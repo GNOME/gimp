@@ -39,7 +39,7 @@
 #include <sys/param.h>
 #endif
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #if defined(G_OS_WIN32) || defined(G_WITH_CYGWIN)
 
@@ -79,13 +79,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpenvirontable.h"
-
-#include "gui/brush-select.h"
-#include "gui/gradient-select.h"
-#include "gui/palette-select.h"
-#include "gui/pattern-select.h"
-
-#include "widgets/gimpwidgets-utils.h"
 
 #include "plug-in.h"
 #include "plug-ins.h"
@@ -655,10 +648,7 @@ plug_in_close (PlugIn   *plug_in,
     }
 
   /* Close any dialogs that this plugin might have opened */
-  brush_select_dialogs_check ();
-  gradient_select_dialogs_check ();
-  palette_select_dialogs_check ();
-  pattern_select_dialogs_check ();
+  gimp_pdb_dialogs_check (plug_in->gimp);
 
   gimp->open_plug_ins = g_slist_remove (gimp->open_plug_ins, plug_in);
 }

@@ -42,6 +42,7 @@
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-render.h"
+#include "display/gimpprogress.h"
 
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdevicestatus.h"
@@ -53,10 +54,16 @@
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "brush-select.h"
 #include "dialogs.h"
 #include "dialogs-commands.h"
+#include "font-select.h"
+#include "gradient-select.h"
 #include "gui.h"
 #include "menus.h"
+#include "palette-select.h"
+#include "pattern-select.h"
+#include "plug-in-menus.h"
 #include "session.h"
 
 #include "app_procs.h" /* FIXME */
@@ -80,6 +87,31 @@ static void         gui_message                 (Gimp             *gimp,
                                                  const gchar      *message);
 static GimpObject * gui_display_new             (GimpImage        *gimage,
                                                  guint             scale);
+static void         gui_menus_init              (Gimp             *gimp,
+                                                 GSList           *plug_in_defs,
+                                                 const gchar      *std_plugins_domain);
+static void         gui_menus_create_entry      (Gimp             *gimp,
+                                                 PlugInProcDef    *proc_def,
+                                                 const gchar      *locale_domain,
+                                                 const gchar      *help_domain);
+static void         gui_menus_delete_entry      (Gimp             *gimp,
+                                                 const gchar      *menu_path);
+static GimpProgress * gui_start_progress        (Gimp             *gimp,
+                                                 gint              gdisp_ID,
+                                                 const gchar      *message,
+                                                 GCallback         cancel_cb,
+                                                 gpointer          cancel_data);
+static GimpProgress * gui_restart_progress      (Gimp             *gimp,
+                                                 GimpProgress     *progress,
+                                                 const gchar      *message,
+                                                 GCallback         cancel_cb,
+                                                 gpointer          cancel_data);
+static void         gui_update_progress         (Gimp             *gimp,
+                                                 GimpProgress     *progress,
+                                                 gdouble           percentage);
+static void         gui_end_progress            (Gimp             *gimp,
+                                                 GimpProgress     *progress);
+static void         gui_pdb_dialogs_check       (Gimp             *gimp);
 
 static void   gui_themes_dir_foreach_func (const GimpDatafileData *file_data,
                                            gpointer                user_data);
@@ -264,12 +296,20 @@ gui_init (Gimp *gimp)
   display_config = GIMP_DISPLAY_CONFIG (gimp->config);
   gui_config     = GIMP_GUI_CONFIG (gimp->config);
 
-  gimp->gui_threads_enter_func  = gui_threads_enter;
-  gimp->gui_threads_leave_func  = gui_threads_leave;
-  gimp->gui_set_busy_func       = gui_set_busy;
-  gimp->gui_unset_busy_func     = gui_unset_busy;
-  gimp->gui_message_func        = gui_message;
-  gimp->gui_create_display_func = gui_display_new;
+  gimp->gui_threads_enter_func     = gui_threads_enter;
+  gimp->gui_threads_leave_func     = gui_threads_leave;
+  gimp->gui_set_busy_func          = gui_set_busy;
+  gimp->gui_unset_busy_func        = gui_unset_busy;
+  gimp->gui_message_func           = gui_message;
+  gimp->gui_create_display_func    = gui_display_new;
+  gimp->gui_menus_init_func        = gui_menus_init;
+  gimp->gui_menus_create_func      = gui_menus_create_entry;
+  gimp->gui_menus_delete_func      = gui_menus_delete_entry;
+  gimp->gui_progress_start_func    = gui_start_progress;
+  gimp->gui_progress_restart_func  = gui_restart_progress;
+  gimp->gui_progress_update_func   = gui_update_progress;
+  gimp->gui_progress_end_func      = gui_end_progress;
+  gimp->gui_pdb_dialogs_check_func = gui_pdb_dialogs_check;
 
   image_disconnect_handler_id =
     gimp_container_add_handler (gimp->images, "disconnect",
@@ -471,6 +511,80 @@ gui_display_new (GimpImage *gimage,
   gimp_item_factory_update (shell->menubar_factory, shell);
 
   return GIMP_OBJECT (gdisp);
+}
+
+static void
+gui_menus_init (Gimp        *gimp,
+                GSList      *plug_in_defs,
+                const gchar *std_plugins_domain)
+{
+  plug_in_menus_init (gimp, plug_in_defs, std_plugins_domain);
+}
+
+static void
+gui_menus_create_entry (Gimp          *gimp,
+                        PlugInProcDef *proc_def,
+                        const gchar   *locale_domain,
+                        const gchar   *help_domain)
+{
+  plug_in_menus_create_entry (NULL, proc_def, locale_domain, help_domain);
+}
+
+static void
+gui_menus_delete_entry (Gimp        *gimp,
+                        const gchar *menu_path)
+{
+  plug_in_menus_delete_entry (menu_path);
+}
+
+static GimpProgress *
+gui_start_progress (Gimp        *gimp,
+                    gint         gdisp_ID,
+                    const gchar *message,
+                    GCallback    cancel_cb,
+                    gpointer     cancel_data)
+{
+  GimpDisplay *gdisp = NULL;
+
+  if (gdisp_ID > 0)
+    gdisp = gimp_display_get_by_ID (gimp, gdisp_ID);
+
+  return gimp_progress_start (gdisp, message, TRUE, cancel_cb, cancel_data);
+}
+
+static GimpProgress *
+gui_restart_progress (Gimp         *gimp,
+                      GimpProgress *progress,
+                      const gchar  *message,
+                      GCallback     cancel_cb,
+                      gpointer      cancel_data)
+{
+  return gimp_progress_restart (progress, message, cancel_cb, cancel_data);
+}
+
+static void
+gui_update_progress (Gimp         *gimp,
+                     GimpProgress *progress,
+                     gdouble       percentage)
+{
+  gimp_progress_update (progress, percentage);
+}
+
+static void
+gui_end_progress (Gimp         *gimp,
+                  GimpProgress *progress)
+{
+  gimp_progress_end (progress);
+}
+
+static void
+gui_pdb_dialogs_check (Gimp *gimp)
+{
+  brush_select_dialogs_check ();
+  font_select_dialogs_check ();
+  gradient_select_dialogs_check ();
+  palette_select_dialogs_check ();
+  pattern_select_dialogs_check ();
 }
 
 static void

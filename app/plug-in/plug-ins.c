@@ -20,7 +20,7 @@
 
 #include "string.h"
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpbase/gimpprotocol.h"
@@ -35,13 +35,6 @@
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-
-#ifdef __GNUC__
-#warning FIXME #include "gui/gui-types.h"
-#endif
-#include "gui/gui-types.h"
-
-#include "gui/plug-in-menus.h"
 
 #include "plug-in.h"
 #include "plug-ins.h"
@@ -277,7 +270,7 @@ plug_ins_init (Gimp               *gimp,
     }
 
   if (! gimp->no_interface)
-    plug_in_menus_init (gimp, gimp->plug_in_defs, STD_PLUGINS_DOMAIN);
+    gimp_menus_init (gimp, gimp->plug_in_defs, STD_PLUGINS_DOMAIN);
 
   /* initial the plug-ins */
   (* status_callback) (_("Initializing Plug-ins"), "", 0);
@@ -575,8 +568,8 @@ plug_ins_temp_proc_def_add (Gimp          *gimp,
           locale_domain = plug_ins_locale_domain (gimp, progname, NULL);
           help_domain   = plug_ins_help_domain (gimp, progname, NULL);
 
-          plug_in_menus_create_entry (NULL, proc_def,
-                                      locale_domain, help_domain);
+          gimp_menus_create_entry (gimp, proc_def,
+                                   locale_domain, help_domain);
         }
     }
 
@@ -597,7 +590,7 @@ plug_ins_temp_proc_def_remove (Gimp          *gimp,
   if (! gimp->no_interface)
     {
       if (proc_def->menu_path)
-        plug_in_menus_delete_entry (proc_def->menu_path);
+        gimp_menus_delete_entry (gimp, proc_def->menu_path);
     }
 
   /*  Unregister the procedural database entry  */

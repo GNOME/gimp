@@ -60,7 +60,7 @@ plug_in_run (Gimp       *gimp,
              ProcRecord *proc_rec,
 	     Argument   *args,
 	     gint        argc,
-	     gboolean    synchronous,   
+	     gboolean    synchronous,
 	     gboolean    destroy_return_vals,
 	     gint        gdisp_ID)
 {
@@ -186,7 +186,7 @@ plug_in_repeat (Gimp    *gimp,
 	args[i].arg_type = gimp->last_plug_in->args[i].arg_type;
 
       /* initialize the first three plug-in arguments  */
-      args[0].value.pdb_int = (with_interface ? 
+      args[0].value.pdb_int = (with_interface ?
                                GIMP_RUN_INTERACTIVE : GIMP_RUN_WITH_LAST_VALS);
       args[1].value.pdb_int = image_ID;
       args[2].value.pdb_int = drawable_ID;

@@ -18,19 +18,13 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "plug-in-types.h"
 
-#ifdef __GNUC__
-#warning FIXME #include "display/display-types.h"
-#endif
-#include "display/display-types.h"
+#include "core/gimp.h"
 
 #include "pdb/procedural_db.h"
-
-#include "display/gimpdisplay.h"
-#include "display/gimpprogress.h"
 
 #include "plug-in.h"
 #include "plug-in-progress.h"
@@ -38,8 +32,8 @@
 
 /*  local function prototypes  */
 
-static void   plug_in_progress_cancel (GtkWidget *widget,
-                                       PlugIn    *plug_in);
+static void   plug_in_progress_cancel (gpointer  eek,
+                                       PlugIn   *plug_in);
 
 
 /*  public functions  */
@@ -49,23 +43,20 @@ plug_in_progress_start (PlugIn      *plug_in,
                         const gchar *message,
                         gint         gdisp_ID)
 {
-  GimpDisplay *gdisp = NULL;
-
   g_return_if_fail (plug_in != NULL);
 
   if (! message)
     message = plug_in->prog;
 
-  if (gdisp_ID > 0)
-    gdisp = gimp_display_get_by_ID (plug_in->gimp, gdisp_ID);
-
   if (plug_in->progress)
-    plug_in->progress = gimp_progress_restart (plug_in->progress, message,
+    plug_in->progress = gimp_restart_progress (plug_in->gimp,
+                                               plug_in->progress, message,
                                                G_CALLBACK (plug_in_progress_cancel),
                                                plug_in);
   else
-    plug_in->progress = gimp_progress_start (gdisp, message, TRUE,
-                                             G_CALLBACK (plug_in_progress_cancel), 
+    plug_in->progress = gimp_start_progress (plug_in->gimp,
+                                             gdisp_ID, message,
+                                             G_CALLBACK (plug_in_progress_cancel),
                                              plug_in);
 }
 
@@ -78,7 +69,7 @@ plug_in_progress_update (PlugIn  *plug_in,
   if (! plug_in->progress)
     plug_in_progress_start (plug_in, NULL, -1);
 
-  gimp_progress_update (plug_in->progress, percentage);
+  gimp_update_progress (plug_in->gimp, plug_in->progress, percentage);
 }
 
 void
@@ -88,7 +79,7 @@ plug_in_progress_end (PlugIn *plug_in)
 
   if (plug_in->progress)
     {
-      gimp_progress_end (plug_in->progress);
+      gimp_end_progress (plug_in->gimp, plug_in->progress);
       plug_in->progress = NULL;
     }
 }
@@ -97,8 +88,8 @@ plug_in_progress_end (PlugIn *plug_in)
 /*  private functions  */
 
 static void
-plug_in_progress_cancel (GtkWidget *widget,
-			 PlugIn    *plug_in)
+plug_in_progress_cancel (gpointer  eek,
+			 PlugIn   *plug_in)
 {
   if (plug_in->recurse_main_loop || plug_in->temp_main_loops)
     {

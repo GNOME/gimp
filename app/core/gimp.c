@@ -178,28 +178,36 @@ gimp_class_init (GimpClass *klass)
 static void
 gimp_init (Gimp *gimp)
 {
-  gimp->config                  = NULL;
+  gimp->config = NULL;
 
-  gimp->be_verbose              = FALSE;
-  gimp->no_data                 = FALSE;
-  gimp->no_interface            = FALSE;
-  gimp->use_shm                 = FALSE;
-  gimp->message_handler         = GIMP_CONSOLE;
-  gimp->stack_trace_mode        = GIMP_STACK_TRACE_NEVER;
+  gimp->be_verbose       = FALSE;
+  gimp->no_data          = FALSE;
+  gimp->no_interface     = FALSE;
+  gimp->use_shm          = FALSE;
+  gimp->message_handler  = GIMP_CONSOLE;
+  gimp->stack_trace_mode = GIMP_STACK_TRACE_NEVER;
 
-  gimp->gui_threads_enter_func  = NULL;
-  gimp->gui_threads_leave_func  = NULL;
-  gimp->gui_create_display_func = NULL;
-  gimp->gui_set_busy_func       = NULL;
-  gimp->gui_unset_busy_func     = NULL;
-  gimp->gui_message_func        = NULL;
+  gimp->gui_threads_enter_func     = NULL;
+  gimp->gui_threads_leave_func     = NULL;
+  gimp->gui_create_display_func    = NULL;
+  gimp->gui_set_busy_func          = NULL;
+  gimp->gui_unset_busy_func        = NULL;
+  gimp->gui_message_func           = NULL;
+  gimp->gui_menus_init_func        = NULL;
+  gimp->gui_menus_create_func      = NULL;
+  gimp->gui_menus_delete_func      = NULL;
+  gimp->gui_progress_start_func    = NULL;
+  gimp->gui_progress_restart_func  = NULL;
+  gimp->gui_progress_update_func   = NULL;
+  gimp->gui_progress_end_func      = NULL;
+  gimp->gui_pdb_dialogs_check_func = NULL;
 
-  gimp->busy                    = 0;
-  gimp->busy_idle_id            = 0;
+  gimp->busy                = 0;
+  gimp->busy_idle_id        = 0;
 
   gimp_units_init (gimp);
 
-  gimp->parasites               = gimp_parasite_list_new ();
+  gimp->parasites           = gimp_parasite_list_new ();
 
   gimp_modules_init (gimp);
 
@@ -930,6 +938,107 @@ gimp_message (Gimp        *gimp,
     }
 
   g_printerr ("%s: %s\n", domain ? domain : GIMP_OBJECT (gimp)->name, message);
+}
+
+void
+gimp_menus_init (Gimp        *gimp,
+                 GSList      *plug_in_defs,
+                 const gchar *std_plugins_domain)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (std_plugins_domain != NULL);
+
+  if (gimp->gui_menus_init_func)
+    gimp->gui_menus_init_func (gimp, plug_in_defs, std_plugins_domain);
+}
+
+void
+gimp_menus_create_entry (Gimp          *gimp,
+                         PlugInProcDef *proc_def,
+                         const gchar   *locale_domain,
+                         const gchar   *help_domain)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (proc_def != NULL);
+
+  if (gimp->gui_menus_create_func)
+    gimp->gui_menus_create_func (gimp, proc_def, locale_domain, help_domain);
+}
+
+void
+gimp_menus_delete_entry (Gimp        *gimp,
+                         const gchar *menu_path)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (menu_path != NULL);
+
+  if (gimp->gui_menus_delete_func)
+    gimp->gui_menus_delete_func (gimp, menu_path);
+}
+
+GimpProgress *
+gimp_start_progress (Gimp        *gimp,
+                     gint         gdisp_ID,
+                     const gchar *message,
+                     GCallback    cancel_cb,
+                     gpointer     cancel_data)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  if (gimp->gui_progress_start_func)
+    return gimp->gui_progress_start_func (gimp, gdisp_ID, message,
+                                          cancel_cb, cancel_data);
+
+  return NULL;
+}
+
+GimpProgress *
+gimp_restart_progress (Gimp         *gimp,
+                       GimpProgress *progress,
+                       const gchar  *message,
+                       GCallback     cancel_cb,
+                       gpointer      cancel_data)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (progress != NULL, NULL);
+
+  if (gimp->gui_progress_restart_func)
+    return gimp->gui_progress_restart_func (gimp, progress, message,
+                                            cancel_cb, cancel_data);
+
+  return NULL;
+}
+
+void
+gimp_update_progress (Gimp         *gimp,
+                      GimpProgress *progress,
+                      gdouble       percentage)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (progress != NULL);
+
+  if (gimp->gui_progress_update_func)
+    gimp->gui_progress_update_func (gimp, progress, percentage);
+}
+
+void
+gimp_end_progress (Gimp         *gimp,
+                   GimpProgress *progress)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (progress != NULL);
+
+  if (gimp->gui_progress_end_func)
+    gimp->gui_progress_end_func (gimp, progress);
+}
+
+void
+gimp_pdb_dialogs_check (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (gimp->gui_pdb_dialogs_check_func)
+    gimp->gui_pdb_dialogs_check_func (gimp);
 }
 
 GimpImage *

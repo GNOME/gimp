@@ -1,3 +1,31 @@
+2003-09-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp.[ch]: added lots more "GimpFooFunc gui_foo_func"
+	vtable entries to the Gimp struct and wrapper function for them.
+	They cover plug-in menu creation and plug-in progress utilities.
+
+	* app/gui/gui.c: fill in the funtion pointers and dispatch
+	to the actual functions.
+
+	* app/pdb/Makefile.am (libapppdb_a_LIBADD): removed most hacks
+	since the symbols are referenced within libappgui.a now.
+
+	Removed any GTK+ dependency from the plug-ins/ directory:
+
+	* app/plug-in/Makefile.am (INCLUDES): replaces GTK_CFLAGS by
+	GDK_PIXBUF_CFLAGS.
+
+	* app/plug-in/plug-in-progress.c
+	* app/plug-in/plug-ins.c: replaced gui function calls to create
+	menus and progress bars by calls to the wrappers.
+
+	* app/plug-in/plug-in.c (plug_in_close): check dangling PDB
+	dialogs using the new wrapper.
+
+	* app/plug-in/plug-in-def.c
+	* app/plug-in/plug-in-rc.c
+	* app/plug-in/plug-in-run.c: removed trailing whitespace.
+
 2003-09-10  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: AC_SUBST the GDK_PIXBUF vars, to workaround automake

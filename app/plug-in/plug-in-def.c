@@ -37,7 +37,7 @@ plug_in_def_new (const gchar *prog)
   plug_in_def = g_new0 (PlugInDef, 1);
 
   plug_in_def->prog = g_strdup (prog);
-  
+
   return plug_in_def;
 }
 
@@ -87,10 +87,10 @@ plug_in_def_set_locale_domain_name (PlugInDef   *plug_in_def,
   g_return_if_fail (plug_in_def != NULL);
 
   if (plug_in_def->locale_domain_name)
-    g_free (plug_in_def->locale_domain_name);      
+    g_free (plug_in_def->locale_domain_name);
   plug_in_def->locale_domain_name = g_strdup (domain_name);
 }
-  
+
 void
 plug_in_def_set_locale_domain_path (PlugInDef   *plug_in_def,
                                     const gchar *domain_path)
