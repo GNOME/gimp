@@ -1,3 +1,8 @@
+Mon Nov 22 11:19:05 GMT 1999  Adam D. Moss <adam@gimp.org>
+
+	* app/convert.c: Removed erroneous spin-button limit, bumped
+	up RGB->INDEXED precision a little.
+
 1999-11-22  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/brightness_contrast.[ch]

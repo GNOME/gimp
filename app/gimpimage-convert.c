@@ -107,7 +107,7 @@
 
 #define PRECISION_R 6
 #define PRECISION_G 6
-#define PRECISION_B 5
+#define PRECISION_B 6
 
 #define HIST_R_ELEMS (1<<PRECISION_R)
 #define HIST_G_ELEMS (1<<PRECISION_G)
@@ -469,7 +469,6 @@ convert_to_indexed (GimpImage *gimage)
   GtkWidget *frame;
   GtkWidget *toggle;
   GSList *group = NULL;
-  gint maxval;
 
   dialog = g_new (IndexedDialog, 1);
   dialog->gimage = gimage;
@@ -543,21 +542,12 @@ convert_to_indexed (GimpImage *gimage)
 	   )
 	  )
 	{
-	  maxval = 255;
 	  dialog->num_cols = 255;
 	}      
-      else
-	{
-	  maxval = 256;
-	}
-    }
-  else
-    {
-      maxval = 256;
     }
 
   spinbutton = gimp_spin_button_new (&adjustment, dialog->num_cols,
-				     2, maxval, 1, 5, 0, 1, 0);
+				     2, 256, 1, 5, 0, 1, 0);
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      GTK_SIGNAL_FUNC (indexed_num_cols_update),
 		      dialog);
