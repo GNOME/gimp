@@ -1,5 +1,10 @@
 2005-03-25  Sven Neumann  <sven@gimp.org>
 
+	* app/app-docs.sgml
+	* app/app-sections.txt: updated.
+
+2005-03-25  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/libgimpwidgets-sections.txt
 	* libgimpwidgets/tmpl/gimppropwidgets.sgml
 	* libgimpwidgets/tmpl/gimpsizeentry.sgml: updated.

@@ -153,8 +153,9 @@ gimp_create_display
 gimp_delete_display
 gimp_reconnect_displays
 gimp_menus_init
-gimp_menus_create_entry
-gimp_menus_delete_entry
+gimp_menus_create_item
+gimp_menus_delete_item
+gimp_menus_create_branch
 gimp_pdb_dialog_new
 gimp_pdb_dialog_set
 gimp_pdb_dialog_close
@@ -5111,6 +5112,7 @@ gimp_view_new
 gimp_view_new_full
 gimp_view_new_by_types
 gimp_view_new_full_by_types
+gimp_view_get_viewable
 gimp_view_set_viewable
 gimp_view_set_expand
 <SUBSECTION Standard>
@@ -6577,6 +6579,8 @@ gimp_image_undo_push_layer_add
 gimp_image_undo_push_layer_remove
 gimp_image_undo_push_layer_mask_add
 gimp_image_undo_push_layer_mask_remove
+gimp_image_undo_push_layer_mask_apply
+gimp_image_undo_push_layer_mask_show
 gimp_image_undo_push_layer_reposition
 gimp_image_undo_push_layer_mode
 gimp_image_undo_push_layer_opacity
@@ -7396,6 +7400,7 @@ plug_in_shm_get_addr
 <FILE>plug-in-types</FILE>
 GimpRunMode
 PlugInImageType
+PlugInMenuBranch
 PlugInShm
 </SECTION>
 
@@ -7437,6 +7442,9 @@ plug_ins_temp_proc_def_remove
 plug_ins_locale_domain
 plug_ins_help_domain
 plug_ins_help_domains
+plug_ins_menu_branch_add
+plug_ins_help_domain_add
+plug_ins_locale_domain_add
 plug_ins_proc_def_find
 plug_ins_extensions_parse
 plug_ins_image_types_parse
@@ -7629,6 +7637,7 @@ GIMP_TARGET_TEXT_PLAIN
 GIMP_TARGET_TOOL
 GIMP_TARGET_URI_LIST
 GIMP_TARGET_VECTORS
+GIMP_TARGET_XDS
 gimp_dnd_init
 GimpDndDropUriListFunc
 GimpDndDragUriListFunc
@@ -7636,6 +7645,8 @@ gimp_dnd_uri_list_dest_add
 gimp_dnd_uri_list_dest_remove
 gimp_dnd_uri_list_source_add
 gimp_dnd_uri_list_source_remove
+gimp_dnd_xds_source_add
+gimp_dnd_xds_source_remove
 GimpDndDropColorFunc
 GimpDndDragColorFunc
 gimp_dnd_color_source_add
@@ -7663,6 +7674,12 @@ gimp_dnd_viewable_dest_remove
 gimp_dnd_drag_source_set_by_type
 gimp_dnd_drag_dest_set_by_type
 gimp_dnd_get_drag_data
+</SECTION>
+
+<SECTION>
+<FILE>gimpdnd-xds</FILE>
+gimp_dnd_xds_source_set
+gimp_dnd_xds_save_image
 </SECTION>
 
 <SECTION>
@@ -8012,6 +8029,7 @@ plug_in_actions_update
 plug_in_actions_add_proc
 plug_in_actions_remove_proc
 plug_in_actions_add_path
+plug_in_actions_add_branch
 </SECTION>
 
 <SECTION>
