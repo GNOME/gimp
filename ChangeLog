@@ -1,3 +1,9 @@
+2003-01-08  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/psd.c: removed MAX_LAYERS and MAX_GUIDES. Memory
+	is now allocated dynamically. Fixes #91282. MAX_CHANNELS is still set
+	to 30.
+
 2003-01-08  Simon Budig  <simon@gimp.or>
 
 	* tools/gimp-remote.c: Implemented a heuristics that tries to

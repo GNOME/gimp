@@ -26,10 +26,11 @@ VPATH = @srcdir@
 
 prefix = @prefix@
 exec_prefix = @exec_prefix@
-datadir = $(prefix)/@DATADIRNAME@
-localedir = $(datadir)/locale
-gnulocaledir = $(prefix)/share/locale
-gettextsrcdir = $(prefix)/share/glib-2.0/gettext/po
+datadir = @datadir@
+libdir = @libdir@
+localedir = $(libdir)/locale
+gnulocaledir = $(datadir)/locale
+gettextsrcdir = $(datadir)/glib-2.0/gettext/po
 subdir = po
 
 INSTALL = @INSTALL@
@@ -38,13 +39,10 @@ MKINSTALLDIRS = $(top_srcdir)/@MKINSTALLDIRS@
 
 CC = @CC@
 GENCAT = @GENCAT@
-GMSGFMT = PATH=../src:$$PATH @GMSGFMT@
+GMSGFMT = @GMSGFMT@
 MSGFMT = @MSGFMT@
-XGETTEXT = PATH=../src:$$PATH @XGETTEXT@
-INTLTOOL_UPDATE = @INTLTOOL_UPDATE@
-INTLTOOL_EXTRACT = @INTLTOOL_EXTRACT@
-MSGMERGE = INTLTOOL_EXTRACT=$(INTLTOOL_EXTRACT) $(INTLTOOL_UPDATE) --gettext-package $(GETTEXT_PACKAGE) --dist
-GENPOT   = INTLTOOL_EXTRACT=$(INTLTOOL_EXTRACT) $(INTLTOOL_UPDATE) --gettext-package $(GETTEXT_PACKAGE) --pot
+XGETTEXT = @XGETTEXT@
+MSGMERGE = msgmerge
 
 DEFS = @DEFS@
 CFLAGS = @CFLAGS@
@@ -197,7 +195,6 @@ dist distdir: update-po $(DISTFILES)
 
 update-po: Makefile
 	$(MAKE) $(GETTEXT_PACKAGE).pot
-	PATH=`pwd`/../src:$$PATH; \
 	cd $(srcdir); \
 	catalogs='$(CATALOGS)'; \
 	for cat in $$catalogs; do \
