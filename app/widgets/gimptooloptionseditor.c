@@ -261,18 +261,17 @@ tool_options_dialog_restore_callback (GtkWidget   *widget,
                                       GimpContext *context)
 {
   GimpToolInfo *tool_info;
-  GError       *error = NULL;
 
   tool_info = gimp_context_get_tool (context);
 
   if (! tool_info)
     return;
 
-  if (! gimp_tool_options_deserialize (tool_info->tool_options, "user", &error))
-    {
-      g_message ("EEK: %s\n", error->message);
-      g_clear_error (&error);
-    }
+  /*  Need to reset the tool-options since only the changes
+   *  from the default values are written to disk.
+   */
+  gimp_tool_options_reset (tool_info->tool_options);
+  gimp_tool_options_deserialize (tool_info->tool_options, "user", NULL);
 }
 
 static void

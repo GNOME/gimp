@@ -1,5 +1,11 @@
 2003-03-26  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/tool-options-dialog.c (tool_options_dialog_restore_callback):
+	reset the tool-options before loading the user settings. Don't warn if
+	loading fails.
+
+2003-03-26  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpfontselection-dialog.c
 	(gimp_font_selection_dialog_set_font_desc): fixed braino that
 	caused the wrong family to be selected.
