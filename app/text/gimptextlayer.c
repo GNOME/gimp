@@ -496,7 +496,7 @@ gimp_text_layer_set (GimpTextLayer *layer,
    *  gimp_text_layer_render() might have to resize it.
    */
   if (GIMP_LAYER (layer)->mask)
-    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TEXT, NULL);
+    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TEXT, undo_desc);
 
   gimp_image_undo_push_text_layer (image, undo_desc, layer);
 
@@ -587,13 +587,11 @@ gimp_text_layer_render (GimpTextLayer *layer)
       (width  != gimp_item_width (item) ||
        height != gimp_item_height (item)))
     {
-      TileManager *new_tiles;
+      TileManager *new_tiles = tile_manager_new (width, height,
+                                                 drawable->bytes);
 
-      item->width  = width;
-      item->height = height;
-
-      new_tiles = tile_manager_new (width, height, drawable->bytes);
       gimp_drawable_set_tiles (drawable, FALSE, NULL, new_tiles);
+
       tile_manager_unref (new_tiles);
 
       if (GIMP_LAYER (layer)->mask)

@@ -1,5 +1,10 @@
 2004-03-20  Sven Neumann  <sven@gimp.org>
 
+	* app/text/gimptextlayer.c (gimp_text_layer_render): don't fiddle
+	with the item size, gimp_drawable_set_tiles() does the right thing.
+ 
+2004-03-20  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/jigsaw.c: pack and show the "Jigsaw Style" radio
 	buttons. Fixes bug #137737.
 
