@@ -1,3 +1,13 @@
+2003-04-14  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/image.pdb: don't request viewable previews with
+	a width or height of 0 and don't crash if no preview is returned.
+
+	* app/pdb/drawable_cmds.c
+	* app/pdb/image_cmds.c
+	* libgimp/gimpdrawable_pdb.c: regenerated.
+
 2003-04-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpvectortool.[ch]: made

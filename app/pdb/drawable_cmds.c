@@ -1444,19 +1444,22 @@ drawable_thumbnail_invoker (Gimp     *gimp,
 	  dheight = gimp_drawable_height (GIMP_DRAWABLE (drawable));
     
 	  if (dwidth > dheight)
-	    req_height = (req_width * dheight) / dwidth;
+	    req_height = MAX (1, (req_width * dheight) / dwidth);
 	  else
-	    req_width = (req_height * dwidth) / dheight;
+	    req_width  = MAX (1, (req_height * dwidth) / dheight);
     
 	  buf = gimp_viewable_get_preview (GIMP_VIEWABLE (drawable),
 					   req_width, req_height);
     
-	  num_pixels = buf->height * buf->width * buf->bytes;
-	  thumbnail_data = g_new (guint8, num_pixels);
-	  g_memmove (thumbnail_data, temp_buf_data (buf), num_pixels);
-	  width = buf->width;        
-	  height = buf->height;
-	  bpp = buf->bytes;
+	  if (buf)
+	    {
+	       num_pixels = buf->height * buf->width * buf->bytes;
+	       thumbnail_data = g_new (guint8, num_pixels);
+	       g_memmove (thumbnail_data, temp_buf_data (buf), num_pixels);
+	       width = buf->width;        
+	       height = buf->height;
+	       bpp = buf->bytes;
+	    }
 	}
     }
 
@@ -1526,7 +1529,7 @@ static ProcRecord drawable_thumbnail_proc =
 {
   "gimp_drawable_thumbnail",
   "Get a thumbnail of a drawable.",
-  "This function gets data from which a thumbnail of a drawable preview can be created. Maximum x or y dimension is 128 pixels. The pixels are returned in the RGB[A] format. The bpp return value gives the number of bytes in the image. The alpha channel also returned if the drawable has one.",
+  "This function gets data from which a thumbnail of a drawable preview can be created. Maximum x or y dimension is 128 pixels. The pixels are returned in the RGB[A] format. The bpp return value gives the number of bytes in the image. The alpha channel is also returned if the drawable has one.",
   "Andy Thomas",
   "Andy Thomas",
   "1999",

@@ -1427,24 +1427,27 @@ HELP
   if (req_width <= 128 && req_height <= 128)
     {	
       /* Adjust the width/height ratio */
-      dwidth = gimage->width;
+      dwidth  = gimage->width;
       dheight = gimage->height;
 
       if (dwidth > dheight)
-        req_height = (req_width * dheight) / dwidth;
+        req_height = MAX (1, (req_width * dheight) / dwidth);
       else
-	req_width = (req_height * dwidth) / dheight;
+	req_width  = MAX (1, (req_height * dwidth) / dheight);
 
       buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (gimage),
-				           req_width,
-				           req_height);
-      num_bytes = buf->height * buf->width * buf->bytes;
-      thumbnail_data = g_new (guint8, num_bytes);
-      g_memmove (thumbnail_data, temp_buf_data (buf), num_bytes);
-      width = buf->width;	
-      height = buf->height;
-      bpp = buf->bytes;
-      temp_buf_free (buf);
+				           req_width, req_height);
+
+      if (buf)
+        {
+          num_bytes = buf->height * buf->width * buf->bytes;
+          thumbnail_data = g_new (guint8, num_bytes);
+          g_memmove (thumbnail_data, temp_buf_data (buf), num_bytes);
+          width = buf->width;	
+          height = buf->height;
+          bpp = buf->bytes;
+          temp_buf_free (buf);
+        }
     }
 }
 CODE
