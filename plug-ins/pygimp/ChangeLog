@@ -1,3 +1,10 @@
+2000-09-23  Kevin Turner  <acapnotic@users.sourceforge.net>
+
+	* gimpmodule.c (newpfobject): use correct type for enums
+
+	* plug-ins/gtkcons.py (Console.run): set _ after evaluating a 
+	statement, so _ may be used as it is in the python interpreter.
+
 2000-09-20  Kevin Turner  <acapnotic@users.sourceforge.net>
 
 	* plug-ins/pdbbrowse.py (pars): Oops.  When we did

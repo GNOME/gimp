@@ -901,7 +901,8 @@ newpfobject(name)
 {
     pfobject *self;
     char *b,*h,*a,*c,*d;
-    int pt, np, nr, i;
+    int np, nr, i;
+    GimpPDBProcType pt;
     GimpParamDef *p, *r;
 
     if (!gimp_procedural_db_proc_info (name, &b, &h, &a, &c, &d, &pt,
@@ -3678,8 +3679,9 @@ static void pygimp_run_proc(char *name, int nparams, GimpParam *params,
 			    int *nreturn_vals, GimpParam **return_vals) {
     PyObject *args, *ret;
     GimpParamDef *pd, *rv;
+    GimpPDBProcType t;
     char *b, *h, *a, *c, *d;
-    int t, np, nrv;
+    int np, nrv;
 
     gimp_procedural_db_proc_info(name, &b, &h, &a, &c, &d, &t, &np, &nrv,
 			 &pd, &rv);

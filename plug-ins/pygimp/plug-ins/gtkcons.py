@@ -285,6 +285,7 @@ class Console(GtkVBox):
 		try:
 			try:
 				r = eval(cmd, self.namespace, self.namespace)
+				self.namespace['_'] = r
 				if r is not None:
 					print `r`
 			except SyntaxError:
