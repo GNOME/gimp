@@ -1,9 +1,9 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * Plugin to load MPEG movies.
+ * Plugin to load MPEG movies. (C) 1997-99 Adam D. Moss
  *
- * v1.0 - by Adam D. Moss, adam@gimp.org, adam@foxbox.org
+ * v1.1 - by Adam D. Moss, adam@gimp.org, adam@foxbox.org
  * Requires mpeg_lib by Gregory P. Ward.  See notes below for
  * obtaining and patching mpeg_lib.
  *
@@ -28,6 +28,8 @@
  * contains a bug in end-of-stream reporting, which will cause it  *
  * to crash in conjunction with this plugin.  I enclose a simple   *
  * patch below which fixes the problem (or at least the symptom.;))*
+ *******************************************************************
+ *    Addendum: mpeg_lib 1.3.0 is now released and much better!    *
  *******************************************************************/
 
 /*******************************************************************
@@ -49,6 +51,9 @@
 
 /*
  * Changelog:
+ *
+ * 99/05/31
+ * v1.1: Endianness fix.
  *
  * 97/09/21
  * v1.0: Initial release. [Adam]
