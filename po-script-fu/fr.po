@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.2.3\n"
-"POT-Creation-Date: 2001-10-24 10:40+0200\n"
-"PO-Revision-Date: 2001-10-24 10:40+0200\n"
+"POT-Creation-Date: 2001-11-10 12:55+0100\n"
+"PO-Revision-Date: 2001-11-10 12:52+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: Gnome French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,6 +23,8 @@ msgid "Script-Fu Console"
 msgstr "Console pour Script-Fu"
 
 #. Action area
+#: plug-ins/dbbrowser/dbbrowser_utils.c:159
+#: plug-ins/dbbrowser/dbbrowser_utils.c:176
 #: plug-ins/script-fu/script-fu-console.c:199
 #: plug-ins/script-fu/script-fu-scripts.c:2033
 msgid "Close"
@@ -106,12 +108,12 @@ msgid "About"
 msgstr "À propos"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1507
-#: plug-ins/script-fu/script-fu-server.c:545
+#: plug-ins/script-fu/script-fu-server.c:549
 msgid "OK"
 msgstr "Valider"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1516
-#: plug-ins/script-fu/script-fu-server.c:547
+#: plug-ins/script-fu/script-fu-server.c:551
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -127,14 +129,18 @@ msgstr ""
 "Au moins une fonte que vous avez choisie est invalide.\n"
 "Veuillez vérifier vos paramètres.\n"
 
+#. show the author & the copyright
+#: plug-ins/dbbrowser/dbbrowser_utils.c:518
 #: plug-ins/script-fu/script-fu-scripts.c:2004
 msgid "Author:"
 msgstr "Auteur :"
 
+#: plug-ins/dbbrowser/dbbrowser_utils.c:548
 #: plug-ins/script-fu/script-fu-scripts.c:2010
 msgid "Copyright:"
 msgstr "Copyright :"
 
+#: plug-ins/dbbrowser/dbbrowser_utils.c:533
 #: plug-ins/script-fu/script-fu-scripts.c:2016
 msgid "Date:"
 msgstr "Date :"
@@ -158,15 +164,15 @@ msgstr ""
 "de %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:540
+#: plug-ins/script-fu/script-fu-server.c:544
 msgid "Script-Fu Server Options"
 msgstr "Options du serveur du Script-Fu"
 
-#: plug-ins/script-fu/script-fu-server.c:567
+#: plug-ins/script-fu/script-fu-server.c:571
 msgid "Server Port:"
 msgstr "Port du serveur :"
 
-#: plug-ins/script-fu/script-fu-server.c:573
+#: plug-ins/script-fu/script-fu-server.c:577
 msgid "Server Logfile:"
 msgstr "Fichier de log du serveur :"
 
@@ -185,6 +191,69 @@ msgstr "Relire la liste des scripts disponibles"
 #: plug-ins/script-fu/script-fu.c:1110
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Exts/Script-Fu/Rafraîchir"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:148
+#: plug-ins/dbbrowser/dbbrowser_utils.c:167
+msgid "DB Browser (init...)"
+msgstr "Navigateur BD (init...)"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:153
+#: plug-ins/dbbrowser/dbbrowser_utils.c:172
+msgid "Search by Name"
+msgstr "Rechercher par nom"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:155
+#: plug-ins/dbbrowser/dbbrowser_utils.c:174
+msgid "Search by Blurb"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:157
+msgid "Apply"
+msgstr "Appliquer"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:226
+msgid "Search:"
+msgstr "Rechercher :"
+
+#. show the name
+#: plug-ins/dbbrowser/dbbrowser_utils.c:344
+msgid "Name:"
+msgstr "Nom :"
+
+#. show the description
+#: plug-ins/dbbrowser/dbbrowser_utils.c:360
+#, fuzzy
+msgid "Blurb:"
+msgstr "Flou X"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:382
+msgid "In:"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:429
+msgid "Out:"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:479
+msgid "Help:"
+msgstr "Aide :"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:643
+msgid "DB Browser (by name - please wait)"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:667
+msgid "DB Browser (by blurb - please wait)"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:677
+msgid "DB Browser (please wait)"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:743
+#, fuzzy
+msgid "DB Browser"
+msgstr "Parcourir..."
 
 #: plug-ins/script-fu/scripts/copy-visible.scm:0
 msgid "<Image>/Edit/Copy Visible"
@@ -1441,7 +1510,7 @@ msgstr "Hauteur"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Hexagons"
-msgstr ""
+msgstr "Hexagones"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0

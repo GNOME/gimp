@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.2.3\n"
-"POT-Creation-Date: 2001-11-08 10:03+0100\n"
-"PO-Revision-Date: 2001-11-08 10:03+0100\n"
+"POT-Creation-Date: 2001-11-10 12:49+0100\n"
+"PO-Revision-Date: 2001-11-10 12:49+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -2286,7 +2286,7 @@ msgid "Animation Playback: "
 msgstr "Jouer une animation : "
 
 #. if no buttons are specified use one CLOSE button per default
-#: plug-ins/common/animationplay.c:675 plug-ins/common/plugindetails.c:1009
+#: plug-ins/common/animationplay.c:675 plug-ins/common/plugindetails.c:1013
 #: plug-ins/common/sample_colorize.c:1374 plug-ins/common/uniteditor.c:526
 #: plug-ins/dbbrowser/dbbrowser_utils.c:159
 #: plug-ins/dbbrowser/dbbrowser_utils.c:176 plug-ins/gap/gap_arr_dialog.c:783
@@ -5085,55 +5085,55 @@ msgstr "Procédure temporaire "
 msgid "<Toolbox>/Xtns/Plugin Details..."
 msgstr "<Toolbox>/Exts/Détails des greffons..."
 
-#: plug-ins/common/plugindetails.c:219
+#: plug-ins/common/plugindetails.c:221
 msgid "Details <<"
 msgstr "Détails <<"
 
-#: plug-ins/common/plugindetails.c:230 plug-ins/common/plugindetails.c:1120
+#: plug-ins/common/plugindetails.c:234 plug-ins/common/plugindetails.c:1125
 msgid "Details >>"
 msgstr "Détails >>"
 
 #. Number of plugins
-#: plug-ins/common/plugindetails.c:316
+#: plug-ins/common/plugindetails.c:320
 #, c-format
 msgid "Number of Plugin Interfaces: %d"
 msgstr "Nombre d'interfaces de greffons : %d"
 
 #. menu path
-#: plug-ins/common/plugindetails.c:334
+#: plug-ins/common/plugindetails.c:338
 msgid "Menu Path:"
 msgstr "Chemin dans le menu :"
 
 #. show the name
-#: plug-ins/common/plugindetails.c:355
+#: plug-ins/common/plugindetails.c:359
 #: plug-ins/dbbrowser/dbbrowser_utils.c:344
 #: plug-ins/gap/gap_dbbrowser_utils.c:329
 msgid "Name:"
 msgstr "Nom :"
 
 #. show the description
-#: plug-ins/common/plugindetails.c:377
+#: plug-ins/common/plugindetails.c:381
 #: plug-ins/dbbrowser/dbbrowser_utils.c:360
 #: plug-ins/gap/gap_dbbrowser_utils.c:346
 msgid "Blurb:"
 msgstr "Description :"
 
-#: plug-ins/common/plugindetails.c:399
+#: plug-ins/common/plugindetails.c:403
 #: plug-ins/dbbrowser/dbbrowser_utils.c:479
 #: plug-ins/gap/gap_dbbrowser_utils.c:463
 msgid "Help:"
 msgstr "Aide :"
 
 #. show the type
-#: plug-ins/common/plugindetails.c:443 plug-ins/gimpressionist/orientmap.c:580
+#: plug-ins/common/plugindetails.c:447 plug-ins/gimpressionist/orientmap.c:580
 msgid "Type:"
 msgstr "Type :"
 
-#: plug-ins/common/plugindetails.c:1002
+#: plug-ins/common/plugindetails.c:1006
 msgid "Plugin Descriptions"
 msgstr "Descriptions des greffons"
 
-#: plug-ins/common/plugindetails.c:1007
+#: plug-ins/common/plugindetails.c:1011
 #: plug-ins/dbbrowser/dbbrowser_utils.c:153
 #: plug-ins/dbbrowser/dbbrowser_utils.c:172
 #: plug-ins/gap/gap_dbbrowser_utils.c:179
@@ -5141,36 +5141,36 @@ msgid "Search by Name"
 msgstr "Rechercher par nom"
 
 #. list : list in a scrolled_win
-#: plug-ins/common/plugindetails.c:1044
+#: plug-ins/common/plugindetails.c:1049
 msgid "Name"
 msgstr "Nom"
 
-#: plug-ins/common/plugindetails.c:1045 plug-ins/common/plugindetails.c:1073
+#: plug-ins/common/plugindetails.c:1050 plug-ins/common/plugindetails.c:1078
 msgid "Ins Date"
 msgstr "Date d'ins."
 
-#: plug-ins/common/plugindetails.c:1046
+#: plug-ins/common/plugindetails.c:1051
 msgid "Menu Path"
 msgstr "Chemin dans le menu"
 
-#: plug-ins/common/plugindetails.c:1047 plug-ins/common/plugindetails.c:1074
+#: plug-ins/common/plugindetails.c:1052 plug-ins/common/plugindetails.c:1079
 msgid "Image Types"
 msgstr "Types de l'image"
 
-#: plug-ins/common/plugindetails.c:1065
+#: plug-ins/common/plugindetails.c:1070
 msgid "List View"
 msgstr "Vue en liste"
 
 #. notebook->ctree
-#: plug-ins/common/plugindetails.c:1072
+#: plug-ins/common/plugindetails.c:1077
 msgid "Menu Path/Name"
 msgstr "Nom/Chemin dans le menu"
 
-#: plug-ins/common/plugindetails.c:1089
+#: plug-ins/common/plugindetails.c:1094
 msgid "Tree View"
 msgstr "Vue en arbre"
 
-#: plug-ins/common/plugindetails.c:1109
+#: plug-ins/common/plugindetails.c:1114
 #: plug-ins/dbbrowser/dbbrowser_utils.c:226
 #: plug-ins/gap/gap_dbbrowser_utils.c:142
 msgid "Search:"
@@ -12383,10 +12383,10 @@ msgstr "Données modifiées"
 #: plug-ins/imagemap/imap_main.c:665
 msgid ""
 "Some data has been changed.\n"
-"Do you really want to continue?"
+"Do you really want to discard your changes?"
 msgstr ""
-"Des données ont été modifiées. \n"
-"Voulez vous vraiment continuer ?"
+"Quelques données ont été modifiées.\n"
+"Voulez-vous vraiment ignorer vos changements ?"
 
 #: plug-ins/imagemap/imap_main.c:874
 #, c-format
