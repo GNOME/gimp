@@ -989,6 +989,7 @@ gimp_display_shell_reconnect (GimpDisplayShell *shell)
 
   gimp_statusbar_resize_cursor (GIMP_STATUSBAR (shell->statusbar));
   gimp_display_shell_scale_setup (shell);
+  gimp_display_shell_expose_full (shell);
 
   g_signal_emit (shell, display_shell_signals[RECONNECT], 0);
 }
