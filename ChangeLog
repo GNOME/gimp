@@ -1,3 +1,8 @@
+2002-10-29  Manish Singh  <yosh@gimp.org>
+
+	* gimptool-1.2.in: strip paths from the plug-in filename for
+	installation (fixes #97111).
+
 2002-10-22  Tor Lillqvist  <tml@iki.fi>
 
 	* app/Makefile.am: Add rule to produce gimp.def from gimp.sym. Had
