@@ -147,6 +147,10 @@ static GtkWidget *msg_label;
    that's not the way things are done around here...  I read it
    enhances optimization or some such thing.  Oh well.  Pointers are
    cheap, right? */
+/* This is silly! Optimizing UI code like dialog creation makes no sense.
+   The whole point of using more then one or two generic widget variables
+   is code readability; but you obviously overexagerted it here!! 
+   But pointers are cheap, so I'll leave it as is ...   -- Sven */
 gint maze_dialog() 
 {
   GtkWidget *dlg;
@@ -154,13 +158,12 @@ gint maze_dialog()
   GtkWidget *frame;
   GtkWidget *table;
   gint trow;
+  GtkWidget *hbbox;
   GtkWidget *button;
   GtkWidget *label;
   GtkWidget *entry;
   GtkWidget *notebook;
   GtkWidget *tilecheck;
-
-  GtkWidget *help_button;
 
   GtkWidget *width_entry, *height_entry;
   GtkWidget *seed_hbox, *seed_entry, *time_button;
@@ -190,12 +193,19 @@ gint maze_dialog()
 		      NULL);
 
   /*  Action area  */
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+ 
   button = gtk_button_new_with_label ("OK");
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) maze_ok_callback,
-                      dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
+		      (GtkSignalFunc) maze_ok_callback,
+		      dlg);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
@@ -204,17 +214,16 @@ gint maze_dialog()
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
 			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  help_button = gtk_button_new_with_label ("Help");
-  gtk_signal_connect (GTK_OBJECT (help_button), "clicked",
-		      (GtkSignalFunc) maze_help, NULL);
-
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), 
-		      help_button, TRUE, TRUE, 0);
-  gtk_widget_show (help_button);
-
+  button = gtk_button_new_with_label ("Help");
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) maze_help,
+		      NULL);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   /* Create notebook */
   notebook = gtk_notebook_new ();

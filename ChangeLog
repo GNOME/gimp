@@ -1,3 +1,23 @@
+Fri Nov 26 21:55:07 MET 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/aa.c
+	* plug-ins/common/gbr.c
+	* plug-ins/common/gicon.c
+	* plug-ins/common/gpb.c
+	* plug-ins/common/gtm.c
+	* plug-ins/common/hrz.c
+	* plug-ins/common/pat.c
+	* plug-ins/common/pnm.c
+	* plug-ins/common/sunras.c
+	* plug-ins/common/tga.c
+	* plug-ins/common/tiff.c
+	* plug-ins/fits/fits.c
+	* plug-ins/fp/fp_gtk.c
+	* plug-ins/maze/maze_face.c
+	* plug-ins/rcm/rcm_dialog.c
+	* plug-ins/sgi/sgi.c
+	* plug-ins/xjt/xjt.c: more action_area beautification
+
 Fri Nov 26 19:03:07 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/mail.c: modified the dialog layout a bit
