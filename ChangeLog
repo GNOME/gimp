@@ -1,3 +1,7 @@
+2001-03-23  Marius Andreiana  <mandreiana@yahoo.com>
+
+	* configure.in: Added ro (Romanian) to ALL_LINGUAS
+
 2001-03-22  Stanislav Brabec  <utx@penguin.cz>  
 
         * app/tools/gimpbucketfilltool.c: Bucket fill threshold=0 must
