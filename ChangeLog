@@ -1,3 +1,30 @@
+2003-11-26  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/animationplay.c
+	* plug-ins/common/animoptimize.c
+	* plug-ins/common/gif.c
+	* plug-ins/common/gih.c
+	* plug-ins/common/pnm.c
+	* plug-ins/common/xbm.c
+	* plug-ins/flame/libifs.c
+	* plug-ins/script-fu/siod/slib.c
+	* plug-ins/script-fu/siod/sliba.c: don't include ctype.h, use
+	g_ascii_* functions from GLib instead.
+
+	* plug-ins/common/film.c
+	* plug-ins/common/gbr.c
+	* plug-ins/common/gee.c
+	* plug-ins/common/gee_zoom.c
+	* plug-ins/common/gicon.c
+	* plug-ins/common/gifload.c
+	* plug-ins/common/hrz.c
+	* plug-ins/common/pat.c
+	* plug-ins/print/print.c
+	* plug-ins/script-fu/script-fu-server.c
+	* plug-ins/twain/twain.c
+	* plug-ins/winsnap/winsnap.c: removed unused includes (mainly
+	ctype.h).
+
 2003-11-26  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/sel2path/sel2path.c (sel2path_response):

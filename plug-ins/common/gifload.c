@@ -69,7 +69,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 
 #include <gtk/gtk.h>
 
@@ -1174,7 +1173,6 @@ typedef unsigned char char_type;
  *              Joe Orost               (decvax!vax135!petsd!joe)
  *
  */
-#include <ctype.h>
 
 #define ARGVAL() (*++(*argv) || (--argc && *++argv))
 

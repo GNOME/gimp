@@ -28,13 +28,13 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 
 #include <gtk/gtk.h>
+
+#include <libgimpmath/gimpmath.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>

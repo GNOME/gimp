@@ -42,7 +42,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 
 #include <gtk/gtk.h>
 
@@ -426,7 +425,7 @@ run (const gchar      *name,
 	  temp = xsvals.prefix;
 	  while (*temp)
 	    {
-	      if (!isalnum (*temp))
+	      if (!g_ascii_isalnum (*temp))
 		*temp = '_';
 	      temp ++;
 	    }
@@ -547,7 +546,7 @@ fgetcomment (FILE *fp)
 		  return NULL;
 		}
 	    }
-	  else if (isspace (c))
+	  else if (c != EOF && g_ascii_isspace (c))
 	    {
 	      /* Skip leading whitespace */
 	      continue;
@@ -644,7 +643,7 @@ get_int (FILE *fp)
 
   do
     c = cpp_fgetc (fp);
-  while (c != EOF && !isdigit (c));
+  while (c != EOF && ! g_ascii_isdigit (c));
 
   if (c == EOF)
     return 0;
@@ -658,7 +657,7 @@ get_int (FILE *fp)
 	  c = fgetc (fp);
 	  base = 16;
 	}
-      else if (isdigit (c))
+      else if (g_ascii_isdigit (c))
 	base = 8;
       else
 	{
@@ -732,12 +731,12 @@ load_image (const gchar *filename)
   c = ' ';
   do
     {
-      if (isspace (c))
+      if (g_ascii_isspace (c))
 	{
 	  if (match (fp, "char"))
 	    {
 	      c = fgetc (fp);
-	      if (isspace (c))
+	      if (g_ascii_isspace (c))
 		{
 		  intbits = 8;
 		  continue;
@@ -746,7 +745,7 @@ load_image (const gchar *filename)
 	  else if (match (fp, "short"))
 	    {
 	      c = fgetc (fp);
-	      if (isspace (c))
+	      if (g_ascii_isspace (c))
 		{
 		  intbits = 16;
 		  continue;
@@ -759,7 +758,7 @@ load_image (const gchar *filename)
 	  if (match (fp, "width"))
 	    {
 	      c = fgetc (fp);
-	      if (isspace (c))
+	      if (g_ascii_isspace (c))
 		{
 		  width = get_int (fp);
 		  continue;
@@ -768,7 +767,7 @@ load_image (const gchar *filename)
 	  else if (match (fp, "height"))
 	    {
 	      c = fgetc (fp);
-	      if (isspace (c))
+	      if (g_ascii_isspace (c))
 		{
 		  height = get_int (fp);
 		  continue;
@@ -777,7 +776,7 @@ load_image (const gchar *filename)
 	  else if (match (fp, "x_hot"))
 	    {
 	      c = fgetc (fp);
-	      if (isspace (c))
+	      if (g_ascii_isspace (c))
 		{
 		  x_hot = get_int (fp);
 		  continue;
@@ -786,7 +785,7 @@ load_image (const gchar *filename)
 	  else if (match (fp, "y_hot"))
 	    {
 	      c = fgetc (fp);
-	      if (isspace (c))
+	      if (g_ascii_isspace (c))
 		{
 		  y_hot = get_int (fp);
 		  continue;

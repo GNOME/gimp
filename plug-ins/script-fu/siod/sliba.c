@@ -14,7 +14,6 @@
 #include <setjmp.h>
 #include <stdlib.h>
 #include <stdarg.h>
-#include <ctype.h>
 #include <math.h>
 
 #include <glib.h>
@@ -635,7 +634,7 @@ string_upcase (LISP str)
   result = strcons (n, s1);
   s2 = get_c_string (result);
   for (j = 0; j < n; ++j)
-    s2[j] = toupper (s2[j]);
+    s2[j] = g_ascii_toupper (s2[j]);
   return (result);
 }
 
@@ -650,7 +649,7 @@ string_downcase (LISP str)
   result = strcons (n, s1);
   s2 = get_c_string (result);
   for (j = 0; j < n; ++j)
-    s2[j] = tolower (s2[j]);
+    s2[j] = g_ascii_tolower (s2[j]);
   return (result);
 }
 
@@ -1550,10 +1549,10 @@ string2number (LISP x, LISP b)
   else if ((base >= 1) && (base <= 16))
     {
       for (result = 0.0; *str; ++str)
-	if (isdigit (*str))
+	if (g_ascii_isdigit (*str))
 	  result = result * base + *str - '0';
-	else if (isxdigit (*str))
-	  result = result * base + toupper (*str) - 'A' + 10;
+	else if (g_ascii_isxdigit (*str))
+	  result = result * base + g_ascii_toupper (*str) - 'A' + 10;
     }
   else
     my_err ("number base not handled", b);
@@ -2474,10 +2473,10 @@ hexstr (LISP a)
 static int
 xdigitvalue (int c)
 {
-  if (isdigit (c))
+  if (g_ascii_isdigit (c))
       return (c - '0');
-  if (isxdigit (c))
-      return (toupper (c) - 'A' + 10);
+  if (g_ascii_isxdigit (c))
+      return (g_ascii_toupper (c) - 'A' + 10);
   return (0);
 }
 

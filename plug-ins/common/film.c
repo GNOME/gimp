@@ -38,7 +38,6 @@ static char ident[] = "@(#) GIMP Film plug-in v1.04 1999-10-08";
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 
 #include <gtk/gtk.h>
 
@@ -901,7 +900,7 @@ draw_number (gint32 layer_ID,
     { /* Try different font sizes if inquire of extent failed */
       delta = (k+1) / 2;
       if ((k & 1) == 0) delta = -delta;
-      
+
       gimp_text_get_extents (buf,
 			     height+delta,
 			     GIMP_PIXELS,
@@ -933,7 +932,7 @@ draw_number (gint32 layer_ID,
 			     1,           /* border */
 			     FALSE,       /* antialias */
 			     height,
-			     GIMP_PIXELS, 
+			     GIMP_PIXELS,
 			     "*",         /* foundry */
 			     family,      /* family */
 			     "*",         /* weight */
@@ -1020,7 +1019,7 @@ add_list_item_callback (GtkWidget        *widget,
 
       if (gtk_tree_model_get_iter (model, &iter, list->data))
         {
-	  gint32  image_ID; 
+	  gint32  image_ID;
           gchar  *name;
 
           gtk_tree_model_get (model, &iter,
@@ -1244,7 +1243,7 @@ create_selection_tab (GtkWidget *notebook,
   /* Film color */
   button = gimp_color_button_new (_("Select Film Color"),
 				  COLOR_BUTTON_WIDTH, COLOR_BUTTON_HEIGHT,
-				  &filmvals.film_color, 
+				  &filmvals.film_color,
 				  GIMP_COLOR_AREA_FLAT);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Co_lor:"), 1.0, 0.5,
@@ -1258,7 +1257,7 @@ create_selection_tab (GtkWidget *notebook,
   frame = gtk_frame_new (_("Numbering"));
   gtk_box_pack_start (GTK_BOX (vbox2), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
-  
+
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
@@ -1293,7 +1292,7 @@ create_selection_tab (GtkWidget *notebook,
   /* Numbering color */
   button = gimp_color_button_new (_("Select Number Color"),
 				  COLOR_BUTTON_WIDTH, COLOR_BUTTON_HEIGHT,
-				  &filmvals.number_color, 
+				  &filmvals.number_color,
 				  GIMP_COLOR_AREA_FLAT);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Co_lor:"), 1.0, 0.5,
@@ -1305,7 +1304,7 @@ create_selection_tab (GtkWidget *notebook,
 
   for (j = 0; j < 2; j++)
     {
-      toggle = gtk_check_button_new_with_mnemonic (j ? _("At _Bottom") 
+      toggle = gtk_check_button_new_with_mnemonic (j ? _("At _Bottom")
                                                    : _("At _Top"));
       gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),

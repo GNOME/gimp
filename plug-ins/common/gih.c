@@ -53,7 +53,6 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#include <ctype.h>
 
 #include <glib.h>
 
@@ -692,7 +691,7 @@ gih_load_image (const gchar *filename)
       gimp_progress_update ((gdouble) i / (gdouble) num_of_brushes);
     }
 
-  while (*paramstring && isspace (*paramstring))
+  while (*paramstring && g_ascii_isspace (*paramstring))
     paramstring++;
 
   /*  Since we do not (yet) load the pipe as described in the header,

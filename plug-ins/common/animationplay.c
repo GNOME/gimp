@@ -111,7 +111,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <ctype.h>
 
 #include <gtk/gtk.h>
 
@@ -280,68 +279,6 @@ run (const gchar      *name,
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
-
-
-
-/*
-static int
-parse_ms_tag (char *str)
-{
-  gint sum = 0;
-  gint offset = 0;
-  gint length;
-
-  length = strlen(str);
-
-find_another_bra:
-
-  while ((offset<length) && (str[offset]!='('))
-    offset++;
-
-  if (offset>=length)
-    return(-1);
-
-  if (!isdigit(str[++offset]))
-    goto find_another_bra;
-
-  do
-    {
-      sum *= 10;
-      sum += str[offset] - '0';
-      offset++;
-    }
-  while ((offset<length) && (isdigit(str[offset])));
-
-  if (length-offset <= 2)
-    return(-3);
-
-  if ((toupper(str[offset]) != 'M') || (toupper(str[offset+1]) != 'S'))
-    return(-4);
-
-  return (sum);
-}
-
-
-static DisposeType
-parse_disposal_tag (char *str)
-{
-  gint offset = 0;
-  gint length;
-
-  length = strlen(str);
-
-  while ((offset+9)<=length)
-    {
-      if (strncmp(&str[offset],"(combine)",9)==0)
-	return(DISPOSE_COMBINE);
-      if (strncmp(&str[offset],"(replace)",9)==0)
-	return(DISPOSE_REPLACE);
-      offset++;
-    }
-
-  return (DISPOSE_UNDEFINED);
-}*/
-
 
 static void
 reshape_from_bitmap (gchar* bitmap)
@@ -1538,7 +1475,7 @@ is_ms_tag (const char *str, int *duration, int *taglength)
   while ((offset<length) && (str[offset] == ' '))
     offset++;
 
-  if ((offset>=length) || (!isdigit(str[offset])))
+  if ((offset>=length) || (!g_ascii_isdigit (str[offset])))
     return 0;
 
   do
@@ -1547,7 +1484,7 @@ is_ms_tag (const char *str, int *duration, int *taglength)
       sum += str[offset] - '0';
       offset++;
     }
-  while ((offset<length) && (isdigit(str[offset])));
+  while ((offset<length) && (g_ascii_isdigit (str[offset])));
 
   if (length-offset <= 2)
     return 0;
@@ -1590,7 +1527,7 @@ parse_ms_tag (const char *str)
 
   for (i=0; i<length; i++)
     {
-      if (is_ms_tag(&str[i], &rtn, &dummy))
+      if (is_ms_tag (&str[i], &rtn, &dummy))
 	return rtn;
     }
 

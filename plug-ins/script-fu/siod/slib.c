@@ -72,7 +72,6 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <ctype.h>
 #include <setjmp.h>
 #include <signal.h>
 #include <math.h>
@@ -1904,7 +1903,7 @@ user_gc (LISP args)
   old_status_flag = gc_status_flag;
   if NNULLP (args)
     {
-      if NULLP (car (args)) 
+      if NULLP (car (args))
 	  gc_status_flag = 0;
       else
 	gc_status_flag = 1;
@@ -1941,12 +1940,12 @@ gc_status (LISP args)
   long n, m;
   if NNULLP (args)
     {
-      if NULLP (car (args)) 
+      if NULLP (car (args))
 	gc_status_flag = 0;
       else
 	gc_status_flag = 1;
     }
-  
+
   if (gc_kind_copying == 1)
     {
       if (gc_status_flag)
@@ -2831,7 +2830,7 @@ flush_ws (struct gen_readio *f, char *eoferr)
 	  else
 	    return (c);
 	}
-      
+
       if (commentp)
 	{
 	  if (c == '\n')
@@ -2839,7 +2838,7 @@ flush_ws (struct gen_readio *f, char *eoferr)
 	}
       else if (c == ';')
 	commentp = 1;
-      else if (!isspace (c))
+      else if (!g_ascii_isspace (c))
 	return (c);
     }
 }
@@ -2930,7 +2929,7 @@ lreadr (struct gen_readio *f)
       c = GETC_FCN (f);
       if (c == EOF)
 	return (lreadtk (buffer, j));
-      if (isspace (c))
+      if (g_ascii_isspace (c))
 	return (lreadtk (buffer, j));
       if (strchr ("()'`,;\"", c) || strchr (user_te_readm, c))
 	{
@@ -2981,7 +2980,7 @@ lreadtk (char *buffer, long j)
   if (*p == '-')
     p += 1;
   adigit = 0;
-  while (isdigit (*p))
+  while (g_ascii_isdigit (*p))
     {
       p += 1;
       adigit = 1;
@@ -2989,7 +2988,7 @@ lreadtk (char *buffer, long j)
   if (*p == '.')
     {
       p += 1;
-      while (isdigit (*p))
+      while (g_ascii_isdigit (*p))
 	{
 	  p += 1;
 	  adigit = 1;
@@ -3002,11 +3001,11 @@ lreadtk (char *buffer, long j)
       p += 1;
       if (*p == '-' || *p == '+')
 	p += 1;
-      if (!isdigit (*p))
+      if (!g_ascii_isdigit (*p))
 	goto a_symbol;
       else
 	p += 1;
-      while (isdigit (*p))
+      while (g_ascii_isdigit (*p))
 	p += 1;
     }
   if (*p)
@@ -3158,7 +3157,7 @@ vload (char *fname, long cflag, long rflag)
   if ((start = strstr (buffer, key)))
     {
       for (end = &start[strlen (key)];
-	   *end && isalnum (*end);
+	   *end && g_ascii_isalnum (*end);
 	   ++end);
       j = end - start;
       g_memmove (buffer, start, j);

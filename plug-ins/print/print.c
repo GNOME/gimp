@@ -26,7 +26,6 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <signal.h>
-#include <ctype.h>
 #include <sys/wait.h>
 #ifdef __EMX__
 #define INCL_DOSDEVICES

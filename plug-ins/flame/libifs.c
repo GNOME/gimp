@@ -16,9 +16,9 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 */
+
 #include "config.h"
 
-#include <ctype.h>
 #include <stdlib.h>
 #include <string.h> /* strcmp */
 
@@ -667,13 +667,13 @@ void tokenize(ss, argv, argc)
        case 0:
 	 if ('#' == c)
 	    state = 2;
-	 else if (!isspace(c)) {
+	 else if (!g_ascii_isspace(c)) {
 	    argv[i] = s;
 	    i++;
 	    state = 1;
 	 }
        case 1:
-	 if (isspace(c)) {
+	 if (g_ascii_isspace(c)) {
 	    *s = 0;
 	    state = 0;
 	 }

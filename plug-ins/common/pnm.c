@@ -35,7 +35,6 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -446,14 +445,14 @@ load_image (const gchar *filename)
   pnmscanner_gettoken(scan, buf, BUFLEN);
   CHECK_FOR_ERROR(pnmscanner_eof(scan), pnminfo->jmpbuf,
 		  _("PNM: Premature end of file."));
-  pnminfo->xres = isdigit(*buf)?atoi(buf):0;
+  pnminfo->xres = g_ascii_isdigit(*buf)?atoi(buf):0;
   CHECK_FOR_ERROR(pnminfo->xres<=0, pnminfo->jmpbuf,
 		  _("PNM: Invalid X resolution."));
 
   pnmscanner_gettoken(scan, buf, BUFLEN);
   CHECK_FOR_ERROR(pnmscanner_eof(scan), pnminfo->jmpbuf,
 		  _("PNM: Premature end of file."));
-  pnminfo->yres = isdigit(*buf)?atoi(buf):0;
+  pnminfo->yres = g_ascii_isdigit(*buf)?atoi(buf):0;
   CHECK_FOR_ERROR(pnminfo->yres<=0, pnminfo->jmpbuf,
 		  _("PNM: Invalid Y resolution."));
 
@@ -463,7 +462,7 @@ load_image (const gchar *filename)
       CHECK_FOR_ERROR(pnmscanner_eof(scan), pnminfo->jmpbuf,
 		      _("PNM: Premature end of file."));
 
-      pnminfo->maxval = isdigit(*buf)?atoi(buf):0;
+      pnminfo->maxval = g_ascii_isdigit(*buf)?atoi(buf):0;
       CHECK_FOR_ERROR(((pnminfo->maxval<=0)
 		       || (pnminfo->maxval>255 && !pnminfo->asciibody)),
 		      pnminfo->jmpbuf,
@@ -544,14 +543,14 @@ pnm_load_ascii (PNMScanner *scan,
 		switch (info->maxval)
 		  {
 		  case 255:
-		    d[b] = isdigit(*buf)?atoi(buf):0;
+		    d[b] = g_ascii_isdigit (*buf) ? atoi (buf) : 0;
 		    break;
 		  case 1:
 		    d[b] = (*buf=='0')?0xff:0x00;
 		    break;
 		  default:
-		    d[b] = (unsigned char)(255.0*(((double)(isdigit(*buf)?atoi(buf):0))
-						  / (double)(info->maxval)));
+		    d[b] = (255.0 * (((gdouble)(g_ascii_isdigit (*buf) ? atoi (buf) : 0))
+                                     / (gdouble)(info->maxval)));
 		  }
 	      }
 
@@ -991,8 +990,11 @@ pnmscanner_gettoken (PNMScanner *s,
 {
   int ctr=0;
 
-  pnmscanner_eatwhitespace(s);
-  while (!(s->eof) && !isspace(s->cur) && (s->cur != '#') && (ctr<bufsize))
+  pnmscanner_eatwhitespace (s);
+  while (! s->eof                   &&
+         ! g_ascii_isspace (s->cur) &&
+         (s->cur != '#')            &&
+         (ctr < bufsize))
     {
       buf[ctr++] = s->cur;
       pnmscanner_getchar(s);
@@ -1008,7 +1010,7 @@ pnmscanner_getsmalltoken (PNMScanner *s,
 			  gchar      *buf)
 {
   pnmscanner_eatwhitespace(s);
-  if (!(s->eof) && !isspace(s->cur) && (s->cur != '#'))
+  if (!(s->eof) && !g_ascii_isspace (s->cur) && (s->cur != '#'))
     {
       *buf = s->cur;
       pnmscanner_getchar(s);
@@ -1056,7 +1058,7 @@ pnmscanner_eatwhitespace (PNMScanner *s)
 	      state = 1;  /* goto comment */
 	      pnmscanner_getchar(s);
 	    }
-	  else if (!isspace(s->cur))
+	  else if (!g_ascii_isspace (s->cur))
 	    state = -1;
 	  else
 	    pnmscanner_getchar(s);

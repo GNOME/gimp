@@ -89,7 +89,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <ctype.h>
 
 #include <libgimp/gimp.h>
 
@@ -971,6 +970,7 @@ g_warning("stat fun");
 			    }
 			skip_right:
 			} /* xit */
+
 		      /* Compare with next pixels from right to left */
 		      for (xit = bbox_right - 2; xit >= bbox_left; xit--)
 			{
@@ -1227,7 +1227,7 @@ is_ms_tag (const char *str, int *duration, int *taglength)
   while ((offset<length) && (str[offset] == ' '))
     offset++;
 
-  if ((offset>=length) || (!isdigit(str[offset])))
+  if ((offset>=length) || (!g_ascii_isdigit (str[offset])))
     return 0;
 
   do
@@ -1236,7 +1236,7 @@ is_ms_tag (const char *str, int *duration, int *taglength)
       sum += str[offset] - '0';
       offset++;
     }
-  while ((offset<length) && (isdigit(str[offset])));
+  while ((offset<length) && (g_ascii_isdigit (str[offset])));
 
   if (length-offset <= 2)
     return 0;
@@ -1246,7 +1246,8 @@ is_ms_tag (const char *str, int *duration, int *taglength)
     offset++;
 
   if ((length-offset <= 2) ||
-      (toupper(str[offset]) != 'M') || (toupper(str[offset+1]) != 'S'))
+      (g_ascii_toupper (str[offset]) != 'M') ||
+      (g_ascii_toupper (str[offset+1]) != 'S'))
     return 0;
 
   offset += 2;

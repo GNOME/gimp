@@ -278,7 +278,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -747,7 +746,7 @@ find_another_bra:
   if (offset>=length)
     return(-1);
 
-  if (!isdigit(str[++offset]))
+  if (!g_ascii_isdigit (str[++offset]))
     goto find_another_bra;
 
   do
@@ -756,15 +755,16 @@ find_another_bra:
       sum += str[offset] - '0';
       offset++;
     }
-  while ((offset<length) && (isdigit(str[offset])));
+  while ((offset<length) && (g_ascii_isdigit (str[offset])));
 
   if (length-offset <= 2)
     return(-3);
 
-  if ((toupper(str[offset]) != 'M') || (toupper(str[offset+1]) != 'S'))
-    return(-4);
+  if ((g_ascii_toupper (str[offset]) != 'M') ||
+      (g_ascii_toupper (str[offset+1]) != 'S'))
+    return -4;
 
-  return (sum);
+  return sum;
 }
 
 
@@ -2048,7 +2048,6 @@ typedef unsigned char char_type;
  *              Joe Orost               (decvax!vax135!petsd!joe)
  *
  */
-#include <ctype.h>
 
 #define ARGVAL() (*++(*argv) || (--argc && *++argv))
 
