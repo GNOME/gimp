@@ -31,7 +31,6 @@
 #include "core/gimpcontext.h"
 #include "core/gimpviewable.h"
 
-#include "gimpcellrendererviewable.h"
 #include "gimpcontainertreeview.h"
 #include "gimpdnd.h"
 #include "gimppreview.h"

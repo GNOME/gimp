@@ -302,7 +302,7 @@ gimp_viewable_dialog_name_changed (GimpObject         *object,
 
   if (get_name_func && dialog->preview)
     {
-      name = get_name_func (dialog->preview, NULL);
+      name = get_name_func (G_OBJECT (dialog->preview), NULL);
     }
   else
     {

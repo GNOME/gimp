@@ -1,3 +1,10 @@
+2003-02-21  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpviewabledialog.c: added missing cast.
+
+	* app/widgets/gimpcontainertreeview.c: do not include a non-existant
+	header file.
+
 2003-02-21  Michael Natterer  <mitch@gimp.org>
 
 	Started migration from GtkList to GtkTreeView:
