@@ -1,5 +1,9 @@
 2003-10-15  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpconfig-utils.c (gimp_config_sync): fixed comment.
+
+2003-10-15  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/file-new-dialog.c (file_new_dialog_set): sync from the
 	given template to the dialog template, not the other way around.
 

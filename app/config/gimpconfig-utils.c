@@ -188,6 +188,8 @@ gimp_config_diff (GimpConfig  *a,
  * that have all @flags set. Differing values are then copied from
  * @src to @dest. If @flags is 0, all differing read/write properties
  * are synced.
+ *
+ * Return value: %TRUE if @dest was modified, %FALSE otherwise
  **/
 gboolean
 gimp_config_sync (GimpConfig  *src,
