@@ -1,18 +1,19 @@
+# translation of gimp-script-fu.HEAD.sk.po to Slovak
 # gimp-script-fu sk.po
-# Copyright (C) 2002 Free Software Foundation, Inc.
-# Zdenko Podobný <zdpo@mailbox.sk>, 2002.
+# Copyright (C) 2002,2003 Free Software Foundation, Inc.
+# Zdenko Podobný <zdpo@mailbox.sk>, 2002,2003.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu\n"
-"POT-Creation-Date: 2003-04-12 14:48+0200\n"
-"PO-Revision-Date: 2002-03-15 12:59+0100\n"
+"Project-Id-Version: gimp-script-fu.HEAD.sk\n"
+"POT-Creation-Date: 2003-04-15 11:55+0200\n"
+"PO-Revision-Date: 2003-04-17 22:46+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 0.9.5\n"
+"X-Generator: KBabel 1.2\n"
 
 #: plug-ins/script-fu/script-fu-console.c:143
 msgid "Script-Fu console mode allows only interactive invocation"
@@ -81,9 +82,8 @@ msgid "Script-Fu File Selection"
 msgstr "Script-Fu výber súboru"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1374
-#, fuzzy
 msgid "Script-Fu Folder Selection"
-msgstr "Script-Fu výber súboru"
+msgstr "Script-Fu výber prieèinka"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1391
 msgid "Script-Fu Font Selection"
@@ -101,18 +101,18 @@ msgstr "Script-Fu výber prechodu"
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu výber ¹tetca"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:499
 #: plug-ins/script-fu/script-fu-scripts.c:1910
+#: plug-ins/dbbrowser/dbbrowser_utils.c:499
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:515
 #: plug-ins/script-fu/script-fu-scripts.c:1916
+#: plug-ins/dbbrowser/dbbrowser_utils.c:515
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:507
 #: plug-ins/script-fu/script-fu-scripts.c:1922
+#: plug-ins/dbbrowser/dbbrowser_utils.c:507
 msgid "Date:"
 msgstr "Dátum:"
 
@@ -166,20 +166,17 @@ msgstr "DB Prehliadaè"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:134
 #: plug-ins/dbbrowser/dbbrowser_utils.c:153
-#, fuzzy
 msgid "Search by _Name"
-msgstr "Hµada» podµa názvu"
+msgstr "Hµada» podµa _názvu"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:136
 #: plug-ins/dbbrowser/dbbrowser_utils.c:155
-#, fuzzy
 msgid "Search by _Blurb"
-msgstr "Hµadanie podµa popisu"
+msgstr "Hµadanie podµa _popisu"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:216
-#, fuzzy
 msgid "_Search:"
-msgstr "Hµada»"
+msgstr "_Hµada»:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:358
 msgid "Name:"
@@ -202,22 +199,20 @@ msgid "Help:"
 msgstr "Pomocník:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:606
-#, fuzzy
 msgid "Searching by name - please wait"
-msgstr "DB Prehliadaè (podµa názvu - èakajte prosím)"
+msgstr "Hµadanie podµa názvu - èakajte prosím"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:629
-#, fuzzy
 msgid "Searching by blurb - please wait"
-msgstr "DB Prehliadaè (podµa popis - èakajte prosím)"
+msgstr "Hµadanie podµa popisu - èakajte prosím"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:639
 msgid "Searching - please wait"
-msgstr ""
+msgstr "Hµadanie - èakajte prosím"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:675
 msgid "No matches"
-msgstr ""
+msgstr "Nenájdené"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/3D Outline..."
@@ -501,8 +496,7 @@ msgstr "Delta hodnota farby"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
-msgstr ""
-"<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Mimozemská ¾iara/©ípka..."
+msgstr "<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Mimozemská ¾iara/©ípka..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -582,8 +576,7 @@ msgstr "Polomer"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
-msgstr ""
-"<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Mimozemská ¾iara/Tlaèítko..."
+msgstr "<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Mimozemská ¾iara/Tlaèítko..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
 msgid "Glow Radius"
@@ -725,8 +718,7 @@ msgstr "Priemer"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
-msgstr ""
-"<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Skosený vzor/Tlaèítko..."
+msgstr "<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Skosený vzor/Tlaèítko..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
@@ -835,7 +827,6 @@ msgid "After Glow"
 msgstr "Po ¾iare"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
-#, fuzzy
 msgid ""
 "Burn-In: Need two layers in total!\n"
 "        A foreground text layer with transparency\n"
@@ -843,7 +834,7 @@ msgid ""
 msgstr ""
 "Vypaµovanie: Celkovo potrebujem dve vrstvy!\n"
 "        V popredí priesvitnú vrstvu s textom\n"
-"        a vrstvu do pozadia.\n"
+"        a vrstvu do pozadia."
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Corona Width"
@@ -1339,8 +1330,7 @@ msgstr "Miera tieòa (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
-msgstr ""
-"<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Gimp.org/Veµký nadpis..."
+msgstr "<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Gimp.org/Veµký nadpis..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
@@ -1385,8 +1375,7 @@ msgid "Shadow Color"
 msgstr "Farba tieòa"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
-msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
 msgstr ""
 "<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Gimp.org/V¹eobecné nápisy na "
 "trubici..."
@@ -1398,8 +1387,7 @@ msgstr ""
 "trubici..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
 msgstr ""
 "<Toolbox>/Roz¹./Script-Fu/Témy pre web stránky/Gimp.org/Nápis podtlaèítka na "
 "trubici..."
@@ -1821,12 +1809,11 @@ msgstr "<Image>/Script-Fu/Animátory/Zvlnenie..."
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
 msgid "Black"
-msgstr ""
+msgstr "Èierna"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
-#, fuzzy
 msgid "Edge Behaviour"
-msgstr "Chovanie"
+msgstr "Chovanie okrajov"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:4
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:4
@@ -1838,13 +1825,12 @@ msgid "Rippling Strength"
 msgstr "Sila zvlnenia"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:6
-#, fuzzy
 msgid "Smear"
-msgstr "Hµada»"
+msgstr "Rozmaza»"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:7
 msgid "Wrap"
-msgstr ""
+msgstr "Zalamova»"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:1
 msgid "<Image>/Script-Fu/Decor/Round Corners..."
@@ -1868,7 +1854,7 @@ msgstr "<Image>/Script-Fu/Výber/Do ¹tetca..."
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 msgid "Brush Name"
-msgstr ""
+msgstr "Názov ¹tetca"
 
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:1
 msgid "<Image>/Script-Fu/Selection/To Image"
@@ -2320,3 +2306,4 @@ msgstr "<Toolbox>/Roz¹./Web prehliadaè/Otázky (FAQ) pou¾ívateµov"
 
 #~ msgid "Script-Fu Directory Selection"
 #~ msgstr "Výber Script-Fu prieèinka"
+
