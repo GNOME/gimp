@@ -11326,7 +11326,7 @@ msgstr "Suivant"
 
 #: plug-ins/ifscompose/ifscompose.c:359
 msgid "<Image>/Filters/Render/Nature/IfsCompose..."
-msgstr "<Image>/Filtres/Synthèse/Nature/Formes fractales..."
+msgstr "<Image>/Filtres/Synthèse/Nature/Fractales IFS..."
 
 #. Asym
 #: plug-ins/ifscompose/ifscompose.c:568
@@ -11446,7 +11446,7 @@ msgstr "Rayon du Point :"
 #: plug-ins/ifscompose/ifscompose.c:1374
 #, c-format
 msgid "Rendering IFS (%d/%d)..."
-msgstr "Interprétation IFS en cours (%d/%d)..."
+msgstr "Synthèse IFS en cours (%d/%d)..."
 
 #. transfer the image to the drawable
 #: plug-ins/ifscompose/ifscompose.c:1393
