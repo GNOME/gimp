@@ -2352,7 +2352,7 @@ dlg_run (void)
   dlg->init = FALSE;
   dlg_preview_update ();
 
-  if (gtk_dialog_run (GTK_DIALOG (shell)) == GTK_RESPONSE_OK)
+  if (gimp_dialog_run (GIMP_DIALOG (shell)) == GTK_RESPONSE_OK)
     {
       gflare_name_copy (pvals.gflare_name, dlg->gflare->name);
 

@@ -2236,7 +2236,7 @@ video_dialog (void)
 
   in_main_loop = TRUE;
 
-  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
   in_main_loop = FALSE;
 

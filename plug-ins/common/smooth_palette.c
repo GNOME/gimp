@@ -447,7 +447,7 @@ dialog (GimpDrawable *drawable)
 
   gtk_widget_show (dlg);
 
-  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
   if (run)
     {

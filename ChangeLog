@@ -1,5 +1,18 @@
 2003-11-11  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpdialog.[ch] (gimp_dialog_run): new function
+	which does the same as gtk_dialog_run() except it does not make
+	the dialog modal.
+
+	* app/gui/resolution-calibrate-dialog.c
+	* libgimp/gimpexport.c
+	* plug-ins/*/*.c: use gimp_dialog_run() instead of gtk_dialog_run().
+
+	* plug-ins/common/grid.c: set update_continuous to TRUE for
+	the GimpColorButtons so this feature gets some testing.
+
+2003-11-11  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpcolorbutton.[ch]: added new API
 	gimp_color_button_[get|set]_update() which configures the button
 	to emit "color_changed" continuously while the color in the color

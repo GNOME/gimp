@@ -242,7 +242,7 @@ load_dialog (const gchar *filename)
 
   gtk_widget_show (dialog);
 
-  if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK)
+  if (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK)
     {
       load_vals.scale = pow (2.0,
                              gtk_adjustment_get_value (GTK_ADJUSTMENT (scale)));

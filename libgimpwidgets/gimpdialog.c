@@ -266,3 +266,126 @@ gimp_dialog_add_buttons_valist (GimpDialog *dialog,
         gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
     }
 }
+
+typedef struct
+{
+  GtkDialog *dialog;
+  gint       response_id;
+  GMainLoop *loop;
+  gboolean   destroyed;
+} RunInfo;
+
+static void
+run_shutdown_loop (RunInfo *ri)
+{
+  if (g_main_loop_is_running (ri->loop))
+    g_main_loop_quit (ri->loop);
+}
+
+static void
+run_unmap_handler (GtkDialog *dialog,
+                   RunInfo   *ri)
+{
+  run_shutdown_loop (ri);
+}
+
+static void
+run_response_handler (GtkDialog *dialog,
+                      gint       response_id,
+                      RunInfo   *ri)
+{
+  ri->response_id = response_id;
+
+  run_shutdown_loop (ri);
+}
+
+static gint
+run_delete_handler (GtkDialog   *dialog,
+                    GdkEventAny *event,
+                    RunInfo     *ri)
+{
+  run_shutdown_loop (ri);
+
+  return TRUE; /* Do not destroy */
+}
+
+static void
+run_destroy_handler (GtkDialog *dialog,
+                     RunInfo   *ri)
+{
+  /* shutdown_loop will be called by run_unmap_handler */
+
+  ri->destroyed = TRUE;
+}
+
+/**
+ * gimp_dialog_run:
+ * @dialog: a #GimpDialog
+ *
+ * This function does exactly the same as gtk_dialog_run() except it
+ * does not make the dialog modal while the #GMainLoop is running.
+ *
+ * Return value: response ID
+ **/
+gint
+gimp_dialog_run (GimpDialog *dialog)
+{
+  RunInfo ri = { NULL, GTK_RESPONSE_NONE, NULL };
+  gulong  response_handler;
+  gulong  unmap_handler;
+  gulong  destroy_handler;
+  gulong  delete_handler;
+
+  g_return_val_if_fail (GIMP_IS_DIALOG (dialog), -1);
+
+  g_object_ref (dialog);
+
+  gtk_window_present (GTK_WINDOW (dialog));
+
+  response_handler =
+    g_signal_connect (dialog,
+                      "response",
+                      G_CALLBACK (run_response_handler),
+                      &ri);
+
+  unmap_handler =
+    g_signal_connect (dialog,
+                      "unmap",
+                      G_CALLBACK (run_unmap_handler),
+                      &ri);
+
+  delete_handler =
+    g_signal_connect (dialog,
+                      "delete_event",
+                      G_CALLBACK (run_delete_handler),
+                      &ri);
+
+  destroy_handler =
+    g_signal_connect (dialog,
+                      "destroy",
+                      G_CALLBACK (run_destroy_handler),
+                      &ri);
+
+  ri.loop = g_main_loop_new (NULL, FALSE);
+
+  GDK_THREADS_LEAVE ();
+  g_main_loop_run (ri.loop);
+  GDK_THREADS_ENTER ();
+
+  g_main_loop_unref (ri.loop);
+
+  ri.loop = NULL;
+  ri.destroyed = FALSE;
+
+  if (!ri.destroyed)
+    {
+      g_signal_handler_disconnect (dialog, response_handler);
+      g_signal_handler_disconnect (dialog, unmap_handler);
+      g_signal_handler_disconnect (dialog, delete_handler);
+      g_signal_handler_disconnect (dialog, destroy_handler);
+    }
+
+  g_object_unref (dialog);
+
+  return ri.response_id;
+}

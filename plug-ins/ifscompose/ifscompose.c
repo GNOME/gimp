@@ -2565,7 +2565,7 @@ ifscompose_message_dialog (GtkMessageType  type,
     gtk_window_set_title (GTK_WINDOW (dlg), title);
 
   gtk_window_set_role (GTK_WINDOW (dlg), "ifscompose-message");
-  gtk_dialog_run (GTK_DIALOG (dlg));
+  gimp_dialog_run (GIMP_DIALOG (dlg));
   gtk_widget_destroy (dlg);
 }
 

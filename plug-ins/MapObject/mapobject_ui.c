@@ -1486,7 +1486,7 @@ main_dialog (GimpDrawable *drawable)
 
   image_setup (drawable, TRUE);
 
-  if (gtk_dialog_run (GTK_DIALOG (appwin)) == GTK_RESPONSE_OK)
+  if (gimp_dialog_run (GIMP_DIALOG (appwin)) == GTK_RESPONSE_OK)
     run = TRUE;
 
   gtk_widget_destroy (appwin);

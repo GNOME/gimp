@@ -1520,7 +1520,7 @@ CML_explorer_dialog (void)
   CML_preview_defer = FALSE;
   preview_update ();
 
-  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dlg);
 
@@ -1942,7 +1942,7 @@ function_graph_new (GtkWidget *widget,
   gtk_widget_show (preview);
   gtk_widget_show (dlg);
 
-  gtk_dialog_run (GTK_DIALOG (dlg));
+  gimp_dialog_run (GIMP_DIALOG (dlg));
 
   gtk_widget_destroy (dlg);
 }
@@ -2224,7 +2224,7 @@ force_overwrite (const gchar *filename,
 
   gtk_widget_show (dlg);
 
-  overwrite = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  overwrite = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dlg);
 

@@ -678,7 +678,7 @@ unsharp_mask_dialog (void)
 
   gtk_widget_show (window);
 
-  run = (gtk_dialog_run (GTK_DIALOG (window)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (window)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (window);
 

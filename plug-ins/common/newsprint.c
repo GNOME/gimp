@@ -1426,7 +1426,7 @@ newsprint_dialog (GimpDrawable *drawable)
 
   gtk_widget_show (st.dlg);
 
-  run = (gtk_dialog_run (GTK_DIALOG (st.dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (st.dlg)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (st.dlg);
 

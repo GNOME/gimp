@@ -1279,7 +1279,7 @@ save_dialog (gint32 drawable_ID)
   gtk_widget_show (vbox);
   gtk_widget_show (dlg);
 
-  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dlg);
 

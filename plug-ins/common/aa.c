@@ -385,7 +385,7 @@ type_dialog (gint selected)
 
   gtk_widget_show (dlg);
 
-  if (gtk_dialog_run (GTK_DIALOG (dlg)) != GTK_RESPONSE_OK)
+  if (gimp_dialog_run (GIMP_DIALOG (dlg)) != GTK_RESPONSE_OK)
     selected_type = -1;
 
   gtk_widget_destroy (dlg);

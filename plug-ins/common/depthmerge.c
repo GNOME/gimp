@@ -799,7 +799,7 @@ DepthMerge_dialog (DepthMerge *dm)
   gtk_widget_show (dm->interface->dialog);
   DepthMerge_updatePreview (dm);
 
-  run = (gtk_dialog_run (GTK_DIALOG (dm->interface->dialog)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dm->interface->dialog)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dm->interface->dialog);
   dm->interface->dialog = NULL;

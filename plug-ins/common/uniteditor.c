@@ -278,7 +278,7 @@ new_unit (GtkWidget *main_dialog,
       gchar   *singular;
       gchar   *plural;
 
-      if (gtk_dialog_run (GTK_DIALOG (dialog)) != GTK_RESPONSE_OK)
+      if (gimp_dialog_run (GIMP_DIALOG (dialog)) != GTK_RESPONSE_OK)
         break;
 
       identifier   = g_strdup (gtk_entry_get_text (GTK_ENTRY (identifier_entry)));

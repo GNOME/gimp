@@ -608,7 +608,7 @@ doDialog (void)
   /* show stuff */
   gtk_widget_show_all (dialog);
 
-  gtk_dialog_run (GTK_DIALOG (dialog));
+  gimp_dialog_run (GIMP_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 }

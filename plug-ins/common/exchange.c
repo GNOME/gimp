@@ -559,7 +559,7 @@ exchange_dialog (void)
   gtk_widget_show (mainbox);
   gtk_widget_show (dialog);
 
-  run = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dialog);
 

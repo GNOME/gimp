@@ -748,7 +748,7 @@ run_save_dialog	(Config *config)
 
   gtk_widget_show (dialog);
 
-  run = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
   if (run)
     {

@@ -246,7 +246,7 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
 
   gtk_widget_show (dialog);
 
-  switch (gtk_dialog_run (GTK_DIALOG (dialog)))
+  switch (gimp_dialog_run (GIMP_DIALOG (dialog)))
     {
     case GTK_RESPONSE_OK:
       {

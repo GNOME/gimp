@@ -893,6 +893,7 @@ dialog (gint32        image_ID,
 					 COLOR_BUTTON_WIDTH, 16,
 					 &grid_cfg.hcolor,
 					 GIMP_COLOR_AREA_SMALL_CHECKS);
+  gimp_color_button_set_update (GIMP_COLOR_BUTTON (hcolor_button), TRUE);
   gtk_container_add (GTK_CONTAINER (align),  hcolor_button);
   gtk_widget_show (hcolor_button);
 
@@ -911,6 +912,7 @@ dialog (gint32        image_ID,
 					 COLOR_BUTTON_WIDTH, 16,
 					 &grid_cfg.vcolor,
 					 GIMP_COLOR_AREA_SMALL_CHECKS);
+  gimp_color_button_set_update (GIMP_COLOR_BUTTON (vcolor_button), TRUE);
   gtk_container_add (GTK_CONTAINER (align), vcolor_button);
   gtk_widget_show (vcolor_button);
 
@@ -929,6 +931,7 @@ dialog (gint32        image_ID,
 				  COLOR_BUTTON_WIDTH, 16,
 				  &grid_cfg.icolor,
 				  GIMP_COLOR_AREA_SMALL_CHECKS);
+  gimp_color_button_set_update (GIMP_COLOR_BUTTON (button), TRUE);
   gtk_container_add (GTK_CONTAINER (align), button);
   gtk_widget_show (button);
 
@@ -955,7 +958,7 @@ dialog (gint32        image_ID,
   g_object_set_data (G_OBJECT (dlg), "offset",   offset);
   g_object_set_data (G_OBJECT (dlg), "drawable", drawable);
 
-  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
   if (run)
     update_values ();
@@ -964,4 +967,3 @@ dialog (gint32        image_ID,
 
   return run;
 }
-

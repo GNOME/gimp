@@ -600,7 +600,7 @@ dialog (gint32 drawable_ID)
 
   gtk_widget_show (dlg);
 
-  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
   if (run)
     plvals.map_mode = 0;  /* Currently always linear mapping */

@@ -72,6 +72,8 @@ GtkWidget * gimp_dialog_new_valist         (const gchar    *title,
 void        gimp_dialog_add_buttons_valist (GimpDialog     *dialog,
                                             va_list         args);
 
+gint        gimp_dialog_run                (GimpDialog     *dialog);
+
 
 G_END_DECLS
 
