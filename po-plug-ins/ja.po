@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.9\n"
-"POT-Creation-Date: 1999-09-08 17:05+0900\n"
-"PO-Revision-Date: 1999-09-02 20:30-0900\n"
+"POT-Creation-Date: 1999-09-09 13:32+0900\n"
+"PO-Revision-Date: 1999-09-09 14:00+0900\n"
 "Last-Translator: Çòºê ÂÙ¹° <yasuhiro@awa.tohoku.ac.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -234,7 +234,7 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:491
 msgid "Make an image of Coupled-Map Lattice"
-msgstr ""
+msgstr "Coupled-Map Lattice ²èÁü¤òºîÀ®¤¹¤ë"
 
 #: plug-ins/common/CML_explorer.c:492
 msgid ""
@@ -242,7 +242,7 @@ msgid ""
 "Automata on continuous (value) domain. In RUN_NONINTERACTIVE, the name of a "
 "prameter file is passed as the 4th arg. You can control CML_explorer via "
 "parameter file."
-msgstr ""
+msgstr "Coupled-Map Lattice (CML) ²èÁü¤òºîÀ®¤¹¤ë. CML ¤ÏÏ¢Â³ÃÍ°è¾å¤Î¥»¥ë¥é¡¼¥ª¡¼¥È¥Þ¥¿¤Î°ì¼ï¤Ç¤¢¤ë. RUN_NONINTERACTIVE ¤Î¾ì¹ç¤Ë¤ÏÂè 4 °ú¿ô¤È¤·¤Æ, ¥Ñ¥é¥á¡¼¥¿¥Õ¥¡¥¤¥ëÌ¾¤òÅÏ¤¹. ¤½¤¦¤¹¤ë¤³¤È¤Ç CML_explorer ¤ò¥Ñ¥é¥á¡¼¥¿¥Õ¥¡¥¤¥ë¤òÄÌ¤·¤ÆÀ©¸æ¤Ç¤­¤ë."
 
 #: plug-ins/common/CML_explorer.c:1325
 msgid "Coupled-Map-Lattice Explorer"
@@ -322,7 +322,7 @@ msgstr "¼ï"
 
 #: plug-ins/common/CML_explorer.c:1506
 msgid "Switch to \"from seed\" with the last seed"
-msgstr ""
+msgstr "ºÇ¸å¤Î¼ï¤òÍÑ¤¤¤Æ \"¼ï¤ò¸µ¤Ë\" ¥â¡¼¥É¤Ë°Ü¤ë"
 
 #: plug-ins/common/CML_explorer.c:1513
 msgid ""
@@ -331,110 +331,113 @@ msgid ""
 "(this is the reason why image on drawable is different from preview), and "
 "(2) all mutation rates equal to zero."
 msgstr ""
+"\"¸ÇÄê¼ï\" ¥Ü¥¿¥ó¤Ï¤³¤ì¤Î¥¨¥¤¥ê¥¢¥¹¤Ç¤¹.\n"
+"(1) ²èÁü¤ÎÉý¤¬Æ±¤¸¤Ç (ÉÁ²èÂÐ¾Ý¤ËÉÁ¤«¤ì¤ë¤â¤Î¤È¥×¥ì¥Ó¥å¡¼¤¬°ã¤¦¸¶°ø)\n"
+"(2) ÊÑ²½ÅÙ¤¬ 0 ¤Ë¤Ê¤Ã¤Æ¤¤¤ë¾ì¹ç¤Ë¤Ï, Æ±¤¸¼ï¤ÏÆ±¤¸²èÁü¤òÀ¸À®¤·¤Þ¤¹."
 
 #: plug-ins/common/CML_explorer.c:1530
 msgid "Others"
-msgstr ""
+msgstr "¤½¤ÎÂ¾"
 
 #: plug-ins/common/CML_explorer.c:1537
 msgid "Misc operations"
-msgstr ""
+msgstr "»¨Â¿¤ÊÁàºî"
 
 #: plug-ins/common/CML_explorer.c:1542
 msgid "Copy settings"
-msgstr ""
+msgstr "ÀßÄê¥³¥Ô¡¼"
 
 #: plug-ins/common/CML_explorer.c:1546
 msgid "Source ch."
-msgstr ""
+msgstr "¸µ¥Á¥ã¥ó¥Í¥ë"
 
 #: plug-ins/common/CML_explorer.c:1552 plug-ins/common/CML_explorer.c:1586
 msgid "Destination ch."
-msgstr ""
+msgstr "Àè¥Á¥ã¥ó¥Í¥ë"
 
 #: plug-ins/common/CML_explorer.c:1558
 msgid "Do copy parameters"
-msgstr ""
+msgstr "¥Ñ¥é¥á¡¼¥¿¤ò¥³¥Ô¡¼¤¹¤ë"
 
 #: plug-ins/common/CML_explorer.c:1576
 msgid "Selective load settings"
-msgstr ""
+msgstr "ÁªÂò²ÄÇ½¤ÊÀßÄêÆÉ¤ß¹þ¤ß"
 
 #: plug-ins/common/CML_explorer.c:1580
 msgid "Source ch. in file"
-msgstr ""
+msgstr "¥Õ¥¡¥¤¥ëÃæ¤Î¸µ¥Á¥ã¥ó¥Í¥ë"
 
 #: plug-ins/common/CML_explorer.c:1606
 msgid "Misc ops."
-msgstr ""
+msgstr "¤½¤ÎÂ¾¤ÎÁàºî"
 
 #: plug-ins/common/CML_explorer.c:1642
 msgid "Function type"
-msgstr ""
+msgstr "´Ø¿ô¼ï"
 
 #: plug-ins/common/CML_explorer.c:1649
 msgid "Composition"
-msgstr ""
+msgstr "¹çÀ®"
 
 #: plug-ins/common/CML_explorer.c:1656
 msgid "Misc arrange"
-msgstr ""
+msgstr "¤½¤ÎÂ¾¤Î¥¢¥ì¥ó¥¸"
 
 #: plug-ins/common/CML_explorer.c:1663
 msgid "Use cyclic range"
-msgstr ""
+msgstr "²óµ¢ÃÍ°è¤ò»È¤¦"
 
 #: plug-ins/common/CML_explorer.c:1668
 msgid "Mod. rate"
-msgstr ""
+msgstr "ÊÑ²½ÅÙ"
 
 #: plug-ins/common/CML_explorer.c:1675
 msgid "Env. sensitivity"
-msgstr ""
+msgstr "´Ä¶­´¶ÅÙ"
 
 #: plug-ins/common/CML_explorer.c:1682
 msgid "Diffusion dist."
-msgstr ""
+msgstr "³È»¶°è"
 
 #: plug-ins/common/CML_explorer.c:1689
 msgid "# of subranges"
-msgstr ""
+msgstr "¥µ¥Ö¥ì¥ó¥¸¿ô"
 
 #: plug-ins/common/CML_explorer.c:1696
 msgid "P(ower factor)"
-msgstr ""
+msgstr "¾è¿ô(P)"
 
 #: plug-ins/common/CML_explorer.c:1703
 msgid "Parameter k"
-msgstr ""
+msgstr "¥Ñ¥é¥á¡¼¥¿ K"
 
 #: plug-ins/common/CML_explorer.c:1710
 msgid "Range low"
-msgstr ""
+msgstr "ÃÍ°è²¼¸Â"
 
 #: plug-ins/common/CML_explorer.c:1717
 msgid "Range high"
-msgstr ""
+msgstr "ÃÍ°è¾å¸Â"
 
 #: plug-ins/common/CML_explorer.c:1736
 msgid "Plot the graph of the settings"
-msgstr ""
+msgstr "ÀßÄê¤Î¥°¥é¥Õ¤òÉÁ¤¯"
 
 #: plug-ins/common/CML_explorer.c:1770
 msgid "Ch. sensitivity"
-msgstr ""
+msgstr "¥Á¥ã¥ó¥Í¥ë´¶ÅÙ"
 
 #: plug-ins/common/CML_explorer.c:1777
 msgid "Mutation rate"
-msgstr ""
+msgstr "ÊÑ²½ÅÙ"
 
 #: plug-ins/common/CML_explorer.c:1784
 msgid "Mutation dist."
-msgstr ""
+msgstr "ÊÑ²½°è"
 
 #: plug-ins/common/CML_explorer.c:1813
 msgid "Graph of the current settings"
-msgstr ""
+msgstr "¸½ºß¤ÎÀßÄê¤Î¥°¥é¥Õ"
 
 #. Action Area
 #: plug-ins/bmp/bmpwrite.c:428 plug-ins/common/CML_explorer.c:1818
@@ -455,62 +458,62 @@ msgstr "Î»²ò"
 
 #: plug-ins/common/CML_explorer.c:1828
 msgid "The Graph"
-msgstr ""
+msgstr "¥°¥é¥Õ"
 
 #: plug-ins/common/CML_explorer.c:1920
 msgid "Warning: the source and the destination are the same channel."
-msgstr ""
+msgstr "·Ù¹ð: ¸µ¤ÈÀè¤Î¥Á¥ã¥ó¥Í¥ë¤¬Æ±¤¸¤Ç¤¹."
 
 #. Action Area
 #: plug-ins/common/CML_explorer.c:2008
 msgid "Execute"
-msgstr ""
+msgstr "¼Â¹Ô"
 
 #: plug-ins/common/CML_explorer.c:2017
 msgid "Execute and Exit"
-msgstr ""
+msgstr "¼Â¹Ô¤È½ªÎ»"
 
 #: plug-ins/common/CML_explorer.c:2025
 msgid "Exit"
-msgstr ""
+msgstr "½ªÎ»"
 
 #: plug-ins/common/CML_explorer.c:2043
 msgid "Save parameters to"
-msgstr ""
+msgstr "¥Ñ¥é¥á¡¼¥¿¤òÊÝÂ¸"
 
 #: plug-ins/common/CML_explorer.c:2106 plug-ins/common/CML_explorer.c:2299
 #, c-format
 msgid "Error: could not open \"%s\""
-msgstr ""
+msgstr "¥¨¥é¡¼: \"%s\" ¤¬³«¤±¤Þ¤»¤ó"
 
 #: plug-ins/common/CML_explorer.c:2171
 msgid "CML file operation warning"
-msgstr ""
+msgstr "CML ¥Õ¥¡¥¤¥ëÁàºî·Ù¹ð"
 
 #: plug-ins/common/CML_explorer.c:2178
 #, c-format
 msgid "%s exists, overwrite?"
-msgstr ""
+msgstr "%s ¤ÏÂ¸ºß¤·¤Þ¤¹, ¾å½ñ¤­¤·¤Þ¤¹¤«?"
 
 #: plug-ins/common/CML_explorer.c:2221
 msgid "Load parameters from"
-msgstr ""
+msgstr "¥Ñ¥é¥á¡¼¥¿ÆÉ¤ß¹þ¤ß"
 
 #: plug-ins/common/CML_explorer.c:2223
 msgid "Selective load from"
-msgstr ""
+msgstr "ÁªÂòÅªÆÉ¤ß¹þ¤ß"
 
 #: plug-ins/common/CML_explorer.c:2322
 msgid "Error: it's not CML parameter file."
-msgstr ""
+msgstr "¥¨¥é¡¼: ¤³¤ì¤Ï CML ¥Ñ¥é¥á¡¼¥¿¥Õ¥¡¥¤¥ë¤Ç¤Ï¤¢¤ê¤Þ¤»¤ó."
 
 #: plug-ins/common/CML_explorer.c:2329
 msgid "Warning: it's an old format file."
-msgstr ""
+msgstr "·Ù¹ð: ¸Å¤¤·Á¼°¤Î¥Õ¥¡¥¤¥ë¤Ç¤¹."
 
 #: plug-ins/common/CML_explorer.c:2331
 msgid "Warning: Hmmm, it's a parameter file for newer CML_explorer than me."
-msgstr ""
+msgstr "·Ù¹ð: ¤Õ¤à, ¤³¤Î CML explorer ¤è¤ê¤â¿·¤·¤¤ÈÇ¤Î¤¿¤á¤Î¥Ñ¥é¥á¡¼¥¿¥Õ¥¡¥¤¥ë¤Ç¤¹."
 
 #. cancel button
 #: plug-ins/Lighting/lighting_ui.c:1062 plug-ins/bmp/bmpwrite.c:437
@@ -3083,8 +3086,8 @@ msgstr "rgb ²èÁüÊÝÂ¸Ãæ¤Î¥¨¥é¡¼"
 #~ "¸Ä¡¹¤Î¥Á¥ã¥ó¥Í¥ë¤ËÂÐ¤·¤ÆÁàºî¤ò¹Ô¤¦¤è¤¦¤Ê¤³¤È¤Ï¤·¤Þ¤»¤ó. "
 #~ "Â¿¤¯¤Î¿Í¤Ï¥³¥ó¥È¥é¥¹¥È¼«Æ°¿­Ä¹¤Ç¤Ï¤Ê¤¯, "
 #~ "¤³¤Á¤é¤Îµ¡Ç½¤ÎÊý¤òË¾¤ó¤Ç¤¤¤ë¤è¤¦¤Ç¤¹. ¥³¥ó¥È¥é¥¹¥È¼«Æ°¿­Ä¹¤ÎÊý¤òÍÑ¤¤¤ë¤Î¤Ï, "
-#~ "¸µ²èÁü¤¬ËÜÍèÇò¹õ¤Ê¤Î¤Ë²èÁü¤Ë¿§¤¬Ãå¤¤¤Æ¤·¤Þ¤Ã¤Æ¤¤¤ë¾ì¹ç¤Ë¤½¤ì¤ò¼è¤ê½ü¤¯¤¿¤á¤À¤"
-#~ "±¤Ç¤·¤ç¤¦."
+#~ "¸µ²èÁü¤¬ËÜÍèÇò¹õ¤Ê¤Î¤Ë²èÁü¤Ë¿§¤¬Ãå¤¤¤Æ¤·¤Þ¤Ã¤Æ¤¤¤ë¾ì¹ç¤Ë¤½¤ì¤ò¼è¤ê½ü¤¯¤¿¤á¤À¤¢
+#~ "±¤Ç¤·¤ç¤¦®"
 
 #~ msgid "<Image>/Image/Colors/Normalize"
 #~ msgstr "<Image>/²èÁü/¿§/Àµµ¬²½"
