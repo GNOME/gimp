@@ -174,7 +174,7 @@ static void query(void)
 			  "Tom Bech & Federico Mena Quintero",
 			  "Tom Bech & Federico Mena Quintero",
 			  "Version 0.2.0, March 15 1998",
-			  _("<Image>/Filters/Light Effects/Lighting Effects"),
+			  N_("<Image>/Filters/Light Effects/Lighting Effects..."),
 			  "RGB*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

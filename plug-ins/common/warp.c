@@ -303,7 +303,7 @@ query ()
 			  "John P. Beale",
 			  "John P. Beale",
 			  "1997",
-			  _("<Image>/Filters/Map/Warp"),
+			  N_("<Image>/Filters/Map/Warp"),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -436,6 +436,7 @@ warp_dialog (GDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *label;
+  GtkWidget *hbbox;
   GtkWidget *button;
   GtkWidget *toggle;
   GtkWidget *toggle_hbox;
@@ -505,21 +506,28 @@ warp_dialog (GDrawable *drawable)
 
 
   /*  Action area  */
-  button = gtk_button_new_with_label ( _("OK"));
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+ 
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) warp_ok_callback,
-                      dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
+		      (GtkSignalFunc) warp_ok_callback,
+		      dlg);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ( _("Cancel"));
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
 			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   /*  The main table  */

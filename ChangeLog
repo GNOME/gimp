@@ -1,3 +1,10 @@
+Tue Nov 23 22:57:13 MET 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/Lighting/lighting_main.c
+	* plug-ins/common/rotate.c
+	* plug-ins/common/warp.c
+	* plug-ins/common/winprint.c: the ones I missed last times...
+
 Tue Nov 23 22:00:12 MET 1999  Sven Neumann <sven@gimp.org>
 
 	* app/menus.c: Looks like I managed to accidentially revert my
