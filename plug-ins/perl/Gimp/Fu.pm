@@ -499,7 +499,10 @@ sub interact($$$$@) {
               my $editor = $ENV{EDITOR} || "vi";
               my $tmp = Gimp->temp_name("txt");
               open TMP,">$tmp" or die "FATAL: unable to create $tmp: $!\n"; print TMP &$gv; close TMP;
+              $w->hide;
+              main_iteration Gtk;
               system ('xterm','-T',"$editor: $name",'-e',$editor,$tmp);
+              $w->show;
               if (open TMP,"<$tmp") {
                  local $/; &$sv(scalar<TMP>); close TMP;
               } else {
@@ -509,7 +512,7 @@ sub interact($$$$@) {
 
            my $filename = ($e{prefix} || eval { Gimp->directory } || ".") . "/";
            
-           my $f = new Gtk::FileSelection "FilexSelector for $name";
+           my $f = new Gtk::FileSelection "Fileselector for $name";
            $f->set_filename($filename);
            $f->cancel_button->signal_connect (clicked => sub { $f->hide });
            my $lf =sub {
@@ -532,14 +535,17 @@ sub interact($$$$@) {
                  Gimp->message("unable to create '$fn': $!");
               }
            };
+           my $lshandle;
            $load->signal_connect (clicked => sub {
               $f->set_title("Load $name");
-              $f->ok_button->signal_connect (clicked => $lf);
+              $f->ok_button->signal_disconnect($lshandle) if $lshandle;
+              $lshandle=$f->ok_button->signal_connect (clicked => $lf);
               $f->show_all;
            });
            $save->signal_connect (clicked => sub {
               $f->set_title("Save $name");
-              $f->ok_button->signal_connect (clicked => $sf);
+              $f->ok_button->signal_disconnect($lshandle) if $lshandle;
+              $lshandle=$f->ok_button->signal_connect (clicked => $sf);
               $f->show_all;
            });
 

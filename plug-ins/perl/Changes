@@ -1,5 +1,6 @@
 Revision history for Gimp-Perl extension.
 
+1.097 Wed Jul 14 22:55:24 CEST 1999
 	- updated perlotine.
         - updated pixelmap with stub documentation.
         - redim_pdl calls affine_new directly rather than via the
@@ -8,6 +9,7 @@ Revision history for Gimp-Perl extension.
           trust it will work elsewhere.
         - improved yinyang for the perl calendar ;)
         - added perl_fu_ as prefix for Image, Drawables and Channels.
+        - fixed Load/Save of PF_TEXT.
 
 1.096 Thu Jul  8 21:36:36 CEST 1999
 	- fix around PDL-2.002 exporting its own ppport.h.
