@@ -381,9 +381,13 @@ parse_gimprc_file (char *filename)
 
   if (!g_path_is_absolute (filename))
     {
-      g_snprintf (rfilename, sizeof (rfilename), "%s" G_DIR_SEPARATOR_S "%s",
-		  g_get_home_dir (), filename);
-      filename = rfilename;
+      if (g_get_home_dir () != NULL)
+	{
+	  g_snprintf (rfilename, sizeof (rfilename),
+		      "%s" G_DIR_SEPARATOR_S "%s",
+		      g_get_home_dir (), filename);
+	  filename = rfilename;
+	}
     }
 
   parse_info.fp = fopen (filename, "rt");
@@ -2321,7 +2325,11 @@ static inline char *
 string_to_str (gpointer val1p,
 	       gpointer val2p)
 {
+#if GLIB_CHECK_VERSION (1,3,1)
+  gchar *str = g_strescape (*((char **)val1p), NULL);
+#else
   gchar *str = g_strescape (*((char **)val1p));
+#endif
   gchar *retval;
 
   retval = g_strdup_printf ("%c%s%c", '"', str, '"');

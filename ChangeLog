@@ -1,3 +1,21 @@
+1999-08-03  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/Makefile.am
+	* plug-ins/common/Makefile.am: Distribute the Windows-only
+	plug-ins, too.
+
+	* plug-ins/print/print.c: Use gimp_personal_rc_file().
+
+	* plug-ins/common/winprint.c: Move here from separate directory.
+
+	* plug-ins/makefile.{cygwin,msc}: Update correspondingly.
+
+	* app/gimprc.c
+	* plug-ins/script-fu/script-fu-scripts.c: Guard against
+	different g_strescape API in GLib 1.2 and 1.3.1.
+
+	* app/gimprc.c: Check for g_get_home_dir() returning NULL.
+
 Mon Aug  2 19:19:19 CEST 1999  Marc Lehmann <pcg@goof.com>
 
          * tools/pdbgen/pdb/procedural_db.pdb,

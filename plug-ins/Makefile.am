@@ -2,7 +2,14 @@
 
 EXTRA_DIST = \
 	makefile.cygwin		\
-	makefile.msc
+	makefile.msc		\
+	winsnap/resource.h	\
+	winsnap/select.cur	\
+	winsnap/small.ico	\
+	winsnap/winsnap.c	\
+	winsnap/winsnap.h	\
+	winsnap/winsnap.ico	\
+	winsnap/winsnap.rc
 
 SUBDIRS = 			\
 	libgck			\

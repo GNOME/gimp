@@ -1901,6 +1901,7 @@ printrc_load(void)
 {
   int		i;		/* Looping var */
   FILE		*fp;		/* Printrc file */
+  char		*filename;	/* Its name */
   char		line[1024],	/* Line in printrc file */
 		*lineptr,	/* Pointer in line */
 		*commaptr;	/* Pointer to next comma */
@@ -1918,18 +1919,15 @@ printrc_load(void)
   * Generate the filename for the current user...
   */
 
-  if (getenv("HOME") == NULL)
-    strcpy(line, "/.gimp/printrc");
-  else
-    sprintf(line, "%s/.gimp/printrc", getenv("HOME"));
+  filename = gimp_personal_rc_file ("printrc");
 #ifdef __EMX__
-  _fnslashify(line);
+  _fnslashify(filename);
 #endif
 
 #ifndef __EMX__
-  if ((fp = fopen(line, "r")) != NULL)
+  if ((fp = fopen(filename, "r")) != NULL)
 #else
-  if ((fp = fopen(line, "rt")) != NULL)
+  if ((fp = fopen(filename, "rt")) != NULL)
 #endif
   {
    /*
@@ -2010,7 +2008,9 @@ printrc_load(void)
     };
 
     fclose(fp);
-  };
+  }
+
+  g_free (filename);
 
  /*
   * Select the current printer as necessary...
@@ -2036,7 +2036,7 @@ static void
 printrc_save(void)
 {
   FILE		*fp;		/* Printrc file */
-  char		filename[1024];	/* Printrc filename */
+  char	       *filename;	/* Printrc filename */
   int		i;		/* Looping var */
   plist_t	*p;		/* Current printer */
 
@@ -2045,10 +2045,8 @@ printrc_save(void)
   * Generate the filename for the current user...
   */
 
-  if (getenv("HOME") == NULL)
-    strcpy(filename, "/.gimp/printrc");
-  else
-    sprintf(filename, "%s/.gimp/printrc", getenv("HOME"));
+  
+  filename = gimp_personal_rc_file ("printrc");
 #ifdef __EMX__
   _fnslashify(filename);
 #endif
@@ -2071,7 +2069,8 @@ printrc_save(void)
               p->resolution, p->media_size, p->media_type, p->media_source);
 
     fclose(fp);
-  };
+  }
+  g_free (filename);
 }
 
 

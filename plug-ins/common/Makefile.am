@@ -2,7 +2,8 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 EXTRA_DIST = \
 	mkgen.pl	\
-	plugin-defs.pl
+	plugin-defs.pl	\
+	winprint.c
 
 AM_CPPFLAGS = \
 	-DLOCALEDIR=\""$(localedir)"\"

@@ -57,6 +57,12 @@
 
 #endif /* NATIVE_WIN32 */
 
+#if GLIB_CHECK_VERSION (1,3,1)
+#define ESCAPE(string) g_strescape (string, NULL)
+#else
+#define ESCAPE(string) g_strescape (string)
+#endif
+
 #define TEXT_WIDTH  100
 #define TEXT_HEIGHT 25
 #define COLOR_SAMPLE_WIDTH 100
@@ -363,7 +369,7 @@ script_fu_find_scripts ()
 
 			  if (!my_err && S_ISREG (filestat.st_mode))
 			    {
-			      char *qf = g_strescape (filename);
+			      char *qf = ESCAPE (filename);
 #ifdef __EMX__
 			      _fnslashify(qf);
 #endif
@@ -845,7 +851,7 @@ script_fu_script_proc (char     *name,
 		    break;
 		  case SF_STRING:
 		  case SF_FILENAME:
-		    escaped = g_strescape (params[i + 1].data.d_string);
+		    escaped = ESCAPE (params[i + 1].data.d_string);
 		    length += strlen (escaped) + 3;
 		    g_free (escaped);
 		    break;
@@ -901,7 +907,7 @@ script_fu_script_proc (char     *name,
 		      break;
 		    case SF_STRING:
 		    case SF_FILENAME:
-		      escaped = g_strescape (params[i + 1].data.d_string);
+		      escaped = ESCAPE (params[i + 1].data.d_string);
 		      g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", escaped);
 		      g_free (escaped);
 		      text = buffer;
@@ -1612,7 +1618,7 @@ script_fu_ok_callback (GtkWidget *widget,
 	length += strlen (gtk_entry_get_text (GTK_ENTRY (script->args_widgets[i]))) + 1;
 	break;
       case SF_STRING:
-	escaped = g_strescape (gtk_entry_get_text (GTK_ENTRY (script->args_widgets[i])));
+	escaped = ESCAPE (gtk_entry_get_text (GTK_ENTRY (script->args_widgets[i])));
 	length += strlen (escaped) + 3;
 	g_free (escaped);
 	break;
@@ -1620,7 +1626,7 @@ script_fu_ok_callback (GtkWidget *widget,
 	length += 24;  /*  Maximum size of float value should not exceed this many characters  */
 	break;
       case SF_FILENAME:
-	escaped = g_strescape (script->arg_values[i].sfa_file.filename);
+	escaped = ESCAPE (script->arg_values[i].sfa_file.filename);
 	length += strlen (escaped) + 3;
 	g_free (escaped);
 	break;
@@ -1676,7 +1682,7 @@ script_fu_ok_callback (GtkWidget *widget,
 	  text = gtk_entry_get_text (GTK_ENTRY (script->args_widgets[i]));
 	  g_free (script->arg_values[i].sfa_value);
 	  script->arg_values[i].sfa_value = g_strdup (text); 
-	  escaped = g_strescape (text);
+	  escaped = ESCAPE (text);
 	  g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", escaped);
 	  g_free (escaped);
 	  text = buffer;
@@ -1700,7 +1706,7 @@ script_fu_ok_callback (GtkWidget *widget,
 	    }
 	  break;
 	case SF_FILENAME:
-	  escaped = g_strescape (script->arg_values[i].sfa_file.filename);
+	  escaped = ESCAPE (script->arg_values[i].sfa_file.filename);
 	  g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", escaped);
 	  g_free (escaped);
 	  text = buffer;
