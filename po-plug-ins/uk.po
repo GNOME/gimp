@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 2001-04-18 14:55+0300\n"
+"POT-Creation-Date: 2001-05-08 11:14+0300\n"
 "PO-Revision-Date: 2000-02-08 16:11+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -34,7 +34,7 @@ msgstr "Про"
 #: plug-ins/common/aa.c:344 plug-ins/common/align_layers.c:425
 #: plug-ins/common/apply_lens.c:392 plug-ins/common/blinds.c:323
 #: plug-ins/common/blur.c:613 plug-ins/common/borderaverage.c:393
-#: plug-ins/common/bumpmap.c:849 plug-ins/common/checkerboard.c:349
+#: plug-ins/common/bumpmap.c:856 plug-ins/common/checkerboard.c:349
 #: plug-ins/common/colorify.c:327 plug-ins/common/colortoalpha.c:407
 #: plug-ins/common/compose.c:776 plug-ins/common/convmatrix.c:856
 #: plug-ins/common/csource.c:653 plug-ins/common/cubism.c:303
@@ -115,7 +115,7 @@ msgstr "Гаразд"
 #: plug-ins/common/CML_explorer.c:2256 plug-ins/common/aa.c:346
 #: plug-ins/common/align_layers.c:427 plug-ins/common/apply_lens.c:394
 #: plug-ins/common/blinds.c:325 plug-ins/common/blur.c:615
-#: plug-ins/common/borderaverage.c:395 plug-ins/common/bumpmap.c:851
+#: plug-ins/common/borderaverage.c:395 plug-ins/common/bumpmap.c:858
 #: plug-ins/common/checkerboard.c:351 plug-ins/common/colorify.c:329
 #: plug-ins/common/colortoalpha.c:409 plug-ins/common/compose.c:778
 #: plug-ins/common/convmatrix.c:860 plug-ins/common/csource.c:655
@@ -835,7 +835,7 @@ msgid "Enable/disable jagged edges removal (antialiasing)"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:501 plug-ins/MapObject/mapobject_ui.c:647
-#: plug-ins/common/bumpmap.c:1042 plug-ins/common/emboss.c:589
+#: plug-ins/common/bumpmap.c:1049 plug-ins/common/emboss.c:589
 #: plug-ins/common/fractaltrace.c:831 plug-ins/common/struc.c:1324
 msgid "Depth:"
 msgstr "Глибина:"
@@ -964,7 +964,7 @@ msgid "Intensity Levels"
 msgstr "Р╕вн╕ ╕нтенсивност╕"
 
 #: plug-ins/Lighting/lighting_ui.c:741 plug-ins/MapObject/mapobject_ui.c:873
-#: plug-ins/common/bumpmap.c:1082
+#: plug-ins/common/bumpmap.c:1089
 msgid "Ambient:"
 msgstr "Осв╕тлення:"
 
@@ -1105,7 +1105,7 @@ msgstr "Св╕тло"
 msgid "Material"
 msgstr "Матер╕ал"
 
-#: plug-ins/Lighting/lighting_ui.c:1084 plug-ins/common/bumpmap.c:844
+#: plug-ins/Lighting/lighting_ui.c:1084 plug-ins/common/bumpmap.c:851
 msgid "Bump Map"
 msgstr "Рель╓ф"
 
@@ -2146,7 +2146,7 @@ msgstr "Вир╕внювання видимих шар╕в"
 #.
 #: plug-ins/common/align_layers.c:436 plug-ins/common/apply_lens.c:403
 #: plug-ins/common/blinds.c:405 plug-ins/common/blur.c:631
-#: plug-ins/common/bumpmap.c:983 plug-ins/common/checkerboard.c:361
+#: plug-ins/common/bumpmap.c:990 plug-ins/common/checkerboard.c:361
 #: plug-ins/common/cubism.c:315 plug-ins/common/despeckle.c:729
 #: plug-ins/common/destripe.c:636 plug-ins/common/edge.c:662
 #: plug-ins/common/emboss.c:559 plug-ins/common/engrave.c:236
@@ -2459,62 +2459,62 @@ msgstr "256 (безглуздо?)"
 msgid "<Image>/Filters/Map/Bump Map..."
 msgstr "<Image>/Ф╕льтри/В╕дображення/Рель╓ф..."
 
-#: plug-ins/common/bumpmap.c:522
+#: plug-ins/common/bumpmap.c:518
 msgid "Bump-mapping..."
 msgstr "Створення рель╓фу..."
 
-#: plug-ins/common/bumpmap.c:935
+#: plug-ins/common/bumpmap.c:942
 msgid "Map Type"
 msgstr "Тип мапи"
 
-#: plug-ins/common/bumpmap.c:939
+#: plug-ins/common/bumpmap.c:946
 msgid "Linear Map"
 msgstr "Л╕н╕йна мапа"
 
-#: plug-ins/common/bumpmap.c:940
+#: plug-ins/common/bumpmap.c:947
 msgid "Spherical Map"
 msgstr "Сферична мапа"
 
-#: plug-ins/common/bumpmap.c:941
+#: plug-ins/common/bumpmap.c:948
 msgid "Sinuosidal Map"
 msgstr "Синусо╖дальна мапа"
 
 #. Compensate darkening
-#: plug-ins/common/bumpmap.c:954
+#: plug-ins/common/bumpmap.c:961
 msgid "Compensate for Darkening"
 msgstr "Компенсувати затемнення"
 
 #. Invert bumpmap
-#: plug-ins/common/bumpmap.c:964
+#: plug-ins/common/bumpmap.c:971
 msgid "Invert Bumpmap"
 msgstr "╤нвертувати рель╓ф"
 
 #. Tile bumpmap
-#: plug-ins/common/bumpmap.c:974
+#: plug-ins/common/bumpmap.c:981
 msgid "Tile Bumpmap"
 msgstr ""
 
-#: plug-ins/common/bumpmap.c:1005
+#: plug-ins/common/bumpmap.c:1012
 msgid "Bump Map:"
 msgstr "Рель╓ф:"
 
-#: plug-ins/common/bumpmap.c:1024 plug-ins/common/emboss.c:571
+#: plug-ins/common/bumpmap.c:1031 plug-ins/common/emboss.c:571
 msgid "Azimuth:"
 msgstr "Азимут:"
 
-#: plug-ins/common/bumpmap.c:1033 plug-ins/common/emboss.c:580
+#: plug-ins/common/bumpmap.c:1040 plug-ins/common/emboss.c:580
 msgid "Elevation:"
 msgstr "П╕двищення:"
 
-#: plug-ins/common/bumpmap.c:1053 plug-ins/gap/resize.c:197
+#: plug-ins/common/bumpmap.c:1060 plug-ins/gap/resize.c:197
 msgid "X Offset:"
 msgstr "Зм╕щення по X:"
 
-#: plug-ins/common/bumpmap.c:1063 plug-ins/gap/resize.c:214
+#: plug-ins/common/bumpmap.c:1070 plug-ins/gap/resize.c:214
 msgid "Y Offset:"
 msgstr "Зм╕щення по Y:"
 
-#: plug-ins/common/bumpmap.c:1073
+#: plug-ins/common/bumpmap.c:1080
 msgid "Waterlevel:"
 msgstr "Р╕вень води:"
 
@@ -10873,15 +10873,15 @@ msgstr "Суц╕льне"
 
 #: plug-ins/gimpressionist/general.c:223
 msgid "Solid colored background"
-msgstr ""
+msgstr "Суц╕льне кольорове тло"
 
 #: plug-ins/gimpressionist/general.c:246
 msgid "Use a transparent background; Only the strokes painted will be visible"
-msgstr ""
+msgstr "Використовувати прозоре тло; Лише нанесен╕ мазки буде видно"
 
 #: plug-ins/gimpressionist/general.c:261
 msgid "Paint edges"
-msgstr ""
+msgstr "Малювати кра╖"
 
 #: plug-ins/gimpressionist/general.c:265
 #, fuzzy
@@ -10891,7 +10891,7 @@ msgstr "Зосередити мазки навколо центру зображення"
 #. Tileable checkbox
 #: plug-ins/gimpressionist/general.c:269 plug-ins/maze/maze_face.c:282
 msgid "Tileable"
-msgstr ""
+msgstr "Без шв╕в"
 
 #: plug-ins/gimpressionist/general.c:273
 msgid "Selects if the resulting image should be seamlessly tileable"
