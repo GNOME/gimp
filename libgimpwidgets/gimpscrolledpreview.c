@@ -231,7 +231,7 @@ gimp_scrolled_preview_area_size_allocate (GtkWidget           *widget,
                                           GtkAllocation       *allocation,
                                           GimpScrolledPreview *preview)
 {
-  GdkCursor *cursor = NULL;
+  GdkCursor *cursor = GIMP_PREVIEW (preview)->default_cursor;
   gint       width  = GIMP_PREVIEW (preview)->xmax - GIMP_PREVIEW (preview)->xmin;
   gint       height = GIMP_PREVIEW (preview)->ymax - GIMP_PREVIEW (preview)->ymin;
 
@@ -627,6 +627,6 @@ gimp_scrolled_preview_set_cursor (GimpPreview *preview)
     }
   else
     {
-      gdk_window_set_cursor (preview->area->window, NULL);
+      gdk_window_set_cursor (preview->area->window, preview->default_cursor);
     }
 }

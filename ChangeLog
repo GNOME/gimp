@@ -1,5 +1,17 @@
 2004-10-13  DindinX  <dindinx@gimp.org>
 
+	* libgimpwidgets/gimppreview.[ch]: added a new function to set the
+	default cursor on preview: gimp_preview_set_default_cursor().
+
+	* libgimpwidgets/gimpscrolledpreview.c: changed accordlingly.
+
+	* plug-ins/common/flarefx.c:
+	* plug-ins/common/nova.c: use this function.
+
+	This addresses bug #90519.
+
+2004-10-13  DindinX  <dindinx@gimp.org>
+
 	* plug-ins/common/cubism.c: Added a preview and done some cleanups.
 
 2004-10-13  Sven Neumann  <sven@gimp.org>

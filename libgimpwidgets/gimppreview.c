@@ -185,15 +185,17 @@ gimp_preview_init (GimpPreview *preview)
   gtk_container_add (GTK_CONTAINER (preview->frame), preview->table);
   gtk_widget_show (preview->table);
 
-  preview->timeout_id = 0;
+  preview->timeout_id     = 0;
 
-  preview->xmin       = preview->ymin = 0;
-  preview->xmax       = preview->ymax = 1;
-  preview->width      = preview->xmax - preview->xmin;
-  preview->height     = preview->ymax - preview->ymin;
+  preview->xmin           = preview->ymin = 0;
+  preview->xmax           = preview->ymax = 1;
+  preview->width          = preview->xmax - preview->xmin;
+  preview->height         = preview->ymax - preview->ymin;
 
-  preview->xoff       = 0;
-  preview->yoff       = 0;
+  preview->xoff           = 0;
+  preview->yoff           = 0;
+
+  preview->default_cursor = NULL;
 
   /*  preview area  */
   frame = gtk_frame_new (NULL);
@@ -453,7 +455,8 @@ gimp_preview_invalidate_now (GimpPreview *preview)
 static void
 gimp_preview_set_cursor (GimpPreview *preview)
 {
-  gdk_window_set_cursor (preview->area->window, NULL);
+  gdk_window_set_cursor (preview->area->window,
+                         preview->default_cursor);
 }
 
 /**
@@ -572,7 +575,7 @@ gimp_preview_get_position (GimpPreview *preview,
     *y = preview->yoff + GIMP_PREVIEW (preview)->ymin;
 }
 
-/*
+/**
  * gimp_preview_draw:
  * @preview: a #GimpPreview widget
  *
@@ -594,7 +597,7 @@ gimp_preview_draw (GimpPreview *preview)
     class->draw (preview);
 }
 
-/*
+/**
  * gimp_preview_draw_buffer:
  * @preview:   a #GimpPreview widget
  * @buffer:    a pixel buffer the size of the preview
@@ -617,7 +620,7 @@ gimp_preview_draw_buffer (GimpPreview  *preview,
     class->draw_buffer (preview, buffer, rowstride);
 }
 
-/*
+/**
  * gimp_preview_invalidate:
  * @preview: a #GimpPreview widget
  *
@@ -649,3 +652,30 @@ gimp_preview_invalidate (GimpPreview *preview)
                             preview, NULL);
     }
 }
+
+/**
+ * gimp_preview_set_default_cursor:
+ * @preview: a #GimpPreview widget
+ * @cursor:  a #GdkCursor or NULL
+ *
+ * Sets the default mouse cursor for the preview.  Note that this will be
+ * overriden by a GDK_FLEUR if the preview has scrollbars, or by a GDK_WATCH
+ * when the preview is invalidated.
+ * 
+ * Since: GIMP 2.2
+ **/
+void
+gimp_preview_set_default_cursor (GimpPreview *preview,
+                                 GdkCursor   *cursor)
+{
+  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+
+  if (preview->default_cursor)
+    gdk_cursor_unref (preview->default_cursor);
+
+  if (cursor)
+    gdk_cursor_ref (cursor);
+
+  preview->default_cursor = cursor;
+}
+
