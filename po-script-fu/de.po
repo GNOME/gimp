@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-24 17:51+0200\n"
-"PO-Revision-Date: 2004-09-24 17:49+0200\n"
+"POT-Creation-Date: 2004-10-01 16:39+0200\n"
+"PO-Revision-Date: 2004-10-01 16:46+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -34,10 +34,10 @@ msgid "Current Command"
 msgstr "Aktueller Befehl"
 
 #: plug-ins/script-fu/script-fu-console.c:267
-msgid "Browse..."
-msgstr "Auswählen..."
+msgid "_Browse..."
+msgstr "_Durchsuchen..."
 
-#: plug-ins/script-fu/script-fu-console.c:550
+#: plug-ins/script-fu/script-fu-console.c:548
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Der Skript-Fu Auswerte-Modus ermöglicht nur nicht-interaktive Aufrufe"
 
@@ -110,17 +110,17 @@ msgid "(none)"
 msgstr "(kein)"
 
 #: plug-ins/script-fu/script-fu-interface.c:1040
-#: plug-ins/dbbrowser/dbbrowser_utils.c:488
+#: plug-ins/dbbrowser/gimpprocview.c:198
 msgid "Author:"
 msgstr "Autor:"
 
 #: plug-ins/script-fu/script-fu-interface.c:1046
-#: plug-ins/dbbrowser/dbbrowser_utils.c:504
+#: plug-ins/dbbrowser/gimpprocview.c:220
 msgid "Copyright:"
 msgstr "Copyright:"
 
 #: plug-ins/script-fu/script-fu-interface.c:1052
-#: plug-ins/dbbrowser/dbbrowser_utils.c:496
+#: plug-ins/dbbrowser/gimpprocview.c:209
 msgid "Date:"
 msgstr "Datum:"
 
@@ -171,60 +171,73 @@ msgstr "Alle Skripte neu einlesen"
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Xtns/Skript-Fu/_Auffrischen"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:118
-#: plug-ins/dbbrowser/dbbrowser_utils.c:132
-msgid "DB Browser"
-msgstr "DB Browser"
+#: plug-ins/dbbrowser/gimpprocbrowser.c:123
+#: plug-ins/dbbrowser/gimpprocbrowser.c:137
+msgid "Procedure Browser"
+msgstr "Prozeduren-Browser"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:122
-#: plug-ins/dbbrowser/dbbrowser_utils.c:136
+#: plug-ins/dbbrowser/gimpprocbrowser.c:127
+#: plug-ins/dbbrowser/gimpprocbrowser.c:141
 msgid "Search by _Name"
 msgstr "Nach _Name suchen"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:123
-#: plug-ins/dbbrowser/dbbrowser_utils.c:137
+#: plug-ins/dbbrowser/gimpprocbrowser.c:128
+#: plug-ins/dbbrowser/gimpprocbrowser.c:142
 msgid "Search by _Blurb"
 msgstr "Nach _Beschreibung suchen"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:206
+#: plug-ins/dbbrowser/gimpprocbrowser.c:219
 msgid "_Search:"
 msgstr "_Suche:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:347
-msgid "Name:"
-msgstr "Name:"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:356
-msgid "Blurb:"
-msgstr "Beschreibung:"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:368
-msgid "In:"
-msgstr "Eingabe:"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:416
-msgid "Out:"
-msgstr "Ausgabe:"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:470
-msgid "Help:"
-msgstr "Hilfe:"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:582
+#: plug-ins/dbbrowser/gimpprocbrowser.c:383
 msgid "Searching by name - please wait"
 msgstr "Suche nach Name läuft - bitte warten"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:606
+#: plug-ins/dbbrowser/gimpprocbrowser.c:407
 msgid "Searching by blurb - please wait"
 msgstr "Suche nach Beschreibung läuft - bitte warten"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:616
+#: plug-ins/dbbrowser/gimpprocbrowser.c:418
 msgid "Searching - please wait"
 msgstr "Suche läuft - bitte warten"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:653
+#: plug-ins/dbbrowser/gimpprocbrowser.c:424
+#, c-format
+msgid "%d Procedures"
+msgstr "%d Prozeduren"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:467
 msgid "No matches"
 msgstr "Keine Treffer"
+
+#: plug-ins/dbbrowser/gimpprocview.c:133
+msgid "Parameters"
+msgstr "Parameter"
+
+#: plug-ins/dbbrowser/gimpprocview.c:146
+msgid "Return Values"
+msgstr "Rückgabewerte"
+
+#: plug-ins/dbbrowser/gimpprocview.c:159
+msgid "Additional Information"
+msgstr "Zusätzliche Informationen"
+
+#: plug-ins/dbbrowser/gimpprocview.c:319
+msgid "Internal GIMP procedure"
+msgstr "Interne GIMP Prozedur"
+
+#: plug-ins/dbbrowser/gimpprocview.c:320
+msgid "GIMP Plug-In"
+msgstr "GIMP Plugin"
+
+#: plug-ins/dbbrowser/gimpprocview.c:321
+msgid "GIMP Extension"
+msgstr "GIMP Erweiterung"
+
+#: plug-ins/dbbrowser/gimpprocview.c:322
+msgid "Temporary Procedure"
+msgstr "Temporäre Prozedur"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/3D _Outline..."
@@ -2432,3 +2445,21 @@ msgstr "Glanzlicht Y-Versatz"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight opacity"
 msgstr "Glanzlicht Deckkraft"
+
+#~ msgid "DB Browser"
+#~ msgstr "DB Browser"
+
+#~ msgid "Name:"
+#~ msgstr "Name:"
+
+#~ msgid "Blurb:"
+#~ msgstr "Beschreibung:"
+
+#~ msgid "In:"
+#~ msgstr "Eingabe:"
+
+#~ msgid "Out:"
+#~ msgstr "Ausgabe:"
+
+#~ msgid "Help:"
+#~ msgstr "Hilfe:"
