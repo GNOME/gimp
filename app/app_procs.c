@@ -631,7 +631,6 @@ app_exit_finish (void)
   we_are_exiting = TRUE;
 
   module_db_free ();
-  device_status_free ();
   lc_dialog_free ();
   gdisplays_delete ();
   global_edit_free ();
@@ -661,6 +660,7 @@ app_exit_finish (void)
   /*  Things to do only if there is an interface  */
   if (no_interface == FALSE)
     {
+      device_status_free ();
       toolbox_free ();
       close_idea_window();
       gximage_free ();
