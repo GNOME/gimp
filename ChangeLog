@@ -1,13 +1,25 @@
-2004-06-19 Michael Schumacher <schumaml@cvs.gnome.org>
+2004-06-20  Philip Lafleur  <plafleur@cvs.gnome.org>
+
+	* app/display/gimpdisplayshell-scale.[ch]:
+	* app/display/gimpnavigationview.[ch]:
+	* app/actions/view-actions.c:
+	* app/actions/view-commands.[ch]:
+	* app/widgets/gimphelp-ids.h:
+	* menus/image-menu.xml.in: Changed "Zoom to Fit Window" command
+	to "Fit Image in Window" and added another command, "Fit Image
+	to Window", that zooms according to the opposite dimension. Fixes
+	bug #144597.
+
+2004-06-19  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	* libgimpwidgets/gimpwidgets.def: added missing 
 	gimp_controller_* entries
 
-2004-06-19 Michael Schumacher <schumaml@cvs.gnome.org>
+2004-06-19  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	* modules/controller_midi.c: #ifdef G_OS_WIN32 for an O_NONBLOCK
 
-2004-06-19 Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+2004-06-19  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/jpeg.c: more changes to save dialog.  Moved
 	comment field to Advanced area.  Don't set restart marker
@@ -15,7 +27,7 @@
 	scale from 0-1 to 0-100 to follow the jpeg spec (but left
 	allowable range for pdb at 0-1 to avoid breaking anything).
 
-2004-06-19 Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+2004-06-19  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimpscaletool.c: fixed my fix for bug # 68106, which 
 	worked incorrectly for two of the control points.

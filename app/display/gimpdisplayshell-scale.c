@@ -390,7 +390,7 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
 }
 
 void
-gimp_display_shell_scale_fit (GimpDisplayShell *shell)
+gimp_display_shell_scale_fit_in (GimpDisplayShell *shell)
 {
   GimpImage *gimage;
   gint       image_width;
@@ -409,10 +409,39 @@ gimp_display_shell_scale_fit (GimpDisplayShell *shell)
       image_width  = ROUND (image_width *
                             shell->monitor_xres / gimage->xresolution);
       image_height = ROUND (image_height *
-                            shell->monitor_xres / gimage->yresolution);
+                            shell->monitor_yres / gimage->yresolution);
     }
 
   zoom_factor = MIN ((gdouble) shell->disp_width  / (gdouble) image_width,
+                     (gdouble) shell->disp_height / (gdouble) image_height);
+
+  gimp_display_shell_scale (shell, GIMP_ZOOM_TO, zoom_factor);
+}
+
+void
+gimp_display_shell_scale_fit_to (GimpDisplayShell *shell)
+{
+  GimpImage *gimage;
+  gint       image_width;
+  gint       image_height;
+  gdouble    zoom_factor;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  gimage = shell->gdisp->gimage;
+
+  image_width  = gimage->width;
+  image_height = gimage->height;
+
+  if (! shell->dot_for_dot)
+    {
+      image_width  = ROUND (image_width *
+                            shell->monitor_xres / gimage->xresolution);
+      image_height = ROUND (image_height *
+                            shell->monitor_yres / gimage->yresolution);
+    }
+
+  zoom_factor = MAX ((gdouble) shell->disp_width  / (gdouble) image_width,
                      (gdouble) shell->disp_height / (gdouble) image_height);
 
   gimp_display_shell_scale (shell, GIMP_ZOOM_TO, zoom_factor);

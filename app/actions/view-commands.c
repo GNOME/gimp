@@ -110,13 +110,23 @@ view_zoom_in_cmd_callback (GtkAction *action,
 }
 
 void
-view_zoom_fit_cmd_callback (GtkAction *action,
-                            gpointer   data)
+view_zoom_fit_in_cmd_callback (GtkAction *action,
+                               gpointer   data)
 {
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
 
-  gimp_display_shell_scale_fit (GIMP_DISPLAY_SHELL (gdisp->shell));
+  gimp_display_shell_scale_fit_in (GIMP_DISPLAY_SHELL (gdisp->shell));
+}
+
+void
+view_zoom_fit_to_cmd_callback (GtkAction *action,
+                               gpointer   data)
+{
+  GimpDisplay *gdisp;
+  return_if_no_display (gdisp, data);
+
+  gimp_display_shell_scale_fit_to (GIMP_DISPLAY_SHELL (gdisp->shell));
 }
 
 void

@@ -173,7 +173,8 @@
       <menu action="view-zoom-menu" name="Zoom">
         <menuitem action="view-zoom-out" />
         <menuitem action="view-zoom-in" />
-        <menuitem action="view-zoom-fit" />
+        <menuitem action="view-zoom-fit-in" />
+        <menuitem action="view-zoom-fit-to" />
 	<separator />
         <menuitem action="view-zoom-16-1" />
         <menuitem action="view-zoom-8-1" />

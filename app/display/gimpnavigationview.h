@@ -53,7 +53,8 @@ struct _GimpNavigationView
   GtkWidget        *zoom_out_button;
   GtkWidget        *zoom_in_button;
   GtkWidget        *zoom_100_button;
-  GtkWidget        *zoom_fit_button;
+  GtkWidget        *zoom_fit_in_button;
+  GtkWidget        *zoom_fit_to_button;
   GtkWidget        *shrink_wrap_button;
 };
 

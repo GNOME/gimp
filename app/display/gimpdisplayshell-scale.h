@@ -34,7 +34,8 @@ void   gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *gdisp,
 void   gimp_display_shell_scale                 (GimpDisplayShell *gdisp,
                                                  GimpZoomType      zoom_type,
                                                  gdouble           new_scale);
-void   gimp_display_shell_scale_fit             (GimpDisplayShell *gdisp);
+void   gimp_display_shell_scale_fit_in          (GimpDisplayShell *shell);
+void   gimp_display_shell_scale_fit_to          (GimpDisplayShell *shell);
 void   gimp_display_shell_scale_by_values       (GimpDisplayShell *gdisp,
                                                  gdouble           scale,
                                                  gint              offset_x,

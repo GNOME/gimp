@@ -56,51 +56,53 @@
 static void   gimp_navigation_view_class_init (GimpNavigationViewClass *klass);
 static void   gimp_navigation_view_init       (GimpNavigationView      *view);
 
-static void   gimp_navigation_view_docked_iface_init  (GimpDockedInterface *docked_iface);
-static void   gimp_navigation_view_set_context      (GimpDocked       *docked,
-                                                     GimpContext      *context);
+static void   gimp_navigation_view_docked_iface_init   (GimpDockedInterface *docked_iface);
+static void   gimp_navigation_view_set_context         (GimpDocked       *docked,
+                                                        GimpContext      *context);
 
-static void   gimp_navigation_view_destroy          (GtkObject          *object);
+static void   gimp_navigation_view_destroy             (GtkObject          *object);
 
-static GtkWidget * gimp_navigation_view_new_private (GimpDisplayShell   *shell,
-                                                     GimpDisplayConfig  *config,
-                                                     gboolean            popup);
+static GtkWidget * gimp_navigation_view_new_private    (GimpDisplayShell   *shell,
+                                                        GimpDisplayConfig  *config,
+                                                        gboolean            popup);
 
-static gboolean gimp_navigation_view_button_release (GtkWidget          *widget,
-                                                     GdkEventButton     *bevent,
-                                                     GimpDisplayShell   *shell);
-static void   gimp_navigation_view_marker_changed   (GimpNavigationPreview *preview,
-                                                     gdouble             x,
-                                                     gdouble             y,
-                                                     GimpNavigationView *view);
-static void   gimp_navigation_view_zoom             (GimpNavigationPreview *preview,
-                                                     GimpZoomType        direction,
-                                                     GimpNavigationView *view);
-static void   gimp_navigation_view_scroll           (GimpNavigationPreview *preview,
-                                                     GdkScrollDirection  direction,
-                                                     GimpNavigationView *view);
+static gboolean gimp_navigation_view_button_release    (GtkWidget          *widget,
+                                                        GdkEventButton     *bevent,
+                                                        GimpDisplayShell   *shell);
+static void   gimp_navigation_view_marker_changed      (GimpNavigationPreview *preview,
+                                                        gdouble             x,
+                                                        gdouble             y,
+                                                        GimpNavigationView *view);
+static void   gimp_navigation_view_zoom                (GimpNavigationPreview *preview,
+                                                        GimpZoomType        direction,
+                                                        GimpNavigationView *view);
+static void   gimp_navigation_view_scroll              (GimpNavigationPreview *preview,
+                                                        GdkScrollDirection  direction,
+                                                        GimpNavigationView *view);
 
-static void   gimp_navigation_view_zoom_adj_changed (GtkAdjustment      *adj,
-                                                     GimpNavigationView *view);
+static void   gimp_navigation_view_zoom_adj_changed    (GtkAdjustment      *adj,
+                                                        GimpNavigationView *view);
 
-static void   gimp_navigation_view_zoom_out_clicked (GtkWidget          *widget,
-                                                     GimpNavigationView *view);
-static void   gimp_navigation_view_zoom_in_clicked  (GtkWidget          *widget,
-                                                     GimpNavigationView *view);
-static void   gimp_navigation_view_zoom_100_clicked (GtkWidget          *widget,
-                                                     GimpNavigationView *view);
-static void   gimp_navigation_view_zoom_fit_clicked (GtkWidget          *widget,
-                                                     GimpNavigationView *view);
-static void   gimp_navigation_view_shrink_clicked   (GtkWidget          *widget,
-                                                     GimpNavigationView *view);
+static void   gimp_navigation_view_zoom_out_clicked    (GtkWidget          *widget,
+                                                        GimpNavigationView *view);
+static void   gimp_navigation_view_zoom_in_clicked     (GtkWidget          *widget,
+                                                        GimpNavigationView *view);
+static void   gimp_navigation_view_zoom_100_clicked    (GtkWidget          *widget,
+                                                        GimpNavigationView *view);
+static void   gimp_navigation_view_zoom_fit_in_clicked (GtkWidget          *widget,
+                                                        GimpNavigationView *view);
+static void   gimp_navigation_view_zoom_fit_to_clicked (GtkWidget          *widget,
+                                                        GimpNavigationView *view);
+static void   gimp_navigation_view_shrink_clicked      (GtkWidget          *widget,
+                                                        GimpNavigationView *view);
 
-static void   gimp_navigation_view_shell_scaled     (GimpDisplayShell   *shell,
-                                                     GimpNavigationView *view);
-static void   gimp_navigation_view_shell_scrolled   (GimpDisplayShell   *shell,
-                                                     GimpNavigationView *view);
-static void   gimp_navigation_view_shell_reconnect  (GimpDisplayShell   *shell,
-                                                     GimpNavigationView *view);
-static void   gimp_navigation_view_update_marker    (GimpNavigationView *view);
+static void   gimp_navigation_view_shell_scaled        (GimpDisplayShell   *shell,
+                                                        GimpNavigationView *view);
+static void   gimp_navigation_view_shell_scrolled      (GimpDisplayShell   *shell,
+                                                        GimpNavigationView *view);
+static void   gimp_navigation_view_shell_reconnect     (GimpDisplayShell   *shell,
+                                                        GimpNavigationView *view);
+static void   gimp_navigation_view_update_marker       (GimpNavigationView *view);
 
 
 static GimpEditorClass *parent_class = NULL;
@@ -468,11 +470,19 @@ gimp_navigation_view_new_private (GimpDisplayShell  *shell,
                                 NULL,
                                 view);
 
-      view->zoom_fit_button =
+      view->zoom_fit_in_button =
         gimp_editor_add_button (GIMP_EDITOR (view),
-                                GTK_STOCK_ZOOM_FIT, _("Zoom to fit window"),
-                                GIMP_HELP_VIEW_ZOOM_FIT,
-                                G_CALLBACK (gimp_navigation_view_zoom_fit_clicked),
+                                GTK_STOCK_ZOOM_FIT, _("Fit Image in Window"),
+                                GIMP_HELP_VIEW_ZOOM_FIT_IN,
+                                G_CALLBACK (gimp_navigation_view_zoom_fit_in_clicked),
+                                NULL,
+                                view);
+
+      view->zoom_fit_to_button =
+        gimp_editor_add_button (GIMP_EDITOR (view),
+                                GTK_STOCK_ZOOM_FIT, _("Fit Image to Window"),
+                                GIMP_HELP_VIEW_ZOOM_FIT_TO,
+                                G_CALLBACK (gimp_navigation_view_zoom_fit_to_clicked),
                                 NULL,
                                 view);
 
@@ -654,11 +664,19 @@ gimp_navigation_view_zoom_100_clicked (GtkWidget          *widget,
 }
 
 static void
-gimp_navigation_view_zoom_fit_clicked (GtkWidget          *widget,
-                                       GimpNavigationView *view)
+gimp_navigation_view_zoom_fit_in_clicked (GtkWidget          *widget,
+                                          GimpNavigationView *view)
 {
   if (view->shell)
-    gimp_display_shell_scale_fit (view->shell);
+    gimp_display_shell_scale_fit_in (view->shell);
+}
+
+static void
+gimp_navigation_view_zoom_fit_to_clicked (GtkWidget          *widget,
+                                          GimpNavigationView *view)
+{
+  if (view->shell)
+    gimp_display_shell_scale_fit_to (view->shell);
 }
 
 static void

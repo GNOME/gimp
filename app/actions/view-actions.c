@@ -76,10 +76,15 @@ static GimpActionEntry view_actions[] =
     G_CALLBACK (view_zoom_in_cmd_callback),
     GIMP_HELP_VIEW_ZOOM_IN },
 
-  { "view-zoom-fit", GTK_STOCK_ZOOM_FIT,
-    N_("Zoom to _Fit Window"), "<control><shift>E", NULL,
-    G_CALLBACK (view_zoom_fit_cmd_callback),
-    GIMP_HELP_VIEW_ZOOM_FIT },
+  { "view-zoom-fit-in", GTK_STOCK_ZOOM_FIT,
+    N_("_Fit Image in Window"), "<control><shift>E", NULL,
+    G_CALLBACK (view_zoom_fit_in_cmd_callback),
+    GIMP_HELP_VIEW_ZOOM_FIT_IN },
+
+  { "view-zoom-fit-to", GTK_STOCK_ZOOM_FIT,
+    N_("Fit Image to Window"), NULL, NULL,
+    G_CALLBACK (view_zoom_fit_to_cmd_callback),
+    GIMP_HELP_VIEW_ZOOM_FIT_TO },
 
   { "view-info-window", GIMP_STOCK_INFO,
     N_("_Info Window"), "<control><shift>I", NULL,
@@ -314,9 +319,10 @@ view_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("view-dot-for-dot", gdisp);
   SET_ACTIVE    ("view-dot-for-dot", gdisp && shell->dot_for_dot);
 
-  SET_SENSITIVE ("view-zoom-out", gdisp);
-  SET_SENSITIVE ("view-zoom-in",  gdisp);
-  SET_SENSITIVE ("view-zoom-fit", gdisp);
+  SET_SENSITIVE ("view-zoom-out",    gdisp);
+  SET_SENSITIVE ("view-zoom-in",     gdisp);
+  SET_SENSITIVE ("view-zoom-fit-in", gdisp);
+  SET_SENSITIVE ("view-zoom-fit-to", gdisp);
 
   SET_SENSITIVE ("view-zoom-16-1",  gdisp);
   SET_SENSITIVE ("view-zoom-8-1",   gdisp);
