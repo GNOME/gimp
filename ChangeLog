@@ -1,5 +1,11 @@
 2003-08-14  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/plugindetails.c (get_plugin_info): convert the
+	stuff returned by strftime() to UTF-8 before displaying it. Fixes
+	bug #119316.
+
+2003-08-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimppreview.c (gimp_preview_button_press_event): 
 	return early if the widget is not realized to enable destroying
 	the widget from an external "button_press_event" handler which

@@ -847,9 +847,18 @@ get_plugin_info (PDesc       *pdesc,
 	  tx = time_ints[loop];
 	  if (tx)
 	    {
+              gchar *utf8;
+
 	      x = localtime (&tx);
 	      ret = strftime (xtimestr, sizeof (xtimestr), "%c", x);
 	      xtimestr[ret] = 0;
+
+              if ((utf8 = g_locale_to_utf8 (xtimestr, -1, NULL, NULL, NULL)))
+                {
+                  strncpy (xtimestr, utf8, sizeof (xtimestr));
+                  xtimestr[sizeof (xtimestr) - 1] = 0;
+                  g_free (utf8);
+                }
 	    }
 	  else
 	    strcpy (xtimestr,"");
