@@ -421,6 +421,8 @@ linux_input_read_event (GIOChannel   *io,
 
                 for (count = ev.value; count > 0; count--)
                   gimp_controller_event (controller, &cevent);
+
+                break;
               }
           break;
 
