@@ -113,6 +113,8 @@ static gboolean mb_run = FALSE;
 
 static GimpDrawable *drawable;
 
+static GtkObject *length, *angle;
+
 static gint img_width, img_height, img_bpp;
 static gint sel_x1, sel_y1, sel_x2, sel_y2;
 static gint sel_width, sel_height;
@@ -342,14 +344,14 @@ mblur_linear (void)
     {
       dest = dest_rgn.data;
 
-      for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
+      for (y = dest_rgn.y; y < dest_rgn.y + dest_rgn.h; y++)
 	{
 	  d = dest;
 
-	  for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
+	  for (x = dest_rgn.x; x < dest_rgn.x + dest_rgn.w; x++)
 	    {
 	      xx = x; yy = y; e = err;
-	      for (c= 0; c < img_bpp; c++)
+	      for (c = 0; c < img_bpp; c++)
 		sum[c]= 0;
 
 	      for (i = 0; i < n; )
@@ -452,11 +454,11 @@ mblur_radial (void)
     {
       dest = dest_rgn.data;
 
-      for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
+      for (y = dest_rgn.y; y < dest_rgn.y + dest_rgn.h; y++)
 	{
 	  d = dest;
 
-	  for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
+	  for (x = dest_rgn.x; x < dest_rgn.x + dest_rgn.w; x++)
 	    {
 	      xr = x-cen_x;
 	      yr = y-cen_y;
@@ -547,11 +549,11 @@ mblur_zoom (void)
     {
       dest = dest_rgn.data;
 
-      for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
+      for (y = dest_rgn.y; y < dest_rgn.y + dest_rgn.h; y++)
 	{
 	  d = dest;
 
-	  for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
+	  for (x = dest_rgn.x; x < dest_rgn.x + dest_rgn.w; x++)
 	    {
 	      for (c = 0; c < img_bpp; c++)
 		sum[c] = 0;
@@ -619,6 +621,38 @@ mblur (void)
  *                 UI
  ****************************************/
 
+static void
+mblur_set_sensitivity (void)
+{
+  if (!length || !angle)
+    return;			/* Not initialized yet */
+
+  switch (mbvals.mblur_type)
+    {
+    case MBLUR_LINEAR:
+      gimp_scale_entry_set_sensitive(length, TRUE);
+      gimp_scale_entry_set_sensitive(angle, TRUE);
+      break;
+    case MBLUR_RADIAL:
+      gimp_scale_entry_set_sensitive(length, FALSE);
+      gimp_scale_entry_set_sensitive(angle, TRUE);
+      break;
+    case MBLUR_ZOOM:
+      gimp_scale_entry_set_sensitive(length, TRUE);
+      gimp_scale_entry_set_sensitive(angle, FALSE);
+      break;
+    default:
+      break;
+    }
+}
+
+static void
+mblur_radio_button_update (GtkWidget *widget, gpointer data)
+{
+  gimp_radio_button_update (widget, data);
+  mblur_set_sensitivity ();
+}
+
 static gboolean
 mblur_dialog (void)
 {
@@ -626,7 +660,6 @@ mblur_dialog (void)
   GtkWidget *main_vbox;
   GtkWidget *frame;
   GtkWidget *table;
-  GtkObject *adjustment;
 
   gimp_ui_init ("mblur", FALSE);
 
@@ -653,7 +686,7 @@ mblur_dialog (void)
   gtk_widget_show (main_vbox);
 
   frame = gimp_radio_group_new2 (TRUE, _("Blur Type"),
-                                 G_CALLBACK (gimp_radio_button_update),
+                                 G_CALLBACK (mblur_radio_button_update),
                                  &mbvals.mblur_type,
                                  GINT_TO_POINTER (mbvals.mblur_type),
 
@@ -682,23 +715,25 @@ mblur_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  adjustment = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				     _("L_ength:"), 150, 3,
-				     mbvals.length, 0.0, 256.0, 1.0, 8.0, 0,
-				     TRUE, 0, 0,
-				     NULL, NULL);
-  g_signal_connect (adjustment, "value_changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &mbvals.length);
+  length = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+				 _("L_ength:"), 150, 3,
+				 mbvals.length, 0.0, 256.0, 1.0, 8.0, 0,
+				 TRUE, 0, 0,
+				 NULL, NULL);
+  g_signal_connect (length, "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update), 
+		    &mbvals.length);
 
-  adjustment = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				     _("_Angle:"), 150, 3,
-				     mbvals.angle, 0.0, 360.0, 1.0, 15.0, 0,
-				     TRUE, 0, 0,
-				     NULL, NULL);
-  g_signal_connect (adjustment, "value_changed",
+  angle = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+				_("_Angle:"), 150, 3,
+				mbvals.angle, 0.0, 360.0, 1.0, 15.0, 0,
+				TRUE, 0, 0,
+				NULL, NULL);
+  g_signal_connect (angle, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &mbvals.angle);
+
+  mblur_set_sensitivity ();
 
   gtk_widget_show (dialog);
 
