@@ -89,8 +89,8 @@ static struct
   { "prob", TOKEN_PROB }
 };
 
-static GTokenType 
-ifsvals_parse_color (GScanner *scanner, 
+static GTokenType
+ifsvals_parse_color (GScanner *scanner,
 		     GimpRGB  *result)
 {
   GTokenType token;
@@ -102,9 +102,9 @@ ifsvals_parse_color (GScanner *scanner,
   token = g_scanner_get_next_token (scanner);
   if (token != G_TOKEN_FLOAT)
     return G_TOKEN_FLOAT;
-  
+
   result->r = scanner->value.v_float;
-  
+
   token = g_scanner_get_next_token (scanner);
   if (token != G_TOKEN_COMMA)
     return G_TOKEN_COMMA;
@@ -112,7 +112,7 @@ ifsvals_parse_color (GScanner *scanner,
   token = g_scanner_get_next_token (scanner);
   if (token != G_TOKEN_FLOAT)
     return G_TOKEN_FLOAT;
-  
+
   result->g = scanner->value.v_float;
 
   token = g_scanner_get_next_token (scanner);
@@ -122,7 +122,7 @@ ifsvals_parse_color (GScanner *scanner,
   token = g_scanner_get_next_token (scanner);
   if (token != G_TOKEN_FLOAT)
     return G_TOKEN_FLOAT;
-  
+
   result->b = scanner->value.v_float;
 
   token = g_scanner_get_next_token (scanner);
@@ -140,7 +140,7 @@ parse_genuine_float (GScanner *scanner,
 {
   gboolean negate = FALSE;
   GTokenType token;
-  
+
   token = g_scanner_get_next_token (scanner);
 
   if (token == '-')
@@ -155,7 +155,7 @@ parse_genuine_float (GScanner *scanner,
       return G_TOKEN_NONE;
     }
   else
-    return G_TOKEN_FLOAT; 
+    return G_TOKEN_FLOAT;
 }
 
 static GTokenType
@@ -185,31 +185,31 @@ ifsvals_parse_element (GScanner       *scanner,
 	  if (expected_token != G_TOKEN_NONE)
 	    return expected_token;
 	  break;
-	  
+
 	case TOKEN_THETA:
 	  expected_token = parse_genuine_float (scanner, &result->theta);
 	  if (expected_token != G_TOKEN_NONE)
 	    return expected_token;
 	  break;
-	  
+
 	case TOKEN_SCALE:
 	  expected_token = parse_genuine_float (scanner, &result->scale);
 	  if (expected_token != G_TOKEN_NONE)
 	    return expected_token;
 	  break;
-	  
+
 	case TOKEN_ASYM:
 	  expected_token = parse_genuine_float (scanner, &result->asym);
 	  if (expected_token != G_TOKEN_NONE)
 	    return expected_token;
 	  break;
-	  
+
 	case TOKEN_SHEAR:
 	  expected_token = parse_genuine_float (scanner, &result->shear);
 	  if (expected_token != G_TOKEN_NONE)
 	    return expected_token;
 	  break;
-	  
+
 	case TOKEN_FLIP:
 	  token = g_scanner_get_next_token (scanner);
 	  if (token != G_TOKEN_INT)
@@ -223,43 +223,43 @@ ifsvals_parse_element (GScanner       *scanner,
 	  if (token != G_TOKEN_NONE)
 	    return token;
 	  break;
-	    
+
 	case TOKEN_GREEN_COLOR:
 	  token = ifsvals_parse_color (scanner, &result->green_color);
 	  if (token != G_TOKEN_NONE)
 	    return token;
 	  break;
-	    
+
 	case TOKEN_BLUE_COLOR:
 	  token = ifsvals_parse_color (scanner, &result->blue_color);
 	  if (token != G_TOKEN_NONE)
 	    return token;
 	  break;
-	    
+
 	case TOKEN_BLACK_COLOR:
 	  token = ifsvals_parse_color (scanner, &result->black_color);
 	  if (token != G_TOKEN_NONE)
 	    return token;
 	  break;
-	  
+
 	case TOKEN_TARGET_COLOR:
 	  token = ifsvals_parse_color (scanner, &result->target_color);
 	  if (token != G_TOKEN_NONE)
 	    return token;
 	  break;
-	  
+
 	case TOKEN_HUE_SCALE:
 	  expected_token = parse_genuine_float (scanner, &result->hue_scale);
 	  if (expected_token != G_TOKEN_NONE)
 	    return expected_token;
 	  break;
-	  
+
 	case TOKEN_VALUE_SCALE:
 	  expected_token = parse_genuine_float (scanner, &result->value_scale);
 	  if (expected_token != G_TOKEN_NONE)
 	    return expected_token;
 	  break;
-	  
+
 	case TOKEN_SIMPLE_COLOR:
 	  token = g_scanner_get_next_token (scanner);
 	  if (token != G_TOKEN_INT)
@@ -279,7 +279,7 @@ ifsvals_parse_element (GScanner       *scanner,
 	default:
 	  return G_TOKEN_SYMBOL;
 	}
-      
+
       token = g_scanner_get_next_token (scanner);
     }
   return G_TOKEN_NONE;
@@ -323,7 +323,7 @@ ifsvals_parse (GScanner         *scanner,
 
       if (g_scanner_eof (scanner))
 	  break;
-      
+
       switch (token)
 	{
 	case TOKEN_ITERATIONS:
@@ -353,19 +353,19 @@ ifsvals_parse (GScanner         *scanner,
 	case TOKEN_RADIUS:
 	  expected_token = parse_genuine_float (scanner, &new_vals.radius);
 	  break;
-	  
+
 	case TOKEN_ASPECT_RATIO:
 	  expected_token = parse_genuine_float (scanner, &new_vals.aspect_ratio);
 	  break;
-	  
+
 	case TOKEN_CENTER_X:
 	  expected_token = parse_genuine_float (scanner, &new_vals.center_x);
 	  break;
-	  
+
 	case TOKEN_CENTER_Y:
 	  expected_token = parse_genuine_float (scanner, &new_vals.center_y);
 	  break;
-	  
+
 	case TOKEN_ELEMENT:
 	  el = aff_element_new (0.0,0.0, &color, ++i);
 	  expected_token = ifsvals_parse_element (scanner, &el->v);
@@ -379,7 +379,7 @@ ifsvals_parse (GScanner         *scanner,
 	    aff_element_free (el);
 
 	  break;
-	  
+
 	default:
 	  expected_token = G_TOKEN_SYMBOL;
 	}
@@ -398,7 +398,7 @@ ifsvals_parse (GScanner         *scanner,
       g_list_free (el_list);
       return FALSE;
     }
-  
+
   *vals = new_vals;
 
   el_list = g_list_reverse (el_list);
@@ -428,16 +428,16 @@ ifsvals_parse_string (const gchar      *str,
   scanner->config->symbol_2_token = TRUE;
   scanner->config->scan_identifier_1char = TRUE;
   scanner->input_name = "IfsCompose Saved Data";
-  
+
   for (i = 0; i < G_N_ELEMENTS (symbols); i++)
     g_scanner_scope_add_symbol (scanner, 0,
-                                symbols[i].name, 
+                                symbols[i].name,
                                 GINT_TO_POINTER (symbols[i].token));
-  
+
   g_scanner_input_text (scanner, str, strlen (str));
-      
+
   result = ifsvals_parse (scanner, vals, elements);
-  
+
   g_scanner_destroy (scanner);
 
   return result;
@@ -492,7 +492,7 @@ ifsvals_stringify (IfsComposeVals  *vals,
       g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.shear);
       g_string_append_printf (result, "    shear %s\n", buf);
       g_string_append_printf (result, "    flip %d\n", elements[i]->v.flip);
-      
+
       g_ascii_formatd (cbuf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.red_color.r);
       g_ascii_formatd (cbuf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.red_color.g);
       g_ascii_formatd (cbuf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.red_color.b);
@@ -526,8 +526,8 @@ ifsvals_stringify (IfsComposeVals  *vals,
       g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.hue_scale);
       g_string_append_printf (result, "    hue_scale %s\n", buf);
       g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.value_scale);
-      g_string_append_printf (result, "    value_scale %s\n", buf); 
-      g_string_append_printf (result, "    simple_color %d\n", 
+      g_string_append_printf (result, "    value_scale %s\n", buf);
+      g_string_append_printf (result, "    simple_color %d\n",
                               elements[i]->v.simple_color);
       g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", elements[i]->v.prob);
       g_string_append_printf (result, "    prob %s\n", buf);

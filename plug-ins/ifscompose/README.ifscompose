@@ -1,5 +1,5 @@
-IfsCompose-0.6.1
-----------------
+IfsCompose
+----------
 
 IfsCompose is a plug-in for the GIMP that allows
 the creation of Iterated Function System fractals by direct
@@ -72,11 +72,12 @@ Note that if you render onto an image with an alpha channel, the
 background will be transparent (very useful for compositing several
 fractals), otherwise the background will be the current background.
 
-There is a tutorial and some example images at:
+There are tutorials and some example images at:
 
-   http://www.msc.cornell.edu/~otaylor/plug-ins/ifscompose.html
+ http://www.gtk.org/~otaylor/IfsCompose/ifs_tutorial/tutorial.html
+ http://tigert.gimp.org/gimp/ifs-compose/
+
 
 Have fun!
 
 Owen Taylor
-owt1@cornell.edu
