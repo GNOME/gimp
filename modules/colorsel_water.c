@@ -25,9 +25,9 @@
 
 #include <gtk/gtk.h>
 
-#include <libgimp/gimpcolorselector.h>
 #include <libgimp/gimpcolor.h>
 #include <libgimp/gimpcolorspace.h>
+#include <libgimp/gimpcolorselector.h>
 #include <libgimp/gimpmodule.h>
 #include <libgimp/gimpmath.h>
 
@@ -36,27 +36,17 @@
 #include <libgimp/gimpintl.h>
 
 /* prototypes */
-static GtkWidget * colorsel_water_new         (gint                h,
-					       gint                s,
-					       gint                v,
-					       gint                r,
-					       gint                g,
-					       gint                b,
-					       gint                a,
+static GtkWidget * colorsel_water_new         (const GimpHSV      *hsv,
+					       const GimpRGB      *rgb,
 					       gboolean            show_alpha,
 				               GimpColorSelectorCallback,
-				               gpointer,
-				               gpointer *);
-static void        colorsel_water_free        (gpointer  data);
-static void        colorsel_water_set_color   (gpointer  data,
-					       gint      h,
-					       gint      s,
-					       gint      v,
-					       gint      r,
-					       gint      g,
-					       gint      b,
-					       gint      a);
-static void        colorsel_water_set_channel (gpointer  data,
+				               gpointer            ,
+				               gpointer           *);
+static void        colorsel_water_free        (gpointer            data);
+static void        colorsel_water_set_color   (gpointer            data,
+					       const GimpHSV      *hsv,
+					       const GimpRGB      *rgb);
+static void        colorsel_water_set_channel (gpointer            data,
 					       GimpColorSelectorChannelType  channel);
 static void        colorsel_water_update      (void);
 static void        colorsel_water_drag_begin  (GtkWidget          *widget,
@@ -345,7 +335,7 @@ select_area_draw (GtkWidget *preview)
 }
 
 
-static void 
+static void
 add_pigment (gboolean erase,
 	     gdouble  x,
 	     gdouble  y,
@@ -411,7 +401,6 @@ draw_brush (GtkWidget *widget,
   last_y = y;
   last_pressure = pressure;
 }
-
 
 static gint
 button_press_event (GtkWidget      *widget,
@@ -564,13 +553,8 @@ pressure_adjust_update (GtkAdjustment *adj,
 
 
 static GtkWidget*
-colorsel_water_new (gint                       h,
-		    gint                       s,
-		    gint                       v,
-		    gint                       r,
-		    gint                       g,
-		    gint                       b,
-		    gint                       a,
+colorsel_water_new (const GimpHSV             *hsv,
+		    const GimpRGB             *rgb,
 		    gboolean                   show_alpha,
 		    GimpColorSelectorCallback  callback,
 		    gpointer                   callback_data,
@@ -760,7 +744,7 @@ colorsel_water_new (gint                       h,
 
   gtk_widget_show_all (hbox);
 
-  colorsel_water_set_color (coldata, h, s, v, r, g, b, a);
+  colorsel_water_set_color (coldata, hsv, rgb);
   draw_all_buckets ();
 
   return vbox;
@@ -774,20 +758,15 @@ colorsel_water_free (gpointer  selector_data)
 }
 
 static void
-colorsel_water_set_color (gpointer  data,
-			  gint      h,
-			  gint      s,
-			  gint      v,
-			  gint      r,
-			  gint      g,
-			  gint      b,
-			  gint      a)
+colorsel_water_set_color (gpointer       data,
+			  const GimpHSV *hsv,
+			  const GimpRGB *rgb)
 {
   set_bucket (0, 
-	      ((gdouble) r) / 255.999, 
-	      ((gdouble) g) / 255.999,
-	      ((gdouble) b) / 255.999,
-	      ((gdouble) a) / 255.999);
+	      rgb->r,
+	      rgb->g,
+	      rgb->b,
+	      rgb->a);
 
   draw_bucket (0);
 }
@@ -801,36 +780,19 @@ colorsel_water_set_channel (gpointer                      data,
 static void
 colorsel_water_update (void)
 {
-  gdouble rr;
-  gdouble gg;
-  gdouble bb;
+  GimpRGB rgb;
+  GimpHSV hsv;
 
-  gint h;
-  gint s;
-  gint v;
-  gint r;
-  gint g;
-  gint b;
-  gint a;
+  rgb.r = bucket[0][0];
+  rgb.g = bucket[0][1];
+  rgb.b = bucket[0][2];
+  rgb.a = bucket[0][3];
 
-  r = (gint) (bucket[0][0] * 255.999);
-  g = (gint) (bucket[0][1] * 255.999);
-  b = (gint) (bucket[0][2] * 255.999);
-  a = (gint) (bucket[0][3] * 255.999);
-
-  rr = bucket[0][0];
-  gg = bucket[0][1];
-  bb = bucket[0][2];
-
-  gimp_rgb_to_hsv_double (&rr, &gg, &bb);
-
-  h = (gint) (rr * 360.99);
-  s = (gint) (gg * 255.99);
-  v = (gint) (bb * 255.99);
+  gimp_rgb_to_hsv (&rgb, &hsv);
 
   draw_bucket (0);
 
-  coldata->callback (coldata->data, h, s, v, r, g, b, a);
+  coldata->callback (coldata->data, &hsv, &rgb);
 }
 
 static void        
@@ -900,10 +862,10 @@ colorsel_water_drop_handle (GtkWidget        *widget,
   
   vals = (guint16 *) selection_data->data;
 
-  colors[0] = (gdouble)vals[0] / 0xffff;
-  colors[1] = (gdouble)vals[1] / 0xffff;
-  colors[2] = (gdouble)vals[2] / 0xffff;
-  colors[3] = (gdouble)vals[3] / 0xffff;
+  colors[0] = (gdouble) vals[0] / 0xffff;
+  colors[1] = (gdouble) vals[1] / 0xffff;
+  colors[2] = (gdouble) vals[2] / 0xffff;
+  colors[3] = (gdouble) vals[3] / 0xffff;
   
   draw_all_buckets ();
   colorsel_water_update ();
@@ -931,10 +893,3 @@ colorsel_water_drag_handle (GtkWidget        *widget,
 			  gdk_atom_intern ("application/x-color", FALSE),
 			  16, (guchar *)vals, 8);
 }
-
-
-
-
-
-
-

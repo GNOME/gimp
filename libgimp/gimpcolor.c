@@ -343,11 +343,11 @@ gimp_hsv_clamp (GimpHSV *hsv)
 {
   g_return_if_fail (hsv != NULL);
 
-  if (hsv->h < 0.0)
-    hsv->h = GIMP_HSV_UNDEFINED;
-
   hsv->h -= (gint) hsv->h;
- 
+
+  if (hsv->h < 0)
+    hsv->h += 1.0;
+
   hsv->s = CLAMP (hsv->s, 0.0, 1.0);
   hsv->v = CLAMP (hsv->v, 0.0, 1.0);
   hsv->a = CLAMP (hsv->a, 0.0, 1.0);

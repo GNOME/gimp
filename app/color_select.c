@@ -36,6 +36,7 @@
 #include "session.h"
 #include "color_area.h"
 
+#include "libgimp/gimpcolorspace.h"
 #include "libgimp/gimpcolorselector.h"
 #include "libgimp/gimphelpui.h"
 
@@ -82,14 +83,9 @@ typedef enum
   UPDATE_CALLER     = 1 << 6
 } ColorSelectUpdateType;
 
-typedef void (* ColorSelectCallback) (gint     h,
-				      gint     s,
-				      gint     v,
-				      gint     r,
-				      gint     g,
-				      gint     b,
-				      gint     a,
-				      gpointer data);
+typedef void (* ColorSelectCallback) (const GimpHSV *hsv,
+				      const GimpRGB *rgb,
+				      gpointer       data);
 
 typedef struct _ColorSelect ColorSelect;
 
@@ -98,11 +94,14 @@ struct _ColorSelect
   GtkWidget *xy_color;
   GtkWidget *z_color;
 
-  gint      pos[3];
-  gint      values[7];
-  gint      z_color_fill;
-  gint      xy_color_fill;
-  GdkGC    *gc;
+  gint       pos[3];
+
+  GimpHSV    hsv;
+  GimpRGB    rgb;
+
+  gint       z_color_fill;
+  gint       xy_color_fill;
+  GdkGC     *gc;
 
   ColorSelectCallback  callback;
   gpointer             client_data;
@@ -114,32 +113,30 @@ typedef void (* ColorSelectFillUpdateProc) (ColorSelectFill *color_select_fill);
 
 struct _ColorSelectFill
 {
-  guchar *buffer;
-  gint    y;
-  gint    width;
-  gint    height;
-  gint   *values;
+  guchar  *buffer;
+  gint     y;
+  gint     width;
+  gint     height;
+  GimpHSV  hsv;
+  GimpRGB  rgb;
 
   ColorSelectFillUpdateProc update;
 };
 
 
-static GtkWidget * color_select_widget_new   (ColorSelect    *,
-					      gint            ,
-					      gint            ,
-					      gint            ,
-					      gint            );
+static GtkWidget * color_select_widget_new   (ColorSelect    *csp,
+					      const GimpRGB  *color);
 
-static void   color_select_drop_color (GtkWidget *widget,
-				       GimpRGB   *color,
-				       gpointer   data);
-static void   color_select_update            (ColorSelect    *,
+static void   color_select_drop_color        (GtkWidget      *widget,
+					      GimpRGB        *color,
+					      gpointer        data);
+static void   color_select_update            (ColorSelect    *csp,
 					      ColorSelectUpdateType);
-static void   color_select_update_caller     (ColorSelect    *);
-static void   color_select_update_values     (ColorSelect    *);
-static void   color_select_update_rgb_values (ColorSelect    *);
-static void   color_select_update_hsv_values (ColorSelect    *);
-static void   color_select_update_pos        (ColorSelect    *);
+static void   color_select_update_caller     (ColorSelect    *csp);
+static void   color_select_update_values     (ColorSelect    *csp);
+static void   color_select_update_rgb_values (ColorSelect    *csp);
+static void   color_select_update_hsv_values (ColorSelect    *csp);
+static void   color_select_update_pos        (ColorSelect    *csp);
 
 static gint   color_select_xy_expose         (GtkWidget      *widget,
 					      GdkEventExpose *eevent,
@@ -156,56 +153,42 @@ static gint   color_select_z_events          (GtkWidget      *widet,
 
 static void   color_select_image_fill        (GtkWidget      *,
 					      ColorSelectFillType,
-					      gint           *);
+					      const GimpHSV  *hsv,
+					      const GimpRGB  *rgb);
 
-static void   color_select_draw_z_marker     (ColorSelect    *,
+static void   color_select_draw_z_marker     (ColorSelect    *csp,
 					      GdkRectangle   *);
-static void   color_select_draw_xy_marker    (ColorSelect    *,
+static void   color_select_draw_xy_marker    (ColorSelect    *csp,
 					      GdkRectangle   *);
 
-static void   color_select_update_red              (ColorSelectFill *);
-static void   color_select_update_green            (ColorSelectFill *);
-static void   color_select_update_blue             (ColorSelectFill *);
-static void   color_select_update_hue              (ColorSelectFill *);
-static void   color_select_update_saturation       (ColorSelectFill *);
-static void   color_select_update_value            (ColorSelectFill *);
-static void   color_select_update_red_green        (ColorSelectFill *);
-static void   color_select_update_red_blue         (ColorSelectFill *);
-static void   color_select_update_green_blue       (ColorSelectFill *);
-static void   color_select_update_hue_saturation   (ColorSelectFill *);
-static void   color_select_update_hue_value        (ColorSelectFill *);
-static void   color_select_update_saturation_value (ColorSelectFill *);
+static void   color_select_update_red              (ColorSelectFill *csf);
+static void   color_select_update_green            (ColorSelectFill *csf);
+static void   color_select_update_blue             (ColorSelectFill *csf);
+static void   color_select_update_hue              (ColorSelectFill *csf);
+static void   color_select_update_saturation       (ColorSelectFill *csf);
+static void   color_select_update_value            (ColorSelectFill *csf);
+static void   color_select_update_red_green        (ColorSelectFill *csf);
+static void   color_select_update_red_blue         (ColorSelectFill *csf);
+static void   color_select_update_green_blue       (ColorSelectFill *csf);
+static void   color_select_update_hue_saturation   (ColorSelectFill *csf);
+static void   color_select_update_hue_value        (ColorSelectFill *csf);
+static void   color_select_update_saturation_value (ColorSelectFill *csf);
 
-static GtkWidget * color_select_notebook_new       (gint      ,
-						    gint      ,
-						    gint      ,
-						    gint      ,
-						    gint      ,
-						    gint      ,
-						    gint      ,
-						    gboolean  ,
+static GtkWidget * color_select_notebook_new       (const GimpHSV *hsv,
+						    const GimpRGB *rgb,
+						    gboolean       show_alpha,
 						    GimpColorSelectorCallback,
-						    gpointer  ,
-						    gpointer *);
-static void        color_select_notebook_free      (gpointer  );
-static void        color_select_notebook_set_color (gpointer  ,
-						    gint      ,
-						    gint      ,
-						    gint      ,
-						    gint      ,
-						    gint      ,
-						    gint      ,
-						    gint      );
+						    gpointer       ,
+						    gpointer      *);
+static void        color_select_notebook_free      (gpointer       );
+static void        color_select_notebook_set_color (gpointer       ,
+						    const GimpHSV *hsv,
+						    const GimpRGB *rgb);
 static void        color_select_notebook_set_channel (gpointer  ,
 						      GimpColorSelectorChannelType  channel);
-static void  color_select_notebook_update_callback (gint      ,
-						    gint      ,
-						    gint      ,
-						    gint      ,
-						    gint      ,
-						    gint      ,
-						    gint      ,
-						    gpointer  );
+static void  color_select_notebook_update_callback (const GimpHSV *hsv,
+						    const GimpRGB *rgb,
+						    gpointer       );
 
 /*  Static variables  */
 static ColorSelectFillUpdateProc update_procs[] =
@@ -251,11 +234,8 @@ color_select_init (void)
 
 
 static GtkWidget *
-color_select_widget_new (ColorSelect *csp,
-			 gint         r,
-			 gint         g,
-			 gint         b,
-			 gint         a)
+color_select_widget_new (ColorSelect   *csp,
+			 const GimpRGB *color)
 {
   GtkWidget *main_vbox;
   GtkWidget *main_hbox;
@@ -330,16 +310,10 @@ color_select_drop_color (GtkWidget *widget,
 			 gpointer   data)
 {
   ColorSelect *csp;
-  guchar       r, g, b, a;
 
   csp = (ColorSelect *) data;
 
-  gimp_rgba_get_uchar (color, &r, &g, &b, &a);
-
-  csp->values[COLOR_SELECT_RED]   = (gint) r;
-  csp->values[COLOR_SELECT_GREEN] = (gint) g;
-  csp->values[COLOR_SELECT_BLUE]  = (gint) b;
-  csp->values[COLOR_SELECT_ALPHA] = (gint) a;
+  csp->rgb = *color;
 
   color_select_update_hsv_values (csp);
   color_select_update_pos (csp);
@@ -351,25 +325,15 @@ color_select_drop_color (GtkWidget *widget,
 }
 
 static void
-color_select_set_color (ColorSelect *csp,
-			gint         h,
-			gint         s,
-			gint         v,
-			gint         r,
-			gint         g,
-			gint         b,
-			gint         a)
+color_select_set_color (ColorSelect   *csp,
+			const GimpHSV *hsv,
+			const GimpRGB *rgb)
 {
-  if (!csp)
+  if (! csp)
     return;
 
-  csp->values[COLOR_SELECT_HUE]        = h;
-  csp->values[COLOR_SELECT_SATURATION] = s;
-  csp->values[COLOR_SELECT_VALUE]      = v;
-  csp->values[COLOR_SELECT_RED]        = r;
-  csp->values[COLOR_SELECT_GREEN]      = g;
-  csp->values[COLOR_SELECT_BLUE]       = b;
-  csp->values[COLOR_SELECT_ALPHA]      = a;
+  csp->hsv = *hsv;
+  csp->rgb = *rgb;
 
   color_select_update_pos (csp);
 
@@ -394,13 +358,15 @@ color_select_update (ColorSelect           *csp,
 
   if (update & UPDATE_XY_COLOR)
     {
-      color_select_image_fill (csp->xy_color, csp->xy_color_fill, csp->values);
+      color_select_image_fill (csp->xy_color, csp->xy_color_fill,
+			       &csp->hsv, &csp->rgb);
       gtk_widget_draw (csp->xy_color, NULL);
     }
 
   if (update & UPDATE_Z_COLOR)
     {
-      color_select_image_fill (csp->z_color, csp->z_color_fill, csp->values);
+      color_select_image_fill (csp->z_color, csp->z_color_fill,
+			       &csp->hsv, &csp->rgb);
       gtk_widget_draw (csp->z_color, NULL);
     }
 
@@ -413,13 +379,8 @@ color_select_update_caller (ColorSelect *csp)
 {
   if (csp && csp->callback)
     {
-      (* csp->callback) (csp->values[COLOR_SELECT_HUE],
-			 csp->values[COLOR_SELECT_SATURATION],
-			 csp->values[COLOR_SELECT_VALUE],
-			 csp->values[COLOR_SELECT_RED],
-			 csp->values[COLOR_SELECT_GREEN],
-			 csp->values[COLOR_SELECT_BLUE],
-			 csp->values[COLOR_SELECT_ALPHA],
+      (* csp->callback) (&csp->hsv,
+			 &csp->rgb,
 			 csp->client_data);
     }
 }
@@ -433,34 +394,35 @@ color_select_update_values (ColorSelect *csp)
   switch (csp->z_color_fill)
     {
     case COLOR_SELECT_RED:
-      csp->values[COLOR_SELECT_BLUE]  = csp->pos[0];
-      csp->values[COLOR_SELECT_GREEN] = csp->pos[1];
-      csp->values[COLOR_SELECT_RED]   = csp->pos[2];
+      csp->rgb.b = csp->pos[0] / 255.0;
+      csp->rgb.g = csp->pos[1] / 255.0;
+      csp->rgb.r = csp->pos[2] / 255.0;
       break;
     case COLOR_SELECT_GREEN:
-      csp->values[COLOR_SELECT_BLUE]  = csp->pos[0];
-      csp->values[COLOR_SELECT_RED]   = csp->pos[1];
-      csp->values[COLOR_SELECT_GREEN] = csp->pos[2];
+      csp->rgb.b = csp->pos[0] / 255.0;
+      csp->rgb.r = csp->pos[1] / 255.0;
+      csp->rgb.g = csp->pos[2] / 255.0;
       break;
     case COLOR_SELECT_BLUE:
-      csp->values[COLOR_SELECT_GREEN] = csp->pos[0];
-      csp->values[COLOR_SELECT_RED]   = csp->pos[1];
-      csp->values[COLOR_SELECT_BLUE]  = csp->pos[2];
+      csp->rgb.g = csp->pos[0] / 255.0;
+      csp->rgb.r = csp->pos[1] / 255.0;
+      csp->rgb.b = csp->pos[2] / 255.0;
       break;
+
     case COLOR_SELECT_HUE:
-      csp->values[COLOR_SELECT_VALUE]      = csp->pos[0] * 100 / 255;
-      csp->values[COLOR_SELECT_SATURATION] = csp->pos[1] * 100 / 255;
-      csp->values[COLOR_SELECT_HUE]        = csp->pos[2] * 360 / 255;
+      csp->hsv.v = csp->pos[0] / 255.0;
+      csp->hsv.s = csp->pos[1] / 255.0;
+      csp->hsv.h = csp->pos[2] / 255.0;
       break;
     case COLOR_SELECT_SATURATION:
-      csp->values[COLOR_SELECT_VALUE]      = csp->pos[0] * 100 / 255;
-      csp->values[COLOR_SELECT_HUE]        = csp->pos[1] * 360 / 255;
-      csp->values[COLOR_SELECT_SATURATION] = csp->pos[2] * 100 / 255;
+      csp->hsv.v = csp->pos[0] / 255.0;
+      csp->hsv.h = csp->pos[1] / 255.0;
+      csp->hsv.s = csp->pos[2] / 255.0;
       break;
     case COLOR_SELECT_VALUE:
-      csp->values[COLOR_SELECT_SATURATION] = csp->pos[0] * 100 / 255;
-      csp->values[COLOR_SELECT_HUE]        = csp->pos[1] * 360 / 255;
-      csp->values[COLOR_SELECT_VALUE]      = csp->pos[2] * 100 / 255;
+      csp->hsv.s = csp->pos[0] / 255.0;
+      csp->hsv.h = csp->pos[1] / 255.0;
+      csp->hsv.v = csp->pos[2] / 255.0;
       break;
     }
 
@@ -471,6 +433,7 @@ color_select_update_values (ColorSelect *csp)
     case COLOR_SELECT_BLUE:
       color_select_update_hsv_values (csp);
       break;
+
     case COLOR_SELECT_HUE:
     case COLOR_SELECT_SATURATION:
     case COLOR_SELECT_VALUE:
@@ -482,178 +445,59 @@ color_select_update_values (ColorSelect *csp)
 static void
 color_select_update_rgb_values (ColorSelect *csp)
 {
-  gfloat h, s, v;
-  gfloat f, p, q, t;
-
-  if (!csp)
+  if (! csp)
     return;
 
-  h = csp->values[COLOR_SELECT_HUE];
-  s = csp->values[COLOR_SELECT_SATURATION] / 100.0;
-  v = csp->values[COLOR_SELECT_VALUE] / 100.0;
-
-  if (s == 0)
-    {
-      csp->values[COLOR_SELECT_RED] = v * 255;
-      csp->values[COLOR_SELECT_GREEN] = v * 255;
-      csp->values[COLOR_SELECT_BLUE] = v * 255;
-    }
-  else
-    {
-      if (h == 360)
-	h = 0;
-
-      h /= 60;
-      f = h - (int) h;
-      p = v * (1 - s);
-      q = v * (1 - (s * f));
-      t = v * (1 - (s * (1 - f)));
-
-      switch ((gint) h)
-	{
-	case 0:
-	  csp->values[COLOR_SELECT_RED]   = v * 255;
-	  csp->values[COLOR_SELECT_GREEN] = t * 255;
-	  csp->values[COLOR_SELECT_BLUE]  = p * 255;
-	  break;
-	case 1:
-	  csp->values[COLOR_SELECT_RED]   = q * 255;
-	  csp->values[COLOR_SELECT_GREEN] = v * 255;
-	  csp->values[COLOR_SELECT_BLUE]  = p * 255;
-	  break;
-	case 2:
-	  csp->values[COLOR_SELECT_RED]   = p * 255;
-	  csp->values[COLOR_SELECT_GREEN] = v * 255;
-	  csp->values[COLOR_SELECT_BLUE]  = t * 255;
-	  break;
-	case 3:
-	  csp->values[COLOR_SELECT_RED]   = p * 255;
-	  csp->values[COLOR_SELECT_GREEN] = q * 255;
-	  csp->values[COLOR_SELECT_BLUE]  = v * 255;
-	  break;
-	case 4:
-	  csp->values[COLOR_SELECT_RED]   = t * 255;
-	  csp->values[COLOR_SELECT_GREEN] = p * 255;
-	  csp->values[COLOR_SELECT_BLUE]  = v * 255;
-	  break;
-	case 5:
-	  csp->values[COLOR_SELECT_RED]   = v * 255;
-	  csp->values[COLOR_SELECT_GREEN] = p * 255;
-	  csp->values[COLOR_SELECT_BLUE]  = q * 255;
-	  break;
-	}
-    }
+  gimp_hsv_to_rgb (&csp->hsv, &csp->rgb);
 }
 
 static void
 color_select_update_hsv_values (ColorSelect *csp)
 {
-  gint   r, g, b;
-  gfloat h, s, v;
-  gint   min, max;
-  gint   delta;
-
-  if (!csp)
+  if (! csp)
     return;
 
-  r = csp->values[COLOR_SELECT_RED];
-  g = csp->values[COLOR_SELECT_GREEN];
-  b = csp->values[COLOR_SELECT_BLUE];
-
-  if (r > g)
-    {
-      if (r > b)
-	max = r;
-      else
-	max = b;
-
-      if (g < b)
-	min = g;
-      else
-	min = b;
-    }
-  else
-    {
-      if (g > b)
-	max = g;
-      else
-	max = b;
-
-      if (r < b)
-	min = r;
-      else
-	min = b;
-    }
-
-  v = max;
-
-  if (max != 0)
-    s = (max - min) / (float) max;
-  else
-    s = 0;
-
-  if (s == 0)
-    {
-      h = 0;
-    }
-  else
-    {
-      h = 0;
-      delta = max - min;
-      if (r == max)
-	h = (g - b) / (float) delta;
-      else if (g == max)
-	h = 2 + (b - r) / (float) delta;
-      else if (b == max)
-	h = 4 + (r - g) / (float) delta;
-      h *= 60;
-
-      if (h < 0)
-	h += 360;
-    }
-
-  csp->values[COLOR_SELECT_HUE]        = h;
-  csp->values[COLOR_SELECT_SATURATION] = s * 100;
-  csp->values[COLOR_SELECT_VALUE]      = v * 100 / 255;
+  gimp_rgb_to_hsv (&csp->rgb, &csp->hsv);
 }
 
 static void
 color_select_update_pos (ColorSelect *csp)
 {
-  if (!csp)
+  if (! csp)
     return;
 
   switch (csp->z_color_fill)
     {
     case COLOR_SELECT_RED:
-      csp->pos[0] = csp->values[COLOR_SELECT_BLUE];
-      csp->pos[1] = csp->values[COLOR_SELECT_GREEN];
-      csp->pos[2] = csp->values[COLOR_SELECT_RED];
+      csp->pos[0] = (gint) (csp->rgb.b * 255.999);
+      csp->pos[1] = (gint) (csp->rgb.g * 255.999);
+      csp->pos[2] = (gint) (csp->rgb.r * 255.999);
       break;
     case COLOR_SELECT_GREEN:
-      csp->pos[0] = csp->values[COLOR_SELECT_BLUE];
-      csp->pos[1] = csp->values[COLOR_SELECT_RED];
-      csp->pos[2] = csp->values[COLOR_SELECT_GREEN];
+      csp->pos[0] = (gint) (csp->rgb.b * 255.999);
+      csp->pos[1] = (gint) (csp->rgb.r * 255.999);
+      csp->pos[2] = (gint) (csp->rgb.g * 255.999);
       break;
     case COLOR_SELECT_BLUE:
-      csp->pos[0] = csp->values[COLOR_SELECT_GREEN];
-      csp->pos[1] = csp->values[COLOR_SELECT_RED];
-      csp->pos[2] = csp->values[COLOR_SELECT_BLUE];
+      csp->pos[0] = (gint) (csp->rgb.g * 255.999);
+      csp->pos[1] = (gint) (csp->rgb.r * 255.999);
+      csp->pos[2] = (gint) (csp->rgb.b * 255.999);
       break;
+
     case COLOR_SELECT_HUE:
-      csp->pos[0] = csp->values[COLOR_SELECT_VALUE] * 255 / 100;
-      csp->pos[1] = csp->values[COLOR_SELECT_SATURATION] * 255 / 100;
-      csp->pos[2] = csp->values[COLOR_SELECT_HUE] * 255 / 360;
+      csp->pos[0] = (gint) (csp->hsv.v * 255.999);
+      csp->pos[1] = (gint) (csp->hsv.s * 255.999);
+      csp->pos[2] = (gint) (csp->hsv.h * 255.999);
       break;
     case COLOR_SELECT_SATURATION:
-      csp->pos[0] = csp->values[COLOR_SELECT_VALUE] * 255 / 100;
-      csp->pos[1] = csp->values[COLOR_SELECT_HUE] * 255 / 360;
-      csp->pos[2] = csp->values[COLOR_SELECT_SATURATION] * 255 / 100;
+      csp->pos[0] = (gint) (csp->hsv.v * 255.999);
+      csp->pos[1] = (gint) (csp->hsv.h * 255.999);
+      csp->pos[2] = (gint) (csp->hsv.s * 255.999);
       break;
     case COLOR_SELECT_VALUE:
-      csp->pos[0] = csp->values[COLOR_SELECT_SATURATION] * 255 / 100;
-      csp->pos[1] = csp->values[COLOR_SELECT_HUE] * 255 / 360;
-      csp->pos[2] = csp->values[COLOR_SELECT_VALUE] * 255 / 100;
+      csp->pos[0] = (gint) (csp->hsv.s * 255.999);
+      csp->pos[1] = (gint) (csp->hsv.h * 255.999);
+      csp->pos[2] = (gint) (csp->hsv.v * 255.999);
       break;
     }
 }
@@ -663,7 +507,7 @@ color_select_xy_expose (GtkWidget      *widget,
 			GdkEventExpose *event,
 			ColorSelect    *csp)
 {
-  if (!csp->gc)
+  if (! csp->gc)
     csp->gc = gdk_gc_new (widget->window);
 
   color_select_draw_xy_marker (csp, &event->area);
@@ -701,7 +545,7 @@ color_select_xy_events (GtkWidget   *widget,
 
       gdk_pointer_grab (csp->xy_color->window, FALSE,
 			GDK_POINTER_MOTION_HINT_MASK |
-			GDK_BUTTON1_MOTION_MASK |
+			GDK_BUTTON1_MOTION_MASK      |
 			GDK_BUTTON_RELEASE_MASK,
 			NULL, NULL, bevent->time);
       color_select_draw_xy_marker (csp, NULL);
@@ -795,10 +639,8 @@ color_select_z_events (GtkWidget   *widget,
       color_select_draw_z_marker (csp, NULL);
 
       csp->pos[2] = 255 - (bevent->y * 255) / (Z_DEF_HEIGHT - 1);
-      if (csp->pos[2] < 0)
-	csp->pos[2] = 0;
-      if (csp->pos[2] > 255)
-	csp->pos[2] = 255;
+
+      csp->pos[2] = CLAMP (csp->pos[2], 0, 255);
 
       gdk_pointer_grab (csp->z_color->window, FALSE,
 			GDK_POINTER_MOTION_HINT_MASK |
@@ -815,10 +657,8 @@ color_select_z_events (GtkWidget   *widget,
       color_select_draw_z_marker (csp, NULL);
 
       csp->pos[2] = 255 - (bevent->y * 255) / (Z_DEF_HEIGHT - 1);
-      if (csp->pos[2] < 0)
-	csp->pos[2] = 0;
-      if (csp->pos[2] > 255)
-	csp->pos[2] = 255;
+
+      csp->pos[2] = CLAMP (csp->pos[2], 0, 255);
 
       gdk_pointer_ungrab (bevent->time);
       color_select_draw_z_marker (csp, NULL);
@@ -837,10 +677,8 @@ color_select_z_events (GtkWidget   *widget,
       color_select_draw_z_marker (csp, NULL);
 
       csp->pos[2] = 255 - (mevent->y * 255) / (Z_DEF_HEIGHT - 1);
-      if (csp->pos[2] < 0)
-	csp->pos[2] = 0;
-      if (csp->pos[2] > 255)
-	csp->pos[2] = 255;
+
+      csp->pos[2] = CLAMP (csp->pos[2], 0, 255);
 
       color_select_draw_z_marker (csp, NULL);
       color_select_update (csp, UPDATE_VALUES | UPDATE_CALLER);
@@ -857,7 +695,7 @@ static void
 color_select_set_channel (ColorSelect                  *csp,
 			  GimpColorSelectorChannelType  type)
 {
-  if (!csp)
+  if (! csp)
     return;
 
   switch ((ColorSelectFillType) type)
@@ -897,7 +735,8 @@ color_select_set_channel (ColorSelect                  *csp,
 static void
 color_select_image_fill (GtkWidget           *preview,
 			 ColorSelectFillType  type,
-			 gint                *values)
+			 const GimpHSV       *hsv,
+			 const GimpRGB       *rgb)
 {
   ColorSelectFill csf;
   gint            height;
@@ -909,7 +748,8 @@ color_select_image_fill (GtkWidget           *preview,
   csf.y      = -1;
   csf.width  = preview->requisition.width;
   csf.height = preview->requisition.height;
-  csf.values = values;
+  csf.hsv    = *hsv;
+  csf.rgb    = *rgb;
 
   height = csf.height;
   if (height > 0)
@@ -1085,14 +925,9 @@ color_select_update_hue (ColorSelectFill *csf)
   p = csf->buffer;
 
   csf->y += 1;
-  h = csf->y * 360 / csf->height;
+  h = csf->y * 360.0 / csf->height;
 
-  h = 360 - h;
-
-  if (h < 0)
-    h = 0;
-  if (h >= 360)
-    h = 0;
+  h = CLAMP (360 - h, 0, 360);
 
   h /= 60;
   f = (h - (int) h) * 255;
@@ -1205,7 +1040,7 @@ color_select_update_red_green (ColorSelectFill *csf)
   p = csf->buffer;
 
   csf->y += 1;
-  b = csf->values[COLOR_SELECT_BLUE];
+  b = (gint) (csf->rgb.b * 255.999);
   r = (csf->height - csf->y + 1) * 255 / csf->height;
 
   if (r < 0)
@@ -1236,7 +1071,7 @@ color_select_update_red_blue (ColorSelectFill *csf)
   p = csf->buffer;
 
   csf->y += 1;
-  g = csf->values[COLOR_SELECT_GREEN];
+  g = (gint) (csf->rgb.g * 255.999);
   r = (csf->height - csf->y + 1) * 255 / csf->height;
 
   if (r < 0)
@@ -1267,7 +1102,7 @@ color_select_update_green_blue (ColorSelectFill *csf)
   p = csf->buffer;
 
   csf->y += 1;
-  r = csf->values[COLOR_SELECT_RED];
+  r = (gint) (csf->rgb.r * 255.999);
   g = (csf->height - csf->y + 1) * 255 / csf->height;
 
   if (g < 0)
@@ -1312,7 +1147,7 @@ color_select_update_hue_saturation (ColorSelectFill *csf)
   s = 0;
   ds = 1.0 / csf->width;
 
-  v = csf->values[COLOR_SELECT_VALUE] / 100.0;
+  v = csf->hsv.v;
 
   switch ((int) h)
     {
@@ -1403,7 +1238,7 @@ color_select_update_hue_value (ColorSelectFill *csf)
   v = 0;
   dv = 1.0 / csf->width;
 
-  s = csf->values[COLOR_SELECT_SATURATION] / 100.0;
+  s = csf->hsv.s;
 
   switch ((int) h)
     {
@@ -1490,7 +1325,7 @@ color_select_update_saturation_value (ColorSelectFill *csf)
 
   s = 1 - s;
 
-  h = (gfloat) csf->values[COLOR_SELECT_HUE];
+  h = (gfloat) csf->hsv.h * 360.0;
   if (h >= 360)
     h -= 360;
   h /= 60;
@@ -1577,13 +1412,8 @@ typedef struct
 } notebook_glue;
 
 static GtkWidget *
-color_select_notebook_new (gint                       h,
-			   gint                       s,
-			   gint                       v,
-			   gint                       r,
-			   gint                       g,
-			   gint                       b,
-			   gint                       a,
+color_select_notebook_new (const GimpHSV             *hsv,
+			   const GimpRGB             *rgb,
 			   gboolean                   show_alpha,
 			   GimpColorSelectorCallback  callback,
 			   gpointer                   data,
@@ -1607,20 +1437,14 @@ color_select_notebook_new (gint                       h,
   csp->xy_color_fill = COLOR_SELECT_SATURATION_VALUE;
   csp->gc            = NULL;
 
-  csp->values[COLOR_SELECT_HUE]        = h;
-  csp->values[COLOR_SELECT_SATURATION] = s;
-  csp->values[COLOR_SELECT_VALUE]      = v;
-  csp->values[COLOR_SELECT_RED]        = r;
-  csp->values[COLOR_SELECT_GREEN]      = g;
-  csp->values[COLOR_SELECT_BLUE]       = b;
-  csp->values[COLOR_SELECT_ALPHA]      = a;
+  csp->hsv           = *hsv;
+  csp->rgb           = *rgb;
 
   color_select_update_pos (csp);
 
-  glue->main_vbox = color_select_widget_new (csp, r, g, b, a);
+  glue->main_vbox = color_select_widget_new (csp, rgb);
 
-  color_select_image_fill (csp->z_color, csp->z_color_fill, csp->values);
-  color_select_image_fill (csp->xy_color, csp->xy_color_fill, csp->values);
+  color_select_update (csp, UPDATE_XY_COLOR | UPDATE_Z_COLOR);
 
   *selector_data = glue;
 
@@ -1642,20 +1466,14 @@ color_select_notebook_free (gpointer data)
   g_free (glue);
 }
 
-
 static void
-color_select_notebook_set_color (gpointer data,
-				 gint     h,
-				 gint     s,
-				 gint     v,
-				 gint     r,
-				 gint     g,
-				 gint     b,
-				 gint     a)
+color_select_notebook_set_color (gpointer       data,
+				 const GimpHSV *hsv,
+				 const GimpRGB *rgb)
 {
   notebook_glue *glue = data;
 
-  color_select_set_color (glue->csp, h, s, v, r, g, b, a);
+  color_select_set_color (glue->csp, hsv, rgb);
 }
 
 static void
@@ -1668,16 +1486,11 @@ color_select_notebook_set_channel (gpointer                      data,
 }
 
 static void
-color_select_notebook_update_callback (gint              h,
-				       gint              s,
-				       gint              v,
-				       gint              r,
-				       gint              g,
-				       gint              b,
-				       gint              a,
-				       gpointer          data)
+color_select_notebook_update_callback (const GimpHSV *hsv,
+				       const GimpRGB *rgb,
+				       gpointer       data)
 {
   notebook_glue *glue = data;
 
-  glue->callback (glue->client_data, h, s, v, r, g, b, a);
+  glue->callback (glue->client_data, hsv, rgb);
 }

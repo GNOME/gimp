@@ -72,9 +72,10 @@ struct _ColorNotebook
 
   GdkGC                    *gc;
 
-  gint                      values[7];
+  GimpHSV                   hsv;
+  GimpRGB                   rgb;
 
-  gint                      orig_values[4];
+  GimpRGB                   orig_rgb;
 
   GimpColorSelectorChannelType  active_channel;
 
@@ -121,13 +122,8 @@ static void       color_notebook_ok_callback     (GtkWidget         *widget,
 static void       color_notebook_cancel_callback (GtkWidget         *widget,
 						  gpointer           data);
 static void       color_notebook_update_callback (gpointer           data,
-						  gint               hue,
-						  gint               saturation,
-						  gint               value,
-						  gint               red,
-						  gint               green,
-						  gint               blue,
-						  gint               alpha);
+						  const GimpHSV     *hsv,
+						  const GimpRGB     *rgb);
 static void       color_notebook_page_switch     (GtkWidget         *widget,
 						  GtkNotebookPage   *page,
 						  guint              page_num,
@@ -203,8 +199,6 @@ color_notebook_new (GimpRGB               *color,
   ColorSelectorInstance *csel;
   gint                   i;
 
-  guchar                 red, green, blue, alpha;
-
   static gchar *toggle_titles[] = 
   { 
     N_("H"),
@@ -225,13 +219,12 @@ color_notebook_new (GimpRGB               *color,
     N_("Blue"),
     N_("Alpha")
   };
-  static gdouble  slider_max_vals[] = { 360, 100, 100, 255, 255, 255, 255 };
-  static gdouble  slider_incs[]     = {  30,  10,  10,  16,  16,  16,  16 };
+  static gdouble  slider_initial_vals[] = {   0,   0,   0,   0,   0,   0,   0 };
+  static gdouble  slider_max_vals[]     = { 360, 100, 100, 255, 255, 255, 100 };
+  static gdouble  slider_incs[]         = {  30,  10,  10,  16,  16,  16,  10 };
 
   g_return_val_if_fail (selector_info != NULL, NULL);
   g_return_val_if_fail (color != NULL, NULL);
-
-  gimp_rgba_get_uchar (color, &red, &green, &blue, &alpha);
 
   cnp = g_new0 (ColorNotebook, 1);
 
@@ -244,10 +237,8 @@ color_notebook_new (GimpRGB               *color,
   cnp->selectors     = NULL;
   cnp->cur_page      = NULL;
 
-  cnp->values[GIMP_COLOR_SELECTOR_RED]   = cnp->orig_values[0] = red;
-  cnp->values[GIMP_COLOR_SELECTOR_GREEN] = cnp->orig_values[1] = green;
-  cnp->values[GIMP_COLOR_SELECTOR_BLUE]  = cnp->orig_values[2] = blue;
-  cnp->values[GIMP_COLOR_SELECTOR_ALPHA] = cnp->orig_values[3] = alpha;
+  cnp->rgb      = *color;
+  cnp->orig_rgb = *color;
 
   color_notebook_update_hsv_values (cnp); 
 
@@ -295,13 +286,8 @@ color_notebook_new (GimpRGB               *color,
 	  csel->info = info;
 	  info->refs++;
 	  csel->frame =
-	    info->methods.new (cnp->values[GIMP_COLOR_SELECTOR_HUE],
-			       cnp->values[GIMP_COLOR_SELECTOR_SATURATION],
-			       cnp->values[GIMP_COLOR_SELECTOR_VALUE],
-			       cnp->values[GIMP_COLOR_SELECTOR_RED],
-			       cnp->values[GIMP_COLOR_SELECTOR_GREEN],
-			       cnp->values[GIMP_COLOR_SELECTOR_BLUE],
-			       cnp->values[GIMP_COLOR_SELECTOR_ALPHA],
+	    info->methods.new (&cnp->hsv,
+			       &cnp->rgb,
 			       show_alpha,
 			       color_notebook_update_callback, csel,
 			       &csel->selector_data);
@@ -418,6 +404,7 @@ color_notebook_new (GimpRGB               *color,
 	  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
 	  gtk_table_attach (GTK_TABLE (table), label,
 			    0, 1, i, i + 1, GTK_FILL, GTK_EXPAND, 0, 0);
+	  gtk_widget_show (label);
 	}
       else
 	{
@@ -438,7 +425,7 @@ color_notebook_new (GimpRGB               *color,
       cnp->slider_data[i] = gimp_scale_entry_new (GTK_TABLE (table), 0, i,
                                                   NULL, 
                                                   80, 55,
-                                                  cnp->values[i], 
+                                                  slider_initial_vals[i],
                                                   0.0, slider_max_vals[i],
                                                   1.0, slider_incs[i],
                                                   0, TRUE, 0.0, 0.0,
@@ -455,7 +442,10 @@ color_notebook_new (GimpRGB               *color,
   gtk_widget_show (hbox);
 
   cnp->hex_entry = gtk_entry_new ();
-  g_snprintf (buffer, sizeof (buffer), "#%.2x%.2x%.2x", red, green, blue);
+  g_snprintf (buffer, sizeof (buffer), "#%.2x%.2x%.2x",
+	      (gint) (color->r * 255.999),
+	      (gint) (color->g * 255.999),
+	      (gint) (color->b * 255.999));
   gtk_entry_set_text (GTK_ENTRY (cnp->hex_entry), buffer);
   gtk_widget_set_usize (GTK_WIDGET (cnp->hex_entry), 75, 0);
   gtk_box_pack_end (GTK_BOX (hbox), cnp->hex_entry, FALSE, FALSE, 2);
@@ -470,6 +460,8 @@ color_notebook_new (GimpRGB               *color,
   label = gtk_label_new (_("Hex Triplet:"));
   gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
+
+  color_notebook_update_scales (cnp, -1);
 
   gtk_widget_show (cnp->shell);
 
@@ -537,19 +529,14 @@ void
 color_notebook_set_color (ColorNotebook *cnp,
 			  GimpRGB       *color)
 {
-  guchar red, green, blue, alpha;
-
   g_return_if_fail (cnp != NULL);
   g_return_if_fail (color != NULL);
 
-  gimp_rgba_get_uchar (color, &red, &green, &blue, &alpha);
-
-  cnp->values[GIMP_COLOR_SELECTOR_RED]   = cnp->orig_values[0] = red;
-  cnp->values[GIMP_COLOR_SELECTOR_GREEN] = cnp->orig_values[1] = green;
-  cnp->values[GIMP_COLOR_SELECTOR_BLUE]  = cnp->orig_values[2] = blue;
-  cnp->values[GIMP_COLOR_SELECTOR_ALPHA] = cnp->orig_values[3] = alpha;
+  cnp->rgb      = *color;
+  cnp->orig_rgb = *color;
 
   color_notebook_update_hsv_values (cnp);
+  color_notebook_update_scales (cnp, -1);
 
   color_notebook_update (cnp,
 			 UPDATE_NOTEBOOK   |
@@ -561,30 +548,22 @@ color_notebook_set_color (ColorNotebook *cnp,
  * Called by a color selector on user selection of a color
  */
 static void
-color_notebook_update_callback (gpointer data,
-				gint     hue,
-				gint     saturation,
-				gint     value,
-				gint     red,
-				gint     green,
-				gint     blue,
-				gint     alpha)
+color_notebook_update_callback (gpointer       data,
+				const GimpHSV *hsv,
+				const GimpRGB *rgb)
 {
   ColorSelectorInstance *csel;
   ColorNotebook         *cnp;
 
   g_return_if_fail (data != NULL);
+  g_return_if_fail (hsv != NULL);
+  g_return_if_fail (rgb != NULL);
 
   csel = (ColorSelectorInstance *) data;
   cnp = csel->color_notebook;
 
-  cnp->values[GIMP_COLOR_SELECTOR_HUE]        = hue;
-  cnp->values[GIMP_COLOR_SELECTOR_SATURATION] = saturation;
-  cnp->values[GIMP_COLOR_SELECTOR_VALUE]      = value;
-  cnp->values[GIMP_COLOR_SELECTOR_RED]        = red;
-  cnp->values[GIMP_COLOR_SELECTOR_GREEN]      = green;
-  cnp->values[GIMP_COLOR_SELECTOR_BLUE]       = blue;
-  cnp->values[GIMP_COLOR_SELECTOR_ALPHA]      = alpha;
+  cnp->hsv = *hsv;
+  cnp->rgb = *rgb;
 
   color_notebook_update_scales (cnp, -1);
 
@@ -598,19 +577,12 @@ color_notebook_ok_callback (GtkWidget *widget,
 			    gpointer   data)
 {
   ColorNotebook *cnp;
-  GimpRGB        color;
 
   cnp = (ColorNotebook *) data;
 
-  gimp_rgba_set_uchar (&color,
-		       (guchar) cnp->values[GIMP_COLOR_SELECTOR_RED],
-		       (guchar) cnp->values[GIMP_COLOR_SELECTOR_GREEN],
-		       (guchar) cnp->values[GIMP_COLOR_SELECTOR_BLUE],
-		       (guchar) cnp->values[GIMP_COLOR_SELECTOR_ALPHA]);
-
   if (cnp->callback)
     {
-      (* cnp->callback) (&color,
+      (* cnp->callback) (&cnp->rgb,
 			 COLOR_NOTEBOOK_OK,
 			 cnp->client_data);
     }
@@ -621,19 +593,12 @@ color_notebook_cancel_callback (GtkWidget *widget,
 				gpointer   data)
 {
   ColorNotebook *cnp;
-  GimpRGB        color;
 
   cnp = (ColorNotebook *) data;
 
-  gimp_rgba_set_uchar (&color,
-		       (guchar) cnp->orig_values[0],
-		       (guchar) cnp->orig_values[1],
-		       (guchar) cnp->orig_values[2],
-		       (guchar) cnp->orig_values[3]);
-
   if (cnp->callback)
     {
-      (* cnp->callback) (&color,
+      (* cnp->callback) (&cnp->orig_rgb,
 			 COLOR_NOTEBOOK_CANCEL,
 			 cnp->client_data);
     }
@@ -800,13 +765,8 @@ color_notebook_update_notebook (ColorNotebook *cnp)
 
   csel = cnp->cur_page;
   csel->info->methods.set_color (csel->selector_data,
-				 cnp->values[GIMP_COLOR_SELECTOR_HUE],
-				 cnp->values[GIMP_COLOR_SELECTOR_SATURATION],
-				 cnp->values[GIMP_COLOR_SELECTOR_VALUE],
-				 cnp->values[GIMP_COLOR_SELECTOR_RED],
-				 cnp->values[GIMP_COLOR_SELECTOR_GREEN],
-				 cnp->values[GIMP_COLOR_SELECTOR_BLUE],
-				 cnp->values[GIMP_COLOR_SELECTOR_ALPHA]);
+				 &cnp->hsv,
+				 &cnp->rgb);
 }
 
 static void
@@ -824,17 +784,9 @@ color_notebook_update_channel (ColorNotebook *cnp)
 static void
 color_notebook_update_caller (ColorNotebook *cnp)
 {
-  GimpRGB color;
-
-  gimp_rgba_set (&color,
-		 cnp->values[GIMP_COLOR_SELECTOR_RED]   / 255.0,
-		 cnp->values[GIMP_COLOR_SELECTOR_GREEN] / 255.0,
-		 cnp->values[GIMP_COLOR_SELECTOR_BLUE]  / 255.0,
-		 cnp->values[GIMP_COLOR_SELECTOR_ALPHA] / 255.0);
-
   if (cnp && cnp->callback)
     {
-      (* cnp->callback) (&color,
+      (* cnp->callback) (&cnp->rgb,
 			 COLOR_NOTEBOOK_UPDATE,
 			 cnp->client_data);
     }
@@ -846,7 +798,7 @@ color_notebook_update_colors (ColorNotebook           *cnp,
 {
   GdkWindow *window;
   GdkColor   color;
-  gint       red, green, blue;
+  guchar     red, green, blue;
   gint       width, height;
 
   if (!cnp)
@@ -855,16 +807,14 @@ color_notebook_update_colors (ColorNotebook           *cnp,
   if (which == UPDATE_ORIG_COLOR)
     {
       window = cnp->orig_color->window;
-      red    = cnp->orig_values[0];
-      green  = cnp->orig_values[1];
-      blue   = cnp->orig_values[2];
+
+      gimp_rgb_get_uchar (&cnp->orig_rgb, &red, &green, &blue);
     }
   else if (which == UPDATE_NEW_COLOR)
     {
       window = cnp->new_color->window;
-      red    = cnp->values[GIMP_COLOR_SELECTOR_RED];
-      green  = cnp->values[GIMP_COLOR_SELECTOR_GREEN];
-      blue   = cnp->values[GIMP_COLOR_SELECTOR_BLUE];
+
+      gimp_rgb_get_uchar (&cnp->rgb, &red, &green, &blue);
     }
   else
     {
@@ -892,64 +842,55 @@ color_notebook_update_colors (ColorNotebook           *cnp,
 static void
 color_notebook_update_rgb_values (ColorNotebook *cnp)
 {
-  gdouble h, s, v;
-
-  if (!cnp)
+  if (! cnp)
     return;
 
-  h = cnp->values[GIMP_COLOR_SELECTOR_HUE]        / 360.0;
-  s = cnp->values[GIMP_COLOR_SELECTOR_SATURATION] / 100.0;
-  v = cnp->values[GIMP_COLOR_SELECTOR_VALUE]      / 100.0;
-
-  gimp_hsv_to_rgb_double (&h, &s, &v);
-
-  cnp->values[GIMP_COLOR_SELECTOR_RED]   = h * 255;
-  cnp->values[GIMP_COLOR_SELECTOR_GREEN] = s * 255;
-  cnp->values[GIMP_COLOR_SELECTOR_BLUE]  = v * 255;
+  gimp_hsv_to_rgb (&cnp->hsv, &cnp->rgb);
 }
 
 static void
 color_notebook_update_hsv_values (ColorNotebook *cnp)
 {
-  gdouble r, g, b;
-
-  if (!cnp)
+  if (! cnp)
     return;
 
-  r = cnp->values[GIMP_COLOR_SELECTOR_RED]   / 255.0;
-  g = cnp->values[GIMP_COLOR_SELECTOR_GREEN] / 255.0;
-  b = cnp->values[GIMP_COLOR_SELECTOR_BLUE]  / 255.0;
-
-  gimp_rgb_to_hsv_double (&r, &g, &b);
-
-  cnp->values[GIMP_COLOR_SELECTOR_HUE]        = r * 360.0;
-  cnp->values[GIMP_COLOR_SELECTOR_SATURATION] = g * 100.0;
-  cnp->values[GIMP_COLOR_SELECTOR_VALUE]      = b * 100.0;
+  gimp_rgb_to_hsv (&cnp->rgb, &cnp->hsv);
 }
 
 static void
 color_notebook_update_scales (ColorNotebook *cnp,
 			      gint           skip)
 {
+  gint  values[7];
   gchar buffer[16];
   gint  i;
 
-  if (!cnp)
+  if (! cnp)
     return;
+
+  values[GIMP_COLOR_SELECTOR_HUE]        = (gint) (cnp->hsv.h * 360.999);
+  values[GIMP_COLOR_SELECTOR_SATURATION] = (gint) (cnp->hsv.s * 100.999);
+  values[GIMP_COLOR_SELECTOR_VALUE]      = (gint) (cnp->hsv.v * 100.999);
+  values[GIMP_COLOR_SELECTOR_RED]        = (gint) (cnp->rgb.r * 255.999);
+  values[GIMP_COLOR_SELECTOR_GREEN]      = (gint) (cnp->rgb.g * 255.999);
+  values[GIMP_COLOR_SELECTOR_BLUE]       = (gint) (cnp->rgb.b * 255.999);
+  values[GIMP_COLOR_SELECTOR_ALPHA]      = (gint) (cnp->rgb.a * 100.999);
 
   for (i = 0; i < (cnp->show_alpha ? 7 : 6); i++)
     if (i != skip)
       {
-	gtk_signal_handler_block_by_data (GTK_OBJECT (cnp->slider_data[i]), cnp);
+	gtk_signal_handler_block_by_data (GTK_OBJECT (cnp->slider_data[i]),
+					  cnp);
 	gtk_adjustment_set_value (GTK_ADJUSTMENT (cnp->slider_data[i]),
-				  cnp->values[i]);
-	gtk_signal_handler_unblock_by_data (GTK_OBJECT (cnp->slider_data[i]), cnp);
+				  values[i]);
+	gtk_signal_handler_unblock_by_data (GTK_OBJECT (cnp->slider_data[i]),
+					    cnp);
       }
 
   g_snprintf (buffer, sizeof (buffer), "#%.2x%.2x%.2x",
-              cnp->values[GIMP_COLOR_SELECTOR_RED],
-              cnp->values[GIMP_COLOR_SELECTOR_GREEN],
-              cnp->values[GIMP_COLOR_SELECTOR_BLUE]);
+              values[GIMP_COLOR_SELECTOR_RED],
+              values[GIMP_COLOR_SELECTOR_GREEN],
+              values[GIMP_COLOR_SELECTOR_BLUE]);
 
   gtk_entry_set_text (GTK_ENTRY (cnp->hex_entry), buffer);
 }
@@ -964,7 +905,7 @@ color_notebook_color_events (GtkWidget *widget,
 
   cnp = (ColorNotebook *) data;
 
-  if (!cnp)
+  if (! cnp)
     return FALSE;
 
   switch (event->type)
@@ -1024,7 +965,36 @@ color_notebook_scale_update (GtkAdjustment *adjustment,
     if (cnp->slider_data[i] == GTK_OBJECT (adjustment))
       break;
 
-  cnp->values[i] = (gint) (GTK_ADJUSTMENT (adjustment)->value);
+  switch (i)
+    {
+    case GIMP_COLOR_SELECTOR_HUE:
+      cnp->hsv.h = GTK_ADJUSTMENT (adjustment)->value / 360.0;
+      break;
+
+    case GIMP_COLOR_SELECTOR_SATURATION:
+      cnp->hsv.s = GTK_ADJUSTMENT (adjustment)->value / 100.0;
+      break;
+
+    case GIMP_COLOR_SELECTOR_VALUE:
+      cnp->hsv.v = GTK_ADJUSTMENT (adjustment)->value / 100.0;
+      break;
+
+    case GIMP_COLOR_SELECTOR_RED:
+      cnp->rgb.r = GTK_ADJUSTMENT (adjustment)->value / 255.0;
+      break;
+
+    case GIMP_COLOR_SELECTOR_GREEN:
+      cnp->rgb.g = GTK_ADJUSTMENT (adjustment)->value / 255.0;
+      break;
+
+    case GIMP_COLOR_SELECTOR_BLUE:
+      cnp->rgb.b = GTK_ADJUSTMENT (adjustment)->value / 255.0;
+      break;
+
+    case GIMP_COLOR_SELECTOR_ALPHA:
+      cnp->hsv.a = cnp->rgb.a = GTK_ADJUSTMENT (adjustment)->value / 100.0;
+      break;
+    }
 
   if ((i >= GIMP_COLOR_SELECTOR_HUE) && (i <= GIMP_COLOR_SELECTOR_VALUE))
     {
@@ -1069,9 +1039,9 @@ color_notebook_hex_entry_events (GtkWidget *widget,
       hex_color = g_strdup (gtk_entry_get_text (GTK_ENTRY (cnp->hex_entry)));
 
       g_snprintf (buffer, sizeof (buffer), "#%.2x%.2x%.2x",
-                  cnp->values[GIMP_COLOR_SELECTOR_RED],
-                  cnp->values[GIMP_COLOR_SELECTOR_GREEN],
-                  cnp->values[GIMP_COLOR_SELECTOR_BLUE]);
+                  (gint) (cnp->rgb.r * 255.999),
+                  (gint) (cnp->rgb.g * 255.999),
+                  (gint) (cnp->rgb.b * 255.999));
 
       if ((strlen (hex_color) == 7) &&
           (g_strcasecmp (buffer, hex_color) != 0))
@@ -1079,9 +1049,9 @@ color_notebook_hex_entry_events (GtkWidget *widget,
           if ((sscanf (hex_color, "#%x", &hex_rgb) == 1) &&
               (hex_rgb < (1 << 24)))
 	    {
-	      cnp->values[GIMP_COLOR_SELECTOR_RED] = (hex_rgb & 0xff0000) >> 16;
-	      cnp->values[GIMP_COLOR_SELECTOR_GREEN] = (hex_rgb & 0x00ff00) >> 8;
-	      cnp->values[GIMP_COLOR_SELECTOR_BLUE] = (hex_rgb & 0x0000ff);
+	      cnp->rgb.r = ((hex_rgb & 0xff0000) >> 16) / 255.0;
+	      cnp->rgb.g = ((hex_rgb & 0x00ff00) >> 8)  / 255.0;
+	      cnp->rgb.b = ((hex_rgb & 0x0000ff))       / 255.0;
 
 	      color_notebook_update_hsv_values (cnp);
 	      color_notebook_update_scales (cnp, -1);
@@ -1114,11 +1084,7 @@ color_notebook_drag_new_color (GtkWidget *widget,
 
   cnp = (ColorNotebook *) data;
 
-  gimp_rgba_set_uchar (color,
-		       (guchar) cnp->values[GIMP_COLOR_SELECTOR_RED],
-		       (guchar) cnp->values[GIMP_COLOR_SELECTOR_GREEN],
-		       (guchar) cnp->values[GIMP_COLOR_SELECTOR_BLUE],
-		       (guchar) cnp->values[GIMP_COLOR_SELECTOR_ALPHA]);
+  *color = cnp->rgb;
 }
 
 static void
@@ -1127,16 +1093,10 @@ color_notebook_drop_new_color (GtkWidget *widget,
 			       gpointer   data)
 {
   ColorNotebook *cnp;
-  guchar         r, g, b, a;
 
   cnp = (ColorNotebook *) data;
 
-  gimp_rgba_get_uchar (color, &r, &g, &b, &a);
-
-  cnp->values[GIMP_COLOR_SELECTOR_RED]   = (gint) r;
-  cnp->values[GIMP_COLOR_SELECTOR_GREEN] = (gint) g;
-  cnp->values[GIMP_COLOR_SELECTOR_BLUE]  = (gint) b;
-  cnp->values[GIMP_COLOR_SELECTOR_ALPHA] = (gint) a;
+  cnp->rgb = *color;
 
   color_notebook_update_hsv_values (cnp);
   color_notebook_update_scales (cnp, -1);
@@ -1156,9 +1116,5 @@ color_notebook_drag_old_color (GtkWidget *widget,
 
   cnp = (ColorNotebook *) data;
 
-  gimp_rgba_set_uchar (color,
-		       (guchar) cnp->orig_values[0],
-		       (guchar) cnp->orig_values[1],
-		       (guchar) cnp->orig_values[2],
-		       (guchar) cnp->orig_values[3]);
+  *color = cnp->orig_rgb;
 }

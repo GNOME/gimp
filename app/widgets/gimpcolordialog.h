@@ -33,6 +33,7 @@ typedef void (* ColorNotebookCallback) (GimpRGB            *color,
 
 typedef struct _ColorSelectorInstance ColorSelectorInstance;
 
+
 ColorNotebook * color_notebook_new       (GimpRGB              *color,
 					  ColorNotebookCallback callback,
 					  gpointer              data,

@@ -24,6 +24,9 @@
 #include "gimpmath.h"
 
 
+#define GIMP_HSV_UNDEFINED -1.0
+#define GIMP_HSL_UNDEFINED -1.0
+
 /*********************************
  *   color conversion routines   *
  *********************************/
@@ -32,8 +35,8 @@
 /*  GimpRGB functions  */
 
 void
-gimp_rgb_to_hsv (GimpRGB *rgb,
-		 GimpHSV *hsv)
+gimp_rgb_to_hsv (const GimpRGB *rgb,
+		 GimpHSV       *hsv)
 {
   gdouble max, min, delta;
 
@@ -50,6 +53,9 @@ gimp_rgb_to_hsv (GimpRGB *rgb,
       delta = max - min;
 
       hsv->s = delta / max;
+
+      if (delta == 0.0)
+	delta = 1.0;
 
       if (rgb->r == max)
         {
@@ -74,23 +80,25 @@ gimp_rgb_to_hsv (GimpRGB *rgb,
   else
     {
       hsv->s = 0.0;
-      hsv->h = GIMP_HSV_UNDEFINED;
+      hsv->h = 0.0;
     }
 
   hsv->a = rgb->a;
 }
 
 void
-gimp_hsv_to_rgb (GimpHSV *hsv,
-		 GimpRGB *rgb)
+gimp_hsv_to_rgb (const GimpHSV *hsv,
+		 GimpRGB       *rgb)
 {
   gint    i;
   gdouble f, w, q, t;
 
+  gdouble hue;
+
   g_return_if_fail (rgb != NULL);
   g_return_if_fail (hsv != NULL);
 
-  if (hsv->s == 0.0 || hsv->h == GIMP_HSV_UNDEFINED)
+  if (hsv->s == 0.0)
     {
       rgb->r = hsv->v;
       rgb->g = hsv->v;
@@ -98,13 +106,15 @@ gimp_hsv_to_rgb (GimpHSV *hsv,
     }
   else
     {
-      if (hsv->h == 1.0)
-        hsv->h = 0.0;
+      hue = hsv->h;
 
-      hsv->h *= 6.0;
+      if (hue == 1.0)
+        hue = 0.0;
 
-      i = (gint) hsv->h;
-      f = hsv->h - i;
+      hue *= 6.0;
+
+      i = (gint) hue;
+      f = hue - i;
       w = hsv->v * (1.0 - hsv->s);
       q = hsv->v * (1.0 - (hsv->s * f));
       t = hsv->v * (1.0 - (hsv->s * (1.0 - f)));
@@ -148,10 +158,10 @@ gimp_hsv_to_rgb (GimpHSV *hsv,
 }
 
 void
-gimp_rgb_to_hsl (GimpRGB *rgb,
-		 gdouble *hue,
-		 gdouble *saturation,
-		 gdouble *lightness)
+gimp_rgb_to_hsl (const GimpRGB *rgb,
+		 gdouble       *hue,
+		 gdouble       *saturation,
+		 gdouble       *lightness)
 {
   gdouble max, min, delta;
 
@@ -178,6 +188,9 @@ gimp_rgb_to_hsl (GimpRGB *rgb,
         *saturation = (max - min) / (2.0 - max - min);
 
       delta = max - min;
+
+      if (delta == 0.0)
+	delta = 1.0;
 
       if (rgb->r == max)
         {
@@ -260,10 +273,10 @@ gimp_hsl_to_rgb (gdouble  hue,
  *****************************************************************************/
 
 void
-gimp_rgb_to_hwb (GimpRGB *rgb,
-		 gdouble *hue,
-		 gdouble *whiteness,
-		 gdouble *blackness)
+gimp_rgb_to_hwb (const GimpRGB *rgb,
+		 gdouble       *hue,
+		 gdouble       *whiteness,
+		 gdouble       *blackness)
 {
   /* RGB are each on [0, 1]. W and B are returned on [0, 1] and H is        */
   /* returned on [0, 6]. Exception: H is returned UNDEFINED if W ==  1 - B. */
@@ -655,6 +668,9 @@ gimp_rgb_to_hsv_double (gdouble *red,
     {
       delta = max - min;
 
+      if (delta == 0.0)
+	delta = 1.0;
+
       if (r == max)
 	h = (g - b) / delta;
       else if (g == max)
@@ -784,6 +800,9 @@ gimp_rgb_to_hsv4 (guchar  *rgb,
   else
     {
       delta = max - min;
+
+      if (delta == 0.0)
+	delta = 1.0;
 
       if (red == max)
 	h = (green - blue) / delta;

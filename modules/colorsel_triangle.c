@@ -27,23 +27,18 @@
 
 #include "gimpmodregister.h"
 
-#include <libgimp/gimpcolorselector.h>
-#include <libgimp/gimpcolor.h>
-#include <libgimp/gimpcolorspace.h>
-#include <libgimp/gimpmodule.h>
-#include <libgimp/gimpmath.h>
+#include "libgimp/gimpcolor.h"
+#include "libgimp/gimpcolorspace.h"
+#include "libgimp/gimpcolorselector.h"
+#include "libgimp/gimpmodule.h"
+#include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
 
 
 /* prototypes */
-static GtkWidget * colorsel_triangle_new  (gint              hue,
-					   gint              saturation,
-					   gint              value,
-					   gint              red,
-					   gint              green,
-					   gint              blue,
-					   gint              alpha,
+static GtkWidget * colorsel_triangle_new  (const GimpHSV    *hsv,
+					   const GimpRGB    *rgb,
 					   gboolean          show_alpha,
 					   GimpColorSelectorCallback callback,
 					   gpointer          callback_data,
@@ -52,13 +47,8 @@ static GtkWidget * colorsel_triangle_new  (gint              hue,
 static void colorsel_triangle_free        (gpointer          selector_data);
 
 static void colorsel_triangle_set_color   (gpointer          selector_data,
-					   gint              hue,
-					   gint              saturation,
-					   gint              value,
-					   gint              red,
-	         			   gint              green,
-	         			   gint              blue,
-					   gint              alpha);
+					   const GimpHSV    *hsv,
+					   const GimpRGB    *rgb);
 static void colorsel_triangle_set_channel (gpointer          selector_data,
 					   GimpColorSelectorChannelType  channel);
 
@@ -113,7 +103,9 @@ typedef enum
 
 struct _ColorSelect
 {
-  gint                       values[7];
+  GimpHSV                    hsv;
+  GimpRGB                    rgb;
+
   gdouble                    oldsat;
   gdouble                    oldval;
   gint                       mode;
@@ -131,10 +123,6 @@ static void        color_select_update_rgb_values (ColorSelect *coldata);
 
 static void        update_previews                (ColorSelect *coldata,
 						   gboolean     hue_changed);
-
-/*
-static void        color_select_update_hsv_values (ColorSelect *coldata);
-*/
 
 
 /*************************************************************/
@@ -179,13 +167,8 @@ module_unload (gpointer                     shutdown_data,
 /* methods */
 
 static GtkWidget *
-colorsel_triangle_new (gint                       hue,
-		       gint                       saturation,
-		       gint                       value,
-		       gint                       red,
-		       gint                       green,
-		       gint                       blue,
-		       gint                       alpha,
+colorsel_triangle_new (const GimpHSV             *hsv,
+		       const GimpRGB             *rgb,
 		       gboolean                   show_alpha,
 		       GimpColorSelectorCallback  callback,
 		       gpointer                   callback_data,
@@ -199,13 +182,9 @@ colorsel_triangle_new (gint                       hue,
   GtkWidget   *vbox;
 
   coldata = g_new (ColorSelect, 1);
-  coldata->values[HUE]        = hue;
-  coldata->values[SATURATION] = saturation;
-  coldata->values[VALUE]      = value;
-  coldata->values[RED]        = red;
-  coldata->values[GREEN]      = green;
-  coldata->values[BLUE]       = blue;
-  coldata->values[ALPHA]      = alpha;
+
+  coldata->hsv    = *hsv;
+  coldata->rgb    = *rgb;
 
   coldata->oldsat = 0;
   coldata->oldval = 0;
@@ -242,26 +221,16 @@ colorsel_triangle_free (gpointer selector_data)
 }
 
 static void
-colorsel_triangle_set_color (gpointer  selector_data,
-			     gint      hue,
-			     gint      saturation,
-			     gint      value,
-			     gint      red,
-			     gint      green,
-			     gint      blue,
-			     gint      alpha)
+colorsel_triangle_set_color (gpointer       selector_data,
+			     const GimpHSV *hsv,
+			     const GimpRGB *rgb)
 {
   ColorSelect *coldata;
 
   coldata = selector_data;
 
-  coldata->values[HUE]        = hue;
-  coldata->values[SATURATION] = saturation;
-  coldata->values[VALUE]      = value;
-  coldata->values[RED]        = red;
-  coldata->values[GREEN]      = green;
-  coldata->values[BLUE]       = blue;
-  coldata->values[ALPHA]      = alpha;
+  coldata->hsv = *hsv;
+  coldata->rgb = *rgb;
 
   update_previews (coldata, TRUE);
 }
@@ -278,201 +247,240 @@ colorsel_triangle_set_channel (gpointer                      selector_data,
 static void 
 color_select_update_rgb_values (ColorSelect *csp) 
 {
-  csp->values[RED]   = RINT (((gdouble) csp->values[HUE]) / 360.0 * 255);
-  csp->values[GREEN] = RINT (((gdouble) csp->values[SATURATION]) / 100.0 * 255);
-  csp->values[BLUE]  = RINT (((gdouble) csp->values[VALUE]) / 100.0 * 255);
-
-  gimp_hsv_to_rgb_int (&(csp->values[RED]),
-		       &(csp->values[GREEN]),
-		       &(csp->values[BLUE]));
+  gimp_hsv_to_rgb (&csp->hsv, &csp->rgb);
 }
-
-/*
-static void
-color_select_update_hsv_values (ColorSelect *csp)
-{
-  gdouble hue, sat, val;
-
-  hue = (gdouble) csp->values[RED]   / 255;
-  sat = (gdouble) csp->values[GREEN] / 255;
-  val = (gdouble) csp->values[BLUE]  / 255;
-  
-  gimp_rgb_to_hsv_double (&hue, &sat, &val);
-
-  csp->values[HUE]        = RINT (hue * 360);
-  csp->values[SATURATION] = RINT (sat * 100);
-  csp->values[VALUE]      = RINT (val * 100);
-}
-*/
 
 static void 
 update_previews (ColorSelect *coldata,
 		 gint         hue_changed) 
 {
   GtkWidget *preview;
-  guchar     buf[3*PREVIEWSIZE];
+  guchar     buf[3 * PREVIEWSIZE];
   gint       x, y, k, r2, dx, col;
   gint       x0, y0;
   gdouble    hue, sat, val, s, v, atn;
   gint       hx,hy, sx,sy, vx,vy;
 
-  hue = (gdouble) coldata->values[HUE] * G_PI / 180;
+  hue = (gdouble) coldata->hsv.h * 2 * G_PI;
 
   hx = sin (hue) * COLORTRIANGLERADIUS;
   hy = cos (hue) * COLORTRIANGLERADIUS;
 
-  sx = sin (hue - 2 * G_PI/3) * COLORTRIANGLERADIUS;
-  sy = cos (hue - 2 * G_PI/3) * COLORTRIANGLERADIUS;
+  sx = sin (hue - 2 * G_PI / 3) * COLORTRIANGLERADIUS;
+  sy = cos (hue - 2 * G_PI / 3) * COLORTRIANGLERADIUS;
 
-  vx = sin (hue + 2 * G_PI/3) * COLORTRIANGLERADIUS;
-  vy = cos (hue + 2 * G_PI/3) * COLORTRIANGLERADIUS;
+  vx = sin (hue + 2 * G_PI / 3) * COLORTRIANGLERADIUS;
+  vy = cos (hue + 2 * G_PI / 3) * COLORTRIANGLERADIUS;
 
-  hue = (gdouble) coldata->values[HUE];
+  hue = coldata->hsv.h * 360.0;
   preview = coldata->preview;
 
-  if (hue_changed) {
-    for (y = COLORWHEELRADIUS; y > -COLORWHEELRADIUS; y--) {
-      dx = RINT (sqrt (fabs ((COLORWHEELRADIUS) * (COLORWHEELRADIUS) - y * y)));
-      for (x = -dx, k = 0; x <= dx; x++) {
-        buf[k] = buf[k+1] = buf[k+2] = BGCOLOR;
-        r2 = (x * x) + (y * y);
-        if ( r2 <= COLORWHEELRADIUS * COLORWHEELRADIUS) {
-          if (r2 > COLORTRIANGLERADIUS * COLORTRIANGLERADIUS) { 
-	    atn = atan2 (x, y);
-	    if (atn < 0)
-	      atn = atn + 2 * G_PI;
-            gimp_hsv_to_rgb4 (buf + k, atn / (2 * G_PI), 1, 1);
-          } else {
-            val = (gdouble) ( (x - sx) * (hy - vy) -  (y - sy) * (hx - vx)) /
-	          (gdouble) ((vx - sx) * (hy - vy) - (vy - sy) * (hx - vx));
+  if (hue_changed)
+    {
+      for (y = COLORWHEELRADIUS; y > -COLORWHEELRADIUS; y--)
+	{
+	  dx = RINT (sqrt (fabs ((COLORWHEELRADIUS) * (COLORWHEELRADIUS) - y * y)));
+	  for (x = -dx, k = 0; x <= dx; x++)
+	    {
+	      buf[k] = buf[k+1] = buf[k+2] = BGCOLOR;
+	      r2 = (x * x) + (y * y);
+
+	      if ( r2 <= COLORWHEELRADIUS * COLORWHEELRADIUS)
+		{
+		  if (r2 > COLORTRIANGLERADIUS * COLORTRIANGLERADIUS) 
+		    { 
+		      atn = atan2 (x, y);
+		      if (atn < 0)
+			atn = atn + 2 * G_PI;
+		      gimp_hsv_to_rgb4 (buf + k, atn / (2 * G_PI), 1, 1);
+		    }
+		  else
+		    {
+		      val =
+			(gdouble) ( (x - sx) * (hy - vy) -  (y - sy) * (hx - vx)) /
+			(gdouble) ((vx - sx) * (hy - vy) - (vy - sy) * (hx - vx));
 	    
-            if (val >= 0 && val<= 1) {   /* normally val>=0, but this results in
-					   graphics errors... */
-              sat = (val == 0 ? 0: ((gdouble) (y - sy - val * (vy - sy)) /
-				    (val * (gdouble) (hy - vy))));
-              if (sat >= 0 && sat <= 1) 
-		gimp_hsv_to_rgb4 (buf + k, hue / 360, sat, val);
-            } 
-          }
-        }
-        k += 3;
-      }
-      gtk_preview_draw_row (GTK_PREVIEW (preview), buf, COLORWHEELRADIUS - dx,
-			    COLORWHEELRADIUS - y - 1, 2 * dx + 1);
-    }
+		      if (val >= 0 && val<= 1)
+			{
+			  /* normally val>=0, but this results in
+			     graphics errors... */
+
+			  sat =
+			    (val == 0 ? 0: ((gdouble) (y - sy - val * (vy - sy)) /
+					    (val * (gdouble) (hy - vy))));
+
+			  if (sat >= 0 && sat <= 1) 
+			    gimp_hsv_to_rgb4 (buf + k, hue / 360, sat, val);
+			} 
+		    }
+		}
+
+	      k += 3;
+	    }
+
+	  gtk_preview_draw_row (GTK_PREVIEW (preview), buf,
+				COLORWHEELRADIUS - dx,
+				COLORWHEELRADIUS - y - 1, 2 * dx + 1);
+	}
   
-    /* marker in outer ring */
+      /* marker in outer ring */
   
-    x0 = RINT (sin (hue * G_PI/180) *
-	       ((gdouble) (COLORWHEELRADIUS - COLORTRIANGLERADIUS + 1) / 2 +
-		COLORTRIANGLERADIUS) + 0.5);
-    y0 = RINT (cos (hue * G_PI/180) *
-	       ((gdouble) (COLORWHEELRADIUS - COLORTRIANGLERADIUS + 1) / 2 +
+      x0 = RINT (sin (hue * G_PI / 180) *
+		 ((gdouble) (COLORWHEELRADIUS - COLORTRIANGLERADIUS + 1) / 2 +
+		  COLORTRIANGLERADIUS) + 0.5);
+      y0 = RINT (cos (hue * G_PI / 180) *
+		 ((gdouble) (COLORWHEELRADIUS - COLORTRIANGLERADIUS + 1) / 2 +
 		  COLORTRIANGLERADIUS) + 0.5);
 
-    atn = atan2 (x0, y0);
-    if (atn < 0)
-      atn = atn + 2 * G_PI;
-    gimp_hsv_to_rgb4 (buf, atn / (2 * G_PI), 1, 1);
+      atn = atan2 (x0, y0);
+      if (atn < 0)
+	atn = atn + 2 * G_PI;
+      gimp_hsv_to_rgb4 (buf, atn / (2 * G_PI), 1, 1);
 
-    col = INTENSITY (buf[0], buf[1], buf[2]) > 127 ? 0 : 255 ;
+      col = INTENSITY (buf[0], buf[1], buf[2]) > 127 ? 0 : 255;
   
-    for (y = y0 - 4 ; y <= y0 + 4 ; y++) {
-      for (x = x0 - 4, k=0 ; x <= x0 + 4 ; x++) {
-        r2 = (x - x0) * (x - x0) + (y - y0) * (y - y0);
-        if (r2 <= 20 && r2 >= 6) {
-          buf[k] = buf[k+1] = buf[k+2] = col;
-	} else {
-	  atn = atan2 (x, y);
-	  if (atn < 0)
-	    atn = atn + 2 * G_PI;
-	  gimp_hsv_to_rgb4 (buf + k, atn / (2 * G_PI), 1, 1);
+      for (y = y0 - 4 ; y <= y0 + 4 ; y++)
+	{
+	  for (x = x0 - 4, k=0 ; x <= x0 + 4 ; x++)
+	    {
+	      r2 = (x - x0) * (x - x0) + (y - y0) * (y - y0);
+
+	      if (r2 <= 20 && r2 >= 6)
+		{
+		  buf[k] = buf[k+1] = buf[k+2] = col;
+		}
+	      else
+		{
+		  atn = atan2 (x, y);
+		  if (atn < 0)
+		    atn = atn + 2 * G_PI;
+		  gimp_hsv_to_rgb4 (buf + k, atn / (2 * G_PI), 1, 1);
+		}
+
+	      k += 3;
+	    }
+
+	  gtk_preview_draw_row (GTK_PREVIEW (preview), buf,
+				COLORWHEELRADIUS + x0-4,
+				COLORWHEELRADIUS - 1 - y, 9);
 	}
-        k += 3;
-      }
-      gtk_preview_draw_row (GTK_PREVIEW (preview), buf,
-			    COLORWHEELRADIUS + x0-4,
-			    COLORWHEELRADIUS - 1 - y, 9);
     }
+  else
+    {
+      /* delete marker in triangle */
   
-  
-  } else {
-    /* delete marker in triangle */
-  
-    s = coldata->oldsat;
-    v = coldata->oldval;
-    x0 = RINT (sx + (vx - sx) * v + (hx - vx) * s * v);
-    y0 = RINT (sy + (vy - sy) * v + (hy - vy) * s * v);
-    for (y = y0 - 4 ; y <= y0 + 4 ; y++) {
-      for (x = x0 - 4, k=0 ; x <= x0 + 4 ; x++) {
-        buf[k] = buf[k+1] = buf[k+2] = BGCOLOR;
-        r2 = (x - x0) * (x - x0) + (y - y0) * (y - y0);
-        if (x * x + y * y > COLORTRIANGLERADIUS * COLORTRIANGLERADIUS) { 
-	  atn = atan2 (x, y);
-	  if (atn < 0)
-	    atn = atn + 2 * G_PI;
-	  gimp_hsv_to_rgb4 (buf + k, atn / (2 * G_PI), 1, 1);
-        } else {
-          val = (gdouble) ( (x - sx) * (hy - vy) -  (y - sy) * (hx - vx)) /
-	        (gdouble) ((vx - sx) * (hy - vy) - (vy - sy) * (hx - vx));
-          if (val > 0 && val <= 1) {   /* eigentlich val>=0, aber dann Grafikfehler... */
-            sat = (val == 0 ? 0 : ((gdouble) (y - sy - val * (vy - sy)) /
-				           (val * (gdouble) (hy - vy))));
-            if (sat >= 0 && sat <= 1) 
-              gimp_hsv_to_rgb4 (buf + k, hue / 360, sat, val);
-          } 
-        }
-        k += 3;
-      }
+      s = coldata->oldsat;
+      v = coldata->oldval;
+      x0 = RINT (sx + (vx - sx) * v + (hx - vx) * s * v);
+      y0 = RINT (sy + (vy - sy) * v + (hy - vy) * s * v);
+
+      for (y = y0 - 4 ; y <= y0 + 4 ; y++)
+	{
+	  for (x = x0 - 4, k=0 ; x <= x0 + 4 ; x++)
+	    {
+	      buf[k] = buf[k+1] = buf[k+2] = BGCOLOR;
+	      r2 = (x - x0) * (x - x0) + (y - y0) * (y - y0);
+
+	      if (x * x + y * y > COLORTRIANGLERADIUS * COLORTRIANGLERADIUS)
+		{
+		  atn = atan2 (x, y);
+		  if (atn < 0)
+		    atn = atn + 2 * G_PI;
+
+		  gimp_hsv_to_rgb4 (buf + k, atn / (2 * G_PI), 1, 1);
+		}
+	      else
+		{
+		  val =
+		    (gdouble) ( (x - sx) * (hy - vy) -  (y - sy) * (hx - vx)) /
+		    (gdouble) ((vx - sx) * (hy - vy) - (vy - sy) * (hx - vx));
+
+		  if (val > 0 && val <= 1)
+		    {
+		      /* eigentlich val>=0, aber dann Grafikfehler... */
+
+		      sat =
+			(val == 0 ? 0 : ((gdouble) (y - sy - val * (vy - sy)) /
+					 (val * (gdouble) (hy - vy))));
+
+		      if (sat >= 0 && sat <= 1)
+			gimp_hsv_to_rgb4 (buf + k, hue / 360, sat, val);
+		    }
+		}
+
+	      k += 3;
+	    }
+
+	  gtk_preview_draw_row (GTK_PREVIEW (preview), buf,
+				COLORWHEELRADIUS + x0 - 4,
+				COLORWHEELRADIUS - 1 - y, 9);
+	}
+
+      coldata->oldsat = coldata->hsv.s;
+      coldata->oldval = coldata->hsv.v;
+    }
+
+  /* marker in triangle */
+
+  col = gimp_rgb_intensity (&coldata->rgb) > 0.5 ? 0 : 255;
+
+  s = coldata->hsv.s;
+  v = coldata->hsv.v;
+  coldata->oldsat = s;
+  coldata->oldval = v;
+
+  x0 = RINT (sx + (vx - sx) * v + (hx - vx) * s * v);
+  y0 = RINT (sy + (vy - sy) * v + (hy - vy) * s * v);
+
+  for (y = y0 - 4 ; y <= y0 + 4 ; y++)
+    {
+      for (x = x0 - 4, k=0 ; x <= x0 + 4 ; x++)
+	{
+	  buf[k] = buf[k+1] = buf[k+2] = BGCOLOR;
+	  r2 = (x - x0) * (x - x0) + (y - y0) * (y - y0);
+
+	  if (r2 <= 20 && r2 >= 6)
+	    {
+	      buf[k] = buf[k+1] = buf[k+2] = col;
+	    }
+	  else
+	    {
+	      if (x * x + y * y > COLORTRIANGLERADIUS * COLORTRIANGLERADIUS)
+		{
+		  atn = atan2 (x, y);
+
+		  if (atn < 0)
+		    atn = atn + 2 * G_PI;
+
+		  gimp_hsv_to_rgb4 (buf + k, atn / (2 * G_PI), 1, 1);
+		}
+	      else
+		{
+		  val =
+		    (gdouble) ( (x - sx) * (hy - vy) -  (y - sy) * (hx - vx)) /
+		    (gdouble) ((vx - sx) * (hy - vy) - (vy - sy) * (hx - vx));
+		  if (val > 0 && val <= 1)
+		    {
+		      /* eigentlich val>=0, aber dann Grafikfehler... */
+
+		      sat =
+			(val == 0 ? 0 : ((gdouble) (y - sy - val * (vy - sy)) /
+					 (val * (gdouble) (hy - vy))));
+
+		      if (sat >= 0 && sat <= 1) 
+			gimp_hsv_to_rgb4 (buf + k, hue / 360, sat, val);
+		    }
+		}
+	    }
+
+	  k += 3;
+	}
+
       gtk_preview_draw_row (GTK_PREVIEW (preview), buf,
 			    COLORWHEELRADIUS + x0 - 4,
 			    COLORWHEELRADIUS - 1 - y, 9);
     }
-  
-    coldata->oldsat = coldata->values[SATURATION] / 100.0;
-    coldata->oldval = coldata->values[VALUE] / 100.0;
-  }
-  
-  /* marker in triangle */
 
-  col = INTENSITY (coldata->values[RED], coldata->values[GREEN],
-                   coldata->values[BLUE]) > 127 ? 0 : 255 ;
-
-  s = coldata->values[SATURATION] / 100.0;
-  v = coldata->values[VALUE] / 100.0;
-  coldata->oldsat = s;
-  coldata->oldval = v;
-  x0 = RINT (sx + (vx - sx) * v + (hx - vx) * s * v);
-  y0 = RINT (sy + (vy - sy) * v + (hy - vy) * s * v);
-  for (y = y0 - 4 ; y <= y0 + 4 ; y++) {
-    for (x = x0 - 4, k=0 ; x <= x0 + 4 ; x++) {
-      buf[k] = buf[k+1] = buf[k+2] = BGCOLOR;
-      r2 = (x - x0) * (x - x0) + (y - y0) * (y - y0);
-      if (r2 <= 20 && r2 >= 6) {
-        buf[k] = buf[k+1] = buf[k+2] = col;
-      } else {
-        if (x * x + y * y > COLORTRIANGLERADIUS * COLORTRIANGLERADIUS) { 
-	  atn = atan2 (x, y);
-	  if (atn < 0)
-	    atn = atn + 2 * G_PI;
-	  gimp_hsv_to_rgb4 (buf + k, atn / (2 * G_PI), 1, 1);
-        } else {
-          val = (gdouble) ( (x - sx) * (hy - vy) -  (y - sy) * (hx - vx)) /
-	        (gdouble) ((vx - sx) * (hy - vy) - (vy - sy) * (hx - vx));
-          if (val > 0 && val <= 1) {   /* eigentlich val>=0, aber dann Grafikfehler... */
-            sat = (val == 0 ? 0 : ((gdouble) (y - sy - val * (vy - sy)) /
-				           (val * (gdouble) (hy - vy))));
-            if (sat >= 0 && sat <= 1) 
-              gimp_hsv_to_rgb4 (buf + k, hue / 360, sat, val);
-          } 
-        }
-      } 
-      k += 3;
-    }
-    gtk_preview_draw_row (GTK_PREVIEW (preview), buf,
-			  COLORWHEELRADIUS + x0 - 4,
-			  COLORWHEELRADIUS - 1 - y, 9);
-  }
   gtk_widget_draw (preview, NULL);
 }
 
@@ -493,7 +501,8 @@ color_selection_callback (GtkWidget *widget,
 
   coldata = gtk_object_get_user_data (GTK_OBJECT (widget));
 
-  switch (event->type) {
+  switch (event->type)
+    {
     case GDK_BUTTON_PRESS:
       gtk_grab_add (widget);
       x = event->button.x - COLORWHEELRADIUS - 1;
@@ -519,13 +528,8 @@ color_selection_callback (GtkWidget *widget,
 
       /* callback the user */
       (* coldata->callback) (coldata->data,
-			     coldata->values[HUE],
-			     coldata->values[SATURATION],
-			     coldata->values[VALUE],
-			     coldata->values[RED],
-			     coldata->values[GREEN],
-			     coldata->values[BLUE],
-			     coldata->values[ALPHA]);
+			     &coldata->hsv,
+			     &coldata->rgb);
       
       return FALSE;
       break;
@@ -537,7 +541,7 @@ color_selection_callback (GtkWidget *widget,
       r = sqrt ((gdouble) (x * x + y * y));
       angle = ((gint) RINT (atan2 (x, y) / G_PI * 180) + 360 ) % 360;
       break;
-  }
+    }
 
   gtk_widget_get_pointer (widget, &mousex, &mousey);
   if ((event->type == GDK_MOTION_NOTIFY &&
@@ -546,77 +550,85 @@ color_selection_callback (GtkWidget *widget,
 
   if (coldata->mode == 1 ||
       (r > COLORWHEELRADIUS &&
-       (abs (angle - coldata->values[HUE]) < 30 ||
-	abs (abs (angle - coldata->values[HUE]) - 360) < 30))) {
-    coldata->values[HUE] = angle;
-    color_select_update_rgb_values (coldata);
-    update_previews (coldata, TRUE);
-  } else {
-    hue = (gdouble) coldata->values[HUE] * G_PI / 180;
-    hx = sin (hue) * COLORTRIANGLERADIUS;
-    hy = cos (hue) * COLORTRIANGLERADIUS;
-    sx = sin (hue - 2 * G_PI / 3) * COLORTRIANGLERADIUS;
-    sy = cos (hue - 2 * G_PI / 3) * COLORTRIANGLERADIUS;
-    vx = sin (hue + 2 * G_PI / 3) * COLORTRIANGLERADIUS;
-    vy = cos (hue + 2 * G_PI / 3) * COLORTRIANGLERADIUS;
-    hue = (gdouble) coldata->values[HUE];
-    if ((x - sx) * vx + (y - sy) * vy < 0) {
-      sat = 1;
-      val = ((gdouble) ( (x - sx) * (hx - sx) +  (y - sy) * (hy - sy)))
-		     / ((hx - sx) * (hx - sx) + (hy - sy) * (hy - sy));
-      if (val < 0)
-	val = 0;
-      else if (val > 1)
-	val = 1;
-    } else
-      if ((x - sx) * hx + (y - sy) * hy < 0) {
-	sat = 0;
-	val = ((gdouble) ( (x - sx) * (vx - sx) +  (y - sy) * (vy - sy)))
-		       / ((vx - sx) * (vx - sx) + (vy - sy) * (vy - sy));
-        if (val < 0)
-	  val = 0;
-       	else if (val > 1)
-	  val = 1;
-    } else if ((x - hx) * sx + (y - hy) * sy < 0) {
-      val = 1;
-      sat = ((gdouble) ( (x - vx) * (hx - vx) +  (y - vy) * (hy - vy)))
-		     / ((hx - vx) * (hx - vx) + (hy - vy) * (hy - vy));
-      if (sat < 0)
-       	sat = 0;
-      else if (sat > 1)
-       	sat = 1;
-    } else {
-      val =   (gdouble) ( (x - sx) * (hy - vy) -  (y - sy) * (hx - vx))
-	    / (gdouble) ((vx - sx) * (hy - vy) - (vy - sy) * (hx - vx));
-      if (val <= 0) {
-        val = 0;
-        sat = 0;
-      } else {
-        if (val > 1)
-	  val = 1;
-        sat = (gdouble) (y - sy - val * (vy - sy)) / (val * (gdouble) (hy - vy));
-        if (sat < 0)
-	  sat = 0;
-       	else if (sat > 1)
-	  sat = 1;
-      }
+       (abs (angle - coldata->hsv.h * 260.0) < 30 ||
+	abs (abs (angle - coldata->hsv.h * 360.0) - 360) < 30)))
+    {
+      coldata->hsv.h = angle / 360.0;
+      color_select_update_rgb_values (coldata);
+      update_previews (coldata, TRUE);
     }
+  else
+    {
+      hue = coldata->hsv.h * 2 * G_PI;
+      hx = sin (hue) * COLORTRIANGLERADIUS;
+      hy = cos (hue) * COLORTRIANGLERADIUS;
+      sx = sin (hue - 2 * G_PI / 3) * COLORTRIANGLERADIUS;
+      sy = cos (hue - 2 * G_PI / 3) * COLORTRIANGLERADIUS;
+      vx = sin (hue + 2 * G_PI / 3) * COLORTRIANGLERADIUS;
+      vy = cos (hue + 2 * G_PI / 3) * COLORTRIANGLERADIUS;
+      hue = coldata->hsv.h * 360.0;
 
-    coldata->values[SATURATION] = 100 * sat + 0.5;
-    coldata->values[VALUE] = 100 * val + 0.5;
+      if ((x - sx) * vx + (y - sy) * vy < 0)
+	{
+	  sat = 1;
+	  val = ((gdouble) ( (x - sx) * (hx - sx) +  (y - sy) * (hy - sy)))
+	    / ((hx - sx) * (hx - sx) + (hy - sy) * (hy - sy));
+	  if (val < 0)
+	    val = 0;
+	  else if (val > 1)
+	    val = 1;
+	}
+      else if ((x - sx) * hx + (y - sy) * hy < 0)
+	{
+	  sat = 0;
+	  val = ((gdouble) ( (x - sx) * (vx - sx) +  (y - sy) * (vy - sy)))
+	    / ((vx - sx) * (vx - sx) + (vy - sy) * (vy - sy));
+	  if (val < 0)
+	    val = 0;
+	  else if (val > 1)
+	    val = 1;
+	}
+      else if ((x - hx) * sx + (y - hy) * sy < 0)
+	{
+	  val = 1;
+	  sat = ((gdouble) ( (x - vx) * (hx - vx) +  (y - vy) * (hy - vy)))
+	    / ((hx - vx) * (hx - vx) + (hy - vy) * (hy - vy));
+	  if (sat < 0)
+	    sat = 0;
+	  else if (sat > 1)
+	    sat = 1;
+	}
+      else
+	{
+	  val =   (gdouble) ( (x - sx) * (hy - vy) -  (y - sy) * (hx - vx))
+	    / (gdouble) ((vx - sx) * (hy - vy) - (vy - sy) * (hx - vx));
+	  if (val <= 0)
+	    {
+	      val = 0;
+	      sat = 0;
+	    }
+	  else
+	    {
+	      if (val > 1)
+		val = 1;
+	      sat = (gdouble) (y - sy - val * (vy - sy)) / (val * (gdouble) (hy - vy));
+	      if (sat < 0)
+		sat = 0;
+	      else if (sat > 1)
+		sat = 1;
+	    }
+	}
+
+    coldata->hsv.s = sat;
+    coldata->hsv.v = val;
     color_select_update_rgb_values (coldata);
     update_previews (coldata, FALSE);
   }
 
   /* callback the user */
   (* coldata->callback) (coldata->data,
-			 coldata->values[HUE],
-			 coldata->values[SATURATION],
-			 coldata->values[VALUE],
-			 coldata->values[RED],
-			 coldata->values[GREEN],
-			 coldata->values[BLUE],
-			 coldata->values[ALPHA]);
+			 &coldata->hsv,
+			 &coldata->rgb);
 
   return FALSE;
 }

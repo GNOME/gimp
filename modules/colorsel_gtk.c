@@ -26,35 +26,25 @@
 
 #include "gimpmodregister.h"
 
-#include "libgimp/gimpcolorselector.h"
 #include "libgimp/gimpcolor.h"
 #include "libgimp/gimpcolorspace.h"
+#include "libgimp/gimpcolorselector.h"
 #include "libgimp/gimpmodule.h"
 
 #include "libgimp/gimpintl.h"
 
 
 /* prototypes */
-static GtkWidget * colorsel_gtk_new         (gint                       h,
-					     gint                       s,
-					     gint                       v,
-					     gint                       r,
-					     gint                       g,
-					     gint                       b,
-					     gint                       a,
+static GtkWidget * colorsel_gtk_new         (const GimpHSV             *hsv,
+					     const GimpRGB             *rgb,
 					     gboolean                   show_alpha,
 					     GimpColorSelectorCallback  callback,
 					     gpointer                   data,
 					     gpointer                  *selector_data);
 static void        colorsel_gtk_free        (gpointer                   data);
 static void        colorsel_gtk_set_color   (gpointer                   data,
-					     gint                       h,
-					     gint                       s,
-					     gint                       v,
-					     gint                       r,
-					     gint                       g,
-					     gint                       b,
-					     gint                       a);
+					     const GimpHSV             *hsv,
+					     const GimpRGB             *rgb);
 static void        colorsel_gtk_set_channel (gpointer                   data,
 					     GimpColorSelectorChannelType  channel);
 static void        colorsel_gtk_update      (GtkWidget                 *widget,
@@ -136,13 +126,8 @@ typedef struct
 
 
 static GtkWidget *
-colorsel_gtk_new (gint                       h,
-		  gint                       s,
-		  gint                       v,
-		  gint                       r,
-		  gint                       g,
-		  gint                       b,
-		  gint                       a,
+colorsel_gtk_new (const GimpHSV             *hsv,
+		  const GimpRGB             *rgb,
 		  gboolean                   show_alpha,
 		  GimpColorSelectorCallback  callback,
 		  gpointer                   data,
@@ -164,7 +149,7 @@ colorsel_gtk_new (gint                       h,
 
   gtk_widget_hide (GTK_COLOR_SELECTION (p->selector)->scales[0]->parent);
 
-  colorsel_gtk_set_color (p, h, s, v, r, g, b, a);
+  colorsel_gtk_set_color (p, hsv, rgb);
 
   /* EEK: to be removed */
   gtk_signal_connect_object_after
@@ -202,23 +187,18 @@ colorsel_gtk_free (gpointer data)
 }
 
 static void
-colorsel_gtk_set_color (gpointer  data,
-			gint      h,
-			gint      s,
-			gint      v,
-			gint      r,
-			gint      g,
-			gint      b,
-			gint      a)
+colorsel_gtk_set_color (gpointer       data,
+			const GimpHSV *hsv,
+			const GimpRGB *rgb)
 {
   ColorselGtk *p = data;
 
   gdouble color[4];
 
-  color[0] = ((gdouble) r) / 255.999;
-  color[1] = ((gdouble) g) / 255.999;
-  color[2] = ((gdouble) b) / 255.999;
-  color[3] = ((gdouble) a) / 255.999;
+  color[0] = rgb->r;
+  color[1] = rgb->g;
+  color[2] = rgb->b;
+  color[3] = rgb->a;
 
   gtk_color_selection_set_color (GTK_COLOR_SELECTION (p->selector), color);
 }
@@ -234,29 +214,20 @@ colorsel_gtk_update (GtkWidget *widget,
 		     gpointer   data)
 {
   ColorselGtk *p = data;
-  gint         h;
-  gint         s;
-  gint         v;
-  gint         r;
-  gint         g;
-  gint         b;
-  gint         a;
+  GimpHSV      hsv;
+  GimpRGB      rgb;
   gdouble      color[4];
 
   gtk_color_selection_get_color (GTK_COLOR_SELECTION (p->selector), color);
 
-  r = (gint) (color[0] * 255.999);
-  g = (gint) (color[1] * 255.999);
-  b = (gint) (color[2] * 255.999);
-  a = (gint) (color[3] * 255.999);
+  rgb.r = color[0];
+  rgb.g = color[1];
+  rgb.b = color[2];
+  rgb.a = color[3];
 
-  gimp_rgb_to_hsv_double (&color[0], &color[1], &color[2]);
+  gimp_rgb_to_hsv (&rgb, &hsv);
 
-  h = (gint) (color[0] * 360.999);
-  s = (gint) (color[1] * 255.999);
-  v = (gint) (color[2] * 255.999);
-
-  p->callback (p->client_data, h, v, s, r, g, b, a);
+  p->callback (p->client_data, &hsv, &rgb);
 }
 
 /* EEK */

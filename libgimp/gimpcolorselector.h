@@ -40,43 +40,28 @@ typedef enum
 } GimpColorSelectorChannelType;
 
 
-typedef void        (* GimpColorSelectorCallback) (gpointer   data,
-						   gint       h,
-						   gint       s,
-						   gint       v,
-						   gint       r,
-						   gint       g,
-						   gint       b,
-						   gint       a);
+typedef void        (* GimpColorSelectorCallback) (gpointer       data,
+						   const GimpHSV *hsv,
+						   const GimpRGB *rgb);
 
-typedef GtkWidget *  (* GimpColorSelectorNewFunc) (gint       h,
-						   gint       s,
-						   gint       v,
-						   gint       r,
-						   gint       g,
-						   gint       b,
-						   gint       a,
-						   gboolean   show_alpha,
+typedef GtkWidget *  (* GimpColorSelectorNewFunc) (const GimpHSV *hsv,
+						   const GimpRGB *rgb,
+						   gboolean       show_alpha,
 						   GimpColorSelectorCallback cb,
-						   gpointer   data,
-						   gpointer  *selector_data);
+						   gpointer       data,
+						   gpointer      *selector_data);
 
-typedef void        (* GimpColorSelectorFreeFunc) (gpointer   selector_data);
+typedef void        (* GimpColorSelectorFreeFunc) (gpointer       selector_data);
 
 
-typedef void    (* GimpColorSelectorSetColorFunc) (gpointer   selector_data,
-						   gint       h,
-						   gint       s,
-						   gint       v,
-						   gint       r,
-						   gint       g,
-						   gint       b,
-						   gint       a);
+typedef void    (* GimpColorSelectorSetColorFunc) (gpointer       selector_data,
+						   const GimpHSV *hsv,
+						   const GimpRGB *rgb);
 
-typedef void  (* GimpColorSelectorSetChannelFunc) (gpointer   selector_data,
+typedef void  (* GimpColorSelectorSetChannelFunc) (gpointer       selector_data,
 						   GimpColorSelectorChannelType  type);
 
-typedef void      (* GimpColorSelectorFinishedCB) (gpointer   finished_data);
+typedef void      (* GimpColorSelectorFinishedCB) (gpointer       finished_data);
 
 
 typedef struct _GimpColorSelectorMethods GimpColorSelectorMethods;
