@@ -262,6 +262,9 @@ void		gimp_image_colormap_changed      (GimpImage          *gimage,
 GimpChannel   * gimp_image_get_mask              (const GimpImage    *gimage);
 void            gimp_image_mask_changed          (GimpImage          *gimage);
 
+gint            gimp_image_get_component_index   (const GimpImage    *gimage,
+                                                  GimpChannelType     channel);
+
 void            gimp_image_set_component_active  (GimpImage          *gimage,
 						  GimpChannelType     type,
 						  gboolean            active);

@@ -36,7 +36,6 @@
 #include "vectors/gimpvectors.h"
 
 #include "gimpvectorslistview.h"
-#include "gimpcomponentlistitem.h"
 #include "gimpdnd.h"
 #include "gimplistitem.h"
 #include "gimpwidgets-utils.h"

@@ -1,3 +1,34 @@
+2003-03-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-enums.[ch]: added descriptions to the
+	GimpChannelType enum.
+
+	* app/core/gimpimage.[ch]: added gimp_image_get_component_index()
+	utility function which does the GIMP_RED_CHANNEL -> RED_PIX etc.
+	mapping. Use it in all component getters/setters.
+
+	* app/widgets/gimpcomponenteditor.[ch]: new widget implementing
+	the component list using GtkListStore/GtkTreeView. Still a bit
+	ugly because it uses the standard check instead of the eye icon.
+
+	* app/widgets/gimpcomponentlistitem.[ch]: removed.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpvectorslistview.c: changed accordingly.
+
+	* app/widgets/gimpchannellistview.[ch]: create a GimpComponentEditor
+	and removed the old GtkList based stuff.
+
+	* app/widgets/gimpitemlistview.[ch]: keep around a pointer to the
+	GimpMenuFactory passed to the constructor.
+
+	* app/gui/channels-menu.c (channels_menu_update): do the right
+	thing if "data" is a GimpComponentEditor.
+
+	* app/gui/channels-commands.[ch]: ditto. Implemented duplicating
+	of components and component to selection (bug #61018).
+
 2003-03-12  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdock.c (gimp_dock_init): set a window type hint

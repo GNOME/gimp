@@ -350,6 +350,7 @@ gimp_item_list_view_new (gint                  preview_size,
   list_view->edit_item_func     = edit_item_func;
   list_view->activate_item_func = activate_item_func;
 
+  list_view->menu_factory = menu_factory;
   list_view->item_factory = gimp_menu_factory_menu_new (menu_factory,
                                                         menu_identifier,
                                                         GTK_TYPE_MENU,

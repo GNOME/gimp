@@ -27,6 +27,7 @@
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
 
+#include "widgets/gimpcomponenteditor.h"
 #include "widgets/gimpitemlistview.h"
 #include "widgets/gimpitemfactory.h"
 
@@ -107,30 +108,42 @@ void
 channels_menu_update (GtkItemFactory *factory,
                       gpointer        data)
 {
-  GimpImage   *gimage;
-  GimpChannel *channel;
-  gboolean     fs;
-  GList       *list;
-  GList       *next = NULL;
-  GList       *prev = NULL;
+  GimpImage   *gimage    = NULL;
+  GimpChannel *channel   = NULL;
+  gboolean     fs        = FALSE;
+  gboolean     component = FALSE;
+  GList       *next      = NULL;
+  GList       *prev      = NULL;
 
-  gimage = GIMP_ITEM_LIST_VIEW (data)->gimage;
+  if (GIMP_IS_COMPONENT_EDITOR (data))
+    {
+      gimage = GIMP_IMAGE_EDITOR (data)->gimage;
 
-  channel = gimp_image_get_active_channel (gimage);
+      if (GIMP_COMPONENT_EDITOR (data)->clicked_component != -1)
+        component = TRUE;
+    }
+  else
+    {
+      GList *list;
+
+      gimage = GIMP_ITEM_LIST_VIEW (data)->gimage;
+
+      channel = gimp_image_get_active_channel (gimage);
+
+      for (list = GIMP_LIST (gimage->channels)->list;
+           list;
+           list = g_list_next (list))
+        {
+          if (channel == (GimpChannel *) list->data)
+            {
+              prev = g_list_previous (list);
+              next = g_list_next (list);
+              break;
+            }
+        }
+    }
 
   fs = (gimp_image_floating_sel (gimage) != NULL);
-
-  for (list = GIMP_LIST (gimage->channels)->list;
-       list;
-       list = g_list_next (list))
-    {
-      if (channel == (GimpChannel *) list->data)
-	{
-	  prev = g_list_previous (list);
-	  next = g_list_next (list);
-	  break;
-	}
-    }
 
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
@@ -138,11 +151,11 @@ channels_menu_update (GtkItemFactory *factory,
   SET_SENSITIVE ("/New Channel...",             !fs);
   SET_SENSITIVE ("/Raise Channel",              !fs && channel && prev);
   SET_SENSITIVE ("/Lower Channel",              !fs && channel && next);
-  SET_SENSITIVE ("/Duplicate Channel",          !fs && channel);
-  SET_SENSITIVE ("/Channel to Selection",       !fs && channel);
-  SET_SENSITIVE ("/Add to Selection",           !fs && channel);
-  SET_SENSITIVE ("/Subtract from Selection",    !fs && channel);
-  SET_SENSITIVE ("/Intersect with Selection",   !fs && channel);
+  SET_SENSITIVE ("/Duplicate Channel",          !fs && (channel || component));
+  SET_SENSITIVE ("/Channel to Selection",       !fs && (channel || component));
+  SET_SENSITIVE ("/Add to Selection",           !fs && (channel || component));
+  SET_SENSITIVE ("/Subtract from Selection",    !fs && (channel || component));
+  SET_SENSITIVE ("/Intersect with Selection",   !fs && (channel || component));
   SET_SENSITIVE ("/Delete Channel",             !fs && channel);
   SET_SENSITIVE ("/Edit Channel Attributes...", !fs && channel);
 

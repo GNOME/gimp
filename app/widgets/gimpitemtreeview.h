@@ -73,6 +73,7 @@ struct _GimpItemListView
   GimpEditItemFunc       edit_item_func;
   GimpActivateItemFunc   activate_item_func;
 
+  GimpMenuFactory       *menu_factory;
   GimpItemFactory       *item_factory;
 
   GtkWidget             *new_button;

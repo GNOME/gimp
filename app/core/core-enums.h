@@ -101,12 +101,12 @@ GType gimp_channel_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_RED_CHANNEL,
-  GIMP_GREEN_CHANNEL,
-  GIMP_BLUE_CHANNEL,
-  GIMP_GRAY_CHANNEL,
-  GIMP_INDEXED_CHANNEL,
-  GIMP_ALPHA_CHANNEL
+  GIMP_RED_CHANNEL,      /*< desc="Red"     >*/
+  GIMP_GREEN_CHANNEL,    /*< desc="Green"   >*/
+  GIMP_BLUE_CHANNEL,     /*< desc="Blue"    >*/
+  GIMP_GRAY_CHANNEL,     /*< desc="Gray"    >*/
+  GIMP_INDEXED_CHANNEL,  /*< desc="Indexed" >*/
+  GIMP_ALPHA_CHANNEL     /*< desc="Alpha"   >*/
 } GimpChannelType;
 
 

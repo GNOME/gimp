@@ -37,6 +37,7 @@
 #include "core/gimpimage-mask-select.h"
 
 #include "widgets/gimpcolorpanel.h"
+#include "widgets/gimpcomponenteditor.h"
 #include "widgets/gimpitemlistview.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -60,6 +61,8 @@ static void   channels_color_changed  (GimpColorButton *button,
     gimage = ((GimpDisplay *) data)->gimage; \
   else if (GIMP_IS_GIMP (data)) \
     gimage = gimp_context_get_image (gimp_get_user_context (GIMP (data))); \
+  else if (GIMP_IS_COMPONENT_EDITOR (data)) \
+    gimage = ((GimpImageEditor *) data)->gimage; \
   else if (GIMP_IS_ITEM_LIST_VIEW (data)) \
     gimage = ((GimpItemListView *) data)->gimage; \
   else \
@@ -116,13 +119,44 @@ channels_duplicate_channel_cmd_callback (GtkWidget *widget,
 					 gpointer   data)
 {
   GimpImage   *gimage;
-  GimpChannel *active_channel;
   GimpChannel *new_channel;
-  return_if_no_channel (gimage, active_channel, data);
 
-  new_channel = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (active_channel),
-                                                   G_TYPE_FROM_INSTANCE (active_channel),
-                                                   TRUE));
+  if (GIMP_IS_COMPONENT_EDITOR (data))
+    {
+      GimpRGB          color;
+      GimpChannelType  component;
+      GEnumClass      *enum_class;
+      GEnumValue      *enum_value;
+      gchar           *name;
+      return_if_no_image (gimage, data);
+
+      gimp_rgba_set (&color, 0, 0, 0, 0.5);
+
+      component = GIMP_COMPONENT_EDITOR (data)->clicked_component;
+
+      enum_class = g_type_class_ref (GIMP_TYPE_CHANNEL_TYPE);
+      enum_value = g_enum_get_value (enum_class, component);
+      g_type_class_unref (enum_class);
+
+      name = g_strdup_printf (_("%s Component Copy"),
+                              gettext (enum_value->value_name));
+
+      new_channel = gimp_channel_new_from_component (gimage, component,
+                                                     name, &color);
+
+      g_free (name);
+    }
+  else
+    {
+      GimpChannel *active_channel;
+      return_if_no_channel (gimage, active_channel, data);
+
+      new_channel =
+        GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (active_channel),
+                                           G_TYPE_FROM_INSTANCE (active_channel),
+                                           TRUE));
+    }
+
   gimp_image_add_channel (gimage, new_channel, -1);
   gimp_image_flush (gimage);
 }
@@ -145,16 +179,37 @@ channels_channel_to_sel (GtkWidget      *widget,
                          GimpChannelOps  op)
 {
   GimpImage   *gimage;
-  GimpChannel *active_channel;
-  return_if_no_channel (gimage, active_channel, data);
+  GimpChannel *channel;
+
+  if (GIMP_IS_COMPONENT_EDITOR (data))
+    {
+      GimpRGB         color;
+      GimpChannelType component;
+      return_if_no_image (gimage, data);
+
+      gimp_rgba_set (&color, 0, 0, 0, 1);
+
+      component = GIMP_COMPONENT_EDITOR (data)->clicked_component;
+
+      channel = gimp_channel_new_from_component (gimage, component,
+                                                 "Component Copy",
+                                                 &color);
+    }
+  else
+    {
+      return_if_no_channel (gimage, channel, data);
+    }
 
   gimp_image_mask_select_channel (gimage,
-                                  _("Channel to Selection"),
-                                  active_channel,
+                                  _("Component to Selection"),
+                                  channel,
                                   0, 0,
                                   op,
                                   FALSE, 0, 0);
   gimp_image_flush (gimage);
+
+  if (GIMP_IS_COMPONENT_EDITOR (data))
+    g_object_unref (channel);
 }
 
 void
@@ -541,25 +596,6 @@ channels_edit_channel_query (GimpChannel *channel)
   gtk_widget_show (options->query_box);
 }
 
-void
-channels_duplicate_component_cmd_callback (GtkWidget *widget,
-                                           gpointer   data)
-{
-  GimpImage   *gimage;
-  GimpChannel *channel;
-  GimpRGB      color;
-  return_if_no_image (gimage, data);
-
-  gimp_rgba_set (&color, 0, 0, 0, 0.5);
-
-  /*  FIXME: hardcoded component  */
-  channel = gimp_channel_new_from_component (gimage, GIMP_RED_CHANNEL,
-                                             "Component Copy",
-                                             &color);
-
-  gimp_image_add_channel (gimage, channel, -1);
-  gimp_image_flush (gimage);
-}
 
 /*  private functions  */
 

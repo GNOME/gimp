@@ -94,12 +94,12 @@ gimp_channel_ops_get_type (void)
 
 static const GEnumValue gimp_channel_type_enum_values[] =
 {
-  { GIMP_RED_CHANNEL, "GIMP_RED_CHANNEL", "red-channel" },
-  { GIMP_GREEN_CHANNEL, "GIMP_GREEN_CHANNEL", "green-channel" },
-  { GIMP_BLUE_CHANNEL, "GIMP_BLUE_CHANNEL", "blue-channel" },
-  { GIMP_GRAY_CHANNEL, "GIMP_GRAY_CHANNEL", "gray-channel" },
-  { GIMP_INDEXED_CHANNEL, "GIMP_INDEXED_CHANNEL", "indexed-channel" },
-  { GIMP_ALPHA_CHANNEL, "GIMP_ALPHA_CHANNEL", "alpha-channel" },
+  { GIMP_RED_CHANNEL, N_("Red"), "red-channel" },
+  { GIMP_GREEN_CHANNEL, N_("Green"), "green-channel" },
+  { GIMP_BLUE_CHANNEL, N_("Blue"), "blue-channel" },
+  { GIMP_GRAY_CHANNEL, N_("Gray"), "gray-channel" },
+  { GIMP_INDEXED_CHANNEL, N_("Indexed"), "indexed-channel" },
+  { GIMP_ALPHA_CHANNEL, N_("Alpha"), "alpha-channel" },
   { 0, NULL, NULL }
 };
 

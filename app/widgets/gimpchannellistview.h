@@ -40,8 +40,7 @@ struct _GimpChannelListView
 {
   GimpDrawableListView  parent_instance;
 
-  GtkWidget            *component_frame;
-  GtkWidget            *component_list;
+  GtkWidget            *component_editor;
 
   GtkWidget            *toselection_button;
 };

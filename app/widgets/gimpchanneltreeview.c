@@ -39,7 +39,7 @@
 #include "core/gimpimage-mask-select.h"
 
 #include "gimpchannellistview.h"
-#include "gimpcomponentlistitem.h"
+#include "gimpcomponenteditor.h"
 #include "gimpdnd.h"
 #include "gimplistitem.h"
 #include "gimpwidgets-utils.h"
@@ -64,16 +64,6 @@ static void   gimp_channel_list_view_toselection_clicked
 static void   gimp_channel_list_view_toselection_extended_clicked
                                                     (GtkWidget           *widget,
 						     guint                state,
-						     GimpChannelListView *view);
-
-static void   gimp_channel_list_view_create_components
-                                                    (GimpChannelListView *view);
-static void   gimp_channel_list_view_clear_components
-                                                    (GimpChannelListView *view);
-
-static void   gimp_channel_list_view_mode_changed   (GimpImage           *gimage,
-						     GimpChannelListView *view);
-static void   gimp_channel_list_view_alpha_changed  (GimpImage           *gimage,
 						     GimpChannelListView *view);
 
 
@@ -144,34 +134,7 @@ gimp_channel_list_view_class_init (GimpChannelListViewClass *klass)
 static void
 gimp_channel_list_view_init (GimpChannelListView *view)
 {
-  GimpDrawableListView *drawable_view;
-  GimpContainerView    *container_view;
-  gchar                *str;
-
-  drawable_view  = GIMP_DRAWABLE_LIST_VIEW (view);
-  container_view = GIMP_CONTAINER_VIEW (view);
-
-  /*  component frame  */
-
-  view->component_frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (view->component_frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (view), view->component_frame, FALSE, FALSE, 0);
-  gtk_box_reorder_child (GTK_BOX (view), view->component_frame, 0);
-  /* don't show */
-
-  view->component_list = gtk_list_new ();
-
-  /*  FIXME: disable keyboard navigation because as of gtk+-2.0.3,
-   *  GtkList kb navigation with is h-o-r-r-i-b-l-y broken with
-   *  GTK_SELECTION_MULTIPLE  --mitch 05/27/2002
-   */
-  GTK_WIDGET_UNSET_FLAGS (view->component_list, GTK_CAN_FOCUS);
-
-  gtk_list_set_selection_mode (GTK_LIST (view->component_list),
-			       GTK_SELECTION_MULTIPLE);
-  gtk_container_add (GTK_CONTAINER (view->component_frame),
-		     view->component_list);
-  gtk_widget_show (view->component_list);
+  gchar *str;
 
   str = g_strdup_printf (_("Channel to Selection\n"
                            "%s  Add\n"
@@ -185,7 +148,7 @@ gimp_channel_list_view_init (GimpChannelListView *view)
 
   /*  To Selection button  */
   view->toselection_button =
-    gimp_editor_add_button (GIMP_EDITOR (container_view),
+    gimp_editor_add_button (GIMP_EDITOR (view),
                             GIMP_STOCK_SELECTION_REPLACE, str, NULL,
                             G_CALLBACK (gimp_channel_list_view_toselection_clicked),
                             G_CALLBACK (gimp_channel_list_view_toselection_extended_clicked),
@@ -193,10 +156,10 @@ gimp_channel_list_view_init (GimpChannelListView *view)
 
   g_free (str);
 
-  gtk_box_reorder_child (GTK_BOX (GIMP_EDITOR (container_view)->button_box),
+  gtk_box_reorder_child (GTK_BOX (GIMP_EDITOR (view)->button_box),
 			 view->toselection_button, 5);
 
-  gimp_container_view_enable_dnd (container_view,
+  gimp_container_view_enable_dnd (GIMP_CONTAINER_VIEW (view),
 				  GTK_BUTTON (view->toselection_button),
 				  GIMP_TYPE_CHANNEL);
 
@@ -214,38 +177,28 @@ gimp_channel_list_view_set_image (GimpItemListView *item_view,
 
   channel_view = GIMP_CHANNEL_LIST_VIEW (item_view);
 
-  if (item_view->gimage)
+  if (! channel_view->component_editor)
     {
-      if (! gimage)
-	gtk_widget_hide (channel_view->component_frame);
-
-      gimp_channel_list_view_clear_components (channel_view);
-
-      g_signal_handlers_disconnect_by_func (item_view->gimage,
-					    gimp_channel_list_view_mode_changed,
-					    channel_view);
-      g_signal_handlers_disconnect_by_func (item_view->gimage,
-					    gimp_channel_list_view_alpha_changed,
-					    channel_view);
+      channel_view->component_editor =
+        gimp_component_editor_new (GIMP_CONTAINER_VIEW (item_view)->preview_size,
+                                   item_view->menu_factory);
+      gtk_box_pack_start (GTK_BOX (item_view), channel_view->component_editor,
+                          FALSE, FALSE, 0);
+      gtk_box_reorder_child (GTK_BOX (item_view),
+                             channel_view->component_editor, 0);
     }
+
+  if (! gimage)
+    gtk_widget_hide (channel_view->component_editor);
+
+  gimp_image_editor_set_image (GIMP_IMAGE_EDITOR (channel_view->component_editor),
+                               gimage);
 
   if (GIMP_ITEM_LIST_VIEW_CLASS (parent_class)->set_image)
     GIMP_ITEM_LIST_VIEW_CLASS (parent_class)->set_image (item_view, gimage);
 
   if (item_view->gimage)
-    {
-      if (! GTK_WIDGET_VISIBLE (channel_view->component_frame))
-	gtk_widget_show (channel_view->component_frame);
-
-      gimp_channel_list_view_create_components (channel_view);
-
-      g_signal_connect (item_view->gimage, "mode_changed",
-			G_CALLBACK (gimp_channel_list_view_mode_changed),
-			channel_view);
-      g_signal_connect (item_view->gimage, "alpha_changed",
-			G_CALLBACK (gimp_channel_list_view_alpha_changed),
-			channel_view);
-    }
+    gtk_widget_show (channel_view->component_editor);
 }
 
 
@@ -283,22 +236,14 @@ static void
 gimp_channel_list_view_set_preview_size (GimpContainerView *view)
 {
   GimpChannelListView *channel_view;
-  GList               *list;
+
+  channel_view = GIMP_CHANNEL_LIST_VIEW (view);
 
   if (GIMP_CONTAINER_VIEW_CLASS (parent_class)->set_preview_size)
     GIMP_CONTAINER_VIEW_CLASS (parent_class)->set_preview_size (view);
 
-  channel_view = GIMP_CHANNEL_LIST_VIEW (view);
-
-  for (list = GTK_LIST (channel_view->component_list)->children;
-       list;
-       list = g_list_next (list))
-    {
-      gimp_list_item_set_preview_size (GIMP_LIST_ITEM (list->data),
-				       view->preview_size);
-    }
-
-  gtk_widget_queue_resize (channel_view->component_frame);
+  gimp_component_editor_set_preview_size (GIMP_COMPONENT_EDITOR (channel_view->component_editor),
+                                          view->preview_size);
 }
 
 static void
@@ -344,79 +289,4 @@ gimp_channel_list_view_toselection_extended_clicked (GtkWidget           *widget
                                       FALSE, 0.0, 0.0);
       gimp_image_flush (gimage);
     }
-}
-
-static void
-gimp_channel_list_view_create_components (GimpChannelListView *view)
-{
-  GimpImage       *gimage;
-  GtkWidget       *list_item;
-  gint             n_components = 0;
-  GimpChannelType  components[MAX_CHANNELS];
-  GList           *list = NULL;
-  gint             i;
-
-  gimage = GIMP_ITEM_LIST_VIEW (view)->gimage;
-
-  switch (gimp_image_base_type (gimage))
-    {
-    case GIMP_RGB:
-      n_components  = 3;
-      components[0] = GIMP_RED_CHANNEL;
-      components[1] = GIMP_GREEN_CHANNEL;
-      components[2] = GIMP_BLUE_CHANNEL;
-      break;
-
-    case GIMP_GRAY:
-      n_components  = 1;
-      components[0] = GIMP_GRAY_CHANNEL;
-      break;
-
-    case GIMP_INDEXED:
-      n_components  = 1;
-      components[0] = GIMP_INDEXED_CHANNEL;
-      break;
-    }
-
-  if (gimp_image_has_alpha (gimage))
-    {
-      components[n_components++] = GIMP_ALPHA_CHANNEL;
-    }
-
-  for (i = 0; i < n_components; i++)
-    {
-      list_item =
-	gimp_component_list_item_new (gimage,
-				      GIMP_CONTAINER_VIEW (view)->preview_size,
-				      components[i]);
-
-      gtk_widget_show (list_item);
-
-      list = g_list_append (list, list_item);
-    }
-
-  gtk_list_insert_items (GTK_LIST (view->component_list), list, 0);
-  gtk_widget_queue_resize (GTK_WIDGET (view->component_frame));
-}
-
-static void
-gimp_channel_list_view_clear_components (GimpChannelListView *view)
-{
-  gtk_list_clear_items (GTK_LIST (view->component_list), 0, -1);
-}
-
-static void
-gimp_channel_list_view_mode_changed (GimpImage           *gimage,
-				     GimpChannelListView *view)
-{
-  gimp_channel_list_view_clear_components (view);
-  gimp_channel_list_view_create_components (view);
-}
-
-static void
-gimp_channel_list_view_alpha_changed (GimpImage           *gimage,
-                                      GimpChannelListView *view)
-{
-  gimp_channel_list_view_clear_components (view);
-  gimp_channel_list_view_create_components (view);
 }
