@@ -42,6 +42,9 @@ your own @help_func which has to call gimp_help() to actually display
 the help.
 </para>
 
+@help_id: 
+@data: 
+<!-- # Unused Parameters # -->
 @help_data: A string containing the path to a HTML page.
 
 
@@ -76,6 +79,7 @@ flexibility.
 See #GimpHelpFunc for the naming conventions of HTML help files.
 </para>
 
+@help_id: 
 @help_data: A string containing the path to a HTML page.
 
 
@@ -86,6 +90,7 @@ See #GimpHelpFunc for the naming conventions of HTML help files.
 
 @widget: 
 @help_func: 
+@help_id: 
 @help_data: 
 
 
@@ -96,6 +101,8 @@ See #GimpHelpFunc for the naming conventions of HTML help files.
 
 @widget: 
 @tooltip: 
+@help_id: 
+<!-- # Unused Parameters # -->
 @help_data: 
 
 

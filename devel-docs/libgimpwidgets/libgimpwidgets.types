@@ -6,6 +6,7 @@
 
 gimp_button_get_type
 gimp_chain_button_get_type
+gimp_color_area_get_type
 gimp_color_button_get_type
 gimp_color_display_get_type
 gimp_color_notebook_get_type
@@ -16,6 +17,7 @@ gimp_color_select_get_type
 gimp_dialog_get_type
 gimp_file_selection_get_type
 gimp_memsize_entry_get_type
+gimp_offset_area_get_type
 gimp_path_editor_get_type
 gimp_pick_button_get_type
 gimp_pixmap_get_type

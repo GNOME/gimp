@@ -307,8 +307,10 @@ Returns the #GtkAdjustment of the scale_entry's #GtkSpinButton.
 @unconstrained_lower: 
 @unconstrained_upper: 
 @tooltip: 
-@help_data: 
+@help_id: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@help_data: 
 
 
 <!-- ##### FUNCTION gimp_scale_entry_set_sensitive ##### -->
@@ -338,8 +340,10 @@ Returns the #GtkAdjustment of the scale_entry's #GtkSpinButton.
 @page_increment: 
 @digits: 
 @tooltip: 
-@help_data: 
+@help_id: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@help_data: 
 
 
 <!-- ##### MACRO GIMP_RANDOM_SEED_SPINBUTTON ##### -->

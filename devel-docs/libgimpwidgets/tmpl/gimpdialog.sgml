@@ -29,13 +29,15 @@ dialog-related stuff.
 @title: 
 @wmclass_name: 
 @help_func: 
-@help_data: 
+@help_id: 
 @position: 
 @allow_shrink: 
 @allow_grow: 
 @auto_shrink: 
 @Varargs: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@help_data: 
 
 
 <!-- ##### FUNCTION gimp_dialog_newv ##### -->
@@ -46,13 +48,15 @@ dialog-related stuff.
 @title: 
 @wmclass_name: 
 @help_func: 
-@help_data: 
+@help_id: 
 @position: 
 @allow_shrink: 
 @allow_grow: 
 @auto_shrink: 
 @args: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@help_data: 
 
 
 <!-- ##### FUNCTION gimp_dialog_create_action_area ##### -->

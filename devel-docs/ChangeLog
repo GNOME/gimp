@@ -1,3 +1,14 @@
+2003-08-23  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets.types: added missing
+	GimpColorArea and GimpOffsetArea.
+
+	* libgimpwidgets/tmpl/gimpcolorarea.sgml
+	* libgimpwidgets/tmpl/gimpdialog.sgml
+	* libgimpwidgets/tmpl/gimphelpui.sgml
+	* libgimpwidgets/tmpl/gimpoffsetarea.sgml
+	* libgimpwidgets/tmpl/gimpwidgets.sgml: regenerated.
+
 2003-08-21  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt
