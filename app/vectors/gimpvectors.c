@@ -35,6 +35,8 @@
 
 #ifdef LIBART_STROKE
 #  include "libgimpcolor/gimpcolor.h"
+#  include "core/gimp.h"
+#  include "core/gimpcontext.h"
 #  include "core/gimpdrawable-stroke.h"
 #else
 #  include "paint/gimppaintcore-stroke.h"
@@ -555,12 +557,18 @@ gimp_vectors_stroke (GimpItem      *item,
 
 #ifdef LIBART_STROKE
   {
+    GimpContext *context;
     GimpRGB  color;
 
-    gimp_rgba_set (&color, 0.0, 0.7, 0.5, 1.0);
+    context = gimp_get_current_context (
+                          gimp_item_get_image (GIMP_ITEM (drawable))->gimp);
+    gimp_context_get_foreground (context, &color);
 
-    gimp_drawable_stroke_vectors (drawable, vectors, 0.5, &color,
-                                  GIMP_NORMAL_MODE, 15,
+    gimp_drawable_stroke_vectors (drawable, vectors,
+                                  gimp_context_get_opacity (context),
+                                  &color,
+                                  gimp_context_get_paint_mode (context),
+                                  14,  /* width */
                                   GIMP_JOIN_MITER, GIMP_CAP_SQUARE, TRUE);
     retval = TRUE;
   }

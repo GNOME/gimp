@@ -1141,7 +1141,7 @@ gimp_vector_tool_status_update (GimpTool    *tool,
       new_status = _("Click to make this node angular.");
       break;
     case VECTORS_FINISHED:
-      new_status = _("Nothing to see here. Move along.");
+      new_status = " ";
       break;
   }
 
