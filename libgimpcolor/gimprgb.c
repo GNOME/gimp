@@ -205,20 +205,30 @@ gimp_rgb_composite (GimpRGB              *color1,
 
     case GIMP_RGB_COMPOSITE_NORMAL:
       /*  put color2 on top of color1  */
-      factor = color1->a * (1.0 - color2->a);
-      color1->r = color1->r * factor + color2->r * color2->a;
-      color1->g = color1->g * factor + color2->g * color2->a;
-      color1->b = color1->b * factor + color2->b * color2->a;
-      color1->a = factor + color2->a;
+      if (color2->a == 1.0)
+	{
+	  *color1 = *color2;
+	}
+      else
+	{
+	  factor = color1->a * (1.0 - color2->a);
+	  color1->r = color1->r * factor + color2->r * color2->a;
+	  color1->g = color1->g * factor + color2->g * color2->a;
+	  color1->b = color1->b * factor + color2->b * color2->a;
+	  color1->a = factor + color2->a;
+	}
       break;
       
     case GIMP_RGB_COMPOSITE_BEHIND:
       /*  put color2 below color1  */
-      factor = color2->a * (1.0 - color1->a);
-      color1->r = color2->r * factor + color1->r * color1->a;
-      color1->g = color2->g * factor + color1->g * color1->a;
-      color1->b = color2->b * factor + color1->b * color1->a;
-      color1->a = factor + color1->a;
+      if (color1->a < 1.0)
+	{
+	  factor = color2->a * (1.0 - color1->a);
+	  color1->r = color2->r * factor + color1->r * color1->a;
+	  color1->g = color2->g * factor + color1->g * color1->a;
+	  color1->b = color2->b * factor + color1->b * color1->a;
+	  color1->a = factor + color1->a;
+	}
       break;
     }
 }

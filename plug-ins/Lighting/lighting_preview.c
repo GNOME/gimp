@@ -39,7 +39,8 @@ compute_preview (gint startx,
   gint          xcnt, ycnt, f1, f2;
   gdouble       imagex, imagey;
   gint32        index = 0;
-  GimpRGB        color, darkcheck, lightcheck, temp;
+  GimpRGB       color;
+  GimpRGB       lightcheck, darkcheck;
   GimpVector3   pos;
   get_ray_func  ray_func;
 
@@ -80,9 +81,10 @@ compute_preview (gint startx,
   init_compute ();
   precompute_init (width, height);
 
-  gimp_rgb_set (&lightcheck, 0.75, 0.75, 0.75);
-  gimp_rgb_set (&darkcheck,  0.50, 0.50, 0.50);
-  gimp_rgb_set (&color,      0.3,  0.7,  1.0);
+  gimp_rgba_set (&lightcheck, 
+		 GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT, 1.0);
+  gimp_rgba_set (&darkcheck, 
+		 GIMP_CHECK_DARK, GIMP_CHECK_DARK, GIMP_CHECK_DARK, 1.0);
 
   if (mapvals.bump_mapped == TRUE && mapvals.bumpmap_id != -1)
     {
@@ -141,36 +143,26 @@ compute_preview (gint startx,
 		  if (f1)
 		    {
 		      if (color.a == 0.0)
-			{
-			  color=lightcheck;
-			}
+			color = lightcheck;
 		      else
-			{
-			  gimp_rgb_multiply (&color, color.a);
-			  temp = lightcheck;
-			  gimp_rgb_multiply (&temp, 1.0 - color.a);
-			  gimp_rgb_add (&color, &temp);
-			}
+			gimp_rgb_composite (&color, &lightcheck, 
+					    GIMP_RGB_COMPOSITE_BEHIND);
 		    }
 		  else
 		    {
 		      if (color.a == 0.0)
-			{
-			  color = darkcheck;
-			}
+			color = darkcheck;
 		      else
-			{
-			  gimp_rgb_multiply (&color, color.a);
-			  temp = darkcheck;
-			  gimp_rgb_multiply (&temp, 1.0 - color.a);
-			  gimp_rgb_add (&color, &temp);
-			}
+			gimp_rgb_composite (&color, &darkcheck, 
+					    GIMP_RGB_COMPOSITE_BEHIND);
 		    }
 		}
 
-	      preview_rgb_data[index++] = (guchar) (255.0 * color.r);
-	      preview_rgb_data[index++] = (guchar) (255.0 * color.g);
-	      preview_rgb_data[index++] = (guchar) (255.0 * color.b);
+	      gimp_rgb_get_uchar (&color, 
+				  preview_rgb_data + index,
+				  preview_rgb_data + index + 1,
+				  preview_rgb_data + index + 2);
+	      index += 3;
 	      imagex++;
             }
           else

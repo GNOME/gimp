@@ -167,7 +167,6 @@ compute_preview (gint x,
   GimpVector3  p1, p2;
   GimpRGB      color;
   GimpRGB      lightcheck, darkcheck;
-  GimpRGB      temp;
   gint         xcnt, ycnt, f1, f2;
   glong        index = 0;
 
@@ -201,8 +200,10 @@ compute_preview (gint x,
       gimp_rgb_set_alpha (&background, 1.0);
     }
 
-  gimp_rgb_set (&lightcheck, 0.75, 0.75, 0.75);
-  gimp_rgb_set (&darkcheck, 0.50, 0.50, 0.50);
+  gimp_rgba_set (&lightcheck, 
+		 GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT, GIMP_CHECK_LIGHT, 1.0);
+  gimp_rgba_set (&darkcheck, 
+		 GIMP_CHECK_DARK, GIMP_CHECK_DARK, GIMP_CHECK_DARK, 1.0);
   gimp_vector3_set (&p2, -1.0, -1.0, 0.0);
 
   for (ycnt = 0; ycnt < ph; ycnt++)
@@ -224,36 +225,26 @@ compute_preview (gint x,
               if (f1)
                 {
                   if (color.a == 0.0)
-		    {
-		      color = lightcheck;
-		    }
+		    color = lightcheck;
                   else
-                    {
-                      gimp_rgb_multiply (&color, color.a);
-                      temp = lightcheck;
-                      gimp_rgb_multiply (&temp, 1.0 - color.a);
-                      gimp_rgb_add (&color, &temp);
-                    }
-                }
+		    gimp_rgb_composite (&color, &lightcheck, 
+					GIMP_RGB_COMPOSITE_BEHIND);
+                 }
               else
                 {
                   if (color.a == 0.0)
-		    {
-		      color = darkcheck;
-		    }
+		    color = darkcheck;
                   else
-                    {
-                      gimp_rgb_multiply (&color, color.a);
-                      temp = darkcheck;
-                      gimp_rgb_multiply (&temp, 1.0 - color.a);
-                      gimp_rgb_add (&color, &temp);
-                    }
+		    gimp_rgb_composite (&color, &darkcheck, 
+					GIMP_RGB_COMPOSITE_BEHIND);
                 }
             }
 
-          preview_rgb_data[index++] = (guchar) (color.r * 255.0);
-          preview_rgb_data[index++] = (guchar) (color.g * 255.0);
-          preview_rgb_data[index++] = (guchar) (color.b * 255.0);
+	  gimp_rgb_get_uchar (&color, 
+			      preview_rgb_data + index,
+			      preview_rgb_data + index + 1,
+			      preview_rgb_data + index + 2);
+	  index += 3;
         }
     }
 

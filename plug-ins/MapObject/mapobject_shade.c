@@ -219,8 +219,11 @@ get_ray_color_plane (GimpVector3 *pos)
         }
     }
   
-  if (color.a == 0.0)
-    color = background;
+  if (mapvals.transparent_background == FALSE && color.a < 1.0)
+    {
+      gimp_rgb_composite (&color, &background, 
+			  GIMP_RGB_COMPOSITE_BEHIND);
+    }
 
   return color;
 }
@@ -391,11 +394,6 @@ get_ray_color_sphere (GimpVector3 *pos)
 
           gimp_rgb_clamp (&color2);
 
-          if (mapvals.transparent_background == FALSE && color2.a < 1.0)
-	    {
-	      gimp_rgb_composite (&color2, &background, GIMP_RGB_COMPOSITE_BEHIND);
-	    }
-
           /* Compute a mix of the first and second colors */
           /* ============================================ */
 
@@ -404,7 +402,7 @@ get_ray_color_sphere (GimpVector3 *pos)
         }
       else if (color.a != 0.0 &&
 	       inside == TRUE &&
-	       mapvals.lightsource.type!=NO_LIGHT)
+	       mapvals.lightsource.type != NO_LIGHT)
         {
           /* Compute shading at this point */
           /* ============================= */
@@ -421,8 +419,11 @@ get_ray_color_sphere (GimpVector3 *pos)
         }
     }
   
-  if (color.a == 0.0)
-    color = background;
+  if (mapvals.transparent_background == FALSE && color.a < 1.0)
+    {
+      gimp_rgb_composite (&color, &background, 
+			  GIMP_RGB_COMPOSITE_BEHIND);
+    }
   
   return color;
 }

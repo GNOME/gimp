@@ -20,9 +20,9 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "libgimpcolor/gimpcolor.h"
 
-#include "libgimp/gimpcolorarea.h"
+#include "apptypes.h"
 
 #include "appenv.h"
 #include "color_picker.h"
@@ -37,6 +37,8 @@
 #include "palette.h"
 #include "tools.h"
 #include "tool_options.h"
+
+#include "libgimp/gimpcolorarea.h"
 
 #include "libgimp/gimpintl.h"
 

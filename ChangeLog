@@ -1,3 +1,18 @@
+2001-01-24  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/airbrush.c
+	* app/tools/by_color_select.c
+	* app/tools/color_picker.c: include gimpcolor/gimpcolor.h
+
+	* libgimpcolor/gimprgb.c: optimized compositing functions.
+	
+	* plug-ins/Lighting/lighting_preview.c
+	* plug-ins/MapObject/mapobject_preview.c: use gimp_rgb_composite 
+	functions instead of doing the blending manually
+
+	* plug-ins/MapObject/map_object_shade.c: fixed a rendering bug when
+	transparent_background == FALSE
+	
 2001-01-24  Michael Natterer  <mitch@gimp.org>
 
 	* Makefile.am
