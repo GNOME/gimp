@@ -51,6 +51,10 @@ set_default_settings (void)
 {
   gint k;
 
+  mapvals.update_enabled = TRUE;
+  mapvals.light_selected = 0;
+  mapvals.light_isolated = FALSE;
+
   gimp_vector3_set (&mapvals.viewpoint,   0.5, 0.5, 0.25);
   gimp_vector3_set (&mapvals.planenormal, 0.0, 0.0, 1.0);
 
@@ -60,6 +64,7 @@ set_default_settings (void)
   gimp_rgba_set (&mapvals.lightsource[0].color, 1.0, 1.0, 1.0, 1.0);
   mapvals.lightsource[0].intensity = 1.0;
   mapvals.lightsource[0].type      = POINT_LIGHT;
+  mapvals.lightsource[0].active    = TRUE;
 
   /* init lights 2 and 3 pos to upper left and below */
   gimp_vector3_set (&mapvals.lightsource[1].position,   2.0, -1.0, 1.0);
@@ -68,17 +73,25 @@ set_default_settings (void)
   gimp_vector3_set (&mapvals.lightsource[2].position,   1.0,  2.0, 1.0);
   gimp_vector3_set (&mapvals.lightsource[2].direction,  0.0,  1.0, 1.0);
 
-  for (k = 1; k < NUM_LIGHTS; k++)
+  /* init any remaining lights to directly overhead */
+  for (k = 3; k < NUM_LIGHTS; k++)
     {
-      gimp_rgba_set (&mapvals.lightsource[k].color, 0.0, 0.0, 0.0, 1.0);
-      mapvals.lightsource[k].intensity = 1.0;
-      mapvals.lightsource[k].type      = NO_LIGHT;
+      gimp_vector3_set (&mapvals.lightsource[k].position,   0.0,  0.0, 1.0);
+      gimp_vector3_set (&mapvals.lightsource[k].direction,  0.0,  0.0, 1.0);
     }
 
-  mapvals.material.ambient_int  =  0.3;
-  mapvals.material.diffuse_int  =  1.0;
+  for (k = 1; k < NUM_LIGHTS; k++)
+    {
+      gimp_rgba_set (&mapvals.lightsource[k].color, 1.0, 1.0, 1.0, 1.0);
+      mapvals.lightsource[k].intensity = 1.0;
+      mapvals.lightsource[k].type      = NO_LIGHT;
+      mapvals.lightsource[k].active    = TRUE;
+    }
+
+  mapvals.material.ambient_int  =  0.2;
+  mapvals.material.diffuse_int  =  0.5;
   mapvals.material.diffuse_ref  =  0.4;
-  mapvals.material.specular_ref =  0.6;
+  mapvals.material.specular_ref =  0.5;
   mapvals.material.highlight    = 27.0;
   mapvals.material.metallic     = FALSE;
 

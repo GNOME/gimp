@@ -35,53 +35,54 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-
 extern LightingValues mapvals;
 
 static GtkWidget   *appwin            = NULL;
 static GtkNotebook *options_note_book = NULL;
 
+GdkGC     *gc                         = NULL;
+GtkWidget *previewarea                = NULL;
 
-GdkGC     *gc          = NULL;
-GtkWidget *previewarea = NULL;
-
-static GtkWidget *pointlightwid[NUM_LIGHTS];
-static GtkWidget *dirlightwid[NUM_LIGHTS];
-static GtkWidget *colorbutton[NUM_LIGHTS];
-static GtkWidget *light_type_combo[NUM_LIGHTS];
+static GtkWidget *colorbutton;
+static GtkWidget *light_type_combo;
+static GtkWidget *lightselect_combo;
+static GtkWidget *spin_intensity;
+static GtkWidget *isolate_button;
 static gchar     *lighting_effects_path       = NULL;
 
-
-static void create_main_notebook      (GtkWidget      *container);
+static void create_main_notebook      (GtkWidget       *container);
 
 #ifdef _LIGHTNING_UNUSED_CODE
-static void xyzval_update             (GtkEntry       *entry);
+static void xyzval_update             (GtkEntry        *entry);
 #endif
 
-static void toggle_update             (GtkWidget      *widget,
-                                       gpointer        data);
+static void toggle_update             (GtkWidget       *widget,
+                                       gpointer         data);
 
-static void lightmenu_callback        (GtkWidget      *widget,
-                                       gpointer        data);
-
-static gboolean  bumpmap_constrain    (gint32          image_id,
-                                       gint32          drawable_id,
-                                       gpointer        data);
-static gboolean  envmap_constrain     (gint32          image_id,
-                                       gint32          drawable_id,
-                                       gpointer        data);
-static void     envmap_combo_callback (GtkWidget      *widget,
-                                       gpointer        data);
-static void     save_lighting_preset  (GtkWidget      *widget,
-                                       gpointer        data);
-static void     file_chooser_response (GtkFileChooser *chooser,
-                                       gint            response_id,
-                                       gpointer        data);
-static void     load_lighting_preset  (GtkWidget      *widget,
-                                       gpointer        data);
+static gboolean  bumpmap_constrain    (gint32           image_id,
+                                       gint32           drawable_id,
+                                       gpointer         data);
+static gboolean  envmap_constrain     (gint32           image_id,
+                                       gint32           drawable_id,
+                                       gpointer         data);
+static void     envmap_combo_callback (GtkWidget       *widget,
+                                       gpointer         data);
+static void     save_lighting_preset  (GtkWidget       *widget,
+                                       gpointer         data);
+static void     file_chooser_response (GtkFileChooser  *chooser,
+                                       gint             response_id,
+                                       gpointer         data);
+static void     load_lighting_preset  (GtkWidget       *widget,
+                                       gpointer         data);
 static void     load_file_chooser_response (GtkFileChooser *chooser,
-                                            gint       response_id,
-                                            gpointer   data);
+                                            gint        response_id,
+                                            gpointer    data);
+static void     lightselect_callback  (GimpIntComboBox *combo,
+                                       gpointer         data);
+static void     apply_settings        (GtkWidget       *widget,
+                                       gpointer         data);
+static void     isolate_selected_light (GtkWidget      *widget,
+                                        gpointer        data);
 
 
 #ifdef _LIGHTNING_UNUSED_CODE
@@ -122,35 +123,42 @@ toggle_update (GtkWidget *widget,
 /*****************************************/
 
 static void
-lightmenu_callback (GtkWidget *widget,
-                    gpointer   data)
+apply_settings (GtkWidget *widget,
+                gpointer   data)
 {
-  gint k;
+  gint valid;
+  gint type;
+  gint k    = mapvals.light_selected;
 
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), (gint *) data);
-
-  for (k = 0; k < NUM_LIGHTS; k++)
+  if (mapvals.update_enabled)
     {
-      switch (mapvals.lightsource[k].type)
-        {
-        case POINT_LIGHT:
-          gtk_widget_hide (dirlightwid[k]);
-          gtk_widget_show (pointlightwid[k]);
-          break;
+      valid = gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (light_type_combo),
+                                             &type);
+      if (valid)
+        mapvals.lightsource[k].type = type;
 
-        case DIRECTIONAL_LIGHT:
-          gtk_widget_hide (pointlightwid[k]);
-          gtk_widget_show (dirlightwid[k]);
-          break;
+      gimp_color_button_get_color (GIMP_COLOR_BUTTON (colorbutton),
+                                   &mapvals.lightsource[k].color);
 
-        default:
-          gtk_widget_hide (pointlightwid[k]);
-          gtk_widget_hide (dirlightwid[k]);
-          break;
-        }
+      mapvals.lightsource[k].position.x
+        = gtk_spin_button_get_value (GTK_SPIN_BUTTON(spin_pos_x));
+      mapvals.lightsource[k].position.y
+        = gtk_spin_button_get_value (GTK_SPIN_BUTTON(spin_pos_y));
+      mapvals.lightsource[k].position.z
+        = gtk_spin_button_get_value (GTK_SPIN_BUTTON(spin_pos_z));
+
+      mapvals.lightsource[k].direction.x
+        = gtk_spin_button_get_value (GTK_SPIN_BUTTON(spin_dir_x));
+      mapvals.lightsource[k].direction.y
+        = gtk_spin_button_get_value (GTK_SPIN_BUTTON(spin_dir_y));
+      mapvals.lightsource[k].direction.z
+        = gtk_spin_button_get_value (GTK_SPIN_BUTTON(spin_dir_z));
+
+      mapvals.lightsource[k].intensity
+        = gtk_spin_button_get_value (GTK_SPIN_BUTTON(spin_intensity));
+
+      interactive_preview_callback(NULL);
     }
-
-  interactive_preview_callback(NULL);
 }
 
 static void
@@ -311,13 +319,11 @@ create_light_page (void)
   GtkWidget *page;
   GtkWidget *frame;
   GtkWidget *table;
-  GtkWidget *table2;
   GtkWidget *ebox;
   GtkWidget *button;
   GtkObject *adj;
   GtkWidget *label;
-  gint       k;
-  gchar      label_text[20];
+  gint       k = mapvals.light_selected;
 
   page = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (page), 12);
@@ -332,6 +338,22 @@ create_light_page (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
+  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 12);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 3, 12);
+
+  lightselect_combo =  gimp_int_combo_box_new (_("Light 1"),        0,
+                                               _("Light 2"),        1,
+                                               _("Light 3"),        2,
+                                               _("Light 4"),        3,
+                                               _("Light 5"),        4,
+                                               _("Light 6"),        5,
+                                               NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (lightselect_combo), k);
+  gtk_table_attach_defaults (GTK_TABLE (table), lightselect_combo, 0, 2, 0, 1);
+  g_signal_connect (lightselect_combo, "changed",
+                    G_CALLBACK (lightselect_callback), NULL);
+  gtk_widget_show (lightselect_combo);
+
   /* row labels */
   label = gtk_label_new (_("Type:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
@@ -343,193 +365,169 @@ create_light_page (void)
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 2, 3);
   gtk_widget_show (label);
 
-  gtk_table_set_col_spacing (GTK_TABLE (table), 2, 12);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 4, 12);
+  light_type_combo =
+    gimp_int_combo_box_new (_("None"),        NO_LIGHT,
+                            _("Directional"), DIRECTIONAL_LIGHT,
+                            _("Point"),       POINT_LIGHT,
+                            /* _("Spot"),     SPOT_LIGHT, */
+                            NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (light_type_combo),
+                                 mapvals.lightsource[k].type);
+  g_signal_connect (light_type_combo, "changed",
+                    G_CALLBACK (apply_settings),
+                    NULL);
 
-  for (k = 0; k < NUM_LIGHTS; k++)
-    {
-      g_snprintf (label_text, sizeof (label_text), "Light %d", k + 1);
-      label = gtk_label_new (label_text);
-      gtk_table_attach_defaults (GTK_TABLE (table),
-                                 label, 2*k + 1, 2*k + 2, 0, 1);
-      gtk_widget_show (label);
+  ebox = gtk_event_box_new ();
+  gtk_container_add (GTK_CONTAINER (ebox), light_type_combo);
+  gtk_widget_show (ebox);
+  gtk_table_attach_defaults (GTK_TABLE (table),
+                             ebox, 1, 2, 1, 2);
+  gtk_widget_show (light_type_combo);
+  gimp_help_set_help_data (ebox, _("Type of light source to apply"), NULL);
 
-      light_type_combo[k] =
-        gimp_int_combo_box_new (_("None"),        NO_LIGHT,
-                                _("Directional"), DIRECTIONAL_LIGHT,
-                                _("Point"),       POINT_LIGHT,
-                                /* _("Spot"),     SPOT_LIGHT, */
-                                NULL);
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (light_type_combo[k]),
-                                     mapvals.lightsource[k].type);
-      g_signal_connect (light_type_combo[k], "changed",
-                        G_CALLBACK (lightmenu_callback),
-                        &mapvals.lightsource[k].type);
+  colorbutton = gimp_color_button_new (_("Select lightsource color"),
+                                          64, 16,
+                                          &mapvals.lightsource[k].color,
+                                          GIMP_COLOR_AREA_FLAT);
+  gimp_color_button_set_update (GIMP_COLOR_BUTTON (colorbutton), TRUE);
+  g_signal_connect (colorbutton, "color_changed",
+                    G_CALLBACK (apply_settings),
+                    NULL);
+  gtk_widget_show (colorbutton);
+  gtk_table_attach_defaults (GTK_TABLE (table),
+                             colorbutton, 1, 2, 2, 3);
+  gimp_help_set_help_data (colorbutton,
+                           _("Set light source color"), NULL);
 
-      ebox = gtk_event_box_new ();
-      gtk_container_add (GTK_CONTAINER (ebox), light_type_combo[k]);
-      gtk_widget_show (ebox);
-      gtk_table_attach_defaults (GTK_TABLE (table),
-                                 ebox, 2*k + 1, 2*k + 2, 1, 2);
-      gtk_widget_show (light_type_combo[k]);
-      gimp_help_set_help_data (ebox, _("Type of light source to apply"), NULL);
 
-      colorbutton[k] = gimp_color_button_new (_("Select lightsource color"),
-                                           64, 16,
-                                           &mapvals.lightsource[k].color,
-                                           GIMP_COLOR_AREA_FLAT);
-      g_signal_connect (colorbutton[k], "color_changed",
-                        G_CALLBACK (gimp_color_button_get_color),
-                        &mapvals.lightsource[k].color);
-      g_signal_connect (colorbutton[k], "color_changed",
-                        G_CALLBACK (interactive_preview_callback),
-                        NULL);
-      gtk_widget_show (colorbutton[k]);
-      gtk_table_attach_defaults (GTK_TABLE (table),
-                                 colorbutton[k], 2*k + 1, 2*k + 2, 2, 3);
-      gimp_help_set_help_data (colorbutton[k],
-                               _("Set light source color"), NULL);
+  spin_intensity = gimp_spin_button_new (&adj,
+                                         mapvals.lightsource[k].intensity,
+                                         0.0, 100.0,
+                                         0.01, 0.1, 1.0, 0.0, 2);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
+                                 _("_Intensity:"), 0.0, 0.5,
+                                 spin_intensity, 1, TRUE);
+  g_signal_connect (adj, "value_changed",
+                    G_CALLBACK (apply_settings),
+                    NULL);
+  gimp_help_set_help_data (spin_intensity,
+                           _("Light intensity"), NULL);
 
-      /* Position vector settings */
-      pointlightwid[k] = gtk_vbox_new (FALSE, 0);
-      if (mapvals.lightsource[k].type == POINT_LIGHT)
-        gtk_widget_show (pointlightwid[k]);
 
-      table2 = gtk_table_new (3, 2, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table2), 6);
-      gtk_table_set_row_spacings (GTK_TABLE (table2), 6);
-      gtk_container_add (GTK_CONTAINER (pointlightwid[k]), table2);
-      gtk_table_attach_defaults (GTK_TABLE (table),
-                                 pointlightwid[k], 2*k + 1, 2*k + 2, 4, 5);
-      gtk_widget_show (table2);
+  label = gtk_label_new (_("Position"));
+  gtk_table_attach_defaults (GTK_TABLE (table), label, 3, 4, 0, 1);
+  gtk_widget_show (label);
 
-      spin_pos_x[k] = gimp_spin_button_new (&adj,
-                                            mapvals.lightsource[k].position.x,
-                                            -100.0, 100.0,
-                                            0.1, 1.0, 1.0, 0.0, 2);
-      gimp_table_attach_aligned (GTK_TABLE (table2), 0, 0,
+  spin_pos_x = gimp_spin_button_new (&adj,
+                                     mapvals.lightsource[k].position.x,
+                                     -100.0, 100.0,
+                                     0.1, 1.0, 1.0, 0.0, 2);
+  gimp_table_attach_aligned (GTK_TABLE (table), 2, 1,
                                  _("_X:"), 0.0, 0.5,
-                                 spin_pos_x[k], 1, TRUE);
-      g_signal_connect (adj, "value_changed",
-                        G_CALLBACK (gimp_double_adjustment_update),
-                        &mapvals.lightsource[k].position.x);
-      g_signal_connect (adj, "value_changed",
-                        G_CALLBACK (interactive_preview_callback),
-                        NULL);
-      gimp_help_set_help_data (spin_pos_x[k],
-                               _("Light source X position in XYZ space"), NULL);
+                                 spin_pos_x, 1, TRUE);
+  g_signal_connect (adj, "value_changed",
+                    G_CALLBACK (apply_settings),
+                    NULL);
+  gimp_help_set_help_data (spin_pos_x,
+                           _("Light source X position in XYZ space"), NULL);
 
-      spin_pos_y[k] = gimp_spin_button_new (&adj,
-                                            mapvals.lightsource[k].position.y,
-                                            -100.0, 100.0,
-                                            0.1, 1.0, 1.0, 0.0, 2);
-      gimp_table_attach_aligned (GTK_TABLE (table2), 0, 1,
-                                 _("_Y:"), 0.0, 0.5,
-                                 spin_pos_y[k], 1, TRUE);
-      g_signal_connect (adj, "value_changed",
-                        G_CALLBACK (gimp_double_adjustment_update),
-                        &mapvals.lightsource[k].position.y);
-      g_signal_connect (adj, "value_changed",
-                        G_CALLBACK (interactive_preview_callback),
-                        NULL);
-      gimp_help_set_help_data (spin_pos_y[k],
+  spin_pos_y = gimp_spin_button_new (&adj,
+                                     mapvals.lightsource[k].position.y,
+                                     -100.0, 100.0,
+                                     0.1, 1.0, 1.0, 0.0, 2);
+  gimp_table_attach_aligned (GTK_TABLE (table), 2, 2,
+                             _("_Y:"), 0.0, 0.5,
+                             spin_pos_y, 1, TRUE);
+  g_signal_connect (adj, "value_changed",
+                    G_CALLBACK (apply_settings),
+                    NULL);
+  gimp_help_set_help_data (spin_pos_y,
                            _("Light source Y position in XYZ space"), NULL);
 
-      spin_pos_z[k] = gimp_spin_button_new (&adj,
-                                            mapvals.lightsource[k].position.z,
-                                            -100.0, 100.0,
-                                            0.1, 1.0, 1.0, 0.0, 2);
-      gimp_table_attach_aligned (GTK_TABLE (table2), 0, 2,
-                                 _("_Z:"), 0.0, 0.5,
-                                 spin_pos_z[k], 1, TRUE);
-      g_signal_connect (adj, "value_changed",
-                        G_CALLBACK (gimp_double_adjustment_update),
-                        &mapvals.lightsource[k].position.z);
-      g_signal_connect (adj, "value_changed",
-                        G_CALLBACK (interactive_preview_callback),
-                        NULL);
-      gimp_help_set_help_data (spin_pos_z[k],
-                               _("Light source Z position in XYZ space"), NULL);
+  spin_pos_z = gimp_spin_button_new (&adj,
+                                     mapvals.lightsource[k].position.z,
+                                     -100.0, 100.0,
+                                     0.1, 1.0, 1.0, 0.0, 2);
+  gimp_table_attach_aligned (GTK_TABLE (table), 2, 3,
+                             _("_Z:"), 0.0, 0.5,
+                             spin_pos_z, 1, TRUE);
+  g_signal_connect (adj, "value_changed",
+                    G_CALLBACK (apply_settings),
+                    NULL);
+  gimp_help_set_help_data (spin_pos_z,
+                           _("Light source Z position in XYZ space"), NULL);
 
-      /* Direction vector settings */
-      dirlightwid[k] = gtk_vbox_new (FALSE, 0);
-      if (mapvals.lightsource[k].type == DIRECTIONAL_LIGHT)
-        gtk_widget_show (dirlightwid[k]);
 
-      table2 = gtk_table_new (3, 2, FALSE);
-      gtk_widget_show (table2);
-      gtk_table_set_col_spacings (GTK_TABLE (table2), 6);
-      gtk_table_set_row_spacings (GTK_TABLE (table2), 6);
-      gtk_container_add (GTK_CONTAINER (dirlightwid[k]), table2);
-      gtk_table_attach_defaults (GTK_TABLE (table),
-                                 dirlightwid[k], 2*k + 1, 2*k + 2, 4, 5);
+  label = gtk_label_new (_("Direction"));
+  gtk_table_attach_defaults (GTK_TABLE (table), label, 5, 6, 0, 1);
+  gtk_widget_show (label);
 
-      spin_dir_x[k] = gimp_spin_button_new (&adj,
-                                            mapvals.lightsource[k].direction.x,
-                                            -100.0, 100.0, 0.1, 1.0, 1.0, 0.0, 2);
-      gimp_table_attach_aligned (GTK_TABLE (table2), 0, 0,
-                                 _("X:"), 0.0, 0.5,
-                                 spin_dir_x[k], 1, TRUE);
-      g_signal_connect (adj, "value_changed",
-                        G_CALLBACK (gimp_double_adjustment_update),
-                        &mapvals.lightsource[k].direction.x);
-      g_signal_connect (adj, "value_changed",
-                        G_CALLBACK (interactive_preview_callback),
-                        NULL);
-      gimp_help_set_help_data (spin_dir_x[k],
-                               _("Light source X direction in XYZ space"), NULL);
+  spin_dir_x = gimp_spin_button_new (&adj,
+                                     mapvals.lightsource[k].direction.x,
+                                     -100.0, 100.0, 0.1, 1.0, 1.0, 0.0, 2);
+  gimp_table_attach_aligned (GTK_TABLE (table), 4, 1,
+                             _("X:"), 0.0, 0.5,
+                             spin_dir_x, 1, TRUE);
+  g_signal_connect (adj, "value_changed",
+                    G_CALLBACK (apply_settings),
+                    NULL);
+  gimp_help_set_help_data (spin_dir_x,
+                           _("Light source X direction in XYZ space"), NULL);
 
-      spin_dir_y[k] = gimp_spin_button_new (&adj,
-                                            mapvals.lightsource[k].direction.y,
-                                            -100.0, 100.0, 0.1, 1.0, 1.0, 0.0, 2);
-      gimp_table_attach_aligned (GTK_TABLE (table2), 0, 1,
-                                 _("Y:"), 0.0, 0.5,
-                                 spin_dir_y[k], 1, TRUE);
-      g_signal_connect (adj, "value_changed",
-                        G_CALLBACK (gimp_double_adjustment_update),
-                        &mapvals.lightsource[k].direction.y);
-      g_signal_connect (adj, "value_changed",
-                        G_CALLBACK (interactive_preview_callback),
-                        NULL);
-      gimp_help_set_help_data (spin_dir_y[k],
-                               _("Light source Y direction in XYZ space"), NULL);
+  spin_dir_y = gimp_spin_button_new (&adj,
+                                     mapvals.lightsource[k].direction.y,
+                                     -100.0, 100.0, 0.1, 1.0, 1.0, 0.0, 2);
+  gimp_table_attach_aligned (GTK_TABLE (table), 4, 2,
+                             _("Y:"), 0.0, 0.5,
+                                 spin_dir_y, 1, TRUE);
+  g_signal_connect (adj, "value_changed",
+                    G_CALLBACK (apply_settings),
+                    NULL);
+  gimp_help_set_help_data (spin_dir_y,
+                           _("Light source Y direction in XYZ space"), NULL);
 
-      spin_dir_z[k] = gimp_spin_button_new (&adj,
-                                            mapvals.lightsource[k].direction.z,
-                                            -100.0, 100.0, 0.1, 1.0, 1.0, 0.0, 2);
-      gimp_table_attach_aligned (GTK_TABLE (table2), 0, 2,
-                                 _("Z:"), 0.0, 0.5,
-                                 spin_dir_z[k], 1, TRUE);
-      g_signal_connect (adj, "value_changed",
-                        G_CALLBACK (gimp_double_adjustment_update),
-                        &mapvals.lightsource[k].direction.z);
-      g_signal_connect (adj, "value_changed",
-                        G_CALLBACK (interactive_preview_callback),
-                        NULL);
-      gimp_help_set_help_data (spin_dir_z[k],
-                               _("Light source Z direction in XYZ space"),
-                               NULL);
+  spin_dir_z = gimp_spin_button_new (&adj,
+                                     mapvals.lightsource[k].direction.z,
+                                     -100.0, 100.0, 0.1, 1.0, 1.0, 0.0, 2);
+  gimp_table_attach_aligned (GTK_TABLE (table), 4, 3,
+                             _("Z:"), 0.0, 0.5,
+                             spin_dir_z, 1, TRUE);
+  g_signal_connect (adj, "value_changed",
+                    G_CALLBACK (apply_settings),
+                    NULL);
+  gimp_help_set_help_data (spin_dir_z,
+                           _("Light source Z direction in XYZ space"),
+                           NULL);
 
-      label = gtk_label_new (_("Lighting preset:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-      gtk_table_set_row_spacing (GTK_TABLE (table), 4, 24);
-      gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 3, 5, 6);
-      gtk_widget_show (label);
+  isolate_button = gtk_toggle_button_new_with_mnemonic (_("I_solate"));
+  gtk_toggle_button_set_mode   (GTK_TOGGLE_BUTTON (isolate_button), FALSE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (isolate_button),
+                                mapvals.light_isolated);
+  g_signal_connect (isolate_button, "toggled",
+                    G_CALLBACK (isolate_selected_light),
+                    NULL);
+  gtk_table_attach_defaults (GTK_TABLE (table), isolate_button, 0, 1, 5, 6);
+  gtk_widget_show (isolate_button);
 
-      button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
-      gtk_table_attach_defaults (GTK_TABLE (table), button, 3, 4, 5, 6);
-      g_signal_connect (button, "clicked",
-                        G_CALLBACK (save_lighting_preset),
-                        NULL);
-      gtk_widget_show (button);
+  label = gtk_label_new (_("Lighting preset:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 5, 12);
+  gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 2, 6, 7);
+  gtk_widget_show (label);
 
-      button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
-      gtk_table_attach_defaults (GTK_TABLE (table), button, 5, 6, 5, 6);
-      g_signal_connect (button, "clicked",
-                        G_CALLBACK (load_lighting_preset),
-                        NULL);
-      gtk_widget_show (button);
-    }
+  button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
+  gtk_table_attach_defaults (GTK_TABLE (table), button, 2, 4, 6, 7);
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (save_lighting_preset),
+                    NULL);
+  gtk_widget_show (button);
+
+  button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
+  gtk_table_attach_defaults (GTK_TABLE (table), button, 4, 6, 6, 7);
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (load_lighting_preset),
+                    NULL);
+  gtk_widget_show (button);
 
   gtk_widget_show (page);
 
@@ -579,7 +577,7 @@ create_material_page (void)
                                      image, 1, FALSE);
   gtk_size_group_add_widget (group, label);
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.ambient_int,
-                                     0, G_MAXFLOAT, 0.1, 1.0, 1.0, 0.0, 2);
+                                     0, G_MAXFLOAT, 0.01, 0.1, 1.0, 0.0, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 0, 1,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   g_signal_connect (adj, "value_changed",
@@ -608,7 +606,7 @@ create_material_page (void)
                                      image, 1, FALSE);
   gtk_size_group_add_widget (group, label);
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.diffuse_int,
-                                     0, G_MAXFLOAT, 0.1, 1.0, 1.0, 0.0, 2);
+                                     0, G_MAXFLOAT, 0.01, 0.1, 1.0, 0.0, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 1, 2,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   g_signal_connect (adj, "value_changed",
@@ -637,7 +635,7 @@ create_material_page (void)
                                      image, 1, FALSE);
   gtk_size_group_add_widget (group, label);
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.specular_ref,
-                                     0, G_MAXFLOAT, 0.1, 1.0, 1.0, 0.0, 2);
+                                     0, G_MAXFLOAT, 0.01, 0.1, 1.0, 0.0, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 2, 3,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   g_signal_connect (adj, "value_changed",
@@ -665,7 +663,7 @@ create_material_page (void)
                                      image, 1, FALSE);
   gtk_size_group_add_widget (group, label);
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.highlight,
-                                     0, G_MAXFLOAT, 0.1, 1.0, 1.0, 0.0, 2);
+                                     0, G_MAXFLOAT, 0.01, 0.1, 1.0, 0.0, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 3, 4,
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   g_signal_connect (adj, "value_changed",
@@ -1001,7 +999,6 @@ main_dialog (GimpDrawable *drawable)
                     G_CALLBACK (interactive_preview_callback),
                     NULL);
 
-
   gtk_widget_show (toggle);
 
   gimp_help_set_help_data (toggle,
@@ -1082,7 +1079,6 @@ save_lighting_preset (GtkWidget *widget,
       gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (window),
                                            g_get_tmp_dir ());
     }
-
 
   gtk_window_present (GTK_WINDOW (window));
 }
@@ -1255,6 +1251,10 @@ load_file_chooser_response (GtkFileChooser *chooser,
         {
           fscanf (fp, "Number of lights: %d", &num_lights);
 
+          /* initialize lights to off */
+          for (k = 0; k < NUM_LIGHTS; k++)
+            mapvals.lightsource[k].type = NO_LIGHT;
+
           for (k = 0; k < num_lights; k++)
             {
               source = &mapvals.lightsource[k];
@@ -1293,17 +1293,121 @@ load_file_chooser_response (GtkFileChooser *chooser,
               fscanf (fp, " Intensity: %s", buffer1);
               source->intensity = g_ascii_strtod (buffer1, &endptr);
 
-              gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (light_type_combo[k]),
-                                             source->type);
-              gimp_color_button_set_color (GIMP_COLOR_BUTTON (colorbutton[k]),
-                                           &source->color);
-              }
+            }
 
           fclose (fp);
         }
-    }
+
+      lightselect_callback (GIMP_INT_COMBO_BOX (lightselect_combo), NULL);
+   }
 
   gtk_widget_destroy (GTK_WIDGET (chooser));
   interactive_preview_callback (GTK_WIDGET (chooser));
 }
 
+
+static void
+lightselect_callback (GimpIntComboBox *combo,
+                      gpointer         data)
+{
+  gint valid;
+  gint j, k;
+
+  valid = gimp_int_combo_box_get_active (combo, &k);
+
+ if (valid)
+    {
+      mapvals.update_enabled = FALSE;  /* prevent apply_settings() */
+
+      mapvals.light_selected = k;
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (light_type_combo),
+                                     mapvals.lightsource[k].type);
+      gimp_color_button_set_color (GIMP_COLOR_BUTTON (colorbutton),
+                                   &mapvals.lightsource[k].color);
+      gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_pos_x),
+                                 mapvals.lightsource[k].position.x);
+      gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_pos_y),
+                                 mapvals.lightsource[k].position.y);
+      gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_pos_z),
+                                 mapvals.lightsource[k].position.z);
+      gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_dir_x),
+                                 mapvals.lightsource[k].direction.x);
+      gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_dir_y),
+                                 mapvals.lightsource[k].direction.y);
+      gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_dir_z),
+                                 mapvals.lightsource[k].direction.z);
+      gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_intensity),
+                                 mapvals.lightsource[k].intensity);
+
+      mapvals.update_enabled = TRUE;
+
+      switch (mapvals.lightsource[k].type)
+        {
+        case NO_LIGHT:
+          gtk_widget_set_sensitive (spin_pos_x, FALSE);
+          gtk_widget_set_sensitive (spin_pos_y, FALSE);
+          gtk_widget_set_sensitive (spin_pos_z, FALSE);
+          gtk_widget_set_sensitive (spin_dir_x, FALSE);
+          gtk_widget_set_sensitive (spin_dir_y, FALSE);
+          gtk_widget_set_sensitive (spin_dir_z, FALSE);
+          break;
+        case POINT_LIGHT:
+          gtk_widget_set_sensitive (spin_pos_x, TRUE);
+          gtk_widget_set_sensitive (spin_pos_y, TRUE);
+          gtk_widget_set_sensitive (spin_pos_z, TRUE);
+          gtk_widget_set_sensitive (spin_dir_x, FALSE);
+          gtk_widget_set_sensitive (spin_dir_y, FALSE);
+          gtk_widget_set_sensitive (spin_dir_z, FALSE);
+          break;
+        case DIRECTIONAL_LIGHT:
+          gtk_widget_set_sensitive (spin_pos_x, FALSE);
+          gtk_widget_set_sensitive (spin_pos_y, FALSE);
+          gtk_widget_set_sensitive (spin_pos_z, FALSE);
+          gtk_widget_set_sensitive (spin_dir_x, TRUE);
+          gtk_widget_set_sensitive (spin_dir_y, TRUE);
+          gtk_widget_set_sensitive (spin_dir_z, TRUE);
+          break;
+        default:
+          break;
+        }
+
+      /* if we are isolating a light, need to switch */
+      if (mapvals.light_isolated)
+        {
+          for (j = 0; j < NUM_LIGHTS; j++)
+            if (j == mapvals.light_selected)
+              mapvals.lightsource[j].active = TRUE;
+            else
+              mapvals.lightsource[j].active = FALSE;
+        }
+
+      interactive_preview_callback (NULL);
+    }
+}
+
+static void
+isolate_selected_light (GtkWidget *widget,
+                        gpointer   data)
+{
+  gint  k;
+
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
+    {
+      mapvals.light_isolated = TRUE;
+
+      for (k = 0; k < NUM_LIGHTS; k++)
+        if (k == mapvals.light_selected)
+          mapvals.lightsource[k].active = TRUE;
+        else
+          mapvals.lightsource[k].active = FALSE;
+    }
+  else
+    {
+      mapvals.light_isolated = FALSE;
+
+      for (k = 0; k < NUM_LIGHTS; k++)
+        mapvals.lightsource[k].active = TRUE;
+    }
+
+  interactive_preview_callback (NULL);
+}

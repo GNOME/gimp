@@ -5,7 +5,7 @@
 /* ================= */
 
 #define TILE_CACHE_SIZE 16
-#define NUM_LIGHTS      3
+#define NUM_LIGHTS      6
 
 /* Typedefs */
 /* ======== */
@@ -14,7 +14,7 @@ typedef enum
 {
   POINT_LIGHT,
   DIRECTIONAL_LIGHT,
-  SPOT_LIGHT, 
+  SPOT_LIGHT,
   NO_LIGHT
 } LightType;
 
@@ -34,13 +34,13 @@ enum
 
 typedef struct
 {
-  gdouble  ambient_int;
-  gdouble  diffuse_int;
-  gdouble  diffuse_ref;
-  gdouble  specular_ref;
-  gdouble  highlight;
-  gboolean metallic;
-  GimpRGB  color;
+  gdouble     ambient_int;
+  gdouble     diffuse_int;
+  gdouble     diffuse_ref;
+  gdouble     specular_ref;
+  gdouble     highlight;
+  gboolean    metallic;
+  GimpRGB     color;
 } MaterialSettings;
 
 typedef struct
@@ -50,13 +50,14 @@ typedef struct
   GimpVector3  direction;
   GimpRGB      color;
   gdouble      intensity;
+  gboolean     active;
 } LightSettings;
 
 typedef struct
 {
-  gint32 drawable_id;
-  gint32 bumpmap_id;
-  gint32 envmap_id;
+  gint32       drawable_id;
+  gint32       bumpmap_id;
+  gint32       envmap_id;
 
   /* Render variables */
   /* ================ */
@@ -67,34 +68,28 @@ typedef struct
   MaterialSettings material;
   MaterialSettings ref_material;
 
-  gdouble pixel_treshold;
-  gdouble bumpmax,bumpmin;
-/*  gdouble wave_cx,wave_cy;
-  gdouble wave_lx,wave_ly;
-  gdouble wave_amp,wave_ph; */
-  gint    max_depth;
-  gint    bumpmaptype;
-/*  gint    bumptype; */
+  gdouble      pixel_treshold;
+  gdouble      bumpmax,bumpmin;
+  gint         max_depth;
+  gint         bumpmaptype;
 
   /* Flags */
-  /* ===== */
-
-  gint antialiasing;
-  gint create_new_image;
-  gint transparent_background;
-  gint bump_mapped;
-  gint env_mapped;
-  gint ref_mapped;
-  gint bumpstretch;
-  gint previewquality;
-  gboolean symbols;
-  gboolean interactive_preview;
-
+  gint         antialiasing;
+  gint         create_new_image;
+  gint         transparent_background;
+  gint         bump_mapped;
+  gint         env_mapped;
+  gint         ref_mapped;
+  gint         bumpstretch;
+  gint         previewquality;
+  gboolean     symbols;
+  gboolean     interactive_preview;
 
   /* Misc */
-  /* ==== */
-  
-  gdouble preview_zoom_factor;
+  gboolean     update_enabled;
+  gint         light_selected;
+  gboolean     light_isolated;
+  gdouble      preview_zoom_factor;
 } LightingValues;
 
 /* Externally visible variables */

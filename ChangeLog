@@ -1,3 +1,16 @@
+2004-07-20  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/Lighting/lighting_main.c
+	* plug-ins/Lighting/lighting_main.h
+	* plug-ins/Lighting/lighting_preview.c
+	* plug-ins/Lighting/lighting_preview.h
+	* plug-ins/Lighting/lighting_shade.c
+	* plug-ins/Lighting/lighting_ui.c: completely reworked UI for 
+	lighting page.  Now supports up to 6 lights (more is trivial).
+	Added ability to temporarily isolate selected light.  Added
+	light intensity controls.  Can interactively position each light 
+	(does not quite work yet for directional lights).
+
 2004-07-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/tools-actions.c: added an icon to the

@@ -224,13 +224,14 @@ gboolean
 check_handle_hit (gint xpos, gint ypos)
 {
   gint dx,dy,r;
+  gint k = mapvals.light_selected;
 
   dx = handle_xpos - xpos;
   dy = handle_ypos - ypos;
 
 
-  if (mapvals.lightsource[0].type == POINT_LIGHT ||
-      mapvals.lightsource[0].type == DIRECTIONAL_LIGHT)
+  if (mapvals.lightsource[k].type == POINT_LIGHT ||
+      mapvals.lightsource[k].type == DIRECTIONAL_LIGHT)
     {
       r = sqrt (dx * dx + dy * dy) + 0.5;
       if ((gint) r > 7)
@@ -253,10 +254,11 @@ check_handle_hit (gint xpos, gint ypos)
 static void
 draw_handles (void)
 {
-  gdouble dxpos, dypos;
-  gint    startx, starty, pw, ph;
+  gdouble     dxpos, dypos;
+  gint        startx, starty, pw, ph;
   GimpVector3 viewpoint;
   GimpVector3 light_position;
+  gint        k      = mapvals.light_selected;
 
   gfloat length;
   gfloat delta_x = 0.0;
@@ -264,15 +266,16 @@ draw_handles (void)
 
   /* calculate handle position */
   compute_preview_rectangle (&startx, &starty, &pw, &ph);
-  switch (mapvals.lightsource[0].type)
+  switch (mapvals.lightsource[k].type)
     {
+    case NO_LIGHT:
+      return;
     case POINT_LIGHT:
     case SPOT_LIGHT:
-    case NO_LIGHT:
       /* swap z to reverse light position */
       viewpoint = mapvals.viewpoint;
       viewpoint.z = -viewpoint.z;
-      light_position = mapvals.lightsource[0].position;
+      light_position = mapvals.lightsource[k].position;
       gimp_vector_3d_to_2d (startx, starty, pw, ph, &dxpos, &dypos,
                             &viewpoint, &light_position);
       handle_xpos = (gint) (dxpos + 0.5);
@@ -285,8 +288,8 @@ draw_handles (void)
       gimp_vector_3d_to_2d (startx, starty, pw, ph, &dxpos, &dypos,
                             &viewpoint, &light_position);
       length = PREVIEW_HEIGHT / 4;
-      delta_x = mapvals.lightsource[0].direction.x * length;
-      delta_y = mapvals.lightsource[0].direction.y * length;
+      delta_x = mapvals.lightsource[k].direction.x * length;
+      delta_y = mapvals.lightsource[k].direction.y * length;
       handle_xpos = dxpos + delta_x;
       handle_ypos = dypos + delta_y;
       break;
@@ -294,7 +297,7 @@ draw_handles (void)
 
   gdk_gc_set_function (gc, GDK_COPY);
 
-  if (mapvals.lightsource[0].type != NO_LIGHT)
+  if (mapvals.lightsource[k].type != NO_LIGHT)
     {
       GdkColor  color;
 
@@ -312,7 +315,7 @@ draw_handles (void)
         }
 
       /* calculate backbuffer */
-      switch (mapvals.lightsource[0].type)
+      switch (mapvals.lightsource[k].type)
         {
         case POINT_LIGHT:
           backbuf.x = handle_xpos - LIGHT_SYMBOL_SIZE / 2;
@@ -335,11 +338,12 @@ draw_handles (void)
           backbuf.h = fabs(delta_y) + LIGHT_SYMBOL_SIZE;
           break;
         case SPOT_LIGHT:
-        case NO_LIGHT:
           backbuf.x = handle_xpos - LIGHT_SYMBOL_SIZE / 2;
           backbuf.y = handle_ypos - LIGHT_SYMBOL_SIZE / 2;
           backbuf.w = LIGHT_SYMBOL_SIZE;
           backbuf.h = LIGHT_SYMBOL_SIZE;
+          break;
+        case NO_LIGHT:
           break;
         }
 
@@ -372,7 +376,7 @@ draw_handles (void)
       gdk_gc_set_rgb_fg_color (gc, &color);
 
       /* draw circle at light position */
-      switch (mapvals.lightsource[0].type)
+      switch (mapvals.lightsource[k].type)
         {
         case POINT_LIGHT:
         case SPOT_LIGHT:
@@ -406,30 +410,32 @@ void
 update_light (gint xpos, gint ypos)
 {
   gint startx, starty, pw, ph;
-  GimpVector3 vp;
+  GimpVector3  vp;
+  gint         k = mapvals.light_selected;
 
   compute_preview_rectangle (&startx, &starty, &pw, &ph);
 
   vp = mapvals.viewpoint;
   vp.z = -vp.z;
 
-  switch (mapvals.lightsource[0].type)
+  switch (mapvals.lightsource[k].type)
     {
     case        NO_LIGHT:
+      break;
     case        POINT_LIGHT:
     case        SPOT_LIGHT:
       gimp_vector_2d_to_3d (startx,
                             starty,
                             pw,
                             ph,
-                            xpos, ypos, &vp, &mapvals.lightsource[0].position);
+                            xpos, ypos, &vp, &mapvals.lightsource[k].position);
       break;
     case DIRECTIONAL_LIGHT:
       gimp_vector_2d_to_3d (startx,
                             starty,
                             pw,
                             ph,
-                            xpos, ypos, &vp, &mapvals.lightsource[0].direction);
+                            xpos, ypos, &vp, &mapvals.lightsource[k].direction);
       break;
     }
 }
@@ -561,23 +567,24 @@ interactive_preview_callback (GtkWidget *widget)
 static gboolean
 interactive_preview_timer_callback ( gpointer data )
 {
-  gint k;
+  gint k = mapvals.light_selected;
 
-  for (k = 0; k < NUM_LIGHTS; k++)
-    {
-      gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_pos_x[k]),
-                                 mapvals.lightsource[k].position.x);
-      gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_pos_y[k]),
-                                 mapvals.lightsource[k].position.y);
-      gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_pos_z[k]),
-                                 mapvals.lightsource[k].position.z);
-      gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_dir_x[k]),
-                                 mapvals.lightsource[k].direction.x);
-      gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_dir_y[k]),
-                                 mapvals.lightsource[k].direction.y);
-      gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_dir_z[k]),
-                                 mapvals.lightsource[k].direction.z);
-    }
+  mapvals.update_enabled = FALSE;  /* disable apply_settings() */
+
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_pos_x),
+                             mapvals.lightsource[k].position.x);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_pos_y),
+                             mapvals.lightsource[k].position.y);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_pos_z),
+                             mapvals.lightsource[k].position.z);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_dir_x),
+                             mapvals.lightsource[k].direction.x);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_dir_y),
+                             mapvals.lightsource[k].direction.y);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON(spin_dir_z),
+                             mapvals.lightsource[k].direction.z);
+
+  mapvals.update_enabled = TRUE;
 
   draw_preview_image (TRUE);
 

@@ -35,12 +35,12 @@ extern gdouble    *xpostab, *ypostab;
 extern gboolean    light_hit;
 extern gboolean    left_button_pressed;
 
-GtkWidget  *spin_pos_x[NUM_LIGHTS];
-GtkWidget  *spin_pos_y[NUM_LIGHTS];
-GtkWidget  *spin_pos_z[NUM_LIGHTS];
-GtkWidget  *spin_dir_x[NUM_LIGHTS];
-GtkWidget  *spin_dir_y[NUM_LIGHTS];
-GtkWidget  *spin_dir_z[NUM_LIGHTS];
+GtkWidget  *spin_pos_x;
+GtkWidget  *spin_pos_y;
+GtkWidget  *spin_pos_z;
+GtkWidget  *spin_dir_x;
+GtkWidget  *spin_dir_y;
+GtkWidget  *spin_dir_z;
 
 /* Externally visible functions */
 
