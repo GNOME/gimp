@@ -443,7 +443,7 @@ levels_new_dialog ()
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   vbox2 = gtk_vbox_new (FALSE, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  ld->input_levels_da[0] = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
+  ld->input_levels_da[0] = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (ld->input_levels_da[0]), DA_WIDTH, GRADIENT_HEIGHT);
   gtk_widget_set_events (ld->input_levels_da[0], LEVELS_DA_MASK);
   gtk_signal_connect (GTK_OBJECT (ld->input_levels_da[0]), "event",
@@ -503,7 +503,7 @@ levels_new_dialog ()
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   vbox2 = gtk_vbox_new (FALSE, 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
-  ld->output_levels_da[0] = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
+  ld->output_levels_da[0] = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (ld->output_levels_da[0]), DA_WIDTH, GRADIENT_HEIGHT);
   gtk_widget_set_events (ld->output_levels_da[0], LEVELS_DA_MASK);
   gtk_signal_connect (GTK_OBJECT (ld->output_levels_da[0]), "event",
@@ -648,19 +648,76 @@ levels_update (LevelsDialog *ld,
     }
   if (update & INPUT_LEVELS)
     {
-      for (i = 0; i < GRADIENT_HEIGHT; i++)
+      unsigned char buf[DA_WIDTH*3];
+
+      switch (ld->channel) {
+      default:
+	  g_warning ("unknown channel type, can't happen\n");
+	  /* fall through */
+      case HISTOGRAM_VALUE:
+      case HISTOGRAM_ALPHA:
+	  for (i = 0; i < DA_WIDTH; i++)
+	  {
+	      buf[3*i+0] = ld->input[ld->channel][i];
+	      buf[3*i+1] = ld->input[ld->channel][i];
+	      buf[3*i+2] = ld->input[ld->channel][i];
+	  }
+	  break;
+
+      case HISTOGRAM_RED:
+      case HISTOGRAM_GREEN:
+      case HISTOGRAM_BLUE:	  
+	  for (i = 0; i < DA_WIDTH; i++)
+	  {
+	      buf[3*i+0] = ld->input[HISTOGRAM_RED][i];
+	      buf[3*i+1] = ld->input[HISTOGRAM_GREEN][i];
+	      buf[3*i+2] = ld->input[HISTOGRAM_BLUE][i];
+	  }
+	  break;
+      }
+
+      for (i = 0; i < GRADIENT_HEIGHT/2; i++)
 	gtk_preview_draw_row (GTK_PREVIEW (ld->input_levels_da[0]),
-			      ld->input[ld->channel], 0, i, DA_WIDTH);
+			      buf, 0, i, DA_WIDTH);
+
+
+      for (i = 0; i < DA_WIDTH; i++)
+      {
+	  buf[3*i+0] = i;
+	  buf[3*i+1] = i;
+	  buf[3*i+2] = i;
+      }
+
+      for (i = GRADIENT_HEIGHT/2; i < GRADIENT_HEIGHT; i++)
+	gtk_preview_draw_row (GTK_PREVIEW (ld->input_levels_da[0]),
+			      buf, 0, i, DA_WIDTH);
 
       if (update & DRAW)
 	gtk_widget_draw (ld->input_levels_da[0], NULL);
     }
   if (update & OUTPUT_LEVELS)
     {
-      unsigned char buf[DA_WIDTH];
+      unsigned char buf[DA_WIDTH*3];
+      unsigned char r, g, b;
+
+      r = g = b = 0;
+      switch (ld->channel) {
+      default:
+	  g_warning ("unknown channel type, can't happen\n");
+	  /* fall through */
+      case HISTOGRAM_VALUE:
+      case HISTOGRAM_ALPHA:  r = g = b = 1; break;
+      case HISTOGRAM_RED:    r = 1;         break;
+      case HISTOGRAM_GREEN:  g = 1;         break;
+      case HISTOGRAM_BLUE:   b = 1;         break;
+      }
 
       for (i = 0; i < DA_WIDTH; i++)
-	buf[i] = i;
+      {
+	buf[3*i+0] = i*r;
+	buf[3*i+1] = i*g;
+	buf[3*i+2] = i*b;
+      }
 
       for (i = 0; i < GRADIENT_HEIGHT; i++)
 	gtk_preview_draw_row (GTK_PREVIEW (ld->output_levels_da[0]),

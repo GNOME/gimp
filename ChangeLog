@@ -1,3 +1,9 @@
+Mon Jul  5 20:39:42 BST 1999  Austin Donnelly  <austin@gimp.org>
+
+	* app/levels.c: change from greyscale bars to colour ones similar
+	    to curves.c.  Is this any use to people?  If not, we can
+	    always revert it.
+
 1999-07-05  Tuomas Kuosmanen  <tigert@gimp.org>
 
 	* gimp1_1_splash.ppm: This is the Eeek!-one again, due to public
