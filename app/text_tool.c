@@ -580,7 +580,6 @@ text_render (GimpImage    *gimage,
 #ifndef GDK_WINDOWING_WIN32
   XFontStruct *xfs;
 #endif
-  gchar *fname;
 
   /*  determine the layer type  */
   if (drawable)
@@ -610,12 +609,15 @@ text_render (GimpImage    *gimage,
       return NULL;
     }
   xfs = GDK_FONT_XFONT (font);
-  if (xfs->min_byte1 != 0 || xfs->max_byte1 != 0) {
-    gdk_font_unref(font);
-    fname = g_strdup_printf("%s,*", fontname);
-    font = gdk_fontset_load (fname);
-    g_free(fname);
-  }
+  if (xfs->min_byte1 != 0 || xfs->max_byte1 != 0) 
+    {
+      gchar *fname;
+
+      gdk_font_unref (font);
+      fname = g_strdup_printf ("%s,*", fontname);
+      font = gdk_fontset_load (fname);
+      g_free (fname);
+    }
 #else
   /* Just use gdk_fontset_load all the time. IMHO it could be like
    * this on all platforms?
@@ -696,7 +698,9 @@ text_render (GimpImage    *gimage,
   mask = tile_manager_new (text_width, text_height, 1);
   pixel_region_init (&maskPR, mask, 0, 0, text_width, text_height, TRUE);
 
-  for (pr = pixel_regions_register (1, &maskPR); pr != NULL; pr = pixel_regions_process (pr))
+  for (pr = pixel_regions_register (1, &maskPR); 
+       pr != NULL; 
+       pr = pixel_regions_process (pr))
     {
       /* erase the pixmap */
       gdk_gc_set_foreground (gc, &white);
@@ -821,11 +825,34 @@ text_get_extents (gchar *fontname,
   gchar *str;
   gint   nstrs;
   gint   line_width, line_height;
+#ifndef GDK_WINDOWING_WIN32
+  XFontStruct *xfs;
+#endif
 
   /* load the font in */
   gdk_error_warnings = 0;
   gdk_error_code = 0;
+#ifndef GDK_WINDOWING_WIN32
   font = gdk_font_load (fontname);
+  if (!font)
+    return FALSE;
+
+  xfs = GDK_FONT_XFONT (font);
+  if (xfs->min_byte1 != 0 || xfs->max_byte1 != 0) 
+    {
+      gchar *fname;
+
+      gdk_font_unref (font);
+      fname = g_strdup_printf ("%s,*", fontname);
+      font = gdk_fontset_load (fname);
+      g_free (fname);
+    }
+#else
+  /* Just use gdk_fontset_load all the time. IMHO it could be like
+   * this on all platforms?
+   */
+  font = gdk_fontset_load (fontname);
+#endif
   gdk_error_warnings = 1;
   if (!font || (gdk_error_code == -1))
     return FALSE;
