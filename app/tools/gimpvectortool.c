@@ -22,6 +22,7 @@
 #include "config.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
@@ -101,6 +102,11 @@ static void   gimp_vector_tool_oper_update     (GimpTool        *tool,
                                                 GimpCoords      *coords,
                                                 GdkModifierType  state,
                                                 GimpDisplay     *gdisp);
+static void   gimp_vector_tool_status_update   (GimpTool        *tool,
+                                                GimpDisplay     *gdisp);
+static void   gimp_vector_tool_status_set      (GimpTool        *tool,
+                                                GimpDisplay     *gdisp,
+                                                const gchar     *message);
 static void   gimp_vector_tool_cursor_update   (GimpTool        *tool,
                                                 GimpCoords      *coords,
                                                 GdkModifierType  state,
@@ -210,6 +216,9 @@ gimp_vector_tool_init (GimpVectorTool *vector_tool)
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_BEZIER_SELECT_TOOL_CURSOR);
 
+  vector_tool->status_gdisp   = NULL;
+  vector_tool->status_msg     = NULL;
+
   vector_tool->function       = VECTORS_CREATE_VECTOR;
   vector_tool->restriction    = GIMP_ANCHOR_FEATURE_NONE;
   vector_tool->modifier_lock  = FALSE;
@@ -248,8 +257,8 @@ gimp_vector_tool_control (GimpTool       *tool,
       break;
 
     case HALT:
-      /* gimp_tool_pop_status (tool); */
       gimp_vector_tool_set_vectors (vector_tool, NULL);
+      gimp_vector_tool_status_set (tool, NULL, NULL);
       break;
 
     default:
@@ -282,12 +291,6 @@ gimp_vector_tool_button_press (GimpTool        *tool,
   /* Save the current modifier state */
 
   vector_tool->saved_state = state;
-
-  /*  if we are changing displays, pop the statusbar of the old one  */
-  if (gdisp != tool->gdisp)
-    {
-      /* gimp_tool_pop_status (tool); */
-    }
 
   gimp_draw_tool_pause (draw_tool);
 
@@ -584,7 +587,9 @@ gimp_vector_tool_button_press (GimpTool        *tool,
   gimp_vectors_thaw (vector_tool->vectors);
 
   if (! gimp_draw_tool_is_active (draw_tool))
-    gimp_draw_tool_start (draw_tool, gdisp);
+    {
+      gimp_draw_tool_start (draw_tool, gdisp);
+    }
 
   gimp_draw_tool_resume (draw_tool);
 }
@@ -1069,8 +1074,113 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
         }
       break;
     }
+
+  gimp_vector_tool_status_update (tool, gdisp);
 }
 
+
+static void
+gimp_vector_tool_status_update (GimpTool    *tool,
+                                GimpDisplay *gdisp)
+{
+  GimpVectorTool *vector_tool = GIMP_VECTOR_TOOL (tool);
+  gchar          *new_status  = NULL;
+
+  switch (vector_tool->function)
+  {
+    case VECTORS_SELECT_VECTOR:
+      new_status = _("Click to pick Path to edit");
+      break;
+    case VECTORS_CREATE_VECTOR:
+      new_status = _("Click to create a new Path");
+      break;
+    case VECTORS_CREATE_STROKE:
+      new_status = _("Click to create a new component of the path");
+      break;
+    case VECTORS_ADD_ANCHOR:
+      new_status = _("Click to create a new anchor, "
+                      "use SHIFT to create a new component.");
+      break;
+    case VECTORS_MOVE_ANCHOR:
+      new_status = _("Click-Drag to move the anchor around");
+      break;
+    case VECTORS_MOVE_ANCHORSET:
+      new_status = _("Click-Drag to move the anchors around");
+      break;
+    case VECTORS_MOVE_HANDLE:
+      new_status = _("Click-Drag to move the handle around. "
+                      "SHIFT moves the opposite handle symmetrically.");
+      break;
+    case VECTORS_MOVE_CURVE:
+      new_status = _("Click-Drag to change the shape of the curve. "
+                      "SHIFT moves the opposite handles of the "
+                      "endpoints symmetrically.");
+      break;
+    case VECTORS_MOVE_STROKE:
+      new_status = _("Click-Drag to move the component around. "
+                      "SHIFT moves the complete path around.");
+      break;
+    case VECTORS_MOVE_VECTORS:
+      new_status = _("Click-Drag to move the component around. "
+                      "SHIFT moves the complete path around.");
+      break;
+    case VECTORS_INSERT_ANCHOR:
+      new_status = _("Click to insert an anchor on the path.");
+      break;
+    case VECTORS_DELETE_ANCHOR:
+      new_status = _("Click to delete this anchor.");
+      break;
+    case VECTORS_CONNECT_STROKES:
+      new_status = _("Click to connect this anchor "
+                      "with the selected endpoint.");
+      break;
+    case VECTORS_DELETE_SEGMENT:
+      new_status = _("Click to open up the path.");
+      break;
+    case VECTORS_CONVERT_EDGE:
+      new_status = _("Click to make this node angular.");
+      break;
+    case VECTORS_FINISHED:
+      new_status = _("Nothing to see here. Move along.");
+      break;
+  }
+
+  gimp_vector_tool_status_set (tool, gdisp, new_status);
+}
+
+static void
+gimp_vector_tool_status_set (GimpTool    *tool,
+                             GimpDisplay *gdisp,
+                             const gchar *message)
+{
+  GimpVectorTool *vector_tool = GIMP_VECTOR_TOOL (tool);
+  GimpDisplay    *orig_gdisp;
+
+  if (vector_tool->status_gdisp != gdisp ||
+      strcmp (vector_tool->status_msg, message) != 0)
+    {
+      orig_gdisp = tool->gdisp;
+
+      if (vector_tool->status_gdisp)
+        {
+          tool->gdisp = vector_tool->status_gdisp;
+          gimp_tool_pop_status (tool);
+          vector_tool->status_gdisp = NULL;
+          g_free (vector_tool->status_msg);
+          vector_tool->status_msg = NULL;
+        }
+
+      if (gdisp && message)
+        {
+          tool->gdisp = gdisp;
+          gimp_tool_push_status (tool, message);
+          vector_tool->status_gdisp = gdisp;
+          vector_tool->status_msg = g_strdup (message);
+        }
+
+      tool->gdisp = orig_gdisp;
+    }
+}
 
 static void
 gimp_vector_tool_cursor_update (GimpTool        *tool,
@@ -1334,7 +1444,9 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
 
   if (gimp_draw_tool_is_active (draw_tool) &&
       (! vectors || draw_tool->gdisp->gimage != item->gimage))
-    gimp_draw_tool_stop (draw_tool);
+    {
+      gimp_draw_tool_stop (draw_tool);
+    }
 
   if (vector_tool->vectors)
     {
@@ -1432,7 +1544,9 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
           tool->gdisp = gdisp;
 
           if (tool->gdisp)
-            gimp_draw_tool_start (draw_tool, tool->gdisp);
+            {
+              gimp_draw_tool_start (draw_tool, tool->gdisp);
+            }
         }
     }
 

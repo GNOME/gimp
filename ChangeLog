@@ -1,3 +1,11 @@
+2003-09-19  Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimpvectortool.[ch]: Show a little help in the
+	status bar. Maybe the functions I implemented to track
+	the status of the status bar should live in a parent class.
+	Still behaves a little weird, but I need help to fix it and it
+	does not crash, so I committed it anyway...  :-)
+
 2003-09-18  Sven Neumann  <sven@gimp.org>
 
 	* app/vectors/gimpbezierstroke.c
