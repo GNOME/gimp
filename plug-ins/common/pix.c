@@ -216,7 +216,7 @@ run (char    *name,
 	case RUN_WITH_LAST_VALS:
 	  init_gtk ();
 	  export = gimp_export_image (&image_ID, &drawable_ID, "PIX", 
-				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_ALPHA));
+				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY));
 	  if (export == EXPORT_CANCEL)
 	    {
 	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
