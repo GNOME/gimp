@@ -119,7 +119,7 @@ gimp_tile_cache_size (gulong kilobytes)
 void
 gimp_tile_cache_ntiles (gulong ntiles)
 {
-  gimp_tile_cache_size ((ntiles * _gimp_tile_width * _gimp_tile_height * 4) / 1024);
+  gimp_tile_cache_size ((gulong)(ntiles * _gimp_tile_width * _gimp_tile_height * 4 + 1023) / 1024);
 }
 
 guint

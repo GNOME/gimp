@@ -52,7 +52,8 @@ It does not need to concern users.
 The parasite data format is not rigidly specified. For non-persistant
 parasites you are entirely free, as the parasite data does not survive the
 current gimp session. If you need persistant data, you basically have to
-choose between the following alternatives:
+choose between the following alternatives (also, having some standard for
+non-persistant data might be fine as well):
 
 - cook your own binary data format
   
@@ -73,6 +74,9 @@ choose between the following alternatives:
   representation would be. Not much a problem for most applications,
   though.
 
+  You could also use one parasite per field you store, i.e. foo-size,
+  foo-offset-x, foo-offset-y etc...
+
 - use the libgimp serialize functions
 
   Look at the stuff in libgimp/gserialize.h. These functions allow for
@@ -81,7 +85,30 @@ choose between the following alternatives:
   issues and other hazzles. The drawback is that you might encounter
   problems when you want to extend your structures later, as you have to
   be prepared for images saved with parasites form a very old version of
-  your plug-in, and the gserialize functions do not (yet) handle different
-  data formats nicely.
+  your plug-in, and the gserialize functions do not handle different data
+  formats nicely itself.
+
+  One way out around this is to prefix your data with a version identifier
+  (remember to use a guchar, i.e. something without endian-ness problems).
+  Depending on that (remember to skip it before deserializing)
+
+  Another very easy way is to add a version tag to your parasite name,
+  i.e. "foo-bar-v1", "foo-bar-v2". Your plug-in could then check for older
+  versions and act accordingly and/or attach the new parasite or both the
+  new and the old version of your data.
+
+  The gserialize stuff also makes it possible to just append more fields
+  (i.e. more gserialized structs) to your data. You could check the length
+  of the parasite data ("anything left?") to decide wether to decode more
+  fields. Here's some example:
+
+  data = parasite_data(p);
+  size = parasite_data_size(p);
+  length = gdeserialize(...);
+  tlength += length;
+  data += length;
+  if (tlength != size)
+    gdeserialize the next one, etc.
+
 
 
