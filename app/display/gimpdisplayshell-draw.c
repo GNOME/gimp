@@ -325,6 +325,9 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   gimp_dnd_viewable_dest_add (GTK_WIDGET (shell), GIMP_TYPE_CHANNEL,
 			      gimp_display_shell_drop_drawable,
                               shell);
+  gimp_dnd_svg_dest_add      (GTK_WIDGET (shell),
+			      gimp_display_shell_drop_svg,
+                              shell);
   gimp_dnd_viewable_dest_add (GTK_WIDGET (shell), GIMP_TYPE_VECTORS,
 			      gimp_display_shell_drop_vectors,
                               shell);

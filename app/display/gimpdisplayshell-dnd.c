@@ -36,6 +36,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "vectors/gimpvectors.h"
+#include "vectors/gimpvectors-import.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -123,6 +124,37 @@ gimp_display_shell_drop_vectors (GtkWidget    *widget,
 
       gimp_image_undo_group_end (gdisp->gimage);
 
+      gimp_image_flush (gdisp->gimage);
+
+      gimp_context_set_display (gimp_get_user_context (gdisp->gimage->gimp),
+                                gdisp);
+    }
+}
+
+void
+gimp_display_shell_drop_svg (GtkWidget     *widget,
+                             const gchar   *svg_data,
+                             gint           svg_data_len,
+                             gpointer       data)
+{
+  GimpDisplay *gdisp;
+  GError      *error = NULL;
+
+  gdisp = GIMP_DISPLAY_SHELL (data)->gdisp;
+
+  if (gdisp->gimage->gimp->busy)
+    return;
+
+  g_print ("drop SVG on canvas\n");
+
+  if (! gimp_vectors_import_buffer (gdisp->gimage, svg_data, svg_data_len,
+                                    TRUE, TRUE, &error))
+    {
+      g_message (error->message);
+      g_clear_error (&error);
+    }
+  else
+    {
       gimp_image_flush (gdisp->gimage);
 
       gimp_context_set_display (gimp_get_user_context (gdisp->gimage->gimp),

@@ -1,5 +1,14 @@
 2003-12-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-dnd.[ch]: added
+	gimp_display_shell_drop_svg() (untested because there is no place
+	to drag an SVG from yet...).
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_init):
+	connect SVG drops to the new callback.
+
+2003-12-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdnd.[ch]: changed "svg_data" from guchar* to
 	gchar*, cleaned up debugging output.
 

@@ -26,6 +26,10 @@ void   gimp_display_shell_drop_drawable (GtkWidget     *widget,
 void   gimp_display_shell_drop_vectors  (GtkWidget     *widget,
                                          GimpViewable  *viewable,
                                          gpointer       data);
+void   gimp_display_shell_drop_svg      (GtkWidget     *widget,
+                                         const gchar   *svg_data,
+                                         gint           svg_data_length,
+                                         gpointer       data);
 void   gimp_display_shell_drop_pattern  (GtkWidget     *widget,
                                          GimpViewable  *viewable,
                                          gpointer       data);
