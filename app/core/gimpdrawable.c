@@ -37,6 +37,7 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "gimp.h"
+#include "gimp-utils.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpdrawable.h"
@@ -369,89 +370,58 @@ gimp_drawable_resize (GimpItem *item,
   GimpDrawable *drawable;
   PixelRegion   srcPR, destPR;
   TileManager  *new_tiles;
-  gint          w, h;
-  gint          x1, y1, x2, y2;
+  gint          new_offset_x;
+  gint          new_offset_y;
+  gint          copy_x, copy_y;
+  gint          copy_width, copy_height;
 
   drawable = GIMP_DRAWABLE (item);
 
-  x1 = CLAMP (offset_x, 0, new_width);
-  y1 = CLAMP (offset_y, 0, new_height);
-  x2 = CLAMP (offset_x + item->width,  0, new_width);
-  y2 = CLAMP (offset_y + item->height, 0, new_height);
+  new_offset_x = item->offset_x - offset_x;
+  new_offset_y = item->offset_y - offset_y;
 
-  w = x2 - x1;
-  h = y2 - y1;
-
-  if (offset_x > 0)
-    {
-      x1 = 0;
-      x2 = offset_x;
-    }
-  else
-    {
-      x1 = -offset_x;
-      x2 = 0;
-    }
-
-  if (offset_y > 0)
-    {
-      y1 = 0;
-      y2 = offset_y;
-    }
-  else
-    {
-      y1 = -offset_y;
-      y2 = 0;
-    }
+  gimp_rectangle_intersect (item->offset_x, item->offset_y,
+                            item->width, item->height,
+                            new_offset_x, new_offset_y,
+                            new_width, new_height,
+                            &copy_x, &copy_y,
+                            &copy_width, &copy_height);
 
   /*  Update the old position  */
   gimp_drawable_update (drawable, 0, 0, item->width, item->height);
-
-  /*  Configure the pixel regions  */
-  pixel_region_init (&srcPR, drawable->tiles,
-		     x1, y1,
-		     w, h,
-		     FALSE);
 
   /*  Allocate the new tile manager, configure dest region  */
   new_tiles = tile_manager_new (new_width, new_height,
 				drawable->bytes);
 
   /*  Determine whether the new tiles need to be initially cleared  */
-  if ((new_width  > item->width)  ||
-      (new_height > item->height) ||
-      (x2 || y2))
+  if (copy_width  != new_width ||
+      copy_height != new_height)
     {
+      guchar bg[MAX_CHANNELS] = { 0, };
+
       pixel_region_init (&destPR, new_tiles,
                          0, 0,
                          new_width, new_height,
                          TRUE);
 
-      /*  fill with the fill color  */
-      if (gimp_drawable_has_alpha (drawable) ||
-          GIMP_IS_CHANNEL (drawable) /* EEK */)
-        {
-          /*  Set to transparent and black  */
-          guchar bg[4] = { 0, 0, 0, 0 };
+      if (! gimp_drawable_has_alpha (drawable) && ! GIMP_IS_CHANNEL (drawable))
+        gimp_image_get_background (gimp_item_get_image (item), drawable, bg);
 
-          color_region (&destPR, bg);
-        }
-      else
-        {
-          guchar bg[3];
-
-          gimp_image_get_background (gimp_item_get_image (item),
-                                     drawable, bg);
-          color_region (&destPR, bg);
-        }
+      color_region (&destPR, bg);
     }
 
-  /*  copy from the old to the new  */
-  if (w && h)
+  /*  Determine whether anything needs to be copied  */
+  if (copy_width && copy_height)
     {
+      pixel_region_init (&srcPR, drawable->tiles,
+                         copy_x - item->offset_x, copy_y - item->offset_y,
+                         copy_width, copy_height,
+                         FALSE);
+
       pixel_region_init (&destPR, new_tiles,
-                         x2, y2,
-                         w, h,
+                         copy_x - new_offset_x, copy_y - new_offset_y,
+                         copy_width, copy_height,
                          TRUE);
 
       copy_region (&srcPR, &destPR);

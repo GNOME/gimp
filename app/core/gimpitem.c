@@ -334,37 +334,8 @@ gimp_item_real_resize (GimpItem *item,
                        gint      offset_x,
                        gint      offset_y)
 {
-  gint x1, y1, x2, y2;
-
-  x1 = CLAMP (offset_x, 0, new_width);
-  y1 = CLAMP (offset_y, 0, new_height);
-  x2 = CLAMP (offset_x + item->width,  0, new_width);
-  y2 = CLAMP (offset_y + item->height, 0, new_height);
-
-  if (offset_x > 0)
-    {
-      x1 = 0;
-      x2 = offset_x;
-    }
-  else
-    {
-      x1 = -offset_x;
-      x2 = 0;
-    }
-
-  if (offset_y > 0)
-    {
-      y1 = 0;
-      y2 = offset_y;
-    }
-  else
-    {
-      y1 = -offset_y;
-      y2 = 0;
-    }
-
-  item->offset_x = x1 + item->offset_x - x2;
-  item->offset_y = y1 + item->offset_y - y2;
+  item->offset_x = item->offset_x - offset_x;
+  item->offset_y = item->offset_y - offset_y;
   item->width    = new_width;
   item->height   = new_height;
 }

@@ -30,6 +30,8 @@ libappcore_a_sources = \
 	gimp-parasites.h		\
 	gimp-templates.c		\
 	gimp-templates.h		\
+	gimp-utils.c			\
+	gimp-utils.h			\
 	gimpbrush.c			\
 	gimpbrush.h			\
 	gimpbrush-header.h		\

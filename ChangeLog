@@ -1,5 +1,25 @@
 2003-05-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/Makefile.am
+	* app/core/gimp-utils.[ch]: new file for utility functions.
+	Contains gimp_rectangle_intersect() for now.
+
+	* app/core/gimpdrawable-transform.c: removed the function here.
+
+	* app/core/gimpdrawable.c (gimp_drawable_resize): use it to
+	determine the amount of pixels to copy between the old and new
+	tile managers. Removed restriction that forced the areas to
+	overlap by at least one pixel.
+
+	* app/core/gimpitem.c (gimp_item_real_transform): removed the
+	restriction here, too.
+
+	* app/core/gimplayer.c (gimp_layer_create_mask): use the new
+	function to decide how much to copy from the selection when
+	creating a mask from it.
+
+2003-05-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdrawable-transform.[ch]: changed the TileManager
 	variable names to "orig_tiles" and "new_tiles" in the whole file.
 

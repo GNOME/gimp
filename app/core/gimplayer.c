@@ -34,10 +34,12 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "gimp-utils.h"
 #include "gimpdrawable-invert.h"
 #include "gimpcontainer.h"
 #include "gimpimage.h"
 #include "gimpimage-convert.h"
+#include "gimpimage-mask.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
@@ -897,8 +899,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
 	{
 	  pixel_region_init (&srcPR, drawable->tiles, 
 			     0, 0, 
-			     item->width, 
-			     item->height, 
+			     item->width, item->height, 
 			     FALSE);
 
 	  extract_alpha_region (&srcPR, NULL, &destPR);
@@ -908,69 +909,37 @@ gimp_layer_create_mask (const GimpLayer *layer,
     case GIMP_ADD_SELECTION_MASK:
       {
         GimpChannel *selection;
+        gboolean     selection_empty;
+        gint         copy_x, copy_y;
+        gint         copy_width, copy_height;
 
-        selection = gimp_image_get_mask (gimage);
+        selection       = gimp_image_get_mask (gimage);
+        selection_empty = gimp_image_mask_is_empty (gimage);
 
-        if (item->offset_x < 0 ||
-            item->offset_y < 0 ||
-            item->offset_x + item->width  > gimage->width ||
-            item->offset_y + item->height > gimage->height)
+        gimp_rectangle_intersect (0, 0, gimage->width, gimage->height,
+                                  item->offset_x, item->offset_y,
+                                  item->width, item->height,
+                                  &copy_x, &copy_y, &copy_width, &copy_height);
+
+        if (copy_width < item->width || copy_height < item->height ||
+            selection_empty)
+          gimp_channel_clear (GIMP_CHANNEL (mask), FALSE);
+
+        if ((copy_width || copy_height) && ! selection_empty)
           {
-            gint width, height;
-
-            width  = item->width;
-            height = item->height;
-
-            if (item->offset_x < 0)
-              width += item->offset_x;
-
-            if (item->offset_y < 0)
-              height += item->offset_y;
-
-            if (item->offset_x + item->width > gimage->width)
-              width -= item->offset_x + item->width - gimage->width;
-
-            if (item->offset_y + item->height > gimage->height)
-              height -= item->offset_y + item->height - gimage->height;
-
-            if (width < item->width || height < item->height)
-              gimp_channel_clear (GIMP_CHANNEL (mask), FALSE);
-
-            if (width > 0 && height > 0)
-              {
-                gint x, y;
-
-                x = MAX (0, item->offset_x);
-                y = MAX (0, item->offset_y);
-
-                pixel_region_init (&srcPR, GIMP_DRAWABLE (selection)->tiles,
-                                   x, y, width, height,
-                                   FALSE);
-
-                x = MAX (0, -item->offset_x);
-                y = MAX (0, -item->offset_y);
-
-                pixel_region_init (&destPR, GIMP_DRAWABLE (mask)->tiles,
-                                   x, y, width, height,
-                                   TRUE);
-
-                copy_region (&srcPR, &destPR);
-              }
-          }
-        else
-          {
-            pixel_region_init (&srcPR, GIMP_DRAWABLE (selection)->tiles, 
-                               item->offset_x,
-                               item->offset_y, 
-                               item->width, 
-                               item->height, 
+            pixel_region_init (&srcPR, GIMP_DRAWABLE (selection)->tiles,
+                               copy_x, copy_y,
+                               copy_width, copy_height,
                                FALSE);
+            pixel_region_init (&destPR, GIMP_DRAWABLE (mask)->tiles,
+                               copy_x - item->offset_x, copy_y - item->offset_y,
+                               copy_width, copy_height,
+                               TRUE);
 
             copy_region (&srcPR, &destPR);
+ 
+            GIMP_CHANNEL (mask)->bounds_known = FALSE;
           }
-
-        if (! (selection->bounds_known && selection->empty))
-          GIMP_CHANNEL (mask)->bounds_known = FALSE;
       }
       break;
 
