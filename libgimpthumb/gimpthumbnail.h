@@ -94,20 +94,30 @@ GimpThumbState   gimp_thumbnail_peek_image       (GimpThumbnail  *thumbnail);
 GimpThumbState   gimp_thumbnail_peek_thumb       (GimpThumbnail  *thumbnail,
                                                   GimpThumbSize   size);
 
+GimpThumbState   gimp_thumbnail_check_thumb      (GimpThumbnail  *thumbnail,
+                                                  GimpThumbSize   size);
+
 GdkPixbuf      * gimp_thumbnail_load_thumb       (GimpThumbnail  *thumbnail,
                                                   GimpThumbSize   size,
                                                   GError        **error);
+
 gboolean         gimp_thumbnail_save_thumb       (GimpThumbnail  *thumbnail,
                                                   GdkPixbuf      *pixbuf,
-                                                  const gchar    *software,
-                                                  GError        **error);
-gboolean         gimp_thumbnail_save_failure     (GimpThumbnail  *thumbnail,
                                                   const gchar    *software,
                                                   GError        **error);
 gboolean         gimp_thumbnail_save_thumb_local (GimpThumbnail  *thumbnail,
                                                   GdkPixbuf      *pixbuf,
                                                   const gchar    *software,
                                                   GError        **error);
+
+gboolean         gimp_thumbnail_save_failure     (GimpThumbnail  *thumbnail,
+                                                  const gchar    *software,
+                                                  GError        **error);
+void             gimp_thumbnail_delete_failure   (GimpThumbnail  *thumbnail);
+void             gimp_thumbnail_delete_others    (GimpThumbnail  *thumbnail,
+                                                  GimpThumbSize   size);
+
+gboolean         gimp_thumbnail_has_failed       (GimpThumbnail  *thumbnail);
 
 
 G_END_DECLS

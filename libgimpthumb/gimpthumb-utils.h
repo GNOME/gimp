@@ -57,6 +57,10 @@ gboolean            gimp_thumb_ensure_thumb_dir_local (const gchar    *dirname,
 void                gimp_thumbs_delete_for_uri_local  (const gchar    *uri);
 
 
+/*  for internal use only   */
+void                _gimp_thumbs_delete_others        (const gchar    *uri,
+                                                       GimpThumbSize   size);
+
 
 G_END_DECLS
 

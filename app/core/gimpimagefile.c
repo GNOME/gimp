@@ -72,6 +72,7 @@ static GdkPixbuf * gimp_imagefile_load_thumb       (GimpImagefile  *imagefile,
 static gboolean    gimp_imagefile_save_thumb       (GimpImagefile  *imagefile,
                                                     GimpImage      *gimage,
                                                     gint            size,
+                                                    gboolean        replace,
                                                     GError        **error);
 
 static gchar     * gimp_imagefile_get_description  (GimpViewable   *viewable,
@@ -230,7 +231,8 @@ void
 gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
                                  GimpContext   *context,
                                  GimpProgress  *progress,
-                                 gint           size)
+                                 gint           size,
+                                 gboolean       replace)
 {
   GimpThumbnail *thumbnail;
 
@@ -276,7 +278,7 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
                           NULL);
 
           success = gimp_imagefile_save_thumb (imagefile,
-                                               gimage, size, &error);
+                                               gimage, size, replace, &error);
 
           g_object_unref (gimage);
         }
@@ -285,11 +287,12 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
           success = gimp_thumbnail_save_failure (thumbnail,
                                                  "The GIMP " GIMP_VERSION,
                                                  &error);
+          gimp_imagefile_update (imagefile);
         }
 
       g_object_unref (imagefile);
 
-      if (!success)
+      if (! success)
         {
           g_message (error->message);
           g_error_free (error);
@@ -300,13 +303,14 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
 /*  The weak version doesn't ref the imagefile but deals gracefully
  *  with an imagefile that is destroyed while the thumbnail is
  *  created. Thia allows to use this function w/o the need to block
- *  the user interface (making it insensitive).
+ *  the user interface.
  */
 void
 gimp_imagefile_create_thumbnail_weak (GimpImagefile *imagefile,
                                       GimpContext   *context,
                                       GimpProgress  *progress,
-                                      gint           size)
+                                      gint           size,
+                                      gboolean       replace)
 {
   GimpImagefile *local;
   const gchar   *uri;
@@ -327,7 +331,7 @@ gimp_imagefile_create_thumbnail_weak (GimpImagefile *imagefile,
 
   g_object_add_weak_pointer (G_OBJECT (imagefile), (gpointer) &imagefile);
 
-  gimp_imagefile_create_thumbnail (local, context, progress, size);
+  gimp_imagefile_create_thumbnail (local, context, progress, size, replace);
 
   if (imagefile)
     {
@@ -347,27 +351,53 @@ gimp_imagefile_create_thumbnail_weak (GimpImagefile *imagefile,
 }
 
 gboolean
+gimp_imagefile_check_thumbnail (GimpImagefile *imagefile)
+{
+  gint  size;
+
+  g_return_val_if_fail (GIMP_IS_IMAGEFILE (imagefile), FALSE);
+
+  size = imagefile->gimp->config->thumbnail_size;
+
+  if (size > 0)
+    {
+      GimpThumbState  state;
+
+      state = gimp_thumbnail_check_thumb (imagefile->thumbnail, size);
+
+      return (state == GIMP_THUMB_STATE_OK);
+    }
+
+  return TRUE;
+}
+
+gboolean
 gimp_imagefile_save_thumbnail (GimpImagefile *imagefile,
                                GimpImage     *gimage)
 {
-  gboolean  success;
-  GError   *error = NULL;
+  gint      size;
+  gboolean  success = TRUE;
+  GError   *error   = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGEFILE (imagefile), FALSE);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
-  /*  peek the thumbnail to make sure that mtime and filesize are set  */
-  gimp_thumbnail_peek_image (imagefile->thumbnail);
+  size = imagefile->gimp->config->thumbnail_size;
 
-  success = gimp_imagefile_save_thumb (imagefile,
-                                       gimage,
-                                       gimage->gimp->config->thumbnail_size,
-                                       &error);
-
-  if (! success)
+  if (size > 0)
     {
-      g_message (error->message);
-      g_error_free (error);
+      /*  peek the thumbnail to make sure that mtime and filesize are set  */
+      gimp_thumbnail_peek_image (imagefile->thumbnail);
+
+      success = gimp_imagefile_save_thumb (imagefile,
+                                           gimage, size, FALSE,
+                                           &error);
+
+      if (! success)
+        {
+          g_message (error->message);
+          g_error_free (error);
+        }
     }
 
   return success;
@@ -684,6 +714,7 @@ static gboolean
 gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
                            GimpImage      *gimage,
                            gint            size,
+                           gboolean        replace,
                            GError        **error)
 {
   GimpThumbnail *thumbnail = imagefile->thumbnail;
@@ -750,7 +781,14 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
   g_object_unref (pixbuf);
 
   if (success)
-    gimp_imagefile_update (imagefile);
+    {
+      if (replace)
+        gimp_thumbnail_delete_others (thumbnail, size);
+      else
+        gimp_thumbnail_delete_failure (thumbnail);
+
+      gimp_imagefile_update (imagefile);
+    }
 
   return success;
 }

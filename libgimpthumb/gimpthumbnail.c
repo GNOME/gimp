@@ -561,6 +561,10 @@ gimp_thumbnail_peek_image (GimpThumbnail *thumbnail)
  * valid and uptodate for the image file asosciated with the
  * @thumbnail.
  *
+ * If you want to check the thumbnail, either attempt to load it using
+ * gimp_thumbnail_load_thumb(), or, if you don't need the resulting
+ * thumbnail pixbuf, use gimp_thumbnail_check_thumb().
+ *
  * Return value: the thumbnail's #GimpThumbState after the update
  **/
 GimpThumbState
@@ -578,6 +582,40 @@ gimp_thumbnail_peek_thumb (GimpThumbnail *thumbnail,
   gimp_thumbnail_update_thumb (thumbnail, size);
 
   g_object_thaw_notify (G_OBJECT (thumbnail));
+
+  return thumbnail->thumb_state;
+}
+
+/**
+ * gimp_thumbnail_check_thumb:
+ * @thumbnail: a #GimpThumbnail object
+ * @size: the preferred size of the thumbnail image
+ *
+ * Checks if a thumbnail file for the @thumbnail exists, loads it and
+ * verifies it is valid and uptodate for the image file asosciated
+ * with the @thumbnail.
+ *
+ * Return value: the thumbnail's #GimpThumbState after the update
+ *
+ * Since: GIMP 2.2
+ **/
+GimpThumbState
+gimp_thumbnail_check_thumb (GimpThumbnail *thumbnail,
+                            GimpThumbSize  size)
+{
+  GdkPixbuf *pixbuf;
+
+  g_return_val_if_fail (GIMP_IS_THUMBNAIL (thumbnail), FALSE);
+
+  GIMP_THUMB_DEBUG_CALL (thumbnail);
+
+  if (gimp_thumbnail_peek_thumb (thumbnail, size) == GIMP_THUMB_STATE_OK)
+    return GIMP_THUMB_STATE_OK;
+
+  pixbuf = gimp_thumbnail_load_thumb (thumbnail, size, NULL);
+
+  if (pixbuf)
+    g_object_unref (pixbuf);
 
   return thumbnail->thumb_state;
 }
@@ -657,6 +695,11 @@ gimp_thumbnail_update_image (GimpThumbnail *thumbnail)
                     "image-mtime",    mtime,
                     "image-filesize", filesize,
                     NULL);
+
+      if (thumbnail->thumb_state == GIMP_THUMB_STATE_OK)
+        g_object_set (thumbnail,
+                      "thumb-state", GIMP_THUMB_STATE_OLD,
+                      NULL);
     }
 }
 
@@ -706,8 +749,7 @@ gimp_thumbnail_update_thumb (GimpThumbnail *thumbnail,
 
   if (filename)
     state = (size > GIMP_THUMB_SIZE_FAIL ?
-             GIMP_THUMB_STATE_EXISTS :
-             GIMP_THUMB_STATE_FAILED);
+             GIMP_THUMB_STATE_EXISTS : GIMP_THUMB_STATE_FAILED);
 
   thumbnail->thumb_size     = size;
   thumbnail->thumb_filesize = filesize;
@@ -887,12 +929,23 @@ gimp_thumbnail_save (GimpThumbnail  *thumbnail,
 
       success = (chmod (filename, 0600) == 0);
 
-      if (success)
-        gimp_thumbnail_update_thumb (thumbnail, size);
-      else
+      if (! success)
         g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                      "Could not set permissions of thumbnail for %s: %s",
                      thumbnail->image_uri, g_strerror (errno));
+
+      g_object_freeze_notify (G_OBJECT (thumbnail));
+
+      gimp_thumbnail_update_thumb (thumbnail, size);
+
+      if (success &&
+          thumbnail->thumb_state == GIMP_THUMB_STATE_EXISTS &&
+          strcmp (filename, thumbnail->thumb_filename) == 0)
+        {
+          thumbnail->thumb_state = GIMP_THUMB_STATE_OK;
+        }
+
+      g_object_thaw_notify (G_OBJECT (thumbnail));
     }
 
   unlink (tmpname);
@@ -1263,4 +1316,129 @@ gimp_thumbnail_save_failure (GimpThumbnail  *thumbnail,
   g_free (name);
 
   return success;
+}
+
+/**
+ * gimp_thumbnail_delete_failure:
+ * @thumbnail: a #GimpThumbnail object
+ *
+ * Removes a failure thumbnail if one exists. This function should be
+ * used after a thumbnail has been successfully created.
+ *
+ * Since: GIMP 2.2
+ **/
+void
+gimp_thumbnail_delete_failure (GimpThumbnail *thumbnail)
+{
+  gchar *filename;
+
+  g_return_if_fail (GIMP_IS_THUMBNAIL (thumbnail));
+  g_return_if_fail (thumbnail->image_uri != NULL);
+
+  GIMP_THUMB_DEBUG_CALL (thumbnail);
+
+  filename = gimp_thumb_name_from_uri (thumbnail->image_uri,
+                                       GIMP_THUMB_SIZE_FAIL);
+  if (filename)
+    {
+      unlink (filename);
+      g_free (filename);
+    }
+}
+
+/**
+ * gimp_thumbnail_delete_others:
+ * @thumbnail: a #GimpThumbnail object
+ * @size: the thumbnail size which should not be deleted
+ *
+ * Removes all other thumbnails from the global thumbnail
+ * repository. Only the thumbnail for @size is not deleted.  This
+ * function should be used after a thumbnail has been successfully
+ * updated. See the spec for a more detailed description on when to
+ * delete thumbnails.
+ *
+ * Since: GIMP 2.2
+ **/
+void
+gimp_thumbnail_delete_others (GimpThumbnail *thumbnail,
+                              GimpThumbSize  size)
+{
+  g_return_if_fail (GIMP_IS_THUMBNAIL (thumbnail));
+  g_return_if_fail (thumbnail->image_uri != NULL);
+
+  GIMP_THUMB_DEBUG_CALL (thumbnail);
+
+  _gimp_thumbs_delete_others (thumbnail->image_uri, size);
+}
+
+/**
+ * gimp_thumbnail_has_failed:
+ * @thumbnail: a #GimpThumbnail object
+ *
+ * Checks if a valid failure thumbnail for the given thumbnail exists
+ * in the global thumbnail repository. This may be the case even if
+ * gimp_thumbnail_peek_thumb() doesn't return %GIMP_THUMB_STATE_FAILED
+ * since there might be a real thumbnail and a failure thumbnail for
+ * the same image file.
+ *
+ * The application should not attempt to create the thumbnail if a
+ * valid failure thumbnail exists.
+ *
+ * Return value: %TRUE if a failure thumbnail exists or
+ *
+ * Since: GIMP 2.2
+ **/
+gboolean
+gimp_thumbnail_has_failed (GimpThumbnail *thumbnail)
+{
+  GdkPixbuf   *pixbuf;
+  const gchar *option;
+  gchar       *filename;
+  gint64       image_mtime;
+  gint64       image_size;
+  gboolean     failed = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_THUMBNAIL (thumbnail), FALSE);
+  g_return_val_if_fail (thumbnail->image_uri != NULL, FALSE);
+
+  GIMP_THUMB_DEBUG_CALL (thumbnail);
+
+  filename = gimp_thumb_name_from_uri (thumbnail->image_uri,
+                                       GIMP_THUMB_SIZE_FAIL);
+  if (! filename)
+    return FALSE;
+
+  pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+  g_free (filename);
+
+  if (! pixbuf)
+    return FALSE;
+
+  if (gimp_thumbnail_peek_image (thumbnail) < GIMP_THUMB_STATE_EXISTS)
+    goto finish;
+
+  /* URI and mtime from the thumbnail need to match our file */
+  option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_URI);
+  if (! option || strcmp (option, thumbnail->image_uri))
+    goto finish;
+
+  option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_MTIME);
+  if (!option || sscanf (option, "%" G_GINT64_FORMAT, &image_mtime) != 1)
+    goto finish;
+
+  option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_FILESIZE);
+  if (option && sscanf (option, "%" G_GINT64_FORMAT, &image_size) != 1)
+    goto finish;
+
+  /* TAG_THUMB_FILESIZE is optional but must match if present */
+  if (image_mtime == thumbnail->image_mtime &&
+      (option == NULL || image_size == thumbnail->image_filesize))
+    {
+      failed = TRUE;
+    }
+
+ finish:
+  g_object_unref (pixbuf);
+
+  return failed;
 }

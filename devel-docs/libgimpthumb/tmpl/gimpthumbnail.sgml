@@ -129,6 +129,16 @@ using object properties.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_thumbnail_check_thumb ##### -->
+<para>
+
+</para>
+
+@thumbnail: 
+@size: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_thumbnail_load_thumb ##### -->
 <para>
 
@@ -152,6 +162,18 @@ using object properties.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_thumbnail_save_thumb_local ##### -->
+<para>
+
+</para>
+
+@thumbnail: 
+@pixbuf: 
+@software: 
+@error: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_thumbnail_save_failure ##### -->
 <para>
 
@@ -163,15 +185,29 @@ using object properties.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_thumbnail_save_thumb_local ##### -->
+<!-- ##### FUNCTION gimp_thumbnail_delete_failure ##### -->
 <para>
 
 </para>
 
 @thumbnail: 
-@pixbuf: 
-@software: 
-@error: 
+
+
+<!-- ##### FUNCTION gimp_thumbnail_delete_others ##### -->
+<para>
+
+</para>
+
+@thumbnail: 
+@size: 
+
+
+<!-- ##### FUNCTION gimp_thumbnail_has_failed ##### -->
+<para>
+
+</para>
+
+@thumbnail: 
 @Returns: 
 
 

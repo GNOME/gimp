@@ -68,11 +68,14 @@ void            gimp_imagefile_update                (GimpImagefile *imagefile);
 void            gimp_imagefile_create_thumbnail      (GimpImagefile *imagefile,
                                                       GimpContext   *context,
                                                       GimpProgress  *progress,
-                                                      gint           thumb_size);
+                                                      gint           size,
+                                                      gboolean       replace);
 void            gimp_imagefile_create_thumbnail_weak (GimpImagefile *imagefile,
                                                       GimpContext   *context,
                                                       GimpProgress  *progress,
-                                                      gint           size);
+                                                      gint           size,
+                                                      gboolean       replace);
+gboolean        gimp_imagefile_check_thumbnail       (GimpImagefile *imagefile);
 gboolean        gimp_imagefile_save_thumbnail        (GimpImagefile *imagefile,
                                                       GimpImage     *gimage);
 const gchar   * gimp_imagefile_get_desc_string       (GimpImagefile *imagefile);

@@ -180,16 +180,10 @@ documents_recreate_preview_cmd_callback (GtkAction *action,
 
   if (imagefile && gimp_container_have (container, GIMP_OBJECT (imagefile)))
     {
-      const gchar *uri  = gimp_object_get_name (GIMP_OBJECT (imagefile));
-      gint         size = imagefile->gimp->config->thumbnail_size;
-
-      if (!size)
-        return;
-
-      if (uri)
-        gimp_thumbs_delete_for_uri (uri);
-
-      gimp_imagefile_create_thumbnail (imagefile, context, NULL, size);
+      gimp_imagefile_create_thumbnail (imagefile,
+                                       context, NULL,
+                                       imagefile->gimp->config->thumbnail_size,
+                                       FALSE);
     }
 }
 

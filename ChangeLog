@@ -1,3 +1,22 @@
+2004-10-23  Sven Neumann  <sven@gimp.org>
+
+	* libgimpthumb/gimpthumb-utils.[ch]
+	* libgimpthumb/gimpthumbnail.[ch]
+	* libgimpthumb/gimpthumb.def: added missing API, mainly for deleting
+	thumbnails.
+
+	* app/core/gimpimagefile.[ch]: when saving a thumbnail, delete a
+	failure thumbnail if one exists. Unless the thumbnail was created
+	explicitely, remove all other thumbnails for this image.
+
+	* app/actions/documents-commands.c: changed accordingly.
+
+	* app/file/file-open.c: only save a thumbnail if there isn't a
+	valid thumbnail already.
+
+	* app/widgets/gimpthumbbox.c: before attempting to create a new
+	thumbnail, check if there's an uptodate failure thumbnail.
+
 2004-10-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/dialogs/Makefile.am

@@ -677,24 +677,26 @@ gimp_thumb_box_create_thumbnail (GimpThumbBox      *box,
 
   if (filename && g_file_test (filename, G_FILE_TEST_IS_REGULAR))
     {
-      gchar *basename = file_utils_uri_to_utf8_basename (uri);
+      GimpThumbnail *thumb = box->imagefile->thumbnail;
+      gchar         *basename;
 
+      basename = file_utils_uri_to_utf8_basename (uri);
       gtk_label_set_text (GTK_LABEL (box->filename), basename);
       g_free (basename);
-
-      if (force)
-        gimp_thumbs_delete_for_uri (uri);
 
       gimp_object_set_name (GIMP_OBJECT (box->imagefile), uri);
 
       if (force ||
-          gimp_thumbnail_peek_thumb (box->imagefile->thumbnail, size)
-          < GIMP_THUMB_STATE_FAILED)
+          (gimp_thumbnail_peek_thumb (thumb, size) < GIMP_THUMB_STATE_FAILED &&
+           ! gimp_thumbnail_has_failed (thumb)))
         {
+          Gimp *gimp = box->imagefile->gimp;
+
           gimp_imagefile_create_thumbnail (box->imagefile,
-                                           gimp_get_user_context (box->imagefile->gimp),
+                                           gimp_get_user_context (gimp),
                                            GIMP_PROGRESS (box),
-                                           size);
+                                           size,
+                                           !force);
         }
     }
 
@@ -715,6 +717,7 @@ gimp_thumb_box_auto_thumbnail (GimpThumbBox *box)
     case GIMP_THUMB_STATE_NOT_FOUND:
     case GIMP_THUMB_STATE_OLD:
       if (thumb->image_filesize < gimp->config->thumbnail_filesize_limit &&
+          ! gimp_thumbnail_has_failed (thumb)                            &&
           file_utils_find_proc_by_extension (gimp->load_procs, uri))
         {
           if (thumb->image_filesize > 0)
@@ -740,7 +743,8 @@ gimp_thumb_box_auto_thumbnail (GimpThumbBox *box)
           gimp_imagefile_create_thumbnail_weak (box->imagefile,
                                                 gimp_get_user_context (gimp),
                                                 GIMP_PROGRESS (box),
-                                                gimp->config->thumbnail_size);
+                                                gimp->config->thumbnail_size,
+                                                TRUE);
         }
       break;
 

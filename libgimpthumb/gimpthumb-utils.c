@@ -548,6 +548,30 @@ gimp_thumbs_delete_for_uri_local (const gchar *uri)
     }
 }
 
+void
+_gimp_thumbs_delete_others (const gchar   *uri,
+                            GimpThumbSize  size)
+{
+  gint i;
+
+  g_return_if_fail (gimp_thumb_initialized);
+  g_return_if_fail (uri != NULL);
+
+  for (i = 0; i < thumb_num_sizes; i++)
+    {
+      if (thumb_sizes[i] != size)
+        {
+          gchar *filename = gimp_thumb_name_from_uri (uri, thumb_sizes[i]);
+
+          if (filename)
+            {
+              unlink (filename);
+              g_free (filename);
+            }
+        }
+    }
+}
+
 static void
 gimp_thumb_exit (void)
 {

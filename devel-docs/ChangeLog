@@ -1,3 +1,8 @@
+2004-10-23  Sven Neumann  <sven@gimp.org>
+
+	* libgimpthumb/libgimpthumb-sections.txt
+	* libgimpthumb/tmpl/gimpthumbnail.sgml: updated.
+
 2004-10-14  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt: added

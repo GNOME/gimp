@@ -247,7 +247,11 @@ file_open_with_proc_and_display (Gimp               *gimp,
        */
       if (strcmp (uri, gimp_image_get_uri (gimage)) == 0)
         {
-          gimp_imagefile_save_thumbnail (imagefile, gimage);
+          /*  no need to save a thumbnail if there's a good one already  */
+          if (! gimp_imagefile_check_thumbnail (imagefile))
+            {
+              gimp_imagefile_save_thumbnail (imagefile, gimage);
+            }
         }
 
       gimp_recent_list_add_uri (uri, mime_type);
