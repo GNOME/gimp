@@ -1,3 +1,24 @@
+2004-07-17  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/Makefile.am
+	* app/actions/file-dialog-actions.[ch]
+	* app/actions/file-open-actions.[ch]
+	* app/actions/file-save-actions.[ch]: these aren't needed any
+	longer.
+
+	* app/actions/actions.c: changed accordingly.
+
+	* app/menus/Makefile.am
+	* app/menus/file-dialog-menu.[ch]
+	* app/menus/file-open-menu.[ch]
+	* app/menus/file-save-menu.[ch]: these aren't needed any longer.
+
+	* app/menus/menus.c: changed accordingly.
+
+	* menus/Makefile.am
+	* menus/file-open-menu.xml
+	* menus/file-save-menu.xml: these are also not needed any longer.
+
 2004-07-17  Philip Lafleur  <plafleur@cvs.gnome.org>
 
 	* plug-ins/bmp/bmpwrite.c (WriteImage): Applied a patch from

@@ -23,8 +23,6 @@ app/actions/edit-commands.c
 app/actions/error-console-actions.c
 app/actions/file-actions.c
 app/actions/file-commands.c
-app/actions/file-open-actions.c
-app/actions/file-save-actions.c
 app/actions/fonts-actions.c
 app/actions/gradient-editor-actions.c
 app/actions/gradient-editor-commands.c

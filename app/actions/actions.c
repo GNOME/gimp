@@ -55,8 +55,6 @@
 #include "edit-actions.h"
 #include "error-console-actions.h"
 #include "file-actions.h"
-#include "file-open-actions.h"
-#include "file-save-actions.h"
 #include "fonts-actions.h"
 #include "gradient-editor-actions.h"
 #include "gradients-actions.h"
@@ -125,12 +123,6 @@ static GimpActionFactoryEntry action_groups[] =
   { "file",
     file_actions_setup,
     file_actions_update },
-  { "file-open",
-    file_open_actions_setup,
-    file_open_actions_update },
-  { "file-save",
-    file_save_actions_setup,
-    file_save_actions_update },
   { "fonts",
     fonts_actions_setup,
     fonts_actions_update },

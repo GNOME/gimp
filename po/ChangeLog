@@ -1,3 +1,7 @@
+2004-07-17  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: removed some files that disappeared.
+
 2004-07-16  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: added app/widgets/gimpfileprocview.c.

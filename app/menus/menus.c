@@ -32,8 +32,6 @@
 
 #include "actions/actions.h"
 
-#include "file-open-menu.h"
-#include "file-save-menu.h"
 #include "image-menu.h"
 #include "menus.h"
 #include "tool-options-menu.h"
@@ -111,22 +109,6 @@ menus_init (Gimp *gimp)
                                       "plug-in",
                                       "qmask",
                                       NULL,
-                                      NULL);
-
-  gimp_menu_factory_manager_register (global_menu_factory, "<Load>",
-                                      "file-open",
-                                      NULL,
-                                      "/file-open-popup",
-                                      "file-open-menu.xml",
-                                      file_open_menu_setup,
-                                      NULL);
-
-  gimp_menu_factory_manager_register (global_menu_factory, "<Save>",
-                                      "file-save",
-                                      NULL,
-                                      "/file-save-popup",
-                                      "file-save-menu.xml",
-                                      file_save_menu_setup,
                                       NULL);
 
   gimp_menu_factory_manager_register (global_menu_factory, "<Layers>",

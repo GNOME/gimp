@@ -6,10 +6,10 @@
 # Christian Neumair <chris@gnome-de.org>
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.3.27\n"
+"Project-Id-Version: GIMP 2.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-06-24 02:37+0200\n"
-"PO-Revision-Date: 2004-06-07 13:27+0200\n"
+"PO-Revision-Date: 2004-07-17 00:34+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -8959,9 +8959,8 @@ msgid "Select transparent areas"
 msgstr "Transparente Bereiche auswählen"
 
 #: app/tools/gimpselectionoptions.c:530
-#, fuzzy
 msgid "Auto shrink selection"
-msgstr "Auswahl automatisch verkleinern"
+msgstr "Automatisch verkleinern"
 
 #: app/tools/gimpsheartool.c:100
 msgid "Shear"
@@ -8972,9 +8971,8 @@ msgid "Shear the layer or selection"
 msgstr "Ebene oder Auswahl scheren"
 
 #: app/tools/gimpsheartool.c:102
-#, fuzzy
 msgid "S_hear"
-msgstr "Schere"
+msgstr "Sc_heren"
 
 #: app/tools/gimpsheartool.c:158
 msgid "Shearing Information"
@@ -8985,12 +8983,10 @@ msgid "Shearing..."
 msgstr "Scheren..."
 
 #: app/tools/gimpsheartool.c:166
-#, fuzzy
 msgid "Shear magnitude X:"
 msgstr "Scherneigung X:"
 
 #: app/tools/gimpsheartool.c:173
-#, fuzzy
 msgid "Shear magnitude Y:"
 msgstr "Scherneigung X:"
 

@@ -59,14 +59,6 @@ libappactions_a_SOURCES = \
 	file-actions.h			\
 	file-commands.c			\
 	file-commands.h			\
-	file-dialog-actions.c		\
-	file-dialog-actions.h		\
-	file-dialog-commands.c		\
-	file-dialog-commands.h		\
-	file-open-actions.c		\
-	file-open-actions.h		\
-	file-save-actions.c		\
-	file-save-actions.h		\
 	file-commands.c			\
 	file-commands.h			\
 	fonts-actions.c			\

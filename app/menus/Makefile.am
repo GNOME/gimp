@@ -6,15 +6,8 @@ libappmenus_a_SOURCES = \
 	menus-types.h		\
 	menus.c			\
 	menus.h			\
-	\
-	file-dialog-menu.c	\
-	file-dialog-menu.h	\
 	file-menu.c		\
 	file-menu.h		\
-	file-open-menu.c	\
-	file-open-menu.h	\
-	file-save-menu.c	\
-	file-save-menu.h	\
 	image-menu.c		\
 	image-menu.h		\
 	plug-in-menus.c		\
