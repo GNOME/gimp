@@ -1,3 +1,8 @@
+2003-10-10  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/png.c (load_image): fixed a typo in the patch
+	for bug #123201 that accidentally already commited earlier.
+
 2003-10-10  Henrik Brix Andersen  <brix@gimp.org>
 
 	* app/core/gimpimage-grid.[ch]: removed the grid parasite related

@@ -662,8 +662,8 @@ load_image (const gchar *filename)
 
             case PNG_RESOLUTION_METER:
               gimp_image_set_resolution (image,
-                                         (gdouble) xres * 0.254,
-                                         (gdouble) yres * 0.254);
+                                         (gdouble) xres * 0.0254,
+                                         (gdouble) yres * 0.0254);
               break;
 
             default:
