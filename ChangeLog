@@ -1,5 +1,10 @@
 2005-01-09  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpgradientmenu.c: fixed out-of-bounds access in
+	gradient selection widget. Presumably fixes bug #163427.
+
+2005-01-09  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcontrollerkeyboard.c: changed "Key" to "Cursor".
 
 2005-01-09  DindinX  <dindinx@gimp.org>

@@ -49,7 +49,7 @@ struct _GradientSelect
   gchar                   *gradient_name;      /* Local copy */
   gint                     sample_size;
   gboolean                 reverse;
-  gint                     width;
+  gint                     n_samples;
   gdouble                 *gradient_data;      /* Local copy */
 
   const gchar             *temp_gradient_callback;
@@ -59,9 +59,9 @@ struct _GradientSelect
 /*  local function prototypes  */
 
 static void gimp_gradient_select_widget_callback (const gchar    *name,
-                                                  gint            width,
+                                                  gint            n_samples,
                                                   const gdouble  *gradient_data,
-                                                  gint            closing,
+                                                  gboolean        closing,
                                                   gpointer        data);
 static void gimp_gradient_select_widget_clicked  (GtkWidget      *widget,
                                                   GradientSelect *gradient_sel);
@@ -198,8 +198,8 @@ gimp_gradient_select_widget_set (GtkWidget   *widget,
   else
     {
       gchar   *name;
-      gint     n_samples;
       gdouble *samples;
+      gint     n_samples;
 
       if (! gradient_name || ! strlen (gradient_name))
         name = gimp_context_get_gradient ();
@@ -228,25 +228,27 @@ gimp_gradient_select_widget_set (GtkWidget   *widget,
 
 static void
 gimp_gradient_select_widget_callback (const gchar   *name,
-                                      gint           width,
+                                      gint           n_samples,
                                       const gdouble *gradient_data,
-                                      gint           closing,
+                                      gboolean       closing,
                                       gpointer       data)
 {
-  GradientSelect *gradient_sel = (GradientSelect *) data;
+  GradientSelect *gradient_sel = data;
 
   g_free (gradient_sel->gradient_name);
   g_free (gradient_sel->gradient_data);
 
   gradient_sel->gradient_name = g_strdup (name);
-  gradient_sel->width         = width;
+  gradient_sel->n_samples     = n_samples;
   gradient_sel->gradient_data = g_memdup (gradient_data,
-                                          width * 4 * sizeof (gdouble));
+                                          n_samples * sizeof (gdouble));
 
   gtk_widget_queue_draw (gradient_sel->preview);
 
   if (gradient_sel->callback)
-    gradient_sel->callback (name, width, gradient_data, closing, gradient_sel->data);
+    gradient_sel->callback (name,
+                            n_samples, gradient_data, closing,
+                            gradient_sel->data);
 
   if (closing)
     gradient_sel->temp_gradient_callback = NULL;
@@ -294,8 +296,8 @@ gimp_gradient_select_preview_size_allocate (GtkWidget      *widget,
                                             GtkAllocation  *allocation,
                                             GradientSelect *gradient_sel)
 {
-  gint     n_samples;
   gdouble *samples;
+  gint     n_samples;
 
   if (gimp_gradient_get_uniform_samples (gradient_sel->gradient_name,
                                          allocation->width,
@@ -303,10 +305,10 @@ gimp_gradient_select_preview_size_allocate (GtkWidget      *widget,
                                          &n_samples,
                                          &samples))
     {
-      gradient_sel->sample_size   = allocation->width;
-      gradient_sel->width         = n_samples;
-
       g_free (gradient_sel->gradient_data);
+
+      gradient_sel->sample_size   = allocation->width;
+      gradient_sel->n_samples     = n_samples;
       gradient_sel->gradient_data = samples;
     }
 }
@@ -321,16 +323,19 @@ gimp_gradient_select_preview_expose (GtkWidget      *widget,
   guchar        *p1;
   guchar        *even;
   guchar        *odd;
+  gint           width;
   gint           x, y;
 
   src = gradient_sel->gradient_data;
   if (! src)
     return;
 
-  p0  = even = g_malloc (gradient_sel->width * 3);
-  p1  = odd  = g_malloc (gradient_sel->width * 3);
+  width = gradient_sel->n_samples / 4;
 
-  for (x = 0; x < gradient_sel->width; x++)
+  p0 = even = g_malloc (width * 3);
+  p1 = odd  = g_malloc (width * 3);
+
+  for (x = 0; x < width; x++)
     {
       gdouble  r, g, b, a;
       gdouble  c0, c1;
@@ -370,7 +375,7 @@ gimp_gradient_select_preview_expose (GtkWidget      *widget,
                                     event->area.width, 1,
                                     GDK_RGB_DITHER_MAX,
                                     buf + event->area.x * 3,
-                                    gradient_sel->width * 3,
+                                    width * 3,
                                     - event->area.x, - y);
     }
 
