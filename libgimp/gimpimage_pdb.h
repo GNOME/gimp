@@ -29,131 +29,133 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gint*             gimp_image_list                     (gint               *num_images);
-gint32            gimp_image_new                      (gint                width,
-						       gint                height,
-						       GimpImageBaseType   type);
-gboolean          gimp_image_delete                   (gint32              image_ID);
-GimpImageBaseType gimp_image_base_type                (gint32              image_ID);
-gboolean          gimp_image_resize                   (gint32              image_ID,
-						       gint                new_width,
-						       gint                new_height,
-						       gint                offx,
-						       gint                offy);
-gboolean          gimp_image_scale                    (gint32              image_ID,
-						       gint                new_width,
-						       gint                new_height);
-gboolean          gimp_image_crop                     (gint32              image_ID,
-						       gint                new_width,
-						       gint                new_height,
-						       gint                offx,
-						       gint                offy);
-gboolean          gimp_image_free_shadow              (gint32              image_ID);
-gint*             gimp_image_get_layers               (gint32              image_ID,
-						       gint               *num_layers);
-gint*             gimp_image_get_channels             (gint32              image_ID,
-						       gint               *num_channels);
-gint32            gimp_image_active_drawable          (gint32              image_ID);
-gboolean          gimp_image_unset_active_channel     (gint32              image_ID);
-gint32            gimp_image_pick_correlate_layer     (gint32              image_ID,
-						       gint                x,
-						       gint                y);
-gboolean          gimp_image_raise_layer              (gint32              image_ID,
-						       gint32              layer_ID);
-gboolean          gimp_image_lower_layer              (gint32              image_ID,
-						       gint32              layer_ID);
-gboolean          gimp_image_raise_layer_to_top       (gint32              image_ID,
-						       gint32              layer_ID);
-gboolean          gimp_image_lower_layer_to_bottom    (gint32              image_ID,
-						       gint32              layer_ID);
-gint32            gimp_image_merge_visible_layers     (gint32              image_ID,
-						       GimpMergeType       merge_type);
-gint32            gimp_image_merge_down               (gint32              image_ID,
-						       gint32              merge_layer_ID,
-						       GimpMergeType       merge_type);
-gint32            gimp_image_flatten                  (gint32              image_ID);
-gboolean          gimp_image_add_layer                (gint32              image_ID,
-						       gint32              layer_ID,
-						       gint                position);
-gboolean          gimp_image_remove_layer             (gint32              image_ID,
-						       gint32              layer_ID);
-gboolean          gimp_image_add_layer_mask           (gint32              image_ID,
-						       gint32              layer_ID,
-						       gint32              mask_ID);
-gboolean          gimp_image_remove_layer_mask        (gint32              image_ID,
-						       gint32              layer_ID,
-						       GimpMaskApplyMode   mode);
-gboolean          gimp_image_raise_channel            (gint32              image_ID,
-						       gint32              channel_ID);
-gboolean          gimp_image_lower_channel            (gint32              image_ID,
-						       gint32              layer_ID);
-gboolean          gimp_image_add_channel              (gint32              image_ID,
-						       gint32              channel_ID,
-						       gint                position);
-gboolean          gimp_image_remove_channel           (gint32              image_ID,
-						       gint32              channel_ID);
-guint8*           _gimp_image_get_cmap                (gint32              image_ID,
-						       gint               *num_bytes);
-gboolean          _gimp_image_set_cmap                (gint32              image_ID,
-						       gint                num_bytes,
-						       guint8             *cmap);
-gboolean          gimp_image_undo_is_enabled          (gint32              image_ID);
-gboolean          gimp_image_undo_enable              (gint32              image_ID);
-gboolean          gimp_image_undo_disable             (gint32              image_ID);
-gboolean          gimp_image_undo_freeze              (gint32              image_ID);
-gboolean          gimp_image_undo_thaw                (gint32              image_ID);
-gboolean          gimp_image_clean_all                (gint32              image_ID);
-gboolean          gimp_image_is_dirty                 (gint32              image_ID);
-gint32            gimp_image_floating_selection       (gint32              image_ID);
-gint32            gimp_image_floating_sel_attached_to (gint32              image_ID);
-gboolean          _gimp_image_thumbnail               (gint32              image_ID,
-						       gint                width,
-						       gint                height,
-						       gint               *ret_width,
-						       gint               *ret_height,
-						       gint               *bpp,
-						       gint               *thumbnail_data_count,
-						       guint8            **thumbnail_data);
-gboolean          gimp_image_set_tattoo_state         (gint32              image_ID,
-						       gint                tattoo);
-gint              gimp_image_get_tattoo_state         (gint32              image_ID);
-gint32            gimp_image_duplicate                (gint32              image_ID);
-gint              gimp_image_width                    (gint32              image_ID);
-gint              gimp_image_height                   (gint32              image_ID);
-gint32            gimp_image_get_active_layer         (gint32              image_ID);
-gboolean          gimp_image_set_active_layer         (gint32              image_ID,
-						       gint32              active_layer_ID);
-gint32            gimp_image_get_active_channel       (gint32              image_ID);
-gboolean          gimp_image_set_active_channel       (gint32              image_ID,
-						       gint32              active_channel_ID);
-gint32            gimp_image_get_selection            (gint32              image_ID);
-gboolean          gimp_image_get_component_active     (gint32              image_ID,
-						       GimpChannelType     component);
-gboolean          gimp_image_set_component_active     (gint32              image_ID,
-						       GimpChannelType     component,
-						       gboolean            active);
-gboolean          gimp_image_get_component_visible    (gint32              image_ID,
-						       GimpChannelType     component);
-gboolean          gimp_image_set_component_visible    (gint32              image_ID,
-						       GimpChannelType     component,
-						       gboolean            visible);
-gchar*            gimp_image_get_filename             (gint32              image_ID);
-gboolean          gimp_image_set_filename             (gint32              image_ID,
-						       gchar              *filename);
-gchar*            gimp_image_get_name                 (gint32              image_ID);
-gboolean          gimp_image_get_resolution           (gint32              image_ID,
-						       gdouble            *xresolution,
-						       gdouble            *yresolution);
-gboolean          gimp_image_set_resolution           (gint32              image_ID,
-						       gdouble             xresolution,
-						       gdouble             yresolution);
-GimpUnit          gimp_image_get_unit                 (gint32              image_ID);
-gboolean          gimp_image_set_unit                 (gint32              image_ID,
-						       GimpUnit            unit);
-gint32            gimp_image_get_layer_by_tattoo      (gint32              image_ID,
-						       gint                tattoo);
-gint32            gimp_image_get_channel_by_tattoo    (gint32              image_ID,
-						       gint                tattoo);
+gint*             gimp_image_list                     (gint                 *num_images);
+gint32            gimp_image_new                      (gint                  width,
+						       gint                  height,
+						       GimpImageBaseType     type);
+gboolean          gimp_image_delete                   (gint32                image_ID);
+GimpImageBaseType gimp_image_base_type                (gint32                image_ID);
+gboolean          gimp_image_resize                   (gint32                image_ID,
+						       gint                  new_width,
+						       gint                  new_height,
+						       gint                  offx,
+						       gint                  offy);
+gboolean          gimp_image_scale                    (gint32                image_ID,
+						       gint                  new_width,
+						       gint                  new_height);
+gboolean          gimp_image_crop                     (gint32                image_ID,
+						       gint                  new_width,
+						       gint                  new_height,
+						       gint                  offx,
+						       gint                  offy);
+gboolean          gimp_image_flip                     (gint32                image_ID,
+						       GimpOrientationType   flip_type);
+gboolean          gimp_image_free_shadow              (gint32                image_ID);
+gint*             gimp_image_get_layers               (gint32                image_ID,
+						       gint                 *num_layers);
+gint*             gimp_image_get_channels             (gint32                image_ID,
+						       gint                 *num_channels);
+gint32            gimp_image_active_drawable          (gint32                image_ID);
+gboolean          gimp_image_unset_active_channel     (gint32                image_ID);
+gint32            gimp_image_pick_correlate_layer     (gint32                image_ID,
+						       gint                  x,
+						       gint                  y);
+gboolean          gimp_image_raise_layer              (gint32                image_ID,
+						       gint32                layer_ID);
+gboolean          gimp_image_lower_layer              (gint32                image_ID,
+						       gint32                layer_ID);
+gboolean          gimp_image_raise_layer_to_top       (gint32                image_ID,
+						       gint32                layer_ID);
+gboolean          gimp_image_lower_layer_to_bottom    (gint32                image_ID,
+						       gint32                layer_ID);
+gint32            gimp_image_merge_visible_layers     (gint32                image_ID,
+						       GimpMergeType         merge_type);
+gint32            gimp_image_merge_down               (gint32                image_ID,
+						       gint32                merge_layer_ID,
+						       GimpMergeType         merge_type);
+gint32            gimp_image_flatten                  (gint32                image_ID);
+gboolean          gimp_image_add_layer                (gint32                image_ID,
+						       gint32                layer_ID,
+						       gint                  position);
+gboolean          gimp_image_remove_layer             (gint32                image_ID,
+						       gint32                layer_ID);
+gboolean          gimp_image_add_layer_mask           (gint32                image_ID,
+						       gint32                layer_ID,
+						       gint32                mask_ID);
+gboolean          gimp_image_remove_layer_mask        (gint32                image_ID,
+						       gint32                layer_ID,
+						       GimpMaskApplyMode     mode);
+gboolean          gimp_image_raise_channel            (gint32                image_ID,
+						       gint32                channel_ID);
+gboolean          gimp_image_lower_channel            (gint32                image_ID,
+						       gint32                layer_ID);
+gboolean          gimp_image_add_channel              (gint32                image_ID,
+						       gint32                channel_ID,
+						       gint                  position);
+gboolean          gimp_image_remove_channel           (gint32                image_ID,
+						       gint32                channel_ID);
+guint8*           _gimp_image_get_cmap                (gint32                image_ID,
+						       gint                 *num_bytes);
+gboolean          _gimp_image_set_cmap                (gint32                image_ID,
+						       gint                  num_bytes,
+						       guint8               *cmap);
+gboolean          gimp_image_undo_is_enabled          (gint32                image_ID);
+gboolean          gimp_image_undo_enable              (gint32                image_ID);
+gboolean          gimp_image_undo_disable             (gint32                image_ID);
+gboolean          gimp_image_undo_freeze              (gint32                image_ID);
+gboolean          gimp_image_undo_thaw                (gint32                image_ID);
+gboolean          gimp_image_clean_all                (gint32                image_ID);
+gboolean          gimp_image_is_dirty                 (gint32                image_ID);
+gint32            gimp_image_floating_selection       (gint32                image_ID);
+gint32            gimp_image_floating_sel_attached_to (gint32                image_ID);
+gboolean          _gimp_image_thumbnail               (gint32                image_ID,
+						       gint                  width,
+						       gint                  height,
+						       gint                 *ret_width,
+						       gint                 *ret_height,
+						       gint                 *bpp,
+						       gint                 *thumbnail_data_count,
+						       guint8              **thumbnail_data);
+gboolean          gimp_image_set_tattoo_state         (gint32                image_ID,
+						       gint                  tattoo);
+gint              gimp_image_get_tattoo_state         (gint32                image_ID);
+gint32            gimp_image_duplicate                (gint32                image_ID);
+gint              gimp_image_width                    (gint32                image_ID);
+gint              gimp_image_height                   (gint32                image_ID);
+gint32            gimp_image_get_active_layer         (gint32                image_ID);
+gboolean          gimp_image_set_active_layer         (gint32                image_ID,
+						       gint32                active_layer_ID);
+gint32            gimp_image_get_active_channel       (gint32                image_ID);
+gboolean          gimp_image_set_active_channel       (gint32                image_ID,
+						       gint32                active_channel_ID);
+gint32            gimp_image_get_selection            (gint32                image_ID);
+gboolean          gimp_image_get_component_active     (gint32                image_ID,
+						       GimpChannelType       component);
+gboolean          gimp_image_set_component_active     (gint32                image_ID,
+						       GimpChannelType       component,
+						       gboolean              active);
+gboolean          gimp_image_get_component_visible    (gint32                image_ID,
+						       GimpChannelType       component);
+gboolean          gimp_image_set_component_visible    (gint32                image_ID,
+						       GimpChannelType       component,
+						       gboolean              visible);
+gchar*            gimp_image_get_filename             (gint32                image_ID);
+gboolean          gimp_image_set_filename             (gint32                image_ID,
+						       gchar                *filename);
+gchar*            gimp_image_get_name                 (gint32                image_ID);
+gboolean          gimp_image_get_resolution           (gint32                image_ID,
+						       gdouble              *xresolution,
+						       gdouble              *yresolution);
+gboolean          gimp_image_set_resolution           (gint32                image_ID,
+						       gdouble               xresolution,
+						       gdouble               yresolution);
+GimpUnit          gimp_image_get_unit                 (gint32                image_ID);
+gboolean          gimp_image_set_unit                 (gint32                image_ID,
+						       GimpUnit              unit);
+gint32            gimp_image_get_layer_by_tattoo      (gint32                image_ID,
+						       gint                  tattoo);
+gint32            gimp_image_get_channel_by_tattoo    (gint32                image_ID,
+						       gint                  tattoo);
 
 
 G_END_DECLS

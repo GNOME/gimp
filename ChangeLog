@@ -1,3 +1,19 @@
+2003-05-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/image-menu.c: moved the image flip entries to the
+	Image->Transform submenu and added flip entries to
+	Layer->Transform. Cleaned up the transform submenus.
+
+	* app/gui/drawable-commands.[ch]: added
+	drawable_flip_cmd_callback().
+
+	* tools/pdbgen/pdb/image.pdb: added a PDB wrapper for
+	gimp_image_flip().
+
+	* libgimp/gimpimage_pdb.[ch]
+	* app/pdb/image_cmds.c
+	* app/pdb/internal_procs.c: regenerated.
+
 2003-05-19  Sven Neumann  <sven@gimp.org>
 
 	* app/base/temp-buf.c (temp_buf_to_color) (temp_buf_to_gray):

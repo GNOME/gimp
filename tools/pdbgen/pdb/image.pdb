@@ -360,13 +360,39 @@ HELP
 	headers => [ qw("core/gimpimage-crop.h") ],
 	code => <<'CODE'
 {
-  if (new_width > gimage->width || new_height > gimage->height ||
-      offx > (gimage->width - new_width) ||
+  if (new_width  > gimage->width          ||
+      new_height > gimage->height         ||
+      offx > (gimage->width  - new_width) ||
       offy > (gimage->height - new_height))
     success = FALSE;
   else
     gimp_image_crop (gimage, offx, offy, offx + new_width, offy + new_height,
 		     FALSE, TRUE);
+}
+CODE
+    );
+}
+
+sub image_flip {
+    $blurb = 'Flips the image horizontally or vertically.';
+
+    $help = <<'HELP';
+This procedure flips (mirrors) the images.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+        &std_image_arg,
+	{ name => 'flip_type', type => &std_orientation_enum,
+	  desc => 'Type of flip: %%desc%%' }
+    );
+
+    %invoke = (
+	headers => [ qw("core/gimpimage-flip.h") ],
+	code => <<'CODE'
+{
+  gimp_image_flip (gimage, flip_type, NULL, NULL);
 }
 CODE
     );
@@ -1577,7 +1603,7 @@ gimlist_cb (gpointer im,
 CODE
 
 unshift @procs, qw(image_list image_new image_delete image_base_type
-                   image_resize image_scale image_crop
+                   image_resize image_scale image_crop image_flip
 		   image_free_shadow
                    image_get_layers image_get_channels
 		   image_active_drawable image_unset_active_channel

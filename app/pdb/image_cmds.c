@@ -38,6 +38,7 @@
 #include "core/gimpimage-colormap.h"
 #include "core/gimpimage-crop.h"
 #include "core/gimpimage-duplicate.h"
+#include "core/gimpimage-flip.h"
 #include "core/gimpimage-merge.h"
 #include "core/gimpimage-resize.h"
 #include "core/gimpimage-scale.h"
@@ -58,6 +59,7 @@ static ProcRecord image_base_type_proc;
 static ProcRecord image_resize_proc;
 static ProcRecord image_scale_proc;
 static ProcRecord image_crop_proc;
+static ProcRecord image_flip_proc;
 static ProcRecord image_free_shadow_proc;
 static ProcRecord image_get_layers_proc;
 static ProcRecord image_get_channels_proc;
@@ -125,6 +127,7 @@ register_image_procs (Gimp *gimp)
   procedural_db_register (gimp, &image_resize_proc);
   procedural_db_register (gimp, &image_scale_proc);
   procedural_db_register (gimp, &image_crop_proc);
+  procedural_db_register (gimp, &image_flip_proc);
   procedural_db_register (gimp, &image_free_shadow_proc);
   procedural_db_register (gimp, &image_get_layers_proc);
   procedural_db_register (gimp, &image_get_channels_proc);
@@ -626,8 +629,9 @@ image_crop_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if (new_width > gimage->width || new_height > gimage->height ||
-	  offx > (gimage->width - new_width) ||
+      if (new_width  > gimage->width          ||
+	  new_height > gimage->height         ||
+	  offx > (gimage->width  - new_width) ||
 	  offy > (gimage->height - new_height))
 	success = FALSE;
       else
@@ -681,6 +685,60 @@ static ProcRecord image_crop_proc =
   0,
   NULL,
   { { image_crop_invoker } }
+};
+
+static Argument *
+image_flip_invoker (Gimp     *gimp,
+                    Argument *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  gint32 flip_type;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  flip_type = args[1].value.pdb_int;
+  if (flip_type < GIMP_ORIENTATION_HORIZONTAL || flip_type > GIMP_ORIENTATION_VERTICAL)
+    success = FALSE;
+
+  if (success)
+    {
+      gimp_image_flip (gimage, flip_type, NULL, NULL);
+    }
+
+  return procedural_db_return_args (&image_flip_proc, success);
+}
+
+static ProcArg image_flip_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_INT32,
+    "flip_type",
+    "Type of flip: GIMP_ORIENTATION_HORIZONTAL (0) or GIMP_ORIENTATION_VERTICAL (1)"
+  }
+};
+
+static ProcRecord image_flip_proc =
+{
+  "gimp_image_flip",
+  "Flips the image horizontally or vertically.",
+  "This procedure flips (mirrors) the images.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  2,
+  image_flip_inargs,
+  0,
+  NULL,
+  { { image_flip_invoker } }
 };
 
 static Argument *

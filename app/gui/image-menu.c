@@ -464,8 +464,18 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   /*  <Image>/Image/Transform  */
 
-  MENU_BRANCH (N_("/Image/Transform")),
+  { { N_("/Image/Transform/Flip Horizontally"), NULL,
+      image_flip_cmd_callback, GIMP_ORIENTATION_HORIZONTAL,
+      "<StockItem>", GIMP_STOCK_FLIP_HORIZONTAL },
+    NULL,
+    "image/dialogs/flip_image.html", NULL },
+  { { N_("/Image/Transform/Flip Vertically"), NULL,
+      image_flip_cmd_callback, GIMP_ORIENTATION_VERTICAL,
+      "<StockItem>", GIMP_STOCK_FLIP_VERTICAL },
+    NULL,
+    "image/dialogs/flip_image.html", NULL },
 
+  MENU_SEPARATOR ("/Image/Transform/---"),
   MENU_SEPARATOR ("/Image/Transform/---"),
 
   MENU_SEPARATOR ("/Image/---"),
@@ -480,16 +490,6 @@ GimpItemFactoryEntry image_menu_entries[] =
       "<StockItem>", GIMP_STOCK_SCALE },
     NULL,
     "image/dialogs/scale_image.html", NULL },
-  { { N_("/Image/Flip Image Horizontally"), NULL,
-      image_flip_cmd_callback, GIMP_ORIENTATION_HORIZONTAL,
-      "<StockItem>", GIMP_STOCK_FLIP_HORIZONTAL },
-    NULL,
-    "image/dialogs/flip_image.html", NULL },
-  { { N_("/Image/Flip Image Vertically"), NULL,
-      image_flip_cmd_callback, GIMP_ORIENTATION_VERTICAL,
-      "<StockItem>", GIMP_STOCK_FLIP_VERTICAL },
-    NULL,
-    "image/dialogs/flip_image.html", NULL },
   { { N_("/Image/Crop Image"), NULL,
       image_crop_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TOOL_CROP },
@@ -598,6 +598,18 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   /*  <Image>/Layer/Transform  */
 
+  { { N_("/Layer/Transform/Flip Horizontally"), NULL,
+      drawable_flip_cmd_callback, GIMP_ORIENTATION_HORIZONTAL,
+      "<StockItem>", GIMP_STOCK_FLIP_HORIZONTAL },
+    NULL,
+    "layers/flip_layer.html", NULL },
+  { { N_("/Layer/Transform/Flip Vertically"), NULL,
+      drawable_flip_cmd_callback, GIMP_ORIENTATION_VERTICAL,
+      "<StockItem>", GIMP_STOCK_FLIP_VERTICAL },
+    NULL,
+    "layers/flip_layer.html", NULL },
+
+  MENU_SEPARATOR ("/Layer/Transform/---"),
   MENU_SEPARATOR ("/Layer/Transform/---"),
 
   { { N_("/Layer/Transform/Offset..."), "<control><shift>O",
@@ -885,6 +897,7 @@ image_menu_setup (GimpItemFactory *factory)
   {
     static const gchar *color_tools[] = { "gimp-color-balance-tool",
                                           "gimp-hue-saturation-tool",
+                                          "gimp-colorize-tool",
                                           "gimp-brightness-contrast-tool",
                                           "gimp-threshold-tool",
                                           "gimp-levels-tool",
@@ -1010,7 +1023,7 @@ image_menu_setup (GimpItemFactory *factory)
       }
 
     /*  Reorder Rotate plugin menu entries */
-    pos = 1;
+    pos = 4;
     for (i = 0; i < G_N_ELEMENTS (rotate_plugins); i++)
       {
         path = g_strconcat ("/Image/Transform/", rotate_plugins[i], NULL);
@@ -1026,7 +1039,7 @@ image_menu_setup (GimpItemFactory *factory)
           }
       }
 
-    pos = 1;
+    pos = 4;
     for (i = 0; i < G_N_ELEMENTS (rotate_plugins); i++)
       {
         path = g_strconcat ("/Layer/Transform/", rotate_plugins[i], NULL);
@@ -1347,6 +1360,9 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/Image/Mode/Grayscale",  gdisp && ! is_gray);
   SET_SENSITIVE ("/Image/Mode/Indexed...", gdisp && ! is_indexed);
 
+  SET_SENSITIVE ("/Image/Transform/Flip Horizontally", gdisp);
+  SET_SENSITIVE ("/Image/Transform/Flip Vertically",   gdisp);
+
   SET_SENSITIVE ("/Image/Canvas Size...",          gdisp);
   SET_SENSITIVE ("/Image/Scale Image...",          gdisp);
   SET_SENSITIVE ("/Image/Crop Image",              gdisp && sel);
@@ -1380,7 +1396,9 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/Layer/Scale Layer...",         lp && !aux);
   SET_SENSITIVE ("/Layer/Crop Layer",             lp && !aux && sel);
 
-  SET_SENSITIVE ("/Layer/Transform/Offset...", lp);
+  SET_SENSITIVE ("/Layer/Transform/Flip Horizontally", lp);
+  SET_SENSITIVE ("/Layer/Transform/Flip Vertically",   lp);
+  SET_SENSITIVE ("/Layer/Transform/Offset...",         lp);
 
   SET_SENSITIVE ("/Layer/Colors/Color Balance...",       lp &&   is_rgb);
   SET_SENSITIVE ("/Layer/Colors/Hue-Saturation...",      lp &&   is_rgb);

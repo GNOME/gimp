@@ -121,6 +121,40 @@ drawable_equalize_cmd_callback (GtkWidget *widget,
 }
 
 void
+drawable_flip_cmd_callback (GtkWidget *widget,
+                            gpointer   data,
+                            guint      action)
+{
+  GimpImage    *gimage;
+  GimpDrawable *active_drawable;
+  GimpItem     *item;
+  gint          off_x, off_y;
+  gdouble       axis = 0.0;
+  return_if_no_drawable (gimage, active_drawable, data);
+
+  item = GIMP_ITEM (active_drawable);
+
+  gimp_item_offsets (item, &off_x, &off_y);
+
+  switch ((GimpOrientationType) action)
+    {
+    case GIMP_ORIENTATION_HORIZONTAL:
+      axis = ((gdouble) off_x + (gdouble) gimp_item_width (item) / 2.0);
+      break;
+
+    case GIMP_ORIENTATION_VERTICAL:
+      axis = ((gdouble) off_y + (gdouble) gimp_item_height (item) / 2.0);
+      break;
+
+    default:
+      break;
+    }
+
+  gimp_item_flip (item, (GimpOrientationType) action, axis, TRUE);
+  gimp_image_flush (gimage);
+}
+
+void
 drawable_offset_cmd_callback (GtkWidget *widget,
                               gpointer   data)
 {
