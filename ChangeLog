@@ -1,3 +1,11 @@
+Wed Nov  3 22:36:21 GMT 1999 Austin Donnelly  <austin@gimp.org>
+
+	* app/text_tool.c: tag text undo group with TEXT_UNDO rather than
+	    silly EDIT_PASTE_UNDO.
+	* app/undo.c: TEXT_UNDO name
+	* undo_types.h: new type: TEXT_UNDO, plus fix numbering to make it
+	    consistent (overlapping enums are bad).
+
 Wed Nov  3 18:44:50 GMT 1999 Nick Lamb <njl195@zepler.org>
 
 	* plug-ins/bmp/bmp.c

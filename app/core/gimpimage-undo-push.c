@@ -49,6 +49,8 @@
 #include "gimpparasite.h"
 
 
+/*#define DEBUG*/
+
 #ifdef DEBUG
 #define TRC(x) printf x
 #else
@@ -2872,6 +2874,7 @@ static struct undo_name_t {
     {FS_RIGOR,			N_("FS rigor")},
     {FS_RELAX,			N_("FS relax")},
     {GUIDE_UNDO,		N_("guide")},
+    {TEXT_UNDO,			N_("text")},
     {FLOAT_MASK_UNDO,		N_("float selection")},
     {EDIT_PASTE_UNDO,		N_("paste")},
     {EDIT_CUT_UNDO,		N_("cut")},

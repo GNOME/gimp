@@ -730,7 +730,7 @@ text_render (GimpImage *gimage,
       apply_mask_to_region (&textPR, &maskPR, OPAQUE_OPACITY);
 
       /*  Start a group undo  */
-      undo_push_group_start (gimage, EDIT_PASTE_UNDO);
+      undo_push_group_start (gimage, TEXT_UNDO);
 
       /*  Set the layer offsets  */
       GIMP_DRAWABLE(layer)->offset_x = text_x;

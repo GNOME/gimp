@@ -49,10 +49,10 @@ typedef enum
     GIMAGE_MOD,
     FS_RIGOR,
     FS_RELAX,
-    GUIDE_UNDO,            /*  18 */
+    GUIDE_UNDO,
+    TEXT_UNDO,
 
-/*  Aggregate undo types  */
-    FLOAT_MASK_UNDO = 20,
+    FLOAT_MASK_UNDO,
     EDIT_PASTE_UNDO,
     EDIT_CUT_UNDO,
     TRANSFORM_CORE_UNDO,
@@ -61,13 +61,13 @@ typedef enum
     FLOATING_LAYER_UNDO,
     LINKED_LAYER_UNDO,
     LAYER_APPLY_MASK_UNDO,
-    LAYER_MERGE_UNDO,      /*  28  */
+    LAYER_MERGE_UNDO,
     FS_ANCHOR_UNDO,
     GIMAGE_MOD_UNDO,
     CROP_UNDO,
     LAYER_SCALE_UNDO,
     LAYER_RESIZE_UNDO,
-    QMASK_UNDO,		   /*  34 */
+    QMASK_UNDO,	
     PARASITE_ATTACH_UNDO,
     PARASITE_REMOVE_UNDO,
     RESOLUTION_UNDO,
