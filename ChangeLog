@@ -1,3 +1,10 @@
+2003-11-13  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig-deserialize.c
+	(gimp_config_deserialize_unknown)
+	(gimp_config_deserialize_property): unset the scanner scope to
+	avoid identifiers that match symbol names to be parsed as symbols.
+
 2003-11-13  Michael Natterer  <mitch@gimp.org>
 
 	Made session management multiscreen aware:

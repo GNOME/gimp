@@ -221,6 +221,9 @@ gimp_config_deserialize_unknown (GimpConfig *config,
                                  GScanner   *scanner)
 {
   gchar *key;
+  guint  old_scope_id;
+
+  old_scope_id = g_scanner_set_scope (scanner, 0);
 
   if (g_scanner_peek_next_token (scanner) != G_TOKEN_STRING)
     return G_TOKEN_STRING;
@@ -228,6 +231,8 @@ gimp_config_deserialize_unknown (GimpConfig *config,
   key = g_strdup (scanner->value.v_identifier);
 
   g_scanner_get_next_token (scanner);
+
+  g_scanner_set_scope (scanner, old_scope_id);
 
   if (!scanner_string_utf8_valid (scanner, key))
     {
@@ -252,6 +257,9 @@ gimp_config_deserialize_property (GimpConfig *config,
   GParamSpec          *prop_spec;
   GTokenType           token = G_TOKEN_RIGHT_PAREN;
   GValue               value = { 0, };
+  guint                old_scope_id;
+
+  old_scope_id = g_scanner_set_scope (scanner, 0);
 
   prop_spec = G_PARAM_SPEC (scanner->value.v_symbol);
 
@@ -322,6 +330,8 @@ gimp_config_deserialize_property (GimpConfig *config,
 #endif
 
   g_value_unset (&value);
+
+  g_scanner_set_scope (scanner, old_scope_id);
 
   return token;
 }
