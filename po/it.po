@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: gimp 1.3.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-01-19 03:08+0100\n"
-"PO-Revision-Date: 2004-01-09 09:30+0100\n"
+"PO-Revision-Date: 2004-01-26 12:49+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -176,10 +176,9 @@ msgstr ""
 "                           Modalità di debugging per segnali fatali.\n"
 
 #: app/main.c:527
-#, fuzzy
 msgid ""
 "  --pdb-compat-mode <off | on | warn>\n"
-"                           Procedural Database compatibility mode.\n"
+"                          Procedural Database compatibility mode.\n"
 msgstr ""
 "  --pdb-compat-mode <off | on | warn>\n"
 "                          Modalità compatibile database procedurale.\n"
@@ -1991,7 +1990,6 @@ msgid "Change Image Unit"
 msgstr "Cambia unità immagine"
 
 #: app/core/gimpimage.c:1940
-#, fuzzy
 msgid "Attach Parasite to Image"
 msgstr "Allega parasite all'immagine"
 
@@ -4928,9 +4926,8 @@ msgid "Invalid width or height. Both must be positive."
 msgstr "Larghezza o Altezza Invalida. Entrambe devono essere positive."
 
 #: app/gui/layers-menu.c:46
-#, fuzzy
 msgid "/Te_xt Tool"
-msgstr "Color del testo"
+msgstr "/Sr_umento testo"
 
 #: app/gui/layers-menu.c:51
 msgid "/_Edit Layer Attributes..."
@@ -5081,7 +5078,6 @@ msgid "Documents Menu"
 msgstr "Menu documenti"
 
 #: app/gui/menus.c:219
-#, fuzzy
 msgid "Templates Menu"
 msgstr "Menu modelli"
 
@@ -6141,7 +6137,7 @@ msgstr "Interpolazione:"
 msgid ""
 "Indexed color layers are always scaled without interpolation. The chosen "
 "interpolation type will affect scaling channels and masks only."
-msgstr ""
+msgstr "I livelli di colore indicizzati sono sempre scalati senza interpolazione. Il tipo di interpolazione scelto riguarderà solamente canali di scalatura e maschere."
 
 #: app/gui/resolution-calibrate-dialog.c:85
 msgid "Calibrate Monitor Resolution"
@@ -7923,9 +7919,8 @@ msgstr "Sposta tracciato"
 
 #: app/tools/gimpeditselectiontool.c:255
 #: app/tools/gimpeditselectiontool.c:1210
-#, fuzzy
 msgid "Move Layer Mask"
-msgstr "Sposta livello"
+msgstr "Sposta maschera di livello"
 
 #: app/tools/gimpeditselectiontool.c:267
 #: app/tools/gimpeditselectiontool.c:1220
@@ -9871,14 +9866,12 @@ msgid "View as Grid"
 msgstr "Mostra come griglia"
 
 #: app/widgets/widgets-enums.c:136
-#, fuzzy
 msgid "Normal Window"
-msgstr "Finestre immagine"
+msgstr "Finestra normale"
 
 #: app/widgets/widgets-enums.c:137
-#, fuzzy
 msgid "Utility Window"
-msgstr "Utilità"
+msgstr "Finestra utilità"
 
 #: app/xcf/xcf-load.c:291
 msgid ""
