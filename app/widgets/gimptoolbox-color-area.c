@@ -108,7 +108,7 @@ color_area_target (gint x,
   gint rect_w, rect_h;
   gint width, height;
 
-  gdk_window_get_size (color_area_pixmap, &width, &height);
+  gdk_drawable_get_size (color_area_pixmap, &width, &height);
 
   rect_w = width * 0.65;
   rect_h = height * 0.65;
@@ -210,7 +210,7 @@ color_area_draw (void)
   if (!color_area_pixmap || !color_area_gc)
     return;
 
-  gdk_window_get_size (color_area_pixmap, &width, &height);
+  gdk_drawable_get_size (color_area_pixmap, &width, &height);
 
   rect_w = width * 0.65;
   rect_h = height * 0.65;
@@ -261,24 +261,24 @@ color_area_draw (void)
 		     0, 0, rect_w, rect_h);
 
   /*  draw the default pixmap  */
-  gdk_window_get_size (default_pixmap, &def_width, &def_height);
-  gdk_draw_pixmap (color_area_pixmap, color_area_gc, default_pixmap,
-		   0, 0, 0, height - def_height, def_width, def_height);
-  gdk_draw_pixmap (color_area_mask, mask_gc, default_mask,
-		   0, 0, 0, height - def_height, def_width, def_height);
+  gdk_drawable_get_size (default_pixmap, &def_width, &def_height);
+  gdk_draw_drawable (color_area_pixmap, color_area_gc, default_pixmap,
+		     0, 0, 0, height - def_height, def_width, def_height);
+  gdk_draw_drawable (color_area_mask, mask_gc, default_mask,
+		     0, 0, 0, height - def_height, def_width, def_height);
 
   /*  draw the swap pixmap  */
-  gdk_window_get_size (swap_pixmap, &swap_width, &swap_height);
-  gdk_draw_pixmap (color_area_pixmap, color_area_gc, swap_pixmap,
-		   0, 0, width - swap_width, 0, swap_width, swap_height);
-  gdk_draw_pixmap (color_area_mask, mask_gc, swap_mask,
-		   0, 0, width - swap_width, 0, swap_width, swap_height);
+  gdk_drawable_get_size (swap_pixmap, &swap_width, &swap_height);
+  gdk_draw_drawable (color_area_pixmap, color_area_gc, swap_pixmap,
+		     0, 0, width - swap_width, 0, swap_width, swap_height);
+  gdk_draw_drawable (color_area_mask, mask_gc, swap_mask,
+		     0, 0, width - swap_width, 0, swap_width, swap_height);
 
   /*  draw the widget  */
   gdk_gc_set_clip_mask (color_area_gc, color_area_mask);
   gdk_gc_set_clip_origin (color_area_gc, 0, 0);
-  gdk_draw_pixmap (color_area->window, color_area_gc, color_area_pixmap,
-		   0, 0, 0, 0, width, height);
+  gdk_draw_drawable (color_area->window, color_area_gc, color_area_pixmap,
+		     0, 0, 0, 0, width, height);
 
   /*  reset the clip mask  */
   gdk_gc_set_clip_mask (color_area_gc, NULL);

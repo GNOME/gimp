@@ -1627,8 +1627,8 @@ bender_update (BenderDialog *cd,
 	  }
 
 
-      gdk_draw_pixmap (cd->graph->window, cd->graph->style->black_gc, cd->pixmap,
-		       0, 0, 0, 0, GRAPH_WIDTH + RADIUS * 2, GRAPH_HEIGHT + RADIUS * 2);
+      gdk_draw_drawable (cd->graph->window, cd->graph->style->black_gc, cd->pixmap,
+			 0, 0, 0, 0, GRAPH_WIDTH + RADIUS * 2, GRAPH_HEIGHT + RADIUS * 2);
     }
 }
 

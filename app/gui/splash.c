@@ -296,7 +296,7 @@ splash_logo_load (void)
   gtk_preview_put (GTK_PREVIEW (preview),
 		   logo_pixmap, gc,
 		   0, 0, 0, 0, logo_width, logo_height);
-  gdk_gc_destroy (gc);
+  gdk_gc_unref (gc);
 
   gtk_widget_unref (preview);
   g_free (pixelrow);
@@ -365,13 +365,13 @@ splash_text_draw (GtkWidget *widget)
 static void
 splash_logo_draw (GtkWidget *widget)
 {
-  gdk_draw_pixmap (widget->window,
-		   widget->style->black_gc,
-		   logo_pixmap,
-		   0, 0,
-		   ((logo_area_width - logo_width) / 2),
-		   ((logo_area_height - logo_height) / 2),
-		   logo_width, logo_height);
+  gdk_draw_drawable (widget->window,
+		     widget->style->black_gc,
+		     logo_pixmap,
+		     0, 0,
+		     ((logo_area_width - logo_width) / 2),
+		     ((logo_area_height - logo_height) / 2),
+		     logo_width, logo_height);
 }
 
 static void

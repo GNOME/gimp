@@ -2159,7 +2159,7 @@ control_update (GradientEditor *gradient_editor,
   cheight = GRAD_CONTROL_HEIGHT;
 
   if (gradient_editor->control_pixmap)
-    gdk_window_get_size (gradient_editor->control_pixmap, &pwidth, &pheight);
+    gdk_drawable_get_size (gradient_editor->control_pixmap, &pwidth, &pheight);
 
   if (! gradient_editor->control_pixmap ||
       (cwidth != pwidth) ||
@@ -2192,11 +2192,11 @@ control_update (GradientEditor *gradient_editor,
 		adjustment->value,
 		adjustment->value + adjustment->page_size);
 
-  gdk_draw_pixmap (gradient_editor->control->window,
-		   gradient_editor->control->style->black_gc,
-		   gradient_editor->control_pixmap,
-		   0, 0, 0, 0,
-		   cwidth, cheight);
+  gdk_draw_drawable (gradient_editor->control->window,
+		     gradient_editor->control->style->black_gc,
+		     gradient_editor->control_pixmap,
+		     0, 0, 0, 0,
+		     cwidth, cheight);
 }
 
 static void
@@ -2343,7 +2343,7 @@ control_calc_p_pos (GradientEditor *gradient_editor,
    */
 
   adjustment = GTK_ADJUSTMENT (gradient_editor->scroll_data);
-  gdk_window_get_size (gradient_editor->control_pixmap, &pwidth, &pheight);
+  gdk_drawable_get_size (gradient_editor->control_pixmap, &pwidth, &pheight);
 
   return RINT ((pwidth - 1) * (pos - adjustment->value) / adjustment->page_size);
 }
@@ -2358,7 +2358,7 @@ control_calc_g_pos (GradientEditor *gradient_editor,
   /* Calculate the gradient position that corresponds to widget's coordinates */
 
   adjustment = GTK_ADJUSTMENT (gradient_editor->scroll_data);
-  gdk_window_get_size (gradient_editor->control_pixmap, &pwidth, &pheight);
+  gdk_drawable_get_size (gradient_editor->control_pixmap, &pwidth, &pheight);
 
   return adjustment->page_size * pos / (pwidth - 1) + adjustment->value;
 }

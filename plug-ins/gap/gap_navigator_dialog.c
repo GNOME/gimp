@@ -2212,7 +2212,7 @@ render_no_preview (GtkWidget *widget,
   int foldh, foldw;
   int i;
 
-  gdk_window_get_size (pixmap, &w, &h);
+  gdk_drawable_get_size (pixmap, &w, &h);
 
   x1 = 2;
   y1 = h / 8 + 2;
@@ -2389,12 +2389,12 @@ frame_widget_preview_events (GtkWidget *widget,
       {
 	  frame_widget_preview_redraw (frame_widget);
 
-	  gdk_draw_pixmap (widget->window,
-			   widget->style->black_gc,
-			   *pixmap,
-			   0, 0, 2, 2,
-			   naviD->image_width,
-			   naviD->image_height);
+	  gdk_draw_drawable (widget->window,
+			     widget->style->black_gc,
+			     *pixmap,
+			     0, 0, 2, 2,
+			     naviD->image_width,
+			     naviD->image_height);
       }
       else
       {
@@ -2439,10 +2439,10 @@ frame_widget_preview_events (GtkWidget *widget,
 
 	  if ((w > 0) && (h > 0))
 	  {
-	    gdk_draw_pixmap (widget->window,
-			     widget->style->black_gc,
-			     *pixmap,
-			     sx, sy, dx, dy, w, h);
+	    gdk_draw_drawable (widget->window,
+			       widget->style->black_gc,
+			       *pixmap,
+			       sx, sy, dx, dy, w, h);
           }
       }
 

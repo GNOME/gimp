@@ -1486,7 +1486,7 @@ main_dialog (GimpDrawable *drawable)
 
     newcursor = gdk_cursor_new (GDK_HAND2);
     gdk_window_set_cursor (previewarea->window, newcursor);
-    gdk_cursor_destroy (newcursor);
+    gdk_cursor_unref (newcursor);
     gdk_flush ();
   }
 
@@ -1501,7 +1501,7 @@ main_dialog (GimpDrawable *drawable)
     g_free (preview_rgb_data);
   
   if (image != NULL)
-    gdk_image_destroy (image);
+    gdk_image_unref (image);
 
   gck_visualinfo_destroy (visinfo);
   gtk_widget_destroy (appwin);

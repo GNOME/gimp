@@ -3912,7 +3912,7 @@ gfig_dialog (void)
   gimp_ui_init ("gfig", TRUE);
 
   yyy = gdk_rgb_get_visual ();
-  xxx = gdk_rgb_get_cmap ();
+  xxx = gdk_rgb_get_colormap ();
 
   plug_in_parse_gfig_path ();
 

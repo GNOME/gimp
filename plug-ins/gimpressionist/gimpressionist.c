@@ -408,7 +408,7 @@ int create_dialog(void)
       gtk_init(&argc, &argv);
       gtk_rc_parse (gimp_gtkrc ());
 
-      gtk_widget_set_default_colormap (gdk_rgb_get_cmap());
+      gtk_widget_set_default_colormap (gdk_rgb_get_colormap());
     }
   else
     {

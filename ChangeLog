@@ -1,3 +1,32 @@
+2001-08-31  Thomas Canty  <tommydal@optushome.com.au>
+	* app/colormaps.c
+	* app/gdisplay.c
+	* app/nav_window.c
+	* app/scroll.c
+	* app/selection.c
+	* app/undo.c
+	* app/gui/about-dialog.c
+	* app/gui/color-area.c
+	* app/gui/color-select.c
+	* app/gui/gradient-editor.c
+	* app/gui/gui.c
+	* app/gui/splash.c
+	* app/tools/gimpcurvestool.c
+	* plug-ins/Lighting/lighting_preview.c
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/MapObject/mapobject_preview.c
+	* plug-ins/MapObject/mapobject_ui.c
+	* plug-ins/common/animationplay.c
+	* plug-ins/common/curve_bend.c
+	* plug-ins/gap/gap_navigator_dialog.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gimpressionist/gimpressionist.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/imagemap/imap_preferences.c
+	* plug-ins/imagemap/imap_preview.c: replaced some deprecated GDK 
+	functions
+
 2001-08-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug_in.c

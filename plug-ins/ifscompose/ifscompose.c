@@ -1061,7 +1061,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
 
   gdk_flush ();
 
-  gdk_gc_destroy (ifsDesign->selected_gc);
+  gdk_gc_unref (ifsDesign->selected_gc);
 
   g_free(ifsD);
 
@@ -1573,12 +1573,12 @@ design_area_expose (GtkWidget      *widget,
 		       ifsDesign->area->style->font);
     }
 
-  gdk_draw_pixmap(widget->window,
-		  widget->style->fg_gc[GTK_WIDGET_STATE (widget)],
-		  ifsDesign->pixmap,
-		  event->area.x, event->area.y,
-		  event->area.x, event->area.y,
-		  event->area.width, event->area.height);
+  gdk_draw_drawable(widget->window,
+		    widget->style->fg_gc[GTK_WIDGET_STATE (widget)],
+		    ifsDesign->pixmap,
+		    event->area.x, event->area.y,
+		    event->area.x, event->area.y,
+		    event->area.width, event->area.height);
 
   return FALSE;
 }
@@ -1600,7 +1600,7 @@ design_area_configure (GtkWidget         *widget,
 
   if (ifsDesign->pixmap)
     {
-      gdk_pixmap_unref(ifsDesign->pixmap);
+      gdk_drawable_unref(ifsDesign->pixmap);
     }
   ifsDesign->pixmap = gdk_pixmap_new(widget->window,
 				     widget->allocation.width,

@@ -475,7 +475,7 @@ gui_rotate_the_shield_harmonics (GtkWidget *widget,
 					 NULL,
 					 wilber2_xpm);
 
-  gdk_window_get_size (pixmap, &width, &height);
+  gdk_drawable_get_size (pixmap, &width, &height);
 
   if (widget->allocation.width  >= width &&
       widget->allocation.height >= height)
@@ -488,11 +488,11 @@ gui_rotate_the_shield_harmonics (GtkWidget *widget,
       gdk_gc_set_clip_mask (widget->style->black_gc, mask);
       gdk_gc_set_clip_origin (widget->style->black_gc, x, y);
 
-      gdk_draw_pixmap (widget->window,
-		       widget->style->black_gc,
-		       pixmap, 0, 0,
-		       x, y,
-		       width, height);
+      gdk_draw_drawable (widget->window,
+			 widget->style->black_gc,
+			 pixmap, 0, 0,
+			 x, y,
+			 width, height);
 
       gdk_gc_set_clip_mask (widget->style->black_gc, NULL);
       gdk_gc_set_clip_origin (widget->style->black_gc, 0, 0);

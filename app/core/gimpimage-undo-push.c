@@ -454,7 +454,7 @@ pop_stack (GimpImage  *gimage,
 	    {
 	      if (gdisp->disp_xoffset || gdisp->disp_yoffset)
 		{
-		  gdk_window_get_size (gdisp->canvas->window, &x, &y);
+		  gdk_drawable_get_size (gdisp->canvas->window, &x, &y);
 		  if (gdisp->disp_yoffset)
 		    {
 		      gdisplay_expose_area (gdisp, 0, 0,

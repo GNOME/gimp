@@ -387,7 +387,7 @@ about_dialog_load_logo (GtkWidget *window)
   gtk_preview_put (GTK_PREVIEW (preview),
 		   logo_pixmap, gc,
 		   0, 0, 0, 0, logo_width, logo_height);
-  gdk_gc_destroy (gc);
+  gdk_gc_unref (gc);
 
   gtk_widget_unref (preview);
   g_free (pixelrow);
@@ -452,12 +452,12 @@ about_dialog_logo_expose (GtkWidget      *widget,
          Otherwise, it would be necessary to intersect event->area
          with the pixmap boundary rectangle. */
 
-      gdk_draw_pixmap (widget->window,
-		       widget->style->black_gc,
-		       logo_pixmap, 
-		       event->area.x, event->area.y,
-		       event->area.x, event->area.y,
-		       event->area.width, event->area.height);
+      gdk_draw_drawable (widget->window,
+			 widget->style->black_gc,
+			 logo_pixmap, 
+			 event->area.x, event->area.y,
+			 event->area.x, event->area.y,
+			 event->area.width, event->area.height);
     }
 
   return FALSE;
@@ -578,7 +578,7 @@ about_dialog_tool_drop (GtkWidget    *widget,
 					 NULL,
 					 wilber2_xpm);
 
-  gdk_window_get_size (pixmap, &width, &height);
+  gdk_drawable_get_size (pixmap, &width, &height);
 
   if (logo_area->allocation.width  >= width &&
       logo_area->allocation.height >= height)
@@ -591,11 +591,11 @@ about_dialog_tool_drop (GtkWidget    *widget,
       gdk_gc_set_clip_mask (logo_area->style->black_gc, mask);
       gdk_gc_set_clip_origin (logo_area->style->black_gc, x, y);
 
-      gdk_draw_pixmap (logo_pixmap,
-                       logo_area->style->black_gc,
-                       pixmap, 0, 0,
-                       x, y,
-                       width, height);
+      gdk_draw_drawable (logo_pixmap,
+                         logo_area->style->black_gc,
+                         pixmap, 0, 0,
+                         x, y,
+                         width, height);
 
       gdk_gc_set_clip_mask (logo_area->style->black_gc, NULL);
       gdk_gc_set_clip_origin (logo_area->style->black_gc, 0, 0);
@@ -638,12 +638,12 @@ about_dialog_timer (gpointer data)
 	    for (j = 0; j < dissolve_width; j++, k++)
 	      if (frame == dissolve_map[k])
 		{
-		  gdk_draw_pixmap (logo_area->window,
-				   logo_area->style->black_gc,
-				   logo_pixmap,
-				   j * ANIMATION_SIZE, i * ANIMATION_SIZE,
-				   j * ANIMATION_SIZE, i * ANIMATION_SIZE,
-				   ANIMATION_SIZE, ANIMATION_SIZE);
+		  gdk_draw_drawable (logo_area->window,
+				     logo_area->style->black_gc,
+				     logo_pixmap,
+				     j * ANIMATION_SIZE, i * ANIMATION_SIZE,
+				     j * ANIMATION_SIZE, i * ANIMATION_SIZE,
+				     ANIMATION_SIZE, ANIMATION_SIZE);
 		}
 
 	  frame += 1;
@@ -707,11 +707,11 @@ about_dialog_timer (gpointer data)
 		       scroll_area->allocation.width - offset,
 		       scroll_area->style->font->ascent,
 		       scroll_text[cur_scroll_text]);
-      gdk_draw_pixmap (scroll_area->window,
-		       scroll_area->style->black_gc,
-		       scroll_pixmap, 0, 0, 0, 0,
-		       scroll_area->allocation.width,
-		       scroll_area->allocation.height);
+      gdk_draw_drawable (scroll_area->window,
+		 	 scroll_area->style->black_gc,
+			 scroll_pixmap, 0, 0, 0, 0,
+			 scroll_area->allocation.width,
+			 scroll_area->allocation.height);
 
       offset += 15;
       if (scroll_state == 0)

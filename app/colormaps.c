@@ -72,7 +72,7 @@ get_standard_colormaps (void)
   gdk_rgb_set_install (gimprc.install_cmap);
 
   g_visual = gdk_rgb_get_visual ();
-  g_cmap   = gdk_rgb_get_cmap ();
+  g_cmap   = gdk_rgb_get_colormap ();
 
   gtk_widget_set_default_colormap (g_cmap);
 

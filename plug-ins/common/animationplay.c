@@ -848,7 +848,7 @@ build_dialog (GimpImageBaseType  basetype,
 
     cursor = gdk_cursor_new (GDK_CENTER_PTR);
     gdk_window_set_cursor(shape_window->window, cursor);
-    gdk_cursor_destroy (cursor);
+    gdk_cursor_unref (cursor);
 
     gtk_signal_connect (GTK_OBJECT (shape_window), "button_press_event",
 			GTK_SIGNAL_FUNC (shape_pressed),NULL);
@@ -1625,7 +1625,7 @@ show_frame (void)
       gtk_preview_put (GTK_PREVIEW (shape_preview),
 		       shape_pixmap, gc,
 		       0, 0, 0, 0, width, height);
-      gdk_gc_destroy (gc);
+      gdk_gc_unref (gc);
       gdk_window_set_back_pixmap(shape_window->window, shape_pixmap,
 				 FALSE);
 

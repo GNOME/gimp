@@ -187,16 +187,16 @@ selection_free (Selection *select)
     g_source_remove (select->timeout_id);
 
   if (select->gc_in)
-    gdk_gc_destroy (select->gc_in);
+    gdk_gc_unref (select->gc_in);
   if (select->gc_out)
-    gdk_gc_destroy (select->gc_out);
+    gdk_gc_unref (select->gc_out);
   if (select->gc_layer)
-    gdk_gc_destroy (select->gc_layer);
+    gdk_gc_unref (select->gc_layer);
 #ifdef USE_XDRAWPOINTS
   if (select->gc_white)
-    gdk_gc_destroy (select->gc_white);
+    gdk_gc_unref (select->gc_white);
   if (select->gc_black)
-    gdk_gc_destroy (select->gc_black);
+    gdk_gc_unref (select->gc_black);
 #endif
   selection_free_segs (select);
 
@@ -365,7 +365,7 @@ create_cycled_ants_pixmap (GdkWindow *window,
 	gdk_draw_line (pixmap, gc, i, j, i, j);
       }
 
-  gdk_gc_destroy (gc);
+  gdk_gc_unref (gc);
 
   return pixmap;
 }

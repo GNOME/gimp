@@ -462,7 +462,7 @@ gdisplay_delete (GDisplay *gdisp)
   g_signal_handlers_disconnect_by_data (G_OBJECT (gdisp->gimage), gdisp);
 
   if (gdisp->scroll_gc)
-    gdk_gc_destroy (gdisp->scroll_gc);
+    gdk_gc_unref (gdisp->scroll_gc);
 
   /*  free the area lists  */
   gdisplay_free_area_list (gdisp->update_areas);
@@ -879,7 +879,7 @@ gdisplay_update_icon (GDisplay *gdisp)
 
   icongc = gdk_gc_new (gdisp->icon);
   iconmaskgc = gdk_gc_new (gdisp->iconmask);
-  colormap = gdk_colormap_get_system ();   /* or gdk_rgb_get_cmap ()  */
+  colormap = gdk_colormap_get_system ();   /* or gdk_rgb_get_colormap ()  */
 
   gdk_color_white (colormap, &white);
   gdk_color_black (colormap, &black);
@@ -1148,7 +1148,7 @@ gdisplay_draw_guide (GDisplay  *gdisp,
   gdisplay_transform_coords (gdisp,
 			     gdisp->gimage->width, gdisp->gimage->height,
 			     &x2, &y2, FALSE);
-  gdk_window_get_size (gdisp->canvas->window, &w, &h);
+  gdk_drawable_get_size (gdisp->canvas->window, &w, &h);
 
   if (x1 < 0) x1 = 0;
   if (y1 < 0) y1 = 0;
@@ -1933,7 +1933,7 @@ gdisplay_real_install_tool_cursor (GDisplay           *gdisp,
 				tool_cursor,
 				modifier);
       gdk_window_set_cursor (gdisp->canvas->window, cursor);
-      gdk_cursor_destroy (cursor);
+      gdk_cursor_unref (cursor);
     }
 }
 
@@ -1968,7 +1968,7 @@ gdisplay_install_override_cursor (GDisplay      *gdisp,
 				GIMP_TOOL_CURSOR_NONE,
 				GIMP_CURSOR_MODIFIER_NONE);
       gdk_window_set_cursor (gdisp->canvas->window, cursor);
-      gdk_cursor_destroy (cursor);
+      gdk_cursor_unref(cursor);
     }
 }
 

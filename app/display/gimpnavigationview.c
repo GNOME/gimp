@@ -1252,7 +1252,7 @@ nav_dialog_grab_pointer (NavigationDialog *nav_dialog,
 		    GDK_EXTENSION_EVENTS_ALL,
 		    widget->window, cursor, 0);
 
-  gdk_cursor_destroy (cursor); 
+  gdk_cursor_unref (cursor); 
 }
 
 static gboolean

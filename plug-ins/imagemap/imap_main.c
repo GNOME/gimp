@@ -211,7 +211,7 @@ get_preferences(void)
 static void
 init_preferences(void)
 {
-   GdkColormap *colormap = gdk_window_get_colormap(_dlg->window);
+   GdkColormap *colormap = gdk_drawable_get_colormap(_dlg->window);
    ColorSelData_t *colors = &_preferences.colors;
 
    colors->normal_fg.red = 0;

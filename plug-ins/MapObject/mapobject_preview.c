@@ -348,7 +348,7 @@ clear_light_marker (void)
 		      backbuf.x, backbuf.y,
 		      backbuf.w, backbuf.h);
 
-      gdk_image_destroy (backbuf.image);
+      gdk_image_unref (backbuf.image);
       backbuf.image = NULL;
     }
 }
@@ -420,14 +420,14 @@ draw_preview_image (gint docompute)
 
       newcursor = gdk_cursor_new (GDK_WATCH);
       gdk_window_set_cursor (previewarea->window, newcursor);
-      gdk_cursor_destroy (newcursor);
+      gdk_cursor_unref (newcursor);
       gdk_flush ();
 
       compute_preview (0, 0, width - 1, height - 1, pw, ph);
 
       newcursor = gdk_cursor_new (GDK_HAND2);
       gdk_window_set_cursor(previewarea->window, newcursor);
-      gdk_cursor_destroy (newcursor);
+      gdk_cursor_unref (newcursor);
       gdk_flush ();
 
       clear_light_marker ();

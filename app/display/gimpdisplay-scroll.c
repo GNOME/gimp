@@ -59,7 +59,7 @@ start_grab_and_scroll (GDisplay       *gdisp,
 			    GIMP_TOOL_CURSOR_NONE,
 			    GIMP_CURSOR_MODIFIER_NONE);
   gdk_window_set_cursor (gdisp->canvas->window, cursor);
-  gdk_cursor_destroy (cursor);
+  gdk_cursor_unref (cursor);
 }
 
 
@@ -167,13 +167,13 @@ scroll_display (GDisplay *gdisp,
       gdisp->offset_x += x_offset;
       gdisp->offset_y += y_offset;
 
-      gdk_draw_pixmap (gdisp->canvas->window,
-		       gdisp->scroll_gc,
-		       gdisp->canvas->window,
-		       src_x, src_y,
-		       dest_x, dest_y,
-		       (gdisp->disp_width - abs (x_offset)),
-		       (gdisp->disp_height - abs (y_offset)));
+      gdk_draw_drawable (gdisp->canvas->window,
+			 gdisp->scroll_gc,
+			 gdisp->canvas->window,
+			 src_x, src_y,
+			 dest_x, dest_y,
+			 (gdisp->disp_width - abs (x_offset)),
+			 (gdisp->disp_height - abs (y_offset)));
 
       /*  re-enable the active tool  */
       tool_manager_control_active (gdisp->gimage->gimp, RESUME, gdisp);

@@ -1454,7 +1454,7 @@ color_select_notebook_free (gpointer data)
 {
   notebook_glue *glue = data;
 
-  gdk_gc_destroy (glue->csp->gc);
+  gdk_gc_unref (glue->csp->gc);
   g_free (glue->csp);
 
   /* don't need to destroy the widget, since it's done by the caller
