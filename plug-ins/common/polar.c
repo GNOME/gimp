@@ -70,8 +70,6 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#include "gimpoldpreview.h"
-
 #define WITHIN(a, b, c) ((((a) <= (b)) && ((b) <= (c))) ? 1 : 0)
 
 
@@ -83,6 +81,7 @@
 
 #define SCALE_WIDTH  200
 #define ENTRY_WIDTH   60
+#define PREVIEW_SIZE 128
 
 /***** Types *****/
 
@@ -95,7 +94,9 @@ typedef struct
   gint polrec;
 } polarize_vals_t;
 
-static GimpOldPreview *preview;
+static GtkWidget *preview;
+static gint       preview_width, preview_height, preview_bpp;
+static guchar    *preview_cache;
 
 /***** Prototypes *****/
 
@@ -610,9 +611,15 @@ polarize_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  preview = gimp_old_preview_new (drawable);
-  gtk_box_pack_start (GTK_BOX (hbox), preview->frame, FALSE, FALSE, 0);
-  gtk_widget_show (preview->frame);
+  preview = gimp_preview_area_new ();
+  preview_width = preview_height = PREVIEW_SIZE;
+  preview_cache = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+                                                    &preview_width,
+                                                    &preview_height,
+                                                    &preview_bpp);
+  gtk_widget_set_size_request (preview, preview_width, preview_height);
+  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
+  gtk_widget_show (preview);
 
   /* Controls */
 
@@ -699,8 +706,6 @@ polarize_dialog (void)
 
   gtk_widget_destroy (dialog);
 
-  gimp_old_preview_free (preview);
-
   return run;
 }
 
@@ -730,24 +735,24 @@ dialog_update_preview (void)
   bottom = sel_y2 - 1;
   top    = sel_y1;
 
-  dx = (right - left) / (preview->width - 1);
-  dy = (bottom - top) / (preview->height - 1);
+  dx = (right - left) / (preview_width - 1);
+  dy = (bottom - top) / (preview_height - 1);
 
-  scale_x = (double) preview->width / (right - left + 1);
-  scale_y = (double) preview->height / (bottom - top + 1);
+  scale_x = (double) preview_width / (right - left + 1);
+  scale_y = (double) preview_height / (bottom - top + 1);
 
-  bpp = preview->bpp;
+  bpp = preview_bpp;
 
   py = top;
 
-  buffer = g_new (guchar, preview->rowstride);
+  buffer = g_new (guchar, bpp * preview_width * preview_height);
+  p_ul = buffer;
 
-  for (y = 0; y < preview->height; y++)
+  for (y = 0; y < preview_height; y++)
     {
       px = left;
-      p_ul = buffer;
 
-      for (x = 0; x < preview->width; x++)
+      for (x = 0; x < preview_width; x++)
         {
           calc_undistorted_coords (px, py, &cx, &cy);
 
@@ -757,9 +762,9 @@ dialog_update_preview (void)
           ix = (int) (cx + 0.5);
           iy = (int) (cy + 0.5);
 
-          if ((ix >= 0) && (ix < preview->width) &&
-              (iy >= 0) && (iy < preview->height))
-            i = preview->cache + preview->rowstride * iy + bpp * ix;
+          if ((ix >= 0) && (ix < preview_width) &&
+              (iy >= 0) && (iy < preview_height))
+            i = preview_cache + bpp * (preview_width * iy + ix);
           else
             i = outside;
 
@@ -771,14 +776,15 @@ dialog_update_preview (void)
           px += dx;
         }
 
-      gimp_old_preview_do_row (preview, y, preview->width, buffer);
-
       py += dy;
     }
 
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                          0, 0, preview_width, preview_height,
+                          gimp_drawable_type (drawable->drawable_id),
+                          buffer,
+                          bpp * preview_width);
   g_free (buffer);
-
-  gtk_widget_queue_draw (preview->widget);
 }
 
 static void

@@ -1,3 +1,8 @@
+2004-08-06  DindinX  <david@dindinx.org>
+
+	* plug-ins/common/polar.c: ported to GimpPreviewArea (from
+	GimpOldPreview).
+
 2004-08-06  Sven Neumann  <sven@gimp.org>
 
 	* libgimpcolor/test-color-parser.c: include <glib-object.h>.
