@@ -244,8 +244,10 @@ gimp_SOURCES = \
 	ops_buttons.c		\
 	ops_buttons.h		\
 	palette.c		\
-	palette.h		\
 	palette_entries.h	\
+	palette.h		\
+	palette_select.c	\
+	palette_select.h	\
 	paint_core.c		\
 	paint_core.h		\
 	paint_funcs.c		\

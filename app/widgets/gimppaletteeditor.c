@@ -39,6 +39,7 @@
 #include "palette.h"
 #include "palette_entries.h"
 #include "session.h"
+#include "palette_select.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -55,8 +56,6 @@
 
 /* New palette code... */
 
-#define SM_PREVIEW_WIDTH (96 + 2)
-#define SM_PREVIEW_HEIGHT (33 + 2)
 #define IMPORT_PREVIEW_WIDTH 80
 #define IMPORT_PREVIEW_HEIGHT 80
 #define MAX_IMAGE_COLOURS (10000*2)
@@ -111,7 +110,6 @@ struct _Palette {
 };
 
 
-
 static void       palette_entries_free (PaletteEntriesP);
 static void       palette_entries_load (char *);
 static void       palette_entry_free (PaletteEntryP);
@@ -119,10 +117,11 @@ static void       palette_entries_save (PaletteEntriesP, char *);
 
 PaletteP          create_palette_dialog ();
 static void       palette_draw_entries (PaletteP palette,gint row_start, gint column_highlight);
-static void       palette_insert_clist(PaletteP palette,PaletteEntriesP p_entries,gint pos);
 static void       redraw_palette(PaletteP palette);
 static GSList *   palette_entries_insert_list (GSList *list,PaletteEntriesP entries,gint pos);
-void              palette_clist_init(PaletteP palette);
+void       palette_clist_init(GtkWidget *clist, 
+			      GtkWidget *shell,
+			      GdkGC     *gc);
 static void       palette_draw_small_preview(GdkGC *gc, PaletteEntriesP p_entry);
 static void       palette_scroll_clist_to_current(PaletteP palette);
 static void       palette_update_small_preview(PaletteP palette);
@@ -132,14 +131,15 @@ static void       palette_import_dialog_callback (GtkWidget *w,gpointer client_d
 static void       import_palette_create_from_image (GImage *gimage,guchar *pname,PaletteP palette);
 static void       palette_merge_dialog_callback (GtkWidget *w,gpointer client_data);
 
+
 GSList *palette_entries_list = NULL;
 static PaletteEntriesP  default_palette_entries = NULL;
 static int              num_palette_entries = 0;
 static unsigned char    foreground[3] = { 0, 0, 0 };
 static unsigned char    background[3] = { 255, 255, 255 };
 static ImportDialogP import_dialog = NULL;
-static PaletteP top_level_palette = NULL;
 
+PaletteP top_level_edit_palette = NULL;
 
 static void
 palette_entries_free (PaletteEntriesP entries)
@@ -338,7 +338,7 @@ palette_entry_free (PaletteEntryP entry)
 void
 palette_free ()
 {
-  if (top_level_palette) 
+  if (top_level_edit_palette) 
     { 
       if(import_dialog)
 	{
@@ -347,15 +347,21 @@ palette_free ()
 	  import_dialog = NULL;
 	}
 
+      gdk_gc_destroy (top_level_edit_palette->gc); 
+      
+      if (top_level_edit_palette->color_select) 
+	color_select_free (top_level_edit_palette->color_select); 
+      
+      g_free (top_level_edit_palette); 
+      
+      top_level_edit_palette = NULL; 
+    }
+
+  if(top_level_palette)
+    {
       gdk_gc_destroy (top_level_palette->gc); 
-      
-      if (top_level_palette->color_select) 
-	color_select_free (top_level_palette->color_select); 
-      
-      session_get_window_info (top_level_palette->shell, &palette_session_info); 
-      g_free (top_level_palette); 
-      
-      top_level_palette = NULL; 
+      session_get_window_info (top_level_palette->shell, &palette_session_info);  
+      top_level_palette = NULL;
     }
 }
 
@@ -434,23 +440,23 @@ palette_change_color (int r,
 		      int b,
 		      int state)
 {
-  if (top_level_palette && top_level_palette->entries) 
+  if (top_level_edit_palette && top_level_edit_palette->entries) 
     { 
       switch (state) 
  	{ 
  	case COLOR_NEW: 
- 	  top_level_palette->color = palette_add_entry (top_level_palette->entries, _("Untitled"), r, g, b); 
+ 	  top_level_edit_palette->color = palette_add_entry (top_level_edit_palette->entries, _("Untitled"), r, g, b); 
 	  
-	  palette_update_small_preview(top_level_palette);
-	  redraw_palette(top_level_palette);
+	  palette_update_small_preview(top_level_edit_palette);
+	  redraw_palette(top_level_edit_palette);
  	  break; 
 	  
  	case COLOR_UPDATE_NEW: 
- 	  top_level_palette->color->color[0] = r; 
- 	  top_level_palette->color->color[1] = g; 
- 	  top_level_palette->color->color[2] = b; 
-	  palette_update_small_preview(top_level_palette);
-	  redraw_palette(top_level_palette);
+ 	  top_level_edit_palette->color->color[0] = r; 
+ 	  top_level_edit_palette->color->color[1] = g; 
+ 	  top_level_edit_palette->color->color[2] = b; 
+	  palette_update_small_preview(top_level_edit_palette);
+	  redraw_palette(top_level_edit_palette);
  	  break; 
 	  
  	default: 
@@ -902,25 +908,35 @@ palette_entries_load (char *filename)
     default_palette_entries = entries;
 }
 
-
-void palette_create()
+static PaletteP
+new_top_palette()
 {
   PaletteP p;
 
+  p = create_palette_dialog();
+  palette_clist_init(p->clist,p->shell,p->gc);
+
+  return(p);
+}
+
+void 
+palette_select_palette_init()
+{
+  /* Load them if they are not already loaded */
+  if(top_level_edit_palette == NULL)
+    {
+      top_level_edit_palette = new_top_palette();
+    }
+}
+
+void 
+palette_create()
+{
   if(top_level_palette == NULL)
     {
-
-      p = create_palette_dialog();
-      
-      palette_clist_init(p);
-      
-      session_set_window_geometry (p->shell, &palette_session_info, FALSE);
-      
-      gtk_widget_show(p->shell);
-      
-      palette_draw_entries(p,-1,-1);
-      
-      top_level_palette = p;
+      top_level_palette = palette_new_selection(_("Palette"),NULL);
+      session_set_window_geometry (top_level_palette->shell, &palette_session_info, TRUE);
+      gtk_widget_show(top_level_palette->shell);
     }
   else
     {
@@ -932,6 +948,44 @@ void palette_create()
 	{
 	  gdk_window_raise(top_level_palette->shell->window);
 	}
+    }
+}
+
+void 
+palette_create_edit(PaletteEntriesP entries)
+{
+  PaletteP p;
+
+  if(top_level_edit_palette == NULL)
+    {
+
+      p = new_top_palette();
+      
+      gtk_widget_show(p->shell);
+      
+      palette_draw_entries(p,-1,-1);
+      
+      top_level_edit_palette = p;
+
+    }
+  else
+    {
+      if (!GTK_WIDGET_VISIBLE (top_level_edit_palette->shell))
+	{
+	  gtk_widget_show (top_level_edit_palette->shell);
+	  palette_draw_entries(top_level_edit_palette,-1,-1);
+	}
+      else
+	{
+	  gdk_window_raise(top_level_edit_palette->shell->window);
+	}
+    }
+
+  if(entries != NULL)
+    {
+      top_level_edit_palette->entries = entries;
+      gtk_clist_unselect_all(GTK_CLIST(top_level_edit_palette->clist));
+      palette_scroll_clist_to_current(top_level_edit_palette);
     }
 }
 
@@ -1022,6 +1076,7 @@ palette_delete_entry (GtkWidget *w,
       if (palette->entries->n_colors == 0)
 	palette->color = palette_add_entry (palette->entries, _("Black"), 0, 0, 0);
       palette_update_small_preview(palette);
+      palette_select_set_text_all(palette->entries);
       redraw_palette(palette);
     }
 }
@@ -1071,8 +1126,10 @@ palette_new_callback (GtkWidget *w,
       num_buf = g_strdup_printf("%d",p_entries->n_colors);;
       palette_draw_small_preview(palette->gc,p_entries);
       gtk_clist_set_text(GTK_CLIST(palette->clist),pos,1,num_buf);
+      palette_select_set_text_all(palette->entries);
     }
 }
+
 
 static PaletteEntriesP
 palette_create_entries(gpointer   client_data,
@@ -1155,8 +1212,8 @@ palette_create_entries(gpointer   client_data,
 
       palette_entries_list = palette_entries_insert_list (palette_entries_list, entries,pos);
 
-      palette_insert_clist(palette,entries,pos);
-      
+      palette_insert_clist(palette->clist,palette->shell,palette->gc,entries,pos);
+
       palette->entries = entries;
 
       palette_save_palettes();
@@ -1169,7 +1226,10 @@ palette_add_entries_callback (GtkWidget *w,
 				 gpointer   client_data,
 				 gpointer   call_data)
 {
-  palette_create_entries(client_data,call_data);
+  PaletteEntriesP entries;
+  entries = palette_create_entries(client_data,call_data);
+  /* Update other selectors on screen */
+  palette_select_clist_insert_all(entries);
   palette_scroll_clist_to_current((PaletteP)client_data);
 }
 
@@ -1240,7 +1300,7 @@ palette_refresh(PaletteP palette)
 
       gtk_clist_freeze(GTK_CLIST(palette->clist));
       gtk_clist_clear(GTK_CLIST(palette->clist));
-      palette_clist_init(palette);
+      palette_clist_init(palette->clist,palette->shell,palette->gc);
       gtk_clist_thaw(GTK_CLIST(palette->clist));
 
       if(palette->entries == NULL)
@@ -1252,12 +1312,15 @@ palette_refresh(PaletteP palette)
       redraw_palette(palette);
 
       palette_scroll_clist_to_current(palette);
+
+      palette_select_refresh_all();
     }
   else
     {
       palette_free_palettes (); 
       palette_init_palettes(FALSE);
     }
+
 }
 
 static void
@@ -1384,6 +1447,7 @@ palette_select_callback (int   r,
 	    }
 
 	  gtk_clist_set_text(GTK_CLIST(palette->clist),pos,2,p_entries->name);
+	  palette_select_set_text_all(palette->entries);
 	  }
 	/* Fallthrough */
       case COLOR_SELECT_CANCEL:
@@ -1414,6 +1478,7 @@ palette_scroll_clist_to_current(PaletteP palette)
 	  pos++;
 	}
 
+      gtk_clist_unselect_all(GTK_CLIST(palette->clist));
       gtk_clist_select_row(GTK_CLIST(palette->clist),pos,-1);
       gtk_clist_moveto(GTK_CLIST(palette->clist),pos,0,0.0,0.0); 
     }
@@ -1532,20 +1597,20 @@ palette_popup_menu(PaletteP   palette)
   GtkWidget *menu_items;
 
   menu = gtk_menu_new();
-  menu_items = gtk_menu_item_new_with_label("Edit");
+  menu_items = gtk_menu_item_new_with_label(_("Edit"));
   gtk_menu_append(GTK_MENU (menu), menu_items);
 
   gtk_signal_connect(GTK_OBJECT(menu_items), "activate", 
 		     GTK_SIGNAL_FUNC(palette_edit_callback), (gpointer)palette);
   gtk_widget_show(menu_items);
 
-  menu_items = gtk_menu_item_new_with_label("New");
+  menu_items = gtk_menu_item_new_with_label(_("New"));
   gtk_menu_append(GTK_MENU (menu), menu_items);
   gtk_signal_connect(GTK_OBJECT(menu_items), "activate", 
 		     GTK_SIGNAL_FUNC(palette_new_callback), (gpointer)palette);
   gtk_widget_show(menu_items);
 
-  menu_items = gtk_menu_item_new_with_label("Delete");
+  menu_items = gtk_menu_item_new_with_label(_("Delete"));
   gtk_signal_connect(GTK_OBJECT(menu_items), "activate", 
 		     GTK_SIGNAL_FUNC(palette_delete_entry), (gpointer)palette);
   gtk_menu_append(GTK_MENU (menu), menu_items);
@@ -1558,7 +1623,7 @@ palette_popup_menu(PaletteP   palette)
   palette->popup_menu = menu;
 
   palette->popup_small_menu = menu = gtk_menu_new();
-  menu_items = gtk_menu_item_new_with_label("New");
+  menu_items = gtk_menu_item_new_with_label(_("New"));
   gtk_menu_append(GTK_MENU (menu), menu_items);
   gtk_signal_connect(GTK_OBJECT(menu_items), "activate", 
 		     GTK_SIGNAL_FUNC(palette_new_callback), (gpointer)palette);
@@ -1643,8 +1708,12 @@ palette_color_area_events (GtkWidget *widget,
   return FALSE;
 }
 
-static void 
-palette_insert_clist(PaletteP palette,PaletteEntriesP p_entries,gint pos)
+void 
+palette_insert_clist(GtkWidget *clist, 
+		     GtkWidget *shell,
+		     GdkGC *gc,
+		     PaletteEntriesP p_entries,
+		     gint pos)
 {
   gchar *string[3];
 	
@@ -1652,23 +1721,25 @@ palette_insert_clist(PaletteP palette,PaletteEntriesP p_entries,gint pos)
   string[1] = g_strdup_printf("%d",p_entries->n_colors);
   string[2] = p_entries->name;
   
-  gtk_clist_insert(GTK_CLIST(palette->clist),pos,string);
+  gtk_clist_insert(GTK_CLIST(clist),pos,string);
   
   g_free((void *)string[1]);
   
   if(p_entries->pixmap == NULL)
-    p_entries->pixmap = gdk_pixmap_new(palette->shell->window,
+    p_entries->pixmap = gdk_pixmap_new(shell->window,
 				       SM_PREVIEW_WIDTH, 
 				       SM_PREVIEW_HEIGHT, 
-				       gtk_widget_get_visual(palette->shell)->depth);
+				       gtk_widget_get_visual(shell)->depth);
   
-  palette_draw_small_preview(palette->gc,p_entries);
-  gtk_clist_set_pixmap(GTK_CLIST(palette->clist), pos, 0, p_entries->pixmap, NULL);
-  gtk_clist_set_row_data(GTK_CLIST(palette->clist),pos,(gpointer)p_entries);
+  palette_draw_small_preview(gc,p_entries);
+  gtk_clist_set_pixmap(GTK_CLIST(clist), pos, 0, p_entries->pixmap, NULL);
+  gtk_clist_set_row_data(GTK_CLIST(clist),pos,(gpointer)p_entries);
 }  
 
 void
-palette_clist_init(PaletteP palette)
+palette_clist_init(GtkWidget *clist, 
+		   GtkWidget *shell,
+		   GdkGC     *gc)
 {
   GSList *list;
   PaletteEntriesP p_entries = NULL;
@@ -1688,7 +1759,7 @@ palette_clist_init(PaletteP palette)
 	  p_entries = default_palette_entries;
 	}
       
-      palette_insert_clist(palette,p_entries,pos);
+      palette_insert_clist(clist,shell,gc,p_entries,pos);
       pos++;
     }
 }
@@ -2012,7 +2083,7 @@ palette_list_item_update(GtkWidget *widget,
 
   /* Stop errors in case no colours are selected */ 
   gtk_signal_handler_block(GTK_OBJECT (palette->color_name),palette->entry_sig_id);
-  gtk_entry_set_text (GTK_ENTRY (palette->color_name), "Undefined"); 
+  gtk_entry_set_text (GTK_ENTRY (palette->color_name), _("Undefined")); 
   gtk_signal_handler_unblock(GTK_OBJECT (palette->color_name),palette->entry_sig_id);
 }
 
@@ -2062,7 +2133,7 @@ create_palette_dialog ()
 
   gtk_window_set_wmclass (GTK_WINDOW (palette->shell), "color_palette", "Gimp");
   gtk_widget_set_usize (palette_dialog, 615, 200);
-  gtk_window_set_title (GTK_WINDOW (palette_dialog), "Color Palette");
+  gtk_window_set_title (GTK_WINDOW (palette_dialog), _("Color Palette"));
   gtk_window_set_policy (GTK_WINDOW (palette_dialog), TRUE, TRUE, FALSE);
 
   dialog_vbox3 = GTK_DIALOG (palette_dialog)->vbox;
@@ -2113,7 +2184,7 @@ create_palette_dialog ()
   palette->color_name = color_name = gtk_entry_new ();
   gtk_widget_show (color_name);
   gtk_box_pack_start (GTK_BOX (hbox4), color_name, TRUE, TRUE, 0);
-  gtk_entry_set_text (GTK_ENTRY (color_name), "Undefined");
+  gtk_entry_set_text (GTK_ENTRY (color_name), _("Undefined"));
   palette->entry_sig_id = gtk_signal_connect (GTK_OBJECT (color_name), "changed",
 					      GTK_SIGNAL_FUNC (color_name_entry_changed),
 					      palette);
@@ -2143,9 +2214,9 @@ create_palette_dialog ()
   gtk_widget_show (palette_list);
   gtk_container_add (GTK_CONTAINER (hbox3), clist_scrolledwindow);
   gtk_widget_set_usize (palette_list, 203, -1);
-  gtk_clist_set_column_title(GTK_CLIST(palette_list), 0, "Palette");
-  gtk_clist_set_column_title(GTK_CLIST(palette_list), 1, "Ncols");
-  gtk_clist_set_column_title(GTK_CLIST(palette_list), 2, "Name");
+  gtk_clist_set_column_title(GTK_CLIST(palette_list), 0, _("Palette"));
+  gtk_clist_set_column_title(GTK_CLIST(palette_list), 1, _("Ncols"));
+  gtk_clist_set_column_title(GTK_CLIST(palette_list), 2, _("Name"));
   gtk_clist_column_titles_show(GTK_CLIST(palette_list));
   gtk_container_add (GTK_CONTAINER (clist_scrolledwindow), GTK_WIDGET(palette->clist));
 
@@ -2162,7 +2233,7 @@ create_palette_dialog ()
   /* gtk_clist_set_column_width (GTK_CLIST (palette_list), 1, 80); */
   gtk_clist_column_titles_show (GTK_CLIST (palette_list));
 
-  frame1 = gtk_frame_new ("Palette Ops");
+  frame1 = gtk_frame_new (_("Palette Ops"));
   gtk_object_set_data (GTK_OBJECT (palette_dialog), "frame1", frame1);
   gtk_widget_show (frame1);
   gtk_box_pack_end (GTK_BOX (hbox3), frame1, FALSE, FALSE, 7);
@@ -2177,7 +2248,7 @@ create_palette_dialog ()
   gtk_button_box_set_child_size (GTK_BUTTON_BOX (vbuttonbox2), 44, 22);
   gtk_button_box_set_child_ipadding (GTK_BUTTON_BOX (vbuttonbox2), 17, 0);
 
-  new_palette = gtk_button_new_with_label ("New");
+  new_palette = gtk_button_new_with_label (_("New"));
   gtk_signal_connect (GTK_OBJECT (new_palette), "clicked",
 		      (GtkSignalFunc) palette_new_entries_callback,
 		      (gpointer) palette);
@@ -2185,28 +2256,28 @@ create_palette_dialog ()
   gtk_widget_show (new_palette);
   gtk_container_add (GTK_CONTAINER (vbuttonbox2), new_palette);
 
-  delete_palette = gtk_button_new_with_label ("Delete");
+  delete_palette = gtk_button_new_with_label (_("Delete"));
   gtk_signal_connect (GTK_OBJECT (delete_palette), "clicked",
 		      (GtkSignalFunc) palette_delete_entries_callback,
 		      (gpointer) palette);
   gtk_widget_show (delete_palette);
   gtk_container_add (GTK_CONTAINER (vbuttonbox2), delete_palette);
 
-  save_palettes = gtk_button_new_with_label ("Save");
+  save_palettes = gtk_button_new_with_label (_("Save"));
   gtk_signal_connect (GTK_OBJECT (save_palettes), "clicked",
 		      (GtkSignalFunc) palette_save_palettes_callback,
 		      (gpointer) NULL);
   gtk_widget_show (save_palettes);
   gtk_container_add (GTK_CONTAINER (vbuttonbox2), save_palettes);
 
-  import_palette = gtk_button_new_with_label ("Import");
+  import_palette = gtk_button_new_with_label (_("Import"));
   gtk_signal_connect (GTK_OBJECT (import_palette), "clicked",
 		      (GtkSignalFunc) palette_import_dialog_callback,
 		      (gpointer) palette);
   gtk_widget_show (import_palette);
   gtk_container_add (GTK_CONTAINER (vbuttonbox2), import_palette);
 
-  merge_palette = gtk_button_new_with_label ("Merge");
+  merge_palette = gtk_button_new_with_label (_("Merge"));
   gtk_signal_connect (GTK_OBJECT (merge_palette), "clicked",
 		      (GtkSignalFunc) palette_merge_dialog_callback,
 		      (gpointer) palette);
@@ -2232,7 +2303,7 @@ create_palette_dialog ()
   gtk_button_box_set_child_size (GTK_BUTTON_BOX (hbuttonbox3), 85, 26);
   gtk_button_box_set_child_ipadding (GTK_BUTTON_BOX (hbuttonbox3), 4, 0);
 
-  close_button = gtk_button_new_with_label ("close");
+  close_button = gtk_button_new_with_label (_("close"));
   gtk_signal_connect(GTK_OBJECT(close_button), "clicked", 
 		     GTK_SIGNAL_FUNC(palette_close_callback), (gpointer)palette);
 
@@ -2245,7 +2316,7 @@ create_palette_dialog ()
 		      GTK_SIGNAL_FUNC (palette_dialog_delete_callback),
 		      palette);
 
-  refresh_button = gtk_button_new_with_label ("refresh");
+  refresh_button = gtk_button_new_with_label (_("refresh"));
   gtk_signal_connect(GTK_OBJECT(refresh_button), "clicked", 
 		     GTK_SIGNAL_FUNC(palette_refresh_callback), (gpointer)palette);
   gtk_widget_show (refresh_button);
@@ -2282,6 +2353,7 @@ import_dialog_close_callback (GtkWidget *w,
 static void
 import_palette_create_from_grad(gchar *name,PaletteP palette)
 {
+  PaletteEntriesP entries;
   if(curr_gradient)
     {
       /* Add names to entry */
@@ -2291,7 +2363,7 @@ import_palette_create_from_grad(gchar *name,PaletteP palette)
       gint sample_sz;
       gint loop;
 
-      palette_create_entries(palette,name);
+      entries = palette_create_entries(palette,name);
       sample_sz = (gint)import_dialog->sample->value;  
 
       dx    = 1.0/ (sample_sz - 1);
@@ -2308,6 +2380,8 @@ import_palette_create_from_grad(gchar *name,PaletteP palette)
 	}
       palette_update_small_preview(palette);
       redraw_palette(palette);
+      /* Update other selectors on screen */
+      palette_select_clist_insert_all(entries);
       palette_scroll_clist_to_current(palette);
     }
 }
@@ -2397,6 +2471,8 @@ palette_merge_entries_callback (GtkWidget *w,
   palette_update_small_preview(palette);
   redraw_palette(palette);
   gtk_clist_unselect_all(GTK_CLIST(palette->clist));
+  /* Update other selectors on screen */
+  palette_select_clist_insert_all(new_entries);
   palette_scroll_clist_to_current(palette);
 }
 
@@ -2736,7 +2812,7 @@ palette_import_dialog(PaletteP palette)
   import_dialog->gimage = NULL;
 
   import_dialog->dialog = dialog1 = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dialog1), "Import Palette");
+  gtk_window_set_title (GTK_WINDOW (dialog1), _("Import Palette"));
   gtk_window_set_policy (GTK_WINDOW (dialog1), TRUE, TRUE, FALSE);
 
   dialog_vbox1 = GTK_DIALOG (dialog1)->vbox;
@@ -2746,7 +2822,7 @@ palette_import_dialog(PaletteP palette)
   gtk_widget_show (hbox2);
   gtk_box_pack_start (GTK_BOX (dialog_vbox1), hbox2, FALSE, FALSE, 0);
 
-  import_frame = gtk_frame_new ("Import");
+  import_frame = gtk_frame_new (_("Import"));
   gtk_widget_show (import_frame);
   gtk_box_pack_start (GTK_BOX (hbox2), import_frame, TRUE, TRUE, 0);
 
@@ -2758,27 +2834,27 @@ palette_import_dialog(PaletteP palette)
   gtk_widget_show (table1);
   gtk_box_pack_start (GTK_BOX (vbox2), table1, TRUE, TRUE, 0);
 
-  steps = gtk_label_new ("Sample Size:");
+  steps = gtk_label_new (_("Sample Size:"));
   gtk_widget_show (steps);
   gtk_table_attach (GTK_TABLE (table1), steps, 0, 1, 2, 3,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   gtk_label_set_justify (GTK_LABEL (steps), GTK_JUSTIFY_LEFT);
 
   import_dialog->threshold_text =
-    steps = gtk_label_new ("Interval:");
+    steps = gtk_label_new (_("Interval:"));
   gtk_widget_show (steps);
   gtk_table_attach (GTK_TABLE (table1), steps, 0, 1, 3, 4,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   gtk_label_set_justify (GTK_LABEL (steps), GTK_JUSTIFY_LEFT);
   gtk_widget_set_sensitive(steps,FALSE);
 
-  import_name = gtk_label_new ("Name:");
+  import_name = gtk_label_new (_("Name:"));
   gtk_widget_show (import_name);
   gtk_table_attach (GTK_TABLE (table1), import_name, 0, 1, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
   gtk_label_set_justify (GTK_LABEL (import_name), GTK_JUSTIFY_LEFT);
 
-  import_type = gtk_label_new ("Source:");
+  import_type = gtk_label_new (_("Source:"));
   gtk_widget_show (import_type);
   gtk_table_attach (GTK_TABLE (table1), import_type, 0, 1, 1, 2,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
@@ -2806,7 +2882,7 @@ palette_import_dialog(PaletteP palette)
   gtk_table_attach (GTK_TABLE (table1), entry1, 1, 2, 0, 1,
                     GTK_FILL, 0, 0, 0);
 /*   gtk_widget_set_usize (entry1, 100, -1); */
-  gtk_entry_set_text (GTK_ENTRY (entry1), (curr_gradient)?curr_gradient->name:"new_import");
+  gtk_entry_set_text (GTK_ENTRY (entry1), (curr_gradient)?curr_gradient->name:_("new_import"));
 
   import_dialog->type_option = optionmenu1 = gtk_option_menu_new ();
   gtk_widget_show (optionmenu1);
@@ -2814,7 +2890,7 @@ palette_import_dialog(PaletteP palette)
                     GTK_FILL, 0, 0, 0);
   optionmenu1_menu = gtk_menu_new ();
   import_dialog->image_menu_item_gradient = 
-    menuitem = gtk_menu_item_new_with_label ("Gradient");
+    menuitem = gtk_menu_item_new_with_label (_("Gradient"));
   gtk_widget_show (menuitem);
   gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 		     (GtkSignalFunc) import_grad_callback,
@@ -2830,7 +2906,7 @@ palette_import_dialog(PaletteP palette)
   gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu1), optionmenu1_menu);
   gtk_widget_set_sensitive(menuitem,image_count() > 0);
 
-  preview_frame = gtk_frame_new ("Preview");
+  preview_frame = gtk_frame_new (_("Preview"));
   gtk_widget_show (preview_frame);
   gtk_box_pack_start (GTK_BOX (hbox2), preview_frame, TRUE, TRUE, 0);
 
@@ -2846,7 +2922,7 @@ palette_import_dialog(PaletteP palette)
   gtk_widget_set_usize (image1,IMPORT_PREVIEW_WIDTH, IMPORT_PREVIEW_HEIGHT);
   gtk_box_pack_start (GTK_BOX (vbox1), image1, FALSE, FALSE, 0);
 
-  import_dialog->select = select = gtk_button_new_with_label ("select");
+  import_dialog->select = select = gtk_button_new_with_label (_("select"));
   gtk_signal_connect(GTK_OBJECT(select), "clicked", 
 		     GTK_SIGNAL_FUNC(import_dialog_select_grad_callback),(gpointer)image1);
   gtk_widget_show (select);
@@ -2860,14 +2936,14 @@ palette_import_dialog(PaletteP palette)
   gtk_widget_show (hbox1);
   gtk_box_pack_start (GTK_BOX (dialog_action_area1), hbox1, TRUE, TRUE, 0);
 
-  import = gtk_button_new_with_label ("import");
+  import = gtk_button_new_with_label (_("import"));
   gtk_widget_show (import);
   gtk_signal_connect(GTK_OBJECT(import), "clicked", 
 		     GTK_SIGNAL_FUNC(import_dialog_import_callback),(gpointer)palette);
   gtk_container_border_width (GTK_CONTAINER (import), 4);
   gtk_box_pack_end (GTK_BOX (hbox1), import, FALSE, FALSE, 0); 
 
-  close = gtk_button_new_with_label ("close");
+  close = gtk_button_new_with_label (_("close"));
   gtk_signal_connect(GTK_OBJECT(close), "clicked", 
 		     GTK_SIGNAL_FUNC(import_dialog_close_callback),(gpointer)NULL);
   gtk_widget_show (close);
@@ -3009,11 +3085,12 @@ static void
 import_image_make_palette(GHashTable *h_array,guchar *name, PaletteP palette)
 {
   GSList * sorted_list = NULL;
+  PaletteEntriesP entries;
 
   g_hash_table_foreach(h_array,create_storted_list,&sorted_list);
   sorted_list = g_slist_sort(sorted_list,sort_colours);
 
-  palette_create_entries(palette,name);
+  entries = palette_create_entries(palette,name);
   g_slist_foreach(sorted_list,create_image_palette,palette);
 
   /* Free up used memory */
@@ -3029,6 +3106,8 @@ import_image_make_palette(GHashTable *h_array,guchar *name, PaletteP palette)
   /* Redraw with new palette */
   palette_update_small_preview(palette);
   redraw_palette(palette);
+  /* Update other selectors on screen */
+  palette_select_clist_insert_all(entries);
   palette_scroll_clist_to_current(palette);
 }
 
@@ -3172,3 +3251,4 @@ import_palette_create_from_image (GImage *gimage,guchar *pname,PaletteP palette)
   /* Make palette from the store_array */
   import_image_make_palette(store_array,pname,palette);
 }
+

@@ -1,3 +1,16 @@
+Wed Dec 23 23:59:52 GMT 1998 Andy Thomas <alt@picnic.demon.co.uk>
+
+	* app/palette.c
+	* app/Makefile.am
+
+	New:-
+
+	* app/palette_select.h
+	* app/palette_select.c
+
+	New smaller palette select dialog. This has an edit button
+	which invokes the palette editor. 
+
 1998-12-22  Chris Lahey  <clahey@umich.edu>
 
 	* app/docindex.c, app/docindex.h, app/docindexif.c,
