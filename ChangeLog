@@ -1,5 +1,12 @@
 2003-10-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpmovetool.c: some cleanup.
+
+	(gimp_move_tool_button_press): removed #if 0'ed experimental cruft
+	and the #warning about it.
+
+2003-10-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpfliptool.c (gimp_flip_tool_transform): should
 	actually call gimp_item_flip() on the path to transform.
 	Fixes bug #125895.

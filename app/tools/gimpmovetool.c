@@ -168,9 +168,7 @@ gimp_move_tool_class_init (GimpMoveToolClass *klass)
 static void
 gimp_move_tool_init (GimpMoveTool *move_tool)
 {
-  GimpTool *tool;
-
-  tool = GIMP_TOOL (move_tool);
+  GimpTool *tool = GIMP_TOOL (move_tool);
 
   move_tool->layer             = NULL;
   move_tool->guide             = NULL;
@@ -204,13 +202,15 @@ gimp_move_tool_control (GimpTool       *tool,
       break;
 
     case RESUME:
-      if (move_tool->guide && gimp_display_shell_get_show_guides (GIMP_DISPLAY_SHELL (shell)))
+      if (move_tool->guide &&
+          gimp_display_shell_get_show_guides (GIMP_DISPLAY_SHELL (shell)))
 	gimp_display_shell_draw_guide (GIMP_DISPLAY_SHELL (shell),
                                        move_tool->guide, TRUE);
       break;
 
     case HALT:
-      if (move_tool->guide && gimp_display_shell_get_show_guides (GIMP_DISPLAY_SHELL (shell)))
+      if (move_tool->guide &&
+          gimp_display_shell_get_show_guides (GIMP_DISPLAY_SHELL (shell)))
         gimp_display_shell_draw_guide (GIMP_DISPLAY_SHELL (shell),
                                        move_tool->guide, FALSE);
       break;
@@ -294,8 +294,7 @@ gimp_move_tool_button_press (GimpTool        *tool,
 	  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
 	  gimp_tool_control_activate (tool->control);
 
-          gimp_display_shell_selection_visibility (shell,
-                                                   GIMP_SELECTION_PAUSE);
+          gimp_display_shell_selection_visibility (shell, GIMP_SELECTION_PAUSE);
 
           gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
 	}
@@ -315,17 +314,7 @@ gimp_move_tool_button_press (GimpTool        *tool,
 	  else
 	    {
               /*  Otherwise, init the edit selection  */
-
 	      gimp_image_set_active_layer (gdisp->gimage, layer);
-
-#ifdef __GNUC__
-#warning FIXME: gimp_layer_set_linked()
-#endif
-#if 0
-              if (state & GDK_SHIFT_MASK)
-                gimp_layer_set_linked (layer, ! gimp_layer_get_linked (layer));
-#endif
-
 	      init_edit_selection (tool, gdisp, coords, EDIT_LAYER_TRANSLATE);
 	    }
 	}
