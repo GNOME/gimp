@@ -627,7 +627,8 @@ nav_window_grab_pointer(NavWinData *iwd,
   ret = gdk_pointer_grab (widget->window, TRUE,
 		    GDK_BUTTON_RELEASE_MASK |
 		    GDK_POINTER_MOTION_HINT_MASK |
-		    GDK_BUTTON_MOTION_MASK,
+		    GDK_BUTTON_MOTION_MASK |
+		    GDK_EXTENSION_EVENTS_ALL,
 		    widget->window, cursor, 0);
 
   gdk_cursor_destroy(cursor); 

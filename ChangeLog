@@ -1,3 +1,11 @@
+Sat Sep 11 22:45:12 BST 1999 Andy Thomas <alt@gimp.org>
+
+	* app/nav_window.c
+	* app/floating_sel.c
+
+	Hopefully fix for nav_popup when using tablets.
+	Also applied the patch supplied by Garry R. Osgood. Thanks.
+
 Sat Sep 11 21:54:10 CEST 1999  vidar@prosalg.no  (Vidar Madsen)
 
 	* plug-ins/common/spheredesigner.c: Added load/save +

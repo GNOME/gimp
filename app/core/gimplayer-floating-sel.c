@@ -113,6 +113,10 @@ floating_sel_anchor (Layer *layer)
   /*  Start a floating selection anchoring undo  */
   undo_push_group_start (gimage, FS_ANCHOR_UNDO);
 
+  /* Invalidate the previews of the layer that will be composited with the floating section. */
+
+  drawable_invalidate_preview (layer->fs.drawable);
+
   /*  Relax the floating selection  */
   floating_sel_relax (layer, TRUE);
 
