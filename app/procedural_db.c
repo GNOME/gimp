@@ -101,7 +101,10 @@ procedural_db_lookup (gchar *name)
   if (list != NULL)
     procedure = (ProcRecord *) list->data;
   else
-    procedure = NULL;
+    {
+      g_message (_("PDB calling error %s not found"), name);
+      procedure = NULL;
+    }
 
   return procedure;
 }
