@@ -15,7 +15,7 @@ helpdata_DATA = \
         fits.html			\
         gauss_iir.html			\
         gauss_rle.html			\
-        gpb.html			\
+        gih.html			\
         gqbist.html			\
         gtm.html			\
         gz.html				\
