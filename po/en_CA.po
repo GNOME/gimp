@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-28 03:26-0500\n"
-"PO-Revision-Date: 2005-03-28 14:29-0400\n"
+"POT-Creation-Date: 2005-04-02 14:29-0500\n"
+"PO-Revision-Date: 2005-04-02 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -2970,7 +2970,7 @@ msgstr "E_xport Path..."
 msgid "Path to Sele_ction"
 msgstr "Path to Sele_ction"
 
-#: ../app/actions/vectors-actions.c:163 ../app/tools/gimpvectortool.c:1896
+#: ../app/actions/vectors-actions.c:163 ../app/tools/gimpvectortool.c:1906
 msgid "Path to selection"
 msgstr "Path to selection"
 
@@ -3019,7 +3019,7 @@ msgstr "New Path Options"
 msgid "Path to Selection"
 msgstr "Path to Selection"
 
-#: ../app/actions/vectors-commands.c:370 ../app/tools/gimpvectortool.c:1926
+#: ../app/actions/vectors-commands.c:370 ../app/tools/gimpvectortool.c:1936
 #: ../app/vectors/gimpvectors.c:238
 msgid "Stroke Path"
 msgstr "Stroke Path"
@@ -5466,7 +5466,7 @@ msgstr "pixel"
 
 #: ../app/core/gimpunit.c:55 ../app/tools/gimpmeasuretool.c:801
 #: ../app/tools/gimpmeasuretool.c:917 ../app/tools/gimpmeasuretool.c:969
-#: ../app/tools/gimpmeasuretool.c:995 ../app/tools/gimppainttool.c:692
+#: ../app/tools/gimpmeasuretool.c:995 ../app/tools/gimppainttool.c:697
 msgid "pixels"
 msgstr "pixels"
 
@@ -6858,24 +6858,24 @@ msgstr "_Y resolution:"
 msgid "pixels/%a"
 msgstr "pixels/%a"
 
-#: ../app/dialogs/quit-dialog.c:84
+#: ../app/dialogs/quit-dialog.c:87
 msgid "Quit The GIMP"
 msgstr "Quit The GIMP"
 
-#: ../app/dialogs/quit-dialog.c:131
+#: ../app/dialogs/quit-dialog.c:139
 msgid "If you quit GIMP now, these changes will be lost."
 msgstr "If you quit GIMP now, these changes will be lost."
 
-#: ../app/dialogs/quit-dialog.c:169
+#: ../app/dialogs/quit-dialog.c:177
 msgid "There is one image with unsaved changes:"
 msgstr "There is one image with unsaved changes:"
 
-#: ../app/dialogs/quit-dialog.c:172
+#: ../app/dialogs/quit-dialog.c:180
 #, c-format
 msgid "There are %d images with unsaved changes:"
 msgstr "There are %d images with unsaved changes:"
 
-#: ../app/dialogs/quit-dialog.c:188
+#: ../app/dialogs/quit-dialog.c:199
 msgid "_Discard Changes"
 msgstr "_Discard Changes"
 
@@ -7560,19 +7560,19 @@ msgstr "1 layer"
 msgid "%d layers"
 msgstr "%d layers"
 
-#: ../app/display/gimpstatusbar.c:144
+#: ../app/display/gimpstatusbar.c:146
 msgid "Shadow type"
 msgstr "Shadow type"
 
-#: ../app/display/gimpstatusbar.c:145
+#: ../app/display/gimpstatusbar.c:147
 msgid "Style of bevel around the statusbar text"
 msgstr "Style of bevel around the statusbar text"
 
-#: ../app/display/gimpstatusbar.c:224
+#: ../app/display/gimpstatusbar.c:226
 msgid "Cancel"
 msgstr "Cancel"
 
-#: ../app/display/gimpstatusbar.c:448
+#: ../app/display/gimpstatusbar.c:450
 msgid "Other..."
 msgstr "Other..."
 
@@ -9012,6 +9012,10 @@ msgstr "Length:"
 msgid "Use color from gradient"
 msgstr "Use colour from gradient"
 
+#: ../app/tools/gimppainttool.c:723
+msgid "Press Shift to draw a straight line."
+msgstr "Press Shift to draw a straight line."
+
 #: ../app/tools/gimppenciltool.c:52
 msgid "Paint hard edged pixels"
 msgstr "Paint hard edged pixels"
@@ -9569,7 +9573,7 @@ msgstr "Click to create a new anchor. (try SHIFT)"
 msgid "Click-Drag to move the anchor around."
 msgstr "Click-Drag to move the anchor around."
 
-#: ../app/tools/gimpvectortool.c:1214
+#: ../app/tools/gimpvectortool.c:1214 ../app/tools/gimpvectortool.c:1221
 msgid "Click-Drag to move the anchors around."
 msgstr "Click-Drag to move the anchors around."
 
@@ -9577,43 +9581,43 @@ msgstr "Click-Drag to move the anchors around."
 msgid "Click-Drag to move the handle around. (try SHIFT)"
 msgstr "Click-Drag to move the handle around. (try SHIFT)"
 
-#: ../app/tools/gimpvectortool.c:1220
+#: ../app/tools/gimpvectortool.c:1223
 msgid "Click-Drag to change the shape of the curve. (SHIFT: symmetrical)"
 msgstr "Click-Drag to change the shape of the curve. (SHIFT: symmetrical)"
 
-#: ../app/tools/gimpvectortool.c:1224
+#: ../app/tools/gimpvectortool.c:1227
 msgid "Click-Drag to move the component around. (try SHIFT)"
 msgstr "Click-Drag to move the component around. (try SHIFT)"
 
-#: ../app/tools/gimpvectortool.c:1228
+#: ../app/tools/gimpvectortool.c:1231
 msgid "Click-Drag to move the path around."
 msgstr "Click-Drag to move the path around."
 
-#: ../app/tools/gimpvectortool.c:1231
+#: ../app/tools/gimpvectortool.c:1234
 msgid "Click to insert an anchor on the path. (try SHIFT)"
 msgstr "Click to insert an anchor on the path. (try SHIFT)"
 
-#: ../app/tools/gimpvectortool.c:1234
+#: ../app/tools/gimpvectortool.c:1237
 msgid "Click to delete this anchor."
 msgstr "Click to delete this anchor."
 
-#: ../app/tools/gimpvectortool.c:1237
+#: ../app/tools/gimpvectortool.c:1240
 msgid "Click to connect this anchor with the selected endpoint."
 msgstr "Click to connect this anchor with the selected endpoint."
 
-#: ../app/tools/gimpvectortool.c:1241
+#: ../app/tools/gimpvectortool.c:1244
 msgid "Click to open up the path."
 msgstr "Click to open up the path."
 
-#: ../app/tools/gimpvectortool.c:1244
+#: ../app/tools/gimpvectortool.c:1247
 msgid "Click to make this node angular."
 msgstr "Click to make this node angular."
 
-#: ../app/tools/gimpvectortool.c:1754
+#: ../app/tools/gimpvectortool.c:1764
 msgid "Delete Anchors"
 msgstr "Delete Anchors"
 
-#: ../app/tools/gimpvectortool.c:1921
+#: ../app/tools/gimpvectortool.c:1931
 msgid "There is no active layer or channel to stroke to"
 msgstr "There is no active layer or channel to stroke to"
 
@@ -9766,7 +9770,7 @@ msgstr "Reorder Channel"
 msgid "Empty Channel"
 msgstr "Empty Channel"
 
-#: ../app/widgets/gimpclipboard.c:283
+#: ../app/widgets/gimpclipboard.c:291
 msgid "Clipboard"
 msgstr "Clipboard"
 
