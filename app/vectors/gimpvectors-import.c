@@ -306,11 +306,11 @@ parser_add_vectors (VectorsParser *parser,
 
       for (list = vectors->strokes; list; list = list->next)
         {
-          gimp_stroke_scale ((GimpStroke *) list->data,
-                             scale_x,
-                             scale_y,
-                             - parser->viewbox.x,
-                             - parser->viewbox.y);
+          GimpStroke *stroke = list->data;
+
+          gimp_stroke_translate (stroke,
+                                 parser->viewbox.x, parser->viewbox.y);
+          gimp_stroke_scale (stroke, scale_x, scale_y);
         }
     }
 
