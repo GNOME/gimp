@@ -4,6 +4,8 @@
  * njl195@zepler.org.uk -- 18 May 1998
  * And it now gains support for tiles (and doubtless a zillion bugs)
  * njl195@zepler.org.uk -- 12 June 1999
+ * LZW patent fuss continues :(
+ * njl195@zepler.org.uk -- 20 April 2000
  * The code for this filter is based on "tifftopnm" and "pnmtotiff",
  *  2 programs that are a part of the netpbm package.
  */
@@ -153,7 +155,7 @@ GPlugInInfo PLUG_IN_INFO =
 
 static TiffSaveVals tsvals =
 {
-  COMPRESSION_LZW,    /*  compression  */
+  COMPRESSION_NONE,    /*  compression  */
 };
 
 static TiffSaveInterface tsint =
@@ -189,7 +191,7 @@ query (void)
     { PARAM_DRAWABLE, "drawable", "Drawable to save" },
     { PARAM_STRING, "filename", "The name of the file to save the image in" },
     { PARAM_STRING, "raw_filename", "The name of the file to save the image in" },
-    { PARAM_INT32, "compression", "Compression type: { NONE (0), LZW (1), PACKBITS (2)" },
+    { PARAM_INT32, "compression", "Compression type: { NONE (0), LZW (1), PACKBITS (2), DEFLATE (3), JPEG (4)" },
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -200,7 +202,7 @@ query (void)
                           "FIXME: write help for tiff_load",
                           "Spencer Kimball, Peter Mattis & Nick Lamb",
                           "Nick Lamb <njl195@zepler.org.uk>",
-                          "1995-1996,1998-1999",
+                          "1995-1996,1998-2000",
                           "<Load>/Tiff",
 			  NULL,
                           PROC_PLUG_IN,
@@ -212,7 +214,7 @@ query (void)
                           "FIXME: write help for tiff_save",
                           "Spencer Kimball & Peter Mattis",
                           "Spencer Kimball & Peter Mattis",
-                          "1995-1996",
+                          "1995-1996,2000",
                           "<Save>/Tiff",
 			  "RGB*, GRAY*, INDEXED",
                           PROC_PLUG_IN,
@@ -344,6 +346,8 @@ run (gchar   *name,
 		case 0: tsvals.compression = COMPRESSION_NONE;     break;
 		case 1: tsvals.compression = COMPRESSION_LZW;      break;
 		case 2: tsvals.compression = COMPRESSION_PACKBITS; break;
+		case 3: tsvals.compression = COMPRESSION_DEFLATE;  break;
+		case 4: tsvals.compression = COMPRESSION_JPEG;  break;
 		default: status = STATUS_CALLING_ERROR; break;
 		}
 	    }
@@ -520,7 +524,7 @@ load_image (gchar *filename)
   }
   gimp_image_set_filename (image, filename);
 
-  /* attach a parasite containing the compression/fillorder */
+  /* attach a parasite containing the compression */
   if (!TIFFGetField (tif, TIFFTAG_COMPRESSION, &tmp))
     save_vals.compression = COMPRESSION_NONE;
   else
@@ -1185,7 +1189,6 @@ static gint save_image (char   *filename,
   unsigned short grn[256];
   unsigned short blu[256];
   int cols, col, rows, row, i;
-  long g3options;
   long rowsperstrip;
   unsigned short compression;
   unsigned short extra_samples[1];
@@ -1207,10 +1210,12 @@ static gint save_image (char   *filename,
   char *name;
 
   compression = tsvals.compression;
+  if (TIFFFindCODEC((uint16) compression) == NULL)
+    compression = COMPRESSION_NONE; /* CODEC not available */
 
-  g3options = 0;
   predictor = 0;
-  rowsperstrip = 0;
+  tile_height = gimp_tile_height ();
+  rowsperstrip = tile_height;
 
   TIFFSetWarningHandler (tiff_warning);
   TIFFSetErrorHandler (tiff_error);
@@ -1287,11 +1292,6 @@ static gint save_image (char   *filename,
       return 0;
     }
 
-  if (rowsperstrip == 0)
-    rowsperstrip = (8 * 1024) / bytesperrow;
-  if (rowsperstrip == 0)
-    rowsperstrip = 1;
-
   /* Set TIFF parameters. */
   TIFFSetField (tif, TIFFTAG_SUBFILETYPE, 0);
   TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, cols);
@@ -1299,13 +1299,14 @@ static gint save_image (char   *filename,
   TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE, bitspersample);
   TIFFSetField (tif, TIFFTAG_ORIENTATION, ORIENTATION_TOPLEFT);
   TIFFSetField (tif, TIFFTAG_COMPRESSION, compression);
-  if ((compression == COMPRESSION_LZW) && (predictor != 0))
+  if ((compression == COMPRESSION_LZW || compression == COMPRESSION_DEFLATE)
+     && (predictor != 0)) {
     TIFFSetField (tif, TIFFTAG_PREDICTOR, predictor);
-  if (alpha)
-    {
+  }
+  if (alpha) {
       extra_samples [0] = EXTRASAMPLE_ASSOCALPHA;
       TIFFSetField (tif, TIFFTAG_EXTRASAMPLES, 1, extra_samples);
-    }
+  }
   TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, photometric);
   TIFFSetField (tif, TIFFTAG_DOCUMENTNAME, filename);
   TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, samplesperpixel);
@@ -1367,7 +1368,6 @@ static gint save_image (char   *filename,
     TIFFSetField (tif, TIFFTAG_COLORMAP, red, grn, blu);
 
   /* array to rearrange data */
-  tile_height = gimp_tile_height ();
   src = g_new (guchar, bytesperrow * tile_height);
   data = g_new (guchar, bytesperrow);
 
@@ -1490,6 +1490,8 @@ save_dialog (void)
 			   _("None"),      (gpointer) COMPRESSION_NONE, NULL,
 			   _("LZW"),       (gpointer) COMPRESSION_LZW, NULL,
 			   _("Pack Bits"), (gpointer) COMPRESSION_PACKBITS, NULL,
+			   _("Deflate"),   (gpointer) COMPRESSION_DEFLATE, NULL,
+			   _("JPEG"),      (gpointer) COMPRESSION_JPEG, NULL,
 
 			   NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);

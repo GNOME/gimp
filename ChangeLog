@@ -1,3 +1,10 @@
+2000-04-20  Nick Lamb  <njl195@zepler.org.uk>
+
+	* plug-ins/common/tiff.c: libtiff has swerved to avoid the LZW
+	patent, hence we must also take action. Gimp's TIFF output
+	is now ..._NONE by default, DEFLATE and JPEG are new options,
+	and LZW is still listed but on e.g. RH6.2 it will not work.
+
 2000-04-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/bucket_fill.c
