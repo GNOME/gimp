@@ -23,7 +23,6 @@
 #include "actionarea.h"
 #include "buildmenu.h"
 #include "drawable.h"
-#include "general.h"
 #include "gdisplay.h"
 #include "histogram_tool.h"
 #include "image_map.h"
@@ -38,7 +37,7 @@
 typedef struct _HistogramTool HistogramTool;
 struct _HistogramTool
 {
-  int x, y;    /*  coords for last mouse click  */
+  gint x, y;   /*  coords for last mouse click  */
 };
 
 
@@ -61,25 +60,25 @@ static void   histogram_tool_red_callback    (GtkWidget *, gpointer);
 static void   histogram_tool_green_callback  (GtkWidget *, gpointer);
 static void   histogram_tool_blue_callback   (GtkWidget *, gpointer);
 
-static void   histogram_tool_dialog_update   (HistogramToolDialog *, int, int);
+static void   histogram_tool_dialog_update   (HistogramToolDialog *, gint, gint);
 
 
 /*  histogram_tool machinery  */
 
 void
-histogram_tool_histogram_range (HistogramWidget *w,
-				int              start,
-				int              end,
+histogram_tool_histogram_range (HistogramWidget *widget,
+				gint             start,
+				gint             end,
 				void            *user_data)
 {
   HistogramToolDialog *htd;
-  double pixels;
-  double count;
+  gdouble pixels;
+  gdouble count;
 
   htd = (HistogramToolDialog *) user_data;
 
-  if (htd == NULL || htd->hist == NULL
-      || gimp_histogram_nchannels(htd->hist) <= 0)
+  if (htd == NULL || htd->hist == NULL ||
+      gimp_histogram_nchannels(htd->hist) <= 0)
     return;
 
   pixels = gimp_histogram_get_count(htd->hist, 0, 255);
@@ -99,40 +98,40 @@ histogram_tool_histogram_range (HistogramWidget *w,
 
 static void
 histogram_tool_dialog_update (HistogramToolDialog *htd,
-			      int                  start,
-			      int                  end)
+			      gint                 start,
+			      gint                 end)
 {
-  char text[12];
+  gchar text[12];
 
   /*  mean  */
-  g_snprintf (text, 12, "%3.1f", htd->mean);
+  g_snprintf (text, sizeof (text), "%3.1f", htd->mean);
   gtk_label_set_text (GTK_LABEL (htd->info_labels[0]), text);
 
   /*  std dev  */
-  g_snprintf (text, 12, "%3.1f", htd->std_dev);
+  g_snprintf (text, sizeof (text), "%3.1f", htd->std_dev);
   gtk_label_set_text (GTK_LABEL (htd->info_labels[1]), text);
 
   /*  median  */
-  g_snprintf (text, 12, "%3.1f", htd->median);
+  g_snprintf (text, sizeof (text), "%3.1f", htd->median);
   gtk_label_set_text (GTK_LABEL (htd->info_labels[2]), text);
 
   /*  pixels  */
-  g_snprintf (text, 12, "%8.1f", htd->pixels);
+  g_snprintf (text, sizeof (text), "%8.1f", htd->pixels);
   gtk_label_set_text (GTK_LABEL (htd->info_labels[3]), text);
 
   /*  intensity  */
   if (start == end)
-    g_snprintf (text, 12, "%d", start);
+    g_snprintf (text, sizeof (text), "%d", start);
   else
-    g_snprintf (text, 12, "%d..%d", start, end);
+    g_snprintf (text, sizeof (text), "%d..%d", start, end);
   gtk_label_set_text (GTK_LABEL (htd->info_labels[4]), text);
 
   /*  count  */
-  g_snprintf (text, 12, "%8.1f", htd->count);
+  g_snprintf (text, sizeof (text), "%8.1f", htd->count);
   gtk_label_set_text (GTK_LABEL (htd->info_labels[5]), text);
 
   /*  percentile  */
-  g_snprintf (text, 12, "%2.2f", htd->percentile * 100);
+  g_snprintf (text, sizeof (text), "%2.2f", htd->percentile * 100);
   gtk_label_set_text (GTK_LABEL (htd->info_labels[6]), text);
 }
 
@@ -205,6 +204,7 @@ void
 histogram_tool_initialize (GDisplay *gdisp)
 {
   PixelRegion PR;
+
   if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
     {
       g_message (_("Histogram does not operate on indexed drawables."));
@@ -227,11 +227,11 @@ histogram_tool_initialize (GDisplay *gdisp)
     gtk_widget_hide (histogram_tool_dialog->channel_menu);
 
   /* calculate the histogram */
-  pixel_region_init(&PR, drawable_data (histogram_tool_dialog->drawable), 0, 0,
-		    drawable_width(histogram_tool_dialog->drawable),
-		    drawable_height(histogram_tool_dialog->drawable),
-		    FALSE);
-  gimp_histogram_calculate(histogram_tool_dialog->hist, &PR, NULL);
+  pixel_region_init (&PR, drawable_data (histogram_tool_dialog->drawable), 0, 0,
+		     drawable_width (histogram_tool_dialog->drawable),
+		     drawable_height (histogram_tool_dialog->drawable),
+		     FALSE);
+  gimp_histogram_calculate (histogram_tool_dialog->hist, &PR, NULL);
 
   histogram_widget_update (histogram_tool_dialog->histogram,
 			   histogram_tool_dialog->hist);
@@ -254,8 +254,8 @@ histogram_tool_new_dialog ()
   GtkWidget *label;
   GtkWidget *option_menu;
   GtkWidget *menu;
-  int i;
-  int x, y;
+  gint i;
+  gint x, y;
 
   static ActionAreaItem action_items[] =
   {
@@ -288,7 +288,7 @@ histogram_tool_new_dialog ()
   for (i = 0; i < 4; i++)
     color_option_items [i].user_data = (gpointer) htd;
   
-  htd->hist = gimp_histogram_new();
+  htd->hist = gimp_histogram_new ();
 
   /*  The shell and main vbox  */
   htd->shell = gtk_dialog_new ();
@@ -383,14 +383,15 @@ histogram_tool_close_callback (GtkWidget *widget,
   HistogramToolDialog *htd;
 
   htd = (HistogramToolDialog *) client_data;
+
   if (GTK_WIDGET_VISIBLE (htd->shell))
     gtk_widget_hide (htd->shell);
 }
 
 static gint
 histogram_tool_delete_callback (GtkWidget *widget,
-				GdkEvent *event,
-				gpointer client_data)
+				GdkEvent  *event,
+				gpointer   client_data)
 {
   histogram_tool_close_callback (widget, client_data);
 
@@ -398,7 +399,7 @@ histogram_tool_delete_callback (GtkWidget *widget,
 }
 
 static void
-histogram_tool_value_callback (GtkWidget *w,
+histogram_tool_value_callback (GtkWidget *widget,
 			       gpointer   client_data)
 {
   HistogramToolDialog *htd;
@@ -413,7 +414,7 @@ histogram_tool_value_callback (GtkWidget *w,
 }
 
 static void
-histogram_tool_red_callback (GtkWidget *w,
+histogram_tool_red_callback (GtkWidget *widget,
 			     gpointer   client_data)
 {
   HistogramToolDialog *htd;
@@ -428,7 +429,7 @@ histogram_tool_red_callback (GtkWidget *w,
 }
 
 static void
-histogram_tool_green_callback (GtkWidget *w,
+histogram_tool_green_callback (GtkWidget *widget,
 			       gpointer   client_data)
 {
   HistogramToolDialog *htd;
@@ -443,7 +444,7 @@ histogram_tool_green_callback (GtkWidget *w,
 }
 
 static void
-histogram_tool_blue_callback (GtkWidget *w,
+histogram_tool_blue_callback (GtkWidget *widget,
 			      gpointer   client_data)
 {
   HistogramToolDialog *htd;

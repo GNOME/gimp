@@ -498,8 +498,9 @@ grad_get_color_at(double pos, double *r, double *g, double *b, double *a)
 			break;
 
 		default:
-			grad_dump_gradient(curr_gradient, stderr);
-			fatal_error(_("grad_get_color_at(): aieee, unknown gradient type %d"), (int) seg->type);
+			grad_dump_gradient (curr_gradient, stderr);
+			gimp_fatal_error (_("grad_get_color_at(): Unknown gradient type %d"),
+					  (int) seg->type);
 			factor = 0.0; /* Shut up -Wall */
 			break;
 	} /* switch */
@@ -551,9 +552,9 @@ grad_get_color_at(double pos, double *r, double *g, double *b, double *a)
 				break;
 
 			default:
-				grad_dump_gradient(curr_gradient, stderr);
-				fatal_error(_("grad_get_color_at(): aieee, unknown coloring mode %d"),
-					    (int) seg->color);
+				grad_dump_gradient (curr_gradient, stderr);
+				gimp_fatal_error (_("grad_get_color_at(): Unknown coloring mode %d"),
+						  (int) seg->color);
 				break;
 		} /* switch */
 
@@ -570,350 +571,357 @@ grad_get_color_at(double pos, double *r, double *g, double *b, double *a)
 
 
 void 
-grad_create_gradient_editor_init(gint need_show)
+grad_create_gradient_editor_init (gint need_show)
 {
-	GtkWidget *topvbox;
-	GtkWidget *vbox;
-	GtkWidget *table;
-	GtkWidget *label;
-	GtkWidget *hbox;
-	GtkWidget *gvbox;
-	GtkWidget *button;
-	GtkWidget *frame;
-	GtkWidget *separator;
-	GtkWidget *scrolled_win;
-	GdkColormap *colormap;
-	int        i;
-	int select_pos;
+  GtkWidget *topvbox;
+  GtkWidget *vbox;
+  GtkWidget *table;
+  GtkWidget *label;
+  GtkWidget *hbox;
+  GtkWidget *gvbox;
+  GtkWidget *button;
+  GtkWidget *frame;
+  GtkWidget *separator;
+  GtkWidget *scrolled_win;
+  GdkColormap *colormap;
+  gint i;
+  gint select_pos;
 
-	/* If the editor already exists, just show it */
+  /* If the editor already exists, just show it */
 
-	if (g_editor) {
-		if (!GTK_WIDGET_VISIBLE(g_editor->shell))
-		  {
-			gtk_widget_show(g_editor->shell);
-			/* Do this because os a proble with scrolling
-			 * clists when not visible on screen.
-			 */
-			grad_set_grad_to_name(curr_gradient->name);
-		  }
-		else
-			gdk_window_raise(g_editor->shell->window);
+  if (g_editor)
+    {
+      if (!GTK_WIDGET_VISIBLE(g_editor->shell))
+	{
+	  gtk_widget_show (g_editor->shell);
+	  /* Do this because os a proble with scrolling
+	   * clists when not visible on screen.
+	   */
+	  grad_set_grad_to_name(curr_gradient->name);
+	}
+      else
+	gdk_window_raise (g_editor->shell->window);
 
-		return;
-	} /* if */
+      return;
+    }
 
-	/* Create editor */
+  /* Create editor */
 
-	if(no_data)
-	  gradients_init(FALSE);
-	g_editor = g_malloc(sizeof(gradient_editor_t));
+  if (no_data)
+    gradients_init (FALSE);
+  g_editor = g_malloc (sizeof (gradient_editor_t));
 
-	/* Shell and main vbox */
+  /* Shell and main vbox */
 
-	g_editor->shell = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_window_set_wmclass (GTK_WINDOW(g_editor->shell), "gradient_editor", "Gimp");
-	gtk_container_border_width(GTK_CONTAINER(g_editor->shell), 0);
-	gtk_window_set_title(GTK_WINDOW(g_editor->shell), _("Gradient Editor"));
+  g_editor->shell = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  gtk_window_set_wmclass (GTK_WINDOW (g_editor->shell), "gradient_editor", "Gimp");
+  gtk_container_set_border_width (GTK_CONTAINER (g_editor->shell), 0);
+  gtk_window_set_title (GTK_WINDOW (g_editor->shell), _("Gradient Editor"));
 	
-	/* handle window manager close signals */
-	gtk_signal_connect (GTK_OBJECT (g_editor->shell), "delete_event",
-			    GTK_SIGNAL_FUNC (ed_close_callback),
-			    NULL);
+  /* handle window manager close signals */
+  gtk_signal_connect (GTK_OBJECT (g_editor->shell), "delete_event",
+		      GTK_SIGNAL_FUNC (ed_close_callback),
+		      NULL);
 
-	topvbox = gtk_vbox_new(FALSE, 0);
-	gtk_container_border_width(GTK_CONTAINER(topvbox), 0);
-	gtk_container_add(GTK_CONTAINER(g_editor->shell), topvbox);
-	gtk_widget_show(topvbox);
+  topvbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (topvbox), 0);
+  gtk_container_add (GTK_CONTAINER (g_editor->shell), topvbox);
+  gtk_widget_show (topvbox);
 
-	/* Hint bar and close button */
+  /* Hint bar and close button */
 
-	table = gtk_table_new(2, 2, FALSE);
-	gtk_container_border_width(GTK_CONTAINER(table), 0);
-	gtk_box_pack_end(GTK_BOX(topvbox), table, FALSE, FALSE, 0);
-	gtk_widget_show(table);
+  table = gtk_table_new (2, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER(table), 0);
+  gtk_box_pack_end (GTK_BOX (topvbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
-	separator = gtk_hseparator_new();
-	gtk_table_attach(GTK_TABLE(table), separator, 0, 1, 0, 1, GTK_EXPAND | GTK_FILL, 0, 0, 0);
-	gtk_widget_show(separator);
+  separator = gtk_hseparator_new ();
+  gtk_table_attach (GTK_TABLE (table), separator, 0, 1, 0, 1,
+		    GTK_EXPAND | GTK_FILL, 0, 0, 0);
+  gtk_widget_show (separator);
 
-	g_editor->hint_label = gtk_label_new("");
-	gtk_misc_set_alignment(GTK_MISC(g_editor->hint_label), 0.0, 0.5);
-	gtk_table_attach(GTK_TABLE(table), g_editor->hint_label, 0, 1, 1, 2,
-			 GTK_EXPAND | GTK_FILL, GTK_FILL, 8, 2);
-	gtk_widget_show(g_editor->hint_label);
+  g_editor->hint_label = gtk_label_new ("");
+  gtk_misc_set_alignment (GTK_MISC (g_editor->hint_label), 0.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), g_editor->hint_label, 0, 1, 1, 2,
+		    GTK_EXPAND | GTK_FILL, GTK_FILL, 8, 2);
+  gtk_widget_show (g_editor->hint_label);
 
-	button = ed_create_button(_("Close"), 0.5, 0.5, (GtkSignalFunc) ed_close_callback, NULL);
-	gtk_widget_set_usize(button, GRAD_CLOSE_BUTTON_WIDTH, 0);
-	gtk_table_attach(GTK_TABLE(table), button, 1, 2, 0, 2, GTK_FILL, GTK_EXPAND | GTK_FILL, 8, 0);
-	gtk_widget_show(button);
+  button = ed_create_button (_("Close"), 0.5, 0.5, (GtkSignalFunc) ed_close_callback, NULL);
+  gtk_widget_set_usize (button, GRAD_CLOSE_BUTTON_WIDTH, 0);
+  gtk_table_attach (GTK_TABLE (table), button, 1, 2, 0, 2,
+		    GTK_FILL, GTK_EXPAND | GTK_FILL, 8, 0);
+  gtk_widget_show(button);
 
-	/* Vbox for everything else */
+  /* Vbox for everything else */
 
-	vbox = gtk_vbox_new(FALSE, 0);
-	gtk_container_border_width(GTK_CONTAINER(vbox), 8);
-	gtk_box_pack_start(GTK_BOX(topvbox), vbox, TRUE, TRUE, 0);
-	gtk_widget_show(vbox);
+  vbox = gtk_vbox_new(FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 8);
+  gtk_box_pack_start (GTK_BOX (topvbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
-	/* Gradients list box */
+  /* Gradients list box */
 
-	label = gtk_label_new(_("Gradients: "));
-	gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-	gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
-	gtk_widget_show(label);
+  label = gtk_label_new (_("Gradients: "));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
-	hbox = gtk_hbox_new(FALSE, 8);
-	gtk_container_border_width(GTK_CONTAINER(hbox), 0);
-	gtk_box_pack_start(GTK_BOX(vbox), hbox, TRUE, TRUE, 0);
-	gtk_widget_show(hbox);
+  hbox = gtk_hbox_new (FALSE, 8);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
+  gtk_widget_show (hbox);
 
-	/* clist preview of gradients */
+  /* clist preview of gradients */
 
-	scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
 
-	g_editor->clist = gtk_clist_new(2);
-	gtk_clist_set_shadow_type(GTK_CLIST(g_editor->clist), GTK_SHADOW_IN);
+  g_editor->clist = gtk_clist_new (2);
+  gtk_clist_set_shadow_type (GTK_CLIST (g_editor->clist), GTK_SHADOW_IN);
 
-	gtk_clist_set_row_height(GTK_CLIST(g_editor->clist), 18);
+  gtk_clist_set_row_height (GTK_CLIST (g_editor->clist), 18);
 
-	gtk_clist_set_column_width(GTK_CLIST(g_editor->clist), 0, 52);
-	gtk_clist_set_column_title(GTK_CLIST(g_editor->clist), 0, _("Gradient"));
-	gtk_clist_set_column_title(GTK_CLIST(g_editor->clist), 1, _("Name"));
-	gtk_clist_column_titles_show(GTK_CLIST(g_editor->clist));
+  gtk_clist_set_column_width (GTK_CLIST (g_editor->clist), 0, 52);
+  gtk_clist_set_column_title (GTK_CLIST (g_editor->clist), 0, _("Gradient"));
+  gtk_clist_set_column_title (GTK_CLIST (g_editor->clist), 1, _("Name"));
+  gtk_clist_column_titles_show (GTK_CLIST (g_editor->clist));
 
- 	gtk_box_pack_start(GTK_BOX(hbox), scrolled_win, TRUE, TRUE, 0); 
-	gtk_container_add (GTK_CONTAINER (scrolled_win), g_editor->clist);
-	gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
-					GTK_POLICY_AUTOMATIC,
-					GTK_POLICY_ALWAYS);
+  gtk_box_pack_start (GTK_BOX (hbox), scrolled_win, TRUE, TRUE, 0); 
+  gtk_container_add (GTK_CONTAINER (scrolled_win), g_editor->clist);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
+				  GTK_POLICY_AUTOMATIC,
+				  GTK_POLICY_ALWAYS);
 
-	gtk_widget_show(scrolled_win);
- 	gtk_widget_show(g_editor->clist);
+  gtk_widget_show (scrolled_win);
+  gtk_widget_show (g_editor->clist);
 
-	colormap = gtk_widget_get_colormap(g_editor->clist);
-	gdk_color_parse("black", &black);
-	gdk_color_alloc(colormap, &black);
+  colormap = gtk_widget_get_colormap (g_editor->clist);
+  gdk_color_parse ("black", &black);
+  gdk_color_alloc (colormap, &black);
 	
-	gtk_signal_connect(GTK_OBJECT(g_editor->clist), "select_row",
-			   GTK_SIGNAL_FUNC(ed_list_item_update),
-			   (gpointer) NULL);
+  gtk_signal_connect (GTK_OBJECT (g_editor->clist), "select_row",
+		      GTK_SIGNAL_FUNC (ed_list_item_update),
+		      (gpointer) NULL);
 
-	/* Buttons for gradient functions */
+  /* Buttons for gradient functions */
 
-	gvbox = gtk_vbox_new(FALSE, 0);
-	gtk_container_border_width(GTK_CONTAINER(gvbox), 0);
-	gtk_box_pack_end(GTK_BOX(hbox), gvbox, FALSE, FALSE, 0);
-	gtk_widget_show(gvbox);
+  gvbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (gvbox), 0);
+  gtk_box_pack_end (GTK_BOX (hbox), gvbox, FALSE, FALSE, 0);
+  gtk_widget_show(gvbox);
 
-	/* Buttons for gradient functions */
+  /* Buttons for gradient functions */
 
-	button = ed_create_button(_("New gradient"), 0.0, 0.5,
-				  (GtkSignalFunc) ed_new_gradient_callback, NULL);
-	gtk_box_pack_start(GTK_BOX(gvbox), button, TRUE, TRUE, 0);
-	gtk_widget_show(button);
+  button = ed_create_button (_("New gradient"), 0.0, 0.5,
+			     (GtkSignalFunc) ed_new_gradient_callback, NULL);
+  gtk_box_pack_start (GTK_BOX (gvbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
 
-	button = ed_create_button(_("Copy gradient"), 0.0, 0.5,
-				  (GtkSignalFunc) ed_copy_gradient_callback, NULL);
-	gtk_box_pack_start(GTK_BOX(gvbox), button, TRUE, TRUE, 0);
-	gtk_widget_show(button);
+  button = ed_create_button (_("Copy gradient"), 0.0, 0.5,
+			     (GtkSignalFunc) ed_copy_gradient_callback, NULL);
+  gtk_box_pack_start (GTK_BOX (gvbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
 
-	button = ed_create_button(_("Delete gradient"), 0.0, 0.5,
-				  (GtkSignalFunc) ed_delete_gradient_callback, NULL);
-	gtk_box_pack_start(GTK_BOX(gvbox), button, TRUE, TRUE, 0);
-	gtk_widget_show(button);
+  button = ed_create_button (_("Delete gradient"), 0.0, 0.5,
+			     (GtkSignalFunc) ed_delete_gradient_callback, NULL);
+  gtk_box_pack_start (GTK_BOX (gvbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
 
-	button = ed_create_button(_("Save as POV-Ray"), 0.0, 0.5,
-				  (GtkSignalFunc) ed_save_pov_callback, NULL);
-	gtk_box_pack_start(GTK_BOX(gvbox), button, TRUE, TRUE, 0);
-	gtk_widget_show(button);
+  button = ed_create_button (_("Save as POV-Ray"), 0.0, 0.5,
+			     (GtkSignalFunc) ed_save_pov_callback, NULL);
+  gtk_box_pack_start (GTK_BOX (gvbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
 
-	button = ed_create_button(_("Save Gradients"), 0.0, 0.5,
-				  (GtkSignalFunc) ed_save_grads_callback, NULL);
-	gtk_box_pack_start(GTK_BOX(gvbox), button, TRUE, TRUE, 0);
-	gtk_widget_show(button);
+  button = ed_create_button (_("Save Gradients"), 0.0, 0.5,
+			     (GtkSignalFunc) ed_save_grads_callback, NULL);
+  gtk_box_pack_start (GTK_BOX (gvbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
 
-	button = ed_create_button(_("Rename Gradient"), 0.0, 0.5,
-				  (GtkSignalFunc) ed_rename_grads_callback, NULL);
-	gtk_box_pack_start(GTK_BOX(gvbox), button, TRUE, TRUE, 0);
-	gtk_widget_show(button);
+  button = ed_create_button (_("Rename Gradient"), 0.0, 0.5,
+			     (GtkSignalFunc) ed_rename_grads_callback, NULL);
+  gtk_box_pack_start (GTK_BOX (gvbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
 
-	button = ed_create_button(_("Refresh gradients"), 0.0, 0.5,
-				  (GtkSignalFunc) ed_refresh_callback, NULL);
-	gtk_box_pack_start(GTK_BOX(gvbox), button, TRUE, TRUE, 0);
-	gtk_widget_show(button);
+  button = ed_create_button (_("Refresh gradients"), 0.0, 0.5,
+			     (GtkSignalFunc) ed_refresh_callback, NULL);
+  gtk_box_pack_start (GTK_BOX (gvbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
 
-	/* Horizontal box for zoom controls, scrollbar, and instant update toggle */
+  /* Horizontal box for zoom controls, scrollbar, and instant update toggle */
 
-	hbox = gtk_hbox_new(FALSE, 0);
-	gtk_container_border_width(GTK_CONTAINER(hbox), 0);
-	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 4);
-	gtk_widget_show(hbox);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 4);
+  gtk_widget_show (hbox);
 
-	/* Zoom buttons */
+  /* Zoom buttons */
 
-	button = ed_create_button(_("Zoom all"), 0.5, 0.5, (GtkSignalFunc) ed_zoom_all_callback, g_editor);
-	gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
-	gtk_widget_show(button);
+  button = ed_create_button (_("Zoom all"), 0.5, 0.5,
+			     (GtkSignalFunc) ed_zoom_all_callback, g_editor);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
-	button = ed_create_button(_("Zoom -"), 0.5, 0.5, (GtkSignalFunc) ed_zoom_out_callback, g_editor);
-	gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
-	gtk_widget_show(button);
+  button = ed_create_button (_("Zoom -"), 0.5, 0.5,
+			     (GtkSignalFunc) ed_zoom_out_callback, g_editor);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show(button);
 
-	button = ed_create_button(_("Zoom +"), 0.5, 0.5, (GtkSignalFunc) ed_zoom_in_callback, g_editor);
-	gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
-	gtk_widget_show(button);
+  button = ed_create_button (_("Zoom +"), 0.5, 0.5,
+			     (GtkSignalFunc) ed_zoom_in_callback, g_editor);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
-	/* Scrollbar */
+  /* Scrollbar */
 
-	g_editor->zoom_factor = 1;
+  g_editor->zoom_factor = 1;
 
-	g_editor->scroll_data = gtk_adjustment_new(0.0, 0.0, 1.0,
-						   1.0 * GRAD_SCROLLBAR_STEP_SIZE,
-						   1.0 * GRAD_SCROLLBAR_PAGE_SIZE,
-						   1.0);
+  g_editor->scroll_data = gtk_adjustment_new (0.0, 0.0, 1.0,
+					      1.0 * GRAD_SCROLLBAR_STEP_SIZE,
+					      1.0 * GRAD_SCROLLBAR_PAGE_SIZE,
+					      1.0);
 
-	gtk_signal_connect(g_editor->scroll_data, "value_changed",
-			   (GtkSignalFunc) ed_scrollbar_update,
-			   g_editor);
-	gtk_signal_connect(g_editor->scroll_data, "changed",
-			   (GtkSignalFunc) ed_scrollbar_update,
-			   g_editor);
+  gtk_signal_connect (g_editor->scroll_data, "value_changed",
+		      (GtkSignalFunc) ed_scrollbar_update,
+		      g_editor);
+  gtk_signal_connect (g_editor->scroll_data, "changed",
+		      (GtkSignalFunc) ed_scrollbar_update,
+		      g_editor);
 
-	g_editor->scrollbar = gtk_hscrollbar_new(GTK_ADJUSTMENT(g_editor->scroll_data));
-	gtk_range_set_update_policy(GTK_RANGE(g_editor->scrollbar), GTK_UPDATE_CONTINUOUS);
-	gtk_box_pack_start(GTK_BOX(hbox), g_editor->scrollbar, TRUE, TRUE, 4);
-	gtk_widget_show(g_editor->scrollbar);
+  g_editor->scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (g_editor->scroll_data));
+  gtk_range_set_update_policy (GTK_RANGE (g_editor->scrollbar), GTK_UPDATE_CONTINUOUS);
+  gtk_box_pack_start (GTK_BOX (hbox), g_editor->scrollbar, TRUE, TRUE, 4);
+  gtk_widget_show (g_editor->scrollbar);
 
-	/* Instant update toggle */
+  /* Instant update toggle */
 
-	g_editor->instant_update = 1;
+  g_editor->instant_update = 1;
 
-	button = gtk_check_button_new_with_label(_("Instant update"));
-	gtk_box_pack_end(GTK_BOX(hbox), button, FALSE, FALSE, 0);
-	gtk_signal_connect(GTK_OBJECT(button), "toggled",
-			   (GtkSignalFunc) ed_instant_update_update,
-			   g_editor);
-	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
-	gtk_widget_show(button);
+  button = gtk_check_button_new_with_label (_("Instant update"));
+  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      (GtkSignalFunc) ed_instant_update_update,
+		      g_editor);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+  gtk_widget_show (button);
 
-	/* hbox for that holds the frame for gradient preview and gradient control; 
-           this is only here, because resizing the preview doesn't work (and is disabled) 
-           to keep the preview and controls together */
+  /*  hbox for that holds the frame for gradient preview and gradient control; 
+   *  this is only here, because resizing the preview doesn't work
+   *  (and is disabled) to keep the preview and controls together
+   */
 	
-	hbox = gtk_hbox_new(FALSE, 0);
-	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
-	gtk_widget_show(hbox);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
-	/* Frame for gradient preview and gradient control */
+  /* Frame for gradient preview and gradient control */
 
-	frame = gtk_frame_new(NULL);
-	gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_IN);
-	gtk_box_pack_start(GTK_BOX(hbox), frame, FALSE, FALSE, 0);
-	gtk_widget_show(frame);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-	gvbox = gtk_vbox_new(FALSE, 0);
-	gtk_container_add(GTK_CONTAINER(frame), gvbox); 
-	gtk_widget_show(gvbox);
+  gvbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), gvbox); 
+  gtk_widget_show (gvbox);
 
-	/* Gradient preview */
+  /* Gradient preview */
 
-	g_editor->preview_rows[0]     = NULL;
-	g_editor->preview_rows[1]     = NULL;
-	g_editor->preview_last_x      = 0;
-	g_editor->preview_button_down = 0;
+  g_editor->preview_rows[0]     = NULL;
+  g_editor->preview_rows[1]     = NULL;
+  g_editor->preview_last_x      = 0;
+  g_editor->preview_button_down = 0;
 
-	g_editor->preview = gtk_preview_new(GTK_PREVIEW_COLOR);
-	gtk_preview_set_dither (GTK_PREVIEW (g_editor->preview),
-				GDK_RGB_DITHER_MAX);
-	gtk_preview_size(GTK_PREVIEW(g_editor->preview),
-			 GRAD_PREVIEW_WIDTH, GRAD_PREVIEW_HEIGHT);
-	gtk_widget_set_events(g_editor->preview, GRAD_PREVIEW_EVENT_MASK);
-	gtk_signal_connect(GTK_OBJECT(g_editor->preview), "event",
-			   (GtkSignalFunc) prev_events,
-			   g_editor);
-	gtk_box_pack_start(GTK_BOX(gvbox), g_editor->preview, TRUE, TRUE, 0);
-	gtk_widget_show(g_editor->preview);
+  g_editor->preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_set_dither (GTK_PREVIEW (g_editor->preview),
+			  GDK_RGB_DITHER_MAX);
+  gtk_preview_size (GTK_PREVIEW (g_editor->preview),
+		    GRAD_PREVIEW_WIDTH, GRAD_PREVIEW_HEIGHT);
+  gtk_widget_set_events (g_editor->preview, GRAD_PREVIEW_EVENT_MASK);
+  gtk_signal_connect (GTK_OBJECT(g_editor->preview), "event",
+		      (GtkSignalFunc) prev_events,
+		      g_editor);
+  gtk_box_pack_start (GTK_BOX (gvbox), g_editor->preview, TRUE, TRUE, 0);
+  gtk_widget_show (g_editor->preview);
 
-	/* Gradient control */
+  /* Gradient control */
 
-	g_editor->control_pixmap                  = NULL;
-	g_editor->control_drag_segment            = NULL;
-	g_editor->control_sel_l                   = NULL;
-	g_editor->control_sel_r                   = NULL;
-	g_editor->control_drag_mode               = GRAD_DRAG_NONE;
-	g_editor->control_click_time              = 0;
-	g_editor->control_compress                = 0;
-	g_editor->control_last_x                  = 0;
-	g_editor->control_last_gx                 = 0.0;
-	g_editor->control_orig_pos                = 0.0;
-	g_editor->control_main_popup              = NULL;
-	g_editor->control_blending_label          = NULL;
-	g_editor->control_coloring_label          = NULL;
-	g_editor->control_splitm_label            = NULL;
-	g_editor->control_splitu_label            = NULL;
-	g_editor->control_delete_menu_item        = NULL;
-	g_editor->control_delete_label            = NULL;
-	g_editor->control_recenter_label          = NULL;
-	g_editor->control_redistribute_label      = NULL;
-	g_editor->control_flip_label              = NULL;
-	g_editor->control_replicate_label         = NULL;
-	g_editor->control_blend_colors_menu_item  = NULL;
-	g_editor->control_blend_opacity_menu_item = NULL;
-	g_editor->control_left_load_popup         = NULL;
-	g_editor->control_left_save_popup         = NULL;
-	g_editor->control_right_load_popup        = NULL;
-	g_editor->control_right_save_popup        = NULL;
-	g_editor->control_blending_popup          = NULL;
-	g_editor->control_coloring_popup          = NULL;
-	g_editor->control_sel_ops_popup           = NULL;
+  g_editor->control_pixmap                  = NULL;
+  g_editor->control_drag_segment            = NULL;
+  g_editor->control_sel_l                   = NULL;
+  g_editor->control_sel_r                   = NULL;
+  g_editor->control_drag_mode               = GRAD_DRAG_NONE;
+  g_editor->control_click_time              = 0;
+  g_editor->control_compress                = 0;
+  g_editor->control_last_x                  = 0;
+  g_editor->control_last_gx                 = 0.0;
+  g_editor->control_orig_pos                = 0.0;
+  g_editor->control_main_popup              = NULL;
+  g_editor->control_blending_label          = NULL;
+  g_editor->control_coloring_label          = NULL;
+  g_editor->control_splitm_label            = NULL;
+  g_editor->control_splitu_label            = NULL;
+  g_editor->control_delete_menu_item        = NULL;
+  g_editor->control_delete_label            = NULL;
+  g_editor->control_recenter_label          = NULL;
+  g_editor->control_redistribute_label      = NULL;
+  g_editor->control_flip_label              = NULL;
+  g_editor->control_replicate_label         = NULL;
+  g_editor->control_blend_colors_menu_item  = NULL;
+  g_editor->control_blend_opacity_menu_item = NULL;
+  g_editor->control_left_load_popup         = NULL;
+  g_editor->control_left_save_popup         = NULL;
+  g_editor->control_right_load_popup        = NULL;
+  g_editor->control_right_save_popup        = NULL;
+  g_editor->control_blending_popup          = NULL;
+  g_editor->control_coloring_popup          = NULL;
+  g_editor->control_sel_ops_popup           = NULL;
 
-	g_editor->accel_group = NULL;
+  g_editor->accel_group = NULL;
 
-	for (i = 0;
-	     i < (sizeof(g_editor->control_blending_items) / sizeof(g_editor->control_blending_items[0]));
-	     i++)
-		g_editor->control_blending_items[i] = NULL;
+  for (i = 0;
+       i < (sizeof(g_editor->control_blending_items) / sizeof(g_editor->control_blending_items[0]));
+       i++)
+    g_editor->control_blending_items[i] = NULL;
 
-	for (i = 0;
-	     i < (sizeof(g_editor->control_coloring_items) / sizeof(g_editor->control_coloring_items[0]));
-	     i++)
-		g_editor->control_coloring_items[i] = NULL;
+  for (i = 0;
+       i < (sizeof(g_editor->control_coloring_items) / sizeof(g_editor->control_coloring_items[0]));
+       i++)
+    g_editor->control_coloring_items[i] = NULL;
 
-	g_editor->control = gtk_drawing_area_new();
-	gtk_drawing_area_size(GTK_DRAWING_AREA(g_editor->control),
-			      GRAD_PREVIEW_WIDTH, GRAD_CONTROL_HEIGHT);
-	gtk_widget_set_events(g_editor->control, GRAD_CONTROL_EVENT_MASK);
-	gtk_signal_connect(GTK_OBJECT(g_editor->control), "event",
-			   (GtkSignalFunc) control_events,
-			   g_editor);
-	gtk_box_pack_start(GTK_BOX(gvbox), g_editor->control, FALSE, TRUE, 0);
-	gtk_widget_show(g_editor->control);
+  g_editor->control = gtk_drawing_area_new ();
+  gtk_drawing_area_size (GTK_DRAWING_AREA (g_editor->control),
+			 GRAD_PREVIEW_WIDTH, GRAD_CONTROL_HEIGHT);
+  gtk_widget_set_events (g_editor->control, GRAD_CONTROL_EVENT_MASK);
+  gtk_signal_connect (GTK_OBJECT (g_editor->control), "event",
+		      (GtkSignalFunc) control_events,
+		      g_editor);
+  gtk_box_pack_start (GTK_BOX (gvbox), g_editor->control, FALSE, TRUE, 0);
+  gtk_widget_show (g_editor->control);
 
-	/* Initialize other data */
+  /* Initialize other data */
 
-	g_editor->left_color_preview            = NULL;
-	g_editor->left_saved_segments           = NULL;
-	g_editor->left_saved_dirty              = 0;
+  g_editor->left_color_preview            = NULL;
+  g_editor->left_saved_segments           = NULL;
+  g_editor->left_saved_dirty              = 0;
 
-	g_editor->right_color_preview           = NULL;
-	g_editor->right_saved_segments          = NULL;
-	g_editor->right_saved_dirty             = 0;
+  g_editor->right_color_preview           = NULL;
+  g_editor->right_saved_segments          = NULL;
+  g_editor->right_saved_dirty             = 0;
 
-	ed_initialize_saved_colors();
-	cpopup_create_main_menu();
+  ed_initialize_saved_colors();
+  cpopup_create_main_menu();
 
-	/* Show everything */
-	gtk_widget_realize(g_editor->shell);
-	g_editor->gc = gdk_gc_new(g_editor->shell->window);
-	select_pos = ed_set_list_of_gradients(g_editor->gc,
-					      g_editor->clist,
-					      curr_gradient);
+  /* Show everything */
+  gtk_widget_realize (g_editor->shell);
+  g_editor->gc = gdk_gc_new (g_editor->shell->window);
+  select_pos = ed_set_list_of_gradients (g_editor->gc,
+					 g_editor->clist,
+					 curr_gradient);
 
-	if(need_show)
-	  gtk_widget_show(g_editor->shell);
+  if (need_show)
+    gtk_widget_show (g_editor->shell);
 
-	if(select_pos != -1)
-	  gtk_clist_moveto(GTK_CLIST(g_editor->clist),select_pos,0,0.0,0.0);
+  if (select_pos != -1)
+    gtk_clist_moveto (GTK_CLIST (g_editor->clist), select_pos, 0, 0.0, 0.0);
 
 } /* grad_create_gradient_editor */
 
@@ -1248,11 +1256,11 @@ ed_close_callback(GtkWidget *widget, gpointer client_data)
 static void
 ed_new_gradient_callback(GtkWidget *widget, gpointer client_data)
 {
-	query_string_box(N_("New gradient"),
-			 N_("Enter a name for the new gradient"),
-			 N_("untitled"),
-			 NULL, NULL,
-			 ed_do_new_gradient_callback, NULL);
+  gtk_widget_show (query_string_box(_("New gradient"),
+				    _("Enter a name for the new gradient"),
+				    _("untitled"),
+				    NULL, NULL,
+				    ed_do_new_gradient_callback, NULL));
 } /* ed_new_gradient_callback */
 
 
@@ -1436,65 +1444,65 @@ ed_do_copy_gradient_callback(GtkWidget *widget, gpointer client_data, gpointer c
 static void
 ed_delete_gradient_callback(GtkWidget *widget, gpointer client_data)
 {
-	GtkWidget *dialog;
-	GtkWidget *vbox;
-	GtkWidget *label;
-	GtkWidget *button;
-	char      *str;
+  GtkWidget *dialog;
+  GtkWidget *vbox;
+  GtkWidget *label;
+  GtkWidget *button;
+  gchar     *str;
 
-	if (num_gradients <= 1)
-		return;
+  if (num_gradients <= 1)
+    return;
 
-	dialog = gtk_dialog_new();
-	gtk_window_set_title(GTK_WINDOW(dialog), _("Delete gradient"));
-	gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
-	gtk_container_border_width(GTK_CONTAINER(dialog), 0);
+  dialog = gtk_dialog_new ();
+  gtk_window_set_title (GTK_WINDOW (dialog), _("Delete gradient"));
+  gtk_window_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
+  gtk_container_set_border_width (GTK_CONTAINER (dialog), 0);
 
-	vbox = gtk_vbox_new(FALSE, 0);
-	gtk_container_border_width(GTK_CONTAINER(vbox), 8);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), vbox,
-			   FALSE, FALSE, 0);
-	gtk_widget_show(vbox);
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 8);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dialog)->vbox), vbox,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
 
-	/* Question */
+  /* Question */
 
-	label = gtk_label_new(_("Are you sure you want to delete"));
-	gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.0);
-	gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
-	gtk_widget_show(label);
+  label = gtk_label_new (_("Are you sure you want to delete"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
-	str = g_strdup_printf(_("\"%s\" from the list and from disk?"), curr_gradient->name);
+  str = g_strdup_printf(_("\"%s\" from the list and from disk?"), curr_gradient->name);
 
-	label = gtk_label_new(str);
-	gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.0);
-	gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
-	gtk_widget_show(label);
+  label = gtk_label_new (str);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
-	g_free(str);
+  g_free (str);
 
-	/* Buttons */
+  /* Buttons */
 
-	button = ed_create_button(_("Delete"), 0.5, 0.5,
-				  (GtkSignalFunc) ed_do_delete_gradient_callback,
-				  (gpointer) dialog);
-	GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area),
-			   button, TRUE, TRUE, 0);
-	gtk_widget_grab_default(button);
-	gtk_widget_show(button);
+  button = ed_create_button (_("Delete"), 0.5, 0.5,
+			     (GtkSignalFunc) ed_do_delete_gradient_callback,
+			     (gpointer) dialog);
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dialog)->action_area),
+		      button, TRUE, TRUE, 0);
+  gtk_widget_grab_default (button);
+  gtk_widget_show (button);
 
-	button = ed_create_button(_("Cancel"), 0.5, 0.5,
-				  (GtkSignalFunc) ed_cancel_delete_gradient_callback,
-				  (gpointer) dialog);
-	GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area),
-			   button, TRUE, TRUE, 0);
-	gtk_widget_show(button);
+  button = ed_create_button (_("Cancel"), 0.5, 0.5,
+			     (GtkSignalFunc) ed_cancel_delete_gradient_callback,
+			     (gpointer) dialog);
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dialog)->action_area),
+		      button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
 
-	/* Show! */
+  /* Show! */
 
-	gtk_widget_show(dialog);
-	gtk_widget_set_sensitive(g_editor->shell, FALSE);
+  gtk_widget_show (dialog);
+  gtk_widget_set_sensitive (g_editor->shell, FALSE);
 } /* ed_delete_gradient_callback */
 
 
@@ -1532,7 +1540,7 @@ ed_do_delete_gradient_callback(GtkWidget *widget, gpointer client_data)
 	} /* while */
 
 	if (tmp == NULL)
-		fatal_error(_("ed_do_delete_gradient_callback(): aieee, could not find gradient to delete!"));
+	  gimp_fatal_error (_("ed_do_delete_gradient_callback(): Could not find gradient to delete!"));
 
 	/* Delete gradient from gradients list */
 
@@ -2498,7 +2506,7 @@ control_motion(gint x)
 			break;
 
 		default:
-			fatal_error("control_motion(): aieee, attempt to move bogus handle %d",
+			gimp_fatal_error(_("control_motion(): Attempt to move bogus handle %d"),
 				    (int) g_editor->control_drag_mode);
 			break;
 	} /* switch */
@@ -4498,83 +4506,84 @@ cpopup_split_midpoint_callback(GtkWidget *widget, gpointer data)
 /*****/
 
 static void
-cpopup_split_uniform_callback(GtkWidget *widget, gpointer data)
+cpopup_split_uniform_callback(GtkWidget *widget,
+			      gpointer   data)
 {
-	GtkWidget *dialog;
-	GtkWidget *vbox;
-	GtkWidget *label;
-	GtkWidget *scale;
-	GtkWidget *button;
-	GtkObject *scale_data;
+  GtkWidget *dialog;
+  GtkWidget *vbox;
+  GtkWidget *label;
+  GtkWidget *scale;
+  GtkWidget *button;
+  GtkObject *scale_data;
 
-	/* Create dialog window */
+  /* Create dialog window */
 
-	dialog = gtk_dialog_new();
-	gtk_window_set_title(GTK_WINDOW(dialog),
-			     (g_editor->control_sel_l == g_editor->control_sel_r) ?
-			     _("Split segment uniformly") :
-			     _("Split segments uniformly"));
-	gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
-	gtk_container_border_width(GTK_CONTAINER(dialog), 0);
+  dialog = gtk_dialog_new ();
+  gtk_window_set_title (GTK_WINDOW (dialog),
+			(g_editor->control_sel_l == g_editor->control_sel_r) ?
+			_("Split segment uniformly") :
+			_("Split segments uniformly"));
+  gtk_window_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
+  gtk_container_set_border_width (GTK_CONTAINER (dialog), 0);
 
-	vbox = gtk_vbox_new(FALSE, 0);
-	gtk_container_border_width(GTK_CONTAINER(vbox), 8);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), vbox,
-			   FALSE, FALSE, 0);
-	gtk_widget_show(vbox);
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 8);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
 
-	/* Instructions */
+  /* Instructions */
 
-	label = gtk_label_new(_("Please select the number of uniform parts"));
-	gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.0);
-	gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
-	gtk_widget_show(label);
+  label = gtk_label_new (_("Please select the number of uniform parts"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
-	label = gtk_label_new((g_editor->control_sel_l == g_editor->control_sel_r) ?
-			      _("in which you want to split the selected segment") :
-			      _("in which you want to split the segments in the selection"));
-	gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.0);
-	gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
-	gtk_widget_show(label);
+  label = gtk_label_new ((g_editor->control_sel_l == g_editor->control_sel_r) ?
+			 _("in which you want to split the selected segment") :
+			 _("in which you want to split the segments in the selection"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
-	/* Scale */
+  /* Scale */
 
-	g_editor->split_parts = 2;
-	scale_data  = gtk_adjustment_new(2.0, 2.0, 21.0, 1.0, 1.0, 1.0);
+  g_editor->split_parts = 2;
+  scale_data  = gtk_adjustment_new (2.0, 2.0, 21.0, 1.0, 1.0, 1.0);
 
-	scale = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));
-	gtk_scale_set_digits(GTK_SCALE(scale), 0);
-	gtk_scale_set_value_pos(GTK_SCALE(scale), GTK_POS_TOP);
-	gtk_box_pack_start(GTK_BOX(vbox), scale, FALSE, TRUE, 8);
-	gtk_widget_show(scale);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
+  gtk_scale_set_digits (GTK_SCALE (scale), 0);
+  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, TRUE, 8);
+  gtk_widget_show (scale);
 
-	gtk_signal_connect(scale_data, "value_changed",
-			   (GtkSignalFunc) cpopup_split_uniform_scale_update,
-			   NULL);
+  gtk_signal_connect (scale_data, "value_changed",
+		      (GtkSignalFunc) cpopup_split_uniform_scale_update,
+		      NULL);
 
-	/* Buttons */
+  /* Buttons */
 
-	button = ed_create_button(_("Split"), 0.5, 0.5,
-				  (GtkSignalFunc) cpopup_split_uniform_split_callback,
-				  (gpointer) dialog);
-	GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area),
-			   button, TRUE, TRUE, 0);
-	gtk_widget_grab_default(button);
-	gtk_widget_show(button);
+  button = ed_create_button (_("Split"), 0.5, 0.5,
+			     (GtkSignalFunc) cpopup_split_uniform_split_callback,
+			     (gpointer) dialog);
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area),
+		      button, TRUE, TRUE, 0);
+  gtk_widget_grab_default (button);
+  gtk_widget_show (button);
 
-	button = ed_create_button(_("Cancel"), 0.5, 0.5,
-				  (GtkSignalFunc) cpopup_split_uniform_cancel_callback,
-				  (gpointer) dialog);
-	GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area),
-			   button, TRUE, TRUE, 0);
-	gtk_widget_show(button);
+  button = ed_create_button (_("Cancel"), 0.5, 0.5,
+			     (GtkSignalFunc) cpopup_split_uniform_cancel_callback,
+			     (gpointer) dialog);
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area),
+		      button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
 
-	/* Show! */
+  /* Show! */
 
-	gtk_widget_show(dialog);
-	gtk_widget_set_sensitive(g_editor->shell, FALSE);
+  gtk_widget_show (dialog);
+  gtk_widget_set_sensitive (g_editor->shell, FALSE);
 } /* cpopup_split_uniform_callback */
 
 
@@ -4855,81 +4864,81 @@ cpopup_flip_callback(GtkWidget *widget, gpointer data)
 static void
 cpopup_replicate_callback(GtkWidget *widget, gpointer data)
 {
-	GtkWidget *dialog;
-	GtkWidget *vbox;
-	GtkWidget *label;
-	GtkWidget *scale;
-	GtkWidget *button;
-	GtkObject *scale_data;
+  GtkWidget *dialog;
+  GtkWidget *vbox;
+  GtkWidget *label;
+  GtkWidget *scale;
+  GtkWidget *button;
+  GtkObject *scale_data;
 
-	/* Create dialog window */
+  /* Create dialog window */
 
-	dialog = gtk_dialog_new();
-	gtk_window_set_title(GTK_WINDOW(dialog),
-			     (g_editor->control_sel_l == g_editor->control_sel_r) ?
-			     _("Replicate segment") :
-			     _("Replicate selection"));
-	gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
-	gtk_container_border_width(GTK_CONTAINER(dialog), 0);
+  dialog = gtk_dialog_new ();
+  gtk_window_set_title (GTK_WINDOW (dialog),
+			(g_editor->control_sel_l == g_editor->control_sel_r) ?
+			_("Replicate segment") :
+			_("Replicate selection"));
+  gtk_window_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
+  gtk_container_set_border_width (GTK_CONTAINER (dialog), 0);
 
-	vbox = gtk_vbox_new(FALSE, 0);
-	gtk_container_border_width(GTK_CONTAINER(vbox), 8);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), vbox,
-			   FALSE, FALSE, 0);
-	gtk_widget_show(vbox);
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 8);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
 
-	/* Instructions */
+  /* Instructions */
 
-	label = gtk_label_new(_("Please select the number of times"));
-	gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.0);
-	gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
-	gtk_widget_show(label);
+  label = gtk_label_new (_("Please select the number of times"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
-	label = gtk_label_new((g_editor->control_sel_l == g_editor->control_sel_r) ?
-			      _("you want to replicate the selected segment") :
-			      _("you want to replicate the selection"));
-	gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.0);
-	gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
-	gtk_widget_show(label);
+  label = gtk_label_new ((g_editor->control_sel_l == g_editor->control_sel_r) ?
+			 _("you want to replicate the selected segment") :
+			 _("you want to replicate the selection"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
-	/* Scale */
+  /* Scale */
 
-	g_editor->replicate_times = 2;
-	scale_data  = gtk_adjustment_new(2.0, 2.0, 21.0, 1.0, 1.0, 1.0);
+  g_editor->replicate_times = 2;
+  scale_data  = gtk_adjustment_new (2.0, 2.0, 21.0, 1.0, 1.0, 1.0);
 
-	scale = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));
-	gtk_scale_set_digits(GTK_SCALE(scale), 0);
-	gtk_scale_set_value_pos(GTK_SCALE(scale), GTK_POS_TOP);
-	gtk_box_pack_start(GTK_BOX(vbox), scale, FALSE, TRUE, 8);
-	gtk_widget_show(scale);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
+  gtk_scale_set_digits (GTK_SCALE (scale), 0);
+  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, TRUE, 8);
+  gtk_widget_show (scale);
 
-	gtk_signal_connect(scale_data, "value_changed",
-			   (GtkSignalFunc) cpopup_replicate_scale_update,
-			   NULL);
+  gtk_signal_connect (scale_data, "value_changed",
+		      (GtkSignalFunc) cpopup_replicate_scale_update,
+		      NULL);
 
-	/* Buttons */
+  /* Buttons */
 
-	button = ed_create_button(_("Replicate"), 0.5, 0.5,
-				  (GtkSignalFunc) cpopup_do_replicate_callback,
-				  (gpointer) dialog);
-	GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area),
-			   button, TRUE, TRUE, 0);
-	gtk_widget_grab_default(button);
-	gtk_widget_show(button);
+  button = ed_create_button (_("Replicate"), 0.5, 0.5,
+			     (GtkSignalFunc) cpopup_do_replicate_callback,
+			     (gpointer) dialog);
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_box_pack_start (GTK_BOX(GTK_DIALOG(dialog)->action_area),
+		      button, TRUE, TRUE, 0);
+  gtk_widget_grab_default (button);
+  gtk_widget_show (button);
 
-	button = ed_create_button(_("Cancel"), 0.5, 0.5,
-				  (GtkSignalFunc) cpopup_replicate_cancel_callback,
-				  (gpointer) dialog);
-	GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area),
-			   button, TRUE, TRUE, 0);
-	gtk_widget_show(button);
+  button = ed_create_button (_("Cancel"), 0.5, 0.5,
+			     (GtkSignalFunc) cpopup_replicate_cancel_callback,
+			     (gpointer) dialog);
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_box_pack_start (GTK_BOX(GTK_DIALOG(dialog)->action_area),
+		      button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
 
-	/* Show! */
+  /* Show! */
 
-	gtk_widget_show(dialog);
-	gtk_widget_set_sensitive(g_editor->shell, FALSE);
+  gtk_widget_show (dialog);
+  gtk_widget_set_sensitive (g_editor->shell, FALSE);
 } /* cpopup_replicate_callback */
 
 
@@ -5685,7 +5694,7 @@ seg_get_segment_at(gradient_t *grad, double pos)
 	/* Oops: we should have found a segment, but we didn't */
 
 	grad_dump_gradient(curr_gradient, stderr);
-	fatal_error(_("seg_get_segment_at(): aieee, no matching segment for position %0.15f"), pos);
+	gimp_fatal_error (_("seg_get_segment_at(): No matching segment for position %0.15f"), pos);
 	return NULL; /* To shut up -Wall */
 } /* seg_get_segment_at */
 

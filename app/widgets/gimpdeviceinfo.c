@@ -692,7 +692,7 @@ create_device_status (void)
 	}
 /* devices table */
       deviceD->table = gtk_table_new (deviceD->num_devices, 5, FALSE);
-      gtk_container_border_width (GTK_CONTAINER(deviceD->table), 3);
+      gtk_container_set_border_width (GTK_CONTAINER(deviceD->table), 3);
       gtk_container_add (GTK_CONTAINER(GTK_DIALOG(deviceD->shell)->vbox),
 			 deviceD->table);
       gtk_widget_realize (deviceD->table);
@@ -1366,7 +1366,3 @@ device_status_update (guint32 deviceid)
   	pattern_area_update();
 	}
 }
-
-
-
-

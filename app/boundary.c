@@ -1,4 +1,3 @@
-
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
@@ -16,15 +15,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdlib.h>
 #include <string.h>
 #include "appenv.h"
 #include "errors.h"
 #include "boundary.h"
+#include "tile.h"
 
 #include "libgimp/gimpintl.h"
-
-#include "tile.h"
 
 /* half intensity for mask */
 #define HALF_WAY 127
@@ -202,7 +199,7 @@ make_seg (int x1,
 					sizeof (BoundSeg) * max_segs);
 
       if (!tmp_segs)
-	fatal_error ("Unable to reallocate segments array for mask boundary.");
+	gimp_fatal_error (_("make_seg(): Unable to reallocate segments array for mask boundary."));
     }
 
   tmp_segs[num_segs].x1 = x1;
@@ -244,7 +241,7 @@ allocate_empty_segs (void)
       empty_segs_l = (int *) g_realloc (empty_segs_l, sizeof (int) * max_empty_segs);
 
       if (!empty_segs_n || !empty_segs_l || !empty_segs_c)
-	fatal_error ("Unable to reallocate empty segments array for mask boundary.");
+	gimp_fatal_error (_("allocate_empty_segs(): Unable to reallocate empty segments array for mask boundary."));
     }
 }
 

@@ -17,14 +17,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
+#include <math.h>
 #include <string.h>
 
 #include "appenv.h"
 #include "gimpbrushgenerated.h"
 #include "brush_edit.h"
 #include "actionarea.h"
-#include "math.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -117,25 +116,25 @@ brush_edit_brush_dirty_callback(GimpBrush *brush,
   src = (gchar *)temp_buf_data (brush->mask);
 
   for (y = ystart; y < yend; y++)
-  {
-    /*  Invert the mask for display.
-     */
-    for (x = 0; x < width; x++)
-      buf[x] = 255 - src[x*scale];
-    gtk_preview_draw_row (GTK_PREVIEW (begw->preview), (guchar *)buf, xo, y,
-			  width);
-    src += brush->mask->width*scale;
-  }
-  g_free(buf);
+    {
+      /*  Invert the mask for display.
+       */
+      for (x = 0; x < width; x++)
+	buf[x] = 255 - src[x*scale];
+      gtk_preview_draw_row (GTK_PREVIEW (begw->preview), (guchar *)buf, xo, y,
+			    width);
+      src += brush->mask->width*scale;
+    }
+  g_free (buf);
   if (begw->scale != scale)
-  {
-    char str[255];
-    begw->scale = scale;
-    g_snprintf(str, 200, "%d:1", scale);
-    gtk_label_set_text(GTK_LABEL(begw->scale_label), str);
-    gtk_widget_draw(begw->scale_label, NULL);
-  }
-  gtk_widget_draw(begw->preview, NULL);
+    {
+      gchar str[255];
+      begw->scale = scale;
+      g_snprintf (str, sizeof (str), "%d:1", scale);
+      gtk_label_set_text (GTK_LABEL (begw->scale_label), str);
+      gtk_widget_draw (begw->scale_label, NULL);
+    }
+  gtk_widget_draw (begw->preview, NULL);
   return TRUE;
 }
 
@@ -201,7 +200,7 @@ brush_edit_generated_new ()
   gtk_window_set_policy(GTK_WINDOW(begw->shell), FALSE, TRUE, FALSE);
 
   vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (begw->shell)->vbox), vbox,
 		      TRUE, TRUE, 0);
 

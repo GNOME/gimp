@@ -699,10 +699,10 @@ text_render (GimpImage *gimage,
       image = gdk_image_get (pixmap, 0, 0, pixmap_width, pixmap_height);
 
       if (!image)
-	fatal_error ("sanity check failed: could not get gdk image");
+	gimp_fatal_error ("text_render(): Sanity check failed: could not get gdk image");
 
       if (image->depth != 1)
-	fatal_error ("sanity check failed: image should have 1 bit per pixel");
+	gimp_fatal_error ("text_render(): Sanity check failed: image should have 1 bit per pixel");
 
       /* convert the GdkImage bitmap to a region */
       text_gdk_image_to_region (image, antialias, &maskPR);
@@ -859,11 +859,11 @@ text_field_edges(char  *fontname,
 
 /* convert sizes back to text */
 #define TO_TXT(x) \
-{						\
-  if (x >= 0)					\
-      g_snprintf (new_ ## x, 16, "%d", x);	\
-  else						\
-      g_snprintf (new_ ## x, 16, "*");		\
+{ \
+  if (x >= 0) \
+    g_snprintf (new_ ## x, sizeof (new_ ## x), "%d", x); \
+  else \
+    g_snprintf (new_ ## x, sizeof (new_ ## x), "*"); \
 }
 
 /* Multiply the point and pixel sizes in *fontname by "mul", which

@@ -72,9 +72,7 @@
  */
 
 
-
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
 #include <math.h>
 
@@ -394,7 +392,7 @@ convert_to_indexed (GimpImage *gimage)
     else
       {
 	gchar tempstr[50];
-	sprintf(tempstr, "%d", dialog->num_cols);
+	g_snprintf (tempstr, sizeof (tempstr), "%d", dialog->num_cols);
 	gtk_entry_set_text (GTK_ENTRY (text), tempstr);
       }
     gtk_widget_set_usize (text, 50, 25);
@@ -1707,12 +1705,12 @@ median_cut_rgb (Histogram histogram,
      */
     if (1 || numboxes*2 <= desired_colors)
       {
-	printf("O ");
+	g_print ("O ");
 	b1 = find_biggest_color_pop (boxlist, numboxes);
       }
     else
       {
-	printf(". ");
+	g_print (". ");
 	b1 = find_biggest_volume (boxlist, numboxes);
       }
 #endif

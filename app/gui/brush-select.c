@@ -85,7 +85,7 @@ static void paint_mode_menu_callback     (GtkWidget *, gpointer);
 static gint brush_select_events          (GtkWidget *, GdkEvent *, BrushSelectP);
 static gint brush_select_resize		 (GtkWidget *, GdkEvent *, BrushSelectP);
 
-static gint brush_select_delete_callback        (GtkWidget *, GdkEvent *, gpointer);
+static gint brush_select_delete_callback  (GtkWidget *, GdkEvent *, gpointer);
 static void preview_scroll_update         (GtkAdjustment *, gpointer);
 static void opacity_scale_update          (GtkAdjustment *, gpointer);
 static void spacing_scale_update          (GtkAdjustment *, gpointer);
@@ -1060,7 +1060,8 @@ update_active_brush_field (BrushSelectP bsp)
   gtk_label_set_text (GTK_LABEL (bsp->brush_name), brush->name);
 
   /*  Set brush size  */
-  g_snprintf (buf, 32, "(%d X %d)", brush->mask->width, brush->mask->height);
+  g_snprintf (buf, sizeof (buf), "(%d X %d)",
+	      brush->mask->width, brush->mask->height);
   gtk_label_set_text (GTK_LABEL (bsp->brush_size), buf);
 
   /*  Set brush spacing  */

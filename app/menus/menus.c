@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "appenv.h"
@@ -121,11 +120,13 @@ static GtkItemFactoryEntry image_entries[] =
   { N_("/Select/All"), "<control>A", select_all_cmd_callback, 0 },
   { N_("/Select/None"), "<control><shift>A", select_none_cmd_callback, 0 },
   { N_("/Select/Float"), "<control><shift>L", select_float_cmd_callback, 0 },
-  { N_("/Select/Sharpen"), "<control><shift>H", select_sharpen_cmd_callback, 0 },
-  { N_("/Select/Border"), "<control><shift>B", select_border_cmd_callback, 0 },
+  { N_("/Select/---"), NULL, NULL, 0, "<Separator>" },
   { N_("/Select/Feather"), "<control><shift>F", select_feather_cmd_callback, 0 },
-  { N_("/Select/Grow"), NULL, select_grow_cmd_callback, 0 },
+  { N_("/Select/Sharpen"), "<control><shift>H", select_sharpen_cmd_callback, 0 },
   { N_("/Select/Shrink"), NULL, select_shrink_cmd_callback, 0 },
+  { N_("/Select/Grow"), NULL, select_grow_cmd_callback, 0 },
+  { N_("/Select/Border"), "<control><shift>B", select_border_cmd_callback, 0 },
+  { N_("/Select/---"), NULL, NULL, 0, "<Separator>" },
   { N_("/Select/Save To Channel"), NULL, select_save_cmd_callback, 0 },
 
   { N_("/View/tearoff1"), NULL, NULL, 0, "<Tearoff>" },

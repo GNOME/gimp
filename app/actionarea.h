@@ -22,17 +22,19 @@
 
 typedef void (*ActionCallback) (GtkWidget *, gpointer);
 
-typedef struct {
-  const char *label;
-  ActionCallback callback;
-  gpointer user_data;
-  GtkWidget *widget;
-} ActionAreaItem;
+typedef struct _ActionAreaItem ActionAreaItem;
 
-void build_action_area (GtkDialog *      dlg,
-			ActionAreaItem * actions,
-			int              num_actions,
-			int              default_action);
+struct _ActionAreaItem
+{
+  const gchar    *label;
+  ActionCallback  callback;
+  gpointer        user_data;
+  GtkWidget      *widget;
+};
 
+void build_action_area (GtkDialog      *dlg,
+			ActionAreaItem *actions,
+			gint            num_actions,
+			gint            default_action);
 
 #endif /* __ACTIONAREA_H__ */

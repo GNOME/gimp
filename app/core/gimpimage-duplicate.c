@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include "appenv.h"
@@ -24,173 +23,192 @@
 #include "cursorutil.h"
 #include "drawable.h"
 #include "floating_sel.h"
-#include "general.h"
 #include "gdisplay.h"
 #include "interface.h"
 #include "palette.h"
 
+#include "libgimp/gimpsizeentry.h"
 #include "libgimp/gimpintl.h"
 
 #include "channel_pvt.h"
 #include "layer_pvt.h"
 
-#define ENTRY_WIDTH        60
+#define ENTRY_WIDTH  60
 
-typedef struct
+typedef struct _OffsetDialog OffsetDialog;
+
+struct _OffsetDialog
 {
-  GtkWidget *dlg;
-  GtkWidget *fill_options;
-  GtkWidget *off_x_entry;
-  GtkWidget *off_y_entry;
+  GtkWidget         *dlg;
+  GtkWidget         *off_se;
 
-  int        wrap_around;
-  int        transparent;
-  int        background;
-  GimpImage*        gimage;
+  gboolean           wrap_around;
 
-} OffsetDialog;
+  GtkWidget         *fill_options;
+  ChannelOffsetType  fill_type;
 
-/*  Local procedures  */
-static void  offset_ok_callback       (GtkWidget *widget,
-				       gpointer   data);
-static void  offset_cancel_callback   (GtkWidget *widget,
-				       gpointer   data);
+  GimpImage         *gimage;
+};
 
-static gint  offset_delete_callback   (GtkWidget *widget,
-				       GdkEvent  *event,
-				       gpointer   data);
+/*  Forward declarations  */
+static void  offset_ok_callback         (GtkWidget *, gpointer);
+static void  offset_cancel_callback     (GtkWidget *, gpointer);
+static gint  offset_delete_callback     (GtkWidget *, GdkEvent *, gpointer);
 
-static void  offset_toggle_update     (GtkWidget *widget,
-				       gpointer   data);
-static void  offset_wraparound_update (GtkWidget *widget,
-				       gpointer   data);
-static void  offset_halfheight_update (GtkWidget *widget,
-				       gpointer   data);
+static void  offset_wraparound_update   (GtkWidget *, gpointer);
+static void  offset_fill_type_update    (GtkWidget *, gpointer);
+static void  offset_halfheight_callback (GtkWidget *, gpointer);
 
 
 void
 channel_ops_offset (GimpImage* gimage)
 {
   OffsetDialog *off_d;
-  GtkWidget *button;
   GtkWidget *label;
   GtkWidget *check;
   GtkWidget *push;
-  GtkWidget *toggle;
   GtkWidget *vbox;
-  GtkWidget *toggle_vbox;
   GtkWidget *table;
+  GtkObject *adjustment;
+  GtkWidget *spinbutton;
+  GtkWidget *radio_box;
+  GtkWidget *radio_button;
   GSList *group = NULL;
+
   GimpDrawable *drawable;
+
+  static ActionAreaItem action_items[] =
+  {
+    { N_("OK"), offset_ok_callback, NULL, NULL },
+    { N_("Cancel"), offset_cancel_callback, NULL, NULL }
+  };
 
   drawable = gimage_active_drawable (gimage);
 
   off_d = g_new (OffsetDialog, 1);
   off_d->wrap_around = TRUE;
-  off_d->transparent = drawable_has_alpha (drawable);
-  off_d->background = !off_d->transparent;
-  off_d->gimage = gimage;
+  off_d->fill_type   = drawable_has_alpha (drawable);
+  off_d->gimage      = gimage;
 
   off_d->dlg = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (off_d->dlg), "offset", "Gimp");
   gtk_window_set_title (GTK_WINDOW (off_d->dlg), _("Offset"));
 
-  /* handle the wm close signal */
+  /*  Handle the wm close signal  */
   gtk_signal_connect (GTK_OBJECT (off_d->dlg), "delete_event",
 		      GTK_SIGNAL_FUNC (offset_delete_callback),
 		      off_d);
 
-  /*  Action area  */
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) offset_ok_callback,
-                      off_d);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (off_d->dlg)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) offset_cancel_callback,
-                      off_d);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (off_d->dlg)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
   /*  The vbox for first column of options  */
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (off_d->dlg)->vbox), vbox, TRUE, TRUE, 0);
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (off_d->dlg)->vbox), vbox);
 
-  /*  the table for offsets  */
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
+  /*  The table for the offsets  */
+  table = gtk_table_new (3, 2, FALSE);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
+  /*  The offset labels  */
   label = gtk_label_new (_("Offset X:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 2, 2);
-  off_d->off_x_entry = gtk_entry_new ();
-  gtk_entry_set_text (GTK_ENTRY (off_d->off_x_entry), "0");
-  gtk_widget_set_usize (off_d->off_x_entry, ENTRY_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), off_d->off_x_entry, 1, 2, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL, 2, 2);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
   gtk_widget_show (label);
-  gtk_widget_show (off_d->off_x_entry);
 
-  label = gtk_label_new (_("Offset Y:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL, GTK_FILL, 2, 2);
-  off_d->off_y_entry = gtk_entry_new ();
-  gtk_entry_set_text (GTK_ENTRY (off_d->off_y_entry), "0");
-  gtk_widget_set_usize (off_d->off_y_entry, ENTRY_WIDTH, 0);
-  gtk_table_attach (GTK_TABLE (table), off_d->off_y_entry, 1, 2, 1, 2, GTK_FILL | GTK_EXPAND, GTK_FILL, 2, 2);
+  label = gtk_label_new (_("Y:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
   gtk_widget_show (label);
-  gtk_widget_show (off_d->off_y_entry);
+
+  /*  The offset sizeentry  */
+  adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
+  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 2);
+  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
+                                   GTK_SHADOW_NONE);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  gtk_widget_set_usize (spinbutton, 75, 0);
+  
+  off_d->off_se = gimp_size_entry_new (1, gimage->unit, "%a",
+				       TRUE, TRUE, FALSE, 75,
+				       GIMP_SIZE_ENTRY_UPDATE_SIZE);
+  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (off_d->off_se),
+                             GTK_SPIN_BUTTON (spinbutton), NULL);
+  gtk_table_attach_defaults (GTK_TABLE (off_d->off_se), spinbutton,
+                             1, 2, 0, 1);
+  gtk_widget_show (spinbutton);
+  gtk_table_attach (GTK_TABLE (table), off_d->off_se, 1, 2, 0, 2,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (off_d->off_se);
+
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (off_d->off_se), UNIT_PIXEL);
+
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (off_d->off_se), 0,
+                                  gimage->xresolution, FALSE);
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (off_d->off_se), 1,
+                                  gimage->yresolution, FALSE);
+
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (off_d->off_se), 0,
+                                         -gimage->width, gimage->width);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (off_d->off_se), 1,
+					 -gimage->height, gimage->height);
+
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (off_d->off_se), 0,
+                            0, gimage->width);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (off_d->off_se), 1,
+                            0, gimage->height);
+
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (off_d->off_se), 0, 0);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (off_d->off_se), 1, 0);
+
   gtk_widget_show (table);
 
-  /*  the wrap around option  */
+  /*  The wrap around option  */
   check = gtk_check_button_new_with_label (_("Wrap-Around"));
   gtk_box_pack_start (GTK_BOX (vbox), check, FALSE, FALSE, 0);
   gtk_widget_show (check);
 
   /*  The fill options  */
   off_d->fill_options = gtk_frame_new (_("Fill Options"));
-  gtk_frame_set_shadow_type (GTK_FRAME (off_d->fill_options), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), off_d->fill_options, FALSE, TRUE, 0);
-  toggle_vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 5);
-  gtk_container_add (GTK_CONTAINER (off_d->fill_options), toggle_vbox);
+  gtk_box_pack_start (GTK_BOX (vbox), off_d->fill_options, FALSE, FALSE, 0);
 
-  toggle = gtk_radio_button_new_with_label (group, _("Background"));
-  group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) offset_toggle_update,
-		      &off_d->background);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), off_d->background);
-  gtk_widget_show (toggle);
+  radio_box = gtk_vbox_new (FALSE, 1);
+  gtk_container_set_border_width (GTK_CONTAINER (radio_box), 2);
+  gtk_container_add (GTK_CONTAINER (off_d->fill_options), radio_box);
+
+  radio_button = gtk_radio_button_new_with_label (group, _("Background"));
+  group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
+  gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
+  gtk_object_set_data (GTK_OBJECT (radio_button), "merge_type",
+		       (gpointer) OFFSET_BACKGROUND);
+  gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
+		      (GtkSignalFunc) offset_fill_type_update,
+		      &off_d->fill_type);
+  gtk_widget_show (radio_button);
 
   if (drawable_has_alpha (drawable))
     {
-      toggle = gtk_radio_button_new_with_label (group, _("Transparent"));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
-      gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-			  (GtkSignalFunc) offset_toggle_update,
-			  &off_d->transparent);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), off_d->transparent);
-      gtk_widget_show (toggle);
+      radio_button = gtk_radio_button_new_with_label (group, _("Transparent"));
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
+      gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
+      gtk_object_set_data (GTK_OBJECT (radio_button), "merge_type",
+			   (gpointer) OFFSET_TRANSPARENT);
+      gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
+			  (GtkSignalFunc) offset_fill_type_update,
+			  &off_d->fill_type);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_button), TRUE);
+      gtk_widget_show (radio_button);
     }
 
-  /*  the by half height and half width offtion */
+  /*  The by half height and half width option */
   push = gtk_button_new_with_label (_("Offset by (x/2),(y/2)"));
-  gtk_box_pack_start (GTK_BOX (vbox), push, FALSE, FALSE,0);
+  gtk_container_set_border_width (GTK_CONTAINER (push), 2);
+  gtk_box_pack_start (GTK_BOX (vbox), push, FALSE, FALSE, 0);
   gtk_widget_show (push);
 
-  gtk_widget_show (toggle_vbox);
+  gtk_widget_show (radio_box);
   gtk_widget_show (off_d->fill_options);
-  gtk_widget_show (vbox);
-  gtk_widget_show (off_d->dlg);
 
   /*  Hook up the wrap around  */
   gtk_signal_connect (GTK_OBJECT (check), "toggled",
@@ -198,20 +216,27 @@ channel_ops_offset (GimpImage* gimage)
 		      off_d);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), off_d->wrap_around);
 
-  /* Hook up the by half */
+  /*  Hook up the by half  */
   gtk_signal_connect (GTK_OBJECT (push), "clicked",
-		      (GtkSignalFunc) offset_halfheight_update,
+		      (GtkSignalFunc) offset_halfheight_callback,
 		      off_d);
+
+  action_items[0].user_data = off_d;
+  action_items[1].user_data = off_d;
+  build_action_area (GTK_DIALOG (off_d->dlg), action_items, 2, 0);
+
+  gtk_widget_show (vbox);
+  gtk_widget_show (off_d->dlg);
 }
 
 
 void
-offset (GimpImage *gimage,
+offset (GimpImage    *gimage,
 	GimpDrawable *drawable,
-	int     wrap_around,
-	int     fill_type,
-	int     offset_x,
-	int     offset_y)
+	gboolean      wrap_around,
+	gint          fill_type,
+	gint          offset_x,
+	gint          offset_y)
 {
   PixelRegion srcPR, destPR;
   TileManager *new_tiles;
@@ -446,25 +471,23 @@ offset_ok_callback (GtkWidget *widget,
 		    gpointer   data)
 {
   OffsetDialog *off_d;
-  GImage *gimage;
+  GImage       *gimage;
   GimpDrawable *drawable;
-  int offset_x, offset_y;
-  int fill_type;
+  gint offset_x;
+  gint offset_y;
 
   off_d = (OffsetDialog *) data;
   if ((gimage = off_d->gimage) != NULL)
     {
       drawable = gimage_active_drawable (gimage);
 
-      offset_x = (int) atof (gtk_entry_get_text (GTK_ENTRY (off_d->off_x_entry)));
-      offset_y = (int) atof (gtk_entry_get_text (GTK_ENTRY (off_d->off_y_entry)));
+      offset_x = (gint)
+	(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (off_d->off_se), 0) + 0.5);
+      offset_y = (gint)
+	(gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (off_d->off_se), 1) + 0.5);
 
-      if (off_d->transparent)
-	fill_type = OFFSET_TRANSPARENT;
-      else
-	fill_type = OFFSET_BACKGROUND;
-
-      offset (gimage, drawable, off_d->wrap_around, fill_type, offset_x, offset_y);
+      offset (gimage, drawable, off_d->wrap_around, off_d->fill_type,
+	      offset_x, offset_y);
       gdisplays_flush ();
     }
 
@@ -474,8 +497,8 @@ offset_ok_callback (GtkWidget *widget,
 
 static gint
 offset_delete_callback (GtkWidget *widget,
-			GdkEvent *event,
-			gpointer data)
+			GdkEvent  *event,
+			gpointer   data)
 {
   offset_cancel_callback (widget, data);
 
@@ -494,20 +517,6 @@ offset_cancel_callback (GtkWidget *widget,
 }
 
 static void
-offset_toggle_update (GtkWidget *widget,
-		      gpointer   data)
-{
-  int *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-}
-
-static void
 offset_wraparound_update (GtkWidget *widget,
 			  gpointer   data)
 {
@@ -515,30 +524,39 @@ offset_wraparound_update (GtkWidget *widget,
 
   off_d = (OffsetDialog *) data;
 
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    off_d->wrap_around = TRUE;
-  else
-    off_d->wrap_around = FALSE;
+  off_d->wrap_around =  GTK_TOGGLE_BUTTON (widget)->active ? TRUE : FALSE;
 
   gtk_widget_set_sensitive (off_d->fill_options, !off_d->wrap_around);
 }
 
 static void
-offset_halfheight_update (GtkWidget *widget,
-			  gpointer data)
+offset_fill_type_update (GtkWidget *widget,
+			 gpointer   data)
+{
+  OffsetDialog *off_d;
+
+  off_d = (OffsetDialog *) data;
+
+  if (GTK_TOGGLE_BUTTON (widget)->active)
+    off_d->fill_type =
+      (ChannelOffsetType) gtk_object_get_data (GTK_OBJECT (widget), "fill_type");
+
+}
+
+static void
+offset_halfheight_callback (GtkWidget *widget,
+			    gpointer   data)
 {
   OffsetDialog *off_d;
   GImage *gimage;
-  gchar buffer[16];
 
   off_d = (OffsetDialog *) data;
   gimage = off_d->gimage;
 
-  sprintf (buffer, "%d", gimage->width / 2);
-  gtk_entry_set_text (GTK_ENTRY (off_d->off_x_entry), buffer);
-
-  sprintf (buffer, "%d", gimage->height / 2);
-  gtk_entry_set_text (GTK_ENTRY (off_d->off_y_entry), buffer);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (off_d->off_se),
+			      0, gimage->width / 2);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (off_d->off_se),
+			      1, gimage->width / 2);
 }
 
 GimpImage *
@@ -556,19 +574,19 @@ duplicate (GimpImage *gimage)
   Channel *active_channel = NULL;
   GimpDrawable *new_floating_sel_drawable = NULL;
   GimpDrawable *floating_sel_drawable = NULL;
-  int count;
+  gint count;
 
-
-  gimp_add_busy_cursors_until_idle();
+  gimp_add_busy_cursors_until_idle ();
 
   /*  Create a new image  */
   new_gimage = gimage_new (gimage->width, gimage->height, gimage->base_type);
   gimage_disable_undo (new_gimage);
 
-  /* Copy-on-write the projection tilemanager so we don't have
-     to reproject the new gimage - since if we do the duplicate
-     operation correctly, the projection for the new gimage is
-     identical to that of the source. */
+  /*  Copy-on-write the projection tilemanager so we don't have
+   *  to reproject the new gimage - since if we do the duplicate
+   *  operation correctly, the projection for the new gimage is
+   *  identical to that of the source.
+   */
   new_gimage->construct_flag = gimage->construct_flag;
   new_gimage->proj_type = gimage->proj_type;
   new_gimage->proj_bytes = gimage->proj_bytes;
@@ -577,8 +595,7 @@ duplicate (GimpImage *gimage)
 		     gimage->width, gimage->height, FALSE);
   pixel_region_init (&destPR, gimp_image_projection (new_gimage), 0, 0,
 		     new_gimage->width, new_gimage->height, TRUE);
-  /* We don't want to copy a half-redrawn projection, so force
-     a flush. */
+  /*  We don't want to copy a half-redrawn projection, so force a flush.  */
   gdisplays_finish_draw();
   copy_region(&srcPR, &destPR);
 

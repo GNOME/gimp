@@ -44,7 +44,6 @@
 #include "lc_dialogP.h"
 #include "menus.h"
 #include "ops_buttons.h"
-#include "paint_funcs.h"
 #include "bezier_select.h"
 #include "bezier_selectP.h"
 #include "pathsP.h"
@@ -285,7 +284,7 @@ GtkWidget * paths_dialog_create()
       gtk_box_pack_start (GTK_BOX (vbox), button_box, FALSE, TRUE, 2);
       gtk_widget_show (button_box);
 
-      gtk_container_border_width (GTK_CONTAINER (vbox), 2);
+      gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
       
       scrolled_win = gtk_scrolled_window_new (NULL, NULL);
       gtk_box_pack_start(GTK_BOX(vbox), scrolled_win, TRUE, TRUE, 0); 
@@ -1216,25 +1215,26 @@ do_rename_paths_callback(GtkWidget *widget, gpointer call_data, gpointer client_
 }
 
 static void
-paths_dialog_edit_path_query(GtkWidget *widget)
+paths_dialog_edit_path_query (GtkWidget *widget)
 {
+  GdkBitmap *mask;
   gchar *text;
   gint   ret;
-  GdkBitmap *mask;
-  /* Get the current name */
-  ret = gtk_clist_get_pixtext(GTK_CLIST(paths_dialog->paths_list),
-			      paths_dialog->selected_row_num,
-			      1,
-			      &text,
-			      NULL,
-			      NULL,
-			      &mask);
 
-  query_string_box(N_("Rename path"),
-		   N_("Enter a new name for the path"),
-		   text,
-		   NULL, NULL,
-		   do_rename_paths_callback, widget);
+  /* Get the current name */
+  ret = gtk_clist_get_pixtext (GTK_CLIST (paths_dialog->paths_list),
+			       paths_dialog->selected_row_num,
+			       1,
+			       &text,
+			       NULL,
+			       NULL,
+			       &mask);
+
+  gtk_widget_show (query_string_box (_("Rename path"),
+				     _("Enter a new name for the path"),
+				     text,
+				     NULL, NULL,
+				     do_rename_paths_callback, widget));
 }
 
 static gint

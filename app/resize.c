@@ -64,18 +64,18 @@ struct _ResizePrivate
   gint    orig_x, orig_y;
 };
 
-static void resize_draw (Resize *);
-static void unit_update (GtkWidget *w, gpointer data);
-static gint resize_bound_off_x (Resize *, gint);
-static gint resize_bound_off_y (Resize *, gint);
-static void orig_labels_update (GtkWidget *w, gpointer data);
-static void size_callback (GtkWidget *w, gpointer data);
-static void ratio_callback (GtkWidget *w, gpointer data);
-static void size_update (Resize *, gdouble, gdouble, gdouble, gdouble);
-static void offset_update (GtkWidget *w, gpointer data);
-static gint resize_events (GtkWidget *area, GdkEvent *event);
-static void printsize_update (GtkWidget *w, gpointer data);
-static void resolution_update (GtkWidget *w, gpointer data);
+static void  resize_draw        (Resize *);
+static void  unit_update        (GtkWidget *, gpointer);
+static gint  resize_bound_off_x (Resize *, gint);
+static gint  resize_bound_off_y (Resize *, gint);
+static void  orig_labels_update (GtkWidget *, gpointer);
+static void  size_callback      (GtkWidget *, gpointer);
+static void  ratio_callback     (GtkWidget *, gpointer);
+static void  size_update        (Resize *, gdouble, gdouble, gdouble, gdouble);
+static void  offset_update      (GtkWidget *, gpointer);
+static gint  resize_events      (GtkWidget *, GdkEvent *);
+static void  printsize_update   (GtkWidget *, gpointer);
+static void  resolution_update  (GtkWidget *, gpointer);
 
 
 Resize *
@@ -779,7 +779,7 @@ resize_bound_off_y (Resize *resize,
 }
 
 static void
-orig_labels_update (GtkWidget *w,
+orig_labels_update (GtkWidget *widget,
 		    gpointer   data)
 {
   Resize *resize;
@@ -793,7 +793,7 @@ orig_labels_update (GtkWidget *w,
   resize = (Resize *) data;
   private = (ResizePrivate *) resize->private_part;
 
-  unit = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (w));
+  unit = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (widget));
 
   if (unit != UNIT_PERCENT)
     label_unit = unit;
@@ -802,37 +802,37 @@ orig_labels_update (GtkWidget *w,
     {
       double unit_factor = gimp_unit_get_factor (label_unit);
   
-      g_snprintf (format_buf, 16, "%%.%df %s",
+      g_snprintf (format_buf, sizeof (format_buf), "%%.%df %s",
                   gimp_unit_get_digits (label_unit) + 1,
                   gimp_unit_get_symbol (label_unit));
-      g_snprintf (buf, 32, format_buf,
+      g_snprintf (buf, sizeof (buf), format_buf,
                   private->old_width * unit_factor / private->old_res_x);
       gtk_label_set_text (GTK_LABEL (private->orig_width_label), buf);
-      g_snprintf (buf, 32, format_buf,
+      g_snprintf (buf, sizeof (buf), format_buf,
                   private->old_height * unit_factor / private->old_res_y);
       gtk_label_set_text (GTK_LABEL (private->orig_height_label), buf);
     }
   else /* unit == UNIT_PIXEL */
     {
-      g_snprintf (buf, 32, "%d", private->old_width);
+      g_snprintf (buf, sizeof (buf), "%d", private->old_width);
       gtk_label_set_text (GTK_LABEL (private->orig_width_label), buf);
-      g_snprintf (buf, 32, "%d", private->old_height);
+      g_snprintf (buf, sizeof (buf), "%d", private->old_height);
       gtk_label_set_text (GTK_LABEL (private->orig_height_label), buf);
     }
 }
 
 static void
-unit_update (GtkWidget *w,
+unit_update (GtkWidget *widget,
 	     gpointer   data)
 {
   Resize *resize;
 
   resize = (Resize *) data;
-  resize->unit = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (w));
+  resize->unit = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (widget));
 }
 
 static void
-offset_update (GtkWidget *w,
+offset_update (GtkWidget *widget,
 	       gpointer   data)
 {
   Resize *resize;
@@ -861,7 +861,7 @@ offset_update (GtkWidget *w,
 }
 
 static void
-size_callback (GtkWidget *w,
+size_callback (GtkWidget *widget,
 	       gpointer   data)
 {
   Resize *resize;
@@ -900,7 +900,7 @@ size_callback (GtkWidget *w,
 }
 
 static void
-ratio_callback (GtkWidget *w,
+ratio_callback (GtkWidget *widget,
 		gpointer   data)
 {
   Resize *resize;
@@ -1006,7 +1006,7 @@ size_update (Resize *resize,
 }
 
 static void
-printsize_update (GtkWidget *w,
+printsize_update (GtkWidget *widget,
 		  gpointer   data)
 {
   Resize *resize;
@@ -1086,7 +1086,7 @@ printsize_update (GtkWidget *w,
 }
 
 static void
-resolution_update (GtkWidget *w,
+resolution_update (GtkWidget *widget,
 		   gpointer   data)
 {
   Resize *resize;

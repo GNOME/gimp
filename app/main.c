@@ -71,14 +71,14 @@ GimpSet* image_context;
 
 MessageHandlerType message_handler;
 
-char *prog_name;		/* The path name we are invoked with */
-char *alternate_gimprc;
-char *alternate_system_gimprc;
-char **batch_cmds;
+gchar  *prog_name;		/* The path name we are invoked with */
+gchar  *alternate_gimprc;
+gchar  *alternate_system_gimprc;
+gchar **batch_cmds;
 
 /* LOCAL data */
-static int gimp_argc;
-static char **gimp_argv;
+static gint    gimp_argc;
+static gchar **gimp_argv;
 
 /*
  *  argv processing: 
@@ -311,7 +311,7 @@ main (int argc, char **argv)
   if (show_version || show_help)
     exit (0);
 
-  g_set_message_handler ((GPrintFunc) message_func);
+  g_set_message_handler ((GPrintFunc) gimp_message_func);
 
   /* Handle some signals */
 #ifdef SIGHUP
@@ -394,8 +394,8 @@ on_error (const gchar    *domain,
 	  const gchar    *msg,
 	  gpointer        user_data)
 {
-  fprintf(stderr, "%s: fatal error: %s\n", prog_name, msg);
-  g_on_error_query(prog_name);
+  fprintf (stderr, "%s: fatal error: %s\n", prog_name, msg);
+  g_on_error_query (prog_name);
 }
 
 static int caught_fatal_sig = 0;
@@ -415,51 +415,51 @@ on_signal (int sig_num)
     {
 #ifdef SIGHUP
     case SIGHUP:
-      terminate (_("sighup caught"));
+      gimp_terminate (_("sighup caught"));
       break;
 #endif
 #ifdef SIGINT
     case SIGINT:
-      terminate (_("sigint caught"));
+      gimp_terminate (_("sigint caught"));
       break;
 #endif
 #ifdef SIGQUIT
     case SIGQUIT:
-      terminate (_("sigquit caught"));
+      gimp_terminate (_("sigquit caught"));
       break;
 #endif
 #ifdef SIGABRT
     case SIGABRT:
-      terminate (_("sigabrt caught"));
+      gimp_terminate (_("sigabrt caught"));
       break;
 #endif
 #ifdef SIGBUS
     case SIGBUS:
-      fatal_error (_("sigbus caught"));
+      gimp_fatal_error (_("sigbus caught"));
       break;
 #endif
 #ifdef SIGSEGV
     case SIGSEGV:
-      fatal_error (_("sigsegv caught"));
+      gimp_fatal_error (_("sigsegv caught"));
       break;
 #endif
 #ifdef SIGPIPE
     case SIGPIPE:
-      terminate (_("sigpipe caught"));
+      gimp_terminate (_("sigpipe caught"));
       break;
 #endif
 #ifdef SIGTERM
     case SIGTERM:
-      terminate (_("sigterm caught"));
+      gimp_terminate (_("sigterm caught"));
       break;
 #endif
 #ifdef SIGFPE
     case SIGFPE:
-      fatal_error (_("sigfpe caught"));
+      gimp_fatal_error (_("sigfpe caught"));
       break;
 #endif
     default:
-      fatal_error (_("unknown signal"));
+      gimp_fatal_error (_("unknown signal"));
       break;
     }
 }
@@ -553,12 +553,3 @@ test_gserialize (void)
   g_free (to);
   g_free_serial_description (test_struct_descript);
 }
-
-
-
-
-
-
-
-
-

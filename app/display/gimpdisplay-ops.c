@@ -24,7 +24,6 @@
 #include "cursorutil.h"
 #include "fileops.h"
 #include "gdisplay_ops.h"
-#include "general.h"
 #include "gimage.h"
 #include "gximage.h"
 #include "interface.h"
@@ -70,7 +69,8 @@ gdisplay_color_pixel (GDisplay *gdisp)
 
 
 void
-gdisplay_xserver_resolution (gdouble *xres, gdouble *yres)
+gdisplay_xserver_resolution (gdouble *xres,
+			     gdouble *yres)
 {
   gint width, height;
   gint widthMM, heightMM;
@@ -131,7 +131,6 @@ gdisplay_close_window (GDisplay *gdisp,
       gtk_widget_destroy (gdisp->shell);
     }
 }
-
 
 
 void
@@ -296,7 +295,7 @@ gdisplay_resize_image (GDisplay *gdisp)
  ********************************************************/
 
 static void
-gdisplay_close_warning_callback (GtkWidget *w,
+gdisplay_close_warning_callback (GtkWidget *widget,
 				 gpointer   client_data)
 {
   GDisplay *gdisp;
@@ -312,7 +311,7 @@ gdisplay_close_warning_callback (GtkWidget *w,
 
 
 static void
-gdisplay_cancel_warning_callback (GtkWidget *w,
+gdisplay_cancel_warning_callback (GtkWidget *widget,
 				  gpointer   client_data)
 {
   GtkWidget *mbox;
@@ -325,7 +324,7 @@ gdisplay_cancel_warning_callback (GtkWidget *w,
 static gint
 gdisplay_delete_warning_callback (GtkWidget *widget,
 				  GdkEvent  *event,
-				  gpointer  client_data)
+				  gpointer   client_data)
 {
   menus_set_sensitive_locale ("<Image>", N_("/File/Close"), TRUE);
 
@@ -334,7 +333,7 @@ gdisplay_delete_warning_callback (GtkWidget *widget,
 
 static void
 gdisplay_destroy_warning_callback (GtkWidget *widget,
-				  gpointer client_data)
+				   gpointer   client_data)
 {
   warning_dialog = NULL;
 }
@@ -381,11 +380,12 @@ gdisplay_close_warning_dialog (char     *image_name,
 		      mbox);
 
   vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 1);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (mbox)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  warning_buf = g_strdup_printf(_("Changes were made to %s. Close anyway?"), image_name);
+  warning_buf =
+    g_strdup_printf(_("Changes were made to %s. Close anyway?"), image_name);
   label = gtk_label_new (warning_buf);
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, FALSE, 0);
   gtk_widget_show (label);

@@ -530,101 +530,124 @@ ink_options_new (void)
 /*  the brush widget functions  */
 
 static void
-brush_widget_active_rect (BrushWidget *brush_widget, GtkWidget *w,
+brush_widget_active_rect (BrushWidget  *brush_widget,
+			  GtkWidget    *widget,
 			  GdkRectangle *rect)
 {
   int x,y;
   int r;
 
-  r = MIN(w->allocation.width,w->allocation.height)/2;
+  r = MIN (widget->allocation.width, widget->allocation.height) / 2;
 
-  x = w->allocation.width/2 + 0.85*r*ink_options->aspect/10. *
+  x = widget->allocation.width / 2 + 0.85 * r * ink_options->aspect / 10.0 *
     cos (ink_options->angle);
-  y = w->allocation.height/2 + 0.85*r*ink_options->aspect/10. *
+  y = widget->allocation.height / 2 + 0.85 * r * ink_options->aspect / 10.0 *
     sin (ink_options->angle);
 
-  rect->x = x-5;
-  rect->y = y-5;
+  rect->x = x - 5;
+  rect->y = y - 5;
   rect->width = 10;
   rect->height = 10;
 }
 
 static void
-brush_widget_realize (GtkWidget *w)
+brush_widget_realize (GtkWidget *widget)
 {
-  gtk_style_set_background (w->style, w->window, GTK_STATE_ACTIVE);
+  gtk_style_set_background (widget->style, widget->window, GTK_STATE_ACTIVE);
 }
 
 static void
-brush_widget_draw_brush (BrushWidget *brush_widget, GtkWidget *w,
-			 double xc, double yc, double radius)
+brush_widget_draw_brush (BrushWidget *brush_widget,
+			 GtkWidget   *widget,
+			 gdouble      xc,
+			 gdouble      yc,
+			 gdouble      radius)
 {
-  Blob *b;
+  Blob *blob;
 
-  b = ink_options->function (xc,yc,
-			     radius*cos(ink_options->angle),
-			     radius*sin(ink_options->angle),
-			     -(radius/ink_options->aspect)*sin(ink_options->angle),
-			     (radius/ink_options->aspect)*cos(ink_options->angle));
+  blob = ink_options->function (xc, yc,
+				radius * cos (ink_options->angle),
+				radius * sin (ink_options->angle),
+				(- (radius / ink_options->aspect) *
+				 sin (ink_options->angle)),
+				((radius / ink_options->aspect) *
+				 cos (ink_options->angle)));
 
-  paint_blob (w->window, w->style->fg_gc[w->state],b);
-  g_free (b);
+  paint_blob (widget->window, widget->style->fg_gc[widget->state], blob);
+  g_free (blob);
 }
 
 static void
-brush_widget_expose (GtkWidget *w, GdkEventExpose *event,
-		     BrushWidget *brush_widget)
+brush_widget_expose (GtkWidget      *widget,
+		     GdkEventExpose *event,
+		     BrushWidget    *brush_widget)
 {
   GdkRectangle rect;
   int r0;
-  
-  r0 = MIN(w->allocation.width,w->allocation.height)/2;
+
+  r0 = MIN (widget->allocation.width, widget->allocation.height) / 2;
 
   if (r0 < 2)
     return;
 
-  gdk_window_clear_area(w->window,
-			0,0,w->allocation.width,
-			w->allocation.height);
-  brush_widget_draw_brush (brush_widget, w,
-			   w->allocation.width/2, w->allocation.height/2,
-			   0.9*r0);
+  gdk_window_clear_area (widget->window, 0, 0,
+			 widget->allocation.width,
+			 widget->allocation.height);
+  brush_widget_draw_brush (brush_widget, widget,
+			   widget->allocation.width / 2,
+			   widget->allocation.height / 2,
+			   0.9 * r0);
 
-  brush_widget_active_rect (brush_widget, w, &rect);
-  gdk_draw_rectangle (w->window, w->style->bg_gc[GTK_STATE_NORMAL],
+  brush_widget_active_rect (brush_widget, widget, &rect);
+  gdk_draw_rectangle (widget->window, widget->style->bg_gc[GTK_STATE_NORMAL],
 		      TRUE,	/* filled */
 		      rect.x, rect.y, 
 		      rect.width, rect.height);
-  gtk_draw_shadow (w->style, w->window, w->state, GTK_SHADOW_OUT,
+  gtk_draw_shadow (widget->style, widget->window, widget->state, GTK_SHADOW_OUT,
 		   rect.x, rect.y,
 		   rect.width, rect.height);
 }
 
 static void
-brush_widget_button_press (GtkWidget *w, GdkEventButton *event,
-			   BrushWidget *brush_widget)
+brush_widget_button_press (GtkWidget      *widget,
+			   GdkEventButton *event,
+			   BrushWidget    *brush_widget)
 {
   GdkRectangle rect;
 
-  brush_widget_active_rect (brush_widget, w, &rect);
+  brush_widget_active_rect (brush_widget, widget, &rect);
   
   if ((event->x >= rect.x) && (event->x-rect.x < rect.width) &&
       (event->y >= rect.y) && (event->y-rect.y < rect.height))
     {
       brush_widget->state = TRUE;
+
+      /*  theoretically, this should work. Dunno why it doesn't --Michael
+      gdk_pointer_grab (brush_widget->widget->window, TRUE,
+			GDK_POINTER_MOTION_HINT_MASK |
+			GDK_BUTTON1_MOTION_MASK |
+			GDK_BUTTON_RELEASE_MASK,
+			NULL, NULL, event->time);
+      */
     }
 }
 
 static void
-brush_widget_button_release (GtkWidget *w, GdkEventButton *event,
-			    BrushWidget *brush_widget)
+brush_widget_button_release (GtkWidget      *widget,
+			     GdkEventButton *event,
+			     BrushWidget    *brush_widget)
 {
   brush_widget->state = FALSE;
+
+  /*
+  gdk_pointer_ungrab (event->time);
+  */
 }
 
 static void
-brush_widget_motion_notify (GtkWidget *w, GdkEventMotion *event,
-			    BrushWidget *brush_widget)
+brush_widget_motion_notify (GtkWidget      *widget,
+			    GdkEventMotion *event,
+			    BrushWidget    *brush_widget)
 {
   int x;
   int y;
@@ -633,24 +656,24 @@ brush_widget_motion_notify (GtkWidget *w, GdkEventMotion *event,
 
   if (brush_widget->state)
     {
-      x = event->x - w->allocation.width/2;
-      y = event->y - w->allocation.height/2;
+      x = event->x - widget->allocation.width / 2;
+      y = event->y - widget->allocation.height / 2;
       rsquare = x*x + y*y;
 
       if (rsquare != 0)
 	{
-	  ink_options->angle = atan2(y,x);
+	  ink_options->angle = atan2 (y, x);
 
-	  r0 = MIN(w->allocation.width,w->allocation.height)/2;
+	  r0 = MIN (widget->allocation.width, widget->allocation.height) / 2;
 	  ink_options->aspect =
-	    10. * sqrt((double)rsquare/(r0*r0)) / 0.85;
+	    10.0 * sqrt ((double) rsquare / (r0 * r0)) / 0.85;
 
 	  if (ink_options->aspect < 1.0)
 	    ink_options->aspect = 1.0;
 	  if (ink_options->aspect > 10.0)
 	    ink_options->aspect = 10.0;
 
-	  gtk_widget_draw(w, NULL);
+	  gtk_widget_draw (widget, NULL);
 	}
     }
 }

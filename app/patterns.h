@@ -25,24 +25,27 @@ typedef struct _GPattern  GPattern, * GPatternP;
 
 struct _GPattern
 {
-  char *     filename;     /*  actual filename--pattern's location on disk   */
-  char *     name;         /*  pattern's name--for pattern selection dialog  */
-  int        index;        /*  pattern's index...                            */
-  TempBuf *  mask;         /*  the actual mask...                            */
+  gchar   * filename;     /*  actual filename--pattern's location on disk   */
+  gchar   * name;         /*  pattern's name--for pattern selection dialog  */
+  gint      index;        /*  pattern's index...                            */
+  TempBuf * mask;         /*  the actual mask...                            */
 };
 
 /*  function declarations  */
-void                patterns_init              (int no_data);
-void                patterns_free              (void);
-void                pattern_select_dialog_free (void);
-void                select_pattern             (GPatternP);
-GPatternP           get_pattern_by_index       (int);
-GPatternP           get_active_pattern         (void);
-GPatternP           pattern_list_get_pattern   (GSList *list, char *name);
-void                create_pattern_dialog      (void);
+void       patterns_init              (gboolean   no_data);
+void       patterns_free              (void);
+
+void       select_pattern             (GPatternP  pattern);
+GPatternP  get_pattern_by_index       (gint       index);
+GPatternP  get_active_pattern         (void);
+GPatternP  pattern_list_get_pattern   (GSList    *list,
+				       gchar     *name);
+
+void       create_pattern_dialog      (void);
+void       pattern_select_dialog_free (void);
 
 /*  global variables  */
-extern GSList *     pattern_list;
-extern int          num_patterns;
+extern GSList * pattern_list;
+extern gint     num_patterns;
 
 #endif  /*  __PATTERNS_H__  */

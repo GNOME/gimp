@@ -18,8 +18,8 @@
 #ifndef __ERRORS_H__
 #define __ERRORS_H__
 
-void message_func (char *);
-void fatal_error (char *, ...);
-void terminate (char *, ...);
+void  gimp_message_func (gchar *);
+void  gimp_fatal_error  (gchar *, ...);
+void  gimp_terminate    (gchar *, ...);
 
 #endif /* __ERRORS_H__ */

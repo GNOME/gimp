@@ -31,9 +31,9 @@ extern GtkTooltips * tool_tips;
 
 /*  function declarations  */
 GtkWidget *  create_pixmap_widget   (GdkWindow   *parent,
-				     char       **data,
-				     int          width,
-				     int          height);
+				     gchar      **data,
+				     gint         width,
+				     gint         height);
 
 GdkPixmap *  create_tool_pixmap     (GtkWidget   *parent,
 				     ToolType     type);
@@ -45,14 +45,16 @@ void         toolbox_raise_callback (GtkWidget   *widget,
 				     gpointer     client_data);
 
 void         create_display_shell   (GDisplay    *gdisp,
-				     int          width,
-				     int          height,
-				     char        *title,
-				     int          type);
+				     gint         width,
+				     gint         height,
+				     gchar       *title,
+				     gint         type);
 
 /*  some simple query dialogs
  *  if object != NULL then the query boxes will connect their cancel callback
  *  to the provided signal of this object
+ *
+ *  it's the caller's job to show the returned widgets
  */
 GtkWidget *  query_string_box       (gchar       *title,
 				     gchar       *message,
@@ -95,11 +97,8 @@ GtkWidget *  query_size_box         (gchar       *title,
 				     gpointer     data);
 
 /*  a simple message box  */
-GtkWidget *  message_box            (char        *message,
+GtkWidget *  message_box            (gchar       *message,
 				     GtkCallback  callback,
 				     gpointer     data);
-
-void tools_push_label               (char *label);
-void tools_pop_label                (void);
 
 #endif /* __INTERFACE_H__ */

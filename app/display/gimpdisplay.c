@@ -15,11 +15,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "appenv.h"
-#include "buildmenu.h"
 #include "colormaps.h"
 #include "cursorutil.h"
 #include "disp_callbacks.h"
@@ -28,7 +26,6 @@
 #include "gdisplay.h"
 #include "gdisplayP.h"
 #include "gdisplay_ops.h"
-#include "general.h"
 #include "gimage_mask.h"
 #include "gimpcontext.h"
 #include "gimprc.h"
@@ -1080,22 +1077,22 @@ gdisplay_resize_cursor_label (GDisplay *gdisp)
 
   if (gdisp->dot_for_dot)
     {
-      g_snprintf (gdisp->cursor_format_str, sizeof(gdisp->cursor_format_str),
+      g_snprintf (gdisp->cursor_format_str, sizeof (gdisp->cursor_format_str),
 		  "%%s%%d%%s%%d");
-      g_snprintf (buffer, sizeof(buffer), gdisp->cursor_format_str,
+      g_snprintf (buffer, sizeof (buffer), gdisp->cursor_format_str,
 		  "", gdisp->gimage->width, ", ", gdisp->gimage->height);
     }
   else /* show real world units */
     {
       gdouble unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
 
-      g_snprintf (gdisp->cursor_format_str, sizeof(gdisp->cursor_format_str),
+      g_snprintf (gdisp->cursor_format_str, sizeof (gdisp->cursor_format_str),
 		  "%%s%%.%df%%s%%.%df %s",
 		  gimp_unit_get_digits (gdisp->gimage->unit),
 		  gimp_unit_get_digits (gdisp->gimage->unit),
 		  gimp_unit_get_symbol (gdisp->gimage->unit));
 
-      g_snprintf (buffer, sizeof(buffer), gdisp->cursor_format_str,
+      g_snprintf (buffer, sizeof (buffer), gdisp->cursor_format_str,
 		  "",
 		  (gdouble) gdisp->gimage->width * unit_factor /
 		  gdisp->gimage->xresolution,
@@ -1106,8 +1103,9 @@ gdisplay_resize_cursor_label (GDisplay *gdisp)
   cursor_label_width = 
     gdk_string_width (gtk_widget_get_style (gdisp->cursor_label)->font, buffer);
   
-  /* find out how many pixels the label's parent frame is bigger than
-   * the label itself */
+  /*  find out how many pixels the label's parent frame is bigger than
+   *  the label itself
+   */
   label_frame_size_difference =
     gdisp->cursor_label->parent->allocation.width -
     gdisp->cursor_label->allocation.width;

@@ -427,36 +427,35 @@ grad_select_delete_callback (GtkWidget *w,
 }
 
 GradSelectP
-gsel_new_selection(gchar * title,
-		   gchar * initial_gradient)
+gsel_new_selection (gchar * title,
+		    gchar * initial_gradient)
 {
-  GradSelectP gsp;
-  gradient_t *grad = NULL;
-  GSList     *list;
-  GtkWidget  *vbox;
-  GtkWidget  *hbox;
-  GtkWidget *scrolled_win;
+  GradSelectP  gsp;
+  gradient_t  *grad = NULL;
+  GSList      *list;
+  GtkWidget   *vbox;
+  GtkWidget   *hbox;
+  GtkWidget   *scrolled_win;
   GdkColormap *colormap;
-  int select_pos;
+  gint         select_pos;
 
   /* Load them if they are not already loaded */
-  if(g_editor == NULL)
+  if (g_editor == NULL)
     {
       grad_create_gradient_editor_init(FALSE);
     }
 
-  gsp = g_malloc(sizeof(_GradSelect));
+  gsp = g_malloc (sizeof (_GradSelect));
   gsp->callback_name = NULL;
   
   /*  The shell and main vbox  */
   gsp->shell = gtk_dialog_new ();
 
   gtk_window_set_wmclass (GTK_WINDOW (gsp->shell), "gradselection", "Gimp");
-  
-  gtk_window_set_policy(GTK_WINDOW(gsp->shell), FALSE, TRUE, FALSE);
+  gtk_window_set_policy (GTK_WINDOW (gsp->shell), FALSE, TRUE, FALSE);
 
   vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 1);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (gsp->shell)->vbox), vbox, TRUE, TRUE, 0);
 
   /* handle the wm close event */
@@ -467,38 +466,38 @@ gsel_new_selection(gchar * title,
   /* clist preview of gradients */
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
 
-  gsp->clist = gtk_clist_new(2);
-  gtk_clist_set_shadow_type(GTK_CLIST(gsp->clist), GTK_SHADOW_IN);
-  
-  gtk_clist_set_row_height(GTK_CLIST(gsp->clist), 18);
-  
-  gtk_clist_set_column_width(GTK_CLIST(gsp->clist), 0, 52);
-  gtk_clist_set_column_title(GTK_CLIST(gsp->clist), 0, _("Gradient"));
-  gtk_clist_set_column_title(GTK_CLIST(gsp->clist), 1, _("Name"));
-  gtk_clist_column_titles_show(GTK_CLIST(gsp->clist));
-  
-  hbox = gtk_hbox_new(FALSE, 8);
-  gtk_container_border_width(GTK_CONTAINER(hbox), 0);
-  gtk_box_pack_start(GTK_BOX(vbox), hbox, TRUE, TRUE, 0);
-  gtk_widget_show(hbox);
+  gsp->clist = gtk_clist_new (2);
+  gtk_clist_set_shadow_type (GTK_CLIST (gsp->clist), GTK_SHADOW_IN);
 
-  gtk_box_pack_start(GTK_BOX(hbox), scrolled_win, TRUE, TRUE, 0); 
+  gtk_clist_set_row_height (GTK_CLIST (gsp->clist), 18);
+
+  gtk_clist_set_column_width (GTK_CLIST (gsp->clist), 0, 52);
+  gtk_clist_set_column_title (GTK_CLIST (gsp->clist), 0, _("Gradient"));
+  gtk_clist_set_column_title (GTK_CLIST (gsp->clist), 1, _("Name"));
+  gtk_clist_column_titles_show (GTK_CLIST (gsp->clist));
+  
+  hbox = gtk_hbox_new (FALSE, 8);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
+  gtk_widget_show (hbox);
+
+  gtk_box_pack_start (GTK_BOX (hbox), scrolled_win, TRUE, TRUE, 0); 
   gtk_container_add (GTK_CONTAINER (scrolled_win), gsp->clist);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
-					GTK_POLICY_AUTOMATIC,
-					GTK_POLICY_ALWAYS);
+				  GTK_POLICY_AUTOMATIC,
+				  GTK_POLICY_ALWAYS);
 
-  gtk_widget_show(scrolled_win);
-  gtk_widget_show(gsp->clist);
+  gtk_widget_show (scrolled_win);
+  gtk_widget_show (gsp->clist);
   gtk_widget_set_usize (gsp->clist, 200, 250);
 
-  colormap = gtk_widget_get_colormap(gsp->clist);
-  gdk_color_parse("black", &gsp->black);
-  gdk_color_alloc(colormap, &gsp->black);
+  colormap = gtk_widget_get_colormap (gsp->clist);
+  gdk_color_parse ("black", &gsp->black);
+  gdk_color_alloc (colormap, &gsp->black);
 
-  gtk_signal_connect(GTK_OBJECT(gsp->clist), "select_row",
-		     GTK_SIGNAL_FUNC(sel_list_item_update),
-		     (gpointer) gsp);
+  gtk_signal_connect (GTK_OBJECT(gsp->clist), "select_row",
+		      GTK_SIGNAL_FUNC(sel_list_item_update),
+		      (gpointer) gsp);
 
   action_items[0].user_data = gsp;
   action_items[1].user_data = gsp;
@@ -512,39 +511,40 @@ gsel_new_selection(gchar * title,
     {
       gtk_window_set_title (GTK_WINDOW (gsp->shell), title);
     }
-  if(initial_gradient && strlen(initial_gradient))
+
+  if (initial_gradient && strlen (initial_gradient))
     {
       list = gradients_list;
       while (list) 
 	{
 	  grad = list->data;
-	  if (strcmp(grad->name, initial_gradient) == 0) 
+	  if (strcmp (grad->name, initial_gradient) == 0) 
 	    {
 	      /* We found it! */
 	      break;
 	    }
-	  list = g_slist_next(list);
+	  list = g_slist_next (list);
 	} 
     }
-  
-  if(grad == NULL)
+
+  if (grad == NULL)
     grad = curr_gradient;
 
   gsp->grad = grad;
 
-  gtk_widget_realize(gsp->shell);
-  gsp->gc = gdk_gc_new(gsp->shell->window);
+  gtk_widget_realize (gsp->shell);
+  gsp->gc = gdk_gc_new (gsp->shell->window);
   
-  select_pos = ed_set_list_of_gradients(gsp->gc, 
- 					gsp->clist, 
- 					grad); 
+  select_pos = ed_set_list_of_gradients (gsp->gc, 
+					 gsp->clist, 
+					 grad); 
 
   /* Now show the dialog */
-  gtk_widget_show(vbox);
-  gtk_widget_show(gsp->shell);
+  gtk_widget_show (vbox);
+  gtk_widget_show (gsp->shell);
 
-  if(select_pos != -1) 
-    gtk_clist_moveto(GTK_CLIST(gsp->clist),select_pos,0,0.0,0.0); 
+  if (select_pos != -1) 
+    gtk_clist_moveto (GTK_CLIST(gsp->clist),select_pos,0,0.0,0.0); 
 
   return gsp;
 }

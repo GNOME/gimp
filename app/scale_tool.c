@@ -230,7 +230,7 @@ scale_info_update (Tool *tool)
 
   if (label_unit) /* unit != UNIT_PIXEL */
     {
-      g_snprintf (format_buf, 16, "%%.%df %s",
+      g_snprintf (format_buf, sizeof (format_buf), "%%.%df %s",
 		  gimp_unit_get_digits (label_unit) + 1,
 		  gimp_unit_get_symbol (label_unit));
       g_snprintf (orig_width_buf, MAX_INFO_BUF, format_buf,

@@ -732,7 +732,7 @@ really_quit_dialog (void)
   gtk_window_set_wmclass (GTK_WINDOW (dialog), "really_quit", "Gimp");
   gtk_window_set_title (GTK_WINDOW (dialog), _("Really Quit?"));
   gtk_window_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
-  gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
 
   gtk_signal_connect (GTK_OBJECT (dialog), "delete_event",
 		      (GtkSignalFunc) really_quit_delete_callback,

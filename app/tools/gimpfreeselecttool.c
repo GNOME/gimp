@@ -62,7 +62,9 @@ static int                max_segs = 0;
 /*  functions  */
 
 static int
-add_point (int num_pts, int x, int y)
+add_point (int num_pts,
+	   int x,
+	   int y)
 {
   if (num_pts >= max_segs)
     {
@@ -71,7 +73,7 @@ add_point (int num_pts, int x, int y)
       global_pts = (GdkPoint *) g_realloc ((void *) global_pts, sizeof (GdkPoint) * max_segs);
 
       if (!global_pts)
-	fatal_error ("Unable to reallocate points array in free_select.");
+	gimp_fatal_error (_("add_point(): Unable to reallocate points array in free_select."));
     }
 
   global_pts[num_pts].x = x;
@@ -84,7 +86,8 @@ add_point (int num_pts, int x, int y)
 /*  Routines to scan convert the polygon  */
 
 static GSList *
-insert_into_sorted_list (GSList *list, int x)
+insert_into_sorted_list (GSList *list,
+			 int     x)
 {
   GSList *orig = list;
   GSList *rest;
@@ -114,8 +117,13 @@ insert_into_sorted_list (GSList *list, int x)
 }
 
 static void
-convert_segment (GSList **scanlines, int width, int height,
-		 int x1, int y1, int x2, int y2)
+convert_segment (GSList **scanlines,
+		 int      width,
+		 int      height,
+		 int      x1,
+		 int      y1,
+		 int      x2,
+		 int      y2)
 {
   int ydiff, y, tmp;
   float xinc, xstart;
@@ -139,8 +147,12 @@ convert_segment (GSList **scanlines, int width, int height,
 }
 
 static Channel *
-scan_convert (GimpImage* gimage, int num_pts, FreeSelectPoint *pts,
-	      int width, int height, int antialias)
+scan_convert (GimpImage       *gimage,
+	      int              num_pts,
+	      FreeSelectPoint *pts,
+	      int              width,
+	      int              height,
+	      int              antialias)
 {
   PixelRegion maskPR;
   Channel * mask;
@@ -274,8 +286,13 @@ scan_convert (GimpImage* gimage, int num_pts, FreeSelectPoint *pts,
 /*  Polygonal selection apparatus    */
 
 void
-free_select (GImage *gimage, int num_pts, FreeSelectPoint *pts, int op,
-	     int antialias, int feather, double feather_radius)
+free_select (GImage          *gimage,
+	     int              num_pts,
+	     FreeSelectPoint *pts,
+	     int              op,
+	     int              antialias,
+	     int              feather,
+	     double           feather_radius)
 {
   Channel *mask;
 
@@ -303,8 +320,9 @@ free_select (GImage *gimage, int num_pts, FreeSelectPoint *pts, int op,
 }
 
 void
-free_select_button_press (Tool *tool, GdkEventButton *bevent,
-			  gpointer gdisp_ptr)
+free_select_button_press (Tool           *tool,
+			  GdkEventButton *bevent,
+			  gpointer        gdisp_ptr)
 {
   GDisplay *gdisp;
   FreeSelect *free_sel;
@@ -313,7 +331,9 @@ free_select_button_press (Tool *tool, GdkEventButton *bevent,
   free_sel = (FreeSelect *) tool->private;
 
   gdk_pointer_grab (gdisp->canvas->window, FALSE,
-		    GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
+		    GDK_POINTER_MOTION_HINT_MASK |
+		    GDK_BUTTON1_MOTION_MASK |
+		    GDK_BUTTON_RELEASE_MASK,
 		    NULL, NULL, bevent->time);
 
   tool->state = ACTIVE;
@@ -338,8 +358,9 @@ free_select_button_press (Tool *tool, GdkEventButton *bevent,
 }
 
 void
-free_select_button_release (Tool *tool, GdkEventButton *bevent,
-			    gpointer gdisp_ptr)
+free_select_button_release (Tool           *tool,
+			    GdkEventButton *bevent,
+			    gpointer        gdisp_ptr)
 {
   FreeSelect *free_sel;
   FreeSelectPoint *pts;
@@ -378,7 +399,9 @@ free_select_button_release (Tool *tool, GdkEventButton *bevent,
 }
 
 void
-free_select_motion (Tool *tool, GdkEventMotion *mevent, gpointer gdisp_ptr)
+free_select_motion (Tool           *tool,
+		    GdkEventMotion *mevent,
+		    gpointer        gdisp_ptr)
 {
   FreeSelect *free_sel;
   GDisplay *gdisp;

@@ -18,20 +18,26 @@
 #ifndef __CHANNEL_OPS_H__
 #define __CHANNEL_OPS_H__
 
-#include "procedural_db.h"
 #include "gimpimageF.h"
 #include "gimpdrawableF.h"
 
-typedef enum {
+typedef enum
+{
   OFFSET_BACKGROUND,
   OFFSET_TRANSPARENT
 } ChannelOffsetType;
 
 /*  channel_ops functions  */
-void channel_ops_offset    (GimpImage *);
-void channel_ops_duplicate (GimpImage *);
+void  channel_ops_offset    (GimpImage *gimage);
+void  channel_ops_duplicate (GimpImage *gimage);
 
-void        offset    (GimpImage *, GimpDrawable *, gboolean, int, int, int);
-GimpImage * duplicate (GimpImage *);
+void        offset    (GimpImage    *gimage,
+		       GimpDrawable *drawable,
+		       gboolean      wrap_around,
+		       gint          fill_type,
+		       gint          offset_x,
+		       gint          offset_y);
+
+GimpImage * duplicate (GimpImage    *gimage);
 
 #endif  /*  __CHANNEL_OPS_H__  */

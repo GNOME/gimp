@@ -15,14 +15,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdlib.h>
-#include <stdio.h>
 #include <math.h>
 #include "appenv.h"
 #include "asupsample.h"
 #include "blend.h"
 #include "brush_select.h"
-#include "buildmenu.h"
 #include "cursorutil.h"
 #include "draw_core.h"
 #include "drawable.h"
@@ -32,7 +29,6 @@
 #include "gimage_mask.h"
 #include "gradient.h"
 #include "interface.h"
-#include "paint_funcs.h"
 #include "paint_options.h"
 #include "palette.h"
 #include "selection.h"
@@ -40,9 +36,10 @@
 #include "tools.h"
 #include "undo.h"
 
+#include "tile.h"
+
 #include "libgimp/gimpintl.h"
 
-#include "tile.h"
 
 /*  target size  */
 #define  TARGET_HEIGHT  15
@@ -199,14 +196,14 @@ static void calc_hsv_to_rgb(double *h, double *s, double *v);
 /*  functions  */
 
 static void
-blend_mode_callback (GtkWidget *w,
+blend_mode_callback (GtkWidget *widget,
 		     gpointer   client_data)
 {
   blend_options->blend_mode = (BlendMode) client_data;
 }
 
 static void
-gradient_type_callback (GtkWidget *w,
+gradient_type_callback (GtkWidget *widget,
 			gpointer   client_data)
 {
   blend_options->gradient_type = (GradientType) client_data;
@@ -639,7 +636,7 @@ blend_motion (Tool           *tool,
   gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), blend_tool->context_id);
   if (gdisp->dot_for_dot)
     {
-      g_snprintf (vector, STATUSBAR_SIZE, gdisp->cursor_format_str,
+      g_snprintf (vector, sizeof (vector), gdisp->cursor_format_str,
 		  _("Blend: "),
 		  abs(blend_tool->endx - blend_tool->startx),
 		  ", ",
@@ -649,7 +646,7 @@ blend_motion (Tool           *tool,
     {
       gdouble unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
 
-      g_snprintf (vector, STATUSBAR_SIZE, gdisp->cursor_format_str,
+      g_snprintf (vector, sizeof (vector), gdisp->cursor_format_str,
 		  _("Blend: "),
 		  abs(blend_tool->endx - blend_tool->startx) * unit_factor /
 		  gdisp->gimage->xresolution,
@@ -675,7 +672,8 @@ blend_cursor_update (Tool           *tool,
 
   switch (drawable_type (gimage_active_drawable (gdisp->gimage)))
     {
-    case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
+    case INDEXED_GIMAGE:
+    case INDEXEDA_GIMAGE:
       gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW);
       break;
     default:
@@ -1033,7 +1031,7 @@ gradient_calc_spiral_factor (double  dist,
 			     double  offset,
 			     double  x,
 			     double  y,
-			     gint cwise)
+			     gint    cwise)
 {
   double ang0, ang1;
   double ang, r;
@@ -1304,8 +1302,8 @@ gradient_render_pixel (double   x,
       break;
 
     default:
-      fatal_error(_("gradient_render_pixel(): unknown gradient type %d"),
-		  (int) rbd->gradient_type);
+      gimp_fatal_error(_("gradient_render_pixel(): Unknown gradient type %d"),
+		       (int) rbd->gradient_type);
       return;
     }
 
@@ -1442,8 +1440,8 @@ gradient_fill_region (GImage          *gimage,
       break;
 
     default:
-      fatal_error(_("gradient_fill_region(): unknown blend mode %d"),
-		  (int) blend_mode);
+      gimp_fatal_error(_("gradient_fill_region(): Unknown blend mode %d"),
+		       (int) blend_mode);
       break;
     }
 
@@ -1483,8 +1481,8 @@ gradient_fill_region (GImage          *gimage,
       break;
 
     default:
-      fatal_error(_("gradient_fill_region(): unknown gradient type %d"),
-		  (int) gradient_type);
+      gimp_fatal_error(_("gradient_fill_region(): Unknown gradient type %d"),
+		       (int) gradient_type);
       break;
     }
 
@@ -1505,8 +1503,8 @@ gradient_fill_region (GImage          *gimage,
       break;
 
     default:
-      fatal_error(_("gradient_fill_region(): unknown repeat mode %d"),
-		  (int) repeat);
+      gimp_fatal_error(_("gradient_fill_region(): Unknown repeat mode %d"),
+		       (int) repeat);
       break;
     }
 

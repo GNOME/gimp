@@ -1,3 +1,71 @@
+1999-07-22  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/channel_ops.[ch]: new ui for the "Layer Offset" dialog.
+
+	* app/channels_dialog.c
+	* app/layers_dialog.c: major code cleanup: Folded some callbacks
+	into common ones, "widget" instead of "w", indentation, ...
+
+	* app/commands.c
+	* app/interface.[ch]
+	* app/global_edit.c: the query boxes must be shown by the caller
+	now. There's no need to split up the string for the message box
+	manually as the Gtk 1.2 label widget handles newlines corectly.
+	Added the "edge_lock" toggle to the "Shrink Selection" dialog.
+	Nicer spacings for the query and message boxes.
+
+	* app/ink.c: tried to grab the pointer in the blob preview but
+	failed. Left the code there as a reminder (commented out).
+
+	* app/menus.c: reordered <Image>/Select.
+
+	I was bored and grep-ed the sources for ancient or deprecated stuff:
+
+	* app/about_dialog.[ch]
+	* app/actionarea.[ch]
+	* app/app_procs.c
+	* app/brush_edit.c
+	* app/brush_select.c
+	* app/color_select.c
+	* app/convert.c
+	* app/devices.c
+	* app/gdisplay.c
+	* app/gdisplay_ops.c
+	* app/histogram_tool.[ch]
+	* app/info_window.c
+	* app/install.c
+	* app/ops_buttons.c
+	* app/palette.c
+	* app/palette_select.c
+	* app/paths_dialog.c
+	* app/pattern_select.c
+	* app/resize.c
+	* app/scale_toolc.c
+	* app/text_tool.c:
+	s/container_border_width/container_set_border_width/g,
+	s/sprintf/g_snprintf/g, replaced some constant string lengths with
+	strlen(x).
+
+	* app/bezier_select.c
+	* app/blend.c
+	* app/boundary.c
+	* app/errors.[ch]
+	* app/free_select.c
+	* app/gimpbrushlist.c
+	* app/gimprc.c
+	* app/iscissors.c
+	* app/main.c
+	* app/patterns.[ch]
+	* app/text_tool.c: namespace fanaticism: prefixed all gimp error
+	functions with "gimp_" and formated the messages more uniformly.
+
+	* app/gradient.c
+	* app/gradient_select.c: same stuff as above for the ui
+	code. There are still some sub-dialogs which need cleanup.
+
+	Did some cleanup in most of these files: prototypes, removed tons
+	of #include's, i18n fixes, s/w/widget/ as above, indentation, ...
+
 1999-07-22  Tomas Ogren  <stric@ing.umu.se>
 
 	* plug-ins/common/gifload.c:

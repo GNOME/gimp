@@ -20,11 +20,8 @@
 #include "actionarea.h"
 #include "patterns.h"
 #include "pattern_select.h"
-#include "buildmenu.h"
 #include "colormaps.h"
-#include "disp_callbacks.h"
 #include "errors.h"
-#include "paint_funcs.h"
 #include "session.h"
 
 #include "libgimp/gimpintl.h"
@@ -90,7 +87,7 @@ pattern_select_new (gchar *title,
     { N_("Close"), pattern_select_close_callback, NULL, NULL }
   };
 
-  psp = g_malloc (sizeof (_PatternSelect));
+  psp = g_new (_PatternSelect, 1);
   psp->preview = NULL;
   psp->old_col = psp->old_row = 0;
   psp->callback_name = NULL;
@@ -112,14 +109,14 @@ pattern_select_new (gchar *title,
   else
     {
       gtk_window_set_title (GTK_WINDOW (psp->shell), title);
-      if(initial_pattern && strlen(initial_pattern))
+      if (initial_pattern && strlen (initial_pattern))
 	{
-	  active = pattern_list_get_pattern(pattern_list,initial_pattern);
+	  active = pattern_list_get_pattern (pattern_list, initial_pattern);
 	}
     }
 
   /*  update the active selection  */
-  if(!active)
+  if (!active)
     active = get_active_pattern ();
 
   psp->pattern = active;
@@ -217,7 +214,8 @@ pattern_select_new (gchar *title,
 }
 
 void
-pattern_change_callbacks(PatternSelectP psp, gint closing)
+pattern_change_callbacks(PatternSelectP psp,
+			 gint           closing)
 {
   gchar * name;
   ProcRecord *prec = NULL;
@@ -278,18 +276,18 @@ pattern_select_free (PatternSelectP psp)
   if (psp)
     {
       /* Only main one is saved */
-      if(psp == pattern_select_dialog)
+      if (psp == pattern_select_dialog)
 	session_get_window_info (psp->shell, &pattern_select_session_info);
       if (psp->pattern_popup != NULL)
 	gtk_widget_destroy (psp->pattern_popup);
       if (psp->popup_timeout_tag != 0)
 	gtk_timeout_remove (psp->popup_timeout_tag);
 
-      if(psp->callback_name)
-	g_free(psp->callback_name);
+      if (psp->callback_name)
+	g_free (psp->callback_name);
 
       /* remove from active list */
-      pattern_active_dialogs = g_slist_remove(pattern_active_dialogs,psp);
+      pattern_active_dialogs = g_slist_remove (pattern_active_dialogs, psp);
 
       g_free (psp);
     }
@@ -653,7 +651,7 @@ static void
 update_active_pattern_field (PatternSelectP psp)
 {
   GPatternP pattern;
-  char buf[32];
+  gchar buf[32];
 
   if(pattern_select_dialog == psp)
     pattern = get_active_pattern ();
@@ -667,7 +665,8 @@ update_active_pattern_field (PatternSelectP psp)
   gtk_label_set_text (GTK_LABEL (psp->pattern_name), pattern->name);
 
   /*  Set pattern size  */
-  g_snprintf (buf, 32, "(%d X %d)", pattern->mask->width, pattern->mask->height);
+  g_snprintf (buf, sizeof (buf), "(%d X %d)",
+	      pattern->mask->width, pattern->mask->height);
   gtk_label_set_text (GTK_LABEL (psp->pattern_size), buf);
 }
 

@@ -21,7 +21,6 @@
 #include "info_dialog.h"
 #include "info_window.h"
 #include "gdisplay.h"
-#include "general.h"
 #include "gximage.h"
 #include "interface.h"
 
@@ -99,7 +98,7 @@ get_shades (GDisplay *gdisp,
 }
 
 static void
-info_window_close_callback (GtkWidget *w,
+info_window_close_callback (GtkWidget *widget,
 			    gpointer   client_data)
 {
   info_dialog_popdown ((InfoDialog *) client_data);
@@ -210,7 +209,8 @@ info_window_update (InfoDialog *info_win,
   /*  width and height  */
   unit_factor = gimp_unit_get_factor (gdisp->gimage->unit);
   unit_digits = gimp_unit_get_digits (gdisp->gimage->unit);
-  g_snprintf (format_buf, 32, "%%d x %%d pixels (%%.%df x %%.%df %s)",
+  g_snprintf (format_buf, sizeof (format_buf),
+	      "%%d x %%d pixels (%%.%df x %%.%df %s)",
 	      unit_digits + 1, unit_digits + 1,
 	      gimp_unit_get_symbol (gdisp->gimage->unit));
   g_snprintf (iwd->dimensions_str, MAX_BUF, format_buf,

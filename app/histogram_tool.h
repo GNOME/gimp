@@ -34,25 +34,25 @@ struct _HistogramToolDialog
   HistogramWidget *histogram;
   GimpHistogram   *hist;
 
-  double       mean;
-  double       std_dev;
-  double       median;
-  double       pixels;
-  double       count;
-  double       percentile;
+  gdouble  mean;
+  gdouble  std_dev;
+  gdouble  median;
+  gdouble  pixels;
+  gdouble  count;
+  gdouble  percentile;
 
   GimpDrawable *drawable;
-  ImageMap     image_map;
-  int          channel;
-  int          color;
+  ImageMap      image_map;
+  gint          channel;
+  gint          color;
 };
 
 /*  histogram_tool functions  */
-Tool *        tools_new_histogram_tool  (void);
-void          tools_free_histogram_tool (Tool *);
+Tool * tools_new_histogram_tool  (void);
+void   tools_free_histogram_tool (Tool *);
 
-void          histogram_tool_initialize      (GDisplay *);
-void          histogram_tool_free            (void);
-void          histogram_tool_histogram_range (HistogramWidget *, int, int,
-					      void *);
-#endif /* __HISTOGRAM_H__ */
+void   histogram_tool_initialize      (GDisplay *);
+void   histogram_tool_free            (void);
+void   histogram_tool_histogram_range (HistogramWidget *, gint, gint, void *);
+
+#endif /* __HISTOGRAM_TOOL_H__ */

@@ -381,7 +381,7 @@ parse_gimprc_file (char *filename)
 
   if (!g_path_is_absolute (filename))
     {
-      g_snprintf (rfilename, MAXPATHLEN, "%s" G_DIR_SEPARATOR_S "%s",
+      g_snprintf (rfilename, sizeof (rfilename), "%s" G_DIR_SEPARATOR_S "%s",
 		  g_get_home_dir (), filename);
       filename = rfilename;
     }
@@ -1637,7 +1637,7 @@ transform_path (char *path,
 		}
 	      else
 		{
-		  terminate(_("gimprc token referenced but not defined: %s"), token);
+		  gimp_terminate (_("transform_path(): gimprc token referenced but not defined: %s"), token);
 		}
 	    }
 	  tmp2 = transform_path (tmp2, FALSE);

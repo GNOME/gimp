@@ -18,8 +18,8 @@
 
 #include "config.h"
 
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -30,45 +30,40 @@
 #include <dirent.h>
 #endif
 
-#include "appenv.h"
 #include "colormaps.h"
 #include "datafiles.h"
 #include "devices.h"
 #include "patterns.h"
 #include "pattern_header.h"
 #include "pattern_select.h"
-#include "buildmenu.h"
 #include "colormaps.h"
 #include "errors.h"
-#include "general.h"
 #include "gimprc.h"
-#include "menus.h"
 #include "dialog_handler.h"
 
 #include "libgimp/gimpintl.h"
 
 /*  global variables  */
-GPatternP           active_pattern = NULL;
-GSList *            pattern_list = NULL;
-int                 num_patterns = 0;
+GPatternP       active_pattern = NULL;
+GSList         *pattern_list = NULL;
+gint            num_patterns = 0;
 
-PatternSelectP      pattern_select_dialog = NULL;
+PatternSelectP  pattern_select_dialog = NULL;
 
 /*  static variables  */
-static int          have_default_pattern = 0;
+static gint     have_default_pattern = 0;
 
 /*  static function prototypes  */
-static GSList *     insert_pattern_in_list   (GSList *, GPatternP);
-static void         load_pattern             (char *filename);
-static void         free_pattern             (GPatternP);
-static void         pattern_free_one         (gpointer, gpointer);
-static gint         pattern_compare_func     (gconstpointer, 
-					      gconstpointer);
-
+static GSList * insert_pattern_in_list   (GSList *, GPatternP);
+static void     load_pattern             (gchar *);
+static void     free_pattern             (GPatternP);
+static void     pattern_free_one         (gpointer, gpointer);
+static gint     pattern_compare_func     (gconstpointer, 
+					  gconstpointer);
 
 /*  function declarations  */
 void
-patterns_init (int no_data)
+patterns_init (gboolean no_data)
 {
   GSList *list;
 
@@ -80,29 +75,32 @@ patterns_init (int no_data)
 
   if (!pattern_path)
     return;
-  if(!no_data)
+  if (!no_data)
     datafiles_read_directories (pattern_path, load_pattern, 0);
 
   /*  assign indexes to the loaded patterns  */
 
   list = pattern_list;
 
-  while (list) {
-    /*  Set the pattern index  */
-    ((GPattern *) list->data)->index = num_patterns++;
-    list = g_slist_next (list);
-  }
+  while (list)
+    {
+      /*  Set the pattern index  */
+      ((GPattern *) list->data)->index = num_patterns++;
+      list = g_slist_next (list);
+    }
 }
 
 
 static void
-pattern_free_one (gpointer data, gpointer dummy)
+pattern_free_one (gpointer data,
+		  gpointer dummy)
 {
   free_pattern ((GPatternP) data);
 }
 
 static gint
-pattern_compare_func(gconstpointer first, gconstpointer second)
+pattern_compare_func (gconstpointer first,
+		      gconstpointer second)
 {
   return strcmp (((const GPatternP)first)->name, 
 		 ((const GPatternP)second)->name);
@@ -111,10 +109,11 @@ pattern_compare_func(gconstpointer first, gconstpointer second)
 void
 patterns_free ()
 {
-  if (pattern_list) {
-    g_slist_foreach (pattern_list, pattern_free_one, NULL);
-    g_slist_free (pattern_list);
-  }
+  if (pattern_list)
+    {
+      g_slist_foreach (pattern_list, pattern_free_one, NULL);
+      g_slist_free (pattern_list);
+    }
 
   have_default_pattern = 0;
   active_pattern = NULL;
@@ -141,7 +140,8 @@ get_active_pattern ()
     {
       have_default_pattern = 0;
       if (!active_pattern)
-	fatal_error (_("Specified default pattern not found!"));
+	gimp_fatal_error (_("get_active_pattern(): "
+			    "Specified default pattern not found!"));
 
     }
   else if (! active_pattern && pattern_list)
@@ -152,22 +152,23 @@ get_active_pattern ()
 
 
 static GSList *
-insert_pattern_in_list (GSList *list, GPatternP pattern)
+insert_pattern_in_list (GSList    *list,
+			GPatternP  pattern)
 {
   return g_slist_insert_sorted (list, pattern, pattern_compare_func);
 }
 
 
 static void
-load_pattern (char *filename)
+load_pattern (gchar *filename)
 {
   GPatternP pattern;
   FILE * fp;
-  int bn_size;
-  unsigned char buf [sz_PatternHeader];
+  gint bn_size;
+  guchar buf [sz_PatternHeader];
   PatternHeader header;
-  unsigned int * hp;
-  int i;
+  guint * hp;
+  gint i;
 
   pattern = (GPatternP) g_malloc (sizeof (GPattern));
 
@@ -218,7 +219,8 @@ load_pattern (char *filename)
     }
 
   /*  Get a new pattern mask  */
-  pattern->mask = temp_buf_new (header.width, header.height, header.bytes, 0, 0, NULL);
+  pattern->mask =
+    temp_buf_new (header.width, header.height, header.bytes, 0, 0, NULL);
 
   /*  Read in the pattern name  */
   if ((bn_size = (header.header_size - sz_PatternHeader)))
@@ -247,18 +249,20 @@ load_pattern (char *filename)
 
   /*temp_buf_swap (pattern->mask);*/
 
-  pattern_list = insert_pattern_in_list(pattern_list, pattern);
+  pattern_list = insert_pattern_in_list (pattern_list, pattern);
 
   /* Check if the current pattern is the default one */
 
-  if (strcmp(default_pattern, g_basename(filename)) == 0) {
-	  active_pattern = pattern;
-	  have_default_pattern = 1;
-  } /* if */
+  if (strcmp (default_pattern, g_basename (filename)) == 0)
+    {
+      active_pattern = pattern;
+      have_default_pattern = 1;
+    }
 }
 
 GPatternP           
-pattern_list_get_pattern (GSList *list, char *name)
+pattern_list_get_pattern (GSList *list,
+			  gchar  *name)
 {
   GPatternP patternp;
 
@@ -276,7 +280,7 @@ pattern_list_get_pattern (GSList *list, char *name)
 }
 
 GPatternP
-get_pattern_by_index (int index)
+get_pattern_by_index (gint index)
 {
   GSList *list;
   GPatternP pattern = NULL;
@@ -288,10 +292,8 @@ get_pattern_by_index (int index)
   return pattern;
 }
 
-
 void
-select_pattern (pattern)
-     GPatternP pattern;
+select_pattern (GPatternP pattern)
 {
   /*  Set the active pattern  */
   active_pattern = pattern;
@@ -316,7 +318,7 @@ create_pattern_dialog (void)
       pattern_select_dialog = pattern_select_new (NULL,NULL);
 
       /* register this one only */
-      dialog_register(pattern_select_dialog->shell);
+      dialog_register (pattern_select_dialog->shell);
     }
   else
     {
@@ -330,8 +332,7 @@ create_pattern_dialog (void)
 
 
 static void
-free_pattern (pattern)
-     GPatternP pattern;
+free_pattern (GPatternP pattern)
 {
   if (pattern->mask)
     temp_buf_free (pattern->mask);

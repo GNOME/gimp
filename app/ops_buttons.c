@@ -16,11 +16,10 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-
 #include "config.h"
 
-#include "appenv.h"
-#include "gimprc.h"
+#include <gtk/gtk.h>
+
 #include "ops_buttons.h"
 
 #include "libgimp/gimpintl.h"
@@ -52,7 +51,7 @@ ops_button_box_new (GtkWidget     *parent,
   while (ops_button->xpm_data)
     {
       box = gtk_hbox_new (FALSE, 0);
-      gtk_container_border_width (GTK_CONTAINER (box), 0);
+      gtk_container_set_border_width (GTK_CONTAINER (box), 0);
       
       pixmap = gdk_pixmap_create_from_xpm_d (parent->window,
 					     &mask,
@@ -72,7 +71,7 @@ ops_button_box_new (GtkWidget     *parent,
 	case OPS_BUTTON_RADIO :
 	  button = gtk_radio_button_new (group);
 	  group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
-	  gtk_container_border_width (GTK_CONTAINER (button), 0);
+	  gtk_container_set_border_width (GTK_CONTAINER (button), 0);
 	  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
 	  break;
 	default :
@@ -172,9 +171,3 @@ ops_button_extended_callback (GtkWidget *widget,
 
   ops_button->modifier = OPS_BUTTON_MODIFIER_NONE;
 }
-			    
-
-
-
-
-

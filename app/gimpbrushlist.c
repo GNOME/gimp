@@ -35,12 +35,10 @@
 #include "gimpbrushgenerated.h"
 #include "brush_header.h"
 #include "brush_select.h"
-#include "buildmenu.h"
 #include "colormaps.h"
 #include "datafiles.h"
 #include "devices.h"
 #include "errors.h"
-#include "general.h"
 #include "gimprc.h"
 #include "gimpsignal.h"
 #include "menus.h"
@@ -212,7 +210,7 @@ get_active_brush ()
     {
       have_default_brush = 0;
       if (!active_brush)
-	fatal_error (_("Specified default brush not found!"));
+	gimp_fatal_error (_("get_active_brush(): Specified default brush not found!"));
     }
   else if (! active_brush && brush_list)
     /* need a gimp_list_get_first() type function */

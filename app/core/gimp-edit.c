@@ -24,7 +24,6 @@
 #include "gdisplay.h"
 #include "gimage.h"
 #include "gimage_mask.h"
-#include "general.h"
 #include "global_edit.h"
 #include "interface.h"
 #include "layer.h"
@@ -693,24 +692,25 @@ named_buffer_dialog_delete_callback (GtkWidget *w,
 static void
 paste_named_buffer (GDisplay *gdisp)
 {
-  static ActionAreaItem paste_action_items[3] =
-  {
-    { N_("Paste"), named_buffer_paste_callback, NULL, NULL },
-    { N_("Paste Into"), named_buffer_paste_into_callback, NULL, NULL },
-    { N_("Paste As New"), named_buffer_paste_as_new_callback, NULL, NULL }
-  };
-  static ActionAreaItem other_action_items[2] =
-  {
-    { N_("Delete"), named_buffer_delete_callback, NULL, NULL },
-    { N_("Cancel"), named_buffer_cancel_callback, NULL, NULL }
-  };
   PasteNamedDlg *pn_dlg;
   GtkWidget *vbox;
   GtkWidget *label;
   GtkWidget *listbox;
   GtkWidget *bbox;
   GtkWidget *button;
-  int i;
+  gint i;
+
+  static ActionAreaItem paste_action_items[] =
+  {
+    { N_("Paste"), named_buffer_paste_callback, NULL, NULL },
+    { N_("Paste Into"), named_buffer_paste_into_callback, NULL, NULL },
+    { N_("Paste As New"), named_buffer_paste_as_new_callback, NULL, NULL }
+  };
+  static ActionAreaItem other_action_items[] =
+  {
+    { N_("Delete"), named_buffer_delete_callback, NULL, NULL },
+    { N_("Cancel"), named_buffer_cancel_callback, NULL, NULL }
+  };
 
   pn_dlg = (PasteNamedDlg *) g_malloc (sizeof (PasteNamedDlg));
   pn_dlg->gdisp = gdisp;
@@ -725,7 +725,7 @@ paste_named_buffer (GDisplay *gdisp)
 		      pn_dlg);
 
   vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 1);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (pn_dlg->shell)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
@@ -749,10 +749,10 @@ paste_named_buffer (GDisplay *gdisp)
   gtk_widget_show (pn_dlg->list);
 
   bbox = gtk_hbutton_box_new ();
-  gtk_container_border_width (GTK_CONTAINER (bbox), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (bbox), 6);
   gtk_button_box_set_spacing (GTK_BUTTON_BOX (bbox), 2);
   gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
-  for (i=0; i<3; i++)
+  for (i=0; i < 3; i++)
     {
       button = gtk_button_new_with_label (gettext (paste_action_items[i].label));
       gtk_container_add (GTK_CONTAINER (bbox), button);
@@ -817,11 +817,11 @@ named_edit_cut (void *gdisp_ptr)
   gdisp = (GDisplay *) gdisp_ptr;
   active_tool_control (HALT, gdisp_ptr);
 
-  query_string_box (N_("Cut Named"),
-                    N_("Enter a name for this buffer"),
-                    NULL,
-		    GTK_OBJECT (gdisp->gimage), "destroy",
-		    cut_named_buffer_callback, gdisp);
+  gtk_widget_show (query_string_box (_("Cut Named"),
+				     _("Enter a name for this buffer"),
+				     NULL,
+				     GTK_OBJECT (gdisp->gimage), "destroy",
+				     cut_named_buffer_callback, gdisp));
   return TRUE;
 }
 
@@ -849,11 +849,11 @@ named_edit_copy (void *gdisp_ptr)
 
   gdisp = (GDisplay *) gdisp_ptr;
   
-  query_string_box (N_("Copy Named"),
-                    N_("Enter a name for this buffer"),
-                    NULL,
-		    GTK_OBJECT (gdisp->gimage), "destroy",
-		    copy_named_buffer_callback, gdisp);
+  gtk_widget_show (query_string_box (_("Copy Named"),
+				     _("Enter a name for this buffer"),
+				     NULL,
+				     GTK_OBJECT (gdisp->gimage), "destroy",
+				     copy_named_buffer_callback, gdisp));
   return TRUE;
 }
 

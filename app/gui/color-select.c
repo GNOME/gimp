@@ -22,13 +22,13 @@
 #include "appenv.h"
 #include "actionarea.h"
 #include "color_select.h"
-#include "libgimp/color_selector.h"
 #include "colormaps.h"
 #include "errors.h"
 #include "gimprc.h"
 #include "session.h"
 #include "color_area.h" /* for color_area_draw_rect */
 
+#include "libgimp/color_selector.h"
 #include "libgimp/gimpintl.h"
 
 #define XY_DEF_WIDTH       240
@@ -326,7 +326,7 @@ color_select_widget_new (ColorSelectP csp, int r, int g, int b)
   table = gtk_table_new (6, 3, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 3);
   gtk_table_set_col_spacings (GTK_TABLE (table), 3);
-  gtk_container_border_width (GTK_CONTAINER (table), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_box_pack_start (GTK_BOX (right_vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
@@ -358,7 +358,7 @@ color_select_widget_new (ColorSelectP csp, int r, int g, int b)
       gtk_widget_show (slider);
 
       csp->entries[i] = gtk_entry_new ();
-      sprintf (buffer, "%d", csp->values[i]);
+      g_snprintf (buffer, sizeof (buffer), "%d", csp->values[i]);
       gtk_entry_set_text (GTK_ENTRY (csp->entries[i]), buffer);
       gtk_widget_set_usize (GTK_WIDGET (csp->entries[i]), 40, 0);
       gtk_table_attach (GTK_TABLE (table), csp->entries[i],
@@ -375,7 +375,7 @@ color_select_widget_new (ColorSelectP csp, int r, int g, int b)
   gtk_widget_show (hex_hbox);
 
   csp->hex_entry = gtk_entry_new ();
-  sprintf(buffer, "#%.2x%.2x%.2x", r, g, b);
+  g_snprintf (buffer, sizeof (buffer), "#%.2x%.2x%.2x", r, g, b);
   gtk_entry_set_text (GTK_ENTRY (csp->hex_entry), buffer);
   gtk_widget_set_usize (GTK_WIDGET (csp->hex_entry), 75, 0);
   gtk_box_pack_end (GTK_BOX (hex_hbox), csp->hex_entry, FALSE, FALSE, 2);

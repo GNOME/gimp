@@ -40,7 +40,6 @@
 #include "fileops.h"
 #include "floating_sel.h"
 #include "gdisplay_ops.h"
-#include "general.h"
 #include "gimage_mask.h"
 #include "gimprc.h"
 #include "global_edit.h"
@@ -92,10 +91,11 @@ static void   gimage_mask_grow_callback    (GtkWidget *, gpointer, gpointer);
 static void   gimage_mask_shrink_callback  (GtkWidget *, gpointer, gpointer);
 
 /*  local variables  */
-static gdouble selection_feather_radius = 5.0;
-static gint    selection_border_radius  = 5;
-static gint    selection_grow_pixels    = 1;
-static gint    selection_shrink_pixels  = 1;
+static gdouble   selection_feather_radius    = 5.0;
+static gint      selection_border_radius     = 5;
+static gint      selection_grow_pixels       = 1;
+static gint      selection_shrink_pixels     = 1;
+static gboolean  selection_shrink_edge_lock  = FALSE;
 
 
 void
@@ -339,15 +339,15 @@ select_border_cmd_callback (GtkWidget *widget,
   GDisplay * gdisp;
   return_if_no_display (gdisp);
 
-  query_size_box (N_("Border Selection"),
-		  N_("Border selection by:"),
-		  selection_border_radius, 1, 32767, 0,
-		  gdisp->gimage->unit,
-		  MIN (gdisp->gimage->xresolution,
-		       gdisp->gimage->yresolution),
-		  gdisp->dot_for_dot,
-		  GTK_OBJECT (gdisp->gimage), "destroy",
-		  gimage_mask_border_callback, gdisp->gimage);
+  gtk_widget_show (query_size_box (_("Border Selection"),
+				   _("Border selection by:"),
+				   selection_border_radius, 1, 32767, 0,
+				   gdisp->gimage->unit,
+				   MIN (gdisp->gimage->xresolution,
+					gdisp->gimage->yresolution),
+				   gdisp->dot_for_dot,
+				   GTK_OBJECT (gdisp->gimage), "destroy",
+				   gimage_mask_border_callback, gdisp->gimage));
 }
 
 void
@@ -357,15 +357,15 @@ select_feather_cmd_callback (GtkWidget *widget,
   GDisplay * gdisp;
   return_if_no_display (gdisp);
 
-  query_size_box (N_("Feather Selection"),
-		  N_("Feather selection by:"),
-		  selection_feather_radius, 0, 32767, 3,
-		  gdisp->gimage->unit,
-		  MIN (gdisp->gimage->xresolution,
-		       gdisp->gimage->yresolution),
-		  gdisp->dot_for_dot,
-		  GTK_OBJECT (gdisp->gimage), "destroy",
-		  gimage_mask_feather_callback, gdisp->gimage);
+  gtk_widget_show (query_size_box (_("Feather Selection"),
+				   _("Feather selection by:"),
+				   selection_feather_radius, 0, 32767, 3,
+				   gdisp->gimage->unit,
+				   MIN (gdisp->gimage->xresolution,
+					gdisp->gimage->yresolution),
+				   gdisp->dot_for_dot,
+				   GTK_OBJECT (gdisp->gimage), "destroy",
+				   gimage_mask_feather_callback, gdisp->gimage));
 }
 
 void
@@ -375,33 +375,48 @@ select_grow_cmd_callback (GtkWidget *widget,
   GDisplay * gdisp;
   return_if_no_display (gdisp);
 
-  query_size_box (N_("Grow Selection"),
-		  N_("Grow selection by:"),
-		  selection_grow_pixels, 1, 32767, 0,
-		  gdisp->gimage->unit,
-		  MIN (gdisp->gimage->xresolution,
-		       gdisp->gimage->yresolution),
-		  gdisp->dot_for_dot,
-		  GTK_OBJECT (gdisp->gimage), "destroy",
-		  gimage_mask_grow_callback, gdisp->gimage);
+  gtk_widget_show (query_size_box (_("Grow Selection"),
+				   _("Grow selection by:"),
+				   selection_grow_pixels, 1, 32767, 0,
+				   gdisp->gimage->unit,
+				   MIN (gdisp->gimage->xresolution,
+					gdisp->gimage->yresolution),
+				   gdisp->dot_for_dot,
+				   GTK_OBJECT (gdisp->gimage), "destroy",
+				   gimage_mask_grow_callback, gdisp->gimage));
 }
 
 void
 select_shrink_cmd_callback (GtkWidget *widget,
 			    gpointer   client_data)
 {
+  GtkWidget *edge_lock;
+  GtkWidget *shrink_dialog;
+
   GDisplay * gdisp;
   return_if_no_display (gdisp);
 
-  query_size_box (N_("Shrink Selection"),
-		  N_("Shrink selection by:"),
-		  selection_shrink_pixels, 1, 32767, 0,
-		  gdisp->gimage->unit,
-		  MIN (gdisp->gimage->xresolution,
-		       gdisp->gimage->yresolution),
-		  gdisp->dot_for_dot,
-		  GTK_OBJECT (gdisp->gimage), "destroy",
-		  gimage_mask_shrink_callback, gdisp->gimage);
+  shrink_dialog = query_size_box (N_("Shrink Selection"),
+				  N_("Shrink selection by:"),
+				  selection_shrink_pixels, 1, 32767, 0,
+				  gdisp->gimage->unit,
+				  MIN (gdisp->gimage->xresolution,
+				       gdisp->gimage->yresolution),
+				  gdisp->dot_for_dot,
+				  GTK_OBJECT (gdisp->gimage), "destroy",
+				  gimage_mask_shrink_callback, gdisp->gimage);
+
+  edge_lock = gtk_check_button_new_with_label (_("Shrink from image border"));
+  /* eeek */
+  gtk_box_pack_start (GTK_BOX (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_DIALOG (shrink_dialog)->vbox)), 0)), edge_lock,
+		      FALSE, FALSE, 0);
+  gtk_object_set_data (GTK_OBJECT (shrink_dialog), "edge_lock_toggle",
+		       edge_lock);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (edge_lock),
+				! selection_shrink_edge_lock);
+  gtk_widget_show (edge_lock);
+
+  gtk_widget_show (shrink_dialog);
 }
 
 void
@@ -1263,24 +1278,26 @@ image_cancel_callback (GtkWidget *w,
 }
 
 static void
-gimage_mask_feather_callback (GtkWidget *w,
+gimage_mask_feather_callback (GtkWidget *widget,
 			      gpointer   client_data,
 			      gpointer   call_data)
 {
-  GImage  *gimage = GIMP_IMAGE (client_data);
+  GImage  *gimage;
   GUnit    unit;
   gdouble  radius_x;
   gdouble  radius_y;
 
-  selection_feather_radius = *(double*) call_data;
+  gimage = GIMP_IMAGE (client_data);
+
+  selection_feather_radius = *(gdouble*) call_data;
   g_free (call_data);
-  unit = (GUnit) gtk_object_get_data (GTK_OBJECT (w), "size_query_unit");
+  unit = (GUnit) gtk_object_get_data (GTK_OBJECT (widget), "size_query_unit");
 
   radius_x = radius_y = selection_feather_radius;
 
   if (unit != UNIT_PIXEL)
     {
-      double factor;
+      gdouble factor;
 
       factor = (MAX (gimage->xresolution, gimage->yresolution) /
 		MIN (gimage->xresolution, gimage->yresolution));
@@ -1297,24 +1314,26 @@ gimage_mask_feather_callback (GtkWidget *w,
 
 
 static void
-gimage_mask_border_callback (GtkWidget *w,
+gimage_mask_border_callback (GtkWidget *widget,
 			     gpointer   client_data,
 			     gpointer   call_data)
 {
-  GImage  *gimage = GIMP_IMAGE (client_data);
+  GImage  *gimage;
   GUnit    unit;
   gdouble  radius_x;
   gdouble  radius_y;
 
-  selection_border_radius = (int) (*(double*) call_data + 0.5);
+  gimage = GIMP_IMAGE (client_data);
+
+  selection_border_radius = (int) (*(gdouble*) call_data + 0.5);
   g_free (call_data);
-  unit = (GUnit) gtk_object_get_data (GTK_OBJECT (w), "size_query_unit");
+  unit = (GUnit) gtk_object_get_data (GTK_OBJECT (widget), "size_query_unit");
 
   radius_x = radius_y = selection_feather_radius;
 
   if (unit != UNIT_PIXEL)
     {
-      double factor;
+      gdouble factor;
 
       factor = (MAX (gimage->xresolution, gimage->yresolution) /
 		MIN (gimage->xresolution, gimage->yresolution));
@@ -1331,24 +1350,26 @@ gimage_mask_border_callback (GtkWidget *w,
 
 
 static void
-gimage_mask_grow_callback (GtkWidget *w,
+gimage_mask_grow_callback (GtkWidget *widget,
 			   gpointer   client_data,
 			   gpointer   call_data)
 {
-  GImage  *gimage = GIMP_IMAGE (client_data);
+  GImage  *gimage;
   GUnit    unit;
   gdouble  radius_x;
   gdouble  radius_y;
 
-  selection_grow_pixels = (int) (*(double*) call_data + 0.5);
+  gimage = GIMP_IMAGE (client_data);
+
+  selection_grow_pixels = (int) (*(gdouble*) call_data + 0.5);
   g_free (call_data);
-  unit = (GUnit) gtk_object_get_data (GTK_OBJECT (w), "size_query_unit");
+  unit = (GUnit) gtk_object_get_data (GTK_OBJECT (widget), "size_query_unit");
 
   radius_x = radius_y = selection_grow_pixels;
   
   if (unit != UNIT_PIXEL)
     {
-      double factor;
+      gdouble factor;
 
       factor = (MAX (gimage->xresolution, gimage->yresolution) /
 		MIN (gimage->xresolution, gimage->yresolution));
@@ -1365,24 +1386,30 @@ gimage_mask_grow_callback (GtkWidget *w,
 
 
 static void
-gimage_mask_shrink_callback (GtkWidget *w,
+gimage_mask_shrink_callback (GtkWidget *widget,
 			     gpointer   client_data,
 			     gpointer   call_data)
 {
-  GImage *gimage = GIMP_IMAGE (client_data);
-  GUnit   unit;
-  gint    radius_x;
-  gint    radius_y;
+  GImage    *gimage;
+  GUnit      unit;
+  gint       radius_x;
+  gint       radius_y;
 
-  selection_shrink_pixels = (int) (*(double*) call_data + 0.5);
+  gimage = GIMP_IMAGE (client_data);
+
+  selection_shrink_pixels = (int) (*(gdouble*) call_data + 0.5);
   g_free (call_data);
-  unit = (GUnit) gtk_object_get_data (GTK_OBJECT (w), "size_query_unit");
+  unit = (GUnit) gtk_object_get_data (GTK_OBJECT (widget), "size_query_unit");
 
   radius_x = radius_y = selection_shrink_pixels;
 
+  selection_shrink_edge_lock =
+    ! GTK_TOGGLE_BUTTON (gtk_object_get_data (GTK_OBJECT (widget),
+					      "edge_lock_toggle"))->active;
+
   if (unit != UNIT_PIXEL)
     {
-      double factor;
+      gdouble factor;
 
       factor = (MAX (gimage->xresolution, gimage->yresolution) /
 		MIN (gimage->xresolution, gimage->yresolution));
@@ -1393,6 +1420,6 @@ gimage_mask_shrink_callback (GtkWidget *w,
 	radius_x *= factor;
     }
 
-  gimage_mask_shrink (gimage, radius_x, radius_y, FALSE);
+  gimage_mask_shrink (gimage, radius_x, radius_y, selection_shrink_edge_lock);
   gdisplays_flush ();
 }

@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include "config.h"
 
 #include <signal.h>
@@ -42,10 +41,10 @@
 #include "errors.h"
 #include "libgimp/gimpintl.h"
 
-extern char *prog_name;
+extern gchar *prog_name;
 
 void
-message_func (char *str)
+gimp_message_func (gchar *str)
 {
   if (console_messages == FALSE)
     switch (message_handler)
@@ -67,7 +66,7 @@ message_func (char *str)
 }
 
 void
-fatal_error (char *fmt, ...)
+gimp_fatal_error (gchar *fmt, ...)
 {
   va_list args;
 
@@ -89,7 +88,7 @@ fatal_error (char *fmt, ...)
 }
 
 void
-terminate (char *fmt, ...)
+gimp_terminate (gchar *fmt, ...)
 {
   va_list args;
 

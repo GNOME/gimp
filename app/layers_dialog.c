@@ -20,7 +20,6 @@
 #include "gdk/gdkkeysyms.h"
 #include "actionarea.h"
 #include "appenv.h"
-#include "draw_core.h"
 #include "buildmenu.h"
 #include "colormaps.h"
 #include "drawable.h"
@@ -30,7 +29,6 @@
 #include "gimage.h"
 #include "gimage_mask.h"
 #include "gimprc.h"
-#include "general.h"
 #include "image_render.h"
 #include "interface.h"
 #include "layers_dialog.h"
@@ -38,8 +36,6 @@
 #include "lc_dialogP.h"
 #include "menus.h"
 #include "ops_buttons.h"
-#include "paint_funcs.h"
-#include "palette.h"
 #include "resize.h"
 #include "undo.h"
 
@@ -84,21 +80,22 @@ typedef struct _LayersDialog LayersDialog;
 
 struct _LayersDialog
 {
-  GtkWidget *vbox;
-  GtkWidget *mode_option_menu;
-  GtkWidget *layer_list;
-  GtkWidget *preserve_trans;
-  GtkWidget *mode_box;
-  GtkWidget *opacity_box;
-  GtkWidget *ops_menu;
+  GtkWidget     *vbox;
+  GtkWidget     *mode_option_menu;
+  GtkWidget     *layer_list;
+  GtkWidget     *preserve_trans;
+  GtkWidget     *mode_box;
+  GtkWidget     *opacity_box;
+  GtkWidget     *ops_menu;
   GtkAccelGroup *accel_group;
   GtkAdjustment *opacity_data;
-  GdkGC *red_gc;     /*  for non-applied layer masks  */
-  GdkGC *green_gc;   /*  for visible layer masks      */
-  GtkWidget *layer_preview;
-  double ratio;
-  int image_width, image_height;
-  int gimage_width, gimage_height;
+  GdkGC         *red_gc;     /*  for non-applied layer masks  */
+  GdkGC         *green_gc;   /*  for visible layer masks      */
+  GtkWidget     *layer_preview;
+
+  gdouble ratio;
+  gint    image_width, image_height;
+  gint    gimage_width, gimage_height;
 
   /*  state information  */
   GimpImage *gimage;
@@ -120,19 +117,19 @@ struct _LayerWidget
   GtkWidget *list_item;
   GtkWidget *label;
 
-  GImage *gimage;
-  Layer *layer;
+  GImage    *gimage;
+  Layer     *layer;
   GdkPixmap *layer_pixmap;
   GdkPixmap *mask_pixmap;
-  int active_preview;
-  int width, height;
+  gint       active_preview;
+  gint       width, height;
 
   /*  state information  */
-  int layer_mask;
-  int apply_mask;
-  int edit_mask;
-  int show_mask;
-  int visited;
+  gboolean  layer_mask;
+  gboolean  apply_mask;
+  gboolean  edit_mask;
+  gboolean  show_mask;
+  gboolean  visited;
 };
 
 /*  layers dialog widget routines  */
@@ -191,7 +188,7 @@ static GdkPixmap *linked_pixmap[] = { NULL, NULL, NULL };
 static GdkPixmap *layer_pixmap[]  = { NULL, NULL, NULL };
 static GdkPixmap *mask_pixmap[]   = { NULL, NULL, NULL };
 
-static int suspend_gimage_notify = 0;
+static gint suspend_gimage_notify = 0;
 
 /*  the option menu items -- the paint modes  */
 static MenuItem option_items[] =
@@ -276,15 +273,15 @@ layers_dialog_create ()
   
   if (! layersD)
     {
-      layersD = g_malloc (sizeof (LayersDialog));
-      layersD->layer_preview = NULL;
-      layersD->gimage = NULL;
-      layersD->active_layer = NULL;
+      layersD = g_new (LayersDialog, 1);
+      layersD->layer_preview  = NULL;
+      layersD->gimage         = NULL;
+      layersD->active_layer   = NULL;
       layersD->active_channel = NULL;
-      layersD->floating_sel = NULL;
-      layersD->layer_widgets = NULL;
-      layersD->green_gc = NULL;
-      layersD->red_gc = NULL;
+      layersD->floating_sel   = NULL;
+      layersD->layer_widgets  = NULL;
+      layersD->green_gc       = NULL;
+      layersD->red_gc         = NULL;
 
       if (preview_size)
 	{
@@ -393,8 +390,8 @@ layers_dialog_create ()
 void
 layers_dialog_free ()
 {
-  GSList *list;
   LayerWidget *lw;
+  GSList *list;
 
   if (layersD == NULL)
     return;
@@ -429,14 +426,15 @@ void
 layers_dialog_invalidate_previews(GimpImage *gimage)
 {
   GSList *list = gimage->layers;
-  Layer * layer;
-  /* Invalidate all previews ... */
-  /* This is called during loading the image */
+  Layer  *layer;
 
+  /*  Invalidate all previews ...
+   *  This is called during loading the image
+   */
   while (list)
     {
       layer = (Layer *) list->data;
-      GIMP_DRAWABLE(layer)->preview_valid = FALSE;
+      GIMP_DRAWABLE (layer)->preview_valid = FALSE;
       list = g_slist_next (list);
     }
 }
@@ -449,9 +447,7 @@ layers_dialog_update (GimpImage* gimage)
   GSList *list;
   GList *item_list;
 
-  if (! layersD)
-    return;
-  if (layersD->gimage == gimage)
+  if (! layersD || layersD->gimage == gimage)
     return;
 
   layersD->gimage = gimage;
@@ -511,9 +507,7 @@ layers_dialog_flush ()
   int gimage_pos;
   int pos;
 
-  if (! layersD)
-    return;
-  if (! (gimage = layersD->gimage))
+  if (!layersD || !(gimage = layersD->gimage))
     return;
 
   /*  Check if the gimage extents have changed  */
@@ -860,7 +854,7 @@ layers_dialog_preview_extents ()
 {
   GImage *gimage;
 
-  if (! layersD)
+  if (!layersD)
     return;
 
   gimage = layersD->gimage;
@@ -944,57 +938,55 @@ layers_dialog_set_menu_sensitivity ()
   else
     next_alpha = FALSE;
 
-  menus_set_sensitive_locale ("<Layers>", N_("/Stack/Previous Layer"),
-		       fs && ac && gimage && lp && prev);
-  menus_set_sensitive_locale ("<Layers>", N_("/Stack/Next Layer"),
-		       fs && ac && gimage && lp && next);
+#define SET_SENSITIVE(menu,condition) \
+        menus_set_sensitive_locale ("<Layers>", (menu), (condition) != 0)
+#define SET_OPS_SENSITIVE(button,condition) \
+        gtk_widget_set_sensitive (layers_ops_buttons[(button)].widget, \
+                                 (condition) != 0)
 
-  menus_set_sensitive_locale ("<Layers>", N_("/Stack/Raise Layer"),
-		       fs && ac && gimage && lp && alpha && prev);
-  gtk_widget_set_sensitive (layers_ops_buttons[1].widget,
-			    fs && ac && gimage && lp && alpha && prev);
+  SET_SENSITIVE (_("/Stack/Previous Layer"), fs && ac && gimage && lp && prev);
+  SET_SENSITIVE (_("/Stack/Next Layer"), fs && ac && gimage && lp && next);
 
-  menus_set_sensitive_locale ("<Layers>", N_("/Stack/Lower Layer"),
-		       fs && ac && gimage && lp && next && next_alpha);
-  gtk_widget_set_sensitive (layers_ops_buttons[2].widget,
-			    fs && ac && gimage && lp && next && next_alpha);
+  SET_SENSITIVE (_("/Stack/Raise Layer"),
+		 fs && ac && gimage && lp && alpha && prev);
+  SET_OPS_SENSITIVE (1, fs && ac && gimage && lp && alpha && prev);
 
-  menus_set_sensitive_locale ("<Layers>", N_("/Stack/Layer to Top"),
-		       fs && ac && gimage && lp && alpha && prev);
-  menus_set_sensitive_locale ("<Layers>", N_("/Stack/Layer to Bottom"),
-		       fs && ac && gimage && lp && next && next_alpha);
+  SET_SENSITIVE (_("/Stack/Lower Layer"),
+		 fs && ac && gimage && lp && next && next_alpha);
+  SET_OPS_SENSITIVE (2, fs && ac && gimage && lp && next && next_alpha);
 
-  menus_set_sensitive_locale ("<Layers>", N_("/New Layer"), gimage);
-  gtk_widget_set_sensitive (layers_ops_buttons[0].widget, gimage);
+  SET_SENSITIVE (_("/Stack/Layer to Top"),
+		 fs && ac && gimage && lp && alpha && prev);
+  SET_SENSITIVE (_("/Stack/Layer to Bottom"),
+		 fs && ac && gimage && lp && next && next_alpha);
 
-  menus_set_sensitive_locale ("<Layers>", N_("/Duplicate Layer"), fs && ac && gimage && lp);
-  gtk_widget_set_sensitive (layers_ops_buttons[3].widget,
-			    fs && ac && gimage && lp);
+  SET_SENSITIVE (_("/New Layer"), gimage);
+  SET_OPS_SENSITIVE (0, gimage);
 
-  menus_set_sensitive_locale ("<Layers>", N_("/Anchor Layer"), !fs && ac && gimage && lp);
-  gtk_widget_set_sensitive (layers_ops_buttons[4].widget,
-			    !fs && ac && gimage && lp);
+  SET_SENSITIVE (_("/Duplicate Layer"), fs && ac && gimage && lp);
+  SET_OPS_SENSITIVE (3, fs && ac && gimage && lp);
 
-  menus_set_sensitive_locale ("<Layers>", N_("/Delete Layer"), ac && gimage && lp);
-  gtk_widget_set_sensitive (layers_ops_buttons[5].widget, ac && gimage && lp);
+  SET_SENSITIVE (_("/Anchor Layer"), !fs && ac && gimage && lp);
+  SET_OPS_SENSITIVE (4, !fs && ac && gimage && lp);
 
-  menus_set_sensitive_locale ("<Layers>", N_("/Scale Layer"), ac && gimage && lp);
-  menus_set_sensitive_locale ("<Layers>", N_("/Resize Layer"), ac && gimage && lp);
+  SET_SENSITIVE (_("/Delete Layer"), ac && gimage && lp);
+  SET_OPS_SENSITIVE (5, ac && gimage && lp);
 
-  menus_set_sensitive_locale ("<Layers>", N_("/Merge Visible Layers"),
-		       fs && ac && gimage && lp);
-  menus_set_sensitive_locale ("<Layers>", N_("/Merge Down"), fs && ac && gimage && lp);
-  menus_set_sensitive_locale ("<Layers>", N_("/Flatten Image"), fs && ac && gimage && lp);
+  SET_SENSITIVE (_("/Scale Layer"), ac && gimage && lp);
+  SET_SENSITIVE (_("/Resize Layer"), ac && gimage && lp);
 
-  menus_set_sensitive_locale ("<Layers>", N_("/Add Layer Mask"),
-		       fs && ac && gimage && !lm && lp && alpha);
-  menus_set_sensitive_locale ("<Layers>", N_("/Apply Layer Mask"),
-		       fs && ac && gimage && lm && lp);
-  menus_set_sensitive_locale ("<Layers>", N_("/Alpha to Selection"),
-		       fs && ac && gimage && lp && alpha);
-  menus_set_sensitive_locale ("<Layers>", N_("/Mask to Selection"),
-		       fs && ac && gimage && lm && lp);
-  menus_set_sensitive_locale ("<Layers>", N_("/Add Alpha Channel"), !alpha);
+  SET_SENSITIVE (_("/Merge Visible Layers"), fs && ac && gimage && lp);
+  SET_SENSITIVE (_("/Merge Down"), fs && ac && gimage && lp);
+  SET_SENSITIVE (_("/Flatten Image"), fs && ac && gimage && lp);
+
+  SET_SENSITIVE (_("/Add Layer Mask"), fs && ac && gimage && !lm && lp && alpha);
+  SET_SENSITIVE (_("/Apply Layer Mask"), fs && ac && gimage && lm && lp);
+  SET_SENSITIVE (_("/Alpha to Selection"), fs && ac && gimage && lp && alpha);
+  SET_SENSITIVE (_("/Mask to Selection"), fs && ac && gimage && lm && lp);
+  SET_SENSITIVE (_("/Add Alpha Channel"), !alpha);
+
+#undef SET_OPS_SENSITIVE
+#undef SET_SENSITIVE
 
   /*  set mode, preserve transparency and opacity to insensitive
    *  if there are no layers
@@ -1006,11 +998,11 @@ layers_dialog_set_menu_sensitivity ()
 
 
 static void
-layers_dialog_set_active_layer (Layer * layer)
+layers_dialog_set_active_layer (Layer *layer)
 {
-  LayerWidget *layer_widget;
-  GtkStateType state;
-  int index;
+  LayerWidget  *layer_widget;
+  GtkStateType  state;
+  gint index;
 
   layer_widget = layer_widget_get_ID (layer);
   if (!layersD || !layer_widget)
@@ -1033,11 +1025,11 @@ layers_dialog_set_active_layer (Layer * layer)
 
 
 static void
-layers_dialog_unset_layer (Layer * layer)
+layers_dialog_unset_layer (Layer *layer)
 {
-  LayerWidget *layer_widget;
-  GtkStateType state;
-  int index;
+  LayerWidget  *layer_widget;
+  GtkStateType  state;
+  gint index;
 
   layer_widget = layer_widget_get_ID (layer);
   if (!layersD || !layer_widget)
@@ -1060,8 +1052,8 @@ layers_dialog_unset_layer (Layer * layer)
 
 
 static void
-layers_dialog_position_layer (Layer * layer,
-			      int     new_index)
+layers_dialog_position_layer (Layer *layer,
+			      gint   new_index)
 {
   LayerWidget *layer_widget;
   GList *list = NULL;
@@ -1089,14 +1081,12 @@ layers_dialog_position_layer (Layer * layer,
 static void
 layers_dialog_add_layer (Layer *layer)
 {
-  GImage *gimage;
-  GList *item_list;
   LayerWidget *layer_widget;
-  int position;
+  GImage *gimage;
+  GList  *item_list;
+  gint    position;
 
-  if (!layersD || !layer)
-    return;
-  if (! (gimage = layersD->gimage))
+  if (!layersD || !layer || !(gimage = layersD->gimage))
     return;
 
   item_list = NULL;
@@ -1111,13 +1101,12 @@ layers_dialog_add_layer (Layer *layer)
 
 
 static void
-layers_dialog_remove_layer (Layer * layer)
+layers_dialog_remove_layer (Layer *layer)
 {
   LayerWidget *layer_widget;
   GList *list = NULL;
 
   layer_widget = layer_widget_get_ID (layer);
-
   if (!layersD || !layer_widget)
     return;
 
@@ -1136,7 +1125,7 @@ layers_dialog_remove_layer (Layer * layer)
 
 
 static void
-layers_dialog_add_layer_mask (Layer * layer)
+layers_dialog_add_layer_mask (Layer *layer)
 {
   LayerWidget *layer_widget;
 
@@ -1154,7 +1143,7 @@ layers_dialog_add_layer_mask (Layer * layer)
 
 
 static void
-layers_dialog_remove_layer_mask (Layer * layer)
+layers_dialog_remove_layer_mask (Layer *layer)
 {
   LayerWidget *layer_widget;
 
@@ -1173,10 +1162,10 @@ layers_dialog_remove_layer_mask (Layer * layer)
 static gint
 paint_mode_menu_get_position (gint mode)
 {
-  /*  FIXME this is an ugly hack that should stay around only until 
-   *  the layers dialog is rewritten 
+  /*  FIXME: this is an ugly hack that should stay around only until 
+   *         the layers dialog is rewritten 
    */
-  int i;
+  gint i;
 
   for (i = 0; option_items[i].label != NULL; i++)
     if (mode == (gint) (option_items[i].user_data))
@@ -1187,16 +1176,14 @@ paint_mode_menu_get_position (gint mode)
 }
 
 static void
-paint_mode_menu_callback (GtkWidget *w,
+paint_mode_menu_callback (GtkWidget *widget,
 			  gpointer   client_data)
 {
   GImage *gimage;
-  Layer *layer;
-  int mode;
+  Layer  *layer;
+  gint    mode;
 
-  if (! (gimage = layersD->gimage))
-    return;
-  if (! (layer = gimage->active_layer))
+  if (!(gimage = layersD->gimage) || !(layer = gimage->active_layer))
     return;
 
   /*  If the layer has an alpha channel, set the transparency and redraw  */
@@ -1207,7 +1194,9 @@ paint_mode_menu_callback (GtkWidget *w,
 	{
 	  layer->mode = mode;
 
-	  drawable_update (GIMP_DRAWABLE (layer), 0, 0, GIMP_DRAWABLE (layer)->width, GIMP_DRAWABLE (layer)->height);
+	  drawable_update (GIMP_DRAWABLE (layer), 0, 0,
+			   GIMP_DRAWABLE (layer)->width,
+			   GIMP_DRAWABLE (layer)->height);
 	  gdisplays_flush ();
 	}
     }
@@ -1219,12 +1208,10 @@ opacity_scale_update (GtkAdjustment *adjustment,
 		      gpointer       data)
 {
   GImage *gimage;
-  Layer *layer;
-  int opacity;
+  Layer  *layer;
+  gint    opacity;
 
-  if (! (gimage = layersD->gimage))
-    return;
-  if (! (layer = gimage->active_layer))
+  if (!(gimage = layersD->gimage) || !(layer = gimage->active_layer))
     return;
 
   /*  add the 0.001 to insure there are no subtle rounding errors  */
@@ -1241,23 +1228,20 @@ opacity_scale_update (GtkAdjustment *adjustment,
 }
 
 static void
-preserve_trans_update (GtkWidget *w,
+preserve_trans_update (GtkWidget *widget,
 		       gpointer   data)
 {
   GImage *gimage;
-  Layer *layer;
+  Layer  *layer;
 
-  if (! (gimage = layersD->gimage))
-    return;
-  if (! (layer = gimage->active_layer))
+  if (!(gimage = layersD->gimage) || !(layer = gimage->active_layer))
     return;
 
-  if (GTK_TOGGLE_BUTTON (w)->active)
+  if (GTK_TOGGLE_BUTTON (widget)->active)
     layer->preserve_trans = TRUE;
   else
     layer->preserve_trans = FALSE;
 }
-
 
 static gint
 layer_list_events (GtkWidget *widget,
@@ -1299,10 +1283,10 @@ layer_list_events (GtkWidget *widget,
 	  switch (kevent->keyval)
 	    {
 	    case GDK_Up:
-	      /* printf ("up arrow\n"); */
+	      /* g_print ("up arrow\n"); */
 	      break;
 	    case GDK_Down:
-	      /* printf ("down arrow\n"); */
+	      /* g_print ("down arrow\n"); */
 	      break;
 	    default:
 	      return FALSE;
@@ -1323,7 +1307,7 @@ layer_list_events (GtkWidget *widget,
 /*****************************/
 
 static void
-layers_dialog_map_callback (GtkWidget *w,
+layers_dialog_map_callback (GtkWidget *widget,
 			    gpointer   client_data)
 {
   if (! layersD)
@@ -1334,7 +1318,7 @@ layers_dialog_map_callback (GtkWidget *w,
 }
 
 static void
-layers_dialog_unmap_callback (GtkWidget *w,
+layers_dialog_unmap_callback (GtkWidget *widget,
 			      gpointer   client_data)
 {
   if (! layersD)
@@ -1345,16 +1329,14 @@ layers_dialog_unmap_callback (GtkWidget *w,
 }
 
 void
-layers_dialog_previous_layer_callback (GtkWidget *w,
+layers_dialog_previous_layer_callback (GtkWidget *widget,
 				       gpointer   client_data)
 {
   GImage *gimage;
-  int current_layer;
-  Layer *new_layer;
+  Layer  *new_layer;
+  gint    current_layer;
 
-  if (! layersD)
-    return;
-  if (! (gimage = layersD->gimage))
+  if (!layersD || !(gimage = layersD->gimage))
     return;
 
   current_layer =
@@ -1374,16 +1356,14 @@ layers_dialog_previous_layer_callback (GtkWidget *w,
 }
 
 void
-layers_dialog_next_layer_callback (GtkWidget *w,
+layers_dialog_next_layer_callback (GtkWidget *widget,
 				   gpointer   client_data)
 {
   GImage *gimage;
-  int current_layer;
-  Layer *new_layer;
+  Layer  *new_layer;
+  gint    current_layer;
 
-  if (! layersD)
-    return;
-  if (! (gimage = layersD->gimage))
+  if (!layersD || !(gimage = layersD->gimage))
     return;
 
   current_layer =
@@ -1403,14 +1383,12 @@ layers_dialog_next_layer_callback (GtkWidget *w,
 }
 
 void
-layers_dialog_raise_layer_callback (GtkWidget *w,
+layers_dialog_raise_layer_callback (GtkWidget *widget,
 				    gpointer   client_data)
 {
   GImage *gimage;
 
-  if (! layersD)
-    return;
-  if (! (gimage = layersD->gimage))
+  if (!layersD || !(gimage = layersD->gimage))
     return;
 
   gimage_raise_layer (gimage, gimage->active_layer);
@@ -1418,14 +1396,12 @@ layers_dialog_raise_layer_callback (GtkWidget *w,
 }
 
 void
-layers_dialog_lower_layer_callback (GtkWidget *w,
+layers_dialog_lower_layer_callback (GtkWidget *widget,
 				    gpointer   client_data)
 {
   GImage *gimage;
 
-  if (! layersD)
-    return;
-  if (! (gimage = layersD->gimage))
+  if (!layersD || !(gimage = layersD->gimage))
     return;
 
   gimage_lower_layer (gimage, gimage->active_layer);
@@ -1433,14 +1409,12 @@ layers_dialog_lower_layer_callback (GtkWidget *w,
 }
 
 void
-layers_dialog_raise_layer_to_top_callback (GtkWidget *w,
+layers_dialog_raise_layer_to_top_callback (GtkWidget *widget,
 					   gpointer   client_data)
 {
   GImage *gimage;
 
-  if (! layersD)
-    return;
-  if (! (gimage = layersD->gimage))
+  if (!layersD || !(gimage = layersD->gimage))
     return;
 
   if (NULL != gimage_raise_layer_to_top (gimage, gimage->active_layer))
@@ -1452,14 +1426,12 @@ layers_dialog_raise_layer_to_top_callback (GtkWidget *w,
 
 
 void
-layers_dialog_lower_layer_to_bottom_callback (GtkWidget *w,
+layers_dialog_lower_layer_to_bottom_callback (GtkWidget *widget,
 					      gpointer   client_data)
 {
   GImage *gimage;
 
-  if (! layersD)
-    return;
-  if (! (gimage = layersD->gimage))
+  if (!layersD || !(gimage = layersD->gimage))
     return;
 
   if (NULL != gimage_lower_layer_to_bottom (gimage, gimage->active_layer))
@@ -1470,17 +1442,13 @@ layers_dialog_lower_layer_to_bottom_callback (GtkWidget *w,
 }
 
 void
-layers_dialog_new_layer_callback (GtkWidget *w,
+layers_dialog_new_layer_callback (GtkWidget *widget,
 				  gpointer   client_data)
 {
   GImage *gimage;
-  Layer *layer;
+  Layer  *layer;
 
-  /*  if there is a currently selected gimage, request a new layer
-   */
-  if (! layersD)
-    return;
-  if (! (gimage = layersD->gimage))
+  if (!layersD || !(gimage = layersD->gimage))
     return;
 
   /*  If there is a floating selection, the new command transforms
@@ -1497,18 +1465,14 @@ layers_dialog_new_layer_callback (GtkWidget *w,
 }
 
 void
-layers_dialog_duplicate_layer_callback (GtkWidget *w,
+layers_dialog_duplicate_layer_callback (GtkWidget *widget,
 					gpointer   client_data)
 {
   GImage *gimage;
-  Layer *active_layer;
-  Layer *new_layer;
+  Layer  *active_layer;
+  Layer  *new_layer;
 
-  /*  if there is a currently selected gimage, request a new layer
-   */
-  if (! layersD)
-    return;
-  if (! (gimage = layersD->gimage))
+  if (!layersD || !(gimage = layersD->gimage))
     return;
 
   /*  Start a group undo  */
@@ -1518,27 +1482,22 @@ layers_dialog_duplicate_layer_callback (GtkWidget *w,
   new_layer = layer_copy (active_layer, TRUE);
   gimage_add_layer (gimage, new_layer, -1);
 
-  /*  end the group undo  */
+  /*  End the group undo  */
   undo_push_group_end (gimage);
 
   gdisplays_flush ();
 }
 
 void
-layers_dialog_delete_layer_callback (GtkWidget *w,
+layers_dialog_delete_layer_callback (GtkWidget *widget,
 				     gpointer   client_data)
 {
   GImage *gimage;
-  Layer *layer;
+  Layer  *layer;
 
-  /*  if there is a currently selected gimage
-   */
-  if (! layersD)
-    return;
-  if (! (gimage = layersD->gimage))
-    return;
-
-  if (! (layer = gimage_get_active_layer (gimage)))
+  if (!layersD ||
+      !(gimage = layersD->gimage) ||
+      !(layer = gimage_get_active_layer (gimage)))
     return;
 
   /*  if the layer is a floating selection, take special care  */
@@ -1551,65 +1510,49 @@ layers_dialog_delete_layer_callback (GtkWidget *w,
 }
 
 void
-layers_dialog_scale_layer_callback (GtkWidget *w,
+layers_dialog_scale_layer_callback (GtkWidget *widget,
 				    gpointer   client_data)
 {
   GImage *gimage;
 
-  /*  if there is a currently selected gimage
-   */
-  if (! layersD)
-    return;
-  if (! (gimage = layersD->gimage))
+  if (!layersD || !(gimage = layersD->gimage))
     return;
 
   layers_dialog_scale_layer_query (gimage, gimage->active_layer);
 }
 
 void
-layers_dialog_resize_layer_callback (GtkWidget *w,
+layers_dialog_resize_layer_callback (GtkWidget *widget,
 				     gpointer   client_data)
 {
   GImage *gimage;
 
-  /*  if there is a currently selected gimage
-   */
-  if (! layersD)
-    return;
-  if (! (gimage = layersD->gimage))
+  if (!layersD || !(gimage = layersD->gimage))
     return;
 
   layers_dialog_resize_layer_query (gimage, gimage->active_layer);
 }
 
 void
-layers_dialog_add_layer_mask_callback (GtkWidget *w,
+layers_dialog_add_layer_mask_callback (GtkWidget *widget,
 				       gpointer   client_data)
 {
   GImage *gimage;
 
-  /*  if there is a currently selected gimage
-   */
-  if (! layersD)
-    return;
-  if (! (gimage = layersD->gimage))
+  if (!layersD || !(gimage = layersD->gimage))
     return;
 
   layers_dialog_add_mask_query (gimage->active_layer);
 }
 
 void
-layers_dialog_apply_layer_mask_callback (GtkWidget *w,
+layers_dialog_apply_layer_mask_callback (GtkWidget *widget,
 					 gpointer   client_data)
 {
   GImage *gimage;
-  Layer *layer;
+  Layer  *layer;
 
-  /*  if there is a currently selected gimage
-   */
-  if (! layersD)
-    return;
-  if (! (gimage = layersD->gimage))
+  if (!layersD || !(gimage = layersD->gimage))
     return;
 
   /*  Make sure there is a layer mask to apply  */
@@ -1621,16 +1564,12 @@ layers_dialog_apply_layer_mask_callback (GtkWidget *w,
 }
 
 void
-layers_dialog_anchor_layer_callback (GtkWidget *w,
+layers_dialog_anchor_layer_callback (GtkWidget *widget,
 				     gpointer   client_data)
 {
   GImage *gimage;
 
-  /*  if there is a currently selected gimage
-   */
-  if (! layersD)
-    return;
-  if (! (gimage = layersD->gimage))
+  if (!layersD || !(gimage = layersD->gimage))
     return;
 
   floating_sel_anchor (gimage_get_active_layer (gimage));
@@ -1638,32 +1577,24 @@ layers_dialog_anchor_layer_callback (GtkWidget *w,
 }
 
 void
-layers_dialog_merge_layers_callback (GtkWidget *w,
+layers_dialog_merge_layers_callback (GtkWidget *widget,
 				     gpointer   client_data)
 {
   GImage *gimage;
 
-  /*  if there is a currently selected gimage
-   */
-  if (! layersD)
-    return;
-  if (! (gimage = layersD->gimage))
+  if (!layersD || !(gimage = layersD->gimage))
     return;
 
   layers_dialog_layer_merge_query (gimage, TRUE);
 }
 
 void
-layers_dialog_merge_down_callback (GtkWidget *w,
+layers_dialog_merge_down_callback (GtkWidget *widget,
 				   gpointer   client_data)
 {
   GImage *gimage;
 
-  /* if there is a currently selected gimage
-   */
-  if (! layersD)
-    return;
-  if (! (gimage = layersD->gimage))
+  if (!layersD || !(gimage = layersD->gimage))
     return;
   
   gimp_image_merge_down (gimage, gimage->active_layer, EXPAND_AS_NECESSARY);
@@ -1671,16 +1602,12 @@ layers_dialog_merge_down_callback (GtkWidget *w,
 }
 
 void
-layers_dialog_flatten_image_callback (GtkWidget *w,
+layers_dialog_flatten_image_callback (GtkWidget *widget,
 				      gpointer   client_data)
 {
   GImage *gimage;
 
-  /*  if there is a currently selected gimage
-   */
-  if (! layersD)
-    return;
-  if (! (gimage = layersD->gimage))
+  if (!layersD || !(gimage = layersD->gimage))
     return;
 
   gimage_flatten (gimage);
@@ -1689,16 +1616,12 @@ layers_dialog_flatten_image_callback (GtkWidget *w,
 
 
 void
-layers_dialog_alpha_select_callback (GtkWidget *w,
+layers_dialog_alpha_select_callback (GtkWidget *widget,
 				     gpointer   client_data)
 {
   GImage *gimage;
 
-  /*  if there is a currently selected gimage
-   */
-  if (! layersD)
-    return;
-  if (! (gimage = layersD->gimage))
+  if (!layersD || !(gimage = layersD->gimage))
     return;
 
   gimage_mask_layer_alpha (gimage, gimage->active_layer);
@@ -1707,16 +1630,12 @@ layers_dialog_alpha_select_callback (GtkWidget *w,
 
 
 void
-layers_dialog_mask_select_callback (GtkWidget *w,
+layers_dialog_mask_select_callback (GtkWidget *widget,
 				    gpointer   client_data)
 {
   GImage *gimage;
 
-  /*  if there is a currently selected gimage
-   */
-  if (! layersD)
-    return;
-  if (! (gimage = layersD->gimage))
+  if (!layersD || !(gimage = layersD->gimage))
     return;
 
   gimage_mask_layer_mask (gimage, gimage->active_layer);
@@ -1725,19 +1644,15 @@ layers_dialog_mask_select_callback (GtkWidget *w,
 
 
 void
-layers_dialog_add_alpha_channel_callback (GtkWidget *w,
+layers_dialog_add_alpha_channel_callback (GtkWidget *widget,
 					  gpointer   client_data)
 {
   GImage *gimage;
   Layer  *layer;
 
-  /*  if there is a currently selected gimage
-   */
-  if (! layersD)
-    return;
-  if (! (gimage = layersD->gimage))
-    return;
-  if (! (layer = gimage_get_active_layer (gimage)))
+  if (!layersD ||
+      !(gimage = layersD->gimage) ||
+      !(layer = gimage_get_active_layer (gimage)))
     return;
 
   /*  Add an alpha channel  */
@@ -1751,7 +1666,7 @@ layers_dialog_add_alpha_channel_callback (GtkWidget *w,
 /****************************/
 
 static LayerWidget *
-layer_widget_get_ID (Layer * ID)
+layer_widget_get_ID (Layer *ID)
 {
   LayerWidget *lw;
   GSList *list;
@@ -1767,7 +1682,7 @@ layer_widget_get_ID (Layer * ID)
       if (lw->layer == ID)
 	return lw;
 
-      list = g_slist_next(list);
+      list = g_slist_next (list);
     }
 
   return NULL;
@@ -1786,21 +1701,21 @@ layer_widget_create (GImage *gimage,
   list_item = gtk_list_item_new ();
 
   /*  create the layer widget and add it to the list  */
-  layer_widget = (LayerWidget *) g_malloc (sizeof (LayerWidget));
-  layer_widget->gimage = gimage;
-  layer_widget->layer = layer;
+  layer_widget = g_new (LayerWidget, 1);
+  layer_widget->gimage        = gimage;
+  layer_widget->layer         = layer;
   layer_widget->layer_preview = NULL;
-  layer_widget->mask_preview = NULL;
-  layer_widget->layer_pixmap = NULL;
-  layer_widget->mask_pixmap = NULL;
-  layer_widget->list_item = list_item;
-  layer_widget->width = -1;
-  layer_widget->height = -1;
-  layer_widget->layer_mask = (layer->mask != NULL);
-  layer_widget->apply_mask = layer->apply_mask;
-  layer_widget->edit_mask = layer->edit_mask;
-  layer_widget->show_mask = layer->show_mask;
-  layer_widget->visited = TRUE;
+  layer_widget->mask_preview  = NULL;
+  layer_widget->layer_pixmap  = NULL;
+  layer_widget->mask_pixmap   = NULL;
+  layer_widget->list_item     = list_item;
+  layer_widget->width         = -1;
+  layer_widget->height        = -1;
+  layer_widget->layer_mask    = (layer->mask != NULL);
+  layer_widget->apply_mask    = layer->apply_mask;
+  layer_widget->edit_mask     = layer->edit_mask;
+  layer_widget->show_mask     = layer->show_mask;
+  layer_widget->visited       = TRUE;
 
   if (layer->mask)
     layer_widget->active_preview = (layer->edit_mask) ? MASK_PREVIEW : LAYER_PREVIEW;
@@ -1930,7 +1845,7 @@ layer_widget_delete (LayerWidget *layer_widget)
 }
 
 static void
-layer_widget_select_update (GtkWidget *w,
+layer_widget_select_update (GtkWidget *widget,
 			    gpointer   data)
 {
   LayerWidget *layer_widget;
@@ -1939,7 +1854,7 @@ layer_widget_select_update (GtkWidget *w,
     return;
 
   /*  Is the list item being selected?  */
-  if (w->state != GTK_STATE_SELECTED)
+  if (widget->state != GTK_STATE_SELECTED)
     return;
 
   /*  Only notify the gimage of an active layer change if necessary  */
@@ -2699,8 +2614,9 @@ layer_widget_layer_flush (GtkWidget *widget,
        *  2)  The paint mode menu
        *  3)  The preserve trans button
        */
-      layersD->opacity_data->value = (gfloat) layer_widget->layer->opacity / 2.55;
-      gtk_signal_emit_by_name (GTK_OBJECT (layersD->opacity_data), "value_changed");
+      gtk_adjustment_set_value (GTK_ADJUSTMENT (layersD->opacity_data),
+				(gfloat) layer_widget->layer->opacity / 2.55);
+
       gtk_option_menu_set_history (GTK_OPTION_MENU (layersD->mode_option_menu),
 				   paint_mode_menu_get_position (layer_widget->layer->mode));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (layersD->preserve_trans),
@@ -2711,7 +2627,7 @@ layer_widget_layer_flush (GtkWidget *widget,
   if (layer_is_floating_sel (layer_widget->layer))
     name = _("Floating Selection");
   else
-    name = layer_get_name(layer_widget->layer);
+    name = layer_get_name (layer_widget->layer);
 
   /*  we need to set the name label if necessary  */
   gtk_label_get (GTK_LABEL (layer_widget->label), &label_name);
@@ -2772,12 +2688,15 @@ layer_widget_layer_flush (GtkWidget *widget,
 /*
  *  The new layer query dialog
  */
+
 typedef struct _NewLayerOptions NewLayerOptions;
 
-struct _NewLayerOptions {
+struct _NewLayerOptions
+{
   GtkWidget *query_box;
   GtkWidget *name_entry;
   GtkWidget *size_se;
+
   gint fill_type;
   gint xsize;
   gint ysize;
@@ -2789,11 +2708,11 @@ static gint   fill_type  = TRANSPARENT_FILL;
 static gchar *layer_name = NULL;
 
 static void
-new_layer_query_ok_callback (GtkWidget *w,
+new_layer_query_ok_callback (GtkWidget *widget,
 			     gpointer   client_data)
 {
   NewLayerOptions *options;
-  Layer *layer;
+  Layer  *layer;
   GImage *gimage;
 
   options = (NewLayerOptions *) client_data;
@@ -2829,16 +2748,17 @@ new_layer_query_ok_callback (GtkWidget *w,
 	} 
       else 
 	{
-	  g_message (_("new_layer_query_ok_callback: could not allocate new layer"));
+	  g_message (_("new_layer_query_ok_callback():\n"
+		       "could not allocate new layer"));
 	}
     }
-  
+
   gtk_widget_destroy (options->query_box);
   g_free (options);
 }
 
 static void
-new_layer_query_cancel_callback (GtkWidget *w,
+new_layer_query_cancel_callback (GtkWidget *widget,
 				 gpointer   client_data)
 {
   NewLayerOptions *options;
@@ -2850,18 +2770,18 @@ new_layer_query_cancel_callback (GtkWidget *w,
 }
 
 static gint
-new_layer_query_delete_callback (GtkWidget *w,
-				 GdkEvent  *e,
+new_layer_query_delete_callback (GtkWidget *widget,
+				 GdkEvent  *event,
 				 gpointer   client_data)
 {
-  new_layer_query_cancel_callback (w, client_data);
+  new_layer_query_cancel_callback (widget, client_data);
 
   return TRUE;
 }
 
 
 static void
-new_layer_query_fill_type_callback (GtkWidget *w,
+new_layer_query_fill_type_callback (GtkWidget *widget,
 				    gpointer   client_data)
 {
   NewLayerOptions *options;
@@ -2869,7 +2789,7 @@ new_layer_query_fill_type_callback (GtkWidget *w,
   options = (NewLayerOptions *) client_data;
 
   options->fill_type =
-    (int) gtk_object_get_data (GTK_OBJECT (w), "layer_fill_type");
+    (GimpFillType) gtk_object_get_data (GTK_OBJECT (widget), "fill_type");
 }
 
 static void
@@ -2885,8 +2805,13 @@ layers_dialog_new_layer_query (GimpImage* gimage)
   GtkWidget *radio_box;
   GtkWidget *radio_button;
   GSList *group;
-  int     i;
+  gint    i;
 
+  static ActionAreaItem action_items[] =
+  {
+    { N_("OK"), new_layer_query_ok_callback, NULL, NULL },
+    { N_("Cancel"), new_layer_query_cancel_callback, NULL, NULL }
+  };
   static gchar *button_names[] =
   {
     N_("Foreground"),
@@ -2894,43 +2819,37 @@ layers_dialog_new_layer_query (GimpImage* gimage)
     N_("White"),
     N_("Transparent")
   };
-  static gint nbutton_names = sizeof (button_names) / sizeof (button_names[0]);
+  static gint n_buttons = sizeof (button_names) / sizeof (button_names[0]);
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("OK"), new_layer_query_ok_callback, NULL, NULL },
-    { N_("Cancel"), new_layer_query_cancel_callback, NULL, NULL }
-  };
-
-  /*  the new options structure  */
-  options = (NewLayerOptions *) g_malloc (sizeof (NewLayerOptions));
+  /*  The new options structure  */
+  options = g_new (NewLayerOptions, 1);
   options->fill_type = fill_type;
-  options->gimage = gimage;
+  options->gimage    = gimage;
 
-  /*  the dialog  */
+  /*  The dialog  */
   options->query_box = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (options->query_box),
 			  "new_layer_options", "Gimp");
   gtk_window_set_title (GTK_WINDOW (options->query_box), _("New Layer Options"));
   gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
 
-  /*  handle the wm close signal  */
+  /*  Handle the wm close signal  */
   gtk_signal_connect (GTK_OBJECT (options->query_box), "delete_event",
 		      GTK_SIGNAL_FUNC (new_layer_query_delete_callback),
 		      options);
 
-  /*  the main vbox  */
+  /*  The main vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (options->query_box)->vbox), vbox,
-		      TRUE, TRUE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
+		     vbox);
 
   table = gtk_table_new (3, 2, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
   gtk_table_set_row_spacing (GTK_TABLE (table), 0, 4);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
-  /*  the name label and entry  */
+  /*  The name label and entry  */
   label = gtk_label_new (_("Layer Name:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
@@ -2944,7 +2863,7 @@ layers_dialog_new_layer_query (GimpImage* gimage)
 		      (layer_name ? layer_name : _("New Layer")));
   gtk_widget_show (options->name_entry);
 
-  /*  the size labels  */
+  /*  The size labels  */
   label = gtk_label_new (_("Layer Width:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
@@ -2957,7 +2876,7 @@ layers_dialog_new_layer_query (GimpImage* gimage)
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
   gtk_widget_show (label);
 
-  /*  the size sizeentry  */
+  /*  The size sizeentry  */
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
   spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 2);
   gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
@@ -3003,28 +2922,29 @@ layers_dialog_new_layer_query (GimpImage* gimage)
 
   gtk_widget_show (table);
 
-  /*  the radio frame and box  */
+  /*  The radio frame and box  */
   radio_frame = gtk_frame_new (_("Layer Fill Type"));
   gtk_box_pack_start (GTK_BOX (vbox), radio_frame, FALSE, FALSE, 0);
 
   radio_box = gtk_vbox_new (FALSE, 1);
+  gtk_container_set_border_width (GTK_CONTAINER (radio_box), 2);
   gtk_container_add (GTK_CONTAINER (radio_frame), radio_box);
 
-  /*  the radio buttons  */
+  /*  The radio buttons  */
   group = NULL;
-  for (i = 0; i < nbutton_names; i++)
+  for (i = 0; i < n_buttons; i++)
     {
       radio_button =
 	gtk_radio_button_new_with_label (group, gettext(button_names[i]));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
       gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
-      gtk_object_set_data (GTK_OBJECT (radio_button), "layer_fill_type",
+      gtk_object_set_data (GTK_OBJECT (radio_button), "fill_type",
 			   (gpointer) i);
       gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
 			  (GtkSignalFunc) new_layer_query_fill_type_callback,
 			  options);
 
-      /*  set the correct radio button  */
+      /*  Set the correct radio button  */
       if (i == options->fill_type)
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_button), TRUE);
 
@@ -3045,9 +2965,11 @@ layers_dialog_new_layer_query (GimpImage* gimage)
 /*
  *  The edit layer attributes dialog
  */
+
 typedef struct _EditLayerOptions EditLayerOptions;
 
-struct _EditLayerOptions {
+struct _EditLayerOptions
+{
   GtkWidget *query_box;
   GtkWidget *name_entry;
   GimpLayer *layer;
@@ -3055,7 +2977,7 @@ struct _EditLayerOptions {
 };
 
 static void
-edit_layer_query_ok_callback (GtkWidget *w,
+edit_layer_query_ok_callback (GtkWidget *widget,
 			      gpointer   client_data)
 {
   EditLayerOptions *options;
@@ -3066,7 +2988,7 @@ edit_layer_query_ok_callback (GtkWidget *w,
   if ((layer = options->layer))
     {
       /*  Set the new layer name  */
-      if (GIMP_DRAWABLE(layer)->name)
+      if (GIMP_DRAWABLE (layer)->name)
 	{
 	  /*  If the layer is a floating selection, make it a layer  */
 	  if (layer_is_floating_sel (layer))
@@ -3074,7 +2996,8 @@ edit_layer_query_ok_callback (GtkWidget *w,
 	      floating_sel_to_layer (layer);
 	    }
 	}
-      layer_set_name(layer, gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
+      layer_set_name (layer,
+		      gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
       gimage_dirty (options->gimage);
     }
 
@@ -3086,7 +3009,7 @@ edit_layer_query_ok_callback (GtkWidget *w,
 }
 
 static void
-edit_layer_query_cancel_callback (GtkWidget *w,
+edit_layer_query_cancel_callback (GtkWidget *widget,
 				  gpointer   client_data)
 {
   EditLayerOptions *options;
@@ -3097,11 +3020,11 @@ edit_layer_query_cancel_callback (GtkWidget *w,
 }
 
 static gint
-edit_layer_query_delete_callback (GtkWidget *w,
-				  GdkEvent *e,
-				  gpointer client_data)
+edit_layer_query_delete_callback (GtkWidget *widget,
+				  GdkEvent  *event,
+				  gpointer   client_data)
 {
-  edit_layer_query_cancel_callback (w, client_data);
+  edit_layer_query_cancel_callback (widget, client_data);
 
   return TRUE;
 }
@@ -3120,33 +3043,35 @@ layers_dialog_edit_layer_query (LayerWidget *layer_widget)
     { N_("Cancel"), edit_layer_query_cancel_callback, NULL, NULL }
   };
 
-  /*  the new options structure  */
-  options = (EditLayerOptions *) g_malloc (sizeof (EditLayerOptions));
-  options->layer = layer_widget->layer;
+  /*  The new options structure  */
+  options = g_new (EditLayerOptions, 1);
+  options->layer  = layer_widget->layer;
   options->gimage = layer_widget->gimage;
 
-  /*  the dialog  */
+  /*  The dialog  */
   options->query_box = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "edit_layer_attrributes", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (options->query_box), _("Edit Layer Attributes"));
+  gtk_window_set_wmclass (GTK_WINDOW (options->query_box),
+			  "edit_layer_attrributes", "Gimp");
+  gtk_window_set_title (GTK_WINDOW (options->query_box),
+			_("Edit Layer Attributes"));
   gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
 
-  /*  handle the wm close signal */
+  /*  Handle the wm close signal */
   gtk_signal_connect (GTK_OBJECT (options->query_box), "delete_event",
 		      GTK_SIGNAL_FUNC (edit_layer_query_delete_callback),
 		      options);
 
-  /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (options->query_box)->vbox), vbox,
-		      TRUE, TRUE, 0);
+  /*  The main vbox  */
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
+		     vbox);
 
-  /*  the name entry hbox, label and entry  */
-  hbox = gtk_hbox_new (FALSE, 1);
+  /*  The name hbox, label and entry  */
+  hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Layer name: "));
+  label = gtk_label_new (_("Layer name:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -3155,7 +3080,7 @@ layers_dialog_edit_layer_query (LayerWidget *layer_widget)
   gtk_entry_set_text (GTK_ENTRY (options->name_entry),
 		      ((layer_is_floating_sel (layer_widget->layer) ?
 			_("Floating Selection") :
-			layer_get_name(layer_widget->layer))));
+			layer_get_name (layer_widget->layer))));
   gtk_widget_show (options->name_entry);
 
   gtk_widget_show (hbox);
@@ -3175,24 +3100,25 @@ layers_dialog_edit_layer_query (LayerWidget *layer_widget)
 
 typedef struct _AddMaskOptions AddMaskOptions;
 
-struct _AddMaskOptions {
-  GtkWidget *query_box;
-  Layer * layer;
-  AddMaskType add_mask_type;
+struct _AddMaskOptions
+{
+  GtkWidget   *query_box;
+  Layer       *layer;
+  AddMaskType  add_mask_type;
 };
 
 static void
-add_mask_query_ok_callback (GtkWidget *w,
+add_mask_query_ok_callback (GtkWidget *widget,
 			    gpointer   client_data)
 {
   AddMaskOptions *options;
-  GImage *gimage;
+  GImage    *gimage;
   LayerMask *mask;
-  Layer *layer;
+  Layer     *layer;
 
   options = (AddMaskOptions *) client_data;
-  if ((layer =  (options->layer)) &&
-      (gimage = GIMP_DRAWABLE(layer)->gimage))
+  if ((layer = (options->layer)) &&
+      (gimage = GIMP_DRAWABLE (layer)->gimage))
     {
       mask = layer_create_mask (layer, options->add_mask_type);
       gimage_add_layer_mask (gimage, layer, mask);
@@ -3204,7 +3130,7 @@ add_mask_query_ok_callback (GtkWidget *w,
 }
 
 static void
-add_mask_query_cancel_callback (GtkWidget *w,
+add_mask_query_cancel_callback (GtkWidget *widget,
 				gpointer   client_data)
 {
   AddMaskOptions *options;
@@ -3215,116 +3141,92 @@ add_mask_query_cancel_callback (GtkWidget *w,
 }
 
 static gint
-add_mask_query_delete_callback (GtkWidget *w,
-				GdkEvent  *e,
+add_mask_query_delete_callback (GtkWidget *widget,
+				GdkEvent  *event,
 				gpointer   client_data)
 {
-  add_mask_query_cancel_callback (w, client_data);
+  add_mask_query_cancel_callback (widget, client_data);
 
   return TRUE;
 }
 
 static void
-fill_white_callback (GtkWidget *w,
-		     gpointer   client_data)
+add_mask_query_fill_type_callback (GtkWidget *widget,
+				   gpointer   client_data)
 {
   AddMaskOptions *options;
 
   options = (AddMaskOptions *) client_data;
-  options->add_mask_type = ADD_WHITE_MASK;
-}
 
-static void
-fill_black_callback (GtkWidget *w,
-		     gpointer   client_data)
-{
-  AddMaskOptions *options;
-
-  options = (AddMaskOptions *) client_data;
-  options->add_mask_type = ADD_BLACK_MASK;
-}
-
-static void
-fill_alpha_callback (GtkWidget *w,
-		     gpointer   client_data)
-{
-  AddMaskOptions *options;
-
-  options = (AddMaskOptions *) client_data;
-  options->add_mask_type = ADD_ALPHA_MASK;
+  options->add_mask_type =
+    (AddMaskType) gtk_object_get_data (GTK_OBJECT (widget), "add_mask_type");
 }
 
 static void
 layers_dialog_add_mask_query (Layer *layer)
 {
-  static ActionAreaItem action_items[2] =
-  {
-    { N_("OK"), add_mask_query_ok_callback, NULL, NULL },
-    { N_("Cancel"), add_mask_query_cancel_callback, NULL, NULL }
-  };
   AddMaskOptions *options;
   GtkWidget *vbox;
-  GtkWidget *label;
   GtkWidget *radio_frame;
   GtkWidget *radio_box;
   GtkWidget *radio_button;
   GSList *group = NULL;
-  int i;
-  char *button_names[3] =
+  gint    i;
+
+  static ActionAreaItem action_items[] =
+  {
+    { N_("OK"), add_mask_query_ok_callback, NULL, NULL },
+    { N_("Cancel"), add_mask_query_cancel_callback, NULL, NULL }
+  };
+  static gchar *button_names[] =
   {
     N_("White (Full Opacity)"),
     N_("Black (Full Transparency)"),
     N_("Layer's Alpha Channel")
   };
-  ActionCallback button_callbacks[3] =
-  {
-    fill_white_callback,
-    fill_black_callback,
-    fill_alpha_callback
-  };
+  static gint n_buttons = sizeof (button_names) / sizeof (button_names[0]);
 
-  /*  the new options structure  */
-  options = (AddMaskOptions *) g_malloc (sizeof (AddMaskOptions));
-  options->layer = layer;
+  /*  The new options structure  */
+  options = g_new (AddMaskOptions, 1);
+  options->layer         = layer;
   options->add_mask_type = ADD_WHITE_MASK;
 
-  /*  the dialog  */
+  /*  The dialog  */
   options->query_box = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "add_mask_options", "Gimp");
   gtk_window_set_title (GTK_WINDOW (options->query_box), _("Add Mask Options"));
   gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
 
-  /*  handle the wm close signal */
+  /*  Handle the wm close signal */
   gtk_signal_connect (GTK_OBJECT (options->query_box), "delete_event",
 		      GTK_SIGNAL_FUNC (add_mask_query_delete_callback),
 		      options);
 
-  /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (options->query_box)->vbox), vbox,
-		      TRUE, TRUE, 0);
+  /*  The main vbox  */
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
+		     vbox);
 
-  /*  the name entry hbox, label and entry  */
-  label = gtk_label_new (_("Initialize Layer Mask To:"));
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  /*  the radio frame and box  */
-  radio_frame = gtk_frame_new (NULL);
+  /*  The radio frame and box  */
+  radio_frame = gtk_frame_new (_("Initialize Layer Mask to:"));
   gtk_box_pack_start (GTK_BOX (vbox), radio_frame, FALSE, FALSE, 0);
 
   radio_box = gtk_vbox_new (FALSE, 1);
+  gtk_container_set_border_width (GTK_CONTAINER (radio_box), 2);
   gtk_container_add (GTK_CONTAINER (radio_frame), radio_box);
 
-  /*  the radio buttons  */
-  for (i = 0; i < 3; i++)
+  /*  The radio buttons  */
+  for (i = 0; i < n_buttons; i++)
     {
-      radio_button = gtk_radio_button_new_with_label (group, gettext(button_names[i]));
+      radio_button =
+	gtk_radio_button_new_with_label (group, gettext (button_names[i]));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
       gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
+      gtk_object_set_data (GTK_OBJECT (radio_button), "add_mask_type",
+			   (gpointer) i);
       gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-			  (GtkSignalFunc) button_callbacks[i],
+			  (GtkSignalFunc) add_mask_query_fill_type_callback,
 			  options);
       gtk_widget_show (radio_button);
     }
@@ -3346,41 +3248,42 @@ layers_dialog_add_mask_query (Layer *layer)
 
 typedef struct _ApplyMaskOptions ApplyMaskOptions;
 
-struct _ApplyMaskOptions {
+struct _ApplyMaskOptions
+{
   GtkWidget *query_box;
-  Layer * layer;
+  Layer     *layer;
 };
 
 static void
-apply_mask_query_apply_callback (GtkWidget *w,
+apply_mask_query_apply_callback (GtkWidget *widget,
 				 gpointer   client_data)
 {
   ApplyMaskOptions *options;
 
   options = (ApplyMaskOptions *) client_data;
 
-  gimage_remove_layer_mask (drawable_gimage (GIMP_DRAWABLE(options->layer)),
+  gimage_remove_layer_mask (drawable_gimage (GIMP_DRAWABLE (options->layer)),
 			    options->layer, APPLY);
   gtk_widget_destroy (options->query_box);
   g_free (options);
 }
 
 static void
-apply_mask_query_discard_callback (GtkWidget *w,
+apply_mask_query_discard_callback (GtkWidget *widget,
 				   gpointer   client_data)
 {
   ApplyMaskOptions *options;
 
   options = (ApplyMaskOptions *) client_data;
 
-  gimage_remove_layer_mask (drawable_gimage (GIMP_DRAWABLE(options->layer)),
+  gimage_remove_layer_mask (drawable_gimage (GIMP_DRAWABLE (options->layer)),
 			    options->layer, DISCARD);
   gtk_widget_destroy (options->query_box);
   g_free (options);
 }
 
 static void
-apply_mask_query_cancel_callback (GtkWidget *w,
+apply_mask_query_cancel_callback (GtkWidget *widget,
 				  gpointer   client_data)
 {
   ApplyMaskOptions *options;
@@ -3391,11 +3294,11 @@ apply_mask_query_cancel_callback (GtkWidget *w,
 }
 
 static gint
-apply_mask_query_delete_callback (GtkWidget *w,
-				  GdkEvent  *e,
+apply_mask_query_delete_callback (GtkWidget *widget,
+				  GdkEvent  *event,
 				  gpointer   client_data)
 {
-  apply_mask_query_cancel_callback (w, client_data);
+  apply_mask_query_cancel_callback (widget, client_data);
 
   return TRUE;
 }
@@ -3403,39 +3306,39 @@ apply_mask_query_delete_callback (GtkWidget *w,
 static void
 layers_dialog_apply_mask_query (Layer *layer)
 {
-  static ActionAreaItem action_items[3] =
+  ApplyMaskOptions *options;
+  GtkWidget *vbox;
+  GtkWidget *label;
+
+  static ActionAreaItem action_items[] =
   {
     { N_("Apply"), apply_mask_query_apply_callback, NULL, NULL },
     { N_("Discard"), apply_mask_query_discard_callback, NULL, NULL },
     { N_("Cancel"), apply_mask_query_cancel_callback, NULL, NULL }
   };
-  ApplyMaskOptions *options;
-  GtkWidget *vbox;
-  GtkWidget *label;
 
-  /*  the new options structure  */
-  options = (ApplyMaskOptions *) g_malloc (sizeof (ApplyMaskOptions));
+  /*  The new options structure  */
+  options = g_new (ApplyMaskOptions, 1);
   options->layer = layer;
 
-  /*  the dialog  */
+  /*  The dialog  */
   options->query_box = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "layer_mask_options", "Gimp");
   gtk_window_set_title (GTK_WINDOW (options->query_box), _("Layer Mask Options"));
   gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
 
-  /*  handle the wm close signal */
+  /*  Handle the wm close signal */
   gtk_signal_connect (GTK_OBJECT (options->query_box), "delete_event",
 		      GTK_SIGNAL_FUNC (apply_mask_query_delete_callback),
 		      options);
 
+  /*  The main vbox  */
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
+		     vbox);
 
-  /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (options->query_box)->vbox), vbox,
-		      TRUE, TRUE, 0);
-
-  /*  the name entry hbox, label and entry  */
+  /*  The name entry hbox, label and entry  */
   label = gtk_label_new (_("Apply layer mask?"));
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
@@ -3456,26 +3359,26 @@ layers_dialog_apply_mask_query (Layer *layer)
 
 typedef struct _ScaleLayerOptions ScaleLayerOptions;
 
-struct _ScaleLayerOptions {
+struct _ScaleLayerOptions
+{
   Layer  *layer;
   Resize *resize;
 };
 
-
 static void
-scale_layer_query_ok_callback (GtkWidget *w,
+scale_layer_query_ok_callback (GtkWidget *widget,
 			       gpointer   client_data)
 {
   ScaleLayerOptions *options;
   GImage *gimage;
-  Layer *layer;
+  Layer  *layer;
 
   options = (ScaleLayerOptions *) client_data;
 
   if (options->resize->width > 0 && options->resize->height > 0 &&
       (layer =  (options->layer)))
     {
-      if ((gimage = GIMP_DRAWABLE(layer)->gimage) != NULL)
+      if ((gimage = GIMP_DRAWABLE (layer)->gimage) != NULL)
 	{
 	  undo_push_group_start (gimage, LAYER_SCALE_UNDO);
 
@@ -3496,11 +3399,12 @@ scale_layer_query_ok_callback (GtkWidget *w,
       g_free (options);
     }
   else
-    g_message (_("Invalid width or height.  Both must be positive."));
+    g_message (_("Invalid width or height.\n"
+		 "Both must be positive."));
 }
 
 static void
-scale_layer_query_cancel_callback (GtkWidget *w,
+scale_layer_query_cancel_callback (GtkWidget *widget,
 				   gpointer   client_data)
 {
   ScaleLayerOptions *options;
@@ -3511,11 +3415,11 @@ scale_layer_query_cancel_callback (GtkWidget *w,
 }
 
 static gint
-scale_layer_query_delete_callback (GtkWidget *w,
-				   GdkEvent  *e,
+scale_layer_query_delete_callback (GtkWidget *widget,
+				   GdkEvent  *event,
 				   gpointer   client_data)
 {
-  scale_layer_query_cancel_callback (w, client_data);
+  scale_layer_query_cancel_callback (widget, client_data);
 
   return TRUE;
 }
@@ -3527,8 +3431,8 @@ layers_dialog_scale_layer_query (GImage *gimage,
   ScaleLayerOptions *options;
 
   /*  the new options structure  */
-  options = (ScaleLayerOptions *) g_malloc (sizeof (ScaleLayerOptions));
-  options->layer = layer;
+  options = g_new (ScaleLayerOptions, 1);
+  options->layer  = layer;
   options->resize = resize_widget_new (ScaleWidget,
 				       ResizeLayer,
 				       GTK_OBJECT (layer),
@@ -3553,25 +3457,26 @@ layers_dialog_scale_layer_query (GImage *gimage,
 
 typedef struct _ResizeLayerOptions ResizeLayerOptions;
 
-struct _ResizeLayerOptions {
-  Layer *layer;
+struct _ResizeLayerOptions
+{
+  Layer  *layer;
   Resize *resize;
 };
 
 static void
-resize_layer_query_ok_callback (GtkWidget *w,
+resize_layer_query_ok_callback (GtkWidget *widget,
 				gpointer   client_data)
 {
   ResizeLayerOptions *options;
   GImage *gimage;
-  Layer *layer;
+  Layer  *layer;
 
   options = (ResizeLayerOptions *) client_data;
 
   if (options->resize->width > 0 && options->resize->height > 0 &&
       (layer = (options->layer)))
     {
-      if ((gimage = GIMP_DRAWABLE(layer)->gimage) != NULL)
+      if ((gimage = GIMP_DRAWABLE (layer)->gimage) != NULL)
 	{
 	  undo_push_group_start (gimage, LAYER_RESIZE_UNDO);
 
@@ -3594,11 +3499,12 @@ resize_layer_query_ok_callback (GtkWidget *w,
       g_free (options);
     }
   else
-    g_message (_("Invalid width or height.  Both must be positive."));
+    g_message (_("Invalid width or height.\n"
+		 "Both must be positive."));
 }
 
 static void
-resize_layer_query_cancel_callback (GtkWidget *w,
+resize_layer_query_cancel_callback (GtkWidget *widget,
 				    gpointer   client_data)
 {
   ResizeLayerOptions *options;
@@ -3609,24 +3515,24 @@ resize_layer_query_cancel_callback (GtkWidget *w,
 }
 
 static gint
-resize_layer_query_delete_callback (GtkWidget *w,
-				    GdkEvent  *e,
+resize_layer_query_delete_callback (GtkWidget *widget,
+				    GdkEvent  *event,
 				    gpointer   client_data)
 {
-  resize_layer_query_cancel_callback (w, client_data);
+  resize_layer_query_cancel_callback (widget, client_data);
 
   return TRUE;
 }
 
 static void
-layers_dialog_resize_layer_query (GImage * gimage,
-				  Layer  * layer)
+layers_dialog_resize_layer_query (GImage *gimage,
+				  Layer  *layer)
 {
   ResizeLayerOptions *options;
 
   /*  the new options structure  */
-  options = (ResizeLayerOptions *) g_malloc (sizeof (ResizeLayerOptions));
-  options->layer = layer;
+  options = g_new (ResizeLayerOptions, 1);
+  options->layer  = layer;
   options->resize = resize_widget_new (ResizeWidget,
 				       ResizeLayer,
 				       GTK_OBJECT (layer),
@@ -3700,113 +3606,88 @@ layer_merge_query_delete_callback (GtkWidget *w,
 }
 
 static void
-expand_as_necessary_callback (GtkWidget *w,
-			      gpointer   client_data)
+layer_merge_query_type_callback (GtkWidget *widget,
+				 gpointer   client_data)
 {
   LayerMergeOptions *options;
 
   options = (LayerMergeOptions *) client_data;
-  options->merge_type = EXPAND_AS_NECESSARY;
-}
 
-static void
-clip_to_image_callback (GtkWidget *w,
-			gpointer   client_data)
-{
-  LayerMergeOptions *options;
-
-  options = (LayerMergeOptions *) client_data;
-  options->merge_type = CLIP_TO_IMAGE;
-}
-
-static void
-clip_to_bottom_layer_callback (GtkWidget *w,
-			       gpointer   client_data)
-{
-  LayerMergeOptions *options;
-
-  options = (LayerMergeOptions *) client_data;
-  options->merge_type = CLIP_TO_BOTTOM_LAYER;
+  options->merge_type =
+    (MergeType) gtk_object_get_data (GTK_OBJECT (widget), "merge_type");
 }
 
 void
 layers_dialog_layer_merge_query (GImage *gimage,
-				 int     merge_visible)  /*  if 0, anchor active layer  */
+				 /*  if 0, anchor active layer  */
+				 gint    merge_visible)
 {
-  static ActionAreaItem action_items[2] =
-  {
-    { N_("OK"), layer_merge_query_ok_callback, NULL, NULL },
-    { N_("Cancel"), layer_merge_query_cancel_callback, NULL, NULL }
-  };
   LayerMergeOptions *options;
   GtkWidget *vbox;
-  GtkWidget *label;
   GtkWidget *radio_frame;
   GtkWidget *radio_box;
   GtkWidget *radio_button;
   GSList *group = NULL;
-  gint i;
+  gint    i;
+
+  static ActionAreaItem action_items[] =
+  {
+    { N_("OK"), layer_merge_query_ok_callback, NULL, NULL },
+    { N_("Cancel"), layer_merge_query_cancel_callback, NULL, NULL }
+  };
   static gchar *button_names[] =
   {
     N_("Expanded as necessary"),
     N_("Clipped to image"),
     N_("Clipped to bottom layer")
   };
-  static ActionCallback button_callbacks[] =
-  {
-    expand_as_necessary_callback,
-    clip_to_image_callback,
-    clip_to_bottom_layer_callback
-  };
+  static gint n_buttons = sizeof (button_names) / sizeof (button_names[0]);
 
-  /*  the new options structure  */
-  options = (LayerMergeOptions *) g_malloc (sizeof (LayerMergeOptions));
-  options->gimage = gimage;
+  /*  The new options structure  */
+  options = g_new (LayerMergeOptions, 1);
+  options->gimage        = gimage;
   options->merge_visible = merge_visible;
-  options->merge_type = EXPAND_AS_NECESSARY;
+  options->merge_type    = EXPAND_AS_NECESSARY;
 
-  /*  the dialog  */
+  /* The dialog  */
   options->query_box = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "layer_merge_options", "Gimp");
   gtk_window_set_title (GTK_WINDOW (options->query_box), _("Layer Merge Options"));
   gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
 
-  /* hadle the wm close signal */
+  /*  Handle the wm close signal  */
   gtk_signal_connect (GTK_OBJECT (options->query_box), "delete_event",
 		      GTK_SIGNAL_FUNC (layer_merge_query_delete_callback),
 		      options);
 
-  /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (options->query_box), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (options->query_box)->vbox), vbox,
-		      TRUE, TRUE, 0);
+  /*  The main vbox  */
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
+		     vbox);
 
-  /*  the name entry hbox, label and entry  */
+  /*  The radio frame and box  */
   if (merge_visible)
-    label = gtk_label_new (_("Final, merged layer should be:"));
+     radio_frame = gtk_frame_new (_("Final, Merged Layer should be:"));
   else
-    label = gtk_label_new (_("Final, anchored layer should be:"));
-
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  /*  the radio frame and box  */
-  radio_frame = gtk_frame_new (NULL);
+     radio_frame = gtk_frame_new (_("Final, Anchored Layer should be:"));
   gtk_box_pack_start (GTK_BOX (vbox), radio_frame, FALSE, FALSE, 0);
 
   radio_box = gtk_vbox_new (FALSE, 1);
+  gtk_container_set_border_width (GTK_CONTAINER (radio_box), 2);
   gtk_container_add (GTK_CONTAINER (radio_frame), radio_box);
 
-  /*  the radio buttons  */
-  for (i = 0; i < 3; i++)
+  /*  The radio buttons  */
+  for (i = 0; i < n_buttons; i++)
     {
       radio_button =
-	gtk_radio_button_new_with_label (group, gettext(button_names[i]));
+	gtk_radio_button_new_with_label (group, gettext (button_names[i]));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
       gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
+      gtk_object_set_data (GTK_OBJECT (radio_button), "merge_type",
+			   (gpointer) i);
       gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-			  (GtkSignalFunc) button_callbacks[i],
+			  (GtkSignalFunc) layer_merge_query_type_callback,
 			  options);
       gtk_widget_show (radio_button);
     }

@@ -1050,11 +1050,11 @@ static void
 palette_new_entries_callback (GtkWidget *w,
 				 gpointer   client_data)
 {
-  query_string_box (N_("New Palette"),
-		    N_("Enter a name for new palette"),
-		    NULL,
-		    NULL, NULL,
-		    palette_add_entries_callback, client_data);
+  gtk_widget_show (query_string_box (_("New Palette"),
+				     _("Enter a name for new palette"),
+				     NULL,
+				     NULL, NULL,
+				     palette_add_entries_callback, client_data));
 }
 
 static void
@@ -2146,7 +2146,7 @@ create_palette_dialog (gint vert)
 
   gtk_widget_show(clist_scrolledwindow);
     
-  gtk_container_border_width (GTK_CONTAINER (palette_list), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (palette_list), 4);
   gtk_clist_set_column_width (GTK_CLIST (palette_list), 0, SM_PREVIEW_WIDTH+2);
   gtk_clist_column_titles_show (GTK_CLIST (palette_list));
 
@@ -2161,7 +2161,7 @@ create_palette_dialog (gint vert)
       gtk_object_set_data (GTK_OBJECT (palette_dialog), "vbuttonbox2", vbuttonbox2);
       gtk_widget_show (vbuttonbox2);
       gtk_container_add (GTK_CONTAINER (frame1), vbuttonbox2);
-      gtk_container_border_width (GTK_CONTAINER (vbuttonbox2), 6);
+      gtk_container_set_border_width (GTK_CONTAINER (vbuttonbox2), 6);
       gtk_button_box_set_layout (GTK_BUTTON_BOX (vbuttonbox2), GTK_BUTTONBOX_SPREAD);
       gtk_button_box_set_spacing (GTK_BUTTON_BOX (vbuttonbox2), 0);
       gtk_button_box_set_child_size (GTK_BUTTON_BOX (vbuttonbox2), 44, 22);
@@ -2211,7 +2211,7 @@ create_palette_dialog (gint vert)
   dialog_action_area3 = GTK_DIALOG (palette_dialog)->action_area;
   gtk_object_set_data (GTK_OBJECT (palette_dialog), "dialog_action_area3", dialog_action_area3);
   gtk_widget_show (dialog_action_area3);
-  gtk_container_border_width (GTK_CONTAINER (dialog_action_area3), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (dialog_action_area3), 2);
   
   alignment2 = gtk_alignment_new (0.5, 0.5, 1, 1);
   gtk_object_set_data (GTK_OBJECT (palette_dialog), "alignment2", alignment2);
@@ -2416,11 +2416,12 @@ static void
 palette_merge_dialog_callback (GtkWidget *w,
 			       gpointer client_data)
 {
-  query_string_box (N_("Merge Palette"),
-		    N_("Enter a name for merged palette"),
-		    NULL,
-		    NULL, NULL,
-		    palette_merge_entries_callback, client_data);
+  gtk_widget_show (query_string_box (_("Merge Palette"),
+				     _("Enter a name for merged palette"),
+				     NULL,
+				     NULL, NULL,
+				     palette_merge_entries_callback,
+				     client_data));
 }
 
 static void
@@ -2869,7 +2870,7 @@ palette_import_dialog(PaletteP palette)
   gtk_box_pack_start (GTK_BOX (vbox1), select, FALSE, FALSE, 0);
 
   dialog_action_area1 = GTK_DIALOG (dialog1)->action_area;
-  gtk_container_border_width (GTK_CONTAINER (dialog_action_area1), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (dialog_action_area1), 2);
   gtk_widget_show (dialog_action_area1);
 
   hbox1 = gtk_hbox_new (FALSE, 0);
@@ -2880,7 +2881,7 @@ palette_import_dialog(PaletteP palette)
   gtk_widget_show (import);
   gtk_signal_connect(GTK_OBJECT(import), "clicked", 
 		     GTK_SIGNAL_FUNC(import_dialog_import_callback),(gpointer)palette);
-  gtk_container_border_width (GTK_CONTAINER (import), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (import), 4);
   gtk_box_pack_end (GTK_BOX (hbox1), import, FALSE, FALSE, 0); 
 
   close = gtk_button_new_with_label (_("close"));

@@ -31,14 +31,14 @@
 #include "about_dialog.h"
 
 #define ANIMATION_STEPS 16
-#define ANIMATION_SIZE 2
+#define ANIMATION_SIZE   2
 
-static int  about_dialog_load_logo (GtkWidget *window);
-static void about_dialog_destroy (void);
-static void about_dialog_unmap (void);
-static int  about_dialog_logo_expose (GtkWidget *widget, GdkEventExpose *event);
-static int  about_dialog_button (GtkWidget *widget, GdkEventButton *event);
-static int  about_dialog_timer (gpointer data);
+static gint  about_dialog_load_logo   (GtkWidget *window);
+static void  about_dialog_destroy     (void);
+static void  about_dialog_unmap       (void);
+static gint  about_dialog_logo_expose (GtkWidget *widget, GdkEventExpose *event);
+static gint  about_dialog_button      (GtkWidget *widget, GdkEventButton *event);
+static gint  about_dialog_timer       (gpointer data);
 
 
 static GtkWidget *about_dialog = NULL;
@@ -46,19 +46,19 @@ static GtkWidget *logo_area = NULL;
 static GtkWidget *scroll_area = NULL;
 static GdkPixmap *logo_pixmap = NULL;
 static GdkPixmap *scroll_pixmap = NULL;
-static unsigned char *dissolve_map = NULL;
-static int dissolve_width;
-static int dissolve_height;
-static int logo_width = 0;
-static int logo_height = 0;
-static int do_animation = 0;
-static int do_scrolling = 0;
-static int scroll_state = 0;
-static int frame = 0;
-static int offset = 0;
-static int timer = 0;
+static guchar *dissolve_map = NULL;
+static gint  dissolve_width;
+static gint  dissolve_height;
+static gint  logo_width = 0;
+static gint  logo_height = 0;
+static gint  do_animation = 0;
+static gint  do_scrolling = 0;
+static gint  scroll_state = 0;
+static gint  frame = 0;
+static gint  offset = 0;
+static gint  timer = 0;
 
-static char *scroll_text[] =
+static gchar *scroll_text[] =
 {
   "Lauri Alanko",
   "Shawn Amundson",
@@ -130,15 +130,15 @@ static char *scroll_text[] =
   "Kris Wehner",
   "Matthew Wilson",
 };
-static int nscroll_texts = sizeof (scroll_text) / sizeof (scroll_text[0]);
-static int scroll_text_widths[100] = { 0 };
-static int cur_scroll_text = 0;
-static int cur_scroll_index = 0;
+static gint nscroll_texts = sizeof (scroll_text) / sizeof (scroll_text[0]);
+static gint scroll_text_widths[100] = { 0 };
+static gint cur_scroll_text = 0;
+static gint cur_scroll_index = 0;
 
-static int shuffle_array[ sizeof(scroll_text) / sizeof(scroll_text[0]) ];
+static gint shuffle_array[ sizeof(scroll_text) / sizeof(scroll_text[0]) ];
 
 void
-about_dialog_create (int timeout)
+about_dialog_create (gint timeout)
 {
   GtkStyle *style;
   GtkWidget *vbox;
@@ -172,13 +172,13 @@ about_dialog_create (int timeout)
 	}
 
       vbox = gtk_vbox_new (FALSE, 1);
-      gtk_container_border_width (GTK_CONTAINER (vbox), 1);
+      gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
       gtk_container_add (GTK_CONTAINER (about_dialog), vbox);
       gtk_widget_show (vbox);
 
       aboutframe = gtk_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (aboutframe), GTK_SHADOW_IN);
-      gtk_container_border_width (GTK_CONTAINER (aboutframe), 0);
+      gtk_container_set_border_width (GTK_CONTAINER (aboutframe), 0);
       gtk_box_pack_start (GTK_BOX (vbox), aboutframe, TRUE, TRUE, 0);
       gtk_widget_show (aboutframe);
 
@@ -192,7 +192,6 @@ about_dialog_create (int timeout)
 
       gtk_widget_realize (logo_area);
       gdk_window_set_background (logo_area->window, &logo_area->style->black);
-
 
       style = gtk_style_new ();
       gdk_font_unref (style->font);
@@ -212,14 +211,13 @@ about_dialog_create (int timeout)
 
       gtk_widget_pop_style ();
 
-
       alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
       gtk_box_pack_start (GTK_BOX (vbox), alignment, FALSE, TRUE, 0);
       gtk_widget_show (alignment);
 
       aboutframe = gtk_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (aboutframe), GTK_SHADOW_IN);
-      gtk_container_border_width (GTK_CONTAINER (aboutframe), 0);
+      gtk_container_set_border_width (GTK_CONTAINER (aboutframe), 0);
       gtk_container_add (GTK_CONTAINER (alignment), aboutframe);
       gtk_widget_show (aboutframe);
 
@@ -283,16 +281,16 @@ about_dialog_create (int timeout)
 }
 
 
-static int
+static gint
 about_dialog_load_logo (GtkWidget *window)
 {
   GtkWidget *preview;
   GdkGC *gc;
-  char buf[1024];
-  unsigned char *pixelrow;
+  gchar buf[1024];
+  guchar *pixelrow;
   FILE *fp;
-  int count;
-  int i, j, k;
+  gint count;
+  gint i, j, k;
 
   if (logo_pixmap)
     return TRUE;
@@ -386,7 +384,7 @@ about_dialog_unmap ()
     }
 }
 
-static int
+static gint
 about_dialog_logo_expose (GtkWidget      *widget,
 			  GdkEventExpose *event)
 {
@@ -418,7 +416,7 @@ about_dialog_logo_expose (GtkWidget      *widget,
   return FALSE;
 }
 
-static int
+static gint
 about_dialog_button (GtkWidget      *widget,
 		     GdkEventButton *event)
 {
@@ -432,7 +430,7 @@ about_dialog_button (GtkWidget      *widget,
   return FALSE;
 }
 
-static int
+static gint
 about_dialog_timer (gpointer data)
 {
   gint i, j, k;
