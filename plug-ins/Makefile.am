@@ -31,7 +31,6 @@ endif
 
 
 SUBDIRS = \
-	libgimpoldpreview	\
 	dbbrowser		\
 	script-fu		\
 	FractalExplorer		\

@@ -20,7 +20,6 @@ EXTRA_DIST = \
 
 INCLUDES = \
 	-I$(top_srcdir)					\
-	-I$(top_srcdir)/plug-ins/libgimpoldpreview	\
 	$(GTK_CFLAGS)					\
 	$(EXIF_CFLAGS)					\
 	$(SVG_CFLAGS)					\
@@ -198,7 +197,6 @@ AlienMap2_SOURCES = \
 	AlienMap2.c
 
 AlienMap2_LDADD = \
-	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	$(libgimpui)							\
 	$(libgimpwidgets)						\
 	$(libgimp)							\
@@ -324,7 +322,6 @@ blinds_SOURCES = \
 	blinds.c
 
 blinds_LDADD = \
-	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	$(libgimpui)							\
 	$(libgimpwidgets)						\
 	$(libgimp)							\
@@ -723,7 +720,6 @@ flarefx_SOURCES = \
 	flarefx.c
 
 flarefx_LDADD = \
-	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	$(libgimpui)							\
 	$(libgimpwidgets)						\
 	$(libgimp)							\
@@ -839,7 +835,6 @@ glasstile_SOURCES = \
 	glasstile.c
 
 glasstile_LDADD = \
-	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	$(libgimpui)							\
 	$(libgimpwidgets)						\
 	$(libgimp)							\
@@ -890,7 +885,6 @@ grid_SOURCES = \
 	grid.c
 
 grid_LDADD = \
-	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	$(libgimpui)							\
 	$(libgimpwidgets)						\
 	$(libgimp)							\
@@ -965,7 +959,6 @@ illusion_SOURCES = \
 	illusion.c
 
 illusion_LDADD = \
-	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	$(libgimpui)							\
 	$(libgimpwidgets)						\
 	$(libgimp)							\
@@ -992,7 +985,6 @@ jigsaw_SOURCES = \
 	jigsaw.c
 
 jigsaw_LDADD = \
-	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	$(libgimpui)							\
 	$(libgimpwidgets)						\
 	$(libgimp)							\
@@ -1074,7 +1066,6 @@ max_rgb_SOURCES = \
 	max_rgb.c
 
 max_rgb_LDADD = \
-	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	$(libgimpui)							\
 	$(libgimpwidgets)						\
 	$(libgimp)							\
@@ -1141,7 +1132,6 @@ nlfilt_SOURCES = \
 	nlfilt.c
 
 nlfilt_LDADD = \
-	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	$(libgimpui)							\
 	$(libgimpwidgets)						\
 	$(libgimp)							\
@@ -1155,7 +1145,6 @@ noisify_SOURCES = \
 	noisify.c
 
 noisify_LDADD = \
-	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	$(libgimpui)							\
 	$(libgimpwidgets)						\
 	$(libgimp)							\
@@ -1180,7 +1169,6 @@ nova_SOURCES = \
 	nova.c
 
 nova_LDADD = \
-	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	$(libgimpui)							\
 	$(libgimpwidgets)						\
 	$(libgimp)							\
@@ -1272,7 +1260,6 @@ plasma_SOURCES = \
 	plasma.c
 
 plasma_LDADD = \
-	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	$(libgimpui)							\
 	$(libgimpwidgets)						\
 	$(libgimp)							\
@@ -1326,7 +1313,6 @@ polar_SOURCES = \
 	polar.c
 
 polar_LDADD = \
-	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	$(libgimpui)							\
 	$(libgimpwidgets)						\
 	$(libgimp)							\
@@ -1814,7 +1800,6 @@ waves_SOURCES = \
 	waves.c
 
 waves_LDADD = \
-	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	$(libgimpui)							\
 	$(libgimpwidgets)						\
 	$(libgimp)							\
@@ -1866,7 +1851,6 @@ wind_SOURCES = \
 	wind.c
 
 wind_LDADD = \
-	$(top_builddir)/plug-ins/libgimpoldpreview/libgimpoldpreview.a	\
 	$(libgimpui)							\
 	$(libgimpwidgets)						\
 	$(libgimp)							\
