@@ -84,7 +84,6 @@ enum
   UNIT_CHANGED,
   QMASK_CHANGED,
   SELECTION_CONTROL,
-
   CLEAN,
   DIRTY,
   UPDATE,
@@ -92,6 +91,7 @@ enum
   COLORMAP_CHANGED,
   UNDO_EVENT,
   FLUSH,
+  LAYER_MERGE,
   LAST_SIGNAL
 };
 
@@ -375,6 +375,15 @@ gimp_image_class_init (GimpImageClass *klass)
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
+  gimp_image_signals[LAYER_MERGE] =
+    g_signal_new ("layer_merge",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpImageClass, layer_merge),
+		  NULL, NULL,
+		  gimp_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
+
   object_class->dispose               = gimp_image_dispose;
   object_class->finalize              = gimp_image_finalize;
 
@@ -404,6 +413,8 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->undo_event                   = NULL;
   klass->undo                         = gimp_image_undo;
   klass->redo                         = gimp_image_redo;
+  klass->flush                        = NULL;
+  klass->layer_merge                  = NULL;
 
   gimp_image_color_hash_init ();
 }
@@ -1644,6 +1655,16 @@ gimp_image_flush (GimpImage *gimage)
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   g_signal_emit (G_OBJECT (gimage), gimp_image_signals[FLUSH], 0);
+}
+
+/*  Post notification of a layer merge   */
+
+void
+gimp_image_layer_merge (GimpImage *gimage)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[LAYER_MERGE], 0);
 }
 
 

@@ -493,6 +493,8 @@ undo_history_shell_destroy_callback (GtkWidget *widget,
       g_signal_handlers_disconnect_by_func (G_OBJECT (st->gimage), 
                                             undo_history_clean_callback,
                                             st);
+      g_object_unref(G_OBJECT(st->gimage));
+
     }
 
   g_free (st);
@@ -784,6 +786,7 @@ undo_history_new (GimpImage *gimage)
 
   st = g_new0 (undo_history_st, 1);
   st->gimage = gimage;
+  g_object_ref(G_OBJECT(gimage));
   st->preview_size = gimage->gimp->config->preview_size;
 
   /*  gimage signals  */

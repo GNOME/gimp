@@ -1,3 +1,34 @@
+2003-01-01 Garry R. Osgood <grosgood@rcn.com>
+	
+	* MAINTAINERS: Updated my CVS.
+	* app/undo.c: Check if LayerUndo object provides a previous 
+	layer before setting such active; in some cases the result of a
+	redo is an empty image, and prev_layer is not populated. Part of
+	bug # 98843.
+	* app/undo_history.c: undo_history_new () Increments reference 
+	count on GimpImage in undo_history_st; 
+	undo_history_shell_destroy_callback () dereferences. Before,
+	with undo history dialog active on application exit, the GimpImage
+	ref count would already be zero, with memory reclaimed, when
+	gimp_dialog_factory_dispose () invoked 
+	undo_history_shell_destroy_callback (). See stack dumps in 
+	bug # 98843; in part closes same.
+	* app/core/gimpimage-merge.c : gimp_image_merge_layers ()
+	Regardless of merge type, temporarily set composition mode
+	of bottom layer to NORMAL, then merge. Closes bug #101036.
+	Issues LAYER_MERGE signal (see bug #98843); listeners thaw
+	undo stack (image map tools, usually) in part closes this bug.
+	* app/core/gimpimage.[ch] Define and implement a LAYER_MERGE
+	signal. 
+	* app/tools/gimpimagemaptool.c: gimp_image_map_tool_initialize ()
+	connects its associated GimpImage with dialog's cancel callback
+	via the GimpImage's LAYER_MERGE signal. gimp_image_map_tool_finalize ()
+	disconnects. Dismisses dialog in layer merges. In part closes
+	bug # 98843.
+	* app/widgets/gimpviewabledialog.c: gimp_viewable_dialog_close () 
+	Check if the widget has a non-null reference to a window before
+	using it to synthesize a cancel event.
+
 2003-01-01  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/menus.c (image_entries): changed some menu entries as

@@ -207,6 +207,7 @@ struct _GimpImageClass
   void (* redo)                         (GimpImage            *gimage);
 
   void (* flush)                        (GimpImage            *gimage);
+  void (* layer_merge)                  (GimpImage            *gimage);
 };
 
 
@@ -313,6 +314,10 @@ void            gimp_image_clean_all             (GimpImage          *gimage);
 /*  flush this image's displays  */
 
 void            gimp_image_flush                 (GimpImage          *gimage);
+
+/* Post notification of layer mergers */
+
+void            gimp_image_layer_merge           (GimpImage *gimage);
 
 
 /*  color transforms / utilities  */

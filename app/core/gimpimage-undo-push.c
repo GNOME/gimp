@@ -1684,8 +1684,11 @@ undo_pop_layer (GimpImage *gimage,
       /*  record the current position  */
       lu->prev_position = gimp_image_get_layer_index (gimage, lu->layer);
 
-      /*  set the previous layer  */
-      gimp_image_set_active_layer (gimage, lu->prev_layer);
+      /*  if exists, set the previous layer                                           */
+      /* (counterexample: result layer added after a merge op has no previous layer.) */
+
+      if(GIMP_IS_LAYER (lu->prev_layer))
+	gimp_image_set_active_layer (gimage, lu->prev_layer);
 
       /*  remove the layer  */
       gimp_container_remove (gimage->layers, GIMP_OBJECT (lu->layer));

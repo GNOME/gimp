@@ -296,7 +296,12 @@ gimp_image_merge_layers (GimpImage     *gimage,
   if ((x2 - x1) == 0 || (y2 - y1) == 0)
     return NULL;
 
-  /*  Start a merge undo group  */
+  /* Tell any listeners about impending layer merges */
+
+  gimp_image_layer_merge (gimage);
+
+  /*  Start a merge undo group. */
+
   undo_push_group_start (gimage, IMAGE_LAYERS_MERGE_UNDO_GROUP);
 
   name = g_strdup (gimp_object_get_name (GIMP_OBJECT (layer)));
@@ -376,22 +381,21 @@ gimp_image_merge_layers (GimpImage     *gimage,
       position = 
 	gimp_container_num_children (gimage->layers) - 
 	gimp_container_get_child_index (gimage->layers, GIMP_OBJECT (layer));
-      
-      /* set the mode of the bottom layer to normal so that the contents
-       *  aren't lost when merging with the all-alpha merge_layer
-       *  Keep a pointer to it so that we can set the mode right after it's
-       *  been merged so that undo works correctly.
-       */
-      bottom_layer = layer;
-      bottom_mode  = bottom_layer->mode;
-
-      /* DISSOLVE_MODE is special since it is the only mode that does not
-       *  work on the projection with the lower layer, but only locally on
-       *  the layers alpha channel. 
-       */
-      if (bottom_layer->mode != GIMP_DISSOLVE_MODE)
-	gimp_layer_set_mode (bottom_layer, GIMP_NORMAL_MODE);
     }
+  /* set the mode of the bottom layer to normal so that the contents
+   *  aren't lost when merging with the all-alpha merge_layer
+   *  Keep a pointer to it so that we can set the mode right after it's
+   *  been merged so that undo works correctly.
+   */
+  bottom_layer = layer;
+  bottom_mode  = bottom_layer->mode;
+
+  /* DISSOLVE_MODE is special since it is the only mode that does not
+   *  work on the projection with the lower layer, but only locally on
+   *  the layers alpha channel. 
+   */
+  if (bottom_layer->mode != GIMP_DISSOLVE_MODE)
+    gimp_layer_set_mode (bottom_layer, GIMP_NORMAL_MODE);
 
   /* Copy the tattoo and parasites of the bottom layer to the new layer */
   gimp_item_set_tattoo (GIMP_ITEM (merge_layer),
