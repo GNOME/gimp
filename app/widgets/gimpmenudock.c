@@ -56,9 +56,11 @@
 static void   gimp_image_dock_class_init          (GimpImageDockClass *klass);
 static void   gimp_image_dock_init                (GimpImageDock      *dock);
 
+#ifdef ENABLE_GLOBAL_SHORTCUTS
 static GObject * gimp_image_dock_constructor   (GType                  type,
                                                 guint                  n_params,
                                                 GObjectConstructParam *params);
+#endif
 static void   gimp_image_dock_destroy                 (GtkObject      *object);
 
 static void   gimp_image_dock_style_set               (GtkWidget      *widget,
@@ -85,16 +87,20 @@ static void   gimp_image_dock_factory_display_changed (GimpContext    *context,
 static void   gimp_image_dock_factory_image_changed   (GimpContext    *context,
                                                        GimpImage      *gimage,
                                                        GimpDock       *dock);
+#ifdef ENABLE_GLOBAL_SHORTCUTS
 static void   gimp_image_dock_display_changed         (GimpContext    *context,
                                                        GimpObject     *display,
                                                        GimpDock       *dock);
+#endif
 static void   gimp_image_dock_image_changed           (GimpContext    *context,
                                                        GimpImage      *gimage,
                                                        GimpDock       *dock);
 static void   gimp_image_dock_auto_clicked            (GtkWidget      *widget,
                                                        GimpDock       *dock);
+#ifdef ENABLE_GLOBAL_SHORTCUTS
 static void   gimp_image_dock_image_flush             (GimpImage      *gimage,
                                                        GimpDock       *dock);
+#endif
 
 
 static GimpDockClass *parent_class = NULL;
@@ -143,7 +149,9 @@ gimp_image_dock_class_init (GimpImageDockClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+#ifdef ENABLE_GLOBAL_SHORTCUTS
   object_class->constructor = gimp_image_dock_constructor;
+#endif
 
   gtk_object_class->destroy = gimp_image_dock_destroy;
 
@@ -216,6 +224,7 @@ gimp_image_dock_init (GimpImageDock *dock)
                            GIMP_HELP_DOCK_AUTO_BUTTON);
 }
 
+#ifdef ENABLE_GLOBAL_SHORTCUTS
 static GObject *
 gimp_image_dock_constructor (GType                  type,
                              guint                  n_params,
@@ -303,6 +312,7 @@ gimp_image_dock_constructor (GType                  type,
 
   return object;
 }
+#endif   /* ENABLE_GLOBAL_SHORTCUTS */
 
 static void
 gimp_image_dock_destroy (GtkObject *object)
@@ -315,6 +325,7 @@ gimp_image_dock_destroy (GtkObject *object)
       dock->update_title_idle_id = 0;
     }
 
+#ifdef ENABLE_GLOBAL_SHORTCUTS
   if (dock->image_flush_handler_id)
     {
       gimp_container_remove_handler (dock->image_container,
@@ -327,6 +338,7 @@ gimp_image_dock_destroy (GtkObject *object)
       g_object_unref (dock->item_factory);
       dock->item_factory = NULL;
     }
+#endif
 
   /*  remove the image menu and the auto button manually here because
    *  of weird cross-connections with GimpDock's context
@@ -522,10 +534,12 @@ gimp_image_dock_new (GimpDialogFactory *dialog_factory,
   image_dock->image_container   = image_container;
   image_dock->display_container = display_container;
 
+#ifdef ENABLE_GLOBAL_SHORTCUTS
   image_dock->image_flush_handler_id =
     gimp_container_add_handler (image_container, "flush",
                                 G_CALLBACK (gimp_image_dock_image_flush),
                                 image_dock);
+#endif
 
   gimp_help_connect (GTK_WIDGET (image_dock), gimp_standard_help_func,
                      GIMP_HELP_DOCK, NULL);
@@ -556,10 +570,12 @@ gimp_image_dock_new (GimpDialogFactory *dialog_factory,
 			   image_dock,
 			   0);
 
+#ifdef ENABLE_GLOBAL_SHORTCUTS
   g_signal_connect_object (context, "display_changed",
 			   G_CALLBACK (gimp_image_dock_display_changed),
 			   image_dock,
 			   0);
+#endif
   g_signal_connect_object (context, "image_changed",
 			   G_CALLBACK (gimp_image_dock_image_changed),
 			   image_dock,
@@ -691,6 +707,7 @@ gimp_image_dock_factory_image_changed (GimpContext *context,
     gimp_context_set_image (dock->context, gimage);
 }
 
+#ifdef ENABLE_GLOBAL_SHORTCUTS
 static void
 gimp_image_dock_display_changed (GimpContext *context,
                                  GimpObject  *display,
@@ -700,6 +717,7 @@ gimp_image_dock_display_changed (GimpContext *context,
 
   gimp_item_factory_update (image_dock->item_factory, display);
 }
+#endif
 
 static void
 gimp_image_dock_image_changed (GimpContext *context,
@@ -805,6 +823,7 @@ gimp_image_dock_auto_clicked (GtkWidget *widget,
     }
 }
 
+#ifdef ENABLE_GLOBAL_SHORTCUTS
 static void
 gimp_image_dock_image_flush (GimpImage *gimage,
                              GimpDock  *dock)
@@ -822,3 +841,4 @@ gimp_image_dock_image_flush (GimpImage *gimage,
         gimp_item_factory_update (image_dock->item_factory, display);
     }
 }
+#endif
