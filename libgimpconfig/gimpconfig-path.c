@@ -281,6 +281,7 @@ static gchar *
 gimp_config_path_expand_only (const gchar  *path,
                               GError      **error)
 {
+  const gchar *home;
   const gchar *p;
   const gchar *s;
   gchar       *n;
@@ -292,21 +293,20 @@ gimp_config_path_expand_only (const gchar  *path,
   gint         length   = 0;
   gint         i;
 
+  home = g_get_home_dir ();
+  if (home)
+    home = gimp_filename_to_utf8 (home);
+
   p = path;
 
   while (*p)
     {
-
-#ifndef G_OS_WIN32
-      if (*p == '~')
+      if (*p == '~' && home)
 	{
-	  length += strlen (gimp_filename_to_utf8 (g_get_home_dir ()));
-	  p += 1;
+          length += strlen (home);
+          p += 1;
 	}
-      else
-#endif  /* G_OS_WIN32 */
-
-      if ((token = gimp_config_path_extract_token (&p)) != NULL)
+      else if ((token = gimp_config_path_extract_token (&p)) != NULL)
         {
           for (i = 0; i < n_substs; i++)
             if (strcmp (substs[2*i], token) == 0)
@@ -378,19 +378,14 @@ gimp_config_path_expand_only (const gchar  *path,
 
   while (*p)
     {
-
-#ifndef G_OS_WIN32
-      if (*p == '~')
+      if (*p == '~' && home)
 	{
 	  *n = '\0';
-	  strcat (n, gimp_filename_to_utf8 (g_get_home_dir ()));
-	  n += strlen (gimp_filename_to_utf8 (g_get_home_dir ()));
+	  strcat (n, home);
+	  n += strlen (home);
 	  p += 1;
 	}
-      else
-#endif  /* G_OS_WIN32 */
-
-      if ((token = gimp_config_path_extract_token (&p)) != NULL)
+      else if ((token = gimp_config_path_extract_token (&p)) != NULL)
         {
           for (i = 0; i < n_substs; i++)
             {

@@ -1,5 +1,11 @@
 2005-03-04  Sven Neumann  <sven@gimp.org>
 
+	* libgimpconfig/gimpconfig-path.c (gimp_config_path_expand_only):
+	handle g_get_home_dir() returning NULL and enable it for the Win32
+	platform as well.
+
+2005-03-04  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/FractalExplorer/Dialogs.c
 	* plug-ins/Lighting/lighting_ui.c
 	* plug-ins/gfig/gfig-dialog.c
