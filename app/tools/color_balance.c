@@ -152,9 +152,8 @@ color_balance (PixelRegion *srcPR,
 
 	  if (cbd->preserve_luminosity)
 	    {
-	      rgb_to_hls (&r, &g, &b);
 	      rgb_to_hls (&r_n, &g_n, &b_n);
-	      g_n = g;
+	      g_n = rgb_to_l (r, g, b);
 	      hls_to_rgb (&r_n, &g_n, &b_n);
 	    }
 
