@@ -1,3 +1,7 @@
+2002-05-26  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/helpbrowser/helpbrowser.c: made Forward button work.
+
 2002-05-25  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/scatter_hsv.c (scatter_hsv_dialog)
@@ -10,7 +14,7 @@
 	* plug-ins/common/max_rgb.c (dialog): enable mnemonics.
 
 	* libgimpwidgets/gimpsizeentry.c (gimp_size_entry_attach_label): allow 
-	underscore to be embedded in text paramter so labels can have 
+	underscore to be embedded in text parameter so labels can have 
 	mnemonics. More work to do here.
 
 2002-05-25  Maurits Rijk  <lpeek.mrijk@consunet.nl>

@@ -129,6 +129,7 @@ static GtkTargetEntry help_dnd_target_table[] =
   { "_NETSCAPE_URL", 0, 0 },
 };
 
+
 /*  GIMP plugin stuff  */
 
 static void query (void);
@@ -195,10 +196,10 @@ button_callback (GtkWidget *widget,
       break;
 
     case BUTTON_FORWARD:
-      if (!(ref = queue_prev (queue)))
+      if (!(ref = queue_next (queue)))
         return;
       load_page (ref, FALSE);
-      queue_move_prev (queue);
+      queue_move_next (queue);
       break;
 
     default:
@@ -225,10 +226,14 @@ entry_changed_callback (GtkWidget *widget,
       item = (HistoryItem *) list->data;
 
       if (item->count)
-	compare_text = g_strdup_printf ("%s <%i>",
-                                        item->title, item->count + 1);
+        {
+          compare_text = g_strdup_printf ("%s <%i>",
+                                          item->title, item->count + 1);
+        }
       else
-	compare_text = (gchar *) item->title;
+        {
+          compare_text = (gchar *) item->title;
+        }
 
       if (strcmp (compare_text, entry_text) == 0)
 	{
@@ -237,7 +242,9 @@ entry_changed_callback (GtkWidget *widget,
 	}
 
       if (item->count)
-	g_free (compare_text);
+        {
+          g_free (compare_text);
+        }
     }
 }
 
