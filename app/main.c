@@ -439,14 +439,20 @@ main (int    argc,
 
   /* Handle fatal signals */
 
+  /* these are handled by gimp_terminate() */
   gimp_signal_private (SIGHUP,  gimp_sigfatal_handler, 0);
   gimp_signal_private (SIGINT,  gimp_sigfatal_handler, 0);
   gimp_signal_private (SIGQUIT, gimp_sigfatal_handler, 0);
   gimp_signal_private (SIGABRT, gimp_sigfatal_handler, 0);
-  gimp_signal_private (SIGBUS,  gimp_sigfatal_handler, 0);
-  gimp_signal_private (SIGSEGV, gimp_sigfatal_handler, 0);
   gimp_signal_private (SIGTERM, gimp_sigfatal_handler, 0);
-  gimp_signal_private (SIGFPE,  gimp_sigfatal_handler, 0);
+
+  if (stack_trace_mode != STACK_TRACE_NEVER)
+    {
+      /* these are handled by gimp_fatal_error() */
+      gimp_signal_private (SIGBUS,  gimp_sigfatal_handler, 0);
+      gimp_signal_private (SIGSEGV, gimp_sigfatal_handler, 0);
+      gimp_signal_private (SIGFPE,  gimp_sigfatal_handler, 0);
+    }
 
   /* Ignore SIGPIPE because plug_in.c handles broken pipes */
 

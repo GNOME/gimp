@@ -712,9 +712,7 @@ load_image (gchar           *filename,
   gint     scanlines;
   gint     i, start, end;
 
-  JpegSaveVals local_save_vals;
   GimpParasite * volatile comment_parasite = NULL;
-  GimpParasite * volatile vals_parasite    = NULL;
 
   /* We set up the normal JPEG error routines. */
   cinfo.err = jpeg_std_error (&jerr.pub);
@@ -786,29 +784,9 @@ load_image (gchar           *filename,
 	  comment_parasite = NULL;
 	}
       
-      /* pw - figuring out what the saved values were is non-trivial.
-       * They don't seem to be in the cinfo structure. For now, I will
-       * just use the defaults, but if someone figures out how to derive
-       * them this is the place to store them. */
-      
-      local_save_vals.quality     = DEFAULT_QUALITY;
-      local_save_vals.smoothing   = DEFAULT_SMOOTHING;
-      local_save_vals.optimize    = DEFAULT_OPTIMIZE;
-      
-#ifdef HAVE_PROGRESSIVE_JPEG 
-      local_save_vals.progressive = cinfo.progressive_mode;
-#else
-      local_save_vals.progressive = 0;
-#endif /* HAVE_PROGRESSIVE_JPEG */
-      local_save_vals.baseline    = DEFAULT_BASELINE;
-      local_save_vals.subsmp      = DEFAULT_SUBSMP;   /* sg - this _is_ there, but I'm too lazy */ 
-      local_save_vals.restart     = DEFAULT_RESTART;
-      local_save_vals.dct         = DEFAULT_DCT;
-      local_save_vals.preview     = DEFAULT_PREVIEW;
-      
-      vals_parasite = gimp_parasite_new ("jpeg-save-options", 0,
-					 sizeof (local_save_vals),
-					 &local_save_vals);
+      /* Do not attach the "jpeg-save-options" parasite to the image
+       * because this conflics with the global defaults.  See bug #75398:
+       * http://bugzilla.gnome.org/show_bug.cgi?id=75398 */
     } 
   
   /* Step 4: set parameters for decompression */
@@ -1061,19 +1039,13 @@ load_image (gchar           *filename,
   /* pw - Last of all, attach the parasites (couldn't do it earlier -
      there was no image. */
 
-  if (!preview) 
+  if (!preview)
     {
       if (comment_parasite)
 	{
 	  gimp_image_parasite_attach (image_ID, comment_parasite);
 	  gimp_parasite_free (comment_parasite);
 	}
-
-      if (vals_parasite)
-	{
-	  gimp_image_parasite_attach (image_ID, vals_parasite);
-	  gimp_parasite_free (vals_parasite);
-	}   
     }
 
   return image_ID;
