@@ -100,6 +100,35 @@ CODE
     );
 }
 
+sub airbrush_default {
+    $blurb  = <<'BLURB';
+Paint in the current brush with varying pressure. Paint application is
+time-dependent.
+BLURB
+
+    $help = <<'HELP';
+This tool simulates the use of an airbrush. It is similar to gimp_airbrush 
+except that the pressure is derived from the airbrush tools options box. 
+It the option has not been set the default for the option will be used.
+HELP
+
+    $author = $copyright = 'Andy Thomas';
+    $date = '1999';
+
+    @inargs = (
+	&drawable_arg,
+	&stroke_arg
+    );
+
+    %invoke = (
+	headers => [ qw("airbrush.h") ],
+	code => <<'CODE'
+success = airbrush_non_gui_default (drawable, num_strokes, strokes);
+CODE
+    );
+}
+
+
 sub blend {
     $blurb = <<'BLURB';
 Blend between the starting and ending coordinates with the specified blend mode
@@ -308,6 +337,35 @@ CODE
     );
 }
 
+sub clone_default {
+    $blurb = <<'BLURB';
+Clone from the source to the dest drawable using the current brush
+BLURB
+
+    $help = <<'HELP';
+This tool clones (copies) from the source drawable starting at the specified 
+source coordinates to the dest drawable. This function performs exactly
+the same as the gimp_clone function except that the tools arguments are 
+obtained from the clones option dialog. It this dialog has not been activated
+then the dialogs default values will be used.
+HELP
+
+    $author = $copyright = 'Andy Thomas';
+    $date = '1999';
+
+    @inargs = (
+	&drawable_arg,
+	&stroke_arg
+    );
+
+    %invoke = (
+	headers => [ qw("clone.h") ],
+	code => <<'CODE'
+success = clone_non_gui_default (drawable, num_strokes, strokes);
+CODE
+    );
+}
+
 sub color_picker {
     $blurb = <<'BLURB';
 Determine the color at the given drawable coordinates
@@ -376,6 +434,33 @@ CODE
     );
 }
 
+sub convolve_default {
+    $blurb = 'Convolve (Blur, Sharpen) using the current brush.';
+
+    $help = <<'HELP';
+This tool convolves the specified drawable with either a sharpening or blurring
+kernel. This function performs exactly the same as the gimp_convolve
+function except that the tools arguments are obtained from the convolve 
+option dialog. It this dialog has not been activated then the dialogs 
+default values will be used.
+HELP
+
+    $author = $copyright = 'Andy Thomas';
+    $date = '1999';
+
+    @inargs = (
+	&drawable_arg,
+	&stroke_arg
+    );
+
+    %invoke = (
+	headers => [ qw("convolve.h") ],
+	code => <<'CODE'
+success = convolve_non_gui_default (drawable, num_strokes, strokes);
+CODE
+    );
+}
+
 sub convolve {
     $blurb = 'Convolve (Blur, Sharpen) using the current brush.';
 
@@ -401,7 +486,7 @@ HELP
     %invoke = (
 	headers => [ qw("convolve.h") ],
 	code => <<'CODE'
-success = convolve_non_gui (drawable, pressure, num_strokes, strokes);
+success = convolve_non_gui (drawable, pressure, convolve_type, num_strokes, strokes);
 CODE
     );
 }
@@ -483,6 +568,32 @@ HELP
 	code => <<'CODE'
 ellipse_select (gimage, (int) x, (int) y, (int) width, (int) height,
 		operation, antialias, feather, feather_radius);
+CODE
+    );
+}
+
+sub eraser_default {
+    $blurb = 'Erase using the current brush.';
+
+    $help = <<'HELP';
+This tool erases using the current brush mask. This function performs exactly
+the same as the gimp_eraser function except that the tools arguments are 
+obtained from the eraser option dialog. It this dialog has not been activated
+then the dialogs default values will be used.
+HELP
+
+    $author = $copyright = 'Andy Thomas';
+    $date = '1999';
+
+    @inargs = (
+	&drawable_arg,
+	&stroke_arg
+    );
+
+    %invoke = (
+	headers => [ qw("eraser.h") ],
+	code => <<'CODE'
+success = eraser_non_gui_default (drawable, num_strokes, strokes);
 CODE
     );
 }
@@ -724,6 +835,42 @@ HELP
 	code => <<'CODE'
 success = paintbrush_non_gui (drawable, num_strokes, strokes, fade_out,
 			      method, gradient_length);
+CODE
+    );
+}
+
+sub paintbrush_default {
+    $blurb = <<'BLURB';
+Paint in the current brush. The fade out parameter and pull colors
+from a gradient parameter are set from the paintbrush options dialog. If this
+dialog has not been activated then the dialog defaults will be used.
+BLURB
+
+    $help = <<'HELP';
+This tool is similar to the standard paintbrush. It draws linearly interpolated lines
+through the specified stroke coordinates. It operates on the specified drawable
+in the foreground color with the active brush. The "fade_out" parameter is
+measured in pixels and allows the brush stroke to linearly fall 
+off (value obtained from the option dialog). The pressure is set 
+to the maximum at the beginning of the stroke. As the distance
+of the stroke nears the fade_out value, the pressure will approach zero. The
+gradient_length (value obtained from the option dialog) is the 
+distance to spread the gradient over. It is measured in pixels. If 
+the gradient_length is 0, no gradient is used.
+HELP
+
+    $author = $copyright = 'Andy Thomas';
+    $date = '1999';
+
+    @inargs = (
+	&drawable_arg,
+	&stroke_arg
+    );
+
+    %invoke = (
+	headers => [ qw("paintbrush.h") ],
+	code => <<'CODE'
+success = paintbrush_non_gui_default (drawable, num_strokes, strokes);
 CODE
     );
 }
@@ -1144,6 +1291,122 @@ CODE
     );
 }
 
+
+sub smudge {
+    $blurb  = <<'BLURB';
+Smudge image with varying pressure.
+BLURB
+
+    $help = <<'HELP';
+This tool simulates a smudge using the current brush. High pressure results 
+in a greater smudge of paint while low pressure results in a lesser smudge.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&drawable_arg,
+	 { name => 'pressure', type => '0 <= float <= 100',
+	   desc => 'The pressure of the smudge strokes (%%desc%%)' },
+	&stroke_arg
+    );
+
+    %invoke = (
+	headers => [ qw("smudge.h") ],
+	code => <<'CODE'
+success = smudge_non_gui (drawable, pressure, num_strokes, strokes);
+CODE
+    );
+}
+
+sub smudge_default {
+    $blurb  = <<'BLURB';
+Smudge image with varying pressure.
+BLURB
+
+    $help = <<'HELP';
+This tool simulates a smudge using the current brush. It behaves exactly 
+the same as gimp_smudge except that the pressure value is taken from the
+smudge tool options or the options default if the tools option dialog has
+not been activated.
+HELP
+
+    $author = $copyright = 'Andy Thomas';
+    $date = '1999';
+
+    @inargs = (
+	&drawable_arg,
+	&stroke_arg
+    );
+
+    %invoke = (
+	headers => [ qw("smudge.h") ],
+	code => <<'CODE'
+success = smudge_non_gui_default (drawable, num_strokes, strokes);
+CODE
+    );
+}
+
+sub dodgeburn {
+    $blurb  = <<'BLURB';
+Dodgeburn image with varying exposure.
+BLURB
+
+    $help = <<'HELP';
+Dodgebure. More details here later.
+HELP
+
+
+    $author = $copyright = 'Andy Thomas';
+    $date = '1999';
+
+    @inargs = (
+	&drawable_arg,
+	 { name => 'exposure', type => '0 <= float <= 100',
+	   desc => 'The exposer of the  strokes (%%desc%%)' },
+        { name => 'dodgeburn_type', type => 'enum DodgeBurnType',
+	  desc => 'The type either dodge or burn: { %%desc%% }' },
+        { name => 'dodgeburn_mode', type => 'enum DodgeBurnMode',
+	  desc => 'The mode: { %%desc%% }' },
+	&stroke_arg
+    );
+
+    %invoke = (
+	headers => [ qw("dodgeburn.h") ],
+	code => <<'CODE'
+success = dodgeburn_non_gui (drawable, exposure, dodgeburn_type, dodgeburn_mode, num_strokes, strokes);
+CODE
+    );
+}
+
+sub dodgeburn_default {
+    $blurb  = <<'BLURB';
+Dodgeburn image with varying exposure. This is the same as the gimp_dodgeburn
+function except that the exposure, type and mode are taken from the tools
+option dialog. If the dialog has not been activated then the defaults 
+as used by the dialog will be used.
+BLURB
+
+    $help = <<'HELP';
+Dodgebure. More details here later.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&drawable_arg,
+	&stroke_arg
+    );
+
+    %invoke = (
+	headers => [ qw("dodgeburn.h") ],
+	code => <<'CODE'
+success = dodgeburn_non_gui_default (drawable, num_strokes, strokes);
+CODE
+    );
+}
+
+
 # Incomplete
 
 sub ink {
@@ -1159,9 +1422,14 @@ sub ink {
     );
 }
 
-@procs = qw(airbrush blend bucket_fill by_color_select clone color_picker
-	    convolve crop ellipse_select eraser flip free_select fuzzy_select
-	    paintbrush pencil perspective rect_select rotate scale shear);
+@procs = qw(airbrush airbrush_default blend bucket_fill by_color_select 
+	    clone clone_default color_picker
+	    convolve convolve_default crop dodgeburn dodgeburn_default
+	    ellipse_select eraser eraser_default
+	    flip free_select fuzzy_select
+	    paintbrush paintbrush_default
+	    pencil perspective rect_select rotate scale shear
+	    smudge smudge_default);
 %exports = (app => [@procs]);
 
 $desc = 'Tool procedures';

@@ -38,6 +38,13 @@
 /*  defines  */
 #define  PAINT_LEFT_THRESHOLD  0.05
 
+/* defaults for the tool options */
+#define PAINTBRUSH_DEFAULT_FADE_OUT          0.0
+#define PAINTBRUSH_DEFAULT_INCREMENTAL       FALSE
+#define PAINTBRUSH_DEFAULT_USE_GRADIENT      FALSE
+#define PAINTBRUSH_DEFAULT_GRADIENT_LENGTH   10.0
+#define PAINTBRUSH_DEFAULT_GRADIENT_TYPE     LOOP_TRIANGLE
+
 /*  the paintbrush structures  */
 
 typedef struct _PaintbrushOptions PaintbrushOptions;
@@ -166,11 +173,16 @@ paintbrush_options_new (void)
   paint_options_init ((PaintOptions *) options,
 		      PAINTBRUSH,
 		      paintbrush_options_reset);
-  options->fade_out        = options->fade_out_d        = 0.0;
-  options->incremental     = options->incremental_d     = FALSE;
-  options->use_gradient    = options->use_gradient_d    = FALSE;
-  options->gradient_length = options->gradient_length_d = 10.0;
-  options->gradient_type   = options->gradient_type_d   = LOOP_TRIANGLE;
+  options->fade_out        = 
+                  options->fade_out_d        = PAINTBRUSH_DEFAULT_FADE_OUT;
+  options->incremental     = 
+                  options->incremental_d     = PAINTBRUSH_DEFAULT_INCREMENTAL;
+  options->use_gradient    = 
+                  options->use_gradient_d    = PAINTBRUSH_DEFAULT_USE_GRADIENT;
+  options->gradient_length = 
+                  options->gradient_length_d = PAINTBRUSH_DEFAULT_GRADIENT_LENGTH;
+  options->gradient_type   = 
+                  options->gradient_type_d   = PAINTBRUSH_DEFAULT_GRADIENT_TYPE;
   
   /*  the main vbox  */
   vbox = ((ToolOptions *) options)->main_vbox;
@@ -447,9 +459,80 @@ paintbrush_non_gui_paint_func (PaintCore    *paint_core,
 			       GimpDrawable *drawable,
 			       int           state)
 {	
-  paintbrush_motion (paint_core, drawable, non_gui_fade_out,non_gui_gradient_length,  non_gui_incremental, non_gui_gradient_type);
+  paintbrush_motion(paint_core,drawable, 
+		    non_gui_fade_out,
+		    (non_gui_gradient_length)?exp(non_gui_gradient_length/10):0,
+		    non_gui_incremental, 
+		    non_gui_gradient_type);
 
   return NULL;
+}
+
+gboolean
+paintbrush_non_gui_default (GimpDrawable *drawable,
+			    int            num_strokes,
+			    double        *stroke_array)
+{
+  PaintbrushOptions *options = paintbrush_options;
+  double             fade_out = PAINTBRUSH_DEFAULT_FADE_OUT;
+  gboolean           incremental = PAINTBRUSH_DEFAULT_INCREMENTAL;
+  int                use_gradient = PAINTBRUSH_DEFAULT_USE_GRADIENT;
+  double             gradient_length = PAINTBRUSH_DEFAULT_GRADIENT_LENGTH;
+  int                gradient_type = PAINTBRUSH_DEFAULT_GRADIENT_TYPE;
+  int                i;
+  
+  if(options)
+    {
+      fade_out = options->fade_out;
+      incremental = options->incremental;
+      use_gradient = options->use_gradient;
+      gradient_length = options->gradient_length;
+      gradient_type = options->gradient_type;
+    }
+
+  if(use_gradient == 0)
+      gradient_length = 0.0;
+
+  /* Hmmm... PDB paintbrush should have gradient type added to it!*/
+  /* thats why the code below is duplicated.
+   */ 
+  if (paint_core_init (&non_gui_paint_core, drawable,
+                      stroke_array[0], stroke_array[1]))
+    {
+      non_gui_fade_out = fade_out;
+      non_gui_gradient_length = gradient_length;
+      non_gui_gradient_type = gradient_type;
+      non_gui_incremental = incremental;
+
+      /* Set the paint core's paint func */
+      non_gui_paint_core.paint_func = paintbrush_non_gui_paint_func;
+
+      non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
+      non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
+
+      if (num_strokes == 1)
+       paintbrush_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
+
+      for (i = 1; i < num_strokes; i++)
+       {
+         non_gui_paint_core.curx = stroke_array[i * 2 + 0];
+         non_gui_paint_core.cury = stroke_array[i * 2 + 1];
+
+         paint_core_interpolate (&non_gui_paint_core, drawable);
+
+         non_gui_paint_core.lastx = non_gui_paint_core.curx;
+         non_gui_paint_core.lasty = non_gui_paint_core.cury;
+       }
+
+      /* Finish the painting */
+      paint_core_finish (&non_gui_paint_core, drawable, -1);
+
+      /* Cleanup */
+      paint_core_cleanup ();
+      return TRUE;
+    }
+  else
+    return FALSE;
 }
 
 gboolean
@@ -462,6 +545,7 @@ paintbrush_non_gui (GimpDrawable *drawable,
 {
   int i;
 
+  /* Code duplicated above */
   if (paint_core_init (&non_gui_paint_core, drawable,
                       stroke_array[0], stroke_array[1]))
     {

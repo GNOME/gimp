@@ -3027,6 +3027,7 @@ bezier_stack_points (BezierSelect *bezier_sel,
     }
   /* allow one pixel fluctuation */
   error = 2.0 / MAX(maxx - minx, maxy - miny);
+  error = 0.0; /* ALT */
 
   /* add the start point */
   bezier_stack_points_aux (points, 0, 0, 0, rpnts);
@@ -3046,6 +3047,7 @@ bezier_gen_points(BezierSelect     *bezier_sel,
   BezierPoint * start_pt;
   BezierPoint * next_curve;
   BezierRenderPnts *next_rpnts = rpnts;
+  gint point_counts = 0; 
 
   /* stack points */
   points = bezier_sel->points;
@@ -3054,6 +3056,9 @@ bezier_gen_points(BezierSelect     *bezier_sel,
   if(bezier_sel->num_points >= 4)
     {
       do {
+ 	point_counts = count_points_on_curve(points); 
+	if(point_counts < 4)
+	  return(TRUE);
 	do {
 	  bezier_draw_segment (bezier_sel, points,
 			       SUBDIVIDE, IMAGE_COORDS,
@@ -3073,6 +3078,48 @@ bezier_gen_points(BezierSelect     *bezier_sel,
     }
   
   return (TRUE);
+}
+
+static guchar *
+active_tool_PDB_string()
+{
+  guchar *toolStr = "gimp_paintbrush_default";
+  /* Return the correct PDB function for the active tool */
+  /* The default is paintbrush if the tool is not recognised */
+
+  if(!active_tool)
+    return toolStr;
+
+  switch(active_tool->type)
+    {
+    case PENCIL:
+      toolStr = "gimp_pencil";
+      break;
+    case PAINTBRUSH:
+      toolStr = "gimp_paintbrush_default";
+      break;
+    case ERASER:
+      toolStr = "gimp_eraser_default";
+      break;
+    case AIRBRUSH:
+      toolStr = "gimp_airbrush_default";
+      break;
+    case CLONE:
+      toolStr = "gimp_clone_default";
+      break;
+    case CONVOLVE:
+      toolStr = "gimp_convolve_default";
+      break;
+    case SMUDGE:
+      toolStr = "gimp_smudge_default";
+      break;
+    case DODGEBURN:
+      toolStr = "gimp_dodgeburn_default";
+      break;
+    default:
+      toolStr = "gimp_paintbrush_default";
+    }
+  return toolStr;
 }
 
 void
@@ -3110,14 +3157,12 @@ bezier_stroke (BezierSelect *bezier_sel,
            }
        }
 
-      return_vals = procedural_db_run_proc ("gimp_paintbrush",
+      /* Stroke with the correct tool */
+      return_vals = procedural_db_run_proc (active_tool_PDB_string(),
 					    &nreturn_vals,
 					    PDB_DRAWABLE, drawable_ID (drawable),
-					    PDB_FLOAT, (gdouble) 0,
 					    PDB_INT32, (gint32) rpnts->num_stroke_points * 2,
 					    PDB_FLOATARRAY, rpnts->stroke_points,
-					    PDB_INT32, 0 /* continuous */,
-					    PDB_FLOAT, (gdouble) 0 /*no grad*/,
 					    PDB_END);
 
       if (return_vals && return_vals[0].value.pdb_int == PDB_SUCCESS)
@@ -3327,3 +3372,5 @@ bezier_distance_along(BezierSelect *bezier_sel,
   g_free(bdist);
   return (ret);
 }
+
+

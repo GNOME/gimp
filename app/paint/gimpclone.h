@@ -30,6 +30,7 @@ typedef enum
 void *        clone_paint_func  (PaintCore *, GimpDrawable *, int);
 gboolean      clone_non_gui     (GimpDrawable *, GimpDrawable *, CloneType,
     				 double, double, int, double *);
+gboolean      clone_non_gui_default (GimpDrawable *, int, double *);
 Tool *        tools_new_clone   (void);
 void          tools_free_clone  (Tool *);
 

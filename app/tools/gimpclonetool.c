@@ -36,6 +36,10 @@
 #define TARGET_HEIGHT  15
 #define TARGET_WIDTH   15
 
+/* default types */
+#define CLONE_DEFAULT_TYPE IMAGE_CLONE
+#define CLONE_DEFAULT_ALIGNED AlignNo
+
 /*  the clone structures  */
 
 typedef enum
@@ -152,8 +156,8 @@ clone_options_new (void)
   paint_options_init ((PaintOptions *) options,
 		      CLONE,
 		      clone_options_reset);
-  options->type    = options->type_d    = IMAGE_CLONE;
-  options->aligned = options->aligned_d = AlignNo;
+  options->type    = options->type_d    = CLONE_DEFAULT_TYPE;
+  options->aligned = options->aligned_d = CLONE_DEFAULT_ALIGNED;
 
   /*  the main vbox  */
   vbox = ((ToolOptions *) options)->main_vbox;
@@ -688,6 +692,32 @@ clone_non_gui_paint_func (PaintCore *paint_core,
 }
 
 gboolean
+clone_non_gui_default (GimpDrawable *drawable,
+		       int           num_strokes,
+		       double       *stroke_array)
+{
+  GimpDrawable *src_drawable = NULL;
+  CloneType     clone_type = CLONE_DEFAULT_TYPE;
+  double        local_src_x = 0.0;
+  double        local_src_y = 0.0;
+  CloneOptions *options = clone_options;
+  
+  if(options)
+    {
+      clone_type = options->type;
+      src_drawable = src_drawable_;
+      local_src_x = src_x;
+      local_src_y = src_y;
+    }
+  
+  return clone_non_gui(drawable,
+		       src_drawable,
+		       clone_type,
+		       local_src_x,local_src_y,
+		       num_strokes,stroke_array);
+}
+
+gboolean
 clone_non_gui (GimpDrawable *drawable,
     	       GimpDrawable *src_drawable,
 	       CloneType     clone_type,
@@ -703,6 +733,8 @@ clone_non_gui (GimpDrawable *drawable,
     {
       /* Set the paint core's paint func */
       non_gui_paint_core.paint_func = clone_non_gui_paint_func;
+      
+      non_gui_type = clone_type;
 
       non_gui_src_drawable = src_drawable;
 

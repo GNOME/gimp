@@ -24,6 +24,8 @@
 void *        paintbrush_paint_func (PaintCore *, GimpDrawable *, int);
 gboolean      paintbrush_non_gui    (GimpDrawable *, int, double *, double,
    				     int, double);
+gboolean      paintbrush_non_gui_default    (GimpDrawable *, int, 
+					     double *);
 
 Tool *        tools_new_paintbrush   (void);
 void          tools_free_paintbrush  (Tool *);

@@ -184,9 +184,15 @@ brush_area_events (GtkWidget *widget,
     case GDK_EXPOSE: 
       break;
     case GDK_BUTTON_RELEASE:
-      if (device_bpopup != NULL)
-         gtk_widget_hide (device_bpopup);
-      brush_area_update();
+      bevent = (GdkEventButton *) event;
+      if (bevent->button == 1)
+	{
+	  if (device_bpopup != NULL)
+	    gtk_widget_hide (device_bpopup);
+	  
+	  gdk_pointer_ungrab (bevent->time);  
+	  brush_area_update();
+	}
       break;
 
     case GDK_BUTTON_PRESS:
@@ -196,6 +202,13 @@ brush_area_events (GtkWidget *widget,
 	{
 	/* pop up the brush selection dialog accordingly */
 	create_brush_dialog();
+
+        gdk_pointer_grab (widget->window, FALSE,
+                         (GDK_POINTER_MOTION_HINT_MASK |
+                          GDK_BUTTON1_MOTION_MASK |
+                          GDK_BUTTON_RELEASE_MASK),
+                        NULL, NULL, bevent->time);
+
 	/*  Show the brush popup window if the brush is too large  */
         if (brush->mask->width > CELL_SIZE ||
             brush->mask->height > CELL_SIZE)
@@ -376,30 +389,31 @@ pattern_area_events (GtkWidget    *widget,
  
       if (bevent->button == 1)
         {
-        gdk_pointer_grab (widget->window, FALSE,
+	  gdk_pointer_grab (widget->window, FALSE,
                          (GDK_POINTER_MOTION_HINT_MASK |
                           GDK_BUTTON1_MOTION_MASK |
                           GDK_BUTTON_RELEASE_MASK),
-                        NULL, NULL, bevent->time);
+			    NULL, NULL, bevent->time);
 
-	 create_pattern_dialog(); 
-
-              /*  Show the pattern popup window if the pattern is too large  */
-              if (pattern->mask->width > CELL_SIZE ||
-                  pattern->mask->height > CELL_SIZE)
-              		pattern_popup_open (pattern, bevent->x, bevent->y);
-      }
+	  create_pattern_dialog(); 
+	  
+	  /*  Show the pattern popup window if the pattern is too large  */
+	  if (pattern->mask->width > CELL_SIZE ||
+	      pattern->mask->height > CELL_SIZE)
+	    pattern_popup_open (pattern, bevent->x, bevent->y);
+	}
       break;
 
     case GDK_BUTTON_RELEASE:
       bevent = (GdkEventButton *) event;
   
       if (bevent->button == 1)
-        gdk_pointer_ungrab (bevent->time);
         {
-        if (device_patpopup != NULL)
-           gtk_widget_hide (device_patpopup);
-        pattern_area_update();
+	  gdk_pointer_ungrab (bevent->time);
+
+	  if (device_patpopup != NULL)
+	    gtk_widget_hide (device_patpopup);
+	  pattern_area_update();
         }
       break;
     case GDK_DELETE:

@@ -29,7 +29,8 @@ typedef enum  /*< chop=_CONVOLVE >*/
 } ConvolveType;
 
 void *        convolve_paint_func  (PaintCore *, GimpDrawable *, int);
-gboolean      convolve_non_gui     (GimpDrawable *, double, int, double *);
+gboolean      convolve_non_gui     (GimpDrawable *, double, ConvolveType, int, double *);
+gboolean      convolve_non_gui_default (GimpDrawable *, int, double *);
 Tool *        tools_new_convolve   (void);
 void          tools_free_convolve  (Tool *);
 

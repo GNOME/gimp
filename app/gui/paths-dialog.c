@@ -2794,46 +2794,19 @@ paths_set_path_points(GimpImage * gimage,
       num_pnts -= 3;
     }
   
-
-  if(!plist)
-    {
-      GSList *bzp_list = NULL;
-      /* No paths at all.... create one */
-      bzpath = path_new(gimage,
-			ptype,
-			pts_list,
-			pclosed,
-			(pclosed)?BEZIER_EDIT:BEZIER_ADD,/*state,*/
-			0, /* Can't be locked */
-			0, /* No tattoo assigned */
-			pname);
-      if(!paths_dialog)
-	{
-	  bzp_list = g_slist_append(bzp_list,bzpath);
-	  plist = pathsList_new(gimage,0,bzp_list);
-	  gimp_image_set_paths(gimage,plist);
-	}
-    }
-  else
-    {
-      bzpath = path_new(gimage,
-			ptype,
-			pts_list,
-			pclosed,
-			(pclosed)?BEZIER_EDIT:BEZIER_ADD,/*state,*/
-			0, /* Can't be locked */
-			0, /* No tattoo assigned */
-			pname);
-      
-      if(!paths_dialog)
-	{
-	  path_add_to_current(plist,bzpath,gimage,0);
-	}
-    }
+  bzpath = path_new(gimage,
+		    ptype,
+		    pts_list,
+		    pclosed,
+		    (pclosed)?BEZIER_EDIT:BEZIER_ADD,/*state,*/
+		    0, /* Can't be locked */
+		    0, /* No tattoo assigned */
+		    pname);
 
   bezier_sel = path_to_beziersel(bzpath);
 
-  if(paths_dialog)
+  /* Only add if paths dialog showing this window */
+  if(paths_dialog && paths_dialog->gimage == gimage)
     { 
 
       paths_dialog->current_path_list =  
@@ -2866,6 +2839,20 @@ paths_set_path_points(GimpImage * gimage,
   else
     {
       GDisplay *gdisp;
+
+      if(!plist)
+	{
+	  /* If we haven't got a paths dialog */
+	  GSList *bzp_list = NULL;
+	  
+	  bzp_list = g_slist_append(bzp_list,bzpath);
+	  plist = pathsList_new(gimage,0,bzp_list);
+	  gimp_image_set_paths(gimage,plist);
+	}
+      else
+	{
+	  path_add_to_current(plist,bzpath,gimage,0);
+	}
 
       /* This is a little HACK.. we need to find a display
        * to put the path image on.

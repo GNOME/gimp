@@ -31,6 +31,10 @@
 
 #include "libgimp/gimpintl.h"
 
+/* Defaults */
+#define ERASER_DEFAULT_HARD        FALSE
+#define ERASER_DEFAULT_INCREMENTAL FALSE
+
 /*  the eraser structures  */
 
 typedef struct _EraserOptions EraserOptions;
@@ -88,8 +92,8 @@ eraser_options_new (void)
   paint_options_init ((PaintOptions *) options,
 		      ERASER,
 		      eraser_options_reset);
-  options->hard        = options->hard_d        = FALSE;
-  options->incremental = options->incremental_d = FALSE;
+  options->hard        = options->hard_d        = ERASER_DEFAULT_HARD;
+  options->incremental = options->incremental_d = ERASER_DEFAULT_INCREMENTAL;
 
   /*  the main vbox  */
   vbox = ((ToolOptions *) options)->main_vbox;
@@ -217,6 +221,24 @@ eraser_non_gui_paint_func (PaintCore    *paint_core,
   eraser_motion (paint_core, drawable, non_gui_hard, non_gui_incremental);
 
   return NULL;
+}
+
+gboolean
+eraser_non_gui_default (GimpDrawable *drawable,
+			int           num_strokes,
+			double       *stroke_array)
+{
+  gint   hardness = ERASER_DEFAULT_HARD;
+  gint   method   = ERASER_DEFAULT_INCREMENTAL;
+  EraserOptions *options = eraser_options;
+
+  if(options)
+    {
+      hardness = options->hard;
+      method   = options->incremental;
+    }
+
+  return eraser_non_gui(drawable,num_strokes,stroke_array,hardness,method);
 }
 
 gboolean

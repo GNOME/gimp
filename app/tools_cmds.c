@@ -29,6 +29,7 @@
 #include "color_picker.h"
 #include "convolve.h"
 #include "crop.h"
+#include "dodgeburn.h"
 #include "drawable.h"
 #include "ellipse_select.h"
 #include "eraser.h"
@@ -44,54 +45,73 @@
 #include "rotate_tool.h"
 #include "scale_tool.h"
 #include "shear_tool.h"
+#include "smudge.h"
 #include "tile_manager_pvt.h"
 #include "transform_core.h"
 #include "undo.h"
 
 static ProcRecord airbrush_proc;
+static ProcRecord airbrush_default_proc;
 static ProcRecord blend_proc;
 static ProcRecord bucket_fill_proc;
 static ProcRecord by_color_select_proc;
 static ProcRecord clone_proc;
+static ProcRecord clone_default_proc;
 static ProcRecord color_picker_proc;
 static ProcRecord convolve_proc;
+static ProcRecord convolve_default_proc;
 static ProcRecord crop_proc;
+static ProcRecord dodgeburn_proc;
+static ProcRecord dodgeburn_default_proc;
 static ProcRecord ellipse_select_proc;
 static ProcRecord eraser_proc;
+static ProcRecord eraser_default_proc;
 static ProcRecord flip_proc;
 static ProcRecord free_select_proc;
 static ProcRecord fuzzy_select_proc;
 static ProcRecord paintbrush_proc;
+static ProcRecord paintbrush_default_proc;
 static ProcRecord pencil_proc;
 static ProcRecord perspective_proc;
 static ProcRecord rect_select_proc;
 static ProcRecord rotate_proc;
 static ProcRecord scale_proc;
 static ProcRecord shear_proc;
+static ProcRecord smudge_proc;
+static ProcRecord smudge_default_proc;
 
 void
 register_tools_procs (void)
 {
   procedural_db_register (&airbrush_proc);
+  procedural_db_register (&airbrush_default_proc);
   procedural_db_register (&blend_proc);
   procedural_db_register (&bucket_fill_proc);
   procedural_db_register (&by_color_select_proc);
   procedural_db_register (&clone_proc);
+  procedural_db_register (&clone_default_proc);
   procedural_db_register (&color_picker_proc);
   procedural_db_register (&convolve_proc);
+  procedural_db_register (&convolve_default_proc);
   procedural_db_register (&crop_proc);
+  procedural_db_register (&dodgeburn_proc);
+  procedural_db_register (&dodgeburn_default_proc);
   procedural_db_register (&ellipse_select_proc);
   procedural_db_register (&eraser_proc);
+  procedural_db_register (&eraser_default_proc);
   procedural_db_register (&flip_proc);
   procedural_db_register (&free_select_proc);
   procedural_db_register (&fuzzy_select_proc);
   procedural_db_register (&paintbrush_proc);
+  procedural_db_register (&paintbrush_default_proc);
   procedural_db_register (&pencil_proc);
   procedural_db_register (&perspective_proc);
   procedural_db_register (&rect_select_proc);
   procedural_db_register (&rotate_proc);
   procedural_db_register (&scale_proc);
   procedural_db_register (&shear_proc);
+  procedural_db_register (&smudge_proc);
+  procedural_db_register (&smudge_default_proc);
 }
 
 static Argument *
@@ -163,6 +183,67 @@ static ProcRecord airbrush_proc =
   0,
   NULL,
   { { airbrush_invoker } }
+};
+
+static Argument *
+airbrush_default_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 num_strokes;
+  gdouble *strokes;
+
+  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  if (drawable == NULL)
+    success = FALSE;
+
+  num_strokes = args[1].value.pdb_int;
+  if (!(num_strokes < 2))
+    num_strokes /= 2;
+  else
+    success = FALSE;
+
+  strokes = (gdouble *) args[2].value.pdb_pointer;
+
+  if (success)
+    success = airbrush_non_gui_default (drawable, num_strokes, strokes);
+
+  return procedural_db_return_args (&airbrush_default_proc, success);
+}
+
+static ProcArg airbrush_default_inargs[] =
+{
+  {
+    PDB_DRAWABLE,
+    "drawable",
+    "The affected drawable"
+  },
+  {
+    PDB_INT32,
+    "num_strokes",
+    "Number of stroke control points (count each coordinate as 2 points)"
+  },
+  {
+    PDB_FLOATARRAY,
+    "strokes",
+    "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }"
+  }
+};
+
+static ProcRecord airbrush_default_proc =
+{
+  "gimp_airbrush_default",
+  "Paint in the current brush with varying pressure. Paint application is time-dependent.",
+  "This tool simulates the use of an airbrush. It is similar to gimp_airbrush except that the pressure is derived from the airbrush tools options box. It the option has not been set the default for the option will be used.",
+  "Andy Thomas",
+  "Andy Thomas",
+  "1999",
+  PDB_INTERNAL,
+  3,
+  airbrush_default_inargs,
+  0,
+  NULL,
+  { { airbrush_default_invoker } }
 };
 
 static Argument *
@@ -647,6 +728,67 @@ static ProcRecord clone_proc =
 };
 
 static Argument *
+clone_default_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 num_strokes;
+  gdouble *strokes;
+
+  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  if (drawable == NULL)
+    success = FALSE;
+
+  num_strokes = args[1].value.pdb_int;
+  if (!(num_strokes < 2))
+    num_strokes /= 2;
+  else
+    success = FALSE;
+
+  strokes = (gdouble *) args[2].value.pdb_pointer;
+
+  if (success)
+    success = clone_non_gui_default (drawable, num_strokes, strokes);
+
+  return procedural_db_return_args (&clone_default_proc, success);
+}
+
+static ProcArg clone_default_inargs[] =
+{
+  {
+    PDB_DRAWABLE,
+    "drawable",
+    "The affected drawable"
+  },
+  {
+    PDB_INT32,
+    "num_strokes",
+    "Number of stroke control points (count each coordinate as 2 points)"
+  },
+  {
+    PDB_FLOATARRAY,
+    "strokes",
+    "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }"
+  }
+};
+
+static ProcRecord clone_default_proc =
+{
+  "gimp_clone_default",
+  "Clone from the source to the dest drawable using the current brush",
+  "This tool clones (copies) from the source drawable starting at the specified source coordinates to the dest drawable. This function performs exactly the same as the gimp_clone function except that the tools arguments are obtained from the clones option dialog. It this dialog has not been activated then the dialogs default values will be used.",
+  "Andy Thomas",
+  "Andy Thomas",
+  "1999",
+  PDB_INTERNAL,
+  3,
+  clone_default_inargs,
+  0,
+  NULL,
+  { { clone_default_invoker } }
+};
+
+static Argument *
 color_picker_invoker (Argument *args)
 {
   gboolean success = TRUE;
@@ -808,7 +950,7 @@ convolve_invoker (Argument *args)
   strokes = (gdouble *) args[4].value.pdb_pointer;
 
   if (success)
-    success = convolve_non_gui (drawable, pressure, num_strokes, strokes);
+    success = convolve_non_gui (drawable, pressure, convolve_type, num_strokes, strokes);
 
   return procedural_db_return_args (&convolve_proc, success);
 }
@@ -856,6 +998,67 @@ static ProcRecord convolve_proc =
   0,
   NULL,
   { { convolve_invoker } }
+};
+
+static Argument *
+convolve_default_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 num_strokes;
+  gdouble *strokes;
+
+  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  if (drawable == NULL)
+    success = FALSE;
+
+  num_strokes = args[1].value.pdb_int;
+  if (!(num_strokes < 2))
+    num_strokes /= 2;
+  else
+    success = FALSE;
+
+  strokes = (gdouble *) args[2].value.pdb_pointer;
+
+  if (success)
+    success = convolve_non_gui_default (drawable, num_strokes, strokes);
+
+  return procedural_db_return_args (&convolve_default_proc, success);
+}
+
+static ProcArg convolve_default_inargs[] =
+{
+  {
+    PDB_DRAWABLE,
+    "drawable",
+    "The affected drawable"
+  },
+  {
+    PDB_INT32,
+    "num_strokes",
+    "Number of stroke control points (count each coordinate as 2 points)"
+  },
+  {
+    PDB_FLOATARRAY,
+    "strokes",
+    "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }"
+  }
+};
+
+static ProcRecord convolve_default_proc =
+{
+  "gimp_convolve_default",
+  "Convolve (Blur, Sharpen) using the current brush.",
+  "This tool convolves the specified drawable with either a sharpening or blurring kernel. This function performs exactly the same as the gimp_convolve function except that the tools arguments are obtained from the convolve option dialog. It this dialog has not been activated then the dialogs default values will be used.",
+  "Andy Thomas",
+  "Andy Thomas",
+  "1999",
+  PDB_INTERNAL,
+  3,
+  convolve_default_inargs,
+  0,
+  NULL,
+  { { convolve_default_invoker } }
 };
 
 static Argument *
@@ -945,6 +1148,158 @@ static ProcRecord crop_proc =
   0,
   NULL,
   { { crop_invoker } }
+};
+
+static Argument *
+dodgeburn_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble exposure;
+  gint32 dodgeburn_type;
+  gint32 dodgeburn_mode;
+  gint32 num_strokes;
+  gdouble *strokes;
+
+  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  if (drawable == NULL)
+    success = FALSE;
+
+  exposure = args[1].value.pdb_float;
+  if (exposure < 0.0 || exposure > 100.0)
+    success = FALSE;
+
+  dodgeburn_type = args[2].value.pdb_int;
+  if (dodgeburn_type < DODGE || dodgeburn_type > BURN)
+    success = FALSE;
+
+  dodgeburn_mode = args[3].value.pdb_int;
+  if (dodgeburn_mode < DODGEBURN_HIGHLIGHTS || dodgeburn_mode > DODGEBURN_SHADOWS)
+    success = FALSE;
+
+  num_strokes = args[4].value.pdb_int;
+  if (!(num_strokes < 2))
+    num_strokes /= 2;
+  else
+    success = FALSE;
+
+  strokes = (gdouble *) args[5].value.pdb_pointer;
+
+  if (success)
+    success = dodgeburn_non_gui (drawable, exposure, dodgeburn_type, dodgeburn_mode, num_strokes, strokes);
+
+  return procedural_db_return_args (&dodgeburn_proc, success);
+}
+
+static ProcArg dodgeburn_inargs[] =
+{
+  {
+    PDB_DRAWABLE,
+    "drawable",
+    "The affected drawable"
+  },
+  {
+    PDB_FLOAT,
+    "exposure",
+    "The exposer of the strokes (0 <= exposure <= 100)"
+  },
+  {
+    PDB_INT32,
+    "dodgeburn_type",
+    "The type either dodge or burn: { DODGE (0), BURN (1) }"
+  },
+  {
+    PDB_INT32,
+    "dodgeburn_mode",
+    "The mode: { DODGEBURN_HIGHLIGHTS (0), DODGEBURN_MIDTONES (1), DODGEBURN_SHADOWS (2) }"
+  },
+  {
+    PDB_INT32,
+    "num_strokes",
+    "Number of stroke control points (count each coordinate as 2 points)"
+  },
+  {
+    PDB_FLOATARRAY,
+    "strokes",
+    "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }"
+  }
+};
+
+static ProcRecord dodgeburn_proc =
+{
+  "gimp_dodgeburn",
+  "Dodgeburn image with varying exposure.",
+  "Dodgebure. More details here later.",
+  "Andy Thomas",
+  "Andy Thomas",
+  "1999",
+  PDB_INTERNAL,
+  6,
+  dodgeburn_inargs,
+  0,
+  NULL,
+  { { dodgeburn_invoker } }
+};
+
+static Argument *
+dodgeburn_default_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 num_strokes;
+  gdouble *strokes;
+
+  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  if (drawable == NULL)
+    success = FALSE;
+
+  num_strokes = args[1].value.pdb_int;
+  if (!(num_strokes < 2))
+    num_strokes /= 2;
+  else
+    success = FALSE;
+
+  strokes = (gdouble *) args[2].value.pdb_pointer;
+
+  if (success)
+    success = dodgeburn_non_gui_default (drawable, num_strokes, strokes);
+
+  return procedural_db_return_args (&dodgeburn_default_proc, success);
+}
+
+static ProcArg dodgeburn_default_inargs[] =
+{
+  {
+    PDB_DRAWABLE,
+    "drawable",
+    "The affected drawable"
+  },
+  {
+    PDB_INT32,
+    "num_strokes",
+    "Number of stroke control points (count each coordinate as 2 points)"
+  },
+  {
+    PDB_FLOATARRAY,
+    "strokes",
+    "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }"
+  }
+};
+
+static ProcRecord dodgeburn_default_proc =
+{
+  "gimp_dodgeburn_default",
+  "Dodgeburn image with varying exposure. This is the same as the gimp_dodgeburn function except that the exposure, type and mode are taken from the tools option dialog. If the dialog has not been activated then the defaults as used by the dialog will be used.",
+  "Dodgebure. More details here later.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  PDB_INTERNAL,
+  3,
+  dodgeburn_default_inargs,
+  0,
+  NULL,
+  { { dodgeburn_default_invoker } }
 };
 
 static Argument *
@@ -1138,6 +1493,67 @@ static ProcRecord eraser_proc =
   0,
   NULL,
   { { eraser_invoker } }
+};
+
+static Argument *
+eraser_default_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 num_strokes;
+  gdouble *strokes;
+
+  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  if (drawable == NULL)
+    success = FALSE;
+
+  num_strokes = args[1].value.pdb_int;
+  if (!(num_strokes < 2))
+    num_strokes /= 2;
+  else
+    success = FALSE;
+
+  strokes = (gdouble *) args[2].value.pdb_pointer;
+
+  if (success)
+    success = eraser_non_gui_default (drawable, num_strokes, strokes);
+
+  return procedural_db_return_args (&eraser_default_proc, success);
+}
+
+static ProcArg eraser_default_inargs[] =
+{
+  {
+    PDB_DRAWABLE,
+    "drawable",
+    "The affected drawable"
+  },
+  {
+    PDB_INT32,
+    "num_strokes",
+    "Number of stroke control points (count each coordinate as 2 points)"
+  },
+  {
+    PDB_FLOATARRAY,
+    "strokes",
+    "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }"
+  }
+};
+
+static ProcRecord eraser_default_proc =
+{
+  "gimp_eraser_default",
+  "Erase using the current brush.",
+  "This tool erases using the current brush mask. This function performs exactly the same as the gimp_eraser function except that the tools arguments are obtained from the eraser option dialog. It this dialog has not been activated then the dialogs default values will be used.",
+  "Andy Thomas",
+  "Andy Thomas",
+  "1999",
+  PDB_INTERNAL,
+  3,
+  eraser_default_inargs,
+  0,
+  NULL,
+  { { eraser_default_invoker } }
 };
 
 static Argument *
@@ -1554,6 +1970,67 @@ static ProcRecord paintbrush_proc =
   0,
   NULL,
   { { paintbrush_invoker } }
+};
+
+static Argument *
+paintbrush_default_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 num_strokes;
+  gdouble *strokes;
+
+  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  if (drawable == NULL)
+    success = FALSE;
+
+  num_strokes = args[1].value.pdb_int;
+  if (!(num_strokes < 2))
+    num_strokes /= 2;
+  else
+    success = FALSE;
+
+  strokes = (gdouble *) args[2].value.pdb_pointer;
+
+  if (success)
+    success = paintbrush_non_gui_default (drawable, num_strokes, strokes);
+
+  return procedural_db_return_args (&paintbrush_default_proc, success);
+}
+
+static ProcArg paintbrush_default_inargs[] =
+{
+  {
+    PDB_DRAWABLE,
+    "drawable",
+    "The affected drawable"
+  },
+  {
+    PDB_INT32,
+    "num_strokes",
+    "Number of stroke control points (count each coordinate as 2 points)"
+  },
+  {
+    PDB_FLOATARRAY,
+    "strokes",
+    "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }"
+  }
+};
+
+static ProcRecord paintbrush_default_proc =
+{
+  "gimp_paintbrush_default",
+  "Paint in the current brush. The fade out parameter and pull colors from a gradient parameter are set from the paintbrush options dialog. If this dialog has not been activated then the dialog defaults will be used.",
+  "This tool is similar to the standard paintbrush. It draws linearly interpolated lines through the specified stroke coordinates. It operates on the specified drawable in the foreground color with the active brush. The \"fade_out\" parameter is measured in pixels and allows the brush stroke to linearly fall off (value obtained from the option dialog). The pressure is set to the maximum at the beginning of the stroke. As the distance of the stroke nears the fade_out value, the pressure will approach zero. The gradient_length (value obtained from the option dialog) is the distance to spread the gradient over. It is measured in pixels. If the gradient_length is 0, no gradient is used.",
+  "Andy Thomas",
+  "Andy Thomas",
+  "1999",
+  PDB_INTERNAL,
+  3,
+  paintbrush_default_inargs,
+  0,
+  NULL,
+  { { paintbrush_default_invoker } }
 };
 
 static Argument *
@@ -2279,4 +2756,136 @@ static ProcRecord shear_proc =
   1,
   shear_outargs,
   { { shear_invoker } }
+};
+
+static Argument *
+smudge_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble pressure;
+  gint32 num_strokes;
+  gdouble *strokes;
+
+  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  if (drawable == NULL)
+    success = FALSE;
+
+  pressure = args[1].value.pdb_float;
+  if (pressure < 0.0 || pressure > 100.0)
+    success = FALSE;
+
+  num_strokes = args[2].value.pdb_int;
+  if (!(num_strokes < 2))
+    num_strokes /= 2;
+  else
+    success = FALSE;
+
+  strokes = (gdouble *) args[3].value.pdb_pointer;
+
+  if (success)
+    success = smudge_non_gui (drawable, pressure, num_strokes, strokes);
+
+  return procedural_db_return_args (&smudge_proc, success);
+}
+
+static ProcArg smudge_inargs[] =
+{
+  {
+    PDB_DRAWABLE,
+    "drawable",
+    "The affected drawable"
+  },
+  {
+    PDB_FLOAT,
+    "pressure",
+    "The pressure of the smudge strokes (0 <= pressure <= 100)"
+  },
+  {
+    PDB_INT32,
+    "num_strokes",
+    "Number of stroke control points (count each coordinate as 2 points)"
+  },
+  {
+    PDB_FLOATARRAY,
+    "strokes",
+    "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }"
+  }
+};
+
+static ProcRecord smudge_proc =
+{
+  "gimp_smudge",
+  "Smudge image with varying pressure.",
+  "This tool simulates a smudge using the current brush. High pressure results in a greater smudge of paint while low pressure results in a lesser smudge.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  PDB_INTERNAL,
+  4,
+  smudge_inargs,
+  0,
+  NULL,
+  { { smudge_invoker } }
+};
+
+static Argument *
+smudge_default_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 num_strokes;
+  gdouble *strokes;
+
+  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  if (drawable == NULL)
+    success = FALSE;
+
+  num_strokes = args[1].value.pdb_int;
+  if (!(num_strokes < 2))
+    num_strokes /= 2;
+  else
+    success = FALSE;
+
+  strokes = (gdouble *) args[2].value.pdb_pointer;
+
+  if (success)
+    success = smudge_non_gui_default (drawable, num_strokes, strokes);
+
+  return procedural_db_return_args (&smudge_default_proc, success);
+}
+
+static ProcArg smudge_default_inargs[] =
+{
+  {
+    PDB_DRAWABLE,
+    "drawable",
+    "The affected drawable"
+  },
+  {
+    PDB_INT32,
+    "num_strokes",
+    "Number of stroke control points (count each coordinate as 2 points)"
+  },
+  {
+    PDB_FLOATARRAY,
+    "strokes",
+    "Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }"
+  }
+};
+
+static ProcRecord smudge_default_proc =
+{
+  "gimp_smudge_default",
+  "Smudge image with varying pressure.",
+  "This tool simulates a smudge using the current brush. It behaves exactly the same as gimp_smudge except that the pressure value is taken from the smudge tool options or the options default if the tools option dialog has not been activated.",
+  "Andy Thomas",
+  "Andy Thomas",
+  "1999",
+  PDB_INTERNAL,
+  3,
+  smudge_default_inargs,
+  0,
+  NULL,
+  { { smudge_default_invoker } }
 };

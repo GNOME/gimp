@@ -1,3 +1,52 @@
+
+Mon Jul 19 21:33:56 BST 1999 Andy Thomas <alt@gimp.org>
+
+	* app/indicator_area.c
+	* app/paths_dialog.c
+	* app/tools_cmds.c
+	* app/airbrush.c
+	* app/airbrush.h
+	* app/bezier_select.c
+	* app/paintbrush.c
+	* app/paintbrush.h
+	* app/clone.c
+	* app/clone.h
+	* app/eraser.c
+	* app/eraser.h
+	* app/convolve.c
+	* app/convolve.h
+	* app/smudge.c
+	* app/smudge.h
+	* app/dodgeburn.c
+	* app/dodgeburn.h
+	* app/internal_procs.c
+	* plug-ins/sel2path/sel2path.c
+	* tools/pdbgen/pdb/tools.pdb
+	* tools/pdbgen/enums.pl
+
+	1) Fixed the brushpreview popup problem where it remained onscreen
+           if the mouse button was released in another GTK window that accepted
+	   mouse events.
+
+	2) Selection to path now works on all types of images (it should have
+	   anyway).
+
+	3) Fixed PDB so you can once again use the PDB interfaces to the clone
+	   and airbrush tools.
+
+	4) PDB Function to add a path to an image now adds it correctly.
+
+	5) airbrush/paintbrush/clone/eraser/convolve New PDB functions that 
+           use the options dialogs settings (or sane defaults if option dialog
+           not present)
+
+	6) Added PDB functions for Smudge & DodgeBurn tools.
+
+	7) Path stroke command (from the LCP dialog) can now use any of the
+	   painting tools (airbrush/paintbrush/clone/eraser/convolve/smudge/
+           dodgeburn except ink). Just have the tool selected when you 
+	   press the stroke button. 
+
 Mon Jul 19 21:40:48 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/brush_select.c: update the brush title when editing a brush

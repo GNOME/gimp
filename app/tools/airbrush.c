@@ -36,6 +36,9 @@
 /*  The maximum amount of pressure that can be exerted  */
 #define MAX_PRESSURE  0.075
 
+/* Default pressure setting */
+#define AIRBRUSH_PRESSURE_DEFAULT 10.0
+
 #define OFF           0
 #define ON            1
 
@@ -110,7 +113,7 @@ airbrush_options_new (void)
 		      AIRBRUSH,
 		      airbrush_options_reset);
   options->rate     = options->rate_d     = 80.0;
-  options->pressure = options->pressure_d = 10.0;
+  options->pressure = options->pressure_d = AIRBRUSH_PRESSURE_DEFAULT;
 
   /*  the main vbox  */
   vbox = ((ToolOptions *) options)->main_vbox;
@@ -317,6 +320,20 @@ airbrush_non_gui_paint_func (PaintCore    *paint_core,
 }
 
 gboolean
+airbrush_non_gui_default (GimpDrawable *drawable,
+			  int           num_strokes,
+			  double       *stroke_array)
+{
+  AirbrushOptions *options = airbrush_options;
+  gdouble pressure = AIRBRUSH_PRESSURE_DEFAULT;
+
+  if(options)
+    pressure = options->pressure;
+
+  return airbrush_non_gui(drawable,pressure,num_strokes,stroke_array);
+}
+
+gboolean
 airbrush_non_gui (GimpDrawable *drawable,
     		  double        pressure,
 		  int           num_strokes,
@@ -329,6 +346,8 @@ airbrush_non_gui (GimpDrawable *drawable,
     {
       /* Set the paint core's paint func */
       non_gui_paint_core.paint_func = airbrush_non_gui_paint_func;
+
+      non_gui_pressure = pressure;
 
       non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
       non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];

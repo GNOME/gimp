@@ -391,6 +391,21 @@ package Gimp::CodeGen::enums;
 	  nicks   => { HORZ_SHEAR => 'HORIZONTAL',
 		       VERT_SHEAR => 'VERTICAL' }
 	},
+    DodgeBurnType =>
+	{ contig => 1,
+	  header => 'dodgeburn.h',
+	  symbols => [ qw(DODGE BURN) ],
+	  mapping => { DODGE => '0',
+		       BURN => '1' }
+	},
+    DodgeBurnMode =>
+	{ contig => 1,
+	  header => 'dodgeburn.h',
+	  symbols => [ qw(DODGEBURN_HIGHLIGHTS DODGEBURN_MIDTONES DODGEBURN_SHADOWS) ],
+	  mapping => { DODGEBURN_HIGHLIGHTS => '0',
+		       DODGEBURN_MIDTONES => '1',
+		       DODGEBURN_SHADOWS => '2' }
+	},
     SizeType =>
 	{ contig => 1,
 	  header => 'text_tool.h',

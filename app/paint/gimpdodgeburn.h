@@ -35,7 +35,8 @@ typedef enum
 } DodgeBurnMode;
 
 void *        dodgeburn_paint_func  (PaintCore *, GimpDrawable *, int);
-gboolean      dodgeburn_non_gui     (GimpDrawable *, double, int, double *);
+gboolean      dodgeburn_non_gui     (GimpDrawable *, double, DodgeBurnType, DodgeBurnMode, int, double *);
+gboolean      dodgeburn_non_gui_default (GimpDrawable *, int, double *);
 Tool *        tools_new_dodgeburn   (void);
 void          tools_free_dodgeburn  (Tool *);
 

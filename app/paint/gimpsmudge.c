@@ -37,6 +37,11 @@
 
 #include "libgimp/gimpintl.h"
 
+
+/* default defines */
+
+#define SMUDGE_DEFAULT_PRESSURE   50.0
+
 /*  the smudge structures  */
 
 typedef struct _SmudgeOptions SmudgeOptions;
@@ -56,7 +61,10 @@ static unsigned char *accum_data;
 /*  the smudge tool options  */
 static SmudgeOptions * smudge_options = NULL;
 
-static void         smudge_motion 	(PaintCore *, GimpDrawable *);
+/* Loca varibles */
+static double non_gui_pressure;
+
+static void         smudge_motion 	(PaintCore *, double, GimpDrawable *);
 static void 	    smudge_init   	(PaintCore *, GimpDrawable *);
 static void 	    smudge_finish   	(PaintCore *, GimpDrawable *);
 
@@ -96,7 +104,7 @@ smudge_options_new (void)
 		      SMUDGE,
 		      smudge_options_reset);
 
-  options->pressure = options->pressure_d = 50.0;
+  options->pressure = options->pressure_d = SMUDGE_DEFAULT_PRESSURE;
 
   /*  the main vbox  */
   vbox = ((ToolOptions *) options)->main_vbox;
@@ -136,7 +144,7 @@ smudge_paint_func (PaintCore    *paint_core,
       smudge_init (paint_core, drawable);
       break;
     case MOTION_PAINT:
-      smudge_motion (paint_core, drawable);
+      smudge_motion (paint_core, smudge_options->pressure, drawable);
       break;
     case FINISH_PAINT:
       smudge_finish (paint_core, drawable);
@@ -170,7 +178,7 @@ smudge_nonclipped_painthit_coords (PaintCore *paint_core,
 
 static void
 smudge_init ( PaintCore *paint_core,
-		 GimpDrawable * drawable)
+	      GimpDrawable * drawable)
 {
   GImage *gimage;
   TempBuf * area;
@@ -284,6 +292,7 @@ tools_free_smudge (Tool *tool)
 
 static void
 smudge_motion (PaintCore    *paint_core,
+	       double        smudge_pressure,
 	       GimpDrawable *drawable)
 {
   GImage *gimage;
@@ -316,7 +325,7 @@ smudge_motion (PaintCore    *paint_core,
   brush_opacity = gimp_context_get_opacity (NULL);
 
   /* Enable pressure sensitive pressure */
-  pressure = ((smudge_options->pressure)/100.0 * (paint_core->curpressure)/0.5);
+  pressure = ((smudge_pressure)/100.0 * (paint_core->curpressure)/0.5);
  
   /* The tempPR will be the built up buffer (for smudge) */ 
   tempPR.bytes = accumPR.bytes;
@@ -377,9 +386,25 @@ smudge_non_gui_paint_func (PaintCore *paint_core,
 			     GimpDrawable *drawable,
 			     int        state)
 {
-  smudge_motion (paint_core, drawable);
+  smudge_motion (paint_core, non_gui_pressure, drawable);
 
   return NULL;
+}
+
+gboolean
+smudge_non_gui_default (GimpDrawable *drawable,
+			int           num_strokes,
+			double       *stroke_array)
+{
+  double         pressure = SMUDGE_DEFAULT_PRESSURE;
+  SmudgeOptions  *options = smudge_options;
+
+  if(options)
+    {
+      pressure = options->pressure;
+    }
+
+  return smudge_non_gui(drawable,pressure,num_strokes,stroke_array);
 }
 
 gboolean
@@ -393,8 +418,12 @@ smudge_non_gui (GimpDrawable *drawable,
   if (paint_core_init (&non_gui_paint_core, drawable,
 		       stroke_array[0], stroke_array[1]))
     {
+      smudge_init(&non_gui_paint_core,drawable);
+
       /* Set the paint core's paint func */
       non_gui_paint_core.paint_func = smudge_non_gui_paint_func;
+
+      non_gui_pressure = pressure;
 
       non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
       non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
@@ -418,6 +447,7 @@ smudge_non_gui (GimpDrawable *drawable,
 
       /* Cleanup */
       paint_core_cleanup ();
+      smudge_finish(&non_gui_paint_core, drawable);
       return TRUE;
     }
   else

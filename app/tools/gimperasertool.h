@@ -23,6 +23,7 @@
 
 void *        eraser_paint_func (PaintCore *, GimpDrawable *, int);
 gboolean      eraser_non_gui    (GimpDrawable *, int, double *, int, int);
+gboolean      eraser_non_gui_default    (GimpDrawable *, int, double *);
 
 Tool *        tools_new_eraser   (void);
 void          tools_free_eraser  (Tool *);

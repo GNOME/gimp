@@ -39,6 +39,10 @@
 #define MIN_SHARPEN   -512
 #define MAX_SHARPEN   -64
 
+/* defaults */
+#define DEFAULT_CONVOLVE_PRESSURE  50.0
+#define DEFAULT_CONVOLVE_TYPE      BLUR_CONVOLVE
+
 /*  the convolve structures  */
 
 typedef struct _ConvolveOptions ConvolveOptions;
@@ -63,6 +67,9 @@ static ConvolveOptions * convolve_options = NULL;
 static int          matrix [25];
 static int          matrix_size;
 static int          matrix_divisor;
+
+static ConvolveType non_gui_type;
+static double       non_gui_pressure;
 
 static float        custom_matrix [25] =
 {
@@ -98,8 +105,7 @@ static void         integer_matrix       (float *, int *, int);
 static void         copy_matrix          (float *, float *, int);
 static int          sum_matrix           (int *, int);
 
-static void         convolve_motion      (PaintCore *, GimpDrawable *);
-
+static void         convolve_motion      (PaintCore *, GimpDrawable *, ConvolveType, double);
 
 /* functions  */
 
@@ -134,8 +140,8 @@ convolve_options_new (void)
   paint_options_init ((PaintOptions *) options,
 		      CONVOLVE,
 		      convolve_options_reset);
-  options->type     = options->type_d     = BLUR_CONVOLVE;
-  options->pressure = options->pressure_d = 50.0;
+  options->type     = options->type_d     = DEFAULT_CONVOLVE_TYPE;
+  options->pressure = options->pressure_d = DEFAULT_CONVOLVE_PRESSURE;
 
   /*  the main vbox  */
   vbox = ((ToolOptions *) options)->main_vbox;
@@ -182,7 +188,7 @@ convolve_paint_func (PaintCore    *paint_core,
   switch (state)
     {
     case MOTION_PAINT:
-      convolve_motion (paint_core, drawable);
+      convolve_motion (paint_core, drawable,convolve_options->type, convolve_options->pressure);
       break;
     }
 
@@ -248,8 +254,10 @@ tools_free_convolve (Tool *tool)
 }
 
 static void
-convolve_motion (PaintCore *paint_core,
-		 GimpDrawable *drawable)
+convolve_motion (PaintCore    *paint_core,
+		 GimpDrawable *drawable,
+		 ConvolveType  type,
+		 double        pressure)
 {
   GImage *gimage;
   TempBuf * area;
@@ -278,7 +286,7 @@ convolve_motion (PaintCore *paint_core,
   destPR.rowstride = area->width * destPR.bytes;
   destPR.data = temp_buf_data (area);
 
-  calculate_matrix (convolve_options->type, convolve_options->pressure,
+  calculate_matrix (type, pressure,
 		    paint_core->curpressure);
 
   /*  convolve the source image with the convolve mask  */
@@ -433,14 +441,33 @@ convolve_non_gui_paint_func (PaintCore *paint_core,
 			     GimpDrawable *drawable,
 			     int        state)
 {
-  convolve_motion (paint_core, drawable);
+  convolve_motion (paint_core, drawable,non_gui_type,non_gui_pressure);
 
   return NULL;
 }
 
 gboolean
+convolve_non_gui_default (GimpDrawable *drawable,
+			  int           num_strokes,
+			  double       *stroke_array)
+{
+  double pressure   = DEFAULT_CONVOLVE_PRESSURE;
+  ConvolveType type = DEFAULT_CONVOLVE_TYPE;
+  ConvolveOptions *options = convolve_options;
+
+  if(options)
+    {
+      pressure = options->pressure;
+      type = options->type;
+    }
+
+  return convolve_non_gui(drawable,pressure,type,num_strokes,stroke_array);
+}
+
+gboolean
 convolve_non_gui (GimpDrawable *drawable,
     		  double        pressure,
+		  ConvolveType  type,
 		  int           num_strokes,
 		  double       *stroke_array)
 {
@@ -451,6 +478,9 @@ convolve_non_gui (GimpDrawable *drawable,
     {
       /* Set the paint core's paint func */
       non_gui_paint_core.paint_func = convolve_non_gui_paint_func;
+      
+      non_gui_type = type;
+      non_gui_pressure = pressure;
 
       non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
       non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];

@@ -58,7 +58,8 @@ struct _DodgeBurnOptions
   GimpLut      *lut;
 };
 
-static void dodgeburn_make_luts ( PaintCore *, GimpDrawable *);
+static void 
+dodgeburn_make_luts ( PaintCore *, double, DodgeBurnType, DodgeBurnMode, GimpLut *, GimpDrawable *);
 
 static gfloat dodgeburn_highlights_lut_func(void *, int, int, gfloat);
 static gfloat dodgeburn_midtones_lut_func(void *, int, int, gfloat);
@@ -72,7 +73,16 @@ gfloat dodgeburn_shadows(void *, int, int, gfloat);
 /*  the dodgeburn tool options  */
 static DodgeBurnOptions * dodgeburn_options = NULL;
 
-static void         dodgeburn_motion 	(PaintCore *, GimpDrawable *);
+/* Non gui function */
+static double  non_gui_exposure;
+static GimpLut *non_gui_lut;
+
+/* Default values */
+#define DODGEBURN_DEFAULT_TYPE     DODGE
+#define DODGEBURN_DEFAULT_EXPOSURE 50.0
+#define DODGEBURN_DEFAULT_MODE     DODGEBURN_HIGHLIGHTS
+
+static void         dodgeburn_motion 	(PaintCore *, double, GimpLut *, GimpDrawable *);
 static void 	    dodgeburn_init   	(PaintCore *, GimpDrawable *);
 static void         dodgeburn_finish    (PaintCore *, GimpDrawable *);
 
@@ -121,9 +131,9 @@ dodgeburn_options_new (void)
 		      DODGEBURN,
 		      dodgeburn_options_reset);
 
-  options->type     = options->type_d     = DODGE;
-  options->exposure = options->exposure_d = 50.0;
-  options->mode = options->mode_d = DODGEBURN_HIGHLIGHTS;
+  options->type     = options->type_d     = DODGEBURN_DEFAULT_TYPE;
+  options->exposure = options->exposure_d = DODGEBURN_DEFAULT_EXPOSURE;
+  options->mode     = options->mode_d     = DODGEBURN_DEFAULT_MODE;
 
   /*  the main vbox  */
   vbox = ((ToolOptions *) options)->main_vbox;
@@ -187,7 +197,7 @@ dodgeburn_paint_func (PaintCore    *paint_core,
       dodgeburn_init (paint_core, drawable);
       break;
     case MOTION_PAINT:
-      dodgeburn_motion (paint_core, drawable);
+      dodgeburn_motion (paint_core, dodgeburn_options->exposure, dodgeburn_options->lut, drawable);
       break;
     case FINISH_PAINT:
       dodgeburn_finish (paint_core, drawable);
@@ -199,7 +209,7 @@ dodgeburn_paint_func (PaintCore    *paint_core,
 
 static void
 dodgeburn_finish ( PaintCore *paint_core,
-		 GimpDrawable * drawable)
+		   GimpDrawable * drawable)
 {
   /* Here we destroy the luts to do the painting with.*/
   if (dodgeburn_options->lut)
@@ -214,24 +224,34 @@ dodgeburn_init ( PaintCore *paint_core,
 		 GimpDrawable * drawable)
 {
   /* Here we create the luts to do the painting with.*/
-  dodgeburn_make_luts (paint_core, drawable);
+  dodgeburn_options->lut = gimp_lut_new();
+  dodgeburn_make_luts (paint_core, 
+		       dodgeburn_options->exposure,
+		       dodgeburn_options->type,
+		       dodgeburn_options->mode,
+		       dodgeburn_options->lut,
+		       drawable);
 }
 
 static void 
-dodgeburn_make_luts ( PaintCore *paint_core,
-		 GimpDrawable * drawable)
+dodgeburn_make_luts ( PaintCore     *paint_core,
+		      double        db_exposure,
+		      DodgeBurnType type,
+		      DodgeBurnMode mode,
+		      GimpLut       *lut,
+		      GimpDrawable  *drawable)
 {
   GimpLutFunc lut_func;
   int nchannels = gimp_drawable_bytes (drawable);
-  gfloat exposure = (dodgeburn_options->exposure)/100.0;
+  static gfloat exposure;
+
+  exposure = (db_exposure)/100.0;
 
   /* make the exposure negative if burn for luts*/
-  if (dodgeburn_options->type == BURN)
+  if (type == BURN)
     exposure = -exposure; 
 
-  dodgeburn_options->lut = gimp_lut_new();
-
-  switch (dodgeburn_options->mode)
+  switch (mode)
     {
     case DODGEBURN_HIGHLIGHTS:
       lut_func = dodgeburn_highlights_lut_func; 
@@ -247,7 +267,7 @@ dodgeburn_make_luts ( PaintCore *paint_core,
       break;
     }
 
-  gimp_lut_setup_exact (dodgeburn_options->lut, 
+  gimp_lut_setup_exact (lut, 
 	lut_func, (void *)&exposure,
 	nchannels);
 	                  
@@ -314,8 +334,10 @@ tools_free_dodgeburn (Tool *tool)
 }
 
 static void
-dodgeburn_motion (PaintCore *paint_core,
-		 GimpDrawable *drawable)
+dodgeburn_motion (PaintCore    *paint_core,
+		  double        dodgeburn_exposure,
+		  GimpLut      *lut,
+		  GimpDrawable *drawable)
 {
   GImage *gimage;
   TempBuf * area;
@@ -374,10 +396,10 @@ dodgeburn_motion (PaintCore *paint_core,
   brush_opacity = gimp_context_get_opacity (NULL);
 
   /* Enable pressure sensitive exposure */
-  exposure = ((dodgeburn_options->exposure)/100.0 * (paint_core->curpressure)/0.5);
+  exposure = ((dodgeburn_exposure)/100.0 * (paint_core->curpressure)/0.5);
 
   /*  DodgeBurn the region  */
-  gimp_lut_process (dodgeburn_options->lut, &srcPR, &tempPR);
+  gimp_lut_process (lut, &srcPR, &tempPR);
 
   /* The dest is the paint area we got above (= canvas_buf) */ 
   destPR.bytes = area->bytes;
@@ -407,16 +429,38 @@ dodgeburn_non_gui_paint_func (PaintCore *paint_core,
 			     GimpDrawable *drawable,
 			     int        state)
 {
-  dodgeburn_motion (paint_core, drawable);
+  dodgeburn_motion (paint_core, non_gui_exposure, non_gui_lut, drawable);
 
   return NULL;
 }
 
 gboolean
+dodgeburn_non_gui_default (GimpDrawable *drawable,
+			   int           num_strokes,
+			   double       *stroke_array)
+{
+  double exposure = DODGEBURN_DEFAULT_TYPE;
+  DodgeBurnType type = DODGEBURN_DEFAULT_TYPE;
+  DodgeBurnMode mode = DODGEBURN_DEFAULT_MODE;
+  DodgeBurnOptions *options = dodgeburn_options;
+
+  if(options)
+    {
+      exposure = dodgeburn_options->exposure;
+      type     = dodgeburn_options->type;
+      mode     = dodgeburn_options->mode;
+    }
+
+  return dodgeburn_non_gui(drawable,exposure,type,mode,num_strokes,stroke_array);
+}
+
+gboolean
 dodgeburn_non_gui (GimpDrawable *drawable,
-    		  double        pressure,
-		  int           num_strokes,
-		  double       *stroke_array)
+		   double        exposure,
+		   DodgeBurnType type,
+		   DodgeBurnMode mode,
+		   int           num_strokes,
+		   double       *stroke_array)
 {
   int i;
 
@@ -425,6 +469,15 @@ dodgeburn_non_gui (GimpDrawable *drawable,
     {
       /* Set the paint core's paint func */
       non_gui_paint_core.paint_func = dodgeburn_non_gui_paint_func;
+
+      non_gui_exposure = exposure;
+      non_gui_lut = gimp_lut_new();
+      dodgeburn_make_luts (&non_gui_paint_core, 
+			   exposure,
+			   type,
+			   mode,
+			   non_gui_lut,
+			   drawable);
 
       non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
       non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
@@ -448,6 +501,9 @@ dodgeburn_non_gui (GimpDrawable *drawable,
 
       /* Cleanup */
       paint_core_cleanup ();
+
+      gimp_lut_free (non_gui_lut);
+
       return TRUE;
     }
   else

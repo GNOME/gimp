@@ -36,6 +36,7 @@ typedef enum
 
 void *        smudge_paint_func  (PaintCore *, GimpDrawable *, int);
 gboolean      smudge_non_gui     (GimpDrawable *, double, int, double *);
+gboolean      smudge_non_gui_default  (GimpDrawable *, int, double *);
 Tool *        tools_new_smudge   (void);
 void          tools_free_smudge  (Tool *);
 

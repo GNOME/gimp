@@ -21,10 +21,11 @@
 #include "tools.h"
 #include "paint_core.h"
 
-void *        airbrush_paint_func  (PaintCore *, GimpDrawable *, int);
-gboolean      airbrush_non_gui     (GimpDrawable *, double, int, double *);
-Tool *        tools_new_airbrush   (void);
-void          tools_free_airbrush  (Tool *);
+void *        airbrush_paint_func      (PaintCore *, GimpDrawable *, int);
+gboolean      airbrush_non_gui         (GimpDrawable *, double, int, double *);
+gboolean      airbrush_non_gui_default (GimpDrawable *, int, double *);
+Tool *        tools_new_airbrush       (void);
+void          tools_free_airbrush      (Tool *);
 
 
 #endif  /*  __AIRBRUSH_H__  */

@@ -132,7 +132,7 @@ query_2()
 			  "Andy Thomas",
 			  "1999",
 			  NULL,
-			  "RGB*, GRAY*",
+			  "RGB*, INDEXED*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
 			  args, return_vals);
@@ -158,7 +158,7 @@ query ()
 			  "Andy Thomas",
 			  "1999",
 			  "<Image>/Select/To Path",
-			  "RGB*, GRAY*",
+			  "RGB*, INDEXED*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
 			  args, return_vals);
