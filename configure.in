@@ -846,11 +846,11 @@ AC_ARG_WITH(libtiff,  [  --without-libtiff       build without TIFF support])
 	[AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF header files not found) ***)])],
       [AC_CHECK_LIB(tiff, TIFFWriteScanline,
 	[AC_CHECK_HEADER(tiffio.h,
-          TIFF='tiff(EXEEXT)'; LIBTIFF='-ltiff -ljpeg -lz',
+          TIFF='tiff$(EXEEXT)'; LIBTIFF='-ltiff -ljpeg -lz',
 	  [AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF header files not found) ***)])],
 	[AC_CHECK_LIB(tiff34, TIFFFlushData,
 	  [AC_CHECK_HEADER(tiffio.h,
-            TIFF='tiff(EXEEXT)'; LIBTIFF='-ltiff34 -ljpeg -lz',
+            TIFF='tiff$(EXEEXT)'; LIBTIFF='-ltiff34 -ljpeg -lz',
 	    [AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF header files not found) ***)])],
         [AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF library not found) ***)], -ljpeg -lz -lm)], -ljpeg -lz -lm)], -lm)
   fi

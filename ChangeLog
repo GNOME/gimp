@@ -1,3 +1,7 @@
+2004-02-07  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: fix use of EXEEXT in tiff checks. Fixes bug #133763.
+
 2004-02-07  Hans Breuer  <hans@breuer.org>
 
 	* gimpdefs.msc : new file to keep common definitions for the msc build
