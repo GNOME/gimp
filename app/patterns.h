@@ -50,5 +50,6 @@ GPattern * pattern_list_get_pattern          (GSList    *list,
 gboolean   pattern_load                      (GPattern  *pattern,
 					      FILE      *fp,
 					      gchar     *filename);
+void       pattern_free                      (GPattern  *pattern);
 
 #endif  /*  __PATTERNS_H__  */

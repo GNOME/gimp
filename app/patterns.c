@@ -52,8 +52,7 @@ static GPattern *standard_pattern = NULL;
 /*  static function prototypes  */
 static GSList * insert_pattern_in_list (GSList *, GPattern *);
 static void     load_pattern           (gchar *);
-static void     free_pattern           (GPattern *);
-static void     pattern_free           (gpointer, gpointer);
+static void     pattern_free_func      (gpointer, gpointer);
 static gint     pattern_compare_func   (gconstpointer, 
 					gconstpointer);
 
@@ -85,7 +84,7 @@ patterns_free ()
 {
   if (pattern_list)
     {
-      g_slist_foreach (pattern_list, pattern_free, NULL);
+      g_slist_foreach (pattern_list, pattern_free_func, NULL);
       g_slist_free (pattern_list);
     }
 
@@ -154,7 +153,7 @@ pattern_load (GPattern *pattern,
   if ((fread (buf, 1, sz_PatternHeader, fp)) < sz_PatternHeader)
     {
       fclose (fp);
-      free_pattern (pattern);
+      pattern_free (pattern);
       return FALSE;
     }
 
@@ -171,7 +170,7 @@ pattern_load (GPattern *pattern,
       if (header.version != 1)
 	{
 	  fclose (fp);
-	  free_pattern (pattern);
+	  pattern_free (pattern);
 	  return FALSE;
 	}
     }
@@ -181,7 +180,7 @@ pattern_load (GPattern *pattern,
       g_message (_("Unknown GIMP version #%d in \"%s\"\n"), header.version,
 		 filename);
       fclose (fp);
-      free_pattern (pattern);
+      pattern_free (pattern);
       return FALSE;
     }
 
@@ -197,7 +196,7 @@ pattern_load (GPattern *pattern,
 	{
 	  g_message (_("Error in GIMP pattern file...aborting."));
 	  fclose (fp);
-	  free_pattern (pattern);
+	  pattern_free (pattern);
 	  return FALSE;
 	}
     }
@@ -215,13 +214,26 @@ pattern_load (GPattern *pattern,
   return TRUE;
 }
 
+void
+pattern_free (GPattern *pattern)
+{
+  if (pattern->mask)
+    temp_buf_free (pattern->mask);
+  if (pattern->filename)
+    g_free (pattern->filename);
+  if (pattern->name)
+    g_free (pattern->name);
+
+  g_free (pattern);
+}
+
 /*  private functions  */
 
 static void
-pattern_free (gpointer data,
-	      gpointer dummy)
+pattern_free_func (gpointer data,
+		   gpointer dummy)
 {
-  free_pattern ((GPattern *) data);
+  pattern_free ((GPattern *) data);
 }
 
 static gint
@@ -254,7 +266,7 @@ load_pattern (gchar *filename)
   /*  Open the requested file  */
   if (! (fp = fopen (filename, "rb")))
     {
-      free_pattern (pattern);
+      pattern_free (pattern);
       return;
     }
 
@@ -270,17 +282,4 @@ load_pattern (gchar *filename)
   /*temp_buf_swap (pattern->mask);*/
 
   pattern_list = insert_pattern_in_list (pattern_list, pattern);
-}
-
-static void
-free_pattern (GPattern *pattern)
-{
-  if (pattern->mask)
-    temp_buf_free (pattern->mask);
-  if (pattern->filename)
-    g_free (pattern->filename);
-  if (pattern->name)
-    g_free (pattern->name);
-
-  g_free (pattern);
 }

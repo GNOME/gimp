@@ -1,3 +1,12 @@
+Thu Nov  4 00:59:01 MET 1999  Sven Neumann <sven.gimp.org>
+
+	* app/file_new_dialog.c
+	* app/gimpbrush.c
+	* app/gimpbrushpipe.c
+	* app/gimprc.c
+	* app/patterns.c
+	* app/patterns.h: plugged mem-leaks
+
 Wed Nov  3 22:36:21 GMT 1999 Austin Donnelly  <austin@gimp.org>
 
 	* app/text_tool.c: tag text undo group with TEXT_UNDO rather than

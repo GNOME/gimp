@@ -91,6 +91,7 @@ file_new_ok_callback (GtkWidget *widget,
       gtk_widget_destroy (info->dlg);
       image_new_create_image (values);
       image_new_values_free (values);
+      g_free (info);
     }
 }
 
@@ -159,6 +160,8 @@ file_new_confirm_dialog_ok_callback (GtkWidget *widget,
   gtk_widget_destroy (info->confirm_dlg);
   gtk_widget_destroy (info->dlg);
   image_new_create_image (info->values);
+  image_new_values_free (info->values);
+  g_free (info);
 }
 
 static void

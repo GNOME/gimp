@@ -149,7 +149,8 @@ gimp_brush_get_name (GimpBrush *brush)
 }
 
 void
-gimp_brush_set_name (GimpBrush *brush, char *name)
+gimp_brush_set_name (GimpBrush *brush, 
+		     char      *name)
 {
   g_return_if_fail(GIMP_IS_BRUSH(brush));
   if (strcmp(brush->name, name) == 0)
@@ -180,7 +181,8 @@ gimp_brush_set_spacing (GimpBrush *brush,
 }
 
 void
-gimp_brush_load(GimpBrush *brush, char *filename)
+gimp_brush_load (GimpBrush *brush, 
+		 char      *filename)
 {
   FILE * fp;
 
@@ -205,7 +207,9 @@ gimp_brush_load(GimpBrush *brush, char *filename)
 
 
 int
-gimp_brush_load_brush(GimpBrush *brush, FILE* fp, char* filename)
+gimp_brush_load_brush (GimpBrush *brush, 
+		       FILE      *fp, 
+		       char      *filename)
 {
   int bn_size;
   unsigned char buf [sz_BrushHeader];

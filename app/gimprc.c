@@ -373,7 +373,8 @@ parse_gimprc (void)
 {
   char libfilename[MAXPATHLEN];
   char filename[MAXPATHLEN];
-
+  gchar *personal_gimprc;
+  
   parse_add_directory_tokens ();
 
   strcpy (libfilename, gimp_system_rc_file ());
@@ -385,7 +386,11 @@ parse_gimprc (void)
   if (alternate_gimprc != NULL) 
     strncpy (filename, alternate_gimprc, MAXPATHLEN);
   else 
-    strncpy (filename, gimp_personal_rc_file ("gimprc"), MAXPATHLEN);
+    {
+      personal_gimprc = gimp_personal_rc_file ("gimprc");
+      strncpy (filename, personal_gimprc, MAXPATHLEN);
+      g_free (personal_gimprc);
+    }
 
   if (filename[0] != '\0' && strcmp (filename, libfilename) != 0)
     {

@@ -370,10 +370,7 @@ gimp_brush_pipe_load (char *filename)
     }
   g_assert (pipe->stride[pipe->dimension-1] == 1);
 
-  pattern = (GPatternP) g_malloc (sizeof (GPattern));
-  pattern->filename = NULL;
-  pattern->name = NULL;
-  pattern->mask = NULL;
+  pattern = (GPattern*) g_malloc0 (sizeof (GPattern));
 
   pipe->brushes =
     (GimpBrushPixmap **) g_new0 (GimpBrushPixmap *, num_of_brushes);
@@ -390,6 +387,7 @@ gimp_brush_pipe_load (char *filename)
 	{
 	  pipe->brushes[pipe->nbrushes] =
 	    GIMP_BRUSH_PIXMAP (gimp_type_new (GIMP_TYPE_BRUSH_PIXMAP));
+	  g_free (GIMP_BRUSH (pipe->brushes[pipe->nbrushes])->name);
 	  GIMP_BRUSH (pipe->brushes[pipe->nbrushes])->name = NULL;
 	}
       
@@ -402,7 +400,7 @@ gimp_brush_pipe_load (char *filename)
        {
 	  g_message (_("failed to load one of the pixmap brushes in the pipe"));
 	  fclose (fp);
-	  g_free (pattern);
+	  pattern_free (pattern);
 	  gimp_object_destroy (pipe);
 	  return NULL;
        }
@@ -410,10 +408,11 @@ gimp_brush_pipe_load (char *filename)
       if (pipe->nbrushes == 0)
 	{
 	  /* Replace name with the whole pipe's name */
+	  g_free (GIMP_BRUSH (pipe)->name);
 	  GIMP_BRUSH (pipe)->name = name;
 	}
       pipe->brushes[pipe->nbrushes]->pixmap_mask = pattern->mask;
-
+      g_free (pattern->name);
       pipe->nbrushes++;
     }
 
@@ -445,10 +444,7 @@ gimp_brush_pixmap_load (char *filename)
   pipe->index = g_new (int, 1);
   pipe->index[0] = 0;
 
-  pattern = (GPatternP) g_malloc (sizeof (GPattern));
-  pattern->filename = NULL;
-  pattern->name = NULL;
-  pattern->mask = NULL;
+  pattern = (GPatternP) g_malloc0 (sizeof (GPattern));
 
   pipe->brushes = (GimpBrushPixmap **) g_new (GimpBrushPixmap *, 1);
 
@@ -464,7 +460,7 @@ gimp_brush_pixmap_load (char *filename)
     {
       g_message (_("failed to load pixmap brush"));
       fclose (fp);
-      g_free (pattern);
+      pattern_free (pattern);
       gimp_object_destroy (pipe);
       return NULL;
     }
@@ -475,7 +471,8 @@ gimp_brush_pixmap_load (char *filename)
   /*  Clean up  */
   fclose (fp);
 
-  g_free(pattern);
+  g_free (pattern->name);
+  g_free (pattern);
   return pipe;
 }
 
