@@ -18,42 +18,53 @@
 #ifndef __COLOR_SELECT_H__
 #define __COLOR_SELECT_H__
 
-typedef enum {
+typedef enum
+{
   COLOR_SELECT_OK,
   COLOR_SELECT_CANCEL,
   COLOR_SELECT_UPDATE
 } ColorSelectState;
 
-typedef struct _ColorSelect _ColorSelect, *ColorSelectP;
-typedef void (*ColorSelectCallback) (int, int, int, ColorSelectState, void *);
+typedef void (*ColorSelectCallback) (gint, gint, gint, ColorSelectState, void *);
 
-struct _ColorSelect {
-  GtkWidget *shell;
-  GtkWidget *xy_color;
-  GtkWidget *z_color;
-  GtkWidget *new_color;
-  GtkWidget *orig_color;
-  GtkWidget *toggles[6];
-  GtkWidget *entries[6];
-  GtkWidget *hex_entry;
+typedef struct _ColorSelect ColorSelect, *ColorSelectP;
+
+struct _ColorSelect
+{
+  GtkWidget     *shell;
+  GtkWidget     *xy_color;
+  GtkWidget     *z_color;
+  GtkWidget     *new_color;
+  GtkWidget     *orig_color;
+  GtkWidget     *toggles[6];
+  GtkWidget     *entries[6];
+  GtkWidget     *hex_entry;
   GtkAdjustment *slider_data[6];
-  int pos[3];
-  int values[6];
-  int z_color_fill;
-  int xy_color_fill;
-  int orig_values[3];
-  ColorSelectCallback callback;
-  void *client_data;
-  int wants_updates;
-  GdkGC *gc;
+
+  gint      pos[3];
+  gint      values[6];
+  gint      z_color_fill;
+  gint      xy_color_fill;
+  gint      orig_values[3];
+  gboolean  wants_updates;
+  GdkGC    *gc;
+
+  ColorSelectCallback  callback;
+  void                *client_data;
 };
 
 void color_select_init (void);
 
-ColorSelectP color_select_new (int, int, int, ColorSelectCallback, void *, int);
-void color_select_show (ColorSelectP);
-void color_select_hide (ColorSelectP);
-void color_select_free (ColorSelectP);
-void color_select_set_color (ColorSelectP, int, int, int, int);
+ColorSelectP color_select_new       (gint                 r,
+				     gint                 g,
+				     gint                 b,
+				     ColorSelectCallback  callback,
+				     gpointer             client_data,
+				     gboolean             wants_update);
+void         color_select_show      (ColorSelectP);
+void         color_select_hide      (ColorSelectP);
+void         color_select_free      (ColorSelectP);
+void         color_select_set_color (ColorSelectP,
+				     gint, gint, gint, gint);
 
 #endif /* __COLOR_SELECT_H__ */
