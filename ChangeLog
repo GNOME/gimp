@@ -1,3 +1,8 @@
+2003-01-06  Michael Natterer  <mitch@gimp.org>
+
+	* etc/gtkrc_user: give an example (commented out) how to change
+	the F1 help binding. Fixes bug #6920.
+
 2003-01-06  Sven Neumann  <sven@gimp.org>
 	    Michael Natterer  <mitch@gimp.org>
 
