@@ -21,14 +21,12 @@
 
 /* TODO:
  *
- *  - previews of the image on each line (reuse the L&C previews?)
+ *  - reuse the L&C previews?
+ *         Currently we use gimp_image_construct_composite_preview ()
+ *	   which makes use of the preview_cache on a per layer basis.
  *
- *  - work out which (if any) is the clean image, and mark it as such
- *         (eg floppy disk icon) Currently, its a "*" and it's on the
- *         wrong line.
- *
- *  - scroll to keep current selection visible.  Can some GTK guru
- *         help out?
+ *  - work out which (if any) is the clean image, and mark it as such.
+ *         Currently, it's on the wrong line.
  *
  *  - undo names are less than useful.  This isn't a problem with
  *         undo_history.c itself, more with the rather chaotic way
@@ -37,7 +35,7 @@
  *         specifying an (enum) type, it should be a const char * ?
  *
  * BUGS:
- *  - clean star in wrong place
+ *  - clean pixmap in wrong place
  *  - window title not updated on image title change
  *
  *  Initial rev 0.01, (c) 19 Sept 1999 Austin Donnelly <austin@gimp.org>
@@ -46,6 +44,7 @@
 
 #include <gtk/gtk.h>
 #include "gimpui.h"
+#include "temp_buf.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
@@ -53,6 +52,12 @@
 #include "pixmaps/raise.xpm"
 #include "pixmaps/lower.xpm"
 #include "pixmaps/yes.xpm"
+
+#define GRAD_CHECK_SIZE_SM 4
+#define GRAD_CHECK_DARK  (1.0 / 3.0)
+#define GRAD_CHECK_LIGHT (2.0 / 3.0)
+
+#define UNDO_THUMBNAIL_SIZE  24
 
 typedef struct
 {
@@ -64,6 +69,12 @@ typedef struct
   int        old_selection;   /* previous selection in the clist */
 } undo_history_st;
 
+typedef struct 
+{
+  GtkCList *clist;
+  gint      row;
+  GImage   *gimage;
+} idle_preview_args;
 
 /*
  * Theory of operation.
@@ -106,7 +117,7 @@ typedef struct
  * The "Close" button hides the dialog, rather than destroying it.
  * This may well need to be changed, since the dialog will continue to
  * track updates, and if it's generating previews this might take too
- * long for large images.
+ * long for large images. 
  *
  * The dialog is destroyed when the gimage it is tracking is
  * destroyed.  Note that a File/Revert destroys the current gimage and
@@ -129,6 +140,149 @@ static GdkBitmap *clean_mask   = NULL;
 
 /**************************************************************/
 /* Local functions */
+
+
+static gint
+undo_history_set_pixmap_idle (gpointer data)
+{
+  idle_preview_args *idle = data;
+  static GdkGC *gc = NULL;
+  TempBuf   *buf;
+  GdkPixmap *pixmap;
+  guchar    *src;
+  gdouble    r, g, b, a;
+  gdouble    c0, c1;
+  guchar    *p0, *p1, *even, *odd;
+  gint       width, height, bpp;
+  gint       x, y;
+
+  if (!gc)
+    gc = gdk_gc_new (GTK_WIDGET (idle->clist)->window);
+
+  width  = idle->gimage->width;
+  height = idle->gimage->height;
+
+  /* Get right aspect ratio */  
+  if (width > height)
+    { 
+      height = (UNDO_THUMBNAIL_SIZE * height) / width;
+      width  = UNDO_THUMBNAIL_SIZE;
+    }
+  else
+    {
+      width  = (UNDO_THUMBNAIL_SIZE * width) / height;
+      height = UNDO_THUMBNAIL_SIZE;
+    }
+
+  buf = gimp_image_construct_composite_preview (idle->gimage, width, height);
+  bpp = buf->bytes;
+
+  pixmap = gdk_pixmap_new (GTK_WIDGET (idle->clist)->window, width+2, height+2, -1);
+  
+  gdk_draw_rectangle (pixmap, 
+		      GTK_WIDGET (idle->clist)->style->bg_gc[GTK_STATE_NORMAL],
+		      TRUE,
+		      0, 0,
+		      width + 2, height + 2);
+
+  src = temp_buf_data (buf);
+
+  even = g_malloc (width * 3);
+  odd  = g_malloc (width * 3);
+  
+  for (y = 0; y < height; y++)
+    {
+      p0 = even;
+      p1 = odd;
+
+      for (x = 0; x < width; x++)
+	{
+	  if (bpp == 4)
+	    {
+	      r = ((gdouble) src[x*4+0]) / 255.0;
+	      g = ((gdouble) src[x*4+1]) / 255.0;
+	      b = ((gdouble) src[x*4+2]) / 255.0;
+	      a = ((gdouble) src[x*4+3]) / 255.0;
+	    }
+	  else if (bpp == 3)
+	    {
+	      r = ((gdouble) src[x*3+0]) / 255.0;
+	      g = ((gdouble) src[x*3+1]) / 255.0;
+	      b = ((gdouble) src[x*3+2]) / 255.0;
+	      a = 1.0;
+	    }
+	  else
+	    {
+	      r = ((gdouble) src[x*bpp+0]) / 255.0;
+	      g = b = r;
+	      if (bpp == 2)
+		a = ((gdouble) src[x*bpp+1]) / 255.0;
+	      else
+		a = 1.0;
+	    }
+
+	  if ((x / GRAD_CHECK_SIZE_SM) & 1)
+	    {
+	      c0 = GRAD_CHECK_LIGHT;
+	      c1 = GRAD_CHECK_DARK;
+	    }
+	  else
+	    {
+	      c0 = GRAD_CHECK_DARK;
+	      c1 = GRAD_CHECK_LIGHT;
+	    }
+
+	  *p0++ = (c0 + (r - c0) * a) * 255.0;
+	  *p0++ = (c0 + (g - c0) * a) * 255.0;
+	  *p0++ = (c0 + (b - c0) * a) * 255.0;
+
+	  *p1++ = (c1 + (r - c1) * a) * 255.0;
+	  *p1++ = (c1 + (g - c1) * a) * 255.0;
+	  *p1++ = (c1 + (b - c1) * a) * 255.0;
+
+	}
+      
+      if ((y / GRAD_CHECK_SIZE_SM) & 1)
+	{
+	  gdk_draw_rgb_image (pixmap, gc,
+			      1, y + 1,
+			      width, 1,
+			      GDK_RGB_DITHER_NORMAL,
+			      (guchar *) odd, 3);
+	}
+      else
+	{
+	  gdk_draw_rgb_image (pixmap, gc,
+			      1, y + 1,
+			      width, 1,
+			      GDK_RGB_DITHER_NORMAL,
+			      (guchar *) even, 3);
+	}
+      src += width * bpp;
+    }
+
+  g_free (even);
+  g_free (odd);
+  temp_buf_free (buf);
+
+  gtk_clist_set_pixmap (idle->clist, idle->row, 0, pixmap, NULL);
+  gdk_pixmap_unref (pixmap);
+
+  return (FALSE);
+}
+
+static void
+undo_history_set_pixmap (GtkCList *clist,
+			 gint      row,
+			 GImage   *gimage)
+{
+  static idle_preview_args idle;
+  
+  idle.clist  = clist;
+  idle.row    = row;
+  idle.gimage = gimage;
+  gtk_idle_add ((GtkFunction)undo_history_set_pixmap_idle, &idle);
+}
 
 /* close button clicked */
 static void
@@ -232,6 +386,8 @@ undo_history_undo_event (GtkWidget *widget,
   int cur_selection;
   GtkCList *clist;
   gint row;
+  GdkPixmap *pixmap;
+  GdkBitmap *mask;
 
   list = GTK_CLIST (st->clist)->selection;
   g_return_if_fail (list != NULL);
@@ -258,24 +414,32 @@ undo_history_undo_event (GtkWidget *widget,
       namelist[2] = (char *) name;
       row = gtk_clist_append (clist, namelist);
       g_assert (clist->rows == cur_selection+2);
- 
+
+      undo_history_set_pixmap (clist, row, st->gimage);
+
       /* always force selection to bottom, and scroll to it */
-      gtk_clist_select_row (clist, clist->rows-1, -1);
-      gtk_clist_moveto (clist, clist->rows-1, 0, 1.0, 0.0);
+      gtk_clist_select_row (clist, clist->rows - 1, -1);
       gtk_clist_thaw (clist);
+      gtk_clist_moveto (clist, clist->rows - 1, 0, 1.0, 0.0);
       cur_selection = clist->rows-1;
       break;
 
     case UNDO_EXPIRED:
       /* remove earliest row, but not our special first one */
+      if (gtk_clist_get_pixmap (clist, 1, 0, &pixmap, &mask))
+	gtk_clist_set_pixmap (clist, 0, 0, pixmap, mask);
       gtk_clist_remove (clist, 1);
       break;
 
     case UNDO_POPPED:
       /* move hilight up one */
       g_return_if_fail (cur_selection >= 1);
-      gtk_clist_select_row (clist, cur_selection-1, -1);
+      gtk_clist_select_row (clist, cur_selection - 1, -1);
       cur_selection--;
+      if (!gtk_clist_get_pixmap (clist, cur_selection, 0, &pixmap, &mask))
+	undo_history_set_pixmap (clist, cur_selection, st->gimage);
+      if ( !(gtk_clist_row_is_visible (clist, cur_selection) & GTK_VISIBILITY_FULL))
+	gtk_clist_moveto (clist, cur_selection, 0, 0.0, 0.0);
       break;
 
      case UNDO_REDO:
@@ -283,6 +447,10 @@ undo_history_undo_event (GtkWidget *widget,
        g_return_if_fail (cur_selection+1 < clist->rows);
        gtk_clist_select_row (clist, cur_selection+1, -1);
        cur_selection++;
+       if (!gtk_clist_get_pixmap (clist, cur_selection, 0, &pixmap, &mask))
+	 undo_history_set_pixmap (clist, cur_selection, st->gimage);
+       if ( !(gtk_clist_row_is_visible (clist, cur_selection) & GTK_VISIBILITY_FULL))
+	 gtk_clist_moveto (clist, cur_selection, 0, 1.0, 0.0);
        break;
 
     case UNDO_FREE:
@@ -386,15 +554,10 @@ undo_history_init_undo (const char *undoitemname,
   namelist[2] = (char *) undoitemname;
   row = gtk_clist_prepend (GTK_CLIST (st->clist), namelist);
 
-  /* force selection to bottom */
-  gtk_clist_select_row (GTK_CLIST (st->clist),
-			GTK_CLIST (st->clist)->rows - 1, -1);
-  st->old_selection = GTK_CLIST (st->clist)->rows - 1;
-
   return 0;
 }
 
-/* Ditto, but doesn't change selection */
+/* Ditto */
 static int
 undo_history_init_redo (const char *undoitemname,
 			void       *data)
@@ -403,8 +566,7 @@ undo_history_init_redo (const char *undoitemname,
   char *namelist[3];
   gint row;
 
-  namelist[0] = NULL;
-  namelist[1] = NULL;
+  namelist[0] = NULL;  namelist[1] = NULL;
   namelist[2] = (char *) undoitemname;
   row = gtk_clist_append (GTK_CLIST (st->clist), namelist);
 
@@ -466,14 +628,15 @@ undo_history_new (GImage *gimage)
 		      st);
 
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-  gtk_widget_set_usize (GTK_WIDGET (scrolled_win), 192, -1);
+  gtk_widget_set_usize (GTK_WIDGET (scrolled_win), 192, 112);
 
   /* clist of undo actions */
   st->clist = gtk_clist_new (3);
   gtk_clist_set_selection_mode (GTK_CLIST (st->clist), GTK_SELECTION_BROWSE);
   gtk_clist_set_reorderable (GTK_CLIST (st->clist), FALSE);
-  gtk_clist_set_column_width (GTK_CLIST (st->clist), 0, 1);
-  gtk_clist_set_column_width (GTK_CLIST (st->clist), 1, 16);
+  gtk_clist_set_row_height (GTK_CLIST (st->clist), UNDO_THUMBNAIL_SIZE + 2);
+  gtk_clist_set_column_width (GTK_CLIST (st->clist), 0, UNDO_THUMBNAIL_SIZE + 2);
+  gtk_clist_set_column_width (GTK_CLIST (st->clist), 1, 18);
   gtk_clist_set_column_min_width (GTK_CLIST (st->clist), 2, 64);
 
   /* allocate the pixmaps if not already done */
@@ -503,10 +666,15 @@ undo_history_new (GImage *gimage)
 
   /* work out the initial contents */
   undo_map_over_undo_stack (st->gimage, undo_history_init_undo, st);
+  /* force selection to bottom */
+  gtk_clist_select_row (GTK_CLIST (st->clist),
+			GTK_CLIST (st->clist)->rows - 1, -1);
   undo_map_over_redo_stack (st->gimage, undo_history_init_redo, st);
   undo_history_prepend_special (GTK_CLIST (st->clist));
-
   st->old_selection = GPOINTER_TO_INT(GTK_CLIST(st->clist)->selection->data);
+
+  /* draw the preview of the current state */
+  undo_history_set_pixmap (GTK_CLIST (st->clist), st->old_selection, st->gimage);
 
   gtk_signal_connect (GTK_OBJECT (st->clist), "select_row",
 		      undo_history_select_row_callback, st);
@@ -576,6 +744,7 @@ undo_history_new (GImage *gimage)
   undo_history_set_sensitive (st, GTK_CLIST (st->clist)->rows);
 
   gtk_widget_show (GTK_WIDGET (st->shell));
+  gtk_clist_moveto (GTK_CLIST (st->clist), st->old_selection, 0, 0.5, 0.0);
 
   return st->shell;
 }
