@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-31 23:20+0100\n"
-"PO-Revision-Date: 2004-10-31 00:14-0400\n"
+"POT-Creation-Date: 2004-11-02 15:26-0500\n"
+"PO-Revision-Date: 2004-11-02 00:14-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -1222,7 +1222,7 @@ msgid "Offset Y"
 msgstr "Offset Y"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:7
-#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:10
 msgid "Opacity"
 msgstr "Opacity"
 
@@ -1859,14 +1859,26 @@ msgid "Angle"
 msgstr "Angle"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:6
-msgid "Interpolate"
-msgstr "Interpolate"
+msgid "Cubic"
+msgstr "Cubic"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
+msgid "Interpolation"
+msgstr "Interpolation"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
+msgid "Linear"
+msgstr "Linear"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
+msgid "None"
+msgstr "None"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:11
 msgid "Relative distance of horizon"
 msgstr "Relative distance of horizon"
 
-#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:12
 msgid "Relative length of shadow"
 msgstr "Relative length of shadow"
 
