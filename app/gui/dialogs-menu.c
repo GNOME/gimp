@@ -236,11 +236,11 @@ dialogs_menu_update (GtkItemFactory *factory,
       tab_style = dockable->tab_style;
 
 #define SET_ACTIVE(path,active) \
-        gimp_item_factory_set_active (factory, (path), (active))
+        gimp_item_factory_set_active (factory, (path), (active) != 0)
 #define SET_VISIBLE(path,active) \
-        gimp_item_factory_set_visible (factory, (path), (active))
+        gimp_item_factory_set_visible (factory, (path), (active) != 0)
 #define SET_SENSITIVE(path,sensitive) \
-        gimp_item_factory_set_sensitive (factory, (path), (sensitive))
+        gimp_item_factory_set_sensitive (factory, (path), (sensitive) != 0)
 
       SET_VISIBLE ("/Preview Size", preview_size != -1);
 
@@ -285,15 +285,15 @@ dialogs_menu_update (GtkItemFactory *factory,
         }
 
       if (tab_style == GIMP_TAB_STYLE_ICON)
-        SET_ACTIVE ("/Tab Style/Icon", TRUE); 
+        SET_ACTIVE ("/Tab Style/Icon", TRUE);
       else if (tab_style == GIMP_TAB_STYLE_PREVIEW)
-        SET_ACTIVE ("/Tab Style/Current Status", TRUE); 
+        SET_ACTIVE ("/Tab Style/Current Status", TRUE);
       else if (tab_style == GIMP_TAB_STYLE_NAME)
-        SET_ACTIVE ("/Tab Style/Text", TRUE); 
+        SET_ACTIVE ("/Tab Style/Text", TRUE);
       else if (tab_style == GIMP_TAB_STYLE_ICON_NAME)
-        SET_ACTIVE ("/Tab Style/Icon & Text", TRUE); 
+        SET_ACTIVE ("/Tab Style/Icon & Text", TRUE);
       else if (tab_style == GIMP_TAB_STYLE_PREVIEW_NAME)
-        SET_ACTIVE ("/Tab Style/Status & Text", TRUE); 
+        SET_ACTIVE ("/Tab Style/Status & Text", TRUE);
 
       SET_SENSITIVE ("/Tab Style/Current Status", dockable->get_preview_func);
       SET_SENSITIVE ("/Tab Style/Status & Text",  dockable->get_preview_func);

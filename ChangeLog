@@ -1,3 +1,7 @@
+2003-08-18  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/dialogs-menu.c: please the compiler.
+
 2003-08-18  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/brush_select.pdb
