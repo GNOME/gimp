@@ -83,7 +83,7 @@ query (void)
                           "Spencer Kimball & Peter Mattis",
                           "1995-1997",
                           N_("URL"),
-			  NULL,
+                          NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
@@ -92,8 +92,8 @@ query (void)
   gimp_plugin_icon_register ("file_url_load",
                              GIMP_ICON_TYPE_STOCK_ID, GIMP_STOCK_WEB);
   gimp_register_load_handler ("file_url_load",
-			      "",
-			      "http:,https:,ftp:");
+                              "",
+                              "http:,https:,ftp:");
 }
 
 static void
@@ -120,12 +120,12 @@ run (const gchar      *name,
       image_ID = load_image (param[2].data.d_string, run_mode, &status);
 
       if (image_ID != -1 &&
-	  status == GIMP_PDB_SUCCESS)
-	{
-	  *nreturn_vals = 2;
-	  values[1].type         = GIMP_PDB_IMAGE;
-	  values[1].data.d_image = image_ID;
-	}
+          status == GIMP_PDB_SUCCESS)
+        {
+          *nreturn_vals = 2;
+          values[1].type         = GIMP_PDB_IMAGE;
+          values[1].data.d_image = image_ID;
+        }
     }
   else
     {
@@ -137,8 +137,8 @@ run (const gchar      *name,
 
 static gint32
 load_image (const gchar       *filename,
-	    GimpRunMode        run_mode,
-	    GimpPDBStatusType *status)
+            GimpRunMode        run_mode,
+            GimpPDBStatusType *status)
 {
   gint32    image_ID;
   gchar    *ext = strrchr (filename, '.');
@@ -197,9 +197,11 @@ load_image (const gchar       *filename,
       gchar     buf[BUFSIZE];
       gboolean  seen_resolve = FALSE;
       gboolean  connected = FALSE;
+      gboolean  redirect = FALSE;
       gboolean  file_found = FALSE;
       gchar     sizestr[32];
       gint      size = 0;
+      gchar    *size_msg;
       gchar    *message;
       gint      i, j;
       gchar     dot;
@@ -215,6 +217,18 @@ load_image (const gchar       *filename,
       input = fdopen (p[0], "r");
 
       /*  hardcoded and not-really-foolproof scanning of wget putput  */
+
+    wget_begin:
+      /*  Eat any Location lines */
+      if (redirect && fgets (buf, BUFSIZE, input) == NULL)
+        {
+          g_message ("wget exited abnormally on URL '%s'", filename);
+          g_free (tmpname);
+          *status = GIMP_PDB_EXECUTION_ERROR;
+          return -1;
+        }
+
+      redirect = FALSE;
 
       if (fgets (buf, BUFSIZE, input) == NULL)
         {
@@ -285,6 +299,16 @@ load_image (const gchar       *filename,
           *status = GIMP_PDB_EXECUTION_ERROR;
           return -1;
         }
+      else if (strstr (buf, "302 Found"))
+        {
+          DEBUG (buf);
+
+          connected = FALSE;
+          seen_resolve = FALSE;
+
+          redirect = TRUE;
+          goto wget_begin;
+        }
 
       DEBUG (buf);
 
@@ -335,11 +359,17 @@ load_image (const gchar       *filename,
 
       size = atoi (sizestr);
 
+      if (size > 0)
+        size_msg = g_strdup_printf ("%d bytes", size);
+      else
+        size_msg = g_strdup ("unknown amount");
+
       /*  Start the actual download...  */
-      message = g_strdup_printf ("Downloading %d bytes of image data... "
-                                 "(timeout is "TIMEOUT" seconds)", size);
+      message = g_strdup_printf ("Downloading %s of image data... "
+                                 "(timeout is "TIMEOUT" seconds)", size_msg);
       gimp_progress_init (message);
       g_free (message);
+      g_free (size_msg);
 
       /*  Switch to byte parsing wget's output...  */
 
@@ -359,8 +389,10 @@ load_image (const gchar       *filename,
           if (dot == '.')  /* one kilobyte */
             {
               kilobytes++;
-              gimp_progress_update ((gdouble) (kilobytes * 1024) /
-                                    (gdouble) size);
+
+              if (size > 0)
+                gimp_progress_update ((gdouble) (kilobytes * 1024) /
+                                      (gdouble) size);
             }
           else if (dot == ':')  /* the time string contains a ':' */
             {
@@ -398,9 +430,9 @@ load_image (const gchar       *filename,
     {
       *status = GIMP_PDB_SUCCESS;
       if (name_image)
-	gimp_image_set_filename (image_ID, filename);
+        gimp_image_set_filename (image_ID, filename);
       else
-	gimp_image_set_filename (image_ID, "");
+        gimp_image_set_filename (image_ID, "");
     }
   else
     *status = GIMP_PDB_EXECUTION_ERROR;
