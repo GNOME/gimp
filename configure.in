@@ -406,7 +406,7 @@ AC_ARG_ENABLE(sendmail_path, [  --with-sendmail=DIR     set sendmail command loc
 if eval "test x$with_sendmail != x"; then
     sendmail_path=$with_sendmail
 fi)
-AC_PATH_PROG(SENDMAIL, "sendmail", $sendmail_path, $PATH:/usr/lib:/usr/sbin)
+AC_PATH_PROG(SENDMAIL, "sendmail", $sendmail_path, $PATH:/usr/sbin:/usr/lib)
 
 if test $ac_cv_path_SENDMAIL != ":"; then
   MAILER="-DMAILER=\\\"$ac_cv_path_SENDMAIL\\\""
@@ -470,8 +470,8 @@ if eval "test x$enable_perl != xno"; then
       AC_MSG_RESULT(yes)
       
       dnl perl does not allow VPATH builds (yet)
-      if test ! -e plug-ins/perl/Makefile.PL; then
-         mkdir plug-ins
+      if test ! -f plug-ins/perl/Makefile.PL; then
+         mkdir plug-ins || true
          cp -r $srcdir/plug-ins/perl plug-ins/perl
       fi
       

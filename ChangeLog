@@ -1,3 +1,8 @@
+1998-11-08  Raja R Harinath  <harinath@cs.umn.edu>
+
+	* configure.in (sendmail_path): Prefer /usr/sbin/sendmail to
+	/usr/lib/sendmail. 
+
 1998-11-07  Jay Cox  <jaycox@earthlink.net>
 
 	* libgimp/{gimp.h, gimpchannel.c, gimpdrawable.c, gimplayer.c}:
