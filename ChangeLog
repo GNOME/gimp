@@ -1,3 +1,8 @@
+2003-09-01  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/edge.c (run): fixed check for the number of
+	arguments (don't always fail). Fixes bug #121176.
+
 2003-08-31  Manish Singh  <yosh@gimp.org>
 
 	* app/paint/gimppaintcore.c: inlined rotate_pointers, made it specific
