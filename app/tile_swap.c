@@ -42,7 +42,7 @@ struct _Gap
   long end;
 };
 
-struct _AsyncSwapInfo
+struct _AsyncSwapArgs
 {
   DefSwapFile *def_swap_file;
   int          fd;
