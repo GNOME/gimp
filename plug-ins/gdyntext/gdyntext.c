@@ -57,31 +57,31 @@ static void gdt_query(void)
 	{
 		static GParamDef gdt_args[] = {
 			/* standard params */
-			{ PARAM_INT32,		_("run_mode"),				_("Interactive, non-interactive")},
-			{ PARAM_IMAGE,		_("image"),						_("Input image") },
-			{ PARAM_DRAWABLE,	_("drawable"),				_("Input drawable")},
+			{ PARAM_INT32,    "run_mode",        "Interactive, non-interactive" },
+			{ PARAM_IMAGE,    "image",           "Input image"                  },
+			{ PARAM_DRAWABLE, "drawable",        "Input drawable"               },
 			/* gdyntext params */
-			{ PARAM_STRING,		_("text"),						_("Text to render")},
-			{ PARAM_INT32,		_("antialias"),				_("Generate antialiased text")},
-			{ PARAM_INT32,		_("alignment"),				_("Text alignment: { LEFT = 0, CENTER = 1, RIGHT = 2 }")},
-			{ PARAM_INT32,		_("rotation"),				_("Text rotation (degrees)")},
-			{ PARAM_INT32,		_("line_spacing"),		_("Line spacing")},
-			{ PARAM_COLOR,		_("color"),						_("Text color")},
-			{ PARAM_INT32,		_("layer_alignment"),	_("Layer alignment { NONE = 0, BOTTOM_LEFT = 1, BOTTOM_CENTER = 2, BOTTOM_RIGHT = 3, MIDDLE_LEFT = 4, CENTER = 5, MIDDLE_RIGHT = 6, TOP_LEFT = 7, TOP_CENTER = 8, TOP_RIGHT = 9 }")},
-			{ PARAM_STRING,		_("fontname"),				_("The fontname (conforming to the X Logical Font Description Conventions)")},
+			{ PARAM_STRING,   "text",            "Text to render"               },
+			{ PARAM_INT32,    "antialias",       "Generate antialiased text"    },
+			{ PARAM_INT32,    "alignment",       "Text alignment: { LEFT = 0, CENTER = 1, RIGHT = 2 }" },
+			{ PARAM_INT32,    "rotation",        "Text rotation (degrees)"      },
+			{ PARAM_INT32,    "line_spacing",    "Line spacing"                 },
+			{ PARAM_COLOR,    "color",           "Text color"                   },
+			{ PARAM_INT32,    "layer_alignment", "Layer alignment { NONE = 0, BOTTOM_LEFT = 1, BOTTOM_CENTER = 2, BOTTOM_RIGHT = 3, MIDDLE_LEFT = 4, CENTER = 5, MIDDLE_RIGHT = 6, TOP_LEFT = 7, TOP_CENTER = 8, TOP_RIGHT = 9 }" },
+			{ PARAM_STRING,   "fontname",        "The fontname (conforming to the X Logical Font Description Conventions)" },
 		};
 		static GParamDef gdt_rets[] = {
-			{ PARAM_LAYER,		"layer",				_("The text layer")},
+			{ PARAM_LAYER,    "layer",           "The text layer"               },
 		};
 		static int ngdt_args = sizeof(gdt_args) / sizeof(gdt_args[0]);
 		static int ngdt_rets = sizeof(gdt_rets) / sizeof(gdt_rets[0]);
 
 		gimp_install_procedure("plug_in_dynamic_text",
-			_("GIMP Dynamic Text"),
-			_(""),
+			"GIMP Dynamic Text",
+			"",
 			"Marco Lamberto <lm@geocities.com>",
 			"Marco Lamberto",
-			_("Jan 1999"),
+			"Jan 1999",
 			_("<Image>/Filters/Render/Dynamic Text..."),
 			"RGB*,GRAY*,INDEXED*",
 			PROC_PLUG_IN,
@@ -319,7 +319,7 @@ void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 	GParamColor old_color, text_color;
 
 	if (show_progress)
-		gimp_progress_init("GIMP Dynamic Text");
+		gimp_progress_init (_("GIMP Dynamic Text"));
 
 	/* undo start */
 	ret_vals = gimp_run_procedure("gimp_undo_push_group_start", &nret_vals,

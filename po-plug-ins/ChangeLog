@@ -1,3 +1,9 @@
+2000-07-30  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added plug-ins/gdyntext/gdyntextcompat.c
+
+	* de.po: updated german translation
+	
 2000-07-30  Tor Lillqvist  <tml@iki.fi>
 
 	* ko.po: Remove the space from the end of one message I added on

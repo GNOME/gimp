@@ -129,7 +129,7 @@ gdouble				col[3];
 
 GtkWidget *create_message_window(GtkWidget **mw)
 {
-	*mw = message_window_new(_("GDynText "GDYNTEXT_VERSION": Messages Window"));
+	*mw = message_window_new(_("GDynText: Messages Window"));
 	gtk_widget_set_usize(*mw, 430, 170);
 	gtk_window_position(GTK_WINDOW(*mw), GTK_WIN_POS_CENTER);
 	gtk_signal_connect(GTK_OBJECT(*mw), "destroy", GTK_SIGNAL_FUNC(on_window_destroy), mw);
@@ -154,7 +154,7 @@ GtkWidget* create_about_dialog(void)
 
   window = gtk_window_new(GTK_WINDOW_DIALOG);
   gtk_container_border_width(GTK_CONTAINER(window), 0);
-  gtk_window_set_title(GTK_WINDOW(window), _("GDynText "GDYNTEXT_VERSION": About ..."));
+  gtk_window_set_title(GTK_WINDOW(window), _("GDynText: About ..."));
   gtk_window_set_policy(GTK_WINDOW(window), FALSE, FALSE, FALSE);
   gtk_window_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
 	gtk_signal_connect(GTK_OBJECT(window), "destroy",
@@ -185,11 +185,10 @@ GtkWidget* create_about_dialog(void)
   gtk_box_pack_start(GTK_BOX(vbox1), frame, TRUE, TRUE, 4);
 	gtk_widget_show(frame);
 	
-  label = gtk_label_new(_(
-		"GIMP Dynamic Text "GDYNTEXT_VERSION"\n"
-		"Copyright (C) 1998,1999,2000 Marco Lamberto\n"
-		"E-mail: lm@geocities.com\n"
-		"Web page: "GDYNTEXT_WEB_PAGE""));
+  label = gtk_label_new ("GIMP Dynamic Text "GDYNTEXT_VERSION"\n"
+			 "Copyright (C) 1998,1999,2000 Marco Lamberto\n"
+			 "E-mail: lm@geocities.com\n"
+			 "Web page: "GDYNTEXT_WEB_PAGE);
   gtk_widget_show(label);
   gtk_container_add(GTK_CONTAINER(frame), label);
   gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_LEFT);
@@ -200,7 +199,7 @@ GtkWidget* create_about_dialog(void)
 	gtk_button_box_set_layout(GTK_BUTTON_BOX(hbbox1), GTK_BUTTONBOX_END);
   gtk_widget_show(hbbox1);
 
-  button = gtk_button_new_with_label(_("Ok"));
+  button = gtk_button_new_with_label(_("OK"));
   gtk_widget_show(button);
   GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
   gtk_box_pack_end(GTK_BOX(hbbox1), button, FALSE, TRUE, 4);
@@ -218,7 +217,7 @@ GtkWidget* create_color_selection_dialog(void)
   GtkWidget *ok_button1;
   GtkWidget *cancel_button1;
 
-  colseldlg = gtk_color_selection_dialog_new(_("GDynText "GDYNTEXT_VERSION": Select Color"));
+  colseldlg = gtk_color_selection_dialog_new(_("GDynText: Select Color"));
   gtk_container_border_width(GTK_CONTAINER(colseldlg), 4);
 	gtk_signal_connect(GTK_OBJECT(&(GTK_COLOR_SELECTION_DIALOG(colseldlg)->window)), "destroy",
 		GTK_SIGNAL_FUNC(on_color_selection_dialog_cancel_clicked), &color_selection_dialog);
@@ -243,13 +242,13 @@ GtkWidget* create_color_selection_dialog(void)
 
 GdtMainWindow *create_main_window(GdtMainWindow **main_window, GdtVals *data)
 {
-	GdtMainWindow *mw;
+  GdtMainWindow *mw;
   GtkObject *font_size_adj;
   GtkObject *line_spacing_adj;
-	GtkTooltips *tooltips;
+  GtkTooltips *tooltips;
   GtkWidget *handlebox;
   GtkWidget *vbox;
-	GtkWidget *hbox;
+  GtkWidget *hbox;
   GtkWidget *hbox1;
   GtkWidget *hbox2;
   GtkWidget *hbox3;
@@ -262,41 +261,45 @@ GdtMainWindow *create_main_window(GdtMainWindow **main_window, GdtVals *data)
   GtkWidget *button_ok;
   GtkWidget *button_cancel;
   GtkWidget *button_apply;
-	GtkWidget *font_preview_toggle;
-	GtkWidget *vscrollbar;
-	GtkWidget *rbutt;
-	GtkWidget *telem;
-	GtkWidget *gtk_icon;
-	GtkWidget *optmenu;
-	GtkWidget *menu;
-	GtkWidget *item;
-	GdkPixmap *icon;
-	GdkBitmap *mask;
-	GdkColor *transparent = NULL;
-	GSList *group;
-	gint i;
-	gchar *lalign_menu[] = {
-		(gchar *)layer_align_0_xpm,	_("none"),
-		(gchar *)layer_align_1_xpm,	_("bottom-left"),
-		(gchar *)layer_align_2_xpm,	_("bottom-center"),
-		(gchar *)layer_align_3_xpm,	_("bottom-right"),
-		(gchar *)layer_align_4_xpm,	_("middle-left"),
-		(gchar *)layer_align_5_xpm,	_("center"),
-		(gchar *)layer_align_6_xpm,	_("middle-right"),
-		(gchar *)layer_align_7_xpm,	_("top-left"),
-		(gchar *)layer_align_8_xpm,	_("top-center"),
-		(gchar *)layer_align_9_xpm,	_("top-right"),
-		NULL,	NULL,
-	};
+  GtkWidget *font_preview_toggle;
+  GtkWidget *vscrollbar;
+  GtkWidget *rbutt;
+  GtkWidget *telem;
+  GtkWidget *gtk_icon;
+  GtkWidget *optmenu;
+  GtkWidget *menu;
+  GtkWidget *item;
+  GdkPixmap *icon;
+  GdkBitmap *mask;
+  GdkColor *transparent = NULL;
+  GSList *group;
+  gint i;
+  gchar *title;
+  gchar *lalign_menu[] = 
+  {
+    (gchar *)layer_align_0_xpm,	N_("none"),
+    (gchar *)layer_align_1_xpm,	N_("bottom-left"),
+    (gchar *)layer_align_2_xpm,	N_("bottom-center"),
+    (gchar *)layer_align_3_xpm,	N_("bottom-right"),
+    (gchar *)layer_align_4_xpm,	N_("middle-left"),
+    (gchar *)layer_align_5_xpm,	N_("center"),
+    (gchar *)layer_align_6_xpm,	N_("middle-right"),
+    (gchar *)layer_align_7_xpm,	N_("top-left"),
+    (gchar *)layer_align_8_xpm,	N_("top-center"),
+    (gchar *)layer_align_9_xpm,	N_("top-right"),
+    NULL,	NULL,
+  };
 
-	*main_window = mw = g_new0(GdtMainWindow, 1);
-	mw->font_preview_enabled = FALSE;
-	mw->ok_pressed = FALSE;
-	
-	tooltips = gtk_tooltips_new();
+  *main_window = mw = g_new0(GdtMainWindow, 1);
+  mw->font_preview_enabled = FALSE;
+  mw->ok_pressed = FALSE;
+  
+  tooltips = gtk_tooltips_new();
 
   mw->window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_title(GTK_WINDOW(mw->window), "GDynText "GDYNTEXT_VERSION);
+  title = g_strconcat (_("GDynText"), " ", GDYNTEXT_VERSION, NULL);
+  gtk_window_set_title(GTK_WINDOW(mw->window), title);
+  g_free (title);
   gtk_window_set_policy(GTK_WINDOW(mw->window), TRUE, TRUE, FALSE);
 	gtk_widget_set_usize(mw->window, 550, 400);
   gtk_container_border_width(GTK_CONTAINER(mw->window), 0);
@@ -452,7 +455,7 @@ GdtMainWindow *create_main_window(GdtMainWindow **main_window, GdtVals *data)
 		gtk_widget_show(gtk_icon);
 		gtk_box_pack_start(GTK_BOX(hbox), gtk_icon, FALSE, FALSE, 2);
 
-		label = gtk_label_new(lalign_menu[i + 1]);
+		label = gtk_label_new (gettext (lalign_menu[i + 1]));
 		gtk_widget_show(label);
 		gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 2);
 	}
@@ -574,7 +577,7 @@ GdtMainWindow *create_main_window(GdtMainWindow **main_window, GdtVals *data)
 	gtk_button_box_set_spacing(GTK_BUTTON_BOX(hbbox2), 4);
   gtk_widget_show(hbbox2);
 
-  button_ok = gtk_button_new_with_label(_("Ok"));
+  button_ok = gtk_button_new_with_label(_("OK"));
   GTK_WIDGET_SET_FLAGS(button_ok, GTK_CAN_DEFAULT);
 	gtk_signal_connect(GTK_OBJECT(button_ok), "button_press_event",
 		GTK_SIGNAL_FUNC(on_main_window_ok_press_event), data);
@@ -585,7 +588,7 @@ GdtMainWindow *create_main_window(GdtMainWindow **main_window, GdtVals *data)
 
 	gtk_tooltips_set_tip(tooltips, button_ok,
 		_("Holding the Shift key while pressing this button will force GDynText "
-			"in changing the layer name as done in GIMP 1.0."), NULL);
+		  "in changing the layer name as done in GIMP 1.0."), NULL);
 
   button_apply = gtk_button_new_with_label(_("Apply"));
   GTK_WIDGET_SET_FLAGS(button_apply, GTK_CAN_DEFAULT);
@@ -915,7 +918,7 @@ void on_charmap_button_toggled(GtkWidget *widget, gpointer data)
 {
 	if (GTK_TOGGLE_BUTTON(widget)->active) {
 		if (charmap_window == NULL) {
-			charmap_window = charmap_window_new(_("GDynText "GDYNTEXT_VERSION" : CharMap"));
+			charmap_window = charmap_window_new(_("GDynText: CharMap"));
 			gtk_widget_set_usize(charmap_window, 430, 270);
 			gtk_window_position(GTK_WINDOW(charmap_window), GTK_WIN_POS_CENTER);
 			gtk_signal_connect(GTK_OBJECT(charmap_window), "destroy", GTK_SIGNAL_FUNC(on_window_destroy), &charmap_window);
@@ -967,7 +970,7 @@ void on_charmap_window_insert(GtkWidget *widget, gpointer data)
 void on_load_text_clicked(GtkWidget *widget, gpointer data)
 {
 	if (!load_file_selection) {
-		load_file_selection = gtk_file_selection_new(_("GDynText "GDYNTEXT_VERSION": Load text"));
+		load_file_selection = gtk_file_selection_new(_("GDynText: Load text"));
 		gtk_file_selection_hide_fileop_buttons(GTK_FILE_SELECTION(load_file_selection));
 		gtk_signal_connect(GTK_OBJECT(load_file_selection), "destroy", GTK_SIGNAL_FUNC(on_window_destroy), &load_file_selection);
 		gtk_signal_connect(GTK_OBJECT(GTK_FILE_SELECTION(load_file_selection)->cancel_button), "clicked",

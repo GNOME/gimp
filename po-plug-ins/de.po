@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.24\n"
-"POT-Creation-Date: 2000-07-29 22:24+0200\n"
-"PO-Revision-Date: 2000-07-29 22:49+02:00\n"
+"POT-Creation-Date: 2000-07-30 15:56+0200\n"
+"PO-Revision-Date: 2000-07-30 15:56+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr "AlienMap"
 
 #: plug-ins/AlienMap/AlienMap.c:615 plug-ins/AlienMap2/AlienMap2.c:607
 #: plug-ins/FractalExplorer/Dialogs.c:282
-#: plug-ins/FractalExplorer/Dialogs.c:1372 plug-ins/gdyntext/gdyntext_ui.c:608
+#: plug-ins/FractalExplorer/Dialogs.c:1372 plug-ins/gdyntext/gdyntext_ui.c:567
 #: plug-ins/gfig/gfig.c:3382 plug-ins/imagemap/imap_about.c:33
 #: plug-ins/webbrowser/webbrowser.c:279
 msgid "About"
@@ -100,7 +100,7 @@ msgstr "Über"
 #: plug-ins/gap/gap_decode_xanim.c:177 plug-ins/gap/gap_lib.c:221
 #: plug-ins/gap/gap_mod_layer.c:145 plug-ins/gap/gap_mov_dialog.c:487
 #: plug-ins/gap/gap_mpege.c:191 plug-ins/gap/gap_resi_dialog.c:149
-#: plug-ins/gdyntext/gdyntext_ui.c:201 plug-ins/gdyntext/gdyntext_ui.c:621
+#: plug-ins/gdyntext/gdyntext_ui.c:202 plug-ins/gdyntext/gdyntext_ui.c:580
 #: plug-ins/gfig/gfig.c:4088 plug-ins/gfig/gfig.c:4433
 #: plug-ins/gfig/gfig.c:4516 plug-ins/gfig/gfig.c:4862
 #: plug-ins/gflare/gflare.c:2465 plug-ins/gflare/gflare.c:3475
@@ -1346,7 +1346,7 @@ msgstr "Z-Koordinate des Objektes im XYZ-Raum"
 
 #. Rotation
 #: plug-ins/MapObject/mapobject_ui.c:1072 plug-ins/common/ps.c:2814
-#: plug-ins/gdyntext/gdyntext_ui.c:500
+#: plug-ins/gdyntext/gdyntext_ui.c:479
 msgid "Rotation"
 msgstr "Rotation"
 
@@ -2212,9 +2212,9 @@ msgstr "Animation abspielen: "
 #: plug-ins/dbbrowser/dbbrowser_utils.c:158
 #: plug-ins/dbbrowser/dbbrowser_utils.c:175 plug-ins/gap/gap_arr_dialog.c:783
 #: plug-ins/gap/gap_navigator_dialog.c:3158
-#: plug-ins/gdyntext/charmap_window.c:143 plug-ins/gdyntext/gdyntext_ui.c:636
+#: plug-ins/gdyntext/charmap_window.c:135 plug-ins/gdyntext/gdyntext_ui.c:600
 #: plug-ins/gfig/gfig.c:1986 plug-ins/gfig/gfig.c:2046
-#: plug-ins/helpbrowser/helpbrowser.c:803
+#: plug-ins/helpbrowser/helpbrowser.c:822
 #: plug-ins/ifscompose/ifscompose.c:1233 plug-ins/imagemap/imap_menu.c:227
 #: plug-ins/print/gimp_color_window.c:81
 msgid "Close"
@@ -5481,7 +5481,7 @@ msgstr "Ähnlich einfärben"
 #. gtk_container_border_width (GTK_CONTAINER (box2), 5);
 #: plug-ins/common/sample_colorize.c:1367 plug-ins/common/tileit.c:564
 #: plug-ins/dbbrowser/dbbrowser_utils.c:156
-#: plug-ins/gdyntext/gdyntext_ui.c:643 plug-ins/gimpressionist/orientmap.c:633
+#: plug-ins/gdyntext/gdyntext_ui.c:593 plug-ins/gimpressionist/orientmap.c:633
 #: plug-ins/gimpressionist/presets.c:640 plug-ins/gimpressionist/sizemap.c:492
 #: plug-ins/imagemap/imap_default_dialog.c:122
 msgid "Apply"
@@ -9886,32 +9886,25 @@ msgstr "Y-Faktor:"
 msgid "Constrain Ratio"
 msgstr "Seitenverhältnis beibehalten"
 
-#: plug-ins/gdyntext/charmap.c:120
+#: plug-ins/gdyntext/charmap.c:117
 #, c-format
 msgid "Char: %c, %d, 0x%02x"
 msgstr "Zeichen: %c, %d, 0x%02x"
 
-#: plug-ins/gdyntext/charmap_window.c:123
+#: plug-ins/gdyntext/charmap_window.c:115
 msgid "Selected char:"
 msgstr "Ausgewähltes Zeichen:"
 
-#: plug-ins/gdyntext/charmap_window.c:137 plug-ins/imagemap/imap_polygon.c:452
+#: plug-ins/gdyntext/charmap_window.c:129 plug-ins/imagemap/imap_polygon.c:452
 msgid "Insert"
 msgstr "Einfügen"
 
-#: plug-ins/gdyntext/charmap_window.c:140
+#: plug-ins/gdyntext/charmap_window.c:132
 msgid "Insert the selected char at the cursor position"
 msgstr "Ausgewähltes Zeichen an der Cursorposition einfügen"
 
-#: plug-ins/gdyntext/font_selection.c:142
-msgid "MAX_FONTS exceeded. Some fonts may be missing."
-msgstr "MAX_FONTS überlaufen. Es kann sein, dass Schriftarten fehlen."
-
-#. "-*-(fn)-(wg)-(sl)-(sp)-*-(px)-(po * 10)-*-*-*-*-*-*"
-#: plug-ins/gdyntext/font_selection.c:214
-#: plug-ins/gdyntext/font_selection.c:268
-#: plug-ins/gdyntext/font_selection.c:355
-#: plug-ins/gdyntext/font_selection.c:379 plug-ins/imagemap/imap_circle.c:265
+#: plug-ins/gdyntext/font_selection.c:165
+#: plug-ins/gdyntext/font_selection.c:308 plug-ins/imagemap/imap_circle.c:265
 #: plug-ins/imagemap/imap_circle.c:271 plug-ins/imagemap/imap_circle.c:277
 #: plug-ins/imagemap/imap_grid.c:202 plug-ins/imagemap/imap_grid.c:208
 #: plug-ins/imagemap/imap_polygon.c:437 plug-ins/imagemap/imap_polygon.c:444
@@ -9922,69 +9915,87 @@ msgstr "MAX_FONTS überlaufen. Es kann sein, dass Schriftarten fehlen."
 msgid "pixels"
 msgstr "Pixel"
 
-#: plug-ins/gdyntext/font_selection.c:215
-#: plug-ins/gdyntext/font_selection.c:355
+#: plug-ins/gdyntext/font_selection.c:166
 msgid "points"
 msgstr "Punkte"
 
-#: plug-ins/gdyntext/font_selection.c:315
-#, c-format
-msgid "Unknown font family \"%s\".\n"
-msgstr "Unbekannte Schriftfamilie: \"%s\".\n"
-
-#: plug-ins/gdyntext/font_selection.c:339
-#, c-format
-msgid "Unknown font style \"%s\" for family \"%s\".\n"
-msgstr "Unbekannte Schriftstil (\"%s\") für Familie \"%s\".\n"
-
-#: plug-ins/gdyntext/gdyntext.c:157
+#: plug-ins/gdyntext/gdyntext.c:85
 msgid "<Image>/Filters/Render/Dynamic Text..."
 msgstr "<Image>/Filter/Render/Dynamischer Text..."
 
-#: plug-ins/gdyntext/gdyntext.c:351
-#, c-format
-msgid "Upgrading old GDynText layer to %s\n"
-msgstr "Konvertiere alte GDynText-Ebene zu %s\n"
-
-#: plug-ins/gdyntext/gdyntext.c:355
-#, c-format
+#: plug-ins/gdyntext/gdyntext.c:203
 msgid ""
-"WARNING: GDynText is too old!\n"
-"  You may loose some data by changing this text.\n"
-"  A newer version is required to handle this layer.\n"
-"  Get it from %s\n"
+" Current layer isn't a GDynText layer or it has no alpha channel. Forcing "
+"new layer creation."
 msgstr ""
-"WARNUNG: GDynText ist zu alt!\n"
-"  Sie könnten Daten verlieren, wenn Sie diesen Text ändern.\n"
-"  Eine neuere Version wird benötigt, um diese Ebene zu bearbeiten.\n"
-"  Sie bekommen sie hier: %s\n"
+"Die aktuelle Ebene ist keine GDynText-Ebene oder hat keinen Alpha-Kanel. "
+"Erzwinge Erzeugung einer neuer Ebene."
 
-#. remove old layer name
-#: plug-ins/gdyntext/gdyntext.c:394
+#: plug-ins/gdyntext/gdyntext.c:286 plug-ins/gdyntext/gdyntext.c:413
 msgid "GDynText Layer "
 msgstr "GDynText-Ebene "
 
-#: plug-ins/gdyntext/gdyntext.c:431
+#: plug-ins/gdyntext/gdyntext.c:322
 msgid "GIMP Dynamic Text"
 msgstr "GIMP Dynamischer Text"
 
-#: plug-ins/gdyntext/gdyntext.c:533
-msgid "GDynText Layer"
-msgstr "GDynText Ebene"
-
-#: plug-ins/gdyntext/gdyntext_ui.c:127
-msgid "GDynText Message Window"
+#: plug-ins/gdyntext/gdyntext_ui.c:132
+msgid "GDynText: Messages Window"
 msgstr "GDynText Nachrichtenfenster"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:157
-msgid "About GDynText"
-msgstr "Über GDynText"
+msgid "GDynText: About ..."
+msgstr "Über GDynText ..."
 
-#: plug-ins/gdyntext/gdyntext_ui.c:221
+#: plug-ins/gdyntext/gdyntext_ui.c:220
 msgid "GDynText: Select Color"
 msgstr "GDynText: Farbe auswählen"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:321
+#: plug-ins/gdyntext/gdyntext_ui.c:280 plug-ins/gflare/gflare.c:4734
+msgid "none"
+msgstr "Kein"
+
+#: plug-ins/gdyntext/gdyntext_ui.c:281
+msgid "bottom-left"
+msgstr "Unten Links"
+
+#: plug-ins/gdyntext/gdyntext_ui.c:282
+msgid "bottom-center"
+msgstr "Unten Mitte"
+
+#: plug-ins/gdyntext/gdyntext_ui.c:283
+msgid "bottom-right"
+msgstr "Unten Rechts"
+
+#: plug-ins/gdyntext/gdyntext_ui.c:284
+msgid "middle-left"
+msgstr "Mitte links"
+
+#: plug-ins/gdyntext/gdyntext_ui.c:285
+msgid "center"
+msgstr "Mitte"
+
+#: plug-ins/gdyntext/gdyntext_ui.c:286
+msgid "middle-right"
+msgstr "Mitte rechts"
+
+#: plug-ins/gdyntext/gdyntext_ui.c:287
+msgid "top-left"
+msgstr "Oben Links"
+
+#: plug-ins/gdyntext/gdyntext_ui.c:288
+msgid "top-center"
+msgstr "Oben Mitte"
+
+#: plug-ins/gdyntext/gdyntext_ui.c:289
+msgid "top-right"
+msgstr "Oben Rechts"
+
+#: plug-ins/gdyntext/gdyntext_ui.c:300
+msgid "GDynText"
+msgstr "GDynText"
+
+#: plug-ins/gdyntext/gdyntext_ui.c:333
 msgid "Toggle creation of a new layer"
 msgstr "Erstellung einer neuen Ebene"
 
@@ -9992,59 +10003,76 @@ msgstr "Erstellung einer neuen Ebene"
 msgid "Load text from file"
 msgstr "Text aus Datei laden"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:367
+#: plug-ins/gdyntext/gdyntext_ui.c:358
 msgid "Text color"
 msgstr "Textfarbe"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:385
+#: plug-ins/gdyntext/gdyntext_ui.c:367
 msgid "Toggle anti-aliased text"
 msgstr "Kantenglättung einschalten"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:408
+#: plug-ins/gdyntext/gdyntext_ui.c:378
 msgid "Left aligned text"
 msgstr "Linksbündiger Text"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:427
+#: plug-ins/gdyntext/gdyntext_ui.c:387
 msgid "Centered text"
 msgstr "Zentrierter Text"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:446
+#: plug-ins/gdyntext/gdyntext_ui.c:396
 msgid "Right aligned text"
 msgstr "Rechtsbündiger Text"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:465
+#: plug-ins/gdyntext/gdyntext_ui.c:405
 msgid "Toggle text font preview"
 msgstr "Text Font Vorschau"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:486
+#: plug-ins/gdyntext/gdyntext_ui.c:415
 msgid "Toggle CharMap window"
 msgstr "CharMap Fenster"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:496
-msgid "Set text rotation (degrees)"
-msgstr "Text Rotation einstellen (Grad)"
+#. Layer Alignment
+#: plug-ins/gdyntext/gdyntext_ui.c:428
+msgid ""
+"Layer\n"
+"Alignment"
+msgstr ""
+"Ebenen-\n"
+"ausrichtung"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:510
+#: plug-ins/gdyntext/gdyntext_ui.c:436
+msgid "Set layer alignment"
+msgstr "Ebenenausrichtung bestimmen"
+
+#: plug-ins/gdyntext/gdyntext_ui.c:465
+msgid ""
+"Line\n"
+"Spacing"
+msgstr ""
+"Zeilen-\n"
+"abstand"
+
+#: plug-ins/gdyntext/gdyntext_ui.c:475
 msgid "Set line spacing"
 msgstr "Setze Zeilenabstand"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:514
-msgid "Line Spacing"
-msgstr "Zeilenabstand"
+#: plug-ins/gdyntext/gdyntext_ui.c:488
+msgid "Set text rotation (degrees)"
+msgstr "Text Rotation einstellen (Grad)"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:543
+#: plug-ins/gdyntext/gdyntext_ui.c:520
 msgid "Editable text sample"
 msgstr "Editierbares Text Beispiel"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:561
+#: plug-ins/gdyntext/gdyntext_ui.c:533
 msgid "Clear preview"
 msgstr "Vorschau löschen"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:570
+#: plug-ins/gdyntext/gdyntext_ui.c:539
 msgid "Preview default text sample"
 msgstr "Standard Text Beispiel Vorschau"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:632
+#: plug-ins/gdyntext/gdyntext_ui.c:590
 msgid ""
 "Holding the Shift key while pressing this button will force GDynText in "
 "changing the layer name as done in GIMP 1.0."
@@ -10052,26 +10080,41 @@ msgstr ""
 "Wenn Sie die Shift-Taste gedrückt halten und diesen Button drücken, wird\n"
 "GDynText den Ebenennamen ändern, so wie es in GIMP 1.0 der Fall war."
 
-#: plug-ins/gdyntext/gdyntext_ui.c:1015
+#: plug-ins/gdyntext/gdyntext_ui.c:921
 msgid "GDynText: CharMap"
 msgstr "GDynText: Zeichentabelle"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:1088
-msgid "GDynText: Load Text"
+#: plug-ins/gdyntext/gdyntext_ui.c:973
+msgid "GDynText: Load text"
 msgstr "GDynText: Text laden"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:1134
+#: plug-ins/gdyntext/gdyntext_ui.c:1011
 #, c-format
 msgid ""
-"Warning file \"%s\" is larger than the maximum allowed text length (%d)."
-msgstr "Warnung Datei \"%s\" ist größer als die maximale erlaubte Länge (%d)."
+"Warning file \"%s\" is larger than the maximum allowed text length (%d).\n"
+msgstr ""
+"Warnung Datei \"%s\" ist größer als die maximale erlaubte Länge (%d).\n"
 
-#: plug-ins/gdyntext/gdyntext_ui.c:1146
+#: plug-ins/gdyntext/gdyntext_ui.c:1019
 #, c-format
-msgid "Error opening \"%s\"!"
-msgstr "Fehler beim Öffnen von \"%s\"!"
+msgid "Error opening \"%s\"!\n"
+msgstr "Fehler beim Öffnen von \"%s\"!\n"
 
-#: plug-ins/gdyntext/message_window.c:113
+#: plug-ins/gdyntext/gdyntextcompat.c:113
+#, c-format
+msgid ""
+" WARNING: GDynText is too old! A newer version is required to handle this "
+"layer. Get it from %s"
+msgstr ""
+"WARNUNG: GDynText ist zu alt! Sie benötigen eine neuere Version um diese "
+"Ebene zu bearbeiten. Diese bekommen sie hier: %s\""
+
+#: plug-ins/gdyntext/gdyntextcompat.c:166
+#, c-format
+msgid " Upgrading old GDynText layer to %s."
+msgstr "Konvertiere alte GDynText-Ebene zu %s."
+
+#: plug-ins/gdyntext/message_window.c:110
 msgid "Dismiss"
 msgstr "Verwerfen"
 
@@ -10898,10 +10941,6 @@ msgstr "Polygon"
 msgid "Second Flares"
 msgstr "Zweites Flare"
 
-#: plug-ins/gflare/gflare.c:4734
-msgid "none"
-msgstr "Kein"
-
 #: plug-ins/gflare/gflare.c:4747
 #, c-format
 msgid "Not found \"%s\": used \"%s\" instead"
@@ -11135,7 +11174,7 @@ msgstr "Programm beenden"
 
 #: plug-ins/gimpressionist/gimpressionist.c:503
 msgid "About..."
-msgstr " Über..."
+msgstr "Über..."
 
 #: plug-ins/gimpressionist/gimpressionist.c:508
 msgid "Show some information about program"
@@ -11622,13 +11661,13 @@ msgstr "Inhalt"
 msgid "Index"
 msgstr "Index"
 
-#: plug-ins/helpbrowser/helpbrowser.c:407 plug-ins/imagemap/imap_main.c:511
+#: plug-ins/helpbrowser/helpbrowser.c:417 plug-ins/imagemap/imap_main.c:511
 #: plug-ins/imagemap/imap_settings.c:149
 msgid "<Untitled>"
 msgstr "<Unbenannt>"
 
-#: plug-ins/helpbrowser/helpbrowser.c:733
-#: plug-ins/helpbrowser/helpbrowser.c:749
+#: plug-ins/helpbrowser/helpbrowser.c:752
+#: plug-ins/helpbrowser/helpbrowser.c:768
 #, c-format
 msgid ""
 "GIMP Help Browser Error.\n"
@@ -11641,15 +11680,15 @@ msgstr ""
 "Kann das HTML-Verzeichnis nicht finden.\n"
 "(%s)"
 
-#: plug-ins/helpbrowser/helpbrowser.c:765
+#: plug-ins/helpbrowser/helpbrowser.c:784
 msgid "GIMP Help Browser"
 msgstr "GIMP Hilfe Browser"
 
-#: plug-ins/helpbrowser/helpbrowser.c:780
+#: plug-ins/helpbrowser/helpbrowser.c:799
 msgid "Back"
 msgstr "Rückwärts"
 
-#: plug-ins/helpbrowser/helpbrowser.c:789
+#: plug-ins/helpbrowser/helpbrowser.c:808
 msgid "Forward"
 msgstr "Vorwärts"
 

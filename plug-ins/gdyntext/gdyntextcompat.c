@@ -108,10 +108,13 @@ gboolean gdt_compat_load(GdtVals *data)
 	{
 		return FALSE;
 	} else if (GDT_MAGIC_REV(gdtparams) > GDT_MAGIC_REV(GDYNTEXT_MAGIC)) {
-		data->messages = g_list_append(data->messages, _(
-			" WARNING: GDynText is too old!"
-			" A newer version is required to handle this layer."
-			" Get it from "GDYNTEXT_WEB_PAGE""));
+	        static gchar *message = NULL;
+		if (!message) 
+		  message = g_strdup_printf (_(" WARNING: GDynText is too old!"
+					       " A newer version is required to handle this layer."
+					       " Get it from %s"), GDYNTEXT_WEB_PAGE);
+		
+	        data->messages = g_list_append (data->messages, message);
 		return TRUE;
 	}
 
@@ -158,8 +161,11 @@ gboolean gdt_compat_load(GdtVals *data)
 		font_metric == FONT_METRIC_PIXELS ? font_size : font_size * 10);
 
 	if (GDT_MAGIC_REV(gdtparams) < GDT_MAGIC_REV(GDYNTEXT_MAGIC)) {
-		data->messages = g_list_append(data->messages,
-			_(" Upgrading old GDynText layer to "GDYNTEXT_MAGIC"."));
+	        static gchar *message = NULL;
+		if (!message) 
+		  message = g_strdup_printf (_(" Upgrading old GDynText layer to %s."), GDYNTEXT_MAGIC);
+		
+	        data->messages = g_list_append (data->messages, message);
 	}
 	
 #ifdef DEBUG
