@@ -1,3 +1,13 @@
+2001-01-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/palette_import.[ch]: moved the palette_import dialog to
+	it's own file.
+
+	* app/gimage.c
+	* app/palette.[ch]
+	* app/paletteP.h: changed accordingly.
+
 2001-01-21  Simon Budig  <simon@gimp.org>
 
 	* modules/colorsel_triangle.c: Fixed the "disappearing

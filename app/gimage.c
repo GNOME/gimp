@@ -33,7 +33,7 @@
 #include "lc_dialog.h"
 #include "gdisplay.h"
 #include "paint_funcs.h"
-#include "paletteP.h"
+#include "palette_import.h"
 #include "procedural_db.h"
 #include "tools.h"
 #include "undo.h"

@@ -16,21 +16,16 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PALETTE_P_H__
-#define __PALETTE_P_H__
+#ifndef __PALETTE_IMPORT_H__
+#define __PALETTE_IMPORT_H__
 
 
-void   palette_clist_init           (GtkWidget      *clist,
-				     GtkWidget      *shell,
-				     GdkGC          *gc);
-void   palette_clist_insert         (GtkWidget      *clist, 
-				     GtkWidget      *shell,
-				     GdkGC          *gc,
-				     GimpPalette    *palette,
-				     gint            pos);
-
-void   palette_select_palette_init  (void);
-void   palette_create_edit          (GimpPalette    *palette);
+void   palette_import_dialog_show    (void);
+void   palette_import_dialog_destroy (void);
 
 
-#endif /* __PALETTE_P_H__ */
+/* FIXME */
+void   palette_import_image_renamed  (GimpImage *gimage);
+
+
+#endif /* __PALETTE_IMPORT_H__ */

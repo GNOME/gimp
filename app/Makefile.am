@@ -287,6 +287,8 @@ gimp_SOURCES = \
 	ops_buttons.h		\
 	palette.c		\
 	palette.h		\
+	palette_import.c	\
+	palette_import.h	\
 	palette_cmds.c		\
 	palette_select.c	\
 	palette_select.h	\
