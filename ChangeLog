@@ -1,3 +1,8 @@
+2004-07-01  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimptemplate.c: do like Liam taught us and use the
+	golden ratio as default for new images.
+
 2004-06-30  Philip Lafleur  <plafleur@cvs.gnome.org>
 
 	* app/tools/gimppainttool.c (gimp_paint_tool_cursor_update):

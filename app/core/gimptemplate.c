@@ -41,6 +41,19 @@
 
 #include "gimp-intl.h"
 
+/*  The default image aspect ratio is the golden mean. We use
+ *  two adjacent fibonacci numbers for the unstable series and
+ *  some less odd values for the stable version.
+ */
+
+#ifdef GIMP_UNSTABLE
+#define DEFAULT_IMAGE_WIDTH   377
+#define DEFAULT_IMAGE_HEIGHT  233
+#else
+#define DEFAULT_IMAGE_WIDTH   420
+#define DEFAULT_IMAGE_HEIGHT  300
+#endif
+
 
 enum
 {
@@ -134,11 +147,13 @@ gimp_template_class_init (GimpTemplateClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_WIDTH, "width",
                                 NULL,
-                                GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 256,
+                                GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
+                                DEFAULT_IMAGE_WIDTH,
                                 0);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_HEIGHT, "height",
                                 NULL,
-                                GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 256,
+                                GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
+                                DEFAULT_IMAGE_HEIGHT,
                                 0);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT, "unit",
                                  N_("The unit used for coordinate display "
