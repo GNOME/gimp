@@ -1,3 +1,7 @@
+Mon Jan 31 21:52:27 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* plug-ins/common/vinvert.c: Typo fix.
+
 Mon Jan 31 12:15:27 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* modules/colorsel_gtk.c

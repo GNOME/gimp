@@ -80,7 +80,7 @@ query ()
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_vinvert",
-			  _("Invert the 'value' componant of an indexed/RGB image in HSV colorspace"),
+			  _("Invert the 'value' component of an indexed/RGB image in HSV colorspace"),
 			  _("This function takes an indexed/RGB image and inverts its 'value' in HSV space.  The upshot of this is that the color and saturation at any given point remains the same, but its brightness is effectively inverted.  Quite strange.  Sometimes produces unpleasant color artifacts on images from lossy sources (ie. JPEG)."),
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "Adam D. Moss (adam@foxbox.org)",
