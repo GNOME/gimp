@@ -1,3 +1,41 @@
+1999-09-01  Tor Lillqvist  <tml@iki.fi>
+
+	* app/appenv.h
+	* libgimp/gimpmath.h: New file. Includes <math.h>. Move G_PI,
+	RINT(), ROUND() etc from app/appenv.h here, so plug-ins can
+	use them, too. Remove some commented-out old stuff in appenv.h.
+
+	* libgimp/gimp.h: Include gimpmath.h.
+
+	* libgimp/gimp.c (gimp_main): Win32: Don't install signal
+	handlers, we can't do anything useful in the handler ourselves
+	anyway (it would be nice to print out a backtrace, but that seems
+	pretty hard to do, even if not impossible). Let Windows inform the
+	user about the crash. If the plug-in was compiled with MSVC, and
+	the user also has it, she is offered a chance to start the
+	debugger automatically anyway.
+
+	* app/*several*.c: Include gimpmath.h for G_PI etc. Don't include
+	<math.h>, as gimpmath.h includes it.
+
+	* plug-ins/*/*many*.c: Include config.h. Don't include <math.h>.
+	Remove all the duplicated definitions of G_PI and rint(). Use
+	RINT() instead of rint().
+
+	* app/app_procs.[ch]: app_exit() takes a gboolean.
+
+	* app/batch.c
+	* app/commands.c
+	* app/interface.c: Call app_exit() with FALSE or TRUE.
+
+	* app/main.c (on_error): Call gimp_fatal_error. (main): Don't
+	install any signal handler on Win32 here, either.
+
+	* app/errors.c (gimp_fatal_error, gimp_terminate): Win32: Format
+	the message and call MessageBox with it.  g_on_error_query doesn't
+	do anything useful on Win32, and printf'ing a message to stdout or
+	stderr doesn't do anything, either, in a windowing application.
+
 Wed Sep  1 22:16:41 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/paint_core.c: Only set the defaults for non_gui operations
@@ -18,6 +56,7 @@ Wed Sep  1 20:45:56 MEST 1999  Sven Neumann <sven@gimp.org>
 	when drawing a line using <Shift>. Do we need the angle here too??
 
 Wed Sep  1 14:12:17 CEST 1999  Pablo Saratxaga <pablo@mandrakesoft.com>
+
         * po/da.po, configure.in: added danish file from
         Henrik Hansen <hh@mailserver.dk>
 

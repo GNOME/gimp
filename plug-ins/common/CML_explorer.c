@@ -69,11 +69,13 @@
  *    Michael Sweet <mike@easysw.com>
  *
  */
+#include "config.h"
 
 #include "gtk/gtk.h"
+
 #include "libgimp/gimp.h"
+
 #include <errno.h>
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -81,12 +83,7 @@
 #include <sys/stat.h>
 #include <time.h>		/* for seed of random number */
 
-#include "config.h"
 #include "libgimp/stdplugins-intl.h"
-
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
 
 #ifndef RAND_MAX
 #define RAND_MAX 2147483647
@@ -1103,16 +1100,16 @@ logistic_function (CML_PARAM *param, gdouble x, gdouble power)
       break;
     case CML_SIN_CURVE:
       if (1.0 < power)
-	result = 0.5 * (sin (M_PI * ABS (x1 - 0.5) / power) / sin (M_PI * 0.5 / power) + 1);
+	result = 0.5 * (sin (G_PI * ABS (x1 - 0.5) / power) / sin (G_PI * 0.5 / power) + 1);
       else
-	result = 0.5 * (pow (sin (M_PI * ABS (x1 - 0.5)), power) + 1);
+	result = 0.5 * (pow (sin (G_PI * ABS (x1 - 0.5)), power) + 1);
       if (x1 < 0.5) result = 1 - result;
       break;
     case CML_SIN_CURVE_STEP:
       if (1.0 < power)
-	result = 0.5 * (sin (M_PI * ABS (x1 - 0.5) / power) / sin (M_PI * 0.5 / power) + 1);
+	result = 0.5 * (sin (G_PI * ABS (x1 - 0.5) / power) / sin (G_PI * 0.5 / power) + 1);
       else
-	result = 0.5 * (pow (sin (M_PI * ABS (x1 - 0.5)), power) + 1);
+	result = 0.5 * (pow (sin (G_PI * ABS (x1 - 0.5)), power) + 1);
       if (x1 < 0.5) result = 1 - result;
       result = (result + step) / (gdouble) n;
       break;

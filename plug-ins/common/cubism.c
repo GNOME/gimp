@@ -19,23 +19,14 @@
  * You can contact the original The Gimp authors at gimp@xcf.berkeley.edu
  * Speedups by Elliot Lee
  */
+#include "config.h"
 
-
-#include <math.h>
 #include <stdlib.h>
 #include <string.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
-#include "config.h"
 #include "libgimp/stdplugins-intl.h"
-
-/* Some useful macros */
-#define SQR(a) ((a) * (a))
-
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
 
 #ifndef RAND_MAX
 #define RAND_MAX 2147483647
@@ -473,7 +464,7 @@ render_cubism (GDrawable *drawable)
 	cvals.tile_saturation;
       height = (cvals.tile_size + fp_rand (cvals.tile_size / 4.0) - cvals.tile_size / 8.0) *
 	cvals.tile_saturation;
-      theta = fp_rand (2 * M_PI);
+      theta = fp_rand (2 * G_PI);
       polygon_reset (&poly);
       polygon_add_point (&poly, -width / 2.0, -height / 2.0);
       polygon_add_point (&poly, width / 2.0, -height / 2.0);

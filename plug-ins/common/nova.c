@@ -49,11 +49,12 @@
  * - fix preview
  * - add notebook interface and so on
  */
+#include "config.h"
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include <time.h>
+
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
@@ -64,10 +65,6 @@ static char rcsid[] = "$Id$";
 
 
 /* Some useful macros */
-
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
 
 #ifndef RAND_MAX
 #define RAND_MAX 2147483647
@@ -1119,7 +1116,7 @@ nova (GDrawable *drawable)
 	      l = sqrt( u*u + v*v );
 
 	      /* This algorithm is still under construction. */
-	      c = (atan2 (u, v) / (2 * M_PI) + .51) * pvals.nspoke;
+	      c = (atan2 (u, v) / (2 * G_PI) + .51) * pvals.nspoke;
 	      i = (int) floor (c);
 	      c -= i;
 	      i %= pvals.nspoke;

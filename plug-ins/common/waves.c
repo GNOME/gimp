@@ -25,19 +25,14 @@
  *
  * $Id$
  */
- 
+#include "config.h"
 
-#include <math.h>
 #include <string.h>
 #include <stdlib.h>
 
 #include <libgimp/gimp.h>
 #include <gtk/gtk.h>
 #include <plug-ins/megawidget/megawidget.h>
-
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
 
 struct Grgb {
   guint8 red;
@@ -371,7 +366,7 @@ wave(guchar *src, guchar *dst, gint width, gint height, gint bypp,
 
   gint k;
 
-  phase = phase*M_PI/180;
+  phase = phase*G_PI/180;
   rowsiz   = width * bypp;
 
   if (verbose) {
@@ -461,13 +456,13 @@ wave(guchar *src, guchar *dst, gint width, gint height, gint bypp,
 
       if (reflective){
         amnt = amplitude * fabs(sin(((d / wavelength)
-                                     * (2.0 * M_PI) + phase)));
+                                     * (2.0 * G_PI) + phase)));
 
         needx = (amnt * dx) / xscale + cen_x;
         needy = (amnt * dy) / yscale + cen_y;
       } else {
         amnt = amplitude * sin(((d / wavelength)
-                                * (2.0 * M_PI) + phase));
+                                * (2.0 * G_PI) + phase));
 
         needx = (amnt + dx) / xscale + cen_x;
         needy = (amnt + dy) / yscale + cen_y;

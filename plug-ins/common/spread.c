@@ -21,19 +21,16 @@
  * You can contact Federico Mena Quintero at quartic@polloux.fciencias.unam.mx
  * You can contact the original The Gimp authors at gimp@xcf.berkeley.edu
  */
+#include "config.h"
 
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
+
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
 /* Some useful macros */
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
-
 #define SCALE_WIDTH 200
 #define TILE_CACHE_SIZE 16
 #define ENTRY_WIDTH 50
@@ -270,7 +267,7 @@ spread (GDrawable *drawable)
 
   /* Initialize random stuff */
   srand (time (NULL));
-  angle_mod_value = M_PI*2;
+  angle_mod_value = G_PI*2;
   angle_sub_value = angle_mod_value / 2;
   x_mod_value = x_amount + 1;
   x_sub_value = x_mod_value / 2;

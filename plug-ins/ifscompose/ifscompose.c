@@ -32,8 +32,8 @@
  *    brushes.
  * 4. (minor) Make undo work correctly when focus is in entry widget.
  */
+#include "config.h"
 
-#include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -41,10 +41,6 @@
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 #include "ifscompose.h"
-
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
 
 #define SCALE_WIDTH     150
 #define ENTRY_WIDTH 60
@@ -1492,7 +1488,7 @@ update_values()
   ifsD->in_update = TRUE;
 
   ifsD->current_vals = elements[ifsD->current_element]->v;
-  ifsD->current_vals.theta *= 180/M_PI;
+  ifsD->current_vals.theta *= 180/G_PI;
 
   value_pair_update(ifsD->prob_pair);
   value_pair_update(ifsD->x_pair);
@@ -1977,7 +1973,7 @@ val_changed_update ()
   undo_update(ifsD->current_element);
 
   cur->v = ifsD->current_vals;
-  cur->v.theta *= M_PI/180.0;
+  cur->v.theta *= G_PI/180.0;
   aff_element_compute_trans(cur,width,height,
 			      ifsvals.center_x, ifsvals.center_y);
   aff_element_compute_color_trans(cur);
@@ -2139,7 +2135,7 @@ color_map_color_changed_cb(GtkWidget *widget,
     color_map->color->vals);
 
   elements[ifsD->current_element]->v = ifsD->current_vals;
-  elements[ifsD->current_element]->v.theta *= M_PI/180.0;
+  elements[ifsD->current_element]->v.theta *= G_PI/180.0;
   aff_element_compute_color_trans(elements[ifsD->current_element]);
 
   update_values();

@@ -46,9 +46,11 @@
 
 #include "libgimp/gimpintl.h"
 
+#ifndef NATIVE_WIN32
 static RETSIGTYPE on_signal (int);
 #ifdef SIGCHLD
 static RETSIGTYPE on_sig_child (int);
+#endif
 #endif
 static void       init (void);
 static void       test_gserialize();
@@ -314,6 +316,14 @@ main (int argc, char **argv)
 
   g_set_message_handler ((GPrintFunc) gimp_message_func);
 
+#ifndef NATIVE_WIN32
+  /* No use catching these on Win32, the user won't get any 
+   * stack trace from glib anyhow. It's better to let Windows inform
+   * about the program error, and offer debugging (if the use
+   * has installed MSVC or some other compiler that knows how to
+   * install itself as a handler for program errors).
+   */
+
   /* Handle some signals */
 #ifdef SIGHUP
   signal (SIGHUP, on_signal);
@@ -346,6 +356,8 @@ main (int argc, char **argv)
 #ifdef SIGCHLD
   /* Handle child exits */
   signal (SIGCHLD, on_sig_child);
+#endif
+
 #endif
 
   g_log_set_handler (NULL, G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
@@ -395,11 +407,12 @@ on_error (const gchar    *domain,
 	  const gchar    *msg,
 	  gpointer        user_data)
 {
-  fprintf (stderr, "%s: fatal error: %s\n", prog_name, msg);
-  g_on_error_query (prog_name);
+  gimp_fatal_error ("%s", msg);
 }
 
 static int caught_fatal_sig = 0;
+
+#ifndef NATIVE_WIN32
 
 static RETSIGTYPE
 on_signal (int sig_num)
@@ -479,6 +492,8 @@ on_sig_child (int sig_num)
 	break;
     }
 }
+#endif
+
 #endif
 
 typedef struct 

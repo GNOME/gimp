@@ -47,7 +47,6 @@
 #include "config.h"
 
 #include <stdlib.h>
-#include <math.h>
 #include <signal.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -55,10 +54,6 @@
 
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
-
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
 
 #define PLUG_IN_NAME 	"plug_in_mblur"
 #define PLUG_IN_VERSION	"Sep 1997, 1.2"
@@ -322,8 +317,8 @@ mblur_linear(void)
   max_progress = sel_width * sel_height;
 
   n = mbvals.length;
-  px = n*cos(mbvals.angle/180.0*M_PI);
-  py = n*sin(mbvals.angle/180.0*M_PI);
+  px = n*cos(mbvals.angle/180.0*G_PI);
+  py = n*sin(mbvals.angle/180.0*G_PI);
 
   /*
    * Initialization for Bresenham algorithm:
@@ -447,7 +442,7 @@ mblur_radial(void)
   progress     = 0;
   max_progress = sel_width * sel_height;
 
-  angle = ((float) mbvals.angle)/180.0*M_PI;
+  angle = ((float) mbvals.angle)/180.0*G_PI;
   w = MAX(img_width-cen_x, cen_x);
   h = MAX(img_height-cen_y, cen_y);
   R = sqrt(w*w + h*h);

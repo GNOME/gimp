@@ -332,7 +332,7 @@ void freerotate(struct ppm *p, double amount)
   double nx, ny;
   double R, a;
   struct ppm tmp = {0,0,NULL};
-  double f = amount*M_PI*2/360.0;
+  double f = amount*G_PI*2/360.0;
   int rowstride = p->width * 3;
 
   a = p->width/(float)p->height;

@@ -51,19 +51,15 @@
   - clean up source code
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
 #include "libgimp/gimp.h"
 #include "gtk/gtk.h"
 
-#include "config.h"
 #include "libgimp/stdplugins-intl.h"
-
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
 
 #define ENTRY_WIDTH 100
 
@@ -231,15 +227,15 @@ find_projected_pos(gfloat a, gfloat b,
   n[2] = sqrt((1-x*x/(a*a)-y*y/(b*b))*(c*c));
 
   nxangle = acos(n[0]/sqrt(n[0]*n[0]+n[2]*n[2]));
-  theta1 = M_PI/2 - nxangle;
+  theta1 = G_PI/2 - nxangle;
   theta2 = asin(sin(theta1)*ri1/ri2);
-  theta2 = M_PI/2 - nxangle - theta2;
+  theta2 = G_PI/2 - nxangle - theta2;
   *projx = x - tan(theta2)*n[2];
 
   nyangle = acos(n[1]/sqrt(n[1]*n[1]+n[2]*n[2]));
-  theta1 = M_PI/2 - nyangle;
+  theta1 = G_PI/2 - nyangle;
   theta2 = asin(sin(theta1)*ri1/ri2);
-  theta2 = M_PI/2 - nyangle - theta2;
+  theta2 = G_PI/2 - nyangle - theta2;
   *projy = y - tan(theta2)*n[2];
 }
 

@@ -48,10 +48,10 @@
  *      - Exchanged the meaning of FG/BG Color, because mostly the FG
  *        color is darker.
  */
+#include "config.h"
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
@@ -64,10 +64,6 @@
 #include "curl6.xpm"
 #include "curl7.xpm"
 #include <libgimp/gimp.h>
-
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
 
 #define PLUG_IN_NAME    "plug_in_pagecurl"
 #define PLUG_IN_VERSION "May 1998, 0.9"
@@ -753,7 +749,7 @@ static void init_calculation () {
 
    alpha = atan ((double) sel_height / sel_width);
    beta = alpha / 2.0;
-   k = sel_width / ((M_PI + alpha) * sin (beta) + cos (beta));
+   k = sel_width / ((G_PI + alpha) * sin (beta) + cos (beta));
    v_set (&center, k * cos (beta), k * sin (beta));
    radius = center.y;
 
@@ -899,7 +895,7 @@ static void do_curl_effect (void) {
 		  /* On the curl */
 		  if (curl.do_curl_gradient) {
 		     /* Calculate position in Gradient (0 <= intensity <= 1) */
-		     intensity = (angle/alpha) + sin(M_PI*2 * angle/alpha)*0.075;
+		     intensity = (angle/alpha) + sin(G_PI*2 * angle/alpha)*0.075;
 		     /* Check boundaries */
 		     intensity = (intensity < 0 ? 0 : (intensity > 1 ? 1 : intensity ));
 		     gradsamp = &grad_samples[((guint) (intensity * NGRADSAMPLES)) * dest_rgn.bpp];
@@ -911,7 +907,7 @@ static void do_curl_effect (void) {
 		        pp[0] = gradsamp[0];
 		     pp[alpha_pos] = (guchar) ((double) gradsamp[alpha_pos] * (1 - intensity*(1-curl.do_curl_opacity)));
 		  } else {
-		     intensity = pow (sin (M_PI * angle / alpha), 1.5);
+		     intensity = pow (sin (G_PI * angle / alpha), 1.5);
 		     if (color_image) {
 		        pp[0] = (intensity * back_color[0] + (1 - intensity) * fore_color[0]);
 		        pp[1] = (intensity * back_color[1] + (1 - intensity) * fore_color[1]);

@@ -36,7 +36,7 @@ SEPARATE = AlienMap FractalExplorer Lighting MapObject bmp borderaverage dbbrows
 # ../unofficial-plug-ins directory, go there, and do "make -f
 # makefile.cygwin unofficial".
 
-UNOFFICIAL = Anamorphose RGB_Displace ccanalyze fuse gimp_ace guash user_filter
+UNOFFICIAL = Anamorphose RGB_Displace ccanalyze fuse gimp_ace guash pmosaic user_filter
 
 # The main target
 
@@ -355,6 +355,14 @@ OBJECTS = \
 	uf_lexer.o \
 	uf_main.o \
 	uf_parser.tab.o
+endif
+
+ifdef EXTRA_pmosaic
+EXTRACFLAGS = -I$(JPEG)
+EXTRALIBS = -L $(JPEG) -ljpeg
+OBJECTS = \
+	pmosaic.o \
+	pmsc.o
 endif
 
 ifdef EXTRA_twain

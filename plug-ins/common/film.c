@@ -31,11 +31,13 @@
  */
 static char ident[] = "@(#) GIMP Film plug-in v1.03a 1999-07-22";
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include <math.h>
+
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 

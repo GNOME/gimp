@@ -21,7 +21,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <math.h>
 
 #include "appenv.h"
 #include "gimprc.h"
@@ -33,6 +32,7 @@
 #include "tile.h"			/* ick. */
 
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpmath.h"
 
 #define STD_BUF_SIZE       1021
 #define MAXDIFF            195076

@@ -30,7 +30,8 @@
  * The 0.54 version of the algorithm was then forwards ported to 1.1.4
  * by Austin Donnelly.  */
 
-#include <math.h>
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -53,6 +54,7 @@
 #include "bezier_selectP.h"
 
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpmath.h"
 
 /*  local structures  */
 

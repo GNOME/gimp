@@ -18,7 +18,7 @@
 #include "config.h"
 
 #include <string.h>
-#include <math.h>
+
 #include "appenv.h"
 #include "cursorutil.h"
 #include "draw_core.h"
@@ -34,6 +34,7 @@
 #include "selection_options.h"
 
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpmath.h"
 
 /* Bezier extensions made by Raphael FRANCOIS (fraph@ibm.net)
 

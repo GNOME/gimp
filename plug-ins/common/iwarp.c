@@ -37,17 +37,14 @@
      (thanks to Arthur Hagen for reporting it)
     
 */
+#include "config.h"
 
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 #include <stdio.h>
+
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
-
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
 
 #define MAX_PREVIEW_WIDTH 256
 #define MAX_PREVIEW_HEIGHT 256
@@ -742,7 +739,7 @@ iwarp_init()
  iwarp_cpy_images();
  for (i=0; i <MAX_DEFORM_AREA_RADIUS; i++) { 
    filter[i] = 
-    pow((cos(sqrt((gfloat)i / MAX_DEFORM_AREA_RADIUS)*M_PI)+1)*0.5,0.7); /*0.7*/
+    pow((cos(sqrt((gfloat)i / MAX_DEFORM_AREA_RADIUS)*G_PI)+1)*0.5,0.7); /*0.7*/
  }
  g_free(linebuffer);
 

@@ -57,7 +57,6 @@
 
 #include "config.h"
 
-#include <math.h>
 #include <stdio.h>
 #include <signal.h>
 #include <stdlib.h>
@@ -68,11 +67,6 @@
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
 
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
-
-#define sqr(x)	((x) * (x))
 #define WITHIN(a, b, c) ((((a) <= (b)) && ((b) <= (c))) ? 1 : 0)
 
 
@@ -495,29 +489,29 @@ calc_undistorted_coords(double wx, double wy,
   ym = ydiff / 2.0;
   circle = pcvals.circle;
   angle = pcvals.angle;
-  angl = (double)angle / 180.0 * M_PI;
+  angl = (double)angle / 180.0 * G_PI;
 
   if (pcvals.polrec) {
     if (wx >= cen_x) {
       if (wy > cen_y) {
-	phi = M_PI - atan (((double)(wx - cen_x))/((double)(wy - cen_y)));
-	r   = sqrt (sqr (wx - cen_x) + sqr (wy - cen_y));
+	phi = G_PI - atan (((double)(wx - cen_x))/((double)(wy - cen_y)));
+	r   = sqrt (SQR (wx - cen_x) + SQR (wy - cen_y));
       } else if (wy < cen_y) {
 	phi = atan (((double)(wx - cen_x))/((double)(cen_y - wy)));
-	r   = sqrt (sqr (wx - cen_x) + sqr (cen_y - wy));
+	r   = sqrt (SQR (wx - cen_x) + SQR (cen_y - wy));
       } else {
-	phi = M_PI / 2;
+	phi = G_PI / 2;
 	r   = wx - cen_x; /* cen_x - x1; */
       }
     } else if (wx < cen_x) {
       if (wy < cen_y) {
-	phi = 2 * M_PI - atan (((double)(cen_x -wx))/((double)(cen_y - wy)));
-	r   = sqrt (sqr (cen_x - wx) + sqr (cen_y - wy));
+	phi = 2 * G_PI - atan (((double)(cen_x -wx))/((double)(cen_y - wy)));
+	r   = sqrt (SQR (cen_x - wx) + SQR (cen_y - wy));
       } else if (wy > cen_y) {
-        phi = M_PI + atan (((double)(cen_x - wx))/((double)(wy - cen_y)));
-        r   = sqrt (sqr (cen_x - wx) + sqr (wy - cen_y));
+        phi = G_PI + atan (((double)(cen_x - wx))/((double)(wy - cen_y)));
+        r   = sqrt (SQR (cen_x - wx) + SQR (wy - cen_y));
       } else {
-        phi = 1.5 * M_PI;
+        phi = 1.5 * G_PI;
         r   = cen_x - wx; /* cen_x - x1; */
       }
     }
@@ -540,17 +534,17 @@ calc_undistorted_coords(double wx, double wy,
       xmax = ymax / m;
     }
     
-    rmax = sqrt ( (double)(sqr (xmax) + sqr (ymax)) );
+    rmax = sqrt ( (double)(SQR (xmax) + SQR (ymax)) );
     
     t = ((cen_y - y1) < (cen_x - x1)) ? (cen_y - y1) : (cen_x - x1);
     rmax = (rmax - t) / 100 * (100 - circle) + t;
     
-    phi = fmod (phi + angl, 2*M_PI);
+    phi = fmod (phi + angl, 2*G_PI);
     
     if (pcvals.backwards)
-      x_calc = x2 - 1 - (x2 - x1 - 1)/(2*M_PI) * phi;
+      x_calc = x2 - 1 - (x2 - x1 - 1)/(2*G_PI) * phi;
     else
-      x_calc = (x2 - x1 - 1)/(2*M_PI) * phi + x1;
+      x_calc = (x2 - x1 - 1)/(2*G_PI) * phi + x1;
     
     if (pcvals.inverse)
       y_calc = (y2 - y1)/rmax   * r   + y1;
@@ -571,20 +565,20 @@ calc_undistorted_coords(double wx, double wy,
   } else {
     
     if (pcvals.backwards)
-      phi = (2 * M_PI) * (x2 - wx) / xdiff;
+      phi = (2 * G_PI) * (x2 - wx) / xdiff;
     else
-      phi = (2 * M_PI) * (wx - x1) / xdiff;
+      phi = (2 * G_PI) * (wx - x1) / xdiff;
     
-    phi = fmod (phi + angl, 2 * M_PI);
+    phi = fmod (phi + angl, 2 * G_PI);
     
-    if (phi >= 1.5 * M_PI)
-      phi2 = 2 * M_PI - phi;
+    if (phi >= 1.5 * G_PI)
+      phi2 = 2 * G_PI - phi;
     else
-      if (phi >= M_PI)
-	phi2 = phi - M_PI;
+      if (phi >= G_PI)
+	phi2 = phi - G_PI;
       else
-	if (phi >= 0.5 * M_PI)
-	  phi2 = M_PI - phi;
+	if (phi >= 0.5 * G_PI)
+	  phi2 = G_PI - phi;
 	else
 	  phi2 = phi;
     
@@ -613,7 +607,7 @@ calc_undistorted_coords(double wx, double wy,
 	xmax = ymax / m;
       }
     
-    rmax = sqrt ((double)(sqr (xmax) + sqr (ymax)));
+    rmax = sqrt ((double)(SQR (xmax) + SQR (ymax)));
     
     t = ((ym - y1) < (xm - x1)) ? (ym - y1) : (xm - x1);
     
@@ -627,19 +621,19 @@ calc_undistorted_coords(double wx, double wy,
     xx = r * sin (phi2);
     yy = r * cos (phi2);
     
-    if (phi >= 1.5 * M_PI)
+    if (phi >= 1.5 * G_PI)
       {
 	x_calc = (double)xm - xx;
 	y_calc = (double)ym - yy;
       }
     else
-      if (phi >= M_PI)
+      if (phi >= G_PI)
 	{
 	  x_calc = (double)xm - xx;
 	  y_calc = (double)ym + yy;
 	}
       else
-	if (phi >= 0.5 * M_PI)
+	if (phi >= 0.5 * G_PI)
 	  {
 	    x_calc = (double)xm + xx;
 	    y_calc = (double)ym + yy;

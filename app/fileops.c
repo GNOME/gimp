@@ -58,6 +58,7 @@
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpmath.h"
 
 typedef struct _OverwriteBox OverwriteBox;
 

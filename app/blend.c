@@ -15,7 +15,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <math.h>
+#include "config.h"
+
 #include "appenv.h"
 #include "asupsample.h"
 #include "blend.h"
@@ -39,6 +40,7 @@
 #include "tile.h"
 
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpmath.h"
 
 
 /*  target size  */

@@ -19,24 +19,17 @@
  * Removed possible div-by-0 errors, took the plugin out
  * of hiding (guess we need a new easter-egg for GIMP 1.2!)
  */
+#include "config.h"
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-#include <math.h>
 #include <time.h>
 
 #include "glib.h"
 #include "libgimp/gimp.h"
 #include "gtk/gtk.h"
-
-#include "config.h"
-
-
-#ifndef HAVE_RINT
-#define rint(x) floor ((x) + 0.5)
-#endif
 
 /* Test for GTK1.2-style gdkrgb code, else use old 'preview' code. */
 #ifdef __GDK_RGB_H__
@@ -339,7 +332,7 @@ static void init_lut(void)
 
   for (i=0; i<LUTSIZE; i++)
     {
-      wigglelut[i] = rint((double)(wiggleamp<<11))*(sin((double)(i) /
+      wigglelut[i] = RINT((double)(wiggleamp<<11))*(sin((double)(i) /
 					    ((double)LUTSIZEMASK /
 					     31.4159265358979323)));
     }

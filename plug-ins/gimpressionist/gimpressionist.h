@@ -1,5 +1,7 @@
 #include <gtk/gtk.h>
 
+#include "libgimp/gimpmath.h"
+
 #define PLUG_IN_NAME "plug_in_gimpressionist"
 #define PLUG_IN_VERSION "v0.99.6, August 1999"
 
@@ -10,14 +12,6 @@
 #define PREVIEWSIZE 150
 #define MAXORIENTVECT 50
 #define MAXSIZEVECT 50
-
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
-
-#ifndef M_PI_2
-#define M_PI_2  (M_PI / 2.0)
-#endif /* M_PI_2 */
 
 /* Type declaration and definitions */
 

@@ -30,6 +30,10 @@
 
 #define USE_LOGO
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -39,17 +43,9 @@
 #include <libgimp/gimp.h>
 #include <plug-ins/megawidget/megawidget.h>
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 #ifdef USE_LOGO
 #include "sinus_logo.h"
 #endif
-
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
 
 #ifndef RAND_MAX
 #define RAND_MAX 2147483647
@@ -304,32 +300,32 @@ void prepare_coef( params *p)
   if (svals.perturbation==IDEAL) {
     p->c11= 0*rand();
     p->c12= (2.0*rand()/(RAND_MAX+1.0)-1)*scaley; /*rand+rand is used to keep */
-    p->c13= (2*M_PI*rand())/RAND_MAX;
+    p->c13= (2*G_PI*rand())/RAND_MAX;
     p->c21= 0*rand();
     p->c22= (2.0*rand()/(RAND_MAX+1.0)-1)*scaley; /*correspondance beetween Ideal*/
-    p->c23= (2*M_PI*rand())/RAND_MAX;
+    p->c23= (2*G_PI*rand())/RAND_MAX;
     p->c31= (2.0*rand()/(RAND_MAX+1.0)-1)*scalex; /*and perturbed coefs (I hope...)*/
     p->c32= 0*rand();
-    p->c33= (2*M_PI*rand())/RAND_MAX;
+    p->c33= (2*G_PI*rand())/RAND_MAX;
   } else {
     p->c11= (2.0*rand()/(RAND_MAX+1.0)-1)*scalex;
     p->c12= (2.0*rand()/(RAND_MAX+1.0)-1)*scaley;
-    p->c13= (2*M_PI*rand())/RAND_MAX;
+    p->c13= (2*G_PI*rand())/RAND_MAX;
     p->c21= (2.0*rand()/(RAND_MAX+1.0)-1)*scalex;
     p->c22= (2.0*rand()/(RAND_MAX+1.0)-1)*scaley;
-    p->c23= (2*M_PI*rand())/RAND_MAX;
+    p->c23= (2*G_PI*rand())/RAND_MAX;
     p->c31= (2.0*rand()/(RAND_MAX+1.0)-1)*scalex;
     p->c32= (2.0*rand()/(RAND_MAX+1.0)-1)*scaley;
-    p->c33= (2*M_PI*rand())/RAND_MAX;
+    p->c33= (2*G_PI*rand())/RAND_MAX;
   }
 
   if (svals.tiling) {
-    p->c11= ROUND_TO_INT(p->c11/(2*M_PI))*2*M_PI;
-    p->c12= ROUND_TO_INT(p->c12/(2*M_PI))*2*M_PI;
-    p->c21= ROUND_TO_INT(p->c21/(2*M_PI))*2*M_PI;
-    p->c22= ROUND_TO_INT(p->c22/(2*M_PI))*2*M_PI;
-    p->c31= ROUND_TO_INT(p->c31/(2*M_PI))*2*M_PI;
-    p->c32= ROUND_TO_INT(p->c32/(2*M_PI))*2*M_PI;
+    p->c11= ROUND_TO_INT(p->c11/(2*G_PI))*2*G_PI;
+    p->c12= ROUND_TO_INT(p->c12/(2*G_PI))*2*G_PI;
+    p->c21= ROUND_TO_INT(p->c21/(2*G_PI))*2*G_PI;
+    p->c22= ROUND_TO_INT(p->c22/(2*G_PI))*2*G_PI;
+    p->c31= ROUND_TO_INT(p->c31/(2*G_PI))*2*G_PI;
+    p->c32= ROUND_TO_INT(p->c32/(2*G_PI))*2*G_PI;
   }
 
   col2.a=255.999*svals.col2[3];
@@ -431,7 +427,7 @@ double bilinear(double v)
 
 double cosinus(double v)
 {
-	return 0.5-0.5*sin((v+0.25)*M_PI*2);
+	return 0.5-0.5*sin((v+0.25)*G_PI*2);
 }
 
 

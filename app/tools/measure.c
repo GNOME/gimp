@@ -20,7 +20,7 @@
  */
 
 #include "config.h"
-#include <math.h>
+
 #include "actionarea.h"
 #include "appenv.h"
 #include "draw_core.h"
@@ -29,7 +29,7 @@
 #include "tool_options_ui.h"
 
 #include "libgimp/gimpintl.h"
-
+#include "libgimp/gimpmath.h"
 
 /*  definitions  */
 #define  TARGET         8

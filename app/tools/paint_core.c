@@ -15,10 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include "config.h"
+
 #include <stdlib.h>
 #include <stdio.h>     /* temporary for debugging */
 #include <string.h>
-#include <math.h>
+
 #include "appenv.h"
 #include "gimpbrushlist.h"
 #include "drawable.h"
@@ -36,6 +38,7 @@
 #include "cursorutil.h"
 
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpmath.h"
 
 #include "tile.h"			/* ick. */
 

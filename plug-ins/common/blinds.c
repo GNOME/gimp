@@ -47,18 +47,14 @@
  * Added patches supplied by Tim Mooney mooney@dogbert.cc.ndsu.NoDak.edu
  * to allow the plug-in to build with Digitals compiler.
  */
+#include "config.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
+
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
-
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
-
 
 /***** Magic numbers *****/
 
@@ -743,7 +739,7 @@ blindsapply(guchar *srow,guchar *drow,gint width,gint bpp,guchar *bg)
     }
 
   /* Disp for each point */
-  ang = (bvals.angledsp*2*M_PI)/360; /* Angle in rads */
+  ang = (bvals.angledsp*2*G_PI)/360; /* Angle in rads */
   ang = (1-fabs(cos(ang)));
 
   available = 0;

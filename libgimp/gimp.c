@@ -70,7 +70,9 @@ void gimp_extension_ack     (void);
 void gimp_read_expect_msg(WireMessage *msg, int type);
 
 
+#ifndef NATIVE_WIN32
 static RETSIGTYPE gimp_signal        (int signum);
+#endif
 static int        gimp_write         (GIOChannel *channel , guint8 *buf, gulong count);
 static int        gimp_flush         (GIOChannel *channel );
 static void       gimp_loop          (void);
@@ -181,6 +183,12 @@ gimp_main (int   argc,
 
   progname = argv[0];
 
+#ifndef NATIVE_WIN32
+  /* No use catching these on Win32, the user won't get any meaningful
+   * stack trace from glib anyhow. It's better to let Windows inform
+   * about the program error, and offer debugging if the plug-in
+   * has been built with MSVC, and the user has MSVC installed.
+   */
 #ifdef SIGHUP
   signal (SIGHUP, gimp_signal);
 #endif
@@ -200,6 +208,7 @@ gimp_main (int   argc,
   signal (SIGTERM, gimp_signal);
 #ifdef SIGFPE
   signal (SIGFPE, gimp_signal);
+#endif
 #endif
 
 #ifndef NATIVE_WIN32
@@ -1131,6 +1140,7 @@ gimp_request_wakeups (void)
     gimp_quit ();
 }
 
+#ifndef NATIVE_WIN32
 static RETSIGTYPE
 gimp_signal (int signum)
 {
@@ -1170,6 +1180,7 @@ gimp_signal (int signum)
 
   gimp_quit ();
 }
+#endif
 
 static int
 gimp_write (GIOChannel *channel, guint8 *buf, gulong count)

@@ -26,23 +26,18 @@
  * $Id$
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <math.h>
 #include <sys/types.h>
 
 #include <libgimp/gimp.h>
 #include <gtk/gtk.h>
 #include <plug-ins/megawidget/megawidget.h>
-
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
 
 static mw_preview_t emboss_do_preview;
 
@@ -91,7 +86,7 @@ static inline void EmbossInit(gdouble azimuth, gdouble elevation,
 static inline void EmbossRow(guchar *src, guchar *texture, guchar *dst,
                              guint xSize, guint bypp, gint alpha);
 
-#define DtoR(d) ((d)*(M_PI/(gdouble)180))
+#define DtoR(d) ((d)*(G_PI/(gdouble)180))
 
 GPlugInInfo PLUG_IN_INFO = {
   NULL, /* init */

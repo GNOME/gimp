@@ -32,10 +32,6 @@
 
 #include <libgimp/gimp.h>
 
-#ifndef G_PI                    /* G_PI will be in GLib eventually */
-#define G_PI    3.14159265358979323846
-#endif
-
 /* Tor Lillqvist used these, but they're not defined on my system? -Vidar */
 /* They are in GIMP's config.h. --tml */
 #ifndef SRAND_FUNC

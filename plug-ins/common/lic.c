@@ -33,10 +33,10 @@
 /* Some of the code is based on code by Steinar Haugen (thanks!), the Perlin     */
 /* noise function is practically ripped as is :)                                 */
 /*********************************************************************************/
+#include "config.h"
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include <signal.h>
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
@@ -46,10 +46,6 @@
 /************/
 /* Typedefs */
 /************/
-
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
 
 #define CHECKBOUNDS(x,y) (x>=0 && y>=0 && x<width && y<height)
 
@@ -370,7 +366,7 @@ void generatevectors(void)
     {
       for (j=0; j<numy; j++)
         {
-          alpha = (gdouble)(rand()%1000)*(M_PI/500.0);
+          alpha = (gdouble)(rand()%1000)*(G_PI/500.0);
           G[i][j][0] = cos(alpha);
           G[i][j][1] = sin(alpha);
         }

@@ -78,10 +78,6 @@
 #  endif
 #endif
 
-#ifndef HAVE_RINT
-#define rint(x) floor (x + 0.5)
-#endif
-
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 #include "pix_data.h"
@@ -119,20 +115,6 @@
 #define SMALL_PREVIEW_SZ 48
 #define BRUSH_PREVIEW_SZ 32
 #define GFIG_HEADER "GFIG Version 0.1\n"
-
-
-#ifndef TRUE
-#define TRUE 1
-#endif /* TRUE */
-
-#ifndef FALSE
-#define FALSE 0
-#endif /* FALSE */
-
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
-
 
 #define PREVIEW_MASK   GDK_EXPOSURE_MASK | \
                        GDK_MOTION_NOTIFY | \
@@ -6895,7 +6877,7 @@ find_grid_pos(GdkPoint *p,GdkPoint *gp,guint is_butt3)
       real_radius = ang_radius = sqrt((shift_y*shift_y) + (shift_x*shift_x));
 
       /* round radius */
-      rounded_radius = (gint)(rint(ang_radius/selvals.opts.gridspacing))*selvals.opts.gridspacing;
+      rounded_radius = (gint)(RINT(ang_radius/selvals.opts.gridspacing))*selvals.opts.gridspacing;
       if(rounded_radius <= 0 || real_radius <=0)
 	{
 	  /* DEAD CENTER */
@@ -6908,21 +6890,21 @@ find_grid_pos(GdkPoint *p,GdkPoint *gp,guint is_butt3)
 	  return;
 	}
 
-      ang_grid = 2*M_PI/get_num_radials();
+      ang_grid = 2*G_PI/get_num_radials();
 
       real_angle = atan2(shift_y,shift_x);
       if(real_angle < 0)
-	real_angle += 2*M_PI;
+	real_angle += 2*G_PI;
 
-      rounded_angle = (rint((real_angle/ang_grid)))*ang_grid;
+      rounded_angle = (RINT((real_angle/ang_grid)))*ang_grid;
 #ifdef DEBUG
       printf("real_ang = %f ang_gid = %f rounded_angle = %f rounded radius = %d\n",
 	     real_angle,ang_grid,rounded_angle,rounded_radius);
 
       printf("preview_width = %d preview_height = %d\n",preview_width,preview_height);
 #endif /* DEBUG */
-      gp->x = (gint)rint((rounded_radius*cos(rounded_angle))) + preview_width/2;
-      gp->y = -(gint)rint((rounded_radius*sin(rounded_angle))) + preview_height/2;
+      gp->x = (gint)RINT((rounded_radius*cos(rounded_angle))) + preview_width/2;
+      gp->y = -(gint)RINT((rounded_radius*sin(rounded_angle))) + preview_height/2;
 
       if(is_butt3)
 	{
@@ -6930,13 +6912,13 @@ find_grid_pos(GdkPoint *p,GdkPoint *gp,guint is_butt3)
 	    {
 	      if(fabs(rounded_angle - cons_ang) > ang_grid/2)
 		{
-		  gp->x = (gint)rint((cons_radius*cos(rounded_angle))) + preview_width/2;
-		  gp->y = -(gint)rint((cons_radius*sin(rounded_angle))) + preview_height/2;
+		  gp->x = (gint)RINT((cons_radius*cos(rounded_angle))) + preview_width/2;
+		  gp->y = -(gint)RINT((cons_radius*sin(rounded_angle))) + preview_height/2;
 		}
 	      else
 		{
-		  gp->x = (gint)rint((rounded_radius*cos(cons_ang))) + preview_width/2;
-		  gp->y = -(gint)rint((rounded_radius*sin(cons_ang))) + preview_height/2;
+		  gp->x = (gint)RINT((rounded_radius*cos(cons_ang))) + preview_width/2;
+		  gp->y = -(gint)RINT((rounded_radius*sin(cons_ang))) + preview_height/2;
 		}
 	    }
 	}
@@ -7232,7 +7214,7 @@ draw_grid_polar(GdkGC *drawgc)
     }
 
   /* Lines */
-  ang_grid = 2*M_PI/get_num_radials();
+  ang_grid = 2*G_PI/get_num_radials();
   ang_radius = sqrt((preview_width*preview_width) + (preview_height*preview_height))/2;
 
   for(loop = 0 ; loop <= get_num_radials() ; loop++)
@@ -7241,8 +7223,8 @@ draw_grid_polar(GdkGC *drawgc)
 
       ang_loop = loop * ang_grid;
 	
-      lx = (gint)rint(ang_radius * cos(ang_loop));
-      ly = (gint)rint(ang_radius * sin(ang_loop));
+      lx = (gint)RINT(ang_radius * cos(ang_loop));
+      ly = (gint)RINT(ang_radius * sin(ang_loop));
 
       gdk_draw_line(gfig_preview->window,
 		    drawgc,
@@ -8517,10 +8499,10 @@ d_draw_circle(DOBJECT * obj)
       gdk_draw_arc (gfig_preview->window,
 		    gfig_gc,
 		    0,
-		    gfig_scale_x(center_pnt->pnt.x - (gint)rint(radius)),
-		    gfig_scale_y(center_pnt->pnt.y - (gint)rint(radius)),
-		    gfig_scale_x((gint)rint(radius) * 2),
-		    gfig_scale_y((gint)rint(radius) * 2),
+		    gfig_scale_x(center_pnt->pnt.x - (gint)RINT(radius)),
+		    gfig_scale_y(center_pnt->pnt.y - (gint)RINT(radius)),
+		    gfig_scale_x((gint)RINT(radius) * 2),
+		    gfig_scale_y((gint)RINT(radius) * 2),
 		    0,
 		    360*64);
     }
@@ -8693,10 +8675,10 @@ d_update_circle(GdkPoint *pnt)
       gdk_draw_arc (gfig_preview->window,
 		    gfig_gc,
 		    0,
-		    center_pnt->pnt.x - (gint)rint(radius),
-		    center_pnt->pnt.y - (gint)rint(radius),
-		    (gint)rint(radius) * 2,
-		    (gint)rint(radius) * 2,
+		    center_pnt->pnt.x - (gint)RINT(radius),
+		    center_pnt->pnt.y - (gint)RINT(radius),
+		    (gint)RINT(radius) * 2,
+		    (gint)RINT(radius) * 2,
 		    0,
 		    360*64);
     }
@@ -8716,10 +8698,10 @@ d_update_circle(GdkPoint *pnt)
   gdk_draw_arc (gfig_preview->window,
 		gfig_gc,
 		0,
-		center_pnt->pnt.x - (gint)rint(radius),
-		center_pnt->pnt.y - (gint)rint(radius),
-		(gint)rint(radius) * 2,
-		(gint)rint(radius) * 2,
+		center_pnt->pnt.x - (gint)RINT(radius),
+		center_pnt->pnt.y - (gint)RINT(radius),
+		(gint)RINT(radius) * 2,
+		(gint)RINT(radius) * 2,
 		0,
 		360*64);
 
@@ -8932,7 +8914,7 @@ d_paint_approx_ellipse(DOBJECT *obj)
   b_axis = ((gdouble)(radius_pnt->pnt.y - center_pnt->pnt.y));
 
   /* Lines */
-  ang_grid = 2*M_PI/(gdouble)(gint)600;
+  ang_grid = 2*G_PI/(gdouble)(gint)600;
 
   for(loop = 0 ; loop < (gint)600 ; loop++)
     {
@@ -8946,8 +8928,8 @@ d_paint_approx_ellipse(DOBJECT *obj)
       lx = radius * cos(ang_loop);
       ly = radius * sin(ang_loop);
 
-      calc_pnt.x = (gint)rint(lx + center_pnt->pnt.x);
-      calc_pnt.y = (gint)rint(ly + center_pnt->pnt.y);
+      calc_pnt.x = (gint)RINT(lx + center_pnt->pnt.x);
+      calc_pnt.y = (gint)RINT(ly + center_pnt->pnt.y);
 
       /* Miss out duped pnts */
       if(!first)
@@ -9445,7 +9427,7 @@ d_draw_poly(DOBJECT *obj)
   radius = sqrt((shift_x*shift_x) + (shift_y*shift_y));
 
   /* Lines */
-  ang_grid = 2*M_PI/(gdouble)(gint)obj->type_data;
+  ang_grid = 2*G_PI/(gdouble)(gint)obj->type_data;
   offset_angle = atan2(shift_y,shift_x);
 
   for(loop = 0 ; loop < (gint)obj->type_data ; loop++)
@@ -9458,8 +9440,8 @@ d_draw_poly(DOBJECT *obj)
       lx = radius * cos(ang_loop);
       ly = radius * sin(ang_loop);
 
-      calc_pnt.x = (gint)rint(lx + center_pnt->pnt.x);
-      calc_pnt.y = (gint)rint(ly + center_pnt->pnt.y);
+      calc_pnt.x = (gint)RINT(lx + center_pnt->pnt.x);
+      calc_pnt.y = (gint)RINT(ly + center_pnt->pnt.y);
 
       if(do_line)
 	{
@@ -9568,7 +9550,7 @@ d_paint_poly(DOBJECT *obj)
   radius = sqrt((shift_x*shift_x) + (shift_y*shift_y));
 
   /* Lines */
-  ang_grid = 2*M_PI/(gdouble)(gint)obj->type_data;
+  ang_grid = 2*G_PI/(gdouble)(gint)obj->type_data;
   offset_angle = atan2(shift_y,shift_x);
 
   for(loop = 0 ; loop < (gint)obj->type_data ; loop++)
@@ -9581,8 +9563,8 @@ d_paint_poly(DOBJECT *obj)
       lx = radius * cos(ang_loop);
       ly = radius * sin(ang_loop);
 
-      calc_pnt.x = (gint)rint(lx + center_pnt->pnt.x);
-      calc_pnt.y = (gint)rint(ly + center_pnt->pnt.y);
+      calc_pnt.x = (gint)RINT(lx + center_pnt->pnt.x);
+      calc_pnt.y = (gint)RINT(ly + center_pnt->pnt.y);
 
       /* Miss out duped pnts */
       if(!first)
@@ -9730,7 +9712,7 @@ d_poly2lines(DOBJECT *obj)
   radius = sqrt((shift_x*shift_x) + (shift_y*shift_y));
 
   /* Lines */
-  ang_grid = 2*M_PI/(gdouble)(gint)obj->type_data;
+  ang_grid = 2*G_PI/(gdouble)(gint)obj->type_data;
   offset_angle = atan2(shift_y,shift_x);
 
   for(loop = 0 ; loop < (gint)obj->type_data ; loop++)
@@ -9743,8 +9725,8 @@ d_poly2lines(DOBJECT *obj)
       lx = radius * cos(ang_loop);
       ly = radius * sin(ang_loop);
 
-      calc_pnt.x = (gint)rint(lx + center_pnt->pnt.x);
-      calc_pnt.y = (gint)rint(ly + center_pnt->pnt.y);
+      calc_pnt.x = (gint)RINT(lx + center_pnt->pnt.x);
+      calc_pnt.y = (gint)RINT(ly + center_pnt->pnt.y);
 
       if(!first)
 	{
@@ -9851,7 +9833,7 @@ d_star2lines(DOBJECT *obj)
   outer_radius = sqrt((shift_x*shift_x) + (shift_y*shift_y));
 
   /* Lines */
-  ang_grid = 2*M_PI/(2.0*(gdouble)(gint)obj->type_data);
+  ang_grid = 2*G_PI/(2.0*(gdouble)(gint)obj->type_data);
   offset_angle = atan2(shift_y,shift_x);
 
   shift_x = inner_radius_pnt->pnt.x - center_pnt->pnt.x;
@@ -9877,8 +9859,8 @@ d_star2lines(DOBJECT *obj)
 	  ly = outer_radius * sin(ang_loop);
 	}
 
-      calc_pnt.x = (gint)rint(lx + center_pnt->pnt.x);
-      calc_pnt.y = (gint)rint(ly + center_pnt->pnt.y);
+      calc_pnt.x = (gint)RINT(lx + center_pnt->pnt.x);
+      calc_pnt.y = (gint)RINT(ly + center_pnt->pnt.y);
 
       if(!first)
 	{
@@ -10294,9 +10276,9 @@ arc_angle(GdkPoint *pnt, GdkPoint *center)
   printf("offset_ang = %f\n",offset_angle);
 #endif /* DEBUG */
   if(offset_angle < 0)
-    offset_angle += 2*M_PI;
+    offset_angle += 2*G_PI;
 
-  return(offset_angle*360/(2*M_PI));
+  return(offset_angle*360/(2*G_PI));
 }
 
 void
@@ -10540,7 +10522,7 @@ d_paint_arc(DOBJECT *obj)
   line_pnts = g_malloc0(GFIG_LCC*(2*seg_count + 3)*sizeof(gdouble));
 
   /* Lines */
-  ang_grid = 2*M_PI/(gdouble)360;
+  ang_grid = 2*G_PI/(gdouble)360;
 
   if(arcang < 0.0)
     {
@@ -10549,7 +10531,7 @@ d_paint_arc(DOBJECT *obj)
       arcang = -arcang;
     }
 
-  minang = minang * (2*M_PI/360); /* min ang is in degrees - need in rads*/
+  minang = minang * (2*G_PI/360); /* min ang is in degrees - need in rads*/
 
   for(loop = 0 ; loop < abs((gint)arcang) ; loop++)
     {
@@ -10561,8 +10543,8 @@ d_paint_arc(DOBJECT *obj)
       lx = radius * cos(ang_loop);
       ly = -radius * sin(ang_loop); /* y grows down screen and angs measured from x clockwise */
 
-      calc_pnt.x = (gint)rint(lx + center_pnt.x);
-      calc_pnt.y = (gint)rint(ly + center_pnt.y);
+      calc_pnt.x = (gint)RINT(lx + center_pnt.x);
+      calc_pnt.y = (gint)RINT(ly + center_pnt.y);
 
       /* Miss out duped pnts */
       if(!first)
@@ -10943,7 +10925,7 @@ d_draw_star(DOBJECT *obj)
   outer_radius = sqrt((shift_x*shift_x) + (shift_y*shift_y));
 
   /* Lines */
-  ang_grid = 2*M_PI/(2.0*(gdouble)(gint)obj->type_data);
+  ang_grid = 2*G_PI/(2.0*(gdouble)(gint)obj->type_data);
   offset_angle = atan2(shift_y,shift_x);
 
   shift_x = inner_radius_pnt->pnt.x - center_pnt->pnt.x;
@@ -10969,8 +10951,8 @@ d_draw_star(DOBJECT *obj)
 	  ly = outer_radius * sin(ang_loop);
 	}
 
-      calc_pnt.x = (gint)rint(lx + center_pnt->pnt.x);
-      calc_pnt.y = (gint)rint(ly + center_pnt->pnt.y);
+      calc_pnt.x = (gint)RINT(lx + center_pnt->pnt.x);
+      calc_pnt.y = (gint)RINT(ly + center_pnt->pnt.y);
 
       if(do_line)
 	{
@@ -11099,7 +11081,7 @@ d_paint_star(DOBJECT *obj)
   outer_radius = sqrt((shift_x*shift_x) + (shift_y*shift_y));
 
   /* Lines */
-  ang_grid = 2*M_PI/(2.0*(gdouble)(gint)obj->type_data);
+  ang_grid = 2*G_PI/(2.0*(gdouble)(gint)obj->type_data);
   offset_angle = atan2(shift_y,shift_x);
 
   shift_x = inner_radius_pnt->pnt.x - center_pnt->pnt.x;
@@ -11125,8 +11107,8 @@ d_paint_star(DOBJECT *obj)
 	  ly = outer_radius * sin(ang_loop);
 	}
 
-      calc_pnt.x = (gint)rint(lx + center_pnt->pnt.x);
-      calc_pnt.y = (gint)rint(ly + center_pnt->pnt.y);
+      calc_pnt.x = (gint)RINT(lx + center_pnt->pnt.x);
+      calc_pnt.y = (gint)RINT(ly + center_pnt->pnt.y);
 
       /* Miss out duped pnts */
       if(!first)
@@ -11511,14 +11493,14 @@ d_draw_spiral(DOBJECT *obj)
   clock_wise = ((gint)obj->type_data)/(abs((gint)(obj->type_data)));
 
   if(offset_angle < 0)
-    offset_angle += 2*M_PI;
+    offset_angle += 2*G_PI;
 
-  sp_cons = radius/((gint)obj->type_data * 2 * M_PI + offset_angle);
+  sp_cons = radius/((gint)obj->type_data * 2 * G_PI + offset_angle);
   /* Lines */
-  ang_grid = 2.0*M_PI/(gdouble)180;
+  ang_grid = 2.0*G_PI/(gdouble)180;
 
 
-  for(loop = 0 ; loop <= abs((gint)(obj->type_data)*180) + clock_wise*(gint)rint(offset_angle/ang_grid) ; loop++)
+  for(loop = 0 ; loop <= abs((gint)(obj->type_data)*180) + clock_wise*(gint)RINT(offset_angle/ang_grid) ; loop++)
     {
       gdouble lx,ly;
       GdkPoint calc_pnt;
@@ -11528,8 +11510,8 @@ d_draw_spiral(DOBJECT *obj)
       lx = sp_cons * ang_loop * cos(ang_loop)*clock_wise;
       ly = sp_cons * ang_loop * sin(ang_loop);
 
-      calc_pnt.x = (gint)rint(lx + center_pnt->pnt.x);
-      calc_pnt.y = (gint)rint(ly + center_pnt->pnt.y);
+      calc_pnt.x = (gint)RINT(lx + center_pnt->pnt.x);
+      calc_pnt.y = (gint)RINT(ly + center_pnt->pnt.y);
 
       if(do_line)
 	{
@@ -11617,15 +11599,15 @@ d_paint_spiral(DOBJECT *obj)
   offset_angle = atan2(shift_y,shift_x);
 
   if(offset_angle < 0)
-    offset_angle += 2*M_PI;
+    offset_angle += 2*G_PI;
 
-  sp_cons = radius/((gint)obj->type_data * 2 * M_PI + offset_angle);
+  sp_cons = radius/((gint)obj->type_data * 2 * G_PI + offset_angle);
   /* Lines */
-  ang_grid = 2.0*M_PI/(gdouble)180;
+  ang_grid = 2.0*G_PI/(gdouble)180;
 
 
   /* count - */
-  seg_count = abs((gint)(obj->type_data)*180) + clock_wise*(gint)rint(offset_angle/ang_grid);
+  seg_count = abs((gint)(obj->type_data)*180) + clock_wise*(gint)RINT(offset_angle/ang_grid);
 
   /* The second 2* to get around bug in GIMP */
   line_pnts = g_malloc0(GFIG_LCC*(2*seg_count + 3)*sizeof(gdouble));
@@ -11640,8 +11622,8 @@ d_paint_spiral(DOBJECT *obj)
       lx = sp_cons * ang_loop * cos(ang_loop)*clock_wise;
       ly = sp_cons * ang_loop * sin(ang_loop);
 
-      calc_pnt.x = (gint)rint(lx + center_pnt->pnt.x);
-      calc_pnt.y = (gint)rint(ly + center_pnt->pnt.y);
+      calc_pnt.x = (gint)RINT(lx + center_pnt->pnt.x);
+      calc_pnt.y = (gint)RINT(ly + center_pnt->pnt.y);
 
       /* Miss out duped pnts */
       if(!loop)

@@ -24,6 +24,7 @@
 #include "libgimp/gimpenums.h"
 #include "libgimp/gimpfeatures.h"
 #include "libgimp/gimpenv.h"
+#include "libgimp/gimpmath.h"
 #include "libgimp/parasite.h"
 #include "libgimp/parasiteP.h"
 #include "libgimp/gimpunit.h"

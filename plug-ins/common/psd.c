@@ -146,14 +146,9 @@
 #include <unistd.h>
 #endif
 #include <string.h>
-#include <math.h>
 
 #include <glib.h>
 #include <libgimp/gimp.h>
-
-#ifndef HAVE_RINT
-#define rint(x) floor (x + 0.5)
-#endif
 
 /* Local types etc
  */
@@ -765,14 +760,14 @@ dispatch_resID(guint ID, FILE *fd, guint32 *offset, guint32 Size)
 		  if (psd_image.guides[i].horizontal)
 		    {
 		      psd_image.guides[i].position =
-			rint((double)(psd_image.guides[i].position *
+			RINT((double)(psd_image.guides[i].position *
 				      (magic4>>8))
 			     /(double)(magic4&255));
 		    }
 		  else
 		    {
 		      psd_image.guides[i].position =
-			rint((double)(psd_image.guides[i].position *
+			RINT((double)(psd_image.guides[i].position *
 				      (magic6>>8))
 			     /(double)(magic6&255));
 		    }

@@ -22,9 +22,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-#include <math.h>
 
 #include "gdk/gdkkeysyms.h"
+
 #include "appenv.h"
 #include "draw_core.h"
 #include "actionarea.h"
@@ -57,6 +57,7 @@
 #include "drawable_pvt.h"
 
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpmath.h"
 
 #include "pixmaps/new.xpm"
 #include "pixmaps/duplicate.xpm"

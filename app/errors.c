@@ -41,6 +41,10 @@
 #include "errors.h"
 #include "libgimp/gimpintl.h"
 
+#ifdef NATIVE_WIN32
+#include <windows.h>
+#endif
+
 extern gchar *prog_name;
 
 void
@@ -68,28 +72,33 @@ gimp_message_func (gchar *str)
 void
 gimp_fatal_error (gchar *fmt, ...)
 {
+#ifndef NATIVE_WIN32
   va_list args;
 
   va_start (args, fmt);
-#ifndef NATIVE_WIN32
   printf (_("%s: fatal error: %s\n"), prog_name, g_strdup_vprintf (fmt, args));
-#else
-  g_error (_("%s: fatal error: %s\n"), prog_name, g_strdup_vprintf (fmt, args));
-#endif
   va_end (args);
-
-#ifndef NATIVE_WIN32
   g_on_error_query (prog_name);
 #else
-  /* g_on_error_query unreliable on Win32 */
-  abort ();
+  /* g_on_error_query doesn't do anything reasonable on Win32. */
+  va_list args;
+  gchar *msg;
+
+  va_start (args, fmt);
+  msg = g_strdup_vprintf (fmt, args);
+  va_end (args);
+
+  MessageBox (NULL, msg, prog_name, MB_OK|MB_ICONERROR);
+  /* I don't dare do anything more. */
+  ExitProcess (1);
 #endif
-  app_exit (1);
+  app_exit (TRUE);
 }
 
 void
 gimp_terminate (gchar *fmt, ...)
 {
+#ifndef NATIVE_WIN32
   va_list args;
 
   va_start (args, fmt);
@@ -98,9 +107,18 @@ gimp_terminate (gchar *fmt, ...)
   printf ("\n");
   va_end (args);
 
-#ifndef NATIVE_WIN32
   if (use_debug_handler)
     g_on_error_query (prog_name);
+#else
+  /* g_on_error_query doesn't do anything reasonable on Win32. */
+  va_list args;
+  gchar *msg;
+
+  va_start (args, fmt);
+  msg = g_strdup_vprintf (fmt, args);
+  va_end (args);
+
+  MessageBox (NULL, msg, prog_name, MB_OK|MB_ICONERROR);
 #endif
   gdk_exit (1);
 }

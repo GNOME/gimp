@@ -23,7 +23,6 @@
 
 #include "config.h"
 
-#include <math.h>
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -37,10 +36,6 @@
 
 
 /***** Magic numbers *****/
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
-
 #define ITERATIONS   100      /* 100 */
 #define WEIRD_FACTOR 0.04     /* 0.04 */
 
@@ -390,7 +385,7 @@ diff_init_luts(void)
 	double a;
 	double sina;
 
-	a = -M_PI;
+	a = -G_PI;
 
 	for (i = 0; i <= ITERATIONS; i++) {
 		sina = sin(a);
@@ -400,7 +395,7 @@ diff_init_luts(void)
 		param_lut1[i] = 0.75 * sina;
 		param_lut2[i] = 0.5 * (4.0 * cos_lut[i] * cos_lut[i] + sina * sina);
 
-		a += (2.0 * M_PI / ITERATIONS);
+		a += (2.0 * G_PI / ITERATIONS);
 	} /* for */
 } /* diff_init_luts */
 
@@ -454,7 +449,7 @@ diff_intensity(double x, double y, double lam)
 	cxy *= WEIRD_FACTOR;
 	sxy *= WEIRD_FACTOR;
 
-	polpi2 = dvals.polarization * (M_PI / 2.0);
+	polpi2 = dvals.polarization * (G_PI / 2.0);
 
 	cospolpi2 = cos(polpi2);
 	sinpolpi2 = sin(polpi2);
@@ -496,7 +491,7 @@ diff_intensity(double x, double y, double lam)
 		sxy += 0.04 * sin(param);
 	} /* for */
 
-	polpi2 = dvals.polarization * (M_PI / 2.0);
+	polpi2 = dvals.polarization * (G_PI / 2.0);
 
 	cospolpi2 = cos(polpi2);
 	sinpolpi2 = sin(polpi2);

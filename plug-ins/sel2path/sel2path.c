@@ -46,10 +46,6 @@
 #include "sel2path.h"
 #include "libgimp/stdplugins-intl.h"
 
-#ifndef HAVE_RINT
-#define rint(x) floor (x + 0.5)
-#endif
-
 #define MID_POINT 127
 
 /***** Magic numbers *****/
@@ -453,11 +449,11 @@ gen_anchor(gdouble *p,double x,double y,int is_newcurve)
 {
 /*   printf("TYPE: %s X: %d Y: %d\n",  */
 /* 	 (is_newcurve)?"3":"1",  */
-/* 	 sel_x1+(int)rint(x),  */
-/* 	 sel_y1 + sel_height - (int)rint(y)+1); */
+/* 	 sel_x1+(int)RINT(x),  */
+/* 	 sel_y1 + sel_height - (int)RINT(y)+1); */
 
-  *p++ = (sel_x1+(int)rint(x));
-  *p++ = sel_y1 + sel_height - (int)rint(y)+1;
+  *p++ = (sel_x1+(int)RINT(x));
+  *p++ = sel_y1 + sel_height - (int)RINT(y)+1;
   *p++ = (is_newcurve)?3.0:1.0;
 
 }
@@ -467,11 +463,11 @@ void
 gen_control(gdouble *p,double x,double y)
 {
 /*   printf("TYPE: 2 X: %d Y: %d\n",  */
-/*  	 sel_x1+(int)rint(x),  */
-/*  	 sel_y1 + sel_height - (int)rint(y)+1);  */
+/*  	 sel_x1+(int)RINT(x),  */
+/*  	 sel_y1 + sel_height - (int)RINT(y)+1);  */
 
-  *p++ = sel_x1+(int)rint(x);
-  *p++ = sel_y1 + sel_height - (int)rint(y)+1;
+  *p++ = sel_x1+(int)RINT(x);
+  *p++ = sel_y1 + sel_height - (int)RINT(y)+1;
   *p++ = 2.0;
 
 }

@@ -48,18 +48,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
-
-#ifndef HAVE_RINT
-#define rint(x) floor((x)+0.5)
-#endif
-
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
 
 #ifdef RCSID
 static char rcsid[] = "$Id$";
@@ -122,7 +113,7 @@ do {									 \
 
 #define BOUNDS(a,x,y)	((a < x) ? x : ((a > y) ? y : a))
 #define ISNEG(x)	(((x) < 0)? 1 : 0)
-#define DEG2RAD(d)	((d) * M_PI / 180)
+#define DEG2RAD(d)	((d) * G_PI / 180)
 #define VALID_BOOL(x)	((x) == TRUE || (x) == FALSE)
 #define CLAMPED_ADD(a, b) (((a)+(b) > 0xff)? 0xff : (a) + (b))
 
@@ -820,7 +811,7 @@ preview_update(channel_st *st)
 	/* redraw preview widget */
 	gtk_widget_draw(prev->widget, NULL);
 
-	sprintf(pct, "%2d%%", (int)rint(spotfn_list[sfn].prev_lvl[i] * 100));
+	sprintf(pct, "%2d%%", (int)RINT(spotfn_list[sfn].prev_lvl[i] * 100));
 	gtk_label_set_text (GTK_LABEL(prev->label), pct);
     }
 
@@ -1612,8 +1603,8 @@ newsprint_cspace_update (GtkWidget *widget,
  * Richard Mortier for this one:
  *
  * #define a(r) \
- *     ((r<=1)? M_PI * (r*r) : \
- *	4 * sqrt(r*r - 1)  +  M_PI*r*r  -  4*r*r*acos(1/r))
+ *     ((r<=1)? G_PI * (r*r) : \
+ *	4 * sqrt(r*r - 1)  +  G_PI*r*r  -  4*r*r*acos(1/r))
  *
  *   radius = sqrt(x*x + y*y);
  *
@@ -2012,8 +2003,8 @@ do {								\
 
 			for(b=0; b<cspace_nchans[colourspace]; b++)
 			{
-			    rx = rint(r * cos(theta + rot[b]));
-			    ry = rint(r * sin(theta + rot[b]));
+			    rx = RINT(r * cos(theta + rot[b]));
+			    ry = RINT(r * sin(theta + rot[b]));
 
 			    /* Make sure rx and ry are positive and within
 			     * the range 0 .. width-1 (incl).  Can't use %

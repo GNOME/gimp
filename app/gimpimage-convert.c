@@ -78,10 +78,10 @@
  *  [Adam D. Moss - adam@gimp.org]
  */
 
+#include "config.h"
 
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 
 #include "appenv.h"
 #include "actionarea.h"
@@ -97,6 +97,7 @@
 #include "preferences_dialog.h"	/* ick. */
 
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpmath.h"
 
 #include "layer_pvt.h"			/* ick. */
 #include "drawable_pvt.h"		/* ick ick. */

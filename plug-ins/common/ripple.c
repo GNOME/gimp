@@ -20,20 +20,17 @@
  *
  * You can contact the original The Gimp authors at gimp@xcf.berkeley.edu
  */
-#include <math.h>
+#include "config.h"
+
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
+
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
 
 /* Some useful macros */
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
-
 #define SCALE_WIDTH 200
 #define TILE_CACHE_SIZE 16
 #define ENTRY_WIDTH 35
@@ -1012,7 +1009,7 @@ displace_amount (gint location)
     switch (rvals.waveform)
     {
         case SINE:
-            return rvals.amplitude*sin(location*(2*M_PI)/(double)rvals.period);
+            return rvals.amplitude*sin(location*(2*G_PI)/(double)rvals.period);
         case SAWTOOTH:
             return floor(rvals.amplitude*(fabs((((location%rvals.period)/(double)rvals.period)*4)-2)-1));
     }

@@ -22,8 +22,8 @@
  *        Copyright (C) 1996  Spencer Kimball
  *        Speedups by Elliot Lee
  */
+#include "config.h"
 
-#include <math.h>
 #include <stdlib.h>
 #include <string.h>
 #include "gtk/gtk.h"
@@ -36,13 +36,7 @@
 #define RAND_MAX 2147483647
 #endif /* RAND_MAX */
 
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
-
 #define  SCALE_WIDTH     150
-
-#define  SQR(x)          ((x) * (x))
 
 #define  HORIZONTAL      0
 #define  VERTICAL        1
@@ -493,8 +487,8 @@ mosaic (GDrawable *drawable)
       back[alpha] = OPAQUE;
     }
 
-  light_x = -cos (mvals.light_dir * M_PI / 180.0);
-  light_y = sin (mvals.light_dir * M_PI / 180.0);
+  light_x = -cos (mvals.light_dir * G_PI / 180.0);
+  light_y = sin (mvals.light_dir * G_PI / 180.0);
   scale = (mvals.tile_spacing > mvals.tile_size / 2.0) ?
     0.5 : 1.0 - mvals.tile_spacing / mvals.tile_size;
 

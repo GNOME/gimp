@@ -86,7 +86,6 @@
 
 #include "config.h"
 
-#include <math.h>
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -103,10 +102,6 @@
 
 
 /***** Magic numbers *****/
-
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
 
 #define PLUG_IN_NAME    "plug_in_bump_map"
 #define PLUG_IN_VERSION "August 1997, 2.04"
@@ -606,8 +601,8 @@ bumpmap_init_params(bumpmap_params_t *params)
 
 	/* Convert to radians */
 
-	azimuth   = M_PI * bmvals.azimuth / 180.0;
-	elevation = M_PI * bmvals.elevation / 180.0;
+	azimuth   = G_PI * bmvals.azimuth / 180.0;
+	elevation = G_PI * bmvals.elevation / 180.0;
 
 	/* Calculate the light vector */
 
@@ -640,7 +635,7 @@ bumpmap_init_params(bumpmap_params_t *params)
 
 			case SINUOSIDAL:
 				n = i / 255.0;
-				params->lut[i] = (int) (255.0 * (sin((-M_PI / 2.0) + M_PI * n) + 1.0) /
+				params->lut[i] = (int) (255.0 * (sin((-G_PI / 2.0) + G_PI * n) + 1.0) /
 							2.0 + 0.5);
 				break;
 

@@ -19,7 +19,6 @@
 
 #include "config.h"
 
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -35,7 +34,9 @@
 #include "gimpbrushpipeP.h"
 #include "paint_core.h"
 #include "gimprc.h"
+
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpmath.h"
 
 /* Code duplicated from plug-ins/common/gpb.c...
  * The struct, and code to parse/build it probably should be in libgimp.

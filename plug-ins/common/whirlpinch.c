@@ -48,7 +48,6 @@
 
 #include "config.h"
 
-#include <math.h>
 #include <signal.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -59,18 +58,10 @@
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
-
-/***** Magic numbers *****/
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
-
-#ifndef M_PI_2
-#define M_PI_2  1.57079632679489661923
-#endif /* M_PI_2 */
-
 #define PLUG_IN_NAME    "plug_in_whirl_pinch"
 #define PLUG_IN_VERSION "May 1997, 2.09"
+
+/***** Magic numbers *****/
 
 #define PREVIEW_SIZE 128
 #define SCALE_WIDTH  200
@@ -418,7 +409,7 @@ whirl_pinch(void)
 
 	gimp_progress_init("Whirling and pinching...");
 
-	whirl   = wpvals.whirl * M_PI / 180;
+	whirl   = wpvals.whirl * G_PI / 180;
 	radius2 = radius * radius * wpvals.radius;
 
 	for (row = sel_y1; row <= ((sel_y1 + sel_y2) / 2); row++) {
@@ -563,7 +554,7 @@ calc_undistorted_coords(double wx, double wy,
 
 		/* Pinch */
 
-		factor = pow(sin(M_PI_2 * dist), -pinch);
+		factor = pow(sin(G_PI_2 * dist), -pinch);
 
 		dx *= factor;
 		dy *= factor;
@@ -931,7 +922,7 @@ dialog_update_preview(void)
 	dx = (right - left) / (preview_width - 1);
 	dy = (bottom - top) / (preview_height - 1);
 
-	whirl   = wpvals.whirl * M_PI / 180.0;
+	whirl   = wpvals.whirl * G_PI / 180.0;
 	radius2 = radius * radius * wpvals.radius;
 
 	scale_x = (double) preview_width / (right - left + 1);

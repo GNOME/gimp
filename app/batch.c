@@ -96,7 +96,7 @@ batch_run_cmd (char *cmd)
 
   if (g_strcasecmp (cmd, "(gimp-quit 0)") == 0)
     {
-      app_exit (0);
+      app_exit (FALSE);
       exit (0);
     }
 

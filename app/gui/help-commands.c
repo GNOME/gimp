@@ -130,7 +130,7 @@ void
 file_quit_cmd_callback (GtkWidget *widget,
 			gpointer   client_data)
 {
-  app_exit (0);
+  app_exit (FALSE);
 }
 
 void

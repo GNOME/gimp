@@ -677,10 +677,10 @@ app_exit_finish (void)
 }
 
 void
-app_exit (int kill_it)
+app_exit (gboolean kill_it)
 {
   /*  If it's the user's perogative, and there are dirty images  */
-  if (kill_it == FALSE && gdisplays_dirty () && no_interface == FALSE)
+  if (!kill_it && gdisplays_dirty () && no_interface == FALSE)
     really_quit_dialog ();
   else
     app_exit_finish ();

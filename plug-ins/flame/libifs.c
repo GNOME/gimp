@@ -16,19 +16,14 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 */
+#include "config.h"
 
-
-#include <math.h>
 #include <ctype.h>
 #include <stdlib.h>
 
+#include "libgimp/gimpmath.h"
+
 #include "libifs.h"
-
-#include "config.h"
-
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
 
 #define CHOOSE_XFORM_GRAIN 100
 
@@ -161,7 +156,7 @@ void iterate(cp, n, fuse, points)
 	 double nx, ny;
 	 if (tx < -EPS || tx > EPS ||
 	     ty < -EPS || ty > EPS)
-	    nx = atan2(tx, ty) / M_PI;
+	    nx = atan2(tx, ty) / G_PI;
 	 else
 	    nx = 0.0;
 
@@ -403,23 +398,23 @@ void interpolate_angle(t, s, v1, v2, v3, tie, cross)
    /* take the shorter way around the circle... */
    if (x > y) {
       d = x - y;
-      if (d > M_PI + EPS ||
-	  (d > M_PI - EPS && tie))
-	 y += 2*M_PI;
+      if (d > G_PI + EPS ||
+	  (d > G_PI - EPS && tie))
+	 y += 2*G_PI;
    } else {
       d = y - x;
-      if (d > M_PI + EPS ||
-	  (d > M_PI - EPS && tie))
-	 x += 2*M_PI;
+      if (d > G_PI + EPS ||
+	  (d > G_PI - EPS && tie))
+	 x += 2*G_PI;
    }
    /* unless we are supposed to avoid crossing */
    if (cross) {
       if (lastx > x) {
 	 if (lasty < y)
-	    y -= 2*M_PI;
+	    y -= 2*G_PI;
       } else {
 	 if (lasty > y)
-	    y += 2*M_PI;
+	    y += 2*G_PI;
       }
    } else {
       lastx = x;
@@ -552,7 +547,7 @@ void interpolate(cps, ncps, time, result)
    if (cps[i1].cmap_inter) {
      for (i = 0; i < 256; i++) {
        double spread = 0.15;
-       double d0, d1, e0, e1, c = 2 * M_PI * i / 256.0;
+       double d0, d1, e0, e1, c = 2 * G_PI * i / 256.0;
        c = cos(c * cps[i1].cmap_inter) + 4.0 * c1 - 2.0;
        if (c >  spread) c =  spread;
        if (c < -spread) c = -spread;
@@ -626,7 +621,7 @@ void interpolate(cps, ncps, time, result)
 			 result->xform[i].c);
 
       if (1) {
-	 double rh_time = time * 2*M_PI / (60.0 * 30.0);
+	 double rh_time = time * 2*G_PI / (60.0 * 30.0);
 
 	 /* apply pulse factor. */
 	 r = 1.0;

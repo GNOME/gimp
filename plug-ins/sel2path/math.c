@@ -16,6 +16,8 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 
+#include "config.h"
+
 #include <float.h>
 #include <math.h>
 #include <errno.h>
@@ -23,9 +25,7 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #include <stdlib.h>
 #include <assert.h>
 
-#ifndef M_PI
-#define M_PI  3.14159265358979323846
-#endif /* M_PI */
+#include "libgimp/gimpmath.h"
 
 #include "types.h"
 #include "global.h"
@@ -78,7 +78,7 @@ acosd (real v)
   if (errno == ERANGE || errno == EDOM)
     FATAL_PERROR ("acosd");
 
-  return a * 180.0 / M_PI;
+  return a * 180.0 / G_PI;
 }
 
 

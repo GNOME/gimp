@@ -15,8 +15,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include "config.h"
+
 #include <stdlib.h>
 #include <string.h>
+
 #include "appenv.h"
 #include "colormaps.h"
 #include "cursorutil.h"
@@ -48,6 +51,7 @@
 #include "layer_pvt.h"			/* ick. (not alone either) */
 
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpmath.h"
 
 
 #define OVERHEAD          25  /*  in units of pixel area  */

@@ -15,16 +15,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <math.h>
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
-
-#ifndef M_PI
-#define M_PI    3.14159265358979323846
-#endif /* M_PI */
 
 #define ENTRY_WIDTH 100
 
@@ -633,7 +631,7 @@ find_constants (gdouble n_p[],
    *  using a 4th order approximation of the gaussian operator
    */
 
-  div = sqrt(2 * M_PI) * std_dev;
+  div = sqrt(2 * G_PI) * std_dev;
   constants [0] = -1.783 / std_dev;
   constants [1] = -1.723 / std_dev;
   constants [2] = 0.6318 / std_dev;
