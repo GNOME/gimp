@@ -19,7 +19,6 @@ app/gimpunit.c
 app/global_edit.c
 app/image_new.c
 app/interface.c
-app/lc_dialog.c
 app/main.c
 app/module_db.c
 app/nav_window.c
@@ -51,7 +50,6 @@ app/gui/about-dialog.c
 app/gui/brush-editor.c
 app/gui/brush-select.c
 app/gui/channels-commands.c
-app/gui/channels-dialog.c
 app/gui/color-area.c
 app/gui/color-notebook.c
 app/gui/color-select.c
@@ -70,7 +68,6 @@ app/gui/info-dialog.c
 app/gui/info-window.c
 app/gui/layer-select.c
 app/gui/layers-commands.c
-app/gui/layers-dialog.c
 app/gui/menus.c
 app/gui/offset-dialog.c
 app/gui/palette-editor.c

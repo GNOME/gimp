@@ -27,8 +27,8 @@
 #include "core/core-types.h"
 #include "procedural_db.h"
 
-#include "appenums.h"
 #include "context_manager.h"
+#include "core/core-types.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage-duplicate.h"
@@ -3068,7 +3068,7 @@ image_get_component_active_invoker (Argument *args)
     success = FALSE;
 
   component = args[1].value.pdb_int;
-  if (component < RED_CHANNEL || component > ALPHA_CHANNEL)
+  if (component < GREEN_CHANNEL || component > ALPHA_CHANNEL)
     success = FALSE;
 
   if (success)
@@ -3141,7 +3141,7 @@ image_set_component_active_invoker (Argument *args)
     success = FALSE;
 
   component = args[1].value.pdb_int;
-  if (component < RED_CHANNEL || component > ALPHA_CHANNEL)
+  if (component < GREEN_CHANNEL || component > ALPHA_CHANNEL)
     success = FALSE;
 
   active = args[2].value.pdb_int ? TRUE : FALSE;
@@ -3210,7 +3210,7 @@ image_get_component_visible_invoker (Argument *args)
     success = FALSE;
 
   component = args[1].value.pdb_int;
-  if (component < RED_CHANNEL || component > ALPHA_CHANNEL)
+  if (component < GREEN_CHANNEL || component > ALPHA_CHANNEL)
     success = FALSE;
 
   if (success)
@@ -3283,7 +3283,7 @@ image_set_component_visible_invoker (Argument *args)
     success = FALSE;
 
   component = args[1].value.pdb_int;
-  if (component < RED_CHANNEL || component > ALPHA_CHANNEL)
+  if (component < GREEN_CHANNEL || component > ALPHA_CHANNEL)
     success = FALSE;
 
   visible = args[2].value.pdb_int ? TRUE : FALSE;

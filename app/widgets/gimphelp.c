@@ -32,15 +32,14 @@
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimp/gimpenv.h"
 
-#include "apptypes.h"
+#include "core/core-types.h"
 
 #include "gimphelp.h"
 #include "gimprc.h"
 #include "gimpui.h"
 #include "plug_in.h"
-
-#include "libgimp/gimpenv.h"
 
 #include "libgimp/gimpintl.h"
 

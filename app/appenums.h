@@ -20,37 +20,6 @@
 #define __APPENUMS_H__
 
 
-/* Base image types */
-typedef enum
-{
-  RGB,
-  GRAY,
-  INDEXED
-} GimpImageBaseType;
-
-/* Image types */
-typedef enum
-{
-  RGB_GIMAGE,		/*< nick=RGB_IMAGE >*/
-  RGBA_GIMAGE,		/*< nick=RGBA_IMAGE >*/
-  GRAY_GIMAGE,		/*< nick=GRAY_IMAGE >*/
-  GRAYA_GIMAGE,		/*< nick=GRAYA_IMAGE >*/
-  INDEXED_GIMAGE,	/*< nick=INDEXED_IMAGE >*/
-  INDEXEDA_GIMAGE	/*< nick=INDEXEDA_IMAGE >*/
-} GimpImageType;
-
-/* Channel types */
-typedef enum
-{
-  RED_CHANNEL,
-  GREEN_CHANNEL,
-  BLUE_CHANNEL,
-  GRAY_CHANNEL,
-  INDEXED_CHANNEL,
-  ALPHA_CHANNEL,
-  AUXILLARY_CHANNEL
-} ChannelType;
-
 /* Fill types */
 typedef enum
 {
@@ -110,12 +79,6 @@ typedef enum
   CONSTANT,    /*< nick=CONTINUOUS >*/ /* pencil, paintbrush, airbrush, clone */
   INCREMENTAL  /* convolve, smudge */
 } PaintApplicationMode;
-
-typedef enum
-{
-  APPLY,
-  DISCARD
-} MaskApplyMode;
 
 typedef enum  /*< chop=ADD_ >*/
 {
@@ -237,44 +200,6 @@ typedef enum
   RUN_NONINTERACTIVE = 1,
   RUN_WITH_LAST_VALS = 2
 } RunModeType;
-
-/*  The possible states for tools  */
-typedef enum /*< skip >*/
-{
-  INACTIVE,
-  ACTIVE,
-  PAUSED
-} ToolState;
-
-/*  Tool control actions  */
-typedef enum /*< skip >*/
-{
-  PAUSE,
-  RESUME,
-  HALT,
-  DESTROY,
-  RECREATE
-} ToolAction;
-
-/* possible transform functions */
-typedef enum /*< skip >*/
-{
-  TRANSFORM_CREATING,
-  TRANSFORM_HANDLE_1,
-  TRANSFORM_HANDLE_2,
-  TRANSFORM_HANDLE_3,
-  TRANSFORM_HANDLE_4,
-  TRANSFORM_HANDLE_CENTER
-} TransformAction;
-
-/* the different states that the transformation function can be called with */
-typedef enum /*< skip >*/
-{
-  TRANSFORM_INIT,
-  TRANSFORM_MOTION,
-  TRANSFORM_RECALC,
-  TRANSFORM_FINISH
-} TransformState;
 
 typedef enum /*< skip >*/
 {

@@ -23,6 +23,45 @@
 #include "apptypes.h"
 
 
+/*  enums  */
+
+/* Base image types */
+typedef enum
+{
+  RGB,
+  GRAY,
+  INDEXED
+} GimpImageBaseType;
+
+/* Image types */
+typedef enum
+{
+  RGB_GIMAGE,		/*< nick=RGB_IMAGE >*/
+  RGBA_GIMAGE,		/*< nick=RGBA_IMAGE >*/
+  GRAY_GIMAGE,		/*< nick=GRAY_IMAGE >*/
+  GRAYA_GIMAGE,		/*< nick=GRAYA_IMAGE >*/
+  INDEXED_GIMAGE,	/*< nick=INDEXED_IMAGE >*/
+  INDEXEDA_GIMAGE	/*< nick=INDEXEDA_IMAGE >*/
+} GimpImageType;
+
+/* Channel types */
+typedef enum
+{
+  RED_CHANNEL,
+  GREEN_CHANNEL,
+  BLUE_CHANNEL,
+  GRAY_CHANNEL,
+  INDEXED_CHANNEL,
+  ALPHA_CHANNEL
+} ChannelType;
+
+typedef enum
+{
+  APPLY,
+  DISCARD
+} MaskApplyMode;
+
+
 /*  base objects  */
 
 typedef struct _GimpObject          GimpObject;

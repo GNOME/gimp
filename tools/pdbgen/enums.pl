@@ -20,46 +20,6 @@
 package Gimp::CodeGen::enums;
 
 %enums = (
-    GimpImageBaseType =>
-	{ contig => 1,
-	  header => 'appenums.h',
-	  symbols => [ qw(RGB GRAY INDEXED) ],
-	  mapping => { RGB => '0',
-		       GRAY => '1',
-		       INDEXED => '2' }
-	},
-    GimpImageType =>
-	{ contig => 1,
-	  header => 'appenums.h',
-	  symbols => [ qw(RGB_GIMAGE RGBA_GIMAGE GRAY_GIMAGE GRAYA_GIMAGE
-			  INDEXED_GIMAGE INDEXEDA_GIMAGE) ],
-	  mapping => { RGB_GIMAGE => '0',
-		       RGBA_GIMAGE => '1',
-		       GRAY_GIMAGE => '2',
-		       GRAYA_GIMAGE => '3',
-		       INDEXED_GIMAGE => '4',
-		       INDEXEDA_GIMAGE => '5' },
-	  nicks   => { RGB_GIMAGE => 'RGB_IMAGE',
-		       RGBA_GIMAGE => 'RGBA_IMAGE',
-		       GRAY_GIMAGE => 'GRAY_IMAGE',
-		       GRAYA_GIMAGE => 'GRAYA_IMAGE',
-		       INDEXED_GIMAGE => 'INDEXED_IMAGE',
-		       INDEXEDA_GIMAGE => 'INDEXEDA_IMAGE' }
-	},
-    ChannelType =>
-	{ contig => 1,
-	  header => 'appenums.h',
-	  symbols => [ qw(RED_CHANNEL GREEN_CHANNEL BLUE_CHANNEL
-			  GRAY_CHANNEL INDEXED_CHANNEL ALPHA_CHANNEL
-			  AUXILLARY_CHANNEL) ],
-	  mapping => { RED_CHANNEL => '0',
-		       GREEN_CHANNEL => '1',
-		       BLUE_CHANNEL => '2',
-		       GRAY_CHANNEL => '3',
-		       INDEXED_CHANNEL => '4',
-		       ALPHA_CHANNEL => '5',
-		       AUXILLARY_CHANNEL => '6' }
-	},
     GimpFillType =>
 	{ contig => 1,
 	  header => 'appenums.h',
@@ -128,13 +88,6 @@ package Gimp::CodeGen::enums;
 	  mapping => { CONSTANT => '0',
 		       INCREMENTAL => '1' },
 	  nicks   => { CONSTANT => 'CONTINUOUS' }
-	},
-    MaskApplyMode =>
-	{ contig => 1,
-	  header => 'appenums.h',
-	  symbols => [ qw(APPLY DISCARD) ],
-	  mapping => { APPLY => '0',
-		       DISCARD => '1' }
 	},
     AddMaskType =>
 	{ contig => 1,
@@ -288,6 +241,51 @@ package Gimp::CodeGen::enums;
 		       GREEN_LUT => '2',
 		       BLUE_LUT => '3',
 		       ALPHA_LUT => '4' }
+	},
+    GimpImageBaseType =>
+	{ contig => 1,
+	  header => 'core/core-types.h',
+	  symbols => [ qw(RGB GRAY INDEXED) ],
+	  mapping => { RGB => '0',
+		       GRAY => '1',
+		       INDEXED => '2' }
+	},
+    GimpImageType =>
+	{ contig => 1,
+	  header => 'core/core-types.h',
+	  symbols => [ qw(RGB_GIMAGE RGBA_GIMAGE GRAY_GIMAGE GRAYA_GIMAGE
+			  INDEXED_GIMAGE INDEXEDA_GIMAGE) ],
+	  mapping => { RGB_GIMAGE => '0',
+		       RGBA_GIMAGE => '1',
+		       GRAY_GIMAGE => '2',
+		       GRAYA_GIMAGE => '3',
+		       INDEXED_GIMAGE => '4',
+		       INDEXEDA_GIMAGE => '5' },
+	  nicks   => { RGB_GIMAGE => 'RGB_IMAGE',
+		       RGBA_GIMAGE => 'RGBA_IMAGE',
+		       GRAY_GIMAGE => 'GRAY_IMAGE',
+		       GRAYA_GIMAGE => 'GRAYA_IMAGE',
+		       INDEXED_GIMAGE => 'INDEXED_IMAGE',
+		       INDEXEDA_GIMAGE => 'INDEXEDA_IMAGE' }
+	},
+    ChannelType =>
+	{ contig => 1,
+	  header => 'core/core-types.h',
+	  symbols => [ qw(RED_CHANNEL GREEN_CHANNEL BLUE_CHANNEL
+			  GRAY_CHANNEL INDEXED_CHANNEL ALPHA_CHANNEL) ],
+	  mapping => { RED_CHANNEL => '0',
+		       GREEN_CHANNEL => '1',
+		       BLUE_CHANNEL => '2',
+		       GRAY_CHANNEL => '3',
+		       INDEXED_CHANNEL => '4',
+		       ALPHA_CHANNEL => '5' }
+	},
+    MaskApplyMode =>
+	{ contig => 1,
+	  header => 'core/core-types.h',
+	  symbols => [ qw(APPLY DISCARD) ],
+	  mapping => { APPLY => '0',
+		       DISCARD => '1' }
 	},
     GimpOffsetType =>
 	{ contig => 1,

@@ -150,7 +150,6 @@ gdisplay_new (GimpImage *gimage,
   gdisp->window_info_dialog = NULL;
   gdisp->window_nav_dialog  = NULL;
   gdisp->nav_popup          = NULL;
-  gdisp->depth              = g_visual->depth;
   gdisp->select             = NULL;
   gdisp->ID                 = display_num++;
   gdisp->instance           = gimage->instance_count;
@@ -195,9 +194,6 @@ gdisplay_new (GimpImage *gimage,
 
   /* update the title to correct the initially displayed scale */
   gdisplay_update_title (gdisp);
-
-  /*  set the gdisplay colormap type and install the appropriate colormap  */
-  gdisp->color_type = (gimp_image_base_type (gimage) == GRAY) ? GRAY : RGB;
 
   /* set the qmask buttons */
   qmask_buttons_update (gdisp);
@@ -934,7 +930,8 @@ gdisplay_update_icon (GDisplay *gdisp)
  */
 
 void
-gdisplay_update_icon_scheduler (GimpImage *gimage, gpointer data)
+gdisplay_update_icon_scheduler (GimpImage *gimage,
+				gpointer   data)
 {
   GDisplay *gdisp;
 
@@ -1113,7 +1110,7 @@ gdisplay_draw_guide (GDisplay *gdisp,
     }
 }
 
-Guide*
+Guide *
 gdisplay_find_guide (GDisplay *gdisp,
 		     gdouble   x,
 		     gdouble   y)
@@ -1376,11 +1373,11 @@ gdisplay_update_cursor (GDisplay *gdisp,
 
 void
 gdisplay_set_dot_for_dot (GDisplay *gdisp, 
-			  gboolean  value)
+			  gboolean  dot_for_dot)
 {
-  if (value != gdisp->dot_for_dot)
+  if (dot_for_dot != gdisp->dot_for_dot)
     {
-      gdisp->dot_for_dot = value;
+      gdisp->dot_for_dot = dot_for_dot;
 
       gdisplay_resize_cursor_label (gdisp);
       resize_display (gdisp, allow_resize_windows, TRUE);

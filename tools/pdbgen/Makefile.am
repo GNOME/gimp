@@ -53,6 +53,7 @@ enum_headers = \
 	../../app/errors.h			\
 	../../app/lut_funcs.h			\
 	../../app/paint-funcs/paint-funcs.h	\
+	../../app/core/core-types.h		\
 	../../app/core/gimpdrawable-offset.h	\
 	../../app/core/gimpimage.h		\
 	../../app/core/gimpimage-convert.h	\

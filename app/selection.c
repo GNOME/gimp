@@ -523,7 +523,7 @@ selection_create (GdkWindow *win,
     {
       new->cycle = TRUE;
       if (!cycled_ants_pixmap)
-	cycled_ants_pixmap = create_cycled_ants_pixmap (win, gdisp->depth);
+	cycled_ants_pixmap = create_cycled_ants_pixmap (win, g_visual->depth);
 
       new->cycle_pix = cycled_ants_pixmap;
     }

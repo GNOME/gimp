@@ -1,5 +1,32 @@
 2001-05-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/appenums.h
+	* app/core/core-types.h
+	* app/tools/tools-types.h: moved some more types to core-types.h
+	and tools-types.h.  Removed AUXILLARY_CHANNEL from the ChannelType
+	enum.
+
+	* app/gdisplay.[ch]: removed the "depth" and "color_type" fields
+	from the struct. Cleaned up the header.
+
+	* app/selection.c
+	* app/gui/info-window.c: use g_visual->depth instead of
+	gdisp->depth.
+
+	* app/gimphelp.c: #include "core/core-types.h"
+
+	* tools/pdbgen/Makefile.am: added app/core/core-types.h to the
+	list of files to be scanned for enums.
+
+	* libgimp/gimpenums.h
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl
+	* app/pdb/drawable_cmds.c
+	* app/pdb/image_cmds.c
+	* app/pdb/layer_cmds.c: regenerated.
+
+2001-05-13  Michael Natterer  <mitch@gimp.org>
+
 	* TODO.xml: some percentage updates.
 
 	* autogen.sh: correctly parse latest autoconf's broken "--version"

@@ -552,7 +552,7 @@ info_window_update (GDisplay *gdisp)
     g_snprintf (iwd->visual_class_str, MAX_BUF, "%s", gettext (visual_classes[g_visual->type]));
 
   /*  visual depth  */
-  g_snprintf (iwd->visual_depth_str, MAX_BUF, "%d", gdisp->depth);
+  g_snprintf (iwd->visual_depth_str, MAX_BUF, "%d", g_visual->depth);
 
   info_dialog_update (info_win);
 }

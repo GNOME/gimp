@@ -59,7 +59,6 @@ init_generated_constants (void)
   setvar (cintern ("GRAY-CHANNEL"), flocons (3), NIL);
   setvar (cintern ("INDEXED-CHANNEL"), flocons (4), NIL);
   setvar (cintern ("ALPHA-CHANNEL"), flocons (5), NIL);
-  setvar (cintern ("AUXILLARY-CHANNEL"), flocons (6), NIL);
 
   setvar (cintern ("IMAGE-CLONE"), flocons (0), NIL);
   setvar (cintern ("PATTERN-CLONE"), flocons (1), NIL);
