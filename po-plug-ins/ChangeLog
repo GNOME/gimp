@@ -1,3 +1,7 @@
+2003-06-13  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: added plug-ins/common/psd_save.c
+
 2003-06-10  Pablo Gonzalo del Campo <pablodc@bigfoot.com>
 
         * es.po: Updated Spanish translation.

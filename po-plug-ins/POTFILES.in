@@ -99,6 +99,7 @@ plug-ins/common/pnm.c
 plug-ins/common/polar.c
 plug-ins/common/ps.c
 plug-ins/common/psd.c
+plug-ins/common/psd_save.c
 plug-ins/common/psp.c
 plug-ins/common/randomize.c
 plug-ins/common/ripple.c
