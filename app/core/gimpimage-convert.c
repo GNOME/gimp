@@ -730,7 +730,7 @@ gimp_image_convert (GimpImage              *gimage,
 		    GimpConvertPaletteType  palette_type,
 		    GimpPalette            *custom_palette)
 {
-  QuantizeObj       *quantobj;
+  QuantizeObj       *quantobj = NULL;
   GimpLayer         *layer;
   GimpLayer         *floating_layer;
   GimpImageBaseType  old_type;
@@ -739,10 +739,8 @@ gimp_image_convert (GimpImage              *gimage,
   TileManager       *new_tiles;
   const gchar       *undo_desc = NULL;
 
-  g_return_if_fail (gimage != NULL);
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  quantobj = NULL;
+  g_return_if_fail (new_type != gimp_image_base_type (gimage));
 
   theCustomPalette = custom_palette;
 
@@ -779,6 +777,10 @@ gimp_image_convert (GimpImage              *gimage,
   /*  Set the new base type  */
   old_type = gimage->base_type;
   gimage->base_type = new_type;
+
+  /*  If the image was INDEXED, push its colormap to the undo stack  */
+  if (old_type == GIMP_INDEXED)
+    gimp_image_undo_push_image_colormap (gimage, NULL);
 
   /* initialize the colour conversion routines */
   cpercep_init_conversions();
@@ -1010,16 +1012,6 @@ gimp_image_convert (GimpImage              *gimage,
     floating_sel_rigor (floating_layer, TRUE);
 
   gimp_image_undo_group_end (gimage);
-
-#if 0 /* gone in cvs */
-  /*  shrink wrap and update all views  */
-  gimp_image_invalidate_layer_previews (gimage);
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
-  gdisplays_update_title (gimage);
-  gdisplays_update_full (gimage);
-
-  gimp_image_colormap_changed (gimage, -1); 
-#endif
 
   gimp_image_invalidate_layer_previews (gimage);
   gimp_image_mode_changed (gimage);
