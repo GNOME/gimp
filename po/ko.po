@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.4\n"
 "POT-Creation-Date: 1999-04-06 20:40+0900\n"
-"PO-Revision-Date: 1999-04-06 14:23:01+0900\n"
+"PO-Revision-Date: 1999-04-06 14:29:20+0900\n"
 "Last-Translator: Sung-Hyun Nam <namsh@lgic.co.kr>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1718,7 +1718,7 @@ msgstr "GIMP 브러쉬 파일이 불완전해 보입니다."
 #: app/gimpbrush.c:228
 #, c-format
 msgid "Unknown brush format version #%d in \"%s\"\n"
-msgstr "\"%s\"에 모르는 브러쉬 형식 버젼 #%d\n"
+msgstr "모르는 브러쉬 형식 버젼 #%d가 \"%s\"에 있음\n"
 
 #: app/gimpbrushlist.c:220
 msgid "Specified default brush not found!"
@@ -4278,7 +4278,7 @@ msgstr "명시된 기본 패턴을 찾을 수 없음!"
 #: app/patterns.c:215
 #, c-format
 msgid "Unknown GIMP version #%d in \"%s\"\n"
-msgstr "\"%s\"에서 모르는 GIMP 판번호 #%d\n"
+msgstr "모르는 GIMP 판번호 #%d가 \"%s\"에 있음\n"
 
 #: app/patterns.c:231
 msgid "Error in GIMP pattern file...aborting."
