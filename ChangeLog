@@ -1,3 +1,8 @@
+Sat Jul  3 16:04:16 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/color_notebook.c
+	* plug-ins/common/borderaverage.c: fix include file paths
+
 1999-07-03  Tor Lillqvist  <tml@iki.fi>
 
 	It is now possible to build a fully functioning GIMP on Win32 with

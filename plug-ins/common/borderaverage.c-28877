@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include <libgimp/gimp.h>
 #include <gtk/gtk.h>
-#include <gck/gck.h>
+#include <plug-ins/libgck/gck/gck.h>
 #include <plug-ins/megawidget/megawidget.h>
 
 #include "config.h"

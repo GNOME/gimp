@@ -20,7 +20,7 @@
 
 #include "config.h"
 
-#include <gmodule/gmodule.h>
+#include <gmodule.h>
 
 #include <stdio.h>
 #include <stdlib.h>
