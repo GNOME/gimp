@@ -46,6 +46,8 @@ libapptools_la_SOURCES = \
 ##	free_select.h		\
 ##	fuzzy_select.c		\
 ##	fuzzy_select.h		\
+	gimptoolinfo.c		\
+	gimptoolinfo.h		\
 ##	histogram_tool.c	\
 ##	histogram_tool.h	\
 ##	hue_saturation.c	\

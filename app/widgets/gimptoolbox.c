@@ -26,6 +26,10 @@
 
 #include "apptypes.h"
 
+#include "tools/gimptoolinfo.h"
+#include "tools/tool_options_dialog.h"
+#include "tools/tool_manager.h"
+
 #include "app_procs.h"
 #include "color_area.h"
 #include "devices.h"
@@ -35,6 +39,8 @@
 #include "gimpcontext.h"
 #include "gimpdnd.h"
 #include "gimplayer.h"
+#include "gimplist.h"
+#include "gimppreview.h"
 #include "gimprc.h"
 #include "gtkhwrapbox.h"
 #include "indicator_area.h"
@@ -43,9 +49,6 @@
 #include "session.h"
 #include "pixel_region.h"
 #include "tile_manager.h"
-
-#include "tools/tool_options_dialog.h"
-#include "tools/tool_manager.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -82,10 +85,8 @@ static gboolean    toolbox_drag_drop          (GtkWidget      *widget,
 					       gint            x,
 					       gint            y,
 					       guint           time);
-static GimpTool  * toolbox_drag_tool          (GtkWidget      *widget,
-					       gpointer        data);
 static void        toolbox_drop_tool          (GtkWidget      *widget,
-					       GimpTool       *tool,
+					       GimpViewable   *viewable,
 					       gpointer        data);
 
 
@@ -122,24 +123,17 @@ static GtkTargetEntry toolbox_target_table[] =
 static guint toolbox_n_targets = (sizeof (toolbox_target_table) /
 				  sizeof (toolbox_target_table[0]));
 
-static GtkTargetEntry tool_target_table[] =
-{
-  GIMP_TARGET_TOOL
-};
-static guint tool_n_targets = (sizeof (tool_target_table) /
-			       sizeof (tool_target_table[0]));
-
 
 static void
 tools_select_update (GtkWidget *widget,
 		     gpointer   data)
 {
-  GimpToolClass *tool_type;
+  GimpToolInfo *tool_info;
 
-  tool_type = GIMP_TOOL_CLASS (data);
+  tool_info = GIMP_TOOL_INFO (data);
 
-  if ((tool_type) && GTK_TOGGLE_BUTTON (widget)->active)
-    gimp_context_set_tool (gimp_context_get_user (), tool_type);
+  if ((tool_info) && GTK_TOGGLE_BUTTON (widget)->active)
+    gimp_context_set_tool (gimp_context_get_user (), tool_info);
 }
 
 static gint
@@ -147,9 +141,6 @@ tools_button_press (GtkWidget      *widget,
 		    GdkEventButton *event,
 		    gpointer        data)
 {
-  GDisplay * gdisp;
-  gdisp = data;
- 
   if ((event->type == GDK_2BUTTON_PRESS) && (event->button == 1))
     tool_options_dialog_show ();
 
@@ -283,95 +274,62 @@ create_color_area (GtkWidget *parent)
   gtk_widget_show (frame);
 }
 
-/* creates all icons */
-static void
-create_tool_pixmaps (GtkWidget *parent)
-{
-  GSList *tools;
-  GimpToolClass *tool;
-
-  g_return_if_fail (parent != NULL);
-
-  for (tools = registered_tools; tools; tools=tools->next)
-    {
-      tool = GIMP_TOOL_CLASS (tools->data);
-      if (tool->icon_data)
-	tool->icon_pixmap = create_pixmap (parent->window, 
-						  &tool->icon_mask,
-						  tool->icon_data,
-						  22, 22);
-      else
-	tool->icon_pixmap = create_pixmap (parent->window,  
-						  &tool->icon_mask,
-						  dialog_bits,
-						  22, 22);
-    }
-}
-
 static void
 create_tools (GtkWidget *parent)
 {
-  GtkWidget *wbox;
-  GtkWidget *button;
-  GtkWidget *alignment;
-  GtkWidget *pixmap;
-  GSList *group, *tools;
-  GimpToolClass *tool;
-  gint    i, j;
+  GtkWidget     *wbox;
+  GtkWidget     *button;
+  GtkWidget     *alignment;
+  GList         *list;
+  GSList        *group;
 
   wbox = parent;
 
   if (! GTK_WIDGET_REALIZED (gtk_widget_get_toplevel (wbox)))
     gtk_widget_realize (gtk_widget_get_toplevel (wbox));
 
-  create_tool_pixmaps (wbox);
-
   group = NULL;
 
-  i = 0;
-  for (tools = registered_tools; tools; tools=tools->next)
+  for (list = GIMP_LIST (global_tool_info_list)->list;
+       list;
+       list = g_list_next (list))
     {
-      tool = GIMP_TOOL_CLASS(tools->data);
-	  tool->tool_widget = button = gtk_radio_button_new (group);
-	  gtk_container_set_border_width (GTK_CONTAINER (button), 0);
-	  group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+      GimpToolInfo *tool_info;
+      GtkWidget    *preview;
 
-	  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
+      tool_info = (GimpToolInfo *) list->data;
 
-	  gtk_wrap_box_pack (GTK_WRAP_BOX (wbox), button,
-			     FALSE, FALSE, FALSE, FALSE);
+      button = gtk_radio_button_new (group);
+      gtk_container_set_border_width (GTK_CONTAINER (button), 0);
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
 
-	  alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-	  gtk_container_set_border_width (GTK_CONTAINER (alignment), 0);
-	  gtk_container_add (GTK_CONTAINER (button), alignment);
+      gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
 
-	  pixmap = gtk_pixmap_new (gimp_tool_get_pixmap (tool), 
-				   gimp_tool_get_mask (tool));
-	  gtk_container_add (GTK_CONTAINER (alignment), pixmap);
+      gtk_wrap_box_pack (GTK_WRAP_BOX (wbox), button,
+			 FALSE, FALSE, FALSE, FALSE);
 
-	  gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			      GTK_SIGNAL_FUNC (tools_select_update),
-			      (gpointer) tool);
+      alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+      gtk_container_add (GTK_CONTAINER (button), alignment);
 
-	  gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
-			      GTK_SIGNAL_FUNC (tools_button_press),
-			      (gpointer) tool);
+      preview = gimp_preview_new (GIMP_VIEWABLE (tool_info), 22, 0, FALSE);
+      gtk_container_add (GTK_CONTAINER (alignment), preview);
+      gtk_widget_show (preview);
 
-	  /*  dnd stuff  */
-	  gtk_drag_source_set (tool->tool_widget,
-			       GDK_BUTTON2_MASK,
-			       tool_target_table, tool_n_targets,
-			       GDK_ACTION_COPY);
-	  gimp_dnd_tool_source_set (tool->tool_widget,
-				    toolbox_drag_tool, tool);
+      gtk_signal_connect (GTK_OBJECT (button), "toggled",
+			  GTK_SIGNAL_FUNC (tools_select_update),
+			  tool_info);
 
-	  gimp_help_set_help_data (button,
-				   gettext(tool->tool_desc),
-				   tool->help_data);
+      gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
+			  GTK_SIGNAL_FUNC (tools_button_press),
+			  tool_info);
 
-	  gtk_widget_show (pixmap);
-	  gtk_widget_show (alignment);
-	  gtk_widget_show (button);
+      gimp_help_set_help_data (button,
+			       gettext (tool_info->tool_desc),
+			       tool_info->help_data);
+
+      gtk_widget_show (preview);
+      gtk_widget_show (alignment);
+      gtk_widget_show (button);
     }
 
   gtk_widget_show (wbox);
@@ -557,7 +515,11 @@ toolbox_create (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), wbox, TRUE, TRUE, 0);
   gtk_widget_show (wbox);
 
+  g_print ("before create_tools (wbox);\n");
+
   create_tools (wbox);
+
+  g_print ("after create_tools (wbox);\n");
 
   create_color_area (wbox);
   if (show_indicators)
@@ -636,7 +598,8 @@ toolbox_set_drag_dest (GtkWidget *object)
 		      GTK_SIGNAL_FUNC (toolbox_drag_drop),
 		      NULL);
 
-  gimp_dnd_tool_dest_set (object, toolbox_drop_tool, NULL);
+  gimp_dnd_viewable_dest_set (object, GIMP_TYPE_TOOL_INFO,
+			      toolbox_drop_tool, NULL);
 }
 
 static gboolean
@@ -796,17 +759,10 @@ toolbox_drag_drop (GtkWidget      *widget,
   return return_val;
 }
 
-static GimpTool *
-toolbox_drag_tool (GtkWidget *widget,
-		   gpointer   data)
-{
-  return GIMP_TOOL(data);
-}
-
 static void
-toolbox_drop_tool (GtkWidget *widget,
-		   GimpTool   *tool,
-		   gpointer   data)
+toolbox_drop_tool (GtkWidget    *widget,
+		   GimpViewable *viewable,
+		   gpointer      data)
 {
-  gimp_context_set_tool (gimp_context_get_user (), tool);
+  gimp_context_set_tool (gimp_context_get_user (), GIMP_TOOL_INFO (viewable));
 }

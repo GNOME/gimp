@@ -24,13 +24,14 @@
 
 #include "apptypes.h"
 
+#include "tools/tool.h"
+#include "tools/tool_manager.h"
+
 #include "cursorutil.h"
 #include "gdisplay.h"
 #include "scale.h"
 #include "scroll.h"
 #include "nav_window.h"
-
-#include "tools/tool.h"
 
 
 /*  This is the delay before dithering begins

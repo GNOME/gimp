@@ -61,12 +61,12 @@ void   devices_rc_update    (gchar        *name,
 			     GdkAxisUse   *axes,
 			     gint          num_keys,
 			     GdkDeviceKey *keys,
-			     GimpTool     *tool,
+			     const gchar  *tool_name,
 			     GimpRGB      *foreground,
 			     GimpRGB      *background,
-			     gchar        *brush_name,
-			     gchar        *pattern_name,
-			     gchar        *gradient_name);
+			     const gchar  *brush_name,
+			     const gchar  *pattern_name,
+			     const gchar  *gradient_name);
 
 /*  Free device status (only for session-managment)  */
 void   device_status_free   (void);

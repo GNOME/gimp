@@ -20,6 +20,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
@@ -37,34 +39,471 @@
 
 #include "libgimp/gimpintl.h"
 
-/*  Local  Data  */
 
-enum {
-	/* ??? SET_DISPLAY, ??? */
-	BUTTON_PRESSED,
-	BUTTON_RELEASED,
-	MOTION,
-	ARROW_KEYS,
-	MODIFIER_KEY,
-	CURSOR_UPDATED,
-	OPER_UPDATE,
-	TOOL_CONTROL,
-	RESERVED1,
-	RESERVED2,
-	RESERVED3,
-	LAST_SIGNAL
+enum
+{
+  INITIALIZE,
+  CONTROL,
+  BUTTON_PRESS,
+  BUTTON_RELEASE,
+  MOTION,
+  ARROW_KEY,
+  MODIFIER_KEY,
+  CURSOR_UPDATE,
+  OPER_UPDATE,
+  LAST_SIGNAL
 };
+
+
+static void   gimp_tool_class_init          (GimpToolClass  *klass);
+static void   gimp_tool_init                (GimpTool       *tool);
+
+static void   gimp_tool_destroy             (GtkObject      *destroy);
+
+static void   gimp_tool_real_initialize     (GimpTool       *tool,
+					     GDisplay       *gdisp);
+static void   gimp_tool_real_control        (GimpTool       *tool,
+					     ToolAction      tool_action,
+					     GDisplay       *gdisp);
+static void   gimp_tool_real_button_press   (GimpTool       *tool,
+					     GdkEventButton *bevent,
+					     GDisplay       *gdisp);
+static void   gimp_tool_real_button_release (GimpTool       *tool,
+					     GdkEventButton *bevent,
+					     GDisplay       *gdisp);
+static void   gimp_tool_real_motion         (GimpTool       *tool,
+					     GdkEventMotion *mevent,
+					     GDisplay       *gdisp);
+static void   gimp_tool_real_arrow_key      (GimpTool       *tool,
+					     GdkEventKey    *kevent,
+					     GDisplay       *gdisp);
+static void   gimp_tool_real_modifier_key   (GimpTool       *tool,
+					     GdkEventKey    *kevent,
+					     GDisplay       *gdisp);
+static void   gimp_tool_real_cursor_update  (GimpTool       *tool,
+					     GdkEventMotion *mevent,
+					     GDisplay       *gdisp);
+static void   gimp_tool_real_oper_update    (GimpTool       *tool,
+					     GdkEventMotion *mevent,
+					     GDisplay       *gdisp);
+
 
 static guint gimp_tool_signals[LAST_SIGNAL] = { 0 };
 
 static GimpObjectClass *parent_class = NULL;
 
-static void gimp_tool_class_init (GimpToolClass *klass);
-static void standard_control_func (GimpTool *,
-					ToolAction,
-					GDisplay *);
 
+#warning FIXME: check what global_tool_ID was used for
 static gint global_tool_ID = 0;
+
+
+GtkType
+gimp_tool_get_type (void)
+{
+  static GtkType tool_type = 0;
+
+  if (! tool_type)
+    {
+      GtkTypeInfo tool_info =
+      {
+        "GimpTool",
+        sizeof (GimpTool),
+        sizeof (GimpToolClass),
+        (GtkClassInitFunc) gimp_tool_class_init,
+        (GtkObjectInitFunc) gimp_tool_init,
+        /* reserved_1 */ NULL,
+        /* reserved_2 */ NULL,
+        (GtkClassInitFunc) NULL,
+      };
+
+      tool_type = gtk_type_unique (GIMP_TYPE_OBJECT, &tool_info);
+    }
+
+  return tool_type;
+}
+
+static void
+gimp_tool_class_init (GimpToolClass *klass)
+{
+  GtkObjectClass *object_class;
+  
+  object_class = (GtkObjectClass *) klass;
+
+  parent_class = gtk_type_class (GIMP_TYPE_OBJECT);
+
+  gimp_tool_signals[INITIALIZE] =
+    gtk_signal_new ("initialize",
+		    GTK_RUN_FIRST,
+		    object_class->type,
+		    GTK_SIGNAL_OFFSET (GimpToolClass,
+				       initialize),
+		    gtk_marshal_NONE__POINTER, 
+		    GTK_TYPE_NONE, 1,
+		    GTK_TYPE_POINTER); 
+
+  gimp_tool_signals[CONTROL] =
+    gtk_signal_new ("control",
+		    GTK_RUN_FIRST,
+		    object_class->type,
+		    GTK_SIGNAL_OFFSET (GimpToolClass,
+				       control),
+		    gtk_marshal_NONE__INT_POINTER, 
+		    GTK_TYPE_NONE, 2,
+		    GTK_TYPE_INT,
+		    GTK_TYPE_POINTER); 
+
+  gimp_tool_signals[BUTTON_PRESS] =
+    gtk_signal_new ("button_press",
+		    GTK_RUN_FIRST,
+		    object_class->type,
+		    GTK_SIGNAL_OFFSET (GimpToolClass,
+				       button_press),
+		    gtk_marshal_NONE__POINTER_POINTER,
+		    GTK_TYPE_NONE, 2,
+		    GTK_TYPE_POINTER,
+		    GTK_TYPE_POINTER);
+
+  gimp_tool_signals[BUTTON_RELEASE] =
+    gtk_signal_new ("button_release",
+		    GTK_RUN_FIRST,
+		    object_class->type,
+		    GTK_SIGNAL_OFFSET (GimpToolClass,
+				       button_release),
+		    gtk_marshal_NONE__POINTER_POINTER, 
+		    GTK_TYPE_NONE, 2,
+		    GTK_TYPE_POINTER,
+		    GTK_TYPE_POINTER); 
+
+  gimp_tool_signals[MOTION] =
+    gtk_signal_new ("motion",
+		    GTK_RUN_FIRST,
+		    object_class->type,
+		    GTK_SIGNAL_OFFSET (GimpToolClass,
+				       motion),
+		    gtk_marshal_NONE__POINTER_POINTER, 
+		    GTK_TYPE_NONE, 2,
+		    GTK_TYPE_POINTER,
+		    GTK_TYPE_POINTER); 
+
+  gimp_tool_signals[ARROW_KEY] =
+    gtk_signal_new ("arrow_key",
+		    GTK_RUN_FIRST,
+		    object_class->type,
+		    GTK_SIGNAL_OFFSET (GimpToolClass,
+				       arrow_key),
+		    gtk_marshal_NONE__POINTER_POINTER, 
+		    GTK_TYPE_NONE, 2,
+		    GTK_TYPE_POINTER,
+		    GTK_TYPE_POINTER); 
+
+  gimp_tool_signals[MODIFIER_KEY] =
+    gtk_signal_new ("modifier_key",
+		    GTK_RUN_FIRST,
+		    object_class->type,
+		    GTK_SIGNAL_OFFSET (GimpToolClass,
+				       modifier_key),
+		    gtk_marshal_NONE__POINTER_POINTER, 
+		    GTK_TYPE_NONE, 2,
+		    GTK_TYPE_POINTER,
+		    GTK_TYPE_POINTER); 
+
+  gimp_tool_signals[CURSOR_UPDATE] =
+    gtk_signal_new ("cursor_update",
+		    GTK_RUN_FIRST,
+		    object_class->type,
+		    GTK_SIGNAL_OFFSET (GimpToolClass,
+				       cursor_update),
+		    gtk_marshal_NONE__POINTER_POINTER, 
+		    GTK_TYPE_NONE, 2,
+		    GTK_TYPE_POINTER,
+		    GTK_TYPE_POINTER);
+
+  gimp_tool_signals[OPER_UPDATE] =
+    gtk_signal_new ("oper_update",
+		    GTK_RUN_FIRST,
+		    object_class->type,
+		    GTK_SIGNAL_OFFSET (GimpToolClass,
+				       oper_update),
+		    gtk_marshal_NONE__POINTER_POINTER, 
+		    GTK_TYPE_NONE, 2,
+		    GTK_TYPE_POINTER,
+		    GTK_TYPE_POINTER); 
+
+  gtk_object_class_add_signals (object_class, gimp_tool_signals, LAST_SIGNAL);  
+
+  object_class->destroy = gimp_tool_destroy;
+
+  klass->initialize     = gimp_tool_real_initialize;
+  klass->control        = gimp_tool_real_control;
+  klass->button_press   = gimp_tool_real_button_press;
+  klass->button_release = gimp_tool_real_button_release;
+  klass->motion         = gimp_tool_real_motion;
+  klass->arrow_key      = gimp_tool_real_arrow_key;
+  klass->modifier_key   = gimp_tool_real_modifier_key;
+  klass->cursor_update  = gimp_tool_real_cursor_update;
+  klass->oper_update    = gimp_tool_real_oper_update;
+}
+
+static void
+gimp_tool_init (GimpTool *tool)
+{
+  tool->state        = INACTIVE;
+  tool->paused_count = 0;
+  tool->scroll_lock  = FALSE;    /*  Allow scrolling  */
+  tool->auto_snap_to = TRUE;     /*  Snap to guides   */
+
+  tool->preserve     = TRUE;     /*  Preserve tool across drawable changes  */
+  tool->gdisp        = NULL;
+  tool->drawable     = NULL;
+
+  tool->toggled      = FALSE;
+}
+
+static void
+gimp_tool_destroy (GtkObject *object)
+{
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+void
+gimp_tool_initialize (GimpTool   *tool, 
+		      GDisplay   *gdisp)
+{
+  g_return_if_fail (tool);
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+
+  gtk_signal_emit (GTK_OBJECT (tool), gimp_tool_signals[INITIALIZE],
+		   gdisp);
+}
+
+void
+gimp_tool_control (GimpTool   *tool, 
+		   ToolAction  action, 
+		   GDisplay   *gdisp)
+{
+  g_return_if_fail (tool);
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+
+  gtk_signal_emit (GTK_OBJECT (tool), gimp_tool_signals[CONTROL],
+		   action, gdisp);
+}
+
+void
+gimp_tool_button_press (GimpTool       *tool,
+			GdkEventButton *bevent,
+			GDisplay       *gdisp)
+{
+  g_return_if_fail (tool);
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+
+  gtk_signal_emit (GTK_OBJECT (tool), gimp_tool_signals[BUTTON_PRESS],
+		   bevent, gdisp); 
+}
+
+void
+gimp_tool_button_release (GimpTool       *tool,
+			  GdkEventButton *bevent,
+			  GDisplay       *gdisp)
+{
+  g_return_if_fail (tool);
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+
+  gtk_signal_emit (GTK_OBJECT (tool), gimp_tool_signals[BUTTON_RELEASE],
+		   bevent, gdisp);
+}
+
+void
+gimp_tool_motion (GimpTool       *tool,
+		  GdkEventMotion *mevent,
+		  GDisplay       *gdisp)
+{
+  g_return_if_fail (tool);
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+
+  gtk_signal_emit (GTK_OBJECT (tool), gimp_tool_signals[MOTION],
+		   mevent, gdisp);
+}
+
+void
+gimp_tool_arrow_key (GimpTool    *tool,
+		     GdkEventKey *kevent,
+		     GDisplay    *gdisp)
+{
+  g_return_if_fail (tool);
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+
+  gtk_signal_emit (GTK_OBJECT (tool), gimp_tool_signals[ARROW_KEY],
+		   kevent, gdisp);
+}
+
+void
+gimp_tool_modifier_key (GimpTool    *tool,
+			GdkEventKey *kevent,
+			GDisplay    *gdisp)
+{
+  g_return_if_fail (tool);
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+
+  gtk_signal_emit (GTK_OBJECT (tool), gimp_tool_signals[MODIFIER_KEY],
+		   kevent, gdisp);  
+}
+
+void
+gimp_tool_cursor_update (GimpTool       *tool,
+			 GdkEventMotion *mevent,
+			 GDisplay       *gdisp)
+{
+  g_return_if_fail (tool);
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+
+  gtk_signal_emit (GTK_OBJECT (tool), gimp_tool_signals[CURSOR_UPDATE],
+		   mevent, gdisp);
+}
+
+void
+gimp_tool_oper_update (GimpTool       *tool,
+		       GdkEventMotion *mevent,
+		       GDisplay       *gdisp)
+{
+  g_return_if_fail (tool);
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+
+  gtk_signal_emit (GTK_OBJECT (tool), gimp_tool_signals[OPER_UPDATE],
+		   mevent, gdisp);
+}
+
+
+
+gchar *
+gimp_tool_get_PDB_string (GimpTool *tool)
+{
+  GtkObject *object;
+  GimpToolClass *klass;
+
+  g_return_val_if_fail(tool, "gimp_core_nothing");
+  
+  object = GTK_OBJECT (tool);
+  
+  klass = GIMP_TOOL_CLASS (object->klass);
+  
+  return klass->pdb_string;
+}
+
+
+
+/* TODO: remove these */
+
+void
+gimp_tool_help_func (const gchar *help_data)
+{
+  gimp_standard_help_func (tool_manager_active_get_help_data());
+}
+
+GdkPixmap *
+gimp_tool_get_pixmap (GimpToolClass *type)
+{
+  g_return_val_if_fail(type, NULL);
+  return (type->icon_pixmap);
+}
+
+GdkPixmap *
+gimp_tool_get_mask (GimpToolClass *type)
+{
+  g_return_val_if_fail(type, NULL);
+  return (type->icon_mask);
+}
+
+gchar *
+gimp_tool_get_help_data (GimpTool *tool)
+{
+  GtkObject *object;
+  GimpToolClass *klass;
+
+  g_return_val_if_fail(tool, NULL);
+
+  object = GTK_OBJECT (tool);
+  
+  klass = GIMP_TOOL_CLASS (object->klass);
+	
+  return klass->help_data;
+}
+
+
+
+/*  standard member functions  */
+
+static void
+gimp_tool_real_initialize (GimpTool       *tool,
+			   GDisplay       *gdisp)
+{
+}
+
+static void
+gimp_tool_real_control (GimpTool   *tool,
+			ToolAction  tool_action,
+			GDisplay   *gdisp)
+{
+}
+
+static void
+gimp_tool_real_button_press (GimpTool       *tool,
+			     GdkEventButton *bevent,
+			     GDisplay       *gdisp)
+{
+  tool->gdisp    = gdisp;
+  tool->drawable = gimp_image_active_drawable (gdisp->gimage);
+}
+
+static void
+gimp_tool_real_button_release (GimpTool       *tool,
+			       GdkEventButton *bevent,
+			       GDisplay       *gdisp)
+{
+}
+
+static void
+gimp_tool_real_motion (GimpTool       *tool,
+		       GdkEventMotion *mevent,
+		       GDisplay       *gdisp)
+{
+}
+
+static void
+gimp_tool_real_arrow_key (GimpTool    *tool,
+			  GdkEventKey *kevent,
+			  GDisplay    *gdisp)
+{
+}
+
+static void
+gimp_tool_real_modifier_key (GimpTool    *tool,
+			     GdkEventKey *kevent,
+			     GDisplay    *gdisp)
+{
+}
+
+static void
+gimp_tool_real_cursor_update (GimpTool       *tool,
+			      GdkEventMotion *mevent,
+			      GDisplay       *gdisp)
+{
+  gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW,
+				TOOL_TYPE_NONE,
+				CURSOR_MODIFIER_NONE,
+				FALSE);
+}
+
+static void
+gimp_tool_real_oper_update (GimpTool       *tool,
+			    GdkEventMotion *mevent,
+			    GDisplay       *gdisp)
+{
+}
+
+
+
+
 #warning obsolete crap
 #ifdef STONE_AGE
 ToolInfo tool_info[] =
@@ -1141,450 +1580,8 @@ ToolInfo tool_info[] =
 
 gint num_tools = sizeof (tool_info) / sizeof (tool_info[0]);
 #endif
-/*  dnd stuff  */
-static GtkTargetEntry tool_target_table[] =
-{
-  GIMP_TARGET_TOOL
-};
-static guint n_tool_targets = (sizeof (tool_target_table) /
-                               sizeof (tool_target_table[0]));
 
 
-/*  Local function declarations  */
-void      gimp_tool_show_options           (GimpTool *);
-
-
-/*  Function definitions  */
-
-GtkType
-gimp_tool_get_type (void)
-{
-  static GtkType tool_type = 0;
-
-  if (! tool_type)
-    {
-      GtkTypeInfo tool_info =
-      {
-        "GimpTool",
-        sizeof (GimpTool),
-        sizeof (GimpToolClass),
-        (GtkClassInitFunc) gimp_tool_class_init,
-        (GtkObjectInitFunc) gimp_tool_initialize,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
-      };
-
-      tool_type = gtk_type_unique (GIMP_TYPE_OBJECT, &tool_info);
-    }
-
-  return tool_type;
-}
-
-
-
-void
-gimp_tool_old_initialize (GimpTool  *tool,
-		  GDisplay *gdisp)
-{
-  /*  Tools which have an init function have dialogs and
-   *  cannot be initialized without a display
-   */
-  /*if (tool_info[(gint) tool_type].init_func && !gdisp)
-    tool_type = RECT_SELECT;*/
-
-  /*  Force the emission of the "tool_changed" signal
-   */
-  /*if (active_tool->type == tool_type)
-    {
-      gimp_context_tool_changed (gimp_context_get_user ());
-    }
-  else*/
-    {
-      gimp_context_set_tool (gimp_context_get_user (), tool);
-    }
-
-  /*if (tool_info[(gint) tool_type].init_func)
-    {
-      (* tool_info[(gint) tool_type].init_func) (gdisp);*/
-
-      active_tool->drawable = gimp_image_active_drawable (gdisp->gimage);
-   /* } */
-  /*  don't set tool->gdisp here! (see commands.c)  */
-}
-
-
-/*  standard member functions  */
-
-static void
-standard_button_press_func (GimpTool           *tool,
-			    GdkEventButton *bevent,
-			    GDisplay       *gdisp)
-{
-  tool->gdisp    = gdisp;
-  tool->drawable = gimp_image_active_drawable (gdisp->gimage);
-}
-
-static void
-standard_button_release_func (GimpTool           *tool,
-			      GdkEventButton *bevent,
-			      GDisplay       *gdisp)
-{
-}
-
-static void
-standard_motion_func (GimpTool           *tool,
-		      GdkEventMotion *mevent,
-		      GDisplay       *gdisp)
-{
-}
-
-static void
-standard_arrow_keys_func (GimpTool        *tool,
-			  GdkEventKey *kevent,
-			  GDisplay    *gdisp)
-{
-}
-
-static void
-standard_modifier_key_func (GimpTool        *tool,
-			    GdkEventKey *kevent,
-			    GDisplay    *gdisp)
-{
-}
-
-static void
-standard_cursor_update_func (GimpTool           *tool,
-			     GdkEventMotion *mevent,
-			     GDisplay       *gdisp)
-{
-  gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW,
-				TOOL_TYPE_NONE,
-				CURSOR_MODIFIER_NONE,
-				FALSE);
-}
-
-static void
-standard_operator_update_func (GimpTool       *tool,
-			       GdkEventMotion *mevent,
-			       GDisplay       *gdisp)
-{
-}
-
-
-/*  Create a default tool object 
- */
-
-GimpTool *
-gimp_tool_new (void)
-{
-  GimpTool *tool;
-  
-  tool = gtk_type_new (GIMP_TYPE_TOOL);
-
-  return tool;
-}
-
-
-/* set tool object defaults */
-void gimp_tool_initialize (GimpTool *tool)
-{
-  tool->state        = INACTIVE;
-  tool->paused_count = 0;
-  tool->scroll_lock  = FALSE;     /*  Allow scrolling  */
-  tool->auto_snap_to = TRUE;      /*  Snap to guides   */
-
-  tool->preserve  = TRUE;         /*  Preserve tool across drawable changes  */
-  tool->gdisp     = NULL;
-  tool->drawable  = NULL;
-
-  tool->toggled   = FALSE;
-
-}
-
-static void gimp_tool_class_init (GimpToolClass *klass)
-{
-  GtkObjectClass *object_class = (GtkObjectClass *) klass;
-  
-  parent_class = gtk_type_class (GIMP_TYPE_OBJECT);
-  
-  /* Welcome to signal registration syntax hell.
-     Abandon hope, all ye developers that enter here. */ 
-	   
-  gimp_tool_signals[BUTTON_PRESSED]=
-    gtk_signal_new ("button_pressed",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpToolClass,
-				       button_press_func),
-		    gtk_marshal_NONE__POINTER_POINTER, /* type that five times fast */
-		    GTK_TYPE_NONE, /* now it's time for the exercise in redundancy exercise */
-		    2, GTK_TYPE_POINTER,
-		    GTK_TYPE_POINTER);  /* now do I get a cookie? */
-
-  gimp_tool_signals[BUTTON_RELEASED]=
-    gtk_signal_new ("button_released",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpToolClass,
-				       button_release_func),
-		    gtk_marshal_NONE__POINTER_POINTER, 
-		    GTK_TYPE_NONE, 
-		    2, GTK_TYPE_POINTER,
-		    GTK_TYPE_POINTER); 
-
-
-  gimp_tool_signals[MOTION]=
-    gtk_signal_new ("motion",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpToolClass,
-				       motion_func),
-		    gtk_marshal_NONE__POINTER_POINTER, 
-		    GTK_TYPE_NONE, 
-		    2, GTK_TYPE_POINTER,
-		    GTK_TYPE_POINTER); 
-
-
-  gimp_tool_signals[ARROW_KEYS]=
-		
-    gtk_signal_new ("arrow_keys",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpToolClass,
-				       arrow_keys_func),
-		    gtk_marshal_NONE__POINTER_POINTER, 
-		    GTK_TYPE_NONE, 
-		    2, GTK_TYPE_POINTER,
-		    GTK_TYPE_POINTER); 
-
-  gimp_tool_signals[MODIFIER_KEY]=
-    gtk_signal_new ("modifier_key",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpToolClass,
-				       modifier_key_func),
-		    gtk_marshal_NONE__POINTER_POINTER, 
-		    GTK_TYPE_NONE, 
-		    2, GTK_TYPE_POINTER,
-		    GTK_TYPE_POINTER); 
-
-  gimp_tool_signals[CURSOR_UPDATED]=
-    gtk_signal_new ("cursor_update",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpToolClass,
-				       cursor_update_func),
-		    gtk_marshal_NONE__POINTER_POINTER, 
-		    GTK_TYPE_NONE, 
-		    2, GTK_TYPE_POINTER,
-		    GTK_TYPE_POINTER); 
-
-
-
-  gimp_tool_signals[OPER_UPDATE]=
-    gtk_signal_new ("oper_update",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpToolClass,
-				       oper_update_func),
-		    gtk_marshal_NONE__POINTER_POINTER, 
-		    GTK_TYPE_NONE, 
-		    2, GTK_TYPE_POINTER,
-		    GTK_TYPE_POINTER); 
-
-  gimp_tool_signals[TOOL_CONTROL]=
-    gtk_signal_new ("tool_control",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpToolClass,
-				       control_func),
-		    gtk_marshal_NONE__INT_POINTER, 
-		    GTK_TYPE_NONE, 
-		    2, GTK_TYPE_INT,
-		    GTK_TYPE_POINTER); 
-
-  gtk_object_class_add_signals (object_class, gimp_tool_signals, LAST_SIGNAL);  
-	
-
-  klass->button_press_func   = standard_button_press_func;
-  klass->button_release_func = standard_button_release_func;
-  klass->motion_func         = standard_motion_func;
-  klass->arrow_keys_func     = standard_arrow_keys_func;
-  klass->modifier_key_func   = standard_modifier_key_func;
-  klass->cursor_update_func  = standard_cursor_update_func;
-  klass->oper_update_func    = standard_operator_update_func;
-  klass->control_func        = standard_control_func;
-}
-
-
-void
-gimp_tool_help_func (const gchar *help_data)
-{
-  gimp_standard_help_func (tool_manager_active_get_help_data());
-}
-
-gchar *
-gimp_tool_get_PDB_string (GimpTool *tool)
-{
-  GtkObject *object;
-  GimpToolClass *klass;
-
-  g_return_val_if_fail(tool, "gimp_core_nothing");
-  
-  object = GTK_OBJECT (tool);
-  
-  klass = GIMP_TOOL_CLASS (object->klass);
-  
-  return klass->pdb_string;
-}
-
-GdkPixmap *
-gimp_tool_get_pixmap (GimpToolClass *type)
-{
-  g_return_val_if_fail(type, NULL);
-  return (type->icon_pixmap);
-}
-
-GdkPixmap *
-gimp_tool_get_mask (GimpToolClass *type)
-{
-  g_return_val_if_fail(type, NULL);
-  return (type->icon_mask);
-}
-
-gchar *
-gimp_tool_get_help_data (GimpTool *tool)
-{
-  GtkObject *object;
-  GimpToolClass *klass;
-
-  g_return_val_if_fail(tool, NULL);
-
-  object = GTK_OBJECT (tool);
-  
-  klass = GIMP_TOOL_CLASS (object->klass);
-	
-  return klass->help_data;
-}
-
-
-void gimp_tool_control(GimpTool *tool, 
-		       ToolAction action, 
-		       GDisplay *gdisp)
-{
-  gtk_signal_emit (GTK_OBJECT (tool), gimp_tool_signals[TOOL_CONTROL], action, gdisp);
-}
-
-
-static void
-standard_control_func (GimpTool       *tool,
-		       ToolAction  action,
-		       GDisplay   *gdisp)
-{
-  if (tool)
-    {
-      if (tool->gdisp == gdisp)
-        {
-          switch (action)
-            {
-            case PAUSE :
-              if (tool->state == ACTIVE)
-                {
-                  if (! tool->paused_count)
-                    {
-                      tool->state = PAUSED;
-                    }
-                }
-              tool->paused_count++;
-              break;
-
-            case RESUME :
-              tool->paused_count--;
-              if (tool->state == PAUSED)
-                {
-                  if (! tool->paused_count)
-                    {
-                      tool->state = ACTIVE;
-                    }
-                }
-              break;
-
-            case HALT :
-              tool->state = INACTIVE;
-              break;
-
-            case DESTROY :
-              gtk_object_unref (GTK_OBJECT(tool));
-              tool_options_hide_shell();
-              break;
-
-            default:
-              break;
-            }
-        }
-      else if (action == HALT)
-        {
-          tool->state = INACTIVE;
-        }
-    }
-}
-
-void gimp_tool_emit_button_press (GimpTool       *tool,
-				  GdkEventButton *bevent,
-				  GDisplay       *gdisp)
-{
-  gtk_signal_emit (GTK_OBJECT (tool), gimp_tool_signals[BUTTON_PRESSED], bevent, gdisp); 
-
-}
-
-void gimp_tool_emit_button_release  (GimpTool       *tool,
-				     GdkEventButton *bevent,
-				     GDisplay       *gdisp)
-{
-  gtk_signal_emit (GTK_OBJECT (tool), gimp_tool_signals[BUTTON_RELEASED], bevent, gdisp);
-}  
-
-void gimp_tool_emit_motion    (GimpTool       *tool,
-			       GdkEventMotion *mevent,
-			       GDisplay       *gdisp)
-{
-  gtk_signal_emit (GTK_OBJECT (tool), gimp_tool_signals[MOTION], mevent, gdisp);
-}
-
-void gimp_tool_emit_arrow_keys (GimpTool       *tool,
-				GdkEventKey    *kevent,
-				GDisplay       *gdisp)
-{
-  gtk_signal_emit (GTK_OBJECT (tool), gimp_tool_signals[ARROW_KEYS], kevent, gdisp);
-
-}
-void gimp_tool_emit_modifier_key (GimpTool       *tool,
-				  GdkEventKey    *kevent,
-				  GDisplay       *gdisp)
-{
-  gtk_signal_emit (GTK_OBJECT (tool), gimp_tool_signals[MODIFIER_KEY], kevent, gdisp);  
-}
-void    gimp_tool_emit_cursor_update (GimpTool       *tool,
-				      GdkEventMotion *mevent,
-				      GDisplay       *gdisp)
-{
-  gtk_signal_emit (GTK_OBJECT (tool), gimp_tool_signals[CURSOR_UPDATED], mevent, gdisp);
-}
-
-void  gimp_tool_emit_oper_update (GimpTool       *tool,
-				  GdkEventMotion *mevent,
-				  GDisplay       *gdisp)
-{
-  gtk_signal_emit (GTK_OBJECT (tool), gimp_tool_signals[OPER_UPDATE], mevent, gdisp);
-}
-
-void gimp_tool_emit_control (GimpTool       *tool,
-			     ToolAction     action,
-			     GDisplay       *gdisp)
-{
-  gtk_signal_emit (GTK_OBJECT (tool), gimp_tool_signals[TOOL_CONTROL], action, gdisp);
-}
 
 #define STUB(x) void * x (void){g_message ("stub function %s called",#x); return NULL;}
 

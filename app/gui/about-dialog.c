@@ -31,6 +31,8 @@
 
 #include "apptypes.h"
 
+#include "tools/gimptoolinfo.h"
+
 #include "appenv.h"
 #include "about_dialog.h"
 #include "authors.h"
@@ -65,7 +67,7 @@ static gint      about_dialog_key         (GtkWidget      *widget,
 					   GdkEventKey    *event,
 					   gpointer        data);
 static void      about_dialog_tool_drop   (GtkWidget      *widget,
-					   ToolType        tool,
+					   GimpViewable   *viewable,
 					   gpointer        data);
 static gint      about_dialog_timer       (gpointer        data);
 
@@ -94,13 +96,6 @@ static gint       cur_scroll_text  = 0;
 static gint       cur_scroll_index = 0;
 static gint       shuffle_array[sizeof (authors) / sizeof (authors[0])];
 
-/*  dnd stuff  */
-static GtkTargetEntry tool_target_table[] =
-{
-  GIMP_TARGET_TOOL
-};
-static guint n_tool_targets = (sizeof (tool_target_table) /
-                               sizeof (tool_target_table[0]));
 
 static gchar *drop_text[] = 
 { 
@@ -158,12 +153,14 @@ about_dialog_create (void)
 			  NULL);
       
       /*  dnd stuff  */
-      gtk_drag_dest_set (about_dialog,
-			 GTK_DEST_DEFAULT_MOTION |
-			 GTK_DEST_DEFAULT_DROP,
-			 tool_target_table, n_tool_targets,
-			 GDK_ACTION_COPY); 
-      gimp_dnd_tool_dest_set (about_dialog, about_dialog_tool_drop, NULL);
+      gimp_gtk_drag_dest_set_by_type (about_dialog,
+				      GTK_DEST_DEFAULT_MOTION |
+				      GTK_DEST_DEFAULT_DROP,
+				      GIMP_TYPE_TOOL_INFO,
+				      GDK_ACTION_COPY); 
+      gimp_dnd_viewable_dest_set (about_dialog,
+				  GIMP_TYPE_TOOL_INFO,
+				  about_dialog_tool_drop, NULL);
 
       gtk_widget_set_events (about_dialog, GDK_BUTTON_PRESS_MASK);
 
@@ -535,9 +532,9 @@ about_dialog_key (GtkWidget      *widget,
 }
 
 static void
-about_dialog_tool_drop (GtkWidget *widget,
-			ToolType   tool,
-			gpointer   data)
+about_dialog_tool_drop (GtkWidget    *widget,
+			GimpViewable *viewable,
+			gpointer      data)
 {
   GdkPixmap *pixmap = NULL;
   GdkBitmap *mask   = NULL;

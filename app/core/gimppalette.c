@@ -33,7 +33,6 @@
 
 #include "gimppalette.h"
 #include "gimprc.h"
-#include "palette_select.h"
 #include "temp_buf.h"
 
 #include "libgimp/gimpenv.h"

@@ -28,6 +28,10 @@
 
 #include "apptypes.h"
 
+#include "tools/gimptoolinfo.h"
+#include "tools/tool.h"
+#include "tools/tool_manager.h"
+
 #include "context_manager.h"
 #include "fileops.h"
 #include "gimpimage.h"
@@ -45,8 +49,6 @@
 #include "gimppreview.h"
 #include "gimprc.h"
 #include "temp_buf.h"
-
-#include "tools/tool.h"
 
 #include "libgimp/gimplimits.h"
 
@@ -107,9 +109,6 @@ static GtkWidget * gimp_dnd_get_viewable_icon (GtkWidget     *widget,
 static GtkWidget * gimp_dnd_get_color_icon    (GtkWidget     *widget,
 					       GtkSignalFunc  get_color_func,
 					       gpointer       get_color_data);
-static GtkWidget * gimp_dnd_get_tool_icon     (GtkWidget     *widget,
-					       GtkSignalFunc  get_tool_func,
-					       gpointer       get_tool_data);
 
 static guchar    * gimp_dnd_get_color_data    (GtkWidget     *widget,
 					       GtkSignalFunc  get_color_func,
@@ -283,7 +282,7 @@ static GimpDndDataDef dnd_data_defs[] =
     "gimp_dnd_set_tool_func",
     "gimp_dnd_set_tool_data",
 
-    gimp_dnd_get_tool_icon,
+    gimp_dnd_get_viewable_icon,
     gimp_dnd_get_tool_data,
     gimp_dnd_set_tool_data
   }
@@ -719,12 +718,19 @@ static const GtkTargetEntry palette_target_table[] =
 static const guint palette_n_targets = (sizeof (palette_target_table) /
 					sizeof (palette_target_table[0]));
 
+static const GtkTargetEntry tool_target_table[] =
+{
+  GIMP_TARGET_TOOL
+};
+static const guint tool_n_targets = (sizeof (tool_target_table) /
+				     sizeof (tool_target_table[0]));
+
 
 void
-gimp_gtk_drag_source_set_by_type (GtkWidget               *widget,
-				  GdkModifierType          start_button_mask,
-				  GtkType                  type,
-				  GdkDragAction            actions)
+gimp_gtk_drag_source_set_by_type (GtkWidget       *widget,
+				  GdkModifierType  start_button_mask,
+				  GtkType          type,
+				  GdkDragAction    actions)
 {
   const GtkTargetEntry *target_table = NULL;
   guint                 n_targets    = 0;
@@ -766,6 +772,11 @@ gimp_gtk_drag_source_set_by_type (GtkWidget               *widget,
     {
       target_table = palette_target_table;
       n_targets    = palette_n_targets;
+    }
+  else if (type == GIMP_TYPE_TOOL)
+    {
+      target_table = tool_target_table;
+      n_targets    = tool_n_targets;
     }
   else
     {
@@ -829,6 +840,11 @@ gimp_gtk_drag_dest_set_by_type (GtkWidget       *widget,
       target_table = palette_target_table;
       n_targets    = palette_n_targets;
     }
+  else if (type == GIMP_TYPE_TOOL_INFO)
+    {
+      target_table = tool_target_table;
+      n_targets    = tool_n_targets;
+    }
   else
     {
       g_warning ("%s(): unsupported GtkType", G_GNUC_FUNCTION);
@@ -883,6 +899,10 @@ gimp_dnd_viewable_source_set (GtkWidget               *widget,
     {
       dnd_type = GIMP_DND_DATA_PALETTE;
     }
+  else if (type == GIMP_TYPE_TOOL_INFO)
+    {
+      dnd_type = GIMP_DND_DATA_TOOL;
+    }
   else
     {
       g_warning ("%s(): unsupported GtkType", G_GNUC_FUNCTION);
@@ -934,6 +954,10 @@ gimp_dnd_viewable_dest_set (GtkWidget               *widget,
     {
       dnd_type = GIMP_DND_DATA_PALETTE;
     }
+  else if (type == GIMP_TYPE_TOOL_INFO)
+    {
+      dnd_type = GIMP_DND_DATA_TOOL;
+    }
   else
     {
       g_warning ("%s(): unsupported GtkType", G_GNUC_FUNCTION);
@@ -979,6 +1003,10 @@ gimp_dnd_viewable_dest_unset (GtkWidget *widget,
     {
       dnd_type = GIMP_DND_DATA_PALETTE;
     }
+  else if (type == GIMP_TYPE_TOOL_INFO)
+    {
+      dnd_type = GIMP_DND_DATA_TOOL;
+    }
   else
     {
       g_warning ("%s(): unsupported GtkType", G_GNUC_FUNCTION);
@@ -1003,7 +1031,7 @@ gimp_dnd_get_drawable_data (GtkWidget     *widget,
   GimpDrawable *drawable;
   gchar        *id;
 
-  drawable =
+  drawable = (GimpDrawable *)
     (* (GimpDndDragViewableFunc) get_drawable_func) (widget, get_drawable_data);
 
   if (! drawable)
@@ -1045,7 +1073,8 @@ gimp_dnd_set_drawable_data (GtkWidget     *widget,
   drawable = gimp_drawable_get_by_ID (ID);
 
   if (drawable)
-    (* (GimpDndDropViewableFunc) set_drawable_func) (widget, drawable,
+    (* (GimpDndDropViewableFunc) set_drawable_func) (widget,
+						     GIMP_VIEWABLE (drawable),
 						     set_drawable_data);
 }
 
@@ -1234,28 +1263,6 @@ gimp_dnd_set_palette_data (GtkWidget     *widget,
 /*  tool dnd functions  */
 /************************/
 
-static GtkWidget *
-gimp_dnd_get_tool_icon (GtkWidget     *widget,
-			GtkSignalFunc  get_tool_func,
-			gpointer       get_tool_data)
-{
-  GtkWidget *tool_icon;
-  ToolType   tool_type;
-
-  tool_type = (* (GimpDndDragToolFunc) get_tool_func) (widget, get_tool_data);
-
-#warning obsolete
-#if 0
-  if (((gint) tool_type < 0) || ((gint) tool_type >= num_tools))
-    return NULL;
-
-  tool_icon = gtk_pixmap_new (gimp_tool_get_pixmap (tool_type),
-			      gimp_tool_get_mask (tool_type));
-
-  return tool_icon;
-#endif
-}
-
 static guchar *
 gimp_dnd_get_tool_data (GtkWidget     *widget,
 			GtkSignalFunc  get_tool_func,
@@ -1263,24 +1270,24 @@ gimp_dnd_get_tool_data (GtkWidget     *widget,
 			gint          *format,
 			gint          *length)
 {
-  ToolType  tool_type;
-  guint16  *val;
+  GimpToolInfo *tool_info;
+  gchar        *name;
 
-  tool_type = (* (GimpDndDragToolFunc) get_tool_func) (widget, get_tool_data);
+  tool_info = (GimpToolInfo *)
+    (* (GimpDndDragViewableFunc) get_tool_func) (widget, get_tool_data);
 
-#warning yet another
-#if 0
-  if (((gint) tool_type < 0) || ((gint) tool_type >= num_tools))
+  if (! tool_info)
     return NULL;
-#endif
-  val = g_new (guint16, 1);
 
-  val[0] = (guint16) tool_type;
+  name = g_strdup (gimp_object_get_name (GIMP_OBJECT (tool_info)));
 
-  *format = 16;
-  *length = 2;
+  if (! name)
+    return NULL;
 
-  return (guchar *) val;
+  *format = 8;
+  *length = strlen (name) + 1;
+
+  return (guchar *) name;
 }
 
 static void
@@ -1291,53 +1298,32 @@ gimp_dnd_set_tool_data (GtkWidget     *widget,
 			gint           format,
 			gint           length)
 {
-  ToolType tool_type;
-  guint16  val;
+  GimpToolInfo *tool_info;
+  gchar        *name;
 
-  if ((format != 16) || (length != 2))
+  if ((format != 8) || (length < 1))
     {
       g_warning ("Received invalid tool data\n");
       return;
     }
 
-  val = *((guint16 *) vals);
+  name = (gchar *) vals;
 
-  tool_type = (ToolType) val;
-#warning nothing special
-#if 0
-  if (((gint) tool_type < 0) || ((gint) tool_type >= num_tools))
-    return;
-#endif
+  /* FIXME
+  if (strcmp (name, "Standard") == 0)
+    palette = GIMP_PALETTE (gimp_palette_get_standard ());
+  else
+  */
 
-  (* (GimpDndDropToolFunc) set_tool_func) (widget, tool_type, set_tool_data);
+  tool_info = (GimpToolInfo *)
+    gimp_container_get_child_by_name (global_tool_info_list,
+				      name);
+
+  if (tool_info)
+    (* (GimpDndDropViewableFunc) set_tool_func) (widget,
+						 GIMP_VIEWABLE (tool_info),
+						 set_tool_data);
 }
-
-void
-gimp_dnd_tool_source_set (GtkWidget           *widget,
-			  GimpDndDragToolFunc  get_tool_func,
-			  gpointer             data)
-{
-  gimp_dnd_data_source_set (GIMP_DND_DATA_TOOL, widget,
-			    GTK_SIGNAL_FUNC (get_tool_func),
-			    data);
-}
-
-void
-gimp_dnd_tool_dest_set (GtkWidget           *widget,
-			GimpDndDropToolFunc  set_tool_func,
-			gpointer             data)
-{
-  gimp_dnd_data_dest_set (GIMP_DND_DATA_TOOL, widget,
-			  GTK_SIGNAL_FUNC (set_tool_func),
-			  data);
-}
-
-void
-gimp_dnd_tool_dest_unset (GtkWidget *widget)
-{
-  gimp_dnd_data_dest_unset (GIMP_DND_DATA_TOOL, widget);
-}
-
 
 /****************************/
 /*  drawable dnd functions  */

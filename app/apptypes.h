@@ -75,6 +75,8 @@ typedef struct _GimpPalette         GimpPalette;
 
 /*  tools  */
 
+typedef struct _GimpToolInfo        GimpToolInfo;
+
 typedef struct _GimpTool            GimpTool;
 
 

@@ -37,6 +37,9 @@
 
 #include "apptypes.h"
 
+#include "tools/gimptoolinfo.h"
+#include "tools/tool.h"
+
 #include "app_procs.h"
 #include "appenv.h"
 #include "color_notebook.h"
@@ -52,7 +55,6 @@
 #include "plug_in.h"
 #include "gimage.h"
 #include "session.h"
-#include "tools/tool.h"
 
 #include "libgimp/gimpenv.h"
 #include "libgimp/gimputils.h"
@@ -2123,12 +2125,12 @@ parse_device (gpointer val1p,
   gint          num_keys = 0;
   GdkDeviceKey *keys     = NULL;
 
-  GimpTool *tool;
-  GimpRGB  foreground    = { 1.0, 1.0, 1.0, 1.0 };
-  GimpRGB  background    = { 0.0, 0.0, 0.0, 1.0 };
-  gchar   *brush_name    = NULL;
-  gchar   *pattern_name  = NULL;
-  gchar   *gradient_name = NULL;
+  gchar        *tool_name     = NULL;
+  GimpRGB       foreground    = { 1.0, 1.0, 1.0, 1.0 };
+  GimpRGB       background    = { 0.0, 0.0, 0.0, 1.0 };
+  gchar        *brush_name    = NULL;
+  gchar        *pattern_name  = NULL;
+  gchar        *gradient_name = NULL;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_STRING))
@@ -2236,19 +2238,7 @@ parse_device (gpointer val1p,
 	    goto error;
 	  token = get_next_token ();
 
-	  /* FIXME: this shouldn't be hard coded like this */
-#warning deep bogosity error 
-#if 0
-	  for (tool = FIRST_TOOLBOX_TOOL; tool <= LAST_TOOLBOX_TOOL; tool++)
-	    {
-	      if (!strcmp (tool_info[tool].tool_name, token_str))
-		break;
-	    }
-
-#endif
-
-if (tool > LAST_TOOLBOX_TOOL)
-	    goto error;
+	  tool_name = g_strdup (token_str);
 	}
       else if (!strcmp ("foreground", token_sym))
 	{
@@ -2315,13 +2305,14 @@ if (tool > LAST_TOOLBOX_TOOL)
   token = get_next_token ();
 
   devices_rc_update (name, values, mode, num_axes, axes, num_keys, keys,
-		     tool,
+		     tool_name,
 		     &foreground,
 		     &background,
 		     brush_name,
 		     pattern_name,
 		     gradient_name);
 
+  g_free (tool_name);
   g_free (brush_name);
   g_free (pattern_name);
   g_free (gradient_name);

@@ -24,16 +24,19 @@
 
 #include "apptypes.h"
 
+#include "tools/color_picker.h"
+#include "tools/tool.h"
+#include "tools/tool_manager.h"
+
 #include "context_manager.h"
 #include "colormaps.h"
 #include "gdisplay.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
+#include "gimppreview.h"
 #include "info_dialog.h"
 #include "info_window.h"
-
-#include "tools/tool.h"
 
 #include "pdb/procedural_db.h"
 
@@ -135,7 +138,7 @@ info_window_create_extended (InfoDialog *info_win)
   GtkWidget   *alignment;
   GtkWidget   *table;
   GtkWidget   *label;
-  GtkWidget   *pixmap;
+  GtkWidget   *preview;
   InfoWinData *iwd;
 
   iwd = (InfoWinData *) info_win->user_data;
@@ -158,11 +161,10 @@ info_window_create_extended (InfoDialog *info_win)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  pixmap = gtk_pixmap_new (gimp_tool_get_pixmap (COLOR_PICKER),
-			   gimp_tool_get_mask (COLOR_PICKER));
-  gtk_table_attach (GTK_TABLE (table), pixmap, 0, 2, 0, 1,
+  preview = gimp_preview_new (GIMP_VIEWABLE (tool_manager_get_info_by_type (GIMP_TYPE_COLOR_PICKER)), 22, 0, FALSE);
+  gtk_table_attach (GTK_TABLE (table), preview, 0, 2, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
-  gtk_widget_show (pixmap);
+  gtk_widget_show (preview);
 
   label = gtk_label_new (_("R:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);

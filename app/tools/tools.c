@@ -54,10 +54,13 @@ void
 register_tools (void)
 {
   GimpToolClass *color_picker = GIMP_TOOL_CLASS(gtk_type_class(GIMP_TYPE_COLOR_PICKER));
-  GimpToolClass *measure_tool = GIMP_TOOL_CLASS(gtk_type_class(GIMP_TYPE_MEASURE)); 
+  GimpToolClass *measure_tool = GIMP_TOOL_CLASS(gtk_type_class(GIMP_TYPE_MEASURE_TOOL));
 
   tool_manager_register (color_picker);
   tool_manager_register (measure_tool);
+
+  gimp_color_picker_register ();
+  gimp_measure_tool_register ();
 /*
   procedural_db_register (&airbrush_proc);
   procedural_db_register (&airbrush_default_proc);

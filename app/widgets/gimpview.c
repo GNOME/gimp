@@ -603,9 +603,10 @@ gimp_preview_real_render (GimpPreview *preview)
 					    preview->width,
 					    preview->height);
 
-  gimp_preview_render_and_flush (preview,
-				 temp_buf,
-				 -1);
+  if (temp_buf)
+    gimp_preview_render_and_flush (preview,
+				   temp_buf,
+				   -1);
 }
 
 static void

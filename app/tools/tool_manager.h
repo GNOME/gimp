@@ -24,21 +24,42 @@
 
 
 /*  Function declarations  */
-void        tool_manager_select               (GimpTool     *tool);
+void        tool_manager_select_tool           (GimpTool       *tool);
 
-void        tool_manager_control_active        (ToolAction   action,
-						GDisplay    *gdisp);
+void        tool_manager_initialize_tool       (GimpTool       *tool,
+						GDisplay       *gdisp);
 
-void        tool_manager_register             (GimpToolClass     *tool_type
+void        tool_manager_control_active        (ToolAction      action,
+						GDisplay       *gdisp);
+
+void        tool_manager_register              (GimpToolClass  *tool_type
 						/*, ToolOptions *tool_options*/);
 
-gchar     * tool_manager_get_active_PDB_string    (void);
-gchar *      tool_manager_active_get_help_data            (void);
+
+void        tool_manager_init                  (void);
+
+/*  these should to go their own file  */
+void        tool_manager_register_tool         (GtkType         tool_type,
+						const gchar    *tool_name,
+						const gchar    *menu_path,
+						const gchar    *menu_accel,
+						const gchar    *tool_desc,
+						const gchar    *help_domain,
+						const gchar    *help_data,
+						const gchar   **icon_data);
+
+GimpToolInfo * tool_manager_get_info_by_type   (GtkType         tool_type);
+
+
+gchar     * tool_manager_get_active_PDB_string (void);
+gchar     * tool_manager_active_get_help_data  (void);
 
 
 /*  Global Data Structures  */
-extern GimpTool     *active_tool;
-extern GSList  	*registered_tools;
+extern GimpTool      *active_tool;
+extern GSList  	     *registered_tools;
+
+extern GimpContainer *global_tool_info_list;
 
 
 #endif  /*  __TOOL_MANAGER_H__  */

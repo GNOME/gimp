@@ -1,3 +1,65 @@
+2001-02-21  Michael Natterer  <mitch@gimp.org>
+
+	Made the tool system work again and integrated it back with the
+	GimpContext. It's a hack between old, new and freshly hacked
+	stuff. There are still lots of warnings but at least we can switch
+	tools again.
+
+	* app/tools/Makefile.am
+	* app/tools/gimptoolinfo.[ch]: resurrected as real object.
+	The GimpToolInfo objects are derived from GimpData, which gives
+	us the tool icon stuff for free. Also, we need a list of _objects_
+	which is allocated all the time. All tools are required to have
+	a "register" function which registers themselves with the list
+	of GimpToolInfo objects which is maintained by the tool manager.
+
+	* app/tools/tool.[ch]: made a real GtkObject with properly named
+	functions out of it. The former "active_tool_control" is of
+	course not the default implementation of the tool's "control"
+	method but a hack _around_ it, so it went to the tool manager.
+
+	* app/tools/color_picker.[ch]
+	* app/tools/measure.[ch]: ditto. Added "register" functions and
+	"destroy" implementations so the tools go away after use.
+
+	* app/tools/tool_manager.[ch]: badly hacked at the moment to keep
+	both the list of class structures _and_ the tool info list.
+
+	* app/tools/tools.c: call the tools' register functions.
+
+	* app/gimpcontext.[ch]: store a pointer to a GimpToolInfo object
+	as "active_tool" in the context, so we're independent of tools
+	being allocated or not. It's treated just like a brush or pattern
+	now.
+
+	* app/gimpdnd.[ch]: made tool DND work like all other DND types.
+
+	* app/devices.[ch]: also here: the tool is just a normal data object
+	now, resulting in removal of lots of code.
+
+	* app/commands.c
+	* app/context_manager.c: updated the tool select and context stuff
+	to work again.
+
+	* app/toolbox.c: removed the old pixmap buttons and put GimpPreviews
+	inside the tool buttons. Still needs an own preview type to
+	look nice.
+
+	* app/disp_callbacks.c
+	* app/about_dialog.c
+	* app/app_procs.c
+	* app/appenums.h
+	* app/apptypes.h
+	* app/gimage.c
+	* app/gimppalette.c
+	* app/gimppreview.c
+	* app/gimprc.c
+	* app/info_window.c
+	* app/menus.c
+	* app/palette_select.h
+	* app/scale.c
+	* app/scroll.c: lots of changes to make it work again.
+
 2001-02-21  Daniel Egger  <egger@suse.de>
 
 	* app/gimpchecks.h: New file containing the check types.

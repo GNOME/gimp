@@ -29,6 +29,11 @@
 
 #include "apptypes.h"
 
+#include "tools/gimptoolinfo.h"
+#include "tools/tool_options_dialog.h"
+#include "tools/tool.h"
+#include "tools/tool_manager.h"
+
 #include "about_dialog.h"
 #include "app_procs.h"
 #include "brush_select.h"
@@ -89,9 +94,6 @@
 #ifdef DISPLAY_FILTERS
 #include "gdisplay_color_ui.h"
 #endif /* DISPLAY_FILTERS */
-
-#include "tools/tool_options_dialog.h"
-#include "tools/tool.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -1114,16 +1116,15 @@ tools_select_cmd_callback (GtkWidget *widget,
 			   gpointer   callback_data,
 			   guint      callback_action)
 {
-  ToolType   tool_type;
-  GDisplay  *gdisp;
+  GimpToolInfo *tool_info;
+  GDisplay     *gdisp;
 
-  tool_type = (ToolType) callback_action;
+  tool_info = GIMP_TOOL_INFO (callback_action);
   gdisp     = gdisplay_active ();
 
+  gimp_context_set_tool (gimp_context_get_user (), tool_info);
 
-#warning fix tools_select_cmd_callback
-#if 0
-  gimp_context_set_tool (gimp_context_get_user (), tool_type);
+#warning FIXME (let the tool manager to this stuff)
 
   /*  Paranoia  */
   active_tool->drawable = NULL;
@@ -1131,9 +1132,9 @@ tools_select_cmd_callback (GtkWidget *widget,
   /*  Complete the initialisation by doing the same stuff
    *  tools_initialize() does after it did what tools_select() does
    */
-  if (tool_info[tool_type].init_func)
+  if (GIMP_TOOL_CLASS (GTK_OBJECT (active_tool)->klass)->initialize)
     {
-      (* tool_info[tool_type].init_func) (gdisp);
+      gimp_tool_initialize (active_tool, gdisp);
 
       active_tool->drawable = gimp_image_active_drawable (gdisp->gimage);
     }
@@ -1144,7 +1145,6 @@ tools_select_cmd_callback (GtkWidget *widget,
    *  before deleting it
    */
   active_tool->gdisp = gdisp;
-#endif
 }
 
 /*****  Filters  *****/

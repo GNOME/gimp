@@ -55,6 +55,8 @@ extern gint col_value[5];
 GtkType    gimp_color_picker_get_type (void);
 GimpTool * gimp_color_picker_new      (void);
 
+void       gimp_color_picker_register (void);
+
 gboolean   pick_color                 (GimpImage    *gimage,
 				       GimpDrawable *drawable,
 				       gint          x,

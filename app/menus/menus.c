@@ -28,20 +28,22 @@
 
 #include "apptypes.h"
 
+#include "tools/gimptoolinfo.h"
+#include "tools/tool_manager.h"
+
 #include "channels_dialog.h"
 #include "commands.h"
 #include "dialog_handler.h"
 #include "fileops.h"
 #include "gdisplay.h"
 #include "gimphelp.h"
+#include "gimplist.h"
 #include "gimprc.h"
 #include "layers_dialog.h"
 #include "menus.h"
 #include "paths_dialog.h"
 #include "preferences_dialog.h"
 #include "toolbox.h"
-
-#include "tools/tool_manager.h"
 
 #include "libgimp/gimpenv.h"
 
@@ -1236,16 +1238,17 @@ menus_reorder_plugins (void)
 }
 
 static void
-menus_tools_create (GimpToolClass *tool_info)
+menus_tools_create (GimpToolInfo *tool_info)
 {
   GimpItemFactoryEntry entry;
+
   if (tool_info->menu_path == NULL)
     return;
 
-  entry.entry.path            = tool_info->menu_path;
+  entry.entry.path            = gettext (tool_info->menu_path);
   entry.entry.accelerator     = tool_info->menu_accel;
   entry.entry.callback        = tools_select_cmd_callback;
-  entry.entry.callback_action = tool_info->tool_id;
+  entry.entry.callback_action = tool_info;
   entry.entry.item_type       = NULL;
   entry.help_page             = tool_info->help_data;
   entry.description           = NULL;
@@ -1694,11 +1697,11 @@ menus_create_items (GtkItemFactory       *item_factory,
 static void
 menus_init (void)
 {
-  GtkWidget *menu_item;
-  gchar     *filename;
-  gint       i;
-  GSList     *tools;
-  GimpToolClass *klass;
+  GtkWidget    *menu_item;
+  gchar        *filename;
+  gint          i;
+  GList        *list;
+  GimpToolInfo *tool_info;
 
   if (menus_initialized)
     return;
@@ -1779,12 +1782,14 @@ menus_init (void)
 		      NULL, 2);
 
 
-for (tools = registered_tools; tools; tools=tools->next)
+  for (list = GIMP_LIST (global_tool_info_list)->list;
+       list;
+       list = g_list_next (list))
     {
-      menus_tools_create (tools->data);
+      menus_tools_create (GIMP_TOOL_INFO (list->data));
     }
   /*  reorder <Image>/Image/Colors  */
-#warning fixme
+#warning FIXME
 #if 0 
    menu_item = gtk_item_factory_get_widget (image_factory,
 					   tool_info[POSTERIZE].menu_path);
@@ -1837,15 +1842,15 @@ static gchar *
 menu_translate (const gchar *path,
     		gpointer     data)
 {
-  static gchar *menupath = NULL;
+  static gchar   *menupath = NULL;
 
   GtkItemFactory *item_factory = NULL;
-  gchar *retval;
-  gchar *factory;
-  gchar *translation;
-  gchar *domain = NULL;
-  gchar *complete = NULL;
-  gchar *p, *t;
+  gchar          *retval;
+  gchar          *factory;
+  gchar          *translation;
+  gchar          *domain = NULL;
+  gchar          *complete = NULL;
+  gchar          *p, *t;
 
   factory = (gchar *) data;
 

@@ -24,14 +24,15 @@
 
 #include "apptypes.h"
 
+#include "tools/tool.h"
+#include "tools/tool_manager.h"
+
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
 #include "gimpimage.h"
 #include "gimprc.h"
 #include "nav_window.h"
 #include "scale.h"
-
-#include "tools/tool.h"
 
 
 void

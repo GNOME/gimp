@@ -19,16 +19,9 @@
 #ifndef __MEASURE_H__
 #define __MEASURE_H__
 
+
 #include "tool.h"
 
-#define GIMP_TYPE_MEASURE            (gimp_measure_tool_get_type ())
-#define GIMP_MEASURE(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_MEASURE, GimpMeasureTool))
-#define GIMP_IS_MEASURE(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_MEASURE))
-#define GIMP_MEASURE_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MEASURE, GimpMeasureToolClass))
-#define GIMP_IS_MEASURE_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MEASURE))
-
-typedef struct _GimpMeasureTool      GimpMeasureTool;
-typedef struct _GimpMeasureToolClass GimpMeasureToolClass;
 
 /*  possible measure functions  */
 typedef enum 
@@ -41,30 +34,44 @@ typedef enum
   FINISHED
 } MeasureFunction;
 
+
+#define GIMP_TYPE_MEASURE_TOOL            (gimp_measure_tool_get_type ())
+#define GIMP_MEASURE_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_MEASURE_TOOL, GimpMeasureTool))
+#define GIMP_IS_MEASURE_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_MEASURE_TOOL))
+#define GIMP_MEASURE_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MEASURE_TOOL, GimpMeasureToolClass))
+#define GIMP_IS_MEASURE_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MEASURE_TOOL))
+
+typedef struct _GimpMeasureTool      GimpMeasureTool;
+typedef struct _GimpMeasureToolClass GimpMeasureToolClass;
+
 struct _GimpMeasureTool
 {
-      GimpTool  parent_instance;
+  GimpTool  parent_instance;
 
-      DrawCore *core;       /*  Core select object  */
+  DrawCore *core;       /*  Core select object  */
 
-      MeasureFunction  function;    /*  function we're performing  */
-      gint             last_x;      /*  last x coordinate          */
-      gint             last_y;      /*  last y coordinate          */
-      gint             point;       /*  what are we manipulating?  */
-      gint             num_points;  /*  how many points?           */
-      gint             x[3];        /*  three x coordinates        */
-      gint             y[3];        /*  three y coordinates        */
-      gdouble          angle1;      /*  first angle                */
-      gdouble          angle2;      /*  second angle               */
-      guint            context_id;  /*  for the statusbar          */
+  MeasureFunction  function;    /*  function we're performing  */
+  gint             last_x;      /*  last x coordinate          */
+  gint             last_y;      /*  last y coordinate          */
+  gint             point;       /*  what are we manipulating?  */
+  gint             num_points;  /*  how many points?           */
+  gint             x[3];        /*  three x coordinates        */
+  gint             y[3];        /*  three y coordinates        */
+  gdouble          angle1;      /*  first angle                */
+  gdouble          angle2;      /*  second angle               */
+  guint            context_id;  /*  for the statusbar          */
 };
 
 struct _GimpMeasureToolClass
 {
-      GimpToolClass parent_class;
+  GimpToolClass parent_class;
 };
 
-GimpTool * tools_new_measure_tool  (void);
-GtkType    gimp_measure_tool_get_type   (void);
+
+GimpTool * tools_new_measure_tool     (void);
+GtkType    gimp_measure_tool_get_type (void);
+
+void       gimp_measure_tool_register (void);
+
 
 #endif  /*  __MEASURE_H__  */

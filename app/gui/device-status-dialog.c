@@ -28,6 +28,9 @@
 
 #include "apptypes.h"
 
+#include "tools/gimptoolinfo.h"
+#include "tools/tool_manager.h"
+
 #include "appenv.h"
 #include "context_manager.h"
 #include "devices.h"
@@ -42,7 +45,6 @@
 #include "gimplist.h"
 #include "gimprc.h"
 #include "session.h"
-#include "tools/tool.h"
 #include "libgimp/gimpenv.h"
 
 #include "libgimp/gimpintl.h"
@@ -97,7 +99,6 @@ struct _DeviceInfoDialog
   GtkWidget **brushes;
   GtkWidget **patterns;
   GtkWidget **gradients;
-  GtkWidget **eventboxes;
 };
 
 
@@ -117,10 +118,8 @@ static void     devices_close_callback           (GtkWidget    *widget,
 static void     device_status_update             (guint32       deviceid);
 static void     device_status_update_current     (void);
 
-static GimpTool *device_status_drag_tool         (GtkWidget    *widget,
-						  gpointer      data);
 static void     device_status_drop_tool          (GtkWidget    *widget,
-						  GimpTool     *tool,
+						  GimpViewable *viewable,
 						  gpointer      data);
 static void     device_status_foreground_changed (GtkWidget    *widget,
 						  gpointer      data);
@@ -153,15 +152,6 @@ static DeviceInfoDialog *deviceD          = NULL;
 
 /*  if true, don't update device information dialog */
 static gboolean          suppress_update  = FALSE;
-
-/*  dnd stuff  */
-static GtkTargetEntry tool_target_table[] =
-{
-  GIMP_TARGET_TOOL
-};
-static guint n_tool_targets = (sizeof (tool_target_table) /
-			       sizeof (tool_target_table[0]));
-
 
 
 /*  utility functions for the device lists  */
@@ -363,12 +353,12 @@ devices_rc_update (gchar        *name,
 		   GdkAxisUse   *axes, 
 		   gint          num_keys, 
 		   GdkDeviceKey *keys,
-		   GimpTool     *tool,
+		   const gchar  *tool_name,
 		   GimpRGB      *foreground,
 		   GimpRGB      *background,
-		   gchar        *brush_name, 
-		   gchar        *pattern_name,
-		   gchar        *gradient_name)
+		   const gchar  *brush_name, 
+		   const gchar  *pattern_name,
+		   const gchar  *gradient_name)
 {
   DeviceInfo *device_info;
 
@@ -448,7 +438,21 @@ devices_rc_update (gchar        *name,
 
   if (values & DEVICE_TOOL)
     {
-      gimp_context_set_tool (device_info->context, tool);
+      GimpToolInfo *tool_info;
+
+      tool_info = (GimpToolInfo *)
+	gimp_container_get_child_by_name (global_tool_info_list,
+					  tool_name);
+
+      if (tool_info)
+	{
+	  gimp_context_set_tool (device_info->context, tool_info);
+	}
+      else
+	{
+	  g_free (device_info->context->tool_name);
+	  device_info->context->tool_name = g_strdup (tool_name);
+	}
     }
 
   if (values & DEVICE_FOREGROUND)
@@ -676,16 +680,17 @@ devices_write_rc_device (DeviceInfo *device_info,
     }
   fprintf (fp,")");
 
-  /* Fixme: hard coded last tool....  see gimprc */
+#warning FIXME
+  /* Fixme: hard coded last tool....  see gimprc
   if (gimp_context_get_tool (device_info->context) >= FIRST_TOOLBOX_TOOL &&
       gimp_context_get_tool (device_info->context) <= LAST_TOOLBOX_TOOL)
     {
+  */
 
-#warning somebody fix me, please
-#if 0
+  if (gimp_context_get_tool (device_info->context))
+    {
       fprintf (fp, "\n    (tool \"%s\")",
-	       tool_info[gimp_context_get_tool (device_info->context)].tool_name);
-#endif
+	       GIMP_OBJECT (gimp_context_get_tool (device_info->context))->name);
     }
 
   {
@@ -799,7 +804,6 @@ device_status_create (void)
       deviceD->brushes     = g_new (GtkWidget *, deviceD->num_devices);
       deviceD->patterns    = g_new (GtkWidget *, deviceD->num_devices);
       deviceD->gradients   = g_new (GtkWidget *, deviceD->num_devices);
-      deviceD->eventboxes  = g_new (GtkWidget *, deviceD->num_devices);
 
       for (list = device_info_list, i = 0; list; list = g_list_next (list), i++)
 	{
@@ -827,30 +831,24 @@ device_status_create (void)
 
 	  /*  the tool  */
 
-	  deviceD->eventboxes[i] = gtk_event_box_new ();
-
-	  deviceD->tools[i] = gtk_pixmap_new (gimp_tool_get_pixmap (RECT_SELECT), 
-					      gimp_tool_get_mask (RECT_SELECT));
-	  
-	  gtk_drag_source_set (deviceD->eventboxes[i],
-			       GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
-			       tool_target_table, n_tool_targets,
-			       GDK_ACTION_COPY);
-	  gimp_dnd_tool_source_set (deviceD->eventboxes[i],
-				    device_status_drag_tool, 
-				    GUINT_TO_POINTER (device_info->device));
- 	  gtk_drag_dest_set (deviceD->eventboxes[i],
- 			     GTK_DEST_DEFAULT_HIGHLIGHT |
-			     GTK_DEST_DEFAULT_MOTION |
- 			     GTK_DEST_DEFAULT_DROP,
- 			     tool_target_table, n_tool_targets,
- 			     GDK_ACTION_COPY); 
- 	  gimp_dnd_tool_dest_set (deviceD->eventboxes[i],
-				  device_status_drop_tool, 
-				  GUINT_TO_POINTER (device_info->device));
-	  gtk_container_add (GTK_CONTAINER (deviceD->eventboxes[i]),
-			     deviceD->tools[i]);
-	  gtk_table_attach (GTK_TABLE (deviceD->table), deviceD->eventboxes[i],
+	  deviceD->tools[i] =
+	    gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_tool (device_info->context)),
+				   CELL_SIZE, CELL_SIZE, 0,
+				   FALSE, FALSE, TRUE);
+	  gtk_signal_connect_object_while_alive
+	    (GTK_OBJECT (device_info->context),
+	     "tool_changed",
+	     GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
+	     GTK_OBJECT (deviceD->tools[i]));
+	  gimp_gtk_drag_dest_set_by_type (deviceD->tools[i],
+					  GTK_DEST_DEFAULT_ALL,
+					  GIMP_TYPE_TOOL_INFO,
+					  GDK_ACTION_COPY);
+	  gimp_dnd_viewable_dest_set (deviceD->tools[i],
+				      GIMP_TYPE_TOOL_INFO,
+				      device_status_drop_tool,
+				      GUINT_TO_POINTER (device_info->device));
+	  gtk_table_attach (GTK_TABLE (deviceD->table), deviceD->tools[i],
 			    1, 2, i, i+1,
 			    0, 0, 2, 2);
 
@@ -982,7 +980,6 @@ device_status_destroy_callback (void)
   g_free (deviceD->ids);
   g_free (deviceD->frames);
   g_free (deviceD->tools);
-  g_free (deviceD->eventboxes);
   g_free (deviceD->foregrounds);
   g_free (deviceD->backgrounds);
   g_free (deviceD->brushes);
@@ -1066,7 +1063,6 @@ device_status_update (guint32 deviceid)
     {
       gtk_widget_hide (deviceD->frames[i]);
       gtk_widget_hide (deviceD->tools[i]);
-      gtk_widget_hide (deviceD->eventboxes[i]);
       gtk_widget_hide (deviceD->foregrounds[i]);
       gtk_widget_hide (deviceD->backgrounds[i]);
       gtk_widget_hide (deviceD->brushes[i]);
@@ -1077,20 +1073,11 @@ device_status_update (guint32 deviceid)
     {
       gtk_widget_show (deviceD->frames[i]);
 
-      gtk_pixmap_set (GTK_PIXMAP (deviceD->tools[i]), 
-		      gimp_tool_get_pixmap (gimp_context_get_tool (device_info->context)),
-		      gimp_tool_get_mask (gimp_context_get_tool (device_info->context)));
+      if (gimp_context_get_tool (device_info->context))
+	{
+	  gtk_widget_show (deviceD->tools[i]);
+	}
 
-      gtk_widget_draw (deviceD->tools[i], NULL);
-      gtk_widget_show (deviceD->tools[i]);
-      gtk_widget_show (deviceD->eventboxes[i]);
-
-#warning fixme
-#if 0
-      gimp_help_set_help_data (deviceD->eventboxes[i],
-			       tool_info[(gint) gimp_context_get_tool (device_info->context)].tool_desc,
-			       tool_info[(gint) gimp_context_get_tool (device_info->context)].private_tip);
-#endif
       /*  foreground color  */
       gimp_context_get_foreground (device_info->context, &color);
       gimp_color_area_set_color (GIMP_COLOR_AREA (deviceD->foregrounds[i]), 
@@ -1138,28 +1125,10 @@ device_status_update (guint32 deviceid)
 
 /*  dnd stuff  */
 
-static GimpTool *
-device_status_drag_tool (GtkWidget *widget,
-			 gpointer   data)
-{
-  DeviceInfo *device_info;
-
-  device_info = device_info_get_by_id (GPOINTER_TO_UINT (data));
-
-  if (device_info)
-    {
-      return gimp_context_get_tool (device_info->context);
-    }
-  else
-    {
-      return RECT_SELECT;
-    }
-}
-
 static void
-device_status_drop_tool (GtkWidget *widget,
-			 GimpTool   *tool,
-			 gpointer   data)
+device_status_drop_tool (GtkWidget    *widget,
+			 GimpViewable *viewable,
+			 gpointer      data)
 {
   DeviceInfo *device_info;
 
@@ -1167,7 +1136,7 @@ device_status_drop_tool (GtkWidget *widget,
 
   if (device_info && device_info->is_present)
     {
-      gimp_context_set_tool (device_info->context, tool);
+      gimp_context_set_tool (device_info->context, GIMP_TOOL_INFO (viewable));
     }
 }
 

@@ -140,23 +140,6 @@ void  gimp_dnd_viewable_dest_unset     (GtkWidget               *widget,
 					GtkType                  type);
 
 
-/*  tool dnd functions  */
-
-typedef void     (* GimpDndDropToolFunc) (GtkWidget *widget,
-					  ToolType   tool,
-					  gpointer   data);
-typedef ToolType (* GimpDndDragToolFunc) (GtkWidget *widget,
-					  gpointer   data); 
-
-void  gimp_dnd_tool_source_set     (GtkWidget           *widget,
-				    GimpDndDragToolFunc  get_tool_func,
-				    gpointer             data);
-void  gimp_dnd_tool_dest_set       (GtkWidget           *widget,
-				    GimpDndDropToolFunc  set_tool_func,
-				    gpointer             data);
-void  gimp_dnd_tool_dest_unset     (GtkWidget           *widget);
-
-
 /*  OLD drawable dnd functions  */
 
 void  gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,

@@ -26,6 +26,9 @@
 
 #include "apptypes.h"
 
+#include "tools/gimptoolinfo.h"
+#include "tools/tool_manager.h"
+
 #include "context_manager.h"
 #include "gdisplay.h"
 #include "gimpbrush.h"
@@ -89,8 +92,15 @@ static void gimp_context_copy_display        (GimpContext      *src,
 					      GimpContext      *dest);
 
 /*  tool  */
+static void gimp_context_tool_dirty          (GimpToolInfo     *tool_info,
+					      GimpContext      *context);
+static void gimp_context_tool_removed        (GimpContainer    *container,
+					      GimpToolInfo     *tool_info,
+					      GimpContext      *context);
+static void gimp_context_tool_list_thaw      (GimpContainer    *container,
+					      GimpContext      *context);
 static void gimp_context_real_set_tool       (GimpContext      *context,
-					      GimpTool         *tool);
+					      GimpToolInfo     *tool_info);
 static void gimp_context_copy_tool           (GimpContext      *src,
 					      GimpContext      *dest);
 
@@ -134,7 +144,7 @@ static void gimp_context_copy_brush          (GimpContext      *src,
 /*  pattern  */
 static void gimp_context_pattern_dirty       (GimpPattern      *pattern,
 					      GimpContext      *context);
-static void gimp_context_pattern_removed     (GimpContainer    *brush_list,
+static void gimp_context_pattern_removed     (GimpContainer    *container,
 					      GimpPattern      *pattern,
 					      GimpContext      *context);
 static void gimp_context_pattern_list_thaw   (GimpContainer    *container,
@@ -160,7 +170,7 @@ static void gimp_context_copy_gradient       (GimpContext      *src,
 /*  palette  */
 static void gimp_context_palette_dirty       (GimpPalette      *palette,
 					      GimpContext      *context);
-static void gimp_context_palette_removed     (GimpContainer    *brush_list,
+static void gimp_context_palette_removed     (GimpContainer    *container,
 					      GimpPalette      *palatte,
 					      GimpContext      *context);
 static void gimp_context_palette_list_thaw   (GimpContainer    *container,
@@ -239,7 +249,7 @@ static GtkType gimp_context_arg_types[] =
 {
   0,
   GTK_TYPE_NONE,
-  GTK_TYPE_NONE,
+  0,
   GTK_TYPE_NONE,
   GTK_TYPE_NONE,
   GTK_TYPE_NONE,
@@ -313,6 +323,7 @@ gimp_context_class_init (GimpContextClass *klass)
 
   parent_class = gtk_type_class (GIMP_TYPE_OBJECT);
 
+  gimp_context_arg_types[GIMP_CONTEXT_ARG_TOOL]     = GIMP_TYPE_TOOL_INFO;
   gimp_context_arg_types[GIMP_CONTEXT_ARG_IMAGE]    = GIMP_TYPE_IMAGE;
   gimp_context_arg_types[GIMP_CONTEXT_ARG_BRUSH]    = GIMP_TYPE_BRUSH;
   gimp_context_arg_types[GIMP_CONTEXT_ARG_PATTERN]  = GIMP_TYPE_PATTERN;
@@ -493,7 +504,8 @@ gimp_context_init (GimpContext *context)
   context->image         = NULL;
   context->display       = NULL;
 
-  context->tool 	 = NULL;
+  context->tool_info     = NULL;
+  context->tool_name     = NULL;
 
   gimp_rgba_set (&context->foreground, 0.0, 0.0, 0.0, 1.0);
   gimp_rgba_set (&context->background, 1.0, 1.0, 1.0, 1.0);
@@ -525,6 +537,15 @@ gimp_context_destroy (GtkObject *object)
 
   if (context->parent)
     gimp_context_unset_parent (context);
+
+  if (context->tool_info)
+    gtk_object_unref (GTK_OBJECT (context->tool_info));
+
+  if (context->tool_name)
+    {
+      g_free (context->tool_name);
+      context->tool_name = NULL;
+    }
 
   if (context->brush)
     gtk_object_unref (GTK_OBJECT (context->brush));
@@ -586,7 +607,7 @@ gimp_context_set_arg (GtkObject *object,
       gimp_context_set_display (context, GTK_VALUE_POINTER (*arg));
       break;
     case ARG_TOOL:
-      gimp_context_set_tool (context, GTK_VALUE_INT (*arg));
+      gimp_context_set_tool (context, GTK_VALUE_POINTER (*arg));
       break;
     case ARG_FOREGROUND:
       gimp_context_set_foreground (context, GTK_VALUE_POINTER (*arg));
@@ -635,7 +656,7 @@ gimp_context_get_arg (GtkObject *object,
       GTK_VALUE_POINTER (*arg) = gimp_context_get_display (context);
       break;
     case ARG_TOOL:
-      GTK_VALUE_INT (*arg) = gimp_context_get_tool (context);
+      GTK_VALUE_POINTER (*arg) = gimp_context_get_tool (context);
       break;
     case ARG_FOREGROUND:
       gimp_context_get_foreground (context, GTK_VALUE_POINTER (*arg));
@@ -716,6 +737,17 @@ gimp_context_new (const gchar *name,
 				  context,
 				  GTK_OBJECT (context));
   
+  gtk_signal_connect_while_alive (GTK_OBJECT (global_tool_info_list),
+				  "remove",
+				  GTK_SIGNAL_FUNC (gimp_context_tool_removed),
+				  context,
+				  GTK_OBJECT (context));
+  gtk_signal_connect_while_alive (GTK_OBJECT (global_tool_info_list),
+				  "thaw",
+				  GTK_SIGNAL_FUNC (gimp_context_tool_list_thaw),
+				  context,
+				  GTK_OBJECT (context));
+
   gtk_signal_connect_while_alive (GTK_OBJECT (global_brush_factory->container),
 				  "remove",
 				  GTK_SIGNAL_FUNC (gimp_context_brush_removed),
@@ -1228,45 +1260,147 @@ gimp_context_copy_display (GimpContext *src,
 /*****************************************************************************/
 /*  tool  ********************************************************************/
 
-GimpTool *
+GimpToolInfo *
 gimp_context_get_tool (GimpContext *context)
 {
-  context_check_current (context);
-  context_return_val_if_fail (context, 0);
+  g_return_val_if_fail (! context || GIMP_IS_CONTEXT (context), NULL);
 
-  return context->tool;
+  context_check_current (context);
+  context_return_val_if_fail (context, NULL);
+
+  return context->tool_info;
 }
 
 void
-gimp_context_set_tool (GimpContext *context,
-		       GimpTool     *tool)
+gimp_context_set_tool (GimpContext  *context,
+		       GimpToolInfo *tool_info)
 {
+  g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
+  g_return_if_fail (! tool_info || GIMP_IS_TOOL_INFO (tool_info));
+
   context_check_current (context);
   context_return_if_fail (context);
   context_find_defined (context, GIMP_CONTEXT_TOOL_MASK);
 
-  gimp_context_real_set_tool (context, tool);
+  gimp_context_real_set_tool (context, tool_info);
 }
 
 void
 gimp_context_tool_changed (GimpContext *context)
 {
+  g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
+
   context_check_current (context);
   context_return_if_fail (context);
 
   gtk_signal_emit (GTK_OBJECT (context),
 		   gimp_context_signals[TOOL_CHANGED],
-		   context->tool);
+		   context->tool_info);
+}
+
+/*  the active tool was modified  */
+static void
+gimp_context_tool_dirty (GimpToolInfo *tool_info,
+			 GimpContext  *context)
+{
+  g_free (context->tool_name);
+  context->tool_name = g_strdup (GIMP_OBJECT (tool_info)->name);
+
+  gimp_context_tool_changed (context);
+}
+
+/*  the global tool list is there again after refresh  */
+static void
+gimp_context_tool_list_thaw (GimpContainer *container,
+			     GimpContext   *context)
+{
+  GimpToolInfo *tool_info;
+
+  if (! context->tool_name)
+    context->tool_name = g_strdup ("Color Picker");
+
+  if ((tool_info = (GimpToolInfo *)
+       gimp_container_get_child_by_name (container,
+					 context->tool_name)))
+    {
+      gimp_context_real_set_tool (context, tool_info);
+      return;
+    }
+
+  if (gimp_container_num_children (container))
+    gimp_context_real_set_tool
+      (context,
+       GIMP_TOOL_INFO (gimp_container_get_child_by_index (container, 0)));
+  else
+    gimp_context_real_set_tool (context, NULL);
+
+  /* FIXME: GIMP_TOOL_INFO (gimp_tool_info_get_standard ())); */
+}
+
+/*  the active tool disappeared  */
+static void
+gimp_context_tool_removed (GimpContainer *container,
+			   GimpToolInfo  *tool_info,
+			   GimpContext   *context)
+{
+  if (tool_info == context->tool_info)
+    {
+      context->tool_info = NULL;
+
+      gtk_signal_disconnect_by_func (GTK_OBJECT (tool_info),
+				     gimp_context_tool_dirty,
+				     context);
+      gtk_object_unref (GTK_OBJECT (tool_info));
+
+      if (! gimp_container_frozen (container))
+	gimp_context_tool_list_thaw (container, context);
+    }
 }
 
 static void
-gimp_context_real_set_tool (GimpContext *context,
-			    GimpTool     *tool)
+gimp_context_real_set_tool (GimpContext  *context,
+			    GimpToolInfo *tool_info)
 {
-  if (context->tool == tool)
+  /* FIXME
+  if (! standard_tool_info)
+    standard_tool_info = GIMP_TOOL_INFO (gimp_tool_info_get_standard ());
+  */
+
+  if (context->tool_info == tool_info)
     return;
 
-  context->tool = tool;
+  if (context->tool_name /* FIXME && tool_info != standard_tool_info*/)
+    {
+      g_free (context->tool_name);
+      context->tool_name = NULL;
+    }
+
+  /*  disconnect from the old tool's signals  */
+  if (context->tool_info)
+    {
+      gtk_signal_disconnect_by_func (GTK_OBJECT (context->tool_info),
+				     gimp_context_tool_dirty,
+				     context);
+      gtk_object_unref (GTK_OBJECT (context->tool_info));
+    }
+
+  context->tool_info = tool_info;
+
+  if (tool_info)
+    {
+      gtk_object_ref (GTK_OBJECT (tool_info));
+      gtk_signal_connect (GTK_OBJECT (tool_info), "invalidate_preview",
+			  GTK_SIGNAL_FUNC (gimp_context_tool_dirty),
+			  context);
+      gtk_signal_connect (GTK_OBJECT (tool_info), "name_changed",
+			  GTK_SIGNAL_FUNC (gimp_context_tool_dirty),
+			  context);
+
+      /* FIXME if (tool_info != standard_tool_info) */
+
+      context->tool_name = g_strdup (GIMP_OBJECT (tool_info)->name);
+    }
+
   gimp_context_tool_changed (context);
 }
 
@@ -1274,8 +1408,16 @@ static void
 gimp_context_copy_tool (GimpContext *src,
 			GimpContext *dest)
 {
-  gimp_context_real_set_tool (dest, src->tool);
+  gimp_context_real_set_tool (dest, src->tool_info);
+
+  if ((!src->tool_info /* FIXME || src->tool_info == standard_tool_info */) &&
+      src->tool_name)
+    {
+      g_free (dest->tool_name);
+      dest->tool_name = g_strdup (src->tool_name);
+    }
 }
+
 
 /*****************************************************************************/
 /*  foreground color  ********************************************************/

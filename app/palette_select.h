@@ -37,8 +37,8 @@ struct _PaletteSelect
 };
 
 
-PaletteSelect * palette_select_new              (const gchar *title,
-						 const gchar *initial_palette);
+PaletteSelect * palette_select_new (const gchar *title,
+				    const gchar *initial_palette);
 
 
 #endif  /* __PALETTE_SELECT_H__ */

@@ -25,9 +25,12 @@
 #include "appenv.h"
 #include "context_manager.h"
 #include "gdisplay.h"
+#include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpdnd.h"
 #include "gimpimage.h"
+#include "gimplist.h"
+#include "gimptoolinfo.h"
 #include "gimpui.h"
 #include "tool.h"
 #include "tool_options.h"
@@ -39,7 +42,8 @@
 /*  Global Data  */
 GimpTool * active_tool = NULL;
 GSList   * registered_tools = NULL;
-/*  Local  Data  */
+
+GimpContainer *global_tool_info_list = NULL;
 
 
 /*  Function definitions  */
@@ -47,7 +51,7 @@ GSList   * registered_tools = NULL;
 static void
 active_tool_unref (void)
 {
-  if (!active_tool)
+  if (! active_tool)
     return;
 
   gimp_tool_hide_options (active_tool);
@@ -58,7 +62,7 @@ active_tool_unref (void)
 }
 
 void
-tool_manager_select (GimpTool *tool)
+tool_manager_select_tool (GimpTool *tool)
 {
   if (active_tool)
     active_tool_unref ();
@@ -68,16 +72,116 @@ tool_manager_select (GimpTool *tool)
   tool_options_show (tool);
 }
 
+void
+tool_manager_initialize_tool (GimpTool *tool, /* FIXME: remove tool param */
+			      GDisplay *gdisp)
+{
+  GimpToolInfo *tool_info;
+
+  /*  Tools which have an init function have dialogs and
+   *  cannot be initialized without a display
+   */
+  if (GIMP_TOOL_CLASS (GTK_OBJECT (tool)->klass)->initialize && ! gdisp)
+    {
+#warning FIXME /* tool_type = RECT_SELECT; */
+    }
+
+  /*  Force the emission of the "tool_changed" signal
+   */
+  tool_info = gimp_context_get_tool (gimp_context_get_user ());
+
+  if (GTK_OBJECT (tool)->klass->type == tool_info->tool_type)
+    {
+      gimp_context_tool_changed (gimp_context_get_user ());
+    }
+  else
+    {
+      GList *list;
+
+      for (list = GIMP_LIST (global_tool_info_list)->list;
+	   list;
+	   list = g_list_next (list))
+	{
+	  tool_info = GIMP_TOOL_INFO (list->data);
+
+	  if (tool_info->tool_type == GTK_OBJECT (tool)->klass->type)
+	    {
+	      gimp_context_set_tool (gimp_context_get_user (), tool_info);
+
+	      break;
+	    }
+	}
+    }
+
+  gimp_tool_initialize (active_tool, gdisp);
+
+  active_tool->drawable = gimp_image_active_drawable (gdisp->gimage);
+
+#warning FIXME /*  don't set tool->gdisp here! (see commands.c)  */
+}
+
+
+
 
 void
 tool_manager_control_active (ToolAction  action,
-		     GDisplay   *gdisp)
+			     GDisplay   *gdisp)
 {
   if (active_tool)
-    gimp_tool_control (active_tool, action, gdisp);
+    {
+      if (active_tool->gdisp == gdisp)
+        {
+          switch (action)
+            {
+            case PAUSE:
+              if (active_tool->state == ACTIVE)
+                {
+                  if (! active_tool->paused_count)
+                    {
+                      active_tool->state = PAUSED;
+
+		      gimp_tool_control (active_tool, action, gdisp);
+                    }
+                }
+              active_tool->paused_count++;
+              break;
+
+            case RESUME:
+              active_tool->paused_count--;
+              if (active_tool->state == PAUSED)
+                {
+                  if (! active_tool->paused_count)
+                    {
+                      active_tool->state = ACTIVE;
+
+		      gimp_tool_control (active_tool, action, gdisp);
+                    }
+                }
+              break;
+
+            case HALT:
+              active_tool->state = INACTIVE;
+
+	      gimp_tool_control (active_tool, action, gdisp);
+              break;
+
+            case DESTROY:
+              gtk_object_unref (GTK_OBJECT (active_tool));
+	      active_tool = NULL;
+              tool_options_hide_shell ();
+              break;
+
+            default:
+              break;
+            }
+        }
+      else if (action == HALT)
+        {
+          active_tool->state = INACTIVE;
+        }
+    }
 }
 
-/*  standard member functions  */
 
 
 #warning bogosity alert
@@ -145,4 +249,58 @@ void tool_manager_register (GimpToolClass *tool_type)
 	
 	registered_tools = g_slist_append (registered_tools, tool_type);
 	active_tool = gtk_type_new(objclass->type);
+}
+
+
+
+void
+tool_manager_init (void)
+{
+  global_tool_info_list = gimp_list_new (GIMP_TYPE_TOOL_INFO,
+					 GIMP_CONTAINER_POLICY_STRONG);
+}
+
+void
+tool_manager_register_tool (GtkType       tool_type,
+			    const gchar  *tool_name,
+			    const gchar  *menu_path,
+			    const gchar  *menu_accel,
+			    const gchar  *tool_desc,
+			    const gchar  *help_domain,
+			    const gchar  *help_data,
+			    const gchar **icon_data)
+{
+  GimpToolInfo *tool_info;
+
+  g_print ("register %s\n", tool_name);
+
+  tool_info = gimp_tool_info_new (tool_type,
+				  tool_name,
+				  menu_path,
+				  menu_accel,
+				  tool_desc,
+				  help_domain,
+				  help_data,
+				  icon_data);
+
+  gimp_container_add (global_tool_info_list, GIMP_OBJECT (tool_info));
+}
+
+GimpToolInfo *
+tool_manager_get_info_by_type (GtkType tool_type)
+{
+  GimpToolInfo *tool_info;
+  GList        *list;
+
+  for (list = GIMP_LIST (global_tool_info_list)->list;
+       list;
+       list = g_list_next (list))
+    {
+      tool_info = (GimpToolInfo *) list->data;
+
+      if (tool_info->tool_type == tool_type)
+	return tool_info;
+    }
+
+  return NULL;
 }

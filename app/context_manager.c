@@ -22,6 +22,11 @@
 
 #include "apptypes.h"
 
+#include "tools/gimptoolinfo.h"
+#include "tools/paint_options.h"
+#include "tools/tool.h"
+#include "tools/tool_manager.h"
+
 #include "appenv.h"
 #include "cursorutil.h"
 #include "context_manager.h"
@@ -40,14 +45,11 @@
 #include "gimppattern.h"
 #include "gimprc.h"
 
-#include "tools/paint_options.h"
-#include "tools/tool.h"
-
 
 /*
  *  the list of all images
  */
-GimpContainer *image_context        = NULL;
+GimpContainer *image_context = NULL;
 
 /*
  *  the global data lists
@@ -72,14 +74,14 @@ context_manager_display_changed (GimpContext *context,
 }
 
 static void
-context_manager_tool_changed (GimpContext *user_context,
-			      ToolType     tool_type,
-			      gpointer     data)
+context_manager_tool_changed (GimpContext  *user_context,
+			      GimpToolInfo *tool_info,
+			      gpointer      data)
 {
-#warning fix context_manager_tool_changed
-#if 0
+  if (! tool_info)
+    return;
 
-/* FIXME: gimp_busy HACK */
+  /* FIXME: gimp_busy HACK */
   if (gimp_busy)
     {
       /*  there may be contexts waiting for the user_context's "tool_changed"
@@ -87,36 +89,54 @@ context_manager_tool_changed (GimpContext *user_context,
        */
       gtk_signal_emit_stop_by_name (GTK_OBJECT (user_context), "tool_changed");
 
-      if (active_tool->type != tool_type)
+      if (GTK_OBJECT (active_tool)->klass->type != tool_info->tool_type)
 	{
 	  gtk_signal_handler_block_by_func (GTK_OBJECT (user_context),
 					    context_manager_tool_changed,
 					    NULL);
 
 	  /*  explicitly set the current tool  */
-	  gimp_context_set_tool (user_context, active_tool->type);
+	  gimp_context_set_tool (user_context,
+				 tool_manager_get_info_by_type (GTK_OBJECT (active_tool)->klass->type));
 
 	  gtk_signal_handler_unblock_by_func (GTK_OBJECT (user_context),
 					      context_manager_tool_changed,
 					      NULL);
 	}
 
-      /*  take care that the correct toolbox button gets re-activated  */
+#warning FIXME (take care that the correct toolbox button gets re-activated)
+      /*
       tool_type = active_tool->type;
+      */
     }
   else
     {
-      GimpContext* tool_context;
+      GimpTool    *new_tool     = NULL;
+      GimpContext *tool_context = NULL;
+      GtkType      active_tool_type;
+
+      if (tool_info->tool_type != GTK_TYPE_NONE)
+	{
+	  new_tool = gtk_type_new (tool_info->tool_type);
+	}
+      else
+	{
+	  g_warning ("%s(): tool_info contains no valid GtkType",
+		     G_GNUC_FUNCTION);
+	  return;
+	}
+
+      active_tool_type = GTK_OBJECT (active_tool)->klass->type;
 
       if (! global_paint_options)
 	{
 	  if (active_tool &&
-	      (tool_context = tool_info[active_tool->type].tool_context))
+	      (tool_context = tool_manager_get_info_by_type (active_tool_type)->context))
 	    {
 	      gimp_context_unset_parent (tool_context);
 	    }
 
-	  if ((tool_context = tool_info[tool_type].tool_context))
+	  if ((tool_context = tool_info->context))
 	    {
 	      gimp_context_copy_args (tool_context, user_context,
 				      PAINT_OPTIONS_MASK);
@@ -124,9 +144,10 @@ context_manager_tool_changed (GimpContext *user_context,
 	    }
 	}
 
-      tools_select (tool_type);
+      tool_manager_select_tool (new_tool);
     }
 
+#if 0
   if (tool_type == SCALE ||
       tool_type == SHEAR ||
       tool_type == PERSPECTIVE)
@@ -142,7 +163,6 @@ context_manager_tool_changed (GimpContext *user_context,
       gtk_signal_handler_unblock_by_data
 	(GTK_OBJECT (tool_info[tool_type].tool_widget), (gpointer) tool_type);
     }
-
 #endif
 }
 
@@ -152,7 +172,7 @@ context_manager_init (void)
   GimpContext *standard_context;
   GimpContext *default_context;
   GimpContext *user_context;
-  gint         i;
+  GimpContext *tool_context;
 
   static const GimpDataFactoryLoaderEntry brush_loader_entries[] =
   {
@@ -223,6 +243,9 @@ context_manager_init (void)
 			   gimp_palette_new,
 			   gimp_palette_get_standard);
 
+  /*  Create the global tool info list  */
+  tool_manager_init ();
+
   /*  Implicitly create the standard context  */
   standard_context = gimp_context_get_standard ();
 
@@ -256,68 +279,28 @@ context_manager_init (void)
   /*  TODO: add foreground, background, brush, pattern, gradient  */
   gimp_context_define_args (global_tool_context, PAINT_OPTIONS_MASK, FALSE);
 
-#warning fixme here too
-#if 0
-/*  Initialize the paint tools' private contexts  */
-  for (i = 0; i < num_tools; i++)
-    {
-      switch (tool_info[i].tool_id)
-	{
-	case BUCKET_FILL:
-	case BLEND:
-	case PENCIL:
-	case PAINTBRUSH:
-	case ERASER:
-	case AIRBRUSH:
-	case CLONE:
-	case CONVOLVE:
-	case INK:
-	case DODGEBURN:
-	case SMUDGE:
-/*  	case XINPUT_AIRBRUSH: */
-	  tool_info[i].tool_context =
-	    gimp_context_new (tool_info[i].private_tip, global_tool_context);
-	  break;
+  /* register internal tools */
+  register_tools ();
 
-	default:
-	  tool_info[i].tool_context = NULL;
-	  break;
-	}
-    }
-
-  if (! global_paint_options &&
-      active_tool &&
-      tool_info[active_tool->type].tool_context)
+  if (! global_paint_options && active_tool &&
+      (tool_context = tool_manager_get_info_by_type (GTK_OBJECT (active_tool)->klass->type)->context))
     {
-      gimp_context_set_parent (tool_info[active_tool->type].tool_context,
-			       user_context);
+      gimp_context_set_parent (tool_context, user_context);
     }
   else if (global_paint_options)
     {
       gimp_context_set_parent (global_tool_context, user_context);
     }
-#endif
+
+  gimp_container_thaw (global_tool_info_list);
 }
 
 void
 context_manager_free (void)
 {
-  gint i;
-
   gtk_object_unref (GTK_OBJECT (global_tool_context));
   global_tool_context = NULL;
 
-#warning I need fixing
-#if 0
-  for (i = 0; i < num_tools; i++)
-    {
-      if (tool_info[i].tool_context != NULL)
-	{
-	  gtk_object_unref (GTK_OBJECT (tool_info[i].tool_context));
-	  tool_info[i].tool_context = NULL;
-	}
-    }
-#endif
   gtk_object_unref (GTK_OBJECT (gimp_context_get_user ()));
   gimp_context_set_user (NULL);
   gimp_context_set_current (NULL);
@@ -335,19 +318,19 @@ context_manager_free (void)
 void
 context_manager_set_global_paint_options (gboolean global)
 {
-  GimpContext* context;
+  GimpToolInfo *tool_info;
+  GimpContext  *context;
 
-  if (global == global_paint_options) return;
+  if (global == global_paint_options)
+    return;
 
   paint_options_set_global (global);
 
-#warning yet another fix needed
-#if 0
+  tool_info = gimp_context_get_tool (gimp_context_get_user ());
 
   if (global)
     {
-      if (active_tool &&
-	  (context = tool_info[active_tool->type].tool_context))
+      if (tool_info && (context = tool_info->context))
 	{
 	  gimp_context_unset_parent (context);
 	}
@@ -360,14 +343,11 @@ context_manager_set_global_paint_options (gboolean global)
     {
       gimp_context_unset_parent (global_tool_context);
 
-      if (active_tool &&
-	  (context = tool_info[active_tool->type].tool_context))
+      if (tool_info && (context = tool_info->context))
 	{
 	  gimp_context_copy_args (context, gimp_context_get_user (),
 				  GIMP_CONTEXT_PAINT_ARGS_MASK);
 	  gimp_context_set_parent (context, gimp_context_get_user ());
 	}
     }
-
-#endif
 }

@@ -22,6 +22,8 @@
 
 #include "apptypes.h"
 
+#include "tools/tool_manager.h"
+
 #include "context_manager.h"
 #include "dialog_handler.h"
 #include "gdisplay.h"
@@ -34,8 +36,6 @@
 #include "paint_funcs.h"
 #include "palette_import.h"
 #include "undo.h"
-
-#include "tools/tool_manager.h"
 
 
 /* gimage.c: Junk (ugly dependencies) from gimpimage.c on its way
@@ -103,11 +103,11 @@ gimage_dirty_handler (GimpImage *gimage)
       if (gdisp)
 	{
 	  if (gdisp->gimage == gimage)
-	    gimp_tool_old_initialize (active_tool, gdisp);
+	    tool_manager_initialize_tool (active_tool, gdisp);
 	  else
-	    gimp_tool_old_initialize (active_tool, NULL);
+	    tool_manager_initialize_tool (active_tool, NULL);
 
-}
+	}
     }
 }
 

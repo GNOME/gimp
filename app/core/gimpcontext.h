@@ -89,7 +89,8 @@ struct _GimpContext
   GimpImage	   *image;
   GDisplay	   *display;
 
-  GimpTool          *tool;
+  GimpToolInfo     *tool_info;
+  gchar            *tool_name;
 
   GimpRGB           foreground;
   GimpRGB           background;
@@ -120,7 +121,7 @@ struct _GimpContextClass
 			       GDisplay         *display);
 
   void (* tool_changed)       (GimpContext      *context,
-			       ToolType          tool);
+			       GimpToolInfo     *tool_info);
 
   void (* foreground_changed) (GimpContext      *context,
 			       GimpRGB          *color);
@@ -234,9 +235,9 @@ void               gimp_context_display_changed    (GimpContext     *context);
 
 
 /*  tool  */
-GimpTool           *gimp_context_get_tool           (GimpContext     *context);
+GimpToolInfo      *gimp_context_get_tool           (GimpContext     *context);
 void               gimp_context_set_tool           (GimpContext     *context,
-						    GimpTool        *tool_type);
+						    GimpToolInfo    *tool_info);
 void               gimp_context_tool_changed       (GimpContext     *context);
 
 

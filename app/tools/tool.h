@@ -23,6 +23,12 @@
 #include "gimpobject.h"
 
 
+/*  The possibilities for where the cursor lies  */
+#define  ACTIVE_LAYER      (1 << 0)
+#define  SELECTION         (1 << 1)
+#define  NON_ACTIVE_LAYER  (1 << 2)
+
+
 #define GIMP_TYPE_TOOL            (gimp_tool_get_type ())
 #define GIMP_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_TOOL, GimpTool))
 #define GIMP_IS_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_TOOL))
@@ -30,50 +36,11 @@
 #define GIMP_IS_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL))
 
 
-/*  The possibilities for where the cursor lies  */
-#define  ACTIVE_LAYER      (1 << 0)
-#define  SELECTION         (1 << 1)
-#define  NON_ACTIVE_LAYER  (1 << 2)
-
-
-/*  Tool action function declarations  */
-typedef void   (* ButtonPressFunc)    (GimpTool       *tool,
-				       GdkEventButton *bevent,
-				       GDisplay       *gdisp);
-typedef void   (* ButtonReleaseFunc)  (GimpTool       *tool,
-				       GdkEventButton *bevent,
-				       GDisplay       *gdisp);
-typedef void   (* MotionFunc)         (GimpTool       *tool,
-				       GdkEventMotion *mevent,
-				       GDisplay       *gdisp);
-typedef void   (* ArrowKeysFunc)      (GimpTool       *tool,
-				       GdkEventKey    *kevent,
-				       GDisplay       *gdisp);
-typedef void   (* ModifierKeyFunc)    (GimpTool       *tool,
-				       GdkEventKey    *kevent,
-				       GDisplay       *gdisp);
-typedef void   (* CursorUpdateFunc)   (GimpTool       *tool,
-				       GdkEventMotion *mevent,
-				       GDisplay       *gdisp);
-typedef void   (* OperUpdateFunc)     (GimpTool       *tool,
-				       GdkEventMotion *mevent,
-				       GDisplay       *gdisp);
-typedef void   (* ToolCtlFunc)        (GimpTool       *tool,
-				       ToolAction     action,
-				       GDisplay       *gdisp);
-
-typedef GimpTool * (* GimpToolNewFunc) (void);
-typedef void   (* GimpToolUnrefFunc)   (GimpTool      *tool);
-typedef void   (* GimpToolInitFunc)    (GimpTool      *tool,
-					GDisplay      *gdisp);
-
 typedef struct _GimpToolClass GimpToolClass;
 
-/*  The types of tools...  */
 struct _GimpTool
 {
   GimpObject	parent_instance;
-  /*  Data  */
 
   ToolState     state;        /*  state of tool activity                      */
   gint          paused_count; /*  paused control count                        */
@@ -87,7 +54,7 @@ struct _GimpTool
   gboolean      toggled;      /*  Bad hack to let the paint_core show the
 			       *  right toggle cursors
 			       */
-  PaintCore	*paintcore;  
+  PaintCore    *paintcore;  
 };
 
 struct _GimpToolClass
@@ -96,6 +63,7 @@ struct _GimpToolClass
 
   /* stuff to be filled in by child classes */
 
+  /* FIXME: most of this stuff must go away */
   ToolOptions *tool_options;
 
   gchar	      *pdb_string;
@@ -120,46 +88,84 @@ struct _GimpToolClass
 
   BitmapCursor *tool_cursor;
   BitmapCursor *toggle_cursor;
-  
-  /*  Action functions  */
-  ButtonPressFunc    button_press_func;
-  ButtonReleaseFunc  button_release_func;
-  MotionFunc         motion_func;
-  ArrowKeysFunc      arrow_keys_func;
-  ModifierKeyFunc    modifier_key_func;
-  CursorUpdateFunc   cursor_update_func;
-  OperUpdateFunc     oper_update_func;
-  ToolCtlFunc        control_func;
 
 
-/* put lots of interesting signals here */
-  ToolCtlFunc        reserved1;
-  ToolCtlFunc        reserved2;
-  ToolCtlFunc        reserved3;
+  void (* initialize)     (GimpTool       *tool,
+			   GDisplay       *gdisp);
+  void (* control)        (GimpTool       *tool,
+			   ToolAction      action,
+			   GDisplay       *gdisp);
+  void (* button_press)   (GimpTool       *tool,
+			   GdkEventButton *bevent,
+			   GDisplay       *gdisp);
+  void (* button_release) (GimpTool       *tool,
+			   GdkEventButton *bevent,
+			   GDisplay       *gdisp);
+  void (* motion)         (GimpTool       *tool,
+			   GdkEventMotion *mevent,
+			   GDisplay       *gdisp);
+  void (* arrow_key)      (GimpTool       *tool,
+			   GdkEventKey    *kevent,
+			   GDisplay       *gdisp);
+  void (* modifier_key)   (GimpTool       *tool,
+			   GdkEventKey    *kevent,
+			   GDisplay       *gdisp);
+  void (* cursor_update)  (GimpTool       *tool,
+			   GdkEventMotion *mevent,
+			   GDisplay       *gdisp);
+  void (* oper_update)    (GimpTool       *tool,
+			   GdkEventMotion *mevent,
+			   GDisplay       *gdisp);
 };
 
 
 /*  Function declarations  */
-GtkType    gimp_tool_get_type (void);
 
-GimpTool  * gimp_tool_new             (void);
-void	    gimp_tool_control	      (GimpTool *tool,
-				       ToolAction action,
-				       GDisplay *gdisp);
-void	    gimp_tool_initialize      (GimpTool	*tool);		
-void        gimp_tool_old_initialize  (GimpTool *tool,
-				       GDisplay *gdisplay);
- 
-gchar *     gimp_tool_get_help_data   (GimpTool *tool);
-void	    gimp_tool_help_func       (const gchar *help_data);
+GtkType     gimp_tool_get_type        (void);
 
-void	    gimp_tool_show_options    (GimpTool *tool);
+void        gimp_tool_initialize      (GimpTool       *tool,
+				       GDisplay       *gdisplay);
+void	    gimp_tool_control	      (GimpTool       *tool,
+				       ToolAction      action,
+				       GDisplay       *gdisp);
+void        gimp_tool_button_press    (GimpTool       *tool,
+				       GdkEventButton *bevent,
+				       GDisplay       *gdisp);
+void        gimp_tool_button_release  (GimpTool       *tool,
+				       GdkEventButton *bevent,
+				       GDisplay       *gdisp);
+void        gimp_tool_motion          (GimpTool       *tool,
+				       GdkEventMotion *mevent,
+				       GDisplay       *gdisp);
+void        gimp_tool_arrow_key       (GimpTool       *tool,
+				       GdkEventKey    *kevent,
+				       GDisplay       *gdisp);
+void        gimp_tool_modifier_key    (GimpTool       *tool,
+				       GdkEventKey    *kevent,
+				       GDisplay       *gdisp);
+void        gimp_tool_cursor_update   (GimpTool       *tool,
+				       GdkEventMotion *mevent,
+				       GDisplay       *gdisp);
+void        gimp_tool_oper_update     (GimpTool       *tool,
+				       GdkEventMotion *mevent,
+				       GDisplay       *gdisp);
+
+
+
 
 gchar     * tool_get_PDB_string       (GimpTool	*tool);
+
+
+
+
+gchar *     gimp_tool_get_help_data   (GimpTool *tool);
+void	    gimp_tool_help_func       (const gchar *help_data);
 
 /*  don't unref these pixmaps, they are static!  */
 GdkPixmap * gimp_tool_get_pixmap           (GimpToolClass     *tool);
 GdkBitmap * gimp_tool_get_mask             (GimpToolClass     *tool);
+
+void      gimp_tool_show_options           (GimpTool *);
 
 
 #endif  /*  __TOOL_H__  */
