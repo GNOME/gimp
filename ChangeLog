@@ -1,5 +1,13 @@
 2005-03-24  Sven Neumann  <sven@gimp.org>
 
+	Merged from HEAD branch:
+
+	* app/display/gimpstatusbar.c (gimp_statusbar_push_coords) 
+	(gimp_statusbar_set_cursor): use RINT() instead of ROUND() to get
+	proper rounding of negative values. Fixes bug #171497.
+
+2005-03-24  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimphistogrameditor.c: change to the Value channel
 	if the current channel becomes invalid due to an image mode change.
 	Fixes bug #170116.
