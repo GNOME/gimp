@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <stdio.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -57,6 +59,7 @@ void
 themes_init (Gimp *gimp)
 {
   GimpGuiConfig *config;
+  gchar         *themerc;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -82,6 +85,10 @@ themes_init (Gimp *gimp)
     }
 
   themes_apply_theme (gimp, config->theme);
+
+  themerc = gimp_personal_rc_file ("themerc");
+  gtk_rc_add_default_file (themerc);
+  g_free (themerc);
 
   g_signal_connect (config, "notify::theme",
                     G_CALLBACK (themes_theme_change_notify),
@@ -148,7 +155,10 @@ themes_apply_theme (Gimp        *gimp,
                     const gchar *theme_name)
 {
   const gchar *theme_dir;
-  gchar       *gtkrc;
+  gchar       *gtkrc_theme;
+  gchar       *gtkrc_user;
+  gchar       *themerc;
+  FILE        *file;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -156,29 +166,48 @@ themes_apply_theme (Gimp        *gimp,
 
   if (theme_dir)
     {
-      gtkrc = g_build_filename (theme_dir, "gtkrc", NULL);
+      gtkrc_theme = g_build_filename (theme_dir, "gtkrc", NULL);
     }
   else
     {
       /*  get the hardcoded default theme gtkrc  */
-      gtkrc = g_strdup (gimp_gtkrc ());
+      gtkrc_theme = g_strdup (gimp_gtkrc ());
     }
 
-  if (gimp->be_verbose)
-    g_print (_("Parsing '%s'\n"), gtkrc);
+  gtkrc_user = gimp_personal_rc_file ("gtkrc");
 
-  gtk_rc_parse (gtkrc);
-  g_free (gtkrc);
-
-  /*  parse the user gtkrc  */
-
-  gtkrc = gimp_personal_rc_file ("gtkrc");
+  themerc = gimp_personal_rc_file ("themerc");
 
   if (gimp->be_verbose)
-    g_print (_("Parsing '%s'\n"), gtkrc);
+    g_print (_("Writing '%s'\n"), themerc);
 
-  gtk_rc_parse (gtkrc);
-  g_free (gtkrc);
+  file = fopen (themerc, "w");
+
+  if (! file)
+    {
+      g_message ("Can't open themerc");
+      goto cleanup;
+    }
+
+  fprintf (file,
+           "# GIMP themerc\n"
+           "#\n"
+           "# This file is written on GIMP startup and on every theme change.\n"
+           "# It is NOT supposed to be edited manually. Edit your personal\n"
+           "# gtkrc file instead (%s).\n"
+           "\n"
+           "include \"%s\"\n"
+           "include \"%s\"\n"
+           "\n"
+           "# end of themerc\n",
+           gtkrc_user, gtkrc_theme, gtkrc_user);
+
+  fclose (file);
+
+ cleanup:
+  g_free (gtkrc_theme);
+  g_free (gtkrc_user);
+  g_free (themerc);
 }
 
 
@@ -216,18 +245,7 @@ themes_theme_change_notify (GimpGuiConfig *config,
                             GParamSpec    *pspec,
                             Gimp          *gimp)
 {
-  GList *list, *toplevels;
-
   themes_apply_theme (gimp, config->theme);
 
-  toplevels = gtk_window_list_toplevels ();
-  g_list_foreach (toplevels, (GFunc) g_object_ref, NULL);
-
-  for (list = toplevels; list; list = list->next)
-    {
-      gtk_widget_reset_rc_styles (list->data);
-      g_object_unref (list->data);
-    }
-
-  g_list_free (toplevels);
+  gtk_rc_reparse_all ();
 }

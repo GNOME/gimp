@@ -223,9 +223,10 @@ prefs_response (GtkWidget *widget,
 
       config_copy = g_object_get_data (G_OBJECT (dialog), "config-copy");
 
-      g_object_ref (config_copy);
+      /*  destroy config_orig  */
+      g_object_set_data (G_OBJECT (dialog), "config-orig", NULL);
 
-      gtk_widget_destroy (dialog);  /*  destroys config_orig  */
+      gtk_widget_set_sensitive (GTK_WIDGET (dialog), FALSE);
 
       confirm_diff = gimp_config_diff (GIMP_CONFIG (gimp->edit_config),
                                        config_copy,
@@ -253,7 +254,6 @@ prefs_response (GtkWidget *widget,
       g_object_thaw_notify (G_OBJECT (gimp->edit_config));
 
       g_list_free (confirm_diff);
-      g_object_unref (config_copy);
 
       gimp_rc_save (GIMP_RC (gimp->edit_config));
 
@@ -297,9 +297,10 @@ prefs_response (GtkWidget *widget,
 
       config_orig = g_object_get_data (G_OBJECT (dialog), "config-orig");
 
-      g_object_ref (config_orig);
+      /*  destroy config_copy  */
+      g_object_set_data (G_OBJECT (dialog), "config-copy", NULL);
 
-      gtk_widget_destroy (dialog);  /*  destroys config_copy  */
+      gtk_widget_set_sensitive (GTK_WIDGET (dialog), FALSE);
 
       diff = gimp_config_diff (GIMP_CONFIG (gimp->edit_config), config_orig,
                                GIMP_PARAM_SERIALIZE);
@@ -328,11 +329,12 @@ prefs_response (GtkWidget *widget,
       g_object_thaw_notify (G_OBJECT (gimp->edit_config));
 
       g_list_free (diff);
-      g_object_unref (config_orig);
 
       /*  enable autosaving again  */
       gimp_rc_set_autosave (GIMP_RC (gimp->edit_config), TRUE);
     }
+
+  gtk_widget_destroy (dialog);
 }
 
 static void
@@ -586,6 +588,13 @@ prefs_theme_select_callback (GtkTreeSelection *sel,
       g_object_set (gimp->config, "theme", g_value_get_string (&val), NULL);
       g_value_unset (&val);
     }
+}
+
+static void
+prefs_theme_reload_callback (GtkWidget *button,
+                             Gimp      *gimp)
+{
+  g_object_notify (G_OBJECT (gimp->config), "theme");
 }
 
 static GtkWidget *
@@ -1202,19 +1211,16 @@ prefs_dialog_new (Gimp       *gimp,
                           GTK_BOX (vbox2));
 
   /* Themes */
-  vbox2 = prefs_frame_new (_("Themes"), GTK_CONTAINER (vbox), FALSE);
+  vbox2 = prefs_frame_new (_("Select Theme"), GTK_CONTAINER (vbox), FALSE);
 
   {
-    GtkListStore       *list_store;
-    GtkWidget          *view;
-    GtkWidget          *scrolled_win;
-    GtkCellRenderer    *rend;
-    GtkTreeViewColumn  *col;
-    GtkTreeIter         iter;
-    GtkTreeSelection   *sel;
-    gchar             **themes;
-    gint                n_themes;
-    gint                i;
+    GtkWidget         *scrolled_win;
+    GtkListStore      *list_store;
+    GtkWidget         *view;
+    GtkTreeSelection  *sel;
+    gchar            **themes;
+    gint               n_themes;
+    gint               i;
 
     scrolled_win = gtk_scrolled_window_new (NULL, NULL);
     gtk_widget_set_size_request (scrolled_win, -1, 80);
@@ -1226,20 +1232,24 @@ prefs_dialog_new (Gimp       *gimp,
     gtk_box_pack_start (GTK_BOX (vbox2), scrolled_win, TRUE, TRUE, 0);
     gtk_widget_show (scrolled_win);
 
-    list_store = gtk_list_store_new (1, G_TYPE_STRING);
+    list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
 
     view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (list_store));
-    gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
     gtk_container_add (GTK_CONTAINER (scrolled_win), view);
     gtk_widget_show (view);
 
     g_object_unref (list_store);
 
-    rend = gtk_cell_renderer_text_new ();
-    col = gtk_tree_view_column_new_with_attributes (NULL, rend,
-                                                    "text", 0,
-                                                    NULL);
-    gtk_tree_view_append_column (GTK_TREE_VIEW (view), col);
+    gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), 0,
+                                                 _("Theme"),
+                                                 gtk_cell_renderer_text_new (),
+                                                 "text", 0,
+                                                 NULL);
+    gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), 1,
+                                                 _("Folder"),
+                                                 gtk_cell_renderer_text_new (),
+                                                 "text", 1,
+                                                 NULL);
 
     sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
 
@@ -1247,9 +1257,12 @@ prefs_dialog_new (Gimp       *gimp,
 
     for (i = 0; i < n_themes; i++)
       {
+        GtkTreeIter iter;
+
         gtk_list_store_append (list_store, &iter);
         gtk_list_store_set (list_store, &iter,
                             0, themes[i],
+                            1, themes_get_theme_dir (gimp, themes[i]),
                             -1);
 
         if (GIMP_GUI_CONFIG (object)->theme &&
@@ -1266,6 +1279,19 @@ prefs_dialog_new (Gimp       *gimp,
                       G_CALLBACK (prefs_theme_select_callback),
                       gimp);
   }
+
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  button = gtk_button_new_with_mnemonic (_("Reload C_urrent Theme"));
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 4, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (prefs_theme_reload_callback),
+                    gimp);
 
 
   /*****************************/
@@ -1528,15 +1554,12 @@ prefs_dialog_new (Gimp       *gimp,
 
     for (format = 0; format < G_N_ELEMENTS (formats); format++)
       {
-        GtkListStore      *list_store;
-        GtkWidget         *view;
-        GtkWidget         *scrolled_win;
-        GtkWidget         *entry;
-        GtkCellRenderer   *rend;
-        GtkTreeViewColumn *col;
-        GtkTreeIter        iter;
-        GtkTreeSelection  *sel;
-        gint               i;
+        GtkWidget        *scrolled_win;
+        GtkListStore     *list_store;
+        GtkWidget        *view;
+        GtkWidget        *entry;
+        GtkTreeSelection *sel;
+        gint              i;
 
         format_strings[0] = formats[format].current_setting;
 
@@ -1565,25 +1588,23 @@ prefs_dialog_new (Gimp       *gimp,
 
         g_object_unref (list_store);
 
-        rend = gtk_cell_renderer_text_new ();
-        col = gtk_tree_view_column_new_with_attributes (NULL, rend,
-                                                        "text", 0,
-                                                        NULL);
-        gtk_tree_view_append_column (GTK_TREE_VIEW (view), col);
-
-        rend = gtk_cell_renderer_text_new ();
-        col = gtk_tree_view_column_new_with_attributes (NULL, rend,
-                                                        "text", 1,
-                                                        NULL);
-        gtk_tree_view_append_column (GTK_TREE_VIEW (view), col);
+        gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), 0,
+                                                     NULL,
+                                                     gtk_cell_renderer_text_new (),
+                                                     "text", 0,
+                                                     NULL);
+        gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (view), 1,
+                                                     NULL,
+                                                     gtk_cell_renderer_text_new (),
+                                                     "text", 1,
+                                                     NULL);
 
         sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
-        g_signal_connect (sel, "changed",
-                          G_CALLBACK (prefs_format_string_select_callback),
-                          entry);
 
         for (i = 0; i < G_N_ELEMENTS (format_strings); i++)
           {
+            GtkTreeIter iter;
+
             gtk_list_store_append (list_store, &iter);
             gtk_list_store_set (list_store, &iter,
                                 0, format_names[i],
@@ -1593,6 +1614,10 @@ prefs_dialog_new (Gimp       *gimp,
             if (i == 0)
               gtk_tree_selection_select_iter (sel, &iter);
           }
+
+        g_signal_connect (sel, "changed",
+                          G_CALLBACK (prefs_format_string_select_callback),
+                          entry);
       }
   }
 

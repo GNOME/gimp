@@ -69,8 +69,7 @@ gimp_ui_init (const gchar *prog_name,
   const gchar  *display_name;
   gint          argc;
   gchar       **argv;
-  gchar        *theme_dir;
-  gchar        *gtkrc;
+  gchar        *themerc;
   GdkScreen    *screen;
 
   g_return_if_fail (prog_name != NULL);
@@ -102,25 +101,9 @@ gimp_ui_init (const gchar *prog_name,
 
   gtk_init (&argc, &argv);
 
-  theme_dir = gimp_get_theme_dir ();
-
-  if (theme_dir)
-    {
-      gtkrc = g_build_filename (theme_dir, "gtkrc", NULL);
-      g_free (theme_dir);
-    }
-  else
-    {
-      /*  get the hardcoded default theme gtkrc  */
-      gtkrc = g_strdup (gimp_gtkrc ());
-    }
-
-  gtk_rc_parse (gtkrc);
-  g_free (gtkrc);
-
-  gtkrc = gimp_personal_rc_file ("gtkrc");
-  gtk_rc_parse (gtkrc);
-  g_free (gtkrc);
+  themerc = gimp_personal_rc_file ("themerc");
+  gtk_rc_add_default_file (themerc);
+  g_free (themerc);
 
   gdk_rgb_set_min_colors (gimp_min_colors ());
   gdk_rgb_set_install (gimp_install_cmap ());

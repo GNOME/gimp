@@ -171,12 +171,11 @@ module_browser_new (Gimp *gimp)
 
   gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
 
-  rend = gtk_cell_renderer_text_new ();
-  col  = gtk_tree_view_column_new_with_attributes (_("Module Path"), rend,
-                                                   "text", PATH_COLUMN,
-                                                   NULL);
-
-  gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
+  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (tv), 1,
+                                               _("Module Path"),
+                                               gtk_cell_renderer_text_new (),
+                                               "text", PATH_COLUMN,
+                                               NULL);
 
   gtk_container_add (GTK_CONTAINER (listbox), tv);
   gtk_widget_show (tv);
