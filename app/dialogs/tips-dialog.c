@@ -38,13 +38,15 @@
 #include "gimp-intl.h"
 
 
-static void  tips_set_labels     (GimpTip     *tip);
-static void  tips_dialog_destroy (GtkWidget   *widget,
-                                  gpointer     data);
-static void  tips_show_previous  (GtkWidget   *widget,
-                                  gpointer     data);
-static void  tips_show_next      (GtkWidget   *widget,
-                                  gpointer     data);
+static GtkWidget * tips_button_new     (const gchar *label,
+                                        gboolean     back);
+static void        tips_set_labels     (GimpTip     *tip);
+static void        tips_dialog_destroy (GtkWidget   *widget,
+                                        gpointer     data);
+static void        tips_show_previous  (GtkWidget   *widget,
+                                        gpointer     data);
+static void        tips_show_next      (GtkWidget   *widget,
+                                        gpointer     data);
 
 
 static GtkWidget *tips_dialog   = NULL;
@@ -214,8 +216,7 @@ tips_dialog_create (Gimp *gimp)
   gtk_box_pack_end (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
   gtk_widget_show (bbox);
 
-  button = gtk_button_new_with_mnemonic (_("_Previous tip"));
-  GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
+  button = tips_button_new (_("_Previous tip"), TRUE);
   gtk_widget_set_sensitive (button, (tips_count > 1));
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
@@ -224,8 +225,7 @@ tips_dialog_create (Gimp *gimp)
 		    G_CALLBACK (tips_show_previous),
 		    NULL);
 
-  button = gtk_button_new_with_mnemonic (_("_Next tip"));
-  GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
+  button = tips_button_new (_("_Next tip"), FALSE);
   gtk_widget_set_sensitive (button, (tips_count > 1));
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
@@ -256,6 +256,48 @@ tips_dialog_destroy (GtkWidget *widget,
 
   gimp_tips_free (tips);
   tips = NULL;
+}
+
+
+static GtkWidget *
+tips_button_new (const gchar *text,
+                 gboolean     back)
+{
+  GtkWidget *button;
+  GtkWidget *label;
+  GtkWidget *image;
+  GtkWidget *hbox;
+
+  hbox = gtk_hbox_new (FALSE, 2);
+
+  label = gtk_label_new_with_mnemonic (text);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
+
+  if (back)
+    gtk_box_pack_end (GTK_BOX (hbox), label, TRUE, TRUE, 0);
+  else
+    gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
+
+  gtk_widget_show (label);
+
+  image = gtk_image_new_from_stock (back ?
+                                    GTK_STOCK_GO_BACK : GTK_STOCK_GO_FORWARD,
+                                    GTK_ICON_SIZE_BUTTON);
+
+  if (back)
+    gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  else
+    gtk_box_pack_end (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+
+  gtk_widget_show (image);
+
+  button = gtk_button_new ();
+  gtk_container_add (GTK_CONTAINER (button), hbox);
+  gtk_widget_show (hbox);
+
+  GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
+
+  return button;
 }
 
 static void

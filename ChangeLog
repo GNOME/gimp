@@ -1,3 +1,8 @@
+2004-11-12  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/tips-dialog.c: added icons to the Previous/Next
+	buttons (bug #158004).
+
 2004-11-11  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/splash.c: lowered labels a few pixels.
