@@ -51,15 +51,11 @@ static void   gimp_color_dialog_class_init     (GimpColorDialogClass *klass);
 static void   gimp_color_dialog_init           (GimpColorDialog      *dialog);
 
 static void   gimp_color_dialog_dispose        (GObject            *object);
-
 static void   gimp_color_dialog_response       (GtkDialog          *dialog,
                                                 gint                response_id);
 
-
 static void   gimp_color_dialog_help_func      (const gchar        *help_id,
                                                 gpointer            help_data);
-
-
 static void   gimp_color_dialog_color_changed  (GimpColorSelection *selection,
                                                 GimpColorDialog    *dialog);
 
@@ -133,7 +129,84 @@ gimp_color_dialog_class_init (GimpColorDialogClass *klass)
 static void
 gimp_color_dialog_init (GimpColorDialog *dialog)
 {
+  GtkWidget *table;
+  GtkWidget *button;
+  GtkWidget *arrow;
+  gint       i;
+
   color_dialogs = g_list_prepend (color_dialogs, dialog);
+
+  gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+                          GIMP_STOCK_RESET, RESPONSE_RESET,
+                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                          NULL);
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+
+  dialog->selection = gimp_color_selection_new ();
+  gtk_container_set_border_width (GTK_CONTAINER (dialog->selection), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox),
+                     dialog->selection);
+  gtk_widget_show (dialog->selection);
+
+  g_signal_connect (dialog->selection, "color_changed",
+                    G_CALLBACK (gimp_color_dialog_color_changed),
+                    dialog);
+
+  /* The color history */
+  table = gtk_table_new (2, 1 + COLOR_HISTORY_SIZE / 2, TRUE);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
+  gtk_box_pack_end (GTK_BOX (GIMP_COLOR_SELECTION (dialog->selection)->right_vbox),
+                    table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  button = gtk_button_new ();
+  gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 1, 0, 1);
+  gimp_help_set_help_data (button,
+			   _("Add the current color to the color history"),
+			   NULL);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "clicked",
+		    G_CALLBACK (gimp_color_history_add_clicked),
+		    dialog);
+
+  arrow = gtk_arrow_new (GTK_ARROW_RIGHT, GTK_SHADOW_OUT);
+  gtk_container_add (GTK_CONTAINER (button), arrow);
+  gtk_widget_show (arrow);
+
+  for (i = 0; i < COLOR_HISTORY_SIZE; i++)
+    {
+      GimpRGB history_color;
+      gint    row, column;
+
+      column = i % (COLOR_HISTORY_SIZE / 2);
+      row    = i / (COLOR_HISTORY_SIZE / 2);
+
+      button = gtk_button_new ();
+      gtk_widget_set_size_request (button, COLOR_AREA_SIZE, COLOR_AREA_SIZE);
+      gtk_table_attach_defaults (GTK_TABLE (table), button,
+                                 column + 1, column + 2, row, row + 1);
+      gtk_widget_show (button);
+
+      color_history_get (i, &history_color);
+
+      dialog->history[i] = gimp_color_area_new (&history_color,
+                                                GIMP_COLOR_AREA_SMALL_CHECKS,
+                                                GDK_BUTTON2_MASK);
+      gtk_container_add (GTK_CONTAINER (button), dialog->history[i]);
+      gtk_widget_show (dialog->history[i]);
+
+      g_signal_connect (button, "clicked",
+			G_CALLBACK (gimp_color_history_color_clicked),
+			dialog);
+
+      g_signal_connect (dialog->history[i], "color_changed",
+			G_CALLBACK (gimp_color_history_color_changed),
+			GINT_TO_POINTER (i));
+    }
 }
 
 static void
@@ -195,11 +268,7 @@ gimp_color_dialog_new (GimpViewable      *viewable,
                        gboolean           show_alpha)
 {
   GimpColorDialog *dialog;
-  GtkWidget       *table;
-  GtkWidget       *button;
-  GtkWidget       *arrow;
   const gchar     *role;
-  gint             i;
 
   g_return_val_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
@@ -228,88 +297,16 @@ gimp_color_dialog_new (GimpViewable      *viewable,
 
   dialog->wants_updates = wants_updates;
 
-  gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-                          GIMP_STOCK_RESET, RESPONSE_RESET,
-                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
-                          NULL);
-  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-
   if (dialog_factory)
     gimp_dialog_factory_add_foreign (dialog_factory, dialog_identifier,
                                      GTK_WIDGET (dialog));
 
-  dialog->selection = gimp_color_selection_new ();
-  gtk_container_set_border_width (GTK_CONTAINER (dialog->selection), 12);
   gimp_color_selection_set_show_alpha (GIMP_COLOR_SELECTION (dialog->selection),
                                        show_alpha);
   gimp_color_selection_set_color (GIMP_COLOR_SELECTION (dialog->selection),
                                   color);
   gimp_color_selection_set_old_color (GIMP_COLOR_SELECTION (dialog->selection),
                                       color);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox),
-                     dialog->selection);
-  gtk_widget_show (dialog->selection);
-
-  g_signal_connect (dialog->selection, "color_changed",
-                    G_CALLBACK (gimp_color_dialog_color_changed),
-                    dialog);
-
-  /* The color history */
-  table = gtk_table_new (2, 1 + COLOR_HISTORY_SIZE / 2, TRUE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
-  gtk_box_pack_end (GTK_BOX (GIMP_COLOR_SELECTION (dialog->selection)->right_vbox),
-                    table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
-
-  button = gtk_button_new ();
-  gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 1, 0, 1);
-  gimp_help_set_help_data (button,
-			   _("Add the current color to the color history"),
-			   NULL);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-		    G_CALLBACK (gimp_color_history_add_clicked),
-		    dialog);
-
-  arrow = gtk_arrow_new (GTK_ARROW_RIGHT, GTK_SHADOW_OUT);
-  gtk_container_add (GTK_CONTAINER (button), arrow);
-  gtk_widget_show (arrow);
-
-  for (i = 0; i < COLOR_HISTORY_SIZE; i++)
-    {
-      GimpRGB history_color;
-      gint    row, column;
-
-      color_history_get (i, &history_color);
-
-      button = gtk_button_new ();
-      gtk_widget_set_size_request (button, COLOR_AREA_SIZE, COLOR_AREA_SIZE);
-
-      column = i % (COLOR_HISTORY_SIZE / 2);
-      row    = i / (COLOR_HISTORY_SIZE / 2);
-
-      gtk_table_attach_defaults (GTK_TABLE (table), button,
-                                 column + 1, column + 2, row, row + 1);
-
-      dialog->history[i] = gimp_color_area_new (&history_color,
-                                                GIMP_COLOR_AREA_SMALL_CHECKS,
-                                                GDK_BUTTON2_MASK);
-      gtk_container_add (GTK_CONTAINER (button), dialog->history[i]);
-      gtk_widget_show (dialog->history[i]);
-      gtk_widget_show (button);
-
-      g_signal_connect (button, "clicked",
-			G_CALLBACK (gimp_color_history_color_clicked),
-			dialog);
-
-      g_signal_connect (dialog->history[i], "color_changed",
-			G_CALLBACK (gimp_color_history_color_changed),
-			GINT_TO_POINTER (i));
-    }
 
   return GTK_WIDGET (dialog);
 }

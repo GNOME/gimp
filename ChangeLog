@@ -1,5 +1,9 @@
 2004-09-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcolordialog.c: moved stuff from new() to init().
+
+2004-09-26  Michael Natterer  <mitch@gimp.org>
+
 	Ported GimpNavigationView to use actions for its buttons:
 
 	* app/menus/menus.c (menus_init): register a <GimpNaviagaionEditor>
