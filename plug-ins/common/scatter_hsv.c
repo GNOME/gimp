@@ -24,8 +24,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <time.h>		/* for seed of random number */
+#include <time.h>
 
 #include <gtk/gtk.h>
 
@@ -36,11 +35,6 @@
 
 #define	PLUG_IN_NAME	"plug_in_scatter_hsv"
 #define SHORT_NAME	"scatter_hsv"
-#define	MAIN_FUNCTION	scatter_hsv
-#define INTERFACE	scatter_hsv_interface
-#define	DIALOG		scatter_hsv_dialog
-#define VALS		scatter_hsv_vals
-#define OK_CALLBACK	scatter_hsv_ok_callback
 
 static void   query (void);
 static void   run   (gchar   *name,
@@ -49,29 +43,32 @@ static void   run   (gchar   *name,
 		     gint    *nreturn_vals,
 		     GParam **return_vals);
 
-static GStatusType	MAIN_FUNCTION (gint32 drawable_id);
-void scatter_hsv_scatter (guchar *r, guchar *g, guchar *b);
-static int randomize_value (int	now,
-			    int min,
-			    int max,
-			    int mod_p,
-			    int	rand_max);
+static GStatusType scatter_hsv         (gint32  drawable_id);
+static void        scatter_hsv_scatter (guchar *r,
+					guchar *g,
+					guchar *b);
+static gint        randomize_value     (gint    now,
+					gint    min,
+					gint    max,
+					gint    mod_p,
+					gint    rand_max);
 
-static gint	DIALOG                     (void);
-static void	OK_CALLBACK                (GtkWidget     *widget,
+static gint	scatter_hsv_dialog         (void);
+static void	scatter_hsv_ok_callback    (GtkWidget     *widget,
 					    gpointer       data);
 static gint	preview_event_handler      (GtkWidget     *widget,
 					    GdkEvent      *event);
 static void	scatter_hsv_preview_update (void);
 static void     scatter_hsv_iscale_update  (GtkAdjustment *adjustment,
 					    gpointer       data);
-/* gtkWrapper functions */ 
-#define PROGRESS_UPDATE_NUM	100
-#define PREVIEW_WIDTH	128
-gint	preview_width = PREVIEW_WIDTH;
-#define PREVIEW_HEIGHT	128
-gint	preview_height = PREVIEW_HEIGHT;
-#define SCALE_WIDTH	100
+
+#define PROGRESS_UPDATE_NUM 100
+#define PREVIEW_WIDTH       128
+#define PREVIEW_HEIGHT      128
+#define SCALE_WIDTH         100
+
+static gint preview_width  = PREVIEW_WIDTH;
+static gint preview_height = PREVIEW_HEIGHT;
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -91,7 +88,10 @@ typedef struct
 
 static ValueType VALS = 
 {
-  2, 3, 10, 10
+  2,
+  3,
+  10,
+  10
 };
 
 typedef struct 
@@ -99,20 +99,22 @@ typedef struct
   gint run;
 } Interface;
 
-static Interface INTERFACE = { FALSE };
-gint	drawable_id;
+static Interface INTERFACE =
+{
+  FALSE
+};
 
-GtkWidget *preview;
-gint	   preview_start_x = 0;
-gint	   preview_end_x = 0;
-gint	   preview_start_y = 0;
-gint	   preview_end_y = 0;
-guchar	  *preview_buffer = NULL;
-gint	   preview_offset_x = 0;
-gint	   preview_offset_y = 0;
-gint	   preview_dragging = FALSE;
-gint	   preview_drag_start_x = 0;
-gint	   preview_drag_start_y = 0;
+static gint      drawable_id;
+
+static GtkWidget *preview;
+static gint	  preview_start_x = 0;
+static gint	  preview_start_y = 0;
+static guchar	 *preview_buffer = NULL;
+static gint	  preview_offset_x = 0;
+static gint	  preview_offset_y = 0;
+static gint	  preview_dragging = FALSE;
+static gint	  preview_drag_start_x = 0;
+static gint	  preview_drag_start_y = 0;
 
 MAIN ()
 
@@ -129,9 +131,7 @@ query (void)
     { PARAM_INT32, "saturation_distance", "distribution distance on saturation axis [0,255]"},
     { PARAM_INT32, "value_distance", "distribution distance on value axis [0,255]"}
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   INIT_I18N();
   
@@ -141,11 +141,11 @@ query (void)
 			  "Shuji Narazaki (narazaki@InetQ.or.jp)",
 			  "Shuji Narazaki",
 			  "1997",
-              N_("<Image>/Filters/Noise/Scatter HSV..."),
+			  N_("<Image>/Filters/Noise/Scatter HSV..."),
 			  "RGB*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -155,9 +155,9 @@ run (gchar   *name,
      gint    *nreturn_vals,
      GParam **return_vals)
 {
-  static GParam	 values[1];
-  GStatusType	status = STATUS_EXECUTION_ERROR;
-  GRunModeType	run_mode;
+  static GParam	values[1];
+  GStatusType   status = STATUS_EXECUTION_ERROR;
+  GRunModeType  run_mode;
   
   run_mode = param[0].data.d_int32;
   drawable_id = param[2].data.d_int32;
@@ -178,7 +178,7 @@ run (gchar   *name,
 	  g_message ("Scatter HSV: RGB drawable is not selected.");
 	  return;
 	}
-      if (! DIALOG ())
+      if (! scatter_hsv_dialog ())
 	return;
       break;
     case RUN_NONINTERACTIVE:
@@ -194,7 +194,7 @@ run (gchar   *name,
       break;
     }
   
-  status = MAIN_FUNCTION (drawable_id);
+  status = scatter_hsv (drawable_id);
 
   if (run_mode != RUN_NONINTERACTIVE)
     gimp_displays_flush();
@@ -206,14 +206,14 @@ run (gchar   *name,
 }
 
 static GStatusType
-MAIN_FUNCTION (gint32	drawable_id)
+scatter_hsv (gint32 drawable_id)
 {
-  GDrawable	*drawable;
-  GPixelRgn	src_rgn, dest_rgn;
-  guchar	*src, *dest;
-  gpointer	pr;
-  gint		x, y, x1, x2, y1, y2;
-  gint		gap, total, processed = 0;
+  GDrawable *drawable;
+  GPixelRgn  src_rgn, dest_rgn;
+  guchar    *src, *dest;
+  gpointer   pr;
+  gint       x, y, x1, x2, y1, y2;
+  gint       gap, total, processed = 0;
   
   drawable = gimp_drawable_get (drawable_id);
   gap = (gimp_drawable_has_alpha (drawable_id)) ? 1 : 0;
@@ -221,10 +221,12 @@ MAIN_FUNCTION (gint32	drawable_id)
   total = (x2 - x1) * (y2 - y1);
 
   gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
-  gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
+  gimp_pixel_rgn_init (&src_rgn, drawable,
+		       x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
+  gimp_pixel_rgn_init (&dest_rgn, drawable,
+		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
 
-  gimp_progress_init ( _("scatter_hsv: scattering..."));
+  gimp_progress_init (_("Scatter HSV: Scattering..."));
   srand (time (NULL));
   pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
   
@@ -260,32 +262,35 @@ MAIN_FUNCTION (gint32	drawable_id)
 		}
 	      /* the function */
 	      if ((++processed % (total / PROGRESS_UPDATE_NUM)) == 0)
-		gimp_progress_update ((double)processed /(double) total); 
+		gimp_progress_update ((double) processed /(double) total); 
 	    }
 	}
   }
+
   gimp_progress_update (1.0);
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->id, TRUE);
   gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
   gimp_drawable_detach (drawable);
+
   return STATUS_SUCCESS;
 }
 
-static int randomize_value (int	now,
-			    int min,
-			    int max,
-			    int mod_p,
-			    int	rand_max)
+static gint
+randomize_value (gint now,
+		 gint min,
+		 gint max,
+		 gint mod_p,
+		 gint rand_max)
 {
-  int	flag, new, steps, index;
-  double rand_val;
+  gint    flag, new, steps, index;
+  gdouble rand_val;
   
   steps = max - min + 1;
-  rand_val = ((double) rand() / (double) G_MAXRAND);
+  rand_val = ((double) rand () / (double) G_MAXRAND);
   for (index = 1; index < VALS.holdness; index++)
     {
-      double tmp = ((double) rand()/(double)G_MAXRAND);
+      double tmp = ((double) rand () / (double) G_MAXRAND);
       if (tmp < rand_val)
 	rand_val = tmp;
     }
@@ -314,9 +319,9 @@ void scatter_hsv_scatter (guchar *r,
 			  guchar *g,
 			  guchar *b)
 {
-  int	h, s, v;
-  int	h1, s1, v1;
-  int	h2, s2, v2;
+  gint h, s, v;
+  gint h1, s1, v1;
+  gint h2, s2, v2;
   
   h = *r; s = *g; v = *b;
   
@@ -348,8 +353,8 @@ void scatter_hsv_scatter (guchar *r,
 }
 
 /* dialog stuff */
-static int
-DIALOG (void)
+static gint
+scatter_hsv_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *vbox;
@@ -364,7 +369,7 @@ DIALOG (void)
 
   argc    = 1;
   argv    = g_new (gchar *, 1);
-  argv[0] = g_strdup (PLUG_IN_NAME);
+  argv[0] = g_strdup (SHORT_NAME);
 
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
@@ -379,12 +384,12 @@ DIALOG (void)
   gtk_widget_set_default_visual (gtk_preview_get_visual ());
   gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
-  dlg = gimp_dialog_new (_("Scatter HSV"), "scatter_hsv",
+  dlg = gimp_dialog_new (_("Scatter HSV"), SHORT_NAME,
 			 gimp_plugin_help_func, "filters/scatter_hsv.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 _("OK"), OK_CALLBACK,
+			 _("OK"), scatter_hsv_ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
 			 _("Cancel"), gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
@@ -416,10 +421,10 @@ DIALOG (void)
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   {
-    gint width = gimp_drawable_width (drawable_id);
+    gint width  = gimp_drawable_width (drawable_id);
     gint height = gimp_drawable_height (drawable_id);
 
-    preview_width = (PREVIEW_WIDTH < width) ? PREVIEW_WIDTH : width;
+    preview_width  = (PREVIEW_WIDTH  < width)  ? PREVIEW_WIDTH  : width;
     preview_height = (PREVIEW_HEIGHT < height) ? PREVIEW_HEIGHT : height;
   }
   gtk_preview_size (GTK_PREVIEW (preview), preview_width * 2, preview_height);
@@ -644,10 +649,11 @@ scatter_hsv_preview_update (void)
 }
 
 static void
-OK_CALLBACK (GtkWidget *widget,
-	     gpointer   data)
+scatter_hsv_ok_callback (GtkWidget *widget,
+			 gpointer   data)
 {
   INTERFACE.run = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 

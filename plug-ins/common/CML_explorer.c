@@ -86,246 +86,164 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#define PARAM_FILE_FORMAT_VERSION	1.0
-#define	PLUG_IN_NAME	"plug_in_CML_explorer"
-#define	VERBOSE_DIALOGS	1
-#define	MAIN_FUNCTION	CML
-#define INTERFACE	CML_explorer_interface
-#define	DIALOG		CML_explorer_dialog
-#define VALS		CML_explorer_vals
-#define OK_CALLBACK	CML_explorer_ok_callback
-#define PROGRESS_UPDATE_NUM	100
-#define CML_LINE_SIZE	1024
-#define TILE_CACHE_SIZE 32
-/* gtkWrapper */
-/* gtkW is the abbreviation of gtk Wrapper */
-#define GTKW_ENTRY_WIDTH	60
-#define GTKW_SCALE_WIDTH	130
-#define GTKW_PREVIEW_WIDTH	64
-#define GTKW_PREVIEW_HEIGHT	220
-#define	GTKW_BORDER_WIDTH	3
-#define GTKW_FLOAT_MIN_ERROR	0.000001
-#define GTKW_ENTRY_BUFFER_SIZE	32
+#define PARAM_FILE_FORMAT_VERSION 1.0
+#define	PLUG_IN_NAME	          "plug_in_CML_explorer"
+#define SHORT_NAME                "CML_explorer"
+#define VALS                      CML_explorer_vals
+#define PROGRESS_UPDATE_NUM        100
+#define CML_LINE_SIZE             1024
+#define TILE_CACHE_SIZE             32
+#define SCALE_WIDTH                130
+#define PREVIEW_WIDTH               64
+#define PREVIEW_HEIGHT             220
 
-/* gtkW type */
-typedef struct
-{
-  GtkWidget	*widget;
-  gpointer	value;
-  void	 	(*updater)();
-} gtkW_widget_table;
+#define	RANDOM               ((gdouble) ((double) rand ()/((double) G_MAXRAND)))
+#define CANNONIZE(p, x)      (255*(((p).range_h - (p).range_l)*(x) + (p).range_l))
+#define HCANNONIZE(p, x)     (254*(((p).range_h - (p).range_l)*(x) + (p).range_l))
+#define POS_IN_TORUS(i,size) ((i < 0) ? size + i : ((size <= i) ? i - size : i))
 
 typedef struct
 {
-  gchar *name;
-  gpointer data;
-} gtkW_menu_item;
+  GtkWidget  *widget;
+  gpointer    value;
+  void      (*updater) ();
+} WidgetEntry;
 
-/* gtkW global variables */
-static gint gtkW_border_width = GTKW_BORDER_WIDTH;
-static gint gtkW_border_height = 0;
-static gint gtkW_homogeneous_layout = FALSE;
-static gint gtkW_frame_shadow_type = GTK_SHADOW_ETCHED_IN;
-static gint gtkW_align_x = GTK_FILL|GTK_EXPAND;
-static gint gtkW_align_y = GTK_FILL;
-
-/* gtkW callback */
-static void	gtkW_toggle_update (GtkWidget *widget, gpointer data);
-static void	gtkW_iscale_update (GtkAdjustment *adjustment, gpointer data);
-static void	gtkW_ientry_update (GtkWidget *widget, gpointer data);
-static void	gtkW_dscale_update (GtkAdjustment *adjustment, gpointer data);
-static void	gtkW_dentry_update (GtkWidget *widget, gpointer data);
-static void	gtkW_dscale_entry_change_value (gtkW_widget_table *wtable);
-static void	gtkW_iscale_entry_change_value (gtkW_widget_table *wtable);
-static void	gtkW_menu_change_value (gtkW_widget_table *wtable);
-static void	gtkW_menu_update (GtkWidget *widget, gpointer   data);
-static void	gtkW_toggle_change_value (gtkW_widget_table	*wtable);
-/* gtkW method */
-GtkWidget	*gtkW_check_button_new (GtkWidget	*parent,
-					gchar		*name,
-					GtkSignalFunc	update,
-					gint		*value);
-static GtkWidget	*gtkW_dialog_new (gchar	*name,
-					  GtkSignalFunc	ok_callback,
-					  GtkSignalFunc	close_callback);
-static GtkWidget	*gtkW_frame_new (GtkWidget *parent, gchar *name);
-static GtkWidget	*gtkW_hbox_new (GtkWidget *parent);
-static GtkWidget	*gtkW_table_add_button (GtkWidget	*table,
-						gchar		*name,
-						gint		x0,
-						gint		x1,
-						gint		y,
-						GtkSignalFunc	callback,
-						gpointer value);
-static GtkWidget	*gtkW_table_add_dscale_entry (GtkWidget	*table,
-						      gchar	*name,
-						      gint	x,
-						      gint	y,
-						      GtkSignalFunc scale_update,
-						      GtkSignalFunc entry_update,
-						      gdouble	*value,
-						      gdouble	min,
-						      gdouble	max,
-						      gdouble	step,
-						      gpointer	table_entry);
-static GtkWidget	*gtkW_table_add_iscale_entry (GtkWidget	*table,
-						      gchar	*name,
-						      gint	x,
-						      gint	y,
-						      GtkSignalFunc scale_update,
-						      GtkSignalFunc entry_update,
-						      gint	*value,
-						      gdouble	min,
-						      gdouble	max,
-						      gdouble	step,
-						      gpointer	table_entry);
-static GtkWidget	 *gtkW_table_add_menu (GtkWidget	*parent,
-					       gchar		*name,
-					       gint		x,
-					       gint		y,
-					       GtkSignalFunc	imenu_update,
-					       gint		*val,
-					       gtkW_menu_item	*item,
-					       gint		item_num,
-					       gpointer		table_entry);
-static GtkWidget	*gtkW_table_add_toggle (GtkWidget	*table,
-						gchar		*name,
-						gint		x,
-						gint		y,
-						GtkSignalFunc	update,
-						gint		*value,
-						gpointer	widget_entry);
-static GtkWidget	*gtkW_table_new (GtkWidget *parent, gint col, gint row);
-static GtkWidget	*gtkW_vbox_add_button (GtkWidget	*vbox,
-					       gchar		*name,
-					       GtkSignalFunc	update,
-					       gpointer		data);
-static GtkWidget	*gtkW_vbox_new (GtkWidget *parent);
-/* end of GtkW */
-
-#define	RANDOM	((gdouble) ((double) rand ()/((double) G_MAXRAND)))
-#define CANNONIZE(p, x)	(255*(((p).range_h - (p).range_l)*(x) + (p).range_l))
-#define HCANNONIZE(p, x)	(254*(((p).range_h - (p).range_l)*(x) + (p).range_l))
-#define POS_IN_TORUS(i,size)	((i < 0) ? size + i : ((size <= i) ? i - size : i))
-
-gtkW_menu_item function_menu [] =
+enum
 {
-#define	CML_KEEP_VALUES	0
-  { N_("Keep image's values"), NULL },
-#define	CML_KEEP_FIRST	1
-  { N_("Keep the first value"), NULL },
-#define	CML_FILL	2
-  { N_("Fill with parameter k"), NULL },
-#define	CML_LOGIST	3
-  { N_("k{x(1-x)}^p"), NULL },
-#define	CML_LOGIST_STEP	4
-  { N_("k{x(1-x)}^p stepped"), NULL },
-#define	CML_POWER	5
-  { N_("kx^p"), NULL },
-#define	CML_POWER_STEP	6
-  { N_("kx^p stepped"), NULL },
-#define	CML_REV_POWER	7
-  { N_("k(1 - x^p)"), NULL },
-#define	CML_REV_POWER_STEP	8
-  { N_("k(1 - x^p) stepped"), NULL },
-#define	CML_DELTA	9
-  { N_("Delta function"), NULL },
-#define	CML_DELTA_STEP	10
-  { N_("Delta function stepped"), NULL },
-#define CML_SIN_CURVE	11
-  { N_("sin^p-based function"), NULL },
-#define CML_SIN_CURVE_STEP	12
-  { N_("sin^p, stepped"), NULL },
+  CML_KEEP_VALUES,
+  CML_KEEP_FIRST,
+  CML_FILL,
+  CML_LOGIST,
+  CML_LOGIST_STEP,
+  CML_POWER,
+  CML_POWER_STEP,
+  CML_REV_POWER,
+  CML_REV_POWER_STEP,
+  CML_DELTA,
+  CML_DELTA_STEP,
+  CML_SIN_CURVE,
+  CML_SIN_CURVE_STEP
 };
 
-gtkW_menu_item composition_menu [] =
+static gchar *function_names[] =
 {
-#define COMP_NONE		0
-  { N_("None"), NULL },
-#define COMP_MAX_LINEAR		1
-  { N_("Max (x, -)"), NULL },
-#define COMP_MAX_LINEAR_P1	2
-  { N_("Max (x+d, -)"), NULL },
-#define COMP_MAX_LINEAR_M1	3
-  { N_("Max (x-d, -)"), NULL },
-#define COMP_MIN_LINEAR		4
-  { N_("Min (x, -)"), NULL },
-#define COMP_MIN_LINEAR_P1	5
-  { N_("Min (x+d, -)"), NULL },
-#define COMP_MIN_LINEAR_M1	6
-  { N_("Min (x-d, -)"), NULL },
-#define COMP_MAX_LINEAR_P1L	7
-  { N_("Max (x+d, -), (x < 0.5)"), NULL },
-#define COMP_MAX_LINEAR_P1U	8
-  { N_("Max (x+d, -), (0.5 < x)"), NULL },
-#define COMP_MAX_LINEAR_M1L	9
-  { N_("Max (x-d, -), (x < 0.5)"), NULL },
-#define COMP_MAX_LINEAR_M1U	10
-  { N_("Max (x-d, -), (0.5 < x)"), NULL },
-#define COMP_MIN_LINEAR_P1L	11
-  { N_("Min (x+d, -), (x < 0.5)"), NULL },
-#define COMP_MIN_LINEAR_P1U	12
-  { N_("Min (x+d, -), (0.5 < x)"), NULL },
-#define COMP_MIN_LINEAR_M1L	13
-  { N_("Min (x-d, -), (x < 0.5)"), NULL },
-#define COMP_MIN_LINEAR_M1U	14
-  { N_("Min (x-d, -), (0.5 < x)"), NULL }
+  N_("Keep image's values"),
+  N_("Keep the first value"),
+  N_("Fill with parameter k"),
+  N_("k{x(1-x)}^p"),
+  N_("k{x(1-x)}^p stepped"),
+  N_("kx^p"),
+  N_("kx^p stepped"),
+  N_("k(1-x^p)"),
+  N_("k(1-x^p) stepped"),
+  N_("Delta function"),
+  N_("Delta function stepped"),
+  N_("sin^p-based function"),
+  N_("sin^p, stepped")
 };
 
-gtkW_menu_item arrange_menu [] =
+enum
 {
-#define	STANDARD	0
-  { N_("Standard"), NULL },
-#define	AVERAGE		1
-  { N_("Use average value"), NULL },
-#define	ANTILOG		2
-  { N_("Use reverse value"), NULL },
-#define	RAND_POWER0	3
-  { N_("With random power (0,10)"), NULL },
-#define	RAND_POWER1	4
-  { N_("With random power (0,1)"), NULL },
-#define	RAND_POWER2	5
-  { N_("With gradient power (0,1)"), NULL },
-#define	MULTIPLY_RANDOM0	6
-  { N_("Multiply rand. value (0,1)"), NULL },
-#define	MULTIPLY_RANDOM1	7
-  { N_("Multiply rand. value (0,2)"), NULL },
-#define	MULTIPLY_GRADIENT	8
-  { N_("Multiply gradient (0,1)"), NULL },
-#define RAND_AND_P	9
-  { N_("With p and random (0,1)"), NULL },
+  COMP_NONE,
+  COMP_MAX_LINEAR,
+  COMP_MAX_LINEAR_P1,
+  COMP_MAX_LINEAR_M1,
+  COMP_MIN_LINEAR,
+  COMP_MIN_LINEAR_P1,
+  COMP_MIN_LINEAR_M1,
+  COMP_MAX_LINEAR_P1L,
+  COMP_MAX_LINEAR_P1U,
+  COMP_MAX_LINEAR_M1L,
+  COMP_MAX_LINEAR_M1U,
+  COMP_MIN_LINEAR_P1L,
+  COMP_MIN_LINEAR_P1U,
+  COMP_MIN_LINEAR_M1L,
+  COMP_MIN_LINEAR_M1U
 };
 
-gtkW_menu_item initial_value_menu [] =
+static gchar *composition_names[] =
 {
-  { N_("All black"), NULL },	/* 0 */
-  { N_("All gray"), NULL },		/* 1 */
-  { N_("All white"), NULL },	/* 2 */
-  { N_("The first row of the image"), NULL }, /* 3 */
-  { N_("Continuous gradient"), NULL }, /* 4 */
-  { N_("Continuous grad. w/o gap"), NULL }, /* 5 */
-#define	CML_INITIAL_RANDOM_INDEPENDENT	6
-  { N_("Random, ch. independent"), NULL },
-#define	CML_INITIAL_RANDOM_SHARED	7
-  { N_("Random shared"), NULL },
-#define	CML_INITIAL_RANDOM_FROM_SEED	8
-  { N_("Randoms from seed") , NULL },
-#define	CML_INITIAL_RANDOM_FROM_SEED_SHARED	9
-  { N_("Randoms from seed (shared)") , NULL }
-} ;
+  N_("None"),
+  N_("Max (x, -)"),
+  N_("Max (x+d, -)"),
+  N_("Max (x-d, -)"),
+  N_("Min (x, -)"),
+  N_("Min (x+d, -)"),
+  N_("Min (x-d, -)"),
+  N_("Max (x+d, -), (x < 0.5)"),
+  N_("Max (x+d, -), (0.5 < x)"),
+  N_("Max (x-d, -), (x < 0.5)"),
+  N_("Max (x-d, -), (0.5 < x)"),
+  N_("Min (x+d, -), (x < 0.5)"),
+  N_("Min (x+d, -), (0.5 < x)"),
+  N_("Min (x-d, -), (x < 0.5)"),
+  N_("Min (x-d, -), (0.5 < x)")
+};
+
+enum
+{
+  STANDARD,
+  AVERAGE,
+  ANTILOG,
+  RAND_POWER0,
+  RAND_POWER1,
+  RAND_POWER2,
+  MULTIPLY_RANDOM0,
+  MULTIPLY_RANDOM1,
+  MULTIPLY_GRADIENT,
+  RAND_AND_P
+};
+
+static gchar *arrange_names[] =
+{
+  N_("Standard"),
+  N_("Use average value"),
+  N_("Use reverse value"),
+  N_("With random power (0,10)"),
+  N_("With random power (0,1)"),
+  N_("With gradient power (0,1)"),
+  N_("Multiply rand. value (0,1)"),
+  N_("Multiply rand. value (0,2)"),
+  N_("Multiply gradient (0,1)"),
+  N_("With p and random (0,1)"),
+};
+
+enum
+{
+  CML_INITIAL_RANDOM_INDEPENDENT = 6,
+  CML_INITIAL_RANDOM_SHARED,
+  CML_INITIAL_RANDOM_FROM_SEED,
+  CML_INITIAL_RANDOM_FROM_SEED_SHARED
+};
+
+static gchar *initial_value_names[] =
+{
+  N_("All black"),
+  N_("All gray"),
+  N_("All white"),
+  N_("The first row of the image"),
+  N_("Continuous gradient"),
+  N_("Continuous grad. w/o gap"),
+  N_("Random, ch. independent"),
+  N_("Random shared"),
+  N_("Randoms from seed"),
+  N_("Randoms from seed (shared)")
+};
 
 #define CML_PARAM_NUM	15
+
 typedef struct
 {
-  gint	  function;
-  gint	  composition;
-  gint	  arrange;
-  gint	  cyclic_range;
+  gint    function;
+  gint    composition;
+  gint    arrange;
+  gint    cyclic_range;
   gdouble mod_rate;		/* diff / old-value */
   gdouble env_sensitivity;	/* self-diff : env-diff */
-  gint	  diffusion_dist;
+  gint    diffusion_dist;
   gdouble ch_sensitivity;
-  gint	  range_num;
+  gint    range_num;
   gdouble power;
   gdouble parameter_k;
   gdouble range_l;
@@ -339,84 +257,139 @@ typedef struct
   CML_PARAM hue;
   CML_PARAM sat;
   CML_PARAM val;
-  gint	initial_value;
-  gint	scale;
-  gint	start_offset;
-  gint	seed;
-  gchar last_file_name[256];
+  gint      initial_value;
+  gint      scale;
+  gint      start_offset;
+  gint      seed;
+  gchar     last_file_name[256];
 } ValueType;
 
 static ValueType VALS =
 {
-  /* function     composition  arra
-   cyc chng sens diff cor  n  pow   k   (l,h) rnd dist */
-  {CML_SIN_CURVE, COMP_NONE, STANDARD,
-   1,  0.5, 0.7,  2,  0.0, 1, 1.0, 1.0, 0, 1, 0.0, 0.1},
-  {CML_FILL     , COMP_NONE, STANDARD,
-   0,  0.6, 0.1,  2,  0.0, 1, 1.4, 0.9, 0, 0.9, 0.0, 0.1},
-  {CML_FILL     , COMP_NONE, STANDARD,
-   0,  0.5, 0.2,  2,  0.0, 1, 2.0, 1.0, 0, 0.9, 0.0, 0.1},
-  6,				/* random value 1 */
-  1,				/* scale */
-  0,				/* start_offset */
-  0,				/* seed */
-  ""
+  /* function      composition  arra
+    cyc chng sens  diff cor  n  pow  k    (l,h)   rnd  dist */
+  {
+    CML_SIN_CURVE, COMP_NONE,   STANDARD,
+    1,  0.5, 0.7,  2,   0.0, 1, 1.0, 1.0, 0, 1,   0.0, 0.1
+  },
+  {
+    CML_FILL,      COMP_NONE,    STANDARD,
+    0,  0.6, 0.1,  2,   0.0, 1, 1.4, 0.9, 0, 0.9, 0.0, 0.1
+  },
+  {
+    CML_FILL,      COMP_NONE,    STANDARD,
+    0,  0.5, 0.2,  2,   0.0, 1, 2.0, 1.0, 0, 0.9, 0.0, 0.1
+  },
+  6,    /* random value 1 */
+  1,    /* scale */
+  0,    /* start_offset */
+  0,    /* seed */
+  ""    /* last filename */
 };
 
-gtkW_menu_item channel_menu [] =
+static CML_PARAM *channel_params[] =
 {
-  { N_("Hue"), (gpointer) &VALS.hue },
-  { N_("Saturation"), (gpointer) &VALS.sat },
-  { N_("Value"), (gpointer) &VALS.val },
+  &VALS.hue,
+  &VALS.sat,
+  &VALS.val
 };
 
-gtkW_menu_item sload_menu [] =
+static gchar *channel_names[] =
 {
-  { N_("NULL"), NULL },
-  { N_("Hue"), NULL },
-  { N_("Saturation"), NULL },
-  { N_("Value"), NULL },
+  N_("Hue"),
+  N_("Saturation"),
+  N_("Value")
 };
 
-static void	query	(void);
-static void	run	(char	*name,
-			 int	nparams,
-			 GParam	*param,
-			 int	*nreturn_vals,
-			 GParam **return_vals);
-static GStatusType	MAIN_FUNCTION (gint preview_p);
-static void	CML_compute_next_step (gint size,
-		       gdouble **h, gdouble **s, gdouble **v,
-		       gdouble **hn, gdouble **sn, gdouble **vn,
-		       gdouble **haux, gdouble **saux, gdouble **vaux);
-static gdouble CML_next_value (gdouble *vec, gint pos, gint size,
-			       gdouble c1, gdouble c2,
-			       CML_PARAM *param, gdouble aux);
-static gdouble	logistic_function (CML_PARAM *param, gdouble x, gdouble power);
-static gint	DIALOG ();
-static GtkWidget *CML_dialog_sub_panel_new (GtkWidget *parent,
-					    gchar *name,
+static void query (void);
+static void run   (gchar   *name,
+		   gint     nparams,
+		   GParam  *param,
+		   gint    *nreturn_vals,
+		   GParam **return_vals);
+
+static GStatusType   CML_main_function     (gint       preview_p);
+static void          CML_compute_next_step (gint       size,
+					    gdouble  **h,
+					    gdouble  **s,
+					    gdouble  **v,
+					    gdouble  **hn,
+					    gdouble  **sn,
+					    gdouble  **vn,
+					    gdouble  **haux,
+					    gdouble  **saux,
+					    gdouble  **vaux);
+static gdouble       CML_next_value        (gdouble   *vec,
+					    gint       pos,
+					    gint       size,
+					    gdouble    c1,
+					    gdouble    c2,
 					    CML_PARAM *param,
-					    gint channel_id);
-static GtkWidget *CML_dialog_advanced_panel_new (GtkWidget *parent, gchar *name);
-void	preview_update ();
-static void	function_graph_new (GtkWidget *widget, gpointer data);
-static void	CML_set_or_randomize_seed_callback (GtkWidget *widget, gpointer data);
-static void	CML_copy_parameters_callback (GtkWidget *widget, gpointer data);
-static void	CML_initial_value_sensitives_update ();
-static void	CML_menu_update (GtkWidget *widget, gpointer data);
-static void	CML_initial_value_menu_update (GtkWidget *widget, gpointer data);
-static void	OK_CALLBACK (GtkWidget *widget, gpointer   data);
-static void	CML_save_to_file_callback (GtkWidget *widget, gpointer client_data);
-static void	CML_execute_save_to_file (GtkWidget *widget, gpointer client_data);
-static gint	force_overwrite (char *filename);
-static void	CML_overwrite_ok_callback (GtkWidget *widget, gpointer   data);
-static void	CML_preview_update_callback (GtkWidget *widget, gpointer   data);
-static void	CML_load_from_file_callback (GtkWidget *widget, gpointer client_data);
-static gint	CML_load_parameter_file (gchar *filename, gint interactive_mode);
-static void	CML_execute_load_from_file (GtkWidget *widget, gpointer client_data);
-static gint	parse_line_to_gint (FILE *file, gint *flag);
-static gdouble	parse_line_to_gdouble (FILE *file, gint *flag);
+					    gdouble    aux);
+static gdouble       logistic_function     (CML_PARAM *param,
+					    gdouble    x,
+					    gdouble    power);
+
+
+static gint	   CML_explorer_dialog           (void);
+static GtkWidget * CML_dialog_channel_panel_new  (gchar     *name,
+						  CML_PARAM *param,
+						  gint       channel_id);
+static GtkWidget * CML_dialog_advanced_panel_new (gchar     *name);
+
+static void     CML_explorer_toggle_entry_init   (WidgetEntry *widget_entry,
+						  GtkWidget   *widget,
+						  gpointer     value_ptr);
+
+static void     CML_explorer_int_entry_init      (WidgetEntry *widget_entry,
+						  GtkObject   *object,
+						  gpointer     value_ptr);
+
+static void     CML_explorer_double_entry_init   (WidgetEntry *widget_entry,
+						  GtkObject   *object,
+						  gpointer     value_ptr);
+
+static void     CML_explorer_menu_update         (GtkWidget   *widget,
+						  gpointer     data);
+static void     CML_initial_value_menu_update    (GtkWidget   *widget,
+						  gpointer     data);
+static void     CML_explorer_menu_entry_init     (WidgetEntry *widget_entry,
+						  GtkWidget   *widget,
+						  gpointer     value_ptr);
+
+static void    preview_update                      (void);
+static void    function_graph_new                  (GtkWidget *widget,
+						    gpointer   data);
+static void    CML_set_or_randomize_seed_callback  (GtkWidget *widget,
+						    gpointer   data);
+static void    CML_copy_parameters_callback        (GtkWidget *widget,
+						    gpointer   data);
+static void    CML_initial_value_sensitives_update (void);
+static void    CML_explorer_ok_callback            (GtkWidget *widget,
+						    gpointer   data);
+
+
+static void    CML_save_to_file_callback (GtkWidget *widget,
+					  gpointer   data);
+static void    CML_execute_save_to_file  (GtkWidget *widget,
+					  gpointer   data);
+static gint    force_overwrite           (gchar     *filename);
+static void    CML_overwrite_ok_callback (GtkWidget *widget,
+					  gpointer   data);
+
+static void    CML_preview_update_callback (GtkWidget *widget,
+					    gpointer   data);
+static void    CML_load_from_file_callback (GtkWidget *widget,
+					    gpointer   data);
+static gint    CML_load_parameter_file     (gchar     *filename,
+					    gint       interactive_mode);
+static void    CML_execute_load_from_file  (GtkWidget *widget,
+					    gpointer   data);
+static gint    parse_line_to_gint          (FILE      *file,
+					    gint      *flag);
+static gdouble parse_line_to_gdouble       (FILE      *file,
+					    gint      *flag);
+
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -436,30 +409,40 @@ static Interface INTERFACE =
   FALSE
 };
 
-GtkWidget	*preview;
-gtkW_widget_table	widget_pointers[4][CML_PARAM_NUM];
+static GtkWidget   *preview;
+static WidgetEntry  widget_pointers[4][CML_PARAM_NUM];
+
 typedef struct
 {
-  GtkWidget	*widget;
-  gint		logic;
+  GtkWidget *widget;
+  gint       logic;
 } CML_sensitive_widget_table;
-#define	RANDOM_SENSITIVES_NUM	5
-CML_sensitive_widget_table	random_sensitives[RANDOM_SENSITIVES_NUM] =
-{ { NULL, 0 }, { NULL, 0 }, { NULL, 0 }, { NULL, 0 }, { NULL, 0} };
-gint		drawable_id = 0;
-gint		copy_source = 0;
-gint		copy_destination = 0;
-gint		selective_load_source = 0;
-gint		selective_load_destination = 0;
-gint		CML_preview_defer = FALSE;
-gint		overwritable = 0;
 
-gdouble		*mem_chank0 = NULL;
-gint		mem_chank0_size = 0;
-guchar		*mem_chank1 = NULL;
-gint		mem_chank1_size = 0;
-guchar		*mem_chank2 = NULL;
-gint		mem_chank2_size = 0;
+#define	RANDOM_SENSITIVES_NUM 5
+
+CML_sensitive_widget_table random_sensitives[RANDOM_SENSITIVES_NUM] =
+{
+  { NULL, 0 },
+  { NULL, 0 },
+  { NULL, 0 },
+  { NULL, 0 },
+  { NULL, 0 }
+};
+
+static gint     drawable_id = 0;
+static gint     copy_source = 0;
+static gint     copy_destination = 0;
+static gint     selective_load_source = 0;
+static gint     selective_load_destination = 0;
+static gint     CML_preview_defer = FALSE;
+static gint     overwritable = FALSE;
+
+static gdouble *mem_chank0 = NULL;
+static gint     mem_chank0_size = 0;
+static guchar  *mem_chank1 = NULL;
+static gint     mem_chank1_size = 0;
+static guchar  *mem_chank2 = NULL;
+static gint     mem_chank2_size = 0;
 
 MAIN ()
 
@@ -473,9 +456,7 @@ query (void)
     { PARAM_DRAWABLE, "drawable", "Input drawable" },
     { PARAM_STRING, "parameter_file_name", "The name of parameter file. CML_explorer makes an image with its settings." },
   };
-  static GParamDef *return_vals = NULL;
   static gint nargs = sizeof (args) / sizeof (args[0]);
-  static gint nreturn_vals = 0;
 
   INIT_I18N();
 
@@ -489,22 +470,21 @@ query (void)
 			  N_("<Image>/Filters/Render/Pattern/CML Explorer..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
-run (char	*name,
-     int	nparams,
-     GParam	*param,
-     int	*nreturn_vals,
-     GParam	**return_vals)
+run (gchar   *name,
+     gint     nparams,
+     GParam  *param,
+     gint    *nreturn_vals,
+     GParam **return_vals)
 {
-  GParam	*values;
-  GStatusType	status = STATUS_EXECUTION_ERROR;
-  GRunModeType	run_mode;
+  static GParam values[1];
+  GStatusType   status = STATUS_EXECUTION_ERROR;
+  GRunModeType  run_mode;
 
-  values = g_new (GParam, 1);
   run_mode = param[0].data.d_int32;
   drawable_id = param[2].data.d_drawable;
 
@@ -519,12 +499,8 @@ run (char	*name,
     case RUN_INTERACTIVE:
       INIT_I18N_UI();
       gimp_get_data (PLUG_IN_NAME, &VALS);
-      if (! DIALOG ())
+      if (! CML_explorer_dialog ())
 	return;
-#ifdef INTERACTIVE_DIALOG
-      else
-	status = STATUS_SUCCESS;
-#endif
       break;
     case RUN_NONINTERACTIVE:
       {
@@ -540,12 +516,7 @@ run (char	*name,
     }
 
   gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
-#ifdef INTERACTIVE_DIALOG
-  if (run_mode != RUN_INTERACTIVE)
-    status = MAIN_FUNCTION (FALSE);
-#else
-  status = MAIN_FUNCTION (FALSE);
-#endif
+  status = CML_main_function (FALSE);
 
   if (run_mode != RUN_NONINTERACTIVE)
     gimp_displays_flush();
@@ -564,27 +535,27 @@ run (char	*name,
 }
 
 static GStatusType
-MAIN_FUNCTION (gint preview_p)
+CML_main_function (gint preview_p)
 {
-  GDrawable	*drawable = NULL;
-  GPixelRgn	dest_rgn, src_rgn;
-  guchar	*dest_buffer = NULL;
-  guchar	*src_buffer = NULL;
-  gint		x1, x2, y1, y2;
-  gint		dx, dy;
-  gint		dest_has_alpha = FALSE;
-  gint		dest_is_gray = FALSE;
-  gint		src_has_alpha = FALSE;
-  gint		src_is_gray = FALSE;
-  gint		total, processed = 0;
-  gint		keep_height = 1;
-  gint		cell_num, width_by_pixel, height_by_pixel;
-  gint		index;
-  gint		src_bpp, src_bpl;
-  gint		dest_bpp, dest_bpl;
-  gdouble	*hues, *sats, *vals;
-  gdouble	*newh, *news, *newv;
-  gdouble	*haux, *saux, *vaux;
+  GDrawable *drawable = NULL;
+  GPixelRgn  dest_rgn, src_rgn;
+  guchar    *dest_buffer = NULL;
+  guchar    *src_buffer = NULL;
+  gint       x1, x2, y1, y2;
+  gint       dx, dy;
+  gint       dest_has_alpha = FALSE;
+  gint       dest_is_gray = FALSE;
+  gint       src_has_alpha = FALSE;
+  gint       src_is_gray = FALSE;
+  gint       total, processed = 0;
+  gint       keep_height = 1;
+  gint       cell_num, width_by_pixel, height_by_pixel;
+  gint       index;
+  gint       src_bpp, src_bpl;
+  gint       dest_bpp, dest_bpl;
+  gdouble   *hues, *sats, *vals;
+  gdouble   *newh, *news, *newv;
+  gdouble   *haux, *saux, *vaux;
 
   /* open THE drawable */
   drawable = gimp_drawable_get (drawable_id);
@@ -599,10 +570,10 @@ MAIN_FUNCTION (gint preview_p)
       dest_is_gray = FALSE;
       dest_bpp = 3;
 
-      if (GTKW_PREVIEW_WIDTH < x2 - x1)	/* preview < drawable (selection) */
-	x2 = x1 + GTKW_PREVIEW_WIDTH;
-      if (GTKW_PREVIEW_HEIGHT < y2 - y1)
-	y2 = y1 + GTKW_PREVIEW_HEIGHT;
+      if (PREVIEW_WIDTH < x2 - x1)	/* preview < drawable (selection) */
+	x2 = x1 + PREVIEW_WIDTH;
+      if (PREVIEW_HEIGHT < y2 - y1)
+	y2 = y1 + PREVIEW_HEIGHT;
     }
   width_by_pixel = x2 - x1;
   height_by_pixel = y2 - y1;
@@ -894,12 +865,18 @@ MAIN_FUNCTION (gint preview_p)
 }
 
 static void
-CML_compute_next_step (gint size,
-		       gdouble **h, gdouble **s, gdouble **v,
-		       gdouble **hn, gdouble **sn, gdouble **vn,
-		       gdouble **haux, gdouble **saux, gdouble **vaux)
+CML_compute_next_step (gint      size,
+		       gdouble **h,
+		       gdouble **s,
+		       gdouble **v,
+		       gdouble **hn,
+		       gdouble **sn,
+		       gdouble **vn,
+		       gdouble **haux,
+		       gdouble **saux,
+		       gdouble **vaux)
 {
-  int	index;
+  gint	index;
 
   for (index = 0; index < size; index++)
     (*hn)[index] = CML_next_value (*h, index, size,
@@ -919,6 +896,7 @@ CML_compute_next_step (gint size,
 				   (*s)[POS_IN_TORUS (index   , size)],
 				   &VALS.val,
 				   (*vaux)[POS_IN_TORUS (index , size)]);
+
 #define GD_SWAP(x, y)	{ gdouble *tmp = *x; *x = *y; *y = tmp; }
   GD_SWAP (h, hn);
   GD_SWAP (s, sn);
@@ -934,18 +912,22 @@ CML_compute_next_step (gint size,
 #define C_CHN_FACTOR(x)	(param->mod_rate * CHN_FACTOR (x))
 
 static gdouble
-CML_next_value (gdouble *vec, gint pos, gint size,
-		gdouble c1, gdouble c2,
-		CML_PARAM *param, gdouble power)
+CML_next_value (gdouble   *vec,
+		gint       pos,
+		gint       size,
+		gdouble    c1,
+		gdouble    c2,
+		CML_PARAM *param,
+		gdouble    power)
 {
-  gdouble	val = vec[pos];
-  gdouble	diff = 0;
-  gdouble	self_diff = 0;
-  gdouble	by_env = 0;
-  gdouble	self_mod_rate = 0;
-  gdouble	hold_rate = 1 - param->mod_rate;
-  gdouble	env_factor = 0;
-  gint		index;
+  gdouble val = vec[pos];
+  gdouble diff = 0;
+  gdouble self_diff = 0;
+  gdouble by_env = 0;
+  gdouble self_mod_rate = 0;
+  gdouble hold_rate = 1 - param->mod_rate;
+  gdouble env_factor = 0;
+  gint    index;
 
   self_mod_rate = (1 - param->env_sensitivity - param->ch_sensitivity);
 
@@ -1034,7 +1016,7 @@ CML_next_value (gdouble *vec, gint pos, gint size,
     val = CLAMP (val, 0.0, 1);
   return val;
 }
-#undef	AVE_DIST
+#undef AVE_DIST
 #undef LOGISTICS
 #undef ENV_FACTOR
 #undef C_ENV_FACTOR
@@ -1042,12 +1024,14 @@ CML_next_value (gdouble *vec, gint pos, gint size,
 #undef C_CHN_FACTOR
 
 static gdouble
-logistic_function (CML_PARAM *param, gdouble x, gdouble power)
+logistic_function (CML_PARAM *param,
+		   gdouble    x,
+		   gdouble    power)
 {
   gdouble x1 = x;
   gdouble result = 0;
-  int n = param->range_num;
-  int step;
+  gint n = param->range_num;
+  gint step;
 
   step = (int) (x * (gdouble) n);
   x1 = (x - ((gdouble) step / (gdouble) n)) * n;
@@ -1165,504 +1149,779 @@ logistic_function (CML_PARAM *param, gdouble x, gdouble power)
 }
 
 /* dialog stuff */
-static int
-DIALOG ()
+static gint
+CML_explorer_dialog (void)
 {
-  GtkWidget	*dlg;
-  GtkWidget	*hbox;
-  GtkWidget	*button;
-  GtkTooltips *tooltips;
-  gchar		**argv;
-  gint		argc;
+  GtkWidget *dlg;
+  GtkWidget *hbox;
+  GtkWidget *vbox;
+  GtkWidget *frame;
+  GtkWidget *abox;
+  GtkWidget *pframe;
+  GtkWidget *hseparator;
+  GtkWidget *button;
+  guchar  *color_cube;
+  gchar	 **argv;
+  gint     argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup (PLUG_IN_NAME);
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
+  argv[0] = g_strdup (SHORT_NAME);
+
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
-  
-  dlg = gtkW_dialog_new (_("Coupled-Map-Lattice Explorer"),
-			 (GtkSignalFunc) OK_CALLBACK,
-			 (GtkSignalFunc) gtk_main_quit);
 
-  memset(&widget_pointers, (int)0, sizeof(widget_pointers));
+  gdk_set_use_xshm (gimp_use_xshm ());
+  gtk_preview_set_gamma (gimp_gamma ());
+  gtk_preview_set_install_cmap (gimp_install_cmap ());
+
+  color_cube = gimp_color_cube ();
+  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
+			      color_cube[2], color_cube[3]);
+
+  gtk_widget_set_default_visual (gtk_preview_get_visual ());
+  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+
+  dlg = gimp_dialog_new (_("Coupled-Map-Lattice Explorer"), "cml_explorer",
+			 gimp_plugin_help_func, "filters/cml_explorer.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 _("OK"), CML_explorer_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
+  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
+
+  memset (&widget_pointers, (gint) 0, sizeof (widget_pointers));
 
   CML_preview_defer = TRUE;
-  hbox = gtkW_hbox_new (GTK_DIALOG (dlg)->vbox);
-  {
-    GtkWidget *table;
-    GtkWidget *frame;
-    GtkWidget *preview_box;
-    GtkWidget *preview_table;
-    GtkWidget *preview_frame;
-    GtkWidget *hseparator;
 
-    table = gtkW_table_new (hbox, 8, 1);
-    frame = gtkW_frame_new (NULL, _("Preview"));
-    gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 0, 1,
-		      0, 0, 0, gtkW_border_width);
-    preview_box = gtkW_hbox_new (frame);
-    gtkW_border_width = 0;
-    preview_table = gtkW_table_new (preview_box, 1, 1);
-    gtkW_border_width = GTKW_BORDER_WIDTH;
-    gtkW_frame_shadow_type = GTK_SHADOW_IN;
-    preview_frame = gtkW_frame_new (NULL, NULL);
-    gtkW_frame_shadow_type = GTK_SHADOW_ETCHED_IN;
-    gtk_widget_set_usize (preview_frame, 0, 0);
+  gimp_help_init ();
 
-    gtk_container_border_width (GTK_CONTAINER (preview_frame), 0);
-    gtk_table_attach (GTK_TABLE (preview_table), preview_frame,
-		      0, 1, 0, 1, 0, 0, 0, 0);
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
-    /* I don't understand well about the following codes */
-    gdk_set_use_xshm (gimp_use_xshm ());
-    gtk_preview_set_gamma (gimp_gamma ());
-    gtk_preview_set_install_cmap (gimp_install_cmap ());
-    {
-      guchar *color_cube;
-      color_cube = gimp_color_cube ();
-      gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-				  color_cube[2], color_cube[3]);
-    }
-    gtk_widget_set_default_visual (gtk_preview_get_visual ());
-    gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
 
-    preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-    gtk_preview_size (GTK_PREVIEW (preview), GTKW_PREVIEW_WIDTH, GTKW_PREVIEW_HEIGHT);
-    gtk_container_add (GTK_CONTAINER (preview_frame), preview);
-    gtk_widget_show (preview);
+  frame = gtk_frame_new (_("Preview"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-    {
-      GtkWidget *hbox = gtkW_hbox_new (NULL);
+  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), abox);
+  gtk_widget_show (abox);
 
-      gtk_table_attach (GTK_TABLE (table), hbox, 0, 1, 1, 2,
-			GTK_FILL, GTK_FILL|GTK_EXPAND, 0, 0);
-    }
+  pframe = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_IN);
+  gtk_container_add (GTK_CONTAINER (abox), pframe);
+  gtk_widget_show (pframe);
 
-    button = gtkW_table_add_button (table, _("New seed"), 0, 1, 2,
-				    (GtkSignalFunc) CML_preview_update_callback,
-				    &VALS);
-    random_sensitives[0].widget = button;
-    random_sensitives[0].logic = TRUE;
+  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (preview),
+		    PREVIEW_WIDTH, PREVIEW_HEIGHT);
+  gtk_container_add (GTK_CONTAINER (pframe), preview);
+  gtk_widget_show (preview);
 
-    button = gtkW_table_add_button (table, _("Fix seed"), 0, 1, 3,
-				    (GtkSignalFunc) CML_set_or_randomize_seed_callback,
-				    &VALS);
-    random_sensitives[1].widget = button;
-    random_sensitives[1].logic = TRUE;
+  button = gtk_button_new_with_label (_("Save"));
+  gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      GTK_SIGNAL_FUNC (CML_save_to_file_callback),
+		      &VALS);
+  gtk_widget_show (button);
 
-    button = gtkW_table_add_button (table, _("Random seed"), 0, 1, 4,
-				    (GtkSignalFunc) CML_set_or_randomize_seed_callback,
-				    &VALS);
-    random_sensitives[2].widget = button;
-    random_sensitives[2].logic = FALSE;
+  button = gtk_button_new_with_label (_("Load"));
+  gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      GTK_SIGNAL_FUNC (CML_load_from_file_callback),
+		      &VALS);
+  gtk_widget_show (button);
 
-    hseparator = gtk_hseparator_new ();
-    gtk_widget_show (hseparator);
-    gtk_table_attach (GTK_TABLE (table), hseparator, 0, 1, 5, 6,
-		      GTK_FILL, GTK_FILL,
-		      gtkW_border_width, 2 * gtkW_border_width);
+  hseparator = gtk_hseparator_new ();
+  gtk_box_pack_end (GTK_BOX (vbox), hseparator, FALSE, FALSE, 4);
+  gtk_widget_show (hseparator);
 
-    gtkW_table_add_button (table, _("Load"), 0, 1, 6,
-			   (GtkSignalFunc) CML_load_from_file_callback,
-			   &VALS);
-    gtkW_table_add_button (table, _("Save"), 0, 1, 7,
-			   (GtkSignalFunc) CML_save_to_file_callback,
-			   &VALS);
-  }
+  button = gtk_button_new_with_label (_("Random Seed"));
+  gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      GTK_SIGNAL_FUNC (CML_set_or_randomize_seed_callback),
+		      &VALS);
+  gtk_widget_show (button);
+
+  random_sensitives[2].widget = button;
+  random_sensitives[2].logic  = FALSE;
+
+  button = gtk_button_new_with_label (_("Fix Seed"));
+  gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      GTK_SIGNAL_FUNC (CML_set_or_randomize_seed_callback),
+		      &VALS);
+  gtk_widget_show (button);
+
+  random_sensitives[1].widget = button;
+  random_sensitives[1].logic  = TRUE;
+
+  button = gtk_button_new_with_label (_("New Seed"));
+  gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      GTK_SIGNAL_FUNC (CML_preview_update_callback),
+		      &VALS);
+  gtk_widget_show (button);
+
+  random_sensitives[0].widget = button;
+  random_sensitives[0].logic  = TRUE;
 
   {
     GtkWidget *notebook;
-    GtkWidget *label;
     GtkWidget *page;
-    GtkWidget *parent = hbox;
 
     notebook = gtk_notebook_new ();
     gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook), GTK_POS_TOP);
-    gtk_box_pack_start (GTK_BOX (parent), notebook, TRUE, TRUE, 0);
+    gtk_box_pack_start (GTK_BOX (hbox), notebook, TRUE, TRUE, 0);
     gtk_widget_show (notebook);
-    parent = NULL;
 
-    page = CML_dialog_sub_panel_new (parent, _("Hue settings"), &VALS.hue, 0);
+    page = CML_dialog_channel_panel_new (_("Hue Settings"), 
+					 &VALS.hue, 0);
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page,
 			      gtk_label_new (_("Hue")));
 
-    page = CML_dialog_sub_panel_new (parent, _("Saturation settings"), &VALS.sat, 1);
+    page = CML_dialog_channel_panel_new (_("Saturation Settings"),
+					 &VALS.sat, 1);
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page,
 			      gtk_label_new (_("Saturation")));
 
-    page = CML_dialog_sub_panel_new (parent, _("Value (grayimage) settings"), &VALS.val, 2);
+    page = CML_dialog_channel_panel_new (_("Value (Gray Image) Settings"),
+					 &VALS.val, 2);
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page,
 			      gtk_label_new (_("Value")));
 
-    page = CML_dialog_advanced_panel_new (parent, _("Advanced settings"));
+    page = CML_dialog_advanced_panel_new (_("Advanced Settings"));
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page,
 			      gtk_label_new (_("Advanced")));
 
     {
-      GtkWidget	*table;
-      GtkWidget *subtable;
+      GtkWidget *table;
       GtkWidget *frame;
+      GtkWidget *optionmenu;
       GtkWidget *subframe;
-      GtkWidget *box;
       GtkWidget *vbox;
-      gint	index;
-      gint	sindex;
+      GtkObject *adj;
 
-      frame = gtkW_frame_new (NULL, _("Other parameter settings"));
-      vbox = gtkW_vbox_new (frame);
-      table = gtkW_table_new (vbox, 6, 1);
-      index = 0;
-      subframe = gtkW_frame_new (NULL, _("Channel independed parameters"));
-      box = gtkW_vbox_new (subframe);
-      subtable = gtkW_table_new (box, 3, 2);
-      sindex = 0;
-      gtkW_table_add_menu (subtable, _("Initial value"), 0, sindex++,
-			   (GtkSignalFunc) CML_initial_value_menu_update,
-			   &VALS.initial_value,
-			   initial_value_menu,
-			   sizeof (initial_value_menu) / sizeof (initial_value_menu[0]),
-			   &widget_pointers[3][0]);
-      gtkW_table_add_iscale_entry (subtable, _("Zoom scale"), 0, sindex++,
-				   (GtkSignalFunc) gtkW_iscale_update,
-				   (GtkSignalFunc) gtkW_ientry_update,
-				   &VALS.scale,
-				   1, 10, 1, &widget_pointers[3][1]);
-      gtkW_table_add_iscale_entry (subtable, _("Start offset"), 0, sindex++,
-				   (GtkSignalFunc) gtkW_iscale_update,
-				   (GtkSignalFunc) gtkW_ientry_update,
-				   &VALS.start_offset,
-				   0, 100, 1, &widget_pointers[3][2]);
+      frame = gtk_frame_new (_("Other Parameter Settings"));
+      gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
+      gtk_widget_show (frame);
 
-      gtk_table_attach (GTK_TABLE (table), subframe, 0, 1, index, index + 1 ,
-			GTK_FILL|GTK_EXPAND, GTK_FILL|GTK_SHRINK, 0, 0);
-      index++;
+      vbox = gtk_vbox_new (FALSE, 4);
+      gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+      gtk_container_add (GTK_CONTAINER (frame), vbox);
+      gtk_widget_show (vbox);
 
-      {
-	GtkWidget *hbox = gtkW_hbox_new (NULL);
+      subframe = gtk_frame_new (_("Channel Independed Parameters"));
+      gtk_box_pack_start (GTK_BOX (vbox), subframe, FALSE, FALSE, 0);
+      gtk_widget_show (subframe);
 
-	gtkW_border_width = 0;
-	gtk_table_attach (GTK_TABLE (table), hbox, 0, 1, index, index + 1,
-			  0, GTK_FILL|GTK_EXPAND, 0, 0);
-	gtkW_border_width = GTKW_BORDER_WIDTH;
-	index++;
-      }
+      table = gtk_table_new (3, 3, FALSE);
+      gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+      gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+      gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+      gtk_container_add (GTK_CONTAINER (subframe), table);
+      gtk_widget_show (table);
 
-      subframe = gtkW_frame_new (NULL, _("Seed of random (only for \"from seed\" modes)"));
-      box = gtkW_vbox_new (subframe);
-      subtable = gtkW_table_new (box, 1, 2);
-      sindex = 0;
-      gtkW_table_add_iscale_entry (subtable, _("Seed"), 0, sindex++,
-				   (GtkSignalFunc) gtkW_iscale_update,
-				   (GtkSignalFunc) gtkW_ientry_update,
-				   &VALS.seed, 0, 1 << 15, 1,
-				   &widget_pointers[3][3]);
-      random_sensitives[3].widget = subtable;
-      random_sensitives[3].logic = FALSE;
-      {
-	GtkWidget *button;
+      optionmenu =
+	gimp_option_menu_new2
+	(FALSE, CML_initial_value_menu_update,
+	 &VALS.initial_value,
+	 (gpointer) VALS.initial_value,
 
-	button = gtkW_vbox_add_button (box, _("Switch to \"from seed\" with the last seed"),
-				       (GtkSignalFunc) CML_set_or_randomize_seed_callback,
-				       &VALS);
-	random_sensitives[4].widget = button;
-	random_sensitives[4].logic = TRUE;
+	 gettext (initial_value_names[0]),
+	 (gpointer)                   0, NULL,
 
-	tooltips = gtk_tooltips_new ();
-	gtk_tooltips_set_tip  (tooltips, button, _("\"Fix seed\" button is an alias of me.\nThe same seed produces the same image, if (1) the widths of images are same (this is the reason why image on drawable is different from preview), and (2) all mutation rates equal to zero."), NULL);
-	gtk_tooltips_enable (tooltips);
-      }
-      gtk_table_attach (GTK_TABLE (table), subframe, 0, 1, index, index + 1,
-			GTK_FILL|GTK_EXPAND, GTK_SHRINK|GTK_FILL, 0, 0);
-      index++;
+	 gettext (initial_value_names[1]),
+	 (gpointer)                   1, NULL,
 
-      {
-	GtkWidget *hbox = gtkW_hbox_new (NULL);
+	 gettext (initial_value_names[2]),
+	 (gpointer)                   2, NULL,
 
-	gtkW_border_width = 0;
-	gtk_table_attach (GTK_TABLE (table), hbox, 0, 1, index, index + 1,
-			  0, GTK_FILL|GTK_EXPAND, 0, 0);
-	gtkW_border_width = GTKW_BORDER_WIDTH;
-	index++;
-      }
+	 gettext (initial_value_names[3]),
+	 (gpointer)                   3, NULL,
 
-      label = gtk_label_new (_("Others"));
-      gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame, label);
+	 gettext (initial_value_names[4]),
+	 (gpointer)                   4, NULL,
+
+	 gettext (initial_value_names[5]),
+	 (gpointer)                   5, NULL,
+
+	 gettext (initial_value_names[CML_INITIAL_RANDOM_INDEPENDENT]),
+	 (gpointer)                   CML_INITIAL_RANDOM_INDEPENDENT, NULL,
+
+	 gettext (initial_value_names[CML_INITIAL_RANDOM_SHARED]),
+	 (gpointer)                   CML_INITIAL_RANDOM_SHARED, NULL,
+
+	 gettext (initial_value_names[CML_INITIAL_RANDOM_FROM_SEED]),
+	 (gpointer)                   CML_INITIAL_RANDOM_FROM_SEED, NULL,
+
+	 gettext (initial_value_names[CML_INITIAL_RANDOM_FROM_SEED_SHARED]),
+	 (gpointer)                   CML_INITIAL_RANDOM_FROM_SEED_SHARED, NULL,
+
+	 NULL);
+      CML_explorer_menu_entry_init (&widget_pointers[3][0],
+				    optionmenu, &VALS.initial_value);
+      gimp_table_attach_aligned2 (GTK_TABLE (table), 0,
+				  _("Initial Value:"), 1.0, 0.5,
+				  optionmenu, 1, 3, FALSE);
+
+      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+				  _("Zoom Scale:"), SCALE_WIDTH, 0,
+				  VALS.scale, 1, 10, 1, 2, 0,
+				  NULL, NULL);
+      CML_explorer_int_entry_init (&widget_pointers[3][1],
+				   adj, &VALS.scale);
+
+      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+				  _("Start Offset:"), SCALE_WIDTH, 0,
+				  VALS.start_offset, 0, 100, 1, 10, 0,
+				  NULL, NULL);
+      CML_explorer_int_entry_init (&widget_pointers[3][2],
+				   adj, &VALS.start_offset);
+
+      subframe =
+	gtk_frame_new (_("Seed of Random (only for \"From Seed\" Modes)"));
+      gtk_box_pack_start (GTK_BOX (vbox), subframe, FALSE, FALSE, 0);
+      gtk_widget_show (subframe);
+
+      table = gtk_table_new (2, 3, FALSE);
+      gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+      gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+      gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+      gtk_container_add (GTK_CONTAINER (subframe), table);
+      gtk_widget_show (table);
+
+      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+				  _("Seed:"), SCALE_WIDTH, 0,
+				  VALS.seed, 0, G_MAXRAND, 1, 10, 0,
+				  NULL, NULL);
+      CML_explorer_int_entry_init (&widget_pointers[3][3],
+				   adj, &VALS.seed);
+
+      random_sensitives[3].widget = table;
+      random_sensitives[3].logic  = FALSE;
+
+      button =
+	gtk_button_new_with_label
+	(_("Switch to \"From Seed\" with the last Seed"));
+      gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 3, 1, 2);
+      gtk_signal_connect (GTK_OBJECT (button), "clicked",
+			  GTK_SIGNAL_FUNC (CML_set_or_randomize_seed_callback),
+			  &VALS);
+      gtk_widget_show (button);
+
+      random_sensitives[4].widget = button;
+      random_sensitives[4].logic  = TRUE;
+
+      gimp_help_set_help_data (button,
+			       _("\"Fix seed\" button is an alias of me.\n"
+				 "The same seed produces the same image, "
+				 "if (1) the widths of images are same "
+				 "(this is the reason why image on drawable "
+				 "is different from preview), and (2) all "
+				 "mutation rates equal to zero."), NULL);
+
+      gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame,
+				gtk_label_new (_("Others")));
     }
     {
-      GtkWidget	*table, *subtable, *frame, *subframe, *box, *vbox;
-      int	index, sindex;
+      GtkWidget	*table;
+      GtkWidget *frame;
+      GtkWidget *subframe;
+      GtkWidget *optionmenu;
+      GtkWidget *vbox;
 
-      frame = gtkW_frame_new (NULL, _("Misc operations"));
-      vbox = gtkW_vbox_new (frame);
-      table = gtkW_table_new (vbox, 4, 1);
-      index = 0;
+      frame = gtk_frame_new (_("Misc Operations"));
+      gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
+      gtk_widget_show (frame);
 
-      subframe = gtkW_frame_new (NULL, _("Copy settings"));
-      box = gtkW_vbox_new (subframe);
-      subtable = gtkW_table_new (box, 3, 2);
-      sindex = 0;
-      gtkW_table_add_menu (subtable, _("Source ch."), 0, sindex++,
-			   (GtkSignalFunc) gtkW_menu_update,
-			   &copy_source,
-			   channel_menu,
-			   sizeof (channel_menu) / sizeof (channel_menu[0]),
-			   NULL);
-      gtkW_table_add_menu (subtable, _("Destination ch."), 0, sindex++,
-			   (GtkSignalFunc) gtkW_menu_update,
-			   &copy_destination,
-			   channel_menu,
-			   sizeof (channel_menu) / sizeof (channel_menu[0]),
-			   NULL);
-      gtkW_table_add_button (subtable, _("Do copy parameters"),
-			     0, 2, sindex++,
-			     (GtkSignalFunc) CML_copy_parameters_callback,
-			     &VALS);
-      gtk_table_attach (GTK_TABLE (table), subframe, 0, 1, index, index + 1,
-			GTK_FILL, GTK_FILL, 0, 0);
-      index++;
+      vbox = gtk_vbox_new (FALSE, 4);
+      gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+      gtk_container_add (GTK_CONTAINER (frame), vbox);
+      gtk_widget_show (vbox);
 
-      {
-	GtkWidget *hbox = gtkW_hbox_new (NULL);
+      subframe = gtk_frame_new (_("Copy Settings"));
+      gtk_box_pack_start (GTK_BOX (vbox), subframe, FALSE, FALSE, 0);
+      gtk_widget_show (subframe);
 
-	gtkW_border_width = 0;
-	gtk_table_attach (GTK_TABLE (table), hbox, 0, 1, index, index + 1,
-			  GTK_FILL|GTK_EXPAND, GTK_FILL|GTK_EXPAND, 0, 0);
-	gtkW_border_width = GTKW_BORDER_WIDTH;
-	index++;
-      }
+      table = gtk_table_new (3, 2, FALSE);
+      gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+      gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+      gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+      gtk_container_add (GTK_CONTAINER (subframe), table);
+      gtk_widget_show (table);
 
-      subframe = gtkW_frame_new (NULL, _("Selective load settings"));
-      box = gtkW_vbox_new (subframe);
-      subtable = gtkW_table_new (box, 2, 2);
-      sindex = 0;
-      gtkW_table_add_menu (subtable, _("Source ch. in file"), 0, sindex++,
-			   (GtkSignalFunc) gtkW_menu_update,
-			   &selective_load_source,
-			   sload_menu,
-			   sizeof (sload_menu) / sizeof (sload_menu[0]),
-			   NULL);
-      gtkW_table_add_menu (subtable, _("Destination ch."), 0, sindex++,
-			   (GtkSignalFunc) gtkW_menu_update,
-			   &selective_load_destination,
-			   sload_menu,
-			   sizeof (sload_menu) / sizeof (sload_menu[0]),
-			   NULL);
-      gtk_table_attach (GTK_TABLE (table), subframe, 0, 1, index, index + 1,
-			GTK_FILL, GTK_FILL, 0, 0);
-      index++;
+      optionmenu = gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
+					  &copy_source, (gpointer) copy_source,
 
-      {
-	GtkWidget *hbox = gtkW_hbox_new (NULL);
+					  gettext (channel_names[0]),
+					  (gpointer)             0, NULL,
+					  gettext (channel_names[1]),
+					  (gpointer)             1, NULL,
+					  gettext (channel_names[2]),
+					  (gpointer)             2, NULL,
 
-	gtkW_border_width = 0;
-	gtk_table_attach (GTK_TABLE (table), hbox, 0, 1, index, index + 1,
-			  GTK_FILL|GTK_EXPAND, GTK_FILL|GTK_EXPAND, 0, 0);
-	gtkW_border_width = GTKW_BORDER_WIDTH;
-	index++;
-      }
+					  NULL);
+      gimp_table_attach_aligned (GTK_TABLE (table), 0,
+				 _("Source Channel:"), 1.0, 0.5,
+				 optionmenu, TRUE);
 
-      label = gtk_label_new (_("Misc ops."));
-      gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame, label);
+      optionmenu = gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
+					  &copy_destination,
+					  (gpointer) copy_destination,
+
+					  gettext (channel_names[0]),
+					  (gpointer)             0, NULL,
+					  gettext (channel_names[1]),
+					  (gpointer)             1, NULL,
+					  gettext (channel_names[2]),
+					  (gpointer)             2, NULL,
+
+					  NULL);
+      gimp_table_attach_aligned (GTK_TABLE (table), 1,
+				 _("Destination Channel:"), 1.0, 0.5,
+				 optionmenu, TRUE);
+
+      button = gtk_button_new_with_label (_("Copy Parameters"));
+      gtk_table_attach (GTK_TABLE (table), button, 0, 2, 2, 3,
+			GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
+      gtk_signal_connect (GTK_OBJECT (button), "clicked",
+			  GTK_SIGNAL_FUNC (CML_copy_parameters_callback),
+			  &VALS);
+      gtk_widget_show (button);
+
+      subframe = gtk_frame_new (_("Selective Load Settings"));
+      gtk_box_pack_start (GTK_BOX (vbox), subframe, FALSE, FALSE, 0);
+      gtk_widget_show (subframe);
+
+      table = gtk_table_new (2, 2, FALSE);
+      gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+      gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+      gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+      gtk_container_add (GTK_CONTAINER (subframe), table);
+      gtk_widget_show (table);
+
+      optionmenu = gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
+					  &selective_load_source,
+					  (gpointer) selective_load_source,
+
+					  _("NULL"),
+					  (gpointer) 0, NULL,
+					  gettext (channel_names[0]),
+					  (gpointer) 1, NULL,
+					  gettext (channel_names[1]),
+					  (gpointer) 2, NULL,
+					  gettext (channel_names[2]),
+					  (gpointer) 3, NULL,
+
+					  NULL);
+      gimp_table_attach_aligned (GTK_TABLE (table), 0,
+				 _("Source Channel in File:"), 1.0, 0.5,
+				 optionmenu, TRUE);
+
+      optionmenu = gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
+					  &selective_load_destination,
+					  (gpointer) selective_load_destination,
+
+					  _("NULL"),
+					  (gpointer) 0, NULL,
+					  gettext (channel_names[0]),
+					  (gpointer) 1, NULL,
+					  gettext (channel_names[1]),
+					  (gpointer) 2, NULL,
+					  gettext (channel_names[2]),
+					  (gpointer) 3, NULL,
+
+					  NULL);
+      gimp_table_attach_aligned (GTK_TABLE (table), 1,
+				 _("Destination Channel:"), 1.0, 0.5,
+				 optionmenu, TRUE);
+
+      gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame,
+				gtk_label_new (_("Misc Ops.")));
     }
   }
+
   CML_initial_value_sensitives_update ();
 
-  /* Displaying preview might takes a long time. Thus, fisrt, dialog itself
-     should be shown before making preview in it. */
+  /*  Displaying preview might takes a long time. Thus, fisrt, dialog itself
+   *  should be shown before making preview in it.
+   */
   gtk_widget_show (dlg);
   gdk_flush ();
+
   CML_preview_defer = FALSE;
   preview_update ();
 
   gtk_main ();
-
-  gtk_object_unref (GTK_OBJECT (tooltips));
-
+  gimp_help_free ();
   gdk_flush ();
 
   return INTERFACE.run;
 }
 
-
 static GtkWidget *
-CML_dialog_sub_panel_new (GtkWidget	*parent,
-			  gchar	*name,
-			  CML_PARAM	*param,
-			  gint		channel_id)
+CML_dialog_channel_panel_new (gchar     *name,
+			      CML_PARAM *param,
+			      gint       channel_id)
 {
-  GtkWidget *subframe, *table;
-  gpointer *chank;
-  int	index = 0;
+  GtkWidget *frame;
+  GtkWidget *table;
+  GtkWidget *optionmenu;
+  GtkWidget *toggle;
+  GtkWidget *button;
+  GtkObject *adj;
+  gpointer  *chank;
+  gint       index = 0;
 
-  subframe = gtkW_frame_new (parent, name);
-  table = gtkW_table_new (subframe, 14, 2);
+  frame = gtk_frame_new (name);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
+  gtk_widget_show (frame);
 
-  gtkW_table_add_menu (table, _("Function type"), 0, index,
-		       (GtkSignalFunc) CML_menu_update,
-		       &param->function,
-		       function_menu,
-		       sizeof (function_menu) / sizeof (function_menu[0]),
-		       &widget_pointers[channel_id][index]);
-  index++;
-  gtkW_table_add_menu (table, _("Composition"), 0, index,
-		       (GtkSignalFunc) CML_menu_update,
-		       &param->composition,
-		       composition_menu,
-		       sizeof (composition_menu) / sizeof (composition_menu[0]),
-		       &widget_pointers[channel_id][index]);
-  index++;
-  gtkW_table_add_menu (table, _("Misc arrange"), 0, index,
-		       (GtkSignalFunc) CML_menu_update,
-		       &param->arrange,
-		       arrange_menu,
-		       sizeof (arrange_menu) / sizeof (arrange_menu[0]),
-		       &widget_pointers[channel_id][index]);
-  index++;
-  gtkW_table_add_toggle (table, _("Use cyclic range"), 0, index,
-			 (GtkSignalFunc) gtkW_toggle_update,
-			 &param->cyclic_range,
-			 &widget_pointers[channel_id][index]);
-  index++;
-  gtkW_table_add_dscale_entry (table, _("Mod. rate"), 0, index,
-			       (GtkSignalFunc) gtkW_dscale_update,
-			       (GtkSignalFunc) gtkW_dentry_update,
-			       &param->mod_rate,
-			       0.0, 1.0, 0.01,
-			       &widget_pointers[channel_id][index]);
-  index++;
-  gtkW_table_add_dscale_entry (table, _("Env. sensitivity"), 0, index,
-			       (GtkSignalFunc) gtkW_dscale_update,
-			       (GtkSignalFunc) gtkW_dentry_update,
-			       &param->env_sensitivity,
-			       0.0, 1.0, 0.01,
-			       &widget_pointers[channel_id][index]);
-  index++;
-  gtkW_table_add_iscale_entry (table, _("Diffusion dist."), 0, index,
-			       (GtkSignalFunc) gtkW_iscale_update,
-			       (GtkSignalFunc) gtkW_ientry_update,
-			       &param->diffusion_dist,
-			       2, 10, 1,
-			       &widget_pointers[channel_id][index]);
-  index++;
-  gtkW_table_add_iscale_entry (table, _("# of subranges"), 0, index,
-			       (GtkSignalFunc) gtkW_iscale_update,
-			       (GtkSignalFunc) gtkW_ientry_update,
-			       &param->range_num,
-			       1, 10, 1,
-			       &widget_pointers[channel_id][index]);
-  index++;
-  gtkW_table_add_dscale_entry (table, _("P(ower factor)"), 0, index,
-			       (GtkSignalFunc) gtkW_dscale_update,
-			       (GtkSignalFunc) gtkW_dentry_update,
-			       &param->power,
-			       0.0, 10.0, 0.01,
-			       &widget_pointers[channel_id][index]);
-  index++;
-  gtkW_table_add_dscale_entry (table, _("Parameter k"), 0, index,
-			       (GtkSignalFunc) gtkW_dscale_update,
-			       (GtkSignalFunc) gtkW_dentry_update,
-			       &param->parameter_k,
-			       0.0, 10.0, 0.01,
-			       &widget_pointers[channel_id][index]);
-  index++;
-  gtkW_table_add_dscale_entry (table, _("Range low"), 0, index,
-			       (GtkSignalFunc) gtkW_dscale_update,
-			       (GtkSignalFunc) gtkW_dentry_update,
-			       &param->range_l,
-			       0, 1.0, 0.01,
-			       &widget_pointers[channel_id][index]);
-  index++;
-  gtkW_table_add_dscale_entry (table, _("Range high"), 0, index,
-			       (GtkSignalFunc) gtkW_dscale_update,
-			       (GtkSignalFunc) gtkW_dentry_update,
-			       &param->range_h,
-			       0, 1.0, 0.01,
-			       &widget_pointers[channel_id][index]);
-  index++;
-  {
-    GtkWidget *hbox = gtkW_hbox_new (NULL);
+  table = gtk_table_new (13, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
 
-    gtkW_border_width = 0;
-    gtk_table_attach (GTK_TABLE (table), hbox, 0, 2, index, index + 1,
-		      0, GTK_FILL|GTK_EXPAND, 0, 0);
-    gtkW_border_width = GTKW_BORDER_WIDTH;
-    index++;
-  }
-  chank = (gpointer *) g_malloc (2 *sizeof (gpointer));
+  optionmenu =
+    gimp_option_menu_new2 (FALSE, CML_explorer_menu_update,
+			   &param->function, (gpointer) param->function,
+
+			   gettext (function_names[CML_KEEP_VALUES]),
+			   (gpointer)              CML_KEEP_VALUES, NULL,
+
+			   gettext (function_names[CML_KEEP_FIRST]),
+			   (gpointer)              CML_KEEP_FIRST, NULL,
+
+			   gettext (function_names[CML_FILL]),
+			   (gpointer)              CML_FILL, NULL,
+
+			   gettext (function_names[CML_LOGIST]),
+			   (gpointer)              CML_LOGIST, NULL,
+
+			   gettext (function_names[CML_LOGIST_STEP]),
+			   (gpointer)              CML_LOGIST_STEP, NULL,
+
+			   gettext (function_names[CML_POWER]),
+			   (gpointer)              CML_POWER, NULL,
+
+			   gettext (function_names[CML_POWER_STEP]),
+			   (gpointer)              CML_POWER_STEP, NULL,
+
+			   gettext (function_names[CML_REV_POWER]),
+			   (gpointer)              CML_REV_POWER, NULL,
+
+			   gettext (function_names[CML_REV_POWER_STEP]),
+			   (gpointer)              CML_REV_POWER_STEP, NULL,
+
+			   gettext (function_names[CML_DELTA]),
+			   (gpointer)              CML_DELTA, NULL,
+
+			   gettext (function_names[CML_DELTA_STEP]),
+			   (gpointer)              CML_DELTA_STEP, NULL,
+
+			   gettext (function_names[CML_SIN_CURVE]),
+			   (gpointer)              CML_SIN_CURVE, NULL,
+
+			   gettext (function_names[CML_SIN_CURVE_STEP]),
+			   (gpointer)              CML_SIN_CURVE_STEP, NULL,
+
+			   NULL);
+  CML_explorer_menu_entry_init (&widget_pointers[channel_id][index],
+				optionmenu, &param->function);
+  gimp_table_attach_aligned2 (GTK_TABLE (table), index,
+			      _("Function Type:"), 1.0, 0.5,
+			      optionmenu, 1, 3, FALSE);
+  index++;
+
+  optionmenu =
+    gimp_option_menu_new2 (FALSE, CML_explorer_menu_update,
+			   &param->composition, (gpointer) param->composition,
+
+			   gettext (composition_names[COMP_NONE]),
+			   (gpointer)                 COMP_NONE, NULL,
+
+			   gettext (composition_names[COMP_MAX_LINEAR]),
+			   (gpointer)                 COMP_MAX_LINEAR, NULL,
+
+			   gettext (composition_names[COMP_MAX_LINEAR_P1]),
+			   (gpointer)                 COMP_MAX_LINEAR_P1, NULL,
+
+			   gettext (composition_names[COMP_MAX_LINEAR_M1]),
+			   (gpointer)                 COMP_MAX_LINEAR_M1, NULL,
+
+			   gettext (composition_names[COMP_MIN_LINEAR]),
+			   (gpointer)                 COMP_MIN_LINEAR, NULL,
+
+			   gettext (composition_names[COMP_MIN_LINEAR_P1]),
+			   (gpointer)                 COMP_MIN_LINEAR_P1, NULL,
+
+			   gettext (composition_names[COMP_MIN_LINEAR_M1]),
+			   (gpointer)                 COMP_MIN_LINEAR_M1, NULL,
+
+			   gettext (composition_names[COMP_MAX_LINEAR_P1L]),
+			   (gpointer)                 COMP_MAX_LINEAR_P1L, NULL,
+
+			   gettext (composition_names[COMP_MAX_LINEAR_P1U]),
+			   (gpointer)                 COMP_MAX_LINEAR_P1U, NULL,
+
+			   gettext (composition_names[COMP_MAX_LINEAR_M1L]),
+			   (gpointer)                 COMP_MAX_LINEAR_M1L, NULL,
+
+			   gettext (composition_names[COMP_MAX_LINEAR_M1U]),
+			   (gpointer)                 COMP_MAX_LINEAR_M1U, NULL,
+
+			   gettext (composition_names[COMP_MIN_LINEAR_P1L]),
+			   (gpointer)                 COMP_MIN_LINEAR_P1L, NULL,
+
+			   gettext (composition_names[COMP_MIN_LINEAR_P1U]),
+			   (gpointer)                 COMP_MIN_LINEAR_P1U, NULL,
+
+			   gettext (composition_names[COMP_MIN_LINEAR_M1L]),
+			   (gpointer)                 COMP_MIN_LINEAR_M1L, NULL,
+
+			   gettext (composition_names[COMP_MIN_LINEAR_M1U]),
+			   (gpointer)                 COMP_MIN_LINEAR_M1U, NULL,
+
+			   NULL);
+  CML_explorer_menu_entry_init (&widget_pointers[channel_id][index],
+				optionmenu, &param->composition);
+  gimp_table_attach_aligned2 (GTK_TABLE (table), index,
+			      _("Composition:"), 1.0, 0.5,
+			      optionmenu, 1, 3, FALSE);
+  index++;
+
+  optionmenu =
+    gimp_option_menu_new2 (FALSE, CML_explorer_menu_update,
+			   &param->arrange, (gpointer) param->arrange,
+
+			   gettext (arrange_names[STANDARD]),
+			   (gpointer)             STANDARD, NULL,
+
+			   gettext (arrange_names[AVERAGE]),
+			   (gpointer)             AVERAGE, NULL,
+
+			   gettext (arrange_names[ANTILOG]),
+			   (gpointer)             ANTILOG, NULL,
+
+			   gettext (arrange_names[RAND_POWER0]),
+			   (gpointer)             RAND_POWER0, NULL,
+
+			   gettext (arrange_names[RAND_POWER1]),
+			   (gpointer)             RAND_POWER1, NULL,
+
+			   gettext (arrange_names[RAND_POWER2]),
+			   (gpointer)             RAND_POWER2, NULL,
+
+			   gettext (arrange_names[MULTIPLY_RANDOM0]),
+			   (gpointer)             MULTIPLY_RANDOM0, NULL,
+
+			   gettext (arrange_names[MULTIPLY_RANDOM1]),
+			   (gpointer)             MULTIPLY_RANDOM1, NULL,
+
+			   gettext (arrange_names[MULTIPLY_GRADIENT]),
+			   (gpointer)             MULTIPLY_GRADIENT, NULL,
+
+			   gettext (arrange_names[RAND_AND_P]),
+			   (gpointer)             RAND_AND_P, NULL,
+
+			   NULL);
+  CML_explorer_menu_entry_init (&widget_pointers[channel_id][index],
+				optionmenu, &param->arrange);
+  gimp_table_attach_aligned2 (GTK_TABLE (table), index,
+			      _("Misc Arrange:"), 1.0, 0.5,
+			      optionmenu, 1, 3, FALSE);
+  index++;
+
+  toggle = gtk_check_button_new_with_label (_("Use Cyclic Range"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				param->cyclic_range);
+  gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 3, index, index + 1);
+  CML_explorer_toggle_entry_init (&widget_pointers[channel_id][index],
+				  toggle, &param->cyclic_range);
+  gtk_widget_show (toggle);
+  index++;
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
+			      _("Mod. Rate:"), SCALE_WIDTH, 0,
+			      param->mod_rate, 0.0, 1.0, 0.01, 0.1, 2,
+			      NULL, NULL);
+  CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
+				  adj, &param->mod_rate);
+  index++;
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
+			      _("Env. Sensitivity:"), SCALE_WIDTH, 0,
+			      param->env_sensitivity, 0.0, 1.0, 0.01, 0.1, 2,
+			      NULL, NULL);
+  CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
+				  adj, &param->env_sensitivity);
+  index++;
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
+			      _("Diffusion Dist.:"), SCALE_WIDTH, 0,
+			      param->diffusion_dist, 2, 10, 1, 2, 0,
+			      NULL, NULL);
+  CML_explorer_int_entry_init (&widget_pointers[channel_id][index],
+			       adj, &param->diffusion_dist);
+  index++;
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
+			      _("# of Subranges:"), SCALE_WIDTH, 0,
+			      param->range_num, 1, 10, 1, 2, 0,
+			      NULL, NULL);
+  CML_explorer_int_entry_init (&widget_pointers[channel_id][index],
+			       adj, &param->range_num);
+  index++;
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
+			      _("P(ower Factor):"), SCALE_WIDTH, 0,
+			      param->power, 0.0, 10.0, 0.1, 1.0, 2,
+			      NULL, NULL);
+  CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
+				  adj, &param->power);
+  index++;
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
+			      _("Parameter k:"), SCALE_WIDTH, 0,
+			      param->parameter_k, 0.0, 10.0, 0.1, 1.0, 2,
+			      NULL, NULL);
+  CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
+				  adj, &param->parameter_k);
+  index++;
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
+			      _("Range Low:"), SCALE_WIDTH, 0,
+			      param->range_l, 0.0, 1.0, 0.01, 0.1, 2,
+			      NULL, NULL);
+  CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
+				  adj, &param->range_l);
+  index++;
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
+			      _("Range High:"), SCALE_WIDTH, 0,
+			      param->range_h, 0.0, 1.0, 0.01, 0.1, 2,
+			      NULL, NULL);
+  CML_explorer_double_entry_init (&widget_pointers[channel_id][index],
+				  adj, &param->range_h);
+  index++;
+
+  chank = g_new (gpointer, 2);
   chank[0] = (gpointer) channel_id;
   chank[1] = (gpointer) param;
-  gtkW_table_add_button (table, _("Plot the graph of the settings"),
-			 0, 2, index++,
-			 (GtkSignalFunc) function_graph_new, chank);
 
-  return subframe;
+  button = gtk_button_new_with_label (_("Plot the Graph of the Settings"));
+  gtk_table_attach_defaults (GTK_TABLE (table), button,
+			     0, 3, index, index + 1);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      GTK_SIGNAL_FUNC (function_graph_new),
+		      chank);
+  gtk_widget_show (button);
+  index++;
+
+  return frame;
 }
 
 static GtkWidget *
-CML_dialog_advanced_panel_new (GtkWidget *parent, gchar *name)
+CML_dialog_advanced_panel_new (gchar *name)
 {
-  GtkWidget	*frame;
-  GtkWidget	*subframe;
-  GtkWidget	*table;
-  GtkWidget	*subtable;
-  gint		index = 0;
-  gint		widget_offset = 12;
-  gint		channel_id;
-  gchar	*ch_name[] = { N_("Hue"), N_("Saturation"), N_("Value") };
-  CML_PARAM	*param;
+  GtkWidget *frame;
+  GtkWidget *vbox;
+  GtkWidget *subframe;
+  GtkWidget *table;
+  GtkObject *adj;
 
-  frame = gtkW_frame_new (parent, name);
-  table = gtkW_table_new (frame, 3, 1);
+  gint       index = 0;
+  gint       widget_offset = 12;
+  gint       channel_id;
+  CML_PARAM *param;
+
+  frame = gtk_frame_new (name);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
+  gtk_widget_show (frame);
+
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
   for (channel_id = 0; channel_id < 3; channel_id++)
     {
       param = (CML_PARAM *)&VALS + channel_id;
 
-      subframe = gtkW_frame_new (NULL, gettext(ch_name[channel_id]));
-      gtk_table_attach (GTK_TABLE (table), subframe,
-			0, 1, channel_id, channel_id + 1,
-			GTK_FILL, GTK_FILL, 0, 0);
-      subtable = gtkW_table_new (subframe, 3, 2);
+      subframe = gtk_frame_new (gettext (channel_names[channel_id]));
+      gtk_box_pack_start (GTK_BOX (vbox), subframe, FALSE, FALSE, 0);
+      gtk_widget_show (subframe);
+
+      table = gtk_table_new (3, 3, FALSE);
+      gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+      gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+      gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+      gtk_container_add (GTK_CONTAINER (subframe), table);
+      gtk_widget_show (table);
 
       index = 0;
-      gtkW_table_add_dscale_entry (subtable, _("Ch. sensitivity"), 0, index,
-				   (GtkSignalFunc) gtkW_dscale_update,
-				   (GtkSignalFunc) gtkW_dentry_update,
-				   &param->ch_sensitivity,
-				   0.0, 1.0, 0.01,
-				   &widget_pointers[channel_id][index + widget_offset]);
+
+      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
+				  _("Ch. Sensitivity:"), SCALE_WIDTH, 0,
+				  param->ch_sensitivity, 0.0, 1.0, 0.01, 0.1, 2,
+				  NULL, NULL);
+      CML_explorer_double_entry_init (&widget_pointers[channel_id][index +
+								  widget_offset],
+				      adj, &param->ch_sensitivity);
       index++;
-      gtkW_table_add_dscale_entry (subtable, _("Mutation rate"), 0, index,
-				   (GtkSignalFunc) gtkW_dscale_update,
-				   (GtkSignalFunc) gtkW_dentry_update,
-				   &param->mutation_rate,
-				   0, 1.0, 0.01,
-				   &widget_pointers[channel_id][index + widget_offset]);
+
+      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
+				  _("Mutation Rate:"), SCALE_WIDTH, 0,
+				  param->mutation_rate, 0.0, 1.0, 0.01, 0.1, 2,
+				  NULL, NULL);
+      CML_explorer_double_entry_init (&widget_pointers[channel_id][index +
+								  widget_offset],
+				      adj, &param->mutation_rate);
       index++;
-      gtkW_table_add_dscale_entry (subtable, _("Mutation dist."), 0, index,
-				   (GtkSignalFunc) gtkW_dscale_update,
-				   (GtkSignalFunc) gtkW_dentry_update,
-				   &param->mutation_dist,
-				   0.0, 1.0, 0.01,
-				   &widget_pointers[channel_id][index + widget_offset]);
+
+      adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index,
+				  _("Mutation Dist.:"), SCALE_WIDTH, 0,
+				  param->mutation_dist, 0.0, 1.0, 0.01, 0.1, 2,
+				  NULL, NULL);
+      CML_explorer_double_entry_init (&widget_pointers[channel_id][index +
+								  widget_offset],
+				      adj, &param->mutation_dist);
     }
   return frame;
 }
 
 void
-preview_update ()
+preview_update (void)
 {
   if (CML_preview_defer == FALSE)
-    MAIN_FUNCTION (TRUE);
+    CML_main_function (TRUE);
 }
 
 static void
-function_graph_new (GtkWidget *widget, gpointer data)
+function_graph_new (GtkWidget *widget,
+		    gpointer   data)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
-  GtkWidget *vbox;
+  GtkWidget *abox;
   GtkWidget *preview;
   gint	     channel_id = *(int *) data;
   CML_PARAM *param = (CML_PARAM *) *((gpointer *) data + 1);
@@ -1681,16 +1940,24 @@ function_graph_new (GtkWidget *widget, gpointer data)
 		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
-  frame = gtkW_frame_new (GTK_DIALOG (dlg)->vbox, _("The Graph"));
-  vbox = gtkW_vbox_new (frame);
+  frame = gtk_frame_new (_("The Graph"));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+  gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), abox);
+  gtk_widget_show (abox);
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (preview), 256, 256);
-  gtk_box_pack_start (GTK_BOX (vbox), preview, TRUE, TRUE, 5);
+  gtk_container_add (GTK_CONTAINER (abox), preview);
+
   {
-    int	x, y, last_y, yy;
+    gint   x, y, last_y, yy;
     guchar rgbc[3];
-    int rgbi[3];
+    gint   rgbi[3];
     guchar black[] = { 0, 0, 0 };
     guchar white[] = { 255, 255, 255 };
 
@@ -1714,8 +1981,8 @@ function_graph_new (GtkWidget *widget, gpointer data)
 				white,
 #endif
 				x, y, 1);
-	}
-    y = 255 * CLAMP (logistic_function (param, x/(gdouble)255, param->power),
+      }
+    y = 255 * CLAMP (logistic_function (param, x / (gdouble) 255, param->power),
 		     0, 1.0);
     for (x = 0; x < 256; x++)
       {
@@ -1728,6 +1995,7 @@ function_graph_new (GtkWidget *widget, gpointer data)
 	  gtk_preview_draw_row (GTK_PREVIEW (preview), black, x, 255 - yy, 1);
       }
   }
+
   gtk_widget_show (preview);
   gtk_widget_show (dlg);
 
@@ -1736,9 +2004,11 @@ function_graph_new (GtkWidget *widget, gpointer data)
 }
 
 static void
-CML_set_or_randomize_seed_callback (GtkWidget *widget, gpointer data)
+CML_set_or_randomize_seed_callback (GtkWidget *widget,
+				    gpointer   data)
 {
   CML_preview_defer = TRUE;
+
   switch (VALS.initial_value)
     {
     case CML_INITIAL_RANDOM_INDEPENDENT:
@@ -1760,52 +2030,42 @@ CML_set_or_randomize_seed_callback (GtkWidget *widget, gpointer data)
     (widget_pointers[3][3].updater) (widget_pointers[3]+3);
   if (widget_pointers[3][0].widget && widget_pointers[3][0].updater)
     (widget_pointers[3][0].updater) (widget_pointers[3]);
+
   CML_initial_value_sensitives_update ();
   gdk_flush ();
+
   CML_preview_defer = FALSE;
 }
 
 static void
-CML_copy_parameters_callback (GtkWidget *widget, gpointer data)
+CML_copy_parameters_callback (GtkWidget *widget,
+			      gpointer   data)
 {
-  int index;
-  gtkW_widget_table *widgets;
+  gint index;
+  WidgetEntry *widgets;
 
   if (copy_source == copy_destination)
     {
-      gimp_message (_("Warning: the source and the destination are the same channel."));
+      g_message (_("Warning: the source and the destination are the same channel."));
       gdk_flush ();
       return;
     }
-  memcpy (channel_menu[copy_destination].data,
-	  channel_menu[copy_source].data,
+  memcpy (channel_params[copy_destination],
+	  channel_params[copy_source],
 	  sizeof (CML_PARAM));
   CML_preview_defer = TRUE;
   widgets = widget_pointers[copy_destination];
   for (index = 0; index < CML_PARAM_NUM; index++)
     if (widgets[index].widget && widgets[index].updater)
-      (widgets[index].updater) (widgets+index);
+      (widgets[index].updater) (widgets + index);
 
   gdk_flush ();
   CML_preview_defer = FALSE;
   preview_update ();
-  /* gtk_main_quit (); */
 }
 
 static void
-CML_menu_update (GtkWidget *widget, gpointer data)
-{
-  gint	**buffer = (gint **) data;
-
-  if (*buffer[1] != (gint) buffer[2])
-    {
-      *buffer[1] = (gint) buffer[2];
-      preview_update ();
-    }
-}
-
-static void
-CML_initial_value_sensitives_update ()
+CML_initial_value_sensitives_update (void)
 {
   gint	i = 0;
   gint	flag1, flag2;
@@ -1822,75 +2082,50 @@ CML_initial_value_sensitives_update ()
 }
 
 static void
-CML_initial_value_menu_update (GtkWidget *widget, gpointer data)
-{
-  gint	**buffer = (gint **) data;
-
-  if (*buffer[1] != (gint) buffer[2])
-    {
-      *buffer[1] = (gint) buffer[2];
-      CML_initial_value_sensitives_update ();
-      preview_update ();
-    }
-}
-
-static void
-OK_CALLBACK (GtkWidget *widget,
-	      gpointer   data)
+CML_explorer_ok_callback (GtkWidget *widget,
+			  gpointer   data)
 {
   INTERFACE.run = TRUE;
-#ifdef INTERACTIVE_DIALOG
-  MAIN_FUNCTION (FALSE);
-#endif
+
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-#ifdef INTERACTIVE_DIALOG
-static GtkWidget *
-CML_dialog_new (char * name,
-		 GtkSignalFunc execute_callback,
-		 GtkSignalFunc ok_callback,
-		 GtkSignalFunc close_callback)
+static void
+CML_preview_update_callback (GtkWidget *widget,
+			     gpointer   data)
 {
-  GtkWidget *dlg;
+  WidgetEntry seed_widget = widget_pointers[3][3];
 
-  dlg = gimp_dialog_new (name, "cml_explorer",
-			 gimp_plugin_help_func, "filters/cml_explorer.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
+  preview_update ();
 
-			 _("Execute"), execute_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
-			 _("Execute and Exit"), ok_callback,
-			 NULL, NULL, NULL, FALSE, FALSE,
-			 _("Exit"), gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
+  CML_preview_defer = TRUE;
 
-			 NULL);
+  if (seed_widget.widget && seed_widget.updater)
+    (seed_widget.updater) (&seed_widget);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (close_callback),
-		      NULL);
-
-  return dlg;
+  CML_preview_defer = FALSE;
 }
-#endif
+
+/*  parameter file saving functions  */
 
 static void
-CML_save_to_file_callback (GtkWidget *widget, gpointer client_data)
+CML_save_to_file_callback (GtkWidget *widget,
+			   gpointer   data)
 {
   GtkWidget *filesel;
 
-  filesel = gtk_file_selection_new (_("Save parameters to"));
+  filesel = gtk_file_selection_new (_("Save Parameters to"));
   gtk_window_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
 
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
-		      "clicked", (GtkSignalFunc) CML_execute_save_to_file,
+		      "clicked",
+		      GTK_SIGNAL_FUNC (CML_execute_save_to_file),
 		      filesel);
 
   gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->cancel_button),
-			     "clicked", (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (GTK_WINDOW (filesel)));
+			     "clicked",
+			     GTK_SIGNAL_FUNC (gtk_widget_destroy),
+			     GTK_OBJECT (filesel));
 
   if (strlen (VALS.last_file_name) > 0)
     gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel),
@@ -1903,15 +2138,16 @@ CML_save_to_file_callback (GtkWidget *widget, gpointer client_data)
 }
 
 static void
-CML_execute_save_to_file (GtkWidget *widget, gpointer client_data)
+CML_execute_save_to_file (GtkWidget *widget,
+			  gpointer   data)
 {
-  char	*filename;
-  struct stat buf;
-  FILE	*file = NULL;
-  int	channel_id;
-  int	err;
+  gchar       *filename;
+  struct stat  buf;
+  FILE        *file = NULL;
+  gint         channel_id;
+  gint         err;
 
-  filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (client_data));
+  filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (data));
   if (! filename)
     return;
 
@@ -1919,37 +2155,38 @@ CML_execute_save_to_file (GtkWidget *widget, gpointer client_data)
   if ((err == 0) || (errno == ENOENT))
     {
       if (errno == ENOENT)
-	file = fopen (filename, "w");
+	{
+	  file = fopen (filename, "w");
+	}
       else if (buf.st_mode & S_IFDIR)
 	{
 	  GString *s = g_string_new (filename);
 
 	  if (filename[strlen (filename) - 1] != '/')
 	    g_string_append_c (s, '/');
-	  gtk_file_selection_set_filename (GTK_FILE_SELECTION (client_data),
+	  gtk_file_selection_set_filename (GTK_FILE_SELECTION (data),
 					   s->str);
 	  g_string_free (s, TRUE);
 	  return;
 	}
       else if (buf.st_mode & S_IFREG) /* already exists */
 	{
-#ifdef	VERBOSE_DIALOGS
-	if (! force_overwrite (filename))
-	  return;
-	else
-	  file = fopen (filename, "w");
-#else
-      file = fopen (filename, "w");
-#endif
+	  gtk_widget_set_sensitive (GTK_WIDGET (data), FALSE);
+
+	  if (! force_overwrite (filename))
+	    {
+	      gtk_widget_set_sensitive (GTK_WIDGET (data), TRUE);
+	      return;
+	    }
+	  else
+	    {
+	      file = fopen (filename, "w");
+	    }
 	}
     }
   if ((err != 0) && (file == NULL))
     {
-      gchar *buffer;
-
-      buffer = g_strdup_printf (_("Error: could not open \"%s\""), filename);
-      gimp_message (buffer);
-      g_free (buffer);
+      g_message (_("Error: could not open \"%s\""), filename);
       return;
     }
   else
@@ -1959,15 +2196,15 @@ CML_execute_save_to_file (GtkWidget *widget, gpointer client_data)
       fprintf (file, ";\n");
       for (channel_id = 0; channel_id < 3; channel_id++)
 	{
-	  CML_PARAM param = *(CML_PARAM *)(channel_menu[channel_id].data);
+	  CML_PARAM param = *(CML_PARAM *)(channel_params[channel_id]);
 
-	  fprintf (file, "\t%s\n", channel_menu[channel_id].name);
+	  fprintf (file, "\t%s\n", channel_names[channel_id]);
 	  fprintf (file, "Function_type    : %d (%s)\n",
-		   param.function, function_menu[param.function].name);
+		   param.function, function_names[param.function]);
 	  fprintf (file, "Compostion_type  : %d (%s)\n",
-		   param.composition, composition_menu[param.composition].name);
+		   param.composition, composition_names[param.composition]);
 	  fprintf (file, "Arrange          : %d (%s)\n",
-		   param.arrange, arrange_menu[param.arrange].name);
+		   param.arrange, arrange_names[param.arrange]);
 	  fprintf (file, "Cyclic_range     : %d (%s)\n",
 		   param.cyclic_range, (param.cyclic_range ? "TRUE" : "FALSE"));
 	  fprintf (file, "Mod. rate        : %f\n", param.mod_rate);
@@ -1984,100 +2221,102 @@ CML_execute_save_to_file (GtkWidget *widget, gpointer client_data)
 	}
       fprintf (file, "\n");
       fprintf (file, "Initial value  : %d (%s)\n",
-	       VALS.initial_value, initial_value_menu[VALS.initial_value].name);
+	       VALS.initial_value, initial_value_names[VALS.initial_value]);
       fprintf (file, "Zoom scale     : %d\n", VALS.scale);
       fprintf (file, "Start offset   : %d\n", VALS.start_offset);
       fprintf (file, "Random seed    : %d\n", VALS.seed);
       fclose(file);
-#ifdef	VERBOSE_DIALOGS
-      {
-	gchar *buffer;
 
-	buffer = g_strdup_printf (_("Parameters were saved to \"%s\""), 
-				  filename);
-	gimp_message (buffer);
-	g_free (buffer);
-      }
-#endif
-      if ( sizeof (VALS.last_file_name) <= strlen (filename))
+      g_message (_("Parameters were Saved to\n\"%s\""), filename);
+
+      if (sizeof (VALS.last_file_name) <= strlen (filename))
 	filename[sizeof (VALS.last_file_name) - 1] = '\0';
       strcpy (VALS.last_file_name, filename);
     }
-  gtk_widget_destroy(GTK_WIDGET(client_data));
+
+  gtk_widget_destroy (GTK_WIDGET (data));
 }
 
 static gint
-force_overwrite (char *filename)
+force_overwrite (gchar *filename)
 {
-  GtkWidget	*dlg;
-  GtkWidget	*label;
-  GtkWidget	*table;
-  gchar		*buffer;
-  gint		tmp;
+  GtkWidget *dlg;
+  GtkWidget *label;
+  GtkWidget *hbox;
+  gchar     *buffer;
+  gint       tmp;
 
-  dlg = gtkW_dialog_new (_("CML file operation warning"),
-			 (GtkSignalFunc) CML_overwrite_ok_callback,
-			 (GtkSignalFunc) gtk_main_quit);
+  dlg = gimp_dialog_new (_("CML File Operation Warning"), "cml_explorer",
+			 gimp_plugin_help_func, "filters/cml_explorer.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, FALSE, FALSE,
 
-  table = gtkW_table_new (NULL, 1, 1);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
+			 _("OK"), CML_overwrite_ok_callback,
+			 NULL, NULL, NULL, FALSE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, TRUE, TRUE,
 
-  buffer = g_strdup_printf (_("%s exists, overwrite?"), filename);
+			 NULL);
+
+  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 6);
+  gtk_widget_show (hbox);
+
+  buffer = g_strdup_printf (_("%s\nexists, Overwrite?"), filename);
   label = gtk_label_new (buffer);
   g_free (buffer);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL|GTK_EXPAND,
-		    0, 0, 0);
+
+  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 6);
   gtk_widget_show (label);
-  gtk_widget_show (table);
+
   gtk_widget_show (dlg);
 
   gtk_main ();
   gdk_flush ();
 
   tmp = overwritable;
-  overwritable = 0;
+  overwritable = FALSE;
 
   return tmp;
 }
 
 static void
-CML_overwrite_ok_callback (GtkWidget *widget, gpointer   data)
+CML_overwrite_ok_callback (GtkWidget *widget,
+			   gpointer   data)
 {
-  overwritable = 1;
+  overwritable = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-static void
-CML_preview_update_callback (GtkWidget *widget, gpointer   data)
-{
-  gtkW_widget_table seed_widget = widget_pointers[3][3];
-
-  preview_update ();
-
-  CML_preview_defer = TRUE;
-  if (seed_widget.widget && seed_widget.updater)
-	  (seed_widget.updater) (&seed_widget);
-  CML_preview_defer = FALSE;
-}
+/*  parameter file loading functions  */
 
 static void
-CML_load_from_file_callback (GtkWidget *widget, gpointer client_data)
+CML_load_from_file_callback (GtkWidget *widget,
+			     gpointer   data)
 {
   GtkWidget *filesel;
 
   if ((selective_load_source == 0) || (selective_load_destination == 0))
-    filesel = gtk_file_selection_new (_("Load parameters from"));
+    filesel = gtk_file_selection_new (_("Load Parameters from"));
   else
-    filesel = gtk_file_selection_new (_("Selective load from"));
+    filesel = gtk_file_selection_new (_("Selective Load from"));
   gtk_window_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
 
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->ok_button),
-		      "clicked", (GtkSignalFunc) CML_execute_load_from_file,
+		      "clicked",
+		      GTK_SIGNAL_FUNC (CML_execute_load_from_file),
 		      filesel);
 
   gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->cancel_button),
-			     "clicked", (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (GTK_WINDOW (filesel)));
+			     "clicked",
+			     GTK_SIGNAL_FUNC (gtk_widget_destroy),
+			     GTK_OBJECT (filesel));
 
   if (strlen (VALS.last_file_name) > 0)
     gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel),
@@ -2090,67 +2329,66 @@ CML_load_from_file_callback (GtkWidget *widget, gpointer client_data)
 }
 
 static void
-CML_execute_load_from_file (GtkWidget *widget, gpointer client_data)
+CML_execute_load_from_file (GtkWidget *widget,
+			    gpointer   data)
 {
-  char	*filename;
-  int	channel_id;
-  int	flag = TRUE;
+  gchar *filename;
+  gint   channel_id;
+  gint   flag = TRUE;
 
-  filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (client_data));
+  filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (data));
 
+  gtk_widget_set_sensitive (GTK_WIDGET (data), FALSE);
   flag = CML_load_parameter_file (filename, TRUE);
-  gtk_widget_destroy(GTK_WIDGET(client_data));
+  gtk_widget_destroy (GTK_WIDGET(data));
 
   if (flag)
     {
-      int index;
-      gtkW_widget_table *widgets;
+      gint index;
+      WidgetEntry *widgets;
 
       CML_preview_defer = TRUE;
+
       for (channel_id = 0; channel_id < 3; channel_id++)
 	{
 	  widgets = widget_pointers[channel_id];
 	  for (index = 0; index < CML_PARAM_NUM; index++)
 	    if (widgets[index].widget && widgets[index].updater)
-	      (widgets[index].updater) (widgets+index);
+	      (widgets[index].updater) (widgets + index);
 	}
       /* channel independent parameters */
       widgets = widget_pointers[3];
       for (index = 0; index < 4; index++)
 	if (widgets[index].widget && widgets[index].updater)
-	  (widgets[index].updater) (widgets+index);
+	  (widgets[index].updater) (widgets + index);
 
       gdk_flush ();
+
       CML_preview_defer = FALSE;
+
       preview_update ();
     }
 }
 
 static gint
-CML_load_parameter_file (gchar *filename, gint interactive_mode)
+CML_load_parameter_file (gchar *filename,
+			 gint   interactive_mode)
 {
-  FILE	*file;
-  int	channel_id;
-  int	flag = TRUE;
-  CML_PARAM ch[3];
-  gint	initial_value = 0;
-  gint	scale = 1;
-  gint	start_offset = 0;
-  gint	seed = 0;
-  gint	old2new_function_id[] = { 3, 4, 5, 6, 7, 9, 10, 11, 1, 2 };
+  FILE      *file;
+  gint       channel_id;
+  gint       flag = TRUE;
+  CML_PARAM  ch[3];
+  gint       initial_value = 0;
+  gint       scale = 1;
+  gint       start_offset = 0;
+  gint       seed = 0;
+  gint       old2new_function_id[] = { 3, 4, 5, 6, 7, 9, 10, 11, 1, 2 };
 
   file = fopen (filename, "r");
 
   if (!file)
     {
-      gchar *buffer;
-
-      if (interactive_mode)
-	{
-	  buffer = g_strdup_printf (_("Error: could not open \"%s\""), filename);
-	  gimp_message (buffer);
-	  g_free (buffer);
-	}
+      g_message (_("Error: could not open \"%s\""), filename);
       return FALSE;
     }
   else
@@ -2178,9 +2416,9 @@ CML_load_parameter_file (gchar *filename, gint interactive_mode)
       if (interactive_mode)
 	{
 	  if (version < PARAM_FILE_FORMAT_VERSION)
-	    gimp_message (_("Warning: it's an old format file."));
+	    g_message (_("Warning: it's an old format file."));
 	  if (PARAM_FILE_FORMAT_VERSION < version)
-	    gimp_message (_("Warning: Hmmm, it's a parameter file for newer CML_explorer than me."));
+	    g_message (_("Warning: Hmmm, it's a parameter file for newer CML_explorer than me."));
 	}
       for (channel_id = 0; flag && (channel_id < 3); channel_id++)
 	{
@@ -2270,11 +2508,12 @@ CML_load_parameter_file (gchar *filename, gint interactive_mode)
 }
 
 static gint
-parse_line_to_gint (FILE *file, gint *flag)
+parse_line_to_gint (FILE *file,
+		    gint *flag)
 {
-  gchar line[CML_LINE_SIZE];
+  gchar  line[CML_LINE_SIZE];
   gchar *str;
-  gint	value;
+  gint   value;
 
   if (! *flag)
     return 0;
@@ -2298,11 +2537,12 @@ parse_line_to_gint (FILE *file, gint *flag)
 }
 
 static gdouble
-parse_line_to_gdouble (FILE *file, gint *flag)
+parse_line_to_gdouble (FILE *file,
+		       gint *flag)
 {
-  gchar line[CML_LINE_SIZE];
-  gchar *str;
-  gdouble value;
+  gchar    line[CML_LINE_SIZE];
+  gchar   *str;
+  gdouble  value;
 
   if (! *flag)
     return 0;
@@ -2325,535 +2565,139 @@ parse_line_to_gdouble (FILE *file, gint *flag)
   return value;
 }
 
-/* gtkW functions */
-/* gtkW callback */
+
+/*  toggle button functions  */
+
 static void
-gtkW_toggle_update (GtkWidget *widget,
-		    gpointer   data)
+CML_explorer_toggle_update (GtkWidget *widget,
+			    gpointer   data)
 {
-  int *toggle_val;
+  gimp_toggle_button_update (widget, data);
 
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
   preview_update ();
 }
 
 static void
-gtkW_iscale_update (GtkAdjustment *adjustment,
-		    gpointer       data)
+CML_explorer_toggle_entry_change_value (WidgetEntry *widget_entry)
 {
-  GtkWidget *entry;
-  gchar buffer[32];
-  int *val;
-
-  val = data;
-  if (*val != (int) adjustment->value)
-    {
-      *val = adjustment->value;
-      entry = gtk_object_get_user_data (GTK_OBJECT (adjustment));
-      sprintf (buffer, "%d", (int) adjustment->value);
-      gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-      preview_update ();
-    }
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget_entry->widget),
+				*(gint *) (widget_entry->value));
 }
 
 static void
-gtkW_ientry_update (GtkWidget *widget,
-		    gpointer   data)
+CML_explorer_toggle_entry_init (WidgetEntry *widget_entry,
+				GtkWidget   *widget,
+				gpointer     value_ptr)
 {
-  GtkAdjustment *adjustment;
-  int new_val;
-  int *val;
+  gtk_signal_connect (GTK_OBJECT (widget), "toggled",
+		      GTK_SIGNAL_FUNC (CML_explorer_toggle_update),
+		      value_ptr);
 
-  val = data;
-  new_val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
-
-  if (*val != new_val)
-    {
-      adjustment = gtk_object_get_user_data (GTK_OBJECT (widget));
-
-      if ((new_val >= adjustment->lower) &&
-	  (new_val <= adjustment->upper))
-	{
-	  *val = new_val;
-	  adjustment->value = new_val;
-	  gtk_signal_emit_by_name (GTK_OBJECT (adjustment), "value_changed");
-	  preview_update ();
-	}
-    }
+  widget_entry->widget  = widget;
+  widget_entry->value   = value_ptr;
+  widget_entry->updater = CML_explorer_toggle_entry_change_value;
 }
 
-static void
-gtkW_dscale_update (GtkAdjustment *adjustment,
-		    gpointer       data)
-{
-  GtkWidget *entry;
-  gchar buffer[32];
-  gdouble *val;
-
-  val = data;
-  if (GTKW_FLOAT_MIN_ERROR < ABS (*val - (gdouble) adjustment->value))
-    {
-      *val = adjustment->value;
-      entry = gtk_object_get_user_data (GTK_OBJECT (adjustment));
-      sprintf (buffer, "%6f", (gdouble) adjustment->value);
-      gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-      preview_update ();
-    }
-}
+/*  int adjustment functions  */
 
 static void
-gtkW_dentry_update (GtkWidget *widget,
-		    gpointer   data)
+CML_explorer_int_adjustment_update (GtkAdjustment *adjustment,
+				    gpointer       data)
 {
-  GtkAdjustment *adjustment;
-  gdouble new_val;
-  gdouble *val;
+  gimp_int_adjustment_update (adjustment, data);
 
-  val = data;
-  new_val = atof (gtk_entry_get_text (GTK_ENTRY (widget)));
-
-  if (GTKW_FLOAT_MIN_ERROR < ABS (*val - new_val))
-    {
-      adjustment = gtk_object_get_user_data (GTK_OBJECT (widget));
-
-      if ((new_val >= adjustment->lower) &&
-	  (new_val <= adjustment->upper))
-	{
-	  *val = new_val;
-	  adjustment->value = new_val;
-	  gtk_signal_emit_by_name (GTK_OBJECT (adjustment), "value_changed");
-	  preview_update ();
-	}
-    }
-}
-
-static void
-gtkW_dscale_entry_change_value (gtkW_widget_table *wtable)
-{
-  GtkWidget *entry;
-  gchar buffer[32];
-  GtkAdjustment *adjustment = (GtkAdjustment *) (wtable->widget);
-
-  adjustment->value = *(gdouble *)(wtable->value);
-  gtk_signal_emit_by_name (GTK_OBJECT (adjustment), "value_changed");
-  entry = gtk_object_get_user_data (GTK_OBJECT (adjustment));
-  sprintf (buffer, "%6f", (gdouble) adjustment->value);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   preview_update ();
 }
 
 static void
-gtkW_iscale_entry_change_value (gtkW_widget_table *wtable)
+CML_explorer_int_entry_change_value (WidgetEntry *widget_entry)
 {
-  GtkWidget *entry;
-  gchar buffer[32];
-  GtkAdjustment *adjustment = (GtkAdjustment *) (wtable->widget);
+  GtkAdjustment *adjustment = (GtkAdjustment *) (widget_entry->widget);
 
-  /*  adustment->value is double, that is not precise to hold long interger. */
-  adjustment->value = *(gint *)(wtable->value);
-  gtk_signal_emit_by_name (GTK_OBJECT (adjustment), "value_changed");
-  entry = gtk_object_get_user_data (GTK_OBJECT (adjustment));
-  sprintf (buffer, "%d", (gint) adjustment->value);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  preview_update ();
+  gtk_adjustment_set_value (adjustment, *(gint *) (widget_entry->value));
 }
 
 static void
-gtkW_menu_change_value (gtkW_widget_table *wtable)
+CML_explorer_int_entry_init (WidgetEntry *widget_entry,
+			     GtkObject   *adjustment,
+			     gpointer     value_ptr)
 {
-  gtk_option_menu_set_history (GTK_OPTION_MENU (wtable->widget),
-			       *(gint *)(wtable->value));
-}
-
-static void
-gtkW_menu_update (GtkWidget *widget,
-		  gpointer   data)
-{
-  gint	**buffer = (gint **) data;
-
-  if (*buffer[1] != (gint) buffer[2])
-    *buffer[1] = (gint) buffer[2];
-}
-
-static void
-gtkW_toggle_change_value (gtkW_widget_table *wtable)
-{
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (wtable->widget),
-				*(gint *)(wtable->value));
-}
-
-/* gtkW method */
-
-GtkWidget *
-gtkW_check_button_new (GtkWidget	*parent,
-		       gchar		*name,
-		       GtkSignalFunc	update,
-		       gint		*value)
-{
-  GtkWidget *toggle;
-
-  toggle = gtk_check_button_new_with_label (name);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) update,
-		      value);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), *value);
-  gtk_container_add (GTK_CONTAINER (parent), toggle);
-  gtk_widget_show (toggle);
-  return toggle;
-}
-
-static GtkWidget *
-gtkW_dialog_new (gchar		*name,
-		 GtkSignalFunc	ok_callback,
-		 GtkSignalFunc	close_callback)
-{
-  GtkWidget *dlg;
-
-  dlg = gimp_dialog_new (name, "cml_explorer",
-			 gimp_plugin_help_func, "filters/cml_explorer.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
-
-			 _("OK"), ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
-			 _("Cancel"), gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-
-			 NULL);
-
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (close_callback),
-		      NULL);
-
-  return dlg;
-}
-
-static GtkWidget *
-gtkW_frame_new (GtkWidget	*parent,
-		gchar		*name)
-{
-  GtkWidget *frame;
-
-  frame = gtk_frame_new (name);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), gtkW_frame_shadow_type);
-  gtk_container_border_width (GTK_CONTAINER (frame), gtkW_border_width);
-  if (parent != NULL)
-    gtk_box_pack_start (GTK_BOX (parent), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  return frame;
-}
-
-static GtkWidget *
-gtkW_hbox_new (GtkWidget *parent)
-{
-  GtkWidget	*hbox;
-
-  hbox = gtk_hbox_new (gtkW_homogeneous_layout, 2);
-  gtk_container_border_width (GTK_CONTAINER (hbox), gtkW_border_width);
-  if (parent)
-    gtk_container_add (GTK_CONTAINER (parent), hbox);
-  gtk_widget_show (hbox);
-
-  return hbox;
-}
-
-static GtkWidget *
-gtkW_table_add_button (GtkWidget	*table,
-		       gchar		*name,
-		       gint		x0,
-		       gint		x1,
-		       gint		y,
-		       GtkSignalFunc	callback,
-		       gpointer		value)
-{
-  GtkWidget *button;
-
-  button = gtk_button_new_with_label (name);
-  gtk_table_attach (GTK_TABLE(table), button, x0, x1, y, y+1,
-		    gtkW_align_x, gtkW_align_y, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) callback, value);
-  gtk_widget_show (button);
-
-  return button;
-}
-
-static GtkWidget *
-gtkW_table_add_dscale_entry (GtkWidget		*table,
-			     gchar		*name,
-			     gint		x,
-			     gint		y,
-			     GtkSignalFunc	scale_update,
-			     GtkSignalFunc	entry_update,
-			     gdouble		*value,
-			     gdouble		min,
-			     gdouble		max,
-			     gdouble		step,
-			     gpointer		widget_entry)
-{
-  GtkObject *adjustment;
-  GtkWidget *label, *hbox, *scale, *entry;
-  gchar *buffer;
-
-  label = gtk_label_new (name);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, x, x+1, y, y+1,
-		    gtkW_align_x, gtkW_align_y,
-		    gtkW_border_width, gtkW_border_height);
-  gtk_widget_show (label);
-
-  hbox = gtk_hbox_new (FALSE, 5);
-  gtk_table_attach (GTK_TABLE (table), hbox, x+1, x+2, y, y+1,
-		    gtkW_align_x, gtkW_border_width,
-		    gtkW_border_width, gtkW_border_height);
-
-  adjustment = gtk_adjustment_new (*value, min, max, step, step, 0.0);
-  gtk_widget_show (hbox);
-
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
-  gtk_widget_set_usize (scale, GTKW_SCALE_WIDTH, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 2);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      (GtkSignalFunc) scale_update, value);
+		      GTK_SIGNAL_FUNC (CML_explorer_int_adjustment_update),
+		      value_ptr);
 
-  entry = gtk_entry_new ();
-  gtk_object_set_user_data (GTK_OBJECT (entry), adjustment);
-  gtk_object_set_user_data (adjustment, entry);
-  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
-  gtk_widget_set_usize (entry, GTKW_ENTRY_WIDTH, 0);
-
-  buffer = (gchar *) g_malloc (GTKW_ENTRY_BUFFER_SIZE);
-  sprintf (buffer, "%6f", *value);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) entry_update, value);
-
-  gtk_widget_show (label);
-  gtk_widget_show (scale);
-  gtk_widget_show (entry);
-
-  if (widget_entry)
-    {
-      gtkW_widget_table *tentry = (gtkW_widget_table *) widget_entry;
-
-      tentry->widget = (GtkWidget *) adjustment;
-      tentry->updater = gtkW_dscale_entry_change_value;
-      tentry->value = value;
-    }
-
-  return entry;
+  widget_entry->widget  = (GtkWidget *) adjustment;
+  widget_entry->value   = value_ptr;
+  widget_entry->updater = CML_explorer_int_entry_change_value;
 }
 
-static GtkWidget *
-gtkW_table_add_iscale_entry (GtkWidget		*table,
-			     gchar		*name,
-			     gint		x,
-			     gint		y,
-			     GtkSignalFunc	scale_update,
-			     GtkSignalFunc	entry_update,
-			     gint		*value,
-			     gdouble		min,
-			     gdouble		max,
-			     gdouble		step,
-			     gpointer		widget_entry)
+/*  double adjustment functions  */
+
+static void
+CML_explorer_double_adjustment_update (GtkAdjustment *adjustment,
+				       gpointer       data)
 {
-  GtkObject *adjustment;
-  GtkWidget *label, *hbox, *scale, *entry;
-  gchar *buffer;
+  gimp_double_adjustment_update (adjustment, data);
 
-  label = gtk_label_new (name);
-  gtk_misc_set_alignment (GTK_MISC(label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE(table), label, x, x+1, y, y+1,
-		    gtkW_align_x, gtkW_align_y,
-		    gtkW_border_width, gtkW_border_height);
-  gtk_widget_show (label);
+  preview_update ();
+}
 
-  hbox = gtk_hbox_new (FALSE, 5);
-  gtk_table_attach (GTK_TABLE (table), hbox, x+1, x+2, y, y+1,
-		    gtkW_align_x, gtkW_align_y,
-		    gtkW_border_width, gtkW_border_height);
+static void
+CML_explorer_double_entry_change_value (WidgetEntry *widget_entry)
+{
+  GtkAdjustment *adjustment = (GtkAdjustment *) (widget_entry->widget);
 
-  adjustment = gtk_adjustment_new (*value, min, max, step, step, 0.0);
-  gtk_widget_show (hbox);
+  gtk_adjustment_set_value (adjustment, *(gdouble *) (widget_entry->value));
+}
 
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
-  gtk_widget_set_usize (scale, GTKW_SCALE_WIDTH, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
-  gtk_scale_set_digits (GTK_SCALE (scale), 0);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+static void
+CML_explorer_double_entry_init (WidgetEntry *widget_entry,
+				GtkObject   *adjustment,
+				gpointer     value_ptr)
+{
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      (GtkSignalFunc) scale_update, value);
+		      GTK_SIGNAL_FUNC (CML_explorer_double_adjustment_update),
+		      value_ptr);
 
-  entry = gtk_entry_new ();
-  gtk_object_set_user_data (GTK_OBJECT (entry), adjustment);
-  gtk_object_set_user_data (adjustment, entry);
-  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
-  gtk_widget_set_usize (entry, GTKW_ENTRY_WIDTH, 0);
-  buffer = (gchar *) g_malloc (GTKW_ENTRY_BUFFER_SIZE);
-  sprintf (buffer, "%d", *value);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) entry_update, value);
-
-  gtk_widget_show (label);
-  gtk_widget_show (scale);
-  gtk_widget_show (entry);
-
-  if (widget_entry)
-    {
-      gtkW_widget_table *tentry = (gtkW_widget_table *) widget_entry;
-
-      tentry->widget = (GtkWidget *) adjustment;
-      tentry->updater = gtkW_iscale_entry_change_value;
-      tentry->value = value;
-    }
-
-  return entry;
+  widget_entry->widget  = (GtkWidget *) adjustment;
+  widget_entry->value   = value_ptr;
+  widget_entry->updater = CML_explorer_double_entry_change_value;
 }
 
-static GtkWidget *
-gtkW_table_add_menu (GtkWidget		*table,
-		     gchar		*name,
-		     gint		x,
-		     gint		y,
-		     GtkSignalFunc	menu_update,
-		     gint		*val,
-		     gtkW_menu_item	*item,
-		     gint		item_num,
-		     gpointer		widget_entry)
+/*  menu functions  */
+
+static void
+CML_explorer_menu_update (GtkWidget *widget,
+			  gpointer   data)
 {
-  GtkWidget *label;
-  GtkWidget *menu, *menuitem, *option_menu;
-  gint i;
+  gimp_menu_item_update (widget, data);
 
-  label = gtk_label_new (name);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, x, x + 1, y, y + 1,
-		    gtkW_align_x, gtkW_align_y,
-		    gtkW_border_width, gtkW_border_height);
-  gtk_widget_show (label);
-
-  menu = gtk_menu_new ();
-
-  for (i = 0; i < item_num; i++)
-    {
-      gint	**buffer;
-
-      buffer = (gint **) g_malloc (3 * sizeof (gint *));
-      buffer[0] = (gint *) ((*val == i) ? TRUE : FALSE); /* for trick */
-      buffer[1] = val;				/* for pointer */
-      buffer[2] = (gint *) i;			/* for value */
-      menuitem = gtk_menu_item_new_with_label (gettext(item[i].name));
-      gtk_menu_append (GTK_MENU (menu), menuitem);
-      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			  (GtkSignalFunc) menu_update,
-			  buffer);
-      gtk_widget_show (menuitem);
-    }
-
-  option_menu = gtk_option_menu_new ();
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
-  gtk_option_menu_set_history (GTK_OPTION_MENU (option_menu), *val);
-  gtk_table_attach (GTK_TABLE (table), option_menu, x + 1, x + 2, y, y + 1,
-		    gtkW_align_x, gtkW_align_y,
-		    gtkW_border_width, gtkW_border_height);
-  gtk_widget_show (option_menu);
-
-  if (widget_entry)
-    {
-      gtkW_widget_table *tentry = (gtkW_widget_table *) widget_entry;
-
-      tentry->widget = option_menu;
-      tentry->updater = gtkW_menu_change_value;
-      tentry->value = val;
-    }
-
-  return option_menu;
+  preview_update ();
 }
 
-static GtkWidget *
-gtkW_table_add_toggle (GtkWidget	*table,
-		       gchar		*name,
-		       gint		x,
-		       gint		y,
-		       GtkSignalFunc	update,
-		       gint		*value,
-		       gpointer		widget_entry)
+static void
+CML_initial_value_menu_update (GtkWidget *widget,
+			       gpointer   data)
 {
-  GtkWidget *toggle;
+  gimp_menu_item_update (widget, data);
 
-  toggle = gtk_check_button_new_with_label(name);
-  gtk_table_attach (GTK_TABLE (table), toggle, x, x + 2, y, y+1,
-		    gtkW_align_x, gtkW_align_y,
-		    gtkW_border_width, gtkW_border_height);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) update,
-		      value);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), *value);
-  gtk_widget_show (toggle);
-
-  if (widget_entry)
-    {
-      gtkW_widget_table * tentry = (gtkW_widget_table *) widget_entry;
-
-      tentry->widget = toggle;
-      tentry->updater = gtkW_toggle_change_value;
-      tentry->value = value;
-    }
-  return toggle;
+  CML_initial_value_sensitives_update ();
+  preview_update ();
 }
 
-static GtkWidget *
-gtkW_table_new (GtkWidget *parent, gint col, gint row)
+static void
+CML_explorer_menu_entry_change_value (WidgetEntry *widget_entry)
 {
-  GtkWidget	*table;
-
-  table = gtk_table_new (col, row, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), gtkW_border_width);
-  if (parent)
-    gtk_container_add (GTK_CONTAINER (parent), table);
-  gtk_widget_show (table);
-
-  return table;
+  gtk_option_menu_set_history (GTK_OPTION_MENU (widget_entry->widget),
+			       *(gint *) (widget_entry->value));
 }
 
-static GtkWidget *
-gtkW_vbox_add_button (GtkWidget		*vbox,
-		      gchar		*name,
-		      GtkSignalFunc	update,
-		      gpointer		data)
+static void
+CML_explorer_menu_entry_init (WidgetEntry *widget_entry,
+			      GtkWidget   *widget,
+			      gpointer     value_ptr)
 {
-  GtkWidget *button;
-
-  button = gtk_button_new_with_label(name);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) update, data);
-  gtk_widget_show (button);
-  return button;
+  widget_entry->widget  = widget;
+  widget_entry->value   = value_ptr;
+  widget_entry->updater = CML_explorer_menu_entry_change_value;
 }
-
-GtkWidget *
-gtkW_vbox_new (GtkWidget *parent)
-{
-  GtkWidget *vbox;
-
-  vbox = gtk_vbox_new (gtkW_homogeneous_layout, 2);
-  gtk_container_border_width (GTK_CONTAINER (vbox), gtkW_border_width);
-  if (parent)
-    gtk_container_add (GTK_CONTAINER (parent), vbox);
-  gtk_widget_show (vbox);
-
-  return vbox;
-}
-

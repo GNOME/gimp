@@ -697,3 +697,51 @@ gimp_table_attach_aligned (GtkTable  *table,
 
   gtk_widget_show (widget);
 }
+
+/*  add aligned label & widget to a table  */
+void
+gimp_table_attach_aligned2 (GtkTable  *table,
+			    gint       row,
+			    gchar     *label_text,
+			    gfloat     xalign,
+			    gfloat     yalign,
+			    GtkWidget *widget,
+			    gint       widget_left,
+			    gint       widget_right,
+			    gboolean   left_adjust)
+{
+  if (label_text)
+    {
+      GtkWidget *label;
+
+      label = gtk_label_new (label_text);
+      gtk_misc_set_alignment (GTK_MISC (label), xalign, yalign);
+      gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_RIGHT);
+      gtk_table_attach (table, GTK_WIDGET (label),
+			widget_left - 1, widget_left,
+			row, row + 1,
+			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (label);
+    }
+
+  if (left_adjust)
+    {
+      GtkWidget *alignment;
+
+      alignment = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
+      gtk_table_attach (table, alignment,
+			widget_left, widget_right,
+			row, row + 1,
+			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (alignment);
+      gtk_container_add (GTK_CONTAINER (alignment), widget);
+    }
+  else
+    {
+      gtk_table_attach_defaults (table, widget,
+				 widget_left, widget_right,
+				 row, row + 1);
+    }
+
+  gtk_widget_show (widget);
+}

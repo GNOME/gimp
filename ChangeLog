@@ -1,3 +1,27 @@
+2000-01-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/main.c: bind the "gimp-libgimp" textdomain to get the
+	libgimp widget translations. Did some code cleanup.
+
+	* libgimp/stdplugins-intl.h: bind "gimp-libgimp".
+
+	* libgimp/gimpintl.h: copyright header.
+
+	* libgimp/libgimp-intl.h: there is no dgettext_noop() function
+	(typo/braino).
+
+	* libgimp/gimpwidgets.[ch]: one more table attach helper
+	function. Should probably find a general way for the two
+	functions.
+
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/align_layers.c
+	* plug-ins/common/scatter_hsv.c
+	* plug-ins/common/threshold_alpha.c: removed the gtkW_* wrapper
+	functions. Badly hacked CML_explorer (The optionmenu creation is a
+	bit more ugly than before but at least consistent with the other
+	files using the libgimp optionmenu constructor).
+
 2000-01-28  Asbjorn Pettersen  <asbjornP@dualog.no>
 
 	* plug-ins/print/print-ps.c: use g_strcasecmp() instead of

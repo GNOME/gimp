@@ -33,63 +33,41 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#define	PLUG_IN_NAME	"plug_in_align_layers"
-#define SHORT_NAME	"align_layers"
-#define PROGRESS_NAME	"align_layers"
-#define	MAIN_FUNCTION	main_function
-#define INTERFACE	align_layers_interface
-#define	DIALOG		align_layers_dialog
-#define VALS		align_layers_vals
-#define OK_CALLBACK	align_layers_ok_callback
-#define	PREVIEW_UPDATE	_preview_update
-#define PROGRESS_UPDATE_NUM	100
+#define	PLUG_IN_NAME "plug_in_align_layers"
+#define SHORT_NAME   "align_layers"
+#define SCALE_WIDTH  150
 
-/* gtkWrapper functions */ 
-#define GTKW_ENTRY_WIDTH	40
-#define GTKW_SCALE_WIDTH	100
-#define GTKW_PREVIEW_WIDTH	50
-#define GTKW_PREVIEW_HEIGHT	256
-#define	GTKW_BORDER_WIDTH	5
-#define GTKW_FLOAT_MIN_ERROR	0.000001
-
-static gint	**gtkW_gint_wrapper_new (gint index, gint *pointer);
-static void	gtkW_toggle_update (GtkWidget *widget, gpointer data);
-static void     gtkW_table_add_toggle (GtkWidget	*table,
-				       gchar	*name,
-				       gint	x,
-				       gint	y,
-				       GtkSignalFunc update,
-				       gint	*value);
-GtkWidget *gtkW_table_add_button (GtkWidget	*table,
-				  gchar	*name,
-				  gint	x0,
-				  gint	x1,
-				  gint	y, 
-				  GtkSignalFunc	callback,
-				  gpointer value);
-typedef struct
+enum
 {
-  gchar *name;
-  gpointer data;
-} gtkW_menu_item;
-GtkWidget *gtkW_table_add_menu (GtkWidget *parent,
-				gchar *name,
-				int x,
-				int y,
-				GtkSignalFunc imenu_update,
-				int *val,
-				gtkW_menu_item *item,
-				int item_num);
-static void	gtkW_menu_update (GtkWidget *widget, gpointer data);
-GtkWidget *gtkW_check_button_new (GtkWidget	*parent,
-				  gchar	*name,
-				  GtkSignalFunc update,
-				  gint	*value);
-GtkWidget *gtkW_frame_new (GtkWidget *parent, gchar *name);
-GtkWidget *gtkW_table_new (GtkWidget *parent, gint col, gint row);
-GtkWidget *gtkW_hbox_new (GtkWidget *parent);
-GtkWidget *gtkW_vbox_new (GtkWidget *parent);
-/* end of GtkW */
+  H_NONE,
+  H_COLLECT,
+  LEFT2RIGHT,
+  RIGHT2LEFT,
+  SNAP2HGRID
+};
+
+enum
+{
+  H_BASE_LEFT,
+  H_BASE_CENTER,
+  H_BASE_RIGHT
+};
+
+enum
+{
+  V_NONE,
+  V_COLLECT,
+  TOP2BOTTOM,
+  BOTTOM2TOP,
+  SNAP2VGRID
+};
+
+enum
+{
+  V_BASE_TOP,
+  V_BASE_CENTER,
+  V_BASE_BOTTOM
+};
 
 static void	query	(void);
 static void	run	(gchar   *name,
@@ -98,12 +76,14 @@ static void	run	(gchar   *name,
 			 gint    *nreturn_vals,
 			 GParam **return_vals);
 
-static GStatusType align_layers (gint32 image_id);
-static void align_layers_get_align_offsets (gint32	drawable_id,
-					    gint	*x,
-					    gint	*y);
-static gint DIALOG      (void);
-static void OK_CALLBACK (GtkWidget *widget, gpointer   data);
+static GStatusType align_layers                   (gint32  image_id);
+static void        align_layers_get_align_offsets (gint32  drawable_id,
+						   gint	  *x,
+						   gint	  *y);
+
+static gint align_layers_dialog      (void);
+static void align_layers_ok_callback (GtkWidget *widget,
+				      gpointer   data);
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -113,55 +93,8 @@ GPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
+
 /* dialog variables */
-gtkW_menu_item h_style_menu [] =
-{
-#define	H_NONE		0
-  { N_("None"), NULL },
-#define H_COLLECT	1
-  { N_("Collect"), NULL },
-#define	LEFT2RIGHT	2
-  { N_("Fill (left to right)"), NULL },
-#define	RIGHT2LEFT	3
-  { N_("Fill (right to left)"), NULL },
-#define SNAP2HGRID	4
-  { N_("Snap to grid"), NULL }
-};
-
-gtkW_menu_item h_base_menu [] =
-{
-#define H_BASE_LEFT	0
-  { N_("Left edge"), NULL },
-#define H_BASE_CENTER	1
-  { N_("Center"), NULL },
-#define	H_BASE_RIGHT	2
-  { N_("Right edge"), NULL }
-};
-
-gtkW_menu_item v_style_menu [] =
-{
-#define	V_NONE		0
-  { N_("None"), NULL },
-#define V_COLLECT	1
-  { N_("Collect"), NULL },
-#define TOP2BOTTOM	2
-  { N_("Fill (top to bottom)"), NULL },
-#define BOTTOM2TOP	3
-  { N_("Fill (bottom to top)"), NULL },
-#define SNAP2VGRID	4
-  { N_("Snap to grid"), NULL }
-};
-
-gtkW_menu_item v_base_menu [] =
-{
-#define V_BASE_TOP	0
-  { N_("Top edge"), NULL },
-#define V_BASE_CENTER	1
-  { N_("Center"), NULL },
-#define V_BASE_BOTTOM	2
-  { N_("Bottom edge"), NULL }
-};
-
 typedef struct
 {
   gint	h_style;
@@ -175,7 +108,13 @@ typedef struct
 
 static ValueType VALS = 
 {
-  H_NONE, H_BASE_LEFT, V_NONE, V_BASE_TOP, 1, 0, 10
+  H_NONE,
+  H_BASE_LEFT,
+  V_NONE,
+  V_BASE_TOP,
+  TRUE,
+  FALSE,
+  10
 };
 
 typedef struct 
@@ -183,9 +122,11 @@ typedef struct
   gint run;
 } Interface;
 
-static Interface INTERFACE = { FALSE };
+static Interface INTERFACE =
+{
+  FALSE
+};
 
-/* gint	link_after_alignment = 0;*/
 
 MAIN ()
 
@@ -249,7 +190,7 @@ run (gchar   *name,
 	  return;
 	}
       gimp_get_data (PLUG_IN_NAME, &VALS);
-      if (! DIALOG ())
+      if (! align_layers_dialog ())
 	return;
       break;
     case RUN_NONINTERACTIVE:
@@ -260,12 +201,12 @@ run (gchar   *name,
       gimp_get_data (PLUG_IN_NAME, &VALS);
       break;
     }
-  
+
   status = align_layers (image_id);
 
   if (run_mode != RUN_NONINTERACTIVE)
-    gimp_displays_flush();
-  if (run_mode == RUN_INTERACTIVE && status == STATUS_SUCCESS )
+    gimp_displays_flush ();
+  if (run_mode == RUN_INTERACTIVE && status == STATUS_SUCCESS)
     gimp_set_data (PLUG_IN_NAME, &VALS, sizeof (ValueType));
 
   values[0].type = PARAM_STATUS;
@@ -453,15 +394,16 @@ align_layers_get_align_offsets (gint32	drawable_id,
 
 /* dialog stuff */
 static int
-DIALOG (void)
+align_layers_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
   GtkWidget *table;
+  GtkWidget *optionmenu;
+  GtkWidget *toggle;
   GtkObject *adj;
   gchar	**argv;
   gint	  argc;
-  gint    index = 0;
 
   argc    = 1;
   argv    = g_new (gchar *, 1);
@@ -475,7 +417,7 @@ DIALOG (void)
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 _("OK"), OK_CALLBACK,
+			 _("OK"), align_layers_ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
 			 _("Cancel"), gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
@@ -485,42 +427,108 @@ DIALOG (void)
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
-  
-  frame = gtkW_frame_new (GTK_DIALOG (dlg)->vbox, _("Parameter Settings"));
-  table = gtkW_table_new (frame, 7, 3);
-  gtkW_table_add_menu (table, _("Horizontal Style:"), 0, index++,
-		       (GtkSignalFunc) gtkW_menu_update,
-		       &VALS.h_style,
-		       h_style_menu,
-		       sizeof (h_style_menu) / sizeof (h_style_menu[0]));
-  gtkW_table_add_menu (table, _("Horizontal Base:"), 0, index++,
-		       (GtkSignalFunc) gtkW_menu_update,
-		       &VALS.h_base,
-		       h_base_menu,
-		       sizeof (h_base_menu) / sizeof (h_base_menu[0]));
-  gtkW_table_add_menu (table, _("Vertical Style:"), 0, index++,
-		       (GtkSignalFunc) gtkW_menu_update,
-		       &VALS.v_style,
-		       v_style_menu,
-		       sizeof (v_style_menu) / sizeof (v_style_menu[0]));
-  gtkW_table_add_menu (table, _("Vertical Base:"), 0, index++,
-		       (GtkSignalFunc) gtkW_menu_update,
-		       &VALS.v_base,
-		       v_base_menu,
-		       sizeof (v_base_menu) / sizeof (v_base_menu[0]));
 
-  gtkW_table_add_toggle (table, _("Ignore the Bottom Layer even if Visible"),
-			 0, index++,
-			 (GtkSignalFunc) gtkW_toggle_update,
-			 &VALS.ignore_bottom);
-  gtkW_table_add_toggle (table,
-			 _("Use the (Invisible) Bottom Layer as the Base"),
-			 0, index++,
-			 (GtkSignalFunc) gtkW_toggle_update,
-			 &VALS.base_is_bottom_layer);
+  frame = gtk_frame_new (_("Parameter Settings"));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, index++,
-			      _("Grid Size:"), GTKW_SCALE_WIDTH, 0,
+  table = gtk_table_new (7, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
+
+  optionmenu =
+    gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
+			   &VALS.h_style, (gpointer) VALS.h_style,
+
+			   _("None"),
+			   (gpointer) H_NONE, NULL,
+			   _("Collect"),
+			   (gpointer) H_COLLECT, NULL,
+			   _("Fill (left to right)"),
+			   (gpointer) LEFT2RIGHT, NULL,
+			   _("Fill (right to left)"),
+			   (gpointer) RIGHT2LEFT, NULL,
+			   _("Snap to Grid"),
+			   (gpointer) SNAP2HGRID, NULL,
+
+			   NULL);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0,
+			     _("Horizontal Style:"), 1.0, 0.5,
+			     optionmenu, FALSE);
+
+  optionmenu =
+    gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
+			   &VALS.h_base, (gpointer) VALS.h_base,
+
+			   _("Left Edge"),  (gpointer) H_BASE_LEFT, NULL,
+			   _("Center"),     (gpointer) H_BASE_CENTER, NULL,
+			   _("Right Edge"), (gpointer) H_BASE_RIGHT, NULL,
+
+			   NULL);
+  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+			     _("Horizontal Base:"), 1.0, 0.5,
+			     optionmenu, FALSE);
+
+  optionmenu =
+    gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
+			   &VALS.v_style, (gpointer) VALS.v_style,
+
+			   _("None"),
+			   (gpointer) V_NONE, NULL,
+			   _("Collect"),
+			   (gpointer) V_COLLECT, NULL,
+			   _("Fill (top to bottom)"),
+			   (gpointer) TOP2BOTTOM, NULL,
+			   _("Fill (bottom to top)"),
+			   (gpointer) BOTTOM2TOP, NULL,
+			   _("Snap to Grid"),
+			   (gpointer) SNAP2VGRID, NULL,
+
+			   NULL);
+  gimp_table_attach_aligned (GTK_TABLE (table), 2,
+			     _("Vertical Style:"), 1.0, 0.5,
+			     optionmenu, FALSE);
+
+  optionmenu =
+    gimp_option_menu_new2 (FALSE, gimp_menu_item_update,
+			   &VALS.v_base, (gpointer) VALS.v_base,
+
+			   _("Top Edge"),    (gpointer) V_BASE_TOP, NULL,
+			   _("Center"),      (gpointer) V_BASE_CENTER, NULL,
+			   _("Bottom Edge"), (gpointer) V_BASE_BOTTOM, NULL,
+
+			   NULL);
+  gimp_table_attach_aligned (GTK_TABLE (table), 3,
+			     _("Horizontal Base:"), 1.0, 0.5,
+			     optionmenu, FALSE);
+
+  toggle =
+    gtk_check_button_new_with_label
+    (_("Ignore the Bottom Layer even if Visible"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), VALS.ignore_bottom);
+  gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 2, 4, 5);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &VALS.ignore_bottom);
+  gtk_widget_show (toggle);
+
+  toggle =
+    gtk_check_button_new_with_label
+    (_("Use the (Invisible) Bottom Layer as the Base"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				VALS.base_is_bottom_layer);
+  gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 2, 5, 6);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &VALS.base_is_bottom_layer);
+  gtk_widget_show (toggle);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 6,
+			      _("Grid Size:"), SCALE_WIDTH, 0,
 			      VALS.grid_size, 0, 200, 1, 10, 0,
 			      NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
@@ -538,247 +546,10 @@ DIALOG (void)
 }
 
 static void
-OK_CALLBACK (GtkWidget *widget,
-	     gpointer   data)
+align_layers_ok_callback (GtkWidget *widget,
+			  gpointer   data)
 {
-#ifdef OLD
-  int	index;
-  
-  for (index = H_NONE; index <= SNAP2HGRID; index++)
-    if (d_var[index])
-      {
-	VALS.h_style = index;
-	break;
-      }
-  for (index = H_BASE_LEFT; index <= H_BASE_RIGHT; index++)
-    if (d_var[index])
-      {
-	VALS.h_base = index;
-	break;
-      }
-  for (index = V_NONE; index <= SNAP2VGRID; index++)
-    if (d_var[index])
-      {
-	VALS.v_style = index;
-	break;
-      }
-  for (index = V_BASE_TOP; index <= V_BASE_BOTTOM; index++)
-    if (d_var[index])
-      {
-	VALS.v_base = index;
-	break;
-      }
-#endif
   INTERFACE.run = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
 }
-
-static void
-PREVIEW_UPDATE ()
-{
-}
-
-/* gtkW functions: gtkW is the abbreviation of gtk Wrapper */
-static gint **
-gtkW_gint_wrapper_new (gint index, gint *pointer)
-{
-  gint **tmp;
-  
-   tmp = (gint **)malloc(3 * sizeof (gint *));
-   tmp[0] = (gint *) ((*pointer == index) ? TRUE : FALSE);
-   tmp[1] = pointer;
-   tmp[2] = (gint *) index;
-   return tmp;
-}
-
-static void
-gtkW_toggle_update (GtkWidget *widget,
-		    gpointer   data)
-{
-  int *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-  PREVIEW_UPDATE ();
-}
-
-GtkWidget *
-gtkW_table_new (GtkWidget *parent, gint col, gint row)
-{
-  GtkWidget	*table;
-  
-  table = gtk_table_new (col,row, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (parent), table);
-  gtk_widget_show (table);
-  
-  return table;
-}
-
-GtkWidget *
-gtkW_hbox_new (GtkWidget *parent)
-{
-  GtkWidget	*hbox;
-  
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_container_border_width (GTK_CONTAINER (hbox), GTKW_BORDER_WIDTH);
-  /* gtk_box_pack_start (GTK_BOX (parent), hbox, FALSE, TRUE, 0); */
-  gtk_container_add (GTK_CONTAINER (parent), hbox);
-  gtk_widget_show (hbox);
-
-  return hbox;
-}
-
-GtkWidget *
-gtkW_vbox_new (GtkWidget *parent)
-{
-  GtkWidget *vbox;
-  
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_border_width (GTK_CONTAINER (vbox), GTKW_BORDER_WIDTH);
-  /* gtk_box_pack_start (GTK_BOX (parent), vbox, TRUE, TRUE, 0); */
-  gtk_container_add (GTK_CONTAINER (parent), vbox);
-  gtk_widget_show (vbox);
-
-  return vbox;
-}
-
-GtkWidget *
-gtkW_check_button_new (GtkWidget	*parent,
-		       gchar	*name,
-		       GtkSignalFunc update,
-		       gint	*value)
-{
-  GtkWidget *toggle;
-  
-  toggle = gtk_check_button_new_with_label (name);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) update,
-		      value);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), *value);
-  gtk_container_add (GTK_CONTAINER (parent), toggle);
-  gtk_widget_show (toggle);
-  return toggle;
-}
-
-GtkWidget *
-gtkW_frame_new (GtkWidget *parent,
-		gchar *name)
-{
-  GtkWidget *frame;
-  
-  frame = gtk_frame_new (name);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  if (parent != NULL)
-    gtk_box_pack_start (GTK_BOX (parent), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  return frame;
-}
-
-static void
-gtkW_table_add_toggle (GtkWidget	*table,
-		       gchar	*name,
-		       gint	x,
-		       gint	y,
-		       GtkSignalFunc update,
-		       gint	*value)
-{
-  GtkWidget *toggle;
-  
-  toggle = gtk_check_button_new_with_label(name);
-  gtk_table_attach (GTK_TABLE (table), toggle, x, x + 2, y, y+1,
-		    GTK_FILL|GTK_EXPAND, 0 & GTK_FILL, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      (GtkSignalFunc) update,
-		      value);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), *value);
-  gtk_widget_show (toggle);
-}
-
-GtkWidget *
-gtkW_table_add_button (GtkWidget	*table,
-		       gchar	*name,
-		       gint	x0,
-		       gint	x1,
-		       gint	y, 
-		       GtkSignalFunc	callback,
-		       gpointer value)
-{
-  GtkWidget *button;
-  
-  button = gtk_button_new_with_label (name);
-  gtk_table_attach (GTK_TABLE(table), button, x0, x1, y, y+1,
-		    GTK_FILL|GTK_EXPAND, GTK_FILL, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) callback, value);
-  gtk_widget_show(button);
-
-  return button;
-}
-
-GtkWidget *
-gtkW_table_add_menu (GtkWidget *table,
-		     gchar *name,
-		     int x,
-		     int y,
-		     GtkSignalFunc menu_update,
-		     int *val,
-		     gtkW_menu_item *item,
-		     int item_num)
-{
-  GtkWidget *label;
-  GtkWidget *menu, *menuitem, *option_menu;
-  gchar buf[64];
-  gint i;
-
-  label = gtk_label_new (name);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, x, x + 1, y, y + 1,
-		    GTK_FILL|GTK_EXPAND, 0 & GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  menu = gtk_menu_new ();
-
-  for (i = 0; i < item_num; i++)
-    {
-      sprintf (buf, gettext(item[i].name));
-      menuitem = gtk_menu_item_new_with_label (buf);
-      gtk_menu_append (GTK_MENU (menu), menuitem);
-      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			  (GtkSignalFunc) menu_update,
-			  gtkW_gint_wrapper_new (i, val));
-      gtk_widget_show (menuitem);
-    }
-
-  option_menu = gtk_option_menu_new ();
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
-  gtk_option_menu_set_history (GTK_OPTION_MENU (option_menu), *val);
-  gtk_table_attach (GTK_TABLE (table), option_menu, x + 1, x + 2, y, y + 1,
-		    GTK_FILL|GTK_EXPAND, 0, 0, 0);
-  gtk_widget_show (option_menu);
-
-  return option_menu;
-}
-
-static void
-gtkW_menu_update (GtkWidget *widget,
-		  gpointer   data)
-{
-  gint	**buffer = (gint **) data;
-
-  if (*buffer[1] != (gint) buffer[2])
-    {
-      *buffer[1] = (gint) buffer[2];
-      PREVIEW_UPDATE ();
-    }
-}
-/* end of gtkW functions */
-/* end of align_layers.c */

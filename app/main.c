@@ -17,7 +17,6 @@
  */
 #include "config.h"
 
-#include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
@@ -49,36 +48,37 @@
 #ifdef G_OS_WIN32
 #include <windows.h>
 #else
-static RETSIGTYPE on_signal (int);
+static RETSIGTYPE on_signal (gint);
 #ifdef SIGCHLD
-static RETSIGTYPE on_sig_child (int);
+static RETSIGTYPE on_sig_child (gint);
 #endif
 #endif
-static void       init (void);
-static void       test_gserialize();
-static void	  on_error (const gchar* domain,
-			    GLogLevelFlags flags,
-			    const gchar* msg,
-			    gpointer user_data);
+static void       init            (void);
+static void       test_gserialize (void);
+static void	  on_error        (const gchar    *domain,
+				   GLogLevelFlags  flags,
+				   const gchar    *msg,
+				   gpointer        user_data);
 
 /* GLOBAL data */
-int no_interface;
-int no_data;
-int no_splash;
-int no_splash_image;
-int be_verbose;
-int use_shm;
-int use_debug_handler;
-int console_messages;
-int restore_session;
-GimpSet* image_context;
+gint no_interface      = FALSE;
+gint no_data           = FALSE;
+gint no_splash         = FALSE;
+gint no_splash_image   = FALSE;
+gint be_verbose        = FALSE;
+gint use_shm           = FALSE;
+gint use_debug_handler = FALSE;
+gint console_messages  = FALSE;
+gint restore_session   = FALSE;
 
-MessageHandlerType message_handler;
+GimpSet *image_context = NULL;
 
-gchar  *prog_name;		/* The path name we are invoked with */
-gchar  *alternate_gimprc;
-gchar  *alternate_system_gimprc;
-gchar **batch_cmds;
+MessageHandlerType message_handler = CONSOLE;
+
+gchar  *prog_name 		= NULL; /* The path name we are invoked with */
+gchar  *alternate_gimprc        = NULL;
+gchar  *alternate_system_gimprc = NULL;
+gchar **batch_cmds              = NULL;
 
 #ifdef ENABLE_NLS
 gchar  *plugin_domains[] = { "gimp-std-plugins",
@@ -88,8 +88,8 @@ gint    n_plugin_domains = (sizeof (plugin_domains) /
 #endif
 
 /* LOCAL data */
-static gint    gimp_argc;
-static gchar **gimp_argv;
+static gint    gimp_argc = 0;
+static gchar **gimp_argv = NULL;
 
 /*
  *  argv processing: 
@@ -113,25 +113,28 @@ static gchar **gimp_argv;
  */
 
 int
-main (int argc, char **argv)
+main (int    argc,
+      char **argv)
 {
-  int show_version;
-  int show_help;
-  int i, j;
+  gint show_version = FALSE;
+  gint show_help    = FALSE;
+  gint i, j;
 #ifdef HAVE_PUTENV
-  gchar *display_name, *display_env;
+  gchar *display_env;
 #endif
 
   g_atexit (g_mem_profile);
 
   /* Initialize variables */
+
   prog_name = argv[0];
 
   /* Initialize i18n support */
-
   INIT_LOCALE ("gimp");
 
 #ifdef ENABLE_NLS
+  bindtextdomain ("gimp-libgimp", LOCALEDIR);
+
   for (i = 0; i < n_plugin_domains; i++)
     bindtextdomain (plugin_domains[i], LOCALEDIR);
 #endif
@@ -141,39 +144,16 @@ main (int argc, char **argv)
   setlocale (LC_NUMERIC, "C");  /* gtk seems to zap this during init.. */
 
 #ifdef HAVE_PUTENV
-  display_name = gdk_get_display ();
-  display_env = g_new (gchar, strlen (display_name) + 9);
-  *display_env = 0;
-  strcat (display_env, "DISPLAY=");
-  strcat (display_env, display_name);
+  display_env = g_strconcat ("DISPLAY=", gdk_get_display (), NULL);
   putenv (display_env);
 #endif
 
-  no_interface = FALSE;
-  no_data = FALSE;
-  no_splash = FALSE;
-  no_splash_image = FALSE;
-
 #if defined (HAVE_SHM_H) || defined (G_OS_WIN32)
   use_shm = TRUE;
-#else
-  use_shm = FALSE;
 #endif
 
-  use_debug_handler = FALSE;
-  restore_session = FALSE;
-  console_messages = FALSE;
-
-  message_handler = CONSOLE;
-
-  batch_cmds = g_new (char *, argc);
+  batch_cmds    = g_new (char *, argc);
   batch_cmds[0] = NULL;
-  
-  alternate_gimprc = NULL;
-  alternate_system_gimprc = NULL;
-
-  show_version = FALSE;
-  show_help = FALSE;
 
   test_gserialize ();
 
@@ -278,9 +258,9 @@ main (int argc, char **argv)
 	  restore_session = TRUE;
  	  argv[i] = NULL;
 	}
-/*
- *    ANYTHING ELSE starting with a '-' is an error.
- */
+      /*
+       *    ANYTHING ELSE starting with a '-' is an error.
+       */
       else if (argv[i][0] == '-')
 	{
 	  show_help = TRUE;
@@ -391,7 +371,7 @@ main (int argc, char **argv)
 
   g_log_set_handler (NULL, G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
 		     on_error, NULL);
-  
+
   /* Keep the command line arguments--for use in gimp_init */
   gimp_argc = argc - 1;
   gimp_argv = argv + 1;
@@ -402,7 +382,7 @@ main (int argc, char **argv)
   /* Main application loop */
   if (!app_exit_finish_done ())
     gtk_main ();
-  
+
   return 0;
 }
 
@@ -447,7 +427,7 @@ static int caught_fatal_sig = 0;
 #ifndef G_OS_WIN32
 
 static RETSIGTYPE
-on_signal (int sig_num)
+on_signal (gint sig_num)
 {
   if (caught_fatal_sig)
     kill (getpid (), sig_num);
@@ -510,8 +490,8 @@ on_signal (int sig_num)
 static RETSIGTYPE
 on_sig_child (int sig_num)
 {
-  int pid;
-  int status;
+  gint pid;
+  gint status;
 
   while (1)
     {

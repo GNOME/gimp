@@ -27,7 +27,7 @@
 #    undef gettext
 #    define gettext(String) dgettext ("gimp-libgimp", String)
 #    ifdef gettext_noop
-#        define N_(String) dgettext_noop ("gimp-libgimp", String)
+#        define N_(String) gettext_noop (String)
 #    else
 #        define N_(String) (String)
 #    endif

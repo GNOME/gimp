@@ -156,6 +156,17 @@ void gimp_table_attach_aligned     (GtkTable           *table,
 				    GtkWidget          *widget,
 				    gboolean            left_adjust);
 
+/*  add aligned label & widget to a table  */
+void gimp_table_attach_aligned2    (GtkTable           *table,
+				    gint                row,
+				    gchar              *label_text,
+				    gfloat              xalign,
+				    gfloat              yalign,
+				    GtkWidget          *widget,
+				    gint                widget_left,
+				    gint                widget_right,
+				    gboolean            left_adjust);
+
 #ifdef __cplusplus
 }
 #endif
