@@ -1013,7 +1013,7 @@ static ProcArg histogram_outargs[] =
   {
     PDB_FLOAT,
     "mean",
-    "Mean itensity value"
+    "Mean intensity value"
   },
   {
     PDB_FLOAT,
@@ -1023,7 +1023,7 @@ static ProcArg histogram_outargs[] =
   {
     PDB_FLOAT,
     "median",
-    "Median itensity value"
+    "Median intensity value"
   },
   {
     PDB_FLOAT,

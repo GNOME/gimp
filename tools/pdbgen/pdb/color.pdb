@@ -570,11 +570,11 @@ HELP
 
     @outargs = (
 	{ name => 'mean', void_ret => 1,
-	  desc => 'Mean itensity value' },
+	  desc => 'Mean intensity value' },
 	{ name => 'std_dev',
 	  desc => 'Standard deviation of intensity values' },
 	{ name => 'median',
-	  desc => 'Median itensity value' },
+	  desc => 'Median intensity value' },
 	{ name => 'pixels',
 	  desc => 'Alpha-weighted pixel count for entire image' },
 	{ name => 'count',
