@@ -124,7 +124,7 @@ static MenuItem palette_ops[] =
 {
   { "New Palette", 0, 0, palette_new_entries_callback, NULL, NULL, NULL },
   { "Delete Palette", 0, 0, palette_delete_entries_callback, NULL, NULL, NULL },
-  { "Refresh Pallettes", 0, 0, palette_refresh_callback, NULL, NULL, NULL },
+  { "Refresh Palettes", 0, 0, palette_refresh_callback, NULL, NULL, NULL },
   { "Close", 0, 0, palette_close_callback, NULL, NULL, NULL },
   { NULL, 0, 0, NULL, NULL, NULL, NULL },
 };

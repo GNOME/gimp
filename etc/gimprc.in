@@ -51,7 +51,7 @@
 
 # Set the palette search path...this path will be searched for valid
 #  palettes at startup.
-(palette-path "${gimp_dir}/palettes:${gimp_data_dir}/palettes")
+(palette-path "${gimp_dir}/palettes")
 
 # Specify a default palette.
 #  The pattern is searched for in the specified pattern paths.
