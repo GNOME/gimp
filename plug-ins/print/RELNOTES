@@ -1,10 +1,21 @@
-This is gimp-print version 4.0.3, a stable release in the 4.0 line.
+This is gimp-print version 4.0.5, a stable release in the 4.0 line.
 
 This software includes the Print plug-in for the Gimp (1.0, 1.1, and
 1.2), and GhostScript and CUPS drivers.  The support for printers in
 GhostScript and CUPS is identical to the support for these printers in
 the Print plugin -- they use the identical code base.  Please read
 Ghost/README and CUPS/README.txt for more information on this.
+
+
+Gimp-Print 4.0.5 contains the following fixes and improvements over
+Gimp-Print 4.0.4:
+
+1) Added support for the EPSON Stylus Color 680 and 777
+
+2) Added support for the EPSON Stylus Pro 7500
+
+3) Fixed a bug in the GIMP plug-in GUI - the image scaling was
+   not maintained properly.
 
 
 Gimp-Print 4.0.4 contains the following fixes over Gimp-Print 4.0.3:
