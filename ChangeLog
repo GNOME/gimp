@@ -1,3 +1,13 @@
+1999-09-06  James Henstridge  <james@daa.com.au>
+
+	* plug-ins/Makefile.am: conditionally compile pygimp.
+
+	* configure.in: added in macros for pygimp.  You must pass
+	--enable-python to configure for it to even consider checking for
+	python at the moment.
+
+	* acinclude.m4: added python detection macros.
+
 Mon Sep  6 03:19:27 CEST 1999 Olof S Kylander <olof@frozenriver.com>
 	
 	* app/blob.c Fixed a cut&paste error

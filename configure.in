@@ -561,6 +561,28 @@ EOF
    fi
 fi
 
+dnl Pygimp configure stuff ...
+AC_ARG_ENABLE(python,
+[  --disable-python        do not build python extension],,[enable_python=no])
+build_python=false
+if test "x$enable_python" != xno; then
+  AM_PATH_PYTHON
+  if test "x$PYTHON" != xno; then
+    AM_INIT_PYEXEC_MOD
+    if test "x$am_cv_python_makefile" != xno; then
+      PYGIMP_CFLAGS_NOUI="-I\$(top_srcdir) $GLIB_CFLAGS"
+      PYGIMP_LIBS_NOUI="-L\$(top_builddir)/libgimp/.libs -lgimp $GLIB_LIBS"
+
+      build_python=true
+      AM_CHECK_PYMOD(gtk,,,build_python=fasle)
+    fi
+  fi
+fi
+AC_SUBST(PYGIMP_CFLAGS_NOUI)
+AC_SUBST(PYGIMP_LIBS_NOUI)
+AM_CONDITIONAL(BUILD_PYTHON, $build_python)
+  
+
 GIMPINSTALL=
 if test "$INSTALL" = "$ac_install_sh"; then
   GIMPINSTALL="gimpinstall"
@@ -680,6 +702,9 @@ plug-ins/maze/Makefile
 plug-ins/mosaic/Makefile
 plug-ins/pagecurl/Makefile
 plug-ins/print/Makefile
+plug-ins/pygimp/Makefile
+plug-ins/pygimp/doc/Makefile
+plug-ins/pygimp/plug-ins/Makefile
 plug-ins/rcm/Makefile
 plug-ins/sel2path/Makefile
 plug-ins/sgi/Makefile

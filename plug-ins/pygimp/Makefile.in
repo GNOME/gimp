@@ -42,7 +42,7 @@ pkgdatadir = $(datadir)/@PACKAGE@
 pkglibdir = $(libdir)/@PACKAGE@
 pkgincludedir = $(includedir)/@PACKAGE@
 
-top_builddir = .
+top_builddir = ../..
 
 ACLOCAL = @ACLOCAL@
 AUTOCONF = @AUTOCONF@
@@ -63,8 +63,8 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 CC = @CC@
 GIMPTOOL = @GIMPTOOL@
-GIMP_CFLAGS_NOUI = @GIMP_CFLAGS_NOUI@
-GIMP_LIBS_NOUI = @GIMP_LIBS_NOUI@
+PYGIMP_CFLAGS_NOUI = @PYGIMP_CFLAGS_NOUI@
+PYGIMP_LIBS_NOUI = @PYGIMP_LIBS_NOUI@
 MAKEINFO = @MAKEINFO@
 OPT = @OPT@
 PACKAGE = @PACKAGE@
@@ -80,12 +80,12 @@ pythondir = @pythondir@
 
 SUBDIRS = doc plug-ins
 
-INCLUDES = $(PYTHON_INCLUDES) $(PYTHON_CFLAGS) $(GIMP_CFLAGS_NOUI)
+INCLUDES = $(PYTHON_INCLUDES) $(PYTHON_CFLAGS) $(PYGIMP_CFLAGS_NOUI)
 
 pyexec_PROGRAMS = gimpmodule$(SO)
 
 gimpmodule__SO__SOURCES = gimpmodule.c
-gimpmodule__SO__LDADD = $(GIMP_LIBS_NOUI)
+gimpmodule__SO__LDADD = $(PYGIMP_LIBS_NOUI)
 gimpmodule__SO__LINK = $(PYTHON_LINK)
 
 python_PYTHON = gimpplugin.py gimpenums.py gimpshelf.py 	gimpui.py gimpfu.py
@@ -111,10 +111,10 @@ CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(LDFLAGS) -o $@
 PYTHONFILES =  gimpplugin.py gimpenums.py gimpshelf.py gimpui.py \
 gimpfu.py
-py_compile = $(top_srcdir)/py-compile
+py_compile = $(srcdir)/py-compile
 DIST_COMMON =  README $(PYTHONFILES) AUTHORS COPYING ChangeLog INSTALL \
-Makefile.am.14 Makefile.in NEWS aclocal.m4 configure configure.in \
-install-sh missing mkinstalldirs py-compile
+Makefile.am.14 Makefile.in NEWS configure.in \
+py-compile
 
 
 DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)

@@ -21,6 +21,12 @@ EXTRA_DIST = \
 	winsnap/winsnap.ico	\
 	winsnap/winsnap.rc
 
+if BUILD_PYTHON
+pygimp=pygimp
+else
+pygimp=
+endif
+
 SUBDIRS = 			\
 	libgck			\
 	megawidget		\
@@ -49,6 +55,7 @@ SUBDIRS = 			\
 	mosaic			\
 	pagecurl		\
 	print			\
+	$(pygimp)		\
 	rcm			\
 	sgi			\
 	sel2path		\
