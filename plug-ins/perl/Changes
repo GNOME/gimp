@@ -1,5 +1,8 @@
 Revision history for Gimp-Perl extension.
 
+	- use DESTDIR when installing plug-ins.
+        - remove absolute paths from examples/logulator.
+
 1.211 Sat Dec  1 00:35:07 CET 2001
 	- callback return values were still broken. yes, I am an idiot.
 

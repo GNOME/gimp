@@ -206,7 +206,7 @@ sub MY::postamble {
    $install_program =~ s{^\.\./}{../../};
    my $GT = $IN_GIMP ? $install_program : "$GIMPTOOL --install-admin-bin";
    my $UT = $IN_GIMP ? '$(RM_F)' : "$GIMPTOOL --uninstall-admin-bin";
-   my $GT2 = $IN_GIMP ? '$(gimpplugindir)/plug-ins/' : '';
+   my $GT2 = $IN_GIMP ? '$(DESTDIR)/$(gimpplugindir)/plug-ins/' : '';
    my $postamble="
 
 objclean :: clean
