@@ -15,13 +15,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-#include <math.h>
+
 #include "appenv.h"
-#include "buildmenu.h"
 #include "colormaps.h"
 #include "drawable.h"
 #include "gdisplay.h"
@@ -33,9 +35,10 @@
 #include "gimplut.h"
 #include "lut_funcs.h"
 
-#include "config.h"
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimpenv.h"
+#include "libgimp/gimpmath.h"
+
+#include "libgimp/gimpintl.h"
 
 #define LOW_INPUT          0x1
 #define GAMMA              0x2
@@ -121,6 +124,8 @@ static LevelsDialog *levels_dialog = NULL;
 static GtkWidget *file_dlg = NULL;
 static gboolean   load_save;
 
+static GtkWidget *color_option_items[5];
+
 /*  levels action functions  */
 static void   levels_control (Tool *, ToolAction, gpointer);
 
@@ -129,11 +134,7 @@ static LevelsDialog * levels_dialog_new (void);
 static void   levels_calculate_transfers           (LevelsDialog *);
 static void   levels_update                        (LevelsDialog *, gint);
 static void   levels_preview                       (LevelsDialog *);
-static void   levels_value_callback                (GtkWidget *, gpointer);
-static void   levels_red_callback                  (GtkWidget *, gpointer);
-static void   levels_green_callback                (GtkWidget *, gpointer);
-static void   levels_blue_callback                 (GtkWidget *, gpointer);
-static void   levels_alpha_callback                (GtkWidget *, gpointer);
+static void   levels_channel_callback              (GtkWidget *, gpointer);
 static void   levels_reset_callback                (GtkWidget *, gpointer);
 static void   levels_ok_callback                   (GtkWidget *, gpointer);
 static void   levels_cancel_callback               (GtkWidget *, gpointer);
@@ -224,16 +225,6 @@ tools_free_levels (Tool *tool)
   g_free (private);
 }
 
-static MenuItem color_option_items[] =
-{
-  { N_("Value"), 0, 0, levels_value_callback, NULL, NULL, NULL },
-  { N_("Red"), 0, 0, levels_red_callback, NULL, NULL, NULL },
-  { N_("Green"), 0, 0, levels_green_callback, NULL, NULL, NULL },
-  { N_("Blue"), 0, 0, levels_blue_callback, NULL, NULL, NULL },
-  { N_("Alpha"), 0, 0, levels_alpha_callback, NULL, NULL, NULL },
-  { NULL, 0, 0, NULL, NULL, NULL, NULL }
-};
-
 void
 levels_initialize (GDisplay *gdisp)
 {
@@ -268,21 +259,20 @@ levels_initialize (GDisplay *gdisp)
   levels_dialog->image_map = image_map_create (gdisp, levels_dialog->drawable);
 
   /* check for alpha channel */
-  if (drawable_has_alpha (levels_dialog->drawable))
-    gtk_widget_set_sensitive (color_option_items[4].widget, TRUE);
-  else 
-    gtk_widget_set_sensitive (color_option_items[4].widget, FALSE);
+  gtk_widget_set_sensitive (color_option_items[4],
+			    drawable_has_alpha (levels_dialog->drawable));
   
   /*  hide or show the channel menu based on image type  */
   if (levels_dialog->color)
     for (i = 0; i < 4; i++) 
-       gtk_widget_set_sensitive (color_option_items[i].widget, TRUE);
+       gtk_widget_set_sensitive (color_option_items[i], TRUE);
   else 
     for (i = 1; i < 4; i++) 
-       gtk_widget_set_sensitive (color_option_items[i].widget, FALSE);
+       gtk_widget_set_sensitive (color_option_items[i], FALSE);
 
   /* set the current selection */
-  gtk_option_menu_set_history (GTK_OPTION_MENU (levels_dialog->channel_menu), 0);
+  gtk_option_menu_set_history (GTK_OPTION_MENU (levels_dialog->channel_menu),
+			       levels_dialog->channel);
 
 
   levels_update (levels_dialog, LOW_INPUT | GAMMA | HIGH_INPUT | LOW_OUTPUT | HIGH_OUTPUT | DRAW);
@@ -327,24 +317,20 @@ levels_dialog_new (void)
   GtkWidget *frame;
   GtkWidget *toggle;
   GtkWidget *channel_hbox;
-  GtkWidget *menu;
   GtkWidget *hbbox;
   GtkWidget *button;
   GtkWidget *spinbutton;
   GtkObject *data;
-  gint i;
 
   ld = g_new (LevelsDialog, 1);
+  ld->channel = HISTOGRAM_VALUE;
   ld->preview = TRUE;
   ld->lut     = gimp_lut_new ();
   ld->hist    = gimp_histogram_new ();
 
-  for (i = 0; i < 5; i++)
-    color_option_items [i].user_data = (gpointer) ld;
-
   /*  The shell and main vbox  */
   ld->shell = gimp_dialog_new (_("Levels"), "levels",
-			       tools_help_func, NULL,
+			       tools_help_func, tool_info[LEVELS].private_tip,
 			       GTK_WIN_POS_NONE,
 			       FALSE, TRUE, FALSE,
 
@@ -374,15 +360,23 @@ levels_dialog_new (void)
 
   label = gtk_label_new (_("Modify Levels for Channel:"));
   gtk_box_pack_start (GTK_BOX (channel_hbox), label, FALSE, FALSE, 0);
-
-  menu = build_menu (color_option_items, NULL);
-  ld->channel_menu = gtk_option_menu_new ();
-  gtk_box_pack_start (GTK_BOX (channel_hbox), ld->channel_menu, FALSE, FALSE, 0);
-
   gtk_widget_show (label);
+
+  ld->channel_menu = gimp_option_menu_new2
+    (FALSE, levels_channel_callback,
+     ld, (gpointer) ld->channel,
+
+     _("Value"), (gpointer) HISTOGRAM_VALUE, &color_option_items[0],
+     _("Red"),   (gpointer) HISTOGRAM_RED,   &color_option_items[1],
+     _("Green"), (gpointer) HISTOGRAM_GREEN, &color_option_items[2],
+     _("Blue"),  (gpointer) HISTOGRAM_BLUE,  &color_option_items[3],
+     _("Alpha"), (gpointer) HISTOGRAM_ALPHA, &color_option_items[4],
+
+     NULL);
+  gtk_box_pack_start (GTK_BOX (channel_hbox), ld->channel_menu, FALSE, FALSE, 0);
   gtk_widget_show (ld->channel_menu);
+
   gtk_widget_show (channel_hbox);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (ld->channel_menu), menu);
 
   /*  Horizontal box for input levels spinbuttons  */
   hbox = gtk_hbox_new (FALSE, 4);
@@ -863,98 +857,32 @@ levels_preview (LevelsDialog *ld)
     }
 
   active_tool->preserve = TRUE;
-  image_map_apply (ld->image_map,  (ImageMapApplyFunc)gimp_lut_process_2,
+  image_map_apply (ld->image_map, (ImageMapApplyFunc) gimp_lut_process_2,
 		   (void *) ld->lut);
   active_tool->preserve = FALSE;
 }
 
 static void
-levels_value_callback (GtkWidget *widget,
-		       gpointer   data)
+levels_channel_callback (GtkWidget *widget,
+			 gpointer   data)
 {
   LevelsDialog *ld;
 
   ld = (LevelsDialog *) data;
 
-  if (ld->channel != HISTOGRAM_VALUE)
-    {
-      ld->channel = HISTOGRAM_VALUE;
-      histogram_widget_channel (ld->histogram, ld->channel);
-      levels_update (ld, ALL);
-    }
-}
+  gimp_menu_item_update (widget, &ld->channel);
 
-static void
-levels_red_callback (GtkWidget *widget,
-		     gpointer   data)
-{
-  LevelsDialog *ld;
-
-  ld = (LevelsDialog *) data;
-
-  if (ld->channel != HISTOGRAM_RED)
-    {
-      ld->channel = HISTOGRAM_RED;
-      histogram_widget_channel (ld->histogram, ld->channel);
-      levels_update (ld, ALL);
-    }
-}
-
-static void
-levels_green_callback (GtkWidget *widget,
-		       gpointer   data)
-{
-  LevelsDialog *ld;
-
-  ld = (LevelsDialog *) data;
-
-  if (ld->channel != HISTOGRAM_GREEN)
-    {
-      ld->channel = HISTOGRAM_GREEN;
-      histogram_widget_channel (ld->histogram, ld->channel);
-      levels_update (ld, ALL);
-    }
-}
-
-static void
-levels_blue_callback (GtkWidget *widget,
-		      gpointer   data)
-{
-  LevelsDialog *ld;
-
-  ld = (LevelsDialog *) data;
-
-  if (ld->channel != HISTOGRAM_BLUE)
-    {
-      ld->channel = HISTOGRAM_BLUE;
-      histogram_widget_channel (ld->histogram, ld->channel);
-      levels_update (ld, ALL);
-    }
-}
-
-static void
-levels_alpha_callback (GtkWidget *widget,
-		       gpointer   data)
-{
-  LevelsDialog *ld;
-
-  ld = (LevelsDialog *) data;
-
-  if (ld->channel != HISTOGRAM_ALPHA)
-    {
-      ld->channel = HISTOGRAM_ALPHA;
-      histogram_widget_channel (ld->histogram, ld->channel);
-      levels_update (ld, ALL);
-    }
+  histogram_widget_channel (ld->histogram, ld->channel);
+  levels_update (ld, ALL);
 }
 
 static void
 levels_adjust_channel (LevelsDialog    *ld,
 		       GimpHistogram   *hist,
-		       int              channel)
+		       gint             channel)
 {
-  int i;
-  double count, new_count, percentage, next_percentage;
+  gint i;
+  gdouble count, new_count, percentage, next_percentage;
 
   ld->gamma[channel]       = 1.0;
   ld->low_output[channel]  = 0;
@@ -1477,6 +1405,9 @@ make_file_dlg (gpointer data)
       			  gimp_directory ());
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (file_dlg), temp);
   g_free (temp);
+
+  gimp_help_connect_help_accel (file_dlg, tools_help_func,
+				tool_info[LEVELS].private_tip);
 }
 
 static void

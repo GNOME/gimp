@@ -18,7 +18,6 @@
 #include "config.h"
 
 #include "appenv.h"
-#include "buildmenu.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimpui.h"
@@ -51,14 +50,12 @@ static void   histogram_tool_control (Tool *, ToolAction, gpointer);
 
 static HistogramToolDialog *  histogram_tool_dialog_new (void);
 
-static void   histogram_tool_close_callback  (GtkWidget *, gpointer);
-static void   histogram_tool_value_callback  (GtkWidget *, gpointer);
-static void   histogram_tool_red_callback    (GtkWidget *, gpointer);
-static void   histogram_tool_green_callback  (GtkWidget *, gpointer);
-static void   histogram_tool_blue_callback   (GtkWidget *, gpointer);
-static void   histogram_tool_gradient_draw   (GtkWidget *, gint);
+static void   histogram_tool_close_callback   (GtkWidget *, gpointer);
+static void   histogram_tool_channel_callback (GtkWidget *, gpointer);
+static void   histogram_tool_gradient_draw    (GtkWidget *, gint);
 
-static void   histogram_tool_dialog_update   (HistogramToolDialog *, gint, gint);
+static void   histogram_tool_dialog_update    (HistogramToolDialog *,
+					       gint, gint);
 
 /*  histogram_tool machinery  */
 
@@ -251,7 +248,6 @@ histogram_tool_dialog_new (void)
   GtkWidget *table;
   GtkWidget *label;
   GtkWidget *option_menu;
-  GtkWidget *menu;
   gint i;
   gint x, y;
 
@@ -266,26 +262,14 @@ histogram_tool_dialog_new (void)
     N_("Percentile:")
   };
 
-  static MenuItem color_option_items[] =
-  {
-    { N_("Value"), 0, 0, histogram_tool_value_callback, NULL, NULL, NULL },
-    { N_("Red"), 0, 0, histogram_tool_red_callback, NULL, NULL, NULL },
-    { N_("Green"), 0, 0, histogram_tool_green_callback, NULL, NULL, NULL },
-    { N_("Blue"), 0, 0, histogram_tool_blue_callback, NULL, NULL, NULL },
-    { NULL, 0, 0, NULL, NULL, NULL, NULL }
-  };
-
   htd = g_new (HistogramToolDialog, 1);
   htd->channel = HISTOGRAM_VALUE;
-
-  for (i = 0; i < 4; i++)
-    color_option_items [i].user_data = (gpointer) htd;
-
-  htd->hist = gimp_histogram_new ();
+  htd->hist    = gimp_histogram_new ();
 
   /*  The shell and main vbox  */
   htd->shell = gimp_dialog_new (_("Histogram"), "histogram",
-				tools_help_func, NULL,
+				tools_help_func,
+				tool_info[HISTOGRAM].private_tip,
 				GTK_WIN_POS_NONE,
 				FALSE, TRUE, FALSE,
 
@@ -310,15 +294,22 @@ histogram_tool_dialog_new (void)
 
   label = gtk_label_new (_("Information on Channel:"));
   gtk_box_pack_start (GTK_BOX (htd->channel_menu), label, FALSE, FALSE, 0);
-
-  menu = build_menu (color_option_items, NULL);
-  option_menu = gtk_option_menu_new ();
-  gtk_box_pack_start (GTK_BOX (htd->channel_menu), option_menu, FALSE, FALSE, 0);
-
   gtk_widget_show (label);
+
+  option_menu = gimp_option_menu_new2
+    (FALSE, histogram_tool_channel_callback,
+     htd, (gpointer) htd->channel,
+
+     _("Value"), (gpointer) HISTOGRAM_VALUE, NULL,
+     _("Red"),   (gpointer) HISTOGRAM_RED, NULL,
+     _("Green"), (gpointer) HISTOGRAM_GREEN, NULL,
+     _("Blue"),  (gpointer) HISTOGRAM_BLUE, NULL,
+
+     NULL);
+  gtk_box_pack_start (GTK_BOX (htd->channel_menu), option_menu, FALSE, FALSE, 0);
   gtk_widget_show (option_menu);
+
   gtk_widget_show (htd->channel_menu);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
 
   /*  The histogram tool histogram  */
   frame = gtk_frame_new (NULL);
@@ -403,67 +394,17 @@ histogram_tool_close_callback (GtkWidget *widget,
 }
 
 static void
-histogram_tool_value_callback (GtkWidget *widget,
-			       gpointer   data)
+histogram_tool_channel_callback (GtkWidget *widget,
+				 gpointer   data)
 {
   HistogramToolDialog *htd;
 
   htd = (HistogramToolDialog *) data;
 
-  if (htd->channel != HISTOGRAM_VALUE)
-    {
-      htd->channel = HISTOGRAM_VALUE;
-      histogram_widget_channel (htd->histogram, htd->channel);
-      histogram_tool_gradient_draw (htd->gradient, HISTOGRAM_VALUE);
-    }
-}
+  gimp_menu_item_update (widget, &htd->channel);
 
-static void
-histogram_tool_red_callback (GtkWidget *widget,
-			     gpointer   data)
-{
-  HistogramToolDialog *htd;
-
-  htd = (HistogramToolDialog *) data;
-
-  if (htd->channel != HISTOGRAM_RED)
-    {
-      htd->channel = HISTOGRAM_RED;
-      histogram_widget_channel (htd->histogram, htd->channel);
-      histogram_tool_gradient_draw (htd->gradient, HISTOGRAM_RED);
-    }
-}
-
-static void
-histogram_tool_green_callback (GtkWidget *widget,
-			       gpointer   data)
-{
-  HistogramToolDialog *htd;
-
-  htd = (HistogramToolDialog *) data;
-
-  if (htd->channel != HISTOGRAM_GREEN)
-    {
-      htd->channel = HISTOGRAM_GREEN;
-      histogram_widget_channel (htd->histogram, htd->channel);
-      histogram_tool_gradient_draw (htd->gradient, HISTOGRAM_GREEN);
-    }
-}
-
-static void
-histogram_tool_blue_callback (GtkWidget *widget,
-			      gpointer   data)
-{
-  HistogramToolDialog *htd;
-
-  htd = (HistogramToolDialog *) data;
-
-  if (htd->channel != HISTOGRAM_BLUE)
-    {
-      htd->channel = HISTOGRAM_BLUE;
-      histogram_widget_channel (htd->histogram, htd->channel);
-      histogram_tool_gradient_draw (htd->gradient, HISTOGRAM_BLUE);
-    }
+  histogram_widget_channel (htd->histogram, htd->channel);
+  histogram_tool_gradient_draw (htd->gradient, htd->channel);
 }
 
 static void

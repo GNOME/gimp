@@ -7,7 +7,6 @@
 #include "color_notebook.h"
 #include "image_render.h"
 #include "dialog_handler.h"
-#include "buildmenu.h"
 #include "colormaps.h"
 #include "color_area.h"
 #include "general.h"
@@ -54,7 +53,7 @@ static void image_menu_callback (GtkWidget *, gpointer);
 static GtkWidget * create_image_menu (GimpColormapDialog *,
 				      GimpImage **,
 				      gint *,
-				      MenuItemCallback);
+				      GtkSignalFunc);
 static void frame_size_alloc_cb (GtkFrame *frame, GtkAllocation *alloc,
 				 GimpColormapDialog *ipal);
 static void window_size_req_cb  (GtkWindow *win, GtkRequisition *req,
@@ -117,6 +116,32 @@ palette_drop_color (GtkWidget *widget,
   gimp_image_colormap_changed (ipal->image, -1);
 }
 
+static void
+ipal_create_popup_menu (GimpColormapDialog *ipal)
+{
+  GtkWidget *menu;
+  GtkWidget *menu_item;
+
+  ipal->popup_menu = menu = gtk_menu_new ();
+
+  menu_item = gtk_menu_item_new_with_label (_("Add"));
+  gtk_menu_append (GTK_MENU (menu), menu_item);
+  gtk_signal_connect (GTK_OBJECT (menu_item), "activate", 
+                      GTK_SIGNAL_FUNC (ipal_add_callback),
+                      (gpointer) ipal);
+  gtk_widget_show (menu_item);
+
+  ipal->add_item = menu_item;
+
+  menu_item = gtk_menu_item_new_with_label (_("Edit"));
+  gtk_menu_append (GTK_MENU (menu), menu_item);
+
+  gtk_signal_connect (GTK_OBJECT (menu_item), "activate", 
+                      GTK_SIGNAL_FUNC (ipal_edit_callback),
+                      (gpointer) ipal);
+  gtk_widget_show (menu_item);
+}
+
 /**************************************/
 /*  Public indexed palette functions  */
 /**************************************/
@@ -131,29 +156,12 @@ ipal_create (GimpSet *context)
   GtkWidget *frame;
   GtkWidget *util_box;
   GtkWidget *label;
-  GtkWidget *arrow_hbox;
-  GtkWidget *arrow;
-  GtkWidget *ops_menu;
-  GtkWidget *menu_bar;
-  GtkWidget *menu_bar_item;
   GtkWidget *hbox;
   GtkWidget *hbox2;
   GtkWidget *entry;
   GtkWidget *evbox;
   GtkAccelGroup *accel_group;
-  gint i;
 
-  MenuItem indexed_color_ops[] =
-  {
-    { N_("Add"), 'N', GDK_CONTROL_MASK,
-      ipal_add_callback, NULL, NULL, NULL },
-    { N_("Edit"), 'E', GDK_CONTROL_MASK,
-      ipal_edit_callback, NULL, NULL, NULL },
-    { N_("Close"), 'W', GDK_CONTROL_MASK,
-      ipal_close_callback, NULL, NULL, NULL },
-    { NULL, 0, 0, NULL, NULL, NULL, NULL },
-  };
-  
   ipal = gtk_type_new (GIMP_TYPE_COLORMAP_DIALOG);
 
   /*  The action area  */
@@ -199,32 +207,10 @@ ipal_create (GimpSet *context)
 		      GTK_WIDGET (ipal->option_menu),
 		      TRUE, TRUE, 0);
   
-  /*  The indexed palette commands pulldown menu  */
-  for (i = 0 ;i < sizeof (indexed_color_ops) / sizeof (indexed_color_ops[0]) ;i++)
-    indexed_color_ops[i].user_data = ipal;
-
-  ops_menu = build_menu (indexed_color_ops, accel_group);
-  ipal->add_item = indexed_color_ops[0].widget;
-  menu_bar = gtk_menu_bar_new ();
-  gtk_box_pack_start (GTK_BOX (util_box), menu_bar, FALSE, FALSE, 0);
-
-  menu_bar_item = gtk_menu_item_new ();
-  gtk_container_add (GTK_CONTAINER (menu_bar), menu_bar_item);
-  gtk_menu_item_set_submenu (GTK_MENU_ITEM (menu_bar_item), ops_menu);
-
-  arrow_hbox = gtk_hbox_new (FALSE, 1);
-  gtk_container_add (GTK_CONTAINER (menu_bar_item), arrow_hbox);
-
-  label = gtk_label_new (_("Operations"));
-  gtk_box_pack_start (GTK_BOX (arrow_hbox), label, FALSE, FALSE, 4);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
-
-  arrow = gtk_arrow_new (GTK_ARROW_DOWN, GTK_SHADOW_OUT);
-  gtk_box_pack_start (GTK_BOX (arrow_hbox), arrow, FALSE, FALSE, 0);
-  gtk_misc_set_alignment (GTK_MISC (arrow), 0.5, 0.5);
-  
   hbox2 = gtk_hbox_new (TRUE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox2, TRUE, TRUE, 0);
+
+  ipal_create_popup_menu (ipal);
 
   /*  The palette frame  */
   evbox = gtk_event_box_new ();
@@ -881,17 +867,9 @@ ipal_area_events (GtkWidget          *widget,
 
 	case 3:
 	  ipal_set_index (ipal, col);
-	  if (! ipal->color_notebook)
-	    {
-	      ipal->color_notebook
-		= color_notebook_new (r, g, b,
-				      ipal_select_callback, ipal, FALSE);
-	    }
-	  else
-	    {
-	      color_notebook_show (ipal->color_notebook);
-	      color_notebook_set_color (ipal->color_notebook, r, g, b, 1);
-	    }
+	  gtk_menu_popup (GTK_MENU (ipal->popup_menu), NULL, NULL, 
+			  NULL, NULL, 3,
+			  bevent->time);
 	  break;
 
 	default:
@@ -924,7 +902,7 @@ typedef struct
 {
   GimpImage          **def;
   gint                *default_index;
-  MenuItemCallback     callback;
+  GtkSignalFunc        callback;
   GtkWidget           *menu;
   gint                 num_items;
   GimpImage           *id;
@@ -976,7 +954,7 @@ static GtkWidget *
 create_image_menu (GimpColormapDialog  *ipal,
 		   GimpImage          **def,
 		   gint                *default_index,
-		   MenuItemCallback     callback)
+		   GtkSignalFunc        callback)
 {
   IMCBData data;
 

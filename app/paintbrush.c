@@ -20,7 +20,6 @@
 #include <math.h>
 
 #include "appenv.h"
-#include "buildmenu.h"
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
@@ -133,15 +132,6 @@ paintbrush_gradient_toggle_callback (GtkWidget *widget,
 }
 
 static void
-paintbrush_gradient_type_callback (GtkWidget *widget,
-				   gpointer   data)
-{
-  if (paintbrush_options)
-    paintbrush_options->gradient_type = (GradientPaintMode) data;
-}
-
-
-static void
 paintbrush_options_reset (void)
 {
   PaintbrushOptions *options = paintbrush_options;
@@ -173,6 +163,9 @@ paintbrush_options_reset (void)
 	     (MIN (6, MAX (3, gimp_unit_get_digits (options->gradient_unit_d))))));
   spinbutton = gtk_object_get_data (GTK_OBJECT (options->gradient_unit_w), "set_digits");
   gtk_spin_button_set_digits (GTK_SPIN_BUTTON (spinbutton), digits);
+
+  options->gradient_type = options->gradient_type_d;
+
   gtk_option_menu_set_history (GTK_OPTION_MENU (options->gradient_type_w), 
 			       options->gradient_type_d);
 }
@@ -187,20 +180,6 @@ paintbrush_options_new (void)
   GtkWidget *table;
   GtkWidget *type_label;
   GtkWidget *spinbutton;
-  GtkWidget *menu;
-
-  static MenuItem gradient_type_items[] =
-  {
-    { N_("Once Forward"),  0, 0, paintbrush_gradient_type_callback, 
-      (gpointer) ONCE_FORWARD, NULL, NULL },
-    { N_("Once Backward"), 0, 0, paintbrush_gradient_type_callback, 
-      (gpointer) ONCE_BACKWARDS, NULL, NULL },
-    { N_("Loop Sawtooth"), 0, 0, paintbrush_gradient_type_callback, 
-      (gpointer) LOOP_SAWTOOTH, NULL, NULL },
-    { N_("Loop Triangle"), 0, 0, paintbrush_gradient_type_callback, 
-      (gpointer) LOOP_TRIANGLE, NULL, NULL },
-    { NULL, 0, 0, NULL, NULL, NULL, NULL }
-  };
 
   /*  the new paint tool options structure  */
   options = g_new (PaintbrushOptions, 1);
@@ -328,14 +307,18 @@ paintbrush_options_new (void)
   gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 3, 2, 3);
   gtk_widget_show (abox);
 
-  options->gradient_type_w = gtk_option_menu_new ();
+  options->gradient_type_w = gimp_option_menu_new2
+    (FALSE, gimp_menu_item_update,
+     &options->gradient_type, (gpointer) options->gradient_type_d,
+
+     _("Once Forward"),  (gpointer) ONCE_FORWARD, NULL,
+     _("Once Backward"), (gpointer) ONCE_BACKWARDS, NULL,
+     _("Loop Sawtooth"), (gpointer) LOOP_SAWTOOTH, NULL,
+     _("Loop Triangle"), (gpointer) LOOP_TRIANGLE, NULL,
+
+     NULL);
   gtk_container_add (GTK_CONTAINER (abox), options->gradient_type_w);
   gtk_widget_show (options->gradient_type_w);
-
-  menu = build_menu (gradient_type_items, NULL);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (options->gradient_type_w), menu);
-  gtk_option_menu_set_history (GTK_OPTION_MENU (options->gradient_type_w), 
-			       options->gradient_type_d);
 
   gtk_widget_show (table);
 

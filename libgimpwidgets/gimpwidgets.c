@@ -84,18 +84,23 @@ gimp_option_menu_new (gboolean            menu_only,
       widget_ptr = va_arg (args, GtkWidget **);
       active     = va_arg (args, gboolean);
 
-      if (label != (gpointer) 1)
-	menuitem = gtk_menu_item_new_with_label (label);
+      if (strcmp (label, "---"))
+	{
+	  menuitem = gtk_menu_item_new_with_label (label);
+
+	  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			      callback,
+			      data);
+
+	  if (user_data)
+	    gtk_object_set_user_data (GTK_OBJECT (menuitem), user_data);
+	}
       else
-	menuitem = gtk_menu_item_new ();
+	{
+	  menuitem = gtk_menu_item_new ();
+	}
 
       gtk_menu_append (GTK_MENU (menu), menuitem);
-      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			  callback,
-			  data);
-
-      if (user_data)
-	gtk_object_set_user_data (GTK_OBJECT (menuitem), user_data);
 
       if (widget_ptr)
 	*widget_ptr = menuitem;
@@ -163,18 +168,23 @@ gimp_option_menu_new2 (gboolean        menu_only,
       user_data  = va_arg (args, gpointer);
       widget_ptr = va_arg (args, GtkWidget **);
 
-      if (label != (gpointer) 1)
-	menuitem = gtk_menu_item_new_with_label (label);
+      if (strcmp (label, "---"))
+	{
+	  menuitem = gtk_menu_item_new_with_label (label);
+
+	  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			      menu_item_callback,
+			      data);
+
+	  if (user_data)
+	    gtk_object_set_user_data (GTK_OBJECT (menuitem), user_data);
+	}
       else
-	menuitem = gtk_menu_item_new ();
+	{
+	  menuitem = gtk_menu_item_new ();
+	}
 
       gtk_menu_append (GTK_MENU (menu), menuitem);
-      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			  menu_item_callback,
-			  data);
-
-      if (user_data)
-	gtk_object_set_user_data (GTK_OBJECT (menuitem), user_data);
 
       if (widget_ptr)
 	*widget_ptr = menuitem;
@@ -205,6 +215,36 @@ gimp_option_menu_new2 (gboolean        menu_only,
   return menu;
 }
 
+void
+gimp_option_menu_set_history (GtkOptionMenu *option_menu,
+			      gpointer       user_data)
+{
+  GtkWidget *menu_item;
+  GList     *list;
+  gint       history = 0;
+
+  g_return_if_fail (option_menu);
+  g_return_if_fail (GTK_IS_OPTION_MENU (option_menu));
+
+  for (list = GTK_MENU_SHELL (option_menu->menu)->children;
+       list;
+       list = g_list_next (list))
+    {
+      menu_item = GTK_WIDGET (list->data);
+
+      if (GTK_IS_LABEL (GTK_BIN (menu_item)->child) &&
+	  gtk_object_get_user_data (GTK_OBJECT (menu_item)) == user_data)
+	{
+	  break;
+	}
+
+      history++;
+    }
+
+  if (list)
+    gtk_option_menu_set_history (option_menu, history);
+}
+
 GtkWidget *
 gimp_radio_group_new (gboolean            in_frame,
 		      gchar              *frame_title,
@@ -221,7 +261,6 @@ gimp_radio_group_new (gboolean            in_frame,
 		      ...)
 {
   GtkWidget *vbox;
-  GtkWidget *frame = NULL;
   GtkWidget *button;
   GSList    *group;
 
@@ -237,13 +276,6 @@ gimp_radio_group_new (gboolean            in_frame,
 
   vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-
-  if (in_frame)
-    {
-      frame = gtk_frame_new (frame_title);
-      gtk_container_add (GTK_CONTAINER (frame), vbox);
-      gtk_widget_show (vbox);
-    }
 
   group = NULL;
 
@@ -286,7 +318,15 @@ gimp_radio_group_new (gboolean            in_frame,
   va_end (args);
 
   if (in_frame)
-    return frame;
+    {
+      GtkWidget *frame;
+
+      frame = gtk_frame_new (frame_title);
+      gtk_container_add (GTK_CONTAINER (frame), vbox);
+      gtk_widget_show (vbox);
+
+      return frame;
+    }
 
   return vbox;
 }
@@ -307,7 +347,6 @@ gimp_radio_group_new2 (gboolean        in_frame,
 		       ...)
 {
   GtkWidget *vbox;
-  GtkWidget *frame = NULL;
   GtkWidget *button;
   GSList    *group;
 
@@ -320,13 +359,6 @@ gimp_radio_group_new2 (gboolean        in_frame,
 
   vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-
-  if (in_frame)
-    {
-      frame = gtk_frame_new (frame_title);
-      gtk_container_add (GTK_CONTAINER (frame), vbox);
-      gtk_widget_show (vbox);
-    }
 
   group = NULL;
 
@@ -366,7 +398,15 @@ gimp_radio_group_new2 (gboolean        in_frame,
   va_end (args);
 
   if (in_frame)
-    return frame;
+    {
+      GtkWidget *frame;
+
+      frame = gtk_frame_new (frame_title);
+      gtk_container_add (GTK_CONTAINER (frame), vbox);
+      gtk_widget_show (vbox);
+
+      return frame;
+    }
 
   return vbox;
 }

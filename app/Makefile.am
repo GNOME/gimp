@@ -65,8 +65,6 @@ gimp_SOURCES = \
 	brushes_cmds.c		\
 	bucket_fill.c		\
 	bucket_fill.h		\
-	buildmenu.c		\
-	buildmenu.h		\
 	by_color_select.c	\
 	by_color_select.h	\
 	channel.c		\

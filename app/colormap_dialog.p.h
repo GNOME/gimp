@@ -25,6 +25,7 @@ struct _GimpColormapDialog {
 	GtkWidget* vbox;
 	GtkPreview* palette;
 	GtkWidget* image_menu;
+        GtkWidget* popup_menu;
 	GtkOptionMenu* option_menu;
 	GimpSet* context;
 	guint event_handler;

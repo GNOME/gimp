@@ -1,3 +1,32 @@
+2000-02-13  Michael Natterer  <mitch@gimp.org>
+
+	* po/POTFILES.in
+	* app/Makefile.am
+	* app/buildmenu.[ch]: removed.
+
+	* app/blend.c
+	* app/brush_select.c
+	* app/curves.c
+	* app/histogram_tool.c
+	* app/layers_dialog.c
+	* app/lc_dialog.c
+	* app/levels.c
+	* app/paint_options.h
+	* app/paintbrush.c
+	* app/tool_options.c: use the libgimp option menu
+	constructor. Removed paint_mode_menu_set_history().
+
+	* app/colormap_dialog.i.c
+	* app/colormap_dialog.p.h: use a popup menu as in the palette
+	dialog instead of a pulldown menu.
+
+	* app/channels_dialog.c: made color dnd to a channel widget work
+	again.
+
+	* libgimp/gimpwidgets.[ch]: new function
+	gimp_option_menu_set_history() which sets the history according to
+	user_data as passed to gimp_option_menu_new().
+
 Sun Feb 13 20:34:15 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/about_dialog.c

@@ -18,7 +18,6 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "appenv.h"
-#include "buildmenu.h"
 #include "colormaps.h"
 #include "drawable.h"
 #include "errors.h"
@@ -134,7 +133,6 @@ static void layers_dialog_add_layer_mask        (Layer *);
 static void layers_dialog_remove_layer_mask     (Layer *);
 
 static void paint_mode_menu_callback            (GtkWidget *, gpointer);
-static gint paint_mode_menu_get_position        (gint);
 static void opacity_scale_update                (GtkAdjustment *, gpointer);
 static void preserve_trans_update               (GtkWidget *, gpointer);
 static gint layer_list_events                   (GtkWidget *, GdkEvent *, gpointer);
@@ -208,42 +206,6 @@ static GdkPixmap *layer_pixmap[]  = { NULL, NULL, NULL };
 static GdkPixmap *mask_pixmap[]   = { NULL, NULL, NULL };
 
 static gint suspend_gimage_notify = 0;
-
-/*  the option menu items -- the paint modes  */
-static MenuItem option_items[] =
-{
-  { N_("Normal"), 0, 0,
-    paint_mode_menu_callback, (gpointer) NORMAL_MODE, NULL, NULL },
-  { N_("Dissolve"), 0, 0,
-    paint_mode_menu_callback, (gpointer) DISSOLVE_MODE, NULL, NULL },
-  { N_("Multiply (Burn)"), 0, 0,
-    paint_mode_menu_callback, (gpointer) MULTIPLY_MODE, NULL, NULL },
-  { N_("Divide (Dodge)"), 0, 0,
-    paint_mode_menu_callback, (gpointer) DIVIDE_MODE, NULL, NULL },
-  { N_("Screen"), 0, 0,
-    paint_mode_menu_callback, (gpointer) SCREEN_MODE, NULL, NULL },
-  { N_("Overlay"), 0, 0,
-    paint_mode_menu_callback, (gpointer) OVERLAY_MODE, NULL, NULL },
-  { N_("Difference"), 0, 0,
-    paint_mode_menu_callback, (gpointer) DIFFERENCE_MODE, NULL, NULL },
-  { N_("Addition"), 0, 0,
-    paint_mode_menu_callback, (gpointer) ADDITION_MODE, NULL, NULL },
-  { N_("Subtract"), 0, 0,
-    paint_mode_menu_callback, (gpointer) SUBTRACT_MODE, NULL, NULL },
-  { N_("Darken Only"), 0, 0,
-    paint_mode_menu_callback, (gpointer) DARKEN_ONLY_MODE, NULL, NULL },
-  { N_("Lighten Only"), 0, 0,
-    paint_mode_menu_callback, (gpointer) LIGHTEN_ONLY_MODE, NULL, NULL },
-  { N_("Hue"), 0, 0,
-    paint_mode_menu_callback, (gpointer) HUE_MODE, NULL, NULL },
-  { N_("Saturation"), 0, 0,
-    paint_mode_menu_callback, (gpointer) SATURATION_MODE, NULL, NULL },
-  { N_("Color"), 0, 0,
-    paint_mode_menu_callback, (gpointer) COLOR_MODE, NULL, NULL },
-  { N_("Value"), 0, 0,
-    paint_mode_menu_callback, (gpointer) VALUE_MODE, NULL, NULL },
-  { NULL, 0, 0, NULL, NULL, NULL, NULL }
-};
 
 /*  the ops buttons  */
 static GtkSignalFunc raise_layers_ext_callbacks[] = 
@@ -322,7 +284,6 @@ layers_dialog_create (void)
   GtkWidget *util_box;
   GtkWidget *button_box;
   GtkWidget *label;
-  GtkWidget *menu;
   GtkWidget *slider;
  
   if (layersD)
@@ -365,11 +326,29 @@ layers_dialog_create (void)
   gtk_box_pack_start (GTK_BOX (util_box), label, FALSE, FALSE, 2);
   gtk_widget_show (label);
 
-  menu = build_menu (option_items, NULL);
-  layersD->mode_option_menu = gtk_option_menu_new ();
+  layersD->mode_option_menu = gimp_option_menu_new2
+    (FALSE, paint_mode_menu_callback,
+     NULL, (gpointer) NORMAL_MODE,
+
+     _("Normal"),          (gpointer) NORMAL_MODE, NULL,
+     _("Dissolve"),        (gpointer) DISSOLVE_MODE, NULL,
+     _("Multiply (Burn)"), (gpointer) MULTIPLY_MODE, NULL,
+     _("Divide (Dodge)"),  (gpointer) DIVIDE_MODE, NULL,
+     _("Screen"),          (gpointer) SCREEN_MODE, NULL,
+     _("Overlay"),         (gpointer) OVERLAY_MODE, NULL,
+     _("Difference"),      (gpointer) DIFFERENCE_MODE, NULL,
+     _("Addition"),        (gpointer) ADDITION_MODE, NULL,
+     _("Subtract"),        (gpointer) SUBTRACT_MODE, NULL,
+     _("Darken Only"),     (gpointer) DARKEN_ONLY_MODE, NULL,
+     _("Lighten Only"),    (gpointer) LIGHTEN_ONLY_MODE, NULL,
+     _("Hue"),             (gpointer) HUE_MODE, NULL,
+     _("Saturation"),      (gpointer) SATURATION_MODE, NULL,
+     _("Color"),           (gpointer) COLOR_MODE, NULL,
+     _("Value"),           (gpointer) VALUE_MODE, NULL,
+
+    NULL);
   gtk_box_pack_start (GTK_BOX (util_box), layersD->mode_option_menu,
 		      FALSE, FALSE, 2);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (layersD->mode_option_menu), menu);
   gtk_widget_show (layersD->mode_option_menu);
 
   gimp_help_set_help_data (layersD->mode_option_menu, NULL, "#paint_mode_menu");
@@ -1272,29 +1251,13 @@ layers_dialog_remove_layer_mask (Layer *layer)
 /*  paint mode, opacity & preserve trans. functions  */
 /*****************************************************/
 
-static gint
-paint_mode_menu_get_position (gint mode)
-{
-  /*  FIXME: this is an ugly hack that should stay around only until 
-   *         the layers dialog is rewritten 
-   */
-  gint i;
-
-  for (i = 0; option_items[i].label != NULL; i++)
-    if (mode == (gint) (option_items[i].user_data))
-      return i;
-
-  g_message ("Unknown layer mode");
-  return 0;
-}
-
 static void
 paint_mode_menu_callback (GtkWidget *widget,
 			  gpointer   data)
 {
-  GImage *gimage;
-  Layer  *layer;
-  gint    mode;
+  GImage           *gimage;
+  Layer            *layer;
+  LayerModeEffects  mode;
 
   if (!(gimage = layersD->gimage) || !(layer = gimage->active_layer))
     return;
@@ -1302,7 +1265,8 @@ paint_mode_menu_callback (GtkWidget *widget,
   /*  If the layer has an alpha channel, set the transparency and redraw  */
   if (layer_has_alpha (layer))
     {
-      mode = (long) data;
+      mode = (LayerModeEffects) gtk_object_get_user_data (GTK_OBJECT (widget));
+
       if (layer->mode != mode)
 	{
 	  layer->mode = mode;
@@ -3165,9 +3129,8 @@ layer_widget_layer_flush (GtkWidget *widget,
        */
       gtk_adjustment_set_value (GTK_ADJUSTMENT (layersD->opacity_data),
 				(gfloat) layer_widget->layer->opacity / 2.55);
-
-      gtk_option_menu_set_history (GTK_OPTION_MENU (layersD->mode_option_menu),
-				   paint_mode_menu_get_position (layer_widget->layer->mode));
+      gimp_option_menu_set_history (GTK_OPTION_MENU (layersD->mode_option_menu),
+				    (gpointer) layer_widget->layer->mode);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (layersD->preserve_trans),
 				    (layer_widget->layer->preserve_trans) ?
 				    GTK_STATE_ACTIVE : GTK_STATE_NORMAL);

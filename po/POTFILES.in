@@ -10,7 +10,6 @@ app/brightness_contrast.c
 app/brush_edit.c
 app/brush_select.c
 app/bucket_fill.c
-app/buildmenu.c
 app/by_color_select.c
 app/channel.c
 app/channel_ops.c

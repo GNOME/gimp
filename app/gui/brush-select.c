@@ -785,10 +785,8 @@ brush_select_opacity_changed (GimpContext *context,
 			      BrushSelect *bsp)
 {
   gtk_signal_handler_block_by_data (GTK_OBJECT (bsp->opacity_data), bsp);
-
   gtk_adjustment_set_value (GTK_ADJUSTMENT (bsp->opacity_data),
 			    opacity * 100.0);
-
   gtk_signal_handler_unblock_by_data (GTK_OBJECT (bsp->opacity_data), bsp);
 
   if (bsp->callback_name)
@@ -800,8 +798,8 @@ brush_select_paint_mode_changed (GimpContext      *context,
 				 LayerModeEffects  paint_mode,
 				 BrushSelect      *bsp)
 {
-  paint_mode_menu_set_paint_mode (GTK_OPTION_MENU (bsp->option_menu),
-				  paint_mode);
+  gimp_option_menu_set_history (GTK_OPTION_MENU (bsp->option_menu),
+				(gpointer) paint_mode);
 
   if (bsp->callback_name)
     brush_change_callbacks (bsp, FALSE);
@@ -1670,16 +1668,20 @@ opacity_scale_update (GtkAdjustment *adjustment,
 
   bsp = (BrushSelect *) data;
 
+  gtk_signal_handler_block_by_data (GTK_OBJECT (bsp->context), data);
   gimp_context_set_opacity (bsp->context, adjustment->value / 100.0);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (bsp->context), data);
 }
 
 static void
 paint_mode_menu_callback (GtkWidget *widget,
 			  gpointer   data)
 {
-  LayerModeEffects paint_mode;
+  LayerModeEffects  paint_mode;
+  BrushSelect      *bsp;
 
   paint_mode = (LayerModeEffects) gtk_object_get_user_data (GTK_OBJECT (widget));
+  bsp = (BrushSelect *) data;
 
   gimp_context_set_paint_mode (((BrushSelect *) data)->context, paint_mode);
 }

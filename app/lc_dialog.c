@@ -18,7 +18,6 @@
 #include "config.h"
 
 #include "appenv.h"
-#include "buildmenu.h"
 #include "dialog_handler.h"
 #include "gimage.h"
 #include "gimpcontext.h"
@@ -56,7 +55,7 @@ static void  lc_dialog_fill_preview_with_thumb (GtkWidget *, GimpImage *,
 
 /*  FIXME: move these to a better place  */
 static GtkWidget * lc_dialog_create_image_menu          (GimpImage **, gint *,
-							 MenuItemCallback);
+							 GtkSignalFunc);
 static void        lc_dialog_create_image_menu_callback (gpointer, gpointer);
 
 /*  the main dialog structure  */
@@ -397,12 +396,12 @@ lc_dialog_update (GimpImage* gimage)
 
 typedef struct
 {
-  GImage           **def;
-  gint              *default_index;
-  MenuItemCallback   callback;
-  GtkWidget         *menu;
-  gint               num_items;
-  GImage            *id;
+  GImage        **def;
+  gint           *default_index;
+  GtkSignalFunc   callback;
+  GtkWidget      *menu;
+  gint            num_items;
+  GImage         *id;
 } IMCBData;
 
 static void
@@ -542,7 +541,8 @@ lc_dialog_create_image_menu_callback (gpointer im,
     g_strdup_printf ("%s-%d", image_name, pdb_image_to_id (gimage));
   menu_item = gtk_menu_item_new();
   gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
-		      (GtkSignalFunc) data->callback, gimage);
+		      data->callback,
+		      gimage);
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_container_add  (GTK_CONTAINER (menu_item), hbox);
   gtk_widget_show (hbox);
@@ -582,7 +582,7 @@ lc_dialog_create_image_menu_callback (gpointer im,
       gtk_object_set_data (GTK_OBJECT (menu_item), "menu_preview_gimage",
 			   gimage);
     }
-  
+
   gtk_container_add (GTK_CONTAINER (data->menu), menu_item);
 
   wlabel = gtk_label_new (menu_item_label);
@@ -597,9 +597,9 @@ lc_dialog_create_image_menu_callback (gpointer im,
 }
 
 static GtkWidget *
-lc_dialog_create_image_menu (GimpImage        **def,
-			     gint              *default_index,
-			     MenuItemCallback   callback)
+lc_dialog_create_image_menu (GimpImage     **def,
+			     gint           *default_index,
+			     GtkSignalFunc   callback)
 {
   IMCBData data;
 

@@ -143,8 +143,6 @@ static PixelRegion distR =
 /*  local function prototypes  */
 
 static void   gradient_type_callback    (GtkWidget *, gpointer);
-static void   blend_mode_callback       (GtkWidget *, gpointer);
-static void   repeat_type_callback      (GtkWidget *, gpointer);
 
 static void   blend_button_press        (Tool *, GdkEventButton *, gpointer);
 static void   blend_button_release      (Tool *, GdkEventButton *, gpointer);
@@ -195,30 +193,17 @@ static void   gradient_fill_region          (GImage *gimage, GimpDrawable *drawa
 /*  functions  */
 
 static void
-blend_mode_callback (GtkWidget *widget,
-		     gpointer   client_data)
-{
-  blend_options->blend_mode = (BlendMode) client_data;
-}
-
-static void
 gradient_type_callback (GtkWidget *widget,
-			gpointer   client_data)
+			gpointer   data)
 {
-  blend_options->gradient_type = (GradientType) client_data;
+  gimp_menu_item_update (widget, data);
+
   gtk_widget_set_sensitive (blend_options->repeat_w, 
 			    (blend_options->gradient_type < 6));
 }
 
 static void
-repeat_type_callback (GtkWidget *widget,
-		      gpointer   client_data)
-{
-  blend_options->repeat = (RepeatMode) client_data;
-}
-
-static void
-blend_options_reset ()
+blend_options_reset (void)
 {
   BlendOptions *options = blend_options;
 
@@ -228,9 +213,12 @@ blend_options_reset ()
   options->gradient_type = options->gradient_type_d;
   options->repeat        = options->repeat_d;
 
-  gtk_option_menu_set_history (GTK_OPTION_MENU (blend_options->blend_mode_w), 0);
-  gtk_option_menu_set_history (GTK_OPTION_MENU (options->gradient_type_w), 0);
-  gtk_option_menu_set_history (GTK_OPTION_MENU (blend_options->repeat_w), 0);
+  gtk_option_menu_set_history (GTK_OPTION_MENU (blend_options->blend_mode_w),
+			       blend_options->blend_mode_d);
+  gtk_option_menu_set_history (GTK_OPTION_MENU (options->gradient_type_w),
+			       blend_options->gradient_type_d);
+  gtk_option_menu_set_history (GTK_OPTION_MENU (blend_options->repeat_w),
+			       blend_options->repeat_d);
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (blend_options->offset_w),
 			    blend_options->offset_d);
@@ -248,59 +236,9 @@ blend_options_new (void)
   BlendOptions *options;
 
   GtkWidget *vbox;
-  GtkWidget *menu;
   GtkWidget *table;
   GtkWidget *scale;
   GtkWidget *frame;
-
-  static MenuItem blend_option_items[] =
-  {
-    { N_("FG to BG (RGB)"), 0, 0, blend_mode_callback,
-      (gpointer) FG_BG_RGB_MODE, NULL, NULL },
-    { N_("FG to BG (HSV)"), 0, 0, blend_mode_callback,
-      (gpointer) FG_BG_HSV_MODE, NULL, NULL },
-    { N_("FG to Transparent"), 0, 0, blend_mode_callback,
-      (gpointer) FG_TRANS_MODE, NULL, NULL },
-    { N_("Custom from Editor"), 0, 0, blend_mode_callback,
-      (gpointer) CUSTOM_MODE, NULL, NULL },
-    { NULL, 0, 0, NULL, NULL, NULL, NULL }
-  };
-  static MenuItem gradient_option_items[] =
-  {
-    { N_("Linear"), 0, 0, gradient_type_callback,
-      (gpointer) LINEAR, NULL, NULL },
-    { N_("Bi-Linear"), 0, 0, gradient_type_callback,
-      (gpointer) BILINEAR, NULL, NULL },
-    { N_("Radial"), 0, 0, gradient_type_callback,
-      (gpointer) RADIAL, NULL, NULL },
-    { N_("Square"), 0, 0, gradient_type_callback,
-      (gpointer) SQUARE, NULL, NULL },
-    { N_("Conical (symmetric)"), 0, 0, gradient_type_callback,
-      (gpointer) CONICAL_SYMMETRIC, NULL, NULL },
-    { N_("Conical (asymmetric)"), 0, 0, gradient_type_callback,
-      (gpointer) CONICAL_ASYMMETRIC, NULL, NULL },
-    { N_("Shapeburst (angular)"), 0, 0, gradient_type_callback,
-      (gpointer) SHAPEBURST_ANGULAR, NULL, NULL },
-    { N_("Shapeburst (spherical)"), 0, 0, gradient_type_callback,
-      (gpointer) SHAPEBURST_SPHERICAL, NULL, NULL },
-    { N_("Shapeburst (dimpled)"), 0, 0, gradient_type_callback,
-      (gpointer) SHAPEBURST_DIMPLED, NULL, NULL },
-    { N_("Spiral (clockwise)"), 0, 0, gradient_type_callback,
-      (gpointer) SPIRAL_CLOCKWISE, NULL, NULL },
-    { N_("Spiral (anticlockwise)"), 0, 0, gradient_type_callback,
-      (gpointer) SPIRAL_ANTICLOCKWISE, NULL, NULL },
-    { NULL, 0, 0, NULL, NULL, NULL, NULL }
-  };
-  static MenuItem repeat_option_items[] =
-  {
-    { N_("None"), 0, 0, repeat_type_callback,
-      (gpointer) REPEAT_NONE, NULL, NULL },
-    { N_("Sawtooth Wave"), 0, 0, repeat_type_callback,
-      (gpointer) REPEAT_SAWTOOTH, NULL, NULL },
-    { N_("Triangular Wave"), 0, 0, repeat_type_callback,
-      (gpointer) REPEAT_TRIANGULAR, NULL, NULL },
-    { NULL, 0, 0, NULL, NULL, NULL, NULL }
-  };
 
   /*  the new blend tool options structure  */
   options = g_new (BlendOptions, 1);
@@ -338,25 +276,52 @@ blend_options_new (void)
 		      &options->offset);
 
   /*  the blend mode menu  */
-  options->blend_mode_w = gtk_option_menu_new ();
-  menu = build_menu (blend_option_items, NULL);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (options->blend_mode_w), menu);
+  options->blend_mode_w = gimp_option_menu_new2
+    (FALSE, gimp_menu_item_update,
+     &options->blend_mode, (gpointer) options->blend_mode_d,
+
+     _("FG to BG (RGB)"),     (gpointer) FG_BG_RGB_MODE, NULL,
+     _("FG to BG (HSV)"),     (gpointer) FG_BG_HSV_MODE, NULL,
+     _("FG to Transparent"),  (gpointer) FG_TRANS_MODE, NULL,
+     _("Custom from Editor"), (gpointer) CUSTOM_MODE, NULL,
+
+     NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Blend:"), 1.0, 0.5,
 			     options->blend_mode_w, 1, TRUE);
 
   /*  the gradient type menu  */
-  options->gradient_type_w = gtk_option_menu_new ();
-  menu = build_menu (gradient_option_items, NULL);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (options->gradient_type_w), menu);
+  options->gradient_type_w = gimp_option_menu_new2
+    (FALSE, gradient_type_callback,
+     &options->gradient_type, (gpointer) options->gradient_type_d,
+
+     _("Linear"),                 (gpointer) LINEAR, NULL,
+     _("Bi-Linear"),              (gpointer) BILINEAR, NULL,
+     _("Radial"),                 (gpointer) RADIAL, NULL,
+     _("Square"),                 (gpointer) SQUARE, NULL,
+     _("Conical (symmetric)"),    (gpointer) CONICAL_SYMMETRIC, NULL,
+     _("Conical (asymmetric)"),   (gpointer) CONICAL_ASYMMETRIC, NULL,
+     _("Shapeburst (angular)"),   (gpointer) SHAPEBURST_ANGULAR, NULL,
+     _("Shapeburst (spherical)"), (gpointer) SHAPEBURST_SPHERICAL, NULL,
+     _("Shapeburst (dimpled)"),   (gpointer) SHAPEBURST_DIMPLED, NULL,
+     _("Spiral (clockwise)"),     (gpointer) SPIRAL_CLOCKWISE, NULL,
+     _("Spiral (anticlockwise)"), (gpointer) SPIRAL_ANTICLOCKWISE, NULL,
+
+     NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Gradient:"), 1.0, 0.5,
 			     options->gradient_type_w, 1, TRUE);
 
   /*  the repeat option  */
-  options->repeat_w = gtk_option_menu_new ();
-  menu = build_menu (repeat_option_items, NULL);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (options->repeat_w), menu);
+  options->repeat_w = gimp_option_menu_new2
+    (FALSE, gimp_menu_item_update,
+     &options->repeat, (gpointer) options->repeat_d,
+
+     _("None"),            (gpointer) REPEAT_NONE, NULL,
+     _("Sawtooth Wave"),   (gpointer) REPEAT_SAWTOOTH, NULL,
+     _("Triangular Wave"), (gpointer) REPEAT_TRIANGULAR, NULL,
+
+     NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Repeat:"), 1.0, 0.5,
 			     options->repeat_w, 1, TRUE);

@@ -60,6 +60,9 @@ GtkWidget * gimp_option_menu_new2  (gboolean            menu_only,
 
 				    ...);
 
+void  gimp_option_menu_set_history (GtkOptionMenu      *option_menu,
+				    gpointer            user_data);
+
 GtkWidget * gimp_radio_group_new   (gboolean            in_frame,
 				    gchar              *frame_title,
 

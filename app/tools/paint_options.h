@@ -18,7 +18,6 @@
 #ifndef __PAINT_OPTIONS_H__
 #define __PAINT_OPTIONS_H__
 
-#include "buildmenu.h"
 #include "tools.h"
 #include "tool_options.h"
 
@@ -99,11 +98,8 @@ void        paint_options_set_global       (gboolean          global);
 
 
 /*  a utility function which returns a paint mode menu  */
-GtkWidget * paint_mode_menu_new            (MenuItemCallback  callback,
+GtkWidget * paint_mode_menu_new            (GtkSignalFunc     callback,
 					    gpointer          data,
 					    LayerModeEffects  initial);
-
-void        paint_mode_menu_set_paint_mode (GtkOptionMenu    *paint_mode_menu,
-					    LayerModeEffects  paint_mode);
 
 #endif  /*  __PAINT_OPTIONS_H__  */

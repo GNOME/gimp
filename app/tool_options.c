@@ -54,8 +54,10 @@ static void
 tool_options_opacity_adjustment_update (GtkAdjustment *adjustment,
 					gpointer       data)
 {
+  gtk_signal_handler_block_by_data (GTK_OBJECT (data), adjustment);
   gimp_context_set_opacity (GIMP_CONTEXT (data),
 			    adjustment->value / 100);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (data), adjustment);
 }
 
 static void
@@ -72,11 +74,20 @@ static void
 tool_options_paint_mode_update (GtkWidget *widget,
 				gpointer   data)
 {
-  LayerModeEffects paint_mode;
+  LayerModeEffects  paint_mode;
+  PaintOptions     *options;
+  GimpContext      *context;
 
   paint_mode = (LayerModeEffects) gtk_object_get_user_data (GTK_OBJECT (widget));
+  options    = (PaintOptions *) data;
+  context    = gtk_object_get_data (GTK_OBJECT (options->paint_mode_w),
+				    "tool_context");
 
-  gimp_context_set_paint_mode (GIMP_CONTEXT (data), paint_mode);
+  gtk_signal_handler_block_by_data (GTK_OBJECT (context),
+				    options->paint_mode_w);
+  gimp_context_set_paint_mode (GIMP_CONTEXT (context), paint_mode);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (context),
+				      options->paint_mode_w);
 }
 
 static void
@@ -84,7 +95,9 @@ tool_options_paint_mode_changed (GimpContext      *context,
 				 LayerModeEffects  paint_mode,
 				 gpointer          data)
 {
-  paint_mode_menu_set_paint_mode (GTK_OPTION_MENU (data), paint_mode);
+  g_print ("tool_options_paint_mode_changed\n");
+
+  gimp_option_menu_set_history (GTK_OPTION_MENU (data), (gpointer) paint_mode);
 }
 
 /*  tool options functions  ***************************************************/
@@ -513,7 +526,7 @@ paint_options_init (PaintOptions         *options,
       gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
 
       options->paint_mode_w =
-	paint_mode_menu_new (tool_options_paint_mode_update, tool_context,
+	paint_mode_menu_new (tool_options_paint_mode_update, options,
 			     gimp_context_get_paint_mode (tool_context));
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 				 _("Mode:"), 1.0, 0.5,
@@ -625,24 +638,22 @@ paint_options_new (ToolType              tool_type,
 void
 paint_options_reset (PaintOptions *options)
 {
+  GimpContext *context;
   GimpContext *default_context;
+
+  context = (GimpContext *)
+    gtk_object_get_data (GTK_OBJECT (options->paint_mode_w), "tool_context");
 
   default_context = gimp_context_get_default ();
 
   if (options->opacity_w)
     {
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (options->opacity_w),
-				gimp_context_get_opacity (default_context) * 100);
+      gimp_context_set_opacity (context,
+				gimp_context_get_opacity (default_context));
     }
   if (options->paint_mode_w)
     {
-      GimpContext *context;
-
-      context = (GimpContext *) gtk_object_get_data (GTK_OBJECT (options->paint_mode_w), "tool_context");
-
       gimp_context_set_paint_mode (GIMP_CONTEXT (context),
-				   gimp_context_get_paint_mode (default_context));
-      gtk_option_menu_set_history (GTK_OPTION_MENU (options->paint_mode_w),
 				   gimp_context_get_paint_mode (default_context));
     }
   if (options->incremental_w)
@@ -882,7 +893,7 @@ paint_options_set_global (gboolean global)
 /*  create a paint mode menu  *************************************************/
 
 GtkWidget *
-paint_mode_menu_new (MenuItemCallback callback,
+paint_mode_menu_new (GtkSignalFunc    callback,
 		     gpointer         data,
 		     LayerModeEffects initial)
 {
@@ -911,34 +922,4 @@ paint_mode_menu_new (MenuItemCallback callback,
      NULL);
 
   return menu;
-}
-
-void
-paint_mode_menu_set_paint_mode (GtkOptionMenu    *paint_mode_menu,
-				LayerModeEffects  paint_mode)
-{
-  gint history = 0;
-
-  switch (paint_mode)
-    {
-    case NORMAL_MODE:       history =  0; break;
-    case DISSOLVE_MODE:     history =  1; break;
-    case BEHIND_MODE:       history =  2; break;
-    case MULTIPLY_MODE:     history =  3; break;
-    case DIVIDE_MODE:       history =  4; break;
-    case SCREEN_MODE:       history =  5; break;
-    case OVERLAY_MODE:      history =  6; break;
-    case DIFFERENCE_MODE:   history =  7; break;
-    case ADDITION_MODE:     history =  8; break;
-    case SUBTRACT_MODE:     history =  9; break;
-    case DARKEN_ONLY_MODE:  history = 10; break;
-    case LIGHTEN_ONLY_MODE: history = 11; break;
-    case HUE_MODE:          history = 12; break;
-    case SATURATION_MODE:   history = 13; break;
-    case COLOR_MODE:        history = 14; break;
-    case VALUE_MODE:        history = 15; break;
-    default: break;
-    }
-
-  gtk_option_menu_set_history (paint_mode_menu, history);
 }

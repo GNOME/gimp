@@ -1509,7 +1509,7 @@ channel_widget_drag_motion_callback (GtkWidget      *widget,
   ChannelWidget *dest;
   gint           dest_index;
   GtkWidget     *src_widget;
-  ChannelWidget *src;
+  ChannelWidget *src = NULL;
   gint           src_index;
   gint           difference;
 
@@ -1519,48 +1519,52 @@ channel_widget_drag_motion_callback (GtkWidget      *widget,
 
   dest = (ChannelWidget *) gtk_object_get_user_data (GTK_OBJECT (widget));
 
-  if (dest &&
-      (src_widget = gtk_drag_get_source_widget (context)))
+  if (dest)
     {
-      src
-        = (ChannelWidget *) gtk_object_get_user_data (GTK_OBJECT (src_widget));
+      src_widget = gtk_drag_get_source_widget (context);
 
-      if (src &&
-          src->channel == channelsD->active_channel)
-        {
-          src_index  = gimage_get_channel_index (channelsD->gimage,
-						 src->channel);
-          dest_index = gimage_get_channel_index (channelsD->gimage,
-						 dest->channel);
+      if (src_widget)
+	{
+	  src = (ChannelWidget *)
+	    gtk_object_get_user_data (GTK_OBJECT (src_widget));
 
-          difference = dest_index - src_index;
+	  if (src &&
+	      src->channel == channelsD->active_channel)
+	    {
+	      src_index  = gimage_get_channel_index (channelsD->gimage,
+						     src->channel);
+	      dest_index = gimage_get_channel_index (channelsD->gimage,
+						     dest->channel);
 
-          drop_type = ((y < widget->allocation.height / 2) ?
-                       GIMP_DROP_ABOVE : GIMP_DROP_BELOW);
+	      difference = dest_index - src_index;
 
-          if (difference < 0 &&
-              drop_type == GIMP_DROP_BELOW)
-            {
-              dest_index++;
-            }
-          else if (difference > 0 &&
-                   drop_type == GIMP_DROP_ABOVE)
-            {
-              dest_index--;
-            }
+	      drop_type = ((y < widget->allocation.height / 2) ?
+			   GIMP_DROP_ABOVE : GIMP_DROP_BELOW);
 
-          if (src_index != dest_index)
-            {
-              drag_action = GDK_ACTION_MOVE;
-              return_val = TRUE;
-            }
-          else
-            {
-              drop_type = GIMP_DROP_NONE;
-            }
-        }
-      else if (gtk_object_get_data (GTK_OBJECT (src_widget),
-				    "gimp_dnd_get_color_func"))
+	      if (difference < 0 &&
+		  drop_type == GIMP_DROP_BELOW)
+		{
+		  dest_index++;
+		}
+	      else if (difference > 0 &&
+		       drop_type == GIMP_DROP_ABOVE)
+		{
+		  dest_index--;
+		}
+
+	      if (src_index != dest_index)
+		{
+		  drag_action = GDK_ACTION_MOVE;
+		  return_val = TRUE;
+		}
+	      else
+		{
+		  drop_type = GIMP_DROP_NONE;
+		}
+	    }
+	}
+
+      if (!src)
 	{
 	  drag_action = GDK_ACTION_COPY;
 	  return_val = TRUE;
