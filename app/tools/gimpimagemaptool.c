@@ -186,6 +186,9 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
 
   image_map_tool = GIMP_IMAGE_MAP_TOOL (tool);
 
+  /*  set gdisp so the dialog can be hidden on display destruction  */
+  tool->gdisp = gdisp;
+
   if (! image_map_tool->shell)
     {
       GimpToolInfo *tool_info;
@@ -205,7 +208,7 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
 
                                   GIMP_STOCK_RESET,
                                   gimp_image_map_tool_reset_clicked,
-                                  image_map_tool, NULL, NULL, TRUE, FALSE,
+                                  image_map_tool, NULL, NULL, FALSE, FALSE,
 
                                   GTK_STOCK_CANCEL,
                                   gimp_image_map_tool_cancel_clicked,

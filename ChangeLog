@@ -1,3 +1,13 @@
+2002-11-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/tools-commands.c (tools_select_cmd_callback): removed
+	the old hack which sets tool->gdisp. Fixes bug #98056.
+
+	* app/tools/gimpimagemaptool.c (gimp_image_map_tool_initialize):
+	set tool->gdisp here because the hack was there for tools which
+	implement initialize() and show dialogs when selected from the
+	menu. Also fixed wrong paramater to gimp_viewable_dialog_new().
+
 2002-11-12  Sven Neumann  <sven@gimp.org>
 
 	* app/paint/gimppaintcore.c: check for NULL masks returned from

@@ -107,11 +107,4 @@ tools_select_cmd_callback (GtkWidget *widget,
   gdisp = gimp_context_get_display (context);
 
   tool_manager_initialize_active (tool_info->gimp, gdisp);
-
-  /*  setting active_tool->gdisp here is a HACK to allow the tools'
-   *  dialog windows being hidden if the tool was selected from
-   *  a tear-off-menu and there was no mouse click in the display
-   *  before deleting it
-   */
-  tool_manager_get_active (tool_info->gimp)->gdisp = gdisp;
 }
