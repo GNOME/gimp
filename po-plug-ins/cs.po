@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.1.18\n"
-"POT-Creation-Date: 2000-03-12 23:53+0100\n"
-"PO-Revision-Date: 2000-03-18 10:24+01:00\n"
+"POT-Creation-Date: 2000-03-25 14:43+0100\n"
+"PO-Revision-Date: 2000-03-25 14:58+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -47,7 +47,7 @@ msgstr "O programu"
 #: plug-ins/common/align_layers.c:420 plug-ins/common/apply_lens.c:404
 #: plug-ins/common/blinds.c:342 plug-ins/common/blur.c:622
 #: plug-ins/common/bumpmap.c:806 plug-ins/common/checkerboard.c:359
-#: plug-ins/common/colorify.c:333 plug-ins/common/colortoalpha.c:418
+#: plug-ins/common/colorify.c:333 plug-ins/common/colortoalpha.c:423
 #: plug-ins/common/compose.c:785 plug-ins/common/convmatrix.c:810
 #: plug-ins/common/csource.c:670 plug-ins/common/cubism.c:316
 #: plug-ins/common/curve_bend.c:1389 plug-ins/common/decompose.c:862
@@ -67,7 +67,7 @@ msgstr "O programu"
 #: plug-ins/common/hot.c:595 plug-ins/common/illusion.c:318
 #: plug-ins/common/iwarp.c:1080 plug-ins/common/jigsaw.c:2316
 #: plug-ins/common/jpeg.c:1609 plug-ins/common/lic.c:1020
-#: plug-ins/common/mail.c:504 plug-ins/common/mapcolor.c:338
+#: plug-ins/common/mail.c:504 plug-ins/common/mapcolor.c:578
 #: plug-ins/common/max_rgb.c:266 plug-ins/common/mblur.c:784
 #: plug-ins/common/newsprint.c:1230 plug-ins/common/nlfilt.c:359
 #: plug-ins/common/noisify.c:333 plug-ins/common/nova.c:364
@@ -128,7 +128,7 @@ msgstr "OK"
 #: plug-ins/common/apply_lens.c:406 plug-ins/common/blinds.c:344
 #: plug-ins/common/blur.c:624 plug-ins/common/bumpmap.c:808
 #: plug-ins/common/checkerboard.c:361 plug-ins/common/colorify.c:335
-#: plug-ins/common/colortoalpha.c:420 plug-ins/common/compose.c:787
+#: plug-ins/common/colortoalpha.c:425 plug-ins/common/compose.c:787
 #: plug-ins/common/convmatrix.c:814 plug-ins/common/csource.c:672
 #: plug-ins/common/cubism.c:318 plug-ins/common/curve_bend.c:1391
 #: plug-ins/common/decompose.c:864 plug-ins/common/deinterlace.c:280
@@ -148,7 +148,7 @@ msgstr "OK"
 #: plug-ins/common/illusion.c:320 plug-ins/common/iwarp.c:1082
 #: plug-ins/common/jigsaw.c:2318 plug-ins/common/jpeg.c:1611
 #: plug-ins/common/lic.c:1022 plug-ins/common/mail.c:506
-#: plug-ins/common/mapcolor.c:340 plug-ins/common/max_rgb.c:268
+#: plug-ins/common/mapcolor.c:580 plug-ins/common/max_rgb.c:268
 #: plug-ins/common/mblur.c:786 plug-ins/common/newsprint.c:1232
 #: plug-ins/common/nlfilt.c:361 plug-ins/common/noisify.c:335
 #: plug-ins/common/nova.c:366 plug-ins/common/oilify.c:464
@@ -438,13 +438,14 @@ msgstr "O cizím mapování 2"
 #: plug-ins/common/blinds.c:362 plug-ins/common/bumpmap.c:828
 #: plug-ins/common/curve_bend.c:1523 plug-ins/common/destripe.c:597
 #: plug-ins/common/emboss.c:762 plug-ins/common/exchange.c:313
-#: plug-ins/common/fractaltrace.c:759 plug-ins/common/nlfilt.c:586
-#: plug-ins/common/polar.c:964 plug-ins/common/ps.c:2789
-#: plug-ins/common/sharpen.c:567 plug-ins/common/spheredesigner.c:2258
-#: plug-ins/common/tileit.c:426 plug-ins/common/waves.c:593
-#: plug-ins/common/whirlpinch.c:847 plug-ins/flame/flame.c:1060
-#: plug-ins/gfig/gfig.c:3961 plug-ins/gflare/gflare.c:2499
-#: plug-ins/gflare/gflare.c:3507 plug-ins/gimpressionist/orientmap.c:502
+#: plug-ins/common/fractaltrace.c:759 plug-ins/common/mapcolor.c:596
+#: plug-ins/common/nlfilt.c:586 plug-ins/common/polar.c:964
+#: plug-ins/common/ps.c:2789 plug-ins/common/sharpen.c:567
+#: plug-ins/common/spheredesigner.c:2258 plug-ins/common/tileit.c:426
+#: plug-ins/common/waves.c:593 plug-ins/common/whirlpinch.c:847
+#: plug-ins/flame/flame.c:1060 plug-ins/gfig/gfig.c:3961
+#: plug-ins/gflare/gflare.c:2499 plug-ins/gflare/gflare.c:3507
+#: plug-ins/gimpressionist/orientmap.c:502
 #: plug-ins/gimpressionist/preview.c:106 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/ifscompose/ifscompose.c:912
 #: plug-ins/imagemap/imap_edit_area_info.c:287
@@ -655,7 +656,7 @@ msgstr "Lambda"
 msgid "Sierpinski"
 msgstr "Sierpinski"
 
-#: plug-ins/FractalExplorer/Dialogs.c:637 plug-ins/common/mapcolor.c:349
+#: plug-ins/FractalExplorer/Dialogs.c:637
 #: plug-ins/imagemap/imap_preferences.c:542 plug-ins/sinus/sinus.c:910
 #: plug-ins/sinus/sinus.c:928 plug-ins/sinus/sinus.c:1014
 msgid "Colors"
@@ -960,7 +961,7 @@ msgstr "Pou¾ít mapování prostøedí"
 msgid "Enable/disable environment mapping (reflection)"
 msgstr "Povolení/zákaz mapování prostøedí (odraz)"
 
-#: plug-ins/Lighting/lighting_ui.c:428
+#: plug-ins/Lighting/lighting_ui.c:428 plug-ins/MapObject/mapobject_ui.c:565
 msgid "Transparent Background"
 msgstr "Prùhledné pozadí"
 
@@ -1294,10 +1295,6 @@ msgstr "Kouli"
 msgid "Type of object to map to"
 msgstr "Typ objektu, na který se mapuje"
 
-#: plug-ins/MapObject/mapobject_ui.c:565
-msgid "Transpararent Background"
-msgstr "Prùhledné pozadí"
-
 #: plug-ins/MapObject/mapobject_ui.c:575
 msgid "Make image transparent outside object"
 msgstr "Mimo objekt bude obrázek prùhledný"
@@ -1436,7 +1433,7 @@ msgstr "Ukázat/skrýt náhledový drátový model"
 
 #. memory mapped file data
 #. must check file size
-#: plug-ins/bmp/bmpread.c:53 plug-ins/common/CEL.c:268
+#: plug-ins/bmp/bmpread.c:54 plug-ins/common/CEL.c:268
 #: plug-ins/common/gbr.c:284 plug-ins/common/gifload.c:304
 #: plug-ins/common/hrz.c:340 plug-ins/common/jpeg.c:748
 #: plug-ins/common/pat.c:263 plug-ins/common/pcx.c:318
@@ -1452,35 +1449,35 @@ msgstr "Ukázat/skrýt náhledový drátový model"
 msgid "Loading %s:"
 msgstr "Ète se %s:"
 
-#: plug-ins/bmp/bmpread.c:65
+#: plug-ins/bmp/bmpread.c:66
 #, c-format
 msgid "%s: can't open \"%s\"\n"
 msgstr "%s: nelze otevøít \"%s\"\n"
 
-#: plug-ins/bmp/bmpread.c:73
+#: plug-ins/bmp/bmpread.c:74
 #, c-format
 msgid "%s: not a valid BMP file %s\n"
 msgstr "%s: není platný BMP soubor %s\n"
 
-#: plug-ins/bmp/bmpread.c:81 plug-ins/bmp/bmpread.c:99
-#: plug-ins/bmp/bmpread.c:122
+#: plug-ins/bmp/bmpread.c:82 plug-ins/bmp/bmpread.c:99
+#: plug-ins/bmp/bmpread.c:109 plug-ins/bmp/bmpread.c:132
 #, c-format
 msgid "%s: error reading BMP file header\n"
 msgstr "%s: chyba pøi ètení hlavièky souboru BMP\n"
 
-#: plug-ins/bmp/bmpread.c:145
+#: plug-ins/bmp/bmpread.c:155
 #, c-format
 msgid "%s: too many colors: %u\n"
 msgstr "%s: pøíli¹ mnoho barev: %u\n"
 
-#: plug-ins/bmp/bmpread.c:235
+#: plug-ins/bmp/bmpread.c:245
 #, c-format
 msgid "%s: bad colormap\n"
 msgstr "%s: ¹patná barevná mapa\n"
 
 #. Create an indexed-alpha layer to hold the image...
-#: plug-ins/bmp/bmpread.c:288 plug-ins/bmp/bmpread.c:297
-#: plug-ins/bmp/bmpread.c:304 plug-ins/common/CEL.c:306
+#: plug-ins/bmp/bmpread.c:298 plug-ins/bmp/bmpread.c:307
+#: plug-ins/bmp/bmpread.c:314 plug-ins/common/CEL.c:306
 #: plug-ins/common/blinds.c:399 plug-ins/common/compose.c:545
 #: plug-ins/common/decompose.c:446 plug-ins/common/film.c:1007
 #: plug-ins/common/gbr.c:346 plug-ins/common/gifload.c:848
@@ -2300,11 +2297,11 @@ msgstr "Zprùhlednit okolí"
 msgid "Lens Refraction Index:"
 msgstr "Refrakèní index èoèek:"
 
-#: plug-ins/common/autocrop.c:67
+#: plug-ins/common/autocrop.c:71
 msgid "<Image>/Image/Transforms/Autocrop"
 msgstr "<Image>/Obrázek/Transformace/Automatické oøíznutí"
 
-#: plug-ins/common/autocrop.c:105
+#: plug-ins/common/autocrop.c:115
 msgid "Cropping..."
 msgstr "Oøezává se..."
 
@@ -2496,7 +2493,7 @@ msgstr "Koloruje se..."
 msgid "Colorify"
 msgstr "Kolorování"
 
-#: plug-ins/common/colorify.c:344 plug-ins/common/colortoalpha.c:429
+#: plug-ins/common/colorify.c:344 plug-ins/common/colortoalpha.c:434
 #: plug-ins/common/ps.c:2562 plug-ins/common/xpm.c:431
 #: plug-ins/gap/gap_mov_dialog.c:251 plug-ins/gimpressionist/color.c:51
 #: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:325
@@ -2516,21 +2513,21 @@ msgstr "Vlastní barva kolorování"
 msgid "<Image>/Filters/Colors/Color to Alpha..."
 msgstr "<Image>/Filtry/Barvy/Barva do alfy..."
 
-#: plug-ins/common/colortoalpha.c:413
+#: plug-ins/common/colortoalpha.c:418
 msgid "Color to Alpha"
 msgstr "Barva do alfy"
 
-#: plug-ins/common/colortoalpha.c:440 plug-ins/common/mail.c:542
-#: plug-ins/common/mapcolor.c:386 plug-ins/gfli/gfli.c:883
+#: plug-ins/common/colortoalpha.c:445 plug-ins/common/mail.c:542
+#: plug-ins/common/mapcolor.c:669 plug-ins/gfli/gfli.c:883
 #: plug-ins/gfli/gfli.c:952
 msgid "From:"
 msgstr "Z:"
 
-#: plug-ins/common/colortoalpha.c:445
+#: plug-ins/common/colortoalpha.c:450
 msgid "Color to Alpha Color Picker"
 msgstr "Barevná pipeta barvy do alfy"
 
-#: plug-ins/common/colortoalpha.c:453
+#: plug-ins/common/colortoalpha.c:458
 msgid "to Alpha"
 msgstr "do alfy"
 
@@ -4395,7 +4392,7 @@ msgstr "<Image>/Soubor/Poslat obrázek..."
 msgid "Send to Mail"
 msgstr "Poslat do po¹ty"
 
-#: plug-ins/common/mail.c:530 plug-ins/common/mapcolor.c:386
+#: plug-ins/common/mail.c:530 plug-ins/common/mapcolor.c:669
 #: plug-ins/gfli/gfli.c:892 plug-ins/gfli/gfli.c:961
 msgid "To:"
 msgstr "Do:"
@@ -4426,31 +4423,31 @@ msgstr "MIME"
 msgid "mail: some sort of error with the file extension or lack thereof \n"
 msgstr "po¹ta: nìjaký druh chyby pøípony souboru nebo její nepøítomnost \n"
 
-#: plug-ins/common/mapcolor.c:106
+#: plug-ins/common/mapcolor.c:142
 msgid "First Source Color"
 msgstr "První zdrojová barva"
 
-#: plug-ins/common/mapcolor.c:107
+#: plug-ins/common/mapcolor.c:143
 msgid "Second Source Color"
 msgstr "Druhá zdrojová barva"
 
-#: plug-ins/common/mapcolor.c:108
+#: plug-ins/common/mapcolor.c:144
 msgid "First Destination Color"
 msgstr "První cílová barva"
 
-#: plug-ins/common/mapcolor.c:109
+#: plug-ins/common/mapcolor.c:145
 msgid "Second Destination Color"
 msgstr "Druhá cílová barva"
 
-#: plug-ins/common/mapcolor.c:150
+#: plug-ins/common/mapcolor.c:348
 msgid "<Image>/Filters/Colors/Map/Adjust FG-BG"
 msgstr "<Image>/Filtry/Barvy/Mapování/Nastavit popøedí-pozadí"
 
-#: plug-ins/common/mapcolor.c:164
-msgid "<Image>/Filters/Colors/Map/Color Mapping..."
-msgstr "<Image>/Filtry/Barvy/Mapování/Barevné mapování..."
+#: plug-ins/common/mapcolor.c:363
+msgid "<Image>/Filters/Colors/Map/Color Range Mapping..."
+msgstr "<Image>/Filtry/Barvy/Mapování/Mapování barevného rozsahu..."
 
-#: plug-ins/common/mapcolor.c:209
+#: plug-ins/common/mapcolor.c:408 plug-ins/common/mapcolor.c:763
 msgid ""
 "Color Mapping / Adjust FG/BG:\n"
 "Cannot operate on gray/indexed images"
@@ -4458,17 +4455,25 @@ msgstr ""
 "Barevné mapování / nastavení popøedí/pozadí:\n"
 "Nelze pracovat s obrázky indexovanými/v ¹edích"
 
-#: plug-ins/common/mapcolor.c:237
+#: plug-ins/common/mapcolor.c:436
 msgid "Adjusting Foreground/Background"
 msgstr "Úprava popøedí/pozadí"
 
-#: plug-ins/common/mapcolor.c:285
+#: plug-ins/common/mapcolor.c:484
 msgid "Mapping colors"
 msgstr "Mapování barev"
 
-#: plug-ins/common/mapcolor.c:333
-msgid "Map Colors"
-msgstr "Mapování barev"
+#: plug-ins/common/mapcolor.c:573
+msgid "Map Color Range"
+msgstr "Mapování barevného rozsahu"
+
+#: plug-ins/common/mapcolor.c:622
+msgid "Source color range"
+msgstr "Zdrojový barevný rozsah"
+
+#: plug-ins/common/mapcolor.c:623
+msgid "Destination color range"
+msgstr "Cílový barevný rozsah"
 
 #: plug-ins/common/max_rgb.c:114
 msgid "<Image>/Filters/Colors/Max RGB..."
@@ -5983,11 +5988,11 @@ msgstr "<Image>/Obrázek/Alfa/Práh alfy..."
 
 #: plug-ins/common/threshold_alpha.c:146
 msgid "The layer preserves transparency."
-msgstr "Vrstva zachovává krytí."
+msgstr "Vrstva zachovává prùhlednost."
 
 #: plug-ins/common/threshold_alpha.c:152
 msgid "RGBA/GRAYA drawable is not selected."
-msgstr "Nebyla zvolena obrazovka RGBA/©EDIA."
+msgstr "Nebyla zvolena obrazovka RGBA/©EDI-A."
 
 #: plug-ins/common/threshold_alpha.c:219
 msgid "Threshold Alpha: Coloring Transparency..."
