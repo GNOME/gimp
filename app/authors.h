@@ -92,7 +92,7 @@ static gchar *authors[] =
   "Laramie Leavitt",
   "Elliot Lee",
   "Marc Lehmann",
-  "Ray Lahtiniemi",
+  "Ray Lehtiniemi",
   "Raph Levien",
   "Wing Tung Leung",
   "Adrian Likins",

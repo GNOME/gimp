@@ -1,3 +1,9 @@
+Thu Nov  9 14:29:20 PST 2000 Manish Singh <yosh@gimp.org>
+
+	* AUTHORS
+	* app/authors.h
+	* tools/authorsgen/contributors: Correct Ray Lehtiniemi's name
+
 2000-11-09  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gap/gap_lib.c: removed some debugging printf statements 
