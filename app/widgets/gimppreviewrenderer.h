@@ -78,10 +78,10 @@ struct _GimpPreviewClass
 
 
 GtkType      gimp_preview_get_type         (void);
+
 GtkWidget *  gimp_preview_new              (GimpViewable  *viewable,
 					    gint           size,
 					    gint           border_width);
-
 GtkWidget *  gimp_preview_new_full         (GimpViewable  *viewable,
 					    gint           width,
 					    gint           height,
@@ -90,13 +90,17 @@ GtkWidget *  gimp_preview_new_full         (GimpViewable  *viewable,
 					    gboolean       clickable,
 					    gboolean       show_popup);
 
+void         gimp_preview_set_size         (GimpPreview   *preview,
+					    gint           size);
+void         gimp_preview_set_size_full    (GimpPreview   *preview,
+					    gint           width,
+					    gint           height,
+					    gint           border_width);
+
 void         gimp_preview_set_viewable     (GimpPreview   *preview,
 					    GimpViewable  *viewable);
 void         gimp_preview_set_context      (GimpPreview   *preview,
 					    GimpContext   *context);
-void         gimp_preview_set_size         (GimpPreview   *preview,
-					    gint           width,
-					    gint           height);
 
 
 /*  private  */

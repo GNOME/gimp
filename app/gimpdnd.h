@@ -39,6 +39,14 @@ enum
   GIMP_DND_TYPE_TOOL
 };
 
+typedef enum
+{
+  GIMP_DROP_NONE,
+  GIMP_DROP_ABOVE,
+  GIMP_DROP_BELOW
+} GimpDropType;
+
+
 #define GIMP_TARGET_URI_LIST \
         { "text/uri-list", 0, GIMP_DND_TYPE_URI_LIST }
 
@@ -84,12 +92,6 @@ enum
 #define GIMP_TARGET_TOOL \
         { "GIMP_TOOL", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_TOOL }
 
-typedef enum
-{
-  GIMP_DROP_NONE,
-  GIMP_DROP_ABOVE,
-  GIMP_DROP_BELOW
-} GimpDropType;
 
 /*  color dnd functions  */
 
@@ -106,6 +108,26 @@ void  gimp_dnd_color_source_set    (GtkWidget            *widget,
 void  gimp_dnd_color_dest_set      (GtkWidget            *widget,
 				    GimpDndDropColorFunc  set_color_func,
 				    gpointer              data);
+void  gimp_dnd_color_dest_unset    (GtkWidget            *widget);
+
+
+/*  GimpViewable (by GtkType) dnd functions  */
+
+typedef void (* GimpDndDropViewableFunc) (GtkWidget     *widget,
+					  GimpViewable  *viewable,
+					  gpointer       data);
+
+void  gimp_gtk_drag_dest_set_by_type (GtkWidget               *widget,
+				      GtkDestDefaults          flags,
+				      GtkType                  type,
+				      GdkDragAction            actions);
+void  gimp_dnd_viewable_dest_set     (GtkWidget               *widget,
+				      GtkType                  type,
+				      GimpDndDropViewableFunc  set_viewable_func,
+				      gpointer                 data);
+void  gimp_dnd_viewable_dest_unset   (GtkWidget               *widget,
+				      GtkType                  type);
+
 
 /*  brush dnd functions  */
 
@@ -121,6 +143,8 @@ void  gimp_dnd_brush_source_set    (GtkWidget            *widget,
 void  gimp_dnd_brush_dest_set      (GtkWidget            *widget,
 				    GimpDndDropBrushFunc  set_brush_func,
 				    gpointer              data);
+void  gimp_dnd_brush_dest_unset    (GtkWidget            *widget);
+
 
 /*  pattern dnd functions  */
 
@@ -136,6 +160,8 @@ void  gimp_dnd_pattern_source_set  (GtkWidget              *widget,
 void  gimp_dnd_pattern_dest_set    (GtkWidget              *widget,
 				    GimpDndDropPatternFunc  set_pattern_func,
 				    gpointer                data);
+void  gimp_dnd_pattern_dest_unset  (GtkWidget              *widget);
+
 
 /*  gradient dnd functions  */
 
@@ -151,6 +177,8 @@ void  gimp_dnd_gradient_source_set (GtkWidget               *widget,
 void  gimp_dnd_gradient_dest_set   (GtkWidget               *widget,
 				    GimpDndDropGradientFunc  set_gradient_func,
 				    gpointer                 data);
+void  gimp_dnd_gradient_dest_unset (GtkWidget               *widget);
+
 
 /*  palette dnd functions  */
 
@@ -166,6 +194,8 @@ void  gimp_dnd_palette_source_set  (GtkWidget              *widget,
 void  gimp_dnd_palette_dest_set    (GtkWidget              *widget,
 				    GimpDndDropPaletteFunc  set_palette_func,
 				    gpointer                data);
+void  gimp_dnd_palette_dest_unset  (GtkWidget              *widget);
+
 
 /*  tool dnd functions  */
 
@@ -181,6 +211,8 @@ void  gimp_dnd_tool_source_set     (GtkWidget           *widget,
 void  gimp_dnd_tool_dest_set       (GtkWidget           *widget,
 				    GimpDndDropToolFunc  set_tool_func,
 				    gpointer             data);
+void  gimp_dnd_tool_dest_unset     (GtkWidget           *widget);
+
 
 /*  drawable dnd functions  */
 
@@ -188,8 +220,10 @@ void  gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
 					  GdkDragContext *context,
 					  GimpDrawable   *drawable);
 
+
 /*  file / url dnd functions  */
 
 void  gimp_dnd_file_dest_set (GtkWidget *widget);
+
 
 #endif /* __GIMP_DND_H__ */

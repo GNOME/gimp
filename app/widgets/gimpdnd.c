@@ -488,6 +488,27 @@ gimp_dnd_data_dest_set (GimpDndDataType  data_type,
 		       set_data_data);
 }
 
+static void
+gimp_dnd_data_dest_unset (GimpDndDataType  data_type,
+			  GtkWidget       *widget)
+{
+  gboolean drop_connected;
+
+  drop_connected =
+    (gboolean) gtk_object_get_data (GTK_OBJECT (widget),
+				    "gimp_dnd_drop_connected");
+
+  if (! drop_connected)
+    return;
+
+  gtk_object_set_data (GTK_OBJECT (widget),
+		       dnd_data_defs[data_type].set_data_func_name,
+		       NULL);
+  gtk_object_set_data (GTK_OBJECT (widget),
+		       dnd_data_defs[data_type].set_data_data_name,
+		       NULL);
+}
+
 /*************************/
 /*  color dnd functions  */
 /*************************/
@@ -587,6 +608,105 @@ gimp_dnd_color_dest_set (GtkWidget            *widget,
 			  data);
 }
 
+void
+gimp_dnd_color_dest_unset (GtkWidget *widget)
+{
+  gimp_dnd_data_dest_unset (GIMP_DND_DATA_COLOR, widget);
+}
+
+/*********************************************/
+/*  GimpViewable (by GtkType) dnd functions  */
+/*********************************************/
+
+void
+gimp_gtk_drag_dest_set_by_type (GtkWidget       *widget,
+				GtkDestDefaults  flags,
+				GtkType          type,
+				GdkDragAction    actions)
+{
+  const GtkTargetEntry *target_table = NULL;
+  guint                 n_targets    = 0;
+
+  static const GtkTargetEntry brush_target_table[] =
+  {
+    GIMP_TARGET_BRUSH
+  };
+  static const guint brush_n_targets = (sizeof (brush_target_table) /
+					sizeof (brush_target_table[0]));
+
+  static const GtkTargetEntry pattern_target_table[] =
+  {
+    GIMP_TARGET_PATTERN
+  };
+  static const guint pattern_n_targets = (sizeof (pattern_target_table) /
+					  sizeof (pattern_target_table[0]));
+
+  if (type == GIMP_TYPE_BRUSH)
+    {
+      target_table = brush_target_table;
+      n_targets    = brush_n_targets;
+    }
+  else if (type == GIMP_TYPE_PATTERN)
+    {
+      target_table = pattern_target_table;
+      n_targets    = pattern_n_targets;
+    }
+  else
+    {
+      g_warning ("%s(): unsupported GtkType", G_GNUC_FUNCTION);
+    }
+
+  if (target_table && n_targets)
+    {
+      gtk_drag_dest_set (widget, flags,
+			 target_table,
+			 n_targets,
+			 actions);
+    }
+}
+
+void
+gimp_dnd_viewable_dest_set (GtkWidget               *widget,
+			    GtkType                  type,
+			    GimpDndDropViewableFunc  set_viewable_func,
+			    gpointer                 data)
+{
+  if (type == GIMP_TYPE_BRUSH)
+    {
+      gimp_dnd_brush_dest_set (widget,
+			       (GimpDndDropBrushFunc) set_viewable_func,
+			       data);
+    }
+  else if (type == GIMP_TYPE_PATTERN)
+    {
+      gimp_dnd_pattern_dest_set (widget,
+				 (GimpDndDropPatternFunc) set_viewable_func,
+				 data);
+    }
+  else
+    {
+      g_warning ("%s(): unsupported GtkType", G_GNUC_FUNCTION);
+    }
+}
+
+void
+gimp_dnd_viewable_dest_unset (GtkWidget *widget,
+			      GtkType    type)
+{
+  if (type == GIMP_TYPE_BRUSH)
+    {
+      gimp_dnd_brush_dest_unset (widget);
+    }
+  else if (type == GIMP_TYPE_PATTERN)
+    {
+      gimp_dnd_pattern_dest_unset (widget);
+    }
+  else
+    {
+      g_warning ("%s(): unsupported GtkType", G_GNUC_FUNCTION);
+    }
+}
+
 /*************************/
 /*  brush dnd functions  */
 /*************************/
@@ -684,6 +804,12 @@ gimp_dnd_brush_dest_set (GtkWidget            *widget,
 			  data);
 }
 
+void
+gimp_dnd_brush_dest_unset (GtkWidget *widget)
+{
+  gimp_dnd_data_dest_unset (GIMP_DND_DATA_BRUSH, widget);
+}
+
 /***************************/
 /*  pattern dnd functions  */
 /***************************/
@@ -779,6 +905,12 @@ gimp_dnd_pattern_dest_set (GtkWidget              *widget,
   gimp_dnd_data_dest_set (GIMP_DND_DATA_PATTERN, widget,
 			  GTK_SIGNAL_FUNC (set_pattern_func),
 			  data);
+}
+
+void
+gimp_dnd_pattern_dest_unset (GtkWidget *widget)
+{
+  gimp_dnd_data_dest_unset (GIMP_DND_DATA_PATTERN, widget);
 }
 
 /****************************/
@@ -882,6 +1014,12 @@ gimp_dnd_gradient_dest_set (GtkWidget               *widget,
 			  data);
 }
 
+void
+gimp_dnd_gradient_dest_unset (GtkWidget *widget)
+{
+  gimp_dnd_data_dest_unset (GIMP_DND_DATA_GRADIENT, widget);
+}
+
 /***************************/
 /*  palette dnd functions  */
 /***************************/
@@ -932,6 +1070,12 @@ gimp_dnd_palette_dest_set (GtkWidget              *widget,
   gimp_dnd_data_dest_set (GIMP_DND_DATA_PALETTE, widget,
 			  GTK_SIGNAL_FUNC (set_palette_func),
 			  data);
+}
+
+void
+gimp_dnd_palette_dest_unset (GtkWidget *widget)
+{
+  gimp_dnd_data_dest_unset (GIMP_DND_DATA_PALETTE, widget);
 }
 
 /************************/
@@ -1027,6 +1171,12 @@ gimp_dnd_tool_dest_set (GtkWidget           *widget,
   gimp_dnd_data_dest_set (GIMP_DND_DATA_TOOL, widget,
 			  GTK_SIGNAL_FUNC (set_tool_func),
 			  data);
+}
+
+void
+gimp_dnd_tool_dest_unset (GtkWidget *widget)
+{
+  gimp_dnd_data_dest_unset (GIMP_DND_DATA_TOOL, widget);
 }
 
 /****************************/
@@ -1265,4 +1415,3 @@ gimp_dnd_file_dest_set (GtkWidget *widget)
                       GTK_SIGNAL_FUNC (gimp_dnd_file_drag_data_received),
                       widget);
 }
-

@@ -42,8 +42,7 @@ struct _GimpContainerView
 
   GHashTable    *hash_table;
 
-  gint           preview_width;
-  gint           preview_height;
+  gint           preview_size;
 };
 
 struct _GimpContainerViewClass
@@ -71,8 +70,7 @@ void      gimp_container_view_set_container    (GimpContainerView *view,
 void      gimp_container_view_set_context      (GimpContainerView *view,
 						GimpContext       *context);
 void      gimp_container_view_set_preview_size (GimpContainerView *view,
-						gint               width,
-						gint               height);
+						gint               preview_size);
 void      gimp_container_view_select_item      (GimpContainerView *view,
 						GimpViewable      *viewable);
 

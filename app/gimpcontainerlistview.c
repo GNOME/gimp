@@ -155,8 +155,7 @@ gimp_container_list_view_destroy (GtkObject *object)
 GtkWidget *
 gimp_container_list_view_new (GimpContainer *container,
 			      GimpContext   *context,
-			      gint           preview_width,
-			      gint           preview_height,
+			      gint           preview_size,
 			      gint           min_items_x,
 			      gint           min_items_y)
 {
@@ -167,8 +166,7 @@ gimp_container_list_view_new (GimpContainer *container,
   g_return_val_if_fail (container != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
   g_return_val_if_fail (! context || GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (preview_width  > 0 && preview_width  <= 64, NULL);
-  g_return_val_if_fail (preview_height > 0 && preview_height <= 64, NULL);
+  g_return_val_if_fail (preview_size > 0 && preview_size <= 64, NULL);
   g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, NULL);
   g_return_val_if_fail (min_items_y > 0 && min_items_y <= 64, NULL);
 
@@ -176,8 +174,7 @@ gimp_container_list_view_new (GimpContainer *container,
 
   view = GIMP_CONTAINER_VIEW (list_view);
 
-  view->preview_width  = preview_width;
-  view->preview_height = preview_height;
+  view->preview_size = preview_size;
 
   window_border =
     GTK_SCROLLED_WINDOW (list_view->scrolled_win)->vscrollbar->requisition.width +
@@ -185,8 +182,8 @@ gimp_container_list_view_new (GimpContainer *container,
     list_view->scrolled_win->style->klass->xthickness * 4;
 
   gtk_widget_set_usize (list_view->gtk_list->parent,
-			(preview_width  + 2) * min_items_x + window_border,
-			(preview_height + 2) * min_items_y + window_border);
+			(preview_size + 2) * min_items_x + window_border,
+			(preview_size + 2) * min_items_y + window_border);
 
   gimp_container_view_set_container (view, container);
 
@@ -222,11 +219,7 @@ gimp_container_list_view_insert_item (GimpContainerView *view,
   gtk_container_add (GTK_CONTAINER (list_item), hbox);
   gtk_widget_show (hbox);
 
-  preview = gimp_preview_new_full (viewable,
-				   view->preview_width,
-				   view->preview_height,
-				   1,
-				   FALSE, FALSE, FALSE);
+  preview = gimp_preview_new (viewable, view->preview_size, 1);
   gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
 
@@ -355,9 +348,7 @@ gimp_container_list_view_set_preview_size (GimpContainerView  *view)
 
       preview = gtk_object_get_data (GTK_OBJECT (list->data), "preview");
 
-      gimp_preview_set_size (preview,
-			     view->preview_width,
-			     view->preview_height);
+      gimp_preview_set_size (preview, view->preview_size);
     }
 
   gtk_widget_queue_resize (list_view->gtk_list);

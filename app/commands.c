@@ -79,8 +79,10 @@
 /* for the example dialogs */
 #include "brushes.h"
 #include "patterns.h"
+#include "gimpcontainer.h"
 #include "gimpcontainerlistview.h"
 #include "gimpcontainergridview.h"
+#include "gimpdnd.h"
 #include "gimppreview.h"
 
 
@@ -1320,33 +1322,77 @@ dialogs_module_browser_cmd_callback (GtkWidget *widget,
   gtk_widget_show (module_browser);
 }
 
+/*****  Container View Test Dialogs  *****/
+
 static void
 container_view_scale_callback (GtkAdjustment     *adj,
 			       GimpContainerView *view)
 {
-  gimp_container_view_set_preview_size (view,
-					ROUND (adj->value),
-					ROUND (adj->value));
+  gimp_container_view_set_preview_size (view, ROUND (adj->value));
+}
+
+static void
+drop_viewable_callback (GtkWidget    *widget,
+			GimpViewable *viewable,
+			gpointer      data)
+{
+  GimpContainerView *view;
+
+  view = GIMP_CONTAINER_VIEW (widget);
+
+  gimp_context_set_by_type (view->context,
+			    view->container->children_type,
+			    GIMP_OBJECT (viewable));
 }
 
 static void
 brushes_callback (GtkWidget         *widget,
 		  GimpContainerView *view)
 {
+  gtk_drag_dest_unset (GTK_WIDGET (view));
+  gimp_dnd_viewable_dest_unset (GTK_WIDGET (view),
+				view->container->children_type);
+
   gimp_container_view_set_container (view, global_brush_list);
+
+  gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (view),
+				  GTK_DEST_DEFAULT_ALL,
+				  view->container->children_type,
+				  GDK_ACTION_COPY);
+  gimp_dnd_viewable_dest_set (GTK_WIDGET (view),
+			      view->container->children_type,
+			      drop_viewable_callback,
+			      NULL);
 }
 
 static void
 patterns_callback (GtkWidget         *widget,
 		   GimpContainerView *view)
 {
+  gtk_drag_dest_unset (GTK_WIDGET (view));
+  gimp_dnd_viewable_dest_unset (GTK_WIDGET (view),
+				view->container->children_type);
+
   gimp_container_view_set_container (view, global_pattern_list);
+
+  gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (view),
+				  GTK_DEST_DEFAULT_ALL,
+				  view->container->children_type,
+				  GDK_ACTION_COPY);
+  gimp_dnd_viewable_dest_set (GTK_WIDGET (view),
+			      view->container->children_type,
+			      drop_viewable_callback,
+			      NULL);
 }
 
 static void
 images_callback (GtkWidget         *widget,
 		 GimpContainerView *view)
 {
+  gtk_drag_dest_unset (GTK_WIDGET (view));
+  gimp_dnd_viewable_dest_unset (GTK_WIDGET (view),
+				view->container->children_type);
+
   gimp_container_view_set_container (view, image_context);
 }
 
@@ -1364,9 +1410,7 @@ container_view_new (gboolean       list,
 		    gchar         *title,
 		    GimpContainer *container,
 		    GimpContext   *context,
-		    gint           preview_width,
-		    gint           preview_height,
-		    gboolean       multi)
+		    gint           preview_size)
 {
   GtkWidget *dialog;
   GtkWidget *view;
@@ -1377,107 +1421,168 @@ container_view_new (gboolean       list,
     {
       view = gimp_container_list_view_new (container,
 					   context,
-					   preview_width,
-					   preview_height,
+					   preview_size,
 					   5, 5);
     }
   else
     {
       view = gimp_container_grid_view_new (container,
 					   context,
-					   preview_width,
-					   preview_height,
+					   preview_size,
 					   5, 5);
     }
 
-  if (! multi)
-    {
-      dialog = gimp_dialog_new (title, "test",
-				gimp_standard_help_func,
-				NULL,
-				GTK_WIN_POS_MOUSE,
-				FALSE, TRUE, TRUE,
+  dialog = gimp_dialog_new (title, "test",
+			    gimp_standard_help_func,
+			    NULL,
+			    GTK_WIN_POS_MOUSE,
+			    FALSE, TRUE, TRUE,
 
-				"_delete_event_", gtk_widget_destroy,
-				NULL, 1, NULL, TRUE, TRUE,
+			    "_delete_event_", gtk_widget_destroy,
+			    NULL, 1, NULL, TRUE, TRUE,
 
-				NULL);
+			    NULL);
 
-      gtk_widget_hide (GTK_DIALOG (dialog)->action_area);
-      /*
-      gtk_widget_hide (GTK_WIDGET (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_BIN (dialog)->child)), 1)));
-      */
-    }
-  else
-    {
-      GtkWidget *preview;
-
-      dialog = gimp_dialog_new (title, "test",
-				gimp_standard_help_func,
-				NULL,
-				GTK_WIN_POS_MOUSE,
-				FALSE, TRUE, TRUE,
-
-				"Images", images_callback,
-				view, NULL, NULL, FALSE, FALSE,
-
-				/*
-				"NULL", null_callback,
-				view, NULL, NULL, FALSE, FALSE,
-				*/
-
-				"_delete_event_", gtk_widget_destroy,
-				NULL, 1, NULL, FALSE, TRUE,
-
-				NULL);
-
-      preview =
-	gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_brush (context)),
-			       32, 32, 1,
-			       FALSE, TRUE, FALSE);
-      gimp_preview_set_context (GIMP_PREVIEW (preview), context);
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area), preview,
-			  FALSE, FALSE, 0);
-      gtk_widget_show (preview);
-
-      gtk_signal_connect (GTK_OBJECT (preview), "clicked",
-			  GTK_SIGNAL_FUNC (brushes_callback),
-			  view);
-
-      gtk_signal_connect_object_while_alive
-	(GTK_OBJECT (context),
-	 "brush_changed",
-	 GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
-	 GTK_OBJECT (preview));
-
-      preview =
-	gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_pattern (context)),
-			       32, 32, 1,
-			       FALSE, TRUE, FALSE);
-      gimp_preview_set_context (GIMP_PREVIEW (preview), context);
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area), preview,
-			  FALSE, FALSE, 0);
-      gtk_widget_show (preview);
-
-      gtk_signal_connect (GTK_OBJECT (preview), "clicked",
-			  GTK_SIGNAL_FUNC (patterns_callback),
-			  view);
-
-      gtk_signal_connect_object_while_alive
-	(GTK_OBJECT (context),
-	 "pattern_changed",
-	 GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
-	 GTK_OBJECT (preview));
-    }
+  gtk_widget_hide (GTK_DIALOG (dialog)->action_area);
+  /*
+    gtk_widget_hide (GTK_WIDGET (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_BIN (dialog)->child)), 1)));
+  */
 
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), view);
   gtk_widget_show (view);
 
-  if (multi)
-    adjustment = gtk_adjustment_new (preview_width, 16, 64, 4, 4, 0);
-  else
-    adjustment = gtk_adjustment_new (preview_width, 16, 257, 16, 16, 16);
+  adjustment = gtk_adjustment_new (preview_size, 16, 256, 16, 16, 0);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), scale,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (scale);
 
+  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
+		      GTK_SIGNAL_FUNC (container_view_scale_callback),
+		      view);
+
+  gtk_widget_show (dialog);
+}
+
+static void
+container_multi_view_new (gboolean       list,
+			  gchar         *title,
+			  GimpContainer *container,
+			  GimpContext   *context,
+			  gint           preview_size)
+{
+  GtkWidget *dialog;
+  GtkWidget *view;
+  GtkObject *adjustment;
+  GtkWidget *scale;
+  GtkWidget *preview;
+
+  if (list)
+    {
+      view = gimp_container_list_view_new (container,
+					   context,
+					   preview_size,
+					   5, 5);
+    }
+  else
+    {
+      view = gimp_container_grid_view_new (container,
+					   context,
+					   preview_size,
+					   5, 5);
+    }
+
+  gimp_gtk_drag_dest_set_by_type (view,
+				  GTK_DEST_DEFAULT_ALL,
+				  container->children_type,
+				  GDK_ACTION_COPY);
+  gimp_dnd_viewable_dest_set (GTK_WIDGET (view),
+			      GIMP_CONTAINER_VIEW (view)->container->children_type,
+			      drop_viewable_callback,
+			      NULL);
+
+  dialog = gimp_dialog_new (title, "test",
+			    gimp_standard_help_func,
+			    NULL,
+			    GTK_WIN_POS_MOUSE,
+			    FALSE, TRUE, TRUE,
+
+			    "Images", images_callback,
+			    view, NULL, NULL, FALSE, FALSE,
+
+				/*
+				  "NULL", null_callback,
+				  view, NULL, NULL, FALSE, FALSE,
+				*/
+
+			    "_delete_event_", gtk_widget_destroy,
+			    NULL, 1, NULL, FALSE, TRUE,
+
+			    NULL);
+
+  preview =
+    gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_brush (context)),
+			   32, 32, 1,
+			   FALSE, TRUE, FALSE);
+  gimp_preview_set_context (GIMP_PREVIEW (preview), context);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area), preview,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (preview);
+
+  gtk_signal_connect (GTK_OBJECT (preview), "clicked",
+		      GTK_SIGNAL_FUNC (brushes_callback),
+		      view);
+
+  gtk_signal_connect_object_while_alive
+    (GTK_OBJECT (context),
+     "brush_changed",
+     GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
+     GTK_OBJECT (preview));
+
+  preview =
+    gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_pattern (context)),
+			   32, 32, 1,
+			   FALSE, TRUE, FALSE);
+  gimp_preview_set_context (GIMP_PREVIEW (preview), context);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area), preview,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (preview);
+
+  gtk_signal_connect (GTK_OBJECT (preview), "clicked",
+		      GTK_SIGNAL_FUNC (patterns_callback),
+		      view);
+
+  gtk_signal_connect_object_while_alive
+    (GTK_OBJECT (context),
+     "pattern_changed",
+     GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
+     GTK_OBJECT (preview));
+
+  /*
+  preview =
+    gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_image (context)),
+			   32, 32, 1,
+			   FALSE, TRUE, FALSE);
+  gimp_preview_set_context (GIMP_PREVIEW (preview), context);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area), preview,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (preview);
+
+  gtk_signal_connect (GTK_OBJECT (preview), "clicked",
+		      GTK_SIGNAL_FUNC (images_callback),
+		      view);
+
+  gtk_signal_connect_object_while_alive
+    (GTK_OBJECT (context),
+     "pattern_changed",
+     GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
+     GTK_OBJECT (preview));
+  */
+
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), view);
+  gtk_widget_show (view);
+
+  adjustment = gtk_adjustment_new (preview_size, 16, 64, 4, 4, 0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), scale,
 		      FALSE, FALSE, 0);
@@ -1497,8 +1602,7 @@ dialogs_test_image_container_list_view_cmd_callback (GtkWidget *widget,
   container_view_new (TRUE, "Image List",
 		      image_context,
 		      gimp_context_get_user (),
-		      64, 64,
-		      FALSE);
+		      64);
 }
 
 void
@@ -1508,8 +1612,7 @@ dialogs_test_pattern_container_list_view_cmd_callback (GtkWidget *widget,
   container_view_new (TRUE, "Pattern List",
 		      global_pattern_list,
 		      gimp_context_get_user (),
-		      24, 24,
-		      FALSE);
+		      24);
 }
 
 void
@@ -1519,8 +1622,7 @@ dialogs_test_brush_container_list_view_cmd_callback (GtkWidget *widget,
   container_view_new (TRUE, "Brush List",
 		      global_brush_list,
 		      gimp_context_get_user (),
-		      24, 24,
-		      FALSE);
+		      24);
 }
 
 void
@@ -1530,8 +1632,7 @@ dialogs_test_image_container_grid_view_cmd_callback (GtkWidget *widget,
   container_view_new (FALSE, "Image Grid",
 		      image_context,
 		      gimp_context_get_user (),
-		      64, 64,
-		      FALSE);
+		      64);
 }
 
 void
@@ -1541,8 +1642,7 @@ dialogs_test_pattern_container_grid_view_cmd_callback (GtkWidget *widget,
   container_view_new (FALSE, "Pattern Grid",
 		      global_pattern_list,
 		      gimp_context_get_user (),
-		      24, 24,
-		      FALSE);
+		      24);
 }
 
 void
@@ -1552,30 +1652,27 @@ dialogs_test_brush_container_grid_view_cmd_callback (GtkWidget *widget,
   container_view_new (FALSE, "Brush Grid",
 		      global_brush_list,
 		      gimp_context_get_user (),
-		      32, 32,
-		      FALSE);
+		      32);
 }
 
 void
 dialogs_test_multi_container_list_view_cmd_callback (GtkWidget *widget,
 						     gpointer   client_data)
 {
-  container_view_new (TRUE, "Multi List",
-		      global_brush_list,
-		      gimp_context_get_user (),
-		      24, 24,
-		      TRUE);
+  container_multi_view_new (TRUE, "Multi List",
+			    global_brush_list,
+			    gimp_context_get_user (),
+			    24);
 }
 
 void
 dialogs_test_multi_container_grid_view_cmd_callback (GtkWidget *widget,
 						     gpointer   client_data)
 {
-  container_view_new (FALSE, "Multi Grid",
-		      global_brush_list,
-		      gimp_context_get_user (),
-		      32, 32,
-		      TRUE);
+  container_multi_view_new (FALSE, "Multi Grid",
+			    global_brush_list,
+			    gimp_context_get_user (),
+			    32);
 }
 
 /*****  Help  *****/

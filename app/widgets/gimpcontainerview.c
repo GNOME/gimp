@@ -170,8 +170,7 @@ gimp_container_view_init (GimpContainerView *view)
 
   view->hash_table     = g_hash_table_new (g_direct_hash, g_direct_equal);
 
-  view->preview_width  = 0;
-  view->preview_height = 0;
+  view->preview_size   = 0;
 }
 
 static void
@@ -307,16 +306,13 @@ gimp_container_view_set_context (GimpContainerView *view,
 
 void
 gimp_container_view_set_preview_size (GimpContainerView *view,
-				      gint               width,
-				      gint               height)
+				      gint               preview_size)
 {
   g_return_if_fail (view != NULL);
   g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
-  g_return_if_fail (width  > 0 && width  <= 256 /* FIXME: 64 */);
-  g_return_if_fail (height > 0 && height <= 256 /* FIXME: 64 */);
+  g_return_if_fail (preview_size > 0 && preview_size <= 256 /* FIXME: 64 */);
 
-  view->preview_width  = width;
-  view->preview_height = height;
+  view->preview_size = preview_size;
 
   gtk_signal_emit (GTK_OBJECT (view), view_signals[SET_PREVIEW_SIZE]);
 }

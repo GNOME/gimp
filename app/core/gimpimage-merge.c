@@ -4050,6 +4050,9 @@ gimp_image_get_new_preview (GimpViewable *viewable,
       y = (gint) RINT (ratio * off_y); 
       w = (gint) RINT (ratio * gimp_drawable_width (GIMP_DRAWABLE (layer))); 
       h = (gint) RINT (ratio * gimp_drawable_height (GIMP_DRAWABLE (layer))); 
+
+      w = MAX (1, width);
+      h = MAX (1, height);
       
       x1 = CLAMP (x, 0, width);
       y1 = CLAMP (y, 0, height);

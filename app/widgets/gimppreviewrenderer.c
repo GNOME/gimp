@@ -310,6 +310,41 @@ gimp_preview_new_full (GimpViewable *viewable,
 }
 
 void
+gimp_preview_set_size (GimpPreview *preview,
+		       gint         preview_size)
+{
+  g_return_if_fail (preview != NULL);
+  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+  g_return_if_fail (preview_size > 0 && preview_size <= 256);
+
+  gimp_preview_set_size_full (preview,
+			      preview_size,
+			      preview_size,
+			      preview->border_width);
+}
+
+void
+gimp_preview_set_size_full (GimpPreview *preview,
+			    gint         width,
+			    gint         height,
+			    gint         border_width)
+{
+  g_return_if_fail (preview != NULL);
+  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+  g_return_if_fail (width  > 0 && width  <= 256);
+  g_return_if_fail (height > 0 && height <= 256);
+  g_return_if_fail (border_width >= 0 && border_width <= 16);
+
+  preview->width        = width;
+  preview->height       = height;
+  preview->border_width = border_width;
+
+  gtk_preview_size (GTK_PREVIEW (preview),
+		    width  + 2 * preview->border_width,
+		    height + 2 * preview->border_width);
+}
+
+void
 gimp_preview_set_viewable (GimpPreview  *preview,
 			   GimpViewable *viewable)
 {
@@ -354,24 +389,6 @@ gimp_preview_set_context (GimpPreview *preview,
   g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
 }
 
-void
-gimp_preview_set_size (GimpPreview *preview,
-		       gint         width,
-		       gint         height)
-{
-  g_return_if_fail (preview != NULL);
-  g_return_if_fail (GIMP_IS_PREVIEW (preview));
-  g_return_if_fail (width  > 0 && width  <= 256);
-  g_return_if_fail (height > 0 && height <= 256);
-
-  preview->width  = width;
-  preview->height = height;
-
-  gtk_preview_size (GTK_PREVIEW (preview),
-		    width  + 2 * preview->border_width,
-		    height + 2 * preview->border_width);
-}
-
 static gint
 gimp_preview_button_press_event (GtkWidget      *widget,
 				 GdkEventButton *bevent)
@@ -396,6 +413,10 @@ gimp_preview_button_press_event (GtkWidget      *widget,
 				       bevent->x,
 				       bevent->y);
 	    }
+	}
+      else
+	{
+	  return FALSE;
 	}
     }
 
@@ -431,6 +452,10 @@ gimp_preview_button_release_event (GtkWidget      *widget,
 	{
 	  gtk_signal_emit (GTK_OBJECT (widget), preview_signals[CLICKED]);
 	}
+    }
+  else
+    {
+      return FALSE;
     }
 
   return TRUE;

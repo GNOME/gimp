@@ -1,5 +1,25 @@
 2001-02-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimpcontainergridview.[ch]
+	* app/gimpcontainerlistview.[ch]
+	* app/gimpcontainerview.[ch]: follow the GimpPreview API change
+	and take only "size" instead of "width" and "height" in the
+	constructor.
+
+	* app/gimpdnd.[ch]: first attempt to hack GtkType based DND which
+	speaks in terms of GimpViewable instead of Brush, Pattern, ...
+	Added functions to remove DND callbacks (used by the multi-views).
+
+	* app/gimppreview.[ch]: new function gimp_preview_set_size_full().
+
+	* app/commands.c: updated the example dialogs to be DND aware.
+
+	* app/gimpimage.c: fixed preview size calculation by ensuring a
+	minimal width/height of 1 pixel.
+	Reported by Dave Neary <dneary@eircom.net>
+
+2001-02-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimppreview.[ch]: moved the constructor-parameter-overkill
 	to the new function gimp_preview_new_full() and made the
 	gimp_preview_new() interface simple.
