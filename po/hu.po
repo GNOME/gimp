@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.2\n"
-"POT-Creation-Date: 2001-07-26 14:09+0200\n"
+"POT-Creation-Date: 2001-09-22 11:30+0200\n"
 "PO-Revision-Date: 2001-08-11 20:35+0200\n"
 "Last-Translator: Andras Timar <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
@@ -899,8 +899,10 @@ msgid ""
 "You should not generate a palette of more than 255 colors if you intend to "
 "create a transparent or animated GIF file from this image."
 msgstr ""
-"Alfa csatornával vagy rétegekkel rendelkezõ képet próbálsz RGB/SZÜRKE módból INDEXELT módba konvertálni.\n"
-"A színpaleta ne tartalmazzon több mint 255 színt, ha a képbõl átlátszó vagy animált GIF fájlt akarsz készíteni."
+"Alfa csatornával vagy rétegekkel rendelkezõ képet próbálsz RGB/SZÜRKE módból "
+"INDEXELT módba konvertálni.\n"
+"A színpaleta ne tartalmazzon több mint 255 színt, ha a képbõl átlátszó vagy "
+"animált GIF fájlt akarsz készíteni."
 
 #: app/convert.c:997
 msgid "Select Custom Palette"
@@ -950,12 +952,12 @@ msgstr "Levágás: "
 
 #: app/crop.c:1042
 msgid "Crop: 0 x 0"
-msgstr "Levágás: 0 x 0"
+msgstr "Kivágás: 0 x 0"
 
 #. create the info dialog
 #: app/crop.c:1063
 msgid "Crop & Resize Information"
-msgstr "Levágás és átméretezés információ"
+msgstr "Kivágás és átméretezés információ"
 
 #. add the information fields
 #: app/crop.c:1079
@@ -1572,7 +1574,7 @@ msgstr ""
 
 #: app/gimpdrawable.c:176
 msgid "Can't fill unknown image type."
-msgstr ""
+msgstr "Ismeretlen képtípus kitöltése sikertelen."
 
 #: app/gimpdrawable.c:509
 msgid "parasite attach to drawable"
@@ -1688,7 +1690,7 @@ msgstr "Névtelen"
 
 #: app/gimpprogress.c:115
 msgid "Progress"
-msgstr "Elõrehaladás"
+msgstr "Folyamatban"
 
 #: app/gimpprogress.c:131 app/gimpprogress.c:178
 msgid "Please wait..."
@@ -1761,7 +1763,7 @@ msgstr "GIMP üzenet"
 msgid "pixel"
 msgstr "képpont"
 
-#: app/gimpunit.c:63 app/measure.c:512 app/measure.c:516 app/paint_core.c:544
+#: app/gimpunit.c:63 app/measure.c:512 app/measure.c:516 app/paint_core.c:545
 msgid "pixels"
 msgstr "képpont"
 
@@ -2224,9 +2226,8 @@ msgid "Hue-Saturation operates only on RGB color drawables."
 msgstr "A színezet-telítettség csak RGB színes rajzfelületen mûködik."
 
 #: app/hue_saturation.c:360
-#, fuzzy
 msgid "Master"
-msgstr "Beilleszt"
+msgstr "Összes"
 
 #: app/hue_saturation.c:362
 msgid "Y"
@@ -3594,7 +3595,7 @@ msgstr "/Réteg törlése"
 
 #: app/menus.c:638
 msgid "/Layer Boundary Size..."
-msgstr "/Réteg Határvonal Mérete..."
+msgstr "/Réteg határvonal mérete..."
 
 #: app/menus.c:640
 msgid "/Layer to Imagesize"
@@ -3838,7 +3839,7 @@ msgstr "Navigáció: %s-%d.%d"
 msgid "Navigation: No Image"
 msgstr "Navigáció: nincs kép"
 
-#: app/paint_core.c:805
+#: app/paint_core.c:806
 msgid "No brushes available for use with this tool."
 msgstr "Nincs felhasználható ecset a mûvelethez."
 
@@ -3918,7 +3919,7 @@ msgid ""
 "Missing RED component"
 msgstr ""
 "%s paletta betöltése (%d. sor):\n"
-"Hiányzó vörös összetevõ"
+"Hiányzó VÖRÖS összetevõ"
 
 #: app/palette.c:449
 #, c-format
@@ -3927,7 +3928,7 @@ msgid ""
 "Missing GREEN component"
 msgstr ""
 "%s paletta betöltése (%d. sor):\n"
-"Hiányzó zöld összetevõ"
+"Hiányzó ZÖLD összetevõ"
 
 #: app/palette.c:456
 #, c-format
@@ -3936,7 +3937,7 @@ msgid ""
 "Missing BLUE component"
 msgstr ""
 "%s paletta betöltése (%d. sor):\n"
-"Hiányzó kék összetevõ"
+"Hiányzó KÉK összetevõ"
 
 #: app/palette.c:465
 #, c-format
@@ -4556,7 +4557,7 @@ msgstr "Visszajelzés a mutató mozgásáról"
 
 #: app/preferences_dialog.c:2073
 msgid "Perfect-but-Slow Pointer Tracking"
-msgstr "Tökéletes-de-lassú mutatókövetés"
+msgstr "Tökéletes, de lassú mutatókövetés"
 
 #: app/preferences_dialog.c:2082
 msgid "Disable Cursor Updating"
@@ -4894,7 +4895,7 @@ msgstr "Képpontos méret"
 
 #: app/resize.c:200
 msgid "Set Layer Boundary Size"
-msgstr ""
+msgstr "Réteg határvonal méretének beállítása"
 
 #: app/resize.c:205
 msgid "Set Canvas Size"
@@ -5601,10 +5602,12 @@ msgstr "Simítás"
 msgid "Show Path"
 msgstr "Útvonal mutatása"
 
+# Eredmény levágása, vagy szélhez igazítása?? Nézd meg a GIMP Help-et
 #. the clip resulting image toggle button
 #: app/transform_tool.c:320
+#, fuzzy
 msgid "Clip Result"
-msgstr ""
+msgstr "Eredmény ..."
 
 #: app/undo.c:2875
 #, c-format
@@ -5877,7 +5880,6 @@ msgstr ""
 "Szerkesztheted ezt a fájlt, de sokkal egyszerûbb a \n"
 "hozzárendeléseket a GIMP felületérõl átállítani. Ha letörlöd \n"
 "a menurc-t, visszaállnak az eredeti értékek."
-
 
 #: app/user_install.c:186
 msgid ""
