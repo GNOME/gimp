@@ -46,8 +46,6 @@
 	 (image-height (car (gimp-image-height image)))
 	 (old-bg (car (gimp-palette-get-background))))
 
-    (gimp-message-handler-set 1)
-
     (gimp-image-disable-undo image)
     (gimp-layer-add-alpha drawable)
     

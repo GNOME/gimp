@@ -1,3 +1,16 @@
+Tue Sep 14 12:40:47 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/sel2path/global.h
+	* plug-ins/sel2path/math.c
+	* plug-ins/sel2path/vector.c: s/acosd/my_acosd/ since some platforms
+	seem to have this function in the native libm
+
+	* plug-ins/script-fu/scripts/xach-effect.scm: remove stale debugging
+	line
+
+	* app/guides_cmds.c
+	* app/tools_cmds.c: changes from below
+
 Tue Sep 14 04:02:06 CEST 1999  Marc Lehmann <pcg@goof.com>
 
         * tools/pdbgen/stddefs.pdb, tools/pdbgen/pdb/tools.pdb: shear and

@@ -153,7 +153,7 @@ extern void safe_free (address *p);
 extern const boolean epsilon_equal (real v1, real v2);
 
 /* Arc cosine, in degrees.  */
-extern const real acosd (real);
+extern const real my_acosd (real);
 
 /* Return the Euclidean distance between the two points.  */
 extern const real distance (real_coordinate_type, real_coordinate_type);

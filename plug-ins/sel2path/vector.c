@@ -117,7 +117,7 @@ Vangle (const vector_type in_vector, const vector_type out_vector)
   vector_type v1 = normalize (in_vector);
   vector_type v2 = normalize (out_vector);
 
-  return acosd (Vdot (v2, v1));
+  return my_acosd (Vdot (v2, v1));
 }
 
 

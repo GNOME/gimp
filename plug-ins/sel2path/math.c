@@ -64,7 +64,7 @@ int_distance (coordinate_type p1, coordinate_type p2)
    is taken to be in radians.  */
 
 const real
-acosd (real v)
+my_acosd (real v)
 {
   real a;
 

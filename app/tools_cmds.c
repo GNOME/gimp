@@ -1573,7 +1573,7 @@ flip_invoker (Argument *args)
     success = FALSE;
 
   flip_type = args[1].value.pdb_int;
-  if (flip_type < VERTICAL || flip_type > UNKNOWN)
+  if (flip_type < HORIZONTAL || flip_type > VERTICAL)
     success = FALSE;
 
   if (success)
@@ -1585,6 +1585,10 @@ flip_invoker (Argument *args)
     
       /* Cut/Copy from the specified drawable */
       float_tiles = transform_core_cut (gimage, drawable, &new_layer);
+    
+      flip_type = flip_type == HORIZONTAL ? ORIENTATION_HORIZONTAL :
+		  flip_type == VERTICAL   ? ORIENTATION_VERTICAL   :
+		  ORIENTATION_UNKNOWN;
     
       /* flip the buffer */
       switch (flip_type)
@@ -1631,7 +1635,7 @@ static ProcArg flip_inargs[] =
   {
     PDB_INT32,
     "flip_type",
-    "Type of flip: HORIZONTAL (0), VERTICAL (1), UNKNOWN (2)"
+    "Type of flip: HORIZONTAL (0) or VERTICAL (1)"
   }
 };
 
@@ -2655,7 +2659,7 @@ shear_invoker (Argument *args)
   interpolation = args[1].value.pdb_int ? TRUE : FALSE;
 
   shear_type = args[2].value.pdb_int;
-  if (shear_type < VERTICAL || shear_type > UNKNOWN)
+  if (shear_type < HORIZONTAL || shear_type > VERTICAL)
     success = FALSE;
 
   magnitude = args[3].value.pdb_float;
@@ -2676,6 +2680,10 @@ shear_invoker (Argument *args)
       gimp_matrix_identity  (matrix);
       gimp_matrix_translate (matrix, -cx, -cy);
       /* Shear matrix */
+      shear_type = shear_type == HORIZONTAL ? ORIENTATION_HORIZONTAL :
+		   shear_type == VERTICAL   ? ORIENTATION_VERTICAL   :
+		   ORIENTATION_UNKNOWN;
+    
       if (shear_type == ORIENTATION_HORIZONTAL)
 	gimp_matrix_xshear (matrix, magnitude / float_tiles->height);
       else if (shear_type == ORIENTATION_VERTICAL)
@@ -2724,7 +2732,7 @@ static ProcArg shear_inargs[] =
   {
     PDB_INT32,
     "shear_type",
-    "Type of shear: HORIZONTAL (0), VERTICAL (1), UNKNOWN (2)"
+    "Type of shear: HORIZONTAL (0) or VERTICAL (1)"
   },
   {
     PDB_FLOAT,
