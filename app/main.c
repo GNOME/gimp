@@ -78,6 +78,11 @@ gchar  *alternate_gimprc;
 gchar  *alternate_system_gimprc;
 gchar **batch_cmds;
 
+gchar  *plugin_domains[] = { "gimp-std-plugins",
+			     "gimp-perl" };
+gint    n_plugin_domains = (sizeof (plugin_domains) /
+			    sizeof (plugin_domains[0]));
+
 /* LOCAL data */
 static gint    gimp_argc;
 static gchar **gimp_argv;
@@ -121,8 +126,9 @@ main (int argc, char **argv)
   /* Initialize i18n support */
 
   INIT_LOCALE ("gimp");
-  bindtextdomain ("gimp-std-plugins", LOCALEDIR);
-  bindtextdomain ("gimp-perl", LOCALEDIR);
+
+  for (i = 0; i < n_plugin_domains; i++)
+    bindtextdomain (plugin_domains[i], LOCALEDIR);
 
   gtk_init (&argc, &argv);
 

@@ -1,5 +1,14 @@
 1999-12-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/main.c
+	* app/menus.c: Define the "plugin_domains" array of strings in
+	main.c and use it as external variable from menus.c
+
+	What's missing now is a proper way to let gimp know which
+	additional catalogs (perl, python, ...) are actually installed.
+
+1999-12-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/menus.c: Reorder all menu items under <Image>/Filters which
 	were created by plugins, so they appear after <Image>/Filters/Web.
 	(this way <Image>/Filters/Toys is always the last submenu)

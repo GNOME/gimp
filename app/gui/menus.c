@@ -64,6 +64,11 @@ static void   help_debug_cmd_callback (GtkWidget *widget,
 				       gpointer   callback_data,
 				       guint      callback_action);
 
+/*  from main.c  */
+extern gchar *plugin_domains[];
+extern gint   n_plugin_domains;
+
+/*  for i18n  */
 static gchar G_GNUC_UNUSED *dummy_entries[] =
 {
   /*  <Toolbox>  */
@@ -1706,11 +1711,6 @@ static gchar *
 menu_translate (const gchar *path,
     		gpointer     data)
 {
-  static gchar *plugin_domains[] = { "gimp-std-plugins",
-				     "gimp-perl" };
-  static gint n_plugin_domains = (sizeof (plugin_domains) /
-				  sizeof (plugin_domains[0]));
-
   static gchar *menupath = NULL;
 
   gchar *retval;
