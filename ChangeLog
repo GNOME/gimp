@@ -1,3 +1,12 @@
+2004-03-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_events): added run-time version
+	check and do the workaround for bug #136636 only if
+	the Gtk+ version is < 2.2.5.
+
+	* m4macros/gimp-2.0.m4: require gimp >= 2.0.0
+
 2004-03-21  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/helpbrowser/dialog.c: fixed check that suppresses

@@ -137,23 +137,24 @@ gimp_display_shell_events (GtkWidget        *widget,
         /*  work around missing GDK_BUTTON*_MASK bits in GdkEventKey::state
          *  (see http://bugzilla.gnome.org/show_bug.cgi?id=136636)
          */
-        {
-          GdkModifierType mouse_mask;
+        if (gtk_check_version (2, 2, 5))
+          {
+            GdkModifierType mouse_mask;
 
-          gdk_device_get_state (gimp_devices_get_current (gimp),
-                                widget->window, NULL, &mouse_mask);
+            gdk_device_get_state (gimp_devices_get_current (gimp),
+                                  widget->window, NULL, &mouse_mask);
 
-          if (mouse_mask & GDK_BUTTON1_MASK)
-            kevent->state |= GDK_BUTTON1_MASK;
-          if (mouse_mask & GDK_BUTTON2_MASK)
-            kevent->state |= GDK_BUTTON2_MASK;
-          if (mouse_mask & GDK_BUTTON3_MASK)
-            kevent->state |= GDK_BUTTON3_MASK;
-          if (mouse_mask & GDK_BUTTON4_MASK)
-            kevent->state |= GDK_BUTTON4_MASK;
-          if (mouse_mask & GDK_BUTTON5_MASK)
-            kevent->state |= GDK_BUTTON5_MASK;
-        }
+            if (mouse_mask & GDK_BUTTON1_MASK)
+              kevent->state |= GDK_BUTTON1_MASK;
+            if (mouse_mask & GDK_BUTTON2_MASK)
+              kevent->state |= GDK_BUTTON2_MASK;
+            if (mouse_mask & GDK_BUTTON3_MASK)
+              kevent->state |= GDK_BUTTON3_MASK;
+            if (mouse_mask & GDK_BUTTON4_MASK)
+              kevent->state |= GDK_BUTTON4_MASK;
+            if (mouse_mask & GDK_BUTTON5_MASK)
+              kevent->state |= GDK_BUTTON5_MASK;
+          }
 #endif /* G_OS_WIN32 */
 
         /*  do not process any key events while BUTTON1 is down. We do this
