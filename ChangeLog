@@ -1,3 +1,8 @@
+2003-03-30  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpbrusheditor.c: increased the upper limit for the
+	brush radius to 1000. Fixes bug #109434.
+
 2003-03-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-resize.c (gimp_image_resize): shut up compiler.
