@@ -36,15 +36,15 @@ HELP
 
     @outargs = (
 	{ name => 'display', type => 'display',
-	  desc => 'The new display', alias => 'gdisp', init => 1 }
+	  desc => 'The new display', init => 1 }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  gdisp = (GimpDisplay *) gimp_create_display (gimp, gimage, 0x0101);
+  display = (GimpDisplay *) gimp_create_display (gimp, gimage, 0x0101);
 
-  success = (gdisp != NULL);
+  success = (display != NULL);
 
   /* the first display takes ownership of the image */
   if (success && gimage->disp_count == 1)
@@ -66,10 +66,10 @@ HELP
 
     @inargs = (
 	{ name => 'display', type => 'display',
-	  desc => 'The display to delete', alias => 'gdisp' }
+	  desc => 'The display to delete' }
     );
 
-    %invoke = ( code => 'gimp_display_delete (gdisp);' );
+    %invoke = ( code => 'gimp_display_delete (display);' );
 }
 
 sub displays_flush {
@@ -104,14 +104,12 @@ HELP
 
     @inargs = ( 
 	{ name => 'old_image', type => 'image',
-	  desc => 'The old image (should have at least one display)',
-          alias => 'gimage_old' },
+	  desc => 'The old image (should have at least one display)' },
 	{ name => 'new_image', type => 'image',
-	  desc => 'The new image (must not have a display)',
-          alias => 'gimage_new' }
+	  desc => 'The new image (must not have a display)' }
      );
 
-   %invoke = ( code => 'gimp_displays_reconnect (gimp, gimage_old, gimage_new);' );
+   %invoke = ( code => 'gimp_displays_reconnect (gimp, old_image, new_image);' );
 }
 
 @headers = qw("core/gimp.h" "display/display-types.h" "display/gimpdisplay.h"

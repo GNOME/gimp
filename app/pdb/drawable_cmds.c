@@ -1871,8 +1871,8 @@ drawable_thumbnail_invoker (Gimp     *gimp,
 
   if (success)
     {
-      TempBuf * buf;
-      gint dwidth, dheight;
+      TempBuf *buf;
+      gint     dwidth, dheight;
     
       if (req_width <= 128 && req_height <= 128)
 	{        
@@ -1890,11 +1890,11 @@ drawable_thumbnail_invoker (Gimp     *gimp,
     
 	  if (buf)
 	    {
-	      num_bytes = buf->height * buf->width * buf->bytes;
+	      num_bytes      = buf->height * buf->width * buf->bytes;
 	      thumbnail_data = g_memdup (temp_buf_data (buf), num_bytes);
-	      width = buf->width;        
-	      height = buf->height;
-	      bpp = buf->bytes;
+	      width          = buf->width;        
+	      height         = buf->height;
+	      bpp            = buf->bytes;
 	    }
 	}
     }

@@ -193,10 +193,18 @@ HELP
 
     @outargs = (
 	{ name => 'channel_copy', type => 'channel', init => 1,
-	  desc => 'The newly copied channel', alias => 'copy' }
+	  desc => 'The newly copied channel' }
     );
 
-    %invoke = ( code => 'success = (copy = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (channel), G_TYPE_FROM_INSTANCE (channel), FALSE))) != NULL;' );
+    %invoke = (
+	code => <<'CODE'
+{
+  channel_copy = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (channel),
+                               G_TYPE_FROM_INSTANCE (channel), FALSE));
+  success = (channel_copy != NULL);
+}
+CODE
+    );
 }
 
 sub channel_combine_masks {

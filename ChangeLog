@@ -1,5 +1,20 @@
 2003-12-08  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/display.pdb
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/image.pdb: don't use "alias"es just to rename
+	variables, they just clutter the code and there is no reason why
+	e.g. a GimpDisplay variable must be called "gdisp" instead of
+	"display". Cleanup.
+
+	* app/pdb/channel_cmds.c
+	* app/pdb/display_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/image_cmds.c: regenerated.
+
+2003-12-08  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/brushes.pdb
 	* tools/pdbgen/pdb/fonts.pdb
 	* tools/pdbgen/pdb/gradients.pdb

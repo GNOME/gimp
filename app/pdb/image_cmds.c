@@ -207,7 +207,7 @@ image_list_invoker (Gimp     *gimp,
   gint32 num_images = 0;
   gint32 *image_ids = NULL;
   GList *list = NULL;
-  int i;
+  gint i;
 
   gimp_container_foreach (gimp->images, gimlist_cb, &list);
   num_images = g_list_length (list);
@@ -266,7 +266,7 @@ image_new_invoker (Gimp     *gimp,
   gint32 width;
   gint32 height;
   gint32 type;
-  GimpImage *gimage = NULL;
+  GimpImage *image = NULL;
 
   width = args[0].value.pdb_int;
   if (width <= 0)
@@ -281,12 +281,15 @@ image_new_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    success = (gimage = gimp_create_image (gimp, width, height, type, FALSE)) != NULL;
+    {
+      image = gimp_create_image (gimp, width, height, type, FALSE);
+      success = (image != NULL);
+    }
 
   return_args = procedural_db_return_args (&image_new_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_image_get_ID (gimage);
+    return_args[1].value.pdb_int = gimp_image_get_ID (image);
 
   return return_args;
 }
@@ -783,7 +786,7 @@ image_get_layers_invoker (Gimp     *gimp,
   gint32 num_layers = 0;
   gint32 *layer_ids = NULL;
   GList *list = NULL;
-  int i;
+  gint i;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -862,7 +865,7 @@ image_get_channels_invoker (Gimp     *gimp,
   gint32 num_channels = 0;
   gint32 *channel_ids = NULL;
   GList *list = NULL;
-  int i;
+  gint i;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -2373,8 +2376,8 @@ image_thumbnail_invoker (Gimp     *gimp,
 
   if (success)
     {
-      TempBuf * buf;
-      gint dwidth, dheight;
+      TempBuf *buf;
+      gint     dwidth, dheight;
     
       g_assert (GIMP_VIEWABLE_MAX_PREVIEW_SIZE >= 1024);
     
@@ -2392,11 +2395,12 @@ image_thumbnail_invoker (Gimp     *gimp,
     
       if (buf)
 	{
-	  num_bytes = buf->height * buf->width * buf->bytes;
+	  num_bytes      = buf->height * buf->width * buf->bytes;
 	  thumbnail_data = g_memdup (temp_buf_data (buf), num_bytes);
-	  width = buf->width;        
-	  height = buf->height;
-	  bpp = buf->bytes;
+	  width          = buf->width;        
+	  height         = buf->height;
+	  bpp            = buf->bytes;
+    
 	  temp_buf_free (buf);
 	}
     }
@@ -2495,7 +2499,7 @@ image_set_tattoo_state_invoker (Gimp     *gimp,
 
   if (success)
     {
-	    success = gimp_image_set_tattoo_state(gimage,tattoo);
+      success = gimp_image_set_tattoo_state (gimage, tattoo);
     }
 
   return procedural_db_return_args (&image_set_tattoo_state_proc, success);
@@ -2546,7 +2550,7 @@ image_get_tattoo_state_invoker (Gimp     *gimp,
 
   if (success)
     {
-    tattoo = gimp_image_get_tattoo_state(gimage);
+      tattoo = gimp_image_get_tattoo_state (gimage);
     }
 
   return_args = procedural_db_return_args (&image_get_tattoo_state_proc, success);
@@ -2598,19 +2602,19 @@ image_duplicate_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  GimpImage *new_gimage = NULL;
+  GimpImage *new_image = NULL;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   if (success)
-    success = (new_gimage = gimp_image_duplicate (gimage)) != NULL;
+    success = (new_image = gimp_image_duplicate (gimage)) != NULL;
 
   return_args = procedural_db_return_args (&image_duplicate_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_image_get_ID (new_gimage);
+    return_args[1].value.pdb_int = gimp_image_get_ID (new_image);
 
   return return_args;
 }

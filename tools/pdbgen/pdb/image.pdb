@@ -57,7 +57,7 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GList *list = NULL', 'int i' ],
+	vars => [ 'GList *list = NULL', 'gint i' ],
 	code => <<CODE
 {
   list = GIMP_LIST (gimage->${type}s)->list;
@@ -256,13 +256,16 @@ HELP
     }
 
     @outargs = (
-	{ name => 'image', type => 'image', alias => 'gimage', init => 1, 
+	{ name => 'image', type => 'image', init => 1, 
 	  desc => 'The ID of the newly created image' }
     );
 
     %invoke = (
 	code => <<'CODE'
-success = (gimage = gimp_create_image (gimp, width, height, type, FALSE)) != NULL;
+{
+  image = gimp_create_image (gimp, width, height, type, FALSE);
+  success = (image != NULL);
+}
 CODE
     );
 }
@@ -1325,8 +1328,8 @@ HELP
 	headers => [ qw(<string.h> "core/gimpviewable.h") ],
 	code => <<'CODE'
 {
-  TempBuf * buf;
-  gint dwidth, dheight;
+  TempBuf *buf;
+  gint     dwidth, dheight;
 
   g_assert (GIMP_VIEWABLE_MAX_PREVIEW_SIZE >= 1024);
 
@@ -1344,11 +1347,12 @@ HELP
 
   if (buf)
     {
-      num_bytes = buf->height * buf->width * buf->bytes;
+      num_bytes      = buf->height * buf->width * buf->bytes;
       thumbnail_data = g_memdup (temp_buf_data (buf), num_bytes);
-      width = buf->width;	
-      height = buf->height;
-      bpp = buf->bytes;
+      width          = buf->width;	
+      height         = buf->height;
+      bpp            = buf->bytes;
+
       temp_buf_free (buf);
     }
 }
@@ -1378,7 +1382,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-tattoo = gimp_image_get_tattoo_state(gimage);
+  tattoo = gimp_image_get_tattoo_state (gimage);
 }
 CODE
     );
@@ -1406,14 +1410,13 @@ HELP
     @inargs = (
 	&std_image_arg,
 	{ name => 'tattoo', type => 'int32',
-	  desc => 'The new tattoo state of the image'
-	}
+	  desc => 'The new tattoo state of the image' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-	success = gimp_image_set_tattoo_state(gimage,tattoo);
+  success = gimp_image_set_tattoo_state (gimage, tattoo);
 }
 CODE
     );
@@ -1434,14 +1437,13 @@ HELP
 
     @outargs = ( 
 	{ name => 'new_image', type => 'image',
-	  desc => 'The new, duplicated image',
-	  alias => 'new_gimage', init => 1 }
+	  desc => 'The new, duplicated image', init => 1 }
     );
 
     %invoke = (
 	headers => [ qw("core/gimpimage-duplicate.h") ],
         code => <<'CODE'
-success = (new_gimage = gimp_image_duplicate (gimage)) != NULL;
+success = (new_image = gimp_image_duplicate (gimage)) != NULL;
 CODE
     );
 }

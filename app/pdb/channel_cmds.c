@@ -177,19 +177,23 @@ channel_copy_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpChannel *channel;
-  GimpChannel *copy = NULL;
+  GimpChannel *channel_copy = NULL;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_CHANNEL (channel))
     success = FALSE;
 
   if (success)
-    success = (copy = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (channel), G_TYPE_FROM_INSTANCE (channel), FALSE))) != NULL;
+    {
+      channel_copy = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (channel),
+				   G_TYPE_FROM_INSTANCE (channel), FALSE));
+      success = (channel_copy != NULL);
+    }
 
   return_args = procedural_db_return_args (&channel_copy_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (copy));
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (channel_copy));
 
   return return_args;
 }

@@ -56,7 +56,7 @@ display_new_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  GimpDisplay *gdisp = NULL;
+  GimpDisplay *display = NULL;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -64,9 +64,9 @@ display_new_invoker (Gimp     *gimp,
 
   if (success)
     {
-      gdisp = (GimpDisplay *) gimp_create_display (gimp, gimage, 0x0101);
+      display = (GimpDisplay *) gimp_create_display (gimp, gimage, 0x0101);
     
-      success = (gdisp != NULL);
+      success = (display != NULL);
     
       /* the first display takes ownership of the image */
       if (success && gimage->disp_count == 1)
@@ -76,7 +76,7 @@ display_new_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&display_new_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_display_get_ID (gdisp);
+    return_args[1].value.pdb_int = gimp_display_get_ID (display);
 
   return return_args;
 }
@@ -120,14 +120,14 @@ display_delete_invoker (Gimp     *gimp,
                         Argument *args)
 {
   gboolean success = TRUE;
-  GimpDisplay *gdisp;
+  GimpDisplay *display;
 
-  gdisp = gimp_display_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_DISPLAY (gdisp))
+  display = gimp_display_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_DISPLAY (display))
     success = FALSE;
 
   if (success)
-    gimp_display_delete (gdisp);
+    gimp_display_delete (display);
 
   return procedural_db_return_args (&display_delete_proc, success);
 }
@@ -186,19 +186,19 @@ displays_reconnect_invoker (Gimp     *gimp,
                             Argument *args)
 {
   gboolean success = TRUE;
-  GimpImage *gimage_old;
-  GimpImage *gimage_new;
+  GimpImage *old_image;
+  GimpImage *new_image;
 
-  gimage_old = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage_old))
+  old_image = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (old_image))
     success = FALSE;
 
-  gimage_new = gimp_image_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage_new))
+  new_image = gimp_image_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! GIMP_IS_IMAGE (new_image))
     success = FALSE;
 
   if (success)
-    gimp_displays_reconnect (gimp, gimage_old, gimage_new);
+    gimp_displays_reconnect (gimp, old_image, new_image);
 
   return procedural_db_return_args (&displays_reconnect_proc, success);
 }
