@@ -52,7 +52,7 @@ WriteBMP (filename,image,drawable_ID)
   int Green[MAXCOLORS];
   int Blue[MAXCOLORS];
   unsigned char *cmap;
-  int rows, cols, channels, MapSize, SpZeile;
+  int rows, cols, Spcols, channels, MapSize, SpZeile;
   long BitsPerPixel;
   int colors;
   char *temp_buf;
@@ -160,8 +160,9 @@ WriteBMP (filename,image,drawable_ID)
   
   /* ... that we write to our headers. */
   
-  if ((((cols*BitsPerPixel)/8) % 4) == 0) SpZeile=((cols*BitsPerPixel)/8);
-  else SpZeile=((int)(((cols*BitsPerPixel)/8)/4)+1)*4;
+  if ((BitsPerPixel != 24) && (cols % (8/BitsPerPixel))) Spcols=(((cols / (8/BitsPerPixel))+1)*(8/BitsPerPixel)); else Spcols=cols;
+  if ((((Spcols*BitsPerPixel)/8) % 4) == 0) SpZeile=((Spcols*BitsPerPixel)/8);
+  else SpZeile=((int)(((Spcols*BitsPerPixel)/8)/4)+1)*4;
   Bitmap_File_Head.bfSize=0x36+MapSize+(rows*SpZeile);
   Bitmap_File_Head.reserverd=0;
   Bitmap_File_Head.bfOffs=0x36+MapSize;

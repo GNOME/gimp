@@ -1,5 +1,5 @@
 /* bmp.c                                          */
-/* Version 0.43	                                  */
+/* Version 0.44	                                  */
 /* This is a File input and output filter for     */
 /* Gimp. It loads and saves images in windows(TM) */
 /* bitmap format.                                 */
@@ -16,7 +16,7 @@
 /*            06.04.1998 Bugfix in Padding        */
 /*            11.04.1998 Arch. cleanup (-Wall)    */
 /*                       Parses gtkrc             */
-
+/*            14.04.1998 Another Bug in Padding   */
 /* 
  * The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
