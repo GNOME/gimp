@@ -395,36 +395,48 @@ sub callback {
       local $function = shift;
       local $in_run = 1;
       _initialized_callback;
-      @cb = (
-         @{$callback{run}},
-         @{$callback{lib}},
-         @{$callback{$function}},
-      );
+      {
+         local $^W = 0;
+         @cb = (
+            @{$callback{run}},
+            @{$callback{lib}},
+            @{$callback{$function}},
+         );
+      }
       die_msg __"required callback 'run' not found\n" unless @cb;
       for (@cb) { &$_ }
    } elsif ($type eq "-net") {
       local $in_net = 1;
       _initialized_callback;
-      @cb = (
-         @{$callback{run}},
-         @{$callback{net}},
-         @{$callback{$function}},
-      );
+      {
+         local $^W = 0;
+         @cb = (
+            @{$callback{run}},
+            @{$callback{net}},
+            @{$callback{$function}},
+         );
+      }
       die_msg __"required callback 'net' not found\n" unless @cb;
       for (@cb) { &$_ }
    } elsif ($type eq "-query") {
       local $in_query = 1;
       _initialized_callback;
-      @cb = (
-         @{$callback{query}},
-      );
+      {
+         local $^W = 0;
+         @cb = (
+            @{$callback{query}},
+         );
+      }
       die_msg __"required callback 'query' not found\n" unless @cb;
       for (@cb) { &$_ }
    } elsif ($type eq "-quit") {
       local $in_quit = 1;
-      @cb = (
-         @{$callback{quiet}},
-      );
+      {
+         local $^W = 0;
+         @cb = (
+            @{$callback{quiet}},
+         );
+      }
       for (@cb) { &$_ }
    }
 }

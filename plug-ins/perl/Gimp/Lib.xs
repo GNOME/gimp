@@ -192,7 +192,7 @@ static int gdrawable_free (SV *obj, MAGIC *mg)
 {
   GDrawable *gdr = (GDrawable *)SvIV(obj);
 
-  g_hash_table_remove (gdrawable_cache, &gdr->id);
+  g_hash_table_remove (gdrawable_cache, (gpointer)gdr->id);
   gimp_drawable_detach (gdr);
 
   return 0;
@@ -206,9 +206,11 @@ static SV *new_gdrawable (gint32 id)
    SV *sv;
    
    if (!gdrawable_cache)
-     gdrawable_cache = g_hash_table_new (g_int_hash, g_int_equal);
+     gdrawable_cache = g_hash_table_new (g_direct_hash, g_direct_equal);
 
-   if ((sv = (SV*)g_hash_table_lookup (gdrawable_cache, &id)))
+   assert (sizeof (gpointer) >= sizeof (id));
+
+   if ((sv = (SV*)g_hash_table_lookup (gdrawable_cache, (gpointer)id)))
      SvREFCNT_inc (sv);
    else
      {
@@ -224,7 +226,7 @@ static SV *new_gdrawable (gint32 id)
        sv_magic (sv, 0, '~', 0, 0);
        mg_find (sv, '~')->mg_virtual = &vtbl_gdrawable;
 
-       g_hash_table_insert (gdrawable_cache, &id, (gpointer)sv);
+       g_hash_table_insert (gdrawable_cache, (gpointer)id, (void *)sv);
      }
    
    return sv_bless (newRV_noinc (sv), stash);

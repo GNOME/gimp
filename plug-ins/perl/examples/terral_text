@@ -26,7 +26,7 @@
 #[terral] input levels of 0, .24, 113                                    [22:11]
 #[terral] --end of script                                                [22:12]
 
-use Gimp qw(:auto N_);
+use Gimp 1.06;
 use Gimp::Fu;
 use Gimp::Util;
 
@@ -39,7 +39,7 @@ register
         "Otherwise, it overwrites the current layer and uses a solid noise",
 	"Seth Burgess",
 	"Seth Burgess <sjburges\@gimp.org>",
-	"19991119",
+	"1999-03-15",
 	N_"<Image>/Filters/Render/Terral Text",
 	"RGB*,GRAY*",
 	[ 
@@ -53,8 +53,6 @@ sub {
 	($img, $pattern, $solidnoise, $font, $text, $blur) = @_;
 	$oldbg = gimp_palette_get_background();
 	$oldfg = gimp_palette_get_foreground();
-
-        $img->undo_push_group_start;
 	
 	if ($solidnoise) {
 		$pattern->plug_in_solid_noise(1,1,256*rand(), 1,2.5,2.5);
@@ -97,8 +95,6 @@ sub {
 	$floater->floating_sel_anchor;
 	
 	$mask->levels(0, 0, 113, 0.24, 0, 255);
-
-        $img->undo_push_group_end;
 
 	palette_set_background($oldbg);
 	palette_set_foreground($oldfg);

@@ -17,8 +17,8 @@ sub pixelmap {					# es folgt das eigentliche Skript...
 
    $_expr =~ /\$p/   and $init.='$p = $src->data;';
    $_expr =~ /\$P/   and $init.= $drawable->has_alpha ? '$P = $src->data;' : '$P = $src->data->slice("0:-1");';
-   $_expr =~ /\$x/   and $init.='$x = sequence(long,$w); $x+=$_dst->x;';
-   $_expr =~ /\$y/   and $init.='$y = sequence(long,$h); $y+=$_dst->y;';
+   $_expr =~ /\$x/   and $init.='$x = (zeroes(long,$w)->xvals + $_dst->x)->dummy(1,$h)->sever;';
+   $_expr =~ /\$y/   and $init.='$y = (zeroes(long,$h)->xvals + $_dst->y)->dummy(0,$w)->sever;';
    $_expr =~ /\$bpp/ and $init.='$bpp = $_dst->bpp;';
 
    my($p,$P,$x,$y,$bpp,$w,$h);
@@ -117,11 +117,15 @@ The source pixels without alpha. Use it like this:
 
 =item $x
 
-A one-dimensional vector of x-coordinates currently being worked on.
+A two-dimensional vector containing the x-coordinates of each point in the current tile:
+
+ $x = (zeroes(long,$w)->xvals + $destination->x)->dummy(1,$h)->sever;
 
 =item $y
 
-A one-dimensional vector of y-coordinates currently being worked on.
+A two-dimensional vector containing the y-coordinates of each point in the current tile:
+
+ $y = (zeroes(long,$h)->xvals + $destination->y)->dummy(0,$w)->sever;
 
 =item $bpp
 

@@ -22,6 +22,8 @@ Revision history for Gimp-Perl extension.
         - move perl-intl.h include below the other includes. William Sebok
           finally came up with a nice problem analysis.
         - try to get rid of -Wall, if possible.
+        - shield more sections against -w dumbness.
+        - updated many of seth's scripts.
 
 1.17  Wed Nov 24 21:25:19 CET 1999
         - re-fitted i18n translation for most plug-ins.

@@ -120,7 +120,8 @@ generally do not care for the url length.
 Browser compatibility list (send more results to pcg@goof.com ;)
 
   Netscape 3.x	displays broken image icons
-  Netscape 4.x	works on some configurations, not on others
+  Netscape 4.x	works on some configurations (communicator!),
+                not on others (navigator!)
   Lynx 		displays the base64 code as text :(
   MSIE 4	thousands of error messages in dialog boxes ;->
   MSIE 5	shows broken image icon

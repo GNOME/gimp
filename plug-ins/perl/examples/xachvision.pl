@@ -3,7 +3,7 @@
 # Once again, an effect of Xach's
 # Created by Seth Burgess <sjburges@gimp.org>
 
-use Gimp;
+use Gimp qw(:auto __ N_);
 use Gimp::Fu;
 
 register "xachvision",
@@ -12,7 +12,7 @@ register "xachvision",
          "Seth Burgess",
          "Seth Burgess <sjburges\@gimp.org>",
          "1999-02-28",
-         N_"<Image>/Filters/Noise/Xach Vision",
+         N_"<Image>/Filters/Noise/Xach Vision...",
          "RGB*, GRAY*",
          [
           [PF_COLOR,	"color",	"What Color to see the world in", [0, 255, 0]],

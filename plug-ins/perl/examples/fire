@@ -53,7 +53,7 @@ register "firetext",
 	 "Marc Lehmann <pcg\@goof.com>",
 	 "Marc Lehmann",
 	 "19990802",
-	 __"<Toolbox>/Xtns/Render/Logos/Firetext",
+	 N_"<Toolbox>/Xtns/Render/Logos/Firetext",
 	 "*",
 	 [
           [PF_TEXT,	"text",		"The text to render (can be multi-line)", "burn,\nBurn,\nBURN!"],
