@@ -31,16 +31,12 @@ void       gimp_config_disconnect            (GObject      *src,
 GList    * gimp_config_diff                  (GimpConfig   *a,
                                               GimpConfig   *b,
                                               GParamFlags   flags);
-
 void       gimp_config_copy_properties       (GimpConfig   *src,
                                               GimpConfig   *dest);
-
 void       gimp_config_reset_properties      (GimpConfig   *config);
 
 void       gimp_config_string_append_escaped (GString      *string,
                                               const gchar  *val);
-void       gimp_config_string_indent         (GString      *string,
-                                              gint          indent_level);
 
 gchar    * gimp_config_build_data_path       (const gchar  *name);
 gchar    * gimp_config_build_plug_in_path    (const gchar  *name);

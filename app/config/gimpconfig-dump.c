@@ -195,13 +195,14 @@ dump_gimprc_system (GimpConfig       *rc,
 	{
 	  gimp_config_writer_comment (writer, comment);
 	  g_free (comment);
-
-	  write (fd, "#\n", 2);
 	}
 
-      write (fd, "# ", 2);
+      gimp_config_writer_comment_mode (writer, TRUE);
+      gimp_config_writer_linefeed (writer);
 
       gimp_config_serialize_property (rc, prop_spec, writer);
+
+      gimp_config_writer_comment_mode (writer, FALSE);
       gimp_config_writer_linefeed (writer);
     }
 
@@ -447,6 +448,10 @@ dump_describe_param (GParamSpec *param_spec)
       values =
 	"The unit can be one inches, millimeters, points or picas plus "
 	"those in your user units database.";
+    }
+  else if (g_type_is_a (type, GIMP_TYPE_CONFIG))
+    {
+      values = "This is a parameter list.";
     }
   else
     {

@@ -424,19 +424,6 @@ gimp_config_string_append_escaped (GString     *string,
     }
 }
 
-void
-gimp_config_string_indent (GString *string,
-                           gint     indent_level)
-{
-  gint i;
-
-  g_return_if_fail (string != NULL);
-  g_return_if_fail (indent_level >= 0);
-
-  for (i = 0; i < indent_level; i++)
-    g_string_append_len (string, "    ", 4);
-}
-
 
 /*
  * GimpConfig path utilities

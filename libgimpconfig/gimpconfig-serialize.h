@@ -30,18 +30,16 @@ gboolean  gimp_config_serialize_changed_properties (GimpConfig       *config,
 gboolean  gimp_config_serialize_properties_diff    (GimpConfig       *config,
                                                     GimpConfig       *compare,
 						    GimpConfigWriter *writer);
+
 gboolean  gimp_config_serialize_unknown_tokens     (GimpConfig       *config,
 						    GimpConfigWriter *writer);
 
 gboolean  gimp_config_serialize_property           (GimpConfig       *config,
 						    GParamSpec       *param_spec,
 						    GimpConfigWriter *writer);
-
 gboolean  gimp_config_serialize_value              (const GValue     *value,
                                                     GString          *str,
                                                     gboolean          escaped);
-void      gimp_config_serialize_comment            (GString          *str,
-						    const gchar      *comment);
 
 
 #endif /* __GIMP_CONFIG_SERIALIZE_H__ */

@@ -157,6 +157,20 @@ Specify a default gradient.  The gradient is searched for in the specified
 gradient path.  This is a string value.
 
 .TP
+(default-grid
+    (xspacing 10.000000)
+    (yspacing 10.000000)
+    (spacing-unit inches)
+    (xoffset 0.000000)
+    (yoffset 0.000000)
+    (offset-unit inches)
+    (fgcolor (color-rgba 0.000000 0.000000 0.000000 1.000000))
+    (bgcolor (color-rgba 1.000000 1.000000 1.000000 1.000000))
+    (style intersections))
+
+Specify a default image grid.  This is a parameter list.
+
+.TP
 (default-font "Sans")
 
 Specify a default font.  The font is searched for in the fontconfig font path.

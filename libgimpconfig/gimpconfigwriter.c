@@ -54,15 +54,32 @@ struct _GimpConfigWriter
   gchar    *tmpname;
   GError   *error;
   GString  *buffer;
+  gboolean  comment;
   gint      depth;
   gint      marker;
 };
 
 
-static gboolean  gimp_config_writer_close_file (GimpConfigWriter  *writer,
-						GError           **error);
+static inline void  gimp_config_writer_flush      (GimpConfigWriter  *writer);
+static inline void  gimp_config_writer_newline    (GimpConfigWriter  *writer);
+static gboolean     gimp_config_writer_close_file (GimpConfigWriter  *writer,
+                                                   GError           **error);
 
 
+/**
+ * gimp_config_writer_new_file:
+ * @filename: a filename
+ * @atomic: if %TRUE the file is written atomically
+ * @header: text to include as comment at the top of the file
+ * @error: return location for errors
+ *
+ * Creates a new #GimpConfigWriter and sets it up to write to
+ * @filename. If @atomic is %TRUE, a temporary file is used to avoid
+ * possible race conditions. The temporary file is then moved to
+ * @filename when the writer is closed.
+ *
+ * Return value: a new #GimpConfigWriter or %NULL in case of an error
+ **/
 GimpConfigWriter *
 gimp_config_writer_new_file (const gchar  *filename,
 			     gboolean      atomic,
@@ -79,13 +96,13 @@ gimp_config_writer_new_file (const gchar  *filename,
   if (atomic)
     {
       tmpname = g_strconcat (filename, "XXXXXX", NULL);
-  
+
       fd = g_mkstemp (tmpname);
 
       if (fd == -1)
 	{
-	  g_set_error (error, 
-		       GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE, 
+	  g_set_error (error,
+		       GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
 		       _("Failed to create temporary file for '%s': %s"),
 		       filename, g_strerror (errno));
 	  g_free (tmpname);
@@ -98,8 +115,8 @@ gimp_config_writer_new_file (const gchar  *filename,
 
       if (fd == -1)
 	{
-	  g_set_error (error, 
-		       GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE, 
+	  g_set_error (error,
+		       GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
 		       _("Failed to open '%s' for writing: %s"),
 		       filename, g_strerror (errno));
 	  return NULL;
@@ -152,6 +169,24 @@ gimp_config_writer_new_string (GString *string)
 }
 
 void
+gimp_config_writer_comment_mode (GimpConfigWriter *writer,
+                                 gboolean          enable)
+{
+  g_return_if_fail (writer != NULL);
+
+  if (writer->error)
+    return;
+
+  enable = (enable ? TRUE : FALSE);
+
+  if (enable)
+    g_string_append_len (writer->buffer, "# ", 2);
+
+  writer->comment = enable;
+}
+
+
+void
 gimp_config_writer_open (GimpConfigWriter *writer,
 			 const gchar      *name)
 {
@@ -165,10 +200,7 @@ gimp_config_writer_open (GimpConfigWriter *writer,
   writer->marker = writer->buffer->len;
 
   if (writer->depth > 0)
-    {
-      g_string_append_c (writer->buffer, '\n');
-      gimp_config_string_indent (writer->buffer, writer->depth);
-    }
+    gimp_config_writer_newline (writer);
 
   writer->depth++;
 
@@ -265,14 +297,7 @@ gimp_config_writer_close (GimpConfigWriter *writer)
       g_string_append_c (writer->buffer, '\n');
 
       if (writer->fd)
-        {
-          if (write (writer->fd, writer->buffer->str, writer->buffer->len) < 0)
-            g_set_error (&writer->error,
-                         GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
-                         g_strerror (errno));
-
-          g_string_truncate (writer->buffer, 0);
-        }
+        gimp_config_writer_flush (writer);
     }
 }
 
@@ -325,11 +350,11 @@ void
 gimp_config_writer_linefeed (GimpConfigWriter *writer)
 {
   g_return_if_fail (writer != NULL);
- 
+
   if (writer->error)
     return;
 
-  if (writer->buffer->len == 0)
+  if (writer->buffer->len == 0 && !writer->comment)
     {
       if (write (writer->fd, "\n", 1) < 0)
         g_set_error (&writer->error,
@@ -338,18 +363,30 @@ gimp_config_writer_linefeed (GimpConfigWriter *writer)
     }
   else
     {
-      g_string_append_c (writer->buffer, '\n');
-      gimp_config_string_indent (writer->buffer, writer->depth);
+      gimp_config_writer_newline (writer);
     }
 }
 
+/**
+ * gimp_config_writer_comment:
+ * @writer: a #GimpConfigWriter
+ * @comment: the comment to write (ASCII only)
+ *
+ * Appends the @comment to @str and inserts linebreaks and hash-marks to
+ * format it as a comment. Note that this function does not handle non-ASCII
+ * characters.
+ **/
 void
 gimp_config_writer_comment (GimpConfigWriter *writer,
 			    const gchar      *comment)
 {
+  const gchar *s;
+  gint         i, len, space;
+
+#define LINE_LENGTH 75
+
   g_return_if_fail (writer != NULL);
   g_return_if_fail (writer->depth == 0);
-  g_return_if_fail (writer->buffer->len == 0);
 
   if (writer->error)
     return;
@@ -357,14 +394,64 @@ gimp_config_writer_comment (GimpConfigWriter *writer,
   if (!comment)
     return;
 
-  gimp_config_serialize_comment (writer->buffer, comment);
+  len = strlen (comment);
 
+  if (! writer->comment)
+    g_string_append_len (writer->buffer, "# ", 2);
+
+  while (len > 0)
+    {
+      for (s = comment, i = 0, space = 0;
+           *s != '\n' && (i <= LINE_LENGTH || space == 0) && i < len;
+           s++, i++)
+        {
+          if (g_ascii_isspace (*s))
+            space = i;
+        }
+
+      if (i > LINE_LENGTH && space && *s != '\n')
+        i = space;
+
+      g_string_append_len (writer->buffer, comment, i);
+      g_string_append_len (writer->buffer, "\n# ", 3);
+
+      i++;
+
+      comment += i;
+      len     -= i;
+    }
+
+  g_string_truncate (writer->buffer, writer->buffer->len - 2);
+
+  if (writer->depth == 0)
+    gimp_config_writer_flush (writer);
+
+#undef LINE_LENGTH
+}
+
+static inline void
+gimp_config_writer_flush (GimpConfigWriter *writer)
+{
   if (write (writer->fd, writer->buffer->str, writer->buffer->len) < 0)
     g_set_error (&writer->error,
                  GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
 		 g_strerror (errno));
-  
+
   g_string_truncate (writer->buffer, 0);
+}
+
+static inline void
+gimp_config_writer_newline (GimpConfigWriter *writer)
+{
+  gint i;
+
+  g_string_append_c (writer->buffer, '\n');
+
+  if (writer->comment)
+    g_string_append_len (writer->buffer, "# ", 2);
+
+  for (i = 0; i < writer->depth; i++)
+    g_string_append_len (writer->buffer, "    ", 4);
 }
 
 static gboolean
@@ -426,11 +513,11 @@ gimp_config_writer_close_file (GimpConfigWriter  *writer,
 
       if (rename (writer->tmpname, writer->filename) == -1)
 	{
-	  g_set_error (error, 
+	  g_set_error (error,
 		       GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
 		       _("Failed to create file '%s': %s"),
 		       writer->filename, g_strerror (errno));
-	  
+
 	  unlink (writer->tmpname);
 	  return FALSE;
 	}

@@ -23,33 +23,35 @@
 #define __GIMP_CONFIG_WRITER_H__
 
 
-GimpConfigWriter * gimp_config_writer_new_file    (const gchar       *filename,
-						   gboolean           atomic,
-						   const gchar       *header,
-						   GError           **error);
-GimpConfigWriter * gimp_config_writer_new_fd      (gint               fd);
-GimpConfigWriter * gimp_config_writer_new_string  (GString           *string);
+GimpConfigWriter * gimp_config_writer_new_file     (const gchar       *filename,
+                                                    gboolean           atomic,
+                                                    const gchar       *header,
+                                                    GError           **error);
+GimpConfigWriter * gimp_config_writer_new_fd       (gint               fd);
+GimpConfigWriter * gimp_config_writer_new_string   (GString           *string);
 
-void               gimp_config_writer_open        (GimpConfigWriter  *writer,
-						   const gchar       *name);
-void               gimp_config_writer_print       (GimpConfigWriter  *writer,
-						   const gchar       *string,
-						   gint               len);
-void               gimp_config_writer_printf      (GimpConfigWriter  *writer,
-						   const gchar       *format,
-						   ...);
-void               gimp_config_writer_string      (GimpConfigWriter  *writer,
-						   const gchar       *string);
-void               gimp_config_writer_revert      (GimpConfigWriter  *writer);
-void               gimp_config_writer_close       (GimpConfigWriter  *writer);
+void               gimp_config_writer_open         (GimpConfigWriter  *writer,
+                                                    const gchar       *name);
+void               gimp_config_writer_comment_mode (GimpConfigWriter  *writer,
+                                                    gboolean           enable);
 
-void               gimp_config_writer_linefeed    (GimpConfigWriter  *writer);
-void               gimp_config_writer_comment     (GimpConfigWriter  *writer,
-						   const gchar       *comment);
+void               gimp_config_writer_print        (GimpConfigWriter  *writer,
+                                                    const gchar       *string,
+                                                    gint               len);
+void               gimp_config_writer_printf       (GimpConfigWriter  *writer,
+                                                    const gchar       *format,
+                                                    ...);
+void               gimp_config_writer_string       (GimpConfigWriter  *writer,
+                                                    const gchar       *string);
+void               gimp_config_writer_comment      (GimpConfigWriter  *writer,
+						    const gchar       *comment);void               gimp_config_writer_linefeed     (GimpConfigWriter  *writer);
 
-gboolean           gimp_config_writer_finish      (GimpConfigWriter  *writer,
-						   const gchar       *footer,
-						   GError           **error);
+
+void               gimp_config_writer_revert       (GimpConfigWriter  *writer);
+void               gimp_config_writer_close        (GimpConfigWriter  *writer);
+gboolean           gimp_config_writer_finish       (GimpConfigWriter  *writer,
+						    const gchar       *footer,
+						    GError           **error);
 
 
 #endif /* __GIMP_CONFIG_WRITER_H__ */
