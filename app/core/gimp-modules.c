@@ -37,6 +37,7 @@
 #include "core-types.h"
 
 #include "config/gimpcoreconfig.h"
+#include "config/gimpconfig-path.h"
 
 #include "gimp.h"
 #include "gimplist.h"
@@ -77,11 +78,7 @@ gimp_modules_load (Gimp *gimp)
   g_free (filename);
 #endif
 
-  gimp_module_db_set_load_inhibit (gimp->module_db,
-                                   gimp->config->module_load_inhibit);
-
-  gimp_module_db_load (gimp->module_db,
-                       gimp->config->module_path);
+  gimp_modules_refresh (gimp);
 }
 
 static void
@@ -136,11 +133,14 @@ gimp_modules_unload (Gimp *gimp)
 void
 gimp_modules_refresh (Gimp *gimp)
 {
+  gchar *path;
+
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   gimp_module_db_set_load_inhibit (gimp->module_db,
                                    gimp->config->module_load_inhibit);
 
-  gimp_module_db_refresh (gimp->module_db,
-                          gimp->config->module_path);
+  path = gimp_config_path_expand (gimp->config->module_path, TRUE, NULL);
+  gimp_module_db_refresh (gimp->module_db, path);
+  g_free (path);
 }

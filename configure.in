@@ -1201,8 +1201,6 @@ data/gradients/Makefile
 data/palettes/Makefile
 data/patterns/Makefile
 etc/Makefile
-etc/gimprc
-etc/gimprc_user
 m4macros/Makefile
 po/Makefile.in
 po-libgimp/Makefile.in

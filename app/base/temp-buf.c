@@ -37,6 +37,7 @@
 #include "base-types.h"
 
 #include "config/gimpbaseconfig.h"
+#include "config/gimpconfig-path.h"
 
 #include "pixel-region.h"
 #include "temp-buf.h"
@@ -620,7 +621,7 @@ mask_buf_data_clear (MaskBuf *mask_buf)
 
 /*  a static counter for generating unique filenames
  */
-static gint swap_index = 0;
+static gint tmp_file_index = 0;
 
 
 /*  a static pointer which keeps track of the last request for
@@ -630,21 +631,25 @@ static TempBuf *cached_in_memory = NULL;
 
 
 static gchar *
-generate_unique_filename (const gchar *temp_path)
+generate_unique_tmp_filename (GimpBaseConfig *config)
 {
   pid_t  pid;
-  gchar *swapfile;
+  gchar *tmpdir;
+  gchar *tmpfile;
   gchar *path;
+
+  tmpdir = gimp_config_path_expand (config->temp_path, TRUE, NULL);
 
   pid = getpid ();
 
-  swapfile = g_strdup_printf ("gimp%d.%d",
-                              (gint) pid,
-                              swap_index++);
+  tmpfile = g_strdup_printf ("gimp%d.%d",
+                             (gint) pid,
+                             tmp_file_index++);
 
-  path = g_build_filename (temp_path, swapfile, NULL);
+  path = g_build_filename (tmpdir, tmpfile, NULL);
 
-  g_free (swapfile);
+  g_free (tmpfile);
+  g_free (tmpdir);
 
   return path;
 }
@@ -679,7 +684,7 @@ temp_buf_swap (TempBuf *buf)
     return;
 
   /*  Get a unique filename for caching the data to a UNIX file  */
-  filename = generate_unique_filename (base_config->temp_path);
+  filename = generate_unique_tmp_filename (base_config);
 
   /*  Check if generated filename is valid  */
   if (g_file_test (filename, G_FILE_TEST_IS_DIR))

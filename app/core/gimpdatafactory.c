@@ -31,6 +31,7 @@
 #include "core-types.h"
 
 #include "config/gimpbaseconfig.h"
+#include "config/gimpconfig-path.h"
 
 #include "gimp.h"
 #include "gimpcontext.h"
@@ -196,6 +197,12 @@ gimp_data_factory_data_init (GimpDataFactory *factory,
 
   if (path && strlen (path))
     {
+      gchar    *tmp;
+
+      tmp = gimp_config_path_expand (path, TRUE, NULL);
+      g_free (path);
+      path = tmp;
+
       gimp_datafiles_read_directories (path,
                                        G_FILE_TEST_EXISTS,
 				       gimp_data_factory_load_callback,
@@ -225,6 +232,11 @@ gimp_data_factory_data_save (GimpDataFactory *factory)
     {
       GimpList *gimp_list;
       GList    *list;
+      gchar    *tmp;
+
+      tmp = gimp_config_path_expand (path, TRUE, NULL);
+      g_free (path);
+      path = tmp;
 
       gimp_list = GIMP_LIST (factory->container);
 

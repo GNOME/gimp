@@ -37,7 +37,7 @@
 #include "gimpconfig.h"
 #include "gimpconfig-deserialize.h"
 #include "gimpconfig-params.h"
-#include "gimpconfig-substitute.h"
+#include "gimpconfig-path.h"
 #include "gimpconfig-types.h"
 #include "gimpscanner.h"
 
@@ -69,7 +69,6 @@ static GTokenType  gimp_config_deserialize_memsize     (GValue     *value,
                                                         GParamSpec *prop_spec,
                                                         GScanner   *scanner);
 static GTokenType  gimp_config_deserialize_path        (GValue     *value,
-                                                        GObject    *object,
                                                         GParamSpec *prop_spec,
                                                         GScanner   *scanner);
 static GTokenType  gimp_config_deserialize_color       (GValue     *value,
@@ -319,8 +318,7 @@ gimp_config_deserialize_value (GValue     *value,
     }
   else if (prop_spec->value_type == GIMP_TYPE_PATH)
     {
-      return  gimp_config_deserialize_path (value,
-                                            object, prop_spec, scanner);
+      return  gimp_config_deserialize_path (value, prop_spec, scanner);
     }
   else if (prop_spec->value_type == GIMP_TYPE_COLOR)
     {
@@ -512,11 +510,10 @@ gimp_config_deserialize_memsize (GValue     *value,
 
 static GTokenType
 gimp_config_deserialize_path (GValue     *value,
-                              GObject    *object,
                               GParamSpec *prop_spec,
                               GScanner   *scanner)
 {
-  gchar *path;
+  GError *error    = NULL;
 
   if (g_scanner_peek_next_token (scanner) != G_TOKEN_STRING)
     return G_TOKEN_STRING;
@@ -526,12 +523,28 @@ gimp_config_deserialize_path (GValue     *value,
   if (!scanner_string_utf8_valid (scanner, prop_spec->name))
     return G_TOKEN_NONE;
 
-  path = gimp_config_substitute_path (object, scanner->value.v_string, TRUE);
+  if (scanner->value.v_string)
+    {
+      /*  Check if the string can be expanded
+       *  and converted to thde filesystem encoding.
+       */
+      gchar *expand = gimp_config_path_expand (scanner->value.v_string,
+                                               TRUE, &error);
 
-  if (!path)
-    return G_TOKEN_NONE;
+      if (!expand)
+        {
+          g_scanner_error (scanner,
+                           _("while parsing token %s: %s"),
+                           prop_spec->name, error->message);
+          g_error_free (error);
+          
+          return G_TOKEN_NONE;
+        }
+      
+      g_free (expand);
 
-  g_value_set_string_take_ownership (value, path);
+      g_value_set_static_string (value, scanner->value.v_string);
+    }
 
   return G_TOKEN_RIGHT_PAREN;
 }

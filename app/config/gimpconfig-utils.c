@@ -118,17 +118,17 @@ gimp_config_copy_properties (GObject *src,
 gchar *
 gimp_config_build_data_path (const gchar *name)
 {
-  return g_strconcat (gimp_directory (), G_DIR_SEPARATOR_S, name,
+  return g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S, name,
                       G_SEARCHPATH_SEPARATOR_S,
-                      gimp_data_directory (), G_DIR_SEPARATOR_S, name,
+                      "${gimp_data_dir}", G_DIR_SEPARATOR_S, name,
                       NULL);
 }
 
 gchar * 
 gimp_config_build_plug_in_path (const gchar *name)
 {
-  return g_strconcat (gimp_directory (), G_DIR_SEPARATOR_S, name,
+  return g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S, name,
                       G_SEARCHPATH_SEPARATOR_S,
-                      gimp_plug_in_directory (), G_DIR_SEPARATOR_S, name,
+                      "${gimp_plug_in_dir}", G_DIR_SEPARATOR_S, name,
                       NULL);
 }

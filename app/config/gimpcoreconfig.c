@@ -225,8 +225,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class,
                                  PROP_PLUGINRC_PATH,
                                  "pluginrc-path", PLUGINRC_PATH_BLURB,
-                                 g_build_filename (gimp_directory (), 
-                                                   "pluginrc", NULL),
+                                 "${gimp_dir}" G_DIR_SEPARATOR_S "pluginrc",
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_MODULE_LOAD_INHIBIT,
                                    "module-load-inhibit",

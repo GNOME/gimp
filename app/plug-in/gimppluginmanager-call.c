@@ -83,6 +83,7 @@
 #include "base/tile-manager.h"
 
 #include "config/gimpcoreconfig.h"
+#include "config/gimpconfig-path.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
@@ -393,7 +394,12 @@ plug_in_new (Gimp  *gimp,
 
   if (! g_path_is_absolute (name))
     {
-      path = plug_in_search_in_path (gimp->config->plug_in_path, name);
+      gchar *plug_in_path;
+
+      plug_in_path = gimp_config_path_expand (gimp->config->plug_in_path,
+                                              FALSE, NULL); 
+      path = plug_in_search_in_path (plug_in_path, name);
+      g_free (plug_in_path);
 
       if (! path)
 	{

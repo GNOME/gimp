@@ -286,17 +286,22 @@ gimp_rc_serialize (GObject *object,
                    gint     indent_level,
                    gpointer data)
 {
-  if (!gimp_config_serialize_unknown_tokens (object, fd, indent_level))
-    return FALSE;
+  if (data && GIMP_IS_RC (data))
+    {
+      if (!gimp_config_serialize_changed_properties (object, G_OBJECT (data),
+                                                     fd, indent_level))
+        return FALSE;
+    }
+  else
+    {
+      if (!gimp_config_serialize_properties (object, fd, indent_level))
+        return FALSE;
+    }
 
   if (write (fd, "\n", 1) < 0)
     return FALSE;
 
-  if (data && GIMP_IS_RC (data))
-    return gimp_config_serialize_changed_properties (object, G_OBJECT (data),
-                                                     fd, indent_level);
-  else
-    return gimp_config_serialize_properties (object, fd, indent_level);
+  return gimp_config_serialize_unknown_tokens (object, fd, indent_level);
 }
 
 static gboolean

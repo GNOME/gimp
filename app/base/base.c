@@ -36,6 +36,7 @@
 #include "base-types.h"
 
 #include "config/gimpbaseconfig.h"
+#include "config/gimpconfig-path.h"
 
 #include "paint-funcs/paint-funcs.h"
 
@@ -62,6 +63,7 @@ base_init (GimpBaseConfig *config,
            gboolean        use_mmx)
 {
   gchar *swapfile;
+  gchar *swapdir;
   gchar *path;
 
   g_return_if_fail (GIMP_IS_BASE_CONFIG (config));
@@ -86,13 +88,15 @@ base_init (GimpBaseConfig *config,
 
   /* Add the swap file */
   if (! config->swap_path)
-    g_object_set (G_OBJECT (config), "swap_path", g_get_tmp_dir ());
+    g_object_set (G_OBJECT (config), "swap_path", "${gimp_dir}");
 
+  swapdir  = gimp_config_path_expand (config->swap_path, TRUE, NULL);
   swapfile = g_strdup_printf ("gimpswap.%lu", (unsigned long) getpid ());
 
-  path = g_build_filename (config->swap_path, swapfile, NULL);
+  path = g_build_filename (swapdir, swapfile, NULL);
 
   g_free (swapfile);
+  g_free (swapdir);
 
   tile_swap_add (path, NULL, NULL);
 
@@ -122,14 +126,24 @@ base_exit (void)
 static void
 base_toast_old_temp_files (GimpBaseConfig *config)
 {
-  GDir *dir = NULL;
+  GDir       *dir = NULL;
+  gchar      *dirname;
   const char *entry;
 
-  if (config->swap_path)
-    dir = g_dir_open (config->swap_path, 0, NULL);
+  if (!config->swap_path)
+    return;
+
+  dirname = gimp_config_path_expand (config->swap_path, TRUE, NULL);
+  if (!dirname)
+    return;
+
+  dir = g_dir_open (dirname, 0, NULL);
 
   if (!dir)
-    return;
+    {
+      g_free (dirname);
+      return;
+    }
 
   while ((entry = g_dir_read_name (dir)) != NULL)
     if (! strncmp (entry, "gimpswap.", 9))
@@ -153,13 +167,15 @@ base_toast_old_temp_files (GimpBaseConfig *config)
 	  {
             gchar *filename;
 
-	    filename = g_build_filename (config->swap_path, entry, NULL);
+	    filename = g_build_filename (dirname, entry, NULL);
 	    unlink (filename);
             g_free (filename);
 	  }
       }
 
   g_dir_close (dir);
+
+  g_free (dirname);
 }
 
 static void

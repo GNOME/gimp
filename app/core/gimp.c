@@ -28,6 +28,7 @@
 
 #include "config/gimpconfig.h"
 #include "config/gimpconfig-params.h"
+#include "config/gimpconfig-path.h"
 #include "config/gimprc.h"
 
 #include "pdb/procedural_db.h"
@@ -606,6 +607,7 @@ gimp_initialize (Gimp               *gimp,
                  GimpInitStatusFunc  status_callback)
 {
   GimpContext *context;
+  gchar       *path;
 
   static const GimpDataFactoryLoaderEntry brush_loader_entries[] =
   {
@@ -715,7 +717,10 @@ gimp_initialize (Gimp               *gimp,
   internal_procs_init (gimp, status_callback);
 
   (* status_callback) (_("Plug-In Environment"), "", -1);
-  gimp_environ_table_load (gimp->environ_table, gimp->config->environ_path);
+
+  path = gimp_config_path_expand (gimp->config->environ_path, TRUE, NULL);
+  gimp_environ_table_load (gimp->environ_table, path);
+  g_free (path);
 }
 
 void

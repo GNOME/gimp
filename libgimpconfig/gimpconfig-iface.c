@@ -42,7 +42,6 @@
 #include "gimpconfig.h"
 #include "gimpconfig-serialize.h"
 #include "gimpconfig-deserialize.h"
-#include "gimpconfig-substitute.h"
 #include "gimpconfig-utils.h"
 #include "gimpscanner.h"
 
@@ -87,8 +86,7 @@ gimp_config_interface_get_type (void)
                                                   &config_iface_info, 
                                                   0);
 
-      g_type_interface_add_prerequisite (config_iface_type, 
-                                         G_TYPE_OBJECT);
+      g_type_interface_add_prerequisite (config_iface_type, G_TYPE_OBJECT);
     }
   
   return config_iface_type;
@@ -120,7 +118,8 @@ gimp_config_iface_deserialize (GObject  *object,
                                gint      nest_level,
                                gpointer  data)
 {
-  return gimp_config_deserialize_properties (object, scanner, nest_level, FALSE);
+  return gimp_config_deserialize_properties (object,
+                                             scanner, nest_level, FALSE);
 }
 
 static GObject *
@@ -488,12 +487,9 @@ gimp_config_add_unknown_token (GObject     *object,
   GSList          *unknown_tokens;
   GSList          *last;
   GSList          *list;
-  gchar           *dup_value;
 
   g_return_if_fail (G_IS_OBJECT (object));
   g_return_if_fail (key != NULL);
-
-  dup_value = value ? gimp_config_substitute_path (object, value, TRUE) : NULL;
 
   unknown_tokens = (GSList *) g_object_get_data (object, 
                                                  GIMP_CONFIG_UNKNOWN_TOKENS);
@@ -510,7 +506,7 @@ gimp_config_add_unknown_token (GObject     *object,
 
           if (value)
             {
-              token->value = dup_value;
+              token->value = g_strdup (value);
             }
           else
             {
@@ -531,7 +527,7 @@ gimp_config_add_unknown_token (GObject     *object,
 
   token = g_new (GimpConfigToken, 1);
   token->key   = g_strdup (key);
-  token->value = dup_value; 
+  token->value = g_strdup (value);
 
   if (last)
     {

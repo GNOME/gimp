@@ -26,6 +26,7 @@
 
 /*FIXME: remove when proper module loading is in place */
 #include "config/gimpcoreconfig.h"
+#include "config/gimpconfig-path.h"
 #include "core/gimp.h"
 /*end remove */
 
@@ -152,10 +153,17 @@ tools_init (Gimp *gimp)
 
 #if 0
   if (g_module_supported ())
-    gimp_datafiles_read_directories (gimp->config->tool_plug_in_path,
-                                     0 /* no flags */,
-                                     cheesey_module_loading_hack,
-                                     gimp);
+    {
+      gchar *path = gimp_config_path_expand (gimp->config->tool_plug_in_path,
+                                             TRUE, NULL);
+
+      gimp_datafiles_read_directories (path,
+                                       0 /* no flags */,
+                                       cheesey_module_loading_hack,
+                                       gimp);
+
+      g_free (path);
+    }
 #endif
 
 }

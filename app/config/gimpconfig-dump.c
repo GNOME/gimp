@@ -125,19 +125,14 @@ dump_system_gimprc (void)
      "# Lines that start with a '#' are comments. Blank lines are ignored.\n"
      "#\n"
      "# By default everything in this file is commented out. The file then\n"
-     "# documents the default values and shows what changes are possible\n." 
+     "# documents the default values and shows what changes are possible.\n" 
      "\n"
      "# The variable gimp_dir is set to either the internal value\n"
      "# @gimpdir@ or the environment variable GIMP_DIRECTORY.  If\n"
      "# the path in GIMP_DIRECTORY is relative, it is considered\n"
      "# relative to your home directory.\n"
-     "\n"
-     "(prefix \"@prefix@\"\n"
-     "(exec_prefix \"@exec_prefix@\")\n"
-     "(gimp_data_dir \"@gimpdatadir@\")\n"
-     "(gimp_plugin_dir \"@gimpplugindir@\")\n"
      "\n");
-  
+
   write (1, str->str, str->len);
 
   rc = g_object_new (GIMP_TYPE_RC, NULL);

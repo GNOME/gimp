@@ -28,8 +28,9 @@
 
 #include "libgimpbase/gimpenv.h"
 
-#include "gimpconfig.h"
-#include "gimpconfig-substitute.h"
+#include "gimpconfig-path.h"
+
+#include "libgimp/gimpintl.h"
 
 
 #define SUBSTS_ALLOC 4
@@ -38,27 +39,37 @@ static inline gchar * extract_token (const gchar **str);
 
 
 gchar * 
-gimp_config_substitute_path (GObject     *object,
-                             const gchar *path,
-                             gboolean     use_env)
+gimp_config_path_expand (const gchar  *path,
+                         gboolean      recode,
+                         GError      **error)
 {
   const gchar *p;
   const gchar *s;
   gchar       *n;
   gchar       *token;
-  gchar       *new_path = NULL;
+  gchar       *filename;
+  gchar       *expanded = NULL;
   gchar      **substs   = NULL;
   guint        n_substs = 0;
   gint         length   = 0;
   gint         i;
 
-  g_return_val_if_fail (G_IS_OBJECT (object), NULL);
   g_return_val_if_fail (path != NULL, NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  p = path;
-
-  while (*p)
+  if (recode)
     {
+      if (!(filename = g_filename_from_utf8 (path, -1, NULL, NULL, error)))
+        return NULL;
+    }
+  else
+    {
+      filename = (gchar *) path;
+    }
+
+  for (p = filename; *p; )
+    {
+
 #ifndef G_OS_WIN32
       if (*p == '~')
 	{
@@ -66,7 +77,8 @@ gimp_config_substitute_path (GObject     *object,
 	  p += 1;
 	}
       else
-#endif
+#endif  /* G_OS_WIN32 */
+
       if ((token = extract_token (&p)) != NULL)
         {
           for (i = 0; i < n_substs; i++)
@@ -79,54 +91,50 @@ gimp_config_substitute_path (GObject     *object,
             }
           else
             {
-              s = gimp_config_lookup_unknown_token (object, token);
+              s = NULL;
 
-              if (!s && use_env) 
-                {
-                  if (!s && strcmp (token, "gimp_dir") == 0)
-                    s = gimp_directory ();
+              if (!s && strcmp (token, "gimp_dir") == 0)
+                s = gimp_directory ();
                   
-                  if (!s && strcmp (token, "gimp_datadir") == 0)
-                    s = gimp_data_directory ();
+              if (!s && strcmp (token, "gimp_data_dir") == 0)
+                s = gimp_data_directory ();
                   
-                  if (!s && 
-                      ((strcmp (token, "gimp_plug_in_dir")) == 0 || 
-                       (strcmp (token, "gimp_plugin_dir")) == 0))
-                    s = gimp_plug_in_directory ();
+              if (!s && 
+                  ((strcmp (token, "gimp_plug_in_dir")) == 0 || 
+                   (strcmp (token, "gimp_plugin_dir")) == 0))
+                s = gimp_plug_in_directory ();
                   
-                  if (!s && strcmp (token, "gimp_sysconfdir") == 0)
-                    s = gimp_sysconf_directory ();
-                  
-                  if (!s)
-                    s = g_getenv (token);
+              if (!s && strcmp (token, "gimp_sysconf_dir") == 0)
+                s = gimp_sysconf_directory ();
+              
+              if (!s)
+                s = g_getenv (token);
                   
 #ifdef G_OS_WIN32
-                  /* The default user gimprc on Windows references
-                   * ${TEMP}, but not all Windows installations have that
-                   * environment variable, even if it should be kinda
-                   * standard. So special-case it.
-                   */
-                  if (!s && strcmp (token, "TEMP") == 0)
-                    s = g_get_tmp_dir ();
-#endif
-                }
-          
-              if (!s)
-                {
-                  g_message ("token referenced but not defined: ${%s}", token);
-                  
-                  g_free (token);
-                  goto cleanup;
-                }
-
-              if (n_substs % SUBSTS_ALLOC == 0)
-                substs = g_renew (gchar *, substs, 2*(n_substs+SUBSTS_ALLOC));
-
-              substs[2*n_substs]     = token;
-              substs[2*n_substs + 1] = (gchar *) s;
-              n_substs++;
+              /* The default user gimprc on Windows references
+               * ${TEMP}, but not all Windows installations have that
+               * environment variable, even if it should be kinda
+               * standard. So special-case it.
+               */
+              if (!s && strcmp (token, "TEMP") == 0)
+                s = g_get_tmp_dir ();
+#endif  /* G_OS_WIN32 */
             }
-
+          
+          if (!s)
+            {
+              g_set_error (error, 0, 0, _("can not expand ${%s}"), token);
+              g_free (token);
+              goto cleanup;
+            }
+          
+          if (n_substs % SUBSTS_ALLOC == 0)
+            substs = g_renew (gchar *, substs, 2 * (n_substs + SUBSTS_ALLOC));
+          
+          substs[2*n_substs]     = token;
+          substs[2*n_substs + 1] = (gchar *) s;
+          n_substs++;
+      
           length += strlen (s);
         }
       else
@@ -136,16 +144,17 @@ gimp_config_substitute_path (GObject     *object,
 	}
     }
 
-  if (!n_substs)
-    return g_strdup (path);
+  if (n_substs == 0)
+    return recode ? filename : g_strdup (filename);
 
-  new_path = g_new (gchar, length + 1);
+  expanded = g_new (gchar, length + 1);
 
-  p = path;
-  n = new_path;
+  p = filename;
+  n = expanded;
 
   while (*p)
     {
+
 #ifndef G_OS_WIN32
       if (*p == '~')
 	{
@@ -155,7 +164,8 @@ gimp_config_substitute_path (GObject     *object,
 	  p += 1;
 	}
       else
-#endif
+#endif  /* G_OS_WIN32 */
+
       if ((token = extract_token (&p)) != NULL)
         {
           for (i = 0; i < n_substs; i++)
@@ -188,7 +198,10 @@ gimp_config_substitute_path (GObject     *object,
 
   g_free (substs);
 
-  return new_path;  
+  if (recode)
+    g_free (filename);
+
+  return expanded;  
 }
 
 static inline gchar *

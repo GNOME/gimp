@@ -133,7 +133,7 @@ tree_items[] =
        "Paths to search for brushes, palettes, gradients,\n"
        "patterns, plug-ins and modules can also configured\n"
        "here."),
-    TREE_ITEM_FROM_SYSCONF_DIR, "gimprc_user"
+    TREE_ITEM_DONT, NULL
   },
   {
     FALSE, "gtkrc",
