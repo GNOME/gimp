@@ -28,9 +28,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "paint/gimppaintcore.h"
 #include "paint/gimppaintcore-stroke.h"
-#include "paint/gimppaintoptions.h"
 
 #include "gimp.h"
 #include "gimpchannel.h"
@@ -44,14 +42,8 @@
 #include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
 #include "gimppaintinfo.h"
-#include "gimptoolinfo.h"
 
 #include "gimp-intl.h"
-
-
-/*  local variables  */
-
-static gboolean   gimp_image_mask_stroking = FALSE;
 
 
 /*  public functions  */
@@ -196,7 +188,7 @@ gimp_image_mask_is_empty (GimpImage *gimage)
    *  that the selection mask is empty so that it doesn't mask the paint
    *  during the stroke operation.
    */
-  if (gimp_image_mask_stroking)
+  if (gimage->mask_stroking)
     return TRUE;
   else
     return gimp_channel_is_empty (gimp_image_get_mask (gimage));
@@ -624,22 +616,20 @@ gimp_image_mask_save (GimpImage *gimage)
 }
 
 gboolean
-gimp_image_mask_stroke (GimpImage    *gimage,
-                        GimpDrawable *drawable,
-                        GimpContext  *context)
+gimp_image_mask_stroke (GimpImage     *gimage,
+                        GimpDrawable  *drawable,
+                        GimpPaintInfo *paint_info)
 {
   const BoundSeg *bs_in;
   const BoundSeg *bs_out;
   gint            num_segs_in;
   gint            num_segs_out;
-  GimpToolInfo   *tool_info;
-  GimpPaintInfo  *paint_info;
   GimpPaintCore  *core;
   gboolean        retval;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
+  g_return_val_if_fail (GIMP_IS_PAINT_INFO (paint_info), FALSE);
 
   if (! gimp_image_mask_boundary (gimage, &bs_in, &bs_out,
                                   &num_segs_in, &num_segs_out))
@@ -648,13 +638,10 @@ gimp_image_mask_stroke (GimpImage    *gimage,
       return FALSE;
     }
 
-  gimp_image_mask_stroking = TRUE;
+  gimage->mask_stroking = TRUE;
 
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_PAINT,
                                _("Stroke Selection"));
-
-  tool_info  = gimp_context_get_tool (context);
-  paint_info = tool_info->paint_info;
 
   core = g_object_new (paint_info->paint_type, NULL);
 
@@ -667,7 +654,7 @@ gimp_image_mask_stroke (GimpImage    *gimage,
 
   gimp_image_undo_group_end (gimage);
 
-  gimp_image_mask_stroking = FALSE;
+  gimage->mask_stroking = FALSE;
 
   return retval;
 }

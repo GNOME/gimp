@@ -29,11 +29,13 @@
 #include "procedural_db.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpedit.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
+#include "core/gimptoolinfo.h"
 
 static ProcRecord edit_cut_proc;
 static ProcRecord edit_copy_proc;
@@ -324,7 +326,6 @@ edit_stroke_invoker (Gimp     *gimp,
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  GimpImage *gimage;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_DRAWABLE (drawable))
@@ -332,8 +333,14 @@ edit_stroke_invoker (Gimp     *gimp,
 
   if (success)
     {
+      GimpImage    *gimage;
+      GimpToolInfo *tool_info;
+    
       gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-      success = gimp_image_mask_stroke (gimage, drawable, gimp_get_current_context (gimage->gimp));
+    
+      tool_info = gimp_context_get_tool (gimp_get_current_context (gimp));
+    
+      success = gimp_image_mask_stroke (gimage, drawable, tool_info->paint_info);
     }
 
   return procedural_db_return_args (&edit_stroke_proc, success);

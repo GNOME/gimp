@@ -100,6 +100,9 @@ struct _GimpItemClass
                             gboolean                clip_result,
                             GimpProgressFunc        progress_callback,
                             gpointer                progress_data);
+  gboolean   (* stroke)    (GimpItem               *item,
+                            GimpDrawable           *drawable,
+                            GimpPaintInfo          *paint_info);
 
   const gchar *default_name;
   const gchar *rename_desc;
@@ -173,13 +176,17 @@ void            gimp_item_rotate           (GimpItem       *item,
                                             gdouble         center_x,
                                             gdouble         center_y,
                                             gboolean        flip_result);
-void            gimp_item_transform        (GimpItem               *item,
-                                            const GimpMatrix3      *matrix,
-                                            GimpTransformDirection  direction,
-                                            GimpInterpolationType   interpolation_type,
-                                            gboolean                clip_result,
-                                            GimpProgressFunc        progress_callback,
-                                            gpointer                progress_data);
+void            gimp_item_transform        (GimpItem       *item,
+                                            const GimpMatrix3 *matrix,
+                                            GimpTransformDirection direction,
+                                            GimpInterpolationType interpolation_type,
+                                            gboolean        clip_result,
+                                            GimpProgressFunc progress_callback,
+                                            gpointer        progress_data);
+
+gboolean        gimp_item_stroke           (GimpItem       *item,
+                                            GimpDrawable   *drawable,
+                                            GimpPaintInfo  *paint_info);
 
 gint            gimp_item_get_ID           (GimpItem       *item);
 GimpItem      * gimp_item_get_by_ID        (Gimp           *gimp,

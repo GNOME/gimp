@@ -483,6 +483,7 @@ gimp_image_init (GimpImage *gimage)
 
   gimage->floating_sel          = NULL;
   gimage->selection_mask        = NULL;
+  gimage->mask_stroking         = FALSE;
 
   gimage->parasites             = gimp_parasite_list_new ();
 

@@ -1,3 +1,42 @@
+2003-09-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpitem.[ch]: added new virtual function
+	GimpItem::stroke().
+
+	* app/core/gimpchannel.c
+	* app/vectors/gimpvectors.c: implement GimpItem::stroke().
+
+	* app/core/gimpimage-mask.[ch] (gimp_image_mask_stroke): changed
+	signature to match gimp_item_stroke() (the selection mask *really*
+	should be a GimpChannel subclass).
+	Removed global variable "gboolean gimp_image_mask_stroking"...
+
+	* app/core/gimpimage.[ch]: ...and added "gboolean mask_stroking"
+	to the GimpImage struct.
+
+	* app/gui/vectors-commands.[ch]: removed vectors_stroke_vectors().
+
+	* app/widgets/widgets-types.h: removed GimpStrokeItemFunc typedef.
+
+	* app/widgets/gimpvectorstreeview.[ch]: removed "stroke_item_func"
+	member and use gimp_item_stroke() instead.
+
+	* app/gui/dialogs-constructors.c (dialogs_vectors_list_view_new)
+	* app/gui/edit-commands.c (edit_stroke_cmd_callback)
+	* app/gui/vectors-commands. (vectors_stroke_cmd_callback)
+	* app/widgets/gimpselectioneditor.c
+	(gimp_selection_editor_stroke_clicked)
+	* tools/pdbgen/pdb/edit.pdb (gimp_edit_stroke): changed accordingly.
+
+	* app/pdb/edit_cmds.c: regenerated.
+
+	Note that there is no GUI for "stroke channel", although it would
+	be utterly cool to have one, since currently slelection stroking
+	cannot be masked by a selection (because we stroke the selection).
+	Anyway, if anyone has an idea how to trigger "stroke channel" with
+	another drawable active (the one to stroke to), please let me
+	know...
+
 2003-09-01  Manish Singh  <yosh@gimp.org>
 
 	* app/gui/preferences-dialog.c: added a shadow around the comment

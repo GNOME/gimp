@@ -1,4 +1,4 @@
-/* The GIMP -- an image manipulation program
+#/* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This program is free software; you can redistribute it and/or modify
@@ -89,7 +89,7 @@ GimpChannel * gimp_image_mask_save        (GimpImage       *gimage);
 
 gboolean      gimp_image_mask_stroke      (GimpImage       *gimage,
                                            GimpDrawable    *drawable,
-                                           GimpContext     *context);
+                                           GimpPaintInfo   *paint_info);
 
 
 #endif  /*  __GIMP_IMAGE_MASK_H__  */

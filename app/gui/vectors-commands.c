@@ -32,13 +32,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-mask-select.h"
-#include "core/gimplist.h"
-#include "core/gimppaintinfo.h"
 #include "core/gimptoolinfo.h"
-
-#include "paint/gimppaintcore.h"
-#include "paint/gimppaintcore-stroke.h"
-#include "paint/gimppaintoptions.h"
 
 #include "pdb/procedural_db.h"
 
@@ -179,11 +173,25 @@ void
 vectors_stroke_cmd_callback (GtkWidget *widget,
                              gpointer   data)
 {
-  GimpImage   *gimage;
-  GimpVectors *active_vectors;
+  GimpImage    *gimage;
+  GimpVectors  *active_vectors;
+  GimpDrawable *active_drawable;
+  GimpToolInfo *tool_info;
   return_if_no_vectors (gimage, active_vectors, data);
 
-  vectors_stroke_vectors (active_vectors);
+  active_drawable = gimp_image_active_drawable (gimage);
+
+  if (! active_drawable)
+    {
+      g_message (_("There is no active layer or channel to stroke to."));
+      return;
+    }
+
+  tool_info = gimp_context_get_tool (gimp_get_current_context (gimage->gimp));
+
+  gimp_item_stroke (GIMP_ITEM (active_vectors), active_drawable,
+                    tool_info->paint_info);
+  gimp_image_flush (gimage);
 }
 
 void
@@ -256,45 +264,6 @@ vectors_edit_attributes_cmd_callback (GtkWidget *widget,
   return_if_no_vectors (gimage, active_vectors, data);
 
   vectors_edit_vectors_query (active_vectors);
-}
-
-void
-vectors_stroke_vectors (GimpVectors *vectors)
-{
-  GimpImage    *gimage;
-  GimpDrawable *active_drawable;
-
-  g_return_if_fail (GIMP_IS_VECTORS (vectors));
-
-  gimage = gimp_item_get_image (GIMP_ITEM (vectors));
-
-  active_drawable = gimp_image_active_drawable (gimage);
-
-  if (! active_drawable)
-    {
-      g_message (_("There is no active Layer or Channel to stroke to"));
-      return;
-    }
-
-  if (vectors && vectors->strokes)
-    {
-      GimpToolInfo  *tool_info;
-      GimpPaintInfo *paint_info;
-      GimpPaintCore *core;
-
-      tool_info  = gimp_context_get_tool (gimp_get_user_context (gimage->gimp));
-      paint_info = tool_info->paint_info;
-
-      core = g_object_new (paint_info->paint_type, NULL);
-
-      gimp_paint_core_stroke_vectors (core, active_drawable,
-                                      paint_info->paint_options,
-                                      vectors);
-
-      g_object_unref (core);
-
-      gimp_image_flush (gimage);
-    }
 }
 
 void

@@ -160,8 +160,23 @@ HELP
 
     &std_pdb_misc;
     &inargs('stroke to');
-    &invoke('gimp_image_mask_stroke (gimage, drawable, gimp_get_current_context (gimage->gimp))');
-    push @{$invoke{headers}}, qw("core/gimpimage-mask.h");
+
+    %invoke = (
+	headers => [ qw("core/gimpimage-mask.h" "core/gimpcontext.h"
+                        "core/gimptoolinfo.h") ],
+	code => <<'CODE'
+{
+  GimpImage    *gimage;
+  GimpToolInfo *tool_info;
+
+  gimage = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  tool_info = gimp_context_get_tool (gimp_get_current_context (gimp));
+
+  success = gimp_image_mask_stroke (gimage, drawable, tool_info->paint_info);
+}
+CODE
+    );
 }
 
 @headers = qw("core/gimpimage.h");

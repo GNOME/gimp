@@ -28,10 +28,13 @@
 
 #include "widgets-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask-select.h"
+#include "core/gimptoolinfo.h"
 
 #include "vectors/gimpvectors.h"
 
@@ -301,6 +304,23 @@ gimp_vectors_tree_view_stroke_clicked (GtkWidget           *widget,
 
   item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (gimage);
 
-  if (item && view->stroke_item_func)
-    view->stroke_item_func (GIMP_VECTORS (item));
+  if (item)
+    {
+      GimpDrawable *active_drawable;
+      GimpToolInfo *tool_info;
+
+      active_drawable = gimp_image_active_drawable (gimage);
+
+      if (! active_drawable)
+        {
+          g_message (_("There is no active layer or channel to stroke to."));
+          return;
+        }
+
+      tool_info =
+        gimp_context_get_tool (gimp_get_current_context (gimage->gimp));
+
+      gimp_item_stroke (item, active_drawable, tool_info->paint_info);
+      gimp_image_flush (gimage);
+    }
 }

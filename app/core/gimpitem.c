@@ -38,6 +38,7 @@
 #include "gimplayer.h"
 #include "gimplist.h"
 #include "gimpmarshal.h"
+#include "gimppaintinfo.h"
 #include "gimpparasitelist.h"
 
 #include "vectors/gimpvectors.h"
@@ -171,6 +172,7 @@ gimp_item_class_init (GimpItemClass *klass)
   klass->flip                     = NULL;
   klass->rotate                   = NULL;
   klass->transform                = NULL;
+  klass->stroke                   = NULL;
 }
 
 static void
@@ -749,6 +751,25 @@ gimp_item_transform (GimpItem               *item,
   item_class->transform (item, matrix, direction, interpolation,
                          clip_result,
                          progress_callback, progress_data);
+}
+
+gboolean
+gimp_item_stroke (GimpItem      *item,
+                  GimpDrawable  *drawable,
+                  GimpPaintInfo *paint_info)
+{
+  GimpItemClass *item_class;
+
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (GIMP_IS_PAINT_INFO (paint_info), FALSE);
+
+  item_class = GIMP_ITEM_GET_CLASS (item);
+
+  if (item_class->stroke)
+    return item_class->stroke (item, drawable, paint_info);
+
+  return FALSE;
 }
 
 gint

@@ -50,7 +50,6 @@ void   vectors_vectors_tool_cmd_callback         (GtkWidget   *widget,
 void   vectors_edit_attributes_cmd_callback      (GtkWidget   *widget,
                                                   gpointer     data);
 
-void   vectors_stroke_vectors                    (GimpVectors *vectors);
 void   vectors_selection_to_vectors              (GimpImage   *gimage,
                                                   gboolean     advanced);
 void   vectors_vectors_tool                      (GimpVectors *vectors);

@@ -29,6 +29,9 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpmarshal.h"
+#include "core/gimppaintinfo.h"
+
+#include "paint/gimppaintcore-stroke.h"
 
 #include "gimpanchor.h"
 #include "gimpstroke.h"
@@ -85,14 +88,19 @@ static void       gimp_vectors_rotate       (GimpItem         *item,
                                              gdouble           center_x,
                                              gdouble           center_y,
                                              gboolean          clip_result);
-static void       gimp_vectors_transform    (GimpItem               *item,
-                                             const GimpMatrix3      *matrix,
-                                             GimpTransformDirection  direction,
-                                             GimpInterpolationType   interp_type,
-                                             gboolean                clip_result,
-                                             GimpProgressFunc        progress_callback,
-                                             gpointer                progress_data);
+static void       gimp_vectors_transform    (GimpItem         *item,
+                                             const GimpMatrix3 *matrix,
+                                             GimpTransformDirection direction,
+                                             GimpInterpolationType interp_type,
+                                             gboolean          clip_result,
+                                             GimpProgressFunc  progress_callback,
+                                             gpointer          progress_data);
+static gboolean   gimp_vectors_stroke       (GimpItem         *item,
+                                             GimpDrawable     *drawable,
+                                             GimpPaintInfo    *paint_info);
 
+
+#
 static void       gimp_vectors_real_thaw            (GimpVectors       *vectors);
 static void       gimp_vectors_real_stroke_add      (GimpVectors       *vectors,
                                                      GimpStroke        *stroke);
@@ -203,6 +211,7 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
   item_class->flip                = gimp_vectors_flip;
   item_class->rotate              = gimp_vectors_rotate;
   item_class->transform           = gimp_vectors_transform;
+  item_class->stroke              = gimp_vectors_stroke;
   item_class->default_name        = _("Path");
   item_class->rename_desc         = _("Rename Path");
 
@@ -518,6 +527,34 @@ gimp_vectors_transform (GimpItem               *item,
     }
 
   gimp_vectors_thaw (vectors);
+}
+
+static gboolean
+gimp_vectors_stroke (GimpItem      *item,
+                     GimpDrawable  *drawable,
+                     GimpPaintInfo *paint_info)
+{
+  GimpVectors   *vectors;
+  GimpPaintCore *core;
+  gboolean       retval;
+
+  vectors = GIMP_VECTORS (item);
+
+  if (! vectors->strokes)
+    {
+      g_message (_("Cannot stroke empty path."));
+      return FALSE;
+    }
+
+  core = g_object_new (paint_info->paint_type, NULL);
+
+  retval = gimp_paint_core_stroke_vectors (core, drawable,
+                                           paint_info->paint_options,
+                                           vectors);
+
+  g_object_unref (core);
+
+  return retval;
 }
 
 static void

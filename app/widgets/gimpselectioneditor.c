@@ -349,13 +349,17 @@ static void
 gimp_selection_editor_stroke_clicked (GtkWidget       *widget,
 				      GimpImageEditor *editor)
 {
-  if (editor->gimage)
+  GimpImage *gimage = editor->gimage;
+
+  if (gimage)
     {
-      GimpImage *gimage = editor->gimage;
+      GimpToolInfo *tool_info;
+
+      tool_info = gimp_context_get_tool (gimp_get_current_context (gimage->gimp));
 
       gimp_image_mask_stroke (gimage,
 			      gimp_image_active_drawable (gimage),
-			      gimp_get_current_context (gimage->gimp));
+			      tool_info->paint_info);
       gimp_image_flush (gimage);
     }
 }

@@ -825,7 +825,6 @@ dialogs_vectors_list_view_new (GimpDialogFactory *factory,
 
   vectors_view = GIMP_VECTORS_TREE_VIEW (view);
 
-  vectors_view->stroke_item_func          = vectors_stroke_vectors;
   vectors_view->selection_to_vectors_func = vectors_selection_to_vectors;
 
   dockable = dialogs_dockable_new (view,

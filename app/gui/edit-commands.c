@@ -36,6 +36,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-undo.h"
+#include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
 
@@ -260,12 +261,22 @@ void
 edit_stroke_cmd_callback (GtkWidget *widget,
 			  gpointer   data)
 {
-  GimpImage *gimage;
+  GimpImage    *gimage;
+  GimpDrawable *active_drawable;
+  GimpToolInfo *tool_info;
   return_if_no_image (gimage, data);
 
-  gimp_image_mask_stroke (gimage,
-                          gimp_image_active_drawable (gimage),
-                          gimp_get_current_context (gimage->gimp));
+  active_drawable = gimp_image_active_drawable (gimage);
+
+  if (! active_drawable)
+    {
+      g_message (_("There is no active layer or channel to stroke to."));
+      return;
+    }
+
+  tool_info = gimp_context_get_tool (gimp_get_current_context (gimage->gimp));
+
+  gimp_image_mask_stroke (gimage, active_drawable, tool_info->paint_info);
   gimp_image_flush (gimage);
 }
 

@@ -38,6 +38,8 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "paint/gimppaintcore-stroke.h"
+
 #include "gimp-utils.h"
 #include "gimpimage.h"
 #include "gimpimage-projection.h"
@@ -45,6 +47,7 @@
 #include "gimpimage-undo-push.h"
 #include "gimpchannel.h"
 #include "gimplayer.h"
+#include "gimppaintinfo.h"
 #include "gimpparasitelist.h"
 
 #include "gimp-intl.h"
@@ -70,7 +73,7 @@ static void       gimp_channel_scale       (GimpItem         *item,
                                             gint              new_height,
                                             gint              new_offset_x,
                                             gint              new_offset_y,
-                                            GimpInterpolationType  interp_type);
+                                            GimpInterpolationType interp_type);
 static void       gimp_channel_resize      (GimpItem         *item,
                                             gint              new_width,
                                             gint              new_height,
@@ -85,13 +88,16 @@ static void       gimp_channel_rotate      (GimpItem         *item,
                                             gdouble           center_x,
                                             gdouble           center_y,
                                             gboolean          flip_result);
-static void       gimp_channel_transform   (GimpItem               *item,
-                                            const GimpMatrix3      *matrix,
-                                            GimpTransformDirection  direction,
-                                            GimpInterpolationType   interpolation_type,
-                                            gboolean                clip_result,
-                                            GimpProgressFunc        progress_callback,
-                                            gpointer                progress_data);
+static void       gimp_channel_transform   (GimpItem         *item,
+                                            const GimpMatrix3 *matrix,
+                                            GimpTransformDirection direction,
+                                            GimpInterpolationType interpolation_type,
+                                            gboolean          clip_result,
+                                            GimpProgressFunc  progress_callback,
+                                            gpointer          progress_data);
+static gboolean   gimp_channel_stroke      (GimpItem         *item,
+                                            GimpDrawable     *drawable,
+                                            GimpPaintInfo    *paint_info);
 
 static void       gimp_channel_push_undo   (GimpChannel      *mask,
                                             const gchar      *undo_desc);
@@ -158,6 +164,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
   item_class->flip                 = gimp_channel_flip;
   item_class->rotate               = gimp_channel_rotate;
   item_class->transform            = gimp_channel_transform;
+  item_class->stroke               = gimp_channel_stroke;
   item_class->default_name         = _("Channel");
   item_class->rename_desc          = _("Rename Channel");
 }
@@ -497,6 +504,51 @@ gimp_channel_transform (GimpItem               *item,
 
   /*  bounds are now unknown  */
   channel->bounds_known = FALSE;
+}
+
+static gboolean
+gimp_channel_stroke (GimpItem         *item,
+                     GimpDrawable     *drawable,
+                     GimpPaintInfo    *paint_info)
+{
+  GimpChannel    *channel;
+  GimpImage      *gimage;
+  const BoundSeg *bs_in;
+  const BoundSeg *bs_out;
+  gint            num_segs_in;
+  gint            num_segs_out;
+  GimpPaintCore  *core;
+  gboolean        retval;
+
+  channel = GIMP_CHANNEL (item);
+
+  gimage = gimp_item_get_image (GIMP_ITEM (channel));
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+
+  if (! gimp_channel_boundary (channel, &bs_in, &bs_out,
+                               &num_segs_in, &num_segs_out,
+                               0, 0, 0, 0))
+    {
+      g_message (_("Cannot stroke empty channel."));
+      return FALSE;
+    }
+
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_PAINT,
+                               _("Stroke Channel"));
+
+  core = g_object_new (paint_info->paint_type, NULL);
+
+  retval = gimp_paint_core_stroke_boundary (core, drawable,
+                                            paint_info->paint_options,
+                                            bs_in, num_segs_in,
+                                            0, 0);
+
+  g_object_unref (core);
+
+  gimp_image_undo_group_end (gimage);
+
+  return retval;
 }
 
 static void
