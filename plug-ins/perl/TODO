@@ -14,11 +14,15 @@ bugs
   * install even without Gtk? NO!
   * perl_fu_webify in homepage-logo.pl
   * wait for working gimp_file_load (or do it myself?)
+  * get rid of xs_exit. please please fuck me plenty.
   
 important issues
 
   * Gimp::IO (?)
+  * Gimp::Fu import after Gimp? use Gimp::main for Gimp::Fu??
+  * generic config query mechanism
   * Gimp->server_eval()
+  * supply a gimp-1.1 compatible gimp_progress_init
   * install scripts in share/
 [DONE]  * fix auto-edit shebang for check-ins
 [DONE]  * gimp-tiles are not accessible in any way..
