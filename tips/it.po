@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-31 21:51+0100\n"
-"PO-Revision-Date: 2004-02-12 14:09+0100\n"
+"POT-Creation-Date: 2004-11-05 16:14+0100\n"
+"PO-Revision-Date: 2004-11-05 16:14+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it> \n"
 "Language-Team: gimp.linux.it <it@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,9 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: tips/gimp-tips.xml.in.h:1
-#, fuzzy
 msgid "<big>Welcome to the GIMP!</big>"
-msgstr "<big>Benvenuto in GIMP !</big>"
+msgstr "<big>Benvenuti in GIMP!</big>"
 
 #: tips/gimp-tips.xml.in.h:2
 msgid ""
@@ -63,7 +62,6 @@ msgstr ""
 "Premendo di nuovo <tt>Shift</tt>-click, riappariranno."
 
 #: tips/gimp-tips.xml.in.h:7
-#, fuzzy
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the &quot;New "
@@ -72,12 +70,11 @@ msgid ""
 msgstr ""
 "Le selezioni fluttuanti devono essere ancorate a un nuovo livello o "
 "all'ultimo livello attivo prima di compiere altre operazioni sull'immagine. "
-"Per questo scopo clicca su \"Nuovo livello\" o \"Ancora livello\" nella "
-"finestra di dialogo Livelli, oppure usa le voci del menu per eseguire le "
-"stesse azioni."
+"Per questo scopo clicca su &quot;Nuovo livello&quot; o &quot;Àncora "
+"livello&quot; nella finestra di dialogo Livelli, oppure usa le voci del menu "
+"per eseguire le stesse azioni."
 
 #: tips/gimp-tips.xml.in.h:8
-#, fuzzy
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
 "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
@@ -85,36 +82,34 @@ msgid ""
 "Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
 "you exit GIMP."
 msgstr ""
-"Dopo aver attivato \"Tasti scorciatoia dinamici\" nelle Preferenze, puoi "
-"riassegnare le scorciatoie da tastiera. Basta aprire il menu, selezionare "
-"una voce, e premere la combinazione desiderata. Se l'opzione \"Salva i tasti "
-"scorciatoia all'uscita\" è abilitata, la combinazione sarà salvata quando si "
-"esce da GIMP."
+"Dopo aver attivato &quot;Tasti scorciatoia dinamici&quot; nelle Preferenze, "
+"puoi riassegnare le scorciatoie da tastiera. Basta aprire il menu, "
+"selezionare una voce, e premere la combinazione desiderata. Se l'opzione "
+"&quot;Salva i tasti scorciatoia all'uscita&quot; è abilitata, la "
+"combinazione sarà salvata quando si esce da GIMP."
 
 #: tips/gimp-tips.xml.in.h:9
-#, fuzzy
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
 "off the image with the Move tool."
 msgstr ""
-"Clicca su un righello e trascina verso l'immagine per posizionare una Guida. "
+"Clicca su un righello e trascina verso l'immagine per posizionare una guida. "
 "Tutte le selezioni trascinate si attaccheranno alle guide. Puoi rimuovere le "
-"guide trascinandole fuori dall'immagine con lo strumento Sposta."
+"guide trascinandole fuori dall'immagine con lo strumento sposta."
 
 #: tips/gimp-tips.xml.in.h:10
-#, fuzzy
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "
 "tool (Layer-&gt;Colors-&gt;Levels). If there are any color casts, you can "
 "correct them with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
 msgstr ""
-"Se le tue foto appena scannerizzate appaiono un po' sbiadite, puoi "
-"facilmente migliorare l'intervallo tonale con il bottone \"Auto\" nello "
-"strumento Livelli (Livelli- &gt;Colori&gt;Livelli). Se sono presenti delle "
-"dominanti di colore puoi correggerle con lo strumento Curve (Livelli&gt;"
-"Colori&gt;Curve). "
+"Se le tue foto appena digitalizzate appaiono un po' sbiadite, puoi "
+"facilmente migliorare l'intervallo tonale con il bottone &quot;Auto&quot; "
+"nello strumento Livelli (Livelli-&gt;Colori-&gt;Livelli). Se sono presenti "
+"delle dominanti di colore puoi correggerle con lo strumento Curve (Livelli-"
+"&gt;Colori-&gt;Curve)."
 
 #: tips/gimp-tips.xml.in.h:11
 msgid ""
@@ -146,7 +141,6 @@ msgstr ""
 "Appiattisci immagine) se vuoi che i plug-in agiscano sull'intera immagine."
 
 #: tips/gimp-tips.xml.in.h:14
-#, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
@@ -155,9 +149,9 @@ msgid ""
 msgstr ""
 "Non tutti gli effetti possono essere applicati ad ogni tipo di immagine. In "
 "caso di impossibilità la corrispondente voce del menù sarà grigia. Per "
-"risolvere il problema, puoi cambiare la modalità immagine in RGB (Immagine "
-"&gt;Modalità&gt;RGB), aggiungere un canale alfa (Livelli&gt;Trasparenze&gt;"
-"Aggiungi canale alfa) o appiattirla (Immagine&gt;Appiattisci immagine)."
+"risolvere il problema, puoi cambiare la modalità immagine in RGB (Immagine-"
+"&gt;Modalità-&gt;RGB), aggiungere un canale alfa (Livelli-&gt;Trasparenze-"
+"&gt;Aggiungi canale alfa) o appiattirla (Immagine-&gt;Appiattisci immagine)."
 
 #: tips/gimp-tips.xml.in.h:15
 msgid ""
@@ -173,6 +167,8 @@ msgstr ""
 msgid ""
 "The GIMP can undo most changes to the image, so feel free to experiment."
 msgstr ""
+"GIMP può annullare molti cambiamenti alle immagini perciò sentitevi liberi "
+"di fare esperimenti!"
 
 #: tips/gimp-tips.xml.in.h:17
 msgid ""
@@ -196,21 +192,19 @@ msgstr ""
 "composizione del loro contenuto."
 
 #: tips/gimp-tips.xml.in.h:19
-#, fuzzy
 msgid ""
 "The layer named &quot;Background&quot; is special because it lacks "
 "transparency. This prevents you from moving the layer up in the stack. You "
 "may add transparency to it by right-clicking in the Layers dialog and "
 "selecting &quot;Add Alpha Channel&quot;."
 msgstr ""
-"Il livello chiamato \"Sfondo\" è speciale poiché è privo di trasparenza. Ciò "
-"ti impedisce di aggiungere una maschera di livello o di muovere il livello "
-"in alto nella pila. Puoi aggiungergli trasparenza cliccandoci sopra col "
-"tasto destro nella finestra di dialogo Livelli e selezionando \"Aggiungi "
-"canale Alpha\"."
+"Il livello chiamato &quot;Sfondo&quot; è speciale poiché è privo di "
+"trasparenza. Ciò ti impedisce di aggiungere una maschera di livello o di "
+"muovere il livello in alto nella pila. Puoi aggiungergli trasparenza "
+"cliccandoci sopra col tasto destro nella finestra di dialogo Livelli e "
+"selezionando &quot;Aggiungi canale alfa&quot;."
 
 #: tips/gimp-tips.xml.in.h:20
-#, fuzzy
 msgid ""
 "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
 "ellipse select. To place a circle precisely, drag horizontal and vertical "
@@ -218,11 +212,11 @@ msgid ""
 "intersection of the guides, and the resulting selection will just touch the "
 "guides."
 msgstr ""
-"Per creare un cerchio perfetto, premi il tasto <tt>Shift</tt> mentre stai "
+"Per creare un cerchio perfetto, premi il tasto <tt>Maiusc</tt> mentre stai "
 "facendo una selezione ellittica. Per posizionare un cerchio in maniera "
 "precisa, trascina le guide verticali e orizzontali in posizione tangente al "
 "cerchio che vuoi selezionare, posiziona il cursore nell'intersezione delle "
-"guide: la selezione risultante toccherà le guide. "
+"guide: la selezione risultante toccherà le guide."
 
 #: tips/gimp-tips.xml.in.h:21
 msgid ""
@@ -249,7 +243,6 @@ msgstr ""
 "completato, puoi salvarlo in JPEG, PNG, GIF, ..."
 
 #: tips/gimp-tips.xml.in.h:23
-#, fuzzy
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Try "
@@ -258,7 +251,7 @@ msgstr ""
 "Puoi muovere una selezione premendo <tt>Alt</tt> mentre trascini la "
 "selezione. Se si dovesse muovere la finestra, vuol dire che il tuo window "
 "manager usa già il tasto <tt>Alt</tt>. Prova a premere allo stesso tempo "
-"anche il tasto <tt>Shift</tt> o <tt>Ctrl</tt>."
+"anche il tasto <tt>Maiusc</tt> o <tt>Ctrl</tt>."
 
 #: tips/gimp-tips.xml.in.h:24
 msgid ""
@@ -325,13 +318,12 @@ msgstr ""
 "nome del livello nella finestra di dialogo Livelli."
 
 #: tips/gimp-tips.xml.in.h:31
-#, fuzzy
 msgid ""
 "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
 "are making a selection in order to constrain it to a square or a circle, or "
 "to have it centered on its starting point."
 msgstr ""
-"Premendo o rilasciando i tasti <tt>Shift</tt> e <tt>Ctrl</tt> mentre stai "
+"Premendo o rilasciando i tasti <tt>Maiusc</tt> e <tt>Ctrl</tt> mentre stai "
 "facendo una selezione puoi forzarla ad un quandrato o un cerchio, o ad "
 "averla centrata nel punto di partenza."
 
@@ -365,31 +357,13 @@ msgstr ""
 "tasto centrale del mouse per muoverti nell'immagine."
 
 #: tips/gimp-tips.xml.in.h:35
-#, fuzzy
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"
 "Quick Mask&quot; button at the bottom left of an image window. Change your "
 "selection by painting in the image and click on the button again to convert "
 "it back to a normal selection."
 msgstr ""
-"Puoi usare gli strumenti di disegno per cambiare le selezioni: clicca sul "
-"bottone \"Maschera veloce\" in basso a sinistra della finestra "
-"dell'immagine, cambia la selezione disegnando nell'immagine e clicca di "
-"nuovo sul bottone per convertirla ad una selezione normale."
-
-#~ msgid ""
-#~ "The file selection dialog box has command-line completion with <tt>Tab</"
-#~ "tt>, just like the shell. Type part of a filename, hit <tt>Tab</tt>, and "
-#~ "voila, it's completed."
-#~ msgstr ""
-#~ "La casella di dialogo per la selezione dei file dispone del completamento "
-#~ "automatico mediante il tasto <tt>Tab</tt>, proprio come la shell. Digita "
-#~ "parte del nome del file, premi <tt>Tab</tt> e, voila, viene completato."
-
-#~ msgid ""
-#~ "Nearly all image operations are performed by right-clicking on the image. "
-#~ "And don't worry, you can undo most mistakes..."
-#~ msgstr ""
-#~ "Quasi tutte le operazioni sull'immagine possono essere effettuate "
-#~ "cliccando col tasto destro sull'immagine. E non preoccuparti, puoi "
-#~ "annullare la maggior parte degli errori..."
+"Gli strumenti di disegno possono servire per cambiare le selezioni: fare "
+"clic sul bottone &quot;Maschera veloce&quot; in basso a sinistra della "
+"finestra dell'immagine, cambiare la selezione disegnando nell'immagine e "
+"fare clic nuovamente sul bottone per convertirla ad una selezione normale."
