@@ -26,10 +26,12 @@
 
 #include "core/core-types.h"
 
+#include "core/gimpimage-new.h"
+
 #include "file-new-dialog.h"
 #include "gdisplay.h"
 
-#include "image_new.h"
+#include "app_procs.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
@@ -100,8 +102,8 @@ file_new_ok_callback (GtkWidget *widget,
   else
     {
       gtk_widget_destroy (info->dlg);
-      image_new_create_image (values);
-      image_new_values_free (values);
+      gimp_image_new_create_image (the_gimp, values);
+      gimp_image_new_values_free (values);
       g_free (info);
     }
 }
@@ -155,7 +157,7 @@ file_new_cancel_callback (GtkWidget *widget,
   info = (NewImageInfo*) data;
 
   gtk_widget_destroy (info->dlg);
-  image_new_values_free(info->values);
+  gimp_image_new_values_free (info->values);
   g_free (info);
 }
 
@@ -174,8 +176,8 @@ file_new_confirm_dialog_callback (GtkWidget *widget,
   if (create)
     {
       gtk_widget_destroy (info->dlg);
-      image_new_create_image (info->values);
-      image_new_values_free (info->values);
+      gimp_image_new_create_image (the_gimp, info->values);
+      gimp_image_new_values_free (info->values);
       g_free (info);
     }
   else
@@ -193,8 +195,8 @@ file_new_confirm_dialog (NewImageInfo *info)
 
   gtk_widget_set_sensitive (info->dlg, FALSE);
 
-  size = image_new_get_size_string (info->size);
-  max_size = image_new_get_size_string (gimprc.max_new_image_size);
+  size     = gimp_image_new_get_size_string (info->size);
+  max_size = gimp_image_new_get_size_string (gimprc.max_new_image_size);
 
   /* xgettext:no-c-format */
 	    
@@ -295,10 +297,10 @@ file_new_image_size_callback (GtkWidget *widget,
   info->values->height =
     RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (info->size_se), 1));
 
-  info->size = image_new_calculate_size (info->values);
+  info->size = gimp_image_new_calculate_size (info->values);
 
   label = g_strdup_printf (_("Image Size: %s"),
-			   text = image_new_get_size_string (info->size));
+			   text = gimp_image_new_get_size_string (info->size));
   gtk_frame_set_label (GTK_FRAME (info->size_frame), label);
 
   g_free (label);
@@ -306,32 +308,31 @@ file_new_image_size_callback (GtkWidget *widget,
 }
 
 void
-ui_new_image_window_create (const GimpImageNewValues *values_orig)
+file_new_dialog_create (GimpImage *gimage)
 {
-  NewImageInfo       *info;
-  GimpImageNewValues *values;
+  NewImageInfo *info;
+  GtkWidget    *top_vbox;
+  GtkWidget    *hbox;
+  GtkWidget    *vbox;
+  GtkWidget    *abox;
+  GtkWidget    *frame;
+  GtkWidget    *table;
+  GtkWidget    *separator;
+  GtkWidget    *label;
+  GtkWidget    *button;
+  GtkObject    *adjustment;
+  GtkWidget    *spinbutton;
+  GtkWidget    *spinbutton2;
+  GtkWidget    *radio_box;
+  GSList       *group;
+  GList        *list;
 
-  GtkWidget *top_vbox;
-  GtkWidget *hbox;
-  GtkWidget *vbox;
-  GtkWidget *abox;
-  GtkWidget *frame;
-  GtkWidget *table;
-  GtkWidget *separator;
-  GtkWidget *label;
-  GtkWidget *button;
-  GtkObject *adjustment;
-  GtkWidget *spinbutton;
-  GtkWidget *spinbutton2;
-  GtkWidget *radio_box;
-  GSList    *group;
-  GList     *list;
+  info = g_new0 (NewImageInfo, 1);
 
-  info = g_new (NewImageInfo, 1);
-  info->values = values = image_new_values_new (values_orig);
+  info->values = gimp_image_new_values_new (the_gimp, gimage);
 
   info->confirm_dlg = NULL;
-  info->size = 0.0;
+  info->size        = 0.0;
 
   info->dlg = gimp_dialog_new (_("New Image"), "new_image",
 			       gimp_standard_help_func,
@@ -409,7 +410,7 @@ ui_new_image_window_create (const GimpImageNewValues *values_orig)
   abox = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
   gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 2, 3, 5);
   info->size_se =
-    gimp_size_entry_new (0, values->unit, "%a", FALSE, FALSE, TRUE, 75,
+    gimp_size_entry_new (0, info->values->unit, "%a", FALSE, FALSE, TRUE, 75,
 			 GIMP_SIZE_ENTRY_UPDATE_SIZE);
   gtk_table_set_col_spacing (GTK_TABLE (info->size_se), 1, 2);
   gtk_container_add (GTK_CONTAINER (abox), info->size_se);
@@ -485,9 +486,9 @@ ui_new_image_window_create (const GimpImageNewValues *values_orig)
 
   /*  initialize the sizeentry  */
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se), 0,
-				  values->xresolution, FALSE);
+				  info->values->xresolution, FALSE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se), 1,
-				  values->yresolution, FALSE);
+				  info->values->yresolution, FALSE);
 
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (info->size_se), 0,
 					 GIMP_MIN_IMAGE_SIZE,
@@ -496,8 +497,10 @@ ui_new_image_window_create (const GimpImageNewValues *values_orig)
 					 GIMP_MIN_IMAGE_SIZE,
 					 GIMP_MAX_IMAGE_SIZE);
 
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->size_se), 0, values->width);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->size_se), 1, values->height);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->size_se), 0,
+			      info->values->width);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->size_se), 1,
+			      info->values->height);
 
   gtk_signal_connect (GTK_OBJECT (info->size_se), "refval_changed",
 		      GTK_SIGNAL_FUNC (file_new_image_size_callback),
@@ -552,10 +555,10 @@ ui_new_image_window_create (const GimpImageNewValues *values_orig)
 					 1, GIMP_MIN_RESOLUTION,
 					 GIMP_MAX_RESOLUTION);
 
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->resolution_se),
-			      0, values->xresolution);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->resolution_se),
-			      1, values->yresolution);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->resolution_se), 0,
+			      info->values->xresolution);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->resolution_se), 1,
+			      info->values->yresolution);
 
   gtk_signal_connect (GTK_OBJECT (info->resolution_se), "value_changed",
 		      GTK_SIGNAL_FUNC (file_new_resolution_callback),
@@ -565,7 +568,8 @@ ui_new_image_window_create (const GimpImageNewValues *values_orig)
   info->couple_resolutions = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
   gimp_chain_button_set_active
     (GIMP_CHAIN_BUTTON (info->couple_resolutions),
-     ABS (values->xresolution - values->yresolution) < GIMP_MIN_RESOLUTION);
+     ABS (info->values->xresolution - info->values->yresolution)
+     < GIMP_MIN_RESOLUTION);
   gtk_table_attach_defaults (GTK_TABLE (info->resolution_se),
 			     info->couple_resolutions, 2, 3, 0, 2);
   gtk_widget_show (info->couple_resolutions);
@@ -587,7 +591,7 @@ ui_new_image_window_create (const GimpImageNewValues *values_orig)
   gtk_widget_show (radio_box);
 
   group = NULL;
-  list = g_list_first (image_new_get_image_base_type_names ());
+  list = g_list_first (gimp_image_new_get_base_type_names (the_gimp));
   while (list)
     {
       GimpImageBaseTypeName *name_info;
@@ -600,11 +604,11 @@ ui_new_image_window_create (const GimpImageNewValues *values_orig)
       gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) name_info->type);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
 			  GTK_SIGNAL_FUNC (gimp_radio_button_update),
-			  &values->type);
+			  &info->values->type);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
 			  GTK_SIGNAL_FUNC (file_new_image_size_callback),
 			  info);
-      if (values->type == name_info->type)
+      if (info->values->type == name_info->type)
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
       gtk_widget_show (button);
 
@@ -624,7 +628,7 @@ ui_new_image_window_create (const GimpImageNewValues *values_orig)
   gtk_widget_show (radio_box);
 
   group = NULL;
-  list = g_list_first (image_new_get_fill_type_names ());
+  list = g_list_first (gimp_image_new_get_fill_type_names (the_gimp));
   while (list)
     {
       GimpFillTypeName *name_info;
@@ -638,11 +642,11 @@ ui_new_image_window_create (const GimpImageNewValues *values_orig)
       gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) name_info->type);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
 			  GTK_SIGNAL_FUNC (gimp_radio_button_update),
-			  &values->fill_type);
+			  &info->values->fill_type);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
 			  GTK_SIGNAL_FUNC (file_new_image_size_callback),
 			  info);
-      if (values->fill_type == name_info->type)
+      if (info->values->fill_type == name_info->type)
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
       gtk_widget_show (button);
 

@@ -92,8 +92,6 @@ gimp_SOURCES = @STRIP_BEGIN@ \
 	gimpparasite.c		\
 	gimpparasite.h		\
 	gimpunit.c		\
-	image_new.c		\
-	image_new.h		\
 	parasitelist.c		\
 	parasitelist.h		\
 	unitrc.h		\

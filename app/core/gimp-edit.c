@@ -40,6 +40,7 @@
 #include "gimpedit.h"
 #include "gimpimage.h"
 #include "gimpimage-mask.h"
+#include "gimpimage-new.h"
 #include "gimplayer.h"
 #include "gimplist.h"
 
@@ -50,7 +51,6 @@
 #include "gimage.h"
 #include "gimpparasite.h"
 #include "gimprc.h"
-#include "image_new.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
@@ -79,7 +79,7 @@ gimp_edit_cut (GimpImage    *gimage,
   cut = gimage_mask_extract (gimage, drawable, TRUE, FALSE, TRUE);
 
   if (cut)
-    image_new_reset_current_cut_buffer ();
+    gimp_image_new_set_have_current_cut_buffer (gimage->gimp);
 
   /*  Only crop if the gimage mask wasn't empty  */
   if (cut && ! empty)
@@ -133,7 +133,7 @@ gimp_edit_copy (GimpImage    *gimage,
   copy = gimage_mask_extract (gimage, drawable, FALSE, FALSE, TRUE);
 
   if (copy)
-    image_new_reset_current_cut_buffer ();
+    gimp_image_new_set_have_current_cut_buffer (gimage->gimp);
 
   /*  Only crop if the gimage mask wasn't empty  */
   if (copy && ! empty)

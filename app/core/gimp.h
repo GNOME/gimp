@@ -21,6 +21,10 @@
 
 
 #include "gimpobject.h"
+#include "gimpimage-new.h"
+
+
+typedef void (* GimpCreateDisplayFunc) (GimpImage *gimage);
 
 
 #define GIMP_TYPE_GIMP            (gimp_get_type ())
@@ -34,23 +38,31 @@ typedef struct _GimpClass GimpClass;
 
 struct _Gimp
 {
-  GimpObject        parent_instance;
+  GimpObject             parent_instance;
 
-  GimpContainer    *images;
+  GimpCreateDisplayFunc  create_display_func;
 
-  TileManager      *global_buffer;
-  GimpContainer    *named_buffers;
+  GimpContainer         *images;
 
-  GimpParasiteList *parasites;
+  TileManager           *global_buffer;
+  GimpContainer         *named_buffers;
 
-  GimpDataFactory  *brush_factory;
-  GimpDataFactory  *pattern_factory;
-  GimpDataFactory  *gradient_factory;
-  GimpDataFactory  *palette_factory;
+  GimpParasiteList      *parasites;
 
-  GHashTable       *procedural_ht;
+  GimpDataFactory       *brush_factory;
+  GimpDataFactory       *pattern_factory;
+  GimpDataFactory       *gradient_factory;
+  GimpDataFactory       *palette_factory;
 
-  GimpContainer    *tool_info_list;
+  GHashTable            *procedural_ht;
+
+  GimpContainer         *tool_info_list;
+
+  /* image_new values */
+  GList                 *image_base_type_names;
+  GList                 *fill_type_names;
+  GimpImageNewValues     image_new_last_values;
+  gboolean               have_current_cut_buffer;
 };
 
 struct _GimpClass
@@ -59,11 +71,18 @@ struct _GimpClass
 };
 
 
-GtkType   gimp_get_type   (void);
-Gimp    * gimp_new        (void);
+GtkType     gimp_get_type       (void);
+Gimp      * gimp_new            (void);
 
-void      gimp_restore    (Gimp *gimp);
-void      gimp_shutdown   (Gimp *gimp);
+void        gimp_restore        (Gimp              *gimp);
+void        gimp_shutdown       (Gimp              *gimp);
+
+GimpImage * gimp_create_image   (Gimp              *gimp,
+				 gint               width,
+				 gint               height,
+				 GimpImageBaseType  type);
+void        gimp_create_display (Gimp              *gimp,
+				 GimpImage         *gimage);
 
 
 #endif  /* __GIMP_H__ */

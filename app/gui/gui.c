@@ -25,9 +25,11 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
 #include "tools/tools-types.h"
 #include "widgets/widgets-types.h"
+
+#include "core/gimp.h"
+#include "core/gimpcontext.h"
 
 #include "widgets/gimpdialogfactory.h"
 
@@ -39,7 +41,6 @@
 #include "errorconsole.h"
 #include "file-open-dialog.h"
 #include "file-save-dialog.h"
-#include "gimprc.h"
 #include "gradient-select.h"
 #include "gui.h"
 #include "gximage.h"
@@ -51,18 +52,30 @@
 #include "tool-options-dialog.h"
 #include "toolbox.h"
 
+#include "appenv.h"
 #include "app_procs.h"
 #include "dialog_handler.h"
 #include "gdisplay.h"     /* for gdisplay_*_override_cursor()  */
 #include "gdisplay_ops.h" /* for gdisplay_xserver_resolution() */
+#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 
+#include "pixmaps/wilber2.xpm"
 
-static void   really_quit_callback (GtkWidget *button,
-				    gboolean   quit,
-				    gpointer   data);
 
+/*  local function prototypes  */
+
+static void   gui_display_new                 (GimpImage *gimage);
+static gint   gui_rotate_the_shield_harmonics (GtkWidget *widget,
+					       GdkEvent  *eevent,
+					       gpointer   data);
+static void   gui_really_quit_callback        (GtkWidget *button,
+					       gboolean   quit,
+					       gpointer   data);
+
+
+/*  global variables  */
 
 extern GSList *display_list;  /*  from gdisplay.c  */
 
@@ -70,7 +83,7 @@ extern GSList *display_list;  /*  from gdisplay.c  */
 /*  public functions  */
 
 void
-gui_init (void)
+gui_init (Gimp *gimp)
 {
   /* make sure the monitor resolution is valid */
   if (gimprc.monitor_xres < GIMP_MIN_RESOLUTION ||
@@ -128,6 +141,8 @@ gui_init (void)
 
     g_free (filenames);
   }
+
+  gimp->create_display_func = gui_display_new;
 }
 
 void
@@ -215,7 +230,7 @@ gui_unset_busy (void)
 }
 
 void
-really_quit_dialog (void)
+gui_really_quit_dialog (void)
 {
   GtkWidget *dialog;
 
@@ -229,7 +244,7 @@ really_quit_dialog (void)
 				   _("Some files unsaved.\n\nQuit the GIMP?"),
 				   _("Quit"), _("Cancel"),
 				   NULL, NULL,
-				   really_quit_callback,
+				   gui_really_quit_callback,
 				   NULL);
 
   gtk_widget_show (dialog);
@@ -239,9 +254,72 @@ really_quit_dialog (void)
 /*  private functions  */
 
 static void
-really_quit_callback (GtkWidget *button,
-		      gboolean   quit,
-		      gpointer   data)
+gui_display_new (GimpImage *gimage)
+{
+  GDisplay *gdisp;
+
+  gdisp = gdisplay_new (gimage, 0x0101);
+
+  gimp_context_set_display (gimp_context_get_user (), gdisp);
+
+  if (double_speed)
+    gtk_signal_connect_after (GTK_OBJECT (gdisp->canvas), "expose_event",
+			      GTK_SIGNAL_FUNC (gui_rotate_the_shield_harmonics),
+			      NULL);
+}
+
+static gint
+gui_rotate_the_shield_harmonics (GtkWidget *widget,
+				 GdkEvent  *eevent,
+				 gpointer   data)
+{
+  GdkPixmap *pixmap = NULL;
+  GdkBitmap *mask   = NULL;
+  gint       width  = 0;
+  gint       height = 0;
+
+  gtk_signal_disconnect_by_func (GTK_OBJECT (widget),
+				 GTK_SIGNAL_FUNC (gui_rotate_the_shield_harmonics),
+				 data);
+
+  pixmap = gdk_pixmap_create_from_xpm_d (widget->window,
+					 &mask,
+					 NULL,
+					 wilber2_xpm);
+
+  gdk_window_get_size (pixmap, &width, &height);
+
+  if (widget->allocation.width  >= width &&
+      widget->allocation.height >= height)
+    {
+      gint x, y;
+
+      x = (widget->allocation.width  - width) / 2;
+      y = (widget->allocation.height - height) / 2;
+
+      gdk_gc_set_clip_mask (widget->style->black_gc, mask);
+      gdk_gc_set_clip_origin (widget->style->black_gc, x, y);
+
+      gdk_draw_pixmap (widget->window,
+		       widget->style->black_gc,
+		       pixmap, 0, 0,
+		       x, y,
+		       width, height);
+
+      gdk_gc_set_clip_mask (widget->style->black_gc, NULL);
+      gdk_gc_set_clip_origin (widget->style->black_gc, 0, 0);
+    }
+
+  gdk_pixmap_unref (pixmap);
+  gdk_bitmap_unref (mask);
+
+  return FALSE;
+}
+
+static void
+gui_really_quit_callback (GtkWidget *button,
+			  gboolean   quit,
+			  gpointer   data)
 {
   if (quit)
     {

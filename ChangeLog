@@ -1,5 +1,30 @@
 2001-07-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am
+	* app/image_new.[ch]: removed...
+
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpimage-new.[ch]: ...and (partly) added here.
+
+	* app/core/gimp.[ch]: added gimp_create_image() which will be the
+	_only_ place to get new images from soon.
+	Added  a "create_display_func" function pointer...
+
+	* app/gui/gui.[ch]: ...which gets initialized here.
+
+	This way the core can create displays without depending on the
+	interface.
+
+	* app/app_procs.c
+	* app/apptypes.h
+	* app/core/gimpedit.c
+	* app/gui/file-commands.c
+	* app/gui/file-new-dialog.[ch]: changed accordingly.
+
+2001-07-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimp.[ch]: renamed gimp_initialize() to gimp_restore()
 	because it loads all kinds of data. Added gimp_shutdown() to save
 	the data. Added the global parasite list.

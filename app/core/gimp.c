@@ -34,6 +34,7 @@
 #include "gimpdatafactory.h"
 #include "gimpgradient.h"
 #include "gimpimage.h"
+#include "gimpimage-new.h"
 #include "gimplist.h"
 #include "gimppalette.h"
 #include "gimppattern.h"
@@ -41,6 +42,7 @@
 
 #include "appenv.h"
 #include "app_procs.h"
+#include "gimage.h"
 #include "gimpparasite.h"
 #include "gimprc.h"
 
@@ -195,6 +197,8 @@ gimp_init (Gimp *gimp)
 
   gtk_object_ref (GTK_OBJECT (gimp->tool_info_list));
   gtk_object_sink (GTK_OBJECT (gimp->tool_info_list));
+
+  gimp_image_new_init (gimp);
 }
 
 static void
@@ -203,6 +207,8 @@ gimp_destroy (GtkObject *object)
   Gimp *gimp;
 
   gimp = GIMP (object);
+
+  gimp_image_new_exit (gimp);
 
   if (gimp->tool_info_list)
     {
@@ -311,4 +317,31 @@ gimp_shutdown (Gimp *gimp)
   gimp_data_factory_data_save (gimp->gradient_factory);
   gimp_data_factory_data_save (gimp->palette_factory);
   gimp_parasiterc_save (gimp);
+}
+
+GimpImage *
+gimp_create_image (Gimp              *gimp,
+		   gint               width,
+		   gint               height,
+		   GimpImageBaseType  type)
+{
+  GimpImage *gimage;
+
+  g_return_val_if_fail (gimp != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  gimage = gimage_new (gimp, width, height, type);
+
+  return gimage;
+}
+
+void
+gimp_create_display (Gimp      *gimp,
+		     GimpImage *gimage)
+{
+  g_return_if_fail (gimp != NULL);
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (gimp->create_display_func)
+    gimp->create_display_func (gimage);
 }

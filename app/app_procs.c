@@ -183,7 +183,7 @@ app_init (gint    gimp_argc,
       if (! no_splash)
 	splash_destroy ();
 
-      gui_init ();
+      gui_init (the_gimp);
 
       /*  FIXME: This needs to go in preferences  */
       message_handler = MESSAGE_BOX;
@@ -215,8 +215,8 @@ void
 app_exit (gboolean kill_it)
 {
   /*  If it's the user's perogative, and there are dirty images  */
-  if (!kill_it && gdisplays_dirty () && !no_interface)
-    really_quit_dialog ();
+  if (! kill_it && gdisplays_dirty () && ! no_interface)
+    gui_really_quit_dialog ();
   else
     app_exit_finish ();
 }

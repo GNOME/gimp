@@ -16,13 +16,9 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __IMAGE_NEW_H__
-#define __IMAGE_NEW_H__
+#ifndef __GIMP_IMAGE_NEW_H__
+#define __GIMP_IMAGE_NEW_H__
 
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 typedef struct
 {
@@ -35,6 +31,7 @@ typedef struct
   GimpFillType  type;
   gchar        *name;
 } GimpFillTypeName;
+
 
 struct _GimpImageNewValues
 {
@@ -50,25 +47,27 @@ struct _GimpImageNewValues
   GimpFillType       fill_type;
 };
 
-GList * image_new_get_fill_type_names       (void);
-GList * image_new_get_image_base_type_names (void);
 
-void image_new_create_window        (const GimpImageNewValues *values, 
-				     const GimpImage          *image);
-void image_new_set_default_values   (const GimpImageNewValues *values);
+void         gimp_image_new_init                  (Gimp               *gimp);
+void         gimp_image_new_exit                  (Gimp               *gimp);
 
-GimpImageNewValues * image_new_values_new  (const GimpImageNewValues *src_vals);
-void                 image_new_values_free (GimpImageNewValues       *values);
+GList      * gimp_image_new_get_base_type_names   (Gimp               *gimp);
+GList      * gimp_image_new_get_fill_type_names   (Gimp               *gimp);
 
-void      image_new_create_image    (const GimpImageNewValues *values);
+GimpImageNewValues * gimp_image_new_values_new    (Gimp               *gimp,
+						   GimpImage          *gimage);
 
-gdouble   image_new_calculate_size  (GimpImageNewValues       *values);
-gchar   * image_new_get_size_string (gdouble                   size);
+void         gimp_image_new_set_default_values    (Gimp               *gimp,
+						   GimpImageNewValues *values);
+void         gimp_image_new_values_free           (GimpImageNewValues *values);
 
-void      image_new_reset_current_cut_buffer (void);
+gdouble      gimp_image_new_calculate_size        (GimpImageNewValues *values);
+gchar      * gimp_image_new_get_size_string       (gdouble             size);
 
-#ifdef __cplusplus
-}
-#endif
+void   gimp_image_new_set_have_current_cut_buffer (Gimp               *gimp);
 
-#endif /* __IMAGE_NEW__ */
+GimpImage  * gimp_image_new_create_image          (Gimp               *gimp,
+						   GimpImageNewValues *values);
+
+
+#endif /* __GIMP_IMAGE_NEW__ */

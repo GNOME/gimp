@@ -30,7 +30,6 @@
 #include "app_procs.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
-#include "image_new.h"
 #include "menus.h"
 
 #include "libgimp/gimpintl.h"
@@ -47,7 +46,7 @@ file_new_cmd_callback (GtkWidget *widget,
 		       guint      action)
 {
   GDisplay  *gdisp;
-  GimpImage *image = NULL;
+  GimpImage *gimage = NULL;
 
   /*  Before we try to determine the responsible gdisplay,
    *  make sure this wasn't called from the toolbox
@@ -57,10 +56,10 @@ file_new_cmd_callback (GtkWidget *widget,
       gdisp = gdisplay_active ();
 
       if (gdisp)
-        image = gdisp->gimage;
+        gimage = gdisp->gimage;
     }
 
-  image_new_create_window (NULL, image);
+  file_new_dialog_create (gimage);
 }
 
 void

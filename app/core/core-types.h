@@ -132,6 +132,8 @@ typedef struct _GimpUndoStack       GimpUndoStack;
 
 typedef struct _GimpGuide           GimpGuide;
 
+typedef struct _GimpImageNewValues  GimpImageNewValues;
+
 
 /*  functions  */
 

@@ -39,8 +39,6 @@ typedef struct _ColorNotebook       ColorNotebook;
 
 typedef struct _GDisplay            GDisplay;
 
-typedef struct _GimpImageNewValues  GimpImageNewValues;
-
 typedef struct _GimpProgress        GimpProgress;
 
 typedef struct _ImageMap            ImageMap;
