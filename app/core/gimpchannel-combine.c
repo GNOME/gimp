@@ -273,13 +273,13 @@ gimp_channel_combine_ellipse (GimpChannel    *mask,
           /*  antialiasing  */
           else
             {
-              /** algorithm changed 7-18-04, because the previous one did not
+              /* algorithm changed 7-18-04, because the previous one did not
                * work well for eccentric ellipses.  The new algorithm
                * measures the distance to the ellipse in the X and Y directions,
                * and uses trigonometry to approximate the distance to the
                * ellipse as the distance to the hypotenuse of a right triangle
                * whose legs are the X and Y distances.  (WES)
-               **/
+               */
               x0 = x;
               last = 0;
               yi = ABS (i + 0.5 - cy);

@@ -1,5 +1,10 @@
 2004-07-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpchannel-combine.c (gimp_channel_combine_ellipse):
+	comments not intended for gtk-doc must not start with '/**'.
+
+2004-07-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/plug-in.h (struct _PlugIn): removed obsolete
 	compile-time check for GLIB >= 2.3.5.
 
