@@ -1,8 +1,13 @@
+2004-12-12  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/common/pnm.c: make export do the right thing when
+	saving as .pgm or .ppm.  Fixes bug #160045.
+	
 2004-12-12  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimp.def: added gimp_edit_copy_visible.
 
-	* plug-ins/script-fu/scripts/copy-visible.scm: decprecated.
+	* plug-ins/script-fu/scripts/copy-visible.scm: deprecated.
 
 2004-12-12  Sven Neumann  <sven@gimp.org>
 

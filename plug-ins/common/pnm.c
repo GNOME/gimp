@@ -241,7 +241,7 @@ query (void)
 
   gimp_install_procedure ("file_pnm_save",
                           "saves files in the pnm file format",
-                          "PNM saving handles all image types except those with alpha channels.",
+                          "PNM saving handles all image types without transparency.",
                           "Erik Nygren",
                           "Erik Nygren",
                           "1996",
@@ -251,8 +251,34 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_file_handler_mime ("file_pnm_save", "image/x-portable-anymap");
-  gimp_register_save_handler ("file_pnm_save", "pnm,ppm,pgm", "");
+  gimp_install_procedure ("file_pgm_save",
+                          "saves files in the pnm file format",
+                          "PGM saving produces grayscale images without transparency.",
+                          "Erik Nygren",
+                          "Erik Nygren",
+                          "1996",
+                          N_("PGM image"),
+			  "RGB, GRAY, INDEXED",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (save_args), 0,
+                          save_args, NULL);
+
+  gimp_install_procedure ("file_ppm_save",
+                          "saves files in the pnm file format",
+                          "PPM saving handles RGB images without transparency.",
+                          "Erik Nygren",
+                          "Erik Nygren",
+                          "1996",
+                          N_("PPM image"),
+			  "RGB, GRAY, INDEXED",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (save_args), 0,
+                          save_args, NULL);
+
+  gimp_register_file_handler_mime ("file_pgm_save", "image/x-portable-graymap");
+  gimp_register_file_handler_mime ("file_ppm_save", "image/x-portable-pixmap");
+  gimp_register_save_handler ("file_pgm_save", "pgm", "");
+  gimp_register_save_handler ("file_ppm_save", "ppm", "");
 }
 
 static void
@@ -293,7 +319,9 @@ run (const gchar      *name,
 	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
-  else if (strcmp (name, "file_pnm_save") == 0)
+  else if (strcmp (name, "file_pnm_save") == 0
+           || strcmp (name, "file_pgm_save") == 0
+           || strcmp (name, "file_ppm_save") == 0 )
     {
       image_ID      = param[1].data.d_int32;
       drawable_ID   = param[2].data.d_int32;
@@ -304,10 +332,19 @@ run (const gchar      *name,
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("pnm", FALSE);
-	  export = gimp_export_image (&image_ID, &drawable_ID, "PNM",
-				      (GIMP_EXPORT_CAN_HANDLE_RGB |
-				       GIMP_EXPORT_CAN_HANDLE_GRAY |
-				       GIMP_EXPORT_CAN_HANDLE_INDEXED));
+          if (strcmp (name, "file_pnm_save") == 0)
+            export = gimp_export_image (&image_ID, &drawable_ID, "PNM",
+                                        (GIMP_EXPORT_CAN_HANDLE_RGB |
+                                         GIMP_EXPORT_CAN_HANDLE_GRAY |
+                                         GIMP_EXPORT_CAN_HANDLE_INDEXED));
+          else if (strcmp (name, "file_pgm_save") == 0)
+            export = gimp_export_image (&image_ID, &drawable_ID, "PGM",
+                                        (GIMP_EXPORT_CAN_HANDLE_GRAY));
+          else
+            export = gimp_export_image (&image_ID, &drawable_ID, "PPM",
+                                        (GIMP_EXPORT_CAN_HANDLE_RGB |
+                                         GIMP_EXPORT_CAN_HANDLE_INDEXED));
+
 	  if (export == GIMP_EXPORT_CANCEL)
 	    {
 	      values[0].data.d_status = GIMP_PDB_CANCEL;
@@ -322,7 +359,7 @@ run (const gchar      *name,
 	{
 	case GIMP_RUN_INTERACTIVE:
 	  /*  Possibly retrieve data  */
-	  gimp_get_data ("file_pnm_save", &psvals);
+	  gimp_get_data (name, &psvals);
 
 	  /*  First acquire information with a dialog  */
 	  if (! save_dialog ())
@@ -342,7 +379,7 @@ run (const gchar      *name,
 
 	case GIMP_RUN_WITH_LAST_VALS:
 	  /*  Possibly retrieve data  */
-	  gimp_get_data ("file_pnm_save", &psvals);
+	  gimp_get_data (name, &psvals);
 	  break;
 
 	default:
@@ -354,7 +391,7 @@ run (const gchar      *name,
 	  if (save_image (param[3].data.d_string, image_ID, drawable_ID))
 	    {
 	      /*  Store psvals data  */
-	      gimp_set_data ("file_pnm_save", &psvals, sizeof (PNMSaveVals));
+	      gimp_set_data (name, &psvals, sizeof (PNMSaveVals));
 	    }
 	  else
 	    {
