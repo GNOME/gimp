@@ -88,6 +88,8 @@ HELP
 	{ name => 'threshold', type => '0 <= float <= 4',
 	  desc => 'Supersampling threshold',
 	  cond => [ 'supersample' ] },
+	{ name => 'dither', type => 'boolean',
+	  desc => 'Use dithering to reduce banding (%%desc%%)' },
 	{ name => 'x1', type => 'float',
 	  desc => "The x coordinate of this blend's starting point" },
 	{ name => 'y1', type => 'float',
@@ -115,7 +117,7 @@ HELP
                            opacity / 100.0,
 	                   offset, repeat,
                            supersample, max_depth,
-                           threshold,
+                           threshold, dither,
                            x1, y1, x2, y2,
 	                   NULL, NULL);
     }
