@@ -1509,7 +1509,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
       
-  table = gtk_table_new (1, 2, FALSE);
+  table = gtk_table_new (2, 2, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
@@ -1527,6 +1527,50 @@ file_pref_cmd_callback (GtkWidget *widget,
   gimp_table_attach_aligned (GTK_TABLE (table), 0,
 			     _("Default Image Type:"), 1.0, 0.5,
 			     optionmenu, TRUE);
+
+  /*  The maximum size of a new image  */
+  mem_size_unit = 1;
+  for (i = 0; i < 3; i++)
+    {
+      if (max_new_image_size % (mem_size_unit * 1024) != 0)
+	break;
+      mem_size_unit *= 1024;
+    }
+  divided_mem_size = max_new_image_size / mem_size_unit;
+
+  hbox = gtk_hbox_new (FALSE, 2);
+  spinbutton =
+    gimp_spin_button_new (&adjustment, divided_mem_size,
+			  0.0, (4069.0 * 1024 * 1024), 1.0, 16.0, 0.0,
+			  1.0, 0.0);
+  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
+		      GTK_SIGNAL_FUNC (file_prefs_mem_size_callback),
+		      &max_new_image_size);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_widget_show (spinbutton);
+
+  /* for the mem_size_unit callback  */
+  gtk_object_set_data (GTK_OBJECT (adjustment), "mem_size",
+		       &max_new_image_size);
+  gtk_object_set_data (GTK_OBJECT (adjustment), "divided_mem_size",
+		       (gpointer) divided_mem_size);
+  gtk_object_set_data (GTK_OBJECT (adjustment), "mem_size_unit",
+		       (gpointer) mem_size_unit);
+
+  optionmenu =
+    gimp_option_menu_new (file_prefs_mem_size_unit_callback,
+			  adjustment, (gpointer) mem_size_unit,
+
+			  _("Bytes"),     (gpointer) 1, NULL,
+			  _("KiloBytes"), (gpointer) 1024, NULL,
+			  _("MegaBytes"), (gpointer) (1024 * 1024), NULL,
+
+			  NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
+  gtk_widget_show (optionmenu);
+  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+			     _("Maximum Image Size:"), 1.0, 0.5, hbox, TRUE);
+
 
   /* Display page */
   vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
@@ -1893,6 +1937,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 		      &no_cursor_updating);
   gtk_widget_show (button);
 
+
   /* Interface / Tool Options */
   vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
 					  _("Tool Options Settings"),
@@ -1920,6 +1965,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   /* Expand the "Interface" branch */
   gtk_ctree_expand (GTK_CTREE (ctree), top_insert);
 
+
   /* Environment */
   vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
 					  _("Environment Settings"),
@@ -1943,9 +1989,9 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_widget_show (button);
 
 #ifdef ENABLE_MP
-  table = gtk_table_new (4, 2, FALSE);
-#else
   table = gtk_table_new (3, 2, FALSE);
+#else
+  table = gtk_table_new (2, 2, FALSE);
 #endif /* ENABLE_MP */
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
@@ -2006,49 +2052,6 @@ file_pref_cmd_callback (GtkWidget *widget,
   gimp_table_attach_aligned (GTK_TABLE (table), 1,
 			     _("Tile Cache Size:"), 1.0, 0.5, hbox, TRUE);
 
-  /*  The maximum size of a new image  */
-  mem_size_unit = 1;
-  for (i = 0; i < 3; i++)
-    {
-      if (max_new_image_size % (mem_size_unit * 1024) != 0)
-	break;
-      mem_size_unit *= 1024;
-    }
-  divided_mem_size = max_new_image_size / mem_size_unit;
-
-  hbox = gtk_hbox_new (FALSE, 2);
-  spinbutton =
-    gimp_spin_button_new (&adjustment, divided_mem_size,
-			  0.0, (4069.0 * 1024 * 1024), 1.0, 16.0, 0.0,
-			  1.0, 0.0);
-  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (file_prefs_mem_size_callback),
-		      &max_new_image_size);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
-
-  /* for the mem_size_unit callback  */
-  gtk_object_set_data (GTK_OBJECT (adjustment), "mem_size",
-		       &max_new_image_size);
-  gtk_object_set_data (GTK_OBJECT (adjustment), "divided_mem_size",
-		       (gpointer) divided_mem_size);
-  gtk_object_set_data (GTK_OBJECT (adjustment), "mem_size_unit",
-		       (gpointer) mem_size_unit);
-
-  optionmenu =
-    gimp_option_menu_new (file_prefs_mem_size_unit_callback,
-			  adjustment, (gpointer) mem_size_unit,
-
-			  _("Bytes"),     (gpointer) 1, NULL,
-			  _("KiloBytes"), (gpointer) 1024, NULL,
-			  _("MegaBytes"), (gpointer) (1024 * 1024), NULL,
-
-			  NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
-  gtk_widget_show (optionmenu);
-  gimp_table_attach_aligned (GTK_TABLE (table), 2,
-			     _("Maximum Image Size:"), 1.0, 0.5, hbox, TRUE);
-
 #ifdef ENABLE_MP
   spinbutton =
     gimp_spin_button_new (&adjustment,
@@ -2056,7 +2059,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      GTK_SIGNAL_FUNC (file_prefs_int_adjustment_callback),
 		      &num_processors);
-  gimp_table_attach_aligned (GTK_TABLE (table), 3,
+  gimp_table_attach_aligned (GTK_TABLE (table), 2,
 			     _("Number of Processors to Use:"), 1.0, 0.5,
 			     spinbutton, TRUE);
 #endif /* ENABLE_MP */

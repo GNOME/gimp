@@ -31,7 +31,7 @@
 .\" Wed Mar  3 13:09:52 MET 1999 Sven Neumann <sven@gimp.org>
 .\"   * reflect the changes that were made to the resolution stuff
 .\"
-.TH GIMPRC 5 "3 Wed 1999" "Version @GIMP_VERSION@"
+.TH GIMPRC 5 "15 Jan 2000" "Version @GIMP_VERSION@"
 .SH NAME
 gimprc \- gimp configuration file
 .SH DESCRIPTION
@@ -385,9 +385,9 @@ sequences are recognised and expanded as follows:
 
 %%  literal percent sign
 .br
-%f  bare filename, or "Untiltled"
+%f  bare filename, or "Untitled"
 .br
-%F  full path to file, or "Untiltled"
+%F  full path to file, or "Untitled"
 .br
 %p  PDB image id
 .br

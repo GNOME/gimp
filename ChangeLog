@@ -1,3 +1,10 @@
+Sat Jan 15 19:11:49 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* gimprc.5.in: fixed a typo
+	
+	* app/preferences_dialog.c: one more change in the spirit of my
+	last commit
+
 2000-01-16  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* plug-ins/common/waves.c
