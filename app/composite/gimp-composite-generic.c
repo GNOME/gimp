@@ -20,7 +20,7 @@
 
 /*
  * This file is supposed to contain the generic (read: C) implementation
- * of the pixelfiddeling paint-functions.
+ * of the pixel fiddling paint-functions.
  */
 
 #include "config.h"
@@ -47,14 +47,14 @@
 /* This version of INT_MULT3 is very fast, but suffers from some
    slight roundoff errors.  It returns the correct result 99.987
    percent of the time */
-#define INT_MULT3(a,b,c,t)  ((t) = (a) * (b) * (c)+ 0x7F5B, ((((t) >> 7) + (t)) >> 16))
+#define INT_MULT3(a,b,c,t)  ((t) = (a) * (b) * (c) + 0x7F5B, ((((t) >> 7) + (t)) >> 16))
 /*
   This version of INT_MULT3 always gives the correct result, but runs at
   approximatly one third the speed. */
-/*  #define INT_MULT3(a,b,c,t) (((a) * (b) * (c)+ 32512) / 65025.0)
+/*  #define INT_MULT3(a,b,c,t) (((a) * (b) * (c) + 32512) / 65025.0)
  */
 
-#define INT_BLEND(a,b,alpha,tmp)  (INT_MULT((a)-(b), alpha, tmp) + (b))
+#define INT_BLEND(a,b,alpha,tmp)  (INT_MULT((a) - (b), alpha, tmp) + (b))
 
 #define RANDOM_TABLE_SIZE  4096
 
@@ -774,13 +774,13 @@ gimp_composite_overlay_any_any_any_generic (GimpCompositeContext * ctx)
   const guint has_alpha1 = HAS_ALPHA(bytes1);
   const guint has_alpha2 = HAS_ALPHA(bytes2);
   const guint alpha = (has_alpha1 || has_alpha2) ? MAX(bytes1, bytes2) - 1 : bytes1;
-  guint b, tmp;
+  guint b, tmp, tmpM;
 
   while (length--)
     {
       for (b = 0; b < alpha; b++)
         {
-          dest[b] = INT_MULT(src1[b], src1[b] + INT_MULT(2 * src2[b], 255 - src1[b], tmp), tmp);
+          dest[b] = INT_MULT(src1[b], src1[b] + INT_MULT(2 * src2[b], 255 - src1[b], tmpM), tmp);
         }
 
       if (has_alpha1 && has_alpha2)
