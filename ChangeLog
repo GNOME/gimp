@@ -1,5 +1,11 @@
 2001-01-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/color_notebook.c
+	* app/color_select.c
+	* libgimp/gimpcolorselector.h: more cleanup before chopping it up.
+
+2001-01-08  Michael Natterer  <mitch@gimp.org>
+
 	Removed GCG:
 
 	* app/colormap_dialog.gc

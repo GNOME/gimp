@@ -53,6 +53,9 @@ typedef void    (* GimpColorSelectorSetColorFunc) (gpointer   selector_data,
 						   gint       a,
 						   gboolean   set_current);
 
+typedef void      (* GimpColorSelectorFinishedCB) (gpointer   finished_data);
+
+
 typedef struct _GimpColorSelectorMethods GimpColorSelectorMethods;
 
 struct _GimpColorSelectorMethods
@@ -73,8 +76,6 @@ GimpColorSelectorID
 gimp_color_selector_register   (const gchar                 *name,
 				const gchar                 *help_page,
 				GimpColorSelectorMethods    *methods);
-
-typedef void (* GimpColorSelectorFinishedCB) (gpointer       finished_data);
 
 gboolean
 gimp_color_selector_unregister (GimpColorSelectorID          id,

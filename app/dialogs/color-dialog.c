@@ -44,14 +44,15 @@ typedef struct _ColorSelectorInfo ColorSelectorInfo;
 
 struct _ColorSelectorInfo
 {
-  char                      *name;    /* label used in notebook tab */
-  char                      *help_page;
-  GimpColorSelectorMethods   methods;
-  int                        refs;    /* number of instances around */
-  gboolean                   active;
-  void                     (*death_callback) (void *data);
-  void                      *death_data;
-  ColorSelectorInfo         *next;
+  gchar                       *name;    /* label used in notebook tab */
+  gchar                       *help_page;
+  GimpColorSelectorMethods     methods;
+  gint                         refs;    /* number of instances around */
+  gboolean                     active;
+  GimpColorSelectorFinishedCB  death_callback;
+  gpointer                     death_data;
+
+  ColorSelectorInfo           *next;
 };
 
 struct _ColorSelectorInstance
@@ -60,6 +61,7 @@ struct _ColorSelectorInstance
   ColorSelectorInfo     *info;
   GtkWidget             *frame;   /* main widget */
   gpointer               selector_data;
+
   ColorSelectorInstance *next;
 };
 
@@ -75,7 +77,8 @@ static void color_notebook_update_callback (gpointer           data,
 					    gint               alpha);
 static void color_notebook_page_switch     (GtkWidget         *widget,
 					    GtkNotebookPage   *page,
-					    guint              page_num);
+					    guint              page_num,
+					    gpointer           data);
 static void color_notebook_help_func       (const gchar       *help_data);
 
 static void color_notebook_selector_death  (ColorSelectorInfo *info);
@@ -89,8 +92,7 @@ enum
   RED,
   GREEN,
   BLUE,
-  ALPHA,
-  NUM_COLORS
+  ALPHA
 };
 
 
@@ -152,13 +154,12 @@ color_notebook_new (gint                   red,
       cnp->notebook = NULL;
     }
 
-  /* create each registered colour selector */
+  /* create each registered color selector */
   info = selector_info;
   while (info)
     {
       if (info->active)
 	{
-
 	  csel = g_new (ColorSelectorInstance, 1);
 	  csel->color_notebook = cnp;
 	  csel->info = info;
@@ -205,10 +206,9 @@ color_notebook_new (gint                   red,
    * news. */
   if (cnp->notebook)
     {
-      gtk_object_set_user_data (GTK_OBJECT (cnp->notebook), cnp);
       gtk_signal_connect (GTK_OBJECT (cnp->notebook), "switch_page",
 			  GTK_SIGNAL_FUNC (color_notebook_page_switch),
-			  NULL);
+			  cnp);
     }
 
   return cnp;
@@ -237,7 +237,7 @@ color_notebook_free (ColorNotebook *cnp)
 
   gtk_widget_destroy (cnp->shell);
 
-  /* call the free functions for all the colour selectors */
+  /* call the free functions for all the color selectors */
   csel = cnp->selectors;
   while (csel)
     {
@@ -287,7 +287,9 @@ color_notebook_set_color (ColorNotebook *cnp,
 				set_current);
 }
 
-/* Called by a colour selector on user selection of a colour */
+/*
+ * Called by a color selector on user selection of a color
+ */
 static void
 color_notebook_update_callback (gpointer data,
 				gint     red,
@@ -328,12 +330,14 @@ color_notebook_ok_callback (GtkWidget *widget,
   cnp = (ColorNotebook *) data;
 
   if (cnp->callback)
-    (* cnp->callback) (cnp->values[RED],
-		       cnp->values[GREEN],
-		       cnp->values[BLUE],
-		       cnp->values[ALPHA],
-		       COLOR_NOTEBOOK_OK,
-		       cnp->client_data);
+    {
+      (* cnp->callback) (cnp->values[RED],
+			 cnp->values[GREEN],
+			 cnp->values[BLUE],
+			 cnp->values[ALPHA],
+			 COLOR_NOTEBOOK_OK,
+			 cnp->client_data);
+    }
 }
 
 static void
@@ -345,24 +349,28 @@ color_notebook_cancel_callback (GtkWidget *widget,
   cnp = (ColorNotebook *) data;
 
   if (cnp->callback)
-    (* cnp->callback) (cnp->orig_values[RED],
-		       cnp->orig_values[GREEN],
-		       cnp->orig_values[BLUE],
-		       cnp->orig_values[ALPHA],
-		       COLOR_NOTEBOOK_CANCEL,
-		       cnp->client_data);
+    {
+      (* cnp->callback) (cnp->orig_values[RED],
+			 cnp->orig_values[GREEN],
+			 cnp->orig_values[BLUE],
+			 cnp->orig_values[ALPHA],
+			 COLOR_NOTEBOOK_CANCEL,
+			 cnp->client_data);
+    }
 }
 
 static void
 color_notebook_page_switch (GtkWidget       *widget,
 			    GtkNotebookPage *page,
-			    guint            page_num)
+			    guint            page_num,
+			    gpointer         data)
 {
   ColorNotebook         *cnp;
   ColorSelectorInstance *csel;
 
-  cnp = gtk_object_get_user_data (GTK_OBJECT (widget));
-  csel = gtk_object_get_data (GTK_OBJECT(page->child), "gimp_color_notebook");
+  cnp = (ColorNotebook *) data;
+
+  csel = gtk_object_get_data (GTK_OBJECT (page->child), "gimp_color_notebook");
 
   g_return_if_fail (cnp != NULL && csel != NULL);
 
@@ -390,7 +398,7 @@ color_notebook_help_func (const gchar *data)
   g_free (help_path);
 }
 
-/**************************************************************/
+/**************************/
 /* Registration functions */
 
 G_MODULE_EXPORT
@@ -428,9 +436,9 @@ gimp_color_selector_register (const gchar              *name,
 
 G_MODULE_EXPORT
 gboolean
-gimp_color_selector_unregister (GimpColorSelectorID   id,
-				void                (*callback) (gpointer data),
-				gpointer              data)
+gimp_color_selector_unregister (GimpColorSelectorID          id,
+				GimpColorSelectorFinishedCB  callback,
+				gpointer                     data)
 {
   ColorSelectorInfo *info;
 
