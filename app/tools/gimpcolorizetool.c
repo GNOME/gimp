@@ -95,7 +95,7 @@ gimp_colorize_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-colorize-tool",
                 _("Colorize"),
                 _("Colorize the image"),
-                N_("/Tools/Color Tools/Colori_ze..."), NULL,
+                N_("Colori_ze..."), NULL,
                 NULL, GIMP_HELP_TOOL_COLORIZE,
                 GIMP_STOCK_TOOL_COLORIZE,
                 data);

@@ -88,7 +88,7 @@ gimp_bucket_fill_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-bucket-fill-tool",
                 _("Bucket Fill"),
                 _("Fill with a color or pattern"),
-                N_("/Tools/Paint Tools/_Bucket Fill"), "<shift>B",
+                N_("_Bucket Fill"), "<shift>B",
                 NULL, GIMP_HELP_TOOL_BUCKET_FILL,
                 GIMP_STOCK_TOOL_BUCKET_FILL,
                 data);

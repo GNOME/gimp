@@ -77,7 +77,7 @@ gimp_posterize_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-posterize-tool",
                 _("Posterize"),
                 _("Reduce image to a fixed number of colors"),
-                N_("/Tools/Color Tools/_Posterize..."), NULL,
+                N_("_Posterize..."), NULL,
                 NULL, GIMP_HELP_TOOL_POSTERIZE,
                 GIMP_STOCK_TOOL_POSTERIZE,
                 data);

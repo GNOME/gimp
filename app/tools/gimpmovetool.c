@@ -108,7 +108,7 @@ gimp_move_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-move-tool",
                 _("Move"),
                 _("Move layers & selections"),
-                N_("/Tools/Transform Tools/_Move"), "M",
+                N_("_Move"), "M",
                 NULL, GIMP_HELP_TOOL_MOVE,
                 GIMP_STOCK_TOOL_MOVE,
                 data);

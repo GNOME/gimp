@@ -97,7 +97,7 @@ gimp_blend_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-blend-tool",
                 _("Blend"),
                 _("Fill with a color gradient"),
-                N_("/Tools/Paint Tools/Blen_d"), "L",
+                N_("Blen_d"), "L",
                 NULL, GIMP_HELP_TOOL_BLEND,
                 GIMP_STOCK_TOOL_BLEND,
                 data);

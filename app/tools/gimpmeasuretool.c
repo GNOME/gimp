@@ -112,7 +112,7 @@ gimp_measure_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-measure-tool",
                 _("Measure"),
                 _("Measure distances and angles"),
-                N_("/Tools/_Measure"), NULL,
+                N_("_Measure"), NULL,
                 NULL, GIMP_HELP_TOOL_MEASURE,
                 GIMP_STOCK_TOOL_MEASURE,
                 data);

@@ -95,7 +95,7 @@ gimp_color_balance_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-color-balance-tool",
                 _("Color Balance"),
                 _("Adjust color balance"),
-                N_("/Tools/Color Tools/Color _Balance..."), NULL,
+                N_("Color _Balance..."), NULL,
                 NULL, GIMP_HELP_TOOL_COLOR_BALANCE,
                 GIMP_STOCK_TOOL_COLOR_BALANCE,
                 data);

@@ -102,7 +102,7 @@ gimp_rotate_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-rotate-tool",
                 _("Rotate"),
                 _("Rotate the layer or selection"),
-                N_("/Tools/Transform Tools/_Rotate"), "<shift>R",
+                N_("_Rotate"), "<shift>R",
                 NULL, GIMP_HELP_TOOL_ROTATE,
                 GIMP_STOCK_TOOL_ROTATE,
                 data);

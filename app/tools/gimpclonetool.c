@@ -100,7 +100,7 @@ gimp_clone_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-clone-tool",
                 _("Clone"),
                 _("Paint using Patterns or Image Regions"),
-                N_("/Tools/Paint Tools/_Clone"), "C",
+                N_("_Clone"), "C",
                 NULL, GIMP_HELP_TOOL_CLONE,
                 GIMP_STOCK_TOOL_CLONE,
                 data);

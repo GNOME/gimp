@@ -83,7 +83,7 @@ gimp_flip_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-flip-tool",
                 _("Flip"),
                 _("Flip the layer or selection"),
-                N_("/Tools/Transform Tools/_Flip"), "<shift>F",
+                N_("_Flip"), "<shift>F",
                 NULL, GIMP_HELP_TOOL_FLIP,
                 GIMP_STOCK_TOOL_FLIP,
                 data);

@@ -82,7 +82,7 @@ gimp_perspective_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-perspective-tool",
                 _("Perspective"),
                 _("Change perspective of the layer or selection"),
-                N_("/Tools/Transform Tools/_Perspective"), "<shift>P",
+                N_("_Perspective"), "<shift>P",
                 NULL, GIMP_HELP_TOOL_PERSPECTIVE,
                 GIMP_STOCK_TOOL_PERSPECTIVE,
                 data);

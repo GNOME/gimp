@@ -1,5 +1,16 @@
 2004-04-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimp*tool.c (gimp_*_tool_register): stripped the menu
+	paths from the "menu_path". Will be renamed to "action_name" or
+	something soon...
+
+	* plug-ins/dbbrowser/dbbrowser.c
+	* plug-ins/common/plugindetails.c
+	* plug-ins/common/uniteditor.c: register under the new
+	"Extensions" placeholder.
+
+2004-04-29  Michael Natterer  <mitch@gimp.org>
+
 	Switch from GtkItemFactory to GtkUIManager. The migration is
 	almost complete, still stuff missing/incomplete, definitely added
 	a bunch of new bugs...

@@ -167,7 +167,7 @@ gimp_ink_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-ink-tool",
                 _("Ink"),
                 _("Draw in ink"),
-                N_("/Tools/Paint Tools/In_k"), "K",
+                N_("In_k"), "K",
                 NULL, GIMP_HELP_TOOL_INK,
                 GIMP_STOCK_TOOL_INK,
                 data);

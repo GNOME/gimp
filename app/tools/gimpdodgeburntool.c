@@ -69,7 +69,7 @@ gimp_dodge_burn_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-dodge-burn-tool",
                 _("Dodge/Burn"),
                 _("Dodge or Burn strokes"),
-                N_("/Tools/Paint Tools/Dod_geBurn"), "<shift>D",
+                N_("Dod_geBurn"), "<shift>D",
                 NULL, GIMP_HELP_TOOL_DODGE_BURN,
                 GIMP_STOCK_TOOL_DODGE,
                 data);

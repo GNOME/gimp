@@ -55,7 +55,7 @@ gimp_smudge_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-smudge-tool",
                 _("Smudge"),
                 _("Smudge image"),
-                N_("/Tools/Paint Tools/_Smudge"), "S",
+                N_("_Smudge"), "S",
                 NULL, GIMP_HELP_TOOL_SMUDGE,
                 GIMP_STOCK_TOOL_SMUDGE,
                 data);

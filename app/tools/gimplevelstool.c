@@ -158,7 +158,7 @@ gimp_levels_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-levels-tool",
                 _("Levels"),
                 _("Adjust color levels"),
-                N_("/Tools/Color Tools/_Levels..."), NULL,
+                N_("_Levels..."), NULL,
                 NULL, GIMP_HELP_TOOL_LEVELS,
                 GIMP_STOCK_TOOL_LEVELS,
                 data);
