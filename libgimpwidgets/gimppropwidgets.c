@@ -289,15 +289,65 @@ gimp_prop_enum_check_button_notify (GObject    *config,
 }
 
 
-/*********************/
-/*  enum combo box   */
-/*********************/
+/*************************/
+/*  int/enum combo box   */
+/*************************/
 
-static void   gimp_prop_enum_combo_box_callback (GtkWidget   *widget,
-                                                 GObject     *config);
-static void   gimp_prop_enum_combo_box_notify   (GObject     *config,
-                                                 GParamSpec  *param_spec,
-                                                 GtkWidget   *widget);
+static void   gimp_prop_int_combo_box_callback (GtkWidget   *widget,
+                                                GObject     *config);
+static void   gimp_prop_int_combo_box_notify   (GObject     *config,
+                                                GParamSpec  *param_spec,
+                                                GtkWidget   *widget);
+
+GtkWidget *
+gimp_prop_int_combo_box_new (GObject      *config,
+                             const gchar  *property_name,
+                             GimpIntStore *store)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *combo_box;
+  GtkWidget  *widget;
+  gint        value;
+
+  param_spec = check_param_spec (config, property_name,
+                                 G_TYPE_PARAM_INT, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  g_object_get (config,
+                property_name, &value,
+                NULL);
+
+  combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX,
+                            "model", store,
+                            NULL);
+
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo_box), value);
+
+  g_signal_connect (combo_box, "changed",
+                    G_CALLBACK (gimp_prop_int_combo_box_callback),
+                    config);
+
+  /*  can't set a tooltip on a combo_box  */
+  if (g_param_spec_get_blurb (param_spec))
+    {
+      widget = gtk_event_box_new ();
+      gtk_container_add (GTK_CONTAINER (widget), combo_box);
+      gtk_widget_show (combo_box);
+    }
+  else
+    {
+      widget = combo_box;
+    }
+
+  set_param_spec (G_OBJECT (combo_box), widget, param_spec);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_int_combo_box_notify),
+                  combo_box);
+
+  return widget;
+}
 
 GtkWidget *
 gimp_prop_enum_combo_box_new (GObject     *config,
@@ -340,7 +390,7 @@ gimp_prop_enum_combo_box_new (GObject     *config,
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo_box), value);
 
   g_signal_connect (combo_box, "changed",
-                    G_CALLBACK (gimp_prop_enum_combo_box_callback),
+                    G_CALLBACK (gimp_prop_int_combo_box_callback),
                     config);
 
   /*  can't set a tooltip on a combo_box  */
@@ -358,15 +408,15 @@ gimp_prop_enum_combo_box_new (GObject     *config,
   set_param_spec (G_OBJECT (combo_box), widget, param_spec);
 
   connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_enum_combo_box_notify),
+                  G_CALLBACK (gimp_prop_int_combo_box_notify),
                   combo_box);
 
   return widget;
 }
 
 static void
-gimp_prop_enum_combo_box_callback (GtkWidget *widget,
-                                   GObject   *config)
+gimp_prop_int_combo_box_callback (GtkWidget *widget,
+                                  GObject   *config)
 {
   GParamSpec  *param_spec;
   gint         value;
@@ -384,9 +434,9 @@ gimp_prop_enum_combo_box_callback (GtkWidget *widget,
 }
 
 static void
-gimp_prop_enum_combo_box_notify (GObject    *config,
-                                 GParamSpec *param_spec,
-                                 GtkWidget  *combo_box)
+gimp_prop_int_combo_box_notify (GObject    *config,
+                                GParamSpec *param_spec,
+                                GtkWidget  *combo_box)
 {
   gint value;
 
@@ -395,13 +445,13 @@ gimp_prop_enum_combo_box_notify (GObject    *config,
                 NULL);
 
   g_signal_handlers_block_by_func (combo_box,
-                                   gimp_prop_enum_combo_box_callback,
+                                   gimp_prop_int_combo_box_callback,
                                    config);
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo_box), value);
 
   g_signal_handlers_unblock_by_func (combo_box,
-                                     gimp_prop_enum_combo_box_callback,
+                                     gimp_prop_int_combo_box_callback,
                                      config);
 }
 

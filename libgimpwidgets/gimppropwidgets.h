@@ -39,6 +39,13 @@ GtkWidget     * gimp_prop_boolean_radio_frame_new (GObject     *config,
                                                    const gchar *false_text);
 
 
+/*  GParamInt  */
+
+GtkWidget     * gimp_prop_int_combo_box_new       (GObject     *config,
+                                                   const gchar *property_name,
+                                                   GimpIntStore *int_store);
+
+
 /*  GParamEnum  */
 
 GtkWidget     * gimp_prop_enum_combo_box_new      (GObject     *config,

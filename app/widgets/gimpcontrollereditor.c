@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -273,9 +275,36 @@ gimp_controller_editor_constructor (GType                  type,
         {
           if (prop_spec->flags & G_PARAM_WRITABLE)
             {
-              widget = gimp_prop_spin_button_new (G_OBJECT (controller),
-                                                  prop_spec->name,
-                                                  1, 8, 0);
+              GimpIntStore *model      = NULL;
+              gchar        *model_name = g_strdup_printf ("%s-values",
+                                                          prop_spec->name);
+
+              if (((i + 1) < n_property_specs)                       &&
+                  ! strcmp (model_name, property_specs[i + 1]->name) &&
+                  G_IS_PARAM_SPEC_OBJECT (property_specs[i + 1])     &&
+                  g_type_is_a (property_specs[i + 1]->value_type,
+                               GIMP_TYPE_INT_STORE))
+                {
+                  g_object_get (controller,
+                                property_specs[i + 1]->name, &model,
+                                NULL);
+                }
+
+              g_free (model_name);
+
+              if (model)
+                {
+                  widget = gimp_prop_int_combo_box_new (G_OBJECT (controller),
+                                                        prop_spec->name,
+                                                        model);
+                  g_object_unref (model);
+                }
+              else
+                {
+                  widget = gimp_prop_spin_button_new (G_OBJECT (controller),
+                                                      prop_spec->name,
+                                                      1, 8, 0);
+                }
 
               gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                                          g_param_spec_get_nick (prop_spec),
