@@ -81,12 +81,6 @@ static gchar G_GNUC_UNUSED *dummy_entries[] =
 {
   /*  <Toolbox>  */
   N_("/Xtns/Animation"),
-  N_("/Xtns/Perl-Fu"),
-  N_("/Xtns/Perl-Fu/Logos"),
-  N_("/Xtns/Perl"),
-  N_("/Xtns/Render"),
-  N_("/Xtns/Render/Logos"),
-  N_("/Xtns/Render/Povray"),
   N_("/Xtns/Script-Fu"),
   N_("/Xtns/Script-Fu/Logos"),
   N_("/Xtns/Script-Fu/Patterns"),

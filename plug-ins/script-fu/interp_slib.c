@@ -558,7 +558,7 @@ repl (struct repl_hooks *h)
 	    {
 	      sprintf (tkbuffer,
 		       "GC took %g seconds, %ld compressed to %d, %d free\n",
-		       myruntime () - rt, old_heap_used, heap - heap_org, heap_end - heap);
+		       myruntime () - rt, old_heap_used, (int)(heap - heap_org), (int)(heap_end - heap));
 	      grepl_puts (tkbuffer, h->repl_puts);
 	    }
 	}
@@ -588,7 +588,7 @@ repl (struct repl_hooks *h)
 	sprintf (tkbuffer,
 		 "Evaluation took %g seconds %d cons work, %g real.\n",
 		 myruntime () - rt,
-		 heap - cw,
+		 (int)(heap - cw),
 		 myrealtime () - ct);
       else
 	sprintf (tkbuffer,
@@ -1954,7 +1954,7 @@ gc_status (LISP args)
       else
 	put_st ("garbage collection is off\n");
       sprintf (tkbuffer, "%d allocated %d free\n",
-	       heap - heap_org, heap_end - heap);
+	       (int)(heap - heap_org), (int)(heap_end - heap));
       put_st (tkbuffer);
     }
   else
