@@ -15,7 +15,7 @@
 	* autogen.sh: Added a test for the version of intltool because
 	some of the recent versions are known to break the Tips file.
 	This fixes bug #137502.  The message should be updated when a new
-	version of libtool is released.
+	version of intltool is released.
 
 2004-03-22  Simon Budig  <simon@gimp.org>
 
