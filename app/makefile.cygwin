@@ -126,6 +126,7 @@ gimp_OBJECTS = \
 	gdisplay.o		\
 	gdisplay_cmds.o		\
 	gdisplay_color.o	\
+	gdisplay_color_ui.o	\
 	gdisplay_ops.o		\
 	general.o		\
 	gimage.o		\

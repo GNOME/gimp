@@ -133,6 +133,7 @@ gimp_OBJECTS = \
 	gdisplay.obj		\
 	gdisplay_cmds.obj	\
 	gdisplay_color.obj	\
+	gdisplay_color_ui.obj	\
 	gdisplay_ops.obj	\
 	general.obj		\
 	gimage.obj		\

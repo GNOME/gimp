@@ -4,6 +4,8 @@
 
 	* plug-ins/makefile.{cygwin,msc}: Add spheredesigner.
 
+	* app/makefile.{cygwin,msc}: Add gdisplay_color_ui.[ch].
+
 Tue Aug 31 14:25:50 CET 1999  vidar@prosalg.no  (Vidar Madsen)
 
 	* plug-ins/common/Makefile.am
