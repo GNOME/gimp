@@ -122,19 +122,19 @@ static OpsButton ops_buttons[] =
     N_("Open the selected entry\n"
        "<Shift> Raise window if already open\n"
        "<Ctrl> Load Image dialog"), NULL,
-    NULL, 0 },
+    NULL },
   { raise_xpm, idea_up_callback, raise_ext_callbacks,
     N_("Move the selected entry up in the index\n"
        "<Shift> To top"), NULL,
-    NULL, 0 },
+    NULL },
   { lower_xpm, idea_down_callback, lower_ext_callbacks,
     N_("Move the selected entry down in the index\n"
        "<Shift> To bottom"), NULL,
-    NULL, 0 },
+    NULL },
   { delete_xpm, idea_remove_callback, NULL,
     N_("Remove the selected entry from the index"), NULL,
-    NULL, 0 },
-  { NULL, NULL, NULL, NULL, NULL, NULL, 0 }
+    NULL },
+  { NULL, NULL, NULL, NULL, NULL, NULL }
 };
 
 

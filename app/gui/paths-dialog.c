@@ -155,28 +155,28 @@ static OpsButton paths_ops_buttons[] =
   { new_xpm, paths_dialog_new_path_callback, NULL,
     N_("New Path"),
     "paths/new_path.html",
-    NULL, 0 },
+    NULL },
   { duplicate_xpm, paths_dialog_dup_path_callback, NULL,
     N_("Duplicate Path"),
     "paths/duplicate_path.html",
-    NULL, 0 },
+    NULL },
   { toselection_xpm, paths_dialog_path_to_sel_callback, NULL,
     N_("Path to Selection"),
     "paths/path_to_selection.html",
-    NULL, 0 },
+    NULL },
   { topath_xpm, paths_dialog_sel_to_path_callback, to_path_ext_callbacks,
     N_("Selection to Path"),
     "filters/sel2path.html",
-    NULL, 0 },
+    NULL },
   { penstroke_xpm, paths_dialog_stroke_path_callback, NULL,
     N_("Stroke Path"),
     "paths/stroke_path.html",
-    NULL, 0 },
+    NULL },
   { delete_xpm, paths_dialog_delete_path_callback, NULL,
     N_("Delete Path"),
     "paths/delete_path.html",
-    NULL, 0 },
-  { NULL, NULL, NULL, NULL, NULL, NULL, 0 }
+    NULL },
+  { NULL, NULL, NULL, NULL, NULL, NULL }
 };
 
 static OpsButton point_ops_buttons[] =
@@ -184,20 +184,20 @@ static OpsButton point_ops_buttons[] =
   { pennorm_xpm, paths_dialog_new_point_callback, NULL,
     N_("New Point"),
     "#new_point_button",
-    NULL, 0 },
+    NULL },
   { penadd_xpm, paths_dialog_add_point_callback, NULL,
     N_("Add Point"),
     "#add_point_button",
-    NULL, 0 },
+    NULL },
   { pendel_xpm, paths_dialog_delete_point_callback, NULL,
     N_("Delete Point"),
     "#delete_point_button",
-    NULL, 0 },
+    NULL },
   { penedit_xpm, paths_dialog_edit_point_callback, NULL,
     N_("Edit Point"),
     "#edit_point_button",
-    NULL, 0 },
-  { NULL, NULL, NULL, NULL, NULL, NULL, 0 }
+    NULL },
+  { NULL, NULL, NULL, NULL, NULL, NULL }
 };
 
 static void

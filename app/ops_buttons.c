@@ -22,18 +22,25 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
-
 #include "ops_buttons.h"
 
 #include "libgimp/gimpintl.h"
 
 
-static void ops_button_pressed_callback  (GtkWidget      *widget,
-					  GdkEventButton *bevent,
-					  gpointer        data);
-static void ops_button_extended_callback (GtkWidget      *widget,
-					  gpointer        data);
+typedef enum
+{
+  OPS_BUTTON_MODIFIER_NONE,
+  OPS_BUTTON_MODIFIER_SHIFT,
+  OPS_BUTTON_MODIFIER_CTRL,
+  OPS_BUTTON_MODIFIER_ALT,
+  OPS_BUTTON_MODIFIER_SHIFT_CTRL,
+  OPS_BUTTON_MODIFIER_LAST
+} OpsButtonModifier;
+
+
+static void ops_button_extended_clicked (GtkWidget *widget,
+                                         guint      modifier_state,
+                                         gpointer   data);
 
 
 GtkWidget *
@@ -54,7 +61,7 @@ ops_button_box_new (OpsButton     *ops_button,
       switch (ops_type)
 	{
 	case OPS_BUTTON_NORMAL:
-	  button = gtk_button_new ();
+	  button = gimp_button_new ();
 	  break;
 
 	case OPS_BUTTON_RADIO:
@@ -78,12 +85,9 @@ ops_button_box_new (OpsButton     *ops_button,
 	}
       else
 	{
-	  gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
-			      GTK_SIGNAL_FUNC (ops_button_pressed_callback),
+	  gtk_signal_connect (GTK_OBJECT (button), "extended_clicked",
+			      GTK_SIGNAL_FUNC (ops_button_extended_clicked),
 			      ops_button);	  
-	  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			      GTK_SIGNAL_FUNC (ops_button_extended_callback),
-			      ops_button);
 	}
 
       gimp_help_set_help_data (button,
@@ -96,7 +100,6 @@ ops_button_box_new (OpsButton     *ops_button,
       gtk_widget_show (button);
 
       ops_button->widget = button;
-      ops_button->modifier = OPS_BUTTON_MODIFIER_NONE;
 
       ops_button++;
     }
@@ -105,49 +108,38 @@ ops_button_box_new (OpsButton     *ops_button,
 }
 
 static void
-ops_button_pressed_callback (GtkWidget      *widget, 
-			     GdkEventButton *bevent,
-			     gpointer        data)
+ops_button_extended_clicked (GtkWidget *widget, 
+                             guint      modifier_state,
+                             gpointer   data)
 {
-  OpsButton *ops_button;
+  OpsButton         *ops_button;
+  OpsButtonModifier  modifier;
 
   g_return_if_fail (data != NULL);
   ops_button = (OpsButton *) data;
 
-  if (bevent->state & GDK_SHIFT_MASK)
+  if (modifier_state & GDK_SHIFT_MASK)
     {
-      if (bevent->state & GDK_CONTROL_MASK)
-	  ops_button->modifier = OPS_BUTTON_MODIFIER_SHIFT_CTRL;
+      if (modifier_state & GDK_CONTROL_MASK)
+        modifier = OPS_BUTTON_MODIFIER_SHIFT_CTRL;
       else 
-	ops_button->modifier = OPS_BUTTON_MODIFIER_SHIFT;
+        modifier = OPS_BUTTON_MODIFIER_SHIFT;
     }
-  else if (bevent->state & GDK_CONTROL_MASK)
-    ops_button->modifier = OPS_BUTTON_MODIFIER_CTRL;
-  else if (bevent->state & GDK_MOD1_MASK)
-    ops_button->modifier = OPS_BUTTON_MODIFIER_ALT;
+  else if (modifier_state & GDK_CONTROL_MASK)
+    modifier = OPS_BUTTON_MODIFIER_CTRL;
+  else if (modifier_state & GDK_MOD1_MASK)
+    modifier = OPS_BUTTON_MODIFIER_ALT;
   else 
-    ops_button->modifier = OPS_BUTTON_MODIFIER_NONE;
-}
+    modifier = OPS_BUTTON_MODIFIER_NONE;
 
-static void
-ops_button_extended_callback (GtkWidget *widget, 
-			      gpointer   data)
-{
-  OpsButton *ops_button;
-
-  g_return_if_fail (data != NULL);
-  ops_button = (OpsButton *) data;
-
-  if (ops_button->modifier > OPS_BUTTON_MODIFIER_NONE &&
-      ops_button->modifier < OPS_BUTTON_MODIFIER_LAST)
+  if (modifier > OPS_BUTTON_MODIFIER_NONE &&
+      modifier < OPS_BUTTON_MODIFIER_LAST)
     {
-      if (ops_button->ext_callbacks[ops_button->modifier - 1] != NULL)
-	(ops_button->ext_callbacks[ops_button->modifier - 1]) (widget, NULL);
+      if (ops_button->ext_callbacks[modifier - 1] != NULL)
+	(ops_button->ext_callbacks[modifier - 1]) (widget, NULL);
       else
 	(ops_button->callback) (widget, NULL);
     } 
   else 
     (ops_button->callback) (widget, NULL);
-
-  ops_button->modifier = OPS_BUTTON_MODIFIER_NONE;
 }

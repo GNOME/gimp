@@ -22,16 +22,6 @@
 
 typedef enum
 {
-  OPS_BUTTON_MODIFIER_NONE,
-  OPS_BUTTON_MODIFIER_SHIFT,
-  OPS_BUTTON_MODIFIER_CTRL,
-  OPS_BUTTON_MODIFIER_ALT,
-  OPS_BUTTON_MODIFIER_SHIFT_CTRL,
-  OPS_BUTTON_MODIFIER_LAST
-} OpsButtonModifier;
-
-typedef enum
-{
   OPS_BUTTON_NORMAL,
   OPS_BUTTON_RADIO
 } OpsButtonType;
@@ -47,7 +37,6 @@ struct _OpsButton
   gchar          *tooltip;
   gchar          *private_tip;
   GtkWidget      *widget;         /*  the button widget        */
-  gint            modifier;
 };
 
 /* Function declarations */

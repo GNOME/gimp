@@ -1,5 +1,12 @@
 2001-05-14  Sven Neumann  <sven@gimp.org>
 
+	* app/ops_buttons.[ch]: use GimpButton and connect to extended_clicked.
+	
+	* app/docindex.c
+	* app/gui/paths-dialog.c: changed accordingly.
+
+2001-05-14  Sven Neumann  <sven@gimp.org>
+
 	* app/Makefile.am
 	* app/pixmaps2.h: removed this file ...
 
