@@ -30,6 +30,8 @@
 #include "core/gimp.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpenummenu.h"
+
 #include "gimpellipseselecttool.h"
 #include "gimpfuzzyselecttool.h"
 #include "gimpiscissorstool.h"
@@ -40,6 +42,14 @@
 
 #include "libgimp/gimpintl.h"
 
+
+/*  local function prototypes  */
+
+static void   selection_options_fixed_mode_update (GtkWidget        *widget,
+                                                   SelectionOptions *options);
+
+
+/*  public functions  */
 
 void
 selection_options_init (SelectionOptions *options,
@@ -71,7 +81,7 @@ selection_options_init (SelectionOptions *options,
     GIMP_GUI_CONFIG (tool_info->gimp->config)->default_threshold;
   options->auto_shrink        = options->auto_shrink_d        = FALSE;
   options->shrink_merged      = options->shrink_merged_d      = FALSE;
-  options->fixed_size         = options->fixed_size_d         = FALSE;
+  options->fixed_mode         = options->fixed_mode_d         = GIMP_RECT_SELECT_MODE_FREE;
   options->fixed_height       = options->fixed_height_d       = 1;
   options->fixed_width        = options->fixed_width_d        = 1;
   options->fixed_unit         = options->fixed_unit_d         = GIMP_UNIT_PIXEL;
@@ -85,7 +95,7 @@ selection_options_init (SelectionOptions *options,
   options->threshold_w          = NULL;
   options->auto_shrink_w        = NULL;
   options->shrink_merged_w      = NULL;
-  options->fixed_size_w         = NULL;
+  options->fixed_mode_w         = NULL;
   options->fixed_height_w       = NULL;
   options->fixed_width_w        = NULL;
   options->fixed_unit_w         = NULL;
@@ -377,16 +387,14 @@ selection_options_init (SelectionOptions *options,
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
-      options->fixed_size_w =
-	gtk_check_button_new_with_label (_("Fixed Size / Aspect Ratio"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->fixed_size_w),
-				    options->fixed_size);
-      gtk_frame_set_label_widget (GTK_FRAME (frame), options->fixed_size_w);
-      gtk_widget_show (options->fixed_size_w);
-
-      g_signal_connect (options->fixed_size_w, "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
-                        &options->fixed_size);
+      options->fixed_mode_w =
+        gimp_enum_option_menu_new (GIMP_TYPE_RECT_SELECT_MODE,
+                                   G_CALLBACK (selection_options_fixed_mode_update),
+                                   options);
+      gimp_option_menu_set_history (GTK_OPTION_MENU (options->fixed_mode_w),
+                                    GINT_TO_POINTER (options->fixed_mode_d));
+      gtk_frame_set_label_widget (GTK_FRAME (frame), options->fixed_mode_w);
+      gtk_widget_show (options->fixed_mode_w);
 
       table = gtk_table_new (3, 3, FALSE);
       gtk_container_set_border_width (GTK_CONTAINER (table), 2);
@@ -394,9 +402,7 @@ selection_options_init (SelectionOptions *options,
       gtk_table_set_row_spacings (GTK_TABLE (table), 1);
       gtk_container_add (GTK_CONTAINER (frame), table);
 
-      gtk_widget_set_sensitive (table, options->fixed_size);
-      g_object_set_data (G_OBJECT (options->fixed_size_w), "set_sensitive",
-                         table);
+      gtk_widget_set_sensitive (table, options->fixed_mode != GIMP_RECT_SELECT_MODE_FREE);
 
       options->fixed_width_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
                                                      _("Width:"), -1, 5,
@@ -500,13 +506,17 @@ selection_options_reset (GimpToolOptions *tool_options)
 				    options->shrink_merged_d);
     }
 
-  if (options->fixed_size_w)
+  if (options->fixed_mode_w)
     {
       GtkWidget *spinbutton;
       gint       digits;
 
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(options->fixed_size_w),
-				    options->fixed_size_d);
+      options->fixed_mode = options->fixed_mode_d;
+      gimp_option_menu_set_history (GTK_OPTION_MENU (options->fixed_mode_w),
+                                    GINT_TO_POINTER (options->fixed_mode));
+      gtk_widget_set_sensitive (GTK_BIN (options->fixed_mode_w->parent)->child,
+                                options->fixed_mode != GIMP_RECT_SELECT_MODE_FREE);
+
       gtk_adjustment_set_value (GTK_ADJUSTMENT (options->fixed_width_w),
 				options->fixed_width_d);
       gtk_adjustment_set_value (GTK_ADJUSTMENT (options->fixed_height_w),
@@ -536,4 +546,17 @@ selection_options_reset (GimpToolOptions *tool_options)
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->interactive_w),
 				    options->interactive_d);
     }
+}
+
+
+/*  private functions  */
+
+static void
+selection_options_fixed_mode_update (GtkWidget        *widget,
+                                     SelectionOptions *options)
+{
+  gimp_menu_item_update (widget, &options->fixed_mode);
+
+  gtk_widget_set_sensitive (GTK_BIN (options->fixed_mode_w->parent)->child,
+                            options->fixed_mode != GIMP_RECT_SELECT_MODE_FREE);
 }

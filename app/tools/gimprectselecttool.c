@@ -185,7 +185,7 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
   rect_sel->w = 0;
   rect_sel->h = 0;
 
-  rect_sel->fixed_size   = sel_options->fixed_size;
+  rect_sel->fixed_mode   = sel_options->fixed_mode;
   rect_sel->fixed_width  = sel_options->fixed_width;
   rect_sel->fixed_height = sel_options->fixed_height;
   unit = sel_options->fixed_unit;
@@ -281,7 +281,7 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
       w = (rect_sel->w < 0) ? -rect_sel->w : rect_sel->w;
       h = (rect_sel->h < 0) ? -rect_sel->h : rect_sel->h;
 
-      if ((! w || ! h) && ! rect_sel->fixed_size)
+      if ((! w || ! h) && rect_sel->fixed_mode == GIMP_RECT_SELECT_MODE_FREE)
         {
           /*  If there is a floating selection, anchor it  */
           if (gimp_image_floating_sel (gdisp->gimage))
@@ -349,55 +349,55 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
       oy = rect_sel->y;
     }
 
-  if (rect_sel->fixed_size)
+  switch (rect_sel->fixed_mode)
     {
-      if (state & GDK_SHIFT_MASK)
-	{
-	  ratio = ((gdouble) rect_sel->fixed_height /
-                   (gdouble) rect_sel->fixed_width);
-	  tw = RINT (coords->x) - ox;
-	  th = RINT (coords->y) - oy;
+    case GIMP_RECT_SELECT_MODE_FIXED_SIZE:
+      w = (RINT (coords->x) - ox > 0 ?
+           rect_sel->fixed_width  : -rect_sel->fixed_width);
 
-          /* This is probably an inefficient way to do it, but it gives
-	   * nicer, more predictable results than the original agorithm
-	   */
-	  if ((abs (th) < (ratio * abs (tw))) &&
-              (abs (tw) > (abs (th) / ratio)))
-	    {
-	      w = tw;
-	      h = (gint) (tw * ratio);
-	      /* h should have the sign of th */
-	      if ((th < 0 && h > 0) || (th > 0 && h < 0))
-		h = -h;
-	    }
-	  else 
-	    {
-	      h = th;
-	      w = (gint) (th / ratio);
-	      /* w should have the sign of tw */
-	      if ((tw < 0 && w > 0) || (tw > 0 && w < 0))
-		w = -w;
-	    }
-	}
-      else
-	{
-	  w = (RINT (coords->x) - ox > 0 ?
-               rect_sel->fixed_width  : -rect_sel->fixed_width);
+      h = (RINT (coords->y) - oy > 0 ?
+           rect_sel->fixed_height : -rect_sel->fixed_height);
+      break;
 
-	  h = (RINT (coords->y) - oy > 0 ?
-               rect_sel->fixed_height : -rect_sel->fixed_height);
-	}
-    }
-  else
-    {
+    case GIMP_RECT_SELECT_MODE_FIXED_RATIO:
+      ratio = ((gdouble) rect_sel->fixed_height /
+               (gdouble) rect_sel->fixed_width);
+      tw = RINT (coords->x) - ox;
+      th = RINT (coords->y) - oy;
+
+      /* This is probably an inefficient way to do it, but it gives
+       * nicer, more predictable results than the original agorithm
+       */
+      if ((abs (th) < (ratio * abs (tw))) &&
+          (abs (tw) > (abs (th) / ratio)))
+        {
+          w = tw;
+          h = (gint) (tw * ratio);
+          /* h should have the sign of th */
+          if ((th < 0 && h > 0) || (th > 0 && h < 0))
+            h = -h;
+        }
+      else 
+        {
+          h = th;
+          w = (gint) (th / ratio);
+          /* w should have the sign of tw */
+          if ((tw < 0 && w > 0) || (tw > 0 && w < 0))
+            w = -w;
+        }
+      break;
+
+    default:
       w = (RINT (coords->x) - ox);
       h = (RINT (coords->y) - oy);
+      break;
     }
 
   /* If the shift key is down, then make the rectangle square (or
    * ellipse circular)
    */
-  if ((state & GDK_SHIFT_MASK) && ! rect_sel->fixed_size)
+  if ((state & GDK_SHIFT_MASK) &&
+      rect_sel->fixed_mode == GIMP_RECT_SELECT_MODE_FREE)
     {
       s = MAX (abs (w), abs (h));
 
@@ -416,25 +416,25 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
    */
   if (state & GDK_CONTROL_MASK)
     {
-      if (rect_sel->fixed_size) 
-	{
-          if (state & GDK_SHIFT_MASK) 
-            {
-              rect_sel->x = ox - w;
-              rect_sel->y = oy - h;
-              rect_sel->w = w * 2;
-              rect_sel->h = h * 2;
-            }
-          else
-            {
-              rect_sel->x = ox - w / 2;
-              rect_sel->y = oy - h / 2;
-              rect_sel->w = w;
-              rect_sel->h = h;
-            }
-	}
-      else
-	{
+      rect_sel->center = TRUE;
+
+      switch (rect_sel->fixed_mode)
+        {
+        case GIMP_RECT_SELECT_MODE_FIXED_SIZE:
+          rect_sel->x = ox - w / 2;
+          rect_sel->y = oy - h / 2;
+          rect_sel->w = w;
+          rect_sel->h = h;
+          break;
+
+        case GIMP_RECT_SELECT_MODE_FIXED_RATIO:
+          rect_sel->x = ox - w;
+          rect_sel->y = oy - h;
+          rect_sel->w = w * 2;
+          rect_sel->h = h * 2;
+          break;
+
+        default:
 	  w = abs (w);
 	  h = abs (h);
 
@@ -442,17 +442,17 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
 	  rect_sel->y = oy - h;
 	  rect_sel->w = 2 * w + 1;
 	  rect_sel->h = 2 * h + 1;
-	}
-      rect_sel->center = TRUE;
+          break;
+        }
     }
   else
     {
+      rect_sel->center = FALSE;
+
       rect_sel->x = ox;
       rect_sel->y = oy;
       rect_sel->w = w;
       rect_sel->h = h;
-
-      rect_sel->center = FALSE;
     }
 
   gimp_tool_pop_status (tool);

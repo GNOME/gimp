@@ -38,7 +38,7 @@
 
 #define GIMP_TYPE_CROP_TYPE (gimp_crop_type_get_type ())
 
-GType gimp_crop_type_get_type (void); /* G_GNUC_CONST;*/
+GType gimp_crop_type_get_type (void) G_GNUC_CONST;
 
 typedef enum /*< pdb-skip >*/
 {
@@ -86,7 +86,19 @@ typedef enum /*< pdb-skip >*/ /*< skip >*/
 } GimpMotionMode;
 
 
-/* possible transform functions */
+#define GIMP_TYPE_RECT_SELECT_MODE (gimp_rect_select_mode_get_type ())
+
+GType gimp_rect_select_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum /*< pdb-skip >*/
+{
+  GIMP_RECT_SELECT_MODE_FREE,        /*< desc="Free Select"        >*/
+  GIMP_RECT_SELECT_MODE_FIXED_SIZE,  /*< desc="Fixed Size"         >*/
+  GIMP_RECT_SELECT_MODE_FIXED_RATIO  /*< desc="Fixed Aspect Ratio" >*/
+} GimpRectSelectMode;
+
+
+/*  Possible transform functions  */
 typedef enum /*< pdb-skip >*/ /*< skip >*/
 {
   TRANSFORM_CREATING,

@@ -111,6 +111,26 @@ gimp_motion_mode_get_type (void)
 }
 
 
+static const GEnumValue gimp_rect_select_mode_enum_values[] =
+{
+  { GIMP_RECT_SELECT_MODE_FREE, N_("Free Select"), "free" },
+  { GIMP_RECT_SELECT_MODE_FIXED_SIZE, N_("Fixed Size"), "fixed-size" },
+  { GIMP_RECT_SELECT_MODE_FIXED_RATIO, N_("Fixed Aspect Ratio"), "fixed-ratio" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_rect_select_mode_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpRectSelectMode", gimp_rect_select_mode_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue transform_action_enum_values[] =
 {
   { TRANSFORM_CREATING, "TRANSFORM_CREATING", "creating" },

@@ -1,5 +1,17 @@
 2003-01-06  Michael Natterer  <mitch@gimp.org>
 
+	* libgimptool/gimptoolenums.[ch]: added enum GimpRectSelectMode
+	which can be one of "free", "fixed-size" and "fixed-ratio".
+
+	* app/tools/selection_options.[ch]: replaced the "Fixed Size /
+	Aspect Ratio" toggle by a menu offering the choices above.
+
+	* app/tools/gimprectselecttool.[ch]: changed accordingly. Removed
+	the possibility to <shift>-switch from "fixed-size" to
+	"fixed-ratio" mode. Fixes bug #100320.
+
+2003-01-06  Michael Natterer  <mitch@gimp.org>
+
 	* etc/gtkrc_user: give an example (commented out) how to change
 	the F1 help binding. Fixes bug #6920.
 
