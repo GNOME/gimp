@@ -2,7 +2,7 @@
 
 	* plug-ins/gfig/gfig.c: applied an old patch from Carl Adams that
 	was updated for 1.3 by Tino Schwarze. The patch fixes the isometric
-	grid so that its mathematical properties can be exploited.
+	grid so that its mathematical properties can be exploited (#34825).
 
 2003-08-31  Sven Neumann  <sven@gimp.org>
 
