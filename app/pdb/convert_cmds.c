@@ -59,8 +59,12 @@ image_convert_rgb_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    if ((success = (gimp_image_base_type (gimage) != GIMP_RGB)))
-      gimp_image_convert ((void *) gimage, GIMP_RGB, 0, 0, 0, 1, 0, NULL);
+    {
+      if (gimp_image_base_type (gimage) != GIMP_RGB)
+	gimp_image_convert (gimage, GIMP_RGB, 0, 0, FALSE, FALSE, 0, NULL);
+      else
+	success = FALSE;
+    }
 
   return procedural_db_return_args (&image_convert_rgb_proc, success);
 }
@@ -102,8 +106,12 @@ image_convert_grayscale_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    if ((success = (gimp_image_base_type (gimage) != GIMP_GRAY)))
-      gimp_image_convert ((void *) gimage, GIMP_GRAY, 0, 0, 0, 1, 0, NULL);
+    {
+      if (gimp_image_base_type (gimage) != GIMP_GRAY)
+	gimp_image_convert (gimage, GIMP_GRAY, 0, 0, FALSE, FALSE, 0, NULL);
+      else
+	success = FALSE;
+    }
 
   return procedural_db_return_args (&image_convert_grayscale_proc, success);
 }
@@ -155,6 +163,8 @@ image_convert_indexed_invoker (Gimp     *gimp,
     success = FALSE;
 
   palette_type = args[2].value.pdb_int;
+  if (palette_type < GIMP_MAKE_PALETTE || palette_type > GIMP_CUSTOM_PALETTE)
+    success = FALSE;
 
   num_cols = args[3].value.pdb_int;
 
@@ -170,30 +180,13 @@ image_convert_indexed_invoker (Gimp     *gimp,
     {
       GimpPalette *palette = NULL;
     
-      if ((success = (gimp_image_base_type (gimage) != GIMP_INDEXED)))
+      if (gimp_image_base_type (gimage) != GIMP_INDEXED)
 	{
-	  switch (dither_type)
-	    {
-	    case GIMP_NO_DITHER:
-	    case GIMP_FS_DITHER:
-	    case GIMP_FSLOWBLEED_DITHER:
-	    case GIMP_FIXED_DITHER:
-	      break;
-	    default:
-	      success = FALSE;
-	      break;
-	    }
-	  
 	  switch (palette_type)
 	    {
 	    case GIMP_MAKE_PALETTE:
 	      if (num_cols < 1 || num_cols > MAXNUMCOLORS)
 		success = FALSE;
-	      break;
-    
-	    case GIMP_REUSE_PALETTE:
-	    case GIMP_WEB_PALETTE:
-	    case GIMP_MONO_PALETTE:
 	      break;
     
 	    case GIMP_CUSTOM_PALETTE:
@@ -210,8 +203,12 @@ image_convert_indexed_invoker (Gimp     *gimp,
 	      break;
     
 	    default:
-	      success = FALSE;
+	      break;
 	    }
+	}
+      else
+	{
+	  success = FALSE;
 	}
     
       if (success)
@@ -232,7 +229,7 @@ static ProcArg image_convert_indexed_inargs[] =
   {
     GIMP_PDB_INT32,
     "dither_type",
-    "dither type (0=none, 1=fs, 2=fs/low-bleed 3=fixed)"
+    "The dither type to use: { GIMP_NO_DITHER (0), GIMP_FS_DITHER (1), GIMP_FSLOWBLEED_DITHER (2), GIMP_FIXED_DITHER (3) }"
   },
   {
     GIMP_PDB_INT32,
@@ -242,17 +239,17 @@ static ProcArg image_convert_indexed_inargs[] =
   {
     GIMP_PDB_INT32,
     "num_cols",
-    "the number of colors to quantize to, ignored unless (palette_type == GIMP_MAKE_PALETTE)"
+    "The number of colors to quantize to, ignored unless (palette_type == GIMP_MAKE_PALETTE)"
   },
   {
     GIMP_PDB_INT32,
     "alpha_dither",
-    "dither transparency to fake partial opacity"
+    "Dither transparency to fake partial opacity"
   },
   {
     GIMP_PDB_INT32,
     "remove_unused",
-    "remove unused or duplicate colour entries from final palette, ignored if (palette_type == GIMP_MAKE_PALETTE)"
+    "Remove unused or duplicate colour entries from final palette, ignored if (palette_type == GIMP_MAKE_PALETTE)"
   },
   {
     GIMP_PDB_STRING,

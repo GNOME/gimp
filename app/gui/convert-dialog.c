@@ -85,7 +85,7 @@ convert_to_rgb (GimpImage *gimage)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gimp_image_convert (gimage, GIMP_RGB, 0, 0, 0, 0, 0, NULL);
+  gimp_image_convert (gimage, GIMP_RGB, 0, 0, FALSE, FALSE, 0, NULL);
   gimp_image_flush (gimage);
 }
 
@@ -94,7 +94,7 @@ convert_to_grayscale (GimpImage* gimage)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gimp_image_convert (gimage, GIMP_GRAY, 0, 0, 0, 0, 0, NULL);
+  gimp_image_convert (gimage, GIMP_GRAY, 0, 0, FALSE, FALSE, 0, NULL);
   gimp_image_flush (gimage);
 }
 

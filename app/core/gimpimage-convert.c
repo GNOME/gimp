@@ -477,8 +477,8 @@ struct _QuantizeObj
   gulong index_used_count[256];     /* how many times an index was used */
   CFHistogram histogram;            /* holds the histogram               */
 
-  int want_alpha_dither;
-  int error_freedom;                /* 0=much bleed, 1=controlled bleed */
+  gboolean want_alpha_dither;
+  int      error_freedom;           /* 0=much bleed, 1=controlled bleed */
 };
 
 typedef struct
@@ -514,20 +514,21 @@ typedef struct
 
 
 
-static void zero_histogram_gray     (CFHistogram);
-static void zero_histogram_rgb      (CFHistogram);
-static void generate_histogram_gray (CFHistogram,
-                                     GimpLayer *,
-                                     int alpha_dither);
-static void generate_histogram_rgb  (CFHistogram,
-                                     GimpLayer *,
-                                     int col_limit,
-                                     int alpha_dither);
+static void zero_histogram_gray     (CFHistogram  histogram);
+static void zero_histogram_rgb      (CFHistogram  histogram);
+static void generate_histogram_gray (CFHistogram  hostogram,
+                                     GimpLayer   *layer,
+                                     gboolean     alpha_dither);
+static void generate_histogram_rgb  (CFHistogram  histogram,
+                                     GimpLayer   *layer,
+                                     gint         col_limit,
+                                     gboolean     alpha_dither);
 
-static QuantizeObj* initialize_median_cut (int, int,
-                                           GimpConvertDitherType,
-					   GimpConvertPaletteType,
-                                           int);
+static QuantizeObj* initialize_median_cut (GimpImageBaseType      old_type,
+                                           gint                   num_cols,
+                                           GimpConvertDitherType  dither_type,
+					   GimpConvertPaletteType palette_type,
+                                           gboolean               alpha_dither);
 
 static void
 compute_color_lin8 (QuantizeObj *quantobj,
@@ -742,8 +743,8 @@ gimp_image_convert (GimpImage              *gimage,
 		     */
 		    gint                    num_cols,
 		    GimpConvertDitherType   dither,
-		    gint                    alpha_dither,
-		    gint                    remove_dups,
+		    gboolean                alpha_dither,
+		    gboolean                remove_dups,
 		    GimpConvertPaletteType  palette_type,
 		    GimpPalette            *custom_palette)
 {
@@ -800,7 +801,7 @@ gimp_image_convert (GimpImage              *gimage,
     gimp_image_undo_push_image_colormap (gimage, NULL);
 
   /* initialize the colour conversion routines */
-  cpercep_init_conversions();
+  cpercep_init_conversions ();
 
   /*  Convert to indexed?  Build histogram if necessary.  */
   if (new_type == GIMP_INDEXED)
@@ -810,9 +811,10 @@ gimp_image_convert (GimpImage              *gimage,
       /* fprintf(stderr, " TO INDEXED(%d) ", num_cols); */
 
       /* don't dither if the input is grayscale and we are simply
-         mapping every color */
-      if (old_type == GIMP_GRAY &&
-          num_cols == 256 &&
+       * mapping every color
+       */
+      if (old_type     == GIMP_GRAY &&
+          num_cols     == 256       &&
           palette_type == GIMP_MAKE_PALETTE)
         {
           dither = GIMP_NO_DITHER;
@@ -856,11 +858,9 @@ gimp_image_convert (GimpImage              *gimage,
 	    }
 	}
 
-      if (
-          (old_type == GIMP_RGB) &&
-          (!needs_quantize) &&
-          (palette_type == GIMP_MAKE_PALETTE)
-          )
+      if (old_type == GIMP_RGB &&
+          ! needs_quantize     &&
+          palette_type == GIMP_MAKE_PALETTE)
         {
           /* If this is an RGB image, and the user wanted a custom-built
            *  generated palette, and this image has no more colours than
@@ -893,7 +893,7 @@ gimp_image_convert (GimpImage              *gimage,
 	}
 
       if (palette_type == GIMP_MAKE_PALETTE)
-        qsort (quantobj->cmap, quantobj->actual_number_of_colors, sizeof(Color),
+        qsort (quantobj->cmap, quantobj->actual_number_of_colors, sizeof (Color),
                color_quicksort);
     }
 
@@ -1017,6 +1017,7 @@ gimp_image_convert (GimpImage              *gimage,
               gimage->cmap[j] = new_palette[j]; j++;
               gimage->cmap[j] = new_palette[j]; j++;
             }
+
           gimage->num_cols = num_entries;
         }
       else
@@ -1029,6 +1030,7 @@ gimp_image_convert (GimpImage              *gimage,
               gimage->cmap[j++] = quantobj->cmap[i].green;
               gimage->cmap[j++] = quantobj->cmap[i].blue;
             }
+
           gimage->num_cols = quantobj->actual_number_of_colors;
         }
       break;
@@ -1258,7 +1260,7 @@ zero_histogram_rgb (CFHistogram histogram)
 static void
 generate_histogram_gray (CFHistogram  histogram,
 			 GimpLayer   *layer,
-			 int          alpha_dither)
+			 gboolean     alpha_dither)
 {
   PixelRegion  srcPR;
   guchar      *data;
@@ -1292,8 +1294,8 @@ generate_histogram_gray (CFHistogram  histogram,
 static void
 generate_histogram_rgb (CFHistogram  histogram,
 			GimpLayer   *layer,
-			int          col_limit,
-			int          alpha_dither)
+			gint         col_limit,
+			gboolean     alpha_dither)
 {
   PixelRegion  srcPR;
   guchar      *data;
@@ -2867,7 +2869,7 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
   gint         pixel;
   gint         has_alpha;
   gulong      *index_used_count = quantobj->index_used_count;
-  gint         alpha_dither     = quantobj->want_alpha_dither;
+  gboolean     alpha_dither     = quantobj->want_alpha_dither;
   gint         offsetx, offsety;
   gpointer     pr;
 
@@ -2943,7 +2945,7 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
   gint         re, R;
   gulong      *index_used_count = quantobj->index_used_count;
   gboolean     has_alpha;
-  gint         alpha_dither     = quantobj->want_alpha_dither;
+  gboolean     alpha_dither     = quantobj->want_alpha_dither;
   gint         offsetx, offsety;
   gpointer     pr;
 
@@ -3035,7 +3037,7 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
   gint         green_pix        = GREEN_PIX;
   gint         blue_pix         = BLUE_PIX;
   gint         alpha_pix        = ALPHA_PIX;
-  gint         alpha_dither     = quantobj->want_alpha_dither;
+  gboolean     alpha_dither     = quantobj->want_alpha_dither;
   gint         offsetx, offsety;
   gulong      *index_used_count = quantobj->index_used_count;
 
@@ -3124,7 +3126,7 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
   gint         green_pix        = GREEN_PIX;
   gint         blue_pix         = BLUE_PIX;
   gint         alpha_pix        = ALPHA_PIX;
-  gint         alpha_dither     = quantobj->want_alpha_dither;
+  gboolean     alpha_dither     = quantobj->want_alpha_dither;
   gint         offsetx, offsety;
   gulong      *index_used_count = quantobj->index_used_count;
 
@@ -3232,7 +3234,7 @@ median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
   guchar      *src, *dest;
   gint         row, col;
   gboolean     has_alpha;
-  gint         alpha_dither = quantobj->want_alpha_dither;
+  gboolean     alpha_dither = quantobj->want_alpha_dither;
   gpointer     pr;
   gint         red_pix = RED_PIX;
   gint         green_pix = GREEN_PIX;
@@ -3437,7 +3439,7 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
   gint          odd_row;
   gboolean      has_alpha;
   gint          offsetx, offsety;
-  gint          alpha_dither = quantobj->want_alpha_dither;
+  gboolean      alpha_dither = quantobj->want_alpha_dither;
   gint          width, height;
   gulong       *index_used_count = quantobj->index_used_count;
 
@@ -3663,7 +3665,7 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
   gint          blue_pix  = BLUE_PIX;
   gint          alpha_pix = ALPHA_PIX;
   gint          offsetx, offsety;
-  gint          alpha_dither     = quantobj->want_alpha_dither;
+  gboolean      alpha_dither     = quantobj->want_alpha_dither;
   gulong       *index_used_count = quantobj->index_used_count;
   gint          global_rmax = 0, global_rmin = G_MAXINT;
   gint          global_gmax = 0, global_gmin = G_MAXINT;
@@ -3977,12 +3979,12 @@ delete_median_cut (QuantizeObj *quantobj)
 /**************************************************************/
 
 
-static QuantizeObj*
-initialize_median_cut (int type,
-		       int num_colors,
-		       GimpConvertDitherType  dither_type,
-		       GimpConvertPaletteType palette_type,
-		       int want_alpha_dither)
+static QuantizeObj *
+initialize_median_cut (GimpImageBaseType       type,
+		       gint                    num_colors,
+		       GimpConvertDitherType   dither_type,
+		       GimpConvertPaletteType  palette_type,
+		       gboolean                want_alpha_dither)
 {
   QuantizeObj * quantobj;
 
@@ -3998,7 +4000,7 @@ initialize_median_cut (int type,
 				    HIST_B_ELEMS);
 
   quantobj->desired_number_of_colors = num_colors;
-  quantobj->want_alpha_dither = want_alpha_dither;
+  quantobj->want_alpha_dither        = want_alpha_dither;
 
   switch (type)
     {
@@ -4023,56 +4025,61 @@ initialize_median_cut (int type,
       if (palette_type == GIMP_WEB_PALETTE  ||
 	  palette_type == GIMP_MONO_PALETTE ||
           palette_type == GIMP_CUSTOM_PALETTE)
-	switch (dither_type)
-	  {
-	  case GIMP_NODESTRUCT_DITHER:
-	  default:
-	    g_warning("Uh-oh, bad dither type, W1");
-	  case GIMP_NO_DITHER:
-	    quantobj->second_pass_init = median_cut_pass2_rgb_init;
-	    quantobj->second_pass = median_cut_pass2_no_dither_rgb;
-	    break;
-	  case GIMP_FS_DITHER:
-	    quantobj->error_freedom = 0;
-	    quantobj->second_pass_init = median_cut_pass2_rgb_init;
-	    quantobj->second_pass = median_cut_pass2_fs_dither_rgb;
-	    break;
-	  case GIMP_FSLOWBLEED_DITHER:
-	    quantobj->error_freedom = 1;
-	    quantobj->second_pass_init = median_cut_pass2_rgb_init;
-	    quantobj->second_pass = median_cut_pass2_fs_dither_rgb;
-	    break;
-	  case GIMP_FIXED_DITHER:
-	    quantobj->second_pass_init = median_cut_pass2_rgb_init;
-	    quantobj->second_pass = median_cut_pass2_fixed_dither_rgb;
-	    break;
-	  }
+        {
+          switch (dither_type)
+            {
+            case GIMP_NODESTRUCT_DITHER:
+            default:
+              g_warning("Uh-oh, bad dither type, W1");
+            case GIMP_NO_DITHER:
+              quantobj->second_pass_init = median_cut_pass2_rgb_init;
+              quantobj->second_pass = median_cut_pass2_no_dither_rgb;
+              break;
+            case GIMP_FS_DITHER:
+              quantobj->error_freedom = 0;
+              quantobj->second_pass_init = median_cut_pass2_rgb_init;
+              quantobj->second_pass = median_cut_pass2_fs_dither_rgb;
+              break;
+            case GIMP_FSLOWBLEED_DITHER:
+              quantobj->error_freedom = 1;
+              quantobj->second_pass_init = median_cut_pass2_rgb_init;
+              quantobj->second_pass = median_cut_pass2_fs_dither_rgb;
+              break;
+            case GIMP_FIXED_DITHER:
+              quantobj->second_pass_init = median_cut_pass2_rgb_init;
+              quantobj->second_pass = median_cut_pass2_fixed_dither_rgb;
+              break;
+            }
+        }
       else
-	switch (dither_type)
-	  {
-	  case GIMP_NODESTRUCT_DITHER:
-	  default:
-	    g_warning("Uh-oh, bad dither type, W2");
-	  case GIMP_NO_DITHER:
-	    quantobj->second_pass_init = median_cut_pass2_gray_init;
-	    quantobj->second_pass = median_cut_pass2_no_dither_gray;
-	    break;
-	  case GIMP_FS_DITHER:
-	    quantobj->error_freedom = 0;
-	    quantobj->second_pass_init = median_cut_pass2_gray_init;
-	    quantobj->second_pass = median_cut_pass2_fs_dither_gray;
-	    break;
-	  case GIMP_FSLOWBLEED_DITHER:
-	    quantobj->error_freedom = 1;
-	    quantobj->second_pass_init = median_cut_pass2_gray_init;
-	    quantobj->second_pass = median_cut_pass2_fs_dither_gray;
-	    break;
-	  case GIMP_FIXED_DITHER:
-	    quantobj->second_pass_init = median_cut_pass2_gray_init;
-	    quantobj->second_pass = median_cut_pass2_fixed_dither_gray;
-	    break;
-	  }
+        {
+          switch (dither_type)
+            {
+            case GIMP_NODESTRUCT_DITHER:
+            default:
+              g_warning("Uh-oh, bad dither type, W2");
+            case GIMP_NO_DITHER:
+              quantobj->second_pass_init = median_cut_pass2_gray_init;
+              quantobj->second_pass = median_cut_pass2_no_dither_gray;
+              break;
+            case GIMP_FS_DITHER:
+              quantobj->error_freedom = 0;
+              quantobj->second_pass_init = median_cut_pass2_gray_init;
+              quantobj->second_pass = median_cut_pass2_fs_dither_gray;
+              break;
+            case GIMP_FSLOWBLEED_DITHER:
+              quantobj->error_freedom = 1;
+              quantobj->second_pass_init = median_cut_pass2_gray_init;
+              quantobj->second_pass = median_cut_pass2_fs_dither_gray;
+              break;
+            case GIMP_FIXED_DITHER:
+              quantobj->second_pass_init = median_cut_pass2_gray_init;
+              quantobj->second_pass = median_cut_pass2_fixed_dither_gray;
+              break;
+            }
+        }
       break;
+
     case GIMP_RGB:
       switch (palette_type)
 	{
@@ -4116,6 +4123,9 @@ initialize_median_cut (int type,
 	  quantobj->second_pass = median_cut_pass2_fixed_dither_rgb;
 	  break;
 	}
+      break;
+
+    default:
       break;
     }
 

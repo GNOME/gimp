@@ -27,8 +27,12 @@ sub simple_invoke {
     my $type = shift;
     %invoke = (
 	code => <<CODE
-if ((success = (gimp_image_base_type (gimage) != $type)))
-  gimp_image_convert ((void *) gimage, $type, 0, 0, 0, 1, 0, NULL);
+{
+  if (gimp_image_base_type (gimage) != $type)
+    gimp_image_convert (gimage, $type, 0, 0, FALSE, FALSE, 0, NULL);
+  else
+    success = FALSE;
+}
 CODE
     );
 }
@@ -85,16 +89,16 @@ HELP
     @inargs = (
 	&std_image_arg,
 	{ name => 'dither_type', type => 'enum GimpConvertDitherType',
-	  desc => 'dither type (0=none, 1=fs, 2=fs/low-bleed 3=fixed)' },
+	  desc => 'The dither type to use: { %%desc%% }' },
 	{ name => 'palette_type', type => 'enum GimpConvertPaletteType',
-	  desc => 'The type of palette to use: { %%desc%% }', no_success => 1 },
+	  desc => 'The type of palette to use: { %%desc%% }' },
 	{ name => 'num_cols', type => 'int32',
-	  desc => 'the number of colors to quantize to, ignored unless
+	  desc => 'The number of colors to quantize to, ignored unless
 		   (palette_type == GIMP_MAKE_PALETTE)' },
 	{ name => 'alpha_dither', type => 'boolean',
-	  desc => 'dither transparency to fake partial opacity' },
+	  desc => 'Dither transparency to fake partial opacity' },
 	{ name => 'remove_unused', type => 'boolean',
-	  desc => 'remove unused or duplicate colour entries from final
+	  desc => 'Remove unused or duplicate colour entries from final
 		   palette, ignored if (palette_type == GIMP_MAKE_PALETTE)' },
 	{ name => 'palette', type => 'string',
 	  desc => 'The name of the custom palette to use, ignored unless
@@ -107,30 +111,13 @@ HELP
 {
   GimpPalette *palette = NULL;
 
-  if ((success = (gimp_image_base_type (gimage) != GIMP_INDEXED)))
+  if (gimp_image_base_type (gimage) != GIMP_INDEXED)
     {
-      switch (dither_type)
-        {
-	case GIMP_NO_DITHER:
-	case GIMP_FS_DITHER:
-	case GIMP_FSLOWBLEED_DITHER:
-	case GIMP_FIXED_DITHER:
-	  break;
-	default:
-	  success = FALSE;
-	  break;
-        }
-      
       switch (palette_type)
 	{
 	case GIMP_MAKE_PALETTE:
 	  if (num_cols < 1 || num_cols > MAXNUMCOLORS)
 	    success = FALSE;
-	  break;
-
-	case GIMP_REUSE_PALETTE:
-	case GIMP_WEB_PALETTE:
-	case GIMP_MONO_PALETTE:
 	  break;
 
 	case GIMP_CUSTOM_PALETTE:
@@ -147,8 +134,12 @@ HELP
 	  break;
 
 	default:
-	  success = FALSE;
+          break;
 	}
+    }
+  else
+    {
+      success = FALSE;
     }
 
   if (success)

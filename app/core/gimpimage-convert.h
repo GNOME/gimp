@@ -30,8 +30,8 @@ void   gimp_image_convert          (GimpImage              *gimage,
                                      */
                                     gint                    num_cols,
                                     GimpConvertDitherType   dither,
-                                    gint                    alpha_dither,
-                                    gint                    remove_dups,
+                                    gboolean                alpha_dither,
+                                    gboolean                remove_dups,
                                     GimpConvertPaletteType  palette_type,
                                     GimpPalette            *custom_palette);
 

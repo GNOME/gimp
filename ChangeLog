@@ -1,3 +1,18 @@
+2004-01-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-convert.[ch]: use gboolean instead of gint
+	for "alpha_dither" and "remove_dups" in all public and private
+	functions. Properly prototyped private functions. Minor cleanup.
+
+	* app/gui/convert-dialog.c: pass FALSE instead of 0.
+
+	* tools/pdbgen/pdb/convert.pdb: ditto. Also cleaned up a bit: use
+	generated checks and documentation for enums, removed duplicate
+	check for enum range (spotted by Kevin Cozens).
+
+	* app/pdb/convert_cmds.c
+	* libgimp/gimpconvert_pdb.c: regenerated.
+
 2004-01-31  Manish Singh  <yosh@gimp.org>
 
 	* app/base/cpu-accel.c: Make the assembly PIC safe. Fixes #132999.
