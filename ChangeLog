@@ -1,3 +1,8 @@
+2000-03-27  David Monniaux  <monniaux@quatramaran.ens.fr>
+
+	* plug-ins/gap/gap_decode_mpeg_main.c: fixed a typo (spurious
+	parenthesis) probably introduced by Sven's corrected spelling.
+
 2000-03-27  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gap/gap_*.c: corrected spelling and punctuation of many
