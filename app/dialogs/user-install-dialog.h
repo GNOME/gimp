@@ -20,7 +20,8 @@
 #define __USER_INSTALL_DIALOG_H__
 
 
-void   user_install_dialog_create (Gimp *gimp);
+void  user_install_dialog_create (const gchar *alternate_system_gimprc,
+                                  const gchar *alernate_gimprc);
 
 
 #endif /* __USER_INSTALL_DIALOG_H__ */

@@ -116,7 +116,11 @@ app_init (gint    gimp_argc,
 	}
       else
 	{
-	  user_install_dialog_create (the_gimp);
+          /*  this needs to be done before gimprc loading  */
+          gimp_unitrc_load (the_gimp);
+	  
+          user_install_dialog_create (alternate_system_gimprc,
+                                      alternate_gimprc);
 
 	  gtk_main ();
 	}

@@ -1,19 +1,29 @@
+2002-11-20  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimprc.c: made object properties from the gimprc
+	filenames. Use NULL to set to the default values.
+
+	* app/app_procs.c
+	* app/gui/user-install-dialog.[ch]: don't pass a gimp pointer to
+	the user installation dialog. All it needs to know are the
+	alternative gimprc names if such are given on the command-line.
+
 2002-11-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/Makefile.am
 	* app/widgets/gimppropwidgets.[ch]: new files containing
 	constructors for views on GObject properties.
 
-	* app/gui/Makefile.am: the build preferences-dialog again.
+	* app/gui/Makefile.am: build the preferences dialog again.
 
 	* app/gui/dialogs-constructors.c
 	* app/gui/dialogs.c
 	* app/gui/menus.c: added it back to the dialog system (as a non
-	signleton to get the new model <-> view stuff some testing).
+	singleton to give the new model <-> view stuff some testing).
 
 	* app/gui/preferences-dialog.c: here it is again, using property
 	view widgets. Lots of stuff removed & simplified. Some things
-	still #if 0'ed and/or non-working. No saving yet, stuff...
+	still #if 0'ed and/or non-working. No saving yet ...
 
 2002-11-20  Sven Neumann  <sven@gimp.org>
 

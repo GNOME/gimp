@@ -38,14 +38,11 @@
 
 #include "config/gimprc.h"
 
-#include "core/gimp.h"
 #include "core/gimpunits.h"
 
 #include "gui.h"
 #include "resolution-calibrate-dialog.h"
 #include "user-install-dialog.h"
-
-#include "appenv.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -78,15 +75,15 @@ enum {
 
 
 static void     user_install_continue_callback (GtkWidget *widget,
-						gpointer   data);
+						GimpRc    *gimprc);
 static void     user_install_cancel_callback   (GtkWidget *widget,
 						gpointer   data);
 
 static gboolean user_install_run               (void);
-static void     user_install_tuning            (GimpRc     *gimprc);
-static void     user_install_tuning_done       (GimpRc     *gimprc);
-static void     user_install_resolution        (GimpRc     *gimprc);
-static void     user_install_resolution_done   (GimpRc     *gimp);
+static void     user_install_tuning            (GimpRc    *gimprc);
+static void     user_install_tuning_done       (GimpRc    *gimprc);
+static void     user_install_resolution        (GimpRc    *gimprc);
+static void     user_install_resolution_done   (GimpRc    *gimprc);
 
 
 /*  private stuff  */
@@ -319,12 +316,9 @@ user_install_notebook_set_page (GtkNotebook *notebook,
 
 static void
 user_install_continue_callback (GtkWidget *widget,
-				gpointer   data)
+				GimpRc    *gimprc)
 {
-  static gint    notebook_index = 0;
-  static GimpRc *gimprc         = NULL;
-
-  Gimp *gimp = (Gimp *) data;
+  static gint notebook_index = 0;
 
   switch (notebook_index)
     {
@@ -354,9 +348,6 @@ user_install_continue_callback (GtkWidget *widget,
 #ifdef G_OS_WIN32
       FreeConsole ();
 #endif
-      gimp_unitrc_load (gimp);
-      gimprc = gimp_rc_new (alternate_system_gimprc, alternate_gimprc);
-
       user_install_tuning (gimprc);
       break;
 
@@ -369,9 +360,6 @@ user_install_continue_callback (GtkWidget *widget,
       user_install_resolution_done (gimprc);
 
       gimp_rc_save (gimprc);
-      
-      g_object_unref (G_OBJECT (gimprc));
-      gimprc = NULL;
       
       g_object_unref (G_OBJECT (title_style));
       g_object_unref (G_OBJECT (page_style));
@@ -530,8 +518,10 @@ user_install_tv_fix_size_request (GtkWidget     *widget,
 }
 
 void
-user_install_dialog_create (Gimp *gimp)
+user_install_dialog_create (const gchar *alternate_system_gimprc,
+                            const gchar *alternate_gimprc)
 {
+  GimpRc    *gimprc;
   GtkWidget *dialog;
   GtkWidget *vbox;
   GtkWidget *hbox;
@@ -544,6 +534,8 @@ user_install_dialog_create (Gimp *gimp)
   GdkPixbuf *wilber;
   gchar     *filename;
 
+  gimprc = gimp_rc_new (alternate_system_gimprc, alternate_gimprc);
+
   dialog = user_install_dialog =
     gimp_dialog_new (_("GIMP User Installation"), "user_installation",
 		     NULL, NULL,
@@ -551,12 +543,15 @@ user_install_dialog_create (Gimp *gimp)
 		     FALSE, FALSE, FALSE,
 
 		     GTK_STOCK_CANCEL, user_install_cancel_callback,
-		     gimp, 1, &cancel_button, FALSE, TRUE,
+		     NULL, 1, &cancel_button, FALSE, TRUE,
 
 		     _("Continue"), user_install_continue_callback,
-		     gimp, NULL, &continue_button, TRUE, FALSE,
+		     gimprc, NULL, &continue_button, TRUE, FALSE,
 
 		     NULL);
+
+  g_object_weak_ref (G_OBJECT (dialog),
+                     (GWeakNotify) g_object_unref, gimprc);
 
   gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 8);
 
@@ -1336,25 +1331,23 @@ user_install_resolution (GimpRc *gimprc)
 static void
 user_install_resolution_done (GimpRc *gimprc)
 {
-  gdouble   xres, yres;
-  gboolean  res_from_gdk;
-
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (xserver_toggle)))
     {
-      gui_get_screen_resolution (&xres, &yres);
-      res_from_gdk = TRUE;
+      g_object_set (G_OBJECT (gimprc),
+                    "monitor-resolution-from-windowing-system", TRUE,
+                    NULL);
     }
   else
     {
-      xres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (resolution_entry), 0);
-      yres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (resolution_entry), 1);
-      res_from_gdk = FALSE;
+      gdouble xres, yres;
+
+      xres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY(resolution_entry), 0);
+      yres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY(resolution_entry), 1);
+
+      g_object_set (G_OBJECT (gimprc),
+                    "monitor-xresolution",                      xres,
+                    "monitor-yresolution",                      yres,
+                    "monitor-resolution-from-windowing-system", FALSE,
+                    NULL);
     }
-
-  g_object_set (G_OBJECT (gimprc),
-		"monitor_xresolution",                      xres,
-		"monitor_yresolution",                      yres,
-		"monitor_resolution_from_windowing-system", res_from_gdk,
-		NULL);
 }
-
