@@ -40,10 +40,6 @@
 #include "gimp-intl.h"
 
 
-#define COLOR_BOX_WIDTH  16
-#define COLOR_BOX_HEIGHT 16
-
-
 /*  local function prototypes  */
 
 static void     gimp_item_factory_class_init      (GimpItemFactoryClass *klass);
@@ -514,6 +510,7 @@ gimp_item_factory_set_color (GtkItemFactory *factory,
   else if (GTK_IS_LABEL (GTK_BIN (widget)->child))
     {
       GtkWidget *hbox;
+      gint       width, height;
 
       label = GTK_BIN (widget)->child;
 
@@ -525,10 +522,12 @@ gimp_item_factory_set_color (GtkItemFactory *factory,
       gtk_container_add (GTK_CONTAINER (widget), hbox);
       gtk_widget_show (hbox);
 
-      area = gimp_color_area_new (color, GIMP_COLOR_AREA_FLAT, 0);
+      area = gimp_color_area_new (color, GIMP_COLOR_AREA_SMALL_CHECKS, 0);
       gimp_color_area_set_draw_border (GIMP_COLOR_AREA (area), TRUE);
 
-      gtk_widget_set_size_request (area, COLOR_BOX_WIDTH, COLOR_BOX_HEIGHT);
+      gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, &height);
+
+      gtk_widget_set_size_request (area, width, height);
       gtk_box_pack_start (GTK_BOX (hbox), area, FALSE, FALSE, 0);
       gtk_widget_show (area);
 

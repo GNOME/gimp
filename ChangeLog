@@ -1,3 +1,10 @@
+2003-07-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpitemfactory.c (gimp_item_factory_set_color): use
+	GIMP_COLOR_AREA_SMALL_CHECKS instead of _FLAT so the color's alpha
+	is visible. Lookup GTK_ICON_SIZE_MENU's dimensions instead of
+	hardcoding 16x16.
+
 2003-07-04  Sven Neumann  <sven@gimp.org>
 
 	* app/base/colorize.c (colorize_init): use more inspiring initial
