@@ -1,6 +1,6 @@
 2001-01-17  Sven Neumann  <sven@gimp.org>
 
-	* INSTALL: adjusted version numbers, added warning
+	* INSTALL: adjusted version numbers, updated, added warning
 	
 	* configure.in: changed .gimp to .gimp-1.3
 

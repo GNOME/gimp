@@ -87,10 +87,9 @@ recognizes. These are:
      all of your horsepower. Enabling it on singleprocessor systems won't
      harm but cause a bit processing overhead.
 
-  8. --with-sendmail=[], --with-lp=[], --with-lpc=[], --with-lpr=[] and
-     --with-lpstat=[]. This options are used to tell GIMP where to find
-     this commands. Normally this options don't have to be used because
-     configure tries to find them in the usual places.
+  8. --with-sendmail=[]. This option is used to tell GIMP where to find
+     this command. Normally this options don't have to be used because
+     configure tries to find it in the usual places.
   
   9. --enable-python and --disable-python. This options control whether to
      build the python scripting language plygin or not. This options
@@ -104,11 +103,10 @@ The `make' command builds several things:
  - The plug-in programs in the `plug-ins' subdirectory.
  - The main GIMP program in `app/gimp'.
 
-The `make install' commands installs the glib, gdk and gtk header
-files and libraries, the gimp header files associated with libgimp and
-the libgimp library, the plug-ins, and the GIMP executable. After
-running `make install' and assuming the build process was successful
-you should be able to run `gimp'.
+The `make install' commands installs the gimp header files associated 
+with libgimp and the libgimp library, the plug-ins, some data files and 
+the GIMP executable. After running `make install' and assuming the 
+build process was successful you should be able to run `gimp'.
 
 Using `make install-strip' will remove unneeded debugging cruft and 
 unused functions from the binaries which will reduce the size of the
