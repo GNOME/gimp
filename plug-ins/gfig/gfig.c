@@ -344,6 +344,7 @@ typedef struct
   gint          maxundo;
   gint          showpos;
   gdouble       brushfade;
+  gdouble       brushgradient;
   gdouble       airbrushpressure;
   gint          showtooltips;
   DrawonLayers  onlayers;
@@ -372,6 +373,7 @@ static SelectItVals selvals =
   MIN_UNDO + (MAX_UNDO - MIN_UNDO)/2,  /* Max level of undos */
   FALSE, /* Show pos updates */
   0.0, /* Brush fade */
+  0.0, /* Brush gradient */
   20.0, /* Air bursh pressure */
   TRUE,  /* show Tool tips */
   ORIGINAL_LAYER, /* Draw all objects on one layer */
@@ -534,6 +536,7 @@ static GtkWidget *undo_widget;
 static GtkWidget *gfig_op_menu; /* Popup menu in the list box */
 static GtkWidget *delete_frame_to_freeze; /* Top preview frame window */
 static GtkWidget *fade_out_hbox;   /* Fade out widget in brush page */
+static GtkWidget *gradient_hbox;   /* Gradient widget in brush page */
 static GtkWidget *pressure_hbox;   /* Pressure widget in brush page */
 static GtkWidget *pencil_hbox;     /* Dummy widget in brush page */
 static GtkWidget *pos_label;       /* XY pos marker */
@@ -2275,19 +2278,23 @@ gfig_brush_menu_callback (GtkWidget *widget,
       gtk_widget_hide (pressure_hbox);
       gtk_widget_hide (pencil_hbox);
       gtk_widget_show (fade_out_hbox);
+      gtk_widget_show (gradient_hbox);
       break;
     case BRUSH_PENCIL_TYPE:
       gtk_widget_hide (fade_out_hbox);
+      gtk_widget_hide (gradient_hbox);
       gtk_widget_hide (pressure_hbox);
       gtk_widget_show (pencil_hbox);
       break;
     case BRUSH_AIRBRUSH_TYPE:
       gtk_widget_hide (fade_out_hbox);
+      gtk_widget_hide (gradient_hbox);
       gtk_widget_hide (pencil_hbox);
       gtk_widget_show (pressure_hbox);
       break;
     case BRUSH_PATTERN_TYPE:
       gtk_widget_hide (fade_out_hbox);
+      gtk_widget_hide (gradient_hbox);
       gtk_widget_hide (pressure_hbox);
       gtk_widget_show (pencil_hbox);
       break;
@@ -2514,7 +2521,7 @@ gfig_paint (BrushType brush_type,
 		       selvals.brushfade,
 		       seg_count, line_pnts,
 		       GIMP_HARD,
-		       0.0);
+		       selvals.brushgradient);
       break;
 
     case BRUSH_PENCIL_TYPE:
@@ -2946,6 +2953,7 @@ brush_page (void)
   GtkWidget *pw;
   GtkWidget *scale;
   GtkObject *fade_out_scale_data;
+  GtkObject *gradient_scale_data;
   GtkObject *pressure_scale_data;
   GtkWidget *vbox;
   GtkWidget *button;
@@ -2954,7 +2962,7 @@ brush_page (void)
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
 
-  table = gtk_table_new (2, 2, FALSE); 
+  table = gtk_table_new (2, 3, FALSE); 
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
@@ -2982,6 +2990,29 @@ brush_page (void)
   gtk_table_attach (GTK_TABLE (table), fade_out_hbox, 0, 2, 1, 2,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_widget_show (fade_out_hbox);   
+
+
+  /* Gradient drawing */
+  gradient_hbox = gtk_hbox_new (FALSE, 4);
+
+  label = gtk_label_new (_("Gradient:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_box_pack_start (GTK_BOX (gradient_hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  gradient_scale_data = gtk_adjustment_new (0.0, 0.0, 3000.0, 1.0, 1.0, 0.0);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (gradient_scale_data));
+  gtk_box_pack_start (GTK_BOX (gradient_hbox), scale, TRUE, TRUE, 0);
+  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  gtk_signal_connect (GTK_OBJECT (gradient_scale_data), "value_changed",
+                      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+                      &selvals.brushgradient);
+  gtk_widget_show (scale);
+  gtk_table_attach (GTK_TABLE (table), gradient_hbox, 0, 2, 2, 3,
+		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
+  gtk_widget_show (gradient_hbox);   
+
 
   pressure_hbox = gtk_hbox_new (FALSE, 4);
   label = gtk_label_new (_("Pressure:"));
