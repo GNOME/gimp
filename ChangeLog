@@ -1,5 +1,10 @@
 2004-02-29  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpblendoptions.c: changed the upper limit for the
+	supersampling depth from 10 to 6 (as a workaround for bug #133266).
+
+2004-02-29  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpunitmenu.c (gimp_unit_menu_create_selection):
 	no need to connect to "destroy", GTK_DIALOG_DESTROY_WITH_PARENT
 	does this for us already.
