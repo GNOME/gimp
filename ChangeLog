@@ -1,5 +1,11 @@
 2004-08-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpiscissorstool.c: increased the handle size from 8
+	to 9 pixels (which is the same as in the path tool) as suggested
+	in bug #134250.
+
+2004-08-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpstatusbar.c: make the cursor coordinates label
 	insensitive when displaying out-of-image coordinates.
 

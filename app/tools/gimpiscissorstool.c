@@ -86,7 +86,7 @@
 #define  GRADIENT_SEARCH   32  /* how far to look when snapping to an edge */
 #define  TARGET_HEIGHT     25
 #define  TARGET_WIDTH      25
-#define  POINT_WIDTH       8   /* size (in pixels) of seed handles */
+#define  POINT_WIDTH       9   /* size (in pixels) of seed handles */
 #define  POINT_HALFWIDTH   (POINT_WIDTH / 2)
 #define  EXTEND_BY         0.2 /* proportion to expand cost map by */
 #define  FIXED             5   /* additional fixed size to expand cost map */
