@@ -1,3 +1,9 @@
+2000-01-18  David Monniaux  <monniaux@quatramaran.ens.fr>
+
+	* plug-ins/gflare/Makefile.am
+	* plug-ins/gflare/gflare.c
+	* po-plug-ins/POTFILES.in: i18n of GFlare
+
 Mon Jan 17 23:11:10 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/wind.c: Wind used to crash badly when used with
