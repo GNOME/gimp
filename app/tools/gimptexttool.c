@@ -214,10 +214,10 @@ text_options_new (void)
   gtk_widget_set_sensitive (spinbutton, ! options->use_dyntext_d);
   gtk_widget_set_sensitive (label, ! options->use_dyntext_d);
   gtk_object_set_data (GTK_OBJECT (options->use_dyntext_w), "inverse_sensitive",
-		       options->antialias_w);
-  gtk_object_set_data (GTK_OBJECT (options->antialias_w), "inverse_sensitive",
 		       spinbutton);
   gtk_object_set_data (GTK_OBJECT (spinbutton), "inverse_sensitive", label);
+  gtk_object_set_data (GTK_OBJECT (label), "inverse_sensitive",
+		       options->antialias_w);
 
   return options;
 }
