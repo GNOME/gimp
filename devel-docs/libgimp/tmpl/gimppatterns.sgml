@@ -14,6 +14,42 @@ gimppatterns
 
 </para>
 
+<!-- ##### FUNCTION gimp_patterns_refresh ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_patterns_get_list ##### -->
+<para>
+
+</para>
+
+@num_patterns: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_patterns_get_pattern ##### -->
+<para>
+
+</para>
+
+@width: 
+@height: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_patterns_set_pattern ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_patterns_get_pattern_data ##### -->
 <para>
 

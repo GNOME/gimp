@@ -1,3 +1,19 @@
+2002-03-13  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/libgimp-sections.txt: reflect the current set of libgimp
+	files and functions.
+
+	* libgimp/tmpl/gimpcompat.sgml
+	* libgimp/tmpl/gimppalettes.sgml: new files.
+
+	* libgimp/tmpl/gimpbrushes.sgml
+	* libgimp/tmpl/gimpcolorselector.sgml
+	* libgimp/tmpl/gimpenums.sgml
+	* libgimp/tmpl/gimpgimprc.sgml
+	* libgimp/tmpl/gimpgradients.sgml
+	* libgimp/tmpl/gimpimage.sgml
+	* libgimp/tmpl/gimppatterns.sgml: regenerated.
+
 2002-03-12  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/tmpl/gimpgradients.sgml

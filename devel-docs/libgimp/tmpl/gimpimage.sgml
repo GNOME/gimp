@@ -61,6 +61,19 @@ gimpimage
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_image_crop ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@new_width: 
+@new_height: 
+@offx: 
+@offy: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_image_delete ##### -->
 <para>
 

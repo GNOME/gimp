@@ -296,16 +296,14 @@ Enums and definitions.
 @GIMP_REPEAT_SAWTOOTH: 
 @GIMP_REPEAT_TRIANGULAR: 
 
-<!-- ##### MACRO GimpRunModeType ##### -->
+<!-- ##### ENUM GimpRunMode ##### -->
 <para>
 
 </para>
 
-<!-- # Unused Parameters # -->
 @GIMP_RUN_INTERACTIVE: 
 @GIMP_RUN_NONINTERACTIVE: 
 @GIMP_RUN_WITH_LAST_VALS: 
-
 
 <!-- ##### ENUM GimpSizeType ##### -->
 <para>

@@ -29,8 +29,6 @@ gimp_destroy_params
 gimp_destroy_paramdefs
 gimp_gamma
 gimp_install_cmap
-gimp_use_xshm
-gimp_color_cube
 gimp_min_colors
 gimp_get_progname
 set_gimp_PLUG_IN_INFO_PTR
@@ -72,12 +70,21 @@ GimpMessageHandlerType
 GimpOrientationType
 GimpPaintApplicationMode
 GimpRepeatMode
-GimpRunModeType
+GimpRunMode
 GimpSizeType
 GimpStackTraceMode
 GimpTransferMode
 </SECTION>
 
+<SECTION>
+<FILE>gimpcompat</FILE>
+GimpRunModeType
+gimp_use_xshm
+gimp_color_cube
+gimp_crop
+gimp_gradients_get_active
+gimp_gradients_set_active
+</SECTION>
 
 <SECTION>
 <FILE>gimpui</FILE>
@@ -94,8 +101,10 @@ GimpColorSelectorSetChannelFunc
 GimpColorSelectorMethods
 GimpColorSelectorID
 GimpColorSelectorChannelType
-gimp_color_selector_register
 GimpColorSelectorFinishedCB
+GIMP_COLOR_SELECTOR_SIZE
+GIMP_COLOR_SELECTOR_BAR_SIZE
+gimp_color_selector_register
 gimp_color_selector_unregister
 </SECTION>
 
@@ -134,10 +143,20 @@ gimp_export_image
 
 <SECTION>
 <FILE>gimpbrushes</FILE>
+gimp_brushes_refresh
+gimp_brushes_get_list
+gimp_brushes_get_brush
+gimp_brushes_set_brush
+gimp_brushes_get_opacity
+gimp_brushes_set_opacity
+gimp_brushes_get_paint_mode
+gimp_brushes_set_paint_mode
+gimp_brushes_get_spacing
+gimp_brushes_set_spacing
+gimp_brushes_get_brush_data
 gimp_brushes_popup
 gimp_brushes_close_popup
 gimp_brushes_set_popup
-gimp_brushes_get_brush_data
 </SECTION>
 
 <SECTION>
@@ -267,14 +286,16 @@ gimp_floating_sel_relax
 <FILE>gimpgimprc</FILE>
 gimp_gimprc_query
 gimp_gimprc_set
+gimp_get_default_comment
 gimp_get_monitor_resolution
 </SECTION>
 
 <SECTION>
 <FILE>gimpgradients</FILE>
+gimp_gradients_refresh
 gimp_gradients_get_list
-gimp_gradients_get_active
-gimp_gradients_set_active
+gimp_gradients_get_gradient
+gimp_gradients_set_gradient
 gimp_gradients_sample_uniform
 gimp_gradients_sample_custom
 gimp_gradients_get_gradient_data
@@ -304,6 +325,7 @@ gimp_image_list
 gimp_image_new
 gimp_image_resize
 gimp_image_scale
+gimp_image_crop
 gimp_image_delete
 gimp_image_free_shadow
 gimp_image_get_layers
@@ -430,7 +452,18 @@ gimp_palette_set_foreground
 gimp_palette_set_background
 gimp_palette_set_default_colors
 gimp_palette_swap_colors
-gimp_palette_refresh
+</SECTION>
+
+<SECTION>
+<FILE>gimppalettes</FILE>
+gimp_palettes_refresh
+gimp_palettes_get_list
+gimp_palettes_get_palette
+gimp_palettes_set_palette
+gimp_palettes_get_palette_entry
+gimp_palettes_popup
+gimp_palettes_close_popup
+gimp_palettes_set_popup
 </SECTION>
 
 <SECTION>
@@ -452,6 +485,10 @@ gimp_path_set_tattoo
 
 <SECTION>
 <FILE>gimppatterns</FILE>
+gimp_patterns_refresh
+gimp_patterns_get_list
+gimp_patterns_get_pattern
+gimp_patterns_set_pattern
 gimp_patterns_get_pattern_data
 gimp_patterns_popup
 gimp_patterns_close_popup
@@ -552,7 +589,6 @@ gimp_clone_default
 gimp_color_picker
 gimp_convolve
 gimp_convolve_default
-gimp_crop
 gimp_dodgeburn
 gimp_dodgeburn_default
 gimp_ellipse_select

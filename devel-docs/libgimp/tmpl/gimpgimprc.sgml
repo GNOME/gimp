@@ -33,6 +33,14 @@ gimpgimprc
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_get_default_comment ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_get_monitor_resolution ##### -->
 <para>
 

@@ -14,6 +14,14 @@ gimpgradients
 
 </para>
 
+<!-- ##### FUNCTION gimp_gradients_refresh ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_gradients_get_list ##### -->
 <para>
 
@@ -23,7 +31,7 @@ gimpgradients
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_gradients_get_active ##### -->
+<!-- ##### FUNCTION gimp_gradients_get_gradient ##### -->
 <para>
 
 </para>
@@ -31,7 +39,7 @@ gimpgradients
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_gradients_set_active ##### -->
+<!-- ##### FUNCTION gimp_gradients_set_gradient ##### -->
 <para>
 
 </para>

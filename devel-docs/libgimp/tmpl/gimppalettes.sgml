@@ -1,0 +1,93 @@
+<!-- ##### SECTION Title ##### -->
+gimppalettes
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_palettes_refresh ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_palettes_get_list ##### -->
+<para>
+
+</para>
+
+@num_palettes: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_palettes_get_palette ##### -->
+<para>
+
+</para>
+
+@num_colors: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_palettes_set_palette ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_palettes_get_palette_entry ##### -->
+<para>
+
+</para>
+
+@name: 
+@entry_num: 
+@num_colors: 
+@color: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_palettes_popup ##### -->
+<para>
+
+</para>
+
+@palette_callback: 
+@popup_title: 
+@initial_palette: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_palettes_close_popup ##### -->
+<para>
+
+</para>
+
+@palette_callback: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_palettes_set_popup ##### -->
+<para>
+
+</para>
+
+@palette_callback: 
+@palette_name: 
+@Returns: 
+
+

@@ -100,6 +100,30 @@ color selector module.
 @GIMP_COLOR_SELECTOR_BLUE: 
 @GIMP_COLOR_SELECTOR_ALPHA: 
 
+<!-- ##### USER_FUNCTION GimpColorSelectorFinishedCB ##### -->
+<para>
+A function of this type will be called once all instances of a color
+selector have finished after the selector module called
+gimp_color_selector_unregister().
+</para>
+
+@finished_data: The @finished_data as specified in gimp_color_selector_register().
+
+
+<!-- ##### MACRO GIMP_COLOR_SELECTOR_SIZE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_COLOR_SELECTOR_BAR_SIZE ##### -->
+<para>
+
+</para>
+
+
+
 <!-- ##### FUNCTION gimp_color_selector_register ##### -->
 <para>
 Register a color selector.  Returns an identifier for the color
@@ -112,16 +136,6 @@ this call.
 @help_page: The help page.
 @methods: The color selector's methods.
 @Returns: The #GimpColorSelectorID of the new color selector.
-
-
-<!-- ##### USER_FUNCTION GimpColorSelectorFinishedCB ##### -->
-<para>
-A function of this type will be called once all instances of a color
-selector have finished after the selector module called
-gimp_color_selector_unregister().
-</para>
-
-@finished_data: The @finished_data as specified in gimp_color_selector_register().
 
 
 <!-- ##### FUNCTION gimp_color_selector_unregister ##### -->
