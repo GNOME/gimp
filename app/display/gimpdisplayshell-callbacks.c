@@ -97,6 +97,9 @@ static void  gimp_display_shell_origin_menu_position (GtkMenu          *menu,
                                                       gint             *x,
                                                       gint             *y,
                                                       gpointer          data);
+static void     gimp_display_shell_origin_menu_popup (GimpDisplayShell *shell,
+                                                      guint             button,
+                                                      guint32           time);
 
 GdkEvent *      gimp_display_shell_compress_motion   (GimpDisplayShell *shell);
 
@@ -110,12 +113,48 @@ gimp_display_shell_events (GtkWidget        *widget,
 {
   Gimp     *gimp        = shell->gdisp->gimage->gimp;
   gboolean  set_display = FALSE;
+  gboolean  popup_menu  = FALSE;
 
   switch (event->type)
     {
       GdkEventKey *kevent;
 
     case GDK_KEY_PRESS:
+      {
+        gchar *accel = NULL;
+
+        g_object_get (G_OBJECT (gtk_widget_get_settings (widget)),
+                      "gtk-menu-bar-accel",
+                      &accel,
+                      NULL);
+
+        if (accel)
+          {
+            guint           keyval = 0;
+            GdkModifierType mods = 0;
+
+            gtk_accelerator_parse (accel, &keyval, &mods);
+
+            if (keyval == 0)
+              g_warning ("Failed to parse menu bar accelerator '%s'\n", accel);
+
+            kevent = (GdkEventKey *) event;
+
+            /* FIXME this is wrong, needs to be in the global accel resolution
+             * thing, to properly consider i18n etc., but that probably requires
+             * AccelGroup changes etc.
+             */
+            if (kevent->keyval == keyval &&
+                ((kevent->state & gtk_accelerator_get_default_mod_mask ()) ==
+                 (mods & gtk_accelerator_get_default_mod_mask ())))
+              {
+                popup_menu = TRUE;
+              }
+
+            g_free (accel);
+          }
+      }
+
     case GDK_KEY_RELEASE:
       kevent = (GdkEventKey *) event;
 
@@ -182,6 +221,12 @@ gimp_display_shell_events (GtkWidget        *widget,
       /*  Setting the context's display automatically sets the image, too  */
       gimp_context_set_display (gimp_get_user_context (shell->gdisp->gimage->gimp),
 				shell->gdisp);
+    }
+
+  if (popup_menu)
+    {
+      gimp_display_shell_origin_menu_popup (shell, 0, event->key.time);
+      return TRUE;
     }
 
   return FALSE;
@@ -1192,26 +1237,11 @@ gimp_display_shell_origin_button_press (GtkWidget        *widget,
                                         GdkEventButton   *event,
                                         GimpDisplayShell *shell)
 {
-  GimpDisplay *gdisp;
-
-  gdisp = shell->gdisp;
-
-  if (! gdisp->gimage->gimp->busy && event->button == 1)
+  if (! shell->gdisp->gimage->gimp->busy && event->button == 1)
     {
-      GtkItemFactory *factory;
-      gint            x, y;
-
-      factory = GTK_ITEM_FACTORY (shell->item_factory);
-
-      gimp_display_shell_origin_menu_position (GTK_MENU (factory->widget),
-                                               &x, &y,
-                                               widget);
-
-      gtk_item_factory_popup_with_data (factory,
-					gdisp->gimage,
-                                        NULL,
-					x, y,
-					1, event->time);
+      gimp_display_shell_origin_menu_popup (shell,
+                                            event->button,
+                                            event->time);
     }
 
   /* Return TRUE to stop signal emission so the button doesn't grab the
@@ -1501,6 +1531,27 @@ gimp_display_shell_origin_menu_position (GtkMenu  *menu,
 
   if (*y + GTK_WIDGET (menu)->allocation.height > gdk_screen_height ())
     *y -= (GTK_WIDGET (menu)->allocation.height);
+}
+
+static void
+gimp_display_shell_origin_menu_popup (GimpDisplayShell *shell,
+                                      guint             button,
+                                      guint32           time)
+{
+  GtkItemFactory *factory;
+  gint            x, y;
+
+  factory = GTK_ITEM_FACTORY (shell->item_factory);
+
+  gimp_display_shell_origin_menu_position (GTK_MENU (factory->widget),
+                                           &x, &y,
+                                           shell->origin);
+
+  gtk_item_factory_popup_with_data (factory,
+                                    shell->gdisp->gimage,
+                                    NULL,
+                                    x, y,
+                                    button, time);
 }
 
 /* gimp_display_shell_compress_motion:
