@@ -1,3 +1,9 @@
+2004-01-27  Jakub Steiner <jimmac@ximian.com>
+
+	* themes/Default/images/stock-layer-mask-32.png
+	* themes/Default/images/stock-layer-mask-48.png: replaced the
+	  placeholders
+
 2004-01-27  Michael Natterer  <mitch@gimp.org>
 
 	* themes/Default/images/Makefile.am
