@@ -1,3 +1,8 @@
+Sat Mar 14 18:50:29 MET 1998 Sven Neumann <sven@gimp.org>
+
+	* app/main.c: applied gimp-ovchinnikov-970312-0.patch which
+	 initializes locale.
+
 Sat Mar 14 17:17:31 MET 1998 Sven Neumann <sven@gimp.org>
 
 	* app/internal_procs.c

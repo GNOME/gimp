@@ -16,6 +16,7 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 #include "config.h"
+#include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
@@ -84,6 +85,8 @@ main (int argc, char **argv)
   prog_name = argv[0];
 
   /* Initialize Gtk toolkit */
+  gtk_set_locale ();
+  setlocale(LC_NUMERIC, "C");  /* must use dot, not comma, as decimal separator */
   gtk_init (&argc, &argv);
   gtk_accelerator_table_set_mod_mask (NULL, GDK_SHIFT_MASK |
                                             GDK_CONTROL_MASK |
