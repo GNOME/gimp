@@ -240,8 +240,7 @@ query (void)
 			  args,
 			  return_vals);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME,
-                             N_("<Image>/Filters/Distorts"));
+  gimp_plugin_menu_register (PLUG_IN_NAME, "<Image>/Filters/Distorts");
 }
 
 static void
