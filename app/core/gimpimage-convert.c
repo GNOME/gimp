@@ -743,8 +743,8 @@ gimp_image_convert (GimpImage          *gimage,
   if (floating_layer)
     floating_sel_relax (floating_layer, TRUE);
 
-  /*  Push the image size to the stack  */
-  undo_push_image_size (gimage);
+  /*  Push the image type to the stack  */
+  undo_push_image_type (gimage);
 
   /*  Set the new base type  */
   old_type = gimage->base_type;

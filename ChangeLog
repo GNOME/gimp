@@ -1,3 +1,14 @@
+2002-02-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/undo_types.h
+	* app/undo.[ch]: added new undo type IMAGE_TYPE_UNDO along with
+	undo_push_image_type(), removed undoing the base_type from
+	IMAGE_SIZE_UNDO. Hacked the undo_names a bit.
+
+	* app/core/gimpimage-convert.c: call undo_push_image_type().
+
+	This removes lots of unneeded invalidations on type/size undo.
+
 2002-02-23  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdrawable.c: include undo_types.h to fix the build.

@@ -81,6 +81,7 @@ gboolean      undo_push_image_mod          (GimpImage     *gimage,
                                             gint           y2,
                                             TileManager   *tiles,
                                             gboolean       sparse);
+gboolean      undo_push_image_type         (GimpImage     *gimage);
 gboolean      undo_push_image_size         (GimpImage     *gimage);
 gboolean      undo_push_image_resolution   (GimpImage     *gimage);
 gboolean      undo_push_image_mask         (GimpImage     *gimage,

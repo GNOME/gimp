@@ -890,15 +890,86 @@ undo_free_image (UndoState  state,
 
 
 /*********************/
+/*  Image Type Undo  */
+
+typedef struct _ImageTypeUndo ImageTypeUndo;
+
+struct _ImageTypeUndo
+{
+  GimpImageBaseType base_type;
+};
+
+static gboolean undo_pop_image_type  (GimpImage *,
+                                      UndoState, UndoType, gpointer);
+static void     undo_free_image_type (UndoState, UndoType, gpointer);
+
+gboolean
+undo_push_image_type (GimpImage *gimage)
+{
+  Undo *new;
+
+  if ((new = undo_push (gimage, sizeof (ImageTypeUndo),
+                        IMAGE_TYPE_UNDO, TRUE)))
+    {
+      ImageTypeUndo *itu;
+
+      itu = g_new0 (ImageTypeUndo, 1);
+
+      new->data      = itu;
+      new->pop_func  = undo_pop_image_type;
+      new->free_func = undo_free_image_type;
+
+      itu->base_type = gimage->base_type;
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static gboolean
+undo_pop_image_type (GimpImage *gimage,
+		     UndoState  state,
+		     UndoType   type,
+		     gpointer   data_ptr)
+{
+  ImageTypeUndo     *itu;
+  GimpImageBaseType  tmp;
+
+  itu = (ImageTypeUndo *) data_ptr;
+
+  tmp = itu->base_type;
+  itu->base_type = gimage->base_type;
+  gimage->base_type = tmp;
+
+  gimp_image_projection_allocate (gimage);
+
+  gimp_image_colormap_changed (gimage, -1);
+
+  if (itu->base_type != gimage->base_type)
+    mode_changed = TRUE;
+
+  return TRUE;
+}
+
+static void
+undo_free_image_type (UndoState  state,
+		      UndoType   type,
+		      gpointer   data_ptr)
+{
+  g_free (data_ptr);
+}
+
+
+/*********************/
 /*  Image Size Undo  */
 
 typedef struct _ImageSizeUndo ImageSizeUndo;
 
 struct _ImageSizeUndo
 {
-  gint              width;
-  gint              height;
-  GimpImageBaseType base_type;
+  gint width;
+  gint height;
 };
 
 static gboolean undo_pop_image_size  (GimpImage *,
@@ -921,9 +992,8 @@ undo_push_image_size (GimpImage *gimage)
       new->pop_func  = undo_pop_image_size;
       new->free_func = undo_free_image_size;
 
-      isu->width     = gimage->width;
-      isu->height    = gimage->height;
-      isu->base_type = gimage->base_type;
+      isu->width  = gimage->width;
+      isu->height = gimage->height;
 
       return TRUE;
     }
@@ -937,34 +1007,25 @@ undo_pop_image_size (GimpImage *gimage,
 		     UndoType   type,
 		     gpointer   data_ptr)
 {
-  ImageSizeUndo *data;
+  ImageSizeUndo *isu;
   gint           tmp;
 
-  data = (ImageSizeUndo *) data_ptr;
+  isu = (ImageSizeUndo *) data_ptr;
 
-  tmp = data->width;
-  data->width = gimage->width;
+  tmp = isu->width;
+  isu->width = gimage->width;
   gimage->width = tmp;
 
-  tmp = data->height;
-  data->height = gimage->height;
+  tmp = isu->height;
+  isu->height = gimage->height;
   gimage->height = tmp;
-
-  tmp = data->base_type;
-  data->base_type = gimage->base_type;
-  gimage->base_type = tmp;
 
   gimp_image_projection_allocate (gimage);
 
   gimp_image_mask_invalidate (gimage);
 
-  gimp_image_colormap_changed (gimage, -1);
-
-  if (data->base_type != gimage->base_type)
-    mode_changed = TRUE;
-
-  if (gimage->width  != data->width ||
-      gimage->height != data->height)
+  if (gimage->width  != isu->width ||
+      gimage->height != isu->height)
     size_changed = TRUE;
 
   return TRUE;
@@ -3171,32 +3232,33 @@ undo_name[] =
   { PAINT_UNDO_GROUP,              N_("Paint")                     },
   { MISC_UNDO_GROUP,               N_("Plug-In")                   },
 
-  { IMAGE_UNDO,	                   N_("image")                     },
-  { IMAGE_MOD_UNDO,                N_("image mod")                 },
-  { IMAGE_SIZE_UNDO,               N_("image size")                },
-  { IMAGE_RESOLUTION_UNDO,         N_("resolution change")         },
-  { IMAGE_MASK_UNDO,               N_("mask")                      },
-  { IMAGE_QMASK_UNDO,              N_("quickmask")                 },
-  { IMAGE_GUIDE_UNDO,              N_("guide")                     },
-  { LAYER_ADD_UNDO,                N_("new layer")                 },
-  { LAYER_REMOVE_UNDO,             N_("delete layer")              },
-  { LAYER_MOD_UNDO,                N_("layer mod")                 },
-  { LAYER_MASK_ADD_UNDO,           N_("add layer mask")            },
-  { LAYER_MASK_REMOVE_UNDO,        N_("delete layer mask")         },
-  { LAYER_RENAME_UNDO,             N_("rename layer")              },
-  { LAYER_REPOSITION_UNDO,         N_("layer reposition")          },
-  { LAYER_DISPLACE_UNDO,           N_("layer move")                },
-  { CHANNEL_ADD_UNDO,              N_("new channel")               },
-  { CHANNEL_REMOVE_UNDO,           N_("delete channel")            },
-  { CHANNEL_MOD_UNDO,              N_("channel mod")               },
-  { CHANNEL_REPOSITION_UNDO,       N_("channel reposition")        },
-  { FS_TO_LAYER_UNDO,              N_("FS to layer")               },
-  { FS_RIGOR_UNDO,                 N_("FS rigor")                  },
-  { FS_RELAX_UNDO,                 N_("FS relax")                  },
-  { TRANSFORM_UNDO,                N_("transform")                 },
-  { PAINT_UNDO,		           N_("paint")                     },
-  { PARASITE_ATTACH_UNDO,          N_("attach parasite")           },
-  { PARASITE_REMOVE_UNDO,          N_("remove parasite")           },
+  { IMAGE_UNDO,	                   N_("Image")                     },
+  { IMAGE_MOD_UNDO,                N_("Image Mod")                 },
+  { IMAGE_TYPE_UNDO,               N_("Image Type")                },
+  { IMAGE_SIZE_UNDO,               N_("Image Size")                },
+  { IMAGE_RESOLUTION_UNDO,         N_("Resolution Change")         },
+  { IMAGE_MASK_UNDO,               N_("Selection Mask")            },
+  { IMAGE_QMASK_UNDO,              N_("QuickMask")                 },
+  { IMAGE_GUIDE_UNDO,              N_("Guide")                     },
+  { LAYER_ADD_UNDO,                N_("New Layer")                 },
+  { LAYER_REMOVE_UNDO,             N_("Delete Layer")              },
+  { LAYER_MOD_UNDO,                N_("Layer Mod")                 },
+  { LAYER_MASK_ADD_UNDO,           N_("Add Layer Mask")            },
+  { LAYER_MASK_REMOVE_UNDO,        N_("Delete Layer Mask")         },
+  { LAYER_RENAME_UNDO,             N_("Rename Layer")              },
+  { LAYER_REPOSITION_UNDO,         N_("Layer Reposition")          },
+  { LAYER_DISPLACE_UNDO,           N_("Layer Move")                },
+  { CHANNEL_ADD_UNDO,              N_("New Channel")               },
+  { CHANNEL_REMOVE_UNDO,           N_("Delete Channel")            },
+  { CHANNEL_MOD_UNDO,              N_("Channel Mod")               },
+  { CHANNEL_REPOSITION_UNDO,       N_("Channel Reposition")        },
+  { FS_TO_LAYER_UNDO,              N_("FS to Layer")               },
+  { FS_RIGOR_UNDO,                 N_("FS Rigor")                  },
+  { FS_RELAX_UNDO,                 N_("FS Relax")                  },
+  { TRANSFORM_UNDO,                N_("Transform")                 },
+  { PAINT_UNDO,		           N_("Paint")                     },
+  { PARASITE_ATTACH_UNDO,          N_("Attach Parasite")           },
+  { PARASITE_REMOVE_UNDO,          N_("Remove Parasite")           },
 
   { CANT_UNDO,                     N_("EEK: can't undo")           }
 };
