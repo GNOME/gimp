@@ -40,6 +40,9 @@
 #include "gimpstatusbar.h"
 
 
+#define GIMP_DISPLAY_UPDATE_ICON_TIMEOUT  1000
+
+
 /*  local function prototypes  */
 
 static void   gimp_display_shell_clean_dirty_handler        (GimpImage        *gimage,
@@ -368,10 +371,11 @@ gimp_display_shell_invalidate_preview_handler (GimpImage        *gimage,
   if (shell->icon_idle_id)
     g_source_remove (shell->icon_idle_id);
 
-  shell->icon_idle_id = g_idle_add_full (G_PRIORITY_LOW,
-                                         gimp_display_shell_idle_update_icon,
-                                         shell,
-                                         NULL);
+  shell->icon_idle_id = g_timeout_add_full (G_PRIORITY_LOW,
+                                            GIMP_DISPLAY_UPDATE_ICON_TIMEOUT,
+                                            gimp_display_shell_idle_update_icon,
+                                            shell,
+                                            NULL);
 }
 
 static void
