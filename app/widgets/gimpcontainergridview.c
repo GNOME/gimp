@@ -74,8 +74,8 @@ static gboolean  gimp_container_grid_view_select_item (GimpContainerView      *v
                                                        gpointer                insert_data);
 static void     gimp_container_grid_view_clear_items  (GimpContainerView      *view);
 static void gimp_container_grid_view_set_preview_size (GimpContainerView      *view);
-static void    gimp_container_grid_view_item_selected (GtkWidget              *widget,
-                                                       GdkModifierType         state,
+static gboolean gimp_container_grid_view_item_selected(GtkWidget              *widget,
+                                                       GdkEventButton         *bevent,
 						       gpointer                data);
 static void   gimp_container_grid_view_item_activated (GtkWidget              *widget,
 						       gpointer                data);
@@ -384,7 +384,7 @@ gimp_container_grid_view_insert_item (GimpContainerView *view,
 
   gtk_widget_show (preview);
 
-  g_signal_connect (preview, "clicked",
+  g_signal_connect (preview, "button_press_event",
                     G_CALLBACK (gimp_container_grid_view_item_selected),
                     view);
   g_signal_connect (preview, "double_clicked",
@@ -481,16 +481,21 @@ gimp_container_grid_view_set_preview_size (GimpContainerView *view)
   gtk_widget_queue_resize (grid_view->wrap_box);
 }
 
-static void
-gimp_container_grid_view_item_selected (GtkWidget       *widget,
-                                        GdkModifierType  state,
-					gpointer         data)
+static gboolean
+gimp_container_grid_view_item_selected (GtkWidget      *widget,
+                                        GdkEventButton *bevent,
+					gpointer        data)
 {
-  if (GTK_WIDGET_CAN_FOCUS (data) && !GTK_WIDGET_HAS_FOCUS (data))
-    gtk_widget_grab_focus (GTK_WIDGET (data));
+  if (bevent->type == GDK_BUTTON_PRESS && bevent->button == 1)
+    {
+      if (GTK_WIDGET_CAN_FOCUS (data) && !GTK_WIDGET_HAS_FOCUS (data))
+        gtk_widget_grab_focus (GTK_WIDGET (data));
   
-  gimp_container_view_item_selected (GIMP_CONTAINER_VIEW (data),
-				     GIMP_PREVIEW (widget)->viewable);
+      gimp_container_view_item_selected (GIMP_CONTAINER_VIEW (data),
+                                         GIMP_PREVIEW (widget)->viewable);
+    }
+
+  return FALSE;
 }
 
 static void

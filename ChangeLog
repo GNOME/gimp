@@ -1,5 +1,11 @@
 2003-06-26  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcontainergridview.c: select items on
+	"button_press_event" not on "clicked". Makes the grid view behave
+	like the list view and fixes bug #115797.
+
+2003-06-26  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/file-new-dialog.c (file_new_dialog_new): don't set the
 	focus on the size_entry. This change allows to accept the default
 	values by pressing OK. Fixes bug #115876.
