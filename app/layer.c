@@ -156,6 +156,7 @@ gimp_layer_mask_init (GimpLayerMask *layermask)
 
 /*  static functions  */
 #if 0
+#define FIXME
 static void transform_color     (GImage *, PixelRegion *,
 				 PixelRegion *, GimpDrawable *, int);
 static void layer_preview_scale (int, unsigned char *, PixelRegion *,
@@ -248,7 +249,7 @@ layer_new  (
 
   layer = gtk_type_new (gimp_layer_get_type ());
 
-  gimp_drawable_configure_tag (GIMP_DRAWABLE(layer), 
+  gimp_drawable_configure (GIMP_DRAWABLE(layer), 
 			   gimage_ID, width, height, tag, storage, name);
 
   /*  allocate the memory for this layer  */
@@ -912,6 +913,7 @@ layer_invalidate_boundary (layer)
 }
 
 
+#define FIXME /* precision wrappers */
 int
 layer_pick_correlate (layer, x, y)
      Layer *layer;
@@ -975,14 +977,6 @@ layer_pick_correlate (layer, x, y)
 /********************/
 /* access functions */
 
-unsigned char *
-layer_data (layer)
-     Layer * layer;
-{
-  return NULL;
-}
-
-
 LayerMask *
 layer_mask (layer)
      Layer * layer;
@@ -1027,6 +1021,7 @@ layer_preview (layer, w, h)
 {
   printf("layer_preview not implemented\n");
   return NULL;
+#define FIXME
 #if 0
   GImage *gimage;
   TempBuf *preview_buf;
@@ -1102,6 +1097,7 @@ layer_mask_preview (layer, w, h)
 {
   printf("layer_mask_preview not implemented\n");
   return NULL;
+#define FIXME
 #if 0
   TempBuf *preview_buf;
   LayerMask *mask;
@@ -1173,6 +1169,7 @@ layer_invalidate_previews (gimage_id)
 }
 
 
+#define FIXME
 #if 0
 static void
 layer_preview_scale (type, cmap, srcPR, destPR, subsample)
@@ -1373,7 +1370,7 @@ layer_mask_new (int gimage_ID, int width, int height,
 
   layer_mask = gtk_type_new (gimp_layer_mask_get_type ());
 
-  gimp_drawable_configure_tag (GIMP_DRAWABLE(layer_mask), 
+  gimp_drawable_configure (GIMP_DRAWABLE(layer_mask), 
 			   gimage_ID, width, height, tag, STORAGE_TILED, name);
 
   /*  set the layer_mask color and opacity  */

@@ -492,6 +492,7 @@ drawable_offsets (GimpDrawable *drawable, int *off_x, int *off_y)
     *off_x = *off_y = 0;
 }
 
+#define FIXME /* indexed color handling in general... */
 unsigned char *
 drawable_cmap (GimpDrawable *drawable)
 {
@@ -589,68 +590,17 @@ gimp_drawable_destroy (GtkObject *object)
     (*GTK_OBJECT_CLASS (parent_class)->destroy) (object);
 }
 
-void
-gimp_drawable_configure (GimpDrawable *drawable,
-			 int gimage_ID, int width, int height, 
-			 int type, char *name)
-{
-  Format format = FORMAT_NONE;
-  Precision precision = PRECISION_NONE;
-  Alpha alpha = ALPHA_NONE;
-  Tag tag; 
-
-  switch (type)
-    {
-    case RGB_GIMAGE:
-      precision = PRECISION_U8;
-      format = FORMAT_RGB; 
-      alpha = ALPHA_NO;
-      break;
-    case GRAY_GIMAGE:
-      precision = PRECISION_U8;
-      format = FORMAT_GRAY; 
-      alpha = ALPHA_NO;
-      break;
-    case RGBA_GIMAGE:
-      precision = PRECISION_U8;
-      format = FORMAT_RGB; 
-      alpha = ALPHA_YES;
-      break;
-    case GRAYA_GIMAGE:
-      precision = PRECISION_U8;
-      format = FORMAT_GRAY; 
-      alpha = ALPHA_YES;
-      break;
-    case INDEXED_GIMAGE:
-      precision = PRECISION_U8;
-      format = FORMAT_INDEXED; 
-      alpha = ALPHA_NO;
-      break;
-    case INDEXEDA_GIMAGE:
-      precision = PRECISION_U8;
-      format = FORMAT_INDEXED; 
-      alpha = ALPHA_YES;
-      break;
-    default:
-      g_message ("Layer type %d not supported.", type);
-      return;
-    }
-  
-  tag = tag_new (precision, format, alpha);
-  gimp_drawable_configure_tag( drawable, gimage_ID, width, height, tag, STORAGE_TILED, name);  
-}
-
   
 void 
-gimp_drawable_configure_tag  (
-                              GimpDrawable * drawable,
-                              int gimage_ID,
-                              int width,
-                              int height,
-                              Tag tag,
-                              Storage storage,
-                              char * name
-                              )
+gimp_drawable_configure  (
+                          GimpDrawable * drawable,
+                          int gimage_ID,
+                          int width,
+                          int height,
+                          Tag tag,
+                          Storage storage,
+                          char * name
+                          )
 {
   if (!name)
     name = "unnamed";

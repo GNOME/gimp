@@ -130,9 +130,9 @@ channel_new (int gimage_ID, int width, int height, Precision p, char *name,
 
   pixelrow_init (&channel->col, tag, channel->_col, 1);
   
-  gimp_drawable_configure_tag (GIMP_DRAWABLE(channel), 
-                               gimage_ID, width, height,
-                               tag, STORAGE_TILED, name);
+  gimp_drawable_configure (GIMP_DRAWABLE(channel), 
+                           gimage_ID, width, height,
+                           tag, STORAGE_TILED, name);
 
   /*  set the channel color and opacity  */
   copy_row (col, &channel->col);
@@ -384,13 +384,6 @@ channel_resize (Channel *channel, int new_width, int new_height,
 /********************/
 /* access functions */
 
-unsigned char *
-channel_data (Channel *channel)
-{
-  return NULL;
-}
-
-
 int
 channel_toggle_visibility (Channel *channel)
 {
@@ -444,6 +437,7 @@ channel_preview (Channel *channel, int width, int height)
                       0, 0,
                       width, height,
                       TRUE);
+#define FIXME
 #if 0
       subsample_area (&srcPR, &destPR, subsample);
 #else
@@ -574,7 +568,9 @@ channel_boundary (Channel *mask, BoundSeg **segs_in, BoundSeg **segs_out,
   return TRUE;
 }
 
-
+#define FIXME
+/* this returns a 0-255 value.  not entirely clear what the function
+   signature should be here... */
 int
 channel_value (Channel *mask, int x, int y)
 {
@@ -597,14 +593,13 @@ channel_value (Channel *mask, int x, int y)
     }
   canvas_portion_refro (canvas, x, y);
   data = canvas_portion_data (canvas, x, y);
-#define FIXME
-  /* this is 8 bit only */
   val = *data;
   canvas_portion_unref (canvas, x, y);
   return val;
 }
 
 
+#define FIXME /* precision wrappers */
 int
 channel_bounds (Channel *mask, int *x1, int *y1, int *x2, int *y2)
 {
@@ -686,7 +681,7 @@ channel_bounds (Channel *mask, int *x1, int *y1, int *x2, int *y2)
   return (mask->empty) ? FALSE : TRUE;
 }
 
-
+#define FIXME /* precision wrappers */
 int
 channel_is_empty (Channel *mask)
 {
@@ -736,6 +731,7 @@ channel_is_empty (Channel *mask)
 }
 
 
+#define FIXME /* int value should be pixelrow */
 void
 channel_add_segment (Channel *mask, int x, int y, int width, int value)
 {
@@ -775,6 +771,7 @@ channel_add_segment (Channel *mask, int x, int y, int width, int value)
 }
 
 
+#define FIXME /* int value should be pixelrow */
 void
 channel_sub_segment (Channel *mask, int x, int y, int width, int value)
 {
@@ -814,6 +811,7 @@ channel_sub_segment (Channel *mask, int x, int y, int width, int value)
 }
 
 
+#define FIXME /* int value should be pixelrow */
 void
 channel_inter_segment (Channel *mask, int x, int y, int width, int value)
 {
@@ -851,6 +849,7 @@ channel_inter_segment (Channel *mask, int x, int y, int width, int value)
     }
 }
 
+#define FIXME /* precision wrappers */
 void
 channel_combine_rect (Channel *mask, int op, int x, int y, int w, int h)
 {
@@ -903,6 +902,7 @@ channel_combine_rect (Channel *mask, int op, int x, int y, int w, int h)
 }
 
 
+#define FIXME /* precision wrappers */
 void
 channel_combine_ellipse (Channel *mask, int op, int x, int y, int w, int h,
 			 int aa /*  antialias selection?  */)
@@ -1049,6 +1049,7 @@ channel_combine_ellipse (Channel *mask, int op, int x, int y, int w, int h,
 }
 
 
+#define FIXME /* precision wrappers */
 void
 channel_combine_mask (Channel *mask, Channel *add_on, int op,
 		      int off_x, int off_y)
@@ -1208,6 +1209,7 @@ channel_clear (Channel *mask)
 }
 
 
+#define FIXME /* precision wrappers */
 void
 channel_invert (Channel *mask)
 {
@@ -1239,6 +1241,7 @@ channel_invert (Channel *mask)
 }
 
 
+#define FIXME /* precision wrappers */
 void
 channel_sharpen (Channel *mask)
 {

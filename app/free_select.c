@@ -157,6 +157,7 @@ scan_convert (int gimage_ID, int num_pts, FreeSelectPoint *pts,
   if (num_pts < 3)
     return NULL;
 
+#define FIXME /* what precision to use */
   mask = channel_new_mask (gimage_ID, width, height, default_precision);
 
   if (antialias)

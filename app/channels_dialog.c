@@ -1969,6 +1969,7 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
   options->channel_widget = channel_widget;
   options->gimage_id = channel_widget->gimage->ID;
   options->opacity = (double) channel_widget->channel->opacity;
+#define FIXME /* should use channel_widget->channel->col directly */
   {
     PixelRow c;
     pixelrow_init (&c, tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO),

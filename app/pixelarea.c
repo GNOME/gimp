@@ -141,6 +141,9 @@ pixelarea_copy_row (
                     int width, 
                     int subsample
 		   )
+#define FIXME
+/* this doesn't work right for subsampling, and it's holding up
+   channel and layer previews */
 {
   guchar * pr_data = pixelrow_data (pr);
   int bytes = tag_bytes (pixelarea_tag (pa));

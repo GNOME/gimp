@@ -125,7 +125,6 @@ void   		layer_mask_unref (LayerMask *);
 
 /* access functions */
 
-unsigned char * layer_data (Layer *);
 LayerMask *     layer_mask (Layer *);
 int             layer_has_alpha (Layer *);
 int             layer_is_floating_sel (Layer *);

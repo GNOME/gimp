@@ -3,3 +3,75 @@ remove traces of autodialog
 remove traces of action areas
 remove use of mem chunks from memutils.[ch]
 remove use of xmalloc and xfree (use g_malloc and g_free instead)
+
+Canvas validator routines
+
+  this needs to be done since it drives the compositing of
+  multilayered gimages
+
+
+8 bitness
+
+  HALF_WAY
+
+  channel_value return 0-255, this gets used a lot.  what semantics do we
+  want?
+
+
+indexed color handling
+
+  the current code has dropped support for converting indexed to RGB via
+  gimage->cmap.  we should look at adding this back sometime.
+
+
+drawable creation
+
+  provide alternate constructors that accept a prebuilt Canvas instead of
+  parameters for building one.
+
+
+
+do color_panel
+  self contained, used only in channels_dialog
+
+do color_picker
+  completely self contained
+
+do convert.c
+  ????
+
+fix equalize
+  two inner loops needs precision wrapping
+  several lookup tables
+
+fix free_select
+  scan_convert is totally 8 bit
+
+fix fuzzy_select
+  seed fill is partially commented out
+
+fix gimage
+  initial_area and combine_areas have a really messy interface.
+
+do histogram
+  ????
+
+do histogram_tool
+  ????
+
+fix iscissors
+  lots of work
+
+do threshold
+  ????
+
+fix transform_core
+  only the low level guts remains, high level stuff is done
+
+xcf
+  should fix this at some point
+
+
+  this is more of a paint_funcs problem
+
+

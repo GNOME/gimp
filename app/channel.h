@@ -35,6 +35,7 @@ struct _PixelRow;
 #define INTERSECT 3
 
 /*  Half way point where a region is no longer visible in a selection  */
+#define FIXME /* 127 is 8 bit only */
 #define HALF_WAY 127
 
 /* structure declarations */
@@ -86,7 +87,6 @@ void            channel_resize (Channel *, int, int, int, int);
 
 /* access functions */
 
-unsigned char * channel_data (Channel *);
 int             channel_toggle_visibility (Channel *);
 struct _Canvas *channel_preview (Channel *, int, int);
 

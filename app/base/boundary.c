@@ -61,7 +61,7 @@ static void make_horiz_segs (int, int, int, int *, int, int);
 static void generate_boundary (BoundaryType, int, int, int, int);
 
 /*  Function definitions  */
-
+#define FIXME /* precision wrappers */
 static void
 find_empty_segs (PixelArea  *maskPR,
 		 int           scanline,
