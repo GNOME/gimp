@@ -1,3 +1,12 @@
+2002-05-07  David Monniaux  <david@picsou.chatons>
+
+	* app/arch/i386/mmx/paint_funcs_mmx.S.m4: original source of
+	paint_funcs_mmx.S, but the latter has been modified manually and
+	is now out-of-sync. Deleted to reduce confusion.
+
+	* app/arch/i386/mmx/paint_funcs_mmx.S: would not compile on my
+	machine due to wrong .type directives. Fixed.
+	
 2002-05-07  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/print/gimp_main_window.c: use more stock labels.
