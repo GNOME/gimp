@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #ifndef __OPS_BUTTONS_H__
 #define __OPS_BUTTONS_H__
 
@@ -24,7 +23,8 @@ typedef struct _OpsButton OpsButton;
 typedef void (*OpsButtonCallback) (GtkWidget *widget,
 				   gpointer   user_data);
 
-typedef enum {
+typedef enum
+{
   OPS_BUTTON_MODIFIER_NONE,
   OPS_BUTTON_MODIFIER_SHIFT,
   OPS_BUTTON_MODIFIER_CTRL,
@@ -33,28 +33,29 @@ typedef enum {
   OPS_BUTTON_MODIFIER_LAST
 } OpsButtonModifier;
 
-typedef enum {
+typedef enum
+{
   OPS_BUTTON_NORMAL,
   OPS_BUTTON_RADIO,
 } OpsButtonType;
 
 struct _OpsButton 
 {
-  gchar             **xpm_data;          /*  xpm data for the button  */
-  OpsButtonCallback   callback;          /*  callback function        */
-  OpsButtonCallback  *ext_callbacks;     /*  callback functions when modifiers are pressed  */
-  char               *tooltip;               
-  GtkWidget          *widget;            /*  the button widget        */
-  gint                modifier;
+  gchar              **xpm_data;       /*  xpm data for the button  */
+  OpsButtonCallback    callback;       /*  callback function        */
+  OpsButtonCallback   *ext_callbacks;  /*  callback functions when modifiers are pressed  */
+  gchar               *tooltip;
+  gchar               *private_tip;
+  GtkWidget           *widget;         /*  the button widget        */
+  gint                 modifier;
 };
 
 /* Function declarations */
 
-GtkWidget * ops_button_box_new        (GtkWidget   *,      /* parent widget */
-				       GtkTooltips *,    
-				       OpsButton   *,
-				       OpsButtonType);
-void ops_button_box_set_insensitive   (OpsButton *);
+GtkWidget * ops_button_box_new (GtkWidget     *parent,
+				GtkTooltips   *tool_tips,
+				OpsButton     *ops_button,
+				OpsButtonType  ops_type);
 
 #endif /* __OPS_BUTTONS_H__ */
 

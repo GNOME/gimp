@@ -1,5 +1,16 @@
 1999-10-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/ops_buttons.[ch]: added a private tooltip to the
+	ops_buttons structure. Removed ops_buttons_set_insensitive().
+
+	* app/channels_dialog.c
+	* app/layers_dialog.c
+	* app/paths_dialog.c
+	* app/lc_dialog.c: let the ops button's private tips point at the
+	already existing help pages. Minor fixes.
+
+1999-10-30  Michael Natterer  <mitch@gimp.org>
+
 	* app_procs.c
 	* app/commands.[ch]
 	* app/interface.c

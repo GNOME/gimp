@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include "config.h"
 
 #include <gtk/gtk.h>
@@ -24,8 +23,8 @@
 
 #include "libgimp/gimpintl.h"
 
-void ops_button_pressed_callback  (GtkWidget*, GdkEventButton*, gpointer);
-void ops_button_extended_callback (GtkWidget*, gpointer);
+static void ops_button_pressed_callback  (GtkWidget*, GdkEventButton*, gpointer);
+static void ops_button_extended_callback (GtkWidget*, gpointer);
 
 
 GtkWidget *
@@ -68,7 +67,7 @@ ops_button_box_new (GtkWidget     *parent,
 	  break;
 	default :
 	  button = NULL; /*stop compiler complaints */
-	  g_error("ops_button_box_new: unknown type %d\n", ops_type);
+	  g_error ("ops_button_box_new: unknown type %d\n", ops_type);
 	  break;
 	}
 
@@ -79,7 +78,9 @@ ops_button_box_new (GtkWidget     *parent,
 	  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 				     (GtkSignalFunc) ops_button->callback,
 				     NULL);
-	} else {
+	}
+      else
+	{
 	  gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
 			      (GtkSignalFunc) ops_button_pressed_callback,
 			      ops_button);	  
@@ -89,9 +90,11 @@ ops_button_box_new (GtkWidget     *parent,
 	}
 
       if (tool_tips != NULL)
-	gtk_tooltips_set_tip (tool_tips, button, gettext (ops_button->tooltip), NULL);
+	gtk_tooltips_set_tip (tool_tips, button,
+			      gettext (ops_button->tooltip),
+			      ops_button->private_tip);
 
-      gtk_box_pack_start (GTK_BOX(button_box), button, TRUE, TRUE, 0); 
+      gtk_box_pack_start (GTK_BOX (button_box), button, TRUE, TRUE, 0); 
 
       gtk_widget_show (pixmap_widget);
       gtk_widget_show (button);
@@ -101,24 +104,11 @@ ops_button_box_new (GtkWidget     *parent,
 
       ops_button++;
     }
-  
+
   return (button_box);
 }
 
-
-void
-ops_button_box_set_insensitive (OpsButton *ops_button)
-{
-  g_return_if_fail (ops_button != NULL);
-
-  while (ops_button->widget)
-    {
-      gtk_widget_set_sensitive (ops_button->widget, FALSE); 
-      ops_button++;
-    }
-}
-
-void
+static void
 ops_button_pressed_callback (GtkWidget      *widget, 
 			     GdkEventButton *bevent,
 			     gpointer        client_data)
@@ -143,7 +133,7 @@ ops_button_pressed_callback (GtkWidget      *widget,
     ops_button->modifier = OPS_BUTTON_MODIFIER_NONE;
 }
 
-void
+static void
 ops_button_extended_callback (GtkWidget *widget, 
 			      gpointer   client_data)
 {

@@ -32,11 +32,7 @@
 #include "session.h"
 
 #include "libgimp/gimpintl.h"
-
-#define GRAD_CHECK_SIZE_SM 4
-
-#define GRAD_CHECK_DARK  (1.0 / 3.0)
-#define GRAD_CHECK_LIGHT (2.0 / 3.0)
+#include "libgimp/gimplimits.h"
 
 #define MENU_THUMBNAIL_WIDTH 24
 #define MENU_THUMBNAIL_HEIGHT 24
@@ -52,11 +48,10 @@ static void  lc_dialog_destroy_cb          (GimpImage *, gpointer);
 static void  lc_dialog_change_image        (GimpContext *, GimpImage *,
 					    gpointer);
 static void  lc_dialog_help_func           (gpointer);
-static void  lc_dialog_image_menu_preview_update_cb (GtkWidget *,gpointer);
-static void  lc_dialog_fill_preview_with_thumb(GtkWidget *,
-					       GimpImage *,
-					       gint       ,
-					       gint       );
+
+static void  lc_dialog_image_menu_preview_update_cb (GtkWidget *, gpointer);
+static void  lc_dialog_fill_preview_with_thumb      (GtkWidget *, GimpImage *,
+						     gint, gint);
 
 
 /*  FIXME: move these to a better place  */
@@ -79,7 +74,7 @@ lc_dialog_create (GimpImage* gimage)
   GtkWidget *button;
   GtkWidget *label;
   GtkWidget *separator;
-  int default_index;
+  gint default_index;
 
   if (lc_dialog)
     {
@@ -224,7 +219,7 @@ lc_dialog_create (GimpImage* gimage)
 }
 
 void
-lc_dialog_free ()
+lc_dialog_free (void)
 {
   if (lc_dialog == NULL)
     return;
@@ -241,17 +236,17 @@ lc_dialog_free ()
 }
 
 void
-lc_dialog_rebuild (int new_preview_size)
+lc_dialog_rebuild (gint new_preview_size)
 {
   GimpImage* gimage;
-  int flag;
+  gboolean flag;
 
   gimage = NULL;
-  
-  flag = 0;
+  flag   = FALSE;
+
   if (lc_dialog)
     {
-      flag = 1;
+      flag = TRUE;
       gimage = lc_dialog->gimage;
       /*  Unregister the dialog  */
       dialog_unregister (lc_dialog->shell);
@@ -266,7 +261,7 @@ lc_dialog_rebuild (int new_preview_size)
 }
 
 void
-lc_dialog_flush ()
+lc_dialog_flush (void)
 {
   if (! lc_dialog || lc_dialog->gimage == NULL)
     return;
@@ -279,41 +274,45 @@ lc_dialog_flush ()
 static gint 
 image_menu_preview_update_do (GimpImage *gimage)
 {
-  if(lc_dialog)
+  if (lc_dialog)
     {
       gtk_container_foreach (GTK_CONTAINER (lc_dialog->image_menu),
-			     lc_dialog_image_menu_preview_update_cb, (gpointer)gimage);
+			     lc_dialog_image_menu_preview_update_cb,
+			     (gpointer) gimage);
     }
   return FALSE;
 }
 
 void
 lc_dialog_menu_preview_dirty (GtkObject *obj,
-			      gpointer   client_data)
+			      gpointer   data)
 {
-  if(!preview_size)
+  if (!preview_size)
     return;
+
   /* Update preview at a less busy time */
-  gtk_idle_add((GtkFunction)image_menu_preview_update_do,(gpointer)obj); 
+  gtk_idle_add ((GtkFunction) image_menu_preview_update_do, obj); 
 }
-    
+
 void 
 lc_dialog_preview_update (GimpImage *gimage)
 {
-  if(!preview_size)
+  if (!preview_size)
     return;
 
-  layers_dialog_invalidate_previews(gimage);
-  gtk_idle_add((GtkFunction)image_menu_preview_update_do,gimage);
+  layers_dialog_invalidate_previews (gimage);
+  gtk_idle_add ((GtkFunction) image_menu_preview_update_do, gimage);
 }
 
 static void
 lc_dialog_image_menu_preview_update_cb (GtkWidget *widget,
-					gpointer   client_data)
+					gpointer   data)
 {
   GtkWidget *menu_preview;
   GimpImage *gimage;
-  GimpImage *gimage_to_update = (GimpImage *)client_data; 
+  GimpImage *gimage_to_update;
+
+  gimage_to_update = (GimpImage *) data; 
 
   /* This is called via an idle  function, so it is possible
    * that the client_data no longer points to a GimpImage.. So don't
@@ -321,25 +320,27 @@ lc_dialog_image_menu_preview_update_cb (GtkWidget *widget,
    * it here anyways.
    */
 
-  menu_preview = (GtkWidget *)gtk_object_get_data(GTK_OBJECT(widget),"menu_preview");
-  gimage = (GimpImage *)gtk_object_get_data(GTK_OBJECT(widget),"menu_preview_gimage");
+  menu_preview = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (widget),
+						    "menu_preview");
+  gimage = (GimpImage *) gtk_object_get_data (GTK_OBJECT (widget),
+					      "menu_preview_gimage");
 
-  if(menu_preview && gimage && gimage_to_update == gimage)
+  if (menu_preview && gimage && gimage_to_update == gimage)
     {
       /* Must update the preview? */
-      lc_dialog_fill_preview_with_thumb(menu_preview,
-					gimage,
-					MENU_THUMBNAIL_WIDTH,
-					MENU_THUMBNAIL_HEIGHT);
-      gtk_widget_draw(GTK_WIDGET(menu_preview),NULL);
+      lc_dialog_fill_preview_with_thumb (menu_preview,
+					 gimage,
+					 MENU_THUMBNAIL_WIDTH,
+					 MENU_THUMBNAIL_HEIGHT);
+      gtk_widget_draw (GTK_WIDGET (menu_preview), NULL);
     }
 }
 
 void
-lc_dialog_update_image_list ()
+lc_dialog_update_image_list (void)
 {
   GimpImage* default_gimage;
-  int default_index;
+  gint default_index;
 
   if (lc_dialog == NULL)
     return;
@@ -359,7 +360,7 @@ lc_dialog_update_image_list ()
       lc_dialog_update (default_gimage);
       gdisplays_flush ();
 
-      if (! GTK_WIDGET_IS_SENSITIVE (lc_dialog->subshell) )
+      if (! GTK_WIDGET_IS_SENSITIVE (lc_dialog->subshell))
 	gtk_widget_set_sensitive (lc_dialog->subshell, TRUE);
     }
   else
@@ -400,15 +401,15 @@ lc_dialog_update (GimpImage* gimage)
 typedef struct
 {
   GImage           **def;
-  int               *default_index;
+  gint              *default_index;
   MenuItemCallback   callback;
   GtkWidget         *menu;
-  int                num_items;
+  gint               num_items;
   GImage            *id;
 } IMCBData;
 
 static void
-lc_dialog_fill_preview_with_thumb (GtkWidget *w,
+lc_dialog_fill_preview_with_thumb (GtkWidget *widget,
 				   GimpImage *gimage,
 				   gint       width,
 				   gint       height)
@@ -422,89 +423,92 @@ lc_dialog_fill_preview_with_thumb (GtkWidget *w,
   guchar    *src;
   gdouble    r, g, b, a;
   gdouble    c0, c1;
-  guchar    *p0, *p1,*even,*odd;
-      
+  guchar    *p0, *p1, *even, *odd;
   
   bpp = 0; /* Only returned */
-  
-  dwidth = gimage->width;
+
+  dwidth  = gimage->width;
   dheight = gimage->height;
   
   /* Get right aspect ratio */  
-  if(dwidth > dheight)
+  if (dwidth > dheight)
     {
-      height = (width*dheight)/dwidth;
+      height = (width * dheight) / dwidth;
     }
   else
     {
-      width = (height*dwidth)/dheight;
+      width = (height * dwidth) / dheight;
     }
-  
-  buf = gimp_image_construct_composite_preview(gimage,
- 					       width,
- 					       height);
-  drawable_data = temp_buf_data(buf);
+
+  buf = gimp_image_construct_composite_preview (gimage, width, height);
+  drawable_data = temp_buf_data (buf);
   bpp = buf->bytes;
 
-  gtk_preview_size(GTK_PREVIEW(w),width,height);
+  gtk_preview_size (GTK_PREVIEW (widget), width, height);
 
   /*  Draw the thumbnail with checks  */
   src = drawable_data;
-  
-  even = g_malloc(width*3);
-  odd = g_malloc(width*3);
-  
+
+  even = g_malloc (width * 3);
+  odd  = g_malloc (width * 3);
+
   for (y = 0; y < height; y++)
     {
       p0 = even;
       p1 = odd;
       
-      for (x = 0; x < width; x++) {
-	if(bpp == 4)
-	  {
-	    r =  ((gdouble)src[x*4+0])/255.0;
-	    g = ((gdouble)src[x*4+1])/255.0;
-	    b = ((gdouble)src[x*4+2])/255.0;
-	    a = ((gdouble)src[x*4+3])/255.0;
-	  }
-	else
-	  {
-	    r = ((gdouble)src[x*bpp+0])/255.0;
-	    g = b = r;
-	    a = ((gdouble)src[x*bpp+1])/255.0;
-	  }
-	
-	if ((x / GRAD_CHECK_SIZE_SM) & 1) {
-	  c0 = GRAD_CHECK_LIGHT;
-	  c1 = GRAD_CHECK_DARK;
-	} else {
-	  c0 = GRAD_CHECK_DARK;
-	  c1 = GRAD_CHECK_LIGHT;
-	} /* else */
-	
-	*p0++ = (c0 + (r - c0) * a) * 255.0;
-	*p0++ = (c0 + (g - c0) * a) * 255.0;
-	*p0++ = (c0 + (b - c0) * a) * 255.0;
-	
-	*p1++ = (c1 + (r - c1) * a) * 255.0;
-	*p1++ = (c1 + (g - c1) * a) * 255.0;
-	*p1++ = (c1 + (b - c1) * a) * 255.0;
-	
-      } /* for */
-      
-      if ((y / GRAD_CHECK_SIZE_SM) & 1)
+      for (x = 0; x < width; x++)
 	{
-	  gtk_preview_draw_row (GTK_PREVIEW (w), (guchar *)odd, 0, y, width);
+	  if (bpp == 4)
+	    {
+	      r =  ((gdouble)src[x*4+0])/255.0;
+	      g = ((gdouble)src[x*4+1])/255.0;
+	      b = ((gdouble)src[x*4+2])/255.0;
+	      a = ((gdouble)src[x*4+3])/255.0;
+	    }
+	  else
+	    {
+	      r = ((gdouble)src[x*bpp+0])/255.0;
+	      g = b = r;
+	      a = ((gdouble)src[x*bpp+1])/255.0;
+	    }
+
+	  if ((x / GIMP_CHECK_SIZE_SM) & 1)
+	    {
+	      c0 = GIMP_CHECK_LIGHT;
+	      c1 = GIMP_CHECK_DARK;
+	    }
+	  else
+	    {
+	      c0 = GIMP_CHECK_DARK;
+	      c1 = GIMP_CHECK_LIGHT;
+	    }
+
+	  *p0++ = (c0 + (r - c0) * a) * 255.0;
+	  *p0++ = (c0 + (g - c0) * a) * 255.0;
+	  *p0++ = (c0 + (b - c0) * a) * 255.0;
+
+	  *p1++ = (c1 + (r - c1) * a) * 255.0;
+	  *p1++ = (c1 + (g - c1) * a) * 255.0;
+	  *p1++ = (c1 + (b - c1) * a) * 255.0;
+	}
+      
+      if ((y / GIMP_CHECK_SIZE_SM) & 1)
+	{
+	  gtk_preview_draw_row (GTK_PREVIEW (widget),
+				(guchar *) odd, 0, y, width);
 	}
       else
 	{
-	  gtk_preview_draw_row (GTK_PREVIEW (w), (guchar *)even, 0, y, width);
+	  gtk_preview_draw_row (GTK_PREVIEW (widget),
+				(guchar *) even, 0, y, width);
 	}
       src += width * bpp;
     }
-  g_free(even);
-  g_free(odd);
-  temp_buf_free(buf);
+
+  g_free (even);
+  g_free (odd);
+  temp_buf_free (buf);
 }
 
 static void
@@ -513,8 +517,8 @@ lc_dialog_create_image_menu_cb (gpointer im,
 {
   GimpImage *gimage = GIMP_IMAGE (im);
   IMCBData  *data   = (IMCBData *) d;
-  char      *image_name;
-  char      *menu_item_label;
+  gchar     *image_name;
+  gchar     *menu_item_label;
   GtkWidget *menu_item;
   GtkWidget *hbox;
   GtkWidget *vbox;
@@ -540,70 +544,72 @@ lc_dialog_create_image_menu_cb (gpointer im,
   menu_item = gtk_menu_item_new();
   gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
 		      (GtkSignalFunc) data->callback, gimage);
-  hbox = gtk_hbox_new(FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (menu_item), hbox);
-  gtk_widget_show(hbox);
-  
-  if(preview_size)
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_container_add  (GTK_CONTAINER (menu_item), hbox);
+  gtk_widget_show (hbox);
+
+  if (preview_size)
     {
-      
-      vbox = gtk_vbox_new(FALSE, 0);
-      gtk_box_pack_start(GTK_BOX(hbox), vbox, FALSE, FALSE, 0);
-      gtk_widget_show(vbox);
-      
-      wcolor_box = gtk_preview_new(GTK_PREVIEW_COLOR);
+      vbox = gtk_vbox_new (FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+      gtk_widget_show (vbox);
+
+      wcolor_box = gtk_preview_new (GTK_PREVIEW_COLOR);
       gtk_preview_set_dither (GTK_PREVIEW (wcolor_box), GDK_RGB_DITHER_MAX);
-      
-      lc_dialog_fill_preview_with_thumb(wcolor_box,
-					gimage,
-					MENU_THUMBNAIL_WIDTH,
-					MENU_THUMBNAIL_HEIGHT);
-      
-      gtk_widget_set_usize( GTK_WIDGET (wcolor_box) , 
+      gtk_widget_set_usize (GTK_WIDGET (wcolor_box) , 
 			    MENU_THUMBNAIL_WIDTH , 
 			    MENU_THUMBNAIL_HEIGHT);
-      
-      gtk_container_add(GTK_CONTAINER(vbox), wcolor_box);
-      gtk_widget_show(wcolor_box);
-      
-      if(gtk_object_get_data(GTK_OBJECT (gimage),"menu_preview_dirty") == NULL)
+
+      lc_dialog_fill_preview_with_thumb (wcolor_box,
+					 gimage,
+					 MENU_THUMBNAIL_WIDTH,
+					 MENU_THUMBNAIL_HEIGHT);
+
+      gtk_container_add (GTK_CONTAINER (vbox), wcolor_box);
+      gtk_widget_show (wcolor_box);
+
+      if (gtk_object_get_data (GTK_OBJECT (gimage),
+			       "menu_preview_dirty") == NULL)
 	{
 	  /* Only add this signal once */
-	  gtk_object_set_data(GTK_OBJECT (gimage),"menu_preview_dirty",(gpointer)1);
+	  gtk_object_set_data (GTK_OBJECT (gimage), "menu_preview_dirty",
+			       (gpointer) 1);
 	  gtk_signal_connect_after (GTK_OBJECT (gimage), "dirty",
-				    GTK_SIGNAL_FUNC(lc_dialog_menu_preview_dirty),NULL);
+				    GTK_SIGNAL_FUNC (lc_dialog_menu_preview_dirty),
+				    NULL);
 	}
-      gtk_object_set_data(GTK_OBJECT(menu_item),"menu_preview",wcolor_box);
-      gtk_object_set_data(GTK_OBJECT(menu_item),"menu_preview_gimage",gimage);
-
+      gtk_object_set_data (GTK_OBJECT (menu_item), "menu_preview",
+			   wcolor_box);
+      gtk_object_set_data (GTK_OBJECT (menu_item), "menu_preview_gimage",
+			   gimage);
     }
   
   gtk_container_add (GTK_CONTAINER (data->menu), menu_item);
 
-  wlabel = gtk_label_new(menu_item_label);
-  gtk_misc_set_alignment(GTK_MISC(wlabel), 0.0, 0.5);
-  gtk_box_pack_start(GTK_BOX(hbox), wlabel, TRUE, TRUE, 4);
-  gtk_widget_show(wlabel);
-  
+  wlabel = gtk_label_new (menu_item_label);
+  gtk_misc_set_alignment (GTK_MISC (wlabel), 0.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (hbox), wlabel, TRUE, TRUE, 4);
+  gtk_widget_show (wlabel);
+
   gtk_widget_show (menu_item);
-  
+
   g_free (menu_item_label);
-  data->num_items ++;  
+  data->num_items++;  
 }
 
 static GtkWidget *
 lc_dialog_create_image_menu (GimpImage        **def,
-			     int               *default_index,
+			     gint              *default_index,
 			     MenuItemCallback   callback)
 {
   IMCBData data;
 
-  data.def = def;
+  data.def           = def;
   data.default_index = default_index;
-  data.callback = callback;
-  data.menu = gtk_menu_new ();
-  data.num_items = 0;
-  data.id = NULL;
+  data.callback      = callback;
+  data.menu          = gtk_menu_new ();
+  data.num_items     = 0;
+  data.id            = NULL;
 
   *default_index = -1;
 
@@ -624,19 +630,19 @@ lc_dialog_create_image_menu (GimpImage        **def,
 }
 
 static void
-lc_dialog_image_menu_callback (GtkWidget *w,
-			       gpointer   client_data)
+lc_dialog_image_menu_callback (GtkWidget *widget,
+			       gpointer   data)
 {
   if (! lc_dialog)
     return;
 
-  lc_dialog_update (GIMP_IMAGE (client_data));
+  lc_dialog_update (GIMP_IMAGE (data));
   gdisplays_flush ();
 }
 
 static void
-lc_dialog_auto_callback (GtkWidget *toggle_button,
-			 gpointer   client_data)
+lc_dialog_auto_callback (GtkWidget *widget,
+			 gpointer   data)
 {
   GimpContext *context;
 
@@ -644,7 +650,7 @@ lc_dialog_auto_callback (GtkWidget *toggle_button,
     return;
 
   lc_dialog->auto_follow_active =
-    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle_button));
+    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
 
   context = gimp_context_get_user ();
 
@@ -670,7 +676,7 @@ lc_dialog_close_callback (GtkWidget *widget,
 static void
 lc_dialog_add_cb (GimpSet   *set,
 		  GimpImage *gimage,
-		  gpointer   user_data)
+		  gpointer   data)
 {
   if (! lc_dialog)
     return;
@@ -681,7 +687,7 @@ lc_dialog_add_cb (GimpSet   *set,
 static void
 lc_dialog_remove_cb (GimpSet   *set,
 		     GimpImage *gimage,
-		     gpointer   user_data)
+		     gpointer   data)
 {
   if (! lc_dialog)
     return;
@@ -691,7 +697,7 @@ lc_dialog_remove_cb (GimpSet   *set,
 
 static void
 lc_dialog_destroy_cb (GimpImage *gimage,
-		      gpointer   user_data)
+		      gpointer   data)
 {
   if (! lc_dialog)
     return;
@@ -702,7 +708,7 @@ lc_dialog_destroy_cb (GimpImage *gimage,
 static void
 lc_dialog_change_image (GimpContext *context,
 			GimpImage   *gimage,
-		        gpointer     user_data)
+		        gpointer     data)
 {
   if (! lc_dialog || ! lc_dialog->auto_follow_active)
     return;

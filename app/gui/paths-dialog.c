@@ -165,26 +165,52 @@ static OpsButtonCallback to_path_ext_callbacks[] =
 
 static OpsButton paths_ops_buttons[] =
 {
-  { new_xpm, paths_dialog_new_path_callback, NULL, N_("New Path"), NULL, 0 },
-  { duplicate_xpm, paths_dialog_dup_path_callback, NULL, N_("Duplicate Path"), NULL, 0 },
-  { toselection_xpm, paths_dialog_path_to_sel_callback, NULL, N_("Path to Selection"), NULL, 0 },
-  { topath_xpm, paths_dialog_sel_to_path_callback, to_path_ext_callbacks, N_("Selection to Path"), NULL, 0 },
-  { penstroke_xpm, paths_dialog_stroke_path_callback, NULL, N_("Stroke Path"), NULL, 0 },
-  { delete_xpm, paths_dialog_delete_path_callback, NULL, N_("Delete Path"), NULL, 0 },
-  { NULL, NULL, NULL, NULL, NULL, 0 }
+  { new_xpm, paths_dialog_new_path_callback, NULL,
+    N_("New Path"),
+    "paths/new_path.html",
+    NULL, 0 },
+  { duplicate_xpm, paths_dialog_dup_path_callback, NULL,
+    N_("Duplicate Path"),
+    "paths/duplicate_path.html",
+    NULL, 0 },
+  { toselection_xpm, paths_dialog_path_to_sel_callback, NULL,
+    N_("Path to Selection"),
+    "paths/path_to_selection.html",
+    NULL, 0 },
+  { topath_xpm, paths_dialog_sel_to_path_callback, to_path_ext_callbacks,
+    N_("Selection to Path"),
+    "paths/selection_to_path.html",
+    NULL, 0 },
+  { penstroke_xpm, paths_dialog_stroke_path_callback, NULL,
+    N_("Stroke Path"),
+    "paths/stroke_path.html",
+    NULL, 0 },
+  { delete_xpm, paths_dialog_delete_path_callback, NULL,
+    N_("Delete Path"),
+    "paths/delete_path.html",
+    NULL, 0 },
+  { NULL, NULL, NULL, NULL, NULL, NULL, 0 }
 };
 
 static OpsButton point_ops_buttons[] =
 {
-  { pennorm_xpm, paths_dialog_new_point_callback, NULL, N_("New Point"), NULL, 0 },
-  { penadd_xpm, paths_dialog_add_point_callback, NULL, N_("Add Point"), NULL, 0 },
-  { pendel_xpm, paths_dialog_delete_point_callback, NULL, N_("Delete Point"), NULL, 0 },
-  { penedit_xpm, paths_dialog_edit_point_callback, NULL, N_("Edit Point"), NULL, 0 },
-  { NULL, NULL, NULL, NULL, NULL, 0 }
+  { pennorm_xpm, paths_dialog_new_point_callback, NULL,
+    N_("New Point"), NULL,
+    NULL, 0 },
+  { penadd_xpm, paths_dialog_add_point_callback, NULL,
+    N_("Add Point"), NULL,
+    NULL, 0 },
+  { pendel_xpm, paths_dialog_delete_point_callback, NULL,
+    N_("Delete Point"), NULL,
+    NULL, 0 },
+  { penedit_xpm, paths_dialog_edit_point_callback, NULL,
+    N_("Edit Point"), NULL,
+    NULL, 0 },
+  { NULL, NULL, NULL, NULL, NULL, NULL, 0 }
 };
 
 static void
-paths_dialog_set_menu_sensitivity ()
+paths_dialog_set_menu_sensitivity (void)
 {
   gboolean gimage = FALSE;  /*  is there a gimage  */
   gboolean pp     = FALSE;  /*  paths present  */
@@ -748,7 +774,7 @@ void paths_add_path (PATHP bzp,
   if(!GTK_WIDGET_REALIZED(paths_dialog->vbox))
     gtk_widget_realize(paths_dialog->vbox);
 
-  paths_dialog_preview_extents();
+  paths_dialog_preview_extents ();
 
   if(preview_size)
     {
@@ -2511,11 +2537,11 @@ paths_transform_do_undo (GimpImage *gimage,
 	}
 
       /* Force selection .. it may have changed */
-      if(bezier_tool_selected() && paths_dialog->current_path_list)
+      if (bezier_tool_selected () && paths_dialog->current_path_list)
 	{
-	  gtk_clist_select_row(GTK_CLIST(paths_dialog->paths_list),
-			       paths_dialog->current_path_list->last_selected_row,
-			       1);
+	  gtk_clist_select_row (GTK_CLIST (paths_dialog->paths_list),
+				paths_dialog->current_path_list->last_selected_row,
+				1);
 	}
     }
 }
@@ -3076,19 +3102,18 @@ paths_delete_path (GimpImage *gimage,
 
   plp->bz_paths = g_slist_remove(plp->bz_paths,tlist->data);
   /* If now empty free everything up */
-  if(!plp->bz_paths || g_slist_length(plp->bz_paths) == 0)
+  if (!plp->bz_paths || g_slist_length(plp->bz_paths) == 0)
     {
-      gtk_signal_disconnect(GTK_OBJECT (plp->gimage),
-			    plp->sig_id);
-      gimp_image_set_paths(plp->gimage,NULL);
-      pathimagelist_free(plp);
+      gtk_signal_disconnect (GTK_OBJECT (plp->gimage), plp->sig_id);
+      gimp_image_set_paths (plp->gimage, NULL);
+      pathimagelist_free (plp);
     }
 
   /* Redisplay if required */
-  if(paths_dialog && paths_dialog->gimage == gimage)
+  if (paths_dialog && paths_dialog->gimage == gimage)
     {
       paths_dialog->current_path_list = NULL;
-      paths_dialog_flush();
+      paths_dialog_flush ();
     }
 
   return TRUE;

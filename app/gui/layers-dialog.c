@@ -260,20 +260,32 @@ static OpsButtonCallback lower_layers_ext_callbacks[] =
 static OpsButton layers_ops_buttons[] =
 {
   { new_xpm, layers_dialog_new_layer_callback, NULL,
-    N_("New Layer"), NULL, 0 },
+    N_("New Layer"),
+    "layers/dialogs/new_layer.html",
+    NULL, 0 },
   { raise_xpm, layers_dialog_raise_layer_callback, raise_layers_ext_callbacks,
     N_("Raise Layer    \n"
-       "<Shift> To Top"), NULL, 0 },
+       "<Shift> To Top"),
+    "layers/stack/stack.html#raise_layer",
+    NULL, 0 },
   { lower_xpm, layers_dialog_lower_layer_callback, lower_layers_ext_callbacks,
     N_("Lower Layer       \n"
-       "<Shift> To Bottom"), NULL, 0 },
+       "<Shift> To Bottom"),
+    "layers/stack/stack.html#lower_layer",
+    NULL, 0 },
   { duplicate_xpm, layers_dialog_duplicate_layer_callback, NULL,
-    N_("Duplicate Layer"), NULL, 0 },
+    N_("Duplicate Layer"),
+    "layers/duplicate_layer.html",
+    NULL, 0 },
   { anchor_xpm, layers_dialog_anchor_layer_callback, NULL,
-    N_("Anchor Layer"), NULL, 0 },
+    N_("Anchor Layer"),
+    "layers/anchor_layer.html",
+    NULL, 0 },
   { delete_xpm, layers_dialog_delete_layer_callback, NULL,
-    N_("Delete Layer"), NULL, 0 },
-  { NULL, NULL, NULL, NULL, NULL, 0 }
+    N_("Delete Layer"),
+    "layers/delete_layer.html",
+    NULL, 0 },
+  { NULL, NULL, NULL, NULL, NULL, NULL, 0 }
 };
 
 /*  dnd structures  */
@@ -305,7 +317,7 @@ static guint n_trashcan_targets = (sizeof (trashcan_target_table) /
 /************************************/
 
 GtkWidget *
-layers_dialog_create ()
+layers_dialog_create (void)
 {
   GtkWidget *vbox;
   GtkWidget *util_box;
@@ -458,7 +470,7 @@ layers_dialog_create ()
 }
 
 void
-layers_dialog_free ()
+layers_dialog_free (void)
 {
   LayerWidget *lw;
   GSList *list;
@@ -565,7 +577,7 @@ layers_dialog_update (GimpImage* gimage)
 }
 
 void
-layers_dialog_flush ()
+layers_dialog_flush (void)
 {
   GImage      *gimage;
   Layer       *layer;
@@ -646,15 +658,13 @@ layers_dialog_flush ()
 }
 
 void
-layers_dialog_clear ()
+layers_dialog_clear (void)
 {
-  ops_button_box_set_insensitive (layers_ops_buttons);
+  if (! layersD)
+    return;
 
-  /*  Make sure the gimage is not notified of this change  */
   suspend_gimage_notify++;
-
   gtk_list_clear_items (GTK_LIST (layersD->layer_list), 0, -1);
-
   suspend_gimage_notify--;
 
   layersD->gimage = NULL;
@@ -900,7 +910,7 @@ render_fs_preview (GtkWidget *widget,
 /*************************************/
 
 static void
-layers_dialog_preview_extents ()
+layers_dialog_preview_extents (void)
 {
   GImage *gimage;
 
@@ -933,7 +943,7 @@ layers_dialog_preview_extents ()
 }
 
 static void
-layers_dialog_set_menu_sensitivity ()
+layers_dialog_set_menu_sensitivity (void)
 {
   gint fs;         /*  floating sel  */
   gint ac;         /*  active channel  */
@@ -952,7 +962,7 @@ layers_dialog_set_menu_sensitivity ()
   if (! layersD)
     return;
 
-  if ((layer =  (layersD->active_layer)) != NULL)
+  if ((layer = (layersD->active_layer)) != NULL)
     lm = (layer->mask) ? TRUE : FALSE;
   else
     lm = FALSE;
