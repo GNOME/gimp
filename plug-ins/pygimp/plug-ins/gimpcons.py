@@ -21,61 +21,58 @@ from gimpfu import *
 import gtkcons
 
 def extension_python_fu_console():
-	import gtk, gimpenums, gimpshelf
-	gtk.rc_parse(gimp.gtkrc())
-	namespace = {'__builtins__': __builtins__,
-		     '__name__': '__main__', '__doc__': None,
-		     'gimp': gimp, 'pdb': gimp.pdb,
-		     'shelf': gimpshelf.shelf}
-	for s in gimpenums.__dict__.keys():
-		if s[0] != '_':
-			namespace[s] = getattr(gimpenums, s)
+    import gtk, gimpenums, gimpshelf
+    gtk.rc_parse(gimp.gtkrc())
+    namespace = {'__builtins__': __builtins__,
+		 '__name__': '__main__', '__doc__': None,
+		 'gimp': gimp, 'pdb': gimp.pdb,
+		 'shelf': gimpshelf.shelf}
+    for s in gimpenums.__dict__.keys():
+        if s[0] != '_':
+            namespace[s] = getattr(gimpenums, s)
 
-	win = gtk.GtkWindow()
-	win.connect("destroy", gtk.mainquit)
-	win.set_title("Gimp-Python Console")
-	cons = gtkcons.Console(namespace=namespace,
-		copyright='Gimp Python Extensions - Copyright (C), 1997-1999' +
-		' James Henstridge\n', quit_cb=gtk.mainquit)
+    win = gtk.Window()
+    win.connect("destroy", gtk.mainquit)
+    win.set_title("Gimp-Python Console")
+    cons = gtkcons.Console(namespace=namespace, quit_cb=gtk.mainquit)
 
-	def browse(button, cons):
-		import gtk, pdbbrowse
-		def ok_clicked(button, browse, cons=cons):
-			cons.line.set_text(browse.cmd)
-			browse.destroy()
-		win = pdbbrowse.BrowseWin(ok_button=ok_clicked)
-		win.connect("destroy", gtk.mainquit)
-		win.set_modal(TRUE)
-		win.show()
-		gtk.mainloop()
-	button = gtk.GtkButton("Browse")
-	button.connect("clicked", browse, cons)
-	cons.inputbox.pack_end(button, expand=FALSE)
-	button.show()
-	win.add(cons)
-	cons.show()
-	win.set_default_size(475, 300)
-	win.show()
-	cons.init()
-	# flush the displays every half second
-	def timeout():
-		gimp.displays_flush()
-		return TRUE
-	gtk.timeout_add(500, timeout)
-	gtk.mainloop()
+    def browse(button, cons):
+        import gtk, pdbbrowse
+        def ok_clicked(button, browse, cons=cons):
+            cons.line.set_text(browse.cmd)
+            browse.destroy()
+        win = pdbbrowse.BrowseWin(ok_button=ok_clicked)
+        win.connect("destroy", gtk.mainquit)
+        win.set_modal(TRUE)
+        win.show()
+        gtk.mainloop()
+    button = gtk.Button("Browse")
+    button.connect("clicked", browse, cons)
+    cons.inputbox.pack_end(button, expand=FALSE)
+    button.show()
+    win.add(cons)
+    cons.show()
+    win.set_default_size(475, 300)
+    win.show()
+    cons.init()
+    # flush the displays every half second
+    def timeout():
+        gimp.displays_flush()
+        return TRUE
+    gtk.timeout_add(500, timeout)
+    gtk.mainloop()
 
 register(
-	"python_fu_console",
-	"Python interactive interpreter with gimp extensions",
-	"Type in commands and see results",
-	"James Henstridge",
-	"James Henstridge",
-	"1997-1999",
-	"<Toolbox>/Xtns/Python-Fu/Console",
-	"*",
-	[],
-	[],
-	extension_python_fu_console)
+    "python_fu_console",
+    "Python interactive interpreter with gimp extensions",
+    "Type in commands and see results",
+    "James Henstridge",
+    "James Henstridge",
+    "1997-1999",
+    "<Toolbox>/Xtns/Python-Fu/Console",
+    "*",
+    [],
+    [],
+    extension_python_fu_console)
 
 main()
-
