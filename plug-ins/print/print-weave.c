@@ -882,7 +882,7 @@ main(int ac, char *av[])
 			}
 			putchar('\n');
 		}
-		//putchar('\n');
+		/* putchar('\n'); */
 	}
 
 	return 0;

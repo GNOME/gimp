@@ -1,0 +1,939 @@
+This is gimp-print version 4.0.0rc1, the first release candidate for
+the first stable release in the 4.0 line.
+
+This software includes the Print plug-in for the Gimp, and GhostScript
+and CUPS drivers.  The support for printers in GhostScript and CUPS is
+identical to the support for these printers in the Print plugin --
+they use the identical code base.  Please read Ghost/README and
+CUPS/README.txt for more information on this.
+
+This plugin can be compiled against either Gimp 1.1 or 1.0.
+
+
+Gimp-Print 4.0.0 is a major release of the Gimp Print plugin and
+associated stp GhostScript driver and CUPS driver.  Among the new
+features over the 2.0 (distributed with the Gimp 1.0) and 3.0
+(distributed with some versions of the Gimp 1.1) line are:
+
+1) Support for many more printers, including advanced Epson Stylus
+   printers and many Canon BubbleJets.  This software now fully
+   supports 6 color printers with variable dot sizes.
+
+2) Greatly improved print quality.  Photographs can now be printed
+   with excellent (certainly not "perfect") color fidelity and
+   smoothness of tone.
+
+3) A much-enhanced GUI in the Gimp plugin, particularly for users of
+   recent Gimp 1.1 releases.
+
+4) Included Ghostscript and CUPS drivers derived from the same source
+   base as the Print plugin, enabling general printing from UNIX/Linux
+   of the same quality as printing from the Gimp.
+
+5) Included support from the Foomatic project (see
+   http://www.linuxprinting.org/foomatic.html), greatly easing the
+   pain of configuring printers.  Foomatic is a system for using free
+   software printer drivers with common spoolers on Unix.  It supports
+   LPD, PDQ, CUPS, the VA Linux LPD, and LPRng.
+
+6) Greatly improved performance in many common cases.  While
+   photographs rendered in the highest quality modes still require
+   considerable computation, typical text and graphics now render much
+   faster.  There are some new special-purpose extremely fast
+   dithering algorithms that can be used.
+
+The following printers are supported by gimp-print 4.0.0.  Note that
+not all of these printers can print with highest quality.  In
+particular, we do not have sufficient information on the Canon and HP
+printers to support highest quality printing.  In general, the Epson
+Stylus printers all support high quality printing:
+
+CANON BJC 1000
+CANON BJC 2000
+CANON BJC 3000
+CANON BJC 4300
+CANON BJC 4400 photo
+CANON BJC 6000
+CANON BJC 6100
+CANON BJC 7000
+CANON BJC 7100
+CANON BJC 8200
+EPSON Stylus Color
+EPSON Stylus Color Pro
+EPSON Stylus Color Pro XL
+EPSON Stylus Color 400
+EPSON Stylus Color 440
+EPSON Stylus Color 460
+EPSON Stylus Color 500
+EPSON Stylus Color 600
+EPSON Stylus Color 640
+EPSON Stylus Color 660
+EPSON Stylus Color 670
+EPSON Stylus Color 740
+EPSON Stylus Color 760
+EPSON Stylus Color 800
+EPSON Stylus Color 850
+EPSON Stylus Color 860
+EPSON Stylus Color 880
+EPSON Stylus Color 900
+EPSON Stylus Color 980
+EPSON Stylus Color 1160
+EPSON Stylus Color 1500
+EPSON Stylus Color 1520
+EPSON Stylus Color 3000
+EPSON Stylus Photo
+EPSON Stylus Photo 700
+EPSON Stylus Photo EX
+EPSON Stylus Photo 720
+EPSON Stylus Photo 750
+EPSON Stylus Photo 870
+EPSON Stylus Photo 1200
+EPSON Stylus Photo 1270
+EPSON Stylus Photo 2000P
+HP DeskJet 340
+HP DeskJet 400
+HP DeskJet 500
+HP DeskJet 500C
+HP DeskJet 520
+HP DeskJet 540C
+HP DeskJet 550C
+HP DeskJet 560C
+HP DeskJet 600/600C (Single Cartridge)
+HP DeskJet 600 series (2 Cartridge)
+HP DeskJet 690 series (Photo-Ink capable)
+HP DeskJet 810C
+HP DeskJet 812C
+HP DeskJet 840C
+HP DeskJet 842C
+HP DeskJet 850C
+HP DeskJet 855C
+HP DeskJet 870C
+HP DeskJet 890C
+HP DeskJet 895C
+HP DeskJet 900 series
+HP DeskJet 1100C
+HP DeskJet 1120C
+HP DeskJet 1200C
+HP DeskJet 1220C
+HP DeskJet 1600C
+HP DeskJet 2000 series
+HP DeskJet 2500 series
+HP PhotoSmart P1000
+HP PhotoSmart P1100
+HP LaserJet II series
+HP LaserJet III series
+HP LaserJet 4 series
+HP LaserJet 4V, 4Si
+HP LaserJet 5 series
+HP LaserJet 5Si
+HP LaserJet 6 series
+Lexmark 4076 (PCL printer)
+
+
+
+For users of earlier versions in the gimp-print 4.0 line (3.1 and 4.0
+alpha and beta releases), the following release notes covering
+specific point releases are included.
+
+Gimp-Print 4.0.0 contains the following fixes over Gimp-Print 4.0b3:
+
+1) All HP LaserJet printers except for the 4L are capable of 600 DPI
+   resolution.
+
+2) Any residual problems with the plugin printer list containing
+   duplicates should now be fixed.
+
+3) Any residual problems with scaling not being set properly in PPI
+   mode should now be fixed.
+
+4) An extraneous dependency on the glibc version of getopt() in
+   escputil has been removed.
+
+5) 'make clean' is now a bit more complete.
+
+6) Certain Epson Stylus printers (the Stylus Pro XL, Stylus Color 400,
+   500, and 600, and Stylus Photo, Photo 700, and Photo EX) will not
+   print quite as close to the bottom of the paper, due to some
+   reports of overrunning pages.  This is presumably due to paper size
+   or printers not being perfectly in spec.
+
+Errata:
+
+1) PostScript files (and PPD's) with embedded .setpagedevice commands
+   to choose a media type will not function correctly.  In place of
+   MediaType, stpMediaType will allow a choice of media type.  This
+   will not be fixed in the release; it is not always possible to know
+   what media types are valid at the time of the .setpagedevice call,
+   which GhostScript requires.
+
+2) The higher resolutions of the HP Deskjet 900/1220C and the HP
+   PhotoSmart P1000/P1100 have been disabled as they do not work.
+   Investigation into these modes (Photo-Ret III) is continuing.
+
+3) There are some known color generation problems.  In particular,
+   greens (particularly weakly saturated greens) tend to be quite
+   weak, giving grass a somewhat tan look.  This may be improved
+   somewhat by printing in 4-color rather than 6-color mode.  We do
+   not anticipate much if any further improvement in the release
+   beyond the change in saturation noted above.  The errors in color
+   are not radical, but it may be hard to get a close match for
+   extremely critical work.
+
+   If the image is radically too light and washed out, please check
+   the color settings, and try setting the defaults (1.0 for all
+   options).
+
+4) When using Epson 4x6 photo paper that is perforated to allow
+   tearing off the unprintable margins it is possible to print part
+   way into those margins.  This will not be fixed in the release.
+
+5) Red Hat 6.1 users cannot configure the plug-in.  The problem is
+   that neither the gimp nor the gimp-devel rpm's in that release
+   include gimptool, which is necessary for configuration to work.
+   This will not be fixed in the release.
+
+   The recommended workaround is to recompile the Gimp from source
+   (either 1.0.4 or the latest 1.1/1.2 release).  That will install
+   gimptool, and you will then be able to build the plug-in.  This
+   does not affect the Ghostscript driver.
+
+
+Gimp-Print 4.0b3 contains the following fixes over Gimp-Print 4.0b2:
+
+1) The gimp-print configure script failed on version of the Gimp older
+   than 1.1.20 or thereabouts, give or take a few versions.  That
+   should now work correctly.
+
+2) The Ghostscript and CUPS drivers did not handle printer-specific
+   default options correctly.  This led to incorrect gamma and/or
+   density on many printers, and on the Epson Stylus Photo 870/1270, a
+   green tint.
+
+3) Some of the defined PCL paper sizes were not included.
+
+4) We have been unable to get the Epson Stylus Color 480 to work
+   correctly in any mode, due to some quirks with this printer.  We
+   have therefore removed it from the release.  It was not possible to
+   change the ink cartridge on this printer in any event, due to the
+   lack of front panel buttons and inability to get the necessary
+   command to change the cartridge.
+
+5) The Canon BJC-7000 had an incorrect definition.
+
+6) The native CUPS driver did not correctly handle the printer
+   resolution for non-Epson printers.
+
+7) With CUPS 1.1.3 and earlier, the CUPS drivers do not pass through
+   the media type correctly, so the driver always prints with the
+   default media type.  The solution is to upgrade to CUPS 1.1.4.
+
+8) With CUPS 1.1.3 and earlier, Under some circumstances the margins
+   are not set correctly.  The solution is to upgrade to CUPS 1.1.4.
+
+Errata:
+
+1) PostScript files (and PPD's) with embedded .setpagedevice commands
+   to choose a media type will not function correctly.  In place of
+   MediaType, stpMediaType will allow a choice of media type.  This
+   will not be fixed in the release; it is not always possible to know
+   what media types are valid at the time of the .setpagedevice call,
+   which GhostScript requires.
+
+2) The higher resolutions of the HP Deskjet 900/1220C and the HP
+   PhotoSmart P1000/P1100 have been disabled as they do not work.
+   Investigation into these modes (Photo-Ret III) is continuing.
+
+3) There are some known color generation problems.  In particular,
+   greens (particularly weakly saturated greens) tend to be quite
+   weak, giving grass a somewhat tan look.  This may be improved
+   somewhat by printing in 4-color rather than 6-color mode.  We do
+   not anticipate much if any further improvement in the release
+   beyond the change in saturation noted above.  The errors in color
+   are not radical, but it may be hard to get a close match for
+   extremely critical work.
+
+   If the image is radically too light and washed out, please check
+   the color settings, and try setting the defaults (1.0 for all
+   options).
+
+4) When using Epson 4x6 photo paper that is perforated to allow
+   tearing off the unprintable margins it is possible to print part
+   way into those margins.  This will not be fixed in the release.
+
+5) Red Hat 6.1 users cannot configure the plug-in.  The problem is
+   that neither the gimp nor the gimp-devel rpm's in that release
+   include gimptool, which is necessary for configuration to work.
+   This will not be fixed in the release.
+
+   The recommended workaround is to recompile the Gimp from source
+   (either 1.0.4 or the latest 1.1/1.2 release).  That will install
+   gimptool, and you will then be able to build the plug-in.  This
+   does not affect the Ghostscript driver.
+
+
+Gimp-Print 4.0b2 contains the following fixes and improvements over
+Gimp-Print 4.0b1:
+
+1) The GhostScript and Foomatic drivers did not handle paper sizes
+   other than letter size.
+
+2) The Foomatic drivers did not handle media type other than the
+   model-specific default.
+
+3) PCL printers that do not support 600x600 in color will now fall
+   back correctly to 600x600 mono.
+
+4) The print plugin crashed on startup during the second and later
+   invocations if scaling was set to PPI mode.
+
+5) In PPI mode, the print plugin did not set the initial image size
+   correctly.
+
+6) print-weave.c now compiles on all platforms.
+
+7) The files 'cups/command.types' and 'cups/calibrate.ppm' are now
+   present.
+
+8) The arguments to escputil have changed.  Instead of -l or -o to
+   specify old or new series printers, the argument -m is used to
+   specify the actual printer model.  In addition, escputil will now
+   attempt to autodetect the printer model for alignment purposes.
+
+9) Print dot size at 360 DPI is now correct on the Epson Stylus Photo
+   720.
+
+10) The default saturation level in Photograph mode (image type 2) has
+   been reduced.  The new default saturation of 1.0 corresponds to a
+   saturation level of 0.625 previously.
+
+11) The configure script in 4.0b1 did not function with the Gimp
+   1.1.26 (which was released after 4.0b1) or with certain very
+   recent snapshots of GNOME which may contain very new Gimp code.
+
+12) The HP 1220C driver now supports large paper sizes.
+
+13) The Epson Stylus Color 480 now prints.  However, the driver is not
+   very useful, as it is not possible to change the ink cartridge
+   (that can only be done under software control with undocumented
+   commands).
+
+14) A new paper size has been added that should be correct for Epson
+   4x6 photo paper (which is actually slightly larger than that, about
+   4.25x6.875).  Note, however, that you must still position the image
+   correctly in the plugin in order to get a correct printout; the
+   margins for this special paper will not be set automatically, and
+   if you are not careful you may get a print too large or not placed
+   correctly, overrunning the perforations.
+
+15) Newly added printers in the plugin often had their parameters set
+   incorrectly (most notably the gamma value, resulting in too-light
+   prints).  That is now believed to be fixed going forward.  However,
+   existing printers are not changed.  Therefore, when you first use a
+   printer in the print plugin, please use the color window to check
+   that the parameters are set to their correct defaults (use the Set
+   Defaults button in the Gimp 1.1/1.2 GUI, or set all of the
+   parameters to 1.0 in the Gimp 1.0 GUI).
+
+Errata:
+
+1) PostScript files (and PPD's) with embedded .setpagedevice commands
+   to choose a media type will not function correctly.  In place of
+   MediaType, stpMediaType will allow a choice of media type.  This
+   will not be fixed in the release; it is not always possible to know
+   what media types are valid at the time of the .setpagedevice call,
+   which GhostScript requires.
+
+2) The higher resolutions of the HP Deskjet 900/1220C and the HP
+   PhotoSmart P1000/P1100 have been disabled as they do not work.
+   Investigation into these modes (Photo-Ret III) is continuing.
+
+3) There are some known color generation problems.  In particular,
+   greens (particularly weakly saturated greens) tend to be quite
+   weak, giving grass a somewhat tan look.  This may be improved
+   somewhat by printing in 4-color rather than 6-color mode.  We do
+   not anticipate much if any further improvement in the release
+   beyond the change in saturation noted above.  The errors in color
+   are not radical, but it may be hard to get a close match for
+   extremely critical work.
+
+   If the image is radically too light and washed out, please check
+   the color settings.  Fix (15) above fixes a problem whereby newly
+   added printers will often have an incorrect gamma setting, but it
+   does not retroactively fix printers that were misconfigured because
+   of this.  That must be fixed manually.
+
+4) As noted above, when using Epson 4x6 photo paper that is perforated
+   to allow tearing off the unprintable margins it is possible to
+   print part way into those margins.  This will not be fixed in the
+   release.
+
+5) Red Hat 6.1 users cannot configure the plug-in.  The problem is
+   that neither the gimp nor the gimp-devel rpm's in that release
+   include gimptool, which is necessary for configuration to work.
+   This will not be fixed in the release.
+
+   The recommended workaround is to recompile the Gimp from source
+   (either 1.0.4 or the latest 1.1/1.2 release).  That will install
+   gimptool, and you will then be able to build the plug-in.  This
+   does not affect the Ghostscript driver.
+
+6) The CUPS drivers do not pass through the media type correctly, so
+   the driver always prints with the default media type, with CUPS
+   1.1.3 and earlier.  CUPS 1.1.4 (which may not be out at the time
+   you read this) has the necessary fix.
+
+7) When printing text with CUPS, under some circumstances the margins
+   are not set correctly.  This is fixed in CUPS 1.1.4 (which may not
+   be out at the time you read this); no fix is needed (or possible)
+   in gimp-print.
+
+8) The Epson Stylus 480 does not print correctly in all modes.  If an
+   owner steps forward who is willing to work on fixing the code, this
+   may get fixed, otherwise it will not be fixed.
+
+
+Gimp-Print 4.0b1 contains the following improvements and changes over
+Gimp-Print 4.0a3:
+
+1) For Gimp plug-in users: the format of the printrc file has changed
+   in a way that is incompatible with older versions of the plugin.
+   This version of the software can read old printrc files, but older
+   versions of the plugin cannot read the new format.
+
+   The new format uses a keyword-based approach that is far superior
+   to the old format, and will be much more amenable to future changes
+   that may become necessary.
+
+2) Support for the HP Deskjet 800 series has been changed
+   incompatibly.  The "pcl-800" driver (HP Deskjet 800 series) no
+   longer exists, since the 800 series printers fall into two distinct
+   groups, the older 850/855/870/890 printers which supported 4-level
+   dithering (HP calls this C-RET) at 300x300 DPI, and the newer
+   810/812/840/842/895 printers which do not support C-RET at 300x300
+   DPI (these are the same as the Deskjet 600 series).
+
+   If you are using the gimp plugin, re-select your 800 series printer
+   from the combo box and re-save the settings.
+
+   If you are using the Ghostscript driver, choose from one of the
+   pcl-8xx values detailed in Ghost/README.
+
+   If you have an 800 series printer that is not on the list, please
+   try both the old C-RET driver (choose model 890) and the non C-RET
+   driver (choose model 895) and see which one works at 300x300 dpi.
+   Also, please let us know; the address is in the README file.
+
+3) The HP Deskjet 1220C has been grouped with the 900 series.
+
+4) The HP PhotoSmart P1000 and P1100 have been added, they are like
+   the HP 900 series.
+
+5) Online documentation for the print plugin finally exists.
+
+6) Support for CUPS, through a choice of a native CUPS driver or
+   Cups-o-Matic.
+
+7) Support for the Foomatic printer configuration system, greatly
+   simplifying configuration and use with lpd, CUPS, and PDQ.
+
+8) The preview window in the plugin now shows a low-resolution
+   representation of the actual image.  The color adjustment window
+   shows an thumbnail that reflects the effect that color adjustments
+   have on the output.
+
+9) The old GTK-based interface is now disabled by default when used
+   with the Gimp 1.1.  It can be enabled by running configure with
+   --enable-maintainer-mode.
+
+10) The plugin now detects the spooling system at runtime, so it need
+   not be compiled specifically for use with Berkeley lpd, System V
+   lp, CUPS, or LPRng.
+
+11) Substantial quality improvement for many Epson Stylus printers in
+   in 1440x720 DPI modes.  The price is that printing takes much
+   longer.  If you need high quality with better performance, use
+   720x720 DPI Highest Quality.
+
+   The specific printers that are affected are the Epson Stylus Color
+   600, 800, 850, 900, 1520, and 3000, and the Epson Stylus Photo 700
+   and EX.  The effect in all cases will be smoother output that is
+   particularly visible in pale tones.
+
+12) The Fast dither algorithm has been slightly tweaked, and a Very
+   Fast dither algorithm has been added.
+
+13) Most menus have been converted to combo boxes.
+
+14) The printrc code has been fixed to set reasonable defaults if an
+   old printrc file with now-invalid parameter settings is read.
+
+15) It is now possible to print in seascape and upside down portrait
+   mode.
+
+16) The support for the Stylus Photo 2000P has been fixed and should
+   now be correct.
+
+17) Printer names may now be up to 127 characters.
+
+18) Additional performance improvements over earlier versions of this
+    package.
+
+19) A number of miscellaneous bugs have been fixed.
+
+
+Errata:
+
+1) The higher resolutions of the HP Deskjet 900/1220C and the HP
+   PhotoSmart P1000/P1100 have been disabled as they do not work.
+   Investigation into these modes (Photo-Ret III) is continuing.
+
+
+Gimp-Print 4.0a3 contains the following improvements over Gimp-Print
+4.0a2:
+
+1) The brightness, contrast, and color level controls have changed
+   incompatibly in both the plugin and the Ghostscript driver.  The
+   controls now adjust cyan, magenta, and yellow levels.  In addition,
+   all controls are now arbitrary values centered around 1, rather
+   than some being centered around 1 and some being integer values
+   centered around 100.
+
+   Furthermore, the action of the color level controls is now much
+   more what would be expected.  The cyan, magenta, and yellow
+   controls can be used to balance the printer grayscale.
+
+   Plug-in users: please be sure to check the color values in the
+   Adjust Color window before printing or reporting a problem.  Use
+   the Set Defaults button to bring them back to reasonable defaults.
+
+   Ghostscript users: please see the Color Balancing Values section of
+   Ghost/README for details.
+
+2) The MediaSource argument in the Ghostscript driver has been renamed
+   InputSlot, to conform to the PPD standard.  Therefore, any
+   uses of Ghostscript that use this argument must change.
+
+3) There is a new Fast dither algorithm.  This produces greatly
+   improved speed at some cost in image quality.  It gives poor
+   results on 6-color printers when used in 6-color mode.  In black
+   and white mode, the results are generally quite acceptable.
+
+4) Performance has been improved to some degree in all modes.  This
+   will probably be most noticeable when printing text, and when
+   printing at a higher resolution than the source image is sampled at.
+
+5) Density is now computed correctly in 1440x720 mode on Canon
+   printers.
+
+6) Positioning should now be correct on the Epson Stylus Color 850 and
+   similar printers.
+
+7) The inlining problems with egcs 1.1.2 are now fixed properly, so
+   inlining is re-enabled.
+
+8) The problem with blank splotches is now fixed.  It was closely
+   related to the other inlining problems (which weren't really
+   inlining problems at all).
+
+9) Ink densities and other color parameters have been tuned for
+   additional paper types.  In particular, plain paper and generic ink
+   jet paper should now work reasonably well.
+
+10) Monochrome mode prints with correct density on variable dot size
+   printers (it was printing too light or entirely incorrectly).
+
+11) The Gimp-based GUI (usable only with Gimp 1.1.22+) has been
+   extensively reorganized.
+
+12) Monochrome (fast black-only) mode works correctly on variable dot
+   size printers.
+
+13) HP printers with multiple input sources now print correctly by
+   default (using the standard paper source rather than the manual
+   feed).
+
+14) Bug fixes to the Canon driver for certain printers.
+
+15) Preliminary support for the Epson Stylus Photo 2000P, Stylus Color
+   880, and Stylus Color 980.  The 880 and 980 should work reasonably
+   well.  The 2000P has not been tuned.
+
+16) Performance and print quality on the Epson Stylus Color 900 is
+   improved.
+
+17) There have been some miscellaneous improvements (or at least
+   changes) in color generation.
+
+18) Images will now print to their exact specified size.  In previous
+   versions, if percentage scaling was used, the scale was effectively
+   rounded down to the next percentage point.
+
+19) The height/width entries are more accurate, and do not
+   automatically set the scaling mode to PPI.
+
+20) Preliminary support for the Epson Stylus Color 880 and 980
+   printers.
+
+21) Miscellaneous bug fixes for certain Epson Stylus printers.
+
+ERRATA:
+
+1) The PDQ and CUPS descriptor files have still not been updated.
+
+2) Printers other than Epson Stylus printers are in an unknown state
+   of tuning.  Unless testers step forward, the these printers will
+   not be tuned in the final release!
+
+3) Documentation is still almost nonexistent.
+
+4) Red Hat 6.1 users cannot configure the plug-in.  The problem is
+   that neither the gimp nor the gimp-devel rpm's in that release
+   include gimptool, which is necessary for configuration to work.
+   The recommended solution is to recompile the Gimp from source
+   (either 1.0.4 or the latest 1.1/1.2 release).  That will install
+   gimptool, and you will then be able to build the plug-in.  This
+   does not affect the Ghostscript driver.  This is not planned to be
+   fixed in the 4.0 release.
+
+5) In some cases, when the scaling has been set to PPI mode, the
+   plugin will start at the minimum PPI allowed for the image (maximum
+   permitted image size).  It is not understood why this is happening.
+
+6) There are some known color generation problems.  In particular,
+   greens (particularly weakly saturated greens) tend to be quite
+   weak, giving grass a somewhat tan look.  These will not be fixed
+   for 4.0.
+
+
+Gimp-Print 4.0a2 contains the following improvements over Gimp-Print
+4.0a1:
+
+1) A serious bug in the handling of landscape mode (in the plugin
+   only) has been fixed.
+
+2) A new 360 dpi softweave mode has been added to the Epson driver for
+   the variable drop size printers, which should yield improved
+   quality.  It is reasonably well tuned on the 870.
+
+3) Improved tonal smoothness in highly saturated red, green, and blue.
+
+4) The Ghostscript driver produces more useful error messages if
+   incorrect parameters are supplied.
+
+5) The top margin of the Epson Stylus Color 850 should be correct
+   now.  The printer is not capable of printing to the top of the
+   page.
+
+6) Ink levels have been fine tuned (not necessarily correctly) for
+   newer Epson printers.
+
+7) Work around some inlining problems with egcs 1.1.2.
+
+ERRATA:
+
+1) The PDQ and CUPS descriptor files are still not fixed.
+
+2) While calibration should still be improved, there is doubtless much
+   to go.
+
+3) There have been sporadic reports of blank splotches or regions,
+   apparently at the very darkest intensity.  This is not yet fully
+   characterized.
+
+
+Gimp-Print 4.0a1 contains the following improvements over Gimp-Print 3.1.9:
+
+1) The Ghostscript driver has been extensively revised.  IN
+   PARTICULAR, THE OPTIONS HAVE CHANGED TO A DEGREE MAKING IT
+   IMPOSSIBLE FOR ANY USES OF THE OLD DRIVER FROM WORKING WITH THE NEW
+   ONE.  Please read Ghost/README for a full explanation of the new
+   options.
+
+2) The Ghostscript driver now supports all printers supported by the
+   Gimp plug-in, including PCL and Canon printers in addition to Epson
+   Stylus inkjets.
+
+3) Photo mode has had major improvements in its color generation in
+   corner cases.  It is slower than it used to be, unfortunately.
+
+4) The inks have been retuned for 6-color Epson printers; they should
+   now better match those of 4-color printers.
+
+5) It is now possible to print to the very edge of the top, left, and
+   right on Epson Stylus 870 and 1270 printers.
+
+6) An experimental CUPS driver is now in place in the Cups
+   subdirectory.  It is not based on the current source base.  It will
+   be redone before 4.0 release.
+
+7) Printing near the top and bottom of the paper is substantially
+   improved on Epson Stylus printers.
+
+8) Printing on PCL printers is fixed.
+
+9) Epson Stylus printers have more flexible tuning than previously,
+   allowing specification of smaller dot sizes in some cases, which
+   will yield better output quality.
+
+10) Ghostscript driver bug whereby only half the page was printed in
+   certain resolutions is now fixed.
+
+11) Adaptive hybrid dithering is now the default.
+
+ERRATA:
+
+1) The PDQ and CUPS descriptor files are not updated for the latest
+   change to the Ghostscript driver.
+
+2) The Epson Stylus 850 apparently does not print to the very top of
+   the page.
+
+3) Not all printers have been fully calibrated, so color and density
+   matching may be significantly off in some cases.  Also, for some
+   printers it may be possible to use smaller dot sizes than
+   currently, which will produce higher quality output.
+
+4) Photograph image type is known to work improperly with at least
+   EGCS 1.1.2, due to problems with inlining in that compiler.
+
+
+Gimp-Print 3.1.9 contains the following improvements over Gimp-Print 3.1.8:
+
+1) A bug in the GhostScript driver would cause the driver to go into
+   an infinite loop on some systems with some printers, depending upon
+   details of the compiler and so forth.  All users of the GhostScript
+   driver should immediately update.
+
+2) Substantial quality improvements across many printers:
+
+   * Output across printers and resolution modes is much more closely
+     matched (except probably 360 DPI).  The saturation may be
+     somewhat less than before, however.
+
+   * 720 DPI is greatly improved on Epson Stylus Color 860/1160 and
+     Stylus Photo 870/1270.  The 750/1200 may not show this
+     improvement.
+
+   * Artifacts in the adaptive hybrid and adaptive random dithering
+     modes have been eliminated.
+
+Please see the README for more information.
+
+
+
+Gimp-Print 3.1.8 contains the following improvements over 3.1.7:
+
+1) The entries for printer model and paper size have been greatly
+   improved.  There are many additional paper sizes offered.
+
+2) Print quality using adaptive, hybrid, and ordered modes is improved
+   at 1440x720 DPI.
+
+3) The UI now offers a choice of metric or English units for
+   measurements.
+
+4) The print preview is much larger, affording easier viewing of the
+   placement of the image.  An arrow is used to indicate the top of
+   the paper, and the size of the arrow gives an indication of the
+   actual paper size.
+
+5) It is now possible to specify the output width or height directly.
+
+6) Dragging the preview image with a button other than the left moves
+   the image in units of points rather than screen pixels, affording
+   finer placement control.
+
+7) A new emulated 1440x2880 mode has been added for highest quality
+   printing on Epson Stylus printers.  It is of most use on the Stylus
+   Photo 750, 1200, 870, and 1270.
+
+8) Experimental improvements for the Canon BJC-8200.
+
+9) The plug-in should operate correctly with the plp spooling system.
+
+10) Support for the Epson Stylus Photo 720 and Stylus Color 480.  Also
+   correct the Stylus Color 860 and 1160 entries.
+
+11) Support for the HP 540C printer.
+
+12) Correct treatment of saturation adjustment, and allow saturation
+   of 0.  This allows printing a color image in black and white using
+   color inks for maximum smoothness.
+
+13) Allow choice of four and six color printing on six color
+   printers.  This is useful for economy (normal printing uses much
+   more light cyan and magenta than dark), and may improve saturation
+   for graphics.
+
+14) Bug fixes for Ghostscript driver.  Also, Ghostscript driver now
+    offers choice of ink type.
+
+15) Some improvement in Epson Stylus Photo, Photo 700, and Photo EX
+    output quality.
+
+
+Gimp-Print 3.1.7 contains the following improvements over Gimp-Print 3.1.6:
+
+1) Emergency GhostScript bug fix.
+
+2) escputil program now retrieves ink level from the printer.
+
+
+Gimp-Print 3.1.6 contains the following improvements over Gimp-Print 3.1.5:
+
+1) Print speed has been greatly improved for sparse pages.  This will
+   not help too much for images, but it will help greatly for text and
+   other typical PostScript printing.
+
+2) 3.1.5 turned out not to improve print quality over 3.1.4; in fact,
+   there was some regression.  There has been some improvement over
+   3.1.5, particularly for higher end printers.  1440x720 enhanced
+   mode (which is computed as 1440x1440) using adaptive hybrid or
+   adaptive random dithering appears to work best.
+
+3) Microweave and 360 dpi positioning is now correct.
+
+4) The Lexmark 4076 is now supported (as a PCL printer).
+
+5) The preview window now notes the size of the image in addition to
+   the position.
+
+6) The code now uses much less memory at high quality settings.
+
+7) Perturbed ordered dithering has been removed.
+
+8) An experimental program to perform nozzle check, head cleaning, and
+   head alignment is now included.  This is potentially dangerous, so
+   read the accompanying help information carefully before performing
+   head alignment!
+
+9) The Ghostscript driver now correctly handles -r1440x720.
+
+10) The PDQ support has been updated, and a CUPS .ppd file added
+   (these are not tested).
+
+
+Gimp-Print 3.1.5 contains the following improvements over Gimp-Print 3.1.4:
+
+1) Greatly improved print quality.  In particular, ordered dithering
+   and adaptive dithering methods are now much better than ever
+   before.  We recommend ordered dithering for four-color printers and
+   either adaptive hybrid or adaptive random dithering for six-color
+   printers.
+
+2) If a print job is canceled from within the Gimp, the partial file
+   will not be sent to the printer.
+
+3) Support for additional Canon and Hewlett-Packard printers.
+
+4) Epson Stylus printers can now print much closer to the edge of the
+   page.  They can print to the extreme top edge and much closer to
+   the bottom than before, although there is some loss in quality
+   close to the edge.
+
+5) Greatly improved black quality.
+
+6) The preview window now shows the borders of the printable area in
+   addition to the borders of the page.  In addition, the offsets are
+   now from the true edge of the page rather than from the edge of the
+   printable area.
+
+7) 720 dpi highest quality and 1440x720 dpi highest quality are now
+   supported on the new generation Epson printers.
+
+8) Epson printers will now print faster on sparse pages and in pure
+   black and white.  This is of particular interest for the
+   Ghostscript driver.
+
+
+Gimp-Print 3.1.4 contains the following improvements over Gimp-Print 3.1.3:
+
+1) Support for the Hewlett-Packard DeskJet 960.
+
+2) Print quality improvements.
+
+3) Some print speed optimizations.
+
+4) Major fix for hybrid Floyd-Steinberg dithering
+
+
+Gimp-Print 3.1.3 contains the following improvements over Gimp-Print 3.1.2:
+
+1) Completely revamped dithering algorithms.  These algorithms should
+   be faster and easier to maintain in addition to better,
+   particularly on more advanced printers.  There are additional
+   choices for dithering algorithms: an ordered dither, and two kinds
+   of Floyd-Steinberg error diffusion.  There are also adaptive error
+   diffusion algorithms, in which ordered dithering is used in certain
+   circumstances.
+
+2) The user interface has been heavily revamped.  There are currently
+   two options, one based on the Gimp native toolkit and one based on
+   GTK.  Depending upon user feedback, one will be withdrawn at some
+   point.
+
+4) Support for additional Hewlett-Packard printers and media.
+
+3) Bug fixes for Epson printers, the GhostScript driver, and many
+   other things.
+
+
+Gimp-Print 3.1.2 contains the following improvements over Gimp-Print 3.1.1:
+
+1) Better dither quality.
+
+2) Dither is optimized for several different types of images
+   (photographs, continuous-tone images such as charts, line art, and
+   very fast pure black/white rendering).
+
+3) Tweaking of the GhostScript driver.
+
+4) Epson Stylus Color 440 prints in softweave.  In general, most Epson
+   printers are more reliable.
+
+5) Preliminary support for more Hewlett-Packard printers.
+
+
+
+Gimp-Print 3.1.1 contains the following improvements over Gimp-Print 3.1.0:
+
+1) Faster dithering speed.
+
+2) Improved support for many Epson Stylus printers.
+
+3) Some UI improvements.
+
+4) Numerous bug fixes.
+
+
+Gimp-Print 3.1.0 contains the following user-visible improvements over
+Gimp-Print 3.0.5, the version distributed with the Gimp 1.1.17:
+
+1) Preliminary support for Canon BubbleJet printers (specifically the
+   BJC6000).
+
+2) Preliminary support for the Epson Stylus Color 440/640/740/900 and
+   Stylus Photo 750/1200 printers.  These printers should in theory
+   work in all modes, although that has not been comprehensively
+   tested.  1440 dpi mode on the 900 in particular may not work.
+   There is also pre-preliminary support for the Stylus Photo 870 and
+   1270 based on the published specifications.  This driver is
+   completely untuned for these printers at present.
+
+3) Ability to position the image on the page to the point (1/72", or
+   about .35 mm), along with a more accurate depiction of the
+   positioning on the page.
+
+4) One-click ability to scale to the image resolution (Gimp 1.1 only).
+
+5) Much better handling of the saved state (printrc file), including
+   saving of parameters related to file output.
+
+6) Utilities (in various states of completion) to reconstitute an
+   image from a print file.
+
+7) Bug fixes for density in indexed and gray modes, and for excess
+   pseudo-black printing in general.
+
+There are additional improvements over Print 2.0.2 (the version
+distributed with Gimp 1.1.11 and earlier) too numerous to list here.

@@ -1,14 +1,14 @@
-This is Gimp-Print version 4.0b3 (beta).  Gimp-print is the print
+This is Gimp-Print version 4.0.0rc1, the first release candidate for
+the first stable release in the 4.0 line.  Gimp-print is the print
 facility for the Gimp, and in addition a suite of drivers that may be
 used with common UNIX spooling systems using GhostScript or CUPS.
 These drivers provide printing quality for UNIX/Linux on a par with
 proprietary vendor-supplied drivers in many cases, and can be used for
 many of the most demanding printing tasks.
 
-Please read the release notes (RELNOTES) carefully, as this release is
-not entirely compatible with 4.0a3 and earlier releases!  There is in
-addition a minor incompatibility with 4.0b1 in the Epson head
-alignment utility.
+Please read the release notes (RELNOTES) carefully, as this release
+has many incompatibilities with 3.1 and 4.0 alpha releases, and minor
+incompatibilities with 4.0b1.
 
 
 BASIC INSTALLATION
@@ -79,6 +79,25 @@ of this method is strongly discouraged on six color (photo) printers.
 
 On most inkjet printers, 720 dpi will produce very high quality;
 1440x720 dpi will produce extremely high quality.
+
+
+SUPPORT
+
+There are four principal ways of requesting support for this package:
+
+1) There are public forums on Sourceforge dedicated to this package.
+   Please see http://sourceforge.net/forum/?group_id=1537 for more
+   information.  The Help forum is a good source of information.
+
+2) If you have a technical support issue that does not appear to be a
+   bug in the software, you can use the Tech Support Manager.  Please
+   see http://sourceforge.net/support/?group_id=1537.
+
+3) If you have found a clear bug in the package, you may file a bug
+   report at http://sourceforge.net/bugs/?group_id=1537.
+
+4) You may send mail to the gimp-print-devel@sourceforge.net mailing
+   list.  This is recommended as a last resort only.
 
 
 USE OF THE CVS REPOSITORY

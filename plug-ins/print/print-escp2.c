@@ -705,7 +705,7 @@ static escp2_printer_t model_capabilities[] =
      | MODEL_6COLOR_NO | MODEL_720DPI_DEFAULT | MODEL_VARIABLE_NORMAL
      | MODEL_COMMAND_GENERIC | MODEL_GRAYMODE_NO | MODEL_1440DPI_NO
      | MODEL_ROLLFEED_NO | MODEL_ZEROMARGIN_NO),
-    48, 6, 48, 6, 720, 720, INCH(17 / 2), INCH(14), 14, 14, 0, 24, 1, 0,
+    48, 6, 48, 6, 720, 720, INCH(17 / 2), INCH(14), 14, 14, 0, 30, 1, 0,
     { -2, -2, -1, -2, -1, -1, -1 },
     { 2.0, 1.3, 1.3, .631, 0, 0, 0, 0, 0 },
     &simple_4color_inks
@@ -727,7 +727,7 @@ static escp2_printer_t model_capabilities[] =
      | MODEL_6COLOR_NO | MODEL_720DPI_600 | MODEL_VARIABLE_NORMAL
      | MODEL_COMMAND_GENERIC | MODEL_GRAYMODE_YES | MODEL_1440DPI_YES
      | MODEL_ROLLFEED_NO | MODEL_ZEROMARGIN_NO),
-    32, 8, 32, 8, 720, 360, INCH(17 / 2), INCH(14), 8, 9, 0, 24, 1, 0,
+    32, 8, 32, 8, 720, 360, INCH(17 / 2), INCH(14), 8, 9, 0, 30, 1, 0,
     { 4, 4, -1, 2, 2, -1, 1 },
     { 2.0, 1.3, 1.3, .775, .775, .55, .55, .275, .138 },
     &simple_4color_inks
@@ -773,7 +773,7 @@ static escp2_printer_t model_capabilities[] =
      | MODEL_6COLOR_YES | MODEL_720DPI_600 | MODEL_VARIABLE_NORMAL
      | MODEL_COMMAND_1998 | MODEL_GRAYMODE_NO | MODEL_1440DPI_YES
      | MODEL_ROLLFEED_NO | MODEL_ZEROMARGIN_NO),
-    32, 8, 32, 8, 720, 360, INCH(17 / 2), INCH(14), 9, 9, 0, 24, 1, 0,
+    32, 8, 32, 8, 720, 360, INCH(17 / 2), INCH(14), 9, 9, 0, 30, 1, 0,
     { 3, 3, -1, -1, 1, -1, 4 },
     { 2.0, 1.3, 1.3, .775, .775, .55, .55, .275, .138 },
     &simple_6color_inks
@@ -784,7 +784,7 @@ static escp2_printer_t model_capabilities[] =
      | MODEL_6COLOR_YES | MODEL_720DPI_600 | MODEL_VARIABLE_NORMAL
      | MODEL_COMMAND_1998 | MODEL_GRAYMODE_NO | MODEL_1440DPI_YES
      | MODEL_ROLLFEED_NO | MODEL_ZEROMARGIN_NO),
-    32, 8, 32, 8, 720, 360, INCH(11), INCH(17), 9, 9, 0, 24, 1, 0,
+    32, 8, 32, 8, 720, 360, INCH(11), INCH(17), 9, 9, 0, 30, 1, 0,
     { 3, 3, -1, -1, 1, -1, 4 },
     { 2.0, 1.3, 1.3, .775, .775, .55, .55, .275, .138 },
     &simple_6color_inks
@@ -795,7 +795,7 @@ static escp2_printer_t model_capabilities[] =
      | MODEL_6COLOR_YES | MODEL_720DPI_600 | MODEL_VARIABLE_NORMAL
      | MODEL_COMMAND_1998 | MODEL_GRAYMODE_NO | MODEL_1440DPI_NO
      | MODEL_ROLLFEED_NO | MODEL_ZEROMARGIN_NO),
-    32, 8, 32, 8, 720, 360, INCH(17 / 2), INCH(14), 9, 9, 0, 24, 1, 0,
+    32, 8, 32, 8, 720, 360, INCH(17 / 2), INCH(14), 9, 9, 0, 30, 1, 0,
     { 3, 3, -1, -1, 1, -1, -1 },
     { 2.0, 1.3, 1.3, .775, .775, 0, 0, 0, 0 },
     &simple_6color_inks

@@ -1,3 +1,15 @@
+2000-10-21  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/print/RELNOTES: new file
+
+	* plug-ins/print/Makefile.am
+	* plug-ins/print/README
+	* plug-ins/print/print-escp2.c
+	* plug-ins/print/print-pcl.c
+	* plug-ins/print/print-printers.c
+	* plug-ins/print/print-weave.c: Updated to the latest CVS version
+	of gimp-print's new stable "print-4_0_branch" branch.
+
 2000-10-21  Austin Donnelly  <austin@gimp.org>
 
 	* plug-ins/common/nlfilt.c: minor patch from David Hodson
