@@ -20,6 +20,8 @@
 
 #include "config.h"
 
+#include <gdk-pixbuf/gdk-pixbuf.h>
+
 #include <glib.h>
 
 #ifdef G_OS_WIN32
@@ -51,6 +53,8 @@
 #include "plug-in/plug-in-proc.h"
 #include "plug-in/plug-in.h"
 #include "plug-in/plug-ins.h"
+
+#include "libgimpthumb/gimpthumb.h"
 
 static ProcRecord file_load_proc;
 static ProcRecord file_save_proc;
@@ -257,8 +261,8 @@ file_load_thumbnail_invoker (Gimp     *gimp,
   gint32 num_bytes = 0;
   guint8 *thumb_data = NULL;
   gchar *uri;
-  GimpImagefile *imagefile = NULL;
-  TempBuf *temp_buf = NULL;
+  GimpThumbnail *thumbnail = NULL;
+  GdkPixbuf *pixbuf = NULL;
 
   filename = (gchar *) args[0].value.pdb_pointer;
   if (filename == NULL)
@@ -269,65 +273,39 @@ file_load_thumbnail_invoker (Gimp     *gimp,
       uri = g_filename_to_uri (filename, NULL, NULL);
     
       if (uri)
-	imagefile = gimp_imagefile_new (gimp, uri);
-    
-      if (imagefile)
-	temp_buf = gimp_viewable_get_preview (GIMP_VIEWABLE (imagefile),
-					      GIMP_THUMBNAIL_SIZE_NORMAL,
-					      GIMP_THUMBNAIL_SIZE_NORMAL);
-    
-      if (temp_buf)
 	{
-	  TempBuf *checks = NULL;
+	  thumbnail = gimp_thumbnail_new ();
+	  gimp_thumbnail_set_uri (thumbnail, uri);
     
-	  width  = temp_buf->width;
-	  height = temp_buf->height;
+	  pixbuf = gimp_thumbnail_load_thumb (thumbnail,
+					      GIMP_THUMBNAIL_SIZE_NORMAL,
+					      NULL);
+	}
     
-	  switch (temp_buf->bytes)
+      if (pixbuf)
+	{
+	  width  = gdk_pixbuf_get_width (pixbuf);
+	  height = gdk_pixbuf_get_height (pixbuf);
+    
+	  if (gdk_pixbuf_get_n_channels (pixbuf) != 3)
 	    {
-	    case 3:
-	      break;
+	      GdkPixbuf *tmp = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8,
+					       width, height);
     
-	    case 4:
-	      {
-		guchar *src, *dest;
+	      gdk_pixbuf_composite_color (pixbuf, tmp,
+					  0, 0, width, height, 0, 0, 1.0, 1.0,
+					  GDK_INTERP_NEAREST, 255,
+					  0, 0, GIMP_SMALL_CHECKS,
+					  0x666666ff, 0x999999ff);
     
-		checks = temp_buf_new_check (width, height,
-					     GIMP_GRAY_CHECKS,
-					     GIMP_SMALL_CHECKS);
-    
-		src  = temp_buf_data (temp_buf);
-		dest = temp_buf_data (checks);
-    
-    #define INT_MULT(a,b,t)  ((t) = (a) * (b) + 0x80, ((((t) >> 8) + (t)) >> 8))
-    #define INT_BLEND(a,b,alpha,t)  (INT_MULT((a)-(b), alpha, t) + (b))
-    
-		num_bytes = width * height;
-		while (num_bytes--)
-		  {
-		    register glong t;
-    
-		    dest[0] = INT_BLEND (src[0] , dest[0] , src[3], t);
-		    dest[1] = INT_BLEND (src[1] , dest[1] , src[3], t);
-		    dest[2] = INT_BLEND (src[2] , dest[2] , src[3], t);
-		    src  += 4;
-		    dest += 3;
-		  }
-    
-		temp_buf = checks;
-	      }
-	      break;
-		  
-	    default:
-	      g_assert_not_reached ();
-	      break;
-	  }
+	      g_object_unref (pixbuf);
+	      pixbuf = tmp;
+	    }
     
 	  num_bytes  = 3 * width * height;
-	  thumb_data = g_memdup (temp_buf_data (temp_buf), num_bytes);
+	  thumb_data = g_memdup (gdk_pixbuf_get_pixels (pixbuf), num_bytes);
     
-	  if (checks)
-	    temp_buf_free (checks);
+	  g_object_unref (pixbuf);
     
 	  success = TRUE;
 	}
@@ -335,9 +313,6 @@ file_load_thumbnail_invoker (Gimp     *gimp,
 	{
 	  success = FALSE;
 	}
-    
-	if (imagefile)
-	  g_object_unref (imagefile);    
     
 	g_free (uri);
     }

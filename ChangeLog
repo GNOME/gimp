@@ -1,3 +1,8 @@
+2004-01-11  Manish Singh  <yosh@gimp.org>
+
+	* tools/pdbgen/pdb/fileops.pdb
+	* app/pdb/fileops_cmds.c: Make it build.
+
 2004-01-11  Simon Budig  <simon@gimp.org>
 
 	* app/display/gimpdisplayshell-scale.c: further tweaks.

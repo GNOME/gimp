@@ -220,8 +220,7 @@ HELP
     %invoke = (
 	vars    => [ 'gchar *uri',
                      'GimpThumbnail *thumbnail = NULL',
-                     'GdkPixbuf *pixbuf = NULL',
-                     'TempBuf *temp_buf = NULL' ],
+                     'GdkPixbuf *pixbuf = NULL' ],
 	code    => <<'CODE'
 {
   uri = g_filename_to_uri (filename, NULL, NULL);
@@ -232,7 +231,8 @@ HELP
       gimp_thumbnail_set_uri (thumbnail, uri);
 
       pixbuf = gimp_thumbnail_load_thumb (thumbnail,
-                                          GIMP_THUMBNAIL_SIZE_NORMAL);
+                                          GIMP_THUMBNAIL_SIZE_NORMAL,
+                                          NULL);
     }
 
   if (pixbuf)
@@ -240,7 +240,7 @@ HELP
       width  = gdk_pixbuf_get_width (pixbuf);
       height = gdk_pixbuf_get_height (pixbuf);
 
-      if (gdk_pixbuf_get_channels (pixbuf) != 3)
+      if (gdk_pixbuf_get_n_channels (pixbuf) != 3)
 	{
           GdkPixbuf *tmp = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8,
                                            width, height);
@@ -256,7 +256,7 @@ HELP
         }
 
       num_bytes  = 3 * width * height;
-      thumb_data = g_memdup (gdk_pixbuf_data (pixbuf), num_bytes);
+      thumb_data = g_memdup (gdk_pixbuf_get_pixels (pixbuf), num_bytes);
 
       g_object_unref (pixbuf);
 
@@ -500,7 +500,8 @@ CODE
     );
 }
 
-@headers = qw(<sys/types.h> <unistd.h> "base/temp-buf.h"
+@headers = qw(<sys/types.h> <unistd.h> <gdk-pixbuf/gdk-pixbuf.h>
+              "libgimpthumb/gimpthumb.h" "base/temp-buf.h"
               "core/gimp.h" "core/gimpimagefile.h"
               "plug-in/plug-in.h" "plug-in/plug-ins.h" "plug-in/plug-in-proc.h"
               "file/file-utils.h");
