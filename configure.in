@@ -1376,6 +1376,7 @@ libgimpbase/Makefile
 libgimpcolor/Makefile
 libgimpmath/Makefile
 libgimpmodule/Makefile
+libgimpthumb/Makefile
 libgimpwidgets/Makefile
 app/Makefile
 app/base/Makefile
@@ -1481,6 +1482,7 @@ po-plug-ins/Makefile.in
 po-script-fu/Makefile.in
 gimptool-1.3
 gimp-1.3.pc
+gimpthumb-1.3.pc
 gimpui-1.3.pc
 gimp.spec
 gimp-zip

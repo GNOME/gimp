@@ -1,0 +1,11 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: GIMP Thumb
+Description: GIMP Thumbnail Library
+Version: @VERSION@
+Requires: gdk-pixbuf-2.0
+Libs: -L${libdir} -lgimpmath-1.3 -lgimpthumb-1.3 
+Cflags: -I${includedir}/gimp-1.3

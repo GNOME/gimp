@@ -1,0 +1,102 @@
+## Process this file with automake to produce Makefile.in
+
+libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la
+
+if PLATFORM_WIN32
+no_undefined = -no-undefined
+endif
+
+if OS_WIN32
+gimpthumb_def = gimpthumb.def
+libgimpthumb_export_symbols = -export-symbols gimpthumb.def
+
+install-libtool-import-lib:
+	$(INSTALL) .libs/libgimpthumb-$(LT_RELEASE).dll.a $(DESTDIR)$(libdir)
+
+uninstall-libtool-import-lib:
+	-rm $(DESTDIR)$(libdir)/libgimpthumb-$(LT_RELEASE).dll.a
+else
+install-libtool-import-lib:
+uninstall-libtool-import-lib:
+endif
+
+if MS_LIB_AVAILABLE
+noinst_DATA = gimpthumb-$(LT_RELEASE).lib
+
+install-ms-lib:
+	$(INSTALL) gimpthumb-$(LT_RELEASE).lib $(DESTDIR)$(libdir)
+
+uninstall-ms-lib:
+	-rm $(DESTDIR)$(libdir)/gimpthumb-$(LT_RELEASE).lib
+
+gimpthumb-@LT_RELEASE@.lib: gimpthumb.def
+	lib -name:libgimpthumb-$(LT_RELEASE)-@LT_CURRENT_MINUS_AGE@.dll -def:gimpthumb.def -out:$@
+
+else
+install-ms-lib:
+uninstall-ms-lib:
+endif
+
+libgimpthumbincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimpthumb
+
+AM_CPPFLAGS = \
+	-DG_LOG_DOMAIN=\"LibGimpThumb\"	\
+	@GIMP_THREAD_FLAGS@
+
+INCLUDES = \
+	-I$(top_srcdir)	\
+	$(GDK_PIXBUF_CFLAGS)	\
+	-I$(includedir)
+
+EXTRA_DIST = \
+	makefile.msc		\
+	gimpthumb.def
+
+lib_LTLIBRARIES = libgimpthumb-1.3.la
+
+libgimpthumb_1_3_la_SOURCES = \
+	gimpthumb.h		\
+	gimpthumb-enums.c	\
+	gimpthumb-enums.h	\
+	gimpthumb-types.h	\
+	gimpthumb-utils.c	\
+	gimpthumb-utils.h	\
+	gimpthumbnail.c		\
+	gimpthumbnail.h
+
+libgimpthumbinclude_HEADERS = \
+	gimpthumb.h		\
+	gimpthumb-enums.h	\
+	gimpthumb-types.h	\
+	gimpthumbnail.h
+
+libgimpthumb_1_3_la_LDFLAGS = \
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\
+	$(no_undefined)						\
+	$(libgimpthumb_export_symbols)
+
+libgimpthumb_1_3_la_LIBADD = $(libgimpmath) $(GDK_PIXBUF_LIBS)
+
+
+install-data-local: install-ms-lib install-libtool-import-lib
+
+uninstall-local: uninstall-ms-lib uninstall-libtool-import-lib
+
+
+#
+# rules to generate built sources
+#
+# setup autogeneration dependencies
+gen_sources = xgen-tec
+CLEANFILES = $(gen_sources)
+
+$(srcdir)/gimpthumb-enums.c: $(srcdir)/gimpthumb-enums.h $(GIMP_MKENUMS)
+	$(GIMP_MKENUMS) \
+		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"gimpthumb-enums.h\"" \
+		--fprod "\n/* enumerations from \"@filename@\" */" \
+		--vhead "\nstatic const GEnumValue @enum_name@_enum_values[] =\n{" \
+		--vprod "  { @VALUENAME@, @valuedesc@, \"@valuenick@\" }," \
+		--vtail "  { 0, NULL, NULL }\n};\n\nGType\n@enum_name@_get_type (void)\n{\n  static GType enum_type = 0;\n\n  if (!enum_type)\n    enum_type = g_enum_register_static (\"@EnumName@\", @enum_name@_enum_values);\n\n  return enum_type;\n}\n" \
+		$(srcdir)/gimpthumb-enums.h > xgen-tec \
+	&& cp xgen-tec $(@F) \
+	&& rm -f xgen-tec

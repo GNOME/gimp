@@ -28,7 +28,10 @@ SUBDIRS = \
 bin_SCRIPTS = gimptool-$(LT_RELEASE) @GIMPINSTALL@
 
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = gimp-$(LT_RELEASE).pc gimpui-$(LT_RELEASE).pc
+pkgconfig_DATA = \
+	gimp-$(LT_RELEASE).pc		\
+	gimpthumb-$(LT_RELEASE).pc	\
+	gimpui-$(LT_RELEASE).pc
 
 EXTRA_SCRIPTS = gimpinstall-$(LT_RELEASE)
 
