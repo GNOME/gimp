@@ -100,37 +100,45 @@ static GList       *idea_list = NULL;
 
 
 /*  the ops buttons  */
-static GtkSignalFunc open_ext_callbacks[] = 
+static GCallback open_ext_callbacks[] = 
 {
-  idea_open_or_raise_callback, file_open_cmd_callback, NULL, NULL
+  G_CALLBACK (idea_open_or_raise_callback), 
+  G_CALLBACK (file_open_cmd_callback), 
+  NULL, NULL
 };
 
-static GtkSignalFunc raise_ext_callbacks[] = 
+static GCallback raise_ext_callbacks[] = 
 {
-  idea_to_top_callback, NULL, NULL, NULL
+  G_CALLBACK (idea_to_top_callback), 
+  NULL, NULL, NULL
 };
 
-static GtkSignalFunc lower_ext_callbacks[] = 
+static GCallback lower_ext_callbacks[] = 
 {
-  idea_to_bottom_callback, NULL, NULL, NULL
+  G_CALLBACK (idea_to_bottom_callback), 
+  NULL, NULL, NULL
 };
 
 static OpsButton ops_buttons[] =
 {
-  { folder_xpm, idea_open_callback, open_ext_callbacks,
+  { folder_xpm, 
+    G_CALLBACK (idea_open_callback), open_ext_callbacks,
     N_("Open the selected entry\n"
        "<Shift> Raise window if already open\n"
        "<Ctrl> Load Image dialog"), NULL,
     NULL },
-  { raise_xpm, idea_up_callback, raise_ext_callbacks,
+  { raise_xpm, 
+    G_CALLBACK (idea_up_callback), raise_ext_callbacks,
     N_("Move the selected entry up in the index\n"
        "<Shift> To top"), NULL,
     NULL },
-  { lower_xpm, idea_down_callback, lower_ext_callbacks,
+  { lower_xpm, 
+    G_CALLBACK (idea_down_callback), lower_ext_callbacks,
     N_("Move the selected entry down in the index\n"
        "<Shift> To bottom"), NULL,
     NULL },
-  { delete_xpm, idea_remove_callback, NULL,
+  { delete_xpm, 
+    G_CALLBACK (idea_remove_callback), NULL,
     N_("Remove the selected entry from the index"), NULL,
     NULL },
   { NULL, NULL, NULL, NULL, NULL, NULL }
@@ -411,9 +419,9 @@ idea_add_in_position_with_select (gchar    *title,
 	  else
 	    gtk_list_insert_items (GTK_LIST (ideas->list), list, position);
 
-	  gtk_signal_connect (GTK_OBJECT (listitem), "button_press_event",
-			      GTK_SIGNAL_FUNC (list_item_callback),
-			      NULL);
+	  g_signal_connect (G_OBJECT (listitem), "button_press_event",
+                            G_CALLBACK (list_item_callback),
+                            NULL);
 
 	  gtk_widget_show (listitem);
 

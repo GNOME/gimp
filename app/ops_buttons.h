@@ -30,13 +30,13 @@ typedef struct _OpsButton OpsButton;
 
 struct _OpsButton 
 {
-  gchar         **xpm_data;       /*  xpm data for the button  */
-  GtkSignalFunc   callback;       /*  callback function        */
-  GtkSignalFunc  *ext_callbacks;  /*  callback functions when
-				   *  modifiers are pressed    */
-  gchar          *tooltip;
-  gchar          *private_tip;
-  GtkWidget      *widget;         /*  the button widget        */
+  gchar     **xpm_data;       /*  xpm data for the button  */
+  GCallback   callback;       /*  callback function        */
+  GCallback  *ext_callbacks;  /*  callback functions when  *
+                               *  modifiers are pressed    */
+  gchar      *tooltip;
+  gchar      *private_tip;
+  GtkWidget  *widget;         /*  the button widget        */
 };
 
 /* Function declarations */

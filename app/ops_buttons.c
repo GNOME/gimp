@@ -79,15 +79,15 @@ ops_button_box_new (OpsButton     *ops_button,
 
       if (ops_button->ext_callbacks == NULL)
 	{
-	  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-				     GTK_SIGNAL_FUNC (ops_button->callback),
-				     NULL);
+	  g_signal_connect_swapped (G_OBJECT (button), "clicked",
+                                    G_CALLBACK (ops_button->callback),
+                                    NULL);
 	}
       else
 	{
-	  gtk_signal_connect (GTK_OBJECT (button), "extended_clicked",
-			      GTK_SIGNAL_FUNC (ops_button_extended_clicked),
-			      ops_button);	  
+	  g_signal_connect (G_OBJECT (button), "extended_clicked",
+                            G_CALLBACK (ops_button_extended_clicked),
+                            ops_button);	  
 	}
 
       gimp_help_set_help_data (button,
