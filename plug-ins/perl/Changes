@@ -26,6 +26,7 @@ Revision history for Gimp-Perl extension.
         - Gimp::Fu augments (some) return value specifications.
         - fixed a "Attempt to free unreferenced scalar" bug that was caused
           by passing undef for strings.
+        - moved interact & friends into Gimp::UI.
         
 1.1   Fri Jul 30 07:37:30 CEST 1999
 	- one of the most successful releases, in terms of features & bugfixes.

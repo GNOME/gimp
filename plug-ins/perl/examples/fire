@@ -67,6 +67,8 @@ register "firetext",
          ['gimp-1.1'],
 	 sub {
    my ($text, $font, $inverse, $strength, $gradient, $displace) = @_;
+
+   $text =~ s/[\r\n]+$//;
    
    if ($inverse) {
       Palette->set_foreground('black');

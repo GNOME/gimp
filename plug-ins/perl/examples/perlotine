@@ -28,7 +28,7 @@ sub get_vguides {
     $i=0;
     my @vguides;
     while ($i=$img->find_next_guide($i)) {
-        if ($img->get_guide_orientation($i) == ORIENTATION_VERTICAL){
+        if ($img->get_guide_orientation($i) == &Gimp::VERTICAL_GUIDE){
             $keyval = sprintf("%4d", $img->get_guide_position($i));
             $vkeys{$keyval} = $i;
             }
@@ -49,7 +49,7 @@ sub get_hguides {
     $i=0;
     my @hguides;
     while ($i=$img->find_next_guide($i)) {
-        if ($img->get_guide_orientation($i) == ORIENTATION_HORIZONTAL){
+        if ($img->get_guide_orientation($i) == &Gimp::HORIZONTAL_GUIDE){
             $keyval = sprintf("%4d", $img->get_guide_position($i));
             $hkeys{$keyval} = $i;
             }
@@ -102,8 +102,8 @@ sub html_table_row_start {
 sub html_table_entry {
     ($fn, $imgname, $width, $height, $capatalize) = @_;
     $str = $capatalize ? 
-"\t\t<TD><IMG SRC=\"$imgname\" WIDTH=\"$width\"HEIGHT=\"$height\"></TD>\n" :
-"\t\t<td><img src=\"$imgname\" width=\"$width\"height=\"$height\"></td>\n";
+"\t\t<TD><IMG ALT=\" \" SRC=\"$imgname\" WIDTH=\"$width\" HEIGHT=\"$height\"></TD>\n" :
+"\t\t<td><img alt=\" \" src=\"$imgname\" width=\"$width\" height=\"$height\"></td>\n";
     print $fn $str;
     }
 
