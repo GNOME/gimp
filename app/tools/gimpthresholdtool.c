@@ -144,6 +144,8 @@ gimp_threshold_tool_class_init (GimpThresholdToolClass *klass)
 
   tool_class->initialize       = gimp_threshold_tool_initialize;
 
+  image_map_tool_class->shell_desc = _("Apply Threshold");
+
   image_map_tool_class->map    = gimp_threshold_tool_map;
   image_map_tool_class->dialog = gimp_threshold_tool_dialog;
   image_map_tool_class->reset  = gimp_threshold_tool_reset;
@@ -152,10 +154,6 @@ gimp_threshold_tool_class_init (GimpThresholdToolClass *klass)
 static void
 gimp_threshold_tool_init (GimpThresholdTool *t_tool)
 {
-  GimpImageMapTool *image_map_tool = GIMP_IMAGE_MAP_TOOL (t_tool);
-
-  image_map_tool->shell_desc = _("Apply Threshold");
-
   t_tool->threshold = g_new0 (Threshold, 1);
   t_tool->hist      = NULL;
 

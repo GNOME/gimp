@@ -90,10 +90,10 @@ static void     gimp_curves_tool_color_picked   (GimpColorTool    *color_tool,
 static void     gimp_curves_tool_map            (GimpImageMapTool *image_map_tool);
 static void     gimp_curves_tool_dialog         (GimpImageMapTool *image_map_tool);
 static void     gimp_curves_tool_reset          (GimpImageMapTool *image_map_tool);
-static gboolean gimp_curves_tool_settings_load  (GimpImageMapTool *tool,
-                                                 gpointer          file);
-static gboolean gimp_curves_tool_settings_save  (GimpImageMapTool *tool,
-                                                 gpointer          file);
+static gboolean gimp_curves_tool_settings_load  (GimpImageMapTool *image_map_tool,
+                                                 gpointer          fp);
+static gboolean gimp_curves_tool_settings_save  (GimpImageMapTool *image_map_tool,
+                                                 gpointer          fp);
 
 static void     curves_add_point                (GimpCurvesTool   *tool,
                                                  gint              x,
@@ -112,21 +112,12 @@ static gboolean curves_set_sensitive_callback   (GimpHistogramChannel channel,
                                                  GimpCurvesTool   *tool);
 static void     curves_curve_type_callback      (GtkWidget        *widget,
                                                  GimpCurvesTool   *tool);
-static void     curves_load_callback            (GtkWidget        *widget,
-                                                 GimpCurvesTool   *tool);
-static void     curves_save_callback            (GtkWidget        *widget,
-                                                 GimpCurvesTool   *tool);
 static gboolean curves_graph_events             (GtkWidget        *widget,
                                                  GdkEvent         *event,
                                                  GimpCurvesTool   *tool);
 static gboolean curves_graph_expose             (GtkWidget        *widget,
                                                  GdkEventExpose   *eevent,
                                                  GimpCurvesTool   *tool);
-
-static gboolean curves_read_from_file           (GimpCurvesTool   *tool,
-                                                 FILE             *file);
-static gboolean curves_write_to_file            (GimpCurvesTool   *tool,
-                                                 FILE             *file);
 
 
 static GimpImageMapToolClass *parent_class = NULL;
@@ -204,23 +195,23 @@ gimp_curves_tool_class_init (GimpCurvesToolClass *klass)
 
   color_tool_class->picked   = gimp_curves_tool_color_picked;
 
-  image_map_tool_class->settings_name = "curves";
+  image_map_tool_class->shell_desc        = _("Adjust Color Curves");
+  image_map_tool_class->settings_name     = "curves";
+  image_map_tool_class->load_dialog_title = _("Load Curves");
+  image_map_tool_class->save_dialog_title = _("Save Curves");
 
-  image_map_tool_class->map           = gimp_curves_tool_map;
-  image_map_tool_class->dialog        = gimp_curves_tool_dialog;
-  image_map_tool_class->reset         = gimp_curves_tool_reset;
+  image_map_tool_class->map               = gimp_curves_tool_map;
+  image_map_tool_class->dialog            = gimp_curves_tool_dialog;
+  image_map_tool_class->reset             = gimp_curves_tool_reset;
 
-  image_map_tool_class->settings_load = gimp_curves_tool_settings_load;
-  image_map_tool_class->settings_save = gimp_curves_tool_settings_save;
+  image_map_tool_class->settings_load     = gimp_curves_tool_settings_load;
+  image_map_tool_class->settings_save     = gimp_curves_tool_settings_save;
 }
 
 static void
 gimp_curves_tool_init (GimpCurvesTool *tool)
 {
-  GimpImageMapTool *image_map_tool = GIMP_IMAGE_MAP_TOOL (tool);
-  gint              i;
-
-  image_map_tool->shell_desc = _("Adjust Color Curves");
+  gint i;
 
   tool->curves  = g_new0 (Curves, 1);
   tool->lut     = gimp_lut_new ();
@@ -602,25 +593,17 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_container_add (GTK_CONTAINER (frame), bbox);
   gtk_widget_show (bbox);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_box_pack_start (GTK_BOX (bbox), button, FALSE, FALSE, 0);
-  gimp_help_set_help_data (button, _("Read curves settings from file"), NULL);
-  gtk_widget_show (button);
+  gtk_box_pack_start (GTK_BOX (bbox), image_map_tool->load_button,
+                      FALSE, FALSE, 0);
+  gimp_help_set_help_data (image_map_tool->load_button,
+                           _("Read curves settings from file"), NULL);
+  gtk_widget_show (image_map_tool->load_button);
 
-  g_signal_connect (button, "clicked",
-		    G_CALLBACK (curves_load_callback),
-		    tool);
-
-  button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_box_pack_start (GTK_BOX (bbox), button, FALSE, FALSE, 0);
-  gimp_help_set_help_data (button, _("Save curves settings to file"), NULL);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-		    G_CALLBACK (curves_save_callback),
-		    tool);
+  gtk_box_pack_start (GTK_BOX (bbox), image_map_tool->save_button,
+                      FALSE, FALSE, 0);
+  gimp_help_set_help_data (image_map_tool->save_button,
+                           _("Save curves settings to file"), NULL);
+  gtk_widget_show (image_map_tool->save_button);
 
   /*  The radio box for selecting the curve type  */
   frame = gtk_frame_new (_("Curve Type"));
@@ -661,17 +644,93 @@ gimp_curves_tool_reset (GimpImageMapTool *image_map_tool)
 }
 
 static gboolean
-gimp_curves_tool_settings_load (GimpImageMapTool *tool,
-                                gpointer          file)
+gimp_curves_tool_settings_load (GimpImageMapTool *image_map_tool,
+                                gpointer          fp)
 {
-  return curves_read_from_file (GIMP_CURVES_TOOL (tool), (FILE *) file);
+  GimpCurvesTool *tool = GIMP_CURVES_TOOL (image_map_tool);
+  FILE           *file = fp;
+  gint            i, j;
+  gint            fields;
+  gchar           buf[50];
+  gint            index[5][17];
+  gint            value[5][17];
+
+  if (! fgets (buf, sizeof (buf), file))
+    return FALSE;
+
+  if (strcmp (buf, "# GIMP Curves File\n") != 0)
+    return FALSE;
+
+  for (i = 0; i < 5; i++)
+    {
+      for (j = 0; j < 17; j++)
+	{
+	  fields = fscanf (file, "%d %d ", &index[i][j], &value[i][j]);
+	  if (fields != 2)
+	    {
+	      g_print ("fields != 2");
+	      return FALSE;
+	    }
+	}
+    }
+
+  for (i = 0; i < 5; i++)
+    {
+      tool->curves->curve_type[i] = GIMP_CURVE_SMOOTH;
+
+      for (j = 0; j < 17; j++)
+	{
+	  tool->curves->points[i][j][0] = index[i][j];
+	  tool->curves->points[i][j][1] = value[i][j];
+	}
+    }
+
+  for (i = 0; i < 5; i++)
+    curves_calculate_curve (tool->curves, i);
+
+  curves_update (tool, ALL);
+
+  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (tool->curve_type),
+			           GIMP_CURVE_SMOOTH);
+
+  return TRUE;
 }
 
 static gboolean
-gimp_curves_tool_settings_save (GimpImageMapTool *tool,
-                                gpointer          file)
+gimp_curves_tool_settings_save (GimpImageMapTool *image_map_tool,
+                                gpointer          fp)
 {
-  return curves_write_to_file (GIMP_CURVES_TOOL (tool), (FILE *) file);
+  GimpCurvesTool *tool = GIMP_CURVES_TOOL (image_map_tool);
+  FILE           *file = fp;
+  gint            i, j;
+  gint32          index;
+
+  for (i = 0; i < 5; i++)
+    if (tool->curves->curve_type[i] == GIMP_CURVE_FREE)
+      {
+	/*  pick representative points from the curve
+            and make them control points  */
+	for (j = 0; j <= 8; j++)
+	  {
+	    index = CLAMP0255 (j * 32);
+	    tool->curves->points[i][j * 2][0] = index;
+	    tool->curves->points[i][j * 2][1] = tool->curves->curve[i][index];
+	  }
+      }
+
+  fprintf (file, "# GIMP Curves File\n");
+
+  for (i = 0; i < 5; i++)
+    {
+      for (j = 0; j < 17; j++)
+	fprintf (file, "%d %d ",
+                 tool->curves->points[i][j][0],
+                 tool->curves->points[i][j][1]);
+
+      fprintf (file, "\n");
+    }
+
+  return TRUE;
 }
 
 /* TODO: preview alpha channel stuff correctly.  -- austin, 20/May/99 */
@@ -1180,108 +1239,4 @@ curves_graph_expose (GtkWidget      *widget,
   curve_print_loc (tool);
 
   return FALSE;
-}
-
-static void
-curves_load_callback (GtkWidget      *widget,
-		      GimpCurvesTool *tool)
-{
-  gimp_image_map_tool_settings_dialog (GIMP_IMAGE_MAP_TOOL (tool),
-                                       _("Load Curves"), FALSE);
-}
-
-static void
-curves_save_callback (GtkWidget      *widget,
-		      GimpCurvesTool *tool)
-{
-  gimp_image_map_tool_settings_dialog (GIMP_IMAGE_MAP_TOOL (tool),
-                                       _("Save Curves"), TRUE);
-}
-
-static gboolean
-curves_read_from_file (GimpCurvesTool *tool,
-                       FILE           *file)
-{
-  gint  i, j;
-  gint  fields;
-  gchar buf[50];
-  gint  index[5][17];
-  gint  value[5][17];
-
-  if (! fgets (buf, sizeof (buf), file))
-    return FALSE;
-
-  if (strcmp (buf, "# GIMP Curves File\n") != 0)
-    return FALSE;
-
-  for (i = 0; i < 5; i++)
-    {
-      for (j = 0; j < 17; j++)
-	{
-	  fields = fscanf (file, "%d %d ", &index[i][j], &value[i][j]);
-	  if (fields != 2)
-	    {
-	      g_print ("fields != 2");
-	      return FALSE;
-	    }
-	}
-    }
-
-  for (i = 0; i < 5; i++)
-    {
-      tool->curves->curve_type[i] = GIMP_CURVE_SMOOTH;
-
-      for (j = 0; j < 17; j++)
-	{
-	  tool->curves->points[i][j][0] = index[i][j];
-	  tool->curves->points[i][j][1] = value[i][j];
-	}
-    }
-
-  for (i = 0; i < 5; i++)
-    curves_calculate_curve (tool->curves, i);
-
-  curves_update (tool, ALL);
-
-  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (tool->curve_type),
-			           GIMP_CURVE_SMOOTH);
-
-  gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
-
-  return TRUE;
-}
-
-static gboolean
-curves_write_to_file (GimpCurvesTool *tool,
-                      FILE           *file)
-{
-  gint   i, j;
-  gint32 index;
-
-  for (i = 0; i < 5; i++)
-    if (tool->curves->curve_type[i] == GIMP_CURVE_FREE)
-      {
-	/*  pick representative points from the curve
-            and make them control points  */
-	for (j = 0; j <= 8; j++)
-	  {
-	    index = CLAMP0255 (j * 32);
-	    tool->curves->points[i][j * 2][0] = index;
-	    tool->curves->points[i][j * 2][1] = tool->curves->curve[i][index];
-	  }
-      }
-
-  fprintf (file, "# GIMP Curves File\n");
-
-  for (i = 0; i < 5; i++)
-    {
-      for (j = 0; j < 17; j++)
-	fprintf (file, "%d %d ",
-                 tool->curves->points[i][j][0],
-                 tool->curves->points[i][j][1]);
-
-      fprintf (file, "\n");
-    }
-
-  return TRUE;
 }

@@ -149,6 +149,8 @@ gimp_colorize_tool_class_init (GimpColorizeToolClass *klass)
 
   tool_class->initialize       = gimp_colorize_tool_initialize;
 
+  image_map_tool_class->shell_desc = _("Colorize the Image");
+
   image_map_tool_class->map    = gimp_colorize_tool_map;
   image_map_tool_class->dialog = gimp_colorize_tool_dialog;
   image_map_tool_class->reset  = gimp_colorize_tool_reset;
@@ -157,10 +159,6 @@ gimp_colorize_tool_class_init (GimpColorizeToolClass *klass)
 static void
 gimp_colorize_tool_init (GimpColorizeTool *col_tool)
 {
-  GimpImageMapTool *image_map_tool = GIMP_IMAGE_MAP_TOOL (col_tool);
-
-  image_map_tool->shell_desc = _("Colorize the Image");
-
   col_tool->colorize = g_new0 (Colorize, 1);
 
   colorize_init (col_tool->colorize);

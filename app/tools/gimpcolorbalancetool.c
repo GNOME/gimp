@@ -146,6 +146,8 @@ gimp_color_balance_tool_class_init (GimpColorBalanceToolClass *klass)
 
   tool_class->initialize       = gimp_color_balance_tool_initialize;
 
+  image_map_tool_class->shell_desc = _("Adjust Color Balance");
+
   image_map_tool_class->map    = gimp_color_balance_tool_map;
   image_map_tool_class->dialog = gimp_color_balance_tool_dialog;
   image_map_tool_class->reset  = gimp_color_balance_tool_reset;
@@ -154,10 +156,6 @@ gimp_color_balance_tool_class_init (GimpColorBalanceToolClass *klass)
 static void
 gimp_color_balance_tool_init (GimpColorBalanceTool *cb_tool)
 {
-  GimpImageMapTool *image_map_tool = GIMP_IMAGE_MAP_TOOL (cb_tool);
-
-  image_map_tool->shell_desc = _("Adjust Color Balance");
-
   cb_tool->color_balance = g_new0 (ColorBalance, 1);
   cb_tool->transfer_mode = GIMP_MIDTONES;
 

@@ -41,9 +41,10 @@ struct _GimpImageMapTool
   GimpImageMap  *image_map;
 
   /* dialog */
-  const gchar   *shell_desc;
   GtkWidget     *shell;
   GtkWidget     *main_vbox;
+  GtkWidget     *load_button;
+  GtkWidget     *save_button;
 
   /* settings file dialog */
   GtkWidget     *settings_dialog;
@@ -53,7 +54,10 @@ struct _GimpImageMapToolClass
 {
   GimpColorToolClass  parent_class;
 
+  const gchar        *shell_desc;
   const gchar        *settings_name;
+  const gchar        *load_dialog_title;
+  const gchar        *save_dialog_title;
 
   /* virtual functions */
   void     (* map)           (GimpImageMapTool *image_map_tool);
@@ -67,13 +71,9 @@ struct _GimpImageMapToolClass
 };
 
 
-GType   gimp_image_map_tool_get_type        (void) G_GNUC_CONST;
+GType   gimp_image_map_tool_get_type (void) G_GNUC_CONST;
 
-void    gimp_image_map_tool_preview         (GimpImageMapTool *image_map_tool);
-
-void    gimp_image_map_tool_settings_dialog (GimpImageMapTool *image_map_tool,
-                                             const gchar      *title,
-                                             gboolean          save);
+void    gimp_image_map_tool_preview  (GimpImageMapTool *image_map_tool);
 
 
 #endif  /*  __GIMP_IMAGE_MAP_TOOL_H__  */

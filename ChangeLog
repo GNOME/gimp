@@ -1,3 +1,24 @@
+2004-02-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpimagemaptool.[ch]: moved "shell_desc" from
+	GimpImageMapTool to GimpImageMapToolClass and added
+	"load_dialog_title" and "save_dialog_title". Create the
+	load/save buttons in gimp_image_map_tool_initialize() and
+	remember them in the GimpImageMapTool struct. Moved the
+	whole load/save button/dialog logic into private functions.
+
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c: changed accordingly, removed
+	load/save callbacks, inlined the load/save functions into
+	GimpImageMapTool's virtual function implementations.
+
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorizetool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimpthresholdtool.c: changed accordingly.
+
 2004-02-25  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpcurvestool.[ch]

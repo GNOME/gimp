@@ -95,10 +95,10 @@ static void     gimp_levels_tool_color_picked   (GimpColorTool    *color_tool,
 static void     gimp_levels_tool_map            (GimpImageMapTool *image_map_tool);
 static void     gimp_levels_tool_dialog         (GimpImageMapTool *image_map_tool);
 static void     gimp_levels_tool_reset          (GimpImageMapTool *image_map_tool);
-static gboolean gimp_levels_tool_settings_load  (GimpImageMapTool *tool,
-                                                 gpointer          file);
-static gboolean gimp_levels_tool_settings_save  (GimpImageMapTool *tool,
-                                                 gpointer          file);
+static gboolean gimp_levels_tool_settings_load  (GimpImageMapTool *image_mao_tool,
+                                                 gpointer          fp);
+static gboolean gimp_levels_tool_settings_save  (GimpImageMapTool *image_map_tool,
+                                                 gpointer          fp);
 
 static void     levels_update                        (GimpLevelsTool *tool,
                                                       guint           update);
@@ -109,10 +109,6 @@ static void     levels_channel_reset_callback        (GtkWidget      *widget,
 static gboolean levels_set_sensitive_callback        (GimpHistogramChannel channel,
                                                       GimpLevelsTool *tool);
 static void     levels_auto_callback                 (GtkWidget      *widget,
-                                                      GimpLevelsTool *tool);
-static void     levels_load_callback                 (GtkWidget      *widget,
-                                                      GimpLevelsTool *tool);
-static void     levels_save_callback                 (GtkWidget      *widget,
                                                       GimpLevelsTool *tool);
 static void     levels_low_input_adjustment_update   (GtkAdjustment  *adjustment,
                                                       GimpLevelsTool *tool);
@@ -140,11 +136,6 @@ static gint     levels_output_area_event             (GtkWidget      *widget,
 static gboolean levels_output_area_expose            (GtkWidget      *widget,
                                                       GdkEventExpose *event,
                                                       GimpLevelsTool *tool);
-
-static gboolean levels_read_from_file                (GimpLevelsTool *tool,
-                                                      FILE           *f);
-static gboolean levels_write_to_file                 (GimpLevelsTool *tool,
-                                                      FILE           *f);
 
 
 static GimpImageMapToolClass *parent_class = NULL;
@@ -221,23 +212,22 @@ gimp_levels_tool_class_init (GimpLevelsToolClass *klass)
 
   color_tool_class->picked = gimp_levels_tool_color_picked;
 
-  image_map_tool_class->settings_name = "levels";
+  image_map_tool_class->shell_desc        = _("Adjust Color Levels");
+  image_map_tool_class->settings_name     = "levels";
+  image_map_tool_class->load_dialog_title = _("Load Levels");
+  image_map_tool_class->save_dialog_title = _("Save Levels");
 
-  image_map_tool_class->map           = gimp_levels_tool_map;
-  image_map_tool_class->dialog        = gimp_levels_tool_dialog;
-  image_map_tool_class->reset         = gimp_levels_tool_reset;
+  image_map_tool_class->map               = gimp_levels_tool_map;
+  image_map_tool_class->dialog            = gimp_levels_tool_dialog;
+  image_map_tool_class->reset             = gimp_levels_tool_reset;
 
-  image_map_tool_class->settings_load = gimp_levels_tool_settings_load;
-  image_map_tool_class->settings_save = gimp_levels_tool_settings_save;
+  image_map_tool_class->settings_load     = gimp_levels_tool_settings_load;
+  image_map_tool_class->settings_save     = gimp_levels_tool_settings_save;
 }
 
 static void
 gimp_levels_tool_init (GimpLevelsTool *tool)
 {
-  GimpImageMapTool *image_map_tool = GIMP_IMAGE_MAP_TOOL (tool);
-
-  image_map_tool->shell_desc = _("Adjust Color Levels");
-
   tool->lut           = gimp_lut_new ();
   tool->levels        = g_new0 (Levels, 1);
   tool->hist          = NULL;
@@ -653,26 +643,17 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbox), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gimp_help_set_help_data (button, _("Read levels settings from file"), NULL);
-  gtk_widget_show (button);
+  gtk_box_pack_start (GTK_BOX (hbbox), image_map_tool->load_button,
+                      FALSE, FALSE, 0);
+  gimp_help_set_help_data (image_map_tool->load_button,
+                           _("Read levels settings from file"), NULL);
+  gtk_widget_show (image_map_tool->load_button);
 
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (levels_load_callback),
-                    tool);
-
-  button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gimp_help_set_help_data (button, _("Save levels settings to file"), NULL);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (levels_save_callback),
-                    tool);
-
+  gtk_box_pack_start (GTK_BOX (hbbox), image_map_tool->save_button,
+                      FALSE, FALSE, 0);
+  gimp_help_set_help_data (image_map_tool->save_button,
+                           _("Save levels settings to file"), NULL);
+  gtk_widget_show (image_map_tool->save_button);
 
   hbbox = gtk_hbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (hbbox), 2);
@@ -713,17 +694,84 @@ gimp_levels_tool_reset (GimpImageMapTool *image_map_tool)
 }
 
 static gboolean
-gimp_levels_tool_settings_load (GimpImageMapTool *tool,
-                                gpointer          file)
+gimp_levels_tool_settings_load (GimpImageMapTool *image_map_tool,
+                                gpointer          fp)
 {
-  return levels_read_from_file (GIMP_LEVELS_TOOL (tool), (FILE *) file);
+  GimpLevelsTool *tool = GIMP_LEVELS_TOOL (image_map_tool);
+  FILE           *file = fp;
+  gint            low_input[5];
+  gint            high_input[5];
+  gint            low_output[5];
+  gint            high_output[5];
+  gdouble         gamma[5];
+  gint            i, fields;
+  gchar           buf[50];
+  gchar          *nptr;
+
+  if (! fgets (buf, sizeof (buf), file))
+    return FALSE;
+
+  if (strcmp (buf, "# GIMP Levels File\n") != 0)
+    return FALSE;
+
+  for (i = 0; i < 5; i++)
+    {
+      fields = fscanf (file, "%d %d %d %d ",
+		       &low_input[i],
+		       &high_input[i],
+		       &low_output[i],
+		       &high_output[i]);
+
+      if (fields != 4)
+	return FALSE;
+
+      if (! fgets (buf, 50, file))
+	return FALSE;
+
+      gamma[i] = g_ascii_strtod (buf, &nptr);
+
+      if (buf == nptr || errno == ERANGE)
+	return FALSE;
+    }
+
+  for (i = 0; i < 5; i++)
+    {
+      tool->levels->low_input[i]   = low_input[i];
+      tool->levels->high_input[i]  = high_input[i];
+      tool->levels->low_output[i]  = low_output[i];
+      tool->levels->high_output[i] = high_output[i];
+      tool->levels->gamma[i]       = gamma[i];
+    }
+
+  levels_update (tool, ALL);
+
+  return TRUE;
 }
 
 static gboolean
-gimp_levels_tool_settings_save (GimpImageMapTool *tool,
-                                gpointer          file)
+gimp_levels_tool_settings_save (GimpImageMapTool *image_map_tool,
+                                gpointer          fp)
 {
-  return levels_write_to_file (GIMP_LEVELS_TOOL (tool), (FILE *) file);
+  GimpLevelsTool *tool = GIMP_LEVELS_TOOL (image_map_tool);
+  FILE           *file = fp;
+  gint            i;
+
+  fprintf (file, "# GIMP Levels File\n");
+
+  for (i = 0; i < 5; i++)
+    {
+      gchar buf[G_ASCII_DTOSTR_BUF_SIZE];
+
+      fprintf (file, "%d %d %d %d %s\n",
+	       tool->levels->low_input[i],
+	       tool->levels->high_input[i],
+	       tool->levels->low_output[i],
+	       tool->levels->high_output[i],
+               g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                                tool->levels->gamma[i]));
+    }
+
+  return TRUE;
 }
 
 static void
@@ -1316,11 +1364,9 @@ gimp_levels_tool_color_picked (GimpColorTool *color_tool,
                                GimpRGB       *color,
                                gint           color_index)
 {
-  GimpLevelsTool *tool;
+  GimpLevelsTool *tool = GIMP_LEVELS_TOOL (color_tool);
   guchar          col[5];
   guint           value;
-
-  tool = GIMP_LEVELS_TOOL (color_tool);
 
   gimp_rgba_get_uchar (color,
                        col + RED_PIX,
@@ -1369,98 +1415,4 @@ gimp_levels_tool_color_picked (GimpColorTool *color_tool,
   levels_update (tool, ALL);
 
   gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
-}
-
-static void
-levels_load_callback (GtkWidget      *widget,
-		      GimpLevelsTool *tool)
-{
-  gimp_image_map_tool_settings_dialog (GIMP_IMAGE_MAP_TOOL (tool),
-                                       _("Load Levels"), FALSE);
-}
-
-static void
-levels_save_callback (GtkWidget      *widget,
-		      GimpLevelsTool *tool)
-{
-  gimp_image_map_tool_settings_dialog (GIMP_IMAGE_MAP_TOOL (tool),
-                                       _("Save Levels"), TRUE);
-}
-
-static gboolean
-levels_read_from_file (GimpLevelsTool *tool,
-                       FILE           *file)
-{
-  gint     low_input[5];
-  gint     high_input[5];
-  gint     low_output[5];
-  gint     high_output[5];
-  gdouble  gamma[5];
-  gint     i, fields;
-  gchar    buf[50];
-  gchar   *nptr;
-
-  if (! fgets (buf, sizeof (buf), file))
-    return FALSE;
-
-  if (strcmp (buf, "# GIMP Levels File\n") != 0)
-    return FALSE;
-
-  for (i = 0; i < 5; i++)
-    {
-      fields = fscanf (file, "%d %d %d %d ",
-		       &low_input[i],
-		       &high_input[i],
-		       &low_output[i],
-		       &high_output[i]);
-
-      if (fields != 4)
-	return FALSE;
-
-      if (! fgets (buf, 50, file))
-	return FALSE;
-
-      gamma[i] = g_ascii_strtod (buf, &nptr);
-
-      if (buf == nptr || errno == ERANGE)
-	return FALSE;
-    }
-
-  for (i = 0; i < 5; i++)
-    {
-      tool->levels->low_input[i]   = low_input[i];
-      tool->levels->high_input[i]  = high_input[i];
-      tool->levels->low_output[i]  = low_output[i];
-      tool->levels->high_output[i] = high_output[i];
-      tool->levels->gamma[i]       = gamma[i];
-    }
-
-  levels_update (tool, ALL);
-
-  gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));
-
-  return TRUE;
-}
-
-static gboolean
-levels_write_to_file (GimpLevelsTool *tool,
-                      FILE           *file)
-{
-  gint  i;
-  gchar buf[G_ASCII_DTOSTR_BUF_SIZE];
-
-  fprintf (file, "# GIMP Levels File\n");
-
-  for (i = 0; i < 5; i++)
-    {
-      fprintf (file, "%d %d %d %d %s\n",
-	       tool->levels->low_input[i],
-	       tool->levels->high_input[i],
-	       tool->levels->low_output[i],
-	       tool->levels->high_output[i],
-               g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                                tool->levels->gamma[i]));
-    }
-
-  return TRUE;
 }
