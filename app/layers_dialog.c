@@ -894,6 +894,10 @@ layers_dialog_update (GimpImage* gimage)
   if (item_list)
     gtk_list_insert_items (GTK_LIST (layersD->layer_list), item_list, 0);
 
+  gtk_signal_connect (GIMP_OBJECT (gimage),
+		      "destroy",
+		      GTK_SIGNAL_FUNC (lc_dialog_update_cb),
+		      NULL);
   suspend_gimage_notify--;
 }
 
