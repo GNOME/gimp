@@ -1,5 +1,10 @@
 2002-11-18  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpdialog.c: forgot to remove the
+	"_delete_event_" stuff's documentation.
+
+2002-11-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/tool_manager.c: removed unneeded #includes.
 
 2002-11-18  Michael Natterer  <mitch@gimp.org>

@@ -273,12 +273,6 @@ gimp_dialog_create_action_area (GimpDialog *dialog,
  * @dialog: The #GimpDialog you want to create the action_area for.
  * @args: A @va_list as obtained with va_start() describing the action_area
  *        buttons.
- *
- * Please note that the delete_event will only be connected to the first
- * button with the "connect_delete" boolean set to true. It is possible
- * to just connect the delete_event to a callback without adding a new
- * button with a special label "_delete_event_", connect_delete == true
- * and callback != NULL.
  **/
 void
 gimp_dialog_create_action_areav (GimpDialog *dialog,
