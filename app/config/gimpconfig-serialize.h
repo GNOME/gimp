@@ -39,8 +39,8 @@ gboolean  gimp_config_serialize_unknown_tokens     (GObject      *object,
 
 gboolean  gimp_config_serialize_property           (GObject      *object,
 						    GParamSpec   *param_spec,
-						    GString      *str,
-						    gboolean      escaped);
+                                                    gint          fd,
+                                                    gint          indent_level);
 gboolean  gimp_config_serialize_value              (const GValue *value,
                                                     GString      *str,
                                                     gboolean      escaped);

@@ -194,13 +194,10 @@ dump_gimprc_system (GObject *rc,
 	}
 
       g_string_append (str, "# ");
+      write (fd, str->str, str->len);
 
-      if (gimp_config_serialize_property (rc, prop_spec, str, TRUE))
-	{
-	  g_string_append (str, "\n");
-
-          write (fd, str->str, str->len);
-        }
+      if (gimp_config_serialize_property (rc, prop_spec, fd, 0))
+        write (fd, "\n", 1);
     }
 
   g_free (property_specs);
@@ -300,12 +297,10 @@ dump_gimprc_manpage (GObject *rc,
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
-  GString       *str;
   guint          n_property_specs;
   guint          i;
 
-  str = g_string_new (man_page_header);
-  write (fd, str->str, str->len);
+  write (fd, man_page_header, strlen (man_page_header));
 
   klass = G_OBJECT_GET_CLASS (rc);
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
@@ -318,13 +313,11 @@ dump_gimprc_manpage (GObject *rc,
       if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
         continue;
 
-      g_string_assign (str, ".TP\n");
+      write (fd, ".TP\n", strlen (".TP\n"));
 
-      if (gimp_config_serialize_property (rc, prop_spec, str, TRUE))
+      if (gimp_config_serialize_property (rc, prop_spec, fd, 0))
 	{
-	  g_string_append (str, "\n");
-
-          write (fd, str->str, str->len);
+	  write (fd, "\n", 1);
 
 	  desc = dump_describe_param (prop_spec);
 
@@ -336,7 +329,6 @@ dump_gimprc_manpage (GObject *rc,
     }
 
   g_free (property_specs);
-  g_string_free (str, TRUE);
 
   write (fd, man_page_path,   strlen (man_page_path));
   write (fd, man_page_footer, strlen (man_page_footer));

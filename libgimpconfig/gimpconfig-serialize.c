@@ -64,7 +64,6 @@ gimp_config_serialize_properties (GObject  *object,
   GParamSpec   **property_specs;
   guint          n_property_specs;
   guint          i;
-  GString       *str;
 
   g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
   
@@ -75,8 +74,6 @@ gimp_config_serialize_properties (GObject  *object,
   if (! property_specs)
     return TRUE;
 
-  str = g_string_new (NULL);
-
   for (i = 0; i < n_property_specs; i++)
     {
       GParamSpec *prop_spec = property_specs[i];
@@ -84,19 +81,12 @@ gimp_config_serialize_properties (GObject  *object,
       if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
         continue;
 
-      gimp_config_string_indent (str, indent_level);
-
-      if (gimp_config_serialize_property (object, prop_spec, str, TRUE))
-	{
-          if (write (fd, str->str, str->len) == -1)
-            return FALSE;
-        }
-
-      g_string_truncate (str, 0);
+      if (! gimp_config_serialize_property (object, prop_spec,
+                                            fd, indent_level))
+        return FALSE;
     }
 
   g_free (property_specs);
-  g_string_free (str, TRUE);
 
   return TRUE;
 }
@@ -118,7 +108,6 @@ gimp_config_serialize_changed_properties (GObject *object,
   GParamSpec   **property_specs;
   guint          n_property_specs;
   guint          i;
-  GString       *str;
   GValue         value = { 0, };
 
   g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
@@ -129,8 +118,6 @@ gimp_config_serialize_changed_properties (GObject *object,
 
   if (! property_specs)
     return TRUE;
-
-  str = g_string_new (NULL);
 
   for (i = 0; i < n_property_specs; i++)
     {
@@ -144,22 +131,15 @@ gimp_config_serialize_changed_properties (GObject *object,
 
       if (! g_param_value_defaults (prop_spec, &value))
         {
-          gimp_config_string_indent (str, indent_level);
-
-          if (gimp_config_serialize_property (object, prop_spec, str, TRUE))
-            {
-              if (write (fd, str->str, str->len) == -1)
-                return FALSE;
-            }
-
-          g_string_truncate (str, 0);
+          if (! gimp_config_serialize_property (object, prop_spec,
+                                                fd, indent_level))
+            return FALSE;
         }
 
       g_value_unset (&value);
     }
 
   g_free (property_specs);
-  g_string_free (str, TRUE);
 
   return TRUE;
 }
@@ -183,7 +163,6 @@ gimp_config_serialize_properties_diff (GObject *object,
   GObjectClass *klass;
   GList        *diff;
   GList        *list;
-  GString      *str;
 
   g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
   g_return_val_if_fail (G_IS_OBJECT (compare), FALSE);
@@ -197,8 +176,6 @@ gimp_config_serialize_properties_diff (GObject *object,
   if (! diff)
     return TRUE;
 
-  str = g_string_new (NULL);
-
   for (list = diff; list; list = g_list_next (list))
     {
       GParamSpec *prop_spec = (GParamSpec *) list->data;
@@ -206,18 +183,11 @@ gimp_config_serialize_properties_diff (GObject *object,
       if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
         continue;
 
-      gimp_config_string_indent (str, indent_level);
-
-      if (gimp_config_serialize_property (object, prop_spec, str, TRUE))
-	{
-          if (write (fd, str->str, str->len) == -1)
-            return FALSE;
-        }
-
-      g_string_truncate (str, 0);
+      if (! gimp_config_serialize_property (object, prop_spec,
+                                            fd, indent_level))
+        return FALSE;
     }
 
-  g_string_free (str, TRUE);
   g_list_free (diff);
 
   return TRUE;
@@ -225,20 +195,23 @@ gimp_config_serialize_properties_diff (GObject *object,
 
 
 gboolean
-gimp_config_serialize_property (GObject      *object,
-                                GParamSpec   *param_spec,
-                                GString      *str,
-                                gboolean      escaped)
+gimp_config_serialize_property (GObject    *object,
+                                GParamSpec *param_spec,
+                                gint        fd,
+                                gint        indent_level)
 {
   GTypeClass          *owner_class;
   GimpConfigInterface *config_iface;
   GimpConfigInterface *parent_iface = NULL;
-  GValue               value = { 0, };
+  GString             *str;
+  GValue               value   = { 0, };
   gboolean             success = FALSE;
 
   if (! (param_spec->flags & GIMP_PARAM_SERIALIZE))
     return FALSE;
 
+  str = g_string_new (NULL);
+  gimp_config_string_indent (str, indent_level);
   g_string_append_printf (str, "(%s ", param_spec->name);
 
   g_value_init (&value, param_spec->value_type);
@@ -285,15 +258,53 @@ gimp_config_serialize_property (GObject      *object,
    *  FALSE, continue with the default implementation
    */
 
-  if (! success && gimp_config_serialize_value (&value, str, escaped))
+  if (! success)
     {
-      success = TRUE;
+      if (G_VALUE_HOLDS_OBJECT (&value))
+        {
+          GimpConfigInterface *gimp_config_iface = NULL;
+          GObject             *prop_object;
+
+          prop_object = g_value_get_object (&value);
+
+          if (prop_object)
+            gimp_config_iface = GIMP_GET_CONFIG_INTERFACE (prop_object);
+          else
+            success = TRUE;
+
+          if (gimp_config_iface)
+            {
+              g_string_append_c (str, '\n');
+              write (fd, str->str, str->len);
+              g_string_truncate (str, 0);
+
+              success = gimp_config_iface->serialize (prop_object,
+                                                      fd, indent_level + 1,
+                                                      NULL);
+
+              success = TRUE;
+            }
+        }
+      else
+        {
+          success = gimp_config_serialize_value (&value, str, TRUE);
+        }
+    }
+
+  if (success)
+    {
+      g_string_append (str, ")\n");
+      
+      if (write (fd, str->str, str->len) == -1)
+        success = FALSE;
     }
 
   if (! success)
     {
       /* don't warn for empty string properties */
-      if (! G_VALUE_HOLDS_STRING (&value))
+      if (G_VALUE_HOLDS_STRING (&value))
+        success = TRUE;
+      else
         g_warning ("couldn't serialize property %s::%s of type %s",
                    g_type_name (G_TYPE_FROM_INSTANCE (object)),
                    param_spec->name, 
@@ -302,8 +313,7 @@ gimp_config_serialize_property (GObject      *object,
 
   g_value_unset (&value);
 
-  if (success)
-    g_string_append (str, ")\n");
+  g_string_free (str, TRUE);
 
   return success;
 }
@@ -425,7 +435,7 @@ gimp_config_serialize_value (const GValue *value,
 
               if (! gimp_config_serialize_value (g_value_array_get_nth (array,
 									i),
-                                                 str, escaped))
+                                                 str, TRUE))
                 return FALSE;
             }
         }

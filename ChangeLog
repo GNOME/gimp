@@ -1,5 +1,28 @@
 2003-02-28  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpconfig-deserialize.c
+	* app/config/gimpconfig-serialize.[ch]: transparently serialize
+	and deserialize object properties that implement the
+	GimpConfigInterface.
+
+	* app/config/gimpconfig-utils.c (gimp_config_reset_properties):
+	call reset recursively if properties are itself objects that
+	implement the GimpConfigInterface.
+
+	* app/config/gimpconfig-dump.c: adapt to API changes.
+
+	* app/config/gimpconfig-params.h: made object properties installed
+	using GIMP_CONFIG_INSTALL_PROP_OBJECT() be not writable by default.
+
+	* app/core/gimpcontext.c (gimp_context_class_init): made objects
+	properties explicitely writeable.
+
+	* app/tools/gimptextoptions.c: made the GimpText object a property
+	of GimpTextOptions and removed lots of special handling which is
+	now transparently done by GimpConfigInterface.
+
+2003-02-28  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig-serialize.[ch]: renamed
 	gimp_config_serialize_changed_properties() to
 	gimp_config_serialize_properties_diff() and added a new function

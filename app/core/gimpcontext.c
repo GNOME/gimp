@@ -560,25 +560,25 @@ gimp_context_class_init (GimpContextClass *klass)
                                    gimp_context_prop_names[GIMP_CONTEXT_PROP_BRUSH],
                                    NULL,
                                    GIMP_TYPE_BRUSH,
-                                   0);
+                                   G_PARAM_WRITABLE);
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_PATTERN,
                                    gimp_context_prop_names[GIMP_CONTEXT_PROP_PATTERN],
                                    NULL,
                                    GIMP_TYPE_PATTERN,
-                                   0);
+                                   G_PARAM_WRITABLE);
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_GRADIENT,
                                    gimp_context_prop_names[GIMP_CONTEXT_PROP_GRADIENT],
                                    NULL,
                                    GIMP_TYPE_GRADIENT,
-                                   0);
+                                   G_PARAM_WRITABLE);
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, GIMP_CONTEXT_PROP_PALETTE,
                                    gimp_context_prop_names[GIMP_CONTEXT_PROP_PALETTE],
                                    NULL,
                                    GIMP_TYPE_PALETTE,
-                                   0);
+                                   G_PARAM_WRITABLE);
 
   g_object_class_install_property (object_class, GIMP_CONTEXT_PROP_BUFFER,
 				   g_param_spec_object (gimp_context_prop_names[GIMP_CONTEXT_PROP_BUFFER],

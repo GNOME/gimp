@@ -149,12 +149,6 @@ GParamSpec * gimp_param_spec_unit         (const gchar    *name,
                                    gimp_param_spec_memsize (name, NULL, blurb,\
                                    min, max, default,\
                                    flags | GIMP_CONFIG_PARAM_FLAGS))
-#define GIMP_CONFIG_INSTALL_PROP_OBJECT(class, id,\
-                                        name, blurb, object_type, flags)\
-  g_object_class_install_property (class, id,\
-                                   g_param_spec_object (name, NULL, blurb,\
-                                   object_type,\
-                                   flags | GIMP_CONFIG_PARAM_FLAGS))
 #define GIMP_CONFIG_INSTALL_PROP_PATH(class, id,\
                                       name, blurb, type, default, flags)\
   g_object_class_install_property (class, id,\
@@ -179,6 +173,17 @@ GParamSpec * gimp_param_spec_unit         (const gchar    *name,
                                    gimp_param_spec_unit (name, NULL, blurb,\
                                    pixels, default,\
                                    flags | GIMP_CONFIG_PARAM_FLAGS))
+
+
+/*  object properties are _not_ writeable by default  */
+
+#define GIMP_CONFIG_INSTALL_PROP_OBJECT(class, id,\
+                                        name, blurb, object_type, flags)\
+  g_object_class_install_property (class, id,\
+                                   g_param_spec_object (name, NULL, blurb,\
+                                   object_type,\
+                                   flags |\
+                                   G_PARAM_READABLE | GIMP_PARAM_SERIALIZE))
 
 
 #endif /* __GIMP_CONFIG_PARAMS_H__ */

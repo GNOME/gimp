@@ -27,6 +27,7 @@
 
 #include "libgimpbase/gimpenv.h"
 
+#include "gimpconfig.h"
 #include "gimpconfig-utils.h"
 
 
@@ -170,6 +171,8 @@ gimp_config_copy_properties (GObject *src,
   if (!property_specs)
     return;
 
+  g_object_freeze_notify (dest);
+
   for (i = 0; i < n_property_specs; i++)
     {
       GParamSpec *prop_spec;
@@ -191,6 +194,8 @@ gimp_config_copy_properties (GObject *src,
     }
 
   g_free (property_specs);
+
+  g_object_thaw_notify (dest);
 }
 
 /**
@@ -205,6 +210,7 @@ gimp_config_reset_properties (GObject *object)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
+  GValue         value = { 0, };
   guint          n_property_specs;
   guint          i;
 
@@ -217,17 +223,30 @@ gimp_config_reset_properties (GObject *object)
   if (!property_specs)
     return;
 
+  g_object_freeze_notify (object);
+
   for (i = 0; i < n_property_specs; i++)
     {
       GParamSpec *prop_spec;
  
       prop_spec = property_specs[i];
 
-      if ((prop_spec->flags & G_PARAM_WRITABLE) &&
-          ! G_IS_PARAM_SPEC_OBJECT (prop_spec))
-	{
-	  GValue value = { 0, };
+      if (G_IS_PARAM_SPEC_OBJECT (prop_spec))
+        {
+          if (g_type_interface_peek (g_type_class_peek (prop_spec->value_type),
+                                     GIMP_TYPE_CONFIG_INTERFACE))
+            {
+              g_value_init (&value, prop_spec->value_type);
 
+              g_object_get_property (object, prop_spec->name, &value);
+
+              gimp_config_reset (g_value_get_object (&value));
+
+              g_value_unset (&value);
+            }
+        }
+      else if (prop_spec->flags & G_PARAM_WRITABLE)
+	{
 	  g_value_init (&value, prop_spec->value_type);
       
 	  g_param_value_set_default (prop_spec, &value);
@@ -238,6 +257,8 @@ gimp_config_reset_properties (GObject *object)
     }
 
   g_free (property_specs);
+
+  g_object_thaw_notify (object);
 }
 
 

@@ -26,8 +26,7 @@
 #include "tools-types.h"
 
 #include "config/gimpconfig.h"
-#include "config/gimpconfig-deserialize.h"
-#include "config/gimpconfig-serialize.h"
+#include "config/gimpconfig-params.h"
 
 #include "core/gimptoolinfo.h"
 
@@ -44,20 +43,20 @@
 #include "libgimp/gimpintl.h"
 
 
-static void  gimp_text_options_init              (GimpTextOptions      *options);
-static void  gimp_text_options_class_init        (GimpTextOptionsClass *options_class);
-static void  gimp_text_options_config_iface_init (GimpConfigInterface  *config_iface);
+enum
+{
+  PROP_0,
+  PROP_TEXT,
+};
 
-static void      gimp_text_options_reset       (GimpToolOptions *tool_options);
 
-static gboolean  gimp_text_options_serialize   (GObject         *object,
-                                                gint             fd,
-                                                gint             indent_level,
-                                                gpointer         data);
-static gboolean  gimp_text_options_deserialize  (GObject        *object,
-                                                 GScanner       *scanner,
-                                                 gint            nest_level,
-                                                 gpointer        data);
+static void  gimp_text_options_init         (GimpTextOptions      *options);
+static void  gimp_text_options_class_init   (GimpTextOptionsClass *options_class);
+
+static void  gimp_text_options_get_property (GObject         *object,
+                                             guint            property_id,
+                                             GValue          *value,
+                                             GParamSpec      *pspec);
 
 
 static GimpToolOptionsClass *parent_class = NULL;
@@ -82,20 +81,10 @@ gimp_text_options_get_type (void)
 	0,              /* n_preallocs    */
 	(GInstanceInitFunc) gimp_text_options_init,
       };
-      static const GInterfaceInfo config_iface_info = 
-      {
-        (GInterfaceInitFunc) gimp_text_options_config_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
 
       type = g_type_register_static (GIMP_TYPE_TOOL_OPTIONS,
                                      "GimpTextOptions",
                                      &info, 0);
-
-      g_type_add_interface_static (type,
-                                   GIMP_TYPE_CONFIG_INTERFACE,
-                                   &config_iface_info);
     }
 
   return type;
@@ -104,22 +93,18 @@ gimp_text_options_get_type (void)
 static void 
 gimp_text_options_class_init (GimpTextOptionsClass *klass)
 {
-  GObjectClass         *object_class;
-  GimpToolOptionsClass *options_class;
+  GObjectClass *object_class;
 
-  object_class  = G_OBJECT_CLASS (klass);
-  options_class = GIMP_TOOL_OPTIONS_CLASS (klass);
+  object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  options_class->reset = gimp_text_options_reset;
-}
+  object_class->get_property = gimp_text_options_get_property;
 
-static void
-gimp_text_options_config_iface_init (GimpConfigInterface *config_iface)
-{
-  config_iface->serialize   = gimp_text_options_serialize;
-  config_iface->deserialize = gimp_text_options_deserialize;
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_TEXT,
+                                   "text", NULL,
+                                   GIMP_TYPE_TEXT,
+                                   0);
 }
 
 static void
@@ -129,43 +114,29 @@ gimp_text_options_init (GimpTextOptions *options)
 
   text = g_object_new (GIMP_TYPE_TEXT, NULL);
 
-  options->text = GIMP_TEXT (text);
-
+  options->text   = GIMP_TEXT (text);
   options->buffer = gimp_prop_text_buffer_new (text, "text", -1);
 }
 
-static gboolean
-gimp_text_options_serialize (GObject  *object,
-                             gint      fd,
-                             gint      indent_level,
-                             gpointer  data)
-{
-  GimpTextOptions *options = GIMP_TEXT_OPTIONS (object);
-
-  return gimp_config_serialize_properties (G_OBJECT (options->text),
-                                           fd, indent_level);
-}
-
-static gboolean
-gimp_text_options_deserialize (GObject  *object,
-                               GScanner *scanner,
-                               gint      nest_level,
-                               gpointer  data)
-{
-  GimpTextOptions *options = GIMP_TEXT_OPTIONS (object);
-
-  return gimp_config_deserialize_properties (G_OBJECT (options->text),
-                                             scanner, nest_level, FALSE);
-}
-
 static void
-gimp_text_options_reset (GimpToolOptions *tool_options)
+gimp_text_options_get_property (GObject    *object,
+                                guint       property_id,
+                                GValue     *value,
+                                GParamSpec *pspec)
 {
-  GimpTextOptions *options = GIMP_TEXT_OPTIONS (tool_options);
+  GimpTextOptions *options;
 
-  gimp_config_reset (G_OBJECT (options->text));
+  options = GIMP_TEXT_OPTIONS (object);
 
-  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
+  switch (property_id)
+    {
+    case PROP_TEXT:
+      g_value_set_object (value, options->text);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 GtkWidget *
