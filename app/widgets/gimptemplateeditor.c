@@ -430,7 +430,7 @@ gimp_template_editor_constructor (GType                  type,
                                         "image-type",
                                         GIMP_RGB, GIMP_GRAY);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("Color_space:"), 0.0, 0.5,
+                             _("Color _space:"), 0.0, 0.5,
                              combo, 1, FALSE);
 
   combo = gimp_prop_enum_combo_box_new (G_OBJECT (editor->template),

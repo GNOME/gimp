@@ -1,3 +1,7 @@
+2005-04-05  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimptemplateeditor.c: s/Colorspace/Color space/
+
 2005-04-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/dialogs/Makefile.am
