@@ -1,3 +1,8 @@
+2004-01-05  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/CEL.c: fixed coding style issues, removed
+	trailing whitespace, use gsize instead of size_t.
+
 2004-01-05  Dov Grobgeld  <dov@imagic.weizmann.ac.il>
 
 	* plug-ins/common/CEL.c: Added read and write support for 

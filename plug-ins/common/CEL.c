@@ -46,16 +46,16 @@ static void run   (const gchar      *name,
                    gint             *nreturn_vals,
                    GimpParam       **return_vals);
 
-static gint   load_palette   (FILE        *fp,
-                              guchar       palette[]);
-static gint32 load_image     (const gchar *file,
-                              const gchar *brief);
-static gint   save_image     (const gchar *file,
-                              const gchar *brief,
-                              gint32       image,
-                              gint32       layer);
-static void   palette_dialog (const gchar *title);
-static gboolean need_palette (const gchar *file);
+static gint      load_palette   (FILE        *fp,
+                                 guchar       palette[]);
+static gint32    load_image     (const gchar *file,
+                                 const gchar *brief);
+static gint      save_image     (const gchar *file,
+                                 const gchar *brief,
+                                 gint32       image,
+                                 gint32       layer);
+static void      palette_dialog (const gchar *title);
+static gboolean  need_palette   (const gchar *file);
 
 
 /* Globals... */
@@ -68,8 +68,8 @@ GimpPlugInInfo  PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
-static gchar  *palette_file = NULL;
-static size_t  data_length  = 0;
+static gchar *palette_file = NULL;
+static gsize  data_length  = 0;
 
 /* Let GIMP library handle initialisation (and inquisitive users) */
 
@@ -166,28 +166,28 @@ run (const gchar      *name,
           gimp_get_data ("file_cel_save:length", &data_length);
           if (data_length > 0)
             {
-              palette_file = g_malloc(data_length);
+              palette_file = g_malloc (data_length);
               gimp_get_data ("file_cel_save:data", palette_file);
             }
           else
             {
-              palette_file = g_strdup("*.kcf");
-              data_length = strlen(palette_file) + 1;
+              palette_file = g_strdup ("*.kcf");
+              data_length = strlen (palette_file) + 1;
             }
         }
 
       if (run_mode == GIMP_RUN_NONINTERACTIVE)
         {
           palette_file = param[3].data.d_string;
-          data_length = strlen(palette_file) + 1;
+          data_length = strlen (palette_file) + 1;
         }
       else if (run_mode == GIMP_RUN_INTERACTIVE)
         {
           /* Let user choose KCF palette (cancel ignores) */
-          if (need_palette(param[1].data.d_string)) 
+          if (need_palette (param[1].data.d_string))
             palette_dialog (_("Load KISS Palette"));
-          
-          gimp_set_data ("file_cel_save:length", &data_length, sizeof (size_t));
+
+          gimp_set_data ("file_cel_save:length", &data_length, sizeof (gsize));
           gimp_set_data ("file_cel_save:data", palette_file, data_length);
         }
 
@@ -213,7 +213,7 @@ run (const gchar      *name,
         }
       else
         {
-          gimp_set_data ("file_cel_save:length", &data_length, sizeof (size_t));
+          gimp_set_data ("file_cel_save:length", &data_length, sizeof (gsize));
           gimp_set_data ("file_cel_save:data", palette_file, data_length);
         }
     }
@@ -227,13 +227,13 @@ run (const gchar      *name,
 
 /* Peek into the file to determine whether we need a palette */
 static gboolean
-need_palette(const gchar *file)
+need_palette (const gchar *file)
 {
   FILE *fp = fopen (file, "rb");
   guchar header[32];
 
-  fread(header, 32, 1, fp);
-  fclose(fp);
+  fread (header, 32, 1, fp);
+  fclose (fp);
 
   return header[5] < 32;
 }
@@ -257,8 +257,8 @@ load_image (const gchar *file,
   guchar    *palette,       /* 24 bit palette */
             *buffer,        /* Temporary buffer */
             *line;          /* Pixel data */
-  GimpDrawable *drawable;      /* Drawable for layer */
-  GimpPixelRgn  pixel_rgn;     /* Pixel region for layer */
+  GimpDrawable *drawable;   /* Drawable for layer */
+  GimpPixelRgn  pixel_rgn;  /* Pixel region for layer */
 
   gint       i, j, k;       /* Counters */
 
@@ -281,7 +281,7 @@ load_image (const gchar *file,
 
   fread (header, 4, 1, fp);
 
-  if (strncmp(header, "KiSS", 4))
+  if (strncmp (header, "KiSS", 4))
     {
       colours= 16;
       bpp = 4;
@@ -335,8 +335,8 @@ load_image (const gchar *file,
                        drawable->height, TRUE, FALSE);
 
   /* Read the image in and give it to the GIMP a line at a time */
-  buffer = g_new (guchar, width*4);
-  line = g_new (guchar, (width+1) * 4);
+  buffer = g_new (guchar, width * 4);
+  line   = g_new (guchar, (width + 1) * 4);
 
   for (i = 0; i < height && !feof(fp); ++i)
     {
@@ -385,7 +385,7 @@ load_image (const gchar *file,
                 }
             }
           break;
-          
+
         case 32:
           fread (line, width*4, 1, fp);
           /* The CEL file order is BGR so we need to swap B and R
@@ -418,7 +418,7 @@ load_image (const gchar *file,
     {
       /* Use palette from file or otherwise default grey palette */
       palette = g_new (guchar, colours*3);
-      
+
       /* Open the file for reading if user picked one */
       if (palette_file == NULL)
         {
@@ -428,7 +428,7 @@ load_image (const gchar *file,
         {
           fp = fopen (palette_file, "r");
         }
-      
+
       if (fp != NULL)
         {
           colours = load_palette (fp, palette);
@@ -441,11 +441,11 @@ load_image (const gchar *file,
               palette[i*3] = palette[i*3+1] = palette[i*3+2]= i * 256 / colours;
             }
         }
-      
+
       gimp_image_set_cmap (image, palette + 3, colours - 1);
-      
+
       /* Close palette file, give back allocated memory */
-      
+
       g_free (palette);
     }
 
@@ -528,7 +528,7 @@ save_image (const gchar *file,
     bpp = 32;
   else
     bpp = 4;
-      
+
   /* Find out how offset this layer was */
   gimp_drawable_offsets (layer, &offx, &offy);
 
@@ -597,7 +597,7 @@ save_image (const gchar *file,
           for (j = 0; j < drawable->width; j++)
             {
               buffer[4*j] = line[4*j+2];     /* B */
-              buffer[4*j+1] = line[4*j+1];   /* G */ 
+              buffer[4*j+1] = line[4*j+1];   /* G */
               buffer[4*j+2] = line[4*j+0];   /* R */
               buffer[4*j+3] = line[4*j+3];   /* Alpha */
             }
