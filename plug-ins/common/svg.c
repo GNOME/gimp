@@ -331,7 +331,7 @@ load_set_size_callback (gint     *width,
       if (aspect > (w / h))
         {
           *height = abs (vals->height);
-          *width  = (gdouble) abs (vals->width) / (w / h) + 0.5;
+          *width  = (gdouble) abs (vals->width) * (w / h) + 0.5;
         }
       else
         {
