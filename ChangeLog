@@ -1,3 +1,8 @@
+2003-11-06  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpbrush.c (gimp_brush_load_brush): read pixmap
+	brushes in chunks of 8192 bytes in order to speed up loading.
+
 2003-11-05  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpbrush.c

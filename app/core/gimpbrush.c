@@ -541,9 +541,8 @@ gimp_brush_load_brush (gint          fd,
   gchar       *name = NULL;
   guchar      *pixmap;
   guchar      *mask;
-  gssize       size;
+  gssize       i, size;
   gboolean     success = TRUE;
-  gint         i;
 
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (fd != -1, NULL);
@@ -636,58 +635,85 @@ gimp_brush_load_brush (gint          fd,
   brush = g_object_new (GIMP_TYPE_BRUSH, NULL);
   brush->mask = temp_buf_new (header.width, header.height, 1, 0, 0, NULL);
 
+  mask = temp_buf_data (brush->mask);
+  size = header.width * header.height * header.bytes;
 
   switch (header.bytes)
     {
     case 1:
-      size = header.width * header.height;
-      success = (read (fd, temp_buf_data (brush->mask), size) == size);
+      success = (read (fd, mask, size) == size);
       break;
 
     case 2:  /*  cinepaint brush, 16 bit floats  */
-      size = 2 * header.width * header.height;
-      mask = g_new (guchar, size);
-      success = (read (fd, mask, size) == size);
+      {
+        guchar buf[8 * 1024];
 
-      if (success)
-        {
-          guchar  *data = temp_buf_data (brush->mask);
-          guint16 *buf  = (guint16 *) mask;
+        for (i = 0; success && i < size;)
+          {
+            gssize  bytes = MIN (size - i, sizeof (buf));
 
-          for (i = 0; i < header.width * header.height; i++, data++, buf++)
-            {
-              union
+            success = (read (fd, buf, bytes) == bytes);
+
+            if (success)
               {
-                guint16 u[2];
-                gfloat  f;
-              } short_float;
+                guint16 *b = (guint16 *) buf;
+
+                i += bytes;
+
+                for (; bytes > 0; bytes -= 2, mask++, b++)
+                  {
+                    union
+                    {
+                      guint16 u[2];
+                      gfloat  f;
+                    } short_float;
 
 #if G_BYTE_ORDER == G_LITTLE_ENDIAN
-              short_float.u[0] = 0;
-              short_float.u[1] = GUINT16_FROM_BE (*buf);
+                    short_float.u[0] = 0;
+                    short_float.u[1] = GUINT16_FROM_BE (*b);
 #else
-              short_float.u[0] = GUINT16_FROM_BE (*buf);
-              short_float.u[1] = 0;
+                    short_float.u[0] = GUINT16_FROM_BE (*b);
+                    short_float.u[1] = 0;
 #endif
 
-              *data = (guchar) (short_float.f *= 255.9999);
-            }
-        }
-
-      g_free (mask);
+                    *mask = (guchar) (short_float.f *= 255.9999);
+                  }
+              }
+          }
+      }
       break;
 
     case 4:
-      size = header.width * header.height;
-      brush->pixmap = temp_buf_new (header.width, header.height, 3, 0, 0, NULL);
-      pixmap = temp_buf_data (brush->pixmap);
-      mask   = temp_buf_data (brush->mask);
+      {
+        guchar buf[8 * 1024];
 
-      for (i = 0; success && i < size; i++)
-	{
-          success = (read (fd, pixmap + i * 3, 3) == 3 &&
-                     read (fd, mask + i, 1)       == 1);
-	}
+        brush->pixmap = temp_buf_new (header.width, header.height,
+                                      3, 0, 0, NULL);
+        pixmap = temp_buf_data (brush->pixmap);
+
+        for (i = 0; success && i < size;)
+          {
+            gssize  bytes = MIN (size - i, sizeof (buf));
+
+            success = (read (fd, buf, bytes) == bytes);
+
+            if (success)
+              {
+                guchar *b = buf;
+
+                i += bytes;
+
+                for (; bytes > 0; bytes -= 4, pixmap += 3, mask++, b += 4)
+                  {
+                    pixmap[0] = b[0];
+                    pixmap[1] = b[1];
+                    pixmap[2] = b[2];
+
+                    mask[0]   = b[3];
+                  }
+              }
+          }
+      }
       break;
 
     default:
