@@ -1,3 +1,13 @@
+2004-05-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/menus.c: register a <Dock> UI manager which has all
+	action groups <Image> has except "view".
+
+	* app/widgets/gimpimagedock.[ch]: re-enabled the global shortcuts,
+	using UI manager instead of item factory. Unfortunately actions
+	without proxy widgets can't be activated so this change is pretty
+	useless. Oh well, will find a hack to work around this later...
+
 2004-05-04  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpblendoptions.c

@@ -44,6 +44,7 @@
 #include "gimphelp-ids.h"
 #include "gimpmenufactory.h"
 #include "gimpsessioninfo.h"
+#include "gimpuimanager.h"
 
 #include "gimp-intl.h"
 
@@ -55,11 +56,9 @@
 static void   gimp_image_dock_class_init          (GimpImageDockClass *klass);
 static void   gimp_image_dock_init                (GimpImageDock      *dock);
 
-#ifdef ENABLE_GLOBAL_SHORTCUTS
 static GObject * gimp_image_dock_constructor   (GType                  type,
                                                 guint                  n_params,
                                                 GObjectConstructParam *params);
-#endif
 static void   gimp_image_dock_destroy                 (GtkObject      *object);
 
 static void   gimp_image_dock_style_set               (GtkWidget      *widget,
@@ -86,20 +85,16 @@ static void   gimp_image_dock_factory_display_changed (GimpContext    *context,
 static void   gimp_image_dock_factory_image_changed   (GimpContext    *context,
                                                        GimpImage      *gimage,
                                                        GimpDock       *dock);
-#ifdef ENABLE_GLOBAL_SHORTCUTS
 static void   gimp_image_dock_display_changed         (GimpContext    *context,
                                                        GimpObject     *display,
                                                        GimpDock       *dock);
-#endif
 static void   gimp_image_dock_image_changed           (GimpContext    *context,
                                                        GimpImage      *gimage,
                                                        GimpDock       *dock);
 static void   gimp_image_dock_auto_clicked            (GtkWidget      *widget,
                                                        GimpDock       *dock);
-#ifdef ENABLE_GLOBAL_SHORTCUTS
 static void   gimp_image_dock_image_flush             (GimpImage      *gimage,
                                                        GimpDock       *dock);
-#endif
 
 
 static GimpDockClass *parent_class = NULL;
@@ -148,9 +143,7 @@ gimp_image_dock_class_init (GimpImageDockClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-#ifdef ENABLE_GLOBAL_SHORTCUTS
   object_class->constructor = gimp_image_dock_constructor;
-#endif
 
   gtk_object_class->destroy = gimp_image_dock_destroy;
 
@@ -223,7 +216,6 @@ gimp_image_dock_init (GimpImageDock *dock)
                            GIMP_HELP_DOCK_AUTO_BUTTON);
 }
 
-#ifdef ENABLE_GLOBAL_SHORTCUTS
 static GObject *
 gimp_image_dock_constructor (GType                  type,
                              guint                  n_params,
@@ -232,8 +224,6 @@ gimp_image_dock_constructor (GType                  type,
   GObject         *object;
   GimpImageDock   *dock;
   GimpMenuFactory *menu_factory;
-  GtkItemFactory  *item_factory;
-  GList           *list;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
@@ -241,77 +231,14 @@ gimp_image_dock_constructor (GType                  type,
 
   menu_factory = GIMP_DOCK (object)->dialog_factory->menu_factory;
 
-  dock->item_factory = gimp_menu_factory_menu_new (menu_factory, "<Image>",
-                                                   GTK_TYPE_MENU,
-                                                   object, FALSE);
-
-  item_factory = GTK_ITEM_FACTORY (dock->item_factory);
-
-#define DESTROY(menu) gtk_item_factory_delete_item (item_factory, menu)
-
-  DESTROY ("/View/New View");
-  DESTROY ("/View/Dot for Dot");
-  DESTROY ("/View/Zoom/Zoom Out");
-  DESTROY ("/View/Zoom/Zoom In");
-  DESTROY ("/View/Zoom/Zoom to Fit Window");
-  DESTROY ("/View/Zoom/16:1");
-  DESTROY ("/View/Zoom/8:1");
-  DESTROY ("/View/Zoom/4:1");
-  DESTROY ("/View/Zoom/2:1");
-  DESTROY ("/View/Zoom/1:1");
-  DESTROY ("/View/Zoom/1:2");
-  DESTROY ("/View/Zoom/1:4");
-  DESTROY ("/View/Zoom/1:8");
-  DESTROY ("/View/Zoom/1:16");
-  DESTROY ("/View/Zoom/Other...");
-  DESTROY ("/View/Info Window");
-  DESTROY ("/View/Navigation Window");
-  DESTROY ("/View/Display Filters...");
-  DESTROY ("/View/Show Selection");
-  DESTROY ("/View/Show Layer Boundary");
-  DESTROY ("/View/Show Menubar");
-  DESTROY ("/View/Show Rulers");
-  DESTROY ("/View/Show Scrollbars");
-  DESTROY ("/View/Show Statusbar");
-  DESTROY ("/View/Shrink Wrap");
-  DESTROY ("/View/Fullscreen");
-
-  DESTROY ("/Layer/Stack/Select Previous Layer");
-  DESTROY ("/Layer/Stack/Select Next Layer");
-  DESTROY ("/Layer/Stack/Select Top Layer");
-  DESTROY ("/Layer/Stack/Select Bottom Layer");
-  DESTROY ("/Layer/Stack/Raise Layer");
-  DESTROY ("/Layer/Stack/Lower Layer");
-  DESTROY ("/Layer/Stack/Layer to Top");
-  DESTROY ("/Layer/Stack/Layer to Bottom");
-
-  DESTROY ("/Select/By Color");
-  DESTROY ("/Select/Toggle QuickMask");
-
-  DESTROY ("/Tools/Toolbox");
-  DESTROY ("/Tools/Default Colors");
-  DESTROY ("/Tools/Swap Colors");
-
-  for (list = GIMP_LIST (GIMP_DOCK (dock)->context->gimp->tool_info_list)->list;
-       list;
-       list = g_list_next (list))
-    {
-      GimpToolInfo *tool_info = list->data;
-      gchar        *menu_path;
-
-      menu_path = gimp_strip_uline (tool_info->menu_path);
-      DESTROY (menu_path);
-      g_free (menu_path);
-    }
-
-#undef DESTROY
+  dock->ui_manager = gimp_menu_factory_manager_new (menu_factory, "<Dock>",
+                                                    dock, FALSE);
 
   gtk_window_add_accel_group (GTK_WINDOW (object),
-                              GTK_ITEM_FACTORY (dock->item_factory)->accel_group);
+                              gtk_ui_manager_get_accel_group (GTK_UI_MANAGER (dock->ui_manager)));
 
   return object;
 }
-#endif   /* ENABLE_GLOBAL_SHORTCUTS */
 
 static void
 gimp_image_dock_destroy (GtkObject *object)
@@ -324,7 +251,6 @@ gimp_image_dock_destroy (GtkObject *object)
       dock->update_title_idle_id = 0;
     }
 
-#ifdef ENABLE_GLOBAL_SHORTCUTS
   if (dock->image_flush_handler_id)
     {
       gimp_container_remove_handler (dock->image_container,
@@ -332,12 +258,11 @@ gimp_image_dock_destroy (GtkObject *object)
       dock->image_flush_handler_id = 0;
     }
 
-  if (dock->item_factory)
+  if (dock->ui_manager)
     {
-      g_object_unref (dock->item_factory);
-      dock->item_factory = NULL;
+      g_object_unref (dock->ui_manager);
+      dock->ui_manager = NULL;
     }
-#endif
 
   /*  remove the image menu and the auto button manually here because
    *  of weird cross-connections with GimpDock's context
@@ -533,12 +458,10 @@ gimp_image_dock_new (GimpDialogFactory *dialog_factory,
   image_dock->image_container   = image_container;
   image_dock->display_container = display_container;
 
-#ifdef ENABLE_GLOBAL_SHORTCUTS
   image_dock->image_flush_handler_id =
     gimp_container_add_handler (image_container, "flush",
                                 G_CALLBACK (gimp_image_dock_image_flush),
                                 image_dock);
-#endif
 
   gimp_help_connect (GTK_WIDGET (image_dock), gimp_standard_help_func,
                      GIMP_HELP_DOCK, NULL);
@@ -569,12 +492,10 @@ gimp_image_dock_new (GimpDialogFactory *dialog_factory,
 			   image_dock,
 			   0);
 
-#ifdef ENABLE_GLOBAL_SHORTCUTS
   g_signal_connect_object (context, "display_changed",
 			   G_CALLBACK (gimp_image_dock_display_changed),
 			   image_dock,
 			   0);
-#endif
   g_signal_connect_object (context, "image_changed",
 			   G_CALLBACK (gimp_image_dock_image_changed),
 			   image_dock,
@@ -706,7 +627,6 @@ gimp_image_dock_factory_image_changed (GimpContext *context,
     gimp_context_set_image (dock->context, gimage);
 }
 
-#ifdef ENABLE_GLOBAL_SHORTCUTS
 static void
 gimp_image_dock_display_changed (GimpContext *context,
                                  GimpObject  *display,
@@ -714,9 +634,8 @@ gimp_image_dock_display_changed (GimpContext *context,
 {
   GimpImageDock *image_dock = GIMP_IMAGE_DOCK (dock);
 
-  gimp_item_factory_update (image_dock->item_factory, display);
+  gimp_ui_manager_update (image_dock->ui_manager, display);
 }
-#endif
 
 static void
 gimp_image_dock_image_changed (GimpContext *context,
@@ -822,7 +741,6 @@ gimp_image_dock_auto_clicked (GtkWidget *widget,
     }
 }
 
-#ifdef ENABLE_GLOBAL_SHORTCUTS
 static void
 gimp_image_dock_image_flush (GimpImage *gimage,
                              GimpDock  *dock)
@@ -837,7 +755,6 @@ gimp_image_dock_image_flush (GimpImage *gimage,
       GimpObject *display = gimp_context_get_display (dock->context);
 
       if (display)
-        gimp_item_factory_update (image_dock->item_factory, display);
+        gimp_ui_manager_update (image_dock->ui_manager, display);
     }
 }
-#endif

@@ -110,6 +110,21 @@ menus_init (Gimp *gimp)
                                       "qmask-menu.xml", NULL,
                                       NULL);
 
+  gimp_menu_factory_manager_register (global_menu_factory, "<Dock>",
+                                      "file",
+                                      "edit",
+                                      "select",
+                                      "image",
+                                      "drawable",
+                                      "layers",
+                                      "vectors",
+                                      "tools",
+                                      "dialogs",
+                                      "plug-in",
+                                      "qmask",
+                                      NULL,
+                                      NULL);
+
   gimp_menu_factory_manager_register (global_menu_factory, "<Load>",
                                       "file-open",
                                       NULL,

@@ -25,7 +25,6 @@
 
 #include "gimpdock.h"
 
-/*  #define ENABLE_GLOBAL_SHORTCUTS  */
 
 #define GIMP_TYPE_IMAGE_DOCK            (gimp_image_dock_get_type ())
 #define GIMP_IMAGE_DOCK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_IMAGE_DOCK, GimpImageDock))
@@ -47,10 +46,8 @@ struct _GimpImageDock
   gboolean         show_image_menu;
   gboolean         auto_follow_active;
 
-#ifdef ENABLE_GLOBAL_SHORTCUTS
-  GimpItemFactory *item_factory;
+  GimpUIManager   *ui_manager;
   GQuark           image_flush_handler_id;
-#endif
 
   GtkWidget       *option_menu;
   GtkWidget       *menu;
