@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp.LIBGIMP.ru\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-01-07 00:18+0300\n"
-"PO-Revision-Date: 2004-12-24 23:13+0300\n"
+"PO-Revision-Date: 2005-01-13 10:42+0100\n"
 "Last-Translator: Roxana Chernogolova <mavka@justos.org>\n"
 "Language-Team: russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -379,7 +379,7 @@ msgstr "Не удалось создать каталог файлов пред�
 #: libgimpthumb/gimpthumbnail.c:919
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
-msgstr "Не удалось создать каталог файлов предварительного просмотра '%s'."
+msgstr "Не удалось создать каталог файлов предварительного просмотра '%s': %s"
 
 #: libgimpwidgets/gimpcolorbutton.c:99
 msgid "_Foreground Color"
