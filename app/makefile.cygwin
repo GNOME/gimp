@@ -104,7 +104,6 @@ gimp_OBJECTS = \
 	dialog_handler.o	\
 	disp_callbacks.o	\
 	docindex.o		\
-	docindexif.o		\
 	dodgeburn.o		\
 	draw_core.o		\
 	drawable.o		\

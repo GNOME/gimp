@@ -39,7 +39,7 @@ SEPARATE = AlienMap AlienMap2 FractalExplorer Lighting MapObject bmp dbbrowser f
 # ../unofficial-plug-ins directory, go there, and do "make -f
 # makefile.cygwin unofficial".
 
-UNOFFICIAL = Anamorphose DigitalSignature RGB_Displace ccanalyze gimp_ace guash sel_gauss magiceye user_filter
+UNOFFICIAL = Anamorphose DigitalSignature RGB_Displace ccanalyze gimp_ace guash sel_gauss magiceye psd_save user_filter
 
 # The main target
 
@@ -183,7 +183,6 @@ endif
 ifdef EXTRA_bmp
 OBJECTS = \
 	bmp.o \
-	bmpos2.o \
 	bmpread.o \
 	bmpwrite.o
 endif

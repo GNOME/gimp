@@ -1,34 +1,31 @@
-This is an unstable version of the GIMP, intended for developers
-only. Even more so the Win32 port.
-
 For more information about the port or GLib, GTk+ and the GIMP to
 native Windows, and pre-built binary packages, see
 http://www.iki.fi/tml/gimp/win32/ or
 http://www.gimp.org/~tml/gimp/win32/
 
 To build the GIMP on Win32, you can use either Microsoft Visual C++ or
-gcc under cygwin (without the produced executables depending on the
-cygwin dll) (gcc -mno-cygwin). For more information about the
-preparation necessary for building with gcc, what version you want and
-where to get it, etc, read README.win32 in GLib 1.3 (or later). (GLib
-1.3 isn't distributed per se, but available from CVS, and in tml's
-source snapshots.)
+gcc. The gcc to use should be for a mingw configuration (producing
+executables that don't depend on the cygwin dll). For more information
+about the preparation necessary for building with gcc, what version
+you want and where to get it, etc, read README.win32 in GLib 1.3 (or
+later). (GLib 1.3 is the developer version and thus isn't distributed
+per se, but available from CVS, and especially for Windows in zipfiles
+from the web pages mentioned above.)
 
 The GIMP wants to be built with the GNU "intl" library for
-internationalisation (i18n). Get the version ported to Win32 from
-tml's web site mentioned above. We build the "intl" library to a DLL
-called gnu-intl.dll to reduce name clash risks. If you don't want any
-i18n stuff, undefine ENABLE_NLS in the config.h.win32 file, and remove
+internationalisation (i18n). Get the version ported to Win32 from the
+web site mentioned above. We build the "intl" library to a DLL called
+gnu-intl.dll to reduce name clash risks. If you don't want any i18n
+stuff, undefine ENABLE_NLS in the config.h.win32 file, and remove
 references to the gnu-intl library from the makefiles.
 
 Note that while the GNU gettext package is under the GPL (GNU General
 Public License), the "intl" library part as distributed with GNU libc
 is under the LGPL (GNU Lesser General Public License, a.k.a. GNU
-Library General Public License) (like GTk+ and GLib). We want the
-LGPL-licensed version of the intl library, even if they are the same,
-more or less. It doesn't matter much for the GIMP which itself is also
-licensed under the GPL, but it does matter for GTk+, which is licensed
-under the LGPL.
+Library General Public License). We want the LGPL-licensed version of
+the intl library, even if they are the same, more or less. It doesn't
+matter for the GIMP which itself is licensed under the GPL, but it
+does matter for GTk+, which is licensed under the LGPL.
 
 First, build in the libgimp directory, then in app, plug-ins, and
 finally in modules. Check the makefile.msc or makefile.cygwin files in
@@ -37,7 +34,7 @@ said directories.
 The current build setup for Windows is a mess, with complex
 hand-maintained makefiles. I know. Adding parallel makefiles for gcc
 didn't make it any cleaner. On the other hand, I don't think using the
-Unix style configuration mechanism (under cygwin) is quite feasible,
-either.
+Unix style configuration mechanism to generate mingw EXEs and DLLs is
+quite feasible, either. I would love to be proved wrong.
 
 --Tor Lillqvist <tml@iki.fi>

@@ -38,7 +38,7 @@ SEPARATE = AlienMap AlienMap2 FractalExplorer Lighting MapObject bmp dbbrowser f
 # ..\unofficial-plug-ins directory, go there, and do "nmake -f
 # makefile.msc unofficial".
 
-UNOFFICIAL = Anamorphose DigitalSignature RGB_Displace ccanalyze gimp_ace guash pmosaic sel_gauss user_filter
+UNOFFICIAL = Anamorphose DigitalSignature RGB_Displace ccanalyze gimp_ace guash sel_gauss magiceye psd_save user_filter
 
 # The main target
 
@@ -192,7 +192,6 @@ OPTIMIZE =
 !IFDEF EXTRA_bmp
 OBJECTS = \
 	bmp.obj \
-	bmpos2.obj \
 	bmpread.obj \
 	bmpwrite.obj
 !ENDIF
@@ -488,6 +487,12 @@ OBJECTS = \
 
 !IFDEF EXTRA_guash
 HAVE_RESOURCE = YES
+!ENDIF
+
+!IFDEF EXTRA_magiceye
+OBJECTS = \
+	dialog.obj \
+	magiceye.obj
 !ENDIF
 
 !IFDEF EXTRA_user_filter

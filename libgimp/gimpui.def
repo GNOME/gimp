@@ -88,6 +88,7 @@ EXPORTS
 	gimp_size_entry_set_value_boundaries
 	gimp_spin_button_new
 	gimp_table_attach_aligned
+	gimp_toggle_button_sensitive_update
 	gimp_toggle_button_update
 	gimp_ui_init
 	gimp_unit_menu_update

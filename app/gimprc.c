@@ -517,6 +517,7 @@ save_gimprc_strings (gchar *token,
   gchar *error_msg;
   gboolean found = FALSE;
   gchar *personal_gimprc;
+  gchar *str;
   
   UnknownToken *ut;    /* variables to modify unknown_tokens */
   UnknownToken *tmp;
@@ -586,12 +587,14 @@ save_gimprc_strings (gchar *token,
 		  fprintf (fp_new, "#- Next line modified %s\n",
 			   timestamp);
 		}
+	      str = gimp_strescape (value, NULL);
               if (!found)
                 {
-		  fprintf (fp_new, "(%s \"%s\")\n", token, value);
+		  fprintf (fp_new, "(%s \"%s\")\n", token, str);
 		}
               else 
-		fprintf (fp_new, "#- (%s \"%s\")\n", token, value);
+		fprintf (fp_new, "#- (%s \"%s\")\n", token, str);
+	      g_free (str);
 	      found = TRUE;
 	      continue;
 	    } /* end if token and name match */
@@ -617,7 +620,9 @@ save_gimprc_strings (gchar *token,
     {
       fprintf (fp_new, "#- Next line added %s\n",
 	       timestamp);
-      fprintf (fp_new, "(%s \"%s\")\n\n", token, value);
+      str = gimp_strescape (value, NULL);
+      fprintf (fp_new, "(%s \"%s\")\n\n", token, str);
+      g_free (str);
     }
 
   /* update unknown_tokens to reflect new token value */

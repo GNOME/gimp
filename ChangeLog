@@ -1,3 +1,17 @@
+2000-05-10  Tor Lillqvist  <tml@iki.fi>
+
+	* README.win32: Clarifications.
+
+	* app/makefile.{cygwin,msc}: Remove docindexif.
+
+	* app/gimprc.c (save_gimprc_strings): Pass strings through
+	gimp_strescape().
+
+	* libgimp/gimpui.def: Add gimp_toggle_button_sensitive_update.
+
+	* plug-ins/makefile.{cygwin,msc}: Add some new unofficial
+	plug-ins. Remove bmpos2 object.
+
 Wed May 10 04:58:13 CEST 2000  Marc Lehmann <pcg@goof.com>
 
         * app/plug_in.c: Fix endless loop problem for certain image_types,
