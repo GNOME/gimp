@@ -1,3 +1,27 @@
+2003-03-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/Makefile.am
+	* app/display/gimpdisplayshell-appearance.[ch]: new files
+	implementing canvas padding, fullscreen toggling and utility
+	functions to show/hide GimpDisplayShell components (menubar,
+	statusbar, ...) Added the possibility to show/hide the scrollbars.
+
+	* app/display/gimpdisplayshell.[ch]: added struct
+	GimpDisplayShellVisibility which stores the GUI components'
+	visibility. Added two such structs to the GimpDisplayShell struct:
+	one for normal mode and one for fullscreen mode. Default to
+	"everything invisible" for fullscreen.  Fixes bug #74383.
+
+	* app/display/gimpdisplayshell-callbacks.c: fiddle with the
+	two visibility structs when toggling fullscreen.
+
+	* app/display/gimpdisplayshell-handlers.c: #include
+	"gimpdisplayshell-appearance.h"
+
+	* app/gui/image-menu.c
+	* app/gui/view-commands.[ch]: added a "Show Scrollbars" menu entry,
+	use the new widget show/hide utility functions.
+
 2003-03-11  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/print/gimp_color_window.c (gimp_dither_algo_callback):

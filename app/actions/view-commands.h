@@ -47,6 +47,8 @@ void   view_toggle_menubar_cmd_callback        (GtkWidget *widget,
                                                 gpointer   data);
 void   view_toggle_rulers_cmd_callback         (GtkWidget *widget,
                                                 gpointer   data);
+void   view_toggle_scrollbars_cmd_callback     (GtkWidget *widget,
+                                                gpointer   data);
 void   view_toggle_statusbar_cmd_callback      (GtkWidget *widget,
                                                 gpointer   data);
 void   view_toggle_guides_cmd_callback         (GtkWidget *widget,

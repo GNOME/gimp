@@ -53,6 +53,7 @@
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-callbacks.h"
 #include "gimpdisplayshell-cursor.h"
 #include "gimpdisplayshell-layer-select.h"
@@ -185,21 +186,39 @@ gimp_display_shell_events (GtkWidget        *widget,
 
     case GDK_WINDOW_STATE:
       {
-	GdkEventWindowState  *sevent;
-	gboolean              fullscreen;
+	GdkEventWindowState        *sevent;
+        GimpDisplayShellVisibility  visibility;
+        gboolean                    fullscreen;
 
 	sevent = (GdkEventWindowState *) event;
 
 	shell->window_state = sevent->new_window_state;
 
-	fullscreen = (shell->window_state & GDK_WINDOW_STATE_FULLSCREEN) != 0;
+        if (! (sevent->changed_mask & GDK_WINDOW_STATE_FULLSCREEN))
+          break;
 
-	gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
-				      "/View/Fullscreen",
-				      fullscreen);
+        fullscreen = gimp_display_shell_get_fullscreen (shell);
+
+        if (fullscreen)
+          {
+            visibility = shell->fullscreen_visibility;
+            shell->fullscreen_visibility = shell->visibility;
+          }
+        else
+          {
+            visibility = shell->visibility;
+            shell->visibility = shell->fullscreen_visibility;
+          }
+
+        gimp_display_shell_set_show_menubar    (shell, visibility.menubar);
+        gimp_display_shell_set_show_rulers     (shell, visibility.rulers);
+        gimp_display_shell_set_show_scrollbars (shell, visibility.scrollbars);
+        gimp_display_shell_set_show_statusbar  (shell, visibility.statusbar);
+
+        gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
+				      "/View/Fullscreen", fullscreen);
 	gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
-				      "/View/Fullscreen",
-				      fullscreen);
+				      "/View/Fullscreen", fullscreen);
       }
       break;
 

@@ -33,6 +33,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-appearance.h"
 #include "display/gimpdisplayshell-scale.h"
 #include "display/gimpdisplayshell-selection.h"
 
@@ -253,66 +254,40 @@ view_toggle_menubar_cmd_callback (GtkWidget *widget,
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
-  GtkWidget        *menubar;
   return_if_no_display (gdisp, data);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  menubar = GTK_ITEM_FACTORY (shell->menubar_factory)->widget;
-
-  if (GTK_CHECK_MENU_ITEM (widget)->active !=
-      GTK_WIDGET_VISIBLE (menubar))
-    {
-      if (GTK_WIDGET_VISIBLE (menubar))
-	gtk_widget_hide (menubar);
-      else
-	gtk_widget_show (menubar);
-
-      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
-                                    "/View/Show Menubar",
-                                    GTK_WIDGET_VISIBLE (menubar));
-      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
-                                    "/View/Show Menubar",
-                                    GTK_WIDGET_VISIBLE (menubar));
-    }
+  gimp_display_shell_set_show_menubar (shell,
+                                       GTK_CHECK_MENU_ITEM (widget)->active);
 }
 
 void
 view_toggle_rulers_cmd_callback (GtkWidget *widget,
 				 gpointer   data)
 {
-  GimpDisplay       *gdisp;
-  GimpDisplayShell  *shell;
-  GimpDisplayConfig *config;
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
   return_if_no_display (gdisp, data);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  config = GIMP_DISPLAY_CONFIG (gdisp->gimage->gimp->config);
+  gimp_display_shell_set_show_rulers (shell,
+                                      GTK_CHECK_MENU_ITEM (widget)->active);
+}
 
-  if (GTK_CHECK_MENU_ITEM (widget)->active !=
-      GTK_WIDGET_VISIBLE (shell->origin))
-    {
-      if (GTK_WIDGET_VISIBLE (shell->origin))
-	{
-          gtk_widget_hide (shell->origin);
-	  gtk_widget_hide (shell->hrule);
-	  gtk_widget_hide (shell->vrule);
-	}
-      else
-	{
-          gtk_widget_show (shell->origin);
-	  gtk_widget_show (shell->hrule);
-	  gtk_widget_show (shell->vrule);
-	}
+void
+view_toggle_scrollbars_cmd_callback (GtkWidget *widget,
+                                     gpointer   data)
+{
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
+  return_if_no_display (gdisp, data);
 
-      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
-                                    "/View/Show Rulers",
-                                    GTK_WIDGET_VISIBLE (shell->origin));
-      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
-                                    "/View/Show Rulers",
-                                    GTK_WIDGET_VISIBLE (shell->origin));
-    }
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  gimp_display_shell_set_show_scrollbars (shell,
+                                          GTK_CHECK_MENU_ITEM (widget)->active);
 }
 
 void
@@ -325,21 +300,8 @@ view_toggle_statusbar_cmd_callback (GtkWidget *widget,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  if (GTK_CHECK_MENU_ITEM (widget)->active !=
-      GTK_WIDGET_VISIBLE (shell->statusbar))
-    {
-      if (GTK_WIDGET_VISIBLE (shell->statusbar))
-	gtk_widget_hide (shell->statusbar);
-      else
-	gtk_widget_show (shell->statusbar);
-
-      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
-                                    "/View/Show Statusbar",
-                                    GTK_WIDGET_VISIBLE (shell->statusbar));
-      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
-                                    "/View/Show Statusbar",
-                                    GTK_WIDGET_VISIBLE (shell->statusbar));
-    }
+  gimp_display_shell_set_show_statusbar (shell,
+                                         GTK_CHECK_MENU_ITEM (widget)->active);
 }
 
 void

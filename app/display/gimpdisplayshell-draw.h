@@ -27,7 +27,16 @@
 #include "gui/gui-types.h"
 
 
-/*  some useful macros  */
+typedef struct _GimpDisplayShellVisibility GimpDisplayShellVisibility;
+
+struct _GimpDisplayShellVisibility
+{
+  gboolean menubar;
+  gboolean rulers;
+  gboolean scrollbars;
+  gboolean statusbar;
+};
+
 
 /* finding the effective screen resolution (double) */
 #define  SCREEN_XRES(s)   (s->dot_for_dot ? \
@@ -149,6 +158,9 @@ struct _GimpDisplayShell
   gboolean          space_release_pending;
 
   GdkWindowState    window_state;      /* for fullscreen display              */
+
+  GimpDisplayShellVisibility visibility;
+  GimpDisplayShellVisibility fullscreen_visibility;  
 };
 
 struct _GimpDisplayShellClass
@@ -225,16 +237,10 @@ void        gimp_display_shell_draw_guides           (GimpDisplayShell *shell);
 
 void        gimp_display_shell_update_icon           (GimpDisplayShell *shell);
 
-void        gimp_display_shell_set_padding           (GimpDisplayShell *shell,
-                                                      GimpDisplayPaddingMode  mode,
-                                                      GimpRGB          *color);
-
 void        gimp_display_shell_shrink_wrap           (GimpDisplayShell *shell);
 
 void        gimp_display_shell_selection_visibility  (GimpDisplayShell *shell,
                                                       GimpSelectionControl  control);
-void        gimp_display_shell_set_fullscreen        (GimpDisplayShell *shell,
-                                                      gboolean          fullscreen);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_H__ */

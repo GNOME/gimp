@@ -254,6 +254,16 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->window_state          = 0;
 
+  shell->visibility.menubar    = FALSE;
+  shell->visibility.rulers     = TRUE;
+  shell->visibility.scrollbars = TRUE;
+  shell->visibility.statusbar  = TRUE;
+
+  shell->fullscreen_visibility.menubar    = FALSE;
+  shell->fullscreen_visibility.rulers     = FALSE;
+  shell->fullscreen_visibility.scrollbars = FALSE;
+  shell->fullscreen_visibility.statusbar  = FALSE;
+
   gtk_window_set_wmclass (GTK_WINDOW (shell), "image_window", "Gimp");
   gtk_window_set_resizable (GTK_WINDOW (shell), TRUE);
 
@@ -437,6 +447,11 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   shell->dot_for_dot = config->default_dot_for_dot;
 
+  shell->visibility.menubar    = config->show_menubar;
+  shell->visibility.rulers     = config->show_rulers;
+  shell->visibility.scrollbars = TRUE;
+  shell->visibility.statusbar  = config->show_statusbar;
+
   /* adjust the initial scale -- so that window fits on screen the 75%
    * value is the same as in gimp_display_shell_shrink_wrap. It
    * probably should be a user-configurable option.
@@ -553,7 +568,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   gtk_box_pack_start (GTK_BOX (main_vbox), menubar, FALSE, FALSE, 0);
 
-  if (config->show_menubar)
+  if (shell->visibility.menubar)
     gtk_widget_show (menubar);
 
   /*  active display callback  */
@@ -804,23 +819,25 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   /*  show everything  *******************************************************/
 
-  if (config->show_rulers)
+  if (shell->visibility.rulers)
     {
       gtk_widget_show (shell->origin);
       gtk_widget_show (shell->hrule);
       gtk_widget_show (shell->vrule);
     }
+
   gtk_widget_show (shell->canvas);
 
-  gtk_widget_show (shell->vsb);
-  gtk_widget_show (shell->hsb);
+  if (shell->visibility.scrollbars)
+    {
+      gtk_widget_show (shell->vsb);
+      gtk_widget_show (shell->hsb);
+      gtk_widget_show (shell->padding_button);
+      gtk_widget_show (shell->qmask);
+      gtk_widget_show (shell->nav_ebox);
+    }
 
-  gtk_widget_show (shell->padding_button);
-
-  gtk_widget_show (shell->qmask);
-  gtk_widget_show (shell->nav_ebox);
-
-  if (config->show_statusbar)
+  if (shell->visibility.statusbar)
     gtk_widget_show (shell->statusbar);
 
   gtk_widget_show (main_vbox);
@@ -1164,85 +1181,6 @@ gimp_display_shell_update_icon (GimpDisplayShell *shell)
 
   if (pixbuf)
     g_object_unref (pixbuf);
-}
-
-void
-gimp_display_shell_set_padding (GimpDisplayShell       *shell,
-                                GimpDisplayPaddingMode  padding_mode,
-                                GimpRGB                *padding_color)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (padding_color != NULL);
-
-  shell->padding_mode = padding_mode;
-
-  switch (shell->padding_mode)
-    {
-    case GIMP_DISPLAY_PADDING_MODE_DEFAULT:
-      if (shell->padding_gc)
-        {
-          guchar r, g, b;
-
-          r = shell->canvas->style->bg[GTK_STATE_NORMAL].red   >> 8;
-          g = shell->canvas->style->bg[GTK_STATE_NORMAL].green >> 8;
-          b = shell->canvas->style->bg[GTK_STATE_NORMAL].blue  >> 8;
-
-          gimp_rgb_set_uchar (&shell->padding_color, r, g, b);
-        }
-      else
-        {
-          shell->padding_color = *padding_color;
-        }
-      break;
-
-    case GIMP_DISPLAY_PADDING_MODE_LIGHT_CHECK:
-      gimp_rgb_set_uchar (&shell->padding_color,
-                          render_blend_light_check[0],
-                          render_blend_light_check[1],
-                          render_blend_light_check[2]);
-      break;
-
-    case GIMP_DISPLAY_PADDING_MODE_DARK_CHECK:
-      gimp_rgb_set_uchar (&shell->padding_color,
-                          render_blend_dark_check[0],
-                          render_blend_dark_check[1],
-                          render_blend_dark_check[2]);
-      break;
-
-    case GIMP_DISPLAY_PADDING_MODE_CUSTOM:
-      shell->padding_color = *padding_color;
-      break;
-    }
-
-  if (shell->padding_gc)
-    {
-      GdkColor gdk_color;
-      guchar   r, g, b;
-
-      gimp_rgb_get_uchar (&shell->padding_color, &r, &g, &b);
-
-      gdk_color.red   = r + r * 256;
-      gdk_color.green = g + g * 256;
-      gdk_color.blue  = b + b * 256;
-
-      gdk_gc_set_rgb_fg_color (shell->padding_gc, &gdk_color);
-    }
-
-  if (shell->padding_button)
-    {
-      g_signal_handlers_block_by_func (shell->padding_button,
-                                       gimp_display_shell_color_button_changed,
-                                       shell);
-
-      gimp_color_button_set_color (GIMP_COLOR_BUTTON (shell->padding_button),
-                                   &shell->padding_color);
-
-      g_signal_handlers_unblock_by_func (shell->padding_button,
-                                         gimp_display_shell_color_button_changed,
-                                         shell);
-    }
-
-  gimp_display_shell_expose_full (shell);
 }
 
 void
@@ -1624,24 +1562,6 @@ gimp_display_shell_selection_visibility (GimpDisplayShell     *shell,
 	  gimp_display_shell_selection_resume (shell->select);
 	  break;
 	}
-    }
-}
-
-void
-gimp_display_shell_set_fullscreen (GimpDisplayShell *shell,
-                                   gboolean          fullscreen)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  if (fullscreen)
-    {
-      if (! (shell->window_state & GDK_WINDOW_STATE_FULLSCREEN))
-        gtk_window_fullscreen (GTK_WINDOW (shell));
-    }
-  else
-    {
-      if (shell->window_state & GDK_WINDOW_STATE_FULLSCREEN)
-        gtk_window_unfullscreen (GTK_WINDOW (shell));
     }
 }
 

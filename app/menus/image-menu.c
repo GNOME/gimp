@@ -39,6 +39,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-appearance.h"
 #include "display/gimpdisplayshell-selection.h"
 
 #include "dialogs-commands.h"
@@ -399,6 +400,10 @@ GimpItemFactoryEntry image_menu_entries[] =
     "view/toggle_menubar.html", NULL },
   { { N_("/View/Show Rulers"), "<control><shift>R",
       view_toggle_rulers_cmd_callback, 0, "<ToggleItem>" },
+    NULL,
+    "view/toggle_rulers.html", NULL },
+  { { N_("/View/Show Scrollbars"), NULL,
+      view_toggle_scrollbars_cmd_callback, 0, "<ToggleItem>" },
     NULL,
     "view/toggle_rulers.html", NULL },
   { { N_("/View/Show Statusbar"), NULL,
@@ -1096,27 +1101,29 @@ void
 image_menu_update (GtkItemFactory *item_factory,
                    gpointer        data)
 {
-  Gimp             *gimp          = NULL;
-  GimpDisplayShell *shell         = NULL;
-  GimpDisplay      *gdisp         = NULL;
-  GimpImage        *gimage        = NULL;
-  GimpDrawable     *drawable      = NULL;
-  GimpLayer        *layer         = NULL;
-  GimpImageType     drawable_type = -1;
-  GimpRGB           fg;
-  GimpRGB           bg;
-  gboolean          is_rgb        = FALSE;
-  gboolean          is_gray       = FALSE;
-  gboolean          is_indexed    = FALSE;
-  gboolean          fs            = FALSE;
-  gboolean          aux           = FALSE;
-  gboolean          lm            = FALSE;
-  gboolean          lp            = FALSE;
-  gboolean          sel           = FALSE;
-  gboolean          alpha         = FALSE;
-  gint              lind          = -1;
-  gint              lnum          = -1;
-
+  Gimp                       *gimp          = NULL;
+  GimpDisplayShell           *shell         = NULL;
+  GimpDisplay                *gdisp         = NULL;
+  GimpImage                  *gimage        = NULL;
+  GimpDrawable               *drawable      = NULL;
+  GimpLayer                  *layer         = NULL;
+  GimpImageType               drawable_type = -1;
+  GimpRGB                     fg;
+  GimpRGB                     bg;
+  gboolean                    is_rgb        = FALSE;
+  gboolean                    is_gray       = FALSE;
+  gboolean                    is_indexed    = FALSE;
+  gboolean                    fs            = FALSE;
+  gboolean                    aux           = FALSE;
+  gboolean                    lm            = FALSE;
+  gboolean                    lp            = FALSE;
+  gboolean                    sel           = FALSE;
+  gboolean                    alpha         = FALSE;
+  gint                        lind          = -1;
+  gint                        lnum          = -1;
+  gboolean                    fullscreen    = FALSE;
+  GimpDisplayShellVisibility *visibility = NULL;
+  
   gimp = GIMP_ITEM_FACTORY (item_factory)->gimp;
 
   if (data)
@@ -1159,6 +1166,13 @@ image_menu_update (GtkItemFactory *item_factory,
 
 	  lnum = gimp_container_num_children (gimage->layers);
 	}
+
+      fullscreen = gimp_display_shell_get_fullscreen (shell);
+
+      if (fullscreen)
+        visibility = &shell->fullscreen_visibility;
+      else
+        visibility = &shell->visibility;
     }
 
   gimp_context_get_foreground (gimp_get_user_context (gimp), &fg);
@@ -1275,21 +1289,19 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_ACTIVE    ("/View/Snap to Guides", gdisp && gdisp->snap_to_guides);
 
   SET_SENSITIVE ("/View/Show Menubar", gdisp);
-  SET_ACTIVE    ("/View/Show Menubar",
-                 gdisp &&
-		 GTK_WIDGET_VISIBLE (GTK_ITEM_FACTORY (shell->menubar_factory)->widget));
+  SET_ACTIVE    ("/View/Show Menubar", gdisp && visibility->menubar);
 
   SET_SENSITIVE ("/View/Show Rulers", gdisp);
-  SET_ACTIVE    ("/View/Show Rulers",
-                 gdisp && GTK_WIDGET_VISIBLE (shell->hrule));
+  SET_ACTIVE    ("/View/Show Rulers", gdisp && visibility->rulers);
+
+  SET_SENSITIVE ("/View/Show Scrollbars", gdisp);
+  SET_ACTIVE    ("/View/Show Scrollbars", gdisp && visibility->scrollbars);
 
   SET_SENSITIVE ("/View/Show Statusbar", gdisp);
-  SET_ACTIVE    ("/View/Show Statusbar",
-                 gdisp && GTK_WIDGET_VISIBLE (shell->statusbar));
+  SET_ACTIVE    ("/View/Show Statusbar", gdisp && visibility->statusbar);
 
   SET_SENSITIVE ("/View/Fullscreen", gdisp);
-  SET_ACTIVE    ("/View/Fullscreen",
-		 gdisp && (shell->window_state & GDK_WINDOW_STATE_FULLSCREEN));
+  SET_ACTIVE    ("/View/Fullscreen", gdisp && fullscreen);
 
   SET_SENSITIVE ("/View/New View",    gdisp);
   SET_SENSITIVE ("/View/Shrink Wrap", gdisp);
