@@ -26,16 +26,11 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <string.h>
-#include <errno.h>
-
 #include <sys/types.h>
 #include <sys/stat.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
@@ -114,18 +109,19 @@ typedef struct
 
 #define PREVIEW_SIZE 200
 
+
 static mwPreview *mw_preview_build_virgin (GimpDrawable *drw);
 static mwPreview *mw_preview_build        (GimpDrawable *drw);
 
-static void query (void);
-static void run   (const gchar      *name,
-                   gint              nparams,
-                   const GimpParam  *param,
-                   gint             *nreturn_vals,
-                   GimpParam       **return_vals);
+static void     query (void);
+static void     run   (const gchar      *name,
+                       gint              nparams,
+                       const GimpParam  *param,
+                       gint             *nreturn_vals,
+                       GimpParam       **return_vals);
 
-static void channel_mixer (GimpDrawable *drawable);
-static gint cm_dialog     (void);
+static void     channel_mixer (GimpDrawable *drawable);
+static gboolean cm_dialog     (void);
 
 static void cm_red_scale_callback           (GtkAdjustment    *adjustment,
                                              CmParamsType     *mix);
@@ -170,6 +166,7 @@ static void cm_set_adjusters (CmParamsType *mix);
 static void cm_save_file (CmParamsType *mix,
                           FILE         *fp);
 
+
 GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
@@ -188,13 +185,14 @@ static CmParamsType mix =
   TRUE,
   FALSE,
   CM_RED_CHANNEL,
-  NULL,
+  NULL
 };
 
 static mwPreview *preview;
 
 static gint sel_x1, sel_y1, sel_x2, sel_y2;
 static gint sel_width, sel_height;
+
 
 MAIN ()
 
@@ -437,7 +435,7 @@ channel_mixer (GimpDrawable *drawable)
                   *(dest + offset) =
                     *(dest + offset + 1) =
                     *(dest + offset + 2) =
-                      cm_mix_pixel (&mix.black, r, g, b, black_norm);
+                    cm_mix_pixel (&mix.black, r, g, b, black_norm);
                 }
               else
                 {
@@ -481,10 +479,7 @@ cm_dialog (void)
   GtkWidget *dialog;
   GtkWidget *vbox;
   GtkWidget *frame;
-  GtkWidget *scale;
   GtkWidget *hbox;
-  GtkWidget *spinbutton;
-  GtkObject *data;
   GtkWidget *button;
   GtkWidget *label;
   GtkWidget *xframe;
@@ -542,51 +537,42 @@ cm_dialog (void)
 
 			    NULL);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox, TRUE, TRUE,
-                      0);
-  gtk_widget_show (vbox);
-
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
   gtk_widget_show (hbox);
 
   /*........................................................... */
   /* preview */
   vbox = gtk_vbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  frame = gtk_frame_new (N_("Preview"));
+  frame = gtk_frame_new (_("Preview"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (1, 1, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
-
   xframe = gtk_frame_new (NULL);
+  gtk_container_set_border_width (GTK_CONTAINER (xframe), 4);
   gtk_frame_set_shadow_type (GTK_FRAME (xframe), GTK_SHADOW_IN);
-  gtk_table_attach (GTK_TABLE (table), xframe, 0, 1, 0, 1,
-                    GTK_EXPAND, GTK_EXPAND, 0, 0);
+  gtk_container_add (GTK_CONTAINER (frame), xframe);
   gtk_widget_show (xframe);
 
   mix.preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (mix.preview),
-                    preview->width, preview->height);
+  gtk_preview_size (GTK_PREVIEW (mix.preview), preview->width, preview->height);
   gtk_container_add (GTK_CONTAINER (xframe), mix.preview);
   gtk_widget_show (mix.preview);
 
   /*  The preview toggle  */
-  mix.preview_toggle = gtk_check_button_new_with_label (N_("Preview"));
+  mix.preview_toggle = gtk_check_button_new_with_mnemonic (_("_Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (mix.preview_toggle),
                                 mix.preview_flag);
   gtk_box_pack_start (GTK_BOX (vbox), mix.preview_toggle, FALSE, FALSE, 0);
-  g_signal_connect (mix.preview_toggle, "toggled",
-                    G_CALLBACK (cm_preview_callback), &mix);
   gtk_widget_show (mix.preview_toggle);
+
+  g_signal_connect (mix.preview_toggle, "toggled",
+                    G_CALLBACK (cm_preview_callback),
+                    &mix);
 
   /*........................................................... */
   /* controls */
@@ -595,165 +581,133 @@ cm_dialog (void)
   gtk_widget_show (vbox);
 
   /*........................................................... */
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  frame = gtk_frame_new (NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  label = gtk_label_new (N_("Output Channel:"));
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_frame_set_label_widget (GTK_FRAME (frame), hbox);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new_with_mnemonic (_("O_utput Channel:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   mix.option_menu =
     gimp_int_option_menu_new (FALSE, G_CALLBACK (cm_option_callback),
                               &mix, mix.output_channel,
-                              _("Red"), CM_RED_CHANNEL, NULL,
+
+                              _("Red"),   CM_RED_CHANNEL,   NULL,
                               _("Green"), CM_GREEN_CHANNEL, NULL,
-                              _("Blue"), CM_BLUE_CHANNEL, NULL, NULL);
+                              _("Blue"),  CM_BLUE_CHANNEL,  NULL,
+
+                              NULL);
+
+  gtk_box_pack_start (GTK_BOX (hbox), mix.option_menu, FALSE, FALSE, 0);
   gtk_widget_show (mix.option_menu);
-  gtk_container_add (GTK_CONTAINER (hbox), mix.option_menu);
+
   if (mix.monochrome_flag == TRUE)
     gtk_widget_set_sensitive (mix.option_menu, FALSE);
 
-  gtk_widget_show (hbox);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), mix.option_menu);
 
   /*........................................................... */
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  frame = gtk_frame_new (_("Red"));
-  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+  table = gtk_table_new (3, 3, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
 
-  data = gtk_adjustment_new (red_value, -200.0, 200.0, 1.0, 10.0, 0.0);
-  mix.red_data = GTK_ADJUSTMENT (data);
+  mix.red_data =
+    GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+                                          _("_Red:"), 150, -1,
+                                          red_value, -200.0, 200.0,
+                                          1.0, 10.0, 1,
+                                          TRUE, 0.0, 0.0,
+                                          NULL, NULL));
+
   g_signal_connect (mix.red_data, "value_changed",
-                    G_CALLBACK (cm_red_scale_callback), &mix);
+                    G_CALLBACK (cm_red_scale_callback),
+                    &mix);
 
-  /*  red scale  */
-  scale = gtk_hscale_new (mix.red_data);
-  gtk_widget_set_size_request (GTK_WIDGET (scale), 150, 30);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_CONTINUOUS);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-  gtk_container_add (GTK_CONTAINER (frame), scale);
-  gtk_widget_show (scale);
+  mix.green_data =
+    GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+                                          _("_Green:"), 150, -1,
+                                          green_value, -200.0, 200.0,
+                                          1.0, 10.0, 1,
+                                          TRUE, 0.0, 0.0,
+                                          NULL, NULL));
 
-  /*  red spinbutton  */
-  spinbutton = gtk_spin_button_new (mix.red_data, 1.0, 1);
-  gtk_widget_set_size_request (spinbutton, 60, -1);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
-
-  gtk_widget_show (hbox);
-
-  gtk_widget_show (frame);
-
-  /*........................................................... */
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-
-  frame = gtk_frame_new (_("Green"));
-  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
-
-  data = gtk_adjustment_new (green_value, -200.0, 200.0, 1.0, 10.0, 0.0);
-  mix.green_data = GTK_ADJUSTMENT (data);
   g_signal_connect (mix.green_data, "value_changed",
-                    G_CALLBACK (cm_green_scale_callback), &mix);
+                    G_CALLBACK (cm_green_scale_callback),
+                    &mix);
 
-  /*  green scale  */
-  scale = gtk_hscale_new (mix.green_data);
-  gtk_widget_set_size_request (GTK_WIDGET (scale), 150, 30);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_CONTINUOUS);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-  gtk_container_add (GTK_CONTAINER (frame), scale);
-  gtk_widget_show (scale);
 
-  /*  green spinbutton  */
-  spinbutton = gtk_spin_button_new (mix.green_data, 1.0, 1);
-  gtk_widget_set_size_request (spinbutton, 60, -1);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
+  mix.blue_data =
+    GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+                                          _("_Blue:"), 150, -1,
+                                          blue_value, -200.0, 200.0,
+                                          1.0, 10.0, 1,
+                                          TRUE, 0.0, 0.0,
+                                          NULL, NULL));
 
-  gtk_widget_show (frame);
-
-  gtk_widget_show (hbox);
-
-  /*........................................................... */
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-
-  frame = gtk_frame_new (_("Blue"));
-  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
-
-  data = gtk_adjustment_new (blue_value, -200.0, 200.0, 1.0, 10.0, 0.0);
-  mix.blue_data = GTK_ADJUSTMENT (data);
   g_signal_connect (mix.blue_data, "value_changed",
-                    G_CALLBACK (cm_blue_scale_callback), &mix);
-
-  /*  blue scale  */
-  scale = gtk_hscale_new (mix.blue_data);
-  gtk_widget_set_size_request (GTK_WIDGET (scale), 150, 30);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_CONTINUOUS);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-  gtk_container_add (GTK_CONTAINER (frame), scale);
-  gtk_widget_show (scale);
-
-  gtk_widget_show (frame);
-
-  /*  blue spinbutton  */
-  spinbutton = gtk_spin_button_new (mix.blue_data, 1.0, 1);
-  gtk_widget_set_size_request (spinbutton, 60, -1);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
-
-  gtk_widget_show (hbox);
-
-  /*........................................................... */
-  /*  Horizontal box for application mode  */
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+                    G_CALLBACK (cm_blue_scale_callback),
+                    &mix);
 
   /*  The monochrome toggle  */
-  mix.monochrome_toggle = gtk_check_button_new_with_label (N_("Monochrome"));
+  mix.monochrome_toggle = gtk_check_button_new_with_mnemonic (_("_Monochrome"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (mix.monochrome_toggle),
                                 mix.monochrome_flag);
-  gtk_box_pack_start (GTK_BOX (hbox), mix.monochrome_toggle, FALSE, FALSE, 0);
-  g_signal_connect (mix.monochrome_toggle, "toggled",
-                    G_CALLBACK (cm_monochrome_callback), &mix);
+  gtk_box_pack_start (GTK_BOX (vbox), mix.monochrome_toggle, FALSE, FALSE, 0);
   gtk_widget_show (mix.monochrome_toggle);
+
+  g_signal_connect (mix.monochrome_toggle, "toggled",
+                    G_CALLBACK (cm_monochrome_callback),
+                    &mix);
 
   /*  The preserve luminosity toggle  */
   mix.preserve_luminosity_toggle =
-    gtk_check_button_new_with_label (N_("Preserve Luminosity"));
+    gtk_check_button_new_with_mnemonic (_("Preserve _Luminosity"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON
                                 (mix.preserve_luminosity_toggle),
                                 mix.preserve_luminosity_flag);
-  gtk_box_pack_start (GTK_BOX (hbox), mix.preserve_luminosity_toggle, FALSE,
-                      FALSE, 0);
-  g_signal_connect (mix.preserve_luminosity_toggle, "toggled",
-                    G_CALLBACK (cm_preserve_luminosity_callback), &mix);
-
+  gtk_box_pack_start (GTK_BOX (vbox), mix.preserve_luminosity_toggle,
+                      FALSE, FALSE, 0);
   gtk_widget_show (mix.preserve_luminosity_toggle);
 
-  gtk_widget_show (hbox);
+  g_signal_connect (mix.preserve_luminosity_toggle, "toggled",
+                    G_CALLBACK (cm_preserve_luminosity_callback),
+                    &mix);
 
   /*........................................................... */
   /*  Horizontal box for file i/o  */
   hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-
-  button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (cm_load_file_callback), &mix);
-  gtk_container_add (GTK_CONTAINER (hbox), button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (cm_save_file_callback), &mix);
-  gtk_container_add (GTK_CONTAINER (hbox), button);
-  gtk_widget_show (button);
-
+  gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
+  button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
+  gtk_container_add (GTK_CONTAINER (hbox), button);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (cm_load_file_callback),
+                    &mix);
+
+  button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
+  gtk_container_add (GTK_CONTAINER (hbox), button);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (cm_save_file_callback),
+                    &mix);
+
   /*........................................................... */
+
+  if (mix.preview_flag)
+    cm_preview (&mix);
 
   gtk_widget_show (dialog);
 
@@ -1079,7 +1033,7 @@ cm_load_file_callback (GtkWidget    *widget,
 
   if (!filesel)
     {
-      filesel = gtk_file_selection_new (N_("Load Channel Mixer Settings"));
+      filesel = gtk_file_selection_new (_("Load Channel Mixer Settings"));
 
       gtk_window_set_transient_for (GTK_WINDOW (filesel),
                                     GTK_WINDOW (gtk_widget_get_toplevel (widget)));
@@ -1122,23 +1076,24 @@ cm_load_file_response_callback (GtkFileSelection *fs,
 
       if (fp)
 	{
-	  gchar   buf[CM_LINE_SIZE];
-          gdouble d1, d2, d3;
+	  gchar buf[3][CM_LINE_SIZE];
 
-	  buf[0] = '\0';
+	  buf[0][0] = '\0';
+	  buf[1][0] = '\0';
+	  buf[2][0] = '\0';
 
-          fgets (buf, CM_LINE_SIZE - 1, fp);
+          fgets (buf[0], CM_LINE_SIZE - 1, fp);
 
-          fscanf (fp, "%*s%s", buf);
-          if (strcmp (buf, "RED") == 0)
+          fscanf (fp, "%*s %s", buf[0]);
+          if (strcmp (buf[0], "RED") == 0)
             mix->output_channel = CM_RED_CHANNEL;
-          else if (strcmp (buf, "GREEN") == 0)
+          else if (strcmp (buf[0], "GREEN") == 0)
             mix->output_channel = CM_GREEN_CHANNEL;
-          else if (strcmp (buf, "BLUE") == 0)
+          else if (strcmp (buf[0], "BLUE") == 0)
             mix->output_channel = CM_BLUE_CHANNEL;
 
-          fscanf (fp, "%*s%s", buf);
-          if (strcmp (buf, "TRUE") == 0)
+          fscanf (fp, "%*s %s", buf[0]);
+          if (strcmp (buf[0], "TRUE") == 0)
             mix->preview_flag = TRUE;
           else
             mix->preview_flag = FALSE;
@@ -1146,8 +1101,8 @@ cm_load_file_response_callback (GtkFileSelection *fs,
           gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (mix->preview_toggle),
                                         mix->preview_flag);
 
-          fscanf (fp, "%*s%s", buf);
-          if (strcmp (buf, "TRUE") == 0)
+          fscanf (fp, "%*s %s", buf[0]);
+          if (strcmp (buf[0], "TRUE") == 0)
             mix->monochrome_flag = TRUE;
           else
             mix->monochrome_flag = FALSE;
@@ -1155,8 +1110,8 @@ cm_load_file_response_callback (GtkFileSelection *fs,
           gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (mix->monochrome_toggle),
                                         mix->monochrome_flag);
 
-          fscanf (fp, "%*s%s", buf);
-          if (strcmp (buf, N_("TRUE")) == 0)
+          fscanf (fp, "%*s %s", buf[0]);
+          if (strcmp (buf[0], "TRUE") == 0)
             mix->preserve_luminosity_flag = TRUE;
           else
             mix->preserve_luminosity_flag = FALSE;
@@ -1164,25 +1119,25 @@ cm_load_file_response_callback (GtkFileSelection *fs,
           gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (mix->preserve_luminosity_toggle),
                                         mix->preserve_luminosity_flag);
 
-          fscanf (fp, "%*s%lf%lf%lf", &d1, &d2, &d3);
-          mix->red.red_gain   = d1;
-          mix->red.green_gain = d2;
-          mix->red.blue_gain  = d3;
+          fscanf (fp, "%*s %s %s %s", buf[0], buf[1], buf[2]);
+          mix->red.red_gain   = g_ascii_strtod (buf[0], NULL);
+          mix->red.green_gain = g_ascii_strtod (buf[1], NULL);
+          mix->red.blue_gain  = g_ascii_strtod (buf[2], NULL);
 
-          fscanf (fp, "%*s%lf%lf%lf", &d1, &d2, &d3);
-          mix->green.red_gain   = d1;
-          mix->green.green_gain = d2;
-          mix->green.blue_gain  = d3;
+          fscanf (fp, "%*s %s %s %s", buf[0], buf[1], buf[2]);
+          mix->green.red_gain   = g_ascii_strtod (buf[0], NULL);
+          mix->green.green_gain = g_ascii_strtod (buf[1], NULL);
+          mix->green.blue_gain  = g_ascii_strtod (buf[2], NULL);
 
-          fscanf (fp, "%*s%lf%lf%lf", &d1, &d2, &d3);
-          mix->blue.red_gain   = d1;
-          mix->blue.green_gain = d2;
-          mix->blue.blue_gain  = d3;
+          fscanf (fp, "%*s %s %s %s", buf[0], buf[1], buf[2]);
+          mix->blue.red_gain   = g_ascii_strtod (buf[0], NULL);
+          mix->blue.green_gain = g_ascii_strtod (buf[1], NULL);
+          mix->blue.blue_gain  = g_ascii_strtod (buf[2], NULL);
 
-          fscanf (fp, "%*s%lf%lf%lf", &d1, &d2, &d3);
-          mix->black.red_gain   = d1;
-          mix->black.green_gain = d2;
-          mix->black.blue_gain  = d3;
+          fscanf (fp, "%*s %s %s %s", buf[0], buf[1], buf[2]);
+          mix->black.red_gain   = g_ascii_strtod (buf[0], NULL);
+          mix->black.green_gain = g_ascii_strtod (buf[1], NULL);
+          mix->black.blue_gain  = g_ascii_strtod (buf[2], NULL);
 
           fclose (fp);
 
@@ -1215,7 +1170,7 @@ cm_save_file_callback (GtkWidget    *widget,
 
   if (!filesel)
     {
-      filesel = gtk_file_selection_new (N_("Save Channel Mixer Settings"));
+      filesel = gtk_file_selection_new (_("Save Channel Mixer Settings"));
 
       gtk_window_set_transient_for (GTK_WINDOW (filesel),
                                     GTK_WINDOW (gtk_widget_get_toplevel (widget)));
@@ -1348,6 +1303,7 @@ cm_save_file (CmParamsType *mix,
               FILE         *fp)
 {
   const gchar *str = NULL;
+  gchar        buf[3][G_ASCII_DTOSTR_BUF_SIZE];
 
   switch (mix->output_channel)
     {
@@ -1365,22 +1321,48 @@ cm_save_file (CmParamsType *mix,
       break;
     }
 
-  fprintf (fp, "# %s\n", "Channel Mixer Configuration File");
-  fprintf (fp, "%s: %s\n", "CHANNEL", str);
-  fprintf (fp, "%s: %s\n", "PREVIEW",
+  fprintf (fp, "# Channel Mixer Configuration File\n");
+
+  fprintf (fp, "CHANNEL: %s\n", str);
+  fprintf (fp, "PREVIEW: %s\n",
            mix->preview_flag ? "TRUE" : "FALSE");
-  fprintf (fp, "%s: %s\n", "MONOCHROME",
+  fprintf (fp, "MONOCHROME: %s\n",
            mix->monochrome_flag ? "TRUE" : "FALSE");
-  fprintf (fp, "%s: %s\n", "PRESERVE_LUMINOSITY",
+  fprintf (fp, "PRESERVE_LUMINOSITY: %s\n",
            mix->preserve_luminosity_flag ? "TRUE" : "FALSE");
-  fprintf (fp, "%s: %5.3f %5.3f %5.3f\n", "RED",
-           mix->red.red_gain, mix->red.green_gain, mix->red.blue_gain);
-  fprintf (fp, "%s: %5.3f %5.3f %5.3f\n", "GREEN",
-           mix->green.red_gain, mix->green.green_gain, mix->green.blue_gain);
-  fprintf (fp, "%s: %5.3f %5.3f %5.3f\n", "BLUE",
-           mix->blue.red_gain, mix->blue.green_gain, mix->blue.blue_gain);
-  fprintf (fp, "%s: %5.3f %5.3f %5.3f\n", "BLACK",
-           mix->black.red_gain, mix->black.green_gain, mix->black.blue_gain);
+
+  fprintf (fp, "RED: %s %s %s\n",
+           g_ascii_formatd (buf[0], sizeof (buf[0]), "%5.3f",
+                            mix->red.red_gain),
+           g_ascii_formatd (buf[1], sizeof (buf[1]), "%5.3f",
+                            mix->red.green_gain),
+           g_ascii_formatd (buf[2], sizeof (buf[2]), "%5.3f",
+                            mix->red.blue_gain));
+
+  fprintf (fp, "GREEN: %s %s %s\n",
+           g_ascii_formatd (buf[0], sizeof (buf[0]), "%5.3f",
+                            mix->green.red_gain),
+           g_ascii_formatd (buf[1], sizeof (buf[1]), "%5.3f",
+                            mix->green.green_gain),
+           g_ascii_formatd (buf[2], sizeof (buf[2]), "%5.3f",
+                            mix->green.blue_gain));
+
+  fprintf (fp, "BLUE: %s %s %s\n",
+           g_ascii_formatd (buf[0], sizeof (buf[0]), "%5.3f",
+                            mix->blue.red_gain),
+           g_ascii_formatd (buf[1], sizeof (buf[1]), "%5.3f",
+                            mix->blue.green_gain),
+           g_ascii_formatd (buf[2], sizeof (buf[2]), "%5.3f",
+                            mix->blue.blue_gain));
+
+  fprintf (fp, "BLACK: %s %s %s\n",
+           g_ascii_formatd (buf[0], sizeof (buf[0]), "%5.3f",
+                            mix->black.red_gain),
+           g_ascii_formatd (buf[1], sizeof (buf[1]), "%5.3f",
+                            mix->black.green_gain),
+           g_ascii_formatd (buf[2], sizeof (buf[2]), "%5.3f",
+                            mix->black.blue_gain));
+
   fclose (fp);
 }
 
