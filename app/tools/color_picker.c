@@ -20,12 +20,14 @@
 #include "appenv.h"
 #include "actionarea.h"
 #include "color_picker.h"
+#include "draw_core.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "info_dialog.h"
 #include "palette.h"
 #include "tool_options_ui.h"
 #include "tools.h"
+#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -52,6 +54,14 @@ struct _ColorPickerOptions
   GtkObject   *average_radius_w;
 };
 
+typedef struct _ColourPickerTool ColourPickerTool;
+struct _ColourPickerTool
+{
+  DrawCore *   core;       /*  Core select object          */
+
+  int          centerx;    /*  starting x coord            */
+  int          centery;    /*  starting y coord            */
+};
 
 /*  the color picker tool options  */
 static ColorPickerOptions * color_picker_options = NULL;
@@ -165,6 +175,7 @@ color_picker_options_new (void)
   options->average_radius_w =
     gtk_adjustment_new (options->average_radius_d, 1.0, 15.0, 2.0, 2.0, 0.0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (options->average_radius_w));
+  gtk_scale_set_digits (GTK_SCALE (scale), 0);
   gtk_container_add (GTK_CONTAINER (abox), scale);
   gtk_widget_set_sensitive (scale, options->sample_average_d);
   gtk_object_set_data (GTK_OBJECT (options->sample_average_w), "set_sensitive",
@@ -189,6 +200,7 @@ color_picker_button_press (Tool           *tool,
 			   gpointer        gdisp_ptr)
 {
   GDisplay * gdisp;
+  ColourPickerTool *cp_tool;
   int x, y;
 
   static ActionAreaItem action_items[] =
@@ -197,6 +209,7 @@ color_picker_button_press (Tool           *tool,
   };
 
   gdisp = (GDisplay *) gdisp_ptr;
+  cp_tool = (ColourPickerTool *) tool->private;
 
   /*  If this is the first invocation of the tool, or a different gdisplay,
    *  create (or recreate) the info dialog...
@@ -247,6 +260,10 @@ color_picker_button_press (Tool           *tool,
 			 action_items, 1, 0);
     }
 
+  /*  Keep the coordinates of the target  */
+  gdisplay_untransform_coords (gdisp, bevent->x, bevent->y,
+			       &cp_tool->centerx, &cp_tool->centery, FALSE, 1);
+
   gdk_pointer_grab (gdisp->canvas->window, FALSE,
 		    (GDK_POINTER_MOTION_HINT_MASK |
 		     GDK_BUTTON1_MOTION_MASK |
@@ -282,6 +299,8 @@ color_picker_button_press (Tool           *tool,
       update_type = COLOR_UPDATE;
     }
 
+  /*  Start drawing the colourpicker tool  */
+  draw_core_start (cp_tool->core, gdisp->canvas->window, tool);
 
 }
 
@@ -291,11 +310,13 @@ color_picker_button_release (Tool           *tool,
 			     gpointer        gdisp_ptr)
 {
   GDisplay *gdisp;
+  ColourPickerTool *cp_tool;
   int x, y;
 
   gdk_pointer_ungrab (bevent->time);
   gdk_flush ();
   gdisp = (GDisplay *) gdisp_ptr;
+  cp_tool = (ColourPickerTool *) tool->private;
 
   /*  First, transform the coordinates to gimp image space  */
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, FALSE, FALSE);
@@ -305,6 +326,9 @@ color_picker_button_release (Tool           *tool,
 					     color_picker_options->sample_average,
 					     color_picker_options->average_radius,
 					     update_type));
+
+  draw_core_stop (cp_tool->core, tool);
+  tool->state = INACTIVE;
 }
 
 static void
@@ -313,18 +337,28 @@ color_picker_motion (Tool           *tool,
 		     gpointer        gdisp_ptr)
 {
   GDisplay *gdisp;
+  ColourPickerTool *cp_tool;
   int x, y;
 
   gdisp = (GDisplay *) gdisp_ptr;
+  cp_tool = (ColourPickerTool *) tool->private;
+
+  /*  undraw the current tool  */
+  draw_core_pause (cp_tool->core, tool);
 
   /*  First, transform the coordinates to gimp image space  */
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, FALSE, FALSE);
+
+  cp_tool->centerx = x;
+  cp_tool->centery = y;
 
   color_picker_info_update (tool, get_color (gdisp->gimage, active_drawable, x, y,
 					     color_picker_options->sample_merged,
 					     color_picker_options->sample_average,
 					     color_picker_options->average_radius,
 					     update_type));
+  /*  redraw the current tool  */
+  draw_core_resume (cp_tool->core, tool);
 }
 
 static void
@@ -349,6 +383,22 @@ color_picker_control (Tool     *tool,
 		      int       action,
 		      gpointer  gdisp_ptr)
 {
+  ColourPickerTool * cp_tool;
+
+  cp_tool = (ColourPickerTool *) tool->private;
+
+  switch (action)
+    {
+    case PAUSE :
+      draw_core_pause (cp_tool->core, tool);
+      break;
+    case RESUME :
+      draw_core_resume (cp_tool->core, tool);
+      break;
+    case HALT :
+      draw_core_stop (cp_tool->core, tool);
+      break;
+    }
 }
 
 typedef guchar * (*GetColorFunc) (GtkObject *, int, int);
@@ -445,6 +495,43 @@ get_color (GimpImage *gimage,
   return TRUE;
 }
 
+static void
+colourpicker_draw (Tool *tool)
+{
+  GDisplay * gdisp;
+  ColourPickerTool * cp_tool;
+  int tx, ty;
+  int radiusx,radiusy;
+  int cx,cy;
+
+  if(!color_picker_options->sample_average)
+    return;
+
+  gdisp = (GDisplay *) tool->gdisp_ptr;
+  cp_tool = (ColourPickerTool *) tool->private;
+
+  gdisplay_transform_coords (gdisp, cp_tool->centerx, cp_tool->centery,
+			     &tx, &ty, 1);
+
+  radiusx = SCALEX(gdisp,color_picker_options->average_radius);
+  radiusy = SCALEY(gdisp,color_picker_options->average_radius);
+  cx = SCALEX(gdisp,1);
+  cy = SCALEY(gdisp,1);
+
+  /*  Draw the circle around the collecting area */
+  gdk_draw_rectangle(cp_tool->core->win, cp_tool->core->gc, 0,
+		     tx - radiusx, 
+		     ty - radiusy,
+		     2*radiusx+cx, 2*radiusy+cy);
+
+  if(radiusx > 1 && radiusy > 1)
+    {
+      gdk_draw_rectangle(cp_tool->core->win, cp_tool->core->gc, 0,
+			 tx - radiusx+2, 
+			 ty - radiusy+2,
+			 2*radiusx+cx-4, 2*radiusy+cy-4);
+    }
+}
 
 static void
 color_picker_info_update (Tool *tool,
@@ -515,6 +602,7 @@ Tool *
 tools_new_color_picker ()
 {
   Tool * tool;
+  ColourPickerTool * private;
 
   /*  The tool options  */
   if (! color_picker_options)
@@ -524,12 +612,15 @@ tools_new_color_picker ()
     }
 
   tool = (Tool *) g_malloc (sizeof (Tool));
+  private = (ColourPickerTool *) g_malloc(sizeof(ColourPickerTool));
+
+  private->core = draw_core_new (colourpicker_draw);
 
   tool->type = COLOR_PICKER;
   tool->state = INACTIVE;
   tool->scroll_lock = 0;  /*  Allow scrolling  */
   tool->auto_snap_to = TRUE;
-  tool->private = NULL;
+  tool->private = private;
   tool->button_press_func = color_picker_button_press;
   tool->button_release_func = color_picker_button_release;
   tool->motion_func = color_picker_motion;
@@ -544,11 +635,22 @@ tools_new_color_picker ()
 void
 tools_free_color_picker (Tool *tool)
 {
+  ColourPickerTool * cp_tool;
+
+  cp_tool = (ColourPickerTool *) tool->private;
+
+  if (tool->state == ACTIVE)
+    draw_core_stop (cp_tool->core, tool);
+
+  draw_core_free (cp_tool->core);
+
   if (color_picker_info)
     {
       info_dialog_free (color_picker_info);
       color_picker_info = NULL;
     }
+
+  g_free(cp_tool);
 }
 
 /*  The color_picker procedure definition  */
