@@ -802,9 +802,8 @@ typedef struct _MaskUndo MaskUndo;
 
 struct _MaskUndo
 {
-  GimpChannel *channel;  /*  the channel this undo is for  */
-  TileManager *tiles;    /*  the actual mask               */
-  gint         x, y;     /*  offsets                       */
+  TileManager *tiles;  /*  the actual mask  */
+  gint         x, y;   /*  offsets          */
 };
 
 static gboolean undo_pop_mask  (GimpUndo            *undo,
@@ -847,21 +846,20 @@ gimp_image_undo_push_mask (GimpImage   *gimage,
   if (undo_tiles)
     size += tile_manager_get_memsize (undo_tiles);
 
-  if ((new = gimp_image_undo_push (gimage,
-                                   size, sizeof (MaskUndo),
-                                   GIMP_UNDO_MASK, undo_desc,
-                                   FALSE,
-                                   undo_pop_mask,
-                                   undo_free_mask)))
+  if ((new = gimp_image_undo_push_item (gimage, GIMP_ITEM (mask),
+                                        size, sizeof (MaskUndo),
+                                        GIMP_UNDO_MASK, undo_desc,
+                                        FALSE,
+                                        undo_pop_mask,
+                                        undo_free_mask)))
     {
       MaskUndo *mu;
 
       mu = new->data;
 
-      mu->channel = mask;
-      mu->tiles   = undo_tiles;
-      mu->x       = x1;
-      mu->y       = y1;
+      mu->tiles = undo_tiles;
+      mu->x     = x1;
+      mu->y     = y1;
 
       return TRUE;
     }
@@ -878,34 +876,38 @@ undo_pop_mask (GimpUndo            *undo,
                GimpUndoAccumulator *accum)
 {
   MaskUndo    *mu;
+  GimpChannel *channel;
   TileManager *new_tiles;
   PixelRegion  srcPR, destPR;
   gint         x1, y1, x2, y2;
-  gint         width, height;
-  guchar       empty = 0;
-
-  width = height = 0;
+  gint         width  = 0;
+  gint         height = 0;
+  guchar       empty  = 0;
 
   mu = (MaskUndo *) undo->data;
 
-  if (gimp_channel_bounds (mu->channel, &x1, &y1, &x2, &y2))
+  channel = GIMP_CHANNEL (GIMP_ITEM_UNDO (undo)->item);
+
+  if (gimp_channel_bounds (channel, &x1, &y1, &x2, &y2))
     {
       new_tiles = tile_manager_new ((x2 - x1), (y2 - y1), 1);
 
-      pixel_region_init (&srcPR, GIMP_DRAWABLE (mu->channel)->tiles,
+      pixel_region_init (&srcPR, GIMP_DRAWABLE (channel)->tiles,
                          x1, y1, (x2 - x1), (y2 - y1), FALSE);
       pixel_region_init (&destPR, new_tiles,
 			 0, 0, (x2 - x1), (y2 - y1), TRUE);
 
       copy_region (&srcPR, &destPR);
 
-      pixel_region_init (&srcPR, GIMP_DRAWABLE (mu->channel)->tiles,
+      pixel_region_init (&srcPR, GIMP_DRAWABLE (channel)->tiles,
 			 x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
       color_region (&srcPR, &empty);
     }
   else
-    new_tiles = NULL;
+    {
+      new_tiles = NULL;
+    }
 
   if (mu->tiles)
     {
@@ -914,7 +916,7 @@ undo_pop_mask (GimpUndo            *undo,
 
       pixel_region_init (&srcPR, mu->tiles,
 			 0, 0, width, height, FALSE);
-      pixel_region_init (&destPR, GIMP_DRAWABLE (mu->channel)->tiles,
+      pixel_region_init (&destPR, GIMP_DRAWABLE (channel)->tiles,
 			 mu->x, mu->y, width, height, TRUE);
 
       copy_region (&srcPR, &destPR);
@@ -922,52 +924,52 @@ undo_pop_mask (GimpUndo            *undo,
       tile_manager_destroy (mu->tiles);
     }
 
-  if (mu->channel == gimp_image_get_mask (undo->gimage))
+  if (channel == gimp_image_get_mask (undo->gimage))
     {
       /* invalidate the current bounds and boundary of the mask */
       gimp_image_mask_invalidate (undo->gimage);
     }
   else
     {
-      mu->channel->boundary_known = FALSE;
-      GIMP_DRAWABLE (mu->channel)->preview_valid = FALSE;
+      channel->boundary_known = FALSE;
+      GIMP_DRAWABLE (channel)->preview_valid = FALSE;
     }
 
   if (mu->tiles)
     {
-      mu->channel->empty = FALSE;
-      mu->channel->x1    = mu->x;
-      mu->channel->y1    = mu->y;
-      mu->channel->x2    = mu->x + width;
-      mu->channel->y2    = mu->y + height;
+      channel->empty = FALSE;
+      channel->x1    = mu->x;
+      channel->y1    = mu->y;
+      channel->x2    = mu->x + width;
+      channel->y2    = mu->y + height;
     }
   else
     {
-      mu->channel->empty = TRUE;
-      mu->channel->x1    = 0;
-      mu->channel->y1    = 0;
-      mu->channel->x2    = GIMP_DRAWABLE (mu->channel)->width;
-      mu->channel->y2    = GIMP_DRAWABLE (mu->channel)->height;
+      channel->empty = TRUE;
+      channel->x1    = 0;
+      channel->y1    = 0;
+      channel->x2    = GIMP_DRAWABLE (channel)->width;
+      channel->y2    = GIMP_DRAWABLE (channel)->height;
     }
 
   /* we know the bounds */
-  mu->channel->bounds_known = TRUE;
+  channel->bounds_known = TRUE;
 
   /*  set the new mask undo parameters  */
   mu->tiles = new_tiles;
   mu->x     = x1;
   mu->y     = y1;
 
-  if (mu->channel == gimp_image_get_mask (undo->gimage))
+  if (channel == gimp_image_get_mask (undo->gimage))
     {
       accum->mask_changed = TRUE;
     }
   else
     {
-      gimp_drawable_update (GIMP_DRAWABLE (mu->channel),
+      gimp_drawable_update (GIMP_DRAWABLE (channel),
                             0, 0,
-                            GIMP_DRAWABLE (mu->channel)->width,
-                            GIMP_DRAWABLE (mu->channel)->height);
+                            GIMP_DRAWABLE (channel)->width,
+                            GIMP_DRAWABLE (channel)->height);
     }
 
   return TRUE;
@@ -1679,8 +1681,8 @@ typedef struct _LayerDisplaceUndo LayerDisplaceUndo;
 
 struct _LayerDisplaceUndo
 {
-  gint    offset_x;
-  gint    offset_y;
+  gint    old_offset_x;
+  gint    old_offset_y;
   GSList *path_undo;
 };
 
@@ -1712,9 +1714,9 @@ gimp_image_undo_push_layer_displace (GimpImage   *gimage,
 
       ldu = new->data;
 
-      ldu->offset_x  = GIMP_DRAWABLE (layer)->offset_x;
-      ldu->offset_y  = GIMP_DRAWABLE (layer)->offset_y;
-      ldu->path_undo = path_transform_start_undo (gimage);
+      ldu->old_offset_x = GIMP_DRAWABLE (layer)->offset_x;
+      ldu->old_offset_y = GIMP_DRAWABLE (layer)->offset_y;
+      ldu->path_undo    = path_transform_start_undo (gimage);
 
       return TRUE;
     }
@@ -1729,42 +1731,22 @@ undo_pop_layer_displace (GimpUndo            *undo,
 {
   LayerDisplaceUndo *ldu;
   GimpLayer         *layer;
-  gint               old_offset_x;
-  gint               old_offset_y;
+  gint               offset_x;
+  gint               offset_y;
 
   ldu = (LayerDisplaceUndo *) undo->data;
 
   layer = GIMP_LAYER (GIMP_ITEM_UNDO (undo)->item);
 
-  old_offset_x = GIMP_DRAWABLE (layer)->offset_x;
-  old_offset_y = GIMP_DRAWABLE (layer)->offset_y;
-  gimp_drawable_update (GIMP_DRAWABLE (layer),
-                        0, 0,
-                        GIMP_DRAWABLE (layer)->width,
-                        GIMP_DRAWABLE (layer)->height);
+  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &offset_x, &offset_y);
 
-  GIMP_DRAWABLE (layer)->offset_x = ldu->offset_x;
-  GIMP_DRAWABLE (layer)->offset_y = ldu->offset_y;
-  gimp_drawable_update (GIMP_DRAWABLE (layer),
-                        0, 0,
-                        GIMP_DRAWABLE (layer)->width,
-                        GIMP_DRAWABLE (layer)->height);
+  gimp_layer_translate (layer,
+                        ldu->old_offset_x - offset_x,
+                        ldu->old_offset_y - offset_y,
+                        FALSE);
 
-  if (layer->mask) 
-    {
-      GIMP_DRAWABLE (layer->mask)->offset_x = ldu->offset_x;
-      GIMP_DRAWABLE (layer->mask)->offset_y = ldu->offset_y;
-      gimp_drawable_update (GIMP_DRAWABLE (layer->mask),
-                            0, 0,
-                            GIMP_DRAWABLE (layer->mask)->width,
-                            GIMP_DRAWABLE (layer->mask)->height);
-    }
-
-  /*  invalidate the selection boundary because of a layer modification  */
-  gimp_layer_invalidate_boundary (layer);
-
-  ldu->offset_x = old_offset_x;
-  ldu->offset_y = old_offset_y;
+  ldu->old_offset_x = offset_x;
+  ldu->old_offset_y = offset_y;
 
   /* Now undo paths bits */
   if (ldu->path_undo)

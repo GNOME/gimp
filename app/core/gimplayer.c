@@ -884,14 +884,15 @@ gimp_layer_apply_mask (GimpLayer         *layer,
 void
 gimp_layer_translate (GimpLayer *layer,
 		      gint       off_x,
-		      gint       off_y)
+		      gint       off_y,
+                      gboolean   push_undo)
 {
   g_return_if_fail (GIMP_IS_LAYER (layer));
 
-  /*  the undo call goes here  */
-  gimp_image_undo_push_layer_displace (gimp_item_get_image (GIMP_ITEM (layer)),
-                                       _("Move Layer"),
-                                       layer);
+  if (push_undo)
+    gimp_image_undo_push_layer_displace (gimp_item_get_image (GIMP_ITEM (layer)),
+                                         _("Move Layer"),
+                                         layer);
 
   /*  update the affected region  */
   gimp_drawable_update (GIMP_DRAWABLE (layer),

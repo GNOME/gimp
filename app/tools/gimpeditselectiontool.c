@@ -39,6 +39,7 @@
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplist.h"
+#include "core/gimpundostack.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -346,7 +347,8 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
        */
       gimp_image_mask_translate (gdisp->gimage,
                                  edit_select->cumlx,
-                                 edit_select->cumly);
+                                 edit_select->cumly,
+                                 TRUE);
 
       if (edit_select->first_move)
 	{
@@ -483,7 +485,7 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 		if (layer == gdisp->gimage->active_layer || 
 		    gimp_layer_get_linked (layer))
 		  {
-		    gimp_layer_translate (layer, xoffset, yoffset);
+		    gimp_layer_translate (layer, xoffset, yoffset, TRUE);
 		  }
 	      }
 
@@ -527,7 +529,7 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 	    layer = gimp_image_get_active_layer (gdisp->gimage);
 
 	    floating_sel_relax (layer, TRUE);
-	    gimp_layer_translate (layer, xoffset, yoffset);
+	    gimp_layer_translate (layer, xoffset, yoffset, TRUE);
 	    floating_sel_rigor (layer, TRUE);
 
 	    if (edit_select->first_move)
@@ -744,12 +746,12 @@ gimp_edit_selection_tool_control (GimpTool       *tool,
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
+/* could move this function to a more central location
+ * so it can be used by other tools?
+ */
 static gint
 process_event_queue_keys (GdkEventKey *kevent, 
-			  ...)
-/* GdkKeyType, GdkModifierType, value ... 0 
- * could move this function to a more central location so it can be used
- * by other tools? */
+			  ... /* GdkKeyType, GdkModifierType, value ... 0 */)
 {
 
 #define FILTER_MAX_KEYS 50
@@ -761,33 +763,36 @@ process_event_queue_keys (GdkEventKey *kevent,
   guint            keys[FILTER_MAX_KEYS];
   GdkModifierType  modifiers[FILTER_MAX_KEYS];
   gint             values[FILTER_MAX_KEYS];
-  gint             i = 0, nkeys = 0, value = 0;
-  gboolean         done = FALSE;
-  gboolean         discard_event;
+  gint             i      = 0;
+  gint             n_keys = 0;
+  gint             value  = 0;
+  gboolean         done   = FALSE;
   GtkWidget       *orig_widget;
 
   va_start (argp, kevent);
 
-  while (nkeys <FILTER_MAX_KEYS && (keys[nkeys] = va_arg (argp, guint)) != 0)
+  while (n_keys < FILTER_MAX_KEYS && (keys[n_keys] = va_arg (argp, guint)) != 0)
     {
-      modifiers[nkeys] = va_arg (argp, GdkModifierType);
-      values[nkeys]    = va_arg (argp, gint);
-      nkeys++;
+      modifiers[n_keys] = va_arg (argp, GdkModifierType);
+      values[n_keys]    = va_arg (argp, gint);
+      n_keys++;
     }
 
   va_end (argp);
 
-  for (i = 0; i < nkeys; i++)
-    {
-      if (kevent->keyval == keys[i] && kevent->state == modifiers[i])
-	value += values[i];
-    }
+  g_print ("process_key: state == %d\n", kevent->state);
+
+  for (i = 0; i < n_keys; i++)
+    if (kevent->keyval                 == keys[i] &&
+        (kevent->state & modifiers[i]) == modifiers[i])
+      value += values[i];
 
   orig_widget = gtk_get_event_widget ((GdkEvent *) kevent);
 
   while (gdk_events_pending () > 0 && ! done)
     {
-      discard_event = FALSE;
+      gboolean discard_event = FALSE;
+
       event = gdk_event_get ();
 
       if (! event || orig_widget != gtk_get_event_widget (event))
@@ -798,9 +803,11 @@ process_event_queue_keys (GdkEventKey *kevent,
         {
           if (event->any.type == GDK_KEY_PRESS)
             {
-              for (i = 0; i < nkeys; i++)
-                if (event->key.keyval == keys[i] &&
-                    event->key.state  == modifiers[i])
+              g_print ("process_key: state == %d\n", event->key.state);
+
+              for (i = 0; i < n_keys; i++)
+                if (event->key.keyval                 == keys[i] &&
+                    (event->key.state & modifiers[i]) == modifiers[i])
                   {
                     discard_event = TRUE;
                     value += values[i];
@@ -814,15 +821,15 @@ process_event_queue_keys (GdkEventKey *kevent,
                    event->any.type != GDK_MOTION_NOTIFY &&
                    event->any.type != GDK_EXPOSE)
             done = FALSE;
-      }
+        }
 
-    if (! event)
-      ; /* Do nothing */
-    else if (! discard_event)
-      event_list = g_list_prepend (event_list, event);
-    else
-      gdk_event_free (event);
-  }
+      if (! event)
+        ; /* Do nothing */
+      else if (! discard_event)
+        event_list = g_list_prepend (event_list, event);
+      else
+        gdk_event_free (event);
+    }
 
   event_list = g_list_reverse (event_list);
 
@@ -845,62 +852,165 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
 				    GdkEventKey *kevent,
 				    GimpDisplay *gdisp)
 {
-  gint       inc_x, inc_y, mask_inc_x, mask_inc_y;
-  GimpLayer *layer;
-  GimpLayer *floating_layer;
-  GList     *layer_list;
-  EditType   edit_type;
+  gint       mask_inc_x      = 0;
+  gint       mask_inc_y      = 0;
+  gint       inc_x           = 0;
+  gint       inc_y           = 0;
+  GimpUndo  *undo;
+  gboolean   push_undo       = TRUE;
+  gboolean   translate_mask  = FALSE;
+  gboolean   translate_layer = FALSE;
+  GimpLayer *layer           = NULL;
+  EditType   edit_type       = EDIT_MASK_TRANSLATE;
 
-  layer = NULL;
-
-  inc_x = 
-    process_event_queue_keys (kevent,
-			      GDK_Left,  0,              -1, 
-			      GDK_Left,  GDK_SHIFT_MASK, -1 * ARROW_VELOCITY, 
-			      GDK_Right, 0,               1, 
-			      GDK_Right, GDK_SHIFT_MASK,  1 * ARROW_VELOCITY, 
-			      0);
-  inc_y = 
-    process_event_queue_keys (kevent,
-			      GDK_Up,   0,              -1, 
-			      GDK_Up,   GDK_SHIFT_MASK, -1 * ARROW_VELOCITY, 
-			      GDK_Down, 0,               1, 
-			      GDK_Down, GDK_SHIFT_MASK,  1 * ARROW_VELOCITY, 
-			      0);
-  
+  /*  check for mask translation first because the translate_layer
+   *  modifiers match the translate_mask ones...
+   */
   mask_inc_x = 
     process_event_queue_keys (kevent,
-			      GDK_Left,  GDK_MOD1_MASK,                    -1, 
-			      GDK_Left,  (GDK_MOD1_MASK | GDK_SHIFT_MASK), -1 * ARROW_VELOCITY, 
-			      GDK_Right, GDK_MOD1_MASK,                     1, 
-			      GDK_Right, (GDK_MOD1_MASK | GDK_SHIFT_MASK),  1 * ARROW_VELOCITY, 
+			      GDK_Left, (GDK_MOD1_MASK | GDK_SHIFT_MASK),
+                              -1 * ARROW_VELOCITY,
+
+			      GDK_Left, GDK_MOD1_MASK,
+                              -1,
+
+			      GDK_Right, (GDK_MOD1_MASK | GDK_SHIFT_MASK),
+                              1 * ARROW_VELOCITY,
+
+			      GDK_Right, GDK_MOD1_MASK,
+                              1,
+
 			      0);
-  mask_inc_y = 
+
+  mask_inc_y =
     process_event_queue_keys (kevent,
-			      GDK_Up,   GDK_MOD1_MASK,                    -1, 
-			      GDK_Up,   (GDK_MOD1_MASK | GDK_SHIFT_MASK), -1 * ARROW_VELOCITY, 
-			      GDK_Down, GDK_MOD1_MASK,                     1, 
-			      GDK_Down, (GDK_MOD1_MASK | GDK_SHIFT_MASK),  1 * ARROW_VELOCITY, 
+			      GDK_Up, (GDK_MOD1_MASK | GDK_SHIFT_MASK),
+                              -1 * ARROW_VELOCITY,
+
+			      GDK_Up, GDK_MOD1_MASK,
+                              -1,
+
+			      GDK_Down, (GDK_MOD1_MASK | GDK_SHIFT_MASK),
+                              1 * ARROW_VELOCITY,
+
+			      GDK_Down, GDK_MOD1_MASK,
+                              1,
+
 			      0);
-
-  if (inc_x == 0 && inc_y == 0  &&  mask_inc_x == 0 && mask_inc_y == 0)
-    return;
-
-  gimp_image_undo_group_start (gdisp->gimage, GIMP_UNDO_GROUP_LAYER_DISPLACE,
-                               _("Move Layer"));
 
   if (mask_inc_x != 0 || mask_inc_y != 0)
-    gimp_image_mask_translate (gdisp->gimage, mask_inc_x, mask_inc_y);
-
-  if (inc_x != 0 || inc_y != 0)
     {
-      layer = gimp_image_get_active_layer (gdisp->gimage);
- 
-      if (gimp_layer_is_floating_sel (layer))
-	edit_type = EDIT_FLOATING_SEL_TRANSLATE;
+      translate_mask = TRUE;
+    }
+  else
+    {
+      inc_x = process_event_queue_keys (kevent,
+                                        GDK_Left, GDK_SHIFT_MASK,
+                                        -1 * ARROW_VELOCITY,
+
+                                        GDK_Left, 0,
+                                        -1,
+
+                                        GDK_Right, GDK_SHIFT_MASK,
+                                        1 * ARROW_VELOCITY,
+
+                                        GDK_Right, 0,
+                                        1,
+
+                                        0);
+
+      inc_y = process_event_queue_keys (kevent,
+                                        GDK_Up, GDK_SHIFT_MASK,
+                                        -1 * ARROW_VELOCITY,
+
+                                        GDK_Up, 0,
+                                        -1,
+
+                                        GDK_Down, GDK_SHIFT_MASK,
+                                        1 * ARROW_VELOCITY,
+
+                                        GDK_Down, 0,
+                                        1,
+
+                                        0);
+
+      if (inc_x != 0 || inc_y != 0)
+        {
+          translate_layer = TRUE;
+
+          layer = gimp_image_get_active_layer (gdisp->gimage);
+
+          if (gimp_layer_is_floating_sel (layer))
+            edit_type = EDIT_FLOATING_SEL_TRANSLATE;
+          else
+            edit_type = EDIT_LAYER_TRANSLATE;
+        }
       else
-	edit_type = EDIT_LAYER_TRANSLATE;
-      
+        {
+          return;
+        }
+    }
+
+  undo = gimp_undo_stack_peek (gdisp->gimage->undo_stack);
+
+  if (GIMP_IS_UNDO_STACK (undo) &&
+      undo->undo_type == GIMP_UNDO_GROUP_LAYER_DISPLACE)
+    {
+      if (g_object_get_data (G_OBJECT (undo), "edit-selection-tool") ==
+          (gpointer) tool                                                 &&
+          g_object_get_data (G_OBJECT (undo), "edit-selection-mask") ==
+          GINT_TO_POINTER (translate_mask)                                &&
+          g_object_get_data (G_OBJECT (undo), "edit-selection-layer") ==
+          (gpointer) layer                                                &&
+          g_object_get_data (G_OBJECT (undo), "edit-selection-type") ==
+          GINT_TO_POINTER (edit_type))
+        {
+          push_undo = FALSE;
+        }
+    }
+
+  if (push_undo)
+    {
+      const gchar *undo_desc;
+
+      if (translate_mask)
+        undo_desc = _("Move Selection");
+      else if (edit_type == EDIT_FLOATING_SEL_TRANSLATE)
+        undo_desc = _("Move Floating Layer");
+      else
+        undo_desc = _("Move Layer");
+
+      if (gimp_image_undo_group_start (gdisp->gimage,
+                                       GIMP_UNDO_GROUP_LAYER_DISPLACE,
+                                       undo_desc))
+        {
+          undo = gimp_undo_stack_peek (gdisp->gimage->undo_stack);
+
+          if (GIMP_IS_UNDO_STACK (undo) &&
+              undo->undo_type == GIMP_UNDO_GROUP_LAYER_DISPLACE)
+            {
+              g_object_set_data (G_OBJECT (undo), "edit-selection-tool",
+                                 tool);
+              g_object_set_data (G_OBJECT (undo), "edit-selection-mask",
+                                 GINT_TO_POINTER (translate_mask));
+              g_object_set_data (G_OBJECT (undo), "edit-selection-layer",
+                                 layer);
+              g_object_set_data (G_OBJECT (undo), "edit-selection-type",
+                                 GINT_TO_POINTER (edit_type));
+            }
+        }
+    }
+
+  if (translate_mask)
+    {
+      gimp_image_mask_translate (gdisp->gimage, mask_inc_x, mask_inc_y,
+                                 push_undo);
+    }
+  else if (translate_layer)
+    {
+      GimpLayer *floating_layer;
+      GList     *layer_list;
+
       switch (edit_type)
 	{
 	case EDIT_MASK_TRANSLATE:
@@ -909,10 +1019,11 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
 	  break;
 
 	case EDIT_LAYER_TRANSLATE:
-	  
-	  if ((floating_layer = gimp_image_floating_sel (gdisp->gimage)))
-	    floating_sel_relax (floating_layer, TRUE);
-	  
+	  floating_layer = gimp_image_floating_sel (gdisp->gimage);
+
+          if (floating_layer)
+	    floating_sel_relax (floating_layer, push_undo);
+
 	  /*  translate the layer -- and any "linked" layers as well  */
 	  for (layer_list = GIMP_LIST (gdisp->gimage->layers)->list;
 	       layer_list; 
@@ -920,30 +1031,27 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
 	    {
 	      layer = (GimpLayer *) layer_list->data;
 
-	      if (((layer) == gdisp->gimage->active_layer) || 
+	      if ((layer == gdisp->gimage->active_layer) || 
 		  gimp_layer_get_linked (layer))
 		{
-		  gimp_layer_translate (layer, inc_x, inc_y);
+		  gimp_layer_translate (layer, inc_x, inc_y, push_undo);
 		}
 	    }
-	  
+
 	  if (floating_layer)
-	    floating_sel_rigor (floating_layer, TRUE);
-	  
+	    floating_sel_rigor (floating_layer, push_undo);
 	  break;
-	  
+
 	case EDIT_FLOATING_SEL_TRANSLATE:
-	  
-	  floating_sel_relax (layer, TRUE);
-	  
-	  gimp_layer_translate (layer, inc_x, inc_y);
-	  
-	  floating_sel_rigor (layer, TRUE);
-	  
+	  floating_sel_relax (layer, push_undo);
+	  gimp_layer_translate (layer, inc_x, inc_y, push_undo);
+	  floating_sel_rigor (layer, push_undo);
 	  break;
 	}
     }
 
-  gimp_image_undo_group_end (gdisp->gimage);
+  if (push_undo)
+    gimp_image_undo_group_end (gdisp->gimage);
+
   gimp_image_flush (gdisp->gimage);
 }

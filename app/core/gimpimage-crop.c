@@ -180,7 +180,7 @@ gimp_image_crop (GimpImage *gimage,
 
 	      next = g_list_next (list);
 
-	      gimp_layer_translate (layer, -x1, -y1);
+	      gimp_layer_translate (layer, -x1, -y1, TRUE);
 
 	      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 

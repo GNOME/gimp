@@ -79,7 +79,8 @@ void          gimp_image_mask_shrink      (GimpImage    *gimage,
 
 void          gimp_image_mask_translate   (GimpImage    *gimage,
                                            gint          off_x,
-                                           gint          off_y);
+                                           gint          off_y,
+                                           gboolean      push_undo);
 
 void          gimp_image_mask_load        (GimpImage    *gimage,
                                            GimpChannel  *channel);

@@ -572,7 +572,7 @@ layers_new_layer_query (GimpImage *gimage,
           gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_layer),
                                       gimp_get_user_context (gimage->gimp),
                                       GIMP_TRANSPARENT_FILL);
-          gimp_layer_translate (new_layer, off_x, off_y);
+          gimp_layer_translate (new_layer, off_x, off_y, FALSE);
         }
 
       gimp_image_add_layer (gimage, new_layer, -1);

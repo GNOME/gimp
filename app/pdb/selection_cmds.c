@@ -307,7 +307,7 @@ selection_translate_invoker (Gimp     *gimp,
   offy = args[2].value.pdb_int;
 
   if (success)
-    gimp_image_mask_translate (gimage, offx, offy);
+    gimp_image_mask_translate (gimage, offx, offy, TRUE);
 
   return procedural_db_return_args (&selection_translate_proc, success);
 }

@@ -156,7 +156,7 @@ HELP
     @inargs = ( &std_image_arg );
     &coord_args('off$_', '$_ offset for translation', \@inargs);
 
-    %invoke = ( code => 'gimp_image_mask_translate (gimage, offx, offy);' );
+    %invoke = ( code => 'gimp_image_mask_translate (gimage, offx, offy, TRUE);' );
 }
 
 sub selection_float {

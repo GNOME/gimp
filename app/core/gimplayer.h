@@ -104,7 +104,8 @@ void            gimp_layer_apply_mask          (GimpLayer            *layer,
                                                 gboolean              push_undo);
 void            gimp_layer_translate           (GimpLayer            *layer,
                                                 gint                  off_x,
-                                                gint                  off_y);
+                                                gint                  off_y,
+                                                gboolean              push_undo);
 void            gimp_layer_add_alpha           (GimpLayer            *layer);
 gboolean        gimp_layer_scale_by_factors    (GimpLayer            *layer, 
                                                 gdouble               w_factor, 

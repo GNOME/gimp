@@ -568,11 +568,15 @@ gimp_image_mask_load (GimpImage   *gimage,
 void
 gimp_image_mask_translate (GimpImage *gimage,
                            gint       off_x,
-                           gint       off_y)
+                           gint       off_y,
+                           gboolean   push_undo)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gimp_image_mask_push_undo (gimage, _("Translate Selection"));
+  if (push_undo)
+    gimp_image_mask_push_undo (gimage, _("Translate Selection"));
+  else
+    gimp_image_mask_invalidate (gimage);
 
   gimp_channel_translate (gimp_image_get_mask (gimage), off_x, off_y, FALSE);
 

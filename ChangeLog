@@ -1,5 +1,34 @@
 2003-03-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-mask.[ch] (gimp_image_mask_translate)
+	* app/core/gimplayer.[ch] (gimp_layer_translate): added
+	"gboolean push_undo" parameters.
+
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-resize.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/gui/layers-commands.c
+	* app/widgets/gimptoolbox.c
+	* tools/pdbgen/pdb/layer.pdb
+	* tools/pdbgen/pdb/selection.pdb: changed accordingly.
+
+	* app/pdb/layer_cmds.c
+	* app/pdb/selection_cmds.c: regenerated.
+
+	* app/core/gimpimage-undo-push.c (undo_pop_layer_displace): call
+	gimp_layer_translate() with "push_undo == FALSE" instead of
+	duplicating gimp_layer_translate()'s code. Use GimpItemUndo for
+	GIMP_UNDO_MASK.
+
+	* app/tools/gimpeditselectiontool.c
+	(gimp_edit_selection_tool_cursor_key): check if the top undo on
+	the stack is of exactly the same type as the undo we would push
+	and just don't push it then (compresses layer translate undos and
+	fixes bug #86362). Changed stuff work with CAPS_LOCK or other
+	modifiers pressed.
+
+2003-03-18  Michael Natterer  <mitch@gimp.org>
+
 	Added an API for image colormap manupulation and made colormap
 	changes undoable (fixes bug #25963).
 
