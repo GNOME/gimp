@@ -1,3 +1,9 @@
+2005-03-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpmeasuretool.[ch]: added width and height to the
+	info displayed in the statusbar and the info window.
+	Fixes bug #165275.
+
 2005-03-20  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* libgimpwidgets/gimpcolorscales.c (gimp_color_scales_update_scales):

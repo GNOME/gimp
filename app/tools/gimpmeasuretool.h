@@ -63,7 +63,9 @@ struct _GimpMeasureTool
   GtkWidget       *dialog;
   GtkWidget       *distance_label[2];
   GtkWidget       *angle_label[2];
-  GtkWidget       *unit_label[2];
+  GtkWidget       *width_label[2];
+  GtkWidget       *height_label[2];
+  GtkWidget       *unit_label[4];
 };
 
 struct _GimpMeasureToolClass
