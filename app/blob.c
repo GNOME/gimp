@@ -640,7 +640,7 @@ blob_ellipse (double xc, double yc, double xp, double yp, double xq, double yq)
   /* Figure out a step that will draw most of the points */
 
   r1 = sqrt (xp * xp + yp * yp);
-  r2 = sqrt (xp * xp + yp * yp);
+  r2 = sqrt (xq * xq + yq * yq); 
   max_radius = MAX (r1, r2);
   step = TABLE_SIZE;
 
