@@ -307,7 +307,10 @@ gimp_display_shell_resolution_changed_handler (GimpImage        *gimage,
                                                GimpDisplayShell *shell)
 {
   if (! shell->dot_for_dot)
-    gimp_display_shell_scale_setup (shell);
+    {
+      gimp_display_shell_scale_setup (shell);
+      gimp_display_shell_scaled (shell);
+    }
 
   gimp_statusbar_resize_cursor (GIMP_STATUSBAR (shell->statusbar));
 }
@@ -317,7 +320,10 @@ gimp_display_shell_unit_changed_handler (GimpImage        *gimage,
                                          GimpDisplayShell *shell)
 {
   if (! shell->dot_for_dot)
-    gimp_display_shell_scale_setup (shell);
+    {
+      gimp_display_shell_scale_setup (shell);
+      gimp_display_shell_scaled (shell);
+    }
 
   gimp_statusbar_resize_cursor (GIMP_STATUSBAR (shell->statusbar));
 }
@@ -420,6 +426,7 @@ gimp_display_shell_monitor_res_notify_handler (GObject          *config,
   if (! shell->dot_for_dot)
     {
       gimp_display_shell_scale_setup (shell);
+      gimp_display_shell_scaled (shell);
 
       gimp_statusbar_resize_cursor (GIMP_STATUSBAR (shell->statusbar));
 

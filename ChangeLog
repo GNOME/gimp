@@ -1,3 +1,21 @@
+2003-03-21  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-scale.c: don't emit the "scaled"
+	signal from gimp_display_shell_scale_setup(). Emit it explicitely
+	from gimp_display_shell_scale_resize() instead.
+
+	* app/display/gimpdisplayshell-scroll.c: call
+	gimp_display_shell_scale_setup() after scrolling in order to
+	update scrollbars and rulers.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-handlers.c: emit the "scaled" signal
+	explicitely.
+
+	* app/display/gimpdisplayshell-render.c: minor optimizations.
+
+	* app/display/gimpdisplayshell.c: minor cleanup.
+
 2003-03-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcellrendererviewable.c

@@ -857,8 +857,8 @@ render_image_init_info (RenderInfo       *info,
   info->h          = h;
   info->scalex     = SCALEFACTOR_X (shell);
   info->scaley     = SCALEFACTOR_Y (shell);
-  info->src_x      = UNSCALEX (shell, info->x);
-  info->src_y      = UNSCALEY (shell, info->y);
+  info->src_x      = (gfloat) info->x / info->scalex;
+  info->src_y      = (gfloat) info->y / info->scaley;
   info->src_bpp    = gimp_image_projection_bytes (shell->gdisp->gimage);
   info->dest       = shell->render_buf;
   info->dest_bpp   = 3;
@@ -876,7 +876,7 @@ render_image_init_info (RenderInfo       *info,
     }
 }
 
-static guint*
+static guint *
 render_image_init_alpha (gint mult)
 {
   static guint *alpha_mult = NULL;
@@ -934,13 +934,9 @@ render_image_tile_fault (RenderInfo *info)
   guchar *scale;
   gint    width;
   gint    tilex;
-  gint    tiley;
   gint    step;
   gint    bpp = info->src_bpp;
   gint    x, b;
-
-  tilex = info->src_x / TILE_WIDTH;
-  tiley = info->src_y / TILE_HEIGHT;
 
   tile = tile_manager_get_tile (info->src_tiles,
 				info->src_x, info->src_y,
@@ -956,6 +952,8 @@ render_image_tile_fault (RenderInfo *info)
 
   x     = info->src_x;
   width = info->w;
+
+  tilex = info->src_x / TILE_WIDTH;
 
   while (width--)
     {

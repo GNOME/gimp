@@ -308,6 +308,7 @@ gimp_display_shell_canvas_configure (GtkWidget         *widget,
 
       gimp_display_shell_scroll_clamp_offsets (shell);
       gimp_display_shell_scale_setup (shell);
+      gimp_display_shell_scaled (shell);
     }
 
   return TRUE;

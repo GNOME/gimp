@@ -1363,11 +1363,11 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
                               gint              w,
                               gint              h)
 {
-  gint    sx, sy;
-  gint    x1, y1;
-  gint    x2, y2;
-  gint    dx, dy;
-  gint    i, j;
+  gint  sx, sy;
+  gint  x1, y1;
+  gint  x2, y2;
+  gint  dx, dy;
+  gint  i, j;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -1449,7 +1449,7 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
                                      i - shell->disp_yoffset,
                                      dx, dy);
 
-#if 0
+#ifdef STRESS_TEST
           /* Invalidate the projection just after we render it! */
           gimp_image_invalidate_without_render (shell->gdisp->gimage,
                                                 j - shell->disp_xoffset,

@@ -150,8 +150,6 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
   gtk_widget_queue_draw (GTK_WIDGET (hruler));
   gtk_widget_queue_draw (GTK_WIDGET (vruler));
 
-  gimp_display_shell_scaled (shell);
-
 #if 0
   g_print ("offset_x:     %d\n"
            "offset_y:     %d\n"
@@ -419,6 +417,7 @@ gimp_display_shell_scale_resize (GimpDisplayShell *shell,
 
   gimp_display_shell_scroll_clamp_offsets (shell);
   gimp_display_shell_scale_setup (shell);
+  gimp_display_shell_scaled (shell);
 
   if (resize_window || redisplay)
     gimp_display_shell_expose_full (shell);
