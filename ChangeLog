@@ -1,3 +1,9 @@
+Thu Apr  2 04:06:50 EST 1998 Matthew Wilson <msw@gimp.org>
+
+	* app/disp_callbacks.c: Always ungrab the pointer on button release.
+	This is a quick and dirty hack to try to nuke the pointer grab
+	bug.
+	
 Thu Apr  2 01:49:34 EST 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/transform_core.c: added a change to make a note of the

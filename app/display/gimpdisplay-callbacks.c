@@ -182,6 +182,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	{
 	case 1:
 	  gtk_grab_remove (canvas);
+	  gdk_pointer_ungrab (bevent->time);  /* fixes pointer grab bug */
 	  if (active_tool && ((active_tool->type == MOVE) ||
 			      !gimage_is_empty (gdisp->gimage)))
 	    if (active_tool->state == ACTIVE)
