@@ -926,7 +926,7 @@ AC_ARG_ENABLE(print, [  --disable-print         build without print support (req
       AC_MSG_CHECKING(for appropriate gimpprint library)
       print_version=`$PRINT_CONFIG --version`
       if expr $print_version \>= $GIMPPRINT_REQUIRED_VERSION >/dev/null; then
-        if expr $print_version \<= $GIMPPRINT_TOONEW_VERSION >/dev/null; then
+        if expr $print_version \< $GIMPPRINT_TOONEW_VERSION >/dev/null; then
           AC_MSG_RESULT([yes (version $print_version)])
           have_gimp_print=yes
           PRINT_LIBS=`$PRINT_CONFIG --libs`
