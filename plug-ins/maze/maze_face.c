@@ -23,12 +23,15 @@
  *
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 
 #include "maze.h"
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
+#include "libgimp/stdplugins-intl.h"
 
 #define BORDER_TOLERANCE 1.00 /* maximum ratio of (max % divs) to width */
 #define ENTRY_WIDTH 75
@@ -173,8 +176,9 @@ gint maze_dialog()
   GtkWidget *alg_box, *alg_button;
 
   gchar **argv;
-  gint  argc;
-  gchar buffer[32];
+  gint    argc;
+  gchar   buffer[32];
+  gchar  *message;
 
   argc = 1;
   argv = g_new (gchar *, 1);
@@ -200,7 +204,7 @@ gint maze_dialog()
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) maze_ok_callback,
@@ -209,19 +213,19 @@ gint maze_dialog()
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label ("Help");
+  button = gtk_button_new_with_label (_("Help"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) maze_help,
 		      NULL);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  button = gtk_button_new_with_label (_("Cancel"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
+			     (GtkSignalFunc) gtk_widget_destroy,
+			     GTK_OBJECT (dlg));
   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -236,8 +240,9 @@ gint maze_dialog()
   gtk_container_border_width (GTK_CONTAINER (msg_frame), 5);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), msg_frame, FALSE, FALSE, 0);
 
-  sprintf(buffer,"Selection is %dx%d",sel_w, sel_h);
-  msg_label = gtk_label_new (buffer);
+  message = g_strdup_printf (_("Selection is %dx%d"),sel_w, sel_h);
+  msg_label = gtk_label_new (message);
+  g_free (message);
   gtk_container_add (GTK_CONTAINER(msg_frame), msg_label);
   gtk_widget_show (msg_label);
   gtk_widget_show (msg_frame);
@@ -250,7 +255,7 @@ gint maze_dialog()
 #endif
 
   /*  Set up Options page  */
-  frame = gtk_frame_new ("Maze Options");
+  frame = gtk_frame_new (_("Maze Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 5);
   table = gtk_table_new (5, 2, FALSE);
@@ -260,7 +265,7 @@ gint maze_dialog()
   trow = 0;
 
   /* Tileable checkbox */
-  tilecheck = gtk_check_button_new_with_label ("Tileable?");
+  tilecheck = gtk_check_button_new_with_label (_("Tileable?"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tilecheck), mvals.tile);
   gtk_signal_connect (GTK_OBJECT (tilecheck), "clicked",
 		      GTK_SIGNAL_FUNC (toggle_callback), &mvals.tile);
@@ -281,7 +286,7 @@ gint maze_dialog()
   /* Number of Divisions entry */
   trow++;
 
-  div_x_label = gtk_label_new("Pieces:");
+  div_x_label = gtk_label_new (_("Pieces:"));
 
   gtk_table_attach (GTK_TABLE (table), div_x_label, 0,1, trow, trow+1, 
 		    0, 0, 5, 5);
@@ -303,7 +308,7 @@ gint maze_dialog()
   trow++;
 
 
-  height_entry = entscale_int_new (table, 0, trow, "Height (pixels):", 
+  height_entry = entscale_int_new (table, 0, trow, _("Height (pixels):"), 
 				   &mvals.height, 
 				   1, sel_h/4, TRUE, 
 				   (EntscaleIntCallbackFunc) height_width_callback,
@@ -311,7 +316,7 @@ gint maze_dialog()
 
   trow++;
 
-  div_y_label = gtk_label_new("Pieces:");
+  div_y_label = gtk_label_new (_("Pieces:"));
 
   gtk_table_attach (GTK_TABLE (table), div_y_label, 0, 1, trow, trow+1, 
 		    0, 0, 5, 5);
@@ -335,10 +340,10 @@ gint maze_dialog()
   gtk_widget_show (table);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame, 
-			    gtk_label_new ("Options"));
+			    gtk_label_new (_("Options")));
 
   /* Set up other page */
-  frame = gtk_frame_new ("At Your Own Risk");
+  frame = gtk_frame_new (_("At Your Own Risk"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   table = gtk_table_new (4, 2, FALSE);
@@ -346,7 +351,7 @@ gint maze_dialog()
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   /* Multiple input box */
-  label = gtk_label_new ("Multiple (57)");
+  label = gtk_label_new (_("Multiple (57)"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL, 0, 5, 0 );
   gtk_widget_show (label);
@@ -361,7 +366,7 @@ gint maze_dialog()
   gtk_widget_show (entry);
 
   /* Offset input box */
-  label = gtk_label_new ("Offset (1)");
+  label = gtk_label_new (_("Offset (1)"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL, 0, 5, 0 );
   gtk_widget_show (label);
@@ -376,7 +381,7 @@ gint maze_dialog()
   gtk_widget_show (entry);
 
   /* Seed input box */
-  label = gtk_label_new ("Seed");
+  label = gtk_label_new (_("Seed"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3, 
 		    GTK_FILL, 0, 5, 5);
@@ -396,7 +401,7 @@ gint maze_dialog()
   gtk_box_pack_start(GTK_BOX(seed_hbox), seed_entry, TRUE, TRUE, 0);
   gtk_widget_show (seed_entry);
 
-  time_button = gtk_toggle_button_new_with_label ("Time");
+  time_button = gtk_toggle_button_new_with_label (_("Time"));
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(time_button),mvals.timeseed);
   gtk_signal_connect (GTK_OBJECT (time_button), "clicked",
 		      (GtkSignalFunc) toggle_callback,
@@ -405,7 +410,7 @@ gint maze_dialog()
   gtk_widget_show (time_button);
   gtk_widget_show (seed_hbox);
 
-  label = gtk_label_new("Algorithm");
+  label = gtk_label_new (_("Algorithm"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4, 
 		    GTK_FILL, 0, 5, 5);
@@ -416,7 +421,7 @@ gint maze_dialog()
 		    GTK_FILL, 0, 5, 5);
   gtk_widget_show (alg_box);
 
-  alg_button=gtk_radio_button_new_with_label (NULL,"Depth First");
+  alg_button=gtk_radio_button_new_with_label (NULL, _("Depth First"));
   gtk_signal_connect(GTK_OBJECT(alg_button),"toggled",
 		     GTK_SIGNAL_FUNC(alg_radio_callback), (gpointer)DEPTH_FIRST);
   if(mvals.algorithm==DEPTH_FIRST)
@@ -425,7 +430,7 @@ gint maze_dialog()
   gtk_widget_show(alg_button);
 
   alg_button=gtk_radio_button_new_with_label (gtk_radio_button_group(
-       GTK_RADIO_BUTTON(alg_button)), "Prim's Algorithm");
+       GTK_RADIO_BUTTON(alg_button)), _("Prim's Algorithm"));
   gtk_signal_connect(GTK_OBJECT(alg_button),"toggled",
 		     GTK_SIGNAL_FUNC(alg_radio_callback), (gpointer)PRIMS_ALGORITHM);
   if(mvals.algorithm==PRIMS_ALGORITHM)
@@ -438,7 +443,7 @@ gint maze_dialog()
   gtk_widget_show (frame);
   gtk_widget_show (table);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame, 
-			    gtk_label_new ("Advanced"));
+			    gtk_label_new (_("Advanced")));
 
   gtk_widget_show (dlg);
 
@@ -546,7 +551,7 @@ div_button_callback (GtkWidget *button, GtkWidget *entry)
 
      /* Sanity check: */
      if (mvals.tile && (max & 1)) {
-	  maze_msg("Selection size is not even.  \nTileable maze won't work perfectly.");
+	  maze_msg(_("Selection size is not even.  \nTileable maze won't work perfectly."));
 	  return;
      }
 
@@ -672,21 +677,30 @@ maze_help (GtkWidget *widget, gpointer foo)
      int proc_type, nparams, nreturn_vals;
      GParamDef *params, *return_vals;
      gint baz;
+     gchar *message;
 
      if (gimp_query_procedure("extension_web_browser",
                               &proc_blurb, &proc_help, 
 			      &proc_author, &proc_copyright, &proc_date,
 			      &proc_type, &nparams, &nreturn_vals,
-			      &params, &return_vals)) {
-          maze_msg("Opening " MAZE_URL);
-          gimp_run_procedure("extension_web_browser", &baz,
-                             PARAM_INT32, RUN_NONINTERACTIVE,
-                             PARAM_STRING, MAZE_URL,
-                             PARAM_INT32, HELP_OPENS_NEW_WINDOW,
-                             PARAM_END);
-     } else {
-          maze_msg("See " MAZE_URL);
-     }                                            
+			      &params, &return_vals)) 
+       {
+	 /* open URL for help */ 
+	 message = g_strdup_printf (_("Opening %s"), MAZE_URL);
+	 maze_msg (message);
+	 g_free (message);
+	 gimp_run_procedure("extension_web_browser", &baz,
+			    PARAM_INT32, RUN_NONINTERACTIVE,
+			    PARAM_STRING, MAZE_URL,
+			    PARAM_INT32, HELP_OPENS_NEW_WINDOW,
+			    PARAM_END);
+       } 
+     else 
+       {
+	 message = g_strdup_printf (_("See %s"), MAZE_URL);
+	 maze_msg (message);
+	 g_free (message);
+       }                                            
 }
 
 static void

@@ -37,10 +37,12 @@
  *
  */
 
+#include "config.h"
 #include <stdlib.h>
 #include "maze.h"
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
+#include "libgimp/stdplugins-intl.h"
 
 extern MazeValues mvals;
 
@@ -277,7 +279,7 @@ prim(guint pos, gchar *maz, guint x, guint y, gint rnd)
      char d, i;
      guint c=0;
 
-     gimp_progress_init ("Constructing maze using Prim's Algorithm...");
+     gimp_progress_init (_("Constructing maze using Prim's Algorithm..."));
 
      /* OUT is zero, so we should be already initalized. */
 
@@ -446,7 +448,7 @@ prim_tileable(gchar *maz, guint x, guint y, gint rnd)
      char d, i;
      guint c=0;
 
-     gimp_progress_init ("Constructing tileable maze using Prim's Algorithm...");
+     gimp_progress_init (_("Constructing tileable maze using Prim's Algorithm..."));
 
      /* OUT is zero, so we should be already initalized. */
 

@@ -34,6 +34,12 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.16  2000/01/01 15:38:59  neo
+ *   added gettext support
+ *
+ *
+ *   --Sven
+ *
  *   Revision 1.15  1999/11/27 02:54:25  neo
  *          * plug-ins/sgi/sgi.c: bail out nicely instead of aborting when
  *           saving fails.
@@ -187,6 +193,8 @@
  *   Initial revision
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
@@ -196,6 +204,7 @@
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+#include "libgimp/stdplugins-intl.h"
 
 
 /*
@@ -274,9 +283,11 @@ query(void)
   static int		nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
 
+  INIT_I18N();
+
   gimp_install_procedure("file_sgi_load",
-      "Loads files in SGI image file format",
-      "This plug-in loads SGI image files.",
+      _("Loads files in SGI image file format"),
+      _("This plug-in loads SGI image files."),
       "Michael Sweet <mike@easysw.com>",
       "Copyright 1997-1998 by Michael Sweet",
       PLUG_IN_VERSION,
@@ -284,8 +295,8 @@ query(void)
       load_args, load_return_vals);
 
   gimp_install_procedure("file_sgi_save",
-      "Saves files in SGI image file format",
-      "This plug-in saves SGI image files.",
+      _("Saves files in SGI image file format"),
+      _("This plug-in saves SGI image files."),
       "Michael Sweet <mike@easysw.com>",
       "Copyright 1997-1998 by Michael Sweet",
       PLUG_IN_VERSION,
@@ -322,6 +333,8 @@ run (char    *name,		/* I - Name of filter program. */
 
   values[0].type          = PARAM_STATUS;
   values[0].data.d_status = STATUS_SUCCESS;
+
+  INIT_I18N_UI();
 
   *return_vals = values;
 
@@ -452,7 +465,7 @@ load_image (char *filename)	/* I - File to load */
 		*pixel,		/* Pixel data */
 		*pptr;		/* Current pixel */
   unsigned short **rows;	/* SGI image data */
-  char		progress[255];	/* Title for progress display... */
+  gchar		*progress;	/* Title for progress display... */
 
 
  /*
@@ -467,11 +480,12 @@ load_image (char *filename)	/* I - File to load */
   };
 
   if (strrchr(filename, '/') != NULL)
-    sprintf(progress, "Loading %s:", strrchr(filename, '/') + 1);
+    progress = g_strdup_printf (_("Loading %s:"), strrchr(filename, '/') + 1);
   else
-    sprintf(progress, "Loading %s:", filename);
+    progress = g_strdup_printf (_("Loading %s:"), filename);
 
   gimp_progress_init(progress);
+  g_free (progress);
 
  /*
   * Get the image dimensions and create the image...
@@ -514,8 +528,8 @@ load_image (char *filename)	/* I - File to load */
   * Create the "background" layer to hold the image...
   */
 
-  layer = gimp_layer_new(image, "Background", sgip->xsize, sgip->ysize,
-                         layer_type, 100, NORMAL_MODE);
+  layer = gimp_layer_new (image, _("Background"), sgip->xsize, sgip->ysize,
+			  layer_type, 100, NORMAL_MODE);
   gimp_image_add_layer(image, layer, 0);
 
  /*
@@ -637,7 +651,7 @@ save_image (char   *filename,	 /* I - File to save to */
 		*pixel,		 /* Pixel data */
 		*pptr;		 /* Current pixel */
   unsigned short **rows;	 /* SGI image data */
-  char		progress[255];	 /* Title for progress display... */
+  gchar		*progress;	 /* Title for progress display... */
 
 
  /*
@@ -683,11 +697,12 @@ save_image (char   *filename,	 /* I - File to save to */
   };
 
   if (strrchr(filename, '/') != NULL)
-    sprintf(progress, "Saving %s:", strrchr(filename, '/') + 1);
+    progress = g_strdup_printf (_("Saving %s:"), strrchr(filename, '/') + 1);
   else
-    sprintf(progress, "Saving %s:", filename);
+    progress = g_strdup_printf (_("Saving %s:"), filename);
 
   gimp_progress_init(progress);
+  g_free (progress);
 
  /*
   * Allocate memory for "tile_height" rows...
@@ -824,9 +839,9 @@ save_dialog(void)
   GSList	*group;		/* Button grouping for compression */
   static char	*types[] =	/* Compression types... */
 		{
-		  "No Compression",
-		  "RLE Compression",
-		  "Aggressive RLE\n(Not supported by SGI)"
+		  N_("No Compression"),
+		  N_("RLE Compression"),
+		  N_("Aggressive RLE\n(Not supported by SGI)")
 		};
 
 
@@ -849,7 +864,7 @@ save_dialog(void)
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) save_ok_callback,
@@ -858,7 +873,7 @@ save_dialog(void)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -870,7 +885,7 @@ save_dialog(void)
   * Compression type...
   */
 
-  frame = gtk_frame_new("Parameter Settings");
+  frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width(GTK_CONTAINER(frame), 10);
   gtk_box_pack_start(GTK_BOX (GTK_DIALOG(dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -884,7 +899,7 @@ save_dialog(void)
 
   for (i = 0; i < (sizeof(types) / sizeof(types[0])); i ++)
   {
-    button = gtk_radio_button_new_with_label(group, types[i]);
+    button = gtk_radio_button_new_with_label(group, gettext (types[i]));
     group  = gtk_radio_button_group(GTK_RADIO_BUTTON(button));
     if (i == compression)
       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);

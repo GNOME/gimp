@@ -44,7 +44,8 @@
 #define _O_BINARY 0
 #endif
 
-#include <libgimp/gimp.h>
+#include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 #include "g3.h"
 
@@ -84,9 +85,11 @@ void query ()
   static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("file_faxg3_load",
-                          "loads g3 fax files",
-			  "This plug-in loads Fax G3 Image files.",
+                          _("loads g3 fax files"),
+			  _("This plug-in loads Fax G3 Image files."),
                           "Jochen Friedrich",
                           "Jochen Friedrich, Gert Doering, Spencer Kimball & Peter Mattis",
                           VERSION,
@@ -117,19 +120,21 @@ static void run (char    *name,
   values[0].data.d_status = STATUS_CALLING_ERROR;
   if (strcmp (name, "file_faxg3_load") == 0)
     {
-	  *nreturn_vals = 2;
-      image_ID = load_image (param[1].data.d_string);
-	  values[1].type = PARAM_IMAGE;
-	  values[1].data.d_image = image_ID;
+      INIT_I18N();
 
+      *nreturn_vals = 2;
+      image_ID = load_image (param[1].data.d_string);
+      values[1].type = PARAM_IMAGE;
+      values[1].data.d_image = image_ID;
+      
       if (image_ID != -1)
-		{
-		  values[0].data.d_status = STATUS_SUCCESS;
-		}
+	{
+	  values[0].data.d_status = STATUS_SUCCESS;
+	}
       else
-		{
-		  values[0].data.d_status = STATUS_EXECUTION_ERROR;
-		}
+	{
+	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	}
     }
 }
 
@@ -183,10 +188,9 @@ load_image (char *filename)
   int	max_rows;		/* max. rows allocated */
   int	col, hcol;		/* column, highest column ever used */
 
-  name = (char *) malloc (strlen (filename) + 12);
-  sprintf (name, "Loading %s:", filename);
+  name = g_strdup_printf (_("Loading %s:"), filename);
   gimp_progress_init (name);
-  free (name);
+  g_free (name);
 
   /* initialize lookup trees */
   build_tree( &white, t_white );
@@ -436,7 +440,7 @@ gint32 emitgimp ( int hcol, int row, char *bitmap, int bperrow, char *filename )
   image_ID = gimp_image_new (hcol, row, GRAY);
   gimp_image_set_filename (image_ID, filename);
 
-  layer_ID = gimp_layer_new (image_ID, "Background",
+  layer_ID = gimp_layer_new (image_ID, _("Background"),
 			     hcol,
 			     row,
 			     GRAY_IMAGE, 100, NORMAL_MODE);

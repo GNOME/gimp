@@ -49,7 +49,9 @@
 
 #include <time.h>  /* For random seeding */
 
-#include <libgimp/gimp.h>
+#include <gtk/gtk.h>
+#include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 #include "maze.h"
 
@@ -145,18 +147,23 @@ query ()
   static GParamDef *return_vals = NULL;
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
+  gchar *help;
 
+  INIT_I18N();
+
+  help = g_strdup_printf (_("Generates a maze using either the depth-first search method or Prim's algorithm.  Can make tileable mazes too.  See %s for more help."), MAZE_URL);
   gimp_install_procedure ("plug_in_maze",
-			  "Draws a maze.",
-			  "Generates a maze using either the depth-first search method or Prim's algorithm.  Can make tileable mazes too.  See " MAZE_URL " for more help.",
+			  _("Draws a maze."),
+			  help,
 			  "Kevin Turner <kevint@poboxes.com>",
 			  "Kevin Turner",
 			  "1997, 1998",
-			  "<Image>/Filters/Render/Pattern/Maze...",
+			  N_("<Image>/Filters/Render/Pattern/Maze..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
 			  args, return_vals);
+  g_free (help);
 }
 
 static void
@@ -179,6 +186,8 @@ run    (gchar    *name,
 
   *nreturn_vals = 1;
   *return_vals = values;
+
+  INIT_I18N_UI(); 
 
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = status;
@@ -391,7 +400,7 @@ maze( GDrawable * drawable)
   /* Get the foreground and background colors */
   get_colors(drawable,fg,bg);
 
-  gimp_progress_init ("Drawing Maze...");
+  gimp_progress_init (_("Drawing Maze..."));
 
   for (pr = gimp_pixel_rgns_register (1, &dest_rgn); 
        pr != NULL; 

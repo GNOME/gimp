@@ -1,3 +1,19 @@
+Sat Jan  1 16:34:25 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/dbbrowser/Makefile.am
+	* plug-ins/dbbrowser/dbbrowser.c
+	* plug-ins/dbbrowser/dbbrowser_utils.c
+	* plug-ins/faxg3/Makefile.am
+	* plug-ins/faxg3/faxg3.c
+	* plug-ins/fits/fits.c
+	* plug-ins/maze/Makefile.am
+	* plug-ins/maze/algorithms.c
+	* plug-ins/maze/maze.c
+	* plug-ins/maze/maze_face.c
+	* plug-ins/sgi/Makefile.am
+	* plug-ins/sgi/sgi.c
+	* po-plug-ins/POTFILES.in: added gettext support
+
 Sat Jan  1 14:57:19 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/global_edit.c: Paste as New now always creates a RGB image,

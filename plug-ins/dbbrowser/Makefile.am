@@ -12,6 +12,9 @@ dbbrowser_SOURCES = \
 	dbbrowser_utils.c	\
 	dbbrowser_utils.h
 
+AM_CPPFLAGS = \
+	-DLOCALEDIR=\""$(localedir)"\"
+
 INCLUDES = \
 	-I$(top_srcdir)			\
 	$(GTK_CFLAGS)			\

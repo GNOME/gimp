@@ -9,6 +9,9 @@ sgi_SOURCES = \
 	sgi.h		\
 	sgilib.c   
 
+AM_CPPFLAGS = \
+	-DLOCALEDIR=\""$(localedir)"\"
+
 INCLUDES = \
 	-I$(top_srcdir)			\
 	$(GTK_CFLAGS)			\

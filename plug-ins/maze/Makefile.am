@@ -11,6 +11,9 @@ maze_SOURCES = \
 	maze.h		\
 	maze_face.c
 
+AM_CPPFLAGS = \
+	-DLOCALEDIR=\""$(localedir)"\"
+
 INCLUDES = \
 	-I$(top_srcdir)			\
 	$(GTK_CFLAGS)			\

@@ -33,9 +33,12 @@
  */
 static char ident[] = "@(#) GIMP FITS file-plugin v1.06  21-Nov-99";
 
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"

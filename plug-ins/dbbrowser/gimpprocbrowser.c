@@ -24,7 +24,9 @@
    98/12/13  Sven Neumann <sven@gimp.org> : added help display
 */
 
+#include "config.h"
 #include "dbbrowser_utils.h"
+#include "libgimp/stdplugins-intl.h"
 
 GList *proc_table;
 
@@ -60,7 +62,7 @@ gimp_db_browser(void (* apply_callback) ( gchar     *selected_proc_name,
 
   dbbrowser->dlg = gtk_dialog_new ();
   
-  gtk_window_set_title (GTK_WINDOW (dbbrowser->dlg), "DB Browser (init)");
+  gtk_window_set_title (GTK_WINDOW (dbbrowser->dlg), _("DB Browser (init)"));
   gtk_window_position (GTK_WINDOW (dbbrowser->dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dbbrowser->dlg), "destroy",
                       (GtkSignalFunc) dialog_close_callback,
@@ -106,7 +108,7 @@ gimp_db_browser(void (* apply_callback) ( gchar     *selected_proc_name,
 		      searchhbox, FALSE, TRUE, 0);
   gtk_widget_show(searchhbox);
 
-  label = gtk_label_new("Search :");
+  label = gtk_label_new (_("Search :"));
   gtk_misc_set_alignment( GTK_MISC(label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (searchhbox), 
 		      label, TRUE, TRUE, 0);
@@ -133,7 +135,7 @@ gimp_db_browser(void (* apply_callback) ( gchar     *selected_proc_name,
 
   gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG(dbbrowser->dlg)->action_area), 0);
 
-  dbbrowser->name_button = gtk_button_new_with_label ("Search by name");
+  dbbrowser->name_button = gtk_button_new_with_label (_("Search by name"));
   GTK_WIDGET_SET_FLAGS (dbbrowser->name_button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (dbbrowser->name_button), "clicked",
                       (GtkSignalFunc) dialog_search_callback, dbbrowser);
@@ -141,7 +143,7 @@ gimp_db_browser(void (* apply_callback) ( gchar     *selected_proc_name,
 		    dbbrowser->name_button , TRUE, TRUE, 0);
   gtk_widget_show(dbbrowser->name_button);
 
-  dbbrowser->blurb_button = gtk_button_new_with_label ("Search by blurb");
+  dbbrowser->blurb_button = gtk_button_new_with_label (_("Search by blurb"));
   GTK_WIDGET_SET_FLAGS (dbbrowser->blurb_button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (dbbrowser->blurb_button), "clicked",
                       (GtkSignalFunc) dialog_search_callback, dbbrowser);
@@ -150,7 +152,7 @@ gimp_db_browser(void (* apply_callback) ( gchar     *selected_proc_name,
   gtk_widget_show(dbbrowser->blurb_button);
 
   if (apply_callback) {
-    button = gtk_button_new_with_label ("Apply");
+    button = gtk_button_new_with_label (_("Apply"));
     GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
     gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			(GtkSignalFunc) dialog_apply_callback, dbbrowser );
@@ -159,7 +161,7 @@ gimp_db_browser(void (* apply_callback) ( gchar     *selected_proc_name,
     gtk_widget_show (button);
   }
 
-  button = gtk_button_new_with_label ("Close");
+  button = gtk_button_new_with_label (_("Close"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) dialog_close_callback, dbbrowser);
@@ -268,7 +270,7 @@ dialog_select (dbbrowser_t *dbbrowser,
 
   /* show the name */
 
-  label = gtk_label_new("Name :");
+  label = gtk_label_new(_("Name :"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
   gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
 		    0, 1, row, row+1, GTK_FILL, GTK_FILL, 3, 6);
@@ -284,7 +286,7 @@ dialog_select (dbbrowser_t *dbbrowser,
 
   /* show the description */
 
-  label = gtk_label_new("Blurb :");
+  label = gtk_label_new(_("Blurb :"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
   gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
 		    0, 1, row, row+1, GTK_FILL, GTK_FILL, 3, 0);
@@ -306,7 +308,7 @@ dialog_select (dbbrowser_t *dbbrowser,
   /* in parameters */
   if (dbbrowser->selected_nparams) 
     {
-      label = gtk_label_new("In :");
+      label = gtk_label_new(_("In :"));
       gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
       gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
 	   0, 1, row, row+(dbbrowser->selected_nparams), 
@@ -401,7 +403,7 @@ dialog_select (dbbrowser_t *dbbrowser,
   /* show the help */
   if ((dbbrowser->selected_proc_help) && (strlen(dbbrowser->selected_proc_help) > 1))
     {
-      label = gtk_label_new("Help :");
+      label = gtk_label_new(_("Help :"));
       gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
       gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
 			0, 1, row, row+1, 
@@ -439,7 +441,7 @@ dialog_select (dbbrowser_t *dbbrowser,
 
   /* show the author & the copyright */
 
-  label = gtk_label_new("Author :");
+  label = gtk_label_new(_("Author :"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
   gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
 		    0, 1, row, row+1, 
@@ -454,7 +456,7 @@ dialog_select (dbbrowser_t *dbbrowser,
   gtk_widget_show(label);
   row++;
   
-  label = gtk_label_new("Date :");
+  label = gtk_label_new(_("Date :"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
   gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
 		    0, 1, row, row+1, 
@@ -469,7 +471,7 @@ dialog_select (dbbrowser_t *dbbrowser,
   gtk_widget_show(label);
   row++;
 
-  label = gtk_label_new("Copyright :");
+  label = gtk_label_new(_("Copyright :"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5); 
   gtk_table_attach (GTK_TABLE (dbbrowser->descr_table), label,
 		    0, 1, row, row+1, 
@@ -561,7 +563,7 @@ dialog_search_callback (GtkWidget *widget,
   if ( widget == (dbbrowser->name_button) ) 
     {
       gtk_window_set_title (GTK_WINDOW (dbbrowser->dlg), 
-			    "DB Browser (by name - please wait)");
+			    _("DB Browser (by name - please wait)"));
 
       query = g_string_new ("");
       query_text = gtk_entry_get_text(GTK_ENTRY(dbbrowser->search_entry));
@@ -585,7 +587,7 @@ dialog_search_callback (GtkWidget *widget,
   else if ( widget == (dbbrowser->blurb_button) )
     {
       gtk_window_set_title (GTK_WINDOW (dbbrowser->dlg), 
-			    "DB Browser (by blurb - please wait)");
+			    _("DB Browser (by blurb - please wait)"));
       gimp_query_database (".*", 
 			   gtk_entry_get_text( GTK_ENTRY(dbbrowser->search_entry) ),
 			   ".*", ".*", ".*", ".*", ".*",
@@ -593,7 +595,7 @@ dialog_search_callback (GtkWidget *widget,
     }
   else {
       gtk_window_set_title (GTK_WINDOW (dbbrowser->dlg), 
-			    "DB Browser (please wait)");
+			    _("DB Browser (please wait)"));
       gimp_query_database (".*", ".*", ".*", ".*", ".*", ".*", ".*", 
 			   &num_procs, &proc_list);
   }
@@ -655,8 +657,7 @@ dialog_search_callback (GtkWidget *widget,
   
   g_free( proc_list );
 
-  gtk_window_set_title (GTK_WINDOW (dbbrowser->dlg), 
-			"DB Browser");
+  gtk_window_set_title (GTK_WINDOW (dbbrowser->dlg), _("DB Browser"));
   gtk_clist_thaw(GTK_CLIST(dbbrowser->clist));
 
 }

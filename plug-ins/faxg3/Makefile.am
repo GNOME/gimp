@@ -10,6 +10,9 @@ faxg3_SOURCES = \
 	g3.h		\
 	run_tbl.c   
 
+AM_CPPFLAGS = \
+	-DLOCALEDIR=\""$(localedir)"\"
+
 INCLUDES = \
 	-I$(top_srcdir)			\
 	$(GLIB_CFLAGS)			\

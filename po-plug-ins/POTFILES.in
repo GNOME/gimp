@@ -98,6 +98,10 @@ plug-ins/common/xbm.c
 plug-ins/common/xpm.c
 plug-ins/common/xwd.c
 plug-ins/common/zealouscrop.c
+plug-ins/dbbrowser/dbbrowser.c
+plug-ins/dbbrowser/dbbrowser_utils.c
+plug-ins/faxg3/faxg3.c
+plug-ins/fits/fits.c
 plug-ins/flame/flame.c
 plug-ins/fp/fp.c
 plug-ins/fp/fp_gtk.c
@@ -179,6 +183,9 @@ plug-ins/imagemap/imap_selection.c
 plug-ins/imagemap/imap_settings.c
 plug-ins/imagemap/imap_source.c
 plug-ins/imagemap/imap_toolbar.c
+plug-ins/maze/algorithms.c
+plug-ins/maze/maze.c
+plug-ins/maze/maze_face.c
 plug-ins/megawidget/megawidget.c
 plug-ins/mosaic/mosaic.c
 plug-ins/print/print-escp2.c
@@ -193,6 +200,7 @@ plug-ins/script-fu/script-fu-scripts.c
 plug-ins/script-fu/script-fu-server.c
 plug-ins/script-fu/script-fu.c
 plug-ins/sel2path/sel2path.c
+plug-ins/sgi/sgi.c
 plug-ins/sinus/sinus.c
 plug-ins/struc/struc.c
 libgimp/gimpcolorbutton.c

@@ -41,10 +41,13 @@
   - bug fixes... (my method : rewrite from scratch :)
 */
 
+#include "config.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 
 #include "dbbrowser.h"
+#include "libgimp/stdplugins-intl.h"
 
 static void   query      (void);
 static void   run        (char    *name,
@@ -74,13 +77,15 @@ query ()
 
   static int nargs = sizeof (args) / sizeof (args[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("extension_db_browser",
-                          "list available procedures in the PDB",
+                          _("List available procedures in the PDB"),
                           "",
                           "Thomas Noel",
                           "Thomas Noel",
                           "23th june 1997",
-                          "<Toolbox>/Xtns/DB Browser...",
+                          N_("<Toolbox>/Xtns/DB Browser..."),
 			  "",
                           PROC_EXTENSION,
 			  nargs, 0,
@@ -110,6 +115,8 @@ run (char    *name,
       {
 	gchar **argv;
 	gint  argc;  
+
+	INIT_I18N_UI(); 
 
 	argc = 1;
 	argv = g_new (gchar *, 1);
