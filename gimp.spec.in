@@ -194,7 +194,7 @@ cat gimp-plugin-files gimp-tips-files > gimp.files
 
 %files devel
 %defattr (0555, bin, bin, 0555)
-%{prefix}/bin/gimptool-%{subver}
+%{prefix}/bin/gimptool-2.0
 %{prefix}/lib/*.so
 %{prefix}/lib/*.la
 %dir %{prefix}/lib/gimp/%{subver}
@@ -202,9 +202,9 @@ cat gimp-plugin-files gimp-tips-files > gimp.files
 %{prefix}/lib/gimp/%{subver}/modules/*.la
 
 %defattr (0444, root, root, 0555)
-%{prefix}/lib/pkgconfig/gimp-%{subver}.pc
-%{prefix}/lib/pkgconfig/gimpui-%{subver}.pc
-%{prefix}/lib/pkgconfig/gimpthumb-%{subver}.pc
+%{prefix}/lib/pkgconfig/gimp-2.0.pc
+%{prefix}/lib/pkgconfig/gimpui-2.0.pc
+%{prefix}/lib/pkgconfig/gimpthumb-2.0.pc
 
 %dir %{prefix}/include/gimp-%{subver}/libgimpbase
 %{prefix}/include/gimp-%{subver}/libgimpbase/*
@@ -241,6 +241,9 @@ cat gimp-plugin-files gimp-tips-files > gimp.files
 %{prefix}/share/gtk-doc/html/libgimpwidgets
 
 %changelog
+* Thu Jan 08 2004 Sven Neumann <sven@gimp.org>
+- gimptool and pkg-config files changed names
+
 * Wed Oct 08 2003 Ville Pätsi <drc@gimp.org>
 - Enabled debug packages again.
 

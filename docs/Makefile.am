@@ -2,14 +2,14 @@
 
 man_MANS = \
 	gimp-$(LT_RELEASE).1		\
-	gimptool-$(LT_RELEASE).1	\
+	gimptool-2.0.1			\
 	gimprc-$(LT_RELEASE).5		\
 	gimp-remote-$(LT_RELEASE).1
 
 EXTRA_DIST = \
 	gimp-$(LT_RELEASE).1.in		\
 	gimprc-$(LT_RELEASE).5.in	\
-	gimptool-$(LT_RELEASE).1.in	\
+	gimptool-2.0.1.in		\
 	gimp-remote-$(LT_RELEASE).1.in	\
 	Wilber.svg			\
 	Wilber.xcf.gz			\

@@ -26,13 +26,13 @@ SUBDIRS = \
 	$(GIMP_DEVEL_DOCS)	\
 	docs
 
-bin_SCRIPTS = gimptool-$(LT_RELEASE) @GIMPINSTALL@
+bin_SCRIPTS = gimptool-2.0 @GIMPINSTALL@
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = \
-	gimp-$(LT_RELEASE).pc		\
-	gimpthumb-$(LT_RELEASE).pc	\
-	gimpui-$(LT_RELEASE).pc
+	gimp-2.0.pc		\
+	gimpthumb-2.0.pc	\
+	gimpui-2.0.pc
 
 EXTRA_SCRIPTS = gimpinstall-$(LT_RELEASE)
 
@@ -78,7 +78,7 @@ install-exec-hook:
 if DEFAULT_BINARY
 	cd $(DESTDIR)$(bindir) \
 	&& rm -f gimptool \
-	&& $(LN_S) gimptool-$(LT_RELEASE) gimptool
+	&& $(LN_S) gimptool-2.0 gimptool
 endif
 
 uninstall-local:

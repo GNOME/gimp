@@ -24,7 +24,7 @@ rt_libs=@RT_LIBS@
 usage()
 {
   cat <<EOF
-Usage: gimptool-1.3 [OPTION]...
+Usage: gimptool-2.0 [OPTION]...
 
 General options:
   --help                  print this message

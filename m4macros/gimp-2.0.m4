@@ -12,8 +12,8 @@ dnl
 
 AC_ARG_ENABLE(gimptest, [  --disable-gimptest      do not try to compile and run a test GIMP program],, enable_gimptest=yes)
 
-  pkg_name=gimp-1.3
-  pkg_config_args="$pkg_name gimpui-1.3"
+  pkg_name=gimp-2.0
+  pkg_config_args="$pkg_name gimpui-2.0"
 
   no_gimp=""
 

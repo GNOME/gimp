@@ -1,3 +1,20 @@
+2004-01-09  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumped version number to 1.3.25, interface_age 1,
+	binary age 1.
+
+	* Makefile.am
+	* gimp-2.0.pc.in
+	* gimpthumb-2.0.pc.in
+	* gimpui-2.0.pc.in: renamed the pkg-config files.
+
+	* gimptool-2.0.in
+	* docs/Makefile.am
+	* docs/gimptool-2.0.1.in: renamed gimptool and it's manpage.
+
+	* gimp.spec.in
+	* m4macros/gimp-2.0.m4: changed accordingly.
+
 2004-01-08  Raphaël Quinet  <quinet@gamers.org>
 
 	* plug-ins/common/jpeg.c: applied a (slightly modified) patch from

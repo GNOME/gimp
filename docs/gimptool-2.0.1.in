@@ -1,8 +1,8 @@
-.TH GIMPTOOL-1.3 1 "25 November 2001" "Version @GIMP_VERSION@" "GIMP Manual Pages"
+.TH GIMPTOOL-2.0 1 "8 January 2004" "Version @GIMP_VERSION@" "GIMP Manual Pages"
 .SH NAME
-gimptool-1.3 - script to perform various GIMPy functions
+gimptool-2.0 - script to perform various GIMPy functions
 .SH SYNOPSIS
-.B gimptool-1.3
+.B gimptool-2.0
 [\-\-prefix\fI[=DIR]\fP] [\-\-exec\-prefix\fI[=DIR]\fP] [\-\-version]
 [\-\-help] [\-\-quiet] [\-\-silent] [\-n] [\-\-just-print] [\-\-dry-run]
 [\-\-recon] [\-\-bindir] [\-\-sbindir] [\-\-libexecdir] [\-\-datadir]
@@ -25,17 +25,17 @@ gimptool-1.3 - script to perform various GIMPy functions
 
 .SH DESCRIPTION
 .PP
-\fIgimptool-1.3\fP is a tool that can, among other things, build
+\fIgimptool-2.0\fP is a tool that can, among other things, build
 plug-ins or scripts and install them if they are distributed in one
 source file.
 .PP
-\fIgimptool-1.3\fP can also be used by programs that need to know what
+\fIgimptool-2.0\fP can also be used by programs that need to know what
 libraries and include-paths \fIGIMP\fP was compiled with. This is
 especially useful in Makefiles.
 
 .SH OPTIONS
 .l
-\fIgimptool-1.3\fP accepts the following options:
+\fIgimptool-2.0\fP accepts the following options:
 .TP 8
 .B  \-\-version
 Print the currently installed version of \fIGIMP\fP on the standard output.

@@ -12,11 +12,11 @@ config.guess
 config.sub
 ltmain.sh
 gimp.spec
-gimptool-1.3
+gimptool-2.0
 gimptool-win32.c
-gimp-1.3.pc
-gimpthumb-1.3.pc
-gimpui-1.3.pc
+gimp-2.0.pc
+gimpthumb-2.0.pc
+gimpui-2.0.pc
 gimp-zip
 intltool-extract
 intltool-extract.in
