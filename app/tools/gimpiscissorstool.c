@@ -279,7 +279,7 @@ gimp_iscissors_tool_register (void)
 			      "gimp:iscissors_tool",
 			      _("Intelligent Scissors"),
                               _("Select shapes from image"),
-			      N_("/Tools/Select Tools/Intelligent Scissors"),
+			      N_("/Tools/Selection Tools/Intelligent Scissors"),
                               "I",
 			      NULL, "tools/iscissors.html",
 			      (const gchar **) iscissors_bits);

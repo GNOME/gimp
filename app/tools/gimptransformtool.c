@@ -59,6 +59,7 @@
 #include "tools/gimprotatetool.h"
 #include "tools/gimpscaletool.h"
 #include "tools/gimpsheartool.h"
+#include "tools/gimpfliptool.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -554,8 +555,7 @@ gimp_transform_tool_button_release (GimpTool         *tool,
   gt_tool->bpressed = FALSE; /* ALT */
 
   /*  if we are creating, there is nothing to be done...exit  */
-  if (gt_tool->function == TRANSFORM_CREATING &&
-      gt_tool->interactive)
+  if (gt_tool->function == TRANSFORM_CREATING && gt_tool->interactive)
     return;
 
   /*  release of the pointer grab  */
@@ -566,7 +566,7 @@ gimp_transform_tool_button_release (GimpTool         *tool,
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
       /* Shift-clicking is another way to approve the transform  */
-      if ((bevent->state & GDK_SHIFT_MASK) /* FIXME || (tool->type == FLIP) */)
+      if ((bevent->state & GDK_SHIFT_MASK) || GIMP_IS_FLIP_TOOL (tool))
 	{
 	  gimp_transform_tool_doit (gt_tool, gdisp);
 	}
@@ -648,7 +648,7 @@ gimp_transform_tool_doit (GimpTransformTool  *gt_tool,
   /*  Send the request for the transformation to the tool...
    */
   new_tiles = gimp_transform_tool_transform (gt_tool, gdisp,
-					      TRANSFORM_FINISH);
+					     TRANSFORM_FINISH);
 
   gimp_transform_tool_transform (gt_tool, gdisp, TRANSFORM_INIT);
 

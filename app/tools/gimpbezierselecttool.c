@@ -277,7 +277,7 @@ gimp_bezier_select_tool_register (void)
                               "gimp:bezier_select_tool",
                               _("Bezier Select"),
                               _("Select regions using Bezier curves"),
-                              _("/Tools/Select Tools/Bezier Select"), "B",
+                              _("/Tools/Selection Tools/Bezier Select"), "B",
                               NULL, "tools/bezier_select.html",
                               (const gchar **) bezier_bits);
 }
@@ -3774,10 +3774,9 @@ bezier_stroke (GimpBezierSelectTool *bezier_sel,
 	      *ptr /= SUPERSAMPLE;
 	      *ptr++ -= offset_y;
 	    }
-#if 0
 	  /* Stroke with the correct tool */
 	  return_vals =
-	    procedural_db_run_proc (tool_active_PDB_string (),
+	    procedural_db_run_proc (tool_manager_active_get_PDB_string (),
 				    &nreturn_vals,
 				    PDB_DRAWABLE, gimp_drawable_get_ID (drawable),
 				    PDB_INT32, (gint32) rpnts->num_stroke_points * 2,
@@ -3788,7 +3787,7 @@ bezier_stroke (GimpBezierSelectTool *bezier_sel,
 	    g_message (_("Paintbrush operation failed."));
 
 	  procedural_db_destroy_args (return_vals, nreturn_vals);
-#endif
+
 	  g_free (rpnts->stroke_points);
 	}
 

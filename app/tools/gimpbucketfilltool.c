@@ -196,6 +196,8 @@ gimp_bucket_fill_tool_init (GimpBucketFillTool *bucket_fill_tool)
       bucket_options_reset ();
     }
 
+  tool->tool_cursor = GIMP_BUCKET_FILL_TOOL_CURSOR;
+
   tool->scroll_lock = TRUE;  /*  Disallow scrolling  */
 }
 

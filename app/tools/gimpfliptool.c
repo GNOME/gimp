@@ -28,27 +28,33 @@
 #include "apptypes.h"
 
 #include "cursorutil.h"
-#include "drawable.h"
+#include "floating_sel.h"
 #include "gdisplay.h"
+#include "gdisplay_ops.h"
 #include "gimage_mask.h"
+#include "gimplayer.h"
 #include "gimpimage.h"
-#include "paint_funcs.h"
+#include "selection.h"
+#include "undo.h"
 #include "path_transform.h"
 #include "pixel_region.h"
-#include "temp_buf.h"
 #include "tile_manager.h"
+#include "paint_funcs.h"
 
-#include "flip_tool.h"
+#include "gimpfliptool.h"
+#include "tool_manager.h"
 #include "tool_options.h"
-#include "tools.h"
-#include "transform_core.h"
 
 #include "libgimp/gimpintl.h"
 
+#include "pixmaps2.h"
+
+
+/*  FIXME: Lame - 1 hacks abound since the code assumes certain values for
+ *  the ORIENTATION_FOO constants.
+ */
 
 #define FLIP_INFO 0
-
-/*  the flip structures  */
 
 typedef struct _FlipOptions FlipOptions;
 
@@ -64,196 +70,69 @@ struct _FlipOptions
 
 /*  local function prototypes  */
 
-static TileManager * flip_tool_transform  (Tool           *tool,
-					   GDisplay       *gdisp,
-					   TransformState  state);
+static void          gimp_flip_tool_class_init    (GimpFlipToolClass *klass);
+static void          gimp_flip_tool_init          (GimpFlipTool      *flip_tool);
 
+static void          gimp_flip_tool_destroy       (GtkObject         *object);
 
-/*  private variables  */
+static void          gimp_flip_tool_cursor_update (GimpTool          *tool,
+						   GdkEventMotion    *mevent,
+						   GDisplay          *gdisp);
+static void          gimp_flip_tool_modifier_key  (GimpTool          *tool,
+						   GdkEventKey       *kevent,
+						   GDisplay          *gdisp);
+
+static TileManager * gimp_flip_tool_transform     (GimpTransformTool *tool,
+						   GDisplay          *gdisp,
+						   TransformState     state);
+
+static FlipOptions * flip_options_new             (void);
+static void          flip_options_reset           (void);
+
 
 static FlipOptions *flip_options = NULL;
 
-/*  functions  */
+static GimpTransformToolClass *parent_class = NULL;
 
-/*  FIXME: Lame - 1 hacks abound since the code assumes certain values for
- *  the ORIENTATION_FOO constants.
- */
 
-static void
-flip_options_reset (void)
+/*  public functions  */
+
+void 
+gimp_flip_tool_register (void)
 {
-  FlipOptions *options = flip_options;
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d - 1]), TRUE); 
+  tool_manager_register_tool (GIMP_TYPE_FLIP_TOOL,
+                              FALSE,
+			      "gimp:flip_tool",
+			      _("Flip Tool"),
+			      _("Flip the layer or selection"),
+			      N_("/Tools/Transform Tools/Flip"), "<shift>F",
+			      NULL, "tools/flip.html",
+			      (const gchar **) flip_bits);
 }
 
-static FlipOptions *
-flip_options_new (void)
+GtkType
+gimp_flip_tool_get_type (void)
 {
-  FlipOptions *options;
+  static GtkType tool_type = 0;
 
-  GtkWidget *vbox;
-  GtkWidget *frame;
- 
-  /*  the new flip tool options structure  */
-  options = g_new (FlipOptions, 1);
-  tool_options_init ((ToolOptions *) options,
-		     _("Flip Tool"),
-		     flip_options_reset);
-  options->type = options->type_d = ORIENTATION_HORIZONTAL;
-
-  /*  the main vbox  */
-  vbox = options->tool_options.main_vbox;
-
-  /*  tool toggle  */
-  frame =
-    gimp_radio_group_new2 (TRUE, _("Tool Toggle"),
-			   gimp_radio_button_update,
-			   &options->type, (gpointer) options->type,
-
-			   _("Horizontal"), (gpointer) ORIENTATION_HORIZONTAL,
-			   &options->type_w[0],
-			   _("Vertical"), (gpointer) ORIENTATION_VERTICAL,
-			   &options->type_w[1],
-
-			   NULL);
-
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  return options;
-}
-
-static void
-flip_modifier_key_func (Tool        *tool,
-			GdkEventKey *kevent,
-			GDisplay    *gdisp)
-{
-  switch (kevent->keyval)
+  if (! tool_type)
     {
-    case GDK_Alt_L: case GDK_Alt_R:
-      break;
-    case GDK_Shift_L: case GDK_Shift_R:
-      break;
-    case GDK_Control_L: case GDK_Control_R:
-      if (flip_options->type == ORIENTATION_HORIZONTAL)
-	{
-	  gtk_toggle_button_set_active
-	    (GTK_TOGGLE_BUTTON (flip_options->type_w[ORIENTATION_VERTICAL - 1]), TRUE);
-	}
-      else
-	{
-	  gtk_toggle_button_set_active
-	    (GTK_TOGGLE_BUTTON (flip_options->type_w[ORIENTATION_HORIZONTAL - 1]), TRUE);
-	}
-      break;
-    }
-}
+      GtkTypeInfo tool_info =
+      {
+        "GimpFlipTool",
+        sizeof (GimpFlipTool),
+        sizeof (GimpFlipToolClass),
+        (GtkClassInitFunc) gimp_flip_tool_class_init,
+        (GtkObjectInitFunc) gimp_flip_tool_init,
+        /* reserved_1 */ NULL,
+        /* reserved_2 */ NULL,
+        (GtkClassInitFunc) NULL,
+      };
 
-static TileManager *
-flip_tool_transform (Tool           *tool,
-                     GDisplay       *gdisp,
-                     TransformState  state)
-{
-  TransformCore *transform_core;
-
-  transform_core = (TransformCore *) tool->private;
-
-  switch (state)
-    {
-    case TRANSFORM_INIT:
-      transform_info = NULL;
-      break;
-
-    case TRANSFORM_MOTION:
-      break;
-
-    case TRANSFORM_RECALC:
-      break;
-
-    case TRANSFORM_FINISH:
-      /*      transform_core->trans_info[FLIP] *= -1.0;*/
-      return flip_tool_flip (gdisp->gimage,
-	  		     gimp_image_active_drawable (gdisp->gimage),
-			     transform_core->original, 
-			     (int) transform_core->trans_info[FLIP_INFO],
-			     flip_options->type);
-      break;
+      tool_type = gtk_type_unique (GIMP_TYPE_TRANSFORM_TOOL, &tool_info);
     }
 
-  return NULL;
-}
-
-static void
-flip_cursor_update (Tool           *tool,
-		    GdkEventMotion *mevent,
-		    GDisplay       *gdisp)
-{
-  GimpDrawable  *drawable;
-  GdkCursorType  ctype = GIMP_BAD_CURSOR;
-
-  if ((drawable = gimp_image_active_drawable (gdisp->gimage)))
-    {
-      gint x, y;
-      gint off_x, off_y;
-
-      gimp_drawable_offsets (drawable, &off_x, &off_y);
-      gdisplay_untransform_coords (gdisp, 
-				   (double) mevent->x, (double) mevent->y,
-				   &x, &y, TRUE, FALSE);
-
-      if (x >= off_x && y >= off_y &&
-	  x < (off_x + gimp_drawable_width (drawable)) &&
-	  y < (off_y + gimp_drawable_height (drawable)))
-	{
-	  /*  Is there a selected region? If so, is cursor inside? */
-	  if (gimage_mask_is_empty (gdisp->gimage) ||
-	      gimage_mask_value (gdisp->gimage, x, y))
-	    {
-	      if (flip_options->type == ORIENTATION_HORIZONTAL)
-		ctype = GDK_SB_H_DOUBLE_ARROW;
-	      else
-		ctype = GDK_SB_V_DOUBLE_ARROW;
-	    }
-	}
-    }
-  gdisplay_install_tool_cursor (gdisp,
-				ctype,
-				ctype == GDK_SB_H_DOUBLE_ARROW ?
-				GIMP_FLIP_HORIZONTAL_TOOL_CORSOR :
-				GIMP_FLIP_VERTICAL_TOOL_CORSOR,
-				CURSOR_MODIFIER_NONE);
-}
-
-Tool *
-tools_new_flip (void)
-{
-  Tool          *tool;
-  TransformCore *private;
-
-  /*  The tool options  */
-  if (! flip_options)
-    {
-      flip_options = flip_options_new ();
-      tools_register (FLIP, (ToolOptions *) flip_options);
-    }
-
-  tool    = transform_core_new (FLIP, FALSE);
-  private = tool->private;
-
-  private->trans_func            = flip_tool_transform;
-  private->trans_info[FLIP_INFO] = -1.0;
-
-  tool->modifier_key_func  = flip_modifier_key_func;
-  tool->cursor_update_func = flip_cursor_update;
-
-  return tool;
-}
-
-void
-tools_free_flip_tool (Tool *tool)
-{
-  transform_core_free (tool);
+  return tool_type;
 }
 
 TileManager *
@@ -323,4 +202,221 @@ flip_tool_flip (GimpImage               *gimage,
     }
 
   return new;
+}
+
+
+/*  private functions  */
+
+static void
+gimp_flip_tool_class_init (GimpFlipToolClass *klass)
+{
+  GtkObjectClass         *object_class;
+  GimpToolClass          *tool_class;
+  GimpDrawToolClass      *draw_class;
+  GimpTransformToolClass *trans_class;
+
+  object_class = (GtkObjectClass *) klass;
+  tool_class   = (GimpToolClass *) klass;
+  draw_class   = (GimpDrawToolClass *) klass;
+  trans_class  = (GimpTransformToolClass *) klass;
+
+  parent_class = gtk_type_class (GIMP_TYPE_TRANSFORM_TOOL);
+
+  object_class->destroy     = gimp_flip_tool_destroy;
+
+  tool_class->cursor_update = gimp_flip_tool_cursor_update;
+  tool_class->modifier_key  = gimp_flip_tool_modifier_key;
+
+  draw_class->draw          = NULL;
+
+  trans_class->transform    = gimp_flip_tool_transform;
+}
+
+static void
+gimp_flip_tool_init (GimpFlipTool *flip_tool)
+{
+  GimpTool          *tool;
+  GimpTransformTool *tr_tool;
+
+  tool    = GIMP_TOOL (flip_tool);
+  tr_tool = GIMP_TRANSFORM_TOOL (flip_tool);
+
+  /*  The tool options  */
+  if (! flip_options)
+    {
+      flip_options = flip_options_new ();
+
+      tool_manager_register_tool_options (GIMP_TYPE_FLIP_TOOL,
+					  (ToolOptions *) flip_options);
+    }
+
+  tool->tool_cursor   = GIMP_FLIP_HORIZONTAL_TOOL_CURSOR;
+  tool->toggle_cursor = GIMP_FLIP_VERTICAL_TOOL_CURSOR;
+
+  tool->auto_snap_to = FALSE;  /*  Don't snap to guides  */
+
+  tr_tool->trans_info[FLIP_INFO] = -1.0;
+}
+
+static void
+gimp_flip_tool_destroy (GtkObject *object)
+{
+  GimpFlipTool *flip_tool;
+  GimpTool     *tool;
+
+  flip_tool = GIMP_FLIP_TOOL (object);
+  tool      = GIMP_TOOL (flip_tool);
+
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static void
+gimp_flip_tool_cursor_update (GimpTool       *tool,
+			      GdkEventMotion *mevent,
+			      GDisplay       *gdisp)
+{
+  GimpDrawable       *drawable;
+  GdkCursorType       ctype       = GIMP_BAD_CURSOR;
+  GimpToolCursorType  tool_cursor = GIMP_FLIP_HORIZONTAL_TOOL_CURSOR;
+
+  if ((drawable = gimp_image_active_drawable (gdisp->gimage)))
+    {
+      gint x, y;
+      gint off_x, off_y;
+
+      gimp_drawable_offsets (drawable, &off_x, &off_y);
+      gdisplay_untransform_coords (gdisp, 
+				   (double) mevent->x, (double) mevent->y,
+				   &x, &y, TRUE, FALSE);
+
+      if (x >= off_x && y >= off_y &&
+	  x < (off_x + gimp_drawable_width (drawable)) &&
+	  y < (off_y + gimp_drawable_height (drawable)))
+	{
+	  /*  Is there a selected region? If so, is cursor inside? */
+	  if (gimage_mask_is_empty (gdisp->gimage) ||
+	      gimage_mask_value (gdisp->gimage, x, y))
+	    {
+	      if (flip_options->type == ORIENTATION_HORIZONTAL)
+		ctype = GDK_SB_H_DOUBLE_ARROW;
+	      else
+		ctype = GDK_SB_V_DOUBLE_ARROW;
+	    }
+	}
+    }
+
+  if (flip_options->type == ORIENTATION_HORIZONTAL)
+    tool_cursor = GIMP_FLIP_HORIZONTAL_TOOL_CURSOR;
+  else
+    tool_cursor = GIMP_FLIP_VERTICAL_TOOL_CURSOR;
+
+  gdisplay_install_tool_cursor (gdisp,
+				ctype,
+				tool_cursor,
+				GIMP_CURSOR_MODIFIER_NONE);
+}
+
+static void
+gimp_flip_tool_modifier_key (GimpTool    *tool,
+			     GdkEventKey *kevent,
+			     GDisplay    *gdisp)
+{
+  switch (kevent->keyval)
+    {
+    case GDK_Alt_L: case GDK_Alt_R:
+      break;
+    case GDK_Shift_L: case GDK_Shift_R:
+      break;
+    case GDK_Control_L: case GDK_Control_R:
+      if (flip_options->type == ORIENTATION_HORIZONTAL)
+	{
+	  gtk_toggle_button_set_active
+	    (GTK_TOGGLE_BUTTON (flip_options->type_w[ORIENTATION_VERTICAL - 1]), TRUE);
+	}
+      else
+	{
+	  gtk_toggle_button_set_active
+	    (GTK_TOGGLE_BUTTON (flip_options->type_w[ORIENTATION_HORIZONTAL - 1]), TRUE);
+	}
+      break;
+    }
+}
+
+static TileManager *
+gimp_flip_tool_transform (GimpTransformTool *trans_tool,
+			  GDisplay          *gdisp,
+			  TransformState     state)
+{
+  GimpTool *tool;
+
+  tool = GIMP_TOOL (trans_tool);
+
+  switch (state)
+    {
+    case TRANSFORM_INIT:
+      transform_info = NULL;
+      break;
+
+    case TRANSFORM_MOTION:
+      break;
+
+    case TRANSFORM_RECALC:
+      break;
+
+    case TRANSFORM_FINISH:
+      return flip_tool_flip (gdisp->gimage,
+	  		     gimp_image_active_drawable (gdisp->gimage),
+			     trans_tool->original, 
+			     (gint) trans_tool->trans_info[FLIP_INFO],
+			     flip_options->type);
+      break;
+    }
+
+  return NULL;
+}
+
+static FlipOptions *
+flip_options_new (void)
+{
+  FlipOptions *options;
+
+  GtkWidget *vbox;
+  GtkWidget *frame;
+ 
+  /*  the new flip tool options structure  */
+  options = g_new0 (FlipOptions, 1);
+  tool_options_init ((ToolOptions *) options,
+		     flip_options_reset);
+
+  options->type = options->type_d = ORIENTATION_HORIZONTAL;
+
+  /*  the main vbox  */
+  vbox = options->tool_options.main_vbox;
+
+  /*  tool toggle  */
+  frame =
+    gimp_radio_group_new2 (TRUE, _("Tool Toggle"),
+			   gimp_radio_button_update,
+			   &options->type, (gpointer) options->type,
+
+			   _("Horizontal"), (gpointer) ORIENTATION_HORIZONTAL,
+			   &options->type_w[0],
+			   _("Vertical"), (gpointer) ORIENTATION_VERTICAL,
+			   &options->type_w[1],
+
+			   NULL);
+
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  return options;
+}
+
+static void
+flip_options_reset (void)
+{
+  FlipOptions *options = flip_options;
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d - 1]), TRUE); 
 }

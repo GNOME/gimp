@@ -22,13 +22,6 @@
 
 #include "tools/gimpdrawtool.h"
 
-#define GIMP_TYPE_TRANSFORM_TOOL            (gimp_transform_tool_get_type ())
-#define GIMP_TRANSFORM_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_TRANSFORM_TOOL, GimpTransformTool))
-#define GIMP_IS_TRANSFORM_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_TRANSFORM_TOOL))
-#define GIMP_TRANSFORM_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TRANSFORM_TOOL, GimpTransformToolClass))
-#define GIMP_IS_TRANSFORM_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TRANSFORM_TOOL))
-
-typedef struct _GimpTransformToolClass GimpTransformToolClass;
 
 /* buffer sizes for scaling information strings (for the info dialog) */
 #define MAX_INFO_BUF   40
@@ -40,6 +33,16 @@ enum BoundingBox
 };
 
 typedef gdouble TranInfo[TRAN_INFO_SIZE];
+
+
+#define GIMP_TYPE_TRANSFORM_TOOL            (gimp_transform_tool_get_type ())
+#define GIMP_TRANSFORM_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_TRANSFORM_TOOL, GimpTransformTool))
+#define GIMP_IS_TRANSFORM_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_TRANSFORM_TOOL))
+#define GIMP_TRANSFORM_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TRANSFORM_TOOL, GimpTransformToolClass))
+#define GIMP_IS_TRANSFORM_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TRANSFORM_TOOL))
+
+
+typedef struct _GimpTransformToolClass GimpTransformToolClass;
 
 struct _GimpTransformTool
 {

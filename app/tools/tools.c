@@ -78,7 +78,7 @@ register_tools (void)
 
   /*  transform tools  */
 
-  /* gimp_flip_tool_registrer (); */
+  gimp_flip_tool_register ();
   /* gimp_perspective_tool_register (); */
   /* gimp_shear_tool_register (); */
   gimp_scale_tool_register ();

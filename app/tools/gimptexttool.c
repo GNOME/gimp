@@ -225,6 +225,8 @@ gimp_text_tool_init (GimpTextTool *text_tool)
 					  (ToolOptions *) text_tool_options);
     }
 
+  tool->tool_cursor = GIMP_TEXT_TOOL_CURSOR;
+
   tool->scroll_lock = TRUE;  /* Disallow scrolling */
 }
 

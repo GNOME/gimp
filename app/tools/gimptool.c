@@ -504,7 +504,6 @@ STUB(posterize_dialog_hide)
 STUB(by_color_select_initialize_by_image)
 STUB(undo_pop_paint)
 STUB(histogram_tool_histogram_range)
-STUB(flip_tool_flip)
 STUB(perspective_find_transform)
 STUB(perspective_tool_perspective)
 STUB(rotate_tool_rotate)
@@ -636,90 +635,6 @@ ToolInfo tool_info[] =
       0, 0, NULL, NULL, NULL
     }
   }, /* perspective */
-
-  {
-    NULL,
-    N_("Flip"),
-    N_("/Tools/Transform Tools/Flip"),
-    "<shift>F",
-    (char **) flip_bits,
-    NULL,
-    NULL,
-    N_("Flip the layer or selection"),
-    "tools/flip.html",
-    FLIP,
-    tools_new_flip,
-    tools_free_flip_tool,
-    NULL,
-    NULL,
-    NULL,
-    {
-      flip_horizontal_small_bits, flip_horizontal_small_mask_bits,
-      flip_horizontal_small_width, flip_horizontal_small_height,
-      0, 0, NULL, NULL, NULL
-    },
-    {
-      flip_vertical_small_bits, flip_vertical_small_mask_bits,
-      flip_vertical_small_width, flip_vertical_small_height,
-      0, 0, NULL, NULL, NULL
-    }
-  },
-
-  {
-    NULL,
-    N_("Text"),
-    N_("/Tools/Text"),
-    "T",
-    (char **) text_bits,
-    NULL,
-    NULL,
-    N_("Add text to the image"),
-    "tools/text.html",
-    TEXT,
-    tools_new_text,
-    tools_free_text,
-    NULL,
-    NULL,
-    NULL,
-    {
-      text_small_bits, text_small_mask_bits,
-      text_small_width, text_small_height,
-      0, 0, NULL, NULL, NULL
-    },
-    {
-      NULL, NULL,
-      0, 0,
-      0, 0, NULL, NULL, NULL
-    }
-  },
-
-  {
-    NULL,
-    N_("Bucket Fill"),
-    N_("/Tools/Paint Tools/Bucket Fill"),
-    "<shift>B",
-    (char **) fill_bits,
-    NULL,
-    NULL,
-    N_("Fill with a color or pattern"),
-    "tools/bucket_fill.html",
-    BUCKET_FILL,
-    tools_new_bucket_fill,
-    tools_free_bucket_fill,
-    NULL,
-    NULL,
-    NULL,
-    {
-      bucket_fill_small_bits, bucket_fill_small_mask_bits,
-      bucket_fill_small_width, bucket_fill_small_height,
-      0, 0, NULL, NULL, NULL
-    },
-    {
-      NULL, NULL,
-      0, 0,
-      0, 0, NULL, NULL, NULL
-    }
-  },
 
   {
     NULL,
