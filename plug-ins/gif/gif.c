@@ -1439,7 +1439,7 @@ static int find_unused_ia_colour (guchar *pixels,
     if (ix_used[i] == (gboolean)FALSE)
       {
 
-	g_message ("GIF: Found unused colour index %d.\n",(int)i);
+	g_print ("GIF: Found unused colour index %d.\n",(int)i);
 
 	return i;
       }

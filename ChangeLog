@@ -1,3 +1,7 @@
+Tue Jun 23 22:33:05 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/gif/gif.c: make it less verbose
+
 Fri Jun 19 16:32:21 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/appenv.h
