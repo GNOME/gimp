@@ -1,3 +1,9 @@
+2003-12-03  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added plug-ins/common/channel_mixer.c.
+
+	* de.po: updated german translation.
+
 2003-11-27  Marco Ciampa  <ciampix@libero.it>
 
 	* it.po: Updated italian translation

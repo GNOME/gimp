@@ -125,18 +125,20 @@ static      gint32 do_optimizations   (GimpRunMode run_mode,
 
 
 /* tag util functions*/
-static         int parse_ms_tag        (const char *str);
-static DisposeType parse_disposal_tag  (const char *str);
-static DisposeType get_frame_disposal  (const guint whichframe);
-static     guint32 get_frame_duration  (const guint whichframe);
-static        void remove_disposal_tag (char* dest, char *src);
-static        void remove_ms_tag       (char* dest, char *src);
-static int is_disposal_tag (const char *str,
-			    DisposeType *disposal,
-			    int *taglength);
-static int is_ms_tag (const char *str,
-		      int *duration,
-		      int *taglength);
+static         int parse_ms_tag        (const gchar *str);
+static DisposeType parse_disposal_tag  (const gchar *str);
+static DisposeType get_frame_disposal  (guint        whichframe);
+static     guint32 get_frame_duration  (guint        whichframe);
+static        void remove_disposal_tag (gchar       *dest,
+                                        gchar       *src);
+static        void remove_ms_tag       (gchar       *dest,
+                                        gchar       *src);
+static        gint is_disposal_tag     (const gchar *str,
+                                        DisposeType *disposal,
+                                        gint        *taglength);
+static        gint is_ms_tag           (const gchar *str,
+                                        gint        *duration,
+                                        gint        *taglength);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -192,7 +194,7 @@ query (void)
 			  "Adam D. Moss <adam@gimp.org>",
 			  "Adam D. Moss <adam@gimp.org>",
 			  "1997-2003",
-			  N_("<Image>/Filters/Animation/_Optimize (for GIF)"),
+			  N_("<Image>/Filters/Animation/Optimize (for _GIF)"),
 			  "RGB*, INDEXED*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args),
@@ -210,7 +212,7 @@ query (void)
 			  "Adam D. Moss <adam@gimp.org>",
 			  "Adam D. Moss <adam@gimp.org>",
 			  "1997-2001",
-			  N_("<Image>/Filters/Animation/_Optimize (difference)"),
+			  N_("<Image>/Filters/Animation/_Optimize (Difference)"),
 			  "RGB*, INDEXED*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args),
@@ -294,18 +296,18 @@ run (const gchar      *name,
 
   /* Check the procedure name we were called with, to decide
      what needs to be done. */
-  if (strcmp(name,"plug_in_animationoptimize")==0)
+  if (strcmp (name, "plug_in_animationoptimize") == 0)
     opmode = OPOPTIMIZE;
-  else if (strcmp(name,"plug_in_animationoptimize_diff")==0)
+  else if (strcmp (name, "plug_in_animationoptimize_diff") == 0)
     {
       opmode = OPOPTIMIZE;
       diff_only = TRUE;
     }
-  else if (strcmp(name,"plug_in_animationunoptimize")==0)
+  else if (strcmp (name, "plug_in_animationunoptimize") == 0)
     opmode = OPUNOPTIMIZE;
-  else if (strcmp(name,"plug_in_animation_find_backdrop")==0)
+  else if (strcmp (name, "plug_in_animation_find_backdrop") == 0)
     opmode = OPBACKGROUND;
-  else if (strcmp(name,"plug_in_animation_remove_backdrop")==0)
+  else if (strcmp (name, "plug_in_animation_remove_backdrop") == 0)
     opmode = OPFOREGROUND;
   else
     g_error("GAH!!!");
@@ -332,36 +334,38 @@ run (const gchar      *name,
 /* Rendering Functions */
 
 static void
-total_alpha(guchar* imdata, guint32 numpix, guchar bytespp)
+total_alpha (guchar  *imdata,
+             guint32  numpix,
+             guchar   bytespp)
 {
   /* Set image to total-transparency w/black
    */
 
-  memset(imdata, 0, numpix*bytespp);
+  memset (imdata, 0, numpix * bytespp);
 }
 
 
 static void
-compose_row(int frame_num,
-	    DisposeType dispose,
-	    int row_num,
-	    unsigned char *dest,
-	    int dest_width,
-	    GimpDrawable *drawable,
-	    const gboolean cleanup)
+compose_row (gint          frame_num,
+             DisposeType   dispose,
+             gint          row_num,
+             guchar       *dest,
+             gint          dest_width,
+             GimpDrawable *drawable,
+             gboolean      cleanup)
 {
-  static unsigned char *line_buf = NULL;
-  guchar *srcptr;
-  GimpPixelRgn pixel_rgn;
-  gint rawx, rawy, rawbpp, rawwidth, rawheight;
-  int i;
-  gboolean has_alpha;
+  static guchar *line_buf = NULL;
+  guchar        *srcptr;
+  GimpPixelRgn   pixel_rgn;
+  gint           rawx, rawy, rawbpp, rawwidth, rawheight;
+  gint           i;
+  gboolean       has_alpha;
 
   if (cleanup)
     {
       if (line_buf)
 	{
-	  g_free(line_buf);
+	  g_free (line_buf);
 	  line_buf = NULL;
 	}
 
@@ -418,7 +422,8 @@ compose_row(int frame_num,
 	{
 	  if ((!has_alpha) || ((*(srcptr+rawbpp-1))&128))
 	    {
-	      int pi;
+	      gint pi;
+
 	      for (pi = 0; pi < pixelstep-1; pi++)
 		{
 		  dest[i*pixelstep +pi] = *(srcptr + pi);
@@ -434,34 +439,34 @@ compose_row(int frame_num,
 
 
 static gint32
-do_optimizations(GimpRunMode run_mode,
-		 gboolean    diff_only)
+do_optimizations (GimpRunMode run_mode,
+                  gboolean    diff_only)
 {
   GimpPixelRgn pixel_rgn;
-  static guchar* rawframe = NULL;
-  guchar* srcptr;
-  guchar* destptr;
-  gint row,this_frame_num;
-  guint32 frame_sizebytes;
-  gint32 new_layer_id;
+  static guchar *rawframe = NULL;
+  guchar   *srcptr;
+  guchar   *destptr;
+  gint      row,this_frame_num;
+  guint32   frame_sizebytes;
+  gint32    new_layer_id;
   DisposeType dispose;
-  guchar* this_frame = NULL;
-  guchar* last_frame = NULL;
-  guchar* opti_frame = NULL;
-  guchar* back_frame = NULL;
+  guchar   *this_frame = NULL;
+  guchar   *last_frame = NULL;
+  guchar   *opti_frame = NULL;
+  guchar   *back_frame = NULL;
 
-  int this_delay;
-  int cumulated_delay = 0;
-  int last_true_frame = -1;
-  int buflen;
+  gint      this_delay;
+  gint      cumulated_delay = 0;
+  gint      last_true_frame = -1;
+  gint      buflen;
 
-  gchar* oldlayer_name;
-  gchar* newlayer_name;
+  gchar    *oldlayer_name;
+  gchar    *newlayer_name;
 
-  gboolean can_combine;
+  gboolean  can_combine;
 
-  gint32 bbox_top, bbox_bottom, bbox_left, bbox_right;
-  gint32 rbox_top, rbox_bottom, rbox_left, rbox_right;
+  gint32    bbox_top, bbox_bottom, bbox_left, bbox_right;
+  gint32    rbox_top, rbox_bottom, rbox_left, rbox_right;
 
   switch (opmode)
     {
@@ -520,14 +525,13 @@ do_optimizations(GimpRunMode run_mode,
     {
       /* iterate through all rows of all frames, find statistical
 	 mode for each pixel position. */
-      int i,j;
+      gint     i,j;
       guchar **these_rows;
       guchar **red;
       guchar **green;
       guchar **blue;
-      guint **count;
-
-      guint *num_colours;
+      guint  **count;
+      guint   *num_colours;
 
       these_rows = g_new (guchar *, total_frames);
       red =        g_new (guchar *, total_frames);
@@ -536,8 +540,6 @@ do_optimizations(GimpRunMode run_mode,
       count =      g_new (guint *, total_frames);
 
       num_colours = g_new (guint, width);
-
-g_warning("stat fun");
 
       for (this_frame_num=0; this_frame_num<total_frames; this_frame_num++)
 	{
@@ -556,8 +558,6 @@ g_warning("stat fun");
 
 	  for (this_frame_num=0; this_frame_num<total_frames; this_frame_num++)
 	    {
-	      /*g_warning("stat fun : %d / %d", row, this_frame_num);*/
-
 	      drawable =
 		gimp_drawable_get (layers[total_frames-(this_frame_num+1)]);
 
@@ -575,21 +575,15 @@ g_warning("stat fun");
 	      gimp_drawable_detach(drawable);
 	    }
 
-	  /*	  g_warning("eh2."); */
-
 	  for (this_frame_num=0; this_frame_num<total_frames; this_frame_num++)
 	    {
 	      for (i=0; i<width; i++)
 		{
-		  /*		  g_warning("eh4(%d).", i); */
 		  if (these_rows[this_frame_num][i * pixelstep + pixelstep -1]
 		      >= 128)
 		    {
-		      /*		      fprintf(stderr, "%d ", */
-		      /*			      these_rows[this_frame_num][i * pixelstep + pixelstep -1]); */
 		      for (j=0; j<num_colours[i]; j++)
 			{
-			  /*		      g_warning("eh3(%d,%d).", i,j); */
 
 			  switch (pixelstep)
 			    {
@@ -631,19 +625,15 @@ g_warning("stat fun");
 			}
 		      num_colours[i]++;
 		    }
-		  /*		  else
-				  g_warning("OOH!");*/
 		same:
 		  /* nop */;
 		}
 	    }
 
-	  /*	  g_warning("eh."); */
-
 	  for (i=0; i<width; i++)
 	    {
-	      guint best_count = 0;
-	      guchar best_r=255, best_g=0, best_b=255;
+	      guint  best_count = 0;
+	      guchar best_r = 255, best_g = 0, best_b = 255;
 
 	      for (j=0; j<num_colours[i]; j++)
 		{
@@ -675,8 +665,6 @@ g_warning("stat fun");
 		  width * pixelstep);*/
 	}
 
-      g_warning("stat fun over");
-
       for (this_frame_num=0; this_frame_num<total_frames; this_frame_num++)
 	{
 	  g_free(these_rows[this_frame_num]);
@@ -685,6 +673,7 @@ g_warning("stat fun");
 	  g_free(blue[this_frame_num]);
 	  g_free(count[this_frame_num]);
 	}
+
       g_free(these_rows);
       g_free(red);
       g_free(green);
@@ -756,9 +745,7 @@ g_warning("stat fun");
 
 	  if (opmode == OPFOREGROUND)
 	    {
-	      int xit, yit, byteit;
-
-	      g_warning("matcher");
+	      gint xit, yit, byteit;
 
 	      for (yit=0; yit<height; yit++)
 		{
@@ -784,16 +771,17 @@ g_warning("stat fun");
 	    }
 
 	  can_combine = FALSE;
-	  bbox_left = 0;
-	  bbox_top = 0;
-	  bbox_right = width;
+	  bbox_left   = 0;
+	  bbox_top    = 0;
+	  bbox_right  = width;
 	  bbox_bottom = height;
-	  rbox_left = 0;
-	  rbox_top = 0;
-	  rbox_right = width;
+	  rbox_left   = 0;
+	  rbox_top    = 0;
+	  rbox_right  = width;
 	  rbox_bottom = height;
+
 	  /* copy 'this' frame into a buffer which we can safely molest */
-	  memcpy(opti_frame, this_frame, frame_sizebytes);
+	  memcpy (opti_frame, this_frame, frame_sizebytes);
 	  /*
 	   *
 	   * OPTIMIZE HERE!
@@ -804,7 +792,7 @@ g_warning("stat fun");
 	      && (opmode == OPOPTIMIZE)
 	      )
 	    {
-	      int xit, yit, byteit;
+	      gint xit, yit, byteit;
 
 	      can_combine = TRUE;
 
@@ -826,6 +814,7 @@ g_warning("stat fun");
 		    {
 		      gboolean keep_pix;
 		      gboolean opaq_pix;
+
 		      /* Check if 'this' and 'last' are transparent */
 		      if (!(this_frame[yit*width*pixelstep + xit*pixelstep
 				      + pixelstep-1]&128)
@@ -1045,7 +1034,7 @@ g_warning("stat fun");
 	    } /* !bot frame? */
 	  else
 	    {
-	      memcpy(opti_frame, this_frame, frame_sizebytes);
+	      memcpy (opti_frame, this_frame, frame_sizebytes);
 	    }
 
 	  /*
@@ -1053,7 +1042,7 @@ g_warning("stat fun");
 	   * REMEMBER THE ANIMATION STATUS TO DELTA AGAINST NEXT TIME
 	   *
 	   */
-	  memcpy(last_frame, this_frame, frame_sizebytes);
+	  memcpy (last_frame, this_frame, frame_sizebytes);
 
 
 	  /*
@@ -1091,26 +1080,25 @@ g_warning("stat fun");
 
 	      g_free (newlayer_name);
 
-	      oldlayer_name =
-		gimp_layer_get_name(last_true_frame);
+	      oldlayer_name = gimp_layer_get_name (last_true_frame);
 
-	      buflen = strlen(oldlayer_name) + 40;
+	      buflen = strlen (oldlayer_name) + 40;
 
-	      newlayer_name = g_malloc(buflen);
+	      newlayer_name = g_malloc (buflen);
 
-	      remove_disposal_tag(newlayer_name, oldlayer_name);
-	      g_free(oldlayer_name);
+	      remove_disposal_tag (newlayer_name, oldlayer_name);
+	      g_free (oldlayer_name);
 
-	      oldlayer_name = g_malloc(buflen);
+	      oldlayer_name = g_malloc (buflen);
 
-	      remove_ms_tag(oldlayer_name, newlayer_name);
+	      remove_ms_tag (oldlayer_name, newlayer_name);
 
-	      g_snprintf(newlayer_name, buflen, "%s(%dms)%s",
-			 oldlayer_name, cumulated_delay,
-			 (this_frame_num ==  0) ? "" :
-			 can_combine ? "(combine)" : "(replace)");
+	      g_snprintf (newlayer_name, buflen, "%s(%dms)%s",
+                          oldlayer_name, cumulated_delay,
+                          (this_frame_num ==  0) ? "" :
+                          can_combine ? "(combine)" : "(replace)");
 
-	      gimp_layer_set_name(last_true_frame, newlayer_name);
+	      gimp_layer_set_name (last_true_frame, newlayer_name);
 
 	      g_free (newlayer_name);
 	    }
@@ -1126,7 +1114,7 @@ g_warning("stat fun");
 					      drawabletype_alpha,
 					      100.0,
 					      GIMP_NORMAL_MODE);
-	      g_free(newlayer_name);
+	      g_free (newlayer_name);
 
 	      gimp_image_add_layer (new_image_id, new_layer_id, 0);
 
@@ -1141,11 +1129,11 @@ g_warning("stat fun");
 				       bbox_bottom-bbox_top);
 	      gimp_drawable_flush (drawable);
 	      gimp_drawable_detach (drawable);
-	      gimp_layer_translate (new_layer_id, (gint)bbox_left, (gint)bbox_top);
+	      gimp_layer_translate (new_layer_id, bbox_left, bbox_top);
 	    }
 
-	  gimp_progress_update (((double)this_frame_num+1.0) /
-				((double)total_frames));
+	  gimp_progress_update (((gdouble) this_frame_num + 1.0) /
+				((gdouble) total_frames));
 	}
     }
 
@@ -1154,19 +1142,20 @@ g_warning("stat fun");
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_display_new (new_image_id);
 
-  g_free(rawframe);
+  g_free (rawframe);
   rawframe = NULL;
-  g_free(last_frame);
+
+  g_free (last_frame);
   last_frame = NULL;
-  g_free(this_frame);
+
+  g_free (this_frame);
   this_frame = NULL;
-  g_free(opti_frame);
+
+  g_free (opti_frame);
   opti_frame = NULL;
-  if (back_frame)
-    {
-      g_free(opti_frame);
-      opti_frame = NULL;
-    }
+
+  g_free (back_frame);
+  back_frame = NULL;
 
   return new_image_id;
 }
@@ -1177,10 +1166,10 @@ g_warning("stat fun");
 /* Util. */
 
 static DisposeType
-get_frame_disposal (const guint whichframe)
+get_frame_disposal (guint whichframe)
 {
-  gchar* layer_name;
-  DisposeType disposal;
+  gchar       *layer_name;
+  DisposeType  disposal;
 
   layer_name = gimp_layer_get_name(layers[total_frames-(whichframe+1)]);
   disposal = parse_disposal_tag(layer_name);
@@ -1192,7 +1181,7 @@ get_frame_disposal (const guint whichframe)
 
 
 static guint32
-get_frame_duration (const guint whichframe)
+get_frame_duration (guint whichframe)
 {
   gchar* layer_name;
   gint   duration = 0;
@@ -1211,8 +1200,10 @@ get_frame_duration (const guint whichframe)
 }
 
 
-static int
-is_ms_tag (const char *str, int *duration, int *taglength)
+static gboolean
+is_ms_tag (const gchar *str,
+           gint        *duration,
+           gint        *taglength)
 {
   gint sum = 0;
   gint offset;
@@ -1221,7 +1212,7 @@ is_ms_tag (const char *str, int *duration, int *taglength)
   length = strlen(str);
 
   if (str[0] != '(')
-    return 0;
+    return FALSE;
 
   offset = 1;
 
@@ -1241,7 +1232,7 @@ is_ms_tag (const char *str, int *duration, int *taglength)
   while ((offset<length) && (g_ascii_isdigit (str[offset])));
 
   if (length-offset <= 2)
-    return 0;
+    return FALSE;
 
   /* eat any spaces between number and 'ms' */
   while ((offset<length) && (str[offset] == ' '))
@@ -1250,7 +1241,7 @@ is_ms_tag (const char *str, int *duration, int *taglength)
   if ((length-offset <= 2) ||
       (g_ascii_toupper (str[offset]) != 'M') ||
       (g_ascii_toupper (str[offset+1]) != 'S'))
-    return 0;
+    return FALSE;
 
   offset += 2;
 
@@ -1259,30 +1250,30 @@ is_ms_tag (const char *str, int *duration, int *taglength)
     offset++;
 
   if ((length-offset < 1) || (str[offset] != ')'))
-    return 0;
+    return FALSE;
 
   offset++;
 
-  *duration = sum;
+  *duration  = sum;
   *taglength = offset;
 
-  return 1;
+  return TRUE;
 }
 
 
 static int
 parse_ms_tag (const char *str)
 {
-  int i;
-  int rtn;
-  int dummy;
-  int length;
+  gint i;
+  gint rtn;
+  gint dummy;
+  gint length;
 
-  length = strlen(str);
+  length = strlen (str);
 
   for (i=0; i<length; i++)
     {
-      if (is_ms_tag(&str[i], &rtn, &dummy))
+      if (is_ms_tag (&str[i], &rtn, &dummy))
 	return rtn;
     }
 
@@ -1290,23 +1281,25 @@ parse_ms_tag (const char *str)
 }
 
 
-static int
-is_disposal_tag (const char *str, DisposeType *disposal, int *taglength)
+static gboolean
+is_disposal_tag (const gchar *str,
+                 DisposeType *disposal,
+                 gint        *taglength)
 {
-  if (strlen(str) != 9)
-    return 0;
+  if (strlen (str) != 9)
+    return FALSE;
 
-  if (strncmp(str, "(combine)", 9) == 0)
+  if (strncmp (str, "(combine)", 9) == 0)
     {
       *taglength = 9;
       *disposal = DISPOSE_COMBINE;
-      return 1;
+      return TRUE;
     }
-  else if (strncmp(str, "(replace)", 9) == 0)
+  else if (strncmp (str, "(replace)", 9) == 0)
     {
       *taglength = 9;
       *disposal = DISPOSE_REPLACE;
-      return 1;
+      return TRUE;
     }
 
   return 0;
@@ -1314,29 +1307,30 @@ is_disposal_tag (const char *str, DisposeType *disposal, int *taglength)
 
 
 static DisposeType
-parse_disposal_tag (const char *str)
+parse_disposal_tag (const gchar *str)
 {
   DisposeType rtn;
-  int i, dummy;
+  gint i, dummy;
   gint length;
 
   length = strlen(str);
 
   for (i=0; i<length; i++)
     {
-      if (is_disposal_tag(&str[i], &rtn, &dummy))
+      if (is_disposal_tag (&str[i], &rtn, &dummy))
 	{
 	  return rtn;
 	}
     }
 
-  return (DISPOSE_UNDEFINED); /* FIXME */
+  return DISPOSE_UNDEFINED; /* FIXME */
 }
 
 
 
 static void
-remove_disposal_tag (char *dest, char *src)
+remove_disposal_tag (gchar *dest,
+                     gchar *src)
 {
   gint offset = 0;
   gint destoffset = 0;
@@ -1365,13 +1359,14 @@ remove_disposal_tag (char *dest, char *src)
 
 
 static void
-remove_ms_tag (char *dest, char *src)
+remove_ms_tag (gchar *dest,
+               gchar *src)
 {
   gint offset = 0;
   gint destoffset = 0;
   gint length;
-  int taglength;
-  int dummy;
+  gint taglength;
+  gint dummy;
 
   length = strlen(src);
 
