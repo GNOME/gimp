@@ -69,9 +69,6 @@ struct _SelectionOptions
   GimpUnit     fixed_unit_d;
   GtkWidget   *fixed_unit_w;
 
-  /*  used by bezier selection  */
-  gint         extend;
-
   /*  used by iscissors */
   gboolean     interactive;
   gboolean     interactive_d;

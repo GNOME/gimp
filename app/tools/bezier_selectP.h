@@ -64,6 +64,9 @@ struct _BezierSelect
   gint          num_points;   /* number of points in the curve     */
   Channel      *mask;         /* null if the curve is open         */
   GSList      **scanlines;    /* used in converting a curve        */
+
+  gint          extend;       /* moved here from the SelectionOptions
+			       * structure (whatever it's used for...) */
 };
 
 /* All data that are passed to the bezier_draw_curve must

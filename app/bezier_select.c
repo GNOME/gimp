@@ -484,6 +484,8 @@ bezier_select_reset (BezierSelect *bezier_sel)
   bezier_sel->num_points  = 0;                /* intially there are no points */
   bezier_sel->mask        = NULL;             /* empty mask */
   bezier_sel->scanlines   = NULL;
+
+  bezier_sel->extend      = 0;                /* ??? */
 }
 
 void
@@ -979,7 +981,7 @@ bezier_select_button_press (Tool           *tool,
   bezier_sel = tool->private;
   grab_pointer = FALSE;
 
-  if (bezier_options->extend)
+  if (bezier_sel->extend)
     {
       tool->gdisp = gdisp;
     }
@@ -2880,7 +2882,7 @@ bezier_to_sel_internal (BezierSelect  *bezier_sel,
   if (bezier_options->antialias)
     bezier_convert (bezier_sel, tool->gdisp, SUBDIVIDE, TRUE);
   
-/*   if (!bezier_options->extend) */
+/*   if (!bezier_sel->extend) */
 /*     { */
 /*       tool->state = INACTIVE; */
 /*       bezier_sel->draw = BEZIER_DRAW_CURVE; */

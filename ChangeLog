@@ -1,5 +1,14 @@
 2001-01-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/bezier_select.c
+	* app/bezier_selectP.h
+	* app/selection_options.h: moved the integer "extend" variable from
+	SelectionOptions to the BezierSelect structure because it does not
+	have a UI widget. Also initialize it with "0" (was used
+	uninitialized before). I have no idea what it does.
+
+2001-01-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/selection_options.h
 	* app/tool_options.c: made a correct tool toption out of
 	"Interactive" (added a default value and the "Reset" function,
