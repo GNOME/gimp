@@ -242,20 +242,11 @@ d_paint_spiral (GfigObject *obj)
     scale_to_xy (&line_pnts[0], i / 2);
 
   /* One go */
-  if (selvals.painttype == PAINT_BRUSH_TYPE)
+  if (obj->style.paint_type == PAINT_BRUSH_TYPE)
     {
       gfig_paint (selvals.brshtype,
                   gfig_context->drawable_id,
                   i, line_pnts);
-    }
-  else
-    {
-      gimp_free_select (gfig_context->image_id,
-                        i, line_pnts,
-                        selopt.type,
-                        selopt.antia,
-                        selopt.feather,
-                        selopt.feather_radius);
     }
 
   g_free (line_pnts);

@@ -55,6 +55,8 @@ void     set_foreground_callback           (GimpColorButton      *button,
 
 void     set_background_callback           (GimpColorButton      *button,
                                             gpointer              data);
+void     set_paint_type_callback           (GtkToggleButton      *toggle,
+                                            gpointer              data);
 
 
 void     gfig_brush_changed_callback       (const gchar          *brush_name,

@@ -89,7 +89,6 @@ typedef struct
   gboolean      reverselines;
   gboolean      scaletoimage;
   gdouble       scaletoimagefp;
-  gboolean      approxcircles;
   BrushType     brshtype;
   DobjType      otype;
 } SelectItVals;
@@ -144,6 +143,7 @@ typedef struct
   GtkWidget   *pattern_select;
   GtkWidget   *gradient_select;
   GtkWidget   *fillstyle_combo;
+  GtkWidget   *paint_type_toggle;
   GimpRGB     *fg_color;
   GimpRGB     *bg_color;
   gboolean     enable_repaint;

@@ -1,5 +1,22 @@
 2004-11-16  DindinX  <dindinx@gimp.org>
 
+	* plug-ins/gfig/gfig-arc.c
+	* plug-ins/gfig/gfig-bezier.c
+	* plug-ins/gfig/gfig-circle.c
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfig/gfig-ellipse.c
+	* plug-ins/gfig/gfig-line.c
+	* plug-ins/gfig/gfig-poly.c
+	* plug-ins/gfig/gfig-spiral.c
+	* plug-ins/gfig/gfig-star.c
+	* plug-ins/gfig/gfig-style.c
+	* plug-ins/gfig/gfig-style.h
+	* plug-ins/gfig/gfig-types.h
+	* plug-ins/gfig/gfig.h: added a toggle so we can now choose to stroke
+	the painting or not.
+
+2004-11-16  DindinX  <dindinx@gimp.org>
+
 	* plug-ins/gfig/gfig-dialog.c: implemented the gradient fill, using a
 	shapeburst blend.  This is very slow, but I dont see how it could be
 	done otherwise.

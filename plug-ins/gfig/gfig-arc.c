@@ -498,27 +498,11 @@ d_paint_arc (GfigObject *obj)
     reverse_pairs_list (&line_pnts[0], i/2);
 
   /* One go */
-  if (selvals.painttype == PAINT_BRUSH_TYPE)
+  if (obj->style.paint_type == PAINT_BRUSH_TYPE)
     {
       gfig_paint (selvals.brshtype,
                   gfig_context->drawable_id,
                   i, line_pnts);
-    }
-  else
-    {
-      if (selopt.as_pie)
-        {
-          /* Add center point - cause a pie like selection... */
-          line_pnts[i++] = center_pnt.x;
-          line_pnts[i++] = center_pnt.y;
-        }
-
-      gimp_free_select (gfig_context->image_id,
-                        i, line_pnts,
-                        selopt.type,
-                        selopt.antia,
-                        selopt.feather,
-                        selopt.feather_radius);
     }
 
   g_free (line_pnts);

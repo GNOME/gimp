@@ -242,7 +242,8 @@ d_paint_poly (GfigObject *obj)
 
   paint_layer_fill ();
 
-  gimp_edit_stroke (gfig_context->drawable_id);
+  if (obj->style.paint_type == PAINT_BRUSH_TYPE)
+    gimp_edit_stroke (gfig_context->drawable_id);
 
   g_free (line_pnts);
 }

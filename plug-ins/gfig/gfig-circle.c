@@ -85,14 +85,6 @@ d_paint_circle (GfigObject *obj)
 
   g_assert (obj != NULL);
 
-  if (selvals.approxcircles)
-    {
-      obj->type_data = 600;
-
-      d_paint_poly (obj);
-      return;
-    }
-
   /* Drawing circles is hard .
    * 1) select circle
    * 2) stroke it
@@ -131,8 +123,8 @@ d_paint_circle (GfigObject *obj)
 
   paint_layer_fill ();
 
-  gimp_edit_stroke (gfig_context->drawable_id);
-
+  if (obj->style.paint_type == PAINT_BRUSH_TYPE)
+    gimp_edit_stroke (gfig_context->drawable_id);
 }
 
 static GfigObject*

@@ -430,6 +430,18 @@ set_background_callback (GimpColorButton *button,
   gfig_paint_callback ();
 }
 
+void
+set_paint_type_callback (GtkToggleButton *toggle,
+                         gpointer         data)
+{
+  gboolean paint_type;
+
+  paint_type = gtk_toggle_button_get_active (toggle);
+  gfig_context->default_style.paint_type = paint_type;
+  gfig_context->current_style->paint_type = paint_type;
+  gfig_paint_callback ();
+}
+
 /*
  * gfig_brush_changed_callback() is the callback for the brush
  * selector widget.  It reads the brush name from the widget, and
@@ -526,6 +538,7 @@ gfig_style_copy (Style *style1,
   style1->pattern       = g_strdup (style0->pattern);
   style1->fill_type    = style0->fill_type;
   style1->fill_opacity = style0->fill_opacity;
+  style1->paint_type   = style0->paint_type;
 }
 
 /*
@@ -648,6 +661,8 @@ gfig_style_set_context_from_style (Style *style)
                                  (gint) style->fill_type);
 
   gfig_context->enable_repaint = enable_repaint;
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gfig_context->paint_type_toggle),
+                                style->paint_type);
 }
 
 /*
@@ -685,6 +700,9 @@ gfig_style_set_style_from_context (Style *style)
 
   /* FIXME when there is an opacity control widget to read */
   style->fill_opacity = 100.;
+
+  style->paint_type =
+    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (gfig_context->paint_type_toggle));
 }
 
 void

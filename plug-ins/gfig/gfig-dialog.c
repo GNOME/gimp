@@ -115,7 +115,6 @@ SelectItVals selvals =
   FALSE,                  /* reverse lines                 */
   TRUE,                   /* Scale to image when painting  */
   1.0,                    /* Scale to image fp             */
-  FALSE,                  /* Approx circles by drawing lines */
   BRUSH_BRUSH_TYPE,       /* Default to use a brush        */
   LINE                    /* Initial object type           */
 };
@@ -373,7 +372,18 @@ gfig_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  /* foreground color button in Style frame*/
+  gfig_context->paint_type_toggle =
+    gtk_check_button_new_with_mnemonic (_("Stro_ke"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gfig_context->paint_type_toggle),
+                                selvals.painttype);
+  g_signal_connect (gfig_context->paint_type_toggle, "toggled",
+                    G_CALLBACK (set_paint_type_callback),
+                    NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), gfig_context->paint_type_toggle,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (gfig_context->paint_type_toggle);
+
+  /* foreground color button in Stroke frame*/
   gfig_context->fg_color = g_new (GimpRGB, 1);
   gfig_context->fg_color_button = gimp_color_button_new ("Foreground",
                                                     SEL_BUTTON_WIDTH,
@@ -389,7 +399,7 @@ gfig_dialog (void)
                       FALSE, FALSE, 0);
   gtk_widget_show (gfig_context->fg_color_button);
 
-  /* brush selector in Style frame */
+  /* brush selector in Stroke frame */
   gfig_context->brush_select
     = gimp_brush_select_widget_new ("Brush", gfig_context->current_style->brush_name,
                                     -1, -1, -1,
@@ -1719,6 +1729,8 @@ paint_layer_fill (void)
                        FALSE,             /* dither             */
                        0.0, 0.0,          /* (x1, y1) - ignored */
                        0.0, 0.0);         /* (x2, y2) - ignored */
+      return;
+    default:
       return;
     }
 

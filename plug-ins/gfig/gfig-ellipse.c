@@ -83,120 +83,6 @@ d_draw_ellipse (GfigObject * obj)
 }
 
 static void
-d_paint_approx_ellipse (GfigObject *obj)
-{
-  /* first point center */
-  /* Next point is radius */
-  gdouble    *line_pnts;
-  gint        seg_count = 0;
-  gint        i = 0;
-  DobjPoints *center_pnt;
-  DobjPoints *radius_pnt;
-  gdouble     a_axis;
-  gdouble     b_axis;
-  gdouble     ang_grid;
-  gdouble     ang_loop;
-  gdouble     radius;
-  gint        loop;
-  GdkPoint    first_pnt, last_pnt;
-  gboolean    first = TRUE;
-
-  g_assert (obj != NULL);
-
-  /* count - add one to close polygon */
-  seg_count = 600;
-
-  center_pnt = obj->points;
-
-  if (!center_pnt || !seg_count)
-    return; /* no-line */
-
-  line_pnts = g_new0 (gdouble, 2 * seg_count + 1);
-
-  /* Go around all the points drawing a line from one to the next */
-
-  radius_pnt = center_pnt->next; /* this defines the vetices */
-
-  /* Have center and radius - get lines */
-  a_axis = ((gdouble) (radius_pnt->pnt.x - center_pnt->pnt.x));
-  b_axis = ((gdouble) (radius_pnt->pnt.y - center_pnt->pnt.y));
-
-  /* Lines */
-  ang_grid = 2 * G_PI / (gdouble)  600;
-
-  for (loop = 0; loop <  600; loop++)
-    {
-      gdouble lx, ly;
-      GdkPoint calc_pnt;
-
-      ang_loop = (gdouble)loop * ang_grid;
-
-      radius = (a_axis * b_axis /
-                (sqrt (cos (ang_loop) * cos (ang_loop) *
-                       (b_axis * b_axis - a_axis * a_axis) + a_axis * a_axis)));
-
-      lx = radius * cos (ang_loop);
-      ly = radius * sin (ang_loop);
-
-      calc_pnt.x = RINT (lx + center_pnt->pnt.x);
-      calc_pnt.y = RINT (ly + center_pnt->pnt.y);
-
-      /* Miss out duped pnts */
-      if (!first)
-        {
-          if (calc_pnt.x == last_pnt.x && calc_pnt.y == last_pnt.y)
-            {
-              continue;
-            }
-        }
-
-      line_pnts[i++] = calc_pnt.x;
-      line_pnts[i++] = calc_pnt.y;
-      last_pnt = calc_pnt;
-
-      if (first)
-        {
-          first_pnt = calc_pnt;
-          first = FALSE;
-        }
-    }
-
-  line_pnts[i++] = first_pnt.x;
-  line_pnts[i++] = first_pnt.y;
-
-  /* Reverse line if approp */
-  if (selvals.reverselines)
-    reverse_pairs_list (&line_pnts[0], i / 2);
-
-  /* Scale before drawing */
-  if (selvals.scaletoimage)
-    scale_to_original_xy (&line_pnts[0], i / 2);
-  else
-    scale_to_xy (&line_pnts[0], i / 2);
-
-  /* One go */
-  if (selvals.painttype == PAINT_BRUSH_TYPE)
-    {
-      gfig_paint (selvals.brshtype,
-                  gfig_context->drawable_id,
-                  i, line_pnts);
-    }
-  else
-    {
-      gimp_free_select (gfig_context->image_id,
-                        i, line_pnts,
-                        selopt.type,
-                        selopt.antia,
-                        selopt.feather,
-                        selopt.feather_radius);
-    }
-
-  g_free (line_pnts);
-}
-
-
-
-static void
 d_paint_ellipse (GfigObject *obj)
 {
   DobjPoints *center_pnt;
@@ -213,12 +99,6 @@ d_paint_ellipse (GfigObject *obj)
    */
 
   g_assert (obj != NULL);
-
-  if (selvals.approxcircles)
-    {
-      d_paint_approx_ellipse (obj);
-      return;
-    }
 
   center_pnt = obj->points;
 
@@ -266,7 +146,8 @@ d_paint_ellipse (GfigObject *obj)
 
   paint_layer_fill ();
 
-  gimp_edit_stroke (gfig_context->drawable_id);
+  if (obj->style.paint_type == PAINT_BRUSH_TYPE)
+    gimp_edit_stroke (gfig_context->drawable_id);
 }
 
 static GfigObject *

@@ -73,9 +73,8 @@ typedef enum
 
 typedef enum
 {
-  PAINT_BRUSH_TYPE = 0,
-  PAINT_SELECTION_TYPE,
-  PAINT_SELECTION_FILL_TYPE
+  PAINT_NONE = 0,
+  PAINT_BRUSH_TYPE = 1
 } PaintType;
 
 typedef enum
