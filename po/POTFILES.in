@@ -16,8 +16,8 @@ app/config/gimprc-blurbs.h
 app/config/gimpscanner.c
 
 app/core/core-enums.c
-app/core/gimp.c
 app/core/gimp-gradients.c
+app/core/gimp.c
 app/core/gimpbrush.c
 app/core/gimpbrushgenerated.c
 app/core/gimpbrushpipe.c
@@ -25,21 +25,25 @@ app/core/gimpchannel.c
 app/core/gimpcontext.c
 app/core/gimpdata.c
 app/core/gimpdatafactory.c
-app/core/gimpdrawable.c
 app/core/gimpdrawable-bucket-fill.c
 app/core/gimpdrawable-transform.c
+app/core/gimpdrawable.c
 app/core/gimpedit.c
 app/core/gimpenvirontable.c
 app/core/gimpgradient.c
 app/core/gimpimage-convert.c
+app/core/gimpimage-crop.c
 app/core/gimpimage-mask.c
 app/core/gimpimage-merge.c
 app/core/gimpimage-new.c
+app/core/gimpimage-qmask.c
+app/core/gimpimage-resize.c
+app/core/gimpimage-scale.c
 app/core/gimpimage.c
 app/core/gimpimagefile.c
 app/core/gimpitem.c
-app/core/gimplayer.c
 app/core/gimplayer-floating-sel.c
+app/core/gimplayer.c
 app/core/gimplayermask.c
 app/core/gimpmodules.c
 app/core/gimppalette-import.c
@@ -52,6 +56,7 @@ app/display/display-enums.c
 app/display/gimpdisplay.c
 app/display/gimpdisplayshell.c
 app/display/gimpdisplayshell-callbacks.c
+app/display/gimpdisplayshell-dnd.c
 app/display/gimpdisplayshell-filter-dialog.c
 app/display/gimpdisplayshell-layer-select.c
 app/display/gimpdisplayshell-title.c
@@ -135,8 +140,10 @@ app/paint/gimppaintcore.c
 
 app/pdb/image_cmds.c
 app/pdb/internal_procs.c
+app/pdb/layer_cmds.c
 app/pdb/procedural_db.c
 app/pdb/procedural_db_cmds.c
+app/pdb/undo_cmds.c
 
 app/plug-in/plug-in.c
 app/plug-in/plug-in-rc.c
@@ -144,6 +151,7 @@ app/plug-in/plug-ins.c
 
 app/text/text-enums.c
 app/text/gimptext.c
+app/text/gimptext-compat.c
 
 app/tools/gimpairbrushtool.c
 app/tools/gimpbezierselecttool.c

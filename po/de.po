@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.12\n"
-"POT-Creation-Date: 2003-02-13 12:11+0100\n"
-"PO-Revision-Date: 2003-02-13 12:14+0100\n"
+"POT-Creation-Date: 2003-02-13 12:27+0100\n"
+"PO-Revision-Date: 2003-02-13 12:33+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -162,7 +162,7 @@ msgstr ""
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Dieses Konsolenfenster wird in 10 Sekunden geschlossen)\n"
 
-#: app/undo.c:3124
+#: app/undo.c:3115
 #, c-format
 msgid "Can't undo %s"
 msgstr "%s konnte nicht rückgängig gemacht werden"
@@ -825,208 +825,227 @@ msgstr "Rückwärts (Korrigierend)"
 msgid "<<invalid>>"
 msgstr "<<ungültig>>"
 
-#: app/core/core-enums.c:388 app/gui/resize-dialog.c:201
+#: app/core/core-enums.c:387 app/core/gimpimage-scale.c:76
+#: app/gui/image-commands.c:480 app/gui/image-commands.c:493
+#: app/gui/image-commands.c:510 app/gui/resize-dialog.c:201
 msgid "Scale Image"
 msgstr "Bild skalieren"
 
-#: app/core/core-enums.c:389
+#: app/core/core-enums.c:388 app/core/gimpimage-resize.c:64
 msgid "Resize Image"
 msgstr "Bildgrösse ändern"
 
-#: app/core/core-enums.c:390
+#: app/core/core-enums.c:389
 msgid "Convert Image"
 msgstr "Bild konvertieren"
 
-#: app/core/core-enums.c:391
+#: app/core/core-enums.c:390 app/core/gimpimage-crop.c:147
 msgid "Crop Image"
 msgstr "Bild zuschneiden"
 
-#: app/core/core-enums.c:392 app/gui/image-commands.c:310
+#: app/core/core-enums.c:391 app/core/gimpimage-merge.c:300
+#: app/gui/image-commands.c:311
 msgid "Merge Layers"
 msgstr "Ebenen vereinen"
 
-#: app/core/core-enums.c:393 app/core/core-enums.c:418
+#: app/core/core-enums.c:392 app/core/core-enums.c:416
 msgid "QuickMask"
 msgstr "QuickMask"
 
-#: app/core/core-enums.c:394 app/core/core-enums.c:419
+#: app/core/core-enums.c:393 app/core/core-enums.c:417
 msgid "Guide"
 msgstr "Hilfslinie"
 
-#: app/core/core-enums.c:395
+#: app/core/core-enums.c:394
 msgid "Layer Properties"
 msgstr "Ebeneneigenschaften"
 
-#: app/core/core-enums.c:396 app/gui/resize-dialog.c:193
+#: app/core/core-enums.c:395 app/gui/layers-commands.c:1013
+#: app/gui/resize-dialog.c:193 app/pdb/layer_cmds.c:407
 msgid "Scale Layer"
 msgstr "Ebene skalieren"
 
-#: app/core/core-enums.c:397
+#: app/core/core-enums.c:396 app/core/gimpimage-crop.c:130
+#: app/gui/layers-commands.c:1103 app/pdb/layer_cmds.c:502
 msgid "Resize Layer"
 msgstr "Ebenengrösse ändern"
 
-#: app/core/core-enums.c:398
+#: app/core/core-enums.c:397 app/pdb/layer_cmds.c:642 app/pdb/layer_cmds.c:774
+#: app/tools/gimpeditselectiontool.c:247 app/tools/gimpeditselectiontool.c:891
 msgid "Move Layer"
 msgstr "Ebene bewegen"
 
-#: app/core/core-enums.c:399
+#: app/core/core-enums.c:398
 msgid "Linked Layer"
 msgstr "Ebene verbinden"
 
-#: app/core/core-enums.c:400
+#: app/core/core-enums.c:399 app/core/gimplayer.c:792
 msgid "Apply Layer Mask"
 msgstr "Ebenenmaske anwenden"
 
-#: app/core/core-enums.c:401
+#: app/core/core-enums.c:400 app/core/gimpimage-mask.c:381
 msgid "Float Selection"
 msgstr "Auswahl anheben"
 
-#: app/core/core-enums.c:402
+#: app/core/core-enums.c:401 app/core/gimplayer-floating-sel.c:132
 msgid "Anchor Floating Selection"
 msgstr "Schwebende Auswahl verankern"
 
-#: app/core/core-enums.c:403 app/widgets/gimpbufferview.c:147
+#: app/core/core-enums.c:402 app/core/gimpedit.c:201
+#: app/widgets/gimpbufferview.c:147
 msgid "Paste"
 msgstr "Einfügen"
 
-#: app/core/core-enums.c:404
+#: app/core/core-enums.c:403 app/core/gimpedit.c:63
 msgid "Cut"
 msgstr "Ausschneiden"
 
-#: app/core/core-enums.c:405
+#: app/core/core-enums.c:404 app/core/gimpedit.c:121
 msgid "Copy"
 msgstr "Kopieren"
 
-#: app/core/core-enums.c:406 app/tools/gimptexttool.c:109
+#: app/core/core-enums.c:405 app/text/gimptext-compat.c:92
+#: app/tools/gimptexttool.c:110
 msgid "Text"
 msgstr "Text"
 
-#: app/core/core-enums.c:407 app/core/core-enums.c:440
+#: app/core/core-enums.c:406 app/core/core-enums.c:438
+#: app/core/gimpdrawable-transform.c:616 app/tools/gimptransformtool.c:828
 msgid "Transform"
 msgstr "Transformation"
 
-#: app/core/core-enums.c:408 app/core/core-enums.c:441
+#: app/core/core-enums.c:407 app/core/core-enums.c:439
+#: app/paint/gimppaintcore.c:440
 msgid "Paint"
 msgstr "Zeichnen"
 
-#: app/core/core-enums.c:409 app/core/core-enums.c:442
+#: app/core/core-enums.c:408 app/core/core-enums.c:440 app/core/gimpitem.c:451
 msgid "Attach Parasite"
 msgstr "Parasit zuweisen"
 
-#: app/core/core-enums.c:410 app/core/core-enums.c:443
+#: app/core/core-enums.c:409 app/core/core-enums.c:441
 msgid "Remove Parasite"
 msgstr "Parasit entfernen"
 
-#: app/core/core-enums.c:411
+#: app/core/core-enums.c:410 app/pdb/undo_cmds.c:58
 msgid "Plug-In"
 msgstr "Plugin"
 
-#: app/core/core-enums.c:413 app/pdb/internal_procs.c:124
+#: app/core/core-enums.c:411 app/pdb/internal_procs.c:124
 msgid "Image"
 msgstr "Bild"
 
-#: app/core/core-enums.c:414
+#: app/core/core-enums.c:412
 msgid "Image Mod"
 msgstr "Bildänderung"
 
-#: app/core/core-enums.c:415 app/gui/file-new-dialog.c:373
+#: app/core/core-enums.c:413 app/gui/file-new-dialog.c:373
 msgid "Image Type"
 msgstr "Bildart"
 
 #. Image size frame
-#: app/core/core-enums.c:416 app/gui/file-new-dialog.c:143
+#: app/core/core-enums.c:414 app/gui/file-new-dialog.c:143
 msgid "Image Size"
 msgstr "Bildgröße"
 
-#: app/core/core-enums.c:417
+#: app/core/core-enums.c:415
 msgid "Resolution Change"
 msgstr "Auflösung ändern"
 
-#: app/core/core-enums.c:420 app/core/gimpchannel.c:527
+#: app/core/core-enums.c:418 app/core/gimpchannel.c:527
 msgid "Selection Mask"
 msgstr "Auswahlmaske"
 
-#: app/core/core-enums.c:421
+#: app/core/core-enums.c:419
 msgid "Rename Item"
 msgstr "Ding umbenennen"
 
-#: app/core/core-enums.c:422 app/gui/layers-commands.c:608
-#: app/gui/layers-commands.c:640
+#: app/core/core-enums.c:420 app/gui/layers-commands.c:579
+#: app/gui/layers-commands.c:611 app/gui/layers-commands.c:643
+#: app/widgets/gimpdrawablelistview.c:208
 msgid "New Layer"
 msgstr "Ebene anlegen"
 
-#: app/core/core-enums.c:423
+#: app/core/core-enums.c:421
 msgid "Delete Layer"
 msgstr "Ebene löschen"
 
-#: app/core/core-enums.c:424
+#: app/core/core-enums.c:422
 msgid "Layer Mod"
 msgstr "Ebenenänderung"
 
-#: app/core/core-enums.c:425 app/gui/layers-commands.c:895
+#: app/core/core-enums.c:423 app/gui/layers-commands.c:900
 msgid "Add Layer Mask"
 msgstr "Ebenenmaske hinzufügen"
 
-#: app/core/core-enums.c:426
+#: app/core/core-enums.c:424
 msgid "Delete Layer Mask"
 msgstr "Ebenenmaske löschen"
 
-#: app/core/core-enums.c:427
+#: app/core/core-enums.c:425
 msgid "Layer Reposition"
 msgstr "Ebene repositionieren"
 
-#: app/core/core-enums.c:428
+#: app/core/core-enums.c:426
 msgid "Layer Move"
 msgstr "Ebene verschieben"
 
-#: app/core/core-enums.c:429 app/gui/channels-commands.c:322
-#: app/gui/channels-commands.c:359
+#: app/core/core-enums.c:427 app/gui/channels-commands.c:290
+#: app/gui/channels-commands.c:324 app/gui/channels-commands.c:361
 msgid "New Channel"
 msgstr "Kanal hinzufügen"
 
-#: app/core/core-enums.c:430
+#: app/core/core-enums.c:428
 msgid "Delete Channel"
 msgstr "Kanal löschen"
 
-#: app/core/core-enums.c:431
+#: app/core/core-enums.c:429
 msgid "Channel Mod"
 msgstr "Kanaländerung"
 
-#: app/core/core-enums.c:432
+#: app/core/core-enums.c:430
 msgid "Channel Reposition"
 msgstr "Kanal repositionieren"
 
-#: app/core/core-enums.c:433
+#: app/core/core-enums.c:431
 msgid "New Vectors"
 msgstr "Neue Vektoren"
 
-#: app/core/core-enums.c:434
+#: app/core/core-enums.c:432
 msgid "Delete Vectors"
 msgstr "Vektoren löschen"
 
-#: app/core/core-enums.c:435
+#: app/core/core-enums.c:433
 msgid "Vectors Mod"
 msgstr "Vektormodus"
 
-#: app/core/core-enums.c:436
+#: app/core/core-enums.c:434
 msgid "Vectors Reposition"
 msgstr "Vektoren repositionieren"
 
-#: app/core/core-enums.c:437
+#: app/core/core-enums.c:435
 msgid "FS to Layer"
 msgstr "Schwebende Auswahl -> Ebene"
 
-#: app/core/core-enums.c:438
+#: app/core/core-enums.c:436
 msgid "FS Rigor"
 msgstr "Schwebende Auswahl anzeigen"
 
-#: app/core/core-enums.c:439
+#: app/core/core-enums.c:437
 msgid "FS Relax"
 msgstr "Schwebende Auswahl verbergen"
 
-#: app/core/core-enums.c:444
+#: app/core/core-enums.c:442
 msgid "EEK: can't undo"
 msgstr "EEK: kann nicht rückgängig gemacht werden"
+
+#: app/core/gimp-gradients.c:75
+msgid "FG to BG (HSV counter-clockwise)"
+msgstr "VG nach HG (HSV gegen Uhrzeigersinn)"
+
+#: app/core/gimp-gradients.c:80
+msgid "FG to BG (HSV clockwise hue)"
+msgstr "VG nach HG (HSV Farbton im Uhrzeigersinn)"
 
 #. register all internal procedures
 #: app/core/gimp.c:714
@@ -1079,14 +1098,6 @@ msgstr "Farbverläufe"
 msgid "Documents"
 msgstr "Dokumente"
 
-#: app/core/gimp-gradients.c:75
-msgid "FG to BG (HSV counter-clockwise)"
-msgstr "VG nach HG (HSV gegen Uhrzeigersinn)"
-
-#: app/core/gimp-gradients.c:80
-msgid "FG to BG (HSV clockwise hue)"
-msgstr "VG nach HG (HSV Farbton im Uhrzeigersinn)"
-
 #: app/core/gimpbrush.c:375 app/core/gimpbrushgenerated.c:390
 #: app/core/gimpbrushpipe.c:319 app/core/gimpgradient.c:338
 #: app/core/gimppalette.c:299 app/core/gimppattern.c:302
@@ -1124,7 +1135,7 @@ msgstr "Ungültiger UTF-8 Text in Pinseldatei »%s«."
 
 #: app/core/gimpbrush.c:573 app/core/gimpbrushpipe.c:343
 #: app/core/gimpcontext.c:1158 app/core/gimpgradient.c:369
-#: app/core/gimpitem.c:357 app/core/gimppalette.c:355
+#: app/core/gimpitem.c:358 app/core/gimppalette.c:355
 #: app/core/gimppattern.c:368 app/tools/gimpvectortool.c:291
 msgid "Unnamed"
 msgstr "Namenlos"
@@ -1186,11 +1197,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:380 app/core/gimpdatafactory.c:383
-#: app/core/gimpitem.c:303 app/core/gimpitem.c:306
+#: app/core/gimpitem.c:304 app/core/gimpitem.c:307
 msgid "copy"
 msgstr "Kopie"
 
-#: app/core/gimpdatafactory.c:392 app/core/gimpitem.c:315
+#: app/core/gimpdatafactory.c:392 app/core/gimpitem.c:316
 #, c-format
 msgid "%s copy"
 msgstr "%s-Kopie"
@@ -1219,11 +1230,19 @@ msgstr ""
 msgid "No patterns available for this operation."
 msgstr "Für diese Operation sind keine Muster vorhanden."
 
-#: app/core/gimpdrawable-transform.c:750
+#: app/core/gimpdrawable-transform.c:664 app/tools/gimpfliptool.c:81
+msgid "Flip"
+msgstr "Spiegeln"
+
+#: app/core/gimpdrawable-transform.c:753
 msgid "Transformation"
 msgstr "Transformation"
 
-#: app/core/gimpedit.c:189 app/core/gimpedit.c:266
+#: app/core/gimpdrawable-transform.c:768
+msgid "Paste Transform"
+msgstr "Transformation einfügen"
+
+#: app/core/gimpedit.c:192 app/core/gimpedit.c:270
 msgid "Pasted Layer"
 msgstr "Eingefügte Ebene"
 
@@ -1264,7 +1283,11 @@ msgstr ""
 msgid "Corrupt segment %d in gradient file '%s'."
 msgstr "Fehlerhaftes Segment %d in Farbverlaufsdatei »%s«."
 
-#: app/core/gimpimage-mask.c:226
+#: app/core/gimpimage-convert.c:751 app/pdb/internal_procs.c:91
+msgid "Convert"
+msgstr "Umwandeln"
+
+#: app/core/gimpimage-mask.c:227
 msgid ""
 "Unable to cut or copy because the\n"
 "selected region is empty."
@@ -1272,7 +1295,7 @@ msgstr ""
 "Ausschneiden oder Kopieren fehlgeschlagen,\n"
 "da der ausgewählte Bereich leer ist."
 
-#: app/core/gimpimage-mask.c:373
+#: app/core/gimpimage-mask.c:374
 msgid ""
 "Cannot float selection because the\n"
 "selected region is empty."
@@ -1280,11 +1303,11 @@ msgstr ""
 "Die Auswahl konnte nicht schwebend gemacht werden,\n"
 "da der ausgewählte Bereich leer ist."
 
-#: app/core/gimpimage-mask.c:391 app/gui/layers-commands.c:828
+#: app/core/gimpimage-mask.c:393 app/gui/layers-commands.c:833
 msgid "Floating Selection"
 msgstr "Schwebende Auswahl"
 
-#: app/core/gimpimage-mask.c:595
+#: app/core/gimpimage-mask.c:597
 msgid ""
 "The active layer has no alpha channel\n"
 "to convert to a selection."
@@ -1292,7 +1315,7 @@ msgstr ""
 "Die aktive Ebene hat keinen Alphakanal\n"
 "um ihn in eine Auswahl umzuwandeln."
 
-#: app/core/gimpimage-mask.c:619
+#: app/core/gimpimage-mask.c:621
 msgid ""
 "The active layer has no mask\n"
 "to convert to a selection."
@@ -1300,11 +1323,15 @@ msgstr ""
 "Die aktive Ebene hat keine Maske\n"
 "um sie in eine Auswahl umzuwandeln."
 
-#: app/core/gimpimage-mask.c:674
+#: app/core/gimpimage-mask.c:676
 msgid "No selection to stroke."
 msgstr "Es gibt keine Auswahl, die nachgezogen werden kann."
 
-#: app/core/gimpimage-mask.c:728
+#: app/core/gimpimage-mask.c:692
+msgid "Stroke Selection"
+msgstr "Auswahl nachziehen"
+
+#: app/core/gimpimage-mask.c:731
 msgid "Paint operation failed."
 msgstr "Pinseloperation schlug fehl."
 
@@ -1352,6 +1379,14 @@ msgstr "%.2f MB"
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
+
+#: app/core/gimpimage-qmask.c:72
+msgid "Enable QuickMask"
+msgstr "QuickMask aktivieren"
+
+#: app/core/gimpimage-qmask.c:128
+msgid "Disable QuickMask"
+msgstr "QuickMask deaktivieren"
 
 #: app/core/gimpimage.c:1054 app/core/gimppalette-import.c:204
 #: app/core/gimppalette.c:543 app/gui/palette-import-dialog.c:591
@@ -1463,60 +1498,15 @@ msgstr "Vorschau-Datei »%s« konnte nicht geöffnet werden: %s"
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Vorschau-Ordner »%s« konnte nicht angelegt werden."
 
-#: app/core/gimpitem.c:458
+#: app/core/gimpitem.c:460
 msgid "parasite attached to item"
 msgstr "Dem Objekt zugewiesener Parasit"
 
-#: app/core/gimpitem.c:501
+#: app/core/gimpitem.c:503
 msgid "parasite detached from item"
 msgstr "Vom Objekt abgenommener Parasit"
 
-#: app/core/gimplayer.c:563
-msgid ""
-"Cannot add layer mask to layer\n"
-"which is not part of an image."
-msgstr ""
-"Masken können nicht zu einer Ebene\n"
-"ohne Alphakanal hinzufügt werden."
-
-#: app/core/gimplayer.c:570
-msgid ""
-"Unable to add a layer mask since\n"
-"the layer already has one."
-msgstr ""
-"Es konnte keine Ebenenenmaske hinzugefügt werden,\n"
-"da diese Ebene bereits eine Maske hat."
-
-#: app/core/gimplayer.c:577
-msgid ""
-"Unable to add a layer mask to a\n"
-"layer in an indexed image."
-msgstr ""
-"Masken können nicht zu einer Ebene in\n"
-"einem indizierten Bild hinzugefügt werden."
-
-#: app/core/gimplayer.c:584
-msgid ""
-"Cannot add layer mask to a layer\n"
-"with no alpha channel."
-msgstr ""
-"Masken können nicht zu einer Ebene\n"
-"ohne Alphakanal hinzufügt werden."
-
-#: app/core/gimplayer.c:594
-msgid ""
-"Cannot add layer mask of different\n"
-"dimensions than specified layer."
-msgstr ""
-"Ebenenmasken mit anderen Abmessungen als\n"
-"die Ebene können nicht hinzufügt werden."
-
-#: app/core/gimplayer.c:632
-#, c-format
-msgid "%s mask"
-msgstr "%s Maske"
-
-#: app/core/gimplayer-floating-sel.c:124
+#: app/core/gimplayer-floating-sel.c:125
 msgid ""
 "Cannot anchor this layer because\n"
 "it is not a floating selection."
@@ -1524,7 +1514,7 @@ msgstr ""
 "Diese Ebene konnte nicht verankert werden,\n"
 "da sie keine schwebende Auswahl ist."
 
-#: app/core/gimplayer-floating-sel.c:198
+#: app/core/gimplayer-floating-sel.c:200
 msgid ""
 "Cannot create a new layer from the floating\n"
 "selection because it belongs to a\n"
@@ -1533,6 +1523,55 @@ msgstr ""
 "Es konnte keine neue Ebene aus dieser schwebenden\n"
 "Auswahl erzeugt werden, da sie zu einer\n"
 "Ebenenmaske oder einem Kanal gehört."
+
+#: app/core/gimplayer.c:564
+msgid ""
+"Cannot add layer mask to layer\n"
+"which is not part of an image."
+msgstr ""
+"Masken können nicht zu einer Ebene\n"
+"ohne Alphakanal hinzufügt werden."
+
+#: app/core/gimplayer.c:571
+msgid ""
+"Unable to add a layer mask since\n"
+"the layer already has one."
+msgstr ""
+"Es konnte keine Ebenenenmaske hinzugefügt werden,\n"
+"da diese Ebene bereits eine Maske hat."
+
+#: app/core/gimplayer.c:578
+msgid ""
+"Unable to add a layer mask to a\n"
+"layer in an indexed image."
+msgstr ""
+"Masken können nicht zu einer Ebene in\n"
+"einem indizierten Bild hinzugefügt werden."
+
+#: app/core/gimplayer.c:585
+msgid ""
+"Cannot add layer mask to a layer\n"
+"with no alpha channel."
+msgstr ""
+"Masken können nicht zu einer Ebene\n"
+"ohne Alphakanal hinzufügt werden."
+
+#: app/core/gimplayer.c:595
+msgid ""
+"Cannot add layer mask of different\n"
+"dimensions than specified layer."
+msgstr ""
+"Ebenenmasken mit anderen Abmessungen als\n"
+"die Ebene können nicht hinzufügt werden."
+
+#: app/core/gimplayer.c:633
+#, c-format
+msgid "%s mask"
+msgstr "%s Maske"
+
+#: app/core/gimplayer.c:1329
+msgid "Layer to Image Size"
+msgstr "Ebene auf Bildgrösse"
 
 #: app/core/gimppalette.c:314
 #, c-format
@@ -1657,8 +1696,8 @@ msgstr ""
 msgid "pixel"
 msgstr "Pixel"
 
-#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:570
-#: app/tools/gimpmeasuretool.c:573 app/tools/gimppainttool.c:561
+#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:572
+#: app/tools/gimpmeasuretool.c:575 app/tools/gimppainttool.c:561
 msgid "pixels"
 msgstr "Pixel"
 
@@ -1776,6 +1815,10 @@ msgid ""
 msgstr ""
 "An %s wurden Veränderungen vorgenommen.\n"
 "Trotzdem schließen?"
+
+#: app/display/gimpdisplayshell-dnd.c:65
+msgid "Drop New Layer"
+msgstr ""
 
 #: app/display/gimpdisplayshell-filter-dialog.c:125
 msgid "Color Display Filters"
@@ -1992,35 +2035,35 @@ msgstr "/Ablage einfügen als Neu"
 msgid "/Delete Buffer"
 msgstr "/Ablage löschen"
 
-#: app/gui/channels-commands.c:292
+#: app/gui/channels-commands.c:294
 msgid "Empty Channel Copy"
 msgstr "Leere Kanal-Kopie"
 
-#: app/gui/channels-commands.c:312
+#: app/gui/channels-commands.c:314
 msgid "New Channel Color"
 msgstr "Farbe für neuen Kanal"
 
-#: app/gui/channels-commands.c:324
+#: app/gui/channels-commands.c:326
 msgid "New Channel Options"
 msgstr "Einstellungen für neuen Kanal"
 
-#: app/gui/channels-commands.c:361 app/gui/channels-commands.c:510
+#: app/gui/channels-commands.c:363 app/gui/channels-commands.c:512
 msgid "Channel Name:"
 msgstr "Kanalname:"
 
-#: app/gui/channels-commands.c:366 app/gui/channels-commands.c:515
+#: app/gui/channels-commands.c:368 app/gui/channels-commands.c:517
 msgid "Fill Opacity:"
 msgstr "Deckkraft:"
 
-#: app/gui/channels-commands.c:461
+#: app/gui/channels-commands.c:463
 msgid "Edit Channel Color"
 msgstr "Kanalfarbe ändern"
 
-#: app/gui/channels-commands.c:471
+#: app/gui/channels-commands.c:473
 msgid "Channel Attributes"
 msgstr "Kanaleigenschaften"
 
-#: app/gui/channels-commands.c:473
+#: app/gui/channels-commands.c:475
 msgid "Edit Channel Attributes"
 msgstr "Kanaleigenschaften ändern"
 
@@ -2301,7 +2344,7 @@ msgstr "Farbtabelle"
 msgid "Selection Editor"
 msgstr "Auswahleditor"
 
-#: app/gui/dialogs-constructors.c:814 app/gui/layers-commands.c:924
+#: app/gui/dialogs-constructors.c:814 app/gui/layers-commands.c:929
 msgid "Selection"
 msgstr "Auswahl"
 
@@ -2621,7 +2664,7 @@ msgid "Width:"
 msgstr "Breite:"
 
 #: app/gui/file-new-dialog.c:168 app/gui/file-new-dialog.c:186
-#: app/gui/layers-commands.c:652 app/gui/resize-dialog.c:285
+#: app/gui/layers-commands.c:655 app/gui/resize-dialog.c:285
 #: app/gui/resize-dialog.c:310 app/gui/resize-dialog.c:559
 #: app/tools/gimpcroptool.c:987 app/tools/gimpscaletool.c:174
 #: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:575
@@ -3052,47 +3095,47 @@ msgstr ""
 "\n"
 "GIMP wirklich beenden?"
 
-#: app/gui/image-commands.c:215 app/gui/layers-commands.c:296
+#: app/gui/image-commands.c:216 app/gui/layers-commands.c:297
 msgid "Cannot crop because the current selection is empty."
 msgstr ""
 "Es konnte nicht ausgeschnitten oder kopiert werden,\n"
 "da der ausgewählte Bereich leer ist."
 
-#: app/gui/image-commands.c:312
+#: app/gui/image-commands.c:313
 msgid "Layers Merge Options"
 msgstr "Eigenschaften Ebenen vereinen"
 
-#: app/gui/image-commands.c:337
+#: app/gui/image-commands.c:338
 msgid "Final, Merged Layer should be:"
 msgstr "Die fertige, vereinte Ebene soll sein:"
 
-#: app/gui/image-commands.c:338
+#: app/gui/image-commands.c:339
 msgid "Final, Anchored Layer should be:"
 msgstr "Die fertige, verankerte Ebene soll sein:"
 
-#: app/gui/image-commands.c:343
+#: app/gui/image-commands.c:344
 msgid "Expanded as necessary"
 msgstr "Nach Bedarf erweitern"
 
-#: app/gui/image-commands.c:346
+#: app/gui/image-commands.c:347
 msgid "Clipped to image"
 msgstr "Auf Bild beschnitten"
 
-#: app/gui/image-commands.c:349
+#: app/gui/image-commands.c:350
 msgid "Clipped to bottom layer"
 msgstr "Auf oberste Ebene beschnitten"
 
-#: app/gui/image-commands.c:389
+#: app/gui/image-commands.c:390
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr ""
 "Fehler beim Verändern der Bildgröße:\n"
 "Breite und Höhe müssen größer als Null sein."
 
-#: app/gui/image-commands.c:422
+#: app/gui/image-commands.c:423
 msgid "Layer Too Small"
 msgstr "Ebene zu klein"
 
-#: app/gui/image-commands.c:426
+#: app/gui/image-commands.c:427
 msgid ""
 "The chosen image size will shrink\n"
 "some layers completely away.\n"
@@ -3102,11 +3145,11 @@ msgstr ""
 "so klein, daß sie vollständig verschwinden.\n"
 "Sollen wir trotzdem fortfahren?"
 
-#: app/gui/image-commands.c:509 app/tools/gimpscaletool.c:162
+#: app/gui/image-commands.c:513 app/tools/gimpscaletool.c:162
 msgid "Scaling..."
 msgstr "Skalierung"
 
-#: app/gui/image-commands.c:524
+#: app/gui/image-commands.c:528
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr ""
 "Fehler beim Skalieren des Bildes:\n"
@@ -3847,72 +3890,80 @@ msgstr "Indizierte Farben"
 msgid "colors"
 msgstr "Farben"
 
-#: app/gui/layers-commands.c:582
+#: app/gui/layers-commands.c:307
+msgid "Crop Layer"
+msgstr "Ebene zuschneiden"
+
+#: app/gui/layers-commands.c:585
 msgid "Empty Layer Copy"
 msgstr "Leere Ebenen-Kopie"
 
-#: app/gui/layers-commands.c:610
+#: app/gui/layers-commands.c:613
 msgid "Create a New Layer"
 msgstr "Eine neue Ebene anlegen"
 
-#: app/gui/layers-commands.c:642
+#: app/gui/layers-commands.c:645
 msgid "Layer _Name:"
 msgstr "Ebenen_name:"
 
 #. The size labels
-#: app/gui/layers-commands.c:646
+#: app/gui/layers-commands.c:649
 msgid "Layer Width:"
 msgstr "Ebenenbreite:"
 
-#: app/gui/layers-commands.c:711
+#: app/gui/layers-commands.c:714
 msgid "Layer Fill Type"
 msgstr "Ebenenfüllart"
 
-#: app/gui/layers-commands.c:794
+#: app/gui/layers-commands.c:762
+msgid "Rename Layer"
+msgstr "Ebene umbenennen"
+
+#: app/gui/layers-commands.c:799
 msgid "Layer Attributes"
 msgstr "Ebeneneigenschaften"
 
-#: app/gui/layers-commands.c:797
+#: app/gui/layers-commands.c:802
 msgid "Edit Layer Attributes"
 msgstr "Ebeneneigenschaften ändern"
 
-#: app/gui/layers-commands.c:831
+#: app/gui/layers-commands.c:836
 msgid "Layer _Name"
 msgstr "Ebenen_name"
 
-#: app/gui/layers-commands.c:897
+#: app/gui/layers-commands.c:902
 msgid "Add a Mask to the Layer"
 msgstr "Eine Maske zur Ebene hinzufügen"
 
-#: app/gui/layers-commands.c:919 app/gui/layers-commands.c:946
+#: app/gui/layers-commands.c:924 app/gui/layers-commands.c:951
 msgid "Initialize Layer Mask to:"
 msgstr "Initialisierung Ebenenmaske nach:"
 
-#: app/gui/layers-commands.c:926
+#: app/gui/layers-commands.c:931
 msgid "Inverse Selection"
 msgstr "Auswahl invertieren"
 
-#: app/gui/layers-commands.c:929 app/gui/layers-commands.c:951
+#: app/gui/layers-commands.c:934 app/gui/layers-commands.c:956
 msgid "Grayscale Copy of Layer"
 msgstr "Graustufen-Kopie der Ebene"
 
-#: app/gui/layers-commands.c:931 app/gui/layers-commands.c:953
+#: app/gui/layers-commands.c:936 app/gui/layers-commands.c:958
 msgid "Inverse Grayscale Copy of Layer"
 msgstr "Inverse Graustufen-Kopie der Ebene"
 
-#: app/gui/layers-commands.c:934 app/gui/layers-commands.c:956
+#: app/gui/layers-commands.c:939 app/gui/layers-commands.c:961
 msgid "White (Full Opacity)"
 msgstr "Weiß (volle Deckkraft)"
 
-#: app/gui/layers-commands.c:936 app/gui/layers-commands.c:958
+#: app/gui/layers-commands.c:941 app/gui/layers-commands.c:963
 msgid "Black (Full Transparency)"
 msgstr "Schwarz (volle Transparenz)"
 
-#: app/gui/layers-commands.c:938 app/gui/layers-commands.c:960
+#: app/gui/layers-commands.c:943 app/gui/layers-commands.c:965
 msgid "Layer's Alpha Channel"
 msgstr "Alphakanal der Ebene"
 
-#: app/gui/layers-commands.c:1030 app/gui/layers-commands.c:1119
+#: app/gui/layers-commands.c:1036 app/gui/layers-commands.c:1126
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -4294,7 +4345,8 @@ msgstr "Auswahl aus Pfad"
 msgid "Selection to Path"
 msgstr "Pfad aus Auswahl"
 
-#: app/gui/paths-dialog.c:255 app/widgets/gimpvectorslistview.c:143
+#: app/gui/paths-dialog.c:255 app/tools/gimpbezierselecttool.c:3436
+#: app/widgets/gimpvectorslistview.c:143
 msgid "Stroke Path"
 msgstr "Pfad nachziehen"
 
@@ -5855,7 +5907,7 @@ msgstr "Weichzeichnen"
 msgid "Sharpen"
 msgstr "Schärfen"
 
-#: app/paint/gimppaintcore.c:375
+#: app/paint/gimppaintcore.c:376
 msgid "No brushes available for use with this tool."
 msgstr "Keine Pinsel für dieses Werkzeug vorhanden."
 
@@ -5878,10 +5930,6 @@ msgstr "Pinsel UI"
 #: app/pdb/internal_procs.c:85
 msgid "Channel"
 msgstr "Kanäle"
-
-#: app/pdb/internal_procs.c:91
-msgid "Convert"
-msgstr "Umwandeln"
 
 #: app/pdb/internal_procs.c:94
 msgid "Display procedures"
@@ -6122,31 +6170,31 @@ msgstr "Rate:"
 msgid "Pressure:"
 msgstr "Druck:"
 
-#: app/tools/gimpbezierselecttool.c:284
+#: app/tools/gimpbezierselecttool.c:285
 msgid "Bezier Select"
 msgstr "Bezier Auswahl"
 
-#: app/tools/gimpbezierselecttool.c:285
+#: app/tools/gimpbezierselecttool.c:286
 msgid "Select regions using Bezier curves"
 msgstr "Einen Bereich mittels Bezierkurven wählen"
 
-#: app/tools/gimpbezierselecttool.c:286
+#: app/tools/gimpbezierselecttool.c:287
 msgid "/Tools/Selection Tools/Bezier Select"
 msgstr "/Werkzeuge/Auswahlwerkzeuge/Bezier Auswahl"
 
-#: app/tools/gimpbezierselecttool.c:1212
+#: app/tools/gimpbezierselecttool.c:1213
 msgid "Bezier path already closed."
 msgstr "Bezier Pfad ist bereits geschlossen."
 
-#: app/tools/gimpbezierselecttool.c:1234
+#: app/tools/gimpbezierselecttool.c:1235
 msgid "Corrupt curve"
 msgstr "Fehlerhafte Kurve"
 
-#: app/tools/gimpbezierselecttool.c:3186
+#: app/tools/gimpbezierselecttool.c:3187
 msgid "Curve not closed!"
 msgstr "Kurve ist nicht geschlossen!"
 
-#: app/tools/gimpbezierselecttool.c:3470
+#: app/tools/gimpbezierselecttool.c:3472
 msgid "Paintbrush operation failed."
 msgstr "Pinseloperation schlug fehl."
 
@@ -6584,11 +6632,11 @@ msgid "Exposure:"
 msgstr "Belichtung:"
 
 #. initialize the statusbar display
-#: app/tools/gimpeditselectiontool.c:304
+#: app/tools/gimpeditselectiontool.c:305
 msgid "Move: 0, 0"
 msgstr "Verschieben: 0, 0"
 
-#: app/tools/gimpeditselectiontool.c:554
+#: app/tools/gimpeditselectiontool.c:555
 msgid "Move: "
 msgstr "Verschieben: "
 
@@ -6626,10 +6674,6 @@ msgstr "Un-Radieren  %s"
 #: app/tools/gimperasertool.c:197
 msgid "Hard Edge"
 msgstr "Harte Kanten"
-
-#: app/tools/gimpfliptool.c:81
-msgid "Flip"
-msgstr "Spiegeln"
 
 #: app/tools/gimpfliptool.c:82
 msgid "Flip the layer or selection"
@@ -6804,7 +6848,7 @@ msgstr "Justierung"
 msgid "Size:"
 msgstr "Größe:"
 
-#: app/tools/gimpinkoptions.c:279 app/tools/gimpmeasuretool.c:385
+#: app/tools/gimpinkoptions.c:279 app/tools/gimpmeasuretool.c:387
 #: app/tools/gimprotatetool.c:178 app/widgets/gimpbrusheditor.c:189
 msgid "Angle:"
 msgstr "Winkel:"
@@ -6949,28 +6993,32 @@ msgstr "/Werkzeuge/Vergrößern / Verkleinern"
 msgid "Use Info Window"
 msgstr "Info-Fenster verwenden"
 
-#: app/tools/gimpmeasuretool.c:127
+#: app/tools/gimpmeasuretool.c:128
 msgid "Measure"
 msgstr "Maßband"
 
-#: app/tools/gimpmeasuretool.c:128
+#: app/tools/gimpmeasuretool.c:129
 msgid "Measure angles and lengths"
 msgstr "Distanzen und Winkel messen"
 
-#: app/tools/gimpmeasuretool.c:129
+#: app/tools/gimpmeasuretool.c:130
 msgid "/Tools/Measure"
 msgstr "/Werkzeuge/Messen"
 
-#: app/tools/gimpmeasuretool.c:382
+#: app/tools/gimpmeasuretool.c:286
+msgid "Add Guides"
+msgstr "Hilfslinie hinzufügen"
+
+#: app/tools/gimpmeasuretool.c:384
 msgid "Measure Distances and Angles"
 msgstr "Abstände und Winkel messen"
 
-#: app/tools/gimpmeasuretool.c:384
+#: app/tools/gimpmeasuretool.c:386
 msgid "Distance:"
 msgstr "Abstand:"
 
-#: app/tools/gimpmeasuretool.c:570 app/tools/gimpmeasuretool.c:575
-#: app/tools/gimpmeasuretool.c:583 app/tools/gimpmeasuretool.c:613
+#: app/tools/gimpmeasuretool.c:572 app/tools/gimpmeasuretool.c:577
+#: app/tools/gimpmeasuretool.c:585 app/tools/gimpmeasuretool.c:615
 msgid "degrees"
 msgstr "Grad"
 
@@ -7268,15 +7316,19 @@ msgstr ""
 "Zeilen-\n"
 "abstand:"
 
-#: app/tools/gimptexttool.c:110
+#: app/tools/gimptexttool.c:111
 msgid "Add text to the image"
 msgstr "Text zum Bild hinzufügen"
 
-#: app/tools/gimptexttool.c:111
+#: app/tools/gimptexttool.c:112
 msgid "/Tools/Text"
 msgstr "/Werkzeuge/Text"
 
-#: app/tools/gimptexttool.c:347
+#: app/tools/gimptexttool.c:288
+msgid "Add Text Layer"
+msgstr "Textebene hinzufügen"
+
+#: app/tools/gimptexttool.c:349
 msgid "GIMP Text Editor"
 msgstr "GIMP Text Editor"
 
@@ -7352,11 +7404,11 @@ msgstr ""
 msgid "Keep Width  %s"
 msgstr "Breite beibehalten  %s"
 
-#: app/tools/gimptransformtool.c:236
+#: app/tools/gimptransformtool.c:237
 msgid "Transforming..."
 msgstr "Transformiere..."
 
-#: app/tools/gimptransformtool.c:360
+#: app/tools/gimptransformtool.c:361
 msgid ""
 "Transformations do not work on\n"
 "layers that contain layer masks."
@@ -8057,18 +8109,3 @@ msgstr "Anzahl der Gitterlinien"
 #: libgimptool/gimptoolenums.c:138
 msgid "Grid Line Spacing"
 msgstr "Abstand zwischen den Gitterlinien"
-
-#~ msgid "Reset"
-#~ msgstr "Zurücksetzen"
-
-#~ msgid "Path"
-#~ msgstr "Pfade"
-
-#~ msgid "Path tool prototype"
-#~ msgstr "Pfadwerkzeug Prototyp"
-
-#~ msgid "/Tools/Path"
-#~ msgstr "/Werkzeuge/Pfad"
-
-#~ msgid "Path Tool"
-#~ msgstr "Pfadwerkzeug"
