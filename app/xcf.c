@@ -334,6 +334,7 @@ xcf_load_invoker (Argument *args)
 	      success = FALSE;
 	    }
 	}
+      fclose (info.fp);
     }
   
   return_args = procedural_db_return_args (&xcf_plug_in_load_proc.db_info, success);
