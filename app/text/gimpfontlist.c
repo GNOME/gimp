@@ -133,25 +133,33 @@ gimp_font_list_new (gdouble xresolution,
 void
 gimp_font_list_restore (GimpFontList *list)
 {
-  PangoContext *pango_context;
-  const gchar  *fonts[] = { "Sans", "Serif", "Monospace" };
-  gint          i;
+  PangoContext     *pango_context;
+  PangoFontFamily **families;
+  gint              n_families;
+  gint              i;
 
   g_return_if_fail (GIMP_IS_FONT_LIST (list));
 
   pango_context = g_object_get_data (G_OBJECT (list), "pango-context");
 
-  for (i = 0; i < G_N_ELEMENTS (fonts); i++)
+  pango_context_list_families (pango_context, &families, &n_families);
+
+  for (i = 0; i < n_families; i++)
     {
-      GimpFont *font;
+      GimpFont    *font;
+      const gchar *name;
+
+      name = pango_font_family_get_name (families[i]);
 
       font = g_object_new (GIMP_TYPE_FONT,
-                           "name",          fonts[i],
+                           "name",          name,
                            "pango-context", pango_context,
                            NULL);
       gimp_container_add (GIMP_CONTAINER (list), GIMP_OBJECT (font));
       g_object_unref (font);
     }
+
+  g_free (families);
 }
 
 static gint
