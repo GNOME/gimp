@@ -113,6 +113,18 @@
 #include "libgimp/gimpintl.h"
 
 
+struct _PlugInDef
+{
+  gchar    *prog;
+  GSList   *proc_defs;
+  gchar    *locale_domain;
+  gchar    *locale_path;
+  gchar    *help_path;
+  time_t    mtime;
+  gboolean  query;
+};
+
+
 typedef struct _PlugInBlocked PlugInBlocked;
 
 struct _PlugInBlocked
@@ -306,6 +318,7 @@ plug_in_init (Gimp               *gimp,
   extern gboolean use_shm;
 
   gchar         *filename;
+  gchar         *basename;
   GSList        *tmp;
   GSList        *tmp2;
   PlugInDef     *plug_in_def;
@@ -374,8 +387,10 @@ plug_in_init (Gimp               *gimp,
 	  plug_in_query (plug_in_def);
 	}
 
-      (* status_callback) (NULL, plug_in_def->prog, nth / nplugins);
+      basename = g_path_get_basename (plug_in_def->prog);
+      (* status_callback) (NULL, basename, nth / nplugins);
       nth++;
+      g_free (basename);
     }
 
   /* insert the proc defs */
@@ -743,6 +758,16 @@ plug_in_def_free (PlugInDef *plug_in_def,
   g_free (plug_in_def);
 }
 
+void
+plug_in_def_add_proc_def (PlugInDef     *plug_in_def,
+                          PlugInProcDef *proc_def)
+{
+  proc_def->mtime = plug_in_def->mtime;
+  proc_def->prog = g_strdup (plug_in_def->prog);
+
+  plug_in_def->proc_defs = g_slist_append (plug_in_def->proc_defs,
+                                           proc_def);
+}
 
 void
 plug_in_def_add (PlugInDef *plug_in_def)
@@ -1470,6 +1495,40 @@ plug_in_set_menu_sensitivity (GimpImageType type)
       menus_set_sensitive ("<Image>/Filters/Repeat Last", FALSE);
       menus_set_sensitive ("<Image>/Filters/Re-Show Last", FALSE);
     }
+}
+
+void
+plug_in_def_set_mtime (PlugInDef *plug_in_def,
+                       time_t     mtime)
+{
+  plug_in_def->mtime = mtime;
+} 
+
+void
+plug_in_def_set_locale_domain_name (PlugInDef   *plug_in_def,
+                                    const gchar *domain_name)
+{
+  if (plug_in_def->locale_domain)
+    g_free (plug_in_def->locale_domain);      
+  plug_in_def->locale_domain = g_strdup (domain_name);
+}
+  
+void
+plug_in_def_set_locale_domain_path (PlugInDef   *plug_in_def,
+                                    const gchar *domain_path)
+{
+  if (plug_in_def->locale_path)
+    g_free (plug_in_def->locale_path);
+  plug_in_def->locale_path = g_strdup (domain_path);
+}
+
+void
+plug_in_def_set_help_path (PlugInDef   *plug_in_def,
+                           const gchar *help_path)
+{
+  if (plug_in_def->help_path)
+    g_free (plug_in_def->help_path);
+  plug_in_def->help_path = g_strdup (help_path);
 }
 
 static gboolean
@@ -2474,7 +2533,7 @@ plug_in_init_file (const gchar *filename,
 
   g_free (basename);
 
-  plug_in_def        = plug_in_def_new (filename);
+  plug_in_def = plug_in_def_new (filename);
   plug_in_def->mtime = gimp_datafile_mtime ();
   plug_in_def->query = TRUE;
 

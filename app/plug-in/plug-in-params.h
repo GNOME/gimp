@@ -69,18 +69,7 @@ struct _PlugIn
 
   GimpProgress *progress;         /* Progress dialog */
 
-  gpointer      user_data;        /* Handle for hanging data onto */
-};
-
-struct _PlugInDef
-{
-  gchar    *prog;
-  GSList   *proc_defs;
-  gchar    *locale_domain;
-  gchar    *locale_path;
-  gchar    *help_path;
-  time_t    mtime;
-  gboolean  query;
+  PlugInDef    *user_data;        /* DON'T USE!! */
 };
 
 struct _PlugInProcDef
@@ -132,6 +121,17 @@ PlugInDef     * plug_in_def_new              (const gchar   *prog);
 void            plug_in_def_free             (PlugInDef     *plug_in_def, 
 					      gboolean       free_proc_defs);
 
+void      plug_in_def_set_mtime              (PlugInDef     *plug_in_def,
+                                              time_t         mtime);
+void      plug_in_def_set_locale_domain_name (PlugInDef     *plug_in_def,
+                                              const gchar   *domain_name);
+void      plug_in_def_set_locale_domain_path (PlugInDef     *plug_in_def,
+                                              const gchar   *domain_path);
+void      plug_in_def_set_help_path          (PlugInDef     *plug_in_def,
+                                              const gchar   *help_path);
+void      plug_in_def_add_proc_def           (PlugInDef     *plug_in_def,
+                                              PlugInProcDef *proc_def);
+
 /* Retrieve a plug-ins menu path */
 gchar         * plug_in_menu_path            (gchar         *name);
 
@@ -145,6 +145,7 @@ PlugIn        * plug_in_new                  (gchar         *name);
  *  This will close the plug-in first if necessary.
  */
 void            plug_in_destroy              (PlugIn        *plug_in);
+
 
 /* Open a plug-in. This cause the plug-in to run.
  * If returns TRUE, you must destroy the plugin.
@@ -171,6 +172,7 @@ void            plug_in_repeat               (gboolean       with_interface);
 
 /* Set the sensitivity for plug-in menu items based on the image type. */
 void            plug_in_set_menu_sensitivity (GimpImageType  type);
+
 
 /* Register an internal plug-in.  This is for file load-save
  * handlers, which are organized around the plug-in data structure.

@@ -18,7 +18,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <string.h>
 
 #include <gtk/gtk.h>
@@ -35,7 +34,6 @@
 
 #define DEFAULT_WIDTH 300
 
-static gint         max_label_length  = 1024;
 static GtkWidget   *win_initstatus    = NULL;
 static GtkWidget   *label1            = NULL;
 static GtkWidget   *label2            = NULL;
@@ -47,12 +45,8 @@ static GtkWidget   *progress          = NULL;
 void
 splash_create (gboolean show_image)
 {
-  GtkWidget        *vbox;
-  GdkPixbuf        *pixbuf = NULL;
-  PangoFontMetrics *metrics;
-  PangoContext     *context;
-  gint              width;
-  gint              char_width;
+  GtkWidget *vbox;
+  GdkPixbuf *pixbuf = NULL;
 
   win_initstatus = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_type_hint (GTK_WINDOW (win_initstatus),
@@ -124,29 +118,8 @@ splash_create (gboolean show_image)
   gtk_box_pack_start_defaults (GTK_BOX (vbox), progress);
   gtk_widget_show (progress);
 
-  /*  This is a hack: we try to compute a good guess for the maximum 
-   *  number of charcters that will fit into the splash-screen using 
-   *  the default_font
-   */
-  context = gtk_widget_get_pango_context (label2);
-  metrics = pango_context_get_metrics (context,
-                                       label2->style->font_desc,
-                                       pango_context_get_language (context));
-  char_width = pango_font_metrics_get_approximate_char_width (metrics);
-  pango_font_metrics_unref (metrics);
-
-  if (pixbuf)
-    {
-      width = gdk_pixbuf_get_width (pixbuf);
-    }
-  else
-    {
-      width = DEFAULT_WIDTH;
-      gtk_widget_set_size_request (win_initstatus, width, -1);
-    }
-
-  max_label_length = 
-    0.9 * (gdouble) width / (gdouble) PANGO_PIXELS (char_width);
+  if (!pixbuf)
+    gtk_widget_set_size_request (win_initstatus, DEFAULT_WIDTH, -1);
 
   gtk_widget_show (win_initstatus);
 }
@@ -166,32 +139,18 @@ splash_update (const gchar *text1,
 	       const gchar *text2,
 	       gdouble      percentage)
 {
-  gchar *temp;
+  if (!win_initstatus)
+    return;
 
-  if (win_initstatus)
-    {
-      if (text1)
-	gtk_label_set_text (GTK_LABEL (label1), text1);
+  if (text1)
+    gtk_label_set_text (GTK_LABEL (label1), text1);
 
-      if (text2)
-	{
-	  while (strlen (text2) > max_label_length)
-	    {
-	      temp = strchr (text2, G_DIR_SEPARATOR);
-	      if (temp == NULL)  /* for sanity */
-		break;
-	      temp++;
-	      text2 = temp;
-	    }
-
-	  gtk_label_set_text (GTK_LABEL (label2), text2);
-	}
-
-      percentage = CLAMP (percentage, 0.0, 1.0);
-
-      gtk_progress_bar_update (GTK_PROGRESS_BAR (progress), percentage);
-
-      while (gtk_events_pending ())
-	gtk_main_iteration ();
-    }
+  if (text2)
+    gtk_label_set_text (GTK_LABEL (label2), text2);
+  
+  gtk_progress_bar_update (GTK_PROGRESS_BAR (progress), 
+                           CLAMP (percentage, 0.0, 1.0));
+  
+  while (gtk_events_pending ())
+    gtk_main_iteration ();
 }

@@ -1461,19 +1461,14 @@ parse_plug_in_def (gpointer val1p,
     goto error;
   token = get_next_token ();
 
-  plug_in_def->mtime = token_int;
+  plug_in_def_set_mtime (plug_in_def, token_int);
 
   success = OK;
   while (success == OK)
     {
       success = parse_proc_def (&proc_def);
       if (success == OK)
-	{
-	  proc_def->mtime = plug_in_def->mtime;
-	  proc_def->prog = g_strdup (plug_in_def->prog);
-	  plug_in_def->proc_defs = g_slist_append (plug_in_def->proc_defs,
-						   proc_def);
-	}
+        plug_in_def_add_proc_def (plug_in_def, proc_def);
       else if (success == LOCALE_DEF)
 	success = parse_locale_def (plug_in_def);
       else if (success == HELP_DEF)
@@ -1504,20 +1499,15 @@ parse_locale_def (PlugInDef *plug_in_def)
   token = peek_next_token ();
   if (!token || (token != TOKEN_STRING))
     return ERROR;
+
   token = get_next_token ();
+  plug_in_def_set_locale_domain_name (plug_in_def, token_str);
       
-  if (plug_in_def->locale_domain)
-    g_free (plug_in_def->locale_domain);
-  plug_in_def->locale_domain = g_strdup (token_str);
-  
   token = peek_next_token ();
   if (token && token == TOKEN_STRING)
     {
       token = get_next_token ();
-      if (plug_in_def->locale_path)
-	g_free (plug_in_def->locale_path);
-      plug_in_def->locale_path = g_strdup (token_str);
-
+      plug_in_def_set_locale_domain_path (plug_in_def, token_str);
       token = peek_next_token ();
     }
 
@@ -1528,11 +1518,8 @@ parse_locale_def (PlugInDef *plug_in_def)
   return OK;
 
  error:
-  g_free (plug_in_def->locale_domain);
-  plug_in_def->locale_domain = NULL;
-  g_free (plug_in_def->locale_path);
-  plug_in_def->locale_path = NULL;
-
+  plug_in_def_set_locale_domain_name (plug_in_def, NULL);
+  plug_in_def_set_locale_domain_path (plug_in_def, NULL);
   return ERROR;
 }
 
@@ -1546,9 +1533,7 @@ parse_help_def (PlugInDef *plug_in_def)
     return ERROR;
   token = get_next_token ();
 
-  if (plug_in_def->help_path)
-    g_free (plug_in_def->help_path);
-  plug_in_def->help_path = g_strdup (token_str);
+  plug_in_def_set_help_path (plug_in_def, token_str);
 
   token = peek_next_token ();
   if (!token || token != TOKEN_RIGHT_PAREN)
@@ -1558,9 +1543,7 @@ parse_help_def (PlugInDef *plug_in_def)
   return OK;
 
  error:
-  g_free (plug_in_def->help_path);
-  plug_in_def->help_path = NULL;
-
+  plug_in_def_set_help_path (plug_in_def, NULL);
   return ERROR;
 }
 
