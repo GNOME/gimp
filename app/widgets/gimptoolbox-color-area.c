@@ -73,6 +73,45 @@ color_area_target (int x,
     return -1;
 }
 
+void
+color_area_draw_rect (GdkDrawable *drawable,
+		      GdkGC *gc,
+		      gint x, gint y, gint width, gint height,
+		      unsigned char r, unsigned char g, unsigned char b)
+{
+  static unsigned char *color_area_rgb_buf = NULL;
+  static gint color_area_rgb_buf_size;
+  static gint rowstride;
+  gint xx, yy;
+  unsigned char *bp;
+
+  rowstride = 3 * ((width + 3) & -4);
+  if (color_area_rgb_buf == NULL ||
+      color_area_rgb_buf_size < height * rowstride)
+    {
+      if (color_area_rgb_buf)
+	g_free (color_area_rgb_buf);
+      color_area_rgb_buf = g_malloc (rowstride * height);
+    }
+  bp = color_area_rgb_buf;
+  for (xx = 0; xx < width; xx++)
+    {
+      *bp++ = r;
+      *bp++ = g;
+      *bp++ = b;
+    }
+  bp = color_area_rgb_buf;
+  for (yy = 1; yy < height; yy++)
+    {
+      bp += rowstride;
+      memcpy (bp, color_area_rgb_buf, rowstride);
+    }
+  gdk_draw_rgb_image (drawable, gc, x, y, width, height,
+		      GDK_RGB_DITHER_MAX,
+		      color_area_rgb_buf,
+		      rowstride);
+}
+
 static void
 color_area_draw (void)
 {
@@ -82,6 +121,7 @@ color_area_draw (void)
   int width, height;
   int def_width, def_height;
   int swap_width, swap_height;
+  unsigned char r, g, b;
 
   /* Check we haven't gotten initial expose yet,
    * no point in drawing anything */
@@ -102,9 +142,16 @@ color_area_draw (void)
   gdk_draw_rectangle (color_area_pixmap, color_area_gc, 1,
 		      0, 0, width, height);
 
+#ifdef OLD_COLOR_AREA
   gdk_gc_set_foreground (color_area_gc, &bg);
   gdk_draw_rectangle (color_area_pixmap, color_area_gc, 1,
 		      (width - rect_w), (height - rect_h), rect_w, rect_h);
+#else
+  palette_get_background (&r, &g, &b);
+  color_area_draw_rect (color_area_pixmap, color_area_gc,
+			(width - rect_w), (height - rect_h), rect_w, rect_h,
+			r, g, b);
+#endif
 
   if (active_color == FOREGROUND)
     gtk_draw_shadow (color_area->style, color_area_pixmap, GTK_STATE_NORMAL, GTK_SHADOW_OUT,
@@ -113,9 +160,16 @@ color_area_draw (void)
     gtk_draw_shadow (color_area->style, color_area_pixmap, GTK_STATE_NORMAL, GTK_SHADOW_IN,
 		     (width - rect_w), (height - rect_h), rect_w, rect_h);
 
+#ifdef OLD_COLOR_AREA
   gdk_gc_set_foreground (color_area_gc, &fg);
   gdk_draw_rectangle (color_area_pixmap, color_area_gc, 1,
 		      0, 0, rect_w, rect_h);
+#else
+  palette_get_foreground (&r, &g, &b);
+  color_area_draw_rect (color_area_pixmap, color_area_gc,
+			0, 0, rect_w, rect_h,
+			r, g, b);
+#endif
 
   if (active_color == FOREGROUND)
     gtk_draw_shadow (color_area->style, color_area_pixmap, GTK_STATE_NORMAL, GTK_SHADOW_IN,

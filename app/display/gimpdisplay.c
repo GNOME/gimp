@@ -844,7 +844,9 @@ gdisplay_display_area (GDisplay *gdisp,
 	dy = (y2 - i < GXIMAGE_HEIGHT) ? y2 - i : GXIMAGE_HEIGHT;
 	render_image (gdisp, j - gdisp->disp_xoffset, i - gdisp->disp_yoffset, dx, dy);
 	gximage_put (gdisp->canvas->window,
-		     j, i, dx, dy);
+		     j, i, dx, dy,
+		     gdisp->offset_x,
+		     gdisp->offset_y);
       }
 }
 

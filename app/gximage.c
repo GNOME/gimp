@@ -108,7 +108,7 @@ gximage_get_byte_order ()
 }
 
 void
-gximage_put (GdkWindow *win, int x, int y, int w, int h)
+gximage_put (GdkWindow *win, int x, int y, int w, int h, int xdith, int ydith)
 {
   /*  create the GC if it doesn't yet exist  */
   if (!gximage->gc)
@@ -117,13 +117,15 @@ gximage_put (GdkWindow *win, int x, int y, int w, int h)
       gdk_gc_set_exposures (gximage->gc, TRUE);
     }
 
-  gdk_draw_rgb_image (win,
-		      gximage->gc,
-		      x,
-		      y,
-		      w,
-		      h,
-		      GDK_RGB_DITHER_MAX, /* todo: make configurable */
-		      gximage->data,
-		      GXIMAGE_WIDTH * 3);
+  gdk_draw_rgb_image_dithalign (win,
+				gximage->gc,
+				x,
+				y,
+				w,
+				h,
+				/* todo: make configurable */
+				GDK_RGB_DITHER_MAX,
+				gximage->data,
+				GXIMAGE_WIDTH * 3,
+				xdith, ydith);
 }

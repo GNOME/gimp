@@ -24,6 +24,7 @@
 #include "errors.h"
 #include "gimprc.h"
 #include "session.h"
+#include "color_area.h" /* for color_area_draw_rect */
 
 #define XY_DEF_WIDTH       240
 #define XY_DEF_HEIGHT      240
@@ -787,9 +788,15 @@ color_select_update_colors (ColorSelectP csp,
 
       if (csp->gc)
 	{
+#ifdef OLD_COLOR_AREA
 	  gdk_gc_set_foreground (csp->gc, &color);
 	  gdk_draw_rectangle (window, csp->gc, 1,
 			      0, 0, width, height);
+#else
+	  color_area_draw_rect (window, csp->gc,
+				0, 0, width, height,
+				red, green, blue);
+#endif
 	}
     }
 }

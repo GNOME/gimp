@@ -1,3 +1,17 @@
+Mon Aug 31 15:15:01 1998  Raph Levien  <raph@gimp.org>
+
+	* app/color_select.c (color_select_update_colors): made it use the
+	color_area rectangle draw so it dithers.
+
+	* app/color_area.[ch] (color_area_draw_rect): made it draw the color
+	rectangle with gdkrgb (so it gets dithered) rather than the
+	rectangle drawing primitive.
+
+	* app/gximage.[ch] (gximage_put): made it align dithers
+
+	* app/gdisplay.c (gdisplay_display_area): made it so that the
+	gximage_put routine gets dither alignment values
+
 Mon Aug 31 16:51:35 CDT 1998  Larry Ewing  <lewing@gimp.org>
 
 	* app/internal_procs.c: included in merge down changes
