@@ -1,5 +1,9 @@
 2002-06-08  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/animationplay.c: ported to the GTK+-2.0 API.
+
+2002-06-08  Sven Neumann  <sven@gimp.org>
+
 	* app/base/Makefile.am
 	* app/paint-funcs/Makefile.am: automake-1.6 seems to use yet another
 	variable to pass flags to the assembler (bug #84514). Define
