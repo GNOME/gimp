@@ -369,7 +369,11 @@ gimp_palette_get_entry (gint entry_num)
 				    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    color = return_vals[1].data.d_color;
+  {
+    color = g_new(GimpRGB, 1);
+    
+    *color = return_vals[1].data.d_color;
+  }
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
