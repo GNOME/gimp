@@ -1,3 +1,8 @@
+2000-06-24  Sven Neumann  <sven@gimp.org>
+
+	* autogen.sh: applied patch from Sesse <sgunderson@bigfoot.com>
+	that fixes the check for recent versions of auto[conf|make].
+
 2000-06-23  Sven Neumann <sven@gimp.org>
 	
 	* Makefile.am
