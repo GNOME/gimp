@@ -717,7 +717,11 @@ tile_swap_resize (DefSwapFile *def_swap_file,
 		  long         new_size)
 {
   if (def_swap_file->swap_file_end > new_size)
-    ftruncate (fd, new_size);
+    {
+      ftruncate (fd, new_size);
+      /*fprintf(stderr, "TRUNCATED SWAP from %d to %d bytes.\n",
+	(int)def_swap_file->swap_file_end, (int) new_size);*/
+    }
   def_swap_file->swap_file_end = new_size;
 }
 

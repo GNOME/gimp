@@ -112,9 +112,12 @@ tile_cache_insert (Tile *tile)
 	    {
 	      g_warning ("cache: unable to find room for a tile");
 	      goto out;
+	      /* goto grump;*/
 	    }
 	}
       
+      /*grump:*/
+
       /* Note the increase in the number of bytes the cache
        *  is referencing.
        */
@@ -196,6 +199,8 @@ tile_cache_flush_internal (Tile *tile)
     }
 }
 
+
+/* untested -- ADM */
 void
 tile_cache_set_size (unsigned long cache_size)
 {
@@ -204,9 +209,10 @@ tile_cache_set_size (unsigned long cache_size)
 
   max_cache_size = cache_size;
   CACHE_LOCK;
-  while (cache_size >= max_cache_size)
+  while (cur_cache_size > max_cache_size)
     {
-      if (!tile_cache_zorch_next ()) break;
+      if (!tile_cache_zorch_next ())
+	break;
     }
   CACHE_UNLOCK;
 }
@@ -239,7 +245,7 @@ tile_cache_zorch_next ()
 {
   Tile *tile;
 
-  /* printf("cache zorch: %u/%u\n", cur_cache_size, cur_cache_dirty); */
+  /*  fprintf(stderr, "cache zorch: %u/%u\n", cur_cache_size, cur_cache_dirty);*/
 
   if      (clean_list.first) tile = clean_list.first;
   else if (dirty_list.first) tile = dirty_list.first;

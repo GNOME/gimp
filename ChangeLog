@@ -1,3 +1,12 @@
+Thu Jan  6 18:39:05 GMT 2000  Adam D. Moss <adam@gimp.org>
+
+	* app/tile_cache.c
+	* app/tile_swap.c: Maybe fixed tile_cache_set_size()
+	so that it actually works now.  You can use this to set GIMP's
+	tile cache size at runtime without restarting.  If the prefs
+	guys (Sven, Michael?) don't wire it in I'll look at it, but it
+	can't be soon.
+
 2000-01-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/[all files using the dialog or action area constructors]
