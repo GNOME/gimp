@@ -71,19 +71,19 @@ gimp_font_list_get_type (void)
       static const GTypeInfo list_info =
       {
         sizeof (GimpFontListClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_font_list_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_font     */
-	sizeof (GimpFontList),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_font_list_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_font_list_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_font     */
+        sizeof (GimpFontList),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_font_list_init,
       };
 
       list_type = g_type_register_static (GIMP_TYPE_LIST,
-					  "GimpFontList",
-					  &list_info, 0);
+                                          "GimpFontList",
+                                          &list_info, 0);
     }
 
   return list_type;
@@ -222,6 +222,7 @@ gimp_font_list_font_desc_from_pattern (FcPattern *pattern)
   PangoFontDescription *desc;
   PangoStyle            style;
   PangoWeight           weight;
+  PangoStretch          stretch;
   gchar                *s;
   gint                  i;
 
@@ -234,12 +235,19 @@ gimp_font_list_font_desc_from_pattern (FcPattern *pattern)
 
   if (FcPatternGetInteger (pattern, FC_SLANT, 0, &i) == FcResultMatch)
     {
-      if (i == FC_SLANT_ROMAN)
-        style = PANGO_STYLE_NORMAL;
-      else if (i == FC_SLANT_OBLIQUE)
-        style = PANGO_STYLE_OBLIQUE;
-      else
-        style = PANGO_STYLE_ITALIC;
+      switch (i)
+        {
+        case FC_SLANT_ITALIC:
+          style = PANGO_STYLE_ITALIC;
+          break;
+        case FC_SLANT_OBLIQUE:
+          style = PANGO_STYLE_OBLIQUE;
+          break;
+        case FC_SLANT_ROMAN:
+        default:
+          style = PANGO_STYLE_NORMAL;
+          break;
+        }
     }
   else
     style = PANGO_STYLE_NORMAL;
@@ -265,9 +273,47 @@ gimp_font_list_font_desc_from_pattern (FcPattern *pattern)
     weight = PANGO_WEIGHT_NORMAL;
 
   pango_font_description_set_weight (desc, weight);
+  
+  if (FcPatternGetInteger (pattern, FC_WIDTH, 0, &i) == FcResultMatch)
+    {
+      switch (i)
+        {
+        case FC_WIDTH_ULTRACONDENSED:
+          stretch = PANGO_STRETCH_ULTRA_CONDENSED;
+          break;
+        case FC_WIDTH_EXTRACONDENSED:
+          stretch = PANGO_STRETCH_EXTRA_CONDENSED;
+          break;
+        case FC_WIDTH_CONDENSED:
+          stretch = PANGO_STRETCH_CONDENSED;
+          break;
+        case FC_WIDTH_SEMICONDENSED:
+          stretch = PANGO_STRETCH_SEMI_CONDENSED;
+          break;
+        case FC_WIDTH_SEMIEXPANDED:
+          stretch = PANGO_STRETCH_SEMI_EXPANDED;
+          break;
+        case FC_WIDTH_EXPANDED:
+          stretch = PANGO_STRETCH_EXPANDED;
+          break;
+        case FC_WIDTH_EXTRAEXPANDED:
+          stretch = PANGO_STRETCH_EXTRA_EXPANDED;
+          break;
+        case FC_WIDTH_ULTRAEXPANDED:
+          stretch = PANGO_STRETCH_ULTRA_EXPANDED;
+          break;
+        case FC_WIDTH_NORMAL:
+        default:
+          stretch = PANGO_STRETCH_NORMAL;
+          break;
+        }
+    }
+  else
+    stretch = PANGO_STRETCH_NORMAL;
+
+  pango_font_description_set_stretch (desc, stretch);
 
   pango_font_description_set_variant (desc, PANGO_VARIANT_NORMAL);
-  pango_font_description_set_stretch (desc, PANGO_STRETCH_NORMAL);
 
   return desc;
 }
@@ -282,7 +328,10 @@ gimp_font_list_load_names (GimpFontList *list,
   FcFontSet   *fontset;
   gint         i;
 
-  os = FcObjectSetBuild (FC_FAMILY, FC_STYLE, FC_SLANT, FC_WEIGHT, NULL);
+  os = FcObjectSetBuild (FC_FAMILY, FC_STYLE,
+                         FC_SLANT, FC_WEIGHT, FC_WIDTH,
+                         NULL);
+
   pat = FcPatternCreate ();
 
   fontset = FcFontList (NULL, pat, os);
@@ -329,7 +378,7 @@ gimp_font_list_load_names (GimpFontList *list,
         {
           PangoFontDescription *desc;
 
-	  desc = pango_font_face_describe (faces[j]);
+          desc = pango_font_face_describe (faces[j]);
           gimp_font_list_add_font (list, context, desc);
           pango_font_description_free (desc);
         }

@@ -1,3 +1,8 @@
+2004-01-15  Manish Singh  <yosh@gimp.org>
+
+	* app/text/gimpfontlist.c: Set PangoStretch from FC_WIDTH. This
+	partially addresses #131561 (namely, the gimp side).
+
 2004-01-15  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/helpbrowser/helpbrowser.c: removed
