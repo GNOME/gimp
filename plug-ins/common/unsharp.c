@@ -69,13 +69,13 @@ static void      run   (const gchar      *name,
                         gint             *nreturn_vals,
                         GimpParam       **return_vals);
 
-static inline void  blur_line            (gdouble       *ctable,
-                                          gdouble       *cmatrix,
-                                          gint           cmatrix_length,
-                                          guchar        *cur_col,
-                                          guchar        *dest_col,
-                                          gint           y,
-                                          glong          bytes);
+static inline void  blur_line (const gdouble *ctable,
+                               const gdouble *cmatrix,
+                               gint           cmatrix_length,
+                               const guchar  *src,
+                               guchar        *dest,
+                               gint           y,
+                               glong          bytes);
 static gint      gen_convolve_matrix     (gdouble        std_dev,
                                           gdouble      **cmatrix);
 static gdouble * gen_lookup_table        (gdouble       *cmatrix,
@@ -254,13 +254,13 @@ run (const gchar      *name,
    in the processing of the lines, at least to the blur_line function.
  */
 static inline void
-blur_line (gdouble *ctable,
-           gdouble *cmatrix,
-           gint     cmatrix_length,
-           guchar  *cur_col,
-           guchar  *dest_col,
-           gint     y,
-           glong    bytes)
+blur_line (const gdouble *ctable,
+           const gdouble *cmatrix,
+           gint           cmatrix_length,
+           const guchar  *src,
+           guchar        *dest,
+           gint           y,
+           glong          bytes)
 {
   gdouble scale;
   gdouble sum;
@@ -269,11 +269,11 @@ blur_line (gdouble *ctable,
   gint    row;
   gint    cmatrix_middle = cmatrix_length / 2;
 
-  gdouble *cmatrix_p;
-  guchar  *cur_col_p;
-  guchar  *cur_col_p1;
-  guchar  *dest_col_p;
-  gdouble *ctable_p;
+  const gdouble *cmatrix_p;
+  const gdouble *ctable_p;
+  const guchar  *src_p;
+  const guchar  *src_p1;
+  guchar        *dest_p;
 
   /* this first block is the same as the non-optimized version --
    * it is only used for very small pictures, so speed isn't a
@@ -288,22 +288,22 @@ blur_line (gdouble *ctable,
           for (j = 0; j < y ; j++)
             {
               /* if the index is in bounds, add it to the scale counter */
-              if ((j + cmatrix_length/2 - row >= 0) &&
-                  (j + cmatrix_length/2 - row < cmatrix_length))
-                scale += cmatrix[j + cmatrix_length/2 - row];
+              if ((j + cmatrix_middle - row >= 0) &&
+                  (j + cmatrix_middle - row < cmatrix_length))
+                scale += cmatrix[j + cmatrix_middle - row];
             }
 
-          for (i = 0; i<bytes; i++)
+          for (i = 0; i < bytes; i++)
             {
               sum = 0;
               for (j = 0; j < y; j++)
                 {
-                  if ((j >= row - cmatrix_length/2) &&
-                      (j <= row + cmatrix_length/2))
-                    sum += cur_col[j*bytes + i] * cmatrix[j];
+                  if ((j >= row - cmatrix_middle) &&
+                      (j <= row + cmatrix_middle))
+                    sum += src[j*bytes + i] * cmatrix[j];
                 }
 
-              dest_col[row*bytes + i] = (guchar) ROUND (sum / scale);
+              dest[row * bytes + i] = (guchar) ROUND (sum / scale);
             }
         }
     }
@@ -315,40 +315,40 @@ blur_line (gdouble *ctable,
           /* find scale factor */
           scale = 0;
 
-          for (j = cmatrix_middle - row; j<cmatrix_length; j++)
+          for (j = cmatrix_middle - row; j < cmatrix_length; j++)
             scale += cmatrix[j];
 
-          for (i = 0; i<bytes; i++)
+          for (i = 0; i < bytes; i++)
             {
               sum = 0;
-              for (j = cmatrix_middle - row; j<cmatrix_length; j++)
+              for (j = cmatrix_middle - row; j < cmatrix_length; j++)
                 {
                   sum +=
-                    cur_col[(row + j-cmatrix_middle)*bytes + i] * cmatrix[j];
+                    src[(row + j - cmatrix_middle) * bytes + i] * cmatrix[j];
                 }
-              dest_col[row*bytes + i] = (guchar) ROUND (sum / scale);
+              dest[row * bytes + i] = (guchar) ROUND (sum / scale);
             }
         }
       /* go through each pixel in each col */
-      dest_col_p = dest_col + row*bytes;
-      for (; row < y-cmatrix_middle; row++)
+      dest_p = dest + row * bytes;
+      for (; row < y - cmatrix_middle; row++)
         {
-          cur_col_p = (row - cmatrix_middle) * bytes + cur_col;
-          for (i = 0; i<bytes; i++)
+          src_p = (row - cmatrix_middle) * bytes + src;
+          for (i = 0; i < bytes; i++)
             {
               sum = 0;
               cmatrix_p = cmatrix;
-              cur_col_p1 = cur_col_p;
+              src_p1 = src_p;
               ctable_p = ctable;
 
-              for (j = cmatrix_length; j>0; j--)
+              for (j = cmatrix_length; j > 0; j--)
                 {
-                  sum += *(ctable_p + *cur_col_p1);
-                  cur_col_p1 += bytes;
+                  sum += *(ctable_p + *src_p1);
+                  src_p1 += bytes;
                   ctable_p += 256;
                 }
-              cur_col_p++;
-              *(dest_col_p++) = ROUND (sum);
+              src_p++;
+              *(dest_p++) = ROUND (sum);
             }
         }
 
@@ -356,18 +356,18 @@ blur_line (gdouble *ctable,
       for (; row < y; row++)
         {
           /* find scale factor */
-          scale=0;
-          for (j = 0; j< y-row + cmatrix_middle; j++)
+          scale = 0;
+          for (j = 0; j < y - row + cmatrix_middle; j++)
             scale += cmatrix[j];
-          for (i = 0; i<bytes; i++)
+          for (i = 0; i < bytes; i++)
             {
               sum = 0;
-              for (j = 0; j<y-row + cmatrix_middle; j++)
+              for (j = 0; j < y - row + cmatrix_middle; j++)
                 {
                   sum +=
-                    cur_col[(row + j-cmatrix_middle)*bytes + i] * cmatrix[j];
+                    src[(row + j - cmatrix_middle) * bytes + i] * cmatrix[j];
                 }
-              dest_col[row*bytes + i] = (guchar) ROUND (sum / scale);
+              dest[row * bytes + i] = (guchar) ROUND (sum / scale);
             }
         }
     }
@@ -392,7 +392,7 @@ unsharp_mask (GimpDrawable *drawable,
   bytes = drawable->bpp;
 
   /* initialize pixel regions */
-  gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&srcPR,  drawable, 0, 0, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
 
   unsharp_region (&srcPR, &destPR, bytes, radius, amount, x1, x2, y1, y2, TRUE);
@@ -439,23 +439,14 @@ unsharp_region (GimpPixelRgn *srcPR,
   /* generate lookup table */
   ctable = gen_lookup_table (cmatrix, cmatrix_length);
 
-  /* allocate row buffers */
-  src  = g_new (guchar, width * bytes);
-  dest = g_new (guchar, width * bytes);
-
-  /* blank out a region of the destination memory area, I think */
-  for (row = 0; row < height; row++)
-    {
-      gimp_pixel_rgn_get_row (destPR, dest, x1, y1 + row, (x2 - x1));
-      memset (dest, 0, width * bytes);
-      gimp_pixel_rgn_set_row (destPR, dest, x1, y1 + row, (x2 - x1));
-    }
+  /* allocate buffers */
+  src  = g_new (guchar, MAX (width, height) * bytes);
+  dest = g_new (guchar, MAX (width, height) * bytes);
 
   /* blur the rows */
   for (row = 0; row < height; row++)
     {
       gimp_pixel_rgn_get_row (srcPR, src, x1, y1 + row, width);
-      gimp_pixel_rgn_get_row (destPR, dest, x1, y1 + row, width);
       blur_line (ctable, cmatrix, cmatrix_length, src, dest, width, bytes);
       gimp_pixel_rgn_set_row (destPR, dest, x1, y1 + row, width);
 
@@ -463,19 +454,10 @@ unsharp_region (GimpPixelRgn *srcPR,
         gimp_progress_update ((gdouble) row / (3 * height));
     }
 
-  /* free row buffers */
-  g_free (dest);
-  g_free (src);
-
-  /* allocate column buffers */
-  src  = g_new (guchar, height * bytes);
-  dest = g_new (guchar, height * bytes);
-
   /* blur the cols */
   for (col = 0; col < width; col++)
     {
-      gimp_pixel_rgn_get_col (destPR, src, x1 + col, y1, height);
-      gimp_pixel_rgn_get_col (destPR, dest, x1 + col, y1, height);
+      gimp_pixel_rgn_get_col (srcPR, src, x1 + col, y1, height);
       blur_line (ctable, cmatrix, cmatrix_length, src, dest, height, bytes);
       gimp_pixel_rgn_set_col (destPR, dest, x1 + col, y1, height);
 
@@ -525,13 +507,10 @@ unsharp_region (GimpPixelRgn *srcPR,
   if (show_progress)
     gimp_progress_update (0.0);
 
-  /* free col buffers */
   g_free (dest);
   g_free (src);
-
-  /* free the memory we took */
-  g_free (cmatrix);
   g_free (ctable);
+  g_free (cmatrix);
 }
 
 /* generates a 1-D convolution matrix to be used for each pass of
@@ -564,9 +543,12 @@ gen_convolve_matrix (gdouble   radius,
   radius = std_dev * 2;
 
   /* go out 'radius' in each direction */
-  matrix_length = 2 * ceil(radius-0.5) + 1;
-  if (matrix_length <= 0) matrix_length = 1;
-  matrix_midpoint = matrix_length/2 + 1;
+  matrix_length = 2 * ceil (radius - 0.5) + 1;
+  if (matrix_length <= 0)
+    matrix_length = 1;
+
+  matrix_midpoint = matrix_length / 2 + 1;
+
   *cmatrix_p = g_new (gdouble, matrix_length);
   cmatrix = *cmatrix_p;
 
@@ -604,9 +586,11 @@ gen_convolve_matrix (gdouble   radius,
   cmatrix[matrix_length / 2] = sum / 51;
 
   /* normalize the distribution by scaling the total sum to one */
-  sum=0;
-  for (i=0; i<matrix_length; i++) sum += cmatrix[i];
-  for (i=0; i<matrix_length; i++) cmatrix[i] = cmatrix[i] / sum;
+  sum = 0;
+  for (i = 0; i < matrix_length; i++)
+    sum += cmatrix[i];
+  for (i = 0; i < matrix_length; i++)
+    cmatrix[i] = cmatrix[i] / sum;
 
   return matrix_length;
 }
@@ -733,34 +717,33 @@ preview_update (GimpPreview *preview)
   GimpDrawable *drawable;
   gint          x1, x2;
   gint          y1, y2;
+  gint          x, y;
+  gint          width, height;
   GimpPixelRgn  srcPR;
   GimpPixelRgn  destPR;
 
   drawable =
     gimp_drawable_preview_get_drawable (GIMP_DRAWABLE_PREVIEW (preview));
 
-  /* get previewed area */
-  gimp_preview_get_position (preview, &x1, &y1);
-  gimp_preview_get_size (preview, &x2, &y2);
-  x2 += x1;
-  y2 += y1;
+  gimp_preview_get_position (preview, &x, &y);
+  gimp_preview_get_size (preview, &width, &height);
 
-  /* make buffer large enough to minimize disturbence */
-  x1 = MAX (0, x1 - unsharp_params.radius);
-  y1 = MAX (0, y1 - unsharp_params.radius);
-  x2 = MIN (drawable->width,  x2 + unsharp_params.radius);
-  y2 = MIN (drawable->height, y2 + unsharp_params.radius);
+  /* enlarge the region to avoid artefacts at the edges of the preview */
+  x1 = MAX (0, x - unsharp_params.radius);
+  y1 = MAX (0, y - unsharp_params.radius);
+  x2 = MIN (x + width  + unsharp_params.radius, drawable->width);
+  y2 = MIN (y + height + unsharp_params.radius, drawable->height);
 
-  /* initialize pixel regions */
-  gimp_pixel_rgn_init (&srcPR,  drawable, x1, y1, x2-x1, y2-y1, FALSE, FALSE);
-  gimp_pixel_rgn_init (&destPR, drawable, x1, y1, x2-x1, y2-y1, TRUE,  TRUE);
+  gimp_pixel_rgn_init (&srcPR,
+                       drawable, x1, y1, x2 - x1, y2 - y1, FALSE, FALSE);
+  gimp_pixel_rgn_init (&destPR,
+                       drawable, x1, y1, x2 - x1, y2 - y1, TRUE, TRUE);
 
-  /* unsharp region */
   unsharp_region (&srcPR, &destPR, drawable->bpp,
                   unsharp_params.radius, unsharp_params.amount,
                   x1, x2, y1, y2,
                   FALSE);
 
-  /* draw preview */
+  gimp_pixel_rgn_init (&destPR, drawable, x, y, width, height, FALSE, TRUE);
   gimp_drawable_preview_draw_region (GIMP_DRAWABLE_PREVIEW (preview), &destPR);
 }
