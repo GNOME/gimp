@@ -1,7 +1,7 @@
 2004-06-02  Sven Neumann  <sven@gimp.org>
 
 	* INSTALL: updated for gimp-2.1. Suggest to use gimp-print
-	4.2.7-pre1 in case of problems (see bug #138273).
+	version 4.2.7-pre1 in case of problems (see bug #138273).
 
 2004-06-02  Michael Natterer  <mitch@gimp.org>
 
