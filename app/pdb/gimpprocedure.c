@@ -276,7 +276,7 @@ procedural_db_run_proc (gchar *name,
           params[i].value.pdb_pointer = va_arg (args, gpointer);
           break;
         case PDB_COLOR:
-	  params[i].value.pdb_color = (GimpRGB) va_arg (args, GimpRGB);
+	  params[i].value.pdb_color = va_arg (args, GimpRGB);
           break;
         case PDB_REGION:
           break;

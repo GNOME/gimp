@@ -622,7 +622,7 @@ gimp_paint_tool_cursor_update (GimpTool       *tool,
   if (paint_tool->context_id)
     gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), paint_tool->context_id);
 
-#warning this doesnt belong here
+  /* #warning this doesnt belong here           */
   /* Set toggle cursors for various paint tools */
   if (tool->toggled)
     {
@@ -883,7 +883,7 @@ gimp_paint_tool_start (GimpPaintTool *paint_tool,
   paint_tool->curx = x;
   paint_tool->cury = y;
 
-#warning (FIX non-gui paint tools)
+  /* #warning (FIX non-gui paint tools)   */
 #if 0
   /* Set up some defaults for non-gui use */
   if (paint_tool == &non_gui_paint_tool)

@@ -806,7 +806,7 @@ static void
 paint_gradient_options_gradient_toggle_callback (GtkWidget    *widget,
                                                  PaintOptions *options)
 {
-#warning (FIXME make incremental_save part of the struct)
+  /* #warning (FIXME make incremental_save part of the struct) */
   static gboolean incremental_save = FALSE;
 
   gimp_toggle_button_update (widget, &options->gradient_options->use_gradient);

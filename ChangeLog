@@ -1,3 +1,28 @@
+2001-03-10  Garry R. Osgood <grosgood@rcn.com>
+	* app/Makefile.am
+	Inclusion of David's MMX code into Makefile now 
+	depends on prior definition of HAVE_ASM_MMX.
+	* app/pdb/procedural_db.c
+	Line 276 cast of va_args to type GimpRGB seems
+	very problematical on SGI, as the va_args macro
+	expands to Extreme Ugliness and 
+	(GimpRGB)(Extreme Ugliness) does not compile.
+	RH Linux seems indifferent and accepts either.
+	* app/commands.c
+	* app/gdisplay.c
+	* app/menus.c
+ 	* app/plug_in_cmds.c
+	* app/undo.c
+	* app/tools/gimppainttool.c
+ 	* app/tools/gimptool.c
+	* app/tools/paint_options.c
+	* app/tools/tool_manager.c
+	s|#<remark about extreme buggedness>| 
+	/* #<remark about extreme buggedness> */|
+	Not all compilers are at peace with non-standard 
+	pre-compiler directives. SGI MIPs compilers are 
+	among the latter species.	
+	
 2001-03-11  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/common/winclipboard.c: Enhance to also be able to paste

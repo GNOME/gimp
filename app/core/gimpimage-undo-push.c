@@ -1263,7 +1263,7 @@ undo_pop_transform (GimpImage *gimage,
 		    UndoType   type,
 		    gpointer   tu_ptr)
 {
-#warning very bogus
+  /* #warning very bogus */
 #if 0
   TransformCore *tc;
   TransformUndo *tu;
@@ -1350,14 +1350,14 @@ undo_push_paint (GimpImage *gimage,
     }
 }
 
-#warning super bogosity error
-#if 0
+    /* #warning super bogosity error */
 static gboolean
 undo_pop_paint (GimpImage *gimage,
 		UndoState  state,
 		UndoType   type,
 		gpointer   pu_ptr)
 {
+#if 0
   PaintCore *pc;
   PaintUndo *pu;
   gdouble    tmp;
@@ -1395,8 +1395,8 @@ undo_pop_paint (GimpImage *gimage,
   pu->lastytilt = tmp;
 
   return TRUE;
-}
 #endif
+}
 
 static void
 undo_free_paint (UndoState  state,

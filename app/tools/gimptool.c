@@ -94,7 +94,7 @@ static guint gimp_tool_signals[LAST_SIGNAL] = { 0 };
 static GimpObjectClass *parent_class = NULL;
 
 
-#warning FIXME: check what global_tool_ID was used for
+/* #warning FIXME: check what global_tool_ID was used for */
 
 /* static gint global_tool_ID = 0; */
 
@@ -557,7 +557,7 @@ STUB(convolve_non_gui)
 STUB(convolve_non_gui_default)
 STUB(path_transform_xy)
 
-#warning obsolete crap
+     /* #warning obsolete crap */
 #ifdef STONE_AGE
 ToolInfo tool_info[] =
 {

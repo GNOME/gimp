@@ -10,6 +10,12 @@ else
 regex_sources = regexrepl.c regexrepl.h
 endif
 
+if HAVE_ASM_MMX
+mmx_sources = paint_funcs_simd.S
+else
+mmx_sources =
+endif
+
 bin_PROGRAMS = gimp
 
 gimp_SOURCES = \
@@ -271,7 +277,7 @@ gimp_SOURCES = \
 	\
 	paint_funcs.c		\
 	paint_funcs.h		\
-	paint_funcs_simd.S	\
+	$(mmx_sources)	        \
 	pixel_processor.c	\
 	pixel_processor.h	\
 	pixel_region.c		\

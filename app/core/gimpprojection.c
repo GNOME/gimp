@@ -17,7 +17,7 @@
  */
 
 #include "config.h"
-
+#include <sys/types.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -2040,7 +2040,7 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
       SET_SENSITIVE ("Image/Mode/RGB", (base_type != RGB));
       SET_SENSITIVE ("Image/Mode/Grayscale", (base_type != GRAY));
       SET_SENSITIVE ("Image/Mode/Indexed...", (base_type != INDEXED));
-#warning FIXME (set_menu_sensitivity)
+      /* #warning FIXME (set_menu_sensitivity) */
 #if 0
       SET_SENSITIVE ("Image/Histogram...", lp);
 #endif
