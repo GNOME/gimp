@@ -85,7 +85,7 @@ temp_buf_to_color (TempBuf *src_buf,
   switch (dest_buf->bytes)
     {
     case 3:
-      g_return_if_fail (src_buf->bytes != 1);
+      g_return_if_fail (src_buf->bytes == 1);
       while (num_pixels--)
         {
           guchar tmpch;
@@ -96,7 +96,7 @@ temp_buf_to_color (TempBuf *src_buf,
       break;
       
     case 4:
-      g_return_if_fail (src_buf->bytes != 2);
+      g_return_if_fail (src_buf->bytes == 2);
       while (num_pixels--)
         {
           guchar tmpch;
@@ -131,7 +131,7 @@ temp_buf_to_gray (TempBuf *src_buf,
   switch (dest_buf->bytes)
     {
     case 1:
-      g_return_if_fail (src_buf->bytes != 3);
+      g_return_if_fail (src_buf->bytes == 3);
       while (num_pixels--)
         {
           pix = INTENSITY (src[0], src[1], src[2]);
@@ -142,7 +142,7 @@ temp_buf_to_gray (TempBuf *src_buf,
       break;
 
     case 2:
-      g_return_if_fail (src_buf->bytes != 4);
+      g_return_if_fail (src_buf->bytes == 4);
       while (num_pixels--)
         {
           pix = INTENSITY (src[0], src[1], src[2]);
