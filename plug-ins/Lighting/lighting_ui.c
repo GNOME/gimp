@@ -82,17 +82,15 @@ static void toggleenvironment_update  (GtkWidget *widget,
 static void lightmenu_callback        (GtkWidget *widget,
 				       gpointer   data);
 
-static gint bumpmap_constrain         (gint32   image_id,
-				       gint32   drawable_id,
-				       gpointer data);
-static void bumpmap_drawable_callback (gint32   id,
-				       gpointer data);
+static gboolean  bumpmap_constrain    (gint32     image_id,
+                                       gint32     drawable_id,
+                                       gpointer   data);
+static gboolean  envmap_constrain     (gint32     image_id,
+                                       gint32     drawable_id,
+                                       gpointer   data);
+static void     envmap_combo_callback (GtkWidget *widget,
+                                       gpointer   data);
 
-static gint envmap_constrain          (gint32   image_id,
-				       gint32   drawable_id,
-				       gpointer data);
-static void envmap_drawable_callback  (gint32   id,
-				       gpointer data);
 /*
 static GtkWidget *create_bump_page        (void);
 
@@ -270,43 +268,32 @@ zoomin_callback (GtkWidget *widget)
 
 static gint
 bumpmap_constrain (gint32   image_id,
-		   gint32   drawable_id,
+                   gint32   drawable_id,
 		   gpointer data)
 {
-  if (drawable_id == -1)
-    return TRUE;
-
   return  ((gimp_drawable_width (drawable_id) ==
 	    gimp_drawable_width (mapvals.drawable_id)) &&
 	   (gimp_drawable_height (drawable_id) ==
 	    gimp_drawable_height (mapvals.drawable_id)));
 }
 
-static void
-bumpmap_drawable_callback (gint32   id,
-			   gpointer data)
-{
-  mapvals.bumpmap_id = id;
-}
-
 static gint
 envmap_constrain (gint32   image_id,
-		  gint32   drawable_id,
+                  gint32   drawable_id,
 		  gpointer data)
 {
-  if (drawable_id == -1)
-    return TRUE;
-
   return (!gimp_drawable_is_gray (drawable_id) &&
 	  !gimp_drawable_has_alpha (drawable_id));
 }
 
 static void
-envmap_drawable_callback (gint32   id,
-			  gpointer data)
+envmap_combo_callback (GtkWidget *widget,
+                       gpointer   data)
 {
-  mapvals.envmap_id = id;
-  env_width = gimp_drawable_width (mapvals.envmap_id);
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
+                                 &mapvals.envmap_id);
+
+  env_width = gimp_drawable_width   (mapvals.envmap_id);
   env_height = gimp_drawable_height (mapvals.envmap_id);
 }
 
@@ -873,8 +860,6 @@ create_bump_page (void)
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *combo;
-  GtkWidget *optionmenu;
-  GtkWidget *menu;
   GtkWidget *spinbutton;
   GtkObject *adj;
 
@@ -912,13 +897,17 @@ create_bump_page (void)
   gtk_widget_set_sensitive (table, mapvals.bump_mapped);
   g_object_set_data (G_OBJECT (toggle), "set_sensitive", table);
 
-  optionmenu = gtk_option_menu_new ();
-  menu = gimp_drawable_menu_new (bumpmap_constrain, bumpmap_drawable_callback,
-				 NULL, mapvals.bumpmap_id);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
+  combo = gimp_drawable_combo_box_new (bumpmap_constrain, NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                 mapvals.bumpmap_id);
+
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (gimp_int_combo_box_get_active),
+                    &mapvals.bumpmap_id);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Bumpm_ap Image:"), 1.0, 0.5,
-			     optionmenu, 1, TRUE);
+			     combo, 1, TRUE);
 
   combo = gimp_int_combo_box_new (_("Linear"),      LINEAR_MAP,
                                   _("Logarithmic"), LOGARITHMIC_MAP,
@@ -963,8 +952,7 @@ create_environment_page (void)
   GtkWidget *toggle;
   GtkWidget *table;
   GtkWidget *frame;
-  GtkWidget *optionmenu;
-  GtkWidget *menu;
+  GtkWidget *combo;
 
   page = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (page), 4);
@@ -1000,17 +988,18 @@ create_environment_page (void)
   gtk_widget_set_sensitive (table, mapvals.env_mapped);
   g_object_set_data (G_OBJECT (toggle), "set_sensitive", table);
 
-  optionmenu = gtk_option_menu_new ();
-  menu = gimp_drawable_menu_new (envmap_constrain, envmap_drawable_callback,
-				 NULL, mapvals.envmap_id);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
+  combo = gimp_drawable_combo_box_new (envmap_constrain, NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                 mapvals.envmap_id);
+
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (envmap_combo_callback),
+                    NULL);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("En_vironment Image:"), 1.0, 0.5,
-			     optionmenu, 1, TRUE);
-
-  gimp_help_set_help_data (optionmenu,
-			   _("Environment image to use"),
-			   NULL);
+			     combo, 1, TRUE);
+  gimp_help_set_help_data (combo, _("Environment image to use"), NULL);
 
   gtk_widget_show (page);
 

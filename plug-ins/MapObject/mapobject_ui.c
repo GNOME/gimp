@@ -71,14 +71,9 @@ static void preview_callback           (GtkWidget     *widget,
 static gint box_constrain              (gint32         image_id,
 					gint32         drawable_id,
 					gpointer       data);
-static void box_drawable_callback      (gint32         id,
+static gint cylinder_constrain         (gint32         image_id,
+					gint32         drawable_id,
 					gpointer       data);
-
-static gint cylinder_constrain         (gint32   image_id,
-					gint32   drawable_id,
-					gpointer data);
-static void cylinder_drawable_callback (gint32   id,
-					gpointer data);
 
 static GtkWidget * create_options_page     (void);
 static GtkWidget * create_light_page       (void);
@@ -365,17 +360,6 @@ box_constrain (gint32   image_id,
 	  !gimp_drawable_is_indexed (drawable_id));
 }
 
-static void
-box_drawable_callback (gint32   id,
-		       gpointer data)
-{
-  gint i;
-
-  i = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (data), "_mapwid_id"));
-
-  mapvals.boxmap_id[i] = id;
-}
-
 static gint
 cylinder_constrain (gint32   image_id,
 		    gint32   drawable_id,
@@ -386,17 +370,6 @@ cylinder_constrain (gint32   image_id,
 
   return (gimp_drawable_is_rgb (drawable_id) &&
 	  !gimp_drawable_is_indexed (drawable_id));
-}
-
-static void
-cylinder_drawable_callback (gint32   id,
-			    gpointer data)
-{
-  gint i;
-
-  i = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (data), "_mapwid_id"));
-
-  mapvals.cylindermap_id[i] = id;
 }
 
 /******************************/
@@ -1130,8 +1103,6 @@ create_box_page (void)
   GtkWidget *frame;
   GtkWidget *vbox;
   GtkWidget *table;
-  GtkWidget *optionmenu;
-  GtkWidget *menu;
   GtkObject *adj;
   gint       i;
 
@@ -1160,21 +1131,21 @@ create_box_page (void)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 5);
   gtk_widget_show (table);
 
-  /* Option menues */
-
   for (i = 0; i < 6; i++)
     {
-      optionmenu = gtk_option_menu_new ();
-      g_object_set_data (G_OBJECT (optionmenu), "_mapwid_id",
-                         GINT_TO_POINTER (i));
-      menu = gimp_drawable_menu_new (box_constrain, box_drawable_callback,
-				     (gpointer) optionmenu,
-				     mapvals.boxmap_id[i]);
-      gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
+      GtkWidget *combo;
+
+      combo = gimp_drawable_combo_box_new (box_constrain, NULL);
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                     mapvals.boxmap_id[i]);
+
+      g_signal_connect (combo, "changed",
+                        G_CALLBACK (gimp_int_combo_box_get_active),
+                        &mapvals.boxmap_id[i]);
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, i,
 				 gettext (labels[i]), 1.0, 0.5,
-				 optionmenu, 1, FALSE);
+				 combo, 1, FALSE);
     }
 
   /* Scale scales */
@@ -1232,8 +1203,6 @@ create_cylinder_page (void)
   GtkWidget *page;
   GtkWidget *frame;
   GtkWidget *table;
-  GtkWidget *optionmenu;
-  GtkWidget *menu;
   GtkObject *adj;
   gint       i;
 
@@ -1257,18 +1226,19 @@ create_cylinder_page (void)
 
   for (i = 0; i < 2; i++)
     {
-      optionmenu = gtk_option_menu_new ();
-      g_object_set_data (G_OBJECT (optionmenu), "_mapwid_id",
-                         GINT_TO_POINTER (i));
-      menu = gimp_drawable_menu_new (cylinder_constrain,
-				     cylinder_drawable_callback,
-				     (gpointer) optionmenu,
-				     mapvals.cylindermap_id[i]);
-      gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
+      GtkWidget *combo;
+
+      combo = gimp_drawable_combo_box_new (cylinder_constrain, NULL);
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                     mapvals.cylindermap_id[i]);
+
+      g_signal_connect (combo, "changed",
+                        G_CALLBACK (gimp_int_combo_box_get_active),
+                        &mapvals.cylindermap_id[i]);
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, i,
 				 gettext (labels[i]), 1.0, 0.5,
-				 optionmenu, 1, FALSE);
+				 combo, 1, FALSE);
     }
 
   frame = gtk_frame_new (_("Size"));

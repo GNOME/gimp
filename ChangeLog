@@ -1,5 +1,10 @@
 2004-04-21  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/MapObject/mapobject_ui.c: ported to the new API.
+
+2004-04-21  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/Makefile.am
 	* libgimp/gimpui.h
 	* libgimp/gimppixbuf.[ch]: new file that holds pixbuf accessors
