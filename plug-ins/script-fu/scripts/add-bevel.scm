@@ -64,7 +64,7 @@
          (offsets (gimp-drawable-offsets pic-layer))
          (width (car (gimp-drawable-width pic-layer)))
          (height (car (gimp-drawable-height pic-layer)))
-         (old-bg (car (gimp-palette-get-background)))
+
          ; Bumpmap has a one pixel border on each side
          (bump-layer (car (gimp-layer-new image
                                           (+ width 2)
@@ -72,9 +72,10 @@
                                           GRAY
                                           "Bumpmap"
                                           100
-                                          NORMAL-MODE)))
-         )
-    
+                                          NORMAL-MODE))))
+
+    (gimp-context-push)
+
     ; If the layer we're bevelling is offset from the image's origin, we
     ; have to do the same to the bumpmap
     (gimp-layer-set-offsets bump-layer (- (car offsets) 1)
@@ -146,7 +147,6 @@
     ;
     ; Restore things
     ;
-    (gimp-palette-set-background old-bg)
     (if (= bevelling-whole-image TRUE)
         (gimp-selection-none image)        ; No selection to start with
         (gimp-selection-load select)
@@ -160,23 +160,20 @@
         (begin
           (gimp-image-add-layer image bump-layer 1)
           (gimp-drawable-set-visible bump-layer 0))
-        (gimp-drawable-delete bump-layer)
-    )
+        (gimp-drawable-delete bump-layer))
 
     (gimp-image-set-active-layer image pic-layer)
 
     ; enable undo / end undo group
     (if (= work-on-copy TRUE) 
-      (begin
-        (gimp-display-new image)
-        (gimp-image-undo-enable image)
-      )
-      (gimp-image-undo-group-end image)
-    )
+	(begin
+	  (gimp-display-new image)
+	  (gimp-image-undo-enable image))
+	(gimp-image-undo-group-end image))
+
     (gimp-displays-flush)
 
-    )
-  )
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-add-bevel"
                     _"<Image>/Script-Fu/Decor/Add B_evel..."

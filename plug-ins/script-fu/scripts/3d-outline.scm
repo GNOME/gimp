@@ -35,9 +35,10 @@
          (bg-layer (car (gimp-layer-new img width height
 					RGB-IMAGE "Background" 100 NORMAL-MODE)))
          (pattern (car (gimp-layer-new img width height
-				       RGBA-IMAGE "Pattern" 100 NORMAL-MODE)))
-         (old-fg (car (gimp-palette-get-foreground)))
-         (old-bg (car (gimp-palette-get-background))))
+				       RGBA-IMAGE "Pattern" 100 NORMAL-MODE))))
+
+    (gimp-context-push)
+
     (gimp-selection-none img)
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img pattern 1)
@@ -60,7 +61,8 @@
 
     (gimp-selection-all img)
     (gimp-patterns-set-pattern text-pattern)
-    (gimp-edit-bucket-fill pattern PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
+    (gimp-edit-bucket-fill pattern
+			   PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
     (plug-in-bump-map noninteractive img pattern layer2
 		      110.0 45.0 4 0 0 0 0 TRUE FALSE 0)
 
@@ -82,8 +84,7 @@
     (gimp-drawable-set-visible pattern TRUE)
     ;;(set! final (car (gimp-image-flatten img)))
 
-    (gimp-palette-set-background old-bg)
-    (gimp-palette-set-foreground old-fg)))
+    (gimp-context-pop)))
 
 (define (script-fu-3d-outline-logo-alpha img
 					 logo-layer

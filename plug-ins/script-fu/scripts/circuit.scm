@@ -40,9 +40,10 @@
 	 (type (car (gimp-drawable-type-with-alpha drawable)))
 	 (image-width (car (gimp-image-width image)))
 	 (image-height (car (gimp-image-height image)))
-	 (old-fg (car (gimp-palette-get-foreground)))
 	)
     
+    (gimp-context-push)
+
     (gimp-image-undo-group-start image)
 
     (gimp-layer-add-alpha drawable)
@@ -85,12 +86,10 @@
 	  (gimp-image-set-active-layer image effect-layer )))
     (set! active-layer (car (gimp-image-get-active-layer image)))
 
-    (if (and
-	 (= remove-bg TRUE)
-	 (= old-bg '(0 0 0)))
+    (if (= remove-bg TRUE)
 	(gimp-palette-set-foreground '(0 0 0))
 	(gimp-palette-set-foreground '(14 14 14)))
-    
+
     (gimp-selection-load active-selection)
     (plug-in-maze 1 image active-layer 5 5 TRUE 0 seed 57 1)
     (plug-in-oilify 1 image active-layer mask-size 0)
@@ -112,8 +111,6 @@
 	   FALSE)
 	  (gimp-edit-clear active-layer)))
     
-    (gimp-palette-set-foreground old-fg)
-    
     (if (= keep-selection FALSE)
 	(gimp-selection-none image))
     
@@ -122,7 +119,9 @@
 
     (gimp-image-undo-group-end image)
 
-    (gimp-displays-flush)))
+    (gimp-displays-flush)
+
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-circuit"
 		    _"<Image>/Script-Fu/Render/_Circuit..."

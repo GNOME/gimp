@@ -39,10 +39,7 @@
 						 width height RGBA-IMAGE
 						 "Drop Shadow" 100 MULTIPLY-MODE)))
 	 (dsl-layer-mask (car (gimp-layer-create-mask drop-shadow-layer
-						      ADD-BLACK-MASK)))
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background)))
-	 (old-grad (car (gimp-gradients-get-gradient))))
+						      ADD-BLACK-MASK))))
 
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img shadow-layer 1)
@@ -94,9 +91,8 @@
     (gimp-edit-fill dsl-layer-mask BACKGROUND-FILL)
     (gimp-layer-remove-mask drop-shadow-layer MASK-APPLY)
     (gimp-selection-none img)
-    (gimp-palette-set-foreground old-fg)
-    (gimp-palette-set-background old-bg)
-    (gimp-gradients-set-gradient old-grad)))
+
+    (gimp-context-pop)))
 
 (define (script-fu-blended-logo-alpha img
 				      logo-layer
@@ -148,19 +144,23 @@
 				blend-gradient-reverse)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
 	 (b-size (scale size 0.1))
-	 (text-layer (car (gimp-text-fontname img -1 0 0 text b-size TRUE size PIXELS font)))
-	 (old-fg (car (gimp-palette-get-foreground))))
+	 (text-layer (car (gimp-text-fontname img
+					      -1 0 0 text b-size TRUE
+					      size PIXELS font))))
+    (gimp-context-push)
+
     (gimp-image-undo-disable img)
     (gimp-drawable-set-name text-layer text)
     (gimp-palette-set-foreground text-color)
     (gimp-layer-set-preserve-trans text-layer TRUE)
     (gimp-edit-fill text-layer FOREGROUND-FILL)
-    (gimp-palette-set-foreground old-fg)
     (apply-blended-logo-effect img text-layer b-size bg-color
 			       blend-mode blend-fg blend-bg
 			       blend-gradient blend-gradient-reverse)
     (gimp-image-undo-enable img)
-    (gimp-display-new img)))
+    (gimp-display-new img)
+
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-blended-logo"
 		    _"<Toolbox>/Xtns/Script-Fu/Logos/Blen_ded..."

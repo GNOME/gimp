@@ -32,17 +32,16 @@
                              inBackColor
 			     inBufferAmount)
 	
-  (set! old-bg (car (gimp-palette-get-background)))
-
-  (set! theImage (car (gimp-image-new 10 10 RGB) ) )
-  
+  (set! theImage (car (gimp-image-new 10 10 RGB)))  
   (set! theLayer (car (gimp-layer-new theImage
 				      10
 				      10
 				      RGBA-IMAGE
 				      "layer 1"
 				      100
-				      NORMAL-MODE) ) )
+				      NORMAL-MODE)))
+
+  (gimp-context-push)
 
   (gimp-palette-set-background inBackColor)
   (gimp-drawable-set-name theLayer "Background")
@@ -51,9 +50,9 @@
   (script-fu-asc-2-img-layer theImage theLayer inFile inFont inFontSize
 			     inTextColor inBufferAmount)
   
-  (set! theBuffer (* inFontSize (/ inBufferAmount 100) ) )
-  (set! theImageWidth (+ theImageWidth theBuffer theBuffer ))
-  (set! theImageHeight (+ theImageHeight theBuffer theBuffer ))
+  (set! theBuffer (* inFontSize (/ inBufferAmount 100)))
+  (set! theImageWidth (+ theImageWidth theBuffer theBuffer))
+  (set! theImageHeight (+ theImageHeight theBuffer theBuffer))
   
   (gimp-image-resize theImage
 		     theImageWidth
@@ -68,17 +67,17 @@
   (gimp-selection-all theImage)
   (if (= inTrans TRUE)
       (gimp-edit-clear theLayer)
-      (gimp-edit-fill theLayer BACKGROUND-FILL)
-      )
+      (gimp-edit-fill theLayer BACKGROUND-FILL))
   (gimp-selection-none theImage)
   
-  (gimp-palette-set-background old-bg)
   (gimp-display-new theImage)
   
   (gimp-image-clean-all theImage)
   
   (gimp-displays-flush)
-  (cons theImage  ()   )
+  (gimp-context-pop)
+
+  (cons theImage ())
 )
 
 (define (script-fu-asc-2-img-layer inImage
@@ -88,7 +87,6 @@
 			           inFontSize
 				   inTextColor)
   
-  (set! old-fg (car (gimp-palette-get-foreground)))
   (set! theImage inImage)
   (set! theLayer inLayer)
   (set! theFile (fopen inFile))
@@ -97,6 +95,8 @@
   (set! nLayers (car (gimp-image-get-layers theImage)))
   (set! n nLayers)
   
+  (gimp-context-push)
+
   (gimp-palette-set-foreground inTextColor)
   (gimp-selection-none theImage)
   (set! theData ())
@@ -161,9 +161,8 @@
 		inFont
 		inFontSize)
   (set! n nLayers)
-  (gimp-palette-set-foreground old-fg)
   (gimp-displays-flush)
-  )
+  (gimp-context-pop))
 
 (define (cjg-add-text inData inIndentList inFont inFontSize)
   (if 	(equal? () inData)

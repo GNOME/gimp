@@ -168,10 +168,9 @@
 	 (tiledraw2 (car (gimp-layer-new tile size size
 					 RGB-IMAGE "Cooper" 100 NORMAL-MODE)))
 	 (Xindex 0)
-	 (Yindex 0)
-	 (old-bg (car (gimp-palette-get-background)))
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 )
+	 (Yindex 0))
+
+    (gimp-context-push)
 
     (gimp-image-undo-disable img)
     (gimp-image-undo-disable tile)
@@ -205,12 +204,10 @@
 	   )
  
     (gimp-image-delete tile)
-    (gimp-palette-set-background old-bg)
-    (gimp-palette-set-foreground old-fg)
     (gimp-image-undo-enable img)
     (gimp-display-new img)
-    )
-  )
+
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-3dtruchet"
 		    _"<Toolbox>/Xtns/Script-Fu/Patterns/3_D Truchet..."

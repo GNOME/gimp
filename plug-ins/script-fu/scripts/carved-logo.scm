@@ -46,10 +46,10 @@
 	 (cast-shadow-layer 0)
 	 (csl-mask 0)
 	 (inset-layer 0)
-	 (il-mask 0)
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background)))
-	 (old-brush (car (gimp-brushes-get-brush))))
+	 (il-mask 0))
+
+    (gimp-context-push)
+
     (gimp-image-undo-disable img)
 
     (gimp-image-set-filename img "")
@@ -146,11 +146,10 @@
     (gimp-drawable-set-name cast-shadow-layer "Cast Shadow")
     (gimp-drawable-set-name inset-layer "Inset")
 
-    (gimp-palette-set-foreground old-fg)
-    (gimp-palette-set-background old-bg)
-    (gimp-brushes-set-brush old-brush)
     (gimp-display-new img)
-    (gimp-image-undo-enable img)))
+    (gimp-image-undo-enable img)
+
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-carved-logo"
 		    _"<Toolbox>/Xtns/Script-Fu/Logos/Carved..."

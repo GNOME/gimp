@@ -58,10 +58,7 @@
 			    padding
 			    bevel-width
 			    pressed)
-  (let* ((old-fg-color (car (gimp-palette-get-foreground)))
-	 (old-bg-color (car (gimp-palette-get-background)))
-
-	 (text-extents (gimp-text-get-extents-fontname text
+  (let* ((text-extents (gimp-text-get-extents-fontname text
 					      size
 					      PIXELS
 					      font))
@@ -81,6 +78,8 @@
 	 (gradient (car (gimp-layer-new img
 					img-width img-height RGBA-IMAGE
 					"Gradient" 100 NORMAL-MODE))))
+
+    (gimp-context-push)
 
     (gimp-image-undo-disable img)
 
@@ -131,10 +130,10 @@
     ; Done
 
     (gimp-selection-none img)
-    (gimp-palette-set-foreground old-fg-color)
-    (gimp-palette-set-background old-bg-color)
     (gimp-image-undo-enable img)
-    (gimp-display-new img)))
+    (gimp-display-new img)
+
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-button00"
 		    _"<Toolbox>/Xtns/Script-Fu/Buttons/Simple _Beveled Button..."

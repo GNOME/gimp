@@ -85,11 +85,10 @@
 	 (layer3 (car (gimp-layer-new img width height GRAYA-IMAGE "Layer 3" 100 NORMAL-MODE)))
 	 (shadow (car (gimp-layer-new img width height GRAYA-IMAGE "Drop Shadow" 100 NORMAL-MODE)))
 	 (mask-fs 0)
-	 (layer-mask 0)
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background)))
-	 (old-brush (car (gimp-brushes-get-brush)))
-	 (old-pattern (car (gimp-patterns-get-pattern))))
+	 (layer-mask 0))
+
+    (gimp-context-push)
+
     (gimp-image-undo-disable img)
 
     (gimp-image-add-channel img mask 0)
@@ -174,12 +173,10 @@
 
     (gimp-image-remove-channel img mask)
 
-    (gimp-palette-set-foreground old-fg)
-    (gimp-palette-set-background old-bg)
-    (gimp-brushes-set-brush old-brush)
-    (gimp-patterns-set-pattern old-pattern)
     (gimp-display-new img)
-    (gimp-image-undo-enable img)))
+    (gimp-image-undo-enable img)
+
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-sota-chrome-it"
 		    _"<Image>/Script-Fu/Stencil Ops/C_hrome-It..."

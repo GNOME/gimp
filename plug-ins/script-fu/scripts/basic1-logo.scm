@@ -8,9 +8,9 @@
   (let* ((width (car (gimp-drawable-width logo-layer)))
 	 (height (car (gimp-drawable-height logo-layer)))
 	 (bg-layer (car (gimp-layer-new img width height RGBA-IMAGE "Background" 100 NORMAL-MODE)))
-	 (shadow-layer (car (gimp-layer-new img width height RGBA-IMAGE "Shadow" 100 MULTIPLY-MODE)))
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background))))
+	 (shadow-layer (car (gimp-layer-new img width height RGBA-IMAGE "Shadow" 100 MULTIPLY-MODE))))
+
+    (gimp-context-push)
 
     (gimp-selection-none img)
     (script-fu-util-image-resize-from-layer img logo-layer)
@@ -35,8 +35,8 @@
 		     0 0 width height)
 
     (gimp-layer-translate shadow-layer 3 3)
-    (gimp-palette-set-background old-bg)
-    (gimp-palette-set-foreground old-fg)))
+
+    (gimp-context-pop)))
 
 (define (script-fu-basic1-logo-alpha img
 				     logo-layer

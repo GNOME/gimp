@@ -29,15 +29,19 @@
 	 (border (/ height 4))
 	 (ruler-layer (car (gimp-layer-new img
 					   (+ length height) (+ height height)
-					   RGBA-IMAGE "Ruler" 100 NORMAL-MODE)))
+					   RGBA-IMAGE "Ruler"
+					   100 NORMAL-MODE)))
 	 (glow-layer (car (gimp-layer-new img
 					  (+ length height) (+ height height)
-					  RGBA-IMAGE "ALien Glow" 100 NORMAL-MODE)))
+					  RGBA-IMAGE "ALien Glow"
+					  100 NORMAL-MODE)))
 	 (bg-layer (car (gimp-layer-new img
 					(+ length height) (+ height height)
-					RGB-IMAGE "Backround" 100 NORMAL-MODE)))
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background))))
+					RGB-IMAGE "Backround"
+					100 NORMAL-MODE))))
+
+    (gimp-context-push)
+
     (gimp-image-undo-disable img)
     (gimp-image-resize img (+ length height) (+ height height) 0 0)
     (gimp-image-add-layer img bg-layer 1)
@@ -50,7 +54,9 @@
     (gimp-edit-clear glow-layer)
     (gimp-edit-clear ruler-layer)
     
-    (gimp-rect-select img (/ height 2) (/ height 2) length height CHANNEL-OP-REPLACE FALSE 0)
+    (gimp-rect-select img
+		      (/ height 2) (/ height 2)
+		      length height CHANNEL-OP-REPLACE FALSE 0)
     (gimp-palette-set-foreground '(79 79 79))
     (gimp-palette-set-background '(0 0 0))
 
@@ -65,14 +71,14 @@
     (gimp-selection-none img)
     (plug-in-gauss-rle 1 img glow-layer 25 TRUE TRUE)
 
-    (gimp-palette-set-background old-bg)
-    (gimp-palette-set-foreground old-fg)
     (gimp-image-undo-enable img)
 
     (if (= flatten TRUE)
 	(gimp-image-flatten img))
 
-    (gimp-display-new img)))
+    (gimp-display-new img)
+    
+    (gimp-context-pop)))
 
 
 (script-fu-register "script-fu-alien-glow-horizontal-ruler"

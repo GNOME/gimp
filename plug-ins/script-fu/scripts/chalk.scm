@@ -26,9 +26,11 @@
 				 bg-color)
   (let* ((width (car (gimp-drawable-width logo-layer)))
 	 (height (car (gimp-drawable-height logo-layer)))
-	 (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background))))
+	 (bg-layer (car (gimp-layer-new img
+					width height RGB-IMAGE
+					"Background" 100 NORMAL-MODE))))
+
+    (gimp-context-push)
 
     (gimp-selection-none img)
     (script-fu-util-image-resize-from-layer img logo-layer)
@@ -51,13 +53,12 @@
     (gimp-edit-clear logo-layer)
     (gimp-selection-none img)
 
-    (gimp-palette-set-background old-bg)
-    (gimp-palette-set-foreground old-fg)))
+    (gimp-context-pop)))
 
 
 (define (script-fu-chalk-logo-alpha img
-			      logo-layer
-			      bg-color)
+				    logo-layer
+				    bg-color)
   (begin
     (gimp-image-undo-group-start img)
     (apply-chalk-logo-effect img logo-layer bg-color)
@@ -73,8 +74,7 @@
                     "RGBA"
                     SF-IMAGE      "Image" 0
                     SF-DRAWABLE   "Drawable" 0
-                    SF-COLOR      _"Background color" '(0 0 0)
-		    )
+                    SF-COLOR      _"Background color" '(0 0 0))
 
 
 (define (script-fu-chalk-logo text
@@ -84,17 +84,20 @@
 			      chalk-color)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
 	 (border (/ size 4))
-	 (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font)))
-	 (old-fg (car (gimp-palette-get-foreground))))
+	 (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font))))
+
+    (gimp-context-push)
+
     (gimp-image-undo-disable img)
     (gimp-drawable-set-name text-layer text)
     (gimp-palette-set-foreground chalk-color)
     (gimp-layer-set-preserve-trans text-layer TRUE)
     (gimp-edit-fill text-layer FOREGROUND-FILL)
-    (gimp-palette-set-foreground old-fg)
     (apply-chalk-logo-effect img text-layer bg-color)
     (gimp-image-undo-enable img)
-    (gimp-display-new img)))
+    (gimp-display-new img)
+
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-chalk-logo"
                     _"<Toolbox>/Xtns/Script-Fu/Logos/_Chalk..."
@@ -107,5 +110,4 @@
                     SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
                     SF-FONT       _"Font" "Cooper"
                     SF-COLOR      _"Background color" '(0 0 0)
-                    SF-COLOR      _"Chalk color" '(255 255 255)
-		    )
+                    SF-COLOR      _"Chalk color" '(255 255 255))

@@ -99,12 +99,14 @@
   (let* ((img (car (gimp-drawable-get-image adraw)))
 	 (owidth (car (gimp-image-width img)))
 	 (oheight (car (gimp-image-height img)))
-	 (old-fg (car (gimp-palette-get-foreground)))
-         (old-bg (car (gimp-palette-get-background)))
 	 (width (+ owidth (* 2 xsize)))
 	 (height (+ oheight (* 2 ysize)))
 	 (layer (car (gimp-layer-new img width height RGBA-IMAGE "Border-Layer" 100 NORMAL-MODE))))
+
 ;Add this for debugging    (verbose 4)
+
+    (gimp-context-push)
+
     (gimp-image-undo-group-start img)
     (gimp-drawable-fill layer TRANSPARENT-FILL)
     (gimp-image-resize img
@@ -153,10 +155,9 @@
     (gimp-selection-none img)
     (gimp-image-add-layer img layer 0)
     (gimp-image-undo-group-end img)
-    (gimp-palette-set-background old-bg)
     (gimp-displays-flush)
-    )
-)
+
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-addborder"
 		    _"<Image>/Script-Fu/Decor/Add _Border..."

@@ -21,10 +21,12 @@
 
 
 (define (script-fu-beveled-pattern-bullet diameter pattern transparent)
-  (let* ((old-bg-color (car (gimp-palette-get-background)))
-	 (img (car (gimp-image-new diameter diameter RGB)))
+  (let* ((img (car (gimp-image-new diameter diameter RGB)))
 	 (background (car (gimp-layer-new img diameter diameter RGBA-IMAGE "Bullet" 100 NORMAL-MODE)))
 	 (bumpmap (car (gimp-layer-new img diameter diameter RGBA-IMAGE "Bumpmap" 100 NORMAL-MODE))))
+
+    (gimp-context-push)
+
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img background -1)
     (gimp-image-add-layer img bumpmap -1)
@@ -68,9 +70,10 @@
     (if (= transparent FALSE)
 	(gimp-image-flatten img))
 
-    (gimp-palette-set-background old-bg-color)
     (gimp-image-undo-enable img)
-    (gimp-display-new img)))
+    (gimp-display-new img)
+
+    (gimp-context-pop)))
 
 
 (script-fu-register "script-fu-beveled-pattern-bullet"

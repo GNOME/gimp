@@ -25,9 +25,7 @@
   (let* (
 	 ;--- main variable: "bl-x" runs from 0 to layer-width
 	 (bl-x 0)
-	 (frame-nr 0)
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background))))
+	 (frame-nr 0))
 
     (if (< speed 1)
 	(set! speed (* -1 speed)) )
@@ -37,6 +35,8 @@
 
         ;--- main program structure starts here, begin of "if-1"
 	(begin
+	  (gimp-context-push)
+
 	  (set! img (car (gimp-image-duplicate org-img)))
 	  (gimp-image-undo-disable img)
 	  (if (> (car (gimp-drawable-type org-layer)) 1 )
@@ -171,10 +171,10 @@
 	  (gimp-image-undo-enable img)
 	  (gimp-image-clean-all img)
 	  (set! img-display (car (gimp-display-new img)))
-	  (gimp-palette-set-foreground old-fg)
-	  (gimp-palette-set-background old-bg)
 
-	  (gimp-displays-flush))
+	  (gimp-displays-flush)
+
+	  (gimp-context-pop))
 
 	;--- false form of "if-1"
 	(gimp-message _"Burn-In: Need two layers in total!"

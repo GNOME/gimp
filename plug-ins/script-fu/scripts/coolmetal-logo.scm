@@ -27,10 +27,9 @@
 	 (reflect-layer (car (gimp-layer-new img width height RGBA-IMAGE "Reflection" 100 NORMAL-MODE)))
 	 (channel 0)
 	 (fs 0)
-	 (layer-mask 0)
-	 (old-gradient (car (gimp-gradients-get-gradient)))
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background))))
+	 (layer-mask 0))
+
+    (gimp-context-push)
 
     (gimp-selection-none img)
     (gimp-image-resize img img-width img-height posx posy)
@@ -102,9 +101,7 @@
 
     (gimp-image-remove-channel img channel)
 
-    (gimp-gradients-set-gradient old-gradient)
-    (gimp-palette-set-background old-bg)
-    (gimp-palette-set-foreground old-fg)))
+    (gimp-context-pop)))
 
 
 (define (script-fu-cool-metal-logo-alpha img

@@ -1,3 +1,11 @@
+2004-09-22  Sven Neumann  <sven@gimp.org>
+
+	Converted the first bunch of Script-Fu to the new context API:
+
+	* plug-ins/script-fu/scripts/[3a-c]*.scm: push and pop a context.
+	Removed code that used to restore the context values changed by
+	the scripts.
+
 2004-09-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-in-proc-frame.[ch] (plug_in_proc_frame_init):

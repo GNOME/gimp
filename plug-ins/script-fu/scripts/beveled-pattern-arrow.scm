@@ -72,13 +72,14 @@
 
   ; the main function
 
-  (let* ((old-bg-color (car (gimp-palette-get-background)))
-         (img (car (gimp-image-new size size RGB)))
+  (let* ((img (car (gimp-image-new size size RGB)))
          (background (car (gimp-layer-new img size size RGB-IMAGE "Arrow" 100 NORMAL-MODE)))
          (bumpmap (car (gimp-layer-new img size size RGB-IMAGE "Bumpmap" 100 NORMAL-MODE)))
          (big-arrow (point-list->double-array (rotate-points (make-arrow size 6) size orientation)))
          (med-arrow (point-list->double-array (rotate-points (make-arrow size 7) size orientation)))
          (small-arrow (point-list->double-array (rotate-points (make-arrow size 8) size orientation))))
+
+    (gimp-context-push)
 
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img background -1)
@@ -132,9 +133,10 @@
 
     (gimp-image-flatten img)
 
-    (gimp-palette-set-background old-bg-color)
     (gimp-image-undo-enable img)
-    (gimp-display-new img)))
+    (gimp-display-new img)
+
+    (gimp-context-pop)))
 
 
 (script-fu-register "script-fu-beveled-pattern-arrow"

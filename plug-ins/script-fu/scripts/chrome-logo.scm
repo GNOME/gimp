@@ -16,9 +16,10 @@
 	 (layer3 (car (gimp-layer-new img width height RGBA-IMAGE "Layer 3" 100 NORMAL-MODE)))
 	 (shadow (car (gimp-layer-new img width height RGBA-IMAGE "Drop Shadow" 100 NORMAL-MODE)))
 	 (background (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
-	 (layer-mask (car (gimp-layer-create-mask layer1 ADD-BLACK-MASK)))
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background))))
+	 (layer-mask (car (gimp-layer-create-mask layer1 ADD-BLACK-MASK))))
+
+    (gimp-context-push)
+
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img background 1)
     (gimp-image-add-layer img shadow 1)
@@ -60,8 +61,8 @@
     (gimp-drawable-set-visible background TRUE)
     (gimp-drawable-set-name layer1 (car (gimp-drawable-get-name logo-layer)))
     (gimp-image-remove-layer img logo-layer)
-    (gimp-palette-set-foreground old-fg)
-    (gimp-palette-set-background old-bg)))
+
+    (gimp-context-pop)))
 
 (define (script-fu-chrome-logo-alpha img
 				     logo-layer

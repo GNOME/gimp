@@ -55,9 +55,7 @@
 				     padding
 				     glow-radius
 				     flatten)
-  (let* ((old-fg-color (car (gimp-palette-get-foreground)))
-	 (old-bg-color (car (gimp-palette-get-background)))
-	 (text-extents (gimp-text-get-extents-fontname text
+  (let* ((text-extents (gimp-text-get-extents-fontname text
 						       size
 						       PIXELS
 						       font))
@@ -82,6 +80,8 @@
 	 (button-layer (car (gimp-layer-new img
 					    layer-width layer-height RGBA-IMAGE
 					    "Button" 100 NORMAL-MODE))))
+
+    (gimp-context-push)
 
     (gimp-image-undo-disable img)
 
@@ -128,12 +128,13 @@
 			      (+ (+ padding descent) (/ glow-radius 2))))
     ; Done
     (gimp-selection-none img)
-    (gimp-palette-set-foreground old-fg-color)
-    (gimp-palette-set-background old-bg-color)
     (gimp-image-undo-enable img)
     (if (= flatten TRUE)
 	(gimp-image-flatten img))
-    (gimp-display-new img)))
+
+    (gimp-display-new img)
+
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-alien-glow-button"
 		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."

@@ -39,9 +39,7 @@
 
 (define (script-fu-beveled-pattern-button
 	 text text-size font text-color pattern pressed)
-  (let* ((old-bg-color (car (gimp-palette-get-background)))
-
-	 (text-extents (gimp-text-get-extents-fontname
+  (let* ((text-extents (gimp-text-get-extents-fontname
 			text text-size PIXELS font))
 	 (ascent (text-ascent text-extents))
 	 (descent (text-descent text-extents))
@@ -60,6 +58,8 @@
 	 (textl (car
 		 (gimp-text-fontname
 		  img -1 0 0 text 0 TRUE text-size PIXELS font))))
+
+    (gimp-context-push)
 
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img background 1)
@@ -106,9 +106,10 @@
     (gimp-image-remove-layer img bumpmap)
     (gimp-image-flatten img)
 
-    (gimp-palette-set-background old-bg-color)
     (gimp-image-undo-enable img)
-    (gimp-display-new img)))
+    (gimp-display-new img)
+
+    (gimp-context-pop)))
 
 
 (script-fu-register "script-fu-beveled-pattern-button"

@@ -101,10 +101,9 @@
                                         "Background" 100 NORMAL-MODE)))
          (big-arrow (point-list->double-array
                      (rotate-points (make-arrow size offset)
-                                     size orientation)))
-         (old-fg (car (gimp-palette-get-foreground)))
-         (old-bg (car (gimp-palette-get-background))))
+                                     size orientation))))
 
+    (gimp-context-push)
 
     (gimp-image-undo-disable img)
     ;(gimp-image-resize img (+ length height) (+ height height) 0 0)
@@ -136,14 +135,13 @@
 
     (gimp-palette-set-background bg-color)
     (gimp-edit-fill bg-layer BACKGROUND-FILL)
-    
-    (gimp-palette-set-background old-bg)
-    (gimp-palette-set-foreground old-fg)
 
     (if (= flatten TRUE)
         (gimp-image-flatten img))
     (gimp-image-undo-enable img)
-    (gimp-display-new img)))
+    (gimp-display-new img)
+
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-alien-glow-right-arrow"
                     _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."

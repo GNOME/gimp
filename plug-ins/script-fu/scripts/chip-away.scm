@@ -49,10 +49,10 @@
   (let* ((width (car (gimp-drawable-width logo-layer)))
 	 (height (car (gimp-drawable-height logo-layer)))
 	 (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
-	 (bump-layer (car (gimp-layer-new img width height RGBA-IMAGE "Bump Layer" 100 NORMAL-MODE)))
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background)))
-	 (old-pattern (car (gimp-patterns-get-pattern))))
+	 (bump-layer (car (gimp-layer-new img width height RGBA-IMAGE "Bump Layer" 100 NORMAL-MODE))))
+
+    (gimp-context-push)
+
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img bg-layer 1)
     (gimp-layer-set-preserve-trans logo-layer TRUE)
@@ -106,10 +106,7 @@
      (if (= keep-back FALSE)
 	 (gimp-image-remove-layer img bg-layer))
 
-    (gimp-patterns-set-pattern old-pattern)
-    (gimp-palette-set-foreground old-fg)
-    (gimp-palette-set-background old-bg)
-    ))
+    (gimp-context-pop)))
 
 (define (script-fu-chip-away-logo-alpha img
 					logo-layer

@@ -47,9 +47,9 @@
 	 (glow-layer (car (gimp-layer-new img diameter diameter RGBA-IMAGE
 					  "ALien Glow" 100 NORMAL-MODE)))
 	 (bg-layer (car (gimp-layer-new img diameter diameter RGB-IMAGE
-					"Background" 100 NORMAL-MODE)))
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background))))
+					"Background" 100 NORMAL-MODE))))
+
+    (gimp-context-push)
 
     (gimp-image-undo-disable img)
     (gimp-image-resize img diameter diameter 0 0)
@@ -85,13 +85,12 @@
 	(plug-in-gauss-rle 1 img glow-layer 25 TRUE TRUE)
 	(plug-in-gauss-rle 1 img glow-layer 12 TRUE TRUE))
 
-    (gimp-palette-set-background old-bg)
-    (gimp-palette-set-foreground old-fg)
-
     (if (= flatten TRUE)
 	(gimp-image-flatten img))
     (gimp-image-undo-enable img)
-    (gimp-display-new img)))
+    (gimp-display-new img)
+
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-alien-glow-bullet"
 		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Bullet..."

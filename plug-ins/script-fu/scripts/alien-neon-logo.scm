@@ -41,9 +41,10 @@
 	 (width (car (gimp-drawable-width logo-layer)))
 	 (height (car (gimp-drawable-height logo-layer)))
 	 (bg-layer (car (gimp-layer-new img width height RGB-IMAGE "Background" 100 NORMAL-MODE)))
-	 (bands-layer (car (gimp-layer-new img width height RGBA-IMAGE "Bands" 100 NORMAL-MODE)))
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background))))
+	 (bands-layer (car (gimp-layer-new img width height RGBA-IMAGE "Bands" 100 NORMAL-MODE))))
+
+    (gimp-context-push)
+
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img bg-layer 1)
     (gimp-image-add-layer img bands-layer 1)
@@ -93,11 +94,11 @@
     ;; (gimp-layer-remove-mask bands-layer MASK-APPLY)
 
     ; Clean up and exit.
-    (gimp-palette-set-foreground old-fg)
-    (gimp-palette-set-background old-bg)
     (gimp-drawable-set-visible logo-layer 0)
     (gimp-image-set-active-layer img bands-layer)
-    (gimp-displays-flush)))
+    (gimp-displays-flush)
+    
+    (gimp-context-pop)))
 
 (define (script-fu-alien-neon-logo-alpha img
 					 logo-layer

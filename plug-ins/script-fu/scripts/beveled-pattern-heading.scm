@@ -28,9 +28,7 @@
 
 (define (script-fu-beveled-pattern-heading
 	 text text-size font pattern transparent)
-  (let* ((old-bg-color (car (gimp-palette-get-background)))
-
-	 (img (car (gimp-image-new 10 10 RGB)))
+  (let* ((img (car (gimp-image-new 10 10 RGB)))
 	 (textl
 	  (car
 	   (gimp-text-fontname img -1 0 0 text 0 TRUE text-size PIXELS font)))
@@ -38,8 +36,14 @@
 	 (width (car (gimp-drawable-width textl)))
 	 (height (car (gimp-drawable-height textl)))
 
-	 (background (car (gimp-layer-new img width height RGBA-IMAGE "Background" 100 NORMAL-MODE)))
-	 (bumpmap (car (gimp-layer-new img width height RGBA-IMAGE "Bumpmap" 100 NORMAL-MODE))))
+	 (background (car (gimp-layer-new img
+					  width height RGBA-IMAGE
+					  "Background" 100 NORMAL-MODE)))
+	 (bumpmap (car (gimp-layer-new img
+				       width height RGBA-IMAGE
+				       "Bumpmap" 100 NORMAL-MODE))))
+
+    (gimp-context-push)
 
     (gimp-image-undo-disable img)
     (gimp-image-resize img width height 0 0)
@@ -51,7 +55,8 @@
     (gimp-palette-set-background '(0 0 0))
     (gimp-edit-fill background BACKGROUND-FILL)
     (gimp-patterns-set-pattern pattern)
-    (gimp-edit-bucket-fill background PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
+    (gimp-edit-bucket-fill background
+			   PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
 
     ; Create bumpmap layer
 
@@ -88,9 +93,10 @@
     (if (= transparent FALSE)
 	(gimp-image-flatten img))
 
-    (gimp-palette-set-background old-bg-color)
     (gimp-image-undo-enable img)
-    (gimp-display-new img)))
+    (gimp-display-new img)
+
+    (gimp-context-pop)))
 
 
 (script-fu-register "script-fu-beveled-pattern-heading"

@@ -21,10 +21,9 @@
 
 (define (script-fu-camo-pattern inSize inGrain inColor1 inColor2 inColor3 inSmooth inFlatten)
 
-        (set! old-bg (car (gimp-palette-get-background)))
         (set! theWidth inSize)
 	(set! theHeight inSize)
-        (set! theImage (car(gimp-image-new theWidth theHeight RGB)))
+        (set! theImage (car (gimp-image-new theWidth theHeight RGB)))
 
         (set! baseLayer (car (gimp-layer-new theImage theWidth theHeight RGBA-IMAGE "Background" 100 NORMAL-MODE)))
         (gimp-image-add-layer theImage baseLayer 0)
@@ -34,6 +33,8 @@
 
         (set! thinLayer (car (gimp-layer-new theImage theWidth theHeight RGBA-IMAGE "Camo Thin Layer" 100 NORMAL-MODE)))
         (gimp-image-add-layer theImage thinLayer 0)
+
+	(gimp-context-push)
 
         (gimp-selection-all theImage)
         (gimp-palette-set-background inColor1)
@@ -73,10 +74,11 @@
         (if (= inFlatten TRUE)
             (gimp-image-flatten theImage)
             ()
-        )
-        (gimp-palette-set-background old-bg)
+	)
+
         (gimp-display-new theImage)
-)
+
+	(gimp-context-pop))
 
 
 

@@ -33,10 +33,9 @@
 	 (bg-layer (car (gimp-layer-new img width height RGBA-IMAGE
 					"Background" 100 NORMAL-MODE)))
 	 (white-layer (car (gimp-layer-copy logo-layer 1)))
-	 (black-layer (car (gimp-layer-copy logo-layer 1)))
-	 (old-gradient (car (gimp-gradients-get-gradient)))
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background))))
+	 (black-layer (car (gimp-layer-copy logo-layer 1))))
+
+    (gimp-context-push)
 
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img bg-layer 1)
@@ -88,9 +87,8 @@
     (gimp-brightness-contrast logo-layer 0 30)
     (plug-in-threshold-alpha 1 img logo-layer 60)
     (gimp-image-set-active-layer img logo-layer)
-    (gimp-gradients-set-gradient old-gradient)
-    (gimp-palette-set-background old-bg)
-    (gimp-palette-set-foreground old-fg)))
+
+    (gimp-context-pop)))
 
 (define (script-fu-comic-logo-alpha img
 				    logo-layer

@@ -21,12 +21,13 @@
 				inNumber
 				inDark)
 
-   (set! old-gradient (car (gimp-gradients-get-gradient)))
    (set! theImage inImage)
    (set! theHeight (car (gimp-image-height theImage)))
    (set! theWidth (car (gimp-image-width theImage)))
    (set! theNumber inNumber)
    (set! theSize (min theWidth theHeight))
+
+   (gimp-context-push)
 
    (gimp-image-undo-group-start theImage)
 
@@ -66,8 +67,9 @@
 
    (gimp-image-undo-group-end theImage)
 
-   (gimp-gradients-set-gradient old-gradient)
-   (gimp-displays-flush))
+   (gimp-displays-flush)
+
+   (gimp-context-pop))
 
 ; Register the function with the GIMP:
 

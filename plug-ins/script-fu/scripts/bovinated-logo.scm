@@ -26,10 +26,15 @@
 				     bg-color)
   (let* ((width (car (gimp-drawable-width logo-layer)))
 	 (height (car (gimp-drawable-height logo-layer)))
-	 (bg-layer (car (gimp-layer-new img width height RGBA-IMAGE "Background" 100 NORMAL-MODE)))
-	 (blur-layer (car (gimp-layer-new img width height RGBA-IMAGE "Blur" 100 NORMAL-MODE)))
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background))))
+	 (bg-layer (car (gimp-layer-new img
+					width height RGBA-IMAGE
+					"Background" 100 NORMAL-MODE)))
+	 (blur-layer (car (gimp-layer-new img
+					  width height RGBA-IMAGE
+					  "Blur" 100 NORMAL-MODE))))
+
+    (gimp-context-push)
+
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img bg-layer 1)
     (gimp-image-add-layer img blur-layer 1)
@@ -57,13 +62,14 @@
     (gimp-brightness-contrast logo-layer 0 127)
     (gimp-selection-none img)
     (gimp-layer-set-preserve-trans logo-layer FALSE)
-    (plug-in-bump-map 1 img logo-layer blur-layer 135 50 10 0 0 0 30 TRUE FALSE 0)
+    (plug-in-bump-map 1 img logo-layer blur-layer
+		      135 50 10 0 0 0 30 TRUE FALSE 0)
     (gimp-layer-set-offsets blur-layer 5 5)
     (gimp-invert blur-layer)
     (gimp-layer-set-opacity blur-layer 50.0)
     (gimp-image-set-active-layer img logo-layer)
-    (gimp-palette-set-background old-bg)
-    (gimp-palette-set-foreground old-fg)))
+
+    (gimp-context-pop)))
 
 (define (script-fu-bovinated-logo-alpha img
 					logo-layer

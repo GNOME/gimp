@@ -73,10 +73,10 @@
 	 (bg-type (car (gimp-drawable-type bg-layer)))
 	 (bg-image (car (gimp-drawable-get-image bg-layer)))
 	 (layer1 (car (gimp-layer-new img bg-width bg-height bg-type "Layer1" 100 NORMAL-MODE)))
-	 (inset-layer (car (gimp-layer-new img bg-width bg-height bg-type "inset1" 100 NORMAL-MODE)))
- 	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background)))
-	 (old-brush (car (gimp-brushes-get-brush))))
+	 (inset-layer (car (gimp-layer-new img bg-width bg-height bg-type "inset1" 100 NORMAL-MODE))))
+
+    (gimp-context-push)
+
     (gimp-image-undo-disable img)
     (gimp-selection-all img)
     (gimp-edit-clear inset-layer)
@@ -170,11 +170,10 @@
     (gimp-drawable-set-name cast-shadow-layer "Cast Shadow")
     (gimp-drawable-set-name inset-layer "Inset")
 
-    (gimp-palette-set-foreground old-fg)
-    (gimp-palette-set-background old-bg)
-    (gimp-brushes-set-brush old-brush)
     (gimp-display-new img)
-    (gimp-image-undo-enable img)))
+    (gimp-image-undo-enable img)
+
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-carve-it"
 		    _"<Image>/Script-Fu/Stencil Ops/C_arve-It..."

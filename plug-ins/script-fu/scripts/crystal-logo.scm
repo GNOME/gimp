@@ -92,10 +92,10 @@
 	 (layer3 (car (gimp-layer-new img width height GRAYA-IMAGE "Layer 3" 100 NORMAL-MODE)))
 	 (layer-mask 0)
 	 (layer-mask2 0)
-	 (disp-map 0)
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background)))
-	 (old-brush (car (gimp-brushes-get-brush))))
+	 (disp-map 0))
+
+    (gimp-context-push)
+
     (gimp-image-delete back-img)
     (gimp-image-undo-disable img)
     (gimp-image-resize img width height 0 0)
@@ -179,11 +179,10 @@
     (gimp-drawable-set-name bg-layer "Background")
     (gimp-drawable-set-name text-layer "Shadow")
 
-    (gimp-palette-set-foreground old-fg)
-    (gimp-palette-set-background old-bg)
-    (gimp-brushes-set-brush old-brush)
     (gimp-image-undo-enable img)
-    (gimp-display-new img)))
+    (gimp-display-new img)
+
+    (gimp-context-pop)))
 
 
 (script-fu-register "script-fu-crystal-logo"

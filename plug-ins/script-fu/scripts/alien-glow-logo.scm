@@ -15,9 +15,9 @@
 					"Background" 100 NORMAL-MODE)))
 	 (glow-layer (car (gimp-layer-new img
 					  width height RGBA-IMAGE
-					  "Alien Glow" 100 NORMAL-MODE)))
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background))))
+					  "Alien Glow" 100 NORMAL-MODE))))
+
+    (gimp-context-push)
 
     (gimp-selection-none img)
     (script-fu-util-image-resize-from-layer img logo-layer)
@@ -42,8 +42,7 @@
 		     FALSE 0 0 TRUE
 		     0 0 1 1)
 
-    (gimp-palette-set-background old-bg)
-    (gimp-palette-set-foreground old-fg)))
+    (gimp-context-pop)))
 
 (define (script-fu-alien-glow-logo-alpha img
 					 logo-layer
@@ -75,11 +74,11 @@
 	 (border (/ size 4))
 	 (grow (/ size 30))
 	 (feather (/ size 4))
-	 (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font)))
+	 (text-layer (car (gimp-text-fontname img
+					      -1 0 0 text border TRUE
+					      size PIXELS font)))
 	 (width (car (gimp-drawable-width text-layer)))
-	 (height (car (gimp-drawable-height text-layer)))
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background))))
+	 (height (car (gimp-drawable-height text-layer))))
 
     (gimp-image-undo-disable img)
     (gimp-drawable-set-name text-layer text)
