@@ -1,5 +1,9 @@
 ## Process this file with automake to produce Makefile.in
 
+libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
+libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
+libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
+
 if PLATFORM_WIN32
 no_undefined = -no-undefined
 endif
@@ -102,10 +106,11 @@ libgimpconfig_2_0_la_LDFLAGS = \
 
 libgimpconfig_2_0_la_DEPENDENCIES = $(gimpconfig_def)
 
-libgimpconfig_2_0_la_LIBADD = $(GLIB_LIBS)
+libgimpconfig_2_0_la_LIBADD = \
 	$(libgimpbase)	\
-	$(libgimpcolor) \
-	$(libgimpmath)
+	$(libgimpcolor)	\
+	$(libgimpmath)	\
+	$(GLIB_LIBS)
 
 
 install-data-local: install-ms-lib install-libtool-import-lib

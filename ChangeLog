@@ -1,3 +1,9 @@
+2005-01-26  Manish Singh  <yosh@gimp.org>
+
+	* libgimpconfig/Makefile.am: make LIBADD really work.
+
+	* Makefile.am: build libgimpconfig after libgimpcolor and libgimpmath.
+
 2005-01-26  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/jpeg/jpeg-exif.c:  libexif can return a result

@@ -14,9 +14,9 @@ SUBDIRS = \
 	menus		\
 	tips		\
 	libgimpbase	\
-	libgimpconfig	\
 	libgimpcolor	\
 	libgimpmath	\
+	libgimpconfig	\
 	libgimpmodule	\
 	libgimpthumb	\
 	libgimpwidgets	\
