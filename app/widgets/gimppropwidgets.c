@@ -627,11 +627,12 @@ gimp_prop_scale_entry_new (GObject     *config,
                            gdouble      restricted_lower,
                            gdouble      restricted_upper)
 {
-  GParamSpec *param_spec;
-  GtkObject  *adjustment;
-  gdouble     value;
-  gdouble     lower;
-  gdouble     upper;
+  GParamSpec  *param_spec;
+  GtkObject   *adjustment;
+  const gchar *tooltip;
+  gdouble      value;
+  gdouble      lower;
+  gdouble      upper;
 
   param_spec = find_param_spec (config, property_name, G_STRLOC);
   if (! param_spec)
@@ -682,6 +683,8 @@ gimp_prop_scale_entry_new (GObject     *config,
       return NULL;
     }
 
+  tooltip = gettext (g_param_spec_get_blurb (param_spec));
+
   if (! restrict_scale)
     {
       adjustment = gimp_scale_entry_new (table, column, row,
@@ -689,7 +692,7 @@ gimp_prop_scale_entry_new (GObject     *config,
                                          value, lower, upper,
                                          step_increment, page_increment, digits,
                                          TRUE, 0.0, 0.0,
-                                         g_param_spec_get_blurb (param_spec),
+                                         tooltip,
                                          NULL);
     }
   else
@@ -701,7 +704,7 @@ gimp_prop_scale_entry_new (GObject     *config,
                                          restricted_upper,
                                          step_increment, page_increment, digits,
                                          FALSE, lower, upper,
-                                         g_param_spec_get_blurb (param_spec),
+                                         tooltip,
                                          NULL);
     }
 
@@ -2070,7 +2073,7 @@ set_param_spec (GObject     *object,
       const gchar *blurb = g_param_spec_get_blurb (param_spec);
 
       if (blurb)
-        gimp_help_set_help_data (widget, blurb, NULL);
+        gimp_help_set_help_data (widget, gettext (blurb), NULL);
     }
 }
 

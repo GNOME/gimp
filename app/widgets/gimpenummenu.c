@@ -606,7 +606,7 @@ gimp_enum_stock_box_new_with_range (GType         enum_type,
         }
 
       if (value->value_name)
-        gimp_help_set_help_data (button, value->value_name, NULL);
+        gimp_help_set_help_data (button, gettext (value->value_name), NULL);
 
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);

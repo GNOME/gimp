@@ -152,13 +152,13 @@ gimp_text_class_init (GimpTextClass *klass)
                                  0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_INDENTATION,
 				   "indent",
-                                   _("How many pixels the "
-                                     "first line should be shorter."),
+                                   N_("How many pixels the "
+				      "first line should be shorter"),
 				   -8192.0, 8192.0, 0.0,
 				   0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LINE_SPACING,
 				   "line-spacing",
-                                   _("Additional line spacing (in pixels)."),
+                                   N_("Additional line spacing (in pixels)"),
 				   -8192.0, 8192.0, 0.0,
 				   0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LETTER_SPACING,

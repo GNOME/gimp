@@ -1,3 +1,18 @@
+2003-02-08  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimptext.c
+	* app/tools/gimpbucketfilloptions.c
+	* app/tools/gimpselectionoptions.c
+	* app/tools/gimptextoptions.c: use N_() instead of _() with blurbs
+	of object properties. GimpConfig wants the untranslated string as
+	well.
+
+	* app/widgets/gimpenummenu.c
+	* app/widgets/gimppropwidgets.c: added gettext() calls.
+
+	* app/config/gimpconfig-serialize.c: document the fact that
+	gimp_config_serialize_comment() only handles ASCII comments.
+
 2003-02-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/tool_options.[ch]: added

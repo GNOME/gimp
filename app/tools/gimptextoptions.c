@@ -141,7 +141,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   font_selection = gimp_prop_font_selection_new (G_OBJECT (options->text),
                                                  "font");
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Font:"), 1.0, 0.5,
+                             _("_Font:"), 1.0, 0.5,
                              font_selection, 3, FALSE);
 
   digits = gimp_unit_get_digits (options->text->font_size_unit);
@@ -149,7 +149,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
                                           "font-size",
 					  1.0, 10.0, digits); 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Size:"), 1.0, 0.5,
+                             _("_Size:"), 1.0, 0.5,
                              spinbutton, 2, FALSE);
 
   unit_menu = gimp_prop_unit_menu_new (G_OBJECT (options->text),

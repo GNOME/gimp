@@ -136,7 +136,7 @@ gimp_selection_options_class_init (GimpSelectionOptionsClass *klass)
                                  0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
                                     "antialias",
-                                    _("Smooth edges"),
+                                    N_("Smooth edges"),
                                     TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FEATHER,
@@ -150,18 +150,18 @@ gimp_selection_options_class_init (GimpSelectionOptionsClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SELECT_TRANSPARENT,
                                     "select-transparent",
-                                    _("Allow completely transparent regions "
-                                      "to be selected"),
+                                    N_("Allow completely transparent regions "
+				       "to be selected"),
                                     TRUE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
                                     "sample-merged",
-                                    _("Base selection on all visible layers"),
+                                    N_("Base selection on all visible layers"),
                                     FALSE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_THRESHOLD,
                                    "threshold",
-                                   _("Maximum color difference"),
+                                   N_("Maximum color difference"),
                                    0.0, 255.0, 15.0,
                                    0);
 
@@ -171,8 +171,8 @@ gimp_selection_options_class_init (GimpSelectionOptionsClass *klass)
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHRINK_MERGED,
                                     "shrink-merged",
-                                    _("Use all visible layers when shrinking "
-                                      "the selection"),
+                                    N_("Use all visible layers when shrinking "
+				       "the selection"),
                                     FALSE,
                                     0);
 

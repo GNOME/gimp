@@ -450,10 +450,11 @@ gimp_config_serialize_unknown_tokens (GObject *object,
 /**
  * gimp_config_serialize_comment:
  * @str: a #GString.
- * @comment: the comment to serialize
+ * @comment: the comment to serialize (ASCII only)
  * 
  * Appends the @comment to @str and inserts linebreaks and hash-marks to
- * format it as a comment.
+ * format it as a comment. Note that this function does not handle non-ASCII
+ * characters.
  **/
 void
 gimp_config_serialize_comment (GString     *str,
