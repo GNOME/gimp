@@ -1,3 +1,8 @@
+1999-07-08  Raja R Harinath  <harinath@cs.umn.edu>
+
+	* tools/pdbgen/app.pl (generate): Fix typo.
+	* tools/pdbgen/Makefile.am: Clean up srcdir != builddir.
+
 Thu Jul  8 00:08:50 EDT 1999  Adrian Likins <alikins@redhat.com>
 
 	*app/interface.c: added type for _NETSCAPE_URL to the DnD stuff

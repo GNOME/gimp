@@ -709,7 +709,7 @@ GPL
 	}
 
 	my $cfile = "$destdir/${group}_cmds.c$FILE_EXT";
-	open CFILE, "> $cfile" or die "Can't open $cmdfile: $!\n";
+	open CFILE, "> $cfile" or die "Can't open $cfile: $!\n";
 	print CFILE $gpl;
 	print CFILE qq/#include "procedural_db.h"\n\n/;
 	print CFILE $headers, "\n";
