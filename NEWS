@@ -9,32 +9,33 @@ GIMP 2.2, will emerge out of this.
 Overview of Changes since 2.0
 =============================
 
-GIMP 2.2 includes the following enhancements:
+GIMP 2.1 includes the following enhancements:
  - Major user interface improvements
    * Work has begun to make the GIMP user interface comply better with
-     the GNOME HIG. This is an ongoing effort and the interface is quite
+     the GNOME HIG. This is an ongoing effort and the interface is still
      inconsistent at the moment.
    * Users are now allowed to clear the undo history.
    * Pixels are now considered image units; this simplifies the handling of 
      units.
    * New widgets and frameworks provided by GTK+ 2.4 are used; this means
      + uses the new GtkFileChooser dialog, vastly improving the file dialogs.
-     + includes port of menus to GtkUIManager, which creates all core menus from
-       XML files at runtime. This means that menu items can be rearrainged by 
-       users simply by editing the files.
-     + uses a global accelerator table in all docks and image windows.  This 
+     + includes port of menus to GtkUIManager, which creates all core menus
+       from XML files at runtime. This means that menu items can be rearranged
+       by users simply by editing these files.
+     + uses a global accelerator table in all docks and image windows. This 
        means that a hotkey will do the same thing regardless of which dock
        or image window you are using.
      + adds replacement widgets based on GtkComboBox for most uses of
        GtkOptionMenu (GimpUnitMenu remains to be ported)
      + makes the order and visibility of tools in the toolbox configurable
-       (This effort has not yet been completed.)
      + allows keeping toolbox and dock windows above other windows (if the WM 
        supports this hint)
  - Some changes to plug-ins
    * Plug-ins can now register the same procedures in multiple places (the
      API to register menu entries has been changed in a backward-compatible 
      fashion.)
+   * Plug-ins can now optionally register a menu icon.
+   * File plug-ins can now register a mime-type.
    * The obsolete AlienMap and GIcon plug-ins were removed.  AlienMap 2 does
      everything than AlienMap did, and the GIMP-specific GIcon format has not
      been used by anything for quites some time now.
