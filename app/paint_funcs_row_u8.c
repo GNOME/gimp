@@ -229,17 +229,17 @@ color_row_u8  (
 {
   gint b, w;
   guint8 * c, *d;
+  guchar * dest_ptr = (guchar *)dest; 
 
+  c = (guint8*)color;
   while (height--)
     {
-      d = dest;  
+      d = (guint8*)dest_ptr;  
       w = width;
 
       while (w--)
         {
-          c = color;
           b = pixelstride;
-
           while (b--)
             {
               d[b] = c[b];
@@ -247,8 +247,7 @@ color_row_u8  (
 
           d += pixelstride;
         }
-
-      dest += rowstride;
+      dest_ptr += rowstride;
     }
 }
 

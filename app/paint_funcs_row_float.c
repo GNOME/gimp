@@ -121,27 +121,27 @@ absdiff_row_float  (
 
 void 
 color_row_float  (
-                  void * dest,
-                  void * color,
-                  guint width,
-                  guint height,
-                  guint pixelstride,
-                  guint rowstride
-                  )
+               void * dest,
+               void * color,
+               guint width,
+               guint height,
+               guint pixelstride,
+               guint rowstride
+               )
 {
   gint b, w;
   gfloat * c, *d;
+  guchar * dest_ptr = (guchar *)dest; 
 
+  c = (gfloat*)color;
   while (height--)
     {
-      d = dest;  
+      d = (gfloat*)dest_ptr;  
       w = width;
 
       while (w--)
         {
-          c = color;
           b = pixelstride;
-
           while (b--)
             {
               d[b] = c[b];
@@ -149,8 +149,7 @@ color_row_float  (
 
           d += pixelstride;
         }
-
-      dest += rowstride;
+      dest_ptr += rowstride;
     }
 }
 
