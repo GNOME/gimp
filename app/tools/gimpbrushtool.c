@@ -693,8 +693,8 @@ gimp_paint_tool_sample_color (GimpDrawable *drawable,
                              x, y,
                              options->sample_average,
                              options->average_radius,
-                             &color,
                              NULL,
+                             &color,
                              NULL))
     {
       if ((state & GDK_CONTROL_MASK))

@@ -327,8 +327,8 @@ gimp_color_picker_tool_pick (GimpColorTool    *tool,
                                    x, y,
 				   options->sample_average,
 				   options->average_radius,
-                                   &color,
                                    &sample_type,
+                                   &color,
                                    &color_index);
   
   if (success)

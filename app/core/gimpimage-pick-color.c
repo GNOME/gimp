@@ -42,8 +42,8 @@ gimp_image_pick_color (GimpImage     *gimage,
                        gint           y,
                        gboolean       sample_average,
                        gdouble        average_radius,
-                       GimpRGB       *color,
                        GimpImageType *sample_type,
+                       GimpRGB       *color,
                        gint          *color_index)
 {
   GimpRGB        rgb_color;
@@ -106,6 +106,7 @@ gimp_image_pick_color (GimpImage     *gimage,
 	      color_avg[RED_PIX]   += tmp_col[RED_PIX];
 	      color_avg[GREEN_PIX] += tmp_col[GREEN_PIX];
 	      color_avg[BLUE_PIX]  += tmp_col[BLUE_PIX];
+
 	      if (has_alpha)
 		color_avg[ALPHA_PIX] += tmp_col[ALPHA_PIX];
 
@@ -142,11 +143,11 @@ gimp_image_pick_color (GimpImage     *gimage,
 
   g_free (col);
 
-  if (color)
-    *color = rgb_color;
-
   if (sample_type)
     *sample_type = my_sample_type;
+
+  if (color)
+    *color = rgb_color;
 
   if (color_index)
     *color_index = my_color_index;
