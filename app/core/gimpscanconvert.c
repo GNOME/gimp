@@ -22,13 +22,7 @@
 
 #include <glib-object.h>
 
-#include <libart_lgpl/art_gray_svp.h>
-#include <libart_lgpl/art_misc.h>
-#include <libart_lgpl/art_pathcode.h>
-#include <libart_lgpl/art_svp.h>
-#include <libart_lgpl/art_svp_vpath.h>
-#include <libart_lgpl/art_svp_wind.h>
-#include <libart_lgpl/art_vpath.h>
+#include <libart_lgpl/libart.h>
 
 #include "libgimpmath/gimpmath.h"
 

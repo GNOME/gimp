@@ -1,3 +1,8 @@
+2002-04-06  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpscanconvert.c: include libart.h instead of a selection
+	of libart headers.
+
 2002-04-03  Manish Singh  <yosh@gimp.org>
 
 	* app/core/gimpobject.c: use gobject marshaller names directly so
