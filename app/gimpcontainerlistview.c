@@ -132,15 +132,22 @@ gimp_container_list_view_destroy (GtkObject *object)
 }
 
 GtkWidget *
-gimp_container_list_view_new (GimpContainer *container)
+gimp_container_list_view_new (GimpContainer *container,
+			      gint           preview_width,
+			      gint           preview_height)
 {
   GimpContainerListView *list_view;
   GimpContainerView     *view;
 
   g_return_val_if_fail (container != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (preview_width  > 0 && preview_width  <= 64, NULL);
+  g_return_val_if_fail (preview_height > 0 && preview_height <= 64, NULL);
 
   list_view = gtk_type_new (GIMP_TYPE_CONTAINER_LIST_VIEW);
+
+  list_view->preview_width  = preview_width;
+  list_view->preview_height = preview_height;
 
   view = GIMP_CONTAINER_VIEW (list_view);
 
@@ -173,8 +180,9 @@ gimp_container_list_view_insert_item (GimpContainerView *view,
   gtk_container_add (GTK_CONTAINER (list_item), hbox);
   gtk_widget_show (hbox);
 
-  preview = gimp_preview_new (viewable);
-  gtk_widget_set_usize (GTK_WIDGET (preview), 64, 64);
+  preview = gimp_preview_new (viewable,
+			      list_view->preview_width,
+			      list_view->preview_height);
   gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
 

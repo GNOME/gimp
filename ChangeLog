@@ -1,5 +1,27 @@
 2001-02-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am
+	* app/gimpcontainergridview.[ch]: new widget providing a grid view
+	in the style of the current brush and pattern selections.
+
+	* app/gimpcontainerlistview.[ch]
+	* app/gimppreview.[ch]: the constructors take "width" and "height"
+	parameters now.
+
+	* app/gimpviewable.c: if the viewable is not able to generate
+	a static (cached) preview, create a new one and cache it ourselves.
+
+	* app/gimppattern.c: produce a nice preview.
+
+	* app/temp_buf.[ch]: changed temp_buf_copy_area() to take a
+	destination offset instead of a border parameter. This function
+	was not used at all before.
+
+	* app/commands.[ch]
+	* app/menus.c: test dialogs for the grid view.
+
+2001-02-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimpcontainerlistview.[ch]
 	* app/gimpcontainerview.[ch]
 	* app/gimpmarshal.[ch]: moved the signal connecting stuff to the

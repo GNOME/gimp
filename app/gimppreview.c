@@ -124,12 +124,16 @@ gimp_preview_destroy (GtkObject *object)
 }
 
 GtkWidget *
-gimp_preview_new (GimpViewable *viewable)
+gimp_preview_new (GimpViewable *viewable,
+		  gint          width,
+		  gint          height)
 {
   GimpPreview *preview;
 
   g_return_val_if_fail (viewable != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
+  g_return_val_if_fail (width  > 0 && width  <= 64, NULL);
+  g_return_val_if_fail (height > 0 && height <= 64, NULL);
 
   preview = gtk_type_new (GIMP_TYPE_PREVIEW);
 
@@ -140,9 +144,7 @@ gimp_preview_new (GimpViewable *viewable)
 					 GTK_SIGNAL_FUNC (gimp_preview_paint),
 					 GTK_OBJECT (preview));
 
-  gtk_preview_size (GTK_PREVIEW (preview), 32, 32);
-
-  gtk_preview_set_expand (GTK_PREVIEW (preview), TRUE);
+  gtk_preview_size (GTK_PREVIEW (preview), width, height);
 
   return GTK_WIDGET (preview);
 }

@@ -56,7 +56,9 @@ struct _GimpPreviewClass
 
 
 GtkType      gimp_preview_get_type (void);
-GtkWidget *  gimp_preview_new      (GimpViewable  *viewable);
+GtkWidget *  gimp_preview_new      (GimpViewable  *viewable,
+				    gint           width,
+				    gint           height);
 
 
 #ifdef __cplusplus

@@ -328,57 +328,62 @@ temp_buf_copy_area (TempBuf *src,
 		    gint     y,
 		    gint     width,
 		    gint     height,
-		    gint     border)
+		    gint     dest_x,
+		    gint     dest_y)
 {
   TempBuf     *new;
   PixelRegion  srcR, destR;
   guchar       empty[MAX_CHANNELS] = { 0, 0, 0, 0 };
   gint         x1, y1, x2, y2;
 
-  if (!src)
-    {
-      g_message ("trying to copy a temp buf which is NULL.");
-      return dest;
-    }
+  g_return_val_if_fail (src  != NULL, dest);
+  g_return_val_if_fail (!dest || dest->bytes == src->bytes, dest);
+
+  g_return_val_if_fail (width  + dest_x > 0, dest);
+  g_return_val_if_fail (height + dest_y > 0, dest);
+
+  g_return_val_if_fail (!dest || dest->width  >= width  + dest_x, dest);
+  g_return_val_if_fail (!dest || dest->height >= height + dest_y, dest);
 
   /*  some bounds checking  */
-  x1 = CLAMP (x, 0, src->width);
-  y1 = CLAMP (y, 0, src->height);
-  x2 = CLAMP (x + width, 0, src->width);
-  y2 = CLAMP (y + height, 0, src->height);
+  x1 = CLAMP (x, 0, src->width  - 1);
+  y1 = CLAMP (y, 0, src->height - 1);
+  x2 = CLAMP (x + width  - 1, 0, src->width  - 1);
+  y2 = CLAMP (y + height - 1, 0, src->height - 1);
 
   if (!(x2 - x1) || !(y2 - y1))
     return dest;
 
-  x      = x1 - border;
-  y      = y1 - border;
-  width  = (x2 - x1) + border * 2;
-  height = (y2 - y1) + border * 2;
+  width  = x2 - x1 + 1;
+  height = y2 - y1 + 1;
 
-  if (!dest)
+  if (! dest)
     {
-      new = temp_buf_new (width, height, src->bytes, x, y, empty);
+      new = temp_buf_new (width  + dest_x,
+			  height + dest_y,
+			  src->bytes,
+			  0, 0,
+			  empty);
     }
   else
     {
       new = dest;
-      if (dest->bytes != src->bytes)
-	g_message ("In temp_buf_copy_area, the widths or heights or bytes don't match.");
     }
-
-  /*  Set the offsets for the dest  */
-  new->x = src->x + x;
-  new->y = src->y + y;
 
   /*  Copy the region  */
   srcR.bytes     = src->bytes;
-  srcR.w         = (x2 - x1);
-  srcR.h         = (y2 - y1);
+  srcR.w         = width;
+  srcR.h         = height;
   srcR.rowstride = src->bytes * src->width;
-  srcR.data      = temp_buf_data (src) + y1 * srcR.rowstride + x1 * srcR.bytes;
+  srcR.data      = (temp_buf_data (src) +
+		    y1 * srcR.rowstride +
+		    x1 * srcR.bytes);
 
+  destR.bytes     = dest->bytes;
   destR.rowstride = new->bytes * new->width;
-  destR.data      = temp_buf_data (new) + (y1 - y) * destR.rowstride + (x1 - x) * srcR.bytes;
+  destR.data      = (temp_buf_data (new) +
+		     dest_y * destR.rowstride +
+		     dest_x * destR.bytes);
 
   copy_region (&srcR, &destR);
 
@@ -387,8 +392,7 @@ temp_buf_copy_area (TempBuf *src,
 
 void
 temp_buf_free (TempBuf *temp_buf)
-{
-  if (temp_buf->data)
+{  if (temp_buf->data)
     g_free (temp_buf->data);
 
   if (temp_buf->swapped)

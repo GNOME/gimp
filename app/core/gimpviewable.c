@@ -149,6 +149,28 @@ gimp_viewable_preview (GimpViewable *viewable,
   gtk_signal_emit (GTK_OBJECT (viewable), viewable_signals[PREVIEW],
 		   width, height, &temp_buf);
 
+  if (temp_buf)
+    return temp_buf;
+
+  temp_buf = gtk_object_get_data (GTK_OBJECT (viewable),
+				  "static_viewable_preview");
+
+  if (temp_buf)
+    {
+      if (temp_buf->width  == width  &&
+	  temp_buf->height == height)
+	return temp_buf;
+
+      temp_buf_free (temp_buf);
+      temp_buf = NULL;
+    }
+
+  gtk_signal_emit (GTK_OBJECT (viewable), viewable_signals[PREVIEW_NEW],
+		   width, height, &temp_buf);
+
+  gtk_object_set_data (GTK_OBJECT (viewable), "static_viewable_preview",
+		       temp_buf);
+
   return temp_buf;
 }
 

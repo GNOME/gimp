@@ -282,6 +282,8 @@ gimp_SOURCES = \
 	tile_swap.c		\
 	tile_swap.h		\
 	\
+	gimpcontainergridview.h	\
+	gimpcontainergridview.c	\
 	gimpcontainerlistview.h	\
 	gimpcontainerlistview.c	\
 	gimpcontainerview.h	\

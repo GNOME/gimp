@@ -1,0 +1,213 @@
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#include "config.h"
+
+#include <stdio.h>
+
+#include <gtk/gtk.h>
+
+#include "apptypes.h"
+
+#include "appenv.h"
+#include "gimpcontainer.h"
+#include "gimpcontainergridview.h"
+#include "gimppreview.h"
+#include "gtkhwrapbox.h"
+
+
+static void     gimp_container_grid_view_class_init   (GimpContainerGridViewClass *klass);
+static void     gimp_container_grid_view_init         (GimpContainerGridView      *panel);
+static void     gimp_container_grid_view_destroy      (GtkObject                  *object);
+
+static gpointer gimp_container_grid_view_insert_item  (GimpContainerView      *view,
+						       GimpViewable           *viewable,
+						       gint                    index);
+static void     gimp_container_grid_view_remove_item  (GimpContainerView      *view,
+						       GimpViewable           *viewable,
+						       gpointer                insert_data);
+static void     gimp_container_grid_view_clear_items  (GimpContainerView      *view);
+
+
+static GimpContainerViewClass *parent_class = NULL;
+
+
+GtkType
+gimp_container_grid_view_get_type (void)
+{
+  static guint grid_view_type = 0;
+
+  if (! grid_view_type)
+    {
+      GtkTypeInfo grid_view_info =
+      {
+	"GimpContainerGridView",
+	sizeof (GimpContainerGridView),
+	sizeof (GimpContainerGridViewClass),
+	(GtkClassInitFunc) gimp_container_grid_view_class_init,
+	(GtkObjectInitFunc) gimp_container_grid_view_init,
+	/* reserved_1 */ NULL,
+	/* reserved_2 */ NULL,
+        (GtkClassInitFunc) NULL
+      };
+
+      grid_view_type = gtk_type_unique (GIMP_TYPE_CONTAINER_VIEW,
+					&grid_view_info);
+    }
+
+  return grid_view_type;
+}
+
+static void
+gimp_container_grid_view_class_init (GimpContainerGridViewClass *klass)
+{
+  GtkObjectClass         *object_class;
+  GimpContainerViewClass *container_view_class;
+
+  object_class         = (GtkObjectClass *) klass;
+  container_view_class = (GimpContainerViewClass *) klass;
+  
+  parent_class = gtk_type_class (GIMP_TYPE_CONTAINER_VIEW);
+
+  object_class->destroy = gimp_container_grid_view_destroy;
+
+  container_view_class->insert_item  = gimp_container_grid_view_insert_item;
+  container_view_class->remove_item  = gimp_container_grid_view_remove_item;
+  container_view_class->clear_items   = gimp_container_grid_view_clear_items;
+}
+
+static void
+gimp_container_grid_view_init (GimpContainerGridView *grid_view)
+{
+  GtkWidget *scrolled_win;
+
+  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win), 
+                                  GTK_POLICY_AUTOMATIC,
+				  GTK_POLICY_ALWAYS);
+  gtk_box_pack_start (GTK_BOX (grid_view), scrolled_win, TRUE, TRUE, 0);
+
+  grid_view->wrapbox = gtk_hwrap_box_new (FALSE);
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
+                                         grid_view->wrapbox);
+
+  gtk_container_set_focus_vadjustment
+    (GTK_CONTAINER (grid_view->wrapbox),
+     gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (scrolled_win)));
+  GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW (scrolled_win)->vscrollbar,
+                          GTK_CAN_FOCUS);
+
+  gtk_widget_show (grid_view->wrapbox);
+  gtk_widget_show (scrolled_win);
+}
+
+static void
+gimp_container_grid_view_destroy (GtkObject *object)
+{
+  GimpContainerGridView *grid_view;
+
+  grid_view = GIMP_CONTAINER_GRID_VIEW (object);
+
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+GtkWidget *
+gimp_container_grid_view_new (GimpContainer *container,
+			      gint           preview_width,
+			      gint           preview_height)
+{
+  GimpContainerGridView *grid_view;
+  GimpContainerView     *view;
+
+  g_return_val_if_fail (container != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (preview_width  > 0 && preview_width  <= 64, NULL);
+  g_return_val_if_fail (preview_height > 0 && preview_height <= 64, NULL);
+
+  grid_view = gtk_type_new (GIMP_TYPE_CONTAINER_GRID_VIEW);
+
+  grid_view->preview_width  = preview_width;
+  grid_view->preview_height = preview_height;
+
+  view = GIMP_CONTAINER_VIEW (grid_view);
+
+  gimp_container_view_set_container (view, container);
+
+  return GTK_WIDGET (grid_view);
+}
+
+static gpointer
+gimp_container_grid_view_insert_item (GimpContainerView *view,
+				      GimpViewable      *viewable,
+				      gint               index)
+{
+  GimpContainerGridView *grid_view;
+  GtkWidget             *preview;
+
+  grid_view = GIMP_CONTAINER_GRID_VIEW (view);
+
+  preview = gimp_preview_new (viewable,
+			      grid_view->preview_width,
+			      grid_view->preview_height);
+  gtk_container_add (GTK_CONTAINER (grid_view->wrapbox), preview);
+  gtk_widget_show (preview);
+
+  /*
+  if (index == -1)
+    gtk_grid_append_items (GTK_GRID (grid_view->gtk_grid), grid);
+  else
+    gtk_grid_insert_items (GTK_GRID (grid_view->gtk_grid), grid, index);
+  */
+
+  return (gpointer) preview;
+}
+
+static void
+gimp_container_grid_view_remove_item (GimpContainerView *view,
+				      GimpViewable      *viewable,
+				      gpointer           insert_data)
+{
+  GimpContainerGridView *grid_view;
+  GtkWidget             *preview;
+
+  grid_view = GIMP_CONTAINER_GRID_VIEW (view);
+  preview   = GTK_WIDGET (insert_data);
+
+  if (preview)
+    {
+      gtk_container_remove (GTK_CONTAINER (grid_view->wrapbox), preview);
+    }
+}
+
+static void
+gimp_container_grid_view_clear_items (GimpContainerView *view)
+{
+  GimpContainerGridView *grid_view;
+
+  grid_view = GIMP_CONTAINER_GRID_VIEW (view);
+
+  /*
+  while (GTK_CONTAINER (grid_view->wrapbox)->children)
+    {
+      gtk_container_remove
+	(GTK_CONTAINER (grid_view->wrapbox),
+	 GTK_WIDGET (GTK_CONTAINER (grid_view->wrapbox)->children->data));
+    }
+  */
+}

@@ -59,7 +59,8 @@ TempBuf * temp_buf_copy_area  (TempBuf     *src,
 			       gint         y,
 			       gint         width,
 			       gint         height,
-			       gint         border);
+			       gint         dest_x,
+			       gint         dest_y);
 void      temp_buf_free       (TempBuf     *buf);
 guchar  * temp_buf_data       (TempBuf     *buf);
 guchar  * temp_buf_data_clear (TempBuf     *buf);

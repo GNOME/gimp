@@ -16,42 +16,42 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_CONTAINER_LIST_VIEW_H__
-#define __GIMP_CONTAINER_LIST_VIEW_H__
+#ifndef __GIMP_CONTAINER_GRID_VIEW_H__
+#define __GIMP_CONTAINER_GRID_VIEW_H__
 
 
 #include "gimpcontainerview.h"
 
 
-#define GIMP_TYPE_CONTAINER_LIST_VIEW            (gimp_container_list_view_get_type ())
-#define GIMP_CONTAINER_LIST_VIEW(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_CONTAINER_LIST_VIEW, GimpContainerListView))
-#define GIMP_CONTAINER_LIST_VIEW_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTAINER_LIST_VIEW, GimpContainerListViewClass))
-#define GIMP_IS_CONTAINER_LIST_VIEW(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_CONTAINER_LIST_VIEW))
-#define GIMP_IS_CONTAINER_LIST_VIEW_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTAINER_LIST_VIEW))
+#define GIMP_TYPE_CONTAINER_GRID_VIEW            (gimp_container_grid_view_get_type ())
+#define GIMP_CONTAINER_GRID_VIEW(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_CONTAINER_GRID_VIEW, GimpContainerGridView))
+#define GIMP_CONTAINER_GRID_VIEW_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTAINER_GRID_VIEW, GimpContainerGridViewClass))
+#define GIMP_IS_CONTAINER_GRID_VIEW(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_CONTAINER_GRID_VIEW))
+#define GIMP_IS_CONTAINER_GRID_VIEW_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTAINER_GRID_VIEW))
 
 
-typedef struct _GimpContainerListViewClass  GimpContainerListViewClass;
+typedef struct _GimpContainerGridViewClass  GimpContainerGridViewClass;
 
-struct _GimpContainerListView
+struct _GimpContainerGridView
 {
   GimpContainerView  parent_instance;
 
-  GtkWidget         *gtk_list;
+  GtkWidget         *wrapbox;
 
   gint               preview_width;
   gint               preview_height;
 };
 
-struct _GimpContainerListViewClass
+struct _GimpContainerGridViewClass
 {
   GimpContainerViewClass  parent_class;
 };
 
 
-GtkType     gimp_container_list_view_get_type (void);
-GtkWidget * gimp_container_list_view_new      (GimpContainer *container,
+GtkType     gimp_container_grid_view_get_type (void);
+GtkWidget * gimp_container_grid_view_new      (GimpContainer *container,
 					       gint           preview_width,
 					       gint           preview_height);
 
 
-#endif  /*  __GIMP_CONTAINER_LIST_VIEW_H__  */
+#endif  /*  __GIMP_CONTAINER_GRID_VIEW_H__  */

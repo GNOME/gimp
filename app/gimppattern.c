@@ -43,6 +43,7 @@
 
 #include "apptypes.h"
 
+#include "gimpimage.h"
 #include "gimppattern.h"
 #include "gimprc.h"
 #include "patterns.h"
@@ -52,12 +53,12 @@
 #include "libgimp/gimpintl.h"
 
 
-static void      gimp_pattern_class_init (GimpPatternClass *klass);
-static void      gimp_pattern_init       (GimpPattern      *pattern);
-static void      gimp_pattern_destroy    (GtkObject        *object);
-static TempBuf * gimp_pattern_preview    (GimpViewable     *viewable,
-					  gint              width,
-					  gint              height);
+static void      gimp_pattern_class_init  (GimpPatternClass *klass);
+static void      gimp_pattern_init        (GimpPattern      *pattern);
+static void      gimp_pattern_destroy     (GtkObject        *object);
+static TempBuf * gimp_pattern_preview_new (GimpViewable     *viewable,
+					   gint              width,
+					   gint              height);
 
 
 static GimpViewableClass *parent_class = NULL;
@@ -101,7 +102,7 @@ gimp_pattern_class_init (GimpPatternClass *klass)
 
   object_class->destroy = gimp_pattern_destroy;
 
-  viewable_class->preview = gimp_pattern_preview;
+  viewable_class->preview_new = gimp_pattern_preview_new;
 }
 
 static void
@@ -128,15 +129,40 @@ gimp_pattern_destroy (GtkObject *object)
 }
 
 static TempBuf *
-gimp_pattern_preview (GimpViewable *viewable,
-		      gint          width,
-		      gint          height)
+gimp_pattern_preview_new (GimpViewable *viewable,
+			  gint          width,
+			  gint          height)
 {
   GimpPattern *pattern;
+  TempBuf     *temp_buf;
+  guchar       white[MAX_CHANNELS] = { 255, 255, 255, 255 };
+  gint         copy_width;
+  gint         copy_height;
+  gint         x, y;
 
   pattern = GIMP_PATTERN (viewable);
 
-  return pattern->mask;
+  width  -= 2;
+  height -= 2;
+
+  copy_width  = MIN (width,  pattern->mask->width);
+  copy_height = MIN (height, pattern->mask->height);
+
+  x = ((copy_width  == width)  ? 0 : (width -  copy_width)  / 2) + 1;
+  y = ((copy_height == height) ? 0 : (height - copy_height) / 2) + 1;
+
+  temp_buf = temp_buf_new (width  + 2,
+			   height + 2,
+			   pattern->mask->bytes,
+			   0, 0,
+			   white);
+
+  temp_buf_copy_area (pattern->mask, temp_buf,
+		      0, 0,
+		      copy_width, copy_height,
+		      x, y);
+
+  return temp_buf;
 }
 
 GimpPattern *
