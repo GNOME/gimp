@@ -16,6 +16,7 @@ gimptool-1.3
 gimptool-win32.c
 gimp-1.3.pc
 gimpui-1.3.pc
+gimp-zip
 intltool-extract
 intltool-extract.in
 intltool-merge
@@ -27,4 +28,3 @@ stamp-h
 stamp-h1
 stamp-h.in
 ABOUT-NLS
-.xvpics
