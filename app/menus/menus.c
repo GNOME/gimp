@@ -30,6 +30,7 @@
 #include "scale.h"
 #include "tools.h"
 #include "gdisplay.h"
+#include "docindex.h"
 
 static void menus_init (void);
 
@@ -50,6 +51,7 @@ static GtkItemFactoryEntry toolbox_entries[] =
   { "/File/Dialogs/Input Devices...", NULL, dialogs_input_devices_cmd_callback, 0 },
   { "/File/Dialogs/Device Status...", NULL, dialogs_device_status_cmd_callback, 0 },
   { "/File/---", NULL, NULL, 0, "<Separator>" },
+  { "/File/Document Index...", NULL, open_idea_window, 0 },
   { "/File/Quit", "<control>Q", file_quit_cmd_callback, 0 },
 };
 static guint n_toolbox_entries = sizeof (toolbox_entries) / sizeof (toolbox_entries[0]);

@@ -280,7 +280,9 @@ gimp_SOURCES = \
 	undo_cmds.h		\
 	wilber.h		\
 	xcf.c			\
-	xcf.h
+	xcf.h			\
+	docindex.c		\
+	docindex.h
 
 EXTRA_DIST = \
 	tools/channel.xbm	\

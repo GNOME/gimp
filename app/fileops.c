@@ -37,6 +37,7 @@
 #include "plug_in.h"
 #include "procedural_db.h"
 #include "gimprc.h"
+#include "docindex.h"
 
 typedef struct _OverwriteBox OverwriteBox;
 
@@ -750,6 +751,8 @@ file_open (char *filename, char* raw_filename)
       /*  display the image */
       gdisplay_new (gimage, 0x0101);
     }
+
+  idea_add( filename );
 
   return return_val;
 }

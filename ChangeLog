@@ -1,3 +1,17 @@
+1998-07-08  Chris Lahey  <clahey@umich.edu>
+
+	* app/docindex.h: 
+	* app/docindex.c: New files containing the document index.
+
+	* app/menus.c (toolbox_entries): Added a menu item to open the
+	Document Index.
+
+	* app/Makefile.am (gimp_SOURCES): Added docindex.c and
+	docindex.h.
+
+	* app/fileops.c (file_open): Made it so that opening a file adds
+	to the document index.
+
 Wed Jul  8 01:38:15 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* Makefile.am blend.c boundary.c by_color_select.c channel.c
