@@ -2,7 +2,13 @@
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * cdisplay_colorblind.c
- * Copyright (C) 2002 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2002-2003 Michael Natterer <mitch@gimp.org>, 
+ *                         Robert Dougherty <bob@vischeck.com> and
+ *                         Alex Wade <alex@vischeck.com>
+ *
+ * This code is an implementation of an algorithm described by Hans Brettel, 
+ * Francoise Vienot and John Mollon in the Journal of the Optical Society of 
+ * America V14(10), pg 2647. (See http://vischeck.com/ for more info.)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +35,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmodule/gimpmodule.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "libgimp/libgimp-intl.h"
 
@@ -36,7 +43,7 @@
 typedef enum
 {
   COLORBLIND_DEFICIENCY_NONE,
-  COLORBLIND_DEFICIENCY_PROTONOPIA,
+  COLORBLIND_DEFICIENCY_PROTANOPIA,
   COLORBLIND_DEFICIENCY_DEUTERANOPIA,
   COLORBLIND_DEFICIENCY_TRITANOPIA,
   COLORBLIND_DEFICIENCY_LAST = COLORBLIND_DEFICIENCY_TRITANOPIA
@@ -98,11 +105,11 @@ static void    colorblind_deficiency_callback        (GtkWidget          *widget
 static const GimpModuleInfo cdisplay_colorblind_info = 
 {
   GIMP_MODULE_ABI_VERSION,
-  N_("Colorblind display filter"),
-  "Michael Natterer <mitch@gimp.org>",
-  "v0.1",
-  "(c) 2002, released under the GPL",
-  "December 16, 2002"
+  N_("Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"),
+  "Michael Natterer <mitch@gimp.org>, Bob Dougherty <bob@vischeck.com>, Alex Wade <alex@vischeck.com>",
+  "v0.2",
+  "(c) 2002-2003, released under the GPL",
+  "January 22, 2003"
 };
 
 static GType                  cdisplay_colorblind_type = 0;
@@ -131,14 +138,14 @@ cdisplay_colorblind_get_type (GTypeModule *module)
       static const GTypeInfo display_info =
       {
         sizeof (CdisplayColorblindClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) cdisplay_colorblind_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (CdisplayColorblind),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) cdisplay_colorblind_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) cdisplay_colorblind_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (CdisplayColorblind),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) cdisplay_colorblind_init,
       };
 
       cdisplay_colorblind_type =
@@ -218,52 +225,190 @@ cdisplay_colorblind_convert (GimpColorDisplay *display,
                              gint              bpl)
 {
   CdisplayColorblind *colorblind;
-  gint                i, j;
+  gint                i;
   guchar             *b;
+  gfloat              rgb2lms[9],lms2rgb[9],gammaRGB[3],anchor_e[3],anchor[12];
+  gfloat              a1, b1, c1, a2, b2, c2, inflectionVal, tmp;
+  gfloat              red, green, blue, redOld, greenOld; /* Hold rgb values extracted from the buffer */
+  gint                npix; /* Number of pixels in the image */
 
   colorblind = CDISPLAY_COLORBLIND (display);
 
+  /* Require 3 bytes per pixel (assume RGB) */
   if (bpp != 3)
     return;
 
-  j = height;
+  /* For most modern Cathode-Ray Tube monitors (CRTs), the following
+   * are good estimates of the RGB->LMS and LMS->RGB transform
+   * matrices.  They are based on spectra measured on a typical CRT
+   * with a PhotoResearch PR650 spectral photometer and the Stockman
+   * human cone fundamentals. NOTE: these estimates will NOT work well
+   * for LCDs!
+   */
+  rgb2lms[0] = 0.05059983; rgb2lms[1] = 0.08585369; rgb2lms[2] = 0.00952420;
+  rgb2lms[3] = 0.01893033; rgb2lms[4] = 0.08925308; rgb2lms[5] = 0.01370054;
+  rgb2lms[6] = 0.00292202; rgb2lms[7] = 0.00975732; rgb2lms[8] = 0.07145979;
 
-  while (j--)
+  lms2rgb[0] =  30.830854; lms2rgb[1] = -29.832659; lms2rgb[2] =   1.610474;
+  lms2rgb[3] =  -6.481468; lms2rgb[4] =  17.715578; lms2rgb[5] =  -2.532642;
+  lms2rgb[6] =  -0.375690; lms2rgb[7] =  -1.199062; lms2rgb[8] =  14.273846;
+
+  /* The RGB<->LMS transforms above are computed from the human cone
+   * photo-pigment absorption spectra and the monitor phosphor
+   * emission spectra. These parameters are fairly constant for most
+   * humans and most montiors (at least for modern CRTs). However,
+   * gamma will vary quite a bit, as it is a property of the monitor
+   * (eg. amplifier gain), the video card, and even the
+   * software. Further, users can adjust their gammas (either via
+   * adjusting the monitor amp gains or in software). That said, the
+   * following are the gamma estimates that we have used in the
+   * Vischeck code. Many colorblind users have viewed our simulations
+   * and told us that they "work" (simulated and original images are
+   * indistinguishabled).
+   */
+  gammaRGB[0] = 2.1;
+  gammaRGB[1] = 2.0;
+  gammaRGB[2] = 2.1;
+
+  /* Performs protan, deutan or tritan color image simulation based on 
+   * Brettel, Vienot and Mollon JOSA 14/10 1997
+   *  L,M,S for lambda=475,485,575,660
+   *
+   * Load the LMS anchor-point values for lambda = 475 & 485 nm (for
+   * protans & deutans) and the LMS values for lambda = 575 & 660 nm
+   * (for tritans)
+   */
+  anchor[0] = 0.08008;  anchor[1]  = 0.1579;    anchor[2]  = 0.5897;
+  anchor[3] = 0.1284;   anchor[4]  = 0.2237;    anchor[5]  = 0.3636;
+  anchor[6] = 0.9856;   anchor[7]  = 0.7325;    anchor[8]  = 0.001079;
+  anchor[9] = 0.0914;   anchor[10] = 0.007009;  anchor[11] = 0.0;    
+ 
+  /* We also need LMS for RGB=(1,1,1)- the equal-energy point (one of
+   * our anchors) (we can just peel this out of the rgb2lms transform
+   * matrix)
+   */
+  anchor_e[0] = rgb2lms[0] + rgb2lms[1] + rgb2lms[2];
+  anchor_e[1] = rgb2lms[3] + rgb2lms[4] + rgb2lms[5];
+  anchor_e[2] = rgb2lms[6] + rgb2lms[7] + rgb2lms[8];
+
+  switch (colorblind->deficiency)
     {
-      i = width;
-      b = buf;
+    default:
+    case COLORBLIND_DEFICIENCY_DEUTERANOPIA:
+      /* find a,b,c for lam=575nm and lam=475 */
+      a1 = anchor_e[1] * anchor[8] - anchor_e[2] * anchor[7];
+      b1 = anchor_e[2] * anchor[6] - anchor_e[0] * anchor[8];
+      c1 = anchor_e[0] * anchor[7] - anchor_e[1] * anchor[6];
+      a2 = anchor_e[1] * anchor[2] - anchor_e[2] * anchor[1];
+      b2 = anchor_e[2] * anchor[0] - anchor_e[0] * anchor[2];
+      c2 = anchor_e[0] * anchor[1] - anchor_e[1] * anchor[0];
+      inflectionVal = (anchor_e[2] / anchor_e[0]);			       
+      break;
+
+    case COLORBLIND_DEFICIENCY_PROTANOPIA:
+      /* find a,b,c for lam=575nm and lam=475 */
+      a1 = anchor_e[1] * anchor[8] - anchor_e[2] * anchor[7];
+      b1 = anchor_e[2] * anchor[6] - anchor_e[0] * anchor[8];
+      c1 = anchor_e[0] * anchor[7] - anchor_e[1] * anchor[6];
+      a2 = anchor_e[1] * anchor[2] - anchor_e[2] * anchor[1];
+      b2 = anchor_e[2] * anchor[0] - anchor_e[0] * anchor[2];
+      c2 = anchor_e[0] * anchor[1] - anchor_e[1] * anchor[0];
+      inflectionVal = (anchor_e[2] / anchor_e[1]);			       
+      break;
+
+    case COLORBLIND_DEFICIENCY_TRITANOPIA:
+      /* Set 1: regions where lambda_a=575, set 2: lambda_a=475 */
+      a1 = anchor_e[1] * anchor[11] - anchor_e[2] * anchor[10];
+      b1 = anchor_e[2] * anchor[9]  - anchor_e[0] * anchor[11];
+      c1 = anchor_e[0] * anchor[10] - anchor_e[1] * anchor[9];
+      a2 = anchor_e[1] * anchor[5]  - anchor_e[2] * anchor[4];
+      b2 = anchor_e[2] * anchor[3]  - anchor_e[0] * anchor[5];
+      c2 = anchor_e[0] * anchor[4]  - anchor_e[1] * anchor[3];
+      inflectionVal = (anchor_e[1] / anchor_e[0]);
+      break;
+    }
+
+  npix = height * width;
+  b    = buf; /* pointer to the RGB color buffer */
+
+  for (i = npix - 1; i >= 0; i--)
+    {
+      red   = b[0];
+      green = b[1];
+      blue  = b[2];
+
+      /* Remove gamma to linearize RGB intensities */
+      red   = pow (red,   1.0 / gammaRGB[0]);
+      green = pow (green, 1.0 / gammaRGB[1]);
+      blue  = pow (blue,  1.0 / gammaRGB[2]);
+
+      /* Convert to LMS (dot product with transform matrix) */
+      redOld   = red;
+      greenOld = green;
+
+      red   = redOld * rgb2lms[0] + greenOld * rgb2lms[1] + blue * rgb2lms[2];
+      green = redOld * rgb2lms[3] + greenOld * rgb2lms[4] + blue * rgb2lms[5];
+      blue  = redOld * rgb2lms[6] + greenOld * rgb2lms[7] + blue * rgb2lms[8];
 
       switch (colorblind->deficiency)
         {
-        case COLORBLIND_DEFICIENCY_PROTONOPIA:
-        case COLORBLIND_DEFICIENCY_DEUTERANOPIA:
-          /*  FIXME: need proper formulas  */
-          while (i--)
-            {
-              guchar red   = b[0] >> 1;
-              guchar green = b[1] >> 1;
+        case COLORBLIND_DEFICIENCY_DEUTERANOPIA:   
+          tmp = blue / red;
+          /* See which side of the inflection line we fall... */
+          if (tmp < inflectionVal)
+            green = -(a1 * red + c1 * blue) / b1;
+          else
+            green = -(a2 * red + c2 * blue) / b2;
+          break;
 
-              b[0] = b[1] = red + green;
-
-              b += bpp;
-            }
+        case COLORBLIND_DEFICIENCY_PROTANOPIA:     
+          tmp = blue / green;
+          /* See which side of the inflection line we fall... */
+          if (tmp < inflectionVal)				          	
+            red = -(b1 * green + c1 * blue) / a1;
+          else
+            red = -(b2 * green + c2 * blue) / a2;
           break;
 
         case COLORBLIND_DEFICIENCY_TRITANOPIA:
-          /*  FIXME: need proper formula  */
-          while (i--)
-            {
-              b[2] = 0;
-
-              b += bpp;
-            }
+          tmp = green / red;
+          /* See which side of the inflection line we fall... */
+          if (tmp < inflectionVal)
+            blue = -(a1 * red + b1 * green) / c1;
+          else
+            blue = -(a2 * red + b2 * green) / c2;
           break;
 
         default:
           break;
         }
 
-      buf += bpl;
+      /* Convert back to RGB (cross product with transform matrix) */
+      redOld   = red;
+      greenOld = green;
+
+      red   = redOld * lms2rgb[0] + greenOld * lms2rgb[1] + blue * lms2rgb[2];
+      green = redOld * lms2rgb[3] + greenOld * lms2rgb[4] + blue * lms2rgb[5];
+      blue  = redOld * lms2rgb[6] + greenOld * lms2rgb[7] + blue * lms2rgb[8];
+
+      /* Apply gamma to go back to non-linear intensities */
+      red   = pow (red,   gammaRGB[0]);
+      green = pow (green, gammaRGB[1]);
+      blue  = pow (blue,  gammaRGB[2]);
+
+      /* Ensure that we stay within the RGB gamut */
+      /* *** FIX THIS: it would be better to desaturate than blindly clip. */
+      red   = CLAMP (red,   0, 255);
+      green = CLAMP (green, 0, 255);
+      blue  = CLAMP (blue,  0, 255);
+
+      /* Stuff result back into buffer */
+      b[0] = (guchar) red;
+      b[1] = (guchar) green;
+      b[2] = (guchar) blue;
+
+      /* Increment b by the number of bytes per pixel. */
+      b += bpp;
     }
 }
 
@@ -306,7 +451,7 @@ cdisplay_colorblind_save_state (GimpColorDisplay *display)
   g_snprintf (buf, sizeof (buf), "%d", colorblind->deficiency);
 
   return gimp_parasite_new ("Display/Colorblind", GIMP_PARASITE_PERSISTENT,
-			    strlen (buf) + 1, buf);
+                            strlen (buf) + 1, buf);
 }
 
 static GtkWidget *
@@ -334,8 +479,8 @@ cdisplay_colorblind_configure (GimpColorDisplay *display)
                            colorblind,
                            GINT_TO_POINTER (colorblind->deficiency),
 
-                           _("Protonopia (insensitivity to red)"),
-                           GINT_TO_POINTER (COLORBLIND_DEFICIENCY_PROTONOPIA),
+                           _("Protanopia (insensitivity to red)"),
+                           GINT_TO_POINTER (COLORBLIND_DEFICIENCY_PROTANOPIA),
                            NULL,
 
                            _("Deuteranopia (insensitivity to green)"),

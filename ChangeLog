@@ -1,3 +1,10 @@
+2003-01-23  Michael Natterer  <mitch@gimp.org>
+
+	* modules/cdisplay_colorblind.c: Bob Dougherty <bobd@stanford.edu>
+	and Alex Wade <wade@ski.org> added the code needed to make this
+	filter actually do something useful. Thanks for this contribution.
+	Addresses bug #101256.
+
 2003-01-23  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpcoreconfig.c
