@@ -9,6 +9,9 @@ Revision history for Gimp-Perl extension.
         - added blowinout.pl, terral_text and xachvision.pl.
         - the use of Gimp::PDL to access the region/tile functions is
           now mandatory. The old string interface does not exist anymore.
+        - the path to the server-socket now includes the UID, to avoid
+          collisions. CGI-scripts should use either tcp or specify the path
+          directly using GIMP_HOST (see Gimp::Net for details).
         
 1.055 Mon Feb 22 22:38:44 CET 1999
 	- applied seth's script changes.

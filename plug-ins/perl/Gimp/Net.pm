@@ -16,7 +16,7 @@ use subs qw(gimp_call_procedure);
 use IO::Socket;
 
 $default_tcp_port  = 10009;
-$default_unix_dir  = "/tmp/gimp-perl-serv/";
+$default_unix_dir  = "/tmp/gimp-perl-serv-uid-$>/";
 $default_unix_sock = "gimp-perl-serv";
 
 $trace_res = *STDERR;
