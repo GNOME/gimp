@@ -1,3 +1,16 @@
+2005-02-08  Sven Neumann  <sven@gimp.org>
+
+	* libgimpconfig/gimpcolorconfig-enums.[ch]: gimp-mkenums doesn't
+	seem to like newlines in enum definitions.
+
+	* libgimpconfig/gimpcolorconfig.[ch]: removed the "profile-path"
+	property for now. It doesn't work too well with GimpFileEntry.
+	We can add it back later if it turns out that we really need it.
+
+	* app/dialogs/preferences-dialog.c
+	* app/widgets/gimphelp-ids.h: added a color management page to the
+	preferences dialog.
+
 2005-02-07  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/uri/uri-backend.h: added backend methods for saving to

@@ -36,15 +36,10 @@
 #include "libgimp/libgimp-intl.h"
 
 
-#define DEFAULT_PROFILE_PATH  "/usr/share/color/icc"
-
-
 #define COLOR_MANAGEMENT_MODE_BLURB \
   N_("Mode of operation for color management.")
-#define PROFILE_PATH_BLURB \
-  N_("Default folder where ICC profiles are located.")
 #define DISPLAY_PROFILE_BLURB \
-  N_("Sets the display color profile.")
+  N_("Sets the color profile for the display.")
 #define RGB_PROFILE_BLURB \
   N_("Sets default RGB workspace color profile.")
 #define CMYK_PROFILE_BLURB \
@@ -67,7 +62,6 @@ enum
 {
   PROP_0,
   PROP_MODE,
-  PROP_PROFILE_PATH,
   PROP_RGB_PROFILE,
   PROP_CMYK_PROFILE,
   PROP_DISPLAY_PROFILE,
@@ -151,10 +145,6 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
                                  GIMP_TYPE_COLOR_MANAGEMENT_MODE,
                                  GIMP_COLOR_MANAGEMENT_DISPLAY,
                                  0);
-  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PROFILE_PATH,
-                                 "profile-path", PROFILE_PATH_BLURB,
-                                 GIMP_CONFIG_PATH_DIR, DEFAULT_PROFILE_PATH,
-                                 0);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_RGB_PROFILE,
                                  "rgb-profile", RGB_PROFILE_BLURB,
                                  GIMP_CONFIG_PATH_FILE, NULL,
@@ -210,7 +200,6 @@ gimp_color_config_finalize (GObject *object)
 {
   GimpColorConfig *color_config = GIMP_COLOR_CONFIG (object);
 
-  g_free (color_config->profile_path);
   g_free (color_config->rgb_profile);
   g_free (color_config->cmyk_profile);
   g_free (color_config->display_profile);
@@ -231,10 +220,6 @@ gimp_color_config_set_property (GObject      *object,
     {
     case PROP_MODE:
       color_config->mode = g_value_get_enum (value);
-      break;
-    case PROP_PROFILE_PATH:
-      g_free (color_config->profile_path);
-      color_config->profile_path = g_value_dup_string (value);
       break;
     case PROP_RGB_PROFILE:
       g_free (color_config->rgb_profile);
@@ -287,9 +272,6 @@ gimp_color_config_get_property (GObject    *object,
     {
     case PROP_MODE:
       g_value_set_enum (value, color_config->mode);
-      break;
-    case PROP_PROFILE_PATH:
-      g_value_set_string (value, color_config->profile_path);
       break;
     case PROP_RGB_PROFILE:
       g_value_set_string (value, color_config->rgb_profile);

@@ -2020,6 +2020,70 @@ prefs_dialog_new (Gimp       *gimp,
 		    sizeentry);
 
 
+  /**********************/
+  /*  Color Management  */
+  /**********************/
+  vbox = prefs_notebook_append_page (gimp,
+                                     GTK_NOTEBOOK (notebook),
+				     _("Color Management"),
+                                     "color-management.png",
+				     GTK_TREE_STORE (tree),
+				     _("Color Management"),
+				     GIMP_HELP_PREFS_COLOR_MANAGEMENT,
+				     NULL,
+				     &top_iter,
+				     page_index++);
+
+  table = prefs_table_new (7, GTK_CONTAINER (vbox));
+
+  {
+    static const struct
+    {
+      const gchar *label;
+      const gchar *fs_label;
+      const gchar *property_name;
+    }
+    profiles[] =
+    {
+      { N_("_RGB Profile:"),
+        N_("Select RGB color profile"),     "rgb-profile"     },
+      { N_("_CMYK Profile:"),
+        N_("Select CMYK color profile"),    "cmyk-profile"    },
+      { N_("_Monitor Profile:"),
+        N_("Select monitor color profile"), "display-profile" },
+      { N_("_Printer Profile:"),
+        N_("Select printer color profile"), "printer-profile" }
+    };
+
+    GObject *color_config;
+
+    g_object_get (object, "color-management", &color_config, NULL);
+
+    prefs_enum_combo_box_add (color_config, "mode", 0, 0,
+                              _("_Mode of operation:"),
+                              GTK_TABLE (table), 0, NULL);
+    prefs_enum_combo_box_add (color_config, "display-rendering-intent", 0, 0,
+                              _("_Display Rendering Intent:"),
+                              GTK_TABLE (table), 1, NULL);
+    prefs_enum_combo_box_add (color_config, "simulation-rendering-intent", 0, 0,
+                              _("_Softproof Rendering Intent:"),
+                              GTK_TABLE (table), 2, NULL);
+
+    for (i = 0; i < G_N_ELEMENTS (profiles); i++)
+      {
+	fileselection =
+          gimp_prop_file_entry_new (color_config,
+                                    profiles[i].property_name,
+                                    gettext (profiles[i].fs_label),
+                                    FALSE, TRUE);
+	gimp_table_attach_aligned (GTK_TABLE (table), 0, 3 + i,
+				   gettext (profiles[i].label), 0.0, 0.5,
+				   fileselection, 1, FALSE);
+      }
+
+    g_object_unref (color_config);
+  }
+
   /*******************/
   /*  Input Devices  */
   /*******************/

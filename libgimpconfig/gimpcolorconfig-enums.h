@@ -43,14 +43,10 @@ GType gimp_color_rendering_intent_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
-  /*< desc="Perceptual"            >*/
-  GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-  /*< desc="Relative Colorimetric" >*/
-  GIMP_COLOR_RENDERING_INTENT_SATURATION,
-  /*< desc="Saturation"            >*/
-  GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC
-  /*< desc="Absolute Colorimetric" >*/
+  GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,            /*< desc="Perceptual"            >*/
+  GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC, /*< desc="Relative Colorimetric" >*/
+  GIMP_COLOR_RENDERING_INTENT_SATURATION,            /*< desc="Saturation"            >*/
+  GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC  /*< desc="Absolute Colorimetric" >*/
 } GimpColorRenderingIntent;
 
 

@@ -386,6 +386,7 @@
 #define GIMP_HELP_PREFS_IMAGE_WINDOW_TITLE        "gimp-prefs-image-window-title"
 #define GIMP_HELP_PREFS_DISPLAY                   "gimp-prefs-display"
 #define GIMP_HELP_PREFS_MONITOR                   "gimp-prefs-monitor"
+#define GIMP_HELP_PREFS_COLOR_MANAGEMENT          "gimp-prefs-color-management"
 #define GIMP_HELP_PREFS_WINDOW_MANAGEMENT         "gimp-prefs-window-management"
 #define GIMP_HELP_PREFS_ENVIRONMENT               "gimp-prefs-environment"
 #define GIMP_HELP_PREFS_SESSION                   "gimp-prefs-session"

@@ -21,7 +21,6 @@ GimpColorConfig
 
 @parent_instance: 
 @mode: 
-@profile_path: 
 @rgb_profile: 
 @cmyk_profile: 
 @display_profile: 

@@ -38,7 +38,6 @@ struct _GimpColorConfig
   GObject                     parent_instance;
 
   GimpColorManagementMode     mode;
-  gchar                      *profile_path;
   gchar                      *rgb_profile;
   gchar                      *cmyk_profile;
   gchar                      *display_profile;
