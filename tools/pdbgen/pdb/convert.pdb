@@ -84,21 +84,21 @@ HELP
 
     @inargs = (
 	&std_image_arg,
-	{ name => 'dither_type', type => 'enum ConvertDitherType',
+	{ name => 'dither_type', type => 'enum GimpConvertDitherType',
 	  desc => 'dither type (0=none, 1=fs, 2=fs/low-bleed 3=fixed)' },
-	{ name => 'palette_type', type => 'enum ConvertPaletteType',
+	{ name => 'palette_type', type => 'enum GimpConvertPaletteType',
 	  desc => 'The type of palette to use: { %%desc%% }', no_success => 1 },
 	{ name => 'num_cols', type => 'int32',
 	  desc => 'the number of colors to quantize to, ignored unless
-		   (palette_type == MAKE_PALETTE)' },
+		   (palette_type == GIMP_MAKE_PALETTE)' },
 	{ name => 'alpha_dither', type => 'boolean',
 	  desc => 'dither transparency to fake partial opacity' },
 	{ name => 'remove_unused', type => 'boolean',
 	  desc => 'remove unused or duplicate colour entries from final
-		   palette, ignored if (palette_type == MAKE_PALETTE)' },
+		   palette, ignored if (palette_type == GIMP_MAKE_PALETTE)' },
 	{ name => 'palette', type => 'string',
 	  desc => 'The name of the custom palette to use, ignored unless
-		   (palette_type == CUSTOM_PALETTE)',
+		   (palette_type == GIMP_CUSTOM_PALETTE)',
 	  alias => 'palette_name' }
     );
 
@@ -111,10 +111,10 @@ HELP
     {
       switch (dither_type)
         {
-	case NO_DITHER:
-	case FS_DITHER:
-	case FSLOWBLEED_DITHER:
-	case FIXED_DITHER:
+	case GIMP_NO_DITHER:
+	case GIMP_FS_DITHER:
+	case GIMP_FSLOWBLEED_DITHER:
+	case GIMP_FIXED_DITHER:
 	  break;
 	default:
 	  success = FALSE;
@@ -123,17 +123,17 @@ HELP
       
       switch (palette_type)
 	{
-	case MAKE_PALETTE:
+	case GIMP_MAKE_PALETTE:
 	  if (num_cols < 1 || num_cols > MAXNUMCOLORS)
 	    success = FALSE;
 	  break;
 
-	case REUSE_PALETTE:
-	case WEB_PALETTE:
-	case MONO_PALETTE:
+	case GIMP_REUSE_PALETTE:
+	case GIMP_WEB_PALETTE:
+	case GIMP_MONO_PALETTE:
 	  break;
 
-	case CUSTOM_PALETTE:
+	case GIMP_CUSTOM_PALETTE:
 	  if (! gimp->palette_factory->container->num_children)
 	    gimp_data_factory_data_init (gimp->palette_factory, FALSE);
 

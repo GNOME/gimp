@@ -35,18 +35,6 @@ init_generated_constants (void)
   setvar (cintern ("IMAGE-CLONE"), flocons (0), NIL);
   setvar (cintern ("PATTERN-CLONE"), flocons (1), NIL);
 
-  setvar (cintern ("NO-DITHER"), flocons (0), NIL);
-  setvar (cintern ("FS-DITHER"), flocons (1), NIL);
-  setvar (cintern ("FSLOWBLEED-DITHER"), flocons (2), NIL);
-  setvar (cintern ("FIXED-DITHER"), flocons (3), NIL);
-  setvar (cintern ("NODESTRUCT-DITHER"), flocons (4), NIL);
-
-  setvar (cintern ("MAKE-PALETTE"), flocons (0), NIL);
-  setvar (cintern ("REUSE-PALETTE"), flocons (1), NIL);
-  setvar (cintern ("WEB-PALETTE"), flocons (2), NIL);
-  setvar (cintern ("MONO-PALETTE"), flocons (3), NIL);
-  setvar (cintern ("CUSTOM-PALETTE"), flocons (4), NIL);
-
   setvar (cintern ("BLUR-CONVOLVE"), flocons (0), NIL);
   setvar (cintern ("SHARPEN-CONVOLVE"), flocons (1), NIL);
   setvar (cintern ("CUSTOM-CONVOLVE"), flocons (2), NIL);
@@ -83,6 +71,18 @@ init_generated_constants (void)
   setvar (cintern ("GRAY-CHANNEL"), flocons (3), NIL);
   setvar (cintern ("INDEXED-CHANNEL"), flocons (4), NIL);
   setvar (cintern ("ALPHA-CHANNEL"), flocons (5), NIL);
+
+  setvar (cintern ("NO-DITHER"), flocons (0), NIL);
+  setvar (cintern ("FS-DITHER"), flocons (1), NIL);
+  setvar (cintern ("FSLOWBLEED-DITHER"), flocons (2), NIL);
+  setvar (cintern ("FIXED-DITHER"), flocons (3), NIL);
+  setvar (cintern ("NODESTRUCT-DITHER"), flocons (4), NIL);
+
+  setvar (cintern ("MAKE-PALETTE"), flocons (0), NIL);
+  setvar (cintern ("REUSE-PALETTE"), flocons (1), NIL);
+  setvar (cintern ("WEB-PALETTE"), flocons (2), NIL);
+  setvar (cintern ("MONO-PALETTE"), flocons (3), NIL);
+  setvar (cintern ("CUSTOM-PALETTE"), flocons (4), NIL);
 
   setvar (cintern ("NORMAL-CONVOL"), flocons (0), NIL);
   setvar (cintern ("ABSOLUTE-CONVOL"), flocons (1), NIL);

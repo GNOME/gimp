@@ -28,7 +28,7 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
-#include "core/core-types.h"
+#include "core/core-enums.h"
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpdatafactory.h"
@@ -152,7 +152,7 @@ convert_indexed_invoker (Gimp     *gimp,
     success = FALSE;
 
   dither_type = args[1].value.pdb_int;
-  if (dither_type < NO_DITHER || dither_type > NODESTRUCT_DITHER)
+  if (dither_type < GIMP_NO_DITHER || dither_type > GIMP_NODESTRUCT_DITHER)
     success = FALSE;
 
   palette_type = args[2].value.pdb_int;
@@ -175,10 +175,10 @@ convert_indexed_invoker (Gimp     *gimp,
 	{
 	  switch (dither_type)
 	    {
-	    case NO_DITHER:
-	    case FS_DITHER:
-	    case FSLOWBLEED_DITHER:
-	    case FIXED_DITHER:
+	    case GIMP_NO_DITHER:
+	    case GIMP_FS_DITHER:
+	    case GIMP_FSLOWBLEED_DITHER:
+	    case GIMP_FIXED_DITHER:
 	      break;
 	    default:
 	      success = FALSE;
@@ -187,17 +187,17 @@ convert_indexed_invoker (Gimp     *gimp,
 	  
 	  switch (palette_type)
 	    {
-	    case MAKE_PALETTE:
+	    case GIMP_MAKE_PALETTE:
 	      if (num_cols < 1 || num_cols > MAXNUMCOLORS)
 		success = FALSE;
 	      break;
     
-	    case REUSE_PALETTE:
-	    case WEB_PALETTE:
-	    case MONO_PALETTE:
+	    case GIMP_REUSE_PALETTE:
+	    case GIMP_WEB_PALETTE:
+	    case GIMP_MONO_PALETTE:
 	      break;
     
-	    case CUSTOM_PALETTE:
+	    case GIMP_CUSTOM_PALETTE:
 	      if (! gimp->palette_factory->container->num_children)
 		gimp_data_factory_data_init (gimp->palette_factory, FALSE);
     
@@ -238,12 +238,12 @@ static ProcArg convert_indexed_inargs[] =
   {
     GIMP_PDB_INT32,
     "palette_type",
-    "The type of palette to use: { MAKE_PALETTE (0), REUSE_PALETTE (1), WEB_PALETTE (2), MONO_PALETTE (3), CUSTOM_PALETTE (4) }"
+    "The type of palette to use: { GIMP_MAKE_PALETTE (0), GIMP_REUSE_PALETTE (1), GIMP_WEB_PALETTE (2), GIMP_MONO_PALETTE (3), GIMP_CUSTOM_PALETTE (4) }"
   },
   {
     GIMP_PDB_INT32,
     "num_cols",
-    "the number of colors to quantize to, ignored unless (palette_type == MAKE_PALETTE)"
+    "the number of colors to quantize to, ignored unless (palette_type == GIMP_MAKE_PALETTE)"
   },
   {
     GIMP_PDB_INT32,
@@ -253,12 +253,12 @@ static ProcArg convert_indexed_inargs[] =
   {
     GIMP_PDB_INT32,
     "remove_unused",
-    "remove unused or duplicate colour entries from final palette, ignored if (palette_type == MAKE_PALETTE)"
+    "remove unused or duplicate colour entries from final palette, ignored if (palette_type == GIMP_MAKE_PALETTE)"
   },
   {
     GIMP_PDB_STRING,
     "palette",
-    "The name of the custom palette to use, ignored unless (palette_type == CUSTOM_PALETTE)"
+    "The name of the custom palette to use, ignored unless (palette_type == GIMP_CUSTOM_PALETTE)"
   }
 };
 

@@ -47,24 +47,6 @@ typedef enum
 
 typedef enum
 {
-  GIMP_NO_DITHER,
-  GIMP_FS_DITHER,
-  GIMP_FSLOWBLEED_DITHER,
-  GIMP_FIXED_DITHER,
-  GIMP_NODESTRUCT_DITHER
-} GimpConvertDitherType;
-
-typedef enum
-{
-  GIMP_MAKE_PALETTE,
-  GIMP_REUSE_PALETTE,
-  GIMP_WEB_PALETTE,
-  GIMP_MONO_PALETTE,
-  GIMP_CUSTOM_PALETTE
-} GimpConvertPaletteType;
-
-typedef enum
-{
   GIMP_BLUR_CONVOLVE,
   GIMP_SHARPEN_CONVOLVE,
   GIMP_CUSTOM_CONVOLVE
@@ -120,6 +102,24 @@ typedef enum
   GIMP_INDEXED_CHANNEL,
   GIMP_ALPHA_CHANNEL
 } GimpChannelType;
+
+typedef enum
+{
+  GIMP_NO_DITHER,
+  GIMP_FS_DITHER,
+  GIMP_FSLOWBLEED_DITHER,
+  GIMP_FIXED_DITHER,
+  GIMP_NODESTRUCT_DITHER
+} GimpConvertDitherType;
+
+typedef enum
+{
+  GIMP_MAKE_PALETTE,
+  GIMP_REUSE_PALETTE,
+  GIMP_WEB_PALETTE,
+  GIMP_MONO_PALETTE,
+  GIMP_CUSTOM_PALETTE
+} GimpConvertPaletteType;
 
 typedef enum
 {

@@ -501,32 +501,32 @@ static void
 indexed_ok_callback (GtkWidget *widget,
 		     gpointer   data)
 {
-  IndexedDialog      *dialog;
-  ConvertPaletteType  palette_type;
-  ConvertDitherType   dither_type;
-  GimpTool           *active_tool;
+  IndexedDialog          *dialog;
+  GimpConvertPaletteType  palette_type;
+  GimpConvertDitherType   dither_type;
+  GimpTool               *active_tool;
 
   dialog = (IndexedDialog *) data;
 
   if (dialog->webpal_flag)
-    palette_type = WEB_PALETTE;
+    palette_type = GIMP_WEB_PALETTE;
   else if (dialog->custompal_flag)
-    palette_type = CUSTOM_PALETTE;
+    palette_type = GIMP_CUSTOM_PALETTE;
   else if (dialog->monopal_flag)
-    palette_type = MONO_PALETTE;
+    palette_type = GIMP_MONO_PALETTE;
   else if (dialog->makepal_flag)
-    palette_type = MAKE_PALETTE;
+    palette_type = GIMP_MAKE_PALETTE;
   else
-    palette_type = REUSE_PALETTE;
+    palette_type = GIMP_REUSE_PALETTE;
 
   if (dialog->nodither_flag)
-    dither_type = NO_DITHER;
+    dither_type = GIMP_NO_DITHER;
   else if (dialog->fsdither_flag)
-    dither_type = FS_DITHER;
+    dither_type = GIMP_FS_DITHER;
   else if (dialog->fslowbleeddither_flag)
-    dither_type = FSLOWBLEED_DITHER;
+    dither_type = GIMP_FSLOWBLEED_DITHER;
   else
-    dither_type = FIXED_DITHER;
+    dither_type = GIMP_FIXED_DITHER;
 
   /* Close the dialogs when open because they're useless for indexed
    *  images and could crash the GIMP when used nevertheless

@@ -73,24 +73,6 @@ typedef enum
   FLATTEN_IMAGE
 } MergeType;
 
-typedef enum
-{
-  MAKE_PALETTE   = 0,
-  REUSE_PALETTE  = 1,
-  WEB_PALETTE    = 2,
-  MONO_PALETTE   = 3,
-  CUSTOM_PALETTE = 4
-} ConvertPaletteType;
-
-typedef enum
-{
-  NO_DITHER         = 0,
-  FS_DITHER         = 1,
-  FSLOWBLEED_DITHER = 2,
-  FIXED_DITHER      = 3,
-
-  NODESTRUCT_DITHER = 4 /* NEVER USE NODESTRUCT_DITHER EXPLICITLY */
-} ConvertDitherType;
 
 typedef enum /*< pdb-skip >*/ /*< skip >*/
 {

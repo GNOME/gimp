@@ -1,6 +1,22 @@
 2002-03-18  Sven Neumann  <sven@gimp.org>
 
 	* app/core/core-enums.h
+	* app/core/core-types.h: more enum cleanup (ConvertPaletteType and 
+	ConvertDitherType this time).
+
+	* app/core/gimpimage-convert.[ch]
+	* app/gui/convert-dialog.c
+	* tools/pdbgen/pdb/convert.pdb: changed accordingly.
+
+	* app/pdb/convert_cmds.c
+	* libgimp/gimpconvert_pdb.c
+	* libgimp/gimpenums.h
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl: regenerated.
+
+2002-03-18  Sven Neumann  <sven@gimp.org>
+
+	* app/core/core-enums.h
 	* app/core/core-types.h: moved some more enums into the right place
 	and namespacified them.
 

@@ -196,28 +196,6 @@ package Gimp::CodeGen::enums;
 		       CLIP_TO_BOTTOM_LAYER => '2',
 		       FLATTEN_IMAGE => '3' }
 	},
-    ConvertPaletteType =>
-	{ contig => 1,
-	  header => 'core/core-types.h',
-	  symbols => [ qw(MAKE_PALETTE REUSE_PALETTE WEB_PALETTE
-			  MONO_PALETTE CUSTOM_PALETTE) ],
-	  mapping => { MAKE_PALETTE => '0',
-		       REUSE_PALETTE => '1',
-		       WEB_PALETTE => '2',
-		       MONO_PALETTE => '3',
-		       CUSTOM_PALETTE => '4' }
-	},
-    ConvertDitherType =>
-	{ contig => 1,
-	  header => 'core/core-types.h',
-	  symbols => [ qw(NO_DITHER FS_DITHER FSLOWBLEED_DITHER FIXED_DITHER
-			  NODESTRUCT_DITHER) ],
-	  mapping => { NO_DITHER => '0',
-		       FS_DITHER => '1',
-		       FSLOWBLEED_DITHER => '2',
-		       FIXED_DITHER => '3',
-		       NODESTRUCT_DITHER => '4' }
-	},
     GimpImageBaseType =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',
@@ -286,6 +264,30 @@ package Gimp::CodeGen::enums;
 	  mapping => { GIMP_FG_BUCKET_FILL => '0',
 		       GIMP_BG_BUCKET_FILL => '1',
 		       GIMP_PATTERN_BUCKET_FILL => '2' }
+	},
+    GimpConvertPaletteType =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_MAKE_PALETTE GIMP_REUSE_PALETTE
+			  GIMP_WEB_PALETTE GIMP_MONO_PALETTE
+			  GIMP_CUSTOM_PALETTE) ],
+	  mapping => { GIMP_MAKE_PALETTE => '0',
+		       GIMP_REUSE_PALETTE => '1',
+		       GIMP_WEB_PALETTE => '2',
+		       GIMP_MONO_PALETTE => '3',
+		       GIMP_CUSTOM_PALETTE => '4' }
+	},
+    GimpConvertDitherType =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_NO_DITHER GIMP_FS_DITHER
+			  GIMP_FSLOWBLEED_DITHER GIMP_FIXED_DITHER
+			  GIMP_NODESTRUCT_DITHER) ],
+	  mapping => { GIMP_NO_DITHER => '0',
+		       GIMP_FS_DITHER => '1',
+		       GIMP_FSLOWBLEED_DITHER => '2',
+		       GIMP_FIXED_DITHER => '3',
+		       GIMP_NODESTRUCT_DITHER => '4' }
 	},
     GimpFillType =>
 	{ contig => 1,

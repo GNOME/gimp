@@ -165,6 +165,24 @@ typedef enum  /*< skip >*/
 
 typedef enum  /*< skip >*/
 {
+  GIMP_MAKE_PALETTE,
+  GIMP_REUSE_PALETTE,
+  GIMP_WEB_PALETTE,
+  GIMP_MONO_PALETTE,
+  GIMP_CUSTOM_PALETTE
+} GimpConvertPaletteType;
+
+typedef enum  /*< skip >*/
+{
+  GIMP_NO_DITHER,
+  GIMP_FS_DITHER,
+  GIMP_FSLOWBLEED_DITHER,
+  GIMP_FIXED_DITHER,
+  GIMP_NODESTRUCT_DITHER  /* NEVER USE NODESTRUCT_DITHER EXPLICITLY */
+} GimpConvertDitherType;
+
+typedef enum  /*< skip >*/
+{
   GIMP_FOREGROUND_FILL,
   GIMP_BACKGROUND_FILL,
   GIMP_WHITE_FILL,
@@ -183,9 +201,9 @@ typedef enum  /*< pdb-skip >*/ /*< skip >*/
 
 typedef enum  /*< pdb-skip >*/ /*< skip >*/
 {
-  GIMP_GRAD_RGB = 0,  /* normal RGB */
+  GIMP_GRAD_RGB,      /* normal RGB           */
   GIMP_GRAD_HSV_CCW,  /* counterclockwise hue */
-  GIMP_GRAD_HSV_CW    /* clockwise hue */
+  GIMP_GRAD_HSV_CW    /* clockwise hue        */
 } GimpGradientSegmentColor;
 
 typedef enum  /*< skip >*/
