@@ -1,3 +1,6 @@
+Thu Mar 26 16L32:05 MST 1998 Nathan Summers <rock@gimp.org>
+	* app/iscissors.c: fix a typo (i where a j should be)
+
 Thu Mar 26 15:26:18 MST 1998 Nathan Summers <rock@gimp.org>
 	* app/iscissors.c: This version works much better.
 	outstanding bugs <VERY IMPORTANT>: 

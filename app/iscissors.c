@@ -1327,9 +1327,9 @@ shape_of_boundary (Tool *tool)
 */
       
 	if(j) {
-	   if((kinks[i].x != kinks[j-1].x) || (kinks[j].y != kinks[j-1].y))
+	   if((kinks[j].x != kinks[j-1].x) || (kinks[j].y != kinks[j-1].y))
 		++j;
-	} else ++j;
+	} else j++;
     }
 
   iscissors->num_kinks = j;
