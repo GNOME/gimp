@@ -1,5 +1,15 @@
 2004-06-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/Makefile.am
+	* app/widgets/gimpselectiondata.[ch]: new files containing the
+	code which encodes/decodes all sorts of stuff to/from its
+	GtkSelectionData representation. Used to live in gimpdnd.c
+
+	* app/widgets/gimpdnd.c: use the new functions (unclutters the
+	file quite a bit), converted tabs to spaces.
+
+2004-06-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontainergridview.c:
 	#include "libgimpwidgets/gimpwidgets.h"
 

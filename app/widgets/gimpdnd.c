@@ -18,13 +18,8 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <string.h>
-
 #include <gtk/gtk.h>
 
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -52,6 +47,7 @@
 
 #include "gimpdnd.h"
 #include "gimppreview.h"
+#include "gimpselectiondata.h"
 
 #include "gimp-intl.h"
 
@@ -68,20 +64,18 @@
 #endif
 
 
-typedef GtkWidget * (* GimpDndGetIconFunc)  (GtkWidget *widget,
-					     GCallback  get_data_func,
-					     gpointer   get_data_data);
-typedef guchar    * (* GimpDndDragDataFunc) (GtkWidget *widget,
-					     GCallback  get_data_func,
-					     gpointer   get_data_data,
-					     gint      *format,
-					     gint      *length);
-typedef gboolean    (* GimpDndDropDataFunc) (GtkWidget *widget,
-					     GCallback  set_data_func,
-					     gpointer   set_data_data,
-					     guchar    *vals,
-					     gint       format,
-					     gint       length);
+typedef GtkWidget * (* GimpDndGetIconFunc)  (GtkWidget        *widget,
+                                             GCallback         get_data_func,
+                                             gpointer          get_data_data);
+typedef void        (* GimpDndDragDataFunc) (GtkWidget        *widget,
+                                             GCallback         get_data_func,
+                                             gpointer          get_data_data,
+                                             GtkSelectionData *selection,
+                                             GdkAtom           atom);
+typedef gboolean    (* GimpDndDropDataFunc) (GtkWidget        *widget,
+                                             GCallback         set_data_func,
+                                             gpointer          set_data_data,
+                                             GtkSelectionData *selection);
 
 
 typedef struct _GimpDndDataDef GimpDndDataDef;
@@ -102,132 +96,105 @@ struct _GimpDndDataDef
 };
 
 
-static GtkWidget * gimp_dnd_get_viewable_icon  (GtkWidget *widget,
-					        GCallback  get_viewable_func,
-					        gpointer   get_viewable_data);
-static GtkWidget * gimp_dnd_get_color_icon     (GtkWidget *widget,
-					        GCallback  get_color_func,
-					        gpointer   get_color_data);
+static GtkWidget * gimp_dnd_get_viewable_icon  (GtkWidget        *widget,
+                                                GCallback         get_viewable_func,
+                                                gpointer          get_viewable_data);
+static GtkWidget * gimp_dnd_get_color_icon     (GtkWidget        *widget,
+                                                GCallback         get_color_func,
+                                                gpointer          get_color_data);
 
-static guchar    * gimp_dnd_get_file_data      (GtkWidget *widget,
-					        GCallback  get_file_func,
-					        gpointer   get_file_data,
-					        gint      *format,
-					        gint      *length);
-static gboolean    gimp_dnd_set_file_data      (GtkWidget *widget,
-					        GCallback  set_file_func,
-					        gpointer   set_file_data,
-					        guchar    *vals,
-					        gint       format,
-					        gint       length);
+static void        gimp_dnd_get_file_data      (GtkWidget        *widget,
+                                                GCallback         get_file_func,
+                                                gpointer          get_file_data,
+                                                GtkSelectionData *selection,
+                                                GdkAtom           atom);
+static gboolean    gimp_dnd_set_file_data      (GtkWidget        *widget,
+                                                GCallback         set_file_func,
+                                                gpointer          set_file_data,
+                                                GtkSelectionData *selection);
 
-static guchar    * gimp_dnd_get_color_data     (GtkWidget *widget,
-					        GCallback  get_color_func,
-					        gpointer   get_color_data,
-					        gint      *format,
-					        gint      *length);
-static gboolean    gimp_dnd_set_color_data     (GtkWidget *widget,
-					        GCallback  set_color_func,
-					        gpointer   set_color_data,
-					        guchar    *vals,
-					        gint       format,
-					        gint       length);
+static void        gimp_dnd_get_color_data     (GtkWidget        *widget,
+                                                GCallback         get_color_func,
+                                                gpointer          get_color_data,
+                                                GtkSelectionData *selection,
+                                                GdkAtom           atom);
+static gboolean    gimp_dnd_set_color_data     (GtkWidget        *widget,
+                                                GCallback         set_color_func,
+                                                gpointer          set_color_data,
+                                                GtkSelectionData *selection);
 
-static guchar    * gimp_dnd_get_svg_data       (GtkWidget *widget,
-					        GCallback  get_svg_func,
-					        gpointer   get_svg_data,
-					        gint      *format,
-					        gint      *length);
-static gboolean    gimp_dnd_set_svg_data       (GtkWidget *widget,
-					        GCallback  set_svg_func,
-					        gpointer   set_svg_data,
-					        guchar    *vals,
-					        gint       format,
-					        gint       length);
+static void        gimp_dnd_get_svg_data       (GtkWidget        *widget,
+                                                GCallback         get_svg_func,
+                                                gpointer          get_svg_data,
+                                                GtkSelectionData *selection,
+                                                GdkAtom           atom);
+static gboolean    gimp_dnd_set_svg_data       (GtkWidget        *widget,
+                                                GCallback         set_svg_func,
+                                                gpointer          set_svg_data,
+                                                GtkSelectionData *selection);
 
-static guchar    * gimp_dnd_get_image_data     (GtkWidget *widget,
-					        GCallback  get_image_func,
-					        gpointer   get_image_data,
-					        gint      *format,
-					        gint      *length);
-static gboolean    gimp_dnd_set_image_data     (GtkWidget *widget,
-					        GCallback  set_image_func,
-					        gpointer   set_image_data,
-					        guchar    *vals,
-					        gint       format,
-					        gint       length);
+static void        gimp_dnd_get_image_data     (GtkWidget        *widget,
+                                                GCallback         get_image_func,
+                                                gpointer          get_image_data,
+                                                GtkSelectionData *selection,
+                                                GdkAtom           atom);
+static gboolean    gimp_dnd_set_image_data     (GtkWidget        *widget,
+                                                GCallback         set_image_func,
+                                                gpointer          set_image_data,
+                                                GtkSelectionData *selection);
 
-static guchar    * gimp_dnd_get_item_data      (GtkWidget *widget,
-					        GCallback  get_item_func,
-					        gpointer   get_item_data,
-					        gint      *format,
-					        gint      *length);
-static gboolean    gimp_dnd_set_item_data      (GtkWidget *widget,
-					        GCallback  set_item_func,
-					        gpointer   set_item_data,
-					        guchar    *vals,
-					        gint       format,
-					        gint       length);
+static void        gimp_dnd_get_item_data      (GtkWidget        *widget,
+                                                GCallback         get_item_func,
+                                                gpointer          get_item_data,
+                                                GtkSelectionData *selection,
+                                                GdkAtom           atom);
+static gboolean    gimp_dnd_set_item_data      (GtkWidget        *widget,
+                                                GCallback         set_item_func,
+                                                gpointer          set_item_data,
+                                                GtkSelectionData *selection);
 
-static guchar    * gimp_dnd_get_data_data      (GtkWidget *widget,
-					        GCallback  get_data_func,
-					        gpointer   get_data_data,
-					        gint      *format,
-					        gint      *length);
-static gboolean    gimp_dnd_set_brush_data     (GtkWidget *widget,
-					        GCallback  set_brush_func,
-					        gpointer   set_brush_data,
-					        guchar    *vals,
-					        gint       format,
-					        gint       length);
-static gboolean    gimp_dnd_set_pattern_data   (GtkWidget *widget,
-					        GCallback  set_pattern_func,
-					        gpointer   set_pattern_data,
-					        guchar    *vals,
-					        gint       format,
-					        gint       length);
-static gboolean    gimp_dnd_set_gradient_data  (GtkWidget *widget,
-					        GCallback  set_gradient_func,
-					        gpointer   set_gradient_data,
-					        guchar    *vals,
-					        gint       format,
-					        gint       length);
-static gboolean    gimp_dnd_set_palette_data   (GtkWidget *widget,
-					        GCallback  set_palette_func,
-					        gpointer   set_palette_data,
-					        guchar    *vals,
-					        gint       format,
-					        gint       length);
-static gboolean    gimp_dnd_set_font_data      (GtkWidget *widget,
-					        GCallback  set_font_func,
-					        gpointer   set_font_data,
-					        guchar    *vals,
-					        gint       format,
-					        gint       length);
-static gboolean    gimp_dnd_set_buffer_data    (GtkWidget *widget,
-					        GCallback  set_buffer_func,
-					        gpointer   set_buffer_data,
-					        guchar    *vals,
-					        gint       format,
-					        gint       length);
-static gboolean    gimp_dnd_set_imagefile_data (GtkWidget *widget,
-					        GCallback  set_imagefile_func,
-					        gpointer   set_imagefile_data,
-					        guchar    *vals,
-					        gint       format,
-					        gint       length);
-static gboolean    gimp_dnd_set_template_data  (GtkWidget *widget,
-                                                GCallback  set_template_func,
-					        gpointer   set_template_data,
-					        guchar    *vals,
-					        gint       format,
-					        gint       length);
-static gboolean    gimp_dnd_set_tool_data      (GtkWidget *widget,
-					        GCallback  set_tool_func,
-					        gpointer   set_tool_data,
-					        guchar    *vals,
-					        gint       format,
-					        gint       length);
+static void        gimp_dnd_get_data_data      (GtkWidget        *widget,
+                                                GCallback         get_data_func,
+                                                gpointer          get_data_data,
+                                                GtkSelectionData *selection,
+                                                GdkAtom           atom);
+
+static gboolean    gimp_dnd_set_brush_data     (GtkWidget        *widget,
+                                                GCallback         set_brush_func,
+                                                gpointer          set_brush_data,
+                                                GtkSelectionData *selection);
+static gboolean    gimp_dnd_set_pattern_data   (GtkWidget        *widget,
+                                                GCallback         set_pattern_func,
+                                                gpointer          set_pattern_data,
+                                                GtkSelectionData *selection);
+static gboolean    gimp_dnd_set_gradient_data  (GtkWidget        *widget,
+                                                GCallback         set_gradient_func,
+                                                gpointer          set_gradient_data,
+                                                GtkSelectionData *selection);
+static gboolean    gimp_dnd_set_palette_data   (GtkWidget        *widget,
+                                                GCallback         set_palette_func,
+                                                gpointer          set_palette_data,
+                                                GtkSelectionData *selection);
+static gboolean    gimp_dnd_set_font_data      (GtkWidget        *widget,
+                                                GCallback         set_font_func,
+                                                gpointer          set_font_data,
+                                                GtkSelectionData *selection);
+static gboolean    gimp_dnd_set_buffer_data    (GtkWidget        *widget,
+                                                GCallback         set_buffer_func,
+                                                gpointer          set_buffer_data,
+                                                GtkSelectionData *selection);
+static gboolean    gimp_dnd_set_imagefile_data (GtkWidget        *widget,
+                                                GCallback         set_imagefile_func,
+                                                gpointer          set_imagefile_data,
+                                                GtkSelectionData *selection);
+static gboolean    gimp_dnd_set_template_data  (GtkWidget        *widget,
+                                                GCallback         set_template_func,
+                                                gpointer          set_template_data,
+                                                GtkSelectionData *selection);
+static gboolean    gimp_dnd_set_tool_data      (GtkWidget        *widget,
+                                                GCallback         set_tool_func,
+                                                gpointer          set_tool_data,
+                                                GtkSelectionData *selection);
 
 
 
@@ -573,8 +540,8 @@ gimp_dnd_init (Gimp *gimp)
 
 static void
 gimp_dnd_data_drag_begin (GtkWidget      *widget,
-			  GdkDragContext *context,
-			  gpointer        data)
+                          GdkDragContext *context,
+                          gpointer        data)
 {
   GimpDndType     data_type;
   GimpDndDataDef *dnd_data;
@@ -625,24 +592,24 @@ gimp_dnd_data_drag_begin (GtkWidget      *widget,
                               window, (GDestroyNotify) gtk_widget_destroy);
 
       gtk_drag_set_icon_widget (context, window,
-				DRAG_ICON_OFFSET, DRAG_ICON_OFFSET);
+                                DRAG_ICON_OFFSET, DRAG_ICON_OFFSET);
     }
 }
 
 static void
 gimp_dnd_data_drag_end (GtkWidget      *widget,
-			GdkDragContext *context)
+                        GdkDragContext *context)
 {
   g_object_set_data (G_OBJECT (widget), "gimp-dnd-data-widget", NULL);
 }
 
 static void
 gimp_dnd_data_drag_handle (GtkWidget        *widget,
-			   GdkDragContext   *context,
-			   GtkSelectionData *selection_data,
-			   guint             info,
-			   guint             time,
-			   gpointer          data)
+                           GdkDragContext   *context,
+                           GtkSelectionData *selection_data,
+                           guint             info,
+                           guint             time,
+                           gpointer          data)
 {
   GCallback    get_data_func = NULL;
   gpointer     get_data_data = NULL;
@@ -657,10 +624,8 @@ gimp_dnd_data_drag_handle (GtkWidget        *widget,
       GimpDndDataDef *dnd_data = dnd_data_defs + data_type;
 
       if (dnd_data->target_entry.info == info)
-	{
-          gint    format;
-          guchar *vals;
-          gint    length;
+        {
+          GdkAtom atom;
 
           D (g_print ("gimp_dnd_data_drag_handle(%s)\n",
                       dnd_data->target_entry.target));
@@ -676,22 +641,13 @@ gimp_dnd_data_drag_handle (GtkWidget        *widget,
           if (! get_data_func)
             return;
 
-          vals = dnd_data->get_data_func (widget,
-                                          get_data_func,
-                                          get_data_data,
-                                          &format,
-                                          &length);
+          atom = gdk_atom_intern (dnd_data->target_entry.target, FALSE);
 
-          if (vals)
-            {
-              GdkAtom atom;
-
-              atom = gdk_atom_intern (dnd_data->target_entry.target, FALSE);
-
-              gtk_selection_data_set (selection_data, atom,
-                                      format, vals, length);
-              g_free (vals);
-            }
+          dnd_data->get_data_func (widget,
+                                   get_data_func,
+                                   get_data_data,
+                                   selection_data,
+                                   atom);
 
           return;
         }
@@ -700,13 +656,13 @@ gimp_dnd_data_drag_handle (GtkWidget        *widget,
 
 static void
 gimp_dnd_data_drop_handle (GtkWidget        *widget,
-			   GdkDragContext   *context,
-			   gint              x,
-			   gint              y,
-			   GtkSelectionData *selection_data,
-			   guint             info,
-			   guint             time,
-			   gpointer          data)
+                           GdkDragContext   *context,
+                           gint              x,
+                           gint              y,
+                           GtkSelectionData *selection_data,
+                           guint             info,
+                           guint             time,
+                           gpointer          data)
 {
   GimpDndType data_type;
 
@@ -725,7 +681,7 @@ gimp_dnd_data_drop_handle (GtkWidget        *widget,
       GimpDndDataDef *dnd_data = dnd_data_defs + data_type;
 
       if (dnd_data->target_entry.info == info)
-	{
+        {
           GCallback set_data_func = NULL;
           gpointer  set_data_data = NULL;
 
@@ -740,21 +696,19 @@ gimp_dnd_data_drop_handle (GtkWidget        *widget,
             set_data_data = g_object_get_data (G_OBJECT (widget),
                                                dnd_data->set_data_data_name);
 
-	  if (set_data_func &&
+          if (set_data_func &&
               dnd_data->set_data_func (widget,
                                        set_data_func,
                                        set_data_data,
-                                       selection_data->data,
-                                       selection_data->format,
-                                       selection_data->length))
+                                       selection_data))
             {
               gtk_drag_finish (context, TRUE, FALSE, time);
               return;
             }
 
           gtk_drag_finish (context, FALSE, FALSE, time);
-	  return;
-	}
+          return;
+        }
     }
 }
 
@@ -862,9 +816,9 @@ gimp_dnd_data_source_remove (GimpDndType  data_type,
 
 static void
 gimp_dnd_data_dest_add (GimpDndType  data_type,
-			GtkWidget   *widget,
-			gpointer     set_data_func,
-			gpointer     set_data_data)
+                        GtkWidget   *widget,
+                        gpointer     set_data_func,
+                        gpointer     set_data_data)
 {
   GimpDndDataDef *dnd_data;
   GtkTargetList  *target_list;
@@ -943,278 +897,31 @@ gimp_dnd_data_dest_remove (GimpDndType  data_type,
 /*  file dnd functions  */
 /************************/
 
-static guchar *
-gimp_dnd_get_file_data (GtkWidget *widget,
-                        GCallback  get_file_func,
-                        gpointer   get_file_data,
-                        gint      *format,
-                        gint      *length)
+static void
+gimp_dnd_get_file_data (GtkWidget        *widget,
+                        GCallback         get_file_func,
+                        gpointer          get_file_data,
+                        GtkSelectionData *selection,
+                        GdkAtom           atom)
 {
-  GList *file_list;
-  GList *list;
-  gchar *vals = NULL;
+  GList *uri_list;
 
-  file_list = (* (GimpDndDragFileFunc) get_file_func) (widget, get_file_data);
+  uri_list = (* (GimpDndDragFileFunc) get_file_func) (widget, get_file_data);
 
-  if (! file_list)
-    return NULL;
-
-  for (list = file_list; list; list = g_list_next (list))
+  if (uri_list)
     {
-      if (vals)
-        {
-          gchar *tmp = g_strconcat (vals,
-                                    list->data,
-                                    list->next ? "\n" : NULL,
-                                    NULL);
-          g_free (vals);
-          vals = tmp;
-        }
-      else
-        {
-          vals = g_strconcat (list->data,
-                              list->next ? "\n" : NULL,
-                              NULL);
-        }
+      gimp_selection_data_set_uris (selection, atom, uri_list);
+      g_list_free (uri_list);
     }
-
-  g_list_free (file_list);
-
-  *format = 8;
-  *length = strlen (vals) + 1;
-
-  return (guchar *) vals;
-}
-
-/*  the next two functions are straight cut'n'paste from glib/glib/gconvert.c,
- *  except that gimp_unescape_uri_string() does not try to UTF-8 validate
- *  the unescaped result.
- */
-static int
-unescape_character (const char *scanner)
-{
-  int first_digit;
-  int second_digit;
-
-  first_digit = g_ascii_xdigit_value (scanner[0]);
-  if (first_digit < 0)
-    return -1;
-
-  second_digit = g_ascii_xdigit_value (scanner[1]);
-  if (second_digit < 0)
-    return -1;
-
-  return (first_digit << 4) | second_digit;
-}
-
-static gchar *
-gimp_unescape_uri_string (const char *escaped,
-                          int         len,
-                          const char *illegal_escaped_characters,
-                          gboolean    ascii_must_not_be_escaped)
-{
-  const gchar *in, *in_end;
-  gchar *out, *result;
-  int c;
-
-  if (escaped == NULL)
-    return NULL;
-
-  if (len < 0)
-    len = strlen (escaped);
-
-  result = g_malloc (len + 1);
-
-  out = result;
-  for (in = escaped, in_end = escaped + len; in < in_end; in++)
-    {
-      c = *in;
-
-      if (c == '%')
-        {
-          /* catch partial escape sequences past the end of the substring */
-          if (in + 3 > in_end)
-            break;
-
-          c = unescape_character (in + 1);
-
-          /* catch bad escape sequences and NUL characters */
-          if (c <= 0)
-            break;
-
-          /* catch escaped ASCII */
-          if (ascii_must_not_be_escaped && c <= 0x7F)
-            break;
-
-          /* catch other illegal escaped characters */
-          if (strchr (illegal_escaped_characters, c) != NULL)
-            break;
-
-          in += 2;
-        }
-
-      *out++ = c;
-    }
-
-  g_assert (out - result <= len);
-  *out = '\0';
-
-  if (in != in_end)
-    {
-      g_free (result);
-      return NULL;
-    }
-
-  return result;
 }
 
 static gboolean
-gimp_dnd_set_file_data (GtkWidget *widget,
-			GCallback  set_file_func,
-			gpointer   set_file_data,
-			guchar    *vals,
-			gint       format,
-			gint       length)
+gimp_dnd_set_file_data (GtkWidget        *widget,
+                        GCallback         set_file_func,
+                        gpointer          set_file_data,
+                        GtkSelectionData *selection)
 {
-  GList *crap_list = NULL;
-  GList *uri_list  = NULL;
-  GList *list;
-  gchar *buffer;
-
-  if (format != 8)
-    {
-      g_warning ("Received invalid file data!");
-      return FALSE;
-    }
-
-  buffer = (gchar *) vals;
-
-  D (g_print ("gimp_dnd_set_file_data: raw buffer >>%s<<\n", buffer));
-
-  {
-    gchar name_buffer[1024];
-
-    while (*buffer && (buffer - (gchar *) vals < length))
-      {
-	gchar *name = name_buffer;
-	gint   len  = 0;
-
-	while (len < sizeof (name_buffer) && *buffer && *buffer != '\n')
-	  {
-	    *name++ = *buffer++;
-	    len++;
-	  }
-	if (len == 0)
-	  break;
-
-	if (*(name - 1) == 0xd)   /* gmc uses RETURN+NEWLINE as delimiter */
-	  len--;
-
-	if (len > 2)
-	  crap_list = g_list_prepend (crap_list, g_strndup (name_buffer, len));
-
-	if (*buffer)
-	  buffer++;
-      }
-  }
-
-  if (! crap_list)
-    return FALSE;
-
-  /*  do various checks because file drag sources send all kinds of
-   *  arbitrary crap...
-   */
-  for (list = crap_list; list; list = g_list_next (list))
-    {
-      const gchar *dnd_crap = list->data;
-      gchar       *filename;
-      gchar       *uri   = NULL;
-      GError      *error = NULL;
-
-      D (g_print ("%s: trying to convert \"%s\" to an uri.\n",
-                  G_STRFUNC, dnd_crap));
-
-      filename = g_filename_from_uri (dnd_crap, NULL, NULL);
-
-      if (filename)
-        {
-          /*  if we got a correctly encoded "file:" uri...  */
-
-          uri = g_filename_to_uri (filename, NULL, NULL);
-
-          g_free (filename);
-        }
-      else if (g_file_test (dnd_crap, G_FILE_TEST_EXISTS))
-        {
-          /*  ...else if we got a valid local filename...  */
-
-          uri = g_filename_to_uri (dnd_crap, NULL, NULL);
-        }
-      else
-        {
-          /*  ...otherwise do evil things...  */
-
-          const gchar *start = dnd_crap;
-
-          if (! strncmp (dnd_crap, "file://", strlen ("file://")))
-            {
-              start += strlen ("file://");
-            }
-          else if (! strncmp (dnd_crap, "file:", strlen ("file:")))
-            {
-              start += strlen ("file:");
-            }
-
-          if (start != dnd_crap)
-            {
-              /*  try if we got a "file:" uri in the local filename encoding  */
-              gchar  *unescaped_filename;
-
-              if (strstr (dnd_crap, "%"))
-                {
-                  unescaped_filename = gimp_unescape_uri_string (start, -1,
-                                                                 "/", FALSE);
-                }
-              else
-                {
-                  unescaped_filename = g_strdup (start);
-                }
-
-              uri = g_filename_to_uri (unescaped_filename, NULL, &error);
-
-              if (! uri)
-                {
-                  gchar *escaped_filename = g_strescape (unescaped_filename,
-                                                         NULL);
-
-                  g_message (_("The filename '%s' couldn't be converted to a "
-                               "valid URI:\n\n%s"),
-                             escaped_filename,
-                             error->message ?
-                             error->message : _("Invalid UTF-8"));
-                  g_free (escaped_filename);
-                  g_clear_error (&error);
-
-                  g_free (unescaped_filename);
-                  continue;
-                }
-
-              g_free (unescaped_filename);
-            }
-          else
-            {
-              /*  otherwise try the crap passed anyway, in case it's
-               *  a "http:" or whatever uri a plug-in might handle
-               */
-              uri = g_strdup (dnd_crap);
-            }
-        }
-
-      uri_list = g_list_prepend (uri_list, uri);
-    }
-
-  g_list_foreach (crap_list, (GFunc) g_free, NULL);
-  g_list_free (crap_list);
+  GList *uri_list = gimp_selection_data_get_uris (selection);
 
   if (! uri_list)
     return FALSE;
@@ -1235,8 +942,8 @@ gimp_dnd_file_source_add (GtkWidget           *widget,
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   gimp_dnd_data_source_add (GIMP_DND_TYPE_URI_LIST, widget,
-			    G_CALLBACK (get_file_func),
-			    data);
+                            G_CALLBACK (get_file_func),
+                            data);
 }
 
 void
@@ -1249,8 +956,8 @@ gimp_dnd_file_source_remove (GtkWidget *widget)
 
 void
 gimp_dnd_file_dest_add (GtkWidget           *widget,
-			GimpDndDropFileFunc  set_file_func,
-			gpointer             data)
+                        GimpDndDropFileFunc  set_file_func,
+                        gpointer             data)
 {
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
@@ -1264,14 +971,14 @@ gimp_dnd_file_dest_add (GtkWidget           *widget,
                        GDK_ACTION_COPY | GDK_ACTION_MOVE);
 
   gimp_dnd_data_dest_add (GIMP_DND_TYPE_NETSCAPE_URL, widget,
-			  G_CALLBACK (set_file_func),
-			  data);
+                          G_CALLBACK (set_file_func),
+                          data);
   gimp_dnd_data_dest_add (GIMP_DND_TYPE_TEXT_PLAIN, widget,
-			  G_CALLBACK (set_file_func),
-			  data);
+                          G_CALLBACK (set_file_func),
+                          data);
   gimp_dnd_data_dest_add (GIMP_DND_TYPE_URI_LIST, widget,
-			  G_CALLBACK (set_file_func),
-			  data);
+                          G_CALLBACK (set_file_func),
+                          data);
 }
 
 void
@@ -1291,14 +998,13 @@ gimp_dnd_file_dest_remove (GtkWidget *widget)
 
 static GtkWidget *
 gimp_dnd_get_color_icon (GtkWidget *widget,
-			 GCallback  get_color_func,
-			 gpointer   get_color_data)
+                         GCallback  get_color_func,
+                         gpointer   get_color_data)
 {
   GtkWidget *color_area;
   GimpRGB    color;
 
-  (* (GimpDndDragColorFunc) get_color_func) (widget, &color,
-					     get_color_data);
+  (* (GimpDndDragColorFunc) get_color_func) (widget, &color, get_color_data);
 
   color_area = gimp_color_area_new (&color, TRUE, 0);
   gtk_widget_set_size_request (color_area, DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);
@@ -1306,76 +1012,47 @@ gimp_dnd_get_color_icon (GtkWidget *widget,
   return color_area;
 }
 
-static guchar *
-gimp_dnd_get_color_data (GtkWidget *widget,
-			 GCallback  get_color_func,
-			 gpointer   get_color_data,
-			 gint      *format,
-			 gint      *length)
+static void
+gimp_dnd_get_color_data (GtkWidget        *widget,
+                         GCallback         get_color_func,
+                         gpointer          get_color_data,
+                         GtkSelectionData *selection,
+                         GdkAtom           atom)
 {
-  guint16 *vals;
-  GimpRGB  color;
-  guchar   r, g, b, a;
+  GimpRGB color;
 
-  (* (GimpDndDragColorFunc) get_color_func) (widget, &color,
-					     get_color_data);
+  (* (GimpDndDragColorFunc) get_color_func) (widget, &color, get_color_data);
 
-  vals = g_new (guint16, 4);
-
-  gimp_rgba_get_uchar (&color, &r, &g, &b, &a);
-
-  vals[0] = r + (r << 8);
-  vals[1] = g + (g << 8);
-  vals[2] = b + (b << 8);
-  vals[3] = a + (a << 8);
-
-  *format = 16;
-  *length = 8;
-
-  return (guchar *) vals;
+  gimp_selection_data_set_color (selection, atom, &color);
 }
 
 static gboolean
-gimp_dnd_set_color_data (GtkWidget *widget,
-			 GCallback  set_color_func,
-			 gpointer   set_color_data,
-			 guchar    *vals,
-			 gint       format,
-			 gint       length)
+gimp_dnd_set_color_data (GtkWidget        *widget,
+                         GCallback         set_color_func,
+                         gpointer          set_color_data,
+                         GtkSelectionData *selection)
 {
-  guint16 *color_vals;
-  GimpRGB  color;
+  GimpRGB color;
 
-  if ((format != 16) || (length != 8))
-    {
-      g_warning ("Received invalid color data!");
-      return FALSE;
-    }
-
-  color_vals = (guint16 *) vals;
-
-  gimp_rgba_set_uchar (&color,
-		       (guchar) (color_vals[0] >> 8),
-		       (guchar) (color_vals[1] >> 8),
-		       (guchar) (color_vals[2] >> 8),
-		       (guchar) (color_vals[3] >> 8));
+  if (! gimp_selection_data_get_color (selection, &color))
+    return FALSE;
 
   (* (GimpDndDropColorFunc) set_color_func) (widget, &color,
-					     set_color_data);
+                                             set_color_data);
 
   return TRUE;
 }
 
 void
 gimp_dnd_color_source_add (GtkWidget            *widget,
-			   GimpDndDragColorFunc  get_color_func,
-			   gpointer              data)
+                           GimpDndDragColorFunc  get_color_func,
+                           gpointer              data)
 {
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   gimp_dnd_data_source_add (GIMP_DND_TYPE_COLOR, widget,
-			    G_CALLBACK (get_color_func),
-			    data);
+                            G_CALLBACK (get_color_func),
+                            data);
 }
 
 void
@@ -1388,14 +1065,14 @@ gimp_dnd_color_source_remove (GtkWidget *widget)
 
 void
 gimp_dnd_color_dest_add (GtkWidget            *widget,
-			 GimpDndDropColorFunc  set_color_func,
-			 gpointer              data)
+                         GimpDndDropColorFunc  set_color_func,
+                         gpointer              data)
 {
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   gimp_dnd_data_dest_add (GIMP_DND_TYPE_COLOR, widget,
-			  G_CALLBACK (set_color_func),
-			  data);
+                          G_CALLBACK (set_color_func),
+                          data);
 }
 
 void
@@ -1411,12 +1088,12 @@ gimp_dnd_color_dest_remove (GtkWidget *widget)
 /*  svg dnd functions  */
 /***********************/
 
-static guchar *
-gimp_dnd_get_svg_data (GtkWidget *widget,
-                       GCallback  get_svg_func,
-                       gpointer   get_svg_data,
-                       gint      *format,
-                       gint      *length)
+static void
+gimp_dnd_get_svg_data (GtkWidget        *widget,
+                       GCallback         get_svg_func,
+                       gpointer          get_svg_data,
+                       GtkSelectionData *selection,
+                       GdkAtom           atom)
 {
   gchar *svg_data;
   gint   svg_data_length;
@@ -1424,27 +1101,30 @@ gimp_dnd_get_svg_data (GtkWidget *widget,
   svg_data = (* (GimpDndDragSvgFunc) get_svg_func) (widget, &svg_data_length,
                                                     get_svg_data);
 
-  *format = 8;
-  *length = svg_data_length;
-
-  return (guchar *) svg_data;
+  if (svg_data)
+    {
+      gimp_selection_data_set_svg (selection, atom,
+                                   svg_data, svg_data_length);
+      g_free (svg_data);
+    }
 }
 
 static gboolean
-gimp_dnd_set_svg_data (GtkWidget *widget,
-                       GCallback  set_svg_func,
-                       gpointer   set_svg_data,
-                       guchar    *vals,
-                       gint       format,
-                       gint       length)
+gimp_dnd_set_svg_data (GtkWidget        *widget,
+                       GCallback         set_svg_func,
+                       gpointer          set_svg_data,
+                       GtkSelectionData *selection)
 {
-  if (format != 8)
-    {
-      g_warning ("Received invalid SVG data!");
-      return FALSE;
-    }
+  gchar *svg_data;
+  gint   svg_data_length;
 
-  (* (GimpDndDropSvgFunc) set_svg_func) (widget, (gchar *) vals, length,
+  svg_data = gimp_selection_data_get_svg (selection, &svg_data_length);
+
+  if (! svg_data)
+    return FALSE;
+
+  (* (GimpDndDropSvgFunc) set_svg_func) (widget, svg_data,
+                                         svg_data_length,
                                          set_svg_data);
 
   return TRUE;
@@ -1458,11 +1138,11 @@ gimp_dnd_svg_source_add (GtkWidget          *widget,
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   gimp_dnd_data_source_add (GIMP_DND_TYPE_SVG, widget,
-			    G_CALLBACK (get_svg_func),
-			    data);
+                            G_CALLBACK (get_svg_func),
+                            data);
   gimp_dnd_data_source_add (GIMP_DND_TYPE_SVG_XML, widget,
-			    G_CALLBACK (get_svg_func),
-			    data);
+                            G_CALLBACK (get_svg_func),
+                            data);
 }
 
 void
@@ -1482,11 +1162,11 @@ gimp_dnd_svg_dest_add (GtkWidget          *widget,
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   gimp_dnd_data_dest_add (GIMP_DND_TYPE_SVG, widget,
-			  G_CALLBACK (set_svg_func),
-			  data);
+                          G_CALLBACK (set_svg_func),
+                          data);
   gimp_dnd_data_dest_add (GIMP_DND_TYPE_SVG_XML, widget,
-			  G_CALLBACK (set_svg_func),
-			  data);
+                          G_CALLBACK (set_svg_func),
+                          data);
 }
 
 void
@@ -1505,14 +1185,14 @@ gimp_dnd_svg_dest_remove (GtkWidget *widget)
 
 static GtkWidget *
 gimp_dnd_get_viewable_icon (GtkWidget *widget,
-			    GCallback  get_viewable_func,
-			    gpointer   get_viewable_data)
+                            GCallback  get_viewable_func,
+                            gpointer   get_viewable_data)
 {
   GtkWidget    *preview;
   GimpViewable *viewable;
 
   viewable = (* (GimpDndDragViewableFunc) get_viewable_func) (widget,
-							      get_viewable_data);
+                                                              get_viewable_data);
 
   if (! viewable)
     return NULL;
@@ -1589,9 +1269,9 @@ gimp_dnd_data_type_get_by_g_type (GType type)
 
 gboolean
 gimp_dnd_drag_source_set_by_type (GtkWidget       *widget,
-				  GdkModifierType  start_button_mask,
-				  GType            type,
-				  GdkDragAction    actions)
+                                  GdkModifierType  start_button_mask,
+                                  GType            type,
+                                  GdkDragAction    actions)
 {
   GimpDndType dnd_type;
 
@@ -1603,7 +1283,7 @@ gimp_dnd_drag_source_set_by_type (GtkWidget       *widget,
     return FALSE;
 
   gtk_drag_source_set (widget, start_button_mask,
-		       &dnd_data_defs[dnd_type].target_entry, 1,
+                       &dnd_data_defs[dnd_type].target_entry, 1,
                        actions);
 
   return TRUE;
@@ -1611,9 +1291,9 @@ gimp_dnd_drag_source_set_by_type (GtkWidget       *widget,
 
 gboolean
 gimp_dnd_drag_dest_set_by_type (GtkWidget       *widget,
-				GtkDestDefaults  flags,
-				GType            type,
-				GdkDragAction    actions)
+                                GtkDestDefaults  flags,
+                                GType            type,
+                                GdkDragAction    actions)
 {
   GimpDndType dnd_type;
 
@@ -1625,7 +1305,7 @@ gimp_dnd_drag_dest_set_by_type (GtkWidget       *widget,
     return FALSE;
 
   gtk_drag_dest_set (widget, flags,
-		     &dnd_data_defs[dnd_type].target_entry, 1,
+                     &dnd_data_defs[dnd_type].target_entry, 1,
                      actions);
 
   return TRUE;
@@ -1633,9 +1313,9 @@ gimp_dnd_drag_dest_set_by_type (GtkWidget       *widget,
 
 gboolean
 gimp_dnd_viewable_source_add (GtkWidget               *widget,
-			      GType                    type,
-			      GimpDndDragViewableFunc  get_viewable_func,
-			      gpointer                 data)
+                              GType                    type,
+                              GimpDndDragViewableFunc  get_viewable_func,
+                              gpointer                 data)
 {
   GimpDndType dnd_type;
 
@@ -1674,9 +1354,9 @@ gimp_dnd_viewable_source_remove (GtkWidget *widget,
 
 gboolean
 gimp_dnd_viewable_dest_add (GtkWidget               *widget,
-			    GType                    type,
-			    GimpDndDropViewableFunc  set_viewable_func,
-			    gpointer                 data)
+                            GType                    type,
+                            GimpDndDropViewableFunc  set_viewable_func,
+                            gpointer                 data)
 {
   GimpDndType dnd_type;
 
@@ -1750,55 +1430,29 @@ gimp_dnd_get_drag_data (GtkWidget *widget)
 /*  image dnd functions  */
 /*************************/
 
-static guchar *
-gimp_dnd_get_image_data (GtkWidget *widget,
-			 GCallback  get_image_func,
-			 gpointer   get_image_data,
-			 gint      *format,
-			 gint      *length)
+static void
+gimp_dnd_get_image_data (GtkWidget        *widget,
+                         GCallback         get_image_func,
+                         gpointer          get_image_data,
+                         GtkSelectionData *selection,
+                         GdkAtom           atom)
 {
   GimpImage *gimage;
-  gchar     *id;
 
   gimage = (GimpImage *)
     (* (GimpDndDragViewableFunc) get_image_func) (widget, get_image_data);
 
-  if (! gimage)
-    return NULL;
-
-  id = g_strdup_printf ("%d", gimp_image_get_ID (gimage));
-
-  *format = 8;
-  *length = strlen (id) + 1;
-
-  return (guchar *) id;
+  if (gimage)
+    gimp_selection_data_set_image (selection, atom, gimage);
 }
 
 static gboolean
-gimp_dnd_set_image_data (GtkWidget *widget,
-			 GCallback  set_image_func,
-			 gpointer   set_image_data,
-			 guchar    *vals,
-			 gint       format,
-			 gint       length)
+gimp_dnd_set_image_data (GtkWidget        *widget,
+                         GCallback         set_image_func,
+                         gpointer          set_image_data,
+                         GtkSelectionData *selection)
 {
-  GimpImage *gimage;
-  gchar     *id;
-  gint       ID;
-
-  if ((format != 8) || (length < 1))
-    {
-      g_warning ("Received invalid image ID data!");
-      return FALSE;
-    }
-
-  id = (gchar *) vals;
-  ID = atoi (id);
-
-  if (! ID)
-    return FALSE;
-
-  gimage = gimp_image_get_by_ID (the_dnd_gimp, ID);
+  GimpImage *gimage = gimp_selection_data_get_image (selection, the_dnd_gimp);
 
   if (! gimage)
     return FALSE;
@@ -1815,55 +1469,29 @@ gimp_dnd_set_image_data (GtkWidget *widget,
 /*  item dnd functions  */
 /************************/
 
-static guchar *
-gimp_dnd_get_item_data (GtkWidget *widget,
-                        GCallback  get_item_func,
-                        gpointer   get_item_data,
-                        gint      *format,
-                        gint      *length)
+static void
+gimp_dnd_get_item_data (GtkWidget        *widget,
+                        GCallback         get_item_func,
+                        gpointer          get_item_data,
+                        GtkSelectionData *selection,
+                        GdkAtom           atom)
 {
   GimpItem *item;
-  gchar    *id;
 
   item = (GimpItem *)
     (* (GimpDndDragViewableFunc) get_item_func) (widget, get_item_data);
 
-  if (! item)
-    return NULL;
-
-  id = g_strdup_printf ("%d", gimp_item_get_ID (item));
-
-  *format = 8;
-  *length = strlen (id) + 1;
-
-  return (guchar *) id;
+  if (item)
+    gimp_selection_data_set_item (selection, atom, item);
 }
 
 static gboolean
-gimp_dnd_set_item_data (GtkWidget *widget,
-                        GCallback  set_item_func,
-                        gpointer   set_item_data,
-                        guchar    *vals,
-                        gint       format,
-                        gint       length)
+gimp_dnd_set_item_data (GtkWidget        *widget,
+                        GCallback         set_item_func,
+                        gpointer          set_item_data,
+                        GtkSelectionData *selection)
 {
-  GimpItem *item;
-  gchar    *id;
-  gint      ID;
-
-  if ((format != 8) || (length < 1))
-    {
-      g_warning ("Received invalid item ID data!");
-      return FALSE;
-    }
-
-  id = (gchar *) vals;
-  ID = atoi (id);
-
-  if (! ID)
-    return FALSE;
-
-  item = gimp_item_get_by_ID (the_dnd_gimp, ID);
+  GimpItem *item = gimp_selection_data_get_item (selection, the_dnd_gimp);
 
   if (! item)
     return FALSE;
@@ -1880,31 +1508,20 @@ gimp_dnd_set_item_data (GtkWidget *widget,
 /*  GimpData dnd functions  */
 /****************************/
 
-static guchar *
-gimp_dnd_get_data_data (GtkWidget *widget,
-			GCallback  get_data_func,
-			gpointer   get_data_data,
-			gint      *format,
-			gint      *length)
+static void
+gimp_dnd_get_data_data (GtkWidget        *widget,
+                        GCallback         get_data_func,
+                        gpointer          get_data_data,
+                        GtkSelectionData *selection,
+                        GdkAtom           atom)
 {
   GimpData *data;
-  gchar    *name;
 
   data = (GimpData *)
     (* (GimpDndDragViewableFunc) get_data_func) (widget, get_data_data);
 
-  if (! data)
-    return NULL;
-
-  name = g_strdup (gimp_object_get_name (GIMP_OBJECT (data)));
-
-  if (! name)
-    return NULL;
-
-  *format = 8;
-  *length = strlen (name) + 1;
-
-  return (guchar *) name;
+  if (data)
+    gimp_selection_data_set_viewable (selection, atom, GIMP_VIEWABLE (data));
 }
 
 
@@ -1913,30 +1530,12 @@ gimp_dnd_get_data_data (GtkWidget *widget,
 /*************************/
 
 static gboolean
-gimp_dnd_set_brush_data (GtkWidget *widget,
-			 GCallback  set_brush_func,
-			 gpointer   set_brush_data,
-			 guchar    *vals,
-			 gint       format,
-			 gint       length)
+gimp_dnd_set_brush_data (GtkWidget        *widget,
+                         GCallback         set_brush_func,
+                         gpointer          set_brush_data,
+                         GtkSelectionData *selection)
 {
-  GimpBrush *brush;
-  gchar     *name;
-
-  if ((format != 8) || (length < 1))
-    {
-      g_warning ("Received invalid brush data!");
-      return FALSE;
-    }
-
-  name = (gchar *) vals;
-
-  if (strcmp (name, "Standard") == 0)
-    brush = GIMP_BRUSH (gimp_brush_get_standard ());
-  else
-    brush = (GimpBrush *)
-      gimp_container_get_child_by_name (the_dnd_gimp->brush_factory->container,
-					name);
+  GimpBrush *brush = gimp_selection_data_get_brush (selection, the_dnd_gimp);
 
   if (! brush)
     return FALSE;
@@ -1954,30 +1553,13 @@ gimp_dnd_set_brush_data (GtkWidget *widget,
 /***************************/
 
 static gboolean
-gimp_dnd_set_pattern_data (GtkWidget *widget,
-			   GCallback  set_pattern_func,
-			   gpointer   set_pattern_data,
-			   guchar    *vals,
-			   gint       format,
-			   gint       length)
+gimp_dnd_set_pattern_data (GtkWidget        *widget,
+                           GCallback         set_pattern_func,
+                           gpointer          set_pattern_data,
+                           GtkSelectionData *selection)
 {
-  GimpPattern *pattern;
-  gchar       *name;
-
-  if ((format != 8) || (length < 1))
-    {
-      g_warning ("Received invalid pattern data!");
-      return FALSE;
-    }
-
-  name = (gchar *) vals;
-
-  if (strcmp (name, "Standard") == 0)
-    pattern = GIMP_PATTERN (gimp_pattern_get_standard ());
-  else
-    pattern = (GimpPattern *)
-      gimp_container_get_child_by_name (the_dnd_gimp->pattern_factory->container,
-					name);
+  GimpPattern *pattern = gimp_selection_data_get_pattern (selection,
+                                                          the_dnd_gimp);
 
   if (! pattern)
     return FALSE;
@@ -1995,30 +1577,13 @@ gimp_dnd_set_pattern_data (GtkWidget *widget,
 /****************************/
 
 static gboolean
-gimp_dnd_set_gradient_data (GtkWidget *widget,
-			    GCallback  set_gradient_func,
-			    gpointer   set_gradient_data,
-			    guchar    *vals,
-			    gint       format,
-			    gint       length)
+gimp_dnd_set_gradient_data (GtkWidget        *widget,
+                            GCallback         set_gradient_func,
+                            gpointer          set_gradient_data,
+                            GtkSelectionData *selection)
 {
-  GimpGradient *gradient;
-  gchar        *name;
-
-  if ((format != 8) || (length < 1))
-    {
-      g_warning ("Received invalid gradient data!");
-      return FALSE;
-    }
-
-  name = (gchar *) vals;
-
-  if (strcmp (name, "Standard") == 0)
-    gradient = GIMP_GRADIENT (gimp_gradient_get_standard ());
-  else
-    gradient = (GimpGradient *)
-      gimp_container_get_child_by_name (the_dnd_gimp->gradient_factory->container,
-					name);
+  GimpGradient *gradient = gimp_selection_data_get_gradient (selection,
+                                                             the_dnd_gimp);
 
   if (! gradient)
     return FALSE;
@@ -2036,30 +1601,13 @@ gimp_dnd_set_gradient_data (GtkWidget *widget,
 /***************************/
 
 static gboolean
-gimp_dnd_set_palette_data (GtkWidget *widget,
-			   GCallback  set_palette_func,
-			   gpointer   set_palette_data,
-			   guchar    *vals,
-			   gint       format,
-			   gint       length)
+gimp_dnd_set_palette_data (GtkWidget        *widget,
+                           GCallback         set_palette_func,
+                           gpointer          set_palette_data,
+                           GtkSelectionData *selection)
 {
-  GimpPalette *palette;
-  gchar       *name;
-
-  if ((format != 8) || (length < 1))
-    {
-      g_warning ("Received invalid palette data!");
-      return FALSE;
-    }
-
-  name = (gchar *) vals;
-
-  if (strcmp (name, "Standard") == 0)
-    palette = GIMP_PALETTE (gimp_palette_get_standard ());
-  else
-    palette = (GimpPalette *)
-      gimp_container_get_child_by_name (the_dnd_gimp->palette_factory->container,
-					name);
+  GimpPalette *palette = gimp_selection_data_get_palette (selection,
+                                                          the_dnd_gimp);
 
   if (! palette)
     return FALSE;
@@ -2077,29 +1625,12 @@ gimp_dnd_set_palette_data (GtkWidget *widget,
 /************************/
 
 static gboolean
-gimp_dnd_set_font_data (GtkWidget *widget,
-                        GCallback  set_font_func,
-                        gpointer   set_font_data,
-                        guchar    *vals,
-                        gint       format,
-                        gint       length)
+gimp_dnd_set_font_data (GtkWidget        *widget,
+                        GCallback         set_font_func,
+                        gpointer          set_font_data,
+                        GtkSelectionData *selection)
 {
-  GimpFont *font;
-  gchar    *name;
-
-  if ((format != 8) || (length < 1))
-    {
-      g_warning ("Received invalid font data!");
-      return FALSE;
-    }
-
-  name = (gchar *) vals;
-
-  if (strcmp (name, "Standard") == 0)
-    font = gimp_font_get_standard ();
-  else
-    font = (GimpFont *)
-      gimp_container_get_child_by_name (the_dnd_gimp->fonts, name);
+  GimpFont *font = gimp_selection_data_get_font (selection, the_dnd_gimp);
 
   if (! font)
     return FALSE;
@@ -2117,26 +1648,12 @@ gimp_dnd_set_font_data (GtkWidget *widget,
 /**************************/
 
 static gboolean
-gimp_dnd_set_buffer_data (GtkWidget *widget,
-			  GCallback  set_buffer_func,
-			  gpointer   set_buffer_data,
-			  guchar    *vals,
-			  gint       format,
-			  gint       length)
+gimp_dnd_set_buffer_data (GtkWidget        *widget,
+                          GCallback         set_buffer_func,
+                          gpointer          set_buffer_data,
+                          GtkSelectionData *selection)
 {
-  GimpBuffer *buffer;
-  gchar      *name;
-
-  if ((format != 8) || (length < 1))
-    {
-      g_warning ("Received invalid buffer data!");
-      return FALSE;
-    }
-
-  name = (gchar *) vals;
-
-  buffer = (GimpBuffer *)
-    gimp_container_get_child_by_name (the_dnd_gimp->named_buffers, name);
+  GimpBuffer *buffer = gimp_selection_data_get_buffer (selection, the_dnd_gimp);
 
   if (! buffer)
     return FALSE;
@@ -2154,26 +1671,13 @@ gimp_dnd_set_buffer_data (GtkWidget *widget,
 /*****************************/
 
 static gboolean
-gimp_dnd_set_imagefile_data (GtkWidget *widget,
-			     GCallback  set_imagefile_func,
-			     gpointer   set_imagefile_data,
-			     guchar    *vals,
-			     gint       format,
-			     gint       length)
+gimp_dnd_set_imagefile_data (GtkWidget        *widget,
+                             GCallback         set_imagefile_func,
+                             gpointer          set_imagefile_data,
+                             GtkSelectionData *selection)
 {
-  GimpImagefile *imagefile;
-  gchar         *name;
-
-  if ((format != 8) || (length < 1))
-    {
-      g_warning ("Received invalid imagefile data!");
-      return FALSE;
-    }
-
-  name = (gchar *) vals;
-
-  imagefile = (GimpImagefile *)
-    gimp_container_get_child_by_name (the_dnd_gimp->documents, name);
+  GimpImagefile *imagefile = gimp_selection_data_get_imagefile (selection,
+                                                                the_dnd_gimp);
 
   if (! imagefile)
     return FALSE;
@@ -2191,26 +1695,13 @@ gimp_dnd_set_imagefile_data (GtkWidget *widget,
 /*****************************/
 
 static gboolean
-gimp_dnd_set_template_data (GtkWidget *widget,
-                            GCallback  set_template_func,
-                            gpointer   set_template_data,
-                            guchar    *vals,
-                            gint       format,
-                            gint       length)
+gimp_dnd_set_template_data (GtkWidget        *widget,
+                            GCallback         set_template_func,
+                            gpointer          set_template_data,
+                            GtkSelectionData *selection)
 {
-  GimpTemplate *template;
-  gchar        *name;
-
-  if ((format != 8) || (length < 1))
-    {
-      g_warning ("Received invalid template data!");
-      return FALSE;
-    }
-
-  name = (gchar *) vals;
-
-  template = (GimpTemplate *)
-    gimp_container_get_child_by_name (the_dnd_gimp->templates, name);
+  GimpTemplate *template = gimp_selection_data_get_template (selection,
+                                                             the_dnd_gimp);
 
   if (! template)
     return FALSE;
@@ -2228,29 +1719,13 @@ gimp_dnd_set_template_data (GtkWidget *widget,
 /************************/
 
 static gboolean
-gimp_dnd_set_tool_data (GtkWidget *widget,
-			GCallback  set_tool_func,
-			gpointer   set_tool_data,
-			guchar    *vals,
-			gint       format,
-			gint       length)
+gimp_dnd_set_tool_data (GtkWidget        *widget,
+                        GCallback         set_tool_func,
+                        gpointer          set_tool_data,
+                        GtkSelectionData *selection)
 {
-  GimpToolInfo *tool_info;
-  gchar        *name;
-
-  if ((format != 8) || (length < 1))
-    {
-      g_warning ("Received invalid tool data!");
-      return FALSE;
-    }
-
-  name = (gchar *) vals;
-
-  if (strcmp (name, "gimp-standard-tool") == 0)
-    tool_info = gimp_tool_info_get_standard (the_dnd_gimp);
-  else
-    tool_info = (GimpToolInfo *)
-      gimp_container_get_child_by_name (the_dnd_gimp->tool_info_list, name);
+  GimpToolInfo *tool_info = gimp_selection_data_get_tool (selection,
+                                                          the_dnd_gimp);
 
   if (! tool_info)
     return FALSE;
