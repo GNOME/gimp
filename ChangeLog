@@ -1,3 +1,9 @@
+2003-06-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint_funcs.c (combine_sub_region): allocate the buffer
+	large enough for DISSOLVE (which always needs alpha). Fixes the
+	crashing part of bug #107402.
+
 2003-06-02  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/grid.c: merged fix for bug #114225 from HEAD.

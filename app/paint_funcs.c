@@ -5408,7 +5408,7 @@ combine_sub_region(struct combine_regions_struct *st,
   unsigned char * s, * s1, * s2;
   unsigned char * d, * m;
   unsigned char buf[MAX (MAX (src1->w * src1->bytes,
-                              src2->w * src2->bytes),
+                              src2->w * (src2->bytes + 1)),
                          dest->w * dest->bytes)];
   gboolean opacity_quickskip_possible;
   gboolean transparency_quickskip_possible;
