@@ -126,7 +126,10 @@ file_last_opened_cmd_callback (GtkWidget *widget,
       if (status != GIMP_PDB_SUCCESS &&
           status != GIMP_PDB_CANCEL)
         {
-          g_message (_("Error opening file: %s\n"),
+	  /* This string needs to be fixed. Mitch is supposed to do it.  Needs a :
+added at the end followed by the error.  Also something about the GIMP_OBJECT 
+needs to be changed. --bex */
+          g_message (_("Error opening file '%s'"),
                      GIMP_OBJECT (imagefile)->name);
         }
     }
@@ -179,7 +182,8 @@ file_save_cmd_callback (GtkWidget *widget,
 	  if (status != GIMP_PDB_SUCCESS &&
 	      status != GIMP_PDB_CANCEL)
 	    {
-	      g_message (_("Save failed.\n%s"), filename);
+	      /* Error message should be added. --bex */
+	      g_message (_("Saving '%s' failed."), filename);
 	    }
 	}
 
@@ -224,7 +228,7 @@ file_revert_cmd_callback (GtkWidget *widget,
   if (! filename)
     {
       g_message (_("Revert failed.\n"
-		   "No filename associated with this image."));
+		   "No file name associated with this image."));
     }
   else if (query_box)
     {
@@ -237,15 +241,15 @@ file_revert_cmd_callback (GtkWidget *widget,
 
       basename = g_path_get_basename (filename);
 
-      text = g_strdup_printf (_("Reverting %s to\n"
-				"%s\n\n"
-				"(You will lose all your changes\n"
+      text = g_strdup_printf (_("Revert '%s' to\n"
+				"'%s'?"
+				"(You will lose all your changes,\n"
 				"including all undo information)"),
 			      basename, filename);
 
       g_free (basename);
 
-      query_box = gimp_query_boolean_box (_("Revert Image?"),
+      query_box = gimp_query_boolean_box (_("Revert Image"),
 					  gimp_standard_help_func,
 					  "file/revert.html",
 					  FALSE,
@@ -324,7 +328,8 @@ file_revert_confirm_callback (GtkWidget *widget,
 	}
       else if (status != GIMP_PDB_CANCEL)
 	{
-	  g_message (_("Revert failed.\n%s"), filename);
+	  /* Needs error information. --bex */
+	  g_message (_("Reverting '%s' failed."), filename);
 	}
     }
 }

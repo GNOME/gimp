@@ -575,15 +575,15 @@ file_new_confirm_dialog (NewImageInfo *info)
 
   /* xgettext:no-c-format */
 	    
-  text = g_strdup_printf (_("You are trying to create an image which\n"
-			    "has an initial size of %s.\n\n"
+  text = g_strdup_printf (_("You are trying to create an image with\n"
+			    "an initial size of %s.\n\n"
 			    "Choose OK to create this image anyway.\n"
-			    "Choose Cancel if you didn't mean to\n"
+			    "Choose Cancel if you did not intend to\n"
 			    "create such a large image.\n\n"
 			    "To prevent this dialog from appearing,\n"
 			    "increase the \"Maximum Image Size\"\n"
 			    "setting (currently %s) in the\n"
-			    "preferences dialog."),
+			    "Preferences dialog."),
                           size, max_size);
 
   info->confirm_dialog =

@@ -838,7 +838,7 @@ dialogs_edit_brush_func (GimpData *data)
     }
   else
     {
-      g_message (_("Sorry, this brush can't be edited."));
+      g_message (_("This brush cannot be edited."));
     }
 }
 

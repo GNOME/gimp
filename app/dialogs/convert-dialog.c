@@ -178,7 +178,7 @@ convert_to_indexed (GimpImage *gimage)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   toggle =
-    gtk_radio_button_new_with_label (NULL, _("Generate Optimal Palette:"));
+    gtk_radio_button_new_with_label (NULL, _("Generate Optimum Palette:"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (G_OBJECT (toggle), "toggled",
@@ -206,7 +206,7 @@ convert_to_indexed (GimpImage *gimage)
 		    G_CALLBACK (gimp_int_adjustment_update),
 		    &dialog->num_cols);
 
-  label = gtk_label_new (_("# of Colors:"));
+  label = gtk_label_new (_("Number of Colors:"));
   gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -294,7 +294,7 @@ convert_to_indexed (GimpImage *gimage)
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   toggle =
-    gtk_radio_button_new_with_label (group, _("Use Black/White (1-Bit) Palette"));
+    gtk_radio_button_new_with_label (group, _("Use Black and White (1-Bit) Palette"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (G_OBJECT (toggle), "toggled",
@@ -305,7 +305,7 @@ convert_to_indexed (GimpImage *gimage)
   gtk_widget_show (toggle);
   gtk_widget_show (hbox);
 
-  frame = gtk_frame_new (_("Dither Options"));
+  frame = gtk_frame_new (_("Dithering Options"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -406,8 +406,8 @@ convert_to_indexed (GimpImage *gimage)
       gtk_widget_show (vbox);
 
       label = gtk_label_new
-	(_("You are attempting to convert an image with alpha/layers "
-	   "from RGB/GRAY to INDEXED.\nYou should not generate a "
+	(_("You are attempting to convert an image with an alpha channel or layers "
+	   "from RGB or GRAY to INDEXED.\nDo not generate a "
 	   "palette of more than 255 colors if you intend to create "
 	   "a transparent or animated GIF file from this image."));
       gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);

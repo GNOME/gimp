@@ -430,7 +430,8 @@ file_save_ok_callback (GtkWidget *widget,
       if (status != GIMP_PDB_SUCCESS &&
           status != GIMP_PDB_CANCEL)
 	{
-          g_message (_("Save failed:\n%s"), filename);
+	  /* Please add error. (: %s) --bex */
+          g_message (_("Saving %s failed."), filename);
 	}
       else
         {
@@ -454,7 +455,7 @@ file_overwrite (const gchar *filename,
   overwrite_data->full_filename = g_strdup (filename);
   overwrite_data->raw_filename  = g_strdup (raw_filename);
 
-  overwrite_text = g_strdup_printf (_("%s exists, overwrite?"), filename);
+  overwrite_text = g_strdup_printf (_("%s exists. Overwrite?"), filename);
 
   query_box = gimp_query_boolean_box (_("File Exists!"),
 				      gimp_standard_help_func,
@@ -494,7 +495,8 @@ file_overwrite_callback (GtkWidget *widget,
       if (status != GIMP_PDB_SUCCESS &&
           status != GIMP_PDB_CANCEL)
         {
-          g_message (_("Save failed:\n%s"), overwrite_data->full_filename);
+	  /* Another error required. --bex */
+          g_message (_("Saving '%s' failed."), overwrite_data->full_filename);
         }
       else
 	{

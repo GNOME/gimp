@@ -318,7 +318,7 @@ file_open_dialog_create (Gimp *gimp)
   }
 
   gtk_frame_set_label (GTK_FRAME (open_options_frame), _("Preview"));
-  gtk_label_set_text (GTK_LABEL (open_options_label), _("No Selection."));
+  gtk_label_set_text (GTK_LABEL (open_options_label), _("No Selection"));
 
   gtk_widget_show (GTK_WIDGET (open_options_genbuttonlabel));
   gtk_widget_hide (GTK_WIDGET (open_options_preview));
@@ -403,7 +403,7 @@ make_RGBbuf_from_tempbuf (TempBuf *tempbuf,
       break;
 
     default:
-      g_warning("UNKNOWN TempBuf width in make_RGBbuf_from_tempbuf()");
+      g_warning ("%s: Unknown TempBuf width.", G_STRLOC);
     }
 
   return (rtn);
@@ -501,8 +501,8 @@ set_preview (Gimp        *gimp,
 	{
 	  gtk_label_set_text (GTK_LABEL (open_options_label),
 			      thumb_may_be_outdated ?
-			      _("(This thumbnail may be out of date)") :
-			      (imginfo ? imginfo : _("(No Information)")));
+			      _("This thumbnail may be out of date") :
+			      (imginfo ? imginfo : _("No Information")));
 	  if (imginfo)
 	    g_free (imginfo);
 	}
@@ -512,15 +512,15 @@ set_preview (Gimp        *gimp,
 	    {
 	    case 0:
 	      gtk_label_set_text (GTK_LABEL(open_options_label),
-				  _("(Thumbnail saving is disabled)"));
+				  _("Thumbnail saving is disabled."));
 	      break;
 	    case 1:
 	      gtk_label_set_text (GTK_LABEL(open_options_label),
-				  _("(Could not write thumbnail file)"));
+				  _("Could not write thumbnail file."));
 	      break;
 	    default:
 	      gtk_label_set_text (GTK_LABEL(open_options_label),
-				  _("(Thumbnail file not written)"));
+				  _("Thumbnail file not written."));
 	    }
 	}
 
@@ -599,7 +599,7 @@ file_open_genbutton_callback (GtkWidget *widget,
 
   if (! preview_fullname)
     {
-      g_warning ("Tried to generate thumbnail for NULL filename.");
+      g_warning ("%s: Tried to generate thumbnail for NULL file name.", G_STRLOC);
       return;
     }
 
@@ -657,7 +657,7 @@ file_open_genbutton_callback (GtkWidget *widget,
           else
             {
               gtk_label_set_text (GTK_LABEL (open_options_label),
-                                  _("(could not make preview)"));
+                                  _("Failed to generate preview."));
             }
         }      
      }
@@ -734,7 +734,8 @@ file_open_ok_callback (GtkWidget *widget,
     }
   else if (status != GIMP_PDB_CANCEL)
     {
-      g_message (_("Open failed.\n%s"), full_filename);
+      /* Hackery required. Please add error message. --bex */
+      g_message (_("Opening '%s' failed."), full_filename);
     }
 
 
@@ -775,7 +776,8 @@ file_open_ok_callback (GtkWidget *widget,
                 }
               else if (status != GIMP_PDB_CANCEL)
                 {
-                  g_message (_("Open failed.\n%s"), full_filename);
+		  /* same as previous. --bex */
+                  g_message (_("Opening '%s' failed."), full_filename);
                 }
             }
         }

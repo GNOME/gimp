@@ -175,7 +175,7 @@ error_console_add (const gchar *errormsg)
 {
   if (! error_console)
     {
-      g_warning ("error_console_add(): error_console widget is NULL");
+      g_warning ("%s: error_console widget is NULL", G_STRLOC);
 
       message_handler = MESSAGE_BOX;
       g_message (errormsg);
@@ -268,7 +268,7 @@ error_console_create_file_dialog (GtkTextBuffer *buffer,
   if (! gtk_text_buffer_get_selection_bounds (buffer, NULL, NULL) &&
       textscope == ERRORS_SELECTION)
     {
-      g_message (_("Can't save, nothing selected!"));
+      g_message (_("Cannot save. Nothing is selected."));
       return;
     }
 
@@ -327,7 +327,7 @@ error_console_file_ok_callback (GtkWidget *widget,
 
   if (! error_console_write_file (buffer, filename, textscope))
     {
-      g_message (_("Error opening file \"%s\":\n%s"),
+      g_message (_("Error opening file '%s':\n%s"),
 		 filename, g_strerror (errno));
     }
   else
