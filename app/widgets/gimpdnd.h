@@ -44,6 +44,9 @@
 #define GIMP_TARGET_IMAGE \
         { "application/x-gimp-image-id", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_IMAGE }
 
+#define GIMP_TARGET_COMPONENT \
+        { "application/x-gimp-component", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_COMPONENT }
+
 #define GIMP_TARGET_LAYER \
         { "application/x-gimp-layer-id", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_LAYER }
 
@@ -52,9 +55,6 @@
 
 #define GIMP_TARGET_LAYER_MASK \
         { "application/x-gimp-layer-mask-id", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_LAYER_MASK }
-
-#define GIMP_TARGET_COMPONENT \
-        { "application/x-gimp-component", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_COMPONENT }
 
 #define GIMP_TARGET_VECTORS \
         { "application/x-gimp-vectors-id", GTK_TARGET_SAME_APP, GIMP_DND_TYPE_VECTORS }
@@ -159,6 +159,29 @@ void  gimp_dnd_svg_dest_add      (GtkWidget              *widget,
                                   GimpDndDropStreamFunc   set_svg_func,
                                   gpointer                data);
 void  gimp_dnd_svg_dest_remove   (GtkWidget              *widget);
+
+
+/*  component dnd functions  */
+
+typedef GimpImage * (* GimpDndDragComponentFunc) (GtkWidget       *widget,
+                                                  GimpChannelType *channel,
+                                                  gpointer         data);
+typedef void        (* GimpDndDropComponentFunc) (GtkWidget       *widget,
+                                                  gint             x,
+                                                  gint             y,
+                                                  GimpImage       *image,
+                                                  GimpChannelType  channel,
+                                                  gpointer         data);
+
+void  gimp_dnd_component_source_add    (GtkWidget                 *widget,
+                                        GimpDndDragComponentFunc   get_comp_func,
+                                        gpointer                   data);
+void  gimp_dnd_component_source_remove (GtkWidget                 *widget);
+
+void  gimp_dnd_component_dest_add      (GtkWidget                 *widget,
+                                        GimpDndDropComponentFunc   set_comp_func,
+                                        gpointer                   data);
+void  gimp_dnd_component_dest_remove   (GtkWidget                 *widget);
 
 
 /*  GimpViewable (by GType) dnd functions  */

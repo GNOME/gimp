@@ -141,6 +141,18 @@ static gboolean    gimp_dnd_set_stream_data    (GtkWidget        *widget,
                                                 gpointer          set_stream_data,
                                                 GtkSelectionData *selection);
 
+static void        gimp_dnd_get_component_data (GtkWidget        *widget,
+                                                GCallback         get_comp_func,
+                                                gpointer          get_comp_data,
+                                                GtkSelectionData *selection,
+                                                GdkAtom           atom);
+static gboolean    gimp_dnd_set_component_data (GtkWidget        *widget,
+                                                gint              x,
+                                                gint              y,
+                                                GCallback         set_comp_func,
+                                                gpointer          set_comp_data,
+                                                GtkSelectionData *selection);
+
 static void        gimp_dnd_get_image_data     (GtkWidget        *widget,
                                                 GCallback         get_image_func,
                                                 gpointer          get_image_data,
@@ -354,6 +366,20 @@ static GimpDndDataDef dnd_data_defs[] =
   },
 
   {
+    GIMP_TARGET_COMPONENT,
+
+    "gimp-dnd-get-component-func",
+    "gimp-dnd-get-component-data",
+
+    "gimp-dnd-set-component-func",
+    "gimp-dnd-set-component-data",
+
+    gimp_dnd_get_viewable_icon,
+    gimp_dnd_get_component_data,
+    gimp_dnd_set_component_data,
+  },
+
+  {
     GIMP_TARGET_LAYER,
 
     "gimp-dnd-get-layer-func",
@@ -393,20 +419,6 @@ static GimpDndDataDef dnd_data_defs[] =
     gimp_dnd_get_viewable_icon,
     gimp_dnd_get_item_data,
     gimp_dnd_set_item_data,
-  },
-
-  {
-    GIMP_TARGET_COMPONENT,
-
-    NULL,
-    NULL,
-
-    NULL,
-    NULL,
-
-    NULL,
-    NULL,
-    NULL,
   },
 
   {
@@ -1251,6 +1263,92 @@ gimp_dnd_svg_dest_remove (GtkWidget *widget)
 
   gimp_dnd_data_dest_remove (GIMP_DND_TYPE_SVG, widget);
   gimp_dnd_data_dest_remove (GIMP_DND_TYPE_SVG_XML, widget);
+}
+
+
+/*****************************/
+/*  component dnd functions  */
+/*****************************/
+
+static void
+gimp_dnd_get_component_data (GtkWidget        *widget,
+                             GCallback         get_comp_func,
+                             gpointer          get_comp_data,
+                             GtkSelectionData *selection,
+                             GdkAtom           atom)
+{
+  GimpImage       *image;
+  GimpChannelType  channel = 0;
+
+  image = (* (GimpDndDragComponentFunc) get_comp_func) (widget, &channel,
+                                                        get_comp_data);
+
+  if (image)
+    gimp_selection_data_set_component (selection, atom, image, channel);
+}
+
+static gboolean
+gimp_dnd_set_component_data (GtkWidget        *widget,
+                             gint              x,
+                             gint              y,
+                             GCallback         set_comp_func,
+                             gpointer          set_comp_data,
+                             GtkSelectionData *selection)
+{
+  GimpImage       *image;
+  GimpChannelType  channel = 0;
+
+  image = gimp_selection_data_get_component (selection, the_dnd_gimp,
+                                             &channel);
+
+  if (! image)
+    return FALSE;
+
+  (* (GimpDndDropComponentFunc) set_comp_func) (widget, x, y,
+                                                image, channel,
+                                                set_comp_data);
+
+  return TRUE;
+}
+
+void
+gimp_dnd_component_source_add (GtkWidget                *widget,
+                               GimpDndDragComponentFunc  get_comp_func,
+                               gpointer                  data)
+{
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  gimp_dnd_data_source_add (GIMP_DND_TYPE_COMPONENT, widget,
+                            G_CALLBACK (get_comp_func),
+                            data);
+}
+
+void
+gimp_dnd_component_source_remove (GtkWidget *widget)
+{
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  gimp_dnd_data_source_remove (GIMP_DND_TYPE_COMPONENT, widget);
+}
+
+void
+gimp_dnd_component_dest_add (GtkWidget                 *widget,
+                             GimpDndDropComponentFunc   set_comp_func,
+                             gpointer                   data)
+{
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  gimp_dnd_data_dest_add (GIMP_DND_TYPE_COMPONENT, widget,
+                          G_CALLBACK (set_comp_func),
+                          data);
+}
+
+void
+gimp_dnd_component_dest_remove (GtkWidget *widget)
+{
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  gimp_dnd_data_dest_remove (GIMP_DND_TYPE_COMPONENT, widget);
 }
 
 

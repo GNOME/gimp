@@ -542,6 +542,58 @@ gimp_selection_data_get_image (GtkSelectionData *selection,
 }
 
 void
+gimp_selection_data_set_component (GtkSelectionData *selection,
+                                   GdkAtom           atom,
+                                   GimpImage        *gimage,
+                                   GimpChannelType   channel)
+{
+  gchar *id;
+
+  g_return_if_fail (selection != NULL);
+  g_return_if_fail (atom != GDK_NONE);
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  id = g_strdup_printf ("%d:%d", gimp_image_get_ID (gimage), (gint) channel);
+
+  gtk_selection_data_set (selection, atom,
+                          8, (guchar *) id, strlen (id) + 1);
+
+  g_free (id);
+}
+
+GimpImage *
+gimp_selection_data_get_component (GtkSelectionData *selection,
+                                   Gimp             *gimp,
+                                   GimpChannelType  *channel)
+{
+  gchar *id;
+  gint   ID;
+  gint   ch;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (selection != NULL, NULL);
+
+  if ((selection->format != 8) || (selection->length < 1))
+    {
+      g_warning ("Received invalid image ID data!");
+      return NULL;
+    }
+
+  id = (gchar *) selection->data;
+
+  if (sscanf (id, "%i:%i", &ID, &ch) != 2)
+    return NULL;
+
+  if (! ID)
+    return NULL;
+
+  if (channel)
+    *channel = ch;
+
+  return gimp_image_get_by_ID (gimp, ID);
+}
+
+void
 gimp_selection_data_set_item (GtkSelectionData *selection,
                               GdkAtom           atom,
                               GimpItem         *item)

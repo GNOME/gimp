@@ -65,6 +65,17 @@ GimpImage     * gimp_selection_data_get_image     (GtkSelectionData *selection,
                                                    Gimp             *gimp);
 
 
+/*  component  */
+
+void            gimp_selection_data_set_component (GtkSelectionData *selection,
+                                                   GdkAtom           atom,
+                                                   GimpImage        *gimage,
+                                                   GimpChannelType   channel);
+GimpImage     * gimp_selection_data_get_component (GtkSelectionData *selection,
+                                                   Gimp             *gimp,
+                                                   GimpChannelType  *channel);
+
+
 /*  item  */
 
 void            gimp_selection_data_set_item      (GtkSelectionData *selection,
