@@ -1,3 +1,10 @@
+2004-11-27  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/plug-ins/colorxhtml.py: s/colorhtml/colorxhtml/,
+	so it doesn't clash with the perl version.
+
+	* plug-ins/pygimp/plug-ins/Makefile.am: reflect filename change.
+
 2004-11-27  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/jpeg.c: delay the creation of the display for

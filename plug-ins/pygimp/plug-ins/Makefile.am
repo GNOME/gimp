@@ -1,7 +1,7 @@
 pluginexecdir = $(gimpplugindir)/plug-ins
 
 pluginexec_SCRIPTS = \
-	colorhtml.py	\
+	colorxhtml.py	\
 	clothify.py	\
 	foggify.py	\
 	gimpcons.py	\

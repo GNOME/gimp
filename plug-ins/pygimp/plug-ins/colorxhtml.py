@@ -36,7 +36,7 @@ preamble = """<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
 postamble = """\n</pre>\n</html>\n"""
 
-def python_colorhtml(img, drawable, filename, raw_filename,
+def python_colorxhtml(img, drawable, filename, raw_filename,
                      source_type, characters, size, separate):
     width = drawable.width
     height = drawable.height
@@ -57,7 +57,7 @@ def python_colorhtml(img, drawable, filename, raw_filename,
         css = file(cssname, 'w')
 
     if source_type == 0:
-        chars = file(inspect.getsourcefile(python_colorhtml)).read()
+        chars = file(inspect.getsourcefile(python_colorxhtml)).read()
     elif source_type == 1:
         chars = file(characters).read()
     elif source_type == 2:
@@ -82,7 +82,7 @@ def python_colorhtml(img, drawable, filename, raw_filename,
 
     pr = drawable.get_pixel_rgn(0, 0, width, height, FALSE, FALSE)
 
-    gimp.progress_init("Saving '%s' as COLORHTML..." % filename)
+    gimp.progress_init("Saving '%s' as COLORXHTML..." % filename)
 
     style = style_def % size
 
@@ -130,7 +130,7 @@ def python_colorhtml(img, drawable, filename, raw_filename,
         css.close()
 
 def register_save():
-    gimp.register_save_handler("file_colorhtml_save", "colorhtml", "")
+    gimp.register_save_handler("file_colorxhtml_save", "colorxhtml", "")
 
 class RowIterator:
     def __init__(self, row, bpp):
@@ -158,13 +158,13 @@ class RowIterator:
         return pixel
 
 register(
-    "file_colorhtml_save",
-    "Saves the image as colored html text",
-    "Saves the image as colored html text (based on perl version by Marc Lehmann)",
+    "file_colorxhtml_save",
+    "Saves the image as colored xhtml text",
+    "Saves the image as colored xhtml text (based on perl version by Marc Lehmann)",
     "Manish Singh",
     "Manish Singh",
     "2003",
-    "<Save>/COLORHTML",
+    "<Save>/COLORXHTML",
     "RGB",
     [
         (PF_RADIO, "source", "Where to take the characters from", 0,
@@ -175,7 +175,7 @@ register(
         (PF_BOOL, "separate", "Separate CSS file", TRUE)
     ],
     [],
-    python_colorhtml,
+    python_colorxhtml,
     on_query=register_save)
 
 main()
