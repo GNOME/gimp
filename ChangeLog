@@ -1,5 +1,23 @@
 2001-05-13  Michael Natterer  <mitch@gimp.org>
 
+	* TODO.xml: some percentage updates.
+
+	* autogen.sh: correctly parse latest autoconf's broken "--version"
+	string.
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpcontainerview-utils.[ch]: new files which
+	provide a set of built-in get_name_func()s for GimpContainerView
+	and GimpContainerMenu.
+
+	* app/widgets/gimpcontainermenu.c
+	* app/widgets/gimpcontainerview.c: use them.
+
+	* app/widgets/gimpimagedock.c
+	* app/gui/dialogs-constructors.c: removed the get_name_func()s here.
+
+2001-05-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/apptypes.h: removed some forgotten tools types.
 
 	* app/tools/tools-types.h: and added them here.

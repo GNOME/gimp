@@ -144,24 +144,6 @@ gimp_image_dock_destroy (GtkObject *object)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
-static gchar *
-gimp_image_dock_image_name_func (GtkWidget *widget)
-{
-  GimpMenuItem *menu_item;
-  GimpImage    *gimage;
-  gchar        *name;
-
-  menu_item = GIMP_MENU_ITEM (widget);
-
-  gimage = GIMP_IMAGE (GIMP_PREVIEW (menu_item->preview)->viewable);
-
-  name = g_strdup_printf ("%s-%d",
-			  g_basename (gimp_image_filename (gimage)),
-			  gimp_image_get_ID (gimage));
-
-  return name;
-}
-
 GtkWidget *
 gimp_image_dock_new (GimpDialogFactory *factory,
 		     GimpContainer     *image_container)
@@ -207,12 +189,8 @@ gimp_image_dock_new (GimpDialogFactory *factory,
      dock,
      GTK_OBJECT (dock));
 
-  image_dock->menu = gimp_container_menu_new (NULL,
+  image_dock->menu = gimp_container_menu_new (image_container,
 					      dock->context, 24);
-  gimp_container_menu_set_name_func (GIMP_CONTAINER_MENU (image_dock->menu),
-				     gimp_image_dock_image_name_func);
-  gimp_container_menu_set_container (GIMP_CONTAINER_MENU (image_dock->menu),
-				     image_container);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (image_dock->option_menu),
 			    image_dock->menu);
   gtk_widget_show (image_dock->menu);

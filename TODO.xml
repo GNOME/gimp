@@ -44,7 +44,7 @@
       </contact>
     </entry>    
 
-    <entry size="big" difficulty="medium" status="20%" target="1.4">
+    <entry size="big" difficulty="medium" status="30%" target="1.4">
       <title>Code reorganization</title>
       <description>
 	<p>
@@ -106,7 +106,7 @@
       </contact>
     </entry>    
 
-    <entry size="medium" difficulty="medium" status="30%" target="1.4">
+    <entry size="medium" difficulty="medium" status="40%" target="1.4">
       <title>Cleanup existing internal objects</title>
       <description>
 	<p>

@@ -31,6 +31,7 @@
 #include "core/gimpviewable.h"
 
 #include "gimpcontainermenu.h"
+#include "gimpcontainerview-utils.h"
 
 
 enum
@@ -300,12 +301,27 @@ gimp_container_menu_real_set_container (GimpContainerMenu *menu,
 					 gimp_container_menu_context_changed,
 					 menu);
 	}
+
+      if (menu->get_name_func &&
+	  gimp_container_view_is_built_in_name_func (menu->get_name_func))
+	{
+	  gimp_container_menu_set_name_func (menu, NULL);
+	}
     }
 
   menu->container = container;
 
   if (menu->container)
     {
+      if (! menu->get_name_func)
+	{
+	  GimpItemGetNameFunc get_name_func;
+
+	  get_name_func = gimp_container_view_get_built_in_name_func (menu->container->children_type);
+
+	  gimp_container_menu_set_name_func (menu, get_name_func);
+	}
+
       gimp_container_foreach (menu->container,
 			      (GFunc) gimp_container_menu_add_foreach,
 			      menu);

@@ -23,6 +23,8 @@ libappwidgets_la_SOURCES = \
 	gimpcontainermenuimpl.h		\
 	gimpcontainerview.c		\
 	gimpcontainerview.h		\
+	gimpcontainerview-utils.c	\
+	gimpcontainerview-utils.h	\
 	gimpdatafactoryview.c		\
 	gimpdatafactoryview.h		\
 	gimpdialogfactory.c		\

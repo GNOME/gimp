@@ -31,6 +31,7 @@
 #include "core/gimpviewable.h"
 
 #include "gimpcontainerview.h"
+#include "gimpcontainerview-utils.h"
 #include "gimpdnd.h"
 
 
@@ -308,12 +309,27 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 	  gimp_dnd_viewable_dest_unset (GTK_WIDGET (view),
 					view->container->children_type);
 	}
+
+      if (view->get_name_func &&
+	  gimp_container_view_is_built_in_name_func (view->get_name_func))
+	{
+	  gimp_container_view_set_name_func (view, NULL);
+	}
     }
 
   view->container = container;
 
   if (view->container)
     {
+      if (! view->get_name_func)
+	{
+	  GimpItemGetNameFunc get_name_func;
+
+	  get_name_func = gimp_container_view_get_built_in_name_func (view->container->children_type);
+
+	  gimp_container_view_set_name_func (view, get_name_func);
+	}
+
       gimp_container_foreach (view->container,
 			      (GFunc) gimp_container_view_add_foreach,
 			      view);

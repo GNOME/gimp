@@ -34,7 +34,7 @@ echo "see the file HACKING for more information..."
 echo
 
 echo "Testing autoconf... "
-VER=`autoconf --version | sed "s/.* \([0-9.]*\)[a-z]*$/\1/"`
+VER=`autoconf --version | grep -iw autoconf | sed "s/.* \([0-9.]*\)[a-z]*$/\1/"`
 if expr $VER \>= 2.13 >/dev/null; then
 	echo "looks OK."
 else
