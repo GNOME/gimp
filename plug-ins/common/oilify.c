@@ -41,7 +41,6 @@
 #define MODE_RGB       0
 #define MODE_INTEN     1
 
-#undef INTENSITY
 #define INTENSITY(p)   ((guint) (p[0]*77+p[1]*150+p[2]*29) >> 8)
 
 typedef struct
@@ -182,7 +181,8 @@ run (const gchar      *name,
       gimp_progress_init (_("Oil Painting..."));
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 
-      if (gimp_drawable_is_rgb (drawable->drawable_id) && (ovals.mode == MODE_INTEN))
+      if (gimp_drawable_is_rgb (drawable->drawable_id) &&
+          (ovals.mode == MODE_INTEN))
         oilify_intensity (drawable);
       else
         oilify_rgb (drawable);

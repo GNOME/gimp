@@ -327,11 +327,12 @@ engrave_large (GimpDrawable *drawable,
 	  if (bpp < 3)
 	    inten = average[0]/254.0*height;
 	  else
-	    inten = INTENSITY(average[0],
-			      average[1],
-			      average[2])/254.0*height;
+	    inten = GIMP_RGB_INTENSITY (average[0],
+                                        average[1],
+                                        average[2]) / 254.0 * height;
 
-	  gimp_pixel_rgn_init(&dest_rgn, drawable, x, y, 1, y_step, TRUE, TRUE);
+	  gimp_pixel_rgn_init(&dest_rgn,
+                              drawable, x, y, 1, y_step, TRUE, TRUE);
 	  for (pr = gimp_pixel_rgns_register(1, &dest_rgn);
 	       pr != NULL;
 	       pr = gimp_pixel_rgns_process(pr))
@@ -484,16 +485,16 @@ engrave_sub (gint height,
 	}
 
       /* Average */
-      if (count > 0) 
+      if (count > 0)
 	for (i = 0; i < color_n; i++)
 	  average[i] /= count;
 
       if (bpp < 3)
-	inten = average[0]/254.0*height;
+	inten = average[0] / 254.0 * height;
       else
-	inten = INTENSITY(average[0],
-			  average[1],
-			  average[2])/254.0*height;
+	inten = GIMP_RGB_INTENSITY (average[0],
+                                    average[1],
+                                    average[2]) / 254.0 * height;
 
       /* Write */
       buf_row = area.data + (y - area.y) * rowstride;

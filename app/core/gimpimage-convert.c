@@ -722,9 +722,10 @@ color_quicksort (const void *c1,
 {
   Color *color1 = (Color *)c1;
   Color *color2 = (Color *)c2;
-  double v1 = INTENSITY(color1->red, color1->green, color1->blue);
-  double v2 = INTENSITY(color2->red, color2->green, color2->blue);
-  
+
+  double v1 = GIMP_RGB_INTENSITY (color1->red, color1->green, color1->blue);
+  double v2 = GIMP_RGB_INTENSITY (color2->red, color2->green, color2->blue);
+
   if (v1 < v2)
     return -1;
   else if (v1 > v2)
@@ -890,7 +891,7 @@ gimp_image_convert (GimpImage              *gimage,
 	{
 	  (* quantobj->first_pass) (quantobj);
 	}
-      
+
       if (palette_type == GIMP_MAKE_PALETTE)
         qsort (quantobj->cmap, quantobj->actual_number_of_colors, sizeof(Color),
                color_quicksort);
@@ -1194,7 +1195,9 @@ gimp_drawable_convert_grayscale (GimpDrawable      *drawable,
 	      d = dest;
 	      for (col = 0; col < srcPR.w; col++)
 		{
-		  val = INTENSITY (s[RED_PIX], s[GREEN_PIX], s[BLUE_PIX]);
+		  val = GIMP_RGB_INTENSITY (s[RED_PIX],
+                                            s[GREEN_PIX],
+                                            s[BLUE_PIX]);
 		  *d++ = (guchar) val;
 		  s += 3;
 		  if (has_alpha)
@@ -1214,9 +1217,9 @@ gimp_drawable_convert_grayscale (GimpDrawable      *drawable,
 	      for (col = 0; col < srcPR.w; col++)
 		{
 		  offset = *s++ * 3;
-		  val = INTENSITY (cmap[offset+0],
-                                   cmap[offset+1],
-                                   cmap[offset+2]);
+		  val = GIMP_RGB_INTENSITY (cmap[offset+0],
+                                            cmap[offset+1],
+                                            cmap[offset+2]);
 		  *d++ = (guchar) val;
 		  if (has_alpha)
 		    *d++ = *s++;

@@ -780,8 +780,12 @@ do_curl_effect (void)
 
   /* Init shade_curl */
 
-  fore_grayval = INTENSITY (fore_color[0], fore_color[1], fore_color[2]);
-  back_grayval = INTENSITY (back_color[0], back_color[1], back_color[2]);
+  fore_grayval = GIMP_RGB_INTENSITY (fore_color[0],
+                                     fore_color[1],
+                                     fore_color[2]);
+  back_grayval = GIMP_RGB_INTENSITY (back_color[0],
+                                     back_color[1],
+                                     back_color[2]);
 
   /* Gradient Samples */
   if (curl.do_curl_gradient)
@@ -1031,7 +1035,7 @@ get_samples (GimpDrawable *drawable)
         for (j = 0; j < 3; j++)
           b_samp[j] = f_samp[j] * 255;
       else
-        b_samp[0] = INTENSITY (f_samp[0], f_samp[1], f_samp[2]) * 255;
+        b_samp[0] = GIMP_RGB_INTENSITY (f_samp[0], f_samp[1], f_samp[2]) * 255;
 
       if (has_alpha)
         b_samp[alpha] = f_samp[3] * 255;

@@ -66,7 +66,7 @@ static char rcsid[] = "$Id$";
 
 #define NSAMPLES	256
 #define TILE_CACHE_SIZE 32
-#define LUMINOSITY(X)	(INTENSITY (X[0], X[1], X[2]))
+#define LUMINOSITY(X)	(GIMP_RGB_INTENSITY (X[0], X[1], X[2]))
 
 static GimpRunMode run_mode;
 

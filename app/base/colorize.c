@@ -42,9 +42,9 @@ colorize_init (Colorize *colorize)
 
   for (i = 0; i < 256; i ++)
     {
-      colorize->lum_red_lookup[i]   = i * INTENSITY_RED;
-      colorize->lum_green_lookup[i] = i * INTENSITY_GREEN;
-      colorize->lum_blue_lookup[i]  = i * INTENSITY_BLUE;
+      colorize->lum_red_lookup[i]   = i * GIMP_RGB_INTENSITY_RED;
+      colorize->lum_green_lookup[i] = i * GIMP_RGB_INTENSITY_GREEN;
+      colorize->lum_blue_lookup[i]  = i * GIMP_RGB_INTENSITY_BLUE;
     }
 }
 

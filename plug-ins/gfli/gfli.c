@@ -642,7 +642,7 @@ save_image (const gchar *filename,
 	{
 	  cm[i*3+0] = cm[i*3+1] = cm[i*3+2] = i;
 	}
-      bg = INTENSITY (red, green, blue);
+      bg = GIMP_RGB_INTENSITY (red, green, blue);
       break;
 
     case GIMP_INDEXED:

@@ -181,7 +181,7 @@ gimp_rgb_intensity (const GimpRGB *rgb)
 
   g_return_val_if_fail (rgb != NULL, 0.0);
 
-  intensity = INTENSITY (rgb->r, rgb->g, rgb->b);
+  intensity = GIMP_RGB_INTENSITY (rgb->r, rgb->g, rgb->b);
 
   return CLAMP (intensity, 0.0, 1.0);
 }

@@ -98,12 +98,12 @@ gdouble   gimp_rgba_distance  (const GimpRGB *rgba1,
 
 /*  Map RGB to intensity  */
 
-#define INTENSITY_RED   0.30
-#define INTENSITY_GREEN 0.59
-#define INTENSITY_BLUE  0.11
-#define INTENSITY(r,g,b) ((r) * INTENSITY_RED   + \
-			  (g) * INTENSITY_GREEN + \
-			  (b) * INTENSITY_BLUE  + 0.001)
+#define GIMP_RGB_INTENSITY_RED    0.30
+#define GIMP_RGB_INTENSITY_GREEN  0.59
+#define GIMP_RGB_INTENSITY_BLUE   0.11
+#define GIMP_RGB_INTENSITY(r,g,b) ((r) * GIMP_RGB_INTENSITY_RED   + \
+			           (g) * GIMP_RGB_INTENSITY_GREEN + \
+			           (b) * GIMP_RGB_INTENSITY_BLUE  + 0.001)
 
 
 G_END_DECLS

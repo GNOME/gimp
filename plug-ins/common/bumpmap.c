@@ -821,12 +821,15 @@ bumpmap_convert_row (guchar *row,
     for (; width; width--)
       {
 	if (has_alpha)
-	  *p++ = lut[(int) (bmvals.waterlevel +
-			    (((int) (INTENSITY (row[0], row[1], row[2]) + 0.5) -
-			      bmvals.waterlevel) *
-			     row[3]) / 255.0)];
+	  *p++ = lut[(gint) (bmvals.waterlevel +
+                             (((gint) (GIMP_RGB_INTENSITY (row[0],
+                                                           row[1],
+                                                           row[2]) + 0.5) -
+                               bmvals.waterlevel) * row[3]) / 255.0)];
 	else
-	  *p++ = lut[(int) (INTENSITY (row[0], row[1], row[2]) + 0.5)];
+	  *p++ = lut[(gint) (GIMP_RGB_INTENSITY (row[0],
+                                                 row[1],
+                                                 row[2]) + 0.5)];
 
 	row += 3 + has_alpha;
       }

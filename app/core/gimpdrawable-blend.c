@@ -851,7 +851,7 @@ gradient_put_pixel (int      x,
   else
     {
       /* Convert to grayscale */
-      gdouble gray = INTENSITY (color->r, color->g, color->b);
+      gdouble gray = gimp_rgb_intensity (color);
 
       if (ppd->dither)
         {
@@ -1127,7 +1127,7 @@ gradient_fill_region (GimpImage        *gimage,
                   else
                     {
                       /* Convert to grayscale */
-                      gdouble gray = INTENSITY (color.r, color.g, color.b);
+                      gdouble gray = gimp_rgb_intensity (&color);
 
 		      if (dither)
                         {

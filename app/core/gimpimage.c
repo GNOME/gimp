@@ -1689,21 +1689,24 @@ gimp_image_transform_color (const GimpImage    *dest_gimage,
     case GIMP_RGB:
       switch (dest_type)
 	{
-	case GIMP_RGB_IMAGE: case GIMP_RGBA_IMAGE:
+	case GIMP_RGB_IMAGE:
+        case GIMP_RGBA_IMAGE:
 	  /*  Straight copy  */
 	  *dest++ = *src++;
 	  *dest++ = *src++;
 	  *dest++ = *src++;
 	  break;
 
-	case GIMP_GRAY_IMAGE: case GIMP_GRAYA_IMAGE:
+	case GIMP_GRAY_IMAGE:
+        case GIMP_GRAYA_IMAGE:
 	  /*  NTSC conversion  */
-	  *dest = INTENSITY (src[RED_PIX],
-			     src[GREEN_PIX],
-			     src[BLUE_PIX]);
+	  *dest = GIMP_RGB_INTENSITY (src[RED_PIX],
+                                      src[GREEN_PIX],
+                                      src[BLUE_PIX]);
 	  break;
 
-	case GIMP_INDEXED_IMAGE: case GIMP_INDEXEDA_IMAGE:
+	case GIMP_INDEXED_IMAGE:
+        case GIMP_INDEXEDA_IMAGE:
 	  /*  Least squares method  */
 	  *dest = gimp_image_color_hash_rgb_to_indexed (dest_gimage,
 							src[RED_PIX],

@@ -1,5 +1,34 @@
 2003-11-17  Sven Neumann  <sven@gimp.org>
 
+	* libgimpcolor/gimprgb.[ch]: added a GIMP_RGB prefix to the
+	INTENSITY macros.
+
+	* libgimp/gimpcompat.h: document this change here.
+
+	* app/base/colorize.c
+	* app/base/temp-buf.c
+	* app/core/gimpdrawable-blend.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage.c
+	* plug-ins/common/aa.c
+	* plug-ins/common/bumpmap.c
+	* plug-ins/common/colorify.c
+	* plug-ins/common/displace.c
+	* plug-ins/common/engrave.c
+	* plug-ins/common/gradmap.c
+	* plug-ins/common/newsprint.c
+	* plug-ins/common/oilify.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/gfli/gfli.c
+	* plug-ins/pagecurl/pagecurl.c: changed accordingly.
+
+	* libgimpcolor/gimpcolor.h: removed trailing whitespace.
+
+	* app/paint-funcs/paint-funcs.c: fixed indentation.
+
+2003-11-17  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpviewable.[ch]: removed the unused GimpViewable
 	parameter from gimp_viewable_calc_preview_size().
 

@@ -135,7 +135,7 @@ temp_buf_to_gray (TempBuf *src_buf,
       g_return_if_fail (src_buf->bytes == 3);
       while (num_pixels--)
         {
-          pix = INTENSITY (src[0], src[1], src[2]);
+          pix = GIMP_RGB_INTENSITY (src[0], src[1], src[2]);
           *dest++ = (guchar) pix;
 
           src += 3;
@@ -146,7 +146,7 @@ temp_buf_to_gray (TempBuf *src_buf,
       g_return_if_fail (src_buf->bytes == 4);
       while (num_pixels--)
         {
-          pix = INTENSITY (src[0], src[1], src[2]);
+          pix = GIMP_RGB_INTENSITY (src[0], src[1], src[2]);
           *dest++ = (guchar) pix;
 
           *dest++ = src[3];  /* alpha channel */

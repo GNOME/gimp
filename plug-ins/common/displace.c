@@ -26,11 +26,13 @@
  * changes, they are my fault and not Stephen's.
  *
  * JTL: May 29th 1997
- * Added (part of) the patch from Eiichi Takamori -- the part which removes the border artefacts
+ * Added (part of) the patch from Eiichi Takamori
+ *    -- the part which removes the border artefacts
  * (http://ha1.seikyou.ne.jp/home/taka/gimp/displace/displace.html)
  * Added ability to use transparency as the identity transformation
  * (Full transparency is treated as if it was grey 0.5)
- * and the possibility to use RGB/RGBA pictures where the intensity of the pixel is taken into account
+ * and the possibility to use RGB/RGBA pictures where the intensity
+ * of the pixel is taken into account
  *
  */
 
@@ -467,7 +469,7 @@ displace (GimpDrawable *drawable)
 
   mxrow = NULL;
   myrow = NULL;
-  
+
   pft = gimp_pixel_fetcher_new (drawable);
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
@@ -529,31 +531,31 @@ displace (GimpDrawable *drawable)
 	mxrow = map_x_rgn.data;
       if (dvals.do_y)
 	myrow = map_y_rgn.data;
-      
+
       for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
 	{
 	  dest = destrow;
 	  mx = mxrow;
 	  my = myrow;
-	  
+
 	  /*
 	   * We could move the displacement image address calculation out of here,
 	   * but when we can have different sized displacement and destination
 	   * images we'd have to move it back anyway.
 	   */
-	  
+
 	  for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
 	    {
 	      if (dvals.do_x)
 		{
-		  xm_val = displace_map_give_value(mx, xm_alpha, xm_bytes); 
+		  xm_val = displace_map_give_value(mx, xm_alpha, xm_bytes);
 		  amnt = dvals.amount_x * (xm_val - 127.5) / 127.5;
 		  needx = x + amnt;
 		  mx += xm_bytes;
 		}
 	      else
 		needx = x;
-	      
+
 	      if (dvals.do_y)
 		{
 		  ym_val = displace_map_give_value(my, ym_alpha, ym_bytes);
@@ -563,9 +565,9 @@ displace (GimpDrawable *drawable)
 		}
 	      else
 		needy = y;
-	      
+
 	      /* Calculations complete; now copy the proper pixel */
-	      
+
 	      if (needx >= 0.0)
 		xi = (int) needx;
 	      else
@@ -575,7 +577,7 @@ displace (GimpDrawable *drawable)
 		yi = (int) needy;
 	      else
 		yi = -((int) -needy + 1);
-	      
+
 	      gimp_pixel_fetcher_get_pixel2 (pft, xi, yi,
 					     dvals.displace_type, pixel[0]);
 	      gimp_pixel_fetcher_get_pixel2 (pft, xi + 1, yi,
@@ -584,7 +586,7 @@ displace (GimpDrawable *drawable)
 					     dvals.displace_type, pixel[2]);
 	      gimp_pixel_fetcher_get_pixel2 (pft, xi + 1, yi + 1,
 					     dvals.displace_type, pixel[3]);
-	      
+
 	      for (k = 0; k < bytes; k++)
 		{
 		  values[0] = pixel[0][k];
@@ -592,19 +594,19 @@ displace (GimpDrawable *drawable)
 		  values[2] = pixel[2][k];
 		  values[3] = pixel[3][k];
 		  val = gimp_bilinear_8 (needx, needy, values);
-		  
+
 		  *dest++ = val;
 		} /* for */
 	    }
-	  
+
 	  destrow += dest_rgn.rowstride;
-	  
+
 	  if (dvals.do_x)
 	    mxrow += map_x_rgn.rowstride;
 	  if (dvals.do_y)
 	    myrow += map_y_rgn.rowstride;
 	}
-      
+
       progress += dest_rgn.w * dest_rgn.h;
       gimp_progress_update ((double) progress / (double) max_progress);
     } /* for */
@@ -629,18 +631,18 @@ displace_map_give_value (guchar *pt,
 			 gint    bytes)
 {
   gdouble ret, val_alpha;
-  
+
   if (bytes >= 3)
-    ret =  INTENSITY (pt[0], pt[1], pt[2]);
+    ret =  GIMP_RGB_INTENSITY (pt[0], pt[1], pt[2]);
   else
     ret = (gdouble) *pt;
-  
+
   if (alpha)
     {
       val_alpha = pt[bytes - 1];
       ret = ((ret - 127.5) * val_alpha / 255.0) + 127.5;
     }
-  
+
   return ret;
 }
 

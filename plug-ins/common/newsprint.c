@@ -1916,7 +1916,9 @@ do {								\
 
 			case CS_INTENSITY:
 			  data[3] = data[0]; /* save orig for later */
-			  data[0] = INTENSITY (data[0], data[1], data[2]);
+			  data[0] = GIMP_RGB_INTENSITY (data[0],
+                                                        data[1],
+                                                        data[2]);
 			  break;
 
 			default:

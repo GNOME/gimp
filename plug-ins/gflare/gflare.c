@@ -70,7 +70,7 @@ static char rcsid[] = "$Id$";
 #define DEBUG_PRINT(X)
 #endif
 
-#define LUMINOSITY(PIX) (INTENSITY (PIX[0], PIX[1], PIX[2]))
+#define LUMINOSITY(PIX) (GIMP_RGB_INTENSITY (PIX[0], PIX[1], PIX[2]))
 #define OFFSETOF(t,f)	((int) ((char*) &((t*) 0)->f))
 
 #define RESPONSE_RESCAN     1
@@ -1141,7 +1141,9 @@ plugin_put_pixel_func (gint      ix,
       dest[2] = color->b * 255;
     }
   else
-    dest[0] = INTENSITY (color->r, color->g, color->b) * 255;
+    {
+      dest[0] = gimp_rgb_intensity_uchar (color);
+    }
 
   if (dinfo.has_alpha)
     dest[drawable->bpp - 1] = color->a * 255;
