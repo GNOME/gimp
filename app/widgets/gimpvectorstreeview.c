@@ -128,7 +128,7 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
 
   item_view_class->edit_desc               = _("Edit Path Attributes");
   item_view_class->edit_help_id            = GIMP_HELP_PATH_EDIT;
-  item_view_class->new_desc                = _("New Path");
+  item_view_class->new_desc                = _("New Path\n%s New Path Dialog");
   item_view_class->new_help_id             = GIMP_HELP_PATH_NEW;
   item_view_class->duplicate_desc          = _("Duplicate Path");
   item_view_class->duplicate_help_id       = GIMP_HELP_PATH_DUPLICATE;

@@ -319,15 +319,15 @@ channels_new_channel_query (GimpImage   *gimage,
 
       new_channel = gimp_channel_new (gimage,
                                       width, height,
-                                      _("Empty Channel Copy"),
+                                      _("Empty Channel"),
                                       &color);
 
-      if (template)
-        gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_channel),
-                                    gimp_get_user_context (gimage->gimp),
-                                    GIMP_TRANSPARENT_FILL);
+      gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_channel),
+                                  gimp_get_user_context (gimage->gimp),
+                                  GIMP_TRANSPARENT_FILL);
 
       gimp_image_add_channel (gimage, new_channel, -1);
+      gimp_image_flush (gimage);
 
       gimp_image_undo_group_end (gimage);
       return;

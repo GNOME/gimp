@@ -720,7 +720,7 @@ layers_new_layer_query (GimpImage *gimage,
                                   width,
                                   height,
                                   gimp_image_base_type_with_alpha (gimage),
-                                  _("Empty Layer Copy"),
+                                  _("Empty Layer"),
                                   opacity,
                                   mode);
 
@@ -733,6 +733,7 @@ layers_new_layer_query (GimpImage *gimage,
         }
 
       gimp_image_add_layer (gimage, new_layer, -1);
+      gimp_image_flush (gimage);
 
       gimp_image_undo_group_end (gimage);
       return;

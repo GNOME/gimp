@@ -204,7 +204,7 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
 
   item_view_class->edit_desc               = _("Edit Layer Attributes");
   item_view_class->edit_help_id            = GIMP_HELP_LAYER_EDIT;
-  item_view_class->new_desc                = _("New Layer");
+  item_view_class->new_desc                = _("New Layer\n%s  New Layer Dialog");
   item_view_class->new_help_id             = GIMP_HELP_LAYER_NEW;
   item_view_class->duplicate_desc          = _("Duplicate Layer");
   item_view_class->duplicate_help_id       = GIMP_HELP_LAYER_DUPLICATE;

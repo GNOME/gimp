@@ -441,9 +441,10 @@ vectors_new_vectors_query (GimpImage   *gimage,
     {
       GimpVectors *new_vectors;
 
-      new_vectors = gimp_vectors_new (gimage, _("Empty Vectors Copy"));
+      new_vectors = gimp_vectors_new (gimage, _("Empty Path"));
 
       gimp_image_add_vectors (gimage, new_vectors, -1);
+      gimp_display_flush (gimage);
 
       return;
     }

@@ -1,3 +1,24 @@
+2004-03-17  Simon Budig  <simon@gimp.org>
+
+	* app/gui/channels-commands.c
+	* app/gui/layers-commands.c
+	* app/gui/vectors-commands.c: Make sure that non-dialog creation
+	of layer/channels/vectors properly updates the image. Also
+	clear the new channel unconditionally.
+
+	Change the name of the newly created item to not include the "Copy".
+	It isn't a copy.
+
+	* app/widgets/gimpitemtreeview.c: Don't try to assemble translated
+	strings.
+
+	* app/widgets/gimpchanneltreeview.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpvectorstreeview.c: properly overwrite the
+	tooltip for the "New" button.
+
+	Sorry, some real string changes ahere, but they were necessary.
+
 2004-03-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable-transform.c

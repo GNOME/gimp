@@ -344,11 +344,8 @@ gimp_item_tree_view_init (GimpItemTreeView      *view,
                             NULL,
                             view);
 
-  str = g_strdup_printf (_("%s\n"
-                           "%s  %s Dialog"),
-                         view_class->new_desc,
-                         gimp_get_mod_name_shift (),
-                         view_class->new_desc);
+  str = g_strdup_printf (view_class->new_desc,
+                         gimp_get_mod_name_shift ());
 
   view->new_button =
     gimp_editor_add_button (editor,

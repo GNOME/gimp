@@ -118,7 +118,7 @@ gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass)
 
   item_view_class->edit_desc               = _("Edit Channel Attributes");
   item_view_class->edit_help_id            = GIMP_HELP_CHANNEL_EDIT;
-  item_view_class->new_desc                = _("New Channel");
+  item_view_class->new_desc                = _("New Channel\n%s New Channel Dialog");
   item_view_class->new_help_id             = GIMP_HELP_CHANNEL_NEW;
   item_view_class->duplicate_desc          = _("Duplicate Channel");
   item_view_class->duplicate_help_id       =  GIMP_HELP_CHANNEL_DUPLICATE;
