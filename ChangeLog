@@ -1,3 +1,7 @@
+Wed Jun 23 02:00:23 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* plugin reorganization
+
 Mon Jun 21 16:47:32 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/mpeg/mpeg.c: don't try to figure out G_BYTE_ORDER for
