@@ -102,10 +102,7 @@ gimp_patterns_get_list (const gchar *filter,
  * @width: The pattern width.
  * @height: The pattern height.
  *
- * This procedure is deprecated! Use 'gimp_context_get_pattern'
- * instead.
- *
- * This procedure is deprecated! Use 'gimp_context_get_pattern'
+ * This procedure is deprecated! Use gimp_context_get_pattern()
  * instead.
  *
  * Returns: The pattern name.
@@ -143,9 +140,7 @@ gimp_patterns_get_pattern (gint *width,
  * @length: Length of pattern mask data.
  * @mask_data: The pattern mask data.
  *
- * This procedure is deprecated! Use 'gimp_pattern_get_pixels' instead.
- *
- * This procedure is deprecated! Use 'gimp_pattern_get_pixels' instead.
+ * This procedure is deprecated! Use gimp_pattern_get_pixels() instead.
  *
  * Returns: The pattern name.
  */

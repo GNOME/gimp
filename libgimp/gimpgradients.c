@@ -28,9 +28,7 @@
 /**
  * gimp_gradients_get_gradient:
  *
- * Retrieve the name of the active gradient.
- *
- * This procedure is deprecated! Use 'gimp_context_get_gradient' instead.
+ * This procedure is deprecated! Use gimp_context_get_gradient() instead.
  *
  * Returns: The name of the active gradient.
  */
@@ -44,9 +42,7 @@ gimp_gradients_get_gradient (void)
  * gimp_gradients_set_gradient:
  * @name: The name of the gradient to set.
  *
- * Sets the specified gradient as the active gradient.
- *
- * This procedure is deprecated! Use 'gimp_context_set_gradient' instead.
+ * This procedure is deprecated! Use gimp_context_set_gradient() instead.
  *
  * Returns: TRUE on success.
  */

@@ -29,9 +29,7 @@
  * gimp_patterns_set_pattern:
  * @name: The pattern name.
  *
- * Set the specified pattern as the active pattern.
- *
- * This procedure is deprecated! Use 'gimp_context_set_pattern' instead.
+ * This procedure is deprecated! Use gimp_context_set_pattern() instead.
  *
  * Returns: TRUE on success.
  */

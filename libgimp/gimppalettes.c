@@ -27,9 +27,7 @@
  * gimp_palettes_set_palette:
  * @name: The palette name.
  *
- * Set the specified palette as the active palette.
- *
- * This procedure is deprecated! Use 'gimp_context_set_palette' instead.
+ * This procedure is deprecated! Use gimp_context_set_palette() instead.
  *
  * Returns: TRUE on success.
  */

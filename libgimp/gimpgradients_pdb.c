@@ -103,10 +103,7 @@ gimp_gradients_get_list (const gchar *filter,
  * @reverse: Use the reverse gradient.
  *
  * This procedure is deprecated! Use
- * 'gimp_gradient_get_uniform_samples' instead.
- *
- * This procedure is deprecated! Use
- * 'gimp_gradient_get_uniform_samples' instead.
+ * gimp_gradient_get_uniform_samples() instead.
  *
  * Returns: Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }.
  */
@@ -144,10 +141,7 @@ gimp_gradients_sample_uniform (gint     num_samples,
  * @positions: The list of positions to sample along the gradient.
  * @reverse: Use the reverse gradient.
  *
- * This procedure is deprecated! Use 'gimp_gradient_get_custom_samples'
- * instead.
- *
- * This procedure is deprecated! Use 'gimp_gradient_get_custom_samples'
+ * This procedure is deprecated! Use gimp_gradient_get_custom_samples()
  * instead.
  *
  * Returns: Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }.
@@ -191,10 +185,7 @@ gimp_gradients_sample_custom (gint           num_samples,
  * @grad_data: The gradient sample data.
  *
  * This procedure is deprecated! Use
- * 'gimp_gradient_get_uniform_samples' instead.
- *
- * This procedure is deprecated! Use
- * 'gimp_gradient_get_uniform_samples' instead.
+ * gimp_gradient_get_uniform_samples() instead.
  *
  * Returns: The gradient name.
  */

@@ -456,7 +456,17 @@ CODE
 	    $sincedesc = "\n *\n * Since: GIMP $proc->{since}";
 	}
 
-	$out->{code} .= <<CODE;
+        if ($proc->{deprecated}) {
+            $out->{code} .= <<CODE;
+
+/**
+ * $wrapped$funcname:
+$argdesc *
+@{[ &desc_wrap("This procedure is deprecated! Use $proc->{deprecated}() instead.") ]}
+CODE
+        }
+        else {
+            $out->{code} .= <<CODE;
 
 /**
  * $wrapped$funcname:
@@ -464,6 +474,10 @@ $argdesc *
 @{[ &desc_wrap($proc->{blurb}) ]}
  *
 @{[ &desc_wrap($proc->{help}) ]}
+CODE
+        }
+
+	$out->{code} .= <<CODE;
  *
  * Returns: $retdesc$sincedesc
  */

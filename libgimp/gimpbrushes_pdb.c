@@ -103,9 +103,7 @@ gimp_brushes_get_list (const gchar *filter,
  * @height: The brush height.
  * @spacing: The brush spacing.
  *
- * This procedure is deprecated! Use 'gimp_context_get_brush' instead.
- *
- * This procedure is deprecated! Use 'gimp_context_get_brush' instead.
+ * This procedure is deprecated! Use gimp_context_get_brush() instead.
  *
  * Returns: The brush name.
  */
@@ -138,9 +136,7 @@ gimp_brushes_get_brush (gint *width,
 /**
  * gimp_brushes_get_spacing:
  *
- * This procedure is deprecated! Use 'gimp_brush_get_spacing' instead.
- *
- * This procedure is deprecated! Use 'gimp_brush_get_spacing' instead.
+ * This procedure is deprecated! Use gimp_brush_get_spacing() instead.
  *
  * Returns: The brush spacing.
  */
@@ -167,9 +163,7 @@ gimp_brushes_get_spacing (void)
  * gimp_brushes_set_spacing:
  * @spacing: The brush spacing.
  *
- * This procedure is deprecated! Use 'gimp_brush_set_spacing' instead.
- *
- * This procedure is deprecated! Use 'gimp_brush_set_spacing' instead.
+ * This procedure is deprecated! Use gimp_brush_set_spacing() instead.
  *
  * Returns: TRUE on success.
  */
@@ -203,9 +197,7 @@ gimp_brushes_set_spacing (gint spacing)
  * @length: Length of brush mask data.
  * @mask_data: The brush mask data.
  *
- * This procedure is deprecated! Use 'gimp_brush_get_pixels' instead.
- *
- * This procedure is deprecated! Use 'gimp_brush_get_pixels' instead.
+ * This procedure is deprecated! Use gimp_brush_get_pixels() instead.
  *
  * Returns: The brush name.
  */

@@ -99,10 +99,7 @@ gimp_palettes_get_list (const gchar *filter,
  * gimp_palettes_get_palette:
  * @num_colors: The palette num_colors.
  *
- * This procedure is deprecated! Use 'gimp_context_get_palette'
- * instead.
- *
- * This procedure is deprecated! Use 'gimp_context_get_palette'
+ * This procedure is deprecated! Use gimp_context_get_palette()
  * instead.
  *
  * Returns: The palette name.
@@ -136,10 +133,7 @@ gimp_palettes_get_palette (gint *num_colors)
  * @num_colors: The palette num_colors.
  * @color: The color requested.
  *
- * This procedure is deprecated! Use 'gimp_palette_entry_get_color'
- * instead.
- *
- * This procedure is deprecated! Use 'gimp_palette_entry_get_color'
+ * This procedure is deprecated! Use gimp_palette_entry_get_color()
  * instead.
  *
  * Returns: The palette name.

@@ -544,12 +544,12 @@ static ProcArg text_outargs[] =
 static ProcRecord text_proc =
 {
   "gimp_text",
-  "This procedure is deprecated! Use 'gimp_get_text_fontname' instead.",
-  "This procedure is deprecated! Use 'gimp_get_text_fontname' instead.",
+  "This procedure is deprecated! Use 'gimp_text_fontname' instead.",
+  "This procedure is deprecated! Use 'gimp_text_fontname' instead.",
   "",
   "",
   "",
-  "gimp_get_text_fontname",
+  "gimp_text_fontname",
   GIMP_INTERNAL,
   17,
   text_inargs,
@@ -737,12 +737,12 @@ static ProcArg text_get_extents_outargs[] =
 static ProcRecord text_get_extents_proc =
 {
   "gimp_text_get_extents",
-  "This procedure is deprecated! Use 'gimp_get_text_extents_fontname' instead.",
-  "This procedure is deprecated! Use 'gimp_get_text_extents_fontname' instead.",
+  "This procedure is deprecated! Use 'gimp_text_get_extents_fontname' instead.",
+  "This procedure is deprecated! Use 'gimp_text_get_extents_fontname' instead.",
   "",
   "",
   "",
-  "gimp_get_text_extents_fontname",
+  "gimp_text_get_extents_fontname",
   GIMP_INTERNAL,
   11,
   text_get_extents_inargs,

@@ -1,5 +1,27 @@
 2004-10-06  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/lib.pl: for deprecated procedures, create a gtk-doc
+	comment that contains a link to the replacement procedure and
+	doesn't contain redundant information.
+
+	* tools/pdbgen/pdb/text_tool.pdb: fixed names of replacement
+	procedures.
+
+	* libgimp/gimpbrushes.c
+	* libgimp/gimpgradients.c
+	* libgimp/gimppalettes.c
+	* libgimp/gimppatterns.c: made the handwritten gtk-doc comments of
+	deprecated procedures look like the generated ones.
+
+	* app/pdb/text_tool_cmds.c
+	* libgimp/gimpbrushes_pdb.c
+	* libgimp/gimpgradients_pdb.c
+	* libgimp/gimppalettes_pdb.c
+	* libgimp/gimppatterns_pdb.c
+	* libgimp/gimptexttool_pdb.c: regenerated.
+
+2004-10-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimp-tools.c (gimp_tools_restore): reset the tool
 	options before deserializing so they have the correct default
 	values. Fixes bug #120832.

@@ -28,9 +28,7 @@
 /**
  * gimp_brushes_get_opacity:
  *
- * Get the brush opacity.
- *
- * This procedure is deprecated! Use 'gimp_context_get_opacity' instead.
+ * This procedure is deprecated! Use gimp_context_get_opacity() instead.
  *
  * Returns: The brush opacity.
  */
@@ -44,9 +42,7 @@ gimp_brushes_get_opacity (void)
  * gimp_brushes_set_opacity:
  * @opacity: The brush opacity.
  *
- * Set the brush opacity.
- *
- * This procedure is deprecated! Use 'gimp_context_set_opacity' instead.
+ * This procedure is deprecated! Use gimp_context_set_opacity() instead.
  *
  * Returns: TRUE on success.
  */
@@ -59,9 +55,7 @@ gimp_brushes_set_opacity (gdouble opacity)
 /**
  * gimp_brushes_get_paint_mode:
  *
- * Get the brush paint mode.
- *
- * This procedure isdeprecated! Use 'gimp_context_get_paint_mode' instead.
+ * This procedure isdeprecated! Use gimp_context_get_paint_mode() instead.
  *
  * Returns: The paint mode.
  */
@@ -75,9 +69,7 @@ gimp_brushes_get_paint_mode (void)
  * gimp_brushes_set_paint_mode:
  * @paint_mode: The paint mode.
  *
- * Set the brush paint mode.
- *
- * This procedure is deprecated! Use 'gimp_context_set_paint_mode' instead.
+ * This procedure is deprecated! Use gimp_context_set_paint_mode() instead.
  *
  * Returns: TRUE on success.
  */
@@ -91,9 +83,7 @@ gimp_brushes_set_paint_mode (GimpLayerModeEffects paint_mode)
  * gimp_brushes_set_brush:
  * @name: The brush name.
  *
- * Set the specified brush as the active brush.
- *
- * This procedure is deprecated! Use 'gimp_context_set_brush' instead.
+ * This procedure is deprecated! Use gimp_context_set_brush() instead.
  *
  * Returns: TRUE on success.
  */
