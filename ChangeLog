@@ -1,3 +1,9 @@
+Fri Apr  7 11:54:25 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	* app/Makefile.am
+	* app/main.c
+	* app/user_install.[ch]: renamed install.[ch]
+
 2000-04-06  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimplimits.h: changed GIMP_MIN_RESOLUTION to 5e-3 so 

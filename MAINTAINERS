@@ -1,10 +1,3 @@
-Name: 
-Email:
-url:
-expertise:
-current work:
-commit access:
-
 Name: Matt Wilson
 Email: msw@gimp.org
 url:
@@ -36,15 +29,6 @@ url: http://www.cl.cam.ac.uk/~and1000/
 ircnick: austin
 expertise: resolution stuff, modules, colour selectors, fonts, PostScript
 current work:  random bug fixes, resolution
-commit access: yes
-
-Name: ray lehtiniemi
-Email: rayl@mail.com
-url: http://www.netrover.com/~rayl/
-ircnick: rayl
-expertise:  bit of everything, moreso in the lowest levels like
-            paint_funcs and pixel_region and tilemanagers
-current work: HOLLYWOOD branch  (film and deep image stuff)
 commit access: yes
 
 Name: Sven Neuman
@@ -177,13 +161,6 @@ Email: njl195@zepler.org.uk
 ircnick: ruth
 expertise: Script-fu extensions, tiff plugin
 current work: 
-commit access: no
-
-Name: Gregory McLean
-Email: gregm@comstar.net
-ircnick: Centove
-expertise: rpm specs file (and probably some more ;)
-current work: gimp.specs file
 commit access: yes
 
 Name: Michael Natterer
@@ -202,11 +179,3 @@ current work: I fell into this rabbit hole by writing highly verbose patch docum
 which just goes to show that succinctness is its own reward. My patch documentation 
 archive is http://idt.net/~gosgood/gimp-patch/
 commit access: yes
-
-Name:  Daniel Egger
-Email: Daniel.Egger@suse.de
-url:
-expertise: Localisation, optimisation, cleanup.
-current work: Cleaning up the code base while trying to find a
-              proper solution for localisation.
-commit access: no

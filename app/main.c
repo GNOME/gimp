@@ -43,7 +43,7 @@
 #include "appenv.h"
 #include "app_procs.h"
 #include "errors.h"
-#include "install.h"
+#include "user_install.h"
 
 #include "libgimp/gimpintl.h"
 

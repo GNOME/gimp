@@ -262,8 +262,6 @@ gimp_SOURCES = \
 	info_window.h		\
 	ink.c                   \
 	ink.h		        \
-	install.c		\
-	install.h		\
 	interface.c		\
 	interface.h		\
 	interface_cmds.c	\
@@ -426,6 +424,8 @@ gimp_SOURCES = \
 	undo_types.h		\
 	unitrc.h		\
 	unit_cmds.c		\
+	user_install.c		\
+	user_install.h		\
 	wilber.h		\
 	xcf.c			\
 	xcf.h

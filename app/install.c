@@ -28,11 +28,11 @@
 #endif
 
 #include "appenv.h"
-#include "install.h"
 #include "gdisplay_ops.h"
 #include "gimprc.h"
 #include "gimpui.h"
 #include "unitrc.h"
+#include "user_install.h"
 
 #include "libgimp/gimpenv.h"
 #include "libgimp/gimplimits.h"
