@@ -60,6 +60,7 @@ enum_headers = \
 	../../app/convert.h		\
 	../../app/convolve.h		\
 	../../app/dodgeburn.h		\
+	../../app/errors.h		\
 	../../app/eraser.h		\
 	../../app/gimpdrawable.h	\
 	../../app/gimpimage.h		\

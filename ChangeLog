@@ -1,3 +1,28 @@
+2000-07-16  Michael Natterer  <mitch@gimp.org>
+	    Sven Neumann      <sven@gimp.org>
+
+	* AUTHORS
+	* gimp.1.in
+	* app/about_dialog.c: removed two accidentially added non-authors.
+
+	* app/errors.[ch]
+	* app/main.c: added a new command line option
+	"--enable-stack-trace" which can be one of {never|query|always}.
+
+	* app/plug_in.c
+	* libgimp/gimp.c: pass the stack trace mode as an argv[] element to
+	plug-ins. Cleaned up the plug-ins' argv[] (removed unused TILE_WIDTH
+	and TILE_HEIGHT arguments, always pass 6 arguments to make the code
+	simpler).
+
+	* libgimp/gimpenums.h
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/enums.pl: export the app's STACK_TRACE_MODE enum.
+
+	* plug-ins/common/plugindetails.c: made the titles of the tree view
+	unclickable, cleanups.
+
 Sat Jul 15 18:32:04 CEST 2000  Marc Lehmann <pcg@goof.com>
 
         * plug-ins/common/plasma.c: applied noninteractive fix by David

@@ -15,25 +15,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #include <signal.h>
 #include <stdarg.h>
-#include <stdio.h>
 #include <stdlib.h>
-#ifdef HAVE_SYS_TIME_H
-#include <sys/time.h>
-#endif
-#ifdef HAVE_SYS_TIMES_H
-#include <sys/times.h>
-#endif
 #include <sys/types.h>
-#include <time.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
 #include <gtk/gtk.h>
+
 #include "appenv.h"
 #include "app_procs.h"
 #include "errorconsole.h"
@@ -46,49 +40,77 @@
 
 extern gchar *prog_name;
 
+StackTraceMode stack_trace_mode = STACK_TRACE_QUERY;
+
 void
 gimp_message_func (gchar *str)
 {
   if (console_messages == FALSE)
-    switch (message_handler)
-      {
-        case MESSAGE_BOX:
-          gimp_message_box (str, NULL, NULL);
-          break;
-
-        case ERROR_CONSOLE:
-          error_console_add (str);
-          break;
-
-        default:
-          fprintf (stderr, "%s: %s\n", prog_name, str);
+    {
+      switch (message_handler)
+	{
+	case MESSAGE_BOX:
+	  gimp_message_box (str, NULL, NULL);
 	  break;
+
+	case ERROR_CONSOLE:
+	  error_console_add (str);
+	  break;
+
+	default:
+	  g_printerr ("%s: %s\n", prog_name, str);
+	  break;
+	}
     }
   else
-    fprintf (stderr, "%s: %s\n", prog_name, str);
+    {
+      g_printerr ("%s: %s\n", prog_name, str);
+    }
 }
 
 void
 gimp_fatal_error (gchar *fmt, ...)
 {
-#ifndef G_OS_WIN32
   va_list args;
+
+#ifndef G_OS_WIN32
 
   va_start (args, fmt);
-  g_print ("%s: fatal error: %s\n", prog_name, g_strdup_vprintf (fmt, args));
+  g_printerr ("%s: fatal error: %s\n", prog_name, g_strdup_vprintf (fmt, args));
   va_end (args);
 
-  if (TRUE)
+  switch (stack_trace_mode)
     {
-      sigset_t sigset;
+    case STACK_TRACE_NEVER:
+      break;
 
-      sigemptyset (&sigset);
-      sigprocmask (SIG_SETMASK, &sigset, NULL);
-      g_on_error_query (prog_name);
+    case STACK_TRACE_QUERY:
+      {
+	sigset_t sigset;
+
+	sigemptyset (&sigset);
+	sigprocmask (SIG_SETMASK, &sigset, NULL);
+	g_on_error_query (prog_name);
+      }
+      break;
+
+    case STACK_TRACE_ALWAYS:
+      {
+	sigset_t sigset;
+
+	sigemptyset (&sigset);
+	sigprocmask (SIG_SETMASK, &sigset, NULL);
+	g_on_error_stack_trace (prog_name);
+      }
+      break;
+
+    default:
+      break;
     }
+
 #else
-  /* g_on_error_query doesn't do anything reasonable on Win32. */
-  va_list args;
+
+  /* g_on_error_* don't do anything reasonable on Win32. */
   gchar *msg;
 
   va_start (args, fmt);
@@ -98,18 +120,21 @@ gimp_fatal_error (gchar *fmt, ...)
   MessageBox (NULL, msg, prog_name, MB_OK|MB_ICONERROR);
   /* I don't dare do anything more. */
   ExitProcess (1);
-#endif
+
+#endif /* ! G_OS_WIN32 */
+
   app_exit (TRUE);
 }
 
 void
 gimp_terminate (gchar *fmt, ...)
 {
-#ifndef G_OS_WIN32
   va_list args;
 
+#ifndef G_OS_WIN32
+
   va_start (args, fmt);
-  g_print ("%s terminated: %s\n", prog_name, g_strdup_vprintf (fmt, args));
+  g_printerr ("%s terminated: %s\n", prog_name, g_strdup_vprintf (fmt, args));
   va_end (args);
 
   if (use_debug_handler)
@@ -120,9 +145,10 @@ gimp_terminate (gchar *fmt, ...)
       sigprocmask (SIG_SETMASK, &sigset, NULL);
       g_on_error_query (prog_name);
     }
+
 #else
-  /* g_on_error_query doesn't do anything reasonable on Win32. */
-  va_list args;
+
+  /* g_on_error_* don't do anything reasonable on Win32. */
   gchar *msg;
 
   va_start (args, fmt);
@@ -130,6 +156,8 @@ gimp_terminate (gchar *fmt, ...)
   va_end (args);
 
   MessageBox (NULL, msg, prog_name, MB_OK|MB_ICONERROR);
-#endif
+
+#endif /* ! G_OS_WIN32 */
+
   gdk_exit (1);
 }

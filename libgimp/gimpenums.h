@@ -327,6 +327,13 @@ typedef enum
 
 typedef enum
 {
+  GIMP_STACK_TRACE_NEVER,
+  GIMP_STACK_TRACE_QUERY,
+  GIMP_STACK_TRACE_ALWAYS
+} GimpStackTraceMode;
+
+typedef enum
+{
   GIMP_SHADOWS,
   GIMP_MIDTONES,
   GIMP_HIGHLIGHTS

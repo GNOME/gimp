@@ -87,6 +87,9 @@ Enable debugging signal handlers.
 Do not popup dialog boxes on errors or warnings. Print the messages on
 the console instead.
 .TP 8
+.B \-\-enable\-stack\-trace \fI{never|query|always}\fP
+If a stack-trace should be generated in case of fatal signals.
+.TP 8
 .B \-\-system\-gimprc \fI<gimprc>\fP
 Use an alternate system gimprc file.
 
@@ -277,7 +280,6 @@ Tom Bech,
 Marc Bless,
 Edward Blevins,
 Reagan Blundell,
-Andreas Bogk,
 Xavier Bouchoux,
 Roberto Boyd,
 Stanislav Brabec,
@@ -337,7 +339,6 @@ Andrew Kieschnick,
 Peter Kirchgessner,
 Philipp Klaus,
 David Koblas,
-Vincent Kolwitz,
 Tuomas Kuosmanen,
 Karin Kylander,
 Olof S Kylander,

@@ -5,7 +5,7 @@
  *
  * Copyright (C) 1999 Andy Thomas  alt@picnic.demon.co.uk
  *
- * Note some portions of th UI comes from the dbbrowser plugin.
+ * Note some portions of the UI comes from the dbbrowser plugin.
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -52,11 +52,11 @@ static gchar *proc_type_str[] =
 /* Declare some local functions.
  */
 static void   query      (void);
-static void   run        (gchar   *name,
-                          gint     nparams,
-                          GParam  *param,
-                          gint    *nreturn_vals,
-                          GParam **return_vals);
+static void   run        (gchar      *name,
+                          gint        nparams,
+                          GimpParam  *param,
+                          gint       *nreturn_vals,
+                          GimpParam **return_vals);
 
 static GtkWidget * gimp_plugin_desc (void);
 
@@ -70,7 +70,7 @@ static gint procedure_ctree_select_callback (GtkWidget      *widget,
 					     gint            column, 
 					     gpointer        data);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -84,15 +84,20 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, [non-interactive]" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, [non-interactive]" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
   gimp_install_procedure ("plug_in_details",
                           "Displays plugin details",
-                          "Helps browse the plugin menus system. You can search for plugin names, sort by name or menu location and you can view a tree representation of the plugin menus. Can also be of help to find where new plugins have installed themselves in the menuing system",
+                          "Helps browse the plugin menus system. You can "
+			  "search for plugin names, sort by name or menu "
+			  "location and you can view a tree representation "
+			  "of the plugin menus. Can also be of help to find "
+			  "where new plugins have installed themselves in "
+			  "the menuing system",
                           "Andy Thomas",
                           "Andy Thomas",
                           "1999",
@@ -104,22 +109,22 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
-     GParam  *param,
-     gint    *nreturn_vals,
-     GParam **return_vals)
+run (gchar      *name,
+     gint        nparams,
+     GimpParam  *param,
+     gint       *nreturn_vals,
+     GimpParam **return_vals)
 {
-  static GParam  values[2];
-  GRunModeType   run_mode;
-  GtkWidget     *plugin_dialog;
+  static GimpParam  values[2];
+  GimpRunModeType   run_mode;
+  GtkWidget        *plugin_dialog;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  values[0].type          = PARAM_STATUS;
-  values[0].data.d_status = STATUS_CALLING_ERROR;
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
 
   INIT_I18N_UI();
 
@@ -127,7 +132,7 @@ run (gchar   *name,
     {
       *nreturn_vals = 1;
 
-      values[0].data.d_status = STATUS_SUCCESS;
+      values[0].data.d_status = GIMP_PDB_SUCCESS;
 
       plugin_dialog = gimp_plugin_desc ();
 
@@ -233,13 +238,13 @@ details_callback (GtkWidget *widget,
 static gchar *
 format_menu_path (gchar *s)
 {
-  gchar ** str_array;
-  gchar *newstr = NULL;
+  gchar **str_array;
+  gchar  *newstr = NULL;
 
   if (!s)
     return s;
 
-  str_array = g_strsplit (s,"/",0);
+  str_array = g_strsplit (s, "/", 0);
 
   newstr = g_strjoinv ("->", str_array);
 
@@ -277,16 +282,16 @@ procedure_general_select_callback (PDesc *pdesc,
   if (pdesc->descr_scroll == NULL)
     return FALSE;
 
-  selected_proc_blurb = NULL;
-  selected_proc_help = NULL;
-  selected_proc_author = NULL;
+  selected_proc_blurb     = NULL;
+  selected_proc_help      = NULL;
+  selected_proc_author    = NULL;
   selected_proc_copyright = NULL;
-  selected_proc_date = NULL;
-  selected_proc_type = 0;
-  selected_nparams = 0;
-  selected_nreturn_vals = 0;
-  selected_params = NULL;
-  selected_return_vals = NULL;
+  selected_proc_date      = NULL;
+  selected_proc_type      = 0;
+  selected_nparams        = 0;
+  selected_nreturn_vals   = 0;
+  selected_params         = NULL;
+  selected_return_vals    = NULL;
 
   gimp_query_procedure (pinfo->realname, 
 			&selected_proc_blurb, 
@@ -486,7 +491,7 @@ procedure_general_select_callback (PDesc *pdesc,
     g_free (selected_params);
   if (selected_return_vals)
     g_free (selected_return_vals);
-  
+
   return FALSE;
 }
 
@@ -544,7 +549,8 @@ procedure_clist_select_callback (GtkWidget      *widget,
       gtk_widget_show (pdesc->ctree); 
 
       gtk_signal_handler_block_by_func (GTK_OBJECT(pdesc->ctree),
-					(GtkSignalFunc)procedure_ctree_select_callback, pdesc);
+					GTK_SIGNAL_FUNC (procedure_ctree_select_callback),
+					pdesc);
 
       gtk_clist_select_row (GTK_CLIST (pdesc->ctree), sel_row, -1);  
       gtk_ctree_select (GTK_CTREE (pdesc->ctree), found_node);
@@ -555,7 +561,8 @@ procedure_clist_select_callback (GtkWidget      *widget,
 			0.5, 0.5);
 
       gtk_signal_handler_unblock_by_func (GTK_OBJECT (pdesc->ctree),
-					  (GtkSignalFunc)procedure_ctree_select_callback, pdesc);
+					  GTK_SIGNAL_FUNC (procedure_ctree_select_callback),
+					  pdesc);
 
       pdesc->ctree_row = sel_row;
     }
@@ -640,7 +647,8 @@ procedure_ctree_select_callback (GtkWidget *widget,
   /* Block signals */
 
   gtk_signal_handler_block_by_func (GTK_OBJECT (pdesc->clist),
-				    (GtkSignalFunc)procedure_clist_select_callback, pdesc);
+				    GTK_SIGNAL_FUNC (procedure_clist_select_callback),
+				    pdesc);
 
   sel_row = gtk_clist_find_row_from_data (GTK_CLIST (pdesc->clist), pinfo);
   gtk_clist_select_row (GTK_CLIST (pdesc->clist), sel_row, -1);  
@@ -650,7 +658,8 @@ procedure_ctree_select_callback (GtkWidget *widget,
 		    0.5, 0.5);
 
   gtk_signal_handler_unblock_by_func (GTK_OBJECT (pdesc->clist),
-				      (GtkSignalFunc)procedure_clist_select_callback, pdesc);
+				      GTK_SIGNAL_FUNC (procedure_clist_select_callback),
+				      pdesc);
 
   pdesc->clist_row = sel_row;
   
@@ -670,7 +679,7 @@ pinfo_free (gpointer p)
   g_free (pinfo);
 }
 
-static GtkCTreeNode*
+static GtkCTreeNode *
 get_parent (PDesc       *pdesc,
 	    GHashTable  *ghash,
 	    gchar       *mpath)
@@ -820,12 +829,12 @@ get_plugin_info (PDesc *pdesc,
     {
       int loop;
       pdesc->num_plugins = return_vals[1].data.d_int32;
-      menu_strs = return_vals[2].data.d_stringarray;
-      accel_strs = return_vals[4].data.d_stringarray;
-      prog_strs = return_vals[6].data.d_stringarray;
-      types_strs = return_vals[8].data.d_stringarray;
-      time_ints = return_vals[10].data.d_int32array;
-      realname_strs = return_vals[12].data.d_stringarray;
+      menu_strs          = return_vals[2].data.d_stringarray;
+      accel_strs         = return_vals[4].data.d_stringarray;
+      prog_strs          = return_vals[6].data.d_stringarray;
+      types_strs         = return_vals[8].data.d_stringarray;
+      time_ints          = return_vals[10].data.d_int32array;
+      realname_strs      = return_vals[12].data.d_stringarray;
 
       for (loop = 0; loop < return_vals[1].data.d_int32; loop++)
 	{
@@ -856,11 +865,11 @@ get_plugin_info (PDesc *pdesc,
 	  else
 	    strcpy (xtimestr,"");
 
-	  pinfo->menu = g_strdup (menu_strs[loop]);
-	  pinfo->accel = g_strdup (accel_strs[loop]);
-	  pinfo->prog = g_strdup (prog_strs[loop]);
-	  pinfo->types = g_strdup (types_strs[loop]);
-	  pinfo->instime = time_ints[loop];
+	  pinfo->menu     = g_strdup (menu_strs[loop]);
+	  pinfo->accel    = g_strdup (accel_strs[loop]);
+	  pinfo->prog     = g_strdup (prog_strs[loop]);
+	  pinfo->types    = g_strdup (types_strs[loop]);
+	  pinfo->instime  = time_ints[loop];
 	  pinfo->realname = g_strdup (realname_strs[loop]);
 
 	  labels[0] = g_strdup (name);
@@ -1035,7 +1044,8 @@ gimp_plugin_desc (void)
   plugindesc->clist = gtk_clist_new_with_titles (4, clabels); 
 
   gtk_signal_connect (GTK_OBJECT (plugindesc->clist), "click_column",
-		      (GtkSignalFunc) clist_click_column, NULL);
+		      GTK_SIGNAL_FUNC (clist_click_column),
+		      NULL);
   gtk_clist_column_titles_show (GTK_CLIST (plugindesc->clist));
   swindow = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (swindow),
@@ -1045,7 +1055,7 @@ gimp_plugin_desc (void)
 
   gtk_widget_set_usize (plugindesc->clist, DBL_LIST_WIDTH, DBL_HEIGHT);
   gtk_signal_connect (GTK_OBJECT (plugindesc->clist), "select_row",
-		      (GtkSignalFunc) procedure_clist_select_callback,
+		      GTK_SIGNAL_FUNC (procedure_clist_select_callback),
 		      plugindesc);
   
   label = gtk_label_new (_("List View"));
@@ -1063,21 +1073,24 @@ gimp_plugin_desc (void)
     swindow = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (swindow),
 				  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-  gtk_widget_set_usize(plugindesc->ctree, DBL_LIST_WIDTH, DBL_HEIGHT);
+  gtk_widget_set_usize (plugindesc->ctree, DBL_LIST_WIDTH, DBL_HEIGHT);
   gtk_signal_connect (GTK_OBJECT (plugindesc->ctree), "tree_select_row",
-		      (GtkSignalFunc) procedure_ctree_select_callback,
+		      GTK_SIGNAL_FUNC (procedure_ctree_select_callback),
 		      plugindesc);
-  label = gtk_label_new (_("Tree View"));
   gtk_clist_set_column_auto_resize (GTK_CLIST (plugindesc->ctree), 0, TRUE);
   gtk_clist_set_column_auto_resize (GTK_CLIST (plugindesc->ctree), 1, TRUE);
   gtk_clist_set_column_auto_resize (GTK_CLIST (plugindesc->ctree), 2, TRUE);
+  gtk_clist_column_titles_passive (GTK_CLIST (plugindesc->ctree));
+
+  label = gtk_label_new (_("Tree View"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), swindow, label);
   gtk_container_add (GTK_CONTAINER (swindow), plugindesc->ctree);
+
   gtk_widget_show (plugindesc->ctree);
   gtk_widget_show (swindow);
 
   gtk_signal_connect_after (GTK_OBJECT (notebook), "switch_page",
-			    (GtkSignalFunc) page_select_callback,
+			    GTK_SIGNAL_FUNC (page_select_callback),
 			    plugindesc);
   
   gtk_widget_show (notebook);
@@ -1102,17 +1115,21 @@ gimp_plugin_desc (void)
 
   button = gtk_button_new_with_label (_("Details >>"));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  gtk_widget_show (button);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) details_callback, plugindesc);
-  gtk_box_pack_start (GTK_BOX (searchhbox), 
-		      button, FALSE, FALSE, 0);
+		      GTK_SIGNAL_FUNC (details_callback),
+		      plugindesc);
+  gtk_box_pack_start (GTK_BOX (searchhbox), button,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   /* right = description */
   /* the right description is build on first click of the Details button */
  
   /* now build the list */
   dialog_search_callback (NULL, (gpointer) plugindesc);
+
+  gtk_clist_set_selection_mode (GTK_CLIST (plugindesc->ctree),
+				GTK_SELECTION_BROWSE);
 
   gtk_widget_show (plugindesc->clist); 
   gtk_widget_show (plugindesc->dlg);

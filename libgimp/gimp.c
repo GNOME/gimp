@@ -139,6 +139,8 @@ static gchar   *progname = NULL;
 static guint8   write_buffer[WRITE_BUFFER_SIZE];
 static guint    write_buffer_index = 0;
 
+static GimpStackTraceMode stack_trace_mode = GIMP_STACK_TRACE_NEVER;
+
 static GHashTable *temp_proc_ht = NULL;
 
 #ifdef G_OS_WIN32
@@ -208,9 +210,9 @@ gimp_main (int   argc,
     }
 #endif
 
-  if ((argc < 4) || (strcmp (argv[1], "-gimp") != 0))
+  if ((argc != 6) || (strcmp (argv[1], "-gimp") != 0))
     {
-      g_print ("%s is a gimp plug-in and must be run by the gimp to be used\n", argv[0]);
+      g_printerr ("%s is a gimp plug-in and must be run by the gimp to be used\n", argv[0]);
       return 1;
     }
 
@@ -240,32 +242,37 @@ gimp_main (int   argc,
 #endif
 
 #ifndef G_OS_WIN32
-  _readchannel = g_io_channel_unix_new (atoi (argv[2]));
+  _readchannel  = g_io_channel_unix_new (atoi (argv[2]));
   _writechannel = g_io_channel_unix_new (atoi (argv[3]));
 #ifdef __EMX__
-  setmode(g_io_channel_unix_get_fd(_readchannel), O_BINARY);
-  setmode(g_io_channel_unix_get_fd(_writechannel), O_BINARY);
+  setmode (g_io_channel_unix_get_fd (_readchannel), O_BINARY);
+  setmode (g_io_channel_unix_get_fd (_writechannel), O_BINARY);
 #endif
 #else
   g_assert (PLUG_IN_INFO_PTR != NULL);
   _readchannel = g_io_channel_win32_new_pipe (atoi (argv[2]));
   peer = strchr (argv[3], ':') + 1;
   peer_fd = strchr (peer, ':') + 1;
-  _writechannel = g_io_channel_win32_new_pipe_with_wakeups
-    (atoi (argv[3]), atoi (peer), atoi (peer_fd));
+  _writechannel = g_io_channel_win32_new_pipe_with_wakeups (atoi (argv[3]),
+							    atoi (peer),
+							    atoi (peer_fd));
 #endif
 
   gp_init ();
   wire_set_writer (gimp_write);
   wire_set_flusher (gimp_flush);
 
-  if ((argc == 5) && (strcmp (argv[4], "-query") == 0))
+  if (strcmp (argv[4], "-query") == 0)
     {
       if (PLUG_IN_INFO.query_proc)
 	(* PLUG_IN_INFO.query_proc) ();
       gimp_close ();
       return 0;
     }
+
+  stack_trace_mode = (GimpStackTraceMode) CLAMP (atoi (argv[5]),
+						 GIMP_STACK_TRACE_NEVER,
+						 GIMP_STACK_TRACE_ALWAYS);
 
 #ifdef G_OS_WIN32
   /* Tell the GIMP our thread id */
@@ -872,7 +879,7 @@ gimp_plugin_sigfatal_handler (gint sig_num)
     case SIGQUIT:
     case SIGABRT:
     case SIGTERM:
-      g_print ("%s terminated: %s\n", progname, g_strsignal (sig_num));
+      g_printerr ("%s terminated: %s\n", progname, g_strsignal (sig_num));
       break;
 
     case SIGBUS:
@@ -880,14 +887,31 @@ gimp_plugin_sigfatal_handler (gint sig_num)
     case SIGFPE:
     case SIGPIPE:
     default:
-      g_print ("%s: fatal error: %s\n", progname, g_strsignal (sig_num));
-      if (TRUE)
+      g_printerr ("%s: fatal error: %s\n", progname, g_strsignal (sig_num));
+      switch (stack_trace_mode)
 	{
-	  sigset_t sigset;
+	case GIMP_STACK_TRACE_NEVER:
+	  break;
 
-	  sigemptyset (&sigset);
-	  sigprocmask (SIG_SETMASK, &sigset, NULL);
-	  g_on_error_query (progname);
+	case GIMP_STACK_TRACE_QUERY:
+	  {
+	    sigset_t sigset;
+
+	    sigemptyset (&sigset);
+	    sigprocmask (SIG_SETMASK, &sigset, NULL);
+	    g_on_error_query (progname);
+	  }
+	  break;
+
+	case GIMP_STACK_TRACE_ALWAYS:
+	  {
+	    sigset_t sigset;
+
+	    sigemptyset (&sigset);
+	    sigprocmask (SIG_SETMASK, &sigset, NULL);
+	    g_on_error_stack_trace (progname);
+	  }
+	  break;
 	}
       break;
     }
@@ -916,7 +940,7 @@ gimp_plugin_io_error_handler (GIOChannel   *channel,
 			      GIOCondition  cond,
 			      gpointer      data)
 {
-  g_print ("%s: fatal error: GIMP crashed\n", progname);
+  g_printerr ("%s: fatal error: GIMP crashed\n", progname);
   gimp_quit ();
 
   /* never reached */

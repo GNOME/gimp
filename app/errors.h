@@ -18,6 +18,15 @@
 #ifndef __ERRORS_H__
 #define __ERRORS_H__
 
+typedef enum
+{
+  STACK_TRACE_NEVER,
+  STACK_TRACE_QUERY,
+  STACK_TRACE_ALWAYS
+} StackTraceMode;
+
+extern StackTraceMode stack_trace_mode;
+
 void  gimp_message_func (gchar *);
 void  gimp_fatal_error  (gchar *, ...);
 void  gimp_terminate    (gchar *, ...);

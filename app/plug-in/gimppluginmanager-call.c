@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #ifdef HAVE_SYS_PARAM_H
@@ -80,6 +81,7 @@
 #include "brush_select.h"  /* Need for closing dialogs */
 #include "drawable.h"
 #include "datafiles.h"
+#include "errors.h"
 #include "gdisplay.h"
 #include "general.h"
 #include "gimage.h"
@@ -99,7 +101,7 @@
 #include "libgimp/gimpintl.h"
 
 
-typedef struct _PlugInBlocked  PlugInBlocked;
+typedef struct _PlugInBlocked PlugInBlocked;
 
 struct _PlugInBlocked
 {
@@ -154,28 +156,29 @@ static gint plug_in_make_menu_entry       (gpointer           foo,
 static void plug_in_callback              (GtkWidget         *widget,
 					   gpointer           client_data);
 static void plug_in_proc_def_insert       (PlugInProcDef     *proc_def,
-					   void (*superceed_fn)(void *));
-static void plug_in_proc_def_dead         (void *freed_proc_def);
+					   void (* superceed_fn) (void *));
+static void plug_in_proc_def_dead         (void              *freed_proc_def);
 static void plug_in_proc_def_remove       (PlugInProcDef     *proc_def);
 static void plug_in_proc_def_destroy      (PlugInProcDef     *proc_def,
 					   gboolean           data_only);
 
-static Argument* plug_in_temp_run       (ProcRecord *proc_rec,
-  					 Argument   *args,
-  					 gint        argc);
-static Argument* plug_in_params_to_args (GPParam    *params,
-  					 gint        nparams,
-					 gboolean    full_copy);
-static GPParam*  plug_in_args_to_params (Argument   *args,
-  					 gint        nargs,
-  					 gboolean    full_copy);
-static void      plug_in_params_destroy (GPParam    *params,
-  					 gint        nparams,
-  					 gboolean    full_destroy);
-static void      plug_in_args_destroy   (Argument   *args,
-  					 gint        nargs,
-  					 gboolean    full_destroy);
-static void      plug_in_init_shm       (void);
+static Argument * plug_in_temp_run       (ProcRecord *proc_rec,
+					  Argument   *args,
+					  gint        argc);
+static Argument * plug_in_params_to_args (GPParam    *params,
+					  gint        nparams,
+					  gboolean    full_copy);
+static GPParam  * plug_in_args_to_params (Argument   *args,
+					  gint        nargs,
+					  gboolean    full_copy);
+static void       plug_in_params_destroy (GPParam    *params,
+					  gint        nparams,
+					  gboolean    full_destroy);
+static void       plug_in_args_destroy   (Argument   *args,
+					  gint        nargs,
+					  gboolean    full_destroy);
+static void       plug_in_init_shm       (void);
+
 
 PlugIn *current_plug_in = NULL;
 GSList *proc_defs       = NULL;
@@ -250,8 +253,8 @@ plug_in_init_shm (void)
   pid = GetCurrentProcessId ();
   
   /* From the id, derive the file map name */
-  sprintf (fileMapName, "GIMP%d.SHM", pid);
-  
+  g_snprintf (fileMapName, sizeof (fileMapName), "GIMP%d.SHM", pid);
+
   /* Create the file mapping into paging space */
   shm_handle = CreateFileMapping ((HANDLE) 0xFFFFFFFF, NULL,
 				  PAGE_READWRITE, 0,
@@ -284,11 +287,14 @@ void
 plug_in_init (void)
 {
   extern gboolean use_shm;
-  gchar  *filename;
-  GSList *tmp, *tmp2;
+
+  gchar         *filename;
+  GSList        *tmp;
+  GSList        *tmp2;
   PlugInDef     *plug_in_def;
   PlugInProcDef *proc_def;
-  gfloat nplugins, nth;
+  gfloat         nplugins;
+  gfloat         nth;
 
   /* initialize the gimp protocol library and set the read and
    *  write handlers.
@@ -302,9 +308,8 @@ plug_in_init (void)
    *  we'll fall back on sending the data over the pipe.
    */
   if (use_shm)
-    {
-      plug_in_init_shm ();
-    }
+    plug_in_init_shm ();
+
   /* search for binaries in the plug-in directory path */
   datafiles_read_directories (plug_in_path, plug_in_init_file, MODE_EXECUTABLE);
 
@@ -479,7 +484,7 @@ plug_in_add (gchar *prog,
 	     gchar *accelerator)
 {
   PlugInProcDef *proc_def;
-  GSList *tmp;
+  GSList        *tmp;
 
   if (strncmp ("plug_in_", prog, 8) != 0)
     {
@@ -512,30 +517,30 @@ plug_in_add (gchar *prog,
 	    g_free (proc_def->image_types);
 
 	  proc_def->db_info.name = prog;
-	  proc_def->menu_path = menu_path;
-	  proc_def->accelerator = accelerator;
-	  proc_def->prefixes = NULL;
-	  proc_def->extensions = NULL;
-	  proc_def->magics = NULL;
-	  proc_def->image_types = NULL;
+	  proc_def->menu_path    = menu_path;
+	  proc_def->accelerator  = accelerator;
+	  proc_def->prefixes     = NULL;
+	  proc_def->extensions   = NULL;
+	  proc_def->magics       = NULL;
+	  proc_def->image_types  = NULL;
 	  return;
 	}
     }
 
   proc_def = g_new0 (PlugInProcDef, 1);
   proc_def->db_info.name = prog;
-  proc_def->menu_path = menu_path;
-  proc_def->accelerator = accelerator;
+  proc_def->menu_path    = menu_path;
+  proc_def->accelerator  = accelerator;
 
   gimprc_proc_defs = g_slist_prepend (gimprc_proc_defs, proc_def);
 }
 
-gchar*
+gchar *
 plug_in_image_types (gchar *name)
 {
-  PlugInDef *plug_in_def;
+  PlugInDef     *plug_in_def;
   PlugInProcDef *proc_def;
-  GSList *tmp;
+  GSList        *tmp;
 
   if (current_plug_in)
     {
@@ -599,7 +604,7 @@ plug_in_file_handler (gchar *name,
 {
   PlugInDef     *plug_in_def;
   PlugInProcDef *proc_def;
-  GSList *tmp;
+  GSList        *tmp;
 
   if (current_plug_in)
     {
@@ -680,9 +685,12 @@ plug_in_def_free (PlugInDef *plug_in_def,
   GSList *list;
 
   g_free (plug_in_def->prog);
-  if (plug_in_def->locale_domain) g_free (plug_in_def->locale_domain);
-  if (plug_in_def->locale_path)   g_free (plug_in_def->locale_path);
-  if (plug_in_def->help_path)     g_free (plug_in_def->help_path);
+  if (plug_in_def->locale_domain)
+    g_free (plug_in_def->locale_domain);
+  if (plug_in_def->locale_path)
+    g_free (plug_in_def->locale_path);
+  if (plug_in_def->help_path)
+    g_free (plug_in_def->help_path);
 
   if (free_proc_defs)
     {
@@ -707,12 +715,13 @@ plug_in_def_add (PlugInDef *plug_in_def)
 
   t1 = g_basename (plug_in_def->prog);
 
-  /* If this is a file load or save plugin, make sure we have
-   * something for one of the extensions, prefixes, or magic number.
-   * Other bits of code rely on detecting file plugins by the presence
-   * of one of these things, but Nick Lamb's alien/unknown format
-   * loader needs to be able to register no extensions, prefixes or
-   * magics. -- austin 13/Feb/99 */
+  /*  If this is a file load or save plugin, make sure we have
+   *  something for one of the extensions, prefixes, or magic number.
+   *  Other bits of code rely on detecting file plugins by the presence
+   *  of one of these things, but Nick Lamb's alien/unknown format
+   *  loader needs to be able to register no extensions, prefixes or
+   *  magics. -- austin 13/Feb/99
+   */
   for (tmp = plug_in_def->proc_defs; tmp; tmp = g_slist_next (tmp))
     {
       proc_def = tmp->data;
@@ -839,8 +848,8 @@ plug_in_new (gchar *name)
   plug_in->pid                = 0;
   plug_in->args[0]            = g_strdup (path);
   plug_in->args[1]            = g_strdup ("-gimp");
-  plug_in->args[2]            = g_new (gchar, 32);
-  plug_in->args[3]            = g_new (gchar, 32);
+  plug_in->args[2]            = NULL;
+  plug_in->args[3]            = NULL;
   plug_in->args[4]            = NULL;
   plug_in->args[5]            = NULL;
   plug_in->args[6]            = NULL;
@@ -897,7 +906,7 @@ plug_in_destroy (PlugIn *plug_in)
 gint
 xspawnv (gint                mode,
 	 const gchar        *cmdname,
-	 const gchar *const *argv )
+	 const gchar *const *argv)
 {
   gchar sExecutable[_MAX_PATH*2];
   gchar** sArgsList;
@@ -983,17 +992,18 @@ plug_in_open (PlugIn *plug_in)
       /* Remember the file descriptors for the pipes.
        */
 #ifndef G_OS_WIN32
-      sprintf (plug_in->args[2], "%d",
-	       g_io_channel_unix_get_fd (plug_in->his_read));
-      sprintf (plug_in->args[3], "%d",
-	       g_io_channel_unix_get_fd (plug_in->his_write));
+      plug_in->args[2] =
+	g_strdup_printf ("%d", g_io_channel_unix_get_fd (plug_in->his_read));
+      plug_in->args[3] =
+	g_strdup_printf ("%d", g_io_channel_unix_get_fd (plug_in->his_write));
 #else
-      sprintf (plug_in->args[2], "%d",
-	       g_io_channel_win32_get_fd (plug_in->his_read));
-      sprintf (plug_in->args[3], "%d:%u:%d",
-	       g_io_channel_win32_get_fd (plug_in->his_write),
-	       GetCurrentThreadId (),
-	       g_io_channel_win32_get_fd (plug_in->my_read));
+      plug_in->args[2] =
+	g_strdup_printf ("%d", g_io_channel_win32_get_fd (plug_in->his_read));
+      plug_in->args[3] =
+	g_strdup_printf ("%d:%u:%d",
+			 g_io_channel_win32_get_fd (plug_in->his_write),
+			 GetCurrentThreadId (),
+			 g_io_channel_win32_get_fd (plug_in->my_read));
 #endif
 
       /* Set the rest of the command line arguments.
@@ -1004,20 +1014,18 @@ plug_in_open (PlugIn *plug_in)
 	}
       else
 	{
-	  plug_in->args[4] = g_new (gchar, 16);
-	  plug_in->args[5] = g_new (gchar, 16);
-
-	  sprintf (plug_in->args[4], "%d", TILE_WIDTH);
-	  sprintf (plug_in->args[5], "%d", TILE_WIDTH);
+	  plug_in->args[4] = g_strdup ("-run");
 	}
+
+      plug_in->args[5] = g_strdup_printf ("%d", (gint) stack_trace_mode);
 
       /* Fork another process. We'll remember the process id
        *  so that we can later use it to kill the filter if
        *  necessary.
        */
 #ifdef __EMX__
-      fcntl(my_read[0], F_SETFD, 1);
-      fcntl(my_write[1], F_SETFD, 1);
+      fcntl (my_read[0], F_SETFD, 1);
+      fcntl (my_write[1], F_SETFD, 1);
 #endif
 #if defined(G_OS_WIN32) || defined (G_WITH_CYGWIN) || defined(__EMX__)
       plug_in->pid = _spawnv (_P_NOWAIT, plug_in->args[0], plug_in->args);
@@ -1119,8 +1127,7 @@ plug_in_close (PlugIn   *plug_in,
 #endif
 	}
 
-      /* If necessary, kill the filter.
-       */
+      /* If necessary, kill the filter. */
 #ifndef G_OS_WIN32
       if (kill_it && plug_in->pid)
 	status = kill (plug_in->pid, SIGKILL);
@@ -1154,13 +1161,11 @@ plug_in_close (PlugIn   *plug_in,
 	}
 #endif
 
-      /* Remove the input handler.
-       */
+      /* Remove the input handler. */
       if (plug_in->input_id)
         gdk_input_remove (plug_in->input_id);
 
-      /* Close the pipes.
-       */
+      /* Close the pipes. */
       if (plug_in->my_read != NULL)
 	{
 	  g_io_channel_close (plug_in->my_read);
@@ -1188,14 +1193,12 @@ plug_in_close (PlugIn   *plug_in,
 
       wire_clear_error ();
 
-      /* Destroy the progress dialog if it exists
-       */
+      /* Destroy the progress dialog if it exists. */
       if (plug_in->progress)
 	progress_end (plug_in->progress);
       plug_in->progress = NULL;
 
-      /* Set the fields to null values.
-       */
+      /* Set the fields to null values. */
       plug_in->pid = 0;
       plug_in->input_id = 0;
       plug_in->my_read = NULL;
@@ -1207,13 +1210,12 @@ plug_in_close (PlugIn   *plug_in,
 	gtk_main_quit ();
 
       plug_in->synchronous = FALSE;
-      plug_in->recurse = FALSE;
+      plug_in->recurse     = FALSE;
 
-      /* Unregister any temporary procedures
-       */
+      /* Unregister any temporary procedures. */
       if (plug_in->temp_proc_defs)
 	{
-	  GSList *list;
+	  GSList        *list;
 	  PlugInProcDef *proc_def;
 
 	  for (list = plug_in->temp_proc_defs; list; list = g_slist_next (list))
@@ -1239,12 +1241,14 @@ static Argument *
 plug_in_get_current_return_vals (ProcRecord *proc_rec)
 {
   Argument *return_vals;
-  gint nargs;
+  gint      nargs;
 
   /* Return the status code plus the current return values. */
   nargs = proc_rec->num_values + 1;
   if (current_return_vals && current_return_nvals == nargs)
-    return_vals = current_return_vals;
+    {
+      return_vals = current_return_vals;
+    }
   else if (current_return_vals)
     {
       /* Allocate new return values of the correct size. */
@@ -1267,12 +1271,12 @@ plug_in_get_current_return_vals (ProcRecord *proc_rec)
 
   /* We have consumed any saved values, so clear them. */
   current_return_nvals = 0;
-  current_return_vals = NULL;
+  current_return_vals  = NULL;
 
   return return_vals;
 }
 
-Argument*
+Argument *
 plug_in_run (ProcRecord *proc_rec,
 	     Argument   *args,
 	     gint        argc,
@@ -1333,9 +1337,8 @@ plug_in_run (ProcRecord *proc_rec,
 
 	  plug_in_params_destroy (proc_run.params, proc_run.nparams, FALSE);
 
-	  /*
-	   *  If this is an automatically installed extension, wait for an
-	   *   installation-confirmation message
+	  /*  If this is an automatically installed extension, wait for an
+	   *  installation-confirmation message
 	   */
 	  if ((proc_rec->proc_type == PDB_EXTENSION) &&
 	      (proc_rec->num_args == 0))
@@ -1344,7 +1347,6 @@ plug_in_run (ProcRecord *proc_rec,
 	  if (plug_in->recurse)
 	    {
 	      gtk_main ();
-	      
 	      return_vals = plug_in_get_current_return_vals (proc_rec);
 	    }
 	}
@@ -1380,7 +1382,7 @@ plug_in_repeat (gboolean with_interface)
 
       /* initialize the first three plug-in arguments  */
       args[0].value.pdb_int = (with_interface ? RUN_INTERACTIVE : RUN_WITH_LAST_VALS);
-      args[1].value.pdb_int = pdb_image_to_id(gdisplay->gimage);
+      args[1].value.pdb_int = pdb_image_to_id (gdisplay->gimage);
       args[2].value.pdb_int = drawable_ID (gimage_active_drawable (gdisplay->gimage));
 
       /* run the plug-in procedure */
@@ -1394,8 +1396,8 @@ void
 plug_in_set_menu_sensitivity (GimpImageType type)
 {
   PlugInProcDef *proc_def;
-  GSList *tmp;
-  gboolean sensitive = FALSE;
+  GSList        *tmp;
+  gboolean       sensitive = FALSE;
 
   for (tmp = proc_defs; tmp; tmp = g_slist_next (tmp))
     {
@@ -1446,9 +1448,9 @@ plug_in_set_menu_sensitivity (GimpImageType type)
 }
 
 static gboolean
-plug_in_recv_message (GIOChannel  *channel,
-		      GIOCondition cond,
-		      gpointer	   data)
+plug_in_recv_message (GIOChannel   *channel,
+		      GIOCondition  cond,
+		      gpointer	    data)
 {
   gboolean got_message = FALSE;
 
@@ -1510,18 +1512,21 @@ plug_in_handle_message (WireMessage *msg)
       plug_in_handle_quit ();
       break;
     case GP_CONFIG:
-      g_warning ("plug_in_handle_message(): received a config message (should not happen)");
+      g_warning ("plug_in_handle_message(): "
+		 "received a config message (should not happen)");
       plug_in_close (current_plug_in, TRUE);
       break;
     case GP_TILE_REQ:
       plug_in_handle_tile_req (msg->data);
       break;
     case GP_TILE_ACK:
-      g_warning ("plug_in_handle_message(): received a tile ack message (should not happen)");
+      g_warning ("plug_in_handle_message(): "
+		 "received a tile ack message (should not happen)");
       plug_in_close (current_plug_in, TRUE);
       break;
     case GP_TILE_DATA:
-      g_warning ("plug_in_handle_message(): received a tile data message (should not happen)");
+      g_warning ("plug_in_handle_message(): "
+		 "received a tile data message (should not happen)");
       plug_in_close (current_plug_in, TRUE);
       break;
     case GP_PROC_RUN:
@@ -1532,7 +1537,8 @@ plug_in_handle_message (WireMessage *msg)
       plug_in_close (current_plug_in, FALSE);
       break;
     case GP_TEMP_PROC_RUN:
-      g_warning ("plug_in_handle_message(): received a temp proc run message (should not happen)");
+      g_warning ("plug_in_handle_message(): "
+		 "received a temp proc run message (should not happen)");
       plug_in_close (current_plug_in, TRUE);
       break;
     case GP_TEMP_PROC_RETURN:
@@ -1576,13 +1582,13 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
   if (tile_req->drawable_ID == -1)
     {
       tile_data.drawable_ID = -1;
-      tile_data.tile_num = 0;
-      tile_data.shadow = 0;
-      tile_data.bpp = 0;
-      tile_data.width = 0;
-      tile_data.height = 0;
-      tile_data.use_shm = (shm_ID == -1) ? FALSE : TRUE;
-      tile_data.data = NULL;
+      tile_data.tile_num    = 0;
+      tile_data.shadow      = 0;
+      tile_data.bpp         = 0;
+      tile_data.width       = 0;
+      tile_data.height      = 0;
+      tile_data.use_shm     = (shm_ID == -1) ? FALSE : TRUE;
+      tile_data.data        = NULL;
 
       if (!gp_tile_data_write (current_writechannel, &tile_data))
 	{
@@ -1769,7 +1775,7 @@ static void
 plug_in_handle_proc_return (GPProcReturn *proc_return)
 {
   PlugInBlocked *blocked;
-  GSList *tmp;
+  GSList        *tmp;
 
   if (current_plug_in->recurse)
     {
@@ -1809,17 +1815,16 @@ plug_in_handle_proc_return (GPProcReturn *proc_return)
 static void
 plug_in_handle_proc_install (GPProcInstall *proc_install)
 {
-  PlugInDef *plug_in_def = NULL;
-  PlugInProcDef *proc_def;
-  ProcRecord *proc = NULL;
+  PlugInDef       *plug_in_def = NULL;
+  PlugInProcDef   *proc_def;
+  ProcRecord      *proc = NULL;
   PlugInMenuEntry *menu_entry;
-  GSList *tmp = NULL;
-  gchar *prog = NULL;
-  gboolean add_proc_def;
+  GSList          *tmp = NULL;
+  gchar           *prog = NULL;
+  gboolean         add_proc_def;
   gint i;
 
-  /*
-   *  Argument checking
+  /*  Argument checking
    *   --only sanity check arguments when the procedure requests a menu path
    */
 
@@ -1903,9 +1908,7 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	}
     }
 
-  /*
-   *  Sanity check for array arguments
-   */
+  /*  Sanity check for array arguments  */
 
   for (i = 1; i < proc_install->nparams; i++) 
     {
@@ -1927,9 +1930,8 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
     }
   
 
-  /*
-   *  Initialization
-   */
+  /*  Initialization  */
+
   proc_def = NULL;
 
   switch (proc_install->type)
@@ -1988,9 +1990,8 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 
   proc = &proc_def->db_info;
 
-  /*
-   *  The procedural database procedure
-   */
+  /*  The procedural database procedure  */
+
   proc->name      = g_strdup (proc_install->name);
   proc->blurb     = g_strdup (proc_install->blurb);
   proc->help      = g_strdup (proc_install->help);
@@ -2042,9 +2043,10 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	  menu_entry = g_new (PlugInMenuEntry, 1);
 	  menu_entry->proc_def = proc_def;
 
-	  /* Below we use a hack to allow translations of Script-Fu paths.
-             Would be nice if we could solve this properly, but I haven't 
-             found a way yet ...  (Sven) */
+	  /*  Below we use a hack to allow translations of Script-Fu paths.
+           *  Would be nice if we could solve this properly, but I haven't 
+           *  found a way yet ...  (Sven)
+	   */
 	  if (plug_in_def && plug_in_def->locale_domain)
 	    menu_entry->domain = plug_in_def->locale_domain;
 	  else if (strncmp (proc_def->db_info.name, "script_fu", 9) == 0)
@@ -2068,7 +2070,7 @@ static void
 plug_in_handle_proc_uninstall (GPProcUninstall *proc_uninstall)
 {
   PlugInProcDef *proc_def;
-  GSList *tmp;
+  GSList        *tmp;
 
   tmp = current_plug_in->temp_proc_defs;
   while (tmp)
@@ -2120,8 +2122,8 @@ static gboolean
 plug_in_flush (GIOChannel *channel)
 {
   GIOError error;
-  gint count;
-  guint bytes;
+  gint     count;
+  guint    bytes;
 
   if (current_write_buffer_index > 0)
     {
@@ -2155,17 +2157,17 @@ plug_in_push (PlugIn *plug_in)
       current_plug_in = plug_in;
       plug_in_stack = g_slist_prepend (plug_in_stack, current_plug_in);
 
-      current_readchannel = current_plug_in->my_read;
-      current_writechannel = current_plug_in->my_write;
+      current_readchannel        = current_plug_in->my_read;
+      current_writechannel       = current_plug_in->my_write;
       current_write_buffer_index = current_plug_in->write_buffer_index;
-      current_write_buffer = current_plug_in->write_buffer;
+      current_write_buffer       = current_plug_in->write_buffer;
     }
   else
     {
-      current_readchannel = NULL;
-      current_writechannel = NULL;
+      current_readchannel        = NULL;
+      current_writechannel       = NULL;
       current_write_buffer_index = 0;
-      current_write_buffer = NULL;
+      current_write_buffer       = NULL;
     }
 }
 
@@ -2186,19 +2188,19 @@ plug_in_pop (void)
 
   if (plug_in_stack)
     {
-      current_plug_in = plug_in_stack->data;
-      current_readchannel = current_plug_in->my_read;
-      current_writechannel = current_plug_in->my_write;
+      current_plug_in            = plug_in_stack->data;
+      current_readchannel        = current_plug_in->my_read;
+      current_writechannel       = current_plug_in->my_write;
       current_write_buffer_index = current_plug_in->write_buffer_index;
-      current_write_buffer = current_plug_in->write_buffer;
+      current_write_buffer       = current_plug_in->write_buffer;
     }
   else
     {
-      current_plug_in = NULL;
-      current_readchannel = NULL;
-      current_writechannel = NULL;
+      current_plug_in            = NULL;
+      current_readchannel        = NULL;
+      current_writechannel       = NULL;
       current_write_buffer_index = 0;
-      current_write_buffer = NULL;
+      current_write_buffer        = NULL;
     }
 }
 
@@ -2241,10 +2243,11 @@ plug_in_write_rc_string (FILE  *fp,
 static void
 plug_in_write_rc (gchar *filename)
 {
-  FILE *fp;
-  PlugInDef *plug_in_def;
+  FILE          *fp;
+  PlugInDef     *plug_in_def;
   PlugInProcDef *proc_def;
-  GSList *tmp, *tmp2;
+  GSList        *tmp;
+  GSList        *tmp2;
   gint i;
 
   fp = fopen (filename, "w");
@@ -2354,10 +2357,10 @@ plug_in_write_rc (gchar *filename)
 static void
 plug_in_init_file (gchar *filename)
 {
-  GSList *tmp;
+  GSList    *tmp;
   PlugInDef *plug_in_def;
-  gchar *plug_in_name;
-  gchar *name;
+  gchar     *plug_in_name;
+  gchar     *name;
 
   name = g_basename (filename);
 
@@ -2390,15 +2393,15 @@ plug_in_init_file (gchar *filename)
 static void
 plug_in_query (PlugInDef *plug_in_def)
 {
-  PlugIn *plug_in;
-  WireMessage msg;
+  PlugIn      *plug_in;
+  WireMessage  msg;
 
   plug_in = plug_in_new (plug_in_def->prog);
   if (plug_in)
     {
-      plug_in->query = TRUE;
+      plug_in->query       = TRUE;
       plug_in->synchronous = TRUE;
-      plug_in->user_data = plug_in_def;
+      plug_in->user_data   = plug_in_def;
 
       if (plug_in_open (plug_in))
 	{
@@ -2425,9 +2428,9 @@ static void
 plug_in_add_to_db (void)
 {
   PlugInProcDef *proc_def;
-  Argument args[4];
-  Argument *return_vals;
-  GSList *tmp;
+  Argument       args[4];
+  Argument      *return_vals;
+  GSList        *tmp;
 
   tmp = proc_defs;
 
@@ -2449,16 +2452,16 @@ plug_in_add_to_db (void)
 
       if (proc_def->extensions || proc_def->prefixes || proc_def->magics)
         {
-          args[0].arg_type = PDB_STRING;
+          args[0].arg_type          = PDB_STRING;
           args[0].value.pdb_pointer = proc_def->db_info.name;
 
-          args[1].arg_type = PDB_STRING;
+          args[1].arg_type          = PDB_STRING;
           args[1].value.pdb_pointer = proc_def->extensions;
 
-	  args[2].arg_type = PDB_STRING;
+	  args[2].arg_type          = PDB_STRING;
 	  args[2].value.pdb_pointer = proc_def->prefixes;
 
-	  args[3].arg_type = PDB_STRING;
+	  args[3].arg_type          = PDB_STRING;
 	  args[3].value.pdb_pointer = proc_def->magics;
 
           if (proc_def->image_types)
@@ -2475,8 +2478,7 @@ plug_in_add_to_db (void)
     }
 }
 
-/* 
- *  The following function has to be a GTraverseFunction, 
+/*  The following function has to be a GTraverseFunction, 
  *  but is also called directly. Please note that it frees the
  *  menu_entry strcuture.                --Sven 
  */ 
@@ -2551,15 +2553,15 @@ plug_in_make_menu (void)
       tmp = tmp->next;
 
       procs = plug_in_def->proc_defs;
-      
+
       if (!procs)
 	continue;
-      
+
 #ifdef ENABLE_NLS
       {
-	gchar *domain;
-	GSList *list;
-	gboolean found = FALSE;
+	gchar    *domain;
+	GSList   *list;
+	gboolean  found = FALSE;
 
 	if (plug_in_def->locale_domain)
 	  {
@@ -2580,7 +2582,7 @@ plug_in_make_menu (void)
 	  }
       }
 #endif  /*  ENABLE_NLS  */
-      
+
       while (procs)
 	{
 	  proc_def = procs->data;
@@ -2615,9 +2617,9 @@ static void
 plug_in_callback (GtkWidget *widget,
 		  gpointer   client_data)
 {
-  GDisplay *gdisplay;
+  GDisplay   *gdisplay;
   ProcRecord *proc_rec;
-  Argument *args;
+  Argument   *args;
   gint i;
   gint gdisp_ID = -1;
   gint argc = 0; /* calm down a gcc warning.  */
@@ -2625,11 +2627,10 @@ plug_in_callback (GtkWidget *widget,
   /* get the active gdisplay */
   gdisplay = gdisplay_active ();
 
-  proc_rec = (ProcRecord*) client_data;
+  proc_rec = (ProcRecord *) client_data;
 
   /* construct the procedures arguments */
-  args = g_new (Argument, proc_rec->num_args);
-  memset (args, 0, (sizeof (Argument) * proc_rec->num_args));
+  args = g_new0 (Argument, proc_rec->num_args);
 
   /* initialize the argument types */
   for (i = 0; i < proc_rec->num_args; i++)
@@ -2706,11 +2707,12 @@ plug_in_proc_def_insert (PlugInProcDef *proc_def,
 			 void (*superceed_fn)(void*))
 {
   PlugInProcDef *tmp_proc_def;
-  GSList *tmp, *prev;
+  GSList *tmp;
+  GSList *prev;
   GSList *list;
 
   prev = NULL;
-  tmp = proc_defs;
+  tmp  = proc_defs;
 
   while (tmp)
     {
@@ -2725,14 +2727,14 @@ plug_in_proc_def_insert (PlugInProcDef *proc_def,
 	  if (proc_def->accelerator)
 	    g_free (proc_def->accelerator);
 
-	  proc_def->menu_path = tmp_proc_def->menu_path;
+	  proc_def->menu_path   = tmp_proc_def->menu_path;
 	  proc_def->accelerator = tmp_proc_def->accelerator;
 
-	  tmp_proc_def->menu_path = NULL;
+	  tmp_proc_def->menu_path   = NULL;
 	  tmp_proc_def->accelerator = NULL;
 
 	  if (superceed_fn)
-	    (*superceed_fn) (tmp_proc_def);
+	    (* superceed_fn) (tmp_proc_def);
 
 	  plug_in_proc_def_destroy (tmp_proc_def, FALSE);
 	  return;
@@ -2760,27 +2762,27 @@ plug_in_proc_def_insert (PlugInProcDef *proc_def,
 }
 
 /* called when plug_in_proc_def_insert causes a proc_def to be
- * overridden and thus g_free()d. */
+ * overridden and thus g_free()d.
+ */
 static void
 plug_in_proc_def_dead (void *freed_proc_def)
 {
-  GSList *tmp;
-  PlugInDef *plug_in_def;
+  GSList        *tmp;
+  PlugInDef     *plug_in_def;
   PlugInProcDef *proc_def = freed_proc_def;
 
   g_warning ("removing duplicate PDB procedure \"%s\"",
 	     proc_def->db_info.name);
 
   /* search the plugin list to see if any plugins had references to 
-   * the recently freed proc_def. */
-  tmp = plug_in_defs;
-  while (tmp)
+   * the recently freed proc_def.
+   */
+  for (tmp = plug_in_defs; tmp; tmp = g_slist_next (tmp))
     {
       plug_in_def = tmp->data;
 
       plug_in_def->proc_defs = g_slist_remove (plug_in_def->proc_defs,
 					       freed_proc_def);
-      tmp = tmp->next;
     }
 }
 
@@ -2864,10 +2866,10 @@ plug_in_temp_run (ProcRecord *proc_rec,
 		  Argument   *args,
 		  gint        argc)
 {
-  Argument *return_vals;
-  PlugIn *plug_in;
-  GPProcRun proc_run;
-  gint old_recurse;
+  Argument  *return_vals;
+  PlugIn    *plug_in;
+  GPProcRun  proc_run;
+  gint       old_recurse;
 
   return_vals = NULL;
 
@@ -2884,9 +2886,9 @@ plug_in_temp_run (ProcRecord *proc_rec,
       plug_in->busy = TRUE;
       plug_in_push (plug_in);
 
-      proc_run.name = proc_rec->name;
+      proc_run.name    = proc_rec->name;
       proc_run.nparams = argc;
-      proc_run.params = plug_in_args_to_params (args, argc, FALSE);
+      proc_run.params  = plug_in_args_to_params (args, argc, FALSE);
 
       if (!gp_temp_proc_run_write (current_writechannel, &proc_run) ||
 	  !wire_flush (current_writechannel))
@@ -2919,9 +2921,9 @@ plug_in_params_to_args (GPParam *params,
 			gint     nparams,
 			gboolean full_copy)
 {
-  Argument *args;
-  gchar **stringarray;
-  guchar *colorarray;
+  Argument  *args;
+  gchar    **stringarray;
+  guchar    *colorarray;
   gint count;
   gint i, j;
 
@@ -3018,7 +3020,7 @@ plug_in_params_to_args (GPParam *params,
 	  break;
 	case PDB_COLOR:
 	  args[i].value.pdb_pointer = g_new (guchar, 3);
-	  colorarray = args[i].value.pdb_pointer;
+	  colorarray    = args[i].value.pdb_pointer;
 	  colorarray[0] = params[i].data.d_color.red;
 	  colorarray[1] = params[i].data.d_color.green;
 	  colorarray[2] = params[i].data.d_color.blue;
@@ -3070,12 +3072,12 @@ plug_in_params_to_args (GPParam *params,
 
 static GPParam*
 plug_in_args_to_params (Argument *args,
-			gint       nargs,
-			gboolean   full_copy)
+			gint      nargs,
+			gboolean  full_copy)
 {
-  GPParam *params;
-  gchar **stringarray;
-  guchar *colorarray;
+  GPParam  *params;
+  gchar   **stringarray;
+  guchar   *colorarray;
   gint i, j;
 
   if (nargs == 0)
@@ -3177,15 +3179,15 @@ plug_in_args_to_params (Argument *args,
 	  colorarray = args[i].value.pdb_pointer;
 	  if( colorarray )
 	    {
-	      params[i].data.d_color.red = colorarray[0];
+	      params[i].data.d_color.red   = colorarray[0];
 	      params[i].data.d_color.green = colorarray[1];
-	      params[i].data.d_color.blue = colorarray[2];
+	      params[i].data.d_color.blue  = colorarray[2];
 	    }
 	  else
 	    {
-	      params[i].data.d_color.red = 0;
+	      params[i].data.d_color.red   = 0;
 	      params[i].data.d_color.green = 0;
-	      params[i].data.d_color.blue = 0;
+	      params[i].data.d_color.blue  = 0;
 	    }
 	  break;
 	case PDB_REGION:
@@ -3219,13 +3221,14 @@ plug_in_args_to_params (Argument *args,
 	  if (full_copy)
 	    {
 	      GimpParasite *tmp;
+
 	      tmp = gimp_parasite_copy (args[i].value.pdb_pointer);
 	      if (tmp == NULL)
 		{
-		  params[i].data.d_parasite.name = 0;
+		  params[i].data.d_parasite.name  = 0;
 		  params[i].data.d_parasite.flags = 0;
-		  params[i].data.d_parasite.size = 0;
-		  params[i].data.d_parasite.data = 0;
+		  params[i].data.d_parasite.size  = 0;
+		  params[i].data.d_parasite.data  = 0;
 		}
 	      else
 		{
@@ -3238,10 +3241,10 @@ plug_in_args_to_params (Argument *args,
 	    {
 	      if (args[i].value.pdb_pointer == NULL)
 		{
-		  params[i].data.d_parasite.name = 0;
+		  params[i].data.d_parasite.name  = 0;
 		  params[i].data.d_parasite.flags = 0;
-		  params[i].data.d_parasite.size = 0;
-		  params[i].data.d_parasite.data = 0;
+		  params[i].data.d_parasite.size  = 0;
+		  params[i].data.d_parasite.data  = 0;
 		}
 	      else
 		memcpy (&params[i].data.d_parasite,
@@ -3344,8 +3347,8 @@ plug_in_args_destroy (Argument *args,
 		      gboolean   full_destroy)
 {
   gchar **stringarray;
-  gint count;
-  gint i, j;
+  gint    count;
+  gint    i, j;
 
   for (i = 0; i < nargs; i++)
     {

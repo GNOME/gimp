@@ -173,32 +173,32 @@ main (int    argc,
 	  if (batch_cmds[0] == NULL)  /* We need at least one batch command */
 	    show_help = TRUE;
 	}
-       else if (strcmp (argv[i], "--system-gimprc") == 0)  
+      else if (strcmp (argv[i], "--system-gimprc") == 0)  
 	{
  	  argv[i] = NULL;
 	  if (argc <= ++i) 
             {
-	     show_help = TRUE;
-	    }	
+	      show_help = TRUE;
+	    }
           else 
             {
-             alternate_system_gimprc = argv[i];
- 	     argv[i] = NULL;
+	      alternate_system_gimprc = argv[i];
+	      argv[i] = NULL;
             }
-         } 
+	} 
       else if ((strcmp (argv[i], "--gimprc") == 0) || 
                (strcmp (argv[i], "-g") == 0)) 
 	{
 	  if (argc <= ++i) 
             {
-	     show_help = TRUE;
-	    }	
-          else 
+	      show_help = TRUE;
+	    }
+          else
             {
-             alternate_gimprc = argv[i];
- 	     argv[i] = NULL;
+	      alternate_gimprc = argv[i];
+	      argv[i] = NULL;
             }
-         } 
+	}
       else if ((strcmp (argv[i], "--help") == 0) ||
 	       (strcmp (argv[i], "-h") == 0))
 	{
@@ -252,11 +252,27 @@ main (int    argc,
 	  restore_session = TRUE;
  	  argv[i] = NULL;
 	}
-      else if (strcmp (argv[i], "--wilber-on-lsd") == 0)
+      else if (strcmp (argv[i], "--enable-stack-trace") == 0)  
 	{
-	  double_speed = TRUE;
  	  argv[i] = NULL;
-	}
+	  if (argc <= ++i) 
+            {
+	      show_help = TRUE;
+	    }
+          else 
+            {
+	      if (! strcmp (argv[i], "never"))
+		stack_trace_mode = STACK_TRACE_NEVER;
+	      else if (! strcmp (argv[i], "query"))
+		stack_trace_mode = STACK_TRACE_QUERY;
+	      else if (! strcmp (argv[i], "always"))
+		stack_trace_mode = STACK_TRACE_ALWAYS;
+	      else
+		show_help = TRUE;
+		  
+	      argv[i] = NULL;
+            }
+	} 
       /*
        *    ANYTHING ELSE starting with a '-' is an error.
        */
@@ -296,7 +312,9 @@ main (int    argc,
       g_print (_("  --no-shm                 Do not use shared memory between GIMP and its plugins.\n"));
       g_print (_("  --no-xshm                Do not use the X Shared Memory extension.\n"));
       g_print (_("  --console-messages       Display warnings to console instead of a dialog box.\n"));
-      g_print (_("  --debug-handlers         Enable debugging signal handlers.\n"));
+      g_print (_("  --debug-handlers         Enable debugging signal handlers for non-fatal signals.\n"));
+      g_print (_("  --enable-stack-trace {never|query|always}\n"));
+      g_print (_("                           Debugging mode for fatal signals.\n"));
       g_print (_("  --display <display>      Use the designated X display.\n"));
       g_print (_("  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"));
     }

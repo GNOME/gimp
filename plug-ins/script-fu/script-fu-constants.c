@@ -220,6 +220,10 @@ init_generated_constants (void)
   setvar (cintern ("PIXELS"), flocons (0), NIL);
   setvar (cintern ("POINTS"), flocons (1), NIL);
 
+  setvar (cintern ("STACK-TRACE-NEVER"), flocons (0), NIL);
+  setvar (cintern ("STACK-TRACE-QUERY"), flocons (1), NIL);
+  setvar (cintern ("STACK-TRACE-ALWAYS"), flocons (2), NIL);
+
   setvar (cintern ("SHADOWS"), flocons (0), NIL);
   setvar (cintern ("MIDTONES"), flocons (1), NIL);
   setvar (cintern ("HIGHLIGHTS"), flocons (2), NIL);

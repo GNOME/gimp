@@ -15,6 +15,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -22,26 +25,39 @@
 
 #include <gtk/gtk.h>
 
+#include "appenv.h"
+#include "about_dialog.h"
+#include "gimpdnd.h"
 #include "gimphelp.h"
 
 #include "libgimp/gimpfeatures.h"
 
-#include "config.h"
 #include "libgimp/gimpenv.h"
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
 
-#include "about_dialog.h"
+#include "pixmaps/wilber2.xpm"
+
 
 #define ANIMATION_STEPS 16
 #define ANIMATION_SIZE   2
 
-static gint  about_dialog_load_logo   (GtkWidget *window);
-static void  about_dialog_destroy     (void);
-static void  about_dialog_unmap       (void);
-static gint  about_dialog_logo_expose (GtkWidget *widget, GdkEventExpose *event);
-static gint  about_dialog_button      (GtkWidget *widget, GdkEventButton *event);
-static gint  about_dialog_timer       (gpointer data);
+static gboolean  about_dialog_load_logo   (GtkWidget      *window);
+static void      about_dialog_destroy     (GtkObject      *object,
+					   gpointer        data);
+static void      about_dialog_unmap       (GtkWidget      *widget,
+					   GdkEvent       *event,
+					   gpointer        data);
+static gint      about_dialog_logo_expose (GtkWidget      *widget,
+					   GdkEventExpose *event,
+					   gpointer        data);
+static gint      about_dialog_button      (GtkWidget      *widget,
+					   GdkEventButton *event,
+					   gpointer        data);
+static void      about_dialog_tool_drop   (GtkWidget      *widget,
+					   ToolType        tool,
+					   gpointer        data);
+static gint      about_dialog_timer       (gpointer        data);
 
 
 static GtkWidget *about_dialog  = NULL;
@@ -74,7 +90,6 @@ static gchar *scroll_text[] =
   "Marc Bless",
   "Edward Blevins",
   "Reagan Blundell",
-  "Andreas Bogk",
   "Xavier Bouchoux",
   "Roberto Boyd",
   "Stanislav Brabec",
@@ -133,7 +148,6 @@ static gchar *scroll_text[] =
   "Peter Kirchgessner",
   "Philipp Klaus",
   "David Koblas",
-  "Vincent Kolwitz",
   "Tuomas Kuosmanen",
   "Karin Kylander",
   "Olof S Kylander",
@@ -230,24 +244,32 @@ static gchar *scroll_text[] =
 #endif
 };
 static gint nscroll_texts = sizeof (scroll_text) / sizeof (scroll_text[0]);
-static gint scroll_text_widths[ sizeof(scroll_text) / sizeof(scroll_text[0]) ];
-static gint cur_scroll_text = 0;
-static gint cur_scroll_index; 
+static gint scroll_text_widths[sizeof (scroll_text) / sizeof (scroll_text[0])];
+static gint cur_scroll_text  = 0;
+static gint cur_scroll_index = 0;
 
-static gint shuffle_array[ sizeof(scroll_text) / sizeof(scroll_text[0]) ];
+static gint shuffle_array[sizeof (scroll_text) / sizeof (scroll_text[0])];
+
+/*  dnd stuff  */
+static GtkTargetEntry tool_target_table[] =
+{
+  GIMP_TARGET_TOOL
+};
+static guint n_tool_targets = (sizeof (tool_target_table) /
+                               sizeof (tool_target_table[0]));
 
 void
-about_dialog_create ()
+about_dialog_create (void)
 {
   GtkWidget *vbox;
   GtkWidget *aboutframe;
   GtkWidget *label;
   GtkWidget *alignment;
-  GtkStyle *style;
-  GdkFont *font;
-  gint max_width;
-  gint i;
-  gchar *label_text;
+  GtkStyle  *style;
+  GdkFont   *font;
+  gint       max_width;
+  gint       i;
+  gchar     *label_text;
 
   if (!about_dialog)
     {
@@ -269,6 +291,14 @@ about_dialog_create ()
       gtk_signal_connect (GTK_OBJECT (about_dialog), "button_press_event",
 			  GTK_SIGNAL_FUNC (about_dialog_button),
 			  NULL);
+
+      /*  dnd stuff  */
+      gtk_drag_dest_set (about_dialog,
+			 GTK_DEST_DEFAULT_MOTION |
+			 GTK_DEST_DEFAULT_DROP,
+			 tool_target_table, n_tool_targets,
+			 GDK_ACTION_COPY); 
+      gimp_dnd_tool_dest_set (about_dialog, about_dialog_tool_drop, NULL);
 
       gtk_widget_set_events (about_dialog, GDK_BUTTON_PRESS_MASK);
 
@@ -398,33 +428,37 @@ about_dialog_create ()
 }
 
 
-static gint
+static gboolean
 about_dialog_load_logo (GtkWidget *window)
 {
   GtkWidget *preview;
-  GdkGC *gc;
-  gchar buf[1024];
-  guchar *pixelrow;
-  FILE *fp;
-  gint count;
-  gint i, j, k;
+  GdkGC     *gc;
+  gchar      buf[1024];
+  gchar     *filename;
+  guchar    *pixelrow;
+  FILE      *fp;
+  gint       count;
+  gint       i, j, k;
 
   if (logo_pixmap)
     return TRUE;
 
-  g_snprintf (buf, sizeof(buf), "%s" G_DIR_SEPARATOR_S "gimp_logo.ppm",
-	      gimp_data_directory ());
+  filename = g_strconcat (gimp_data_directory (),
+			  G_DIR_SEPARATOR_S,
+			  "gimp_logo.ppm",
+			  NULL);
+  fp = fopen (filename, "rb");
+  g_free (filename);
 
-  fp = fopen (buf, "rb");
   if (!fp)
-    return 0;
+    return FALSE;
 
   fgets (buf, 1024, fp);
 
   if (strncmp (buf, "P6", 2) != 0)
     {
       fclose (fp);
-      return 0;
+      return FALSE;
     }
 
   fgets (buf, 1024, fp);
@@ -435,7 +469,7 @@ about_dialog_load_logo (GtkWidget *window)
   if (strncmp (buf, "255", 3) != 0)
     {
       fclose (fp);
-      return 0;
+      return FALSE;
     }
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
@@ -444,13 +478,13 @@ about_dialog_load_logo (GtkWidget *window)
 
   for (i = 0; i < logo_height; i++)
     {
-      count = fread (pixelrow, sizeof (unsigned char), logo_width * 3, fp);
+      count = fread (pixelrow, sizeof (guchar), logo_width * 3, fp);
       if (count != (logo_width * 3))
 	{
 	  gtk_widget_destroy (preview);
 	  g_free (pixelrow);
 	  fclose (fp);
-	  return 0;
+	  return FALSE;
 	}
 
       gtk_preview_draw_row (GTK_PREVIEW (preview), pixelrow, 0, i, logo_width);
@@ -487,14 +521,17 @@ about_dialog_load_logo (GtkWidget *window)
 }
 
 static void
-about_dialog_destroy (void)
+about_dialog_destroy (GtkObject *object,
+		      gpointer   data)
 {
   about_dialog = NULL;
-  about_dialog_unmap ();
+  about_dialog_unmap (NULL, NULL, NULL);
 }
 
 static void
-about_dialog_unmap (void)
+about_dialog_unmap (GtkWidget *widget,
+		    GdkEvent  *event,
+		    gpointer   data)
 {
   if (timer)
     {
@@ -505,7 +542,8 @@ about_dialog_unmap (void)
 
 static gint
 about_dialog_logo_expose (GtkWidget      *widget,
-			  GdkEventExpose *event)
+			  GdkEventExpose *event,
+			  gpointer        data)
 {
   if (do_animation)
     {
@@ -537,7 +575,8 @@ about_dialog_logo_expose (GtkWidget      *widget,
 
 static gint
 about_dialog_button (GtkWidget      *widget,
-		     GdkEventButton *event)
+		     GdkEventButton *event,
+		     gpointer        data)
 {
   if (timer)
     gtk_timeout_remove (timer);
@@ -547,6 +586,70 @@ about_dialog_button (GtkWidget      *widget,
   gtk_widget_hide (about_dialog);
 
   return FALSE;
+}
+
+static void
+about_dialog_tool_drop (GtkWidget *widget,
+			ToolType   tool,
+			gpointer   data)
+{
+  GdkPixmap *pixmap = NULL;
+  GdkBitmap *mask   = NULL;
+  gint width  = 0;
+  gint height = 0;
+
+  if (do_animation)
+    return;
+
+  if (timer)
+    gtk_timeout_remove (timer);
+
+  timer = gtk_timeout_add (75, about_dialog_timer, NULL);
+
+  frame = 0;
+  do_animation = TRUE;
+  do_scrolling = FALSE;
+
+  gdk_draw_rectangle (logo_pixmap,
+		      logo_area->style->white_gc,
+		      TRUE,
+		      0, 0,
+		      logo_area->allocation.width,
+		      logo_area->allocation.height);
+
+  pixmap =
+    gdk_pixmap_create_from_xpm_d (widget->window,
+                                  &mask,
+                                  NULL,
+                                  wilber2_xpm);
+
+  gdk_window_get_size (pixmap, &width, &height);
+
+  if (logo_area->allocation.width  >= width &&
+      logo_area->allocation.height >= height)
+    {
+      gint x, y;
+
+      x = (logo_area->allocation.width  - width) / 2;
+      y = (logo_area->allocation.height - height) / 2;
+
+      gdk_gc_set_clip_mask (logo_area->style->black_gc, mask);
+      gdk_gc_set_clip_origin (logo_area->style->black_gc, x, y);
+
+      gdk_draw_pixmap (logo_pixmap,
+                       logo_area->style->black_gc,
+                       pixmap, 0, 0,
+                       x, y,
+                       width, height);
+
+      gdk_gc_set_clip_mask (logo_area->style->black_gc, NULL);
+      gdk_gc_set_clip_origin (logo_area->style->black_gc, 0, 0);
+    }
+
+  gdk_pixmap_unref (pixmap);
+  gdk_bitmap_unref (mask);
+
+  double_speed = TRUE;
 }
 
 static gint

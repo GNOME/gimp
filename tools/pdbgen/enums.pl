@@ -283,6 +283,15 @@ package Gimp::CodeGen::enums;
 		       DODGEBURN_MIDTONES => '1',
 		       DODGEBURN_SHADOWS => '2' }
 	},
+    StackTraceMode =>
+	{ contig => 1,
+	  header => 'errors.h',
+	  symbols => [ qw(STACK_TRACE_NEVER STACK_TRACE_QUERY
+			  STACK_TRACE_ALWAYS) ],
+	  mapping => { STACK_TRACE_NEVER => '0',
+		       STACK_TRACE_QUERY => '1',
+		       STACK_TRACE_ALWAYS => '2' }
+	},
     OrientationType =>
 	{ contig => 1,
 	  header => 'gimpimage.h',
