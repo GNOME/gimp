@@ -158,7 +158,9 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
     }
 
   /*  the gradient preview  */
-  if (tool_options->tool_info->tool_type == GIMP_TYPE_BLEND_TOOL)
+  if (tool_options->tool_info->tool_type == GIMP_TYPE_PAINTBRUSH_TOOL ||
+      tool_options->tool_info->tool_type == GIMP_TYPE_PENCIL_TOOL     ||
+      tool_options->tool_info->tool_type == GIMP_TYPE_BLEND_TOOL)
     {
       button = gimp_viewable_button_new (context->gimp->gradient_factory->container,
                                          context,
@@ -336,7 +338,8 @@ fade_options_gui (GimpGradientOptions *gradient,
 
   config = G_OBJECT (paint_options);
 
-  if (tool_type == GIMP_TYPE_PAINTBRUSH_TOOL)
+  if (tool_type == GIMP_TYPE_PAINTBRUSH_TOOL ||
+      tool_type == GIMP_TYPE_PENCIL_TOOL)
     {
       frame = gtk_frame_new (NULL);
 
@@ -391,8 +394,9 @@ gradient_options_gui (GimpGradientOptions *gradient,
 
   config = G_OBJECT (paint_options);
 
-  if (tool_type == GIMP_TYPE_PAINTBRUSH_TOOL)
-    {
+  if (tool_type == GIMP_TYPE_PAINTBRUSH_TOOL ||
+      tool_type == GIMP_TYPE_PENCIL_TOOL)
+   {
       frame = gtk_frame_new (NULL);
 
       table = gtk_table_new (2, 3, FALSE);
