@@ -257,9 +257,9 @@ static void   dither_grey      (guchar            *grey,
 
 /* Dialog-handling */
 
-static gint   load_dialog               (void);
-static void   load_pages_entry_callback (GtkWidget *widget,
-					 gpointer   data);
+static gboolean  load_dialog               (void);
+static void      load_pages_entry_callback (GtkWidget *widget,
+                                            gpointer   data);
 
 typedef struct
 {
@@ -267,9 +267,9 @@ typedef struct
   gint       level;
 } SaveDialogVals;
 
-static gint   save_dialog              (void);
-static void   save_unit_toggle_update  (GtkWidget *widget,
-                                        gpointer   data);
+static gboolean  save_dialog              (void);
+static void      save_unit_toggle_update  (GtkWidget *widget,
+                                           gpointer   data);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -2776,7 +2776,7 @@ save_rgb (FILE   *ofp,
 
 /*  Load interface functions  */
 
-static gint
+static gboolean
 load_dialog (void)
 {
   GtkWidget *dialog;
@@ -2802,36 +2802,35 @@ load_dialog (void)
 
 			    NULL);
 
-  main_vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
                       FALSE, FALSE, 0);
   gtk_widget_show (main_vbox);
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_hbox_new (TRUE, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   /* Rendering */
-  frame = gtk_frame_new (_("Rendering"));
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
+  frame = gimp_frame_new (_("Rendering"));
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, TRUE, 0);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   /* Resolution/Width/Height/Pages labels */
   table = gtk_table_new (4, 2, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   spinbutton = gimp_spin_button_new (&adj, plvals.resolution,
 				     5, 1440, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Resolution:"), 1.0, 0.5,
-			     spinbutton, 1, TRUE);
+			     _("Resolution:"), 0.0, 0.5,
+			     spinbutton, 1, FALSE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &plvals.resolution);
@@ -2839,8 +2838,8 @@ load_dialog (void)
   spinbutton = gimp_spin_button_new (&adj, plvals.width,
 				     1, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("_Width:"), 1.0, 0.5,
-			     spinbutton, 1, TRUE);
+			     _("_Width:"), 0.0, 0.5,
+			     spinbutton, 1, FALSE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &plvals.width);
@@ -2848,8 +2847,8 @@ load_dialog (void)
   spinbutton = gimp_spin_button_new (&adj, plvals.height,
 				     1, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("_Height:"), 1.0, 0.5,
-			     spinbutton, 1, TRUE);
+			     _("_Height:"), 0.0, 0.5,
+			     spinbutton, 1, FALSE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &plvals.height);
@@ -2858,8 +2857,8 @@ load_dialog (void)
   gtk_widget_set_size_request (pages_entry, 80, -1);
   gtk_entry_set_text (GTK_ENTRY (pages_entry), plvals.pages);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-			     _("Pages:"), 1.0, 0.5,
-			     pages_entry, 1, TRUE);
+			     _("Pages:"), 0.0, 0.5,
+			     pages_entry, 1, FALSE);
   g_signal_connect (pages_entry, "changed",
                     G_CALLBACK (load_pages_entry_callback),
                     NULL);
@@ -2887,10 +2886,10 @@ load_dialog (void)
 				    _("Automatic"), 7, NULL,
 
 				    NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, TRUE, 0);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (TRUE, 6);
+  hbox = gtk_hbox_new (TRUE, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -2940,7 +2939,7 @@ load_pages_entry_callback (GtkWidget *widget,
 
 /*  Save interface functions  */
 
-static gint
+static gboolean
 save_dialog (void)
 {
   SaveDialogVals *vals;
@@ -2968,37 +2967,37 @@ save_dialog (void)
 			    NULL);
 
   /* Main hbox */
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox,
                       FALSE, FALSE, 0);
   main_vbox[0] = main_vbox[1] = NULL;
 
   for (j = 0; j < G_N_ELEMENTS (main_vbox); j++)
     {
-      main_vbox[j] = gtk_vbox_new (FALSE, 4);
-      gtk_box_pack_start (GTK_BOX (hbox), main_vbox[j], TRUE, TRUE, 0);
+      main_vbox[j] = gtk_vbox_new (FALSE, 12);
+      gtk_box_pack_start (GTK_BOX (hbox), main_vbox[j], FALSE, TRUE, 0);
+      gtk_widget_show (main_vbox[j]);
     }
 
   /* Image Size */
-  frame = gtk_frame_new (_("Image Size"));
-  gtk_box_pack_start (GTK_BOX (main_vbox[0]), frame, TRUE, TRUE, 0);
+  frame = gimp_frame_new (_("Image Size"));
+  gtk_box_pack_start (GTK_BOX (main_vbox[0]), frame, FALSE, TRUE, 0);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   /* Width/Height/X-/Y-offset labels */
   table = gtk_table_new (4, 2, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   spinbutton = gimp_spin_button_new (&vals->adjustment[0], psvals.width,
 				     1e-5, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("_Width:"), 1.0, 0.5,
+			     _("_Width:"), 0.0, 0.5,
 			     spinbutton, 1, FALSE);
   g_signal_connect (vals->adjustment[0], "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -3007,7 +3006,7 @@ save_dialog (void)
   spinbutton = gimp_spin_button_new (&vals->adjustment[1], psvals.height,
 				     1e-5, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("_Height:"), 1.0, 0.5,
+			     _("_Height:"), 0.0, 0.5,
 			     spinbutton, 1, FALSE);
   g_signal_connect (vals->adjustment[1], "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -3016,7 +3015,7 @@ save_dialog (void)
   spinbutton = gimp_spin_button_new (&vals->adjustment[2], psvals.x_offset,
 				     0.0, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("_X-Offset:"), 1.0, 0.5,
+			     _("_X Offset:"), 0.0, 0.5,
 			     spinbutton, 1, FALSE);
   g_signal_connect (vals->adjustment[2], "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -3025,14 +3024,14 @@ save_dialog (void)
   spinbutton = gimp_spin_button_new (&vals->adjustment[3], psvals.y_offset,
 				     0.0, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-			     _("_Y-Offset:"), 1.0, 0.5,
+			     _("_Y Offset:"), 0.0, 0.5,
 			     spinbutton, 1, FALSE);
   g_signal_connect (vals->adjustment[3], "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &psvals.y_offset);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Keep Aspect Ratio"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), psvals.keep_ratio);
   gtk_widget_show (toggle);
 
@@ -3055,7 +3054,7 @@ save_dialog (void)
 
 				     NULL);
 
-  gtk_box_pack_start (GTK_BOX (vbox), uframe, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox[0]), uframe, TRUE, TRUE, 0);
   gtk_widget_show (uframe);
 
   gtk_widget_show (vbox);
@@ -3073,19 +3072,18 @@ save_dialog (void)
 
 				    NULL);
 
-  gtk_box_pack_start (GTK_BOX (main_vbox[1]), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox[1]), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   /* Format */
-  frame = gtk_frame_new (_("Output"));
+  frame = gimp_frame_new (_("Output"));
   gtk_box_pack_start (GTK_BOX (main_vbox[1]), frame, TRUE, TRUE, 0);
 
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_PostScript Level 2"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), vals->level);
   gtk_widget_show (toggle);
 
@@ -3094,7 +3092,7 @@ save_dialog (void)
                     &vals->level);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Encapsulated PostScript"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), psvals.eps);
   gtk_widget_show (toggle);
 
@@ -3103,7 +3101,7 @@ save_dialog (void)
                     &psvals.eps);
 
   toggle = gtk_check_button_new_with_mnemonic (_("P_review"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), psvals.preview);
   gtk_widget_show (toggle);
 
@@ -3113,7 +3111,7 @@ save_dialog (void)
 
   /* Preview size label/entry */
   table = gtk_table_new (1, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -3133,9 +3131,6 @@ save_dialog (void)
 
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
-
-  for (j = 0; j < G_N_ELEMENTS (main_vbox); j++)
-    gtk_widget_show (main_vbox[j]);
 
   gtk_widget_show (hbox);
   gtk_widget_show (dialog);

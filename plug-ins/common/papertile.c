@@ -228,9 +228,7 @@ open_dialog (void)
   GtkWidget *vbox;
   GtkWidget *table;
   GtkWidget *frame;
-  GtkWidget *box;
   GtkWidget *color_button;
-  GtkWidget *sep;
 
   gimp_ui_init ("papertile", TRUE);
 
@@ -243,31 +241,30 @@ open_dialog (void)
 
 			    NULL);
 
-  main_hbox = gtk_hbox_new (FALSE, 5);
-  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 6);
+  main_hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_hbox);
   gtk_widget_show (main_hbox);
 
   /* Left */
-  vbox = gtk_vbox_new (FALSE, 4);
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  frame = gtk_frame_new (_("Division"));
+  frame = gimp_frame_new (_("Division"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (3, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
   button = gimp_spin_button_new (&w.division_x_adj, p.params.division_x,
 				 1.0, p.drawable->width, 1.0, 5.0, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("_X:"), 1.0, 0.5,
+			     _("_X:"), 0.0, 0.5,
 			     button, 1, TRUE);
   g_signal_connect (w.division_x_adj, "value_changed",
                     G_CALLBACK (division_x_adj_changed),
@@ -276,7 +273,7 @@ open_dialog (void)
   button = gimp_spin_button_new (&w.division_y_adj, p.params.division_y,
 				 1.0, p.drawable->width, 1.0, 5.0, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("_Y:"), 1.0, 0.5,
+			     _("_Y:"), 0.0, 0.5,
 			     button, 1, TRUE);
   g_signal_connect (w.division_y_adj, "value_changed",
                     G_CALLBACK (division_y_adj_changed),
@@ -287,7 +284,7 @@ open_dialog (void)
 					   p.drawable->height),
 				 1.0, 5.0, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("_Size:"), 1.0, 0.5,
+			     _("_Size:"), 0.0, 0.5,
 			     button, 1, TRUE);
   g_signal_connect (w.tile_size_adj, "value_changed",
                     G_CALLBACK (tile_size_adj_changed),
@@ -306,19 +303,13 @@ open_dialog (void)
 				    FRACTIONAL_TYPE_FORCE, NULL,
 
 				    NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
-
-  box = GTK_BIN (frame)->child;
-
-  sep = gtk_hseparator_new ();
-  gtk_box_pack_start (GTK_BOX (box), sep, FALSE, FALSE, 1);
-  gtk_widget_show (sep);
 
   button = gtk_check_button_new_with_mnemonic(_("C_entering"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 p.params.centering);
-  gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "toggled",
@@ -326,25 +317,24 @@ open_dialog (void)
                     &p.params.centering);
 
   /* Right */
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (main_hbox), vbox, FALSE, FALSE, 0);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (main_hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  frame = gtk_frame_new (_("Movement"));
+  frame = gimp_frame_new (_("Movement"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
   button = gimp_spin_button_new (&adjustment, p.params.move_max_rate,
 				 0.0, 100.0, 1.0, 10.0, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("_Max (%):"), 1.0, 0.5,
+			     _("_Max (%):"), 0.0, 0.5,
 			     button, 1, TRUE);
   g_signal_connect (adjustment, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),

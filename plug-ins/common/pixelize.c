@@ -97,25 +97,25 @@ typedef struct
 
 /* Declare local functions.
  */
-static void   query                (void);
-static void   run                  (const gchar      *name,
+static void      query             (void);
+static void      run               (const gchar      *name,
                                     gint              nparams,
                                     const GimpParam  *param,
                                     gint             *nreturn_vals,
                                     GimpParam       **return_vals);
 
-static gint   pixelize_dialog      (GimpDrawable  *drawable);
+static gboolean  pixelize_dialog   (GimpDrawable  *drawable);
 
-static void   pixelize             (GimpDrawable  *drawable);
-static void   pixelize_large       (GimpDrawable  *drawable,
+static void      pixelize          (GimpDrawable  *drawable);
+static void      pixelize_large    (GimpDrawable  *drawable,
                                     gint           pixelwidth,
                                     gint           pixelheight);
-static void   pixelize_small       (GimpDrawable  *drawable,
+static void      pixelize_small    (GimpDrawable  *drawable,
                                     gint           pixelwidth,
                                     gint           pixelheight,
                                     gint           tile_width,
                                     gint           tile_height);
-static void   pixelize_sub         (gint           pixelwidth,
+static void      pixelize_sub      (gint           pixelwidth,
                                     gint           pixelheight,
                                     gint           bpp,
                                     gint           has_alpha);
@@ -300,11 +300,10 @@ run (const gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
-static gint
+static gboolean
 pixelize_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
-  GtkWidget *frame;
   GtkWidget *vbox;
   GtkWidget *sizeentry;
   guint32    image_id;
@@ -323,15 +322,9 @@ pixelize_dialog (GimpDrawable *drawable)
 
 			 NULL);
 
-  /*  parameter settings  */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   image_id = gimp_drawable_get_image (drawable->drawable_id);

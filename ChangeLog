@@ -1,5 +1,14 @@
 2004-05-19  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/papertile.c
+	* plug-ins/common/pat.c
+	* plug-ins/common/pixelize.c
+	* plug-ins/common/png.c
+	* plug-ins/common/postscript.c
+	* plug-ins/common/psp.c: HIG-ified.
+
+2004-05-19  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/mapcolor.c
 	* plug-ins/common/mblur.c
 	* plug-ins/common/mng.c
