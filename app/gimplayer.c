@@ -902,6 +902,30 @@ layer_resize (Layer *layer,
 		   GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
 }
 
+void
+layer_resize_to_image (Layer *layer)
+{
+  GImage *gimage;
+  gint offset_x;
+  gint offset_y;
+
+  if (!(gimage = GIMP_DRAWABLE (layer)->gimage))
+    return;
+
+  undo_push_group_start (gimage, LAYER_RESIZE_UNDO);
+
+  if (layer_is_floating_sel (layer))
+    floating_sel_relax (layer, TRUE);
+
+   gimp_drawable_offsets (GIMP_DRAWABLE (layer), &offset_x, &offset_y);
+   layer_resize (layer, gimage->width, gimage->height, offset_x, offset_y);
+
+  if (layer_is_floating_sel (layer))
+    floating_sel_rigor (layer, TRUE);
+
+  undo_push_group_end (gimage);
+}
+
 BoundSeg *
 layer_boundary (Layer *layer,
 		gint  *num_segs)

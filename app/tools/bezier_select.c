@@ -32,6 +32,7 @@
 #include "bezier_selectP.h"
 #include "paths_dialogP.h"
 #include "selection_options.h"
+#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"

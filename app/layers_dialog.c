@@ -1043,6 +1043,7 @@ layers_dialog_set_menu_sensitivity (void)
   SET_OPS_SENSITIVE (5, ac && gimage && lp);
 
   SET_SENSITIVE ("Layer Boundary Size...", ac && gimage && lp);
+  SET_SENSITIVE ("Resize to Image", ac && gimage && lp);
   SET_SENSITIVE ("Scale Layer...", ac && gimage && lp);
 
   SET_SENSITIVE ("Merge Visible Layers...", fs && ac && gimage && lp);
@@ -1623,6 +1624,20 @@ layers_dialog_resize_layer_callback (GtkWidget *widget,
     return;
 
   layers_dialog_resize_layer_query (gimage, gimage->active_layer);
+}
+
+void
+layers_dialog_resize_to_image_callback (GtkWidget *widget,
+					gpointer   data)
+{
+  GImage *gimage;
+  
+  if (!layersD || !(gimage = layersD->gimage))
+    return;
+  
+  layer_resize_to_image (gimage->active_layer);
+
+  gdisplays_flush ();
 }
 
 void

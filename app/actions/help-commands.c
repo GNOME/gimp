@@ -1030,6 +1030,17 @@ layers_alpha_select_cmd_callback (GtkWidget *widget,
   gdisplays_flush ();
 }
 
+void
+layers_resize_to_image_cmd_callback (GtkWidget *widget,
+				     gpointer   client_data)
+{
+  GDisplay *gdisp;
+  return_if_no_display (gdisp);
+
+  layer_resize_to_image (gdisp->gimage->active_layer);
+  gdisplays_flush ();
+}
+
 /*****  Tools  *****/
 
 void

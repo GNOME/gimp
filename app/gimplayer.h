@@ -94,6 +94,7 @@ void            layer_translate             (Layer *, gint, gint);
 void            layer_add_alpha             (Layer *);
 void            layer_scale                 (Layer *, gint, gint, gint);
 void            layer_resize                (Layer *, gint, gint, gint, gint);
+void            layer_resize_to_image       (Layer *);
 BoundSeg *      layer_boundary              (Layer *, gint *);
 void            layer_invalidate_boundary   (Layer *);
 gint            layer_pick_correlate        (Layer *, gint, gint);

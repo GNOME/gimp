@@ -21,15 +21,16 @@
 
 #include "info_dialog.h"
 
-InfoDialog *nav_window_create (void *);
-void        nav_window_free   (GDisplay *,InfoDialog *);
-void        nav_window_update_window_marker(InfoDialog *);
-void        nav_dialog_popup (InfoDialog *idialog);
-void        nav_window_preview_resized (InfoDialog *idialog);
+InfoDialog *nav_window_create                (void *);
+void        nav_window_free                  (GDisplay *,InfoDialog *);
+void        nav_window_update_window_marker  (InfoDialog *);
+void        nav_dialog_popup                 (InfoDialog *idialog);
+void        nav_window_preview_resized       (InfoDialog *idialog);
 void        nav_window_popup_preview_resized (GtkWidget **widget);
+void        nav_window_follow_auto           (void);
 
 /* popup functions */
-void        nav_popup_click_handler(GtkWidget *widget, GdkEventButton *event, gpointer data);
-void        nav_popup_free(GtkWidget *widget);
+void        nav_popup_click_handler          (GtkWidget *widget, GdkEventButton *event, gpointer data);
+void        nav_popup_free                   (GtkWidget *widget);
 
 #endif /*  __NAV_WINDOW_H__  */

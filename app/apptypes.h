@@ -153,11 +153,11 @@ typedef struct _paint_core	   PaintCore;
 typedef struct _GimpBrush	   GimpBrush;
 typedef struct _GimpBrushClass	   GimpBrushClass;
 
-typedef struct _layer_undo LayerUndo;
+typedef struct _layer_undo         LayerUndo;
 
-typedef struct _layer_mask_undo LayerMaskUndo;
+typedef struct _layer_mask_undo    LayerMaskUndo;
 
-typedef struct _fs_to_layer_undo FStoLayerUndo;
+typedef struct _fs_to_layer_undo   FStoLayerUndo;
 
 typedef struct _PlugIn             PlugIn;
 typedef struct _PlugInDef          PlugInDef;

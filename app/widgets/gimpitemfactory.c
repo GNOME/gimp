@@ -494,6 +494,9 @@ static GimpItemFactoryEntry image_entries[] =
   { { N_("/Layers/Rotate"), NULL, NULL, 0, "<Branch>" },
     NULL, NULL },
 
+  { { N_("/Layers/Resize to Image"), NULL, layers_resize_to_image_cmd_callback, 0 },
+    "layers/resize_to_image.html", NULL },
+
   { { "/Layers/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
   { { N_("/Layers/Anchor Layer"), "<control>H", layers_anchor_cmd_callback, 0 },
@@ -700,9 +703,11 @@ static GimpItemFactoryEntry layers_entries[] =
     NULL, NULL },
   { { N_("/Layer Boundary Size..."), "<control>R", layers_dialog_resize_layer_callback, 0 },
     "dialogs/resize_layer.html", NULL },
+  { { N_("/Resize to Image"), NULL, layers_dialog_resize_to_image_callback, 0 },
+    "resize_to_image.html", NULL },
   { { N_("/Scale Layer..."), "<control>S", layers_dialog_scale_layer_callback, 0 },
     "dialogs/scale_layer.html", NULL },
-
+      
   { { "/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
   { { N_("/Merge Visible Layers..."), "<control>M", layers_dialog_merge_layers_callback, 0 },

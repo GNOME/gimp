@@ -1,3 +1,18 @@
+Sat Nov 27 14:49:20 MET 1999  Sven Neuman <sven@gimp.org>
+
+	* app/commands.c
+	* app/commands.h
+	* app/layer.c
+	* app/layer.h
+	* app/layers_dialog.c
+	* app/layers_dialog.h
+	* app/menus.c: implemented "Resize Layer to Imagesize" in C
+
+	* app/apptypes.h: indentation
+	
+	* app/bezier_select.c
+	* app/nav_window.h: get rid of compiler warnings 
+
 1999-11-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/main.c: bind the "gimp-perl" textdomain.
@@ -11,10 +26,9 @@
 
 Sat Nov 27 04:08:32 MET 1999  Sven Neuman <sven@gimp.org>
 
-	* app/fileops.c: I might break it again, but loading a single
+	* app/fileops.c: I might break it again, but creating a single
 	preview seemed to be broken after Adam fixed my last change.
-	IMHO it works as it should now... [and Adam sez: "I didn't
-        touch preview loading."]
+	IMHO it works as it should now... 
 
 Sat Nov 27 03:51:41 MET 1999  Sven Neuman <sven@gimp.org>
 
