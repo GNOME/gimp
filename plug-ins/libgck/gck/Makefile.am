@@ -25,7 +25,7 @@ libgck_la_LDFLAGS = -version-info 1:0:0
 INCLUDES = \
 	$(X_CFLAGS)		\
 	-I$(srcdir)/..		\
-#	-I$(top_srcdir)		\
+	-I$(top_srcdir)		\
 	-I$(includedir)
 
 .PHONY: files

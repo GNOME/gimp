@@ -387,8 +387,10 @@ plug-ins/flarefx/Makefile
 plug-ins/webbrowser/Makefile
 plug-ins/animoptimize/Makefile
 plug-ins/libgck/Makefile
+plug-ins/libgck/gck/Makefile
 plug-ins/MapObject/Makefile
 plug-ins/gfig/Makefile
+plug-ins/gfig/gfig-examples/Makefile
 app/Makefile
 docs/Makefile
 data/Makefile
