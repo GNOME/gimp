@@ -618,8 +618,8 @@ rect_select_motion (Tool           *tool,
              w = -w;
          }
      } else {
-       w = rect_sel->fixed_width;
-       h = rect_sel->fixed_height;
+       w = (x - ox > 0 ? rect_sel->fixed_width  : -rect_sel->fixed_width);
+       h = (y - oy > 0 ? rect_sel->fixed_height : -rect_sel->fixed_height);
      }
   } else {
     w = (x - ox);

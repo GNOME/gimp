@@ -1,3 +1,8 @@
+Wed Apr  7 00:50:13 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* app/rect_select.c: when using fixed_size selections create the
+	selection into the direction the user moved the mouse
+
 1999-04-06  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/rect_select.h: oops, didn't commit this one.
