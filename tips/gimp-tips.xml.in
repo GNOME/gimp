@@ -109,13 +109,6 @@
   </tip>
   <tip level="intermediate">
     <_thetip>
-    The file selection dialog box has command-line completion with
-    <tt>Tab</tt>, just like the shell.  Type part of a filename, hit
-    <tt>Tab</tt>, and voila, it's completed.
-    </_thetip>
-  </tip>
-  <tip level="intermediate">
-    <_thetip>
     You can use the middle mouse button to pan around the image, if it's
     larger than its display window.
     </_thetip>
