@@ -52,11 +52,10 @@ void
 batch_run (Gimp         *gimp,
            const gchar **batch_cmds)
 {
-  static ProcRecord *eval_proc = NULL;
-
-  gboolean perl_server_already_running = FALSE;
-  gulong   exit_id;
-  gint     i;
+  ProcRecord *eval_proc = NULL;
+  gboolean    perl_server_running = FALSE;
+  gulong      exit_id;
+  gint        i;
 
   exit_id = g_signal_connect_after (gimp, "exit",
                                     G_CALLBACK (batch_exit_after_callback),
@@ -81,10 +80,10 @@ batch_run (Gimp         *gimp,
                     "(extension%*[-_]perl%*[-_]server %i %i %i)",
                     &run_mode, &flags, &extra) == 3)
           {
-            if (!perl_server_already_running)
+            if (! perl_server_running)
               {
                 batch_perl_server (gimp, run_mode, flags, extra);
-                perl_server_already_running = TRUE;
+                perl_server_running = TRUE;
               }
             continue;
           }
