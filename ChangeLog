@@ -1,3 +1,7 @@
+Fri May 22 19:23:59 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* docs/gimp_quick_reference.*: some small fixes and additions
+
 Fri May 22 00:46:18 EDT 1998  Matthew Wilson  <msw@gimp.org>
 
 	* app/batch.c: removed global conversion from '-' to '_'
