@@ -1,3 +1,11 @@
+2004-09-06  Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimpcroptool.c: reordered info_dialog_hide() and
+	crop_tool_crop_image(), which avoids the repeated popping up
+	of the info dialog and avoids a crash.
+
+	Fixes bug #151712
+
 2004-09-05  DindinX  <david@dindinx.org>
 
 	* plug-ins/common/cartoon.c: use gimp_preview_invalidate() where

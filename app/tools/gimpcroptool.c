@@ -317,21 +317,9 @@ gimp_crop_tool_button_release (GimpTool        *tool,
   if (! (state & GDK_BUTTON3_MASK))
     {
       if (crop->function == CROPPING)
-        {
-          crop_tool_crop_image (gdisp->gimage,
-                                GIMP_CONTEXT (options),
-                                crop->x1, crop->y1,
-                                crop->x2, crop->y2,
-                                options->layer_only,
-                                options->crop_mode);
-
-          /*  Finish the tool  */
-          crop_response (NULL, GTK_RESPONSE_CANCEL, crop);
-        }
+        crop_response (NULL, options->crop_mode, crop);
       else
-        {
-          crop_info_update (crop);
-        }
+        crop_info_update (crop);
     }
 }
 
@@ -1107,9 +1095,6 @@ crop_response (GtkWidget    *widget,
   GimpTool        *tool    = GIMP_TOOL (crop);
   GimpCropOptions *options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
 
-  if (crop->crop_info)
-    info_dialog_hide (crop->crop_info);
-
   switch (response_id)
     {
     case GIMP_CROP_MODE_CROP:
@@ -1125,6 +1110,9 @@ crop_response (GtkWidget    *widget,
     default:
       break;
     }
+
+  if (crop->crop_info)
+    info_dialog_hide (crop->crop_info);
 
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (crop)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (crop));
