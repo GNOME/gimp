@@ -447,6 +447,11 @@ init_constants ()
   setvar (cintern ("SF-TOGGLE"), flocons (SF_TOGGLE), NIL);
   setvar (cintern ("SF-VALUE"), flocons (SF_VALUE), NIL);
   setvar (cintern ("SF-STRING"), flocons (SF_STRING), NIL);
+  setvar (cintern ("SF-ADJUSTMENT"), flocons (SF_ADJUSTMENT), NIL);
+
+  /* for SF_ADJUSTMENT */
+  setvar (cintern ("SF-SLIDER"), flocons (SF_SLIDER), NIL);
+  setvar (cintern ("SF-SPINNER"), flocons (SF_SPINNER), NIL);
 }
 
 static void

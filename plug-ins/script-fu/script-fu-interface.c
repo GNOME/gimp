@@ -31,6 +31,9 @@
 #define TEXT_HEIGHT 25
 #define COLOR_SAMPLE_WIDTH 100
 #define COLOR_SAMPLE_HEIGHT 15
+#define SLIDER_WIDTH  100
+#define SLIDER_HEIGHT 30
+#define SPINNER_WIDTH 75
 
 #define MAX_STRING_LENGTH 4096
 
@@ -42,16 +45,29 @@ typedef struct
   gdouble    old_color[3];
 } SFColor;
 
+typedef struct
+{
+  GtkAdjustment *adj;
+  gfloat         value;
+  gfloat         lower;
+  gfloat         upper;
+  gfloat         step;
+  gfloat         page;
+  gint           digits;
+  SFAdjustmentType type;
+} SFAdjustment;
+
 typedef union
 {
-  gint32      sfa_image;
-  gint32      sfa_drawable;
-  gint32      sfa_layer;
-  gint32      sfa_channel;
-  SFColor     sfa_color;
-  gint32      sfa_toggle;
-  gchar *     sfa_value;
-  gchar *     sfa_string;
+  gint32        sfa_image;
+  gint32        sfa_drawable;
+  gint32        sfa_layer;
+  gint32        sfa_channel;
+  SFColor       sfa_color;
+  gint32        sfa_toggle;
+  gchar *       sfa_value;
+  gchar *       sfa_string;
+  SFAdjustment  sfa_adjustment;
 } SFArgValue;
 
 typedef struct
@@ -279,6 +295,7 @@ script_fu_add_script (LISP a)
   int i;
   gdouble color[3];
   LISP color_list;
+  LISP adj_list;
   gchar *menu_path = NULL;
 
   /*  Check the length of a  */
@@ -461,6 +478,31 @@ script_fu_add_script (LISP a)
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
 
+		case SF_ADJUSTMENT:
+		  if (!TYPEP (car (a), tc_cons))
+		    return my_err ("script-fu-register: adjustment defaults must be a list", NIL);
+		  adj_list = car (a);
+		  script->arg_defaults[i].sfa_adjustment.value = get_c_double (car (adj_list));
+		  adj_list = cdr (adj_list);
+		  script->arg_defaults[i].sfa_adjustment.lower = get_c_double (car (adj_list));
+		  adj_list = cdr (adj_list);
+		  script->arg_defaults[i].sfa_adjustment.upper = get_c_double (car (adj_list));
+		  adj_list = cdr (adj_list);
+		  script->arg_defaults[i].sfa_adjustment.step = get_c_double (car (adj_list));
+		  adj_list = cdr (adj_list);
+		  script->arg_defaults[i].sfa_adjustment.page = get_c_double (car (adj_list));
+		  adj_list = cdr (adj_list);
+		  script->arg_defaults[i].sfa_adjustment.digits = get_c_long (car (adj_list));
+		  adj_list = cdr (adj_list);
+		  script->arg_defaults[i].sfa_adjustment.type = get_c_long (car (adj_list));
+		  script->arg_values[i].sfa_adjustment.adj = NULL;
+		  script->arg_values[i].sfa_adjustment.value = script->arg_defaults[i].sfa_adjustment.value;
+
+		  args[i + 1].type = PARAM_STRING;
+		  args[i + 1].name = "value";
+		  args[i + 1].description = script->arg_labels[i];
+		  break;
+
 		default:
 		  break;
 		}
@@ -603,6 +645,9 @@ script_fu_script_proc (char     *name,
 		  case SF_STRING:
 		    length += strlen (params[i + 1].data.d_string) + 3;
 		    break;
+		  case SF_ADJUSTMENT:
+		    length += strlen (params[i + 1].data.d_string) + 1;
+		    break;
 		  default:
 		    break;
 		  }
@@ -641,6 +686,9 @@ script_fu_script_proc (char     *name,
 		    case SF_STRING:
 		      g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", params[i + 1].data.d_string);
 		      text = buffer;
+		      break;
+		    case SF_ADJUSTMENT:
+		      text = params[i + 1].data.d_string;
 		      break;
 		    default:
 		      break;
@@ -729,6 +777,8 @@ script_fu_free_script (SFScript *script)
 	      break;
 	    case SF_STRING:
 	      g_free (script->arg_defaults[i].sfa_string);
+	      break;
+	    case SF_ADJUSTMENT:
 	      break;
 	    default:
 	      break;
@@ -934,6 +984,40 @@ script_fu_interface (SFScript *script)
 	  gtk_entry_set_text (GTK_ENTRY (script->args_widgets[i]),
 			      script->arg_defaults[i].sfa_string);
 	  break;
+
+	case SF_ADJUSTMENT:
+	  script->arg_values[i].sfa_adjustment.adj = 
+	    (GtkAdjustment *) gtk_adjustment_new (script->arg_values[i].sfa_adjustment.value, 
+						  script->arg_defaults[i].sfa_adjustment.lower, 
+						  script->arg_defaults[i].sfa_adjustment.upper, 
+						  script->arg_defaults[i].sfa_adjustment.step, 
+						  script->arg_defaults[i].sfa_adjustment.page, 0);
+	  switch (script->arg_defaults[i].sfa_adjustment.type)
+	    {
+	    case SF_SLIDER:
+	      script->args_widgets[i] = gtk_hscale_new (script->arg_values[i].sfa_adjustment.adj);
+	      gtk_widget_set_usize (GTK_WIDGET (script->args_widgets[i]), 
+				    SLIDER_WIDTH, SLIDER_HEIGHT);
+	      gtk_scale_set_digits (GTK_SCALE (script->args_widgets[i]), 
+				    script->arg_defaults[i].sfa_adjustment.digits);
+	      gtk_scale_set_draw_value (GTK_SCALE (script->args_widgets[i]), TRUE);
+	      gtk_range_set_update_policy (GTK_RANGE (script->args_widgets[i]), 
+					   GTK_UPDATE_DELAYED);
+	      break;
+	    case SF_SPINNER:
+	      script->args_widgets[i] = gtk_spin_button_new (script->arg_values[i].sfa_adjustment.adj, 0, 0);
+	      gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (script->args_widgets[i]), TRUE);
+	      gtk_widget_set_usize (script->args_widgets[i], SPINNER_WIDTH, 0);
+	      gtk_spin_button_set_digits (GTK_SPIN_BUTTON (script->args_widgets[i]),
+					  script->arg_defaults[i].sfa_adjustment.digits);
+	      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (script->args_widgets[i]), TRUE);
+	      break;
+	    default: /* this shouldn't happen */
+	      script->args_widgets[i] = NULL;
+	      break;
+	    }	  
+	  break;
+
 	default:
 	  break;
 	}
@@ -1069,6 +1153,9 @@ script_fu_ok_callback (GtkWidget *widget,
       case SF_STRING:
 	length += strlen (gtk_entry_get_text (GTK_ENTRY (script->args_widgets[i]))) + 3;
 	break;
+      case SF_ADJUSTMENT:
+	length += 24;  /*  Maximum size of float value should not exceed this many characters  */
+	break;
       default:
 	break;
       }
@@ -1106,6 +1193,22 @@ script_fu_ok_callback (GtkWidget *widget,
 	  text = gtk_entry_get_text (GTK_ENTRY (script->args_widgets[i]));
 	  g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", text);
 	  text = buffer;
+	  break;
+	case SF_ADJUSTMENT:
+	  switch (script->arg_defaults[i].sfa_adjustment.type)
+	    {
+	    case SF_SLIDER:
+	      g_snprintf (buffer, 24, "%f", script->arg_values[i].sfa_adjustment.adj->value);
+	      text = buffer;
+	      break;
+	    case SF_SPINNER:
+	      g_snprintf (buffer, 24, "%f", 
+			  gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (script->args_widgets[i])));
+	      text = buffer;
+	      break;
+	    default:
+	      break;
+	    }
 	  break;
 	default:
 	  break;

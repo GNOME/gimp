@@ -95,7 +95,8 @@ scriptdata_DATA = \
 	unsharp-mask.scm			\
 	waves-anim.scm				\
 	weave.scm				\
-	xach-effect.scm
+	xach-effect.scm				\
+	test-sphere.scm
 
 EXTRA_DATA =
 EXTRA_DIST = $(scriptdata_DATA)
