@@ -1,3 +1,7 @@
+Tue Sep  7 03:16:56 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* configure.in: build the Makefile in plug-ins/gflare/gflares.
+
 Tue Sep  7 02:17:02 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/gimpcontextpreview.c: return FALSE in event_handlers.
