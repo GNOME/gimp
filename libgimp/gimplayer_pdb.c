@@ -455,8 +455,8 @@ gimp_layer_get_mask (gint32 layer_ID)
 
 /**
  * gimp_layer_add_mask:
- * @layer_ID: The layer.
- * @mask_ID: The mask to add to the layer to receive the mask.
+ * @layer_ID: The layer to receive the mask.
+ * @mask_ID: The mask to add to the layer.
  *
  * Add a layer mask to the specified layer.
  *
@@ -492,8 +492,8 @@ gimp_layer_add_mask (gint32 layer_ID,
 
 /**
  * gimp_layer_remove_mask:
- * @layer_ID: The layer.
- * @mode: Removal mode:  from which to remove mask.
+ * @layer_ID: The layer from which to remove mask.
+ * @mode: Removal mode.
  *
  * Remove the specified layer mask from the layer.
  *

@@ -947,12 +947,12 @@ static ProcArg layer_add_mask_inargs[] =
   {
     GIMP_PDB_LAYER,
     "layer",
-    "The layer"
+    "The layer to receive the mask"
   },
   {
     GIMP_PDB_CHANNEL,
     "mask",
-    "The mask to add to the layer to receive the mask"
+    "The mask to add to the layer"
   }
 };
 
@@ -1002,12 +1002,12 @@ static ProcArg layer_remove_mask_inargs[] =
   {
     GIMP_PDB_LAYER,
     "layer",
-    "The layer"
+    "The layer from which to remove mask"
   },
   {
     GIMP_PDB_INT32,
     "mode",
-    "Removal mode: { GIMP_MASK_APPLY (0), GIMP_MASK_DISCARD (1) } from which to remove mask"
+    "Removal mode: { GIMP_MASK_APPLY (0), GIMP_MASK_DISCARD (1) }"
   }
 };
 

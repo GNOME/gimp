@@ -277,7 +277,7 @@ HELP
 	{ name => 'mask', type => 'layer_mask',
 	  desc => 'The mask to add to the layer' }
     );
-    $inargs[1]->{desc} .= ' to receive the mask';
+    $inargs[0]->{desc} .= ' to receive the mask';
 
     %invoke = (
 	code => <<'CODE'
@@ -303,7 +303,7 @@ HELP
 	{ name => 'mode', type => 'enum GimpMaskApplyMode',
 	  desc => 'Removal mode: { %%desc%% }' }
     );
-    $inargs[1]->{desc} .= ' from which to remove mask';
+    $inargs[0]->{desc} .= ' from which to remove mask';
 
     %invoke = ( code => 'gimp_layer_apply_mask (layer, mode, TRUE);' );
 }

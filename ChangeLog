@@ -1,5 +1,13 @@
 2004-10-15  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/layer.pdb: fixed parameter descriptions for
+	layer_add_mask() and layer_remove_mask().
+
+	* app/pdb/layer_cmds.c
+	* libgimp/gimplayer_pdb.c: regenerated.
+
+2004-10-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/images-commands.[ch]
 	* app/actions/templates-commands.[ch]: made some public functions
 	private or removed them entirely by folding their code into their
