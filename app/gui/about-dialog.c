@@ -242,7 +242,7 @@ about_dialog_create (void)
       gtk_window_set_resizable (GTK_WINDOW (about_dialog), FALSE);
 
       gimp_help_connect (about_dialog, gimp_standard_help_func,
-			 GIMP_HELP_ABOUT_DIALOG);
+			 GIMP_HELP_ABOUT_DIALOG, NULL);
 
       g_signal_connect (about_dialog, "destroy",
 			G_CALLBACK (about_dialog_destroy),

@@ -156,7 +156,6 @@ GimpItemFactory *
 gimp_item_factory_new (Gimp                      *gimp,
                        GType                      container_type,
                        const gchar               *factory_path,
-                       const gchar               *help_path,
                        GimpItemFactoryUpdateFunc  update_func,
                        gboolean                   update_on_popup,
                        guint                      n_entries,
@@ -170,7 +169,6 @@ gimp_item_factory_new (Gimp                      *gimp,
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (factory_path != NULL, NULL);
-  g_return_val_if_fail (help_path != NULL, NULL);
   g_return_val_if_fail (factory_path[0] == '<', NULL);
   g_return_val_if_fail (factory_path[strlen (factory_path) - 1] == '>', NULL);
 
@@ -199,11 +197,6 @@ gimp_item_factory_new (Gimp                      *gimp,
   g_hash_table_replace (factory_class->factories,
                         g_strdup (factory_path),
                         list);
-
-  /*  this will go away  <mitch>  */
-  g_object_set_data_full (G_OBJECT (factory), "help_path",
-                          g_strdup (help_path),
-                          (GDestroyNotify) g_free);
 
   gimp_item_factory_create_items (factory,
                                   n_entries,
@@ -326,14 +319,14 @@ gimp_item_factory_create_item (GimpItemFactory       *item_factory,
 			      G_CALLBACK (gimp_item_factory_item_realize),
 			      item_factory);
 
-      if (entry->help_page)
+      if (entry->help_id)
         {
           if (static_entry)
-            g_object_set_data (G_OBJECT (menu_item), "help_page",
-                               (gpointer) entry->help_page);
+            g_object_set_data (G_OBJECT (menu_item), "gimp-help-id",
+                               (gpointer) entry->help_id);
           else
-            g_object_set_data_full (G_OBJECT (menu_item), "help_page",
-                                    g_strdup (entry->help_page),
+            g_object_set_data_full (G_OBJECT (menu_item), "gimp-help-id",
+                                    g_strdup (entry->help_id),
                                     g_free);
         }
     }
@@ -811,7 +804,7 @@ gimp_item_factory_create_branches (GimpItemFactory      *factory,
 	  };
 
           branch_entry.entry.path = tearoff_path->str;
-	  
+
           g_object_set_data (G_OBJECT (factory), "complete", entry->entry.path);
 
 	  gimp_item_factory_create_item (factory,
@@ -881,9 +874,7 @@ gimp_item_factory_item_key_press (GtkWidget       *widget,
                                   GimpItemFactory *item_factory)
 {
   GtkWidget *active_menu_item;
-  gchar     *factory_help_path = NULL;
-  gchar     *help_path         = NULL;
-  gchar     *help_page         = NULL;
+  gchar     *help_id = NULL;
 
   active_menu_item = GTK_MENU_SHELL (widget)->active_menu_item;
 
@@ -891,10 +882,10 @@ gimp_item_factory_item_key_press (GtkWidget       *widget,
    */
   if (active_menu_item)
     {
-      help_page = g_object_get_data (G_OBJECT (active_menu_item), "help_page");
+      help_id = g_object_get_data (G_OBJECT (active_menu_item), "gimp-help-id");
 
-      if (help_page && ! *help_page)
-        help_page = NULL;
+      if (help_id && ! strlen (help_id))
+        help_id = NULL;
     }
 
   /*  For any valid accelerator key except F1, continue with the
@@ -903,55 +894,49 @@ gimp_item_factory_item_key_press (GtkWidget       *widget,
    */
   if (kevent->keyval != GDK_F1)
     {
-      if (help_page                                 &&
+      if (help_id                                   &&
           gtk_accelerator_valid (kevent->keyval, 0) &&
-	  (strcmp (help_page, GIMP_HELP_HELP)         == 0 ||
-	   strcmp (help_page, GIMP_HELP_HELP_CONTEXT) == 0))
+	  (strcmp (help_id, GIMP_HELP_HELP)         == 0 ||
+	   strcmp (help_id, GIMP_HELP_HELP_CONTEXT) == 0))
 	{
 	  return TRUE;
 	}
-      else
-	{
-	  return FALSE;
-	}
+
+      return FALSE;
     }
 
   /*  ...finally, if F1 was pressed over any menu, show it's help page...  */
 
-  factory_help_path = g_object_get_data (G_OBJECT (item_factory), "help_path");
+  if (! help_id)
+    help_id = GIMP_HELP_MAIN;
 
-  if (! help_page)
-    help_page = "index.html";
+  {
+    gchar *help_path   = NULL;
+    gchar *help_string = NULL;
+    gchar *path_separator;
 
-  if (factory_help_path && help_page)
-    {
-      gchar *help_string;
-      gchar *at;
+    help_id = g_strdup (help_id);
 
-      help_page = g_strdup (help_page);
+    path_separator = strchr (help_id, ':');
 
-      at = strchr (help_page, '@');  /* HACK: locale subdir */
+    if (path_separator)
+      {
+        *path_separator = '\0';
 
-      if (at)
-	{
-	  *at = '\0';
-	  help_path   = g_strdup (help_page);
-	  help_string = g_strdup (at + 1);
-	}
-      else
-	{
-	  help_string = g_strdup_printf ("%s/%s", factory_help_path, help_page);
-	}
+        help_path   = g_strdup (help_id);
+        help_string = g_strdup (path_separator + 1);
+      }
+    else
+      {
+        help_string = g_strdup (help_id);
+      }
 
-      gimp_help (item_factory->gimp, help_path, help_string);
+    gimp_help (item_factory->gimp, help_path, help_string);
 
-      g_free (help_string);
-      g_free (help_page);
-    }
-  else
-    {
-      gimp_standard_help_func (NULL);
-    }
+    g_free (help_path);
+    g_free (help_string);
+    g_free (help_id);
+  }
 
   return TRUE;
 }
@@ -984,8 +969,8 @@ gimp_item_factory_translate_func (const gchar *path,
 
       if (complete)
 	{
-          /*  This is a branch, use the complete path for translation, 
-	   *  then strip off entries from the end until it matches. 
+          /*  This is a branch, use the complete path for translation,
+	   *  then strip off entries from the end until it matches.
 	   */
 	  complete    = g_strconcat (item_factory->path, complete, NULL);
 	  translation = g_strdup (dgettext (domain, complete));
@@ -1010,7 +995,7 @@ gimp_item_factory_translate_func (const gchar *path,
 	  translation = dgettext (domain, menupath);
 	}
 
-      /* 
+      /*
        * Work around a bug in GTK+ prior to 1.2.7 (similar workaround below)
        */
       if (strncmp (item_factory->path, translation,
@@ -1034,8 +1019,8 @@ gimp_item_factory_translate_func (const gchar *path,
 
       if (complete)
 	{
-          /*  This is a branch, use the complete path for translation, 
-	   *  then strip off entries from the end until it matches. 
+          /*  This is a branch, use the complete path for translation,
+	   *  then strip off entries from the end until it matches.
 	   */
 	  complete    = g_strdup (complete);
 	  translation = g_strdup (gettext (complete));

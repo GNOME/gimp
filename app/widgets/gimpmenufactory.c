@@ -106,7 +106,6 @@ gimp_menu_factory_finalize (GObject *object)
       entry = (GimpMenuFactoryEntry *) list->data;
 
       g_free (entry->identifier);
-      g_free (entry->help_path);
       g_free (entry);
     }
 
@@ -133,7 +132,6 @@ gimp_menu_factory_new (Gimp *gimp)
 void
 gimp_menu_factory_menu_register (GimpMenuFactory           *factory,
                                  const gchar               *identifier,
-                                 const gchar               *help_path,
                                  GimpItemFactorySetupFunc   setup_func,
                                  GimpItemFactoryUpdateFunc  update_func,
                                  gboolean                   update_on_popup,
@@ -144,14 +142,12 @@ gimp_menu_factory_menu_register (GimpMenuFactory           *factory,
 
   g_return_if_fail (GIMP_IS_MENU_FACTORY (factory));
   g_return_if_fail (identifier != NULL);
-  g_return_if_fail (help_path != NULL);
   g_return_if_fail (n_entries > 0);
   g_return_if_fail (entries != NULL);
 
   entry = g_new0 (GimpMenuFactoryEntry, 1);
 
   entry->identifier      = g_strdup (identifier);
-  entry->help_path       = g_strdup (help_path);
   entry->setup_func      = setup_func;
   entry->update_func     = update_func;
   entry->update_on_popup = update_on_popup ? TRUE : FALSE;
@@ -184,7 +180,6 @@ gimp_menu_factory_menu_new (GimpMenuFactory *factory,
           item_factory = gimp_item_factory_new (factory->gimp,
                                                 container_type,
                                                 entry->identifier,
-                                                entry->help_path,
                                                 entry->update_func,
                                                 entry->update_on_popup,
                                                 entry->n_entries,

@@ -35,17 +35,19 @@ void  gimp_help_disable_tooltips   (void);
 
 /*  the standard gimp help function
  */
-void  gimp_standard_help_func      (const gchar  *help_data);
+void  gimp_standard_help_func      (const gchar  *help_id,
+                                    gpointer      help_data);
 
 /*  connect the help callback of a window  */
 void  gimp_help_connect            (GtkWidget    *widget,
 				    GimpHelpFunc  help_func,
-				    const gchar  *help_data);
+				    const gchar  *help_id,
+                                    gpointer      help_data);
 
 /*  set help data for non-window widgets  */
 void  gimp_help_set_help_data      (GtkWidget    *widget,
 				    const gchar  *tooltip,
-				    const gchar  *help_data);
+				    const gchar  *help_id);
 
 /*  activate the context help inspector  */
 void  gimp_context_help            (void);

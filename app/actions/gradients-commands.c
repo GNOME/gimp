@@ -104,7 +104,7 @@ gradients_save_as_pov_query (GimpContainerEditor *editor)
                            G_CONNECT_SWAPPED);
 
   gimp_help_connect (GTK_WIDGET (filesel), gimp_standard_help_func,
-		     GIMP_HELP_GRADIENT_SAVE_AS_POV);
+		     GIMP_HELP_GRADIENT_SAVE_AS_POV, NULL);
 
   gtk_widget_show (GTK_WIDGET (filesel));
 }

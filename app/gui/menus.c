@@ -107,129 +107,108 @@ menus_init (Gimp *gimp)
 
   global_menu_factory = gimp_menu_factory_new (gimp);
 
-  gimp_menu_factory_menu_register (global_menu_factory,
-                                   "<Toolbox>", "toolbox",
+  gimp_menu_factory_menu_register (global_menu_factory, "<Toolbox>",
                                    toolbox_menu_setup, NULL, FALSE,
                                    n_toolbox_menu_entries,
                                    toolbox_menu_entries);
 
-  gimp_menu_factory_menu_register (global_menu_factory,
-                                   "<Image>", "image",
+  gimp_menu_factory_menu_register (global_menu_factory, "<Image>",
                                    image_menu_setup, image_menu_update, FALSE,
                                    n_image_menu_entries,
                                    image_menu_entries);
 
-  gimp_menu_factory_menu_register (global_menu_factory,
-                                   "<Load>", "open",
+  gimp_menu_factory_menu_register (global_menu_factory, "<Load>",
                                    file_open_menu_setup, NULL, FALSE,
                                    n_file_open_menu_entries,
                                    file_open_menu_entries);
 
-  gimp_menu_factory_menu_register (global_menu_factory,
-                                   "<Save>", "save",
+  gimp_menu_factory_menu_register (global_menu_factory, "<Save>",
                                    file_save_menu_setup,
                                    file_save_menu_update, FALSE,
                                    n_file_save_menu_entries,
                                    file_save_menu_entries);
 
-  gimp_menu_factory_menu_register (global_menu_factory,
-                                   "<Layers>", "layers",
+  gimp_menu_factory_menu_register (global_menu_factory, "<Layers>",
                                    NULL, layers_menu_update, TRUE,
                                    n_layers_menu_entries,
                                    layers_menu_entries);
 
-  gimp_menu_factory_menu_register (global_menu_factory,
-                                   "<Channels>", "channels",
+  gimp_menu_factory_menu_register (global_menu_factory, "<Channels>",
                                    NULL, channels_menu_update, TRUE,
                                    n_channels_menu_entries,
                                    channels_menu_entries);
 
-  gimp_menu_factory_menu_register (global_menu_factory,
-                                   "<Vectors>", "vectors",
+  gimp_menu_factory_menu_register (global_menu_factory, "<Vectors>",
                                    NULL, vectors_menu_update, TRUE,
                                    n_vectors_menu_entries,
                                    vectors_menu_entries);
 
-  gimp_menu_factory_menu_register (global_menu_factory,
-                                   "<Dialogs>", "dialogs",
+  gimp_menu_factory_menu_register (global_menu_factory, "<Dialogs>",
                                    NULL, dialogs_menu_update, TRUE,
                                    n_dialogs_menu_entries,
                                    dialogs_menu_entries);
 
-  gimp_menu_factory_menu_register (global_menu_factory,
-                                   "<Brushes>", "brushes",
+  gimp_menu_factory_menu_register (global_menu_factory, "<Brushes>",
                                    NULL, brushes_menu_update, TRUE,
                                    n_brushes_menu_entries,
                                    brushes_menu_entries);
 
-  gimp_menu_factory_menu_register (global_menu_factory,
-                                   "<Patterns>", "patterns",
+  gimp_menu_factory_menu_register (global_menu_factory, "<Patterns>",
                                    NULL, patterns_menu_update, TRUE,
                                    n_patterns_menu_entries,
                                    patterns_menu_entries);
 
-  gimp_menu_factory_menu_register (global_menu_factory,
-                                   "<Gradients>", "gradients",
+  gimp_menu_factory_menu_register (global_menu_factory, "<Gradients>",
                                    NULL, gradients_menu_update, TRUE,
                                    n_gradients_menu_entries,
                                    gradients_menu_entries);
 
-  gimp_menu_factory_menu_register (global_menu_factory,
-                                   "<Palettes>", "palettes",
+  gimp_menu_factory_menu_register (global_menu_factory, "<Palettes>",
                                    NULL, palettes_menu_update, TRUE,
                                    n_palettes_menu_entries,
                                    palettes_menu_entries);
 
-  gimp_menu_factory_menu_register (global_menu_factory,
-                                   "<Buffers>", "buffers",
+  gimp_menu_factory_menu_register (global_menu_factory, "<Buffers>",
                                    NULL, buffers_menu_update, TRUE,
                                    n_buffers_menu_entries,
                                    buffers_menu_entries);
 
-  gimp_menu_factory_menu_register (global_menu_factory,
-                                   "<Documents>", "documents",
+  gimp_menu_factory_menu_register (global_menu_factory, "<Documents>",
                                    NULL, documents_menu_update, TRUE,
                                    n_documents_menu_entries,
                                    documents_menu_entries);
 
-  gimp_menu_factory_menu_register (global_menu_factory,
-                                   "<Templates>", "templates",
+  gimp_menu_factory_menu_register (global_menu_factory, "<Templates>",
                                    NULL, templates_menu_update, TRUE,
                                    n_templates_menu_entries,
                                    templates_menu_entries);
 
-  gimp_menu_factory_menu_register (global_menu_factory,
-                                   "<Images>", "images",
+  gimp_menu_factory_menu_register (global_menu_factory, "<Images>",
                                    NULL, images_menu_update, TRUE,
                                    n_images_menu_entries,
                                    images_menu_entries);
 
-  gimp_menu_factory_menu_register (global_menu_factory,
-                                   "<GradientEditor>", "gradient_editor",
+  gimp_menu_factory_menu_register (global_menu_factory, "<GradientEditor>",
                                    NULL, gradient_editor_menu_update, TRUE,
                                    n_gradient_editor_menu_entries,
                                    gradient_editor_menu_entries);
 
-  gimp_menu_factory_menu_register (global_menu_factory,
-                                   "<PaletteEditor>", "palette_editor",
+  gimp_menu_factory_menu_register (global_menu_factory, "<PaletteEditor>",
                                    NULL, palette_editor_menu_update, TRUE,
                                    n_palette_editor_menu_entries,
                                    palette_editor_menu_entries);
 
-  gimp_menu_factory_menu_register (global_menu_factory,
-                                   "<ColormapEditor>", "colormap_editor",
+  gimp_menu_factory_menu_register (global_menu_factory, "<ColormapEditor>",
                                    NULL, colormap_editor_menu_update, TRUE,
                                    n_colormap_editor_menu_entries,
                                    colormap_editor_menu_entries);
 
-  gimp_menu_factory_menu_register (global_menu_factory,
-                                   "<QMask>", "qmask",
+  gimp_menu_factory_menu_register (global_menu_factory, "<QMask>",
                                    NULL, qmask_menu_update, TRUE,
                                    n_qmask_menu_entries,
                                    qmask_menu_entries);
 
-  gimp_menu_factory_menu_register (global_menu_factory,
-                                   "<ErrorConsole>", "error_console",
+  gimp_menu_factory_menu_register (global_menu_factory, "<ErrorConsole>",
                                    NULL, error_console_menu_update, TRUE,
                                    n_error_console_menu_entries,
                                    error_console_menu_entries);
@@ -312,7 +291,7 @@ menus_last_opened_add (GimpItemFactory *item_factory,
       last_opened_entries[i].entry.item_type       = "<StockItem>";
       last_opened_entries[i].entry.extra_data      = GTK_STOCK_OPEN;
       last_opened_entries[i].quark_string          = NULL;
-      last_opened_entries[i].help_page             = GIMP_HELP_FILE_OPEN_RECENT;
+      last_opened_entries[i].help_id               = GIMP_HELP_FILE_OPEN_RECENT;
       last_opened_entries[i].description           = NULL;
     }
 

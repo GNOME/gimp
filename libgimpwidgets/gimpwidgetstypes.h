@@ -76,7 +76,8 @@ typedef struct _GimpSizeEntry     GimpSizeEntry;
 typedef struct _GimpUnitMenu      GimpUnitMenu;
 
 
-typedef void (* GimpHelpFunc) (const gchar *help_data);
+typedef void (* GimpHelpFunc) (const gchar *help_id,
+                               gpointer     data);
 
 
 G_END_DECLS

@@ -8,10 +8,10 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
- *             
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU  
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -22,9 +22,8 @@
 
 #include "config.h"
 
-#include <gdk/gdkkeysyms.h>
-
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
@@ -51,7 +50,8 @@ typedef enum
 /*  local function prototypes  */
 
 static const gchar * gimp_help_get_help_data         (GtkWidget      *widget,
-                                                      GtkWidget     **help_widget);
+                                                      GtkWidget     **help_widget,
+                                                      gpointer       *ret_data);
 static gboolean gimp_help_callback                   (GtkWidget      *widget,
                                                       GtkWidgetHelpType help_type,
                                                       GimpHelpFunc    help_func);
@@ -122,7 +122,8 @@ gimp_help_disable_tooltips (void)
 }
 
 void
-gimp_standard_help_func (const gchar *help_data)
+gimp_standard_help_func (const gchar *help_id,
+                         gpointer     data)
 {
   if (! _gimp_standard_help_func)
     {
@@ -131,7 +132,7 @@ gimp_standard_help_func (const gchar *help_data)
       return;
     }
 
-  (* _gimp_standard_help_func) (help_data);
+  (* _gimp_standard_help_func) (help_id, data);
 }
 
 /**
@@ -139,7 +140,8 @@ gimp_standard_help_func (const gchar *help_data)
  * @widget: The widget you want to connect the help accelerator for. Will
  *          be a #GtkWindow in most cases.
  * @help_func: The function which will be called if the user presses "F1".
- * @help_data: The data pointer which will be passed to @help_func.
+ * @help_id:   The help_id which will be passed to @help_func.
+ * @help_data: The help_data pointer which will be passed to @help_func.
  *
  * Note that this function is automatically called by all libgimp dialog
  * constructors. You only have to call it for windows/dialogs you created
@@ -148,7 +150,8 @@ gimp_standard_help_func (const gchar *help_data)
 void
 gimp_help_connect (GtkWidget    *widget,
 		   GimpHelpFunc  help_func,
-		   const gchar  *help_data)
+		   const gchar  *help_id,
+                   gpointer      help_data)
 {
   g_return_if_fail (GTK_IS_WIDGET (widget));
   g_return_if_fail (help_func != NULL);
@@ -189,7 +192,9 @@ gimp_help_connect (GtkWidget    *widget,
       gtk_widget_realize (tips_query);
     }
 
-  gimp_help_set_help_data (widget, NULL, help_data);
+  gimp_help_set_help_data (widget, NULL, help_id);
+
+  g_object_set_data (G_OBJECT (widget), "gimp-help-data", help_data);
 
   g_signal_connect (widget, "show_help",
                     G_CALLBACK (gimp_help_callback),
@@ -200,45 +205,29 @@ gimp_help_connect (GtkWidget    *widget,
 
 /**
  * gimp_help_set_help_data:
- * @widget: The #GtkWidget you want to set a @tooltip and/or @help_data for.
+ * @widget:  The #GtkWidget you want to set a @tooltip and/or @help_data for.
  * @tooltip: The text for this widget's tooltip (or %NULL).
- * @help_data: The @help_data for the #GtkTipsQuery tooltips inspector.
+ * @help_id: The @help_id for the #GtkTipsQuery tooltips inspector.
  *
  * The reason why we don't use gtk_tooltips_set_tip() is that it's
- * impossible to set a @private_tip (aka @help_data) without a visible
+ * impossible to set a @private_tip (aka @help_id) without a visible
  * @tooltip.
  *
  * This function can be called with %NULL for @tooltip. Use this feature
- * if you want to set a HTML help link for a widget which shouldn't have
+ * if you want to set a help link for a widget which shouldn't have
  * a visible tooltip.
- *
- * You can e.g. set a @help_data string to a complete HTML page for a
- * container widget (e.g. a #GtkBox). For the widgets inside the box
- * you can set HTML anchors which point inside the container widget's
- * help page by setting @help_data strings starting with "#".
- *
- * If the tooltips inspector (Shift + "F1") is invoked and the user
- * clicks on one of the widgets which only contain a "#" link, the
- * help system will automatically ascend the widget hierarchy until it
- * finds another widget with @help_data attached and concatenates both
- * to a complete help path.
  **/
 void
 gimp_help_set_help_data (GtkWidget   *widget,
 			 const gchar *tooltip,
-			 const gchar *help_data)
+			 const gchar *help_id)
 {
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   if (tooltip)
-    {
-      gtk_tooltips_set_tip (tool_tips, widget, tooltip, help_data);
-    }
-  else if (help_data)
-    {
-      g_object_set_data (G_OBJECT (widget), "gimp_help_data",
-                         (gpointer) help_data);
-    }
+    gtk_tooltips_set_tip (tool_tips, widget, tooltip, help_id);
+  else
+    g_object_set_data (G_OBJECT (widget), "gimp-help-id", (gpointer) help_id);
 }
 
 /**
@@ -249,10 +238,10 @@ gimp_help_set_help_data (GtkWidget   *widget,
  * The mouse cursor will turn turn into a question mark and the user can
  * click on any widget of the application which started the inspector.
  *
- * If the widget the user clicked on has a @help_data string attached
- * (see gimp_help_set_help_data()), the corresponding HTML page will
+ * If the widget the user clicked on has a @help_id string attached
+ * (see gimp_help_set_help_data()), the corresponding help page will
  * be displayed. Otherwise the help system will ascend the widget hierarchy
- * until it finds an attached @help_data string (which should be the
+ * until it finds an attached @help_id string (which should be the
  * case at least for every window/dialog).
  **/
 void
@@ -267,29 +256,36 @@ gimp_context_help (void)
 
 static const gchar *
 gimp_help_get_help_data (GtkWidget  *widget,
-                         GtkWidget **help_widget)
+                         GtkWidget **help_widget,
+                         gpointer   *ret_data)
 {
   GtkTooltipsData *tooltips_data;
-  gchar           *help_data = NULL;
+  gchar           *help_id   = NULL;
+  gpointer         help_data = NULL;
 
   for (; widget; widget = widget->parent)
     {
       if ((tooltips_data = gtk_tooltips_data_get (widget)) &&
 	  tooltips_data->tip_private)
 	{
-	  help_data = tooltips_data->tip_private;
+	  help_id = tooltips_data->tip_private;
 	}
       else
 	{
-	  help_data = g_object_get_data (G_OBJECT (widget), "gimp_help_data");
+	  help_id = g_object_get_data (G_OBJECT (widget), "gimp-help-id");
 	}
 
-      if (help_data)
+      help_data = g_object_get_data (G_OBJECT (widget), "gimp-help-data");
+
+      if (help_id)
         {
           if (help_widget)
             *help_widget = widget;
 
-          return (const gchar *) help_data;
+          if (ret_data)
+            *ret_data = help_data;
+
+          return (const gchar *) help_id;
         }
     }
 
@@ -306,11 +302,23 @@ gimp_help_callback (GtkWidget          *widget,
     case GIMP_WIDGET_HELP_TYPE_HELP:
       if (help_func)
         {
-          gchar *help_data;
+          GtkTooltipsData *tooltips_data;
+          gchar           *help_id   = NULL;
+          gpointer         help_data = NULL;
 
-          help_data = g_object_get_data (G_OBJECT (widget), "gimp_help_data");
+          if ((tooltips_data = gtk_tooltips_data_get (widget)) &&
+              tooltips_data->tip_private)
+            {
+              help_id = tooltips_data->tip_private;
+            }
+          else
+            {
+              help_id = g_object_get_data (G_OBJECT (widget), "gimp-help-id");
+            }
 
-	  (* help_func) (help_data);
+          help_data = g_object_get_data (G_OBJECT (widget), "gimp-help-data");
+
+	  (* help_func) (help_id, help_data);
         }
       return TRUE;
 
@@ -337,33 +345,14 @@ static gboolean
 gimp_help_tips_query_idle_show_help (gpointer data)
 {
   GtkWidget   *help_widget;
-  const gchar *help_data = NULL;
+  const gchar *help_id   = NULL;
+  gpointer     help_data = NULL;
 
-  help_data = gimp_help_get_help_data (GTK_WIDGET (data), &help_widget);
+  help_id = gimp_help_get_help_data (GTK_WIDGET (data), &help_widget,
+                                     &help_data);
 
-  if (help_data)
-    {
-      if (help_data[0] == '#')
-        {
-          const gchar *help_index;
-
-          help_index = help_data;
-          help_data  = gimp_help_get_help_data (help_widget->parent, NULL);
-
-          if (help_data)
-            {
-              gchar *help_text;
-
-              help_text = g_strconcat (help_data, help_index, NULL);
-              gimp_standard_help_func (help_text);
-              g_free (help_text);
-            }
-        }
-      else
-        {
-          gimp_standard_help_func (help_data);
-        }
-    }
+  if (help_id)
+    gimp_standard_help_func (help_id, help_data);
 
   return FALSE;
 }

@@ -223,7 +223,7 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
                                   stock_id,
                                   image_map_tool->shell_desc,
                                   gimp_standard_help_func,
-                                  tool_info->help_data,
+                                  tool_info->help_id,
 
                                   GIMP_STOCK_RESET,
                                   gimp_image_map_tool_reset_clicked,

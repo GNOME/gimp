@@ -172,8 +172,8 @@ gimp_text_editor_new (const gchar   *title,
                          NULL);
 
   gtk_window_set_wmclass (GTK_WINDOW (editor), "text_editor", "Gimp");
-  gimp_help_connect (GTK_WIDGET (editor),
-                     gimp_standard_help_func, "dialogs/text_editor.html");
+  gimp_help_connect (GTK_WIDGET (editor), gimp_standard_help_func,
+                     "dialogs/text_editor.html", NULL);
 
   gimp_dialog_create_action_area (GIMP_DIALOG (editor),
                                   GTK_STOCK_CLOSE, gtk_widget_destroy,

@@ -28,7 +28,8 @@
 
 /*  local function prototypes  */
 
-static void  gimp_ui_help_func (const gchar *help_data);
+static void  gimp_ui_help_func (const gchar *help_id,
+                                gpointer     help_data);
 
 
 /*  public functions  */
@@ -115,7 +116,8 @@ gimp_ui_init (const gchar *prog_name,
 /*  private functions  */
 
 static void
-gimp_ui_help_func (const gchar *help_data)
+gimp_ui_help_func (const gchar *help_id,
+                   gpointer     help_data)
 {
-  gimp_help (gimp_get_progname (), (gchar *) help_data);
+  gimp_help (gimp_get_progname (), help_id);
 }

@@ -658,7 +658,7 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
                                gdouble      unconstrained_lower,
                                gdouble      unconstrained_upper,
                                const gchar *tooltip,
-                               const gchar *help_data)
+                               const gchar *help_id)
 {
   GtkWidget *label;
   GtkWidget *scale;
@@ -749,10 +749,10 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
 		    GTK_SHRINK, GTK_SHRINK, 0, 0);
   gtk_widget_show (spinbutton);
 
-  if (tooltip || help_data)
+  if (tooltip || help_id)
     {
-      gimp_help_set_help_data (scale, tooltip, help_data);
-      gimp_help_set_help_data (spinbutton, tooltip, help_data);
+      gimp_help_set_help_data (scale, tooltip, help_id);
+      gimp_help_set_help_data (spinbutton, tooltip, help_id);
     }
 
   g_object_set_data (G_OBJECT (return_adj), "label", label);
@@ -784,7 +784,7 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
  * @unconstrained_upper: The spinbutton's upper boundary
  *                       if @constrain == %FALSE.
  * @tooltip:             A tooltip message for the scale and the spinbutton.
- * @help_data:           The widgets' help_data (see gimp_help_set_help_data()).
+ * @help_id:             The widgets' help_id (see gimp_help_set_help_data()).
  *
  * This function creates a #GtkLabel, a #GtkHScale and a #GtkSpinButton and
  * attaches them to a 3-column #GtkTable.
@@ -808,7 +808,7 @@ gimp_scale_entry_new (GtkTable    *table,
 		      gdouble      unconstrained_lower,
 		      gdouble      unconstrained_upper,
 		      const gchar *tooltip,
-		      const gchar *help_data)
+		      const gchar *help_id)
 {
   return gimp_scale_entry_new_internal (FALSE,
                                         table, column, row,
@@ -819,7 +819,7 @@ gimp_scale_entry_new (GtkTable    *table,
                                         constrain,
                                         unconstrained_lower,
                                         unconstrained_upper,
-                                        tooltip, help_data);
+                                        tooltip, help_id);
 }
 
 /**
@@ -838,7 +838,7 @@ gimp_scale_entry_new (GtkTable    *table,
  * @page_increment:      The page increment.
  * @digits:              The number of decimal digits.
  * @tooltip:             A tooltip message for the scale and the spinbutton.
- * @help_data:           The widgets' help_data (see gimp_help_set_help_data()).
+ * @help_id:             The widgets' help_id (see gimp_help_set_help_data()).
  *
  * This function creates a #GtkLabel, a #GimpColorScale and a
  * #GtkSpinButton and attaches them to a 3-column #GtkTable.
@@ -859,7 +859,7 @@ gimp_color_scale_entry_new (GtkTable    *table,
                             gdouble      page_increment,
                             guint        digits,
                             const gchar *tooltip,
-                            const gchar *help_data)
+                            const gchar *help_id)
 {
   return gimp_scale_entry_new_internal (TRUE,
                                         table, column, row,
@@ -868,7 +868,7 @@ gimp_color_scale_entry_new (GtkTable    *table,
                                         step_increment, page_increment,
                                         digits,
                                         TRUE, 0.0, 0.0,
-                                        tooltip, help_data);
+                                        tooltip, help_id);
 }
 
 /**

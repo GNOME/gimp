@@ -29,7 +29,7 @@
  */
 void   gimp_help (Gimp        *gimp,
                   const gchar *help_path,
-                  const gchar *help_data);
+                  const gchar *help_id);
 
 
 #endif /* __GIMP_HELP_H__ */

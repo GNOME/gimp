@@ -217,9 +217,8 @@ tips_dialog_create (Gimp *gimp)
 		    G_CALLBACK (tips_show_next),
 		    NULL);
 
-  /*  Connect the "F1" help key  */
   gimp_help_connect (tips_dialog, gimp_standard_help_func,
-		     GIMP_HELP_TIPS_DIALOG);
+		     GIMP_HELP_TIPS_DIALOG, NULL);
 
   tips_set_labels (current_tip->data);
 

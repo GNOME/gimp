@@ -263,7 +263,7 @@ gimp_color_picker_tool_info_create (GimpTool *tool)
                                  GIMP_STOCK_TOOL_COLOR_PICKER,
                                  _("Color Picker Information"),
                                  gimp_standard_help_func,
-                                 tool->tool_info->help_data);
+                                 tool->tool_info->help_id);
 
   gimp_dialog_create_action_area (GIMP_DIALOG (info_dialog->shell),
 

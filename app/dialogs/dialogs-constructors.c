@@ -1110,8 +1110,7 @@ dialogs_tool_options_tool_changed (GimpContext  *context,
   gtk_label_set_text (label, tool_info->blurb);
 
   gimp_help_set_help_data (GTK_WIDGET (label)->parent->parent,
-                           tool_info->help,
-                           tool_info->help_data);
+                           tool_info->help, tool_info->help_id);
 }
 
 static GtkWidget *

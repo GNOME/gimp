@@ -24,10 +24,6 @@
 
 #include "gui-types.h"
 
-#include "core/gimpobject.h"
-
-#include "plug-in/plug-in.h"
-
 #include "help-commands.h"
 
 
@@ -36,7 +32,7 @@ help_help_cmd_callback (GtkWidget *widget,
 			gpointer   data,
                         guint      action)
 {
-  gimp_standard_help_func (NULL);
+  gimp_standard_help_func (NULL, NULL);
 }
 
 void

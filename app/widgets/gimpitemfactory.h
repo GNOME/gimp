@@ -28,7 +28,7 @@ struct _GimpItemFactoryEntry
 
   const gchar *quark_string;
 
-  const gchar *help_page;
+  const gchar *help_id;
   const gchar *description;
 };
 
@@ -65,7 +65,6 @@ GType   gimp_item_factory_get_type        (void) G_GNUC_CONST;
 GimpItemFactory * gimp_item_factory_new   (Gimp                 *gimp,
                                            GType                 container_type,
                                            const gchar          *factory_path,
-                                           const gchar          *help_path,
                                            GimpItemFactoryUpdateFunc  update_func,
                                            gboolean              update_on_popup,
                                            guint                 n_entries,

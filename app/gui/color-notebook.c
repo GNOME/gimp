@@ -95,7 +95,8 @@ static ColorNotebook *
                                                 gboolean               wants_updates,
                                                 gboolean               show_alpha);
 
-static void   color_notebook_help_func         (const gchar           *help_data);
+static void   color_notebook_help_func         (const gchar           *help_id,
+                                                gpointer               help_data);
 
 static void   color_notebook_ok_callback       (GtkWidget             *widget,
                                                 ColorNotebook         *cnp);
@@ -322,21 +323,21 @@ color_notebook_new_internal (GimpViewable          *viewable,
       cnp->shell = gimp_viewable_dialog_new (viewable,
                                              title, wmclass_name,
                                              stock_id, desc,
-                                             color_notebook_help_func,
-                                             (const gchar *) cnp,
+                                             color_notebook_help_func, NULL,
                                              NULL);
 
       gtk_window_set_resizable (GTK_WINDOW (cnp->shell), FALSE);
     }
   else
     {
-       cnp->shell = gimp_dialog_new (title, wmclass_name,
-                                     color_notebook_help_func,
-                                     (const gchar *) cnp,
-                                     GTK_WIN_POS_NONE,
-                                     FALSE, TRUE, TRUE,
-                                     NULL);
+      cnp->shell = gimp_dialog_new (title, wmclass_name,
+                                    color_notebook_help_func, NULL,
+                                    GTK_WIN_POS_NONE,
+                                    FALSE, TRUE, TRUE,
+                                    NULL);
    }
+
+  g_object_set_data (G_OBJECT (cnp->shell), "color-notebook", cnp);
 
   gimp_dialog_create_action_area (GIMP_DIALOG (cnp->shell),
 
@@ -535,21 +536,19 @@ color_notebook_new_internal (GimpViewable          *viewable,
 }
 
 static void
-color_notebook_help_func (const gchar *data)
+color_notebook_help_func (const gchar *help_id,
+                          gpointer     help_data)
 {
   ColorNotebook     *cnp;
   GimpColorNotebook *notebook;
-  gchar             *help_path;
 
-  cnp = (ColorNotebook *) data;
+  cnp = g_object_get_data (G_OBJECT (help_data), "color-notebook");
 
   notebook = GIMP_COLOR_NOTEBOOK (cnp->notebook);
 
-  help_path = g_strconcat ("dialogs/color_selectors/",
-			   GIMP_COLOR_SELECTOR_GET_CLASS (notebook->cur_page)->help_page,
-			   NULL);
-  gimp_standard_help_func (help_path);
-  g_free (help_path);
+  help_id = GIMP_COLOR_SELECTOR_GET_CLASS (notebook->cur_page)->help_page;
+
+  gimp_standard_help_func (help_id, NULL);
 }
 
 static void

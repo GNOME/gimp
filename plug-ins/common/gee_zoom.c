@@ -146,7 +146,7 @@ query (void)
 static void
 run (const gchar      *name,
      gint              n_params,
-     const GimpParam  *param, 
+     const GimpParam  *param,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
@@ -155,7 +155,7 @@ run (const gchar      *name,
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   gr = g_rand_new();
-  
+
   *nreturn_vals = 1;
   *return_vals = values;
 
@@ -168,7 +168,7 @@ run (const gchar      *name,
     {
       status = GIMP_PDB_CALLING_ERROR;
     }
-  
+
   if (status == GIMP_PDB_SUCCESS)
     {
       image_id = param[1].data.d_image;
@@ -196,7 +196,6 @@ build_dialog (void)
   GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *hbox2;
-  GtkTooltips *tooltips;
 
   gimp_ui_init ("gee_zoom", TRUE);
 
@@ -209,7 +208,8 @@ build_dialog (void)
                     G_CALLBACK (window_delete_callback),
                     NULL);
 
-  gimp_help_connect (dlg, gimp_standard_help_func, "filters/gee.html");
+  gimp_help_connect (dlg, gimp_standard_help_func,
+                     "filters/gee.html", NULL);
 
   /* Action area - 'close' button only. */
 
@@ -224,14 +224,13 @@ build_dialog (void)
                             G_CALLBACK (window_close_callback),
                             dlg);
 
-  tooltips = gtk_tooltips_new ();
-  gtk_tooltips_set_tip (GTK_TOOLTIPS (tooltips), button,
-                        _("An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / 1998-2000"),
-		       NULL);
-  gtk_tooltips_enable (tooltips);
+  gimp_help_set_help_data (button,
+                           _("An obsolete creation of Adam D. Moss / "
+                             "adam@gimp.org / adam@foxbox.org / 1998-2000"),
+                           NULL);
 
   /* The 'fun' half of the dialog */
-    
+
   frame = gtk_frame_new (NULL);
 
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
@@ -287,19 +286,19 @@ build_dialog (void)
   gtk_widget_show (frame);
 
   gtk_widget_show (dlg);
-	    
+
   idle_tag = g_idle_add_full (G_PRIORITY_LOW,
                               (GSourceFunc) iteration_callback,
                               NULL,
                               NULL);
-  
+
   g_signal_connect (eventbox, "button_release_event",
                     G_CALLBACK (toggle_feedbacktype),
                     NULL);
 }
 
 
-static void 
+static void
 init_lut (void)
 {
   gint i;
@@ -313,7 +312,7 @@ init_lut (void)
 }
 
 
-static void 
+static void
 do_fun (void)
 {
   imagetype = gimp_image_base_type(image_id);
@@ -328,7 +327,7 @@ do_fun (void)
   build_dialog ();
 
   init_lut();
-  
+
   render_frame();
   show_frame();
 
@@ -340,7 +339,7 @@ do_fun (void)
 /* Rendering Functions */
 
 /* Adam's silly algorithm. */
-static void 
+static void
 domap1 (unsigned char *src, unsigned char *dest,
 	int bx, int by, int cx, int cy)
 {
@@ -367,9 +366,9 @@ domap1 (unsigned char *src, unsigned char *dest,
     bycxmcybx = 1;
 
   /* A little sub-pixel jitter to liven things up. */
-  basesx = ((g_rand_int_range (gr, 0, 29<<19)/bycxmcybx)) + 
+  basesx = ((g_rand_int_range (gr, 0, 29<<19)/bycxmcybx)) +
     ((-128-((128*256)/(cx+bx)))<<11);
-  basesy = ((g_rand_int_range (gr, 0, 29<<19)/bycxmcybx)) + 
+  basesy = ((g_rand_int_range (gr, 0, 29<<19)/bycxmcybx)) +
     ((-128-((128*256)/(cy+by)))<<11);
 
   bx2 = ((bx)<<19)/bycxmcybx;
@@ -416,7 +415,7 @@ domap1 (unsigned char *src, unsigned char *dest,
 }
 
 /* 3bypp variant */
-static void 
+static void
 domap3(unsigned char *src, unsigned char *dest,
        int bx, int by, int cx, int cy)
 {
@@ -443,9 +442,9 @@ domap3(unsigned char *src, unsigned char *dest,
     bycxmcybx = 1;
 
   /* A little sub-pixel jitter to liven things up. */
-  basesx = ((g_rand_int_range (gr, 0, 29<<19)/bycxmcybx)) + 
+  basesx = ((g_rand_int_range (gr, 0, 29<<19)/bycxmcybx)) +
     ((-128-((128*256)/(cx+bx)))<<11);
-  basesy = ((g_rand_int_range (gr, 0, 29<<19)/bycxmcybx)) + 
+  basesy = ((g_rand_int_range (gr, 0, 29<<19)/bycxmcybx)) +
     ((-128-((128*256)/(cy+by)))<<11);
 
   bx2 = ((bx)<<19)/bycxmcybx;
@@ -457,8 +456,8 @@ domap3(unsigned char *src, unsigned char *dest,
     {
       unsigned int sx;
       unsigned int sy;
-      unsigned int dx; 
-      
+      unsigned int dx;
+
       sy = (basesy+=cx2);
       sx = (basesx-=bx2);
 
@@ -467,13 +466,13 @@ domap3(unsigned char *src, unsigned char *dest,
 	  sx += wigglelut[(((basesy)>>11)+grrr) & LUTSIZEMASK];
 	  sy += wigglelut[(((basesx)>>11)+(grrr/3)) & LUTSIZEMASK];
 	}
-      
+
       dx = 256;
-      
+
       do
 	{
 	  unsigned char* addr;
-	  
+
 	  addr = src + 3*
 	    (
 	     (
@@ -486,11 +485,11 @@ domap3(unsigned char *src, unsigned char *dest,
 		       ))<<8)))
 	      )
 	     );
-	  
+
 	  *dest++ = *(addr);
 	  *dest++ = *(addr+1);
 	  *dest++ = *(addr+2);
-	  
+
 	  sx += by2;
 	  sy -= cy2;
 	}
@@ -601,7 +600,7 @@ render_frame (void)
 		    ((seedwords[i] >> 1) & 0x7f7f7f7f) +
 		    (prevwords[i] & seedwords[i] & 0x01010101); */
 		}
-	    }	
+	    }
 	}
     }
   else /* GRAYSCALE */
@@ -662,7 +661,7 @@ render_frame (void)
 		    ((seedwords[i] >> 1) & 0x7f7f7f7f) +
 		    (prevwords[i] & seedwords[i] & 0x01010101); */
 		}
-	    }	
+	    }
 	}
     }
 
@@ -877,7 +876,7 @@ toggle_feedbacktype (GtkWidget *widget,
   if (bevent->state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK))
     {
       wiggleamp = bevent->x/5;
-      
+
       wiggly = TRUE;
       init_lut();
 

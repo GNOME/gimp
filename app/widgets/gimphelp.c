@@ -43,6 +43,7 @@
 #include "plug-in/plug-in-run.h"
 
 #include "gimphelp.h"
+#include "gimphelp-ids.h"
 
 #include "gimp-intl.h"
 
@@ -58,7 +59,7 @@ struct _GimpIdleHelp
   Gimp  *gimp;
   gchar *help_path;
   gchar *help_locale;
-  gchar *help_data;
+  gchar *help_id;
 };
 
 
@@ -68,11 +69,11 @@ static gint      gimp_idle_help     (gpointer     data);
 static gboolean  gimp_help_internal (Gimp        *gimp,
                                      const gchar *help_path,
 				     const gchar *current_locale,
-				     const gchar *help_data);
+				     const gchar *help_id);
 static void      gimp_help_netscape (Gimp        *gimp,
                                      const gchar *help_path,
 				     const gchar *current_locale,
-				     const gchar *help_data);
+				     const gchar *help_id);
 
 
 /*  public functions  */
@@ -80,7 +81,7 @@ static void      gimp_help_netscape (Gimp        *gimp,
 void
 gimp_help (Gimp        *gimp,
            const gchar *help_path,
-	   const gchar *help_data)
+	   const gchar *help_id)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -97,8 +98,8 @@ gimp_help (Gimp        *gimp,
 
       idle_help->help_locale = g_strdup ("C");
 
-      if (help_data && strlen (help_data))
-	idle_help->help_data = g_strdup (help_data);
+      if (help_id && strlen (help_id))
+	idle_help->help_id = g_strdup (help_id);
 
       g_idle_add (gimp_idle_help, idle_help);
     }
@@ -123,10 +124,10 @@ gimp_idle_help (gpointer data)
   else
     g_print ("Help Path: NULL\n");
 
-  if (idle_help->help_data)
-    g_print ("Help Page: %s\n", idle_help->help_data);
+  if (idle_help->help_id)
+    g_print ("Help ID: %s\n", idle_help->help_id);
   else
-    g_print ("Help Page: NULL\n");
+    g_print ("Help ID: NULL\n");
 
   g_print ("\n");
 #endif  /*  DEBUG_HELP  */
@@ -137,14 +138,14 @@ gimp_idle_help (gpointer data)
       if (gimp_help_internal (idle_help->gimp,
                               idle_help->help_path,
 			      idle_help->help_locale,
-			      idle_help->help_data))
+			      idle_help->help_id))
 	break;
 
     case GIMP_HELP_BROWSER_NETSCAPE:
       gimp_help_netscape (idle_help->gimp,
                           idle_help->help_path,
 			  idle_help->help_locale,
-			  idle_help->help_data);
+			  idle_help->help_id);
       break;
 
     default:
@@ -153,7 +154,7 @@ gimp_idle_help (gpointer data)
 
   g_free (idle_help->help_path);
   g_free (idle_help->help_locale);
-  g_free (idle_help->help_data);
+  g_free (idle_help->help_id);
   g_free (idle_help);
 
   return FALSE;
@@ -178,7 +179,7 @@ static gboolean
 gimp_help_internal (Gimp        *gimp,
                     const gchar *help_path,
 		    const gchar *current_locale,
-		    const gchar *help_data)
+		    const gchar *help_id)
 {
   ProcRecord *proc_rec;
 
@@ -228,7 +229,7 @@ gimp_help_internal (Gimp        *gimp,
       args[2].arg_type          = GIMP_PDB_STRING;
       args[2].value.pdb_pointer = (gpointer) current_locale;
       args[3].arg_type          = GIMP_PDB_STRING;
-      args[3].value.pdb_pointer = (gpointer) help_data;
+      args[3].value.pdb_pointer = (gpointer) help_id;
 
       plug_in_run (gimp, proc_rec, args, 4, FALSE, TRUE, -1);
 
@@ -245,7 +246,7 @@ gimp_help_internal (Gimp        *gimp,
                                 &nreturn_vals,
 				GIMP_PDB_STRING, help_path,
 				GIMP_PDB_STRING, current_locale,
-                                GIMP_PDB_STRING, help_data,
+                                GIMP_PDB_STRING, help_id,
                                 GIMP_PDB_END);
 
       procedural_db_destroy_args (return_vals, nreturn_vals);
@@ -260,18 +261,18 @@ static void
 gimp_help_netscape (Gimp        *gimp,
                     const gchar *help_path,
 		    const gchar *current_locale,
-		    const gchar *help_data)
+		    const gchar *help_id)
 {
   Argument *return_vals;
   gint      nreturn_vals;
   gchar    *url;
 
-  if (!help_data)
-    help_data = "introduction.html";
+  if (! help_id)
+    help_id = GIMP_HELP_MAIN;
 
-  if (help_data[0] == '/')  /* _not_ g_path_is_absolute() */
+  if (help_id[0] == '/')  /* _not_ g_path_is_absolute() */
     {
-      url = g_strconcat ("file:", help_data, NULL);
+      url = g_strconcat ("file:", help_id, NULL);
     }
   else
     {
@@ -281,7 +282,7 @@ gimp_help_netscape (Gimp        *gimp,
 			     gimp_data_directory (),
 			     "/help/",
 			     current_locale, "/",
-			     help_data,
+			     help_id,
 			     NULL);
 	}
       else
@@ -289,7 +290,7 @@ gimp_help_netscape (Gimp        *gimp,
 	  url = g_strconcat ("file:",
 			     help_path, "/",
 			     current_locale, "/",
-			     help_data,
+			     help_id,
 			     NULL);
 	}
     }

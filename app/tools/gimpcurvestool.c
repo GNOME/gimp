@@ -1273,7 +1273,7 @@ file_dialog_create (GimpCurvesTool *c_tool)
   g_free (temp);
 
   gimp_help_connect (c_tool->file_dialog, gimp_standard_help_func,
-                     GIMP_TOOL (c_tool)->tool_info->help_data);
+                     GIMP_TOOL (c_tool)->tool_info->help_id, NULL);
 }
 
 static void

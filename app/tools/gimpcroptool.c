@@ -988,7 +988,7 @@ crop_info_create (GimpCropTool *crop)
                                      stock_id,
                                      _("Crop & Resize Information"),
                                      gimp_standard_help_func,
-                                     tool->tool_info->help_data);
+                                     tool->tool_info->help_id);
 
   gimp_dialog_create_action_area (GIMP_DIALOG (crop->crop_info->shell),
 

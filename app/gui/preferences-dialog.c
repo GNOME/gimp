@@ -464,7 +464,7 @@ prefs_notebook_append_page (Gimp          *gimp,
                             const gchar   *notebook_icon,
                             GtkTreeStore  *tree,
                             const gchar   *tree_label,
-                            const gchar   *help_data,
+                            const gchar   *help_id,
                             GtkTreeIter   *parent,
                             GtkTreeIter   *iter,
                             gint           page_index)
@@ -478,7 +478,7 @@ prefs_notebook_append_page (Gimp          *gimp,
   gtk_notebook_append_page (notebook, event_box, NULL);
   gtk_widget_show (event_box);
 
-  gimp_help_set_help_data (event_box, NULL, help_data);
+  gimp_help_set_help_data (event_box, NULL, help_id);
 
   vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
@@ -824,21 +824,19 @@ prefs_memsize_entry_add (GObject     *config,
 }
 
 static void
-prefs_help_func (const gchar *help_data)
+prefs_help_func (const gchar *help_id,
+                 gpointer     help_data)
 {
-  if (prefs_dialog)
-    {
-      GtkWidget *notebook;
-      GtkWidget *event_box;
-      gint       page_num;
+  GtkWidget *notebook;
+  GtkWidget *event_box;
+  gint       page_num;
 
-      notebook  = g_object_get_data (G_OBJECT (prefs_dialog), "notebook");
-      page_num  = gtk_notebook_get_current_page (GTK_NOTEBOOK (notebook));
-      event_box = gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), page_num);
+  notebook  = g_object_get_data (G_OBJECT (help_data), "notebook");
+  page_num  = gtk_notebook_get_current_page (GTK_NOTEBOOK (notebook));
+  event_box = gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), page_num);
 
-      help_data = g_object_get_data (G_OBJECT (event_box), "gimp_help_data");
-      gimp_standard_help_func (help_data);
-    }
+  help_id = g_object_get_data (G_OBJECT (event_box), "gimp-help-id");
+  gimp_standard_help_func (help_id, NULL);
 }
 
 static GtkWidget *

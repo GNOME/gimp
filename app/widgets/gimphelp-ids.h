@@ -23,6 +23,8 @@
 #define __GIMP_HELP_IDS_H__
 
 
+#define GIMP_HELP_MAIN                            "index.html"
+
 #define GIMP_HELP_FILE_NEW                        "dialogs/file_new.html"
 #define GIMP_HELP_FILE_NEW_CONFIRM                "dialogs/file_new.html#confirm_dialog"
 #define GIMP_HELP_FILE_OPEN                       "dialogs/file_open.html"

@@ -29,6 +29,7 @@
 #include "core/gimp.h"
 
 #include "plug-in/plug-in-proc.h"
+#include "plug-in/plug-ins.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
@@ -56,31 +57,48 @@ gint n_file_open_menu_entries = G_N_ELEMENTS (file_open_menu_entries);
 void
 file_open_menu_setup (GimpItemFactory *factory)
 {
-  GimpItemFactoryEntry  entry;
-  PlugInProcDef        *file_proc;
-  GSList               *list;
+  GSList *list;
 
   for (list = factory->gimp->load_procs; list; list = g_slist_next (list))
     {
-      gchar *basename;
-      gchar *lowercase_basename;
-      gchar *help_page;
+      PlugInProcDef        *file_proc;
+      const gchar          *progname;
+      const gchar          *locale_domain;
+      const gchar          *help_path;
+      GimpItemFactoryEntry  entry;
+      gchar                *help_id;
+      gchar                *help_page;
 
       file_proc = (PlugInProcDef *) list->data;
 
-      basename = g_path_get_basename (file_proc->prog);
+      progname = plug_in_proc_def_get_progname (file_proc);
 
-      lowercase_basename = g_ascii_strdown (basename, -1);
+      locale_domain = plug_ins_locale_domain (factory->gimp,
+                                              progname, NULL);
+      help_path = plug_ins_help_path (factory->gimp,
+                                      progname);
 
-      g_free (basename);
+#ifdef __GNUC__
+#warning FIXME: fix plug-in menu item help
+#endif
+      {
+        gchar *basename;
+        gchar *lowercase_basename;
 
-      /*  NOT g_build_filename() because this is a relative URI */
-      help_page = g_strconcat ("filters/",
-			       lowercase_basename,
-			       ".html",
-			       NULL);
+        basename = g_path_get_basename (file_proc->prog);
+        lowercase_basename = g_ascii_strdown (basename, -1);
 
-      g_free (lowercase_basename);
+        help_id = g_strconcat (lowercase_basename, ".html", NULL);
+
+        g_free (lowercase_basename);
+      }
+
+      if (help_path)
+        help_page = g_strconcat (help_path, ":", help_id, NULL);
+      else
+        help_page = g_strconcat ("filters/", help_id, NULL);
+
+      g_free (help_id);
 
       entry.entry.path            = strstr (file_proc->menu_path, "/");
       entry.entry.accelerator     = NULL;
@@ -88,12 +106,12 @@ file_open_menu_setup (GimpItemFactory *factory)
       entry.entry.callback_action = 0;
       entry.entry.item_type       = NULL;
       entry.quark_string          = NULL;
-      entry.help_page             = help_page;
+      entry.help_id               = help_page;
       entry.description           = NULL;
 
       gimp_item_factory_create_item (factory,
                                      &entry,
-                                     NULL,
+                                     locale_domain,
                                      file_proc, 2,
                                      TRUE, FALSE);
 

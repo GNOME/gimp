@@ -48,7 +48,7 @@ typedef struct _PlugInMenuEntry PlugInMenuEntry;
 struct _PlugInMenuEntry
 {
   PlugInProcDef *proc_def;
-  const gchar   *domain;
+  const gchar   *locale_domain;
   const gchar   *help_path;
 };
 
@@ -149,17 +149,17 @@ plug_in_menus_create (GimpItemFactory *item_factory,
 
           menu_entry = g_new0 (PlugInMenuEntry, 1);
 
-          menu_entry->proc_def  = proc_def;
-          menu_entry->domain    = locale_domain;
-          menu_entry->help_path = help_path;
+          menu_entry->proc_def      = proc_def;
+          menu_entry->locale_domain = locale_domain;
+          menu_entry->help_path     = help_path;
 
-          g_tree_insert (menu_entries, 
+          g_tree_insert (menu_entries,
                          dgettext (locale_domain, proc_def->menu_path),
                          menu_entry);
         }
     }
 
-  g_tree_foreach (menu_entries, 
+  g_tree_foreach (menu_entries,
                   (GTraverseFunc) plug_in_menu_tree_traverse_func,
                   item_factory);
   g_tree_destroy (menu_entries);
@@ -172,36 +172,33 @@ plug_in_menus_create_entry (GimpItemFactory *item_factory,
                             const gchar     *help_path)
 {
   GimpItemFactoryEntry  entry;
+  gchar                *help_id;
   gchar                *help_page;
-  gchar                *basename;
-  gchar                *lowercase_page;
 
   g_return_if_fail (item_factory == NULL ||
                     GIMP_IS_ITEM_FACTORY (item_factory));
 
-  basename = g_path_get_basename (proc_def->prog);
+#ifdef __GNUC__
+#warning FIXME: fix plug-in menu item help
+#endif
+  {
+    gchar *basename;
+    gchar *lowercase_basename;
+
+    basename = g_path_get_basename (proc_def->prog);
+    lowercase_basename = g_ascii_strdown (basename, -1);
+
+    help_id = g_strconcat (lowercase_basename, ".html", NULL);
+
+    g_free (lowercase_basename);
+  }
 
   if (help_path)
-    {
-      help_page = g_strconcat (help_path,
-			       "@",   /* HACK: locale subdir */
-			       basename,
-			       ".html",
-			       NULL);
-    }
+    help_page = g_strconcat (help_path, ":", help_id, NULL);
   else
-    {
-      help_page = g_strconcat ("filters/",  /* _not_ G_DIR_SEPARATOR_S */
-			       basename,
-			       ".html",
-			       NULL);
-    }
+    help_page = g_strconcat ("filters/", help_id, NULL);
 
-  g_free (basename);
-
-  lowercase_page = g_ascii_strdown (help_page, -1);
-
-  g_free (help_page);
+  g_free (help_id);
 
   entry.entry.path            = strstr (proc_def->menu_path, "/");
   entry.entry.accelerator     = proc_def->accelerator;
@@ -209,7 +206,7 @@ plug_in_menus_create_entry (GimpItemFactory *item_factory,
   entry.entry.callback_action = 0;
   entry.entry.item_type       = NULL;
   entry.quark_string          = NULL;
-  entry.help_page             = lowercase_page;
+  entry.help_id               = help_page;
   entry.description           = NULL;
 
   if (item_factory)
@@ -246,7 +243,7 @@ plug_in_menus_create_entry (GimpItemFactory *item_factory,
         }
     }
 
-  g_free (lowercase_page);
+  g_free (help_page);
 }
 
 void
@@ -413,7 +410,7 @@ plug_in_menu_tree_traverse_func (gpointer         foo,
 {
   plug_in_menus_create_entry (item_factory,
                               menu_entry->proc_def,
-                              menu_entry->domain,
+                              menu_entry->locale_domain,
                               menu_entry->help_path);
 
   return FALSE;

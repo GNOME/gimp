@@ -370,7 +370,7 @@ gimp_error_console_save_ext_clicked (GtkWidget        *button,
 		    console);
 
   gimp_help_connect (GTK_WIDGET (filesel), gimp_standard_help_func,
-		     GIMP_HELP_ERROR_DIALOG);
+		     GIMP_HELP_ERROR_DIALOG, NULL);
 
   gtk_widget_show (GTK_WIDGET (filesel));
 }

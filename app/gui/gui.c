@@ -66,7 +66,8 @@
 
 /*  local function prototypes  */
 
-static void         gui_help_func               (const gchar      *help_data);
+static void         gui_help_func               (const gchar      *help_id,
+                                                 gpointer          help_data);
 static gboolean     gui_get_background_func     (GimpRGB          *color);
 static gboolean     gui_get_foreground_func     (GimpRGB          *color);
 
@@ -367,9 +368,10 @@ gui_post_init (Gimp *gimp)
 /*  private functions  */
 
 static void
-gui_help_func (const gchar *help_data)
+gui_help_func (const gchar *help_id,
+               gpointer     help_data)
 {
-  gimp_help (the_gimp, NULL, help_data);
+  gimp_help (the_gimp, NULL, help_id);
 }
 
 static gboolean

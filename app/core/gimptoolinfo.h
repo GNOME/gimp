@@ -50,7 +50,7 @@ struct _GimpToolInfo
   gchar               *menu_accel; 
 
   gchar               *help_domain;
-  gchar               *help_data;
+  gchar               *help_id;
 
   gboolean             in_toolbox;
   GimpToolOptions     *tool_options;
@@ -75,7 +75,7 @@ GimpToolInfo * gimp_tool_info_new          (Gimp                *gimp,
 					    const gchar         *menu_path,
 					    const gchar         *menu_accel,
 					    const gchar         *help_domain,
-					    const gchar         *help_data,
+					    const gchar         *help_id,
                                             const gchar         *paint_core_name,
 					    const gchar         *stock_id);
 

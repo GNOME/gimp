@@ -48,7 +48,7 @@ file_dialog_new (Gimp              *gimp,
                  const gchar       *menu_identifier,
                  const gchar       *title,
                  const gchar       *wmclass_name,
-                 const gchar       *help_data,
+                 const gchar       *help_id,
                  GCallback          ok_callback)
 {
   GtkWidget        *filesel;
@@ -61,7 +61,7 @@ file_dialog_new (Gimp              *gimp,
   g_return_val_if_fail (menu_identifier != NULL, NULL);
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (wmclass_name != NULL, NULL);
-  g_return_val_if_fail (help_data != NULL, NULL);
+  g_return_val_if_fail (help_id != NULL, NULL);
   g_return_val_if_fail (ok_callback != NULL, NULL);
 
   filesel = gtk_file_selection_new (title);
@@ -73,7 +73,7 @@ file_dialog_new (Gimp              *gimp,
   gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
   gtk_window_set_wmclass (GTK_WINDOW (filesel), wmclass_name, "Gimp");
 
-  gimp_help_connect (filesel, gimp_standard_help_func, help_data);
+  gimp_help_connect (filesel, gimp_standard_help_func, help_id, NULL);
 
   gtk_container_set_border_width (GTK_CONTAINER (fs->button_area), 2);
   gtk_container_set_border_width (GTK_CONTAINER (filesel), 2);

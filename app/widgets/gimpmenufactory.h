@@ -31,7 +31,6 @@ typedef struct _GimpMenuFactoryEntry GimpMenuFactoryEntry;
 struct _GimpMenuFactoryEntry
 {
   gchar                     *identifier;
-  gchar                     *help_path;
   GimpItemFactorySetupFunc   setup_func;
   GimpItemFactoryUpdateFunc  update_func;
   gboolean                   update_on_popup;
@@ -70,7 +69,6 @@ GimpMenuFactory * gimp_menu_factory_new           (Gimp            *gimp);
 
 void              gimp_menu_factory_menu_register (GimpMenuFactory *factory,
                                                    const gchar     *identifier,
-                                                   const gchar     *help_path,
                                                    GimpItemFactorySetupFunc   setup_func,
                                                    GimpItemFactoryUpdateFunc  update_func,
                                                    gboolean                   update_on_popup,

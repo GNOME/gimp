@@ -110,7 +110,7 @@ query (void)
 static void
 run (const gchar      *name,
      gint              n_params,
-     const GimpParam  *param, 
+     const GimpParam  *param,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
@@ -130,7 +130,7 @@ run (const gchar      *name,
     {
       status = GIMP_PDB_CALLING_ERROR;
     }
-  
+
   if (status == GIMP_PDB_SUCCESS)
     {
       image_id = param[1].data.d_image;
@@ -166,7 +166,6 @@ build_dialog (void)
   GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *hbox2;
-  GtkTooltips *tooltips;
 
   gimp_ui_init ("gee", TRUE);
 
@@ -178,7 +177,8 @@ build_dialog (void)
                     G_CALLBACK (window_delete_callback),
                     NULL);
 
-  gimp_help_connect (dlg, gimp_standard_help_func, "filters/geeslime.html");
+  gimp_help_connect (dlg, gimp_standard_help_func,
+                     "filters/geeslime.html", NULL);
 
   /* Action area - 'close' button only. */
 
@@ -193,14 +193,13 @@ build_dialog (void)
                             G_CALLBACK (window_close_callback),
                             dlg);
 
-  tooltips = gtk_tooltips_new ();
-  gtk_tooltips_set_tip (GTK_TOOLTIPS (tooltips), button,
-                        _("A less-obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / 1998-2000"),
-		       NULL);
-  gtk_tooltips_enable (tooltips);
+  gimp_help_set_help_data (button,
+                           _("A less-obsolete creation of Adam D. Moss / "
+                             "adam@gimp.org / adam@foxbox.org / 1998-2000"),
+                           NULL);
 
   /* The 'fun' half of the dialog */
-    
+
   frame = gtk_frame_new (NULL);
 
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
@@ -252,7 +251,7 @@ build_dialog (void)
                               (GSourceFunc) iteration_callback,
                               NULL,
                               NULL);
-  
+
   g_signal_connect (eventbox, "button_release_event",
                     G_CALLBACK (toggle_feedbacktype),
                     NULL);
@@ -271,7 +270,7 @@ gen_llut(void)
 
   for (i=0; i<256; i++)
     {
-      /* k = i + RINT (((double)LIGHT) * pow(((double)i / 255.0), 0.5)); 
+      /* k = i + RINT (((double)LIGHT) * pow(((double)i / 255.0), 0.5));
 	 k = i + ((LIGHT*i)/255); */
       k = i + ((LIGHT*( /* (255*255)- */ i*i))/(255*255));
 #if 0
@@ -284,7 +283,7 @@ gen_llut(void)
 }
 
 
-static void 
+static void
 do_fun (void)
 {
   imagetype = gimp_image_base_type(image_id);
@@ -344,7 +343,7 @@ bumpbob(int x, int y, int size)
     }
   memset(&bump[x+(y+(size/2))*IWIDTH], 255, size);
   */
-  
+
   for (o=0; o<size; o++)
     {
       int p;
@@ -364,7 +363,7 @@ bumpbob(int x, int y, int size)
 
 
 /* Adam's sillier algorithm. */
-static void 
+static void
 iterate (void)
 {
   static guint frame = 0;
@@ -407,7 +406,7 @@ iterate (void)
   /* this setup obsolete, tranformation is constant */
   /*if ((cx+bx) == 0)
     cx++;
-    
+
     if ((cy+by) == 0)
     by++;
 
@@ -423,13 +422,13 @@ iterate (void)
   */
 
   /* A little sub-pixel jitter to liven things up. */
-  basesx = (g_rand_int_range (gr, 0, 29<<19)/bycxmcybx) + 
+  basesx = (g_rand_int_range (gr, 0, 29<<19)/bycxmcybx) +
             ((-128-((128*256)/(cx+bx)))<<11);
   basesy = (g_rand_int_range (gr, 0, 29<<19)/bycxmcybx) + ((-128-((128*256)/(cy+by)))<<11);
-  
+
   basebump = srcbump;
 
-  
+
 #if 0
   /* identity only */
   j = IHEIGHT;
@@ -451,7 +450,7 @@ iterate (void)
     {
       unsigned int tx;
       unsigned int ty;
-      
+
       ty = (basesy+=cx2);
       tx = (basesx-=bx2);
 
@@ -480,7 +479,7 @@ iterate (void)
 					  )
 		      );
 	  basebump++;
-	  
+
 	  tx += by2;
 	  ty -= cy2;
 
@@ -569,7 +568,7 @@ iterate (void)
   destbump = (frame&1) ? bump2 : bump1;
   {
     gint rxp, ryp, posx, posy;
-    GdkModifierType mask; 
+    GdkModifierType mask;
     gint size, i;
 
     gdk_window_get_pointer (eventbox->window, &rxp, &ryp, &mask);
@@ -579,10 +578,10 @@ iterate (void)
 	size = g_rand_int_range (gr, 1, BOBSIZE);
 
 	posx = rxp + BOBSPREAD/2 -
-	  RINT(sqrt(g_rand_double_range (gr, 0, BOBSPREAD)) * 
+	  RINT(sqrt(g_rand_double_range (gr, 0, BOBSPREAD)) *
                g_rand_int_range (gr, 0, BOBSPREAD));
 	posy = ryp + BOBSPREAD/2 -
-	  RINT(sqrt(g_rand_double_range (gr, 0, BOBSPREAD)) * 
+	  RINT(sqrt(g_rand_double_range (gr, 0, BOBSPREAD)) *
                g_rand_int_range (gr, 0, BOBSPREAD));
 
 	if (! ((posx>IWIDTH-size) ||
@@ -604,9 +603,9 @@ render_frame (void)
   if (frame==0)
     {
       gint i, bytes;
-      
+
       bytes = IWIDTH*IHEIGHT*4;
-      
+
       for (i=0;i<bytes;i++)
 	{
 	  disp[i] = env[i];
@@ -617,7 +616,7 @@ render_frame (void)
   iterate();
 
   show();
-  
+
   frame++;
 }
 

@@ -301,7 +301,7 @@ static void    drawcolor2    (GtkWidget *widget);
 static void    render        (void);
 static void    realrender    (GimpDrawable *drawable);
 static void    fileselect    (gint);
-static gint    traceray      (ray * r, GimpVector4 * col, gint level, 
+static gint    traceray      (ray * r, GimpVector4 * col, gint level,
 			      gdouble imp);
 static gdouble turbulence    (gdouble *point, gdouble lofreq, gdouble hifreq);
 
@@ -1274,7 +1274,7 @@ objnormal (GimpVector4 *res, common *obj, GimpVector4 *p)
     }
 }
 
-/* 
+/*
    Quality:
    0 = Color only
    1 = Textures
@@ -2172,7 +2172,7 @@ fileselect (gint action)
 				windows[action]);
 
       gimp_help_connect (windows[action], gimp_standard_help_func,
-			 "filters/spheredesigner.html");
+			 "filters/spheredesigner.html", NULL);
     }
   gtk_widget_show (windows[action]);
 }
@@ -2188,7 +2188,7 @@ initworld (void)
   s.a.x = s.a.y = s.a.z = 0.0;
   s.r = 4.0;
 
-  /* not: world.obj[0] = s; 
+  /* not: world.obj[0] = s;
    * s is a sphere so error C2115: '=' : incompatible types
    */
   memcpy (&world.obj[0], &s, sizeof (s));
@@ -2467,10 +2467,10 @@ makewindow (void)
 
                             GIMP_STOCK_RESET,
                             sphere_reset, NULL, NULL, NULL, FALSE, FALSE,
-			    
+
                             GTK_STOCK_CANCEL,
                             sphere_cancel, NULL, NULL, NULL, FALSE, TRUE,
-                            
+
                             GTK_STOCK_OK,
                             sphere_ok, NULL, NULL, NULL, TRUE, FALSE,
 
@@ -2980,7 +2980,7 @@ render (void)
 
 #if CONTINOUS_UPDATE
 	  drawit ();
-	  
+
 	  while (gtk_events_pending ())
 	    gtk_main_iteration ();
 #endif

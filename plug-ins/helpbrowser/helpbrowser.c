@@ -24,7 +24,7 @@
 
 #include "config.h"
 
-#include <string.h> 
+#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -119,8 +119,8 @@ static void     request_url (HtmlDocument *doc,
                              const gchar  *url,
                              HtmlStream   *stream,
                              gpointer      data);
-static gboolean io_handler  (GIOChannel   *io, 
-                             GIOCondition  condition, 
+static gboolean io_handler  (GIOChannel   *io,
+                             GIOCondition  condition,
                              gpointer      data);
 
 
@@ -140,7 +140,7 @@ has_case_prefix (const gchar *haystack, const gchar *needle)
       n++;
       h++;
     }
-  
+
   return (*n == '\0');
 }
 
@@ -197,7 +197,7 @@ button_callback (GtkWidget *widget,
   update_toolbar ();
 }
 
-static void 
+static void
 entry_changed_callback (GtkWidget *widget,
 			gpointer   data)
 {
@@ -316,7 +316,7 @@ title_changed (HtmlDocument *doc,
 
   if (!new_title)
     new_title = (_("<Untitled>"));
-      
+
   title = g_strstrip (g_strdup (new_title));
 
   history_add (current_ref, title);
@@ -347,7 +347,7 @@ load_remote_page (const gchar *ref)
 }
 
 static void
-load_page (const gchar *ref,	  
+load_page (const gchar *ref,
 	   gboolean     add_to_queue)
 {
   HtmlDocument *doc = HTML_VIEW (html)->document;
@@ -385,7 +385,7 @@ load_page (const gchar *ref,
       html_document_open_stream (doc, "text/html");
       gtk_adjustment_set_value (gtk_layout_get_vadjustment (GTK_LAYOUT (html)),
                                 0);
-      
+
       request_url (doc, abs, doc->current_stream, NULL);
     }
 
@@ -395,9 +395,9 @@ load_page (const gchar *ref,
   g_free (current_ref);
   current_ref = new_ref;
 
-  if (add_to_queue) 
+  if (add_to_queue)
     queue_add (queue, new_ref);
-  
+
   update_toolbar ();
 }
 
@@ -463,7 +463,7 @@ request_url (HtmlDocument *doc,
                "been written or your installation is not complete. Ensure "
                "that your installation is complete before reporting this "
                "error as a bug."));
-          
+
           html_document_write_stream (doc, msg, strlen (msg));
 
           g_free (msg);
@@ -476,7 +476,7 @@ request_url (HtmlDocument *doc,
           g_io_channel_set_close_on_unref (io, TRUE);
           g_io_channel_set_encoding (io, NULL, NULL);
 
-          g_io_add_watch (io, G_IO_IN | G_IO_ERR | G_IO_HUP | G_IO_NVAL, 
+          g_io_add_watch (io, G_IO_IN | G_IO_ERR | G_IO_HUP | G_IO_NVAL,
                           io_handler, stream);
         }
 
@@ -488,7 +488,7 @@ request_url (HtmlDocument *doc,
 
 static gboolean
 io_handler (GIOChannel   *io,
-            GIOCondition  condition, 
+            GIOCondition  condition,
             gpointer      data)
 {
   HtmlStream *stream;
@@ -497,7 +497,7 @@ io_handler (GIOChannel   *io,
 
   stream = (HtmlStream *) data;
 
-  if (condition & G_IO_IN) 
+  if (condition & G_IO_IN)
     {
       if (g_io_channel_read_chars (io, buffer, sizeof (buffer),
                                    &bytes, NULL) != G_IO_STATUS_ERROR
@@ -513,7 +513,7 @@ io_handler (GIOChannel   *io,
 	  return FALSE;
 	}
 
-      if (condition & G_IO_HUP) 
+      if (condition & G_IO_HUP)
         {
           while (g_io_channel_read_chars (io, buffer, sizeof (buffer),
                                           &bytes, NULL) != G_IO_STATUS_ERROR
@@ -524,7 +524,7 @@ io_handler (GIOChannel   *io,
         }
     }
 
-  if (condition & (G_IO_ERR | G_IO_HUP | G_IO_NVAL)) 
+  if (condition & (G_IO_ERR | G_IO_HUP | G_IO_NVAL))
     {
       html_stream_close (stream);
       g_io_channel_unref (io);
@@ -544,7 +544,7 @@ drag_begin (GtkWidget      *widget,
 }
 
 static void
-drag_data_get (GtkWidget        *widget, 
+drag_data_get (GtkWidget        *widget,
                GdkDragContext   *context,
                GtkSelectionData *selection_data,
                guint             info,
@@ -556,8 +556,8 @@ drag_data_get (GtkWidget        *widget,
 
   gtk_selection_data_set (selection_data,
                           selection_data->target,
-                          8, 
-                          current_ref, 
+                          8,
+                          current_ref,
                           strlen (current_ref));
 }
 
@@ -587,13 +587,15 @@ open_browser_dialog (const gchar *help_path,
 
   /*  the dialog window  */
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-  g_signal_connect (window, "destroy",
-                    G_CALLBACK (close_callback),
-                    NULL);
   gtk_window_set_wmclass (GTK_WINDOW (window), "helpbrowser", "Gimp");
   gtk_window_set_title (GTK_WINDOW (window), _("GIMP Help Browser"));
 
-  gimp_help_connect (window, gimp_standard_help_func, "dialogs/help.html");
+  g_signal_connect (window, "destroy",
+                    G_CALLBACK (close_callback),
+                    NULL);
+
+  gimp_help_connect (window, gimp_standard_help_func,
+                     "dialogs/help.html", NULL);
 
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_add (GTK_CONTAINER (window), vbox);
@@ -647,7 +649,7 @@ open_browser_dialog (const gchar *help_path,
   gtk_drag_source_set (GTK_WIDGET (drag_source),
                        GDK_BUTTON1_MASK,
                        help_dnd_target_table,
-                       G_N_ELEMENTS (help_dnd_target_table), 
+                       G_N_ELEMENTS (help_dnd_target_table),
                        GDK_ACTION_MOVE | GDK_ACTION_COPY);
   g_signal_connect (drag_source, "drag_begin",
                     G_CALLBACK (drag_begin),
@@ -655,7 +657,7 @@ open_browser_dialog (const gchar *help_path,
   g_signal_connect (drag_source, "drag_data_get",
                     G_CALLBACK (drag_data_get),
                     NULL);
-  
+
   image = gtk_image_new_from_stock (GTK_STOCK_JUMP_TO, GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (drag_source), image);
   gtk_widget_show (image);
@@ -664,12 +666,12 @@ open_browser_dialog (const gchar *help_path,
   combo = gtk_combo_new ();
   gtk_widget_set_size_request (GTK_WIDGET (combo), 360, -1);
   gtk_combo_set_use_arrows (GTK_COMBO (combo), TRUE);
-  g_object_set (GTK_COMBO (combo)->entry, "editable", FALSE, NULL); 
+  g_object_set (GTK_COMBO (combo)->entry, "editable", FALSE, NULL);
   gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 
   g_signal_connect (GTK_COMBO (combo)->entry, "changed",
-                    G_CALLBACK (entry_changed_callback), 
+                    G_CALLBACK (entry_changed_callback),
                     combo);
 
 
@@ -679,10 +681,10 @@ open_browser_dialog (const gchar *help_path,
 
   gtk_widget_set_size_request (GTK_WIDGET (html), -1, 240);
 
-  scroll = 
+  scroll =
     gtk_scrolled_window_new (gtk_layout_get_hadjustment (GTK_LAYOUT (html)),
                              gtk_layout_get_vadjustment (GTK_LAYOUT (html)));
-  
+
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scroll),
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_box_pack_start (GTK_BOX (vbox), scroll, TRUE, TRUE, 0);
@@ -690,7 +692,7 @@ open_browser_dialog (const gchar *help_path,
 
   gtk_container_add (GTK_CONTAINER (scroll), html);
   gtk_widget_show (html);
-  
+
   html_view_set_document (HTML_VIEW (html), html_document_new ());
 
   g_signal_connect (HTML_VIEW (html)->document, "title_changed",
@@ -890,7 +892,7 @@ run (const gchar      *name,
 	  help_path = g_strdup (gimp_help_root);
 	  locale    = g_strdup ("C");
 	  help_file = g_strdup ("introduction.html");
-	  
+
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams == 4)
 	    {

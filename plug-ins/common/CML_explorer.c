@@ -620,16 +620,16 @@ CML_main_function (gint preview_p)
       mem_chank2 = (guchar *) g_malloc (mem_chank2_size);
     }
   dest_buffer = mem_chank2;
-  
+
   if (! preview_p)
     gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1,
 			 width_by_pixel, height_by_pixel,
 			 TRUE, TRUE);
-  
+
   gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1,
 		       width_by_pixel, height_by_pixel,
 		       FALSE, FALSE);
-  
+
   gr = g_rand_new ();
   if (VALS.initial_value == CML_INITIAL_RANDOM_FROM_SEED)
     g_rand_set_seed (gr, VALS.seed);
@@ -770,7 +770,7 @@ CML_main_function (gint preview_p)
 
       if (height_by_pixel < dy + keep_height)
 	keep_height = height_by_pixel - dy;
-      
+
       if ((VALS.hue.function == CML_KEEP_VALUES) ||
 	  (VALS.sat.function == CML_KEEP_VALUES) ||
 	  (VALS.val.function == CML_KEEP_VALUES))
@@ -802,7 +802,7 @@ CML_main_function (gint preview_p)
 		  {
 		    int	rgbi[3];
 		    int	i;
-		  
+
 		    for (i = 0; i < src_bpp; i++)
 		      rgbi[i] = src_buffer[offset_y * src_bpl
 					  + (dx * VALS.scale + offset_x) * src_bpp + i];
@@ -959,7 +959,7 @@ CML_next_value (gdouble   *vec,
     case MULTIPLY_GRADIENT:
       {
 	gdouble	tmp;
-	
+
 	tmp = power;
 	power = param->power;
 	self_diff = self_mod_rate * LOGISTICS (vec[pos]);
@@ -1435,7 +1435,7 @@ CML_explorer_dialog (void)
       gtk_container_add (GTK_CONTAINER (frame), table);
       gtk_widget_show (table);
 
-      optionmenu = gimp_option_menu_new2 (FALSE, 
+      optionmenu = gimp_option_menu_new2 (FALSE,
                                           G_CALLBACK (gimp_menu_item_update),
 					  &copy_source, (gpointer) copy_source,
 
@@ -1451,7 +1451,7 @@ CML_explorer_dialog (void)
 				 _("Source Channel:"), 1.0, 0.5,
 				 optionmenu, 1, TRUE);
 
-      optionmenu = gimp_option_menu_new2 (FALSE, 
+      optionmenu = gimp_option_menu_new2 (FALSE,
                                           G_CALLBACK (gimp_menu_item_update),
 					  &copy_destination,
 					  (gpointer) copy_destination,
@@ -1488,7 +1488,7 @@ CML_explorer_dialog (void)
       gtk_container_add (GTK_CONTAINER (frame), table);
       gtk_widget_show (table);
 
-      optionmenu = gimp_option_menu_new2 (FALSE, 
+      optionmenu = gimp_option_menu_new2 (FALSE,
                                           G_CALLBACK (gimp_menu_item_update),
 					  &selective_load_source,
 					  (gpointer) selective_load_source,
@@ -1507,7 +1507,7 @@ CML_explorer_dialog (void)
 				 _("Source Channel in File:"), 1.0, 0.5,
 				 optionmenu, 1, TRUE);
 
-      optionmenu = gimp_option_menu_new2 (FALSE, 
+      optionmenu = gimp_option_menu_new2 (FALSE,
                                           G_CALLBACK (gimp_menu_item_update),
 					  &selective_load_destination,
 					  (gpointer) selective_load_destination,
@@ -2086,7 +2086,7 @@ CML_save_to_file_callback (GtkWidget *widget,
     {
       filesel = gtk_file_selection_new (_("Save Parameters to"));
       gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
-      
+
       g_signal_connect (GTK_FILE_SELECTION (filesel)->ok_button,
 			"clicked",
 			G_CALLBACK (CML_execute_save_to_file),
@@ -2102,7 +2102,7 @@ CML_save_to_file_callback (GtkWidget *widget,
 				filesel);
 
       gimp_help_connect (filesel, gimp_standard_help_func,
-			 "filters/cml_explorer.html");
+			 "filters/cml_explorer.html", NULL);
     }
 
   if (strlen (VALS.last_file_name) > 0)
@@ -2299,25 +2299,25 @@ CML_load_from_file_callback (GtkWidget *widget,
 			"clicked",
 			G_CALLBACK (CML_execute_load_from_file),
 			filesel);
-      
+
       g_signal_connect_swapped(G_OBJECT(filesel), "delete_event",
 			       G_CALLBACK (gtk_widget_hide),
 			       filesel);
-      
+
       g_signal_connect_swapped (GTK_FILE_SELECTION (filesel)->cancel_button,
 				"clicked",
 				G_CALLBACK (gtk_widget_hide),
 				filesel);
 
       gimp_help_connect (filesel, gimp_standard_help_func,
-			 "filters/cml_explorer.html");
+			 "filters/cml_explorer.html", NULL);
     }
 
   if ((selective_load_source == 0) || (selective_load_destination == 0))
     gtk_window_set_title (GTK_WINDOW (filesel), _("Load Parameters from"));
   else
     gtk_window_set_title (GTK_WINDOW (filesel), _("Selective Load from"));
-  
+
   if (strlen (VALS.last_file_name) > 0)
     gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel),
 				     VALS.last_file_name);
@@ -2455,7 +2455,7 @@ CML_load_parameter_file (const gchar *filename,
       if (flag)
 	{
 	  gint dummy;
-	
+
 	  if (fgets (line, CML_LINE_SIZE - 1, file) == NULL) /* skip a line */
 	    dummy = 1;
 	  else

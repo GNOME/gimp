@@ -61,7 +61,7 @@ GtkWidget * gimp_viewable_dialog_new      (GimpViewable       *viewable,
                                            const gchar        *stock_id,
                                            const gchar        *desc,
                                            GimpHelpFunc        help_func,
-                                           const gchar        *help_data,
+                                           const gchar        *help_id,
 
                                            /* specify action area buttons
                                             * as va_list:

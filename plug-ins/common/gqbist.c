@@ -3,10 +3,10 @@
  * This program is based on an algorithm / article by
  * Jörn Loviscach.
  *
- * It appeared in c't 10/95, page 326 and is called 
+ * It appeared in c't 10/95, page 326 and is called
  * "Ausgewürfelt - Moderne Kunst algorithmisch erzeugen"
  * (~modern art created with algorithms).
- * 
+ *
  * It generates one main formula (the middle button) and 8 variations of it.
  * If you select a variation it becomes the new main formula. If you
  * press "OK" the main formula will be applied to the image.
@@ -16,7 +16,7 @@
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, 
+ * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -33,16 +33,16 @@
  * 1.2 now handles RGB*
  * 1.5 fixed a small bug
  * 1.6 fixed a bug that was added by v1.5 :-(
- * 1.7 added patch from Art Haas to make it compile with HP-UX, a small 
+ * 1.7 added patch from Art Haas to make it compile with HP-UX, a small
  *     clean-up
- * 1.8 Dscho added transform file load/save, bug-fixes 
+ * 1.8 Dscho added transform file load/save, bug-fixes
  * 1.9 rewrote renderloop.
  * 1.9a fixed a bug.
  * 1.9b fixed MAIN()
  * 1.10 added optimizer
- * 1.11 uses tile iterator, antialiasing thanks to Simon Thum, compiles 
+ * 1.11 uses tile iterator, antialiasing thanks to Simon Thum, compiles
  *      outside GIMP-tree
- * 1.12 small fix to behave more like the original, button to control 
+ * 1.12 small fix to behave more like the original, button to control
  *      antialaising, remeber last used filename, bugfixes+cleanups
  */
 
@@ -174,22 +174,22 @@ modify_info (ExpInfo *o_info,
       switch (g_rand_int_range (gr, 0, 4))
 	{
 	case 0:
-	  n_info->transformSequence[g_rand_int_range (gr, 0, MAX_TRANSFORMS)] = 
+	  n_info->transformSequence[g_rand_int_range (gr, 0, MAX_TRANSFORMS)] =
 	    g_rand_int_range (gr, 0, NUM_TRANSFORMS);
 	  break;
 
 	case 1:
-	  n_info->source[g_rand_int_range (gr, 0, MAX_TRANSFORMS)] = 
+	  n_info->source[g_rand_int_range (gr, 0, MAX_TRANSFORMS)] =
             g_rand_int_range (gr, 0, NUM_REGISTERS);
 	  break;
 
 	case 2:
-	  n_info->control[g_rand_int_range (gr, 0, MAX_TRANSFORMS)] = 
+	  n_info->control[g_rand_int_range (gr, 0, MAX_TRANSFORMS)] =
             g_rand_int_range (gr, 0, NUM_REGISTERS);
 	  break;
 
 	case 3:
-	  n_info->dest[g_rand_int_range (gr, 0, MAX_TRANSFORMS)] = 
+	  n_info->dest[g_rand_int_range (gr, 0, MAX_TRANSFORMS)] =
             g_rand_int_range (gr, 0, NUM_REGISTERS);
 	  break;
 	}
@@ -304,9 +304,9 @@ qbist (ExpInfo *info,
 			{
 			  gfloat scalarProd;
 
-			  scalarProd = (reg[sr][0] * reg[cr][0]) + 
+			  scalarProd = (reg[sr][0] * reg[cr][0]) +
 			    (reg[sr][1] * reg[cr][1]) + (reg[sr][2] * reg[cr][2]);
-			  
+
 			  reg[dr][0] = scalarProd * reg[sr][0];
 			  reg[dr][1] = scalarProd * reg[sr][1];
 			  reg[dr][2] = scalarProd * reg[sr][2];
@@ -394,7 +394,7 @@ qbist (ExpInfo *info,
 	{
 	  if (i < 3)
 	    {
-	      buffer[i] = (guchar) (((gfloat) accum[i] / 
+	      buffer[i] = (guchar) (((gfloat) accum[i] /
 				     (gfloat) (oversampling * oversampling)) + 0.5);
 	    }
 	  else
@@ -527,40 +527,40 @@ run (const gchar      *name,
 
 	  gimp_tile_cache_ntiles ((drawable->width + gimp_tile_width () - 1) /
 				  gimp_tile_width ());
-	  gimp_pixel_rgn_init (&imagePR, drawable, 
+	  gimp_pixel_rgn_init (&imagePR, drawable,
 			       0, 0, img_width, img_height, TRUE, TRUE);
 
 	  optimize (&qbist_info.info);
 
 	  gimp_progress_init (_("Qbist ..."));
 
-	  for (pr = gimp_pixel_rgns_register (1, &imagePR); 
-	       pr != NULL; 
+	  for (pr = gimp_pixel_rgns_register (1, &imagePR);
+	       pr != NULL;
 	       pr = gimp_pixel_rgns_process (pr))
 	    {
 	      gint row;
 
 	      for (row = 0; row < imagePR.h; row++)
 		{
-		  qbist (&qbist_info.info, 
-			 imagePR.data + row * imagePR.rowstride, 
-			 imagePR.x, 
-			 imagePR.y + row, 
-			 imagePR.w, 
-			 sel_x2 - sel_x1, 
-			 sel_y2 - sel_y1, 
-			 imagePR.bpp, 
+		  qbist (&qbist_info.info,
+			 imagePR.data + row * imagePR.rowstride,
+			 imagePR.x,
+			 imagePR.y + row,
+			 imagePR.w,
+			 sel_x2 - sel_x1,
+			 sel_y2 - sel_y1,
+			 imagePR.bpp,
 			 qbist_info.oversampling);
 		}
 
-	      gimp_progress_update ((gfloat) (imagePR.y - sel_y1) / 
+	      gimp_progress_update ((gfloat) (imagePR.y - sel_y1) /
 				    (gfloat) (sel_y2 - sel_y1));
 	    }
 
 	  gimp_drawable_flush (drawable);
 	  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-	  gimp_drawable_update (drawable->drawable_id, 
-				sel_x1, sel_y1, 
+	  gimp_drawable_update (drawable->drawable_id,
+				sel_x1, sel_y1,
 				(sel_x2 - sel_x1), (sel_y2 - sel_y1));
 
 	  gimp_displays_flush ();
@@ -638,7 +638,7 @@ get_be16 (guint8 *buf)
 }
 
 static void
-set_be16 (guint8  *buf, 
+set_be16 (guint8  *buf,
 	  guint16  val)
 {
   buf[0] = val >> 8;
@@ -665,7 +665,7 @@ load_data (gchar *name)
   fclose (f);
 
   for (i = 0; i < MAX_TRANSFORMS; i++)
-    info[0].transformSequence[i] = 
+    info[0].transformSequence[i] =
       get_be16 (buf + i * 2 + MAX_TRANSFORMS * 2 * 0);
 
   for (i = 0; i < MAX_TRANSFORMS; i++)
@@ -694,7 +694,7 @@ save_data (gchar *name)
     }
 
   for (i = 0; i < MAX_TRANSFORMS; i++)
-    set_be16 (buf + i * 2 + MAX_TRANSFORMS * 2 * 0, 
+    set_be16 (buf + i * 2 + MAX_TRANSFORMS * 2 * 0,
 	      info[0].transformSequence[i]);
 
   for (i = 0; i < MAX_TRANSFORMS; i++)
@@ -716,7 +716,8 @@ static void
 file_selection_save (GtkWidget *widget,
 		     GtkWidget *file_select)
 {
-  strcpy (qbist_info.path, gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_select)));
+  strcpy (qbist_info.path,
+          gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_select)));
   save_data (qbist_info.path);
 
   gtk_widget_destroy (file_select);
@@ -726,7 +727,7 @@ static void
 file_selection_load (GtkWidget *widget,
 		     GtkWidget *file_select)
 {
-  strcpy (qbist_info.path, 
+  strcpy (qbist_info.path,
 	  gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_select)));
   load_data (qbist_info.path);
   gtk_widget_destroy (file_select);
@@ -743,7 +744,7 @@ dialog_load (GtkWidget *widget,
   file_select = gtk_file_selection_new (_("Load QBE file..."));
 
   gimp_help_connect (file_select, gimp_standard_help_func,
-		     "filters/gqbist.html");
+		     "filters/gqbist.html", NULL);
 
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (file_select),
                                    qbist_info.path);
@@ -770,9 +771,9 @@ dialog_save (GtkWidget *widget,
     gtk_file_selection_new (_("Save (middle transform) as QBE file..."));
 
   gimp_help_connect (file_select, gimp_standard_help_func,
-		     "filters/gqbist.html");
+		     "filters/gqbist.html", NULL);
 
-  gtk_file_selection_set_filename (GTK_FILE_SELECTION (file_select), 
+  gtk_file_selection_set_filename (GTK_FILE_SELECTION (file_select),
 				   qbist_info.path);
 
   g_signal_connect (GTK_FILE_SELECTION (file_select)->ok_button,
@@ -791,7 +792,7 @@ static void
 dialog_toggle_antialaising (GtkWidget *widget,
 			    gpointer   data)
 {
-  qbist_info.oversampling = 
+  qbist_info.oversampling =
     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)) ? 4 : 1;
 }
 
@@ -841,7 +842,7 @@ dialog_create (void)
   for (i = 0; i < 9; i++)
     {
       button = gtk_button_new ();
-      gtk_table_attach (GTK_TABLE (table), 
+      gtk_table_attach (GTK_TABLE (table),
 			button, i % 3, (i % 3) + 1, i / 3, (i / 3) + 1,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (button);
@@ -857,7 +858,7 @@ dialog_create (void)
     }
 
   button = gtk_check_button_new_with_mnemonic (_("_Antialiasing"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), 
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				qbist_info.oversampling > 1);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);

@@ -618,7 +618,7 @@ palette_dialog (const gchar *title)
                     NULL);
 
   gimp_help_connect (dialog, gimp_standard_help_func,
-		     "filters/cel.html");
+		     "filters/cel.html", NULL);
 
   gtk_widget_show (dialog);
 

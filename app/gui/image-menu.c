@@ -1116,7 +1116,7 @@ image_menu_setup (GimpItemFactory *factory)
             const gchar          *stock_id;
             const gchar          *identifier;
 
-            stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+            stock_id   = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
             identifier = gimp_object_get_name (GIMP_OBJECT (tool_info));
 
             entry.entry.path            = tool_info->menu_path;
@@ -1126,7 +1126,7 @@ image_menu_setup (GimpItemFactory *factory)
             entry.entry.item_type       = "<StockItem>";
             entry.entry.extra_data      = stock_id;
             entry.quark_string          = identifier;
-            entry.help_page             = tool_info->help_data;
+            entry.help_id               = tool_info->help_id;
             entry.description           = NULL;
 
             gimp_item_factory_create_item (factory,

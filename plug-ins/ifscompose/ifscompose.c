@@ -242,14 +242,14 @@ static void undo          (void);
 static void redo          (void);
 
 static void recompute_center              (gboolean   save_undo);
-static void recompute_center_cb           (GtkWidget *widget, 
+static void recompute_center_cb           (GtkWidget *widget,
 				           gpointer   data);
 
 static void ifs_compose                   (GimpDrawable *drawable);
 
 static ColorMap *color_map_create         (gchar     *name,
 					   GimpRGB   *orig_color,
-					   GimpRGB   *data, 
+					   GimpRGB   *data,
 					   gboolean   fixed_point);
 static void color_map_color_changed_cb    (GtkWidget *widget,
 					   ColorMap  *color_map);
@@ -260,9 +260,9 @@ static void simple_color_toggled          (GtkWidget *widget, gpointer data);
 static void simple_color_set_sensitive    (void);
 static void val_changed_update            (void);
 static ValuePair *value_pair_create       (gpointer   data,
-					   gdouble    lower, 
+					   gdouble    lower,
 					   gdouble    upper,
-					   gboolean   create_scale, 
+					   gboolean   create_scale,
 					   ValuePairType type);
 static void value_pair_update             (ValuePair *value_pair);
 static void value_pair_entry_callback     (GtkWidget *w,
@@ -396,7 +396,7 @@ run (const gchar      *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  INIT_I18N (); 
+  INIT_I18N ();
 
   image_id        = param[1].data.d_image;
   active_drawable = gimp_drawable_get (param[2].data.d_drawable);
@@ -420,7 +420,7 @@ run (const gchar      *name,
       if (!found_parasite)
 	{
 	  gint length;
-	  
+
 	  length = gimp_get_data_size (IFSCOMPOSE_DATA);
 	  if (length)
 	    {
@@ -449,7 +449,7 @@ run (const gchar      *name,
       /*  Possibly retrieve data  */
 	{
 	  gint length;
-	  
+
 	  length = gimp_get_data_size (IFSCOMPOSE_DATA);
 	  if (length)
 	    {
@@ -584,7 +584,7 @@ ifs_compose_trans_page (void)
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  ifsD->scale_pair = value_pair_create (&ifsD->current_vals.scale, 0.0, 1.0, 
+  ifsD->scale_pair = value_pair_create (&ifsD->current_vals.scale, 0.0, 1.0,
 				        FALSE, VALUE_PAIR_DOUBLE);
   gtk_table_attach (GTK_TABLE (table), ifsD->scale_pair->entry, 3, 4, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
@@ -1134,7 +1134,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
   gtk_main ();
 
   g_object_unref (ifsDesign->op_menu);
-  
+
   if (dlg)
     gtk_widget_destroy (dlg);
 
@@ -1365,15 +1365,15 @@ ifs_compose (GimpDrawable *drawable)
 
   num_bands = ceil((gdouble)(width*height*SQR(ifsvals.subdivide)*5)
 		   / (1024 * ifsvals.max_memory));
-  band_height = (height + num_bands - 1) / num_bands; 
-  
+  band_height = (height + num_bands - 1) / num_bands;
+
   if (band_height > height)
     band_height = height;
 
   mask  = g_new (guchar, width * band_height * SQR (ifsvals.subdivide));
   data  = g_new (guchar, width * band_height * SQR (ifsvals.subdivide) * 3);
   nhits = g_new (guchar, width * band_height * SQR (ifsvals.subdivide));
-  
+
   gimp_palette_get_background (&color);
   gimp_rgb_get_uchar (&color, &rc, &gc, &bc);
 
@@ -1391,7 +1391,7 @@ ifs_compose (GimpDrawable *drawable)
 
       gpointer pr;
 
-      buffer = g_strdup_printf (_("Rendering IFS (%d/%d)..."), 
+      buffer = g_strdup_printf (_("Rendering IFS (%d/%d)..."),
 				band_no+1, num_bands);
       gimp_progress_init (buffer);
       g_free (buffer);
@@ -1409,8 +1409,8 @@ ifs_compose (GimpDrawable *drawable)
 
       /* transfer the image to the drawable */
 
-      
-      buffer = g_strdup_printf (_("Copying IFS to image (%d/%d)..."), 
+
+      buffer = g_strdup_printf (_("Copying IFS to image (%d/%d)..."),
 				band_no+1, num_bands);
       gimp_progress_init (buffer);
       g_free (buffer);
@@ -1909,7 +1909,7 @@ undo_update (gint el)
 {
   AffElement *elem;
   /* initialize */
-  
+
   elem = NULL;
 
   if (!undo_ring[(undo_start + undo_cur) % UNDO_LEVELS].elements[el])
@@ -2062,8 +2062,8 @@ color_map_create (gchar    *name,
   gtk_box_pack_start (GTK_BOX (color_map->hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  color_map->orig_preview = 
-    gimp_color_area_new (fixed_point ? data : orig_color, 
+  color_map->orig_preview =
+    gimp_color_area_new (fixed_point ? data : orig_color,
 			 GIMP_COLOR_AREA_FLAT, 0);
   gtk_drag_dest_unset (color_map->orig_preview);
   gtk_widget_set_size_request (color_map->orig_preview,
@@ -2076,11 +2076,11 @@ color_map_create (gchar    *name,
   gtk_widget_show (arrow);
 
   color_map->button = gimp_color_button_new (name,
-					     COLOR_SAMPLE_SIZE, 
 					     COLOR_SAMPLE_SIZE,
-					     data, 
+					     COLOR_SAMPLE_SIZE,
+					     data,
 					     GIMP_COLOR_AREA_FLAT);
-  gtk_box_pack_start (GTK_BOX (color_map->hbox), color_map->button, 
+  gtk_box_pack_start (GTK_BOX (color_map->hbox), color_map->button,
 		      FALSE, FALSE, 0);
   gtk_widget_show (color_map->button);
 
@@ -2104,7 +2104,7 @@ color_map_color_changed_cb (GtkWidget *widget,
 
   undo_begin ();
   undo_update (ifsD->current_element);
- 
+
   elements[ifsD->current_element]->v = ifsD->current_vals;
   elements[ifsD->current_element]->v.theta *= G_PI/180.0;
   aff_element_compute_color_trans (elements[ifsD->current_element]);
@@ -2122,7 +2122,7 @@ color_map_update (ColorMap *color_map)
                                color_map->color);
 
   if (color_map->fixed_point)
-    gimp_color_area_set_color (GIMP_COLOR_AREA (color_map->orig_preview), 
+    gimp_color_area_set_color (GIMP_COLOR_AREA (color_map->orig_preview),
                                color_map->color);
 }
 
@@ -2326,7 +2326,7 @@ value_pair_destroy_callback (GtkWidget *widget,
     g_object_unref (value_pair->scale);
   g_object_unref (value_pair->adjustment);
 }
- 
+
 static void
 design_op_callback (GtkWidget *widget,
 		    gpointer   data)
@@ -2696,12 +2696,12 @@ ifsfile_load (GtkWidget *widget,
 	  undo_begin ();
 	  for (i = 0; i < ifsvals.num_elements; i++)
 	    undo_update (i);
-	  
+
 	  ifsfile_replace_ifsvals (&new_ifsvals, new_elements);
-	  
+
 	  if (ifsD->auto_preview)
 	    ifs_compose_preview ();
-	  
+
 	  gtk_widget_hide (file_select);
 	  design_area_redraw ();
 	}
@@ -2736,10 +2736,10 @@ ifs_compose_save_callback (GtkWidget *widget,
   if (!file_select)
     {
       file_select = gtk_file_selection_new (_("Save as IFS file"));
-      
+
       gimp_help_connect (file_select, gimp_standard_help_func,
-			 "filters/ifscompose.html");
-      
+			 "filters/ifscompose.html", NULL);
+
       g_signal_connect (GTK_FILE_SELECTION (file_select)->ok_button, "clicked",
 			G_CALLBACK (ifsfile_save),
 			file_select);
@@ -2761,9 +2761,9 @@ ifs_compose_load_callback (GtkWidget *widget,
   if (!file_select)
     {
       file_select = gtk_file_selection_new (_("Load IFS file"));
-      
+
       gimp_help_connect (file_select, gimp_standard_help_func,
-			 "filters/ifscompose.html");
+			 "filters/ifscompose.html", NULL);
 
       g_signal_connect (GTK_FILE_SELECTION (file_select)->ok_button, "clicked",
 			G_CALLBACK (ifsfile_load),

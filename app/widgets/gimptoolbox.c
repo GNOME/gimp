@@ -190,7 +190,7 @@ gimp_toolbox_init (GimpToolbox *toolbox)
                               GTK_ITEM_FACTORY (toolbox_factory)->accel_group);
 
   gimp_help_connect (GTK_WIDGET (toolbox), gimp_standard_help_func,
-                     GIMP_HELP_TOOLBOX);
+                     GIMP_HELP_TOOLBOX, NULL);
 
   toolbox->wbox = gtk_hwrap_box_new (FALSE);
   gtk_wrap_box_set_justify (GTK_WRAP_BOX (toolbox->wbox), GTK_JUSTIFY_TOP);
@@ -595,9 +595,7 @@ gimp_toolbox_button_accel_changed (GtkAccelGroup   *accel_group,
           tooltip = g_strdup (tool_info->help);
         }
 
-      gimp_help_set_help_data (tool_button,
-			       tooltip,
-			       tool_info->help_data);
+      gimp_help_set_help_data (tool_button, tooltip, tool_info->help_id);
 
       g_free (tooltip);
     }

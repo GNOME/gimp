@@ -104,7 +104,7 @@ gimp_tool_info_init (GimpToolInfo *tool_info)
   tool_info->menu_accel        = NULL;
 
   tool_info->help_domain       = NULL;
-  tool_info->help_data         = NULL;
+  tool_info->help_id           = NULL;
 
   tool_info->in_toolbox        = TRUE;
   tool_info->tool_options      = NULL;
@@ -145,10 +145,10 @@ gimp_tool_info_finalize (GObject *object)
       g_free (tool_info->help_domain);
       tool_info->help_domain = NULL;
     }
-  if (tool_info->help_data)
+  if (tool_info->help_id)
     {
-      g_free (tool_info->help_data);
-      tool_info->help_data = NULL;
+      g_free (tool_info->help_id);
+      tool_info->help_id = NULL;
     }
 
   if (tool_info->tool_options)
@@ -185,7 +185,7 @@ gimp_tool_info_new (Gimp                *gimp,
 		    const gchar         *menu_path,
 		    const gchar         *menu_accel,
 		    const gchar         *help_domain,
-		    const gchar         *help_data,
+		    const gchar         *help_id,
                     const gchar         *paint_core_name,
 		    const gchar         *stock_id)
 {
@@ -227,7 +227,7 @@ gimp_tool_info_new (Gimp                *gimp,
   tool_info->menu_accel        = g_strdup (menu_accel);
 
   tool_info->help_domain       = g_strdup (help_domain);
-  tool_info->help_data         = g_strdup (help_data);
+  tool_info->help_id           = g_strdup (help_id);
 
   gimp_viewable_set_stock_id (viewable, stock_id);
 

@@ -118,7 +118,7 @@ static void query()
    };
    static GimpParamDef *return_vals = NULL;
    static int nreturn_vals = 0;
-   
+
    gimp_install_procedure("plug_in_imagemap",
 			  "Creates a clickable imagemap.",
 			  "",
@@ -148,7 +148,7 @@ run (const gchar      *name,
 
    *nreturn_vals = 1;
    *return_vals = values;
-   
+
    /*  Get the specified drawable  */
    drawable = gimp_drawable_get(param[2].data.d_drawable);
    _drawable = drawable;
@@ -159,18 +159,18 @@ run (const gchar      *name,
    _map_info.color = gimp_drawable_is_rgb(drawable->drawable_id);
 
    run_mode = (GimpRunMode) param[0].data.d_int32;
-   
+
    if (run_mode == GIMP_RUN_INTERACTIVE) {
       if (!dialog(drawable)) {
 	 /* The dialog was closed, or something similarly evil happened. */
 	 status = GIMP_PDB_EXECUTION_ERROR;
       }
    }
-      
+
    if (status == GIMP_PDB_SUCCESS) {
       gimp_drawable_detach(drawable);
    }
-   
+
    values[0].type = GIMP_PDB_STATUS;
    values[0].data.d_status = status;
 }
@@ -204,19 +204,19 @@ init_preferences(void)
    colors->normal_fg.red = 0;
    colors->normal_fg.green = 0xFFFF;
    colors->normal_fg.blue = 0;
-   
+
    colors->normal_bg.red = 0;
    colors->normal_bg.green = 0;
    colors->normal_bg.blue = 0xFFFF;
-   
+
    colors->selected_fg.red = 0xFFFF;
    colors->selected_fg.green = 0;
    colors->selected_fg.blue = 0;
-   
+
    colors->selected_bg.red = 0;
    colors->selected_bg.green = 0;
    colors->selected_bg.blue = 0xFFFF;
-   
+
    preferences_load(&_preferences);
 
    gdk_colormap_alloc_color(colormap, &colors->normal_fg, FALSE, TRUE);
@@ -229,10 +229,10 @@ init_preferences(void)
 
    gdk_gc_set_line_attributes(_preferences.normal_gc, 1, GDK_LINE_DOUBLE_DASH,
 			      GDK_CAP_BUTT, GDK_JOIN_BEVEL);
-   gdk_gc_set_line_attributes(_preferences.selected_gc, 1, 
-			      GDK_LINE_DOUBLE_DASH, GDK_CAP_BUTT, 
+   gdk_gc_set_line_attributes(_preferences.selected_gc, 1,
+			      GDK_LINE_DOUBLE_DASH, GDK_CAP_BUTT,
 			      GDK_JOIN_BEVEL);
-   
+
    gdk_gc_set_foreground(_preferences.normal_gc, &colors->normal_fg);
    gdk_gc_set_background(_preferences.normal_gc, &colors->normal_bg);
    gdk_gc_set_foreground(_preferences.selected_gc, &colors->selected_fg);
@@ -254,13 +254,13 @@ get_image_height(void)
    return _image_height;
 }
 
-void 
+void
 set_busy_cursor(void)
 {
    preview_set_cursor(_preview, GDK_WATCH);
 }
 
-void 
+void
 remove_busy_cursor(void)
 {
    gdk_window_set_cursor(_dlg->window, NULL);
@@ -373,7 +373,7 @@ preview_thaw(void)
    }
 }
 
-void 
+void
 redraw_preview(void)
 {
    if (_preview_redraw_blocked)
@@ -416,12 +416,12 @@ set_arrow_func(void)
 }
 
 static gboolean
-fuzzy_select_on_button_press(GtkWidget *widget, GdkEventButton *event, 
+fuzzy_select_on_button_press(GtkWidget *widget, GdkEventButton *event,
 			     gpointer data)
 {
    if (event->button == 1) {
       gdouble rx = get_real_coord((gint) event->x);
-      gdouble ry = get_real_coord((gint) event->y);  
+      gdouble ry = get_real_coord((gint) event->y);
       gint32 image_ID = gimp_drawable_image(_drawable->drawable_id);
       gint32 channel_ID;
 
@@ -439,7 +439,7 @@ fuzzy_select_on_button_press(GtkWidget *widget, GdkEventButton *event,
 					  &nreturn_vals,
 					  GIMP_PDB_INT32, TRUE,
 					  GIMP_PDB_IMAGE, 0,
-					  GIMP_PDB_DRAWABLE, 
+					  GIMP_PDB_DRAWABLE,
 					  _drawable->drawable_id,
 					  GIMP_PDB_END);
 	 if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS) {
@@ -449,18 +449,18 @@ fuzzy_select_on_button_press(GtkWidget *widget, GdkEventButton *event,
 	    Polygon_t *polygon = ObjectToPolygon(object);
 	    gint x0, y0;
 	    gdouble grad0;
-	    
+
 	    add_shape(object);
 	    x0 = gimp_path_get_point_at_dist(image_ID, 0.0, &y0, &grad0);
 	    polygon_append_point(polygon, x0, y0);
-	    
+
 	    for (distance = 1.0;; distance += 1.0) {
 	       gint x1, y1 = -1;
 	       gdouble grad1;
-	       
-	       x1 = gimp_path_get_point_at_dist(image_ID, distance, &y1, 
+
+	       x1 = gimp_path_get_point_at_dist(image_ID, distance, &y1,
 						&grad1);
-	       
+
 	       if (y1 == -1)
 		  break;
 
@@ -471,7 +471,7 @@ fuzzy_select_on_button_press(GtkWidget *widget, GdkEventButton *event,
 		     diff = (grad1 - grad0) / grad0;
 		  else
 		     diff = grad1;
-		  
+
 		  if (fabs(diff) > 0.1) {
 		     polygon_append_point(polygon, x1, y1);
 		     grad0 = grad1;
@@ -503,8 +503,8 @@ set_fuzzy_select_func(void)
    _cursor = GDK_TOP_LEFT_ARROW; /* Fix me! */
 }
 
-static void 
-set_object_func(gboolean (*func)(GtkWidget*, GdkEventButton*, 
+static void
+set_object_func(gboolean (*func)(GtkWidget*, GdkEventButton*,
 				 gpointer), gpointer param)
 {
    _button_press_func = func;
@@ -580,7 +580,7 @@ static void
 main_set_title(const char *filename)
 {
    char *title, *p;
-   
+
    g_strreplace(&_filename, filename);
    p = (filename) ? g_path_get_basename(filename) : _("<Untitled>");
    title = g_strdup_printf("%s - ImageMap 2.0", p);
@@ -590,10 +590,10 @@ main_set_title(const char *filename)
    g_free(title);
 }
 
-void 
+void
 main_set_dimension(gint width, gint height)
 {
-   statusbar_set_dimension(_statusbar, width / _zoom_factor, 
+   statusbar_set_dimension(_statusbar, width / _zoom_factor,
 			   height / _zoom_factor);
 }
 
@@ -616,7 +616,7 @@ hide_url(void)
    statusbar_clear_status(_statusbar);
 }
 
-void 
+void
 select_shape(GtkWidget *widget, GdkEventButton *event)
 {
    Object_t *obj;
@@ -703,7 +703,7 @@ menu_zoom_out(void)
    popup_set_zoom_sensitivity(factor);
 }
 
-void 
+void
 draw_shapes(GtkWidget *preview)
 {
    if (!_preview_redraw_blocked)
@@ -822,7 +822,7 @@ save(void)
 static void
 write_cern_comment(gpointer param, OutputFunc_t output)
 {
-   output(param, "rect (4096,4096) (4096,4096) imap:#$");   
+   output(param, "rect (4096,4096) (4096,4096) imap:#$");
 }
 
 static void
@@ -846,7 +846,7 @@ save_as_cern(gpointer param, OutputFunc_t output)
    output(param, "AUTHOR:%s\n", _map_info.author);
    write_cern_comment(param, output);
    output(param, "FORMAT:cern\n");
-   
+
    description = g_strdup(_map_info.description);
    next_token = description;
    for (p = strtok (next_token, "\n"); p; p = strtok(NULL, "\n")) {
@@ -865,24 +865,24 @@ save_as_csim(gpointer param, OutputFunc_t output)
 {
    char *p;
    gchar *description;
-   
+
    output(param, "<img src=\"%s\" width=\"%d\" height=\"%d\" border=\"0\" "
 	  "usemap=\"#%s\" />\n\n", _map_info.image_name,
 	  _image_width, _image_height, _map_info.title);
    output(param, "<map name=\"%s\">\n", _map_info.title);
-   output(param, 
+   output(param,
 	  "<!-- #$-:Image Map file created by GIMP Imagemap Plugin -->\n");
    output(param, "<!-- #$-:GIMP Imagemap Plugin by Maurits Rijk -->\n");
-   output(param, 
+   output(param,
 	  "<!-- #$-:Please do not edit lines starting with \"#$\" -->\n");
    output(param, "<!-- #$VERSION:2.0 -->\n");
    output(param, "<!-- #$AUTHOR:%s -->\n", _map_info.author);
-   
+
    description = g_strdup(_map_info.description);
    for (p = strtok(description, "\n"); p; p = strtok(NULL, "\n"))
       output(param, "<!-- #$DESCRIPTION:%s -->\n", p);
    g_free(description);
-   
+
    object_list_write_csim(_shapes, param, output);
    if (*_map_info.default_url)
       output(param, "<area shape=\"default\" href=\"%s\" />\n",
@@ -903,7 +903,7 @@ save_as_ncsa(gpointer param, OutputFunc_t output)
    output(param, "#$TITLE:%s\n", _map_info.title);
    output(param, "#$AUTHOR:%s\n", _map_info.author);
    output(param, "#$FORMAT:ncsa\n");
-   
+
    description = g_strdup(_map_info.description);
    for (p = strtok(description, "\n"); p; p = strtok(NULL, "\n"))
       output(param, "#$DESCRIPTION:%s\n", p);
@@ -914,7 +914,7 @@ save_as_ncsa(gpointer param, OutputFunc_t output)
    object_list_write_ncsa(_shapes, param, output);
 }
 
-static void 
+static void
 save_to_file(gpointer param, const char* format, ...)
 {
    va_list ap;
@@ -1024,7 +1024,7 @@ load(const gchar *filename)
    check_if_changed(really_load, (gpointer) tmp_filename);
 }
 
-static void 
+static void
 toggle_area_list(void)
 {
    selection_toggle_visibility(_selection);
@@ -1128,7 +1128,7 @@ key_timeout_cb(gpointer data)
    return FALSE;
 }
 
-static gboolean 
+static gboolean
 key_press_cb(GtkWidget *widget, GdkEventKey *event)
 {
    gboolean handled = FALSE;
@@ -1171,7 +1171,7 @@ key_press_cb(GtkWidget *widget, GdkEventKey *event)
    return handled;
 }
 
-static gboolean 
+static gboolean
 key_release_cb(GtkWidget *widget, GdkEventKey *event)
 {
    _keyval = event->keyval;
@@ -1415,14 +1415,15 @@ dialog(GimpDrawable *drawable)
    gtk_window_set_resizable(GTK_WINDOW(dlg), TRUE);
 
    main_set_title(NULL);
-   gimp_help_connect (dlg, gimp_standard_help_func, "filters/imagemap.html");
+   gimp_help_connect (dlg, gimp_standard_help_func,
+                      "filters/imagemap.html", NULL);
 
    gtk_window_set_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
-   g_signal_connect(dlg, "delete_event", 
+   g_signal_connect(dlg, "delete_event",
 		    G_CALLBACK(close_callback), NULL);
-   g_signal_connect(dlg, "key_press_event", 
+   g_signal_connect(dlg, "key_press_event",
 		    G_CALLBACK(key_press_cb), NULL);
-   g_signal_connect(dlg, "key_release_event", 
+   g_signal_connect(dlg, "key_release_event",
 		    G_CALLBACK(key_release_cb), NULL);
 
    main_vbox = gtk_vbox_new(FALSE, 1);
@@ -1533,6 +1534,6 @@ dialog(GimpDrawable *drawable)
 
    gtk_main();
    gdk_flush();
-   
+
    return run_flag;
 }

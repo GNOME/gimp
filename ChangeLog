@@ -1,3 +1,78 @@
+2003-08-23  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpwidgetstypes.h: changed GimpHelpFunc typedef:
+	- renamed "const gchar *help_data" to "const gchar *help_id".
+	- added "gpointer help_data".
+
+	* libgimpwidgets/gimphelpui.[ch]: added "gpointer help_data" to
+	gimp_help_connect(). Removed all fiddling with html links and
+	treat all help IDs as opaque identifiers.
+
+	* app/core/gimptoolinfo.[ch]: changed "help_data" member to
+	"help_id".
+
+	* app/widgets/gimpitemfactory.[ch]: removed the "help_path"
+	parameter from gimp_item_factory_new() since we don't fiddle with
+	html file paths any more. Simplifies menu item help a lot.
+	Renamed "help_data" member of struct GimpItemFactoryEntry to
+	"help_id".
+
+	* app/gui/plug-in-menus.c: changed accordingly. 3rd party
+	plug-ins' menu item help IDs are now encoded as
+	"help_path:help_id".
+
+	* app/gui/file-open-menu.c
+	* app/gui/file-save-menu.c: when constructing the <Load> and
+	<Save> menus, take the resp. procedures' locale_domain and
+	help_path into account. Fixes translation of 3rd party menu items.
+	Also do the right thing for load/save procs which are implemented
+	as temporary procedures (they are impossible to implement
+	currently but it's nice to do the right thing anyway...).
+
+	* app/widgets/gimphelp-ids.h: added GIMP_HELP_MAIN identifier.
+
+	* libgimpwidgets/gimpdialog.[ch]
+	* libgimpwidgets/gimpwidgets.[ch]
+	* libgimp/gimpui.c
+	* app/display/gimpdisplayshell.c
+	* app/gui/gui.c
+	* app/gui/about-dialog.c
+	* app/gui/color-notebook.c
+	* app/gui/dialogs-constructors.c
+	* app/gui/file-dialog-utils.[ch]
+	* app/gui/gradients-commands.c
+	* app/gui/help-commands.c
+	* app/gui/image-menu.c
+	* app/gui/menus.c
+	* app/gui/preferences-dialog.c
+	* app/gui/tips-dialog.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimpimagemaptool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimptransformtool.c
+	* app/widgets/gimperrorconsole.c
+	* app/widgets/gimphelp.[ch]
+	* app/widgets/gimpmenufactory.[ch]
+	* app/widgets/gimptexteditor.c
+	* app/widgets/gimptoolbox.c
+	* app/widgets/gimpviewabledialog.[ch]
+	* plug-ins/common/CEL.c
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/gee.c
+	* plug-ins/common/gee_zoom.c
+	* plug-ins/common/gqbist.c
+	* plug-ins/common/spheredesigner.c
+	* plug-ins/flame/flame.c
+	* plug-ins/fp/fp_gtk.c
+	* plug-ins/helpbrowser/helpbrowser.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/imagemap/imap_main.c: changed accordingly. Removed
+	trailing whitespace all over the place.
+
 2003-06-22  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: disallow libgimpprint >= 4.3.0, addresses bug #120162.

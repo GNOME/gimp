@@ -487,7 +487,8 @@ make_file_dlg (void)
      G_CALLBACK (file_cancel_callback),
      file_dlg);
 
-  gimp_help_connect (file_dlg, gimp_standard_help_func, "filters/flame.html");
+  gimp_help_connect (file_dlg, gimp_standard_help_func,
+                     "filters/flame.html", NULL);
 }
 
 static void

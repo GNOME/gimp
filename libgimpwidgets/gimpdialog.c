@@ -136,7 +136,7 @@ gimp_dialog_close (GtkDialog *dialog)
  *                gtk_window_set_wmclass(). The @wmclass_class will be
  *                automatically set to "Gimp".
  * @help_func:    The function which will be called if the user presses "F1".
- * @help_data:    The data pointer which will be passed to @help_func.
+ * @help_id:      The help_id which will be passed to @help_func.
  * @position:     The dialog's initial position which will be set with
  *                gtk_window_set_position().
  * @allow_shrink: The dialog's @allow_shrink flag, ...
@@ -158,7 +158,7 @@ GtkWidget *
 gimp_dialog_new (const gchar       *title,
 		 const gchar       *wmclass_name,
 		 GimpHelpFunc       help_func,
-		 const gchar       *help_data,
+		 const gchar       *help_id,
 		 GtkWindowPosition  position,
 		 gint               allow_shrink,
 		 gint               allow_grow,
@@ -184,7 +184,7 @@ gimp_dialog_new (const gchar       *title,
   dialog = gimp_dialog_newv (title,
 			     wmclass_name,
 			     help_func,
-			     help_data,
+			     help_id,
 			     position,
 			     allow_shrink,
 			     allow_grow,
@@ -204,7 +204,7 @@ gimp_dialog_new (const gchar       *title,
  *                gtk_window_set_wmclass(). The @wmclass_class will be
  *                automatically set to "Gimp".
  * @help_func:    The function which will be called if the user presses "F1".
- * @help_data:    The data pointer which will be passed to @help_func.
+ * @help_id:      The help_id which will be passed to @help_func.
  * @position:     The dialog's initial position which will be set with
  *                gtk_window_set_position().
  * @allow_shrink: The dialog's @allow_shrink flag, ...
@@ -226,7 +226,7 @@ GtkWidget *
 gimp_dialog_newv (const gchar       *title,
 		  const gchar       *wmclass_name,
 		  GimpHelpFunc       help_func,
-		  const gchar       *help_data,
+		  const gchar       *help_id,
 		  GtkWindowPosition  position,
 		  gint               allow_shrink,
 		  gint               allow_grow,
@@ -256,7 +256,7 @@ gimp_dialog_newv (const gchar       *title,
 
   /*  connect the "F1" help key  */
   if (help_func)
-    gimp_help_connect (dialog, help_func, help_data);
+    gimp_help_connect (dialog, help_func, help_id, dialog);
 
   return dialog;
 }

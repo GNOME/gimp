@@ -168,7 +168,7 @@ GtkObject * gimp_scale_entry_new       (GtkTable           *table,
                                         gdouble             unconstrained_lower,
                                         gdouble             unconstrained_upper,
                                         const gchar        *tooltip,
-                                        const gchar        *help_data);
+                                        const gchar        *help_id);
 
 GtkObject * gimp_color_scale_entry_new (GtkTable           *table,
                                         gint                column,
@@ -183,7 +183,7 @@ GtkObject * gimp_color_scale_entry_new (GtkTable           *table,
                                         gdouble             page_increment,
                                         guint               digits,
                                         const gchar        *tooltip,
-                                        const gchar        *help_data);
+                                        const gchar        *help_id);
 
 void    gimp_scale_entry_set_sensitive (GtkObject          *adjustment,
                                         gboolean            sensitive);

@@ -158,7 +158,7 @@ gimp_viewable_dialog_new (GimpViewable       *viewable,
                           const gchar        *stock_id,
                           const gchar        *desc,
                           GimpHelpFunc        help_func,
-                          const gchar        *help_data,
+                          const gchar        *help_id,
 
                           /* specify action area buttons
                            * as va_list:
@@ -189,15 +189,14 @@ gimp_viewable_dialog_new (GimpViewable       *viewable,
   gtk_window_set_wmclass (GTK_WINDOW (dialog), wmclass_name, "Gimp");
 
   if (help_func)
-    gimp_help_connect (GTK_WIDGET (dialog), help_func, help_data);
+    gimp_help_connect (GTK_WIDGET (dialog), help_func, help_id, dialog);
 
-  va_start (args, help_data);
+  va_start (args, help_id);
   gimp_dialog_create_action_areav (GIMP_DIALOG (dialog), args);
   va_end (args);
 
   gtk_image_set_from_stock (GTK_IMAGE (dialog->icon), stock_id,
                             GTK_ICON_SIZE_LARGE_TOOLBAR);
-
 
   attrs = pango_attr_list_new ();
 
