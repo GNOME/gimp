@@ -1,3 +1,17 @@
+Thu Sep  2 19:25:03 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/app_procs.c: call device_status_free before freeing brushes
+	and patterns, so the devicerc can be written properly.
+
+	* app/brush_scale.h: removed the scale_indicator_bits definition
+
+	* app/brush_select.[ch]
+	* tools/pdbgen/pdb/brush_select.pdb
+	* app/brush_select_cmds.c
+	* app/gimpbrushlist.c: display the pixmap brushes correctly and
+	set the sensitivity of the edit/delete buttons properly when adding
+	or deleting brushes.
+
 Thu Sep  2 16:46:35 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/gimpcontextpreview.c: grab the pointer so that the popups don't

@@ -89,7 +89,7 @@ BrushSelectP  brush_select_new (gchar        *title,
 void          brush_select_free      (BrushSelectP  bsp);
 
 void          brush_select_select    (BrushSelectP  bsp,
-				      int           index);
+				      GimpBrushP    brush);
 
 void          brush_change_callbacks (BrushSelectP  bsp,
 				      gint          closing);

@@ -20,27 +20,6 @@
 
 #include "temp_buf.h"
 
-/*  the pixmap for the brush_scale_indicator  */
-#define brush_scale_indicator_width 7
-#define brush_scale_indicator_height 7
-
-#define WHT {255,255,255}
-#define BLK {  0,  0,  0}
-
-static unsigned char brush_scale_indicator_bits[7][7][3] = 
-{
-  { WHT, WHT, WHT, WHT, WHT, WHT, WHT },
-  { WHT, WHT, WHT, BLK, WHT, WHT, WHT },
-  { WHT, WHT, WHT, BLK, WHT, WHT, WHT },
-  { WHT, BLK, BLK, BLK, BLK, BLK, WHT },
-  { WHT, WHT, WHT, BLK, WHT, WHT, WHT },
-  { WHT, WHT, WHT, BLK, WHT, WHT, WHT },
-  { WHT, WHT, WHT, WHT, WHT, WHT, WHT }
-};
-
-#undef WHT
-#undef BLK
-
 /*  functions   */
 
 MaskBuf * brush_scale_mask   (MaskBuf *, int, int);

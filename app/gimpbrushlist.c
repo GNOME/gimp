@@ -501,8 +501,7 @@ select_brush (GimpBrush * brush)
 
   /*  Keep up appearances in the brush dialog  */
   if (brush_select_dialog)
-    brush_select_select (brush_select_dialog,
-			 gimp_brush_list_get_brush_index(brush_list, brush));
+    brush_select_select (brush_select_dialog, brush);
 
   device_status_update (current_device);
 }

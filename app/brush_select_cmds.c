@@ -263,7 +263,7 @@ brushes_set_popup_invoker (Argument *args)
 	      /* Must alter the wigdets on screen as well */
     
 	      bsp->brush = active;
-	      brush_select_select (bsp, gimp_brush_list_get_brush_index (brush_list, active));
+	      brush_select_select (bsp, active);
     
 	      bsp->opacity_value = opacity;
 	      bsp->spacing_value = spacing;

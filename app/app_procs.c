@@ -633,6 +633,10 @@ app_exit_finish (void)
   message_handler = CONSOLE;
   we_are_exiting = TRUE;
 
+  /*  do this here before brushes and patterns are freed  */
+  if (!no_interface)
+    device_status_free ();
+
   module_db_free ();
   lc_dialog_free ();
   gdisplays_delete ();
@@ -661,9 +665,8 @@ app_exit_finish (void)
   gimp_parasiterc_save ();
 
   /*  Things to do only if there is an interface  */
-  if (no_interface == FALSE)
+  if (!no_interface)
     {
-      device_status_free ();
       toolbox_free ();
       close_idea_window();
       gximage_free ();
