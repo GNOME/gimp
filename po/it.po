@@ -9,7 +9,7 @@ msgstr ""
 "Last-Translator: Daniele Medri <madrid@linux.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Date: dom mar 26 16:01:57 CEST 2000\n"
 "From: Daniele Medri <madrid@linux.it>\n"
@@ -69,7 +69,7 @@ msgstr "Opzioni:\n"
 
 #: app/main.c:409
 msgid "  -b, --batch <commands>   Run in batch mode.\n"
-msgstr "  -b, --batch <comandi>  Esegue comandi in modalit‡ batch.\n"
+msgstr "  -b, --batch <comandi>  Esegue comandi in modalit√† batch.\n"
 
 #: app/main.c:410
 msgid ""
@@ -156,12 +156,12 @@ msgid ""
 "                           Debugging mode for fatal signals.\n"
 "\n"
 msgstr ""
-"                           Modalit‡ di debugging per segnali non fatali.\n"
+"                           Modalit√† di debugging per segnali non fatali.\n"
 "\n"
 
 #: app/main.c:444
 msgid "(This console window will close in ten seconds)\n"
-msgstr "(Questa finestra di console si chiuder‡ in 10 secondi)\n"
+msgstr "(Questa finestra di console si chiuder√† in 10 secondi)\n"
 
 #: app/base/base-enums.c:13 app/core/core-enums.c:324
 msgid "Small"
@@ -303,7 +303,7 @@ msgstr "Impossibile aprire il file %s"
 #: app/config/gimpconfigwriter.c:103
 #, fuzzy, c-format
 msgid "Failed to open '%s' for writing: %s"
-msgstr "Non Ë possibile aprire \"%s\""
+msgstr "Non √® possibile aprire \"%s\""
 
 #: app/config/gimpconfigwriter.c:396
 #, fuzzy, c-format
@@ -639,7 +639,7 @@ msgstr "Errore aprendo il file %s: %s"
 #: app/core/core-enums.c:13
 #, fuzzy
 msgid "_White (Full Opacity)"
-msgstr "Bianco (totale opacit‡)"
+msgstr "Bianco (totale opacit√†)"
 
 #: app/core/core-enums.c:14
 #, fuzzy
@@ -1070,7 +1070,7 @@ msgstr "Immagine"
 #: app/core/core-enums.c:503
 #, fuzzy
 msgid "Image Mod"
-msgstr "/Immagine/Modalit‡"
+msgstr "/Immagine/Modalit√†"
 
 #: app/core/core-enums.c:504 app/widgets/gimptemplateeditor.c:370
 msgid "Image Type"
@@ -1186,7 +1186,7 @@ msgstr "Elimina la selezione"
 #: app/core/core-enums.c:532
 #, fuzzy
 msgid "Vectors Mod"
-msgstr "Modalit‡ di selezione"
+msgstr "Modalit√† di selezione"
 
 #: app/core/core-enums.c:533
 #, fuzzy
@@ -1216,7 +1216,7 @@ msgstr "Impossibile annullare %s"
 #: app/core/gimp-gradients.c:75
 #, fuzzy
 msgid "FG to BG (HSV counter-clockwise)"
-msgstr "HSV (contatore tonalit‡ in senso orario)"
+msgstr "HSV (contatore tonalit√† in senso orario)"
 
 #: app/core/gimp-gradients.c:80
 #, fuzzy
@@ -1294,7 +1294,7 @@ msgstr "Replica"
 #: app/core/gimppalette.c:382 app/core/gimppattern.c:344
 #, fuzzy, c-format
 msgid "Could not open '%s' for reading: %s"
-msgstr "Non Ë possibile aprire \"%s\""
+msgstr "Non √® possibile aprire \"%s\""
 
 #: app/core/gimpbrush.c:547 app/core/gimppattern.c:353
 #, fuzzy, c-format
@@ -1340,7 +1340,7 @@ msgstr ""
 #: app/core/gimpgradient.c:588 app/core/gimppalette.c:581
 #, fuzzy, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Non Ë possibile aprire \"%s\""
+msgstr "Non √® possibile aprire \"%s\""
 
 #: app/core/gimpbrushgenerated.c:388
 #, c-format
@@ -1467,7 +1467,7 @@ msgstr "mod canale"
 #: app/core/gimpdata.c:239
 #, fuzzy, c-format
 msgid "Could not delete '%s': %s"
-msgstr "Non Ë possibile aprire \"%s\""
+msgstr "Non √® possibile aprire \"%s\""
 
 #: app/core/gimpdatafactory.c:265
 #, fuzzy, c-format
@@ -1475,7 +1475,7 @@ msgid ""
 "Warning: Failed to save data:\n"
 "%s"
 msgstr ""
-"Attenzione: Non Ë possibile caricare il pennello\n"
+"Attenzione: Non √® possibile caricare il pennello\n"
 "\"%s\""
 
 #: app/core/gimpdatafactory.c:380 app/core/gimpdatafactory.c:383
@@ -1502,7 +1502,7 @@ msgid ""
 "Warning: Failed to load data:\n"
 "%s"
 msgstr ""
-"Attenzione: Non Ë possibile caricare il pennello\n"
+"Attenzione: Non √® possibile caricare il pennello\n"
 "\"%s\""
 
 #: app/core/gimpdrawable-blend.c:235 app/tools/gimpblendtool.c:94
@@ -1695,8 +1695,8 @@ msgid ""
 "Unable to cut or copy because the\n"
 "selected region is empty."
 msgstr ""
-"Non Ë possibile a tagliare/copiare perchË\n"
-"la regione selezionata Ë vuota."
+"Non √® possibile a tagliare/copiare perch√®\n"
+"la regione selezionata √® vuota."
 
 #: app/core/gimpimage-mask.c:377
 #, fuzzy
@@ -1704,8 +1704,8 @@ msgid ""
 "Cannot float selection because the\n"
 "selected region is empty."
 msgstr ""
-"Non Ë possibile a tagliare/copiare perchË\n"
-"la regione selezionata Ë vuota."
+"Non √® possibile a tagliare/copiare perch√®\n"
+"la regione selezionata √® vuota."
 
 #: app/core/gimpimage-mask.c:400 app/gui/layers-commands.c:826
 msgid "Floating Selection"
@@ -1880,7 +1880,7 @@ msgstr "rinomina livello"
 #: app/core/gimpimage.c:2654
 #, fuzzy
 msgid "Layer cannot be raised higher."
-msgstr "Il livello non puÚ essere spostato ulteriormente"
+msgstr "Il livello non pu√≤ essere spostato ulteriormente"
 
 #: app/core/gimpimage.c:2659 app/widgets/gimplayertreeview.c:201
 #, fuzzy
@@ -1890,7 +1890,7 @@ msgstr "/Pila/Alza livello"
 #: app/core/gimpimage.c:2679
 #, fuzzy
 msgid "Layer cannot be lowered more."
-msgstr "Il livello non puÚ essere spostato ulteriormente"
+msgstr "Il livello non pu√≤ essere spostato ulteriormente"
 
 #: app/core/gimpimage.c:2684 app/widgets/gimplayertreeview.c:203
 #, fuzzy
@@ -1900,7 +1900,7 @@ msgstr "/Pila/Abbassa livello"
 #: app/core/gimpimage.c:2701
 #, fuzzy
 msgid "Layer is already on top."
-msgstr "Livello gi‡ in cima"
+msgstr "Livello gi√† in cima"
 
 #: app/core/gimpimage.c:2707
 #, fuzzy
@@ -1915,7 +1915,7 @@ msgstr "muovi livello in cima"
 #: app/core/gimpimage.c:2732
 #, fuzzy
 msgid "Layer is already on the bottom."
-msgstr "Livello gi‡ in fondo"
+msgstr "Livello gi√† in fondo"
 
 #: app/core/gimpimage.c:2737 app/widgets/gimplayertreeview.c:204
 #, fuzzy
@@ -1942,7 +1942,7 @@ msgstr "Canale superiore"
 #: app/core/gimpimage.c:2927
 #, fuzzy
 msgid "Channel cannot be raised higher."
-msgstr "Il canale non puÚ essere spostato ulteriormente"
+msgstr "Il canale non pu√≤ essere spostato ulteriormente"
 
 #: app/core/gimpimage.c:2932 app/widgets/gimpchanneltreeview.c:122
 #, fuzzy
@@ -1952,7 +1952,7 @@ msgstr "/Alza il canale"
 #: app/core/gimpimage.c:2948
 #, fuzzy
 msgid "Channel cannot be lowered more."
-msgstr "Il canale non puÚ essere spostato ulteriormente"
+msgstr "Il canale non pu√≤ essere spostato ulteriormente"
 
 #: app/core/gimpimage.c:2953 app/widgets/gimpchanneltreeview.c:124
 msgid "Lower Channel"
@@ -1971,7 +1971,7 @@ msgstr "Rinomina tracciato"
 #: app/core/gimpimage.c:3112
 #, fuzzy
 msgid "Path cannot be raised higher."
-msgstr "Il livello non puÚ essere spostato ulteriormente"
+msgstr "Il livello non pu√≤ essere spostato ulteriormente"
 
 #: app/core/gimpimage.c:3117 app/widgets/gimpvectorstreeview.c:127
 #, fuzzy
@@ -1981,7 +1981,7 @@ msgstr "/Incolla tracciato"
 #: app/core/gimpimage.c:3133
 #, fuzzy
 msgid "Path cannot be lowered more."
-msgstr "Il livello non puÚ essere spostato ulteriormente"
+msgstr "Il livello non pu√≤ essere spostato ulteriormente"
 
 #: app/core/gimpimage.c:3138 app/widgets/gimpvectorstreeview.c:129
 #, fuzzy
@@ -1991,12 +1991,12 @@ msgstr "Mostra tracciato"
 #: app/core/gimpimagefile.c:464 app/core/gimpimagefile.c:1054
 #, fuzzy, c-format
 msgid "Failed to write thumbnail for '%s' as '%s': %s"
-msgstr "(non Ë possibile creare file miniatura)"
+msgstr "(non √® possibile creare file miniatura)"
 
 #: app/core/gimpimagefile.c:470 app/core/gimpimagefile.c:1060
 #, fuzzy, c-format
 msgid "Failed to set permissions of thumbnail '%s': %s"
-msgstr "Non Ë possibile aprire \"%s\""
+msgstr "Non √® possibile aprire \"%s\""
 
 #: app/core/gimpimagefile.c:748
 #, fuzzy
@@ -2050,7 +2050,7 @@ msgstr "Impossibile aprire il file %s"
 #: app/core/gimpimagefile.c:1148
 #, fuzzy, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr "(non Ë possibile creare file miniatura)"
+msgstr "(non √® possibile creare file miniatura)"
 
 #: app/core/gimpitem.c:796
 #, fuzzy
@@ -2068,7 +2068,7 @@ msgid ""
 "it is not a floating selection."
 msgstr ""
 "Non posso ancorare questo livello\n"
-"perchË questo non Ë una selezione fluttuante."
+"perch√® questo non √® una selezione fluttuante."
 
 #: app/core/gimplayer-floating-sel.c:202
 msgid ""
@@ -2077,7 +2077,7 @@ msgid ""
 "layer mask or channel."
 msgstr ""
 "Impossibile creare un nuovo livello da una\n"
-"selezione fluttuante perchË appartiene ad\n"
+"selezione fluttuante perch√® appartiene ad\n"
 "un livello maschera o canale."
 
 #: app/core/gimplayer.c:217 app/pdb/internal_procs.c:131
@@ -2117,7 +2117,7 @@ msgstr ""
 #, fuzzy
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
-"Impossibile aggiungere una maschera livello finchË\n"
+"Impossibile aggiungere una maschera livello finch√®\n"
 "un livello non ne ha una."
 
 #: app/core/gimplayer.c:847
@@ -2544,7 +2544,7 @@ msgstr "Tipo di informazione sconosciuta."
 msgid "Not a regular file"
 msgstr ""
 "%s fallita.\n"
-"%s non Ë un file regolare."
+"%s non √® un file regolare."
 
 #: app/file/file-open.c:156
 msgid "Plug-In returned SUCCESS but did not return an image"
@@ -2553,12 +2553,12 @@ msgstr ""
 #: app/file/file-open.c:164
 #, fuzzy
 msgid "Plug-In could not open image"
-msgstr "Non Ë possibile aprire \"%s\""
+msgstr "Non √® possibile aprire \"%s\""
 
 #: app/file/file-save.c:210
 #, fuzzy
 msgid "Plug-In could not save image"
-msgstr "Non Ë possibile aprire \"%s\""
+msgstr "Non √® possibile aprire \"%s\""
 
 #: app/file/file-utils.c:106
 #, fuzzy
@@ -2583,12 +2583,12 @@ msgstr "Visitate http://www.gimp.org/ per informazioni"
 #: app/gui/brush-select.c:182 app/tools/paint_options.c:107
 #: app/widgets/gimplayertreeview.c:277
 msgid "Opacity:"
-msgstr "Opacit‡"
+msgstr "Opacit√†"
 
 #: app/gui/brush-select.c:199 app/tools/gimpselectionoptions.c:397
 #: app/tools/paint_options.c:112 app/widgets/gimplayertreeview.c:270
 msgid "Mode:"
-msgstr "Modalit‡:"
+msgstr "Modalit√†:"
 
 #: app/gui/brush-select.c:321
 msgid ""
@@ -2672,7 +2672,7 @@ msgstr "Nome canale:"
 
 #: app/gui/channels-commands.c:415 app/gui/channels-commands.c:575
 msgid "Fill Opacity:"
-msgstr "Opacit‡ del riempimento:"
+msgstr "Opacit√† del riempimento:"
 
 #: app/gui/channels-commands.c:487 app/gui/channels-commands.c:531
 #, fuzzy
@@ -2831,7 +2831,7 @@ msgid ""
 msgstr ""
 "State tentando di convertire una immagine con alpha/livelli da RGB/Scala di "
 "grigio al metodo scala di colore.\n"
-"Bisogna utilizzare una palette di colori con non pi˘ di 255 colori se "
+"Bisogna utilizzare una palette di colori con non pi√π di 255 colori se "
 "desiderate creareun file GIF trasparente o una animazione da questo formato."
 
 #: app/gui/convert-dialog.c:517
@@ -2923,7 +2923,7 @@ msgstr "/Modifica/Buffer"
 #: app/gui/dialogs-constructors.c:479
 #, fuzzy
 msgid "Image Grid"
-msgstr "/Immagine/Modalit‡"
+msgstr "/Immagine/Modalit√†"
 
 #: app/gui/dialogs-constructors.c:500
 #, fuzzy
@@ -3281,11 +3281,11 @@ msgstr "La desaturazione opera solo su figure con colore RGB."
 
 #: app/gui/drawable-commands.c:99
 msgid "Invert does not operate on indexed drawables."
-msgstr "L'inversione non opera in modalit‡ scala di colore"
+msgstr "L'inversione non opera in modalit√† scala di colore"
 
 #: app/gui/drawable-commands.c:117
 msgid "Equalize does not operate on indexed drawables."
-msgstr "L'equalizzazione non opera in modalit‡ scala di colore."
+msgstr "L'equalizzazione non opera in modalit√† scala di colore."
 
 #: app/gui/edit-commands.c:192
 msgid "Cut Named"
@@ -3427,7 +3427,7 @@ msgstr ""
 "\n"
 "Segliere OK per creare questa immagine comunque.\n"
 "Segliere Cancella se non intendete creare\n"
-"un immagine cosÏ ampia.\n"
+"un immagine cos√¨ ampia.\n"
 "\n"
 "Per prevenire questa finestra di dialogo,\n"
 "aumentate la \"Massima Dimensione Immagine\"\n"
@@ -3559,12 +3559,12 @@ msgstr "Selezionare il numero di "
 #: app/gui/gradient-editor-commands.c:620
 #, fuzzy
 msgid "Split Segment Uniformly"
-msgstr "Dividi uniformit‡ segmento"
+msgstr "Dividi uniformit√† segmento"
 
 #: app/gui/gradient-editor-commands.c:621
 #, fuzzy
 msgid "Split Gradient Segment Uniformly"
-msgstr "Dividi uniformit‡ segmento"
+msgstr "Dividi uniformit√† segmento"
 
 #: app/gui/gradient-editor-commands.c:625
 #, fuzzy
@@ -3685,12 +3685,12 @@ msgstr ""
 #: app/gui/gradient-editor-menu.c:193
 #, fuzzy
 msgid "/coloringtype/HSV (counter-clockwise hue)"
-msgstr "HSV (contatore tonalit‡ in senso orario)"
+msgstr "HSV (contatore tonalit√† in senso orario)"
 
 #: app/gui/gradient-editor-menu.c:198
 #, fuzzy
 msgid "/coloringtype/HSV (clockwise hue)"
-msgstr "HSV (tonalit‡ in senso orario)"
+msgstr "HSV (tonalit√† in senso orario)"
 
 #: app/gui/gradient-editor-menu.c:203
 msgid "/coloringtype/(Varies)"
@@ -3704,7 +3704,7 @@ msgstr "Sfumatura dei colori agli estremi"
 #: app/gui/gradient-editor-menu.c:245
 #, fuzzy
 msgid "/Blend Endpoints' Opacity"
-msgstr "Sfumatura opacit‡ agli estremi"
+msgstr "Sfumatura opacit√† agli estremi"
 
 #: app/gui/gradient-editor-menu.c:390
 #, fuzzy
@@ -3729,12 +3729,12 @@ msgstr "Replica segmento"
 #: app/gui/gradient-editor-menu.c:395
 #, fuzzy
 msgid "Split Segment at Midpoint"
-msgstr "Dividi segmento a met‡"
+msgstr "Dividi segmento a met√†"
 
 #: app/gui/gradient-editor-menu.c:396
 #, fuzzy
 msgid "Split Segment Uniformly..."
-msgstr "Dividi uniformit‡ segmento"
+msgstr "Dividi uniformit√† segmento"
 
 #: app/gui/gradient-editor-menu.c:397
 #, fuzzy
@@ -3744,7 +3744,7 @@ msgstr "Elimina segmento"
 #: app/gui/gradient-editor-menu.c:398
 #, fuzzy
 msgid "Re-center Segment's Midpoint"
-msgstr "Ri-centra met‡ del segmento"
+msgstr "Ri-centra met√† del segmento"
 
 #: app/gui/gradient-editor-menu.c:399
 #, fuzzy
@@ -3774,7 +3774,7 @@ msgstr "Replica la selezione"
 #: app/gui/gradient-editor-menu.c:408
 #, fuzzy
 msgid "Split Segments at Midpoints"
-msgstr "Dividi il segmento a met‡"
+msgstr "Dividi il segmento a met√†"
 
 #: app/gui/gradient-editor-menu.c:409
 #, fuzzy
@@ -3789,7 +3789,7 @@ msgstr "Elimina la selezione"
 #: app/gui/gradient-editor-menu.c:411
 #, fuzzy
 msgid "Re-center Midpoints in Selection"
-msgstr "Ri-centra met‡ nella selezione"
+msgstr "Ri-centra met√† nella selezione"
 
 #: app/gui/gradient-editor-menu.c:412
 #, fuzzy
@@ -3950,8 +3950,8 @@ msgstr "Rotazione..."
 #, fuzzy
 msgid "Cannot crop because the current selection is empty."
 msgstr ""
-"Non Ë possibile a tagliare/copiare perchË\n"
-"la regione selezionata Ë vuota."
+"Non √® possibile a tagliare/copiare perch√®\n"
+"la regione selezionata √® vuota."
 
 #: app/gui/image-commands.c:352
 #, fuzzy
@@ -4000,7 +4000,7 @@ msgid ""
 "Is this what you want?"
 msgstr ""
 "La dimensione immagine scelta\n"
-"ridurr‡ alcuni livelli.\n"
+"ridurr√† alcuni livelli.\n"
 "E' questo quello che desiderate?"
 
 #: app/gui/image-commands.c:543 app/tools/gimpscaletool.c:164
@@ -4353,19 +4353,19 @@ msgstr "/Immagine"
 #: app/gui/image-menu.c:475
 #, fuzzy
 msgid "/Image/_Mode"
-msgstr "/Immagine/Modalit‡/---"
+msgstr "/Immagine/Modalit√†/---"
 
 #: app/gui/image-menu.c:477
 msgid "/Image/Mode/RGB"
-msgstr "/Immagine/Modalit‡/RGB"
+msgstr "/Immagine/Modalit√†/RGB"
 
 #: app/gui/image-menu.c:482
 msgid "/Image/Mode/Grayscale"
-msgstr "/Immagine/Modalit‡/Scala di grigio"
+msgstr "/Immagine/Modalit√†/Scala di grigio"
 
 #: app/gui/image-menu.c:487
 msgid "/Image/Mode/Indexed..."
-msgstr "/Immagine/Modalit‡/Scala di colore..."
+msgstr "/Immagine/Modalit√†/Scala di colore..."
 
 #. <Image>/Image/Transform
 #: app/gui/image-menu.c:495
@@ -4517,7 +4517,7 @@ msgstr "/Immagine/Colori/Bilanciamento colore..."
 #: app/gui/image-menu.c:648
 #, fuzzy
 msgid "/Layer/Colors/Hue-Saturation..."
-msgstr "/Immagine/Colori/Tonalit‡-Saturazione..."
+msgstr "/Immagine/Colori/Tonalit√†-Saturazione..."
 
 #: app/gui/image-menu.c:653
 #, fuzzy
@@ -4527,7 +4527,7 @@ msgstr "/Immagine/Colori/Posterizzazione..."
 #: app/gui/image-menu.c:658
 #, fuzzy
 msgid "/Layer/Colors/Brightness-Contrast..."
-msgstr "/Immagine/Colori/Luminosit‡-Contrasto..."
+msgstr "/Immagine/Colori/Luminosit√†-Contrasto..."
 
 #: app/gui/image-menu.c:663
 #, fuzzy
@@ -5031,7 +5031,7 @@ msgstr "B:"
 #: app/gui/info-window.c:260
 #, fuzzy
 msgid "H:"
-msgstr "Tonalit‡:"
+msgstr "Tonalit√†:"
 
 #. Saturation
 #: app/gui/info-window.c:267
@@ -5384,7 +5384,7 @@ msgstr ""
 
 #: app/gui/offset-dialog.c:198 app/widgets/gimptemplateeditor.c:378
 msgid "Fill Type"
-msgstr "Modalit‡ di riempimento"
+msgstr "Modalit√† di riempimento"
 
 #: app/gui/offset-dialog.c:203
 #, fuzzy
@@ -5606,7 +5606,7 @@ msgstr "Dimensioni base dell'immagine"
 #. Default Image Resolution and Resolution Unit
 #: app/gui/preferences-dialog.c:1057
 msgid "Default Image Resolution and Resolution Unit"
-msgstr "Risoluzione dell'immagine e unit‡ di misura"
+msgstr "Risoluzione dell'immagine e unit√† di misura"
 
 #: app/gui/preferences-dialog.c:1083 app/gui/preferences-dialog.c:1692
 #: app/gui/user-install-dialog.c:1295
@@ -5847,7 +5847,7 @@ msgstr "Scala:"
 #: app/gui/preferences-dialog.c:1420
 #, fuzzy
 msgid "Marching _Ants Speed:"
-msgstr "Velocit‡ animazione titolo:"
+msgstr "Velocit√† animazione titolo:"
 
 #. Canvas Padding Color
 #: app/gui/preferences-dialog.c:1424
@@ -5903,7 +5903,7 @@ msgstr "Disabilita aggiornamento cursore"
 #: app/gui/preferences-dialog.c:1463
 #, fuzzy
 msgid "Cursor M_ode:"
-msgstr "Modalit‡ cursore:"
+msgstr "Modalit√† cursore:"
 
 #: app/gui/preferences-dialog.c:1472
 #, fuzzy
@@ -6196,7 +6196,7 @@ msgstr "Modifica attributi Qmask"
 
 #: app/gui/qmask-commands.c:191
 msgid "Mask Opacity:"
-msgstr "Opacit‡:"
+msgstr "Opacit√†:"
 
 #: app/gui/qmask-menu.c:43
 #, fuzzy
@@ -6281,7 +6281,7 @@ msgstr "Centro X:"
 
 #: app/gui/resize-dialog.c:538
 msgid "Print Size & Display Unit"
-msgstr "Stampa dimensione e unit‡ del display"
+msgstr "Stampa dimensione e unit√† del display"
 
 #. the resolution labels
 #: app/gui/resize-dialog.c:619 app/widgets/gimptemplateeditor.c:288
@@ -6411,7 +6411,7 @@ msgid ""
 "Your GIMP tips file appears to be missing! There should be a file called '%"
 "s'. Please check your installation."
 msgstr ""
-"Il file dei Suggerimenti GIMP non Ë stato trovato!\n"
+"Il file dei Suggerimenti GIMP non √® stato trovato!\n"
 "Dovrebbe esserci un file chiamato gimp-tips.it.txt nella\n"
 "sotto-directory di GIMP.\n"
 "Si prega di controllare la vostra installazione."
@@ -6606,7 +6606,7 @@ msgid ""
 "patterns, plug-ins and modules can also configured\n"
 "here."
 msgstr ""
-"Il file gimprc Ë utile per memorizzare le preferenze\n"
+"Il file gimprc √® utile per memorizzare le preferenze\n"
 "personali come le caratteristiche di GIMP e gli\n"
 "hotkey dei plug-in. Percorsi per cercare i pennelli,\n"
 "palette, gradienti, pattern, plug-in e moduli sono\n"
@@ -6617,7 +6617,7 @@ msgid ""
 "GIMP uses an additional gtkrc file so you can\n"
 "configure it to look differently than other GTK apps."
 msgstr ""
-"GIMP utilizza un file gtkrc aggiuntivo cosÏ Ë possibile\n"
+"GIMP utilizza un file gtkrc aggiuntivo cos√¨ √® possibile\n"
 "dare un aspetto differente dalle altre applicazioni GTK."
 
 #: app/gui/user-install-dialog.c:153
@@ -6630,10 +6630,10 @@ msgid ""
 "be GIMP-readable only, and should not be edited."
 msgstr ""
 "I plugin e le estensioni sono programmi esterni che\n"
-"aggiungono funzionalit‡ a Gimp. Questi programmi sono\n"
+"aggiungono funzionalit√† a Gimp. Questi programmi sono\n"
 "ricercati all'avvio del programma e le relative\n"
-"informazioni sulle funzionalit‡ sono memorizzate in\n"
-"questo file. Questo file Ë destinato alla sola lettura\n"
+"informazioni sulle funzionalit√† sono memorizzate in\n"
+"questo file. Questo file √® destinato alla sola lettura\n"
 "e non deve essere editato."
 
 #: app/gui/user-install-dialog.c:163
@@ -6646,11 +6646,11 @@ msgid ""
 "restore the default shortcuts."
 msgstr ""
 "I tasti combinazione possono essere dinamicamente definiti\n"
-"in GIMP. Il menurc Ë una copia delle vostre configurazioni\n"
-"per questo puÚ essere utilizzato la volta successiva. Potete\n"
-"editare questo file se preferite, ma Ë molto pi˘ semplice\n"
+"in GIMP. Il menurc √® una copia delle vostre configurazioni\n"
+"per questo pu√≤ essere utilizzato la volta successiva. Potete\n"
+"editare questo file se preferite, ma √® molto pi√π semplice\n"
 "definire le scorciatoie con GIMP. Cancellare questo file\n"
-"vorr‡ dire utilizzare le scorciatoie di base."
+"vorr√† dire utilizzare le scorciatoie di base."
 
 #: app/gui/user-install-dialog.c:173
 msgid ""
@@ -6658,7 +6658,7 @@ msgid ""
 "open the last time you quit The GIMP.  You can configure\n"
 "The GIMP to reopen these dialogs at the saved position."
 msgstr ""
-"Il file sessionrc Ë utilizzato per memorizzare quali finestre\n"
+"Il file sessionrc √® utilizzato per memorizzare quali finestre\n"
 "di dialogo erano aperte l'ultima volta prima di uscire da GIMP.\n"
 "Potete configurare GIMP per riaprire queste finestre nella stessa\n"
 "posizione."
@@ -6677,9 +6677,9 @@ msgid ""
 "points and picas.  This file is overwritten each time\n"
 "you quit the GIMP."
 msgstr ""
-"Il file unitrc Ë utilizzato per memorizzare il database\n"
-"delle unit‡ di misura utente. Potete definire ulteriori\n"
-"unint‡ da utilizzare come le unit‡ basilari integrate.\n"
+"Il file unitrc √® utilizzato per memorizzare il database\n"
+"delle unit√† di misura utente. Potete definire ulteriori\n"
+"unint√† da utilizzare come le unit√† basilari integrate.\n"
 "Questo file viene sovrascritto ogni volta che uscite\n"
 "da GIMP."
 
@@ -6691,7 +6691,7 @@ msgid ""
 "wide GIMP brushes installation when searching for\n"
 "brushes."
 msgstr ""
-"Questa Ë una sottodirectory utile per tenere\n"
+"Questa √® una sottodirectory utile per tenere\n"
 "i pennelli definiti dall'utente. Il file di base\n"
 "gimprc controlla questa directory oltre a quelle\n"
 "di sistema dove sono disposti i pennelli base\n"
@@ -6705,7 +6705,7 @@ msgid ""
 "wide GIMP gradients installation when searching for\n"
 "gradients."
 msgstr ""
-"Questa Ë una sottodirectory utile per tenere\n"
+"Questa √® una sottodirectory utile per tenere\n"
 "i gradienti definiti dall'utente. Il file di base\n"
 "gimprc controlla questa directory oltre a quelle di\n"
 "sistema dove sono disposti i gradienti base presenti\n"
@@ -6719,7 +6719,7 @@ msgid ""
 "wide GIMP palettes installation when searching for\n"
 "palettes."
 msgstr ""
-"Questa Ë una sottodirectory utile per tenere\n"
+"Questa √® una sottodirectory utile per tenere\n"
 "i pattern definiti dall'utente. Il file di base\n"
 "gimprc controlla questa directory oltre a quelle\n"
 "di sistema dove sono disposti i pattern base\n"
@@ -6733,7 +6733,7 @@ msgid ""
 "wide GIMP patterns installation when searching for\n"
 "patterns."
 msgstr ""
-"Questa Ë una sottodirectory utile per tenere\n"
+"Questa √® una sottodirectory utile per tenere\n"
 "i pattern definiti dall'utente. Il file di base\n"
 "gimprc controlla questa directory oltre a quelle\n"
 "di sistema dove sono disposti i pattern base\n"
@@ -6747,7 +6747,7 @@ msgid ""
 "checks this folder in addition to the system-wide\n"
 "GIMP plug-in folder when searching for plug-ins."
 msgstr ""
-"Questa Ë una sottodirectory utile per tenere\n"
+"Questa √® una sottodirectory utile per tenere\n"
 "i plug-in definiti dall'utente. Il file di base\n"
 "gimprc controlla questa directory oltre a quelle di\n"
 "sistema dove sono disposti i plug-in base presenti\n"
@@ -6762,7 +6762,7 @@ msgid ""
 "GIMP module folder when searching for modules to load\n"
 "during initialization."
 msgstr ""
-"Questa sottodirectory puÚ essere utilizzata per tenere\n"
+"Questa sottodirectory pu√≤ essere utilizzata per tenere\n"
 "file utente o altri moduli non di sistema.\n"
 "Il file di base gimprc controlla questa sottodirectory\n"
 "oltre a quelle di sistema dove sono riposti di moduli base\n"
@@ -6778,7 +6778,7 @@ msgid ""
 "when searching for plug-in environment modification\n"
 "files."
 msgstr ""
-"Questa Ë una sottodirectory utile per tenere\n"
+"Questa √® una sottodirectory utile per tenere\n"
 "i plug-in definiti dall'utente. Il file di base\n"
 "gimprc controlla questa directory oltre a quelle di\n"
 "sistema dove sono disposti i plug-in base presenti\n"
@@ -6801,7 +6801,7 @@ msgstr ""
 #, fuzzy
 msgid "This folder is searched for image templates."
 msgstr ""
-"Questa sottodirectory Ë utilizzata per memorizzare i\n"
+"Questa sottodirectory √® utilizzata per memorizzare i\n"
 "file con i parametri relativi ai Livelli."
 
 #: app/gui/user-install-dialog.c:267
@@ -6817,18 +6817,18 @@ msgid ""
 "this folder.  These files are useless across GIMP\n"
 "sessions and can be destroyed with impunity."
 msgstr ""
-"Questa sottodirectory Ë utilizzata da GIMP per tenere\n"
+"Questa sottodirectory √® utilizzata da GIMP per tenere\n"
 "temporaneamente lo storico comandi e ridurre l'utilizzo\n"
-"della memoria. Se GIMP Ë interrotto improvvisamente, i\n"
+"della memoria. Se GIMP √® interrotto improvvisamente, i\n"
 "file rimarranno in questa directory nella forma:\n"
 "gimp<#>.<#>. Questi file sono utili durante la sessione\n"
-"di GIMP e possono essere distrutti senza impunit‡."
+"di GIMP e possono essere distrutti senza impunit√†."
 
 #: app/gui/user-install-dialog.c:281
 #, fuzzy
 msgid "This folder is used to store tool options."
 msgstr ""
-"Questa sottodirectory Ë utilizzata per memorizzare i\n"
+"Questa sottodirectory √® utilizzata per memorizzare i\n"
 "file con i parametri relativi ai Livelli."
 
 #: app/gui/user-install-dialog.c:286
@@ -6837,7 +6837,7 @@ msgid ""
 "This folder is used to store parameter files for the\n"
 "Curves tool."
 msgstr ""
-"Questa sottodirectory Ë utilizzata per memorizzare i\n"
+"Questa sottodirectory √® utilizzata per memorizzare i\n"
 "file con i parametri relativi alle Curve."
 
 #: app/gui/user-install-dialog.c:292
@@ -6846,7 +6846,7 @@ msgid ""
 "This folder is used to store parameter files for the\n"
 "Levels tool."
 msgstr ""
-"Questa sottodirectory Ë utilizzata per memorizzare i\n"
+"Questa sottodirectory √® utilizzata per memorizzare i\n"
 "file con i parametri relativi ai Livelli."
 
 #: app/gui/user-install-dialog.c:380
@@ -6903,7 +6903,7 @@ msgid ""
 "the Free Software Foundation; either version 2 of the License, or\n"
 "(at your option) any later version."
 msgstr ""
-"Questo programma Ë free software; potete ridistribuirlo e/o modificarlo\n"
+"Questo programma √® free software; potete ridistribuirlo e/o modificarlo\n"
 "sotto le condizioni della  GNU General Public License  pubblicata dalla\n"
 "Free Software Foundation; sia la versione 2 della Licenza, o ogni\n"
 "successiva versione."
@@ -6915,7 +6915,7 @@ msgid ""
 "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
 "See the GNU General Public License for more details."
 msgstr ""
-"Questo programma Ë distribuito con la speranza che possa essere utile, ma\n"
+"Questo programma √® distribuito con la speranza che possa essere utile, ma\n"
 "SENZA NESSUNA GARANZIA; senza le garanzie implicate nella DISTRIBUZIONE o\n"
 "SCOPI PARTICOLARI. Fate riferimento alla GNU General Public License per\n"
 "maggiori dettagli."
@@ -6948,7 +6948,7 @@ msgid ""
 "For a proper GIMP installation, a folder named\n"
 "'%s' needs to be created."
 msgstr ""
-"Per una appropriata installazione di GIMP, Ë necessario\n"
+"Per una appropriata installazione di GIMP, √® necessario\n"
 "creare una directory con il nome %s."
 
 #: app/gui/user-install-dialog.c:832
@@ -6958,7 +6958,7 @@ msgid ""
 "Click on one of the files or folders in the tree\n"
 "to get more information about the selected item."
 msgstr ""
-"Questa sottodirectory conterr‡ un numero di file importanti.\n"
+"Questa sottodirectory conterr√† un numero di file importanti.\n"
 "Click su uno dei file o sottodirectory nell'alberatura\n"
 "per conoscere i dettagli specifici."
 
@@ -6986,7 +6986,7 @@ msgstr "Cliccare \"Continua\" per accettare le configurazioni."
 #: app/gui/user-install-dialog.c:917
 msgid "For optimal GIMP performance, some settings may have to be adjusted."
 msgstr ""
-"Per una prestazione ottimale di GIMP, Ë necessario aggiustare alcuni "
+"Per una prestazione ottimale di GIMP, √® necessario aggiustare alcuni "
 "parametri."
 
 #: app/gui/user-install-dialog.c:926
@@ -7012,12 +7012,12 @@ msgstr "Installazione annullata..."
 #: app/gui/user-install-dialog.c:967
 #, fuzzy, c-format
 msgid "Cannot open '%s' for reading: %s"
-msgstr "Non Ë possibile aprire %s; %s"
+msgstr "Non √® possibile aprire %s; %s"
 
 #: app/gui/user-install-dialog.c:976
 #, fuzzy, c-format
 msgid "Cannot open '%s' for writing: %s"
-msgstr "Non Ë possibile aprire %s; %s"
+msgstr "Non √® possibile aprire %s; %s"
 
 #: app/gui/user-install-dialog.c:987 app/gui/user-install-dialog.c:1010
 #, fuzzy, c-format
@@ -7100,7 +7100,7 @@ msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
 msgstr ""
-"GIMP puÚ ottenere queste informazioni dal gestore finestre.\n"
+"GIMP pu√≤ ottenere queste informazioni dal gestore finestre.\n"
 "Comunque, usualmente non vengono riscontrati valori utili."
 
 #: app/gui/user-install-dialog.c:1254
@@ -7110,7 +7110,7 @@ msgstr "Rileva la risoluzione dal gestore finestre (corrente %d x %d dpi)"
 
 #: app/gui/user-install-dialog.c:1272
 msgid "Alternatively, you can set the monitor resolution manually."
-msgstr "Alternativamente, Ë possibile configurare la risoluzione manualmente."
+msgstr "Alternativamente, √® possibile configurare la risoluzione manualmente."
 
 #: app/gui/user-install-dialog.c:1318
 msgid ""
@@ -7321,7 +7321,7 @@ msgstr "Incrementale"
 
 #: app/pdb/color_cmds.c:129 app/tools/gimpbrightnesscontrasttool.c:82
 msgid "Brightness-Contrast"
-msgstr "Liminosit‡-Contrasto"
+msgstr "Liminosit√†-Contrasto"
 
 #: app/pdb/color_cmds.c:254 app/tools/gimplevelstool.c:162
 msgid "Levels"
@@ -7342,7 +7342,7 @@ msgstr "Bilanciamento colore"
 
 #: app/pdb/color_cmds.c:1131 app/tools/gimphuesaturationtool.c:107
 msgid "Hue-Saturation"
-msgstr "Tonalit‡-saturazione"
+msgstr "Tonalit√†-saturazione"
 
 #: app/pdb/color_cmds.c:1229 app/tools/gimpthresholdtool.c:88
 msgid "Threshold"
@@ -7353,7 +7353,7 @@ msgid ""
 "Image resolution is out of bounds,\n"
 "using the default resolution instead."
 msgstr ""
-"La risoluzione immagine Ë fuori limite,\n"
+"La risoluzione immagine √® fuori limite,\n"
 "utilizzo  della risoluzione base."
 
 #: app/pdb/internal_procs.c:80
@@ -7474,7 +7474,7 @@ msgstr "Procedure strumenti"
 
 #: app/pdb/internal_procs.c:188
 msgid "Units"
-msgstr "Unit‡"
+msgstr "Unit√†"
 
 #: app/pdb/procedural_db.c:177
 #, fuzzy, c-format
@@ -7660,7 +7660,7 @@ msgstr "Dimensione immagine: %s"
 #: app/tools/tools-enums.c:100
 #, fuzzy
 msgid "Fixed Aspect Ratio"
-msgstr "Dimensioni fisse / Unit‡ di misura"
+msgstr "Dimensioni fisse / Unit√† di misura"
 
 #: app/tools/tools-enums.c:118
 #, fuzzy
@@ -7761,26 +7761,26 @@ msgstr "Unione:"
 
 #: app/tools/gimpbrightnesscontrasttool.c:83
 msgid "Adjust brightness and contrast"
-msgstr "Aggiusta luminosit‡-contrasto"
+msgstr "Aggiusta luminosit√†-contrasto"
 
 #: app/tools/gimpbrightnesscontrasttool.c:84
 #, fuzzy
 msgid "/Tools/Color Tools/Brightness-Contrast..."
-msgstr "/Immagine/Colori/Luminosit‡-Contrasto..."
+msgstr "/Immagine/Colori/Luminosit√†-Contrasto..."
 
 #: app/tools/gimpbrightnesscontrasttool.c:148
 #, fuzzy
 msgid "Adjust Brightness and Contrast"
-msgstr "Aggiusta luminosit‡-contrasto"
+msgstr "Aggiusta luminosit√†-contrasto"
 
 #: app/tools/gimpbrightnesscontrasttool.c:181
 msgid "Brightness-Contrast does not operate on indexed drawables."
-msgstr "Luminosit‡ e contrasto non operano su figure in scala di colore"
+msgstr "Luminosit√† e contrasto non operano su figure in scala di colore"
 
 #: app/tools/gimpbrightnesscontrasttool.c:236
 #, fuzzy
 msgid "_Brightness:"
-msgstr "Luminosit‡:"
+msgstr "Luminosit√†:"
 
 #: app/tools/gimpbrightnesscontrasttool.c:251
 #, fuzzy
@@ -7805,7 +7805,7 @@ msgstr "Filtri della Gamma Colore"
 #: app/tools/gimpbucketfilloptions.c:237
 #, fuzzy, c-format
 msgid "Fill Type  %s"
-msgstr "Modalit‡ di riempimento"
+msgstr "Modalit√† di riempimento"
 
 #: app/tools/gimpbucketfilloptions.c:244 app/tools/gimpselectionoptions.c:476
 msgid "Finding Similar Colors"
@@ -7907,7 +7907,7 @@ msgstr "Salva immagine"
 #: app/tools/gimpcolorbalancetool.c:339
 #, fuzzy
 msgid "Preserve _Luminosity"
-msgstr "Preserva luminosit‡"
+msgstr "Preserva luminosit√†"
 
 #: app/tools/gimpcolorizetool.c:93
 #, fuzzy
@@ -7942,12 +7942,12 @@ msgstr "/Selezione/Per colore..."
 #: app/tools/gimpcolorizetool.c:256 app/tools/gimphuesaturationtool.c:367
 #, fuzzy
 msgid "_Hue:"
-msgstr "Tonalit‡:"
+msgstr "Tonalit√†:"
 
 #: app/tools/gimpcolorizetool.c:270 app/tools/gimphuesaturationtool.c:381
 #, fuzzy
 msgid "_Lightness:"
-msgstr "Luminosit‡:"
+msgstr "Luminosit√†:"
 
 #: app/tools/gimpcolorizetool.c:284 app/tools/gimphuesaturationtool.c:395
 #, fuzzy
@@ -8008,7 +8008,7 @@ msgstr "Esadecimale:"
 
 #: app/tools/gimpcolorpickertool.c:287
 msgid "Intensity:"
-msgstr "Intensit‡:"
+msgstr "Intensit√†:"
 
 #: app/tools/gimpcolorpickertool.c:293
 msgid "Index:"
@@ -8170,7 +8170,7 @@ msgstr "Tipo"
 
 #: app/tools/gimpdodgeburntool.c:213
 msgid "Mode"
-msgstr "Modalit‡"
+msgstr "Modalit√†"
 
 #: app/tools/gimpdodgeburntool.c:225
 msgid "Exposure:"
@@ -8228,7 +8228,7 @@ msgstr "Compensato:"
 #: app/tools/gimpflipoptions.c:180
 #, fuzzy, c-format
 msgid "Flip Type  %s"
-msgstr "Modalit‡ di riempimento"
+msgstr "Modalit√† di riempimento"
 
 #: app/tools/gimpfliptool.c:85
 msgid "Flip the layer or selection"
@@ -8305,7 +8305,7 @@ msgstr "Visualizza istogramma immagine"
 #: app/tools/gimphistogramtool.c:365
 #, fuzzy
 msgid "Intensity Range:"
-msgstr "Intensit‡:"
+msgstr "Intensit√†:"
 
 #: app/tools/gimphistogramtool.c:372
 msgid "Information on Channel:"
@@ -8318,21 +8318,21 @@ msgstr "Istogramma"
 
 #: app/tools/gimphuesaturationtool.c:108
 msgid "Adjust hue and saturation"
-msgstr "Aggiusta Tonalit‡-Saturazione"
+msgstr "Aggiusta Tonalit√†-Saturazione"
 
 #: app/tools/gimphuesaturationtool.c:109
 #, fuzzy
 msgid "/Tools/Color Tools/Hue-Saturation..."
-msgstr "/Immagine/Colori/Tonalit‡-Saturazione..."
+msgstr "/Immagine/Colori/Tonalit√†-Saturazione..."
 
 #: app/tools/gimphuesaturationtool.c:176
 #, fuzzy
 msgid "Adjust Hue / Lightness / Saturation"
-msgstr "Aggiustamenti tonalit‡ / luminosit‡ / saturazione"
+msgstr "Aggiustamenti tonalit√† / luminosit√† / saturazione"
 
 #: app/tools/gimphuesaturationtool.c:210
 msgid "Hue-Saturation operates only on RGB color drawables."
-msgstr "Tonalit‡-saturazione operano solamente su figure RGB."
+msgstr "Tonalit√†-saturazione operano solamente su figure RGB."
 
 #: app/tools/gimphuesaturationtool.c:265
 #, fuzzy
@@ -8405,7 +8405,7 @@ msgstr "Angolo:"
 #. sens sliders
 #: app/tools/gimpinkoptions.c:285
 msgid "Sensitivity"
-msgstr "Sensibilit‡"
+msgstr "Sensibilit√†"
 
 #: app/tools/gimpinkoptions.c:306
 msgid "Tilt:"
@@ -8413,7 +8413,7 @@ msgstr "Inclinazione:"
 
 #: app/tools/gimpinkoptions.c:313
 msgid "Speed:"
-msgstr "Velocit‡:"
+msgstr "Velocit√†:"
 
 #: app/tools/gimpinkoptions.c:324
 msgid "Type"
@@ -8576,7 +8576,7 @@ msgstr "Distanza:"
 #: app/tools/gimpmeasuretool.c:579 app/tools/gimpmeasuretool.c:584
 #: app/tools/gimpmeasuretool.c:592 app/tools/gimpmeasuretool.c:622
 msgid "degrees"
-msgstr "∞"
+msgstr "¬∞"
 
 #: app/tools/gimpmoveoptions.c:183
 #, fuzzy
@@ -8936,7 +8936,7 @@ msgstr "Movimento riflesso"
 
 #: app/tools/gimptransformoptions.c:344
 msgid "Density:"
-msgstr "Densit‡:"
+msgstr "Densit√†:"
 
 #. the constraints frame
 #: app/tools/gimptransformoptions.c:355
@@ -9030,11 +9030,11 @@ msgstr "Gradiente:"
 
 #: app/tools/paint_options.c:249
 msgid "Pressure Sensitivity"
-msgstr "Sensibilit‡ pressione"
+msgstr "Sensibilit√† pressione"
 
 #: app/tools/paint_options.c:265
 msgid "Opacity"
-msgstr "Opacit‡"
+msgstr "Opacit√†"
 
 #: app/tools/paint_options.c:279
 msgid "Hardness"
@@ -9283,7 +9283,7 @@ msgid ""
 "%s  Open image dialog"
 msgstr ""
 "Apri la voce selezionata\n"
-"<Shift> Alza la finestra se gi‡ aperta\n"
+"<Shift> Alza la finestra se gi√† aperta\n"
 "<Ctrl> Apre la finestra immagine"
 
 #: app/widgets/gimpdocumentview.c:183
@@ -9328,7 +9328,7 @@ msgstr "Messaggio GIMP"
 #: app/widgets/gimperrorconsole.c:331
 #, fuzzy
 msgid "Cannot save. Nothing is selected."
-msgstr "Impossibile salvare, non Ë stato selezionato nulla!"
+msgstr "Impossibile salvare, non √® stato selezionato nulla!"
 
 #: app/widgets/gimperrorconsole.c:341
 #, fuzzy
@@ -9478,7 +9478,7 @@ msgid ""
 msgstr ""
 "Impossibile trovare le procedure del browser aiuti di GIMP.\n"
 "Probabilmente non era stato compilato\n"
-"perchË non era installato GtkXmHTML."
+"perch√® non era installato GtkXmHTML."
 
 #: app/widgets/gimphelp.c:201
 msgid "Use Netscape instead"
@@ -9583,7 +9583,7 @@ msgstr "Palette scala di colore"
 #: app/widgets/gimppropwidgets.c:1273
 #, fuzzy, c-format
 msgid "This text input field is limited to %d characters."
-msgstr "Il commentod di base Ë limitato a %d caratteri."
+msgstr "Il commentod di base √® limitato a %d caratteri."
 
 #: app/widgets/gimpselectioneditor.c:193
 #, fuzzy
@@ -9859,7 +9859,7 @@ msgstr "Solo toni chiari"
 #: app/widgets/gimpwidgets-constructors.c:68
 #: app/widgets/gimpwidgets-constructors.c:101
 msgid "Hue"
-msgstr "Tonalit‡"
+msgstr "Tonalit√†"
 
 #: app/widgets/gimpwidgets-constructors.c:69
 #: app/widgets/gimpwidgets-constructors.c:102
@@ -9922,7 +9922,7 @@ msgstr "Errore aprendo il file: %s\n"
 #: app/xcf/xcf-seek.c:44 app/xcf/xcf-seek.c:61 app/xcf/xcf-seek.c:72
 #, fuzzy, c-format
 msgid "Could not seek in XCF file: %s"
-msgstr "Non Ë possibile aprire \"%s\""
+msgstr "Non √® possibile aprire \"%s\""
 
 #: app/xcf/xcf.c:261
 #, c-format
@@ -10038,7 +10038,7 @@ msgstr ""
 #~ msgstr "/Strumenti/Strumenti di selezioine/Selezione Bezier"
 
 #~ msgid "Bezier path already closed."
-#~ msgstr "Tracciato Bezier gi‡ chiuso."
+#~ msgstr "Tracciato Bezier gi√† chiuso."
 
 #~ msgid "Corrupt curve"
 #~ msgstr "Curva corrotta"
@@ -10180,7 +10180,7 @@ msgstr ""
 #~ "%s is not a regular file."
 #~ msgstr ""
 #~ "Salvataggio fallito.\n"
-#~ "%s non Ë un file regolare."
+#~ "%s non √® un file regolare."
 
 #, fuzzy
 #~ msgid ""
@@ -10212,7 +10212,7 @@ msgstr ""
 #~ "checks this folder in addition to the systemwide\n"
 #~ "FractalExplorer installation when searching for fractals."
 #~ msgstr ""
-#~ "Questa Ë una sottodirectory utile per tenere\n"
+#~ "Questa √® una sottodirectory utile per tenere\n"
 #~ "i frattali da utilizzare con il plug-in FractalExplorer.\n"
 #~ "Il file di base gimprc controlla questa directory oltre a\n"
 #~ "quelle di sistema."
@@ -10224,7 +10224,7 @@ msgstr ""
 #~ "folder in addition to the systemwide GFig installation\n"
 #~ "when searching for gfig figures."
 #~ msgstr ""
-#~ "Questa Ë una sottodirectory utilizzata per memorizzare\n"
+#~ "Questa √® una sottodirectory utilizzata per memorizzare\n"
 #~ "figure definite da utilizzare con gfig. Il file gimprc\n"
 #~ "ricerca in questa sottodirectory oltre alla directory\n"
 #~ "di sistema per ulteriori figure da utilizzare."
@@ -10236,7 +10236,7 @@ msgstr ""
 #~ "folder in addition to the systemwide GFlares\n"
 #~ "installation when searching for gflares."
 #~ msgstr ""
-#~ "Questa Ë una sottodirectory utile per tenere\n"
+#~ "Questa √® una sottodirectory utile per tenere\n"
 #~ "gli gflares definiti dall'utente. Il file di base\n"
 #~ "gimprc controlla questa directory oltre a quelle di\n"
 #~ "sistema dove sono disposti i gflares base presenti\n"
@@ -10249,23 +10249,23 @@ msgstr ""
 #~ "this folder in addition to the systemwide Gimpressionist\n"
 #~ "installation when searching for data."
 #~ msgstr ""
-#~ "Questa Ë una sottodirectory utile per tenere\n"
+#~ "Questa √® una sottodirectory utile per tenere\n"
 #~ "gli gflares definiti dall'utente. Il file di base gimprc\n"
 #~ "controlla questa directory oltre a quelle di sistema\n"
 #~ "dove sono disposti i gflares base presenti con la comune\n"
 #~ "installazione di gimp."
 
 #~ msgid "Unit:"
-#~ msgstr "Unit‡:"
+#~ msgstr "Unit√†:"
 
 #~ msgid "The GIMP is not properly installed for the current user\n"
-#~ msgstr "GIMP non Ë stato appropriamente installato per l'utente attuale\n"
+#~ msgstr "GIMP non √® stato appropriamente installato per l'utente attuale\n"
 
 #~ msgid ""
 #~ "User installation was skipped because the '--nointerface' flag was "
 #~ "encountered\n"
 #~ msgstr ""
-#~ "L'installazione utente Ë saltata perchË l'opzione '--nointerface' Ë stata "
+#~ "L'installazione utente √® saltata perch√® l'opzione '--nointerface' √® stata "
 #~ "riscontrata\n"
 
 #~ msgid ""
@@ -10326,7 +10326,7 @@ msgstr ""
 #~ "This folder is used to store brushes that are created\n"
 #~ "with the brush editor."
 #~ msgstr ""
-#~ "Questa sottodirectory Ë utilizzata per memorizzare i\n"
+#~ "Questa sottodirectory √® utilizzata per memorizzare i\n"
 #~ "file con i parametri relativi alle Curve."
 
 #, fuzzy
@@ -10346,7 +10346,7 @@ msgstr ""
 #~ msgstr ""
 #~ "Avete riscontrato messaggi di errore\n"
 #~ "nella finestra di console? In caso negativo\n"
-#~ "l'installazione Ë avvenuta con successo! In caso\n"
+#~ "l'installazione √® avvenuta con successo! In caso\n"
 #~ "contrario uscite e cercate le possibili ragioni..."
 
 #~ msgid "Click \"Continue\" to complete GIMP installation."
@@ -10370,13 +10370,13 @@ msgstr ""
 #~ msgstr "  inaspettato: %s\n"
 
 #~ msgid "Can't rename %s to %s.old; %s"
-#~ msgstr "Non Ë possibile rinominare %s a %s.old; %s"
+#~ msgstr "Non √® possibile rinominare %s a %s.old; %s"
 
 #~ msgid "Couldn't reopen %s\n"
-#~ msgstr "Non Ë possibile riaprire %s\n"
+#~ msgstr "Non √® possibile riaprire %s\n"
 
 #~ msgid "Can't write to %s; %s"
-#~ msgstr "Non Ë possibile scrivere su %s; %s"
+#~ msgstr "Non √® possibile scrivere su %s; %s"
 
 #, fuzzy
 #~ msgid ""
@@ -10392,7 +10392,7 @@ msgstr ""
 #~ msgid ""
 #~ "Cannot save palette '%s':\n"
 #~ "%s"
-#~ msgstr "Non Ë possibile salvare la palette \"%s\"\n"
+#~ msgstr "Non √® possibile salvare la palette \"%s\"\n"
 
 #, fuzzy
 #~ msgid "/Default Color"
@@ -10414,7 +10414,7 @@ msgstr ""
 #~ "dopo aver riavviato GIMP.\n"
 #~ "\n"
 #~ "Dovreste scegliere 'Salva' ora per rendere le\n"
-#~ "i cambiamenti permanenti, cosÏ potrete riavviare\n"
+#~ "i cambiamenti permanenti, cos√¨ potrete riavviare\n"
 #~ "GIMP o premere 'Chiudi' e tralasciare le modifiche\n"
 #~ "fino ad ora fatte."
 
@@ -10431,7 +10431,7 @@ msgstr ""
 #~ "Otherwise, quit and investigate the possible reason..."
 #~ msgstr ""
 #~ "Avete riscontrato messaggi di errore nella finestra di console?\n"
-#~ "In caso negativo l'installazione Ë stata  portata a termine con\n"
+#~ "In caso negativo l'installazione √® stata  portata a termine con\n"
 #~ "successo! In caso contrario uscite e cercate le possibili ragioni..."
 
 #~ msgid "Monitor Resolution X:"
@@ -10439,7 +10439,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Fill Type (<Ctrl>)"
-#~ msgstr "Modalit‡ di riempimento"
+#~ msgstr "Modalit√† di riempimento"
 
 #, fuzzy
 #~ msgid "Anti Erase (<Ctrl>)"
@@ -10645,14 +10645,14 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Could not open image"
-#~ msgstr "Non Ë possibile aprire \"%s\""
+#~ msgstr "Non √® possibile aprire \"%s\""
 
 #, fuzzy
 #~ msgid ""
 #~ "Could not open thumbnail\n"
 #~ "file '%s':\n"
 #~ "%s"
-#~ msgstr "Non Ë possibile aprire \"%s\""
+#~ msgstr "Non √® possibile aprire \"%s\""
 
 #, fuzzy
 #~ msgid ""
@@ -10749,7 +10749,7 @@ msgstr ""
 #~ msgstr "Errore: Lo storico deve essere uguale a zero o superiore."
 
 #~ msgid "Error: Marching speed must be 50 or greater."
-#~ msgstr "Errore: il livello di velocit‡ deve essere 50"
+#~ msgstr "Errore: il livello di velocit√† deve essere 50"
 
 #~ msgid "Error: Default width must be one or greater."
 #~ msgstr "Errore: La larghezza base deve essere uguale a 1 o superiore."
@@ -10758,13 +10758,13 @@ msgstr ""
 #~ msgstr "Errore: L'altezza base deve essere uguale a 1 o superiore."
 
 #~ msgid "Error: Default unit must be within unit range."
-#~ msgstr "Errore: L'unit‡ base Ë senza campo di valore."
+#~ msgstr "Errore: L'unit√† base √® senza campo di valore."
 
 #~ msgid "Error: Default resolution must not be zero."
 #~ msgstr "Errore: La risoluzione non deve essere uguale a 0."
 
 #~ msgid "Error: Default resolution unit must be within unit range."
-#~ msgstr "Errore: L'unit‡ di risoluzione non ha campo valore."
+#~ msgstr "Errore: L'unit√† di risoluzione non ha campo valore."
 
 #~ msgid "Error: Monitor resolution must not be zero."
 #~ msgstr "Errore: La risoluzione del Monitor non deve essere uguale a 0."
@@ -10795,7 +10795,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "This brush cannot be edited."
-#~ msgstr "Ci dispiace, questo pennello non puÚ essere modificato."
+#~ msgstr "Ci dispiace, questo pennello non pu√≤ essere modificato."
 
 #~ msgid "Default"
 #~ msgstr "Standard"
@@ -10805,7 +10805,7 @@ msgstr ""
 #~ "0.3f)    Opacity: %0.3f"
 #~ msgstr ""
 #~ "Posizione: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %"
-#~ "0.3f)    Opacit‡: %0.3f"
+#~ "0.3f)    Opacit√†: %0.3f"
 
 #~ msgid "Foreground color set to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 #~ msgstr ""
@@ -10914,7 +10914,7 @@ msgstr ""
 #~ msgstr "Livelli di larghezza/altezza uguale a zero non sono permessi."
 
 #~ msgid "Invert operation failed."
-#~ msgstr "L'operazione di inversione non Ë stata portata a termine."
+#~ msgstr "L'operazione di inversione non √® stata portata a termine."
 
 #~ msgid "/File/Dialogs/Input Devices..."
 #~ msgstr "/File/Finestre/Dispositivi di ingresso..."
@@ -11000,7 +11000,7 @@ msgstr ""
 #~ "gimprc file checks this subdirectory when searching\n"
 #~ "for generated brushes."
 #~ msgstr ""
-#~ "Questa Ë una sottodirectory utile per tenere\n"
+#~ "Questa √® una sottodirectory utile per tenere\n"
 #~ "i pennelli definiti dall'utente. Il file di base gimprc\n"
 #~ "controlla questa directory oltre a quelle di sistema\n"
 #~ "per cercare i pennelli creati."
@@ -11015,12 +11015,12 @@ msgstr ""
 #~ "palettes during GIMP execution to persist across\n"
 #~ "sessions."
 #~ msgstr ""
-#~ "Questa Ë una sottodirectory utile per tenere\n"
+#~ "Questa √® una sottodirectory utile per tenere\n"
 #~ "le palette definite dall'utente. Il file di base\n"
 #~ "gimprc controlla questa directory oltre a quelle\n"
 #~ "di sistema dove sono disposti le palette basilari\n"
 #~ "presenti con la comune installazione di gimp.\n"
-#~ "Questa funzionalit‡ serve ad utilizzare le palette\n"
+#~ "Questa funzionalit√† serve ad utilizzare le palette\n"
 #~ "durante l'esecuzione di GIMP."
 
 #~ msgid "Swap Directory:"
@@ -11039,7 +11039,7 @@ msgstr ""
 #~ msgstr "(file miniatura non creato)"
 
 #~ msgid "(could not make preview)"
-#~ msgstr "(non Ë possibile creare anteprima)"
+#~ msgstr "(non √® possibile creare anteprima)"
 
 #, fuzzy
 #~ msgid ""
@@ -11119,7 +11119,7 @@ msgstr ""
 #~ msgid ""
 #~ "Failed to load one of the brushes in the brush pipe\n"
 #~ "\"%s\""
-#~ msgstr "Non Ë possibile aprire uno dei pennelli multipli."
+#~ msgstr "Non √® possibile aprire uno dei pennelli multipli."
 
 #~ msgid "unnamed"
 #~ msgstr "Senza nome"
@@ -11128,7 +11128,7 @@ msgstr ""
 #~ msgstr "Tipo di livello %d non supportato."
 
 #~ msgid "Can't fill unknown image type."
-#~ msgstr "Non Ë possibile riempire tipo di immagine sconosciuto."
+#~ msgstr "Non √® possibile riempire tipo di immagine sconosciuto."
 
 #~ msgid "detach parasite from drawable"
 #~ msgstr "togliere parasite dalla figura"
@@ -11175,7 +11175,7 @@ msgstr ""
 #~ msgstr "Nessun pennello disponibile"
 
 #~ msgid "Sorry, this brush can't be deleted."
-#~ msgstr "Ci dispiace, questo pennello non puÚ essere cancellato."
+#~ msgstr "Ci dispiace, questo pennello non pu√≤ essere cancellato."
 
 #~ msgid "Image:"
 #~ msgstr "Immagine:"
@@ -11226,7 +11226,7 @@ msgstr ""
 #~ "Warning: Failed to load brush pipe\n"
 #~ "\"%s\""
 #~ msgstr ""
-#~ "Attenzione: Non Ë possibile caricare il pennello\n"
+#~ "Attenzione: Non √® possibile caricare il pennello\n"
 #~ "\"%s\""
 
 #~ msgid "Select a buffer to paste:"
@@ -11380,18 +11380,18 @@ msgstr ""
 #~ "Warning: Failed to load pixmap brush\n"
 #~ "\"%s\""
 #~ msgstr ""
-#~ "Attenzione: Non Ë possibile caricare il pennello pixmap\n"
+#~ "Attenzione: Non √® possibile caricare il pennello pixmap\n"
 #~ "\"%s\""
 
 #~ msgid ""
 #~ "Warning: Failed to load pixmap pipe\n"
 #~ "\"%s\""
 #~ msgstr ""
-#~ "Attenzione: Non Ë possibile caricare il pixmap pipe\n"
+#~ "Attenzione: Non √® possibile caricare il pixmap pipe\n"
 #~ "\"%s\""
 
 #~ msgid "Failed to load pixmap brush."
-#~ msgstr "Non Ë possibile aprire pennello pixmap."
+#~ msgstr "Non √® possibile aprire pennello pixmap."
 
 #~ msgid "Unknown GIMP pattern version #%d in \"%s\"\n"
 #~ msgstr "Versione sconosciuta di GIMP #%d in \"%s\"\n"
@@ -11403,13 +11403,13 @@ msgstr ""
 #~ msgstr "staccate parasite dall'immagine"
 
 #~ msgid "This file cannot be moved up."
-#~ msgstr "Il file non puÚ essere spostato."
+#~ msgstr "Il file non pu√≤ essere spostato."
 
 #~ msgid "There's no selection to move up."
 #~ msgstr "Non ci sono selezioni da muovere."
 
 #~ msgid "This file cannot be moved down."
-#~ msgstr "Il file non puÚ essere spostato."
+#~ msgstr "Il file non pu√≤ essere spostato."
 
 #~ msgid "There's no selection to move down."
 #~ msgstr "Non ci sono selezioni da muovere."
@@ -11437,7 +11437,7 @@ msgstr ""
 #~ "This subdirectory will contain a number of important files."
 #~ msgstr ""
 #~ "Per una installazione di GIMP deve essere creata una sottodirectory.\n"
-#~ "Questa sottodirectory conterr‡ un numero di file importanti."
+#~ "Questa sottodirectory conterr√† un numero di file importanti."
 
 #~ msgid ""
 #~ "The GIMP - GNU Image Manipulation Program\n"
@@ -11497,7 +11497,7 @@ msgstr ""
 #~ "\n"
 #~ msgstr ""
 #~ "# GIMP parasiterc\n"
-#~ "# Questo file verr‡ riscritto ogni volta che uscite da gimp.\n"
+#~ "# Questo file verr√† riscritto ogni volta che uscite da gimp.\n"
 #~ "\n"
 
 #~ msgid "Layer Mask Options"
@@ -11528,7 +11528,7 @@ msgstr ""
 #~ msgstr "/Xtns/Script-Fu/Temi pagine web"
 
 #~ msgid "/Xtns/Script-Fu/Utils"
-#~ msgstr "/Xtns/Script-Fu/Utilit‡"
+#~ msgstr "/Xtns/Script-Fu/Utilit√†"
 
 #~ msgid "/Xtns/Script-Fu/Buttons"
 #~ msgstr "/Xtns/Script-Fu/Bottoni"
@@ -11564,7 +11564,7 @@ msgstr ""
 #~ msgstr "/Script-Fu/Decorazioni"
 
 #~ msgid "/Script-Fu/Utils"
-#~ msgstr "/Script-Fu/Utilit‡"
+#~ msgstr "/Script-Fu/Utilit√†"
 
 #~ msgid "/Script-Fu/Animators"
 #~ msgstr "/Script-Fu/Animatori"
@@ -11606,16 +11606,16 @@ msgstr ""
 #~ msgstr "Relazione flusso:"
 
 #~ msgid "Flow Sensitivity:"
-#~ msgstr "Sensibilit‡ flusso:"
+#~ msgstr "Sensibilit√† flusso:"
 
 #~ msgid "Base Tilt:"
 #~ msgstr "Tilt base:"
 
 #~ msgid "Tilt Sensitivity:"
-#~ msgstr "Sensibilit‡ Tilt:"
+#~ msgstr "Sensibilit√† Tilt:"
 
 #~ msgid "Speed Sensitivity:"
-#~ msgstr "Sensibilit‡ velocit‡:"
+#~ msgstr "Sensibilit√† velocit√†:"
 
 #~ msgid "Min Height:"
 #~ msgstr "Altezza minima:"
@@ -11636,7 +11636,7 @@ msgstr ""
 #~ msgstr "%%d x %%d pixel (%%.%df x %%.%df %s)"
 
 #~ msgid "Brightness-Contrast Options"
-#~ msgstr "Opzioni Luminosit‡-Contrasto"
+#~ msgstr "Opzioni Luminosit√†-Contrasto"
 
 #~ msgid ""
 #~ "We are all fresh out of brush editors today,\n"
@@ -11658,7 +11658,7 @@ msgstr ""
 #~ msgstr "Opzioni Istogramma"
 
 #~ msgid "Hue-Saturation Options"
-#~ msgstr "Opzioni Tonalit‡-Saturazione"
+#~ msgstr "Opzioni Tonalit√†-Saturazione"
 
 #~ msgid "Levels Options"
 #~ msgstr "Opzioni Livelli"
@@ -11745,7 +11745,7 @@ msgstr ""
 #~ msgstr "Opzioni Sfumino"
 
 #~ msgid "Xinput Airbrush Options"
-#~ msgstr "Opzioni Aerografo con Sensibilit‡"
+#~ msgstr "Opzioni Aerografo con Sensibilit√†"
 
 #~ msgid "/Tools/Move"
 #~ msgstr "/Strumenti/Muovi"
@@ -11775,10 +11775,10 @@ msgstr ""
 #~ "\n"
 #~ msgstr ""
 #~ "# GIMP unitrc\n"
-#~ "# Questo file contiene le unit‡ di base scelte dall'utente.\n"
-#~ "# E' possibile modificare la lista delle unit‡ con l'apposito\n"
-#~ "# editor delle unit‡. Non Ë detto che dobbiate modificarlo\n"
-#~ "# manualmente ma Ë possibile. Il file verr‡ riscritto interamente\n"
+#~ "# Questo file contiene le unit√† di base scelte dall'utente.\n"
+#~ "# E' possibile modificare la lista delle unit√† con l'apposito\n"
+#~ "# editor delle unit√†. Non √® detto che dobbiate modificarlo\n"
+#~ "# manualmente ma √® possibile. Il file verr√† riscritto interamente\n"
 #~ "# ogni volta che uscirete da gimp.\n"
 #~ "\n"
 
@@ -11910,13 +11910,13 @@ msgstr ""
 #~ msgstr ""
 #~ "# GIMP sessionrc\n"
 #~ "# Questo file ritrae le informazioni specifiche della sessione,\n"
-#~ "# (che desiderare tenere tra due sessioni di gimp). Non Ë consigliato\n"
-#~ "# Il file verr‡ riscritto ogni volta che si esce da gimp. Se non trovare\n"
-#~ "# il file verr‡ utilizzato quello base.\n"
+#~ "# (che desiderare tenere tra due sessioni di gimp). Non √® consigliato\n"
+#~ "# Il file verr√† riscritto ogni volta che si esce da gimp. Se non trovare\n"
+#~ "# il file verr√† utilizzato quello base.\n"
 #~ "\n"
 
 #~ msgid "Error in temp buf caching: \"%s\" is a directory (cannot overwrite)"
-#~ msgstr "Errore: \"%s\" Ë una directory (impossibile sovrascrivere)"
+#~ msgstr "Errore: \"%s\" √® una directory (impossibile sovrascrivere)"
 
 #~ msgid "Cannot write \"%s\""
 #~ msgstr "Impossibile scrivere \"%s\""
@@ -11946,7 +11946,7 @@ msgstr ""
 #~ msgstr "coordinate omogenee = 0...\n"
 
 #~ msgid "Grid density:"
-#~ msgstr "Densit‡ griglia:"
+#~ msgstr "Densit√† griglia:"
 
 #~ msgid "xcf: zlib compression unimplemented"
 #~ msgstr "xcf: compressione zlib non implementata"
@@ -11961,22 +11961,22 @@ msgstr ""
 #~ msgstr "tipo di compressione sconosciuta: %d"
 
 #~ msgid "Warning, resolution out of range in XCF file"
-#~ msgstr "Attenzione, la risoluzione Ë fuori campo nel file XCF"
+#~ msgstr "Attenzione, la risoluzione √® fuori campo nel file XCF"
 
 #~ msgid "Error detected while loading an image's parasites"
 #~ msgstr "Errore riscontrato mentre si carica un'immagine di parasites"
 
 #~ msgid "Warning, unit out of range in XCF file, falling back to inches"
-#~ msgstr "Attenzione, unit‡ fuori campo nel file XCF"
+#~ msgstr "Attenzione, unit√† fuori campo nel file XCF"
 
 #~ msgid "unexpected/unknown image property: %d (skipping)"
-#~ msgstr "propriet‡ immagine sconosciuta/non attesa: %d (sospensione)"
+#~ msgstr "propriet√† immagine sconosciuta/non attesa: %d (sospensione)"
 
 #~ msgid "unexpected/unknown layer property: %d (skipping)"
-#~ msgstr "propriet‡ livello sconosciuto/non atteso: %d (sospensione)"
+#~ msgstr "propriet√† livello sconosciuto/non atteso: %d (sospensione)"
 
 #~ msgid "unexpected/unknown channel property: %d (skipping)"
-#~ msgstr "propriet‡ canale sconosciuto/non atteso: %d (sospensione)"
+#~ msgstr "propriet√† canale sconosciuto/non atteso: %d (sospensione)"
 
 #~ msgid "not enough tiles found in level"
 #~ msgstr "non sono stati ritrovati abbastanza tile nel livello"
@@ -12011,7 +12011,7 @@ msgstr ""
 #~ msgstr "grad_get_color_at(): gradiente sconosciuto %d"
 
 #~ msgid "gradient_get_color_at(): Unknown coloring mode %d"
-#~ msgstr "grad_get_color_at(): modalit‡ di colorazione sconosciuta %d"
+#~ msgstr "grad_get_color_at(): modalit√† di colorazione sconosciuta %d"
 
 #~ msgid "ed_do_new_gradient_callback(): oops, received NULL in call_data"
 #~ msgstr "ed_do_new_gradient_callback(): dati in ricezione assenti"
@@ -12088,7 +12088,7 @@ msgstr ""
 #~ msgstr "/Immagine/tearoff1"
 
 #~ msgid "/Image/Mode/tearoff1"
-#~ msgstr "/Immagine/Modalit‡/tearoff1"
+#~ msgstr "/Immagine/Modalit√†/tearoff1"
 
 #~ msgid "/Image/Colors/tearoff1"
 #~ msgstr "/Immagine/Colori/tearoff1"
@@ -12173,17 +12173,17 @@ msgstr ""
 #~ msgstr "Altri..."
 
 #~ msgid "unit-menu-format string ended within %%-sequence"
-#~ msgstr "la stringa unit‡-menu-formato termina senza %%-sequence"
+#~ msgstr "la stringa unit√†-menu-formato termina senza %%-sequence"
 
 #~ msgid "unit-menu-format contains unknown format sequence '%%%c'"
 #~ msgstr ""
-#~ "la stringa unit‡-menu-formato contengono sconosciute sequenze '%%%c'"
+#~ "la stringa unit√†-menu-formato contengono sconosciute sequenze '%%%c'"
 
 #~ msgid "Unit Selection"
-#~ msgstr "Selezione delle Unit‡"
+#~ msgstr "Selezione delle Unit√†"
 
 #~ msgid "Unit "
-#~ msgstr "Unit‡"
+#~ msgstr "Unit√†"
 
 #~ msgid "can't handle layers"
 #~ msgstr "impossibile gestire i livelli"
@@ -12195,18 +12195,18 @@ msgstr ""
 #~ msgstr "impossibile gestire la trasparenza"
 
 #~ msgid "can only handle indexed images"
-#~ msgstr "Ë possibile gestire unicamente immagini in Scala di Colore"
+#~ msgstr "√® possibile gestire unicamente immagini in Scala di Colore"
 
 #~ msgid "can only handle RGB or indexed images"
-#~ msgstr "Ë possibile gestire unicamente immagini RGB o in Scala di Colore"
+#~ msgstr "√® possibile gestire unicamente immagini RGB o in Scala di Colore"
 
 #~ msgid "can only handle grayscale or indexed images"
 #~ msgstr ""
-#~ "Ë possibile gestire unicamente immagini in Scala di Grigio o in Scala di "
+#~ "√® possibile gestire unicamente immagini in Scala di Grigio o in Scala di "
 #~ "Colore"
 
 #~ msgid "needs an alpha channel"
-#~ msgstr "Ë necessario avere un canale alpha"
+#~ msgstr "√® necessario avere un canale alpha"
 
 #~ msgid "Add alpha channel"
 #~ msgstr "Aggiungi canale alpha"
@@ -12221,7 +12221,7 @@ msgstr ""
 #~ msgstr "get_active_brush(): Pennello selezionato non trovato!"
 
 #~ msgid "get_active_pattern(): Specified default pattern not found!"
-#~ msgstr "get_active_pattern(): il pattern specificato non Ë stato trovato!"
+#~ msgstr "get_active_pattern(): il pattern specificato non √® stato trovato!"
 
 #~ msgid "Cannot properly scanline convert polygon!\n"
 #~ msgstr "Impossibile definire i contorni del poligono!\n"
@@ -12236,7 +12236,7 @@ msgstr ""
 #~ msgstr "Margine definito "
 
 #~ msgid "Elasticity:"
-#~ msgstr "Elasticit‡:"
+#~ msgstr "Elasticit√†:"
 
 #~ msgid "/View/Window Info..."
 #~ msgstr "/Visualizza/Finestra Informazioni..."
@@ -12251,16 +12251,16 @@ msgstr ""
 #~ msgstr "Spencer Kimball e Peter Mattis"
 
 #~ msgid "script-fu not available: batch mode disabled\n"
-#~ msgstr "script-fu non disponibile: modalit‡ batch disabilitata\n"
+#~ msgstr "script-fu non disponibile: modalit√† batch disabilitata\n"
 
 #~ msgid "reading batch commands from stdin\n"
 #~ msgstr "lettura dei comandi batch dallo stdin\n"
 
 #~ msgid "batch command: experienced an execution error.\n"
-#~ msgstr "comando batch: si Ë verificato un errore di esecuzione.\n"
+#~ msgstr "comando batch: si √® verificato un errore di esecuzione.\n"
 
 #~ msgid "batch command: experienced a calling error.\n"
-#~ msgstr "comando batch: si Ë verificato un errore di chiamata.\n"
+#~ msgstr "comando batch: si √® verificato un errore di chiamata.\n"
 
 #~ msgid "batch command: executed successfully.\n"
 #~ msgstr "comando batch: esecuzione con successo.\n"
@@ -12271,10 +12271,10 @@ msgstr ""
 #~ "extension_perl_server non disponibile: impossibile aviare il server perl\n"
 
 #~ msgid "perl server: experienced an execution error.\n"
-#~ msgstr "server perl: si Ë verificato un errore di esecuzione.\n"
+#~ msgstr "server perl: si √® verificato un errore di esecuzione.\n"
 
 #~ msgid "perl server: experienced a calling error.\n"
-#~ msgstr "server perl: si Ë verificato un errore di chiamata.\n"
+#~ msgstr "server perl: si √® verificato un errore di chiamata.\n"
 
 #~ msgid "perl server: executed successfully.\n"
 #~ msgstr "server perl: esecuzione con successo.\n"
@@ -12308,13 +12308,13 @@ msgstr ""
 #~ msgstr "gradient_render_pixel(): Tipo di gradiente sconosciuto %d"
 
 #~ msgid "gradient_fill_region(): Unknown blend mode %d"
-#~ msgstr "gradient_fill_region(): Modalit‡ %d sconosciuta"
+#~ msgstr "gradient_fill_region(): Modalit√† %d sconosciuta"
 
 #~ msgid "gradient_fill_region(): Unknown gradient type %d"
 #~ msgstr "gradient_fill_region(): Tipo di gradiente %d sconosciuto"
 
 #~ msgid "gradient_fill_region(): Unknown repeat mode %d"
-#~ msgstr "gradient_fill_region(): Modalit‡ di ripetizione %d sconosciuta"
+#~ msgstr "gradient_fill_region(): Modalit√† di ripetizione %d sconosciuta"
 
 #~ msgid "make_seg(): Unable to reallocate segments array for mask boundary."
 #~ msgstr "make_seg(): Impossibile riallocare segmenti."
@@ -12328,7 +12328,7 @@ msgstr ""
 #~ msgstr "fallita funzione di callback del pennello"
 
 #~ msgid "error in %s at %d: this shouldn't happen."
-#~ msgstr "errore in %s a %d: impossibilit‡ a procedere."
+#~ msgstr "errore in %s a %d: impossibilit√† a procedere."
 
 #~ msgid ""
 #~ "channels_dialog_drop_new_channel_callback():\n"
@@ -12468,7 +12468,7 @@ msgstr ""
 #~ msgstr "rimozione procedure PDB duplicate \"%s\""
 
 #~ msgid "the \"region\" arg type is not currently supported"
-#~ msgstr "la \"regione\" tipo non Ë attualmente supportata"
+#~ msgstr "la \"regione\" tipo non √® attualmente supportata"
 
 #~ msgid "File Previews / Thumbnails"
 #~ msgstr "Anteprima File / Icone"
@@ -12522,7 +12522,7 @@ msgstr ""
 #~ msgstr "Non esiste un'espressione regolare precedente"
 
 #~ msgid "Use Pressure"
-#~ msgstr "Sensibilit‡ pressione"
+#~ msgstr "Sensibilit√† pressione"
 
 #~ msgid "Failed to find device_info\n"
 #~ msgstr "Impossibile trovare informazioni sul dispositivo\n"
@@ -12619,10 +12619,10 @@ msgstr ""
 #~ msgstr "<Image>/Immagine/Colori/Bilanciamento colore"
 
 #~ msgid "<Image>/Image/Colors/Brightness-Contrast"
-#~ msgstr "<Image>/Immagine/Colori/Luminosit‡-Contrasta"
+#~ msgstr "<Image>/Immagine/Colori/Luminosit√†-Contrasta"
 
 #~ msgid "<Image>/Image/Colors/Hue-Saturation"
-#~ msgstr "<Image>/Immagine/Colori/Tonalit‡-Saturazione"
+#~ msgstr "<Image>/Immagine/Colori/Tonalit√†-Saturazione"
 
 #~ msgid "<Image>/Image/Colors/Curves"
 #~ msgstr "<Image>/Immagine/Colori/Curve"
@@ -12703,7 +12703,7 @@ msgstr ""
 #~ "Unable to set sensitivity for menu which doesn't exist:\n"
 #~ "%s"
 #~ msgstr ""
-#~ "Impossibile cambiare la sensibilit‡ di un menu che non esiste:\n"
+#~ "Impossibile cambiare la sensibilit√† di un menu che non esiste:\n"
 #~ "%s"
 
 #~ msgid ""

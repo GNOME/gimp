@@ -1,3 +1,9 @@
+2003-06-28  Christian Rose  <menthos@menthos.com>
+
+	* am.po, ca.po, en_GB.po, fi.po, gl.po, hr.po, it.po, lt.po,
+	nl.po, ro.po, sr.po, sr@Latn.po, tr.po, uk.po: Converted to
+	UTF-8.
+
 2003-06-26  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
         * es.po: Updated Spanish translation by
