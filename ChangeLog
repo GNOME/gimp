@@ -1,3 +1,13 @@
+Thu Dec 30 21:14:05 CET 1999  Sven Neumann <sven@gimp.org>
+
+	* app/errorconsole.c
+	* app/fileops.c
+	* app/gradient.c
+	* app/levels.c
+	* app/paths_dialog.c
+	* libgimp/gimpfileselection.c: use our new (sligtly compressed) layout
+	of gtk_file_selection all over the place
+
 Thu Dec 30 19:45:13 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/bmp/bmpread.c

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.14\n"
-"POT-Creation-Date: 1999-12-29 17:39+0100\n"
-"PO-Revision-Date: 1999-12-29 17:42+0100\n"
+"POT-Creation-Date: 1999-12-30 19:23+0100\n"
+"PO-Revision-Date: 1999-12-30 20:25+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -85,8 +85,8 @@ msgstr "Beenden"
 #: app/color_balance.c:273 app/color_notebook.c:115 app/convert.c:500
 #: app/curves.c:564 app/file_new_dialog.c:199 app/file_new_dialog.c:381
 #: app/gdisplay_color_ui.c:117 app/gdisplay_ops.c:356 app/gimpprogress.c:114
-#: app/gimpui.c:485 app/global_edit.c:720 app/gradient.c:1896
-#: app/gradient.c:4973 app/gradient.c:5534 app/hue_saturation.c:375
+#: app/gimpui.c:485 app/global_edit.c:720 app/gradient.c:1791
+#: app/gradient.c:4869 app/gradient.c:5430 app/hue_saturation.c:375
 #: app/interface.c:965 app/layers_dialog.c:3351 app/layers_dialog.c:3557
 #: app/layers_dialog.c:3682 app/layers_dialog.c:3796 app/layers_dialog.c:4083
 #: app/levels.c:368 app/palette.c:1852 app/posterize.c:200
@@ -137,7 +137,7 @@ msgstr "VG nach Transparent"
 msgid "Custom from Editor"
 msgstr "Selbsterstellt aus Editor"
 
-#: app/blend.c:271 app/gradient.c:620 app/preferences_dialog.c:1517
+#: app/blend.c:271 app/gradient.c:530 app/preferences_dialog.c:1517
 msgid "Linear"
 msgstr "Linear"
 
@@ -298,7 +298,7 @@ msgstr "Pinseleditor"
 #: app/color_notebook.c:112 app/color_picker.c:297 app/colormap_dialog.i.c:151
 #: app/colormap_dialog.i.c:161 app/crop.c:1041 app/devices.c:755
 #: app/docindexif.c:104 app/errorconsole.c:277 app/gdisplay_ops.c:354
-#: app/gradient.c:894 app/gradient_select.c:152 app/histogram_tool.c:292
+#: app/gradient.c:802 app/gradient_select.c:152 app/histogram_tool.c:292
 #: app/info_window.c:308 app/lc_dialog.c:196 app/measure.c:270
 #: app/nav_window.c:1366 app/palette.c:2117 app/palette.c:2133
 #: app/palette.c:3179 app/palette_select.c:62 app/pattern_select.c:171
@@ -328,7 +328,7 @@ msgstr "Winkel:"
 msgid "Brush Selection"
 msgstr "Pinselauswahl"
 
-#: app/brush_select.c:277 app/gradient.c:892 app/module_db.c:316
+#: app/brush_select.c:277 app/gradient.c:800 app/module_db.c:316
 #: app/palette.c:2115 app/pattern_select.c:169
 msgid "Refresh"
 msgstr "Auffrischen"
@@ -355,7 +355,7 @@ msgstr "Neu"
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: app/brush_select.c:479 app/global_edit.c:718 app/gradient.c:1894
+#: app/brush_select.c:479 app/global_edit.c:718 app/gradient.c:1789
 #: app/palette.c:1208 app/palette.c:1850 app/palette.c:2313
 msgid "Delete"
 msgstr "Löschen"
@@ -442,7 +442,7 @@ msgid "copy"
 msgstr "Kopie"
 
 #. formulate the new layer_mask name
-#: app/channel.c:195 app/gradient.c:1723 app/layer.c:318 app/layer.c:1546
+#: app/channel.c:195 app/gradient.c:1618 app/layer.c:318 app/layer.c:1546
 #, c-format
 msgid "%s copy"
 msgstr "%s Kopie"
@@ -977,7 +977,7 @@ msgstr "Sättigung kann nur bei RGB Bildern verringert werden"
 msgid "Device Status"
 msgstr "Gerätestatus"
 
-#: app/devices.c:753 app/gradient.c:890 app/levels.c:627 app/palette.c:2113
+#: app/devices.c:753 app/levels.c:627 app/palette.c:2113
 #: app/preferences_dialog.c:1264
 msgid "Save"
 msgstr "Sichern"
@@ -1184,7 +1184,7 @@ msgstr "Bild öffnen"
 #. format-chooser frame
 #: app/fileops.c:288
 msgid "Determine file type"
-msgstr "Datentyp festlegen"
+msgstr "Dateityp festlegen"
 
 #: app/fileops.c:382
 msgid ""
@@ -1208,7 +1208,7 @@ msgstr "Sichern Einstellungen"
 
 #: app/fileops.c:514
 msgid "Determine file type:"
-msgstr "Datentyp festlegen:"
+msgstr "Dateityp festlegen:"
 
 #: app/fileops.c:567
 msgid "Can't revert. No filename associated with this image"
@@ -1667,132 +1667,132 @@ msgstr "Geben sie dieser Ablage einen Namen"
 msgid "Copy Named"
 msgstr "Kopieren in Ablage"
 
-#: app/gradient.c:621
+#: app/gradient.c:531
 msgid "Curved"
 msgstr "Kurvig"
 
-#: app/gradient.c:622
+#: app/gradient.c:532
 msgid "Sinusoidal"
 msgstr "Sinusförmig"
 
-#: app/gradient.c:623
+#: app/gradient.c:533
 msgid "Spherical (increasing)"
 msgstr "Sphärisch (zunehmend)"
 
-#: app/gradient.c:624
+#: app/gradient.c:534
 msgid "Spherical (decreasing)"
 msgstr "Sphärisch (abnehmend)"
 
-#: app/gradient.c:629
+#: app/gradient.c:539
 msgid "Plain RGB"
 msgstr "Reines RGB"
 
-#: app/gradient.c:630
+#: app/gradient.c:540
 msgid "HSV (counter-clockwise hue)"
 msgstr "HSV (Farbton gegen Uhrzeigersinn)"
 
-#: app/gradient.c:631
+#: app/gradient.c:541
 msgid "HSV (clockwise hue)"
 msgstr "HSV (Farbton im Uhrzeigersinn)"
 
-#: app/gradient.c:884
+#: app/gradient.c:794
 msgid "Gradient Editor"
 msgstr "Farbverlaufs Editor"
 
-#: app/gradient.c:917 app/gradient_select.c:206 app/paintbrush.c:286
+#: app/gradient.c:825 app/gradient_select.c:206 app/paintbrush.c:286
 #: app/palette.c:3235
 msgid "Gradient"
 msgstr "Farbverlauf"
 
-#: app/gradient.c:918 app/gradient_select.c:207 app/palette.c:2274
+#: app/gradient.c:826 app/gradient_select.c:207 app/palette.c:2274
 #: app/palette_select.c:82
 msgid "Name"
 msgstr "Name"
 
 #. Frame & vbox for gradient functions
-#: app/gradient.c:963
+#: app/gradient.c:871
 msgid "Gradient Ops"
 msgstr "Farbverlaufsfunktionen"
 
 #. Buttons for gradient functions
-#: app/gradient.c:971
+#: app/gradient.c:879
 msgid "New Gradient"
 msgstr "Neuer Farbverlauf"
 
-#: app/gradient.c:980
+#: app/gradient.c:887
 msgid "Copy Gradient"
 msgstr "Kopiere Farbverlauf"
 
-#: app/gradient.c:989
+#: app/gradient.c:895
 msgid "Delete Gradient"
 msgstr "Lösche Farbverlauf"
 
-#: app/gradient.c:998
+#: app/gradient.c:903
 msgid "Rename Gradient"
 msgstr "Benenne Farbverlauf um"
 
-#: app/gradient.c:1007 app/gradient.c:1996
+#: app/gradient.c:911 app/gradient.c:1891
 msgid "Save as POV-Ray"
 msgstr "Sichere als POV-Ray Datei"
 
 #. Zoom all button
-#: app/gradient.c:1026
+#: app/gradient.c:929
 msgid "Zoom all"
 msgstr "Zeige alles"
 
-#: app/gradient.c:1092
+#: app/gradient.c:995
 msgid "Instant update"
 msgstr "Dauernd Auffrischen"
 
-#: app/gradient.c:1227 app/gradient.c:2116
+#: app/gradient.c:1130 app/gradient.c:2004
 msgid "Default"
 msgstr "Standard"
 
-#: app/gradient.c:1662
+#: app/gradient.c:1557
 msgid "New gradient"
 msgstr "Neuer Farbverlauf"
 
-#: app/gradient.c:1665
+#: app/gradient.c:1560
 msgid "Enter a name for the new gradient"
 msgstr "Geben sie dem neuen Farbverlauf einen Namen"
 
-#: app/gradient.c:1666
+#: app/gradient.c:1561
 msgid "untitled"
 msgstr "unbenannt"
 
-#: app/gradient.c:1725
+#: app/gradient.c:1620
 msgid "Copy gradient"
 msgstr "Farbverlauf kopieren"
 
-#: app/gradient.c:1728
+#: app/gradient.c:1623
 msgid "Enter a name for the copied gradient"
 msgstr "Geben sie dem kopierten Farbverlauf einen Namen"
 
-#: app/gradient.c:1811
+#: app/gradient.c:1706
 msgid "Rename gradient"
 msgstr "Farbverlauf umbenennen"
 
-#: app/gradient.c:1814
+#: app/gradient.c:1709
 msgid "Enter a new name for the gradient"
 msgstr "Geben sie dem Farbverlauf einen neuen Namen"
 
-#: app/gradient.c:1888
+#: app/gradient.c:1783
 msgid "Delete gradient"
 msgstr "Farbverlauf löschen"
 
-#: app/gradient.c:1907 app/palette.c:1863
+#: app/gradient.c:1802 app/palette.c:1863
 #, c-format
 msgid ""
 "Are you sure you want to delete\n"
 "\"%s\" from the list and from disk?"
 msgstr "\"%s\" wirklich aus der Liste und vom Datenträger löschen?"
 
-#: app/gradient.c:2154
+#: app/gradient.c:2042
 #, c-format
 msgid "Zoom factor: %d:1    Displaying [%0.6f, %0.6f]"
 msgstr "Zoom-Faktor: %d:1    Zeige [%0.6f, %0.6f]"
 
-#: app/gradient.c:2396
+#: app/gradient.c:2292
 #, c-format
 msgid ""
 "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
@@ -1801,31 +1801,31 @@ msgstr ""
 "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
 "Deckkraft: %0.3f"
 
-#: app/gradient.c:2421
+#: app/gradient.c:2317
 #, c-format
 msgid "Foreground color set to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr ""
 "Vordergrundfarbe auf RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f) gesetzt"
 
-#: app/gradient.c:2445
+#: app/gradient.c:2341
 #, c-format
 msgid "Background color to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr ""
 "Hintergrundfarbe auf RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f) gesetzt"
 
-#: app/gradient.c:2750
+#: app/gradient.c:2646
 msgid "Drag: move    Shift+drag: move & compress"
 msgstr "Ziehen: Bewegen    Shift+Ziehen: Bewegen & Stauchen"
 
-#: app/gradient.c:2752 app/gradient.c:2755
+#: app/gradient.c:2648 app/gradient.c:2651
 msgid "Click: select    Shift+click: extend selection"
 msgstr "Klick: Auswahl    Shift+Klick: Auswahl erweitern"
 
-#: app/gradient.c:2760
+#: app/gradient.c:2656
 msgid "Click: select    Shift+click: extend selection    Drag: move"
 msgstr "Klick: Auswahl    Shift+Klick: Auswahl erweitern   Ziehen: Bewegen"
 
-#: app/gradient.c:2772
+#: app/gradient.c:2668
 msgid ""
 "Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
 "move & compress"
@@ -1833,176 +1833,176 @@ msgstr ""
 "Klick: Auswahl   Shift+Klick: Auswahl erweitern   Ziehen: "
 "BewegenShift+Ziehen: Bewegen und Stauchen"
 
-#: app/gradient.c:3014 app/gradient.c:3023
+#: app/gradient.c:2910 app/gradient.c:2919
 #, fuzzy, c-format
 msgid "Handle position: %0.6f"
 msgstr "Position: %0.6f"
 
-#: app/gradient.c:3041
+#: app/gradient.c:2937
 #, c-format
 msgid "Distance: %0.6f"
 msgstr "Abstand: %0.6f"
 
-#: app/gradient.c:3525 app/gradient.c:4582
+#: app/gradient.c:3421 app/gradient.c:4478
 msgid "Left endpoint's color"
 msgstr "Farbe des linken Endpunktes"
 
-#: app/gradient.c:3536 app/gradient.c:3578
+#: app/gradient.c:3432 app/gradient.c:3474
 msgid "Load from"
 msgstr "Hole aus"
 
-#: app/gradient.c:3540
+#: app/gradient.c:3436
 msgid "Left neighbor's right endpoint"
 msgstr "Linker Nachbar des rechten Endpunktes"
 
-#: app/gradient.c:3541
+#: app/gradient.c:3437
 msgid "Right endpoint"
 msgstr "Rechter Endpunkt"
 
-#: app/gradient.c:3551 app/gradient.c:3593
+#: app/gradient.c:3447 app/gradient.c:3489
 msgid "Save to"
 msgstr "Sichern unter"
 
-#: app/gradient.c:3567 app/gradient.c:4660
+#: app/gradient.c:3463 app/gradient.c:4556
 msgid "Right endpoint's color"
 msgstr "Farbe des rechten Endpunktes"
 
-#: app/gradient.c:3582
+#: app/gradient.c:3478
 msgid "Right neighbor's left endpoint"
 msgstr "Rechter Nachbar des linken Endpunktes"
 
-#: app/gradient.c:3583
+#: app/gradient.c:3479
 msgid "Left endpoint"
 msgstr "Linker Endpunkt"
 
-#: app/gradient.c:3694
+#: app/gradient.c:3590
 msgid "Selection operations"
 msgstr "Auswahl Operationen"
 
-#: app/gradient.c:3866
+#: app/gradient.c:3762
 msgid "Blending function for segment"
 msgstr "Übergangsfunktion für Segment"
 
-#: app/gradient.c:3868
+#: app/gradient.c:3764
 msgid "Coloring type for segment"
 msgstr "Farbe für Segment"
 
-#: app/gradient.c:3870
+#: app/gradient.c:3766
 msgid "Split segment at midpoint"
 msgstr "Segment mittig teilen"
 
-#: app/gradient.c:3872 app/gradient.c:4963
+#: app/gradient.c:3768 app/gradient.c:4859
 msgid "Split segment uniformly"
 msgstr "Segment gleichmäßig teilen"
 
-#: app/gradient.c:3874
+#: app/gradient.c:3770
 msgid "Delete segment"
 msgstr "Segment löschen"
 
-#: app/gradient.c:3876
+#: app/gradient.c:3772
 msgid "Re-center segment's midpoint"
 msgstr "Mittelpunkt des Segments zentrieren"
 
-#: app/gradient.c:3878
+#: app/gradient.c:3774
 msgid "Re-distribute handles in segment"
 msgstr "Punkte gleichmäßig im Segment verteilen"
 
-#: app/gradient.c:3880
+#: app/gradient.c:3776
 msgid "Flip segment"
 msgstr "Segment spiegeln"
 
-#: app/gradient.c:3882 app/gradient.c:5524
+#: app/gradient.c:3778 app/gradient.c:5420
 msgid "Replicate segment"
 msgstr "Segment duplizieren"
 
-#: app/gradient.c:3887
+#: app/gradient.c:3783
 msgid "Blending function for selection"
 msgstr "Farbverlaufsfunktion für Auswahl"
 
-#: app/gradient.c:3889
+#: app/gradient.c:3785
 msgid "Coloring type for selection"
 msgstr "Färbungsart für Auswahl"
 
-#: app/gradient.c:3891
+#: app/gradient.c:3787
 msgid "Split segments at midpoints"
 msgstr "Segment an Mittelpunkten aufteilen"
 
-#: app/gradient.c:3893 app/gradient.c:4964
+#: app/gradient.c:3789 app/gradient.c:4860
 msgid "Split segments uniformly"
 msgstr "Segment gleichmäßig aufteilen"
 
-#: app/gradient.c:3895
+#: app/gradient.c:3791
 msgid "Delete selection"
 msgstr "Auswahl löschen"
 
-#: app/gradient.c:3897
+#: app/gradient.c:3793
 msgid "Re-center midpoints in selection"
 msgstr "Mittelpunkte in Auswahl zentrieren"
 
-#: app/gradient.c:3899
+#: app/gradient.c:3795
 msgid "Re-distribute handles in selection"
 msgstr "Punkte gleichmäßig in Auswahl verteilen"
 
-#: app/gradient.c:3901
+#: app/gradient.c:3797
 msgid "Flip selection"
 msgstr "Auswahl spiegeln"
 
-#: app/gradient.c:3903 app/gradient.c:5525
+#: app/gradient.c:3799 app/gradient.c:5421
 msgid "Replicate selection"
 msgstr "Auswahl duplizieren"
 
-#: app/gradient.c:4187
+#: app/gradient.c:4083
 msgid "FG color"
 msgstr "VG Farbe"
 
-#: app/gradient.c:4236
+#: app/gradient.c:4132
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:4749 app/gradient.c:4819
+#: app/gradient.c:4645 app/gradient.c:4715
 msgid "(Varies)"
 msgstr "(veränderlich)"
 
-#: app/gradient.c:4971
+#: app/gradient.c:4867
 msgid "Split"
 msgstr "Teilen"
 
 #. Instructions
-#: app/gradient.c:4985
+#: app/gradient.c:4881
 msgid "Please select the number of uniform parts"
 msgstr "Bitte Anzahl der Abschnitte eingeben"
 
-#: app/gradient.c:4991
+#: app/gradient.c:4887
 msgid "in which you want to split the selected segment"
 msgstr "in der Sie das ausgewählte Segment teilen wollen"
 
-#: app/gradient.c:4992
+#: app/gradient.c:4888
 msgid "in which you want to split the segments in the selection"
 msgstr "in der Sie die Segmente in der Auswahl teilen woll"
 
-#: app/gradient.c:5352
+#: app/gradient.c:5248
 msgid "Blend endpoints' colors"
 msgstr "Übergang zwischen den Endpunktfarben"
 
-#: app/gradient.c:5364
+#: app/gradient.c:5260
 msgid "Blend endpoints' opacity"
 msgstr "Übergang zwischen der Endpunktdeckung"
 
-#: app/gradient.c:5532
+#: app/gradient.c:5428
 msgid "Replicate"
 msgstr "Duplizieren"
 
 #. Instructions
-#: app/gradient.c:5545
+#: app/gradient.c:5441
 msgid "Please select the number of times"
 msgstr "Bitte Anzahl der Nachbildungen"
 
-#: app/gradient.c:5550
+#: app/gradient.c:5446
 msgid "you want to replicate the selected segment"
 msgstr "des ausgweählten Segments eingeben"
 
-#: app/gradient.c:5551
+#: app/gradient.c:5447
 msgid "you want to replicate the selection"
 msgstr "der Auswahl eingeben"
 
@@ -3112,7 +3112,7 @@ msgid ""
 "  --no-data                Do not load patterns, gradients, palettes, "
 "brushes.\n"
 msgstr ""
-" --no-data                Lädt keine Muster, Farbverläufe, Farbpaletten und "
+"  --no-data                Lädt keine Muster, Farbverläufe, Farbpaletten und "
 "Pinsel.\n"
 
 #: app/main.c:302

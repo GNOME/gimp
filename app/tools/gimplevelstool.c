@@ -1468,7 +1468,11 @@ make_file_dlg (gpointer data)
   gchar *temp;
 
   file_dlg = gtk_file_selection_new (_("Load/Save Levels"));
+  gtk_window_set_wmclass (GTK_WINDOW (file_dlg), "load_save_levels", "Gimp");
   gtk_window_set_position (GTK_WINDOW (file_dlg), GTK_WIN_POS_MOUSE);
+
+  gtk_container_set_border_width (GTK_CONTAINER (file_dlg), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_FILE_SELECTION (file_dlg)->button_area), 2);
 
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->cancel_button),
 		      "clicked", GTK_SIGNAL_FUNC (file_cancel_callback),

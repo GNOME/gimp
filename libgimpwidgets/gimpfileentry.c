@@ -352,6 +352,13 @@ gimp_file_selection_browse_callback (GtkWidget *widget,
 	  gfs->file_selection = gtk_file_selection_new (_("Select File"));
 	}
 
+      gtk_window_set_position (GTK_WINDOW (gfs->file_selection), GTK_WIN_POS_MOUSE);
+      gtk_window_set_wmclass (GTK_WINDOW (gfs->file_selection), "file_select", "Gimp");
+
+      /* slightly compress the dialog */
+      gtk_container_set_border_width (GTK_CONTAINER (gfs->file_selection), 2);
+      gtk_container_set_border_width (GTK_CONTAINER (GTK_FILE_SELECTION (gfs->file_selection)->button_area), 2);
+
       gtk_label_set_text (GTK_LABEL (GTK_BIN (GTK_FILE_SELECTION (gfs->file_selection)->ok_button)->child), _("Select"));
       gtk_label_set_text (GTK_LABEL (GTK_BIN (GTK_FILE_SELECTION (gfs->file_selection)->cancel_button)->child), _("Close"));
 

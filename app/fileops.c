@@ -468,6 +468,10 @@ file_save_as_callback (GtkWidget *widget,
       filesave = gtk_file_selection_new (_("Save Image"));
       gtk_window_set_wmclass (GTK_WINDOW (filesave), "save_image", "Gimp");
       gtk_window_set_position (GTK_WINDOW (filesave), GTK_WIN_POS_MOUSE);
+
+      gtk_container_set_border_width (GTK_CONTAINER (filesave), 2);
+      gtk_container_set_border_width (GTK_CONTAINER (GTK_FILE_SELECTION (filesave)->button_area), 2);
+
       gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (filesave)->cancel_button),
 			  "clicked",
 			  GTK_SIGNAL_FUNC (file_dialog_hide),

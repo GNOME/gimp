@@ -1889,7 +1889,11 @@ ed_save_pov_callback (GtkWidget *widget,
     return;
 
   window = gtk_file_selection_new (_("Save as POV-Ray"));
+  gtk_window_set_wmclass (GTK_WINDOW (window), "save_gradient", "Gimp");
   gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
+
+  gtk_container_set_border_width (GTK_CONTAINER (window), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_FILE_SELECTION (window)->button_area), 2);
 
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (window)->ok_button),
 		      "clicked", (GtkSignalFunc) ed_do_save_pov_callback,

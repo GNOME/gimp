@@ -191,6 +191,10 @@ error_console_menu_callback (gint textscope)
   filesel = gtk_file_selection_new (_("Save error log to file..."));
   gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
   gtk_window_set_wmclass (GTK_WINDOW (filesel), "save_errors", "Gimp");
+
+  gtk_container_set_border_width (GTK_CONTAINER (filesel), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_FILE_SELECTION (filesel)->button_area), 2);
+
   gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->cancel_button),
 			     "clicked", (GtkSignalFunc) gtk_widget_destroy,
 			     GTK_OBJECT (filesel));
