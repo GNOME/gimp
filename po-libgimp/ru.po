@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-plugin-1.1.14\n"
-"POT-Creation-Date: 2000-06-06 12:41-0700\n"
-"PO-Revision-Date: 2000-04-13 02:22+04:00\n"
+"POT-Creation-Date: 2000-06-28 21:03+0000\n"
+"PO-Revision-Date: 2000-06-28 21:04+00:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,8 +20,8 @@ msgstr "/Использовать цвет переднего плана"
 msgid "/Use Background Color"
 msgstr "/Использовать цвет фона"
 
-#: libgimp/gimpexport.c:158
-msgid "can't Handle Layers"
+#: libgimp/gimpexport.c:158 libgimp/gimpexport.c:185
+msgid "can't handle layers"
 msgstr "невозможно обработать слои"
 
 #: libgimp/gimpexport.c:159 libgimp/gimpexport.c:168
@@ -29,67 +29,67 @@ msgid "Merge Visible Layers"
 msgstr "Объединить видимые слои"
 
 #: libgimp/gimpexport.c:167 libgimp/gimpexport.c:176
-msgid "can only Handle Layers as Animation Frames"
+msgid "can only handle layers as animation frames"
 msgstr "можно обработать слои только как анимированные кадры"
 
 #: libgimp/gimpexport.c:168 libgimp/gimpexport.c:177
 msgid "Save as Animation"
 msgstr "Сохранить как анимацию"
 
-#: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186
+#: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186 libgimp/gimpexport.c:195
 msgid "Flatten Image"
 msgstr "Свести изображение"
 
-#: libgimp/gimpexport.c:185
-msgid "can't Handle Transparency"
+#: libgimp/gimpexport.c:194
+msgid "can't handle transparency"
 msgstr "невозможно обработать прозрачность"
 
-#: libgimp/gimpexport.c:194
-msgid "can only Handle RGB Images"
+#: libgimp/gimpexport.c:203
+msgid "can only handle RGB images"
 msgstr "можно обработать только RGB-изображения"
 
-#: libgimp/gimpexport.c:195 libgimp/gimpexport.c:223 libgimp/gimpexport.c:232
+#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:232 libgimp/gimpexport.c:241
 msgid "Convert to RGB"
 msgstr "Преобразовать в RGB"
 
-#: libgimp/gimpexport.c:203
-msgid "can only Handle Grayscale Images"
+#: libgimp/gimpexport.c:212
+msgid "can only handle grayscale images"
 msgstr "можно обработать только изображения в оттенках серого"
 
-#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:223 libgimp/gimpexport.c:244
+#: libgimp/gimpexport.c:213 libgimp/gimpexport.c:232 libgimp/gimpexport.c:253
 msgid "Convert to Grayscale"
 msgstr "Преобразовать в оттенки серого"
 
-#: libgimp/gimpexport.c:212
-msgid "can only Handle Indexed Images"
+#: libgimp/gimpexport.c:221
+msgid "can only handle indexed images"
 msgstr "можно обработать только индексированные изображения"
 
-#: libgimp/gimpexport.c:213 libgimp/gimpexport.c:232 libgimp/gimpexport.c:242
+#: libgimp/gimpexport.c:222 libgimp/gimpexport.c:241 libgimp/gimpexport.c:251
 msgid ""
-"Convert to indexed using default settings\n"
+"Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
 "Преобразовать в индексированное используя настройки по умолчанию\n"
 "(Результат можно подстроить вручную)"
 
-#: libgimp/gimpexport.c:222
-msgid "can only Handle RGB or Grayscale Images"
+#: libgimp/gimpexport.c:231
+msgid "can only handle RGB or grayscale images"
 msgstr "можно обработать только изображения в оттенках серого или RGB"
 
-#: libgimp/gimpexport.c:231
-msgid "can only Handle RGB or Indexed Images"
+#: libgimp/gimpexport.c:240
+msgid "can only handle RGB or indexed images"
 msgstr "можно обработать только RGB или индексированные изображения"
 
-#: libgimp/gimpexport.c:241
-msgid "can only Handle Grayscale or Indexed Images"
+#: libgimp/gimpexport.c:250
+msgid "can only handle grayscale or indexed images"
 msgstr ""
 "можно обработать только изображения в оттенках серого или индексированные"
 
-#: libgimp/gimpexport.c:252
-msgid "needs an Alpha Channel"
+#: libgimp/gimpexport.c:261
+msgid "needs an alpha channel"
 msgstr "требуется альфа канал"
 
-#: libgimp/gimpexport.c:253
+#: libgimp/gimpexport.c:262
 msgid "Add Alpha Channel"
 msgstr "Добавить альфа-канал"
 
@@ -98,25 +98,25 @@ msgstr "Добавить альфа-канал"
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:322
+#: libgimp/gimpexport.c:331
 msgid "Export File"
 msgstr "Экспортировать файл"
 
-#: libgimp/gimpexport.c:327
+#: libgimp/gimpexport.c:336
 msgid "Export"
 msgstr "Экспорт"
 
-#: libgimp/gimpexport.c:329
+#: libgimp/gimpexport.c:338
 msgid "Ignore"
 msgstr "Игнорировать"
 
-#: libgimp/gimpexport.c:331 libgimp/gimpquerybox.c:183
+#: libgimp/gimpexport.c:340 libgimp/gimpquerybox.c:183
 #: libgimp/gimpquerybox.c:237 libgimp/gimpquerybox.c:293
 #: libgimp/gimpquerybox.c:356 libgimp/gimpunitmenu.c:501
 msgid "Cancel"
 msgstr "Отмена"
 
-#: libgimp/gimpexport.c:346
+#: libgimp/gimpexport.c:355
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
@@ -125,7 +125,7 @@ msgstr ""
 "сохранено по следующим причинам:"
 
 #. the footline
-#: libgimp/gimpexport.c:409
+#: libgimp/gimpexport.c:418
 msgid "The export conversion won't modify your original image."
 msgstr "Экспортное преобразование не изменит ваше исходное изображение."
 
