@@ -1,3 +1,12 @@
+2004-04-15  Tor Lillqvist  <tml@iki.fi>
+
+	* libgimpthumb/Makefile.am: For Win32, install gimpthumb.def, like
+	the .def files of the other libgimp* libs.
+
+	* app/Makefile.am (INCLUDES): Add PANGOFT2_CFLAGS.
+
+	* gimp-zip.in: Put also libgimpthumb in the developer package.
+
 2004-04-15  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/winicon/icodialog.c: fixed gtk+ includes, added a

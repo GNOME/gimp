@@ -18,6 +18,7 @@ bin/libgimpbase-@GIMP_API_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
 bin/libgimpcolor-@GIMP_API_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
 bin/libgimpmath-@GIMP_API_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
 bin/libgimpmodule-@GIMP_API@-@LT_CURRENT_MINUS_AGE@.dll
+bin/libgimpthumb-@GIMP_API@-@LT_CURRENT_MINUS_AGE@.dll
 bin/libgimpui-@GIMP_API_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
 bin/libgimpwidgets-@GIMP_API_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
 lib/gimp/@GIMP_PLUGIN_VERSION@/environ
@@ -48,6 +49,8 @@ lib/gimpmath.def
 lib/libgimpmodule-@GIMP_API_VERSION@.dll.a
 lib/gimpmodule-@GIMP_API_VERSION@.lib
 lib/gimpmodule.def
+lib/gimpthumb-@GIMP_API_VERSION@.lib
+lib/gimpthumb.def
 lib/libgimpui-@GIMP_API_VERSION@.dll.a
 lib/gimpui-@GIMP_API_VERSION@.lib
 lib/gimpui.def

@@ -12,9 +12,11 @@ libgimpthumb_export_symbols = -export-symbols gimpthumb.def
 
 install-libtool-import-lib:
 	$(INSTALL) .libs/libgimpthumb-$(GIMP_API_VERSION).dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) gimpthumb.def $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
 	-rm $(DESTDIR)$(libdir)/libgimpthumb-$(GIMP_API_VERSION).dll.a
+	-rm $(DESTDIR)$(libdir)/gimpthumb.def
 else
 install-libtool-import-lib:
 uninstall-libtool-import-lib:
