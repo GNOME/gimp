@@ -1,7 +1,16 @@
+2001-10-10  Sven Neumann  <sven@gimp.org>
+
+	* app/fileops_cmds.c
+	* tools/pdbgen/app.pl
+	* tools/pdbgen/pdb/fileops.pdb: call mkdir() in the PDB function
+	gimp_temp_name() so there's a better chance the temp dir exists 
+	before plug-ins try to place temporary files there. This is a 
+	workaround for bug #61803.
+	
 2001-10-10  Gediminas Paulauskas <menesis@delfi.lt>
 
-        * tips/Makefile.am|makefile.mingw: Added gimp_tips.lt.txt to the
-	targets. 
+	* tips/Makefile.am
+	* tips/makefile.mingw: Added gimp_tips.lt.txt to the targets. 
 
 	* tips/gimp_tips.lt.txt: Added Lithuanian tips file. 
 

@@ -690,6 +690,10 @@ GPL
 		$headers .= "\n" if $seen;
 		$headers .= "#ifdef HAVE_UNISTD_H\n";
 	    }
+            elsif ($_ eq '<direct.h>') {
+                $headers .= "\n" if $seen;
+                $headers .= "#ifdef G_OS_WIN32\n";
+	    }
 
 	    $seen++ if /^</;
 	    $headers .= "\n" if $seen && !/^</;
@@ -699,7 +703,10 @@ GPL
 
 	    $headers .= "#include $_\n";
 
-	    if ($_ eq '<unistd.h>') {
+            if ($_ eq '<direct.h>') {
+		$headers .= "#define mkdir(path,mode) _mkdir(path)\n";
+	    }
+	    if ($_ eq '<unistd.h>' || $_ eq '<direct.h>') {
 		$headers .= "#endif\n\n";
 		$seen = 0;
  	    }

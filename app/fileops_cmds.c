@@ -22,7 +22,14 @@
 
 #include "config.h"
 
+#ifdef G_OS_WIN32
+#include <direct.h>
+#define mkdir(path,mode) _mkdir(path)
+#endif
+
 #include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
@@ -377,6 +384,9 @@ temp_name_invoker (Argument *args)
     {
       if (id == 0)
 	pid = getpid();
+    
+      /* create the temp_path, just in case */
+      mkdir (temp_path, 0755);
     
       name = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "gimp_temp.%d%d.%s",
 			      temp_path, pid, id++, extension);

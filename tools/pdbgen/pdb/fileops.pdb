@@ -274,12 +274,15 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("gimprc.h") ],
+	headers => [ qw( <sys/stat.h> <sys/types.h> <direct.h> "gimprc.h" ) ],
 	vars => [ 'static gint id = 0', 'static gint pid' ],
 	code => <<'CODE'
 {
   if (id == 0)
     pid = getpid();
+
+  /* create the temp_path, just in case */
+  mkdir (temp_path, 0755);
 
   name = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "gimp_temp.%d%d.%s",
 			  temp_path, pid, id++, extension);
