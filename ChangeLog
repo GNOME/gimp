@@ -1,3 +1,9 @@
+2003-04-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpmovetool.c (gimp_move_tool_button_release): don't
+	forget to resume the selection after cancelling a guide drag.
+	Spotted by Pedro Gimeno.
+
 2003-04-03  Sven Neumann  <sven@gimp.org>
 
 	* themes/Default/images/Makefile.am

@@ -326,6 +326,8 @@ gimp_move_tool_button_release (GimpTool        *tool,
           move->guide_position    = -1;
           move->guide_orientation = GIMP_ORIENTATION_UNKNOWN;
 
+          gimp_display_shell_selection_visibility (shell,
+                                                   GIMP_SELECTION_RESUME);
           return;
         }
 
