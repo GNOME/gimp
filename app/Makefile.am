@@ -22,20 +22,27 @@ endif
 bin_PROGRAMS = gimp
 
 gimp_SOURCES = \
+##
+## gui stuff that needs to go to libgimp/, gui/ or /dev/null
+##
+	colormaps.c		\
+	colormaps.h		\
 	cursorutil.c		\
 	cursorutil.h		\
 	devices.c		\
 	devices.h		\
 	dialog_handler.c	\
 	dialog_handler.h	\
+	docindex.c		\
+	docindex.h		\
 	errorconsole.c		\
 	errorconsole.h		\
 	gimpdnd.c		\
 	gimpdnd.h		\
+	gimpprogress.c		\
+	gimpprogress.h		\
 	gimpui.c		\
 	gimpui.h		\
-	interface.c		\
-	interface.h		\
 	layers_dialogP.h	\
 	lc_dialog.c		\
 	lc_dialog.h		\
@@ -45,9 +52,54 @@ gimp_SOURCES = \
 	ops_buttons.c		\
 	ops_buttons.h		\
 	paths_dialogP.h		\
+	qmask.c			\
+	qmask.h			\
+	resize.c		\
+	resize.h		\
 	resolution_calibrate.c	\
 	resolution_calibrate.h	\
-	\
+	undo_history.c		\
+	undo_history.h		\
+##
+## display stuff
+##
+	disp_callbacks.c	\
+	disp_callbacks.h	\
+	gximage.c		\
+	gximage.h		\
+	image_render.c		\
+	image_render.h		\
+	interface.c		\
+	interface.h		\
+	scale.c			\
+	scale.h			\
+	scroll.c		\
+	scroll.h		\
+	selection.c		\
+	selection.h		\
+	marching_ants.h		\
+##
+## stuff that needs to be split up in core / ui files
+##
+	channel_ops.c		\
+	channel_ops.h		\
+	convert.c		\
+	convert.h		\
+	gdisplay.c		\
+	gdisplay.h		\
+	gdisplay_ops.c		\
+	gdisplay_ops.h		\
+	global_edit.c		\
+	global_edit.h		\
+	image_map.c		\
+	image_map.h		\
+	module_db.c		\
+	module_db.h		\
+	user_install.c		\
+	user_install.h		\
+##
+## core stuff
+##
 	app_procs.c		\
 	app_procs.h		\
 	appenums.h		\
@@ -63,24 +115,14 @@ gimp_SOURCES = \
 	brush_header.h		\
 	brush_scale.c		\
 	brush_scale.h		\
-	channel_ops.c		\
-	channel_ops.h		\
 	color_transfer.c	\
 	color_transfer.h	\
-	colormaps.c		\
-	colormaps.h		\
 	context_manager.c	\
 	context_manager.h	\
-	convert.c		\
-	convert.h		\
 	datafiles.c		\
 	datafiles.h		\
 	desaturate.c		\
 	desaturate.h		\
-	disp_callbacks.c	\
-	disp_callbacks.h	\
-	docindex.c		\
-	docindex.h		\
 	drawable.c		\
 	drawable.h		\
 	errors.c		\
@@ -96,10 +138,6 @@ gimp_SOURCES = \
 	floating_sel.c		\
 	floating_sel.h		\
 	fsdither.h		\
-	gdisplay.c		\
-	gdisplay.h		\
-	gdisplay_ops.c		\
-	gdisplay_ops.h		\
 	general.c		\
 	general.h		\
 	gimage.c		\
@@ -160,8 +198,6 @@ gimp_SOURCES = \
 	gimpparasite.h		\
 	gimppreviewcache.h	\
 	gimppreviewcache.c	\
-	gimpprogress.c		\
-	gimpprogress.h		\
 	gimprc.c		\
 	gimprc.h		\
 	gimpundo.c		\
@@ -171,16 +207,8 @@ gimp_SOURCES = \
 	gimpunit.c		\
 	gimpviewable.c		\
 	gimpviewable.h		\
-	global_edit.c		\
-	global_edit.h		\
-	gximage.c		\
-	gximage.h		\
-	image_map.c		\
-	image_map.h		\
 	image_new.c		\
 	image_new.h		\
-	image_render.c		\
-	image_render.h		\
 	invert.c		\
 	invert.h		\
 	libgimp_glue.c		\
@@ -188,8 +216,6 @@ gimp_SOURCES = \
 	lut_funcs.c		\
 	lut_funcs.h		\
 	main.c			\
-	module_db.c		\
-	module_db.h		\
 	parasitelist.c		\
 	parasitelist.h		\
 	path.c			\
@@ -209,18 +235,8 @@ gimp_SOURCES = \
 	pixel_surround.h	\
 	plug_in.c		\
 	plug_in.h		\
-	qmask.c			\
-	qmask.h			\
-	resize.c		\
-	resize.h		\
-	scale.c			\
-	scale.h			\
 	scan_convert.c		\
 	scan_convert.h		\
-	scroll.c		\
-	scroll.h		\
-	selection.c		\
-	selection.h		\
 	temp_buf.c		\
 	temp_buf.h		\
 	tile.c			\
@@ -235,18 +251,13 @@ gimp_SOURCES = \
 	tile_swap.h		\
 	undo.c			\
 	undo.h			\
-	undo_history.c		\
-	undo_history.h		\
 	undo_types.h		\
 	unitrc.h		\
-	user_install.c		\
-	user_install.h		\
 	xcf.c			\
 	xcf.h			\
 	$(regex_sources)	\
 	$(mmx_sources)		\
 	\
-	marching_ants.h		\
 	pixmaps2.h
 
 EXTRA_DIST = \

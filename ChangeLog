@@ -1,3 +1,10 @@
+2001-04-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am: commented the sections of the file list.
+	* app/gui/Makefile.am: cleanup.
+
+	* app/unittest/*: removed.
+
 2001-04-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am

@@ -3,17 +3,6 @@
 noinst_LTLIBRARIES = libappgui.la
 
 libappgui_la_SOURCES = \
-	dialogs.c		\
-	dialogs.h		\
-	dialogs-commands.c	\
-	dialogs-commands.h	\
-	dialogs-constructors.c	\
-	dialogs-constructors.h	\
-	gui.c			\
-	gui.h			\
-	splash.c		\
-	splash.h		\
-	\
 	about-dialog.c		\
 	about-dialog.h		\
 	brush-editor.c		\
@@ -32,12 +21,20 @@ libappgui_la_SOURCES = \
 	colormap-dialog.h	\
 	commands.c		\
 	commands.h		\
+	dialogs.c		\
+	dialogs.h		\
+	dialogs-commands.c	\
+	dialogs-commands.h	\
+	dialogs-constructors.c	\
+	dialogs-constructors.h	\
 	file-new-dialog.c	\
 	file-new-dialog.h	\
 	gradient-editor.c	\
 	gradient-editor.h	\
 	gradient-select.h	\
 	gradient-select.c	\
+	gui.c			\
+	gui.h			\
 	indicator-area.c	\
 	indicator-area.h	\
 	info-dialog.c		\
@@ -64,6 +61,8 @@ libappgui_la_SOURCES = \
 	preferences-dialog.h	\
 	session.c		\
 	session.h		\
+	splash.c		\
+	splash.h		\
 	test-commands.c		\
 	test-commands.h		\
 	tips-dialog.c		\
