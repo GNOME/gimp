@@ -1,5 +1,13 @@
 2004-12-31  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
+	* app/paint/gimpbrushcore.c
+	* app/paint/gimppaintoptions.c
+	* app/paint/gimppaintoptions.h
+	* app/tools/gimppaintoptions-gui.c: reverted last change, and
+	applied full patch from Dave Ahlswede in bug #149576.
+
+2004-12-31  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
 	* tools/pdbgen/pdb/gradient.pdb: added gradient-is-editable
 
 	* tools/pdbgen/pdb/brush.pdb

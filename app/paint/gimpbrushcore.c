@@ -36,7 +36,6 @@
 #include "gimpbrushcore.h"
 #include "gimpbrushcore-kernels.h"
 #include "gimppaintoptions.h"
-#include "gimpairbrushoptions.h"
 
 #include "gimp-intl.h"
 
@@ -663,11 +662,10 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
     {
       GimpPressureOptions *pressure_options = paint_options->pressure_options;
 
-      if (pressure_options->size)
-        if (GIMP_IS_AIRBRUSH_OPTIONS (paint_options))
-          core->scale = 1.0 - 0.9 * paint_core->cur_coords.pressure;
-        else
-          core->scale = paint_core->cur_coords.pressure;
+      if (pressure_options->inv_size)
+        core->scale = 1.0 - 0.9 * paint_core->cur_coords.pressure;
+      else if (pressure_options->size)
+        core->scale = paint_core->cur_coords.pressure;
       else
         core->scale = 1.0;
     }

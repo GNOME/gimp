@@ -43,6 +43,7 @@
 #define DEFAULT_PRESSURE_RATE     FALSE
 #define DEFAULT_PRESSURE_SIZE     FALSE
 #define DEFAULT_PRESSURE_COLOR    FALSE
+#define DEFAULT_PRESSURE_INVSIZE  FALSE
 
 #define DEFAULT_USE_FADE          FALSE
 #define DEFAULT_FADE_LENGTH       100.0
@@ -66,6 +67,7 @@ enum
   PROP_PRESSURE_RATE,
   PROP_PRESSURE_SIZE,
   PROP_PRESSURE_COLOR,
+  PROP_PRESSURE_INVSIZE,
   PROP_USE_FADE,
   PROP_FADE_LENGTH,
   PROP_FADE_UNIT,
@@ -173,6 +175,10 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                     "pressure-color", NULL,
                                     DEFAULT_PRESSURE_COLOR,
                                     0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESSURE_INVSIZE,
+                                    "pressure-invsize", NULL,
+                                    DEFAULT_PRESSURE_INVSIZE,
+                                    0);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_FADE,
                                     "use-fade", NULL,
@@ -276,6 +282,9 @@ gimp_paint_options_set_property (GObject      *object,
     case PROP_PRESSURE_COLOR:
       pressure_options->color = g_value_get_boolean (value);
       break;
+    case PROP_PRESSURE_INVSIZE:
+      pressure_options->inv_size = g_value_get_boolean (value);
+      break;
 
     case PROP_USE_FADE:
       fade_options->use_fade = g_value_get_boolean (value);
@@ -351,6 +360,9 @@ gimp_paint_options_get_property (GObject    *object,
       break;
     case PROP_PRESSURE_COLOR:
       g_value_set_boolean (value, pressure_options->color);
+      break;
+    case PROP_PRESSURE_INVSIZE:
+      g_value_set_boolean (value, pressure_options->inv_size);
       break;
 
     case PROP_USE_FADE:

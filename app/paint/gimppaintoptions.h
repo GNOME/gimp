@@ -41,6 +41,7 @@ struct _GimpPressureOptions
   gboolean  rate;
   gboolean  size;
   gboolean  color;
+  gboolean  inv_size;
 };
 
 struct _GimpFadeOptions

@@ -265,11 +265,13 @@ pressure_options_gui (GimpPressureOptions *pressure,
     }
 
   /*  the size toggle  */
-  if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
-      tool_type == GIMP_TYPE_CLONE_TOOL                  ||
-      tool_type == GIMP_TYPE_CONVOLVE_TOOL               ||
-      tool_type == GIMP_TYPE_DODGE_BURN_TOOL             ||
-      tool_type == GIMP_TYPE_ERASER_TOOL)
+  if ((g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
+       tool_type == GIMP_TYPE_CLONE_TOOL                  ||
+       tool_type == GIMP_TYPE_CONVOLVE_TOOL               ||
+       tool_type == GIMP_TYPE_DODGE_BURN_TOOL             ||
+       tool_type == GIMP_TYPE_ERASER_TOOL)
+      &&
+      ! g_type_is_a (tool_type, GIMP_TYPE_AIRBRUSH_TOOL))
     {
       button = gimp_prop_check_button_new (config, "pressure-size",
                                            _("Size"));
@@ -285,6 +287,15 @@ pressure_options_gui (GimpPressureOptions *pressure,
       gtk_container_add (GTK_CONTAINER (wbox), button);
       gtk_widget_show (button);
     }
+
+  /* the inverse size toggle */
+  if (g_type_is_a (tool_type, GIMP_TYPE_AIRBRUSH_TOOL))
+  {
+    button = gimp_prop_check_button_new (config, "pressure-invsize",
+                                         _("Size"));
+    gtk_container_add (GTK_CONTAINER (wbox), button);
+    gtk_widget_show (button);
+  }
 
   return frame;
 }
