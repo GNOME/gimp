@@ -1,3 +1,8 @@
+2003-06-22  Sven Neumann  <sven@gimp.org>
+
+	* etc/ps-menurc: an updated version of PotatoShop keybindings
+	contributed by Eric Pierce <epierce@sdf.lonestar.org>.
+
 2003-06-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainergridview.c
