@@ -24,11 +24,6 @@
 
 #include <string.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -55,15 +50,35 @@ enum
   NUM_COLUMNS
 };
 
+typedef struct
+{
+  const gchar *title;
+  const gchar *help;
 
-static void   query              (void);
-static void   run                (const gchar      *name,
-				  gint              nparams,
-				  const GimpParam  *param,
-				  gint             *nreturn_vals,
-				  GimpParam       **return_vals);
+} UnitColumn;
 
-static void   unit_editor_dialog (void);
+
+static void     query                  (void);
+static void     run                    (const gchar           *name,
+                                        gint                   n_params,
+                                        const GimpParam       *param,
+                                        gint                  *n_return_vals,
+                                        GimpParam            **return_vals);
+
+static GimpUnit new_unit_dialog        (GtkWidget             *main_dialog,
+                                        GimpUnit               template);
+static void     unit_editor_dialog     (void);
+static void     unit_editor_response   (GtkWidget             *widget,
+                                        gint                   response_id,
+                                        gpointer               data);
+static void     new_callback           (GtkAction             *action,
+                                        GtkTreeView           *tv);
+static void     duplicate_callback     (GtkAction             *action,
+                                        GtkTreeView           *tv);
+static void     saved_toggled_callback (GtkCellRendererToggle *celltoggle,
+                                        gchar                 *path_string,
+                                        GtkListStore          *list_store);
+static void     unit_list_init         (GtkTreeView           *tv);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -73,16 +88,6 @@ GimpPlugInInfo PLUG_IN_INFO =
   query, /* query_proc */
   run,   /* run_proc   */
 };
-
-MAIN ()
-
-
-typedef struct
-{
-  const gchar *title;
-  const gchar *help;
-
-} UnitColumn;
 
 static const UnitColumn columns[] =
 {
@@ -104,6 +109,29 @@ static const UnitColumn columns[] =
   { N_("Singular"),     N_("The unit's singular form.")                     },
   { N_("Plural"),       N_("The unit's plural form.")                       }
 };
+
+static GtkActionEntry actions[] =
+{
+  { "unit-editor-toolbar", NULL,
+    "Unit Editor Toolbar", NULL, NULL, NULL
+  },
+
+  { "unit-editor-new", GTK_STOCK_NEW,
+    N_("New"), NULL,
+    N_("Create a new unit from scratch."),
+    G_CALLBACK (new_callback)
+  },
+
+  { "unit-editor-duplicate", GIMP_STOCK_DUPLICATE,
+    N_("Duplicate"), NULL,
+    N_("Create a new unit with the currently "
+       "selected unit as template."),
+    G_CALLBACK (duplicate_callback)
+  }
+};
+
+
+MAIN ()
 
 
 static void
@@ -161,8 +189,8 @@ run (const gchar      *name,
 }
 
 static GimpUnit
-new_unit (GtkWidget *main_dialog,
-          GimpUnit   template)
+new_unit_dialog (GtkWidget *main_dialog,
+                 GimpUnit   template)
 {
   GtkWidget *dialog;
   GtkWidget *table;
@@ -341,180 +369,12 @@ new_unit (GtkWidget *main_dialog,
 }
 
 static void
-list_init (GtkTreeView *tv)
-{
-  GtkListStore *list_store;
-  GtkTreeIter   iter;
-  gint          num_units;
-  GimpUnit      unit;
-  GdkColor      color;
-
-  list_store = GTK_LIST_STORE (gtk_tree_view_get_model (tv));
-
-  gtk_list_store_clear (list_store);
-
-  num_units = gimp_unit_get_number_of_units ();
-
-  color.red   = 0xdddd;
-  color.green = 0xdddd;
-  color.blue  = 0xffff;
-
-  for (unit = GIMP_UNIT_INCH; unit < num_units; unit++)
-    {
-      gboolean user_unit;
-
-      user_unit = (unit >= gimp_unit_get_number_of_built_in_units ());
-
-      gtk_list_store_append (list_store, &iter);
-      gtk_list_store_set (list_store, &iter,
-                          SAVE,         ! gimp_unit_get_deletion_flag (unit),
-                          IDENTIFIER,   gimp_unit_get_identifier (unit),
-                          FACTOR,       gimp_unit_get_factor (unit),
-                          DIGITS,       gimp_unit_get_digits (unit),
-                          SYMBOL,       gimp_unit_get_symbol (unit),
-                          ABBREVIATION, gimp_unit_get_abbreviation (unit),
-                          SINGULAR,     gimp_unit_get_singular (unit),
-                          PLURAL,       gimp_unit_get_plural (unit),
-                          UNIT,         unit,
-                          USER_UNIT,    user_unit,
-
-                          user_unit ? -1 : BG_COLOR, &color,
-
-                          -1);
-    }
-
-  if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter))
-    gtk_tree_selection_select_iter (gtk_tree_view_get_selection (tv), &iter);
-}
-
-static void
-new_callback (GtkWidget   *widget,
-	      GtkTreeView *tv)
-{
-  GimpUnit  unit;
-
-  unit = new_unit (gtk_widget_get_toplevel (widget), GIMP_UNIT_PIXEL);
-
-  if (unit != GIMP_UNIT_PIXEL)
-    {
-      GtkTreeModel *model;
-      GtkTreeIter   iter;
-
-      list_init (tv);
-
-      model = gtk_tree_view_get_model (tv);
-
-      if (gtk_tree_model_get_iter_first (model, &iter) &&
-          gtk_tree_model_iter_nth_child (model, &iter,
-                                         NULL, unit - GIMP_UNIT_INCH))
-        {
-          GtkAdjustment *adj;
-
-          gtk_tree_selection_select_iter (gtk_tree_view_get_selection (tv),
-                                          &iter);
-
-          adj = gtk_tree_view_get_vadjustment (tv);
-          gtk_adjustment_set_value (adj, adj->upper);
-        }
-    }
-}
-
-static void
-duplicate_callback (GtkWidget   *widget,
-		    GtkTreeView *tv)
-{
-  GtkTreeModel     *model;
-  GtkTreeSelection *sel;
-  GtkTreeIter       iter;
-
-  model = gtk_tree_view_get_model (tv);
-  sel   = gtk_tree_view_get_selection (tv);
-
-  if (gtk_tree_selection_get_selected (sel, NULL, &iter))
-    {
-      GimpUnit unit;
-
-      gtk_tree_model_get (model, &iter,
-                          UNIT, &unit,
-                          -1);
-
-      unit = new_unit (gtk_widget_get_toplevel (widget), unit);
-
-      if (unit != GIMP_UNIT_PIXEL)
-        {
-          GtkTreeIter iter;
-
-          list_init (tv);
-
-          if (gtk_tree_model_get_iter_first (model, &iter) &&
-              gtk_tree_model_iter_nth_child (model, &iter,
-                                             NULL, unit - GIMP_UNIT_INCH))
-            {
-              GtkAdjustment *adj;
-
-              gtk_tree_selection_select_iter (sel, &iter);
-
-              adj = gtk_tree_view_get_vadjustment (tv);
-              gtk_adjustment_set_value (adj, adj->upper);
-            }
-        }
-    }
-}
-
-static void
-saved_toggled_callback (GtkCellRendererToggle *celltoggle,
-                        gchar                 *path_string,
-                        GtkListStore          *list_store)
-{
-  GtkTreePath *path;
-  GtkTreeIter  iter;
-  gboolean     saved;
-  GimpUnit     unit;
-
-  path = gtk_tree_path_new_from_string (path_string);
-  if (! gtk_tree_model_get_iter (GTK_TREE_MODEL (list_store), &iter, path))
-    {
-      g_warning ("%s: bad tree path?", G_STRLOC);
-      return;
-    }
-  gtk_tree_path_free (path);
-
-  gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
-                      SAVE, &saved,
-                      UNIT, &unit,
-                      -1);
-
-  if (unit >= gimp_unit_get_number_of_built_in_units ())
-    {
-      gimp_unit_set_deletion_flag (unit, saved);
-      gtk_list_store_set (GTK_LIST_STORE (list_store), &iter,
-                          SAVE, ! saved,
-                          -1);
-    }
-}
-
-static void
-unit_editor_response (GtkWidget *widget,
-                      gint       response_id,
-                      gpointer   data)
-{
-  switch (response_id)
-    {
-    case RESPONSE_REFRESH:
-      list_init (GTK_TREE_VIEW (data));
-      break;
-
-    default:
-      gtk_widget_destroy (widget);
-      break;
-    }
-}
-
-static void
 unit_editor_dialog (void)
 {
   GtkWidget         *main_dialog;
   GtkWidget         *scrolled_win;
+  GtkUIManager      *ui_manager;
+  GtkActionGroup    *group;
   GtkWidget         *toolbar;
   GtkListStore      *list_store;
   GtkWidget         *tv;
@@ -560,20 +420,28 @@ unit_editor_dialog (void)
                     NULL);
 
   /*  the toolbar  */
-  toolbar = gtk_toolbar_new ();
+  ui_manager = gtk_ui_manager_new ();
+
+  group = gtk_action_group_new ("unit-editor");
+  gtk_action_group_add_actions (group, actions, G_N_ELEMENTS (actions), tv);
+
+  gtk_ui_manager_insert_action_group (ui_manager, group, -1);
+  g_object_unref (group);
+
+  gtk_ui_manager_add_ui_from_string
+    (ui_manager,
+     "<ui>\n"
+     "  <toolbar action=\"unit-editor-toolbar\">\n"
+     "    <toolitem action=\"unit-editor-new\" />\n"
+     "    <toolitem action=\"unit-editor-duplicate\" />\n"
+     "  </toolbar>\n"
+     "</ui>\n",
+     -1, NULL);
+
+  toolbar = gtk_ui_manager_get_widget (ui_manager, "/unit-editor-toolbar");
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (main_dialog)->vbox), toolbar,
 		      FALSE, FALSE, 0);
   gtk_widget_show (toolbar);
-
-  gtk_toolbar_insert_stock (GTK_TOOLBAR (toolbar), GTK_STOCK_NEW,
-                            _("Create a new unit from scratch."), NULL,
-                            G_CALLBACK (new_callback), tv,
-                            0);
-  gtk_toolbar_insert_stock (GTK_TOOLBAR (toolbar), GIMP_STOCK_DUPLICATE,
-                            _("Create a new unit with the currently "
-                              "selected unit as template."), NULL,
-                            G_CALLBACK (duplicate_callback), tv,
-                            1);
 
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
@@ -626,9 +494,181 @@ unit_editor_dialog (void)
                                gettext (columns[i].help), NULL);
     }
 
-  list_init (GTK_TREE_VIEW (tv));
+  unit_list_init (GTK_TREE_VIEW (tv));
 
   gtk_widget_show (main_dialog);
 
   gtk_main ();
+}
+
+static void
+unit_editor_response (GtkWidget *widget,
+                      gint       response_id,
+                      gpointer   data)
+{
+  switch (response_id)
+    {
+    case RESPONSE_REFRESH:
+      unit_list_init (GTK_TREE_VIEW (data));
+      break;
+
+    default:
+      gtk_widget_destroy (widget);
+      break;
+    }
+}
+
+static void
+new_callback (GtkAction   *action,
+	      GtkTreeView *tv)
+{
+  GimpUnit  unit;
+
+  unit = new_unit_dialog (gtk_widget_get_toplevel (GTK_WIDGET (tv)),
+                          GIMP_UNIT_PIXEL);
+
+  if (unit != GIMP_UNIT_PIXEL)
+    {
+      GtkTreeModel *model;
+      GtkTreeIter   iter;
+
+      unit_list_init (tv);
+
+      model = gtk_tree_view_get_model (tv);
+
+      if (gtk_tree_model_get_iter_first (model, &iter) &&
+          gtk_tree_model_iter_nth_child (model, &iter,
+                                         NULL, unit - GIMP_UNIT_INCH))
+        {
+          GtkAdjustment *adj;
+
+          gtk_tree_selection_select_iter (gtk_tree_view_get_selection (tv),
+                                          &iter);
+
+          adj = gtk_tree_view_get_vadjustment (tv);
+          gtk_adjustment_set_value (adj, adj->upper);
+        }
+    }
+}
+
+static void
+duplicate_callback (GtkAction   *action,
+		    GtkTreeView *tv)
+{
+  GtkTreeModel     *model;
+  GtkTreeSelection *sel;
+  GtkTreeIter       iter;
+
+  model = gtk_tree_view_get_model (tv);
+  sel   = gtk_tree_view_get_selection (tv);
+
+  if (gtk_tree_selection_get_selected (sel, NULL, &iter))
+    {
+      GimpUnit unit;
+
+      gtk_tree_model_get (model, &iter,
+                          UNIT, &unit,
+                          -1);
+
+      unit = new_unit_dialog (gtk_widget_get_toplevel (GTK_WIDGET (tv)),
+                              unit);
+
+      if (unit != GIMP_UNIT_PIXEL)
+        {
+          GtkTreeIter iter;
+
+          unit_list_init (tv);
+
+          if (gtk_tree_model_get_iter_first (model, &iter) &&
+              gtk_tree_model_iter_nth_child (model, &iter,
+                                             NULL, unit - GIMP_UNIT_INCH))
+            {
+              GtkAdjustment *adj;
+
+              gtk_tree_selection_select_iter (sel, &iter);
+
+              adj = gtk_tree_view_get_vadjustment (tv);
+              gtk_adjustment_set_value (adj, adj->upper);
+            }
+        }
+    }
+}
+
+static void
+saved_toggled_callback (GtkCellRendererToggle *celltoggle,
+                        gchar                 *path_string,
+                        GtkListStore          *list_store)
+{
+  GtkTreePath *path;
+  GtkTreeIter  iter;
+  gboolean     saved;
+  GimpUnit     unit;
+
+  path = gtk_tree_path_new_from_string (path_string);
+  if (! gtk_tree_model_get_iter (GTK_TREE_MODEL (list_store), &iter, path))
+    {
+      g_warning ("%s: bad tree path?", G_STRLOC);
+      return;
+    }
+  gtk_tree_path_free (path);
+
+  gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
+                      SAVE, &saved,
+                      UNIT, &unit,
+                      -1);
+
+  if (unit >= gimp_unit_get_number_of_built_in_units ())
+    {
+      gimp_unit_set_deletion_flag (unit, saved);
+      gtk_list_store_set (GTK_LIST_STORE (list_store), &iter,
+                          SAVE, ! saved,
+                          -1);
+    }
+}
+
+static void
+unit_list_init (GtkTreeView *tv)
+{
+  GtkListStore *list_store;
+  GtkTreeIter   iter;
+  gint          num_units;
+  GimpUnit      unit;
+  GdkColor      color;
+
+  list_store = GTK_LIST_STORE (gtk_tree_view_get_model (tv));
+
+  gtk_list_store_clear (list_store);
+
+  num_units = gimp_unit_get_number_of_units ();
+
+  color.red   = 0xdddd;
+  color.green = 0xdddd;
+  color.blue  = 0xffff;
+
+  for (unit = GIMP_UNIT_INCH; unit < num_units; unit++)
+    {
+      gboolean user_unit;
+
+      user_unit = (unit >= gimp_unit_get_number_of_built_in_units ());
+
+      gtk_list_store_append (list_store, &iter);
+      gtk_list_store_set (list_store, &iter,
+                          SAVE,         ! gimp_unit_get_deletion_flag (unit),
+                          IDENTIFIER,   gimp_unit_get_identifier (unit),
+                          FACTOR,       gimp_unit_get_factor (unit),
+                          DIGITS,       gimp_unit_get_digits (unit),
+                          SYMBOL,       gimp_unit_get_symbol (unit),
+                          ABBREVIATION, gimp_unit_get_abbreviation (unit),
+                          SINGULAR,     gimp_unit_get_singular (unit),
+                          PLURAL,       gimp_unit_get_plural (unit),
+                          UNIT,         unit,
+                          USER_UNIT,    user_unit,
+
+                          user_unit ? -1 : BG_COLOR, &color,
+
+                          -1);
+    }
+
+  if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter))
+    gtk_tree_selection_select_iter (gtk_tree_view_get_selection (tv), &iter);
 }
