@@ -1783,12 +1783,12 @@ menu_translate (const gchar *path,
   if (menupath)
     g_free (menupath);
 
-  menupath = g_strdup (path);
+  retval = menupath = g_strdup (path);
 
   if ((strstr (path, "/tearoff1") != NULL) ||
       (strstr (path, "/---") != NULL) ||
       (strstr (path, "/MRU") != NULL))
-    return menupath;
+    return retval;
 
   /* 
    * Work around a bug in GTK+ prior to 1.2.7 (similar workaround below)
