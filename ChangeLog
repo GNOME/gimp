@@ -1,3 +1,13 @@
+Wed Mar  8 21:52:51 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/menus.c: applied and heavily modified a patch from Daniel Egger.
+
+	There's not any more the need to declare menu branches unless we
+	want to create empty submenus (to be filled in by plug-ins). Removes
+	a bunch of messages from the catalogs.
+	We do not longer put a seperator after submenus if the menu contains
+	nothing but submenus. 
+
 2000-03-08  Tor Lillqvist  <tml@iki.fi>
 
 	* app/cursorutil.c (gtkutil_compress_motion)

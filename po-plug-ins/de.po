@@ -5599,16 +5599,16 @@ msgstr "Suchzeit:"
 
 #: plug-ins/common/snoise.c:193
 msgid "<Image>/Filters/Render/Clouds/Solid Noise..."
-msgstr "<Image>/Filter/Render/Wolken/Plastisches rauschen..."
+msgstr "<Image>/Filter/Render/Wolken/Plastisches Rauschen..."
 
 #: plug-ins/common/snoise.c:318
 msgid "Solid Noise..."
-msgstr "Plastisches rauschen..."
+msgstr "Plastisches Rauschen..."
 
 #. Dialog initialization
 #: plug-ins/common/snoise.c:521
 msgid "Solid Noise"
-msgstr "Plastisches rauschen"
+msgstr "Plastisches Rauschen"
 
 #: plug-ins/common/snoise.c:563
 msgid "Detail:"
