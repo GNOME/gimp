@@ -1,5 +1,11 @@
 2004-07-27  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpbrushmenu.c
+	* libgimp/gimppatternmenu.c: attempt to make the brush and pattern
+	selectors look less like buttons (supposed to fix bug #147777).
+
+2004-07-27  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpcolorhexentry.c (gimp_color_hex_entry_events):
 	also accept the short hexadecimal notation (3 hex digits).
 

@@ -137,11 +137,11 @@ gimp_brush_select_widget_new (const gchar          *title,
   brush_sel->callback = callback;
   brush_sel->data     = data;
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
 
   frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME(frame), GTK_SHADOW_OUT);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
+  gtk_frame_set_shadow_type (GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   brush_sel->preview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
@@ -159,7 +159,7 @@ gimp_brush_select_widget_new (const gchar          *title,
                     brush_sel);
 
   brush_sel->button = gtk_button_new_with_mnemonic (_("_Browse..."));
-  gtk_box_pack_end (GTK_BOX (hbox), brush_sel->button, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (hbox), brush_sel->button, TRUE, TRUE, 0);
   gtk_widget_show (brush_sel->button);
 
   g_signal_connect (brush_sel->button, "clicked",

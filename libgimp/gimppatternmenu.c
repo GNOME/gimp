@@ -120,11 +120,11 @@ gimp_pattern_select_widget_new (const gchar            *title,
   pattern_sel->callback = callback;
   pattern_sel->data     = data;
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
 
   frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
+  gtk_frame_set_shadow_type (GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   pattern_sel->preview = gtk_preview_new (GTK_PREVIEW_COLOR);
@@ -142,7 +142,7 @@ gimp_pattern_select_widget_new (const gchar            *title,
                     pattern_sel);
 
   pattern_sel->button = gtk_button_new_with_mnemonic (_("_Browse..."));
-  gtk_box_pack_start (GTK_BOX (hbox), pattern_sel->button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), pattern_sel->button, TRUE, TRUE, 0);
   gtk_widget_show (pattern_sel->button);
 
   g_signal_connect (pattern_sel->button, "clicked",
