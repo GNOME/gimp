@@ -63,6 +63,7 @@ void       gimage_foreach               (GFunc              func,
 #define gimage_remove_guide gimp_image_remove_guide
 #define gimage_delete_guide gimp_image_delete_guide
 #define gimage_get_layer_index gimp_image_get_layer_index
+#define gimage_get_layer_by_index gimp_image_get_layer_by_index
 #define gimage_get_channel_index gimp_image_get_channel_index
 #define gimage_get_active_layer gimp_image_get_active_layer
 #define gimage_get_active_channel gimp_image_get_active_channel

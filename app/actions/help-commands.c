@@ -894,11 +894,7 @@ layers_previous_cmd_callback (GtkWidget *widget,
   current_layer =
     gimage_get_layer_index (gdisp->gimage, gdisp->gimage->active_layer);
 
-  /*  FIXME: don't use internal knowledge about layer lists
-   *  TODO : implement gimage_get_layer_by_index()
-   */
-  new_layer =
-    (Layer *) g_slist_nth_data (gdisp->gimage->layers, current_layer - 1);
+  new_layer = gimage_get_layer_by_index (gdisp->gimage, current_layer - 1);
 
   if (new_layer)
     {
@@ -920,11 +916,7 @@ layers_next_cmd_callback (GtkWidget *widget,
   current_layer =
     gimage_get_layer_index (gdisp->gimage, gdisp->gimage->active_layer);
 
-  /*  FIXME: don't use internal knowledge about layer lists
-   *  TODO : implement gimage_get_layer_by_index()
-   */
-  new_layer =
-    (Layer *) g_slist_nth_data (gdisp->gimage->layers, current_layer + 1);
+  new_layer = gimage_get_layer_by_index (gdisp->gimage, current_layer + 1);
 
   if (new_layer)
     {

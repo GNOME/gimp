@@ -1,5 +1,15 @@
 2000-12-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimage.h
+	* app/gimpimage.[ch]: implemented gimp_image_get_layer_by_index(),
+	small cleanups.
+
+	* app/commands.c
+	* app/layers_dialog.c: use the new function instead of accessing
+	the layer list directly.
+
+2000-12-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/layers_dialog.c: layers_dialog_scroll_index(): don't fiddle
 	around with magic numbers when calculating the layer widget's
 	height but simply ask one of them for it's allocation.  Fixes

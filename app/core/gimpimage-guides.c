@@ -435,7 +435,7 @@ gimp_image_resize (GimpImage *gimage,
   GSList  *list;
   GList   *guide_list;
 
-  gimp_add_busy_cursors();
+  gimp_add_busy_cursors ();
 
   g_assert (new_width > 0 && new_height > 0);
 
@@ -574,8 +574,8 @@ gimp_image_scale (GimpImage *gimage,
   old_height     = gimage->height;
   gimage->width  = new_width;
   gimage->height = new_height;
-  img_scale_w    = (gdouble)new_width / (gdouble)old_width;
-  img_scale_h    = (gdouble)new_height / (gdouble)old_height;
+  img_scale_w    = (gdouble) new_width  / (gdouble) old_width;
+  img_scale_h    = (gdouble) new_height / (gdouble) old_height;
  
   /*  Scale all channels  */
   for (list = gimage->channels; list; list = g_slist_next (list))
@@ -600,10 +600,11 @@ gimp_image_scale (GimpImage *gimage,
       layer = (Layer *) list->data;
       if (layer_scale_by_factors (layer, img_scale_w, img_scale_h) == FALSE)
 	{
-	  /* Since 0 < img_scale_w, img_scale_h, failure due to one or more     */
-	  /* vanishing scaled layer dimensions. Implicit delete implemented     */
-	  /* here. Upstream warning implemented in resize_check_layer_scaling() */
-          /* [resize.c line 1295], which offers the user the chance to bail out.*/
+	  /* Since 0 < img_scale_w, img_scale_h, failure due to one or more
+	   * vanishing scaled layer dimensions. Implicit delete implemented
+	   * here. Upstream warning implemented in resize_check_layer_scaling()
+	   * [resize.c line 1295], which offers the user the chance to bail out.
+	   */
 
           remove = g_slist_append (remove, layer);
         }
@@ -733,7 +734,7 @@ gimp_image_apply_image (GimpImage	 *gimage,
   /*  determine what sort of operation is being attempted and
    *  if it's actually legal...
    */
-  operation = valid_combinations [drawable_type (drawable)][src2PR->bytes];
+  operation = valid_combinations[drawable_type (drawable)][src2PR->bytes];
   if (operation == -1)
     {
       g_message ("gimp_image_apply_image sent illegal parameters");
@@ -755,10 +756,10 @@ gimp_image_apply_image (GimpImage	 *gimage,
        *  we need to add the layer offset to transform coords
        *  into the mask coordinate system
        */
-      x1 = CLAMP (x1, -offset_x, drawable_width (GIMP_DRAWABLE(mask))-offset_x);
-      y1 = CLAMP (y1, -offset_y, drawable_height(GIMP_DRAWABLE(mask))-offset_y);
-      x2 = CLAMP (x2, -offset_x, drawable_width (GIMP_DRAWABLE(mask))-offset_x);
-      y2 = CLAMP (y2, -offset_y, drawable_height(GIMP_DRAWABLE(mask))-offset_y);
+      x1 = CLAMP (x1, -offset_x, drawable_width (GIMP_DRAWABLE (mask))-offset_x);
+      y1 = CLAMP (y1, -offset_y, drawable_height(GIMP_DRAWABLE (mask))-offset_y);
+      x2 = CLAMP (x2, -offset_x, drawable_width (GIMP_DRAWABLE (mask))-offset_x);
+      y2 = CLAMP (y2, -offset_y, drawable_height(GIMP_DRAWABLE (mask))-offset_y);
     }
 
   /*  If the calling procedure specified an undo step...  */
@@ -800,8 +801,10 @@ gimp_image_apply_image (GimpImage	 *gimage,
 		       opacity, mode, active, operation);
     }
   else
-    combine_regions (&src1PR, src2PR, &destPR, NULL, NULL,
-		     opacity, mode, active, operation);
+    {
+      combine_regions (&src1PR, src2PR, &destPR, NULL, NULL,
+		       opacity, mode, active, operation);
+    }
 }
 
 /* Similar to gimp_image_apply_image but works in "replace" mode (i.e.
@@ -860,10 +863,10 @@ gimp_image_replace_image (GimpImage    *gimage,
        *  we need to add the layer offset to transform coords
        *  into the mask coordinate system
        */
-      x1 = CLAMP (x1, -offset_x, drawable_width (GIMP_DRAWABLE(mask))-offset_x);
-      y1 = CLAMP (y1, -offset_y, drawable_height(GIMP_DRAWABLE(mask))-offset_y);
-      x2 = CLAMP (x2, -offset_x, drawable_width (GIMP_DRAWABLE(mask))-offset_x);
-      y2 = CLAMP (y2, -offset_y, drawable_height(GIMP_DRAWABLE(mask))-offset_y);
+      x1 = CLAMP (x1, -offset_x, drawable_width (GIMP_DRAWABLE (mask))-offset_x);
+      y1 = CLAMP (y1, -offset_y, drawable_height(GIMP_DRAWABLE (mask))-offset_y);
+      x2 = CLAMP (x2, -offset_x, drawable_width (GIMP_DRAWABLE (mask))-offset_x);
+      y2 = CLAMP (y2, -offset_y, drawable_height(GIMP_DRAWABLE (mask))-offset_y);
     }
 
   /*  If the calling procedure specified an undo step...  */
@@ -873,9 +876,13 @@ gimp_image_replace_image (GimpImage    *gimage,
   /* configure the pixel regions
    *  If an alternative to using the drawable's data as src1 was provided...
    */
-  pixel_region_init (&src1PR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  pixel_region_init (&destPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
-  pixel_region_resize (src2PR, src2PR->x + (x1 - x), src2PR->y + (y1 - y), (x2 - x1), (y2 - y1));
+  pixel_region_init (&src1PR, drawable_data (drawable),
+		     x1, y1, (x2 - x1), (y2 - y1), FALSE);
+  pixel_region_init (&destPR, drawable_data (drawable),
+		     x1, y1, (x2 - x1), (y2 - y1), TRUE);
+  pixel_region_resize (src2PR,
+		       src2PR->x + (x1 - x), src2PR->y + (y1 - y),
+		       (x2 - x1), (y2 - y1));
 
   if (mask)
     {
@@ -926,8 +933,10 @@ gimp_image_replace_image (GimpImage    *gimage,
       g_free (temp_data);
     }
   else
-    combine_regions_replace (&src1PR, src2PR, &destPR, maskPR, NULL,
-		     opacity, active, operation);
+    {
+      combine_regions_replace (&src1PR, src2PR, &destPR, maskPR, NULL,
+			       opacity, active, operation);
+    }
 }
 
 /* Get rid of these! A "foreground" is an UI concept.. */
@@ -1536,19 +1545,19 @@ gimp_image_construct_layers (GimpImage *gimage,
       /*  only add layers that are visible and not floating selections 
 	  to the list  */
       if (!layer_is_floating_sel (layer) && 
-	  drawable_visible (GIMP_DRAWABLE(layer)))
+	  drawable_visible (GIMP_DRAWABLE (layer)))
 	reverse_list = g_slist_prepend (reverse_list, layer);
     }
 
   while (reverse_list)
     {
       layer = (Layer *) reverse_list->data;
-      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
+      drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
       x1 = CLAMP (off_x, x, x + w);
       y1 = CLAMP (off_y, y, y + h);
-      x2 = CLAMP (off_x + drawable_width (GIMP_DRAWABLE(layer)), x, x + w);
-      y2 = CLAMP (off_y + drawable_height (GIMP_DRAWABLE(layer)), y, y + h);
+      x2 = CLAMP (off_x + drawable_width (GIMP_DRAWABLE (layer)), x, x + w);
+      y2 = CLAMP (off_y + drawable_height (GIMP_DRAWABLE (layer)), y, y + h);
 
       /* configure the pixel regions  */
       pixel_region_init (&src1PR, gimp_image_projection (gimage), 
@@ -1559,7 +1568,7 @@ gimp_image_construct_layers (GimpImage *gimage,
       if (layer->mask && layer->show_mask)
 	{
 	  pixel_region_init (&src2PR, 
-			     drawable_data (GIMP_DRAWABLE(layer->mask)),
+			     drawable_data (GIMP_DRAWABLE (layer->mask)),
 			     (x1 - off_x), (y1 - off_y),
 			     (x2 - x1), (y2 - y1), FALSE);
 
@@ -1587,7 +1596,7 @@ gimp_image_construct_layers (GimpImage *gimage,
 	  /*  Based on the type of the layer, project the layer onto the
 	   *  projection image...
 	   */
-	  switch (drawable_type (GIMP_DRAWABLE(layer)))
+	  switch (drawable_type (GIMP_DRAWABLE (layer)))
 	    {
 	    case RGB_GIMAGE: case GRAY_GIMAGE:
 	      /* no mask possible */
@@ -1627,7 +1636,8 @@ gimp_image_construct_channels (GimpImage *gimage,
 			       gint       h)
 {
   Channel     *channel;
-  PixelRegion  src1PR, src2PR;
+  PixelRegion  src1PR;
+  PixelRegion  src2PR;
   GSList      *list;
   GSList      *reverse_list = NULL;
 
@@ -1645,7 +1655,7 @@ gimp_image_construct_channels (GimpImage *gimage,
 	  pixel_region_init (&src1PR, gimp_image_projection (gimage), 
 			     x, y, w, h, 
 			     TRUE);
-	  pixel_region_init (&src2PR, drawable_data (GIMP_DRAWABLE(channel)), 
+	  pixel_region_init (&src2PR, drawable_data (GIMP_DRAWABLE (channel)), 
 			     x, y, w, h, 
 			     FALSE);
 
@@ -1683,14 +1693,14 @@ gimp_image_initialize_projection (GimpImage *gimage,
       gint off_x, off_y;
 
       layer = (Layer *) list->data;
-      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
+      drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
-      if (drawable_visible (GIMP_DRAWABLE(layer)) &&
+      if (drawable_visible (GIMP_DRAWABLE (layer)) &&
 	  ! layer_has_alpha (layer) &&
 	  (off_x <= x) &&
 	  (off_y <= y) &&
-	  (off_x + drawable_width (GIMP_DRAWABLE(layer)) >= x + w) &&
-	  (off_y + drawable_height (GIMP_DRAWABLE(layer)) >= y + h))
+	  (off_x + drawable_width (GIMP_DRAWABLE (layer)) >= x + w) &&
+	  (off_y + drawable_height (GIMP_DRAWABLE (layer)) >= y + h))
 	{
 	  coverage = 1;
 	  break;
@@ -1738,9 +1748,9 @@ gimp_image_get_active_channels (GimpImage    *gimage,
 
 void
 gimp_image_construct (GimpImage *gimage, 
-		      gint       x, 
-		      gint       y, 
-		      gint       w, 
+		      gint       x,
+		      gint       y,
+		      gint       w,
 		      gint       h,
 		      gboolean   can_use_cowproject)
 {
@@ -1757,12 +1767,11 @@ gimp_image_construct (GimpImage *gimage,
 
   if (gimage->layers)
     {
-      gimp_drawable_offsets (GIMP_DRAWABLE((Layer*)(gimage->layers->data)),
+      gimp_drawable_offsets (GIMP_DRAWABLE ((Layer*) gimage->layers->data),
 			     &xoff, &yoff);
     }
 
-  if (/*can_use_cowproject &&*/
-      (gimage->layers) &&                         /* There's a layer.      */
+  if ((gimage->layers) &&                         /* There's a layer.      */
       (!g_slist_next(gimage->layers)) &&          /* It's the only layer.  */
       (layer_has_alpha((Layer*)(gimage->layers->data))) && /* It's !flat.  */
                                                   /* It's visible.         */
@@ -1926,15 +1935,15 @@ gimp_image_invalidate (GimpImage *gimage,
             /*  If the tile is not valid, make sure we get the entire tile
              *   in the construction extents
              */
-            if (tile_is_valid(tile) == FALSE)
+            if (tile_is_valid (tile) == FALSE)
               {
                 tilex = j - (j % TILE_WIDTH);
                 tiley = i - (i % TILE_HEIGHT);
                 
                 startx = MIN (startx, tilex);
-                endx = MAX (endx, tilex + tile_ewidth(tile));
+                endx   = MAX (endx, tilex + tile_ewidth (tile));
                 starty = MIN (starty, tiley);
-                endy = MAX (endy, tiley + tile_eheight(tile));
+                endy   = MAX (endy, tiley + tile_eheight (tile));
                 
                 tile_mark_valid (tile); /* hmmmmmmm..... */
               }
@@ -1991,6 +2000,21 @@ gimp_image_get_layer_index (GimpImage *gimage,
   return -1;
 }
 
+Layer *
+gimp_image_get_layer_by_index (GimpImage *gimage, 
+			       gint       layer_index)
+{
+  Layer *layer;
+
+  g_return_val_if_fail (gimage != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+
+  layer =
+    (Layer *) g_slist_nth_data (gimage->layers, layer_index);
+
+  return layer;
+}
+
 gint
 gimp_image_get_channel_index (GimpImage *gimage, 
 			      Channel   *channel_ID)
@@ -1999,6 +2023,7 @@ gimp_image_get_channel_index (GimpImage *gimage,
   GSList  *channels;
   gint     index;
 
+  g_return_val_if_fail (gimage != NULL, -1);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), -1);
 
   for (channels = gimage->channels, index = 0;
@@ -2016,6 +2041,7 @@ gimp_image_get_channel_index (GimpImage *gimage,
 Layer *
 gimp_image_get_active_layer (GimpImage *gimage)
 {
+  g_return_val_if_fail (gimage != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   return gimage->active_layer;

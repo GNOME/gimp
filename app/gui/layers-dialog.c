@@ -1529,11 +1529,7 @@ layers_dialog_previous_layer_callback (GtkWidget *widget,
   current_layer =
     gimp_image_get_layer_index (gimage, gimage->active_layer);
 
-  /*  FIXME: don't use internal knowledge about layer lists
-   *  TODO : implement gimp_image_get_layer_by_index()
-   */
-  new_layer =
-    (Layer *) g_slist_nth_data (gimage->layers, current_layer - 1);
+  new_layer = gimp_image_get_layer_by_index (gimage, current_layer - 1);
 
   if (new_layer)
     {
@@ -1556,11 +1552,7 @@ layers_dialog_next_layer_callback (GtkWidget *widget,
   current_layer =
     gimp_image_get_layer_index (gimage, gimage->active_layer);
 
-  /*  FIXME: don't use internal knowledge about layer lists
-   *  TODO : implement gimp_image_get_layer_by_index()
-   */
-  new_layer =
-    (Layer *) g_slist_nth_data (gimage->layers, current_layer + 1);
+  new_layer = gimp_image_get_layer_by_index (gimage, current_layer + 1);
 
   if (new_layer)
     {

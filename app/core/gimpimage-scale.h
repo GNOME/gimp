@@ -189,6 +189,7 @@ void		gimp_image_colormap_changed	  (GimpImage * image,
 /*  layer/channel functions  */
 
 gint            gimp_image_get_layer_index        (GimpImage *, Layer *);
+Layer *         gimp_image_get_layer_by_index     (GimpImage *, gint);
 gint            gimp_image_get_channel_index      (GimpImage *, Channel *);
 Layer *         gimp_image_get_active_layer       (GimpImage *);
 Channel *       gimp_image_get_active_channel     (GimpImage *);
