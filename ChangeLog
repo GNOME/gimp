@@ -1,3 +1,29 @@
+2005-03-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptoolcontrol.[ch]: in the spirit of the fix for bug
+	#165618 below, allow tools to specify up to two "object actions"
+	(actions which select brushes, patterns, ...).
+
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimptexttool.c: set actions where appropriate.
+
+	* app/actions/actions.c (action_select_object): allow objects to
+	be selected by index.
+
+	* app/actions/context-actions.c: added actions which select
+	objects by index. Not really used but the same actions can be used
+	to generically pass any GimpActionSelectType enum value to the
+	action callbacks.
+
+	* app/actions/tools-actions.c
+	* app/actions/tools-commands.[ch]: added actions and callbacks
+	for the new generic tool objects.
+
+	Also fixed and cleaned up the new generic tool value code.
+
 2003-03-04  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/gqbist.c: #include gstdio.h

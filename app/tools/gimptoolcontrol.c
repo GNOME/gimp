@@ -104,6 +104,8 @@ gimp_tool_control_init (GimpToolControl *control)
   control->action_value_2         = NULL;
   control->action_value_3         = NULL;
   control->action_value_4         = NULL;
+  control->action_object_1        = NULL;
+  control->action_object_2        = NULL;
 }
 
 static void
@@ -115,6 +117,8 @@ gimp_tool_control_finalize (GObject *object)
   g_free (control->action_value_2);
   g_free (control->action_value_3);
   g_free (control->action_value_4);
+  g_free (control->action_object_1);
+  g_free (control->action_object_2);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -430,14 +434,14 @@ gimp_tool_control_get_toggle_cursor_modifier (GimpToolControl *control)
 
 void
 gimp_tool_control_set_action_value_1 (GimpToolControl *control,
-                                      const gchar     *action_name)
+                                      const gchar     *action_desc)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
 
-  if (action_name != control->action_value_1)
+  if (action_desc != control->action_value_1)
     {
       g_free (control->action_value_1);
-      control->action_value_1 = g_strdup (action_name);
+      control->action_value_1 = g_strdup (action_desc);
     }
 }
 
@@ -451,14 +455,14 @@ gimp_tool_control_get_action_value_1 (GimpToolControl *control)
 
 void
 gimp_tool_control_set_action_value_2 (GimpToolControl *control,
-                                      const gchar     *action_name)
+                                      const gchar     *action_desc)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
 
-  if (action_name != control->action_value_2)
+  if (action_desc != control->action_value_2)
     {
       g_free (control->action_value_2);
-      control->action_value_2 = g_strdup (action_name);
+      control->action_value_2 = g_strdup (action_desc);
     }
 }
 
@@ -472,14 +476,14 @@ gimp_tool_control_get_action_value_2 (GimpToolControl *control)
 
 void
 gimp_tool_control_set_action_value_3 (GimpToolControl *control,
-                                      const gchar     *action_name)
+                                      const gchar     *action_desc)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
 
-  if (action_name != control->action_value_3)
+  if (action_desc != control->action_value_3)
     {
       g_free (control->action_value_3);
-      control->action_value_3 = g_strdup (action_name);
+      control->action_value_3 = g_strdup (action_desc);
     }
 }
 
@@ -493,14 +497,14 @@ gimp_tool_control_get_action_value_3 (GimpToolControl *control)
 
 void
 gimp_tool_control_set_action_value_4 (GimpToolControl *control,
-                                      const gchar     *action_name)
+                                      const gchar     *action_desc)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
 
-  if (action_name != control->action_value_4)
+  if (action_desc != control->action_value_4)
     {
       g_free (control->action_value_4);
-      control->action_value_4 = g_strdup (action_name);
+      control->action_value_4 = g_strdup (action_desc);
     }
 }
 
@@ -511,3 +515,46 @@ gimp_tool_control_get_action_value_4 (GimpToolControl *control)
 
   return control->action_value_4;
 }
+
+void
+gimp_tool_control_set_action_object_1 (GimpToolControl *control,
+                                       const gchar     *action_desc)
+{
+  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+
+  if (action_desc != control->action_object_1)
+    {
+      g_free (control->action_object_1);
+      control->action_object_1 = g_strdup (action_desc);
+    }
+}
+
+const gchar *
+gimp_tool_control_get_action_object_1 (GimpToolControl *control)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), NULL);
+
+  return control->action_object_1;
+}
+
+void
+gimp_tool_control_set_action_object_2 (GimpToolControl *control,
+                                       const gchar     *action_desc)
+{
+  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+
+  if (action_desc != control->action_object_2)
+    {
+      g_free (control->action_object_2);
+      control->action_object_2 = g_strdup (action_desc);
+    }
+}
+
+const gchar *
+gimp_tool_control_get_action_object_2 (GimpToolControl *control)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), NULL);
+
+  return control->action_object_2;
+}
+

@@ -69,6 +69,8 @@ struct _GimpToolControl
   gchar             *action_value_2;
   gchar             *action_value_3;
   gchar             *action_value_4;
+  gchar             *action_object_1;
+  gchar             *action_object_2;
 };
 
 struct _GimpToolControlClass
@@ -152,17 +154,23 @@ void               gimp_tool_control_set_toggle_cursor_modifier (GimpToolControl
                                                                  GimpCursorModifier  cmodifier);
 
 void               gimp_tool_control_set_action_value_1         (GimpToolControl    *control,
-                                                                 const gchar        *action_name);
+                                                                 const gchar        *action_desc);
 const gchar      * gimp_tool_control_get_action_value_1         (GimpToolControl    *control);
 void               gimp_tool_control_set_action_value_2         (GimpToolControl    *control,
-                                                                 const gchar        *action_name);
+                                                                 const gchar        *action_desc);
 const gchar      * gimp_tool_control_get_action_value_2         (GimpToolControl    *control);
 void               gimp_tool_control_set_action_value_3         (GimpToolControl    *control,
-                                                                 const gchar        *action_name);
+                                                                 const gchar        *action_desc);
 const gchar      * gimp_tool_control_get_action_value_3         (GimpToolControl    *control);
 void               gimp_tool_control_set_action_value_4         (GimpToolControl    *control,
-                                                                 const gchar        *action_name);
+                                                                 const gchar        *action_desc);
 const gchar      * gimp_tool_control_get_action_value_4         (GimpToolControl    *control);
+void               gimp_tool_control_set_action_object_1        (GimpToolControl    *control,
+                                                                 const gchar        *action_desc);
+const gchar      * gimp_tool_control_get_action_object_1        (GimpToolControl    *control);
+void               gimp_tool_control_set_action_object_2        (GimpToolControl    *control,
+                                                                 const gchar        *action_desc);
+const gchar      * gimp_tool_control_get_action_object_2        (GimpToolControl    *control);
 
 
 #endif /* __GIMP_TOOL_CONTROL_H__ */

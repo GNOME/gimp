@@ -158,10 +158,13 @@ gimp_blend_tool_init (GimpBlendTool *blend_tool)
 {
   GimpTool *tool = GIMP_TOOL (blend_tool);
 
-  gimp_tool_control_set_scroll_lock    (tool->control, TRUE);
-  gimp_tool_control_set_tool_cursor    (tool->control, GIMP_TOOL_CURSOR_BLEND);
-  gimp_tool_control_set_action_value_1 (tool->control,
-                                        "context/context-opacity-set");
+  gimp_tool_control_set_scroll_lock     (tool->control, TRUE);
+  gimp_tool_control_set_tool_cursor     (tool->control,
+                                         GIMP_TOOL_CURSOR_BLEND);
+  gimp_tool_control_set_action_value_1  (tool->control,
+                                         "context/context-opacity-set");
+  gimp_tool_control_set_action_object_1 (tool->control,
+                                         "context/context-gradient-select-set");
 }
 
 static void

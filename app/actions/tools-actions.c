@@ -364,6 +364,54 @@ static GimpEnumActionEntry tools_value_4_actions[] =
     NULL },
 };
 
+static GimpEnumActionEntry tools_object_1_actions[] =
+{
+  { "tools-object-1-set", GIMP_STOCK_TOOL_OPTIONS,
+    "Select Object 1 by Index", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL },
+  { "tools-object-1-first", GIMP_STOCK_TOOL_OPTIONS,
+    "First Object 1", NULL, NULL,
+    GIMP_ACTION_SELECT_FIRST, FALSE,
+    NULL },
+  { "tools-object-1-last", GIMP_STOCK_TOOL_OPTIONS,
+    "Last Object 1", NULL, NULL,
+    GIMP_ACTION_SELECT_LAST, FALSE,
+    NULL },
+  { "tools-object-1-previous", GIMP_STOCK_TOOL_OPTIONS,
+    "Previous Object 1", NULL, NULL,
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
+    NULL },
+  { "tools-object-1-next", GIMP_STOCK_TOOL_OPTIONS,
+    "Next Object 1", NULL, NULL,
+    GIMP_ACTION_SELECT_NEXT, FALSE,
+    NULL }
+};
+
+static GimpEnumActionEntry tools_object_2_actions[] =
+{
+  { "tools-object-2-set", GIMP_STOCK_TOOL_OPTIONS,
+    "Select Object 2 by Index", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL },
+  { "tools-object-2-first", GIMP_STOCK_TOOL_OPTIONS,
+    "First Object 2", NULL, NULL,
+    GIMP_ACTION_SELECT_FIRST, FALSE,
+    NULL },
+  { "tools-object-2-last", GIMP_STOCK_TOOL_OPTIONS,
+    "Last Object 2", NULL, NULL,
+    GIMP_ACTION_SELECT_LAST, FALSE,
+    NULL },
+  { "tools-object-2-previous", GIMP_STOCK_TOOL_OPTIONS,
+    "Previous Object 2", NULL, NULL,
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
+    NULL },
+  { "tools-object-2-next", GIMP_STOCK_TOOL_OPTIONS,
+    "Next Object 2", NULL, NULL,
+    GIMP_ACTION_SELECT_NEXT, FALSE,
+    NULL }
+};
+
 
 void
 tools_actions_setup (GimpActionGroup *group)
@@ -426,6 +474,15 @@ tools_actions_setup (GimpActionGroup *group)
                                       tools_value_4_actions,
                                       G_N_ELEMENTS (tools_value_4_actions),
                                       G_CALLBACK (tools_value_4_cmd_callback));
+
+  gimp_action_group_add_enum_actions (group,
+                                      tools_object_1_actions,
+                                      G_N_ELEMENTS (tools_object_1_actions),
+                                      G_CALLBACK (tools_object_1_cmd_callback));
+  gimp_action_group_add_enum_actions (group,
+                                      tools_object_2_actions,
+                                      G_N_ELEMENTS (tools_object_2_actions),
+                                      G_CALLBACK (tools_object_2_cmd_callback));
 
   for (list = GIMP_LIST (group->gimp->tool_info_list)->list;
        list;

@@ -389,7 +389,7 @@ action_select_value (GimpActionSelectType  select_type,
       break;
 
     default:
-      if (value >= 0)
+      if ((gint) select_type >= 0)
         value = (gdouble) select_type * (max - min) / 1000.0 + min;
       else
         g_return_val_if_reached (value);
@@ -488,7 +488,10 @@ action_select_object (GimpActionSelectType  select_type,
       break;
 
     default:
-      g_return_val_if_reached (current);
+      if ((gint) select_type >= 0)
+        select_index = (gint) select_type;
+      else
+        g_return_val_if_reached (current);
       break;
     }
 

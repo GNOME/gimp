@@ -44,6 +44,14 @@
 #include "tools-commands.h"
 
 
+/*  local function prototypes  */
+
+static void   tools_activate_enum_action (const gchar *action_desc,
+                                          gint         value);
+
+
+/*  public functions  */
+
 void
 tools_select_cmd_callback (GtkAction   *action,
                            const gchar *value,
@@ -306,42 +314,6 @@ tools_ink_blob_angle_cmd_callback (GtkAction *action,
     }
 }
 
-static void
-tools_activate_value_action (const gchar *action_desc,
-                             gint         value)
-{
-  gchar *group_name;
-  gchar *action_name;
-
-  group_name  = g_strdup (action_desc);
-  action_name = strchr (group_name, '/');
-
-  if (action_name)
-    {
-      GList     *managers;
-      GtkAction *action;
-
-      *action_name++ = '\0';
-
-      managers = gimp_ui_managers_from_name ("<Image>");
-
-      action = gimp_ui_manager_find_action (managers->data,
-                                            group_name, action_name);
-
-      if (GIMP_IS_ENUM_ACTION (action))
-        {
-          gint old_value;
-
-          old_value = GIMP_ENUM_ACTION (action)->value;
-          GIMP_ENUM_ACTION (action)->value = value;
-          gtk_action_activate (action);
-          GIMP_ENUM_ACTION (action)->value = old_value;
-        }
-    }
-
-  g_free (group_name);
-}
-
 void
 tools_value_1_cmd_callback (GtkAction *action,
                             gint       value,
@@ -360,7 +332,7 @@ tools_value_1_cmd_callback (GtkAction *action,
       action_desc = gimp_tool_control_get_action_value_1 (tool->control);
 
       if (action_desc)
-        tools_activate_value_action (action_desc, value);
+        tools_activate_enum_action (action_desc, value);
     }
 }
 
@@ -382,7 +354,7 @@ tools_value_2_cmd_callback (GtkAction *action,
       action_desc = gimp_tool_control_get_action_value_2 (tool->control);
 
       if (action_desc)
-        tools_activate_value_action (action_desc, value);
+        tools_activate_enum_action (action_desc, value);
     }
 }
 
@@ -404,7 +376,7 @@ tools_value_3_cmd_callback (GtkAction *action,
       action_desc = gimp_tool_control_get_action_value_3 (tool->control);
 
       if (action_desc)
-        tools_activate_value_action (action_desc, value);
+        tools_activate_enum_action (action_desc, value);
     }
 }
 
@@ -426,6 +398,90 @@ tools_value_4_cmd_callback (GtkAction *action,
       action_desc = gimp_tool_control_get_action_value_4 (tool->control);
 
       if (action_desc)
-        tools_activate_value_action (action_desc, value);
+        tools_activate_enum_action (action_desc, value);
     }
+}
+
+void
+tools_object_1_cmd_callback (GtkAction *action,
+                             gint       value,
+                             gpointer   data)
+{
+  GimpContext *context;
+  GimpTool    *tool;
+  return_if_no_context (context, data);
+
+  tool = tool_manager_get_active (context->gimp);
+
+  if (tool)
+    {
+      const gchar *action_desc;
+
+      action_desc = gimp_tool_control_get_action_object_1 (tool->control);
+
+      if (action_desc)
+        tools_activate_enum_action (action_desc, value);
+    }
+}
+
+void
+tools_object_2_cmd_callback (GtkAction *action,
+                             gint       value,
+                             gpointer   data)
+{
+  GimpContext *context;
+  GimpTool    *tool;
+  return_if_no_context (context, data);
+
+  tool = tool_manager_get_active (context->gimp);
+
+  if (tool)
+    {
+      const gchar *action_desc;
+
+      action_desc = gimp_tool_control_get_action_object_2 (tool->control);
+
+      if (action_desc)
+        tools_activate_enum_action (action_desc, value);
+    }
+}
+
+
+/*  private functions  */
+
+static void
+tools_activate_enum_action (const gchar *action_desc,
+                            gint         value)
+{
+  gchar *group_name;
+  gchar *action_name;
+
+  group_name  = g_strdup (action_desc);
+  action_name = strchr (group_name, '/');
+
+  if (action_name)
+    {
+      GList     *managers;
+      GtkAction *action;
+
+      *action_name++ = '\0';
+
+      managers = gimp_ui_managers_from_name ("<Image>");
+
+      action = gimp_ui_manager_find_action (managers->data,
+                                            group_name, action_name);
+
+      if (GIMP_IS_ENUM_ACTION (action) &&
+          GIMP_ENUM_ACTION (action)->value_variable)
+        {
+          gint old_value;
+
+          old_value = GIMP_ENUM_ACTION (action)->value;
+          GIMP_ENUM_ACTION (action)->value = value;
+          gtk_action_activate (action);
+          GIMP_ENUM_ACTION (action)->value = old_value;
+        }
+    }
+
+  g_free (group_name);
 }

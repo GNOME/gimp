@@ -65,5 +65,12 @@ void   tools_value_4_cmd_callback              (GtkAction   *action,
                                                 gint         value,
                                                 gpointer     data);
 
+void   tools_object_1_cmd_callback             (GtkAction   *action,
+                                                gint         value,
+                                                gpointer     data);
+void   tools_object_2_cmd_callback             (GtkAction   *action,
+                                                gint         value,
+                                                gpointer     data);
+
 
 #endif /* __TOOLS_COMMANDS_H__ */

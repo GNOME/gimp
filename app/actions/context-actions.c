@@ -318,6 +318,10 @@ static GimpEnumActionEntry context_paint_mode_actions[] =
 
 static GimpEnumActionEntry context_tool_select_actions[] =
 {
+  { "context-tool-select-set", GIMP_STOCK_TOOLS,
+    "Select Tool by Index", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL },
   { "context-tool-select-first", GIMP_STOCK_TOOLS,
     "First Tool", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST, FALSE,
@@ -338,6 +342,10 @@ static GimpEnumActionEntry context_tool_select_actions[] =
 
 static GimpEnumActionEntry context_brush_select_actions[] =
 {
+  { "context-brush-select-set", GIMP_STOCK_BRUSH,
+    "Select Brush by Index", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL },
   { "context-brush-select-first", GIMP_STOCK_BRUSH,
     "First Brush", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST, FALSE,
@@ -358,6 +366,10 @@ static GimpEnumActionEntry context_brush_select_actions[] =
 
 static GimpEnumActionEntry context_pattern_select_actions[] =
 {
+  { "context-pattern-select-set", GIMP_STOCK_PATTERN,
+    "Select Pattern by Index", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL },
   { "context-pattern-select-first", GIMP_STOCK_PATTERN,
     "First Pattern", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST, FALSE,
@@ -378,6 +390,10 @@ static GimpEnumActionEntry context_pattern_select_actions[] =
 
 static GimpEnumActionEntry context_palette_select_actions[] =
 {
+  { "context-palette-select-set", GIMP_STOCK_PALETTE,
+    "Select Palette by Index", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL },
   { "context-palette-select-first", GIMP_STOCK_PALETTE,
     "First Palette", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST, FALSE,
@@ -398,6 +414,10 @@ static GimpEnumActionEntry context_palette_select_actions[] =
 
 static GimpEnumActionEntry context_gradient_select_actions[] =
 {
+  { "context-gradient-select-set", GIMP_STOCK_GRADIENT,
+    "Select Gradient by Index", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL },
   { "context-gradient-select-first", GIMP_STOCK_GRADIENT,
     "First Gradient", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST, FALSE,
@@ -418,6 +438,10 @@ static GimpEnumActionEntry context_gradient_select_actions[] =
 
 static GimpEnumActionEntry context_font_select_actions[] =
 {
+  { "context-font-select-set", GIMP_STOCK_FONT,
+    "Select Font by Index", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL },
   { "context-font-select-first", GIMP_STOCK_FONT,
     "First Font", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST, FALSE,
