@@ -209,18 +209,17 @@ gimp_container_menu_impl_remove_item (GimpContainerMenu *menu,
 
   if (menu_item)
     {
+      gboolean active;
+
+      active = (gtk_menu_get_active (GTK_MENU (menu)) == menu_item);
+
       if (g_list_length (GTK_MENU_SHELL (menu)->children) == 2)
 	gtk_widget_show (GIMP_CONTAINER_MENU_IMPL (menu)->empty_item);
 
       gtk_container_remove (GTK_CONTAINER (menu), menu_item);
 
-      if (g_list_length (GTK_MENU_SHELL (menu)->children) == 1)
-	{
-	  gtk_widget_show (GIMP_CONTAINER_MENU_IMPL (menu)->empty_item);
-	}
-
-      /* FIXME: this is due to gtkoptionmenu brokenness */
-      gimp_container_menu_impl_set_history (menu, 0);
+      if (active)
+	gimp_container_menu_impl_set_history (menu, 0);
     }
 }
 
@@ -231,7 +230,6 @@ gimp_container_menu_impl_reorder_item (GimpContainerMenu *menu,
 				       gpointer           insert_data)
 {
   GtkWidget *menu_item;
-  gboolean   active;
 
   if (insert_data)
     menu_item = GTK_WIDGET (insert_data);
@@ -240,6 +238,8 @@ gimp_container_menu_impl_reorder_item (GimpContainerMenu *menu,
 
   if (menu_item)
     {
+      gboolean   active;
+
       active = (gtk_menu_get_active (GTK_MENU (menu)) == menu_item);
 
       gtk_menu_reorder_child (GTK_MENU (menu),

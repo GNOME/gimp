@@ -1,3 +1,14 @@
+2001-04-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainermenuimpl.c: only work around option
+	menu reference problems if the removed item was the active one.
+
+	* app/widgets/gimpimagedock.c: don't try to avoid a recursive
+	signal emission in gimp_image_dock_image_changed() but work around
+	it. This makes the image menu work finally.
+
+	* app/gui/dialogs-constructors.c: removed debugging output.
+
 2001-04-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpobject.c: free the object's name on destruction.

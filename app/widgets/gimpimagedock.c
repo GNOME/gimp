@@ -216,19 +216,22 @@ gimp_image_dock_image_changed (GimpContext *context,
 
   image_dock = GIMP_IMAGE_DOCK (dock);
 
-  g_print ("%p: got image %s\n",
-	   context, gimage ? GIMP_OBJECT (gimage)->name : "NULL");
-
-  if (! gimage && image_dock->image_container->num_children)
+  if (! gimage && image_dock->image_container->num_children > 0)
     {
       gimage = GIMP_IMAGE (gimp_container_get_child_by_index (image_dock->image_container, 0));
 
-      gtk_signal_emit_stop_by_name (GTK_OBJECT (context), "image_changed");
+      if (gimage)
+	{
+	  /*  this invokes this function recursively but we don't enter
+	   *  the if() branch the second time
+	   */
+	  gimp_context_set_image (dock->context, gimage);
 
-      g_print ("%p: set image %s\n",
-	       context, gimage ? GIMP_OBJECT (gimage)->name : "NULL");
-
-      gimp_context_set_image (dock->context, gimage);
+	  /*  stop the emission of the original signal (the emission of
+	   *  the recursive signal is finished)
+	   */
+	  gtk_signal_emit_stop_by_name (GTK_OBJECT (context), "image_changed");
+	}
     }
 }
 

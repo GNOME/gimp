@@ -886,8 +886,5 @@ dialogs_drawable_view_image_changed (GimpContext          *context,
 				     GimpImage            *gimage,
 				     GimpDrawableListView *view)
 {
-  g_print ("%p: image changed %s\n",
-	   context, gimage ? GIMP_OBJECT (gimage)->name : "NULL");
-
   gimp_drawable_list_view_set_image (view, gimage);
 }
