@@ -1,3 +1,8 @@
+Sun Oct  3 23:35:20 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* libgimp/gimpexport.c: if there aren't any changes needed,
+	the fall through should succeed
+
 Sun Oct  3 19:21:00 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* configure.in
