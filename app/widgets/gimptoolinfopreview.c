@@ -115,14 +115,10 @@ gimp_tool_info_preview_render (GimpPreview *preview)
   GimpToolInfo *tool_info;
   TempBuf      *temp_buf;
   TempBuf      *render_buf;
-  guchar        color[3];
   gint          width;
   gint          height;
   gint          tool_info_width;
   gint          tool_info_height;
-  gint          x, y;
-  guchar       *src;
-  guchar       *dest;
   gboolean      new_buf = FALSE;
 
   widget = GTK_WIDGET (preview);
@@ -147,43 +143,70 @@ gimp_tool_info_preview_render (GimpPreview *preview)
       new_buf = TRUE;
     }
 
-  color[0] = widget->style->bg[widget->state].red   >> 8;
-  color[1] = widget->style->bg[widget->state].green >> 8;
-  color[2] = widget->style->bg[widget->state].blue  >> 8;
-
-  render_buf = temp_buf_new (width, height, 3, 0, 0, color);
-
-  src  = temp_buf_data (temp_buf);
-  dest = temp_buf_data (render_buf);
-
-  for (y = 0; y < height; y++)
+  switch (temp_buf->bytes)
     {
-      for (x = 0; x < width; x++)
-	{
-	  if (src[3] != 0)
-	    {
-	      *dest++ = *src++;
-	      *dest++ = *src++;
-	      *dest++ = *src++;
+    case 3:
+      render_buf = temp_buf;
+      break;
 
-	      src++;
-	    }
-	  else
-	    {
-	      src  += 4;
-	      dest += 3;
-	    }
-	}
+    case 4:
+      {
+        gint    x, y;
+        guchar *src;
+        guchar *dest;
+        guchar  color[3];
+        
+        color[0] = widget->style->bg[widget->state].red   >> 8;
+        color[1] = widget->style->bg[widget->state].green >> 8;
+        color[2] = widget->style->bg[widget->state].blue  >> 8;
+        
+        render_buf = temp_buf_new (width, height, 3, 0, 0, color);
+        
+        src  = temp_buf_data (temp_buf);
+        dest = temp_buf_data (render_buf);
+        
+        for (y = 0; y < height; y++)
+          {
+            for (x = 0; x < width; x++)
+              {
+                switch (src[3])
+                  {
+                  case 0:
+                    break;
+                  case 255:
+                    dest[0] = src[0];
+                    dest[1] = src[1];
+                    dest[2] = src[2];
+                    break;
+                  default:
+                    {
+                      guint16 t = 255 - src[3];
+                      dest[0] = (src[0] * src[3] + dest[0] * t) >> 8;
+                      dest[1] = (src[1] * src[3] + dest[1] * t) >> 8;
+                      dest[2] = (src[2] * src[3] + dest[2] * t) >> 8;
+                    }
+                    break;
+                  }
+
+                src  += 4;
+                dest += 3;
+              }
+          }
+      }
+      break;
+
+    default:
+      render_buf = 0;
+      g_assert_not_reached ();
+      break;
     }
 
-  if (new_buf)
-    temp_buf_free (temp_buf);
-
-  gimp_preview_render_and_flush (preview,
-                                 render_buf,
-                                 -1);
-
+  gimp_preview_render_and_flush (preview, render_buf, -1);
+    
   temp_buf_free (render_buf);
+
+  if (new_buf && temp_buf->bytes != 3)
+    temp_buf_free (temp_buf);
 }
 
 static GtkWidget *

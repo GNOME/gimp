@@ -2274,8 +2274,8 @@ gimp_display_shell_close_warning_dialog (GimpDisplayShell *shell,
                                          const gchar      *image_name)
 {
   GtkWidget *mbox;
-  gchar     *title_buf;
-  gchar     *warning_buf;
+  gchar     *title;
+  gchar     *warning;
 
   if (shell->warning_dialog)
     {
@@ -2283,23 +2283,24 @@ gimp_display_shell_close_warning_dialog (GimpDisplayShell *shell,
       return;
     }
 
-  warning_buf = g_strdup_printf (_("Changes were made to %s.\nClose anyway?"), 
-                                 image_name);
-  title_buf = g_strdup_printf (_("Close %s?"), image_name);
+  title = g_strdup_printf (_("Close %s?"), image_name);
+
+  warning = g_strdup_printf (_("Changes were made to %s.\n"
+                               "Close anyway?"), image_name);
 
   shell->warning_dialog = mbox =
-    gimp_query_boolean_box (title_buf,
+    gimp_query_boolean_box (title,
 			    gimp_standard_help_func,
 			    "dialogs/really_close.html",
-			    FALSE,
-			    warning_buf,
+			    GTK_STOCK_DIALOG_QUESTION,
+			    warning,
 			    GTK_STOCK_CLOSE, GTK_STOCK_CANCEL,
 			    NULL, NULL,
 			    gimp_display_shell_close_warning_callback,
 			    shell);
 
-  g_free (title_buf);
-  g_free (warning_buf);
+  g_free (title);
+  g_free (warning);
 
   gtk_widget_show (mbox);
 }

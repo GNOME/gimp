@@ -167,12 +167,11 @@ temp_buf_new_from_pixbuf (GdkPixbuf *pixbuf,
   TempBuf   *temp_buf;
   gint       pixbuf_width;
   gint       pixbuf_height;
+  gint       bytes;
   guchar     transparent[4] = { 0, 0, 0, 0 };
   guchar    *p_data;
   guchar    *t_data;
-  guchar    *p;
-  guchar    *t;
-  gint       x, y;
+  gint       y;
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
 
@@ -194,26 +193,19 @@ temp_buf_new_from_pixbuf (GdkPixbuf *pixbuf,
       g_object_ref (G_OBJECT (pixbuf));
     }
 
-  temp_buf = temp_buf_new (width, height, 4, 0, 0, transparent);
+  bytes = gdk_pixbuf_get_n_channels (pixbuf);
+
+  temp_buf = temp_buf_new (width, height, bytes, 0, 0, transparent);
 
   p_data = gdk_pixbuf_get_pixels (pixbuf);
   t_data = temp_buf_data (temp_buf);
 
   for (y = 0; y < height; y++)
     {
-      p = p_data;
-      t = t_data;
-
-      for (x = 0; x < width; x++)
-	{
-	  *t++ = *p++;
-	  *t++ = *p++;
-	  *t++ = *p++;
-	  *t++ = *p++;
-	}
+      memcpy (t_data, p_data, width * bytes);
 
       p_data += gdk_pixbuf_get_rowstride (pixbuf);
-      t_data += width * 4;
+      t_data += width * bytes;
     }
 
   g_object_unref (G_OBJECT (pixbuf));

@@ -1,3 +1,14 @@
+2002-03-02  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimptoolinfo.c
+	* app/widgets/gimptoolinfopreview.c: allow RGB previews and do proper
+	blending for RGBA. This is wasted effort since we will change the
+	GimpPreview system anyway, but I couldn't stand the awful look any
+	longer.
+	
+	* app/display/gimpdisplayshell.c
+	* app/gui/file-save-dialog.c: added linebreaks to messages.
+
 2002-03-01  Michael Natterer  <mitch@gimp.org>
 
 	* themes/Default/images/preferences/Makefile.am

@@ -420,7 +420,8 @@ file_overwrite (const gchar *filename,
   overwrite_data->full_filename = g_strdup (filename);
   overwrite_data->raw_filename  = g_strdup (raw_filename);
 
-  overwrite_text = g_strdup_printf (_("%s exists. Overwrite?"), filename);
+  overwrite_text = g_strdup_printf (_("File '%s' exists.\n"
+                                      "Overwrite it?"), filename);
 
   query_box = gimp_query_boolean_box (_("File Exists!"),
 				      gimp_standard_help_func,
