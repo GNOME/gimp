@@ -365,14 +365,12 @@ gimp_composite_init (gboolean  be_verbose,
   if (!use_cpu_accel)
     gimp_composite_options.bits |=  GIMP_COMPOSITE_OPTION_NOEXTENSIONS;
 
-#ifdef GIMP_UNSTABLE
   if (be_verbose)
-    {
-      g_printerr ("gimp_composite: use=%s, verbose=%s\n",
-                  (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_USE)     ? "yes" : "no",
-                  (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_VERBOSE) ? "yes" : "no");
-    }
-#endif
+    g_printerr ("gimp_composite: use=%s, verbose=%s\n",
+                (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_USE)     ?
+                "yes" : "no",
+                (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_VERBOSE) ?
+                "yes" : "no");
 
   gimp_composite_generic_install ();
 
@@ -402,18 +400,14 @@ gimp_composite_init (gboolean  be_verbose,
       gboolean can_use_altivec = gimp_composite_altivec_install ();
       gboolean can_use_vis     = gimp_composite_vis_install ();
 
-#ifdef GIMP_UNSTABLE
       if (be_verbose)
-        {
-          g_printerr ("Processor instruction sets: "
-                      "%cmmx %csse %csse2 %c3dnow %caltivec %cvis\n",
-                      can_use_mmx     ? '+' : '-',
-                      can_use_sse     ? '+' : '-',
-                      can_use_sse2    ? '+' : '-',
-                      can_use_3dnow   ? '+' : '-',
-                      can_use_altivec ? '+' : '-',
-                      can_use_vis     ? '+' : '-');
-        }
-#endif
+        g_printerr ("Processor instruction sets: "
+                    "%cmmx %csse %csse2 %c3dnow %caltivec %cvis\n",
+                    can_use_mmx     ? '+' : '-',
+                    can_use_sse     ? '+' : '-',
+                    can_use_sse2    ? '+' : '-',
+                    can_use_3dnow   ? '+' : '-',
+                    can_use_altivec ? '+' : '-',
+                    can_use_vis     ? '+' : '-');
     }
 }

@@ -1,8 +1,14 @@
+2004-07-20  Sven Neumann  <sven@gimp.org>
+
+	* app/composite/gimp-composite.c (gimp_composite_init): now that
+	the output depends on --verbose, enable it for stable releases also.
+
 2004-07-20  Shlomi Fish  <shlomif@iglu.org.il>
 
 	* plug-ins/gimpressionist/presets.c: fixed the incorrect strings
 	for input and output of the preset's fields. (a relic of an
 	irresponsible search-and-replace script).
+
 	* plug-ins/gimpressionist/: normalized the identifiers of 
 	orientmap.c.
 
@@ -40,7 +46,6 @@
 	* app/composite/gimp-composite-vis.[ch]
 	* app/composite/gimp-composite-vis-test.c:
 	Regenerated sources via make-installer.py
-	
 
 2004-07-20  Sven Neumann  <sven@gimp.org>
 
