@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "POT-Creation-Date: 2002-11-10 12:03+0100\n"
-"PO-Revision-Date: 2002-11-15 16:21+0100\n"
+"PO-Revision-Date: 2002-11-17 23:40+0100\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -889,7 +889,7 @@ msgstr "Använd/använd inte realtidsförhandsgranskning"
 
 #: plug-ins/MapObject/mapobject_main.c:203
 msgid "<Image>/Filters/Map/Map Object..."
-msgstr "<Image>/Filter/Karta/Mappa objekt..."
+msgstr "<Image>/Filter/Mappa/Mappa objekt..."
 
 #: plug-ins/MapObject/mapobject_ui.c:270
 #: plug-ins/MapObject/mapobject_ui.c:1379
@@ -2301,7 +2301,7 @@ msgstr "256 (nonsens?)"
 
 #: plug-ins/common/bumpmap.c:371
 msgid "<Image>/Filters/Map/Bump Map..."
-msgstr "<Image>/Filters/Mappa/Bumpmap..."
+msgstr "<Image>/Filter/Mappa/Bumpmap..."
 
 #: plug-ins/common/bumpmap.c:523
 msgid "Bump-mapping..."
@@ -3772,7 +3772,7 @@ msgstr "GIF-inställningar"
 
 #: plug-ins/common/gif.c:1248
 msgid "Interlace"
-msgstr "Interlace"
+msgstr "Sammanflätning"
 
 #: plug-ins/common/gif.c:1264
 msgid "GIF Comment:"
@@ -4782,9 +4782,8 @@ msgid "_Input SPI:"
 msgstr ""
 
 #: plug-ins/common/newsprint.c:1295
-#, fuzzy
 msgid "O_utput LPI:"
-msgstr "Utdatatyp:"
+msgstr "Ustkrift LPI:"
 
 #: plug-ins/common/newsprint.c:1305
 msgid "C_ell Size:"
@@ -4834,11 +4833,11 @@ msgstr "Ö_versampla"
 
 #: plug-ins/common/nlfilt.c:147
 msgid "<Image>/Filters/Enhance/NL Filter..."
-msgstr ""
+msgstr "<Image>/Filter/Förbättra/NL-filter..."
 
 #: plug-ins/common/nlfilt.c:267 plug-ins/common/nlfilt.c:353
 msgid "NL Filter"
-msgstr ""
+msgstr "NL-filter"
 
 #: plug-ins/common/nlfilt.c:383
 msgid "Filter"
@@ -4846,7 +4845,7 @@ msgstr "Filtrera"
 
 #: plug-ins/common/nlfilt.c:387
 msgid "_Alpha Trimmed Mean"
-msgstr ""
+msgstr "_Alfa-trimmat medelvärde"
 
 #: plug-ins/common/nlfilt.c:389
 msgid "Op_timal Estimation"
@@ -4962,7 +4961,7 @@ msgstr "_Mediastorlek:"
 
 #: plug-ins/common/papertile.c:245
 msgid "Paper Tile"
-msgstr ""
+msgstr "Pappersplatta"
 
 #: plug-ins/common/papertile.c:271
 msgid "Division"
@@ -4970,7 +4969,7 @@ msgstr "Delning"
 
 #: plug-ins/common/papertile.c:311
 msgid "Fractional Pixels"
-msgstr ""
+msgstr "Delade bildpunkter"
 
 #: plug-ins/common/papertile.c:316
 msgid "_Background"
@@ -5030,7 +5029,7 @@ msgstr "Bakgrundsfärg"
 
 #: plug-ins/common/papertile.c:549
 msgid "Paper Tile..."
-msgstr ""
+msgstr "Pappersplattor..."
 
 #: plug-ins/common/papertile.c:835
 msgid "September 31, 1999"
@@ -5038,7 +5037,7 @@ msgstr "31:a September, 1999"
 
 #: plug-ins/common/papertile.c:836
 msgid "<Image>/Filters/Map/Paper Tile..."
-msgstr ""
+msgstr "<Image>/Filter/Mappa/Pappersplattor..."
 
 #: plug-ins/common/pat.c:447
 msgid "Save as Pattern"
@@ -5100,7 +5099,7 @@ msgstr "Temporär procedur"
 
 #: plug-ins/common/plugindetails.c:108
 msgid "<Toolbox>/Xtns/Plugin Details..."
-msgstr ""
+msgstr "<Toolbox>/Xtns/Plugindetaljer..."
 
 #: plug-ins/common/plugindetails.c:222
 msgid "Details <<"
@@ -5149,7 +5148,7 @@ msgstr "Beskrivningar för insticksmoduler"
 
 #: plug-ins/common/plugindetails.c:1007
 msgid "Search by Name"
-msgstr ""
+msgstr "Sök efter namn"
 
 #. list : list in a scrolled_win
 #: plug-ins/common/plugindetails.c:1039
@@ -5158,7 +5157,7 @@ msgstr "Namn"
 
 #: plug-ins/common/plugindetails.c:1040 plug-ins/common/plugindetails.c:1068
 msgid "Ins Date"
-msgstr ""
+msgstr "Ins. datum"
 
 #: plug-ins/common/plugindetails.c:1041
 msgid "Menu Path"
@@ -5230,7 +5229,7 @@ msgstr "Spara som PNG"
 
 #: plug-ins/common/png.c:1222
 msgid "_Interlacing (Adam7)"
-msgstr ""
+msgstr "_Sammanflätning (Adam7)"
 
 #: plug-ins/common/png.c:1232
 msgid "Save _background color"
@@ -5265,7 +5264,7 @@ msgstr "PNM: kan ej öppna %s."
 #: plug-ins/common/pnm.c:472 plug-ins/common/pnm.c:481
 #: plug-ins/common/pnm.c:556 plug-ins/common/pnm.c:612
 msgid "PNM: Premature end of file."
-msgstr ""
+msgstr "PNM: oväntat slut på filen"
 
 #: plug-ins/common/pnm.c:446
 msgid "PNM: Invalid file."
@@ -5336,6 +5335,7 @@ msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
 msgstr ""
+"Om vald börjar mappningen på höger sida istället för at börja på vänster sida."
 
 #: plug-ins/common/polar.c:1014
 msgid "Map from _Top"
@@ -5410,12 +5410,12 @@ msgstr "Sidor:"
 
 #: plug-ins/common/ps.c:2702
 msgid "Try Bounding Box"
-msgstr ""
+msgstr "Prova begränsningsram"
 
 #. Colouring
 #: plug-ins/common/ps.c:2715
 msgid "Coloring"
-msgstr ""
+msgstr "Färgsättning"
 
 #: plug-ins/common/ps.c:2719
 msgid "B/W"
@@ -5472,6 +5472,8 @@ msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr ""
+"När vald kommer bilden skalas till att passa den givna storleken utan att "
+"ändra proportionerna"
 
 #. Unit
 #: plug-ins/common/ps.c:2903
@@ -5497,7 +5499,7 @@ msgstr "PostScript Level 2"
 
 #: plug-ins/common/ps.c:2956
 msgid "Encapsulated PostScript"
-msgstr ""
+msgstr "Enkapsulerad Postscript"
 
 #: plug-ins/common/ps.c:2986
 msgid "Preview Size:"
@@ -5526,27 +5528,27 @@ msgstr "LZ77"
 
 #: plug-ins/common/randomize.c:107
 msgid "Random Hurl 1.7"
-msgstr ""
+msgstr "Slumpsläng 1.7"
 
 #: plug-ins/common/randomize.c:108
 msgid "Random Pick 1.7"
-msgstr ""
+msgstr "Slumppeta 1.7"
 
 #: plug-ins/common/randomize.c:109
 msgid "Random Slur 1.7"
-msgstr ""
+msgstr "Slumpsluddra 1.7"
 
 #: plug-ins/common/randomize.c:239
 msgid "<Image>/Filters/Noise/Hurl..."
-msgstr ""
+msgstr "<Image>/Filter/Brus/Släng..."
 
 #: plug-ins/common/randomize.c:251
 msgid "<Image>/Filters/Noise/Pick..."
-msgstr ""
+msgstr "<Image>/Filter/Brus/Peta..."
 
 #: plug-ins/common/randomize.c:263
 msgid "<Image>/Filters/Noise/Slur..."
-msgstr ""
+msgstr "<Image>/Filter/Brus/Sluddra..."
 
 #: plug-ins/common/randomize.c:748
 msgid "R_andomization (%):"
@@ -5636,15 +5638,15 @@ msgstr "Roterar..."
 
 #: plug-ins/common/sample_colorize.c:309
 msgid "<Image>/Filters/Colors/Map/Sample Colorize..."
-msgstr ""
+msgstr "<Image>/Filter/Färger/Karta/Sampelfärglägg..."
 
 #: plug-ins/common/sample_colorize.c:1363
 msgid "Sample Colorize"
-msgstr ""
+msgstr "Sampelfärglägg"
 
 #: plug-ins/common/sample_colorize.c:1371
 msgid "Get Sample Colors"
-msgstr ""
+msgstr "Hämta sampelfärger"
 
 #. gtk_container_set_border_width (GTK_CONTAINER (box2), 5);
 #: plug-ins/common/sample_colorize.c:1377
@@ -5691,21 +5693,21 @@ msgstr "Visa färg"
 
 #: plug-ins/common/sample_colorize.c:1619
 msgid "In Level:"
-msgstr ""
+msgstr "Innivå:"
 
 #: plug-ins/common/sample_colorize.c:1669
 msgid "Out Level:"
-msgstr ""
+msgstr "Utnivå:"
 
 #. check button
 #: plug-ins/common/sample_colorize.c:1709
 msgid "Hold Intensity"
-msgstr ""
+msgstr "Behåll intensitet"
 
 #. check button
 #: plug-ins/common/sample_colorize.c:1720
 msgid "Original Intensity"
-msgstr ""
+msgstr "Ursprunglig intensitet"
 
 #. check button
 #: plug-ins/common/sample_colorize.c:1738
@@ -5715,15 +5717,15 @@ msgstr "Använd delfärger"
 #. check button
 #: plug-ins/common/sample_colorize.c:1749
 msgid "Smooth Samplecolors"
-msgstr ""
+msgstr "Utjämna sampelfärger"
 
 #: plug-ins/common/sample_colorize.c:2749
 msgid "Sample Analyze..."
-msgstr ""
+msgstr "Analysera sampel..."
 
 #: plug-ins/common/sample_colorize.c:3114
 msgid "Remap Colorized..."
-msgstr ""
+msgstr "Mappa om färgsättningen..."
 
 #: plug-ins/common/scatter_hsv.c:148
 msgid "<Image>/Filters/Noise/Scatter HSV..."
@@ -6085,13 +6087,12 @@ msgid "Adjust the Luminosity Threshold"
 msgstr "Justera tröskelvärdet för luminans"
 
 #: plug-ins/common/sparkle.c:394
-#, fuzzy
 msgid "F_lare Intensity:"
-msgstr "Intensitet"
+msgstr "Överstrålningsintensitet:"
 
 #: plug-ins/common/sparkle.c:397
 msgid "Adjust the Flare Intensity"
-msgstr ""
+msgstr "Justera överstrålningsintensiteten"
 
 #: plug-ins/common/sparkle.c:404
 msgid "_Spike Length:"
@@ -6338,12 +6339,11 @@ msgstr "_RLE komprimeringsnivå"
 #. origin
 #: plug-ins/common/tga.c:1215
 msgid "Or_igin at bottom left"
-msgstr ""
+msgstr "Ur_sprung från nere till vänster"
 
 #: plug-ins/common/threshold_alpha.c:105
-#, fuzzy
 msgid "<Image>/Layer/Alpha/Threshold Alpha..."
-msgstr "<Image>/Lager/Justera synliga lager..."
+msgstr "<Image>/Lager/Tröskla alfa..."
 
 #: plug-ins/common/threshold_alpha.c:148
 msgid "The layer preserves transparency."
@@ -6355,11 +6355,11 @@ msgstr "RGBA/GRAYA rityta är inte vald."
 
 #: plug-ins/common/threshold_alpha.c:223
 msgid "Threshold Alpha: Coloring Transparency..."
-msgstr ""
+msgstr "Tröskla alfa: färgar transparens..."
 
 #: plug-ins/common/threshold_alpha.c:267
 msgid "Threshold Alpha"
-msgstr ""
+msgstr "Tröskla alfa"
 
 #: plug-ins/common/threshold_alpha.c:295
 msgid "Threshold:"
@@ -6396,11 +6396,11 @@ msgstr "JPEG"
 
 #: plug-ins/common/tile.c:127
 msgid "<Image>/Filters/Map/Tile..."
-msgstr ""
+msgstr "<Image>/Filter/Mappa/Plattor..."
 
 #: plug-ins/common/tile.c:206 plug-ins/common/tileit.c:340
 msgid "Tiling..."
-msgstr ""
+msgstr "Plattlägger..."
 
 # Osäker!
 #: plug-ins/common/tile.c:399
@@ -6410,7 +6410,7 @@ msgstr "Plattlägg"
 #. parameter settings
 #: plug-ins/common/tile.c:416
 msgid "Tile to New Size"
-msgstr ""
+msgstr "Plattlägg till ny storlek"
 
 #: plug-ins/common/tile.c:442
 msgid "C_reate New Image"
@@ -6418,7 +6418,7 @@ msgstr "S_kapa ny bild"
 
 #: plug-ins/common/tileit.c:238
 msgid "<Image>/Filters/Map/Small Tiles..."
-msgstr ""
+msgstr "<Image>/Filter/Mappa/Små plattor..."
 
 #. Get the preview image
 #. Start buildng the dialog up
@@ -6465,9 +6465,8 @@ msgstr "O_pacitet:"
 
 #. Lower frame saying howmany segments
 #: plug-ins/common/tileit.c:624
-#, fuzzy
 msgid "Segment Setting"
-msgstr "Parameterinställningar"
+msgstr "Segmentinställning"
 
 #: plug-ins/common/tiler.c:71
 msgid "<Image>/Filters/Map/Make Seamless"
@@ -6752,17 +6751,14 @@ msgid "<Image>/Filters/Distorts/Value Propagate..."
 msgstr "<Image>/Filter/Störningar/Sprid värden..."
 
 #: plug-ins/common/vpropagate.c:261
-#, fuzzy
 msgid "<Image>/Filters/Generic/Erode"
 msgstr "<Image>/Filter/Allmänna/Erodera..."
 
 #: plug-ins/common/vpropagate.c:273
-#, fuzzy
 msgid "<Image>/Filters/Generic/Dilate"
 msgstr "<Image>/Filter/Allmänna/Vidga..."
 
 #: plug-ins/common/vpropagate.c:463
-#, fuzzy
 msgid "Value propagating..."
 msgstr "Sprider värden..."
 
@@ -7062,14 +7058,12 @@ msgid "Edge Affected"
 msgstr "Påverkad kant"
 
 #: plug-ins/common/wind.c:1121
-#, fuzzy
 msgid "L_eading"
-msgstr "Laddar %s:"
+msgstr "F_ramkant"
 
 #: plug-ins/common/wind.c:1124
-#, fuzzy
 msgid "Tr_ailing"
-msgstr "Skalning"
+msgstr "B_akkant"
 
 # src/dialogs.c:502 src/dialogs.c:600
 #: plug-ins/common/wind.c:1127
@@ -7458,7 +7452,6 @@ msgid "Edit Flame"
 msgstr "Redigera Flame"
 
 #: plug-ins/flame/flame.c:647
-#, fuzzy
 msgid "Directions"
 msgstr "Riktningar"
 
@@ -7556,9 +7549,8 @@ msgid "_Zoom:"
 msgstr "_Zooma:"
 
 #: plug-ins/fp/fp.c:92
-#, fuzzy
 msgid "<Image>/Layer/Colors/Filter Pack..."
-msgstr "<Image>/Filter/Färger/Filterpack..."
+msgstr "<Image>/Lager/Färger/Filterpack..."
 
 #: plug-ins/fp/fp.c:127
 msgid "Convert the image to RGB first!"
@@ -7634,13 +7626,12 @@ msgid "Value Variations"
 msgstr "Värdevariation"
 
 #: plug-ins/fp/fp_gtk.c:401
-#, fuzzy
 msgid "Saturation Variations"
-msgstr "Mättnadsvariation"
+msgstr "Mättnadsvariationer"
 
 #: plug-ins/fp/fp_gtk.c:417
 msgid "Select Pixels by"
-msgstr "Välj bildpnkter med"
+msgstr "Välj bildpunkter med"
 
 #: plug-ins/fp/fp_gtk.c:447
 msgid "Show"
@@ -7876,7 +7867,6 @@ msgid "Pencil"
 msgstr "Penna"
 
 #: plug-ins/gfig/gfig.c:2351 plug-ins/gfig/gfig.c:3183
-#, fuzzy
 msgid "Pattern"
 msgstr "Mönster"
 
@@ -7937,7 +7927,6 @@ msgid "Transparent"
 msgstr "Genomskinlig"
 
 #: plug-ins/gfig/gfig.c:2833 plug-ins/gfig/gfig.c:3184
-#, fuzzy
 msgid "Foreground"
 msgstr "Förgrund"
 
@@ -7995,9 +7984,8 @@ msgid "Fade out:"
 msgstr "Tona bort:"
 
 #: plug-ins/gfig/gfig.c:2998
-#, fuzzy
 msgid "Gradient:"
-msgstr "Färgskala:"
+msgstr "Färgtoning:"
 
 #: plug-ins/gfig/gfig.c:3018
 msgid "Pressure:"
@@ -8077,9 +8065,8 @@ msgstr ""
 
 #. Put buttons in
 #: plug-ins/gfig/gfig.c:3281
-#, fuzzy
 msgid "Show Image"
-msgstr "magenta"
+msgstr "Visa bild"
 
 #: plug-ins/gfig/gfig.c:3292
 msgid "Reload Image"
@@ -8161,9 +8148,8 @@ msgid "Rescan"
 msgstr "Genomsök igen"
 
 #: plug-ins/gfig/gfig.c:3542
-#, fuzzy
 msgid "Select folder and rescan Gfig object collection"
-msgstr "Välj katalog och genomsök Gfig objektsamlingen igen"
+msgstr "Välj katalog och genomsök Gfig-objektsamlingen igen"
 
 #: plug-ins/gfig/gfig.c:3548
 msgid "Load"
@@ -8191,7 +8177,6 @@ msgid "Object Details"
 msgstr "Objektdetaljer"
 
 #: plug-ins/gfig/gfig.c:3736
-#, fuzzy
 msgid "Collection Details"
 msgstr "Samlingsdetaljer"
 
