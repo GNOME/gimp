@@ -287,6 +287,8 @@ msgstr "Використовувати косинусо╖дальну функц╕ю для червоно╖ складово╖."
 #: plug-ins/AlienMap/AlienMap.c:717
 msgid "Red channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
+"Канал червоного: використову╓ться л╕н╕йне в╕дображення зам╕сть будь-яко╖ "
+"тригонометрично╖ функц╕╖"
 
 #. Greenmode toggle box
 #: plug-ins/AlienMap/AlienMap.c:725 plug-ins/FractalExplorer/Dialogs.c:770
@@ -307,6 +309,8 @@ msgstr "Використовувати косинусо╖дальну функц╕ю для червоно╖ складово╖."
 msgid ""
 "Green channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
+"Канал зеленого: используется линейное отображение вместо любой "
+"тригонометрической функции"
 
 #. Bluemode toggle box
 #: plug-ins/AlienMap/AlienMap.c:748 plug-ins/FractalExplorer/Dialogs.c:811
@@ -327,6 +331,8 @@ msgstr "Використовувати косинусо╖дальну функц╕ю для синьо╖ складово╖."
 msgid ""
 "Blue channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
+"Канал синього: используется линейное отображение вместо любой "
+"тригонометрической функции"
 
 #: plug-ins/AlienMap/AlienMap.c:893
 msgid "About AlienMap"
@@ -346,11 +352,11 @@ msgstr "Чужа Мапа 2"
 
 #: plug-ins/AlienMap2/AlienMap2.c:668
 msgid "R/H-Frequency:"
-msgstr ""
+msgstr "Ч/В-частота:"
 
 #: plug-ins/AlienMap2/AlienMap2.c:671
 msgid "Change frequency of the red/hue channel"
-msgstr ""
+msgstr "Зм╕нити частоту каналу червоний/в╕дт╕нок"
 
 #: plug-ins/AlienMap2/AlienMap2.c:678
 msgid "R/H-Phaseshift:"
@@ -362,11 +368,11 @@ msgstr ""
 
 #: plug-ins/AlienMap2/AlienMap2.c:688
 msgid "G/S-Frequency:"
-msgstr ""
+msgstr "З/Н-частота:"
 
 #: plug-ins/AlienMap2/AlienMap2.c:691
 msgid "Change frequency of the green/saturation channel"
-msgstr ""
+msgstr "Зм╕нити частоту каналу зелений/насичен╕сть"
 
 #: plug-ins/AlienMap2/AlienMap2.c:698
 msgid "G/S-Phaseshift:"
@@ -378,11 +384,11 @@ msgstr ""
 
 #: plug-ins/AlienMap2/AlienMap2.c:708
 msgid "B/L-Frequency:"
-msgstr ""
+msgstr "С/Л-частота:"
 
 #: plug-ins/AlienMap2/AlienMap2.c:711
 msgid "Change frequency of the blue/luminance channel"
-msgstr ""
+msgstr "Зм╕нити частоту каналу син╕й/люм╕нац╕я"
 
 #: plug-ins/AlienMap2/AlienMap2.c:718
 msgid "B/L-Phaseshift:"
@@ -401,15 +407,15 @@ msgstr "Режим"
 
 #: plug-ins/AlienMap2/AlienMap2.c:733
 msgid "RGB Color Model"
-msgstr ""
+msgstr "Кольорова модель RGB"
 
 #: plug-ins/AlienMap2/AlienMap2.c:734
 msgid "HSL Color Model"
-msgstr ""
+msgstr "Кольорова модель HSL"
 
 #: plug-ins/AlienMap2/AlienMap2.c:746
 msgid "Modify Red/Hue Channel"
-msgstr ""
+msgstr "Зм╕нити канал червоний/в╕дт╕нок"
 
 #: plug-ins/AlienMap2/AlienMap2.c:753
 msgid "Use function for red/hue component"
@@ -417,7 +423,7 @@ msgstr ""
 
 #: plug-ins/AlienMap2/AlienMap2.c:756
 msgid "Modify Green/Saturation Channel"
-msgstr ""
+msgstr "Зм╕нити канал зелений/насичен╕сть"
 
 #: plug-ins/AlienMap2/AlienMap2.c:764
 msgid "Use function for green/saturation component"
@@ -425,7 +431,7 @@ msgstr ""
 
 #: plug-ins/AlienMap2/AlienMap2.c:767
 msgid "Modify Blue/Luminance Channel"
-msgstr ""
+msgstr "Зм╕нити канал син╕й/люм╕нац╕я"
 
 #: plug-ins/AlienMap2/AlienMap2.c:775
 msgid "Use function for blue/luminance component"
@@ -518,7 +524,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:454
 msgid "XMIN:"
-msgstr ""
+msgstr "XMIN:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:457
 msgid "Change the first (minimal) x-coordinate delimitation"
@@ -526,7 +532,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:465
 msgid "XMAX:"
-msgstr ""
+msgstr "XMAX:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:468
 msgid "Change the second (maximal) x-coordinate delimitation"
@@ -534,7 +540,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:476
 msgid "YMIN:"
-msgstr ""
+msgstr "YMIN:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:479
 msgid "Change the first (minimal) y-coordinate delimitation"
@@ -542,7 +548,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:487
 msgid "YMAX:"
-msgstr ""
+msgstr "YMAX:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:490
 msgid "Change the second (maximal) y-coordinate delimitation"
@@ -550,7 +556,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:498
 msgid "ITER:"
-msgstr ""
+msgstr "ITER:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:501
 msgid ""
@@ -779,16 +785,16 @@ msgstr "Не вдалось зберегти."
 
 #: plug-ins/FractalExplorer/Dialogs.c:1600
 msgid "Failed to write file\n"
-msgstr ""
+msgstr "Не вдалося записати файл\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1622
 msgid "Save: No filename given"
-msgstr ""
+msgstr "Збереження: не дано назви фалу"
 
 #. Can't save to directory
 #: plug-ins/FractalExplorer/Dialogs.c:1632
 msgid "Save: Can't save to a directory"
-msgstr ""
+msgstr "Збереження: неможливо зберегти в каталог"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1681
 msgid "Load Fractal Parameters"
@@ -949,7 +955,7 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:428 plug-ins/MapObject/mapobject_ui.c:565
 msgid "Transparent Background"
-msgstr ""
+msgstr "Прозоре тло"
 
 #: plug-ins/Lighting/lighting_ui.c:438
 msgid "Make destination image transparent where bump height is zero"
@@ -983,11 +989,11 @@ msgstr ""
 #. Antialiasing options
 #: plug-ins/Lighting/lighting_ui.c:479 plug-ins/MapObject/mapobject_ui.c:615
 msgid "Antialiasing Options"
-msgstr ""
+msgstr "Параметри згладжування"
 
 #: plug-ins/Lighting/lighting_ui.c:488 plug-ins/MapObject/mapobject_ui.c:624
 msgid "Enable Antialiasing"
-msgstr ""
+msgstr "Ув╕мкнути згладжування"
 
 #: plug-ins/Lighting/lighting_ui.c:498 plug-ins/MapObject/mapobject_ui.c:634
 msgid "Enable/disable jagged edges removal (antialiasing)"
@@ -997,15 +1003,15 @@ msgstr ""
 #: plug-ins/common/bumpmap.c:1067 plug-ins/common/emboss.c:602
 #: plug-ins/struc/struc.c:304
 msgid "Depth:"
-msgstr ""
+msgstr "Глибина:"
 
 #: plug-ins/Lighting/lighting_ui.c:514 plug-ins/MapObject/mapobject_ui.c:650
 msgid "Antialiasing quality. Higher is better, but slower"
-msgstr ""
+msgstr "Як╕сть згладжування. Вища - краща, але пов╕льн╕ше викону╓ться"
 
 #: plug-ins/Lighting/lighting_ui.c:526 plug-ins/MapObject/mapobject_ui.c:662
 msgid "Treshold:"
-msgstr ""
+msgstr "Пор╕г:"
 
 #: plug-ins/Lighting/lighting_ui.c:530 plug-ins/MapObject/mapobject_ui.c:666
 msgid "Stop when pixel differences are smaller than this value"
@@ -1134,7 +1140,7 @@ msgstr ""
 #: plug-ins/Lighting/lighting_ui.c:765 plug-ins/Lighting/lighting_ui.c:804
 #: plug-ins/MapObject/mapobject_ui.c:898 plug-ins/MapObject/mapobject_ui.c:937
 msgid "Diffuse:"
-msgstr ""
+msgstr "Дифуз╕я:"
 
 #: plug-ins/Lighting/lighting_ui.c:778 plug-ins/MapObject/mapobject_ui.c:911
 msgid "Intensity of original color when lit by a light source"
@@ -1142,7 +1148,7 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:786 plug-ins/MapObject/mapobject_ui.c:919
 msgid "Reflectivity"
-msgstr ""
+msgstr "Рефлекс╕я"
 
 #: plug-ins/Lighting/lighting_ui.c:817 plug-ins/MapObject/mapobject_ui.c:950
 msgid "Higher values makes the object reflect more light (appear lighter)"
@@ -1167,28 +1173,28 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:895
 msgid "Bumpmap Settings"
-msgstr ""
+msgstr "Параметри рель╓фного перетворення"
 
 #: plug-ins/Lighting/lighting_ui.c:911
 msgid "Bumpmap Image:"
-msgstr ""
+msgstr "Зображення рель╓фу:"
 
 #: plug-ins/Lighting/lighting_ui.c:919 plug-ins/common/mblur.c:805
 #: plug-ins/flame/flame.c:714 plug-ins/sinus/sinus.c:1039
 msgid "Linear"
-msgstr ""
+msgstr "Л╕н╕йний"
 
 #: plug-ins/Lighting/lighting_ui.c:920
 msgid "Logarithmic"
-msgstr ""
+msgstr "Логарифм╕чний"
 
 #: plug-ins/Lighting/lighting_ui.c:921 plug-ins/flame/flame.c:715
 msgid "Sinusoidal"
-msgstr ""
+msgstr "Синусо╖дальний"
 
 #: plug-ins/Lighting/lighting_ui.c:922 plug-ins/flame/flame.c:716
 msgid "Spherical"
-msgstr ""
+msgstr "Сферичний"
 
 #: plug-ins/Lighting/lighting_ui.c:926
 msgid "Curve:"
@@ -1258,12 +1264,12 @@ msgstr "<Image>/Ф╕льтри/Мапа/Мапа об'╓кта..."
 #: plug-ins/MapObject/mapobject_ui.c:262 plug-ins/MapObject/mapobject_ui.c:556
 #: plug-ins/MapObject/mapobject_ui.c:1332
 msgid "Box"
-msgstr ""
+msgstr "Паралелеп╕пед"
 
 #: plug-ins/MapObject/mapobject_ui.c:280 plug-ins/MapObject/mapobject_ui.c:557
 #: plug-ins/MapObject/mapobject_ui.c:1338
 msgid "Cylinder"
-msgstr ""
+msgstr "Цил╕ндр"
 
 #: plug-ins/MapObject/mapobject_ui.c:545
 msgid "Map to:"
@@ -1393,7 +1399,7 @@ msgstr "Рад╕ус:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1276
 msgid "Cylinder radius"
-msgstr "Ряд╕ус цил╕ндра"
+msgstr "Рад╕ус цил╕ндра"
 
 #: plug-ins/MapObject/mapobject_ui.c:1284 plug-ins/common/mblur.c:825
 msgid "Length:"
@@ -1407,7 +1413,7 @@ msgstr "Довжина цил╕ндра"
 #: plug-ins/common/ripple.c:650 plug-ins/gimpressionist/orientation.c:52
 #: plug-ins/gimpressionist/orientation.c:57
 msgid "Orientation"
-msgstr ""
+msgstr "Ор╕╓нтац╕я"
 
 #: plug-ins/MapObject/mapobject_ui.c:1376
 msgid "Map to Object"
@@ -4094,7 +4100,7 @@ msgstr ""
 
 #: plug-ins/common/iwarp.c:1094 plug-ins/gflare/gflare.c:3036
 msgid "Max Depth:"
-msgstr ""
+msgstr "Максимальна глибина:"
 
 #: plug-ins/common/iwarp.c:1104 plug-ins/common/threshold_alpha.c:297
 #: plug-ins/common/unsharp.c:837 plug-ins/common/wind.c:818
@@ -9505,7 +9511,7 @@ msgstr ""
 #: plug-ins/gfig/gfig.c:2021 plug-ins/gimpressionist/orientation.c:121
 #: plug-ins/print/gimp_main_window.c:394
 msgid "Orientation:"
-msgstr ""
+msgstr "Ор╕╓нтац╕я:"
 
 #: plug-ins/gfig/gfig.c:2041
 msgid "Bezier Settings"
@@ -10395,7 +10401,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/general.c:302
 msgid "Shadow depth:"
-msgstr ""
+msgstr "Глибина т╕н╕:"
 
 #: plug-ins/gimpressionist/general.c:313
 msgid ""
