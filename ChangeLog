@@ -1,5 +1,10 @@
 2002-04-29  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimagefile.c: adapt the thumbnail size to the image size
+	so that thumbs of small images don't end up in the "large" directory.
+
+2002-04-29  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimagefile.[ch]: accept any size so we don't depend on
 	the values of GimpThumbnailSize. We might want to allow other thumbnail
 	sizes than only 0, 128 or 256.

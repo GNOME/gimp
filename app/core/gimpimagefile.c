@@ -335,21 +335,21 @@ gimp_imagefile_update (GimpImagefile *imagefile,
 
 void
 gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
-                                 gint           size)
+                                 gint           thumb_size)
 {
   const gchar *uri;
 
   g_return_if_fail (GIMP_IS_IMAGEFILE (imagefile));
 
-  if (size == GIMP_THUMBNAIL_SIZE_NONE)
+  if (thumb_size < 1)
     return;
 
   uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
 
   if (uri)
     {
-      gchar             *filename   = NULL;
-      gchar             *thumb_name = NULL;
+      gchar             *filename;
+      gboolean           file_exists;
       time_t             image_mtime;
       off_t              image_size;
       GimpImage         *gimage;
@@ -361,14 +361,11 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
       if (! filename)
         return;
 
-      thumb_name = gimp_imagefile_png_thumb_path (uri, size);
-
-      /*  the thumbnail directory doesn't exist and couldn't be created */
-      if (! thumb_name)
-        goto cleanup;
-
-      if (! gimp_imagefile_test (filename, &image_mtime, &image_size))
-        goto cleanup;
+      file_exists = gimp_imagefile_test (filename, &image_mtime, &image_size);
+      g_free (filename);
+      
+      if (! file_exists)
+        return;
 
       gimage = file_open_image (the_gimp,
                                 uri,
@@ -380,12 +377,22 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
 
       if (gimage)
         {
-          gimp_imagefile_save_png_thumb (imagefile,
-                                         gimage,
-                                         thumb_name,
-                                         size,
-                                         image_mtime,
-                                         image_size);
+          gchar *thumb_name;
+
+          thumb_size = MIN (thumb_size, MAX (gimage->width, gimage->height));
+
+          thumb_name = gimp_imagefile_png_thumb_path (uri, thumb_size);
+
+          if (thumb_name)
+            {
+              gimp_imagefile_save_png_thumb (imagefile,
+                                             gimage,
+                                             thumb_name,
+                                             thumb_size,
+                                             image_mtime,
+                                             image_size);
+              g_free (thumb_name);
+            }
 
           g_object_unref (G_OBJECT (gimage));
         }
@@ -397,10 +404,6 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
 
           gimp_imagefile_save_fail_thumb (imagefile, image_mtime, image_size);
         }
-
-    cleanup:
-      g_free (filename);
-      g_free (thumb_name);
     }
 }
 
@@ -458,8 +461,8 @@ gimp_imagefile_save_fail_thumb (GimpImagefile *imagefile,
 }
 
 gboolean
-gimp_imagefile_save_thumbnail (GimpImagefile     *imagefile,
-                               GimpImage         *gimage)
+gimp_imagefile_save_thumbnail (GimpImagefile *imagefile,
+                               GimpImage     *gimage)
 {
   const gchar *uri;
   const gchar *image_uri;
@@ -490,6 +493,7 @@ gimp_imagefile_save_thumbnail (GimpImagefile     *imagefile,
   if (! filename)
     return FALSE;
 
+  thumb_size = MIN (thumb_size, MAX (gimage->width, gimage->height));
   thumb_name = gimp_imagefile_png_thumb_path (uri, thumb_size);
 
   /*  the thumbnail directory doesn't exist and couldn't be created */
@@ -883,6 +887,8 @@ gimp_imagefile_save_png_thumb (GimpImagefile *imagefile,
     {
       width  = gimage->width;
       height = gimage->height;
+
+      thumb_size = MIN (thumb_size, MAX (width, height));
     }
   else
     {
