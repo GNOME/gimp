@@ -144,11 +144,9 @@
 	 (offset (* radius 0.1))
 	 (text-extents (gimp-text-get-extents-fontname text size PIXELS font))
 	 (x-position (- cx (/ (car text-extents) 2)))
-	 (y-position (- cy (/ (cadr text-extents) 2)))
-	 (old-pattern (car (gimp-patterns-get-pattern)))
-	 (old-gradient (car (gimp-gradients-get-gradient)))
-	 (old-fg (car (gimp-palette-get-foreground)))
-	 (old-bg (car (gimp-palette-get-background))))
+	 (y-position (- cy (/ (cadr text-extents) 2))))
+
+    (gimp-context-push)
 
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img drawable 0)
@@ -203,12 +201,10 @@
 						       size PIXELS
 						       font)))
 
-    (gimp-gradients-set-gradient old-gradient)
-    (gimp-patterns-set-pattern old-pattern)
-    (gimp-palette-set-background old-bg)
-    (gimp-palette-set-foreground old-fg)
     (gimp-image-undo-enable img)
-    (gimp-display-new img)))
+    (gimp-display-new img)
+
+    (gimp-context-pop)))
 
 (script-fu-register "script-fu-test-sphere"
 		    "<Toolbox>/Xtns/Script-Fu/Test/_Sphere..."

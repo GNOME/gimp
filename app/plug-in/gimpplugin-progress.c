@@ -176,7 +176,7 @@ plug_in_progress_install (PlugIn      *plug_in,
     }
 
   proc_frame->progress = g_object_new (GIMP_TYPE_PDB_PROGRESS,
-                                       "context",       proc_frame->context,
+                                       "context",       proc_frame->main_context,
                                        "callback-name", progress_callback,
                                        NULL);
 

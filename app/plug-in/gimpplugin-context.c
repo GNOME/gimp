@@ -23,6 +23,7 @@
 #include "plug-in-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 
 #include "plug-in.h"
 #include "plug-in-context.h"
@@ -32,10 +33,23 @@ gboolean
 plug_in_context_push (PlugIn *plug_in)
 {
   PlugInProcFrame *proc_frame;
+  GimpContext     *parent;
+  GimpContext     *context;
 
   g_return_val_if_fail (plug_in != NULL, FALSE);
 
   proc_frame = plug_in_get_proc_frame (plug_in);
+
+  if (proc_frame->context_stack)
+    parent = proc_frame->context_stack->data;
+  else
+    parent = proc_frame->main_context;
+
+  context = gimp_context_new (plug_in->gimp, "plug-in context", NULL);
+  gimp_context_copy_properties (parent, context, GIMP_CONTEXT_ALL_PROPS_MASK);
+
+  proc_frame->context_stack = g_list_prepend (proc_frame->context_stack,
+                                              context);
 
   return TRUE;
 }
@@ -49,5 +63,16 @@ plug_in_context_pop (PlugIn *plug_in)
 
   proc_frame = plug_in_get_proc_frame (plug_in);
 
-  return TRUE;
+  if (proc_frame->context_stack)
+    {
+      GimpContext *context = proc_frame->context_stack->data;
+
+      proc_frame->context_stack = g_list_remove (proc_frame->context_stack,
+                                                 context);
+      g_object_unref (context);
+
+      return TRUE;
+    }
+
+  return FALSE;
 }

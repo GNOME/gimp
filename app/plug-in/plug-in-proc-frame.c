@@ -60,9 +60,9 @@ plug_in_proc_frame_init (PlugInProcFrame *proc_frame,
   g_return_if_fail (proc_frame != NULL);
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
-  g_return_if_fail (proc_rec != NULL);
 
-  proc_frame->context            = g_object_ref (context);
+  proc_frame->main_context       = g_object_ref (context);
+  proc_frame->context_stack      = NULL;
   proc_frame->proc_rec           = proc_rec;
   proc_frame->main_loop          = NULL;
   proc_frame->return_vals        = NULL;
@@ -90,10 +90,17 @@ plug_in_proc_frame_dispose (PlugInProcFrame *proc_frame,
         }
     }
 
-  if (proc_frame->context)
+  if (proc_frame->context_stack)
     {
-      g_object_unref (proc_frame->context);
-      proc_frame->context = NULL;
+      g_list_foreach (proc_frame->context_stack, (GFunc) g_object_unref, NULL);
+      g_list_free (proc_frame->context_stack);
+      proc_frame->context_stack = NULL;
+    }
+
+  if (proc_frame->main_context)
+    {
+      g_object_unref (proc_frame->main_context);
+      proc_frame->main_context = NULL;
     }
 }
 

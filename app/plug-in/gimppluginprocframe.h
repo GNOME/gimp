@@ -24,7 +24,8 @@
 
 struct _PlugInProcFrame
 {
-  GimpContext  *context;
+  GimpContext  *main_context;
+  GList        *context_stack;
 
   ProcRecord   *proc_rec;
   GMainLoop    *main_loop;

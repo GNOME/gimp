@@ -27,6 +27,7 @@
 #include "procedural_db.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "plug-in/plug-in-context.h"
 #include "plug-in/plug-in.h"
 
@@ -49,7 +50,7 @@ context_push_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   if (gimp->current_plug_in && gimp->current_plug_in->open)
     {
-      plug_in_context_push (gimp->current_plug_in);
+      success = plug_in_context_push (gimp->current_plug_in);
     }
   else
     success = FALSE;
@@ -81,7 +82,7 @@ context_pop_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   if (gimp->current_plug_in && gimp->current_plug_in->open)
     {
-      plug_in_context_push (gimp->current_plug_in);
+      success = plug_in_context_push (gimp->current_plug_in);
     }
   else
     success = FALSE;

@@ -1,3 +1,26 @@
+2004-09-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in-proc-frame.[ch] (plug_in_proc_frame_init):
+	removed assertion about proc_rec != NULL because that happens
+	when query()ing and init()int plug-ins.
+
+	Replaced "context" by "main_context" plus "context_stack".
+
+	* app/plug-in/plug-in-context.c: implement plug_in_context_push()
+	and plug_in_context_pop().
+
+	* app/plug-in/plug-in-message.c
+	* app/plug-in/plug-in-progress.c: changed accordingly.
+
+	* tools/pdbgen/pdb/context.pdb: use the return values of
+	plug_in_context_push() and _pop().
+
+	* app/pdb/context_cmds.c: regenerated.
+
+	* plug-ins/script-fu/scripts/test-sphere.scm: use
+	gimp-context-push and gimp-context-pop instead of remembering the
+	old values for FG, BG etc.
+
 2004-09-22  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/Makefile.am

@@ -40,7 +40,7 @@ HELP
 {
   if (gimp->current_plug_in && gimp->current_plug_in->open)
     {
-      plug_in_context_push (gimp->current_plug_in);
+      success = plug_in_context_push (gimp->current_plug_in);
     }
   else
     success = FALSE;
@@ -64,7 +64,7 @@ HELP
 {
   if (gimp->current_plug_in && gimp->current_plug_in->open)
     {
-      plug_in_context_push (gimp->current_plug_in);
+      success = plug_in_context_push (gimp->current_plug_in);
     }
   else
     success = FALSE;
@@ -73,7 +73,8 @@ CODE
     );
 }
 
-@headers = qw("core/gimp.h" "plug-in/plug-in.h" "plug-in/plug-in-context.h");
+@headers = qw("core/gimp.h" "core/gimpcontext.h"
+              "plug-in/plug-in.h" "plug-in/plug-in-context.h");
 
 @procs = qw(context_push context_pop);
 %exports = (app => [@procs], lib => [@procs]);

@@ -387,7 +387,10 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
   /*  Execute the procedure even if procedural_db_lookup() returned NULL,
    *  procedural_db_execute() will return appropriate error return_vals.
    */
-  return_vals = procedural_db_execute (plug_in->gimp, proc_frame->context,
+  return_vals = procedural_db_execute (plug_in->gimp,
+                                       proc_frame->context_stack ?
+                                       proc_frame->context_stack->data :
+                                       proc_frame->main_context,
                                        proc_frame->progress,
                                        proc_name, args);
 
@@ -435,6 +438,11 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
     {
       PlugInBlocked *blocked;
 
+      g_warning ("%s: EEEEEEEEEK! \n"
+                 "You managed to trigger a code path that \n"
+                 "should be dead. Please report this to bugs.gimp.org.",
+                 G_STRFUNC);
+
       blocked = g_new0 (PlugInBlocked, 1);
 
       blocked->plug_in   = plug_in;
@@ -466,6 +474,11 @@ plug_in_handle_proc_return_priv (PlugIn       *plug_in,
   else
     {
       GSList *list;
+
+      g_warning ("%s: EEEEEEEEEK! \n"
+                 "You managed to trigger a code path that \n"
+                 "should be dead. Please report this to bugs.gimp.org.",
+                 G_STRFUNC);
 
       for (list = blocked_plug_ins; list; list = g_slist_next (list))
 	{
