@@ -154,7 +154,7 @@ query()
 			  "Stephen Norris & (ported to 1.0 by) Eiichi Takamori",
 			  "Stephen Norris",
 			  "1995",
-			  "<Image>/Filters/Render/Plasma",
+			  "<Image>/Filters/Render/Clouds/Plasma",
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

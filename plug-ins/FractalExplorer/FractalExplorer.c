@@ -132,7 +132,7 @@ query()
 	                   "Daniel Cotting (cotting@multimania.com, www.multimania.com/cotting)",
 			   "Daniel Cotting (cotting@multimania.com, www.multimania.com/cotting)",
 			   "December, 1998",
-			   "<Image>/Filters/Render/Fractal Explorer",
+			   "<Image>/Filters/Render/Pattern/Fractal Explorer",
 			   "RGB*",
 			   PROC_PLUG_IN,
 			   nargs, nreturn_vals,

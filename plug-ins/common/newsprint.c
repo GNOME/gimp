@@ -563,7 +563,7 @@ query()
 			  "Austin Donnelly",
 			  "Austin Donnelly",
 			  "1998 (" VERSION ")",
-			  "<Image>/Filters/Render/Newsprint",
+			  "<Image>/Filters/Distorts/Newsprint",
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

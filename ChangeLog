@@ -1,3 +1,35 @@
+Sat Nov 20 19:52:30 CET 1999 Olof S Kylander <olof@gimp.org>
+
+	* plug-ins/AlienMap/AlienMap.c
+	* plug-ins/AlienMap2/AlienMap2.c
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/checkerboard.c
+	* plug-ins/common/diffraction.c
+	* plug-ins/common/exchange.c
+	* plug-ins/common/gqbist.c
+	* plug-ins/common/gradmap.c
+	* plug-ins/common/grid.c
+	* plug-ins/common/lic.c
+	* plug-ins/common/mapcolor.c
+	* plug-ins/common/newsprint.c
+	* plug-ins/common/plasma.c
+	* plug-ins/common/randomize.c
+	* plug-ins/common/sample_colorize.c
+	* plug-ins/common/scatter_hsv.c
+	* plug-ins/common/snoise.c
+	* plug-ins/common/warp.c
+	* plug-ins/flame/flame.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/maze/maze.c
+
+	Updated menu location as suggested in the proposal from me
+	with comments form others. (Mitch what about fixing the sub
+	menu location so submenus allways is in top of a menu. Exception
+	of Repeat last, Re-show last and Filter all Layers, which should
+	be in top of the Filters menu.)
+
+
 1999-11-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/devices.c: s/sprintf/g_snprintf

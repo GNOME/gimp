@@ -185,7 +185,7 @@ query (void)
 			  "Marcelo de Gomensoro Malheiros",
 			  "Marcelo de Gomensoro Malheiros",
 			  "Apr 1998, v1.03",
-			  "<Image>/Filters/Render/Solid Noise",
+			  "<Image>/Filters/Render/Clouds/Solid Noise",
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs,

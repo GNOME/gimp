@@ -1311,7 +1311,7 @@ static void query(void)
 			  "Tom Bech & Federico Mena Quintero",
 			  "Tom Bech & Federico Mena Quintero",
 			  "Version 0.14, September 24 1997",
-			  _("<Image>/Filters/Artistic/Van Gogh (LIC)"),
+			  _("<Image>/Filters/Map/Van Gogh (LIC)"),
 			  "RGB",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,

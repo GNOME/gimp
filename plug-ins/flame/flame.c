@@ -128,7 +128,7 @@ static void query()
 			 "Scott Draves",
 			 "Scott Draves",
 			 "1997",
-			 "<Image>/Filters/Render/Flame",
+			 "<Image>/Filters/Render/Nature/Flame",
 			 "RGB*",
 			 PROC_PLUG_IN,
 			 nargs, nreturn_vals,

@@ -93,7 +93,7 @@
 #define	PLUG_IN_NAME	"plug_in_CML_explorer"
 #define SHORT_NAME	"CML_explorer"
 #define PROGRESS_NAME	"CML_explorer: evoluting..."
-#define MENU_POSITION	"<Image>/Filters/Render/CML explorer"
+#define MENU_POSITION	"<Image>/Filters/Render/Pattern/CML explorer"
 #define	VERBOSE_DIALOGS	1
 #define	MAIN_FUNCTION	CML
 #define INTERFACE	CML_explorer_interface

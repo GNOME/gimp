@@ -174,7 +174,7 @@ query(void)
 			       "Federico Mena Quintero",
 			       "Federico Mena Quintero & David Bleecker",
 			       "April 1997, 0.5",
-			       "<Image>/Filters/Render/Diffraction Patterns",
+			       "<Image>/Filters/Render/Pattern/Diffraction Patterns",
 			       "RGB*",
 			       PROC_PLUG_IN,
 			       nargs,

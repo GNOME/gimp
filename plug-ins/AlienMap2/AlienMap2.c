@@ -214,7 +214,7 @@ query ()
         		  "Martin Weber (martin.weber@usa.net, http://diverse.freepage.de/martin.weber)",
         		  "Martin Weber (martin.weber@usa.net, http://diverse.freepage.de/martin.weber",
         		  _("24th April 1998"),
-        		  _("<Image>/Filters/Colors/Alien Map 2"),
+        		  _("<Image>/Filters/Colors/Map/Alien Map 2"),
         		  "RGB_MODEL*",
         		  PROC_PLUG_IN,
         		  nargs, nreturn_vals,

@@ -99,7 +99,7 @@ query ()
 			  "Brent Burton & the Edward Blevins",
 			  "Brent Burton & the Edward Blevins",
 			  "1997",
-			  _("<Image>/Filters/Render/Checkerboard"),
+			  _("<Image>/Filters/Render/Pattern/Checkerboard"),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
