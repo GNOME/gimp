@@ -1,3 +1,9 @@
+2004-09-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcomponenteditor.[ch]: set the viewable
+	renderer's "renderer" property to NULL when clearing the
+	view to work around bug #149906.
+
 2004-09-16  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpscanconvert.c (VALUE_TO_PIXEL): replaced a bitshift

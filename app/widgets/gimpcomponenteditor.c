@@ -119,11 +119,8 @@ gimp_component_editor_get_type (void)
 static void
 gimp_component_editor_class_init (GimpComponentEditorClass *klass)
 {
-  GtkWidgetClass       *widget_class;
-  GimpImageEditorClass *image_editor_class;
-
-  widget_class       = GTK_WIDGET_CLASS (klass);
-  image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
+  GtkWidgetClass       *widget_class       = GTK_WIDGET_CLASS (klass);
+  GimpImageEditorClass *image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -135,8 +132,8 @@ gimp_component_editor_class_init (GimpComponentEditorClass *klass)
 static void
 gimp_component_editor_init (GimpComponentEditor *editor)
 {
-  GtkWidget         *frame;
-  GtkListStore      *list;
+  GtkWidget    *frame;
+  GtkListStore *list;
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
@@ -169,9 +166,10 @@ gimp_component_editor_init (GimpComponentEditor *editor)
                     G_CALLBACK (gimp_component_editor_clicked),
                     editor);
 
+  editor->renderer_cell = gimp_cell_renderer_viewable_new ();
   gtk_tree_view_insert_column_with_attributes (editor->view,
                                                -1, NULL,
-                                               gimp_cell_renderer_viewable_new (),
+                                               editor->renderer_cell,
                                                "renderer", COLUMN_RENDERER,
                                                NULL);
 
@@ -414,6 +412,11 @@ static void
 gimp_component_editor_clear_components (GimpComponentEditor *editor)
 {
   gtk_list_store_clear (GTK_LIST_STORE (editor->model));
+
+#ifdef __GNUC__
+#warning FIXME: remove this hack as soon as bug #149906 is fixed
+#endif
+  g_object_set (editor->renderer_cell, "renderer", NULL, NULL);
 }
 
 static void
