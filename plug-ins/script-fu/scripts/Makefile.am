@@ -71,6 +71,7 @@ scriptdata_DATA = \
 	rendermap.scm				\
 	ripply-anim.scm				\
 	round-corners.scm			\
+	script-fu-util.scm			\
 	select_to_brush.scm			\
 	select_to_image.scm			\
 	selection-round.scm			\
