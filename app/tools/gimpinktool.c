@@ -1546,7 +1546,7 @@ ink_options_new (GimpToolInfo *tool_info)
 			gtk_widget_get_visual (vbox),
 			blob_ellipse);
 
-  pixmap_widget = gtk_pixmap_new (pixmap, NULL);
+  pixmap_widget = gtk_image_new_from_pixmap (pixmap, NULL);
   g_object_unref (pixmap);
   gtk_misc_set_padding (GTK_MISC (pixmap_widget), 6, 0);
 
@@ -1565,7 +1565,7 @@ ink_options_new (GimpToolInfo *tool_info)
 			gtk_widget_get_visual (vbox),
 			blob_square);
 
-  pixmap_widget = gtk_pixmap_new (pixmap, NULL);
+  pixmap_widget = gtk_image_new_from_pixmap (pixmap, NULL);
   g_object_unref (pixmap);
   gtk_misc_set_padding (GTK_MISC (pixmap_widget), 6, 0);
 
@@ -1585,7 +1585,7 @@ ink_options_new (GimpToolInfo *tool_info)
 			gtk_widget_get_visual (vbox),
 			blob_diamond);
 
-  pixmap_widget = gtk_pixmap_new (pixmap, NULL);
+  pixmap_widget = gtk_image_new_from_pixmap (pixmap, NULL);
   g_object_unref (pixmap);
   gtk_misc_set_padding (GTK_MISC (pixmap_widget), 6, 0);
 
