@@ -46,13 +46,15 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#include <gtk/gtk.h>
+
 #include "appenv.h"
 #include "commands.h"
 #include "gimprc.h"
 #include "session.h"
 
 static void sessionrc_write_info (SessionInfo *, FILE *);
-static void session_open_dialog (SessionInfo *info);
+static void session_open_dialog (gpointer unused, gpointer pinfo);
 static void session_reset_open_state (SessionInfo *info);
 
 GList *session_info_updates = NULL;
@@ -61,19 +63,19 @@ GList *session_info_updates = NULL;
 SessionInfo toolbox_session_info = 
   { "toolbox", NULL, 0, 0, 0, 0, FALSE };
 SessionInfo lc_dialog_session_info = 
-  { "lc-dialog", dialogs_lc_cmd_callback, 0, 400, 0, 0, FALSE };
+  { "lc-dialog", (GtkItemFactoryCallback)dialogs_lc_cmd_callback, 0, 400, 0, 0, FALSE };
 SessionInfo info_dialog_session_info = 
   { "info-dialog", NULL, 165, 0, 0, 0, FALSE };
 SessionInfo tool_options_session_info = 
-  { "tool-options", dialogs_tools_options_cmd_callback, 0, 345, 0, 0, FALSE };
+  { "tool-options", (GtkItemFactoryCallback)dialogs_tools_options_cmd_callback, 0, 345, 0, 0, FALSE };
 SessionInfo palette_session_info = 
-  { "palette", dialogs_palette_cmd_callback, 140, 180, 0, 0, FALSE };
+  { "palette", (GtkItemFactoryCallback)dialogs_palette_cmd_callback, 140, 180, 0, 0, FALSE };
 SessionInfo brush_select_session_info = 
-  { "brush-select",  dialogs_brushes_cmd_callback, 150, 180, 0, 0, FALSE };
+  { "brush-select",  (GtkItemFactoryCallback)dialogs_brushes_cmd_callback, 150, 180, 0, 0, FALSE };
 SessionInfo pattern_select_session_info = 
-  { "pattern-select", dialogs_patterns_cmd_callback, 160, 180, 0, 0, FALSE };
+  { "pattern-select", (GtkItemFactoryCallback)dialogs_patterns_cmd_callback, 160, 180, 0, 0, FALSE };
 SessionInfo gradient_editor_session_info = 
-  { "gradient-editor", dialogs_gradient_editor_cmd_callback, 170, 180, 0, 0, FALSE };
+  { "gradient-editor", (GtkItemFactoryCallback)dialogs_gradient_editor_cmd_callback, 170, 180, 0, 0, FALSE };
 
 /* public functions */
 void 
@@ -194,12 +196,14 @@ sessionrc_write_info (SessionInfo *info, FILE *fp)
 }
 
 static void
-session_open_dialog (SessionInfo *info)
+session_open_dialog (gpointer unused, gpointer pinfo)
 {
+  SessionInfo *info = (SessionInfo*) pinfo;
+
   if (info == NULL || info->open == FALSE) 
     return;
 
-  (info->open_callback) (NULL, NULL);
+  (info->open_callback) ();
 }
 
 static void

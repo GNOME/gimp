@@ -19,6 +19,7 @@
 #define __SESSION_H__
 
 #include <glib.h>
+#include <gtk/gtk.h>
 
 /* Structures */
 typedef struct _SessionInfo SessionInfo;

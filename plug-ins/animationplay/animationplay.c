@@ -1,5 +1,5 @@
 /*
- * Animation Playback plug-in version 0.94.2
+ * Animation Playback plug-in version 0.98.0
  *
  * Adam D. Moss : 1997-98 : adam@gimp.org : adam@foxbox.org
  *
@@ -10,6 +10,11 @@
 
 /*
  * REVISION HISTORY:
+ *
+ * 98.07.19 : version 0.98.0
+ *            Adapted to use GDKRGB (from recent GTK >= 1.1) if
+ *            available - good speed and reliability improvement.
+ *            Plus some minor tweaks.
  *
  * 98.04.28 : version 0.94.2
  *            Fixed a time-parsing bug.
@@ -91,6 +96,15 @@
 #include "gtk/gtk.h"
 
 
+/* Test for GTK1.2-style gdkrgb code, else use old 'preview' code. */
+#ifdef __GDK_RGB_H__
+#define RAPH_IS_HOME yep
+#define DITHERTYPE GDK_RGB_DITHER_NORMAL
+#endif
+
+
+/* #define I_AM_STUPID yesiam */
+
 
 typedef enum
 {
@@ -124,11 +138,17 @@ static void rewind_callback  (GtkWidget *widget,
 			      gpointer   data);
 static void step_callback  (GtkWidget *widget,
 			    gpointer   data);
+#ifdef RAPH_IS_HOME
+static void repaint_sda (GtkWidget *darea,
+			 gpointer data);
+static void repaint_da (GtkWidget *darea,
+			gpointer data);
+#endif
 
 static DisposeType  get_frame_disposal  (guint whichframe);
 static void         render_frame        (gint32 whichframe);
 static void         show_frame          (void);
-static void         total_alpha_preview (void);
+static void         total_alpha_preview (guchar* ptr);
 static void         init_preview_misc   (void);
 
 
@@ -146,7 +166,14 @@ GPlugInInfo PLUG_IN_INFO =
 
 /* Global widgets'n'stuff */
 guchar*    preview_data;
-static     GtkPreview* preview = NULL;
+#ifdef RAPH_IS_HOME
+static GtkWidget* drawing_area = NULL;
+static GtkWidget* shape_drawing_area = NULL;
+guchar*    shape_drawing_area_data = NULL;
+guchar*    drawing_area_data = NULL;
+#else
+static GtkPreview* preview = NULL;
+#endif
 GtkProgressBar* progress;
 guint      width,height;
 guchar*    preview_alpha1_data;
@@ -167,9 +194,12 @@ gint       ncolours;
 /* for shaping */
 gchar    *shape_preview_mask;
 GtkWidget *shape_window;
+#ifdef RAPH_IS_HOME
+#else
 GtkWidget *shape_fixed;
 GtkPreview *shape_preview;
 GdkPixmap *shape_pixmap;
+#endif
 typedef struct _cursoroffset {gint x,y;} CursorOffset;
 gint shaping = 0;
 static GdkWindow *root_win = NULL;
@@ -335,11 +365,24 @@ shape_pressed (GtkWidget *widget, GdkEventButton *event)
 }
 
 
+#ifdef RAPH_IS_HOME
+static void
+maybeblocked_expose (GtkWidget *widget, GdkEventExpose *event)
+{
+  if (playing)
+    gtk_signal_emit_stop_by_name (GTK_OBJECT(widget), "expose_event");
+  else
+    repaint_sda (widget, event);
+}
+#else
+
+
 static void
 blocked_expose (GtkWidget *widget, GdkEventExpose *event)
 {
   gtk_signal_emit_stop_by_name (GTK_OBJECT(widget), "expose_event");
 }
+#endif
 
 
 #ifdef I_AM_STUPID
@@ -437,15 +480,52 @@ shape_motion (GtkWidget      *widget,
 }
 
 
+#ifdef RAPH_IS_HOME
+static void
+repaint_da (GtkWidget *darea, gpointer data)
+{
+  /*  printf("Repaint!  Woohoo!\n");*/
+  gdk_draw_rgb_image (drawing_area->window,
+		      drawing_area->style->white_gc,
+		      0, 0, width, height,
+		      DITHERTYPE,
+		      drawing_area_data, width * 3);
+}
+
+
+static void
+repaint_sda (GtkWidget *darea, gpointer data)
+{
+  /*printf("Repaint!  Woohoo!\n");*/
+  gdk_draw_rgb_image (shape_drawing_area->window,
+		      shape_drawing_area->style->white_gc,
+		      0, 0, width, height,
+		      DITHERTYPE,
+		      shape_drawing_area_data, width * 3);
+}
+#endif
+
+
 static void
 preview_pressed (GtkWidget *widget, GdkEventButton *event)
 {
+#ifdef RAPH_IS_HOME
+#else
   gint i;
+#endif
   gint xp, yp;
   GdkModifierType mask;
 
   if (shaping) return;
   
+#ifdef RAPH_IS_HOME
+  /* Create a total-alpha buffer merely for the not-shaped
+     drawing area to now display. */
+
+  drawing_area_data = g_malloc (width * height * 3);
+  total_alpha_preview (drawing_area_data);
+
+#else
   /* put current preview buf into shaped buf */
   for (i=0;i<height;i++)
     {
@@ -453,6 +533,8 @@ preview_pressed (GtkWidget *widget, GdkEventButton *event)
 			    &preview_data[3*i*width],
 			    0, i, width);
   }
+  total_alpha_preview (preview_data);
+#endif
       
   gdk_window_get_pointer (root_win, &xp, &yp, &mask);
   gtk_widget_set_uposition (shape_window, xp  - event->x, yp  - event->y);
@@ -460,22 +542,31 @@ preview_pressed (GtkWidget *widget, GdkEventButton *event)
   gtk_widget_show (shape_window);
 
   gdk_window_set_back_pixmap(shape_window->window, NULL, 0);
+#ifdef RAPH_IS_HOME
+  gdk_window_set_back_pixmap(shape_drawing_area->window, NULL, 1);
+#else
   gdk_window_set_back_pixmap(shape_fixed->window, NULL, 1);
+#endif
 
-  /* clear nonshaped preview widget */
-  total_alpha_preview();
+#ifdef RAPH_IS_HOME
+#else
   for (i=0;i<height;i++)
     {
       gtk_preview_draw_row (preview,
 			    &preview_data[3*i*width],
 			    0, i, width);
     }
+#endif
   show_frame();
 
   shaping = 1;
   memset(shape_preview_mask, 0, (width*height)/8 + height);
   render_frame(frame_number);
   show_frame();
+  
+#ifdef RAPH_IS_HOME
+  repaint_da (NULL,NULL);
+#endif
 
   /* mildly amusing hack */
   shape_pressed(shape_window, event);
@@ -508,6 +599,11 @@ build_dialog(GImageType basetype,
   argv = g_new (gchar *, 1);
   argv[0] = g_strdup ("animationplay");
   gtk_init (&argc, &argv);
+
+#ifdef RAPH_IS_HOME
+  gdk_rgb_init ();
+#endif
+
   gtk_rc_parse (gimp_gtkrc ());
   gdk_set_use_xshm (gimp_use_xshm ());
   gtk_preview_set_gamma (gimp_gamma ());
@@ -615,12 +711,20 @@ build_dialog(GImageType basetype,
 	      gtk_container_add (GTK_CONTAINER (frame2), GTK_WIDGET (eventbox));
 	      
 	      {
+#ifdef RAPH_IS_HOME
+		drawing_area = gtk_drawing_area_new ();
+                gtk_widget_set_usize (drawing_area, width, height);
+                gtk_container_add (GTK_CONTAINER (eventbox),
+                                   GTK_WIDGET (drawing_area));
+                gtk_widget_show (drawing_area);
+#else
 		preview =
 		  GTK_PREVIEW (gtk_preview_new (GTK_PREVIEW_COLOR));/* FIXME */
 		gtk_preview_size (preview, width, height);
 		gtk_container_add (GTK_CONTAINER (eventbox),
 				   GTK_WIDGET (preview));
 		gtk_widget_show(GTK_WIDGET (preview));
+#endif
 	      }
 	      gtk_widget_show(eventbox);
 	      gtk_widget_set_events (eventbox,
@@ -646,6 +750,17 @@ build_dialog(GImageType basetype,
   /* let's get into shape. */
   shape_window = gtk_window_new (GTK_WINDOW_POPUP);
   {
+#ifdef RAPH_IS_HOME
+    shape_drawing_area = gtk_drawing_area_new ();
+    {
+      gtk_widget_set_usize (shape_drawing_area, width, height);
+      gtk_container_add (GTK_CONTAINER (shape_window), shape_drawing_area);
+    }
+    gtk_widget_show (shape_drawing_area);
+    gtk_widget_set_events (shape_drawing_area,
+			   gtk_widget_get_events (shape_drawing_area)
+			   | GDK_BUTTON_PRESS_MASK);
+#else
     shape_fixed = gtk_fixed_new ();
     {
       gtk_widget_set_usize (shape_fixed, width,height);
@@ -655,17 +770,18 @@ build_dialog(GImageType basetype,
 	GTK_PREVIEW (gtk_preview_new (GTK_PREVIEW_COLOR)); /* FIXME */
       {
 	gtk_preview_size (shape_preview, width, height);
-	/*	gtk_fixed_put (GTK_FIXED (shape_fixed), GTK_WIDGET(shape_preview),
-		       0,0);*/
       }
-      /*      gtk_widget_show (GTK_WIDGET(shape_preview));*/
     }
     gtk_widget_show (shape_fixed);
+#endif
     gtk_widget_realize (shape_window);
 
+#ifdef RAPH_IS_HOME
+#else
     shape_pixmap = gdk_pixmap_new (shape_window->window,
 				   width, height,
 				   gtk_preview_get_visual()->depth);
+#endif
     
     gdk_window_set_back_pixmap(shape_window->window, NULL, 0);
 
@@ -683,6 +799,7 @@ build_dialog(GImageType basetype,
     icon_pos = g_new (CursorOffset, 1);
     gtk_object_set_user_data(GTK_OBJECT(shape_window), icon_pos);
   }
+  /*  gtk_widget_show (shape_window);*/
 
   gtk_signal_connect (GTK_OBJECT (eventbox), "button_press_event",
 		      GTK_SIGNAL_FUNC (preview_pressed),NULL);
@@ -691,8 +808,18 @@ build_dialog(GImageType basetype,
   gtk_signal_connect (GTK_OBJECT (shape_window), "expose_event",
 		      GTK_SIGNAL_FUNC (unblocked_expose),shape_window);
 #endif
+
+#ifdef RAPH_IS_HOME
+  gtk_signal_connect (GTK_OBJECT (drawing_area), "expose_event",
+		      GTK_SIGNAL_FUNC (repaint_da), drawing_area);
+
+  gtk_signal_connect (GTK_OBJECT (shape_drawing_area), "expose_event",
+		      GTK_SIGNAL_FUNC (maybeblocked_expose),
+		      shape_drawing_area);
+#else
   gtk_signal_connect (GTK_OBJECT (shape_fixed), "expose_event",
 		      GTK_SIGNAL_FUNC (blocked_expose),shape_fixed);
+#endif
 
   root_win = gdk_window_foreign_new (GDK_ROOT_WINDOW ());
 }
@@ -730,17 +857,27 @@ static void do_playback(void)
   gimp_tile_cache_size (0);
 
   init_preview_misc();
+
   build_dialog(gimp_image_base_type(image_id),
                gimp_image_get_filename(image_id));
 
   /* Make sure that whole preview is dirtied with pure-alpha */
-  total_alpha_preview();
+  total_alpha_preview(preview_data);
+
+#ifdef RAPH_IS_HOME
+  /*  gdk_draw_rgb_image (drawing_area->window,
+		      drawing_area->style->white_gc,
+		      0, 0, width, height,
+		      DITHERTYPE,
+		      preview_data, width * 3);*/
+#else
   for (i=0;i<height;i++)
   {
     gtk_preview_draw_row (preview,
                           &preview_data[3*i*width],
                           0, i, width);
   }
+#endif
   
   render_frame(0);
   show_frame();
@@ -786,7 +923,7 @@ render_frame(gint32 whichframe)
   if (((dispose==DISPOSE_REPLACE)||(whichframe==0)) &&
       gimp_drawable_has_alpha(drawable->id))
     {
-      total_alpha_preview();
+      total_alpha_preview(preview_data);
     }
 
 
@@ -897,21 +1034,39 @@ render_frame(gint32 whichframe)
 	  /* Display the preview buffer... finally. */
 	  if (shaping)
 	    {
+#ifdef RAPH_IS_HOME
+	      reshape_from_bitmap (shape_preview_mask);
+	      gdk_draw_rgb_image (shape_drawing_area->window,
+				  shape_drawing_area->style->white_gc,
+				  0, 0, width, height,
+				  DITHERTYPE,
+				  preview_data, width * 3);
+#else
 	      for (i=0;i<height;i++)
 		{
 		  gtk_preview_draw_row (shape_preview,
 					&preview_data[3*i*width],
 					0, i, width);
 		}
+#endif
 	    }
 	  else
 	    {
+#ifdef RAPH_IS_HOME
+	      reshape_from_bitmap (shape_preview_mask);
+	      gdk_draw_rgb_image (drawing_area->window,
+				  drawing_area->style->white_gc,
+				  0, 0, width, height,
+				  DITHERTYPE,
+				  preview_data, width * 3);
+#else
 	      for (i=0;i<height;i++)
 		{
 		  gtk_preview_draw_row (preview,
 					&preview_data[3*i*width],
 					0, i, width);
 		}
+#endif
 	    }
 	}
       else
@@ -991,6 +1146,20 @@ render_frame(gint32 whichframe)
 	    {
 	      if ((dispose!=DISPOSE_REPLACE)&&(whichframe!=0))
 		{
+#ifdef RAPH_IS_HOME
+		  int top, bottom;
+
+		  top = (rawy < 0) ? 0 : rawy;
+		  bottom = (rawy+rawheight) < height ?
+		    (rawy+rawheight) : height-1;
+
+		  reshape_from_bitmap (shape_preview_mask);
+		  gdk_draw_rgb_image (shape_drawing_area->window,
+				      shape_drawing_area->style->white_gc,
+				      0, top, width, bottom-top,
+				      DITHERTYPE,
+				      &preview_data[3*top*width], width * 3);
+#else
 		  for (i=rawy;i<rawy+rawheight;i++)
 		    {
 		      if (i>=0 && i<height)
@@ -998,21 +1167,44 @@ render_frame(gint32 whichframe)
 					      &preview_data[3*i*width],
 					      0, i, width);
 		    }
+#endif
 		}
 	      else
 		{
+#ifdef RAPH_IS_HOME
+		  reshape_from_bitmap (shape_preview_mask);
+		  gdk_draw_rgb_image (shape_drawing_area->window,
+				      shape_drawing_area->style->white_gc,
+				      0, 0, width, height,
+				      DITHERTYPE,
+				      preview_data, width * 3);
+#else
 		  for (i=0;i<height;i++)
 		    {
 		      gtk_preview_draw_row (shape_preview,
 					    &preview_data[3*i*width],
 					    0, i, width);
 		    }
+#endif
 		}
 	    }
 	  else
 	    {
 	      if ((dispose!=DISPOSE_REPLACE)&&(whichframe!=0))
 		{
+#ifdef RAPH_IS_HOME
+		  int top, bottom;
+
+		  top = (rawy < 0) ? 0 : rawy;
+		  bottom = (rawy+rawheight) < height ?
+		    (rawy+rawheight) : height-1;
+
+		  gdk_draw_rgb_image (drawing_area->window,
+				      drawing_area->style->white_gc,
+				      0, top, width, bottom-top,
+				      DITHERTYPE,
+				      &preview_data[3*top*width], width * 3);
+#else
 		  for (i=rawy;i<rawy+rawheight;i++)
 		    {
 		      if (i>=0 && i<height)
@@ -1020,15 +1212,24 @@ render_frame(gint32 whichframe)
 					      &preview_data[3*i*width],
 					      0, i, width);
 		    }
+#endif
 		}
 	      else
 		{
+#ifdef RAPH_IS_HOME
+		  gdk_draw_rgb_image (drawing_area->window,
+				      drawing_area->style->white_gc,
+				      0, 0, width, height,
+				      DITHERTYPE,
+				      preview_data, width * 3);
+#else
 		  for (i=0;i<height;i++)
 		    {
 		      gtk_preview_draw_row (preview,
 					    &preview_data[3*i*width],
 					    0, i, width);
 		    }
+#endif
 		}
 	    }
 	}
@@ -1107,21 +1308,38 @@ render_frame(gint32 whichframe)
 	  /* Display the preview buffer... finally. */
 	  if (shaping)
 	    {
+#ifdef RAPH_IS_HOME
+	      reshape_from_bitmap (shape_preview_mask);
+	      gdk_draw_rgb_image (shape_drawing_area->window,
+				  shape_drawing_area->style->white_gc,
+				  0, 0, width, height,
+				  DITHERTYPE,
+				  preview_data, width * 3);
+#else
 	      for (i=0;i<height;i++)
 		{
 		  gtk_preview_draw_row (shape_preview,
 					&preview_data[3*i*width],
 					0, i, width);
 		}
+#endif
 	    }
 	  else
 	    {
+#ifdef RAPH_IS_HOME
+	      gdk_draw_rgb_image (drawing_area->window,
+				  drawing_area->style->white_gc,
+				  0, 0, width, height,
+				  DITHERTYPE,
+				  preview_data, width * 3);
+#else
 	      for (i=0;i<height;i++)
 		{
 		  gtk_preview_draw_row (preview,
 					&preview_data[3*i*width],
 					0, i, width);
 		}
+#endif
 	    }
 	}
       else
@@ -1207,6 +1425,20 @@ render_frame(gint32 whichframe)
 	    {
 	      if ((dispose!=DISPOSE_REPLACE)&&(whichframe!=0))
 		{
+#ifdef RAPH_IS_HOME
+		  int top, bottom;
+
+		  top = (rawy < 0) ? 0 : rawy;
+		  bottom = (rawy+rawheight) < height ?
+		    (rawy+rawheight) : height-1;
+
+		  reshape_from_bitmap (shape_preview_mask);
+		  gdk_draw_rgb_image (shape_drawing_area->window,
+				      shape_drawing_area->style->white_gc,
+				      0, top, width, bottom-top,
+				      DITHERTYPE,
+				      &preview_data[3*top*width], width * 3);
+#else
 		  for (i=rawy;i<rawy+rawheight;i++)
 		    {
 		      if (i>=0 && i<height)
@@ -1214,21 +1446,44 @@ render_frame(gint32 whichframe)
 					      &preview_data[3*i*width],
 					      0, i, width);
 		    }
+#endif
 		}
 	      else
 		{
+#ifdef RAPH_IS_HOME
+		  reshape_from_bitmap (shape_preview_mask);
+		  gdk_draw_rgb_image (shape_drawing_area->window,
+				      shape_drawing_area->style->white_gc,
+				      0, 0, width, height,
+				      DITHERTYPE,
+				      preview_data, width * 3);
+#else
 		  for (i=0;i<height;i++)
 		    {
 		      gtk_preview_draw_row (shape_preview,
 					    &preview_data[3*i*width],
 					    0, i, width);
 		    }
+#endif
 		}
 	    }
 	  else
 	    {
 	      if ((dispose!=DISPOSE_REPLACE)&&(whichframe!=0))
 		{
+#ifdef RAPH_IS_HOME
+		  int top, bottom;
+
+		  top = (rawy < 0) ? 0 : rawy;
+		  bottom = (rawy+rawheight) < height ?
+		    (rawy+rawheight) : height-1;
+
+		  gdk_draw_rgb_image (drawing_area->window,
+				      drawing_area->style->white_gc,
+				      0, top, width, bottom-top,
+				      DITHERTYPE,
+				      &preview_data[3*top*width], width * 3);
+#else
 		  for (i=rawy;i<rawy+rawheight;i++)
 		    {
 		      if (i>=0 && i<height)
@@ -1236,15 +1491,24 @@ render_frame(gint32 whichframe)
 					      &preview_data[3*i*width],
 					      0, i, width);
 		    }
+#endif
 		}
 	      else
 		{
+#ifdef RAPH_IS_HOME
+		  gdk_draw_rgb_image (drawing_area->window,
+				      drawing_area->style->white_gc,
+				      0, 0, width, height,
+				      DITHERTYPE,
+				      preview_data, width * 3);
+#else
 		  for (i=0;i<height;i++)
 		    {
 		      gtk_preview_draw_row (preview,
 					    &preview_data[3*i*width],
 					    0, i, width);
 		    }
+#endif
 		}
 	    }
 	}
@@ -1257,9 +1521,13 @@ render_frame(gint32 whichframe)
 }
 
 
+/* If we're using GDKRGB, we don't reshape in this function because
+   it's too late (GDKRGB is synchronous).  So this just updates the
+   progress bar. */
 static void
 show_frame(void)
 {
+#ifndef RAPH_IS_HOME
   GdkGC *gc;
 
   /* Tell GTK to physically draw the preview */
@@ -1288,6 +1556,7 @@ show_frame(void)
 
       gtk_widget_queue_draw(shape_window);
     }
+#endif /* ! RAPH_IS_HOME */
 
   /* update the dialog's progress bar */
   gtk_progress_bar_update (progress,
@@ -1326,11 +1595,16 @@ init_preview_misc(void)
 	  preview_alpha2_data[i*3 +2] = 102;
 	}
     }
+
+#ifdef RAPH_IS_HOME
+  drawing_area_data = preview_data;
+  shape_drawing_area_data = preview_data;
+#endif
 }
 
 
 static void
-total_alpha_preview(void)
+total_alpha_preview(guchar* ptr)
 {
   int i;
 
@@ -1343,9 +1617,9 @@ total_alpha_preview(void)
       for (i=0;i<height;i++)
 	{
 	  if (i&8)
-	    memcpy(&preview_data[i*3*width], preview_alpha1_data, 3*width);
+	    memcpy(&ptr[i*3*width], preview_alpha1_data, 3*width);
 	  else
-	    memcpy(&preview_data[i*3*width], preview_alpha2_data, 3*width);
+	    memcpy(&ptr[i*3*width], preview_alpha2_data, 3*width);
 	}
     }
 }
@@ -1436,8 +1710,15 @@ advance_frame_callback (GtkWidget *widget,
 			gpointer   data)
 {
   remove_timer();
+
+#ifdef RAPH_IS_HOME
+  timer = gtk_timeout_add (get_frame_duration((frame_number+1)%total_frames),
+			   (GtkFunction) advance_frame_callback, NULL);
+#else
   timer = gtk_timeout_add (get_frame_duration(frame_number),
 			   (GtkFunction) advance_frame_callback, NULL);
+#endif
+
   show_frame();
   do_step();
 
@@ -1451,7 +1732,8 @@ playstop_callback (GtkWidget *widget,
   if (!playing)
     { /* START PLAYING */
       playing = TRUE;
-      timer = gtk_timeout_add (0, (GtkFunction) advance_frame_callback, NULL);
+      timer = gtk_timeout_add (get_frame_duration(frame_number),
+			       (GtkFunction) advance_frame_callback, NULL);
     }
   else
     { /* STOP PLAYING */
