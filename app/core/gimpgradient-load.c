@@ -219,8 +219,11 @@ static void      svg_parser_end_element   (GMarkupParseContext  *context,
                                            gpointer              user_data,
                                            GError              **error);
 
-static SvgStop * svg_parse_gradient_stop  (const gchar         **names,
-                                           const gchar         **values);
+static GimpGradientSegment *
+                 svg_parser_gradient_segments   (GList          *stops);
+
+static SvgStop * svg_parse_gradient_stop        (const gchar   **names,
+                                                 const gchar   **values);
 
 
 static const GMarkupParser markup_parser =
@@ -367,42 +370,53 @@ svg_parser_end_element (GMarkupParseContext  *context,
   else if (parser->gradient && parser->stops &&
            strcmp (element_name, "linearGradient") == 0)
     {
-      GimpGradientSegment *seg  = gimp_gradient_segment_new ();
-      GimpGradientSegment *next = NULL;
-      SvgStop             *stop = parser->stops->data;
-      GList               *list;
-
-      seg->left_color  = stop->color;
-      seg->right_color = stop->color;
-
-      /*  the list of offsets is sorted from largest to smallest  */
-      for (list = g_list_next (parser->stops); list; list = g_list_next (list))
-        {
-          seg->left   = stop->offset;
-          seg->middle = (seg->left + seg->right) / 2.0;
-
-          next = seg;
-          seg  = gimp_gradient_segment_new ();
-
-          seg->next  = next;
-          next->prev = seg;
-
-          seg->right       = stop->offset;
-          seg->right_color = stop->color;
-
-          stop = list->data;
-
-          seg->left_color = stop->color;
-        }
-
-      seg->middle = (seg->left + seg->right) / 2.0;
-
-      parser->gradient->segments = seg;
+      parser->gradient->segments = svg_parser_gradient_segments (parser->stops);
 
       parser->state = SVG_STATE_DONE;
     }
 }
 
+static GimpGradientSegment *
+svg_parser_gradient_segments (GList *stops)
+{
+  GimpGradientSegment *segment = gimp_gradient_segment_new ();
+  SvgStop             *stop    = stops->data;
+  GList               *list;
+
+  segment->left_color  = stop->color;
+  segment->right_color = stop->color;
+
+  /*  the list of offsets is sorted from largest to smallest  */
+  for (list = g_list_next (stops); list; list = g_list_next (list))
+    {
+      GimpGradientSegment *next = segment;
+
+      segment->left   = stop->offset;
+      segment->middle = (segment->left + segment->right) / 2.0;
+
+      segment = gimp_gradient_segment_new ();
+
+      segment->next = next;
+      next->prev    = segment;
+
+      segment->right       = stop->offset;
+      segment->right_color = stop->color;
+
+      stop = list->data;
+
+      segment->left_color  = stop->color;
+    }
+
+  segment->middle = (segment->left + segment->right) / 2.0;
+
+  if (stop->offset > 0.0)
+    segment->right_color = stop->color;
+
+  /*  FIXME: remove empty segments here or add a GimpGradient API to do that
+   */
+
+  return segment;
+}
 
 static void
 svg_parse_gradient_stop_style_prop (SvgStop     *stop,

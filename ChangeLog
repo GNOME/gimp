@@ -1,5 +1,10 @@
 2004-07-23  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpgradient-load.c (svg_parser_end_element): fixed
+	handling of the last gradient segment and did some code cleanup.
+
+2004-07-23  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpgradient-load.c (gimp_gradient_load_svg): improved
 	error message.
 	(svg_parser_end_element): don't crash on empty gradient definitions.
