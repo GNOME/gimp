@@ -1,5 +1,14 @@
 2003-04-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpvectortool.[ch]: made
+	gimp_vector_tool_clear_vectors() private. Connect to the vector's
+	"changed" signal (and do nothing in the callback for now...).
+	Alwayws set tool->gdisp in button_press(). Use for() loops to
+	iterate strokes. Fixed gimp_vector_tool_set_vectors() to hopefully
+	do the right thing in all cases now. s/ptr/list/g. Cleanup.
+
+2003-04-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/vectors/gimpvectors.[ch]: made "changed" a real signal,
 	don't crash when iterating a NULL stroke list, cleanup.
 

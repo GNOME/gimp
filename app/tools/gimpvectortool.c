@@ -50,7 +50,7 @@
 #include "gimp-intl.h"
 
 
-#define  TARGET         9
+#define TARGET 9
 
 
 /*  local function prototypes  */
@@ -87,6 +87,10 @@ static gboolean   gimp_vector_tool_on_handle   (GimpTool        *tool,
                                                 GimpAnchor     **ret_anchor);
 
 static void   gimp_vector_tool_draw            (GimpDrawTool    *draw_tool);
+
+static void   gimp_vector_tool_clear_vectors   (GimpVectorTool  *vector_tool);
+static void   gimp_vector_tool_vectors_changed (GimpVectors     *vectors,
+                                                GimpVectorTool  *vector_tool);
 
 
 static GimpSelectionToolClass *parent_class = NULL;
@@ -230,7 +234,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
     {
       /* gimp_tool_pop_status (tool); */
     }
-  
+
   if (vector_tool->vectors &&
       gdisp->gimage != GIMP_ITEM (vector_tool->vectors)->gimage)
     gimp_vector_tool_clear_vectors (vector_tool);
@@ -256,6 +260,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
                                               FALSE))
         {
           gimp_draw_tool_pause (GIMP_DRAW_TOOL (vector_tool));
+
           if (state & GDK_MOD1_MASK)
             vector_tool->restriction = GIMP_ANCHOR_FEATURE_SYMMETRIC;
           else
@@ -306,13 +311,16 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
           gimp_image_add_vectors (gdisp->gimage, vectors, -1);
 
-          vector_tool->vectors = vectors;
-          g_object_ref (G_OBJECT (vectors));
+          vector_tool->vectors = g_object_ref (vectors);
 
           g_signal_connect_object (vectors, "removed", 
                                    G_CALLBACK (gimp_vector_tool_clear_vectors),
                                    vector_tool,
                                    G_CONNECT_SWAPPED);
+          g_signal_connect_object (vectors, "changed",
+                                   G_CALLBACK (gimp_vector_tool_vectors_changed),
+                                   vector_tool,
+                                   0);
         }
 
       stroke = gimp_bezier_stroke_new (coords);
@@ -325,9 +333,6 @@ gimp_vector_tool_button_press (GimpTool        *tool,
       gimp_stroke_anchor_select (stroke, anchor, TRUE);
 
       vector_tool->function = VECTORS_MOVING;
-
-      /*  set the gdisplay  */
-      tool->gdisp = gdisp;
 
       if (gimp_tool_control_is_active (tool->control))
 	{
@@ -351,9 +356,6 @@ gimp_vector_tool_button_press (GimpTool        *tool,
       if (anchor)
         vector_tool->cur_anchor = anchor;
 
-      /*  set the gdisplay  */
-      tool->gdisp = gdisp;
-
       if (gimp_tool_control_is_active (tool->control))
 	{
 	  /* gimp_tool_pop_status (tool); */
@@ -364,6 +366,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
       gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
     }
 
+  tool->gdisp = gdisp;
   gimp_tool_control_activate (tool->control);
 }
 
@@ -388,7 +391,6 @@ gimp_vector_tool_button_release (GimpTool        *tool,
       viewable = GIMP_VIEWABLE (vector_tool->vectors);
       gimp_viewable_invalidate_preview (viewable);
     }
-
 }
 
 
@@ -426,16 +428,18 @@ gimp_vector_tool_motion (GimpTool        *tool,
 }
 
 
-static gboolean   gimp_vector_tool_on_handle   (GimpTool        *tool,
-                                                GimpCoords      *coords,
-                                                GimpAnchorType   preferred,
-                                                GimpAnchor     **ret_anchor)
+static gboolean
+gimp_vector_tool_on_handle (GimpTool        *tool,
+                            GimpCoords      *coords,
+                            GimpAnchorType   preferred,
+                            GimpAnchor     **ret_anchor)
 {
   GimpVectorTool *vector_tool;
   GimpStroke     *stroke = NULL;
-  GimpAnchor     *anchor = NULL, *pref_anchor = NULL;
+  GimpAnchor     *anchor = NULL;
+  GimpAnchor     *pref_anchor = NULL;
   GList          *list, *anchor_list = NULL;
-  gdouble         dx, dy, pref_mindist= -1, mindist = -1;
+  gdouble         dx, dy, pref_mindist = -1, mindist = -1;
 
   vector_tool = GIMP_VECTOR_TOOL (tool);
 
@@ -460,17 +464,20 @@ static gboolean   gimp_vector_tool_on_handle   (GimpTool        *tool,
     {
       dx = coords->x - ((GimpAnchor *) anchor_list->data)->position.x;
       dy = coords->y - ((GimpAnchor *) anchor_list->data)->position.y;
+
       if (mindist < 0 || mindist > dx * dx + dy * dy)
         {
           mindist = dx * dx + dy * dy;
           anchor = (GimpAnchor *) anchor_list->data;
         }
+
       if ((pref_mindist < 0 || pref_mindist > dx * dx + dy * dy) &&
           ((GimpAnchor *) anchor_list->data)->type == preferred)
         {
           pref_mindist = dx * dx + dy * dy;
           pref_anchor = (GimpAnchor *) anchor_list->data;
         }
+
       anchor_list = anchor_list->next;
     }
 
@@ -538,7 +545,8 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
   GimpVectors     *vectors;
   GArray          *coords;
   gboolean         closed;
-  GList           *draw_anchors, *ptr;
+  GList           *draw_anchors;
+  GList           *list;
 
   vector_tool = GIMP_VECTOR_TOOL (draw_tool);
   tool        = GIMP_TOOL (draw_tool);
@@ -551,20 +559,18 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
   while ((cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke)))
     {
       /* anchor handles */
-      cur_anchor = NULL;
       draw_anchors = gimp_stroke_get_draw_anchors (cur_stroke);
-      ptr = draw_anchors;
 
-      while (ptr) 
+      for (list = draw_anchors; list; list = g_list_next (list))
         {
-          cur_anchor = (GimpAnchor *) ptr->data;
+          cur_anchor = (GimpAnchor *) list->data;
 
           if (cur_anchor->type == GIMP_ANCHOR_ANCHOR)
             {
               gimp_draw_tool_draw_handle (draw_tool,
                                           cur_anchor->selected ?
-                                            GIMP_HANDLE_CIRCLE:
-                                            GIMP_HANDLE_FILLED_CIRCLE,
+                                          GIMP_HANDLE_CIRCLE :
+                                          GIMP_HANDLE_FILLED_CIRCLE,
                                           cur_anchor->position.x,
                                           cur_anchor->position.y,
                                           TARGET,
@@ -572,28 +578,25 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
                                           GTK_ANCHOR_CENTER,
                                           FALSE);
             }
-          ptr = ptr->next;
         }
 
       g_list_free (draw_anchors);
 
       /* control handles */
       draw_anchors = gimp_stroke_get_draw_controls (cur_stroke);
-      ptr = draw_anchors;
 
-      while (ptr) 
+      for (list = draw_anchors; list; list = g_list_next (list))
         {
-          cur_anchor = (GimpAnchor *) ptr->data;
+          cur_anchor = (GimpAnchor *) list->data;
 
           gimp_draw_tool_draw_handle (draw_tool,
                                       GIMP_HANDLE_SQUARE,
                                       cur_anchor->position.x,
                                       cur_anchor->position.y,
-                                      TARGET-2,
-                                      TARGET-2,
+                                      TARGET - 2,
+                                      TARGET - 2,
                                       GTK_ANCHOR_CENTER,
                                       FALSE);
-          ptr = ptr->next;
         }
 
       g_list_free (draw_anchors);
@@ -604,11 +607,14 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
       if (coords->len % 2 == 0)
         {
           gint i;
-          for (i=0; i < coords->len; i += 2)
+
+          for (i = 0; i < coords->len; i += 2)
             gimp_draw_tool_draw_strokes (draw_tool,
-                                       &(g_array_index (coords, GimpCoords, i)),
-                                       2, FALSE, FALSE);
+                                         &g_array_index (coords,
+                                                         GimpCoords, i),
+                                         2, FALSE, FALSE);
         }
+
       g_array_free (coords, TRUE);
 
       /* the stroke itself */
@@ -616,7 +622,7 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
 
       if (coords->len)
         gimp_draw_tool_draw_strokes (draw_tool,
-                                     & (g_array_index (coords, GimpCoords, 0)),
+                                     &g_array_index (coords, GimpCoords, 0),
                                      coords->len, FALSE, FALSE);
 
       g_array_free (coords, TRUE);
@@ -624,11 +630,20 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
 }
 
 
-void
+static void
 gimp_vector_tool_clear_vectors (GimpVectorTool *vector_tool)
 {
   g_return_if_fail (GIMP_IS_VECTOR_TOOL (vector_tool));
+
   gimp_vector_tool_set_vectors (vector_tool, NULL);
+}
+
+
+static void
+gimp_vector_tool_vectors_changed (GimpVectors    *vectors,
+                                  GimpVectorTool *vector_tool)
+{
+  g_print ("vectors changed\n");
 }
 
 
@@ -645,14 +660,16 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
 
   draw_tool = GIMP_DRAW_TOOL (vector_tool);
   tool      = GIMP_TOOL (vector_tool);
-  item      = GIMP_ITEM (vectors);
+
+  if (vectors)
+    item = GIMP_ITEM (vectors);
 
   if (vectors == vector_tool->vectors)
     return;
 
   if (draw_tool->gdisp)
     {
-      if (item && draw_tool->gdisp->gimage == item->gimage)
+      if (vectors && draw_tool->gdisp->gimage == item->gimage)
         gimp_draw_tool_pause (draw_tool);
       else
         gimp_draw_tool_stop (draw_tool);
@@ -663,7 +680,10 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
       g_signal_handlers_disconnect_by_func (vector_tool->vectors,
                                             gimp_vector_tool_clear_vectors,
                                             vector_tool);
-      g_object_unref (G_OBJECT (vector_tool->vectors));
+      g_signal_handlers_disconnect_by_func (vector_tool->vectors,
+                                            gimp_vector_tool_vectors_changed,
+                                            vector_tool);
+      g_object_unref (vector_tool->vectors);
     }
 
   vector_tool->vectors        = vectors;
@@ -672,20 +692,30 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
   vector_tool->active_anchors = NULL;
   vector_tool->function       = VECTORS_CREATING;
 
-  if (vector_tool->vectors)
+  if (! vector_tool->vectors)
     {
-      g_object_ref (G_OBJECT (vector_tool->vectors));
-      g_signal_connect_object (vectors, "removed", 
-                               G_CALLBACK (gimp_vector_tool_clear_vectors),
-                               vector_tool,
-                               G_CONNECT_SWAPPED);
+      tool->gdisp = NULL;
+      gimp_tool_control_halt (tool->control);
+
+      return;
     }
 
-  if (item && draw_tool->gdisp && draw_tool->gdisp->gimage == item->gimage)
+  g_object_ref (vectors);
+
+  g_signal_connect_object (vectors, "removed", 
+                           G_CALLBACK (gimp_vector_tool_clear_vectors),
+                           vector_tool,
+                           G_CONNECT_SWAPPED);
+  g_signal_connect_object (vectors, "changed",
+                           G_CALLBACK (gimp_vector_tool_vectors_changed),
+                           vector_tool,
+                           0);
+
+  if (draw_tool->gdisp && draw_tool->gdisp->gimage == item->gimage)
     {
       gimp_draw_tool_resume (draw_tool);
     }
-  else if (item && tool->gdisp && tool->gdisp->gimage == item->gimage)
+  else if (tool->gdisp && tool->gdisp->gimage == item->gimage)
     {
       gimp_draw_tool_start (draw_tool, tool->gdisp);
     }
@@ -695,10 +725,9 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
       GimpDisplay *gdisp;
 
       context = gimp_get_current_context (tool->tool_info->gimp);
+      gdisp   = gimp_context_get_display (context);
 
-      gdisp = gimp_context_get_display (context);
-
-      if (item && gdisp->gimage != item->gimage)
+      if (! gdisp || gdisp->gimage != item->gimage)
         {
           GList *list;
 
@@ -717,14 +746,14 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
                   break;
                 }
             }
-
-          if (! gdisp)
-            return;
         }
 
-      tool->gdisp = gdisp;
-      gimp_tool_control_activate (tool->control);
+      if (gdisp)
+        {
+          tool->gdisp = gdisp;
+          gimp_tool_control_activate (tool->control);
 
-      gimp_draw_tool_start (draw_tool, tool->gdisp);
+          gimp_draw_tool_start (draw_tool, tool->gdisp);
+        }
     }
 }
