@@ -994,6 +994,22 @@ GIMP_PATTERN_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpselection</FILE>
+<TITLE>GimpSelection</TITLE>
+gimp_selection_new
+gimp_selection_push_undo
+gimp_selection_invalidate
+<SUBSECTION Standard>
+GIMP_SELECTION
+GIMP_IS_SELECTION
+GIMP_TYPE_SELECTION
+gimp_selection_get_type
+GIMP_SELECTION_CLASS
+GIMP_IS_SELECTION_CLASS
+GIMP_SELECTION_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimptemplate</FILE>
 <TITLE>GimpTemplate</TITLE>
 GimpTemplate
@@ -2520,6 +2536,10 @@ GimpBezierStroke
 gimp_bezier_stroke_new
 gimp_bezier_stroke_new_from_coords
 gimp_bezier_stroke_extend
+gimp_bezier_stroke_new_moveto
+gimp_bezier_stroke_lineto
+gimp_bezier_stroke_conicto
+gimp_bezier_stroke_cubicto
 <SUBSECTION Standard>
 GIMP_BEZIER_STROKE
 GIMP_IS_BEZIER_STROKE
@@ -2540,6 +2560,7 @@ gimp_stroke_anchor_select
 gimp_stroke_anchor_move_relative
 gimp_stroke_anchor_move_absolute
 gimp_stroke_close
+gimp_stroke_is_empty
 gimp_stroke_anchor_convert
 gimp_stroke_anchor_delete
 gimp_stroke_get_length
@@ -6231,7 +6252,6 @@ plug_in_def_free
 plug_in_def_add_proc_def
 plug_in_def_set_locale_domain_name
 plug_in_def_set_locale_domain_path
-plug_in_def_set_help_path
 plug_in_def_set_mtime
 plug_in_def_set_needs_query
 plug_in_def_set_has_init
@@ -6326,7 +6346,6 @@ plug_ins_def_add_from_rc
 plug_ins_temp_proc_def_add
 plug_ins_temp_proc_def_remove
 plug_ins_locale_domain
-plug_ins_help_path
 plug_ins_proc_def_find
 plug_ins_extensions_parse
 plug_ins_image_types_parse
@@ -6712,7 +6731,6 @@ gimp_get_mod_name_alt
 gimp_get_mod_separator
 gimp_get_screen_resolution
 gimp_rgb_get_gdk_color
-gimp_menu_path_strip_uline
 </SECTION>
 
 <SECTION>
@@ -6812,7 +6830,6 @@ GimpItemFactoryEntry
 GimpItemFactorySetupFunc
 GimpItemFactoryUpdateFunc
 GimpMenuPositionFunc
-GimpStrokeItemFunc
 GimpSelectionToVectorsFunc
 </SECTION>
 

@@ -1,5 +1,11 @@
 2003-09-03  Sven Neumann  <sven@gimp.org>
 
+	* app/Makefile.am (IGNORE_HFILES): added some more files to ignore.
+
+	* app/app-sections.txt: some updates, a lot more are needed.
+
+2003-09-03  Sven Neumann  <sven@gimp.org>
+
 	* libgimpcolor/tmpl/gimpcolorspace.sgml: updated.
 
 2003-08-31  Sven Neumann  <sven@gimp.org>
