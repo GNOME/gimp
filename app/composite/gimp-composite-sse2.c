@@ -296,7 +296,7 @@ gimp_composite_difference_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
 
 
 void
-gimp_composite_dodge_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
+xxxgimp_composite_dodge_rgba8_rgba8_rgba8_sse2 (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 

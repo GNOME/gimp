@@ -85,6 +85,23 @@ typedef struct
 } gimp_rgba32_t;
 #endif
 
+extern void gimp_composite_regression_print_vector (guchar vector[],
+																																																				GimpPixelFormat format,
+																																																				gulong n_pixels);
+
+extern void gimp_composite_regression_print_vector_v8 (gimp_v8_t v[],
+																																																							unsigned int n_pixels);
+
+extern void gimp_composite_regression_print_vector_va8 (gimp_va8_t v[],
+																																																								unsigned int n_pixels);
+
+extern void gimp_composite_regression_print_vector_rgb8 (gimp_rgb8_t v[],
+																																																									unsigned int n_pixels);
+
+extern void gimp_composite_regression_print_vector_rgba8 (gimp_rgba8_t v[],
+																																																										unsigned int n_pixels);
+
+
 extern double gimp_composite_regression_time_function (u_long iterations,
 																																																							void (*func)(),
 																																																							GimpCompositeContext *ctx);

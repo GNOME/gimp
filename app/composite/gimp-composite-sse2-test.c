@@ -43,9 +43,9 @@ gimp_composite_sse2_test (int iterations, int n_pixels)
       return (0);
     }
 
-  rgba8A =  gimp_composite_regression_fixed_rgba8(n_pixels+1);
-  rgba8B =  gimp_composite_regression_fixed_rgba8(n_pixels+1);
-  rgba8M =  gimp_composite_regression_fixed_rgba8(n_pixels+1);
+  rgba8A =  gimp_composite_regression_random_rgba8(n_pixels+1);
+  rgba8B =  gimp_composite_regression_random_rgba8(n_pixels+1);
+  rgba8M =  gimp_composite_regression_random_rgba8(n_pixels+1);
   rgba8D1 = (gimp_rgba8_t *) calloc(sizeof(gimp_rgba8_t), n_pixels+1);
   rgba8D2 = (gimp_rgba8_t *) calloc(sizeof(gimp_rgba8_t), n_pixels+1);
   va8A =    (gimp_va8_t *)   calloc(sizeof(gimp_va8_t), n_pixels+1);
@@ -97,17 +97,6 @@ gimp_composite_sse2_test (int iterations, int n_pixels)
       return (1);
     }
   gimp_composite_regression_timer_report ("difference", ft0, ft1);
-
-  gimp_composite_context_init (&special_ctx, GIMP_COMPOSITE_DODGE, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, n_pixels, (unsigned char *) rgba8A, (unsigned char *) rgba8B, (unsigned char *) rgba8B, (unsigned char *) rgba8D2);
-  gimp_composite_context_init (&generic_ctx, GIMP_COMPOSITE_DODGE, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, n_pixels, (unsigned char *) rgba8A, (unsigned char *) rgba8B, (unsigned char *) rgba8B, (unsigned char *) rgba8D1);
-  ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
-  ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_dodge_rgba8_rgba8_rgba8_sse2, &special_ctx);
-  if (gimp_composite_regression_compare_contexts ("dodge", &generic_ctx, &special_ctx))
-    {
-      printf("dodge failed\n");
-      return (1);
-    }
-  gimp_composite_regression_timer_report ("dodge", ft0, ft1);
 
   gimp_composite_context_init (&special_ctx, GIMP_COMPOSITE_GRAIN_EXTRACT, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, n_pixels, (unsigned char *) rgba8A, (unsigned char *) rgba8B, (unsigned char *) rgba8B, (unsigned char *) rgba8D2);
   gimp_composite_context_init (&generic_ctx, GIMP_COMPOSITE_GRAIN_EXTRACT, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, n_pixels, (unsigned char *) rgba8A, (unsigned char *) rgba8B, (unsigned char *) rgba8B, (unsigned char *) rgba8D1);
@@ -185,7 +174,7 @@ main (int argc, char *argv[])
       else
         {
           printf("Usage: gimp-composites-*-test [-i|--iterations n] [-n|--n-pixels n]");
-          argc--, argv++;
+          exit(1);
         }
     }
 

@@ -336,8 +336,6 @@ xxxgimp_composite_divide_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
-  printf("A=%d B=%d %d  ", op.pixelformat_A, op.pixelformat_B, GIMP_PIXELFORMAT_RGBA8); fflush(stdout);
-
   asm volatile ("  movq    %0, %%mm0\n"
                 "\tmovq    %1, %%mm7\n"
                 :
@@ -433,7 +431,7 @@ xxxgimp_composite_divide_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
 }
 
 void
-gimp_composite_dodge_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
+xxxgimp_composite_dodge_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 

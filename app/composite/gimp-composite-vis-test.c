@@ -43,9 +43,9 @@ gimp_composite_vis_test (int iterations, int n_pixels)
       return (0);
     }
 
-  rgba8A =  gimp_composite_regression_fixed_rgba8(n_pixels+1);
-  rgba8B =  gimp_composite_regression_fixed_rgba8(n_pixels+1);
-  rgba8M =  gimp_composite_regression_fixed_rgba8(n_pixels+1);
+  rgba8A =  gimp_composite_regression_random_rgba8(n_pixels+1);
+  rgba8B =  gimp_composite_regression_random_rgba8(n_pixels+1);
+  rgba8M =  gimp_composite_regression_random_rgba8(n_pixels+1);
   rgba8D1 = (gimp_rgba8_t *) calloc(sizeof(gimp_rgba8_t), n_pixels+1);
   rgba8D2 = (gimp_rgba8_t *) calloc(sizeof(gimp_rgba8_t), n_pixels+1);
   va8A =    (gimp_va8_t *)   calloc(sizeof(gimp_va8_t), n_pixels+1);
@@ -97,7 +97,7 @@ main (int argc, char *argv[])
       else
         {
           printf("Usage: gimp-composites-*-test [-i|--iterations n] [-n|--n-pixels n]");
-          argc--, argv++;
+          exit(1);
         }
     }
 

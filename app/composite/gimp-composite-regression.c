@@ -1,3 +1,26 @@
+/* -*- mode: c tab-width: 2; c-basic-indent: 2; indent-tabs-mode: nil -*-
+ * The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ *
+ * Gimp image compositing
+ * Copyright (C) 2003  Helvetix Victorinox, a pseudonym, <helvetix@gimp.org>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
 #include "config.h"
 
 #include <stdio.h>
@@ -14,6 +37,115 @@
 #include "gimp-composite-regression.h"
 #include "gimp-composite-util.h"
 #include "gimp-composite-generic.h"
+
+/**
+ * gimp_composite_regression_print_vector:
+ * @vector: 
+ * @format: 
+ * @n_pixels: 
+ * 
+ * 
+ **/
+void
+gimp_composite_regression_print_vector (guchar vector[], GimpPixelFormat format, gulong n_pixels)
+{
+		switch (format)
+				{
+				case GIMP_PIXELFORMAT_V8:
+						gimp_composite_regression_print_vector_v8 ((gimp_v8_t *) vector, n_pixels);
+						break;
+
+				case GIMP_PIXELFORMAT_VA8:
+						gimp_composite_regression_print_vector_va8 ((gimp_va8_t *) vector, n_pixels);
+						break;
+
+				case GIMP_PIXELFORMAT_RGB8:
+						gimp_composite_regression_print_vector_rgb8 ((gimp_rgb8_t *) vector, n_pixels);
+						break;
+
+				case GIMP_PIXELFORMAT_RGBA8:
+						gimp_composite_regression_print_vector_rgba8 ((gimp_rgba8_t *) vector, n_pixels);
+						break;
+
+				case GIMP_PIXELFORMAT_ANY:
+				case GIMP_PIXELFORMAT_N:
+				default:
+						break;
+				}
+}
+
+
+/**
+ * gimp_composite_regression_print_vector_v8:
+ * @v: 
+ * @n_pixels: 
+ * 
+ * 
+ **/
+void
+gimp_composite_regression_print_vector_v8 (gimp_v8_t v[], unsigned int n_pixels)
+{
+		unsigned int i;
+
+		for (i = 0; i < n_pixels; i++)
+				{
+						printf ("#%02x\n", v[i].v);
+				}
+}
+
+/**
+ * gimp_composite_regression_print_vector_va8:
+ * @v: 
+ * @n_pixels: 
+ * 
+ * 
+ **/
+void
+gimp_composite_regression_print_vector_va8 (gimp_va8_t v[], unsigned int n_pixels)
+{
+		unsigned int i;
+
+		for (i = 0; i < n_pixels; i++)
+				{
+						printf ("#%02x,%02X\n", v[i].v, v[i].a);
+				}
+}
+
+/**
+ * gimp_composite_regression_print_vector_rgb8:
+ * @rgb8: 
+ * @n_pixels: 
+ * 
+ * 
+ **/
+void
+gimp_composite_regression_print_vector_rgb8 (gimp_rgb8_t v[], unsigned int n_pixels)
+{
+		unsigned int i;
+
+		for (i = 0; i < n_pixels; i++)
+				{
+						printf ("#%02x%02x%02x\n", v[i].r, v[i].g, v[i].b);
+				}
+}
+
+/**
+ * gimp_composite_regression_print_vector_rgba8:
+ * @v: 
+ * @n_pixels: 
+ * 
+ * 
+ **/
+void
+gimp_composite_regression_print_vector_rgba8 (gimp_rgba8_t v[], unsigned int n_pixels)
+{
+		unsigned int i;
+
+		for (i = 0; i < n_pixels; i++)
+				{
+						printf ("#%02x%02x%02x,%02X\n", v[i].r, v[i].g, v[i].b, v[i].a);
+				}
+}
 
 /**
  * gimp_composite_regression_print_rgba8:

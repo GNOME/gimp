@@ -506,7 +506,7 @@ xxxgimp_composite_divide_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
 }
 
 void
-gimp_composite_dodge_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
+xxxgimp_composite_dodge_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
 {
   GimpCompositeContext op = *_op;
 
