@@ -1,3 +1,11 @@
+2002-04-16  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimppreview.c (gimp_preview_expose_event): don't draw
+	anything if an idle update is pending.
+	
+	* libgimpwidgets/gimpcolorarea.c (gimp_color_area_expose): reordered
+	conditions so that the one that is most expensive to check comes last.
+
 2002-04-15  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig-serialize.c: serialize doubles and floats

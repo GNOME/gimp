@@ -219,7 +219,7 @@ gimp_color_area_expose (GtkWidget      *widget,
 
   gca = GIMP_COLOR_AREA (widget);
   
-  if (!GTK_WIDGET_DRAWABLE (widget) || !gca->buf || gca->idle_id)
+  if (gca->idle_id || ! gca->buf || ! GTK_WIDGET_DRAWABLE (widget))
     return FALSE;
 
   buf = gca->buf + event->area.y * gca->rowstride + event->area.x * 3;

@@ -293,7 +293,7 @@ gimp_preview_expose_event (GtkWidget      *widget,
 
   preview = GIMP_PREVIEW (widget);
 
-  if (! GTK_WIDGET_DRAWABLE (widget) || ! preview->buffer)
+  if (preview->idle_id || ! preview->buffer || ! GTK_WIDGET_DRAWABLE (widget))
     return FALSE;
 
   buf_rect.width  = preview->width  + 2 * preview->border_width;
