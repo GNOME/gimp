@@ -1,3 +1,10 @@
+2001-12-01  Abel Cheung  <maddog@linux.org.hk>
+
+	* configure.in: Added zh_CN to ALL_LINGUAS (simplified Chinese
+	  translation was taken from HEAD branch).
+	* tips/gimp_tips.zh_CN.txt: Take simplified Chinese tips file
+	  HEAD branch.
+
 Thu Nov 29 14:25:50 PST 2001 Manish Singh <yosh@gimp.org>
 
 	* acinclude.m4: remove libtool and python stuff, stick contents
