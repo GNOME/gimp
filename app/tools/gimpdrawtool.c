@@ -835,8 +835,8 @@ gimp_draw_tool_draw_boundary (GimpDrawTool *draw_tool,
                                          &x, &y,
                                          FALSE);
 
-      gdk_segs[n_gdk_segs].x1 = floor (CLAMP (x, -1, xmax));
-      gdk_segs[n_gdk_segs].y1 = floor (CLAMP (y, -1, ymax));
+      gdk_segs[n_gdk_segs].x1 = RINT (CLAMP (x, -1, xmax));
+      gdk_segs[n_gdk_segs].y1 = RINT (CLAMP (y, -1, ymax));
 
       gimp_display_shell_transform_xy_f (shell,
                                          bound_segs[i].x2 + offset_x,
@@ -844,8 +844,8 @@ gimp_draw_tool_draw_boundary (GimpDrawTool *draw_tool,
                                          &x, &y,
                                          FALSE);
 
-      gdk_segs[n_gdk_segs].x2 = floor (CLAMP (x, -1, xmax));
-      gdk_segs[n_gdk_segs].y2 = floor (CLAMP (y, -1, ymax));
+      gdk_segs[n_gdk_segs].x2 = RINT (CLAMP (x, -1, xmax));
+      gdk_segs[n_gdk_segs].y2 = RINT (CLAMP (y, -1, ymax));
 
       if (gdk_segs[n_gdk_segs].x1 == gdk_segs[n_gdk_segs].x2 &&
           gdk_segs[n_gdk_segs].y1 == gdk_segs[n_gdk_segs].y2)

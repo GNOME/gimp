@@ -1,5 +1,16 @@
 2003-07-16  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimppainttool.c (gimp_paint_tool_draw): add a small
+	EPSILON to the brush coordinates before rounding them (fixes
+	off-by-one floating point rounding fnord for "hard edge" painting
+	where e.g. (5.0 - (3.0 / 2.0)) was rounded to 3.0 instead of 4.0).
+
+	* app/tools/gimpdrawtool.c (gimp_draw_tool_draw_boundary): use
+	RINT() instead of floor() to round the transformed boundary to
+	GdkSegments.
+
+2003-07-16  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimptransformtool.[ch]: implemented transforming of
 	paths. Cleaned up initialize() and button_press() to activate the
 	tool correctly. Use the transform tool's CREATING state *only*

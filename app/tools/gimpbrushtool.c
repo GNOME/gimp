@@ -182,8 +182,8 @@ gimp_paint_tool_init (GimpPaintTool *paint_tool)
 
   paint_tool->brush_bound_segs   = NULL;
   paint_tool->n_brush_bound_segs = 0;
-  paint_tool->brush_x            = 0;
-  paint_tool->brush_y            = 0;
+  paint_tool->brush_x            = 0.0;
+  paint_tool->brush_y            = 0.0;
 }
 
 static void
@@ -734,8 +734,16 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
 
               if (paint_options->hard)
                 {
-                  brush_x = RINT (brush_x);
-                  brush_y = RINT (brush_y);
+#define EPSILON 0.000001
+
+                  /*  Add EPSILON before rounding since e.g.
+                   *  (5.0 - 0.5) may end up at (4.499999999....)
+                   *  due to floating point fnords
+                   */
+                  brush_x = RINT (brush_x + EPSILON);
+                  brush_y = RINT (brush_y + EPSILON);
+
+#undef EPSILON
                 }
 
               gimp_draw_tool_draw_boundary (draw_tool,
