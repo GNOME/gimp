@@ -85,41 +85,25 @@ INCLUDES = \
 	$(PANGOFT2_CFLAGS) \
 	-I$(includedir)
 
-gimp_2_1_LDFLAGS = \
-	$(mwindows)					\
-	-u $(SYMPREFIX)gimp_container_filter		\
-	-u $(SYMPREFIX)gimp_xml_parser_new		\
-	-u $(SYMPREFIX)gimp_drawable_stroke_vectors	\
-	-u $(SYMPREFIX)gimp_coords_mix			\
-	-u $(SYMPREFIX)gimp_pdb_progress_get_type	\
-	\
-	-u $(SYMPREFIX)convert_dialog_new		\
-	-u $(SYMPREFIX)grid_dialog_new			\
-	-u $(SYMPREFIX)info_dialog_new			\
-	-u $(SYMPREFIX)info_window_create		\
-	-u $(SYMPREFIX)offset_dialog_new		\
-	-u $(SYMPREFIX)palette_import_dialog_show	\
-	-u $(SYMPREFIX)resize_dialog_new		\
-	-u $(SYMPREFIX)stroke_dialog_new		\
-	-u $(SYMPREFIX)color_dialog_new
+gimp_2_1_LDFLAGS = $(mwindows)
 
 gimp_2_1_LDADD = \
-	config/libappconfig.a		\
 	gui/libappgui.a			\
+	actions/libappactions.a		\
 	dialogs/libappdialogs.a		\
 	menus/libappmenus.a		\
-	actions/libappactions.a		\
 	display/libappdisplay.a		\
 	tools/libapptools.a		\
 	widgets/libappwidgets.a		\
-	core/libappcore.a		\
 	pdb/libapppdb.a			\
+	vectors/libappvectors.a		\
+	plug-in/libappplug-in.a		\
+	core/libappcore.a		\
 	paint/libapppaint.a		\
 	xcf/libappxcf.a			\
 	text/libapptext.a		\
-	vectors/libappvectors.a		\
 	file/libappfile.a		\
-	plug-in/libappplug-in.a		\
+	config/libappconfig.a		\
 	paint-funcs/libapppaint-funcs.a	\
 	composite/libappcomposite.a	\
 	base/libappbase.a		\
@@ -153,18 +137,18 @@ gimp_console_2_1_CPPFLAGS = \
 gimp_console_2_1_LDFLAGS = $(gimp_2_1_LDFLAGS)
 
 gimp_console_2_1_LDADD = \
-	config/libappconfig.a		\
 	widgets/widgets-enums.o		\
 	display/display-enums.o		\
 	display/gimpdisplayoptions.o	\
 	pdb/libapppdb.a			\
+	vectors/libappvectors.a		\
+	plug-in/libappplug-in.a		\
 	core/libappcore.a		\
 	paint/libapppaint.a		\
 	xcf/libappxcf.a			\
 	text/libapptext.a		\
-	vectors/libappvectors.a		\
 	file/libappfile.a		\
-	plug-in/libappplug-in.a		\
+	config/libappconfig.a		\
 	paint-funcs/libapppaint-funcs.a	\
 	composite/libappcomposite.a	\
 	base/libappbase.a		\

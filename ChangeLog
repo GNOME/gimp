@@ -1,5 +1,13 @@
 2004-09-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am (gimp_2_1_LDFLAGS): removed all -u hacks.
+
+	(gimp_2_1_LDADD)
+	(gimp_console_2_1_LDADD): reordered .a files correctly. The core
+	seems to be cleaned up enough to have proper dependencies now.
+
+2004-09-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/channels-commands.c
 	* app/actions/vectors-commands.c: removed massive code duplication
 	by factoring out the code that creates the "New Channel/Path" and
