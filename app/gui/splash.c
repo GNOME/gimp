@@ -68,10 +68,18 @@ splash_create (void)
 
   g_return_if_fail (splash == NULL);
 
-  filename = g_build_filename (gimp_data_directory (),
-                               "images", "gimp_splash.png", NULL);
+  filename = gimp_personal_rc_file ("gimp-splash.png");
   pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
   g_free (filename);
+
+  if (! pixbuf)
+    {
+      filename = g_build_filename (gimp_data_directory (),
+                                   "images", "gimp-splash.png",
+                                   NULL);
+      pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+      g_free (filename);
+    }
 
   if (! pixbuf)
     return;
@@ -81,15 +89,15 @@ splash_create (void)
   splash->width  = gdk_pixbuf_get_width (pixbuf);
   splash->height = gdk_pixbuf_get_height (pixbuf);
 
-  splash->window = g_object_new (GTK_TYPE_WINDOW,
-                                 "type",            GTK_WINDOW_TOPLEVEL,
-                                 "type_hint",       GDK_WINDOW_TYPE_HINT_SPLASHSCREEN,
-                                 "title",           _("GIMP Startup"),
-                                 "window_position", GTK_WIN_POS_CENTER,
-                                 "resizable",       FALSE,
-                                 NULL);
-
-  gtk_window_set_role (GTK_WINDOW (splash->window), "gimp-startup");
+  splash->window =
+    g_object_new (GTK_TYPE_WINDOW,
+                  "type",            GTK_WINDOW_TOPLEVEL,
+                  "type_hint",       GDK_WINDOW_TYPE_HINT_SPLASHSCREEN,
+                  "title",           _("GIMP Startup"),
+                  "role",            "gimp-startup",
+                  "window_position", GTK_WIN_POS_CENTER,
+                  "resizable",       FALSE,
+                  NULL);
 
   g_signal_connect_swapped (splash->window, "delete_event",
                             G_CALLBACK (exit),
@@ -119,7 +127,6 @@ splash_create (void)
   gtk_widget_realize (splash->area);
   splash->pixmap = gdk_pixmap_new (splash->area->window,
                                    splash->width, splash->height, -1);
-
   gdk_draw_pixbuf (splash->pixmap, splash->area->style->black_gc,
                    pixbuf, 0, 0, 0, 0, splash->width, splash->height,
                    GDK_RGB_DITHER_NORMAL, 0, 0);
@@ -139,7 +146,6 @@ splash_create (void)
   pango_attr_list_insert (attrs, attr);
 
   pango_layout_set_attributes (splash->upper, attrs);
-
   pango_attr_list_unref (attrs);
 
   splash->progress = gtk_progress_bar_new ();

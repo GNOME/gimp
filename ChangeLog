@@ -1,5 +1,15 @@
 2004-09-21  Sven Neumann  <sven@gimp.org>
 
+	* data/images/Makefile.am (imagedata_DATA): renamed gimp_splash.png
+	to gimp-splash.png.
+
+	* data/images/gimp-splash.png: new splash, courtesy of Dave Neary.
+
+	* app/gui/splash.c: look for gimp-splash.png in the users
+	directory, then in the systemwide images directory.
+
+2004-09-21  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu-server.c: got rid of two the global
 	file descriptor sets. Use the client hash-table instead.
 
