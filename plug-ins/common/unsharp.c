@@ -833,7 +833,8 @@ preview_update (void)
   gint  x1, y1, x2, y2;
 
   /* preview */
-  guchar    *render_buffer=NULL;   /* Buffer to hold rendered image */
+  guchar    *render_buffer = NULL; /* Buffer to hold rendered image */
+  guchar    *row_buffer    = NULL;
   gint       preview_width;        /* Width of preview widget */
   gint       preview_height;       /* Height of preview widget */
   gint       preview_x1;           /* Upper-left X of preview */
@@ -848,34 +849,38 @@ preview_update (void)
   gint       preview_buf_x2;       /* Lower-right X of preview */
   gint       preview_buf_y2;       /* Lower-right Y of preview */
 
+  const guchar check_light = GIMP_CHECK_LIGHT * 255;
+  const guchar check_dark  = GIMP_CHECK_DARK  * 255;
+  guchar       check;
+
   GimpPixelRgn srcPR, destPR;      /* Pixel regions */
-  gint         x,y;                /* Current location in image */
+  gint         x, y;               /* Current location in image */
 
   gint row,buf_y, offset;          /* Preview loop control      */
 
   /* Get drawable info */
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  width = drawable->width;
+  width  = drawable->width;
   height = drawable->height;
-  bytes = drawable->bpp;
+  bytes  = drawable->bpp;
 
   /*
    * Setup for filter...
    */
-  preview_x1 = x1 + delta_x;
-  preview_y1 = y1 + delta_y;
-  preview_x2 = preview_x1 + MIN (PREVIEW_SIZE, x2-x1);
-  preview_y2 = preview_y1 + MIN (PREVIEW_SIZE, y2-y1);
-  preview_width = preview_x2-preview_x1;
-  preview_height = preview_y2-preview_y1;
+  preview_x1     = x1 + delta_x;
+  preview_y1     = y1 + delta_y;
+  preview_x2     = preview_x1 + MIN (PREVIEW_SIZE, x2 - x1);
+  preview_y2     = preview_y1 + MIN (PREVIEW_SIZE, y2 - y1);
+  preview_width  = preview_x2 - preview_x1;
+  preview_height = preview_y2 - preview_y1;
 
   /* Make buffer large enough to minimize disturbence */
-  preview_buf_x1 = MAX(0,preview_x1-unsharp_params.radius);
-  preview_buf_y1 = MAX(0,preview_y1-unsharp_params.radius);
-  preview_buf_x2 = MIN(x2,preview_x2+unsharp_params.radius);
-  preview_buf_y2 = MIN(y2,preview_y2+unsharp_params.radius);
-  preview_buf_width =  preview_buf_x2-preview_buf_x1;
-  preview_buf_height = preview_buf_y2-preview_buf_y1;
+  preview_buf_x1     = MAX (0, preview_x1 - unsharp_params.radius);
+  preview_buf_y1     = MAX (0, preview_y1 - unsharp_params.radius);
+  preview_buf_x2     = MIN (x2, preview_x2 + unsharp_params.radius);
+  preview_buf_y2     = MIN (y2, preview_y2 + unsharp_params.radius);
+  preview_buf_width  = preview_buf_x2 - preview_buf_x1;
+  preview_buf_height = preview_buf_y2 - preview_buf_y1;
 
   /* If radius/amount/treshold changed render*/
   if ((run_mode != GIMP_RUN_NONINTERACTIVE))
@@ -887,27 +892,125 @@ preview_update (void)
   gimp_pixel_rgn_init (&destPR, drawable,
                        preview_buf_x1,preview_buf_y1,
                        preview_buf_width, preview_buf_height,  TRUE, TRUE);
+
   /* render image */
   unsharp_region (srcPR, destPR, preview_buf_width, preview_buf_height, bytes,
                   unsharp_params.radius, unsharp_params.amount,
                   preview_buf_x1, preview_buf_x2, preview_buf_y1, preview_buf_y2);
+
   render_buffer = g_new (guchar, preview_buf_width * preview_buf_height * bytes);
-  gimp_pixel_rgn_get_rect(&destPR,render_buffer,
+
+  gimp_pixel_rgn_get_rect(&destPR, render_buffer,
                           preview_buf_x1, preview_buf_y1,
-                          preview_buf_width,preview_buf_height);
+                          preview_buf_width, preview_buf_height);
+
   /*
-  * Draw the preview image on the screen...
-  */
-  y =  preview_y1-preview_buf_y1;
-  x =  preview_x1-preview_buf_x1;
-  row=0;
-  buf_y = y+preview_height;
+   * Draw the preview image on the screen...
+   */
+  y     = preview_y1 - preview_buf_y1;
+  x     = preview_x1 - preview_buf_x1;
+  row   = 0;
+  buf_y = y + preview_height;
+
+  if (gimp_drawable_type (drawable->drawable_id) == GIMP_GRAY_IMAGE ||
+      gimp_drawable_type (drawable->drawable_id) == GIMP_GRAYA_IMAGE)
+    row_buffer = g_new (guchar, preview_width * preview_height);
+  else
+    row_buffer = g_new (guchar, preview_width * preview_height * 3);
+
   for ( ; y < buf_y ; y++ )
     {
-      offset = (x*bytes)+(y*preview_buf_width*bytes);
-      gtk_preview_draw_row(GTK_PREVIEW (preview), render_buffer+offset, 0, row++, preview_width);
+      offset = (x * bytes) + (y * preview_buf_width * bytes);
+
+      switch (gimp_drawable_type (drawable->drawable_id))
+        {
+        case GIMP_GRAY_IMAGE:
+          memcpy (row_buffer, render_buffer + offset, preview_width);
+          break;
+
+        case GIMP_GRAYA_IMAGE:
+          {
+            gint    j;
+            guchar *rowptr = row_buffer;
+            guchar *bufptr = render_buffer + offset;
+
+            for (j = 0; j < preview_width; j++)
+              {
+                if (bufptr[1] == 255)
+                  *rowptr = bufptr[0];
+                else
+                  {
+                    if ((row & GIMP_CHECK_SIZE) ^ (j & GIMP_CHECK_SIZE))
+                      check = check_light;
+                    else
+                      check = check_dark;
+
+                    if (bufptr[1] == 0)
+                      *rowptr = check;
+                    else
+                      *rowptr = check + (((gint) (bufptr[0] - check) * bufptr[1]) >> 8);
+                  }
+
+                rowptr ++;
+                bufptr += 2;
+              }
+          }
+          break;
+
+        default:
+        case GIMP_RGB_IMAGE:
+          memcpy (row_buffer, render_buffer + offset, preview_width * 3);
+          break;
+
+        case GIMP_RGBA_IMAGE:
+          {
+            gint    j;
+            guchar *rowptr = row_buffer;
+            guchar *bufptr = render_buffer + offset;
+
+            for (j = 0; j < preview_width; j++)
+              {
+                if (bufptr[3] == 255)
+                  {
+                    rowptr[0] = bufptr[0];
+                    rowptr[1] = bufptr[1];
+                    rowptr[2] = bufptr[2];
+                  }
+                else
+                  {
+                    if ((row & GIMP_CHECK_SIZE) ^ (j & GIMP_CHECK_SIZE))
+                      check = check_light;
+                    else
+                      check = check_dark;
+
+                    if (bufptr[3] == 0)
+                      {
+                        rowptr[0] = check;
+                        rowptr[1] = check;
+                        rowptr[2] = check;
+                      }
+                    else
+                      {
+                        rowptr[0] = check + (((gint) (bufptr[0] - check) * bufptr[3]) >> 8);
+                        rowptr[1] = check + (((gint) (bufptr[1] - check) * bufptr[3]) >> 8);
+                        rowptr[2] = check + (((gint) (bufptr[2] - check) * bufptr[3]) >> 8);
+                      }
+                  }
+
+                rowptr += 3;
+                bufptr += 4;
+              }
+          }
+          break;
+        }
+
+      gtk_preview_draw_row (GTK_PREVIEW (preview), row_buffer, 0,
+                            row++, preview_width);
     }
+
   gtk_widget_queue_draw (preview);
-  g_free(render_buffer);
+
+  g_free (row_buffer);
+  g_free (render_buffer);
 }
 

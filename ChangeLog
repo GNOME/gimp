@@ -1,3 +1,8 @@
+2004-06-26  Philip Lafleur  <plafleur@cvs.gnome.org>
+
+	* plug-ins/common/unsharp.c: Preview now works correctly with
+	RGBA and grayscale-alpha images. Fixes bug #144971.
+
 2004-06-26  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/tools/gimpclonetool.c: added button_release callback
