@@ -1,3 +1,8 @@
+2004-11-28  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/gfig/gfig-style.c: make sure PaintType is saved and
+	loaded with the style.
+	
 2004-11-28  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/gfig/gfig-dialog.c: correctly initializes the paint_type

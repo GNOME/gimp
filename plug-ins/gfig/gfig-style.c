@@ -230,6 +230,7 @@ gfig_load_style (Style *style,
   gfig_read_parameter_gimp_rgb (style_text, nitems, "Foreground",  &style->foreground);
   gfig_read_parameter_gimp_rgb (style_text, nitems, "Background",  &style->background);
   gfig_read_parameter_int      (style_text, nitems, "FillType",    (gint *)&style->fill_type);
+  gfig_read_parameter_int      (style_text, nitems, "PaintType",    (gint *)&style->paint_type);
   gfig_read_parameter_double   (style_text, nitems, "FillOpacity",
                                 (gdouble *)&style->fill_opacity);
 
@@ -316,6 +317,8 @@ gfig_save_style (Style *style,
   if (!style->brush_name)
     g_message ("Error saving style %s: saving NULL for brush name", style->name);
 
+  g_string_append_printf (string, "PaintType:       %d\n",          style->paint_type);
+
   g_string_append_printf (string, "FillType:       %d\n",          style->fill_type);
 
   g_string_append_printf (string, "FillOpacity:    %s\n",
@@ -368,6 +371,8 @@ gfig_style_save_as_attributes (Style   *style,
                           g_ascii_dtostr (buffer_a, blen, style->background.a));
 
   g_string_append_printf (string, "FillType=%d ", style->fill_type);
+
+  g_string_append_printf (string, "PaintType=%d ", style->paint_type);
 
   g_string_append_printf (string, "FillOpacity=%s ",
                           g_ascii_dtostr (buffer, blen, style->fill_opacity));
