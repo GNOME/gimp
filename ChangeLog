@@ -1,3 +1,10 @@
+Sat Sep  4 00:38:01 CEST 1999  Marc Lehmann <pcg@goof.com>
+
+	* plug-ins/common/nova.c,
+        plug-ins/script-fu/scripts/starburst-logo.scm,
+        plug-ins/script-fu/scripts/starscape-logo.scm: updated nova plug-in
+        and two dependent scripts.
+
 Sat Sep  4 00:32:18 CEST 1999  Marc Lehmann <pcg@goof.com>
 
 	* plug-ins/common/color_enhance.c,
