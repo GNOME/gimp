@@ -3165,6 +3165,11 @@ gimp_image_remove_layer_mask (GimpImage     *gimage,
 		       drawable_width  (GIMP_DRAWABLE (layer)),
 		       drawable_height (GIMP_DRAWABLE (layer)));
     }
+  else if (lmu->edit_mask)
+    {
+      /*  flush displays in order to update the menus  */
+      gdisplays_flush ();
+    }
 
   return NULL;
 }
