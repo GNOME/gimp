@@ -1595,7 +1595,7 @@ gimp_bezier_stroke_arcto (GimpStroke       *bez_stroke,
   GimpMatrix3 anglerot;
 
   gdouble     lambda;
-  gdouble     phi1, phi2;
+  gdouble     phi0, phi1, phi2;
   gdouble     tmpx, tmpy;
 
   g_return_if_fail (GIMP_IS_BEZIER_STROKE (bez_stroke));
@@ -1651,7 +1651,7 @@ gimp_bezier_stroke_arcto (GimpStroke       *bez_stroke,
       trans_center.y = - trans_delta.x * radius_y / radius_x * factor;
     }
 
-  if (large_arc == sweep)
+  if ((large_arc && sweep) || (!large_arc && !sweep))
     {
       trans_center.x *= -1;
       trans_center.y *= -1;
@@ -1678,15 +1678,16 @@ gimp_bezier_stroke_arcto (GimpStroke       *bez_stroke,
 
   if (phi1 < 0)
     phi1 += 2 * G_PI;
+
   if (phi2 < 0)
     phi2 += 2 * G_PI;
 
-  while (phi1 < phi2)
-    phi1 += 2 * G_PI;
-
   if (sweep)
     {
-      gdouble phi0 = floor (phi1 / G_PI_2) * G_PI_2;
+      while (phi2 < phi1)
+        phi2 += 2 * G_PI;
+
+      phi0 = floor (phi1 / G_PI_2) * G_PI_2;
 
       while (phi0 < phi2)
         {
@@ -1718,7 +1719,10 @@ gimp_bezier_stroke_arcto (GimpStroke       *bez_stroke,
     }
   else
     {
-      gdouble phi0 = ceil (phi1 / G_PI_2) * G_PI_2;
+      while (phi1 < phi2)
+        phi1 += 2 * G_PI;
+
+      phi0 = ceil (phi1 / G_PI_2) * G_PI_2;
 
       while (phi0 > phi2)
         {

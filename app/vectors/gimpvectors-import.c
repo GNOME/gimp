@@ -131,6 +131,10 @@ static void  svg_handler_path_start    (SvgHandler   *handler,
                                         const gchar **names,
                                         const gchar **values,
                                         SvgParser    *parser);
+static void  svg_handler_rect_start    (SvgHandler   *handler,
+                                        const gchar **names,
+                                        const gchar **values,
+                                        SvgParser    *parser);
 static void  svg_handler_ellipse_start (SvgHandler   *handler,
                                         const gchar **names,
                                         const gchar **values,
@@ -149,6 +153,7 @@ static const SvgHandler svg_handlers[] =
   { "svg",      svg_handler_svg_start,     svg_handler_svg_end },
   { "g",        svg_handler_group_start,   NULL                },
   { "path",     svg_handler_path_start,    NULL                },
+  { "rect",     svg_handler_rect_start,    NULL                },
   { "circle",   svg_handler_ellipse_start, NULL                },
   { "ellipse",  svg_handler_ellipse_start, NULL                },
   { "line",     svg_handler_line_start,    NULL                },
@@ -593,6 +598,137 @@ svg_handler_path_start (SvgHandler   *handler,
 }
 
 static void
+svg_handler_rect_start (SvgHandler   *handler,
+                        const gchar **names,
+                        const gchar **values,
+                        SvgParser    *parser)
+{
+  SvgPath    *path   = g_new0 (SvgPath, 1);
+  gdouble     x      = 0.0;
+  gdouble     y      = 0.0;
+  gdouble     width  = 0.0;
+  gdouble     height = 0.0;
+  gdouble     rx     = 0.0;
+  gdouble     ry     = 0.0;
+
+  while (*names)
+    {
+      if (strcmp (*names, "id") == 0 && !path->id)
+        {
+          path->id = g_strdup (*values);
+        }
+      else if (strcmp (*names, "x") == 0)
+        {
+          parse_svg_length (*values,
+                            handler->width, parser->image->xresolution,
+                            &x);
+        }
+      else if (strcmp (*names, "y") == 0)
+        {
+          parse_svg_length (*values,
+                            handler->height, parser->image->yresolution,
+                            &y);
+        }
+      else if (strcmp (*names, "width") == 0)
+        {
+          parse_svg_length (*values,
+                            handler->width, parser->image->xresolution,
+                            &width);
+        }
+      else if (strcmp (*names, "height") == 0)
+        {
+          parse_svg_length (*values,
+                            handler->height, parser->image->yresolution,
+                            &height);
+        }
+      else if (strcmp (*names, "rx") == 0)
+        {
+          parse_svg_length (*values,
+                            handler->width, parser->image->xresolution,
+                            &rx);
+        }
+      else if (strcmp (*names, "ry") == 0)
+        {
+          parse_svg_length (*values,
+                            handler->height, parser->image->yresolution,
+                            &ry);
+        }
+      else if (strcmp (*names, "transform") == 0 && !handler->transform)
+        {
+          GimpMatrix3  matrix;
+
+          if (parse_svg_transform (*values, &matrix))
+            handler->transform = g_memdup (&matrix, sizeof (GimpMatrix3));
+        }
+
+      names++;
+      values++;
+    }
+
+  if (width > 0.0 && height > 0.0 && rx >= 0.0 && ry >= 0.0)
+    {
+      GimpStroke *stroke;
+      GimpCoords  point = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
+
+      if (rx == 0.0)
+        rx = ry;
+      if (ry == 0.0)
+        ry = rx;
+
+      rx = MIN (rx, width / 2);
+      ry = MIN (ry, height / 2);
+
+      point.x = x + rx;
+      point.y = y;
+      stroke = gimp_bezier_stroke_new_moveto (&point);
+
+      point.x = x + width - rx;
+      point.y = y;
+      gimp_bezier_stroke_lineto (stroke, &point);
+
+      if (rx)
+        {
+          GimpCoords  end = { x + width, y + ry, 1.0, 0.5, 0.5, 0.5 };
+          gimp_bezier_stroke_arcto (stroke, rx, ry, 0, FALSE, TRUE, &end);
+        }
+
+      point.x = x + width;
+      point.y = y + height - ry;
+      gimp_bezier_stroke_lineto (stroke, &point);
+
+      if (rx)
+        {
+          GimpCoords  end = { x + width - rx, y + height, 1.0, 0.5, 0.5, 0.5 };
+          gimp_bezier_stroke_arcto (stroke, rx, ry, 0, FALSE, TRUE, &end);
+        }
+
+      point.x = x + rx;
+      point.y = y + height;
+      gimp_bezier_stroke_lineto (stroke, &point);
+
+      if (rx)
+        {
+          GimpCoords  end = { x, y + height - ry, 1.0, 0.5, 0.5, 0.5 };
+          gimp_bezier_stroke_arcto (stroke, rx, ry, 0, FALSE, TRUE, &end);
+        }
+
+      point.x = x;
+      point.y = y + ry;
+      gimp_bezier_stroke_lineto (stroke, &point);
+
+      if (rx)
+        {
+          GimpCoords  end = { x + rx, y, 1.0, 0.5, 0.5, 0.5 };
+          gimp_bezier_stroke_arcto (stroke, rx, ry, 0, FALSE, TRUE, &end);
+        }
+
+      path->strokes = g_list_prepend (path->strokes, stroke);
+    }
+
+  handler->paths = g_list_prepend (handler->paths, path);
+}
+
+static void
 svg_handler_ellipse_start (SvgHandler   *handler,
                            const gchar **names,
                            const gchar **values,
@@ -611,23 +747,33 @@ svg_handler_ellipse_start (SvgHandler   *handler,
         }
       else if (strcmp (*names, "cx") == 0)
         {
-          center.x = g_ascii_strtod (*values, NULL);
+          parse_svg_length (*values,
+                            handler->width, parser->image->xresolution,
+                            &center.x);
         }
       else if (strcmp (*names, "cy") == 0)
         {
-          center.y = g_ascii_strtod (*values, NULL);
+          parse_svg_length (*values,
+                            handler->height, parser->image->yresolution,
+                            &center.y);
         }
       else if (strcmp (*names, "r") == 0)
         {
-          rx = ry = g_ascii_strtod (*values, NULL);
+          parse_svg_length (*values,
+                            handler->width, parser->image->xresolution,
+                            &rx);
         }
       else if (strcmp (*names, "rx") == 0)
         {
-          rx = g_ascii_strtod (*values, NULL);
+          parse_svg_length (*values,
+                            handler->width, parser->image->xresolution,
+                            &rx);
         }
       else if (strcmp (*names, "ry") == 0)
         {
-          ry = g_ascii_strtod (*values, NULL);
+          parse_svg_length (*values,
+                            handler->height, parser->image->yresolution,
+                            &ry);
         }
       else if (strcmp (*names, "transform") == 0 && !handler->transform)
         {
@@ -668,19 +814,27 @@ svg_handler_line_start (SvgHandler   *handler,
         }
       else if (strcmp (*names, "x1") == 0)
         {
-          start.x = g_ascii_strtod (*values, NULL);
+          parse_svg_length (*values,
+                            handler->width, parser->image->xresolution,
+                            &start.x);
         }
       else if (strcmp (*names, "y1") == 0)
         {
-          start.y = g_ascii_strtod (*values, NULL);
+          parse_svg_length (*values,
+                            handler->height, parser->image->yresolution,
+                            &start.y);
         }
       else if (strcmp (*names, "x2") == 0)
         {
-          end.x = g_ascii_strtod (*values, NULL);
+          parse_svg_length (*values,
+                            handler->width, parser->image->xresolution,
+                            &end.x);
         }
       else if (strcmp (*names, "y2") == 0)
         {
-          end.y = g_ascii_strtod (*values, NULL);
+          parse_svg_length (*values,
+                            handler->height, parser->image->yresolution,
+                            &end.y);
         }
       else if (strcmp (*names, "transform") == 0 && !handler->transform)
         {
@@ -1441,6 +1595,7 @@ parse_path_do_cmd (ParsePathContext *ctx,
 
               gimp_bezier_stroke_lineto (ctx->stroke, &coords);
 	    }
+
 	  ctx->param = 0;
 	}
       break;
