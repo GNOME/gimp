@@ -186,6 +186,7 @@ gimp_set_user_context
 gimp_get_user_context
 gimp_set_current_context
 gimp_get_current_context
+gimp_set_global_buffer
 GimpPlugInDebug 
 <SUBSECTION Standard>
 GimpClass
@@ -3461,6 +3462,26 @@ GIMP_CHANNEL_TREE_VIEW_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpcolorbar</FILE>
+<TITLE>GimpColorBar</TITLE>
+GimpColorBar
+gimp_color_bar_new
+gimp_color_bar_set_color
+gimp_color_bar_set_channel
+gimp_color_bar_set_buffers
+<SUBSECTION Standard>
+GimpColorBarClass
+GIMP_COLOR_BAR
+GIMP_IS_COLOR_BAR
+GIMP_TYPE_COLOR_BAR
+gimp_color_bar_get_type
+GIMP_COLOR_BAR_CLASS
+GIMP_IS_COLOR_BAR_CLASS
+GIMP_COLOR_BAR_GET_CLASS
+</SECTION>
+ 
+
+<SECTION>
 <FILE>gimpcoloreditor</FILE>
 <TITLE>GimpColorEditor</TITLE>
 GimpColorEditor
@@ -5646,6 +5667,7 @@ gimp_image_invalidate_without_render
 <FILE>gimpimage-qmask</FILE>
 <TITLE>GimpImage-qmask</TITLE>
 GIMP_IMAGE_QMASK_NAME
+gimp_image_get_qmask
 gimp_image_set_qmask_state
 gimp_image_get_qmask_state
 gimp_image_qmask_invert
@@ -5687,7 +5709,6 @@ gimp_image_undo_push_image_mod
 gimp_image_undo_push_image_type
 gimp_image_undo_push_image_size
 gimp_image_undo_push_image_resolution
-gimp_image_undo_push_image_qmask
 gimp_image_undo_push_image_grid
 gimp_image_undo_push_image_guide
 gimp_image_undo_push_image_colormap

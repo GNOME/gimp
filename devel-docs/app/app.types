@@ -28,6 +28,7 @@ gimp_clone_get_type
 gimp_clone_options_get_type
 gimp_clone_tool_get_type
 gimp_color_balance_tool_get_type
+gimp_color_bar_get_type
 gimp_color_display_editor_get_type
 gimp_color_editor_get_type
 gimp_color_frame_get_type

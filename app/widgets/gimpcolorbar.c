@@ -329,6 +329,8 @@ gimp_color_bar_expose (GtkWidget      *widget,
 
 /**
  * gimp_color_bar_new:
+ * @orientation: whether the bar should be oriented horizontally or
+ *               vertically
  *
  * Creates a new #GimpColorBar widget.
  *
@@ -371,7 +373,7 @@ gimp_color_bar_set_color (GimpColorBar  *bar,
 }
 
 /**
- * gimp_color_bar_set_color:
+ * gimp_color_bar_set_channel:
  * @bar:     a #GimpColorBar widget
  * @channel: a #GimpHistogramChannel
  *
