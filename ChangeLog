@@ -1,3 +1,8 @@
+Sun Jul 19 10:23:58 PDT 1998  Jay Cox <jaycox@earthlink.net>
+	* app/paint_funcs.c
+	new and improved color_pixels now 4-7 times as fast and 8-12
+	times as convoluted as original color_pixels.  
+
 Sun Jul 19 12:48:00 BST 1998 Adam D. Moss <adam@gimp.org>
 
 	* plug-ins/animationplay/animationplay.c: Adapted
