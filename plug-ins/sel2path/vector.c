@@ -148,8 +148,8 @@ Vadd_int_point (const coordinate_type c, const vector_type v)
 {
   coordinate_type a;
   
-  a.x = ROUND ((real) c.x + v.dx);
-  a.y = ROUND ((real) c.y + v.dy);
+  a.x = SROUND ((real) c.x + v.dx);
+  a.y = SROUND ((real) c.y + v.dy);
   return a;
 }
 

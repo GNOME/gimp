@@ -78,8 +78,8 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 #define SQUARE(x) ((x) * (x))
 #define CUBE(x) ((x) * (x) * (x))
 #define	SAME_SIGN(u,v) ((u) >= 0 && (v) >= 0 || (u) < 0 && (v) < 0)
-#define ROUND(x) ((int) ((int) (x) + .5 * SIGN (x)))
 #define SIGN(x) ((x) > 0 ? 1 : (x) < 0 ? -1 : 0)
+#define SROUND(x) ((int) ((int) (x) + .5 * SIGN (x)))
 
 #ifndef MAX
 #define MAX(a, b) ((a) > (b) ? (a) : (b))

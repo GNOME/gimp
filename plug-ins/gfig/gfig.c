@@ -65,7 +65,7 @@
 #include <math.h>
 #include <gtk/gtk.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include <libgimp/stdplugins-intl.h>
 
 #ifdef G_OS_WIN32
 #  include <io.h>
@@ -6474,10 +6474,9 @@ static void
 gfig_copy_menu_callback(GtkWidget *widget, gpointer data)
 {
   /* Create new entry with name + copy at end & copy object into it */
-  gchar *new_name =
-    g_strdup_printf(new_name, _("%s copy"), gfig_obj_for_menu->draw_name);
-  new_gfig_obj(new_name);
-  g_free(new_name);
+  gchar *new_name = g_strdup_printf (_("%s copy"), gfig_obj_for_menu->draw_name);
+  new_gfig_obj (new_name);
+  g_free (new_name);
 
   /* Copy objs across */
   current_obj->obj_list = copy_all_objs(gfig_obj_for_menu->obj_list);

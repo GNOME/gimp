@@ -41,16 +41,9 @@
  *
  *   See ChangeLog
  */
+#include "config.h"
 
 #include "print.h"
-
-/*
- * All Gimp-specific code is in this file.
- */
-#include <gtk/gtk.h>
-#include <libgimp/gimp.h>
-#define PLUG_IN_VERSION		"3.0.5 - 13 Jan 2000"
-#define PLUG_IN_NAME		"Print"
 
 #include <math.h>
 #include <signal.h>
@@ -60,38 +53,15 @@
 #include <os2.h>
 #endif
 
-#include <libgimp/gimpui.h>
-#if 0
-#include <libgimp/stdplugins-intl.h>
-#else
-#include <libgimp/gimpintl.h>
-#include <locale.h>
+#include <gtk/gtk.h>
 
-#ifndef LOCALEDIR
-#define LOCALEDIR g_strconcat (gimp_data_directory (), \
-			       G_DIR_SEPARATOR_S, \
-			       "locale", \
-			       NULL)
-#endif
-#ifdef HAVE_LC_MESSAGES
-#define INIT_I18N() \
-  setlocale(LC_MESSAGES, ""); \
-  bindtextdomain("gimp-std-plugins", LOCALEDIR); \
-  textdomain("gimp-std-plugins")
-#define INIT_I18N_UI() \
-  gtk_set_locale(); \
-  setlocale (LC_NUMERIC, "C"); \
-  INIT_I18N();
-#else
-#define INIT_I18N() \
-  bindtextdomain("gimp-std-plugins", LOCALEDIR); \
-  textdomain("gimp-std-plugins")
-#define INIT_I18N_UI() \
-  gtk_set_locale(); \
-  setlocale (LC_NUMERIC, "C"); \
-  INIT_I18N();
-#endif
-#endif
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+#include <libgimp/stdplugins-intl.h>
+
+#define PLUG_IN_VERSION		"3.0.5 - 13 Jan 2000"
+#define PLUG_IN_NAME		"Print"
+
 
 /*
  * Constants for GUI...
@@ -270,7 +240,7 @@ printer_t	printers[] =		/* List of supported printer types */
     escp2_parameters,	default_media_size,	escp2_imageable_area,	escp2_print },
   { N_("EPSON Stylus Photo EX"),	"escp2-ex",	1,	7,	0.585,	0.646,
     escp2_parameters,	default_media_size,	escp2_imageable_area,	escp2_print },
-  { N_("EPSON Stylus Photo"),	"escp2-photo",	1,	8,	0.585,	0.646,
+  { N_("EPSON Stylus Photo EX"),	"escp2-photo",	1,	8,	0.585,	0.646,
     escp2_parameters,	default_media_size,	escp2_imageable_area,	escp2_print },
 };
 
@@ -3141,7 +3111,6 @@ get_printers(void)
   int	i;
   FILE	*pfile;
   char	line[129],
-	name[17],
 	defname[17];
 #ifdef __EMX__
   BYTE  pnum;
@@ -3179,6 +3148,8 @@ get_printers(void)
 #ifdef LPSTAT_COMMAND
   if ((pfile = popen(LPSTAT_COMMAND " -d -p", "r")) != NULL)
   {
+    char name[17];	
+	
     while (fgets(line, sizeof(line), pfile) != NULL &&
            plist_count < MAX_PLIST)
     {

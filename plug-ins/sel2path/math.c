@@ -112,8 +112,8 @@ real_to_int_coord (real_coordinate_type real_coord)
 {
   coordinate_type int_coord;
 
-  int_coord.x = ROUND (real_coord.x);
-  int_coord.y = ROUND (real_coord.y);
+  int_coord.x = SROUND (real_coord.x);
+  int_coord.y = SROUND (real_coord.y);
 
   return int_coord;
 }

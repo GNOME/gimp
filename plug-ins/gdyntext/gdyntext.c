@@ -412,10 +412,12 @@ void gdt_render_text(GdtVals *data)
 void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 {
 	gint layer_ox, layer_oy, i, nret_vals, xoffs;
-	gint32 layer_f, selection_channel;
-	gint32 text_width, text_height;
-  gint32 text_ascent, text_descent;
-  gint32 layer_width, layer_height;
+	gint32 layer_f;
+	gint32 selection_channel = -1;
+	gint32 text_width = 0;
+	gint32 text_height = 0;
+	gint32 text_ascent, text_descent;
+	gint32 layer_width, layer_height;
 	gint32 space_width;
 	gchar **text_style, **text_lines;
 	gint32 *text_lines_w;

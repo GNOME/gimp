@@ -193,19 +193,11 @@ run (char    *name,
   char       *l_env;
   
   char        l_extension[32];
-  char       *l_basename_ptr;
-  char       *l_palette_ptr;
   static GParam values[2];
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
   gint32     image_id;
   gint32     nr;
-  long       range_from, range_to;
-  gint32     inverse_order;
-  gint32     no_alpha;
-  long       framerate;
-#define      FRAME_BASENAME_LEN   256  
-  char       frame_basename[FRAME_BASENAME_LEN];
    
   gint32     l_rc;
 

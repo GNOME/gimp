@@ -1,3 +1,20 @@
+Sat Jan 29 12:06:51 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/deinterlace.c
+	* plug-ins/common/despeckle.c
+	* plug-ins/common/plasma.c
+	* plug-ins/common/randomize.c
+	* plug-ins/common/sharpen.c
+	* plug-ins/gap/gap_frontends_main.c
+	* plug-ins/gdyntext/gdyntext.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/print/print-ps.c
+	* plug-ins/print/print.c
+	* plug-ins/sel2path/global.h
+	* plug-ins/sel2path/math.c
+	* plug-ins/sel2path/vector.c: removed warnings
+
 Fri Jan 28 17:38:36 CET 2000  Marc Lehmann <pcg@goof.com>
 
         * PLUGIN_MAINTAINERS, PLUGIN_CVS: mark Robert Krawitz with write

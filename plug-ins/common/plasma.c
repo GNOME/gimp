@@ -277,7 +277,6 @@ plasma_dialog (void)
   GtkWidget *dlg;
   GtkWidget *frame;
   GtkWidget *table;
-  GtkWidget *spinbutton;
   GtkWidget *seed_hbox;
   GtkObject *adj;
   gchar **argv;

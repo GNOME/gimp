@@ -184,8 +184,6 @@ static inline void randomize_prepare_row (GPixelRgn *pixel_rgn,
 static gint randomize_dialog             (void);
 static void randomize_ok_callback        (GtkWidget     *widget,
 					  gpointer       data);
-static void randomize_time_toggle_update (GtkWidget *widget,
-					  gpointer   data);
 
 /************************************ Guts ***********************************/
 
@@ -790,18 +788,4 @@ randomize_ok_callback (GtkWidget *widget,
   rndm_int.run = TRUE;
 
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-randomize_time_toggle_update (GtkWidget *widget,
-			      gpointer   data)
-{
-  gint *toggle_val;
-
-  toggle_val = (gint *) data;
-
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
-    *toggle_val = SEED_TIME;
-  else
-    *toggle_val = SEED_USER;
 }

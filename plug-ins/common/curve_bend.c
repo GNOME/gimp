@@ -688,14 +688,13 @@ run (char *name,                /* name of plugin */
 {
   char       *l_env;
   BenderDialog *cd;
-  gint      l_nreturn_vals;
   
-   GDrawable *l_active_drawable = NULL;
-   gint32    l_image_id = -1;
-   gint32    l_layer_id = -1;
-   gint32    l_layer_mask_id = -1;
-   gint32    l_bent_layer_id = -1;
-
+  GDrawable *l_active_drawable = NULL;
+  gint32    l_image_id = -1;
+  gint32    l_layer_id = -1;
+  gint32    l_layer_mask_id = -1;
+  gint32    l_bent_layer_id = -1;
+  
   /* Get the runmode from the in-parameters */
   GRunModeType run_mode = param[0].data.d_int32;
 

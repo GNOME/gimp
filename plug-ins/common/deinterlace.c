@@ -261,7 +261,6 @@ deinterlace_dialog (void)
   GtkWidget *frame;
   gchar **argv;
   gint    argc;
-  gint    i;
 
   /* Set args */
   argc    = 1;
