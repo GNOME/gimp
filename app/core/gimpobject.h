@@ -55,6 +55,8 @@ GType         gimp_object_get_type      (void) G_GNUC_CONST;
 void          gimp_object_set_name      (GimpObject       *object,
                                          const gchar      *name);
 const gchar * gimp_object_get_name      (const GimpObject *object);
+void          gimp_object_set_name_safe (GimpObject       *object,
+                                         const gchar      *name);
 void          gimp_object_name_changed  (GimpObject       *object);
 
 gsize         gimp_object_get_memsize   (GimpObject       *object);

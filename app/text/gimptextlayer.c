@@ -205,8 +205,6 @@ gimp_text_layer_render (GimpTextLayer *layer)
   GimpTextLayout *layout;
   gint            width;
   gint            height;
-  gchar          *name;
-  gchar          *newline;
 
   image = gimp_item_get_image (GIMP_ITEM (layer));
 
@@ -242,17 +240,7 @@ gimp_text_layer_render (GimpTextLayer *layer)
       gimp_viewable_size_changed (GIMP_VIEWABLE (layer));
     }
 
-  newline = strchr (layer->text->text, '\n');
-  if (newline)
-    {
-      name = g_strndup (layer->text->text, newline - layer->text->text);
-      gimp_object_set_name (GIMP_OBJECT (layer), name);
-      g_free (name);
-    }
-  else
-  {
-    gimp_object_set_name (GIMP_OBJECT (layer), layer->text->text);
-  }
+  gimp_object_set_name_safe (GIMP_OBJECT (layer), layer->text->text);
 
   gimp_text_layer_render_layout (layer, layout);
   g_object_unref (layout);

@@ -44,13 +44,11 @@ enum
   PROP_FONT_SIZE,
   PROP_FONT_SIZE_UNIT,
   PROP_COLOR,
+  PROP_FIXED_WIDTH,
   PROP_JUSTIFICATION,
   PROP_INDENTATION,
   PROP_LINE_SPACING,
   PROP_LETTER_SPACING,
-  PROP_FIXED_WIDTH,
-  PROP_FIXED_HEIGHT,
-  PROP_GRAVITY,
   PROP_BORDER
 };
 
@@ -142,6 +140,10 @@ gimp_text_class_init (GimpTextClass *klass)
 				  "color", NULL,
 				  &black,
 				  0);
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_FIXED_WIDTH,
+                                "fixed-width", NULL,
+                                0, GIMP_MAX_IMAGE_SIZE, 0,
+                                0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_JUSTIFICATION,
                                 "justify",
                                  NULL,
@@ -163,18 +165,6 @@ gimp_text_class_init (GimpTextClass *klass)
 				   "letter-spacing", NULL,
                                     -8192.0, 8192.0, 0.0,
                                     0);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_FIXED_WIDTH,
-                                "fixed-width", NULL,
-                                0, GIMP_MAX_IMAGE_SIZE, 0,
-                                0);
-  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_FIXED_HEIGHT,
-                                "fixed-height", NULL,
-                                0, GIMP_MAX_IMAGE_SIZE, 0,
-                                0);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_GRAVITY,
-                                "gravity", NULL,
-                                 GIMP_TYPE_GRAVITY_TYPE, GIMP_GRAVITY_NONE,
-                                 0);
 
   /*  border does only exist to implement the old text API  */
   param_spec = g_param_spec_int ("border", NULL, NULL,
@@ -228,6 +218,9 @@ gimp_text_get_property (GObject      *object,
     case PROP_COLOR:
       g_value_set_boxed (value, &text->color);
       break;
+    case PROP_FIXED_WIDTH:
+      g_value_set_int (value, text->fixed_width);
+      break;
     case PROP_JUSTIFICATION:
       g_value_set_enum (value, text->justify);
       break;
@@ -239,15 +232,6 @@ gimp_text_get_property (GObject      *object,
       break;
     case PROP_LETTER_SPACING:
       g_value_set_double (value, text->letter_spacing);
-      break;
-    case PROP_FIXED_WIDTH:
-      g_value_set_int (value, text->fixed_width);
-      break;
-    case PROP_FIXED_HEIGHT:
-      g_value_set_int (value, text->fixed_height);
-      break;
-    case PROP_GRAVITY:
-      g_value_set_enum (value, text->gravity);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -284,6 +268,9 @@ gimp_text_set_property (GObject      *object,
       color = g_value_get_boxed (value);
       text->color = *color;
       break;
+    case PROP_FIXED_WIDTH:
+      text->fixed_width = g_value_get_int (value);
+      break;
     case PROP_JUSTIFICATION:
       text->justify = g_value_get_enum (value);
       break;
@@ -296,19 +283,8 @@ gimp_text_set_property (GObject      *object,
     case PROP_LETTER_SPACING:
       text->letter_spacing = g_value_get_double (value);
       break;
-    case PROP_FIXED_WIDTH:
-      text->fixed_width = g_value_get_int (value);
-      break;
-    case PROP_FIXED_HEIGHT:
-      text->fixed_height = g_value_get_int (value);
-      break;
-    case PROP_GRAVITY:
-      text->gravity = g_value_get_enum (value);
-      break;
     case PROP_BORDER:
       text->border = g_value_get_int (value);
-      if (text->border > 0)
-        text->gravity = GIMP_GRAVITY_CENTER;
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

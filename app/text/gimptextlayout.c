@@ -289,123 +289,52 @@ gimp_text_layout_render (GimpTextLayout *layout)
 static void
 gimp_text_layout_position (GimpTextLayout *layout)
 {
-  GimpText        *text;
   PangoRectangle   ink;
   PangoRectangle   logical;
-  GimpGravityType  gravity;
   gint             x1, y1;
   gint             x2, y2;
-  gboolean         fixed;
 
   layout->extents.x      = 0;
   layout->extents.x      = 0;
   layout->extents.width  = 0;
   layout->extents.height = 0;
   
-  text = layout->text;
-
-  fixed = (text->fixed_width > 1 && text->fixed_height > 1);
-
   pango_layout_get_pixel_extents (layout->layout, &ink, &logical);
 
+#ifdef VERBOSE
   g_print ("ink rect: %d x %d @ %d, %d\n", 
            ink.width, ink.height, ink.x, ink.y);
   g_print ("logical rect: %d x %d @ %d, %d\n", 
            logical.width, logical.height, logical.x, logical.y);
+#endif
 
-  if (!fixed)
-    {
-      if (ink.width < 1 || ink.height < 1)
-        return;
-
-      /* sanity checks for insane font sizes */
-      if (ink.width  > 8192)  ink.width  = 8192;
-      if (ink.height > 8192)  ink.height = 8192;
-    }
+  if (ink.width < 1 || ink.height < 1)
+    return;
 
   x1 = MIN (0, logical.x);
   y1 = MIN (0, logical.y);
   x2 = MAX (ink.x + ink.width,  logical.x + logical.width);
   y2 = MAX (ink.y + ink.height, logical.y + logical.height);
 
-  layout->extents.width  = fixed ? text->fixed_width  : x2 - x1;
-  layout->extents.height = fixed ? text->fixed_height : y2 - y1;
-
-  gravity = text->gravity;
+  layout->extents.width  = x2 - x1;
+  layout->extents.height = y2 - y1;
 
   /* border should only be used by the compatibility API */
-  if (text->border)
+  if (layout->text->border > 0)
     {
-      fixed = TRUE;
-      gravity = GIMP_GRAVITY_CENTER;
+      gint border = layout->text->border;
 
-      layout->extents.width  += 2 * text->border;
-      layout->extents.height += 2 * text->border;
+      layout->extents.x      += border;     
+      layout->extents.y      += border;     
+      layout->extents.width  += 2 * border;
+      layout->extents.height += 2 * border;
     }
 
-  layout->extents.x = 0;
-  layout->extents.y = 0;
-
-  if (!fixed)
-    return;
-
-  if (gravity == GIMP_GRAVITY_NONE)
-    {
-      switch (pango_layout_get_alignment (layout->layout))
-        {
-        case PANGO_ALIGN_LEFT:
-          gravity = GIMP_GRAVITY_NORTH_WEST;
-          break;
-        case PANGO_ALIGN_CENTER:
-          gravity = GIMP_GRAVITY_NORTH;
-          break;
-        case PANGO_ALIGN_RIGHT:
-          gravity = GIMP_GRAVITY_NORTH_EAST;
-          break;
-        }
-    }
-
-  switch (gravity)
-    {
-    case GIMP_GRAVITY_NONE:
-    case GIMP_GRAVITY_NORTH_WEST:
-    case GIMP_GRAVITY_SOUTH_WEST:
-    case GIMP_GRAVITY_WEST:
-      break;
-      
-    case GIMP_GRAVITY_CENTER:
-    case GIMP_GRAVITY_NORTH:
-    case GIMP_GRAVITY_SOUTH:
-      layout->extents.x += (layout->extents.width - logical.width) / 2;
-      break;
-      
-    case GIMP_GRAVITY_NORTH_EAST:
-    case GIMP_GRAVITY_SOUTH_EAST:
-    case GIMP_GRAVITY_EAST:
-      layout->extents.x += (layout->extents.width - logical.width);
-      break;
-    }
-
-  switch (text->gravity)
-    {
-    case GIMP_GRAVITY_NONE:
-    case GIMP_GRAVITY_NORTH:
-    case GIMP_GRAVITY_NORTH_WEST:
-    case GIMP_GRAVITY_NORTH_EAST:
-      break;
-
-    case GIMP_GRAVITY_CENTER:
-    case GIMP_GRAVITY_WEST:
-    case GIMP_GRAVITY_EAST:
-      layout->extents.y += (layout->extents.height - logical.height) / 2;
-      break;
-
-    case GIMP_GRAVITY_SOUTH:
-    case GIMP_GRAVITY_SOUTH_WEST:
-    case GIMP_GRAVITY_SOUTH_EAST:
-      layout->extents.y += (layout->extents.height - logical.height);
-      break;
-    }
+#ifdef VERBOSE
+  g_print ("layout extents: %d x %d @ %d, %d\n", 
+           layout->extents.width, layout->extents.height,
+           layout->extents.x, layout->extents.y);
+#endif
 }
 
 

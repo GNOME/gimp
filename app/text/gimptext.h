@@ -46,8 +46,6 @@ struct _GimpText
   gdouble                line_spacing;
   gdouble                letter_spacing;
   gint                   fixed_width;
-  gint                   fixed_height;
-  GimpGravityType        gravity;
 
   /* for historical reasons, don't use */
   gint                   border;

@@ -237,6 +237,56 @@ gimp_object_set_name (GimpObject  *object,
   gimp_object_name_changed (object);
 }
 
+/*  A safe version of gimp_object_set_name() that takes care
+ *  of newlines and overly long names.
+ */
+#define MAX_NAME_LEN 32
+void
+gimp_object_set_name_safe (GimpObject  *object,
+                           const gchar *name)
+{
+  gchar *newline;
+  gsize  len;
+
+  g_return_if_fail (GIMP_IS_OBJECT (object));
+  
+  if (name)
+    {
+      newline = strchr (name, '\n');
+
+      if (newline)
+        len = newline - name + 1;
+      else
+        len = strlen (name);
+
+      if (len > MAX_NAME_LEN)
+        newline = NULL;
+
+      if (newline || len > MAX_NAME_LEN)
+        {
+          gchar *safe_name;
+          
+          len = MIN (len, MAX_NAME_LEN);
+
+          safe_name = g_new (gchar, len + 4);
+
+          memcpy (safe_name, name, len);
+          if (newline)
+            safe_name[len-1] = ' ';
+
+          g_strlcpy (safe_name + len, "...", 4);
+
+          gimp_object_set_name (object, safe_name);
+
+          g_free (safe_name);
+
+          return;
+        }
+    }
+  
+  gimp_object_set_name (object, name);
+}
+
 const gchar *
 gimp_object_get_name (const GimpObject *object)
 {

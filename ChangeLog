@@ -1,3 +1,17 @@
+2003-02-05  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpobject.[ch]
+	* app/text/gimptextlayer.c: improved the code that trims the text
+	before setting it as layer name and moved it to GimpObject as
+	gimp_object_set_name_safe().
+
+	* app/text/gimptext.[ch]: removed fixed_height and gravity again.
+
+	* app/text/gimptextlayout.c: much simpler positioning that has the
+	advantage that it actually works.
+
+	* libgimpproxy/gimpobject.[ch]: this crap was regenerated.
+
 2003-02-05  Michael Natterer  <mitch@gimp.org>
 
 	Made GimpToolOptions a GimpContext subclass and objectified
@@ -95,7 +109,7 @@
 	hbox of radio buttons with icons from an enum type.
 
 	* app/widgets/gimppropwidgets.[ch]: added a property widget
-	constructors for the new enum_stock_box.
+	constructor for the new enum_stock_box.
 
 2003-02-05  Sven Neumann  <sven@gimp.org>
 
