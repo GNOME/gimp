@@ -66,6 +66,10 @@ static void   gimp_clone_tool_cursor_update    (GimpTool        *tool,
                                                 GimpCoords      *coords,
                                                 GdkModifierType  state,
                                                 GimpDisplay     *gdisp);
+static void   gimp_clone_tool_oper_update      (GimpTool        *tool,
+                                                GimpCoords      *coords,
+                                                GdkModifierType  state,
+                                                GimpDisplay     *gdisp);
 
 static void   gimp_clone_tool_draw             (GimpDrawTool    *draw_tool);
 
@@ -132,6 +136,7 @@ gimp_clone_tool_class_init (GimpCloneToolClass *klass)
   tool_class->button_press  = gimp_clone_tool_button_press;
   tool_class->motion        = gimp_clone_tool_motion;
   tool_class->cursor_update = gimp_clone_tool_cursor_update;
+  tool_class->oper_update   = gimp_clone_tool_oper_update;
 
   draw_tool_class->draw     = gimp_clone_tool_draw;
 }
@@ -173,7 +178,9 @@ gimp_clone_tool_button_press (GimpTool        *tool,
         }
     }
   else
-    GIMP_CLONE (paint_tool->core)->set_source = FALSE;
+    {
+      GIMP_CLONE (paint_tool->core)->set_source = FALSE;
+    }
 
   GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
                                                 gdisp);
@@ -196,7 +203,7 @@ gimp_clone_tool_motion (GimpTool        *tool,
   GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state, gdisp);
 }
 
-void
+static void
 gimp_clone_tool_cursor_update (GimpTool        *tool,
                                GimpCoords      *coords,
                                GdkModifierType  state,
@@ -231,6 +238,19 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
   gimp_tool_control_set_cursor (tool->control, ctype);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
+}
+
+static void
+gimp_clone_tool_oper_update (GimpTool        *tool,
+                             GimpCoords      *coords,
+                             GdkModifierType  state,
+                             GimpDisplay     *gdisp)
+{
+  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, gdisp);
+
+  if (! GIMP_CLONE (GIMP_PAINT_TOOL (tool)->core)->src_drawable)
+    gimp_paint_tool_replace_status (tool, gdisp,
+                                    _("Ctrl-Click to set a clone source."));
 }
 
 static void

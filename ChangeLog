@@ -1,5 +1,11 @@
 2005-04-04  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimppainttool.[ch] export paint tool statusbar API.
+	
+	* app/tools/gimpclonetool.c: added statusbar hint.
+
+2005-04-04  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/gimpenv.c (gimp_directory): use g_ascii_isalnum()
 	instead of isalnum(). Rephrased some comments.
 
