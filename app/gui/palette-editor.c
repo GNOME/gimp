@@ -120,6 +120,7 @@ struct _PaletteDialog
   gfloat zoom_factor;  /* range from 0.1 to 4.0 */
   gint columns;
   gint freeze_update;
+  gint columns_valid;
 };
 
 /*  This one is called from palette_select.c  */
@@ -1487,7 +1488,6 @@ palette_color_area_events (GtkWidget     *widget,
   GdkEventButton *bevent;
   GSList *tmp_link;
   int r, g, b;
-  int width, height;
   int entry_width;
   int entry_height;
   int row, col;
@@ -1495,10 +1495,11 @@ palette_color_area_events (GtkWidget     *widget,
 
   switch (event->type)
     {
+    case GDK_EXPOSE:
+      redraw_palette(palette);
+      break;
     case GDK_BUTTON_PRESS:
       bevent = (GdkEventButton *) event;
-      width = palette->color_area->requisition.width;
-      height = palette->color_area->requisition.height;
       entry_width = (ENTRY_WIDTH*palette->zoom_factor)+SPACING;
       entry_height = (ENTRY_HEIGHT*palette->zoom_factor)+SPACING;
       col = (bevent->x - 1) / entry_width;
@@ -1886,6 +1887,20 @@ redraw_palette (PaletteDialog *palette)
   gint nrows;
   gint n_entries;
   gint new_pre_width;
+  gint entry_width;
+  guint width;
+  gint ncols;
+
+  width  = palette->color_area->parent->parent->allocation.width;
+  entry_width = (ENTRY_WIDTH*palette->zoom_factor)+SPACING;
+  ncols = width/entry_width;
+
+  if(ncols <= 0 || 
+     (palette->columns_valid && palette->columns == ncols))
+    return;
+
+  palette->columns_valid = TRUE;
+  palette->columns = ncols;
 
   n_entries = palette->entries->n_colors;
   nrows = n_entries / palette->columns;
@@ -1937,6 +1952,7 @@ palette_list_item_update (GtkWidget      *widget,
     (PaletteEntriesP) gtk_clist_get_row_data (GTK_CLIST (palette->clist), row);
 
   palette->entries = p_entries;
+  palette->columns_valid = FALSE;
 
   redraw_palette (palette);
 
@@ -2020,6 +2036,7 @@ create_palette_dialog (gint vert)
   palette->color_select_active = 0;
   palette->zoom_factor = 1.0;
   palette->columns = COLUMNS;
+  palette->columns_valid = TRUE;
   palette->freeze_update = FALSE;
 
   palette->shell = gtk_dialog_new ();
@@ -2308,6 +2325,7 @@ palette_drop_color (GtkWidget *widget,
 
       g_free (name);
 
+      palette->columns_valid = FALSE;
       redraw_palette (palette);
 
       list = palette_entries_list;
