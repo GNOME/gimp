@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
-"Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
-"POT-Creation-Date: 2004-03-08 21:26+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-03-20 23:20+0100\n"
 "PO-Revision-Date: 2004-03-08 21:30+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
@@ -409,6 +409,16 @@ msgstr "MegaBytes"
 msgid "GigaBytes"
 msgstr "GigaBytes"
 
+#: libgimpwidgets/gimppatheditor.c:243
+#, fuzzy
+msgid "Writable"
+msgstr "Triângulo"
+
+#: libgimpwidgets/gimppatheditor.c:252
+#, fuzzy
+msgid "Folder"
+msgstr "Seleccionar Pasta"
+
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
@@ -497,7 +507,7 @@ msgstr "Unidade"
 msgid "Factor"
 msgstr "Factor"
 
-#: libgimpwidgets/gimpwidgets.c:1271
+#: libgimpwidgets/gimpwidgets.c:1291
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -505,15 +515,15 @@ msgstr ""
 "Utilize este valor para a semente da geração de números aleatórios - isto "
 "permite-lhe repetir uma dada operação \"aleatória\""
 
-#: libgimpwidgets/gimpwidgets.c:1275
+#: libgimpwidgets/gimpwidgets.c:1295
 msgid "_New Seed"
 msgstr "_Nova Semente"
 
-#: libgimpwidgets/gimpwidgets.c:1288
+#: libgimpwidgets/gimpwidgets.c:1308
 msgid "Seed random number generator with a generated random number"
 msgstr "Semente de geração aleatória com número gerado aleatoriamente"
 
-#: libgimpwidgets/gimpwidgets.c:1292
+#: libgimpwidgets/gimpwidgets.c:1312
 msgid "_Randomize"
 msgstr "_Aleatorizar"
 

@@ -142,6 +142,31 @@
 # 
 # (default-font "Sans")
 
+# When enabled, the selected brush will be used for all tools.  Possible
+# values are yes and no.
+# 
+# (global-brush yes)
+
+# When enabled, the selected pattern will be used for all tools.  Possible
+# values are yes and no.
+# 
+# (global-pattern yes)
+
+# When enabled, the selected palette will be used for all tools.  Possible
+# values are yes and no.
+# 
+# (global-palette yes)
+
+# When enabled, the selected gradient will be used for all tools.  Possible
+# values are yes and no.
+# 
+# (global-gradient yes)
+
+# When enabled, the selected font will be used for all tools.  Possible
+# values are yes and no.
+# 
+# (global-font yes)
+
 # Sets the default image in the "File/New" dialog.  This is a parameter list.
 # 
 # (default-image
@@ -182,6 +207,12 @@
 # size defaults to being specified in kilobytes.
 # 
 # (undo-size 4M)
+
+# Sets the size of the previews in the Undo History.  Possible values are
+# tiny, extra-small, small, medium, large, extra-large, huge, enormous and
+# gigantic.
+# 
+# (undo-preview-size large)
 
 # Sets the pluginrc search path.  This is a single filename.
 # 
@@ -492,6 +523,13 @@
 # yes and no.
 # 
 # (use-help yes)
+
+# Specifies the language preferences used by the help system. This is
+# acolon-separated list of language identifiers with decreasing priority. If
+# empty, the language is taken from the user's locale setting.  This is a
+# string value.
+# 
+# 
 
 # Sets the browser used by the help system.  Possible values are gimp and
 # web-browser.

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-04 00:14+0100\n"
+"POT-Creation-Date: 2004-03-20 23:20+0100\n"
 "PO-Revision-Date: 2003-01-26 17:30+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -422,6 +422,16 @@ msgstr "MegaBytes"
 msgid "GigaBytes"
 msgstr "GigaBytes"
 
+#: libgimpwidgets/gimppatheditor.c:243
+#, fuzzy
+msgid "Writable"
+msgstr "_Trekant"
+
+#: libgimpwidgets/gimppatheditor.c:252
+#, fuzzy
+msgid "Folder"
+msgstr "Velg mappe"
+
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
@@ -510,7 +520,7 @@ msgstr "Enhet"
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:1271
+#: libgimpwidgets/gimpwidgets.c:1291
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -518,18 +528,18 @@ msgstr ""
 "Bruk denne verdien som startverdi for generering av tilfeldige tall - dette "
 "lar deg gjenta en gitt «tilfeldig» operasjon"
 
-#: libgimpwidgets/gimpwidgets.c:1275
+#: libgimpwidgets/gimpwidgets.c:1295
 msgid "_New Seed"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1288
+#: libgimpwidgets/gimpwidgets.c:1308
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "Gi generator for tilfeldige tall et generert tilfeldig tall som startverdi"
 
-#: libgimpwidgets/gimpwidgets.c:1292
+#: libgimpwidgets/gimpwidgets.c:1312
 #, fuzzy
-msgid "Randomize"
+msgid "_Randomize"
 msgstr "Gjø_r tilfeldig"
 
 #: modules/cdisplay_colorblind.c:124

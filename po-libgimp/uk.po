@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-04 00:14+0100\n"
+"POT-Creation-Date: 2004-03-20 23:20+0100\n"
 "PO-Revision-Date: 2003-03-01 09:52--500\n"
 "Last-Translator: Yuriy Syrota <yuri@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -417,6 +417,15 @@ msgstr "Мегабайти"
 msgid "GigaBytes"
 msgstr "Гігабайти"
 
+#: libgimpwidgets/gimppatheditor.c:243
+msgid "Writable"
+msgstr ""
+
+#: libgimpwidgets/gimppatheditor.c:252
+#, fuzzy
+msgid "Folder"
+msgstr "Вибір теки"
+
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
@@ -505,7 +514,7 @@ msgstr "Одиниці"
 msgid "Factor"
 msgstr "Множник"
 
-#: libgimpwidgets/gimpwidgets.c:1271
+#: libgimpwidgets/gimpwidgets.c:1291
 #, fuzzy
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
@@ -515,19 +524,19 @@ msgstr ""
 "ініціалізації генератора випадкових чисел, то це дозволяє вам повторити дану "
 "\"випадкову\" операцію"
 
-#: libgimpwidgets/gimpwidgets.c:1275
+#: libgimpwidgets/gimpwidgets.c:1295
 msgid "_New Seed"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1288
+#: libgimpwidgets/gimpwidgets.c:1308
 #, fuzzy
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "Ініціалізувати генератор випадкових чисел поточним часом - це гарантує "
 "надійну \"випадковість\""
 
-#: libgimpwidgets/gimpwidgets.c:1292
-msgid "Randomize"
+#: libgimpwidgets/gimpwidgets.c:1312
+msgid "_Randomize"
 msgstr ""
 
 #: modules/cdisplay_colorblind.c:124

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-15 03:38+0100\n"
+"POT-Creation-Date: 2004-03-20 23:20+0100\n"
 "PO-Revision-Date: 2004-03-15 10:30+0100\n"
 "Last-Translator: Miloslav Trmač <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -507,7 +507,7 @@ msgstr "Jednotka"
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:1271
+#: libgimpwidgets/gimpwidgets.c:1291
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -515,15 +515,15 @@ msgstr ""
 "Tato hodnota se použije pro hnízdo náhodného generátoru - umožňuje to "
 "zopakovat zadanou \"náhodnou\" operaci"
 
-#: libgimpwidgets/gimpwidgets.c:1275
+#: libgimpwidgets/gimpwidgets.c:1295
 msgid "_New Seed"
 msgstr "_Nové hnízdo"
 
-#: libgimpwidgets/gimpwidgets.c:1288
+#: libgimpwidgets/gimpwidgets.c:1308
 msgid "Seed random number generator with a generated random number"
 msgstr "Hnízdo generátoru náhodného čísla z generovaného náhodného čísla"
 
-#: libgimpwidgets/gimpwidgets.c:1292
+#: libgimpwidgets/gimpwidgets.c:1312
 #, fuzzy
 msgid "_Randomize"
 msgstr "_Generovat náhodná čísla"

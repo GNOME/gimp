@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-10 14:44+0100\n"
+"POT-Creation-Date: 2004-03-20 23:20+0100\n"
 "PO-Revision-Date: 2004-03-10 20:17+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -411,6 +411,16 @@ msgstr "v megabytoch"
 msgid "GigaBytes"
 msgstr "Gigabyty"
 
+#: libgimpwidgets/gimppatheditor.c:243
+#, fuzzy
+msgid "Writable"
+msgstr "Trojuholník"
+
+#: libgimpwidgets/gimppatheditor.c:252
+#, fuzzy
+msgid "Folder"
+msgstr "Výber priečinka"
+
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
@@ -499,7 +509,7 @@ msgstr "Jednotka"
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:1271
+#: libgimpwidgets/gimpwidgets.c:1291
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -507,15 +517,15 @@ msgstr ""
 "Použite túto hodnotu na náhodný číselný generátor hniezda - toto vám umožní "
 "opakovať danú \"náhodnú\" operáciu"
 
-#: libgimpwidgets/gimpwidgets.c:1275
+#: libgimpwidgets/gimpwidgets.c:1295
 msgid "_New Seed"
 msgstr "_Nové hniezdo"
 
-#: libgimpwidgets/gimpwidgets.c:1288
+#: libgimpwidgets/gimpwidgets.c:1308
 msgid "Seed random number generator with a generated random number"
 msgstr "Hniezdo náhodného generátoru s generovaným náhodným číslom"
 
-#: libgimpwidgets/gimpwidgets.c:1292
+#: libgimpwidgets/gimpwidgets.c:1312
 msgid "_Randomize"
 msgstr "_Náhodnosť"
 
@@ -683,4 +693,3 @@ msgstr "Tlak"
 
 #~ msgid "Parameter Settings"
 #~ msgstr "Nastavenie parametrov"
-

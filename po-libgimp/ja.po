@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-04 00:14+0100\n"
+"POT-Creation-Date: 2004-03-20 23:20+0100\n"
 "PO-Revision-Date: 2003-09-10 21:52+0900\n"
 "Last-Translator: Ryoichi INAGAKI <ryo1@bc.wakwak.com>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -417,6 +417,16 @@ msgstr "メガバイト"
 msgid "GigaBytes"
 msgstr "ギガバイト"
 
+#: libgimpwidgets/gimppatheditor.c:243
+#, fuzzy
+msgid "Writable"
+msgstr "三角形"
+
+#: libgimpwidgets/gimppatheditor.c:252
+#, fuzzy
+msgid "Folder"
+msgstr "フォルダ選択"
+
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
@@ -505,7 +515,7 @@ msgstr "単位"
 msgid "Factor"
 msgstr "倍率"
 
-#: libgimpwidgets/gimpwidgets.c:1271
+#: libgimpwidgets/gimpwidgets.c:1291
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -513,17 +523,17 @@ msgstr ""
 "この値を乱数の種として用います - そうすることで, 特定の \"乱数\" 操作を行うこ"
 "とができます"
 
-#: libgimpwidgets/gimpwidgets.c:1275
+#: libgimpwidgets/gimpwidgets.c:1295
 msgid "_New Seed"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1288
+#: libgimpwidgets/gimpwidgets.c:1308
 msgid "Seed random number generator with a generated random number"
 msgstr "生成された乱数で、乱数生成の種を取得します"
 
-#: libgimpwidgets/gimpwidgets.c:1292
+#: libgimpwidgets/gimpwidgets.c:1312
 #, fuzzy
-msgid "Randomize"
+msgid "_Randomize"
 msgstr "乱数化(_R)"
 
 #: modules/cdisplay_colorblind.c:124

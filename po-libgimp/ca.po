@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-04 00:14+0100\n"
+"POT-Creation-Date: 2004-03-20 23:20+0100\n"
 "PO-Revision-Date: 2004-02-05 14:28+0100\n"
 "Last-Translator: Xavier Conde Rueda <xaviconde@eremas.com>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
@@ -410,6 +410,16 @@ msgstr "MegaBytes"
 msgid "GigaBytes"
 msgstr "GigaBytes"
 
+#: libgimpwidgets/gimppatheditor.c:243
+#, fuzzy
+msgid "Writable"
+msgstr "Triangle"
+
+#: libgimpwidgets/gimppatheditor.c:252
+#, fuzzy
+msgid "Folder"
+msgstr "Seleccioneu una carpeta"
+
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
@@ -498,7 +508,7 @@ msgstr "Unitat"
 msgid "Factor"
 msgstr "Factor"
 
-#: libgimpwidgets/gimpwidgets.c:1271
+#: libgimpwidgets/gimpwidgets.c:1291
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -506,18 +516,18 @@ msgstr ""
 "Useu aquest valor com a generador de nombres aleatoris. Això us permetrà "
 "repetir una operació \"aleatòria\" ja feta"
 
-#: libgimpwidgets/gimpwidgets.c:1275
+#: libgimpwidgets/gimpwidgets.c:1295
 msgid "_New Seed"
 msgstr "_Nova llavor"
 
-#: libgimpwidgets/gimpwidgets.c:1288
+#: libgimpwidgets/gimpwidgets.c:1308
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "Configura el generador de nombres aleatoris amb el nombre aleatori generat"
 
-#: libgimpwidgets/gimpwidgets.c:1292
+#: libgimpwidgets/gimpwidgets.c:1312
 #, fuzzy
-msgid "Randomize"
+msgid "_Randomize"
 msgstr "Fes a l'atza_r"
 
 #: modules/cdisplay_colorblind.c:124

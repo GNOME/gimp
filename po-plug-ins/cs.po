@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-19 03:42+0100\n"
+"POT-Creation-Date: 2004-03-20 23:20+0100\n"
 "PO-Revision-Date: 2004-03-19 13:48+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -3800,12 +3800,12 @@ msgid "Blur Radius"
 msgstr "Poloměr rozostření"
 
 #: plug-ins/common/gauss_iir.c:447 plug-ins/common/gauss_rle.c:441
-#: plug-ins/common/jigsaw.c:2578 plug-ins/common/spread.c:356
+#: plug-ins/common/jigsaw.c:2581 plug-ins/common/spread.c:358
 msgid "_Horizontal:"
 msgstr "_Vodorovně"
 
 #: plug-ins/common/gauss_iir.c:451 plug-ins/common/gauss_rle.c:445
-#: plug-ins/common/jigsaw.c:2591 plug-ins/common/spread.c:360
+#: plug-ins/common/jigsaw.c:2594 plug-ins/common/spread.c:362
 msgid "_Vertical:"
 msgstr "_Svisle:"
 
@@ -4513,42 +4513,43 @@ msgstr "<Image>/Filtry/Vyobrazení/Vzorky/_Skládačka..."
 msgid "Assembling Jigsaw..."
 msgstr "Tvořím skládačku..."
 
-#: plug-ins/common/jigsaw.c:2543
+#: plug-ins/common/jigsaw.c:2542
 msgid "Jigsaw"
 msgstr "Skládačka"
 
-#: plug-ins/common/jigsaw.c:2567
+#: plug-ins/common/jigsaw.c:2570
 msgid "Number of Tiles"
 msgstr "Počet dlaždic"
 
-#: plug-ins/common/jigsaw.c:2581
+#: plug-ins/common/jigsaw.c:2584
 msgid "Number of pieces going across"
 msgstr "Počet kusů jdoucích napříč"
 
-#: plug-ins/common/jigsaw.c:2594
+#: plug-ins/common/jigsaw.c:2597
 msgid "Number of pieces going down"
 msgstr "Počet kusů jdoucích dolů"
 
-#: plug-ins/common/jigsaw.c:2605
+#: plug-ins/common/jigsaw.c:2608
 msgid "Bevel Edges"
 msgstr "Zkosené hrany"
 
-#: plug-ins/common/jigsaw.c:2616
+#: plug-ins/common/jigsaw.c:2619
 msgid "_Bevel Width:"
 msgstr "Šířka _zkosení:"
 
-#: plug-ins/common/jigsaw.c:2620
+#: plug-ins/common/jigsaw.c:2623
 msgid "Degree of slope of each piece's edge"
 msgstr "Stupeň naklonění na hraně každého kusu"
 
-#: plug-ins/common/jigsaw.c:2630
+#: plug-ins/common/jigsaw.c:2633
 msgid "H_ighlight:"
 msgstr "_Odlesk:"
 
-#: plug-ins/common/jigsaw.c:2634
+#: plug-ins/common/jigsaw.c:2637
 msgid "The amount of highlighting on the edges of each piece"
 msgstr "Síla zvýraznění hran každého kusu"
 
+#. frame for primitive radio buttons
 #: plug-ins/common/jigsaw.c:2651
 msgid "Jigsaw Style"
 msgstr "Styl skládačky"
@@ -6693,20 +6694,20 @@ msgstr "Vykresluji kouli..."
 msgid "<Image>/Filters/Render/Sphere _Designer..."
 msgstr "<Image>/Filtry/Vyobrazení/_Návrhář koulí..."
 
-#: plug-ins/common/spread.c:108
+#: plug-ins/common/spread.c:110
 msgid "<Image>/Filters/Noise/Sp_read..."
 msgstr "<Image>/Filtry/Šum/_Rozprostření..."
 
-#: plug-ins/common/spread.c:186
+#: plug-ins/common/spread.c:188
 msgid "Spreading..."
 msgstr "Rozprostírám..."
 
-#: plug-ins/common/spread.c:330
+#: plug-ins/common/spread.c:332
 msgid "Spread"
 msgstr "Rozprostření"
 
 #. parameter settings
-#: plug-ins/common/spread.c:340
+#: plug-ins/common/spread.c:342
 msgid "Spread Amount"
 msgstr "Míra rozprostření"
 

@@ -5,7 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
-"POT-Creation-Date: 2004-02-04 02:50+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-03-20 23:20+0100\n"
 "PO-Revision-Date: 2004-03-13 03:27+0100\n"
 "Last-Translator: Branko Collin <collin@xs4all.nl>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -152,8 +153,7 @@ msgstr "<Toolbox>/Xtra/Script-Fu/Console..."
 msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
 msgstr "<Toolbox>/Xtra/Script-Fu/Server starten..."
 
-#: plug-ins/script-fu/script-fu.c:271
-#: plug-ins/script-fu/script-fu.c:272
+#: plug-ins/script-fu/script-fu.c:271 plug-ins/script-fu/script-fu.c:272
 msgid "Re-read all available scripts"
 msgstr "Alle beschikbare scripts opnieuw inlezen"
 
@@ -729,7 +729,9 @@ msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Afgeschuind patroon/Pijl..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Bullet..."
-msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Afgeschuind patroon/Opsommingsteken..."
+msgstr ""
+"<Toolbox>/Xtra/Script-Fu/Websitethema's/Afgeschuind patroon/"
+"Opsommingsteken..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
@@ -863,7 +865,9 @@ msgstr "Inbranden: heb in totaal twee lagen nodig!"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
-msgstr "Inbrandachtig effect op een voorgrondlaag (tekst) en een achtergrondlaag; V2.1"
+msgstr ""
+"Inbrandachtig effect op een voorgrondlaag (tekst) en een achtergrondlaag; "
+"V2.1"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Corona Width"
@@ -1436,15 +1440,21 @@ msgid "Shadow Color"
 msgstr "Schaduwkleur"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
-msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Gimp.Org/Subknoplabel van buis..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
+msgstr ""
+"<Toolbox>/Xtra/Script-Fu/Websitethema's/Gimp.Org/Subknoplabel van buis..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button Label..."
-msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Gimp.Org/Subsubknoplabel van buis..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
+"Label..."
+msgstr ""
+"<Toolbox>/Xtra/Script-Fu/Websitethema's/Gimp.Org/Subsubknoplabel van buis..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
 msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Gimp.Org/Algemene buislabels"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
@@ -2060,8 +2070,12 @@ msgid "Color Method"
 msgstr "Kleurmethode"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
-msgid "Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://netword.com/*spyrogimp"
-msgstr "Tekent spirografen, epitrochoids en Lissajous-krommen. Meer informatie op http://netword.com/*spyrogimp"
+msgid ""
+"Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
+"netword.com/*spyrogimp"
+msgstr ""
+"Tekent spirografen, epitrochoids en Lissajous-krommen. Meer informatie op "
+"http://netword.com/*spyrogimp"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
 msgid "Epitrochoid"
@@ -2431,128 +2445,127 @@ msgstr "X-verspringing hoge lichten"
 msgid "Highlight Y Offset"
 msgstr "Y-verspringing hoge lichten"
 
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
-msgstr "<Toolbox>/Xtra/Script-Fu/Patronen/Kronkel (naadloos)..."
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
+#~ msgstr "<Toolbox>/Xtra/Script-Fu/Patronen/Kronkel (naadloos)..."
 
-msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-msgstr "<Toolbox>/Xtns/Webbrowser/Ontwikkelaars-FAQ"
+#~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
+#~ msgstr "<Toolbox>/Xtns/Webbrowser/Ontwikkelaars-FAQ"
 
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-msgstr "<Toolbox>/Xtns/Webbrowser/GIMP-bugs"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
+#~ msgstr "<Toolbox>/Xtns/Webbrowser/GIMP-bugs"
 
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-msgstr "<Toolbox>/Xtns/Webbrowser/GIMP-handleiding"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
+#~ msgstr "<Toolbox>/Xtns/Webbrowser/GIMP-handleiding"
 
-msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-msgstr "<Toolbox>/Xtns/Webbrowser/GIMP-nieuws"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
+#~ msgstr "<Toolbox>/Xtns/Webbrowser/GIMP-nieuws"
 
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-msgstr "<Toolbox>/Xtns/Webbrowser/GIMP-lessen"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
+#~ msgstr "<Toolbox>/Xtns/Webbrowser/GIMP-lessen"
 
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-msgstr "<Toolbox>/Xtns/Webbrowser/GIMP.ORG/Documentatie"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
+#~ msgstr "<Toolbox>/Xtns/Webbrowser/GIMP.ORG/Documentatie"
 
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-msgstr "<Toolbox>/Xtns/Webbrowser/GIMP.ORG/Download"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
+#~ msgstr "<Toolbox>/Xtns/Webbrowser/GIMP.ORG/Download"
 
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-msgstr "<Toolbox>/Xtns/Webbrowser/GIMP.ORG/GIMP-kunst"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
+#~ msgstr "<Toolbox>/Xtns/Webbrowser/GIMP.ORG/GIMP-kunst"
 
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-msgstr "<Toolbox>/Xtns/Webbrowser/GIMP.ORG/GTK"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
+#~ msgstr "<Toolbox>/Xtns/Webbrowser/GIMP.ORG/GTK"
 
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-msgstr "<Toolbox>/Xtns/Webbrowser/GIMP.ORG/Links"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
+#~ msgstr "<Toolbox>/Xtns/Webbrowser/GIMP.ORG/Links"
 
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-msgstr "<Toolbox>/Xtns/Webbrowser/GIMP.ORG/Mailinglijsten"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
+#~ msgstr "<Toolbox>/Xtns/Webbrowser/GIMP.ORG/Mailinglijsten"
 
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-msgstr "<Toolbox>/Xtns/Webbrowser/GIMP.ORG/Hulpbronnen"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
+#~ msgstr "<Toolbox>/Xtns/Webbrowser/GIMP.ORG/Hulpbronnen"
 
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-msgstr "<Toolbox>/Xtns/Webbrowser/GIMP.ORG/The GIMP"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
+#~ msgstr "<Toolbox>/Xtns/Webbrowser/GIMP.ORG/The GIMP"
 
-msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-msgstr "<Toolbox>/Xtns/Webbrowser/Gimp-Savvy.com"
+#~ msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
+#~ msgstr "<Toolbox>/Xtns/Webbrowser/Gimp-Savvy.com"
 
-msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-msgstr "<Toolbox>/Xtns/Webbrowser/Grokking the GIMP"
+#~ msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
+#~ msgstr "<Toolbox>/Xtns/Webbrowser/Grokking the GIMP"
 
-msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-msgstr "<Toolbox>/Xtns/Webbrowser/Gebruikers-FAQ"
+#~ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
+#~ msgstr "<Toolbox>/Xtns/Webbrowser/Gebruikers-FAQ"
 
-msgid "Border"
-msgstr "Rand"
+#~ msgid "Border"
+#~ msgstr "Rand"
 
-msgid "Fonts"
-msgstr "Fonts"
+#~ msgid "Fonts"
+#~ msgstr "Fonts"
 
-msgid "<Image>/Script-Fu/Render/Make Grid System..."
-msgstr "<Image>/Script-Fu/Renderen/Rastersysteem..."
+#~ msgid "<Image>/Script-Fu/Render/Make Grid System..."
+#~ msgstr "<Image>/Script-Fu/Renderen/Rastersysteem..."
 
-msgid "Grids X"
-msgstr "Raster X"
+#~ msgid "Grids X"
+#~ msgstr "Raster X"
 
-msgid "Grids Y"
-msgstr "Raster Y"
+#~ msgid "Grids Y"
+#~ msgstr "Raster Y"
 
 # Is Trochoid a name or a term? If it is a term, what does it mean?
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Patronen/Trochoid..."
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Patronen/Trochoid..."
 
-msgid "Base Radius (pixels)"
-msgstr "Basisradius (pixels)"
+#~ msgid "Base Radius (pixels)"
+#~ msgstr "Basisradius (pixels)"
 
-msgid "Erase before Draw"
-msgstr "Wissen voor tekenen"
+#~ msgid "Erase before Draw"
+#~ msgstr "Wissen voor tekenen"
 
-msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
-msgstr "Penradius / wielradius [0.0:1.0]"
+#~ msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
+#~ msgstr "Penradius / wielradius [0.0:1.0]"
 
-msgid "Wheel Radius (hypo < 0 < epi)"
-msgstr "Wielradius (hypo < 0 < epi"
+#~ msgid "Wheel Radius (hypo < 0 < epi)"
+#~ msgstr "Wielradius (hypo < 0 < epi"
 
-msgid ""
-"At least one font you've choosen is invalid.\n"
-"Please check your settings.\n"
-msgstr ""
-"Minstens een van de door u gekozen fonts is ongeldig.\n"
-"Controleer a.u.b. uw instellingen.\n"
+#~ msgid ""
+#~ "At least one font you've choosen is invalid.\n"
+#~ "Please check your settings.\n"
+#~ msgstr ""
+#~ "Minstens een van de door u gekozen fonts is ongeldig.\n"
+#~ "Controleer a.u.b. uw instellingen.\n"
 
-msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
-msgstr "<Image>/Script-Fu/Animators/Selectie naar animatiebeeld..."
+#~ msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
+#~ msgstr "<Image>/Script-Fu/Animators/Selectie naar animatiebeeld..."
 
-msgid "Anim-Filter for all Copies"
-msgstr "Animatiefilter voor alle kopieën"
+#~ msgid "Anim-Filter for all Copies"
+#~ msgstr "Animatiefilter voor alle kopieën"
 
-msgid "Fill with BG Color"
-msgstr "Vul met AG-kleur"
+#~ msgid "Fill with BG Color"
+#~ msgstr "Vul met AG-kleur"
 
-msgid "Number of Copies"
-msgstr "Aantal kopieën"
+#~ msgid "Number of Copies"
+#~ msgstr "Aantal kopieën"
 
-msgid "DB Browser (init...)"
-msgstr "DB-browser (init...)"
+#~ msgid "DB Browser (init...)"
+#~ msgstr "DB-browser (init...)"
 
-msgid "DB Browser (please wait)"
-msgstr "DB-browser (wacht a.u.b.)"
+#~ msgid "DB Browser (please wait)"
+#~ msgstr "DB-browser (wacht a.u.b.)"
 
-msgid "Reset to Defaults"
-msgstr "Standaardwaarden"
+#~ msgid "Reset to Defaults"
+#~ msgstr "Standaardwaarden"
 
-msgid "Close"
-msgstr "Sluiten"
+#~ msgid "Close"
+#~ msgstr "Sluiten"
 
-msgid "OK"
-msgstr "OK"
+#~ msgid "OK"
+#~ msgstr "OK"
 
-msgid "Cancel"
-msgstr "Annuleren"
+#~ msgid "Cancel"
+#~ msgstr "Annuleren"
 
-msgid "NOT SET"
-msgstr "NIET INGESTELD"
+#~ msgid "NOT SET"
+#~ msgstr "NIET INGESTELD"
 
-msgid "Apply"
-msgstr "Toepassen"
-
+#~ msgid "Apply"
+#~ msgstr "Toepassen"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins 1.1.26\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-18 02:18+0200\n"
+"POT-Creation-Date: 2004-03-20 23:20+0100\n"
 "PO-Revision-Date: 2004-03-19 02:25+0200\n"
 "Last-Translator: Mikko Paananen <mikko at ipi.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -38,6 +38,27 @@ msgid "About"
 msgstr "Tietoja"
 
 #. Preview
+#. Create the Preview
+#. ==================
+#. Create the Preview
+#. Preview area, top of column
+#.
+#. * Preview window...
+#.
+#. Preview
+#. hbox created and packed into the dialog
+#. make a nice frame
+#. Preview
+#.
+#. * Preview window...
+#.
+#. Preview
+#.
+#. *	Preview
+#.
+#. Previews: frame
+#. * Misc: Preview settings *
+#. Misc: Preview settings: Continuous update ?!
 #: plug-ins/FractalExplorer/Dialogs.c:578 plug-ins/Lighting/lighting_ui.c:1126
 #: plug-ins/MapObject/mapobject_ui.c:1395 plug-ins/common/CML_explorer.c:1195
 #: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1268
@@ -283,6 +304,7 @@ msgid "Color Function"
 msgstr "Värifunktio"
 
 #. Redmode radio frame
+#. Redmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:990 plug-ins/common/AlienMap.c:1218
 #: plug-ins/common/channel_mixer.c:599 plug-ins/common/decompose.c:130
 msgid "Red"
@@ -345,12 +367,14 @@ msgid ""
 msgstr "Jos käytät tätä, voimakkaat ja heikot värit vaihtavat paikkaa"
 
 #. Greenmode radio frame
+#. Greenmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1031 plug-ins/common/AlienMap.c:1241
 #: plug-ins/common/channel_mixer.c:600 plug-ins/common/decompose.c:131
 msgid "Green"
 msgstr "Vihreä"
 
 #. Bluemode radio frame
+#. Bluemode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1072 plug-ins/common/AlienMap.c:1264
 #: plug-ins/common/channel_mixer.c:601 plug-ins/common/decompose.c:136
 msgid "Blue"
@@ -434,6 +458,7 @@ msgid "Save Fractal Parameters"
 msgstr "Tallenna fraktaaliparametrit"
 
 #. Do not rely on librsvg setting GError on failure!
+#. stat error (file does not exist)
 #: plug-ins/FractalExplorer/Dialogs.c:2128 plug-ins/bmp/bmpread.c:118
 #: plug-ins/common/CEL.c:305 plug-ins/common/CML_explorer.c:2341
 #: plug-ins/common/channel_mixer.c:1151 plug-ins/common/curve_bend.c:911
@@ -451,7 +476,7 @@ msgstr "Tallenna fraktaaliparametrit"
 #: plug-ins/common/xwd.c:383 plug-ins/faxg3/faxg3.c:219
 #: plug-ins/fits/fits.c:337 plug-ins/flame/flame.c:404
 #: plug-ins/gfig/gfig.c:716 plug-ins/gfli/gfli.c:425 plug-ins/gfli/gfli.c:461
-#: plug-ins/xjt/xjt.c:2535 plug-ins/xjt/xjt.c:2543
+#: plug-ins/help/domain.c:380 plug-ins/xjt/xjt.c:2535 plug-ins/xjt/xjt.c:2543
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Ei voi avata '%s' lukua varten: %s"
@@ -1147,6 +1172,11 @@ msgid "Bad colormap"
 msgstr "Virheellinen värikartta"
 
 #. Set up progress display
+#. put up a progress bar
+#. max. rows allocated
+#. column, highest column ever used
+#. -1  assume fsel is not available (and not attached to any drawable)
+#. -1  assume there is no floating selection
 #: plug-ins/bmp/bmpread.c:123 plug-ins/common/CEL.c:310
 #: plug-ins/common/dicom.c:294 plug-ins/common/gbr.c:327
 #: plug-ins/common/gifload.c:300 plug-ins/common/gih.c:634
@@ -1213,6 +1243,8 @@ msgid "Cannot operate on unknown image types."
 msgstr "Ei voi toimia tuntemattomilla kuvilla"
 
 #. And let's begin the progress
+#. init the progress meter
+#. Set up progress display
 #: plug-ins/bmp/bmpwrite.c:209 plug-ins/common/CEL.c:582
 #: plug-ins/common/gbr.c:586 plug-ins/common/gif.c:1002
 #: plug-ins/common/gih.c:1223 plug-ins/common/gtm.c:246
@@ -1931,6 +1963,35 @@ msgstr "Kohista näkyvät tasot"
 #. *
 #. *  First set up the basic containers, label them, etc.
 #.
+#. parameter settings
+#.
+#. * Filter type controls...
+#.
+#. parameter settings
+#. filter routine, initial pass
+#. Parameter settings
+#. left side of the UI is done
+#. right side
+#. parameter settings
+#. preview noisify
+#. parameter settings
+#. Controls
+#.
+#. *  Parameter settings
+#. *
+#. *  First set up the basic containers, label them, etc.
+#.
+#. Parameter Settings
+#. parameter settings
+#.
+#. * Sharpness control...
+#.
+#. parameter settings
+#. Parameter settings
+#. main parameter frame
+#. Parameter settings
+#. Controls
+#. parameter settings
 #: plug-ins/common/align_layers.c:410 plug-ins/common/apply_lens.c:378
 #: plug-ins/common/blinds.c:337 plug-ins/common/blur.c:604
 #: plug-ins/common/bumpmap.c:1011 plug-ins/common/checkerboard.c:326
@@ -2851,6 +2912,8 @@ msgid "Automatic Pre_view"
 msgstr "Automaattinen esikatselu"
 
 #. Options area, bottom of column
+#. the vertical box and its toggle buttons
+#. Options section
 #: plug-ins/common/curve_bend.c:1321 plug-ins/common/mosaic.c:527
 #: plug-ins/common/ripple.c:443 plug-ins/gfig/gfig.c:2992
 msgid "Options"
@@ -3720,12 +3783,12 @@ msgid "Blur Radius"
 msgstr "Säde:"
 
 #: plug-ins/common/gauss_iir.c:447 plug-ins/common/gauss_rle.c:441
-#: plug-ins/common/jigsaw.c:2578 plug-ins/common/spread.c:356
+#: plug-ins/common/jigsaw.c:2581 plug-ins/common/spread.c:358
 msgid "_Horizontal:"
 msgstr "_Vaakasuora:"
 
 #: plug-ins/common/gauss_iir.c:451 plug-ins/common/gauss_rle.c:445
-#: plug-ins/common/jigsaw.c:2591 plug-ins/common/spread.c:360
+#: plug-ins/common/jigsaw.c:2594 plug-ins/common/spread.c:362
 msgid "_Vertical:"
 msgstr "_Pystysuora:"
 
@@ -4414,42 +4477,43 @@ msgstr "<Image>/Filters/Render/Pattern/_Palapeli..."
 msgid "Assembling Jigsaw..."
 msgstr "Kootaan palapeli..."
 
-#: plug-ins/common/jigsaw.c:2543
+#: plug-ins/common/jigsaw.c:2542
 msgid "Jigsaw"
 msgstr "Palapeli"
 
-#: plug-ins/common/jigsaw.c:2567
+#: plug-ins/common/jigsaw.c:2570
 msgid "Number of Tiles"
 msgstr "Palojen lukumäärä"
 
-#: plug-ins/common/jigsaw.c:2581
+#: plug-ins/common/jigsaw.c:2584
 msgid "Number of pieces going across"
 msgstr "Paloja rinnan"
 
-#: plug-ins/common/jigsaw.c:2594
+#: plug-ins/common/jigsaw.c:2597
 msgid "Number of pieces going down"
 msgstr "Paloja päällekkäin"
 
-#: plug-ins/common/jigsaw.c:2605
+#: plug-ins/common/jigsaw.c:2608
 msgid "Bevel Edges"
 msgstr "Särmää reunat"
 
-#: plug-ins/common/jigsaw.c:2616
+#: plug-ins/common/jigsaw.c:2619
 msgid "_Bevel Width:"
 msgstr "Särmäyksen leveys:"
 
-#: plug-ins/common/jigsaw.c:2620
+#: plug-ins/common/jigsaw.c:2623
 msgid "Degree of slope of each piece's edge"
 msgstr ""
 
-#: plug-ins/common/jigsaw.c:2630
+#: plug-ins/common/jigsaw.c:2633
 msgid "H_ighlight:"
 msgstr "Korostus:"
 
-#: plug-ins/common/jigsaw.c:2634
+#: plug-ins/common/jigsaw.c:2637
 msgid "The amount of highlighting on the edges of each piece"
 msgstr ""
 
+#. frame for primitive radio buttons
 #: plug-ins/common/jigsaw.c:2651
 msgid "Jigsaw Style"
 msgstr "Palapelin tyyli"
@@ -5077,6 +5141,7 @@ msgid "_Factory Defaults"
 msgstr ""
 
 #. anti-alias control
+#. 2
 #: plug-ins/common/newsprint.c:1390 plug-ins/gfig/gfig.c:2406
 msgid "Antialiasing"
 msgstr ""
@@ -6018,6 +6083,7 @@ msgid "Error obtaining Screen Shot"
 msgstr "Virhe otettaessa kuvankaappausta"
 
 #. single window
+#. Action area
 #: plug-ins/common/screenshot.c:525 plug-ins/winsnap/winsnap.c:905
 msgid "Grab"
 msgstr "Kaappaa"
@@ -6592,20 +6658,20 @@ msgstr "Muodostan fraktaalia..."
 msgid "<Image>/Filters/Render/Sphere _Designer..."
 msgstr ""
 
-#: plug-ins/common/spread.c:108
+#: plug-ins/common/spread.c:110
 msgid "<Image>/Filters/Noise/Sp_read..."
 msgstr ""
 
-#: plug-ins/common/spread.c:186
+#: plug-ins/common/spread.c:188
 msgid "Spreading..."
 msgstr ""
 
-#: plug-ins/common/spread.c:330
+#: plug-ins/common/spread.c:332
 msgid "Spread"
 msgstr ""
 
 #. parameter settings
-#: plug-ins/common/spread.c:340
+#: plug-ins/common/spread.c:342
 msgid "Spread Amount"
 msgstr ""
 
@@ -6834,7 +6900,8 @@ msgid ""
 "this conversion."
 msgstr ""
 "Varoitus:\n"
-"Kuvassa on 16 bittiä värikanavaa kohti. GIMP voi käsitellä vain 8 bittiä per kanava. Tiedosto muunnetaan ja tarkkuutta katoaa tämän muutoksen vuoksi."
+"Kuvassa on 16 bittiä värikanavaa kohti. GIMP voi käsitellä vain 8 bittiä per "
+"kanava. Tiedosto muunnetaan ja tarkkuutta katoaa tämän muutoksen vuoksi."
 
 #: plug-ins/common/tiff.c:1930
 msgid ""
@@ -6987,7 +7054,9 @@ msgid ""
 "This field is a hint for numerical input fields. It specifies how many "
 "decimal digits the input field should provide to get approximately the same "
 "accuracy as an \"inch\" input field with two decimal digits."
-msgstr "Tämä kenttä kertoo montako desimaalia kenttiin pitäisi mahtua jotta saavutettaisiin sama tarkkuus kuin tuumilla kahdella desimaalilla."
+msgstr ""
+"Tämä kenttä kertoo montako desimaalia kenttiin pitäisi mahtua jotta "
+"saavutettaisiin sama tarkkuus kuin tuumilla kahdella desimaalilla."
 
 #: plug-ins/common/uniteditor.c:93
 msgid "Symbol"
@@ -7510,6 +7579,7 @@ msgstr "Tuuli"
 #. ********************************************************
 #. radio buttons for choosing wind rendering algorithm
 #. *****************************************************
+#. Algorithm Choice
 #: plug-ins/common/wind.c:915 plug-ins/maze/maze_face.c:297
 msgid "Style"
 msgstr ""
@@ -8296,7 +8366,9 @@ msgstr "Monta"
 
 #: plug-ins/gfig/gfig.c:2044
 msgid "Draw all objects on one layer (original or new) or one object per layer"
-msgstr "Piirrä kaikki objektit samalle tasolle (alkuperäinen tai uusi) tai yksi objekti per taso"
+msgstr ""
+"Piirrä kaikki objektit samalle tasolle (alkuperäinen tai uusi) tai yksi "
+"objekti per taso"
 
 #: plug-ins/gfig/gfig.c:2049
 msgid "Draw on:"
@@ -8697,6 +8769,7 @@ msgid "(none)"
 msgstr "(ei mikään)"
 
 #: plug-ins/gfig/gfig-preview.c:581 plug-ins/gfig/gfig-preview.c:612
+#, c-format
 msgid "<NONE>"
 msgstr "<TYHJÄ>"
 
@@ -8778,6 +8851,9 @@ msgstr ""
 
 #.
 #. *  Scales
+#.
+#.
+#. *	Scales
 #.
 #: plug-ins/gflare/gflare.c:2671 plug-ins/gflare/gflare.c:3482
 #: plug-ins/gflare/gflare.c:3589 plug-ins/gflare/gflare.c:3728
@@ -9646,6 +9722,30 @@ msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
 msgstr ""
+
+#: plug-ins/help/domain.c:161
+msgid "The GIMP help files are not installed."
+msgstr ""
+
+#: plug-ins/help/domain.c:163
+msgid "There is a problem with the GIMP help files."
+msgstr ""
+
+#: plug-ins/help/domain.c:168
+msgid "Please check your installation."
+msgstr ""
+
+#: plug-ins/help/domain.c:174
+#, c-format
+msgid "Help ID '%s' unknown"
+msgstr ""
+
+#: plug-ins/help/domain.c:414
+#, fuzzy, c-format
+msgid ""
+"Parse error in '%s':\n"
+"%s"
+msgstr "Ei voi avata: %s"
 
 #: plug-ins/helpbrowser/dialog.c:149
 msgid "GIMP Help Browser"
@@ -11560,12 +11660,6 @@ msgstr "Ei voi avata: %s"
 #, fuzzy
 #~ msgid "Can't open '%s': %s"
 #~ msgstr "Ei voi avata %s"
-
-#, fuzzy
-#~ msgid ""
-#~ "Error opening file '%s':\n"
-#~ "%s"
-#~ msgstr "Ei voi avata: %s"
 
 #, fuzzy
 #~ msgid "A_bout..."

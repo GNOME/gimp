@@ -4,7 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins 0\n"
-"POT-Creation-Date: 2004-03-20 14:49+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-03-20 23:20+0100\n"
 "PO-Revision-Date: 2004-03-20 14:49+CET\n"
 "Last-Translator: auto\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
@@ -15,6 +16,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:533 plug-ins/gfig/gfig.c:2903
 #: plug-ins/gflare/gflare.c:898
+#, c-format
 msgid ""
 "No %s in gimprc:\n"
 "You need to add an entry like\n"
@@ -34,27 +36,27 @@ msgid "About"
 msgstr "O"
 
 #. Preview
-#.  Create the Preview
-#.  ==================
-#.  Create the Preview
-#.  Preview area, top of column
-#. 
-#.  * Preview window...
-#. 
-#.  Preview
-#.  hbox created and packed into the dialog
-#.  make a nice frame
-#.  Preview
-#. 
-#.  * Preview window...
-#. 
-#.  Preview
-#. 
-#.  *	Preview
-#. 
-#.  Previews: frame
-#.  * Misc: Preview settings *
-#.  Misc: Preview settings: Continuous update ?!
+#. Create the Preview
+#. ==================
+#. Create the Preview
+#. Preview area, top of column
+#.
+#. * Preview window...
+#.
+#. Preview
+#. hbox created and packed into the dialog
+#. make a nice frame
+#. Preview
+#.
+#. * Preview window...
+#.
+#. Preview
+#.
+#. *	Preview
+#.
+#. Previews: frame
+#. * Misc: Preview settings *
+#. Misc: Preview settings: Continuous update ?!
 #: plug-ins/FractalExplorer/Dialogs.c:578 plug-ins/Lighting/lighting_ui.c:1126
 #: plug-ins/MapObject/mapobject_ui.c:1395 plug-ins/common/CML_explorer.c:1195
 #: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1268
@@ -265,8 +267,8 @@ msgid "Color Density"
 msgstr "Obojanost"
 
 #. These values are translated for the GUI but also used internally
-#.  to figure out which button the user pushed, etc.
-#.  Not my design, please don't blame me -- njl
+#. to figure out which button the user pushed, etc.
+#. Not my design, please don't blame me -- njl
 #: plug-ins/FractalExplorer/Dialogs.c:951 plug-ins/common/compose.c:131
 #: plug-ins/common/compose.c:141 plug-ins/fp/fp_gtk.c:28
 msgid "Red:"
@@ -300,7 +302,7 @@ msgid "Color Function"
 msgstr "Funkcije Boje"
 
 #. Redmode radio frame
-#.  Redmode toggle box
+#. Redmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:990 plug-ins/common/AlienMap.c:1218
 #: plug-ins/common/channel_mixer.c:599 plug-ins/common/decompose.c:130
 msgid "Red"
@@ -346,7 +348,8 @@ msgstr "Koristi kosinus funkciju za crvenu"
 msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
-msgstr "Crveni kanal:koristim linearno mapiranje bez trigonometrijskih funkcija"
+msgstr ""
+"Crveni kanal:koristim linearno mapiranje bez trigonometrijskih funkcija"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1018
 #: plug-ins/FractalExplorer/Dialogs.c:1059
@@ -365,14 +368,14 @@ msgstr ""
 "i obratno"
 
 #. Greenmode radio frame
-#.  Greenmode toggle box
+#. Greenmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1031 plug-ins/common/AlienMap.c:1241
 #: plug-ins/common/channel_mixer.c:600 plug-ins/common/decompose.c:131
 msgid "Green"
 msgstr "Zelena"
 
 #. Bluemode radio frame
-#.  Bluemode toggle box
+#. Bluemode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1072 plug-ins/common/AlienMap.c:1264
 #: plug-ins/common/channel_mixer.c:601 plug-ins/common/decompose.c:136
 msgid "Blue"
@@ -392,8 +395,8 @@ msgid ""
 "Create a color-map with the options you specified above (color density/"
 "function). The result is visible in the preview image"
 msgstr ""
-"Napravi mapu boja s opcijama navedenim gore (gustoća boje/funkcija). Rezultat "
-"je vidljiv na prikazu."
+"Napravi mapu boja s opcijama navedenim gore (gustoća boje/funkcija). "
+"Rezultat je vidljiv na prikazu."
 
 #: plug-ins/FractalExplorer/Dialogs.c:1145
 msgid "Apply active gradient to final image"
@@ -430,11 +433,12 @@ msgstr "_Fraktali"
 #: plug-ins/flame/flame.c:434 plug-ins/gfig/gfig.c:1025
 #: plug-ins/gfli/gfli.c:716 plug-ins/ifscompose/ifscompose.c:2595
 #: plug-ins/xjt/xjt.c:1272 plug-ins/xjt/xjt.c:1711
+#, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Ne mogu otvoriti '%s' za pisanje: %s"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1841
-#, , c-format
+#, c-format
 msgid "Could not write '%s': %s"
 msgstr "Greška pri zapisivanju '%s': %s"
 
@@ -456,7 +460,7 @@ msgid "Save Fractal Parameters"
 msgstr "Spremi Osobitosti Fraktala"
 
 #. Do not rely on librsvg setting GError on failure!
-#.  stat error (file does not exist)
+#. stat error (file does not exist)
 #: plug-ins/FractalExplorer/Dialogs.c:2128 plug-ins/bmp/bmpread.c:118
 #: plug-ins/common/CEL.c:305 plug-ins/common/CML_explorer.c:2341
 #: plug-ins/common/channel_mixer.c:1151 plug-ins/common/curve_bend.c:911
@@ -474,17 +478,18 @@ msgstr "Spremi Osobitosti Fraktala"
 #: plug-ins/common/xwd.c:383 plug-ins/faxg3/faxg3.c:219
 #: plug-ins/fits/fits.c:337 plug-ins/flame/flame.c:404
 #: plug-ins/gfig/gfig.c:716 plug-ins/gfli/gfli.c:425 plug-ins/gfli/gfli.c:461
-#: plug-ins/help/domain.c:255 plug-ins/xjt/xjt.c:2535 plug-ins/xjt/xjt.c:2543
+#: plug-ins/help/domain.c:380 plug-ins/xjt/xjt.c:2535 plug-ins/xjt/xjt.c:2543
+#, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Ne mogu otvoriti '%s' za čitanje: %s"
 
 #: plug-ins/FractalExplorer/Dialogs.c:2136
-#, , c-format
+#, c-format
 msgid "'%s' is not a FractalExplorer file"
 msgstr "'%s' nije FractalExplorer datoteka"
 
 #: plug-ins/FractalExplorer/Dialogs.c:2142
-#, , c-format
+#, c-format
 msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "Datoteka '%s' je oštećena. Linija %d u dijelu odrednica je pogrešna"
 
@@ -498,7 +503,7 @@ msgstr "Renderiram fraktal..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:763 plug-ins/gfig/gfig.c:3827
 #: plug-ins/gflare/gflare.c:3109
-#, , c-format
+#, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
 msgstr "Jeste li sigurni da želite obrisati \"%s\" iz popisa i s diska ?"
 
@@ -570,31 +575,33 @@ msgstr "<Slika>/Filteri/Svjetlostni efekti/Svjetlostni efekti..."
 msgid "General Options"
 msgstr "Opće Mogućnosti"
 
+#.
 #. toggle = gtk_check_button_new_with_label (_("Use Bump Mapping"));
-#.  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-#.  mapvals.bump_mapped);
-#.  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-#.  g_signal_connect (toggle, "toggled",
-#.  G_CALLBACK (togglebump_update),
-#.  &mapvals.bump_mapped);
-#.  gtk_widget_show (toggle);
-#. 
-#.  gimp_help_set_help_data (toggle,
-#.  _("Enable/disable bump-mapping (image depth)"),
-#.  NULL);
-#. 
-#.  toggle = gtk_check_button_new_with_label (_("Use Environment Mapping"));
-#.  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-#.  mapvals.env_mapped);
-#.  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-#.  g_signal_connect (toggle, "toggled",
-#.  G_CALLBACK (toggleenvironment_update),
-#.  &mapvals.env_mapped);
-#.  gtk_widget_show (toggle);
-#. 
-#.  gimp_help_set_help_data (toggle,
-#.  _("Enable/disable environment mapping (reflection)"),
-#.  NULL);
+#. gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+#. mapvals.bump_mapped);
+#. gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+#. g_signal_connect (toggle, "toggled",
+#. G_CALLBACK (togglebump_update),
+#. &mapvals.bump_mapped);
+#. gtk_widget_show (toggle);
+#.
+#. gimp_help_set_help_data (toggle,
+#. _("Enable/disable bump-mapping (image depth)"),
+#. NULL);
+#.
+#. toggle = gtk_check_button_new_with_label (_("Use Environment Mapping"));
+#. gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+#. mapvals.env_mapped);
+#. gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+#. g_signal_connect (toggle, "toggled",
+#. G_CALLBACK (toggleenvironment_update),
+#. &mapvals.env_mapped);
+#. gtk_widget_show (toggle);
+#.
+#. gimp_help_set_help_data (toggle,
+#. _("Enable/disable environment mapping (reflection)"),
+#. NULL);
+#.
 #: plug-ins/Lighting/lighting_ui.c:368
 msgid "T_ransparent Background"
 msgstr "_Prozirna Pozadina"
@@ -1169,11 +1176,11 @@ msgid "Bad colormap"
 msgstr "Pogrešna mapa boja"
 
 #. Set up progress display
-#.  put up a progress bar
-#.  max. rows allocated
-#.  column, highest column ever used
-#.  -1  assume fsel is not available (and not attached to any drawable)
-#.  -1  assume there is no floating selection
+#. put up a progress bar
+#. max. rows allocated
+#. column, highest column ever used
+#. -1  assume fsel is not available (and not attached to any drawable)
+#. -1  assume there is no floating selection
 #: plug-ins/bmp/bmpread.c:123 plug-ins/common/CEL.c:310
 #: plug-ins/common/dicom.c:294 plug-ins/common/gbr.c:327
 #: plug-ins/common/gifload.c:300 plug-ins/common/gih.c:634
@@ -1187,14 +1194,14 @@ msgstr "Pogrešna mapa boja"
 #: plug-ins/common/xpm.c:329 plug-ins/common/xwd.c:434
 #: plug-ins/faxg3/faxg3.c:202 plug-ins/gfli/gfli.c:466 plug-ins/sgi/sgi.c:322
 #: plug-ins/xjt/xjt.c:3321
-#, , c-format
+#, c-format
 msgid "Opening '%s'..."
 msgstr "Otvaram '%s'..."
 
 #: plug-ins/bmp/bmpread.c:135 plug-ins/bmp/bmpread.c:144
 #: plug-ins/bmp/bmpread.c:150 plug-ins/bmp/bmpread.c:158
 #: plug-ins/bmp/bmpread.c:172 plug-ins/bmp/bmpread.c:307
-#, , c-format
+#, c-format
 msgid "'%s' is not a valid BMP file"
 msgstr "'%s' nije valjana BMP datoteka"
 
@@ -1202,11 +1209,13 @@ msgstr "'%s' nije valjana BMP datoteka"
 #: plug-ins/bmp/bmpread.c:225 plug-ins/bmp/bmpread.c:244
 #: plug-ins/bmp/bmpread.c:263 plug-ins/bmp/bmpread.c:269
 #: plug-ins/bmp/bmpread.c:275
-#, , c-format
+#, c-format
 msgid "Error reading BMP file header from '%s'"
 msgstr "Greška kod čitanja BMP zaglavlja iz '%s'"
 
+#.
 #. * Create the "background" layer to hold the image...
+#.
 #: plug-ins/bmp/bmpread.c:397 plug-ins/bmp/bmpread.c:405
 #: plug-ins/bmp/bmpread.c:413 plug-ins/common/CEL.c:357
 #: plug-ins/common/CEL.c:360 plug-ins/common/blinds.c:312
@@ -1238,8 +1247,8 @@ msgid "Cannot operate on unknown image types."
 msgstr "Ne mogu raditi s nepoznatim tipovima slika."
 
 #. And let's begin the progress
-#.  init the progress meter
-#.  Set up progress display
+#. init the progress meter
+#. Set up progress display
 #: plug-ins/bmp/bmpwrite.c:209 plug-ins/common/CEL.c:582
 #: plug-ins/common/gbr.c:586 plug-ins/common/gif.c:1002
 #: plug-ins/common/gih.c:1223 plug-ins/common/gtm.c:246
@@ -1252,7 +1261,7 @@ msgstr "Ne mogu raditi s nepoznatim tipovima slika."
 #: plug-ins/common/xbm.c:1000 plug-ins/common/xpm.c:619
 #: plug-ins/common/xwd.c:538 plug-ins/fits/fits.c:457 plug-ins/gfli/gfli.c:683
 #: plug-ins/sgi/sgi.c:537 plug-ins/xjt/xjt.c:1691
-#, , c-format
+#, c-format
 msgid "Saving '%s'..."
 msgstr "Spremam '%s'..."
 
@@ -1339,7 +1348,8 @@ msgstr "Koristi kosinus funkciju za crvenu"
 
 #: plug-ins/common/AlienMap.c:1233
 msgid "Red channel: use linear mapping instead of any trigonometrical function"
-msgstr "Crveni kanal:koristim linearno mapiranje bez trigonometrijskih funkcija"
+msgstr ""
+"Crveni kanal:koristim linearno mapiranje bez trigonometrijskih funkcija"
 
 #: plug-ins/common/AlienMap.c:1252
 msgid "Use sine-function for green component."
@@ -1350,7 +1360,8 @@ msgid "Use cosine-function for green component."
 msgstr "Koristi kosinus funkciju za zelenu komponentu"
 
 #: plug-ins/common/AlienMap.c:1256
-msgid "Green channel: use linear mapping instead of any trigonometrical function"
+msgid ""
+"Green channel: use linear mapping instead of any trigonometrical function"
 msgstr "Zeleni kanal:Koristi linearno mapiranje bez trigonometrijskih funkcija"
 
 #: plug-ins/common/AlienMap.c:1275
@@ -1362,7 +1373,8 @@ msgid "Use cosine-function for blue component."
 msgstr "Koristi kosinus fukciju za plavu komponentu"
 
 #: plug-ins/common/AlienMap.c:1279
-msgid "Blue channel: use linear mapping instead of any trigonometrical function"
+msgid ""
+"Blue channel: use linear mapping instead of any trigonometrical function"
 msgstr "Plavi kanal:Koristim linearno mapiranje bez trigonometrijskih funkcija"
 
 #: plug-ins/common/AlienMap.c:1360
@@ -1481,7 +1493,7 @@ msgid "Can't create a new image"
 msgstr "Ne mogu stvoriti novu sliku"
 
 #: plug-ins/common/CEL.c:438
-#, , c-format
+#, c-format
 msgid "Unsupported bit depth (%d)!"
 msgstr "Nepodržana dubina bitova (%d)"
 
@@ -1889,7 +1901,7 @@ msgid "Save Parameters to"
 msgstr "Spremi Parametre u"
 
 #: plug-ins/common/CML_explorer.c:2191 plug-ins/common/channel_mixer.c:1245
-#, , c-format
+#, c-format
 msgid "Parameters were Saved to '%s'"
 msgstr "Parametri su spremljeni u \"%s\""
 
@@ -1898,6 +1910,7 @@ msgid "CML File Operation Warning"
 msgstr "Operacija s CML datotekom:POZOR"
 
 #: plug-ins/common/CML_explorer.c:2223 plug-ins/common/channel_mixer.c:1278
+#, c-format
 msgid ""
 "File '%s' exists.\n"
 "Overwrite it?"
@@ -1916,12 +1929,12 @@ msgid "Error: it's not CML parameter file."
 msgstr "Greška:To nije datoteka sa CML parametrima"
 
 #: plug-ins/common/CML_explorer.c:2370
-#, , c-format
+#, c-format
 msgid "Warning: '%s' is an old format file."
 msgstr "Pozor: '%s' je stari slikovni format."
 
 #: plug-ins/common/CML_explorer.c:2373
-#, , c-format
+#, c-format
 msgid "Warning: '%s' is a parameter file for newer CML_explorer than me."
 msgstr "Pozor: '%s' je parametar za noviji CML_explorer od mene."
 
@@ -1952,39 +1965,40 @@ msgstr "Nema dovoljno slojeva za poravnanje."
 msgid "Align Visible Layers"
 msgstr "Stopi Vidljive Slojeve"
 
+#.
 #. *  Parameter settings
-#.  *
-#.  *  First set up the basic containers, label them, etc.
-#. 
-#.  parameter settings
-#. 
-#.  * Filter type controls...
-#. 
-#.  parameter settings
-#.  filter routine, initial pass
-#.  Parameter settings
-#.  left side of the UI is done
-#.  right side
-#.  parameter settings
-#.  preview noisify
-#.  parameter settings
-#.  Controls
-#. 
-#.  *  Parameter settings
-#.  *
-#.  *  First set up the basic containers, label them, etc.
-#. 
-#.  Parameter Settings
-#.  parameter settings
-#. 
-#.  * Sharpness control...
-#. 
-#.  parameter settings
-#.  Parameter settings
-#.  main parameter frame
-#.  Parameter settings
-#.  Controls
-#.  parameter settings
+#. *
+#. *  First set up the basic containers, label them, etc.
+#.
+#. parameter settings
+#.
+#. * Filter type controls...
+#.
+#. parameter settings
+#. filter routine, initial pass
+#. Parameter settings
+#. left side of the UI is done
+#. right side
+#. parameter settings
+#. preview noisify
+#. parameter settings
+#. Controls
+#.
+#. *  Parameter settings
+#. *
+#. *  First set up the basic containers, label them, etc.
+#.
+#. Parameter Settings
+#. parameter settings
+#.
+#. * Sharpness control...
+#.
+#. parameter settings
+#. Parameter settings
+#. main parameter frame
+#. Parameter settings
+#. Controls
+#. parameter settings
 #: plug-ins/common/align_layers.c:410 plug-ins/common/apply_lens.c:378
 #: plug-ins/common/blinds.c:337 plug-ins/common/blur.c:604
 #: plug-ins/common/bumpmap.c:1011 plug-ins/common/checkerboard.c:326
@@ -2112,7 +2126,7 @@ msgid "Step"
 msgstr "Korak"
 
 #: plug-ins/common/animationplay.c:1241
-#, , c-format
+#, c-format
 msgid "Frame %d of %d"
 msgstr "Okvir %d od %d"
 
@@ -2245,7 +2259,9 @@ msgstr "Broj _dijelova:"
 msgid "<Image>/Filters/Blur/_Blur..."
 msgstr "<Slika>/Filteri/Zamućenje/Zamućenje..."
 
+#.
 #. *  JUST DO IT!
+#.
 #: plug-ins/common/blur.c:316 plug-ins/common/unsharp.c:255
 msgid "Blurring..."
 msgstr "Zamućujem..."
@@ -2427,25 +2443,27 @@ msgid "Only one unique color"
 msgstr "Samo jedna jedinstvena boja"
 
 #: plug-ins/common/ccanalyze.c:599
-#, , c-format
+#, c-format
 msgid "Number of unique colors: %d"
 msgstr "Broj jedinstvenih boja: %d"
 
 #: plug-ins/common/ccanalyze.c:602
+#, c-format
 msgid "Uncompressed size: %s"
 msgstr "Veličina nesažetog: %s"
 
 #: plug-ins/common/ccanalyze.c:609
-#, , c-format
+#, c-format
 msgid "Filename: %s"
 msgstr "Datoteka: %s"
 
 #: plug-ins/common/ccanalyze.c:610
-#, , c-format
+#, c-format
 msgid "Compressed size: %s"
 msgstr "Sažeta veličina: %s"
 
 #: plug-ins/common/ccanalyze.c:611
+#, c-format
 msgid "Compression ratio (approx.): %d to 1"
 msgstr "Odnos sažimanja (približno): %d prema 1"
 
@@ -2683,7 +2701,7 @@ msgid "<Image>/Filters/Colors/C_ompose..."
 msgstr "<Slika>/Filteri/Boje/Sastavi..."
 
 #: plug-ins/common/compose.c:360
-#, , c-format
+#, c-format
 msgid "Could not get layers for image %d"
 msgstr "Ne mogu dohvatiti sloj za sliku %d"
 
@@ -2704,7 +2722,7 @@ msgid "Error in getting layer IDs"
 msgstr "Greška kod dobivanja oznaka slojeva"
 
 #: plug-ins/common/compose.c:529
-#, , c-format
+#, c-format
 msgid "Image is not a gray image (bpp=%d)"
 msgstr "Slika nije siva slika (bpp=%d)"
 
@@ -2718,9 +2736,9 @@ msgid "Compose Channels"
 msgstr "Komponiraj Kanale"
 
 #. The right frame keeps the selection menues for images.
-#.  Because the labels within this frame will change when a toggle
-#.  in the left frame is changed, fill in the right part first.
-#.  Otherwise it can occur, that a non-existing label might be changed.
+#. Because the labels within this frame will change when a toggle
+#. in the left frame is changed, fill in the right part first.
+#. Otherwise it can occur, that a non-existing label might be changed.
 #: plug-ins/common/compose.c:1118
 msgid "Channel Representations"
 msgstr "Postave Kanala:"
@@ -2815,26 +2833,31 @@ msgid "Co_mment:"
 msgstr "_Komentar:"
 
 #. Use Comment
+#.
 #: plug-ins/common/csource.c:675
 msgid "_Save Comment to File"
 msgstr "_Spremanje komentara u datoteku"
 
 #. GLib types
+#.
 #: plug-ins/common/csource.c:687
 msgid "_Use GLib Types (guint8*)"
 msgstr "_Koristi GLib vrste (guint8*)"
 
 #. Use Macros
+#.
 #: plug-ins/common/csource.c:699
 msgid "Us_e Macros instead of Struct"
 msgstr "Koristi makroe umjesto struktura"
 
 #. Use RLE
+#.
 #: plug-ins/common/csource.c:711
 msgid "Use _1 Byte Run-Length-Encoding"
 msgstr "Upotrebi jednobajtno Run-Length-Encoding (RLE)"
 
 #. Alpha
+#.
 #: plug-ins/common/csource.c:723
 msgid "Sa_ve Alpha Channel (RGBA/RGB)"
 msgstr "Spremi alfa kanal (RGBA/RGB)"
@@ -2880,7 +2903,7 @@ msgid "Cannot operate on empty selections."
 msgstr "Ne mogu raditi na praznim odabirima."
 
 #. Possibly retrieve data from a previous run
-#.  The shell and main vbox
+#. The shell and main vbox
 #: plug-ins/common/curve_bend.c:1238
 msgid "Curve Bend"
 msgstr "Svinutost Krivulje"
@@ -2896,8 +2919,8 @@ msgid "Automatic Pre_view"
 msgstr "Automatsko osvježavanje pregleda"
 
 #. Options area, bottom of column
-#.  the vertical box and its toggle buttons
-#.  Options section
+#. the vertical box and its toggle buttons
+#. Options section
 #: plug-ins/common/curve_bend.c:1321 plug-ins/common/mosaic.c:527
 #: plug-ins/common/ripple.c:443 plug-ins/gfig/gfig.c:2992
 msgid "Options"
@@ -3226,30 +3249,31 @@ msgid "<Image>/Filters/Enhance/Des_peckle..."
 msgstr "<Slika>/Filteri/Poboljšaj/Des_peckle..."
 
 #. Source image region
-#.  Destination image region
-#.  Source pixel rows
-#.  Destination pixel row
-#.  Source pixel pointer
-#.  Pixel value sort array
-#.  Current sort value
-#.  Number of soft values
-#.  Looping vars
-#.  Current location in image
-#.  Current row in src_rows
-#.  Number of rows loaded
-#.  Last row loaded in src_rows
-#.  Looping var
-#.  Starting row for loop
-#.  Ending row for loop
-#.  Maximum number of filled src_rows
-#.  Width/height of the filter box
-#.  Byte width of the image
-#.  Looping vars
-#.  Current radius
-#.  Histogram count for 0 values
-#.  Histogram count for 255 values
-#. 
-#.  * Let the user know what we're doing...
+#. Destination image region
+#. Source pixel rows
+#. Destination pixel row
+#. Source pixel pointer
+#. Pixel value sort array
+#. Current sort value
+#. Number of soft values
+#. Looping vars
+#. Current location in image
+#. Current row in src_rows
+#. Number of rows loaded
+#. Last row loaded in src_rows
+#. Looping var
+#. Starting row for loop
+#. Ending row for loop
+#. Maximum number of filled src_rows
+#. Width/height of the filter box
+#. Byte width of the image
+#. Looping vars
+#. Current radius
+#. Histogram count for 0 values
+#. Histogram count for 255 values
+#.
+#. * Let the user know what we're doing...
+#.
 #: plug-ins/common/despeckle.c:406
 msgid "Despeckling..."
 msgstr "Despeckling..."
@@ -3258,7 +3282,9 @@ msgstr "Despeckling..."
 msgid "Despeckle"
 msgstr "Despeckle..."
 
+#.
 #. * Filter type controls...
+#.
 #: plug-ins/common/despeckle.c:694 plug-ins/gimpressionist/orientmap.c:552
 msgid "Type"
 msgstr "Tip"
@@ -3311,7 +3337,7 @@ msgid "_Width:"
 msgstr "_Širina:"
 
 #: plug-ins/common/dicom.c:317
-#, , c-format
+#, c-format
 msgid "'%s' is not a DICOM file."
 msgstr "'%s' nije DICOM datoteka"
 
@@ -3383,7 +3409,7 @@ msgid "_Y Displacement:"
 msgstr "Y promjena položaja:"
 
 #. =======================================================================
-#.  Displacement Type
+#. Displacement Type
 #: plug-ins/common/displace.c:370 plug-ins/common/warp.c:462
 msgid "On Edges:"
 msgstr "Na Rubovima:"
@@ -3662,7 +3688,7 @@ msgid "_Number Height:"
 msgstr "Broj _visine:"
 
 #. don't translate '<Image>' entry,
-#.  * it is keyword for the gtk toolkit
+#. * it is keyword for the gtk toolkit
 #: plug-ins/common/flarefx.c:191
 msgid "<Image>/Filters/Light Effects/_FlareFX..."
 msgstr "<Slika>/Filteri/Svjetlostni efekti/Odsjaj..."
@@ -3763,12 +3789,12 @@ msgid "Blur Radius"
 msgstr "Polumjer Zamućenja"
 
 #: plug-ins/common/gauss_iir.c:447 plug-ins/common/gauss_rle.c:441
-#: plug-ins/common/jigsaw.c:2578 plug-ins/common/spread.c:356
+#: plug-ins/common/jigsaw.c:2581 plug-ins/common/spread.c:358
 msgid "_Horizontal:"
 msgstr "Horizontalno:"
 
 #: plug-ins/common/gauss_iir.c:451 plug-ins/common/gauss_rle.c:445
-#: plug-ins/common/jigsaw.c:2591 plug-ins/common/spread.c:360
+#: plug-ins/common/jigsaw.c:2594 plug-ins/common/spread.c:362
 msgid "_Vertical:"
 msgstr "Vertikalno:"
 
@@ -3786,11 +3812,12 @@ msgid "Unsupported brush format"
 msgstr "Nepodržani format kista"
 
 #: plug-ins/common/gbr.c:387
-#, , c-format
+#, c-format
 msgid "Error in GIMP brush file '%s'"
 msgstr "Greška u datoteci GIMP kista '%s'"
 
 #: plug-ins/common/gbr.c:395
+#, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Greška u GIMP uzorku \"%s\""
 
@@ -3834,8 +3861,8 @@ msgid ""
 "A less-obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
 msgstr ""
-"Manje zastarjelo dijelo Adama D. Mossa / adam@gimp.org / adam@foxbox.org / 1998-"
-"2000"
+"Manje zastarjelo dijelo Adama D. Mossa / adam@gimp.org / adam@foxbox.org / "
+"1998-2000"
 
 #: plug-ins/common/gee_zoom.c:135
 msgid "<Image>/Filters/Toys/Gee-_Zoom"
@@ -3850,8 +3877,8 @@ msgid ""
 "An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
 msgstr ""
-"Manje zastarjelo dijelo Adama D. Mossa / adam@gimp.org / adam@foxbox.org / 1998-"
-"2000"
+"Manje zastarjelo dijelo Adama D. Mossa / adam@gimp.org / adam@foxbox.org / "
+"1998-2000"
 
 #: plug-ins/common/gicon.c:426
 msgid "Save as GIcon"
@@ -3874,8 +3901,10 @@ msgstr ""
 "spremljen."
 
 #: plug-ins/common/gif.c:971
-msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
-msgstr "Ne mogu spremiti RGB slike. Promijenite ih prvo u indeksirane ili sive slike."
+msgid ""
+"Cannot save RGB color images. Convert to indexed color or grayscale first."
+msgstr ""
+"Ne mogu spremiti RGB slike. Promijenite ih prvo u indeksirane ili sive slike."
 
 #: plug-ins/common/gif.c:1114
 msgid ""
@@ -3884,8 +3913,8 @@ msgid ""
 "support transparency."
 msgstr ""
 "Upozorenje:\n"
-"Prozirna boja u zapisanoj datoteci može biti netočna na preglednicima koji ne "
-"podržavaju prozirnost."
+"Prozirna boja u zapisanoj datoteci može biti netočna na preglednicima koji "
+"ne podržavaju prozirnost."
 
 #: plug-ins/common/gif.c:1153
 msgid "Delay inserted to prevent evil CPU-sucking anim."
@@ -3968,6 +3997,7 @@ msgid "Error writing output file."
 msgstr "Greška u zapisivanju izlazne datoteke."
 
 #: plug-ins/common/gif.c:2693
+#, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Uobičajeni komentar je ograničen na %d slova."
 
@@ -3980,7 +4010,7 @@ msgid "Non-square pixels.  Image might look squashed."
 msgstr "Ne-kvadratne točke. Slika može izgledati stiješnjeno."
 
 #: plug-ins/common/gifload.c:859
-#, , c-format
+#, c-format
 msgid "Background (%d%s)"
 msgstr "Pozadina (%d%s)"
 
@@ -3991,17 +4021,18 @@ msgid "Frame %d"
 msgstr "Okvir %d"
 
 #: plug-ins/common/gifload.c:909
-#, , c-format
+#, c-format
 msgid "Frame %d (%d%s)"
 msgstr "Okvir %d (%d%s)"
 
 #: plug-ins/common/gifload.c:939
+#, c-format
 msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
 "play or re-save perfectly."
 msgstr ""
-"GIF: ne može se rukovati nedokumentiranim složenim GIF tipom %d.  Možda se neće "
-"moći gledati ili spremiti animacija."
+"GIF: ne može se rukovati nedokumentiranim složenim GIF tipom %d.  Možda se "
+"neće moći gledati ili spremiti animacija."
 
 #: plug-ins/common/gih.c:302
 #, c-format
@@ -4329,7 +4360,7 @@ msgid "_Blacken"
 msgstr "_Zacrnjeno"
 
 #: plug-ins/common/hrz.c:348
-#, , c-format
+#, c-format
 msgid "'%s' is not a HRZ file"
 msgstr "'%s' nije HRZ datoteka"
 
@@ -4374,7 +4405,7 @@ msgid "Warping..."
 msgstr "Izobličavanje..."
 
 #: plug-ins/common/iwarp.c:790 plug-ins/common/iwarp.c:803
-#, , c-format
+#, c-format
 msgid "Warping Frame No. %d..."
 msgstr "Izobličavam okvire br. %d ..."
 
@@ -4471,42 +4502,43 @@ msgstr "<Slika>/Filteri/Renderiranje/Uzorak/_Jigsaw..."
 msgid "Assembling Jigsaw..."
 msgstr "Sastavljam _slagalicu..."
 
-#: plug-ins/common/jigsaw.c:2543
+#: plug-ins/common/jigsaw.c:2542
 msgid "Jigsaw"
 msgstr "Jigsaw"
 
-#: plug-ins/common/jigsaw.c:2567
+#: plug-ins/common/jigsaw.c:2570
 msgid "Number of Tiles"
 msgstr "Broj Djelića"
 
-#: plug-ins/common/jigsaw.c:2581
+#: plug-ins/common/jigsaw.c:2584
 msgid "Number of pieces going across"
 msgstr "Broj razasutih djelića uokolo"
 
-#: plug-ins/common/jigsaw.c:2594
+#: plug-ins/common/jigsaw.c:2597
 msgid "Number of pieces going down"
 msgstr "Broj razasutih djelića dolje"
 
-#: plug-ins/common/jigsaw.c:2605
+#: plug-ins/common/jigsaw.c:2608
 msgid "Bevel Edges"
 msgstr "Ukošeni Rubovi"
 
-#: plug-ins/common/jigsaw.c:2616
+#: plug-ins/common/jigsaw.c:2619
 msgid "_Bevel Width:"
 msgstr "Širina nagiba:"
 
-#: plug-ins/common/jigsaw.c:2620
+#: plug-ins/common/jigsaw.c:2623
 msgid "Degree of slope of each piece's edge"
 msgstr "Stupanj nagiba svakog komadića ruba"
 
-#: plug-ins/common/jigsaw.c:2630
+#: plug-ins/common/jigsaw.c:2633
 msgid "H_ighlight:"
 msgstr "_Osvjetljenje:"
 
-#: plug-ins/common/jigsaw.c:2634
+#: plug-ins/common/jigsaw.c:2637
 msgid "The amount of highlighting on the edges of each piece"
 msgstr "Vrijednost osvjetljnja svakog djelića ruba"
 
+#. frame for primitive radio buttons
 #: plug-ins/common/jigsaw.c:2651
 msgid "Jigsaw Style"
 msgstr "Jigsaw Stil"
@@ -4536,7 +4568,7 @@ msgid "JPEG preview"
 msgstr "JPEG pregled"
 
 #: plug-ins/common/jpeg.c:1171
-#, , c-format
+#, c-format
 msgid "Size: %ld bytes (%02.01f kB)"
 msgstr "Veličina: %ld bajtova (%02.01f kB)"
 
@@ -4555,7 +4587,8 @@ msgstr "Pregled Slike"
 
 #: plug-ins/common/jpeg.c:1694
 msgid "Preview (in image window, will modify image's undo history!)"
-msgstr "Pregled (u prozoru za slike, promijeniti će povijest poništavanja slike!)"
+msgstr ""
+"Pregled (u prozoru za slike, promijeniti će povijest poništavanja slike!)"
 
 #: plug-ins/common/jpeg.c:1727 plug-ins/xjt/xjt.c:888
 msgid "Quality:"
@@ -5133,7 +5166,7 @@ msgid "_Factory Defaults"
 msgstr "Uobičajeno"
 
 #. anti-alias control
-#.  2
+#. 2
 #: plug-ins/common/newsprint.c:1390 plug-ins/gfig/gfig.c:2406
 msgid "Antialiasing"
 msgstr "Antialiasing"
@@ -5350,6 +5383,7 @@ msgid "<Image>/Filters/Map/_Paper Tile..."
 msgstr "<Slika>/Filteri/Mapa/Djelići papira..."
 
 #: plug-ins/common/pat.c:338
+#, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Greška u GIMP uzorku \"%s\""
 
@@ -5358,12 +5392,12 @@ msgid "Save as Pattern"
 msgstr "Spremi kao Uzorak"
 
 #: plug-ins/common/pcx.c:313
-#, , c-format
+#, c-format
 msgid "Could not read header from '%s'"
 msgstr "Ne mogu pročitati zaglavlje iz '%s'"
 
 #: plug-ins/common/pcx.c:320
-#, , c-format
+#, c-format
 msgid "'%s' is not a PCX file"
 msgstr "'%s' nije PCX datoteka"
 
@@ -5509,11 +5543,13 @@ msgid "Search:"
 msgstr "Traži:"
 
 #: plug-ins/common/png.c:650
+#, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Greška prilikom čitanja \"%s\". Oštećena datoteka?"
 
 #. Aie! Unknown type
 #: plug-ins/common/png.c:784
+#, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Nepoznat model boja u PNG datoteci \"%s\""
 
@@ -5524,9 +5560,12 @@ msgid ""
 msgstr "PNG datoteka određuje pomak koji je pomaknuo sloj izvan opsega slike."
 
 #: plug-ins/common/png.c:1153
+#, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Greška pri čuvanju \"%s\". Ne mogu spremiti sliku."
 
+#. Inform the user that we couldn't losslessly save the
+#. * transparency & just use the full palette
 #: plug-ins/common/png.c:1527
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "Ne mogu spremiti prozirnost bez gubitaka, čuvam neprozirnost."
@@ -5662,7 +5701,8 @@ msgstr "Mapiraj unazad"
 msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
-msgstr "Ako je označeno mapiranje, početi će na desnoj strani, kao suprotnost početku"
+msgstr ""
+"Ako je označeno mapiranje, početi će na desnoj strani, kao suprotnost početku"
 
 #: plug-ins/common/polar.c:674
 msgid "Map from _Top"
@@ -5689,7 +5729,7 @@ msgstr ""
 "odabrano, slika će biti mapirana u krug."
 
 #: plug-ins/common/postscript.c:887
-#, , c-format
+#, c-format
 msgid "Could not interpret '%s'"
 msgstr "Ne mogu interpretirati '%s'"
 
@@ -6075,7 +6115,7 @@ msgid "Error obtaining Screen Shot"
 msgstr "Greška pri dobijanju snimke zaslona"
 
 #. single window
-#.  Action area
+#. Action area
 #: plug-ins/common/screenshot.c:525 plug-ins/winsnap/winsnap.c:905
 msgid "Grab"
 msgstr "Uhvati"
@@ -6133,7 +6173,9 @@ msgstr "Polu-ravno..."
 msgid "<Image>/Filters/Enhance/_Sharpen..."
 msgstr "<Slika>/Filteri/Enhance/Izoštravanje... "
 
+#.
 #. * Let the user know what we're doing...
+#.
 #: plug-ins/common/sharpen.c:329
 msgid "Sharpening..."
 msgstr "Izoštravanje..."
@@ -6179,7 +6221,7 @@ msgid "Sinus: rendering..."
 msgstr "Sinus: renderiranje..."
 
 #. Create Main window with a vbox
-#.  ==============================
+#. ==============================
 #: plug-ins/common/sinus.c:649
 msgid "Sinus"
 msgstr "Sinus"
@@ -6638,20 +6680,20 @@ msgstr "Iscrtavam loptu.."
 msgid "<Image>/Filters/Render/Sphere _Designer..."
 msgstr "<Slika>/Filteri/Renderiranje/Dizajner sfere..."
 
-#: plug-ins/common/spread.c:108
+#: plug-ins/common/spread.c:110
 msgid "<Image>/Filters/Noise/Sp_read..."
 msgstr "<Slika>/Filteri/Šum/Rastegni..."
 
-#: plug-ins/common/spread.c:186
+#: plug-ins/common/spread.c:188
 msgid "Spreading..."
 msgstr "Rastezanje..."
 
-#: plug-ins/common/spread.c:330
+#: plug-ins/common/spread.c:332
 msgid "Spread"
 msgstr "Rastezanje"
 
 #. parameter settings
-#: plug-ins/common/spread.c:340
+#: plug-ins/common/spread.c:342
 msgid "Spread Amount"
 msgstr "Vrijednost Rastezanja"
 
@@ -6668,8 +6710,8 @@ msgid "Apply Canvas"
 msgstr "Prihvati Canvas"
 
 #. *****************************************************
-#.  radio buttons for choosing LEFT or RIGHT
-#.  *************************************************
+#. radio buttons for choosing LEFT or RIGHT
+#. *************************************************
 #: plug-ins/common/struc.c:1276 plug-ins/common/wind.c:935
 msgid "Direction"
 msgstr "Smjer"
@@ -6691,7 +6733,7 @@ msgid "Bottom-_Right"
 msgstr "Dno-_Desno"
 
 #: plug-ins/common/sunras.c:391
-#, , c-format
+#, c-format
 msgid "Could not open '%s' as SUN-raster-file"
 msgstr "Ne mogu otvoriti '%s'  kao SUN raster datoteku"
 
@@ -6700,7 +6742,7 @@ msgid "The type of this SUN-rasterfile is not supported"
 msgstr "Ovaj tip SUN-Raster datoteke nije podržan"
 
 #: plug-ins/common/sunras.c:422
-#, , c-format
+#, c-format
 msgid "Could not read color entries from '%s'"
 msgstr "Ne mogu pročitati ulazne boje iz '%s'"
 
@@ -6762,6 +6804,7 @@ msgstr ""
 "određuje veličinu!"
 
 #: plug-ins/common/svg.c:430
+#, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
 
@@ -6788,6 +6831,7 @@ msgid "Constrain aspect ratio"
 msgstr "Ograničene proporcije"
 
 #: plug-ins/common/svg.c:826
+#, c-format
 msgid "pixels/%a"
 msgstr "pikseli/%a"
 
@@ -6797,21 +6841,22 @@ msgid "Import _Paths"
 msgstr "_Uvezi Stazu.."
 
 #: plug-ins/common/svg.c:852
-msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
-msgstr """Uvezi elemente putanje za SVG, kako bi bili korišteni u Gimp alatu za "
-"putanje"
+msgid ""
+"Import path elements of the SVG so they can be used with the GIMP path tool"
+msgstr ""
+"Uvezi elemente putanje za SVG, kako bi bili korišteni u Gimp alatu za putanje"
 
 #: plug-ins/common/svg.c:865
 msgid "Merge Imported Paths"
 msgstr "Spoji uvezene putanje"
 
 #: plug-ins/common/tga.c:426
-#, , c-format
+#, c-format
 msgid "Cannot read footer from '%s'"
 msgstr "Ne mogu pročitati podnožje iz '%s'"
 
 #: plug-ins/common/tga.c:442
-#, , c-format
+#, c-format
 msgid "Cannot read extension from '%s'"
 msgstr "Ne mogu pročitati nastavak iz '%s'"
 
@@ -6859,6 +6904,7 @@ msgid "Threshold:"
 msgstr "Prag:"
 
 #: plug-ins/common/tiff.c:831
+#, c-format
 msgid "Page %d"
 msgstr "Stranica %d"
 
@@ -6875,8 +6921,8 @@ msgid ""
 msgstr ""
 "Upozorenje:\n"
 "Slika koju učitavate ima 16 bita po kanalu. Gimp može raditi samo s 8 bita, "
-"tako da će ovo biti konvertirano. Informacije će biti izgubljene zbog ovakvog "
-"prevođenja."
+"tako da će ovo biti konvertirano. Informacije će biti izgubljene zbog "
+"ovakvog prevođenja."
 
 #: plug-ins/common/tiff.c:1930
 msgid ""
@@ -7012,8 +7058,10 @@ msgid "ID"
 msgstr "Identifikacija"
 
 #: plug-ins/common/uniteditor.c:85
-msgid "This string will be used to identify a unit in GIMP's configuration files."
-msgstr """Ovaj izraz će se koristiti za identifikaciju mjere u GIMP-ovoj datoteci s "
+msgid ""
+"This string will be used to identify a unit in GIMP's configuration files."
+msgstr ""
+"Ovaj izraz će se koristiti za identifikaciju mjere u GIMP-ovoj datoteci s "
 "osobitostima."
 
 #: plug-ins/common/uniteditor.c:87
@@ -7347,7 +7395,7 @@ msgid "FG Color"
 msgstr "FG boja"
 
 #. --------------------------------------------------------------------
-#.  ---------    The secondary table         --------------------------
+#. ---------    The secondary table         --------------------------
 #: plug-ins/common/warp.c:540
 msgid "Secondary Options"
 msgstr "Sekundarne opcije"
@@ -7374,7 +7422,7 @@ msgid "Use Mag Map"
 msgstr "Koristi Mag mapu:"
 
 #. --------------------------------------------------------------------
-#.  ---------    The "other" table         --------------------------
+#. ---------    The "other" table         --------------------------
 #: plug-ins/common/warp.c:613
 msgid "Other Options"
 msgstr "Druge opcije"
@@ -7400,11 +7448,12 @@ msgstr "Kut:"
 msgid "Fixed-direction-vector map selection menu"
 msgstr "Izbornik za odabir mape vektora fiksnog usmjerenja"
 
+#.
 #. if (display_diff_map) {
-#.  gimp_display_new(new_image_id);
-#.  }
-#. 
-#.  make sure layer is visible
+#. gimp_display_new(new_image_id);
+#. }
+#.
+#. make sure layer is visible
 #: plug-ins/common/warp.c:1139
 msgid "Smoothing X gradient..."
 msgstr "Uglađujem X gradijent..."
@@ -7460,6 +7509,7 @@ msgstr ""
 "Molim vas da odredite preglednik korištenjem dijaloga za podešavanje."
 
 #: plug-ins/common/webbrowser.c:161
+#, c-format
 msgid ""
 "Could not parse specified web browser command:\n"
 "%s"
@@ -7468,6 +7518,7 @@ msgstr ""
 "%s"
 
 #: plug-ins/common/webbrowser.c:174
+#, c-format
 msgid ""
 "Could not execute specified web browser:\n"
 "%s"
@@ -7520,6 +7571,7 @@ msgid "Can't get Clipboard data."
 msgstr "Ne mogu dobiti podatke iz odlagališta."
 
 #. ??? gimp_image_convert_rgb (image_ID);
+#.
 #: plug-ins/common/winclipboard.c:564
 msgid "Pasted"
 msgstr "Ubačeno"
@@ -7545,9 +7597,9 @@ msgid "Wind"
 msgstr "Vjetar"
 
 #. ********************************************************
-#.  radio buttons for choosing wind rendering algorithm
-#.  *****************************************************
-#.  Algorithm Choice
+#. radio buttons for choosing wind rendering algorithm
+#. *****************************************************
+#. Algorithm Choice
 #: plug-ins/common/wind.c:915 plug-ins/maze/maze_face.c:297
 msgid "Style"
 msgstr "Stil"
@@ -7569,8 +7621,8 @@ msgid "_Right"
 msgstr "_Desno"
 
 #. ****************************************************
-#.  radio buttons for choosing BOTH, LEADING, TRAILING
-#.  **************************************************
+#. radio buttons for choosing BOTH, LEADING, TRAILING
+#. **************************************************
 #: plug-ins/common/wind.c:955
 msgid "Edge Affected"
 msgstr "Rub Promjenjen"
@@ -7665,7 +7717,7 @@ msgid "Scale (log 2):"
 msgstr "Ljestvica (log 2):"
 
 #: plug-ins/common/wmf.c:396 plug-ins/sgi/sgi.c:317
-#, , c-format
+#, c-format
 msgid "Could not open '%s' for reading."
 msgstr "Ne mogu otvorit '%s' za čitanje."
 
@@ -7678,7 +7730,7 @@ msgid "Created with The GIMP"
 msgstr "Kreirano GIMP-om"
 
 #: plug-ins/common/xbm.c:803
-#, , c-format
+#, c-format
 msgid ""
 "'%s':\n"
 "Could not read header (ftell == %ld)"
@@ -7687,7 +7739,7 @@ msgstr ""
 "Ne mogu pročitati zaglavlje (ftell == %ld)"
 
 #: plug-ins/common/xbm.c:810
-#, , c-format
+#, c-format
 msgid ""
 "'%s':\n"
 "No image width specified"
@@ -7696,7 +7748,7 @@ msgstr ""
 "Nema podataka o širini slike"
 
 #: plug-ins/common/xbm.c:817
-#, , c-format
+#, c-format
 msgid ""
 "'%s':\n"
 "No image height specified"
@@ -7705,7 +7757,7 @@ msgstr ""
 "Nema podataka o visini slike"
 
 #: plug-ins/common/xbm.c:824
-#, , c-format
+#, c-format
 msgid ""
 "'%s':\n"
 "No image data type specified"
@@ -7713,6 +7765,7 @@ msgstr ""
 "'%s'\n"
 "Nisu navedeni podaci slike"
 
+#. The image is not black-and-white.
 #: plug-ins/common/xbm.c:959
 msgid ""
 "The image which you are trying to save as an XBM contains more than two "
@@ -7722,7 +7775,8 @@ msgid ""
 msgstr ""
 "Slika koju spremate kao XBM sadrži više od dvije boje.\n"
 "\n"
-"Molim prebacite je u crno-bijelu 1 bitnu indeksiranu sliku pa ponovite radnju."
+"Molim prebacite je u crno-bijelu 1 bitnu indeksiranu sliku pa ponovite "
+"radnju."
 
 #: plug-ins/common/xbm.c:970
 msgid ""
@@ -7773,6 +7827,7 @@ msgid "_Mask File Extension:"
 msgstr "_Ekstenzija datoteke maske:"
 
 #: plug-ins/common/xpm.c:341
+#, c-format
 msgid "Error opening file '%s'"
 msgstr "Greška kod otvaranja datoteke \"%s\""
 
@@ -7789,7 +7844,7 @@ msgid "_Alpha Threshold:"
 msgstr "Alfa Prag:"
 
 #: plug-ins/common/xwd.c:391
-#, , c-format
+#, c-format
 msgid "Could not read XWD header from '%s'"
 msgstr "Ne mogu pročitati XWD zaglavlje iz '%s'"
 
@@ -7949,7 +8004,7 @@ msgid "Flame works only on RGB drawables."
 msgstr "MaXRGB: mogu raditi samo na RGB crtežima."
 
 #: plug-ins/flame/flame.c:395
-#, , c-format
+#, c-format
 msgid "'%s' is not a regular file"
 msgstr "'%s' nije valjana datoteka"
 
@@ -8180,7 +8235,7 @@ msgid "Lighter And Darker"
 msgstr "Svjetlije i Tamnije"
 
 #. ******************************************************************
-#.  ************************ All the Standard Stuff ******************
+#. ************************ All the Standard Stuff ******************
 #: plug-ins/fp/fp_gtk.c:923
 msgid "Filter Pack Simulation"
 msgstr "Simulacija Paketnog Filtera"
@@ -8352,7 +8407,8 @@ msgstr "Višestruko"
 
 #: plug-ins/gfig/gfig.c:2044
 msgid "Draw all objects on one layer (original or new) or one object per layer"
-msgstr """Crta sve objekte na jednom sloju (originalnom ili novom) ili jedan objekt po "
+msgstr ""
+"Crta sve objekte na jednom sloju (originalnom ili novom) ili jedan objekt po "
 "sloju"
 
 #: plug-ins/gfig/gfig.c:2049
@@ -8374,8 +8430,8 @@ msgid ""
 "Draw type. Either a brush or a selection. See brush page or selection page "
 "for more options"
 msgstr ""
-"Vrsta crtanja. kistom ili odabirom. Pogledajte stranicu o kistovima ili odabiru "
-"za više opcija"
+"Vrsta crtanja. kistom ili odabirom. Pogledajte stranicu o kistovima ili "
+"odabiru za više opcija"
 
 #: plug-ins/gfig/gfig.c:2067
 msgid "Using:"
@@ -8401,8 +8457,8 @@ msgid ""
 "Layer background type. Copy causes previous layer to be copied before the "
 "draw is performed"
 msgstr ""
-"Vrsta pozadine sloja. Kopiranje uzrokuje da se prethodni sloj kopira "
-"prije nego što se izvrši crtanje"
+"Vrsta pozadine sloja. Kopiranje uzrokuje da se prethodni sloj kopira prije "
+"nego što se izvrši crtanje"
 
 #: plug-ins/gfig/gfig.c:2087
 msgid "With BG of:"
@@ -8581,7 +8637,7 @@ msgid "Show Grid"
 msgstr "Prikaži mrežu"
 
 #. 17/10/2003 (Maurits): this option is not implemented. Therefore removing
-#.  it from the user interface
+#. it from the user interface
 #: plug-ins/gfig/gfig.c:2672
 msgid "Lock on Grid"
 msgstr "Zaključaj na Mreži"
@@ -8642,7 +8698,7 @@ msgid "Select"
 msgstr "Odaberi"
 
 #: plug-ins/gfig/gfig.c:3096
-#, , c-format
+#, c-format
 msgid "%d unsaved Gfig objects. Continue with exiting?"
 msgstr "%d nespremljenih Gfig objekata. Treba li nastaviti izlazak?"
 
@@ -8760,6 +8816,7 @@ msgid "(none)"
 msgstr "(nijedan)"
 
 #: plug-ins/gfig/gfig-preview.c:581 plug-ins/gfig/gfig-preview.c:612
+#, c-format
 msgid "<NONE>"
 msgstr "<NONE>"
 
@@ -8793,20 +8850,22 @@ msgid "Gradient Flare..."
 msgstr "Gradijent Flare..."
 
 #: plug-ins/gflare/gflare.c:1269
-#, , c-format
+#, c-format
 msgid "Failed to open GFlare file '%s': %s"
 msgstr "Nije uspjelo otvaranje GFlare datoteke '%s': %s"
 
 #: plug-ins/gflare/gflare.c:1277
-#, , c-format
+#, c-format
 msgid "'%s' is not a valid GFlare file."
 msgstr "'%s' nije valjana GFlare datoteka."
 
 #: plug-ins/gflare/gflare.c:1331
+#, c-format
 msgid "invalid formatted GFlare file: %s\n"
 msgstr "loše formatirana GFlare datoteka: %s\n"
 
 #: plug-ins/gflare/gflare.c:1456
+#, c-format
 msgid ""
 "GFlare '%s' is not saved. If you add a new entry in '%s', like:\n"
 "(gflare-path \"%s\")\n"
@@ -8818,11 +8877,13 @@ msgstr ""
 "mapu."
 
 #: plug-ins/gflare/gflare.c:1489
-#, , c-format
+#, c-format
 msgid "Failed to write GFlare file '%s': %s"
 msgstr "Nije uspjelo zapisivanje GFlare datoteke '%s': %s"
 
+#.
 #. *	Dialog Shell
+#.
 #: plug-ins/gflare/gflare.c:2301
 msgid "GFlare"
 msgstr "GFlare"
@@ -8839,10 +8900,12 @@ msgstr "'Default' je kreiran."
 msgid "Default"
 msgstr "Uobičajeno"
 
+#.
 #. *  Scales
-#. 
-#. 
-#.  *	Scales
+#.
+#.
+#. *	Scales
+#.
 #: plug-ins/gflare/gflare.c:2671 plug-ins/gflare/gflare.c:3482
 #: plug-ins/gflare/gflare.c:3589 plug-ins/gflare/gflare.c:3728
 msgid "Parameters"
@@ -8957,7 +9020,9 @@ msgstr "Sekundarne Flare opcije"
 msgid "_General"
 msgstr "_Općenito"
 
+#.
 #. *  Gradient Menus
+#.
 #: plug-ins/gflare/gflare.c:3454 plug-ins/gflare/gflare.c:3559
 #: plug-ins/gflare/gflare.c:3700
 msgid "Gradients"
@@ -9015,7 +9080,9 @@ msgstr "Faktor veličine Gradijenta:"
 msgid "Probability Gradient:"
 msgstr "Mogući Gradijent:"
 
+#.
 #. *	Shape Radio Button Frame
+#.
 #: plug-ins/gflare/gflare.c:3783
 msgid "Shape of Second Flares"
 msgstr "Oblik drugog plamena"
@@ -9214,7 +9281,8 @@ msgid "Shadow depth:"
 msgstr "Dubina sjene:"
 
 #: plug-ins/gimpressionist/general.c:196
-msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgid ""
+"The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "Dubina kapljice sjene,npr. koliko će daleko biti od objekta"
 
 #: plug-ins/gimpressionist/general.c:201
@@ -9241,8 +9309,9 @@ msgstr "<Slika>/Filteri/Umjetnički/GIMPressionist..."
 msgid "Painting..."
 msgstr "Slikanje..."
 
+#. don't translate the gimprc entry
 #: plug-ins/gimpressionist/gimpressionist.c:64
-#, , c-format
+#, c-format
 msgid ""
 "It is highly recommended to add\n"
 " (gimpressionist-path \"%s\")\n"
@@ -9529,7 +9598,7 @@ msgid "Focus the brush strokes around the center of the image"
 msgstr "Grupiranje poteza kistom oko sredine slike"
 
 #: plug-ins/gimpressionist/ppmtool.c:499
-#, , c-format
+#, c-format
 msgid "Failed to save PPM file '%s': %s"
 msgstr "Nije uspjelo spremanje PPM datoteke '%s': %s"
 
@@ -9616,11 +9685,13 @@ msgid "The largest brush to create"
 msgstr "Najveći kist za kreirati"
 
 #: plug-ins/gimpressionist/size.c:111
-msgid "Let the value (brightness) of the region determine the size of the stroke"
+msgid ""
+"Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Osvjetljenje područja određuje veličinu poteza"
 
 #: plug-ins/gimpressionist/size.c:118
-msgid "The distance from the center of the image determines the size of the stroke"
+msgid ""
+"The distance from the center of the image determines the size of the stroke"
 msgstr "Udaljenost od sredine slike određuje veličinu poteza"
 
 #: plug-ins/gimpressionist/size.c:125
@@ -9660,8 +9731,8 @@ msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
 msgstr ""
-"Sm-vektorsko polje. Lijevi klik pomiče odabrani vektor, desni ga okreće prema "
-"mišu, srednji klik dodaje novi Sm-vektor."
+"Sm-vektorsko polje. Lijevi klik pomiče odabrani vektor, desni ga okreće "
+"prema mišu, srednji klik dodaje novi Sm-vektor."
 
 #: plug-ins/gimpressionist/sizemap.c:478
 msgid "Select previous smvector"
@@ -9703,48 +9774,29 @@ msgstr ""
 "Voronoi način prouzrokuje da samo Sm-vektor najbliži odabranoj točki ima "
 "neki utjecaj"
 
-#: plug-ins/help/domain.c:112
-#, , c-format
-msgid ""
-"Failed to open help files:\n"
-"%s"
-msgstr ""
-"Nije uspjelo otvaranje datoteka pomoći:\n"
-"%s"
+#: plug-ins/help/domain.c:161
+msgid "The GIMP help files are not installed."
+msgstr "Nisu instalitane datoteke pomoći za GIMP."
 
-#: plug-ins/help/domain.c:114
-#, c-format
-msgid ""
-"Parse error in help domain:\n"
-"%s\n"
-"\n"
-"(Added entires before error anyway)"
+#: plug-ins/help/domain.c:163
+msgid "There is a problem with the GIMP help files."
 msgstr ""
-"Greška kod prevođenja područja pomoći:\n"
-"%s\n"
-"\n"
-"(Ionako su prijave dodane prije greške)"
-""
-""
-""
-""
 
-#: plug-ins/help/domain.c:129
+#: plug-ins/help/domain.c:168
+msgid "Please check your installation."
+msgstr "Molim, provjerite vašu instalaciju."
+
+#: plug-ins/help/domain.c:174
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "Nepoznati ID pomoći \"%s\""
 
-#: plug-ins/help/domain.c:251
-msgid "The GIMP help files are not installed."
-msgstr "Nisu instalitane datoteke pomoći za GIMP."
-
-#: plug-ins/help/domain.c:253
-msgid "The requested help files are not installed."
-msgstr "Nisu instalirane zatražene datoteke pomoći."
-
-#: plug-ins/help/domain.c:260
-msgid "Please check your installation."
-msgstr "Molim, provjerite vašu instalaciju."
+#: plug-ins/help/domain.c:414
+#, c-format
+msgid ""
+"Parse error in '%s':\n"
+"%s"
+msgstr ""
 
 #: plug-ins/helpbrowser/dialog.c:149
 msgid "GIMP Help Browser"
@@ -9772,8 +9824,8 @@ msgid ""
 msgstr ""
 "Traženi dokument nije pronađen u vašoj putanji za Gimp pomoć koja je "
 "prikazana iznad. Ovo znači da tema još uvijek nije bila zapisana ili vaša "
-"instalacija nije cijelovita. Uvjerite se da je instalacija u redu prije nego što "
-"prijavite ovu grešku u programu."
+"instalacija nije cijelovita. Uvjerite se da je instalacija u redu prije nego "
+"što prijavite ovu grešku u programu."
 
 #: plug-ins/ifscompose/ifscompose.c:372
 msgid "<Image>/Filters/Render/Nature/Ifs_Compose..."
@@ -9941,7 +9993,7 @@ msgid "Copying IFS to image (%d/%d)..."
 msgstr "Kopiram IFS u sliku (%d/%d)..."
 
 #: plug-ins/ifscompose/ifscompose.c:1551
-#, , c-format
+#, c-format
 msgid "Transformation %s"
 msgstr "Transformacija %s"
 
@@ -9950,6 +10002,7 @@ msgid "Open failed"
 msgstr "Otvaranje nije uspjelo"
 
 #: plug-ins/ifscompose/ifscompose.c:2685
+#, c-format
 msgid "File '%s' doesn't seem to be an IFS Compose file."
 msgstr "Datoteka \"%s\" nije IFS datoteka."
 
@@ -10391,10 +10444,12 @@ msgid "Open Recent"
 msgstr "Otvori skorašnje"
 
 #: plug-ins/imagemap/imap_menu.c:208
+#, c-format
 msgid "_Undo %s"
 msgstr "_Vrati %s"
 
 #: plug-ins/imagemap/imap_menu.c:224
+#, c-format
 msgid "_Redo %s"
 msgstr "_Ponovi %s"
 
@@ -10715,12 +10770,14 @@ msgid "Constructing tileable maze using Prim's Algorithm..."
 msgstr "Kreiram Labirint u djelićima (Prim Algoritam) "
 
 #: plug-ins/maze/maze.c:157
+#, c-format
 msgid ""
 "Generates a maze using either the depth-first search method or Prim's "
 "algorithm.  Can make tileable mazes too.  See %s for more help."
 msgstr ""
-"Stvara labirint koristeći dubinski-prvu metodu pretrage ili Primov algoritam. "
-"Može stvarati i dijeljive labirinte. Pogledajte %s za daljnjuu pomoć."
+"Stvara labirint koristeći dubinski-prvu metodu pretrage ili Primov "
+"algoritam. Može stvarati i dijeljive labirinte. Pogledajte %s za daljnjuu "
+"pomoć."
 
 #: plug-ins/maze/maze.c:163
 msgid "Draws a maze."
@@ -10898,9 +10955,9 @@ msgid ""
 "ink bleeds through the paper or smears; increase the density if black "
 "regions are not solid."
 msgstr ""
-"Podešavanje gustoće (količine tinte) za ispis. Smanjite gustoću ako "
-"tinta curi kroz papir ili se mrlja; povećajte gustoću ako crna područja "
-"nisu potpuno crna."
+"Podešavanje gustoće (količine tinte) za ispis. Smanjite gustoću ako tinta "
+"curi kroz papir ili se mrlja; povećajte gustoću ako crna područja nisu "
+"potpuno crna."
 
 #: plug-ins/print/gimp_color_window.c:410
 msgid ""
@@ -10931,7 +10988,9 @@ msgstr ""
 "Brzi i Vrlo brzi su prilično brzi i dobri su za tekst i linijske crteže.\n"
 "Hibridni Floyd-Steinberg općenito daje daje izlaz loše kvalitete."
 
+#.
 #. * Create the main dialog
+#.
 #: plug-ins/print/gimp_main_window.c:360
 #, c-format
 msgid "%s -- Print v%s"
@@ -10968,14 +11027,14 @@ msgid ""
 msgstr ""
 "Mjesto slike na stranici.\n"
 "Kliknite i vucite lijevim gumbom za postavljanje slike.\n"
-"Kliknite i vucite desnim gumbom za precizniji pomak slike; svaka "
-"jedinica pomaka pomiče sliku za jednu točku (1/72\")\n"
+"Kliknite i vucite desnim gumbom za precizniji pomak slike; svaka jedinica "
+"pomaka pomiče sliku za jednu točku (1/72\")\n"
 "Kliknite i vucite srednjim gumbom za pomak slike u jedinicama veličine "
 "slike.\n"
 "Držanje tipke shift tijekom operacije ograničava sliku samo na vodoravne i "
 "omomite pokrete.\n"
-"Ako kliknete drugim gumbom dok vučete mišem, slika će se vratiti na "
-"početnu poziciju."
+"Ako kliknete drugim gumbom dok vučete mišem, slika će se vratiti na početnu "
+"poziciju."
 
 #: plug-ins/print/gimp_main_window.c:484
 msgid "Portrait"
@@ -11065,7 +11124,9 @@ msgstr "Centriraj sliku vodoravno na papiru"
 msgid "Setup Printer"
 msgstr "Postavke pisača"
 
+#.
 #. * Printer driver option menu.
+#.
 #: plug-ins/print/gimp_main_window.c:680 plug-ins/print/gimp_main_window.c:942
 msgid "Printer Model:"
 msgstr "Model Pisača:"
@@ -11074,7 +11135,9 @@ msgstr "Model Pisača:"
 msgid "Select your printer model"
 msgstr "Odaberite model vašeg pisača"
 
+#.
 #. * PPD file.
+#.
 #: plug-ins/print/gimp_main_window.c:731
 msgid "PPD File:"
 msgstr "PPD dat.:"
@@ -11091,7 +11154,9 @@ msgstr "Potraži"
 msgid "Choose the correct PPD filename for your printer"
 msgstr "Odaberite ispravan naziv PPD datoteke za vaš pisač"
 
+#.
 #. * Print command.
+#.
 #: plug-ins/print/gimp_main_window.c:766
 msgid "Command:"
 msgstr "Naredba:"
@@ -11102,15 +11167,19 @@ msgid ""
 "remove the `-l' or `-oraw' from the command string, or printing will "
 "probably fail!"
 msgstr ""
-"Unesite odgovarajuću naredbu za ispis. Primjedba: Molim ne "
-"uklanjate \"-l\" ili \"-oraw\" iz naredbe ili ispisivanje neće uspjeti!"
+"Unesite odgovarajuću naredbu za ispis. Primjedba: Molim ne uklanjate \"-l\" "
+"ili \"-oraw\" iz naredbe ili ispisivanje neće uspjeti!"
 
+#.
 #. * Output file selection dialog.
+#.
 #: plug-ins/print/gimp_main_window.c:788
 msgid "Print To File?"
 msgstr "Ispis u Datoteku?"
 
+#.
 #. * PPD file selection dialog.
+#.
 #: plug-ins/print/gimp_main_window.c:801
 msgid "PPD File?"
 msgstr "PPD Datoteka?"
@@ -11188,10 +11257,11 @@ msgid ""
 "Select the name of the printer (not the type, or model, of printer) that you "
 "wish to print to"
 msgstr ""
-"Odaberite naziv pisača (ne vrstu, ili model pisača) na kojem želite "
-"ispisati"
+"Odaberite naziv pisača (ne vrstu, ili model pisača) na kojem želite ispisati"
 
+#.
 #. * Setup printer button
+#.
 #: plug-ins/print/gimp_main_window.c:953
 msgid "Setup Printer..."
 msgstr "Podesi pisač..."
@@ -11204,7 +11274,9 @@ msgstr ""
 "Odaberite model pisača, PPD datoteku i naredbu kojom ćete ispisati na ovom "
 "pisaču"
 
+#.
 #. * New printer button
+#.
 #: plug-ins/print/gimp_main_window.c:970
 msgid "New Printer..."
 msgstr "Novi pisač..."
@@ -11278,8 +11350,8 @@ msgid ""
 "Select whether scaling is measured as percent of available page size or "
 "number of output dots per inch"
 msgstr ""
-"Određuje da li se skaliranje mjeri u postotcima dostupne veličine stranice ili "
-"broju izlaznih točaka po inču"
+"Određuje da li se skaliranje mjeri u postotcima dostupne veličine stranice "
+"ili broju izlaznih točaka po inču"
 
 #: plug-ins/print/gimp_main_window.c:1183
 msgid "Percent"
@@ -11329,7 +11401,9 @@ msgstr "cm"
 msgid "Set the base unit of measurement to centimetres"
 msgstr "Postavi centrimetre kao onovnu mernu jedinicu"
 
+#.
 #. * The "image size" button
+#.
 #: plug-ins/print/gimp_main_window.c:1298
 msgid ""
 "Use Original\n"
@@ -11406,14 +11480,18 @@ msgstr "Crno-bijelo"
 msgid "Print in black and white (no color, and no shades of gray)"
 msgstr "Ispis crno/bijelo (nema boja, niti nijansi sive)"
 
+#.
 #. *  Color adjust button
+#.
 #: plug-ins/print/gimp_main_window.c:1463
 msgid "Adjust Output..."
 msgstr "Podesi izlaz..."
 
 #: plug-ins/print/gimp_main_window.c:1470
-msgid "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
-msgstr "Podesi ravnotežu boja, svijetlo, kontrast, zasićenje i algoritam mješanja"
+msgid ""
+"Adjust color balance, brightness, contrast, saturation, and dither algorithm"
+msgstr ""
+"Podesi ravnotežu boja, svijetlo, kontrast, zasićenje i algoritam mješanja"
 
 #: plug-ins/print/print.c:164
 msgid "<Image>/File/_Print..."
@@ -11537,7 +11615,7 @@ msgid "Selection To Path Advanced Settings"
 msgstr "Napredne opcije za pretvaranje odabira u putanju"
 
 #: plug-ins/sgi/sgi.c:532
-#, , c-format
+#, c-format
 msgid "Could not open '%s' for writing."
 msgstr "Ne mogu otvoriti '%s' za pisanje"
 
@@ -11633,17 +11711,37 @@ msgid "Clear Transparent"
 msgstr "Čisto Prozirno"
 
 #: plug-ins/xjt/xjt.c:1702 plug-ins/xjt/xjt.c:3332
-#, , c-format
+#, c-format
 msgid "Could not create working folder '%s': %s"
 msgstr "Ne mogu stvoriti radni direktorij '%s': %s"
 
 #: plug-ins/xjt/xjt.c:3198
-#, , c-format
+#, c-format
 msgid "Error: Could not read XJT property file '%s'."
 msgstr "Greška: Ne mogu pročitati XJT datoteku svojstava '%s'"
 
 #: plug-ins/xjt/xjt.c:3204
-#, , c-format
+#, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Greška XJT datoteka %s je prazna."
 
+#~ msgid ""
+#~ "Failed to open help files:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Nije uspjelo otvaranje datoteka pomoći:\n"
+#~ "%s"
+
+#~ msgid ""
+#~ "Parse error in help domain:\n"
+#~ "%s\n"
+#~ "\n"
+#~ "(Added entires before error anyway)"
+#~ msgstr ""
+#~ "Greška kod prevođenja područja pomoći:\n"
+#~ "%s\n"
+#~ "\n"
+#~ "(Ionako su prijave dodane prije greške)"
+
+#~ msgid "The requested help files are not installed."
+#~ msgstr "Nisu instalirane zatražene datoteke pomoći."

@@ -5,14 +5,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2004-03-04 00:14+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-03-20 23:20+0100\n"
 "PO-Revision-Date: 2004-03-12 19:09+0800\n"
 "Last-Translator: Yuheng Xie <elephant@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 "Translator: Yuheng Xie <elephant@linux.net.cn>\n"
 
 #: libgimp/gimpbrushmenu.c:132
@@ -407,12 +407,21 @@ msgstr "兆字节"
 msgid "GigaBytes"
 msgstr "G 字节"
 
+#: libgimpwidgets/gimppatheditor.c:243
+#, fuzzy
+msgid "Writable"
+msgstr "三角"
+
+#: libgimpwidgets/gimppatheditor.c:252
+#, fuzzy
+msgid "Folder"
+msgstr "选择文件夹"
+
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
-msgstr ""
-"点击滴管，然后点击你的屏幕上任何位置的颜色即可选取该颜色。"
+msgstr "点击滴管，然后点击你的屏幕上任何位置的颜色即可选取该颜色。"
 
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -494,23 +503,23 @@ msgstr "单位"
 msgid "Factor"
 msgstr "因子"
 
-#: libgimpwidgets/gimpwidgets.c:1271
+#: libgimpwidgets/gimpwidgets.c:1291
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
-msgstr ""
-"使用这个值作为随机数生成种子 - 这将允许你重复一个指定的“随机”操作"
+msgstr "使用这个值作为随机数生成种子 - 这将允许你重复一个指定的“随机”操作"
 
-#: libgimpwidgets/gimpwidgets.c:1275
+#: libgimpwidgets/gimpwidgets.c:1295
 msgid "_New Seed"
 msgstr "新种子(_N)"
 
-#: libgimpwidgets/gimpwidgets.c:1288
+#: libgimpwidgets/gimpwidgets.c:1308
 msgid "Seed random number generator with a generated random number"
 msgstr "以生成的随机数作为随机数生成器的种子"
 
-#: libgimpwidgets/gimpwidgets.c:1292
-msgid "Randomize"
+#: libgimpwidgets/gimpwidgets.c:1312
+#, fuzzy
+msgid "_Randomize"
 msgstr "随机"
 
 #: modules/cdisplay_colorblind.c:124

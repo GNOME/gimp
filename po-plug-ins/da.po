@@ -32,7 +32,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-14 23:16+0100\n"
+"POT-Creation-Date: 2004-03-20 23:20+0100\n"
 "PO-Revision-Date: 2004-03-14 23:15+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -353,7 +353,7 @@ msgstr "Cosinus"
 #: plug-ins/common/CML_explorer.c:169 plug-ins/common/align_layers.c:426
 #: plug-ins/common/align_layers.c:454 plug-ins/common/postscript.c:2838
 #: plug-ins/common/postscript.c:2850 plug-ins/common/psp.c:418
-#: plug-ins/fits/fits.c:1012
+#: plug-ins/fits/fits.c:1013
 msgid "None"
 msgstr "Ingen"
 
@@ -508,7 +508,7 @@ msgstr "Gem fraktalparametre"
 #: plug-ins/common/xwd.c:383 plug-ins/faxg3/faxg3.c:219
 #: plug-ins/fits/fits.c:337 plug-ins/flame/flame.c:404
 #: plug-ins/gfig/gfig.c:716 plug-ins/gfli/gfli.c:425 plug-ins/gfli/gfli.c:461
-#: plug-ins/help/domain.c:255 plug-ins/xjt/xjt.c:2535 plug-ins/xjt/xjt.c:2543
+#: plug-ins/help/domain.c:380 plug-ins/xjt/xjt.c:2535 plug-ins/xjt/xjt.c:2543
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Kan ikke åbne '%s' til læsning: %s"
@@ -1269,17 +1269,17 @@ msgstr "Fejl ved læsning af BMP-filens hoved fra '%s'"
 #: plug-ins/bmp/bmpread.c:397 plug-ins/bmp/bmpread.c:405
 #: plug-ins/bmp/bmpread.c:413 plug-ins/common/CEL.c:357
 #: plug-ins/common/CEL.c:360 plug-ins/common/blinds.c:312
-#: plug-ins/common/compose.c:615 plug-ins/common/decompose.c:579
-#: plug-ins/common/dicom.c:441 plug-ins/common/film.c:974
+#: plug-ins/common/compose.c:616 plug-ins/common/decompose.c:580
+#: plug-ins/common/dicom.c:441 plug-ins/common/film.c:975
 #: plug-ins/common/gifload.c:857 plug-ins/common/hrz.c:373
 #: plug-ins/common/jpeg.c:925 plug-ins/common/pcx.c:333
 #: plug-ins/common/pcx.c:339 plug-ins/common/pix.c:375
 #: plug-ins/common/png.c:801 plug-ins/common/pnm.c:479
-#: plug-ins/common/psd.c:2182 plug-ins/common/smooth_palette.c:252
+#: plug-ins/common/psd.c:2182 plug-ins/common/smooth_palette.c:253
 #: plug-ins/common/sunras.c:924 plug-ins/common/tga.c:927
-#: plug-ins/common/tiff.c:829 plug-ins/common/tile.c:263
+#: plug-ins/common/tiff.c:829 plug-ins/common/tile.c:264
 #: plug-ins/common/winclipboard.c:556 plug-ins/common/xbm.c:866
-#: plug-ins/faxg3/faxg3.c:464 plug-ins/fits/fits.c:507
+#: plug-ins/faxg3/faxg3.c:464 plug-ins/fits/fits.c:508
 #: plug-ins/gfig/gfig.c:2075 plug-ins/gfig/gfig.c:2443 plug-ins/sgi/sgi.c:368
 #: plug-ins/twain/twain.c:743 plug-ins/winsnap/winsnap.c:1234
 msgid "Background"
@@ -2075,7 +2075,7 @@ msgstr "Justér synlige lag"
 #: plug-ins/common/randomize.c:725 plug-ins/common/ripple.c:516
 #: plug-ins/common/scatter_hsv.c:388 plug-ins/common/sel_gauss.c:238
 #: plug-ins/common/sharpen.c:582 plug-ins/common/shift.c:327
-#: plug-ins/common/smooth_palette.c:417 plug-ins/common/snoise.c:513
+#: plug-ins/common/smooth_palette.c:418 plug-ins/common/snoise.c:513
 #: plug-ins/common/sobel.c:242 plug-ins/common/sparkle.c:350
 #: plug-ins/common/struc.c:1266 plug-ins/common/threshold_alpha.c:232
 #: plug-ins/common/unsharp.c:651 plug-ins/common/video.c:2151
@@ -2794,12 +2794,12 @@ msgstr "Fejl under indhentning af lag-id'er"
 msgid "Image is not a gray image (bpp=%d)"
 msgstr "Billedet er ikke et gråtonebillede (bpp=%d)"
 
-#: plug-ins/common/compose.c:1089
+#: plug-ins/common/compose.c:1090
 msgid "Compose"
 msgstr "Sammensætning"
 
 #. The left frame keeps the compose type toggles
-#: plug-ins/common/compose.c:1105
+#: plug-ins/common/compose.c:1106
 msgid "Compose Channels"
 msgstr "Sæt kanaler sammen"
 
@@ -2807,7 +2807,7 @@ msgstr "Sæt kanaler sammen"
 #. Because the labels within this frame will change when a toggle
 #. in the left frame is changed, fill in the right part first.
 #. Otherwise it can occur, that a non-existing label might be changed.
-#: plug-ins/common/compose.c:1117
+#: plug-ins/common/compose.c:1118
 msgid "Channel Representations"
 msgstr "Kanalrepræsentationer"
 
@@ -3244,16 +3244,16 @@ msgstr "<Image>/Filtre/Farver/_Opbrydning..."
 msgid "Decomposing..."
 msgstr "Bryder op..."
 
-#: plug-ins/common/decompose.c:1182
+#: plug-ins/common/decompose.c:1183
 msgid "Decompose"
 msgstr "Opbrydning"
 
 #. parameter settings
-#: plug-ins/common/decompose.c:1192
+#: plug-ins/common/decompose.c:1193
 msgid "Extract Channels:"
 msgstr "Udtræk kanaler:"
 
-#: plug-ins/common/decompose.c:1222
+#: plug-ins/common/decompose.c:1223
 msgid "Decompose to _Layers"
 msgstr "Opbryd i _lag"
 
@@ -3405,7 +3405,7 @@ msgstr "Opret _histogram"
 
 #: plug-ins/common/destripe.c:664 plug-ins/common/gtm.c:583
 #: plug-ins/common/postscript.c:2779 plug-ins/common/postscript.c:2938
-#: plug-ins/common/smooth_palette.c:430 plug-ins/common/tile.c:408
+#: plug-ins/common/smooth_palette.c:431 plug-ins/common/tile.c:409
 #: plug-ins/imagemap/imap_cmd_guides.c:165
 #: plug-ins/imagemap/imap_rectangle.c:404
 msgid "_Width:"
@@ -3590,10 +3590,10 @@ msgstr "Indgravering"
 msgid "_Limit Line Width"
 msgstr "_Begræns linjebredde"
 
-#: plug-ins/common/engrave.c:238 plug-ins/common/film.c:1228
+#: plug-ins/common/engrave.c:238 plug-ins/common/film.c:1229
 #: plug-ins/common/gtm.c:599 plug-ins/common/postscript.c:2788
-#: plug-ins/common/postscript.c:2947 plug-ins/common/smooth_palette.c:435
-#: plug-ins/common/tile.c:412 plug-ins/imagemap/imap_cmd_guides.c:175
+#: plug-ins/common/postscript.c:2947 plug-ins/common/smooth_palette.c:436
+#: plug-ins/common/tile.c:413 plug-ins/imagemap/imap_cmd_guides.c:175
 #: plug-ins/imagemap/imap_rectangle.c:411
 msgid "_Height:"
 msgstr "_Højde:"
@@ -3664,102 +3664,102 @@ msgstr "Uden navn"
 msgid "Temporary"
 msgstr "Midlertidig"
 
-#: plug-ins/common/film.c:1107
+#: plug-ins/common/film.c:1108
 msgid "Available Images:"
 msgstr "Tilgængelige billeder:"
 
-#: plug-ins/common/film.c:1108
+#: plug-ins/common/film.c:1109
 msgid "On Film:"
 msgstr "På film:"
 
-#: plug-ins/common/film.c:1192
+#: plug-ins/common/film.c:1193
 msgid "_Selection"
 msgstr "_Markering"
 
 #. Film height/colour
-#: plug-ins/common/film.c:1200 plug-ins/common/film.c:1484
+#: plug-ins/common/film.c:1201 plug-ins/common/film.c:1485
 msgid "Film"
 msgstr "Film"
 
 #. Keep maximum image height
-#: plug-ins/common/film.c:1210
+#: plug-ins/common/film.c:1211
 msgid "_Fit Height to Images"
 msgstr "_Tilpas højde til billeder"
 
 #. Film color
-#: plug-ins/common/film.c:1244
+#: plug-ins/common/film.c:1245
 msgid "Select Film Color"
 msgstr "Vælg filmfarve"
 
-#: plug-ins/common/film.c:1249 plug-ins/common/film.c:1298
+#: plug-ins/common/film.c:1250 plug-ins/common/film.c:1299
 #: plug-ins/common/nova.c:351
 msgid "Co_lor:"
 msgstr "Fa_rve:"
 
 #. Film numbering: Startindex/Font/colour
-#: plug-ins/common/film.c:1257
+#: plug-ins/common/film.c:1258
 msgid "Numbering"
 msgstr "Nummerering"
 
-#: plug-ins/common/film.c:1276
+#: plug-ins/common/film.c:1277
 msgid "Start _Index:"
 msgstr "Start_indeks:"
 
-#: plug-ins/common/film.c:1289
+#: plug-ins/common/film.c:1290
 msgid "_Font:"
 msgstr "_Skrifttype:"
 
 #. Numbering color
-#: plug-ins/common/film.c:1293
+#: plug-ins/common/film.c:1294
 msgid "Select Number Color"
 msgstr "Vælg talfarve"
 
-#: plug-ins/common/film.c:1307
+#: plug-ins/common/film.c:1308
 msgid "At _Bottom"
 msgstr "_Nederst"
 
-#: plug-ins/common/film.c:1308
+#: plug-ins/common/film.c:1309
 msgid "At _Top"
 msgstr "_Øverst"
 
 #. ** The right frame keeps the image selection **
-#: plug-ins/common/film.c:1321
+#: plug-ins/common/film.c:1322
 msgid "Image Selection"
 msgstr "Billedmarkering"
 
-#: plug-ins/common/film.c:1351
+#: plug-ins/common/film.c:1352
 msgid "All Values are Fractions of the Film Heigh"
 msgstr "Alle værdier er brøkdele af filmhøjden"
 
-#: plug-ins/common/film.c:1354
+#: plug-ins/common/film.c:1355
 msgid "Ad_vanced"
 msgstr "_Avanceret"
 
-#: plug-ins/common/film.c:1372
+#: plug-ins/common/film.c:1373
 msgid "Image _Height:"
 msgstr "Billed_højde:"
 
-#: plug-ins/common/film.c:1383
+#: plug-ins/common/film.c:1384
 msgid "Image Spac_ing:"
 msgstr "Billed_mellemrum:"
 
-#: plug-ins/common/film.c:1401
+#: plug-ins/common/film.c:1402
 msgid "_Hole Offset:"
 msgstr "_Hulafstand:"
 
-#: plug-ins/common/film.c:1412
+#: plug-ins/common/film.c:1413
 msgid "Ho_le Width:"
 msgstr "Hulb_redde:"
 
-#: plug-ins/common/film.c:1423
+#: plug-ins/common/film.c:1424
 msgid "Hol_e Height:"
 msgstr "Hulhø_jde:"
 
-#: plug-ins/common/film.c:1434
+#: plug-ins/common/film.c:1435
 msgid "Hole Sp_acing:"
 msgstr "Hulm_ellemrum:"
 
-#: plug-ins/common/film.c:1452
+#: plug-ins/common/film.c:1453
 msgid "_Number Height:"
 msgstr "_Talhøjde:"
 
@@ -3866,12 +3866,12 @@ msgid "Blur Radius"
 msgstr "Sløringsradius"
 
 #: plug-ins/common/gauss_iir.c:447 plug-ins/common/gauss_rle.c:441
-#: plug-ins/common/jigsaw.c:2578 plug-ins/common/spread.c:356
+#: plug-ins/common/jigsaw.c:2581 plug-ins/common/spread.c:358
 msgid "_Horizontal:"
 msgstr "_Vandret:"
 
 #: plug-ins/common/gauss_iir.c:451 plug-ins/common/gauss_rle.c:445
-#: plug-ins/common/jigsaw.c:2591 plug-ins/common/spread.c:360
+#: plug-ins/common/jigsaw.c:2594 plug-ins/common/spread.c:362
 msgid "_Vertical:"
 msgstr "_Lodret:"
 
@@ -4586,42 +4586,43 @@ msgstr "<Image>/Filtre/Generér/Mønstre/_Puslespil..."
 msgid "Assembling Jigsaw..."
 msgstr "Samler puslespil..."
 
-#: plug-ins/common/jigsaw.c:2543
+#: plug-ins/common/jigsaw.c:2542
 msgid "Jigsaw"
 msgstr "Puslespil"
 
-#: plug-ins/common/jigsaw.c:2567
+#: plug-ins/common/jigsaw.c:2570
 msgid "Number of Tiles"
 msgstr "Antal brikker"
 
-#: plug-ins/common/jigsaw.c:2581
+#: plug-ins/common/jigsaw.c:2584
 msgid "Number of pieces going across"
 msgstr "Antal brikker i vandret retning"
 
-#: plug-ins/common/jigsaw.c:2594
+#: plug-ins/common/jigsaw.c:2597
 msgid "Number of pieces going down"
 msgstr "Antal brikker i lodret retning"
 
-#: plug-ins/common/jigsaw.c:2605
+#: plug-ins/common/jigsaw.c:2608
 msgid "Bevel Edges"
 msgstr "Runde hjørner"
 
-#: plug-ins/common/jigsaw.c:2616
+#: plug-ins/common/jigsaw.c:2619
 msgid "_Bevel Width:"
 msgstr "Rundingers _bredde:"
 
-#: plug-ins/common/jigsaw.c:2620
+#: plug-ins/common/jigsaw.c:2623
 msgid "Degree of slope of each piece's edge"
 msgstr "Hældningsgrad for hver briks kant"
 
-#: plug-ins/common/jigsaw.c:2630
+#: plug-ins/common/jigsaw.c:2633
 msgid "H_ighlight:"
 msgstr "H_øjlys:"
 
-#: plug-ins/common/jigsaw.c:2634
+#: plug-ins/common/jigsaw.c:2637
 msgid "The amount of highlighting on the edges of each piece"
 msgstr "Hvor meget fremhævning der skal laves på hver briks kanter"
 
+#. frame for primitive radio buttons
 #: plug-ins/common/jigsaw.c:2651
 msgid "Jigsaw Style"
 msgstr "Puslespilstil"
@@ -5881,7 +5882,7 @@ msgstr "S/H"
 msgid "Gray"
 msgstr "Grå"
 
-#: plug-ins/common/postscript.c:2824 plug-ins/fits/fits.c:1000
+#: plug-ins/common/postscript.c:2824 plug-ins/fits/fits.c:1001
 msgid "Automatic"
 msgstr "Automatisk"
 
@@ -6200,42 +6201,42 @@ msgstr "Fejl ved beslaglæggelse af markøren"
 msgid "Loading Screen Shot..."
 msgstr "Indlæser skærmbillede..."
 
-#: plug-ins/common/screenshot.c:349 plug-ins/common/screenshot.c:508
+#: plug-ins/common/screenshot.c:350 plug-ins/common/screenshot.c:509
 msgid "Screen Shot"
 msgstr "Skærmbillede"
 
-#: plug-ins/common/screenshot.c:457
+#: plug-ins/common/screenshot.c:458
 msgid "Specified window not found"
 msgstr "Angivet vindue ikke fundet"
 
-#: plug-ins/common/screenshot.c:480
+#: plug-ins/common/screenshot.c:481
 msgid "Error obtaining Screen Shot"
 msgstr "Fejl ved indhentning af skærmbillede"
 
 #. single window
 #. Action area
-#: plug-ins/common/screenshot.c:524 plug-ins/winsnap/winsnap.c:905
+#: plug-ins/common/screenshot.c:525 plug-ins/winsnap/winsnap.c:905
 msgid "Grab"
 msgstr "Indfang"
 
-#: plug-ins/common/screenshot.c:532
+#: plug-ins/common/screenshot.c:533
 msgid "a _Single Window"
 msgstr "_enkelt vindue"
 
-#: plug-ins/common/screenshot.c:548
+#: plug-ins/common/screenshot.c:549
 msgid "S_elect Window After"
 msgstr "_Vælg vindue efter"
 
-#: plug-ins/common/screenshot.c:561 plug-ins/common/screenshot.c:601
+#: plug-ins/common/screenshot.c:562 plug-ins/common/screenshot.c:602
 #: plug-ins/winsnap/winsnap.c:1019
 msgid "Seconds Delay"
 msgstr "sekunders forsinkelse"
 
-#: plug-ins/common/screenshot.c:569
+#: plug-ins/common/screenshot.c:570
 msgid "the _Whole Screen"
 msgstr "_hele skærmen"
 
-#: plug-ins/common/screenshot.c:588
+#: plug-ins/common/screenshot.c:589
 msgid "Grab _After"
 msgstr "Indfang _efter"
 
@@ -6437,11 +6438,11 @@ msgstr "<Image>/Filtre/Farver/_Jævn palet..."
 msgid "Deriving Smooth Palette..."
 msgstr "Afleder jævn palet..."
 
-#: plug-ins/common/smooth_palette.c:408
+#: plug-ins/common/smooth_palette.c:409
 msgid "Smooth Palette"
 msgstr "Jævn palet"
 
-#: plug-ins/common/smooth_palette.c:445
+#: plug-ins/common/smooth_palette.c:446
 msgid "_Search Depth:"
 msgstr "_Søgedybde:"
 
@@ -6781,20 +6782,20 @@ msgstr "Genererer kugle..."
 msgid "<Image>/Filters/Render/Sphere _Designer..."
 msgstr "<Image>/Filtre/Generér/_Kugledesigner..."
 
-#: plug-ins/common/spread.c:108
+#: plug-ins/common/spread.c:110
 msgid "<Image>/Filters/Noise/Sp_read..."
 msgstr "<Image>/Filtre/Støj/Sp_red..."
 
-#: plug-ins/common/spread.c:186
+#: plug-ins/common/spread.c:188
 msgid "Spreading..."
 msgstr "Spreder..."
 
-#: plug-ins/common/spread.c:330
+#: plug-ins/common/spread.c:332
 msgid "Spread"
 msgstr "Spred"
 
 #. parameter settings
-#: plug-ins/common/spread.c:340
+#: plug-ins/common/spread.c:342
 msgid "Spread Amount"
 msgstr "Spredningsstyrke"
 
@@ -6869,12 +6870,12 @@ msgstr "Kan ikke arbejde med ukendt billedtype"
 #: plug-ins/common/sunras.c:1203 plug-ins/common/sunras.c:1298
 #: plug-ins/common/xwd.c:1335 plug-ins/common/xwd.c:1497
 #: plug-ins/common/xwd.c:1694 plug-ins/common/xwd.c:1944
-#: plug-ins/fits/fits.c:674
+#: plug-ins/fits/fits.c:675
 msgid "EOF encountered on reading"
 msgstr "Filafslutning mødt ved læsning"
 
 #: plug-ins/common/sunras.c:1453 plug-ins/common/sunras.c:1561
-#: plug-ins/fits/fits.c:826 plug-ins/fits/fits.c:950
+#: plug-ins/fits/fits.c:827 plug-ins/fits/fits.c:951
 msgid "Write error occured"
 msgstr "Der opstod en skrivefejl"
 
@@ -7079,17 +7080,17 @@ msgstr "<Image>/Filtre/Afbildning/_Fliselæg..."
 msgid "Tiling..."
 msgstr "Fliselægger..."
 
-#: plug-ins/common/tile.c:388
+#: plug-ins/common/tile.c:389
 msgid "Tile"
 msgstr "Fliselæg"
 
 # billedet lægges side om side til det har opnået den nye størrelse
 #. parameter settings
-#: plug-ins/common/tile.c:398
+#: plug-ins/common/tile.c:399
 msgid "Tile to New Size"
 msgstr "Fliselæg for at opnå ny størrelse"
 
-#: plug-ins/common/tile.c:422
+#: plug-ins/common/tile.c:423
 msgid "C_reate New Image"
 msgstr "_Opret nyt billede"
 
@@ -7497,7 +7498,7 @@ msgstr "Ombryd"
 msgid "Smear"
 msgstr "Smør ud"
 
-#: plug-ins/common/warp.c:502 plug-ins/fits/fits.c:988
+#: plug-ins/common/warp.c:502 plug-ins/fits/fits.c:989
 #: plug-ins/flame/flame.c:1098 plug-ins/gfig/gfig.c:2572
 msgid "Black"
 msgstr "Sort"
@@ -8085,28 +8086,28 @@ msgstr "FITS-fil indeholder ingen fremviselige billeder"
 msgid "FITS save cannot handle images with alpha channels"
 msgstr "FITS kan ikke gemme billeder med alfakanaler"
 
-#: plug-ins/fits/fits.c:969
+#: plug-ins/fits/fits.c:970
 msgid "Load FITS File"
 msgstr "Indlæs FITS-fil"
 
-#: plug-ins/fits/fits.c:984
+#: plug-ins/fits/fits.c:985
 msgid "BLANK/NaN Pixel Replacement"
 msgstr "BLANK/NaN-punkterstatning"
 
-#: plug-ins/fits/fits.c:989 plug-ins/gfig/gfig.c:2077
+#: plug-ins/fits/fits.c:990 plug-ins/gfig/gfig.c:2077
 #: plug-ins/gfig/gfig.c:2573
 msgid "White"
 msgstr "Hvid"
 
-#: plug-ins/fits/fits.c:996
+#: plug-ins/fits/fits.c:997
 msgid "Pixel Value Scaling"
 msgstr "Punktværdiskalering"
 
-#: plug-ins/fits/fits.c:1001
+#: plug-ins/fits/fits.c:1002
 msgid "By DATAMIN/DATAMAX"
 msgstr "Ved DATAMIN/DATAMAX"
 
-#: plug-ins/fits/fits.c:1008
+#: plug-ins/fits/fits.c:1009
 msgid "Image Composing"
 msgstr "Sammensætning af billeder"
 
@@ -9913,44 +9914,29 @@ msgstr ""
 "Voronoi-tilstand bevirker at kun vektoren nærmest et givent punkt har nogen "
 "indflydelse"
 
-#: plug-ins/help/domain.c:112
-#, c-format
-msgid ""
-"Failed to open help files:\n"
-"%s"
-msgstr ""
-"Kunne ikke åbne hjælpefiler:\n"
-"%s"
+#: plug-ins/help/domain.c:161
+msgid "The GIMP help files are not installed."
+msgstr "Hjælpefilerne til Gimp'en er ikke installeret."
 
-#: plug-ins/help/domain.c:114
-#, c-format
-msgid ""
-"Parse error in help domain:\n"
-"%s\n"
-"\n"
-"(Added entires before error anyway)"
+#: plug-ins/help/domain.c:163
+msgid "There is a problem with the GIMP help files."
 msgstr ""
-"Fortolkningsfejl i hjælpedomæne:\n"
-"%s\n"
-"\n"
-"(Tilføjede elementer før fejl alligevel)"
 
-#: plug-ins/help/domain.c:129
+#: plug-ins/help/domain.c:168
+msgid "Please check your installation."
+msgstr "Kontroller din installation."
+
+#: plug-ins/help/domain.c:174
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "Hjælpe-id \"%s\" ukendt"
 
-#: plug-ins/help/domain.c:251
-msgid "The GIMP help files are not installed."
-msgstr "Hjælpefilerne til Gimp'en er ikke installeret."
-
-#: plug-ins/help/domain.c:253
-msgid "The requested help files are not installed."
-msgstr "De forespurgte hjælpefiler er ikke installeret."
-
-#: plug-ins/help/domain.c:260
-msgid "Please check your installation."
-msgstr "Kontroller din installation."
+#: plug-ins/help/domain.c:414
+#, c-format
+msgid ""
+"Parse error in '%s':\n"
+"%s"
+msgstr ""
 
 #: plug-ins/helpbrowser/dialog.c:149
 msgid "GIMP Help Browser"
@@ -11892,6 +11878,27 @@ msgstr "Fejl: Kunne ikke læse XJT-egenskabsfilen \"%s\"."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Fejl: XJT-egenskabsfilen \"%s\" er tom."
+
+#~ msgid ""
+#~ "Failed to open help files:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Kunne ikke åbne hjælpefiler:\n"
+#~ "%s"
+
+#~ msgid ""
+#~ "Parse error in help domain:\n"
+#~ "%s\n"
+#~ "\n"
+#~ "(Added entires before error anyway)"
+#~ msgstr ""
+#~ "Fortolkningsfejl i hjælpedomæne:\n"
+#~ "%s\n"
+#~ "\n"
+#~ "(Tilføjede elementer før fejl alligevel)"
+
+#~ msgid "The requested help files are not installed."
+#~ msgstr "De forespurgte hjælpefiler er ikke installeret."
 
 #~ msgid "About..."
 #~ msgstr "Om..."
