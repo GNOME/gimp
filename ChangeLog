@@ -1,5 +1,11 @@
 2005-03-20  Sven Neumann  <sven@gimp.org>
 
+	* app/text/gimptext.[ch]
+	* app/text/gimptextlayer-transform.[ch]: some infrastructure for
+	text transforms.
+
+2005-03-20  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimp-transform-utils.c (gimp_transform_matrix_perspective):
 	cosmetic changes.
 

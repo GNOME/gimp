@@ -29,8 +29,7 @@ void  gimp_text_layer_scale     (GimpItem               *item,
                                  gint                    new_offset_x,
                                  gint                    new_offset_y,
                                  GimpInterpolationType   interpolation_type,
-                                 GimpProgressFunc        progress_callback,
-                                 gpointer                progress_data);
+                                 GimpProgress           *progress);
 void  gimp_text_layer_flip      (GimpItem               *item,
                                  GimpContext            *context,
                                  GimpOrientationType     flip_type,
@@ -50,8 +49,7 @@ void  gimp_text_layer_transform (GimpItem               *item,
                                  gboolean                supersample,
                                  gint                    recursion_level,
                                  gboolean                clip_result,
-                                 GimpProgressFunc        progress_callback,
-                                 gpointer                progress_data);
+                                 GimpProgress           *progress);
 
 
 #endif /* __GIMP_TEXT_LAYER_TRANSFORM_H__ */

@@ -482,3 +482,23 @@ gimp_text_get_memsize (GimpObject *object,
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
 }
+
+void
+gimp_text_get_transformation (GimpText    *text,
+                              GimpMatrix3 *matrix)
+{
+  g_return_if_fail (GIMP_IS_TEXT (text));
+  g_return_if_fail (matrix != NULL);
+
+  matrix->coeff[0][0] = text->transformation.coeff[0][0];
+  matrix->coeff[0][1] = text->transformation.coeff[0][1];
+  matrix->coeff[0][2] = text->offset_x;
+
+  matrix->coeff[1][0] = text->transformation.coeff[1][0];
+  matrix->coeff[1][1] = text->transformation.coeff[1][1];
+  matrix->coeff[1][2] = text->offset_y;
+
+  matrix->coeff[2][0] = 0.0;
+  matrix->coeff[2][1] = 0.0;
+  matrix->coeff[2][1] = 1.0;
+}

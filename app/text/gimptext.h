@@ -73,7 +73,10 @@ struct _GimpTextClass
 };
 
 
-GType  gimp_text_get_type (void) G_GNUC_CONST;
+GType  gimp_text_get_type           (void) G_GNUC_CONST;
+
+void   gimp_text_get_transformation (GimpText    *text,
+                                     GimpMatrix3 *matrix);
 
 
 #endif /* __GIMP_TEXT_H__ */

@@ -25,6 +25,7 @@
 
 #include "text-types.h"
 
+#include "core/gimp-transform-utils.h"
 #include "core/gimpimage-undo.h"
 
 #include "gimptext.h"
@@ -32,9 +33,12 @@
 #include "gimptextlayer-transform.h"
 
 
+static GimpItemClass * gimp_text_layer_parent_class (void) G_GNUC_CONST;
 
-static void  gimp_text_layer_get_trafo (GimpTextLayer *layer,
-                                        GimpMatrix2   *trafo);
+static gboolean  gimp_text_layer_get_transformation  (GimpTextLayer *layer,
+                                                      GimpMatrix3   *matrix);
+static gboolean  gimp_text_layer_set_transformation  (GimpTextLayer *layer,
+                                                      GimpMatrix3   *matrix);
 
 
 void
@@ -44,10 +48,24 @@ gimp_text_layer_scale (GimpItem               *item,
                        gint                    new_offset_x,
                        gint                    new_offset_y,
                        GimpInterpolationType   interpolation_type,
-                       GimpProgressFunc        progress_callback,
-                       gpointer                progress_data)
+                       GimpProgress           *progress)
 {
+  /*  TODO  */
+}
 
+static gboolean
+gimp_text_layer_transform_flip (GimpTextLayer       *layer,
+                                GimpOrientationType  flip_type,
+                                gdouble              axis)
+{
+  GimpMatrix3  matrix;
+
+  if (! gimp_text_layer_get_transformation (layer, &matrix))
+    return FALSE;
+
+  gimp_transform_matrix_flip (flip_type, axis, &matrix);
+
+  return gimp_text_layer_set_transformation (layer, &matrix);
 }
 
 void
@@ -57,34 +75,51 @@ gimp_text_layer_flip (GimpItem            *item,
                       gdouble              axis,
                       gboolean             clip_result)
 {
-  GimpLayer   *layer = GIMP_LAYER (item);
-  GimpMatrix2  text_trafo;
-  GimpMatrix2  trafo = { { { 1.0, 0.0 }, { 0.0, 1.0 } } };
+  GimpTextLayer *layer = GIMP_TEXT_LAYER (item);
 
-  switch (flip_type)
+  if (gimp_text_layer_transform_flip (layer, flip_type, axis))
     {
-    case GIMP_ORIENTATION_HORIZONTAL:
-      trafo.coeff[0][0] = - 1.0;
-      break;
+      GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (layer));
 
-    case GIMP_ORIENTATION_VERTICAL:
-      trafo.coeff[1][1] = - 1.0;
-      break;
+      if (mask)
+        gimp_item_flip (GIMP_ITEM (mask), context,
+                        flip_type, axis, clip_result);
+    }
+  else
+    {
+      gimp_text_layer_parent_class ()->flip (item, context,
+                                             flip_type, axis, clip_result);
+    }
+}
 
-    case GIMP_ORIENTATION_UNKNOWN:
+static gboolean
+gimp_text_layer_transform_rotate (GimpTextLayer    *layer,
+                                  GimpRotationType  rotate_type,
+                                  gdouble           center_x,
+                                  gdouble           center_y)
+{
+  GimpMatrix3  matrix;
+  gdouble      angle = 0.0;
+
+  if (! gimp_text_layer_get_transformation (layer, &matrix))
+    return FALSE;
+
+  switch (rotate_type)
+    {
+    case GIMP_ROTATE_90:
+      angle = G_PI_2;
+      break;
+    case GIMP_ROTATE_180:
+      angle = G_PI;
+      break;
+    case GIMP_ROTATE_270:
+      angle = - G_PI_2;
       break;
     }
 
-  gimp_text_layer_get_trafo (GIMP_TEXT_LAYER (layer), &text_trafo);
-  gimp_matrix2_mult (&trafo, &text_trafo);
+  gimp_transform_matrix_rotate_center (center_x, center_y, angle, &matrix);
 
-  gimp_text_layer_set (GIMP_TEXT_LAYER (layer), NULL,
-                       "transformation", &text_trafo,
-                       NULL);
-
-  if (layer->mask)
-    gimp_item_flip (GIMP_ITEM (layer->mask), context,
-                    flip_type, axis, clip_result);
+  return gimp_text_layer_set_transformation (layer, &matrix);
 }
 
 void
@@ -95,43 +130,23 @@ gimp_text_layer_rotate (GimpItem         *item,
                         gdouble           center_y,
                         gboolean          clip_result)
 {
-  GimpLayer   *layer = GIMP_LAYER (item);
-  GimpMatrix2  text_trafo;
-  GimpMatrix2  trafo;
-  gdouble      cos   = 1.0;
-  gdouble      sin   = 0.0;
+  GimpTextLayer *layer = GIMP_TEXT_LAYER (item);
 
-  switch (rotate_type)
+  if (! gimp_text_layer_transform_rotate (layer,
+                                          rotate_type, center_x, center_y))
     {
-    case GIMP_ROTATE_90:
-      cos =   0.0;
-      sin = - 1.0;
-      break;
-    case GIMP_ROTATE_180:
-      cos = - 1.0;
-      sin =   0.0;
-      break;
-    case GIMP_ROTATE_270:
-      cos =   0.0;
-      sin =   1.0;
-      break;
+      GimpLayerMask *mask = gimp_layer_get_mask (GIMP_LAYER (layer));
+
+      if (mask)
+        gimp_item_rotate (GIMP_ITEM (mask), context,
+                          rotate_type, center_x, center_y, clip_result);
     }
-
-  trafo.coeff[0][0] = cos;
-  trafo.coeff[0][1] = -sin;
-  trafo.coeff[1][0] = sin;
-  trafo.coeff[1][1] = cos;
-
-  gimp_text_layer_get_trafo (GIMP_TEXT_LAYER (layer), &text_trafo);
-  gimp_matrix2_mult (&trafo, &text_trafo);
-
-  gimp_text_layer_set (GIMP_TEXT_LAYER (layer), NULL,
-                       "transformation", &text_trafo,
-                       NULL);
-
-  if (layer->mask)
-    gimp_item_rotate (GIMP_ITEM (layer->mask), context,
-                      rotate_type, center_x, center_y, clip_result);
+  else
+    {
+      gimp_text_layer_parent_class ()->rotate (item, context,
+                                               rotate_type, center_x, center_y,
+                                               clip_result);
+    }
 }
 
 void
@@ -143,15 +158,57 @@ gimp_text_layer_transform (GimpItem               *item,
                            gboolean                supersample,
                            gint                    recursion_level,
                            gboolean                clip_result,
-                           GimpProgressFunc        progress_callback,
-                           gpointer                progress_data)
+                           GimpProgress           *progress)
 {
-
+  /*  TODO  */
 }
 
-static void
-gimp_text_layer_get_trafo (GimpTextLayer *layer,
-                           GimpMatrix2   *trafo)
+static GimpItemClass *
+gimp_text_layer_parent_class (void)
 {
-  *trafo = layer->text->transformation;
+  static GimpItemClass *parent_class = NULL;
+
+  if (! parent_class)
+    {
+      gpointer klass = g_type_class_peek (GIMP_TYPE_TEXT_LAYER);
+
+      parent_class = g_type_class_peek_parent (klass);
+    }
+
+  return parent_class;
+}
+
+static gboolean
+gimp_text_layer_get_transformation (GimpTextLayer *layer,
+                                    GimpMatrix3   *matrix)
+{
+  if (! layer->text || layer->modified)
+    return FALSE;
+
+  gimp_text_get_transformation (layer->text, matrix);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_text_layer_set_transformation (GimpTextLayer *layer,
+                                    GimpMatrix3   *matrix)
+{
+  GimpMatrix2  trafo;
+
+  if (! gimp_matrix3_is_affine (matrix))
+    return FALSE;
+
+  trafo.coeff[0][0] = matrix->coeff[0][0];
+  trafo.coeff[0][1] = matrix->coeff[0][1];
+  trafo.coeff[1][0] = matrix->coeff[1][0];
+  trafo.coeff[1][1] = matrix->coeff[1][1];
+
+  gimp_text_layer_set (GIMP_TEXT_LAYER (layer), NULL,
+                       "transformation", &trafo,
+                       "offset-x",       matrix->coeff[0][2],
+                       "offset-y",       matrix->coeff[1][2],
+                       NULL);
+
+  return TRUE;
 }
