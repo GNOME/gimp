@@ -28,6 +28,7 @@
 #include "core-types.h"
 
 #include "gimpmarshal.h"
+#include "gimp-gui.h"
 #include "gimpprogress.h"
 
 #include "gimp-intl.h"
@@ -187,6 +188,25 @@ gimp_progress_get_value (GimpProgress *progress)
     return progress_iface->get_value (progress);
 
   return 0.0;
+}
+
+
+void
+gimp_progress_message (GimpProgress *progress,
+                       Gimp         *gimp,
+                       const gchar  *domain,
+                       const gchar  *message)
+{
+  GimpProgressInterface *progress_iface;
+
+  g_return_if_fail (GIMP_IS_PROGRESS (progress));
+
+  progress_iface = GIMP_PROGRESS_GET_INTERFACE (progress);
+
+  if (progress_iface->message)
+    progress_iface->message (progress, gimp, domain, message);
+  else
+    gimp_message (gimp, domain, message);
 }
 
 void

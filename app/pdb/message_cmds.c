@@ -29,6 +29,7 @@
 
 #include "core/gimp.h"
 #include "gimp-intl.h"
+#include "plug-in/plug-in-progress.h"
 #include "plug-in/plug-in.h"
 
 static ProcRecord message_proc;
@@ -58,14 +59,10 @@ message_invoker (Gimp         *gimp,
 
   if (success)
     {
-      gchar *domain = NULL;
-
       if (gimp->current_plug_in)
-        domain = plug_in_get_undo_desc (gimp->current_plug_in);
-
-      gimp_message (gimp, domain, message);
-
-      g_free (domain);
+        plug_in_progress_message (gimp->current_plug_in, message);
+      else
+        gimp_message (gimp, NULL, message);
     }
 
   return procedural_db_return_args (&message_proc, success);

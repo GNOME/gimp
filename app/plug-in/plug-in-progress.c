@@ -216,6 +216,33 @@ plug_in_progress_cancel (PlugIn      *plug_in,
   return FALSE;
 }
 
+void
+plug_in_progress_message (PlugIn      *plug_in,
+                          const gchar *message)
+{
+  PlugInProcFrame *proc_frame;
+  gchar           *domain;
+
+  g_return_if_fail (plug_in != NULL);
+  g_return_if_fail (message != NULL);
+
+  proc_frame = plug_in_get_proc_frame (plug_in);
+
+  domain = plug_in_get_undo_desc (plug_in);
+
+  if (proc_frame->progress)
+    {
+      gimp_progress_message (proc_frame->progress,
+                             plug_in->gimp, domain, message);
+    }
+  else
+    {
+      gimp_message (plug_in->gimp, domain, message);
+    }
+
+  g_free (domain);
+}
+
 
 /*  private functions  */
 

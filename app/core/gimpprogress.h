@@ -48,6 +48,11 @@ struct _GimpProgressInterface
                                 gdouble       percentage);
   gdouble        (* get_value) (GimpProgress *progress);
 
+  void           (* message)   (GimpProgress *progress,
+                                Gimp         *gimp,
+                                const gchar  *domain,
+                                const gchar  *message);
+
   /*  signals  */
   void           (* cancel)    (GimpProgress *progress);
 };
@@ -66,6 +71,11 @@ void           gimp_progress_set_text           (GimpProgress *progress,
 void           gimp_progress_set_value          (GimpProgress *progress,
                                                  gdouble       percentage);
 gdouble        gimp_progress_get_value          (GimpProgress *progress);
+
+void           gimp_progress_message            (GimpProgress *progress,
+                                                 Gimp         *gimp,
+                                                 const gchar  *domain,
+                                                 const gchar  *message);
 
 void           gimp_progress_cancel             (GimpProgress *progress);
 

@@ -50,8 +50,8 @@
 static void      gimp_display_shell_close_dialog       (GimpDisplayShell *shell,
                                                         GimpImage        *gimage);
 static void      gimp_display_shell_close_name_changed (GimpImage        *image,
-                                                        GtkWidget        *box);
-static gboolean  gimp_display_shell_close_time_changed (GtkWidget        *box);
+                                                        GimpMessageBox   *box);
+static gboolean  gimp_display_shell_close_time_changed (GimpMessageBox   *box);
 static void      gimp_display_shell_close_response     (GtkWidget        *widget,
                                                         gboolean          close,
                                                         GimpDisplayShell *shell);
@@ -172,27 +172,32 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
 }
 
 static void
-gimp_display_shell_close_name_changed (GimpImage *image,
-                                       GtkWidget *box)
+gimp_display_shell_close_name_changed (GimpImage      *image,
+                                       GimpMessageBox *box)
 {
-  gchar *name;
-  gchar *title;
+  GtkWidget *window = gtk_widget_get_toplevel (GTK_WIDGET (box));
+  gchar     *name;
 
   name = file_utils_uri_to_utf8_basename (gimp_image_get_uri (image));
 
-  title = g_strdup_printf (_("Close %s"), name);
-  gtk_window_set_title (GTK_WINDOW (gtk_widget_get_toplevel (box)), title);
-  g_free (title);
+  if (window)
+    {
+      gchar *title = g_strdup_printf (_("Close %s"), name);
 
-  gimp_message_box_set_primary_text (GIMP_MESSAGE_BOX (box),
+      gtk_window_set_title (GTK_WINDOW (window), title);
+      g_free (title);
+    }
+
+  gimp_message_box_set_primary_text (box,
                                      _("Save the changes to image '%s' "
-                                       "before closing?"), name);
+                                       "before closing?"),
+                                     name);
   g_free (name);
 }
 
 
 static gboolean
-gimp_display_shell_close_time_changed (GtkWidget *box)
+gimp_display_shell_close_time_changed (GimpMessageBox *box)
 {
   GimpImage *image  = g_object_get_data (G_OBJECT (box), "gimp-image");
 
@@ -200,7 +205,7 @@ gimp_display_shell_close_time_changed (GtkWidget *box)
     {
       gchar *period = gimp_time_since (image->dirty_time);
 
-      gimp_message_box_set_text (GIMP_MESSAGE_BOX (box),
+      gimp_message_box_set_text (box,
                                  _("If you don't save the image, "
                                    "changes from the last %s will be lost."),
                                  period);
@@ -208,7 +213,7 @@ gimp_display_shell_close_time_changed (GtkWidget *box)
     }
   else
     {
-      gimp_message_box_set_text (GIMP_MESSAGE_BOX (box), NULL);
+      gimp_message_box_set_text (box, NULL);
     }
 
   return TRUE;

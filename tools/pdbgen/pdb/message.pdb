@@ -40,14 +40,10 @@ HELP
     %invoke = (
         code => <<CODE
 {
-  gchar *domain = NULL;
-
   if (gimp->current_plug_in)
-    domain = plug_in_get_undo_desc (gimp->current_plug_in);
-
-  gimp_message (gimp, domain, message);
-
-  g_free (domain);
+    plug_in_progress_message (gimp->current_plug_in, message);
+  else
+    gimp_message (gimp, NULL, message);
 }
 CODE
     );
@@ -90,7 +86,9 @@ HELP
     %invoke = ( code => 'gimp->message_handler = handler;' );
 }
 
-@headers = qw(<string.h> "core/gimp.h" "plug-in/plug-in.h" "gimp-intl.h");
+@headers = qw(<string.h>
+              "core/gimp.h" "plug-in/plug-in.h" "plug-in/plug-in-progress.h"
+              "gimp-intl.h");
 
 @procs = qw(message message_get_handler message_set_handler);
 %exports = (app => [@procs], lib => [@procs]);

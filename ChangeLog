@@ -1,3 +1,23 @@
+2004-10-14  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpprogress.[ch]: added "message" function to the
+	GimpProgress interface. Call gimp_message() if it is unimplemented.
+
+	* app/plug-in/plug-in-progress.[ch]: added new function
+	plug_in_progress_message() that passes the message to the current
+	proc_frame's progress.
+
+	* app/widgets/gimpthumbbox.c: implement GimpProgress::message.
+	Just do nothing in the implementation. We don't want to see
+	messages from file plug-ins that we use to create the thumbnails.
+
+	* tools/pdbgen/pdb/message.pdb
+	* app/pdb/message_cmds.c: if there's a current plug-in, dispatch
+	the message by calling plug_in_progress_message().
+
+	* app/display/gimpdisplayshell-close.c: fixed wrong types in
+	function calls.
+
 2004-10-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcolordialog.c (gimp_color_dialog_new): use

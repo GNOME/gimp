@@ -36,5 +36,8 @@ gboolean   plug_in_progress_uninstall (PlugIn      *plug_in,
 gboolean   plug_in_progress_cancel    (PlugIn      *plug_in,
                                        const gchar *progress_callback);
 
+void       plug_in_progress_message   (PlugIn      *plug_in,
+                                       const gchar *message);
+
 
 #endif /* __PLUG_IN_PROGRESS_H__ */
