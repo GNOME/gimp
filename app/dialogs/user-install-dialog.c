@@ -72,8 +72,8 @@
 #define EEK_PAGE     (NUM_PAGES - 1)
 #define WILBER_WIDTH 62
 
-#define PAGE_STYLE(widget)  gtk_widget_set_style (widget, page_style)
-#define TITLE_STYLE(widget) gtk_widget_set_style (widget, title_style)
+#define PAGE_STYLE(widget)  gtk_widget_modify_style (widget, page_style)
+#define TITLE_STYLE(widget) gtk_widget_modify_style (widget, title_style)
 
 
 static void     user_install_continue_callback (GtkWidget *widget,
@@ -90,32 +90,29 @@ static void     user_install_resolution_done   (void);
 
 /*  private stuff  */
 
-static GtkWidget *user_install_dialog = NULL;
+static GtkWidget  *user_install_dialog = NULL;
 
-static GtkWidget *notebook = NULL;
+static GtkWidget  *notebook        = NULL;
 
-static GtkWidget *title_pixmap = NULL;
+static GtkWidget  *title_pixmap    = NULL;
 
-static GtkWidget *title_label  = NULL;
-static GtkWidget *footer_label = NULL;
+static GtkWidget  *title_label     = NULL;
+static GtkWidget  *footer_label    = NULL;
 
-static GtkWidget *log_page        = NULL;
-static GtkWidget *tuning_page     = NULL;
-static GtkWidget *resolution_page = NULL;
+static GtkWidget  *log_page        = NULL;
+static GtkWidget  *tuning_page     = NULL;
+static GtkWidget  *resolution_page = NULL;
 
-static GtkWidget *continue_button = NULL;
-static GtkWidget *cancel_button   = NULL;
+static GtkWidget  *continue_button = NULL;
+static GtkWidget  *cancel_button   = NULL;
 
-static GtkStyle *title_style = NULL;
+static GtkRcStyle *title_style     = NULL;
+static GtkRcStyle *page_style      = NULL;
 
-static GtkStyle    *page_style = NULL;
-static GdkColormap *colormap   = NULL;
+static GdkColor    black_color;
+static GdkColor    white_color;
+static GdkColor    title_color;
 
-static GdkGC *white_gc = NULL;
-
-static GdkColor black_color;
-static GdkColor white_color;
-static GdkColor title_color;
 
 static struct
 {
@@ -367,10 +364,10 @@ user_install_continue_callback (GtkWidget *widget,
     case 4:
       user_install_resolution_done ();
 
+      g_object_unref (G_OBJECT (title_style));
+      g_object_unref (G_OBJECT (page_style));
+
       gtk_widget_destroy (user_install_dialog);
-      gdk_gc_unref (white_gc);
-      gtk_style_unref (title_style);
-      gtk_style_unref (page_style);
 
       gtk_main_quit ();
       return;
@@ -409,7 +406,7 @@ user_install_corner_expose (GtkWidget      *widget,
     {
     case GTK_CORNER_TOP_LEFT:
       gdk_draw_arc (widget->window,
-		    white_gc,
+		    widget->style->white_gc,
 		    TRUE,
 		    0, 0,
 		    widget->allocation.width * 2,
@@ -420,7 +417,7 @@ user_install_corner_expose (GtkWidget      *widget,
       
     case GTK_CORNER_BOTTOM_LEFT:
       gdk_draw_arc (widget->window,
-		    white_gc,
+		    widget->style->white_gc,
 		    TRUE,
 		    0, -widget->allocation.height,
 		    widget->allocation.width * 2,
@@ -431,7 +428,7 @@ user_install_corner_expose (GtkWidget      *widget,
       
     case GTK_CORNER_TOP_RIGHT:
       gdk_draw_arc (widget->window,
-		    white_gc,
+		    widget->style->white_gc,
 		    TRUE,
 		    -widget->allocation.width, 0,
 		    widget->allocation.width * 2,
@@ -442,7 +439,7 @@ user_install_corner_expose (GtkWidget      *widget,
       
     case GTK_CORNER_BOTTOM_RIGHT:
       gdk_draw_arc (widget->window,
-		    white_gc,
+		    widget->style->white_gc,
 		    TRUE,
 		    -widget->allocation.width, -widget->allocation.height,
 		    widget->allocation.width * 2,
@@ -515,7 +512,6 @@ user_install_dialog_create (Gimp *gimp)
   GtkWidget *darea;
   GtkWidget *page;
   GtkWidget *sep;
-  GdkFont   *large_font;
 
   dialog = user_install_dialog =
     gimp_dialog_new (_("GIMP User Installation"), "user_installation",
@@ -534,48 +530,36 @@ user_install_dialog_create (Gimp *gimp)
 
   gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 8);
 
-  /*  hide the separator between the dialog's vbox and the action area  */
-  gtk_widget_destroy (GTK_WIDGET (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_BIN (dialog)->child)), 0)));
+  gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
+
+  gdk_color_parse ("black", &black_color);
+  gdk_color_parse ("white", &white_color);
+  gdk_color_parse ("dark orange", &title_color);
 
   gtk_widget_realize (dialog);
 
   /*  B/W Style for the page contents  */
-  page_style = gtk_style_copy (gtk_widget_get_default_style ());
-  colormap = gtk_widget_get_colormap (dialog);
-
-  gdk_color_black (colormap, &black_color);
-  gdk_color_white (colormap, &white_color);
+  page_style = gtk_widget_get_modifier_style (dialog);
+  g_object_ref (G_OBJECT (page_style));
 
   page_style->fg[GTK_STATE_NORMAL]   = black_color;
   page_style->text[GTK_STATE_NORMAL] = black_color;
   page_style->bg[GTK_STATE_NORMAL]   = white_color;
 
-  gdk_font_unref (page_style->font);
-  page_style->font = dialog->style->font;
-  gdk_font_ref (page_style->font);
+  page_style->color_flags[GTK_STATE_NORMAL] |= (GTK_RC_FG |
+						GTK_RC_BG |
+						GTK_RC_TEXT);
+
+  pango_font_description_free (page_style->font_desc);
+  page_style->font_desc = pango_font_description_from_string ("sans 12");
 
   /*  B/Colored Style for the page title  */
-  title_style = gtk_style_copy (page_style);
+  title_style = gtk_rc_style_copy (page_style);
 
-  if (gdk_color_parse ("dark orange", &title_color) &&
-      gdk_colormap_alloc_color (colormap, &title_color, FALSE, TRUE))
-    {
-      title_style->bg[GTK_STATE_NORMAL] = title_color;
-    }
+  title_style->bg[GTK_STATE_NORMAL] = title_color;
 
-  /*  this is a fontset, e.g. multiple comma-separated font definitions  */
-  large_font = gdk_fontset_load (_("-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"));
-
-  if (large_font)
-    {
-      gdk_font_unref (title_style->font);
-      title_style->font = large_font;
-      gdk_font_ref (title_style->font);
-    }
-
-  /*  W/W GC for the corner  */
-  white_gc = gdk_gc_new (dialog->window);
-  gdk_gc_set_foreground (white_gc, &white_color);
+  pango_font_description_free (title_style->font_desc);
+  title_style->font_desc = pango_font_description_from_string ("sans bold 24");
 
   TITLE_STYLE (dialog);
 
@@ -644,7 +628,7 @@ user_install_dialog_create (Gimp *gimp)
   gtk_widget_show (darea);
 
   darea = gtk_drawing_area_new ();
-  TITLE_STYLE (darea);  
+  TITLE_STYLE (darea);
   gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 16, 16);
   gtk_signal_connect_after (GTK_OBJECT (darea), "expose_event",
 			    GTK_SIGNAL_FUNC (user_install_corner_expose),
@@ -695,19 +679,19 @@ user_install_dialog_create (Gimp *gimp)
 
   /*  Page 2  */
   {
-    GtkWidget *hbox;
-    GtkWidget *vbox;
-    GtkWidget *ctree;
-    GtkWidget *notebook2;
-    GtkWidget *page2;
-    GtkWidget *label;
+    GtkWidget    *hbox;
+    GtkWidget    *vbox;
+    GtkWidget    *ctree;
+    GtkWidget    *notebook2;
+    GtkWidget    *page2;
+    GtkWidget    *label;
     GtkCTreeNode *main_node = NULL;
     GtkCTreeNode *sub_node = NULL;
-    GdkPixmap *file_pixmap;
-    GdkBitmap *file_mask;
-    GdkPixmap *folder_pixmap;
-    GdkBitmap *folder_mask;
-    gchar     *str;
+    GdkPixmap    *file_pixmap;
+    GdkBitmap    *file_mask;
+    GdkPixmap    *folder_pixmap;
+    GdkBitmap    *folder_mask;
+    gchar        *str;
 
     gint i;
 
@@ -1141,7 +1125,8 @@ user_install_resolution_calibrate (GtkWidget *button,
 				   gpointer   data)
 {
   resolution_calibrate_dialog (resolution_entry, 
-			       title_style, page_style,
+			       title_style,
+			       page_style,
 			       GTK_SIGNAL_FUNC (user_install_corner_expose));
 }
 

@@ -61,7 +61,7 @@ struct _GimpUndoClass
 };
 
 
-GtkType    gimp_undo_get_type (void);
+GType      gimp_undo_get_type (void);
 GimpUndo * gimp_undo_new      (const gchar      *name,
                                gpointer          data,
                                glong             size,

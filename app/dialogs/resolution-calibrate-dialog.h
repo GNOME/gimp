@@ -21,8 +21,8 @@
 
 
 void  resolution_calibrate_dialog (GtkWidget     *resolution_entry,
-				   GtkStyle      *dialog_style,
-				   GtkStyle      *ruler_style,
+				   GtkRcStyle    *dialog_style,
+				   GtkRcStyle    *ruler_style,
 				   GtkSignalFunc  expose_callback);
 
 

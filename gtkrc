@@ -1,3 +1,7 @@
+# pixmap_path "<dir 1>:<dir 2>:<dir 3>:..."
+#
+# include "rc-file"
+#
 # style <name> [= <name>]
 # {
 #   <option>
@@ -6,17 +10,31 @@
 # widget <widget_set> style <style_name>
 # widget_class <widget_class_set> style <style_name>
 
-style "ruler"
+
+style "gimp-global-style"
 {
-  font = "-adobe-helvetica-medium-r-normal--*-80-*-*-*-*-*-*"
+  GtkDialog::content_area_border = 0
+  GtkDialog::action_area_border  = 4
+# GtkSpinButton::shadow_type     = none
+
+  font_name = "sans 11"
 }
 
-style "tooltips"
+class "GtkWidget" style "gimp-global-style"
+
+
+style "gimp-ruler"
+{
+  font_name = "sans 8"
+}
+
+class "*Ruler*" style "gimp-ruler"
+
+
+style "gimp-tooltips"
 {
   fg[NORMAL] = { 0.0,  0.0,  0.0  }
   bg[NORMAL] = { 0.94, 0.90, 0.54 }
 }
 
-widget "gtk-tooltips" style "tooltips"
-
-widget_class "*Ruler*" style "ruler"
+widget "gtk-tooltips" style "gimp-tooltips"

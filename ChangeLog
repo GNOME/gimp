@@ -1,3 +1,21 @@
+2001-07-25  Michael Natterer  <mitch@gimp.org>
+
+	* gtkrc
+	* gtkrc_user: updated for gtk+ 2.0, added a "gimp-" prefix to
+	all global GIMP styles.
+
+	* app/app_procs.c: typo.
+
+	* app/user_install.c
+	* app/gui/resolution-calibrate-dialog.[ch]: use GtkRcStyle along
+	with gtk_widget_get_modifier_style()/gtk_widget_modify_style() as
+	recommended instead of messing with the widgets' styles directly.
+
+	* app/core/gimpdatalist.[ch]
+	* app/core/gimpparasitelist.[ch]
+	* app/core/gimpundo.[ch]
+	* app/core/gimpundostack.[ch]: GObject porting stuff.
+
 2001-07-25  Sven Neumann  <sven@gimp.org>
 
 	* app/devices.c: fixed typo.

@@ -54,10 +54,10 @@ static gint   gimp_data_list_data_compare_func  (gconstpointer      first,
 static GimpListClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_data_list_get_type (void)
 {
-  static GtkType type = 0;
+  static GType type = 0;
 
   if (!type)
     {
@@ -110,9 +110,9 @@ gimp_data_list_add (GimpContainer *container,
   list->list = g_list_insert_sorted (list->list, object,
 				     gimp_data_list_data_compare_func);
 
-  gtk_signal_connect (GTK_OBJECT (object), "name_changed",
-		      GTK_SIGNAL_FUNC (gimp_data_list_object_renamed_callback),
-		      container);
+  g_signal_connect (G_OBJECT (object), "name_changed",
+		    G_CALLBACK (gimp_data_list_object_renamed_callback),
+		    container);
 }
 
 static void
@@ -123,20 +123,20 @@ gimp_data_list_remove (GimpContainer *container,
 
   list = GIMP_LIST (container);
 
-  gtk_signal_disconnect_by_func (GTK_OBJECT (object),
-				 G_CALLBACK (gimp_data_list_object_renamed_callback),
-				 container);
+  g_signal_handlers_disconnect_by_func (G_OBJECT (object),
+					gimp_data_list_object_renamed_callback,
+					container);
 
   list->list = g_list_remove (list->list, object);
 }
 
 GimpContainer *
-gimp_data_list_new (GtkType  children_type)
+gimp_data_list_new (GType children_type)
 
 {
   GimpDataList *list;
 
-  g_return_val_if_fail (gtk_type_is_a (children_type, GIMP_TYPE_DATA), NULL);
+  g_return_val_if_fail (g_type_is_a (children_type, GIMP_TYPE_DATA), NULL);
 
   list = GIMP_DATA_LIST (gtk_type_new (GIMP_TYPE_DATA_LIST));
 
@@ -223,18 +223,16 @@ gimp_data_list_uniquefy_data_name (GimpDataList *data_list,
           while (list2);
 
 	  if (have)
-	    gtk_signal_handler_block_by_func
-	      (GTK_OBJECT (object),
-	       G_CALLBACK (gimp_data_list_object_renamed_callback),
-	       data_list);
+	    g_signal_handlers_block_by_func (G_OBJECT (object),
+					     gimp_data_list_object_renamed_callback,
+					     data_list);
 
 	  gimp_object_set_name (object, new_name);
 
 	  if (have)
-	    gtk_signal_handler_unblock_by_func
-	      (GTK_OBJECT (object),
-	       G_CALLBACK (gimp_data_list_object_renamed_callback),
-	       data_list);
+	    g_signal_handlers_unblock_by_func (G_OBJECT (object),
+					       gimp_data_list_object_renamed_callback,
+					       data_list);
 
 	  g_free (new_name);
 

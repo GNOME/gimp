@@ -53,10 +53,10 @@ static guint undo_signals[LAST_SIGNAL] = { 0 };
 static GimpViewableClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_undo_get_type (void)
 {
-  static GtkType undo_type = 0;
+  static GType undo_type = 0;
 
   if (! undo_type)
     {
@@ -136,10 +136,16 @@ gimp_undo_destroy (GtkObject *object)
   undo = GIMP_UNDO (object);
 
   if (undo->free_func)
-    undo->free_func (undo);
+    {
+      undo->free_func (undo);
+      undo->free_func = NULL;
+    }
 
   if (undo->preview)
-    temp_buf_free (undo->preview);
+    {
+      temp_buf_free (undo->preview);
+      undo->preview = NULL;
+    }
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -172,26 +178,22 @@ void
 gimp_undo_push (GimpUndo  *undo,
                 GimpImage *gimage)
 {
-  g_return_if_fail (undo != NULL);
   g_return_if_fail (GIMP_IS_UNDO (undo));
-  
-  g_return_if_fail (gimage != NULL);
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gtk_signal_emit (GTK_OBJECT (undo), undo_signals[PUSH], gimage);
+  g_signal_emit (G_OBJECT (undo), undo_signals[PUSH], 0,
+		 gimage);
 }
 
 void
 gimp_undo_pop (GimpUndo  *undo,
                GimpImage *gimage)
 {
-  g_return_if_fail (undo != NULL);
   g_return_if_fail (GIMP_IS_UNDO (undo));
-  
-  g_return_if_fail (gimage != NULL);
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gtk_signal_emit (GTK_OBJECT (undo), undo_signals[POP], gimage);
+  g_signal_emit (G_OBJECT (undo), undo_signals[POP], 0,
+		 gimage);
 }
 
 static void

@@ -29,7 +29,7 @@
 #include "libgimp/gimpintl.h"
 
 
-#define SET_STYLE(widget, style)  if (style) gtk_widget_set_style (widget, style)
+#define SET_STYLE(widget, style)  if (style) gtk_widget_modify_style (widget, style)
 
 
 static GtkWidget *calibrate_entry = NULL;
@@ -84,8 +84,8 @@ resolution_calibrate_ok (GtkWidget *button,
  **/
 void
 resolution_calibrate_dialog (GtkWidget     *resolution_entry,
-			     GtkStyle      *dialog_style,
-			     GtkStyle      *ruler_style,
+			     GtkRcStyle    *dialog_style,
+			     GtkRcStyle    *ruler_style,
 			     GtkSignalFunc  expose_callback)
 {
   GtkWidget *dialog;

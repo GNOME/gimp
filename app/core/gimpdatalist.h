@@ -46,8 +46,9 @@ struct _GimpDataListClass
 };
 
 
-GtkType         gimp_data_list_get_type (void);
-GimpContainer * gimp_data_list_new      (GtkType children_type);
+GType           gimp_data_list_get_type (void);
+
+GimpContainer * gimp_data_list_new      (GType children_type);
 
 
 #endif  /*  __GIMP_DATA_LIST_H__  */

@@ -39,13 +39,14 @@ static void  gimp_undo_stack_remove_callback (GimpContainer      *container,
                                               GimpObject         *object,
                                               gpointer           data);
 
+
 static GimpUndoClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_undo_stack_get_type (void)
 {
-  static GtkType undo_stack_type = 0;
+  static GType undo_stack_type = 0;
 
   if (! undo_stack_type)
     {
@@ -92,12 +93,12 @@ gimp_undo_stack_init (GimpUndoStack *stack)
   gtk_object_ref (GTK_OBJECT (undos));
   gtk_object_sink (GTK_OBJECT (undos));  
 
-  gtk_signal_connect (GTK_OBJECT (undos), "add",
-                      GTK_SIGNAL_FUNC (gimp_undo_stack_add_callback), 
-                      stack);
-  gtk_signal_connect (GTK_OBJECT (undos), "remove",
-                      GTK_SIGNAL_FUNC (gimp_undo_stack_remove_callback), 
-                      stack);
+  g_signal_connect (G_OBJECT (undos), "add",
+		    G_CALLBACK (gimp_undo_stack_add_callback), 
+		    stack);
+  g_signal_connect (G_OBJECT (undos), "remove",
+		    G_CALLBACK (gimp_undo_stack_remove_callback), 
+		    stack);
 
   stack->gimage = NULL;
 }
@@ -109,7 +110,11 @@ gimp_undo_stack_destroy (GtkObject *object)
 
   stack = GIMP_UNDO_STACK (object);
 
-  gtk_object_unref (GTK_OBJECT (stack->undos));
+  if (stack->undos)
+    {
+      g_object_unref (G_OBJECT (stack->undos));
+      stack->undos = NULL;
+    }
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -120,7 +125,6 @@ gimp_undo_stack_new (GimpImage *gimage)
 {
   GimpUndoStack *stack;
 
-  g_return_val_if_fail (gimage != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   stack = GIMP_UNDO_STACK (gtk_object_new (GIMP_TYPE_UNDO_STACK, 
@@ -135,10 +139,7 @@ void
 gimp_undo_stack_push (GimpUndoStack *stack, 
                       GimpUndo      *undo)
 {
-  g_return_if_fail (stack != NULL);
   g_return_if_fail (GIMP_IS_UNDO_STACK (stack));
-  
-  g_return_if_fail (undo != NULL);
   g_return_if_fail (GIMP_IS_UNDO (undo));
 
   gimp_undo_push (undo, stack->gimage);
@@ -150,7 +151,6 @@ gimp_undo_stack_pop (GimpUndoStack *stack)
 {
   GimpObject *object;
 
-  g_return_val_if_fail (stack != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_UNDO_STACK (stack), NULL);
   
   object = gimp_container_get_child_by_index (GIMP_CONTAINER (stack->undos),0);
@@ -171,10 +171,9 @@ gimp_undo_stack_peek (GimpUndoStack *stack)
 {
   GimpObject *object;
 
-  g_return_val_if_fail (stack != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_UNDO_STACK (stack), NULL);
 
-  object = gimp_container_get_child_by_index (GIMP_CONTAINER (stack->undos),0);
+  object = gimp_container_get_child_by_index (GIMP_CONTAINER (stack->undos), 0);
 
   return (object ? GIMP_UNDO (object) : NULL);
 }
@@ -187,7 +186,7 @@ gimp_undo_stack_add_callback (GimpContainer *container,
   GimpUndo *undo;
   GimpUndo *stack;
 
-  undo = GIMP_UNDO (object);
+  undo  = GIMP_UNDO (object);
   stack = GIMP_UNDO (data);
   
   stack->size += undo->size;
@@ -201,7 +200,7 @@ gimp_undo_stack_remove_callback (GimpContainer *container,
   GimpUndo *undo;
   GimpUndo *stack;
 
-  undo = GIMP_UNDO (object);
+  undo  = GIMP_UNDO (object);
   stack = GIMP_UNDO (data);
   
   stack->size -= undo->size;
