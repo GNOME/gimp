@@ -14,7 +14,7 @@
 	* app/pdb/layer_cmds.c
 	* libgimp/gimplayer_pdb.[ch]: regenerated.
 
-	* plug-ins/common/tiff.c: always compare used unsigned chars for 7bit
+	* plug-ins/common/tiff.c: always compare using unsigned chars for 7bit
 	ASCII check.
 
 2003-10-06  Michael Natterer  <mitch@gimp.org>
