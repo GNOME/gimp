@@ -278,6 +278,7 @@ gimp_color_bar_set_channel (GimpColorBar         *bar,
     {
     case GIMP_HISTOGRAM_VALUE:
     case GIMP_HISTOGRAM_ALPHA:
+    case GIMP_HISTOGRAM_RGB:
       gimp_rgb_set (&color, 1.0, 1.0, 1.0);
       break;
     case GIMP_HISTOGRAM_RED:

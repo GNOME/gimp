@@ -774,6 +774,7 @@ curves_update (GimpCurvesTool *tool,
 	{
 	case GIMP_HISTOGRAM_VALUE:
 	case GIMP_HISTOGRAM_ALPHA:
+        case GIMP_HISTOGRAM_RGB:
           gimp_color_bar_set_buffers (GIMP_COLOR_BAR (tool->xrange),
                                       tool->curves->curve[tool->channel],
                                       tool->curves->curve[tool->channel],
@@ -853,6 +854,9 @@ curves_menu_visible_func (GtkTreeModel *model,
 
     case GIMP_HISTOGRAM_ALPHA:
       return tool->alpha;
+
+    case GIMP_HISTOGRAM_RGB:
+      return FALSE;
     }
 
   return FALSE;

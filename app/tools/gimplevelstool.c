@@ -870,6 +870,7 @@ levels_update (GimpLevelsTool *tool,
         {
         case GIMP_HISTOGRAM_VALUE:
         case GIMP_HISTOGRAM_ALPHA:
+        case GIMP_HISTOGRAM_RGB:
           gimp_color_bar_set_buffers (GIMP_COLOR_BAR (tool->input_bar),
                                       tool->levels->input[tool->channel],
                                       tool->levels->input[tool->channel],
@@ -954,6 +955,9 @@ levels_menu_visible_func (GtkTreeModel *model,
 
     case GIMP_HISTOGRAM_ALPHA:
       return tool->alpha;
+
+    case GIMP_HISTOGRAM_RGB:
+      return FALSE;
     }
 
   return FALSE;

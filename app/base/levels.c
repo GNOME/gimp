@@ -163,6 +163,8 @@ levels_input_from_color (GimpHistogramChannel  channel,
       return color[BLUE_PIX];
     case GIMP_HISTOGRAM_ALPHA:
       return color[ALPHA_PIX];
+    case GIMP_HISTOGRAM_RGB:
+      return MIN (MIN (color[RED_PIX], color[GREEN_PIX]), color[BLUE_PIX]);
     }
 
   return 0;  /* just to please the compiler */

@@ -403,6 +403,7 @@ gimp_histogram_editor_item_visible (GtkTreeModel *model,
     case GIMP_HISTOGRAM_RED:
     case GIMP_HISTOGRAM_GREEN:
     case GIMP_HISTOGRAM_BLUE:
+    case GIMP_HISTOGRAM_RGB:
       return editor->drawable && gimp_drawable_is_rgb (editor->drawable);
 
     case GIMP_HISTOGRAM_ALPHA:

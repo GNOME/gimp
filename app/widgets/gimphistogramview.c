@@ -72,6 +72,16 @@ static gboolean gimp_histogram_view_button_release (GtkWidget      *widget,
 static gboolean gimp_histogram_view_motion_notify  (GtkWidget      *widget,
                                                     GdkEventMotion *bevent);
 
+static void     gimp_histogram_view_draw_spike (GimpHistogramView    *view,
+                                                GimpHistogramChannel  channel,
+                                                GdkGC                *gc,
+                                                gint                  x,
+                                                gint                  i,
+                                                gint                  j,
+                                                gint                  max,
+                                                gint                  height,
+                                                gint                  border);
+
 
 static guint histogram_view_signals[LAST_SIGNAL] = { 0 };
 
@@ -245,27 +255,11 @@ gimp_histogram_view_size_request (GtkWidget      *widget,
   requisition->height = MIN_HEIGHT + 2 * view->border_width;
 }
 
-static gboolean
-gimp_histogram_view_expose (GtkWidget      *widget,
-                            GdkEventExpose *event)
+static gdouble
+gimp_histogram_view_get_maximum (GimpHistogramView    *view,
+                                 GimpHistogramChannel  channel)
 {
-  GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (widget);
-  gint               x, y;
-  gint               x1, x2;
-  gint               border;
-  gint               width, height;
-  gdouble            max;
-  gint               xstop;
-
-  if (! view->histogram)
-    return FALSE;
-
-  border = view->border_width;
-  width  = widget->allocation.width  - 2 * border;
-  height = widget->allocation.height - 2 * border;
-
-  /*  find the maximum value  */
-  max = gimp_histogram_get_maximum (view->histogram, view->channel);
+  gdouble max = gimp_histogram_get_maximum (view->histogram, channel);
 
   switch (view->scale)
     {
@@ -280,10 +274,34 @@ gimp_histogram_view_expose (GtkWidget      *widget,
       break;
     }
 
+  return max;
+}
+
+static gboolean
+gimp_histogram_view_expose (GtkWidget      *widget,
+                            GdkEventExpose *event)
+{
+  GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (widget);
+  gint               x;
+  gint               x1, x2;
+  gint               border;
+  gint               width, height;
+  gdouble            max;
+  gint               xstop;
+  GdkGC             *gc_in;
+  GdkGC             *gc_out;
+  GdkGC             *rgb_gc[3]  = { NULL, NULL, NULL };
+
+  if (! view->histogram)
+    return FALSE;
+
+  border = view->border_width;
+  width  = widget->allocation.width  - 2 * border;
+  height = widget->allocation.height - 2 * border;
+
   x1 = CLAMP (MIN (view->start, view->end), 0, 255);
   x2 = CLAMP (MAX (view->start, view->end), 0, 255);
 
-  /*  Draw the background  */
   gdk_draw_rectangle (widget->window,
                       widget->style->base_gc[GTK_STATE_NORMAL], TRUE,
                       0, 0,
@@ -296,31 +314,51 @@ gimp_histogram_view_expose (GtkWidget      *widget,
                       border, border,
                       width - 1, height - 1);
 
-  /*  Draw the spikes  */
+  max = gimp_histogram_view_get_maximum (view, view->channel);
+
+  gc_in  = (view->light_histogram ?
+            widget->style->mid_gc[GTK_STATE_SELECTED] :
+            widget->style->text_gc[GTK_STATE_SELECTED]);
+
+  gc_out = (view->light_histogram ?
+            widget->style->mid_gc[GTK_STATE_NORMAL] :
+            widget->style->text_gc[GTK_STATE_NORMAL]);
+
+  if (view->channel == GIMP_HISTOGRAM_RGB)
+    {
+      GdkGCValues  values;
+      GdkColor     color;
+
+      values.function = GDK_OR;
+
+      for (x = 0; x < 3; x++)
+        {
+          rgb_gc[x] = gdk_gc_new_with_values (widget->window,
+                                              &values, GDK_GC_FUNCTION);
+
+          color.red   = (x == 0 ? 0xFFFF : 0x0);
+          color.green = (x == 1 ? 0xFFFF : 0x0);
+          color.blue  = (x == 2 ? 0xFFFF : 0x0);
+
+          gdk_gc_set_rgb_fg_color (rgb_gc[x], &color);
+        }
+    }
+
   xstop = 1;
   for (x = 0; x < width; x++)
     {
-      gdouble   value = 0.0;
-      gint      i, j;
       gboolean  in_selection = FALSE;
-      GdkGC    *spike_gc;
 
-      i = (x * 256) / width;
-      j = ((x + 1) * 256) / width;
+      gint  i = (x * 256) / width;
+      gint  j = ((x + 1) * 256) / width;
 
-      do
+      if (! (x1 == 0 && x2 == 255))
         {
-          gdouble v;
+          gint k;
 
-          if (! in_selection)
-            in_selection = ((x1 != 0 || x2 != 255) && x1 <= i && i <= x2);
-
-          v = gimp_histogram_get_value (view->histogram, view->channel, i++);
-
-          if (v > value)
-            value = v;
+          for (k = i; k < j && !in_selection; k++)
+            in_selection = (x1 <= k && k <= x2);
         }
-      while (i < j);
 
       if (view->subdivisions > 1 && x >= (xstop * width / view->subdivisions))
         {
@@ -338,46 +376,79 @@ gimp_histogram_view_expose (GtkWidget      *widget,
                          x + border, border + height - 1);
         }
 
-      if (value <= 0.0)
-	continue;
-
-      switch (view->scale)
+      if (view->channel == GIMP_HISTOGRAM_RGB)
         {
-        case GIMP_HISTOGRAM_SCALE_LINEAR:
-          y = (gint) (((height - 1) * value) / max);
-          break;
+          gint c;
 
-        case GIMP_HISTOGRAM_SCALE_LOGARITHMIC:
-          y = (gint) (((height - 1) * log (value)) / max);
-          break;
+          for (c = 0; c < 3; c++)
+            gimp_histogram_view_draw_spike (view, GIMP_HISTOGRAM_RED + c,
+                                            widget->style->black_gc,
+                                            x, i, j, max, height, border);
 
-        default:
-          y = 0;
-          break;
-	}
-
-      if (in_selection)
-        {
-          if (view->light_histogram)
-            spike_gc = widget->style->mid_gc[GTK_STATE_SELECTED];
-          else
-            spike_gc = widget->style->text_gc[GTK_STATE_SELECTED];
-        }
-      else
-        {
-          if (view->light_histogram)
-            spike_gc = widget->style->mid_gc[GTK_STATE_NORMAL];
-          else
-            spike_gc = widget->style->text_gc[GTK_STATE_NORMAL];
+          for (c = 0; c < 3; c++)
+            gimp_histogram_view_draw_spike (view, GIMP_HISTOGRAM_RED + c,
+                                            rgb_gc[c],
+                                            x, i, j, max, height, border);
         }
 
-      gdk_draw_line (widget->window,
-                     spike_gc,
-                     x + border, height + border - 1,
-                     x + border, height + border - y - 1);
+      gimp_histogram_view_draw_spike (view, view->channel,
+                                      in_selection ? gc_in : gc_out,
+                                      x, i, j, max, height, border);
+    }
+
+  if (view->channel == GIMP_HISTOGRAM_RGB)
+    {
+      for (x = 0; x < 3; x++)
+        g_object_unref (rgb_gc[x]);
     }
 
   return FALSE;
+}
+
+static void
+gimp_histogram_view_draw_spike (GimpHistogramView    *view,
+                                GimpHistogramChannel  channel,
+                                GdkGC                *gc,
+                                gint                  x,
+                                gint                  i,
+                                gint                  j,
+                                gint                  max,
+                                gint                  height,
+                                gint                  border)
+{
+  gdouble  value = 0.0;
+  gint     y;
+
+  do
+    {
+      gdouble v = gimp_histogram_get_value (view->histogram, channel, i++);
+
+      if (v > value)
+        value = v;
+    }
+  while (i < j);
+
+  if (value <= 0.0)
+    return;
+
+  switch (view->scale)
+    {
+    case GIMP_HISTOGRAM_SCALE_LINEAR:
+      y = (gint) (((height - 1) * value) / max);
+      break;
+
+    case GIMP_HISTOGRAM_SCALE_LOGARITHMIC:
+      y = (gint) (((height - 1) * log (value)) / max);
+      break;
+
+    default:
+      y = 0;
+      break;
+    }
+
+  gdk_draw_line (GTK_WIDGET (view)->window, gc,
+                 x + border, height + border - 1,
+                 x + border, height + border - y - 1);
 }
 
 static gboolean

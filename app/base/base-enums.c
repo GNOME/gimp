@@ -77,6 +77,7 @@ static const GEnumValue gimp_histogram_channel_enum_values[] =
   { GIMP_HISTOGRAM_GREEN, N_("Green"), "green" },
   { GIMP_HISTOGRAM_BLUE, N_("Blue"), "blue" },
   { GIMP_HISTOGRAM_ALPHA, N_("Alpha"), "alpha" },
+  { GIMP_HISTOGRAM_RGB, N_("RGB"), "rgb" },
   { 0, NULL, NULL }
 };
 

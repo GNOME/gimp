@@ -1,5 +1,25 @@
 2004-07-06  Sven Neumann  <sven@gimp.org>
 
+	Added an RGB histogram based on a patch by Tor Lillqvist. Fixes
+	bug #145401.
+
+	* app/base/base-enums.[ch]: added GIMP_HISTOGRAM_RGB, don't export
+	it to the PDB.
+
+	* app/base/gimphistogram.c: implemented histogram functions for
+	the RGB mode.
+
+	* app/base/levels.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c
+	* app/widgets/gimpcolorbar.c
+	* app/widgets/gimphistogrameditor.c: handle the new enum value.
+
+	* app/widgets/gimphistogramview.c: for GIMP_HISTOGRAM_RGB mode,
+	draw a histogram that shows the RGB channels simultaneously 
+
+2004-07-06  Sven Neumann  <sven@gimp.org>
+
 	* libgimpmodule/gimpmodule.c: comply with C99 aliasing rules.
 
 2004-07-06  Michael Natterer  <mitch@gimp.org>

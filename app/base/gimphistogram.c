@@ -178,12 +178,21 @@ gimp_histogram_get_maximum (GimpHistogram        *histogram,
   if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
 
-  if (! histogram->values || channel >= histogram->n_channels)
+  if (! histogram->values ||
+      (channel != GIMP_HISTOGRAM_RGB && channel >= histogram->n_channels))
     return 0.0;
 
-  for (x = 0; x < 256; x++)
-    if (histogram->values[channel][x] > max)
-      max = histogram->values[channel][x];
+  if (channel == GIMP_HISTOGRAM_RGB)
+    for (x = 0; x < 256; x++)
+      {
+	max = MAX (max, histogram->values[GIMP_HISTOGRAM_RED][x]);
+	max = MAX (max, histogram->values[GIMP_HISTOGRAM_GREEN][x]);
+	max = MAX (max, histogram->values[GIMP_HISTOGRAM_BLUE][x]);
+      }
+  else
+    for (x = 0; x < 256; x++)
+      if (histogram->values[channel][x] > max)
+	max = histogram->values[channel][x];
 
   return max;
 }
@@ -199,12 +208,22 @@ gimp_histogram_get_value (GimpHistogram        *histogram,
   if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
 
-  if (histogram->values               &&
-      channel < histogram->n_channels &&
-      bin >= 0 && bin < 256)
-    return histogram->values[channel][bin];
+  if (! histogram->values ||
+      bin < 0 || bin >= 256 ||
+      (channel == GIMP_HISTOGRAM_RGB && histogram->n_channels < 4) ||
+      (channel != GIMP_HISTOGRAM_RGB && channel >= histogram->n_channels))
+    return 0.0;
 
-  return 0.0;
+  if (channel == GIMP_HISTOGRAM_RGB)
+    {
+      gdouble min = histogram->values[GIMP_HISTOGRAM_RED][bin];
+
+      min = MIN (min, histogram->values[GIMP_HISTOGRAM_GREEN][bin]);
+
+      return MIN (min, histogram->values[GIMP_HISTOGRAM_BLUE][bin]);
+    }
+  else
+    return histogram->values[channel][bin];
 }
 
 gdouble
@@ -243,8 +262,21 @@ gimp_histogram_get_count (GimpHistogram        *histogram,
   if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
 
-  if (! histogram->values || channel >= histogram->n_channels)
+  if (channel == GIMP_HISTOGRAM_RGB)
+    return (gimp_histogram_get_count (histogram,
+                                      GIMP_HISTOGRAM_RED, start, end)   +
+	    gimp_histogram_get_count (histogram,
+                                      GIMP_HISTOGRAM_GREEN, start, end) +
+	    gimp_histogram_get_count (histogram,
+                                      GIMP_HISTOGRAM_BLUE, start, end));
+
+  if (! histogram->values ||
+      start > end ||
+      channel >= histogram->n_channels)
     return 0.0;
+
+  start = CLAMP (start, 0, 255);
+  end   = CLAMP (end, 0, 255);
 
   for (i = start; i <= end; i++)
     count += histogram->values[channel][i];
@@ -268,11 +300,27 @@ gimp_histogram_get_mean (GimpHistogram        *histogram,
   if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
 
-  if (! histogram->values || channel >= histogram->n_channels)
+  if (! histogram->values ||
+      start > end ||
+      (channel == GIMP_HISTOGRAM_RGB && histogram->n_channels < 4) ||
+      (channel != GIMP_HISTOGRAM_RGB && channel >= histogram->n_channels))
     return 0.0;
 
-  for (i = start; i <= end; i++)
-    mean += i * histogram->values[channel][i];
+  start = CLAMP (start, 0, 255);
+  end = CLAMP (end, 0, 255);
+
+  if (channel == GIMP_HISTOGRAM_RGB)
+    {
+      for (i = start; i <= end; i++)
+	mean += (i * histogram->values[GIMP_HISTOGRAM_RED][i]   +
+		 i * histogram->values[GIMP_HISTOGRAM_GREEN][i] +
+		 i * histogram->values[GIMP_HISTOGRAM_BLUE][i]);
+    }
+  else
+    {
+      for (i = start; i <= end; i++)
+	mean += i * histogram->values[channel][i];
+    }
 
   count = gimp_histogram_get_count (histogram, channel, start, end);
 
@@ -298,18 +346,35 @@ gimp_histogram_get_median (GimpHistogram         *histogram,
   if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
 
-  if (! histogram->values || channel >= histogram->n_channels)
+  if (! histogram->values ||
+      start > end ||
+      (channel == GIMP_HISTOGRAM_RGB && histogram->n_channels < 4) ||
+      (channel != GIMP_HISTOGRAM_RGB && channel >= histogram->n_channels))
     return 0;
+
+  start = CLAMP (start, 0, 255);
+  end = CLAMP (end, 0, 255);
 
   count = gimp_histogram_get_count (histogram, channel, start, end);
 
-  for (i = start; i <= end; i++)
-    {
-      sum += histogram->values[channel][i];
+  if (channel == GIMP_HISTOGRAM_RGB)
+    for (i = start; i <= end; i++)
+      {
+	sum += (histogram->values[GIMP_HISTOGRAM_RED][i]   +
+		histogram->values[GIMP_HISTOGRAM_GREEN][i] +
+		histogram->values[GIMP_HISTOGRAM_BLUE][i]);
 
-      if (sum * 2 > count)
-	return i;
-    }
+	if (sum * 2 > count)
+	  return i;
+      }
+  else
+    for (i = start; i <= end; i++)
+      {
+	sum += histogram->values[channel][i];
+
+	if (sum * 2 > count)
+	  return i;
+      }
 
   return -1;
 }
@@ -331,7 +396,10 @@ gimp_histogram_get_std_dev (GimpHistogram        *histogram,
   if (histogram->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
 
-  if (! histogram->values || channel >= histogram->n_channels)
+  if (! histogram->values ||
+      start > end ||
+      (channel == GIMP_HISTOGRAM_RGB && histogram->n_channels < 4) ||
+      (channel != GIMP_HISTOGRAM_RGB && channel >= histogram->n_channels))
     return 0.0;
 
   mean  = gimp_histogram_get_mean  (histogram, channel, start, end);
@@ -452,7 +520,7 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 		}
 	      break;
 
-	    case 3: /* calculate seperate value values */
+	    case 3: /* calculate separate value values */
 	      while (w--)
 		{
 		  masked = m[0] / 255.0;
@@ -471,7 +539,7 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 		}
 	      break;
 
-	    case 4: /* calculate seperate value values */
+	    case 4: /* calculate separate value values */
 	      while (w--)
 		{
 		  masked = m[0] / 255.0;
@@ -524,7 +592,7 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 		}
 	      break;
 
-	    case 3: /* calculate seperate value values */
+	    case 3: /* calculate separate value values */
 	      while (w--)
 		{
 		  values[1][s[0]] += 1.0;
@@ -541,7 +609,7 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 		}
 	      break;
 
-	    case 4: /* calculate seperate value values */
+	    case 4: /* calculate separate value values */
 	      while (w--)
 		{
 		  values[1][s[0]] += 1.0;
