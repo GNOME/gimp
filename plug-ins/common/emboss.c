@@ -33,11 +33,6 @@
 #include <stdlib.h>
 #include <sys/types.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -89,17 +84,17 @@ typedef struct
 static gint do_preview = TRUE;
 
 static GtkWidget *mw_preview_new   (GtkWidget        *parent,
-				    mwPreview *mwp);
+                                    mwPreview *mwp);
 static mwPreview *mw_preview_build (GimpDrawable        *drw);
 
 
 
 static void query (void);
 static void run   (const gchar      *name,
-		   gint              nparam,
-		   const GimpParam  *param,
-		   gint             *nretvals,
-		   GimpParam       **retvals);
+                   gint              nparam,
+                   const GimpParam  *param,
+                   gint             *nretvals,
+                   GimpParam       **retvals);
 
 static gint pluginCore        (piArgs *argp);
 static gint pluginCoreIA      (piArgs *argp);
@@ -107,14 +102,14 @@ static gint pluginCoreIA      (piArgs *argp);
 static void emboss_do_preview (GtkWidget     *preview);
 
 static inline void EmbossInit (gdouble  azimuth,
-			       gdouble  elevation,
-			       gushort  width45);
+                               gdouble  elevation,
+                               gushort  width45);
 static inline void EmbossRow  (guchar  *src,
-			       guchar  *texture,
-			       guchar  *dst,
-			       guint    xSize,
-			       guint    bypp,
-			       gint     alpha);
+                               guchar  *texture,
+                               guchar  *dst,
+                               guint    xSize,
+                               guint    bypp,
+                               gint     alpha);
 
 #define DtoR(d) ((d)*(G_PI/(gdouble)180))
 
@@ -145,17 +140,17 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_emboss",
-			  "Emboss filter",
-			  "Emboss or Bumpmap the given drawable, specifying "
-			  "the angle and elevation for the light source.",
-			  "Eric L. Hernes, John Schlag",
-			  "Eric L. Hernes",
-			  "1997",
-			  N_("_Emboss..."),
-			  "RGB*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Emboss filter",
+                          "Emboss or Bumpmap the given drawable, specifying "
+                          "the angle and elevation for the light source.",
+                          "Eric L. Hernes, John Schlag",
+                          "Eric L. Hernes",
+                          "1997",
+                          N_("_Emboss..."),
+                          "RGB*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register ("plug_in_emboss",
                              N_("<Image>/Filters/Distorts"));
@@ -188,35 +183,35 @@ run (const gchar      *name,
       args.img = args.drw = 0;
       gimp_get_data ("plug_in_emboss", &args);
       if (args.img == 0 && args.drw == 0)
-	{
-	  /* initial conditions */
-	  args.azimuth = 30.0;
-	  args.elevation = 45.0;
-	  args.depth = 20;
-	  args.embossp = FUNCTION_EMBOSS;
-	}
+        {
+          /* initial conditions */
+          args.azimuth = 30.0;
+          args.elevation = 45.0;
+          args.depth = 20;
+          args.embossp = FUNCTION_EMBOSS;
+        }
       args.img = param[1].data.d_image;
       args.drw = param[2].data.d_drawable;
       drw = gimp_drawable_get (args.drw);
       thePreview = mw_preview_build (drw);
 
       if (pluginCoreIA (&args) == -1)
-	{
-	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+        }
       else
-	{
-	  gimp_set_data ("plug_in_emboss", &args, sizeof (piArgs));
-	}
+        {
+          gimp_set_data ("plug_in_emboss", &args, sizeof (piArgs));
+        }
 
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       if (nparam != 7)
-	{
-	  rvals[0].data.d_status = GIMP_PDB_CALLING_ERROR;
-	  break;
-	}
+        {
+          rvals[0].data.d_status = GIMP_PDB_CALLING_ERROR;
+          break;
+        }
 
       args.img = param[1].data.d_image;
       args.drw = param[2].data.d_drawable;
@@ -226,10 +221,10 @@ run (const gchar      *name,
       args.embossp = param[6].data.d_int32;
 
       if (pluginCore(&args)==-1)
-	{
-	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-	  break;
-	}
+        {
+          rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+          break;
+        }
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -248,8 +243,8 @@ run (const gchar      *name,
 
 static void
 EmbossInit (gdouble azimuth,
-	    gdouble elevation,
-	    gushort width45)
+            gdouble elevation,
+            gushort width45)
 {
   /*
    * compute the light vector from the input parameters.
@@ -291,11 +286,11 @@ EmbossInit (gdouble azimuth,
 
 static inline void
 EmbossRow (guchar *src,
-	   guchar *texture,
-	   guchar *dst,
-	   guint   xSize,
-	   guint   bypp,
-	   gint    alpha)
+           guchar *texture,
+           guchar *dst,
+           guint   xSize,
+           guint   bypp,
+           gint    alpha)
 {
   glong Nx, Ny, NdotL;
   guchar *s1, *s2, *s3;
@@ -322,40 +317,40 @@ EmbossRow (guchar *src,
        * signed. ergo, cast to signed.
        */
       Nx = (int) (s1[-(int)bypp] + s2[-(int)bypp] + s3[-(int)bypp]
-		  - s1[bypp] - s2[bypp] - s3[bypp]);
+                  - s1[bypp] - s2[bypp] - s3[bypp]);
       Ny = (int) (s3[-(int)bypp] + s3[0] + s3[bypp] - s1[-(int)bypp]
-		  - s1[0] - s1[bypp]);
+                  - s1[0] - s1[bypp]);
 
       /* shade with distant light source */
       if ( Nx == 0 && Ny == 0 )
-	shade = Filter.bg;
+        shade = Filter.bg;
       else if ( (NdotL = Nx * Filter.Lx + Ny * Filter.Ly + Filter.NzLz) < 0 )
-	shade = 0;
+        shade = 0;
       else
-	shade = NdotL / sqrt(Nx*Nx + Ny*Ny + Filter.Nz2);
+        shade = NdotL / sqrt(Nx*Nx + Ny*Ny + Filter.Nz2);
 
       /* do something with the shading result */
       if (texture)
-	{
-	  for (b = 0; b < bytes; b++)
-	    {
-	      *dst++ = (*texture++ * shade) >> 8;
-	    }
-	  if (alpha)
-	    {
-	      *dst++ = s2[bytes]; /* preserve the alpha */
-	      texture++;
-	    }
-	}
+        {
+          for (b = 0; b < bytes; b++)
+            {
+              *dst++ = (*texture++ * shade) >> 8;
+            }
+          if (alpha)
+            {
+              *dst++ = s2[bytes]; /* preserve the alpha */
+              texture++;
+            }
+        }
       else
-	{
-	  for (b = 0; b < bytes; b++)
-	    {
-	      *dst++ = shade;
-	    }
-	  if (alpha)
-	    *dst++ = s2[bytes]; /* preserve the alpha */
-	}
+        {
+          for (b = 0; b < bytes; b++)
+            {
+              *dst++ = shade;
+            }
+          if (alpha)
+            *dst++ = s2[bytes]; /* preserve the alpha */
+        }
     }
   if (texture)
     texture += bypp;
@@ -405,24 +400,24 @@ pluginCore (piArgs *argp)
   gimp_pixel_rgn_get_rect (&src, srcbuf, x1, y1, width, 3);
   memcpy (srcbuf, srcbuf + rowsize, rowsize);
   EmbossRow (srcbuf, argp->embossp ? (guchar *) 0 : srcbuf,
-	     dstbuf, width, bypp, has_alpha);
+             dstbuf, width, bypp, has_alpha);
   gimp_pixel_rgn_set_row (&dst, dstbuf, 0, 0, width);
 
   /* last row */
   gimp_pixel_rgn_get_rect (&src, srcbuf, x1, y2-3, width, 3);
   memcpy (srcbuf + rowsize * 2, srcbuf + rowsize, rowsize);
   EmbossRow (srcbuf, argp->embossp ? (guchar *) 0 : srcbuf,
-	     dstbuf, width, bypp, has_alpha);
+             dstbuf, width, bypp, has_alpha);
   gimp_pixel_rgn_set_row (&dst, dstbuf, x1, y2-1, width);
 
   for (y = 0; y < height - 2; y++)
     {
       if (y % p_update == 0)
-	  gimp_progress_update ((gdouble) y / (gdouble) height);
+          gimp_progress_update ((gdouble) y / (gdouble) height);
 
       gimp_pixel_rgn_get_rect (&src, srcbuf, x1, y1+y, width, 3);
       EmbossRow (srcbuf, argp->embossp ? (guchar *) 0 : srcbuf,
-		 dstbuf, width, bypp, has_alpha);
+                 dstbuf, width, bypp, has_alpha);
      gimp_pixel_rgn_set_row (&dst, dstbuf, x1, y1+y+1, width);
   }
   gimp_progress_update (1.0);
@@ -440,7 +435,7 @@ pluginCore (piArgs *argp)
 
 static void
 emboss_radio_button_callback (GtkWidget *widget,
-			      gpointer   data)
+                              gpointer   data)
 {
   gimp_radio_button_update (widget, data);
 
@@ -450,7 +445,7 @@ emboss_radio_button_callback (GtkWidget *widget,
 
 static void
 emboss_float_adjustment_callback (GtkAdjustment *adj,
-				  gpointer       data)
+                                  gpointer       data)
 {
   gdouble *value;
 
@@ -464,7 +459,7 @@ emboss_float_adjustment_callback (GtkAdjustment *adj,
 
 static void
 emboss_int_adjustment_callback (GtkAdjustment *adj,
-				gpointer       data)
+                                gpointer       data)
 {
   gint *value;
 
@@ -492,17 +487,17 @@ pluginCoreIA (piArgs *argp)
 
   dlg = gimp_dialog_new (_("Emboss"), "emboss",
                          NULL, 0,
-			 gimp_standard_help_func, "plug-in-emboss",
+                         gimp_standard_help_func, "plug-in-emboss",
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
+                         NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
-		      TRUE, TRUE, 0);
+                      TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
   hbox = gtk_hbox_new (FALSE, 12);
@@ -511,16 +506,15 @@ pluginCoreIA (piArgs *argp)
 
   preview = mw_preview_new (hbox, thePreview);
   g_object_set_data (G_OBJECT (preview), "piArgs", argp);
-  emboss_do_preview (preview);
 
   frame = gimp_int_radio_group_new (TRUE, _("Function"),
-				    G_CALLBACK (emboss_radio_button_callback),
-				    &argp->embossp, argp->embossp,
+                                    G_CALLBACK (emboss_radio_button_callback),
+                                    &argp->embossp, argp->embossp,
 
-				    _("_Bumpmap"), FUNCTION_BUMPMAP, NULL,
-				    _("_Emboss"),  FUNCTION_EMBOSS,  NULL,
+                                    _("_Bumpmap"), FUNCTION_BUMPMAP, NULL,
+                                    _("_Emboss"),  FUNCTION_EMBOSS,  NULL,
 
-				    NULL);
+                                    NULL);
 
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
@@ -531,28 +525,28 @@ pluginCoreIA (piArgs *argp)
   gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("_Azimuth:"), 100, 6,
-			      argp->azimuth, 0.0, 360.0, 1.0, 10.0, 2,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Azimuth:"), 100, 6,
+                              argp->azimuth, 0.0, 360.0, 1.0, 10.0, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (emboss_float_adjustment_callback),
                     &argp->azimuth);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("E_levation:"), 100, 6,
-			      argp->elevation, 0.0, 180.0, 1.0, 10.0, 2,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("E_levation:"), 100, 6,
+                              argp->elevation, 0.0, 180.0, 1.0, 10.0, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (emboss_float_adjustment_callback),
                     &argp->elevation);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("_Depth:"), 100, 6,
-			      argp->depth, 1.0, 100.0, 1.0, 5.0, 0,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Depth:"), 100, 6,
+                              argp->depth, 1.0, 100.0, 1.0, 5.0, 0,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (emboss_int_adjustment_callback),
                     &argp->depth);
@@ -561,6 +555,7 @@ pluginCoreIA (piArgs *argp)
 
   gtk_widget_show (dlg);
 
+  emboss_do_preview (preview);
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dlg);
@@ -587,38 +582,38 @@ emboss_do_preview (GtkWidget *w)
   ap = g_object_get_data (G_OBJECT (theWidget), "piArgs");
   rowsize = thePreview->width * thePreview->bpp;
 
-  dst = g_malloc (rowsize);
-  c = g_malloc (rowsize * 3);
+  dst = g_new (guchar, rowsize * thePreview->height);
+  c = g_new (guchar, rowsize * 3);
   memcpy (c, thePreview->bits, rowsize);
   memcpy (c + rowsize, thePreview->bits, rowsize * 2);
   EmbossInit (DtoR (ap->azimuth), DtoR (ap->elevation), ap->depth);
 
   EmbossRow (c, ap->embossp ? (guchar *) 0 : c,
              dst, thePreview->width, thePreview->bpp, FALSE);
-  gtk_preview_draw_row (GTK_PREVIEW (theWidget),
-                        dst, 0, 0, thePreview->width);
 
   memcpy (c,
-	  thePreview->bits + ((thePreview->height-2) * rowsize),
-	  rowsize * 2);
+          thePreview->bits + ((thePreview->height-2) * rowsize),
+          rowsize * 2);
   memcpy (c + (rowsize * 2),
-	  thePreview->bits + ((thePreview->height - 1) * rowsize),
+          thePreview->bits + ((thePreview->height - 1) * rowsize),
           rowsize);
   EmbossRow (c, ap->embossp ? (guchar *) 0 : c,
-             dst, thePreview->width, thePreview->bpp, FALSE);
-  gtk_preview_draw_row (GTK_PREVIEW (theWidget),
-                        dst, 0, thePreview->height - 1, thePreview->width);
+             dst+rowsize*(thePreview->height-1),
+             thePreview->width, thePreview->bpp, FALSE);
   g_free (c);
 
   for (y = 0, c = thePreview->bits; y<thePreview->height - 2; y++, c += rowsize)
     {
       EmbossRow (c, ap->embossp ? (guchar *) 0 : c,
-		 dst, thePreview->width, thePreview->bpp, FALSE);
-      gtk_preview_draw_row (GTK_PREVIEW (theWidget),
-			    dst, 0, y, thePreview->width);
+                 dst + rowsize * (y+1),
+                 thePreview->width, thePreview->bpp, FALSE);
     }
 
-  gtk_widget_queue_draw (theWidget);
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (theWidget),
+                          1, 0, thePreview->width-2, thePreview->height,
+                          GIMP_RGB_IMAGE,
+                          dst+3,
+                          3 * thePreview->width);
 
   g_free (dst);
 }
@@ -708,8 +703,8 @@ mw_preview_new (GtkWidget *parent,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), mwp->width, mwp->height);
+  preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (preview, mwp->width, mwp->height);
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 
@@ -724,3 +719,4 @@ mw_preview_new (GtkWidget *parent,
 
   return preview;
 }
+
