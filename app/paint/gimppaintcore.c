@@ -95,23 +95,23 @@ static MaskBuf * gimp_paint_core_get_brush_mask   (GimpPaintCore    *core,
 static void      gimp_paint_core_paste            (GimpPaintCore    *core,
                                                    MaskBuf	    *brush_mask,
                                                    GimpDrawable	    *drawable,
-                                                   gint		     brush_opacity,
-                                                   gint		     image_opacity,
+                                                   gdouble	     brush_opacity,
+                                                   gdouble	     image_opacity,
                                                    GimpLayerModeEffects  paint_mode,
                                                    PaintApplicationMode  mode);
 static void      gimp_paint_core_replace          (GimpPaintCore    *core,
                                                    MaskBuf          *brush_mask,
                                                    GimpDrawable	    *drawable,
-                                                   gint		     brush_opacity,
-                                                   gint              image_opacity,
+                                                   gdouble	     brush_opacity,
+                                                   gdouble           image_opacity,
                                                    PaintApplicationMode  mode);
 
 static void      brush_to_canvas_tiles            (GimpPaintCore    *core,
                                                    MaskBuf          *brush_mask,
-                                                   gint              brush_opacity);
+                                                   gdouble           brush_opacity);
 static void      brush_to_canvas_buf              (GimpPaintCore    *core,
                                                    MaskBuf          *brush_mask,
-                                                   gint              brush_opacity);
+                                                   gdouble           brush_opacity);
 static void      canvas_tiles_to_canvas_buf       (GimpPaintCore    *core);
 
 static void      set_undo_tiles                   (GimpPaintCore    *core,
@@ -793,8 +793,8 @@ gimp_paint_core_get_orig_image (GimpPaintCore *core,
 void
 gimp_paint_core_paste_canvas (GimpPaintCore        *core,
 			      GimpDrawable	   *drawable,
-			      gint		    brush_opacity,
-			      gint		    image_opacity,
+			      gdouble		    brush_opacity,
+			      gdouble		    image_opacity,
 			      GimpLayerModeEffects  paint_mode,
 			      BrushApplicationMode  brush_hardness,
 			      gdouble               brush_scale,
@@ -809,7 +809,9 @@ gimp_paint_core_paste_canvas (GimpPaintCore        *core,
 
   /*  paste the canvas buf  */
   gimp_paint_core_paste (core, brush_mask, drawable,
-			 brush_opacity, image_opacity, paint_mode, mode);
+			 brush_opacity,
+                         image_opacity, paint_mode,
+                         mode);
 }
 
 /* Similar to gimp_paint_core_paste_canvas, but replaces the alpha channel
@@ -819,8 +821,8 @@ gimp_paint_core_paste_canvas (GimpPaintCore        *core,
 void
 gimp_paint_core_replace_canvas (GimpPaintCore        *core,
 				GimpDrawable	     *drawable,
-				gint                  brush_opacity,
-				gint                  image_opacity,
+				gdouble               brush_opacity,
+				gdouble               image_opacity,
 				BrushApplicationMode  brush_hardness,
 				gdouble               brush_scale,
 				PaintApplicationMode  mode)
@@ -834,7 +836,8 @@ gimp_paint_core_replace_canvas (GimpPaintCore        *core,
 
   /*  paste the canvas buf  */
   gimp_paint_core_replace (core, brush_mask, drawable,
-			   brush_opacity, image_opacity, mode);
+			   brush_opacity,
+                           image_opacity, mode);
 }
 
 
@@ -1237,8 +1240,8 @@ static void
 gimp_paint_core_paste (GimpPaintCore        *core,
 		       MaskBuf              *brush_mask,
 		       GimpDrawable         *drawable,
-		       gint                  brush_opacity,
-		       gint                  image_opacity,
+		       gdouble               brush_opacity,
+		       gdouble               image_opacity,
 		       GimpLayerModeEffects  paint_mode,
 		       PaintApplicationMode  mode)
 {
@@ -1291,7 +1294,8 @@ gimp_paint_core_paste (GimpPaintCore        *core,
 
   /*  apply the paint area to the gimage  */
   gimp_image_apply_image (gimage, drawable, &srcPR,
-			  FALSE, image_opacity, paint_mode,
+			  FALSE,
+                          image_opacity, paint_mode,
 			  alt,  /*  specify an alternative src1  */
 			  core->canvas_buf->x,
                           core->canvas_buf->y);
@@ -1326,8 +1330,8 @@ static void
 gimp_paint_core_replace (GimpPaintCore        *core,
 			 MaskBuf              *brush_mask,
 			 GimpDrawable         *drawable,
-			 gint                  brush_opacity,
-			 gint                  image_opacity,
+			 gdouble               brush_opacity,
+			 gdouble               image_opacity,
 			 PaintApplicationMode  mode)
 {
   GimpImage   *gimage;
@@ -1340,7 +1344,8 @@ gimp_paint_core_replace (GimpPaintCore        *core,
   if (! gimp_drawable_has_alpha (drawable))
     {
       gimp_paint_core_paste (core, brush_mask, drawable,
-			     brush_opacity, image_opacity, GIMP_NORMAL_MODE,
+			     brush_opacity,
+                             image_opacity, GIMP_NORMAL_MODE,
 			     mode);
       return;
     }
@@ -1401,7 +1406,8 @@ gimp_paint_core_replace (GimpPaintCore        *core,
 
   /*  apply the paint area to the gimage  */
   gimp_image_replace_image (gimage, drawable, &srcPR,
-			    FALSE, image_opacity,
+			    FALSE,
+                            image_opacity,
 			    &maskPR,
 			    core->canvas_buf->x,
                             core->canvas_buf->y);
@@ -1453,7 +1459,7 @@ canvas_tiles_to_canvas_buf (GimpPaintCore *core)
 static void
 brush_to_canvas_tiles (GimpPaintCore *core,
 		       MaskBuf       *brush_mask,
-		       gint           brush_opacity)
+		       gdouble        brush_opacity)
 {
   PixelRegion srcPR;
   PixelRegion maskPR;
@@ -1485,13 +1491,13 @@ brush_to_canvas_tiles (GimpPaintCore *core,
                                                    xoff * maskPR.bytes);
 
   /*  combine the mask to the canvas tiles  */
-  combine_mask_and_region (&srcPR, &maskPR, brush_opacity);
+  combine_mask_and_region (&srcPR, &maskPR, brush_opacity * 255.999);
 }
 
 static void
 brush_to_canvas_buf (GimpPaintCore *core,
 		     MaskBuf       *brush_mask,
-		     gint           brush_opacity)
+		     gdouble        brush_opacity)
 {
   PixelRegion srcPR;
   PixelRegion maskPR;
@@ -1523,7 +1529,7 @@ brush_to_canvas_buf (GimpPaintCore *core,
   maskPR.data      = mask_buf_data (brush_mask) + yoff * maskPR.rowstride + xoff * maskPR.bytes;
 
   /*  apply the mask  */
-  apply_mask_to_region (&srcPR, &maskPR, brush_opacity);
+  apply_mask_to_region (&srcPR, &maskPR, brush_opacity * 255.999);
 }
 
 static void

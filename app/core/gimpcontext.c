@@ -653,10 +653,10 @@ gimp_context_init (GimpContext *context)
   context->tool_info     = NULL;
   context->tool_name     = NULL;
 
-  gimp_rgba_set (&context->foreground, 0.0, 0.0, 0.0, 1.0);
-  gimp_rgba_set (&context->background, 1.0, 1.0, 1.0, 1.0);
+  gimp_rgba_set (&context->foreground, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
+  gimp_rgba_set (&context->background, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
 
-  context->opacity       = 1.0;
+  context->opacity       = GIMP_OPACITY_OPAQUE;
   context->paint_mode    = GIMP_NORMAL_MODE;
 
   context->brush         = NULL;
@@ -1707,8 +1707,8 @@ gimp_context_set_default_colors (GimpContext *context)
   context_find_defined (context, GIMP_CONTEXT_FOREGROUND_MASK);
   context_find_defined (bg_context, GIMP_CONTEXT_BACKGROUND_MASK);
 
-  gimp_rgba_set (&fg, 0.0, 0.0, 0.0, 1.0);
-  gimp_rgba_set (&bg, 1.0, 1.0, 1.0, 1.0);
+  gimp_rgba_set (&fg, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
+  gimp_rgba_set (&bg, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
 
   gimp_context_real_set_foreground (context, &fg);
   gimp_context_real_set_background (bg_context, &bg);
@@ -1740,7 +1740,7 @@ gimp_context_swap_colors (GimpContext *context)
 gdouble
 gimp_context_get_opacity (GimpContext *context)
 {
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), 1.0);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), GIMP_OPACITY_OPAQUE);
 
   return context->opacity;
 }

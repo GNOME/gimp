@@ -1395,7 +1395,7 @@ parse_units (gpointer val1p,
 static gint
 parse_color (GimpRGB *color)
 {
-  gdouble  col[4] = { 0.0, 0.0, 0.0, 1.0 };
+  gdouble  col[4] = { 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE };
   gint     token;
   gint     i;
   gint     n_channels;
@@ -1727,8 +1727,8 @@ parse_device (gpointer val1p,
   GdkDeviceKey *keys     = NULL;
 
   gchar        *tool_name     = NULL;
-  GimpRGB       foreground    = { 1.0, 1.0, 1.0, 1.0 };
-  GimpRGB       background    = { 0.0, 0.0, 0.0, 1.0 };
+  GimpRGB       foreground    = { 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE };
+  GimpRGB       background    = { 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE };
   gchar        *brush_name    = NULL;
   gchar        *pattern_name  = NULL;
   gchar        *gradient_name = NULL;
@@ -1844,7 +1844,7 @@ parse_device (gpointer val1p,
 	  if (parse_color (&foreground) == ERROR)
 	    goto error;
 
-	  foreground.a = 1.0;
+	  foreground.a = GIMP_OPACITY_OPAQUE;
 	}
       else if (!strcmp ("background", token_sym))
 	{
@@ -1853,7 +1853,7 @@ parse_device (gpointer val1p,
 	  if (parse_color (&background) == ERROR)
 	    goto error;
 
-	  background.a = 1.0;
+	  background.a = GIMP_OPACITY_OPAQUE;
 	}
       else if (!strcmp ("brush", token_sym))
 	{

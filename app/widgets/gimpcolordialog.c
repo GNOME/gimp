@@ -439,7 +439,7 @@ color_notebook_new (const gchar           *title,
 		    GTK_SHRINK, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (button);
 
-  gimp_rgba_set (&bw, 1.0, 1.0, 1.0, 1.0);
+  gimp_rgba_set (&bw, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
   color_area = gimp_color_area_new (&bw, 
 				    GIMP_COLOR_AREA_FLAT,
 				    GDK_BUTTON2_MASK);
@@ -458,7 +458,7 @@ color_notebook_new (const gchar           *title,
 		    GTK_SHRINK, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (button);
 
-  gimp_rgba_set (&bw, 0.0, 0.0, 0.0, 1.0);
+  gimp_rgba_set (&bw, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
   color_area = gimp_color_area_new (&bw, 
 				    GIMP_COLOR_AREA_FLAT,
 				    GDK_BUTTON2_MASK);
@@ -1321,7 +1321,7 @@ color_history_init (void)
   gint i;
 
   for (i = 0; i < COLOR_HISTORY_SIZE; i++)
-    gimp_rgba_set (&color_history[i], 1.0, 1.0, 1.0, 1.0);
+    gimp_rgba_set (&color_history[i], 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
 
   color_history_initialized = TRUE;
 }

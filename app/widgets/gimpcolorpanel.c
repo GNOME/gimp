@@ -155,8 +155,8 @@ gimp_color_panel_button_press (GtkWidget      *widget,
 
       gimp_context_get_foreground (gimp_get_user_context (the_gimp), &fg);
       gimp_context_get_background (gimp_get_user_context (the_gimp), &bg);
-      gimp_rgba_set (&black, 0.0, 0.0, 0.0, 1.0);
-      gimp_rgba_set (&white, 1.0, 1.0, 1.0, 1.0);
+      gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
+      gimp_rgba_set (&white, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
 
       gimp_item_factory_set_color (color_button->item_factory,
                                    "/Foreground Color", &fg, FALSE);

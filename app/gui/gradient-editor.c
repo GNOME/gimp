@@ -466,52 +466,52 @@ gradient_editor_new (Gimp *gimp)
   editor->saved_colors[0].r = 0.0; /* Black */
   editor->saved_colors[0].g = 0.0;
   editor->saved_colors[0].b = 0.0;
-  editor->saved_colors[0].a = 1.0;
+  editor->saved_colors[0].a = GIMP_OPACITY_OPAQUE;
 
   editor->saved_colors[1].r = 0.5; /* 50% Gray */
   editor->saved_colors[1].g = 0.5;
   editor->saved_colors[1].b = 0.5;
-  editor->saved_colors[1].a = 1.0;
+  editor->saved_colors[1].a = GIMP_OPACITY_OPAQUE;
 
   editor->saved_colors[2].r = 1.0; /* White */
   editor->saved_colors[2].g = 1.0;
   editor->saved_colors[2].b = 1.0;
-  editor->saved_colors[2].a = 1.0;
+  editor->saved_colors[2].a = GIMP_OPACITY_OPAQUE;
 
   editor->saved_colors[3].r = 0.0; /* Clear */
   editor->saved_colors[3].g = 0.0;
   editor->saved_colors[3].b = 0.0;
-  editor->saved_colors[3].a = 0.0;
+  editor->saved_colors[3].a = GIMP_OPACITY_TRANSPARENT;
 
   editor->saved_colors[4].r = 1.0; /* Red */
   editor->saved_colors[4].g = 0.0;
   editor->saved_colors[4].b = 0.0;
-  editor->saved_colors[4].a = 1.0;
+  editor->saved_colors[4].a = GIMP_OPACITY_OPAQUE;
 
   editor->saved_colors[5].r = 1.0; /* Yellow */
   editor->saved_colors[5].g = 1.0;
   editor->saved_colors[5].b = 0.0;
-  editor->saved_colors[5].a = 1.0;
+  editor->saved_colors[5].a = GIMP_OPACITY_OPAQUE;
 
   editor->saved_colors[6].r = 0.0; /* Green */
   editor->saved_colors[6].g = 1.0;
   editor->saved_colors[6].b = 0.0;
-  editor->saved_colors[6].a = 1.0;
+  editor->saved_colors[6].a = GIMP_OPACITY_OPAQUE;
 
   editor->saved_colors[7].r = 0.0; /* Cyan */
   editor->saved_colors[7].g = 1.0;
   editor->saved_colors[7].b = 1.0;
-  editor->saved_colors[7].a = 1.0;
+  editor->saved_colors[7].a = GIMP_OPACITY_OPAQUE;
 
   editor->saved_colors[8].r = 0.0; /* Blue */
   editor->saved_colors[8].g = 0.0;
   editor->saved_colors[8].b = 1.0;
-  editor->saved_colors[8].a = 1.0;
+  editor->saved_colors[8].a = GIMP_OPACITY_OPAQUE;
 
   editor->saved_colors[9].r = 1.0; /* Magenta */
   editor->saved_colors[9].g = 0.0;
   editor->saved_colors[9].b = 1.0;
-  editor->saved_colors[9].a = 1.0;
+  editor->saved_colors[9].a = GIMP_OPACITY_OPAQUE;
 
   if (gimp_container_num_children (gimp->gradient_factory->container))
     {

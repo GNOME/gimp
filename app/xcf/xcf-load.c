@@ -929,7 +929,7 @@ xcf_load_channel (XcfInfo   *info,
   gint         height;
   gint         add_floating_sel;
   gchar       *name;
-  GimpRGB      color = { 0.0, 0.0, 0.0, 1.0 };
+  GimpRGB      color = { 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE };
 
   /* check and see if this is the drawable the floating selection
    *  is attached to. if it is then we'll do the attachment at
@@ -986,7 +986,7 @@ xcf_load_layer_mask (XcfInfo   *info,
   gint           height;
   gint           add_floating_sel;
   gchar         *name;
-  GimpRGB        color = { 0.0, 0.0, 0.0, 1.0 };
+  GimpRGB        color = { 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE };
 
   /* check and see if this is the drawable the floating selection
    *  is attached to. if it is then we'll do the attachment at

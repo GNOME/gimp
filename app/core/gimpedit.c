@@ -302,8 +302,9 @@ gimp_edit_clear (GimpImage    *gimage,
   color_region (&bufPR, col);
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimp_image_apply_image (gimage, drawable, &bufPR, TRUE, OPAQUE_OPACITY,
-			  GIMP_ERASE_MODE, NULL, x1, y1);
+  gimp_image_apply_image (gimage, drawable, &bufPR, TRUE,
+                          GIMP_OPACITY_OPAQUE, GIMP_ERASE_MODE,
+                          NULL, x1, y1);
 
   /*  update the image  */
   gimp_drawable_update (drawable,
@@ -376,8 +377,9 @@ gimp_edit_fill (GimpImage    *gimage,
   color_region (&bufPR, col);
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimp_image_apply_image (gimage, drawable, &bufPR, TRUE, OPAQUE_OPACITY,
-			  GIMP_NORMAL_MODE, NULL, x1, y1);
+  gimp_image_apply_image (gimage, drawable, &bufPR, TRUE,
+                          GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
+                          NULL, x1, y1);
 
   /*  update the image  */
   gimp_drawable_update (drawable,

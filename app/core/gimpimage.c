@@ -1754,7 +1754,7 @@ gimp_image_apply_image (GimpImage	     *gimage,
 			GimpDrawable	     *drawable,
 			PixelRegion	     *src2PR,
 			gboolean              push_undo,
-			gint                  opacity,
+			gdouble               opacity,
 			GimpLayerModeEffects  mode,
 			/*  alternative to using drawable tiles as src1: */
 			TileManager	     *src1_tiles,
@@ -1847,12 +1847,14 @@ gimp_image_apply_image (GimpImage	     *gimage,
 			 (x2 - x1), (y2 - y1), 
 			 FALSE);
       combine_regions (&src1PR, src2PR, &destPR, &maskPR, NULL,
-		       opacity, mode, active_components, operation);
+		       opacity * 255.999, mode,
+                       active_components, operation);
     }
   else
     {
       combine_regions (&src1PR, src2PR, &destPR, NULL, NULL,
-		       opacity, mode, active_components, operation);
+		       opacity * 255.999, mode,
+                       active_components, operation);
     }
 }
 
@@ -1867,7 +1869,7 @@ gimp_image_replace_image (GimpImage    *gimage,
 			  GimpDrawable *drawable, 
 			  PixelRegion  *src2PR,
 			  gboolean      push_undo, 
-			  gint          opacity,
+			  gdouble       opacity,
 			  PixelRegion  *maskPR,
 			  gint          x, 
 			  gint          y)
@@ -1980,14 +1982,16 @@ gimp_image_replace_image (GimpImage    *gimage,
       tempPR.data = temp_data;
 
       combine_regions_replace (&src1PR, src2PR, &destPR, &tempPR, NULL,
-                               opacity, active_components, operation);
+                               opacity * 255.999,
+                               active_components, operation);
 
       g_free (temp_data);
     }
   else
     {
       combine_regions_replace (&src1PR, src2PR, &destPR, maskPR, NULL,
-			       opacity, active_components, operation);
+			       opacity * 255.999,
+                               active_components, operation);
     }
 }
 

@@ -28,6 +28,12 @@
 #include "core/core-enums.h"
 
 
+/*  defines  */
+
+#define GIMP_OPACITY_TRANSPARENT 0.0
+#define GIMP_OPACITY_OPAQUE      1.0
+
+
 /*  enums  */
 
 typedef enum  /*< chop=ADD_ >*/

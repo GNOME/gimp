@@ -466,7 +466,7 @@ floating_sel_composite (GimpLayer *layer,
 	   */
 	  gimp_image_apply_image (gimage, layer->fs.drawable, &fsPR,
 				  undo,
-				  layer->opacity,
+				  (gdouble) layer->opacity / 255.0,
 				  layer->mode,
 				  NULL,
 				  (x1 - offx), (y1 - offy));

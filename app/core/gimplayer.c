@@ -604,7 +604,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
   GimpLayerMask *mask;
   GimpImage     *gimage;
   gchar         *mask_name;
-  GimpRGB        black = { 0.0, 0.0, 0.0, 1.0 };
+  GimpRGB        black = { 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE };
 
   gimage = gimp_item_get_image (GIMP_ITEM (layer));
 
@@ -1480,7 +1480,7 @@ gimp_layer_set_opacity (GimpLayer *layer,
 gdouble
 gimp_layer_get_opacity (const GimpLayer *layer)
 {
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), 1.0);
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), GIMP_OPACITY_OPAQUE);
 
   return (gdouble) layer->opacity / 255.0;
 }

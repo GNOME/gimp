@@ -258,7 +258,7 @@ gimp_smudge_motion (GimpPaintCore       *paint_core,
   TempBuf     *area;
   PixelRegion  srcPR, destPR, tempPR;
   gdouble      rate;
-  gint         opacity;
+  gdouble      opacity;
   gint         x, y, w, h;
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
@@ -335,14 +335,15 @@ gimp_smudge_motion (GimpPaintCore       *paint_core,
   else                                                            
     copy_region (&tempPR, &destPR);
 
-  opacity = 255 * gimp_context_get_opacity (context);
+  opacity = gimp_context_get_opacity (context);
+
   if (pressure_options->opacity)
     opacity = opacity * 2.0 * paint_core->cur_coords.pressure;
 
   /*Replace the newly made paint area to the gimage*/ 
   gimp_paint_core_replace_canvas (paint_core, drawable, 
-				  MIN (opacity, 255),
-				  OPAQUE_OPACITY, 
+				  MIN (opacity, GIMP_OPACITY_OPAQUE),
+				  GIMP_OPACITY_OPAQUE,
 				  pressure_options->pressure ? PRESSURE : SOFT,
 				  1.0, INCREMENTAL);
 }

@@ -138,10 +138,10 @@ gimp_layer_list_item_class_init (GimpLayerListItemClass *klass)
   list_item_class->set_viewable     = gimp_layer_list_item_set_viewable;
   list_item_class->set_preview_size = gimp_layer_list_item_set_preview_size;
 
-  gimp_rgba_set (&black_color, 0.0, 0.0, 0.0, 1.0);
-  gimp_rgba_set (&white_color, 1.0, 1.0, 1.0, 1.0);
-  gimp_rgba_set (&green_color, 0.0, 1.0, 0.0, 1.0);
-  gimp_rgba_set (&red_color,   1.0, 0.0, 0.0, 1.0);
+  gimp_rgba_set (&black_color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
+  gimp_rgba_set (&white_color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
+  gimp_rgba_set (&green_color, 0.0, 1.0, 0.0, GIMP_OPACITY_OPAQUE);
+  gimp_rgba_set (&red_color,   1.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
 }
 
 static void

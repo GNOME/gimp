@@ -143,7 +143,7 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   GimpPressureOptions *pressure_options;
   GimpImage           *gimage;
   GimpContext         *context;
-  gint                 opacity;
+  gdouble              opacity;
   TempBuf             *area;
   guchar               col[MAX_CHANNELS];
   gdouble              scale;
@@ -175,7 +175,7 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   color_pixels (temp_buf_data (area), col,
 		area->width * area->height, area->bytes);
 
-  opacity = 255 * gimp_context_get_opacity (context);
+  opacity = gimp_context_get_opacity (context);
 
   if (pressure_options->opacity)
     opacity = opacity * 2.0 * paint_core->cur_coords.pressure;
@@ -184,8 +184,8 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
    * worked on
    */
   gimp_paint_core_paste_canvas (paint_core, drawable, 
-				MIN (opacity, 255),
-				gimp_context_get_opacity (context) * 255,
+				MIN (opacity, GIMP_OPACITY_OPAQUE),
+				gimp_context_get_opacity (context),
 				options->anti_erase ? GIMP_ANTI_ERASE_MODE : GIMP_ERASE_MODE,
 				options->hard ? HARD : (pressure_options->pressure ? PRESSURE : SOFT),
 				scale,

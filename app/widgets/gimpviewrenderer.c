@@ -235,7 +235,7 @@ gimp_preview_init (GimpPreview *preview)
   preview->border_width = 0;
   preview->dot_for_dot  = TRUE;
 
-  gimp_rgba_set (&preview->border_color, 0.0, 0.0, 0.0, 1.0);
+  gimp_rgba_set (&preview->border_color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
 
   preview->is_popup     = FALSE;
   preview->clickable    = FALSE;

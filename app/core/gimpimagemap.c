@@ -411,8 +411,9 @@ image_map_do (gpointer data)
 
   /*  apply the results  */
   pixel_region_init (&shadowPR, gimage->shadow, x, y, w, h, FALSE);
-  gimp_image_apply_image (gimage, image_map->drawable, &shadowPR,
-			  FALSE, OPAQUE_OPACITY, GIMP_REPLACE_MODE, NULL, 
+  gimp_image_apply_image (gimage, image_map->drawable, &shadowPR, FALSE,
+                          GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
+                          NULL,
                           x, y);
 
   /*  display the results  */

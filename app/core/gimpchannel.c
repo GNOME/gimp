@@ -108,7 +108,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
 static void
 gimp_channel_init (GimpChannel *channel)
 {
-  gimp_rgba_set (&channel->color, 0.0, 0.0, 0.0, 1.0);
+  gimp_rgba_set (&channel->color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
 
   channel->show_masked = FALSE;
 
@@ -258,23 +258,23 @@ gimp_channel_get_color (const GimpChannel *channel)
   return &channel->color;
 }
 
-gint
+gdouble
 gimp_channel_get_opacity (const GimpChannel *channel)
 {
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), 0);
 
-  return (gint) (channel->color.a * 100.999);
+  return channel->color.a;
 }
 
 void 
 gimp_channel_set_opacity (GimpChannel *channel,
-			  gint         opacity)
+			  gdouble      opacity)
 {
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
-  opacity = CLAMP (opacity, 0, 100);
+  opacity = CLAMP (opacity, GIMP_OPACITY_TRANSPARENT, GIMP_OPACITY_OPAQUE);
 
-  channel->color.a = opacity / 100.0;
+  channel->color.a = opacity;
 }
 
 void

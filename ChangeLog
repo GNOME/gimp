@@ -1,3 +1,42 @@
+2002-03-03  Michael Natterer  <mitch@gimp.org>
+
+	Use gdouble in a [0.0..1.0] range for opacity values in the whole
+	core's API. Convert them using (opacity * 255.999) when passing
+	them to base/ and paint-funcs/
+
+	Affected functions:
+
+	* app/core/gimpchannel.[ch]: gimp_channel_[set|get]_opacity()
+	* app/core/gimpimage.[ch]: gimp_image_[apply|replace]_image()
+	* app/paint/gimppaintcore.[ch]: gimp_paint_core_[paste|replace]_canvas()
+
+	* app/core/core-types.h: added defines GIMP_OPACITY_TRANSPARENT
+	and GIMP_OPACITY_OPAQUE, just like the ones from
+	paint-funcs/paint-funcs-types.h
+
+	* app/gimprc.c
+	* app/image_map.c
+	* app/core/gimpcontext.c
+	* app/core/gimpdrawable-blend.c
+	* app/core/gimpdrawable-bucket-fill.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpedit.c
+	* app/core/gimplayer.c
+	* app/core/gimplayer-floating-sel.c
+	* app/core/gimppalette.c
+	* app/paint/gimpairbrush.c
+	* app/paint/gimpclone.c
+	* app/paint/gimpconvolve.c
+	* app/paint/gimpdodgeburn.c
+	* app/paint/gimperaser.c
+	* app/paint/gimppaintbrush.c
+	* app/paint/gimpsmudge.c
+	* app/tools/gimpinktool.c
+	* app/widgets/gimpcolorpanel.c
+	* app/widgets/gimplayerlistitem.c
+	* app/widgets/gimppreview.c
+	* app/xcf/xcf-load.c: changed accordingly, use the new constants.
+
 2002-03-03  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/webbrowser/Makefile.am

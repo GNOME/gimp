@@ -229,7 +229,7 @@ gimp_drawable_blend (GimpDrawable     *drawable,
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
   gimp_image_apply_image (gimage, drawable, &bufPR, TRUE,
-			  opacity * 255, paint_mode,
+			  opacity, paint_mode,
                           NULL, x1, y1);
 
   /*  update the image  */

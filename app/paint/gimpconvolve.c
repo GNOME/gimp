@@ -415,8 +415,8 @@ gimp_convolve_motion (GimpPaintCore       *paint_core,
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   gimp_paint_core_replace_canvas (paint_core, drawable,
-                                  OPAQUE_OPACITY,
-				  gimp_context_get_opacity (context) * 255,
+                                  GIMP_OPACITY_OPAQUE,
+				  gimp_context_get_opacity (context),
 				  pressure_options->pressure ? PRESSURE : SOFT,
 				  scale,
                                   INCREMENTAL);

@@ -214,8 +214,7 @@ gimp_paintbrush_motion (GimpPaintCore       *paint_core,
   guchar                temp_blend  = OPAQUE_OPACITY;
   guchar                col[MAX_CHANNELS];
   GimpRGB               color;
-  gint                  mode;
-  gint                  opacity;
+  gdouble               opacity;
   gdouble               scale;
   PaintApplicationMode  paint_appl_mode = incremental ? INCREMENTAL : CONSTANT;
 
@@ -248,7 +247,6 @@ gimp_paintbrush_motion (GimpPaintCore       *paint_core,
     {
       /*  set the alpha channel  */
       temp_blend = local_blend;
-      mode = gradient_type;
 
       if (gradient_length)
 	{
@@ -265,7 +263,7 @@ gimp_paintbrush_motion (GimpPaintCore       *paint_core,
                                                      gradient,
                                                      gradient_length,
 						     &color,
-                                                     mode);
+                                                     gradient_type);
 
 	  temp_blend = (gint) ((color.a * local_blend));
 
@@ -299,14 +297,14 @@ gimp_paintbrush_motion (GimpPaintCore       *paint_core,
 			area->width * area->height, area->bytes);
 	}
 
-      opacity = (gdouble) temp_blend;
+      opacity = (gdouble) temp_blend / 255.0;
 
       if (pressure_options->opacity)
 	opacity = opacity * 2.0 * paint_core->cur_coords.pressure;
 
       gimp_paint_core_paste_canvas (paint_core, drawable,
-				    MIN (opacity, 255),
-				    gimp_context_get_opacity (context) * 255,
+				    MIN (opacity, GIMP_OPACITY_OPAQUE),
+				    gimp_context_get_opacity (context),
 				    gimp_context_get_paint_mode (context),
 				    pressure_options->pressure ? PRESSURE : SOFT,
 				    scale, paint_appl_mode);

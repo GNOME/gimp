@@ -418,8 +418,9 @@ gimp_drawable_merge_shadow (GimpDrawable *drawable,
   gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
   pixel_region_init (&shadowPR, gimage->shadow, x1, y1,
 		     (x2 - x1), (y2 - y1), FALSE);
-  gimp_image_apply_image (gimage, drawable, &shadowPR, undo, OPAQUE_OPACITY,
-			  GIMP_REPLACE_MODE, NULL, x1, y1);
+  gimp_image_apply_image (gimage, drawable, &shadowPR, undo,
+                          GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
+                          NULL, x1, y1);
 }
 
 void
@@ -503,7 +504,7 @@ gimp_drawable_fill_by_type (GimpDrawable *drawable,
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
-  color.a = 1.0;
+  color.a = GIMP_OPACITY_OPAQUE;
 
   switch (fill_type)
     {
@@ -520,7 +521,7 @@ gimp_drawable_fill_by_type (GimpDrawable *drawable,
       break;
 
     case TRANSPARENT_FILL:
-      gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);
+      gimp_rgba_set (&color, 0.0, 0.0, 0.0, GIMP_OPACITY_TRANSPARENT);
       break;
 
     case NO_FILL:

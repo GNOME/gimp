@@ -224,7 +224,7 @@ gimp_dodgeburn_motion (GimpPaintCore    *paint_core,
   TempBuf              *orig;
   PixelRegion           srcPR, destPR, tempPR;
   guchar               *temp_data;
-  gint                  opacity;
+  gdouble               opacity;
   gdouble               scale;
 
   if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
@@ -304,16 +304,15 @@ gimp_dodgeburn_motion (GimpPaintCore    *paint_core,
   else
     copy_region (&tempPR, &destPR);
 
-  opacity =
-    255 * gimp_context_get_opacity (gimp_get_current_context (gimage->gimp));
+  opacity = gimp_context_get_opacity (gimp_get_current_context (gimage->gimp));
 
   if (pressure_options->opacity)
     opacity = opacity * 2.0 * paint_core->cur_coords.pressure;
 
   /* Replace the newly dodgedburned area (canvas_buf) to the gimage*/   
   gimp_paint_core_replace_canvas (paint_core, drawable, 
-			          MIN (opacity, 255),
-		                  OPAQUE_OPACITY, 
+			          MIN (opacity, GIMP_OPACITY_OPAQUE),
+		                  GIMP_OPACITY_OPAQUE,
 			          pressure_options->pressure ? PRESSURE : SOFT,
 			          scale, CONSTANT);
  
@@ -354,7 +353,7 @@ gimp_dodgeburn_midtones_lut_func (gpointer  user_data,
   if (exposure < 0)
     factor = 1.0 - exposure * (.333333);
   else
-    factor = 1/(1.0 + exposure);
+    factor = 1 / (1.0 + exposure);
 
   return pow (value, factor); 
 }

@@ -268,7 +268,7 @@ gimp_airbrush_motion (GimpPaintCore    *paint_core,
 
   paint_appl_mode = paint_options->incremental ? INCREMENTAL : CONSTANT;
 
-  pressure = ((GimpAirbrushOptions *) paint_options)->pressure;
+  pressure = ((GimpAirbrushOptions *) paint_options)->pressure / 100.0;
 
   if (paint_options->pressure_options->size)
     scale = paint_core->cur_coords.pressure;
@@ -319,8 +319,8 @@ gimp_airbrush_motion (GimpPaintCore    *paint_core,
 
   /*  paste the newly painted area to the image  */
   gimp_paint_core_paste_canvas (paint_core, drawable,
-				MIN (pressure, 255),
-				gimp_context_get_opacity (context) * 255,
+				MIN (pressure, GIMP_OPACITY_OPAQUE),
+				gimp_context_get_opacity (context),
 				gimp_context_get_paint_mode (context),
 				SOFT, scale, paint_appl_mode);
 }

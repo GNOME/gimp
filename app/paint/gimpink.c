@@ -1289,7 +1289,7 @@ ink_paste (GimpInkTool  *ink_tool,
   /*  apply the paint area to the gimage  */
   gimp_image_apply_image (gimage, drawable, &srcPR,
 			  FALSE, 
-			  (int) (gimp_context_get_opacity (context) * 255),
+			  gimp_context_get_opacity (context),
 			  gimp_context_get_paint_mode (context),
 			  undo_tiles,  /*  specify an alternative src1  */
 			  canvas_buf->x, canvas_buf->y);

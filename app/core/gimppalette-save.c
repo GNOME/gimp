@@ -576,7 +576,7 @@ gimp_palette_delete_entry (GimpPalette      *palette,
 	{
 	  GimpRGB color;
 
-	  gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
+	  gimp_rgba_set (&color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
 
 	  gimp_palette_add_entry (palette,
 				  _("Black"),
