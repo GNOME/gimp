@@ -964,6 +964,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
   g_signal_connect (ifsD->delete_button, "clicked",
 		    G_CALLBACK (ifs_compose_delete_callback), NULL);
   gtk_box_pack_start (GTK_BOX (util_hbox), ifsD->delete_button, TRUE, TRUE, 0);
+  gtk_widget_set_sensitive (ifsD->delete_button, ifsvals.num_elements > 2);
   gtk_widget_show (ifsD->delete_button);
 
   ifsD->undo_button = gtk_button_new_from_stock (GTK_STOCK_UNDO);
@@ -1233,6 +1234,7 @@ design_op_menu_create (GtkWidget *window)
   gtk_widget_set_sensitive (ifsD->redo_menu_item, FALSE);
 
   ifsD->delete_menu_item = gtk_item_factory_get_widget (item_factory, "/Delete");
+  gtk_widget_set_sensitive (ifsD->delete_menu_item, ifsvals.num_elements > 2);
 }
 
 static void
@@ -1980,6 +1982,8 @@ undo (void)
   gtk_widget_set_sensitive (ifsD->undo_menu_item, undo_cur >= 0);
   gtk_widget_set_sensitive (ifsD->redo_button,    undo_cur != undo_num-1);
   gtk_widget_set_sensitive (ifsD->redo_menu_item, undo_cur != undo_num-1);
+  gtk_widget_set_sensitive (ifsD->delete_button,    ifsvals.num_elements > 2);
+  gtk_widget_set_sensitive (ifsD->delete_menu_item, ifsvals.num_elements > 2);
 }
 
 static void
@@ -1995,6 +1999,8 @@ redo (void)
   gtk_widget_set_sensitive (ifsD->undo_menu_item, undo_cur >= 0);
   gtk_widget_set_sensitive (ifsD->redo_button,    undo_cur != undo_num-1);
   gtk_widget_set_sensitive (ifsD->redo_menu_item, undo_cur != undo_num-1);
+  gtk_widget_set_sensitive (ifsD->delete_button,    ifsvals.num_elements > 2);
+  gtk_widget_set_sensitive (ifsD->delete_menu_item, ifsvals.num_elements > 2);
 }
 
 static void
@@ -2701,6 +2707,10 @@ ifsfile_load_response (GtkFileSelection *file_select,
         undo_update (i);
 
       ifsfile_replace_ifsvals (&new_ifsvals, new_elements);
+      gtk_widget_set_sensitive (ifsD->delete_button,
+                                ifsvals.num_elements > 2);
+      gtk_widget_set_sensitive (ifsD->delete_menu_item,
+                                ifsvals.num_elements > 2);
 
       if (ifsD->auto_preview)
         ifs_compose_preview ();
@@ -2948,6 +2958,8 @@ ifs_compose_response (GtkWidget *widget,
                                      ifsvals.center_x, ifsvals.center_y);
 
         design_area_redraw ();
+        gtk_widget_set_sensitive (ifsD->delete_button,    TRUE);
+        gtk_widget_set_sensitive (ifsD->delete_menu_item, TRUE);
       }
       break;
 
