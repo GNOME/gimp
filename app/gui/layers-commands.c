@@ -927,6 +927,9 @@ add_mask_query_response (GtkWidget      *widget,
 
       if ((layer = (options->layer)) && (gimage = GIMP_ITEM (layer)->gimage))
         {
+          gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_ADD_MASK,
+                                       _("Add Layer Mask"));
+
           mask = gimp_layer_create_mask (layer, options->add_mask_type);
 
           if (options->invert)
@@ -934,6 +937,8 @@ add_mask_query_response (GtkWidget      *widget,
 
           gimp_layer_add_mask (layer, mask, TRUE);
           g_object_unref (mask);
+
+          gimp_image_undo_group_end (gimage);
 
           gimp_image_flush (gimage);
         }

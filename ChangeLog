@@ -1,3 +1,21 @@
+2003-11-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-enums.[ch]: added enum values
+	GIMP_ADD_ALPHA_MASK_TRANSFER and GIMP_UNDO_GROUP_LAYER_ADD_MASK.
+
+	* app/core/gimplayer.c (gimp_layer_create_mask): applied patch
+	from Pedro Gimeno which implements the new ADD_MASK type and
+	added undo. Fixes bug #127930.
+
+	* app/gui/layers-commands.c: push an undo group around layer mask
+	creation & adding since the creation may change the layer now.
+
+	* app/pdb/layer_cmds.c
+	* libgimp/gimpenums.h
+	* plug-ins/pygimp/gimpenums.py
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl: regenerated.
+
 2003-11-26  Sven Neumann  <sven@gimp.org>
 
 	* libgimpthumb/gimpthumb-utils.[ch]

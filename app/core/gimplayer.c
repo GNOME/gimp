@@ -1041,6 +1041,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
       break;
 
     case GIMP_ADD_ALPHA_MASK:
+    case GIMP_ADD_ALPHA_MASK_TRANSFER:
       if (gimp_drawable_has_alpha (drawable))
 	{
 	  pixel_region_init (&srcPR, drawable->tiles,
@@ -1049,6 +1050,45 @@ gimp_layer_create_mask (const GimpLayer *layer,
 			     FALSE);
 
 	  extract_alpha_region (&srcPR, NULL, &destPR);
+
+          if (add_mask_type == GIMP_ADD_ALPHA_MASK_TRANSFER)
+            {
+              void   *pr;
+              gint    w, h;
+              guchar *alpha_ptr;
+
+              gimp_drawable_push_undo (GIMP_DRAWABLE (layer),
+                                       _("Transfer Alpha to Mask"),
+                                       0, 0,
+                                       item->width,
+                                       item->height,
+                                       NULL, FALSE);
+
+              pixel_region_init (&srcPR, drawable->tiles,
+                                 0, 0,
+                                 item->width, item->height,
+                                 TRUE);
+
+              for (pr = pixel_regions_register (1, &srcPR);
+                   pr != NULL;
+                   pr = pixel_regions_process (pr))
+                {
+                  h = srcPR.h;
+
+                  while (h--)
+                    {
+                      w = srcPR.w;
+                      alpha_ptr = (srcPR.data + h * srcPR.rowstride +
+                                   srcPR.bytes - 1);
+
+                      while (w--)
+                        {
+                          *alpha_ptr = OPAQUE_OPACITY;
+                          alpha_ptr += srcPR.bytes;
+                        }
+                    }
+                }
+            }
 	}
       break;
 

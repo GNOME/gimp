@@ -42,11 +42,12 @@ GType gimp_add_mask_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_ADD_WHITE_MASK,         /*< desc="_White (Full Opacity)"      >*/
-  GIMP_ADD_BLACK_MASK,         /*< desc="_Black (Full Transparency)" >*/
-  GIMP_ADD_ALPHA_MASK,         /*< desc="Layer's _Alpha Channel"     >*/
-  GIMP_ADD_SELECTION_MASK,     /*< desc="_Selection"                 >*/
-  GIMP_ADD_COPY_MASK           /*< desc="_Grayscale Copy of Layer"   >*/
+  GIMP_ADD_WHITE_MASK,          /*< desc="_White (Full Opacity)"           >*/
+  GIMP_ADD_BLACK_MASK,          /*< desc="_Black (Full Transparency)"      >*/
+  GIMP_ADD_ALPHA_MASK,          /*< desc="Layer's _Alpha Channel"          >*/
+  GIMP_ADD_ALPHA_MASK_TRANSFER, /*< desc="_Transfer Layer's Alpha Channel" >*/
+  GIMP_ADD_SELECTION_MASK,      /*< desc="_Selection"                      >*/
+  GIMP_ADD_COPY_MASK            /*< desc="_Grayscale Copy of Layer"        >*/
 } GimpAddMaskType;
 
 
@@ -407,6 +408,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_ITEM_LINKED,        /*< desc="Linked Item"                 >*/
   GIMP_UNDO_GROUP_LAYER_SCALE,        /*< desc="Scale Layer"                 >*/
   GIMP_UNDO_GROUP_LAYER_RESIZE,       /*< desc="Resize Layer"                >*/
+  GIMP_UNDO_GROUP_LAYER_ADD_MASK,     /*< desc="Add Layer Mask"              >*/
   GIMP_UNDO_GROUP_LAYER_APPLY_MASK,   /*< desc="Apply Layer Mask"            >*/
   GIMP_UNDO_GROUP_FS_TO_LAYER,        /*< desc="Floating Selection to Layer" >*/
   GIMP_UNDO_GROUP_FS_FLOAT,           /*< desc="Float Selection"             >*/

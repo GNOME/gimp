@@ -13,6 +13,7 @@ static const GEnumValue gimp_add_mask_type_enum_values[] =
   { GIMP_ADD_WHITE_MASK, N_("_White (Full Opacity)"), "white-mask" },
   { GIMP_ADD_BLACK_MASK, N_("_Black (Full Transparency)"), "black-mask" },
   { GIMP_ADD_ALPHA_MASK, N_("Layer's _Alpha Channel"), "alpha-mask" },
+  { GIMP_ADD_ALPHA_MASK_TRANSFER, N_("_Transfer Layer's Alpha Channel"), "alpha-mask-transfer" },
   { GIMP_ADD_SELECTION_MASK, N_("_Selection"), "selection-mask" },
   { GIMP_ADD_COPY_MASK, N_("_Grayscale Copy of Layer"), "copy-mask" },
   { 0, NULL, NULL }
@@ -568,6 +569,7 @@ static const GEnumValue gimp_undo_type_enum_values[] =
   { GIMP_UNDO_GROUP_ITEM_LINKED, N_("Linked Item"), "group-item-linked" },
   { GIMP_UNDO_GROUP_LAYER_SCALE, N_("Scale Layer"), "group-layer-scale" },
   { GIMP_UNDO_GROUP_LAYER_RESIZE, N_("Resize Layer"), "group-layer-resize" },
+  { GIMP_UNDO_GROUP_LAYER_ADD_MASK, N_("Add Layer Mask"), "group-layer-add-mask" },
   { GIMP_UNDO_GROUP_LAYER_APPLY_MASK, N_("Apply Layer Mask"), "group-layer-apply-mask" },
   { GIMP_UNDO_GROUP_FS_TO_LAYER, N_("Floating Selection to Layer"), "group-fs-to-layer" },
   { GIMP_UNDO_GROUP_FS_FLOAT, N_("Float Selection"), "group-fs-float" },
