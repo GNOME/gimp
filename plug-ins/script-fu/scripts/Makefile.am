@@ -67,6 +67,7 @@ scriptdata_DATA = \
 	neon-logo.scm				\
 	perspective-shadow.scm			\
 	predator.scm				\
+	pupi-button.scm                         \
 	rendermap.scm				\
 	ripply-anim.scm				\
 	round-corners.scm			\

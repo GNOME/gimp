@@ -1,3 +1,8 @@
+Tue Jun 30 12:19:58 CDT 1998 arturo@nuclecu.unam.mx
+
+	* pupi-button.scm: (script-fu-round-button) A new beveled button
+	script for rendering round, elliptical or squared buttons.
+
 Tue Jun 30 12:13:36 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/flame/flame.c: don't use app private includes
@@ -301,6 +306,7 @@ Sat Jun 20 11:36:16 PDT 1998 Manish Singh <yosh@gimp.org>
 	* configure.in
 	* app/Makefile.am: really add thread support
 
+>>>>>>> 1.454
 Sat Jun 20 12:04:41 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* app/tile.h: #include config.h so we can tell if we're doing
