@@ -40,6 +40,8 @@
 	
 	* modules/Makefile.am (CPPFLAGS): Define MODULE_COMPILATION.
 
+	* modules/makefile.msc: New file.
+
 	* app/{about_dialog.c,app_procs.c,gimprc.c,install.c,
 	tips_dialog.c}: Use gimp_data_directory() instead of DATADIR.
 
@@ -83,12 +85,25 @@
 	* app/plug_in.c: Add Win32 code. (plug_in_write_rc_string): Escape
 	problematic characters (\r, \n and control-Z). Use
 	plug_in_write_rc_string() to write program name, too (contains
-	backslashes on Win32...).
+	backslashes on Win32...). Use GIOChannels.
 
 	* app/text_tool.c: Shouldn't use gdk_colormap_alloc_color() to
 	allocate black and white on Win32 after all.
 
 	* app/tile_swap.c: Include <stdio.h>
+
+	* app/{gimp.def,gimp.rc,makefile.msc,wilber.ico}: New
+	files. Thanks to Paolo Bonzini for the Wilber icon.
+
+	* app/Makefile.am (CPPFLAGS): GIMPDIR or DATADIR not needed,
+	handled by libgimp/gimpenv.c functions.
+
+	* plug-ins/script-fu/scripts/{alien-glow-button,beveled-button,
+	beveled-pattern-button,beveled-pattern-heading,gimp-headers,
+	gimp-labels,hsv-graph,i26-gunya2,image-structure,pupi-button,
+	,title-header}.scm: Use the gimp-text*-fontname forms
+	calls. Register having corresponding SF-FONT parameters. Thanks to
+	Piet van Oostrum for this.
 
 1999-03-07  Jay Cox  <jaycox@earthlink.net>
 
