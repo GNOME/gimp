@@ -68,10 +68,57 @@ the search path, the "path_changed" signal will be emitted.
 @gpe: 
 
 
+<!-- ##### FUNCTION gimp_path_editor_get_writable_path ##### -->
+<para>
+
+</para>
+
+@editor: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_path_editor_set_writable_path ##### -->
+<para>
+
+</para>
+
+@editor: 
+@path: 
+
+
+<!-- ##### FUNCTION gimp_path_editor_get_dir_writable ##### -->
+<para>
+
+</para>
+
+@editor: 
+@directory: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_path_editor_set_dir_writable ##### -->
+<para>
+
+</para>
+
+@editor: 
+@directory: 
+@writable: 
+
+
 <!-- ##### SIGNAL GimpPathEditor::path-changed ##### -->
 <para>
 
 </para>
 
 @gimppatheditor: the object which received the signal.
+
+<!-- ##### SIGNAL GimpPathEditor::writable-changed ##### -->
+<para>
+
+</para>
+
+@gimppatheditor: the object which received the signal.
+<!-- # Unused Parameters # -->
+@arg1: 
 

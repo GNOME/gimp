@@ -1,3 +1,9 @@
+2004-01-28  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpbase/tmpl/gimpdatafiles.sgml
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimppatheditor.sgml: updated.
+
 2004-01-27  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt

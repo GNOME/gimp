@@ -128,6 +128,10 @@ GimpPathEditor
 gimp_path_editor_new
 gimp_path_editor_get_path
 gimp_path_editor_set_path
+gimp_path_editor_get_writable_path
+gimp_path_editor_set_writable_path
+gimp_path_editor_get_dir_writable
+gimp_path_editor_set_dir_writable
 <SUBSECTION Standard>
 GIMP_PATH_EDITOR
 GIMP_IS_PATH_EDITOR
