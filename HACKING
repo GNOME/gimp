@@ -55,9 +55,9 @@ autogen.sh and they will be passed on to configure.
 CVS
 ---
 GIMP is available from GNOME CVS. You can also grab glib, pango, atk,
-libart, gtk+ as well as intltool and gtk-doc from the same CVS server.
-You can use the following commands to get them from the anonymous CVS
-server:
+gtk+, libart, gtkhtml2 as well as intltool and gtk-doc from the same
+CVS server. You can use the following commands to get them from the
+anonymous CVS server:
 
    $ export CVSROOT=':pserver:anonymous@anoncvs.gimp.org:/cvs/gnome'
    $ cvs login
@@ -71,9 +71,9 @@ The interesting modules and the suggested branches to use are:
    pango       (pango-1-0)
    gtk+        (gtk-2-0)
    libart_lgpl
+   gtkhtml2
    intltool
    gtk-doc
-   gtkhtml2
 
 
 Patches
