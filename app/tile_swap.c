@@ -415,7 +415,7 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
   nleft = rbytes;
   while (nleft > 0)
     {
-      err = write (fd, tile->data + rbytes - nleft, rbytes);
+      err = write (fd, tile->data + rbytes - nleft, nleft);
       if (err <= 0)
 	{
 	  g_warning ("unable to write tile data to disk: %d ( %d ) bytes written", err, nleft);

@@ -63,6 +63,7 @@ SUBDIRS = 			\
 	film			\
 	fits			\
 	flame			\
+	flarefx			\
 	fp			\
 	fractaltrace		\
 	gauss_iir		\

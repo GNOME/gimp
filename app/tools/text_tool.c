@@ -259,6 +259,18 @@ text_button_press (Tool           *tool,
 	return;
       }
 
+  if (nfonts == -1)
+    {
+      text_get_fonts ();
+      if (nfonts == 0)
+       {
+         message_box ("Note: No fonts found.  Text tool not available.",
+                      NULL, NULL);
+         nfonts = -1;
+         return;
+       }
+    }
+
   if (!text_tool->shell)
     text_create_dialog (text_tool);
 
@@ -330,7 +342,7 @@ text_control (Tool     *tool,
     case RESUME :
       break;
     case HALT :
-      if (GTK_WIDGET_VISIBLE (the_text_tool->shell))
+      if (the_text_tool->shell != NULL && GTK_WIDGET_VISIBLE (the_text_tool->shell))
 	gtk_widget_hide (the_text_tool->shell);
       break;
     }
@@ -395,8 +407,6 @@ text_create_dialog (TextTool *text_tool)
   gtk_container_add (GTK_CONTAINER (list_box), text_tool->font_list);
   gtk_list_set_selection_mode (GTK_LIST (text_tool->font_list), GTK_SELECTION_BROWSE);
 
-  if (nfonts == -1)
-    text_get_fonts ();
   for (i = 0; i < nfonts; i++)
     {
       list_item = gtk_list_item_new_with_label (font_info[i]->family);

@@ -117,7 +117,7 @@ is_pixel_sufficiently_different (unsigned char *col1,
 	max = diff;
     }
 
-  if (antialias)
+  if (antialias && threshold > 0)
     {
       float aa;
 

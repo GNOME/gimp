@@ -421,6 +421,7 @@ plug-ins/DigitalSignature/Makefile
 plug-ins/FractalExplorer/Makefile
 plug-ins/stegano/Makefile
 plug-ins/fs/Makefile
+plug-ins/flarefx/Makefile
 app/Makefile
 docs/Makefile
 )

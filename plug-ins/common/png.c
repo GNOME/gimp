@@ -37,21 +37,19 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.1.1.1  1997/11/24 22:04:45  sopwith
- *   Let's try this import one last time.
+ *   Revision 1.2  1998/01/05 09:30:23  yosh
+ *   Check for div-by-zero in by_color_select.c when threshold is 0
+ *   The text tool handles the no fonts case better
+ *   Minor bug in tile saving squashed
+ *   updated png plugin
+ *   added flarefx plugin
  *
- *   Revision 1.4  1997/11/18 03:04:24  nobody
- *   fixed ugly comment-bugs introduced by evil darkwing
- *   keep out configuration empty dirs
- *   	--darkwing
+ *   -Yosh
  *
- *   Revision 1.3  1997/11/17 05:43:55  nobody
- *   updated ChangeLog
- *   dropped non-working /doc/Makefile entries
- *   applied many fixes from the registry as well as the devel ML
- *   applied missing patches by Art Haas
- *
- *   	--darkwing
+ *   Revision 1.12  1998/01/04  14:10:09  mike
+ *   Fixed paletted image saving bug - wasn't correctly storing the number of
+ *   colors and didn't flag the palette as valid.
+ *   Removed INDEXEDA support since the current PNG library doesn't support it.
  *
  *   Revision 1.11  1997/11/14  17:17:59  mike
  *   Updated to dynamically allocate return params in the run() function.
@@ -72,9 +70,8 @@
  *
  *   Revision 1.6  1997/06/11  17:49:07  mike
  *   Updated docos for release.
- */
-
-/*   Revision 1.5  1997/06/11  17:39:28  mike
+ *
+ *   Revision 1.5  1997/06/11  17:39:28  mike
  *   Fixed a few memory leaks - not critical, since this plug-in isn't running
  *   all the time...
  *
@@ -112,7 +109,7 @@
  * Constants...
  */
 
-#define PLUG_IN_VERSION		"1.1.4 - 14 November 1997"
+#define PLUG_IN_VERSION		"1.1.5 - 4 January 1998"
 #define SCALE_WIDTH		125
 
 
@@ -222,7 +219,7 @@ query(void)
       "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
       "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>",
       PLUG_IN_VERSION,
-      "<Save>/PNG", "RGB*,GRAY*,INDEXED*", PROC_PLUG_IN, nsave_args, 0, save_args, NULL);
+      "<Save>/PNG", "RGB*,GRAY*,INDEXED", PROC_PLUG_IN, nsave_args, 0, save_args, NULL);
 
   gimp_register_magic_load_handler("file_png_load", "png", "", "0,string,\211PNG\r\n\032\n");
   gimp_register_save_handler("file_png_save", "png", "");
@@ -464,12 +461,6 @@ load_image(char *filename)	/* I - File to load */
         image_type = INDEXED;
         layer_type = INDEXED_IMAGE;
         break;
-
-    case PNG_COLOR_TYPE_PALETTE | PNG_COLOR_MASK_ALPHA:	/* Indexed + alpha */
-        bpp        = 2;
-        image_type = INDEXED;
-        layer_type = INDEXEDA_IMAGE;
-        break;
   };
 
   image = gimp_image_new(info->width, info->height, image_type);
@@ -592,6 +583,7 @@ save_image(char   *filename,	/* I - File to save to */
   GPixelRgn	pixel_rgn;	/* Pixel region for layer */
   png_structp	pp;		/* PNG read pointer */
   png_infop	info;		/* PNG info pointer */
+  gint		num_colors;	/* Number of colors in colormap */
   guchar	**pixels,	/* Pixel rows */
 		*pixel;		/* Pixel data */
   char		progress[255];	/* Title for progress display... */
@@ -621,7 +613,7 @@ save_image(char   *filename,	/* I - File to save to */
 #endif /* PNG_LIBPNG_VER > 88 */
 
  /*
-  * Open the file and initialize the PNG read "engine"...
+  * Open the file and initialize the PNG write "engine"...
   */
 
   fp = fopen(filename, "w");
@@ -684,16 +676,11 @@ save_image(char   *filename,	/* I - File to save to */
         bpp              = 2;
         break;
     case INDEXED_IMAGE :
+	info->valid      |= PNG_INFO_PLTE;
         info->color_type = PNG_COLOR_TYPE_PALETTE;
-        info->palette    = (png_colorp)gimp_image_get_cmap(image_ID,
-                                                           (guchar *)&(info->num_palette));
+        info->palette    = (png_colorp)gimp_image_get_cmap(image_ID, &num_colors);
+        info->num_palette= num_colors;
         bpp              = 1;
-        break;
-    case INDEXEDA_IMAGE :
-        info->color_type = PNG_COLOR_TYPE_PALETTE | PNG_COLOR_MASK_ALPHA;
-        info->palette    = (png_colorp)gimp_image_get_cmap(image_ID,
-                                                           (guchar *)&(info->num_palette));
-        bpp              = 2;
         break;
   };
 

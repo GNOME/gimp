@@ -1,3 +1,16 @@
+Sun Jan  4 17:43:32 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* app/by_color_select.c: Prevent divide-by-zero error when
+	fuzzy threshold in select by color is 0
+
+	* app/tile_swap.c: Minor bugfix for tile saves
+
+	* app/text_tool.c: better handling when there are no fonts
+
+	* Updated PNG plugin from registry
+
+	* Added the FlareFX plugin
+
 Sun Jan  4 14:24:05 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* plug-ins/despeckle/despeckle.c: realloc buffers when the radius
