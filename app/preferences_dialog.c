@@ -390,25 +390,31 @@ file_prefs_ok_callback (GtkWidget *widget,
 {
   PrefsState state;
 
-  if (show_tool_tips)
-    gimp_help_enable_tooltips ();
-  else
-    gimp_help_disable_tooltips ();
-
-  if (edit_tile_cache_size != tile_cache_size)
-    tile_cache_set_size (edit_tile_cache_size);
-
   state = file_prefs_check_settings ();
   switch (state)
     {
     case PREFS_CORRUPT:
       return;
       break;
+
     case PREFS_RESTART:
       gtk_widget_set_sensitive (prefs_dlg, FALSE);
       file_prefs_restart_notification ();
-      /* don't break */
+      break;
+
     case PREFS_OK:
+      if (show_tool_tips)
+	gimp_help_enable_tooltips ();
+      else
+	gimp_help_disable_tooltips ();
+
+      if (edit_tile_cache_size != old_tile_cache_size)
+	{
+	  tile_cache_size = edit_tile_cache_size;
+	  tile_cache_set_size (edit_tile_cache_size);
+	}
+      break;
+
     default:
       break;
     }
@@ -447,29 +453,33 @@ file_prefs_save_callback (GtkWidget *widget,
   gchar *save_palette_path;
   gchar *save_gradient_path;
 
-  if (show_tool_tips)
-    gimp_help_enable_tooltips ();
-  else
-    gimp_help_disable_tooltips ();
-
-  if (edit_tile_cache_size != old_tile_cache_size)
-    tile_cache_set_size (edit_tile_cache_size);
-
   state = file_prefs_check_settings ();
   switch (state)
     {
     case PREFS_CORRUPT:
       return;
       break;
+
     case PREFS_RESTART:
       gtk_widget_set_sensitive (prefs_dlg, FALSE);
       g_message (_("You will need to restart GIMP for these "
 		   "changes to take effect."));
       /* don't break */
+
     case PREFS_OK:
+      if (show_tool_tips)
+	gimp_help_enable_tooltips ();
+      else
+	gimp_help_disable_tooltips ();
+
+      if (edit_tile_cache_size != old_tile_cache_size)
+	tile_cache_set_size (edit_tile_cache_size);
+      break;
+
     default:
       break;
     }
+
   gtk_widget_destroy (prefs_dlg);
   prefs_dlg = NULL;
 
@@ -748,6 +758,7 @@ file_prefs_save_callback (GtkWidget *widget,
   /*  values which are changed on "OK" or "Save"  */
   if (edit_tile_cache_size != old_tile_cache_size)
     {
+      tile_cache_size = edit_tile_cache_size;
       update = g_list_append (update, "tile-cache-size");
     }
 
