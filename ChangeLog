@@ -1,3 +1,7 @@
+2004-07-05  Sven Neumann  <sven@gimp.org>
+
+	* modules/Makefile.am: link all modules with libgimpmodule.
+
 2004-07-05  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/dog.c: improved defaults.  use gimp_invert()
