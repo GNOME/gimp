@@ -1,5 +1,10 @@
 2003-06-09  Sven Neumann  <sven@gimp.org>
 
+	* app/paint-funcs/paint-funcs-generic.h (blend_pixels): weight
+	pixels by their alpha value. Fixes the smudge tool (bug #72879).
+
+2003-06-09  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu-scripts.c (script_fu_interface):
 	use a GimpScaleEntry for SF_SLIDER adjustments (bug #114509).
 
