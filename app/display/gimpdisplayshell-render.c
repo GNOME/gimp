@@ -237,15 +237,15 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                            gint              w,
                            gint              h)
 {
-  RenderInfo info;
-  gint       image_type;
-  GList     *list;
+  RenderInfo     info;
+  GimpImageType  image_type;
+  GList         *list;
 
   render_image_init_info (&info, shell, x, y, w, h);
 
   image_type = gimp_image_projection_type (shell->gdisp->gimage);
 
-  if ((image_type < 0) || (image_type > 5))
+  if ((image_type < GIMP_RGB_IMAGE) || (image_type > GIMP_INDEXEDA_IMAGE))
     {
       g_message ("unknown gimage projection type: %d",
 		 gimp_image_projection_type (shell->gdisp->gimage));
@@ -269,11 +269,11 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   /*  apply filters to the rendered projection  */
   for (list = shell->filters; list; list = g_list_next (list))
     {
-      ColorDisplayNode *node;
+      GimpColorDisplay *filter;
 
-      node = (ColorDisplayNode *) list->data;
+      filter = (GimpColorDisplay *) list->data;
 
-      gimp_color_display_convert (node->color_display,
+      gimp_color_display_convert (filter,
                                   shell->render_buf,
                                   w, h,
                                   3,

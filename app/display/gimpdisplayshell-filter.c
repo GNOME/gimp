@@ -35,32 +35,22 @@
 #include "gimpdisplayshell-filter.h"
 
 
-static void   gimp_display_shell_filter_detach_real (GimpDisplayShell *shell,
-                                                     ColorDisplayNode *node);
-
-
-ColorDisplayNode *
+GimpColorDisplay *
 gimp_display_shell_filter_attach (GimpDisplayShell *shell,
                                   GType             type)
 {
-  GimpColorDisplay *color_display;
-  ColorDisplayNode *node;
+  GimpColorDisplay *filter;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
   g_return_val_if_fail (g_type_is_a (type, GIMP_TYPE_COLOR_DISPLAY), NULL);
 
-  color_display = gimp_color_display_new (type);
+  filter = gimp_color_display_new (type);
 
-  if (color_display)
+  if (filter)
     {
-      node = g_new (ColorDisplayNode, 1);
+      shell->filters = g_list_append (shell->filters, filter);
 
-      node->cd_name       = g_strdup (GIMP_COLOR_DISPLAY_GET_CLASS (color_display)->name);
-      node->color_display = color_display;
-
-      shell->filters = g_list_append (shell->filters, node);
-
-      return node;
+      return filter;
     }
   else
     g_warning ("Tried to attach a nonexistant color display");
@@ -68,28 +58,22 @@ gimp_display_shell_filter_attach (GimpDisplayShell *shell,
   return NULL;
 }
 
-ColorDisplayNode *
+GimpColorDisplay *
 gimp_display_shell_filter_attach_clone (GimpDisplayShell *shell,
-                                        ColorDisplayNode *node)
+                                        GimpColorDisplay *filter)
 {
-  GimpColorDisplay *color_display;
-  ColorDisplayNode *clone;
+  GimpColorDisplay *clone;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
-  g_return_val_if_fail (node != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_COLOR_DISPLAY (filter), NULL);
 
-  color_display = gimp_color_display_clone (node->color_display);
+  clone = gimp_color_display_clone (filter);
 
-  if (color_display)
+  if (clone)
     {
-      clone = g_new (ColorDisplayNode, 1);
+      shell->filters = g_list_append (shell->filters, clone);
 
-      clone->cd_name       = g_strdup (node->cd_name);
-      clone->color_display = color_display;
-
-      shell->filters = g_list_append (shell->filters, node);
-
-      return node;
+      return clone;
     }
   else
     g_warning ("Tried to clone a nonexistant color display");
@@ -99,106 +83,68 @@ gimp_display_shell_filter_attach_clone (GimpDisplayShell *shell,
 
 void
 gimp_display_shell_filter_detach (GimpDisplayShell *shell,
-                                  ColorDisplayNode *node)
+                                  GimpColorDisplay *filter)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GIMP_IS_COLOR_DISPLAY (filter));
 
-  shell->filters = g_list_remove (shell->filters, node);
+  shell->filters = g_list_remove (shell->filters, filter);
 }
 
 void
 gimp_display_shell_filter_detach_destroy (GimpDisplayShell *shell,
-                                          ColorDisplayNode *node)
+                                          GimpColorDisplay *filter)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GIMP_IS_COLOR_DISPLAY (filter));
 
-  gimp_display_shell_filter_detach_real (shell, node);
+  g_object_unref (filter);
 
-  shell->filters = g_list_remove (shell->filters, node);
+  shell->filters = g_list_remove (shell->filters, filter);
 }
 
 void
 gimp_display_shell_filter_detach_all (GimpDisplayShell *shell)
 {
-  GList *list;
-
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  for (list = shell->filters; list; list = g_list_next (list))
-    {
-      gimp_display_shell_filter_detach_real (shell, list->data);
-    }
-
+  g_list_foreach (shell->filters, (GFunc) g_object_unref, NULL);
   g_list_free (shell->filters);
   shell->filters = NULL;
 }
 
-static void
-gimp_display_shell_filter_detach_real (GimpDisplayShell *shell,
-                                       ColorDisplayNode *node)
-{
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (node != NULL);
-
-  g_object_unref (node->color_display);
-  g_free (node->cd_name);
-  g_free (node);
-}
-
 void
 gimp_display_shell_filter_reorder_up (GimpDisplayShell *shell,
-                                      ColorDisplayNode *node)
+                                      GimpColorDisplay *filter)
 {
   GList *node_list;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (node  != NULL);
+  g_return_if_fail (GIMP_IS_COLOR_DISPLAY (filter));
 
-  node_list = g_list_find (shell->filters, node);
+  node_list = g_list_find (shell->filters, filter);
 
   if (node_list->prev)
     {
-      node_list->data = node_list->prev->data;
-      node_list->prev->data = node;
+      node_list->data       = node_list->prev->data;
+      node_list->prev->data = filter;
     }
 }
 
 void
 gimp_display_shell_filter_reorder_down (GimpDisplayShell *shell,
-                                        ColorDisplayNode *node)
+                                        GimpColorDisplay *filter)
 {
   GList *node_list;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-  g_return_if_fail (node  != NULL);
+  g_return_if_fail (GIMP_IS_COLOR_DISPLAY (filter));
 
-  node_list = g_list_find (shell->filters, node);
+  node_list = g_list_find (shell->filters, filter);
 
   if (node_list->next)
     {
-      node_list->data = node_list->next->data;
-      node_list->next->data = node;
+      node_list->data       = node_list->next->data;
+      node_list->next->data = filter;
     }
-}
-
-void
-gimp_display_shell_filter_configure (ColorDisplayNode *node,
-                                     GFunc             ok_func,
-                                     gpointer          ok_data,
-                                     GFunc             cancel_func,
-                                     gpointer          cancel_data)
-{
-  g_return_if_fail (node != NULL);
-
-  gimp_color_display_configure (node->color_display,
-                                ok_func, ok_data,
-                                cancel_func, cancel_data);
-}
-
-void
-gimp_display_shell_filter_configure_cancel (ColorDisplayNode *node)
-{
-  g_return_if_fail (node != NULL);
-
-  gimp_color_display_configure_cancel (node->color_display);
 }

@@ -1,5 +1,14 @@
 2002-10-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-filter.[ch]: removed the
+	ColorDisplayNode struct entirely. GimpDisplayShell->filters is now
+	just a GList of GimpColorDisplay objects.
+
+	* app/display/gimpdisplayshell-filter-dialog.c
+	* app/display/gimpdisplayshell-render.c: changed accordingly.
+
+2002-10-20  Michael Natterer  <mitch@gimp.org>
+
 	Ported module loading to GTypeModule, getting rid of all own
 	module registering/bookkeeping stuff for color selectors and
 	display filters. The modules now simply register GimpColorSelector

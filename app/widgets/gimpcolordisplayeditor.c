@@ -352,21 +352,21 @@ color_display_add_callback (GtkWidget          *widget,
 
   if (gtk_tree_selection_get_selected (cdd->src_sel, &model, &iter))
     {
-      ColorDisplayNode *node;
+      GimpColorDisplay *filter;
       GValue            val = { 0, };
 
       gtk_tree_model_get_value (model, &iter, 1, &val);
 
-      node = gimp_display_shell_filter_attach (cdd->shell,
-                                               (GType) g_value_get_pointer (&val));
+      filter = gimp_display_shell_filter_attach (cdd->shell,
+                                                 (GType) g_value_get_pointer (&val));
 
       g_value_unset (&val);
 
       gtk_tree_store_append (cdd->dest, &iter, NULL);
 
       gtk_tree_store_set (cdd->dest, &iter,
-                          0, node->cd_name,
-                          1, node,
+                          0, GIMP_COLOR_DISPLAY_GET_CLASS (filter)->name,
+                          1, filter,
                           -1);
 
       cdd->modified = TRUE;
@@ -386,12 +386,12 @@ color_display_remove_callback (GtkWidget          *widget,
 
   if (gtk_tree_selection_get_selected (cdd->dest_sel, &model, &iter))
     {
-      ColorDisplayNode *node;
+      GimpColorDisplay *filter;
       GValue            val = { 0, };
 
       gtk_tree_model_get_value (model, &iter, 1, &val);
 
-      node = g_value_get_pointer (&val);
+      filter = g_value_get_pointer (&val);
 
       g_value_unset (&val);
 
@@ -399,10 +399,10 @@ color_display_remove_callback (GtkWidget          *widget,
 
       cdd->modified = TRUE;
 
-      if (g_list_find (cdd->old_nodes, node))
-        gimp_display_shell_filter_detach (cdd->shell, node);
+      if (g_list_find (cdd->old_nodes, filter))
+        gimp_display_shell_filter_detach (cdd->shell, filter);
       else
-        gimp_display_shell_filter_detach_destroy (cdd->shell, node);
+        gimp_display_shell_filter_detach_destroy (cdd->shell, filter);
 
       color_display_update_up_and_down (cdd);
 
@@ -421,27 +421,27 @@ color_display_up_callback (GtkWidget          *widget,
   if (gtk_tree_selection_get_selected (cdd->dest_sel, &model, &iter1))
     {
       GtkTreePath      *path;
-      ColorDisplayNode *node1;
-      ColorDisplayNode *node2;
+      GimpColorDisplay *filter1;
+      GimpColorDisplay *filter2;
 
       path = gtk_tree_model_get_path (model, &iter1);
       gtk_tree_path_prev (path);
       gtk_tree_model_get_iter (model, &iter2, path);
       gtk_tree_path_free (path);
 
-      gtk_tree_model_get (model, &iter1, 1, &node1, -1);
-      gtk_tree_model_get (model, &iter2, 1, &node2, -1);
+      gtk_tree_model_get (model, &iter1, 1, &filter1, -1);
+      gtk_tree_model_get (model, &iter2, 1, &filter2, -1);
 
       gtk_tree_store_set (GTK_TREE_STORE (model), &iter1,
-                          0, node2->cd_name,
-                          1, node2,
+                          0, GIMP_COLOR_DISPLAY_GET_CLASS (filter2)->name,
+                          1, filter2,
                           -1);
       gtk_tree_store_set (GTK_TREE_STORE (model), &iter2,
-                          0, node1->cd_name,
-                          1, node1,
+                          0, GIMP_COLOR_DISPLAY_GET_CLASS (filter1)->name,
+                          1, filter1,
                           -1);
 
-      gimp_display_shell_filter_reorder_up (cdd->shell, node1);
+      gimp_display_shell_filter_reorder_up (cdd->shell, filter1);
 
       cdd->modified = TRUE;
 
@@ -462,27 +462,27 @@ color_display_down_callback (GtkWidget          *widget,
   if (gtk_tree_selection_get_selected (cdd->dest_sel, &model, &iter1))
     {
       GtkTreePath      *path;
-      ColorDisplayNode *node1;
-      ColorDisplayNode *node2;
+      GimpColorDisplay *filter1;
+      GimpColorDisplay *filter2;
 
       path = gtk_tree_model_get_path (model, &iter1);
       gtk_tree_path_next (path);
       gtk_tree_model_get_iter (model, &iter2, path);
       gtk_tree_path_free (path);
 
-      gtk_tree_model_get (model, &iter1, 1, &node1, -1);
-      gtk_tree_model_get (model, &iter2, 1, &node2, -1);
+      gtk_tree_model_get (model, &iter1, 1, &filter1, -1);
+      gtk_tree_model_get (model, &iter2, 1, &filter2, -1);
 
       gtk_tree_store_set (GTK_TREE_STORE (model), &iter1,
-                          0, node2->cd_name,
-                          1, node2,
+                          0, GIMP_COLOR_DISPLAY_GET_CLASS (filter2)->name,
+                          1, filter2,
                           -1);
       gtk_tree_store_set (GTK_TREE_STORE (model), &iter2,
-                          0, node1->cd_name,
-                          1, node1,
+                          0, GIMP_COLOR_DISPLAY_GET_CLASS (filter1)->name,
+                          1, filter1,
                           -1);
 
-      gimp_display_shell_filter_reorder_down (cdd->shell, node1);
+      gimp_display_shell_filter_reorder_down (cdd->shell, filter1);
 
       cdd->modified = TRUE;
 
@@ -501,19 +501,19 @@ color_display_configure_callback (GtkWidget          *widget,
 
   if (gtk_tree_selection_get_selected (cdd->dest_sel, &model, &iter))
     {
-      ColorDisplayNode *node;
+      GimpColorDisplay *filter;
       GValue            val = { 0, };
 
       gtk_tree_model_get_value (model, &iter, 1, &val);
 
-      node = g_value_get_pointer (&val);
+      filter = g_value_get_pointer (&val);
 
       g_value_unset (&val);
 
-      if (! g_list_find (cdd->conf_nodes, node))
-        cdd->conf_nodes = g_list_append (cdd->conf_nodes, node);
+      if (! g_list_find (cdd->conf_nodes, filter))
+        cdd->conf_nodes = g_list_append (cdd->conf_nodes, filter);
 
-      gimp_display_shell_filter_configure (node, NULL, NULL, NULL, NULL);
+      gimp_color_display_configure (filter, NULL, NULL, NULL, NULL);
 
       cdd->modified = TRUE;
 
@@ -567,19 +567,19 @@ static void
 dest_list_populate (GList        *node_list,
     		    GtkTreeStore *dest)
 {
-  ColorDisplayNode *node;
+  GimpColorDisplay *filter;
   GList            *list;
   GtkTreeIter       iter;
 
   for (list = node_list; list; list = g_list_next (list))
     {
-      node = (ColorDisplayNode *) list->data;
+      filter = (GimpColorDisplay *) list->data;
 
       gtk_tree_store_append (dest, &iter, NULL);
 
       gtk_tree_store_set (dest, &iter,
-                          0, node->cd_name,
-                          1, node,
+                          0, GIMP_COLOR_DISPLAY_GET_CLASS (filter)->name,
+                          1, filter,
                           -1);
     }
 }
@@ -612,7 +612,7 @@ dest_selection_changed (GtkTreeSelection   *sel,
 {
   GtkTreeModel     *model;
   GtkTreeIter       iter;
-  ColorDisplayNode *node = NULL;
+  GimpColorDisplay *filter = NULL;
 
   if (gtk_tree_selection_get_selected (sel, &model, &iter))
     {
@@ -620,13 +620,13 @@ dest_selection_changed (GtkTreeSelection   *sel,
 
       gtk_tree_model_get_value (model, &iter, 1, &val);
 
-      node = g_value_get_pointer (&val);
+      filter = g_value_get_pointer (&val);
 
       g_value_unset (&val);
     }
 
-  gtk_widget_set_sensitive (cdd->remove_button,    (node != NULL));
-  gtk_widget_set_sensitive (cdd->configure_button, (node != NULL));
+  gtk_widget_set_sensitive (cdd->remove_button,    (filter != NULL));
+  gtk_widget_set_sensitive (cdd->configure_button, (filter != NULL));
 
   color_display_update_up_and_down (cdd);
 }

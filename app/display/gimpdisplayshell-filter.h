@@ -20,37 +20,21 @@
 #define __GIMP_DISPLAY_SHELL_FILTER_H__
 
 
-typedef struct _ColorDisplayNode ColorDisplayNode;
-
-struct _ColorDisplayNode
-{
-  GimpColorDisplay *color_display;
-  gchar            *cd_name;
-};
-
-
-ColorDisplayNode *
+GimpColorDisplay *
        gimp_display_shell_filter_attach           (GimpDisplayShell *shell,
                                                    GType             type);
-ColorDisplayNode *
+GimpColorDisplay * 
        gimp_display_shell_filter_attach_clone     (GimpDisplayShell *shell,
-                                                   ColorDisplayNode *node);
+                                                   GimpColorDisplay *filter);
 void   gimp_display_shell_filter_detach           (GimpDisplayShell *shell,
-                                                   ColorDisplayNode *node);
+                                                   GimpColorDisplay *filter);
 void   gimp_display_shell_filter_detach_destroy   (GimpDisplayShell *shell,
-                                                   ColorDisplayNode *node);
+                                                   GimpColorDisplay *filter);
 void   gimp_display_shell_filter_detach_all       (GimpDisplayShell *shell);
 void   gimp_display_shell_filter_reorder_up       (GimpDisplayShell *shell,
-                                                   ColorDisplayNode *node);
+                                                   GimpColorDisplay *filter);
 void   gimp_display_shell_filter_reorder_down     (GimpDisplayShell *shell,
-                                                   ColorDisplayNode *node);
-
-void   gimp_display_shell_filter_configure        (ColorDisplayNode *node,
-                                                   GFunc             ok_func,
-                                                   gpointer          ok_data,
-                                                   GFunc             cancel_func,
-                                                   gpointer          cancel_data);
-void   gimp_display_shell_filter_configure_cancel (ColorDisplayNode *node);
+                                                   GimpColorDisplay *filter);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_FILTER_H__ */
