@@ -34,6 +34,9 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.12  1999/04/23 06:32:41  asbjoer
+ *   use MAIN macro
+ *
  *   Revision 1.11  1999/04/15 21:49:06  yosh
  *   * applied gimp-lecorfec-99041[02]-0, changes follow
  *
@@ -217,13 +220,7 @@ int		runme = FALSE;
  * 'main()' - Main entry - just call gimp_main()...
  */
 
-int
-main(int  argc,		/* I - Number of command-line args */
-     char *argv[])	/* I - Command-line args */
-{
-  return (gimp_main(argc, argv));
-}
-
+MAIN()
 
 /*
  * 'query()' - Respond to a plug-in query...

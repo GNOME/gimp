@@ -1291,8 +1291,6 @@ void set_default_settings(void)
   licvals.effect_image_id=0;
 }
 
-MAIN()
-
 static void query(void)
 {
   static GParamDef args[] =
@@ -1430,4 +1428,6 @@ void lic_noninteractive(GDrawable *drawable)
 {
   printf("Noninteractive not yet implemented! Sorry.\n");
 }
+
+MAIN()
 

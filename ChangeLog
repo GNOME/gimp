@@ -1,3 +1,11 @@
+Fri Apr 23 08:31:50 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
+
+	* plug-ins/lic/lic.c: MAIN at the end of file.
+	* plug-ins/despeckle/despeckle.c: 
+	* plug-ins/destripe/destripe.c: 
+	* plug-ins/png/png.c: 
+	* plug-ins/sgi/sgi.c:  Use MAIN() macro.
+
 1999-04-22  Jay Cox  <jaycox@earthlink.net>
 
 	* app/edit_selection.c: removed some nonfunctional code.

@@ -37,6 +37,9 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.16  1999/04/23 06:33:13  asbjoer
+ *   use MAIN macro
+ *
  *   Revision 1.15  1999/04/19 00:17:49  mitch
  *   1999-04-19  Michael Natterer  <mitschel@cs.tu-berlin.de>
  *
@@ -323,13 +326,7 @@ int		runme = FALSE;
  * 'main()' - Main entry - just call gimp_main()...
  */
 
-int
-main(int  argc,		/* I - Number of command-line args */
-     char *argv[])	/* I - Command-line args */
-{
-  return (gimp_main(argc, argv));
-}
-
+MAIN()
 
 /*
  * 'query()' - Respond to a plug-in query...

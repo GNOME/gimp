@@ -124,13 +124,7 @@ int		avg_width = 36;
  * 'main()' - Main entry - just call gimp_main()...
  */
 
-int
-main(int  argc,		/* I - Number of command-line args */
-     char *argv[])	/* I - Command-line args */
-{
-  return (gimp_main(argc, argv));
-}
-
+MAIN()
 
 /*
  * 'query()' - Respond to a plug-in query...

@@ -43,6 +43,9 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.15  1999/04/23 06:35:14  asbjoer
+ *   use MAIN macro
+ *
  *   Revision 1.14  1999/01/15 17:33:24  unammx
  *   1999-01-15  Federico Mena Quintero  <federico@nuclecu.unam.mx>
  *
@@ -235,13 +238,7 @@ int		despeckle_vals[4] = { 3, FILTER_ADAPTIVE, 7, 248 };
  * 'main()' - Main entry - just call gimp_main()...
  */
 
-int
-main(int  argc,		/* I - Number of command-line args */
-     char *argv[])	/* I - Command-line args */
-{
-  return (gimp_main(argc, argv));
-}
-
+MAIN()
 
 /*
  * 'query()' - Respond to a plug-in query...
