@@ -746,7 +746,7 @@ gimp_dnd_open_files (GtkWidget *widget,
     {
       gchar *filename = (gchar *) list->data;
 
-      file_open_with_display (filename, filename);
+      file_open_with_display (filename);
     }
 }
 

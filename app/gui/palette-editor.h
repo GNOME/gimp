@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PALETTE_H__
-#define __PALETTE_H__
+#ifndef __PALETTE_EDITOR_H__
+#define __PALETTE_EDITOR_H__
 
 
 /*  The states for updating a color in the palette via palette_set_* calls */
@@ -26,15 +26,19 @@
 #define COLOR_UPDATE      2
 
 
-GtkWidget * palette_dialog_create       (void);
-void        palette_dialog_free         (void);
-
-void        palette_dialog_edit_palette (GimpData *data);
-
-void        palette_set_active_color    (gint      r,
-					 gint      g,
-					 gint      b,
-					 gint      state);
+typedef struct _PaletteEditor PaletteEditor;
 
 
-#endif /* __PALETTE_H__ */
+PaletteEditor * palette_editor_new         (void);
+
+void            palette_editor_set_palette (PaletteEditor *palette_editor,
+					    GimpPalette   *palette);
+void            palette_editor_free        (PaletteEditor *palette_editor);
+
+void            palette_set_active_color   (gint           r,
+					    gint           g,
+					    gint           b,
+					    gint           state);
+
+
+#endif /* __PALETTE_EDITOR_H__ */

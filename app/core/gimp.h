@@ -58,7 +58,7 @@ struct _Gimp
 
   GimpContainer         *tool_info_list;
 
-  /* image_new values */
+  /*  image_new values  */
   GList                 *image_base_type_names;
   GList                 *fill_type_names;
   GimpImageNewValues     image_new_last_values;
@@ -100,6 +100,12 @@ GimpImage   * gimp_create_image         (Gimp              *gimp,
 
 void          gimp_create_display       (Gimp              *gimp,
 					 GimpImage         *gimage);
+
+/*
+void          gimp_open_file            (Gimp              *gimp,
+					 const gchar       *filename,
+					 gboolean           with_display);
+*/
 
 GimpContext * gimp_create_context       (Gimp              *gimp,
 					 const gchar       *name,

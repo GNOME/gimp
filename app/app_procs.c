@@ -197,7 +197,7 @@ app_init (gint    gimp_argc,
     while (gimp_argc--)
       {
 	if (*gimp_argv)
-	  file_open_with_display (*gimp_argv, *gimp_argv);
+	  file_open_with_display (*gimp_argv);
 	gimp_argv++;
       }
 

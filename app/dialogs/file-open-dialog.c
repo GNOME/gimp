@@ -54,7 +54,6 @@
 #include "app_procs.h"
 #include "dialog_handler.h"
 #include "docindex.h"
-#include "gdisplay.h"
 #include "file-open.h"
 #include "file-utils.h"
 #include "plug_in.h"
@@ -63,32 +62,21 @@
 #include "libgimp/gimpintl.h"
 
 
-#define REVERT_DATA_KEY "revert_confirm_dialog"
+/*  local function prototypes  */
 
-
-static int   file_open_with_proc_and_display (gchar         *filename,
-                                              gchar         *raw_filename,
-                                              PlugInProcDef *file_proc);
-
-static void     file_open_dialog_create      (void);
-
-static void     file_revert_confirm_callback (GtkWidget     *widget,
-					      gboolean       revert,
-					      gpointer       data);
-
-static void     file_open_genbutton_callback (GtkWidget     *widget,
-					      gpointer       data);
-
-static void     file_open_clistrow_callback  (GtkWidget     *widget,
-					      gint           row);
-
-static void     file_open_ok_callback        (GtkWidget     *widget,
-					      gpointer       data);
-
-static void     file_open_type_callback      (GtkWidget     *widget,
-					      gpointer       data);
-
-static GSList * clist_to_slist               (GtkCList      *file_list);
+static gint     file_open_with_proc_and_display (gchar         *filename,
+						 gchar         *raw_filename,
+						 PlugInProcDef *file_proc);
+static void     file_open_dialog_create         (void);
+static void     file_open_genbutton_callback    (GtkWidget     *widget,
+						 gpointer       data);
+static void     file_open_clistrow_callback     (GtkWidget     *widget,
+						 gint           row);
+static void     file_open_ok_callback           (GtkWidget     *widget,
+						 gpointer       data);
+static void     file_open_type_callback         (GtkWidget     *widget,
+						 gpointer       data);
+static GSList * clist_to_slist                  (GtkCList      *file_list);
 
 
 
@@ -112,7 +100,7 @@ extern GSList *display_list; /* from gdisplay.c */
 /*  public functions  */
 
 void
-file_open_menu_init (void)
+file_open_dialog_menu_init (void)
 {
   GimpItemFactoryEntry  entry;
   PlugInProcDef        *file_proc;
@@ -137,6 +125,7 @@ file_open_menu_init (void)
       entry.entry.callback        = file_open_type_callback;
       entry.entry.callback_action = 0;
       entry.entry.item_type       = NULL;
+      entry.quark_string          = NULL;
       entry.help_page             = help_page;
       entry.description           = NULL;
 
@@ -145,10 +134,15 @@ file_open_menu_init (void)
 }
 
 void
-file_open_callback (GtkWidget *widget,
-		    gpointer   data)
+file_open_dialog_menu_reset (void)
 {
-  if (!fileload)
+  load_file_proc = NULL;
+}
+
+void
+file_open_dialog_show (void)
+{
+  if (! fileload)
     file_open_dialog_create ();
 
   gtk_widget_set_sensitive (GTK_WIDGET (fileload), TRUE);
@@ -162,81 +156,16 @@ file_open_callback (GtkWidget *widget,
   file_dialog_show (fileload);
 }
 
-void
-file_revert_callback (GtkWidget *widget,
-		      gpointer   data)
-{
-  GDisplay    *gdisplay;
-  GimpImage   *gimage;
-  GtkWidget   *query_box;
-  const gchar *filename;
-
-  gdisplay = gdisplay_active ();
-  if (!gdisplay || !gdisplay->gimage)
-    return;
-
-  gimage = gdisplay->gimage;
-
-  filename = gimp_object_get_name (GIMP_OBJECT (gimage));
-
-  query_box = gtk_object_get_data (GTK_OBJECT (gimage), REVERT_DATA_KEY);
-
-  if (! filename)
-    {
-      g_message (_("Revert failed.\n"
-		   "No filename associated with this image."));
-    }
-  else if (query_box)
-    {
-      gdk_window_raise (query_box->window);
-    }
-  else
-    {
-      gchar *text;
-
-      text = g_strdup_printf (_("Reverting %s to\n"
-				"%s\n\n"
-				"(You will lose all your changes\n"
-				"including all undo information)"),
-			      g_basename (filename),
-			      filename);
-
-      query_box = gimp_query_boolean_box (_("Revert Image?"),
-					  gimp_standard_help_func,
-					  "file/revert.html",
-					  FALSE,
-					  text,
-					  _("Yes"), _("No"),
-					  GTK_OBJECT (gimage), "destroy",
-					  file_revert_confirm_callback,
-					  gimage);
-
-      g_free (text);
-
-      gtk_object_set_data (GTK_OBJECT (gimage), REVERT_DATA_KEY, query_box);
-
-      gtk_widget_show (query_box);
-    }
-}
-
-void
-file_open_by_extension_callback (GtkWidget *widget,
-				 gpointer   data)
-{
-  load_file_proc = NULL;
-}
-
 gint
-file_open_with_display (gchar *filename,
-			gchar *raw_filename)
+file_open_with_display (gchar *filename)
 {
-  return file_open_with_proc_and_display (filename, raw_filename, NULL);
+  return file_open_with_proc_and_display (filename, filename, NULL);
 }
 
 
 /*  private functions  */
 
-static int
+static gint
 file_open_with_proc_and_display (gchar         *filename,
                                  gchar         *raw_filename,
                                  PlugInProcDef *file_proc)
@@ -915,46 +844,4 @@ clist_to_slist (GtkCList *file_list)
     }
 
   return list;
-}
-
-static void
-file_revert_confirm_callback (GtkWidget *widget,
-			      gboolean   revert,
-			      gpointer   data)
-{
-  GimpImage *old_gimage;
-
-  old_gimage = (GimpImage *) data;
-
-  gtk_object_set_data (GTK_OBJECT (old_gimage), REVERT_DATA_KEY, NULL);
-
-  if (revert)
-    {
-      GimpImage   *new_gimage;
-      const gchar *filename;
-      gint         status;
-
-      filename = gimp_object_get_name (GIMP_OBJECT (old_gimage));
-
-      new_gimage = file_open_image (old_gimage->gimp,
-				    filename, filename,
-				    _("Revert"),
-				    NULL,
-				    RUN_INTERACTIVE,
-				    &status);
-
-      if (new_gimage != NULL)
-	{
-	  undo_free (new_gimage);
-	  gdisplays_reconnect (old_gimage, new_gimage);
-	  gdisplays_resize_cursor_label (new_gimage);
-	  gdisplays_update_full (new_gimage);
-	  gdisplays_shrink_wrap (new_gimage);
-	  gimp_image_clean_all (new_gimage);
-	}
-      else if (status != GIMP_PDB_CANCEL)
-	{
-	  g_message (_("Revert failed.\n%s"), filename);
-	}
-    }
 }

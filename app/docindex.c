@@ -31,6 +31,7 @@
 
 #include "widgets/gimpdnd.h"
 
+#include "gui/file-commands.h"
 #include "gui/file-open-dialog.h"
 
 #include "dialog_handler.h"
@@ -102,7 +103,7 @@ static GList       *idea_list = NULL;
 /*  the ops buttons  */
 static GtkSignalFunc open_ext_callbacks[] = 
 {
-  idea_open_or_raise_callback, file_open_callback, NULL, NULL
+  idea_open_or_raise_callback, file_open_cmd_callback, NULL, NULL
 };
 
 static GtkSignalFunc raise_ext_callbacks[] = 
@@ -515,12 +516,12 @@ open_or_raise (gchar    *file_name,
 
       if (! pair.boole)
 	{
-	  file_open_with_display (file_name, file_name);
+	  file_open_with_display (file_name);
 	}
     }
   else
     {
-      file_open_with_display (file_name, file_name);
+      file_open_with_display (file_name);
     }
 }
 
@@ -617,7 +618,7 @@ idea_open_callback (GtkWidget   *widget,
     }
   else
     {
-      file_open_callback (widget, data);
+      file_open_dialog_show ();
     }
 }
 
@@ -634,7 +635,7 @@ idea_open_or_raise_callback (GtkWidget   *widget,
     }
   else
     {
-      file_open_callback (widget, data);
+      file_open_dialog_show ();
     }
 }
 

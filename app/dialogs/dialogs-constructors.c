@@ -33,6 +33,7 @@
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
+#include "core/gimppalette.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpbrushfactoryview.h"
@@ -66,6 +67,7 @@
 #include "layers-commands.h"
 #include "menus.h"
 #include "palette-editor.h"
+#include "palette-select.h"
 #include "palettes-commands.h"
 #include "paths-dialog.h"
 #include "pattern-select.h"
@@ -175,8 +177,8 @@ dialogs_gradient_select_get (GimpDialogFactory *factory,
 }
 
 GtkWidget *
-dialogs_palette_get (GimpDialogFactory *factory,
-		     GimpContext       *context)
+dialogs_palette_select_get (GimpDialogFactory *factory,
+			    GimpContext       *context)
 {
   return palette_dialog_create ();
 }
@@ -717,7 +719,18 @@ dialogs_edit_gradient_func (GimpData *data)
 void
 dialogs_edit_palette_func (GimpData *data)
 {
-  palette_dialog_edit_palette (data);
+  static PaletteEditor *palette_editor_dialog = NULL;
+
+  GimpPalette *palette;
+
+  palette = GIMP_PALETTE (data);
+
+  if (! palette_editor_dialog)
+    {
+      palette_editor_dialog = palette_editor_new ();
+    }
+
+  palette_editor_set_palette (palette_editor_dialog, palette);
 }
 
 

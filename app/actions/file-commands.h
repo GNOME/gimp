@@ -20,28 +20,35 @@
 #define __FILE_COMMANDS_H__
 
 
-void   file_new_cmd_callback            (GtkWidget *widget,
-					 gpointer   data,
-					 guint      action);
-void   file_open_cmd_callback           (GtkWidget *widget,
-					 gpointer   data);
-void   file_last_opened_cmd_callback    (GtkWidget *widget,
-					 gpointer   data,
-					 guint      action);
-void   file_save_cmd_callback           (GtkWidget *widget,
-					 gpointer   data);
-void   file_save_as_cmd_callback        (GtkWidget *widget,
-					 gpointer   data);
-void   file_save_a_copy_as_cmd_callback (GtkWidget *widget,
-					 gpointer   data);
-void   file_revert_cmd_callback         (GtkWidget *widget,
-					 gpointer   data);
-void   file_pref_cmd_callback           (GtkWidget *widget,
-					 gpointer   data);
-void   file_close_cmd_callback          (GtkWidget *widget,
-					 gpointer   data);
-void   file_quit_cmd_callback           (GtkWidget *widget,
-					 gpointer   data);
+void   file_new_cmd_callback               (GtkWidget *widget,
+					    gpointer   data,
+					    guint      action);
+
+void   file_open_by_extension_cmd_callback (GtkWidget *widget,
+					    gpointer   data);
+void   file_open_cmd_callback              (GtkWidget *widget,
+					    gpointer   data);
+void   file_last_opened_cmd_callback       (GtkWidget *widget,
+					    gpointer   data,
+					    guint      action);
+
+void   file_save_by_extension_cmd_callback (GtkWidget *widget,
+					    gpointer   data);
+void   file_save_cmd_callback              (GtkWidget *widget,
+					    gpointer   data);
+void   file_save_as_cmd_callback           (GtkWidget *widget,
+					    gpointer   data);
+void   file_save_a_copy_as_cmd_callback    (GtkWidget *widget,
+					    gpointer   data);
+
+void   file_revert_cmd_callback            (GtkWidget *widget,
+					    gpointer   data);
+void   file_pref_cmd_callback              (GtkWidget *widget,
+					    gpointer   data);
+void   file_close_cmd_callback             (GtkWidget *widget,
+					    gpointer   data);
+void   file_quit_cmd_callback              (GtkWidget *widget,
+					    gpointer   data);
 
 
 #endif /* __FILE_COMMANDS_H__ */

@@ -64,8 +64,32 @@ static void   palette_select_close_callback (GtkWidget      *widget,
 /*  list of active dialogs  */
 static GSList *palette_active_dialogs = NULL;
 
+/*  the main palette selection dialog  */
+PaletteSelect *palette_select_dialog = NULL;
+
 
 /*  public functions  */
+
+GtkWidget *
+palette_dialog_create (void)
+{
+  if (! palette_select_dialog)
+    {
+      palette_select_dialog = palette_select_new (NULL, NULL);
+    }
+
+  return palette_select_dialog->shell;
+}
+
+void
+palette_dialog_free (void)
+{
+  if (palette_select_dialog)
+    {
+      palette_select_free (palette_select_dialog);
+      palette_select_dialog = NULL;
+    }
+}
 
 PaletteSelect *
 palette_select_new (const gchar *title,
@@ -169,22 +193,7 @@ palette_select_new (const gchar *title,
   return psp;
 }
 
-
-/*  local functions  */
-
-static void
-palette_select_drop_palette (GtkWidget    *widget,
-			     GimpViewable *viewable,
-			     gpointer      data)
-{
-  PaletteSelect *psp;
-
-  psp = (PaletteSelect *) data;
-
-  gimp_context_set_palette (psp->context, GIMP_PALETTE (viewable));
-}
-
-static void
+void
 palette_select_free (PaletteSelect *psp)
 {
   if (psp)
@@ -199,6 +208,21 @@ palette_select_free (PaletteSelect *psp)
 
       g_free (psp);
     }
+}
+
+
+/*  local functions  */
+
+static void
+palette_select_drop_palette (GtkWidget    *widget,
+			     GimpViewable *viewable,
+			     gpointer      data)
+{
+  PaletteSelect *psp;
+
+  psp = (PaletteSelect *) data;
+
+  gimp_context_set_palette (psp->context, GIMP_PALETTE (viewable));
 }
 
 static void

@@ -20,16 +20,11 @@
 #define __FILE_SAVE_DIALOG_H__
 
 
-void   file_save_menu_init             (void);
+void   file_save_dialog_menu_init   (void);
+void   file_save_dialog_menu_reset  (void);
 
-void   file_save_callback              (GtkWidget   *widget,
-                                        gpointer     data);
-void   file_save_as_callback           (GtkWidget   *widget,
-                                        gpointer     data);
-void   file_save_a_copy_as_callback    (GtkWidget   *widget,
-                                        gpointer     data);
-void   file_save_by_extension_callback (GtkWidget   *widget,
-                                        gpointer     data);
+void   file_save_dialog_show        (GimpImage *gimage);
+void   file_save_a_copy_dialog_show (GimpImage *gimage);
 
 
 #endif /* __FILE_SAVE_DIALOG_H__ */

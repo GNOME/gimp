@@ -48,7 +48,7 @@
 #include "gximage.h"
 #include "image_render.h"
 #include "menus.h"
-#include "palette-editor.h"
+#include "palette-select.h"
 #include "palette-import-dialog.h"
 #include "pattern-select.h"
 #include "session.h"
@@ -165,8 +165,8 @@ gui_init (Gimp *gimp)
       gimprc.using_xserver_resolution = TRUE;
     }
 
-  file_open_menu_init ();
-  file_save_menu_init ();
+  file_open_dialog_menu_init ();
+  file_save_dialog_menu_init ();
 
   menus_reorder_plugins ();
 

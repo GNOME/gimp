@@ -34,7 +34,7 @@ GtkWidget * dialogs_pattern_select_get     (GimpDialogFactory *factory,
 					    GimpContext       *context);
 GtkWidget * dialogs_gradient_select_get    (GimpDialogFactory *factory,
 					    GimpContext       *context);
-GtkWidget * dialogs_palette_get            (GimpDialogFactory *factory,
+GtkWidget * dialogs_palette_select_get     (GimpDialogFactory *factory,
 					    GimpContext       *context);
 GtkWidget * dialogs_error_console_get      (GimpDialogFactory *factory,
 					    GimpContext       *context);

@@ -84,7 +84,6 @@ gradient_dialog_free (void)
     {
       gradient_select_free (gradient_select_dialog);
       gradient_select_dialog = NULL;
-
     }
 }
 

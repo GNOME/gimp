@@ -44,7 +44,7 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
   { "gimp:brush-select-dialog",    dialogs_brush_select_get,    TRUE,  TRUE,  FALSE },
   { "gimp:pattern-select-dialog",  dialogs_pattern_select_get,  TRUE,  TRUE,  FALSE },
   { "gimp:gradient-select-dialog", dialogs_gradient_select_get, TRUE,  TRUE,  FALSE },
-  { "gimp:palette-dialog",         dialogs_palette_get,         TRUE,  TRUE,  FALSE },
+  { "gimp:palette-select-dialog",  dialogs_palette_select_get,  TRUE,  TRUE,  FALSE },
   { "gimp:error-console-dialog",   dialogs_error_console_get,   TRUE,  TRUE,  TRUE  },
   { "gimp:document-index-dialog",  dialogs_document_index_get,  TRUE,  TRUE,  TRUE  },
   { "gimp:preferences-dialog",     dialogs_preferences_get,     TRUE,  FALSE, FALSE },

@@ -1,3 +1,35 @@
+2001-07-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp.[ch]: added a (commented out) function to open
+	files (to get rid of including gui/file-open-dialog.h)
+
+	* app/gui/file-open-dialog.[ch]
+	* app/gui/file-save-dialog.[ch]: renamed all functions because they
+	are no callbacks any more. Removed the _by_extension() callbacks.
+
+	* app/gui/file-commands.[ch]: added the
+	file_[open|save]_by_extension() callbaks here along with some
+	other stuff which has nothing to do with the file dialogs.
+
+	* app/gui/menus.c: added a helper function to create an item
+	factory, cleanup.
+
+	* app/gui/palette-editor.[ch]: contains only the editor for a
+	single palette now (removed the notebook and the palette list).
+	Renamed all functions to palette_editor_*(). Will be made a
+	dockable later.
+
+	* app/gui/palette-select.[ch]: made it work like the other
+	selection dialogs.
+
+	* app/app_procs.c
+	* app/docindex.c
+	* app/gui/dialogs-constructors.[ch]
+	* app/gui/dialogs.c
+	* app/gui/gradient-select.c
+	* app/gui/gui.c
+	* app/widgets/gimpdnd.c: changed accordingly.
+
 2001-07-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/disp_callbacks.c: the active_tool may change in the middle

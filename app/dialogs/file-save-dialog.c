@@ -41,7 +41,6 @@
 #include "docindex.h"
 #include "file-dialog-utils.h"
 #include "file-save-dialog.h"
-#include "gdisplay.h"
 #include "menus.h"
 
 #include "app_procs.h"
@@ -90,7 +89,7 @@ static gboolean   set_filename = TRUE;
 /*  public functions  */
 
 void
-file_save_menu_init (void)
+file_save_dialog_menu_init (void)
 {
   GimpItemFactoryEntry  entry;
   PlugInProcDef        *file_proc;
@@ -115,6 +114,7 @@ file_save_menu_init (void)
       entry.entry.callback        = file_save_type_callback;
       entry.entry.callback_action = 0;
       entry.entry.item_type       = NULL;
+      entry.quark_string          = NULL;
       entry.help_page             = help_page;
       entry.description           = NULL;
 
@@ -123,70 +123,20 @@ file_save_menu_init (void)
 }
 
 void
-file_save_callback (GtkWidget *widget,
-		    gpointer   data)
+file_save_dialog_menu_reset (void)
 {
-  GDisplay *gdisplay;
-
-  gdisplay = gdisplay_active ();
-  if (! gdisplay)
-    return;
-
-  if (! gimp_image_active_drawable (gdisplay->gimage))
-    return;
-
-  /*  Only save if the gimage has been modified  */
-  if (!gimprc.trust_dirty_flag || gdisplay->gimage->dirty != 0)
-    {
-      gchar *filename;
-
-      filename =
-	g_strdup (gimp_object_get_name (GIMP_OBJECT (gdisplay->gimage)));
-
-      if (! filename)
-	{
-	  file_save_as_callback (widget, data);
-	}
-      else
-	{
-	  gchar *raw_filename;
-	  gint   status;
-
-	  raw_filename = g_basename (filename);
-	  
-	  status = file_save (gdisplay->gimage,
-			      filename,
-			      raw_filename,
-			      RUN_WITH_LAST_VALS,
-			      TRUE);
-
-	  if (status != GIMP_PDB_SUCCESS &&
-	      status != GIMP_PDB_CANCEL)
-	    {
-	      g_message (_("Save failed.\n%s"), filename);
-	    }
-
-	}
-
-      g_free (filename);
-    }
+  save_file_proc = NULL;
 }
 
 void
-file_save_as_callback (GtkWidget *widget,
-		       gpointer   data)
+file_save_dialog_show (GimpImage *gimage)
 {
-  GDisplay    *gdisplay;
   const gchar *filename;
 
-  gdisplay = gdisplay_active ();
-  if (! gdisplay)
+  if (! gimp_image_active_drawable (gimage))
     return;
 
-  if (! gimp_image_active_drawable (gdisplay->gimage))
-    return;
-
-  the_gimage = gdisplay->gimage;
+  the_gimage = gimage;
 
   set_filename = TRUE;
 
@@ -206,7 +156,7 @@ file_save_as_callback (GtkWidget *widget,
 				   filename :
                                    "." G_DIR_SEPARATOR_S);
 
-  switch (gimp_drawable_type (gimp_image_active_drawable (gdisplay->gimage)))
+  switch (gimp_drawable_type (gimp_image_active_drawable (gimage)))
     {
     case RGB_GIMAGE:
       file_dialog_update_menus (save_procs, PLUG_IN_RGB_IMAGE);
@@ -232,26 +182,20 @@ file_save_as_callback (GtkWidget *widget,
 }
 
 void
-file_save_a_copy_as_callback (GtkWidget *widget,
-			      gpointer   data)
+file_save_a_copy_dialog_show (GimpImage *gimage)
 {
-  GDisplay    *gdisplay;
   const gchar *filename;
 
-  gdisplay = gdisplay_active ();
-  if (! gdisplay)
+  if (! gimp_image_active_drawable (gimage))
     return;
 
-  if (! gimp_image_active_drawable (gdisplay->gimage))
-    return;
-
-  the_gimage = gdisplay->gimage;
+  the_gimage = gimage;
 
   set_filename = FALSE;
 
   filename = gimp_object_get_name (GIMP_OBJECT (the_gimage));
 
-  if (!filesave)
+  if (! filesave)
     file_save_dialog_create ();
 
   gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
@@ -265,7 +209,7 @@ file_save_a_copy_as_callback (GtkWidget *widget,
                                    filename :
                                    "." G_DIR_SEPARATOR_S);
 
-  switch (gimp_drawable_type (gimp_image_active_drawable (gdisplay->gimage)))
+  switch (gimp_drawable_type (gimp_image_active_drawable (gimage)))
     {
     case RGB_GIMAGE:
       file_dialog_update_menus (save_procs, PLUG_IN_RGB_IMAGE);
@@ -288,13 +232,6 @@ file_save_a_copy_as_callback (GtkWidget *widget,
     }
 
   file_dialog_show (filesave);
-}
-
-void
-file_save_by_extension_callback (GtkWidget *widget,
-				 gpointer   data)
-{
-  save_file_proc = NULL;
 }
 
 
@@ -475,8 +412,8 @@ file_overwrite (gchar *filename,
 		gchar *raw_filename)
 {
   OverwriteData *overwrite_data;
-  GtkWidget *query_box;
-  gchar     *overwrite_text;
+  GtkWidget     *query_box;
+  gchar         *overwrite_text;
 
   overwrite_data = g_new (OverwriteData, 1);
   overwrite_data->full_filename = filename;

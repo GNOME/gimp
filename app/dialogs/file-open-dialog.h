@@ -20,19 +20,12 @@
 #define __FILE_OPEN_DIALOG_H__
 
 
-void   file_open_menu_init             (void);
+void   file_open_dialog_menu_init  (void);
+void   file_open_dialog_menu_reset (void);
 
-void   file_open_callback              (GtkWidget   *widget,
-                                        gpointer     data);
+void   file_open_dialog_show       (void);
 
-void   file_revert_callback            (GtkWidget   *widget,
-                                        gpointer     data);
-
-void   file_open_by_extension_callback (GtkWidget   *widget,
-                                        gpointer     data);
-
-gint   file_open_with_display          (gchar       *filename,
-					gchar       *raw_filename);
+gint   file_open_with_display      (gchar *filename);
 
 
 #endif /* __FILE_OPEN_DIALOG_H__ */
