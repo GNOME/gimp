@@ -1,3 +1,21 @@
+2003-01-28  Tor Lillqvist  <tml@iki.fi>
+
+	* libgimp/gimpui.def: Add missing entry points.
+
+	* plug-ins/common/plugin-defs.pl: Mark bz2, mail, screenshot and
+	url as optional (not built on Win32). Ditto for winclipboard and
+	winprint (Win32 only).
+
+	* plug-ins/common/mkgen.pl: Use -mwindows on Win32.
+
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/.cvsignore: Regenerated.
+
+	* configure.in: Correspondingly conditionally define BZ2, MAIL,
+	SCREENSHOT, URL, WINCLIPBOARD and WINPRINT, and AC_SUBST them.
+	Set XJT to empty always on Win32 (uses tar, mv and bzip2, which
+	aren't usually available).
+	
 2003-01-27  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/sample_colorize.c: code clean-up, added a few more

@@ -14,7 +14,7 @@
     'blur' => { libdep => 'gtk', ui => 1 },
     'borderaverage' => { libdep => 'gtk', ui => 1 },
     'bumpmap' => { libdep => 'gtk', ui => 1 },
-    'bz2' => { libdep => 'glib' },
+    'bz2' => { libdep => 'glib', optional => 1 },
     'c_astretch' => { libdep => 'glib' },
     'checkerboard' => { libdep => 'gtk', ui => 1 },
     'color_enhance' => { libdep => 'gtk', ui => 1 },
@@ -64,7 +64,7 @@
     'jpeg' => { libdep => 'gtk', ui => 1, optional => 1 },
     'laplace' => { libdep => 'glib', ui => 1 },
     'lic' => { libdep => 'gtk', ui => 1 },
-    'mail' => { libdep => 'gtk', ui => 1 },
+    'mail' => { libdep => 'gtk', ui => 1, optional => 1 },
     'mapcolor' => { libdep => 'gtk', ui => 1 },
     'max_rgb' => { libdep => 'gtk', ui => 1 },
     'mblur' => { libdep => 'gtk', ui => 1 },
@@ -93,7 +93,7 @@
     'rotate' => { libdep => 'glib' },
     'sample_colorize' => { libdep => 'gtk', ui => 1 },
     'scatter_hsv' => { libdep => 'gtk', ui => 1 },
-    'screenshot' => { libdep => 'gtk', ui => 1 },
+    'screenshot' => { libdep => 'gtk', ui => 1, optional => 1 },
     'sel_gauss' => { libdep => 'gtk', ui => 1 },
     'semiflatten' => { libdep => 'glib' },
     'sharpen' => { libdep => 'gtk', ui => 1 },
@@ -115,22 +115,19 @@
     'tiler' => { libdep => 'glib' },
     'uniteditor' => { libdep => 'gtk', ui => 1 },
     'unsharp' => { libdep => 'gtk', ui => 1 },
-    'url' => { libdep => 'glib' },
+    'url' => { libdep => 'glib', optional => 1 },
     'video' => { libdep => 'gtk', ui => 1 },
     'vinvert' => { libdep => 'glib' },
     'vpropagate' => { libdep => 'gtk', ui => 1 },
     'warp' => { libdep => 'gtk', ui => 1 },
     'waves' => { libdep => 'gtk', ui => 1 },
     'whirlpinch' => { libdep => 'gtk', ui => 1 },
+    'winclipboard' => { libdep => 'glib', ui => 1, optional => 1 },
     'wind' => { libdep => 'gtk', ui => 1 },
+    'winprint' => { libdep => 'glib', ui => 1, optional => 1 },
     'wmf' => { libdep => 'gtk', ui => 1 },
     'xbm' => { libdep => 'gtk', ui => 1 },
     'xpm' => { libdep => 'gtk', ui => 1, optional => 1 },
     'xwd' => { libdep => 'gtk', ui => 1 },
     'zealouscrop' => { libdep => 'glib' }
-);
-
-@extra = qw(
-    winclipboard.c
-    winprint.c
 );

@@ -209,7 +209,7 @@ if test x"$os_win32" = xyes; then
     esac
     if test x"$msnative_struct" = x ; then
       AC_MSG_RESULT([no way])
-      AC_MSG_WARN([build will be incompatible with GLib and GTK+ DLLs])
+      AC_MSG_WARN([build will be incompatible with GTK+ DLLs])
     else
       CFLAGS="$CFLAGS $msnative_struct"
       AC_MSG_RESULT([${msnative_struct}])
@@ -697,7 +697,6 @@ AC_ARG_WITH(libjpeg,  [  --without-libjpeg       build without JPEG support])
   fi
 
 AC_SUBST(JPEG)
-AC_SUBST(XJT)
 AC_SUBST(LIBJPEG)
 
 
@@ -950,6 +949,31 @@ if test "x$enable_python" != xno; then
 fi
 AM_CONDITIONAL(BUILD_PYTHON, test "x$enable_python" != xno)
 
+
+###########################################################
+# Some plug-ins don't build on Win32, others are Win32-only
+###########################################################
+
+if test x"$os_win32" = xyes; then
+  WINCLIPBOARD='winclipboard'
+  WINPRINT='winprint'
+  dnl xjt does build, but it isn't more confusing than useful on Win32,
+  dnl as it wants to run tar, mv and bzip2, which seldom are available
+  XJT=''
+else
+  BZ2='bz2'
+  MAIL='mail'
+  SCREENSHOT='screenshot'
+  URL='url'
+fi
+
+AC_SUBST(BZ2)
+AC_SUBST(MAIL)
+AC_SUBST(SCREENSHOT)
+AC_SUBST(URL)
+AC_SUBST(WINCLIPBOARD)
+AC_SUBST(WINPRINT)
+AC_SUBST(XJT)
 
 #################################################################
 # Determine where to install the GNOME2 desktop & mime info files
