@@ -34,8 +34,15 @@
    0.08  26th sept 97  by Thomas NOEL <thomas@minet.net> )
 */
 
+#include <stdlib.h>
+#include <string.h>
+
 #include "config.h"
+#include "gtk/gtk.h"
+#include "libgimp/gimp.h"
+
 #include "libgimp/stdplugins-intl.h"
+#include "gap_filter.h"
 #include "gap_dbbrowser_utils.h"
 
 extern int gap_debug;

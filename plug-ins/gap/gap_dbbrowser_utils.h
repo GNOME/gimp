@@ -41,11 +41,6 @@
 
 /* end of configuration */
 
-#include <stdlib.h>
-#include "gtk/gtk.h"
-#include "libgimp/gimp.h"
-# include "gap_filter.h"
-
 typedef struct {
   gchar *label;
   gchar *func;

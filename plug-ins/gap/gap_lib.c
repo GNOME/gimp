@@ -2707,7 +2707,7 @@ gap_vid_edit_paste(GimpRunModeType run_mode, gint32 image_id, long paste_mode)
        if(0 != p_rename_frame(ainfo_ptr, l_lo, l_hi))
        {
           gchar *tmp_errtxt;
-          tmp_errtxt = g_strdup_printf(_("Error: could not rename frame %ld to %ld"), l_lo, l_hi);
+          tmp_errtxt = g_strdup_printf(_("Error: could not rename frame %ld to %ld"), (long int)l_lo, (long int)l_hi);
           p_msg_win(ainfo_ptr->run_mode, tmp_errtxt);
 	  g_free(tmp_errtxt);
           return -1;
