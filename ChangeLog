@@ -1,5 +1,17 @@
 2003-06-25  Sven Neumann  <sven@gimp.org>
 
+	* app/text/gimptext-parasite.c (gimp_text_from_gdyntext_parasite):
+	attempt to convert text from locale encoding.
+
+	* app/vectors/gimpvectors-compat.c (gimp_vectors_compat_new):
+	allow paths with zero points (bug # 115955).
+
+	* plug-ins/script-fu/script-fu-server.c: if a connection to a
+	client is lost, invalidate file descriptors in the command queue.
+	Plugged a couple of memleaks.
+
+2003-06-25  Sven Neumann  <sven@gimp.org>
+
 	* app/text/gimptext-xlfd.[ch]: added convenience function
 	gimp_text_set_font_from_xlfd(). Improved and documented XLFD parsing.
 

@@ -243,7 +243,8 @@ script_fu_server_listen (gint timeout)
   else
     tvp = NULL;
 
-  /* Block until input arrives on one or more active sockets or timeout occurs. */
+  /* Block until input arrives on one or more active sockets
+     or timeout occurs. */
   server_read = server_active;
   if (select (FD_SETSIZE, &server_read, NULL, NULL, tvp) < 0)
     {
@@ -274,11 +275,9 @@ script_fu_server_listen (gint timeout)
 	    g_hash_table_insert (clientname_ht,
 				 GINT_TO_POINTER (new),
 				 g_strdup (inet_ntoa (clientname.sin_addr)));
-	    /*
 	    server_log ("Server: connect from host %s, port %d.\n",
 			inet_ntoa (clientname.sin_addr),
 			(unsigned int) ntohs (clientname.sin_port));
-			*/
 
 	    FD_SET (new, &server_active);
 	  }
@@ -286,18 +285,28 @@ script_fu_server_listen (gint timeout)
 	  {
 	    if (read_from_client (i) < 0)
 	      {
+                GList *list;
+
 		/*  Disassociate the client address with the socket  */
 		g_hash_table_remove (clientname_ht, GINT_TO_POINTER (i));
 
-		/*
 		server_log ("Server: disconnect from host %s, port %d.\n",
 			    inet_ntoa (clientname.sin_addr),
 			    (unsigned int) ntohs (clientname.sin_port));
-			    */
 
 		close (i);
 		FD_CLR (i, &server_active);
-	      }
+
+                /*  Invalidate the file descriptor for pending commands
+                    from the disconnected client.  */
+                for (list = command_queue; list; list = list->next)
+                  {
+                    SFCommand *cmd = (SFCommand *) command_queue->data;
+
+                    if (cmd->filedes == i)
+                      cmd->filedes = -1;
+                  }
+              }
 	  }
       }
 }
@@ -306,26 +315,28 @@ static void
 server_start (gint   port,
 	      gchar *logfile)
 {
-  SFCommand *cmd;
-
-  /*  Set up the clientname hash table  */
-  clientname_ht = g_hash_table_new (g_direct_hash, NULL);
-
-  /*  Setup up the server log file  */
-  if (logfile)
-    server_log_file = fopen (logfile, "a");
-  else
-    server_log_file = NULL;
-  if (server_log_file == NULL)
-    server_log_file = stdout;
-
-  /* Create the socket and set it up to accept connections. */
+  /* First of all, create the socket and set it up to accept connections. */
+  /* This may fail if there's a server running on this port already.      */
   server_sock = make_socket (port);
   if (listen (server_sock, 5) < 0)
     {
       perror ("listen");
       return;
     }
+
+  /*  Setup up the server log file  */
+  if (logfile && *logfile)
+    server_log_file = fopen (logfile, "a");
+  else
+    server_log_file = NULL;
+
+  if (! server_log_file)
+    server_log_file = stdout;
+
+  /*  Set up the clientname hash table  */
+  clientname_ht = g_hash_table_new_full (g_direct_hash, NULL,
+                                         NULL,
+                                         (GDestroyNotify) g_free);
 
   server_log ("Script-fu initialized and listening...\n");
 
@@ -340,8 +351,7 @@ server_start (gint   port,
 
       while (command_queue)
 	{
-	  /*  Get the current command  */
-	  cmd = (SFCommand *) command_queue->data;
+          SFCommand *cmd = (SFCommand *) command_queue->data;
 
 	  /*  Process the command  */
 	  execute_command (cmd);
@@ -357,10 +367,6 @@ server_start (gint   port,
     }
 
   server_quit ();
-
-  /*  Close the server log file  */
-  if (server_log_file != stdout)
-    fclose (server_log_file);
 }
 
 static gboolean
@@ -374,7 +380,6 @@ execute_command (SFCommand *cmd)
   gboolean     error;
   gint         i;
 
-  /*  Get the client address from the address/socket table  */
   server_log ("Processing request #%d\n", cmd->request_no);
   time (&clock1);
 
@@ -406,7 +411,7 @@ execute_command (SFCommand *cmd)
 
   /*  Write the response to the client  */
   for (i = 0; i < RESPONSE_HEADER; i++)
-    if (write (cmd->filedes, buffer + i, 1) < 0)
+    if (cmd->filedes > 0 && write (cmd->filedes, buffer + i, 1) < 0)
       {
 	/*  Write error  */
 	perror ("write");
@@ -414,7 +419,7 @@ execute_command (SFCommand *cmd)
       }
 
   for (i = 0; i < response_len; i++)
-    if (write (cmd->filedes, response + i, 1) < 0)
+    if (cmd->filedes > 0 && write (cmd->filedes, response + i, 1) < 0)
       {
 	/*  Write error  */
 	perror ("write");
@@ -499,8 +504,9 @@ read_from_client (gint filedes)
   time (&clock);
   server_log ("Received request #%d from IP address %s: %s on %s,"
 	      "[Request queue length: %d]",
-	      cmd->request_no, clientaddr, cmd->command, ctime (&clock), 
-	      queue_length);
+	      cmd->request_no,
+              clientaddr ? clientaddr : "<invalid>",
+              cmd->command, ctime (&clock), queue_length);
 
   return 0;
 }
@@ -519,7 +525,7 @@ make_socket (guint port)
       perror ("socket");
       gimp_quit ();
     }
-  setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &v, sizeof(v));
+  setsockopt (sock, SOL_SOCKET, SO_REUSEADDR, &v, sizeof(v));
 
   /* Give the socket a name. */
   name.sin_family      = AF_INET;
@@ -559,6 +565,27 @@ server_quit (void)
   for (i = 0; i < FD_SETSIZE; ++i)
     if (FD_ISSET (i, &server_active))
       shutdown (i, 2);
+
+  g_hash_table_destroy (clientname_ht);
+  clientname_ht = NULL;
+
+  while (command_queue)
+    {
+      SFCommand *cmd = (SFCommand *) command_queue->data;
+
+      g_free (cmd->command);
+      g_free (cmd);
+    }
+
+  g_list_free (command_queue);
+  command_queue = NULL;
+  queue_length  = 0;
+
+  /*  Close the server log file  */
+  if (server_log_file != stdout)
+    fclose (server_log_file);
+
+  server_log_file = NULL;
 }
 
 static gboolean
@@ -576,10 +603,11 @@ server_interface (void)
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_OK, ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
 			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
+
+			 GTK_STOCK_OK, ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
 
 			 NULL);
 
@@ -611,7 +639,6 @@ server_interface (void)
   gtk_widget_show (dlg);
 
   gtk_main ();
-  gdk_flush ();
 
   return sint.run;
 }
@@ -620,6 +647,8 @@ static void
 ok_callback (GtkWidget *widget,
 	     gpointer   data)
 {
+  g_free (sint.logfile);
+
   sint.port    = atoi (gtk_entry_get_text (GTK_ENTRY (sint.port_entry)));
   sint.logfile = g_strdup (gtk_entry_get_text (GTK_ENTRY (sint.log_entry)));
   sint.run     = TRUE;

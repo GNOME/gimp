@@ -58,8 +58,8 @@ gimp_vectors_compat_new (GimpImage              *gimage,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (name != NULL, NULL);
-  g_return_val_if_fail (points != NULL, NULL);
-  g_return_val_if_fail (n_points > 0, NULL);
+  g_return_val_if_fail (points != NULL || n_points == 0, NULL);
+  g_return_val_if_fail (n_points >= 0, NULL);
 
   vectors = gimp_vectors_new (gimage, name);
 
@@ -114,7 +114,7 @@ gimp_vectors_compat_new (GimpImage              *gimage,
     }
 
   stroke = gimp_bezier_stroke_new_from_coords (curr_stroke,
-                                               curr_coord - curr_stroke ,
+                                               curr_coord - curr_stroke,
                                                closed);
   gimp_vectors_stroke_add (vectors, stroke);
   g_object_unref (stroke);
