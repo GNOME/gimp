@@ -1,4 +1,4 @@
-#!/usr/app/bin/perl
+#!/usr/bin/perl
 # This is (hopefully) a demonstration of how pathetically easy it is to script
 # a neato effect you've come up with.  This lil' effect was created by xach,
 # and translated by sjburges (me).  You can consider it released under the GPL

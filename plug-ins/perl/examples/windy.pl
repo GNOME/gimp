@@ -1,4 +1,4 @@
-#!/usr/app/bin/perl
+#!/usr/bin/perl
 
 # sent to me by Seth Burgess <sjburges@ou.edu>
 # small changes my Marc Lehmann <pcg@goof.com>

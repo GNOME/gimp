@@ -19,6 +19,7 @@ bugs
 important issues
 
   * register dummy function to calm gimp down
+  * paths in module(!)
   * gimp->object_id, drawable_object_id remove!
   * PF_CUSTOM
   * gimp_display_image

@@ -1,4 +1,4 @@
-#!/usr/app/bin/perl
+#!/usr/bin/perl
 #[Xach] start off with an image, then pixelize it
 #[Xach] then add alpha->add layer mask                                   [20:21]
 #[Xach] render a checkerboard into the layer mask
