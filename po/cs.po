@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-09 14:49+0100\n"
-"PO-Revision-Date: 2004-01-09 18:10+0100\n"
+"POT-Creation-Date: 2004-01-13 04:11+0100\n"
+"PO-Revision-Date: 2004-01-13 14:36+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -170,7 +170,7 @@ msgstr ""
 #: app/main.c:527
 msgid ""
 "  --pdb-compat-mode <off | on | warn>\n"
-"                           Procedural Database compat mode.\n"
+"                           Procedural Database compatibility mode.\n"
 msgstr ""
 "  --pdb-compat-mode <off | on | warn>\n"
 "                           Režim kompatibility Procedural Database.\n"
@@ -312,7 +312,7 @@ msgstr "při zpracování prvku '%s': %s"
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "hodnota pro prvek %s není platný řetězec v kódování UTF-8"
 
-#: app/config/gimpconfig-path.c:144
+#: app/config/gimpconfig-path.c:157
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Nemohu expandovat ${%s}"
@@ -745,7 +745,11 @@ msgid ""
 "course of running the GIMP.  Most files will disappear when the GIMP exits, "
 "but some files are likely to remain, so it is best if this directory not be "
 "one that is shared by other users."
-msgstr "Nastavuje adresář pro dočasný úložný prostor. Při běhu GIMPu se zde budou objevovat soubory. Většina souborů zmizí, když GIMP skončí, ale některé soubory pravděpodobně zůstanou, takže je dobré, když tento adresář není sdílen jinými uživateli."
+msgstr ""
+"Nastavuje adresář pro dočasný úložný prostor. Při běhu GIMPu se zde budou "
+"objevovat soubory. Většina souborů zmizí, když GIMP skončí, ale některé "
+"soubory pravděpodobně zůstanou, takže je dobré, když tento adresář není "
+"sdílen jinými uživateli."
 
 #: app/config/gimprc-blurbs.h:310
 msgid ""
@@ -1213,7 +1217,7 @@ msgid "Guide"
 msgstr "Vodítko"
 
 #: app/core/core-enums.c:594 app/core/core-enums.c:624
-#: app/core/gimpchannel.c:1599 app/core/gimpselection.c:565
+#: app/core/gimpchannel.c:1597 app/core/gimpselection.c:565
 msgid "Selection Mask"
 msgstr "Maska výběru"
 
@@ -1234,20 +1238,20 @@ msgid "Linked Item"
 msgstr "Svázaná položka"
 
 #: app/core/core-enums.c:599 app/core/gimplayer.c:569 app/core/gimplayer.c:571
-#: app/gui/layers-commands.c:1070 app/gui/resize-dialog.c:204
+#: app/gui/layers-commands.c:1067 app/gui/resize-dialog.c:204
 #: app/pdb/layer_cmds.c:453
 msgid "Scale Layer"
 msgstr "Velikost vrstvy"
 
 #: app/core/core-enums.c:600 app/core/gimpimage-crop.c:117
 #: app/core/gimplayer.c:607 app/core/gimplayer.c:609
-#: app/gui/layers-commands.c:1164 app/pdb/layer_cmds.c:548
+#: app/gui/layers-commands.c:1161 app/pdb/layer_cmds.c:548
 msgid "Resize Layer"
 msgstr "Změnit velikost vrstvy"
 
 #: app/core/core-enums.c:601 app/core/core-enums.c:632
-#: app/core/gimplayer.c:982 app/gui/layers-commands.c:945
-#: app/gui/layers-commands.c:984
+#: app/core/gimplayer.c:982 app/gui/layers-commands.c:942
+#: app/gui/layers-commands.c:981
 msgid "Add Layer Mask"
 msgstr "Přidat masku vrstvy"
 
@@ -1340,8 +1344,8 @@ msgstr "Přejmenování položky"
 msgid "Set Item Linked"
 msgstr "Nastavit spojení položky"
 
-#: app/core/core-enums.c:629 app/gui/layers-commands.c:655
-#: app/gui/layers-commands.c:686 app/gui/layers-commands.c:720
+#: app/core/core-enums.c:629 app/gui/layers-commands.c:652
+#: app/gui/layers-commands.c:683 app/gui/layers-commands.c:717
 #: app/widgets/gimpdrawabletreeview.c:219 app/widgets/gimplayertreeview.c:212
 msgid "New Layer"
 msgstr "Nová vrstva"
@@ -1604,7 +1608,8 @@ msgstr "Kanál"
 msgid "Rename Channel"
 msgstr "Přejmenovat kanál"
 
-#: app/core/gimpchannel.c:255 app/tools/gimpeditselectiontool.c:1122
+#: app/core/gimpchannel.c:255 app/tools/gimpeditselectiontool.c:251
+#: app/tools/gimpeditselectiontool.c:1215
 msgid "Move Channel"
 msgstr "Přesunout kanál"
 
@@ -1640,27 +1645,27 @@ msgstr "Zvětšit kanál"
 msgid "Shrink Channel"
 msgstr "Zmenšit kanál"
 
-#: app/core/gimpchannel.c:467
+#: app/core/gimpchannel.c:465
 msgid "Scale Channel"
 msgstr "Velikost kanálu"
 
-#: app/core/gimpchannel.c:494
+#: app/core/gimpchannel.c:492
 msgid "Resize Channel"
 msgstr "Změnit velikost kanálu"
 
-#: app/core/gimpchannel.c:523
+#: app/core/gimpchannel.c:521
 msgid "Flip Channel"
 msgstr "Překlopit kanál"
 
-#: app/core/gimpchannel.c:550
+#: app/core/gimpchannel.c:548
 msgid "Rotate Channel"
 msgstr "Rotovat kanál"
 
-#: app/core/gimpchannel.c:580 app/core/gimpdrawable-transform.c:1108
+#: app/core/gimpchannel.c:578 app/core/gimpdrawable-transform.c:1108
 msgid "Transform Channel"
 msgstr "Transformovat kanál"
 
-#: app/core/gimpchannel.c:620
+#: app/core/gimpchannel.c:618
 msgid "Cannot stroke empty channel."
 msgstr "Nemohu vykreslit prázdný kanál."
 
@@ -1668,7 +1673,7 @@ msgstr "Nemohu vykreslit prázdný kanál."
 msgid "Set Channel Color"
 msgstr "Nastavit barvu kanálu"
 
-#: app/core/gimpchannel.c:1527
+#: app/core/gimpchannel.c:1525
 msgid "Set Channel Opacity"
 msgstr "Nastavit krytí kanálu"
 
@@ -1936,7 +1941,7 @@ msgstr "Nelze vrátit %s"
 
 #: app/core/gimpimage.c:1064 app/core/gimppalette-import.c:205
 #: app/core/gimppalette.c:661 app/gui/palette-import-dialog.c:587
-#: app/pdb/image_cmds.c:3520 app/widgets/gimpdatafactoryview.c:299
+#: app/pdb/image_cmds.c:3518 app/widgets/gimpdatafactoryview.c:299
 msgid "Untitled"
 msgstr "Bez názvu"
 
@@ -2053,45 +2058,45 @@ msgstr "Cesta nemůže být ještě níž."
 msgid "Lower Path"
 msgstr "Snížit cestu"
 
-#: app/core/gimpimagefile.c:469
+#: app/core/gimpimagefile.c:458
 msgid "Remote image"
 msgstr "Vzdálený obrázek"
 
-#: app/core/gimpimagefile.c:474
+#: app/core/gimpimagefile.c:463
 msgid "Could not open"
 msgstr "Nemohu otevřít"
 
-#: app/core/gimpimagefile.c:495
+#: app/core/gimpimagefile.c:484
 msgid "No preview available"
 msgstr "Náhled není k dispozici"
 
-#: app/core/gimpimagefile.c:499
+#: app/core/gimpimagefile.c:488
 msgid "Loading preview ..."
 msgstr "Načítám náhled..."
 
-#: app/core/gimpimagefile.c:503
+#: app/core/gimpimagefile.c:492
 msgid "Preview is out of date"
 msgstr "Náhled je zastaralý"
 
-#: app/core/gimpimagefile.c:507
+#: app/core/gimpimagefile.c:496
 msgid "Cannot create preview"
 msgstr "Nelze vytvořit náhled"
 
-#: app/core/gimpimagefile.c:514 app/gui/info-window.c:505
+#: app/core/gimpimagefile.c:503 app/gui/info-window.c:505
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d × %d pixelů"
 
-#: app/core/gimpimagefile.c:529
+#: app/core/gimpimagefile.c:518
 msgid "1 Layer"
 msgstr "1 vrstva"
 
-#: app/core/gimpimagefile.c:531
+#: app/core/gimpimagefile.c:520
 #, c-format
 msgid "%d Layers"
 msgstr "%d vrstvy(ev)"
 
-#: app/core/gimpimagefile.c:568
+#: app/core/gimpimagefile.c:557
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Nemohu otevřít  miniaturu '%s': %s"
@@ -2125,8 +2130,8 @@ msgid "Rename Layer"
 msgstr "Přejmenovat vrstvu"
 
 #: app/core/gimplayer.c:528 app/pdb/layer_cmds.c:685 app/pdb/layer_cmds.c:774
-#: app/tools/gimpeditselectiontool.c:251
-#: app/tools/gimpeditselectiontool.c:1124
+#: app/tools/gimpeditselectiontool.c:263
+#: app/tools/gimpeditselectiontool.c:1225
 msgid "Move Layer"
 msgstr "Přemístit vrstvu"
 
@@ -2262,8 +2267,8 @@ msgstr ""
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Neplatný řetězec v kódování UTF-8 v souboru se vzorkem '%s'."
 
-#: app/core/gimpselection.c:196 app/tools/gimpeditselectiontool.c:247
-#: app/tools/gimpeditselectiontool.c:1031 app/tools/gimpmoveoptions.c:184
+#: app/core/gimpselection.c:196 app/tools/gimpeditselectiontool.c:259
+#: app/tools/gimpeditselectiontool.c:1127 app/tools/gimpmoveoptions.c:184
 #: app/tools/gimpmoveoptions.c:185
 msgid "Move Selection"
 msgstr "Přesunout výběr"
@@ -2322,7 +2327,7 @@ msgstr "Nemohu vyříznout nebo kopírovat, protože zvolená oblast je prázdn�
 msgid "Cannot float selection because the selected region is empty."
 msgstr "Nemohu udělat výběr plovoucí, protože vybraná oblast je prázdná."
 
-#: app/core/gimpselection.c:837 app/gui/layers-commands.c:903
+#: app/core/gimpselection.c:837 app/gui/layers-commands.c:900
 msgid "Floating Selection"
 msgstr "Plovoucí výběr"
 
@@ -2473,15 +2478,15 @@ msgstr "Filtry barevného zobrazení"
 msgid "Layer Select"
 msgstr "Vrstva výběru"
 
-#: app/display/gimpdisplayshell-scale.c:468
+#: app/display/gimpdisplayshell-scale.c:499
 msgid "Zoom Ratio"
 msgstr "Zvětšení"
 
-#: app/display/gimpdisplayshell-scale.c:470
+#: app/display/gimpdisplayshell-scale.c:501
 msgid "Select Zoom Ratio"
 msgstr "Vyberte zvětšení"
 
-#: app/display/gimpdisplayshell-scale.c:499
+#: app/display/gimpdisplayshell-scale.c:530
 msgid "Zoom Ratio:"
 msgstr "Zvětšení:"
 
@@ -3181,8 +3186,8 @@ msgstr "/Uložit vš_echny chyby do souboru..."
 msgid "/Save _Selection to File..."
 msgstr "/Uložit vý_běr do souboru..."
 
-#: app/gui/file-commands.c:189 app/gui/file-open-dialog.c:714
-#: app/widgets/gimpdnd.c:1286 app/widgets/gimpdocumentview.c:477
+#: app/gui/file-commands.c:189 app/gui/file-open-dialog.c:712
+#: app/widgets/gimpdnd.c:1286 app/widgets/gimpdocumentview.c:468
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -3310,7 +3315,7 @@ msgstr "_Náhled"
 msgid "No Selection"
 msgstr "Žádný výběr"
 
-#: app/gui/file-open-dialog.c:503 app/gui/file-open-dialog.c:534
+#: app/gui/file-open-dialog.c:501 app/gui/file-open-dialog.c:532
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Miniatura č. %d z %d"
@@ -4804,24 +4809,24 @@ msgstr "Ořezat vrstvu"
 msgid "Layer Mask to Selection"
 msgstr "Maska vrstvy do výběru"
 
-#: app/gui/layers-commands.c:661
+#: app/gui/layers-commands.c:658
 msgid "Empty Layer Copy"
 msgstr "Kopie prázdné vrstvy"
 
-#: app/gui/layers-commands.c:688
+#: app/gui/layers-commands.c:685
 msgid "Create a New Layer"
 msgstr "Vytvořit novou vrstvu"
 
-#: app/gui/layers-commands.c:722
+#: app/gui/layers-commands.c:719
 msgid "Layer _Name:"
 msgstr "_Název vrstvy:"
 
 #. The size labels
-#: app/gui/layers-commands.c:726
+#: app/gui/layers-commands.c:723
 msgid "Layer Width:"
 msgstr "Šířka vrstvy:"
 
-#: app/gui/layers-commands.c:732 app/gui/resize-dialog.c:299
+#: app/gui/layers-commands.c:729 app/gui/resize-dialog.c:299
 #: app/gui/resize-dialog.c:324 app/gui/resize-dialog.c:570
 #: app/tools/gimpcroptool.c:999 app/tools/gimpscaletool.c:174
 #: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:573
@@ -4829,35 +4834,35 @@ msgstr "Šířka vrstvy:"
 msgid "Height:"
 msgstr "Výška:"
 
-#: app/gui/layers-commands.c:791
+#: app/gui/layers-commands.c:788
 msgid "Layer Fill Type"
 msgstr "Typ vyplňování vrstvy"
 
-#: app/gui/layers-commands.c:868
+#: app/gui/layers-commands.c:865
 msgid "Layer Attributes"
 msgstr "Vlastností vrstvy"
 
-#: app/gui/layers-commands.c:870 app/widgets/gimplayertreeview.c:210
+#: app/gui/layers-commands.c:867 app/widgets/gimplayertreeview.c:210
 msgid "Edit Layer Attributes"
 msgstr "Úpravy vlastností vrstvy"
 
-#: app/gui/layers-commands.c:906
+#: app/gui/layers-commands.c:903
 msgid "Layer _Name"
 msgstr "_Název vrstvy"
 
-#: app/gui/layers-commands.c:986
+#: app/gui/layers-commands.c:983
 msgid "Add a Mask to the Layer"
 msgstr "Přidat masku k vrstvě"
 
-#: app/gui/layers-commands.c:1005
+#: app/gui/layers-commands.c:1002
 msgid "Initialize Layer Mask to:"
 msgstr "Výchozí stav masky vrstvy:"
 
-#: app/gui/layers-commands.c:1022
+#: app/gui/layers-commands.c:1019
 msgid "In_vert Mask"
 msgstr "In_vertovat masku"
 
-#: app/gui/layers-commands.c:1095 app/gui/layers-commands.c:1189
+#: app/gui/layers-commands.c:1092 app/gui/layers-commands.c:1186
 msgid "Invalid width or height. Both must be positive."
 msgstr "Neplatná šířka nebo výška. Obě musí být kladné."
 
@@ -5315,21 +5320,21 @@ msgstr "/_Odstranit vzorek..."
 msgid "/_Refresh Patterns"
 msgstr "/_Aktualizovat vzorky"
 
-#: app/gui/plug-in-menus.c:339
+#: app/gui/plug-in-menus.c:343
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Z_opakovat \"%s\""
 
-#: app/gui/plug-in-menus.c:340
+#: app/gui/plug-in-menus.c:344
 #, c-format
 msgid "R_e-show \"%s\""
 msgstr "Znovu z_obrazit \"%s\""
 
-#: app/gui/plug-in-menus.c:366
+#: app/gui/plug-in-menus.c:370
 msgid "Repeat Last"
 msgstr "Opakovat poslední"
 
-#: app/gui/plug-in-menus.c:369
+#: app/gui/plug-in-menus.c:373
 msgid "Re-Show Last"
 msgstr "Znovu zobrazit poslední"
 
@@ -6166,33 +6171,33 @@ msgstr "Zapisuji '%s'\n"
 msgid "Adding theme '%s' (%s)\n"
 msgstr "Přidávám téma '%s' (%s)\n"
 
-#: app/gui/tips-dialog.c:94
+#: app/gui/tips-dialog.c:93
 msgid "<b>Your GIMP tips file appears to be missing!</b>"
 msgstr "<b>Váš soubor s tipy GIMPu zřejmě chybí!</b>"
 
-#: app/gui/tips-dialog.c:96
+#: app/gui/tips-dialog.c:95
 #, c-format
 msgid "There should be a file called '%s'. Please check your installation."
 msgstr ""
 "Měl existovat soubor s názvem '%s'. Zkontrolujte prosím svou instalaci."
 
-#: app/gui/tips-dialog.c:102
+#: app/gui/tips-dialog.c:101
 msgid "<b>The GIMP tips file could not be parsed!</b>"
 msgstr "<b>Soubor s tipy GIMPu nebylo možné zpracovat!</b>"
 
-#: app/gui/tips-dialog.c:133
+#: app/gui/tips-dialog.c:134
 msgid "GIMP Tip of the Day"
 msgstr "GIMP: Tip dne"
 
-#: app/gui/tips-dialog.c:197
+#: app/gui/tips-dialog.c:198
 msgid "Show tip next time GIMP starts"
 msgstr "Zobrazit tip při příštím spuštění GIMPu"
 
-#: app/gui/tips-dialog.c:221
+#: app/gui/tips-dialog.c:222
 msgid "_Previous Tip"
 msgstr "_Předchozí tip"
 
-#: app/gui/tips-dialog.c:231
+#: app/gui/tips-dialog.c:232
 msgid "_Next Tip"
 msgstr "_Následující tip"
 
@@ -6407,13 +6412,18 @@ msgid ""
 "The gimprc is used to store personal preferences that affect GIMP's default "
 "behavior.  Paths to search for brushes, palettes, gradients, patterns, plug-"
 "ins and modules can also configured here."
-msgstr "gimprc se používá pro ukládání osobních nastavení, která ovlivňují implicitní chování GIMPu. Také zde mohou být nastaveny cesty pro hledání stop, palet, přechodů, vzorků, zásuvných modulů a modulů."
+msgstr ""
+"gimprc se používá pro ukládání osobních nastavení, která ovlivňují "
+"implicitní chování GIMPu. Také zde mohou být nastaveny cesty pro hledání "
+"stop, palet, přechodů, vzorků, zásuvných modulů a modulů."
 
 #: app/gui/user-install-dialog.c:141
 msgid ""
 "GIMP uses an additional gtkrc file so you can configure it to look "
 "differently than other GTK apps."
-msgstr "GIMP používá doplňující soubor gtkrc, takže můžete nastavit vzhled odlišný od ostatních aplikací GTK."
+msgstr ""
+"GIMP používá doplňující soubor gtkrc, takže můžete nastavit vzhled odlišný "
+"od ostatních aplikací GTK."
 
 #: app/gui/user-install-dialog.c:147
 msgid ""
@@ -6421,7 +6431,11 @@ msgid ""
 "additional functionality.  These programs are searched for at run-time and "
 "information about their functionality and mod-times is cached in this file.  "
 "This file is intended to be GIMP-readable only, and should not be edited."
-msgstr "Zásuvné moduly a rozšíření jsou vnější programy spouštěné GIMPem, které poskytují doplňujícími funkce. Tyto programy jsou vyhledávány za běhu a informace o jejich funkci a časech změn jsou uloženy do tohoto souboru. Tento soubor je navržen pro čtení pouze GIMPem a neměl by být měněn."
+msgstr ""
+"Zásuvné moduly a rozšíření jsou vnější programy spouštěné GIMPem, které "
+"poskytují doplňujícími funkce. Tyto programy jsou vyhledávány za běhu a "
+"informace o jejich funkci a časech změn jsou uloženy do tohoto souboru. "
+"Tento soubor je navržen pro čtení pouze GIMPem a neměl by být měněn."
 
 #: app/gui/user-install-dialog.c:157
 msgid ""
@@ -6429,20 +6443,29 @@ msgid ""
 "of your configuration so it can. be remembered for the next session.  You "
 "may edit this file if you wish, but it is much easier to define the keys "
 "from within The GIMP.  Deleting this file will restore the default shortcuts."
-msgstr "Klávesové zkratky je možné v GIMPu dynamicky měnit. menurc je výpis vašeho nastavení, aby bylo uloženo pro příští sezení. Chcete-li, můžete jej upravovat, ale je mnohem jednodušší definovat klávesy za běhu GIMPu. Odstranění tohoto souboru obnoví implicitní zkratky."
+msgstr ""
+"Klávesové zkratky je možné v GIMPu dynamicky měnit. menurc je výpis vašeho "
+"nastavení, aby bylo uloženo pro příští sezení. Chcete-li, můžete jej "
+"upravovat, ale je mnohem jednodušší definovat klávesy za běhu GIMPu. "
+"Odstranění tohoto souboru obnoví implicitní zkratky."
 
 #: app/gui/user-install-dialog.c:167
 msgid ""
 "The sessionrc is used to store what dialog windows were open the last time "
 "you quit The GIMP.  You can configure The GIMP to reopen these dialogs at "
 "the saved position."
-msgstr "sesionrc se používá pro uložené, která okna dialogů byla otevřena, když jste naposledy ukončili GIMP. Můžete GIMP nastavit, aby tyto dialogy znovu otevřel na uložených pozicích."
+msgstr ""
+"sesionrc se používá pro uložené, která okna dialogů byla otevřena, když jste "
+"naposledy ukončili GIMP. Můžete GIMP nastavit, aby tyto dialogy znovu "
+"otevřel na uložených pozicích."
 
 #: app/gui/user-install-dialog.c:174
 msgid ""
 "This file holds a collection of standard media sizes that serve as image "
 "templates."
-msgstr "Tento soubor obsahuje soubor standardních velikostí médií, které slouží jako šablony obrázků."
+msgstr ""
+"Tento soubor obsahuje soubor standardních velikostí médií, které slouží jako "
+"šablony obrázků."
 
 #: app/gui/user-install-dialog.c:180
 msgid ""
@@ -6450,14 +6473,19 @@ msgid ""
 "additional units and use them just like you use the built-in units inches, "
 "millimeters, points and picas.  This file is overwritten each time you quit "
 "the GIMP."
-msgstr "unitrc se používá pro uládání databáze uživatelských jednotek. Můžete definovat vlastní jednotky a používat je stejně jako vestavěné palce, milimetry, body a piky. Tento soubor je přepsán pokaždé, když ukončíte GIMP."
+msgstr ""
+"unitrc se používá pro uládání databáze uživatelských jednotek. Můžete "
+"definovat vlastní jednotky a používat je stejně jako vestavěné palce, "
+"milimetry, body a piky. Tento soubor je přepsán pokaždé, když ukončíte GIMP."
 
 #: app/gui/user-install-dialog.c:189
 msgid ""
 "This folder is used to store user defined brushes. The GIMP checks this "
 "folder in addition to the system-wide GIMP brushes installation when "
 "searching for brushes."
-msgstr "Tento adresář se používá pro ukládání uživatelem definovaných stop. Při hledání stop GIMP tento adresář použije navíc k systémovým stopám GIMPu."
+msgstr ""
+"Tento adresář se používá pro ukládání uživatelem definovaných stop. Při "
+"hledání stop GIMP tento adresář použije navíc k systémovým stopám GIMPu."
 
 #: app/gui/user-install-dialog.c:197
 msgid ""
@@ -6465,35 +6493,49 @@ msgid ""
 "GIMP checks this folder in addition to the system-wide GIMP fonts "
 "installation when searching for fonts. Use this only if you really want to "
 "have GIMP-only fonts, otherwise put things in your global font directory."
-msgstr "Tento adresář se používá k ukládání písem, která chcete viděte jen v GIMPu. Při hledání písem GIMP tento adresář použije navíc k systémové instalaci písem GIMPu. Použijte to jen, pokud opravdu chcete mít písma jen pro GIMP, jinak je umístěte do svého globálního adresáře písem."
+msgstr ""
+"Tento adresář se používá k ukládání písem, která chcete viděte jen v GIMPu. "
+"Při hledání písem GIMP tento adresář použije navíc k systémové instalaci "
+"písem GIMPu. Použijte to jen, pokud opravdu chcete mít písma jen pro GIMP, "
+"jinak je umístěte do svého globálního adresáře písem."
 
 #: app/gui/user-install-dialog.c:207
 msgid ""
 "This folder is used to store user defined gradients.  The GIMP checks this "
 "folder in addition to the system-wide GIMP gradients installation when "
 "searching for gradients."
-msgstr "Tento adresář se používá k ukládání uživatelem definovaných přechodů. Při hledání přechodů GIMP tento adresář použije navíc k systémovým přechodům GIMPu."
+msgstr ""
+"Tento adresář se používá k ukládání uživatelem definovaných přechodů. Při "
+"hledání přechodů GIMP tento adresář použije navíc k systémovým přechodům "
+"GIMPu."
 
 #: app/gui/user-install-dialog.c:214
 msgid ""
 "This folder is used to store user defined palettes.  The GIMP checks this "
 "folder in addition to the system-wide GIMP palettes installation when "
 "searching for palettes."
-msgstr "Tento adresář se používá k ukládání uživatelem definovaných palet. Při hledání palet GIMP tento adresář použije navíc k systémovým paletám GIMPu."
+msgstr ""
+"Tento adresář se používá k ukládání uživatelem definovaných palet. Při "
+"hledání palet GIMP tento adresář použije navíc k systémovým paletám GIMPu."
 
 #: app/gui/user-install-dialog.c:221
 msgid ""
 "This folder is used to store user defined patterns.  The GIMP checks this "
 "folder in addition to the system-wide GIMP patterns installation when "
 "searching for patterns."
-msgstr "Tento adresář se používá k ukládání uživatelem definovaných vzorků. Při hledání vzorků GIMP tento adresář použije navíc k systémovým vzorkům GIMPu."
+msgstr ""
+"Tento adresář se používá k ukládání uživatelem definovaných vzorků. Při "
+"hledání vzorků GIMP tento adresář použije navíc k systémovým vzorkům GIMPu."
 
 #: app/gui/user-install-dialog.c:228
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
 "system-supported plug-ins.  The GIMP checks this folder in addition to the "
 "system-wide GIMP plug-in folder when searching for plug-ins."
-msgstr "Tento adresář se používá k ukládání uživatelem vytvořených, dočasných nebo jinak systémem nepodporovaných zásuvných modulů. Při hledání zásuvných modulů GIMP tento adresář použije navíc k systémovému adresáři modulů GIMPu."
+msgstr ""
+"Tento adresář se používá k ukládání uživatelem vytvořených, dočasných nebo "
+"jinak systémem nepodporovaných zásuvných modulů. Při hledání zásuvných "
+"modulů GIMP tento adresář použije navíc k systémovému adresáři modulů GIMPu."
 
 #: app/gui/user-install-dialog.c:236
 msgid ""
@@ -6501,7 +6543,11 @@ msgid ""
 "system-supported DLL modules.  The GIMP checks this folder in addition to "
 "the system-wide GIMP module folder when searching for modules to load during "
 "initialization."
-msgstr "Tento adresář se používá k ukládání uživatelem vytvořených, dočasných nebo jinak systémem nepodporovaných modulů DLL. Při hledání modulů, které načíst při inicializaci, GIMP tento adresář použije navíc k systémovému adresáři modulů GIMPu."
+msgstr ""
+"Tento adresář se používá k ukládání uživatelem vytvořených, dočasných nebo "
+"jinak systémem nepodporovaných modulů DLL. Při hledání modulů, které načíst "
+"při inicializaci, GIMP tento adresář použije navíc k systémovému adresáři "
+"modulů GIMPu."
 
 #: app/gui/user-install-dialog.c:245
 msgid ""
@@ -6509,14 +6555,21 @@ msgid ""
 "system-supported additions to the plug-in environment.  The GIMP checks this "
 "folder in addition to the system-wide GIMP environment folder when searching "
 "for plug-in environment modification files."
-msgstr "Tento adresář se používá k ukládání uživatelem vytvořených, dočasných nebo jinak systémem nepodporovaných dodatků k prostředí zásuvných modulů. Při hledání souborů úprav prostředí zásuvných modulů GIMP tento adresář použije navíc k systémovému adresáři preosředí GIMPu."
+msgstr ""
+"Tento adresář se používá k ukládání uživatelem vytvořených, dočasných nebo "
+"jinak systémem nepodporovaných dodatků k prostředí zásuvných modulů. Při "
+"hledání souborů úprav prostředí zásuvných modulů GIMP tento adresář použije "
+"navíc k systémovému adresáři preosředí GIMPu."
 
 #: app/gui/user-install-dialog.c:255
 msgid ""
 "This folder is used to store user created and installed scripts.  The GIMP "
 "checks this folder in addition to the systemwide GIMP scripts folder when "
 "searching for scripts."
-msgstr "Tento adresář se používá k ukládání uživatelem vytvořených a nainstalovaných skriptů. Při hledání skriptů GIMP tento adresář použije navíck systémovému adresáři skriptů GIMPu."
+msgstr ""
+"Tento adresář se používá k ukládání uživatelem vytvořených a nainstalovaných "
+"skriptů. Při hledání skriptů GIMP tento adresář použije navíck systémovému "
+"adresáři skriptů GIMPu."
 
 #: app/gui/user-install-dialog.c:263
 msgid "This folder is searched for image templates."
@@ -6532,7 +6585,11 @@ msgid ""
 "usage.  If The GIMP is unceremoniously killed, files of the form: gimp<#>."
 "<#> may persist in this folder.  These files are useless across GIMP "
 "sessions and can be destroyed with impunity."
-msgstr "Tento adresář se používá k dočasnému ukládání bufferů pro vracení, čímž se ušetří paměť. Pokud je GIMP nenormálně ukončen, mohou zde zbýt soubory ve formě: gimp<#>.<#>. Ty jsou mezi GIMP sezeními zbytečné a mohou být odstraněny jako smetí."
+msgstr ""
+"Tento adresář se používá k dočasnému ukládání bufferů pro vracení, čímž se "
+"ušetří paměť. Pokud je GIMP nenormálně ukončen, mohou zde zbýt soubory ve "
+"formě: gimp<#>.<#>. Ty jsou mezi GIMP sezeními zbytečné a mohou být "
+"odstraněny jako smetí."
 
 #: app/gui/user-install-dialog.c:282
 msgid "This folder is used to store tool options."
@@ -6540,11 +6597,13 @@ msgstr "Tento adresář je používán pro ukládání voleb nástrojů."
 
 #: app/gui/user-install-dialog.c:287
 msgid "This folder is used to store parameter files for the Curves tool."
-msgstr "Tento adresář se používá pro ukládání souborů parametrů pro nástroj Křivky."
+msgstr ""
+"Tento adresář se používá pro ukládání souborů parametrů pro nástroj Křivky."
 
 #: app/gui/user-install-dialog.c:292
 msgid "This folder is used to store parameter files for the Levels tool."
-msgstr "Tento adresář se používá pro ukládání souborů parametrů pro nástroj Úrovně."
+msgstr ""
+"Tento adresář se používá pro ukládání souborů parametrů pro nástroj Úrovně."
 
 #: app/gui/user-install-dialog.c:392
 msgid "Installation successful.  Click \"Continue\" to proceed."
@@ -6590,7 +6649,10 @@ msgid ""
 "under the terms of the GNU General Public License as published by the Free "
 "Software Foundation; either version 2 of the License, or (at your option) "
 "any later version."
-msgstr "Tento program je free software; můžete jej šířit a měnit za podmínek GNU General Public License publikované Free Software Foundation; buď verze 2 této licence, nebo (podle vašeho uvážené) jakékoli novější."
+msgstr ""
+"Tento program je free software; můžete jej šířit a měnit za podmínek GNU "
+"General Public License publikované Free Software Foundation; buď verze 2 "
+"této licence, nebo (podle vašeho uvážené) jakékoli novější."
 
 #: app/gui/user-install-dialog.c:771
 msgid ""
@@ -6598,14 +6660,20 @@ msgid ""
 "ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
 "FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for "
 "more details."
-msgstr "Tento program je šířen v naději, že bude užitečný, avšak BEZ JAKÉKOLI ZÁRUKY; neposkytují se ani odvozené záruky PRODEJNOSTI anebo VHODNOSTI PRO URČITÝ ÚČEL. Další podrobnosti hledejte v GNU General Public LIcense."
+msgstr ""
+"Tento program je šířen v naději, že bude užitečný, avšak BEZ JAKÉKOLI "
+"ZÁRUKY; neposkytují se ani odvozené záruky PRODEJNOSTI anebo VHODNOSTI PRO "
+"URČITÝ ÚČEL. Další podrobnosti hledejte v GNU General Public LIcense."
 
 #: app/gui/user-install-dialog.c:777
 msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
 "Place - Suite 330, Boston, MA 02111-1307, USA."
-msgstr "Kopii GNU General Public license byste měli získat s tímto programem; pokud tomu tak není, napište Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
+msgstr ""
+"Kopii GNU General Public license byste měli získat s tímto programem; pokud "
+"tomu tak není, napište Free Software Foundation, Inc., 59 Temple Place - "
+"Suite 330, Boston, MA 02111-1307, USA."
 
 #: app/gui/user-install-dialog.c:802
 msgid "Personal GIMP Folder"
@@ -6620,13 +6688,16 @@ msgstr "Klepnutím na \"Pokračovat\" vytvoříte váš osobní adresář."
 msgid ""
 "For a proper GIMP installation, a folder named '<b>%s</b>' needs to be "
 "created."
-msgstr "Pro řádnou instalaci GIMPu je potřeba vytvořit adresář s názvem <b>%s</b>."
+msgstr ""
+"Pro řádnou instalaci GIMPu je potřeba vytvořit adresář s názvem <b>%s</b>."
 
 #: app/gui/user-install-dialog.c:854
 msgid ""
 "This folder will contain a number of important files.  Click on one of the "
 "files or folders in the tree to get more information about the selected item."
-msgstr "Tento adresář bude obsahovat několik důležitých souborů. Kliknutím na jeden ze souborů nebo adresářů ve stromu získáte více informací o zvolené položce."
+msgstr ""
+"Tento adresář bude obsahovat několik důležitých souborů. Kliknutím na jeden "
+"ze souborů nebo adresářů ve stromu získáte více informací o zvolené položce."
 
 #: app/gui/user-install-dialog.c:942
 msgid "User Installation Log"
@@ -6692,7 +6763,10 @@ msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called "
 "\"Tile Cache\".  You should adjust its size to fit into memory.  Consider "
 "the amount of memory used by other running processes."
-msgstr "GIMP používá k ukládání dat obrázků omezené množství paměti, tak zvanou \"vyrovnávací paměť dlaždic\". Měli byste ji nastavit tak, aby se vešla do paměti. Počítejte také s pamětí používanou ostatními běžící procesy."
+msgstr ""
+"GIMP používá k ukládání dat obrázků omezené množství paměti, tak zvanou "
+"\"vyrovnávací paměť dlaždic\". Měli byste ji nastavit tak, aby se vešla do "
+"paměti. Počítejte také s pamětí používanou ostatními běžící procesy."
 
 #: app/gui/user-install-dialog.c:1185
 msgid ""
@@ -6700,7 +6774,12 @@ msgid ""
 "written to a swap file.  This file should be located on a local filesystem "
 "with enough free space (several hundred MB). On a UNIX system, you may want "
 "to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
-msgstr "Všechna data obrázků a zpětných úprav, která se nevejdou do vyrovnávací paměti dlaždic, budou zapisována do odkládacího souboru. Tento soubor by se měl nacházet na místním systému souborů s dostatečným volným prostorem (několik set MB). Na systémech UNIX asi budete chtít použít systémový dočasný adresář (\"/tmp\" nebo \"/var/tmp\")."
+msgstr ""
+"Všechna data obrázků a zpětných úprav, která se nevejdou do vyrovnávací "
+"paměti dlaždic, budou zapisována do odkládacího souboru. Tento soubor by se "
+"měl nacházet na místním systému souborů s dostatečným volným prostorem "
+"(několik set MB). Na systémech UNIX asi budete chtít použít systémový "
+"dočasný adresář (\"/tmp\" nebo \"/var/tmp\")."
 
 #: app/gui/user-install-dialog.c:1201
 msgid "Swap Folder:"
@@ -6710,7 +6789,9 @@ msgstr "Odkládací adresář:"
 msgid ""
 "GIMP can obtain this information from the windowing system.  However, "
 "usually this does not give useful values."
-msgstr "GIMP může získat tyto informace ze systému oken. Tím ale obvykle nedostane užitečné hodnoty."
+msgstr ""
+"GIMP může získat tyto informace ze systému oken. Tím ale obvykle nedostane "
+"užitečné hodnoty."
 
 #: app/gui/user-install-dialog.c:1260
 #, c-format
@@ -6725,7 +6806,9 @@ msgstr "Alternativně můžete nastavit rozlišení monitoru ručně."
 msgid ""
 "You can also press the \"Calibrate\" button to open a window which lets you "
 "determine your monitor resolution interactively."
-msgstr "Kliknutím na \"Kalibrovat\" můžete také otevřít okno, které vám umožní interaktivně určit rozlišení vašeho monitoru."
+msgstr ""
+"Kliknutím na \"Kalibrovat\" můžete také otevřít okno, které vám umožní "
+"interaktivně určit rozlišení vašeho monitoru."
 
 #: app/gui/user-install-dialog.c:1332
 msgid "Calibrate"
@@ -6943,7 +7026,7 @@ msgstr "Odstín-sytost"
 msgid "Threshold"
 msgstr "Práh"
 
-#: app/pdb/image_cmds.c:3652
+#: app/pdb/image_cmds.c:3650
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -7098,7 +7181,7 @@ msgstr "Pomocná procedura"
 msgid "Free Select"
 msgstr "Volný výběr"
 
-#: app/plug-in/plug-in.c:696
+#: app/plug-in/plug-in.c:684
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -7110,7 +7193,8 @@ msgstr ""
 "Modul spadl: \"%s\"\n"
 "(%s)\n"
 "\n"
-"Během svého ukončení mohl modul narušit vnitřní stav GIMPu. K opětovnému dosažení bezpečného stavu je vhodné uložit obrázky a restartovat GIMP."
+"Během svého ukončení mohl modul narušit vnitřní stav GIMPu. K opětovnému "
+"dosažení bezpečného stavu je vhodné uložit obrázky a restartovat GIMP."
 
 #: app/plug-in/plug-in-rc.c:155
 #, c-format
@@ -7737,17 +7821,22 @@ msgstr "Režim"
 msgid "Exposure:"
 msgstr "Míra:"
 
-#: app/tools/gimpeditselectiontool.c:249
-#: app/tools/gimpeditselectiontool.c:1071 app/vectors/gimpvectors.c:352
+#: app/tools/gimpeditselectiontool.c:247
+#: app/tools/gimpeditselectiontool.c:1167 app/vectors/gimpvectors.c:352
 msgid "Move Path"
 msgstr "Přesunout cestu"
 
-#: app/tools/gimpeditselectiontool.c:253
-#: app/tools/gimpeditselectiontool.c:1115
+#: app/tools/gimpeditselectiontool.c:255
+#: app/tools/gimpeditselectiontool.c:1210
+msgid "Move Layer Mask"
+msgstr "Přesunout masku vrstvy"
+
+#: app/tools/gimpeditselectiontool.c:267
+#: app/tools/gimpeditselectiontool.c:1220
 msgid "Move Floating Layer"
 msgstr "Přesunout plovoucí vrstvu"
 
-#: app/tools/gimpeditselectiontool.c:429 app/tools/gimpeditselectiontool.c:709
+#: app/tools/gimpeditselectiontool.c:474 app/tools/gimpeditselectiontool.c:777
 msgid "Move: "
 msgstr "Přesun: "
 
