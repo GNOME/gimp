@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu VERSION\n"
+"Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-23 16:11+0100\n"
+"POT-Creation-Date: 2004-03-25 02:01+0900\n"
 "PO-Revision-Date: 2003-06-05 07:54+0800\n"
 "Last-Translator: Dongsu Jang <iolo@hellocity.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -2301,7 +2301,7 @@ msgstr "<Toolbox>/확장/Script-Fu/로고/웹 제목 헤더..."
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/T_ruchet..."
-msgstr "<Toolbox>/확장/Script-Fu/패턴/T_ruchet..."
+msgstr "<Toolbox>/확장/Script-Fu/패턴/트루쳇(_R)..."
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:4
 msgid "Foreground Color"

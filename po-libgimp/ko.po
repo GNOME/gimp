@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins 1.1.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:20+0100\n"
+"POT-Creation-Date: 2004-03-25 00:19+0900\n"
 "PO-Revision-Date: 2003-06-05 07:55+0800\n"
 "Last-Translator: Dongsu Jang <iolo@hellocity.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -385,11 +385,11 @@ msgstr "현재:"
 msgid "Old:"
 msgstr "이전:"
 
-#: libgimpwidgets/gimpfileentry.c:350
+#: libgimpwidgets/gimpfileentry.c:351
 msgid "Select Folder"
 msgstr "폴더 선택"
 
-#: libgimpwidgets/gimpfileentry.c:364
+#: libgimpwidgets/gimpfileentry.c:353
 msgid "Select File"
 msgstr "파일 선택"
 
@@ -406,14 +406,12 @@ msgid "GigaBytes"
 msgstr "기가바이트"
 
 #: libgimpwidgets/gimppatheditor.c:243
-#, fuzzy
 msgid "Writable"
-msgstr "삼각형"
+msgstr "기록 가능"
 
 #: libgimpwidgets/gimppatheditor.c:252
-#, fuzzy
 msgid "Folder"
-msgstr "폴더 선택"
+msgstr "폴더"
 
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
@@ -519,9 +517,8 @@ msgid "Seed random number generator with a generated random number"
 msgstr "생성된 난수를 난수 생성기의 씨앗으로 사용합니다"
 
 #: libgimpwidgets/gimpwidgets.c:1312
-#, fuzzy
 msgid "_Randomize"
-msgstr "난수화"
+msgstr "난수화(_R)"
 
 #: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-23 16:10+0100\n"
+"POT-Creation-Date: 2004-03-25 00:17+0900\n"
 "PO-Revision-Date: 2004-01-20 19:30+0900\n"
 "Last-Translator: Dongsu Jang <iolo@hellocity.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -30,6 +30,8 @@ msgid ""
 "location and permissions of the swap directory defined in your Preferences "
 "(currently \"%s\")."
 msgstr ""
+"테스트 스왑 파일을 열 수 없습니다. 데이터의 손실을 피하려면 환경 설정에 정의"
+"된 스왑 디렉토리(현재 \"%s\")의 위치와 허가 권한을 확인하십시오."
 
 #: app/app_procs.c:275
 #, c-format
@@ -316,7 +318,7 @@ msgstr "${%s}을(를) 확장할 수 없습니다."
 #: app/core/gimpbrush.c:396 app/core/gimpbrushgenerated.c:379
 #: app/core/gimpbrushpipe.c:349 app/core/gimpgradient.c:352
 #: app/core/gimppalette.c:369 app/core/gimppattern.c:328
-#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:420
+#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:431
 #: app/xcf/xcf.c:273
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -467,15 +469,15 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:118
 msgid "When enabled, the selected brush will be used for all tools."
-msgstr ""
+msgstr "선택하면, 모든 도구에서 선택한 브러시를 사용합니다."
 
 #: app/config/gimprc-blurbs.h:124
 msgid "When enabled, the selected gradient will be used for all tools."
-msgstr ""
+msgstr "선택하면, 모든 도구에서 선택한 그라디언트를 사용합니다."
 
 #: app/config/gimprc-blurbs.h:127
 msgid "When enabled, the selected pattern will be used for all tools."
-msgstr ""
+msgstr "선택하면, 모든 도구에서 선택한 무늬를 사용합니다."
 
 #: app/config/gimprc-blurbs.h:143
 msgid "Sets the browser used by the help system."
@@ -802,9 +804,8 @@ msgstr ""
 "과 무관하게, 최소 실행 취소 횟수로 지정된 만큼의 실행 취소는 할 수 있습니다."
 
 #: app/config/gimprc-blurbs.h:378
-#, fuzzy
 msgid "Sets the size of the previews in the Undo History."
-msgstr "투명도을 표시할 격자의 크기를 지정하십시오."
+msgstr "실행 취소 이력의 미리보기 크기를 지정하십시오."
 
 #: app/config/gimprc-blurbs.h:381
 msgid "When enabled, pressing F1 will open the help browser."
@@ -1320,14 +1321,12 @@ msgid "Change Indexed Palette"
 msgstr "인덱스된 색상표 바꾸기"
 
 #: app/core/core-enums.c:621
-#, fuzzy
 msgid "Drawable"
-msgstr "옵셋 Drawable"
+msgstr "Drawable"
 
 #: app/core/core-enums.c:622
-#, fuzzy
 msgid "Drawable Mod"
-msgstr "Drawable 프로시져"
+msgstr "Drawable 모드"
 
 #: app/core/core-enums.c:624
 msgid "Rename Item"
@@ -2432,16 +2431,16 @@ msgstr "%s을(를) 닫습니까?"
 
 #: app/display/gimpdisplayshell.c:1414
 msgid "_Discard changes"
-msgstr ""
+msgstr "바뀐 내용 버리기(_D)"
 
 #: app/display/gimpdisplayshell.c:1454
-#, fuzzy, c-format
+#, c-format
 msgid "Changes were made to '%s'."
-msgstr "'%s'이(가) 바뀌었습니다. 그래도 닫습니까?"
+msgstr "'%s'이(가) 바뀌었습니다."
 
 #: app/display/gimpdisplayshell.c:1468
 msgid "Unsaved changes will be lost."
-msgstr ""
+msgstr "저장하지 않은 바뀐 내용을 잃게 됩니다."
 
 #: app/display/gimpdisplayshell-dnd.c:87
 msgid "Drop New Layer"
@@ -2651,9 +2650,8 @@ msgid "%s Channel Copy"
 msgstr "채널 %s 복사"
 
 #: app/gui/channels-commands.c:322
-#, fuzzy
 msgid "Empty Channel"
-msgstr "빈 채널 복사"
+msgstr "빈 채널"
 
 #: app/gui/channels-commands.c:338
 msgid "New Channel Color"
@@ -2801,7 +2799,7 @@ msgstr ""
 
 #: app/gui/convert-dialog.c:498
 msgid "Cannot convert to a palette with more than 256 colors."
-msgstr ""
+msgstr "256색 이상을 가진 색상표로 변환할 수 없습니다."
 
 #: app/gui/convert-dialog.c:517
 msgid "Select Custom Palette"
@@ -2928,91 +2926,91 @@ msgstr "/탭 더하기"
 
 #: app/gui/dialogs-menu.c:68
 msgid "/Add Tab/Tool _Options"
-msgstr "/탭 더하기/도구 선택사항(_O)"
+msgstr "/탭 더하기(A)/도구 선택사항(_O)"
 
 #: app/gui/dialogs-menu.c:70
 msgid "/Add Tab/_Device Status"
-msgstr "/탭 더하기/장치 상태(_D)"
+msgstr "/탭 더하기(A)/장치 상태(_D)"
 
 #: app/gui/dialogs-menu.c:75
 msgid "/Add Tab/_Layers"
-msgstr "/탭 더하기/레이어(_L)"
+msgstr "/탭 더하기(A)/레이어(_L)"
 
 #: app/gui/dialogs-menu.c:77
 msgid "/Add Tab/_Channels"
-msgstr "/탭 더하기/채널(_C)"
+msgstr "/탭 더하기(A)/채널(_C)"
 
 #: app/gui/dialogs-menu.c:79
 msgid "/Add Tab/_Paths"
-msgstr "/탭 더하기/경로(_P)"
+msgstr "/탭 더하기(A)/경로(_P)"
 
 #: app/gui/dialogs-menu.c:81
 msgid "/Add Tab/Inde_xed Palette"
-msgstr "/탭 더하기/인덱스된 색상표(_X)"
+msgstr "/탭 더하기(A)/인덱스된 색상표(_X)"
 
 #: app/gui/dialogs-menu.c:83
 msgid "/Add Tab/Histogra_m"
-msgstr "/탭 더하기/히스토그램(_M)"
+msgstr "/탭 더하기(A)/히스토그램(_M)"
 
 #: app/gui/dialogs-menu.c:85
 msgid "/Add Tab/_Selection Editor"
-msgstr "/탭 더하기/선택 편집기(_S)"
+msgstr "/탭 더하기(A)/선택 편집기(_S)"
 
 #: app/gui/dialogs-menu.c:87
 msgid "/Add Tab/Na_vigation"
-msgstr "/탭 더하기/네비게이션(_V)"
+msgstr "/탭 더하기(A)/네비게이션(_V)"
 
 #: app/gui/dialogs-menu.c:89
 msgid "/Add Tab/_Undo History"
-msgstr "/탭 더하기/실행 취소 이력(_U)"
+msgstr "/탭 더하기(A)/실행 취소 이력(_U)"
 
 #: app/gui/dialogs-menu.c:94
 msgid "/Add Tab/Colo_rs"
-msgstr "/탭 더하기/색상(_R)"
+msgstr "/탭 더하기(A)/색상(_R)"
 
 #: app/gui/dialogs-menu.c:96
 msgid "/Add Tab/Brus_hes"
-msgstr "/탭 더하기/브러시(_H)..."
+msgstr "/탭 더하기(A)/브러시(_H)..."
 
 #: app/gui/dialogs-menu.c:98
 msgid "/Add Tab/P_atterns"
-msgstr "/탭 더하기/무늬(_A)"
+msgstr "/탭 더하기(A)/무늬(_A)"
 
 #: app/gui/dialogs-menu.c:100
 msgid "/Add Tab/_Gradients"
-msgstr "/탭 더하기/그라디언트(_G)"
+msgstr "/탭 더하기(A)/그라디언트(_G)"
 
 #: app/gui/dialogs-menu.c:102
 msgid "/Add Tab/Pal_ettes"
-msgstr "/탭 더하기/색상표(_E)"
+msgstr "/탭 더하기(A)/색상표(_E)"
 
 #: app/gui/dialogs-menu.c:104
 msgid "/Add Tab/_Fonts"
-msgstr "/탭 더하기/글꼴(_F)"
+msgstr "/탭 더하기(A)/글꼴(_F)"
 
 #: app/gui/dialogs-menu.c:106
 msgid "/Add Tab/_Buffers"
-msgstr "/탭 더하기/버퍼(_B)"
+msgstr "/탭 더하기(A)/버퍼(_B)"
 
 #: app/gui/dialogs-menu.c:111
 msgid "/Add Tab/_Images"
-msgstr "/탭 더하기/이미지(_M)"
+msgstr "/탭 더하기(A)/이미지(_M)"
 
 #: app/gui/dialogs-menu.c:113
 msgid "/Add Tab/Document Histor_y"
-msgstr "/탭 더하기/문서 이력(_Y)"
+msgstr "/탭 더하기(A)/문서 이력(_Y)"
 
 #: app/gui/dialogs-menu.c:115
 msgid "/Add Tab/_Templates"
-msgstr "/탭 더하기/템플릿(_T)"
+msgstr "/탭 더하기(A)/템플릿(_T)"
 
 #: app/gui/dialogs-menu.c:117
 msgid "/Add Tab/T_ools"
-msgstr "/탭 더하기/도구(_O)"
+msgstr "/탭 더하기(A)/도구(_O)"
 
 #: app/gui/dialogs-menu.c:119
 msgid "/Add Tab/Error Co_nsole"
-msgstr "/탭 더하기/오류 콘솔(_N)"
+msgstr "/탭 더하기(A)/오류 콘솔(_N)"
 
 #: app/gui/dialogs-menu.c:122
 msgid "/_Close Tab"
@@ -3028,39 +3026,39 @@ msgstr "/미리보기 크기(_Z)"
 
 #: app/gui/dialogs-menu.c:137
 msgid "/Preview Size/_Tiny"
-msgstr "/미리보기 크기/아주 작게(_T)"
+msgstr "/미리보기 크기(Z)/아주 작게(_T)"
 
 #: app/gui/dialogs-menu.c:143
 msgid "/Preview Size/E_xtra Small"
-msgstr "/미리보기 크기/더 작게(_X)"
+msgstr "/미리보기 크기(Z)/더 작게(_X)"
 
 #: app/gui/dialogs-menu.c:144
 msgid "/Preview Size/_Small"
-msgstr "/미리보기 크기/작게(_S)"
+msgstr "/미리보기 크기(Z)/작게(_S)"
 
 #: app/gui/dialogs-menu.c:145
 msgid "/Preview Size/_Medium"
-msgstr "/미리보기 크기/보통(_M)"
+msgstr "/미리보기 크기(Z)/보통(_M)"
 
 #: app/gui/dialogs-menu.c:146
 msgid "/Preview Size/_Large"
-msgstr "/미리보기 크기/크게(_L)"
+msgstr "/미리보기 크기(Z)/크게(_L)"
 
 #: app/gui/dialogs-menu.c:147
 msgid "/Preview Size/Ex_tra Large"
-msgstr "/미리보기 크기/더 크게(_T)"
+msgstr "/미리보기 크기(Z)/더 크게(_T)"
 
 #: app/gui/dialogs-menu.c:148
 msgid "/Preview Size/_Huge"
-msgstr "/미리보기 크기/아주 크게(_H)"
+msgstr "/미리보기 크기(Z)/아주 크게(_H)"
 
 #: app/gui/dialogs-menu.c:149
 msgid "/Preview Size/_Enormous"
-msgstr "/미리보기 크기/거대하게(_E)"
+msgstr "/미리보기 크기(Z)/거대하게(_E)"
 
 #: app/gui/dialogs-menu.c:150
 msgid "/Preview Size/_Gigantic"
-msgstr "/미리보기 크기/더 거대하게(_G)"
+msgstr "/미리보기 크기(Z)/더 거대하게(_G)"
 
 #: app/gui/dialogs-menu.c:152
 msgid "/_Tab Style"
@@ -3068,23 +3066,23 @@ msgstr "/탭 형태(_T)"
 
 #: app/gui/dialogs-menu.c:154
 msgid "/Tab Style/_Icon"
-msgstr "/탭 형태/아이콘(_I)"
+msgstr "/탭 형태(T)/아이콘(_I)"
 
 #: app/gui/dialogs-menu.c:160
 msgid "/Tab Style/Current _Status"
-msgstr "/탭 형태/현재 상태(_S)"
+msgstr "/탭 형태(T)/현재 상태(_S)"
 
 #: app/gui/dialogs-menu.c:161
 msgid "/Tab Style/_Text"
-msgstr "/탭 형태/글자(_T)"
+msgstr "/탭 형태(T)/글자(_T)"
 
 #: app/gui/dialogs-menu.c:162
 msgid "/Tab Style/I_con & Text"
-msgstr "/탭 형태/아이콘과 글자(_C)"
+msgstr "/탭 형태(T)/아이콘과 글자(_C)"
 
 #: app/gui/dialogs-menu.c:163
 msgid "/Tab Style/St_atus & Text"
-msgstr "/탭 형태/상태와 글자(_A)"
+msgstr "/탭 형태(T)/상태와 글자(_A)"
 
 #: app/gui/dialogs-menu.c:165
 msgid "/View as _List"
@@ -3187,7 +3185,7 @@ msgstr "/모든 오류를 파일에 쓰기(_A)..."
 msgid "/Save _Selection to File..."
 msgstr "/선택을 파일에 쓰기(_S)..."
 
-#: app/gui/file-commands.c:188 app/gui/file-open-dialog.c:244
+#: app/gui/file-commands.c:188 app/gui/file-open-dialog.c:190
 #: app/widgets/gimpdnd.c:1294 app/widgets/gimpdocumentview.c:468
 #, c-format
 msgid ""
@@ -3199,7 +3197,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/gui/file-commands.c:233 app/gui/file-save-dialog.c:341
+#: app/gui/file-commands.c:233 app/gui/file-save-dialog.c:321
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -3289,7 +3287,7 @@ msgstr ""
 msgid "Confirm Image Size"
 msgstr "이미지 크기 확인"
 
-#: app/gui/file-open-dialog.c:105
+#: app/gui/file-open-dialog.c:104
 msgid "Open Image"
 msgstr "이미지 열기"
 
@@ -3297,7 +3295,7 @@ msgstr "이미지 열기"
 msgid "/Automatic"
 msgstr "/자동"
 
-#: app/gui/file-save-dialog.c:101 app/gui/file-save-dialog.c:151
+#: app/gui/file-save-dialog.c:101 app/gui/file-save-dialog.c:152
 msgid "Save Image"
 msgstr "이미지 저장"
 
@@ -3305,7 +3303,7 @@ msgstr "이미지 저장"
 msgid "Save a Copy of the Image"
 msgstr "이미지의 사본을 저장"
 
-#: app/gui/file-save-dialog.c:260
+#: app/gui/file-save-dialog.c:240
 #, c-format
 msgid ""
 "File '%s' exists.\n"
@@ -3314,7 +3312,7 @@ msgstr ""
 "'%s'이(가) 존재합니다.\n"
 "덮어쓰겠습니까?"
 
-#: app/gui/file-save-dialog.c:264
+#: app/gui/file-save-dialog.c:244
 msgid "File Exists!"
 msgstr "파일이 존재합니다!"
 
@@ -3429,19 +3427,19 @@ msgstr "/왼쪽 색상 불러오기(_L)"
 
 #: app/gui/gradient-editor-menu.c:71
 msgid "/Load Left Color From/_Left Neighbor's Right Endpoint"
-msgstr "/왼쪽 색상/왼쪽 인접 구획의 오른쪽 끝점(_L)"
+msgstr "/왼쪽 색상 불러오기(L)/왼쪽 인접 구획의 오른쪽 끝점(_L)"
 
 #: app/gui/gradient-editor-menu.c:75
 msgid "/Load Left Color From/_Right Endpoint"
-msgstr "/왼쪽 색상/오른쪽 끝점(_R)"
+msgstr "/왼쪽 색상 불러오기(L)/오른쪽 끝점(_R)"
 
 #: app/gui/gradient-editor-menu.c:79
 msgid "/Load Left Color From/_FG Color"
-msgstr "/왼쪽 색상/전경색(_F)"
+msgstr "/왼쪽 색상 불러오기(L)/전경색(_F)"
 
 #: app/gui/gradient-editor-menu.c:83
 msgid "/Load Left Color From/_BG Color"
-msgstr "/왼쪽 색상/배경색(_B)"
+msgstr "/왼쪽 색상 불러오기(L)/배경색(_B)"
 
 #: app/gui/gradient-editor-menu.c:101
 msgid "/_Save Left Color To"
@@ -3457,19 +3455,19 @@ msgstr "/오른쪽 색상 불러오기(_O)"
 
 #: app/gui/gradient-editor-menu.c:123
 msgid "/Load Right Color From/_Right Neighbor's Left Endpoint"
-msgstr "/오른쪽 색상/오른쪽 인접 구획의 왼쪽 끝점(_R)"
+msgstr "/오른쪽 색상 불러오기(_O)/오른쪽 인접 구획의 왼쪽 끝점(_R)"
 
 #: app/gui/gradient-editor-menu.c:127
 msgid "/Load Right Color From/_Left Endpoint"
-msgstr "/오른쪽 색상/왼쪽 끝점(_L)"
+msgstr "/오른쪽 색상 불러오기(_O)/왼쪽 끝점(_L)"
 
 #: app/gui/gradient-editor-menu.c:131
 msgid "/Load Right Color From/_FG Color"
-msgstr "/오른쪽 색상/전경색(_F)"
+msgstr "/오른쪽 색상 불러오기(_O)/전경색(_F)"
 
 #: app/gui/gradient-editor-menu.c:135
 msgid "/Load Right Color From/_BG Color"
-msgstr "/오른쪽 색상/배경색(_B)"
+msgstr "/오른쪽 색상 불러오기(_O)/배경색(_B)"
 
 #: app/gui/gradient-editor-menu.c:153
 msgid "/Sa_ve Right Color To"
@@ -3517,7 +3515,7 @@ msgstr "/배색 유형/(변형)"
 
 #: app/gui/gradient-editor-menu.c:251
 msgid "/Ble_nd Endpoints' Colors"
-msgstr "/끝점의 색상 혼합)(_N)"
+msgstr "/끝점의 색상 혼합(_N)"
 
 #: app/gui/gradient-editor-menu.c:255
 msgid "/Blend Endpoints' Opacit_y"
@@ -3748,53 +3746,53 @@ msgstr "/파일(_F)"
 
 #: app/gui/image-menu.c:103 app/gui/toolbox-menu.c:51
 msgid "/File/_New..."
-msgstr "/파일/새 그림(_N)..."
+msgstr "/파일(F)/새 그림(_N)..."
 
 #: app/gui/image-menu.c:108 app/gui/toolbox-menu.c:56
 msgid "/File/_Open..."
-msgstr "/파일/열기(_O)..."
+msgstr "/파일(F)/열기(_O)..."
 
 #. <Image>/File/Open Recent
 #. <Toolbox>/File/Open Recent
 #: app/gui/image-menu.c:116 app/gui/toolbox-menu.c:64
 msgid "/File/Open _Recent"
-msgstr "/파일/최근 파일 열기(_R)"
+msgstr "/파일(F)/최근 파일 열기(_R)"
 
 #: app/gui/image-menu.c:118 app/gui/toolbox-menu.c:66
 msgid "/File/Open Recent/(None)"
-msgstr "/파일/최근 파일 열기/(없음)"
+msgstr "/파일(F)/최근 파일 열기(R)/(없음)"
 
 #: app/gui/image-menu.c:123 app/gui/toolbox-menu.c:71
 msgid "/File/Open Recent/Document _History"
-msgstr "/파일/최근 파일 열기/문서 이력(_H)"
+msgstr "/파일(F)/최근 파일 열기(R)/문서 이력(_H)"
 
 #: app/gui/image-menu.c:131
 msgid "/File/_Save"
-msgstr "/파일/저장(_S)"
+msgstr "/파일(F)/저장(_S)"
 
 #: app/gui/image-menu.c:136
 msgid "/File/Save _as..."
-msgstr "/파일/다른 이름으로 저장(_A)..."
+msgstr "/파일(F)/다른 이름으로 저장(_A)..."
 
 #: app/gui/image-menu.c:141
 msgid "/File/Save a Cop_y..."
-msgstr "/파일/사본 저장(_Y)..."
+msgstr "/파일(F)/사본 저장(_Y)..."
 
 #: app/gui/image-menu.c:145
 msgid "/File/Save as _Template..."
-msgstr "/파일/템플릿으로 저장(_T)..."
+msgstr "/파일(F)/템플릿으로 저장(_T)..."
 
 #: app/gui/image-menu.c:149
 msgid "/File/Re_vert"
-msgstr "/파일/원상 복구(_V)"
+msgstr "/파일(F)/원상 복구(_V)"
 
 #: app/gui/image-menu.c:157
 msgid "/File/_Close"
-msgstr "/파일/닫기(_C)"
+msgstr "/파일(F)/닫기(_C)"
 
 #: app/gui/image-menu.c:162 app/gui/toolbox-menu.c:241
 msgid "/File/_Quit"
-msgstr "/파일/마침(_Q)"
+msgstr "/파일(F)/마침(_Q)"
 
 #. <Image>/Edit
 #: app/gui/image-menu.c:172
@@ -3803,76 +3801,76 @@ msgstr "/편집(_E)"
 
 #: app/gui/image-menu.c:174
 msgid "/Edit/_Undo"
-msgstr "/편집/실행 취소(_U)"
+msgstr "/편집(E)/실행 취소(_U)"
 
 #: app/gui/image-menu.c:179
 msgid "/Edit/_Redo"
-msgstr "/편집/재실행(_R)"
+msgstr "/편집(E)/재실행(_R)"
 
 #: app/gui/image-menu.c:184
 msgid "/Edit/Undo _History"
-msgstr "/편집/실행 취소 이력(_H)"
+msgstr "/편집(E)/실행 취소 이력(_H)"
 
 #: app/gui/image-menu.c:192
 msgid "/Edit/Cu_t"
-msgstr "/편집/잘라내기(_T)"
+msgstr "/편집(E)/잘라내기(_T)"
 
 #: app/gui/image-menu.c:197
 msgid "/Edit/_Copy"
-msgstr "/편집/복사(_C)"
+msgstr "/편집(E)/복사(_C)"
 
 #: app/gui/image-menu.c:202
 msgid "/Edit/_Paste"
-msgstr "/편집/붙여 넣기(_P)"
+msgstr "/편집(E)/붙여 넣기(_P)"
 
 #: app/gui/image-menu.c:207
 msgid "/Edit/Paste _Into"
-msgstr "/편집/새 레이어으로 붙여 넣기(_I)"
+msgstr "/편집(E)/새 레이어으로 붙여 넣기(_I)"
 
 #: app/gui/image-menu.c:212
 msgid "/Edit/Paste as _New"
-msgstr "/편집/새 이미지로 붙여 넣기(_N)"
+msgstr "/편집(E)/새 이미지로 붙여 넣기(_N)"
 
 #. <Image>/Edit/Buffer
 #: app/gui/image-menu.c:220
 msgid "/Edit/_Buffer"
-msgstr "/편집/버퍼(_B)"
+msgstr "/편집(E)/버퍼(_B)"
 
 #: app/gui/image-menu.c:222
 msgid "/Edit/Buffer/Cu_t Named..."
-msgstr "/편집/버퍼/이름붙여 잘라내기(_T)..."
+msgstr "/편집(E)/버퍼(B)/이름붙여 잘라내기(_T)..."
 
 #: app/gui/image-menu.c:227
 msgid "/Edit/Buffer/_Copy Named..."
-msgstr "/편집/버퍼/이름붙여 복사(_C)..."
+msgstr "/편집(E)/버퍼(B)/이름붙여 복사(_C)..."
 
 #: app/gui/image-menu.c:232
 msgid "/Edit/Buffer/_Paste Named..."
-msgstr "/편집/버퍼/이름붙여 붙여 넣기(_P)..."
+msgstr "/편집(E)/버퍼(B)/이름붙여 붙여 넣기(_P)..."
 
 #: app/gui/image-menu.c:240
 msgid "/Edit/Cl_ear"
-msgstr "/편집/지우기(_E)"
+msgstr "/편집(E)/지우기(_E)"
 
 #: app/gui/image-menu.c:245
 msgid "/Edit/Fill with _FG Color"
-msgstr "/편집/전경색으로 채우기(_F)"
+msgstr "/편집(E)/전경색으로 채우기(_F)"
 
 #: app/gui/image-menu.c:250
 msgid "/Edit/Fill with B_G Color"
-msgstr "/편집/배경색으로 채우기(_G)"
+msgstr "/편집(E)/배경색으로 채우기(_G)"
 
 #: app/gui/image-menu.c:255
 msgid "/Edit/Fill with P_attern"
-msgstr "/편집/무늬로 채우기(_A)"
+msgstr "/편집(E)/무늬로 채우기(_A)"
 
 #: app/gui/image-menu.c:260
 msgid "/Edit/_Stroke Selection..."
-msgstr "/편집/선택 따라 그리기(_S)..."
+msgstr "/편집(E)/선택 따라 그리기(_S)..."
 
 #: app/gui/image-menu.c:265
 msgid "/Edit/St_roke Path..."
-msgstr "/편집/경로 따라 그리기(_R)..."
+msgstr "/편집(E)/경로 따라 그리기(_R)..."
 
 #. <Image>/Select
 #: app/gui/image-menu.c:275
@@ -3881,60 +3879,59 @@ msgstr "/선택(_S)"
 
 #: app/gui/image-menu.c:277
 msgid "/Select/_All"
-msgstr "/선택/모두(_A)"
+msgstr "/선택(S)/모두(_A)"
 
 #: app/gui/image-menu.c:282
 msgid "/Select/_None"
-msgstr "/선택/없음(_N)"
+msgstr "/선택(S)/없음(_N)"
 
 #: app/gui/image-menu.c:287
 msgid "/Select/_Invert"
-msgstr "/선택/반전(_I)"
+msgstr "/선택(S)/반전(_I)"
 
 #: app/gui/image-menu.c:292
-#, fuzzy
 msgid "/Select/Fr_om Path"
-msgstr "/선택/경로로(_P)"
+msgstr "/선택(S)/경로에서(_O)"
 
 #: app/gui/image-menu.c:297
 msgid "/Select/_Float"
-msgstr "/선택/띄우기(_F)"
+msgstr "/선택(S)/띄우기(_F)"
 
 #: app/gui/image-menu.c:302
 msgid "/Select/_By Color"
-msgstr "/선택/색상으로(_B)"
+msgstr "/선택(S)/색상으로(_B)"
 
 #: app/gui/image-menu.c:310
 msgid "/Select/Fea_ther..."
-msgstr "/선택/페더(_T)..."
+msgstr "/선택(S)/페더(_T)..."
 
 #: app/gui/image-menu.c:314
 msgid "/Select/_Sharpen"
-msgstr "/선택/선명하게(_S)"
+msgstr "/선택(S)/선명하게(_S)"
 
 #: app/gui/image-menu.c:318
 msgid "/Select/S_hrink..."
-msgstr "/선택/줄이기(_H)..."
+msgstr "/선택(S)/줄이기(_H)..."
 
 #: app/gui/image-menu.c:323
 msgid "/Select/_Grow..."
-msgstr "/선택/늘이기(_G)..."
+msgstr "/선택(S)/늘이기(_G)..."
 
 #: app/gui/image-menu.c:328
 msgid "/Select/Bo_rder..."
-msgstr "/선택/테두리(_R)..."
+msgstr "/선택(S)/테두리(_R)..."
 
 #: app/gui/image-menu.c:336
 msgid "/Select/Toggle _QuickMask"
-msgstr "/선택/퀵마스크(_Q)"
+msgstr "/선택(S)/퀵마스크(_Q)"
 
 #: app/gui/image-menu.c:341
 msgid "/Select/Save to _Channel"
-msgstr "/선택/채널로 저장(_C)"
+msgstr "/선택(S)/채널로 저장(_C)"
 
 #: app/gui/image-menu.c:346
 msgid "/Select/To _Path"
-msgstr "/선택/경로로(_P)"
+msgstr "/선택(S)/경로로(_P)"
 
 #. <Image>/View
 #: app/gui/image-menu.c:354
@@ -3943,128 +3940,128 @@ msgstr "/보기(_V)"
 
 #: app/gui/image-menu.c:356
 msgid "/View/_New View"
-msgstr "/보기/새로운 보기(_N)"
+msgstr "/보기(V)/새로운 보기(_N)"
 
 #: app/gui/image-menu.c:361
 msgid "/View/_Dot for Dot"
-msgstr "/보기/점 대 점(_D)"
+msgstr "/보기(V)/점 대 점(_D)"
 
 #. <Image>/View/Zoom
 #: app/gui/image-menu.c:368
 msgid "/View/_Zoom"
-msgstr "/보기/확대(_Z)"
+msgstr "/보기(V)/배율(_Z)"
 
 #: app/gui/image-menu.c:370
 msgid "/View/Zoom/Zoom _Out"
-msgstr "/보기/확대/축소(_O)"
+msgstr "/보기(V)/배율(Z)/축소(_O)"
 
 #: app/gui/image-menu.c:375
 msgid "/View/Zoom/Zoom _In"
-msgstr "/보기/확대/확대(_I)"
+msgstr "/보기(V)/배율(Z)/확대(_I)"
 
 #: app/gui/image-menu.c:380
 msgid "/View/Zoom/Zoom to _Fit Window"
-msgstr "/보기/확대/창 크기에 맞추기(_F)"
+msgstr "/보기(V)/배율(Z)/창 크기에 맞추기(_F)"
 
 #: app/gui/image-menu.c:388
 msgid "/View/Zoom/16:1  (1600%)"
-msgstr "/보기/확대/16:1  (1600%)"
+msgstr "/보기(V)/배율(Z)/16:1  (1600%)"
 
 #: app/gui/image-menu.c:392
 msgid "/View/Zoom/8:1  (800%)"
-msgstr "/보기/확대/8:1  (800%)"
+msgstr "/보기(V)/배율(Z)/8:1  (800%)"
 
 #: app/gui/image-menu.c:396
 msgid "/View/Zoom/4:1  (400%)"
-msgstr "/보기/확대/4:1  (400%)"
+msgstr "/보기(V)/배율(Z)/4:1  (400%)"
 
 #: app/gui/image-menu.c:400
 msgid "/View/Zoom/2:1  (200%)"
-msgstr "/보기/확대/2:1  (200%)"
+msgstr "/보기(V)/배율(Z)/2:1  (200%)"
 
 #: app/gui/image-menu.c:404
 msgid "/View/Zoom/1:1  (100%)"
-msgstr "/보기/확대/1:1  (100%)"
+msgstr "/보기(V)/배율(Z)/1:1  (100%)"
 
 #: app/gui/image-menu.c:408
 msgid "/View/Zoom/1:2  (50%)"
-msgstr "/보기/확대/1:2  (50%)"
+msgstr "/보기(V)/배율(Z)/1:2  (50%)"
 
 #: app/gui/image-menu.c:412
 msgid "/View/Zoom/1:4  (25%)"
-msgstr "/보기/확대/1:4  (25%)"
+msgstr "/보기(V)/배율(Z)/1:4  (25%)"
 
 #: app/gui/image-menu.c:416
 msgid "/View/Zoom/1:8  (12.5%)"
-msgstr "/보기/확대/1:8  (12.5%)"
+msgstr "/보기(V)/배율(Z)/1:8  (12.5%)"
 
 #: app/gui/image-menu.c:420
 msgid "/View/Zoom/1:16  (6.25%)"
-msgstr "/보기/확대/1:16  (6.25%)"
+msgstr "/보기(V)/배율(Z)/1:16  (6.25%)"
 
 #: app/gui/image-menu.c:434
 msgid "/View/_Info Window"
-msgstr "/보기/정보 창(_F)"
+msgstr "/보기(V)/정보 창(_F)"
 
 #: app/gui/image-menu.c:439
 msgid "/View/Na_vigation Window"
-msgstr "/보기/네비게이션 창(_V)"
+msgstr "/보기(V)/네비게이션 창(_V)"
 
 #: app/gui/image-menu.c:444
 msgid "/View/Display _Filters..."
-msgstr "/보기/화면 표시 필터(_F)..."
+msgstr "/보기(V)/화면 표시 필터(_F)..."
 
 #: app/gui/image-menu.c:452
 msgid "/View/Show _Selection"
-msgstr "/보기/선택(_S)"
+msgstr "/보기(V)/선택(_S)"
 
 #: app/gui/image-menu.c:456
 msgid "/View/Show _Layer Boundary"
-msgstr "/보기/레이어 경계(_L)"
+msgstr "/보기(V)/레이어 경계(_L)"
 
 #: app/gui/image-menu.c:460
 msgid "/View/Show _Guides"
-msgstr "/보기/안내선(_G)"
+msgstr "/보기(V)/안내선(_G)"
 
 #: app/gui/image-menu.c:464
 msgid "/View/Sn_ap to Guides"
-msgstr "/보기/안내선에 맞추기(_A)"
+msgstr "/보기(V)/안내선에 맞추기(_A)"
 
 #: app/gui/image-menu.c:468
 msgid "/View/S_how Grid"
-msgstr "/보기/모눈(_H)"
+msgstr "/보기(V)/모눈(_H)"
 
 #: app/gui/image-menu.c:472
 msgid "/View/Sna_p to Grid"
-msgstr "/보기/모눈에 맞추기(_P)"
+msgstr "/보기(V)/모눈에 맞추기(_P)"
 
 #: app/gui/image-menu.c:479
 msgid "/View/Show _Menubar"
-msgstr "/보기/메뉴표시줄(_M)"
+msgstr "/보기(V)/메뉴표시줄(_M)"
 
 #: app/gui/image-menu.c:483
 msgid "/View/Show R_ulers"
-msgstr "/보기/눈금자(_U)"
+msgstr "/보기(V)/눈금자(_U)"
 
 #: app/gui/image-menu.c:487
 msgid "/View/Show Scroll_bars"
-msgstr "/보기/스크롤막대(_B)"
+msgstr "/보기(V)/스크롤막대(_B)"
 
 #: app/gui/image-menu.c:491
 msgid "/View/Show S_tatusbar"
-msgstr "/보기/상태표시줄(_T)"
+msgstr "/보기(V)/상태표시줄(_T)"
 
 #: app/gui/image-menu.c:498
 msgid "/View/Shrink _Wrap"
-msgstr "/보기/덮개 줄이기(_W)"
+msgstr "/보기(V)/덮개 줄이기(_W)"
 
 #: app/gui/image-menu.c:503
 msgid "/View/Fullscr_een"
-msgstr "/보기/전체 화면(_E)"
+msgstr "/보기(V)/전체 화면(_E)"
 
 #: app/gui/image-menu.c:508
 msgid "/View/Move to Screen..."
-msgstr "/보기/화면으로 이동..."
+msgstr "/보기(V)/화면으로 이동..."
 
 #. <Image>/Image
 #: app/gui/image-menu.c:516
@@ -4074,73 +4071,73 @@ msgstr "/이미지(_I)"
 #. <Image>/Image/Mode
 #: app/gui/image-menu.c:520
 msgid "/Image/_Mode"
-msgstr "/이미지/모드(_M)"
+msgstr "/이미지(I)/모드(_M)"
 
 #: app/gui/image-menu.c:522
 msgid "/Image/Mode/_RGB"
-msgstr "/이미지/모드/_RGB"
+msgstr "/이미지(I)/모드(M)/_RGB"
 
 #: app/gui/image-menu.c:527
 msgid "/Image/Mode/_Grayscale"
-msgstr "/이미지/모드/그레이스케일(_G)"
+msgstr "/이미지(I)/모드(M)/그레이스케일(_G)"
 
 #: app/gui/image-menu.c:532
 msgid "/Image/Mode/_Indexed..."
-msgstr "/이미지/모드/인덱스됨(_I)..."
+msgstr "/이미지(I)/모드(M)/인덱스됨(_I)..."
 
 #. <Image>/Image/Transform
 #: app/gui/image-menu.c:540
 msgid "/Image/_Transform"
-msgstr "/이미지/변형(_T)"
+msgstr "/이미지(I)/변형(_T)"
 
 #: app/gui/image-menu.c:542
 msgid "/Image/Transform/Flip _Horizontally"
-msgstr "/이미지/변형/가로로 뒤집기(_H)"
+msgstr "/이미지(I)/변형(T)/가로로 뒤집기(_H)"
 
 #: app/gui/image-menu.c:547
 msgid "/Image/Transform/Flip _Vertically"
-msgstr "/이미지/변형/세로로 뒤집기(_V)"
+msgstr "/이미지(I)/변형(T)/세로로 뒤집기(_V)"
 
 #. please use the degree symbol in the translation
 #: app/gui/image-menu.c:556
 msgid "/Image/Transform/Rotate 90 degrees _CW"
-msgstr "/이미지/변형/시계방향으로 90도 회전(_C)"
+msgstr "/이미지(I)/변형(T)/시계방향으로 90도 회전(_C)"
 
 #: app/gui/image-menu.c:561
 msgid "/Image/Transform/Rotate 90 degrees CC_W"
-msgstr "/이미지/변형/시계반대방향으로 90도 회전(_W)"
+msgstr "/이미지(I)/변형(T)/시계반대방향으로 90도 회전(_W)"
 
 #: app/gui/image-menu.c:566
 msgid "/Image/Transform/Rotate _180 degrees"
-msgstr "/이미지/변형/_180도 회전"
+msgstr "/이미지(I)/변형(T)/_180도 회전"
 
 #: app/gui/image-menu.c:576
 msgid "/Image/Can_vas Size..."
-msgstr "/이미지/캔버스 크기(_V)..."
+msgstr "/이미지(I)/캔버스 크기(_V)..."
 
 #: app/gui/image-menu.c:581
 msgid "/Image/_Scale Image..."
-msgstr "/이미지/이미지 배율 조정(_S)..."
+msgstr "/이미지(I)/이미지 배율 조정(_S)..."
 
 #: app/gui/image-menu.c:586
 msgid "/Image/_Crop Image"
-msgstr "/이미지/이미지 자르기(_C)"
+msgstr "/이미지(I)/이미지 자르기(_C)"
 
 #: app/gui/image-menu.c:591
 msgid "/Image/_Duplicate"
-msgstr "/이미지/복제(_D)"
+msgstr "/이미지(I)/복제(_D)"
 
 #: app/gui/image-menu.c:599
 msgid "/Image/Merge Visible _Layers..."
-msgstr "/이미지/보이는 레이어 합치기(_L)..."
+msgstr "/이미지(I)/보이는 레이어 합치기(_L)..."
 
 #: app/gui/image-menu.c:603
 msgid "/Image/_Flatten Image"
-msgstr "/레이어/이미지 배경으로 합치기(_F)"
+msgstr "/이미지(I)/이미지 배경으로 합치기(_F)"
 
 #: app/gui/image-menu.c:610
 msgid "/Image/Configure G_rid..."
-msgstr "/이미지/모눈 설정(_R)..."
+msgstr "/이미지(I)/모눈 설정(_R)..."
 
 #. <Image>/Layer
 #: app/gui/image-menu.c:618
@@ -4149,229 +4146,229 @@ msgstr "/레이어(_L)"
 
 #: app/gui/image-menu.c:620
 msgid "/Layer/_New Layer..."
-msgstr "/레이어/새 레이어(_N)..."
+msgstr "/레이어(L)/새 레이어(_N)..."
 
 #: app/gui/image-menu.c:625
 msgid "/Layer/Du_plicate Layer"
-msgstr "/레이어/레이어 복제(_P)"
+msgstr "/레이어(L)/레이어 복제(_P)"
 
 #: app/gui/image-menu.c:630
 msgid "/Layer/Anchor _Layer"
-msgstr "/레이어/레이어 고정(_L)"
+msgstr "/레이어(L)/레이어 고정(_L)"
 
 #: app/gui/image-menu.c:635
 msgid "/Layer/Me_rge Down"
-msgstr "/레이어/아래로 합치기(_R)"
+msgstr "/레이어(L)/아래로 합치기(_R)"
 
 #: app/gui/image-menu.c:640
 msgid "/Layer/_Delete Layer"
-msgstr "/레이어/레이어 지우기(_D)"
+msgstr "/레이어(L)/레이어 지우기(_D)"
 
 #: app/gui/image-menu.c:645
 msgid "/Layer/Discard _Text Information"
-msgstr "/레이어/텍스트 정보 버리기(_T)"
+msgstr "/레이어(L)/텍스트 정보 버리기(_T)"
 
 #. <Image>/Layer/Stack
 #: app/gui/image-menu.c:655
 msgid "/Layer/Stac_k"
-msgstr "/레이어/쌓기(K)"
+msgstr "/레이어(L)/쌓기(K)"
 
 #: app/gui/image-menu.c:657
 msgid "/Layer/Stack/Select _Previous Layer"
-msgstr "/레이어/쌓기/이전 레이어 선택(_P)"
+msgstr "/레이어(L)/쌓기(K)/이전 레이어 선택(_P)"
 
 #: app/gui/image-menu.c:661
 msgid "/Layer/Stack/Select _Next Layer"
-msgstr "/레이어/쌓기/다음 레이어 선택(_N)"
+msgstr "/레이어(L)/쌓기(K)/다음 레이어 선택(_N)"
 
 #: app/gui/image-menu.c:665
 msgid "/Layer/Stack/Select _Top Layer"
-msgstr "/레이어/쌓기/맨 위 레이어 선택(_T)"
+msgstr "/레이어(L)/쌓기(S)/맨 위 레이어 선택(_T)"
 
 #: app/gui/image-menu.c:669
 msgid "/Layer/Stack/Select _Bottom Layer"
-msgstr "/레이어/쌓기/맨 아래 레이어 선택(_B)"
+msgstr "/레이어(L)/쌓기(S)/맨 아래 레이어 선택(_B)"
 
 #: app/gui/image-menu.c:676
 msgid "/Layer/Stack/_Raise Layer"
-msgstr "/레이어/쌓기/레이어 올리기(_R)"
+msgstr "/레이어(L)/쌓기(S)/레이어 올리기(_R)"
 
 #: app/gui/image-menu.c:681
 msgid "/Layer/Stack/_Lower Layer"
-msgstr "/레이어/쌓기/레이어 내리기(_L)"
+msgstr "/레이어(L)/쌓기(S)/레이어 내리기(_L)"
 
 #: app/gui/image-menu.c:686
 msgid "/Layer/Stack/Layer to T_op"
-msgstr "/레이어/쌓기/레이어를 맨 위로(_O)"
+msgstr "/레이어(L)/쌓기(S)/레이어를 맨 위로(_O)"
 
 #: app/gui/image-menu.c:691
 msgid "/Layer/Stack/Layer to Botto_m"
-msgstr "/레이어/쌓기/레이어를 맨 아래로(_M)"
+msgstr "/레이어(L)/쌓기(S)/레이어를 맨 아래로(_M)"
 
 #. <Image>/Layer/Colors
 #: app/gui/image-menu.c:699
 msgid "/Layer/_Colors"
-msgstr "/레이어/색상(_C)"
+msgstr "/레이어(L)/색상(_C)"
 
 #: app/gui/image-menu.c:701
 msgid "/Layer/Colors/Color _Balance..."
-msgstr "/레이어/색상/색상 균형(_B)..."
+msgstr "/레이어(L)/색상(C)/색상 균형(_B)..."
 
 #: app/gui/image-menu.c:706
 msgid "/Layer/Colors/Hue-_Saturation..."
-msgstr "/레이어/색상/색상-채도(_S)..."
+msgstr "/레이어(L)/색상(C)/색상-채도(_S)..."
 
 #: app/gui/image-menu.c:711
 msgid "/Layer/Colors/Colori_ze..."
-msgstr "/이미지/색상/컬러화(_Z)..."
+msgstr "/이미지(L)/색상(C)/컬러화(_Z)..."
 
 #: app/gui/image-menu.c:716
 msgid "/Layer/Colors/B_rightness-Contrast..."
-msgstr "/레이어/색상/명도-대비(_R)..."
+msgstr "/레이어(L)/색상(C)/명도-대비(_R)..."
 
 #: app/gui/image-menu.c:721
 msgid "/Layer/Colors/_Threshold..."
-msgstr "/레이어/색상/고대비(_T)..."
+msgstr "/레이어(L)/색상(C)/고대비(_T)..."
 
 #: app/gui/image-menu.c:726
 msgid "/Layer/Colors/_Levels..."
-msgstr "/레이어/색상/레벨(_L)..."
+msgstr "/레이어(L)/색상(C)/레벨(_L)..."
 
 #: app/gui/image-menu.c:731
 msgid "/Layer/Colors/_Curves..."
-msgstr "/레이어/색상/곡선(_C)..."
+msgstr "/레이어(L)/색상(C)/곡선(_C)..."
 
 #: app/gui/image-menu.c:736
 msgid "/Layer/Colors/_Posterize..."
-msgstr "/레이어/색상/포스터화(_P)..."
+msgstr "/레이어(L)/색상(C)/포스터화(_P)..."
 
 #: app/gui/image-menu.c:744
 msgid "/Layer/Colors/_Desaturate"
-msgstr "/레이어/색상/무채화(_D)"
+msgstr "/레이어(L)/색상(C)/무채화(_D)"
 
 #: app/gui/image-menu.c:749
 msgid "/Layer/Colors/In_vert"
-msgstr "/레이어/색상/반전(_V)"
+msgstr "/레이어/색상(C)/반전(_V)"
 
 #. <Image>/Layer/Colors/Auto
 #: app/gui/image-menu.c:757
 msgid "/Layer/Colors/_Auto"
-msgstr "/레이어/색상/자동(_A)"
+msgstr "/레이어(L)/색상(C)/자동(_A)"
 
 #: app/gui/image-menu.c:759
 msgid "/Layer/Colors/Auto/_Equalize"
-msgstr "/레이어/색상/자동/균등화(_E)"
+msgstr "/레이어(L)/색상(C)/자동(A)/균등화(_E)"
 
 #: app/gui/image-menu.c:766
 msgid "/Layer/Colors/_Histogram"
-msgstr "/레이어/색상/히스토그램(_H)"
+msgstr "/레이어(L)/색상(C)/히스토그램(_H)"
 
 #. <Image>/Layer/Mask
 #: app/gui/image-menu.c:774
 msgid "/Layer/_Mask"
-msgstr "/레이어/마스크(_M)"
+msgstr "/레이어(L)/마스크(_M)"
 
 #: app/gui/image-menu.c:776
 msgid "/Layer/Mask/_Add Layer Mask..."
-msgstr "/레이어/마스크/레이어 마스크 더하기(_A)..."
+msgstr "/레이어(L)/마스크(M)/레이어 마스크 더하기(_A)..."
 
 #: app/gui/image-menu.c:781
 msgid "/Layer/Mask/A_pply Layer Mask"
-msgstr "/레이어/마스크/레이어 마스크 적용(_P)"
+msgstr "/레이어(L)/마스크(M)/레이어 마스크 적용(_P)"
 
 #: app/gui/image-menu.c:785
 msgid "/Layer/Mask/_Delete Layer Mask"
-msgstr "/레이어/마스크/레이어 마스크 지우기(_D)"
+msgstr "/레이어(L)/마스크(M)/레이어 마스크 지우기(_D)"
 
 #: app/gui/image-menu.c:793
 msgid "/Layer/Mask/_Mask to Selection"
-msgstr "/레이어/마스크/선택을 마스크로(_M)"
+msgstr "/레이어(L)/마스크(M)/선택을 마스크로(_M)"
 
 #: app/gui/image-menu.c:798
 msgid "/Layer/Mask/_Add to Selection"
-msgstr "/레이어/마스크/선택에 더하기(_A)"
+msgstr "/레이어(L)/마스크(M)/선택에 더하기(_A)"
 
 #: app/gui/image-menu.c:803
 msgid "/Layer/Mask/_Subtract from Selection"
-msgstr "/레이어/마스크/선택에서 빼기(_S)"
+msgstr "/레이어(L)/마스크(M)/선택에서 빼기(_S)"
 
 #: app/gui/image-menu.c:808
 msgid "/Layer/Mask/_Intersect with Selection"
-msgstr "/레이어/마스크/선택과 교차하기(_I)"
+msgstr "/레이어(L)/마스크(M)/선택과 교차하기(_I)"
 
 #. <Image>/Layer/Transparency
 #: app/gui/image-menu.c:816
 msgid "/Layer/Tr_ansparency"
-msgstr "/레이어/투명도(_A)"
+msgstr "/레이어(L)/투명도(_A)"
 
 #: app/gui/image-menu.c:818
 msgid "/Layer/Transparency/_Add Alpha Channel"
-msgstr "/레이어/투명도/알파 채널 더하기(_A)"
+msgstr "/레이어(L)/투명도(A)/알파 채널 더하기(_A)"
 
 #: app/gui/image-menu.c:826
 msgid "/Layer/Transparency/Al_pha to Selection"
-msgstr "/레이어/투명도/알파를 선택으로(_P)"
+msgstr "/레이어(L)/투명도(A)/알파를 선택으로(_P)"
 
 #: app/gui/image-menu.c:831
 msgid "/Layer/Transparency/A_dd to Selection"
-msgstr "/레이어/투명도/선택에 더하기(_D)"
+msgstr "/레이어(L)/투명도(A)/선택에 더하기(_D)"
 
 #: app/gui/image-menu.c:836
 msgid "/Layer/Transparency/_Subtract from Selection"
-msgstr "/레이어/투명도/선택에서 빼기(_S)"
+msgstr "/레이어(L)/투명도(A)/선택에서 빼기(_S)"
 
 #: app/gui/image-menu.c:841
 msgid "/Layer/Transparency/_Intersect with Selection"
-msgstr "/레이어/투명도/선택과 교차하기(_I)"
+msgstr "/레이어(L)/투명도(A)/선택과 교차하기(_I)"
 
 #. <Image>/Layer/Transform
 #: app/gui/image-menu.c:851
 msgid "/Layer/_Transform"
-msgstr "/레이어/변형(_T)"
+msgstr "/레이어(L)/변형(_T)"
 
 #: app/gui/image-menu.c:853
 msgid "/Layer/Transform/Flip _Horizontally"
-msgstr "/레이어/변형/가로로 뒤집기(_H)"
+msgstr "/레이어(L)/변형(T)/가로로 뒤집기(_H)"
 
 #: app/gui/image-menu.c:858
 msgid "/Layer/Transform/Flip _Vertically"
-msgstr "/레이어/변형/세로로 뒤집기(_V)"
+msgstr "/레이어(L)/변형(T)/세로로 뒤집기(_V)"
 
 #: app/gui/image-menu.c:866
 msgid "/Layer/Transform/Rotate 90 degrees _CW"
-msgstr "/레이어/변형/시계방향으로 90도 회전(_C)"
+msgstr "/레이어(L)/변형(T)/시계방향으로 90도 회전(_C)"
 
 #: app/gui/image-menu.c:871
 msgid "/Layer/Transform/Rotate 90 degrees CC_W"
-msgstr "/레이어/변형/시계반대방향으로 90도 회전(_W)"
+msgstr "/레이어(L)/변형(T)/시계반대방향으로 90도 회전(_W)"
 
 #: app/gui/image-menu.c:876
 msgid "/Layer/Transform/Rotate _180 degrees"
-msgstr "/레이어/변형/_180도 회전(_W)"
+msgstr "/레이어(L)/변형(T)/_180도 회전(_W)"
 
 #: app/gui/image-menu.c:881
 msgid "/Layer/Transform/_Arbitrary Rotation..."
-msgstr "/레이어/변형/임의 각도로 회전(_A)..."
+msgstr "/레이어(L)/변형(T)/임의 각도로 회전(_A)..."
 
 #: app/gui/image-menu.c:889
 msgid "/Layer/Transform/_Offset..."
-msgstr "/레이어/변형/옵셋(_O)..."
+msgstr "/레이어(L)/변형(T)/옵셋(_O)..."
 
 #: app/gui/image-menu.c:896
 msgid "/Layer/Layer _Boundary Size..."
-msgstr "/레이어/레이어 경계 크기(_B)..."
+msgstr "/레이어(L)/레이어 경계 크기(_B)..."
 
 #: app/gui/image-menu.c:901
 msgid "/Layer/Layer to _Image Size"
-msgstr "/레이어/레이어를 이미지 크기에 맞추기"
+msgstr "/레이어(L)/레이어를 이미지 크기에 맞추기"
 
 #: app/gui/image-menu.c:906
 msgid "/Layer/_Scale Layer..."
-msgstr "/레이어/레이어 배율 조정(_S)..."
+msgstr "/레이어(L)/레이어 배율 조정(_S)..."
 
 #: app/gui/image-menu.c:911
 msgid "/Layer/Cr_op Layer"
-msgstr "/레이어/레이어 자르기(_O)"
+msgstr "/레이어(L)/레이어 자르기(_O)"
 
 #. <Image>/Tools
 #: app/gui/image-menu.c:921
@@ -4380,31 +4377,31 @@ msgstr "/도구(_T)"
 
 #: app/gui/image-menu.c:923
 msgid "/Tools/Tool_box"
-msgstr "/도구/도구 상자(_B)"
+msgstr "/도구(T)/도구 상자(_B)"
 
 #: app/gui/image-menu.c:927
 msgid "/Tools/_Default Colors"
-msgstr "/도구/기본 색상(_D)"
+msgstr "/도구(T)/기본 색상(_D)"
 
 #: app/gui/image-menu.c:932
 msgid "/Tools/S_wap Colors"
-msgstr "/도구/색상 바꾸기(_W)"
+msgstr "/도구(T)/색상 바꾸기(_W)"
 
 #: app/gui/image-menu.c:940
 msgid "/Tools/_Selection Tools"
-msgstr "/도구/선택 도구(_S)"
+msgstr "/도구(T)/선택 도구(_S)"
 
 #: app/gui/image-menu.c:941
 msgid "/Tools/_Paint Tools"
-msgstr "/도구/그리기 도구(_P)"
+msgstr "/도구(T)/그리기 도구(_P)"
 
 #: app/gui/image-menu.c:942
 msgid "/Tools/_Transform Tools"
-msgstr "/도구/변형 도구(_T)"
+msgstr "/도구(T)/변형 도구(_T)"
 
 #: app/gui/image-menu.c:943
 msgid "/Tools/_Color Tools"
-msgstr "/도구/색상 도구(_C)"
+msgstr "/도구(T)/색상 도구(_C)"
 
 #. <Image>/Dialogs
 #: app/gui/image-menu.c:947
@@ -4413,107 +4410,107 @@ msgstr "/대화상자(_D)"
 
 #: app/gui/image-menu.c:949
 msgid "/Dialogs/Create New Doc_k"
-msgstr "/대화상자/새 Doc_k 만들기"
+msgstr "/대화상자(D)/새 독 만들기(_K)"
 
 #: app/gui/image-menu.c:951
 msgid "/Dialogs/Create New Dock/_Layers, Channels & Paths"
-msgstr "/대화상자/새 Dock 만들기/레이어, 채널, 경로(_L)"
+msgstr "/대화상자(D)/새 독 만들기(K)/레이어, 채널, 경로(_L)"
 
 #: app/gui/image-menu.c:955
 msgid "/Dialogs/Create New Dock/_Brushes, Patterns & Gradients"
-msgstr "/대화상자/새 Dock 만들기/브러시, 무늬, 그라디언트(_B)"
+msgstr "/대화상자(D)/새 독 만들기(K)/브러시, 무늬, 그라디언트(_B)"
 
 #: app/gui/image-menu.c:959
 msgid "/Dialogs/Create New Dock/_Misc. Stuff"
-msgstr "/대화상자/새 Dock 만들기/기타(_M)"
+msgstr "/대화상자(D)/새 독 만들기(K)/기타(_M)"
 
 #: app/gui/image-menu.c:964
 msgid "/Dialogs/Tool _Options"
-msgstr "/대화상자/도구 선택사항(_O)"
+msgstr "/대화상자(D)/도구 선택사항(_O)"
 
 #: app/gui/image-menu.c:969
 msgid "/Dialogs/_Device Status"
-msgstr "/대화상자/장치 상태(_D)"
+msgstr "/대화상자(D)/장치 상태(_D)"
 
 #: app/gui/image-menu.c:977
 msgid "/Dialogs/_Layers"
-msgstr "/대화상자/레이어(_L)"
+msgstr "/대화상자(D)/레이어(_L)"
 
 #: app/gui/image-menu.c:982
 msgid "/Dialogs/_Channels"
-msgstr "/대화상자/채널(_C)"
+msgstr "/대화상자(D)/채널(_C)"
 
 #: app/gui/image-menu.c:987
 msgid "/Dialogs/_Paths"
-msgstr "/대화상자/경로(_P)"
+msgstr "/대화상자(D)/경로(_P)"
 
 #: app/gui/image-menu.c:992
 msgid "/Dialogs/Inde_xed Palette"
-msgstr "/대화상자/인덱스된 색상표(_X)"
+msgstr "/대화상자(D)/인덱스된 색상표(_X)"
 
 #: app/gui/image-menu.c:997
 msgid "/Dialogs/Histogra_m"
-msgstr "/대화상자/히스토그램(_M)"
+msgstr "/대화상자(D)/히스토그램(_M)"
 
 #: app/gui/image-menu.c:1002
 msgid "/Dialogs/_Selection Editor"
-msgstr "/대화상자/선택 편집기(_S)"
+msgstr "/대화상자(D)/선택 편집기(_S)"
 
 #: app/gui/image-menu.c:1007
 msgid "/Dialogs/Na_vigation"
-msgstr "/대화상자/네비게이션(_V)"
+msgstr "/대화상자(D)/네비게이션(_V)"
 
 #: app/gui/image-menu.c:1012
 msgid "/Dialogs/_Undo History"
-msgstr "/대화상자/실행 취소 이력(_U)"
+msgstr "/대화상자(D)/실행 취소 이력(_U)"
 
 #: app/gui/image-menu.c:1020
 msgid "/Dialogs/Colo_rs"
-msgstr "/대화상자/색상(_R)"
+msgstr "/대화상자(D)/색상(_R)"
 
 #: app/gui/image-menu.c:1025
 msgid "/Dialogs/Brus_hes"
-msgstr "/대화상자/브러시(_H)"
+msgstr "/대화상자(D)/브러시(_H)"
 
 #: app/gui/image-menu.c:1030
 msgid "/Dialogs/P_atterns"
-msgstr "/대화상자/무늬(_A)"
+msgstr "/대화상자(D)/무늬(_A)"
 
 #: app/gui/image-menu.c:1035
 msgid "/Dialogs/_Gradients"
-msgstr "/대화상자/그라디언트(_G)"
+msgstr "/대화상자(D)/그라디언트(_G)"
 
 #: app/gui/image-menu.c:1040
 msgid "/Dialogs/Pal_ettes"
-msgstr "/대화상자/색상표(_E)"
+msgstr "/대화상자(D)/색상표(_E)"
 
 #: app/gui/image-menu.c:1045
 msgid "/Dialogs/_Fonts"
-msgstr "/대화상자/글꼴(_F)"
+msgstr "/대화상자(D)/글꼴(_F)"
 
 #: app/gui/image-menu.c:1050
 msgid "/Dialogs/_Buffers"
-msgstr "/대화상자/버퍼(_B)"
+msgstr "/대화상자(D)/버퍼(_B)"
 
 #: app/gui/image-menu.c:1058
 msgid "/Dialogs/_Images"
-msgstr "/대화상자/이미지(_M)"
+msgstr "/대화상자(D)/이미지(_M)"
 
 #: app/gui/image-menu.c:1063
 msgid "/Dialogs/Document Histor_y"
-msgstr "/대화상자/문서 이력(_Y)"
+msgstr "/대화상자(D)/문서 이력(_Y)"
 
 #: app/gui/image-menu.c:1068
 msgid "/Dialogs/_Templates"
-msgstr "/대화상자/템플릿(_T)"
+msgstr "/대화상자(D)/템플릿(_T)"
 
 #: app/gui/image-menu.c:1073
 msgid "/Dialogs/T_ools"
-msgstr "/대화상자/도구(_O)"
+msgstr "/대화상자(D)/도구(_O)"
 
 #: app/gui/image-menu.c:1078
 msgid "/Dialogs/Error Co_nsole"
-msgstr "/대화상자/오류 콘솔(_N)"
+msgstr "/대화상자(D)/오류 콘솔(_N)"
 
 #: app/gui/image-menu.c:1088
 msgid "/Filte_rs"
@@ -4521,91 +4518,91 @@ msgstr "/필터(_R)"
 
 #: app/gui/image-menu.c:1090
 msgid "/Filters/Repeat Last"
-msgstr "/필터/마지막 필터 반복"
+msgstr "/필터(R)/마지막 필터 반복"
 
 #: app/gui/image-menu.c:1095
 msgid "/Filters/Re-Show Last"
-msgstr "/필터/마지막 필터 다시 보여주기"
+msgstr "/필터(R)/마지막 필터 다시 보여주기"
 
 #: app/gui/image-menu.c:1103
 msgid "/Filters/_Blur"
-msgstr "/필터/흐릿하게(_B)"
+msgstr "/필터(R)/흐릿하게(_B)"
 
 #: app/gui/image-menu.c:1104
 msgid "/Filters/_Colors"
-msgstr "/필터/색상(_C)"
+msgstr "/필터(R)/색상(_C)"
 
 #: app/gui/image-menu.c:1105
 msgid "/Filters/Colors/Ma_p"
-msgstr "/필터/색상/맵(_P)"
+msgstr "/필터(R)/색상/맵(_P)"
 
 #: app/gui/image-menu.c:1106
 msgid "/Filters/_Noise"
-msgstr "/필터/잡음(_N)"
+msgstr "/필터(R)/잡음(_N)"
 
 #: app/gui/image-menu.c:1107
 msgid "/Filters/Edge-De_tect"
-msgstr "/필터/경계선 검출(_T)"
+msgstr "/필터(R)/경계선 검출(_T)"
 
 #: app/gui/image-menu.c:1108
 msgid "/Filters/En_hance"
-msgstr "/필터/강화(_H)"
+msgstr "/필터(R)/강화(_H)"
 
 #: app/gui/image-menu.c:1109
 msgid "/Filters/_Generic"
-msgstr "/필터/일반(_G)"
+msgstr "/필터(R)/일반(_G)"
 
 #: app/gui/image-menu.c:1113
 msgid "/Filters/Gla_ss Effects"
-msgstr "/필터/유리잔 효과(_S)"
+msgstr "/필터(R)/유리잔 효과(_S)"
 
 #: app/gui/image-menu.c:1114
 msgid "/Filters/_Light Effects"
-msgstr "/필터/조명 효과(_L)"
+msgstr "/필터(R)/조명 효과(_L)"
 
 #: app/gui/image-menu.c:1115
 msgid "/Filters/_Distorts"
-msgstr "/필터/왜곡(_D)"
+msgstr "/필터(R)/왜곡(_D)"
 
 #: app/gui/image-menu.c:1116
 msgid "/Filters/_Artistic"
-msgstr "/필터/예술(_A)"
+msgstr "/필터(R)/예술(_A)"
 
 #: app/gui/image-menu.c:1117
 msgid "/Filters/_Map"
-msgstr "/필터/맵(_M)"
+msgstr "/필터(R)/맵(_M)"
 
 #: app/gui/image-menu.c:1118
 msgid "/Filters/_Render"
-msgstr "/필터/렌더링(_R)"
+msgstr "/필터(R)/렌더링(_R)"
 
 #: app/gui/image-menu.c:1119
 msgid "/Filters/Render/_Clouds"
-msgstr "/필터/렌더링/구름(_C)"
+msgstr "/필터(R)/렌더링(R)/구름(_C)"
 
 #: app/gui/image-menu.c:1120
 msgid "/Filters/Render/_Nature"
-msgstr "/필터/렌더링/자연(_N)"
+msgstr "/필터(R)/렌더링(R)/자연(_N)"
 
 #: app/gui/image-menu.c:1121
 msgid "/Filters/Render/_Pattern"
-msgstr "/필터/렌더링/무늬"
+msgstr "/필터(R)/렌더링(R)/무늬"
 
 #: app/gui/image-menu.c:1122
 msgid "/Filters/_Web"
-msgstr "/필터/웹(_W)"
+msgstr "/필터(R)/웹(_W)"
 
 #: app/gui/image-menu.c:1126
 msgid "/Filters/An_imation"
-msgstr "/필터/에니메이션(_I)"
+msgstr "/필터(R)/에니메이션(_I)"
 
 #: app/gui/image-menu.c:1127
 msgid "/Filters/C_ombine"
-msgstr "/필터/결합(_O)"
+msgstr "/필터(R)/결합(_O)"
 
 #: app/gui/image-menu.c:1131
 msgid "/Filters/To_ys"
-msgstr "/필터/장난감(_Y)"
+msgstr "/필터(R)/장난감(_Y)"
 
 #: app/gui/image-menu.c:1471
 #, c-format
@@ -4663,15 +4660,15 @@ msgstr "고정 컬러"
 
 #: app/gui/info-window.c:87
 msgid "Pseudo Color"
-msgstr "의사 색상(Pseudo Color)"
+msgstr "의사 색상"
 
 #: app/gui/info-window.c:88
 msgid "True Color"
-msgstr "트루 컬러(True Color)"
+msgstr "트루 컬러"
 
 #: app/gui/info-window.c:89
 msgid "Direct Color"
-msgstr "직접 색상(Direct Color)"
+msgstr "직접 색상"
 
 #: app/gui/info-window.c:137
 msgid "Extended"
@@ -4788,9 +4785,8 @@ msgid "Layer Mask to Selection"
 msgstr "/레이어 마스크를 선택으로"
 
 #: app/gui/layers-commands.c:723
-#, fuzzy
 msgid "Empty Layer"
-msgstr "빈 텍스트 레이어"
+msgstr "빈 레이어"
 
 #: app/gui/layers-commands.c:747
 msgid "Create a New Layer"
@@ -4830,9 +4826,8 @@ msgid "Layer _Name"
 msgstr "레이어 이름(_N)"
 
 #: app/gui/layers-commands.c:1009
-#, fuzzy
 msgid "Set Name from _Text"
-msgstr "텍스트에서 새 경로 만들기"
+msgstr "텍스트에서 이름 지정(_T)"
 
 #: app/gui/layers-commands.c:1096
 msgid "Add a Mask to the Layer"
@@ -5416,9 +5411,8 @@ msgid "_Navigation Preview Size:"
 msgstr "네비게이터 미리보기 크기(_N):"
 
 #: app/gui/preferences-dialog.c:1218
-#, fuzzy
 msgid "_Undo History Preview Size:"
-msgstr "네비게이터 미리보기 크기(_N):"
+msgstr "실행 취소 이력 미리보기 크기(_U):"
 
 #. Dialog Bahavior
 #: app/gui/preferences-dialog.c:1222
@@ -5531,17 +5525,15 @@ msgstr "기본 보간법(_I):"
 #. Global Brush, Pattern, ...
 #: app/gui/preferences-dialog.c:1422
 msgid "Paint Options Shared Between Tools"
-msgstr ""
+msgstr "그리기 도구 공통 선택사항 "
 
 #: app/gui/preferences-dialog.c:1426
-#, fuzzy
 msgid "_Brush"
-msgstr "브러시:"
+msgstr "브러시(_B)"
 
 #: app/gui/preferences-dialog.c:1429
-#, fuzzy
 msgid "_Pattern"
-msgstr "무늬"
+msgstr "무늬(_P)"
 
 #. Input Devices
 #: app/gui/preferences-dialog.c:1441 app/gui/preferences-dialog.c:1444
@@ -6257,42 +6249,34 @@ msgid "Enter a new name for the saved options"
 msgstr "저장된 선택사항의 새 이름을 입력하십시오"
 
 #: app/gui/tool-options-menu.c:58
-#, fuzzy
 msgid "/_Save Options to"
-msgstr "저장된 선택사항"
+msgstr "/선택사항 저장(_A)"
 
 #: app/gui/tool-options-menu.c:60
-#, fuzzy
 msgid "/Save Options to/_New Entry..."
-msgstr "/선택사항 저장(S)/새 항목(_N)..."
+msgstr "/선택사항 저장(A)/새 항목(_N)..."
 
 #: app/gui/tool-options-menu.c:71
-#, fuzzy
 msgid "/_Restore Options from"
-msgstr "/선택사항 복원(R)/(없음)"
+msgstr "/선택사항 복원(_R)"
 
 #: app/gui/tool-options-menu.c:73
-#, fuzzy
 msgid "/Restore Options from/(None)"
 msgstr "/선택사항 복원(R)/(없음)"
 
 #: app/gui/tool-options-menu.c:79
-#, fuzzy
 msgid "/Re_name Saved Options"
-msgstr "/선택사항 이름 바꾸기(N)/(없음)"
+msgstr "/선택사항 이름 바꾸기(_N)"
 
 #: app/gui/tool-options-menu.c:81
-#, fuzzy
 msgid "/Rename Saved Options/(None)"
 msgstr "/선택사항 이름 바꾸기(N)/(없음)"
 
 #: app/gui/tool-options-menu.c:87
-#, fuzzy
 msgid "/_Delete Saved Options"
-msgstr "/선택사항 지우기(D)/(없음)"
+msgstr "/선택사항 지우기(_D)"
 
 #: app/gui/tool-options-menu.c:89
-#, fuzzy
 msgid "/Delete Saved Options/(None)"
 msgstr "/선택사항 지우기(D)/(없음)"
 
@@ -6307,124 +6291,124 @@ msgstr "/모든 도구 선택사항 초기화(_A)..."
 #. <Toolbox>/File/Acquire
 #: app/gui/toolbox-menu.c:79
 msgid "/File/_Acquire"
-msgstr "/파일/얻기(_A)"
+msgstr "/파일(F)/얻기(_A)"
 
 #: app/gui/toolbox-menu.c:83
 msgid "/File/_Preferences"
-msgstr "/파일/기본 설정(_P)"
+msgstr "/파일(F)/기본 설정(_P)"
 
 #. <Toolbox>/File/Dialogs
 #: app/gui/toolbox-menu.c:91
 msgid "/File/_Dialogs"
-msgstr "/파일/대화상자(_D)"
+msgstr "/파일(F)/대화상자(_D)"
 
 #: app/gui/toolbox-menu.c:93
 msgid "/File/Dialogs/Create New Doc_k"
-msgstr "/파일/대화상자/새 독(Dock) 만들기(_K)"
+msgstr "/파일(F)/대화상자(D)/새 독 만들기(_K)"
 
 #: app/gui/toolbox-menu.c:95
 msgid "/File/Dialogs/Create New Dock/_Layers, Channels & Paths"
-msgstr "/파일/대화상자/새 독(Dock) 만들기/레이어, 채널, 경로(_L)"
+msgstr "/파일(F)/대화상자(D)/새 독 만들기(K)/레이어, 채널, 경로(_L)"
 
 #: app/gui/toolbox-menu.c:99
 msgid "/File/Dialogs/Create New Dock/_Brushes, Patterns & Gradients"
-msgstr "/파일/대화상자/새 독(Dock) 만들기/브러시, 무늬, 그라디언트(_B)"
+msgstr "/파일(F)/대화상자(D)/새 독 만들기(K)/브러시, 무늬, 그라디언트(_B)"
 
 #: app/gui/toolbox-menu.c:103
 msgid "/File/Dialogs/Create New Dock/_Misc. Stuff"
-msgstr "/파일/대화상자/새 독(Dock) 만들기/기타(_M)"
+msgstr "/파일(F)/대화상자(D)/새 독 만들기(K)/기타(_M)"
 
 #: app/gui/toolbox-menu.c:108
 msgid "/File/Dialogs/Tool _Options"
-msgstr "/파일/대화상자/도구 선택사항(_O)"
+msgstr "/파일(F)/대화상자(D)/도구 선택사항(_O)"
 
 #: app/gui/toolbox-menu.c:113
 msgid "/File/Dialogs/_Device Status"
-msgstr "/파일/대화상자/장치 상태(_D)"
+msgstr "/파일(F)/대화상자(D)/장치 상태(_D)"
 
 #: app/gui/toolbox-menu.c:121
 msgid "/File/Dialogs/_Layers"
-msgstr "/파일/대화상자/레이어(_L)"
+msgstr "/파일(F)/대화상자(D)/레이어(_L)"
 
 #: app/gui/toolbox-menu.c:126
 msgid "/File/Dialogs/_Channels"
-msgstr "/파일/대화상자/채널(_C)"
+msgstr "/파일(F)/대화상자(D)/채널(_C)"
 
 #: app/gui/toolbox-menu.c:131
 msgid "/File/Dialogs/_Paths"
-msgstr "/파일/대화상자/경로(_P)"
+msgstr "/파일(F)/대화상자(D)/경로(_P)"
 
 #: app/gui/toolbox-menu.c:136
 msgid "/File/Dialogs/Inde_xed Palette"
-msgstr "/파일/대화상자/인덱스된 색상표(_I)"
+msgstr "/파일(F)/대화상자(D)/인덱스된 색상표(_I)"
 
 #: app/gui/toolbox-menu.c:141
 msgid "/File/Dialogs/Histogra_m"
-msgstr "/파일/대화상자/히스토그램(_M)"
+msgstr "/파일(F)/대화상자(D)/히스토그램(_M)"
 
 #: app/gui/toolbox-menu.c:146
 msgid "/File/Dialogs/_Selection Editor"
-msgstr "/파일/대화상자/선택 편집기(_S)"
+msgstr "/파일(F)/대화상자(D)/선택 편집기(_S)"
 
 #: app/gui/toolbox-menu.c:151
 msgid "/File/Dialogs/Na_vigation"
-msgstr "/파일/대화상자/네비게이션(_V)"
+msgstr "/파일(F)/대화상자(D)/네비게이션(_V)"
 
 #: app/gui/toolbox-menu.c:156
 msgid "/File/Dialogs/_Undo History"
-msgstr "/파일/대화상자/실행 취소 이력(_U)"
+msgstr "/파일(F)/대화상자(D)/실행 취소 이력(_U)"
 
 #: app/gui/toolbox-menu.c:164
 msgid "/File/Dialogs/Colo_rs"
-msgstr "/파일/대화상자/색상(_R)"
+msgstr "/파일(F)/대화상자(D)/색상(_R)"
 
 #: app/gui/toolbox-menu.c:169
 msgid "/File/Dialogs/Brus_hes"
-msgstr "/파일/대화상자/브러시(_H)"
+msgstr "/파일(F)/대화상자(D)/브러시(_H)"
 
 #: app/gui/toolbox-menu.c:174
 msgid "/File/Dialogs/P_atterns"
-msgstr "/파일/대화상자/무늬(_A)"
+msgstr "/파일(F)/대화상자(D)/무늬(_A)"
 
 #: app/gui/toolbox-menu.c:179
 msgid "/File/Dialogs/_Gradients"
-msgstr "/파일/대화상자/그라디언트(_G)"
+msgstr "/파일(F)/대화상자(D)/그라디언트(_G)"
 
 #: app/gui/toolbox-menu.c:184
 msgid "/File/Dialogs/Pal_ettes"
-msgstr "/파일/대화상자/색상표(_E)"
+msgstr "/파일(F)/대화상자(D)/색상표(_E)"
 
 #: app/gui/toolbox-menu.c:189
 msgid "/File/Dialogs/_Fonts"
-msgstr "/파일/대화상자/글꼴(_F)"
+msgstr "/파일(F)/대화상자(D)/글꼴(_F)"
 
 #: app/gui/toolbox-menu.c:194
 msgid "/File/Dialogs/_Buffers"
-msgstr "/파일/대화상자/버퍼(_B)"
+msgstr "/파일(F)/대화상자(D)/버퍼(_B)"
 
 #: app/gui/toolbox-menu.c:202
 msgid "/File/Dialogs/_Images"
-msgstr "/파일/대화상자/이미지(_M)"
+msgstr "/파일(F)/대화상자(D)/이미지(_M)"
 
 #: app/gui/toolbox-menu.c:207
 msgid "/File/Dialogs/Document Histor_y"
-msgstr "/파일/대화상자/문서 이력(_Y)"
+msgstr "/파일(F)/대화상자(D)/문서 이력(_Y)"
 
 #: app/gui/toolbox-menu.c:212
 msgid "/File/Dialogs/_Templates"
-msgstr "/파일/대화상자/템플릿(_T)"
+msgstr "/파일(F)/대화상자(D)/템플릿(_T)"
 
 #: app/gui/toolbox-menu.c:217
 msgid "/File/Dialogs/T_ools"
-msgstr "/파일/대화상자/도구(_O)"
+msgstr "/파일(F)/대화상자(D)/도구(_O)"
 
 #: app/gui/toolbox-menu.c:222
 msgid "/File/Dialogs/Error Co_nsole"
-msgstr "/파일/대화상자/오류 콘솔(_N)"
+msgstr "/파일(F)/대화상자(D)/오류 콘솔(_N)"
 
 #: app/gui/toolbox-menu.c:229
 msgid "/File/D_ebug"
-msgstr "/파일/디버그(_D)"
+msgstr "/파일(F)/디버그(_D)"
 
 #. <Toolbox>/Xtns
 #: app/gui/toolbox-menu.c:249
@@ -6433,7 +6417,7 @@ msgstr "/확장(_X)"
 
 #: app/gui/toolbox-menu.c:251
 msgid "/Xtns/_Module Manager"
-msgstr "/확장/모듈 관리기(_M)"
+msgstr "/확장(X)/모듈 관리기(_M)"
 
 #. <Toolbox>/Help
 #: app/gui/toolbox-menu.c:260
@@ -6442,19 +6426,19 @@ msgstr "/도움말(_H)"
 
 #: app/gui/toolbox-menu.c:262
 msgid "/Help/_Help"
-msgstr "/도움말/도움말(_H)"
+msgstr "/도움말(H)/도움말(_H)"
 
 #: app/gui/toolbox-menu.c:267
 msgid "/Help/_Context Help"
-msgstr "/도움말/문맥 도움말(_C)"
+msgstr "/도움말(H)/문맥 도움말(_C)"
 
 #: app/gui/toolbox-menu.c:272
 msgid "/Help/_Tip of the Day"
-msgstr "/도움말/오늘의 팁(_T)"
+msgstr "/도움말(H)/오늘의 팁(_T)"
 
 #: app/gui/toolbox-menu.c:277
 msgid "/Help/_About"
-msgstr "/도움말/정보(_A)"
+msgstr "/도움말(H)/정보(_A)"
 
 #: app/gui/user-install-dialog.c:132
 msgid ""
@@ -6833,9 +6817,8 @@ msgid "Calibrate"
 msgstr "측정"
 
 #: app/gui/vectors-commands.c:444
-#, fuzzy
 msgid "Empty Path"
-msgstr "경로 가져오기"
+msgstr "빈 경로"
 
 #: app/gui/vectors-commands.c:458 app/gui/vectors-commands.c:506
 msgid "New Path"
@@ -6863,7 +6846,7 @@ msgstr "경로 속성 편집"
 msgid "Import Paths from SVG"
 msgstr "SVG에서 경로 가져오기"
 
-#: app/gui/vectors-commands.c:737
+#: app/gui/vectors-commands.c:740
 msgid "Export Path to SVG"
 msgstr "SVG로 경로 내보내기"
 
@@ -7405,7 +7388,7 @@ msgstr "압력 감지 에어브러시"
 
 #: app/tools/gimpairbrushtool.c:58
 msgid "/Tools/Paint Tools/_Airbrush"
-msgstr "/도구/그리기 도구/에어브러시(_A)"
+msgstr "/도구(T)/그리기 도구(P)/에어브러시(_A)"
 
 #: app/tools/gimpairbrushtool.c:124 app/tools/gimpconvolvetool.c:239
 #: app/tools/gimpsmudgetool.c:125
@@ -7451,7 +7434,7 @@ msgstr "그라디언트로 채우기"
 
 #: app/tools/gimpblendtool.c:100
 msgid "/Tools/Paint Tools/Blen_d"
-msgstr "/도구/그리기 도구/혼합(_D)"
+msgstr "/도구(T)/그리기 도구(P)/혼합(_D)"
 
 #: app/tools/gimpblendtool.c:188
 msgid "Blend: Invalid for indexed images."
@@ -7472,7 +7455,7 @@ msgstr "명도와 대비를 조절합니다"
 
 #: app/tools/gimpbrightnesscontrasttool.c:87
 msgid "/Tools/Color Tools/B_rightness-Contrast..."
-msgstr "/이미지/색상 도구/명도-대비(_R)..."
+msgstr "/도구(T)/색상 도구(C)/명도-대비(_R)..."
 
 #: app/tools/gimpbrightnesscontrasttool.c:138
 msgid "Adjust Brightness and Contrast"
@@ -7542,7 +7525,7 @@ msgstr "색상이나 무늬로 채우기"
 
 #: app/tools/gimpbucketfilltool.c:91
 msgid "/Tools/Paint Tools/_Bucket Fill"
-msgstr "/도구/그리기 도구/영역 채우기(_B)"
+msgstr "/도구(T)/그리기 도구(P)/영역 채우기(_B)"
 
 #: app/tools/gimpbycolorselecttool.c:82
 msgid "Select By Color"
@@ -7554,7 +7537,7 @@ msgstr "색상으로 영역 선택"
 
 #: app/tools/gimpbycolorselecttool.c:84
 msgid "/Tools/Selection Tools/_By Color Select"
-msgstr "/도구/선택 도구/색상으로 선택(_B)"
+msgstr "/도구(T)/선택 도구(S)/색상으로 선택(_B)"
 
 #: app/tools/gimpclonetool.c:102
 msgid "Paint using Patterns or Image Regions"
@@ -7562,7 +7545,7 @@ msgstr "무늬나 이미지 영역을 사용하여 칠하기"
 
 #: app/tools/gimpclonetool.c:103
 msgid "/Tools/Paint Tools/_Clone"
-msgstr "/도구/그리기 도구/복제(_C)"
+msgstr "/도구(T)/그리기 도구(P)/복제(_C)"
 
 #: app/tools/gimpclonetool.c:360
 msgid "Source"
@@ -7578,7 +7561,7 @@ msgstr "색상 균형 조정"
 
 #: app/tools/gimpcolorbalancetool.c:98
 msgid "/Tools/Color Tools/Color _Balance..."
-msgstr "/도구/색상 도구/색상 균형(_B)..."
+msgstr "/도구(T)/색상 도구(C)/색상 균형(_B)..."
 
 #: app/tools/gimpcolorbalancetool.c:149
 msgid "Adjust Color Balance"
@@ -7626,7 +7609,7 @@ msgstr "이미지 컬러화(Colorize)"
 
 #: app/tools/gimpcolorizetool.c:98
 msgid "/Tools/Color Tools/Colori_ze..."
-msgstr "/도구/색상 도구/컬러화(_Z)..."
+msgstr "/도구(T)/색상 도구(C)/컬러화(_Z)..."
 
 #: app/tools/gimpcolorizetool.c:152
 msgid "Colorize the Image"
@@ -7677,7 +7660,7 @@ msgstr "이미지에서 색상 추출"
 
 #: app/tools/gimpcolorpickertool.c:99
 msgid "/Tools/C_olor Picker"
-msgstr "/도구/색상 추출(_O)"
+msgstr "/도구(T)/색상 추출(_O)"
 
 #. tool->gdisp->shell
 #: app/tools/gimpcolorpickertool.c:315
@@ -7690,7 +7673,7 @@ msgstr "흐릿하게 혹은 선명하게"
 
 #: app/tools/gimpconvolvetool.c:92
 msgid "/Tools/Paint Tools/Con_volve"
-msgstr "/도구/그리기 도구/흐리게 선명하게(_V)"
+msgstr "/도구(T)/그리기 도구(P)/흐리게 선명하게(_V)"
 
 #. the type radio box
 #: app/tools/gimpconvolvetool.c:221
@@ -7725,7 +7708,7 @@ msgstr "이미지를 자르거나 크기를 바꿉니다"
 
 #: app/tools/gimpcroptool.c:161
 msgid "/Tools/Transform Tools/_Crop & Resize"
-msgstr "/도구/변형 도구/자르기 & 크기 바꾸기(_C)"
+msgstr "/도구(T)/변형 도구(T)/자르기 & 크기 바꾸기(_C)"
 
 #. initialize the statusbar display
 #: app/tools/gimpcroptool.c:499 app/tools/gimpcroptool.c:932
@@ -7762,7 +7745,7 @@ msgstr "색상 곡선 조절"
 
 #: app/tools/gimpcurvestool.c:140
 msgid "/Tools/Color Tools/_Curves..."
-msgstr "/도구/색상/곡선(_C)..."
+msgstr "/도구(T)/색상 도구(C)/곡선(_C)..."
 
 #: app/tools/gimpcurvestool.c:199
 msgid "Adjust Color Curves"
@@ -7813,7 +7796,7 @@ msgstr "피하기 또는 태우기 따라 그리기"
 
 #: app/tools/gimpdodgeburntool.c:72
 msgid "/Tools/Paint Tools/Dod_geBurn"
-msgstr "/도구/그리기 도구/피하기 태우기(_G)"
+msgstr "/도구(T)/그리기 도구(P)/피하기 태우기(_G)"
 
 #. the type (dodge or burn)
 #: app/tools/gimpdodgeburntool.c:198
@@ -7854,7 +7837,7 @@ msgstr "타원형으로 영역 선택"
 
 #: app/tools/gimpellipseselecttool.c:73
 msgid "/Tools/Selection Tools/_Ellipse Select"
-msgstr "/도구/선택 도구/타원형 선택(_E)"
+msgstr "/도구(T)/선택 도구(S)/타원형 선택(_E)"
 
 #: app/tools/gimperasertool.c:71
 msgid "Erase to background or transparency"
@@ -7862,7 +7845,7 @@ msgstr "배경색 또는 투명하게 지우기"
 
 #: app/tools/gimperasertool.c:72
 msgid "/Tools/Paint Tools/_Eraser"
-msgstr "/도구/그리기 도구/지우개(_E)"
+msgstr "/도구(T)/그리기 도구(P)/지우개(_E)"
 
 #. the anti_erase toggle
 #: app/tools/gimperasertool.c:185
@@ -7887,7 +7870,7 @@ msgstr "레이어 혹은 선택 뒤집기"
 
 #: app/tools/gimpfliptool.c:86
 msgid "/Tools/Transform Tools/_Flip"
-msgstr "/도구/변형 도구/뒤집기(_F)"
+msgstr "/도구(T)/변형 도구(T)/뒤집기(_F)"
 
 #: app/tools/gimpfreeselecttool.c:98
 msgid "Select hand-drawn regions"
@@ -7895,7 +7878,7 @@ msgstr "손으로 그려서 영역 선택"
 
 #: app/tools/gimpfreeselecttool.c:99
 msgid "/Tools/Selection Tools/_Free Select"
-msgstr "/도구/선택 도구/자유 선택(_F)"
+msgstr "/도구(T)/선택 도구(S)/자유 선택(_F)"
 
 #: app/tools/gimpfuzzyselecttool.c:101
 msgid "Select contiguous regions"
@@ -7903,7 +7886,7 @@ msgstr "연속적인 영역 선택"
 
 #: app/tools/gimpfuzzyselecttool.c:102
 msgid "/Tools/Selection Tools/Fu_zzy Select"
-msgstr "/도구/선택 도구/퍼지 선택(_Z)"
+msgstr "/도구(T)/선택 도구(S)/퍼지 선택(_Z)"
 
 #: app/tools/gimphistogramoptions.c:151
 msgid "Histogram Scale"
@@ -7915,7 +7898,7 @@ msgstr "색상(Hue)과 채도(Saturation) 조절"
 
 #: app/tools/gimphuesaturationtool.c:112
 msgid "/Tools/Color Tools/Hue-_Saturation..."
-msgstr "/도구/색상 도구/색상/색상-채도(_S)..."
+msgstr "/도구(T)/색상 도구(C)/색상/색상-채도(_S)..."
 
 #: app/tools/gimphuesaturationtool.c:166
 msgid "Adjust Hue / Lightness / Saturation"
@@ -8019,7 +8002,7 @@ msgstr "잉크로 그리기"
 
 #: app/tools/gimpinktool.c:170
 msgid "/Tools/Paint Tools/In_k"
-msgstr "/도구/그리기 도구/잉크(_K)"
+msgstr "/도구(T)/그리기 도구(P)/잉크(_K)"
 
 #: app/tools/gimpiscissorstool.c:278
 msgid "Scissors"
@@ -8031,7 +8014,7 @@ msgstr "이미지에서 모양 선택"
 
 #: app/tools/gimpiscissorstool.c:280
 msgid "/Tools/Selection Tools/_Intelligent Scissors"
-msgstr "/도구/선택 도구/똑똑한 가위(_I)"
+msgstr "/도구(T)/선택 도구(S)/똑똑한 가위(_I)"
 
 #: app/tools/gimplevelstool.c:157
 msgid "Adjust color levels"
@@ -8039,7 +8022,7 @@ msgstr "색상 레벨 조절"
 
 #: app/tools/gimplevelstool.c:158
 msgid "/Tools/Color Tools/_Levels..."
-msgstr "/도구/색상 도구/레벨(_L)..."
+msgstr "/도구(T)/색상 도구(C)/레벨(_L)..."
 
 #: app/tools/gimplevelstool.c:216
 msgid "Adjust Color Levels"
@@ -8113,7 +8096,7 @@ msgstr "확대 & 축소"
 
 #: app/tools/gimpmagnifytool.c:98
 msgid "/Tools/M_agnify"
-msgstr "/도구/확대(_A)"
+msgstr "/도구(T)/확대(_A)"
 
 #: app/tools/gimpmeasureoptions.c:171
 msgid "Use Info Window"
@@ -8129,7 +8112,7 @@ msgstr "거리와 각도를 측정"
 
 #: app/tools/gimpmeasuretool.c:115
 msgid "/Tools/_Measure"
-msgstr "/도구/측정(_M)"
+msgstr "/도구(T)/측정(_M)"
 
 #: app/tools/gimpmeasuretool.c:266
 msgid "Add Guides"
@@ -8166,7 +8149,7 @@ msgstr "레이어 선택 이동"
 
 #: app/tools/gimpmovetool.c:111
 msgid "/Tools/Transform Tools/_Move"
-msgstr "/도구/변형 도구/이동(_M)"
+msgstr "/도구(T)/변형 도구(T)/이동(_M)"
 
 #: app/tools/gimppaintbrushtool.c:54
 msgid "Paint fuzzy brush strokes"
@@ -8174,7 +8157,7 @@ msgstr "퍼지 브러시 따라 그리기"
 
 #: app/tools/gimppaintbrushtool.c:55
 msgid "/Tools/Paint Tools/_Paintbrush"
-msgstr "/도구/그리기 도구/페인트 브러시(_P)"
+msgstr "/도구(T)/그리기 도구(P)/페인트 브러시(_P)"
 
 #: app/tools/gimppaintoptions-gui.c:145
 msgid "Open the brush selection dialog"
@@ -8242,7 +8225,7 @@ msgstr "가장자리가 딱딱한 픽셀로 그리기"
 
 #: app/tools/gimppenciltool.c:54
 msgid "/Tools/Paint Tools/Pe_ncil"
-msgstr "/도구/그리기 도구/연필(_N)"
+msgstr "/도구(T)/그리기 도구(P)/연필(_N)"
 
 #: app/tools/gimpperspectivetool.c:83
 msgid "Perspective"
@@ -8254,7 +8237,7 @@ msgstr "레이어나 선택의 원근법 바꾸기"
 
 #: app/tools/gimpperspectivetool.c:85
 msgid "/Tools/Transform Tools/_Perspective"
-msgstr "/도구/변형 도구/원근법(_P)"
+msgstr "/도구(T)/변형 도구(T)/원근법(_P)"
 
 #: app/tools/gimpperspectivetool.c:143
 msgid "Perspective Transform Information"
@@ -8294,7 +8277,7 @@ msgstr "사각 영역 선택"
 
 #: app/tools/gimprectselecttool.c:100
 msgid "/Tools/Selection Tools/_Rect Select"
-msgstr "/도구/선택 도구/사각 선택(_R)"
+msgstr "/도구(T)/선택 도구(S)/사각 선택(_R)"
 
 #: app/tools/gimprectselecttool.c:242
 msgid "Selection: ADD"
@@ -8322,7 +8305,7 @@ msgstr "레이어나 선택 회전"
 
 #: app/tools/gimprotatetool.c:105
 msgid "/Tools/Transform Tools/_Rotate"
-msgstr "/도구/변형 도구/회전(_R)"
+msgstr "/도구(T)/변형 도구(T)/회전(_R)"
 
 #: app/tools/gimprotatetool.c:165
 msgid "Rotation Information"
@@ -8342,7 +8325,7 @@ msgstr "레이어나 선택 배율 조정"
 
 #: app/tools/gimpscaletool.c:101
 msgid "/Tools/Transform Tools/_Scale"
-msgstr "/도구/변형 도구/배율 조정(_S)"
+msgstr "/도구(T)/변형 도구(T)/배율 조정(_S)"
 
 #: app/tools/gimpscaletool.c:161
 msgid "Scaling Information"
@@ -8402,7 +8385,7 @@ msgstr "레이어 또는 선택 기울이기"
 
 #: app/tools/gimpsheartool.c:102
 msgid "/Tools/Transform Tools/S_hear"
-msgstr "/도구/변형 도구/기울이기(_H)"
+msgstr "/도구(T)/변형 도구(T)/기울이기(_H)"
 
 #: app/tools/gimpsheartool.c:160
 msgid "Shearing Information"
@@ -8422,7 +8405,7 @@ msgstr "이미지 문지르기"
 
 #: app/tools/gimpsmudgetool.c:58
 msgid "/Tools/Paint Tools/_Smudge"
-msgstr "/도구/그리기 도구/문지르기(_S)"
+msgstr "/도구(T)/그리기 도구(P)/문지르기(_S)"
 
 #: app/tools/gimptextoptions.c:146
 msgid ""
@@ -8498,7 +8481,7 @@ msgstr "이미지에 텍스트 더하기"
 
 #: app/tools/gimptexttool.c:143
 msgid "/Tools/Te_xt"
-msgstr "/도구/텍스트(_X)"
+msgstr "/도구(T)/텍스트(_X)"
 
 #: app/tools/gimptexttool.c:718
 msgid "GIMP Text Editor"
@@ -8506,7 +8489,7 @@ msgstr "김프 텍스트 편집기"
 
 #: app/tools/gimptexttool.c:828 app/tools/gimptexttool.c:831
 msgid "Confirm Text Editing"
-msgstr ""
+msgstr "텍스트 편집 확인"
 
 #: app/tools/gimptexttool.c:852
 msgid ""
@@ -8516,6 +8499,8 @@ msgid ""
 "\n"
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
+"선택한 레이어는 텍스트 레이어지만 다른 도구로 수정했습니다. 텍스트 도구로 그 "
+"레이어를 편집하면 변경 사항들이 무시됩니다."
 
 #: app/tools/gimpthresholdtool.c:93
 msgid "Reduce image to two colors using a threshold"
@@ -8523,7 +8508,7 @@ msgstr "이미지를 임계값을 기준으로 두 개의 색상으로 줄입니
 
 #: app/tools/gimpthresholdtool.c:94
 msgid "/Tools/Color Tools/_Threshold..."
-msgstr "/도구/색상 도구/고대비(_T)..."
+msgstr "/도구(T)/색상 도구(C)/고대비(_T)..."
 
 #: app/tools/gimpthresholdtool.c:148
 msgid "Apply Threshold"
@@ -8542,9 +8527,8 @@ msgid "Transform Direction"
 msgstr "변형 방향"
 
 #: app/tools/gimptransformoptions.c:353
-#, fuzzy
 msgid "Supersampling"
-msgstr "적응형 슈퍼샘플링"
+msgstr "슈퍼샘플링"
 
 #. the clip resulting image toggle button
 #: app/tools/gimptransformoptions.c:358
@@ -8632,7 +8616,7 @@ msgstr "경로를 만들고 편집합니다"
 
 #: app/tools/gimpvectortool.c:160
 msgid "/Tools/_Paths"
-msgstr "/도구/경로(_P)"
+msgstr "/도구(T)/경로(_P)"
 
 #: app/tools/gimpvectortool.c:362
 msgid "Add Stroke"
@@ -8825,11 +8809,13 @@ msgid "Delete"
 msgstr "지우기"
 
 #: app/widgets/gimpchanneltreeview.c:121
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "New Channel\n"
 "%s New Channel Dialog"
-msgstr "새 채널 색상"
+msgstr ""
+"새 채널\n"
+"%s 새 채널 대화상자"
 
 #: app/widgets/gimpchanneltreeview.c:123
 msgid "Duplicate Channel"
@@ -9131,20 +9117,26 @@ msgstr "%s 메시지"
 msgid "Cannot save. Nothing is selected."
 msgstr "저장할 수 없습니다. 선택한 것이 없습니다."
 
-#: app/widgets/gimperrorconsole.c:357
+#: app/widgets/gimperrorconsole.c:358
 msgid "Save Error Log to File"
 msgstr "파일에 오류 기록 저장"
 
-#: app/widgets/gimperrorconsole.c:399
+#: app/widgets/gimperrorconsole.c:406
 #, c-format
 msgid ""
 "Error writing file '%s':\n"
 "%s"
-msgstr "파일 '%s' 쓰기 오류: %s"
+msgstr ""
+"파일 '%s' 쓰기 오류:\n"
+"%s"
 
-#: app/widgets/gimpfiledialog.c:191
+#: app/widgets/gimpfiledialog.c:199
 msgid "Determine File _Type:"
 msgstr "파일 유형 결정(_T):"
+
+#: app/widgets/gimpfiledialog.c:227
+msgid "All Files"
+msgstr "모든 파일"
 
 #: app/widgets/gimpfontview.c:133
 msgid "Rescan Font List"
@@ -9384,6 +9376,8 @@ msgid ""
 "New Layer\n"
 "%s  New Layer Dialog"
 msgstr ""
+"새 레이어\n"
+"%s  새 레이어 대화상자"
 
 #: app/widgets/gimplayertreeview.c:209
 msgid "Duplicate Layer"
@@ -9535,7 +9529,7 @@ msgstr "모든 텍스트 지우기"
 msgid "Open Text File (UTF-8)"
 msgstr "텍스트 파일 열기 (UTF-8)"
 
-#: app/widgets/gimptexteditor.c:449
+#: app/widgets/gimptexteditor.c:460
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "파일 '%s'에 잘못된 UTF-8 데이터가 있습니다."
@@ -9546,16 +9540,17 @@ msgid ""
 "Click to update preview\n"
 "%s  Click to force update even if preview is up-to-date"
 msgstr ""
+"미리보기를 갱신하려면 누르세요\n"
+"%s  미리보기가 최신이더라도 강제로 갱신하려면 누르세요"
 
-#: app/widgets/gimpthumbbox.c:250 app/widgets/gimpthumbbox.c:296
-#, fuzzy
+#: app/widgets/gimpthumbbox.c:250 app/widgets/gimpthumbbox.c:297
 msgid "No Selection"
-msgstr "선택"
+msgstr "선택 없음"
 
-#: app/widgets/gimpthumbbox.c:382 app/widgets/gimpthumbbox.c:402
+#: app/widgets/gimpthumbbox.c:383 app/widgets/gimpthumbbox.c:403
 #, c-format
 msgid "Thumbnail %d of %d"
-msgstr ""
+msgstr "썸네일 %d / %d"
 
 #: app/widgets/gimptoolbox-color-area.c:360
 msgid "Change Foreground Color"
@@ -9646,6 +9641,8 @@ msgid ""
 "New Path\n"
 "%s New Path Dialog"
 msgstr ""
+"새 경로\n"
+"%s 새 경로 대화상자"
 
 #: app/widgets/gimpvectorstreeview.c:133
 msgid "Duplicate Path"
@@ -9900,28 +9897,3 @@ msgstr "XCF 오류: XCF 파일 버젼 %d은(는) 지원되지 않습니다."
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "이미지나 사진을 만들고 편집합니다"
-
-#~ msgid ""
-#~ "  -S, --no-splash-image    Do not add an image to the startup window.\n"
-#~ msgstr "  -S, --no-splash-image    시작 창에 그림을 표시 안함.\n"
-
-#~ msgid "Image Mod"
-#~ msgstr "이미지 모드"
-
-#~ msgid "Layer Mod"
-#~ msgstr "레이어 모드"
-
-#~ msgid "Channel Mod"
-#~ msgstr "채널 모드"
-
-#~ msgid "Paste Transform"
-#~ msgstr "변형 붙여 넣기"
-
-#~ msgid "Empty Layer Copy"
-#~ msgstr "빈 레어어 복사"
-
-#~ msgid "Empty Vectors Copy"
-#~ msgstr "빈 벡터 복사"
-
-#~ msgid "Modify letter spacing"
-#~ msgstr "글자 간격 고치기"
