@@ -1,3 +1,7 @@
+2003-12-07  Dave Neary  <bolsh@gimp.org>
+
+	* NEWS: Updated.
+
 2003-12-06  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/image.pdb (image_delete): fixed "success"
