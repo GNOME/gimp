@@ -1,3 +1,7 @@
+Fri Apr 30 17:01:01 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
+
+        * app/module_db.c (mod_load): only OS/2 patches.
+
 Fri Apr 30 13:31:14 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* Makefile.am: listed tools first in SUBDIRS, so xgettext can grab
