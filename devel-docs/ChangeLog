@@ -1,3 +1,8 @@
+2003-07-09  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/libgimp-paths.sgml: updated.
+
 2003-07-07  Sven Neumann  <sven@gimp.org>
 
 	* libgimpmath/libgimpmath-sections.txt

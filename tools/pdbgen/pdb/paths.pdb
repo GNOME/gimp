@@ -79,9 +79,8 @@ HELP
 
     @inargs = (
 	&std_image_arg,
-	{ name => 'pathname', type => 'string',
-	  desc => 'the name of the path whose points should be listed',
-	  alias => 'pname' }
+	{ name => 'name', type => 'string',
+	  desc => 'the name of the path whose points should be listed' }
     );
     $inargs[0]->{desc} = 'The ID of the image to list the paths from';
 
@@ -97,7 +96,7 @@ HELP
 		   the x pos, next is the y pos, last is the type of the pnt.
 		   The type field is dependant on the path type. For beziers
 		   (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR,
-		   2.0 = BEZIER_CONTROL). Note all points are returned in pixel
+		   2.0 = BEZIER_CONTROL, 3.0 = BEZIER_MOVE). Note all points are returned in pixel
 		   resolution',
 	  init => 1,
 	  array => { name => 'num_path_point_details',
@@ -162,9 +161,9 @@ HELP
     $inargs[0]->{desc} = 'The ID of the image to get the current paths from';
 
     @outargs = (
-	{ name => 'current_path_name', type => 'string',
+	{ name => 'name', type => 'string',
 	  desc => 'The name of the current path',
-	  alias => 'pname', init => 1 }
+	  init => 1 }
     );
 
     %invoke = (
@@ -174,7 +173,7 @@ HELP
   vectors = gimp_image_get_active_vectors (gimage);
 
   if (vectors)
-    pname = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
+    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
   else
     success = FALSE;
 }
@@ -193,9 +192,8 @@ HELP
 
     @inargs = (
 	&std_image_arg,
-	{ name => 'set_current_path_name', type => 'string',
-	  desc => 'The name of the path to set the current path to',
-	  alias => 'pname' }	
+	{ name => 'name', type => 'string',
+	  desc => 'The name of the path to set the current path to' }	
     );
     $inargs[0]->{desc} = 'The ID of the image to list set the paths in';
 
@@ -203,7 +201,7 @@ HELP
 	vars => [ 'GimpVectors *vectors' ],
 	code => <<'CODE'
 {
-  vectors = gimp_image_get_vectors_by_name (gimage, pname);
+  vectors = gimp_image_get_vectors_by_name (gimage, name);
 
   if (vectors)
     gimp_image_set_active_vectors (gimage, vectors);
@@ -225,12 +223,12 @@ HELP
 
     @inargs = (
 	&std_image_arg,
-	{ name => 'pathname', type => 'string',
+	{ name => 'name', type => 'string',
 	  desc => 'The name of the path to create (if it exists then a unique
 		   name will be created - query the list of paths if you want
 		   to make sure that the name of the path you create is 
 		   unique. This will be set as the current path.',
-	  alias => 'pname', init => 1 },
+	  init => 1 },
 	{ name => 'ptype', type => 'int32',
 	  desc => 'The type of the path. Currently only one type (1 = Bezier)
 		   is supported' },
@@ -239,11 +237,11 @@ HELP
 		   the x pos, next is the y pos, last is the type of the pnt.
 		   The type field is dependant on the path type. For beziers
 		   (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR,
-		   2.0 = BEZIER_CONTROL). Note all points are returned in pixel
+		   2.0 = BEZIER_CONTROL, 3.0= BEZIER_MOVE). Note all points are returned in pixel
 		   resolution',
 	  array => { name => 'num_path_points',
 		     desc => 'The number of points in the path. Each point is
-			      made up of (x, y, type) of floats. Currently only 
+			      made up of (x, y, type) of floats. Currently only
 			      the creation of bezier curves is allowed. The type
 			      parameter must be set to (1) to indicate a BEZIER
 			      type curve. For BEZIERS. Note the that points
@@ -289,7 +287,7 @@ HELP
           points[i].type = curr_point_pair[2];
         }
 
-      vectors = gimp_vectors_compat_new (gimage, pname, points, n_points,
+      vectors = gimp_vectors_compat_new (gimage, name, points, n_points,
                                          closed);
 
       g_free (points);
@@ -412,9 +410,8 @@ HELP
 
     @inargs = (
 	&std_image_arg,
-	{ name => 'pathname', type => 'string',
-	  desc => 'the name of the path whose tattoo should be obtained',
-	  alias => 'pname' }
+	{ name => 'name', type => 'string',
+	  desc => 'the name of the path whose tattoo should be obtained' }
     );
 
     @outargs = (
@@ -427,7 +424,7 @@ HELP
 	code => <<'CODE'
 {
   vectors = (GimpVectors *)
-    gimp_container_get_child_by_name (gimage->vectors, pname);
+    gimp_container_get_child_by_name (gimage->vectors, name);
 
   if (vectors)
     tattoo = gimp_item_get_tattoo (GIMP_ITEM (vectors));
@@ -449,9 +446,8 @@ HELP
 
     @inargs = (
 	&std_image_arg,
-	{ name => 'pathname', type => 'string',
-	  desc => 'the name of the path whose tattoo should be set',
-	  alias => 'pname' },
+	{ name => 'name', type => 'string',
+	  desc => 'the name of the path whose tattoo should be set' },
         { name => 'tattovalue', type => 'int32',
 	  desc => 'The tattoo associated with the name path. Only values returned from \'path_get_tattoo\' should be used here', init => 1  }
     );
@@ -461,7 +457,7 @@ HELP
 	code => <<'CODE'
 {
   vectors = (GimpVectors *)
-    gimp_container_get_child_by_name (gimage->vectors, pname);
+    gimp_container_get_child_by_name (gimage->vectors, name);
 
   if (vectors)
     gimp_item_set_tattoo (GIMP_ITEM (vectors), tattovalue);
@@ -489,7 +485,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'path_name', type => 'string', init => 1,
+	{ name => 'name', type => 'string', init => 1,
 	  desc => 'The name of the path with the specified tattoo' }
     );
 
@@ -500,7 +496,7 @@ HELP
   vectors = gimp_image_get_vectors_by_tattoo (gimage, tattoo);
 
   if (vectors)
-    path_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
+    name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
   else
     success = FALSE;
 }
@@ -519,9 +515,8 @@ HELP
 
     @inargs = (
 	&std_image_arg,
-	{ name => 'path_name_to_del', type => 'string',
-	  desc => 'The name of the path to delete',
-	  alias => 'pname' }	
+	{ name => 'name', type => 'string',
+	  desc => 'The name of the path to delete' }
     );
     $inargs[0]->{desc} = 'The ID of the image to list delete the paths from';
 
@@ -530,7 +525,7 @@ HELP
 	code => <<'CODE'
 {
   vectors = (GimpVectors *)
-    gimp_container_get_child_by_name (gimage->vectors, pname);
+    gimp_container_get_child_by_name (gimage->vectors, name);
 
   if (vectors)
     gimp_image_remove_vectors (gimage, vectors);
@@ -552,9 +547,8 @@ HELP
 
     @inargs = (
 	&std_image_arg,
-	{ name => 'pathname', type => 'string',
-	  desc => 'the name of the path whose locked status should be obtained',
-	  alias => 'pname' }
+	{ name => 'name', type => 'string',
+	  desc => 'the name of the path whose locked status should be obtained'}
     );
 
     @outargs = (
@@ -567,7 +561,7 @@ HELP
 	code => <<'CODE'
 {
   vectors = (GimpVectors *)
-    gimp_container_get_child_by_name (gimage->vectors, pname);
+    gimp_container_get_child_by_name (gimage->vectors, name);
 
   if (vectors)
     lockstatus = gimp_item_get_linked (GIMP_ITEM (vectors));
@@ -589,9 +583,8 @@ HELP
 
     @inargs = (
 	&std_image_arg,
-	{ name => 'pathname', type => 'string',
-	  desc => 'the name of the path whose locked status should be set',
-	  alias => 'pname' },
+	{ name => 'name', type => 'string',
+	  desc => 'the name of the path whose locked status should be set' },
 	{ name => 'lockstatus', type => 'int32',
 	  desc => 'The lock status associated with the name path. 0 if the path is not locked. 1 if the path is to be locked', init => 1  }
     );
@@ -601,7 +594,7 @@ HELP
 	code => <<'CODE'
 {
   vectors = (GimpVectors *)
-    gimp_container_get_child_by_name (gimage->vectors, pname);
+    gimp_container_get_child_by_name (gimage->vectors, name);
 
   if (vectors)
     gimp_item_set_linked (GIMP_ITEM (vectors), lockstatus, TRUE);
@@ -612,8 +605,59 @@ CODE
     );
 }
 
+sub path_to_selection {
+    $blurb = 'Transforms the active path into a selection';
+
+    $help = <<'HELP';
+This procedure renders the desired path into the current selection.
+HELP
+
+
+    $author = $copyright = 'Joao S. O. Bueno';
+    $date = '2003';
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'name', type => 'string',
+	  desc => 'The name of the path which should be made into selection' },
+        { name => 'op', type => 'enum GimpChannelOps',
+	  desc => 'The desired operation with current selection' },
+	{ name => 'antialias', type => 'boolean',
+	  desc => 'Antialias selection' },
+	{ name => 'feather', type => 'boolean',
+	  desc => 'Feather selection' },
+	{ name => 'feather_radius_x', type => 'float',
+	  desc => 'Feather radius x'  },
+	{ name => 'feather_radius_y', type => 'float',
+	  desc => 'Feather radius y'  }
+    );
+
+    %invoke = (
+	vars => [ 'GimpVectors *vectors' ],
+	code => <<'CODE'
+{
+  vectors = (GimpVectors *)
+    gimp_container_get_child_by_name (gimage->vectors, name);
+
+  if (vectors)
+    gimp_image_mask_select_vectors (gimage,
+                                    vectors,
+                                    op,
+                                    antialias,
+                                    feather,
+                                    feather_radius_x,
+                                    feather_radius_y);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
 @headers = qw(<string.h> "core/gimp.h" "core/gimpcontext.h" "core/gimplist.h"
               "core/gimppaintinfo.h" "core/gimptoolinfo.h"
+              "core/gimpimage-mask-select.h"
               "paint/gimppaintcore-stroke.h" "paint/gimppaintoptions.h"
               "vectors/gimpanchor.h" "vectors/gimpbezierstroke.h"
               "vectors/gimpvectors.h" "vectors/gimpvectors-compat.h");
@@ -622,7 +666,7 @@ CODE
 	    path_get_points path_set_points
             path_stroke_current path_get_point_at_dist
 	    path_get_tattoo path_set_tattoo get_path_by_tattoo
-            path_get_locked path_set_locked);
+            path_get_locked path_set_locked path_to_selection);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Paths';

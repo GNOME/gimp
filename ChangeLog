@@ -1,5 +1,15 @@
 2003-07-09  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/paths.pdb: applied a modified patch from Joao
+	S. O. Bueno <gwidion@mpc.com.br> that adds the new PDB function
+	gimp_path_to_selection().
+
+	* app/pdb/internal_procs.c
+	* app/pdb/paths_cmds.c
+	* libgimp/gimppaths_pdb.[ch]: regenerated.
+
+2003-07-09  Sven Neumann  <sven@gimp.org>
+
 	* app/composite/tester.c: removed ...
 	* app/composite/test-composite.c: ... and readded under a new name.
 

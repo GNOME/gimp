@@ -31,6 +31,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpimage-mask-select.h"
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
 #include "core/gimppaintinfo.h"
@@ -55,6 +56,7 @@ static ProcRecord path_set_tattoo_proc;
 static ProcRecord get_path_by_tattoo_proc;
 static ProcRecord path_get_locked_proc;
 static ProcRecord path_set_locked_proc;
+static ProcRecord path_to_selection_proc;
 
 void
 register_paths_procs (Gimp *gimp)
@@ -72,6 +74,7 @@ register_paths_procs (Gimp *gimp)
   procedural_db_register (gimp, &get_path_by_tattoo_proc);
   procedural_db_register (gimp, &path_get_locked_proc);
   procedural_db_register (gimp, &path_set_locked_proc);
+  procedural_db_register (gimp, &path_to_selection_proc);
 }
 
 static Argument *
@@ -166,7 +169,7 @@ path_get_current_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  gchar *pname = NULL;
+  gchar *name = NULL;
   GimpVectors *vectors;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
@@ -178,7 +181,7 @@ path_get_current_invoker (Gimp     *gimp,
       vectors = gimp_image_get_active_vectors (gimage);
     
       if (vectors)
-	pname = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
+	name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
       else
 	success = FALSE;
     }
@@ -186,7 +189,7 @@ path_get_current_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&path_get_current_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = pname;
+    return_args[1].value.pdb_pointer = name;
 
   return return_args;
 }
@@ -204,7 +207,7 @@ static ProcArg path_get_current_outargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "current_path_name",
+    "name",
     "The name of the current path"
   }
 };
@@ -231,20 +234,20 @@ path_set_current_invoker (Gimp     *gimp,
 {
   gboolean success = TRUE;
   GimpImage *gimage;
-  gchar *pname;
+  gchar *name;
   GimpVectors *vectors;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
-  pname = (gchar *) args[1].value.pdb_pointer;
-  if (pname == NULL)
+  name = (gchar *) args[1].value.pdb_pointer;
+  if (name == NULL)
     success = FALSE;
 
   if (success)
     {
-      vectors = gimp_image_get_vectors_by_name (gimage, pname);
+      vectors = gimp_image_get_vectors_by_name (gimage, name);
     
       if (vectors)
 	gimp_image_set_active_vectors (gimage, vectors);
@@ -264,7 +267,7 @@ static ProcArg path_set_current_inargs[] =
   },
   {
     GIMP_PDB_STRING,
-    "set_current_path_name",
+    "name",
     "The name of the path to set the current path to"
   }
 };
@@ -291,21 +294,21 @@ path_delete_invoker (Gimp     *gimp,
 {
   gboolean success = TRUE;
   GimpImage *gimage;
-  gchar *pname;
+  gchar *name;
   GimpVectors *vectors;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
-  pname = (gchar *) args[1].value.pdb_pointer;
-  if (pname == NULL)
+  name = (gchar *) args[1].value.pdb_pointer;
+  if (name == NULL)
     success = FALSE;
 
   if (success)
     {
       vectors = (GimpVectors *)
-	gimp_container_get_child_by_name (gimage->vectors, pname);
+	gimp_container_get_child_by_name (gimage->vectors, name);
     
       if (vectors)
 	gimp_image_remove_vectors (gimage, vectors);
@@ -325,7 +328,7 @@ static ProcArg path_delete_inargs[] =
   },
   {
     GIMP_PDB_STRING,
-    "path_name_to_del",
+    "name",
     "The name of the path to delete"
   }
 };
@@ -353,7 +356,7 @@ path_get_points_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  gchar *pname;
+  gchar *name;
   gint32 path_type = 0;
   gint32 path_closed = 0;
   gint32 num_points = 0;
@@ -364,8 +367,8 @@ path_get_points_invoker (Gimp     *gimp,
   if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
-  pname = (gchar *) args[1].value.pdb_pointer;
-  if (pname == NULL)
+  name = (gchar *) args[1].value.pdb_pointer;
+  if (name == NULL)
     success = FALSE;
 
   if (success)
@@ -428,7 +431,7 @@ static ProcArg path_get_points_inargs[] =
   },
   {
     GIMP_PDB_STRING,
-    "pathname",
+    "name",
     "the name of the path whose points should be listed"
   }
 };
@@ -453,7 +456,7 @@ static ProcArg path_get_points_outargs[] =
   {
     GIMP_PDB_FLOATARRAY,
     "points_pairs",
-    "The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR, 2.0 = BEZIER_CONTROL). Note all points are returned in pixel resolution"
+    "The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR, 2.0 = BEZIER_CONTROL, 3.0 = BEZIER_MOVE). Note all points are returned in pixel resolution"
   }
 };
 
@@ -479,7 +482,7 @@ path_set_points_invoker (Gimp     *gimp,
 {
   gboolean success = TRUE;
   GimpImage *gimage;
-  gchar *pname = NULL;
+  gchar *name = NULL;
   gint32 ptype;
   gint32 num_path_points = 0;
   gdouble *points_pairs;
@@ -489,8 +492,8 @@ path_set_points_invoker (Gimp     *gimp,
   if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
-  pname = (gchar *) args[1].value.pdb_pointer;
-  if (pname == NULL)
+  name = (gchar *) args[1].value.pdb_pointer;
+  if (name == NULL)
     success = FALSE;
 
   ptype = args[2].value.pdb_int;
@@ -529,7 +532,7 @@ path_set_points_invoker (Gimp     *gimp,
 	      points[i].type = curr_point_pair[2];
 	    }
     
-	  vectors = gimp_vectors_compat_new (gimage, pname, points, n_points,
+	  vectors = gimp_vectors_compat_new (gimage, name, points, n_points,
 					     closed);
     
 	  g_free (points);
@@ -553,7 +556,7 @@ static ProcArg path_set_points_inargs[] =
   },
   {
     GIMP_PDB_STRING,
-    "pathname",
+    "name",
     "The name of the path to create (if it exists then a unique name will be created - query the list of paths if you want to make sure that the name of the path you create is unique. This will be set as the current path."
   },
   {
@@ -569,7 +572,7 @@ static ProcArg path_set_points_inargs[] =
   {
     GIMP_PDB_FLOATARRAY,
     "points_pairs",
-    "The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR, 2.0 = BEZIER_CONTROL). Note all points are returned in pixel resolution"
+    "The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be (1.0 = BEZIER_ANCHOR, 2.0 = BEZIER_CONTROL, 3.0= BEZIER_MOVE). Note all points are returned in pixel resolution"
   }
 };
 
@@ -762,7 +765,7 @@ path_get_tattoo_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  gchar *pname;
+  gchar *name;
   gint32 tattoo = 0;
   GimpVectors *vectors;
 
@@ -770,14 +773,14 @@ path_get_tattoo_invoker (Gimp     *gimp,
   if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
-  pname = (gchar *) args[1].value.pdb_pointer;
-  if (pname == NULL)
+  name = (gchar *) args[1].value.pdb_pointer;
+  if (name == NULL)
     success = FALSE;
 
   if (success)
     {
       vectors = (GimpVectors *)
-	gimp_container_get_child_by_name (gimage->vectors, pname);
+	gimp_container_get_child_by_name (gimage->vectors, name);
     
       if (vectors)
 	tattoo = gimp_item_get_tattoo (GIMP_ITEM (vectors));
@@ -802,7 +805,7 @@ static ProcArg path_get_tattoo_inargs[] =
   },
   {
     GIMP_PDB_STRING,
-    "pathname",
+    "name",
     "the name of the path whose tattoo should be obtained"
   }
 };
@@ -838,7 +841,7 @@ path_set_tattoo_invoker (Gimp     *gimp,
 {
   gboolean success = TRUE;
   GimpImage *gimage;
-  gchar *pname;
+  gchar *name;
   gint32 tattovalue = 0;
   GimpVectors *vectors;
 
@@ -846,8 +849,8 @@ path_set_tattoo_invoker (Gimp     *gimp,
   if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
-  pname = (gchar *) args[1].value.pdb_pointer;
-  if (pname == NULL)
+  name = (gchar *) args[1].value.pdb_pointer;
+  if (name == NULL)
     success = FALSE;
 
   tattovalue = args[2].value.pdb_int;
@@ -855,7 +858,7 @@ path_set_tattoo_invoker (Gimp     *gimp,
   if (success)
     {
       vectors = (GimpVectors *)
-	gimp_container_get_child_by_name (gimage->vectors, pname);
+	gimp_container_get_child_by_name (gimage->vectors, name);
     
       if (vectors)
 	gimp_item_set_tattoo (GIMP_ITEM (vectors), tattovalue);
@@ -875,7 +878,7 @@ static ProcArg path_set_tattoo_inargs[] =
   },
   {
     GIMP_PDB_STRING,
-    "pathname",
+    "name",
     "the name of the path whose tattoo should be set"
   },
   {
@@ -909,7 +912,7 @@ get_path_by_tattoo_invoker (Gimp     *gimp,
   Argument *return_args;
   GimpImage *gimage;
   gint32 tattoo;
-  gchar *path_name = NULL;
+  gchar *name = NULL;
   GimpVectors *vectors;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
@@ -923,7 +926,7 @@ get_path_by_tattoo_invoker (Gimp     *gimp,
       vectors = gimp_image_get_vectors_by_tattoo (gimage, tattoo);
     
       if (vectors)
-	path_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
+	name = g_strdup (gimp_object_get_name (GIMP_OBJECT (vectors)));
       else
 	success = FALSE;
     }
@@ -931,7 +934,7 @@ get_path_by_tattoo_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&get_path_by_tattoo_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = path_name;
+    return_args[1].value.pdb_pointer = name;
 
   return return_args;
 }
@@ -954,7 +957,7 @@ static ProcArg get_path_by_tattoo_outargs[] =
 {
   {
     GIMP_PDB_STRING,
-    "path_name",
+    "name",
     "The name of the path with the specified tattoo"
   }
 };
@@ -982,7 +985,7 @@ path_get_locked_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  gchar *pname;
+  gchar *name;
   gint32 lockstatus = 0;
   GimpVectors *vectors;
 
@@ -990,14 +993,14 @@ path_get_locked_invoker (Gimp     *gimp,
   if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
-  pname = (gchar *) args[1].value.pdb_pointer;
-  if (pname == NULL)
+  name = (gchar *) args[1].value.pdb_pointer;
+  if (name == NULL)
     success = FALSE;
 
   if (success)
     {
       vectors = (GimpVectors *)
-	gimp_container_get_child_by_name (gimage->vectors, pname);
+	gimp_container_get_child_by_name (gimage->vectors, name);
     
       if (vectors)
 	lockstatus = gimp_item_get_linked (GIMP_ITEM (vectors));
@@ -1022,7 +1025,7 @@ static ProcArg path_get_locked_inargs[] =
   },
   {
     GIMP_PDB_STRING,
-    "pathname",
+    "name",
     "the name of the path whose locked status should be obtained"
   }
 };
@@ -1058,7 +1061,7 @@ path_set_locked_invoker (Gimp     *gimp,
 {
   gboolean success = TRUE;
   GimpImage *gimage;
-  gchar *pname;
+  gchar *name;
   gint32 lockstatus = 0;
   GimpVectors *vectors;
 
@@ -1066,8 +1069,8 @@ path_set_locked_invoker (Gimp     *gimp,
   if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
-  pname = (gchar *) args[1].value.pdb_pointer;
-  if (pname == NULL)
+  name = (gchar *) args[1].value.pdb_pointer;
+  if (name == NULL)
     success = FALSE;
 
   lockstatus = args[2].value.pdb_int;
@@ -1075,7 +1078,7 @@ path_set_locked_invoker (Gimp     *gimp,
   if (success)
     {
       vectors = (GimpVectors *)
-	gimp_container_get_child_by_name (gimage->vectors, pname);
+	gimp_container_get_child_by_name (gimage->vectors, name);
     
       if (vectors)
 	gimp_item_set_linked (GIMP_ITEM (vectors), lockstatus, TRUE);
@@ -1095,7 +1098,7 @@ static ProcArg path_set_locked_inargs[] =
   },
   {
     GIMP_PDB_STRING,
-    "pathname",
+    "name",
     "the name of the path whose locked status should be set"
   },
   {
@@ -1119,4 +1122,113 @@ static ProcRecord path_set_locked_proc =
   0,
   NULL,
   { { path_set_locked_invoker } }
+};
+
+static Argument *
+path_to_selection_invoker (Gimp     *gimp,
+                           Argument *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  gchar *name;
+  gint32 op;
+  gboolean antialias;
+  gboolean feather;
+  gdouble feather_radius_x;
+  gdouble feather_radius_y;
+  GimpVectors *vectors;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  name = (gchar *) args[1].value.pdb_pointer;
+  if (name == NULL)
+    success = FALSE;
+
+  op = args[2].value.pdb_int;
+  if (op < GIMP_CHANNEL_OP_ADD || op > GIMP_CHANNEL_OP_INTERSECT)
+    success = FALSE;
+
+  antialias = args[3].value.pdb_int ? TRUE : FALSE;
+
+  feather = args[4].value.pdb_int ? TRUE : FALSE;
+
+  feather_radius_x = args[5].value.pdb_float;
+
+  feather_radius_y = args[6].value.pdb_float;
+
+  if (success)
+    {
+      vectors = (GimpVectors *)
+	gimp_container_get_child_by_name (gimage->vectors, name);
+    
+      if (vectors)
+	gimp_image_mask_select_vectors (gimage,
+					vectors,
+					op,
+					antialias,
+					feather,
+					feather_radius_x,
+					feather_radius_y);
+      else
+	success = FALSE;
+    }
+
+  return procedural_db_return_args (&path_to_selection_proc, success);
+}
+
+static ProcArg path_to_selection_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The name of the path which should be made into selection"
+  },
+  {
+    GIMP_PDB_INT32,
+    "op",
+    "The desired operation with current selection"
+  },
+  {
+    GIMP_PDB_INT32,
+    "antialias",
+    "Antialias selection"
+  },
+  {
+    GIMP_PDB_INT32,
+    "feather",
+    "Feather selection"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "feather_radius_x",
+    "Feather radius x"
+  },
+  {
+    GIMP_PDB_FLOAT,
+    "feather_radius_y",
+    "Feather radius y"
+  }
+};
+
+static ProcRecord path_to_selection_proc =
+{
+  "gimp_path_to_selection",
+  "Transforms the active path into a selection",
+  "This procedure renders the desired path into the current selection.",
+  "Joao S. O. Bueno",
+  "Joao S. O. Bueno",
+  "2003",
+  GIMP_INTERNAL,
+  7,
+  path_to_selection_inargs,
+  0,
+  NULL,
+  { { path_to_selection_invoker } }
 };
