@@ -830,7 +830,7 @@ quick_median_select (guchar **p,
     }
 }
 
-static guchar
+static inline guchar
 pixel_intensity (const guchar *p,
                  gint          bpp)
 {
