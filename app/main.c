@@ -525,7 +525,7 @@ gimp_show_help (const gchar *progname)
   g_print (_("  --stack-trace-mode <never | query | always>\n"
              "                           Debugging mode for fatal signals.\n"));
   g_print (_("  --pdb-compat-mode <off | on | warn>\n"
-             "                           Procedural Database compat mode.\n"));
+             "                           Procedural Database compatibility mode.\n"));
   g_print (_("  -b, --batch <commands>   Process commands in batch mode.\n"));
   g_print ("\n");
 };
