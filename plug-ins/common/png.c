@@ -364,8 +364,8 @@ run (const gchar      *name,
 }
 
 
-/* Try to find a colour in the palette which isn't actually 
- * used in the image, so that we can use it as the transparency 
+/* Try to find a colour in the palette which isn't actually
+ * used in the image, so that we can use it as the transparency
  * index. Taken from gif.c */
 static gint
 find_unused_ia_colour (guchar *pixels,
@@ -383,7 +383,7 @@ find_unused_ia_colour (guchar *pixels,
 
   for (i = 0; i < numpixels; i++)
     {
-      /* If alpha is over a threshold, the colour index in the 
+      /* If alpha is over a threshold, the colour index in the
        * palette is taken. Otherwise, this pixel is transparent. */
       if (pixels[i * 2 + 1] > 127)
         ix_used[pixels[i * 2]] = TRUE;
@@ -627,12 +627,24 @@ load_image (const gchar *filename)
 #if PNG_LIBPNG_VER > 99
   if (png_get_valid (pp, info, PNG_INFO_gAMA))
     {
-      /* I sure would like to handle this, but there's no mechanism to
-         do so in Gimp :( */
+      GimpParasite *parasite;
+      gchar         buf[G_ASCII_DTOSTR_BUF_SIZE];
+      gdouble       gamma;
+
+      png_get_gAMA (pp, info, &gamma);
+
+      g_ascii_dtostr (buf, sizeof (buf), gamma);
+
+      parasite = gimp_parasite_new ("gamma",
+                                    GIMP_PARASITE_PERSISTENT,
+                                    strlen (buf) + 1, buf);
+      gimp_image_parasite_attach (image, parasite);
+      gimp_parasite_free (parasite);
     }
   if (png_get_valid (pp, info, PNG_INFO_oFFs))
     {
-      gimp_layer_set_offsets (layer, png_get_x_offset_pixels (pp, info),
+      gimp_layer_set_offsets (layer,
+                              png_get_x_offset_pixels (pp, info),
                               png_get_y_offset_pixels (pp, info));
     }
   if (png_get_valid (pp, info, PNG_INFO_pHYs))
@@ -768,8 +780,8 @@ load_image (const gchar *filename)
 
 	  if (text->text_length > 0)   /*  tEXt  */
 	    {
-	      comment = g_convert (text->text, -1, 
-				   "UTF-8", "ISO-8859-1", 
+	      comment = g_convert (text->text, -1,
+				   "UTF-8", "ISO-8859-1",
 				   NULL, NULL, NULL);
 	    }
 	  else if (g_utf8_validate (text->text, -1, NULL))
@@ -878,7 +890,6 @@ save_image (const gchar *filename,
    *pixel;                      /* Pixel data */
   gchar *progress;              /* Title for progress display... */
   gdouble xres, yres;           /* GIMP resolution (dpi) */
-  gdouble gamma;                /* GIMP gamma e.g. 2.20 */
   png_color_16 background;      /* Background color */
   png_time mod_time;            /* Modification time (ie NOW) */
   guchar red, green, blue;      /* Used for palette background */
@@ -886,7 +897,7 @@ save_image (const gchar *filename,
   struct tm *gmt;               /* GMT broken down */
 
   guchar remap[256];            /* Re-mapping for the palette */
-  
+
   png_textp  text = NULL;
 
   if (pngvals.comment)
@@ -894,7 +905,7 @@ save_image (const gchar *filename,
       GimpParasite *parasite;
 
       parasite = gimp_image_parasite_find (orig_image_ID, "gimp-comment");
-      if (parasite) 
+      if (parasite)
         {
           gchar *comment = g_strndup (gimp_parasite_data (parasite),
                                       gimp_parasite_data_size (parasite));
@@ -913,9 +924,9 @@ save_image (const gchar *filename,
 #else
 
           text->compression = PNG_TEXT_COMPRESSION_NONE;
-          text->text        = g_convert (comment, -1, 
-                                         "ISO-8859-1", "UTF-8", 
-                                         NULL, &text->text_length, 
+          text->text        = g_convert (comment, -1,
+                                         "ISO-8859-1", "UTF-8",
+                                         NULL, &text->text_length,
                                          NULL);
 
 #endif
@@ -963,7 +974,7 @@ save_image (const gchar *filename,
                  filename, g_strerror (errno));
       return 0;
     }
-      
+
   png_init_io (pp, fp);
 
   progress = g_strdup_printf (_("Saving '%s'..."), filename);
@@ -988,14 +999,14 @@ save_image (const gchar *filename,
   info->bit_depth      = 8;
   info->interlace_type = pngvals.interlaced;
 
-  /* 
+  /*
    * Initialise remap[]
    */
   for (i = 0; i < 256; i++)
     remap[i] = i;
 
   /*
-   * Set color type and remember bytes per pixel count 
+   * Set color type and remember bytes per pixel count
    */
 
   switch (type)
@@ -1071,8 +1082,17 @@ save_image (const gchar *filename,
 
   if (pngvals.gama)
     {
-      gamma = gimp_gamma ();
-      png_set_gAMA (pp, info, 1.0 / (gamma != 1.00 ? gamma : DEFAULT_GAMMA));
+      GimpParasite *parasite;
+      gdouble       gamma = DEFAULT_GAMMA;
+
+      parasite = gimp_image_parasite_find (orig_image_ID, "gamma");
+      if (parasite)
+	{
+          gamma = g_ascii_strtod (parasite->data, NULL);
+	  gimp_parasite_free (parasite);
+	}
+
+      png_set_gAMA (pp, info, gamma);
     }
 
   if (pngvals.offs)
@@ -1153,7 +1173,7 @@ save_image (const gchar *filename,
           gimp_pixel_rgn_get_rect (&pixel_rgn, pixel, 0, begin,
                                    drawable->width, num);
 
-          /* If we're dealing with a paletted image with 
+          /* If we're dealing with a paletted image with
            * transparency set, write out the remapped palette */
           if (info->valid & PNG_INFO_tRNS)
             {
@@ -1162,13 +1182,13 @@ save_image (const gchar *filename,
                   fixed = pixels[i];
                   for (k = 0; k < drawable->width; ++k)
                     {
-                      fixed[k] = (fixed[k*2+1] > 127) ? 
-                                 remap[fixed[k*2]] : 
+                      fixed[k] = (fixed[k*2+1] > 127) ?
+                                 remap[fixed[k*2]] :
                                  0;
                     }
                 }
             }
-          /* Otherwise if we have a paletted image and transparency 
+          /* Otherwise if we have a paletted image and transparency
            * couldn't be set, we ignore the alpha channel */
           else if (info->valid & PNG_INFO_PLTE && bpp == 2)
             {
@@ -1260,8 +1280,8 @@ respin_cmap (png_structp pp,
                                        &colors);
 
 #if PNG_LIBPNG_VER > 99
-  if (transparent != -1)        /* we have a winner for a transparent 
-                                 * index - do like gif2png and swap 
+  if (transparent != -1)        /* we have a winner for a transparent
+                                 * index - do like gif2png and swap
                                  * index 0 and index transparent */
     {
       png_color palette[256];
@@ -1269,15 +1289,15 @@ respin_cmap (png_structp pp,
 
       png_set_tRNS (pp, info, (png_bytep) trans, 1, NULL);
 
-      /* Transform all pixels with a value = transparent to 
-       * 0 and vice versa to compensate for re-ordering in palette 
+      /* Transform all pixels with a value = transparent to
+       * 0 and vice versa to compensate for re-ordering in palette
        * due to png_set_tRNS() */
 
       remap[0] = transparent;
       remap[transparent] = 0;
 
-      /* Copy from index 0 to index transparent - 1 to index 1 to 
-       * transparent of after, then from transparent+1 to colors-1 
+      /* Copy from index 0 to index transparent - 1 to index 1 to
+       * transparent of after, then from transparent+1 to colors-1
        * unchanged, and finally from index transparent to index 0. */
 
       for (i = 0; i < colors; i++)
@@ -1291,7 +1311,7 @@ respin_cmap (png_structp pp,
     }
   else
     {
-      /* Inform the user that we couldn't losslessly save the 
+      /* Inform the user that we couldn't losslessly save the
        * transparency & just use the full palette */
       g_message (_("Couldn't losslessly save transparency,\n"
                    "saving opacity instead."));

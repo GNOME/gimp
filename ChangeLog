@@ -1,5 +1,10 @@
 2003-11-02  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/png.c: handle gamma settings in PNG files using
+	the "gamma" parasite (see bug #120031).
+
+2003-11-02  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpdock.c
 	* etc/gtkrc_user: draw the separators in normal color but make the
 	DND highlight use the bg color of the selected state.
