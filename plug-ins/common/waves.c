@@ -46,24 +46,23 @@ enum
 
 typedef struct
 {
-  gdouble amplitude;
-  gdouble phase;
-  gdouble wavelength;
-  gint32  type;
-  gint32  reflective;
+  gdouble  amplitude;
+  gdouble  phase;
+  gdouble  wavelength;
+  gint32   type;
+  gboolean reflective;
+  gboolean preview;
 } piArgs;
 
-/*  preview stuff -- to be removed as soon as we have a real libgimp preview  */
-static gint            do_preview = TRUE;
-#define PREVIEW_SIZE 128
-static GtkWidget *preview;
-static gint       preview_width, preview_height, preview_bpp;
-static guchar    *preview_cache;
-
-static GimpDrawable *drawable;
-
-static GtkWidget *mw_preview_new (GtkWidget    *parent,
-                                  GimpDrawable *drawable);
+static piArgs wvals =
+{
+  10.0,       /* amplitude  */
+  0.0,        /* phase      */
+  10.0,       /* wavelength */
+  MODE_SMEAR, /* type       */
+  FALSE,      /* reflective */
+  TRUE        /* preview    */
+};
 
 static void query (void);
 static void run   (const gchar      *name,
@@ -72,12 +71,12 @@ static void run   (const gchar      *name,
                    gint             *nretvals,
                    GimpParam       **retvals);
 
-static gint pluginCore       (piArgs *argp,
-                              GimpDrawable *drawable);
-static gint pluginCoreIA     (piArgs *argp,
-                              GimpDrawable *drawable);
+static void waves            (GimpDrawable *drawable);
 
-static void waves_do_preview (void);
+static gboolean waves_dialog (GimpDrawable *drawable);
+
+static void waves_preview    (GimpDrawable *drawable,
+                              GimpPreview  *preview);
 
 static void wave (guchar  *src,
                   guchar  *dest,
@@ -89,8 +88,8 @@ static void wave (guchar  *src,
                   gdouble  wavelength,
                   gdouble  phase,
                   gint     smear,
-                  gint     reflective,
-                  gint     verbose);
+                  gboolean reflective,
+                  gboolean verbose);
 
 #define WITHIN(a, b, c) ((((a) <= (b)) && ((b) <= (c))) ? TRUE : FALSE)
 
@@ -137,26 +136,22 @@ query (void)
 
 static void
 run (const gchar      *name,
-     gint              nparam,
+     gint              nparams,
      const GimpParam  *param,
-     gint             *nretvals,
-     GimpParam       **retvals)
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
-  static GimpParam  rvals[1];
+  static GimpParam   values[1];
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpDrawable      *drawable;
 
-  piArgs args;
+  *nreturn_vals = 1;
+  *return_vals  = values;
+
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = status;
 
   INIT_I18N ();
-
-  *nretvals = 1;
-  *retvals  = rvals;
-
-  rvals[0].type          = GIMP_PDB_STATUS;
-  rvals[0].data.d_status = GIMP_PDB_SUCCESS;
-
-  memset (&args, (int) 0, sizeof (piArgs));
-  args.type = -1;
-  gimp_get_data ("plug_in_waves", &args);
 
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
@@ -164,69 +159,55 @@ run (const gchar      *name,
     {
 
     case GIMP_RUN_INTERACTIVE:
-      /* XXX: add code here for interactive running */
-      if (args.type == -1)
-        {
-          args.amplitude  = 10.0;
-          args.wavelength = 10;
-          args.phase      = 0.0;
-          args.type       = MODE_SMEAR;
-          args.reflective = 0;
-        }
+      gimp_get_data ("plug_in_waves", &wvals);
 
-      if (pluginCoreIA(&args, drawable) == -1)
-        {
-          rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-        }
-      else
-        {
-          gimp_set_data ("plug_in_waves", &args, sizeof (piArgs));
-        }
+      if (! waves_dialog (drawable))
+        return;
 
     break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      /* XXX: add code here for non-interactive running */
-      if (nparam != 8)
+      if (nparams != 8)
         {
-          rvals[0].data.d_status = GIMP_PDB_CALLING_ERROR;
-          break;
+          status = GIMP_PDB_CALLING_ERROR;
         }
-      args.amplitude  = param[3].data.d_float;
-      args.phase      = param[4].data.d_float;
-      args.wavelength = param[5].data.d_float;
-      args.type       = param[6].data.d_int32;
-      args.reflective = param[7].data.d_int32;
-
-      if (pluginCore (&args, drawable) == -1)
+      else
         {
-          rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-          break;
-        }
-    break;
-
-    case GIMP_RUN_WITH_LAST_VALS:
-      /* XXX: add code here for last-values running */
-      if (pluginCore (&args, drawable) == -1)
-        {
-          rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+          wvals.amplitude  = param[3].data.d_float;
+          wvals.phase      = param[4].data.d_float;
+          wvals.wavelength = param[5].data.d_float;
+          wvals.type       = param[6].data.d_int32;
+          wvals.reflective = param[7].data.d_int32;
         }
       break;
+
+    case GIMP_RUN_WITH_LAST_VALS:
+      gimp_get_data ("plug_in_waves", &wvals);
+      break;
+
+    default:
+      break;
+    }
+
+  if (status == GIMP_PDB_SUCCESS)
+    {
+      waves (drawable);
+
+      gimp_set_data ("plug_in_waves", &wvals, sizeof (piArgs));
+      values[0].data.d_status = status;
     }
 }
 
-static gint
-pluginCore (piArgs *argp,
-            GimpDrawable *drawable)
+static void
+waves (GimpDrawable *drawable)
 {
-  gint retval=0;
-  GimpPixelRgn srcPr, dstPr;
-  guchar *src, *dst;
-  guint width, height, bpp, has_alpha;
+  GimpPixelRgn  srcPr, dstPr;
+  guchar       *src, *dst;
+  guint         width, height, bpp, has_alpha;
 
-  width = drawable->width;
-  height = drawable->height;
-  bpp = drawable->bpp;
+  width     = drawable->width;
+  height    = drawable->height;
+  bpp       = drawable->bpp;
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   src = g_new (guchar, width * height * bpp);
@@ -236,8 +217,8 @@ pluginCore (piArgs *argp,
   gimp_pixel_rgn_get_rect (&srcPr, src, 0, 0, width, height);
 
   wave (src, dst, width, height, bpp, has_alpha,
-        argp->amplitude, argp->wavelength, argp->phase,
-        argp->type==0, argp->reflective, 1);
+        wvals.amplitude, wvals.wavelength, wvals.phase,
+        wvals.type == 0, wvals.reflective, TRUE);
   gimp_pixel_rgn_set_rect (&dstPr, dst, 0, 0, width, height);
 
   g_free (src);
@@ -248,45 +229,16 @@ pluginCore (piArgs *argp,
   gimp_drawable_update (drawable->drawable_id, 0, 0, width, height);
 
   gimp_displays_flush ();
-
-  return retval;
 }
 
-static void
-waves_toggle_button_update (GtkWidget *widget,
-                            gpointer   data)
+static gboolean
+waves_dialog (GimpDrawable *drawable)
 {
-  gimp_toggle_button_update (widget, data);
-  waves_do_preview ();
-}
-
-static void
-waves_radio_button_update (GtkWidget *widget,
-                           gpointer   data)
-{
-  gimp_radio_button_update (widget, data);
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    waves_do_preview ();
-}
-
-static void
-waves_double_adjustment_update (GtkAdjustment *adjustment,
-                                gpointer   data)
-{
-  gimp_double_adjustment_update (adjustment, data);
-  waves_do_preview ();
-}
-
-static gint
-pluginCoreIA (piArgs *argp,
-              GimpDrawable *drawable)
-{
-  GtkWidget *dlg;
+  GtkWidget *dialog;
   GtkWidget *main_vbox;
   GtkWidget *frame;
-  GtkWidget *hbox;
-  GtkWidget *vbox;
+  GtkWidget *smear;
+  GtkWidget *blacken;
   GtkWidget *table;
   GtkWidget *preview;
   GtkWidget *toggle;
@@ -295,51 +247,55 @@ pluginCoreIA (piArgs *argp,
 
   gimp_ui_init ("waves", TRUE);
 
-  dlg = gimp_dialog_new (_("Waves"), "waves",
-                         NULL, 0,
-                         gimp_standard_help_func, "plug-in-waves",
+  dialog = gimp_dialog_new (_("Waves"), "waves",
+                            NULL, 0,
+                            gimp_standard_help_func, "plug-in-waves",
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
-                      TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  hbox = gtk_hbox_new (FALSE, 12);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  preview = mw_preview_new (hbox, drawable);
-  g_object_set_data (G_OBJECT (preview), "piArgs", argp);
-
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  preview = gimp_aspect_preview_new (drawable, &wvals.preview);
+  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
+  gtk_widget_show (preview);
+  g_signal_connect_swapped (preview, "invalidated",
+                            G_CALLBACK (waves_preview),
+                            drawable);
 
   frame = gimp_int_radio_group_new (TRUE, _("Mode"),
-                                    G_CALLBACK (waves_radio_button_update),
-                                    &argp->type, argp->type,
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &wvals.type, wvals.type,
 
-                                    _("_Smear"),   MODE_SMEAR,   NULL,
-                                    _("_Blacken"), MODE_BLACKEN, NULL,
+                                    _("_Smear"),   MODE_SMEAR,   &smear,
+                                    _("_Blacken"), MODE_BLACKEN, &blacken,
 
                                     NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+  g_signal_connect_swapped (smear, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  g_signal_connect_swapped (blacken, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   toggle = gtk_check_button_new_with_mnemonic ( _("_Reflective"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), argp->reflective);
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), wvals.reflective);
+  gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (waves_toggle_button_update),
-                    &argp->reflective);
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &wvals.reflective);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -349,109 +305,72 @@ pluginCoreIA (piArgs *argp,
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
                               _("_Amplitude:"), 140, 6,
-                              argp->amplitude, 0.0, 101.0, 1.0, 5.0, 2,
+                              wvals.amplitude, 0.0, 101.0, 1.0, 5.0, 2,
                               TRUE, 0, 0,
                               NULL, NULL);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (waves_double_adjustment_update),
-                    &argp->amplitude);
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &wvals.amplitude);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
                               _("_Phase:"), 140, 6,
-                              argp->phase, 0.0, 360.0, 2.0, 5.0, 2,
+                              wvals.phase, 0.0, 360.0, 2.0, 5.0, 2,
                               TRUE, 0, 0,
                               NULL, NULL);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (waves_double_adjustment_update),
-                    &argp->phase);
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &wvals.phase);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
                               _("_Wavelength:"), 140, 6,
-                              argp->wavelength, 0.1, 50.0, 1.0, 5.0, 2,
+                              wvals.wavelength, 0.1, 50.0, 1.0, 5.0, 2,
                               TRUE, 0, 0,
                               NULL, NULL);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (waves_double_adjustment_update),
-                    &argp->wavelength);
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &wvals.wavelength);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  waves_do_preview ();
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
+  gtk_widget_destroy (dialog);
 
-  gtk_widget_destroy (dlg);
-
-  return run ? pluginCore (argp, drawable) : -1;
+  return run;
 }
 
 static void
-waves_do_preview (void)
+waves_preview (GimpDrawable *drawable,
+               GimpPreview  *preview)
 {
-  piArgs *argp;
-  guchar *dst;
+  guchar *src, *dest;
+  gint    width, height;
+  gint    bpp;
 
-  if (!do_preview)
-    return;
+  gimp_preview_get_size (preview, &width, &height);
+  src = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+                                          &width, &height, &bpp);
+  dest = g_new (guchar, width * height * bpp);
 
-  argp = g_object_get_data (G_OBJECT (preview), "piArgs");
-  dst = g_new (guchar, preview_width * preview_height * preview_bpp);
+  wave (src, dest, width, height, bpp,
+        bpp == 2 || bpp == 4,
+        wvals.amplitude * width / drawable->width,
+        wvals.wavelength * height / drawable->height,
+        wvals.phase, wvals.type == 0, wvals.reflective, FALSE);
 
-  wave (preview_cache, dst, preview_width, preview_height, preview_bpp,
-        preview_bpp == 2 || preview_bpp == 4,
-        argp->amplitude * preview_width / drawable->width,
-        argp->wavelength * preview_height / drawable->height,
-        argp->phase, argp->type == 0, argp->reflective, 0);
+  gimp_preview_draw_buffer (preview, dest, width * bpp);
 
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
-                          0, 0, preview_width, preview_height,
-                          gimp_drawable_type (drawable->drawable_id),
-                          dst,
-                          preview_width * preview_bpp);
-
-  g_free (dst);
-}
-
-static void
-mw_preview_toggle_callback (GtkWidget *widget,
-                            gpointer   data)
-{
-  gimp_toggle_button_update (widget, data);
-
-  waves_do_preview ();
-}
-
-static GtkWidget *
-mw_preview_new (GtkWidget    *parent,
-                GimpDrawable *drawable)
-{
-  GtkWidget *vbox;
-  GtkWidget *button;
-
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (parent), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
-
-  preview = gimp_preview_area_new ();
-  preview_width = preview_height = PREVIEW_SIZE;
-  preview_cache = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
-                                                    &preview_width,
-                                                    &preview_height,
-                                                    &preview_bpp);
-  gtk_widget_set_size_request (preview, preview_width, preview_height);
-  gtk_box_pack_start (GTK_BOX (vbox), preview, FALSE, FALSE, 0);
-  gtk_widget_show (preview);
-
-  button = gtk_check_button_new_with_mnemonic (_("_Do preview"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), do_preview);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "toggled",
-                    G_CALLBACK (mw_preview_toggle_callback),
-                    &do_preview);
-
-  return preview;
+  g_free (src);
+  g_free (dest);
 }
 
 /* Wave the image.  For each pixel in the destination image
@@ -481,8 +400,8 @@ wave (guchar  *src,
       gdouble  wavelength,
       gdouble  phase,
       gint     smear,
-      gint     reflective,
-      gint     verbose)
+      gboolean reflective,
+      gboolean verbose)
 {
   glong   rowsiz;
   guchar *p;
