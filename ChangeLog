@@ -1,3 +1,13 @@
+Wed Jan 13 16:12:35 PST 1999 Manish Singh <yosh@gimp.org>
+
+        * app/colormaps.c
+        * app/devices.h
+        * app/tips_dialog.h: minor cleanups
+
+        * app/gimpimage.c: the dirty/clean handling seemed weird, and wasn't
+        correct in all cases. Just do a straight increment/decrement to
+        try to fix it.
+
 Thu Jan 14 00:02:56 MET 1999 Sven Neumann <sven@gimp.org>
 
 	* acconfig.h

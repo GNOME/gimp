@@ -72,7 +72,7 @@ static void make_color (gulong *pixel_ptr,
 			int     readwrite);
 
 static void
-set_app_colors ()
+set_app_colors (void)
 {
   cycled_marching_ants = FALSE;
 

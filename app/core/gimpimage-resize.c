@@ -2822,9 +2822,9 @@ gimp_image_disable_undo (GimpImage *gimage)
 int
 gimp_image_dirty (GimpImage *gimage)
 {
-  if (gimage->dirty < 0)
+/*  if (gimage->dirty < 0)
     gimage->dirty = 2;
-  else
+  else */
     gimage->dirty ++;
   gtk_signal_emit(GTK_OBJECT(gimage), gimp_image_signals[DIRTY]);
 
@@ -2834,9 +2834,9 @@ gimp_image_dirty (GimpImage *gimage)
 int
 gimp_image_clean (GimpImage *gimage)
 {
-  if (gimage->dirty <= 0)
+/*  if (gimage->dirty <= 0)
     gimage->dirty = 0;
-  else
+  else */
     gimage->dirty --;
   return gimage->dirty;
 }

@@ -60,7 +60,7 @@ void devices_rc_update (gchar *name, DeviceValues values,
 void device_status_free (void);
 
 /* Restores device settings from rc file */
-void devices_restore();
+void devices_restore (void);
 
 /* Current device id */
 extern int current_device;
