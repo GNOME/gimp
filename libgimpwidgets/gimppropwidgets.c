@@ -391,7 +391,15 @@ gimp_prop_enum_combo_box_notify (GObject    *config,
                 param_spec->name, &value,
                 NULL);
 
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo_box), value);
+  g_signal_handlers_block_by_func (combo_box,
+                                   gimp_prop_enum_combo_box_callback,
+                                   config);
+
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo_box), value));
+
+  g_signal_handlers_unblock_by_func (combo_box,
+                                     gimp_prop_enum_combo_box_callback,
+                                     config);
 }
 
 

@@ -1,5 +1,11 @@
 2004-07-08  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimppropwidgets.c (gimp_prop_enum_combo_box_notify):
+	block gimp_prop_enum_combo_box_callback() before changing the
+	combo-box.
+
+2004-07-08  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpsessioninfo.c: only write aux-info for properties
 	that have been changed from their default values.
 
