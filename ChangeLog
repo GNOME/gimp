@@ -1,3 +1,14 @@
+Sun Sep  6 12:55:45 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* configure.in: see if CC needs -posix (for NeXTStep)
+
+	* app/channels_dialog.c: added clarifying {}'s around if block
+
+	* app/gimpbrushlist.c: #if 0'd out some dead code
+
+	* plug-ins/script-fu/script-fu-server.c: removed unused variable
+	declaration
+
 Fri Sep  4 17:48:42 BST 1998 Adam D. Moss <adam@gimp.org>
 
 	* plug-ins/psd/psd.c: Added the ability to load

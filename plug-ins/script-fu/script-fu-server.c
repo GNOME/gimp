@@ -502,7 +502,7 @@ make_socket (guint port)
 static void
 server_log (gchar *format, ...)
 {
-  va_list args, args2;
+  va_list args;
   char *buf;
 
   va_start (args, format);

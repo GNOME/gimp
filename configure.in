@@ -65,6 +65,14 @@ dnl i18n stuff
 ALL_LINGUAS=""
 AM_GNU_GETTEXT
 
+dnl NeXTStep cc seems to need this
+AC_MSG_CHECKING([whether C compiler needs -posix])
+AC_TRY_COMPILE([#include <dirent.h>], [DIR *dir;], posix=no, posix=yes)
+AC_MSG_RESULT($posix)
+if test "$posix" = yes; then
+  CFLAGS="$CFLAGS -posix"
+fi
+
 dnl Check for GTK+
 AM_PATH_GTK(1.1.0,,
   AC_MSG_ERROR(Test for GTK failed. See the file 'INSTALL' for help.))

@@ -208,11 +208,13 @@ get_active_brush ()
 }
 
 
+#if 0
 static GSList *
 insert_brush_in_list (GSList *list, GimpBrush * brush)
 {
   return g_slist_insert_sorted (list, brush, brush_compare_func);
 }
+#endif
 
 static void
 create_default_brush ()
