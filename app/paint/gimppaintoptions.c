@@ -67,6 +67,7 @@ gimp_paint_options_init (GimpPaintOptions *options)
 
   options->opacity_w        = NULL;
   options->paint_mode_w     = NULL;
+  options->context          = NULL;
   options->incremental_w    = NULL;
 
   options->incremental      = options->incremental_d = DEFAULT_INCREMENTAL;

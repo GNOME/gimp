@@ -98,6 +98,9 @@ struct _GimpPaintOptions
   GtkObject   *opacity_w;
   GtkWidget   *paint_mode_w;
 
+  /*  this tool's private context  */
+  GimpContext *context;
+
   /*  the incremental toggle  */
   gboolean     incremental;
   gboolean     incremental_d;

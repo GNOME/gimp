@@ -1,5 +1,10 @@
 2002-06-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimppaintoptions.[ch]: i don't know what i was
+	thinking, but GimpPaintOptions.context *is* used, sorry...
+
+2002-06-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimppaintoptions.[ch]: removed
 	GimpPaintOptions.context because it was unused.
 
