@@ -360,7 +360,7 @@ selection_float_invoker (Gimp     *gimp,
   GimpLayer *layer = NULL;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_DRAWABLE (drawable))
+  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
     success = FALSE;
 
   offx = args[1].value.pdb_int;
@@ -861,7 +861,7 @@ selection_layer_alpha_invoker (Gimp     *gimp,
   GimpImage *gimage;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   if (success)
@@ -908,7 +908,7 @@ selection_load_invoker (Gimp     *gimp,
   GimpChannel *channel;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_CHANNEL (channel))
+  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
     success = FALSE;
 
   if (success)
@@ -1022,7 +1022,7 @@ selection_combine_invoker (Gimp     *gimp,
   gint32 operation;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_CHANNEL (channel))
+  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
     success = FALSE;
 
   operation = args[1].value.pdb_int;

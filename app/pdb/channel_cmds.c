@@ -180,7 +180,7 @@ channel_copy_invoker (Gimp     *gimp,
   GimpChannel *channel_copy = NULL;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_CHANNEL (channel))
+  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
     success = FALSE;
 
   if (success)
@@ -244,11 +244,11 @@ channel_combine_masks_invoker (Gimp     *gimp,
   gint32 offy;
 
   channel1 = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_CHANNEL (channel1))
+  if (! (GIMP_IS_CHANNEL (channel1) && ! gimp_item_is_removed (GIMP_ITEM (channel1))))
     success = FALSE;
 
   channel2 = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_CHANNEL (channel2))
+  if (! (GIMP_IS_CHANNEL (channel2) && ! gimp_item_is_removed (GIMP_ITEM (channel2))))
     success = FALSE;
 
   operation = args[2].value.pdb_int;
@@ -321,7 +321,7 @@ channel_get_show_masked_invoker (Gimp     *gimp,
   GimpChannel *channel;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_CHANNEL (channel))
+  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
     success = FALSE;
 
   return_args = procedural_db_return_args (&channel_get_show_masked_proc, success);
@@ -375,7 +375,7 @@ channel_set_show_masked_invoker (Gimp     *gimp,
   gboolean show_masked;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_CHANNEL (channel))
+  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
     success = FALSE;
 
   show_masked = args[1].value.pdb_int ? TRUE : FALSE;
@@ -425,7 +425,7 @@ channel_get_opacity_invoker (Gimp     *gimp,
   GimpChannel *channel;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_CHANNEL (channel))
+  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
     success = FALSE;
 
   return_args = procedural_db_return_args (&channel_get_opacity_proc, success);
@@ -479,7 +479,7 @@ channel_set_opacity_invoker (Gimp     *gimp,
   gdouble opacity;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_CHANNEL (channel))
+  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
     success = FALSE;
 
   opacity = args[1].value.pdb_float;
@@ -532,7 +532,7 @@ channel_get_color_invoker (Gimp     *gimp,
   GimpRGB color;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_CHANNEL (channel))
+  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
     success = FALSE;
 
   if (success)
@@ -589,7 +589,7 @@ channel_set_color_invoker (Gimp     *gimp,
   GimpRGB color;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_CHANNEL (channel))
+  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
     success = FALSE;
 
   color = args[1].value.pdb_color;

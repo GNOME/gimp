@@ -210,6 +210,7 @@ gimp_item_init (GimpItem *item)
   item->visible   = TRUE;
   item->linked    = FALSE;
   item->floating  = TRUE;
+  item->removed   = FALSE;
 }
 
 static void
@@ -412,7 +413,17 @@ gimp_item_removed (GimpItem *item)
 {
   g_return_if_fail (GIMP_IS_ITEM (item));
 
+  item->removed = TRUE;
+
   g_signal_emit (item, gimp_item_signals[REMOVED], 0);
+}
+
+gboolean
+gimp_item_is_removed (const GimpItem *item)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  return item->removed;
 }
 
 void

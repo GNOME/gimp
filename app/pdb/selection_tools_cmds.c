@@ -67,7 +67,7 @@ by_color_select_invoker (Gimp     *gimp,
   GimpImage *gimage;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_DRAWABLE (drawable))
+  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
     success = FALSE;
 
   color = args[1].value.pdb_color;
@@ -407,7 +407,7 @@ fuzzy_select_invoker (Gimp     *gimp,
   GimpImage *gimage;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_DRAWABLE (drawable))
+  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
     success = FALSE;
 
   x = args[1].value.pdb_float;

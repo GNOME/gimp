@@ -234,7 +234,7 @@ layer_new_from_drawable_invoker (Gimp     *gimp,
   GimpLayer *layer_copy = NULL;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_DRAWABLE (drawable))
+  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
     success = FALSE;
 
   dest_image = gimp_image_get_by_ID (gimp, args[1].value.pdb_int);
@@ -320,7 +320,7 @@ layer_copy_invoker (Gimp     *gimp,
   GimpLayer *layer_copy = NULL;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   add_alpha = args[1].value.pdb_int ? TRUE : FALSE;
@@ -383,7 +383,7 @@ layer_add_alpha_invoker (Gimp     *gimp,
   GimpLayer *layer;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   if (success)
@@ -430,7 +430,7 @@ layer_scale_invoker (Gimp     *gimp,
   GimpLayer *floating_layer;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   new_width = args[1].value.pdb_int;
@@ -523,7 +523,7 @@ layer_resize_invoker (Gimp     *gimp,
   GimpLayer *floating_layer;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   new_width = args[1].value.pdb_int;
@@ -617,7 +617,7 @@ layer_resize_to_image_size_invoker (Gimp     *gimp,
   GimpLayer *layer;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   if (success)
@@ -668,7 +668,7 @@ layer_translate_invoker (Gimp     *gimp,
   GimpLayer *floating_layer;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   offx = args[1].value.pdb_int;
@@ -757,7 +757,7 @@ layer_set_offsets_invoker (Gimp     *gimp,
   GimpLayer *floating_layer;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   offx = args[1].value.pdb_int;
@@ -845,7 +845,7 @@ layer_create_mask_invoker (Gimp     *gimp,
   GimpLayerMask *mask = NULL;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   mask_type = args[1].value.pdb_int;
@@ -911,7 +911,7 @@ layer_get_mask_invoker (Gimp     *gimp,
   GimpLayer *layer;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   return_args = procedural_db_return_args (&layer_get_mask_proc, success);
@@ -965,11 +965,11 @@ layer_add_mask_invoker (Gimp     *gimp,
   GimpLayerMask *mask;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   mask = (GimpLayerMask *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_LAYER_MASK (mask))
+  if (! (GIMP_IS_LAYER_MASK (mask) && ! gimp_item_is_removed (GIMP_ITEM (mask))))
     success = FALSE;
 
   if (success)
@@ -1019,7 +1019,7 @@ layer_remove_mask_invoker (Gimp     *gimp,
   gint32 mode;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   mode = args[1].value.pdb_int;
@@ -1071,7 +1071,7 @@ layer_is_floating_sel_invoker (Gimp     *gimp,
   GimpLayer *layer;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   return_args = procedural_db_return_args (&layer_is_floating_sel_proc, success);
@@ -1125,7 +1125,7 @@ layer_get_preserve_trans_invoker (Gimp     *gimp,
   GimpLayer *layer;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   return_args = procedural_db_return_args (&layer_get_preserve_trans_proc, success);
@@ -1179,7 +1179,7 @@ layer_set_preserve_trans_invoker (Gimp     *gimp,
   gboolean preserve_trans;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   preserve_trans = args[1].value.pdb_int ? TRUE : FALSE;
@@ -1229,7 +1229,7 @@ layer_get_apply_mask_invoker (Gimp     *gimp,
   GimpLayer *layer;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   return_args = procedural_db_return_args (&layer_get_apply_mask_proc, success);
@@ -1283,7 +1283,7 @@ layer_set_apply_mask_invoker (Gimp     *gimp,
   gboolean apply_mask;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   apply_mask = args[1].value.pdb_int ? TRUE : FALSE;
@@ -1333,7 +1333,7 @@ layer_get_show_mask_invoker (Gimp     *gimp,
   GimpLayer *layer;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   return_args = procedural_db_return_args (&layer_get_show_mask_proc, success);
@@ -1387,7 +1387,7 @@ layer_set_show_mask_invoker (Gimp     *gimp,
   gboolean show_mask;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   show_mask = args[1].value.pdb_int ? TRUE : FALSE;
@@ -1437,7 +1437,7 @@ layer_get_edit_mask_invoker (Gimp     *gimp,
   GimpLayer *layer;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   return_args = procedural_db_return_args (&layer_get_edit_mask_proc, success);
@@ -1491,7 +1491,7 @@ layer_set_edit_mask_invoker (Gimp     *gimp,
   gboolean edit_mask;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   edit_mask = args[1].value.pdb_int ? TRUE : FALSE;
@@ -1541,7 +1541,7 @@ layer_get_opacity_invoker (Gimp     *gimp,
   GimpLayer *layer;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   return_args = procedural_db_return_args (&layer_get_opacity_proc, success);
@@ -1595,7 +1595,7 @@ layer_set_opacity_invoker (Gimp     *gimp,
   gdouble opacity;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   opacity = args[1].value.pdb_float;
@@ -1647,7 +1647,7 @@ layer_get_mode_invoker (Gimp     *gimp,
   GimpLayer *layer;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   return_args = procedural_db_return_args (&layer_get_mode_proc, success);
@@ -1701,7 +1701,7 @@ layer_set_mode_invoker (Gimp     *gimp,
   gint32 mode;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   mode = args[1].value.pdb_int;

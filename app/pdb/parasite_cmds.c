@@ -268,7 +268,7 @@ drawable_parasite_find_invoker (Gimp     *gimp,
   GimpParasite *parasite = NULL;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_DRAWABLE (drawable))
+  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
@@ -337,7 +337,7 @@ drawable_parasite_attach_invoker (Gimp     *gimp,
   GimpParasite *parasite;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_DRAWABLE (drawable))
+  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
     success = FALSE;
 
   parasite = (GimpParasite *) args[1].value.pdb_pointer;
@@ -389,7 +389,7 @@ drawable_parasite_detach_invoker (Gimp     *gimp,
   gchar *name;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_DRAWABLE (drawable))
+  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
@@ -443,7 +443,7 @@ drawable_parasite_list_invoker (Gimp     *gimp,
   gchar **parasites = NULL;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_DRAWABLE (drawable))
+  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
     success = FALSE;
 
   if (success)

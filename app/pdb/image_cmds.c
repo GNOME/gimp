@@ -1584,7 +1584,7 @@ image_add_layer_invoker (Gimp     *gimp,
     success = FALSE;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   position = args[2].value.pdb_int;
@@ -1653,7 +1653,7 @@ image_remove_layer_invoker (Gimp     *gimp,
     success = FALSE;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   if (success)
@@ -1705,7 +1705,7 @@ image_raise_layer_invoker (Gimp     *gimp,
     success = FALSE;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   if (success)
@@ -1757,7 +1757,7 @@ image_lower_layer_invoker (Gimp     *gimp,
     success = FALSE;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   if (success)
@@ -1809,7 +1809,7 @@ image_raise_layer_to_top_invoker (Gimp     *gimp,
     success = FALSE;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   if (success)
@@ -1861,7 +1861,7 @@ image_lower_layer_to_bottom_invoker (Gimp     *gimp,
     success = FALSE;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   if (success)
@@ -1914,7 +1914,7 @@ image_add_channel_invoker (Gimp     *gimp,
     success = FALSE;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_CHANNEL (channel))
+  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
     success = FALSE;
 
   position = args[2].value.pdb_int;
@@ -1973,7 +1973,7 @@ image_remove_channel_invoker (Gimp     *gimp,
     success = FALSE;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_CHANNEL (channel))
+  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
     success = FALSE;
 
   if (success)
@@ -2025,7 +2025,7 @@ image_raise_channel_invoker (Gimp     *gimp,
     success = FALSE;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_CHANNEL (channel))
+  if (! (GIMP_IS_CHANNEL (channel) && ! gimp_item_is_removed (GIMP_ITEM (channel))))
     success = FALSE;
 
   if (success)
@@ -2077,7 +2077,7 @@ image_lower_channel_invoker (Gimp     *gimp,
     success = FALSE;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   if (success)
@@ -2261,7 +2261,7 @@ image_merge_down_invoker (Gimp     *gimp,
     success = FALSE;
 
   merge_layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_LAYER (merge_layer))
+  if (! (GIMP_IS_LAYER (merge_layer) && ! gimp_item_is_removed (GIMP_ITEM (merge_layer))))
     success = FALSE;
 
   merge_type = args[2].value.pdb_int;
@@ -2340,11 +2340,11 @@ image_add_layer_mask_invoker (Gimp     *gimp,
     success = FALSE;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   mask = (GimpLayerMask *) gimp_item_get_by_ID (gimp, args[2].value.pdb_int);
-  if (! GIMP_IS_LAYER_MASK (mask))
+  if (! (GIMP_IS_LAYER_MASK (mask) && ! gimp_item_is_removed (GIMP_ITEM (mask))))
     success = FALSE;
 
   if (success)
@@ -2404,7 +2404,7 @@ image_remove_layer_mask_invoker (Gimp     *gimp,
     success = FALSE;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_LAYER (layer))
+  if (! (GIMP_IS_LAYER (layer) && ! gimp_item_is_removed (GIMP_ITEM (layer))))
     success = FALSE;
 
   mode = args[2].value.pdb_int;
@@ -2899,7 +2899,7 @@ image_set_active_layer_invoker (Gimp     *gimp,
     success = FALSE;
 
   active_layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_LAYER (active_layer))
+  if (! (GIMP_IS_LAYER (active_layer) && ! gimp_item_is_removed (GIMP_ITEM (active_layer))))
     success = FALSE;
 
   if (success)
@@ -3009,7 +3009,7 @@ image_set_active_channel_invoker (Gimp     *gimp,
     success = FALSE;
 
   active_channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (! GIMP_IS_CHANNEL (active_channel))
+  if (! (GIMP_IS_CHANNEL (active_channel) && ! gimp_item_is_removed (GIMP_ITEM (active_channel))))
     success = FALSE;
 
   if (success)

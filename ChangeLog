@@ -1,3 +1,32 @@
+2004-03-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpitem.[ch]: added "gboolean removed" to the GimpItem
+	struct. Defaults to FALSE. Set it to TRUE in gimp_item_removed().
+	Added public function gimp_item_is_removed().
+
+	* app/core/gimpimage-undo-push.c (undo_pop_layer)
+	(undo_pop_layer_mask) (undo_pop_channel) (undo_pop_vectors):
+	set it to FALSE manually when re-adding something from the
+	undo stack.
+
+	* tools/pdbgen/app.pl
+	* tools/pdbgen/pdb.pl: don't allow any operation on items which
+	are removed from the image (and exist on the undo stack only).
+	Fixes bug #138311.
+
+	* app/pdb/channel_cmds.c
+	* app/pdb/color_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/edit_cmds.c
+	* app/pdb/floating_sel_cmds.c
+	* app/pdb/image_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/pdb/paint_tools_cmds.c
+	* app/pdb/parasite_cmds.c
+	* app/pdb/selection_cmds.c
+	* app/pdb/selection_tools_cmds.c
+	* app/pdb/transform_tools_cmds.c: regenerated.
+
 2004-03-28  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/slide.scm: applied a (modified) patch

@@ -1398,6 +1398,8 @@ undo_pop_layer (GimpUndo            *undo,
 
       if (gimp_layer_is_floating_sel (layer))
 	gimp_image_floating_selection_changed (undo->gimage);
+
+      GIMP_ITEM (layer)->removed = FALSE;
     }
 
   if (old_has_alpha != gimp_image_has_alpha (undo->gimage))
@@ -1520,6 +1522,8 @@ undo_pop_layer_mask (GimpUndo            *undo,
       undo->size -= gimp_object_get_memsize (GIMP_OBJECT (lmu->mask), NULL);
 
       gimp_layer_add_mask (layer, lmu->mask, FALSE);
+
+      GIMP_ITEM (lmu->mask)->removed = FALSE;
     }
 
   return TRUE;
@@ -1890,6 +1894,8 @@ undo_pop_channel (GimpUndo            *undo,
       gimp_container_insert (undo->gimage->channels,
 			     GIMP_OBJECT (channel), cu->prev_position);
       gimp_image_set_active_channel (undo->gimage, channel);
+
+      GIMP_ITEM (channel)->removed = FALSE;
     }
 
   return TRUE;
@@ -2168,6 +2174,8 @@ undo_pop_vectors (GimpUndo            *undo,
       gimp_container_insert (undo->gimage->vectors,
 			     GIMP_OBJECT (vectors), vu->prev_position);
       gimp_image_set_active_vectors (undo->gimage, vectors);
+
+      GIMP_ITEM (vectors)->removed = FALSE;
     }
 
   return TRUE;
