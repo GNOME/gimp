@@ -676,7 +676,7 @@ gimp_item_tree_view_drop (GimpContainerTreeView   *tree_view,
                                      GIMP_ITEM (src_object),
                                      dest_index,
                                      TRUE,
-                                     _("Reorder Item"));
+                                     item_view_class->reorder_desc);
     }
 
   gimp_image_flush (item_view->gimage);

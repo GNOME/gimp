@@ -206,6 +206,9 @@ gimp_drawable_tree_view_constructor (GType                  type,
   return object;
 }
 
+
+/*  GimpContainerView methods  */
+
 static void
 gimp_drawable_tree_view_set_container (GimpContainerView *view,
                                        GimpContainer     *container)
@@ -250,6 +253,9 @@ gimp_drawable_tree_view_insert_item (GimpContainerView *view,
   return iter;
 }
 
+
+/*  GimpItemTreeView methods  */
+
 static void
 gimp_drawable_tree_view_set_image (GimpItemTreeView *item_view,
                                    GimpImage        *gimage)
@@ -282,6 +288,9 @@ gimp_drawable_tree_view_set_image (GimpItemTreeView *item_view,
                                                             view);
     }
 }
+
+
+/*  callbacks  */
 
 static gboolean
 gimp_drawable_tree_view_select (GtkTreeSelection *selection,
@@ -319,9 +328,6 @@ gimp_drawable_tree_view_select (GtkTreeSelection *selection,
           if (! path_currently_selected)
             retval = FALSE;
         }
-
-      g_print ("gimp_drawable_tree_view_select: floating sel present (%d)\n",
-               retval);
 
       g_object_unref (renderer);
     }

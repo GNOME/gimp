@@ -203,6 +203,7 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   item_view_class->raise_to_top_desc    = _("Raise Layer to Top");
   item_view_class->lower_desc           = _("Lower Layer");
   item_view_class->lower_to_bottom_desc = _("Lower Layer to Bottom");
+  item_view_class->reorder_desc         = _("Reorder Layer");
 
   gimp_rgba_set (&black_color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
   gimp_rgba_set (&white_color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);

@@ -1,5 +1,20 @@
 2003-03-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcomponenteditor.c: need to connect to the cell
+	renderer's "clicked" signal because "toggled" is not emitted any
+	longer.
+
+	* app/widgets/gimpdrawabletreeview.c: removed debugging output.
+
+	* app/widgets/gimpitemtreeview.[ch]: added "const gchar *reorder_desc"
+	to the class scruct and use it as undo_desc for DND reordering.
+
+	* app/widgets/gimpchanneltreeview.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpvectorstreeview.c: set reorder_desc.
+
+2003-03-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcellrenderertoggle.[ch]
 	* app/widgets/gimpcellrendererviewable.[ch]: added public
 	functions to emit the "clicked" signal.

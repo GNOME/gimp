@@ -60,8 +60,9 @@ static void gimp_component_editor_set_image         (GimpImageEditor     *editor
 
 static void gimp_component_editor_create_components (GimpComponentEditor *editor);
 static void gimp_component_editor_clear_components  (GimpComponentEditor *editor);
-static void gimp_component_editor_toggled         (GtkCellRendererToggle *cellrenderertoggle,
+static void gimp_component_editor_clicked         (GtkCellRendererToggle *cellrenderertoggle,
                                                    gchar                 *path,
+                                                   GdkModifierType        state,
                                                    GimpComponentEditor   *editor);
 static gboolean gimp_component_editor_select        (GtkTreeSelection    *selection,
                                                      GtkTreeModel        *model,
@@ -165,8 +166,8 @@ gimp_component_editor_init (GimpComponentEditor *editor)
                                        "active", COLUMN_VISIBLE,
                                        NULL);
 
-  g_signal_connect (editor->eye_cell, "toggled",
-                    G_CALLBACK (gimp_component_editor_toggled),
+  g_signal_connect (editor->eye_cell, "clicked",
+                    G_CALLBACK (gimp_component_editor_clicked),
                     editor);
 
   gtk_tree_view_insert_column_with_attributes (editor->view,
@@ -412,8 +413,9 @@ gimp_component_editor_clear_components (GimpComponentEditor *editor)
 }
 
 static void
-gimp_component_editor_toggled (GtkCellRendererToggle *cellrenderertoggle,
+gimp_component_editor_clicked (GtkCellRendererToggle *cellrenderertoggle,
                                gchar                 *path_str,
+                               GdkModifierType        state,
                                GimpComponentEditor   *editor)
 {
   GtkTreePath *path;

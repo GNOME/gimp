@@ -21,11 +21,6 @@
 
 #include "config.h"
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -128,6 +123,7 @@ gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass)
   item_view_class->raise_to_top_desc    = _("Raise Channel to Top");
   item_view_class->lower_desc           = _("Lower Channel");
   item_view_class->lower_to_bottom_desc = _("Lower Channel to Bottom");
+  item_view_class->reorder_desc         = _("Reorder Channel");
 }
 
 static void

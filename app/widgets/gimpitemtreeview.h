@@ -110,6 +110,7 @@ struct _GimpItemTreeViewClass
   const gchar          *raise_to_top_desc;
   const gchar          *lower_desc;
   const gchar          *lower_to_bottom_desc;
+  const gchar          *reorder_desc;
 };
 
 
