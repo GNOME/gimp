@@ -677,6 +677,7 @@ GPL
     foreach $group (@main::groups) {
 	my $out = $out{$group};
         my $tool_eek = 0;
+        my $widgets_eek = 0;
 
 	foreach (@{$main::grp{$group}->{headers}}) { $out->{headers}->{$_}++ }
 	delete $out->{headers}->{q/"procedural_db.h"/};
@@ -685,6 +686,11 @@ GPL
         if (exists $out->{headers}->{q|"tools/tools-types.h"|}) {
 	    $tool_eek = 1;
 	    delete $out->{headers}->{q|"tools/tools-types.h"|};
+	}
+
+        if (exists $out->{headers}->{q|"widgets/widgets-types.h"|}) {
+	    $widgets_eek = 1;
+	    delete $out->{headers}->{q|"widgets/widgets-types.h"|};
 	}
 
 	my @headers = sort {
@@ -722,6 +728,11 @@ GPL
 
 		if ($tool_eek == 1) {
 		    $headers .= '#include "tools/tools-types.h"';
+		    $headers .= "\n";		    
+		}
+
+		if ($widgets_eek == 1) {
+		    $headers .= '#include "widgets/widgets-types.h"';
 		    $headers .= "\n";		    
 		}
 

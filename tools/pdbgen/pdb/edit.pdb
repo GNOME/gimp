@@ -160,9 +160,11 @@ HELP
 
     &std_pdb_misc;
     &inargs('stroke to');
-    &invoke('gimage_mask_stroke (gimage, drawable)');
+    &invoke('gimage_mask_stroke (gimage, drawable, gimp_get_current_context (gimage->gimp))');
     push @{$invoke{headers}}, qw("core/gimpimage-mask.h");
 }
+
+@headers = qw("core/gimpimage.h");
 
 @procs = qw(edit_cut edit_copy edit_paste edit_clear edit_fill edit_stroke);
 %exports = (app => [@procs], lib => [@procs]);

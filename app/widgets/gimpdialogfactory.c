@@ -57,7 +57,7 @@ typedef enum
 static void   gimp_dialog_factory_class_init (GimpDialogFactoryClass *klass);
 static void   gimp_dialog_factory_init       (GimpDialogFactory      *factory);
 
-static void   gimp_dialog_factory_destroy             (GtkObject         *object);
+static void   gimp_dialog_factory_finalize   (GObject                *object);
 
 static void   gimp_dialog_factories_save_foreach      (gchar             *name,
 						       GimpDialogFactory *factory,
@@ -90,26 +90,29 @@ static void   gimp_dialog_factories_unidle_foreach    (gchar             *name,
 static GimpObjectClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_dialog_factory_get_type (void)
 {
-  static guint factory_type = 0;
+  static GType factory_type = 0;
 
   if (! factory_type)
     {
-      GtkTypeInfo factory_info =
+      static const GTypeInfo factory_info =
       {
-	"GimpDialogFactory",
-	sizeof (GimpDialogFactory),
-	sizeof (GimpDialogFactoryClass),
-	(GtkClassInitFunc) gimp_dialog_factory_class_init,
-	(GtkObjectInitFunc) gimp_dialog_factory_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
+        sizeof (GimpDialogFactoryClass),
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_dialog_factory_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpDialogFactory),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_dialog_factory_init,
       };
 
-      factory_type = gtk_type_unique (GIMP_TYPE_OBJECT, &factory_info);
+      factory_type = g_type_register_static (GIMP_TYPE_OBJECT,
+					     "GimpDialogFactory",
+					     &factory_info, 0);
     }
 
   return factory_type;
@@ -118,13 +121,13 @@ gimp_dialog_factory_get_type (void)
 static void
 gimp_dialog_factory_class_init (GimpDialogFactoryClass *klass)
 {
-  GtkObjectClass *object_class;
+  GObjectClass *object_class;
 
-  object_class = (GtkObjectClass *) klass;
+  object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy = gimp_dialog_factory_destroy;
+  object_class->finalize = gimp_dialog_factory_finalize;
 
   klass->factories = g_hash_table_new (g_str_hash, g_str_equal);
 }
@@ -140,7 +143,7 @@ gimp_dialog_factory_init (GimpDialogFactory *factory)
 }
 
 static void
-gimp_dialog_factory_destroy (GtkObject *object)
+gimp_dialog_factory_finalize (GObject *object)
 {
   GimpDialogFactory *factory;
   GList             *list;
@@ -160,11 +163,18 @@ gimp_dialog_factory_destroy (GtkObject *object)
       g_free (entry);
     }
 
-  g_list_free (factory->registered_dialogs);
-  g_list_free (factory->open_dialogs);
+  if (factory->registered_dialogs)
+    {
+      g_list_free (factory->registered_dialogs);
+      factory->registered_dialogs = NULL;
+    }
+  if (factory->open_dialogs)
+    {
+      g_list_free (factory->open_dialogs);
+      factory->open_dialogs = NULL;
+    }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 GimpDialogFactory *
