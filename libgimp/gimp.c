@@ -263,7 +263,7 @@ gimp_main (int   argc,
 		     G_LOG_LEVEL_MESSAGE,
 		     gimp_message_func,
 		     NULL);
-  g_log_set_handler ("",
+  g_log_set_handler (NULL,
 		     G_LOG_LEVEL_MESSAGE,
 		     gimp_message_func,
 		     NULL);

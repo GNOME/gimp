@@ -1,3 +1,7 @@
+2000-08-27  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimp.c: NULL is the default log domain, not "".
+
 2000-08-27  Piers Cornwell  <piers.cornwell@bigfoot.com>
 
 	* plug-ins/Lighting/lighting_ui.c: s/Treshold/Threshold.
