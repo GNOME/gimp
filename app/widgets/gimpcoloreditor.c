@@ -179,30 +179,9 @@ gimp_color_editor_init (GimpColorEditor *editor)
       gtk_container_add (GTK_CONTAINER (button), image);
       gtk_widget_show (image);
 
-      if (selector_class->name)
-        {
-          gchar *stripped_name;
-          gchar *p, *q;
-
-          stripped_name = g_strdup (selector_class->name);
-
-          p = q = stripped_name;
-
-          while (*q)
-            {
-              if (*q == '_')
-                q++;
-              else
-                *p++ = *q++;
-            }
-
-          *p = '\0';
-
-          gimp_help_set_help_data (button, stripped_name,
-                                   selector_class->help_page);
-
-          g_free (stripped_name);
-        }
+      gimp_help_set_help_data (button,
+			       selector_class->name,
+			       selector_class->help_page);
 
       g_object_set_data (G_OBJECT (button), "selector", selector);
 

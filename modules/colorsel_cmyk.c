@@ -69,7 +69,7 @@ static const GimpModuleInfo colorsel_cmyk_info =
   GIMP_MODULE_ABI_VERSION,
   N_("CMYK color selector"),
   "Sven Neumann <sven@gimp.org>",
-  "v0.1",
+  "v0.2",
   "(c) 2003, released under the GPL",
   "July 2003"
 };
@@ -126,7 +126,7 @@ colorsel_cmyk_class_init (ColorselCmykClass *klass)
 
   selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
 
-  selector_class->name        = _("_CMYK");
+  selector_class->name        = _("CMYK");
   selector_class->help_page   = "cmyk.html";
   selector_class->stock_id    = GTK_STOCK_PRINT;  /* FIXME */
   selector_class->set_color   = colorsel_cmyk_set_color;

@@ -1,3 +1,16 @@
+2003-07-19  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpcolornotebook.c: save some space by showing
+	the stock_id instead of the colorselector's name.
+
+	* libgimpwidgets/gimpcolorselect.c
+	* modules/colorsel_cmyk.c
+	* modules/colorsel_triangle.c
+	* modules/colorsel_water.c: removed now unused mnemonics.
+
+	* app/widgets/gimpcoloreditor.c: no need to strip mnemonics from
+	the name here any longer.
+
 2003-07-18  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/info-window.c: show CMYK color values.

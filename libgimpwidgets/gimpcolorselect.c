@@ -260,7 +260,7 @@ gimp_color_select_class_init (GimpColorSelectClass *klass)
 
   object_class->finalize      = gimp_color_select_finalize;
 
-  selector_class->name                  = "GI_MP";
+  selector_class->name                  = "GIMP";
   selector_class->help_page             = "built_in.html";
   selector_class->stock_id              = GIMP_STOCK_WILBER;
   selector_class->set_toggles_visible   = gimp_color_select_togg_visible;

@@ -173,7 +173,7 @@ colorsel_water_class_init (ColorselWaterClass *klass)
 
   object_class->finalize      = colorsel_water_finalize;
 
-  selector_class->name        = _("_Watercolor");
+  selector_class->name        = _("Watercolor");
   selector_class->help_page   = "watercolor.html";
   selector_class->stock_id    = GIMP_STOCK_TOOL_PAINTBRUSH;
   selector_class->set_color   = colorsel_water_set_color;

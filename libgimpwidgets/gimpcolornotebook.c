@@ -123,12 +123,11 @@ gimp_color_notebook_class_init (GimpColorNotebookClass *klass)
 static void
 gimp_color_notebook_init (GimpColorNotebook *notebook)
 {
-  GimpColorSelector *selector;
-  GtkWidget         *page;
-  GtkWidget         *label;
-  GType             *selector_types;
-  gint               n_selector_types;
-  gint               i;
+  GimpColorSelector      *selector;
+  GimpColorSelectorClass *selector_class;
+  GType                  *selector_types;
+  gint                    n_selector_types;
+  gint                    i;
 
   selector = GIMP_COLOR_SELECTOR (notebook);
 
@@ -136,11 +135,14 @@ gimp_color_notebook_init (GimpColorNotebook *notebook)
   gtk_box_pack_start (GTK_BOX (notebook), notebook->notebook, TRUE, TRUE, 0);
   gtk_widget_show (notebook->notebook);
 
+  gtk_notebook_popup_enable (GTK_NOTEBOOK (notebook->notebook));
+
   g_signal_connect (notebook->notebook, "switch_page",
                     G_CALLBACK (gimp_color_notebook_switch_page),
                     notebook);
 
-  selector_types = g_type_children (GIMP_TYPE_COLOR_SELECTOR, &n_selector_types);
+  selector_types = g_type_children (GIMP_TYPE_COLOR_SELECTOR,
+				    &n_selector_types);
 
   if (n_selector_types == 2)
     {
@@ -150,6 +152,9 @@ gimp_color_notebook_init (GimpColorNotebook *notebook)
 
   for (i = 0; i < n_selector_types; i++)
     {
+      GtkWidget *page;
+      GtkWidget *image;
+
       /*  skip ourselves  */
       if (g_type_is_a (selector_types[i], GIMP_TYPE_COLOR_NOTEBOOK))
         continue;
@@ -166,11 +171,18 @@ gimp_color_notebook_init (GimpColorNotebook *notebook)
       if (! page)
         continue;
 
+      selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (page);
+
       gimp_color_selector_set_show_alpha (GIMP_COLOR_SELECTOR (page), FALSE);
 
-      label = gtk_label_new_with_mnemonic (GIMP_COLOR_SELECTOR_GET_CLASS (page)->name);
+      image = gtk_image_new_from_stock (selector_class->stock_id,
+					GTK_ICON_SIZE_BUTTON);
 
-      gtk_notebook_append_page (GTK_NOTEBOOK (notebook->notebook), page, label);
+      gtk_notebook_append_page (GTK_NOTEBOOK (notebook->notebook),
+				page, image);
+
+      gtk_notebook_set_menu_label_text (GTK_NOTEBOOK (notebook->notebook),
+					page, selector_class->name);
 
       if (! notebook->cur_page)
         notebook->cur_page = GIMP_COLOR_SELECTOR (page);
