@@ -375,7 +375,7 @@ run (gchar      *name,
 
   if (strcmp (name, "file_jpeg_load") == 0)
     {
-      INIT_I18N();
+      INIT_I18N_UI();
 
       image_ID = load_image (param[1].data.d_string, run_mode, FALSE);
 

@@ -232,7 +232,7 @@ run (gchar   *name,
 
   if (strcmp (name, "file_png_load") == 0)
     {
-      INIT_I18N ();
+      INIT_I18N_UI ();
       image_ID = load_image (param[1].data.d_string);
 
       if (image_ID != -1)

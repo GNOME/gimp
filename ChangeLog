@@ -1,3 +1,15 @@
+2001-04-08  Sven Neumann  <sven@gimp.org>
+
+        * plug-ins/bmp/bmp.c
+        * plug-ins/common/jpeg.c
+        * plug-ins/common/mpeg.c
+        * plug-ins/common/png.c
+        * plug-ins/common/tiff.c
+        * plug-ins/common/xpm.c
+        * plug-ins/twain/twain.c
+        * plug-ins/winsnap/winsnap.c: ported I18N initialization fixes from
+	stable branch
+
 2001-04-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint_funcs.c

@@ -1064,7 +1064,7 @@ query(void)
   static GimpParamDef args[] = { IN_ARGS };
   static GimpParamDef return_vals[] = { OUT_ARGS };
 
-  INIT_I18N();
+  INIT_I18N_UI();
 
   /* the installation of the plugin */
   gimp_install_procedure(PLUG_IN_NAME,
