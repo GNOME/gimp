@@ -96,15 +96,26 @@ extern "C" {
 #define pixpipeparams_parse             gimp_pixpipe_params_parse
 #define pixpipeparams_build             gimp_pixpipe_params_build
 
-#define GPlugInInfo  GimpPlugInInfo
-#define GTile        GimpTile
-#define GDrawable    GimpDrawable
-#define GPixelRgn    GimpPixelRgn
-#define GParamColor  GimpParamColor
-#define GParamRegion GimpParamRegion
-#define GParamData   GimpParamData
-#define GParamDef    GimpParamDef
-#define GParam       GimpParam
+#define GPlugInInfo                     GimpPlugInInfo
+#define GTile                           GimpTile
+#define GDrawable                       GimpDrawable
+#define GPixelRgn                       GimpPixelRgn
+#define GParamColor                     GimpParamColor
+#define GParamRegion                    GimpParamRegion
+#define GParamData                      GimpParamData
+#define GParamDef                       GimpParamDef
+#define GParam                          GimpParam
+
+#define CAN_HANDLE_RGB                  GIMP_EXPORT_CAN_HANDLE_RGB
+#define CAN_HANDLE_GRAY                 GIMP_EXPORT_CAN_HANDLE_GRAY
+#define CAN_HANDLE_INDEXED              GIMP_EXPORT_CAN_HANDLE_INDEXED
+#define CAN_HANDLE_ALPHA                GIMP_EXPORT_CAN_HANDLE_ALPHA 
+#define CAN_HANDLE_LAYERS               GIMP_EXPORT_CAN_HANDLE_LAYERS
+#define CAN_HANDLE_LAYERS_AS_ANIMATION  GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION
+#define NEEDS_ALPHA                     GIMP_EXPORT_NEEDS_ALPHA
+#define EXPORT_CANCEL                   GIMP_EXPORT_CANCEL
+#define EXPORT_IGNORE                   GIMP_EXPORT_IGNORE
+#define EXPORT_EXPORT                   GIMP_EXPORT_EXPORT
 
 #endif /* GIMP_ENABLE_COMPAT_CRUFT */
 

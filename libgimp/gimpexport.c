@@ -267,14 +267,14 @@ static ExportAction export_action_add_alpha =
 /* dialog functions */
 
 static GtkWidget            *dialog = NULL;
-static GimpExportReturnType  dialog_return = EXPORT_CANCEL;
+static GimpExportReturnType  dialog_return = GIMP_EXPORT_CANCEL;
 
 static void
 export_export_callback (GtkWidget *widget,
 			gpointer   data)
 {
   gtk_widget_destroy (dialog);
-  dialog_return = EXPORT_EXPORT;
+  dialog_return = GIMP_EXPORT_EXPORT;
 }
 
 static void
@@ -282,14 +282,14 @@ export_skip_callback (GtkWidget *widget,
 		      gpointer   data)
 {
   gtk_widget_destroy (dialog);
-  dialog_return = EXPORT_IGNORE;
+  dialog_return = GIMP_EXPORT_IGNORE;
 }
 
 static void
 export_cancel_callback (GtkWidget *widget,
 			gpointer   data)
 {
-  dialog_return = EXPORT_CANCEL;
+  dialog_return = GIMP_EXPORT_CANCEL;
   dialog = NULL;
   gtk_main_quit ();
 }
@@ -319,7 +319,7 @@ export_dialog (GSList *actions,
   gchar        *text;
   ExportAction *action;
 
-  dialog_return = EXPORT_CANCEL;
+  dialog_return = GIMP_EXPORT_CANCEL;
   g_return_val_if_fail (actions != NULL && format != NULL, dialog_return);
 
   /*
@@ -441,13 +441,13 @@ export_dialog (GSList *actions,
  * If the user chooses to export the image, a copy is created.
  * This copy is then converted, the image_ID and drawable_ID
  * are changed to point to the new image and the procedure returns
- * EXPORT_EXPORT. The save_plugin has to take care of deleting the
+ * GIMP_EXPORT_EXPORT. The save_plugin has to take care of deleting the
  * created image using gimp_image_delete() when it has saved it.
  *
  * If the user chooses to Ignore the export problem, the image_ID
- * and drawable_ID is not altered, EXPORT_IGNORE is returned and 
+ * and drawable_ID is not altered, GIMP_EXPORT_IGNORE is returned and 
  * the save_plugin should try to save the original image. If the 
- * user chooses Cancel, EXPORT_CANCEL is returned and the 
+ * user chooses Cancel, GIMP_EXPORT_CANCEL is returned and the 
  * save_plugin should quit itself with status #STATUS_CANCEL.
  *
  * Returns: An enum of #GimpExportReturnType describing the user_action.
@@ -471,10 +471,10 @@ gimp_export_image (gint32                 *image_ID,
   g_return_val_if_fail (*image_ID > -1 && *drawable_ID > -1, FALSE);
 
   /* do some sanity checks */
-  if (capabilities & NEEDS_ALPHA)
-    capabilities |= CAN_HANDLE_ALPHA;
-  if (capabilities & CAN_HANDLE_LAYERS_AS_ANIMATION)
-    capabilities |= CAN_HANDLE_LAYERS;
+  if (capabilities & GIMP_EXPORT_NEEDS_ALPHA)
+    capabilities |= GIMP_EXPORT_CAN_HANDLE_ALPHA ;
+  if (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION)
+    capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
 
   /* check alpha */
   layers = gimp_image_get_layers (*image_ID, &nlayers);
@@ -483,7 +483,7 @@ gimp_export_image (gint32                 *image_ID,
       if (gimp_drawable_has_alpha (layers[i]))
 	{
 
-	  if ( !(capabilities & CAN_HANDLE_ALPHA) )
+	  if ( !(capabilities & GIMP_EXPORT_CAN_HANDLE_ALPHA ) )
 	    {
 	      actions = g_slist_prepend (actions, &export_action_flatten);
 	      added_flatten = TRUE;
@@ -497,7 +497,7 @@ gimp_export_image (gint32                 *image_ID,
       	  if (i == nlayers - 1 && gimp_layer_get_visible(layers[i])) 
 	    background_has_alpha = FALSE;
 
-	  if (capabilities & NEEDS_ALPHA)
+	  if (capabilities & GIMP_EXPORT_NEEDS_ALPHA)
 	    {
 	      actions = g_slist_prepend (actions, &export_action_add_alpha);
 	      break;
@@ -509,16 +509,16 @@ gimp_export_image (gint32                 *image_ID,
   /* check multiple layers */
   if (!added_flatten && nlayers > 1)
     {
-      if (capabilities & CAN_HANDLE_LAYERS_AS_ANIMATION)
+      if (capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION)
 	{
-	  if (background_has_alpha || capabilities & NEEDS_ALPHA)
+	  if (background_has_alpha || capabilities & GIMP_EXPORT_NEEDS_ALPHA)
 	    actions = g_slist_prepend (actions, &export_action_animate_or_merge);
 	  else
 	    actions = g_slist_prepend (actions, &export_action_animate_or_flatten);
 	}
-      else if ( !(capabilities & CAN_HANDLE_LAYERS))
+      else if ( !(capabilities & GIMP_EXPORT_CAN_HANDLE_LAYERS))
 	{
-	  if (background_has_alpha || capabilities & NEEDS_ALPHA)
+	  if (background_has_alpha || capabilities & GIMP_EXPORT_NEEDS_ALPHA)
 	    actions = g_slist_prepend (actions, &export_action_merge);
 	  else
 	    actions = g_slist_prepend (actions, &export_action_merge_flat);
@@ -530,35 +530,35 @@ gimp_export_image (gint32                 *image_ID,
   switch (type)
     {
     case GIMP_RGB:
-       if ( !(capabilities & CAN_HANDLE_RGB) )
+       if ( !(capabilities & GIMP_EXPORT_CAN_HANDLE_RGB) )
 	{
-	  if ((capabilities & CAN_HANDLE_INDEXED) && (capabilities & CAN_HANDLE_GRAY))
+	  if ((capabilities & GIMP_EXPORT_CAN_HANDLE_INDEXED) && (capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY))
 	    actions = g_slist_prepend (actions, &export_action_convert_indexed_or_grayscale);
-	  else if (capabilities & CAN_HANDLE_INDEXED)
+	  else if (capabilities & GIMP_EXPORT_CAN_HANDLE_INDEXED)
 	    actions = g_slist_prepend (actions, &export_action_convert_indexed);
-	  else if (capabilities & CAN_HANDLE_GRAY)
+	  else if (capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY)
 	    actions = g_slist_prepend (actions, &export_action_convert_grayscale);
 	}
       break;
     case GIMP_GRAY:
-      if ( !(capabilities & CAN_HANDLE_GRAY) )
+      if ( !(capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY) )
 	{
-	  if ((capabilities & CAN_HANDLE_RGB) && (capabilities & CAN_HANDLE_INDEXED))
+	  if ((capabilities & GIMP_EXPORT_CAN_HANDLE_RGB) && (capabilities & GIMP_EXPORT_CAN_HANDLE_INDEXED))
 	    actions = g_slist_prepend (actions, &export_action_convert_rgb_or_indexed);
-	  else if (capabilities & CAN_HANDLE_RGB)
+	  else if (capabilities & GIMP_EXPORT_CAN_HANDLE_RGB)
 	    actions = g_slist_prepend (actions, &export_action_convert_rgb);
-	  else if (capabilities & CAN_HANDLE_INDEXED)
+	  else if (capabilities & GIMP_EXPORT_CAN_HANDLE_INDEXED)
 	    actions = g_slist_prepend (actions, &export_action_convert_indexed);
 	}
       break;
     case GIMP_INDEXED:
-       if ( !(capabilities & CAN_HANDLE_INDEXED) )
+       if ( !(capabilities & GIMP_EXPORT_CAN_HANDLE_INDEXED) )
 	{
-	  if ((capabilities & CAN_HANDLE_RGB) && (capabilities & CAN_HANDLE_GRAY))
+	  if ((capabilities & GIMP_EXPORT_CAN_HANDLE_RGB) && (capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY))
 	    actions = g_slist_prepend (actions, &export_action_convert_rgb_or_grayscale);
-	  else if (capabilities & CAN_HANDLE_RGB)
+	  else if (capabilities & GIMP_EXPORT_CAN_HANDLE_RGB)
 	    actions = g_slist_prepend (actions, &export_action_convert_rgb);
-	  else if (capabilities & CAN_HANDLE_GRAY)
+	  else if (capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY)
 	    actions = g_slist_prepend (actions, &export_action_convert_grayscale);
 	}
       break;
@@ -570,9 +570,9 @@ gimp_export_image (gint32                 *image_ID,
       dialog_return = export_dialog (actions, format_name);
     }
   else
-    dialog_return = EXPORT_IGNORE;
+    dialog_return = GIMP_EXPORT_IGNORE;
 
-  if (dialog_return == EXPORT_EXPORT)
+  if (dialog_return == GIMP_EXPORT_EXPORT)
     {
       *image_ID = gimp_image_duplicate (*image_ID);
       *drawable_ID = gimp_image_get_active_layer (*image_ID);

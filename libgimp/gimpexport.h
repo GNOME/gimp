@@ -32,20 +32,20 @@ extern "C" {
 
 typedef enum
 {
-  CAN_HANDLE_RGB                 = 1 << 0,
-  CAN_HANDLE_GRAY                = 1 << 1,
-  CAN_HANDLE_INDEXED             = 1 << 2,
-  CAN_HANDLE_ALPHA               = 1 << 3,
-  CAN_HANDLE_LAYERS              = 1 << 4,
-  CAN_HANDLE_LAYERS_AS_ANIMATION = 1 << 5,
-  NEEDS_ALPHA                    = 1 << 6
+  GIMP_EXPORT_CAN_HANDLE_RGB                 = 1 << 0,
+  GIMP_EXPORT_CAN_HANDLE_GRAY                = 1 << 1,
+  GIMP_EXPORT_CAN_HANDLE_INDEXED             = 1 << 2,
+  GIMP_EXPORT_CAN_HANDLE_ALPHA               = 1 << 3,
+  GIMP_EXPORT_CAN_HANDLE_LAYERS              = 1 << 4,
+  GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION = 1 << 5,
+  GIMP_EXPORT_NEEDS_ALPHA                    = 1 << 6
 } GimpExportCapabilities;
   
 typedef enum
 {
-  EXPORT_CANCEL,
-  EXPORT_IGNORE,
-  EXPORT_EXPORT
+  GIMP_EXPORT_CANCEL,
+  GIMP_EXPORT_IGNORE,
+  GIMP_EXPORT_EXPORT
 } GimpExportReturnType;
 
 GimpExportReturnType gimp_export_image (gint32                 *image_ID,

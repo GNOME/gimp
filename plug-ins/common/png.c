@@ -223,7 +223,7 @@ run (gchar   *name,
   gint32        image_ID;
   gint32        drawable_ID;
   gint32        orig_image_ID;
-  GimpExportReturnType export = EXPORT_CANCEL;
+  GimpExportReturnType export = GIMP_EXPORT_CANCEL;
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -261,11 +261,11 @@ run (gchar   *name,
 	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("png", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "PNG", 
-				      (CAN_HANDLE_RGB |
-				       CAN_HANDLE_GRAY |
-				       CAN_HANDLE_INDEXED |
-				       CAN_HANDLE_ALPHA));
-	  if (export == EXPORT_CANCEL)
+				      (GIMP_EXPORT_CAN_HANDLE_RGB |
+				       GIMP_EXPORT_CAN_HANDLE_GRAY |
+				       GIMP_EXPORT_CAN_HANDLE_INDEXED |
+				       GIMP_EXPORT_CAN_HANDLE_ALPHA ));
+	  if (export == GIMP_EXPORT_CANCEL)
 	    {
 	      *nreturn_vals = 1;
 	      values[0].data.d_status = GIMP_PDB_CANCEL;
@@ -339,7 +339,7 @@ run (gchar   *name,
 	    }
 	}
 
-      if (export == EXPORT_EXPORT)
+      if (export == GIMP_EXPORT_EXPORT)
 	gimp_image_delete (image_ID);
     }
   else

@@ -905,7 +905,7 @@ run (char    *name,
   gint32       *layer_ID;
   gint          nlayers, layer;
   gchar        *layer_name;
-  GimpExportReturnType export = EXPORT_CANCEL;
+  GimpExportReturnType export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
@@ -935,10 +935,10 @@ run (char    *name,
 	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("gpb", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "GPB", 
-				      (CAN_HANDLE_RGB |
-				       CAN_HANDLE_ALPHA | 
-				       NEEDS_ALPHA ));
-	  if (export == EXPORT_CANCEL)
+				      (GIMP_EXPORT_CAN_HANDLE_RGB |
+				       GIMP_EXPORT_CAN_HANDLE_ALPHA  | 
+				       GIMP_EXPORT_NEEDS_ALPHA ));
+	  if (export == GIMP_EXPORT_CANCEL)
 	    {
 	      values[0].data.d_status = GIMP_PDB_CANCEL;
 	      return;
@@ -999,11 +999,11 @@ run (char    *name,
 	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("gpb", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "GIH", 
-				      (CAN_HANDLE_RGB |
-				       CAN_HANDLE_ALPHA | 
-				       CAN_HANDLE_LAYERS |
-				       NEEDS_ALPHA));
-	  if (export == EXPORT_CANCEL)
+				      (GIMP_EXPORT_CAN_HANDLE_RGB |
+				       GIMP_EXPORT_CAN_HANDLE_ALPHA  | 
+				       GIMP_EXPORT_CAN_HANDLE_LAYERS |
+				       GIMP_EXPORT_NEEDS_ALPHA));
+	  if (export == GIMP_EXPORT_CANCEL)
 	    {
 	      values[0].data.d_status = GIMP_PDB_CANCEL;
 	      return;
@@ -1083,7 +1083,7 @@ run (char    *name,
 	}
     }
 
-  if (export == EXPORT_EXPORT)
+  if (export == GIMP_EXPORT_EXPORT)
     gimp_image_delete (image_ID);
 
   values[0].data.d_status = status;

@@ -368,7 +368,7 @@ run (gchar   *name,
   GimpParasite *parasite;
 #endif /* GIMP_HAVE_PARASITES */
   gint          err;
-  GimpExportReturnType export = EXPORT_CANCEL;
+  GimpExportReturnType export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
@@ -408,18 +408,18 @@ run (gchar   *name,
 	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("jpeg", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "JPEG", 
-				      (CAN_HANDLE_RGB |
-				       CAN_HANDLE_GRAY));
+				      (GIMP_EXPORT_CAN_HANDLE_RGB |
+				       GIMP_EXPORT_CAN_HANDLE_GRAY));
 	  switch (export)
 	    {
-	    case EXPORT_EXPORT: 
+	    case GIMP_EXPORT_EXPORT: 
 	      display_ID = gimp_display_new (image_ID);
 	      gimp_image_set_filename (image_ID, _("Export Preview"));
 	      gimp_displays_flush ();
 	      break;
-	    case EXPORT_IGNORE:
+	    case GIMP_EXPORT_IGNORE:
 	      break;
-	    case EXPORT_CANCEL:
+	    case GIMP_EXPORT_CANCEL:
 	      values[0].data.d_status = GIMP_PDB_CANCEL;
 	      return;
 	      break;
@@ -583,7 +583,7 @@ run (gchar   *name,
 	    }
 	}
 
-      if (export == EXPORT_EXPORT)
+      if (export == GIMP_EXPORT_EXPORT)
 	{
 	  /* If the image was exported, delete the new display. */
 	  /* This also deletes the image.                       */

@@ -240,7 +240,7 @@ run (gchar      *name,
   gint32             drawable_ID;
   GimpParasite      *parasite;
   gchar             *mask_filename = NULL;
-  GimpExportReturnType export = EXPORT_CANCEL;
+  GimpExportReturnType export = GIMP_EXPORT_CANCEL;
 
   INIT_I18N_UI();
   strncpy (xsvals.comment, _("Created with The GIMP"), MAX_COMMENT);
@@ -284,9 +284,9 @@ run (gchar      *name,
 	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("xbm", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "XBM",
-				      CAN_HANDLE_INDEXED |
-				      CAN_HANDLE_ALPHA);
-	  if (export == EXPORT_CANCEL)
+				      GIMP_EXPORT_CAN_HANDLE_INDEXED |
+				      GIMP_EXPORT_CAN_HANDLE_ALPHA );
+	  if (export == GIMP_EXPORT_CANCEL)
 	    {
 	      values[0].data.d_status = GIMP_PDB_CANCEL;
 	      return;
@@ -469,7 +469,7 @@ run (gchar      *name,
 	  g_free (mask_filename);
 	}
 
-      if (export == EXPORT_EXPORT)
+      if (export == GIMP_EXPORT_EXPORT)
 	gimp_image_delete (image_ID);
     }
   else

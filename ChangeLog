@@ -1,4 +1,37 @@
+2000-08-24  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpcompat.h
+	* libgimp/gimpexport.[ch]: renamed CAN_HANDLE_INDEXED and friends.
+
+	* plugins/bmp/bmp.c
+	* plugins/common/aa.c
+	* plugins/common/csource.c
+	* plugins/common/gbr.c
+	* plugins/common/gicon.c
+	* plugins/common/gif.c
+	* plugins/common/gpb.c
+	* plugins/common/header.c
+	* plugins/common/hrz.c
+	* plugins/common/jpeg.c
+	* plugins/common/pat.c
+	* plugins/common/pcx.c
+	* plugins/common/pix.c
+	* plugins/common/png.c
+	* plugins/common/pnm.c
+	* plugins/common/ps.c
+	* plugins/common/psp.c
+	* plugins/common/sunras.c
+	* plugins/common/tga.c
+	* plugins/common/tiff.c
+	* plugins/common/xbm.c
+	* plugins/common/xpm.c
+	* plugins/common/xwd.c
+	* plug-ins/fits/fits.c
+	* plugins/gfli/gfli.c
+	* plugins/sgi/sgi.c: ditto
+	
 2000-08-23 Garry R. Osgood <gosgood@idt.net>
+
 	* app/image_map.c 
 	A bit of refresh drawable code was misplaced 
 	these many years ago, leading to the persistence 
