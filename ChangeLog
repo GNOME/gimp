@@ -1,3 +1,8 @@
+Sun Dec 14 16:56:33 PST 1997 Manish Singh <yosh@gimp.org>
+
+	* backed out of the tools fix, cause problems with
+	rmb script-fu
+
 Sun Dec 14 03:41:27 PST 1997 Manish Singh <yosh@gimp.org>
 
 	* Support for dithering to custom palettes

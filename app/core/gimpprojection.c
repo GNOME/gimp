@@ -42,6 +42,7 @@
 #include "scroll.h"
 #include "tools.h"
 #include "undo.h"
+#include "tools.h"
 
 
 #define OVERHEAD          25  /*  in units of pixel area  */
@@ -1097,6 +1098,7 @@ gdisplay_active ()
 
   if (popup_shell)
     {
+      active_tool_control (DESTROY, gdisp);
       gdisp = gtk_object_get_user_data (GTK_OBJECT (popup_shell));
       return gdisp;
     }
