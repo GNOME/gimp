@@ -67,20 +67,17 @@ gimp_transform_matrix_flip_free (gint         x,
                                  GimpMatrix3 *result)
 {
   gdouble angle;
-  gdouble dx, dy;
 
   g_return_if_fail (result != NULL);
 
   angle = atan2  (y2 - y1, x2 - x1);
-  dx    = x - x1;
-  dy    = (x1 + ((y2 - y1) / (x2 - x1) ) * x) - y1;
 
   gimp_matrix3_identity  (result);
-  gimp_matrix3_translate (result, dx, dy);
+  gimp_matrix3_translate (result, -x1, -y1);
   gimp_matrix3_rotate    (result, -angle);
   gimp_matrix3_scale     (result, 1.0, -1.0);
   gimp_matrix3_rotate    (result, angle);
-  gimp_matrix3_translate (result, -dx, -dy);
+  gimp_matrix3_translate (result, x1, y1);
 }
 
 void

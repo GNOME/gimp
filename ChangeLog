@@ -1,5 +1,10 @@
 2004-12-05  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimp-transform-utils.c (gimp_transform_matrix_flip_free):
+	applied patch from Joao S. O. Bueno that fixes bug #160339.
+
+2004-12-05  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/help/domain.c
 	* plug-ins/help/gimp-help-lookup.c
 	* plug-ins/help/help.[ch]: if the help files are not installed,
