@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.0\n"
-"POT-Creation-Date: 2001-03-23 09:32+0200\n"
+"POT-Creation-Date: 2001-04-05 16:29+0300\n"
 "PO-Revision-Date: 2000-02-08 16:11+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -2402,7 +2402,7 @@ msgstr "Зам╕щення:"
 
 #: plug-ins/common/blinds.c:425
 msgid "Num Segments:"
-msgstr "К╕льк╕сть сегмент╕в:"
+msgstr "К╕льк╕сть се╜мент╕в:"
 
 #: plug-ins/common/blur.c:202
 msgid "<Image>/Filters/Blur/Blur..."
