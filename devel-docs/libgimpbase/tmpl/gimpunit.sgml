@@ -20,6 +20,19 @@ user-defined units.
 #GimpSizeEntry
 </para>
 
+<!-- ##### ENUM GimpUnit ##### -->
+<para>
+
+</para>
+
+@GIMP_UNIT_PIXEL: 
+@GIMP_UNIT_INCH: 
+@GIMP_UNIT_MM: 
+@GIMP_UNIT_POINT: 
+@GIMP_UNIT_PICA: 
+@GIMP_UNIT_END: 
+@GIMP_UNIT_PERCENT: 
+
 <!-- ##### FUNCTION gimp_unit_get_number_of_units ##### -->
 <para>
   Returns the number of units which are known to the #GimpUnit system.

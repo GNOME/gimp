@@ -142,6 +142,15 @@ The communication protocol between GIMP and it's plug-ins.
 
 
 
+<!-- ##### FUNCTION gp_has_init_write ##### -->
+<para>
+
+</para>
+
+@channel: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gp_quit_write ##### -->
 <para>
 

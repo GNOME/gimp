@@ -1,14 +1,14 @@
 <!doctype book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
-<!entity libgimpbase-gimpbasetypes SYSTEM "sgml/gimpbasetypes.sgml">
-<!entity libgimpbase-gimpsignal SYSTEM "sgml/gimpsignal.sgml">
-<!entity libgimpbase-gimpwire SYSTEM "sgml/gimpwire.sgml">
-<!entity libgimpbase-gimpparasite SYSTEM "sgml/gimpparasite.sgml">
-<!entity libgimpbase-gimpenv SYSTEM "sgml/gimpenv.sgml">
-<!entity libgimpbase-gimplimits SYSTEM "sgml/gimplimits.sgml">
-<!entity libgimpbase-gimpparasiteio SYSTEM "sgml/gimpparasiteio.sgml">
-<!entity libgimpbase-gimpversion SYSTEM "sgml/gimpversion.sgml">
-<!entity libgimpbase-gimpunit SYSTEM "sgml/gimpunit.sgml">
-<!entity libgimpbase-gimputils SYSTEM "sgml/gimputils.sgml">
+<!entity GimpBaseTypes SYSTEM "sgml/gimpbasetypes.sgml">
+<!entity GimpLimits SYSTEM "sgml/gimplimits.sgml">
+<!entity GimpEnv SYSTEM "sgml/gimpenv.sgml">
+<!entity GimpParasite SYSTEM "sgml/gimpparasite.sgml">
+<!entity GimpParasiteIO SYSTEM "sgml/gimpparasiteio.sgml">
+<!entity GimpSignal SYSTEM "sgml/gimpsignal.sgml">
+<!entity GimpUnit SYSTEM "sgml/gimpunit.sgml">
+<!entity GimpVersion SYSTEM "sgml/gimpversion.sgml">
+<!entity GimpProtocol SYSTEM "sgml/gimpprotocol.sgml">
+<!entity GimpWire SYSTEM "sgml/gimpwire.sgml">
 ]>
 <book id="index">
   <bookinfo>
@@ -17,15 +17,15 @@
 
   <chapter id="libgimpbase">
     <title>GIMP Base Library</title>
-    &libgimpbase-gimpbasetypes;
-    &libgimpbase-gimpversion;
-    &libgimpbase-gimplimits;
-    &libgimpbase-gimpenv;
-    &libgimpbase-gimpparasite;
-    &libgimpbase-gimpparasiteio;
-    &libgimpbase-gimpsignal;
-    &libgimpbase-gimpunit;
-    &libgimpbase-gimputils;
-    &libgimpbase-gimpwire;
+    &GimpBaseTypes;
+    &GimpVersion;
+    &GimpLimits;
+    &GimpEnv;
+    &GimpParasite;
+    &GimpParasiteIO;
+    &GimpSignal;
+    &GimpUnit;
+    &GimpProtocol;
+    &GimpWire;
   </chapter>
 </book>

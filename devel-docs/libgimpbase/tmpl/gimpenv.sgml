@@ -40,6 +40,22 @@ configuration files.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_locale_directory ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_plug_in_directory ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_sysconf_directory ##### -->
 <para>
 

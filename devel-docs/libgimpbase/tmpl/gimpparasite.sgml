@@ -16,62 +16,6 @@ gimp_image_parasite_attach(), gimp_drawable_parasite_attach(),
 gimp_parasite_attach() and their related functions.
 </para>
 
-<!-- ##### MACRO GIMP_PARASITE_PERSISTENT ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_PARASITE_UNDOABLE ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_PARASITE_ATTACH_PARENT ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_PARASITE_PARENT_PERSISTENT ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_PARASITE_PARENT_UNDOABLE ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_PARASITE_ATTACH_GRANDPARENT ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_PARASITE_GRANDPARENT_PERSISTENT ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO GIMP_PARASITE_GRANDPARENT_UNDOABLE ##### -->
-<para>
-
-</para>
-
-
-
 <!-- ##### STRUCT GimpParasite ##### -->
 <para>
 
@@ -193,5 +137,61 @@ gimp_parasite_attach() and their related functions.
 
 @parasite: 
 @Returns: 
+
+
+<!-- ##### MACRO GIMP_PARASITE_PERSISTENT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_PARASITE_UNDOABLE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_PARASITE_ATTACH_PARENT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_PARASITE_PARENT_PERSISTENT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_PARASITE_PARENT_UNDOABLE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_PARASITE_ATTACH_GRANDPARENT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_PARASITE_GRANDPARENT_PERSISTENT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_PARASITE_GRANDPARENT_UNDOABLE ##### -->
+<para>
+
+</para>
+
 
 

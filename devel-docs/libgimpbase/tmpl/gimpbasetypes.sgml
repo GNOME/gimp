@@ -14,29 +14,6 @@ gimpbasetypes
 
 </para>
 
-<!-- ##### STRUCT GimpParasite ##### -->
-<para>
-
-</para>
-
-@name: 
-@flags: 
-@size: 
-@data: 
-
-<!-- ##### ENUM GimpUnit ##### -->
-<para>
-
-</para>
-
-@GIMP_UNIT_PIXEL: 
-@GIMP_UNIT_INCH: 
-@GIMP_UNIT_MM: 
-@GIMP_UNIT_POINT: 
-@GIMP_UNIT_PICA: 
-@GIMP_UNIT_END: 
-@GIMP_UNIT_PERCENT: 
-
 <!-- ##### ENUM GimpPDBArgType ##### -->
 <para>
 
@@ -86,4 +63,22 @@ gimpbasetypes
 @GIMP_PDB_PASS_THROUGH: 
 @GIMP_PDB_SUCCESS: 
 @GIMP_PDB_CANCEL: 
+
+<!-- ##### ENUM GimpMessageHandlerType ##### -->
+<para>
+
+</para>
+
+@GIMP_MESSAGE_BOX: 
+@GIMP_CONSOLE: 
+@GIMP_ERROR_CONSOLE: 
+
+<!-- ##### ENUM GimpStackTraceMode ##### -->
+<para>
+
+</para>
+
+@GIMP_STACK_TRACE_NEVER: 
+@GIMP_STACK_TRACE_QUERY: 
+@GIMP_STACK_TRACE_ALWAYS: 
 

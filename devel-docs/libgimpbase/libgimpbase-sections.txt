@@ -1,14 +1,10 @@
 <SECTION>
 <FILE>gimpbasetypes</FILE>
-GimpParasite
-GimpUnit
 GimpPDBArgType
 GimpPDBProcType
 GimpPDBStatusType
-</SECTION>
-
-<SECTION>
-<FILE>gimpbase</FILE>
+GimpMessageHandlerType
+GimpStackTraceMode
 </SECTION>
 
 <SECTION>
@@ -16,6 +12,8 @@ GimpPDBStatusType
 gimp_directory
 gimp_personal_rc_file
 gimp_data_directory
+gimp_locale_directory
+gimp_plug_in_directory
 gimp_sysconf_directory
 gimp_gtkrc
 gimp_path_parse
@@ -38,14 +36,6 @@ GIMP_CHECK_LIGHT
 
 <SECTION>
 <FILE>gimpparasite</FILE>
-GIMP_PARASITE_PERSISTENT
-GIMP_PARASITE_UNDOABLE
-GIMP_PARASITE_ATTACH_PARENT
-GIMP_PARASITE_PARENT_PERSISTENT
-GIMP_PARASITE_PARENT_UNDOABLE
-GIMP_PARASITE_ATTACH_GRANDPARENT
-GIMP_PARASITE_GRANDPARENT_PERSISTENT
-GIMP_PARASITE_GRANDPARENT_UNDOABLE
 GimpParasite
 gimp_parasite_new
 gimp_parasite_free
@@ -59,6 +49,14 @@ gimp_parasite_flags
 gimp_parasite_name
 gimp_parasite_data
 gimp_parasite_data_size
+GIMP_PARASITE_PERSISTENT
+GIMP_PARASITE_UNDOABLE
+GIMP_PARASITE_ATTACH_PARENT
+GIMP_PARASITE_PARENT_PERSISTENT
+GIMP_PARASITE_PARENT_UNDOABLE
+GIMP_PARASITE_ATTACH_GRANDPARENT
+GIMP_PARASITE_GRANDPARENT_PERSISTENT
+GIMP_PARASITE_GRANDPARENT_UNDOABLE
 </SECTION>
 
 <SECTION>
@@ -83,6 +81,7 @@ GPProcReturn
 GPProcInstall
 GPProcUninstall
 gp_init
+gp_has_init_write
 gp_quit_write
 gp_config_write
 gp_tile_req_write
@@ -107,6 +106,7 @@ gimp_signal_syscallrestart
 
 <SECTION>
 <FILE>gimpunit</FILE>
+GimpUnit
 gimp_unit_get_number_of_units
 gimp_unit_get_number_of_built_in_units
 gimp_unit_new
@@ -119,12 +119,6 @@ gimp_unit_get_symbol
 gimp_unit_get_abbreviation
 gimp_unit_get_singular
 gimp_unit_get_plural
-</SECTION>
-
-<SECTION>
-<FILE>gimputils</FILE>
-gimp_strescape
-gimp_strcompress
 </SECTION>
 
 <SECTION>

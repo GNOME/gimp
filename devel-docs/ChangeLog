@@ -1,5 +1,25 @@
 2002-05-13  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/Makefile.am: ignore gimpbase.h.
+
+	* libgimpbase/libgimpbase-docs.sgml: removed GimpBase and GimpUtils
+	sections, added GimpProtocol.
+
+	* libgimpbase/libgimpbase-sections.txt: updated.
+
+	* libgimpbase/tmpl/gimpbase.sgml
+	* libgimpbase/tmpl/gimputils.sgml: removed.
+
+	* libgimpbase/tmpl/gimpbasetypes.sgml
+	* libgimpbase/tmpl/gimpenv.sgml
+	* libgimpbase/tmpl/gimpparasite.sgml
+	* libgimpbase/tmpl/gimpprotocol.sgml
+	* libgimpbase/tmpl/gimpunit.sgml: updated.
+
+2002-05-13  Sven Neumann  <sven@gimp.org>
+
+	* libgimpcolor/Makefile.am: ignore gimpcolor.h.
+
 	* libgimpcolor/libgimpcolor-docs.sgml: removed GimpColorTypes and
 	GimpColor sections.
 
