@@ -72,6 +72,7 @@ typedef struct
   gint          timer;
 
   gint          index;
+  gint          animstep;
   gboolean      visible;
   gint          textrange[2];
   gint          state;
@@ -101,6 +102,7 @@ static gint      about_dialog_button      (GtkWidget      *widget,
 static gint      about_dialog_key         (GtkWidget      *widget,
                                            GdkEventKey    *event,
                                            gpointer        data);
+static void      reshuffle_array          (void);
 static gboolean  about_dialog_timer       (gpointer        data);
 
 
@@ -135,6 +137,7 @@ about_dialog_create (void)
 
       about_info.visible = FALSE;
       about_info.state = 0;
+      about_info.animstep = -1;
 
       widget = gtk_window_new (GTK_WINDOW_TOPLEVEL);
       about_info.about_dialog = widget;
@@ -215,32 +218,11 @@ about_dialog_create (void)
     {
       if (! double_speed)
 	{
-	  GRand *gr = g_rand_new ();
-          gint i;
+          about_info.state = 0;
+          about_info.index = 0;
 
-	  for (i = 0; i < nscroll_texts; i++) 
-	    {
-	      shuffle_array[i] = i;
-	    }
-
-	  for (i = 0; i < nscroll_texts; i++) 
-	    {
-	      gint j;
-
-	      j = g_rand_int_range (gr, 0, nscroll_texts);
-	      if (i != j) 
-		{
-		  gint t;
-
-		  t = shuffle_array[j];
-		  shuffle_array[j] = shuffle_array[i];
-		  shuffle_array[i] = t;
-		}
-	    }
-
+          reshuffle_array ();
           pango_layout_set_text (about_info.layout, "", -1);
-
-	  g_rand_free (gr);
 	}
     }
 
@@ -252,9 +234,12 @@ about_dialog_create (void)
 static gboolean
 about_dialog_load_logo (GtkWidget *window)
 {
-  gchar     *filename;
-  GdkPixbuf *pixbuf;
-  GdkGC     *gc;
+  gchar       *filename;
+  GdkPixbuf   *pixbuf;
+  GdkGC       *gc;
+  gint         width;
+  PangoLayout *layout;
+  PangoFontDescription *desc;
 
   if (about_info.logo_pixmap)
     return TRUE;
@@ -280,6 +265,16 @@ about_dialog_load_logo (GtkWidget *window)
                                 about_info.pixmaparea.height,
                                 gtk_widget_get_visual (window)->depth);
 
+  layout = gtk_widget_create_pango_layout (window, NULL);
+  desc = pango_font_description_from_string ("Bitstream Vera Sans,"
+                                             "Trebuchet MS,"
+                                             "Helvetica,"
+                                             "Sans,"
+                                             "Bold 9");
+  pango_layout_set_font_description (layout, desc);
+  pango_layout_set_justify (layout, PANGO_ALIGN_CENTER);
+  pango_layout_set_text (layout, GIMP_VERSION, -1);
+  
   gc = gdk_gc_new (about_info.logo_pixmap);
 
   gdk_draw_pixbuf (GDK_DRAWABLE (about_info.logo_pixmap),
@@ -289,8 +284,14 @@ about_dialog_load_logo (GtkWidget *window)
                    about_info.pixmaparea.height,
                    GDK_RGB_DITHER_NORMAL, 0, 0);
 
+  pango_layout_get_pixel_size (layout, &width, NULL);
+
+  gdk_draw_layout (GDK_DRAWABLE (about_info.logo_pixmap),
+                   gc, 224 - width, 204, layout);
+
   g_object_unref (gc);
   g_object_unref (pixbuf);
+  g_object_unref (layout);
 
   return TRUE;
 }
@@ -322,7 +323,15 @@ about_dialog_logo_expose (GtkWidget      *widget,
   gint width, height;
 
   if (!about_info.timer)
-    about_info.timer = g_timeout_add (30, about_dialog_timer, NULL);
+    {
+      /* No timeout, we were unmapped earlier */
+      about_info.state = 0;
+      about_info.index = 0;
+      about_info.animstep = -1;
+      about_info.visible = FALSE;
+      reshuffle_array ();
+      about_info.timer = g_timeout_add (30, about_dialog_timer, NULL);
+    }
 
   /* only operate on the region covered by the pixmap */
   if (! gdk_rectangle_intersect (&(about_info.pixmaparea),
@@ -476,6 +485,35 @@ mix_colors (PangoColor *start, PangoColor *end,
   target->red   = start->red   * (1.0 - pos) + end->red   * pos;
   target->green = start->green * (1.0 - pos) + end->green * pos;
   target->blue  = start->blue  * (1.0 - pos) + end->blue  * pos;
+}
+
+static void
+reshuffle_array (void)
+{
+  GRand *gr = g_rand_new ();
+  gint i;
+
+  for (i = 0; i < nscroll_texts; i++) 
+    {
+      shuffle_array[i] = i;
+    }
+
+  for (i = 0; i < nscroll_texts; i++) 
+    {
+      gint j;
+
+      j = g_rand_int_range (gr, 0, nscroll_texts);
+      if (i != j) 
+        {
+          gint t;
+
+          t = shuffle_array[j];
+          shuffle_array[j] = shuffle_array[i];
+          shuffle_array[i] = t;
+        }
+    }
+
+  g_rand_free (gr);
 }
 
 static void
@@ -663,14 +701,13 @@ decorate_text (PangoLayout *layout, gint anim_type, gdouble time)
 static gboolean
 about_dialog_timer (gpointer data)
 {
-  static gint count = -1;
   gboolean return_val;
   gint width, height;
   gdouble size;
   gchar *text;
   return_val = TRUE;
 
-  if (count == 0)
+  if (about_info.animstep == 0)
     {
       size = 13.0;
       text = NULL;
@@ -754,27 +791,27 @@ about_dialog_timer (gpointer data)
         }
     }
 
-  count++;
+  about_info.animstep++;
 
-  if (count < 16)
+  if (about_info.animstep < 16)
     {
-      decorate_text (about_info.layout, 4, ((float) count) / 15.0);
+      decorate_text (about_info.layout, 4, ((float) about_info.animstep) / 15.0);
     }
-  else if (count == 16)
+  else if (about_info.animstep == 16)
     {
       about_info.timer = g_timeout_add (800, about_dialog_timer, NULL);
       return_val = FALSE;
     }
-  else if (count == 17)
+  else if (about_info.animstep == 17)
     {
       about_info.timer = g_timeout_add (30, about_dialog_timer, NULL);
       return_val = FALSE;
     }
-  else if (count < 33)
+  else if (about_info.animstep < 33)
     {
-      decorate_text (about_info.layout, 1, 1.0 - ((float) (count-17)) / 15.0);
+      decorate_text (about_info.layout, 1, 1.0 - ((float) (about_info.animstep-17)) / 15.0);
     }
-  else if (count == 33)
+  else if (about_info.animstep == 33)
     {
       about_info.timer = g_timeout_add (300, about_dialog_timer, NULL);
       return_val = FALSE;
@@ -782,7 +819,7 @@ about_dialog_timer (gpointer data)
     }
   else
     {
-      count = 0;
+      about_info.animstep = 0;
       about_info.timer = g_timeout_add (30, about_dialog_timer, NULL);
       return_val = FALSE;
       about_info.visible = FALSE;

@@ -1,3 +1,10 @@
+2003-12-29  Simon Budig  <simon@gimp.org>
+
+	* app/gui/about-dialog.c: reshuffle the authors array and
+	restart the animation when the dialog gets shown a second
+	time. Also render the current version number to the image
+	permanently.
+
 2003-12-29  Raphaël Quinet  <quinet@gamers.org>
 
 	* app/gui/palette-editor-menu.c: Applied patch by David Gowers
