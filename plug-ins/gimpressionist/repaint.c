@@ -26,14 +26,14 @@ static double get_siz_from_pcvals(double x, double y)
             pcvals.sizestrexp, pcvals.sizevoronoi);
 }
 
-static int pixval(double dir)
+static int get_pixel_value (double dir)
 {
   while(dir < 0.0) dir += 360.0;
   while(dir >= 360.0) dir -= 360.0;
   return dir * 255.0 / 360.0;
 }
 
-static void prepbrush(ppm_t *p)
+static void prepare_brush (ppm_t *p)
 {
   int x, y;
   int rowstride = p->width * 3;
@@ -53,7 +53,7 @@ static void prepbrush(ppm_t *p)
   }
 }
 
-static double sumbrush(ppm_t *p)
+static double sum_brush (ppm_t *p)
 {
   double sum = 0;
   int i;
@@ -63,7 +63,7 @@ static double sumbrush(ppm_t *p)
   return sum;
 }
 
-static int gethue(guchar *rgb)
+static int get_hue (guchar *rgb)
 {
   double h, v, temp, diff;
   /* TODO : There seems to be some typoes in the comments here.
@@ -87,9 +87,9 @@ static int gethue(guchar *rgb)
   return h * 255.0 / 6.0;
 }
 
-static int bestbrush(ppm_t *p, ppm_t *a, int tx, int ty,
-                     ppm_t *brushes, int numbrush, double *brushsum,
-                     int start, int step)
+static int choose_best_brush (ppm_t *p, ppm_t *a, int tx, int ty,
+                              ppm_t *brushes, int num_brushes, 
+                              double *brushes_sum, int start, int step)
 {
   double dev, thissum;
   double bestdev = 0.0;
@@ -99,12 +99,12 @@ static int bestbrush(ppm_t *p, ppm_t *a, int tx, int ty,
   long i;
   GList *brlist = NULL;
 
-  for(i = start; i < numbrush; i += step) {
+  for(i = start; i < num_brushes; i += step) {
     ppm_t *brush = &brushes[i];
 #if 0
     thissum = 0.0;
 #endif
-    thissum = brushsum[i];
+    thissum = brushes_sum[i];
 
     r = g = b = 0.0;
     for(y = 0; y < brush->height; y++) {
@@ -171,10 +171,10 @@ static int bestbrush(ppm_t *p, ppm_t *a, int tx, int ty,
   return best;
 }
 
-static void applybrush(ppm_t *brush,
-                       ppm_t *shadow,
-                       ppm_t *p, ppm_t *a,
-                       int tx, int ty, int r, int g, int b)
+static void apply_brush (ppm_t *brush,
+                         ppm_t *shadow,
+                         ppm_t *p, ppm_t *a,
+                         int tx, int ty, int r, int g, int b)
 {
   ppm_t tmp;
   ppm_t atmp;
@@ -265,16 +265,16 @@ void repaint(ppm_t *p, ppm_t *a)
   ppm_t tmp = {0,0,NULL};
   ppm_t atmp = {0,0,NULL};
   int r, g, b, n, h, i, j, on, sn;
-  int numbrush, maxbrushwidth, maxbrushheight;
+  int num_brushes, maxbrushwidth, maxbrushheight;
   guchar back[3] = {0,0,0};
   ppm_t *brushes, *shadows;
   ppm_t *brush, *shadow = NULL;
-  double *brushsum;
+  double *brushes_sum;
   int cx, cy, maxdist;
   double scale, relief, startangle, anglespan, density, bgamma;
   double thissum;
   int max_progress;
-  ppm_t paperppm = {0,0,NULL};
+  ppm_t paper_ppm = {0,0,NULL};
   ppm_t dirmap = {0,0,NULL};
   ppm_t sizmap = {0,0,NULL};
   int *xpos = NULL, *ypos = NULL;
@@ -298,7 +298,7 @@ void repaint(ppm_t *p, ppm_t *a)
       return;
     }
 
-  numbrush = runningvals.orientnum * runningvals.sizenum;
+  num_brushes = runningvals.orientnum * runningvals.sizenum;
   startangle = runningvals.orientfirst;
   anglespan = runningvals.orientlast;
 
@@ -309,11 +309,11 @@ void repaint(ppm_t *p, ppm_t *a)
 
   bgamma = runningvals.brushgamma;
 
-  brushes = g_malloc (numbrush * sizeof(ppm_t));
-  brushsum = g_malloc (numbrush * sizeof(double));
+  brushes = g_malloc (num_brushes * sizeof(ppm_t));
+  brushes_sum = g_malloc (num_brushes * sizeof(double));
 
   if(dropshadow)
-    shadows = g_malloc (numbrush * sizeof(ppm_t));
+    shadows = g_malloc (num_brushes * sizeof(ppm_t));
   else
     shadows = NULL;
 
@@ -332,7 +332,7 @@ void repaint(ppm_t *p, ppm_t *a)
   ppm_pad(&brushes[0], i-brushes[0].width, i-brushes[0].width,
       i-brushes[0].height, i-brushes[0].height, back);
 
-  for(i = 1; i < numbrush; i++) {
+  for(i = 1; i < num_brushes; i++) {
     brushes[i].col = NULL;
     ppm_copy(&brushes[0], &brushes[i]);
   }
@@ -353,29 +353,29 @@ void repaint(ppm_t *p, ppm_t *a)
 
   /* Brush-debugging */
 #if 0
-  for(i = 0; i < numbrush; i++) {
+  for(i = 0; i < num_brushes; i++) {
     char tmp[1000];
     g_snprintf (tmp, sizeof (tmp), "/tmp/_brush%03d.ppm", i);
     ppm_save(&brushes[i], tmp);
   }
 #endif
 
-  for(i = 0; i < numbrush; i++) {
+  for(i = 0; i < num_brushes; i++) {
     if(!runningvals.colorbrushes)
-      prepbrush(&brushes[i]);
-    brushsum[i] = sumbrush(&brushes[i]);
+      prepare_brush(&brushes[i]);
+    brushes_sum[i] = sum_brush(&brushes[i]);
   }
 
   brush = &brushes[0];
-  thissum = brushsum[0];
+  thissum = brushes_sum[0];
 
   maxbrushwidth = maxbrushheight = 0;
-  for(i = 0; i < numbrush; i++) {
+  for(i = 0; i < num_brushes; i++) {
     if(brushes[i].width > maxbrushwidth) maxbrushwidth = brushes[i].width;
     if(brushes[i].height > maxbrushheight) maxbrushheight = brushes[i].height;
   }
 
-  for(i = 0; i < numbrush; i++) {
+  for(i = 0; i < num_brushes; i++) {
     int xp, yp;
     guchar blk[3] = {0,0,0};
 
@@ -386,7 +386,7 @@ void repaint(ppm_t *p, ppm_t *a)
   }
 
   if(dropshadow) {
-    for(i = 0; i < numbrush; i++) {
+    for(i = 0; i < num_brushes; i++) {
       shadows[i].col = NULL;
       ppm_copy(&brushes[i], &shadows[i]);
       ppm_apply_gamma(&shadows[i], 0, 1,1,0);
@@ -438,15 +438,15 @@ void repaint(ppm_t *p, ppm_t *a)
   } else {
     scale = runningvals.paperscale / 100.0;
     ppm_new(&tmp, p->width, p->height);
-    ppm_load(runningvals.selectedpaper, &paperppm);
-    resize(&paperppm, paperppm.width * scale, paperppm.height * scale);
+    ppm_load(runningvals.selectedpaper, &paper_ppm);
+    resize(&paper_ppm, paper_ppm.width * scale, paper_ppm.height * scale);
     if(runningvals.paper_invert)
-      ppm_apply_gamma(&paperppm, -1.0, 1, 1, 1);
+      ppm_apply_gamma(&paper_ppm, -1.0, 1, 1, 1);
     for(x = 0; x < tmp.width; x++) {
-      int rx = x % paperppm.width;
+      int rx = x % paper_ppm.width;
       for(y = 0; y < tmp.height; y++) {
-        int ry = y % paperppm.height;
-        memcpy(&tmp.col[y*tmp.width*3+x*3], &paperppm.col[ry*paperppm.width*3+rx*3], 3);
+        int ry = y % paper_ppm.height;
+        memcpy(&tmp.col[y*tmp.width*3+x*3], &paper_ppm.col[ry*paper_ppm.width*3+rx*3], 3);
       }
     }
   }
@@ -502,7 +502,7 @@ void repaint(ppm_t *p, ppm_t *a)
       guchar *dstrow = &dirmap.col[y*dirmap.width*3];
       guchar *srcrow = &p->col[y*p->width*3];
       for(x = 0; x < dirmap.width; x++) {
-        dstrow[x*3] = gethue(&srcrow[x*3]);
+        dstrow[x*3] = get_hue(&srcrow[x*3]);
       }
     }
     break;
@@ -519,7 +519,7 @@ void repaint(ppm_t *p, ppm_t *a)
       guchar *dstrow = &dirmap.col[y*dirmap.width*3];
       double tmpy = y / (double)dirmap.height;
       for(x = 0; x < dirmap.width; x++) {
-        dstrow[x*3] = pixval(90-getdir(x / (double)dirmap.width, tmpy, 1));
+        dstrow[x*3] = get_pixel_value(90-getdir(x / (double)dirmap.width, tmpy, 1));
       }
     }
     edgepad(&dirmap, maxbrushwidth, maxbrushwidth, maxbrushheight, maxbrushheight);
@@ -576,7 +576,7 @@ void repaint(ppm_t *p, ppm_t *a)
       guchar *dstrow = &sizmap.col[y*sizmap.width*3];
       guchar *srcrow = &p->col[y*p->width*3];
       for(x = 0; x < sizmap.width; x++) {
-        dstrow[x*3] = gethue(&srcrow[x*3]);
+        dstrow[x*3] = get_hue(&srcrow[x*3]);
       }
     }
   }
@@ -728,22 +728,22 @@ void repaint(ppm_t *p, ppm_t *a)
     if((runningvals.orienttype == ORIENTATION_ADAPTIVE) &&
        (runningvals.sizetype == SIZE_TYPE_ADAPTIVE))
     {
-      n = bestbrush(p, a, tx-maxbrushwidth/2, ty-maxbrushheight/2,
-                    brushes, numbrush, brushsum, 0, 1);
+      n = choose_best_brush(p, a, tx-maxbrushwidth/2, ty-maxbrushheight/2,
+                    brushes, num_brushes, brushes_sum, 0, 1);
     } else if(runningvals.orienttype == ORIENTATION_ADAPTIVE) {
       int st = sn * runningvals.orientnum;
-      n = bestbrush(p, a, tx-maxbrushwidth/2, ty-maxbrushheight/2,
-                    brushes, st+runningvals.orientnum, brushsum, st, 1);
+      n = choose_best_brush(p, a, tx-maxbrushwidth/2, ty-maxbrushheight/2,
+                    brushes, st+runningvals.orientnum, brushes_sum, st, 1);
     } else if(runningvals.sizetype == SIZE_TYPE_ADAPTIVE) {
-      n = bestbrush(p, a, tx-maxbrushwidth/2, ty-maxbrushheight/2,
-                    brushes, numbrush, brushsum, on, runningvals.orientnum);
+      n = choose_best_brush(p, a, tx-maxbrushwidth/2, ty-maxbrushheight/2,
+                    brushes, num_brushes, brushes_sum, on, runningvals.orientnum);
     } else {
       n = sn * runningvals.orientnum + on;
     }
 
     /* Should never happen, but hey... */
     if(n < 0) n = 0;
-    else if(n >= numbrush) n = numbrush - 1;
+    else if(n >= num_brushes) n = num_brushes - 1;
 
     tx -= maxbrushwidth/2;
     ty -= maxbrushheight/2;
@@ -751,7 +751,7 @@ void repaint(ppm_t *p, ppm_t *a)
     brush = &brushes[n];
     if(dropshadow)
       shadow = &shadows[n];
-    thissum = brushsum[n];
+    thissum = brushes_sum[n];
 
     /* Calculate color - avg. of in-brush pixels */
     if(runningvals.colortype == 0) {
@@ -799,39 +799,39 @@ void repaint(ppm_t *p, ppm_t *a)
 #undef MYASSIGN
     }
 
-    applybrush(brush, shadow, &tmp, &atmp, tx,ty, r,g,b);
+    apply_brush(brush, shadow, &tmp, &atmp, tx,ty, r,g,b);
     if(runningvals.general_tileable && runningvals.general_paint_edges) {
-      int origwidth = tmp.width - 2 * maxbrushwidth;
-      int origheight = tmp.height - 2 * maxbrushheight;
+      int orig_width = tmp.width - 2 * maxbrushwidth;
+      int orig_height = tmp.height - 2 * maxbrushheight;
       int dox = 0, doy = 0;
       if(tx < maxbrushwidth) {
-        applybrush(brush, shadow, &tmp, &atmp, tx+origwidth,ty, r,g,b);
+        apply_brush(brush, shadow, &tmp, &atmp, tx+orig_width,ty, r,g,b);
         dox = -1;
-      } else if(tx > origwidth) {
-        applybrush(brush, shadow, &tmp, &atmp, tx-origwidth,ty, r,g,b);
+      } else if(tx > orig_width) {
+        apply_brush(brush, shadow, &tmp, &atmp, tx-orig_width,ty, r,g,b);
         dox = 1;
       }
       if(ty < maxbrushheight) {
-        applybrush(brush, shadow, &tmp, &atmp, tx,ty+origheight, r,g,b);
+        apply_brush(brush, shadow, &tmp, &atmp, tx,ty+orig_height, r,g,b);
         doy = 1;
-      } else if(ty > origheight) {
-        applybrush(brush, shadow, &tmp, &atmp, tx,ty-origheight, r,g,b);
+      } else if(ty > orig_height) {
+        apply_brush(brush, shadow, &tmp, &atmp, tx,ty-orig_height, r,g,b);
         doy = -1;
       }
       if(doy) {
         if(dox < 0)
-          applybrush(brush, shadow, &tmp, &atmp, tx+origwidth,ty+doy*origheight,r,g,b);
+          apply_brush(brush, shadow, &tmp, &atmp, tx+orig_width,ty+doy*orig_height,r,g,b);
         if(dox > 0)
-          applybrush(brush, shadow, &tmp, &atmp, tx-origwidth,ty+doy*origheight,r,g,b);
+          apply_brush(brush, shadow, &tmp, &atmp, tx-orig_width,ty+doy*orig_height,r,g,b);
       }
     }
   }
-  for(i = 0; i < numbrush; i++) {
+  for(i = 0; i < num_brushes; i++) {
     ppm_kill(&brushes[i]);
   }
   g_free(brushes);
   g_free(shadows);
-  g_free(brushsum);
+  g_free(brushes_sum);
 
   g_free (xpos);
   g_free (ypos);
@@ -858,9 +858,9 @@ void repaint(ppm_t *p, ppm_t *a)
   if(relief > 0.001) {
     scale = runningvals.paperscale / 100.0;
 
-    if(paperppm.col) {
-      tmp = paperppm;
-      paperppm.col = NULL;
+    if(paper_ppm.col) {
+      tmp = paper_ppm;
+      paper_ppm.col = NULL;
     } else {
       tmp.col = NULL;
       ppm_load(runningvals.selectedpaper, &tmp);
@@ -896,7 +896,10 @@ void repaint(ppm_t *p, ppm_t *a)
     ppm_kill(&tmp);
   }
 
-  if(paperppm.col) ppm_kill(&paperppm);
+  /* TODO : Replace these conditionals simply with ppm_kill().
+   * (if ppm_kill() cannot handle NULL col's properly - replace it.
+   * */
+  if(paper_ppm.col) ppm_kill(&paper_ppm);
   if(dirmap.col) ppm_kill(&dirmap);
   if(sizmap.col) ppm_kill(&sizmap);
   if(runningvals.run) {

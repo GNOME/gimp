@@ -1,3 +1,8 @@
+2004-07-17  Shlomi Fish  <shlomif@iglu.org.il>
+
+	* plug-ins/gimpressionist/repaint.c: normalized some identifiers of 
+	repaint.c, and corrected some indentation there.
+
 2004-07-18  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* app/core/gimpchannel-combine.c: improve anti-aliasing for
