@@ -3,7 +3,7 @@ The GNU Image Manipulation Program Version 2.2
 
 This is the stable branch of GIMP 2.2. Only bug-fixes are applied
 here. New features are being added in the HEAD branch that will lead
-into GIMP version 2.4.
+to GIMP version 2.4.
 
 
 Bugs fixed in GIMP 2.2.1
@@ -17,3 +17,5 @@ Bugs fixed in GIMP 2.2.1
   radius was being used on a small drawable; minor optimizations
 - removed broken asc2img Script-Fu
 - fixed channel drag-n-drop (bug #161877)
+- fixed misbehaviour of entries in Scale and Resize dialogs (bug #161756)
+- speed up preview in Motion Blur plug-in
