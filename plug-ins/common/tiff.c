@@ -208,7 +208,7 @@ query (void)
                           "Spencer Kimball, Peter Mattis & Nick Lamb",
                           "Nick Lamb <njl195@zepler.org.uk>",
                           "1995-1996,1998-2003",
-                          N_("TIFF images"),
+                          N_("TIFF image"),
                           NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),

@@ -1,3 +1,7 @@
+2004-11-01  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/tiff.c (query): fixed typo.
+
 2004-11-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/drawable-actions.c: trailing whitespace.
