@@ -159,7 +159,7 @@
 		    SF-TOGGLE     _"Concave"    FALSE)
 
 (script-fu-menu-register "script-fu-selection-rounded-rectangle"
-			 "<Image>/Select")
+			 "<Image>/Select/Modify")
 
 
 (script-fu-register "script-fu-selection-round"
