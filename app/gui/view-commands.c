@@ -42,6 +42,7 @@
 #include "dialogs.h"
 #include "info-dialog.h"
 #include "info-window.h"
+#include "grid-dialog.h"
 #include "view-commands.h"
 
 
@@ -347,6 +348,63 @@ view_snap_to_guides_cmd_callback (GtkWidget *widget,
       gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
                                     "/View/Snap to Guides",
                                     shell->snap_to_guides);
+    }
+}
+
+void
+view_configure_grid_cmd_callback (GtkWidget *widget,
+                                  gpointer   data)
+{
+  GimpDisplay      *gdisp;
+  GtkWidget        *grid_dialog;
+  return_if_no_display (gdisp, data);
+
+  grid_dialog = grid_dialog_new (GIMP_DISPLAY (gdisp));
+
+  g_signal_connect_object (gdisp, "disconnect",
+                           G_CALLBACK (gtk_widget_destroy),
+                           grid_dialog,
+                           G_CONNECT_SWAPPED);
+
+  gtk_widget_show (grid_dialog);
+}
+
+
+void
+view_toggle_grid_cmd_callback (GtkWidget *widget,
+                               gpointer   data)
+{
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
+  return_if_no_display (gdisp, data);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  gimp_display_shell_set_show_grid (shell,
+                                    GTK_CHECK_MENU_ITEM (widget)->active);
+
+}
+
+void
+view_snap_to_grid_cmd_callback (GtkWidget *widget,
+                                gpointer   data)
+{
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
+  return_if_no_display (gdisp, data);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  if (shell->snap_to_grid != GTK_CHECK_MENU_ITEM (widget)->active)
+    {
+      shell->snap_to_grid = GTK_CHECK_MENU_ITEM (widget)->active;
+
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
+                                    "/View/Snap to Grid",
+                                    shell->snap_to_grid);
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
+                                    "/View/Snap to Grid",
+                                    shell->snap_to_grid);
     }
 }
 

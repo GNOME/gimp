@@ -170,6 +170,19 @@ typedef enum
 } GimpGradientType;
 
 
+#define GIMP_TYPE_GRID_TYPE (gimp_grid_type_get_type ())
+
+GType gimp_grid_type_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_GRID_TYPE_INTERSECTION,   /*< desc="Intersections Only" >*/
+  GIMP_GRID_TYPE_ON_OFF_DASH,    /*< desc="Dashed"             >*/
+  GIMP_GRID_TYPE_DOUBLE_DASH,    /*< desc="Double Dashed"      >*/
+  GIMP_GRID_TYPE_SOLID           /*< desc="Solid"              >*/
+} GimpGridType;
+
+
 #define GIMP_TYPE_IMAGE_BASE_TYPE (gimp_image_base_type_get_type ())
 
 GType gimp_image_base_type_get_type (void) G_GNUC_CONST;
@@ -335,6 +348,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_IMAGE_CROP,         /*< desc="Crop Image"                  >*/
   GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE, /*< desc="Merge Layers"                >*/
   GIMP_UNDO_GROUP_IMAGE_QMASK,        /*< desc="QuickMask"                   >*/
+  GIMP_UNDO_GROUP_IMAGE_GRID,         /*< desc="Grid"                        >*/
   GIMP_UNDO_GROUP_IMAGE_GUIDE,        /*< desc="Guide"                       >*/
   GIMP_UNDO_GROUP_MASK,               /*< desc="Selection Mask"              >*/
   GIMP_UNDO_GROUP_ITEM_PROPERTIES,    /*< desc="Item Properties"             >*/
@@ -367,6 +381,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_IMAGE_SIZE,               /*< desc="Image Size"                >*/
   GIMP_UNDO_IMAGE_RESOLUTION,         /*< desc="Resolution Change"         >*/
   GIMP_UNDO_IMAGE_QMASK,              /*< desc="QuickMask"                 >*/
+  GIMP_UNDO_IMAGE_GRID,               /*< desc="Grid"                      >*/
   GIMP_UNDO_IMAGE_GUIDE,              /*< desc="Guide"                     >*/
   GIMP_UNDO_IMAGE_COLORMAP,           /*< desc="Change Indexed Palette"    >*/
   GIMP_UNDO_MASK,                     /*< desc="Selection Mask"            >*/

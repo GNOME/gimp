@@ -34,6 +34,7 @@ struct _GimpDisplayShellVisibility
   gboolean selection;
   gboolean active_layer;
   gboolean guides;
+  gboolean grid;
 
   gboolean menubar;
   gboolean rulers;
@@ -107,6 +108,7 @@ struct _GimpDisplayShell
 
   gboolean          proximity;         /* is a device in proximity            */
   gboolean          snap_to_guides;    /*  should the guides be snapped to?   */
+  gboolean          snap_to_grid;      /*  should the grid be snapped to?     */
 
   Selection        *select;            /*  Selection object                   */
 
@@ -155,6 +157,7 @@ struct _GimpDisplayShell
   InfoDialog       *info_dialog;       /*  image information dialog           */
   GtkWidget        *scale_dialog;      /*  scale (zoom) dialog                */
   GtkWidget        *nav_popup;         /*  navigation popup                   */
+  GtkWidget        *grid_dialog;       /*  grid configuration dialog          */
 
   GList            *filters;           /* color display conversion stuff      */
   GtkWidget        *filters_dialog;    /* color display filter dialog         */
@@ -232,6 +235,8 @@ void        gimp_display_shell_draw_guide            (GimpDisplayShell *shell,
                                                       GimpGuide        *guide,
                                                       gboolean          active);
 void        gimp_display_shell_draw_guides           (GimpDisplayShell *shell);
+
+void        gimp_display_shell_draw_grid             (GimpDisplayShell *shell);
 
 void        gimp_display_shell_update_icon           (GimpDisplayShell *shell);
 

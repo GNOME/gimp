@@ -124,6 +124,7 @@ struct _GimpImage
                                             /*  channels                     */
 
   GList             *guides;                /*  guides                       */
+  GimpGrid          *grid;                  /*  grid                         */
 
   /*  Layer/Channel attributes  */
   GimpContainer     *layers;                /*  the list of layers           */
@@ -174,6 +175,7 @@ struct _GimpImageClass
 					 GimpChannelType       channel);
   void (* component_active_changed)     (GimpImage            *gimage,
 					 GimpChannelType       channel);
+  void (* grid_changed)                 (GimpImage            *gimage);
   void (* mask_changed)                 (GimpImage            *gimage);
   void (* resolution_changed)           (GimpImage            *gimage);
   void (* unit_changed)                 (GimpImage            *gimage);
@@ -269,6 +271,7 @@ void            gimp_image_set_component_visible (GimpImage          *gimage,
 gboolean        gimp_image_get_component_visible (const GimpImage    *gimage,
 						  GimpChannelType     type);
 
+void            gimp_image_grid_changed          (GimpImage          *gimage);
 void            gimp_image_mode_changed          (GimpImage          *gimage);
 void            gimp_image_alpha_changed         (GimpImage          *gimage);
 void            gimp_image_update                (GimpImage          *gimage,
@@ -482,6 +485,11 @@ GimpLayer     * gimp_image_pick_correlate_layer  (const GimpImage    *gimage,
 
 void        gimp_image_invalidate_layer_previews (GimpImage          *gimage);
 void      gimp_image_invalidate_channel_previews (GimpImage          *gimage);
+
+GimpGrid  * gimp_image_get_grid                  (GimpImage          *gimage);
+void        gimp_image_set_grid                  (GimpImage          *gimage,
+                                                  GimpGrid           *grid,
+                                                  gboolean            push_undo);
 
 
 #endif /* __GIMP_IMAGE_H__ */

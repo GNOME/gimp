@@ -36,9 +36,10 @@
 #include "core/gimp.h"
 #include "core/gimpbuffer.h"
 #include "core/gimpcontext.h"
+#include "core/gimpgrid.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-guides.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimpimage-snap.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimpmarshal.h"
@@ -208,6 +209,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->proximity             = FALSE;
   shell->snap_to_guides        = TRUE;
+  shell->snap_to_grid          = TRUE;
 
   shell->select                = NULL;
 
@@ -254,6 +256,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->info_dialog           = NULL;
   shell->scale_dialog          = NULL;
   shell->nav_popup             = NULL;
+  shell->grid_dialog           = NULL;
 
   shell->filters               = NULL;
   shell->filters_dialog        = NULL;
@@ -266,6 +269,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->visibility.selection    = TRUE;
   shell->visibility.active_layer = TRUE;
   shell->visibility.guides       = TRUE;
+  shell->visibility.grid         = TRUE;
   shell->visibility.menubar      = FALSE;
   shell->visibility.rulers       = TRUE;
   shell->visibility.scrollbars   = TRUE;
@@ -274,6 +278,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->fullscreen_visibility.selection    = TRUE;
   shell->fullscreen_visibility.active_layer = TRUE;
   shell->fullscreen_visibility.guides       = TRUE;
+  shell->fullscreen_visibility.grid         = TRUE;
   shell->fullscreen_visibility.menubar      = FALSE;
   shell->fullscreen_visibility.rulers       = FALSE;
   shell->fullscreen_visibility.scrollbars   = FALSE;
@@ -394,6 +399,12 @@ gimp_display_shell_destroy (GtkObject *object)
     {
       gtk_widget_destroy (shell->nav_popup);
       shell->nav_popup = NULL;
+    }
+
+  if (shell->grid_dialog)
+    {
+      gtk_widget_destroy (shell->grid_dialog);
+      shell->grid_dialog = NULL;
     }
 
   shell->gdisp = NULL;
@@ -967,6 +978,9 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
                                 gint              snap_width,
                                 gint              snap_height)
 {
+  gboolean snap_to_guides = FALSE;
+  gboolean snap_to_grid = FALSE;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (coords != NULL);
   g_return_if_fail (snapped_coords != NULL);
@@ -976,6 +990,18 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
   if (gimp_display_shell_get_show_guides (shell) &&
       shell->snap_to_guides                      &&
       shell->gdisp->gimage->guides)
+    {
+      snap_to_guides = TRUE;
+    }
+      
+  if (gimp_display_shell_get_show_grid (shell)    &&
+      gimp_display_shell_get_snap_to_grid (shell) &&
+      shell->gdisp->gimage->grid)
+    {
+      snap_to_grid = TRUE;
+    }
+
+  if (snap_to_guides || snap_to_grid)
     {
       gboolean snapped;
       gint     tx, ty;
@@ -990,7 +1016,9 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
                                                coords->y + snap_offset_y +
                                                snap_height,
                                                &tx,
-                                               &ty);
+                                               &ty,
+                                               snap_to_guides,
+                                               snap_to_grid);
         }
       else
         {
@@ -998,7 +1026,9 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
                                            coords->x + snap_offset_x,
                                            coords->y + snap_offset_y,
                                            &tx,
-                                           &ty);
+                                           &ty,
+                                           snap_to_guides,
+                                           snap_to_grid);
         }
 
       if (snapped)
@@ -1325,6 +1355,131 @@ gimp_display_shell_draw_guides (GimpDisplayShell *shell)
 
 	  gimp_display_shell_draw_guide (shell, guide, FALSE);
 	}
+    }
+}
+
+void
+gimp_display_shell_draw_grid (GimpDisplayShell *shell)
+{
+  GdkGC        *gc;
+  GdkGCValues   values;
+  GdkColor      fg, bg;
+
+  GimpGrid     *grid;
+  gdouble       xspacing, yspacing;
+  gdouble       xoffset,  yoffset;
+  GimpRGB      *fgcolor, *bgcolor;
+  GimpGridType  type;
+
+  gint          x1, x2;
+  gint          y1, y2;
+  gint          x, y;
+  gint          x_real, y_real;
+  const gint    length = 2;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  grid = GIMP_GRID (shell->gdisp->gimage->grid);
+
+  if (grid == NULL)
+    return;
+
+  if (gimp_display_shell_get_show_grid (shell))
+    {
+      g_object_get (G_OBJECT (grid),
+                    "xspacing", &xspacing,
+                    "yspacing", &yspacing,
+                    "xoffset",  &xoffset,
+                    "yoffset",  &yoffset,
+                    "fgcolor",  &fgcolor,
+                    "bgcolor",  &bgcolor,
+                    "type",     &type,
+                    NULL);
+
+      switch (type)
+        {
+        case GIMP_GRID_TYPE_INTERSECTION:
+          values.line_style = GDK_LINE_SOLID;
+          break;
+
+        case GIMP_GRID_TYPE_ON_OFF_DASH:
+          values.line_style = GDK_LINE_ON_OFF_DASH;
+          break;
+
+        case GIMP_GRID_TYPE_DOUBLE_DASH:
+          values.line_style = GDK_LINE_DOUBLE_DASH;
+          break;
+
+        case GIMP_GRID_TYPE_SOLID:
+          values.line_style = GDK_LINE_SOLID;
+          break;
+
+        default:
+          g_assert_not_reached ();
+        }
+
+      values.join_style = GDK_JOIN_MITER;
+
+      gc = gdk_gc_new_with_values (shell->canvas->window, &values,
+                                   GDK_GC_LINE_STYLE | GDK_GC_JOIN_STYLE);
+
+      gimp_rgb_get_gdk_color (fgcolor, &fg);
+      gimp_rgb_get_gdk_color (bgcolor, &bg);
+
+      gdk_gc_set_rgb_fg_color (gc, &fg);
+      gdk_gc_set_rgb_bg_color (gc, &bg);
+
+      gimp_display_shell_transform_xy (shell, 0, 0, &x1, &y1, FALSE);
+      gimp_display_shell_transform_xy (shell,
+                                       shell->gdisp->gimage->width,
+                                       shell->gdisp->gimage->height,
+                                       &x2, &y2, FALSE);
+
+      switch (type)
+        {
+        case GIMP_GRID_TYPE_INTERSECTION:
+          for (x = xoffset; x <= shell->gdisp->gimage->width; x += xspacing)
+            {
+              for (y = yoffset; y <= shell->gdisp->gimage->height; y += yspacing)
+                {
+                  gimp_display_shell_transform_xy (shell, x, y, &x_real, &y_real, FALSE);
+                  if (x_real >= x1 && x_real < x2)
+                    {
+                      gdk_draw_line (shell->canvas->window, gc,
+                                     x_real, CLAMP (y_real - length, y1, y2 - 1),
+                                     x_real, CLAMP (y_real + length, y1, y2 - 1));
+                    }
+                  if (y_real >= y1 && y_real < y2)
+                    {
+                      gdk_draw_line (shell->canvas->window, gc,
+                                     CLAMP (x_real - length, x1, x2 - 1), y_real,
+                                     CLAMP (x_real + length, x1, x2 - 1), y_real);
+                    }
+                }
+            }
+          break;
+
+        case GIMP_GRID_TYPE_ON_OFF_DASH:
+        case GIMP_GRID_TYPE_DOUBLE_DASH:
+        case GIMP_GRID_TYPE_SOLID:
+          for (x = xoffset; x < shell->gdisp->gimage->width; x += xspacing)
+            {
+              gimp_display_shell_transform_xy (shell, x, 0, &x_real, &y_real, FALSE);
+              if (x_real > x1)
+                gdk_draw_line (shell->canvas->window, gc, x_real, y1, x_real, y2 - 1);
+            }
+
+          for (y = yoffset; y < shell->gdisp->gimage->height; y += yspacing)
+            {
+              gimp_display_shell_transform_xy (shell, 0, y, &x_real, &y_real, FALSE);
+              if (y_real > y1)
+                gdk_draw_line (shell->canvas->window, gc, x1, y_real, x2 - 1, y_real);
+            }
+          break;
+
+        default:
+          g_assert_not_reached ();
+        }
     }
 }
 

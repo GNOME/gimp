@@ -39,6 +39,7 @@
 #include "gimp.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
+#include "gimpgrid.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-guides.h"
 #include "gimpimage-mask.h"
@@ -621,6 +622,93 @@ undo_free_image_qmask (GimpUndo     *undo,
                        GimpUndoMode  undo_mode)
 {
   g_free (undo->data);
+}
+
+
+/****************/
+/*  Grid Undo   */
+/****************/
+
+typedef struct _GridUndo GridUndo;
+
+struct _GridUndo
+{
+  GimpGrid *grid;
+};
+
+static gboolean undo_pop_image_grid  (GimpUndo            *undo,
+                                      GimpUndoMode         undo_mode,
+                                      GimpUndoAccumulator *accum);
+static void     undo_free_image_grid (GimpUndo            *undo,
+                                      GimpUndoMode         undo_mode);
+
+gboolean
+gimp_image_undo_push_image_grid (GimpImage   *gimage,
+                                 const gchar *undo_desc,
+                                 GimpGrid    *grid)
+{
+  GimpUndo *new;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (grid == NULL || GIMP_IS_GRID (grid), FALSE);
+
+#ifdef __GNUC__
+#warning FIXME: mark image as dirty when grid save functionality is added
+#endif
+  if ((new = gimp_image_undo_push (gimage,
+                                   sizeof (GridUndo),
+                                   sizeof (GridUndo),
+                                   GIMP_UNDO_IMAGE_GRID, undo_desc,
+                                   FALSE,
+                                   undo_pop_image_grid,
+                                   undo_free_image_grid)))
+    {
+      GridUndo *gu;
+
+      gu = new->data;
+
+      if (grid)
+        gu->grid = g_object_ref (grid);
+      else
+        gu->grid = NULL;
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static gboolean
+undo_pop_image_grid (GimpUndo            *undo,
+                     GimpUndoMode         undo_mode,
+                     GimpUndoAccumulator *accum)
+{
+  GridUndo *gu;
+  GimpGrid *tmp;
+
+  gu = (GridUndo *) undo->data;
+
+  tmp = gimp_image_get_grid (undo->gimage);
+  gimp_image_set_grid (undo->gimage, gu->grid, FALSE);
+  gu->grid = tmp;
+
+  gimp_image_grid_changed (undo->gimage);
+
+  return TRUE;
+}
+
+static void
+undo_free_image_grid (GimpUndo     *undo,
+                      GimpUndoMode  undo_mode)
+{
+  GridUndo *gu;
+
+  gu = (GridUndo *) undo->data;
+
+  if (gu->grid)
+    g_object_unref (gu->grid);
+
+  g_free (gu);
 }
 
 

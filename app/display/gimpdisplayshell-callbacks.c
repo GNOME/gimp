@@ -211,6 +211,7 @@ gimp_display_shell_events (GtkWidget        *widget,
         gimp_display_shell_set_show_selection  (shell, visibility.selection);
         gimp_display_shell_set_show_layer      (shell, visibility.active_layer);
         gimp_display_shell_set_show_guides     (shell, visibility.guides);
+        gimp_display_shell_set_show_grid       (shell, visibility.grid);
         gimp_display_shell_set_show_menubar    (shell, visibility.menubar);
         gimp_display_shell_set_show_rulers     (shell, visibility.rulers);
         gimp_display_shell_set_show_scrollbars (shell, visibility.scrollbars);
@@ -334,6 +335,9 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
 
   /* draw the guides */
   gimp_display_shell_draw_guides (shell);
+
+  /* draw the grid */
+  gimp_display_shell_draw_grid (shell);
 
   /* and the cursor (if we have a software cursor) */
   if (shell->have_cursor)

@@ -29,6 +29,8 @@ dialogs_sources = \
 	font-select.h			\
 	gradient-select.c		\
 	gradient-select.h		\
+	grid-dialog.h                   \
+	grid-dialog.c                   \
 	info-dialog.c			\
 	info-dialog.h			\
 	info-window.c			\

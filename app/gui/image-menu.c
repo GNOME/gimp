@@ -422,6 +422,21 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   MENU_SEPARATOR ("/View/---"),
 
+  { { N_("/View/Configure Grid..."), NULL,
+      view_configure_grid_cmd_callback, 0, NULL },
+    NULL,
+    "view/configure_grid.html", NULL },
+  { { N_("/View/Show Grid"), NULL,
+      view_toggle_grid_cmd_callback, 0, "<ToggleItem>" },
+    NULL,
+    "view/toggle_grid.html", NULL },
+  { { N_("/View/Snap to Grid"), NULL,
+      view_snap_to_grid_cmd_callback, 0, "<ToggleItem>" },
+    NULL,
+    "view/snap_to_grid.html", NULL },
+
+  MENU_SEPARATOR ("/View/---"),
+
   { { N_("/View/Show Menubar"), NULL,
       view_toggle_menubar_cmd_callback, 0, "<ToggleItem>" },
     NULL,
@@ -1413,6 +1428,11 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_ACTIVE    ("/View/Show Guides",         gdisp && visibility->guides);
   SET_SENSITIVE ("/View/Snap to Guides",      gdisp);
   SET_ACTIVE    ("/View/Snap to Guides",      gdisp && shell->snap_to_guides);
+
+  SET_SENSITIVE ("/View/Show Grid",    gdisp);
+  SET_ACTIVE    ("/View/Show Grid",    gdisp && visibility->grid);
+  SET_SENSITIVE ("/View/Snap to Grid", gdisp);
+  SET_ACTIVE    ("/View/Snap to Grid", gdisp && shell->snap_to_grid);
 
   SET_SENSITIVE ("/View/Show Menubar",    gdisp);
   SET_ACTIVE    ("/View/Show Menubar",    gdisp && visibility->menubar);

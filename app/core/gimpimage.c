@@ -39,6 +39,7 @@
 #include "gimp.h"
 #include "gimp-parasites.h"
 #include "gimpcontext.h"
+#include "gimpgrid.h"
 #include "gimpimage.h"
 #include "gimpimage-colorhash.h"
 #include "gimpimage-colormap.h"
@@ -80,6 +81,7 @@ enum
   ACTIVE_VECTORS_CHANGED,
   COMPONENT_VISIBILITY_CHANGED,
   COMPONENT_ACTIVE_CHANGED,
+  GRID_CHANGED,
   MASK_CHANGED,
   RESOLUTION_CHANGED,
   UNIT_CHANGED,
@@ -259,6 +261,15 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_TYPE_NONE, 1,
 		  GIMP_TYPE_CHANNEL_TYPE);
 
+  gimp_image_signals[GRID_CHANGED] = 
+    g_signal_new ("grid_changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpImageClass, grid_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
   gimp_image_signals[MASK_CHANGED] =
     g_signal_new ("mask_changed",
 		  G_TYPE_FROM_CLASS (klass),
@@ -400,6 +411,7 @@ gimp_image_class_init (GimpImageClass *klass)
   viewable_class->get_new_preview     = gimp_image_get_new_preview;
   viewable_class->get_description     = gimp_image_get_description;
 
+  klass->grid_changed                 = NULL;
   klass->mode_changed                 = NULL;
   klass->alpha_changed                = NULL;
   klass->floating_selection_changed   = NULL;
@@ -454,6 +466,8 @@ gimp_image_init (GimpImage *gimage)
   gimage->projection            = NULL;
 
   gimage->guides                = NULL;
+
+  gimage->grid                  = NULL;
 
   gimage->layers                = gimp_list_new (GIMP_TYPE_LAYER, 
 						 GIMP_CONTAINER_POLICY_STRONG);
@@ -573,6 +587,12 @@ gimp_image_finalize (GObject *object)
       gimage->guides = NULL;
     }
 
+  if (gimage->grid)
+    {
+      g_object_unref (gimage->grid);
+      gimage->grid = NULL;
+    }
+
   if (gimage->undo_stack)
     {
       g_object_unref (gimage->undo_stack);
@@ -625,6 +645,8 @@ gimp_image_get_memsize (GimpObject *object)
 
   memsize += (g_list_length (gimage->guides) * (sizeof (GList) +
                                                 sizeof (GimpGuide)));
+
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->grid));
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->layers));
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->channels));
@@ -3219,4 +3241,38 @@ gimp_image_invalidate_channel_previews (GimpImage *gimage)
   gimp_container_foreach (gimage->channels, 
 			  (GFunc) gimp_viewable_invalidate_preview, 
 			  NULL);
+}
+
+
+/*  grid  */
+
+void
+gimp_image_grid_changed (GimpImage *gimage)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  g_signal_emit (gimage, gimp_image_signals[GRID_CHANGED], 0);
+}
+
+GimpGrid *
+gimp_image_get_grid (GimpImage *gimage)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+
+  return gimage->grid;
+}
+
+void
+gimp_image_set_grid (GimpImage *gimage,
+                     GimpGrid  *grid,
+                     gboolean   push_undo)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_if_fail (grid == NULL || GIMP_IS_GRID (grid));
+
+  if (push_undo)
+    gimp_image_undo_push_image_grid (gimage, _("Grid"), gimage->grid);
+
+  gimage->grid = grid;
+  gimp_image_grid_changed (gimage);
 }

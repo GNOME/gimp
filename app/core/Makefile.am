@@ -83,6 +83,8 @@ libappcore_a_sources = \
 	gimpenvirontable.c		\
 	gimpgradient.c			\
 	gimpgradient.h			\
+	gimpgrid.c                      \
+	gimpgrid.h                      \
 	gimpimage.c			\
 	gimpimage.h			\
 	gimpimage-colorhash.c		\
@@ -125,6 +127,8 @@ libappcore_a_sources = \
 	gimpimage-rotate.h		\
 	gimpimage-scale.c		\
 	gimpimage-scale.h		\
+	gimpimage-snap.c		\
+	gimpimage-snap.h		\
 	gimpimage-undo.c		\
 	gimpimage-undo.h		\
 	gimpimage-undo-push.c		\

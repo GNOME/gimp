@@ -208,6 +208,63 @@ gimp_display_shell_get_show_layer (GimpDisplayShell *shell)
 }
 
 void
+gimp_display_shell_set_show_grid (GimpDisplayShell *shell,
+                                  gboolean          show)
+{
+  GimpDisplayShellVisibility *visibility;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  visibility = GET_VISIBILITY (shell);
+
+  if (show != visibility->grid)
+    {
+      visibility->grid = show ? TRUE : FALSE;
+
+      if (shell->gdisp->gimage->grid)
+        gimp_display_shell_expose_full (shell);
+
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
+                                    "/View/Show Grid", show);
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
+                                    "/View/Show Grid", show);
+    }
+}
+
+gboolean
+gimp_display_shell_get_show_grid (GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+
+  return GET_VISIBILITY (shell)->grid;
+}
+
+void
+gimp_display_shell_set_snap_to_grid (GimpDisplayShell *shell,
+                                     gboolean          snap)
+{
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+
+  if (snap != shell->snap_to_grid)
+    {
+      shell->snap_to_grid = snap ? TRUE : FALSE;
+
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
+                                    "/View/Snap to Grid", snap);
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
+                                    "/View/Snap to Grid", snap);
+    }
+}
+
+gboolean
+gimp_display_shell_get_snap_to_grid (GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+
+  return shell->snap_to_grid;
+}
+
+void
 gimp_display_shell_set_show_guides (GimpDisplayShell *shell,
                                     gboolean          show)
 {

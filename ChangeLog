@@ -1,3 +1,55 @@
+2003-06-23  Henrik Brix Andersen  <brix@gimp.org>
+
+	Added a per image configurable grid.
+	This fixes bug #65198
+	
+	* app/core/Makefile.am
+	* app/core/core-types.h: 
+	* app/core/gimpgrid.[ch]: added new class GimpGrid.
+
+	* app/core/core-enums.[ch]: added new enum GimpGridType.
+
+	* app/core/gimpimage-guides.[ch]: removed the gimp_image_snap_*()
+	functions...
+
+	* app/core/gimpimage-snap.[ch]: ...and added them here since they
+	are no longer guide specific.
+	
+	* app/core/gimpimage-undo-push.[ch]: added
+	gimp_image_undo_push_image_grid()
+
+	* app/display/gimpdisplayshell-handlers.c:
+	* app/core/gimpimage.[ch]: added grid member to _GimpImage. Added
+	new signal "grid_changed", added gimp_image_grid_changed(),
+	gimp_image_get_grid() and gimp_image_set_grid().
+
+	* app/display/gimpdisplayshell-appearance.[ch]: added
+	gimp_display_shell_set_show_grid(),
+	gimp_display_shell_get_show_grid(),
+	gimp_display_shell_set_snap_to_grid() and
+	gimp_display_shell_get_snap_to_grid().
+
+	* app/display/gimpdisplayshell-callbacks.c: added call to
+	gimp_display_shell_draw_grid()
+	
+	* app/display/gimpdisplayshell.[ch]: added grid member to
+	_GimpDisplayShellVisibility, added snap_to_grid and grid_dialog
+	members to _GimpDisplayShell, added
+	gimp_display_shell_draw_grid(), modified
+	gimp_display_shell_snap_coords() to use the new
+	gimp_image_snap_*() functions.
+
+	* app/gui/image-menu.c: added grid entries to
+	image_menu_entries[].
+	
+	* app/gui/view-commands.[ch]: added
+	view_configure_grid_cmd_callback(),
+	view_toggle_grid_cmd_callback() and
+	view_snap_to_grid_cmd_callback().
+
+	* app/gui/Makefile.am
+	* app/gui/grid-dialog.[ch]: added a grid dialog.
+
 2003-06-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-in.[ch]: added separate GMainLoops for waiting

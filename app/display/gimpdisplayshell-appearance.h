@@ -36,6 +36,14 @@ void       gimp_display_shell_set_show_layer      (GimpDisplayShell *shell,
                                                    gboolean          show);
 gboolean   gimp_display_shell_get_show_layer      (GimpDisplayShell *shell);
 
+void       gimp_display_shell_set_show_grid       (GimpDisplayShell *shell,
+                                                   gboolean          show);
+gboolean   gimp_display_shell_get_show_grid       (GimpDisplayShell *shell);
+
+void       gimp_display_shell_set_snap_to_grid    (GimpDisplayShell *shell,
+                                                   gboolean          snap);
+gboolean   gimp_display_shell_get_snap_to_grid    (GimpDisplayShell *shell);
+
 void       gimp_display_shell_set_show_guides     (GimpDisplayShell *shell,
                                                    gboolean          show);
 gboolean   gimp_display_shell_get_show_guides     (GimpDisplayShell *shell);

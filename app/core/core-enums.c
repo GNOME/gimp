@@ -213,6 +213,27 @@ gimp_gradient_type_get_type (void)
 }
 
 
+static const GEnumValue gimp_grid_type_enum_values[] =
+{
+  { GIMP_GRID_TYPE_INTERSECTION, N_("Intersections Only"), "intersection" },
+  { GIMP_GRID_TYPE_ON_OFF_DASH, N_("Dashed"), "on-off-dash" },
+  { GIMP_GRID_TYPE_DOUBLE_DASH, N_("Double Dashed"), "double-dash" },
+  { GIMP_GRID_TYPE_SOLID, N_("Solid"), "solid" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_grid_type_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpGridType", gimp_grid_type_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_image_base_type_enum_values[] =
 {
   { GIMP_RGB, N_("RGB"), "rgb" },
@@ -456,6 +477,7 @@ static const GEnumValue gimp_undo_type_enum_values[] =
   { GIMP_UNDO_GROUP_IMAGE_CROP, N_("Crop Image"), "group-image-crop" },
   { GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE, N_("Merge Layers"), "group-image-layers-merge" },
   { GIMP_UNDO_GROUP_IMAGE_QMASK, N_("QuickMask"), "group-image-qmask" },
+  { GIMP_UNDO_GROUP_IMAGE_GRID, N_("Grid"), "group-image-grid" },
   { GIMP_UNDO_GROUP_IMAGE_GUIDE, N_("Guide"), "group-image-guide" },
   { GIMP_UNDO_GROUP_MASK, N_("Selection Mask"), "group-mask" },
   { GIMP_UNDO_GROUP_ITEM_PROPERTIES, N_("Item Properties"), "group-item-properties" },
@@ -483,6 +505,7 @@ static const GEnumValue gimp_undo_type_enum_values[] =
   { GIMP_UNDO_IMAGE_SIZE, N_("Image Size"), "image-size" },
   { GIMP_UNDO_IMAGE_RESOLUTION, N_("Resolution Change"), "image-resolution" },
   { GIMP_UNDO_IMAGE_QMASK, N_("QuickMask"), "image-qmask" },
+  { GIMP_UNDO_IMAGE_GRID, N_("Grid"), "image-grid" },
   { GIMP_UNDO_IMAGE_GUIDE, N_("Guide"), "image-guide" },
   { GIMP_UNDO_IMAGE_COLORMAP, N_("Change Indexed Palette"), "image-colormap" },
   { GIMP_UNDO_MASK, N_("Selection Mask"), "mask" },

@@ -45,24 +45,5 @@ GimpGuide * gimp_image_find_guide     (GimpImage *gimage,
                                        gdouble    x,
                                        gdouble    y);
 
-gboolean    gimp_image_snap_x         (GimpImage *gimage,
-                                       gdouble    x,
-                                       gint      *tx);
-gboolean    gimp_image_snap_y         (GimpImage *gimage,
-                                       gdouble    y,
-                                       gint      *ty);
-gboolean    gimp_image_snap_point     (GimpImage *gimage,
-                                       gdouble    x,
-                                       gdouble    y,
-                                       gint      *tx,
-                                       gint      *ty);
-gboolean    gimp_image_snap_rectangle (GimpImage *gimage,
-                                       gdouble    x1,
-                                       gdouble    y1,
-                                       gdouble    x2,
-                                       gdouble    y2,
-                                       gint      *tx1,
-                                       gint      *ty1);
-
 
 #endif /* __GIMP_IMAGE_GUIDES_H__ */
