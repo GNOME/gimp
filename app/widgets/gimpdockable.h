@@ -75,6 +75,10 @@ struct _GimpDockableClass
 {
   GtkBinClass  parent_class;
 
+  void              (* set_aux_info)   (GimpDockable *dockable,
+                                        GList        *aux_info);
+  GList           * (* get_aux_info)   (GimpDockable *dockable);
+
   GtkWidget       * (* get_tab_widget) (GimpDockable *dockable,
                                         GimpContext  *context,
                                         GimpTabStyle  tab_style,
@@ -96,6 +100,10 @@ GtkWidget * gimp_dockable_new      (const gchar                *name,
                                     gpointer                    get_preview_data,
 				    GimpDockableSetContextFunc  set_context_func,
                                     GimpDockableGetMenuFunc     get_menu_func);
+
+void              gimp_dockable_set_aux_info   (GimpDockable   *dockable,
+                                                GList          *aux_info);
+GList           * gimp_dockable_get_aux_info   (GimpDockable   *dockable);
 
 GtkWidget       * gimp_dockable_get_tab_widget (GimpDockable   *dockable,
                                                 GimpContext    *context,

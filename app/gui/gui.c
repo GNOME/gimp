@@ -51,6 +51,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpmenufactory.h"
+#include "widgets/gimpsessioninfo.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "dialogs.h"

@@ -11,7 +11,8 @@
     (open-on-exit)
     (dock
         (book
-             "gimp-tool-options@preview")))
+            (dockable "gimp-tool-options"
+                (tab-style preview)))))
 (session-info "dock" "dock"
     (position 300 48)
     (size 240 660)
@@ -19,14 +20,24 @@
     (aux-info "menu-shown" "follow-active-image")
     (dock
         (book
-             "gimp-layer-list@icon"
-             "gimp-channel-list@icon"
-             "gimp-vectors-list@icon"
-             "gimp-undo-history@icon")
+            (dockable "gimp-layer-list"
+                (tab-style icon)
+                (preview-size 32))
+            (dockable "gimp-channel-list"
+                (tab-style icon)
+                (preview-size 32))
+            (dockable "gimp-vectors-list"
+                (tab-style icon)
+                (preview-size 32))
+            (dockable "gimp-undo-history"
+                (tab-style icon)))
         (book
-             "gimp-brush-grid@preview"
-             "gimp-pattern-grid@preview"
-             "gimp-gradient-list@preview"
-             "gimp-font-list@preview")))
+            (position 370)
+            (dockable "gimp-brush-grid"
+                (tab-style preview))
+            (dockable "gimp-pattern-grid"
+                (tab-style preview))
+            (dockable "gimp-gradient-list"
+                (tab-style preview)))))
 
 # end of sessionrc

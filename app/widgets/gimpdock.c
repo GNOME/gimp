@@ -331,6 +331,27 @@ gimp_dock_setup (GimpDock       *dock,
 }
 
 void
+gimp_dock_set_aux_info (GimpDock *dock,
+                        GList    *aux_info)
+{
+  g_return_if_fail (GIMP_IS_DOCK (dock));
+
+  if (GIMP_DOCK_GET_CLASS (dock)->set_aux_info)
+    GIMP_DOCK_GET_CLASS (dock)->set_aux_info (dock, aux_info);
+}
+
+GList *
+gimp_dock_get_aux_info (GimpDock *dock)
+{
+  g_return_val_if_fail (GIMP_IS_DOCK (dock), NULL);
+
+  if (GIMP_DOCK_GET_CLASS (dock)->get_aux_info)
+    return GIMP_DOCK_GET_CLASS (dock)->get_aux_info (dock);
+
+  return NULL;
+}
+
+void
 gimp_dock_add (GimpDock     *dock,
 	       GimpDockable *dockable,
 	       gint          section,

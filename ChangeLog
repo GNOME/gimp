@@ -1,3 +1,37 @@
+2003-10-10  Michael Natterer  <mitch@gimp.org>
+
+	Cleaned up session management and changed the format of sessionrc
+	in a way that allows extensions without changing the format during
+	the 2.0 cycle:
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpsessioninfo.[ch]: new files implementing the whole
+	GimpSessionInfo stuff (parsing, saving, restoring, utility functions).
+	Save / parse the position of GimpDock's panes (bug #122964).
+
+	* app/widgets/gimpdialogfactory.[ch]: removed saving, restoring
+	and session related utility functions and use the ones from
+	the new files above.
+
+	* app/gui/session.c: removed parsing and use the new stuff.
+
+	* app/widgets/gimpdock.[ch]: added new virtual functions
+	GimpDock::set_aux_info() and GimpDock::get_aux_info():
+
+	* app/widgets/gimpimagedock.c: implement them and handle the
+	"auto_follow_active" and "show_image_menu" properties.
+
+	* app/widgets/gimpdockable.[ch]: added the same virtual functions
+	to the GimpDockable class. Enables forward-compatible per-dockable
+	session management (bug #122964).
+
+	* app/gui/dialogs-commands.c
+	* app/gui/gui.c: changed accordingly.
+
+	* etc/sessionrc: ditto. Look at this file and update your own
+	sessionrc manually if you don't want to lose it.
+
 2003-10-10  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/burn-in-anim.scm: repaired this script

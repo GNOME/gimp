@@ -30,6 +30,7 @@
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
 #include "widgets/gimpimagedock.h"
+#include "widgets/gimpsessioninfo.h"
 
 #include "dialogs.h"
 #include "dialogs-commands.h"

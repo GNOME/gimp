@@ -32,17 +32,13 @@
 
 #include "core/gimpcontext.h"
 
-#include "config/gimpconfigwriter.h"
-
-#include "gimpcontainerview.h"
-#include "gimpcontainerview-utils.h"
 #include "gimpcursor.h"
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
 #include "gimpdockbook.h"
 #include "gimpdockable.h"
-#include "gimpimagedock.h"
 #include "gimpmenufactory.h"
+#include "gimpsessioninfo.h"
 
 
 /* #define DEBUG_FACTORY */
@@ -90,14 +86,6 @@ static void   gimp_dialog_factories_restore_foreach   (gconstpointer      key,
 static void   gimp_dialog_factories_clear_foreach     (gconstpointer      key,
 						       GimpDialogFactory *factory,
 						       gpointer           data);
-static void   gimp_dialog_factory_get_window_info     (GtkWidget         *window,
-						       GimpSessionInfo   *info);
-static void   gimp_dialog_factory_set_window_geometry (GtkWidget         *window,
-						       GimpSessionInfo   *info);
-static void   gimp_dialog_factory_get_aux_info        (GtkWidget         *dialog,
-						       GimpSessionInfo   *info);
-static void   gimp_dialog_factory_set_aux_info        (GtkWidget         *dialog,
-						       GimpSessionInfo   *info);
 static void   gimp_dialog_factories_hide_foreach      (gconstpointer      key,
 						       GimpDialogFactory *factory,
 						       gpointer           data);
@@ -348,9 +336,7 @@ gimp_dialog_factory_find_entry (GimpDialogFactory *factory,
       entry = (GimpDialogFactoryEntry *) list->data;
 
       if (! strcmp (identifier, entry->identifier))
-	{
-	  return entry;
-	}
+        return entry;
     }
 
   return NULL;
@@ -761,7 +747,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                           entry->identifier));
 
 	      if (entry->session_managed)
-                gimp_dialog_factory_set_window_geometry (info->widget, info);
+                gimp_session_info_set_geometry (info);
 
 	      break;
 	    }
@@ -820,7 +806,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                           G_GNUC_FUNCTION,
                           info, info->widget));
 
-	      gimp_dialog_factory_set_window_geometry (info->widget, info);
+	      gimp_session_info_set_geometry (info);
 
 	      break;
 	    }
@@ -1144,7 +1130,7 @@ gimp_dialog_factory_dialog_configure (GtkWidget         *dialog,
           D (g_print ("%s: updating session info for \"%s\"\n",
                       G_GNUC_FUNCTION, entry->identifier));
 
-          gimp_dialog_factory_get_window_info (dialog, session_info);
+          gimp_session_info_get_geometry (session_info);
 
           break;
 	}
@@ -1158,17 +1144,11 @@ gimp_dialog_factories_save_foreach (gconstpointer      key,
 				    GimpDialogFactory *factory,
 				    GimpConfigWriter  *writer)
 {
-  GEnumClass *enum_class;
-  GList      *list;
+  GList *infos;
 
-  enum_class = g_type_class_ref (GIMP_TYPE_TAB_STYLE);
-
-  for (list = factory->session_infos; list; list = g_list_next (list))
+  for (infos = factory->session_infos; infos; infos = g_list_next (infos))
     {
-      GimpSessionInfo *info;
-      const gchar     *dialog_name;
-
-      info = (GimpSessionInfo *) list->data;
+      GimpSessionInfo *info = infos->data;
 
       /*  we keep session info entries for all toplevel dialogs created
        *  by the factory but don't save them if they don't want to be
@@ -1178,138 +1158,8 @@ gimp_dialog_factories_save_foreach (gconstpointer      key,
 	  (info->toplevel_entry && ! info->toplevel_entry->session_managed))
 	continue;
 
-      if (info->widget)
-	gimp_dialog_factory_get_window_info (info->widget, info);
-
-      if (info->toplevel_entry)
-        dialog_name = info->toplevel_entry->identifier;
-      else
-        dialog_name = "dock";
-
-      gimp_config_writer_open (writer, "session-info");
-      gimp_config_writer_string (writer, GIMP_OBJECT (factory)->name);
-      gimp_config_writer_string (writer, dialog_name);
-
-      gimp_config_writer_open (writer, "position");
-      gimp_config_writer_printf (writer, "%d %d", info->x, info->y);
-      gimp_config_writer_close (writer);
-
-      if (info->width > 0 && info->height > 0)
-        {
-          gimp_config_writer_open (writer, "size");
-          gimp_config_writer_printf (writer, "%d %d",
-                                     info->width, info->height);
-          gimp_config_writer_close (writer);
-        }
-
-      if (info->open)
-        {
-          gimp_config_writer_open (writer, "open-on-exit");
-          gimp_config_writer_close (writer);
-        }
-
-      /*  save aux-info  */
-      if (info->widget)
-	{
-	  gimp_dialog_factory_get_aux_info (info->widget, info);
-
-	  if (info->aux_info)
-	    {
-	      GList *aux;
-
-              gimp_config_writer_open (writer, "aux-info");
-
-	      for (aux = info->aux_info; aux; aux = g_list_next (aux))
-                gimp_config_writer_string (writer, (gchar *) aux->data);
-
-              gimp_config_writer_close (writer);
-
-	      g_list_foreach (info->aux_info, (GFunc) g_free, NULL);
-	      g_list_free (info->aux_info);
-	      info->aux_info = NULL;
-	    }
-	}
-
-      if (! info->toplevel_entry && info->widget)
-	{
-	  GimpDock *dock;
-	  GList    *books;
-
-	  dock = GIMP_DOCK (info->widget);
-
-	  gimp_config_writer_open (writer, "dock");
-
-	  for (books = dock->dockbooks; books; books = g_list_next (books))
-	    {
-	      GimpDockbook *dockbook;
-	      GList        *children;
-	      GList        *pages;
-
-	      dockbook = (GimpDockbook *) books->data;
-
-	      gimp_config_writer_open (writer, "book");
-
-	      children = gtk_container_get_children (GTK_CONTAINER (dockbook));
-
-	      for (pages = children; pages; pages = g_list_next (pages))
-		{
-		  GimpDockable           *dockable;
-		  GimpDialogFactoryEntry *entry;
-
-		  dockable = (GimpDockable *) pages->data;
-
-		  entry = g_object_get_data (G_OBJECT (dockable),
-                                             "gimp-dialog-factory-entry");
-
-		  if (entry)
-                    {
-                      GimpContainerView *view;
-                      GEnumValue        *enum_value;
-                      gchar             *tab_style    = "icon";
-                      gint               preview_size = -1;
-
-                      gimp_config_writer_linefeed (writer);
-
-                      enum_value = g_enum_get_value (enum_class,
-                                                     dockable->tab_style);
-
-                      if (enum_value)
-                        tab_style = enum_value->value_nick;
-
-                      view = gimp_container_view_get_by_dockable (dockable);
-
-                      if (view && view->preview_size >= GIMP_PREVIEW_SIZE_TINY)
-                        preview_size = view->preview_size;
-
-                      if (preview_size > 0 &&
-                          preview_size != entry->preview_size)
-                        {
-                          gimp_config_writer_printf (writer, "\"%s@%s:%d\"",
-                                                     entry->identifier,
-                                                     tab_style,
-                                                     preview_size);
-                        }
-                      else
-                        {
-                          gimp_config_writer_printf (writer, "\"%s@%s\"",
-                                                     entry->identifier,
-                                                     tab_style);
-                        }
-                    }
-		}
-
-	      g_list_free (children);
-
-	      gimp_config_writer_close (writer);  /* book */
-	    }
-
-	  gimp_config_writer_close (writer);  /* dock */
-	}
-
-      gimp_config_writer_close (writer);  /* session-info */
+      gimp_session_info_save (info, GIMP_OBJECT (factory)->name, writer);
     }
-
-  g_type_class_unref (enum_class);
 }
 
 static void
@@ -1317,151 +1167,14 @@ gimp_dialog_factories_restore_foreach (gconstpointer      key,
 				       GimpDialogFactory *factory,
 				       gpointer           data)
 {
-  GList *list;
+  GList *infos;
 
-  for (list = factory->session_infos; list; list = g_list_next (list))
+  for (infos = factory->session_infos; infos; infos = g_list_next (infos))
     {
-      GimpSessionInfo *info;
+      GimpSessionInfo *info = infos->data;
 
-      info = (GimpSessionInfo *) list->data;
-
-      if (! info->open)
-	continue;
-
-      info->open = FALSE;
-
-      if (info->toplevel_entry)
-	{
-	  GtkWidget *dialog;
-
-	  dialog =
-	    gimp_dialog_factory_dialog_new (factory,
-					    info->toplevel_entry->identifier,
-                                            info->toplevel_entry->preview_size);
-
-	  if (dialog && info->aux_info)
-	    gimp_dialog_factory_set_aux_info (dialog, info);
-	}
-      else
-	{
-	  GimpDock   *dock;
-	  GList      *books;
-          GEnumClass *enum_class;
-
-	  dock = GIMP_DOCK (gimp_dialog_factory_dock_new (factory));
-
-          enum_class = g_type_class_ref (GIMP_TYPE_TAB_STYLE);
-
-	  if (dock && info->aux_info)
-	    gimp_dialog_factory_set_aux_info (GTK_WIDGET (dock), info);
-
-	  for (books = info->sub_dialogs; books; books = g_list_next (books))
-	    {
-	      GtkWidget *dockbook;
-	      GList     *pages;
-
-	      dockbook = gimp_dockbook_new (dock->dialog_factory->menu_factory);
-
-	      gimp_dock_add_book (dock, GIMP_DOCKBOOK (dockbook), -1);
-
-	      for (pages = books->data; pages; pages = g_list_next (pages))
-		{
-		  GtkWidget    *dockable;
-		  gchar        *identifier;
-                  gchar        *substring;
-                  gint          preview_size = -1;
-                  GimpTabStyle  tab_style    = GIMP_TAB_STYLE_PREVIEW;
-
-		  identifier = (gchar *) pages->data;
-
-                  if ((substring = strstr (identifier, "@")))
-                    {
-                      gchar **split;
-
-                      *substring = '\0';
-                      substring++;
-
-                      split = g_strsplit (substring, ":", 16);
-
-                      if (split[0])
-                        {
-                          if (split[1] || ! g_ascii_isdigit (split[0][0]))
-                            {
-                              GEnumValue *enum_value;
-
-                              enum_value = g_enum_get_value_by_nick (enum_class,
-                                                                     split[0]);
-
-                              if (enum_value)
-                                tab_style = enum_value->value;
-                            }
-                          else
-                            {
-                              preview_size = atoi (split[0]);
-                            }
-                        }
-
-                      if (split[1])
-                        preview_size = atoi (split[1]);
-
-                      g_strfreev (split);
-                    }
-
-                  if (preview_size < GIMP_PREVIEW_SIZE_TINY ||
-                      preview_size > GIMP_PREVIEW_SIZE_GIGANTIC)
-                    preview_size = -1;
-
-                  /*  use the new dock's dialog factory to create dockables
-                   *  because it may be different from the dialog factory
-                   *  the dock was created from.
-                   */
-		  dockable =
-                    gimp_dialog_factory_dockable_new (dock->dialog_factory,
-                                                      dock,
-                                                      identifier,
-                                                      preview_size);
-
-                  if (! GIMP_DOCKABLE (dockable)->get_preview_func)
-                    {
-                      switch (tab_style)
-                        {
-                        case GIMP_TAB_STYLE_PREVIEW:
-                          tab_style = GIMP_TAB_STYLE_ICON;
-                          break;
-                        case GIMP_TAB_STYLE_PREVIEW_NAME:
-                          tab_style = GIMP_TAB_STYLE_ICON_BLURB;
-                          break;
-                        case GIMP_TAB_STYLE_PREVIEW_BLURB:
-                          tab_style = GIMP_TAB_STYLE_ICON_BLURB;
-                          break;
-                        default:
-                          break;
-                        }
-                    }
-
-                  GIMP_DOCKABLE (dockable)->tab_style = tab_style;
-
-		  if (dockable)
-		    gimp_dockbook_add (GIMP_DOCKBOOK (dockbook),
-                                       GIMP_DOCKABLE (dockable), -1);
-
-		  g_free (identifier);
-		}
-
-	      g_list_free (books->data);
-	    }
-
-	  g_list_free (info->sub_dialogs);
-	  info->sub_dialogs = NULL;
-
-	  gtk_widget_show (GTK_WIDGET (dock));
-
-          g_type_class_unref (enum_class);
-	}
-
-      g_list_foreach (info->aux_info, (GFunc) g_free, NULL);
-      g_list_free (info->aux_info);
-      info->aux_info = NULL;
+      if (info->open)
+        gimp_session_info_restore (info, factory);
     }
 }
 
@@ -1484,131 +1197,6 @@ gimp_dialog_factories_clear_foreach (gconstpointer      key,
 #ifdef __GNUC__
 #warning FIXME: implement session info deletion
 #endif
-    }
-}
-
-static void
-gimp_dialog_factory_get_window_info (GtkWidget       *window,
-				     GimpSessionInfo *info)
-{
-  g_return_if_fail (GTK_IS_WIDGET (window));
-  g_return_if_fail (GTK_WIDGET_TOPLEVEL (window));
-  g_return_if_fail (info != NULL);
-
-  if (window->window)
-    {
-      gdk_window_get_root_origin (window->window, &info->x, &info->y);
-
-      if (! info->toplevel_entry || info->toplevel_entry->remember_size)
-	{
-	  info->width  = window->allocation.width;
-	  info->height = window->allocation.height;
-	}
-      else
-	{
-	  info->width  = 0;
-	  info->height = 0;
-	}
-    }
-
-  if (! info->toplevel_entry || info->toplevel_entry->remember_if_open)
-    info->open = GTK_WIDGET_VISIBLE (window);
-  else
-    info->open = FALSE;
-}
-
-static void
-gimp_dialog_factory_set_window_geometry (GtkWidget       *window,
-					 GimpSessionInfo *info)
-{
-  static gint screen_width  = 0;
-  static gint screen_height = 0;
-
-  gchar geom[32];
-
-  g_return_if_fail (GTK_IS_WINDOW (window));
-  g_return_if_fail (GTK_WIDGET_TOPLEVEL (window));
-  g_return_if_fail (info != NULL);
-
-  if (screen_width == 0 || screen_height == 0)
-    {
-      screen_width  = gdk_screen_width ();
-      screen_height = gdk_screen_height ();
-    }
-
-  info->x = CLAMP (info->x, 0, screen_width  - 128);
-  info->y = CLAMP (info->y, 0, screen_height - 128);
-
-  g_snprintf (geom, sizeof (geom), "+%d+%d", info->x, info->y);
-
-  gtk_window_parse_geometry (GTK_WINDOW (window), geom);
-
-  if (! info->toplevel_entry || info->toplevel_entry->remember_size)
-    {
-      if (info->width > 0 && info->height > 0)
-        gtk_window_set_default_size (GTK_WINDOW (window),
-                                     info->width, info->height);
-    }
-}
-
-static void
-gimp_dialog_factory_get_aux_info (GtkWidget       *dialog,
-				  GimpSessionInfo *info)
-{
-  /* FIXME: make the aux-info stuff generic */
-
-  if (GIMP_IS_IMAGE_DOCK (dialog))
-    {
-      GimpImageDock *dock;
-
-      dock = GIMP_IMAGE_DOCK (dialog);
-
-      info->aux_info = g_list_append (info->aux_info,
-				      dock->show_image_menu ?
-				      g_strdup ("menu-shown") :
-				      g_strdup ("menu-hidden"));
-
-      info->aux_info = g_list_append (info->aux_info,
-				      dock->auto_follow_active ?
-				      g_strdup ("follow-active-image") :
-				      g_strdup ("dont-follow-active-image"));
-    }
-}
-
-static void
-gimp_dialog_factory_set_aux_info (GtkWidget       *dialog,
-				  GimpSessionInfo *info)
-{
-  GList *aux;
-
-  /* FIXME: make the aux-info stuff generic */
-
-  if (GIMP_IS_IMAGE_DOCK (dialog))
-    {
-      gboolean menu_shown  = TRUE;
-      gboolean auto_follow = TRUE;
-
-      for (aux = info->aux_info; aux; aux = g_list_next (aux))
-	{
-	  gchar *str;
-
-	  str = (gchar *) aux->data;
-
-	  if (! strcmp (str, "menu-shown"))
-	    menu_shown = TRUE;
-	  else if (! strcmp (str, "menu-hidden"))
-	    menu_shown = FALSE;
-
-	  else if (! strcmp (str, "follow-active-image"))
-	    auto_follow = TRUE;
-	  else if (! strcmp (str, "dont-follow-active-image"))
-	    auto_follow = FALSE;
-	}
-
-      gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (dialog),
-					   menu_shown);
-      gimp_image_dock_set_auto_follow_active (GIMP_IMAGE_DOCK (dialog),
-                                              auto_follow);
     }
 }
 

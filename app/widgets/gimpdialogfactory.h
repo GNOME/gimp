@@ -31,9 +31,6 @@ typedef GtkWidget * (* GimpDialogNewFunc) (GimpDialogFactory *factory,
                                            gint               preview_size);
 
 
-typedef struct _GimpDialogFactoryEntry GimpDialogFactoryEntry;
-typedef struct _GimpSessionInfo        GimpSessionInfo;
-
 struct _GimpDialogFactoryEntry
 {
   gchar             *identifier;
@@ -43,27 +40,6 @@ struct _GimpDialogFactoryEntry
   gboolean           session_managed;
   gboolean           remember_size;
   gboolean           remember_if_open;
-};
-
-struct _GimpSessionInfo
-{
-  gint       x;
-  gint       y;
-  gint       width;
-  gint       height;
-
-  GtkWidget *widget;
-
-  /*  only valid while restoring and saving the session  */
-  gboolean   open;
-
-  /*  GList of gchar* of optional additional dialog specific info  */
-  GList     *aux_info;
-
-  /*  only one of these is valid  */
-  GimpDialogFactoryEntry *toplevel_entry;
-  GimpDialogFactoryEntry *dockable_entry;
-  GList                  *sub_dialogs;  /*  GList of GLists of entries  */
 };
 
 

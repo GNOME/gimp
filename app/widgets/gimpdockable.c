@@ -70,6 +70,9 @@ static void        gimp_dockable_forall              (GtkContainer   *container,
 static void        gimp_dockable_get_title_area      (GimpDockable   *dockable,
                                                       GdkRectangle   *area);
 
+static void        gimp_dockable_real_set_aux_info   (GimpDockable   *dockable,
+                                                      GList          *aux_info);
+static GList     * gimp_dockable_real_get_aux_info   (GimpDockable   *dockable);
 static GtkWidget * gimp_dockable_real_get_tab_widget (GimpDockable   *dockable,
                                                       GimpContext    *context,
                                                       GimpTabStyle    tab_style,
@@ -151,6 +154,8 @@ gimp_dockable_class_init (GimpDockableClass *klass)
 
   container_class->forall     = gimp_dockable_forall;
 
+  klass->get_aux_info         = gimp_dockable_real_get_aux_info;
+  klass->set_aux_info         = gimp_dockable_real_set_aux_info;
   klass->get_tab_widget       = gimp_dockable_real_get_tab_widget;
   klass->set_context          = gimp_dockable_real_set_context;
   klass->get_menu             = gimp_dockable_real_get_menu;
@@ -636,6 +641,23 @@ gimp_dockable_new (const gchar                *name,
   return GTK_WIDGET (dockable);
 }
 
+void
+gimp_dockable_set_aux_info (GimpDockable *dockable,
+                            GList        *aux_info)
+{
+  g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
+
+  GIMP_DOCKABLE_GET_CLASS (dockable)->set_aux_info (dockable, aux_info);
+}
+
+GList *
+gimp_dockable_get_aux_info (GimpDockable *dockable)
+{
+  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
+
+  return GIMP_DOCKABLE_GET_CLASS (dockable)->get_aux_info (dockable);
+}
+
 GtkWidget *
 gimp_dockable_get_tab_widget (GimpDockable *dockable,
                               GimpContext  *context,
@@ -718,6 +740,28 @@ gimp_dockable_get_title_area (GimpDockable *dockable,
 
   if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
     area->x += 2 * dockable->close_button->allocation.width;
+}
+
+static void
+gimp_dockable_real_set_aux_info (GimpDockable *dockable,
+                                 GList        *aux_info)
+{
+  GList *aux;
+
+  for (aux = aux_info; aux; aux = g_list_next (aux))
+    {
+      gchar *str = (gchar *) aux->data;
+
+      g_print ("dockable %s aux_info: %s\n", dockable->name, str);
+    }
+}
+
+static GList *
+gimp_dockable_real_get_aux_info (GimpDockable *dockable)
+{
+  GList *aux = NULL;
+
+  return aux;
 }
 
 static GtkWidget *

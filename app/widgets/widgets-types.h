@@ -115,6 +115,10 @@ typedef struct _GimpTextEditor          GimpTextEditor;
 /*  structs  */
 
 typedef struct _GimpItemFactoryEntry    GimpItemFactoryEntry;
+typedef struct _GimpDialogFactoryEntry  GimpDialogFactoryEntry;
+typedef struct _GimpSessionInfo         GimpSessionInfo;
+typedef struct _GimpSessionInfoBook     GimpSessionInfoBook;
+typedef struct _GimpSessionInfoDockable GimpSessionInfoDockable;
 
 
 /*  function types  */
