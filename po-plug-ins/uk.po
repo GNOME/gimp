@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 2000-08-29 19:37+0300\n"
+"POT-Creation-Date: 2000-08-31 18:01+0300\n"
 "PO-Revision-Date: 2000-02-08 16:11+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -26,7 +26,7 @@ msgstr "Про"
 #: plug-ins/FractalExplorer/Dialogs.c:1377
 #: plug-ins/FractalExplorer/FractalExplorer.c:850
 #: plug-ins/FractalExplorer/FractalExplorer.c:1469
-#: plug-ins/Lighting/lighting_ui.c:1073 plug-ins/MapObject/mapobject_ui.c:1383
+#: plug-ins/Lighting/lighting_ui.c:1143 plug-ins/MapObject/mapobject_ui.c:1383
 #: plug-ins/bmp/bmpwrite.c:564 plug-ins/common/AlienMap.c:1398
 #: plug-ins/common/AlienMap.c:1662 plug-ins/common/AlienMap2.c:1390
 #: plug-ins/common/AlienMap2.c:1676 plug-ins/common/CML_explorer.c:1176
@@ -109,7 +109,7 @@ msgstr "Гаразд"
 #: plug-ins/FractalExplorer/FractalExplorer.c:744
 #: plug-ins/FractalExplorer/FractalExplorer.c:859
 #: plug-ins/FractalExplorer/FractalExplorer.c:1471
-#: plug-ins/Lighting/lighting_ui.c:1075 plug-ins/MapObject/mapobject_ui.c:1385
+#: plug-ins/Lighting/lighting_ui.c:1145 plug-ins/MapObject/mapobject_ui.c:1385
 #: plug-ins/bmp/bmpwrite.c:566 plug-ins/common/AlienMap.c:1400
 #: plug-ins/common/AlienMap2.c:1392 plug-ins/common/CML_explorer.c:1178
 #: plug-ins/common/CML_explorer.c:2256 plug-ins/common/aa.c:346
@@ -190,7 +190,7 @@ msgid "Cancel"
 msgstr "В╕дмова"
 
 #. Preview
-#: plug-ins/FractalExplorer/Dialogs.c:308 plug-ins/Lighting/lighting_ui.c:1091
+#: plug-ins/FractalExplorer/Dialogs.c:308 plug-ins/Lighting/lighting_ui.c:1161
 #: plug-ins/MapObject/mapobject_ui.c:1400 plug-ins/common/CML_explorer.c:1202
 #: plug-ins/common/blinds.c:343 plug-ins/common/curve_bend.c:1503
 #: plug-ins/common/destripe.c:575 plug-ins/common/emboss.c:739
@@ -520,7 +520,7 @@ msgstr "Косинус"
 
 #: plug-ins/FractalExplorer/Dialogs.c:721
 #: plug-ins/FractalExplorer/Dialogs.c:762
-#: plug-ins/FractalExplorer/Dialogs.c:803 plug-ins/Lighting/lighting_ui.c:569
+#: plug-ins/FractalExplorer/Dialogs.c:803 plug-ins/Lighting/lighting_ui.c:572
 #: plug-ins/common/AlienMap.c:1472 plug-ins/common/AlienMap.c:1495
 #: plug-ins/common/AlienMap.c:1518 plug-ins/common/CML_explorer.c:167
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
@@ -760,142 +760,140 @@ msgstr ""
 msgid "<Image>/Filters/Light Effects/Lighting Effects..."
 msgstr "<Image>/Ф╕льтри/Св╕тлов╕ ефекти/Блискавки..."
 
-#: plug-ins/Lighting/lighting_ui.c:159 plug-ins/Lighting/lighting_ui.c:1026
-#: plug-ins/common/emboss.c:551 plug-ins/common/spheredesigner.c:1574
-msgid "Bumpmap"
-msgstr "Рель╓ф"
-
-#: plug-ins/Lighting/lighting_ui.c:186 plug-ins/Lighting/lighting_ui.c:1034
-msgid "Environment"
-msgstr "Середовище"
-
 #. General options
-#: plug-ins/Lighting/lighting_ui.c:389 plug-ins/MapObject/mapobject_ui.c:532
+#: plug-ins/Lighting/lighting_ui.c:395 plug-ins/MapObject/mapobject_ui.c:532
 msgid "General Options"
 msgstr "Основн╕ параметри"
 
-#: plug-ins/Lighting/lighting_ui.c:398
-msgid "Use Bump Mapping"
-msgstr "Використовувати рель╓фне перетворення"
-
-#: plug-ins/Lighting/lighting_ui.c:408
-msgid "Enable/disable bump-mapping (image depth)"
-msgstr "Ув╕мкнути/вимкнути рель╓фне перетворення (глибина зображення)"
-
-#: plug-ins/Lighting/lighting_ui.c:411
-msgid "Use Environment Mapping"
-msgstr ""
-
-#: plug-ins/Lighting/lighting_ui.c:421
-msgid "Enable/disable environment mapping (reflection)"
-msgstr ""
-
-#: plug-ins/Lighting/lighting_ui.c:424 plug-ins/MapObject/mapobject_ui.c:565
+#.
+#. toggle = gtk_check_button_new_with_label (_("Use Bump Mapping"));
+#. gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+#. mapvals.bump_mapped);
+#. gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+#. gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+#. GTK_SIGNAL_FUNC (togglebump_update),
+#. &mapvals.bump_mapped);
+#. gtk_widget_show (toggle);
+#.
+#. gimp_help_set_help_data (toggle,
+#. _("Enable/disable bump-mapping (image depth)"),
+#. NULL);
+#.
+#. toggle = gtk_check_button_new_with_label (_("Use Environment Mapping"));
+#. gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+#. mapvals.env_mapped);
+#. gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+#. gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+#. GTK_SIGNAL_FUNC (toggleenvironment_update),
+#. &mapvals.env_mapped);
+#. gtk_widget_show (toggle);
+#.
+#. gimp_help_set_help_data (toggle,
+#. _("Enable/disable environment mapping (reflection)"),
+#. NULL);
+#.
+#: plug-ins/Lighting/lighting_ui.c:430 plug-ins/MapObject/mapobject_ui.c:565
 msgid "Transparent Background"
 msgstr "Прозоре тло"
 
-#: plug-ins/Lighting/lighting_ui.c:434
+#: plug-ins/Lighting/lighting_ui.c:440
 msgid "Make destination image transparent where bump height is zero"
 msgstr "Зробити результуюче зображення прозорим на нульов╕й висот╕ рель╓фа"
 
-#: plug-ins/Lighting/lighting_ui.c:437 plug-ins/MapObject/mapobject_ui.c:590
+#: plug-ins/Lighting/lighting_ui.c:443 plug-ins/MapObject/mapobject_ui.c:590
 #: plug-ins/common/tile.c:421
 msgid "Create New Image"
 msgstr "Створити нове зображення"
 
-#: plug-ins/Lighting/lighting_ui.c:447 plug-ins/MapObject/mapobject_ui.c:600
+#: plug-ins/Lighting/lighting_ui.c:453 plug-ins/MapObject/mapobject_ui.c:600
 msgid "Create a new image when applying filter"
 msgstr "Створювати нове зображення на застосуванн╕ ф╕льтру"
 
-#: plug-ins/Lighting/lighting_ui.c:449
+#: plug-ins/Lighting/lighting_ui.c:455
 msgid "High Quality Preview"
 msgstr "Високояк╕сний попередн╕й перегляд"
 
-#: plug-ins/Lighting/lighting_ui.c:459
+#: plug-ins/Lighting/lighting_ui.c:465
 msgid "Enable/disable high quality preview"
 msgstr "Ув╕мкнути/вимкнути високояк╕сний попередн╕й перегляд"
 
-#: plug-ins/Lighting/lighting_ui.c:462 plug-ins/MapObject/mapobject_ui.c:611
-msgid "Enable/disable tooltip messages"
-msgstr "Ув╕мкнути/вимкнути п╕дказки"
-
 #. Antialiasing options
-#: plug-ins/Lighting/lighting_ui.c:466 plug-ins/MapObject/mapobject_ui.c:615
+#: plug-ins/Lighting/lighting_ui.c:469 plug-ins/MapObject/mapobject_ui.c:615
 msgid "Antialiasing Options"
 msgstr "Параметри згладжування"
 
-#: plug-ins/Lighting/lighting_ui.c:475 plug-ins/MapObject/mapobject_ui.c:624
+#: plug-ins/Lighting/lighting_ui.c:478 plug-ins/MapObject/mapobject_ui.c:624
 msgid "Enable Antialiasing"
 msgstr "Ув╕мкнути згладжування"
 
-#: plug-ins/Lighting/lighting_ui.c:485
+#: plug-ins/Lighting/lighting_ui.c:488
 msgid "Enable/disable jagged edges removal(antialiasing)"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:498 plug-ins/MapObject/mapobject_ui.c:647
+#: plug-ins/Lighting/lighting_ui.c:501 plug-ins/MapObject/mapobject_ui.c:647
 #: plug-ins/common/bumpmap.c:1041 plug-ins/common/emboss.c:589
 #: plug-ins/common/struc.c:1324
 msgid "Depth:"
 msgstr "Глибина:"
 
-#: plug-ins/Lighting/lighting_ui.c:501 plug-ins/MapObject/mapobject_ui.c:650
+#: plug-ins/Lighting/lighting_ui.c:504 plug-ins/MapObject/mapobject_ui.c:650
 msgid "Antialiasing quality. Higher is better, but slower"
 msgstr "Як╕сть згладжування. Вища - краща, але пов╕льн╕ше викону╓ться"
 
-#: plug-ins/Lighting/lighting_ui.c:508 plug-ins/common/iwarp.c:1107
+#: plug-ins/Lighting/lighting_ui.c:511 plug-ins/common/iwarp.c:1107
 #: plug-ins/common/threshold_alpha.c:294 plug-ins/common/unsharp.c:829
 #: plug-ins/common/wind.c:1137 plug-ins/gflare/gflare.c:3015
 msgid "Threshold:"
 msgstr "Пор╕г:"
 
-#: plug-ins/Lighting/lighting_ui.c:511 plug-ins/MapObject/mapobject_ui.c:666
+#: plug-ins/Lighting/lighting_ui.c:514 plug-ins/MapObject/mapobject_ui.c:666
 msgid "Stop when pixel differences are smaller than this value"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:554 plug-ins/MapObject/mapobject_ui.c:692
+#: plug-ins/Lighting/lighting_ui.c:557 plug-ins/MapObject/mapobject_ui.c:692
 msgid "Light Settings"
 msgstr "Налаштування св╕тла"
 
-#: plug-ins/Lighting/lighting_ui.c:571
+#: plug-ins/Lighting/lighting_ui.c:574
 msgid "Directional"
 msgstr "Напрямене"
 
-#: plug-ins/Lighting/lighting_ui.c:573
+#: plug-ins/Lighting/lighting_ui.c:576
 msgid "Point"
 msgstr "Точка"
 
-#: plug-ins/Lighting/lighting_ui.c:575
+#: plug-ins/Lighting/lighting_ui.c:578
 msgid "Spot"
 msgstr "Пляма"
 
-#: plug-ins/Lighting/lighting_ui.c:580
+#: plug-ins/Lighting/lighting_ui.c:583
 msgid "Light Type:"
 msgstr "Тип св╕тла:"
 
-#: plug-ins/Lighting/lighting_ui.c:583 plug-ins/MapObject/mapobject_ui.c:718
+#: plug-ins/Lighting/lighting_ui.c:586 plug-ins/MapObject/mapobject_ui.c:718
 msgid "Type of light source to apply"
 msgstr "Тип джерела св╕тла"
 
-#: plug-ins/Lighting/lighting_ui.c:585 plug-ins/MapObject/mapobject_ui.c:720
+#: plug-ins/Lighting/lighting_ui.c:588 plug-ins/MapObject/mapobject_ui.c:720
 msgid "Select Lightsource Color"
 msgstr "Виб╕р кольору джерела св╕тла"
 
-#: plug-ins/Lighting/lighting_ui.c:589
+#: plug-ins/Lighting/lighting_ui.c:592
 msgid "Light Color:"
 msgstr "Кол╕р джерела:"
 
-#: plug-ins/Lighting/lighting_ui.c:593 plug-ins/MapObject/mapobject_ui.c:728
+#: plug-ins/Lighting/lighting_ui.c:596 plug-ins/MapObject/mapobject_ui.c:728
 msgid "Set light source color"
 msgstr "Вказати кол╕р джерела св╕тла"
 
-#: plug-ins/Lighting/lighting_ui.c:595 plug-ins/MapObject/mapobject_ui.c:730
+#: plug-ins/Lighting/lighting_ui.c:598 plug-ins/MapObject/mapobject_ui.c:730
 #: plug-ins/MapObject/mapobject_ui.c:1028
 msgid "Position"
 msgstr "Позиц╕я"
 
 #. X
 #. table col, row
-#: plug-ins/Lighting/lighting_ui.c:612 plug-ins/Lighting/lighting_ui.c:664
+#: plug-ins/Lighting/lighting_ui.c:615 plug-ins/Lighting/lighting_ui.c:667
 #: plug-ins/MapObject/mapobject_ui.c:747 plug-ins/MapObject/mapobject_ui.c:799
 #: plug-ins/MapObject/mapobject_ui.c:1040
 #: plug-ins/MapObject/mapobject_ui.c:1084 plug-ins/common/flarefx.c:785
@@ -906,13 +904,13 @@ msgstr "Позиц╕я"
 msgid "X:"
 msgstr "X:"
 
-#: plug-ins/Lighting/lighting_ui.c:619 plug-ins/MapObject/mapobject_ui.c:754
+#: plug-ins/Lighting/lighting_ui.c:622 plug-ins/MapObject/mapobject_ui.c:754
 msgid "Light source X position in XYZ space"
 msgstr "Позиц╕я джерела св╕тла по X в простор╕ XYZ"
 
 #. Y
 #. table col, row
-#: plug-ins/Lighting/lighting_ui.c:625 plug-ins/Lighting/lighting_ui.c:676
+#: plug-ins/Lighting/lighting_ui.c:628 plug-ins/Lighting/lighting_ui.c:679
 #: plug-ins/MapObject/mapobject_ui.c:760 plug-ins/MapObject/mapobject_ui.c:811
 #: plug-ins/MapObject/mapobject_ui.c:1051
 #: plug-ins/MapObject/mapobject_ui.c:1093
@@ -923,11 +921,11 @@ msgstr "Позиц╕я джерела св╕тла по X в простор╕ XYZ"
 msgid "Y:"
 msgstr "Y:"
 
-#: plug-ins/Lighting/lighting_ui.c:632 plug-ins/MapObject/mapobject_ui.c:767
+#: plug-ins/Lighting/lighting_ui.c:635 plug-ins/MapObject/mapobject_ui.c:767
 msgid "Light source Y position in XYZ space"
 msgstr "Позиц╕я джерела св╕тла по Y в простор╕ XYZ"
 
-#: plug-ins/Lighting/lighting_ui.c:638 plug-ins/Lighting/lighting_ui.c:688
+#: plug-ins/Lighting/lighting_ui.c:641 plug-ins/Lighting/lighting_ui.c:691
 #: plug-ins/MapObject/mapobject_ui.c:773 plug-ins/MapObject/mapobject_ui.c:823
 #: plug-ins/MapObject/mapobject_ui.c:1062
 #: plug-ins/MapObject/mapobject_ui.c:1102
@@ -935,146 +933,193 @@ msgstr "Позиц╕я джерела св╕тла по Y в простор╕ XYZ"
 msgid "Z:"
 msgstr "Z:"
 
-#: plug-ins/Lighting/lighting_ui.c:645 plug-ins/MapObject/mapobject_ui.c:780
+#: plug-ins/Lighting/lighting_ui.c:648 plug-ins/MapObject/mapobject_ui.c:780
 msgid "Light source Z position in XYZ space"
 msgstr "Позиц╕я джерела св╕тла по Z в простор╕ XYZ"
 
-#: plug-ins/Lighting/lighting_ui.c:648 plug-ins/MapObject/mapobject_ui.c:783
+#: plug-ins/Lighting/lighting_ui.c:651 plug-ins/MapObject/mapobject_ui.c:783
 msgid "Direction Vector"
 msgstr "Напрямок вектора"
 
-#: plug-ins/Lighting/lighting_ui.c:671 plug-ins/MapObject/mapobject_ui.c:806
+#: plug-ins/Lighting/lighting_ui.c:674 plug-ins/MapObject/mapobject_ui.c:806
 msgid "Light source X direction in XYZ space"
 msgstr "Напрямок джерела св╕тла по X в простор╕ XYZ"
 
-#: plug-ins/Lighting/lighting_ui.c:683 plug-ins/MapObject/mapobject_ui.c:818
+#: plug-ins/Lighting/lighting_ui.c:686 plug-ins/MapObject/mapobject_ui.c:818
 msgid "Light source Y direction in XYZ space"
 msgstr "Напрямок джерела св╕тла по Y в простор╕ XYZ"
 
-#: plug-ins/Lighting/lighting_ui.c:695 plug-ins/MapObject/mapobject_ui.c:830
+#: plug-ins/Lighting/lighting_ui.c:698 plug-ins/MapObject/mapobject_ui.c:830
 msgid "Light source Z direction in XYZ space"
 msgstr "Напрямок джерела св╕тла по Z в простор╕ XYZ"
 
-#: plug-ins/Lighting/lighting_ui.c:720 plug-ins/MapObject/mapobject_ui.c:855
+#: plug-ins/Lighting/lighting_ui.c:723 plug-ins/MapObject/mapobject_ui.c:855
 msgid "Intensity Levels"
 msgstr "Р╕вн╕ ╕нтенсивност╕"
 
-#: plug-ins/Lighting/lighting_ui.c:738 plug-ins/MapObject/mapobject_ui.c:873
+#: plug-ins/Lighting/lighting_ui.c:741 plug-ins/MapObject/mapobject_ui.c:873
 #: plug-ins/common/bumpmap.c:1081
 msgid "Ambient:"
 msgstr "Осв╕тлення:"
 
-#: plug-ins/Lighting/lighting_ui.c:751 plug-ins/MapObject/mapobject_ui.c:886
+#: plug-ins/Lighting/lighting_ui.c:754 plug-ins/MapObject/mapobject_ui.c:886
 msgid "Amount of original color to show where no direct light falls"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:763 plug-ins/Lighting/lighting_ui.c:802
+#: plug-ins/Lighting/lighting_ui.c:766 plug-ins/Lighting/lighting_ui.c:805
 #: plug-ins/MapObject/mapobject_ui.c:898 plug-ins/MapObject/mapobject_ui.c:937
 msgid "Diffuse:"
 msgstr "Дифуз╕я:"
 
-#: plug-ins/Lighting/lighting_ui.c:776 plug-ins/MapObject/mapobject_ui.c:911
+#: plug-ins/Lighting/lighting_ui.c:779 plug-ins/MapObject/mapobject_ui.c:911
 msgid "Intensity of original color when lit by a light source"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:784 plug-ins/MapObject/mapobject_ui.c:919
+#: plug-ins/Lighting/lighting_ui.c:787 plug-ins/MapObject/mapobject_ui.c:919
 msgid "Reflectivity"
 msgstr "Рефлекс╕я"
 
-#: plug-ins/Lighting/lighting_ui.c:815 plug-ins/MapObject/mapobject_ui.c:950
+#: plug-ins/Lighting/lighting_ui.c:818 plug-ins/MapObject/mapobject_ui.c:950
 msgid "Higher values makes the object reflect more light (appear lighter)"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:827 plug-ins/MapObject/mapobject_ui.c:962
+#: plug-ins/Lighting/lighting_ui.c:830 plug-ins/MapObject/mapobject_ui.c:962
 msgid "Specular:"
 msgstr "В╕дбивання:"
 
-#: plug-ins/Lighting/lighting_ui.c:840 plug-ins/MapObject/mapobject_ui.c:975
+#: plug-ins/Lighting/lighting_ui.c:843 plug-ins/MapObject/mapobject_ui.c:975
 msgid "Controls how intense the highlights will be"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:852 plug-ins/MapObject/mapobject_ui.c:987
+#: plug-ins/Lighting/lighting_ui.c:855 plug-ins/MapObject/mapobject_ui.c:987
 #: plug-ins/common/jigsaw.c:2597
 msgid "Highlight:"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:865 plug-ins/MapObject/mapobject_ui.c:1000
+#: plug-ins/Lighting/lighting_ui.c:868 plug-ins/MapObject/mapobject_ui.c:1000
 msgid "Higher values makes the highlights more focused"
 msgstr ""
 
-#: plug-ins/Lighting/lighting_ui.c:892
+#: plug-ins/Lighting/lighting_ui.c:898
 msgid "Bumpmap Settings"
 msgstr "Налаштування рель╓фного перетворення"
 
-#: plug-ins/Lighting/lighting_ui.c:908
+#: plug-ins/Lighting/lighting_ui.c:907
+msgid "Enable Bump Mapping"
+msgstr "Ув╕мкнути рель╓фне перетворення"
+
+#: plug-ins/Lighting/lighting_ui.c:917
+msgid "Enable/disable bump-mapping (image depth)"
+msgstr "Ув╕мкнути/вимкнути рель╓фне перетворення (глибина зображення)"
+
+#: plug-ins/Lighting/lighting_ui.c:934
 msgid "Bumpmap Image:"
 msgstr "Зображення рель╓фу:"
 
-#: plug-ins/Lighting/lighting_ui.c:916 plug-ins/common/mblur.c:784
+#: plug-ins/Lighting/lighting_ui.c:942 plug-ins/common/mblur.c:784
 #: plug-ins/common/sinus.c:1988 plug-ins/flame/flame.c:721
 msgid "Linear"
 msgstr "Л╕н╕йний"
 
-#: plug-ins/Lighting/lighting_ui.c:917
+#: plug-ins/Lighting/lighting_ui.c:943
 msgid "Logarithmic"
 msgstr "Логарифм╕чний"
 
-#: plug-ins/Lighting/lighting_ui.c:918 plug-ins/flame/flame.c:722
+#: plug-ins/Lighting/lighting_ui.c:944 plug-ins/flame/flame.c:722
 msgid "Sinusoidal"
 msgstr "Синусо╖дальний"
 
-#: plug-ins/Lighting/lighting_ui.c:919 plug-ins/flame/flame.c:723
+#: plug-ins/Lighting/lighting_ui.c:945 plug-ins/flame/flame.c:723
 msgid "Spherical"
 msgstr "Сферичний"
 
-#: plug-ins/Lighting/lighting_ui.c:923
+#: plug-ins/Lighting/lighting_ui.c:949
 msgid "Curve:"
 msgstr "Крива:"
 
-#: plug-ins/Lighting/lighting_ui.c:929
-msgid "Minimum Height:"
-msgstr "М╕н╕мальна висота:"
-
-#: plug-ins/Lighting/lighting_ui.c:938
+#: plug-ins/Lighting/lighting_ui.c:955
 msgid "Maximum Height:"
 msgstr "Максимальна висота:"
 
-#: plug-ins/Lighting/lighting_ui.c:944
+#: plug-ins/Lighting/lighting_ui.c:962
+msgid "Maximum height for bumps"
+msgstr "Максимальна висота рель╓фу"
+
+#: plug-ins/Lighting/lighting_ui.c:968
+msgid "Minimum Height:"
+msgstr "М╕н╕мальна висота:"
+
+#: plug-ins/Lighting/lighting_ui.c:975
+msgid "Minimum height for bumps"
+msgstr "М╕н╕мальна висота рель╓фу"
+
+#: plug-ins/Lighting/lighting_ui.c:978
 msgid "Autostretch to Fit Value Range"
 msgstr "Авторозтягування для заповнення всього д╕апазону"
 
-#: plug-ins/Lighting/lighting_ui.c:971
+#: plug-ins/Lighting/lighting_ui.c:988
+msgid "Fit into value range"
+msgstr "Розм╕стити в д╕апазон╕ значень"
+
+#: plug-ins/Lighting/lighting_ui.c:1009
 msgid "Environment Settings"
 msgstr "Налаштування середовища"
 
-#: plug-ins/Lighting/lighting_ui.c:980
+#: plug-ins/Lighting/lighting_ui.c:1018
+msgid "Enable Environment Mapping"
+msgstr ""
+
+#: plug-ins/Lighting/lighting_ui.c:1028
+#, fuzzy
+msgid "Enable/disable environment-mapping (reflection)"
+msgstr "Ув╕мкнути/вимкнути рель╓фне перетворення (глибина зображення)"
+
+#: plug-ins/Lighting/lighting_ui.c:1045
 msgid "Environment Image:"
 msgstr "Зображення середовища:"
 
+#: plug-ins/Lighting/lighting_ui.c:1049
+#, fuzzy
+msgid "Environment image to use"
+msgstr "Зображення середовища:"
+
 #. Options section
-#: plug-ins/Lighting/lighting_ui.c:1011 plug-ins/MapObject/mapobject_ui.c:1314
+#: plug-ins/Lighting/lighting_ui.c:1072 plug-ins/MapObject/mapobject_ui.c:1314
 #: plug-ins/common/lic.c:1037 plug-ins/common/ripple.c:604
 #: plug-ins/gap/gap_mov_dialog.c:861 plug-ins/gfig/gfig.c:3974
 msgid "Options"
 msgstr "Параметри"
 
-#: plug-ins/Lighting/lighting_ui.c:1015 plug-ins/MapObject/mapobject_ui.c:1318
+#: plug-ins/Lighting/lighting_ui.c:1076 plug-ins/MapObject/mapobject_ui.c:1318
 #: plug-ins/common/spheredesigner.c:1575 plug-ins/common/spheredesigner.c:2614
 msgid "Light"
 msgstr "Св╕тло"
 
-#: plug-ins/Lighting/lighting_ui.c:1019 plug-ins/MapObject/mapobject_ui.c:1322
+#: plug-ins/Lighting/lighting_ui.c:1080 plug-ins/MapObject/mapobject_ui.c:1322
 msgid "Material"
 msgstr "Матер╕ал"
 
-#: plug-ins/Lighting/lighting_ui.c:1067
+#: plug-ins/Lighting/lighting_ui.c:1084 plug-ins/common/bumpmap.c:843
+msgid "Bump Map"
+msgstr "Рель╓ф"
+
+#: plug-ins/Lighting/lighting_ui.c:1088
+#, fuzzy
+msgid "Environment Map"
+msgstr "Середовище"
+
+#: plug-ins/Lighting/lighting_ui.c:1137
 msgid "Lighting Effects"
 msgstr "Св╕тлов╕ ефекти"
 
-#: plug-ins/Lighting/lighting_ui.c:1127 plug-ins/common/grid.c:708
+#: plug-ins/Lighting/lighting_ui.c:1197 plug-ins/common/grid.c:708
 #: plug-ins/gap/gap_mov_dialog.c:496
 msgid "Update Preview"
 msgstr "Оновити перегляд"
+
+#: plug-ins/Lighting/lighting_ui.c:1205 plug-ins/MapObject/mapobject_ui.c:1442
+msgid "Recompute preview image"
+msgstr "Перерахувати перегляд зображення"
 
 #: plug-ins/MapObject/mapobject_main.c:205
 msgid "<Image>/Filters/Map/Map Object..."
@@ -1121,6 +1166,10 @@ msgstr "Розр╕зати вих╕дне зображення: корисно для безмежних площин"
 #: plug-ins/MapObject/mapobject_ui.c:602
 msgid "Enable Tooltips"
 msgstr "Ув╕мкнути п╕дказки"
+
+#: plug-ins/MapObject/mapobject_ui.c:611
+msgid "Enable/disable tooltip messages"
+msgstr "Ув╕мкнути/вимкнути п╕дказки"
 
 #: plug-ins/MapObject/mapobject_ui.c:634
 msgid "Enable/disable jagged edges removal (antialiasing)"
@@ -1273,10 +1322,6 @@ msgstr "В╕добразити в об'╓кт"
 #: plug-ins/MapObject/mapobject_ui.c:1434 plug-ins/common/diffraction.c:575
 msgid "Preview!"
 msgstr "Перегляд!"
-
-#: plug-ins/MapObject/mapobject_ui.c:1442
-msgid "Recompute preview image"
-msgstr "Перерахувати перегляд зображення"
 
 #: plug-ins/MapObject/mapobject_ui.c:1451
 msgid "Zoom out (make image smaller)"
@@ -1652,67 +1697,67 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:142
 msgid "sin^p-based function"
-msgstr ""
+msgstr "функц╕я основана на sin^p"
 
 #: plug-ins/common/CML_explorer.c:143
 msgid "sin^p, stepped"
-msgstr ""
+msgstr "покрокова sin^p"
 
 #: plug-ins/common/CML_explorer.c:168
 msgid "Max (x, -)"
-msgstr ""
+msgstr "Max (x, -)"
 
 #: plug-ins/common/CML_explorer.c:169
 msgid "Max (x+d, -)"
-msgstr ""
+msgstr "Max (x+d, -)"
 
 #: plug-ins/common/CML_explorer.c:170
 msgid "Max (x-d, -)"
-msgstr ""
+msgstr "Max (x-d, -)"
 
 #: plug-ins/common/CML_explorer.c:171
 msgid "Min (x, -)"
-msgstr ""
+msgstr "Min (x, -)"
 
 #: plug-ins/common/CML_explorer.c:172
 msgid "Min (x+d, -)"
-msgstr ""
+msgstr "Min (x+d, -)"
 
 #: plug-ins/common/CML_explorer.c:173
 msgid "Min (x-d, -)"
-msgstr ""
+msgstr "Min (x-d, -)"
 
 #: plug-ins/common/CML_explorer.c:174
 msgid "Max (x+d, -), (x < 0.5)"
-msgstr ""
+msgstr "Max (x+d, -), (x < 0.5)"
 
 #: plug-ins/common/CML_explorer.c:175
 msgid "Max (x+d, -), (0.5 < x)"
-msgstr ""
+msgstr "Max (x+d, -), (0.5 < x)"
 
 #: plug-ins/common/CML_explorer.c:176
 msgid "Max (x-d, -), (x < 0.5)"
-msgstr ""
+msgstr "Max (x-d, -), (x < 0.5)"
 
 #: plug-ins/common/CML_explorer.c:177
 msgid "Max (x-d, -), (0.5 < x)"
-msgstr ""
+msgstr "Max (x-d, -), (0.5 < x)"
 
 #: plug-ins/common/CML_explorer.c:178
 msgid "Min (x+d, -), (x < 0.5)"
-msgstr ""
+msgstr "Max (x-d, -), (0.5 < x)"
 
 #: plug-ins/common/CML_explorer.c:179
 msgid "Min (x+d, -), (0.5 < x)"
-msgstr ""
+msgstr "Min (x+d, -), (0.5 < x)"
 
 #: plug-ins/common/CML_explorer.c:180
 msgid "Min (x-d, -), (x < 0.5)"
-msgstr ""
+msgstr "Min (x-d, -), (x < 0.5)"
 
 #: plug-ins/common/CML_explorer.c:181
 msgid "Min (x-d, -), (0.5 < x)"
-msgstr ""
+msgstr "Min (x-d, -), (x < 0.5)"
 
 #: plug-ins/common/CML_explorer.c:200 plug-ins/common/sunras.c:1606
 #: plug-ins/print/gimp_color_window.c:349
@@ -1910,31 +1955,31 @@ msgstr "╤нш╕"
 
 #: plug-ins/common/CML_explorer.c:1438
 msgid "Misc Operations"
-msgstr ""
+msgstr "Р╕зн╕ операц╕╖"
 
 #: plug-ins/common/CML_explorer.c:1447
 msgid "Copy Settings"
-msgstr ""
+msgstr "Скоп╕ювати налаштування"
 
 #: plug-ins/common/CML_explorer.c:1470
 msgid "Source Channel:"
-msgstr ""
+msgstr "Вих╕дний канал:"
 
 #: plug-ins/common/CML_explorer.c:1486 plug-ins/common/CML_explorer.c:1541
 msgid "Destination Channel:"
-msgstr ""
+msgstr "Канал призначення:"
 
 #: plug-ins/common/CML_explorer.c:1489
 msgid "Copy Parameters"
-msgstr ""
+msgstr "Скоп╕ювати параметри"
 
 #: plug-ins/common/CML_explorer.c:1497
 msgid "Selective Load Settings"
-msgstr ""
+msgstr "Виб╕ркове завантаження налаштувань"
 
 #: plug-ins/common/CML_explorer.c:1512 plug-ins/common/CML_explorer.c:1530
 msgid "NULL"
-msgstr ""
+msgstr "Нуль"
 
 #: plug-ins/common/CML_explorer.c:1523
 msgid "Source Channel in File:"
@@ -1946,7 +1991,7 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1639
 msgid "Function Type:"
-msgstr ""
+msgstr "Тип функц╕╖:"
 
 #: plug-ins/common/CML_explorer.c:1696
 msgid "Composition:"
@@ -2051,7 +2096,7 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:2306
 msgid "Load Parameters from"
-msgstr ""
+msgstr "Завантажити параметри з"
 
 #: plug-ins/common/CML_explorer.c:2308
 msgid "Selective Load from"
@@ -2059,7 +2104,7 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:2412
 msgid "Error: it's not CML parameter file."
-msgstr ""
+msgstr "Помилка: це не файл параметр╕в CML."
 
 #: plug-ins/common/CML_explorer.c:2419
 msgid "Warning: it's an old format file."
@@ -2067,11 +2112,11 @@ msgstr "Попередження: це файл старого формату."
 
 #: plug-ins/common/CML_explorer.c:2421
 msgid "Warning: Hmmm, it's a parameter file for newer CML_explorer than me."
-msgstr ""
+msgstr "Попередження: файл параметр╕в призначено для нов╕шого Досл╕дника CML."
 
 #: plug-ins/common/CML_explorer.c:2482
 msgid "Error: failed to load parameters"
-msgstr ""
+msgstr "Помилка: не вдалось завантажити параметри"
 
 #. Create the actual window.
 #: plug-ins/common/aa.c:339
@@ -2199,16 +2244,16 @@ msgstr "Використовувати (невидимий) нижн╕й шар як основу"
 msgid "Grid Size:"
 msgstr "Розм╕р с╕тки:"
 
-#: plug-ins/common/animationplay.c:270
+#: plug-ins/common/animationplay.c:273
 msgid "<Image>/Filters/Animation/Animation Playback..."
 msgstr "<Image>/Ф╕льтри/Ан╕мац╕я/В╕дтворення..."
 
-#: plug-ins/common/animationplay.c:666
+#: plug-ins/common/animationplay.c:669
 msgid "Animation Playback: "
 msgstr "В╕дтворення ан╕мац╕╖: "
 
 #. if no buttons are specified use one CLOSE button per default
-#: plug-ins/common/animationplay.c:673 plug-ins/common/plugindetails.c:1009
+#: plug-ins/common/animationplay.c:676 plug-ins/common/plugindetails.c:1009
 #: plug-ins/common/sample_colorize.c:1373 plug-ins/common/uniteditor.c:525
 #: plug-ins/dbbrowser/dbbrowser_utils.c:159
 #: plug-ins/dbbrowser/dbbrowser_utils.c:176 plug-ins/gap/gap_arr_dialog.c:783
@@ -2222,43 +2267,43 @@ msgid "Close"
 msgstr "Закрити"
 
 #. The 'playback' half of the dialog
-#: plug-ins/common/animationplay.c:687 plug-ins/common/animationplay.c:690
+#: plug-ins/common/animationplay.c:690 plug-ins/common/animationplay.c:693
 msgid "Playback: "
 msgstr "В╕дтворення: "
 
-#: plug-ins/common/animationplay.c:720
+#: plug-ins/common/animationplay.c:723
 msgid "Play/Stop"
 msgstr "Пуск/Стоп"
 
-#: plug-ins/common/animationplay.c:726
+#: plug-ins/common/animationplay.c:729
 msgid "Rewind"
 msgstr "Перемотування"
 
-#: plug-ins/common/animationplay.c:732
+#: plug-ins/common/animationplay.c:735
 msgid "Step"
 msgstr "Крок"
 
-#: plug-ins/common/animationplay.c:790
+#: plug-ins/common/animationplay.c:793
 msgid "Frame %v of %u"
 msgstr "Кадр %v з %u"
 
-#: plug-ins/common/animoptimize.c:158
+#: plug-ins/common/animoptimize.c:162
 msgid "<Image>/Filters/Animation/Animation Optimize"
 msgstr "<Image>/Ф╕льтри/Ан╕мац╕я/Оптим╕зац╕я"
 
-#: plug-ins/common/animoptimize.c:174
+#: plug-ins/common/animoptimize.c:178
 msgid "<Image>/Filters/Animation/Animation UnOptimize"
 msgstr "<Image>/Ф╕льтри/Ан╕мац╕я/Розоптим╕зац╕я"
 
-#: plug-ins/common/animoptimize.c:274
+#: plug-ins/common/animoptimize.c:278
 msgid "Optimizing Animation..."
 msgstr "Оптим╕зац╕я ан╕мац╕╖..."
 
-#: plug-ins/common/animoptimize.c:276
+#: plug-ins/common/animoptimize.c:280
 msgid "UnOptimizing Animation..."
 msgstr "Розоптим╕зац╕я ан╕мац╕╖..."
 
-#: plug-ins/common/animoptimize.c:305
+#: plug-ins/common/animoptimize.c:309
 msgid "Not enough memory to allocate buffers for optimization.\n"
 msgstr "Не вистача╓ пам'ят╕ щоб вид╕лити буфери для оптим╕зац╕╖.\n"
 
@@ -2358,7 +2403,7 @@ msgstr "<Image>/Ф╕льтри/Розмивання/Розмивання..."
 #: plug-ins/common/randomize.c:737 plug-ins/common/sinus.c:1811
 #: plug-ins/common/snoise.c:542 plug-ins/gflare/gflare.c:4093
 msgid "Random Seed:"
-msgstr ""
+msgstr "База випадковост╕:"
 
 #: plug-ins/common/blur.c:655
 msgid "Randomization %:"
@@ -2415,10 +2460,6 @@ msgstr "<Image>/Ф╕льтри/Мапа/Рель╓ф..."
 #: plug-ins/common/bumpmap.c:521
 msgid "Bump-mapping..."
 msgstr "Створення рель╓фу..."
-
-#: plug-ins/common/bumpmap.c:843
-msgid "Bump Map"
-msgstr "Рель╓ф"
 
 #: plug-ins/common/bumpmap.c:934
 msgid "Map Type"
@@ -3301,6 +3342,10 @@ msgstr "Барель╓ф"
 #: plug-ins/common/emboss.c:547
 msgid "Function"
 msgstr "Функц╕я"
+
+#: plug-ins/common/emboss.c:551 plug-ins/common/spheredesigner.c:1574
+msgid "Bumpmap"
+msgstr "Рель╓ф"
 
 #: plug-ins/common/emboss.c:759 plug-ins/common/nlfilt.c:595
 #: plug-ins/common/sinus.c:2143 plug-ins/common/waves.c:596
@@ -5419,7 +5464,7 @@ msgstr "<Image>/Ф╕льтри/Кольори/В╕дображення/Замальовування за зразком..."
 msgid "Sample Colorize"
 msgstr ""
 
-#. gtk_container_border_width (GTK_CONTAINER (box2), 5);
+#. gtk_container_set_border_width (GTK_CONTAINER (box2), 5);
 #: plug-ins/common/sample_colorize.c:1367 plug-ins/common/tileit.c:564
 #: plug-ins/dbbrowser/dbbrowser_utils.c:157
 #: plug-ins/gdyntext/gdyntext_ui.c:586 plug-ins/gimpressionist/orientmap.c:633
@@ -11614,24 +11659,24 @@ msgstr "Вставити"
 
 #: plug-ins/imagemap/imap_cmd_select_next.c:51
 msgid "Select Next"
-msgstr ""
+msgstr "Вибрати наступну"
 
 #: plug-ins/imagemap/imap_cmd_select_region.c:63
 msgid "Select Region"
-msgstr ""
+msgstr "Вибрати д╕лянку"
 
 #: plug-ins/imagemap/imap_cmd_send_to_back.c:51
 #: plug-ins/imagemap/imap_toolbar.c:158
 msgid "Send To Back"
-msgstr ""
+msgstr "Перем╕стити назад"
 
 #: plug-ins/imagemap/imap_cmd_unselect.c:49
 msgid "Unselect"
-msgstr ""
+msgstr "Зняти виб╕р"
 
 #: plug-ins/imagemap/imap_cmd_unselect_all.c:50
 msgid "Unselect All"
-msgstr ""
+msgstr "Зняти виб╕р ╕з всього"
 
 #: plug-ins/imagemap/imap_default_dialog.c:139
 msgid "Help..."
@@ -11935,7 +11980,7 @@ msgstr "Додати"
 
 #: plug-ins/imagemap/imap_popup.c:125
 msgid "Map Info..."
-msgstr ""
+msgstr "╤нформац╕ю про мапу..."
 
 #: plug-ins/imagemap/imap_popup.c:128
 msgid "Tools"
@@ -11943,11 +11988,11 @@ msgstr "╤нструменти"
 
 #: plug-ins/imagemap/imap_popup.c:142
 msgid "In"
-msgstr "д"
+msgstr "Вх╕д"
 
 #: plug-ins/imagemap/imap_popup.c:144
 msgid "Out"
-msgstr ""
+msgstr "Вих╕д"
 
 #: plug-ins/imagemap/imap_popup.c:151
 msgid "Guides..."
@@ -11955,7 +12000,7 @@ msgstr "Направляюч╕..."
 
 #: plug-ins/imagemap/imap_preferences.c:204
 msgid "Couldn't save resource file:"
-msgstr ""
+msgstr "Не вдалось зберети файл ресурс╕в: "
 
 #: plug-ins/imagemap/imap_preferences.c:356
 msgid "Select Color"
@@ -11963,7 +12008,7 @@ msgstr "Виб╕р кольору"
 
 #: plug-ins/imagemap/imap_preferences.c:434
 msgid "Default Map Type"
-msgstr ""
+msgstr "Типовий тип мапи"
 
 #: plug-ins/imagemap/imap_preferences.c:453
 msgid "Prompt for area info"
@@ -12035,7 +12080,7 @@ msgstr "Коментар"
 
 #: plug-ins/imagemap/imap_settings.c:68
 msgid "Settings for this Mapfile"
-msgstr ""
+msgstr "Налаштування до цього файлу мапи"
 
 #: plug-ins/imagemap/imap_settings.c:82
 msgid "Image name:"
@@ -12075,31 +12120,31 @@ msgstr "Зменшити"
 
 #: plug-ins/imagemap/imap_toolbar.c:150
 msgid "Edit Map Info"
-msgstr ""
+msgstr "Виправлення ╕нформац╕╖ про мапу"
 
 #: plug-ins/imagemap/imap_toolbar.c:154
 msgid "Move To Front"
-msgstr ""
+msgstr "Перем╕стити вперед"
 
 #: plug-ins/imagemap/imap_tools.c:128
 msgid "Select existing area"
-msgstr ""
+msgstr "Вид╕лити ╕снуючу д╕лянку"
 
 #: plug-ins/imagemap/imap_tools.c:132
 msgid "Define Rectangle area"
-msgstr ""
+msgstr "Визначити прямокутну д╕лянку"
 
 #: plug-ins/imagemap/imap_tools.c:136
 msgid "Define Circle/Oval area"
-msgstr ""
+msgstr "Визначити овальну д╕ляку"
 
 #: plug-ins/imagemap/imap_tools.c:140
 msgid "Define Polygon area"
-msgstr ""
+msgstr "Визначити багатокутну д╕лянку"
 
 #: plug-ins/imagemap/imap_tools.c:144
 msgid "Edit selected area info"
-msgstr ""
+msgstr "Виправити ╕нформац╕ю про вибрану д╕лянку"
 
 #: plug-ins/imagemap/imap_tools.c:148
 msgid "Delete selected area"
@@ -12619,7 +12664,7 @@ msgstr "вид╕лення_у_контур"
 
 #: plug-ins/sel2path/sel2path.c:577
 msgid "gimp_image_get_selection failed"
-msgstr ""
+msgstr "Не вдалось виконати gimp_image_get_selection"
 
 #: plug-ins/sel2path/sel2path.c:585
 msgid "Internal error. Selection bpp > 1"
