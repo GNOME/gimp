@@ -1,3 +1,9 @@
+2004-02-07  Hans Breuer  <hans@breuer.org>
+
+	* gimpdefs.msc : new file to keep common definitions for the msc build
+	* **/makefile.msc : use common defintions, e.g. GIMP_VER
+	* Makefile.am : add the former to EXTRA_DIST
+
 2004-02-07  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* app/core/gimpimage-convert.c (median_cut_pass2_no_dither_rgb):

@@ -1,19 +1,9 @@
 ## Makefile for building the GIMP DLLs and LIBs with Microsoft C.
 ## Use: nmake -f makefile.msc
 
-# Change this to wherever you want to install the DLLs. This directory
-# should be in your PATH. As these DLLs are for the GIMP and its plug-ins
-# only, it probably is best to keep them in the GIMP's bin directory.
-BIN = C:\install\gimp\bin
-
 TOP = ..\..
 !INCLUDE $(TOP)\glib\build\win32\make.msc 
-
-GIMP_VER = 1.3
-
-# The name of the directory in your %HOME% where the GIMP's personal settings
-# and stuff is saved.
-GIMPDIR = _gimp$(GIMP_VER)
+!INCLUDE ..\gimpdefs.msc
 
 ################################################################
 
@@ -66,7 +56,6 @@ PDB_WRAPPERS_O = \
 	gimplayer_pdb.obj \
 	gimpmessage_pdb.obj \
 	gimpmisc_pdb.obj \
-	gimpmisctools_pdb.obj \
 	gimppainttools_pdb.obj \
 	gimppalette_pdb.obj \
 	gimppalettes_pdb.obj \
@@ -110,10 +99,11 @@ gimp_OBJECTS = \
 #	gimphelp.obj \
 	gimpimage.obj \
 	gimplayer.obj \
-	gimpmisc.obj \
 	gimppatternselect.obj \
+	gimppixelfetcher.obj \
 	gimppixelrgn.obj \
 	gimpproceduraldb.obj \
+	gimpregioniterator.obj \
 	gimpselection.obj \
 	gimptile.obj \
 	gimpunitcache.obj \
@@ -140,7 +130,6 @@ gimpui_OBJECTS = \
 	gimpmenu.obj \
 	gimppatternmenu.obj \
 	gimpexport.obj \
-	gimpmiscui.obj \
 #	gimppatheditor.obj \
 
 gimpui-$(GIMP_VER).dll : $(gimpui_OBJECTS) gimpui.def

@@ -1,18 +1,12 @@
 ## Makefile for building the GIMP DLLs and LIBs with Microsoft C.
 ## Use: nmake -f makefile.msc
 
-# Change this to wherever you want to install the DLLs. This directory
-# should be in your PATH. As these DLLs are for the GIMP and its plug-ins
-# only, it probably is best to keep them in the GIMP's bin directory.
-BIN = C:\install\gimp\bin
 TOP = ..\..
+PRJ_TOP = ..
 !include $(TOP)\glib\build\win32\make.msc
 
-GIMP_VER = 1.3
-
-# The name of the directory in your %HOME% where the GIMP's personal settings
-# and stuff is saved.
-GIMPDIR = _gimp$(GIMP_VER)
+!INCLUDE $(PRJ_TOP)\gimpdefs.msc
+PKG_VER = $(GIMP_VER)
 
 ################################################################
 

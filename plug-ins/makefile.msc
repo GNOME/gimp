@@ -19,6 +19,7 @@ GIMPTOP = ..
 
 TOP = ..\$(GIMPTOP)
 !INCLUDE $(TOP)\glib\build\win32\make.msc
+!INCLUDE $(GIMPTOP)\gimpdefs.msc
 
 !IFNDEF LIBRARY
 !IFNDEF PLUGIN
@@ -472,8 +473,12 @@ OBJECTS = \
 
 !IFDEF EXTRA_gimpressionist
 
+gimpressionist.c: logo-pixbuf.h
+
+logo-pixbuf.h: logo.png
+	gdk-pixbuf-csource --raw --name=logo_data logo.png > $(@F)
+
 OBJECTS = \
-	about.obj \
 	brush.obj \
 	color.obj \
 	general.obj \
@@ -573,8 +578,6 @@ EXTRACFLAGS = $(JPEG_CFLAGS)
 EXTRALIBS = $(JPEG_LIBS)
 !ENDIF
 
-GIMP_VER = 1.3
-
 PLUGINDIR = $(GIMPTOP)\plug-ins
 
 !IFNDEF OPTIMIZE
@@ -593,7 +596,7 @@ LINKDEBUG = /debug
 RTL = -MDd
 !ENDIF
 
-CC = cl -nologo -G5 -GF $(OPTIMIZE) $(RTL) -W2 -Zm200
+CC = cl -nologo -G5 -GF $(OPTIMIZE) $(RTL) -W2 -Zm400
 
 CFLAGS = -FImsvc_recommended_pragmas.h \
 	-DHAVE_CONFIG_H $(EXTRACFLAGS) \

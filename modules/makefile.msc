@@ -1,11 +1,6 @@
 ## Makefile for building gimp modules with Microsoft C
 ## Use: nmake -f makefile.msc
 
-# Change this to wherever you install gimp.
-# This is what I use as installation target, from where the installer-builder
-# will pick it up.
-GIMP = \install\gimp
-
 TOP = ..\..
 
 ################################################################
@@ -13,8 +8,7 @@ TOP = ..\..
 # Nothing much configurable below
 
 !INCLUDE $(TOP)\glib\build\win32\make.msc
-
-GIMP_VER = 1.3
+!INCLUDE ..\gimpdefs.msc
 
 INCLUDES = \
 	-FImsvc_recommended_pragmas.h \
@@ -30,6 +24,7 @@ MODULES = \
 #	colorsel_gtk-$(GIMP_VER).dll \
 	colorsel_triangle-$(GIMP_VER).dll \
 	colorsel_water-$(GIMP_VER).dll \
+	colorsel_cmyk-$(GIMP_VER).dll \
 	cdisplay_colorblind-$(GIMP_VER).dll \
 	cdisplay_gamma-$(GIMP_VER).dll \
 	cdisplay_highcontrast-$(GIMP_VER).dll
@@ -60,6 +55,13 @@ colorsel_triangle-$(GIMP_VER).dll : colorsel_triangle.obj
 
 colorsel_water-$(GIMP_VER).dll : colorsel_water.obj
 	$(CC) $(CFLAGS) -LD -Fe$@ colorsel_water.obj $(LDFLAGS) \
+	..\app\gimp.lib \
+	..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
+	..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
+	$(DEPLIBS)
+
+colorsel_cmyk-$(GIMP_VER).dll : colorsel_cmyk.obj
+	$(CC) $(CFLAGS) -LD -Fe$@ colorsel_cmyk.obj $(LDFLAGS) \
 	..\app\gimp.lib \
 	..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
 	..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \

@@ -4,13 +4,7 @@
 TOP = ..\..
 PRJ_TOP = ..
 PACKAGE = regexrepl
-PKG_VER = 1.3
 !INCLUDE $(TOP)\glib\build\win32\make.msc
-
-top_srcdir = $(PRJ_TOP)
-top_builddir = $(PRJ_TOP)
-includedir = $(PRJ_TOP)
-LT_RELEASE = $(PKG_VER)
 
 PKG_CFLAGS = -I ..
 

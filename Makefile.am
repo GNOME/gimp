@@ -56,6 +56,7 @@ EXTRA_DIST = \
 	gimp.spec.in		\
 	gimp.spec		\
 	gimp-zip.in		\
+	gimpdefs.msc	\
 	gimptool-win32.c.in	\
 	intltool-extract.in	\
 	intltool-merge.in	\

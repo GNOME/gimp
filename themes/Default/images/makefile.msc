@@ -59,6 +59,10 @@ STOCK_VARIABLES = \
 	stock_channel_green_24		stock-channel-green-24.png	\
 	stock_channel_green_32		stock-channel-green-32.png	\
 	stock_channel_green_48		stock-channel-green-48.png	\
+	stock_channel_indexed_16		stock-channel-indexed-16.png \
+	stock_channel_indexed_24		stock-channel-indexed-24.png \
+	stock_channel_indexed_32		stock-channel-indexed-32.png \
+	stock_channel_indexed_48		stock-channel-indexed-48.png \
 	stock_channel_red_16		stock-channel-red-16.png	\
 	stock_channel_red_24		stock-channel-red-24.png	\
 	stock_channel_red_32		stock-channel-red-32.png	\
@@ -138,6 +142,10 @@ STOCK_VARIABLES = \
 	stock_layer_24		stock-layer-24.png	\
 	stock_layer_32		stock-layer-32.png	\
 	stock_layer_48		stock-layer-48.png	\
+	stock_layer_mask_16		stock-layer-mask-16.png \
+	stock_layer_mask_24		stock-layer-mask-24.png \
+	stock_layer_mask_32		stock-layer-mask-32.png \
+	stock_layer_mask_48		stock-layer-mask-48.png \
 	stock_layer_to_imagesize_16		stock-layer-to-imagesize-16.png	\
 	stock_layers_16		stock-layers-16.png	\
 	stock_layers_24		stock-layers-24.png	\
@@ -194,6 +202,7 @@ STOCK_VARIABLES = \
 	stock_selection_16		stock-selection-16.png \
 	stock_selection_add_16		stock-selection-add-16.png	\
 	stock_selection_all_16		stock-selection-all-16.png	\
+	stock_selection_border_16		stock-selection-border-16.png	\
 	stock_selection_grow_16		stock-selection-grow-16.png	\
 	stock_selection_intersect_16		stock-selection-intersect-16.png	\
 	stock_selection_none_16		stock-selection-none-16.png	\

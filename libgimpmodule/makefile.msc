@@ -3,12 +3,11 @@
 TOP = ..\..
 PRJ_TOP = ..
 PACKAGE = gimpmodule
-PKG_VER = 1.3
-!INCLUDE $(TOP)\glib\build\win32\make.msc
+!include $(TOP)\glib\build\win32\make.msc
 
-# The name of the directory in your %HOME% where the GIMP's personal settings
-# and stuff is saved.
-GIMPDIR = _gimp$(PKG_VER)
+!INCLUDE $(PRJ_TOP)\gimpdefs.msc
+PKG_VER = $(GIMP_VER)
+
 DEFINES = -DGIMPDIR=\"$(GIMPDIR)\" -DDATADIR=\"\" -DSYSCONFDIR=\"\" \
 	-DPLUGINDIR=\"plug-ins\" -DLOCALEDIR=\"locale\"
 
