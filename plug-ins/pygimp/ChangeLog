@@ -1,3 +1,7 @@
+2004-12-19  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am: added $(pygimp_DATA) to EXTRA_DIST.
+
 2003-02-08  Manish Singh  <yosh@gimp.org>
 
 	* gimpui.py: use dialog.run() for sub dialogs, since the main dialog

@@ -71,4 +71,6 @@ install-data-local:
 snap:
 	$(MAKE) dist distdir=$(PACKAGE)-SNAP-`date +"%Y%m%d"`
 
-EXTRA_DIST = makefile.msc
+EXTRA_DIST = \
+	$(pygimp_DATA)	\
+	makefile.msc
