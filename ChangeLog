@@ -3,7 +3,7 @@
 	Merged from HEAD branch:
 
 	* app/dialogs/convert-dialog.c (convert_dialog_palette_filter): don't
-	show empty palettes.
+	show empty palettes. Fixes bug #170973.
 
 2005-03-20  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
