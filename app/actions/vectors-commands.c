@@ -587,8 +587,8 @@ vectors_import_response (GtkWidget           *widget,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      const gchar *filename;
-      GError      *error = NULL;
+      gchar  *filename;
+      GError *error = NULL;
 
       vectors_import_merge = dialog->merge_vectors;
       vectors_import_scale = dialog->scale_vectors;
@@ -606,6 +606,8 @@ vectors_import_response (GtkWidget           *widget,
           g_message (error->message);
           g_error_free (error);
         }
+
+      g_free (filename);
     }
 
   gtk_widget_destroy (widget);
@@ -619,7 +621,7 @@ vectors_export_response (GtkWidget           *widget,
   if (response_id == GTK_RESPONSE_OK)
     {
       GimpVectors *vectors = NULL;
-      const gchar *filename;
+      gchar       *filename;
       GError      *error   = NULL;
 
       vectors_export_active_only = dialog->active_only;
@@ -634,6 +636,8 @@ vectors_export_response (GtkWidget           *widget,
           g_message (error->message);
           g_error_free (error);
         }
+
+      g_free (filename);
     }
 
   gtk_widget_destroy (widget);

@@ -1,5 +1,10 @@
 2004-10-24  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/vectors-commands.c: don't leak the filenames of the
+	import and export dialogs.
+
+2004-10-24  Michael Natterer  <mitch@gimp.org>
+
 	* app/dialogs/Makefile.am
 	* app/dialogs/vectors-export-dialog.[ch]
 	* app/dialogs/vectors-import-dialog.[ch]: new files.
