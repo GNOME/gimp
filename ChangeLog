@@ -1,5 +1,17 @@
 2003-03-11  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage.[ch]: made gimp_image_get_active_components()
+	a static function and changed its behaviour so that the image's
+	active components are only used for layers, not for channels.
+	Fixes bug #108083.
+
+2003-03-11  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/session.c (session_info_deserialize): improved error
+	handling.
+
+2003-03-11  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.c
 	* app/display/gimpdisplayshell.[ch]
 	* app/gui/image-menu.c

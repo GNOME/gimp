@@ -128,6 +128,10 @@ static TempBuf *gimp_image_get_new_preview       (GimpViewable   *viewable,
 						  gint            width, 
 						  gint            height);
 
+static void     gimp_image_get_active_components (const GimpImage    *gimage,
+                                                  const GimpDrawable *drawable,
+                                                  gboolean           *active);
+
 static void     gimp_image_real_colormap_changed (GimpImage      *gimage,
 						  gint            ncol);
 
@@ -995,6 +999,36 @@ gimp_image_get_new_preview (GimpViewable *viewable,
   return comp;
 }
 
+static void
+gimp_image_get_active_components (const GimpImage    *gimage,
+                                  const GimpDrawable *drawable,
+                                  gboolean           *active)
+{
+  /* If the drawable is a channel make sure that the alpha channel is
+   * not valid.
+   */
+  if (GIMP_IS_CHANNEL (drawable))
+    {
+      active[GRAY_PIX]    = TRUE;
+      active[ALPHA_G_PIX] = FALSE;
+    }
+  /*  otherwise, check whether preserve transparency is
+   *  enabled in the layer and if the layer has alpha
+   */
+  else if (GIMP_IS_LAYER (drawable))
+    {
+      GimpLayer *layer = GIMP_LAYER (drawable);
+      gint       i;
+      
+      /*  first copy the gimage active channels  */
+      for (i = 0; i < MAX_CHANNELS; i++)
+        active[i] = gimage->active[i];
+
+      if (gimp_drawable_has_alpha (drawable) && layer->preserve_trans)
+        active[gimp_drawable_bytes (drawable) - 1] = FALSE;
+    }
+}
+
 static void 
 gimp_image_real_colormap_changed (GimpImage *gimage,
 				  gint       ncol)
@@ -1451,41 +1485,6 @@ gimp_image_get_component_active (const GimpImage *gimage,
     }
 
   return FALSE;
-}
-
-void
-gimp_image_get_active_components (const GimpImage    *gimage,
-                                  const GimpDrawable *drawable,
-                                  gint               *active)
-{
-  gint i;
-
-  /*  first, blindly copy the gimage active channels  */
-  for (i = 0; i < MAX_CHANNELS; i++)
-    active[i] = gimage->active[i];
-
-  /*  If the drawable is a channel (a saved selection, etc.)
-   *  make sure that the alpha channel is not valid
-   */
-  if (GIMP_IS_CHANNEL (drawable))
-    {
-      active[ALPHA_G_PIX] = 0;  /*  no alpha values in channels  */
-    }
-  else
-    {
-      /*  otherwise, check whether preserve transparency is
-       *  enabled in the layer and if the layer has alpha
-       */
-      if (GIMP_IS_LAYER (drawable))
-        {
-          GimpLayer *layer;
-
-          layer = GIMP_LAYER (drawable);
-
-          if (gimp_drawable_has_alpha (drawable) && layer->preserve_trans)
-            active[gimp_drawable_bytes (drawable) - 1] = 0;
-        }
-    }
 }
 
 void
@@ -1998,10 +1997,10 @@ gimp_image_apply_image (GimpImage	     *gimage,
        *  we need to add the layer offset to transform coords
        *  into the mask coordinate system
        */
-      x1 = CLAMP (x1, -offset_x, gimp_drawable_width (GIMP_DRAWABLE (mask))-offset_x);
-      y1 = CLAMP (y1, -offset_y, gimp_drawable_height(GIMP_DRAWABLE (mask))-offset_y);
-      x2 = CLAMP (x2, -offset_x, gimp_drawable_width (GIMP_DRAWABLE (mask))-offset_x);
-      y2 = CLAMP (y2, -offset_y, gimp_drawable_height(GIMP_DRAWABLE (mask))-offset_y);
+      x1 = CLAMP (x1, -offset_x, gimp_drawable_width  (GIMP_DRAWABLE (mask))-offset_x);
+      y1 = CLAMP (y1, -offset_y, gimp_drawable_height (GIMP_DRAWABLE (mask))-offset_y);
+      x2 = CLAMP (x2, -offset_x, gimp_drawable_width  (GIMP_DRAWABLE (mask))-offset_x);
+      y2 = CLAMP (y2, -offset_y, gimp_drawable_height (GIMP_DRAWABLE (mask))-offset_y);
     }
 
   /*  If the calling procedure specified an undo step...  */

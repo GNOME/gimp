@@ -267,9 +267,6 @@ void            gimp_image_set_component_active  (GimpImage          *gimage,
 						  gboolean            active);
 gboolean        gimp_image_get_component_active  (const GimpImage    *gimage,
 						  GimpChannelType     type);
-void            gimp_image_get_active_components (const GimpImage    *gimage,
-                                                  const GimpDrawable *drawable,
-                                                  gint               *active);
 
 void            gimp_image_set_component_visible (GimpImage          *gimage,
 						  GimpChannelType     type,
