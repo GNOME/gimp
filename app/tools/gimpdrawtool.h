@@ -70,5 +70,16 @@ void       	  gimp_draw_tool_stop     (GimpDrawTool *draw_tool);
 void       	  gimp_draw_tool_pause    (GimpDrawTool *draw_tool);
 void       	  gimp_draw_tool_resume   (GimpDrawTool *draw_tool);
 
+void              gimp_draw_tool_draw_handle (GimpDrawTool *draw_tool, 
+		                              gdouble x,
+			                      gdouble y,
+			                      gint size,
+			                      gint type);
+
+void              gimp_draw_tool_draw_lines (GimpDrawTool *draw_tool, 
+		                             gdouble *points,
+			                     gint npoints,
+			                     gint filled);
+
 
 #endif  /*  __GIMP_DRAW_TOOL_H__  */

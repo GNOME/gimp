@@ -27,18 +27,20 @@
  * segments between two anchors.
  */
 
+/*
 #include <math.h>
-/* #include "appenv.h"
- */
 
-#include "draw_core.h"
-#include "cursorutil.h"
-#include "path_tool.h"
-#include "path_toolP.h"
+
 #include "path_curves.h"
-
 #include "config.h"
 #include "libgimp/gimpintl.h"
+*/
+
+#include <glib.h>
+#include <gdk/gdk.h>
+#include "apptypes.h"
+#include "path_curves.h"
+#include "path_tool.h"
 
 /*
  * Every new curve-type has to have a parameter between 0 and 1, and
@@ -61,22 +63,22 @@ void    path_segment_get_coordinates (PathSegment *,
 				      gdouble,
 				      gint *,
 				      gint *);
-void    path_traverse_path           (Path *,
+void    path_traverse_path           (NPath *,
 				      PathTraverseFunc,
 				      CurveTraverseFunc,
 				      SegmentTraverseFunc,
 				      gpointer);
-void    path_traverse_curve          (Path *,
+void    path_traverse_curve          (NPath *,
 				      PathCurve *,
 				      CurveTraverseFunc,
 				      SegmentTraverseFunc,
 				      gpointer);
-void    path_traverse_segment        (Path *,
+void    path_traverse_segment        (NPath *,
 				      PathCurve *,
 				      PathSegment *,
 				      SegmentTraverseFunc,
 				      gpointer);
-gdouble path_locate_point            (Path *,
+gdouble path_locate_point            (NPath *,
 				      PathCurve **,
 				      PathSegment **,
 				      gint,
@@ -85,17 +87,26 @@ gdouble path_locate_point            (Path *,
 				      gint,
 				      gint);
 
+gdouble path_tool_on_curve           (NPath *path,
+		                      gint x,
+		                      gint y,
+		                      gint halfwidth,
+		                      NPath **ret_pathP,
+		                      PathCurve **ret_curveP,
+		                      PathSegment **ret_segmentP);
+
+
 /* Tools to manipulate paths, curves, segments */
 
-PathCurve   * path_add_curve       (Path *,
+PathCurve   * path_add_curve       (NPath *,
 				    gint,
 				    gint);
-PathSegment * path_append_segment  (Path *,
+PathSegment * path_append_segment  (NPath *,
 				    PathCurve *,
 				    SegmentType,
 				    gint,
 				    gint);
-PathSegment * path_prepend_segment (Path *,
+PathSegment * path_prepend_segment (NPath *,
 				    PathCurve *,
 				    SegmentType,
 				    gint,
@@ -105,14 +116,14 @@ PathSegment * path_split_segment   (PathSegment *,
 void          path_join_curves     (PathSegment *,
 				    PathSegment *);
 void          path_flip_curve      (PathCurve *);
-void          path_free_path       (Path *);
+void          path_free_path       (NPath *);
 void          path_free_curve      (PathCurve *);
 void          path_free_segment    (PathSegment *);
 void          path_delete_segment  (PathSegment *);
-void          path_print           (Path *);
-void          path_offset_active   (Path *, gdouble, gdouble);
-void          path_set_flags       (PathTool *,
-				    Path *,
+void          path_print           (NPath *);
+void          path_offset_active   (NPath *, gdouble, gdouble);
+void          path_set_flags       (GimpPathTool *,
+				    NPath *,
 				    PathCurve *,
 				    PathSegment *,
 				    guint32,
@@ -120,13 +131,14 @@ void          path_set_flags       (PathTool *,
 
 /* High level image-manipulation functions */
 
-void path_stroke                   (PathTool *,
-				    Path *);
-void path_to_selection             (PathTool *,
-				    Path *);
+void path_stroke                   (GimpPathTool *,
+				    NPath *);
+void path_to_selection             (GimpPathTool *,
+				    NPath *);
 
 /* Functions necessary for the tool */
 
+#if 0
 void     path_tool_button_press    (Tool *, GdkEventButton *, gpointer);
 void     path_tool_button_release  (Tool *, GdkEventButton *, gpointer);
 void     path_tool_motion          (Tool *, GdkEventMotion *, gpointer);
@@ -137,11 +149,11 @@ void     path_tool_draw_curve      (Tool *, PathCurve *);
 void     path_tool_draw_segment    (Tool *, PathSegment *);
 
 gdouble  path_tool_on_curve        (Tool *, gint, gint, gint,
-				    Path**, PathCurve**, PathSegment**);
+				    NPath**, PathCurve**, PathSegment**);
 gboolean path_tool_on_anchors      (Tool *, gint, gint, gint,
-				    Path**, PathCurve**, PathSegment**);
+				    NPath**, PathCurve**, PathSegment**);
 gint     path_tool_on_handles      (Tool *, gint, gint, gint,
-		                    Path **, PathCurve **, PathSegment **);
+		                    NPath **, PathCurve **, PathSegment **);
 
 gint path_tool_button_press_canvas (Tool *, GdkEventButton *, GDisplay *);
 gint path_tool_button_press_anchor (Tool *, GdkEventButton *, GDisplay *);
@@ -151,6 +163,7 @@ void path_tool_motion_anchor       (Tool *, GdkEventMotion *, GDisplay *);
 void path_tool_motion_handle       (Tool *, GdkEventMotion *, GDisplay *);
 void path_tool_motion_curve        (Tool *, GdkEventMotion *, GDisplay *);
 
+#endif
 
 /*  the path tool options  */
 static ToolOptions *path_options = NULL;
@@ -181,7 +194,7 @@ static ToolOptions *path_options = NULL;
  */
 
 void
-path_traverse_path (Path *path,
+path_traverse_path (NPath *path,
 		    PathTraverseFunc pathfunc,
 		    CurveTraverseFunc curvefunc,
 		    SegmentTraverseFunc segmentfunc,
@@ -207,7 +220,7 @@ path_traverse_path (Path *path,
      
 
 void
-path_traverse_curve (Path *path,
+path_traverse_curve (NPath *path,
 		     PathCurve *curve,
 		     CurveTraverseFunc curvefunc,
 		     SegmentTraverseFunc segmentfunc,
@@ -232,7 +245,7 @@ path_traverse_curve (Path *path,
 }
 
 void
-path_traverse_segment (Path *path,
+path_traverse_segment (NPath *path,
 		       PathCurve *curve,
 		       PathSegment *segment,
 		       SegmentTraverseFunc function,
@@ -257,7 +270,7 @@ path_traverse_segment (Path *path,
  */
 
 PathCurve *
-path_add_curve (Path * cur_path,
+path_add_curve (NPath * cur_path,
 		gint x,
 		gint y)
 {
@@ -293,7 +306,7 @@ path_add_curve (Path * cur_path,
    
    
 PathSegment *
-path_append_segment  (Path * cur_path,
+path_append_segment  (NPath * cur_path,
 		      PathCurve * cur_curve,
 		      SegmentType type,
 		      gint x,
@@ -347,7 +360,7 @@ path_append_segment  (Path * cur_path,
 
 
 PathSegment *
-path_prepend_segment  (Path * cur_path,
+path_prepend_segment  (NPath * cur_path,
 		       PathCurve * cur_curve,
 		       SegmentType type,
 		       gint x,
@@ -409,8 +422,7 @@ path_split_segment   (PathSegment *segment,
       new_segment = g_new (PathSegment, 1);
 
       new_segment->type = segment->type;
-      /* XXX: Giving PathTool as NULL Pointer! */
-      path_curve_get_point (NULL, segment, position, &(new_segment->x), &(new_segment->y));
+      path_curve_get_point (segment, position, &(new_segment->x), &(new_segment->y));
       new_segment->flags = 0;
       new_segment->parent = segment->parent;
       new_segment->next = segment->next;
@@ -602,7 +614,7 @@ path_flip_curve (PathCurve *curve)
 
 
 void
-path_free_path (Path * path)
+path_free_path (NPath * path)
 {
    PathCurve *tmp1, *tmp2;
    
@@ -651,7 +663,7 @@ path_free_segment (PathSegment *segment)
        * consistent */
       
 
-      path_set_flags (segment->parent->parent->path_tool, segment->parent->parent,
+      path_set_flags (NULL, segment->parent->parent,
 	              segment->parent, segment, 0, SEGMENT_ACTIVE);
 
       path_curve_cleanup_segment(segment);
@@ -715,11 +727,11 @@ path_delete_segment (PathSegment *segment)
  */
 
 gint
-path_tool_cursor_position (Tool *tool,
+path_tool_cursor_position (NPath *path,
 			   gint x,
 			   gint y,
 			   gint halfwidth,
-			   Path **pathP,
+			   NPath **pathP,
 			   PathCurve **curveP,
 			   PathSegment **segmentP,
 			   gdouble *positionP,
@@ -728,16 +740,16 @@ path_tool_cursor_position (Tool *tool,
    gdouble pos;
    gint handle_id;
 
-   if (path_tool_on_anchors (tool, x, y, halfwidth, pathP, curveP, segmentP))
+   if (path_tool_on_anchors (path, x, y, halfwidth, pathP, curveP, segmentP))
       return ON_ANCHOR;
 
-   handle_id = path_tool_on_handles (tool, x, y, halfwidth, pathP, curveP, segmentP);
+   handle_id = path_tool_on_handles (path, x, y, halfwidth, pathP, curveP, segmentP);
    if (handle_id) {
       if (handle_idP) (*handle_idP) = handle_id;
       return ON_HANDLE;
    }
 
-   pos = path_tool_on_curve (tool, x, y, halfwidth, pathP, curveP, segmentP);
+   pos = path_tool_on_curve (path, x, y, halfwidth, pathP, curveP, segmentP);
    if (pos >= 0 && pos <= 1) {
       if (positionP) (*positionP) = pos;
       return ON_CURVE;
@@ -748,6 +760,7 @@ path_tool_cursor_position (Tool *tool,
 }
       
      
+#if 0
 /**************************************************************
  * The click-callbacks for the tool
  */
@@ -837,7 +850,7 @@ path_tool_button_press_anchor (Tool *tool,
    gboolean doubleclick=FALSE;
    PathTool *path_tool = tool->private;
    
-   Path * cur_path = path_tool->cur_path;
+   NPath * cur_path = path_tool->cur_path;
    PathSegment *p_sas;
    gint grab_pointer;
    
@@ -962,7 +975,7 @@ path_tool_button_press_handle (Tool *tool,
    gboolean doubleclick=FALSE;
    PathTool *path_tool = tool->private;
    
-   Path * cur_path = path_tool->cur_path;
+   NPath * cur_path = path_tool->cur_path;
    gint grab_pointer;
    
 #ifdef PATH_TOOL_DEBUG
@@ -1002,7 +1015,7 @@ path_tool_button_press_canvas (Tool *tool,
 {
    PathTool *path_tool = tool->private;
    
-   Path * cur_path = path_tool->cur_path;
+   NPath * cur_path = path_tool->cur_path;
    PathCurve * cur_curve;
    PathSegment * cur_segment;
    gint grab_pointer;
@@ -1058,7 +1071,7 @@ path_tool_button_press_curve (Tool *tool,
 {
    PathTool *path_tool = tool->private;
    
-   Path * cur_path = path_tool->cur_path;
+   NPath * cur_path = path_tool->cur_path;
    PathSegment * cur_segment;
    gint grab_pointer;
    
@@ -1070,7 +1083,7 @@ path_tool_button_press_curve (Tool *tool,
    
    if (!cur_path) {
 #ifdef PATH_TOOL_DEBUG
-      fprintf (stderr, "Fatal error: No current Path\n");
+      fprintf (stderr, "Fatal error: No current NPath\n");
 #endif PATH_TOOL_DEBUG
       return 0;
    }
@@ -1421,7 +1434,7 @@ tools_new_path_tool (void)
    private->state           = 0;
    private->draw            = PATH_TOOL_REDRAW_ALL;
    private->core            = draw_core_new (path_tool_draw);
-   private->cur_path        = g_new0(Path, 1);
+   private->cur_path        = g_new0(NPath, 1);
    private->scanlines       = NULL;
 
 
@@ -1470,14 +1483,14 @@ tools_free_path_tool (Tool *tool)
 
 }
 
+#endif
 
 /**************************************************************
  * Set of function to determine, if the click was on a segment
  */
 
 typedef struct {
-   Tool *tool;
-   Path *path;
+   NPath *path;
    PathCurve *curve;
    PathSegment *segment;
    gint testx;
@@ -1490,7 +1503,7 @@ typedef struct {
 
 /* This is a CurveTraverseFunc */
 void
-path_tool_on_curve_helper (Path *path,
+path_tool_on_curve_helper (NPath *path,
 			   PathCurve *curve,
 			   PathSegment *segment,
 			   gpointer ptr)
@@ -1501,7 +1514,7 @@ path_tool_on_curve_helper (Path *path,
 
    if (segment && segment->next && data && data->distance > 0)
    {
-      position = path_curve_on_segment (data->tool, segment, data->testx, data->testy, data->halfwidth, &distance);
+      position = path_curve_on_segment (segment, data->testx, data->testy, data->halfwidth, &distance);
       if (position >= 0 && distance < data->distance )
       {
          data->path = path;
@@ -1515,20 +1528,19 @@ path_tool_on_curve_helper (Path *path,
 }
 
 gdouble
-path_tool_on_curve (Tool *tool,
+path_tool_on_curve (NPath *path,
 		    gint x,
 		    gint y,
 		    gint halfwidth,
-		    Path **ret_pathP,
+		    NPath **ret_pathP,
 		    PathCurve **ret_curveP,
 		    PathSegment **ret_segmentP)
 {
    Path_on_curve_type *data = g_new (Path_on_curve_type, 1);
    gdouble position;
 
-   data->tool = tool;
-   data->path = NULL;
-   data->segment = NULL;
+   data->path = path;
+   data->curve = NULL;
    data->segment = NULL;
    data->testx = x;
    data->testy = y;
@@ -1537,7 +1549,7 @@ path_tool_on_curve (Tool *tool,
    data->position = -1;
    data->found = FALSE;
 
-   path_traverse_path (((PathTool *) data->tool->private)->cur_path, NULL, path_tool_on_curve_helper, NULL, data);
+   path_traverse_path (path, NULL, path_tool_on_curve_helper, NULL, data);
 
    if (ret_pathP) *ret_pathP = data->path;
    if (ret_curveP) *ret_curveP = data->curve;
@@ -1556,7 +1568,7 @@ path_tool_on_curve (Tool *tool,
  */
 
 typedef struct {
-   Path *path;
+   NPath *path;
    PathCurve *curve;
    PathSegment *segment;
    gint testx;
@@ -1567,7 +1579,7 @@ typedef struct {
 
 /* This is a CurveTraverseFunc */
 void
-path_tool_on_anchors_helper (Path *path,
+path_tool_on_anchors_helper (NPath *path,
 			     PathCurve *curve,
 			     PathSegment *segment,
 			     gpointer ptr)
@@ -1592,18 +1604,18 @@ path_tool_on_anchors_helper (Path *path,
 }
 
 gboolean
-path_tool_on_anchors (Tool *tool,
+path_tool_on_anchors (NPath *path,
 		      gint x,
 		      gint y,
 		      gint halfwidth,
-		      Path **ret_pathP,
+		      NPath **ret_pathP,
 		      PathCurve **ret_curveP,
 		      PathSegment **ret_segmentP)
 {
    Path_on_anchors_type *data = g_new (Path_on_anchors_type, 1);
    gboolean ret_found;
 
-   data->path = NULL;
+   data->path = path;
    data->curve = NULL;
    data->segment = NULL;
    data->testx = x;
@@ -1611,7 +1623,7 @@ path_tool_on_anchors (Tool *tool,
    data->distance = halfwidth * halfwidth + 1;
    data->found = FALSE;
 
-   path_traverse_path (((PathTool *) tool->private)->cur_path, NULL, path_tool_on_anchors_helper, NULL, data);
+   path_traverse_path (path, NULL, path_tool_on_anchors_helper, NULL, data);
 
    if (ret_pathP) *ret_pathP = data->path;
    if (ret_curveP) *ret_curveP = data->curve;
@@ -1630,7 +1642,7 @@ path_tool_on_anchors (Tool *tool,
  */
 
 typedef struct {
-   Path *path;
+   NPath *path;
    PathCurve *curve;
    PathSegment *segment;
    gint testx;
@@ -1642,7 +1654,7 @@ typedef struct {
 
 /* This is a CurveTraverseFunc */
 void
-path_tool_on_handles_helper (Path *path,
+path_tool_on_handles_helper (NPath *path,
 			     PathCurve *curve,
 			     PathSegment *segment,
 			     gpointer ptr)
@@ -1652,8 +1664,8 @@ path_tool_on_handles_helper (Path *path,
 
    if (segment && data && !data->found)
    {
-      handle = path_curve_on_handle (NULL, segment, data->testx, data->testy,
-	   data->halfwidth);
+      handle = path_curve_on_handle (segment, data->testx, data->testy,
+	                             data->halfwidth);
       if (handle)
       {
          data->path = path;
@@ -1666,18 +1678,18 @@ path_tool_on_handles_helper (Path *path,
 }
 
 gint
-path_tool_on_handles (Tool *tool,
+path_tool_on_handles (NPath *path,
 		      gint x,
 		      gint y,
 		      gint halfwidth,
-		      Path **ret_pathP,
+		      NPath **ret_pathP,
 		      PathCurve **ret_curveP,
 		      PathSegment **ret_segmentP)
 {
    Path_on_handles_type *data = g_new (Path_on_handles_type, 1);
    gint handle_ret;
 
-   data->path = NULL;
+   data->path = path;
    data->curve = NULL;
    data->segment = NULL;
    data->testx = x;
@@ -1686,7 +1698,7 @@ path_tool_on_handles (Tool *tool,
    data->handle_id = 0;
    data->found = FALSE;
 
-   path_traverse_path (((PathTool *) tool->private)->cur_path, NULL, path_tool_on_handles_helper, NULL, data);
+   path_traverse_path (path, NULL, path_tool_on_handles_helper, NULL, data);
 
    if (ret_pathP) *ret_pathP = data->path;
    if (ret_curveP) *ret_curveP = data->curve;
@@ -1711,7 +1723,7 @@ typedef struct {
 
 /* This is a CurveTraverseFunc */
 void
-path_offset_active_helper (Path *path,
+path_offset_active_helper (NPath *path,
 			   PathCurve *curve,
 			   PathSegment *segment,
 			   gpointer ptr)
@@ -1726,7 +1738,7 @@ path_offset_active_helper (Path *path,
 }
 
 void
-path_offset_active (Path *path,
+path_offset_active (NPath *path,
 		    gdouble dx,
 		    gdouble dy)
 {
@@ -1748,12 +1760,12 @@ path_offset_active (Path *path,
 typedef struct {
    guint32 bits_set;
    guint32 bits_clear;
-   PathTool *path_tool;
+   GimpPathTool *path_tool;
 } Path_set_flags_type;
 
 /* This is a CurveTraverseFunc */
 void
-path_set_flags_helper (Path *path,
+path_set_flags_helper (NPath *path,
 		       PathCurve *curve,
 		       PathSegment *segment,
 		       gpointer ptr)
@@ -1768,14 +1780,17 @@ path_set_flags_helper (Path *path,
       segment->flags |= tmp->bits_set;
 
       /* 
-       * Some black magic: We try to remember, which is the single active segment.
-       * We count, how many segments are active (in path_tool->active_count) and
-       * XOR path_tool->single_active_segment every time we select or deselect
-       * an anchor. So if exactly one anchor is active, path_tool->single_active_segment
-       * points to it.
+       * Some black magic: We try to remember, which is the single active
+       * segment.  We count, how many segments are active (in
+       * path_tool->active_count) and XOR path_tool->single_active_segment
+       * every time we select or deselect an anchor. So if exactly one anchor
+       * is active, path_tool->single_active_segment points to it.
        */
 
-      /* If SEGMENT_ACTIVE state has changed change the PathTool data accordingly.*/
+#if 0
+      /* If SEGMENT_ACTIVE state has changed change the PathTool data
+       * accordingly.
+       */
       if (((segment->flags ^ oldflags) & SEGMENT_ACTIVE) && tmp && tmp->path_tool) {
 	 if (segment->flags & SEGMENT_ACTIVE)
 	    tmp->path_tool->active_count++;
@@ -1788,12 +1803,13 @@ path_set_flags_helper (Path *path,
          tmp_uint ^= GPOINTER_TO_UINT(segment);
 	 tmp->path_tool->single_active_segment = GUINT_TO_POINTER(tmp_uint);
       }
+#endif
    }
 }
 
 void
-path_set_flags (PathTool *path_tool,
-		Path *path,
+path_set_flags (GimpPathTool *path_tool,
+		NPath *path,
 		PathCurve *curve,
 		PathSegment *segment,
 		guint32 bits_set,
@@ -1821,11 +1837,12 @@ path_set_flags (PathTool *path_tool,
 
 /* This is a CurveTraverseFunc */
 void
-path_tool_draw_helper (Path *path,
+path_tool_draw_helper (NPath *path,
 		       PathCurve *curve,
 		       PathSegment *segment,
 		       gpointer tool_ptr)
 {
+#if 0
    Tool     * tool = (Tool *) tool_ptr;
    GDisplay * gdisp;
    PathTool * path_tool;
@@ -1871,13 +1888,15 @@ path_tool_draw_helper (Path *path,
    else if (!segment)
       fprintf(stderr, "path_tool_draw_segment: no segment to draw\n");
 #endif PATH_TOOL_DEBUG
+#endif
 }
 
 void
 path_tool_draw (Tool *tool)
 {
+#if 0
    GDisplay * gdisp;
-   Path * cur_path;
+   NPath * cur_path;
    PathTool * path_tool;
   
 #ifdef PATH_TOOL_DEBUG
@@ -1894,6 +1913,7 @@ path_tool_draw (Tool *tool)
    /* fprintf (stderr, "path_tool_draw end.\n");
     */
 #endif PATH_TOOL_DEBUG
+#endif
    
 }
 

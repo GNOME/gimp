@@ -19,6 +19,10 @@
 
 #include <math.h>
 
+#include <glib.h>
+#include <gdk/gdk.h>
+#include "apptypes.h"
+#include "path_curves.h"
 #include "path_bezier.h"
 
 #define HANDLE_HALFWIDTH 3
@@ -33,9 +37,8 @@
  */
 
 guint
-path_bezier_get_points (PathTool *path_tool,
-                        PathSegment *segment,
-			GdkPoint *points,
+path_bezier_get_points (PathSegment *segment,
+			gfloat *points,
 			guint npoints,
 			gdouble start,
 			gdouble end)
@@ -44,8 +47,7 @@ path_bezier_get_points (PathTool *path_tool,
 }
 
 void
-path_bezier_get_point (PathTool *path_tool,
-		       PathSegment *segment,
+path_bezier_get_point (PathSegment *segment,
 		       gdouble pos,
 		       gdouble *x,
 		       gdouble *y)
@@ -72,9 +74,10 @@ path_bezier_get_point (PathTool *path_tool,
 }
 
 void
-path_bezier_draw_handles (GimpTool *tool,
+path_bezier_draw_handles (GimpDrawTool *tool,
 			  PathSegment *segment)
 {
+#if 0
    PathTool *path_tool = (PathTool *) (tool->private);
    PathBezierData *data = (PathBezierData *) segment->data;
    GDisplay * gdisp = tool->gdisp;
@@ -112,10 +115,11 @@ path_bezier_draw_handles (GimpTool *tool,
 	       HANDLE_WIDTH, HANDLE_WIDTH);
       }
    }
+#endif
 }
 
 void
-path_bezier_draw_segment (GimpTool *tool,
+path_bezier_draw_segment (GimpDrawTool *tool,
 			  PathSegment *segment)
 {
    return;
@@ -123,8 +127,7 @@ path_bezier_draw_segment (GimpTool *tool,
 
 
 gdouble
-path_bezier_on_segment (GimpTool *tool,
-			PathSegment *segment,
+path_bezier_on_segment (PathSegment *segment,
 			gint x,
 			gint y,
 			gint halfwidth,
@@ -134,8 +137,7 @@ path_bezier_on_segment (GimpTool *tool,
 }
 
 void
-path_bezier_drag_segment (PathTool *path_tool,
-			  PathSegment *segment,
+path_bezier_drag_segment (PathSegment *segment,
 			  gdouble pos,
 			  gdouble dx,
 			  gdouble dy)
@@ -157,8 +159,7 @@ path_bezier_drag_segment (PathTool *path_tool,
 }
 
 gint
-path_bezier_on_handles (PathTool *path_tool,
-			PathSegment *segment,
+path_bezier_on_handles (PathSegment *segment,
 			gdouble x,
 			gdouble y,
 			gdouble halfwidth)
@@ -179,8 +180,7 @@ path_bezier_on_handles (PathTool *path_tool,
 }
 
 void
-path_bezier_drag_handles (PathTool *path_tool,
-			  PathSegment *segment,
+path_bezier_drag_handles (PathSegment *segment,
 			  gdouble dx,
 			  gdouble dy,
 			  gint handle_id)
@@ -198,16 +198,14 @@ path_bezier_drag_handles (PathTool *path_tool,
 
 			
 PathSegment *
-path_bezier_insert_anchor (PathTool *path_tool,
-			   PathSegment *segment,
+path_bezier_insert_anchor (PathSegment *segment,
 			   gdouble position)
 {
    return NULL;
 }
 
 void
-path_bezier_update_segment (PathTool *path_tool,
-			    PathSegment *segment)
+path_bezier_update_segment (PathSegment *segment)
 {
    return;
 }

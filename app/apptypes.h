@@ -79,6 +79,7 @@ typedef struct _GimpToolInfo        GimpToolInfo;
 typedef struct _GimpTool            GimpTool;
 typedef struct _GimpPaintTool       GimpPaintTool;
 typedef struct _GimpDrawTool        GimpDrawTool;
+typedef struct _GimpPathTool        GimpPathTool;
 typedef struct _GimpTransformTool   GimpTransformTool;
 
 typedef struct _GimpBezierSelectPoint  GimpBezierSelectPoint;

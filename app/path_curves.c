@@ -18,8 +18,13 @@
  */
 
 #include <math.h>
+#include <glib.h>
+#include <gdk/gdk.h>
+#include "apptypes.h"
 #include "path_curves.h"
 #include "path_bezier.h"
+
+#include "tools/gimpdrawtool.h"
 
 /* only here temporarily */
 PathSegment * path_split_segment   (PathSegment *, gdouble);
@@ -37,7 +42,7 @@ static CurveDescription CurveTypes[] =
    {
       NULL, /* path_bezier_get_points, */
       path_bezier_get_point,
-      path_bezier_draw_handles,
+      NULL, /* path_bezier_draw_handles, */
       NULL, /* path_bezier_draw_segment, */
       NULL, /* path_bezier_on_segment, */
       path_bezier_drag_segment,
@@ -60,25 +65,25 @@ static CurveDescription CurveTypes[] =
 
 
 guint
-path_curve_get_points (PathTool *path_tool,
-                       PathSegment *segment,
-		       GdkPoint *points,
+path_curve_get_points (PathSegment *segment,
+		       gdouble *points,
 		       guint npoints,
 		       gdouble start,
 		       gdouble end)
 {
    gdouble pos, x, y;
+
    gint index=0;
 
    if (segment && segment->next) {
       if (CurveTypes[segment->type].get_points)
-	 return (* CurveTypes[segment->type].get_points) (path_tool, segment, points, npoints, start, end);
+	 return (* CurveTypes[segment->type].get_points) (segment, points, npoints, start, end);
       else {
+
 	 if (npoints > 1 && segment && segment->next) {
    	    for (pos = start; pos <= end; pos += (end - start) / (npoints -1)) {
-   	       path_curve_get_point (path_tool, segment, pos, &x, &y);
-   	       points[index].x = (guint) (x + 0.5);
-   	       points[index].y = (guint) (y + 0.5);
+   	       path_curve_get_point (segment, pos, &points[index*2],
+			             &points[index*2+1]);
    	       index++;
    	    }
    	    return index;
@@ -95,21 +100,20 @@ path_curve_get_points (PathTool *path_tool,
 
 
 void
-path_curve_get_point (PathTool *path_tool,
-		      PathSegment *segment,
+path_curve_get_point (PathSegment *segment,
 		      gdouble position,
 		      gdouble *x,
 		      gdouble *y)
 {
    if (segment && segment->next) {
       if (CurveTypes[segment->type].get_point)
-	 (* CurveTypes[segment->type].get_point) (path_tool, segment, position, x, y);
+	 (* CurveTypes[segment->type].get_point) (segment, position, x, y);
       else {
 #if 0
 	 *x = segment->x + (segment->next->x - segment->x) * position;
          *y = segment->y + (segment->next->y - segment->y) * position;
 #else
-	 /* Only here for debugging purposes: A bezier curve fith fixed tangents */
+	 /* Only here for debugging purposes: A bezier curve with fixed tangents */
 
 	 *x = (1-position)*(1-position)*(1-position) * segment->x +
 		3 * position *(1-position)*(1-position) * (segment->x - 60) +
@@ -130,7 +134,7 @@ path_curve_get_point (PathTool *path_tool,
 }
 
 void
-path_curve_draw_handles (Tool *tool,
+path_curve_draw_handles (GimpDrawTool *tool,
 			 PathSegment *segment)
 {
    if (segment && CurveTypes[segment->type].draw_handles)
@@ -141,7 +145,7 @@ path_curve_draw_handles (Tool *tool,
 }
 			  
 void
-path_curve_draw_segment (Tool *tool,
+path_curve_draw_segment (GimpDrawTool *tool,
 			 PathSegment *segment)
 {
    gint x, y, numpts, index;
@@ -151,20 +155,9 @@ path_curve_draw_segment (Tool *tool,
          (* CurveTypes[segment->type].draw_segment) (tool, segment);
          return;
       } else {
-	 GdkPoint *coordinates = g_new (GdkPoint, 100);
-         numpts = path_curve_get_points (((PathTool *) tool->private), segment,
-				         coordinates, 100, 0, 1);
-	 for (index=0; index < numpts; index++) {
-	    gdisplay_transform_coords (tool->gdisp,
-		                       coordinates[index].x,
-				       coordinates[index].y,
-				       &x, &y, FALSE);
-	    coordinates[index].x = x;
-	    coordinates[index].y = y;
-	 }
-	 gdk_draw_lines (((PathTool *) tool->private)->core->win,
-	                 ((PathTool *) tool->private)->core->gc,
-			 coordinates, numpts);
+	 gdouble *coordinates = g_new (gdouble, 200);
+         numpts = path_curve_get_points (segment, coordinates, 100, 0, 1);
+	 gimp_draw_tool_draw_lines (tool, coordinates, 100, FALSE);
 	 g_free (coordinates);
       }
 
@@ -180,8 +173,7 @@ path_curve_draw_segment (Tool *tool,
 			  
 
 gdouble
-path_curve_on_segment (Tool *tool,
-		       PathSegment *segment,
+path_curve_on_segment (PathSegment *segment,
 		       gint x,
 		       gint y,
 		       gint halfwidth,
@@ -189,21 +181,21 @@ path_curve_on_segment (Tool *tool,
 {
 
    if (segment && CurveTypes[segment->type].on_segment)
-      return (* CurveTypes[segment->type].on_segment) (tool, segment, x, y, halfwidth, distance);
+      return (* CurveTypes[segment->type].on_segment) (segment, x, y, halfwidth, distance);
    else {
       if (segment && segment->next) {
 #if 1
 	 gint x1, y1, numpts, index;
-	 GdkPoint *coordinates = g_new (GdkPoint, 100);
+	 gdouble *coordinates;
 	 gint bestindex = -1;
 
+	 coordinates = g_new (gdouble, 200);
 	 *distance = halfwidth * halfwidth + 1;
 
-         numpts = path_curve_get_points (((PathTool *) tool->private), segment,
-				         coordinates, 100, 0, 1);
+         numpts = path_curve_get_points (segment, coordinates, 100, 0, 1);
 	 for (index=0; index < numpts; index++) {
-	    x1 = coordinates[index].x;
-	    y1 = coordinates[index].y;
+	    x1 = coordinates[2*index];
+	    y1 = coordinates[2*index+1];
 	    if (((x - x1) * (x - x1) + (y - y1) * (y - y1)) < *distance) {
 	       *distance = (x - x1) * (x - x1) + (y - y1) * (y - y1);
 	       bestindex = index;
@@ -247,47 +239,43 @@ path_curve_on_segment (Tool *tool,
 }
 
 void
-path_curve_drag_segment (PathTool *path_tool,
-			 PathSegment *segment,
+path_curve_drag_segment (PathSegment *segment,
 			 gdouble position,
 			 gdouble dx,
 			 gdouble dy)
 {
    if (segment && CurveTypes[segment->type].drag_segment)
-      (* CurveTypes[segment->type].drag_segment) (path_tool, segment, position, dx, dy);
+      (* CurveTypes[segment->type].drag_segment) (segment, position, dx, dy);
    return;
 }
 
 gint
-path_curve_on_handle (PathTool *path_tool,
-		      PathSegment *segment,
+path_curve_on_handle (PathSegment *segment,
 		      gdouble x,
 		      gdouble y,
 		      gdouble halfwidth)
 {
    if (segment && CurveTypes[segment->type].on_handles)
-      return (* CurveTypes[segment->type].on_handles) (path_tool, segment, x, y, halfwidth);
+      return (* CurveTypes[segment->type].on_handles) (segment, x, y, halfwidth);
    return FALSE;
 }
 
 void
-path_curve_drag_handle (PathTool *path_tool,
-			PathSegment *segment,
+path_curve_drag_handle (PathSegment *segment,
 			gdouble dx,
 			gdouble dy,
 			gint handle_id)
 {
    if (segment && CurveTypes[segment->type].drag_handle)
-      (* CurveTypes[segment->type].drag_handle) (path_tool, segment, dx, dy, handle_id);
+      (* CurveTypes[segment->type].drag_handle) (segment, dx, dy, handle_id);
 }
 
 PathSegment *
-path_curve_insert_anchor (PathTool *path_tool,
-			  PathSegment *segment,
+path_curve_insert_anchor (PathSegment *segment,
 			  gdouble position)
 {
    if (segment && CurveTypes[segment->type].insert_anchor)
-      return (* CurveTypes[segment->type].insert_anchor) (path_tool, segment, position);
+      return (* CurveTypes[segment->type].insert_anchor) (segment, position);
    else {
       return path_split_segment (segment, position);
    }
@@ -302,11 +290,10 @@ path_curve_flip_segment (PathSegment *segment)
 }
 
 void
-path_curve_update_segment (PathTool *path_tool,
-			   PathSegment *segment)
+path_curve_update_segment (PathSegment *segment)
 {
    if (segment && CurveTypes[segment->type].update_segment)
-      (* CurveTypes[segment->type].update_segment) (path_tool, segment);
+      (* CurveTypes[segment->type].update_segment) (segment);
    return;
 }
 

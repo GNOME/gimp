@@ -29,79 +29,67 @@
 #define __PATH_BEZIER_H__
 
 
-#include "path_toolP.h"
-
 typedef struct 
 {
    gdouble x1;
    gdouble y1;
    gdouble x2;
    gdouble y2;
-
 } PathBezierData;
 
 
 guint
-path_bezier_get_points (PathTool *path_tool,
-                        PathSegment *segment,
-			GdkPoint *points,
+path_bezier_get_points (PathSegment *segment,
+			gfloat *points,
 			guint npoints,
 			gdouble start,
 			gdouble end);
 
 void
-path_bezier_get_point (PathTool *path_tool,
-		       PathSegment *segment,
+path_bezier_get_point (PathSegment *segment,
 		       gdouble position,
 		       gdouble *x,
 		       gdouble *y);
 
 void
-path_bezier_draw_handles (GimpTool *tool,
+path_bezier_draw_handles (GimpDrawTool *tool,
 			  PathSegment *segment);
 			  
 void
-path_bezier_draw_segment (GimpTool *tool,
+path_bezier_draw_segment (GimpDrawTool *tool,
 			  PathSegment *segment);
 			  
-
 gdouble
-path_bezier_on_segment (GimpTool *tool,
-			PathSegment *segment,
+path_bezier_on_segment (PathSegment *segment,
 			gint x,
 			gint y,
 			gint halfwidth,
 			gint *distance);
 
 void
-path_bezier_drag_segment (PathTool *path_tool,
-			  PathSegment *segment,
+path_bezier_drag_segment (PathSegment *segment,
 			  gdouble position,
 			  gdouble dx,
 			  gdouble dy);
 
 gint
-path_bezier_on_handles (PathTool *path_tool,
-			PathSegment *segment,
+path_bezier_on_handles (PathSegment *segment,
 			gdouble x,
 			gdouble y,
 			gdouble halfwidth);
 
 void
-path_bezier_drag_handles (PathTool *path_tool,
-			  PathSegment *segment,
+path_bezier_drag_handles (PathSegment *segment,
 			  gdouble dx,
 			  gdouble dy,
 			  gint handle_id);
 
 PathSegment *
-path_bezier_insert_anchor (PathTool *path_tool,
-			   PathSegment *segment,
+path_bezier_insert_anchor (PathSegment *segment,
 			   gdouble position);
 
 void
-path_bezier_update_segment (PathTool *path_tool,
-			    PathSegment *segment);
+path_bezier_update_segment (PathSegment *segment);
 
 void
 path_bezier_flip_segment (PathSegment *segment);

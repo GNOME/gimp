@@ -54,6 +54,8 @@ libapptools_la_SOURCES = \
 	gimppainttool.c		\
 	gimppainttool.h		\
 	gimppainttool_kernels.h	\
+	gimppathtool.c		\
+	gimppathtool.h		\
 	gimppenciltool.c	\
 	gimppenciltool.h	\
 ##	gimpperspectivetool.c	\
@@ -90,7 +92,10 @@ libapptools_la_SOURCES = \
 	gimptoolinfo.h		\
 	tool_manager.c		\
 	tool_manager.h		\
-	tools.c
+	tools.c			\
+	path_tool.h		\
+	path_tool.c		\
+	path_toolP.h
 
 ##	brightness_contrast.c	\
 ##	brightness_contrast.h	\

@@ -1,5 +1,5 @@
 /* The GIMP -- an image manipulation program
- *
+ * 
  * This file Copyright (C) 1999 Simon Budig
  *
  * This program is free software; you can redistribute it and/or modify
@@ -20,14 +20,89 @@
 #ifndef __PATH_TOOL_H__
 #define __PATH_TOOL_H__
 
-#include "tools.h"
+/*
+ * Every new curve-type has to have a parameter between 0 and 1, and
+ * should go from a starting to a target point.
+ */
 
-/*  path functions  */
+/* Some defines... */
 
-Tool *        tools_new_path_tool    (void);
-void          tools_free_path_tool   (Tool *);
+#define PATH_TOOL_WIDTH 8
+#define PATH_TOOL_HALFWIDTH 4
+
+/*  function prototypes  */
 
 
-#endif  /*  __PATH_TOOL_H__  */
+/* Small functions to determine coordinates, iterate over path/curve/segment */
 
+void    path_segment_get_coordinates (PathSegment *,
+				      gdouble,
+				      gint *,
+				      gint *);
+void    path_traverse_path           (NPath *,
+				      PathTraverseFunc,
+				      CurveTraverseFunc,
+				      SegmentTraverseFunc,
+				      gpointer);
+void    path_traverse_curve          (NPath *,
+				      PathCurve *,
+				      CurveTraverseFunc,
+				      SegmentTraverseFunc,
+				      gpointer);
+void    path_traverse_segment        (NPath *,
+				      PathCurve *,
+				      PathSegment *,
+				      SegmentTraverseFunc,
+				      gpointer);
+gdouble path_locate_point            (NPath *,
+				      PathCurve **,
+				      PathSegment **,
+				      gint,
+				      gint,
+				      gint,
+				      gint,
+				      gint);
+
+/* Tools to manipulate paths, curves, segments */
+
+PathCurve   * path_add_curve       (NPath *,
+				    gint,
+				    gint);
+PathSegment * path_append_segment  (NPath *,
+				    PathCurve *,
+				    SegmentType,
+				    gint,
+				    gint);
+PathSegment * path_prepend_segment (NPath *,
+				    PathCurve *,
+				    SegmentType,
+				    gint,
+				    gint);
+PathSegment * path_split_segment   (PathSegment *,
+				    gdouble);
+void          path_join_curves     (PathSegment *,
+				    PathSegment *);
+void          path_flip_curve      (PathCurve *);
+void          path_free_path       (NPath *);
+void          path_free_curve      (PathCurve *);
+void          path_free_segment    (PathSegment *);
+void          path_delete_segment  (PathSegment *);
+void          path_print           (NPath *);
+void          path_offset_active   (NPath *, gdouble, gdouble);
+void          path_set_flags       (GimpPathTool *,
+				    NPath *,
+				    PathCurve *,
+				    PathSegment *,
+				    guint32,
+				    guint32);
+
+/* High level image-manipulation functions */
+
+void path_stroke                   (GimpPathTool *,
+				    NPath *);
+void path_to_selection             (GimpPathTool *,
+				    NPath *);
+
+
+#endif  /* __PATH_TOOL_H__ */
 

@@ -20,8 +20,85 @@
 #ifndef __PATH_CURVES_H__
 #define __PATH_CURVES_H__
 
-#include <gdk/gdk.h>
-#include "path_toolP.h"
+#undef PATH_TOOL_DEBUG
+#ifdef PATH_TOOL_DEBUG
+#include <stdio.h>
+#endif
+
+#define IMAGE_COORDS    1
+#define AA_IMAGE_COORDS 2
+#define SCREEN_COORDS   3
+
+#define SEGMENT_ACTIVE  1
+
+#define PATH_TOOL_DRAG  1
+
+#define PATH_TOOL_REDRAW_ALL      1
+#define PATH_TOOL_REDRAW_ACTIVE   2
+#define PATH_TOOL_REDRAW_HANDLES  4
+
+#define SUBDIVIDE  1000
+
+typedef enum { SEGMENT_LINE=0, SEGMENT_BEZIER} SegmentType;
+
+enum { ON_ANCHOR, ON_HANDLE, ON_CURVE, ON_CANVAS };
+
+typedef struct _path_segment PathSegment;
+typedef struct _path_curve   PathCurve;
+typedef struct _npath         NPath;
+
+
+struct _path_segment
+{
+   SegmentType  type;         /* What type of segment */
+   gdouble      x, y;         /* location of starting-point in image space  */
+   gpointer     data;         /* Additional data, dependant of segment-type */
+   
+   guint32      flags;        /* Various Flags: Is the Segment active? */
+
+   PathCurve   *parent;       /* the parent Curve */
+   PathSegment *next;         /* Next Segment or NULL */
+   PathSegment *prev;         /* Previous Segment or NULL */
+
+};
+
+
+struct _path_curve
+{
+   PathSegment *segments;    /* The segments of the curve */
+   PathSegment *cur_segment; /* the current segment */
+   NPath        *parent;      /* the parent Path */
+   PathCurve   *next;        /* Next Curve or NULL */
+   PathCurve   *prev;        /* Previous Curve or NULL */
+};
+
+
+struct _npath
+{
+   PathCurve *curves;        /* the curves */
+   PathCurve *cur_curve;     /* the current curve */
+   GString   *name;          /* the name of the path */
+   guint32    state;         /* is the path locked? */
+   /* GimpPathTool  *path_tool; */     /* The parent Path Tool */
+};
+
+
+typedef void
+(*PathTraverseFunc)    (NPath *,
+                        PathCurve *,
+                        gpointer);
+typedef void
+(*CurveTraverseFunc)   (NPath *,
+                        PathCurve *,
+                        PathSegment *,
+                        gpointer);
+typedef void
+(*SegmentTraverseFunc) (NPath *,
+                        PathCurve *,
+                        PathSegment *,
+                        gint,
+                        gint,
+                        gpointer);
 
 
 /*
@@ -32,57 +109,49 @@
  * Array is allocated.
  */
 
-typedef guint (*PathGetPointsFunc) (PathTool *path_tool,
-                        	    PathSegment *segment,
-				    GdkPoint *points,
+typedef guint (*PathGetPointsFunc) (PathSegment *segment,
+				    gdouble *points,
 				    guint npoints,
 				    gdouble start,
 				    gdouble end);
 
-typedef void (*PathGetPointFunc) (PathTool *path_tool,
-		       		  PathSegment *segment,
+typedef void (*PathGetPointFunc) (PathSegment *segment,
 		       		  gdouble position,
 		       		  gdouble *x,
 		       		  gdouble *y);
 
-typedef void (*PathDrawHandlesFunc) (Tool *tool,
+typedef void (*PathDrawHandlesFunc) (GimpDrawTool *tool,
 			  	     PathSegment *segment);
 			  
-typedef void (*PathDrawSegmentFunc) (Tool *tool,
+typedef void (*PathDrawSegmentFunc) (GimpDrawTool *tool,
 			  	     PathSegment *segment);
 			  
 
-typedef gdouble (*PathOnSegmentFunc) (Tool *tool,
-				      PathSegment *segment,
+typedef gdouble (*PathOnSegmentFunc) (PathSegment *segment,
 				      gint x,
 				      gint y,
 				      gint halfwidth,
 				      gint *distance);
 
-typedef void (*PathDragSegmentFunc) (PathTool *path_tool,
-				     PathSegment *segment,
+typedef void (*PathDragSegmentFunc) (PathSegment *segment,
 				     gdouble position,
 				     gdouble dx,
 				     gdouble dy);
 
-typedef gint (*PathOnHandlesFunc) (PathTool *path_tool,
-				   PathSegment *segment,
+typedef gint (*PathOnHandlesFunc) (PathSegment *segment,
 				   gdouble x,
 				   gdouble y,
 				   gdouble halfwidth);
 
-typedef void (*PathDragHandleFunc) (PathTool *path_tool,
-				    PathSegment *segment,
+typedef void (*PathDragHandleFunc) (PathSegment *segment,
 				    gdouble dx,
 				    gdouble dy,
 				    gint handle_id);
 
-typedef PathSegment * (*PathInsertAnchorFunc) (PathTool *path_tool,
-					       PathSegment *segment,
+typedef PathSegment * (*PathInsertAnchorFunc) (PathSegment *segment,
 					       gdouble position);
 
-typedef void (*PathUpdateSegmentFunc) (PathTool *path_tool,
-			    	       PathSegment *segment);
+typedef void (*PathUpdateSegmentFunc) (PathSegment *segment);
 
 typedef void (*PathFlipSegmentFunc) (PathSegment *segment);
 
@@ -108,66 +177,58 @@ typedef struct {
 
 
 guint
-path_curve_get_points (PathTool *path_tool,
-		       PathSegment *segment,
-		       GdkPoint *points,
+path_curve_get_points (PathSegment *segment,
+		       gdouble *points,
 		       guint npoints,
 		       gdouble start,
 		       gdouble end);
 
 void
-path_curve_get_point (PathTool *path_tool,
-		      PathSegment *segment,
+path_curve_get_point (PathSegment *segment,
 		      gdouble position,
 		      gdouble *x,
 		      gdouble *y);
 
 void
-path_curve_draw_handles (Tool *tool,
+path_curve_draw_handles (GimpDrawTool *tool,
 			 PathSegment *segment);
 			  
 void
-path_curve_draw_segment (Tool *tool,
+path_curve_draw_segment (GimpDrawTool *tool,
 			 PathSegment *segment);
 			  
 
 gdouble
-path_curve_on_segment (Tool *tool,
-		       PathSegment *segment,
+path_curve_on_segment (PathSegment *segment,
 		       gint x,
 		       gint y,
 		       gint halfwidth,
 		       gint *distance);
 
 void
-path_curve_drag_segment (PathTool *path_tool,
-			 PathSegment *segment,
+path_curve_drag_segment (PathSegment *segment,
 			 gdouble position,
 			 gdouble dx,
 			 gdouble dy);
 
 gint
-path_curve_on_handle (PathTool *path_tool,
-		      PathSegment *segment,
+path_curve_on_handle (PathSegment *segment,
 		      gdouble x,
 		      gdouble y,
 		      gdouble halfwidth);
 
 void
-path_curve_drag_handle (PathTool *path_tool,
-			PathSegment *segment,
+path_curve_drag_handle (PathSegment *segment,
 			gdouble dx,
 			gdouble dy,
 			gint handle_id);
 
 PathSegment *
-path_curve_insert_anchor (PathTool *path_tool,
-			  PathSegment *segment,
-			  gdouble position);
+path_curve_insert_anchor (PathSegment *segment,
+		          gdouble position);
 
 void
-path_curve_update_segment (PathTool *path_tool,
-			   PathSegment *segment);
+path_curve_update_segment (PathSegment *segment);
 
 void
 path_curve_flip_segment (PathSegment *segment);

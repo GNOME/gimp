@@ -22,7 +22,9 @@
 
 #include "apptypes.h"
  
+#include "gdisplay.h"
 #include "gimpdrawtool.h"
+#include "libgimpmath/gimpmath.h"
 
 
 enum
@@ -224,4 +226,71 @@ gimp_draw_tool_pause (GimpDrawTool *core)
     }
 
   core->paused_count++;
+}
+
+
+void
+gimp_draw_tool_draw_handle (GimpDrawTool *draw_tool, 
+			    gdouble x,
+			    gdouble y,
+			    gint size,
+			    gint type)
+{
+  GimpTool *tool = GIMP_TOOL (draw_tool);
+  gdouble hx, hy;
+  gint filled;
+
+  gdisplay_transform_coords_f (tool->gdisp, x, y, &hx, &hy, TRUE);
+
+  hx = ROUND (hx);
+  hy = ROUND (hy);
+
+  filled = type % 2;
+
+  if (type < 2)
+    gdk_draw_rectangle (tool->gdisp->canvas->window,
+			draw_tool->gc, filled,
+			hx - size/2, hy - size/2,
+			size, size); 
+  else
+    gdk_draw_arc       (tool->gdisp->canvas->window,
+			draw_tool->gc, filled,
+			hx - size/2, hy - size/2,
+			size, size, 0, 360); 
+
+}
+
+
+void
+gimp_draw_tool_draw_lines (GimpDrawTool *draw_tool, 
+			   gdouble *points,
+			   gint npoints,
+			   gint filled)
+{
+  GimpTool *tool = GIMP_TOOL (draw_tool);
+  GdkPoint *coords = g_new (GdkPoint, npoints);
+
+  gint i;
+  gdouble sx, sy;
+
+  for (i=0; i < npoints ; i++)
+  {
+    gdisplay_transform_coords_f (tool->gdisp, points[i*2], points[i*2+1],
+				 &sx, &sy, TRUE);
+    coords[i].x = ROUND (sx);
+    coords[i].y = ROUND (sy);
+  }
+
+
+  if (filled)
+    gdk_draw_polygon (tool->gdisp->canvas->window,
+	              draw_tool->gc, TRUE,
+		      coords, npoints);
+  else
+    gdk_draw_lines (tool->gdisp->canvas->window,
+	            draw_tool->gc,
+		    coords, npoints);
+
+  g_free (coords);
+
 }

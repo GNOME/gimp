@@ -240,6 +240,10 @@ gimp_SOURCES = \
 	paths_dialog.c		\
 	paths_dialog.h		\
 	paths_dialogP.h		\
+	path_curves.h		\
+	path_curves.c		\
+	path_bezier.h		\
+	path_bezier.c		\
 	pattern_header.h	\
 	pattern_select.c	\
 	pattern_select.h	\

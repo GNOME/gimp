@@ -20,11 +20,11 @@
 
 #undef PATH_TOOL_DEBUG
 
-#include "draw_core.h"
-
 #ifdef PATH_TOOL_DEBUG
 #include <stdio.h>
 #endif
+
+#include "apptypes.h"
 
 #define IMAGE_COORDS    1
 #define AA_IMAGE_COORDS 2
@@ -46,9 +46,7 @@ enum { ON_ANCHOR, ON_HANDLE, ON_CURVE, ON_CANVAS };
 
 typedef struct _path_segment PathSegment;
 typedef struct _path_curve   PathCurve;
-typedef struct _path         Path;
-
-typedef struct _path_tool    PathTool;
+typedef struct _npath         NPath;
 
 struct _path_segment
 {
@@ -69,22 +67,23 @@ struct _path_curve
 {
    PathSegment *segments;    /* The segments of the curve */
    PathSegment *cur_segment; /* the current segment */
-   Path        *parent;      /* the parent Path */
+   NPath        *parent;      /* the parent Path */
    PathCurve   *next;        /* Next Curve or NULL */
    PathCurve   *prev;        /* Previous Curve or NULL */
 };
 
 
-struct _path
+struct _npath
 {
    PathCurve *curves;        /* the curves */
    PathCurve *cur_curve;     /* the current curve */
    GString   *name;          /* the name of the path */
    guint32    state;         /* is the path locked? */
-   PathTool  *path_tool;     /* The parent Path Tool */
+   /* GimpPathTool  *path_tool; */     /* The parent Path Tool */
 };
 
 
+#if 0
 struct _path_tool
 {
    gint         click_type;      /* where did the user click?         */
@@ -92,7 +91,7 @@ struct _path_tool
    gint         click_y;         /* Y-coordinate of the click         */
    gint         click_halfwidth;
    guint        click_modifier;  /* what modifiers were pressed?      */
-   Path        *click_path;      /* On which Path/Curve/Segment       */
+   NPath        *click_path;      /* On which Path/Curve/Segment       */
    PathCurve   *click_curve;     /* was the click?                    */
    PathSegment *click_segment;
    gdouble      click_position;  /* The position on the segment       */
@@ -109,21 +108,23 @@ struct _path_tool
    gint         state;           /* state of tool                     */
    gint         draw;            /* all or part                       */
    DrawCore    *core;            /* Core drawing object               */
-   Path        *cur_path;        /* the current active path           */
+   NPath        *cur_path;        /* the current active path           */
    GSList     **scanlines;       /* used in converting a path         */
 };
 
+#endif
+
 typedef void
-(*PathTraverseFunc)    (Path *,
+(*PathTraverseFunc)    (NPath *,
 			PathCurve *,
 			gpointer);
 typedef void
-(*CurveTraverseFunc)   (Path *,
+(*CurveTraverseFunc)   (NPath *,
 			PathCurve *,
 			PathSegment *,
 			gpointer);
 typedef void
-(*SegmentTraverseFunc) (Path *,
+(*SegmentTraverseFunc) (NPath *,
 			PathCurve *,
 			PathSegment *,
 			gint,
