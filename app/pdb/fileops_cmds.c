@@ -41,6 +41,7 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
+#include "base/temp-buf.h"
 #include "config/gimpbaseconfig.h"
 #include "config/gimpconfig-path.h"
 #include "core/gimp.h"
@@ -224,12 +225,9 @@ file_load_thumbnail_invoker (Gimp     *gimp,
   gint32 height = 0;
   gint32 num_bytes = 0;
   guint8 *thumb_data = NULL;
-  gchar *pname;
-  gchar *fname;
-  gchar *tname;
-  guchar *raw_thumb;
-  gchar *imginfo = NULL;
-  gint i;
+  gchar *uri;
+  GimpImagefile *imagefile = NULL;
+  TempBuf *temp_buf = NULL;
 
   filename = (gchar *) args[0].value.pdb_pointer;
   if (filename == NULL)
@@ -237,30 +235,43 @@ file_load_thumbnail_invoker (Gimp     *gimp,
 
   if (success)
     {
-      pname = g_path_get_dirname (filename);
-      fname = g_path_get_basename (filename);
-      tname = g_build_filename (pname, ".xvpics", fname, NULL);
-      g_free (pname);
-      g_free (fname);
-      raw_thumb = file_utils_readXVThumb (tname, &width, &height, &imginfo);
-      g_free (tname);
+      uri = g_filename_to_uri (filename, NULL, NULL);
     
-      if (raw_thumb)
+      if (uri)
+	imagefile = gimp_imagefile_new (gimp, uri);
+    
+      if (imagefile)
 	{
-	  num_bytes = 3 * width * height;
-	  thumb_data = g_malloc (num_bytes);
-	      
-	  for (i=0; i<width*height; i++)
-	    {
-	      thumb_data[i*3  ] = ((raw_thumb[i]>>5)*255)/7;
-	      thumb_data[i*3+1] = (((raw_thumb[i]>>2)&7)*255)/7;
-	      thumb_data[i*3+2] = (((raw_thumb[i])&3)*255)/3;
-	    }
-	  g_free (raw_thumb);
+	  temp_buf = gimp_viewable_get_preview (GIMP_VIEWABLE (imagefile),
+						    GIMP_THUMBNAIL_SIZE_NORMAL,
+						GIMP_THUMBNAIL_SIZE_NORMAL);
+	  g_object_unref (imagefile);
+	}
+    
+      if (temp_buf && temp_buf->bytes != 3)
+	{
+	  g_warning ("FIXME: handle thumbnails with bpp != 3");
+    
+	  temp_buf_free (temp_buf);
+	  temp_buf = NULL;
+	}
+    
+      if (temp_buf)
+	{
+	  width      = temp_buf->width;
+	  height     = temp_buf->height;
+	  num_bytes  = 3 * width * height;
+	  thumb_data = g_memdup (temp_buf_data (temp_buf), num_bytes);
+    
+	  temp_buf_free (temp_buf);
 	  success = TRUE;
 	}
       else
-	success = FALSE;
+	{
+	  success = FALSE;
+	}
+    
+	g_free (uri);
     }
 
   return_args = procedural_db_return_args (&file_load_thumbnail_proc, success);
@@ -316,7 +327,7 @@ static ProcRecord file_load_thumbnail_proc =
   "This procedure tries to load a thumbnail that belongs to the file with the given filename. This name is a full pathname. The returned data is an array of colordepth 3 (RGB), regardless of the image type. Width and height of the thumbnail are also returned. Don't use this function if you need a thumbnail of an already opened image, use gimp_image_thumbnail instead.",
   "Adam D. Moss, Sven Neumann",
   "Adam D. Moss, Sven Neumann",
-  "1999-2000",
+  "1999-2003",
   GIMP_INTERNAL,
   1,
   file_load_thumbnail_inargs,

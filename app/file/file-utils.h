@@ -32,12 +32,4 @@ gchar         * file_utils_uri_to_utf8_basename (const gchar   *uri);
 gchar         * file_utils_uri_to_utf8_filename (const gchar   *uri);
 
 
-/* .xvpics thumbnail stuff  */
-
-guchar        * file_utils_readXVThumb          (const gchar   *fnam,
-                                                 gint          *w,
-                                                 gint          *h,
-                                                 gchar        **imginfo /* caller frees if != NULL */);
-
-
 #endif /* __FILE_UTILS_H__ */

@@ -1,3 +1,20 @@
+2003-05-15  Sven Neumann  <sven@gimp.org>
+
+	* app/base/temp-buf.c: added some sanity checks to temp_buf
+	conversion routines.
+
+	* tools/pdbgen/pdb/fileops.pdb (file_load_thumbnail_invoker): use
+	GimpImagefile to load a thumbnail. Only works for RGB images yet.
+	This adresses bug #113033.
+
+	* app/pdb/fileops_cmds.c: regenerated.
+
+	* app/file/file-utils.[ch]: removed file_utils_readXVThumb(). It
+	is not needed any longer since GimpImagefile also handles the
+	old-style .xvpics.
+
+	* plug-ins/script-fu/scripts/copy-visible.scm: fixed typo.
+
 2003-05-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/xcf/xcf-save.c: cleaned up the old path saving functions

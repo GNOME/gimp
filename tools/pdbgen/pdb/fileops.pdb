@@ -169,7 +169,7 @@ instead.
 HELP
 
     $author = $copyright = 'Adam D. Moss, Sven Neumann';
-    $date = '1999-2000';
+    $date = '1999-2003';
 
     @inargs = (
 	{ name => 'filename', type => 'string',
@@ -189,34 +189,48 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'gchar *pname', 'gchar *fname', 'gchar *tname',
-		  'guchar *raw_thumb', 'gchar *imginfo = NULL', 'gint i' ],
-	code => <<'CODE'
+	vars    => [ 'gchar *uri',
+                     'GimpImagefile *imagefile = NULL',
+                     'TempBuf *temp_buf = NULL' ],
+	code    => <<'CODE'
 {
-  pname = g_path_get_dirname (filename);
-  fname = g_path_get_basename (filename);
-  tname = g_build_filename (pname, ".xvpics", fname, NULL);
-  g_free (pname);
-  g_free (fname);
-  raw_thumb = file_utils_readXVThumb (tname, &width, &height, &imginfo);
-  g_free (tname);
+  uri = g_filename_to_uri (filename, NULL, NULL);
 
-  if (raw_thumb)
+  if (uri)
+    imagefile = gimp_imagefile_new (gimp, uri);
+
+  if (imagefile)
     {
-      num_bytes = 3 * width * height;
-      thumb_data = g_malloc (num_bytes);
-	  
-      for (i=0; i<width*height; i++)
-        {
-	  thumb_data[i*3  ] = ((raw_thumb[i]>>5)*255)/7;
-	  thumb_data[i*3+1] = (((raw_thumb[i]>>2)&7)*255)/7;
-	  thumb_data[i*3+2] = (((raw_thumb[i])&3)*255)/3;
-	}
-      g_free (raw_thumb);
+      temp_buf = gimp_viewable_get_preview (GIMP_VIEWABLE (imagefile),
+    	                                    GIMP_THUMBNAIL_SIZE_NORMAL,
+                                            GIMP_THUMBNAIL_SIZE_NORMAL);
+      g_object_unref (imagefile);
+    }
+
+  if (temp_buf && temp_buf->bytes != 3)
+    {
+      g_warning ("FIXME: handle thumbnails with bpp != 3");
+
+      temp_buf_free (temp_buf);
+      temp_buf = NULL;
+    }
+
+  if (temp_buf)
+    {
+      width      = temp_buf->width;
+      height     = temp_buf->height;
+      num_bytes  = 3 * width * height;
+      thumb_data = g_memdup (temp_buf_data (temp_buf), num_bytes);
+
+      temp_buf_free (temp_buf);
       success = TRUE;
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
+
+    g_free (uri);
 }
 CODE
     );
@@ -445,7 +459,8 @@ CODE
     );
 }
 
-@headers = qw(<sys/types.h> <unistd.h> "core/gimp.h" "core/gimpimagefile.h"
+@headers = qw(<sys/types.h> <unistd.h> "base/temp-buf.h"
+              "core/gimp.h" "core/gimpimagefile.h"
               "plug-in/plug-in.h" "plug-in/plug-ins.h" "plug-in/plug-in-proc.h"
               "file/file-utils.h");
 

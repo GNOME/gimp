@@ -49,7 +49,8 @@
   
   ; merge all visible layers
   (if (> num-visi-layers 1)
-      (set! merged-layer (car (gimp-image-merge-visible-layers image EXPAND-AS-NECESSARY)))
+      (set! merged-layer (car (gimp-image-merge-visible-layers image
+                                                               EXPAND-AS-NECESSARY)))
       (if (> num-visi-layers 0)
 	  (set! merged-layer copy)))
 
@@ -72,10 +73,10 @@
 
 (script-fu-register "script-fu-copy-visible"
 		    _"<Image>/Edit/Copy Visible"
-		    "Copy the visible selction"
+		    "Copy the visible selection"
 		    "Sven Neumann <sven@gimp.org>, Adrian Likins <adrian@gimp.org>"
 		    "Sven Neumann, Adrian Likins"
 		    "01/24/1998"
 		    "RGB* INDEXED* GRAY*"
-		    SF-IMAGE "Image" 0
+		    SF-IMAGE    "Image"    0
 		    SF-DRAWABLE "Drawable" 0)

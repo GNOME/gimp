@@ -45,7 +45,7 @@
 #include "paint-funcs/paint-funcs.h"
 
 
-static guchar * temp_buf_allocate (guint);
+static guchar * temp_buf_allocate (guint    size);
 static void     temp_buf_to_color (TempBuf *src_buf,
 				   TempBuf *dest_buf);
 static void     temp_buf_to_gray  (TempBuf *src_buf,
@@ -63,11 +63,7 @@ extern GimpBaseConfig *base_config;
 static guchar *
 temp_buf_allocate (guint size)
 {
-  guchar *data;
-
-  data = g_new (guchar, size);
-
-  return data;
+  return g_new (guchar, size);
 }
 
 
@@ -86,8 +82,21 @@ temp_buf_to_color (TempBuf *src_buf,
 
   num_pixels = src_buf->width * src_buf->height;
 
-  if (dest_buf->bytes == 4)
+  switch (dest_buf->bytes)
     {
+    case 3:
+      g_return_if_fail (src_buf->bytes != 1);
+      while (num_pixels--)
+        {
+          guchar tmpch;
+          *dest++ = tmpch = *src++;
+          *dest++ = tmpch;
+          *dest++ = tmpch;
+        }
+      break;
+      
+    case 4:
+      g_return_if_fail (src_buf->bytes != 2);
       while (num_pixels--)
         {
           guchar tmpch;
@@ -97,16 +106,11 @@ temp_buf_to_color (TempBuf *src_buf,
 
           *dest++ = *src++;  /* alpha channel */
         }
-    }
-  else
-    {
-      while (num_pixels--)
-        {
-          guchar tmpch;
-          *dest++ = tmpch = *src++;
-          *dest++ = tmpch;
-          *dest++ = tmpch;
-        }
+      break;
+
+    default:
+      g_return_if_reached ();
+      break;
     }
 }
 
@@ -124,8 +128,21 @@ temp_buf_to_gray (TempBuf *src_buf,
 
   num_pixels = src_buf->width * src_buf->height;
 
-  if (dest_buf->bytes == 2)
+  switch (dest_buf->bytes)
     {
+    case 1:
+      g_return_if_fail (src_buf->bytes != 3);
+      while (num_pixels--)
+        {
+          pix = INTENSITY (src[0], src[1], src[2]);
+          *dest++ = (guchar) pix;
+
+          src += 3;
+        }
+      break;
+
+    case 2:
+      g_return_if_fail (src_buf->bytes != 4);
       while (num_pixels--)
         {
           pix = INTENSITY (src[0], src[1], src[2]);
@@ -135,16 +152,11 @@ temp_buf_to_gray (TempBuf *src_buf,
 
           src += 4;
         }
-    }
-  else
-    {
-      while (num_pixels--)
-        {
-          pix = INTENSITY (src[0], src[1], src[2]);
-          *dest++ = (guchar) pix;
+      break;
 
-          src += 3;
-        }
+    default:
+      g_return_if_reached ();
+      break;
     }
 }
 
@@ -315,13 +327,13 @@ temp_buf_copy (TempBuf *src,
 
   if (src->bytes != dest->bytes)
     {
-      if (src->bytes == 4 && dest->bytes == 2)  /* RGBA -> GRAYA */
+      if (src->bytes == 4 && dest->bytes == 2)       /* RGBA  -> GRAYA */
         temp_buf_to_gray (src, dest);
-      else if (src->bytes == 3 && dest->bytes == 1)  /* RGB -> GRAY */
+      else if (src->bytes == 3 && dest->bytes == 1)  /* RGB   -> GRAY  */
         temp_buf_to_gray (src, dest);
-      else if (src->bytes == 2 && dest->bytes == 4) /* GRAYA -> RGBA */
+      else if (src->bytes == 2 && dest->bytes == 4)  /* GRAYA -> RGBA  */
         temp_buf_to_color (src, dest);
-      else if (src->bytes == 1 && dest->bytes == 3) /* GRAYA -> RGBA */
+      else if (src->bytes == 1 && dest->bytes == 3)  /* GRAY  -> RGB   */
         temp_buf_to_color (src, dest);
       else
         g_warning ("temp_buf_copy(): unimplemented color conversion");
@@ -697,12 +709,17 @@ temp_buf_swap (TempBuf *buf)
   /*  Open file for overwrite  */
   if ((fp = fopen (filename, "wb")))
     {
-      size_t blocks_written;
-      blocks_written = fwrite (swap->data, swap->width * swap->height * swap->bytes, 1, fp);
-      /* Check whether all bytes were written and fclose() was able to flush its buffers */
+      gsize blocks_written;
+
+      blocks_written = fwrite (swap->data,
+                               swap->width * swap->height * swap->bytes, 1,
+                               fp);
+
+      /* Check whether all bytes were written and fclose() was able
+         to flush its buffers */
       if ((0 != fclose (fp)) || (1 != blocks_written))
         {
-          (void) unlink (filename);
+          unlink (filename);
           perror ("Write error on temp buf");
           g_message ("Cannot write \"%s\"", filename);
           g_free (filename);
@@ -711,7 +728,7 @@ temp_buf_swap (TempBuf *buf)
     }
   else
     {
-      (void) unlink (filename);
+      unlink (filename);
       perror ("Error in temp buf caching");
       g_message ("Cannot write \"%s\"", filename);
       g_free (filename);
@@ -750,9 +767,13 @@ temp_buf_unswap (TempBuf *buf)
     {
       if ((fp = fopen (buf->filename, "rb")))
 	{
-	  size_t blocks_read;
-	  blocks_read = fread (buf->data, buf->width * buf->height * buf->bytes, 1, fp);
-	  (void) fclose (fp);
+	  gsize blocks_read;
+
+	  blocks_read = fread (buf->data,
+                               buf->width * buf->height * buf->bytes, 1,
+                               fp);
+
+	  fclose (fp);
 	  if (blocks_read != 1)
             perror ("Read error on temp buf");
 	  else
@@ -764,8 +785,10 @@ temp_buf_unswap (TempBuf *buf)
       /*  Delete the swap file  */
       unlink (buf->filename);
     }
+
   if (!succ)
-    g_message ("Error in temp buf caching: information swapped to disk was lost!");
+    g_message ("Error in temp buf caching: "
+               "information swapped to disk was lost!");
 
   g_free (buf->filename);   /*  free filename  */
   buf->filename = NULL;
@@ -794,7 +817,8 @@ temp_buf_swap_free (TempBuf *buf)
       unlink (buf->filename);
     }
   else
-    g_message ("Error in temp buf disk swapping: information swapped to disk was lost!");
+    g_message ("Error in temp buf disk swapping: "
+               "information swapped to disk was lost!");
 
   if (buf->filename)
     g_free (buf->filename);   /*  free filename  */
