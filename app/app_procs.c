@@ -272,7 +272,7 @@ splash_text_draw (GtkWidget *widget)
 		   _("The GIMP"));
   gdk_font_unref (font);
 
-  font = gdk_font_load (_("-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*"));
+  font = gdk_fontset_load (_("-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"));
   gdk_draw_string (widget->window,
 		   font,
 		   widget->style->fg_gc[GTK_STATE_NORMAL],

@@ -1,3 +1,10 @@
+2000-02-11  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* plug-ins/gap/gap_decode_xanim.c
+	* plug-ins/gap/gap_lib.c: fixed typo.
+
+	* app/app_procs.c: i18n fix.
+
 Fri Feb 11 01:40:22 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/menus.c: This should guard us against unintentionally wrong

@@ -996,7 +996,7 @@ int p_decide_save_as(gint32 image_id, char *sav_name)
   int               l_save_as_mode;
   GRunModeType      l_run_mode;  
 
-  l_msg = _("You are using a fileformat != xcf\nSave Operations may result\nin loss of layerinformation");
+  l_msg = _("You are using a file format != xcf\nSave Operations may result\nin loss of layer information");
   /* check if there are SAVE_AS_MODE settings (from privious calls within one gimp session) */
   l_save_as_mode = -1;
   /* sprintf(l_save_as_name, "plug_in_gap_plugins_SAVE_AS_MODE_%d", (int)image_id);*/

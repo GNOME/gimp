@@ -280,13 +280,13 @@ p_xanim_dialog   (gint32 *first_frame,
   argv[9].int_ret   = 1;
 
   p_init_arr_arg(&argv[10], WGT_TOGGLE);
-  argv[10].label_txt = _("xanim asynchron");
-  argv[10].help_txt  = _("Run xanim asynchron and delete unwanted frames\n"
+  argv[10].label_txt = _("Run asynchronously");
+  argv[10].help_txt  = _("Run xanim asynchronously and delete unwanted frames\n"
                         "(out of the specified range) while xanim is still running");
   argv[10].int_ret   = 1;
    
   if(TRUE == p_array_dialog(_("Split any Xanim readable Video to Frames"), 
-			    _("Select Framerange"), XADIALOG_NUM_ARGS, argv))
+			    _("Select Frame range"), XADIALOG_NUM_ARGS, argv))
   {
      if(argv[1].int_ret < argv[2].int_ret )
      {
