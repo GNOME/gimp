@@ -28,6 +28,32 @@
 
 
 void
+gimp_drawable_transform_matrix_flip (GimpOrientationType  flip_type,
+                                     gdouble              axis,
+                                     GimpMatrix3         *result)
+{
+  gimp_matrix3_identity (result);
+
+  switch (flip_type)
+    {
+    case GIMP_ORIENTATION_HORIZONTAL:
+      gimp_matrix3_translate (result, - axis, 0.0);
+      gimp_matrix3_scale (result, -1.0, 1.0);
+      gimp_matrix3_translate (result, axis, 0.0);
+      break;
+
+    case GIMP_ORIENTATION_VERTICAL:
+      gimp_matrix3_translate (result, 0.0, - axis);
+      gimp_matrix3_scale (result, 1.0, -1.0);
+      gimp_matrix3_translate (result, 0.0, axis);
+      break;
+
+    case GIMP_ORIENTATION_UNKNOWN:
+      break;
+    }
+}
+
+void
 gimp_drawable_transform_matrix_rotate (gint         x1,
                                        gint         y1,
                                        gint         x2,

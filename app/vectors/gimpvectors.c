@@ -380,8 +380,7 @@ gimp_vectors_scale (GimpItem              *item,
 
       gimp_stroke_scale (stroke,
                          (gdouble) new_width  / (gdouble) item->width,
-                         (gdouble) new_height / (gdouble) item->height,
-                         new_offset_x, new_offset_y);
+                         (gdouble) new_height / (gdouble) item->height);
     }
 
   GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
@@ -413,7 +412,7 @@ gimp_vectors_resize (GimpItem *item,
     {
       GimpStroke *stroke = list->data;
 
-      gimp_stroke_resize (stroke, new_width, new_height, offset_x, offset_y);
+      gimp_stroke_translate (stroke, offset_x, offset_y);
     }
 
   GIMP_ITEM_CLASS (parent_class)->resize (item, new_width, new_height,
@@ -430,6 +429,9 @@ gimp_vectors_flip (GimpItem            *item,
 {
   GimpVectors *vectors;
   GList       *list;
+  GimpMatrix3  matrix;
+
+  gimp_drawable_transform_matrix_flip (flip_type, axis, &matrix);
 
   vectors = GIMP_VECTORS (item);
 
@@ -443,7 +445,7 @@ gimp_vectors_flip (GimpItem            *item,
     {
       GimpStroke *stroke = list->data;
 
-      gimp_stroke_flip (stroke, flip_type, axis, clip_result);
+      gimp_stroke_transform (stroke, &matrix);
     }
 
   gimp_vectors_thaw (vectors);
@@ -489,7 +491,7 @@ gimp_vectors_rotate (GimpItem         *item,
     {
       GimpStroke *stroke = list->data;
 
-      gimp_stroke_rotate (stroke, rotate_type, center_x, center_y, clip_result);
+      gimp_stroke_transform (stroke, &matrix);
     }
 
   gimp_vectors_thaw (vectors);
@@ -525,8 +527,7 @@ gimp_vectors_transform (GimpItem               *item,
     {
       GimpStroke *stroke = list->data;
 
-      gimp_stroke_transform (stroke, matrix, direction, interpolation_type,
-                             clip_result, progress_callback, progress_data);
+      gimp_stroke_transform (stroke, &local_matrix);
     }
 
   gimp_vectors_thaw (vectors);

@@ -20,6 +20,9 @@
 #define __GIMP_DRAWABLE_TRANSFORM_UTILS_H__
 
 
+void   gimp_drawable_transform_matrix_flip          (GimpOrientationType  flip_type,
+                                                     gdouble      axis,
+                                                     GimpMatrix3 *result);
 void   gimp_drawable_transform_matrix_rotate        (gint         x1,
                                                      gint         y1,
                                                      gint         x2,
