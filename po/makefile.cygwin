@@ -1,11 +1,11 @@
-## Makefile for building the GIMP message catalogs with Microsoft nmake
-## Use: nmake -f makefile.msc install
+## Makefile for compiling the GIMP message
+## Use: make -f makefile.msc install
 ## You will need: - msgfmt from GNU gettext,
 ##		  - jconv (http://www.oreilly.com/~lunde/j_tools.html)
 ##		  - sjis_esc, included here eventually
 
 # Locale directory.
-LOCALEDIR = c:\gimp\locale
+LOCALEDIR = /gimp/locale
 
 LANGUAGES= cs da de fi fr hu it ja ja.sjis ko nl no pl ru sk sv
 
@@ -13,13 +13,11 @@ LANGUAGES= cs da de fi fr hu it ja ja.sjis ko nl no pl ru sk sv
 
 # Nothing much configurable below
 
-all :
-	for %l in ($(LANGUAGES)) do nmake -nologo -f makefile.msc %l.gmo
+all : $(addsuffix .gmo,$(LANGUAGES))
 
 install : all
-	for %l in ($(LANGUAGES)) do md $(LOCALEDIR)\%l
-	for %l in ($(LANGUAGES)) do md $(LOCALEDIR)\%l\LC_MESSAGES
-	for %l in ($(LANGUAGES)) do copy %l.gmo $(LOCALEDIR)\%l\LC_MESSAGES\gimp.mo
+	mkdir -p $(addsuffix /LC_MESSAGES,$(addprefix $(LOCALEDIR)/,$(LANGUAGES)))
+	for l in $(LANGUAGES); do cp $$l.gmo $(LOCALEDIR)/$$l/LC_MESSAGES/gimp.mo; done
 
 .SUFFIXES: .po .gmo
 
@@ -33,5 +31,4 @@ ja.sjis.po: ja.po
 	jconv -ie -os <ja.po | sjis_esc >ja.sjis.po
 
 clean:
-	del *.gmo
-	del ja.sjis.po
+	rm *.gmo ja.sjis.po
