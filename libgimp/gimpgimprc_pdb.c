@@ -65,7 +65,7 @@ gimp_gimprc_query (const gchar *token)
 
 /**
  * gimp_gimprc_set:
- * @token: The token to modify.
+ * @token: The token to add or modify.
  * @value: The value to set the token to.
  *
  * Sets a gimprc token to a value and saves it in the gimprc.
@@ -74,10 +74,7 @@ gimp_gimprc_query (const gchar *token)
  * the gimprc file that is considered extraneous to the operation of
  * the GIMP. Plug-ins that need configuration information can use this
  * function to store it, and gimp_gimprc_query to retrieve it. This
- * will accept _only_ parameters in the format of (&lt;token&gt;
- * &lt;value&gt;), where &lt;token&gt; and &lt;value&gt; must be
- * strings. Entries not corresponding to this format will be eaten and
- * no action will be performed.
+ * will accept _only_ string values in UTF-8 encoding.
  *
  * Returns: TRUE on success.
  */

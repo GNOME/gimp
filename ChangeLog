@@ -1,3 +1,14 @@
+2003-09-22  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/gimprc.pdb: UTF-8 validate the value set using
+	gimprc_set(); mention this in the documentation.
+
+	* app/pdb/gimprc_cmds.c
+	* libgimp/gimpgimprc_pdb.c: regenerated.
+	
+	* app/config/gimpconfig-path.c (gimp_config_path_expand): added
+	inline docs since this function is really not self-explanatory.
+
 2003-09-22  Henrik Brix Andersen  <brix@gimp.org>
 
 	Replaced the netscape-dependent web browser plug-in with a user

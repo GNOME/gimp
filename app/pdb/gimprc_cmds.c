@@ -124,7 +124,7 @@ gimprc_set_invoker (Gimp     *gimp,
     success = FALSE;
 
   value = (gchar *) args[1].value.pdb_pointer;
-  if (value == NULL)
+  if (value == NULL || !g_utf8_validate (value, -1, NULL))
     success = FALSE;
 
   if (success)
@@ -144,7 +144,7 @@ static ProcArg gimprc_set_inargs[] =
   {
     GIMP_PDB_STRING,
     "token",
-    "The token to modify"
+    "The token to add or modify"
   },
   {
     GIMP_PDB_STRING,
@@ -157,7 +157,7 @@ static ProcRecord gimprc_set_proc =
 {
   "gimp_gimprc_set",
   "Sets a gimprc token to a value and saves it in the gimprc.",
-  "This procedure is used to add or change additional information in the gimprc file that is considered extraneous to the operation of the GIMP. Plug-ins that need configuration information can use this function to store it, and gimp_gimprc_query to retrieve it. This will accept _only_ parameters in the format of (<token> <value>), where <token> and <value> must be strings. Entries not corresponding to this format will be eaten and no action will be performed.",
+  "This procedure is used to add or change additional information in the gimprc file that is considered extraneous to the operation of the GIMP. Plug-ins that need configuration information can use this function to store it, and gimp_gimprc_query to retrieve it. This will accept _only_ string values in UTF-8 encoding.",
   "Seth Burgess",
   "Seth Burgess",
   "1999",
