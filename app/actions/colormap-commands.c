@@ -27,11 +27,9 @@
 
 #include "gui-types.h"
 
-#include "core/gimp.h"
 #include "core/gimpimage.h"
 
 #include "widgets/gimpcolormapeditor.h"
-#include "widgets/gimpitemfactory.h"
 
 #include "color-notebook.h"
 #include "colormap-editor-commands.h"
@@ -113,32 +111,6 @@ colormap_editor_edit_color_cmd_callback (GtkWidget *widget,
       color_notebook_show (editor->color_notebook);
       color_notebook_set_color (editor->color_notebook, &color);
     }
-}
-
-void
-colormap_editor_menu_update (GtkItemFactory *factory,
-                             gpointer        data)
-{
-  GimpColormapEditor *editor;
-  GimpImage          *gimage;
-  gint                num_colors = 0;
-
-  editor = GIMP_COLORMAP_EDITOR (data);
-
-  gimage = editor->gimage;
-
-  if (gimage)
-    {
-      num_colors = gimage->num_cols;
-    }
-
-#define SET_SENSITIVE(menu,condition) \
-        gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
-
-  SET_SENSITIVE ("/Add Color",     gimage && num_colors < 256);
-  SET_SENSITIVE ("/Edit Color...", gimage);
-
-#undef SET_SENSITIVE
 }
 
 

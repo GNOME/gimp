@@ -27,8 +27,5 @@ void   images_new_display_cmd_callback    (GtkWidget *widget,
 void   images_delete_image_cmd_callback   (GtkWidget *widget,
                                            gpointer   data);
 
-void   images_menu_update                 (GtkItemFactory *factory,
-                                           gpointer        data);
-
 
 #endif /* __IMAGES_COMMANDS_H__ */

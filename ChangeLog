@@ -1,3 +1,61 @@
+2003-01-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/brushes-menu.[ch]
+	* app/gui/buffers-menu.[ch]
+	* app/gui/channels-menu.[ch]
+	* app/gui/colormap-editor-menu.[ch]
+	* app/gui/dialogs-menu.[ch]
+	* app/gui/documents-menu.[ch]
+	* app/gui/file-open-menu.[ch]
+	* app/gui/file-save-menu.[ch]
+	* app/gui/gradient-editor-menu.[ch]
+	* app/gui/gradients-menu.[ch]
+	* app/gui/image-menu.[ch]
+	* app/gui/images-menu.[ch]
+	* app/gui/layers-menu.[ch]
+	* app/gui/palette-editor-menu.[ch]
+	* app/gui/palettes-menu.[ch]
+	* app/gui/patterns-menu.[ch]
+	* app/gui/qmask-menu.[ch]
+	* app/gui/toolbox-menu.[ch]
+	* app/gui/vectors-menu.[ch]: new files, one per GimpItemFactory,
+	containing the menu entries and their setup and update funcs.
+
+	* app/gui/brushes-commands.[ch]
+	* app/gui/patterns-commands.[ch]: removed because they contained
+	only update funcs.
+
+	* app/gui/Makefile.am: changed accordingly. Split the huge
+	SOURCES list in smaller ones for menus and dialogs.
+
+	* app/gui/menus.[ch]: removed the menu entries and setup funcs.
+	Added MENU_SEPARATOR() and MENU_BRANCH() macros to the header.
+	Made some utility functions public.
+
+	* app/display/gimpdisplayshell.[ch]
+	* app/gui/buffers-commands.[ch]
+	* app/gui/channels-commands.[ch]
+	* app/gui/colormap-editor-commands.[ch]
+	* app/gui/dialogs-commands.[ch]
+	* app/gui/documents-commands.[ch]
+	* app/gui/gradient-editor-commands.[ch]
+	* app/gui/gradients-commands.[ch]
+	* app/gui/images-commands.[ch]
+	* app/gui/layers-commands.[ch]
+	* app/gui/palette-editor-commands.[ch]
+	* app/gui/palettes-commands.[ch]
+	* app/gui/qmask-commands.[ch]
+	* app/gui/vectors-commands.[ch]: removed the update funcs.
+
+	* app/gui/plug-in-menus.[ch]: renamed plug_in_set_menu_sensitivity()
+	to plug_in_menus_update(). Cleanup.
+
+	* app/gui/paths-dialog.[ch]: added the <Paths> entries here
+	so they will go away together with these files.
+
+	* app/gui/dialogs-constructors.c
+	* app/gui/drawable-commands.c: removed useless #includes.
+
 2003-01-13  Sven Neumann  <sven@gimp.org>
 
 	Changed my mind again and decided that gimpconfig-dump should

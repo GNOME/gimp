@@ -20,18 +20,9 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
-
 #include "gui-types.h"
 
-#include "core/gimpbuffer.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-
 #include "widgets/gimpbufferview.h"
-#include "widgets/gimpcontainerlistview.h"
-#include "widgets/gimpitemfactory.h"
-#include "widgets/gimplistitem.h"
 
 #include "buffers-commands.h"
 
@@ -82,26 +73,4 @@ buffers_delete_buffer_cmd_callback (GtkWidget *widget,
   view = GIMP_BUFFER_VIEW (data);
 
   gtk_button_clicked (GTK_BUTTON (view->delete_button));
-}
-
-void
-buffers_menu_update (GtkItemFactory *factory,
-                     gpointer        data)
-{
-  GimpContainerEditor *editor;
-  GimpBuffer          *buffer;
-
-  editor = GIMP_CONTAINER_EDITOR (data);
-
-  buffer = gimp_context_get_buffer (editor->view->context);
-
-#define SET_SENSITIVE(menu,condition) \
-        gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
-
-  SET_SENSITIVE ("/Paste Buffer",        buffer);
-  SET_SENSITIVE ("/Paste Buffer Into",   buffer);
-  SET_SENSITIVE ("/Paste Buffer as New", buffer);
-  SET_SENSITIVE ("/Delete Buffer",       buffer);
-
-#undef SET_SENSITIVE
 }

@@ -20,46 +20,67 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "gui-types.h"
 
-#include "core/gimpbrushgenerated.h"
 #include "core/gimpcontext.h"
 
+#include "widgets/gimpcontainereditor.h"
 #include "widgets/gimpcontainerview.h"
-#include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimpitemfactory.h"
 
-#include "brushes-commands.h"
+#include "buffers-commands.h"
+#include "buffers-menu.h"
 
 #include "libgimp/gimpintl.h"
 
 
-/*  public functions  */
+GimpItemFactoryEntry buffers_menu_entries[] =
+{
+  { { N_("/Paste Buffer"), NULL,
+      buffers_paste_buffer_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_PASTE },
+    NULL,
+    NULL, NULL },
+  { { N_("/Paste Buffer Into"), NULL,
+      buffers_paste_buffer_into_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_PASTE_INTO },
+    NULL,
+    NULL, NULL },
+  { { N_("/Paste Buffer as New"), NULL,
+      buffers_paste_buffer_as_new_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_PASTE_AS_NEW },
+    NULL,
+    NULL, NULL },
+  { { N_("/Delete Buffer"), NULL,
+      buffers_delete_buffer_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_DELETE },
+    NULL,
+    NULL, NULL }
+};
+
+gint n_buffers_menu_entries = G_N_ELEMENTS (buffers_menu_entries);
+
 
 void
-brushes_menu_update (GtkItemFactory *factory,
+buffers_menu_update (GtkItemFactory *factory,
                      gpointer        data)
 {
   GimpContainerEditor *editor;
-  GimpBrush           *brush;
-  gboolean             internal = FALSE;
+  GimpBuffer          *buffer;
 
   editor = GIMP_CONTAINER_EDITOR (data);
 
-  brush = gimp_context_get_brush (editor->view->context);
-
-  if (brush)
-    internal = GIMP_DATA (brush)->internal;
+  buffer = gimp_context_get_buffer (editor->view->context);
 
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("/Duplicate Brush",
-		 brush && GIMP_DATA_GET_CLASS (brush)->duplicate);
-  SET_SENSITIVE ("/Edit Brush...",
-		 brush && GIMP_DATA_FACTORY_VIEW (editor)->data_edit_func);
-  SET_SENSITIVE ("/Delete Brush...",
-		 brush && ! internal);
+  SET_SENSITIVE ("/Paste Buffer",        buffer);
+  SET_SENSITIVE ("/Paste Buffer Into",   buffer);
+  SET_SENSITIVE ("/Paste Buffer as New", buffer);
+  SET_SENSITIVE ("/Delete Buffer",       buffer);
 
 #undef SET_SENSITIVE
 }

@@ -34,7 +34,6 @@
 #include "core/gimpdrawable-invert.h"
 #include "core/gimpimage.h"
 
-#include "widgets/gimpitemfactory.h"
 #include "widgets/gimpitemlistview.h"
 
 #include "display/gimpdisplay.h"

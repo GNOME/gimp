@@ -176,9 +176,6 @@ void        gimp_display_shell_reconnect             (GimpDisplayShell *shell);
 void        gimp_display_shell_scaled                (GimpDisplayShell *shell);
 void        gimp_display_shell_scrolled              (GimpDisplayShell *shell);
 
-void        gimp_display_shell_menu_update           (GtkItemFactory   *item_factory,
-                                                      gpointer          data);
-
 GimpGuide * gimp_display_shell_find_guide            (GimpDisplayShell *shell,
                                                       gdouble           x,
                                                       gdouble           y);

@@ -25,8 +25,5 @@ void   palettes_import_palette_cmd_callback (GtkWidget *widget,
 void   palettes_merge_palettes_cmd_callback (GtkWidget *widget,
 					     gpointer   data);
 
-void   palettes_menu_update                 (GtkItemFactory *factory,
-                                             gpointer        data);
-
 
 #endif /* __PALETTES_COMMANDS_H__ */

@@ -24,17 +24,9 @@
 
 #include "gui-types.h"
 
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimagefile.h"
-
-#include "widgets/gimpcontainerlistview.h"
 #include "widgets/gimpdocumentview.h"
-#include "widgets/gimpitemfactory.h"
 
 #include "documents-commands.h"
-
-#include "libgimp/gimpintl.h"
 
 
 /*  public functionss */
@@ -119,29 +111,4 @@ documents_delete_dangling_documents_cmd_callback (GtkWidget *widget,
 
   gimp_button_extended_clicked (GIMP_BUTTON (view->refresh_button),
                                 GDK_CONTROL_MASK);
-}
-
-void
-documents_menu_update (GtkItemFactory *factory,
-                       gpointer        data)
-{
-  GimpContainerEditor *editor;
-  GimpImagefile       *imagefile;
-
-  editor = GIMP_CONTAINER_EDITOR (data);
-
-  imagefile = gimp_context_get_imagefile (editor->view->context);
-
-#define SET_SENSITIVE(menu,condition) \
-        gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
-
-  SET_SENSITIVE ("/Open Image",              imagefile);
-  SET_SENSITIVE ("/Raise or Open Image",     imagefile);
-  SET_SENSITIVE ("/File Open Dialog...",     TRUE);
-  SET_SENSITIVE ("/Remove Entry",            imagefile);
-  SET_SENSITIVE ("/Recreate Preview",        imagefile);
-  SET_SENSITIVE ("/Reload all Previews",     imagefile);
-  SET_SENSITIVE ("/Remove Dangling Entries", imagefile);
-
-#undef SET_SENSITIVE
 }

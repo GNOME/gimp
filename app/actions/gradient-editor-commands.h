@@ -76,8 +76,5 @@ void   gradient_editor_blend_opacity_cmd_callback   (GtkWidget *widget,
                                                      gpointer   data,
                                                      guint      action);
 
-void   gradient_editor_menu_update                  (GtkItemFactory *factory,
-                                                     gpointer        data);
-
 
 #endif /* __GRADIENT_EDITOR_COMMANDS_H__ */

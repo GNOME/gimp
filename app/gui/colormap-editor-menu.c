@@ -20,46 +20,60 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "gui-types.h"
 
-#include "core/gimppattern.h"
-#include "core/gimpcontext.h"
+#include "core/gimpimage.h"
 
-#include "widgets/gimpcontainerview.h"
-#include "widgets/gimpdatafactoryview.h"
+#include "widgets/gimpcolormapeditor.h"
 #include "widgets/gimpitemfactory.h"
 
-#include "patterns-commands.h"
+#include "colormap-editor-commands.h"
+#include "colormap-editor-menu.h"
 
 #include "libgimp/gimpintl.h"
 
 
-/*  public functions  */
+GimpItemFactoryEntry colormap_editor_menu_entries[] =
+{
+  { { N_("/Add Color"), NULL,
+      colormap_editor_add_color_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_NEW },
+    NULL,
+    NULL, NULL },
+  { { N_("/Edit Color..."), NULL,
+      colormap_editor_edit_color_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_EDIT },
+    NULL,
+    NULL, NULL },
+};
+
+gint n_colormap_editor_menu_entries = G_N_ELEMENTS (colormap_editor_menu_entries);
+
 
 void
-patterns_menu_update (GtkItemFactory *factory,
-                      gpointer        data)
+colormap_editor_menu_update (GtkItemFactory *factory,
+                             gpointer        data)
 {
-  GimpContainerEditor *editor;
-  GimpPattern         *pattern;
-  gboolean             internal = FALSE;
+  GimpColormapEditor *editor;
+  GimpImage          *gimage;
+  gint                num_colors = 0;
 
-  editor = GIMP_CONTAINER_EDITOR (data);
+  editor = GIMP_COLORMAP_EDITOR (data);
 
-  pattern = gimp_context_get_pattern (editor->view->context);
+  gimage = editor->gimage;
 
-  if (pattern)
-    internal = GIMP_DATA (pattern)->internal;
+  if (gimage)
+    {
+      num_colors = gimage->num_cols;
+    }
 
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
-  SET_SENSITIVE ("/Duplicate Pattern",
-		 pattern && GIMP_DATA_GET_CLASS (pattern)->duplicate);
-  SET_SENSITIVE ("/Edit Pattern...",
-		 pattern && GIMP_DATA_FACTORY_VIEW (editor)->data_edit_func);
-  SET_SENSITIVE ("/Delete Pattern...",
-		 pattern && ! internal);
+  SET_SENSITIVE ("/Add Color",     gimage && num_colors < 256);
+  SET_SENSITIVE ("/Edit Color...", gimage);
 
 #undef SET_SENSITIVE
 }

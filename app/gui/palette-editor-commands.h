@@ -30,8 +30,5 @@ void   palette_editor_delete_color_cmd_callback (GtkWidget *widget,
                                                  gpointer   data,
                                                  guint      action);
 
-void   palette_editor_menu_update               (GtkItemFactory *factory,
-                                                 gpointer        data);
-
 
 #endif /* __PALETTE_EDITOR_COMMANDS_H__ */

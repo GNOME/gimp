@@ -64,9 +64,8 @@ void
 plug_in_menus_init (GSList      *plug_in_defs,
                     const gchar *std_plugins_domain)
 {
-  PlugInDef *plug_in_def;
-  GSList    *domains = NULL;
-  GSList    *tmp;
+  GSList *domains = NULL;
+  GSList *tmp;
 
   g_return_if_fail (std_plugins_domain != NULL);
 
@@ -77,11 +76,12 @@ plug_in_menus_init (GSList      *plug_in_defs,
 
   for (tmp = plug_in_defs; tmp; tmp = g_slist_next (tmp))
     {
+      PlugInDef   *plug_in_def;
       const gchar *locale_domain;
       const gchar *locale_path;
       GSList      *list;
 
-      plug_in_def = tmp->data;
+      plug_in_def = (PlugInDef *) tmp->data;
 
       if (! plug_in_def->proc_defs)
         continue;
@@ -261,8 +261,8 @@ plug_in_delete_menu_entry (const gchar *menu_path)
 }
 
 void
-plug_in_set_menu_sensitivity (GimpItemFactory *item_factory,
-                              GimpImageType    type)
+plug_in_menus_update (GimpItemFactory *item_factory,
+                      GimpImageType    type)
 {
   PlugInProcDef *proc_def;
   GSList        *tmp;

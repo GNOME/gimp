@@ -2,48 +2,23 @@
 
 noinst_LIBRARIES = libappgui.a
 
-libappgui_a_SOURCES = \
+dialogs_sources = \
 	about-dialog.c			\
 	about-dialog.h			\
-	authors.h			\
 	brush-select.c			\
 	brush-select.h			\
-	brushes-commands.c		\
-	brushes-commands.h		\
-	buffers-commands.c		\
-	buffers-commands.h		\
-	channels-commands.c		\
-	channels-commands.h		\
-	color-history.c			\
-	color-history.h			\
 	color-notebook.c		\
 	color-notebook.h		\
-	colormap-editor-commands.c	\
-	colormap-editor-commands.h	\
 	convert-dialog.c		\
 	convert-dialog.h		\
-	data-commands.c			\
-	data-commands.h			\
-	debug-commands.c		\
-	debug-commands.h		\
 	device-status-dialog.c		\
 	device-status-dialog.h		\
 	dialogs.c			\
 	dialogs.h			\
-	dialogs-commands.c		\
-	dialogs-commands.h		\
 	dialogs-constructors.c		\
 	dialogs-constructors.h		\
-	documents-commands.c		\
-	documents-commands.h		\
-	drawable-commands.c		\
-	drawable-commands.h		\
-	edit-commands.c			\
-	edit-commands.h			\
 	error-console-dialog.c		\
 	error-console-dialog.h		\
-	file-commands.c			\
-	file-commands.h			\
 	file-dialog-utils.c		\
 	file-dialog-utils.h		\
 	file-new-dialog.c		\
@@ -52,81 +27,146 @@ libappgui_a_SOURCES = \
 	file-open-dialog.h		\
 	file-save-dialog.c		\
 	file-save-dialog.h		\
-	gradient-editor-commands.c	\
-	gradient-editor-commands.h	\
-	gradient-select.h		\
 	gradient-select.c		\
-	gradients-commands.c		\
-	gradients-commands.h		\
-	gui.c				\
-	gui.h				\
-	gui-types.h			\
-	help-commands.c			\
-	help-commands.h			\
-	image-commands.c		\
-	image-commands.h		\
-	images-commands.c		\
-	images-commands.h		\
+	gradient-select.h		\
 	info-dialog.c			\
 	info-dialog.h			\
 	info-window.c			\
 	info-window.h			\
-	layers-commands.c		\
-	layers-commands.h		\
-	menus.c				\
-	menus.h				\
 	module-browser.c		\
 	module-browser.h		\
 	offset-dialog.c			\
 	offset-dialog.h			\
-	palette-editor-commands.c	\
-	palette-editor-commands.h	\
 	palette-import-dialog.c		\
 	palette-import-dialog.h		\
 	palette-select.c		\
 	palette-select.h		\
-	palettes-commands.c		\
-	palettes-commands.h		\
 	paths-dialog.c			\
 	paths-dialog.h			\
 	pattern-select.c		\
 	pattern-select.h		\
-	patterns-commands.c		\
-	patterns-commands.h		\
-	plug-in-commands.c		\
-	plug-in-commands.h		\
-	plug-in-menus.c			\
-	plug-in-menus.h			\
 	preferences-dialog.c		\
 	preferences-dialog.h		\
-	qmask-commands.c		\
-	qmask-commands.h		\
 	resize-dialog.c			\
 	resize-dialog.h			\
 	resolution-calibrate-dialog.c	\
 	resolution-calibrate-dialog.h	\
-	select-commands.c		\
-	select-commands.h		\
-	session.c			\
-	session.h			\
-	splash.c			\
-	splash.h			\
-	test-commands.c			\
-	test-commands.h			\
 	tips-dialog.c			\
 	tips-dialog.h			\
 	tips-parser.c			\
 	tips-parser.h			\
 	tool-options-dialog.c		\
 	tool-options-dialog.h		\
+	user-install-dialog.c		\
+	user-install-dialog.h
+
+menus_sources = \
+	brushes-menu.c			\
+	brushes-menu.h			\
+	buffers-commands.c		\
+	buffers-commands.h		\
+	buffers-menu.c			\
+	buffers-menu.h			\
+	channels-commands.c		\
+	channels-commands.h		\
+	channels-menu.c			\
+	channels-menu.h			\
+	colormap-editor-commands.c	\
+	colormap-editor-commands.h	\
+	colormap-editor-menu.c		\
+	colormap-editor-menu.h		\
+	data-commands.c			\
+	data-commands.h			\
+	debug-commands.c		\
+	debug-commands.h		\
+	dialogs-commands.c		\
+	dialogs-commands.h		\
+	dialogs-menu.c			\
+	dialogs-menu.h			\
+	documents-commands.c		\
+	documents-commands.h		\
+	documents-menu.c		\
+	documents-menu.h		\
+	drawable-commands.c		\
+	drawable-commands.h		\
+	edit-commands.c			\
+	edit-commands.h			\
+	file-commands.c			\
+	file-commands.h			\
+	file-open-menu.c		\
+	file-open-menu.h		\
+	file-save-menu.c		\
+	file-save-menu.h		\
+	gradient-editor-commands.c	\
+	gradient-editor-commands.h	\
+	gradient-editor-menu.c		\
+	gradient-editor-menu.h		\
+	gradients-commands.c		\
+	gradients-commands.h		\
+	gradients-menu.c		\
+	gradients-menu.h		\
+	help-commands.c			\
+	help-commands.h			\
+	image-commands.c		\
+	image-commands.h		\
+	image-menu.c			\
+	image-menu.h			\
+	images-commands.c		\
+	images-commands.h		\
+	images-menu.c			\
+	images-menu.h			\
+	layers-commands.c		\
+	layers-commands.h		\
+	layers-menu.c			\
+	layers-menu.h			\
+	menus.c				\
+	menus.h				\
+	palette-editor-commands.c	\
+	palette-editor-commands.h	\
+	palette-editor-menu.c		\
+	palette-editor-menu.h		\
+	palettes-commands.c		\
+	palettes-commands.h		\
+	palettes-menu.c			\
+	palettes-menu.h			\
+	patterns-menu.c			\
+	patterns-menu.h			\
+	plug-in-commands.c		\
+	plug-in-commands.h		\
+	plug-in-menus.c			\
+	plug-in-menus.h			\
+	qmask-commands.c		\
+	qmask-commands.h		\
+	qmask-menu.c			\
+	qmask-menu.h			\
+	select-commands.c		\
+	select-commands.h		\
+	test-commands.c			\
+	test-commands.h			\
+	toolbox-menu.c			\
+	toolbox-menu.h			\
 	tools-commands.c		\
 	tools-commands.h		\
-	user-install-dialog.c		\
-	user-install-dialog.h		\
 	vectors-commands.c		\
 	vectors-commands.h		\
+	vectors-menu.c			\
+	vectors-menu.h			\
 	view-commands.c			\
 	view-commands.h
+
+libappgui_a_SOURCES = \
+	$(dialogs_sources)		\
+	$(menus_sources)		\
+	authors.h			\
+	color-history.c			\
+	color-history.h			\
+	gui.c				\
+	gui.h				\
+	gui-types.h			\
+	session.c			\
+	session.h			\
+	splash.c			\
+	splash.h
 
 EXTRA_DIST = makefile.msc
 

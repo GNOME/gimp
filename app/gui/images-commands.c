@@ -20,21 +20,11 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpwidgets/gimpwidgets.h"
-
 #include "gui-types.h"
 
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "core/gimpimage.h"
-
-#include "widgets/gimpcontainerlistview.h"
 #include "widgets/gimpimageview.h"
-#include "widgets/gimpitemfactory.h"
 
 #include "images-commands.h"
-
-#include "libgimp/gimpintl.h"
 
 
 /*  public functionss */
@@ -70,25 +60,4 @@ images_delete_image_cmd_callback (GtkWidget *widget,
   view = GIMP_IMAGE_VIEW (data);
 
   gtk_button_clicked (GTK_BUTTON (view->delete_button));
-}
-
-void
-images_menu_update (GtkItemFactory *factory,
-                    gpointer        data)
-{
-  GimpContainerEditor *editor;
-  GimpImage           *image;
-
-  editor = GIMP_CONTAINER_EDITOR (data);
-
-  image = gimp_context_get_image (editor->view->context);
-
-#define SET_SENSITIVE(menu,condition) \
-        gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
-
-  SET_SENSITIVE ("/Raise Displays", image);
-  SET_SENSITIVE ("/New Display",    image);
-  SET_SENSITIVE ("/Delete Image",   image && image->disp_count == 0);
-
-#undef SET_SENSITIVE
 }

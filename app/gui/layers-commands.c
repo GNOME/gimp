@@ -41,7 +41,6 @@
 #include "pdb/procedural_db.h"
 
 #include "widgets/gimpenummenu.h"
-#include "widgets/gimpitemfactory.h"
 #include "widgets/gimpitemlistview.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -1149,86 +1148,4 @@ layers_resize_layer_query (GimpImage *gimage,
 		     options);
 
   gtk_widget_show (options->resize->resize_shell);
-}
-
-void
-layers_menu_update (GtkItemFactory *factory,
-                    gpointer        data)
-{
-  GimpImage *gimage;
-  GimpLayer *layer;
-  gboolean   fs         = FALSE;    /*  floating sel           */
-  gboolean   ac         = FALSE;    /*  active channel         */
-  gboolean   lm         = FALSE;    /*  layer mask             */
-  gboolean   lp         = FALSE;    /*  layers present         */
-  gboolean   alpha      = FALSE;    /*  alpha channel present  */
-  gboolean   indexed    = FALSE;    /*  is indexed             */
-  gboolean   next_alpha = FALSE;
-  GList     *list;
-  GList     *next       = NULL;
-  GList     *prev       = NULL;
-
-  gimage = GIMP_ITEM_LIST_VIEW (data)->gimage;
-
-  layer = gimp_image_get_active_layer (gimage);
-
-  if (layer)
-    lm = (gimp_layer_get_mask (layer)) ? TRUE : FALSE;
-
-  fs = (gimp_image_floating_sel (gimage) != NULL);
-  ac = (gimp_image_get_active_channel (gimage) != NULL);
-
-  alpha = layer && gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
-
-  lp      = ! gimp_image_is_empty (gimage);
-  indexed = (gimp_image_base_type (gimage) == GIMP_INDEXED);
-
-  for (list = GIMP_LIST (gimage->layers)->list;
-       list;
-       list = g_list_next (list)) 
-    {
-      if (layer == (GimpLayer *) list->data)
-	{
-	  prev = g_list_previous (list);
-	  next = g_list_next (list);
-	  break;
-	}
-    }
-
-  if (next)
-    next_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (next->data));
-  else
-    next_alpha = FALSE;
-
-#define SET_SENSITIVE(menu,condition) \
-        gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
-
-  SET_SENSITIVE ("/New Layer...", gimage);
-
-  SET_SENSITIVE ("/Raise Layer",     !fs && !ac && gimage && lp && alpha && prev);
-  SET_SENSITIVE ("/Layer to Top",    !fs && !ac && gimage && lp && alpha && prev);
-
-  SET_SENSITIVE ("/Lower Layer",     !fs && !ac && gimage && lp && next && next_alpha);
-  SET_SENSITIVE ("/Layer to Bottom", !fs && !ac && gimage && lp && next && next_alpha);
-
-  SET_SENSITIVE ("/Duplicate Layer", !fs && !ac && gimage && lp);
-  SET_SENSITIVE ("/Anchor Layer",     fs && !ac && gimage && lp);
-  SET_SENSITIVE ("/Merge Down",      !fs && !ac && gimage && lp && next);
-  SET_SENSITIVE ("/Delete Layer",    !ac && gimage && lp);
-
-  SET_SENSITIVE ("/Layer Boundary Size...", !ac && gimage && lp);
-  SET_SENSITIVE ("/Layer to Imagesize",     !ac && gimage && lp);
-  SET_SENSITIVE ("/Scale Layer...",         !ac && gimage && lp);
-
-  SET_SENSITIVE ("/Add Layer Mask...", !fs && !ac && gimage && !lm && lp && alpha && !indexed);
-  SET_SENSITIVE ("/Apply Layer Mask",  !fs && !ac && gimage && lm && lp);
-  SET_SENSITIVE ("/Delete Layer Mask", !fs && !ac && gimage && lm && lp);
-  SET_SENSITIVE ("/Mask to Selection", !fs && !ac && gimage && lm && lp);
-
-  SET_SENSITIVE ("/Add Alpha Channel",  !fs && !alpha);
-  SET_SENSITIVE ("/Alpha to Selection", !fs && !ac && gimage && lp && alpha);
-
-  SET_SENSITIVE ("/Edit Layer Attributes...", !fs && !ac && gimage && lp);
-
-#undef SET_SENSITIVE
 }

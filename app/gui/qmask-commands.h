@@ -30,8 +30,5 @@ void   qmask_configure_cmd_callback (GtkWidget *widget,
                                      gpointer   data,
                                      guint      action);
 
-void   qmask_menu_update            (GtkItemFactory *factory,
-                                     gpointer        data);
-
 
 #endif /* __QMASK_COMMANDS_H__ */

@@ -30,7 +30,6 @@
 
 #include "widgets/gimpcontainerlistview.h"
 #include "widgets/gimpdatafactoryview.h"
-#include "widgets/gimpitemfactory.h"
 #include "widgets/gimplistitem.h"
 #include "widgets/gimppreview.h"
 
@@ -76,36 +75,6 @@ palettes_merge_palettes_cmd_callback (GtkWidget *widget,
   editor = GIMP_CONTAINER_EDITOR (data);
 
   palettes_merge_palettes_query (editor);
-}
-
-void
-palettes_menu_update (GtkItemFactory *factory,
-                      gpointer        data)
-{
-  GimpContainerEditor *editor;
-  GimpPalette         *palette;
-  gboolean             internal = FALSE;
-
-  editor = GIMP_CONTAINER_EDITOR (data);
-
-  palette = gimp_context_get_palette (editor->view->context);
-
-  if (palette)
-    internal = GIMP_DATA (palette)->internal;
-
-#define SET_SENSITIVE(menu,condition) \
-        gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
-
-  SET_SENSITIVE ("/Duplicate Palette",
-		 palette && GIMP_DATA_GET_CLASS (palette)->duplicate);
-  SET_SENSITIVE ("/Edit Palette...",
-		 palette && GIMP_DATA_FACTORY_VIEW (editor)->data_edit_func);
-  SET_SENSITIVE ("/Delete Palette...",
-		 palette && ! internal);
-  SET_SENSITIVE ("/Merge Palettes...",
-		 FALSE); /* FIXME palette && GIMP_IS_CONTAINER_LIST_VIEW (editor->view)); */
-
-#undef SET_SENSITIVE
 }
 
 

@@ -31,7 +31,6 @@
 #include "core/gimpimage-qmask.h"
 
 #include "widgets/gimpcolorpanel.h"
-#include "widgets/gimpitemfactory.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
@@ -116,33 +115,6 @@ qmask_configure_cmd_callback (GtkWidget *widget,
   shell = GIMP_DISPLAY_SHELL (data);
 
   qmask_channel_query (shell);
-}
-
-void
-qmask_menu_update (GtkItemFactory *factory,
-                   gpointer        data)
-{
-  GimpDisplayShell *shell;
-
-  shell = GIMP_DISPLAY_SHELL (data);
-
-#define SET_ACTIVE(menu,active) \
-        gimp_item_factory_set_active (factory, "/" menu, (active))
-#define SET_COLOR(menu,color) \
-        gimp_item_factory_set_color (factory, "/" menu, (color), FALSE)
-
-  SET_ACTIVE ("QMask Active", shell->gdisp->gimage->qmask_state);
-
-  if (shell->gdisp->gimage->qmask_inverted)
-    SET_ACTIVE ("Mask Selected Areas", TRUE);
-  else
-    SET_ACTIVE ("Mask Unselected Areas", TRUE);
-
-  SET_COLOR ("Configure Color and Opacity...",
-             &shell->gdisp->gimage->qmask_color);
-
-#undef SET_SENSITIVE
-#undef SET_COLOR
 }
 
 

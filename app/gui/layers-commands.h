@@ -69,9 +69,6 @@ void   layers_add_alpha_channel_cmd_callback (GtkWidget *widet,
 void   layers_edit_attributes_cmd_callback   (GtkWidget *widet,
 					      gpointer   data);
 
-void   layers_menu_update                    (GtkItemFactory *factory,
-                                              gpointer        data);
-
 void   layers_remove_layer                   (GimpImage *gimage,
                                               GimpLayer *layer);
 void   layers_anchor_layer                   (GimpLayer *layer);

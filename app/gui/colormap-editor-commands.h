@@ -27,8 +27,5 @@ void   colormap_editor_edit_color_cmd_callback (GtkWidget *widget,
                                                 gpointer   data,
                                                 guint      action);
 
-void   colormap_editor_menu_update             (GtkItemFactory *factory,
-                                                gpointer        data);
-
 
 #endif /* __COLORMAP_EDITOR_COMMANDS_H__ */

@@ -41,7 +41,6 @@
 
 #include "vectors/gimpvectors.h"
 
-#include "widgets/gimpitemfactory.h"
 #include "widgets/gimpitemlistview.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -626,60 +625,4 @@ vectors_edit_vectors_query (GimpVectors *vectors)
   gtk_widget_show (vbox);
   gtk_widget_show (hbox);
   gtk_widget_show (options->query_box);
-}
-
-void
-vectors_menu_update (GtkItemFactory *factory,
-                     gpointer        data)
-{
-  GimpImage   *gimage;
-  GimpVectors *vectors;
-  gboolean     mask_empty;
-  gboolean     global_buf;
-  GList       *list;
-  GList       *next = NULL;
-  GList       *prev = NULL;
-
-  gimage = GIMP_ITEM_LIST_VIEW (data)->gimage;
-
-  vectors = gimp_image_get_active_vectors (gimage);
-
-  mask_empty = gimp_image_mask_is_empty (gimage);
-
-  global_buf = FALSE;
-
-  for (list = GIMP_LIST (gimage->vectors)->list;
-       list;
-       list = g_list_next (list))
-    {
-      if (vectors == (GimpVectors *) list->data)
-	{
-	  prev = g_list_previous (list);
-	  next = g_list_next (list);
-	  break;
-	}
-    }
-
-#define SET_SENSITIVE(menu,condition) \
-        gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
-
-  SET_SENSITIVE ("/New Path...",              TRUE);
-  SET_SENSITIVE ("/Raise Path",               vectors && prev);
-  SET_SENSITIVE ("/Lower Path",               vectors && next);
-  SET_SENSITIVE ("/Duplicate Path",           vectors);
-  SET_SENSITIVE ("/Path to Selection",        vectors);
-  SET_SENSITIVE ("/Add to Selection",         vectors);
-  SET_SENSITIVE ("/Subtract from Selection",  vectors);
-  SET_SENSITIVE ("/Intersect with Selection", vectors);
-  SET_SENSITIVE ("/Selection to Path",        ! mask_empty);
-  SET_SENSITIVE ("/Stroke Path",              vectors);
-  SET_SENSITIVE ("/Delete Path",              vectors);
-  SET_SENSITIVE ("/Copy Path",                vectors);
-  SET_SENSITIVE ("/Paste Path",               global_buf);
-  SET_SENSITIVE ("/Import Path...",           TRUE);
-  SET_SENSITIVE ("/Export Path...",           vectors);
-  SET_SENSITIVE ("/Path Tool",                vectors);
-  SET_SENSITIVE ("/Edit Path Attributes...",  vectors);
-
-#undef SET_SENSITIVE
 }

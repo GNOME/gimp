@@ -16,12 +16,16 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __BRUSHES_COMMANDS_H__
-#define __BRUSHES_COMMANDS_H__
+#ifndef __PALETTES_MENU_H__
+#define __PALETTES_MENU_H__
 
 
-void   brushes_menu_update (GtkItemFactory *factory,
-                            gpointer        data);
+extern GimpItemFactoryEntry palettes_menu_entries[];
+extern gint                 n_palettes_menu_entries;
 
 
-#endif /* __BRUSHES_COMMANDS_H__ */
+void   palettes_menu_update (GtkItemFactory *factory,
+                             gpointer        data);
+
+
+#endif /* __PALETTES_MENU_H__ */

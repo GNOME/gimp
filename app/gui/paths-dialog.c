@@ -56,6 +56,7 @@
 #include "tools/gimpbezierselecttool.h"
 
 #include "paths-dialog.h"
+#include "menus.h"
 
 #include "app_procs.h"
 #include "ops_buttons.h"
@@ -154,6 +155,77 @@ static void     paths_dialog_edit_point_callback       (GtkWidget *, gpointer);
 static void     paths_dialog_advanced_to_path_callback (GtkWidget *, gpointer);
 
 static void     path_close                   (Path *);
+
+
+/*****  <Paths>  *****/
+
+GimpItemFactoryEntry paths_menu_entries[] =
+{
+  { { N_("/New Path"), "<control>N",
+      paths_dialog_new_path_callback, 0,
+      "<StockItem>", GTK_STOCK_NEW },
+    NULL,
+    "new_path.html", NULL },
+  { { N_("/Duplicate Path"), "<control>U",
+      paths_dialog_dup_path_callback, 0,
+      "<StockItem>", GIMP_STOCK_DUPLICATE },
+    NULL,
+    "duplicate_path.html", NULL },
+  { { N_("/Path to Selection"), "<control>S",
+      paths_dialog_path_to_sel_callback, 0,
+      "<StockItem>", GIMP_STOCK_SELECTION_REPLACE },
+    NULL,
+    "path_to_selection.html", NULL },
+  { { N_("/Selection to Path"), "<control>P",
+      paths_dialog_sel_to_path_callback, 0,
+      "<StockItem>", GIMP_STOCK_SELECTION_TO_PATH },
+    NULL,
+    "filters/sel2path.html", NULL },
+  { { N_("/Stroke Path"), "<control>T",
+      paths_dialog_stroke_path_callback, 0,
+      "<StockItem>", GIMP_STOCK_PATH_STROKE },
+    NULL,
+    "stroke_path.html", NULL },
+  { { N_("/Delete Path"), "<control>X",
+      paths_dialog_delete_path_callback, 0,
+      "<StockItem>", GTK_STOCK_DELETE },
+    NULL,
+    "delete_path.html", NULL },
+
+  MENU_SEPARATOR ("/---"),
+
+  { { N_("/Copy Path"), "<control>C",
+      paths_dialog_copy_path_callback, 0,
+      "<StockItem>", GTK_STOCK_COPY },
+    NULL,
+    "copy_path.html", NULL },
+  { { N_("/Paste Path"), "<control>V",
+      paths_dialog_paste_path_callback, 0,
+      "<StockItem>", GTK_STOCK_PASTE },
+    NULL,
+    "paste_path.html", NULL },
+  { { N_("/Import Path..."), "<control>I",
+      paths_dialog_import_path_callback, 0,
+      "<StockItem>", GTK_STOCK_OPEN },
+    NULL,
+    "dialogs/import_path.html", NULL },
+  { { N_("/Export Path..."), "<control>E",
+      paths_dialog_export_path_callback, 0,
+      "<StockItem>", GTK_STOCK_SAVE },
+    NULL,
+    "dialogs/export_path.html", NULL },
+
+  MENU_SEPARATOR ("/---"),
+
+  { { N_("/Edit Path Attributes..."), NULL,
+      paths_dialog_edit_path_attributes_callback, 0,
+      "<StockItem>", GIMP_STOCK_EDIT },
+    NULL,
+    "dialogs/edit_path_attributes.html", NULL }
+};
+
+gint n_paths_menu_entries = G_N_ELEMENTS (paths_menu_entries);
+
 
 /*  the ops buttons  */
 static GtkSignalFunc to_path_ext_callbacks[] = 

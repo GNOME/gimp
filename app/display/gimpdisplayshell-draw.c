@@ -18,15 +18,13 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "display-types.h"
+#include "tools/tools-types.h"
 
 #ifdef __GNUC__
 #warning FIXME #include "gui/gui-types.h"
@@ -38,11 +36,9 @@
 #include "core/gimp.h"
 #include "core/gimpbuffer.h"
 #include "core/gimpcontext.h"
-#include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-mask.h"
-#include "core/gimpimage-new.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimpmarshal.h"
@@ -56,10 +52,6 @@
 #include "widgets/gimpmenufactory.h"
 
 #include "gui/info-window.h"
-#include "gui/plug-in-menus.h"
-#include "gui/menus.h"
-
-#include "tools/tools-types.h"
 
 #include "tools/tool_manager.h"
 
@@ -76,8 +68,6 @@
 #include "gimpdisplayshell-title.h"
 #include "gimpdisplayshell-transform.h"
 #include "gimpstatusbar.h"
-
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -880,305 +870,6 @@ gimp_display_shell_scrolled (GimpDisplayShell *shell)
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   g_signal_emit (shell, display_shell_signals[SCROLLED], 0);
-}
-
-
-void
-gimp_display_shell_menu_update (GtkItemFactory *item_factory,
-                                gpointer        data)
-{
-  Gimp             *gimp          = NULL;
-  GimpDisplayShell *shell         = NULL;
-  GimpDisplay      *gdisp         = NULL;
-  GimpImage        *gimage        = NULL;
-  GimpDrawable     *drawable      = NULL;
-  GimpLayer        *layer         = NULL;
-  GimpImageType     drawable_type = -1;
-  GimpRGB           fg;
-  GimpRGB           bg;
-  gboolean          is_rgb        = FALSE;
-  gboolean          is_gray       = FALSE;
-  gboolean          is_indexed    = FALSE;
-  gboolean          fs            = FALSE;
-  gboolean          aux           = FALSE;
-  gboolean          lm            = FALSE;
-  gboolean          lp            = FALSE;
-  gboolean          sel           = FALSE;
-  gboolean          alpha         = FALSE;
-  gint              lind          = -1;
-  gint              lnum          = -1;
-
-  gimp = GIMP_ITEM_FACTORY (item_factory)->gimp;
-
-  if (data)
-    {
-      shell = GIMP_DISPLAY_SHELL (data);
-      gdisp = shell->gdisp;
-    }
-
-#if 0
-  if (shell)
-    {
-      gdisp = shell->gdisp;
-
-      if (popup_only)
-        item_factory = GTK_ITEM_FACTORY (shell->popup_factory);
-      else
-        item_factory = GTK_ITEM_FACTORY (shell->menubar_factory);
-    }
-  else if (popup_only)
-    {
-      item_factory = GTK_ITEM_FACTORY (gimp_item_factory_from_path ("<Image>"));
-    }
-#endif
-
-  if (gdisp)
-    {
-      GimpImageBaseType base_type;
-
-      gimage = gdisp->gimage;
-
-      base_type = gimp_image_base_type (gimage);
-
-      is_rgb     = (base_type == GIMP_RGB);
-      is_gray    = (base_type == GIMP_GRAY);
-      is_indexed = (base_type == GIMP_INDEXED);
-
-      fs  = (gimp_image_floating_sel (gimage) != NULL);
-      aux = (gimp_image_get_active_channel (gimage) != NULL);
-      lp  = ! gimp_image_is_empty (gimage);
-      sel = ! gimp_image_mask_is_empty (gimage);
-
-      drawable = gimp_image_active_drawable (gimage);
-      if (drawable)
-	drawable_type = gimp_drawable_type (drawable);
-
-      if (lp)
-	{
-	  layer = gimp_image_get_active_layer (gimage);
-
-	  if (layer)
-	    {
-	      lm    = gimp_layer_get_mask (layer) ? TRUE : FALSE;
-	      alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
-	      lind  = gimp_image_get_layer_index (gimage, layer);
-	    }
-
-	  lnum = gimp_container_num_children (gimage->layers);
-	}
-    }
-
-  gimp_context_get_foreground (gimp_get_user_context (gimp), &fg);
-  gimp_context_get_background (gimp_get_user_context (gimp), &bg);
-
-#define SET_ACTIVE(menu,condition) \
-        gimp_item_factory_set_active (item_factory, menu, (condition) != 0)
-#define SET_LABEL(menu,label) \
-        gimp_item_factory_set_label (item_factory, menu, (label))
-#define SET_SENSITIVE(menu,condition) \
-        gimp_item_factory_set_sensitive (item_factory, menu, (condition) != 0)
-
-  /*  File  */
-
-  SET_SENSITIVE ("/File/Save",           gdisp && drawable);
-  SET_SENSITIVE ("/File/Save as...",     gdisp && drawable);
-  SET_SENSITIVE ("/File/Save a Copy...", gdisp && drawable);
-  SET_SENSITIVE ("/File/Revert...",      gdisp && GIMP_OBJECT (gimage)->name);
-  SET_SENSITIVE ("/File/Close",          gdisp);
-
-  /*  Edit  */
-
-  {
-    gchar *undo_name = NULL;
-    gchar *redo_name = NULL;
-
-    if (gdisp && gimp_image_undo_is_enabled (gimage))
-      {
-        undo_name = (gchar *) undo_get_undo_name (gimage);
-        redo_name = (gchar *) undo_get_redo_name (gimage);
-      }
-
-    if (undo_name)
-      undo_name = g_strdup_printf (_("Undo %s"), gettext (undo_name));
-
-    if (redo_name)
-      redo_name = g_strdup_printf (_("Redo %s"), gettext (redo_name));
-
-    SET_LABEL ("/Edit/Undo", undo_name ? undo_name : _("Undo"));
-    SET_LABEL ("/Edit/Redo", redo_name ? redo_name : _("Redo"));
-
-    SET_SENSITIVE ("/Edit/Undo", undo_name);
-    SET_SENSITIVE ("/Edit/Redo", redo_name);
-
-    g_free (undo_name);
-    g_free (redo_name);
-  }
-
-  SET_SENSITIVE ("/Edit/Cut",                   lp);
-  SET_SENSITIVE ("/Edit/Copy",                  lp);
-  SET_SENSITIVE ("/Edit/Paste",                 gdisp && gimp->global_buffer);
-  SET_SENSITIVE ("/Edit/Paste Into",            gdisp && gimp->global_buffer);
-  SET_SENSITIVE ("/Edit/Paste as New",          gimp->global_buffer);
-  SET_SENSITIVE ("/Edit/Buffer/Cut Named...",   lp);
-  SET_SENSITIVE ("/Edit/Buffer/Copy Named...",  lp);
-  SET_SENSITIVE ("/Edit/Buffer/Paste Named...", lp);
-  SET_SENSITIVE ("/Edit/Clear",                 lp);
-  SET_SENSITIVE ("/Edit/Fill with FG Color",    lp);
-  SET_SENSITIVE ("/Edit/Fill with BG Color",    lp);
-  SET_SENSITIVE ("/Edit/Stroke",                lp && sel);
-
-  /*  Select  */
-
-  SET_SENSITIVE ("/Select/Invert",           lp && sel);
-  SET_SENSITIVE ("/Select/All",              lp);
-  SET_SENSITIVE ("/Select/None",             lp && sel);
-  SET_SENSITIVE ("/Select/Float",            lp && sel);
-  SET_SENSITIVE ("/Select/Feather...",       lp && sel);
-  SET_SENSITIVE ("/Select/Sharpen",          lp && sel);
-  SET_SENSITIVE ("/Select/Shrink...",        lp && sel);
-  SET_SENSITIVE ("/Select/Grow...",          lp && sel);
-  SET_SENSITIVE ("/Select/Border...",        lp && sel);
-  SET_SENSITIVE ("/Select/Toggle QuickMask", gdisp);
-  SET_SENSITIVE ("/Select/Save to Channel",  lp && sel && !fs);
-
-  /*  View  */
-
-  SET_SENSITIVE ("/View/Zoom In",            gdisp);
-  SET_SENSITIVE ("/View/Zoom Out",           gdisp);
-  SET_SENSITIVE ("/View/Zoom to Fit Window", gdisp);
-
-  SET_SENSITIVE ("/View/Zoom/16:1", gdisp);
-  SET_SENSITIVE ("/View/Zoom/8:1",  gdisp);
-  SET_SENSITIVE ("/View/Zoom/4:1",  gdisp);
-  SET_SENSITIVE ("/View/Zoom/2:1",  gdisp);
-  SET_SENSITIVE ("/View/Zoom/1:1",  gdisp);
-  SET_SENSITIVE ("/View/Zoom/1:2",  gdisp);
-  SET_SENSITIVE ("/View/Zoom/1:4",  gdisp);
-  SET_SENSITIVE ("/View/Zoom/1:8",  gdisp);
-  SET_SENSITIVE ("/View/Zoom/1:16", gdisp);
-
-  SET_SENSITIVE ("/View/Dot for Dot", gdisp);
-  SET_ACTIVE    ("/View/Dot for Dot", gdisp && shell->dot_for_dot);
-
-  SET_SENSITIVE ("/View/Info Window...",       gdisp);
-  SET_SENSITIVE ("/View/Navigation Window...", gdisp);
-  SET_SENSITIVE ("/View/Display Filters...",   gdisp);
-
-  SET_SENSITIVE ("/View/Show Selection",      gdisp);
-  SET_ACTIVE    ("/View/Show Selection",      gdisp && ! shell->select->hidden);
-  SET_SENSITIVE ("/View/Show Layer Boundary", gdisp);
-  SET_ACTIVE    ("/View/Show Layer Boundary", gdisp && ! shell->select->layer_hidden);
-
-  SET_SENSITIVE ("/View/Show Guides",  gdisp);
-  SET_ACTIVE    ("/View/Show Guides",  gdisp && gdisp->draw_guides);
-  SET_SENSITIVE ("/View/Snap to Guides", gdisp);
-  SET_ACTIVE    ("/View/Snap to Guides", gdisp && gdisp->snap_to_guides);
-
-  SET_SENSITIVE ("/View/Show Menubar", gdisp);
-  SET_ACTIVE    ("/View/Show Menubar",
-                 gdisp &&
-		 GTK_WIDGET_VISIBLE (GTK_ITEM_FACTORY (shell->menubar_factory)->widget));
-
-  SET_SENSITIVE ("/View/Show Rulers", gdisp);
-  SET_ACTIVE    ("/View/Show Rulers",
-                 gdisp && GTK_WIDGET_VISIBLE (shell->hrule));
-
-  SET_SENSITIVE ("/View/Show Statusbar", gdisp);
-  SET_ACTIVE    ("/View/Show Statusbar",
-                 gdisp && GTK_WIDGET_VISIBLE (shell->statusbar));
-
-  SET_SENSITIVE ("/View/New View",    gdisp);
-  SET_SENSITIVE ("/View/Shrink Wrap", gdisp);
-
-  /*  Image  */
-
-  SET_SENSITIVE ("/Image/Mode/RGB",        gdisp && ! is_rgb);
-  SET_SENSITIVE ("/Image/Mode/Grayscale",  gdisp && ! is_gray);
-  SET_SENSITIVE ("/Image/Mode/Indexed...", gdisp && ! is_indexed);
-
-  SET_SENSITIVE ("/Image/Canvas Size...",          gdisp);
-  SET_SENSITIVE ("/Image/Scale Image...",          gdisp);
-  SET_SENSITIVE ("/Image/Crop Image",              gdisp && sel);
-  SET_SENSITIVE ("/Image/Duplicate",               gdisp);
-  SET_SENSITIVE ("/Image/Merge Visible Layers...", gdisp && !fs && !aux && lp);
-  SET_SENSITIVE ("/Image/Flatten Image",           gdisp && !fs && !aux && lp);
-  SET_SENSITIVE ("/Image/Undo History...",         gdisp);
-
-  /*  Layer  */
-
-  SET_SENSITIVE ("/Layer/Stack/Previous Layer",
-                 lp && !fs && !aux && lind > 0);
-  SET_SENSITIVE ("/Layer/Stack/Next Layer",
-                 lp && !fs && !aux && lind < (lnum - 1));
-  SET_SENSITIVE ("/Layer/Stack/Raise Layer",
-                 lp && !fs && !aux && alpha && lind > 0);
-  SET_SENSITIVE ("/Layer/Stack/Lower Layer",
-                 lp && !fs && !aux && alpha && lind < (lnum - 1));
-  SET_SENSITIVE ("/Layer/Stack/Layer to Top",
-                 lp && !fs && !aux && alpha && lind > 0);
-  SET_SENSITIVE ("/Layer/Stack/Layer to Bottom",
-                 lp && !fs && !aux && alpha && lind < (lnum - 1));
-
-  SET_SENSITIVE ("/Layer/New Layer...",    gdisp);
-  SET_SENSITIVE ("/Layer/Duplicate Layer", lp && !fs && !aux);
-  SET_SENSITIVE ("/Layer/Anchor Layer",    lp &&  fs && !aux);
-  SET_SENSITIVE ("/Layer/Merge Down",      lp && !fs && !aux);
-  SET_SENSITIVE ("/Layer/Delete Layer",    lp && !aux);
-
-  SET_SENSITIVE ("/Layer/Layer Boundary Size...", lp && !aux);
-  SET_SENSITIVE ("/Layer/Layer to Imagesize",     lp && !aux);
-  SET_SENSITIVE ("/Layer/Scale Layer...",         lp && !aux);
-  SET_SENSITIVE ("/Layer/Crop Layer",             lp && !aux && sel);
-
-  SET_SENSITIVE ("/Layer/Transform/Offset...", lp);
-
-  SET_SENSITIVE ("/Layer/Colors/Color Balance...",       lp &&   is_rgb);
-  SET_SENSITIVE ("/Layer/Colors/Hue-Saturation...",      lp &&   is_rgb);
-  SET_SENSITIVE ("/Layer/Colors/Brightness-Contrast...", lp && ! is_indexed);
-  SET_SENSITIVE ("/Layer/Colors/Threshold...",           lp && ! is_indexed);
-  SET_SENSITIVE ("/Layer/Colors/Levels...",              lp && ! is_indexed);
-  SET_SENSITIVE ("/Layer/Colors/Curves...",              lp && ! is_indexed);
-  SET_SENSITIVE ("/Layer/Colors/Desaturate",             lp &&   is_rgb);
-  SET_SENSITIVE ("/Layer/Colors/Posterize...",           lp && ! is_indexed);
-  SET_SENSITIVE ("/Layer/Colors/Invert",                 lp && ! is_indexed);
-  SET_SENSITIVE ("/Layer/Colors/Auto/Equalize",          lp && ! is_indexed);
-  SET_SENSITIVE ("/Layer/Colors/Histogram...",           lp);
-
-  SET_SENSITIVE ("/Layer/Mask/Add Layer Mask...", lp && !aux && !lm && alpha && ! is_indexed);
-  SET_SENSITIVE ("/Layer/Mask/Apply Layer Mask",  lp && !aux && lm);
-  SET_SENSITIVE ("/Layer/Mask/Delete Layer Mask", lp && !aux && lm);
-  SET_SENSITIVE ("/Layer/Mask/Mask to Selection", lp && !aux && lm);
-
-  SET_SENSITIVE ("/Layer/Alpha/Alpha to Selection", lp && !aux && alpha);
-  SET_SENSITIVE ("/Layer/Alpha/Add Alpha Channel",  lp && !aux && !fs && !lm && !alpha);
-
-#undef SET_ACTIVE
-#undef SET_LABEL
-#undef SET_SENSITIVE
-
-  plug_in_set_menu_sensitivity (GIMP_ITEM_FACTORY (item_factory), drawable_type);
-
-#if 0
-  /*  update the popup menu  */
-  if (! popup_only)
-    {
-      GimpContext *user_context;
-
-      user_context = gimp_get_user_context (gimp);
-
-      if (shell)
-        {
-          if (gimp_context_get_display (user_context) == gdisp)
-            gimp_display_shell_set_menu_sensitivity (shell, gdisp->gimage->gimp,
-                                                     TRUE);
-        }
-      else
-        {
-          gimp_display_shell_set_menu_sensitivity (NULL, gdisp->gimage->gimp,
-                                                   TRUE);
-        }
-    }
-#endif
 }
 
 GimpGuide *

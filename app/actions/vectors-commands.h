@@ -62,8 +62,5 @@ void   vectors_new_vectors_query                       (GimpImage   *gimage,
                                                         gboolean     interactive);
 void   vectors_edit_vectors_query                      (GimpVectors *vectors);
 
-void   vectors_menu_update                             (GtkItemFactory *factory,
-                                                        gpointer        data);
-
 
 #endif /* __VECTORS_COMMANDS_H__ */

@@ -18,8 +18,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
-
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -29,9 +27,8 @@
 #include "core/gimpgradient.h"
 #include "core/gimpcontext.h"
 
+#include "widgets/gimpcontainereditor.h"
 #include "widgets/gimpcontainerview.h"
-#include "widgets/gimpdatafactoryview.h"
-#include "widgets/gimpitemfactory.h"
 
 #include "gradients-commands.h"
 
@@ -56,36 +53,6 @@ gradients_save_as_pov_ray_cmd_callback (GtkWidget *widget,
   editor = GIMP_CONTAINER_EDITOR (data);
 
   gradients_save_as_pov_query (editor);
-}
-
-void
-gradients_menu_update (GtkItemFactory *factory,
-                       gpointer        data)
-{
-  GimpContainerEditor *editor;
-  GimpGradient        *gradient;
-  gboolean             internal = FALSE;
-
-  editor = GIMP_CONTAINER_EDITOR (data);
-
-  gradient = gimp_context_get_gradient (editor->view->context);
-
-  if (gradient)
-    internal = GIMP_DATA (gradient)->internal;
-
-#define SET_SENSITIVE(menu,condition) \
-        gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
-
-  SET_SENSITIVE ("/Duplicate Gradient",
-		 gradient && GIMP_DATA_GET_CLASS (gradient)->duplicate);
-  SET_SENSITIVE ("/Edit Gradient...",
-		 gradient && GIMP_DATA_FACTORY_VIEW (editor)->data_edit_func);
-  SET_SENSITIVE ("/Delete Gradient...",
-		 gradient && ! internal);
-  SET_SENSITIVE ("/Save as POV-Ray...",
-		 gradient);
-
-#undef SET_SENSITIVE
 }
 
 

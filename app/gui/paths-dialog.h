@@ -25,6 +25,10 @@ void        paths_dialog_update     (GimpImage *gimage);
 void        paths_dialog_flush      (void);
 
 
+extern GimpItemFactoryEntry paths_menu_entries[];
+extern gint                 n_paths_menu_entries;
+
+
 void   paths_dialog_new_path_callback             (GtkWidget *widget,
 						   gpointer   data);
 void   paths_dialog_delete_path_callback          (GtkWidget *widget,

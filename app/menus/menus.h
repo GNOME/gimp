@@ -20,11 +20,22 @@
 #define __MENUS_H__
 
 
+#define MENU_SEPARATOR(path) \
+        { { (path), NULL, NULL, 0, "<Separator>" }, NULL, NULL, NULL }
+
+#define MENU_BRANCH(path) \
+        { { (path), NULL, NULL, 0, "<Branch>" }, NULL, NULL, NULL }
+
+
 extern GimpMenuFactory *global_menu_factory;
 
 
-void   menus_init (Gimp *gimp);
-void   menus_exit (Gimp *gimp);
+void   menus_init                   (Gimp            *gimp);
+void   menus_exit                   (Gimp            *gimp);
+
+void   menus_last_opened_add        (GimpItemFactory *item_factory,
+                                     Gimp            *gimp);
+void   menus_filters_subdirs_to_top (GtkMenu         *menu);
 
 
 #endif /* __MENUS_H__ */

@@ -35,8 +35,5 @@ void   documents_reload_previews_cmd_callback           (GtkWidget *widget,
 void   documents_delete_dangling_documents_cmd_callback (GtkWidget *widget,
                                                          gpointer   data);
 
-void   documents_menu_update                            (GtkItemFactory *factory,
-                                                         gpointer        data);
-
 
 #endif /* __DOCUMENTS_COMMANDS_H__ */

@@ -29,7 +29,6 @@
 #include "core/gimppalette.h"
 
 #include "widgets/gimppaletteeditor.h"
-#include "widgets/gimpitemfactory.h"
 #include "widgets/gimptoolbox-color-area.h"
 
 #include "color-notebook.h"
@@ -135,24 +134,6 @@ palette_editor_delete_color_cmd_callback (GtkWidget *widget,
     return;
 
   gimp_palette_delete_entry (palette, editor->color);
-}
-
-void
-palette_editor_menu_update (GtkItemFactory *factory,
-                            gpointer        data)
-{
-  GimpPaletteEditor *editor;
-
-  editor = GIMP_PALETTE_EDITOR (data);
-
-#define SET_SENSITIVE(menu,condition) \
-        gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
-
-  SET_SENSITIVE ("/New Color",     TRUE);
-  SET_SENSITIVE ("/Edit Color...", editor->color);
-  SET_SENSITIVE ("/Delete Color",  editor->color);
-
-#undef SET_SENSITIVE
 }
 
 
