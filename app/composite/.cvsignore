@@ -4,6 +4,5 @@ Makefile.in
 .libs
 *.lo
 libappcomposite.la
-gimp-composite-dispatch.c
 ns.pyc
 test-composite
