@@ -2140,6 +2140,15 @@ void create_choice(GtkWidget *box)
   gtk_widget_show (option_menu);
 }
 
+static gint 
+bezier_extends_delete_callback (GtkWidget *dialog)
+{
+  dialog_open = 2;
+  gtk_widget_hide (dialog);
+
+  return TRUE;
+}
+
 static void bezier_named_buffer_proc (GDisplay *gdisp)
 {
   int i;
@@ -2169,6 +2178,10 @@ static void bezier_named_buffer_proc (GDisplay *gdisp)
   pn_dlg->shell = gtk_dialog_new ();
 
   curPndlg = pn_dlg;
+
+  gtk_signal_connect (GTK_OBJECT (pn_dlg->shell), "delete_event",
+		      GTK_SIGNAL_FUNC (bezier_extends_delete_callback),
+		      NULL);
 
   gtk_window_set_title (GTK_WINDOW (pn_dlg->shell), _("Paste Bezier Named Buffer"));
   gtk_window_position (GTK_WINDOW (pn_dlg->shell), GTK_WIN_POS_MOUSE);
@@ -2209,7 +2222,6 @@ static void bezier_named_buffer_proc (GDisplay *gdisp)
 
   gtk_widget_show (pn_dlg->shell);
 }
-
 
 static int
 add_point_on_segment (BezierSelect     *bezier_sel,

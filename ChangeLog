@@ -1,3 +1,8 @@
+Tue Dec  1 22:12:08 CST 1998 Larry Ewing  <lewing@gimp.org>
+
+	* app/bezier_select.c: fixed the dialog destroy handling in the
+	bezier extends dialog.  
+
 Wed Dec  2 02:40:34 MET 1998 Sven Neumann <sven@gimp.org>
 
 	* app/drawable_cmds.[ch]
