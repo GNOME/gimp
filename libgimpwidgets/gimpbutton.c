@@ -152,18 +152,17 @@ static gint
 gimp_button_button_release (GtkWidget      *widget,
 			    GdkEventButton *bevent)
 {
-  gboolean in_button = FALSE;
+  GtkButton *button;
+  gboolean   in_button = FALSE;
 
   g_return_val_if_fail (widget != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_BUTTON (widget), FALSE);
   g_return_val_if_fail (bevent != NULL, FALSE);
 
+  button = GTK_BUTTON (widget);
+
   if (bevent->button == 1)
     {
-      GtkButton *button;
-
-      button = GTK_BUTTON (widget);
-
       in_button = button->in_button;
 
       if (in_button &&
@@ -183,6 +182,8 @@ gimp_button_button_release (GtkWidget      *widget,
 
   if (bevent->button == 1 && in_button)
     {
+      button->in_button = TRUE;
+
       gtk_widget_set_state (widget, GTK_STATE_PRELIGHT);
       gtk_widget_draw (widget, NULL);
    }

@@ -235,7 +235,7 @@ gimp_drawable_list_view_init (GimpDrawableListView *view)
   gtk_widget_show (view->raise_button);
 
   gimp_help_set_help_data (view->raise_button, _("Raise          \n"
-						 "<shift> To Top"), NULL);
+						 "<Shift> To Top"), NULL);
 
   gtk_signal_connect (GTK_OBJECT (view->raise_button), "clicked",
 		      GTK_SIGNAL_FUNC (gimp_drawable_list_view_raise_clicked),
@@ -256,7 +256,7 @@ gimp_drawable_list_view_init (GimpDrawableListView *view)
   gtk_widget_show (view->lower_button);
 
   gimp_help_set_help_data (view->lower_button, _("Lower             \n"
-						 "<shift> To Bottom"), NULL);
+						 "<Shift> To Bottom"), NULL);
 
   gtk_signal_connect (GTK_OBJECT (view->lower_button), "clicked",
 		      GTK_SIGNAL_FUNC (gimp_drawable_list_view_lower_clicked),

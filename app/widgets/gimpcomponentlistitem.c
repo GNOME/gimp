@@ -55,8 +55,6 @@ static void    gimp_component_list_item_visibility_changed (GimpImage    *gimage
 							    ChannelType   channel,
 							    gpointer      data);
 
-static void    gimp_component_list_item_state_changed      (GtkWidget    *widget,
-							    GtkStateType  previous_state);
 static void    gimp_component_list_item_active_changed     (GimpImage    *gimage,
 							    ChannelType   channel,
 							    gpointer      data);
@@ -104,8 +102,6 @@ gimp_component_list_item_class_init (GimpComponentListItemClass *klass)
   list_item_class = (GimpListItemClass *) klass;
 
   parent_class = gtk_type_class (GIMP_TYPE_LIST_ITEM);
-
-  widget_class->state_changed   = gimp_component_list_item_state_changed;
 
   list_item_class->set_viewable = gimp_component_list_item_set_viewable;
 }
@@ -329,59 +325,6 @@ gimp_component_list_item_visibility_changed (GimpImage   *gimage,
                                           gimp_component_list_item_eye_toggled,
                                           list_item);
     }
-}
-
-static void
-gimp_component_list_item_state_changed (GtkWidget    *widget,
-					GtkStateType  previous_state)
-{
-  /*
-  GimpComponentListItem *component_item;
-  GimpListItem          *list_item;
-  GimpImage             *gimage;
-  gboolean               active;
-  */
-
-  if (GTK_WIDGET_CLASS (parent_class)->state_changed)
-    GTK_WIDGET_CLASS (parent_class)->state_changed (widget, previous_state);
-
-  /*
-  component_item = GIMP_COMPONENT_LIST_ITEM (widget);
-  list_item      = GIMP_LIST_ITEM (widget);
-  gimage         = GIMP_IMAGE (GIMP_PREVIEW (list_item->preview)->viewable);
-
-  g_print ("state: %d\n", widget->state);
-
-  if (widget->state == GTK_STATE_SELECTED &&
-      previous_state == GTK_STATE_NORMAL)
-    {
-      active = TRUE;
-    }
-  else if (widget->state == GTK_STATE_NORMAL &&
-	   previous_state == GTK_STATE_SELECTED)
-    {
-      active = FALSE;
-    }
-  else
-    return;
-
-  g_print ("active: %d\n", active);
-
-  if (active != gimp_image_get_component_active (gimage,
-						 component_item->channel))
-    {
-      gtk_signal_handler_block_by_func (GTK_OBJECT (gimage),
-                                        gimp_component_list_item_active_changed,
-                                        widget);
-
-      gimp_image_set_component_active (gimage, component_item->channel,
-				       active);
-
-      gtk_signal_handler_unblock_by_func (GTK_OBJECT (gimage),
-                                          gimp_component_list_item_active_changed,
-                                          widget);
-    }
-  */
 }
 
 static void

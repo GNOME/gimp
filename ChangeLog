@@ -1,3 +1,20 @@
+2001-05-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpchannellistview.c: enabled setting component
+	activity. Connect an "extended_clicked" callback to the "To
+	Selection" button for add/sub/intersect.
+
+	* app/widgets/gimpcomponentlistitem.c: removed some commented out
+	code.
+
+	* app/widgets/gimpdrawablelistview.c: stuff.
+
+	* app/widgets/gimplayerlistview.c: set "Raise" to insensitive if
+	the active layer has no alpha.
+
+	* libgimpwidgets/gimpbutton.c: fiddle around correctly with
+	GtkButton's internals.
+
 2001-05-06  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/Makefile.am

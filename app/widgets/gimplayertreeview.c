@@ -295,11 +295,14 @@ gimp_layer_list_view_select_item (GimpContainerView *view,
 				  GimpViewable      *item,
 				  gpointer           insert_data)
 {
-  GimpLayerListView *list_view;
-  gboolean           options_sensitive = FALSE;
-  gboolean           anchor_sensitive  = FALSE;
+  GimpDrawableListView *drawable_view;
+  GimpLayerListView    *list_view;
+  gboolean              options_sensitive = FALSE;
+  gboolean              anchor_sensitive  = FALSE;
+  gboolean              raise_sensitive   = FALSE;
 
-  list_view = GIMP_LAYER_LIST_VIEW (view);
+  list_view     = GIMP_LAYER_LIST_VIEW (view);
+  drawable_view = GIMP_DRAWABLE_LIST_VIEW (view);
 
   if (GIMP_CONTAINER_VIEW_CLASS (parent_class)->select_item)
     GIMP_CONTAINER_VIEW_CLASS (parent_class)->select_item (view,
@@ -316,10 +319,17 @@ gimp_layer_list_view_select_item (GimpContainerView *view,
 	{
 	  anchor_sensitive = TRUE;
 	}
+
+      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (item)) &&
+	  gimp_container_get_child_index (view->container, GIMP_OBJECT (item)))
+	{
+	  raise_sensitive = TRUE;
+	}
     }
 
-  gtk_widget_set_sensitive (list_view->options_box,   options_sensitive);
-  gtk_widget_set_sensitive (list_view->anchor_button, anchor_sensitive);
+  gtk_widget_set_sensitive (list_view->options_box,      options_sensitive);
+  gtk_widget_set_sensitive (list_view->anchor_button,    anchor_sensitive);
+  gtk_widget_set_sensitive (drawable_view->raise_button, raise_sensitive);
 }
 
 
