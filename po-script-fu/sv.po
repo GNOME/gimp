@@ -9,14 +9,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-05 20:25+0200\n"
-"PO-Revision-Date: 2003-09-28 11:42+0200\n"
+"POT-Creation-Date: 2003-10-07 17:31+0200\n"
+"PO-Revision-Date: 2003-10-07 17:32+0200\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: plug-ins/script-fu/script-fu-console.c:143
 #: plug-ins/script-fu/script-fu-text-console.c:66
@@ -150,23 +150,20 @@ msgid "Server Logfile:"
 msgstr "Serverloggfil:"
 
 #: plug-ins/script-fu/script-fu.c:120
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
-msgstr "<Toolbox>/Utökningar/Script-Fu/_Konsoll..."
+msgstr "<Toolbox>/Utökningar/Script-Fu/Script-fu-_konsoll"
 
 #: plug-ins/script-fu/script-fu.c:145
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/_Server..."
+msgstr "<Toolbox>/Utökningar/Script-Fu/Starta _server..."
 
 #: plug-ins/script-fu/script-fu.c:269 plug-ins/script-fu/script-fu.c:270
 msgid "Re-read all available scripts"
 msgstr "Läs om alla tillgängliga skript"
 
 #: plug-ins/script-fu/script-fu.c:274
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
-msgstr "<Toolbox>/Utökningar/Script-Fu/_Uppdatera"
+msgstr "<Toolbox>/Utökningar/Script-Fu/_Uppdatera skripts"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:119
 #: plug-ins/dbbrowser/dbbrowser_utils.c:138
@@ -2161,9 +2158,8 @@ msgid "Whirl Amount"
 msgstr "Virvelmängd"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Mönster/Virvelbricka..."
+msgstr "<Toolbox>/Utökningar/Script-Fu/Mönster/_Virvelbricka..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of Times to Whirl"

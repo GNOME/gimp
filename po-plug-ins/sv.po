@@ -9,14 +9,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-05 20:23+0200\n"
-"PO-Revision-Date: 2003-09-28 11:41+0200\n"
+"POT-Creation-Date: 2003-10-07 17:22+0200\n"
+"PO-Revision-Date: 2003-10-07 17:26+0200\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:495
 #: plug-ins/FractalExplorer/Dialogs.c:1586 plug-ins/gfig/gfig.c:3222
@@ -75,9 +75,8 @@ msgid "Redo last zoom"
 msgstr "Upprepa senaste inzoomning"
 
 #: plug-ins/FractalExplorer/Dialogs.c:642
-#, fuzzy
 msgid "_Parameters"
-msgstr "Parametrar"
+msgstr "_Parametrar"
 
 #: plug-ins/FractalExplorer/Dialogs.c:645
 msgid "Fractal Parameters"
@@ -215,7 +214,6 @@ msgid "Number of Colors"
 msgstr "Antal färger"
 
 #: plug-ins/FractalExplorer/Dialogs.c:863
-#, fuzzy
 msgid "Number of colors:"
 msgstr "Antal färger:"
 
@@ -224,7 +222,6 @@ msgid "Change the number of colors in the mapping"
 msgstr "Ändra antalet färger i mappningen"
 
 #: plug-ins/FractalExplorer/Dialogs.c:873
-#, fuzzy
 msgid "Use loglog smoothing"
 msgstr "Använd loglog-utjämning"
 
@@ -356,7 +353,6 @@ msgid "Color Mode"
 msgstr "Färgläge"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1072
-#, fuzzy
 msgid "As specified above"
 msgstr "Enligt ovan"
 
@@ -369,7 +365,6 @@ msgstr ""
 "funktion). Resultatet visas i förhandsgranskningsbilden"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1094
-#, fuzzy
 msgid "Apply active gradient to final image"
 msgstr "Använd aktiv färgtoning på slutgiltiga bilden"
 
@@ -384,9 +379,8 @@ msgid "FractalExplorer Gradient"
 msgstr "FractalExplorer-färgtoning"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1144
-#, fuzzy
 msgid "_Fractals"
-msgstr "Fraktaler"
+msgstr "_Fraktaler"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1776 plug-ins/bmp/bmpwrite.c:199
 #: plug-ins/common/CEL.c:497 plug-ins/common/CML_explorer.c:2165
@@ -474,9 +468,8 @@ msgstr ""
 "Rad %d alternativsektion är felaktig"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:267
-#, fuzzy
 msgid "<Image>/Filters/Render/_Fractal Explorer..."
-msgstr "<Image>/Filter/Rendera/Mönster/_Fractal Explorer..."
+msgstr "<Image>/Filter/Rendera/_Fractal Explorer..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:395
 msgid "Rendering Fractal..."
@@ -5373,9 +5366,8 @@ msgid "Temporary Procedure"
 msgstr "Temporär procedur"
 
 #: plug-ins/common/plugindetails.c:145
-#, fuzzy
 msgid "<Toolbox>/Xtns/_Plugin Details"
-msgstr "<Toolbox>/Xtns/_Detaljer för insticksmodul..."
+msgstr "<Toolbox>/Xtns/_Detaljer för insticksmodul"
 
 #: plug-ins/common/plugindetails.c:221
 msgid "Details <<"
@@ -7031,9 +7023,8 @@ msgid "The unit's plural form."
 msgstr "Enhetens namn i plural."
 
 #: plug-ins/common/uniteditor.c:115
-#, fuzzy
 msgid "<Toolbox>/Xtns/_Unit Editor"
-msgstr "<Toolbox>/Xtns/_Enhetseditor..."
+msgstr "<Toolbox>/Xtns/_Enhetseditor"
 
 #: plug-ins/common/uniteditor.c:179
 msgid "New Unit"
@@ -7802,9 +7793,8 @@ msgid "Nothing to crop."
 msgstr "Inget att beskära."
 
 #: plug-ins/dbbrowser/dbbrowser.c:89
-#, fuzzy
 msgid "<Toolbox>/Xtns/_DB Browser"
-msgstr "<Toolbox>/Xtns/_DB bläddrare..."
+msgstr "<Toolbox>/Xtns/_DB bläddrare"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:119
 #: plug-ins/dbbrowser/dbbrowser_utils.c:138
