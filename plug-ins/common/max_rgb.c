@@ -50,13 +50,10 @@ static void     run     (const gchar      *name,
                          gint             *nreturn_vals,
                          GimpParam       **return_vals);
 
-static GimpPDBStatusType main_function (GimpDrawable *drawable,
-                                        gboolean      preview_mode);
+static GimpPDBStatusType main_function  (GimpDrawable *drawable,
+                                         GimpPreview  *preview);
 
-static gint        dialog         (GimpDrawable *drawable);
-static void        radio_callback (GtkWidget    *widget,
-                                   gpointer      data);
-
+static gint              max_rgb_dialog (GimpDrawable *drawable);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -74,18 +71,15 @@ enum
 
 typedef struct
 {
-  gint      max_p;
+  gint     max_p;
+  gboolean preview;
 } ValueType;
 
 static ValueType pvals =
 {
-  MAX_CHANNELS
+  MAX_CHANNELS,
+  TRUE
 };
-
-#define PREVIEW_SIZE 128
-static GtkWidget *preview;
-static gint       preview_width, preview_height, preview_bpp;
-static guchar    *preview_cache;
 
 MAIN ()
 
@@ -152,7 +146,7 @@ run (const gchar      *name,
           g_message (_("Can only operate on RGB drawables."));
           return;
         }
-      if (! dialog (drawable))
+      if (! max_rgb_dialog (drawable))
         return;
       break;
     case GIMP_RUN_NONINTERACTIVE:
@@ -164,7 +158,7 @@ run (const gchar      *name,
       break;
     }
 
-  status = main_function (drawable, FALSE);
+  status = main_function (drawable, NULL);
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
@@ -214,7 +208,7 @@ max_rgb_func (const guchar *src,
 
 static GimpPDBStatusType
 main_function (GimpDrawable *drawable,
-               gboolean      preview_mode)
+               GimpPreview  *preview)
 {
   MaxRgbParam_t param;
 
@@ -222,26 +216,30 @@ main_function (GimpDrawable *drawable,
   param.flag = (0 < pvals.max_p) ? 1 : -1;
   param.has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
-  if (preview_mode)
+  if (preview)
     {
       gint    i;
-      guchar *buffer = g_new (guchar,
-                              preview_width * preview_height * preview_bpp);
+      guchar *buffer;
+      guchar *src;
+      gint    width, height, bpp;
 
-      for (i = 0; i<preview_width * preview_height; i++)
+      gimp_preview_get_size (preview, &width, &height);
+      src = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+                                              &width, &height, &bpp);
+
+      buffer = g_new (guchar, width * height * bpp);
+
+      for (i = 0; i < width * height; i++)
         {
-          max_rgb_func (preview_cache + i * preview_bpp,
-                        buffer        + i * preview_bpp,
-                        preview_bpp,
+          max_rgb_func (src    + i * bpp,
+                        buffer + i * bpp,
+                        bpp,
                         &param);
         }
 
-      gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
-                              0, 0, preview_width, preview_height,
-                              gimp_drawable_type (drawable->drawable_id),
-                              buffer,
-                              preview_width * preview_bpp);
+      gimp_preview_draw_buffer (preview, buffer, width * bpp);
       g_free (buffer);
+      g_free (src);
     }
   else
     {
@@ -258,11 +256,11 @@ main_function (GimpDrawable *drawable,
 
 /* dialog stuff */
 static gint
-dialog (GimpDrawable *drawable)
+max_rgb_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dlg;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
+  GtkWidget *preview;
   GtkWidget *frame;
   GtkWidget *max;
   GtkWidget *min;
@@ -270,36 +268,29 @@ dialog (GimpDrawable *drawable)
 
   gimp_ui_init ("max_rgb", TRUE);
 
-  dlg = gimp_dialog_new (_("Max RGB"), "max_rgb",
-                         NULL, 0,
-                         gimp_standard_help_func, "plug-in-max-rgb",
+  dialog = gimp_dialog_new (_("Max RGB"), "max_rgb",
+                            NULL, 0,
+                            gimp_standard_help_func, "plug-in-max-rgb",
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  preview = gimp_preview_area_new ();
-  preview_width = preview_height = PREVIEW_SIZE;
-  preview_cache = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
-                                                    &preview_width,
-                                                    &preview_height,
-                                                    &preview_bpp);
-  gtk_widget_set_size_request (preview, preview_width, preview_height);
-  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
+  preview = gimp_aspect_preview_new (drawable, &pvals.preview);
+  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
+  g_signal_connect_swapped (preview, "invalidated",
+                            G_CALLBACK (main_function),
+                            drawable);
 
   frame = gimp_int_radio_group_new (FALSE, NULL,
-                                    G_CALLBACK (radio_callback),
+                                    G_CALLBACK (gimp_radio_button_update),
                                     &pvals.max_p, pvals.max_p,
 
                                     _("_Hold the maximal channels"),
@@ -310,33 +301,21 @@ dialog (GimpDrawable *drawable)
 
                                     NULL);
 
-  g_object_set_data (G_OBJECT (max), "drawable", drawable);
-  g_object_set_data (G_OBJECT (min), "drawable", drawable);
+  g_signal_connect_swapped (max, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  g_signal_connect_swapped (min, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
-  gtk_container_add (GTK_CONTAINER (vbox), frame);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  main_function (drawable, TRUE);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
-
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
-}
-
-static void
-radio_callback (GtkWidget *widget,
-                gpointer  data)
-{
-  gimp_radio_button_update (widget, data);
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    {
-      GimpDrawable *drawable;
-      drawable = g_object_get_data (G_OBJECT (widget), "drawable");
-      main_function (drawable, TRUE);
-    }
 }
