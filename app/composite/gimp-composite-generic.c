@@ -21,7 +21,7 @@
 
 /*
  * This file is supposed to contain the generic (read: C) implementation
- * of the pixelfiddeling paint-functions. 
+ * of the pixelfiddeling paint-functions.
  */
 
 #include "config.h"
@@ -1026,15 +1026,15 @@ gimp_composite_dissolve_any_any_any_generic (GimpCompositeContext * ctx)
       for (b = 0; b < alpha; b++)
         dest[b] = src[b];
 
-      /*  dissolve if random value is > opacity  */
-      rand_val = g_rand_int_range(gr, 0, 256);
+      /*  dissolve if random value is >= opacity  */
+      rand_val = g_rand_int_range(gr, 0, 255);
 
       if (mask) {
         if (has_alpha)
           combined_opacity = opacity * src[alpha] * (*mask) / (255 * 255);
         else
           combined_opacity = opacity * (*mask) / 255;
- 
+
         mask++;
       } else {
         if (has_alpha)
@@ -1042,8 +1042,8 @@ gimp_composite_dissolve_any_any_any_generic (GimpCompositeContext * ctx)
         else
           combined_opacity = opacity;
       }
- 
-      dest[alpha] = (rand_val > combined_opacity) ? 0 : OPAQUE_OPACITY;
+
+      dest[alpha] = (rand_val >= combined_opacity) ? 0 : OPAQUE_OPACITY;
 
       dest += db;
       src += sb;

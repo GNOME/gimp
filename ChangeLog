@@ -1,4 +1,12 @@
+2003-09-03  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/paint-funcs-generic.h (dissolve_pixels)
+	* app/composite/gimp-composite-generic.c	
+	(gimp_composite_dissolve_any_any_any_generic): fixed a bug in the
+	dissolve algorithm (bug #121305).
+
 2003-09-03  Ville Pätsi  <drc@gimp.org>
+
 	* gimp.spec.in: Added epoch 1.
 
 2003-09-03  Michael Natterer  <mitch@gimp.org>
