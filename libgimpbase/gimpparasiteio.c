@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library 
+/* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpparasiteio.c
@@ -65,7 +65,7 @@ gimp_pixpipe_params_parse (gchar            *string,
 			   GimpPixPipeParams *params)
 {
   gchar *p, *q, *r;		/* Don't you love single-char identifiers?  */
-  gint i;                       /*          No, we don't!!   <Sven>         */ 
+  gint i;                       /*          No, we don't!!   <Sven>         */
 
   q = string;
   while ((p = strtok (q, " \r\n")) != NULL)

@@ -4,7 +4,7 @@
  * gimpmisc.c
  * Contains all kinds of miscellaneous routines factored out from different
  * plug-ins. They stay here until their API has crystalized a bit and we can
- * put them into the file where they belong (Maurits Rijk 
+ * put them into the file where they belong (Maurits Rijk
  * <lpeek.mrijk@consunet.nl> if you want to blame someone for this mess)
  *
  * This library is free software; you can redistribute it and/or
@@ -49,7 +49,7 @@ struct _GimpPixelFetcher
   gboolean      shadow;
 };
 
-struct _GimpRgnIterator 
+struct _GimpRgnIterator
 {
   GimpDrawable *drawable;
   gint 		x1, y1, x2, y2;
@@ -64,7 +64,7 @@ gimp_pixel_fetcher_new (GimpDrawable *drawable)
   pf = g_new (GimpPixelFetcher, 1);
 
   gimp_drawable_mask_bounds (drawable->drawable_id,
-			     &pf->sel_x1, &pf->sel_y1, 
+			     &pf->sel_x1, &pf->sel_y1,
 			     &pf->sel_x2, &pf->sel_y2);
 
   pf->col           = -1;
@@ -112,7 +112,7 @@ gimp_pixel_fetcher_set_bg_color (GimpPixelFetcher *pf)
     }
 }
 
-void		 
+void
 gimp_pixel_fetcher_set_shadow (GimpPixelFetcher *pf,
 			       gboolean          shadow)
 {
@@ -144,7 +144,7 @@ gimp_pixel_fetcher_provide_tile (GimpPixelFetcher *pf,
       pf->col = col;
       pf->row = row;
     }
-  
+
   return pf->tile->data + pf->img_bpp * (pf->tile->ewidth * rowoff + coloff);
 }
 
@@ -231,7 +231,7 @@ gimp_pixel_fetcher_get_pixel2 (GimpPixelFetcher *pf,
 	break;
 
       case PIXEL_BLACK:
-	if (x < 0 || x >= pf->img_width || 
+	if (x < 0 || x >= pf->img_width ||
 	    y < 0 || y >= pf->img_height)
 	  {
 	    i = pf->img_bpp;
@@ -297,7 +297,7 @@ gimp_get_color_guchar (GimpDrawable *drawable,
     }
 }
 
-void		 
+void
 gimp_get_bg_guchar (GimpDrawable *drawable,
 		    gboolean      transparent,
 		    guchar       *bg)
@@ -308,7 +308,7 @@ gimp_get_bg_guchar (GimpDrawable *drawable,
   gimp_get_color_guchar (drawable, &background, transparent, bg);
 }
 
-void		 
+void
 gimp_get_fg_guchar (GimpDrawable *drawable,
 		    gboolean      transparent,
 		    guchar       *fg)
@@ -323,10 +323,10 @@ GimpRgnIterator*
 gimp_rgn_iterator_new (GimpDrawable *drawable, GimpRunMode run_mode)
 {
   GimpRgnIterator *iter = g_new (GimpRgnIterator, 1);
-  
+
   iter->drawable = drawable;
   iter->run_mode = run_mode;
-  gimp_drawable_mask_bounds (drawable->drawable_id, &iter->x1, &iter->y1, 
+  gimp_drawable_mask_bounds (drawable->drawable_id, &iter->x1, &iter->y1,
 			     &iter->x2, &iter->y2);
 
   return iter;
@@ -339,7 +339,7 @@ gimp_rgn_iterator_free (GimpRgnIterator *iter)
 }
 
 static void
-gimp_rgn_iterator_iter_single (GimpRgnIterator *iter, GimpPixelRgn *srcPR, 
+gimp_rgn_iterator_iter_single (GimpRgnIterator *iter, GimpPixelRgn *srcPR,
 			       GimpRgnFuncSrc func, gpointer data)
 {
   gpointer  pr;
@@ -347,28 +347,28 @@ gimp_rgn_iterator_iter_single (GimpRgnIterator *iter, GimpPixelRgn *srcPR,
 
   total_area = (iter->x2 - iter->x1) * (iter->y2 - iter->y1);
   area_so_far   = 0;
-  
+
   for (pr = gimp_pixel_rgns_register (1, srcPR);
        pr != NULL;
        pr = gimp_pixel_rgns_process (pr))
     {
       guchar *src = srcPR->data;
       gint    y;
-      
+
       for (y = srcPR->y; y < srcPR->y + srcPR->h; y++)
 	{
 	  guchar *s = src;
 	  gint x;
-	  
+
 	  for (x = srcPR->x; x < srcPR->x + srcPR->w; x++)
 	    {
               func (x, y, s, srcPR->bpp, data);
 	      s += srcPR->bpp;
 	    }
-	  
+
 	  src += srcPR->rowstride;
 	}
-      
+
       if (iter->run_mode != GIMP_RUN_NONINTERACTIVE)
 	{
 	  area_so_far += srcPR->w * srcPR->h;
@@ -379,20 +379,20 @@ gimp_rgn_iterator_iter_single (GimpRgnIterator *iter, GimpPixelRgn *srcPR,
 }
 
 void
-gimp_rgn_iterator_src (GimpRgnIterator *iter, 
-		       GimpRgnFuncSrc func, 
+gimp_rgn_iterator_src (GimpRgnIterator *iter,
+		       GimpRgnFuncSrc func,
 		       gpointer data)
 {
   GimpPixelRgn srcPR;
-  
-  gimp_pixel_rgn_init (&srcPR, iter->drawable, iter->x1, iter->y1, 
+
+  gimp_pixel_rgn_init (&srcPR, iter->drawable, iter->x1, iter->y1,
 		       iter->x2 - iter->x1, iter->y2 - iter->y1, FALSE, FALSE);
   gimp_rgn_iterator_iter_single (iter, &srcPR, func, data);
 }
 
-void		 
-gimp_rgn_iterator_src_dest (GimpRgnIterator *iter, 
-			    GimpRgnFuncSrcDest func, 
+void
+gimp_rgn_iterator_src_dest (GimpRgnIterator *iter,
+			    GimpRgnFuncSrcDest func,
 			    gpointer data)
 {
   GimpPixelRgn srcPR, destPR;
@@ -415,7 +415,7 @@ gimp_rgn_iterator_src_dest (GimpRgnIterator *iter,
 		       TRUE, TRUE);
 
   bpp = srcPR.bpp;
-  
+
   for (pr = gimp_pixel_rgns_register (2, &srcPR, &destPR);
        pr != NULL;
        pr = gimp_pixel_rgns_process (pr))
@@ -423,7 +423,7 @@ gimp_rgn_iterator_src_dest (GimpRgnIterator *iter,
       gint    y;
       guchar* src  = srcPR.data;
       guchar* dest = destPR.data;
-  
+
       for (y = srcPR.y; y < srcPR.y + srcPR.h; y++)
 	{
 	  gint x;
@@ -436,7 +436,7 @@ gimp_rgn_iterator_src_dest (GimpRgnIterator *iter,
 	      s += bpp;
 	      d += bpp;
 	    }
-	  
+
 	  src  += srcPR.rowstride;
 	  dest += destPR.rowstride;
 	}
@@ -451,25 +451,25 @@ gimp_rgn_iterator_src_dest (GimpRgnIterator *iter,
 
   gimp_drawable_flush (iter->drawable);
   gimp_drawable_merge_shadow (iter->drawable->drawable_id, TRUE);
-  gimp_drawable_update (iter->drawable->drawable_id, x1, y1, x2 - x1, 
+  gimp_drawable_update (iter->drawable->drawable_id, x1, y1, x2 - x1,
 			y2 - y1);
 }
 
 void
-gimp_rgn_iterator_dest (GimpRgnIterator *iter, 
-			GimpRgnFuncDest func, 
+gimp_rgn_iterator_dest (GimpRgnIterator *iter,
+			GimpRgnFuncDest func,
 			gpointer data)
 {
   GimpPixelRgn destPR;
-  
-  gimp_pixel_rgn_init (&destPR, iter->drawable, iter->x1, iter->y1, 
+
+  gimp_pixel_rgn_init (&destPR, iter->drawable, iter->x1, iter->y1,
 		       iter->x2 - iter->x1, iter->y2 - iter->y1, TRUE, TRUE);
   gimp_rgn_iterator_iter_single (iter, &destPR, (GimpRgnFuncSrc) func, data);
-  
+
   /*  update the processed region  */
   gimp_drawable_flush (iter->drawable);
   gimp_drawable_merge_shadow (iter->drawable->drawable_id, TRUE);
-  gimp_drawable_update (iter->drawable->drawable_id, iter->x1, iter->y1, 
+  gimp_drawable_update (iter->drawable->drawable_id, iter->x1, iter->y1,
 			iter->x2 - iter->x1, iter->y2 - iter->y1);
 }
 
@@ -498,7 +498,7 @@ gimp_rgn_render_region (const GimpPixelRgn *srcPR,
   gint    row;
   guchar* src  = srcPR->data;
   guchar* dest = destPR->data;
-  
+
   for (row = 0; row < srcPR->h; row++)
     {
       gimp_rgn_render_row (src, dest, srcPR->w, srcPR->bpp, func, data);
@@ -563,7 +563,7 @@ gimp_rgn_iterate1 (GimpDrawable *drawable,
 
 void
 gimp_rgn_iterate2 (GimpDrawable *drawable,
-		   GimpRunMode   run_mode, 
+		   GimpRunMode   run_mode,
 		   GimpRgnFunc2  func,
 		   gpointer      data)
 {
@@ -585,7 +585,7 @@ gimp_rgn_iterate2 (GimpDrawable *drawable,
 		       FALSE, FALSE);
   gimp_pixel_rgn_init (&destPR, drawable, x1, y1, (x2 - x1), (y2 - y1),
 		       TRUE, TRUE);
-  
+
   for (pr = gimp_pixel_rgns_register (2, &srcPR, &destPR);
        pr != NULL;
        pr = gimp_pixel_rgns_process (pr))

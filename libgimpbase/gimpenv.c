@@ -126,10 +126,10 @@ gimp_directory (void)
     }
   else
     {
-#ifdef __EMX__       
+#ifdef __EMX__
 	gimp_dir = g_strdup(__XOS2RedirRoot(GIMPDIR));
-	return gimp_dir;  
-#endif      
+	return gimp_dir;
+#endif
 	if (home_dir)
 	{
 	  gimp_dir = g_build_filename (home_dir, GIMPDIR, NULL);
@@ -196,26 +196,26 @@ gimp_toplevel_directory ()
   static gchar *toplevel = NULL;
   gchar filename[MAX_PATH];
   gchar *sep1, *sep2;
-  
+
   if (toplevel != NULL)
     return toplevel;
-  
+
   if (GetModuleFileName (NULL, filename, sizeof (filename)) == 0)
     g_error ("GetModuleFilename failed\n");
-  
+
   /* If the executable file name is of the format
    * <foobar>\bin\*.exe or
    * <foobar>\lib\gimp\GIMP_MAJOR_VERSION.GIMP_MINOR_VERSION\plug-ins\*.exe,
    * use <foobar>. Otherwise, use the directory where the
    * executable is.
    */
-  
+
   sep1 = strrchr (filename, '\\');
-  
+
   *sep1 = '\0';
-  
+
   sep2 = strrchr (filename, '\\');
-  
+
   if (sep2 != NULL)
     {
       if (g_ascii_strcasecmp (sep2 + 1, "bin") == 0)
@@ -225,10 +225,10 @@ gimp_toplevel_directory ()
       else
 	{
 	  gchar test[MAX_PATH];
-	  
+
 	  sprintf (test, "\\lib\\gimp\\%d.%d\\plug-ins",
 		   GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION);
-	  
+
 	  if (strlen (filename) > strlen (test) &&
 	      g_ascii_strcasecmp (filename + strlen (filename) - strlen (test),
 				  test) == 0)
@@ -326,10 +326,10 @@ gimp_sysconf_directory (void)
 /**
  * gimp_plug_in_directory:
  *
- * Returns the top directory for GIMP plug_ins and modules. If the 
- * environment variable GIMP2_PLUGINDIR exists, that is used.  It 
- * should be an absolute pathname. Otherwise, on Unix the compile-time 
- * defined directory is used. On Win32, the installation directory as 
+ * Returns the top directory for GIMP plug_ins and modules. If the
+ * environment variable GIMP2_PLUGINDIR exists, that is used.  It
+ * should be an absolute pathname. Otherwise, on Unix the compile-time
+ * defined directory is used. On Win32, the installation directory as
  * deduced from the executable's name is used.
  *
  * The returned string is allocated just once, and should *NOT* be
@@ -359,7 +359,7 @@ gimp_plug_in_directory (void)
  * freed with g_free().
  *
  * Returns: The name of the GIMP's application-specific gtkrc file.
- **/ 
+ **/
 const gchar *
 gimp_gtkrc (void)
 {
@@ -628,7 +628,7 @@ gimp_env_get_dir (const gchar *gimp_env_name,
   if (env)
     {
       if (! g_path_is_absolute (env))
-	g_error ("%s environment variable should be an absolute path.", 
+	g_error ("%s environment variable should be an absolute path.",
                  gimp_env_name);
 #ifndef __EMX__
       return g_strdup (env);

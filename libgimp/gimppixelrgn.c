@@ -183,7 +183,7 @@ gimp_pixel_rgn_get_row (GimpPixelRgn *pr,
 #ifdef MEMCPY_IS_NICE
       memcpy ((void *)buf,
 	      (const void *)tile_data,
-	      inc = (bpp * 
+	      inc = (bpp *
 		     ( (min = MIN (end, boundary)) -x) ) );
       x = min;
       buf += inc;
@@ -301,8 +301,8 @@ gimp_pixel_rgn_get_rect (GimpPixelRgn *pr,
 	      dest = buf + bufstride * (ty - ystart) + bpp * (x - xstart);
 
 #ifdef MEMCPY_IS_NICE
-	      memcpy ((void *)dest, (const void *)src, (xboundary-x)*bpp);  
-#else   
+	      memcpy ((void *)dest, (const void *)src, (xboundary-x)*bpp);
+#else
 	      for (tx = x; tx < xboundary; tx++)
 		{
 		  for (b = 0; b < bpp; b++)
@@ -500,7 +500,7 @@ gimp_pixel_rgn_set_rect (GimpPixelRgn *pr,
                                                (ty % TILE_HEIGHT) + (x % TILE_WIDTH));
 
 #ifdef MEMCPY_IS_NICE
-	      memcpy ((void *)dest, (const void *)src, (xboundary-x)*bpp); 
+	      memcpy ((void *)dest, (const void *)src, (xboundary-x)*bpp);
 #else
 	      for (tx = x; tx < xboundary; tx++)
 		{

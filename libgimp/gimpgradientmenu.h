@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 
 GtkWidget * gimp_gradient_select_widget_new   (const gchar      *title,
-                                               const gchar      *gradient_name, 
+                                               const gchar      *gradient_name,
                                                GimpRunGradientCallback  callback,
                                                gpointer          data);
 

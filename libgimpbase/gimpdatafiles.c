@@ -183,7 +183,7 @@ gimp_datafiles_read_directories (const gchar            *path_str,
 		    }
 #endif
 		  else if ((flags & G_FILE_TEST_IS_EXECUTABLE) &&
-                           (((filestat.st_mode & S_IXUSR) && 
+                           (((filestat.st_mode & S_IXUSR) &&
 			     !S_ISDIR (filestat.st_mode)) ||
                             (S_ISREG (filestat.st_mode) &&
                              is_script (filename))))

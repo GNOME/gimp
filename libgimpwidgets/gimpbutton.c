@@ -1,5 +1,5 @@
-/* LIBGIMP - The GIMP Library 
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball 
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpbutton.c
  * Copyright (C) 2000 Michael Natterer <mitch@gimp.org>
@@ -8,7 +8,7 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
@@ -89,7 +89,7 @@ gimp_button_class_init (GimpButtonClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  button_signals[EXTENDED_CLICKED] = 
+  button_signals[EXTENDED_CLICKED] =
     g_signal_new ("extended_clicked",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
@@ -130,7 +130,7 @@ gimp_button_new (void)
  * gimp_button_extended_clicked:
  * @button: a #GimpButton.
  * @state:  a state as found in #GdkEventButton->state, e.g. #GDK_SHIFT_MASK.
- * 
+ *
  * Emits the button's "extended_clicked" signal.
  **/
 void

@@ -1,5 +1,5 @@
-/* LIBGIMP - The GIMP Library 
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpcolorscale.c
  * Copyright (C) 2002  Sven Neumann <sven@gimp.org>
@@ -9,10 +9,10 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU  
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -209,7 +209,7 @@ gimp_color_scale_expose (GtkWidget      *widget,
   gint            w, h;
 
   scale = GIMP_COLOR_SCALE (widget);
-  
+
   if (! scale->buf || ! GTK_WIDGET_DRAWABLE (widget))
     return FALSE;
 
@@ -348,11 +348,11 @@ gimp_color_scale_expose (GtkWidget      *widget,
           break;
         }
       gdk_gc_set_clip_rectangle (widget->style->black_gc, NULL);
-          
+
       gdk_gc_set_clip_rectangle (widget->style->white_gc, &expose_area);
       switch (range->orientation)
         {
-        case GTK_ORIENTATION_HORIZONTAL:      
+        case GTK_ORIENTATION_HORIZONTAL:
           for (w = area.width, x = area.x, y = area.y + area.height - 1;
                w > 0; w -= 2, x++, y--)
             gdk_draw_line (widget->window, widget->style->white_gc,
@@ -375,9 +375,9 @@ gimp_color_scale_expose (GtkWidget      *widget,
  * gimp_color_scale_new:
  * @orientation: the scale's orientation (horizontal or vertical)
  * @channel: the scale's color channel
- * 
+ *
  * Creates a new #GimpColorScale widget.
- * 
+ *
  * Return value: a new #GimpColorScale widget
  **/
 GtkWidget *
@@ -394,7 +394,7 @@ gimp_color_scale_new (GtkOrientation            orientation,
   range = GTK_RANGE (scale);
   range->orientation = orientation;
   range->flippable   = (orientation == GTK_ORIENTATION_HORIZONTAL);
-  
+
   return GTK_WIDGET (scale);
 }
 
@@ -402,7 +402,7 @@ gimp_color_scale_new (GtkOrientation            orientation,
  * gimp_color_scale_set_channel:
  * @scale: a #GimpColorScale widget
  * @channel: the new color channel
- * 
+ *
  * Changes the color channel displayed by the @scale.
  **/
 void
@@ -425,7 +425,7 @@ gimp_color_scale_set_channel (GimpColorScale           *scale,
  * @scale: a #GimpColorScale widget
  * @rgb: the new color as #GimpRGB
  * @hsv: the new color as #GimpHSV
- * 
+ *
  * Changes the color value of the @scale.
  **/
 void
@@ -447,7 +447,7 @@ gimp_color_scale_set_color (GimpColorScale *scale,
 /* as in gtkrange.c */
 static gboolean
 should_invert (GtkRange *range)
-{  
+{
   if (range->orientation == GTK_ORIENTATION_HORIZONTAL)
     return
       (range->inverted && !range->flippable) ||
@@ -546,7 +546,7 @@ gimp_color_scale_render (GimpColorScale *scale)
             value = 1.0 - value;
 
           *channel_value = value;
-          
+
           if (to_rgb)
             gimp_hsv_to_rgb (&hsv, &rgb);
 
@@ -593,23 +593,23 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
         /* this won't work correctly for very thin scales */
         dark  = (scale->height > GIMP_CHECK_SIZE_SM ?
                  buf + GIMP_CHECK_SIZE_SM * scale->rowstride : light);
-      
+
         for (x = 0, d = light, l = dark; x < scale->width; x++)
           {
             if ((x % GIMP_CHECK_SIZE_SM) == 0)
               {
                 guchar *t;
-                
+
                 t = d;
                 d = l;
                 l = t;
               }
-            
+
             a = (gdouble) x / (gdouble) (scale->width - 1);
 
             if (invert)
               a = 1.0 - a;
-            
+
             l[0] = (GIMP_CHECK_LIGHT +
                     (rgb.r - GIMP_CHECK_LIGHT) * a) * 255.999;
             l[1] = (GIMP_CHECK_LIGHT +
@@ -617,7 +617,7 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
             l[2] = (GIMP_CHECK_LIGHT +
                     (rgb.b - GIMP_CHECK_LIGHT) * a) * 255.999;
             l += 3;
-          
+
             d[0] = (GIMP_CHECK_DARK +
                     (rgb.r - GIMP_CHECK_DARK) * a) * 255.999;
             d[1] = (GIMP_CHECK_DARK +
@@ -631,7 +631,7 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
           {
             if (y == 0 || y == GIMP_CHECK_SIZE_SM)
               continue;
-            
+
             if ((y / GIMP_CHECK_SIZE_SM) & 1)
               memcpy (d, dark, scale->rowstride);
             else
@@ -639,7 +639,7 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
           }
       }
       break;
-      
+
     case GTK_ORIENTATION_VERTICAL:
       {
         guchar  light[3];
@@ -648,7 +648,7 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
         for (y = 0, d = buf; y < scale->height; y++, d += scale->rowstride)
           {
             a = (gdouble) y / (gdouble) (scale->height - 1);
-            
+
             if (invert)
               a = 1.0 - a;
 

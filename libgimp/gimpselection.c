@@ -47,7 +47,7 @@ gimp_selection_float (gint32 image_ID,
 		      gint   offx,
 		      gint   offy)
 {
-  return _gimp_selection_float (drawable_ID, 
-				offx, 
+  return _gimp_selection_float (drawable_ID,
+				offx,
 				offy);
 }

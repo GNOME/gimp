@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library 
+/* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpparasite.c
@@ -39,7 +39,7 @@
 
 
 #ifdef DEBUG
-static void 
+static void
 gimp_parasite_print (GimpParasite *parasite)
 {
   if (parasite == NULL)
@@ -63,9 +63,9 @@ gimp_parasite_print (GimpParasite *parasite)
 #endif
 
 GimpParasite *
-gimp_parasite_new (const gchar    *name, 
+gimp_parasite_new (const gchar    *name,
 		   guint32         flags,
-		   guint32         size, 
+		   guint32         size,
 		   gconstpointer   data)
 {
   GimpParasite *parasite;
@@ -100,7 +100,7 @@ gimp_parasite_free (GimpParasite *parasite)
 }
 
 gboolean
-gimp_parasite_is_type (const GimpParasite *parasite, 
+gimp_parasite_is_type (const GimpParasite *parasite,
 		       const gchar        *name)
 {
   if (!parasite || !parasite->name)
@@ -120,7 +120,7 @@ gimp_parasite_copy (const GimpParasite *parasite)
 }
 
 gboolean
-gimp_parasite_compare (const GimpParasite *a, 
+gimp_parasite_compare (const GimpParasite *a,
 		       const GimpParasite *b)
 {
   if (a && b &&
@@ -129,7 +129,7 @@ gimp_parasite_compare (const GimpParasite *a,
       a->flags == b->flags &&
       a->size == b->size)
     {
-      if (a->data == NULL && b->data == NULL)  
+      if (a->data == NULL && b->data == NULL)
 	return TRUE;
       else if (a->data && b->data && memcmp (a->data, b->data, a->size) == 0)
 	return TRUE;
@@ -166,7 +166,7 @@ gimp_parasite_is_undoable (const GimpParasite *parasite)
 }
 
 gboolean
-gimp_parasite_has_flag (const GimpParasite *parasite, 
+gimp_parasite_has_flag (const GimpParasite *parasite,
 			gulong              flag)
 {
   if (parasite == NULL)
@@ -193,7 +193,7 @@ gimp_parasite_data (const GimpParasite *parasite)
   return NULL;
 }
 
-glong 
+glong
 gimp_parasite_data_size (const GimpParasite *parasite)
 {
   if (parasite)

@@ -17,7 +17,7 @@
  * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
- */        
+ */
 
 #ifndef __GIMP_PATTERN_SELECT_H__
 #define __GIMP_PATTERN_SELECT_H__
@@ -32,7 +32,7 @@ typedef void (* GimpRunPatternCallback)   (const gchar  *pattern_name,
                                            const guchar *mask_data,
                                            gboolean      dialog_closing,
                                            gpointer      user_data);
-  
+
 
 const gchar * gimp_pattern_select_new     (const gchar            *title,
                                            const gchar            *pattern_name,

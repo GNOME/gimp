@@ -44,8 +44,8 @@
  *
  * This procedure returns information on the specified procedure. A
  * short blurb, detailed help, author(s), copyright information,
- * procedure type, number of input, and number of return values are 
- * returned. Additionally this function returns specific information 
+ * procedure type, number of input, and number of return values are
+ * returned. Additionally this function returns specific information
  * about each input argument and return value.
  *
  * Returns: TRUE on success.
@@ -123,10 +123,10 @@ gimp_procedural_db_proc_info (const gchar      *procedure,
  * Returns data associated with the specified identifier.
  *
  * This procedure returns any data which may have been associated with
- * the specified identifier. The data is copied into the given memory 
+ * the specified identifier. The data is copied into the given memory
  * location.
  *
- * Returns: TRUE on success, FALSE if no data has been associated with 
+ * Returns: TRUE on success, FALSE if no data has been associated with
  * the identifier
  */
 gboolean
@@ -145,7 +145,7 @@ gimp_procedural_db_get_data (const gchar *identifier,
       memcpy (data, (gpointer) hack, size * sizeof (guint8));
       g_free (hack);
     }
-  
+
   return success;
 }
 

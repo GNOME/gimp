@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 
 GtkWidget * gimp_brush_select_widget_new   (const gchar          *title,
-                                            const gchar          *brush_name, 
+                                            const gchar          *brush_name,
                                             gdouble               opacity,
                                             gint                  spacing,
                                             GimpLayerModeEffects  paint_mode,

@@ -4,7 +4,7 @@
  * gimpmiscui.c
  * Contains all kinds of miscellaneous routines factored out from different
  * plug-ins. They stay here until their API has crystalized a bit and we can
- * put them into the file where they belong (Maurits Rijk 
+ * put them into the file where they belong (Maurits Rijk
  * <lpeek.mrijk@consunet.nl> if you want to blame someone for this mess)
  *
  * This library is free software; you can redistribute it and/or
@@ -39,27 +39,27 @@
 #include "libgimp-intl.h"
 
 
-#define PREVIEW_SIZE	128 
+#define PREVIEW_SIZE	128
 #define PREVIEW_BPP	3
 
 static void
 gimp_fixme_preview_put_in_frame (GimpFixMePreview* preview)
 {
   GtkWidget *frame, *abox;
-  
+
   preview->frame = gtk_frame_new (_("Preview"));
   gtk_widget_show (preview->frame);
-  
+
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
   gtk_container_add (GTK_CONTAINER (preview->frame), abox);
   gtk_widget_show (abox);
-  
+
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER (abox), frame);
   gtk_widget_show (frame);
-  
+
   gtk_container_add (GTK_CONTAINER (frame), preview->widget);
 }
 
@@ -81,7 +81,7 @@ gimp_fixme_preview_new (GimpDrawable *drawable,
   return preview;
 }
 
-void 
+void
 gimp_fixme_preview_free (GimpFixMePreview *preview)
 {
   g_free (preview->cmap);
@@ -123,9 +123,9 @@ gimp_fixme_preview_new2 (GimpImageType drawable_type,
     }
 
   gtk_preview_size (GTK_PREVIEW (preview->widget), PREVIEW_SIZE, PREVIEW_SIZE);
-  
-  for (y = 0; y < PREVIEW_SIZE; y++) 
-    gtk_preview_draw_row (GTK_PREVIEW (preview->widget), buf, 0, y, 
+
+  for (y = 0; y < PREVIEW_SIZE; y++)
+    gtk_preview_draw_row (GTK_PREVIEW (preview->widget), buf, 0, y,
 			  PREVIEW_SIZE);
 
   g_free (buf);
@@ -208,7 +208,7 @@ gimp_fixme_preview_do_row (GimpFixMePreview *preview,
   gint r, g, b, a;
   gint c0, c1;
 
-  for (x = 0; x < width; x++) 
+  for (x = 0; x < width; x++)
     {
       switch (bpp)
         {
@@ -230,7 +230,7 @@ gimp_fixme_preview_do_row (GimpFixMePreview *preview,
 	  if (preview->cmap)
 	    {
 	      gint index = MIN (src[x*bpp], preview->ncolors - 1);
-	      
+
 	      r = preview->cmap[index * 3 + 0];
 	      g = preview->cmap[index * 3 + 1];
 	      b = preview->cmap[index * 3 + 2];
@@ -239,43 +239,43 @@ gimp_fixme_preview_do_row (GimpFixMePreview *preview,
 	    {
 	      g = b = r = src[x * bpp + 0];
 	    }
-	  
+
 	  if (bpp == 2)
 	    a = src[x*2 + 1];
 	  else
 	    a = 255;
           break;
         }
-      
-      if ((x / GIMP_CHECK_SIZE_SM) & 1) 
+
+      if ((x / GIMP_CHECK_SIZE_SM) & 1)
 	{
 	  c0 = GIMP_CHECK_LIGHT * 255;
 	  c1 = GIMP_CHECK_DARK * 255;
-	} 
-      else 
+	}
+      else
 	{
 	  c0 = GIMP_CHECK_DARK * 255;
 	  c1 = GIMP_CHECK_LIGHT * 255;
 	}
-      
+
       *p0++ = c0 + (r - c0) * a / 255;
       *p0++ = c0 + (g - c0) * a / 255;
       *p0++ = c0 + (b - c0) * a / 255;
-      
+
       *p1++ = c1 + (r - c1) * a / 255;
       *p1++ = c1 + (g - c1) * a / 255;
-      *p1++ = c1 + (b - c1) * a / 255; 
+      *p1++ = c1 + (b - c1) * a / 255;
     }
 
   if ((row / GIMP_CHECK_SIZE_SM) & 1)
     {
-      gtk_preview_draw_row (GTK_PREVIEW (preview->widget), 
-                            preview->odd,  0, row, width); 
+      gtk_preview_draw_row (GTK_PREVIEW (preview->widget),
+                            preview->odd,  0, row, width);
     }
   else
     {
       gtk_preview_draw_row (GTK_PREVIEW (preview->widget),
-                            preview->even, 0, row, width); 
+                            preview->even, 0, row, width);
     }
 }
 
@@ -312,7 +312,7 @@ gimp_fixme_preview_update (GimpFixMePreview      *preview,
   g_free (buffer);
 }
 
-void 
+void
 gimp_fixme_preview_fill_with_thumb (GimpFixMePreview *preview,
 				    gint32            drawable_ID)
 {
@@ -322,7 +322,7 @@ gimp_fixme_preview_fill_with_thumb (GimpFixMePreview *preview,
   gint          width  = PREVIEW_SIZE;
   gint          height = PREVIEW_SIZE;
 
-  preview->cache = 
+  preview->cache =
     gimp_drawable_get_thumbnail_data (drawable_ID, &width, &height, &bpp);
 
   if (width < 1 || height < 1)
@@ -343,9 +343,9 @@ gimp_fixme_preview_fill_with_thumb (GimpFixMePreview *preview,
 
   gtk_preview_size (GTK_PREVIEW (preview->widget), width, height);
 
-  preview->scale_x = 
+  preview->scale_x =
     (gdouble) width / (gdouble) gimp_drawable_width (drawable_ID);
-  preview->scale_y = 
+  preview->scale_y =
     (gdouble) height / (gdouble) gimp_drawable_height (drawable_ID);
 
   src  = preview->cache;
@@ -363,8 +363,8 @@ gimp_fixme_preview_fill_with_thumb (GimpFixMePreview *preview,
   preview->height = GTK_PREVIEW (preview->widget)->buffer_height;
 }
 
-void 
-gimp_fixme_preview_fill (GimpFixMePreview *preview, 
+void
+gimp_fixme_preview_fill (GimpFixMePreview *preview,
 			 GimpDrawable     *drawable)
 {
   GimpPixelRgn  srcPR;
@@ -374,15 +374,15 @@ gimp_fixme_preview_fill (GimpFixMePreview *preview,
   gint          bpp;
   gint          y;
   guchar       *src;
-  
+
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   if (x2 - x1 > PREVIEW_SIZE)
     x2 = x1 + PREVIEW_SIZE;
-  
+
   if (y2 - y1 > PREVIEW_SIZE)
     y2 = y1 + PREVIEW_SIZE;
-  
+
   width  = x2 - x1;
   height = y2 - y1;
   bpp    = gimp_drawable_bpp (drawable->drawable_id);
@@ -413,10 +413,10 @@ gimp_fixme_preview_fill (GimpFixMePreview *preview,
       gimp_pixel_rgn_get_row (&srcPR, src, x1, y + y1, width);
       memcpy(preview->cache + (y * width * bpp), src, width * bpp);
     }
-  
+
   for (y = 0; y < height; y++)
     {
-      gimp_fixme_preview_do_row (preview, y, width, 
+      gimp_fixme_preview_do_row (preview, y, width,
 				 preview->cache + (y * width * bpp));
     }
 
@@ -427,8 +427,8 @@ gimp_fixme_preview_fill (GimpFixMePreview *preview,
   g_free (src);
 }
 
-void 
-gimp_fixme_preview_fill_scaled (GimpFixMePreview *preview, 
+void
+gimp_fixme_preview_fill_scaled (GimpFixMePreview *preview,
 				GimpDrawable     *drawable)
 {
   gint     bpp;

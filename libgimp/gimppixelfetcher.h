@@ -4,17 +4,17 @@
  * gimpmisc.h
  * Contains all kinds of miscellaneous routines factored out from different
  * plug-ins. They stay here until their API has crystalized a bit and we can
- * put them into the file where they belong (Maurits Rijk 
+ * put them into the file where they belong (Maurits Rijk
  * <lpeek.mrijk@consunet.nl> if you want to blame someone for this mess)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -45,16 +45,16 @@ GimpPixelFetcher * gimp_pixel_fetcher_new          (GimpDrawable     *drawable);
 void               gimp_pixel_fetcher_set_bg_color (GimpPixelFetcher *pf);
 void		   gimp_pixel_fetcher_set_shadow   (GimpPixelFetcher *pf,
 						    gboolean          shadow);
-void               gimp_pixel_fetcher_get_pixel    (GimpPixelFetcher *pf, 
+void               gimp_pixel_fetcher_get_pixel    (GimpPixelFetcher *pf,
 						    gint              x,
 						    gint              y,
 						    guchar           *pixel);
-void               gimp_pixel_fetcher_get_pixel2   (GimpPixelFetcher *pf, 
+void               gimp_pixel_fetcher_get_pixel2   (GimpPixelFetcher *pf,
 						    gint              x,
 						    gint              y,
 						    gint              wrapmode,
 						    guchar           *pixel);
-void               gimp_pixel_fetcher_put_pixel    (GimpPixelFetcher *pf, 
+void               gimp_pixel_fetcher_put_pixel    (GimpPixelFetcher *pf,
 						    gint              x,
 						    gint              y,
 						    const guchar     *pixel);
@@ -93,28 +93,28 @@ typedef void (* GimpRgnFuncSrcDest) (gint x,
 				     gint bpp,
 				     gpointer data);
 
-GimpRgnIterator *gimp_rgn_iterator_new 		   (GimpDrawable *drawable, 
+GimpRgnIterator *gimp_rgn_iterator_new 		   (GimpDrawable *drawable,
 						    GimpRunMode   run_mode);
 void 		 gimp_rgn_iterator_free 	   (GimpRgnIterator *iter);
-void		 gimp_rgn_iterator_src 		   (GimpRgnIterator *iter, 
-						    GimpRgnFuncSrc func, 
+void		 gimp_rgn_iterator_src 		   (GimpRgnIterator *iter,
+						    GimpRgnFuncSrc func,
 						    gpointer       data);
-void		 gimp_rgn_iterator_dest 	   (GimpRgnIterator *iter, 
-						    GimpRgnFuncDest  func, 
+void		 gimp_rgn_iterator_dest 	   (GimpRgnIterator *iter,
+						    GimpRgnFuncDest  func,
 						    gpointer data);
-void		 gimp_rgn_iterator_src_dest 	   (GimpRgnIterator   *iter, 
-						    GimpRgnFuncSrcDest func, 
+void		 gimp_rgn_iterator_src_dest 	   (GimpRgnIterator   *iter,
+						    GimpRgnFuncSrcDest func,
 						    gpointer           data);
 
 
-void gimp_rgn_iterate1 (GimpDrawable *drawable, 
+void gimp_rgn_iterate1 (GimpDrawable *drawable,
 			GimpRunMode   run_mode,
-			GimpRgnFunc1  func, 
+			GimpRgnFunc1  func,
 			gpointer      data);
 
 void gimp_rgn_iterate2 (GimpDrawable *drawable,
-			GimpRunMode   run_mode, 
-			GimpRgnFunc2  func, 
+			GimpRunMode   run_mode,
+			GimpRgnFunc2  func,
 			gpointer      data);
 
 G_END_DECLS

@@ -38,8 +38,8 @@ G_BEGIN_DECLS
 #define SA_RESTART SA_SYSV
 #endif
 
-/* GimpSignalHandlerFunc is a reference to a (signal handler) function 
- * that takes a signal ID and returns void. 
+/* GimpSignalHandlerFunc is a reference to a (signal handler) function
+ * that takes a signal ID and returns void.
  * signal(2) returns such references; so does gimp_signal_private.
  */
 typedef void (* GimpSignalHandlerFunc) (gint signum);

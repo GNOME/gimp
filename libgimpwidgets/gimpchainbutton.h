@@ -1,17 +1,17 @@
-/* LIBGIMP - The GIMP Library 
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpchainbutton.h
- * Copyright (C) 1999-2000 Sven Neumann <sven@gimp.org> 
+ * Copyright (C) 1999-2000 Sven Neumann <sven@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU  
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -20,12 +20,12 @@
  * Boston, MA 02111-1307, USA.
  */
 
-/* 
+/*
  * This implements a widget derived from GtkTable that visualizes
- * it's state with two different pixmaps showing a closed and a 
+ * it's state with two different pixmaps showing a closed and a
  * broken chain. It's intented to be used with the GimpSizeEntry
  * widget. The usage is quite similar to the one the GtkToggleButton
- * provides. 
+ * provides.
  */
 
 #ifndef __GIMP_CHAIN_BUTTON_H__

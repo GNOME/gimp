@@ -61,7 +61,7 @@ static GHashTable *gimp_brush_select_ht = NULL;
 /*  public functions  */
 
 const gchar *
-gimp_brush_select_new (const gchar          *title, 
+gimp_brush_select_new (const gchar          *title,
                        const gchar          *brush_name,
                        gdouble               opacity,
                        gint                  spacing,
@@ -147,7 +147,7 @@ gimp_brush_select_destroy (const gchar *brush_callback)
     {
       g_source_remove (brush_data->idle_id);
       g_free (brush_data->brush_name);
-      g_free (brush_data->brush_mask_data); 
+      g_free (brush_data->brush_mask_data);
     }
 
   if (brush_data->brush_callback)

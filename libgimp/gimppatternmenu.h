@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 
 GtkWidget * gimp_pattern_select_widget_new   (const gchar      *title,
-                                              const gchar      *pattern_name, 
+                                              const gchar      *pattern_name,
                                               GimpRunPatternCallback  callback,
                                               gpointer          data);
 

@@ -1,5 +1,5 @@
-/* LIBGIMP - The GIMP Library 
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpcolorarea.c
  * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
@@ -8,10 +8,10 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU  
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -58,14 +58,14 @@ static void  gimp_color_area_drag_begin         (GtkWidget        *widget,
 						 GdkDragContext   *context);
 static void  gimp_color_area_drag_end           (GtkWidget        *widget,
 						 GdkDragContext   *context);
-static void  gimp_color_area_drag_data_received (GtkWidget        *widget, 
+static void  gimp_color_area_drag_data_received (GtkWidget        *widget,
 						 GdkDragContext   *context,
 						 gint              x,
 						 gint              y,
 						 GtkSelectionData *selection_data,
 						 guint             info,
 						 guint             time);
-static void  gimp_color_area_drag_data_get      (GtkWidget        *widget, 
+static void  gimp_color_area_drag_data_get      (GtkWidget        *widget,
 						 GdkDragContext   *context,
 						 GtkSelectionData *selection_data,
 						 guint             info,
@@ -100,7 +100,7 @@ gimp_color_area_get_type (void)
       };
 
       area_type = g_type_register_static (GTK_TYPE_DRAWING_AREA,
-                                         "GimpColorArea", 
+                                         "GimpColorArea",
                                          &area_info, 0);
     }
 
@@ -118,7 +118,7 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  gimp_color_area_signals[COLOR_CHANGED] = 
+  gimp_color_area_signals[COLOR_CHANGED] =
     g_signal_new ("color_changed",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
@@ -161,7 +161,7 @@ gimp_color_area_destroy (GtkObject *object)
   GimpColorArea *area;
 
   g_return_if_fail (GIMP_IS_COLOR_AREA (object));
-  
+
   area = GIMP_COLOR_AREA (object);
 
   if (area->buf)
@@ -198,7 +198,7 @@ gimp_color_area_size_allocate (GtkWidget     *widget,
       area->buf = g_new (guchar, area->rowstride * area->height);
 
       area->needs_render = TRUE;
-    } 
+    }
 }
 
 static gboolean
@@ -207,7 +207,7 @@ gimp_color_area_expose (GtkWidget      *widget,
 {
   GimpColorArea *area = GIMP_COLOR_AREA (widget);
   guchar        *buf;
-  
+
   if (! area->buf || !GTK_WIDGET_DRAWABLE (widget))
     return FALSE;
 
@@ -243,12 +243,12 @@ gimp_color_area_expose (GtkWidget      *widget,
  * @color:     A pointer to a #GimpRGB struct.
  * @type:      The type of color area to create.
  * @drag_mask: The event_mask that should trigger drags.
- * 
+ *
  * Creates a new #GimpColorArea widget.
  *
  * This returns a preview area showing the color. It handles color
  * DND. If the color changes, the "color_changed" signal is emitted.
- * 
+ *
  * Returns: Pointer to the new #GimpColorArea widget.
  **/
 GtkWidget *
@@ -258,13 +258,13 @@ gimp_color_area_new (const GimpRGB     *color,
 {
   GimpColorArea *area;
 
-  g_return_val_if_fail (color != NULL, NULL); 
- 
+  g_return_val_if_fail (color != NULL, NULL);
+
   area = g_object_new (GIMP_TYPE_COLOR_AREA, NULL);
 
   area->color = *color;
   area->type  = type;
- 
+
   gtk_drag_dest_set (GTK_WIDGET (area),
 		     GTK_DEST_DEFAULT_HIGHLIGHT |
 		     GTK_DEST_DEFAULT_MOTION |
@@ -287,10 +287,10 @@ gimp_color_area_new (const GimpRGB     *color,
  * gimp_color_area_set_color:
  * @area: Pointer to a #GimpColorArea.
  * @color: Pointer to a #GimpRGB struct that defines the new color.
- * 
+ *
  * Sets @area to a different @color.
  **/
-void       
+void
 gimp_color_area_set_color (GimpColorArea *area,
 			   const GimpRGB *color)
 {
@@ -334,7 +334,7 @@ gimp_color_area_get_color (GimpColorArea *area,
  *
  * Returns: %TRUE if @area shows transparency information, %FALSE otherwise.
  **/
-gboolean    
+gboolean
 gimp_color_area_has_alpha (GimpColorArea *area)
 {
   g_return_val_if_fail (GIMP_IS_COLOR_AREA (area), FALSE);
@@ -345,7 +345,7 @@ gimp_color_area_has_alpha (GimpColorArea *area)
 /**
  * gimp_color_area_set_type:
  * @area: Pointer to a #GimpColorArea.
- * @type: A #GimpColorAreaType. 
+ * @type: A #GimpColorAreaType.
  *
  * Allows to change the type of @area. The #GimpColorAreaType determines
  * whether the widget shows transparency information and chooses the size of
@@ -376,7 +376,7 @@ void
 gimp_color_area_set_draw_border (GimpColorArea *area,
                                  gboolean       draw_border)
 {
-  g_return_if_fail (GIMP_IS_COLOR_AREA (area));  
+  g_return_if_fail (GIMP_IS_COLOR_AREA (area));
 
   area->draw_border = draw_border ? TRUE : FALSE;
 
@@ -433,27 +433,27 @@ gimp_color_area_render (GimpColorArea *area)
               *p++ = opaque[2];
             }
         }
-      
+
       return;
     }
 
-  light[0] = (GIMP_CHECK_LIGHT + 
+  light[0] = (GIMP_CHECK_LIGHT +
               (area->color.r - GIMP_CHECK_LIGHT) * area->color.a) * 255.999;
-  dark[0]  = (GIMP_CHECK_DARK + 
+  dark[0]  = (GIMP_CHECK_DARK +
               (area->color.r - GIMP_CHECK_DARK)  * area->color.a) * 255.999;
-  light[1] = (GIMP_CHECK_LIGHT + 
+  light[1] = (GIMP_CHECK_LIGHT +
               (area->color.g - GIMP_CHECK_LIGHT) * area->color.a) * 255.999;
-  dark[1]  = (GIMP_CHECK_DARK + 
+  dark[1]  = (GIMP_CHECK_DARK +
               (area->color.g - GIMP_CHECK_DARK)  * area->color.a) * 255.999;
-  light[2] = (GIMP_CHECK_LIGHT + 
+  light[2] = (GIMP_CHECK_LIGHT +
               (area->color.b - GIMP_CHECK_LIGHT) * area->color.a) * 255.999;
-  dark[2]  = (GIMP_CHECK_DARK + 
+  dark[2]  = (GIMP_CHECK_DARK +
               (area->color.b - GIMP_CHECK_DARK)  * area->color.a) * 255.999;
-  
+
   for (y = 0; y < height; y++)
     {
       p = area->buf + y * area->rowstride;
-      
+
       for (x = 0; x < width; x++)
         {
           if ((width - x) * height > y * width)
@@ -461,13 +461,13 @@ gimp_color_area_render (GimpColorArea *area)
               *p++ = opaque[0];
               *p++ = opaque[1];
               *p++ = opaque[2];
-              
+
               continue;
             }
-          
+
           frac = y - (gdouble) ((width - x) * height) / (gdouble) width;
-          
-          if (((x / check_size) ^ (y / check_size)) & 1) 
+
+          if (((x / check_size) ^ (y / check_size)) & 1)
             {
               if ((gint) frac)
                 {
@@ -477,11 +477,11 @@ gimp_color_area_render (GimpColorArea *area)
                 }
               else
                 {
-                  *p++ = ((gdouble) light[0]  * frac + 
+                  *p++ = ((gdouble) light[0]  * frac +
                           (gdouble) opaque[0] * (1.0 - frac));
-                  *p++ = ((gdouble) light[1]  * frac + 
+                  *p++ = ((gdouble) light[1]  * frac +
                           (gdouble) opaque[1] * (1.0 - frac));
-                  *p++ = ((gdouble) light[2]  * frac + 
+                  *p++ = ((gdouble) light[2]  * frac +
                           (gdouble) opaque[2] * (1.0 - frac));
                 }
             }
@@ -495,11 +495,11 @@ gimp_color_area_render (GimpColorArea *area)
                 }
               else
                 {
-                  *p++ = ((gdouble) dark[0] * frac + 
+                  *p++ = ((gdouble) dark[0] * frac +
                           (gdouble) opaque[0] * (1.0 - frac));
-                  *p++ = ((gdouble) dark[1] * frac + 
+                  *p++ = ((gdouble) dark[1] * frac +
                           (gdouble) opaque[1] * (1.0 - frac));
-                  *p++ = ((gdouble) dark[2] * frac + 
+                  *p++ = ((gdouble) dark[2] * frac +
                           (gdouble) opaque[2] * (1.0 - frac));
                 }
             }
@@ -540,7 +540,7 @@ gimp_color_area_drag_begin (GtkWidget      *widget,
                           window,
                           (GDestroyNotify) gtk_widget_destroy);
 
-  gtk_drag_set_icon_widget (context, window, 
+  gtk_drag_set_icon_widget (context, window,
                             DRAG_ICON_OFFSET, DRAG_ICON_OFFSET);
 }
 
@@ -553,7 +553,7 @@ gimp_color_area_drag_end (GtkWidget      *widget,
 }
 
 static void
-gimp_color_area_drag_data_received (GtkWidget        *widget, 
+gimp_color_area_drag_data_received (GtkWidget        *widget,
 				    GdkDragContext   *context,
 				    gint              x,
 				    gint              y,
@@ -570,7 +570,7 @@ gimp_color_area_drag_data_received (GtkWidget        *widget,
   if (selection_data->length < 0)
     return;
 
-  if ((selection_data->format != 16) || 
+  if ((selection_data->format != 16) ||
       (selection_data->length != 8))
     {
       g_warning ("Received invalid color data");
@@ -579,7 +579,7 @@ gimp_color_area_drag_data_received (GtkWidget        *widget,
 
   vals = (guint16 *)selection_data->data;
 
-  gimp_rgba_set (&color, 
+  gimp_rgba_set (&color,
 		 (gdouble) vals[0] / 0xffff,
 		 (gdouble) vals[1] / 0xffff,
 		 (gdouble) vals[2] / 0xffff,
@@ -589,7 +589,7 @@ gimp_color_area_drag_data_received (GtkWidget        *widget,
 }
 
 static void
-gimp_color_area_drag_data_get (GtkWidget        *widget, 
+gimp_color_area_drag_data_get (GtkWidget        *widget,
 			       GdkDragContext   *context,
 			       GtkSelectionData *selection_data,
 			       guint             info,

@@ -55,7 +55,7 @@ static GHashTable *gimp_font_select_ht = NULL;
 /*  public functions  */
 
 const gchar *
-gimp_font_select_new (const gchar         *title, 
+gimp_font_select_new (const gchar         *title,
                       const gchar         *font_name,
                       GimpRunFontCallback  callback,
                       gpointer             data)

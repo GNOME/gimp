@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 
 GtkWidget * gimp_font_select_widget_new   (const gchar         *title,
-                                           const gchar         *font_name, 
+                                           const gchar         *font_name,
                                            GimpRunFontCallback  callback,
                                            gpointer             data);
 

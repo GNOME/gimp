@@ -4,17 +4,17 @@
  * gimpmiscui.h
  * Contains all kinds of miscellaneous routines factored out from different
  * plug-ins. They stay here until their API has crystalized a bit and we can
- * put them into the file where they belong (Maurits Rijk 
+ * put them into the file where they belong (Maurits Rijk
  * <lpeek.mrijk@consunet.nl> if you want to blame someone for this mess)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -59,13 +59,13 @@ typedef struct
 } GimpFixMePreview;
 
 typedef void (*GimpFixeMePreviewFunc)  (const guchar *src,
-                                        guchar       *dest, 
+                                        guchar       *dest,
                                         gint          bpp,
                                         gpointer      data);
 
 GimpFixMePreview * gimp_fixme_preview_new    (GimpDrawable     *drawable,
                                               gboolean          has_frame);
-GimpFixMePreview * gimp_fixme_preview_new2   (GimpImageType     drawable_type, 
+GimpFixMePreview * gimp_fixme_preview_new2   (GimpImageType     drawable_type,
                                               gboolean          has_frame);
 void               gimp_fixme_preview_free   (GimpFixMePreview *preview);
 
@@ -75,9 +75,9 @@ void               gimp_fixme_preview_update (GimpFixMePreview *preview,
 
 void      gimp_fixme_preview_fill_with_thumb (GimpFixMePreview *preview,
                                               gint32            drawable_ID);
-void      gimp_fixme_preview_fill            (GimpFixMePreview *preview, 
+void      gimp_fixme_preview_fill            (GimpFixMePreview *preview,
                                               GimpDrawable     *drawable);
-void      gimp_fixme_preview_fill_scaled     (GimpFixMePreview *preview, 
+void      gimp_fixme_preview_fill_scaled     (GimpFixMePreview *preview,
                                               GimpDrawable     *drawable);
 
 void      gimp_fixme_preview_do_row          (GimpFixMePreview *preview,

@@ -63,7 +63,7 @@ static void   gimp_font_select_widget_destroy  (GtkWidget   *widget,
  * gimp_font_select_widget_new:
  * @title:     Title of the dialog to use or %NULL means to use the default
  *             title.
- * @font_name: Initial font name. 
+ * @font_name: Initial font name.
  * @callback:  A function to call when the selected font changes.
  * @data:      A pointer to arbitary data to be used in the call to @callback.
  *
@@ -73,9 +73,9 @@ static void   gimp_font_select_widget_destroy  (GtkWidget   *widget,
  *
  * Returns: A #GtkWidget that you can use in your UI.
  */
-GtkWidget * 
+GtkWidget *
 gimp_font_select_widget_new (const gchar         *title,
-                             const gchar         *font_name, 
+                             const gchar         *font_name,
                              GimpRunFontCallback  callback,
                              gpointer             data)
 {
@@ -149,7 +149,7 @@ gimp_font_select_widget_close (GtkWidget *widget)
 /**
  * gimp_font_select_widget_set;
  * @widget:    A font select widget.
- * @font_name: Font name to set; %NULL means no change. 
+ * @font_name: Font name to set; %NULL means no change.
  *
  * Sets the current font for the font select widget.  Calls the
  * callback function if one was supplied in the call to
@@ -200,7 +200,7 @@ gimp_font_select_widget_clicked (GtkWidget  *widget,
   if (font_sel->temp_font_callback)
     {
       /*  calling gimp_fonts_set_popup() raises the dialog  */
-      gimp_fonts_set_popup (font_sel->temp_font_callback, font_sel->font_name); 
+      gimp_fonts_set_popup (font_sel->temp_font_callback, font_sel->font_name);
     }
   else
     {

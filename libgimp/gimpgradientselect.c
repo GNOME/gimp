@@ -57,7 +57,7 @@ static GHashTable *gimp_gradient_select_ht = NULL;
 /*  public functions  */
 
 const gchar *
-gimp_gradient_select_new (const gchar             *title, 
+gimp_gradient_select_new (const gchar             *title,
                           const gchar             *gradient_name,
                           gint                     sample_size,
                           GimpRunGradientCallback  callback,

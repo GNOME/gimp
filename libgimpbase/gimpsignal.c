@@ -26,10 +26,10 @@
 
 /* Courtesy of Austin Donnelly 06-04-2000 to address bug #2742 */
 
-/** 
- * gimp_signal_private: 
+/**
+ * gimp_signal_private:
  * @signum: Selects signal to be handled see man 5 signal (or man 7 signal)
- * @handler: Handler that maps to signum. Invoked by O/S. 
+ * @handler: Handler that maps to signum. Invoked by O/S.
  *           Handler gets signal that caused invocation. Corresponds
  *           to the @sa_handler field of the @sigaction struct.
  * @flags: Preferences. OR'ed SA_&lt;xxx&gt;. See man sigaction. Corresponds
@@ -38,9 +38,9 @@
  * This function furnishes a workalike for signal(2) but
  * which internally invokes sigaction(2) after certain
  * sa_flags are set; these primarily to ensure restarting
- * of interrupted system calls. See sigaction(2)  It is a 
- * aid to transition and not new development: that effort 
- * should employ sigaction directly. [gosgood 18.04.2000] 
+ * of interrupted system calls. See sigaction(2)  It is a
+ * aid to transition and not new development: that effort
+ * should employ sigaction directly. [gosgood 18.04.2000]
  *
  * Cause @handler to be run when @signum is delivered.  We
  * use sigaction(2) rather than signal(2) so that we can control the

@@ -185,7 +185,7 @@ gchar *
 gimp_memsize_to_string (guint64 memsize)
 {
 #if defined _MSC_VER && (_MSC_VER < 1200)
-/* sorry, error C2520: conversion from unsigned __int64 to double not 
+/* sorry, error C2520: conversion from unsigned __int64 to double not
  *                     implemented, use signed __int64
  */
 #  define CAST_DOUBLE (gdouble)(gint64)

@@ -1,5 +1,49 @@
 2003-12-05  Michael Natterer  <mitch@gimp.org>
 
+	* libgimp/gimp.h
+	* libgimp/gimpbrushmenu.h
+	* libgimp/gimpbrushselect.[ch]
+	* libgimp/gimpfontmenu.[ch]
+	* libgimp/gimpfontselect.[ch]
+	* libgimp/gimpgradientmenu.h
+	* libgimp/gimpgradientselect.[ch]
+	* libgimp/gimpmenu.h
+	* libgimp/gimpmisc.[ch]
+	* libgimp/gimpmiscui.[ch]
+	* libgimp/gimppatternmenu.h
+	* libgimp/gimppatternselect.[ch]
+	* libgimp/gimppixelrgn.[ch]
+	* libgimp/gimpproceduraldb.c
+	* libgimp/gimpselection.c
+	* libgimp/gimptile.h
+	* libgimp/gimptypes.h
+	* libgimp/gimpui.h
+	* libgimp/gimpuitypes.h
+	* libgimp/libgimp-intl.h
+	* libgimp/stdplugins-intl.h
+	* libgimpbase/gimpbase.h
+	* libgimpbase/gimpdatafiles.c
+	* libgimpbase/gimpenv.c
+	* libgimpbase/gimpparasite.[ch]
+	* libgimpbase/gimpparasiteio.[ch]
+	* libgimpbase/gimpsignal.[ch]
+	* libgimpbase/gimputils.c
+	* libgimpcolor/gimpadaptivesupersample.[ch]
+	* libgimpcolor/gimpbilinear.[ch]
+	* libgimpmath/gimpmath.h
+	* libgimpmath/gimpmathtypes.h
+	* libgimpwidgets/gimpbutton.[ch]
+	* libgimpwidgets/gimpchainbutton.h
+	* libgimpwidgets/gimpcolorarea.[ch]
+	* libgimpwidgets/gimpcolornotebook.h
+	* libgimpwidgets/gimpcolorscale.[ch]
+	* libgimpwidgets/gimpcolorscales.h
+	* libgimpwidgets/gimpcolorselect.h
+	* libgimpwidgets/gimpoffsetarea.h
+	* libgimpwidgets/gimppixmap.[ch]: removed trailing whitespace.
+
+2003-12-05  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/drawable.pdb: renamed gimp_drawable_bytes() to
 	gimp_drawable_bpp() because all other libgimp API speak in terms
 	of "bpp" too.

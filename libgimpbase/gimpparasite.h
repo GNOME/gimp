@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library 
+/* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpparasite.h
@@ -50,15 +50,15 @@ struct _GimpParasite
 };
 
 
-GimpParasite * gimp_parasite_new           (const gchar        *name, 
+GimpParasite * gimp_parasite_new           (const gchar        *name,
                                             guint32             flags,
-                                            guint32             size, 
+                                            guint32             size,
                                             gconstpointer       data);
 void           gimp_parasite_free          (GimpParasite       *parasite);
 
 GimpParasite * gimp_parasite_copy          (const GimpParasite *parasite);
 
-gboolean       gimp_parasite_compare       (const GimpParasite *a, 
+gboolean       gimp_parasite_compare       (const GimpParasite *a,
                                             const GimpParasite *b);
 
 gboolean       gimp_parasite_is_type       (const GimpParasite *parasite,

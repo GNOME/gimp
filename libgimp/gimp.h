@@ -160,7 +160,7 @@ struct _GimpParam
  * platform being compiled for.
  *
  * To use this macro, simply place a line that contains just the code
- * MAIN() at the toplevel of your file.  No semicolon should be used. 
+ * MAIN() at the toplevel of your file.  No semicolon should be used.
  *
  */
 
