@@ -1493,16 +1493,15 @@ read_tube_block (FILE *f,
     gimp_image_add_hguide (image_ID, (ia->height * i)/row_count);
 
   /* We use a parasite to pass in the tube (pipe) parameters in
-   * case we will have any use of those (for instance in some
-   * yet to be written code that saves a GIMP image pipe format
-   * file.
+   * case we will have any use of those, for instance in the gpb
+   * plug-in that saves a GIMP image pipe.
    */
   parasite_text =
     g_strdup_printf ("ncells:%d step:%d dim:%d cols:%d rows:%d "
-		     "rank0:%d rank1:%d "
-		     "placement:%s selection:%s",
+		     "rank0:%d "
+		     "spacing:%s sel0:%s",
 		     cell_count, step_size, 1, column_count, row_count,
-		     column_count, row_count,
+		     cell_count,
 		     (placement_mode == tpmRandom ? "random" :
 		      (placement_mode == tpmConstant ? "constant" :
 		       "default")),
