@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-15 01:04+0200\n"
-"PO-Revision-Date: 2004-03-15 10:56+0900\n"
+"POT-Creation-Date: 2004-10-16 00:42+0900\n"
+"PO-Revision-Date: 2004-10-16 00:43+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -196,7 +196,7 @@ msgstr "Gradientval"
 
 #: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:182
 msgid "(Empty)"
-msgstr ""
+msgstr "(Tom)"
 
 #: libgimp/gimppatternmenu.c:113
 msgid "Pattern Selection"
@@ -207,75 +207,72 @@ msgid "percent"
 msgstr "procent"
 
 #: libgimpbase/gimpbaseenums.c:15
-#, fuzzy
 msgid "Small"
-msgstr "Skala"
+msgstr "Liten"
 
 #: libgimpbase/gimpbaseenums.c:16
 msgid "Medium"
-msgstr ""
+msgstr "Mellan"
 
 #: libgimpbase/gimpbaseenums.c:17
 msgid "Large"
-msgstr ""
+msgstr "Stor"
 
 #: libgimpbase/gimpbaseenums.c:37
 msgid "Light Checks"
-msgstr ""
+msgstr "Ljusa rutor"
 
 #: libgimpbase/gimpbaseenums.c:38
 msgid "Mid-Tone Checks"
-msgstr ""
+msgstr "Mellanmörka rutor"
 
 #: libgimpbase/gimpbaseenums.c:39
 msgid "Dark Checks"
-msgstr ""
+msgstr "Mörka rutor"
 
 #: libgimpbase/gimpbaseenums.c:40
 msgid "White Only"
-msgstr ""
+msgstr "Endast vit"
 
 #: libgimpbase/gimpbaseenums.c:41
 msgid "Gray Only"
-msgstr ""
+msgstr "Endast grå"
 
 #: libgimpbase/gimpbaseenums.c:42
-#, fuzzy
 msgid "Black Only"
-msgstr "Svart"
+msgstr "Endast svart"
 
 #: libgimpbase/gimpbaseenums.c:62
 msgid "RGB color"
-msgstr ""
+msgstr "RGB-färg"
 
 #: libgimpbase/gimpbaseenums.c:63 libgimpbase/gimpbaseenums.c:86
-#, fuzzy
 msgid "Grayscale"
-msgstr "Konvertera till gråskala"
+msgstr "Gråskala"
 
 #: libgimpbase/gimpbaseenums.c:64
 msgid "Indexed color"
-msgstr ""
+msgstr "Indexerad färg"
 
 #: libgimpbase/gimpbaseenums.c:84
 msgid "RGB"
-msgstr ""
+msgstr "RGB"
 
 #: libgimpbase/gimpbaseenums.c:85
 msgid "RGB-alpha"
-msgstr ""
+msgstr "RGB-alfa"
 
 #: libgimpbase/gimpbaseenums.c:87
 msgid "Grayscale-alpha"
-msgstr ""
+msgstr "Gråskala-alfa"
 
 #: libgimpbase/gimpbaseenums.c:88
 msgid "Indexed"
-msgstr ""
+msgstr "Indexerad"
 
 #: libgimpbase/gimpbaseenums.c:89
 msgid "Indexed-alpha"
-msgstr ""
+msgstr "Indexerad-alfa"
 
 #: libgimpbase/gimpmemsize.c:177
 #, c-format
@@ -447,13 +444,12 @@ msgid "Alpha"
 msgstr "Alfa"
 
 #: libgimpwidgets/gimpcolorscales.c:243
-#, fuzzy
 msgid "Hexadecimal color notation as used in HTML and CSS"
-msgstr "Hexadecimal färgnotation som används i HTML"
+msgstr "Hexadecimal färgnotation som används i HTML och CSS"
 
 #: libgimpwidgets/gimpcolorscales.c:248
 msgid "HTML _Notation:"
-msgstr ""
+msgstr "HTML _Notation:"
 
 #: libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
@@ -501,17 +497,16 @@ msgstr ""
 
 #: libgimpwidgets/gimppreviewarea.c:126
 msgid "Check Size"
-msgstr ""
+msgstr "Rutstorlek"
 
 #: libgimpwidgets/gimppreviewarea.c:133
 msgid "Check Style"
-msgstr ""
+msgstr "Rutstil"
 
 #. toggle button to (des)activate the instant preview
 #: libgimpwidgets/gimppreview.c:240
-#, fuzzy
 msgid "_Preview"
-msgstr "Förhandsgranska"
+msgstr "_Förhandsgranska"
 
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -739,13 +734,12 @@ msgid "Black"
 msgstr "Svart"
 
 #: modules/colorsel_cmyk.c:191
-#, fuzzy
 msgid "Black _Pullout:"
-msgstr "Svartbegränsning (%):"
+msgstr "Svart_begränsning:"
 
 #: modules/colorsel_cmyk.c:208
 msgid "The percentage of black to pull out of the colored inks."
-msgstr ""
+msgstr "Mängden svart i procent att ta ut ur dom färgade bläcken."
 
 #: modules/colorsel_triangle.c:104
 msgid "Painter-style triangle color selector"
