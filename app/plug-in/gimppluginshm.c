@@ -219,7 +219,8 @@ plug_in_init ()
    */
   if (use_shm)
     {
-      shm_ID = shmget (IPC_PRIVATE, TILE_WIDTH * TILE_HEIGHT * 4, IPC_CREAT | 0777);
+#define PLUG_IN_C_3_cw 
+      shm_ID = shmget (IPC_PRIVATE, TILE_WIDTH * TILE_HEIGHT * TAG_MAX_BYTES, IPC_CREAT | 0777);
       if (shm_ID == -1)
 	g_warning ("shmget failed...disabling shared memory tile transport\n");
       else

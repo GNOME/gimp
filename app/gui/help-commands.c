@@ -60,6 +60,7 @@
 #include "posterize.h"
 #include "resize.h"
 #include "scale.h"
+#include "tag.h"
 #include "threshold.h"
 #include "tips_dialog.h"
 #include "tools.h"
@@ -176,6 +177,9 @@ file_new_ok_callback (GtkWidget *widget,
   GDisplay *gdisplay;
   Layer *layer;
   int type;
+  Precision precision = PRECISION_NONE;
+  Format format = FORMAT_NONE;
+  Alpha alpha = ALPHA_NONE;
 
   vals = data;
 
@@ -194,21 +198,42 @@ file_new_ok_callback (GtkWidget *widget,
     case BACKGROUND_FILL:
     case WHITE_FILL:
       type = (vals->type == RGB) ? RGB_GIMAGE : GRAY_GIMAGE;
+      format = (vals->type == RGB) ? FORMAT_RGB: FORMAT_GRAY;
+      alpha = ALPHA_NO;
       break;
     case TRANSPARENT_FILL:
       type = (vals->type == RGB) ? RGBA_GIMAGE : GRAYA_GIMAGE;
+      format = (vals->type == RGB) ? FORMAT_RGB: FORMAT_GRAY;
+      alpha =  ALPHA_YES;
       break;
     default:
       type = RGB_IMAGE;
       break;
     }
 
+#ifdef U8_SUPPORT
+      precision = PRECISION_U8; 
+#elif U16_SUPPORT
+      precision = PRECISION_U16; 
+#elif FLOAT_SUPPORT
+      precision = PRECISION_FLOAT; 
+#endif
+
+#if 0
   gimage = gimage_new (vals->width, vals->height, vals->type);
 
   /*  Make the background (or first) layer  */
   layer = layer_new (gimage->ID, gimage->width, gimage->height,
 		     type, "Background", OPAQUE_OPACITY, NORMAL);
+#endif
+  {  
+    Tag tag = tag_new ( precision, format, alpha);
+    gimage = gimage_new_tag (vals->width, vals->height, tag);
 
+    /*  Make the background (or first) layer  */
+    layer = layer_new_tag (gimage->ID, gimage->width, gimage->height,
+		       tag, "Background", OPAQUE_OPACITY, NORMAL);
+  }
   if (layer) {
     /*  add the new layer to the gimage  */
     gimage_disable_undo (gimage);

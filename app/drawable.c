@@ -640,35 +640,40 @@ gimp_drawable_configure (GimpDrawable *drawable,
 			 int gimage_ID, int width, int height, 
 			 int type, char *name)
 {
-  Format format;
-  Alpha alpha;
-
-  if (!name)
-    name = "unnamed";
+  Format format = FORMAT_NONE;
+  Precision precision = PRECISION_NONE;
+  Alpha alpha = ALPHA_NONE;
+  Tag tag; 
 
   switch (type)
     {
     case RGB_GIMAGE:
+      precision = PRECISION_U8;
       format = FORMAT_RGB; 
       alpha = ALPHA_NO;
       break;
     case GRAY_GIMAGE:
+      precision = PRECISION_U8;
       format = FORMAT_GRAY; 
       alpha = ALPHA_NO;
       break;
     case RGBA_GIMAGE:
+      precision = PRECISION_U8;
       format = FORMAT_RGB; 
       alpha = ALPHA_YES;
       break;
     case GRAYA_GIMAGE:
+      precision = PRECISION_U8;
       format = FORMAT_GRAY; 
       alpha = ALPHA_YES;
       break;
     case INDEXED_GIMAGE:
+      precision = PRECISION_U8;
       format = FORMAT_INDEXED; 
       alpha = ALPHA_NO;
       break;
     case INDEXEDA_GIMAGE:
+      precision = PRECISION_U8;
       format = FORMAT_INDEXED; 
       alpha = ALPHA_YES;
       break;
@@ -677,7 +682,20 @@ gimp_drawable_configure (GimpDrawable *drawable,
       return;
     }
   
-  drawable->tag = tag_new (PRECISION_U8, format, alpha);
+  tag = tag_new (precision, format, alpha);
+  gimp_drawable_configure_tag( drawable, gimage_ID, width, height, tag, name);  
+}
+
+  
+void
+gimp_drawable_configure_tag (GimpDrawable *drawable,
+			 int gimage_ID, int width, int height, 
+			 Tag tag, char *name)
+{
+  if (!name)
+    name = "unnamed";
+  
+  drawable->tag = tag;
   
   if (drawable->name) 
     g_free (drawable->name);
@@ -685,7 +703,21 @@ gimp_drawable_configure (GimpDrawable *drawable,
   drawable->width = width;
   drawable->height = height;
   drawable->bytes = tag_bytes (drawable->tag);
-  drawable->type = type;
+
+  switch (tag_format (tag))
+    {
+    case FORMAT_RGB:
+      drawable->type = (tag_alpha (tag) == ALPHA_YES) ? RGBA_GIMAGE: RGB_GIMAGE;
+      break;
+    case FORMAT_GRAY:
+      drawable->type = (tag_alpha (tag) == ALPHA_YES) ? GRAYA_GIMAGE: GRAY_GIMAGE;
+      break;
+    case FORMAT_INDEXED:
+      drawable->type = (tag_alpha (tag) == ALPHA_YES) ? INDEXEDA_GIMAGE: INDEXED_GIMAGE;
+      break;
+    default:
+      break;
+    }
   drawable->has_alpha = (tag_alpha (drawable->tag) == ALPHA_YES) ? TRUE : FALSE;
   drawable->offset_x = 0;
   drawable->offset_y = 0;
@@ -707,4 +739,3 @@ gimp_drawable_configure (GimpDrawable *drawable,
   drawable->preview = NULL;
   drawable->preview_valid = FALSE;
 }
-  

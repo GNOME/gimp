@@ -44,11 +44,8 @@
 
 #define    SQR(x) ((x) * (x))
 
-
 /*  global variables--for use in the various paint tools  */
 PaintCore16  non_gui_paint_core_16;
-
-
 
 /*  local function prototypes  */
 static void      paint_core_16_button_press    (Tool *, GdkEventButton *, gpointer);
@@ -74,6 +71,9 @@ static Canvas *  brush_mask_get                (PaintCore16 *, int);
 static Canvas *  brush_mask_subsample          (Canvas *, double, double);
 static Canvas *  brush_mask_solidify           (Canvas *);
 
+static void brush_solidify_mask_float ( Canvas *, Canvas *);
+static void brush_solidify_mask_u8 ( Canvas *, Canvas *);
+static void brush_solidify_mask_u16 ( Canvas *, Canvas *);
 
 
 /* the portions of the original image which have been modified */
@@ -671,12 +671,19 @@ paint_core_16_area  (
   
   dw = drawable_width (drawable);
   dh = drawable_height (drawable);
-  
+
+#define PAINT_CORE_16_C_4_cw  
+#ifdef BRUSH_WITH_BORDER 
   x1 = CLAMP (x - 1 , 0, dw);
   y1 = CLAMP (y - 1, 0, dh);
   x2 = CLAMP (x + bw + 1, 0, dw);
   y2 = CLAMP (y + bh + 1, 0, dh);
-  
+#else  
+  x1 = CLAMP (x , 0, dw);
+  y1 = CLAMP (y , 0, dh);
+  x2 = CLAMP (x + bw , 0, dw);
+  y2 = CLAMP (y + bh , 0, dh);
+#endif
   /* save the boundaries of this paint hit */
   paint_core->x = x1;
   paint_core->y = y1;
@@ -914,8 +921,16 @@ painthit_create_constant (
       static Paint * p;
       if (p == NULL)
         {
+#ifdef U8_SUPPORT
           p = paint_new (tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_NO),
                          NULL);
+#elif U16_SUPPORT
+          p = paint_new (tag_new (PRECISION_U16, FORMAT_GRAY, ALPHA_NO),
+                         NULL);
+#elif FLOAT_SUPPORT
+          p = paint_new (tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO),
+                         NULL);
+#endif
         }
       paint_load (p,
                   tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO),
@@ -937,8 +952,17 @@ painthit_create_constant (
     static Paint * p;
     if (p == NULL)
       {
+
+#ifdef U8_SUPPORT
         p = paint_new (tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_NO),
                        NULL);
+#elif U16_SUPPORT
+          p = paint_new (tag_new (PRECISION_U16, FORMAT_GRAY, ALPHA_NO),
+                         NULL);
+#elif FLOAT_SUPPORT
+          p = paint_new (tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO),
+                         NULL);
+#endif
         {
           static gfloat  d[3] = {1.0, 1.0, 1.0};
           paint_load (p,
@@ -974,8 +998,16 @@ painthit_create_incremental (
     static Paint * p;
     if (p == NULL)
       {
+#ifdef U8_SUPPORT
         p = paint_new (tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_NO),
                        NULL);
+#elif U16_SUPPORT
+          p = paint_new (tag_new (PRECISION_U16, FORMAT_GRAY, ALPHA_NO),
+                         NULL);
+#elif FLOAT_SUPPORT
+          p = paint_new (tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO),
+                         NULL);
+#endif
       }
     paint_load (p,
                 tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO),
@@ -1073,11 +1105,16 @@ brush_mask_get  (
                  )
 {
   Canvas * bm;
+
   switch (brush_hardness)
     {
     case SOFT:
+#ifdef BRUSH_WIDTH_BORDER 
       bm = brush_mask_subsample (paint_core->brush_mask,
                                  paint_core->curx, paint_core->cury);
+#else
+      bm = paint_core->brush_mask;
+#endif
       break;
     case HARD:
       bm = brush_mask_solidify (paint_core->brush_mask);
@@ -1208,6 +1245,13 @@ brush_mask_subsample  (
   return dest;
 }
 
+typedef void  (*BrushSolidifyMaskFunc) (Canvas*,Canvas*);
+static BrushSolidifyMaskFunc brush_solidify_mask_funcs[] =
+{
+  brush_solidify_mask_u8,
+  brush_solidify_mask_u16,
+  brush_solidify_mask_float
+};
 
 static Canvas * 
 brush_mask_solidify  (
@@ -1216,7 +1260,8 @@ brush_mask_solidify  (
 {
   static Canvas * solid_brush = NULL;
   static Canvas * last_brush  = NULL;
-  
+  Precision prec = tag_precision (canvas_tag (brush_mask));  
+
   int i, j;
   unsigned char * data, * src;
 
@@ -1226,29 +1271,25 @@ brush_mask_solidify  (
   last_brush = brush_mask;
   if (solid_brush)
     canvas_delete (solid_brush);
-  
+#ifdef BRUSH_WITH_BORDER  
   solid_brush = canvas_new (canvas_tag (brush_mask),
                             canvas_width (brush_mask) + 2,
                             canvas_height (brush_mask) + 2,
                             canvas_tiling (brush_mask));
-
+#else 
+  solid_brush = canvas_new (canvas_tag (brush_mask),
+                            canvas_width (brush_mask) ,
+                            canvas_height (brush_mask) ,
+                            canvas_tiling (brush_mask));
+#endif
   canvas_ref (solid_brush, 0, 0);
   canvas_ref (brush_mask, 0, 0);
   
   /*  get the data and advance one line into it  */
   data = canvas_data (solid_brush, 0, 1);
   src = canvas_data (brush_mask, 0, 0);
-
-  for (i = 0; i < canvas_height (brush_mask); i++)
-    {
-      data++;
-      for (j = 0; j < canvas_width (brush_mask); j++)
-	{
-	  *data++ = (*src++) ? OPAQUE : TRANSPARENT;
-	}
-      data++;
-    }
   
+  (*brush_solidify_mask_funcs [prec-1]) (brush_mask, solid_brush); 
   canvas_unref (solid_brush, 0, 0);
   canvas_unref (brush_mask, 0, 0);
   
@@ -1256,6 +1297,92 @@ brush_mask_solidify  (
 }
 
 
+static void brush_solidify_mask_u8 (
+			Canvas *brush_mask,
+			Canvas *solid_brush
+		      )
+{  
+  /* get the data and advance one line into it  */
+#ifdef BRUSH_WITH_BORDER
+  guint8* data = (guint8*)canvas_data (solid_brush, 0, 1);
+#else
+  guint8* data = (guint8*)canvas_data (solid_brush, 0, 0);
+#endif
+  guint8* src = (guint8*)canvas_data (brush_mask, 0, 0);
+  gint i, j;
+
+  for (i = 0; i < canvas_height (brush_mask); i++)
+    {
+#ifdef BRUSH_WITH_BORDER
+      data++;
+#endif
+      for (j = 0; j < canvas_width (brush_mask); j++)
+	{
+	  *data++ = (*src++) ? OPAQUE : TRANSPARENT;
+	}
+#ifdef BRUSH_WITH_BORDER
+      data++;
+#endif
+    }
+}
+
+static void brush_solidify_mask_u16 (
+			Canvas *brush_mask,
+			Canvas *solid_brush
+		      )
+{  
+  /* get the data and advance one line into it  */
+#ifdef BRUSH_WITH_BORDER
+  guint16* data = (guint16*)canvas_data (solid_brush, 0, 1);
+#else
+  guint16* data = (guint16*)canvas_data (solid_brush, 0, 0);
+#endif
+  guint16* src = (guint16*)canvas_data (brush_mask, 0, 0);
+  gint i, j;
+
+  for (i = 0; i < canvas_height (brush_mask); i++)
+    {
+#ifdef BRUSH_WITH_BORDER
+      data++;
+#endif
+      for (j = 0; j < canvas_width (brush_mask); j++)
+	{
+	  *data++ = (*src++) ? 65535 : 0;
+	}
+#ifdef BRUSH_WITH_BORDER
+      data++;
+#endif
+    }
+}
+
+static void brush_solidify_mask_float (
+			Canvas *brush_mask,
+			Canvas *solid_brush
+		      )
+{  
+  /* get the data and advance one line into it  */
+#ifdef BRUSH_WITH_BORDER
+  gfloat* data =(gfloat*)canvas_data (solid_brush, 0, 1);
+#else
+  gfloat* data =(gfloat*)canvas_data (solid_brush, 0, 0);
+#endif
+  gfloat* src = (gfloat*)canvas_data (brush_mask, 0, 0);
+  gint i, j;
+
+  for (i = 0; i < canvas_height (brush_mask); i++)
+    {
+#ifdef BRUSH_WITH_BORDER
+      data++;
+#endif
+      for (j = 0; j < canvas_width (brush_mask); j++)
+	{
+	  *data++ = (*src++) ? 1.0 : 0.0;
+	}
+#ifdef BRUSH_WITH_BORDER
+      data++;
+#endif
+    }
+}
 
 
 

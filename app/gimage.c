@@ -194,6 +194,33 @@ gimage_allocate_shadow (GImage *gimage, int width, int height, int bpp)
 GImage *
 gimage_new (int width, int height, int base_type)
 {
+  Precision prec = PRECISION_U8;
+  Format format = FORMAT_NONE;
+  Alpha alpha = ALPHA_NO;
+  Tag   tag;
+
+  switch (base_type)
+    {
+    case RGB:
+      format = FORMAT_RGB;
+      break;
+    case GRAY:
+      format = FORMAT_GRAY;
+      break;
+    case INDEXED:
+      format = FORMAT_INDEXED;
+      break;
+    default:
+      break;
+    }
+  tag = tag_new (prec, format, alpha); 
+  return gimage_new_tag (width, height, tag);
+}
+
+
+GImage *
+gimage_new_tag (int width, int height, Tag tag)
+{
   GImage *gimage;
   int i;
 
@@ -203,14 +230,16 @@ gimage_new (int width, int height, int base_type)
   gimage->width = width;
   gimage->height = height;
 
-  gimage->base_type = base_type;
-
-  switch (base_type)
+  switch (tag_format (tag))
     {
-    case RGB:
-    case GRAY:
+    case FORMAT_RGB:
+    gimage->base_type = RGB;
       break;
-    case INDEXED:
+    case FORMAT_GRAY:
+    gimage->base_type = GRAY;
+      break;
+    case FORMAT_INDEXED:
+    gimage->base_type = INDEXED;
       /* always allocate 256 colors for the colormap */
       gimage->num_cols = 0;
       gimage->cmap = (unsigned char *) g_malloc (COLORMAP_SIZE);
@@ -240,7 +269,6 @@ gimage_new (int width, int height, int base_type)
 
   return gimage;
 }
-
 
 void
 gimage_set_filename (GImage *gimage, char *filename)
@@ -617,7 +645,7 @@ gimage_apply_painthit  (
   /* make sure we're doing something legal */
   operation = valid_combinations
     [drawable_type (drawable)]
-    [tag_bytes (pixelarea_tag (src2PR))];
+    [tag_num_channels (pixelarea_tag (src2PR))];
 
   if (operation == -1)
     return;
@@ -700,8 +728,16 @@ gimage_apply_painthit  (
         static Paint * p;
         if (p == NULL)
           {
-            p = paint_new (tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_NO),
-                           NULL);
+#ifdef U8_SUPPORT
+          p = paint_new (tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_NO),
+                         NULL);
+#elif U16_SUPPORT
+          p = paint_new (tag_new (PRECISION_U16, FORMAT_GRAY, ALPHA_NO),
+                         NULL);
+#elif FLOAT_SUPPORT
+          p = paint_new (tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO),
+                         NULL);
+#endif
           }
         paint_load (p,
                     tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO),

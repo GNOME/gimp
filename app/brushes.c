@@ -59,7 +59,7 @@ static int          have_default_brush = 0;
 
 /*  static function prototypes  */
 static GSList *     insert_brush_in_list   (GSList *, GBrushP);
-static void         create_default_brush   (void);
+static GBrushP      create_default_brush   (gint, gint);
 static void         load_brush             (char *filename);
 static void         free_brush             (GBrushP);
 static void         brushes_free_one       (gpointer, gpointer);
@@ -75,16 +75,51 @@ brushes_init ()
 
   brush_list = NULL;
   num_brushes = 0;
-
+  
   if (!brush_path)
-    create_default_brush ();
+  {
+    GBrushP brush;
+    /* Make a 1x1 brush if no path */
+    brush = create_default_brush (1, 1);
+
+#define BRUSHES_C_2_cw
+    /*  Swap the brush to disk (if we're being stingy with memory) */
+    if (stingy_memory_use)
+      {
+	/*temp_buf_swap (brush->mask);*/
+	g_warning( "brush_init: canvas_swap not implemented.");
+      }
+    
+    brush_list = insert_brush_in_list(brush_list, brush);
+    /*  Make this the default, active brush  */
+    active_brush = brush;
+    have_default_brush = 1;
+  }
   else
     datafiles_read_directories (brush_path, load_brush, 0);
 
-  /*  assign indexes to the loaded brushes  */
-
   list = brush_list;
-
+  
+#define BRUSHES_C_4_cw
+  /* Make defaults if no valid brushes in brush_path */
+  if (!list)
+  {
+    GBrushP brush;
+    brush = create_default_brush(1,1);
+    brush_list = insert_brush_in_list(brush_list, brush);
+    brush = create_default_brush(2,2);
+    active_brush = brush;
+    have_default_brush = 1;
+    brush_list = insert_brush_in_list(brush_list, brush);
+    brush = create_default_brush(5,5);
+    brush_list = insert_brush_in_list(brush_list, brush);
+    brush = create_default_brush(10,10);
+    brush_list = insert_brush_in_list(brush_list, brush);
+    brush = create_default_brush(40,40);
+    brush_list = insert_brush_in_list(brush_list, brush);
+  }
+  
+  /*  assign indexes to the loaded brushes  */
   while (list) {
     /*  Set the brush index  */
     ((GBrush *) list->data)->index = num_brushes++;
@@ -155,15 +190,19 @@ insert_brush_in_list (GSList *list, GBrushP brush)
   return g_slist_insert_sorted (list, brush, brush_compare_func);
 }
 
-static void
-create_default_brush ()
+static GBrushP 
+create_default_brush (gint width, gint height)
 {
   GBrushP brush;
-  gchar filled[] = { 255 };
-
 #define BRUSHES_C_1_cw
-  Tag brush_tag = tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_YES);
 
+#ifdef U8_SUPPORT 
+  Tag brush_tag = tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_NO);
+#elif U16_SUPPORT
+  Tag brush_tag = tag_new (PRECISION_U16, FORMAT_GRAY, ALPHA_NO);
+#elif FLOAT_SUPPORT
+  Tag brush_tag = tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO);
+#endif 
   brush = g_new (GBrush, 1);
 
   brush->filename = NULL;
@@ -172,7 +211,7 @@ create_default_brush ()
   
   /*brush->mask = temp_buf_new (1, 1, 1, 0, 0, filled);*/
   
-  brush->mask_canvas = canvas_new (brush_tag,1,1,TILING_NEVER);
+  brush->mask_canvas = canvas_new (brush_tag, width, height, TILING_NEVER);
   canvas_ref (brush->mask_canvas,0,0);
   
   /* Fill the default brush canvas with white */
@@ -192,18 +231,7 @@ create_default_brush ()
   }
   canvas_unref (brush->mask_canvas,0,0);
   
-  /*  Swap the brush to disk (if we're being stingy with memory) */
-#define BRUSHES_C_1_cw
-  if (stingy_memory_use)
-    {
-      /*temp_buf_swap (brush->mask);*/
-      g_warning( "create_default_brush: canvas_swap not implemented.");
-    }
-  brush_list = insert_brush_in_list(brush_list, brush);
-
-  /*  Make this the default, active brush  */
-  active_brush = brush;
-  have_default_brush = 1;
+  return brush; 
 }
 
 
@@ -218,11 +246,13 @@ load_brush(char *filename)
   unsigned int * hp;
   int i;
   gint bytes; 
+  Precision precision; 
   brush = (GBrushP) g_malloc (sizeof (GBrush));
 
   brush->filename = g_strdup (filename);
   brush->name = NULL;
   brush->mask = NULL;
+  brush->mask_canvas = NULL;
 
   /*  Open the requested file  */
   if (! (fp = fopen (filename, "r")))
@@ -271,13 +301,61 @@ load_brush(char *filename)
       
       /* If its version 1 or 2 the tag field contains just
          the number of bytes and must be converted to a true tag. */    
+#define BRUSHES_C_3_cw
       if (header.tag == 1)   /* 1 byte */ 
-	format = FORMAT_GRAY;
+	{
+          precision = PRECISION_U8;
+	  format = FORMAT_GRAY;
+	}
       else if (header.tag == 3) /* 3 bytes */
-	format = FORMAT_RGB;
-      
-      /* version 1 or 2 are always u8 data as well */
-      header.tag = tag_new( PRECISION_U8, format, ALPHA_NO ); 
+	{
+          precision = PRECISION_U8;
+	  format = FORMAT_RGB;
+	}
+      else if (header.tag == 2) /* 2 bytes -- PRECISION_U16 */ 
+	{
+          precision = PRECISION_U16;
+	  format = FORMAT_GRAY;
+	}
+      else if (header.tag == 6) /* 4 bytes -- PRECISION_U16 */ 
+	{
+          precision = PRECISION_U16;
+	  format = FORMAT_RGB;
+	}
+      else if (header.tag == 4) /* 4 bytes -- PRECISION_FLOAT */ 
+	{
+          precision = PRECISION_FLOAT;
+	  format = FORMAT_GRAY;
+	}
+      else if (header.tag == 12) /* 12 bytes -- PRECISION_FLOAT */ 
+	{
+          precision = PRECISION_FLOAT;
+	  format = FORMAT_RGB;
+	}
+#ifdef U8_SUPPORT
+     if (header.tag != 1 && header.tag != 3 )
+     { 
+	  fclose (fp);
+	  free_brush (brush);
+	  return;
+     }
+#elif U16_SUPPORT
+     if (header.tag != 2 &&  header.tag != 6 )
+     { 
+	  fclose (fp);
+	  free_brush (brush);
+	  return;
+     }
+#elif FLOAT_SUPPORT 
+     if (header.tag != 4 && header.tag != 12 )
+     { 
+	  fclose (fp);
+	  free_brush (brush);
+	  return;
+     }
+#endif
+      header.tag = tag_new( precision, format, ALPHA_NO ); 
+
     }
   else if (header.version != FILE_VERSION)
     {
@@ -406,10 +484,6 @@ static void
 free_brush (brush)
      GBrushP brush;
 {
-#if 0
-  if (brush->mask)
-    temp_buf_free (brush->mask);
-#endif
   if (brush->mask_canvas);
     canvas_delete (brush->mask_canvas);
   if (brush->filename)

@@ -95,6 +95,7 @@ struct _fs_to_layer_undo
 /* function declarations */
 
 Layer *         layer_new (int, int, int, int, char *, int, int);
+Layer *         layer_new_tag (int, int, int, Tag, char *, int, int);
 Layer *         layer_copy (Layer *, int);
 Layer *		layer_ref (Layer *);
 void   		layer_unref (Layer *);

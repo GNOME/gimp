@@ -19,7 +19,6 @@ May want to rewrite render_image_canvas_faults to use
 pixelarea_copy_row (which faults automatically) instead
 of doing the faulting ourselves here.
 
-
 PIXELAREA_C_1_cw
 Not sure what to do with the subsample parameter here. scale_area
 does use this value. 
@@ -39,15 +38,25 @@ PAINT_CORE_16_C_1_cw
 Commented out the grab pointer for debugging
 PAINT_CORE_16_C_2_cw 
 I changed the brush mask to a canvas in paint_core_init.
-PAINT_CORE_16_3_cw
+PAINT_CORE_16_C_3_cw
 I commented out this canvas_delete because the brush
 mask is a true canvas now. 
+PAINT_CORE_16_C_4_cw  
+This is where the +2 needs to be dekludged to make brushse
+of the exact ui-advertised size for debugging in the 
+paint_funcs. Also see the brush_mask_get function. I wrote
+code for solidify for 16bit/float but have not written
+subsample for 16bit/float. So if using 16bit you have
+to make sure BRUSH_WITH_BORDER is not defined. 
 
 
 PLUG_IN_C_1_cw
 Once the shadow canvas for drawable is working set up this.
 PLUG_IN_C_2_cw
 Once the shadow canvas for drawable is working set up this.
+PLUG_IN_C_3_cw 
+Here the shared memory segment tile to pass
+plugins is allocated to size TILE_WIDTH x TILE_HEIGHT x TAG_MAX_BYTES
 
 
 BRUSHES_C_1_cw
@@ -56,12 +65,20 @@ Maybe make one of each type...
 BRUSHES_C_2_cw
 I dont know if there is an analogue to temp_buf_swap to put here. 
 There are a number of these in this file.
-
+BRUSHES_C_3_cw
+This is a hack for version 2 of the gbr file. We'll have
+version 2 work with 16bit/float but it will still put
+the bytes in this field. Im working on straightening
+this out.
+BRUSHES_C_4_cw
+Just make some default brushes if none found. This is 
+temp --just to see some 16bit/brushes.
 
 BRUSH_SELECT_C_1_cw
 These routines should be passed tags when color brushes are
 introduced -- not just generic data like now. So for now
 this will only display gray-scale brushes.
+
 
 BRUSH_HEADER_C_2_cw
 Because I changed the name of this field and since gbr plugin
@@ -72,7 +89,4 @@ of gbrs yet though. Once the gbr.c actually saves
 the real tag (not just bytes) we'll have to change the
 FILE_VERSION. Someone else may have plans about all this
 -we'll have to check.
-
-
-
 

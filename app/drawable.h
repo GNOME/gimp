@@ -72,5 +72,7 @@ GimpDrawable *   drawable_get_ID             (int);
 void		 drawable_deallocate	     (GimpDrawable *);
 void		 gimp_drawable_configure     (GimpDrawable *,
 					      int, int, int, int, char *);
+void             gimp_drawable_configure_tag (GimpDrawable *, 
+					      int, int, int, Tag, char *);
 
 #endif /* __DRAWABLE_H__ */

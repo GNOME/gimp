@@ -232,6 +232,55 @@ layer_new (gimage_ID, width, height, type, name, opacity, mode)
      int opacity;
      int mode;
 {
+  
+  Precision prec = PRECISION_U8;
+  Format format = FORMAT_NONE;
+  Alpha alpha = ALPHA_NONE;
+  Tag   tag;
+
+  switch (type)
+    {
+    case RGB_GIMAGE:
+    case RGBA_GIMAGE:
+      format = FORMAT_RGB;
+      break;
+    case GRAY_GIMAGE:
+    case GRAYA_GIMAGE:
+      format = FORMAT_GRAY;
+      break;
+    case INDEXED_GIMAGE:
+    case INDEXEDA_GIMAGE:
+      format = FORMAT_INDEXED;
+      break;
+    }
+  
+  switch (type)
+    {
+    case RGB_GIMAGE:
+    case GRAY_GIMAGE:
+    case INDEXED_GIMAGE:
+      alpha = ALPHA_NO;
+      break;
+    case RGBA_GIMAGE:
+    case GRAYA_GIMAGE:
+    case INDEXEDA_GIMAGE:
+      alpha = ALPHA_YES;
+    }
+  
+  tag = tag_new (prec, format, alpha); 
+  return layer_new_tag (gimage_ID, width, height, tag, name, opacity, mode);
+}
+
+
+Layer *
+layer_new_tag (gimage_ID, width, height, tag, name, opacity, mode)
+     int gimage_ID;
+     int width, height;
+     Tag tag;
+     char * name;
+     int opacity;
+     int mode;
+{
   Layer * layer;
 
   if (width == 0 || height == 0) {
@@ -241,8 +290,8 @@ layer_new (gimage_ID, width, height, type, name, opacity, mode)
 
   layer = gtk_type_new (gimp_layer_get_type ());
 
-  gimp_drawable_configure (GIMP_DRAWABLE(layer), 
-			   gimage_ID, width, height, type, name);
+  gimp_drawable_configure_tag (GIMP_DRAWABLE(layer), 
+			   gimage_ID, width, height, tag, name);
 
   /*  allocate the memory for this layer  */
   layer->linked = 0;
@@ -268,7 +317,6 @@ layer_new (gimage_ID, width, height, type, name, opacity, mode)
 
   return layer;
 }
-
 
 Layer *
 layer_ref (Layer *layer)

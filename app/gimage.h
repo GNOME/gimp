@@ -29,16 +29,15 @@
 struct _PixelArea;
 struct _Canvas;
 
-
 /* the image types */
-#define RGB_GIMAGE       0
-#define RGBA_GIMAGE      1
-#define GRAY_GIMAGE      2
-#define GRAYA_GIMAGE     3
-#define INDEXED_GIMAGE   4
-#define INDEXEDA_GIMAGE  5
+#define RGB_GIMAGE          0
+#define RGBA_GIMAGE         1
+#define GRAY_GIMAGE         2
+#define GRAYA_GIMAGE        3
+#define INDEXED_GIMAGE      4
+#define INDEXEDA_GIMAGE     5
 
-#define TYPE_HAS_ALPHA(t)  ((t)==RGBA_GIMAGE || (t)==GRAYA_GIMAGE || (t)==INDEXEDA_GIMAGE)
+#define TYPE_HAS_ALPHA(t)  ((t)==RGBA_GIMAGE || (t)==GRAYA_GIMAGE || (t)==INDEXEDA_GIMAGE) 
 
 #define GRAY_PIX         0
 #define ALPHA_G_PIX      1
@@ -160,6 +159,7 @@ struct _GImage
 
 /* function declarations */
 
+GImage *        gimage_new_tag                (int, int, Tag);
 GImage *        gimage_new                    (int, int, int);
 void            gimage_set_filename           (GImage *, char *);
 void            gimage_resize                 (GImage *, int, int, int, int);

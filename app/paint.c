@@ -336,8 +336,40 @@ load_u8_rgb_into_u16 (
                       guint8 * data
                       )
 {
-  g_warning ("finish writing load_u8_rgb_into_u16()");
-  return FALSE;
+  guint16 *d = (guint16 *) paint_data (paint);
+  guint16  a;
+  
+  if (tag_alpha (tag) == ALPHA_YES)
+    a = (data[3] * (gint)65535) / 255;
+  else
+    a = 65535;
+        
+  switch (paint_format (paint))
+    {
+    case FORMAT_RGB:
+      d[0] = (data[0] * (gint)65535) / 255;
+      d[1] = (data[1] * (gint)65535) / 255;
+      d[2] = (data[2] * (gint)65535) / 255;
+      if (paint_alpha (paint) == ALPHA_YES)
+        d[3] = a;
+      return TRUE;
+            
+    case FORMAT_GRAY:
+      d[0] = INTENSITY ((data[0] * (gint)65535) / 255,
+                        (data[1] * (gint)65535) / 255,
+                        (data[2] * (gint)65535) / 255);
+      if (paint_alpha (paint) == ALPHA_YES)
+        d[1] = a;
+      return TRUE;
+
+    case FORMAT_INDEXED:
+      g_warning ("finish writing load_u8_rgb_into_float() indexed");
+      break;
+    case FORMAT_NONE:
+      break;
+    }
+  
+  return FALSE;        
 }
 
 
