@@ -32,8 +32,9 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "gimpprocview.h"
+#include "gimpprocbox.h"
 #include "gimpprocbrowser.h"
+#include "gimpprocview.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -59,8 +60,7 @@ typedef struct
 
   GtkWidget        *count_label;
   GtkWidget        *search_entry;
-  GtkWidget        *descr_vbox;
-  GtkWidget        *description;
+  GtkWidget        *proc_box;
 
   GtkListStore     *store;
   GtkWidget        *tv;
@@ -229,20 +229,11 @@ gimp_proc_browser_dialog_new (GimpProcBrowserApplyCallback apply_callback)
 
   /* right = description */
 
-  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-  gtk_widget_set_size_request (scrolled_window,
+  browser->proc_box = gimp_proc_box_new ();
+  gtk_widget_set_size_request (browser->proc_box,
                                DBL_WIDTH - DBL_LIST_WIDTH, -1);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
-                                  GTK_POLICY_AUTOMATIC,
-                                  GTK_POLICY_ALWAYS);
-  gtk_paned_pack2 (GTK_PANED (paned), scrolled_window, TRUE, TRUE);
-  gtk_widget_show (scrolled_window);
-
-  browser->descr_vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (browser->descr_vbox), 12);
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_window),
-                                         browser->descr_vbox);
-  gtk_widget_show (browser->descr_vbox);
+  gtk_paned_pack2 (GTK_PANED (paned), browser->proc_box, TRUE, TRUE);
+  gtk_widget_show (browser->proc_box);
 
   /* now build the list */
 
@@ -250,7 +241,6 @@ gimp_proc_browser_dialog_new (GimpProcBrowserApplyCallback apply_callback)
 
   /* initialize the "return" value (for "apply") */
 
-  browser->description      = NULL;
   browser->proc_name        = NULL;
   browser->scheme_proc_name = NULL;
   browser->proc_blurb       = NULL;
@@ -306,8 +296,6 @@ static void
 browser_show_procedure (GimpDBBrowser *browser,
                         gchar         *proc_name)
 {
-  GtkWidget *vbox;
-
   g_free (browser->proc_name);
   browser->proc_name = g_strdup (proc_name);
 
@@ -335,51 +323,19 @@ browser_show_procedure (GimpDBBrowser *browser,
                                 &browser->params,
                                 &browser->return_vals);
 
-  vbox = gimp_proc_view_new (browser->scheme_proc_name,
-                             NULL,
-                             browser->proc_blurb,
-                             browser->proc_help,
-                             browser->proc_author,
-                             browser->proc_copyright,
-                             browser->proc_date,
-                             browser->proc_type,
-                             browser->n_params,
-                             browser->n_return_vals,
-                             browser->params,
-                             browser->return_vals);
-
-  if (browser->description)
-    gtk_container_remove (GTK_CONTAINER (browser->descr_vbox),
-                          browser->description);
-
-  gtk_box_pack_start (GTK_BOX (browser->descr_vbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
-
-  browser->description = vbox;
-}
-
-static void
-dialog_show_message (GimpDBBrowser *browser,
-                     const gchar   *message)
-{
-  if (GTK_IS_LABEL (browser->description))
-    {
-      gtk_label_set_text (GTK_LABEL (browser->description), message);
-    }
-  else
-    {
-      if (browser->description)
-        gtk_container_remove (GTK_CONTAINER (browser->descr_vbox),
-                              browser->description);
-
-      browser->description = gtk_label_new (message);
-      gtk_box_pack_start (GTK_BOX (browser->descr_vbox),
-                          browser->description, FALSE, FALSE, 0);
-      gtk_widget_show (browser->description);
-    }
-
-  while (gtk_events_pending ())
-    gtk_main_iteration ();
+  gimp_proc_box_set_widget (browser->proc_box,
+                            gimp_proc_view_new (browser->scheme_proc_name,
+                                                NULL,
+                                                browser->proc_blurb,
+                                                browser->proc_help,
+                                                browser->proc_author,
+                                                browser->proc_copyright,
+                                                browser->proc_date,
+                                                browser->proc_type,
+                                                browser->n_params,
+                                                browser->n_return_vals,
+                                                browser->params,
+                                                browser->return_vals));
 }
 
 static void
@@ -422,8 +378,8 @@ browser_response (GtkWidget     *widget,
 
         if (response_id == RESPONSE_SEARCH_NAME)
           {
-            dialog_show_message (browser,
-                                 _("Searching by name - please wait"));
+            gimp_proc_box_show_message (browser->proc_box,
+                                        _("Searching by name - please wait"));
 
             query = g_string_new ("");
             query_text = gtk_entry_get_text (GTK_ENTRY (browser->search_entry));
@@ -446,8 +402,8 @@ browser_response (GtkWidget     *widget,
           }
         else if (response_id == RESPONSE_SEARCH_BLURB)
           {
-            dialog_show_message (browser,
-                                 _("Searching by blurb - please wait"));
+            gimp_proc_box_show_message (browser->proc_box,
+                                        _("Searching by blurb - please wait"));
 
             gimp_procedural_db_query (".*",
                                       (gchar *) gtk_entry_get_text
@@ -457,7 +413,8 @@ browser_response (GtkWidget     *widget,
           }
         else
           {
-            dialog_show_message (browser, _("Searching - please wait"));
+            gimp_proc_box_show_message (browser->proc_box,
+                                        _("Searching - please wait"));
 
             gimp_procedural_db_query (".*", ".*", ".*", ".*", ".*", ".*", ".*",
                                       &num_procs, &proc_list);
@@ -493,9 +450,10 @@ browser_response (GtkWidget     *widget,
 
         g_free (proc_list);
 
-        /* now sort the store */
+        gtk_tree_view_columns_autosize (GTK_TREE_VIEW (browser->tv));
+
         gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (browser->store),
-                                              0, GTK_SORT_ASCENDING);
+                                              COLUMN_LABEL, GTK_SORT_ASCENDING);
 
         if (num_procs > 0)
           {
@@ -505,7 +463,7 @@ browser_response (GtkWidget     *widget,
           }
         else
           {
-            dialog_show_message (browser, _("No matches"));
+            gimp_proc_box_show_message (browser->proc_box, _("No matches"));
           }
       }
       break;

@@ -1,3 +1,14 @@
+2004-09-30  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/dbbrowser/Makefile.am
+	* plug-ins/dbbrowser/gimpprocbox.c: new files holding more common
+	code from the two browsers.
+
+	* plug-ins/dbbrowser/gimpprocbrowser.c: use it.
+
+	* plug-ins/dbbrowser/plugin-browser.c: ditto. Re-enabled sorting
+	by all columns in both views. More cleanup.
+
 2004-09-30  Sven Neumann  <sven@gimp.org>
 
 	* README: added missing linebreak.
@@ -36,7 +47,7 @@
 	libgimpprocbrowser.a
 
 	* plug-ins/script-fu/script-fu-console.c: changed #includes
-	accordingly. Monir cleanup.
+	accordingly. Minor cleanup.
 
 	* tools/pdbgen/pdb/plug_in.pdb (plugins_query): fixed menu_path
 	return value. Was broken since the plug-in menu registering

@@ -33,6 +33,7 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include "gimpprocbox.h"
 #include "gimpprocview.h"
 
 #include "libgimp/stdplugins-intl.h"
@@ -71,10 +72,10 @@ typedef struct
 
   GtkWidget   *count_label;
   GtkWidget   *search_entry;
-  GtkWidget   *descr_scroll;
-  GtkWidget   *info_table;
+  GtkWidget   *proc_box;
+
   gint         num_plugins;
-} PDesc;
+} PluginBrowser;
 
 typedef struct
 {
@@ -97,21 +98,24 @@ static void   run        (const gchar      *name,
                           GimpParam       **return_vals);
 
 
-static GtkWidget * gimp_plugin_desc           (void);
+static GtkWidget * browser_dialog_new             (void);
+static void        browser_dialog_response        (GtkWidget        *widget,
+                                                   gint              response_id,
+                                                   PluginBrowser    *browser);
+static void        browser_list_selection_changed (GtkTreeSelection *selection,
+                                                   PluginBrowser    *browser);
+static void        browser_tree_selection_changed (GtkTreeSelection *selection,
+                                                   PluginBrowser    *browser);
+static void        browser_show_plugin            (PluginBrowser    *browser,
+                                                   PInfo            *pinfo);
 
-static gboolean    find_existing_mpath        (GtkTreeModel     *model,
-                                               gchar            *mpath,
-                                               GtkTreeIter      *return_iter);
-
-static void        list_store_select_callback (GtkTreeSelection *selection,
-                                               PDesc            *browser);
-static void        tree_store_select_callback (GtkTreeSelection *selection,
-                                               PDesc            *browser);
-static void        browser_show_plugin        (PDesc            *browser,
-                                               PInfo            *pinfo);
+static gboolean    find_existing_mpath            (GtkTreeModel     *model,
+                                                   gchar            *mpath,
+                                                   GtkTreeIter      *return_iter);
 
 
-static PDesc *browser = NULL;
+
+static PluginBrowser *browser = NULL;
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -184,212 +188,10 @@ run (const gchar      *name,
 
       values[0].data.d_status = GIMP_PDB_SUCCESS;
 
-      plugin_dialog = gimp_plugin_desc ();
+      plugin_dialog = browser_dialog_new ();
 
       gtk_main ();
     }
-}
-
-static void
-browser_show_plugin (PDesc *browser,
-                     PInfo *pinfo)
-{
-  gchar           *selected_proc_blurb;
-  gchar           *selected_proc_help;
-  gchar           *selected_proc_author;
-  gchar           *selected_proc_copyright;
-  gchar           *selected_proc_date;
-  GimpPDBProcType  selected_proc_type;
-  gint             selected_nparams;
-  gint             selected_nreturn_vals;
-  GimpParamDef    *selected_params;
-  GimpParamDef    *selected_return_vals;
-  GtkWidget       *old_table;
-
-  g_return_if_fail (browser != NULL);
-  g_return_if_fail (pinfo != NULL);
-
-  if (browser->descr_scroll == NULL)
-    return;
-
-  selected_proc_blurb     = NULL;
-  selected_proc_help      = NULL;
-  selected_proc_author    = NULL;
-  selected_proc_copyright = NULL;
-  selected_proc_date      = NULL;
-  selected_proc_type      = 0;
-  selected_nparams        = 0;
-  selected_nreturn_vals   = 0;
-  selected_params         = NULL;
-  selected_return_vals    = NULL;
-
-  gimp_procedural_db_proc_info (pinfo->realname,
-                                &selected_proc_blurb,
-                                &selected_proc_help,
-                                &selected_proc_author,
-                                &selected_proc_copyright,
-                                &selected_proc_date,
-                                &selected_proc_type,
-                                &selected_nparams, &selected_nreturn_vals,
-                                &selected_params,  &selected_return_vals);
-
-  old_table = browser->info_table;
-
-  browser->info_table = gimp_proc_view_new (pinfo->realname,
-                                            pinfo->menu,
-                                            selected_proc_blurb,
-                                            selected_proc_help,
-                                            selected_proc_author,
-                                            selected_proc_copyright,
-                                            selected_proc_date,
-                                            selected_proc_type,
-                                            selected_nparams,
-                                            selected_nreturn_vals,
-                                            selected_params,
-                                            selected_return_vals);
-
-  gtk_container_set_border_width (GTK_CONTAINER (browser->info_table), 12);
-
-  if (old_table)
-    gtk_widget_destroy (old_table);
-
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (browser->descr_scroll),
-                                         browser->info_table);
-
-  gtk_widget_show (browser->info_table);
-
-  g_free (selected_proc_blurb);
-  g_free (selected_proc_help);
-  g_free (selected_proc_author);
-  g_free (selected_proc_copyright);
-  g_free (selected_proc_date);
-  g_free (selected_params);
-  g_free (selected_return_vals);
-}
-
-static void
-list_store_select_callback (GtkTreeSelection *selection,
-                            PDesc            *browser)
-{
-  PInfo        *pinfo = NULL;
-  GtkTreeIter   iter;
-  GtkTreeModel *model;
-  gchar        *mpath = NULL;
-
-  g_return_if_fail (browser != NULL);
-
-  if (gtk_tree_selection_get_selected (selection, &model, &iter))
-    {
-      gtk_tree_model_get (model, &iter,
-                          LIST_PINFO_COLUMN, &pinfo,
-                          LIST_PATH_COLUMN,  &mpath,
-                          -1);
-    }
-
-  if (!pinfo || !mpath)
-    return;
-
-  model = gtk_tree_view_get_model (browser->tree_view);
-
-  if (find_existing_mpath (model, mpath, &iter))
-    {
-      GtkTreeSelection *tree_selection;
-      GtkTreePath      *tree_path;
-
-      tree_path = gtk_tree_model_get_path (model, &iter);
-      gtk_tree_view_expand_to_path (browser->tree_view, tree_path);
-      tree_selection = gtk_tree_view_get_selection (browser->tree_view);
-      g_signal_handlers_block_by_func (tree_selection,
-                                       G_CALLBACK (tree_store_select_callback),
-                                       browser);
-      gtk_tree_selection_select_iter (tree_selection, &iter);
-      g_signal_handlers_unblock_by_func (tree_selection,
-                                         G_CALLBACK (tree_store_select_callback),
-                                         browser);
-      gtk_tree_view_scroll_to_cell (browser->tree_view,
-                                    tree_path, NULL,
-                                    TRUE, 0.5, 0.0);
-    }
-  else
-    {
-      g_warning ("Failed to find node in tree");
-    }
-
-  g_free (mpath);
-
-  browser_show_plugin (browser, pinfo);
-}
-
-static void
-tree_store_select_callback (GtkTreeSelection *selection,
-                            PDesc            *browser)
-{
-  PInfo        *pinfo = NULL;
-  GtkTreeIter   iter;
-  GtkTreeModel *model;
-  gchar        *mpath = NULL;
-  gboolean      valid, found;
-
-  g_return_if_fail (browser != NULL);
-
-  if (gtk_tree_selection_get_selected (selection, &model, &iter))
-    {
-      gtk_tree_model_get (model, &iter,
-                          TREE_PINFO_COLUMN, &pinfo,
-                          TREE_MPATH_COLUMN, &mpath,
-                          -1);
-    }
-
-  if (!pinfo || !mpath)
-    return;
-
-  /* Get the first iter in the list */
-  model = gtk_tree_view_get_model (browser->list_view);
-  valid = gtk_tree_model_get_iter_first (model, &iter);
-  found = FALSE;
-
-  while (valid)
-    {
-      /* Walk through the list, reading each row */
-      gchar *picked_mpath;
-
-      gtk_tree_model_get (model, &iter,
-                          LIST_PATH_COLUMN, &picked_mpath,
-                          -1);
-      if (picked_mpath && !strcmp (mpath, picked_mpath))
-        {
-          found = TRUE;
-          break;
-        }
-      g_free (picked_mpath);
-      valid = gtk_tree_model_iter_next (model, &iter);
-    }
-  g_free (mpath);
-
-  if (found)
-    {
-      GtkTreeSelection *list_selection;
-      GtkTreePath      *tree_path;
-
-      tree_path = gtk_tree_model_get_path (model, &iter);
-      list_selection = gtk_tree_view_get_selection (browser->list_view);
-      g_signal_handlers_block_by_func (list_selection,
-                                       G_CALLBACK (list_store_select_callback),
-                                       browser);
-      gtk_tree_selection_select_iter (list_selection, &iter);
-      g_signal_handlers_unblock_by_func (list_selection,
-                                         G_CALLBACK (list_store_select_callback),
-                                         browser);
-      gtk_tree_view_scroll_to_cell (browser->list_view,
-                                    tree_path, NULL,
-                                    TRUE, 0.5, 0.0);
-    }
-  else
-    {
-      g_warning ("Failed to find node in list");
-    }
-
-  browser_show_plugin (browser, pinfo);
 }
 
 #if 0
@@ -473,11 +275,10 @@ find_existing_mpath (GtkTreeModel *model,
   gtk_tree_path_free (path);
 }
 
-
 static void
-get_parent (PDesc       *browser,
-            gchar       *mpath,
-            GtkTreeIter *parent)
+get_parent (PluginBrowser *browser,
+            gchar         *mpath,
+            GtkTreeIter   *parent)
 {
   GtkTreeIter   last_parent;
   gchar        *tmp_ptr;
@@ -524,12 +325,12 @@ get_parent (PDesc       *browser,
 }
 
 static void
-insert_into_tree_view (PDesc *browser,
-                       gchar *name,
-                       gchar *xtimestr,
-                       gchar *menu_str,
-                       gchar *types_str,
-                       PInfo *pinfo)
+insert_into_tree_view (PluginBrowser *browser,
+                       gchar         *name,
+                       gchar         *xtimestr,
+                       gchar         *menu_str,
+                       gchar         *types_str,
+                       PInfo         *pinfo)
 {
   gchar        *labels[3];
   gchar        *str_ptr;
@@ -565,17 +366,17 @@ insert_into_tree_view (PDesc *browser,
   tree_store = GTK_TREE_STORE (gtk_tree_view_get_model (browser->tree_view));
   gtk_tree_store_append (tree_store, &iter, &parent);
   gtk_tree_store_set (tree_store, &iter,
-                      TREE_MPATH_COLUMN, menu_str,
-                      TREE_PATH_NAME_COLUMN, name,
-                      TREE_PINFO_COLUMN, pinfo,
+                      TREE_MPATH_COLUMN,       menu_str,
+                      TREE_PATH_NAME_COLUMN,   name,
                       TREE_IMAGE_TYPES_COLUMN, types_str,
-                      TREE_DATE_COLUMN, xtimestr,
+                      TREE_DATE_COLUMN,        xtimestr,
+                      TREE_PINFO_COLUMN,       pinfo,
                       -1);
 }
 
 static void
-get_plugin_info (PDesc       *browser,
-                 const gchar *search_text)
+get_plugin_info (PluginBrowser *browser,
+                 const gchar   *search_text)
 {
   GimpParam    *return_vals;
   gint          nreturn_vals;
@@ -589,8 +390,11 @@ get_plugin_info (PDesc       *browser,
   GtkTreeStore *tree_store;
   GtkTreeIter   iter;
 
-  if (!search_text)
+  if (! search_text)
     search_text = "";
+
+  gimp_proc_box_show_message (browser->proc_box,
+                              _("Searching by name - please wait"));
 
   return_vals = gimp_run_procedure ("gimp_plugins_query",
                                     &nreturn_vals,
@@ -682,100 +486,37 @@ get_plugin_info (PDesc       *browser,
                                  types_strs[loop],
                                  pinfo);
         }
+
+      gtk_tree_view_columns_autosize (GTK_TREE_VIEW (browser->list_view));
+      gtk_tree_view_columns_autosize (GTK_TREE_VIEW (browser->tree_view));
+
       gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (list_store),
                                             LIST_NAME_COLUMN,
                                             GTK_SORT_ASCENDING);
+      gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (tree_store),
+                                            TREE_PATH_NAME_COLUMN,
+                                            GTK_SORT_ASCENDING);
+
+      if (browser->num_plugins)
+        {
+          GtkTreeSelection *sel =
+            gtk_tree_view_get_selection (GTK_TREE_VIEW (browser->list_view));
+
+          gtk_tree_model_get_iter_root (GTK_TREE_MODEL (list_store),
+                                        &iter);
+          gtk_tree_selection_select_iter (sel, &iter);
+        }
+      else
+        {
+          gimp_proc_box_show_message (browser->proc_box, _("No matches"));
+        }
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
 
-#if 0
-static gint
-date_sort (GtkCList      *clist,
-           gconstpointer  ptr1,
-           gconstpointer  ptr2)
-{
-  GtkCListRow *row1 = (GtkCListRow *) ptr1;
-  GtkCListRow *row2 = (GtkCListRow *) ptr2;
-
-  /* Get the data for the row */
-  PInfo *row1_pinfo = row1->data;
-  PInfo *row2_pinfo = row2->data;
-
-  /* Want to sort on the date field */
-
-  if (row2_pinfo->instime < row1_pinfo->instime)
-    {
-      return -1;
-    }
-
-  if (row2_pinfo->instime > row1_pinfo->instime)
-    {
-      return 1;
-    }
-  return 0;
-}
-#endif
-
-#if 0
-static void
-clist_click_column (GtkCList *clist,
-                    gint      column,
-                    gpointer  data)
-{
-  if (column == 1)
-    {
-      gtk_clist_set_compare_func (clist, date_sort);
-    }
-  else
-    {
-      gtk_clist_set_compare_func (clist, NULL); /* Set back to default */
-    }
-
-  if (column == clist->sort_column)
-    {
-      if (clist->sort_type == GTK_SORT_ASCENDING)
-        clist->sort_type = GTK_SORT_DESCENDING;
-      else
-        clist->sort_type = GTK_SORT_ASCENDING;
-    }
-  else
-    gtk_clist_set_sort_column (clist, column);
-
-  gtk_clist_sort (clist);
-}
-#endif
-
-static void
-dialog_response (GtkWidget *widget,
-                 gint       response_id,
-                 PDesc     *browser)
-{
-  const gchar *search_text = NULL;
-
-  switch (response_id)
-    {
-    case GTK_RESPONSE_OK:
-      if (widget != NULL)
-        {
-          /* The result of a button press... read entry data */
-          search_text =
-            gtk_entry_get_text (GTK_ENTRY (browser->search_entry));
-        }
-
-      get_plugin_info (browser, search_text);
-      break;
-
-    default:
-      gtk_widget_destroy (browser->dialog);
-      gtk_main_quit ();
-      break;
-    }
-}
-
 static GtkWidget *
-gimp_plugin_desc (void)
+browser_dialog_new (void)
 {
   GtkWidget         *paned;
   GtkWidget         *hbox, *vbox;
@@ -791,7 +532,7 @@ gimp_plugin_desc (void)
 
   gimp_ui_init ("plugindetails", FALSE);
 
-  browser = g_new0 (PDesc, 1);
+  browser = g_new0 (PluginBrowser, 1);
 
   /* the dialog box */
   browser->dialog =
@@ -805,7 +546,7 @@ gimp_plugin_desc (void)
                      NULL);
 
   g_signal_connect (browser->dialog, "response",
-                    G_CALLBACK (dialog_response),
+                    G_CALLBACK (browser_dialog_response),
                     browser);
 
   /* paned : left=notebook ; right=description */
@@ -848,25 +589,25 @@ gimp_plugin_desc (void)
   renderer = gtk_cell_renderer_text_new ();
   column = gtk_tree_view_column_new_with_attributes (_("Name"),
                                                      renderer,
-                                                     "text",
-                                                     LIST_NAME_COLUMN,
+                                                     "text", LIST_NAME_COLUMN,
                                                      NULL);
+  gtk_tree_view_column_set_sort_column_id  (column, LIST_NAME_COLUMN);
   gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), column);
 
   renderer = gtk_cell_renderer_text_new ();
   column = gtk_tree_view_column_new_with_attributes (_("Insertion Date"),
                                                      renderer,
-                                                     "text",
-                                                     LIST_DATE_COLUMN,
+                                                     "text", LIST_DATE_COLUMN,
                                                      NULL);
+  gtk_tree_view_column_set_sort_column_id  (column, LIST_DATE_COLUMN);
   gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), column);
 
   renderer = gtk_cell_renderer_text_new ();
   column = gtk_tree_view_column_new_with_attributes (_("Menu Path"),
                                                      renderer,
-                                                     "text",
-                                                     LIST_PATH_COLUMN,
+                                                     "text", LIST_PATH_COLUMN,
                                                      NULL);
+  gtk_tree_view_column_set_sort_column_id  (column, LIST_PATH_COLUMN);
   gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), column);
 
   renderer = gtk_cell_renderer_text_new ();
@@ -875,6 +616,7 @@ gimp_plugin_desc (void)
                                                      "text",
                                                      LIST_IMAGE_TYPES_COLUMN,
                                                      NULL);
+  gtk_tree_view_column_set_sort_column_id  (column, LIST_IMAGE_TYPES_COLUMN);
   gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), column);
 
   swindow = gtk_scrolled_window_new (NULL, NULL);
@@ -890,7 +632,7 @@ gimp_plugin_desc (void)
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_BROWSE);
 
   g_signal_connect (selection, "changed",
-                    G_CALLBACK (list_store_select_callback),
+                    G_CALLBACK (browser_list_selection_changed),
                     browser);
 
   label = gtk_label_new (_("List View"));
@@ -918,6 +660,7 @@ gimp_plugin_desc (void)
                                                      "text",
                                                      TREE_PATH_NAME_COLUMN,
                                                      NULL);
+  gtk_tree_view_column_set_sort_column_id  (column, TREE_PATH_NAME_COLUMN);
   gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
 
   renderer = gtk_cell_renderer_text_new ();
@@ -926,6 +669,7 @@ gimp_plugin_desc (void)
                                                      "text",
                                                      TREE_DATE_COLUMN,
                                                      NULL);
+  gtk_tree_view_column_set_sort_column_id  (column, TREE_DATE_COLUMN);
   gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
 
   renderer = gtk_cell_renderer_text_new ();
@@ -934,6 +678,7 @@ gimp_plugin_desc (void)
                                                      "text",
                                                      TREE_IMAGE_TYPES_COLUMN,
                                                      NULL);
+  gtk_tree_view_column_set_sort_column_id  (column, TREE_IMAGE_TYPES_COLUMN);
   gtk_tree_view_append_column (GTK_TREE_VIEW (tree_view), column);
 
   swindow = gtk_scrolled_window_new (NULL, NULL);
@@ -948,7 +693,7 @@ gimp_plugin_desc (void)
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_BROWSE);
 
   g_signal_connect (selection, "changed",
-                    G_CALLBACK (tree_store_select_callback),
+                    G_CALLBACK (browser_tree_selection_changed),
                     browser);
 
   label = gtk_label_new (_("Tree view"));
@@ -978,17 +723,14 @@ gimp_plugin_desc (void)
 
   /* right = description */
 
-  browser->descr_scroll = gtk_scrolled_window_new (NULL, NULL);
-  gtk_widget_set_size_request (browser->descr_scroll,
+  browser->proc_box = gimp_proc_box_new ();
+  gtk_widget_set_size_request (browser->proc_box,
                                DBL_WIDTH - DBL_LIST_WIDTH, -1);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (browser->descr_scroll),
-                                  GTK_POLICY_AUTOMATIC,
-                                  GTK_POLICY_ALWAYS);
-  gtk_paned_pack2 (GTK_PANED (paned), browser->descr_scroll, TRUE, TRUE);
-  gtk_widget_show (browser->descr_scroll);
+  gtk_paned_pack2 (GTK_PANED (paned), browser->proc_box, TRUE, TRUE);
+  gtk_widget_show (browser->proc_box);
 
   /* now build the list */
-  dialog_response (NULL, GTK_RESPONSE_OK, browser);
+  browser_dialog_response (NULL, GTK_RESPONSE_OK, browser);
 
   gtk_widget_show (browser->dialog);
 
@@ -999,4 +741,216 @@ gimp_plugin_desc (void)
   gtk_widget_grab_focus (browser->search_entry);
 
   return browser->dialog;
+}
+
+static void
+browser_dialog_response (GtkWidget     *widget,
+                         gint           response_id,
+                         PluginBrowser *browser)
+{
+  const gchar *search_text = NULL;
+
+  switch (response_id)
+    {
+    case GTK_RESPONSE_OK:
+      search_text = gtk_entry_get_text (GTK_ENTRY (browser->search_entry));
+      get_plugin_info (browser, search_text);
+      break;
+
+    default:
+      gtk_widget_destroy (browser->dialog);
+      gtk_main_quit ();
+      break;
+    }
+}
+
+static void
+browser_list_selection_changed (GtkTreeSelection *selection,
+                                PluginBrowser    *browser)
+{
+  PInfo        *pinfo = NULL;
+  GtkTreeIter   iter;
+  GtkTreeModel *model;
+  gchar        *mpath = NULL;
+
+  g_return_if_fail (browser != NULL);
+
+  if (gtk_tree_selection_get_selected (selection, &model, &iter))
+    {
+      gtk_tree_model_get (model, &iter,
+                          LIST_PINFO_COLUMN, &pinfo,
+                          LIST_PATH_COLUMN,  &mpath,
+                          -1);
+    }
+
+  if (!pinfo || !mpath)
+    return;
+
+  model = gtk_tree_view_get_model (browser->tree_view);
+
+  if (find_existing_mpath (model, mpath, &iter))
+    {
+      GtkTreeSelection *tree_selection;
+      GtkTreePath      *tree_path;
+
+      tree_path = gtk_tree_model_get_path (model, &iter);
+      gtk_tree_view_expand_to_path (browser->tree_view, tree_path);
+      tree_selection = gtk_tree_view_get_selection (browser->tree_view);
+
+      g_signal_handlers_block_by_func (tree_selection,
+                                       browser_tree_selection_changed,
+                                       browser);
+      gtk_tree_selection_select_iter (tree_selection, &iter);
+      g_signal_handlers_unblock_by_func (tree_selection,
+                                         browser_tree_selection_changed,
+                                         browser);
+
+      gtk_tree_view_scroll_to_cell (browser->tree_view,
+                                    tree_path, NULL,
+                                    TRUE, 0.5, 0.0);
+    }
+  else
+    {
+      g_warning ("Failed to find node in tree");
+    }
+
+  g_free (mpath);
+
+  browser_show_plugin (browser, pinfo);
+}
+
+static void
+browser_tree_selection_changed (GtkTreeSelection *selection,
+                                PluginBrowser    *browser)
+{
+  PInfo        *pinfo = NULL;
+  GtkTreeIter   iter;
+  GtkTreeModel *model;
+  gchar        *mpath = NULL;
+  gboolean      valid, found;
+
+  g_return_if_fail (browser != NULL);
+
+  if (gtk_tree_selection_get_selected (selection, &model, &iter))
+    {
+      gtk_tree_model_get (model, &iter,
+                          TREE_PINFO_COLUMN, &pinfo,
+                          TREE_MPATH_COLUMN, &mpath,
+                          -1);
+    }
+
+  if (!pinfo || !mpath)
+    return;
+
+  /* Get the first iter in the list */
+  model = gtk_tree_view_get_model (browser->list_view);
+  valid = gtk_tree_model_get_iter_first (model, &iter);
+  found = FALSE;
+
+  while (valid)
+    {
+      /* Walk through the list, reading each row */
+      gchar *picked_mpath;
+
+      gtk_tree_model_get (model, &iter,
+                          LIST_PATH_COLUMN, &picked_mpath,
+                          -1);
+      if (picked_mpath && !strcmp (mpath, picked_mpath))
+        {
+          found = TRUE;
+          break;
+        }
+      g_free (picked_mpath);
+      valid = gtk_tree_model_iter_next (model, &iter);
+    }
+  g_free (mpath);
+
+  if (found)
+    {
+      GtkTreeSelection *list_selection;
+      GtkTreePath      *tree_path;
+
+      tree_path = gtk_tree_model_get_path (model, &iter);
+      list_selection = gtk_tree_view_get_selection (browser->list_view);
+
+      g_signal_handlers_block_by_func (list_selection,
+                                       browser_list_selection_changed,
+                                       browser);
+      gtk_tree_selection_select_iter (list_selection, &iter);
+      g_signal_handlers_unblock_by_func (list_selection,
+                                         browser_list_selection_changed,
+                                         browser);
+
+      gtk_tree_view_scroll_to_cell (browser->list_view,
+                                    tree_path, NULL,
+                                    TRUE, 0.5, 0.0);
+    }
+  else
+    {
+      g_warning ("Failed to find node in list");
+    }
+
+  browser_show_plugin (browser, pinfo);
+}
+
+static void
+browser_show_plugin (PluginBrowser *browser,
+                     PInfo         *pinfo)
+{
+  gchar           *selected_proc_blurb;
+  gchar           *selected_proc_help;
+  gchar           *selected_proc_author;
+  gchar           *selected_proc_copyright;
+  gchar           *selected_proc_date;
+  GimpPDBProcType  selected_proc_type;
+  gint             selected_nparams;
+  gint             selected_nreturn_vals;
+  GimpParamDef    *selected_params;
+  GimpParamDef    *selected_return_vals;
+
+  g_return_if_fail (browser != NULL);
+  g_return_if_fail (pinfo != NULL);
+
+  selected_proc_blurb     = NULL;
+  selected_proc_help      = NULL;
+  selected_proc_author    = NULL;
+  selected_proc_copyright = NULL;
+  selected_proc_date      = NULL;
+  selected_proc_type      = 0;
+  selected_nparams        = 0;
+  selected_nreturn_vals   = 0;
+  selected_params         = NULL;
+  selected_return_vals    = NULL;
+
+  gimp_procedural_db_proc_info (pinfo->realname,
+                                &selected_proc_blurb,
+                                &selected_proc_help,
+                                &selected_proc_author,
+                                &selected_proc_copyright,
+                                &selected_proc_date,
+                                &selected_proc_type,
+                                &selected_nparams, &selected_nreturn_vals,
+                                &selected_params,  &selected_return_vals);
+
+  gimp_proc_box_set_widget (browser->proc_box,
+                            gimp_proc_view_new (pinfo->realname,
+                                                pinfo->menu,
+                                                selected_proc_blurb,
+                                                selected_proc_help,
+                                                selected_proc_author,
+                                                selected_proc_copyright,
+                                                selected_proc_date,
+                                                selected_proc_type,
+                                                selected_nparams,
+                                                selected_nreturn_vals,
+                                                selected_params,
+                                                selected_return_vals));
+
+  g_free (selected_proc_blurb);
+  g_free (selected_proc_help);
+  g_free (selected_proc_author);
+  g_free (selected_proc_copyright);
+  g_free (selected_proc_date);
+  g_free (selected_params);
+  g_free (selected_return_vals);
 }
