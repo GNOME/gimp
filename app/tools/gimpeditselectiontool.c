@@ -39,24 +39,24 @@ typedef struct _edit_selection EditSelection;
 
 struct _edit_selection
 {
-  int                 origx, origy;        /*  original x and y coords            */
-  int                 x, y;                /*  current x and y coords             */
+  int                 origx, origy;      /*  original x and y coords         */
+  int                 x, y;              /*  current x and y coords          */
 
-  int                 x1, y1;              /*  bounding box of selection mask     */
+  int                 x1, y1;            /*  bounding box of selection mask  */
   int                 x2, y2;
 
-  EditType            edit_type;           /*  translate the mask or layer?       */
+  EditType            edit_type;         /*  translate the mask or layer?    */
 
-  DrawCore *          core;                /*  selection core for drawing bounds  */
+  DrawCore *          core;              /* selection core for drawing bounds*/
 
-  ButtonReleaseFunc   old_button_release;  /*  old button press member func       */
-  MotionFunc          old_motion;          /*  old motion member function         */
-  ToolCtlFunc         old_control;         /*  old control member function        */
-  CursorUpdateFunc    old_cursor_update;   /*  old cursor update function         */
-  int                 old_scroll_lock;     /*  old value of scroll lock           */
-  int                 old_auto_snap_to;    /*  old value of auto snap to          */
+  ButtonReleaseFunc   old_button_release;/*  old button press member func    */
+  MotionFunc          old_motion;        /*  old motion member function      */
+  ToolCtlFunc         old_control;       /*  old control member function     */
+  CursorUpdateFunc    old_cursor_update; /*  old cursor update function      */
+  int                 old_scroll_lock;   /*  old value of scroll lock        */
+  int                 old_auto_snap_to;  /*  old value of auto snap to       */
 
-  guint               context_id;          /*  for the statusbar                  */
+  guint               context_id;        /*  for the statusbar               */
 };
 
 
@@ -234,7 +234,15 @@ edit_selection_button_release (Tool           *tool,
 		  layer = (Layer *) layer_list->data;
 		  if (layer == gdisp->gimage->active_layer || 
 		      layer_linked (layer))
-		    layer_translate (layer, (x - edit_select.origx), (y - edit_select.origy));
+		    {
+		      /* Temporarily shift back to the original
+			 position so that undo information is updated
+			 properly... bit of a hack. DISABLED */
+		      /*layer_temporarily_translate (layer,
+						   edit_select.origx - x,
+						   edit_select.origy - y);*/
+		      layer_translate (layer, (x - edit_select.origx), (y - edit_select.origy));
+		    }
 		  layer_list = g_slist_next (layer_list);
 		}
 
@@ -287,14 +295,54 @@ edit_selection_motion (Tool           *tool,
   GDisplay * gdisp;
   gchar offset[STATUSBAR_SIZE];
 
+  /*  g_warning("motion");*/
+
   if (tool->state != ACTIVE)
     return;
 
   gdisp = (GDisplay *) gdisp_ptr;
 
+  gdk_flush();
+
   draw_core_pause (edit_select.core, tool);
 
   edit_selection_snap (gdisp, mevent->x, mevent->y);
+
+#if 0
+#warning ADAM MADNESS
+  if (edit_select.edit_type == LayerTranslate)
+    {
+      int x = edit_select.x;
+      int y = edit_select.y;
+      Layer* floating_layer;
+      Layer* layer;
+      GSList* layer_list;
+
+      if ((floating_layer = gimage_floating_sel (gdisp->gimage)))
+        floating_sel_relax (floating_layer, TRUE);
+      
+      /*  translate the layer--and any "linked" layers as well  */
+      layer_list = gdisp->gimage->layers;
+      while (layer_list)
+        {
+          layer = (Layer *) layer_list->data;
+          if (layer == gdisp->gimage->active_layer || 
+              layer_linked (layer))
+	    {
+	      layer_temporarily_translate (layer,
+					   (x - edit_select.origx),
+					   (y - edit_select.origy));
+	    }
+          layer_list = g_slist_next (layer_list);
+        }
+
+      if (floating_layer)
+        floating_sel_rigor (floating_layer, TRUE);
+      
+      gdisplays_flush();
+    }
+#warning END OF ADAM MADNESS
+#endif
 
   gtk_statusbar_pop (GTK_STATUSBAR(gdisp->statusbar), edit_select.context_id);
   g_snprintf (offset, STATUSBAR_SIZE, _("Move: %d, %d"), 
@@ -319,6 +367,9 @@ edit_selection_draw (Tool *tool)
   int x1, y1, x2, y2;
   int x3, y3, x4, y4;
   int off_x, off_y;
+
+  /*static int ggg = 0;
+    g_warning("draw %d", ggg++);*/
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   select = gdisp->select;
@@ -429,6 +480,41 @@ edit_selection_draw (Tool *tool)
 			  edit_select.core->gc, 0,
 			  x1 + diff_x, y1 + diff_y,
 			  (x2 - x1) - 1, (y2 - y1) - 1);
+#if 0
+#warning ADAM MADNESS
+  if (edit_select.edit_type == LayerTranslate)
+    {
+      int x = edit_select.x;
+      int y = edit_select.y;
+      Layer* floating_layer;
+      Layer* layer;
+      GSList* layer_list;
+
+      if ((floating_layer = gimage_floating_sel (gdisp->gimage)))
+        floating_sel_relax (floating_layer, TRUE);
+      
+      /*  translate the layer--and any "linked" layers as well  */
+      layer_list = gdisp->gimage->layers;
+      while (layer_list)
+        {
+          layer = (Layer *) layer_list->data;
+          if (layer == gdisp->gimage->active_layer || 
+              layer_linked (layer))
+	    {
+	      layer_temporarily_translate (layer,
+					   (x - edit_select.origx),
+					   (y - edit_select.origy));
+	    }
+          layer_list = g_slist_next (layer_list);
+        }
+
+      if (floating_layer)
+        floating_sel_rigor (floating_layer, TRUE);
+      
+      gdisplays_flush();
+    }
+#warning END OF ADAM MADNESS
+#endif
       break;
 
     case FloatingSelTranslate:

@@ -45,6 +45,7 @@
 
 #include "libgimp/gimpintl.h"
 
+
 #define OVERHEAD          25  /*  in units of pixel area  */
 #define EPSILON           5
 
@@ -1210,6 +1211,14 @@ gdisplay_display_area (GDisplay *gdisp,
 	dy = MIN (y2 - i, GXIMAGE_HEIGHT);
 	render_image (gdisp, j - gdisp->disp_xoffset, i - gdisp->disp_yoffset,
 		      dx, dy);
+#if 0
+	    /* Invalidate the projection just after we render it! */
+	    gimage_invalidate_without_render (gdisp->gimage,
+					      j - gdisp->disp_xoffset,
+					      i - gdisp->disp_yoffset,
+					      dx, dy,
+					      0, 0, 0, 0);
+#endif
 	gximage_put (gdisp->canvas->window,
 		     j, i, dx, dy,
 		     gdisp->offset_x,

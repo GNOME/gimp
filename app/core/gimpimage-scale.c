@@ -1332,8 +1332,6 @@ void
 gimp_image_construct (GimpImage *gimage, int x, int y, int w, int h,
 		      gboolean can_use_cowproject)
 {
-
-      gimage->construct_flag = 0;
 #if 0
       int xoff, yoff;
   
@@ -1342,42 +1340,10 @@ gimp_image_construct (GimpImage *gimage, int x, int y, int w, int h,
        */
       gimage->construct_flag = 0;
       
-/*
-	printf("************ [%d] ty:%d by:%d op:%d\n",
-	       gimage->construct_flag,
-	       gimage_projection_type(gimage),
-	       gimage_projection_bytes(gimage),
-	       gimage_projection_opacity(gimage)
-	       );fflush(stdout);*/
-
       if (gimage->layers)
 	{
 	  gimp_drawable_offsets (GIMP_DRAWABLE((Layer*)(gimage->layers->data)),
 				 &xoff, &yoff);
-#if 0
-	  printf("-------\n%d,%d,%d,%d,%d,%d,%d,%d,%d\n",
-		 (gimage->layers != NULL) ,                /* There's a layer.      */
-		 (!g_slist_next(gimage->layers)) ,          /* It's the only layer.  */
-		 (layer_has_alpha((Layer*)(gimage->layers->data))) , /* It's !flat.  */
-		 /* It's visible.         */
-		 (drawable_visible (GIMP_DRAWABLE((Layer*)(gimage->layers->data)))) ,
-		 (drawable_width (GIMP_DRAWABLE((Layer*)(gimage->layers->data))) ==
-		  gimage->width) ,
-		 (drawable_height (GIMP_DRAWABLE((Layer*)(gimage->layers->data))) ==
-		  gimage->height) ,                         /* Covers all.           */
-		 /* Not indexed.          */
-		 (!drawable_indexed (GIMP_DRAWABLE((Layer*)(gimage->layers->data)))) ,
-		 (((Layer*)(gimage->layers->data))->opacity == OPAQUE_OPACITY) /*opaq */,
-		 ((xoff==0) && (yoff==0))
-		 );fflush(stdout);
-#endif
-	}
-      else
-	{
-	  /*	  printf("GIMAGE @%p HAS NO LAYERS?! %d\n",
-		 gimage,
-		 g_slist_length(gimage->layers));
-		 fflush(stdout);*/
 	}
 
       if (/*can_use_cowproject &&*/
@@ -1407,9 +1373,7 @@ gimp_image_construct (GimpImage *gimage, int x, int y, int w, int h,
 	void * pr;
 	
 	g_warning("Can use cow-projection hack.  Yay!");
-	/*	
-	//	gimp_image_initialize_projection (gimage, x, y, w, h);
-*/
+
 	pixel_region_init (&srcPR, gimp_drawable_data
 			   (GIMP_DRAWABLE
 			    ((Layer*)(gimage->layers->data))),
@@ -1417,25 +1381,13 @@ gimp_image_construct (GimpImage *gimage, int x, int y, int w, int h,
 	pixel_region_init (&destPR,
 			   gimp_image_projection (gimage),
 			   x, y, w,h, TRUE);
-/*	
-	//	tile_manager_set_validate_proc(destPR.tiles, NULL);
-*/
+
 	for (pr = pixel_regions_register (2, &srcPR, &destPR);
 	     pr != NULL;
 	     pr = pixel_regions_process (pr))
 	  {
-	    /*if (!tile_is_valid(srcPR.curtile))
-	      tile_manager_validate (srcPR.tiles,
-				     srcPR.curtile);
-	    if (!tile_is_valid(destPR.curtile))
-	      tile_manager_validate (destPR.tiles,
-	      destPR.curtile);*/
-	    tile_lock (destPR.curtile);
-	    tile_lock (srcPR.curtile);
 	    tile_manager_map_over_tile (destPR.tiles,
 					destPR.curtile, srcPR.curtile);
-	    tile_release(srcPR.curtile, FALSE);
-	    tile_release(destPR.curtile, TRUE);
 	  }
 
 	gimage->construct_flag = 1;
@@ -1443,12 +1395,8 @@ gimp_image_construct (GimpImage *gimage, int x, int y, int w, int h,
 	return;
       }
     }
- /*     
-      if (gimage->layers)
-	g_warning("Can NOT use cow-projection hack.  Boo!");
-      else
-	g_warning("gimage has no layers!  Boo!");
-*/
+#else
+  gimage->construct_flag = 0;
 #endif
   
   /*  First, determine if the projection image needs to be
@@ -1466,8 +1414,39 @@ gimp_image_construct (GimpImage *gimage, int x, int y, int w, int h,
 }
 
 void
-gimp_image_invalidate (GimpImage *gimage, int x, int y, int w, int h, int x1, int y1,
-		   int x2, int y2)
+gimp_image_invalidate_without_render (GimpImage *gimage, int x, int y,
+				      int w, int h,
+				      int x1, int y1, int x2, int y2)
+{
+  Tile *tile;
+  TileManager *tm;
+  int i, j;
+
+  tm = gimp_image_projection (gimage);
+
+  /*  invalidate all tiles which are located outside of the displayed area
+   *   all tiles inside the displayed area are constructed.
+   */
+  for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
+    for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
+      {
+	tile = tile_manager_get_tile (tm, j, i, FALSE, FALSE);
+
+        /*  check if the tile is outside the bounds  */
+        if ((MIN ((j + tile_ewidth(tile)), x2) - MAX (j, x1)) <= 0)
+          {
+            tile_invalidate_tile (&tile, tm, j, i);
+          }
+        else if (MIN ((i + tile_eheight(tile)), y2) - MAX (i, y1) <= 0)
+          {
+            tile_invalidate_tile (&tile, tm, j, i);
+          }
+      }
+}
+
+void
+gimp_image_invalidate (GimpImage *gimage, int x, int y, int w, int h,
+		       int x1, int y1, int x2, int y2)
 {
   Tile *tile;
   TileManager *tm;

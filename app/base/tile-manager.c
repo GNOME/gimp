@@ -25,6 +25,7 @@
 
 #include "libgimp/gimpintl.h"
 
+
 static int tile_manager_get_tile_num (TileManager *tm,
 				       int xpixel,
 				       int ypixel);

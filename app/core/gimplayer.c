@@ -600,19 +600,28 @@ layer_apply_mask (layer, mode)
 }
 
 
-void
-layer_translate (layer, off_x, off_y)
+
+static void
+layer_translate_lowlevel (layer, off_x, off_y, temporary)
      Layer * layer;
      int off_x, off_y;
+     gboolean temporary;
 {
-  /*  the undo call goes here  */
-  undo_push_layer_displace (GIMP_DRAWABLE(layer)->gimage, layer);
+  if (!temporary)
+    {
+      /*  the undo call goes here  */
+      /*g_warning ("setting undo for layer translation");*/
+      undo_push_layer_displace (GIMP_DRAWABLE(layer)->gimage, layer);
+    }
 
   /*  update the affected region  */
   drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
 
-  /*  invalidate the selection boundary because of a layer modification  */
-  layer_invalidate_boundary (layer);
+  if (!temporary)
+    {
+      /*  invalidate the selection boundary because of a layer modification  */
+      layer_invalidate_boundary (layer);
+    }
 
   /*  update the layer offsets  */
   GIMP_DRAWABLE(layer)->offset_x += off_x;
@@ -625,9 +634,31 @@ layer_translate (layer, off_x, off_y)
     {
       GIMP_DRAWABLE(layer->mask)->offset_x += off_x;
       GIMP_DRAWABLE(layer->mask)->offset_y += off_y;
-  /*  invalidate the mask preview  */
-      drawable_invalidate_preview (GIMP_DRAWABLE(layer->mask));
+
+      if (!temporary)
+	{
+	  /*  invalidate the mask preview  */
+	  drawable_invalidate_preview (GIMP_DRAWABLE(layer->mask));
+	}
     }
+}
+
+
+void
+layer_temporarily_translate (layer, off_x, off_y)
+     Layer * layer;
+     int off_x, off_y;
+{
+  layer_translate_lowlevel (layer, off_x, off_y, TRUE);
+}
+
+
+void
+layer_translate (layer, off_x, off_y)
+     Layer * layer;
+     int off_x, off_y;
+{
+  layer_translate_lowlevel (layer, off_x, off_y, FALSE);
 }
 
 

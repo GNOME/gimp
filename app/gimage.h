@@ -99,6 +99,7 @@ gimage_foreach (GFunc func, gpointer user_data);
 #define gimage_add_channel gimp_image_add_channel
 #define gimage_remove_channel gimp_image_remove_channel
 #define gimage_construct gimp_image_construct
+#define gimage_invalidate_without_render gimp_image_invalidate_without_render
 #define gimage_invalidate gimp_image_invalidate
 #define gimage_validate gimp_image_validate
 #define gimage_is_empty gimp_image_is_empty

@@ -1,3 +1,18 @@
+Sun Feb  7 15:04:23 GMT 1999 Adam D. Moss <adam@gimp.org>
+
+	* app/fileops.c: More robust and kickin' thumbnail support.
+
+	* app/edit_selection.c app/layer.c app/layer.h: Working
+	on lazy opaque layer moves.  Disabled for now.
+
+	* app/gdisplay.c
+	* app/gimage.h
+	* app/gimpimage.c
+	* app/gimpimage.h
+	* app/image_render.c
+	* app/tile_manager.c: Errr, I don't remember.  No, seriously.
+	Nothing of consequence.
+
 Sun Feb  7 02:44:44 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* configure.in: fix setting of $localedir, and use $CONFIG_SHELL

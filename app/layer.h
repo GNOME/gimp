@@ -90,6 +90,7 @@ LayerMask *     layer_create_mask (Layer *, AddMaskType);
 Layer *         layer_get_ID (int);
 void            layer_delete (Layer *);
 void            layer_apply_mask (Layer *, int);
+void            layer_temporarily_translate (Layer *, int, int);
 void            layer_translate (Layer *, int, int);
 void            layer_add_alpha (Layer *);
 void            layer_scale (Layer *, int, int, int);

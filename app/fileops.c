@@ -118,6 +118,7 @@ static GtkWidget *save_options = NULL;
 static GtkPreview *open_options_preview = NULL;
 static GtkWidget  *open_options_fixed = NULL;
 static GtkWidget  *open_options_label = NULL;
+static GtkWidget  *open_options_frame = NULL;
 
 /* Load by extension.
  */
@@ -535,7 +536,7 @@ file_open_callback (GtkWidget *w,
     {
       GtkWidget* frame;
 
-      open_options = gtk_hbox_new (FALSE, 1);
+      open_options = gtk_hbox_new (TRUE, 1);
 
       /* format-chooser frame */
       frame = gtk_frame_new (_("Open Options"));
@@ -572,11 +573,11 @@ file_open_callback (GtkWidget *w,
       gtk_widget_show (frame);
 
       /* Preview frame */
-      frame = gtk_frame_new (_("Preview"));
+      frame = gtk_frame_new ("");
+      open_options_frame = frame;
       {
 	gtk_frame_set_shadow_type (GTK_FRAME (frame),
 				   GTK_SHADOW_ETCHED_IN);
-	gtk_widget_set_usize (frame, 130,100);
 	gtk_box_pack_end (GTK_BOX (open_options), frame, FALSE, TRUE, 5);
 	
 	vbox = gtk_vbox_new (FALSE, 1);
@@ -607,11 +608,11 @@ file_open_callback (GtkWidget *w,
 	  }
 	  gtk_widget_show (hbox);
 
-	  open_options_label = gtk_label_new ("hmm.");
+	  open_options_label = gtk_label_new ("");
 	  {
-	    gtk_label_set_justify (GTK_LABEL (open_options_label),
-				   GTK_JUSTIFY_FILL);
-	    gtk_label_set_line_wrap (GTK_LABEL (open_options_label), TRUE);
+	    /*	    gtk_label_set_justify (GTK_LABEL (open_options_label),
+		    GTK_JUSTIFY_LEFT);
+		    gtk_label_set_line_wrap (GTK_LABEL (open_options_label), TRUE);*/
 	    gtk_box_pack_end (GTK_BOX (vbox), open_options_label,
 			      FALSE, TRUE, 0);
 	  }
@@ -626,6 +627,7 @@ file_open_callback (GtkWidget *w,
 			open_options, FALSE, FALSE, 5);
     }
 
+  gtk_frame_set_label (GTK_FRAME(open_options_frame), _("Preview"));
   gtk_label_set_text (GTK_LABEL(open_options_label), "No selection.");
   gtk_widget_hide (open_options_fixed);
   gtk_widget_show (open_options);
@@ -893,6 +895,133 @@ file_open (char *filename, char *raw_filename)
   return FALSE;
 }
 
+static gboolean
+file_save_thumbnail (GimpImage* gimage,
+		     char *filename,
+		     char *raw_filename)
+{
+  TempBuf* tempbuf;
+  gint i,j;
+  unsigned char* tbd;
+  gchar* pname;
+  gchar* xpname;
+  gchar* fname;
+  gint w,h;
+  GimpImageBaseType basetype;
+  FILE* fp;
+
+  if (gimp_image_preview_valid (gimage, Gray))
+    {
+      printf("(gimage already has valid preview - %dx%d)\n",
+	     gimage->comp_preview->width,
+	     gimage->comp_preview->height);
+    }
+
+  pname = g_dirname(filename);
+  xpname = g_strconcat(pname,G_DIR_SEPARATOR_S,".xvpics",
+		       NULL);
+
+  fname = g_strconcat (xpname,G_DIR_SEPARATOR_S,
+		       raw_filename,
+		       NULL);
+
+  if (gimage->width<=80 && gimage->height<=60)
+    {
+      w = gimage->width;
+      h = gimage->height;
+    }
+  else
+    {
+      /* Ratio molesting to fit within .xvpic thumbnail size limits */
+      if (60*gimage->width < 80*gimage->height)
+	{
+	  h = 60;
+	  w = (60*gimage->width)/gimage->height;
+	  if (w==0)
+	    w = 1;
+	}
+      else
+	{
+	  w = 80;
+	  h = (80*gimage->height)/gimage->width;
+	  if (h==0)
+	    h = 1;
+	}
+    }
+
+  printf("tn: %d x %d -> ", w, h);fflush(stdout);
+
+  tempbuf = gimp_image_composite_preview (gimage, Gray, w, h);
+  tbd = temp_buf_data(tempbuf);
+
+  w = tempbuf->width;
+  h = tempbuf->height;
+  printf("tn: %d x %d\n", w, h);fflush(stdout);
+
+  mkdir (xpname, 0755);
+
+  fp = fopen(fname,"wb");
+  g_free(pname);
+  g_free(xpname);
+  g_free(fname);
+
+  if (fp)
+    {
+      basetype = gimp_image_base_type(gimage);
+
+      fprintf(fp,
+	      "P7 332\n#IMGINFO:%dx%d %s\n"
+	      "#END_OF_COMMENTS\n%d %d 255\n",
+	      gimage->width, gimage->height,
+	      (basetype == RGB) ? "RGB" :
+	      (basetype == GRAY) ? "Greyscale" :
+	      (basetype == INDEXED) ? "Indexed" :
+	      "(UNKNOWN COLOUR TYPE)",
+	      w, h);
+
+      switch (basetype)
+	{
+	case INDEXED:
+	case RGB:
+	  for (i=0;i<w;i++)
+	    {
+	      for (j=0;j<h;j++)
+		{
+		  guchar r,g,b;
+		  r = *(tbd++);
+		  g = *(tbd++);
+		  b = *(tbd++);
+		  tbd++;
+		  fputc(((r>>5)<<5) | ((g>>5)<<2) | (b>>6), fp);
+		}
+	    }
+	  break;
+	case GRAY:
+	  for (i=0;i<w;i++)
+	    {
+	      for (j=0;j<h;j++)
+		{
+		  guchar v;
+		  v = *(tbd++);
+		  tbd++;
+		  fputc(((v>>5)<<5) | ((v>>5)<<2) | (v>>6), fp);
+		}
+	    }
+	  break;
+	default:
+	  g_warning("UNKNOWN GIMAGE TYPE IN THUMBNAIL SAVE");
+	}
+      fclose(fp);
+    }
+  else /* Error writing thumbnail */
+    {
+      return (FALSE);
+    }
+
+  return (TRUE);
+}
+
+
 int
 file_save (GimpImage* gimage,
 	   char *filename,
@@ -951,129 +1080,7 @@ file_save (GimpImage* gimage,
 	 attention --Adam */
       /* gimage_set_save_proc(gimage, file_proc); */
 
-#ifdef __GNUC__
-#warning CRUFTY THUMBNAIL SAVING
-      /* If you have problems, blame Adam... not quite finished.
-	 Will be moved somewhere more appropriate. */
-#endif
-      {
-	TempBuf* tempbuf;
-	gint i,j;
-	unsigned char* tbd;
-	gchar* pname;
-	gchar* xpname;
-	gchar* fname;
-	gint w,h;
-	GimpImageBaseType basetype;
-	FILE* fp;
-
-	if (gimp_image_preview_valid (gimage, Gray))
-	  {
-	    printf("(gimage already has valid preview - %dx%d)\n",
-		   gimage->comp_preview->width,
-		   gimage->comp_preview->height);
-	  }
-
-	pname = g_dirname(filename);
-	xpname = g_strconcat(pname,G_DIR_SEPARATOR_S,".xvpics",
-			     NULL);
-
-	fname = g_strconcat (xpname,G_DIR_SEPARATOR_S,
-			     raw_filename,
-			     NULL);
-
-	unlink (fname);
-
-	if (gimage->width<=80 && gimage->height<=60)
-	  {
-	    w = gimage->width;
-	    h = gimage->height;
-	  }
-	else
-	  {
-	    /* Ratio molesting to fit within .xvpic thumbnail size limits */
-	    if (60*gimage->width < 80*gimage->height)
-	      {
-		h = 60;
-		w = (60*gimage->width)/gimage->height;
-		if (w==0)
-		  w = 1;
-	      }
-	    else
-	      {
-		w = 80;
-		h = (80*gimage->height)/gimage->width;
-		if (h==0)
-		  h = 1;
-	      }
-	  }
-
-	printf("tn: %d x %d -> ", w, h);fflush(stdout);
-
-	tempbuf = gimp_image_composite_preview (gimage, Gray, w, h);
-	tbd = temp_buf_data(tempbuf);
-
-	w = tempbuf->width;
-	h = tempbuf->height;
-	printf("tn: %d x %d\n", w, h);fflush(stdout);
-
-	mkdir (xpname, 0755);
-
-	fp = fopen(fname,"wb");
-	g_free(pname);
-	g_free(xpname);
-	g_free(fname);
-
-	if (fp)
-	  {
-	    basetype = gimp_image_base_type(gimage);
-
-	    fprintf(fp,
-		    "P7 332\n#IMGINFO:%dx%d %s\n"
-		    "#END_OF_COMMENTS\n%d %d 255\n",
-		    gimage->width, gimage->height,
-		    (basetype == RGB) ? "RGB" :
-		    (basetype == GRAY) ? "Greyscale" :
-		    (basetype == INDEXED) ? "Indexed" :
-		    "(UNKNOWN COLOUR TYPE)",
-		    w, h);
-
-	    switch (basetype)
-	      {
-	      case INDEXED:
-	      case RGB:
-		for (i=0;i<w;i++)
-		  {
-		    for (j=0;j<h;j++)
-		      {
-			guchar r,g,b;
-			r = *(tbd++);
-			g = *(tbd++);
-			b = *(tbd++);
-			tbd++;
-			fputc(((r>>5)<<5) | ((g>>5)<<2) | (b>>6), fp);
-		      }
-		  }
-		break;
-	      case GRAY:
-		for (i=0;i<w;i++)
-		  {
-		    for (j=0;j<h;j++)
-		      {
-			guchar v;
-			v = *(tbd++);
-			tbd++;
-			fputc(((v>>5)<<5) | ((v>>5)<<2) | (v>>6), fp);
-		      }
-		  }
-		break;
-	      default:
-		g_warning("UNKNOWN GIMAGE TYPE IN THUMBNAIL SAVE");
-	      }
-	    fclose(fp);
-	  }
-      }
-      /* END OF THUMBNAIL SAVING */
+      file_save_thumbnail (gimage, filename, raw_filename);
     }
 
   g_free (return_vals);
@@ -1084,7 +1091,12 @@ file_save (GimpImage* gimage,
 }
 
 
-static guchar* readXVThumb(gchar *fnam, gint* w, gint* h)
+/* The readXVThumb function source may be re-used under
+   the XFree86-style license. <adam@gimp.org> */
+static guchar*
+readXVThumb(const gchar *fnam,
+	    gint* w, gint* h,
+	    gchar** imginfo /* caller frees if != NULL */)
 {
   FILE *fp;
   const gchar *P7_332 = "P7 332";
@@ -1093,6 +1105,9 @@ static guchar* readXVThumb(gchar *fnam, gint* w, gint* h)
   guchar *buf;
   gint twofivefive;
   void *ptr;
+
+  *w = *h = 0;
+  *imginfo = NULL;
 
   fp = fopen (fnam, "rb");
   if (!fp)
@@ -1113,8 +1128,29 @@ static guchar* readXVThumb(gchar *fnam, gint* w, gint* h)
   do
     {
       ptr = fgets(linebuf, 199, fp);
+      if ((strncmp(linebuf, "#IMGINFO:", 9) == 0) &&
+	  (linebuf[9] != '\0') &&
+	  (linebuf[9] != '\n'))
+	{
+	  if (linebuf[strlen(linebuf)-1] == '\n')
+	    linebuf[strlen(linebuf)-1] = '\0';
+
+	  if (linebuf[9] != '\0')
+	    {
+	      if (*imginfo)
+		g_free(*imginfo);
+	      *imginfo = g_strdup (&linebuf[9]);
+	    }
+	}
     }
   while (ptr && linebuf[0]=='#'); /* keep throwing away comment lines */
+
+  if (!ptr)
+    {
+      /* g_warning("Thumbnail ended - not an image?"); */
+      fclose(fp);
+      return(NULL);
+    }
 
   sscanf(linebuf, "%d %d %d\n", w, h, &twofivefive);
 
@@ -1146,14 +1182,18 @@ static void
 file_open_clistrow_callback (GtkWidget *w,
 			     int client_data)
 {
-  gchar *rawfname = NULL;
+  gchar  *rawfname = NULL;
   guchar *thumb_rgb;
   guchar *raw_thumb;
-  gint tnw,tnh;
-  gchar *pname;
-  gchar *fname;
-  gchar *tname;
-  
+  gint    tnw,tnh;
+  gchar  *pname;
+  gchar  *fname;
+  gchar  *tname;
+  gchar  *imginfo;
+  struct stat file_stat;
+  struct stat thumb_stat;
+  gboolean thumb_may_be_outdated = FALSE;
+
   rawfname = gtk_file_selection_get_filename(GTK_FILE_SELECTION(fileload));
 
   pname = g_dirname (rawfname);
@@ -1168,9 +1208,22 @@ file_open_clistrow_callback (GtkWidget *w,
   /*gtk_clist_get_text(GTK_CLIST(w), client_data, 0, &txt);
     g_warning ("clique! %p %d %s [%s]", w, client_data, txt, fname);*/
 
-  raw_thumb = readXVThumb(tname, &tnw, &tnh);
+  /* If the file is newer than its thumbnail, the thumbnail may
+     be out of date. */
+  if ((stat(tname,    &thumb_stat)==0) &&
+      (stat(rawfname, &file_stat )==0))
+    {
+      if ((thumb_stat.st_mtime) < (file_stat.st_mtime))
+	{
+	  thumb_may_be_outdated = TRUE;
+	}
+    }
 
+  raw_thumb = readXVThumb(tname, &tnw, &tnh, &imginfo);
   g_free (tname);
+
+  gtk_frame_set_label (GTK_FRAME(open_options_frame),
+		       fname);
 
   if (raw_thumb)
     {
@@ -1193,8 +1246,11 @@ file_open_clistrow_callback (GtkWidget *w,
 	  gtk_preview_draw_row(open_options_preview, &thumb_rgb[3*i*tnw],
 			       0, i,
 			       tnw);
+
 	  gtk_label_set_text (GTK_LABEL(open_options_label),
-			      fname);
+			      thumb_may_be_outdated ?
+			      "(this thumbnail may be out of date)" :
+			      imginfo);
 	  gtk_widget_show (open_options_fixed);
 	  gtk_widget_queue_draw (GTK_WIDGET(open_options_preview));
 	}
@@ -1204,6 +1260,9 @@ file_open_clistrow_callback (GtkWidget *w,
     }
   else
     {
+      if (imginfo)
+	g_free(imginfo);
+
       gtk_widget_hide (open_options_fixed);
       gtk_label_set_text (GTK_LABEL(open_options_label),
 			  "no preview available");
