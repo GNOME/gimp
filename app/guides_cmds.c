@@ -442,7 +442,7 @@ static ProcArg image_get_guide_orientation_outargs[] =
   {
     PDB_INT32,
     "orientation",
-    "The guide's orientation: { HORIZONTAL (0), VERTICAL (1) }"
+    "The guide's orientation: { HORIZONTAL (1), VERTICAL (2) }"
   }
 };
 

@@ -83,11 +83,11 @@ package Gimp::CodeGen::enums;
 		       INDEXED => '2' }
 	},
     GuideOrientation =>
-	{ contig => 1,
+	{ contig => 0,
 	  header => 'gimpimage.h',
 	  symbols => [ qw(HORIZONTAL_GUIDE VERTICAL_GUIDE) ],
-	  mapping => { HORIZONTAL_GUIDE => '0',
-		       VERTICAL_GUIDE => '1' },
+	  mapping => { HORIZONTAL_GUIDE => '1',
+		       VERTICAL_GUIDE => '2' },
 	  nicks   => { HORIZONTAL_GUIDE => 'HORIZONTAL',
 		       VERTICAL_GUIDE => 'VERTICAL' }
 	},

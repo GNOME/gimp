@@ -1,3 +1,11 @@
+Sun May  2 14:56:52 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/gimpimage.h: guide types used to start at 1, so make them
+	start at 1
+
+	* tools/pdbgen/enums.pl
+	* app/guides_cmds.c: autogenned files reflect above change
+
 1999-05-02  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/commands.c

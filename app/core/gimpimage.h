@@ -58,7 +58,7 @@ typedef enum
 #define COLORMAP_SIZE    768
 
 typedef enum {  /*< chop=_GUIDE >*/
-  HORIZONTAL_GUIDE,
+  HORIZONTAL_GUIDE = 1,
   VERTICAL_GUIDE
 } GuideOrientation;
 
