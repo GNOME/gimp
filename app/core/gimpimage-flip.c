@@ -24,7 +24,6 @@
 
 #include "gimp.h"
 #include "gimpimage.h"
-#include "gimpimage-mask.h"
 #include "gimpimage-projection.h"
 #include "gimpimage-flip.h"
 #include "gimpimage-guides.h"
@@ -36,7 +35,7 @@
 
 
 void
-gimp_image_flip (GimpImage           *gimage, 
+gimp_image_flip (GimpImage           *gimage,
                  GimpOrientationType  flip_type,
                  GimpProgressFunc     progress_func,
                  gpointer             progress_data)
@@ -82,8 +81,8 @@ gimp_image_flip (GimpImage           *gimage,
     floating_sel_relax (floating_layer, TRUE);
 
   /*  Flip all channels  */
-  for (list = GIMP_LIST (gimage->channels)->list; 
-       list; 
+  for (list = GIMP_LIST (gimage->channels)->list;
+       list;
        list = g_list_next (list))
     {
       item = (GimpItem *) list->data;
@@ -95,8 +94,8 @@ gimp_image_flip (GimpImage           *gimage,
     }
 
   /*  Flip all vectors  */
-  for (list = GIMP_LIST (gimage->vectors)->list; 
-       list; 
+  for (list = GIMP_LIST (gimage->vectors)->list;
+       list;
        list = g_list_next (list))
     {
       item = (GimpItem *) list->data;
@@ -108,15 +107,15 @@ gimp_image_flip (GimpImage           *gimage,
     }
 
   /*  Don't forget the selection mask!  */
-  gimp_item_flip (GIMP_ITEM (gimage->selection_mask), flip_type, axis, TRUE);
-  gimp_image_mask_invalidate (gimage);
+  gimp_item_flip (GIMP_ITEM (gimp_image_get_mask (gimage)),
+                  flip_type, axis, TRUE);
 
   if (progress_func)
     (* progress_func) (0, progress_max, progress_current++, progress_data);
 
   /*  Flip all layers  */
-  for (list = GIMP_LIST (gimage->layers)->list; 
-       list; 
+  for (list = GIMP_LIST (gimage->layers)->list;
+       list;
        list = g_list_next (list))
     {
       item = (GimpItem *) list->data;
@@ -159,8 +158,6 @@ gimp_image_flip (GimpImage           *gimage,
     floating_sel_rigor (floating_layer, TRUE);
 
   gimp_image_undo_group_end (gimage);
-
-  gimp_image_mask_changed (gimage);
 
   gimp_unset_busy (gimage->gimp);
 }

@@ -32,7 +32,6 @@
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpedit.h"
-#include "core/gimpimage-mask.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimptoolinfo.h"
@@ -340,7 +339,8 @@ edit_stroke_invoker (Gimp     *gimp,
     
       tool_info = gimp_context_get_tool (gimp_get_current_context (gimp));
     
-      success = gimp_image_mask_stroke (gimage, drawable, tool_info->paint_info);
+      success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (gimage)),
+				  drawable, tool_info->paint_info);
     }
 
   return procedural_db_return_args (&edit_stroke_proc, success);

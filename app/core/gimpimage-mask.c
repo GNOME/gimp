@@ -179,29 +179,6 @@ gimp_image_mask_shrink (GimpImage *gimage,
 }
 
 void
-gimp_image_mask_translate (GimpImage *gimage,
-                           gint       off_x,
-                           gint       off_y,
-                           gboolean   push_undo)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  gimp_item_translate (GIMP_ITEM (gimp_image_get_mask (gimage)),
-                       off_x, off_y, TRUE);
-}
-
-gboolean
-gimp_image_mask_stroke (GimpImage     *gimage,
-                        GimpDrawable  *drawable,
-                        GimpPaintInfo *paint_info)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-
-  return gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (gimage)),
-                           drawable, paint_info);
-}
-
-void
 gimp_image_mask_push_undo (GimpImage   *gimage,
                            const gchar *undo_desc)
 {

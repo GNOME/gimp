@@ -30,7 +30,6 @@
 #include "gimpimage.h"
 #include "gimpimage-crop.h"
 #include "gimpimage-guides.h"
-#include "gimpimage-mask.h"
 #include "gimpimage-projection.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
@@ -176,9 +175,8 @@ gimp_image_crop (GimpImage *gimage,
         }
 
       /*  Don't forget the selection mask!  */
-      gimp_item_resize (GIMP_ITEM (gimage->selection_mask),
+      gimp_item_resize (GIMP_ITEM (gimp_image_get_mask (gimage)),
                         width, height, -x1, -y1);
-      gimp_image_mask_invalidate (gimage);
 
       /*  crop all layers  */
       list = GIMP_LIST (gimage->layers)->list;
@@ -263,8 +261,6 @@ gimp_image_crop (GimpImage *gimage,
       gimp_image_update (gimage, 0, 0, gimage->width, gimage->height);
 
       gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
-
-      gimp_image_mask_changed (gimage);
     }
 
   gimp_unset_busy (gimage->gimp);

@@ -407,10 +407,10 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
       /* move the selection -- whether there has been net movement or not!
        * (to ensure that there's something on the undo stack)
        */
-      gimp_image_mask_translate (gdisp->gimage,
-                                 edit_select->cumlx,
-                                 edit_select->cumly,
-                                 TRUE);
+      gimp_item_translate (GIMP_ITEM (gimp_image_get_mask (gdisp->gimage)),
+                           edit_select->cumlx,
+                           edit_select->cumly,
+                           TRUE);
 
       if (edit_select->first_move)
 	{
@@ -518,7 +518,7 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
                                         gdisp,
                                         motion_x,
                                         motion_y);
-  
+
   /******************************************* adam's live move *******/
   /********************************************************************/
   {
@@ -1013,8 +1013,9 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
 
   if (translate_mask)
     {
-      gimp_image_mask_translate (gdisp->gimage, mask_inc_x, mask_inc_y,
-                                 push_undo);
+      gimp_item_translate (GIMP_ITEM (gimp_image_get_mask (gdisp->gimage)),
+                           mask_inc_x, mask_inc_y,
+                           push_undo);
     }
   else if (translate_layer)
     {

@@ -162,8 +162,7 @@ HELP
     &inargs('stroke to');
 
     %invoke = (
-	headers => [ qw("core/gimpimage-mask.h" "core/gimpcontext.h"
-                        "core/gimptoolinfo.h") ],
+	headers => [ qw("core/gimpcontext.h" "core/gimptoolinfo.h") ],
 	code => <<'CODE'
 {
   GimpImage    *gimage;
@@ -173,7 +172,8 @@ HELP
 
   tool_info = gimp_context_get_tool (gimp_get_current_context (gimp));
 
-  success = gimp_image_mask_stroke (gimage, drawable, tool_info->paint_info);
+  success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (gimage)),
+                              drawable, tool_info->paint_info);
 }
 CODE
     );

@@ -44,6 +44,26 @@ static void       gimp_selection_translate     (GimpItem        *item,
                                                 gint             offset_x,
                                                 gint             offset_y,
                                                 gboolean         push_undo);
+static void       gimp_selection_scale         (GimpItem        *item,
+                                                gint             new_width,
+                                                gint             new_height,
+                                                gint             new_offset_x,
+                                                gint             new_offset_y,
+                                                GimpInterpolationType interp_type);
+static void       gimp_selection_resize        (GimpItem        *item,
+                                                gint             new_width,
+                                                gint             new_height,
+                                                gint             off_x,
+                                                gint             off_y);
+static void       gimp_selection_flip          (GimpItem        *item,
+                                                GimpOrientationType flip_type,
+                                                gdouble          axis,
+                                                gboolean         clip_result);
+static void       gimp_selection_rotate        (GimpItem        *item,
+                                                GimpRotationType rotation_type,
+                                                gdouble          center_x,
+                                                gdouble          center_y,
+                                                gboolean         clip_result);
 static gboolean   gimp_selection_stroke        (GimpItem        *item,
                                                 GimpDrawable    *drawable,
                                                 GimpPaintInfo   *paint_info);
@@ -141,6 +161,10 @@ gimp_selection_class_init (GimpSelectionClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   item_class->translate   = gimp_selection_translate;
+  item_class->scale       = gimp_selection_scale;
+  item_class->resize      = gimp_selection_resize;
+  item_class->flip        = gimp_selection_flip;
+  item_class->rotate      = gimp_selection_rotate;
   item_class->stroke      = gimp_selection_stroke;
 
   channel_class->boundary = gimp_selection_boundary;
@@ -177,6 +201,81 @@ gimp_selection_translate (GimpItem *item,
     gimp_selection_invalidate (selection);
 
   GIMP_ITEM_CLASS (parent_class)->translate (item, offset_x, offset_y, FALSE);
+
+  gimp_selection_changed (selection);
+}
+
+static void
+gimp_selection_scale (GimpItem              *item,
+                      gint                   new_width,
+                      gint                   new_height,
+                      gint                   new_offset_x,
+                      gint                   new_offset_y,
+                      GimpInterpolationType  interp_type)
+{
+  GimpSelection *selection = GIMP_SELECTION (item);
+
+  gimp_selection_invalidate (selection);
+
+  GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
+                                         new_offset_x, new_offset_y,
+                                         interp_type);
+
+  item->offset_x = 0;
+  item->offset_y = 0;
+
+  gimp_selection_changed (selection);
+}
+
+static void
+gimp_selection_resize (GimpItem *item,
+                       gint      new_width,
+                       gint      new_height,
+                       gint      off_x,
+                       gint      off_y)
+{
+  GimpSelection *selection = GIMP_SELECTION (item);
+
+  gimp_selection_invalidate (selection);
+
+  GIMP_ITEM_CLASS (parent_class)->resize (item, new_width, new_height,
+                                          off_x, off_y);
+
+  item->offset_x = 0;
+  item->offset_y = 0;
+
+  gimp_selection_changed (selection);
+}
+
+static void
+gimp_selection_flip (GimpItem            *item,
+                     GimpOrientationType  flip_type,
+                     gdouble              axis,
+                     gboolean             clip_result)
+{
+  GimpSelection *selection = GIMP_SELECTION (item);
+
+  gimp_selection_invalidate (selection);
+
+  GIMP_ITEM_CLASS (parent_class)->flip (item, flip_type, axis, TRUE);
+
+  gimp_selection_changed (selection);
+}
+
+static void
+gimp_selection_rotate (GimpItem        *item,
+                       GimpRotationType rotation_type,
+                       gdouble          center_x,
+                       gdouble          center_y,
+                       gboolean         clip_result)
+{
+  GimpSelection *selection = GIMP_SELECTION (item);
+
+  gimp_selection_invalidate (selection);
+
+  GIMP_ITEM_CLASS (parent_class)->rotate (item, rotation_type,
+                                          center_x, center_y,
+                                          clip_result);
 
   gimp_selection_changed (selection);
 }

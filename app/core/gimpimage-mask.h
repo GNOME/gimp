@@ -57,17 +57,6 @@ void          gimp_image_mask_shrink      (GimpImage       *gimage,
                                            gboolean         edge_lock);
 
 
-/*  pure wrappers around the resp. GimpItem::foo() functions:  */
-
-void          gimp_image_mask_translate   (GimpImage       *gimage,
-                                           gint             off_x,
-                                           gint             off_y,
-                                           gboolean         push_undo);
-gboolean      gimp_image_mask_stroke      (GimpImage       *gimage,
-                                           GimpDrawable    *drawable,
-                                           GimpPaintInfo   *paint_info);
-
-
 /*  pure wrappers around the resp. GimpSelection functions:  */
 
 void          gimp_image_mask_push_undo   (GimpImage       *gimage,

@@ -24,7 +24,6 @@
 
 #include "gimp.h"
 #include "gimpimage.h"
-#include "gimpimage-mask.h"
 #include "gimpimage-projection.h"
 #include "gimpimage-rotate.h"
 #include "gimpimage-guides.h"
@@ -45,7 +44,7 @@ static void  gimp_image_rotate_guides      (GimpImage        *gimage,
 
 
 void
-gimp_image_rotate (GimpImage        *gimage, 
+gimp_image_rotate (GimpImage        *gimage,
                    GimpRotationType  rotate_type,
                    GimpProgressFunc  progress_func,
                    gpointer          progress_data)
@@ -104,8 +103,8 @@ gimp_image_rotate (GimpImage        *gimage,
     }
 
   /*  Rotate all channels  */
-  for (list = GIMP_LIST (gimage->channels)->list; 
-       list; 
+  for (list = GIMP_LIST (gimage->channels)->list;
+       list;
        list = g_list_next (list))
     {
       item = (GimpItem *) list->data;
@@ -120,8 +119,8 @@ gimp_image_rotate (GimpImage        *gimage,
     }
 
   /*  Rotate all vectors  */
-  for (list = GIMP_LIST (gimage->vectors)->list; 
-       list; 
+  for (list = GIMP_LIST (gimage->vectors)->list;
+       list;
        list = g_list_next (list))
     {
       item = (GimpItem *) list->data;
@@ -132,7 +131,7 @@ gimp_image_rotate (GimpImage        *gimage,
       item->height   = new_image_height;
       item->offset_x = 0;
       item->offset_y = 0;
-      
+
       gimp_item_translate (item,
 			   (new_image_width  - gimage->width)  / 2,
 			   (new_image_height - gimage->height) / 2,
@@ -143,13 +142,11 @@ gimp_image_rotate (GimpImage        *gimage,
     }
 
   /*  Don't forget the selection mask!  */
-  gimp_item_rotate (GIMP_ITEM (gimage->selection_mask),
+  gimp_item_rotate (GIMP_ITEM (gimp_image_get_mask (gimage)),
                     rotate_type, center_x, center_y, FALSE);
 
   GIMP_ITEM (gimage->selection_mask)->offset_x = 0;
   GIMP_ITEM (gimage->selection_mask)->offset_y = 0;
-
-  gimp_image_mask_invalidate (gimage);
 
   if (progress_func)
     (* progress_func) (0, progress_max, progress_current++, progress_data);
@@ -167,7 +164,7 @@ gimp_image_rotate (GimpImage        *gimage,
 
       gimp_item_rotate (item, rotate_type, center_x, center_y, FALSE);
 
-      gimp_image_rotate_item_offset (gimage, rotate_type, item, off_x, off_y); 
+      gimp_image_rotate_item_offset (gimage, rotate_type, item, off_x, off_y);
 
       if (progress_func)
         (* progress_func) (0, progress_max, progress_current++, progress_data);
@@ -208,8 +205,6 @@ gimp_image_rotate (GimpImage        *gimage,
   if (size_changed)
     gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
 
-  gimp_image_mask_changed (gimage);
-
   gimp_unset_busy (gimage->gimp);
 }
 
@@ -244,7 +239,7 @@ gimp_image_rotate_item_offset (GimpImage        *gimage,
 
   x -= off_x;
   y -= off_y;
-  
+
   if (x || y)
     gimp_item_translate (item, x, y, FALSE);
 }
@@ -270,12 +265,12 @@ gimp_image_rotate_guides (GimpImage        *gimage,
               guide->orientation = GIMP_ORIENTATION_VERTICAL;
               guide->position    = gimage->height - guide->position;
               break;
-              
+
             case GIMP_ORIENTATION_VERTICAL:
               gimp_image_undo_push_image_guide (gimage, NULL, guide);
               guide->orientation = GIMP_ORIENTATION_HORIZONTAL;
               break;
-              
+
             default:
               break;
             }
@@ -288,7 +283,7 @@ gimp_image_rotate_guides (GimpImage        *gimage,
               gimp_image_move_guide (gimage, guide,
                                      gimage->height - guide->position, TRUE);
               break;
-              
+
             case GIMP_ORIENTATION_VERTICAL:
               gimp_image_move_guide (gimage, guide,
                                      gimage->width - guide->position, TRUE);
@@ -306,13 +301,13 @@ gimp_image_rotate_guides (GimpImage        *gimage,
               gimp_image_undo_push_image_guide (gimage, NULL, guide);
               guide->orientation = GIMP_ORIENTATION_VERTICAL;
               break;
-              
+
             case GIMP_ORIENTATION_VERTICAL:
               gimp_image_undo_push_image_guide (gimage, NULL, guide);
               guide->orientation = GIMP_ORIENTATION_HORIZONTAL;
               guide->position    = gimage->width - guide->position;
               break;
-              
+
             default:
               break;
             }

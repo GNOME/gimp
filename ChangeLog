@@ -1,3 +1,29 @@
+2003-09-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-mask.[ch]: removed the _translate()
+	and _stroke() wrappers.
+
+	* app/gui/edit-commands.c
+	* app/tools/gimpeditselectiontool.c
+	* app/widgets/gimpselectioneditor.c
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/selection.pdb: changed accordingly.
+
+	* app/pdb/edit_cmds.c
+	* app/pdb/selection_cmds.c: regenerated.
+
+	* app/core/gimpselection.c: implement GimpItem::scale(), resize(),
+	flip() and rotate().
+
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-flip.c
+	* app/core/gimpimage-resize.c
+	* app/core/gimpimage-rotate.c
+	* app/core/gimpimage-scale.c: no need to call
+	gimp_image_mask_invalidate() and/or gimp_image_mask_changed()
+	manually after scale, resize, flip and rotate, since GimpSelection
+	updates itself correctly.
+
 2003-09-03  Sven Neumann  <sven@gimp.org>
 
 	* app/batch.c (batch_init): s/extension/plug_in/ for Script-Fu

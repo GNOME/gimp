@@ -25,7 +25,6 @@
 #include "gimp.h"
 #include "gimpimage.h"
 #include "gimpimage-guides.h"
-#include "gimpimage-mask.h"
 #include "gimpimage-projection.h"
 #include "gimpimage-resize.h"
 #include "gimpimage-undo.h"
@@ -38,10 +37,10 @@
 
 
 void
-gimp_image_resize (GimpImage        *gimage, 
-		   gint              new_width, 
+gimp_image_resize (GimpImage        *gimage,
+		   gint              new_width,
 		   gint              new_height,
-		   gint              offset_x, 
+		   gint              offset_x,
 		   gint              offset_y,
                    GimpProgressFunc  progress_func,
                    gpointer          progress_data)
@@ -105,9 +104,8 @@ gimp_image_resize (GimpImage        *gimage,
     }
 
   /*  Don't forget the selection mask!  */
-  gimp_item_resize (GIMP_ITEM (gimage->selection_mask),
+  gimp_item_resize (GIMP_ITEM (gimp_image_get_mask (gimage)),
                     new_width, new_height, offset_x, offset_y);
-  gimp_image_mask_invalidate (gimage);
 
   if (progress_func)
     (* progress_func) (0, progress_max, progress_current++, progress_data);
@@ -169,8 +167,6 @@ gimp_image_resize (GimpImage        *gimage,
   gimp_image_undo_group_end (gimage);
 
   gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
-
-  gimp_image_mask_changed (gimage);
 
   gimp_unset_busy (gimage->gimp);
 }

@@ -24,7 +24,6 @@
 
 #include "gimp.h"
 #include "gimpimage.h"
-#include "gimpimage-mask.h"
 #include "gimpimage-projection.h"
 #include "gimpimage-scale.h"
 #include "gimpimage-undo.h"
@@ -37,8 +36,8 @@
 
 
 void
-gimp_image_scale (GimpImage             *gimage, 
-		  gint                   new_width, 
+gimp_image_scale (GimpImage             *gimage,
+		  gint                   new_width,
 		  gint                   new_height,
                   GimpInterpolationType  interpolation_type,
                   GimpProgressFunc       progress_func,
@@ -86,10 +85,10 @@ gimp_image_scale (GimpImage             *gimage,
   gimage->height = new_height;
   img_scale_w    = (gdouble) new_width  / (gdouble) old_width;
   img_scale_h    = (gdouble) new_height / (gdouble) old_height;
- 
+
   /*  Scale all channels  */
-  for (list = GIMP_LIST (gimage->channels)->list; 
-       list; 
+  for (list = GIMP_LIST (gimage->channels)->list;
+       list;
        list = g_list_next (list))
     {
       item = (GimpItem *) list->data;
@@ -101,8 +100,8 @@ gimp_image_scale (GimpImage             *gimage,
     }
 
   /*  Scale all vectors  */
-  for (list = GIMP_LIST (gimage->vectors)->list; 
-       list; 
+  for (list = GIMP_LIST (gimage->vectors)->list;
+       list;
        list = g_list_next (list))
     {
       item = (GimpItem *) list->data;
@@ -114,16 +113,16 @@ gimp_image_scale (GimpImage             *gimage,
     }
 
   /*  Don't forget the selection mask!  */
-  gimp_item_scale (GIMP_ITEM (gimage->selection_mask), new_width, new_height,
+  gimp_item_scale (GIMP_ITEM (gimp_image_get_mask (gimage)),
+                   new_width, new_height,
                    0, 0, interpolation_type);
-  gimp_image_mask_invalidate (gimage);
 
   if (progress_func)
     (* progress_func) (0, progress_max, progress_current++, progress_data);
 
   /*  Scale all layers  */
-  for (list = GIMP_LIST (gimage->layers)->list; 
-       list; 
+  for (list = GIMP_LIST (gimage->layers)->list;
+       list;
        list = g_list_next (list))
     {
       item = (GimpItem *) list->data;
@@ -190,8 +189,6 @@ gimp_image_scale (GimpImage             *gimage,
 
   gimp_viewable_size_changed (GIMP_VIEWABLE (gimage));
 
-  gimp_image_mask_changed (gimage);
-
   gimp_unset_busy (gimage->gimp);
 }
 
@@ -200,14 +197,14 @@ gimp_image_scale (GimpImage             *gimage,
  * @gimage:     A #GimpImage.
  * @new_width:  The new width.
  * @new_height: The new height.
- * 
+ *
  * Inventory the layer list in gimage and return #TRUE if, after
  * scaling, they all retain positive x and y pixel dimensions.
- * 
+ *
  * Return value: #TRUE if scaling the image will shrink none of it's
  *               layers completely away.
  **/
-gboolean 
+gboolean
 gimp_image_check_scaling (const GimpImage *gimage,
 			  gint             new_width,
 			  gint             new_height)
