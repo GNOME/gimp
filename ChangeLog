@@ -1,5 +1,10 @@
 2004-03-21  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpbase/makefile.msc: 
+	* libgimpmodule/makefile.msc: s/1.3/2.0/g
+
+2004-03-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.c
 	(gimp_display_shell_events): added run-time version
 	check and do the workaround for bug #136636 only if
