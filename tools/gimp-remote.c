@@ -253,14 +253,30 @@ start_new_gimp (GdkScreen   *screen,
         break;
     }
 
-  execv (gimp, argv);
-  execvp (GIMP_BINARY, argv);
+  /* We must ensure that gimp is started with a different PID.
+     Otherwise it could happen that (when it opens it's display) it sends
+     the same auth token again (because that one is uniquified with PID
+     and time()), which the server would deny.  */
+  switch (fork ())
+    {
+    case -1:
+      exit (EXIT_FAILURE);
 
-  /*  if execv and execvp return, there was an arror  */
-  g_printerr ("Couldn't start %s for the following reason: %s\n",
-              GIMP_BINARY, g_strerror (errno));
+    case 0: /* child */
+      execv (gimp, argv);
+      execvp (GIMP_BINARY, argv);
 
-  exit (EXIT_FAILURE);
+      /*  if execv and execvp return, there was an error  */
+      g_printerr ("Couldn't start %s for the following reason: %s\n",
+		      GIMP_BINARY, g_strerror (errno));
+
+      exit (EXIT_FAILURE);
+
+    default: /* parent */
+      break;
+    }
+
+  exit (EXIT_SUCCESS);
 }
 
 static void

@@ -1,3 +1,9 @@
+2004-04-08  Sven Neumann  <sven@gimp.org>
+
+	* tools/gimp-remote.c (start_new_gimp): applied a patch from
+	Michael Matz that calls fork() before starting gimp. This is to
+	avoid X server authentification problems (bug #139158).
+
 2004-04-07  Henrik Brix Andersen  <brix@gimp.org>
 
 	* configure.in (ALL_LINGUAS): revert addition of "is" until all
