@@ -30,6 +30,9 @@
 #include <errno.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
@@ -44,7 +47,7 @@
 #include "libgimp/libgimp-intl.h"
 
 
-/*   #define GIMP_THUMB_DEBUG   */
+/*  #define GIMP_THUMB_DEBUG  */
 
 
 #if defined (GIMP_THUMB_DEBUG) && defined (__GNUC__)
@@ -775,6 +778,9 @@ gimp_thumbnail_save (GimpThumbnail  *thumbnail,
 {
   const gchar  *keys[12];
   gchar        *values[12];
+  gchar        *basename;
+  gchar        *dirname;
+  gchar        *tmpname;
   gboolean      success;
   gint          i = 0;
 
@@ -836,7 +842,16 @@ gimp_thumbnail_save (GimpThumbnail  *thumbnail,
   keys[i]   = NULL;
   values[i] = NULL;
 
-  success = gdk_pixbuf_savev (pixbuf, filename, "png",
+  basename = g_path_get_basename (filename);
+  dirname  = g_path_get_dirname (filename);
+
+  tmpname = g_strdup_printf ("%s%cgimp-thumb-%d-%.8s",
+                             dirname, G_DIR_SEPARATOR, getpid (), basename);
+
+  g_free (dirname);
+  g_free (basename);
+
+  success = gdk_pixbuf_savev (pixbuf, tmpname, "png",
                               (gchar **) keys, values,
                               error);
 
@@ -846,7 +861,28 @@ gimp_thumbnail_save (GimpThumbnail  *thumbnail,
   if (success)
     {
 #ifdef GIMP_THUMB_DEBUG
-      g_printerr ("thumbnail saved to file %s\n", filename);
+      g_printerr ("thumbnail saved to temporary file %s\n", tmpname);
+#endif
+
+#ifdef G_OS_WIN32
+      /* win32 rename can't overwrite */
+      unlink (filename);
+#endif
+
+      if (rename (tmpname, filename) == -1)
+	{
+	  g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Could not create thumbnail for %s: %s"),
+		       thumbnail->image_uri, g_strerror (errno));
+
+          success = FALSE;
+        }
+    }
+
+  if (success)
+    {
+#ifdef GIMP_THUMB_DEBUG
+      g_printerr ("temporary thumbnail file renamed to %s\n", filename);
 #endif
 
       success = (chmod (filename, 0600) == 0);
@@ -858,6 +894,9 @@ gimp_thumbnail_save (GimpThumbnail  *thumbnail,
                      "Could not set permissions of thumbnail for %s: %s",
                      thumbnail->image_uri, g_strerror (errno));
     }
+
+  unlink (tmpname);
+  g_free (tmpname);
 
   return success;
 }

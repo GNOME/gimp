@@ -1,3 +1,9 @@
+2004-10-23  Sven Neumann  <sven@gimp.org>
+
+	* libgimpthumb/gimpthumbnail.c (gimp_thumbnail_save): save to a
+	temporary file to avoid problems with concurrent thumbnail
+	creation.
+
 2004-10-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/dialogs/Makefile.am
