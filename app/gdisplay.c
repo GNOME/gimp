@@ -37,6 +37,9 @@
 #include "interface.h"
 #include "layers_dialog.h"
 #include "menus.h"
+#include "draw_core.h"
+#include "bezier_selectP.h"
+#include "paths_dialog.h"
 #include "plug_in.h"
 #include "scale.h"
 #include "scroll.h"
@@ -2064,6 +2067,8 @@ gdisplays_flush_whenever (gboolean now)
   layers_dialog_flush ();
   /*  for convenience, we call the channels dialog flush here  */
   channels_dialog_flush ();
+  /*  for convenience, we call the paths dialog flush here  */
+  paths_dialog_flush();
 
   flushing = FALSE;
 }

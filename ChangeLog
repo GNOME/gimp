@@ -1,3 +1,12 @@
+Sat May 15 00:06:06 BST 1999 Andy Thomas <alt@gimp.org>
+
+	* app/gdisplay.c
+	* app/paths_dialog.c
+	* app/paths_dialog.h
+
+	Fixed problem where paths preview not resized correctly when
+	image was resized.
+
 1999-05-13  Jay Cox  <jaycox@earthlink.net>
 
 	* app/pencil.c: use the new color picking feature of paint_core.

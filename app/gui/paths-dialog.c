@@ -1852,6 +1852,26 @@ paths_dialog_edit_point_callback (GtkWidget * widget, gpointer udata)
   bezier_select_mode(EXTEND_EDIT);
 }
 
+void
+paths_dialog_flush()
+{
+  GImage *gimage;
+
+  if (!paths_dialog)
+    return;
+
+ if (!(gimage = paths_dialog->gimage))
+    return;
+
+  gimage = paths_dialog->gimage;
+
+  if ((gimage->width != paths_dialog->gimage_width) ||
+      (gimage->height != paths_dialog->gimage_height))
+    {
+      paths_dialog->gimage = NULL;
+      paths_dialog_update(gimage);
+    }
+}
 
 void 
 paths_first_button_press(BezierSelect *bezier_sel,GDisplay * gdisp)

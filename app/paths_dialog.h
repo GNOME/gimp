@@ -27,5 +27,6 @@ void        paths_first_button_press(BezierSelect *,GDisplay *);
 void        paths_new_bezier_select_tool(void);
 PATHP       paths_get_bzpaths(void);
 void        paths_set_bzpaths(GImage*,PATHP);
+void        paths_dialog_flush(void);
 
 #endif  /*  __PATHS_DIALOG_H__  */
