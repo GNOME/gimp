@@ -284,9 +284,9 @@ edit_stroke_cmd_callback (GtkWidget *widget,
 /*  private functions  */
 
 static void
-cut_named_buffer_callback (GtkWidget *widget,
-			   gchar     *name,
-			   gpointer   data)
+cut_named_buffer_callback (GtkWidget   *widget,
+			   const gchar *name,
+			   gpointer     data)
 {
   const GimpBuffer *cut_buffer;
   GimpImage        *gimage;
