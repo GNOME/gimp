@@ -18,7 +18,6 @@
 
 #include "config.h"
 
-#include <stdlib.h>
 #include <string.h>
 
 #include <glib-object.h>
@@ -29,7 +28,6 @@
 
 #include "config/gimpconfig.h"
 #include "config/gimpconfig-utils.h"
-#include "config/gimpcoreconfig.h"
 
 #include "base/pixel-region.h"
 #include "base/tile-manager.h"
@@ -38,8 +36,6 @@
 
 #include "gimp-parasites.h"
 #include "gimp.h"
-#include "gimpchannel.h"
-#include "gimpcontext.h"
 #include "gimpgrid.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-grid.h"
@@ -52,9 +48,6 @@
 #include "gimplayermask.h"
 #include "gimplist.h"
 #include "gimpparasitelist.h"
-#include "gimpundostack.h"
-
-#include "paint/gimppaintcore.h"
 
 #include "text/gimptextlayer.h"
 
