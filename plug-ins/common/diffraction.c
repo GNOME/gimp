@@ -96,9 +96,7 @@ static void diffraction (GimpDrawable *drawable);
 static void   diff_init_luts (void);
 static void   diff_diffract  (gdouble  x,
 			      gdouble  y,
-			      gdouble *r,
-			      gdouble *g,
-			      gdouble *b);
+			      GimpRGB *rgb);
 static double diff_point     (gdouble  x,
 			      gdouble  y,
 			      gdouble  edges,
@@ -153,6 +151,8 @@ static gdouble cos_lut[ITERATIONS + 1];
 static gdouble param_lut1[ITERATIONS + 1];
 static gdouble param_lut2[ITERATIONS + 1];
 
+static GimpRunMode run_mode;
+
 
 /***** Functions *****/
 
@@ -203,7 +203,6 @@ run (const gchar      *name,
   static GimpParam values[1];
 
   GimpDrawable      *active_drawable;
-  GimpRunMode        run_mode;
   GimpPDBStatusType  status;
 
   /* Initialize */
@@ -295,92 +294,54 @@ run (const gchar      *name,
   gimp_drawable_detach (active_drawable);
 }
 
+typedef struct {
+  gdouble 	dhoriz;
+  gdouble 	dvert;
+  gint		x1;
+  gint 		y1;
+} DiffractionParam_t;
+
+static void
+diffraction_func (gint x,
+		  gint y,
+		  guchar *dest,
+		  gint bpp,
+		  gpointer data)
+{
+  DiffractionParam_t *param = (DiffractionParam_t*) data;
+  gdouble px, py;
+  GimpRGB rgb;
+
+  px = -5.0 + param->dhoriz * (x - param->x1);
+  py = 5.0 + param->dvert * (y - param->y1);
+
+  diff_diffract (px, py, &rgb);
+  
+  dest[0] = 255.0 * rgb.r;
+  dest[1] = 255.0 * rgb.g;
+  dest[2] = 255.0 * rgb.b;
+  
+  if (bpp == 4)
+    dest[3] = 255;
+}
+
 static void
 diffraction (GimpDrawable *drawable)
 {
-  GimpPixelRgn dest_rgn;
-  gpointer  pr;
-  gint      x1, y1, x2, y2;
-  gint      width, height;
-  gint      has_alpha;
-  gint      row, col;
-  guchar   *dest_row;
-  guchar   *dest;
-  gint      progress, max_progress;
-  double    left, right, bottom, top;
-  double    dhoriz, dvert;
-  double    px, py;
-  double    r, g, b;
-
-  /* Get the mask bounds and image size */
+  GimpRgnIterator *iter;
+  DiffractionParam_t param;
+  gint x1, y1, x2, y2;
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-
-  width  = x2 - x1;
-  height = y2 - y1;
-
-  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
-
-  /* Initialize pixel regions */
-
-  gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, width, height, TRUE, TRUE);
-
-  progress     = 0;
-  max_progress = width * height;
+  param.x1 = x1;
+  param.y1 = y1;
+  param.dhoriz = 10.0 / (x2 - x1 - 1);
+  param.dvert  = -10.0 / (y2 - y1 - 1);
 
   gimp_progress_init (_("Creating diffraction pattern..."));
-
-  /* Create diffraction pattern */
-
-  left   = -5.0;
-  right  =  5.0;
-  bottom = -5.0;
-  top    =  5.0;
-
-  dhoriz = (right - left) / (width - 1);
-  dvert  = (bottom - top) / (height - 1);
-
-  for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
-    {
-      dest_row = dest_rgn.data;
-
-      py = top + dvert * (dest_rgn.y - y1);
-
-      for (row = 0; row < dest_rgn.h; row++)
-	{
-	  dest = dest_row;
-
-	  px = left + dhoriz * (dest_rgn.x - x1);
-
-	  for (col = 0; col < dest_rgn.w; col++)
-	    {
-	      diff_diffract (px, py, &r, &g, &b);
-
-	      *dest++ = 255.0 * r;
-	      *dest++ = 255.0 * g;
-	      *dest++ = 255.0 * b;
-
-	      if (has_alpha)
-		*dest++ = 255;
-
-	      px += dhoriz;
-	    }
-
-	  /* Update progress */
-
-	  progress += dest_rgn.w;
-	  gimp_progress_update ((double) progress / max_progress);
-
-	  py       += dvert;
-	  dest_row += dest_rgn.rowstride;
-	}
-    }
-
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
+  iter = gimp_rgn_iterator_new (drawable, run_mode);
+  gimp_rgn_iterator_dest (iter, diffraction_func, &param);
+  gimp_rgn_iterator_free (iter);
 }
 
 static void
@@ -406,15 +367,13 @@ diff_init_luts (void)
 }
 
 static void
-diff_diffract (double  x,
-	       double  y,
-	       double *r,
-	       double *g,
-	       double *b)
+diff_diffract (double   x,
+	       double   y,
+	       GimpRGB* rgb)
 {
-  *r = diff_point (x, y, dvals.edges_r, dvals.contour_r, dvals.lam_r);
-  *g = diff_point (x, y, dvals.edges_g, dvals.contour_g, dvals.lam_g);
-  *b = diff_point (x, y, dvals.edges_b, dvals.contour_b, dvals.lam_b);
+  rgb->r = diff_point (x, y, dvals.edges_r, dvals.contour_r, dvals.lam_r);
+  rgb->g = diff_point (x, y, dvals.edges_g, dvals.contour_g, dvals.lam_g);
+  rgb->b = diff_point (x, y, dvals.edges_b, dvals.contour_b, dvals.lam_b);
 }
 
 static double
@@ -466,50 +425,6 @@ diff_intensity (double x,
   return dvals.scattering * ((cospolpi2 + sinpolpi2) * cxy * cxy +
 			     (cospolpi2 - sinpolpi2) * sxy * sxy);
 }
-
-#if 0
-static double
-diff_intensity (double x,
-		double y,
-		double lam)
-{
-  int    i;
-  double cxy, sxy;
-  double s;
-  double cosa, sina;
-  double twocosa, param;
-  double polpi2;
-  double cospolpi2, sinpolpi2;
-
-  s   = dvals.scattering;
-  cxy = 0.0;
-  sxy = 0.0;
-
-  for (i = 0; i <= ITERATIONS; i++)
-    {
-      cosa = cos_lut[i];
-      sina = sin_lut[i];
-
-      twocosa = 2.0 * cosa;
-
-      param = 4.0 * lam *
-	(cosa * x +
-	 0.75 * sina * y -
-	 0.5 * (twocosa * twocosa + sina * sina));
-
-      cxy += 0.04 * cos (param);
-      sxy += 0.04 * sin (param);
-    }
-
-  polpi2 = dvals.polarization * (G_PI / 2.0);
-
-  cospolpi2 = cos (polpi2);
-  sinpolpi2 = sin (polpi2);
-
-  return s * ((cospolpi2 + sinpolpi2) * cxy * cxy +
-	      (cospolpi2 - sinpolpi2) * sxy * sxy);
-}
-#endif
 
 static gint
 diffraction_dialog (void)
@@ -758,7 +673,7 @@ dialog_update_preview (void)
   double  left, right, bottom, top;
   double  px, py;
   double  dx, dy;
-  double  r, g, b;
+  GimpRGB rgb;
   int     x, y;
   guchar *p;
 
@@ -779,11 +694,11 @@ dialog_update_preview (void)
 
       for (x = 0; x < PREVIEW_WIDTH; x++)
 	{
-	  diff_diffract (px, py, &r, &g, &b);
+	  diff_diffract (px, py, &rgb);
 
-	  *p++ = 255.0 * r;
-	  *p++ = 255.0 * g;
-	  *p++ = 255.0 * b;
+	  *p++ = 255.0 * rgb.r;
+	  *p++ = 255.0 * rgb.g;
+	  *p++ = 255.0 * rgb.b;
 
 	  px += dx;
 	}

@@ -78,7 +78,7 @@ static IllValues parameters =
 
 static GimpFixMePreview *preview;
 static gboolean dialog_status = FALSE;
-
+static GimpRunMode        run_mode;
 
 MAIN ()
 
@@ -115,7 +115,6 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   GimpDrawable      *drawable;
-  GimpRunMode        run_mode;
   static GimpParam   returnv[1];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
@@ -189,100 +188,92 @@ run (const gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
+typedef struct {
+  GimpPixelFetcher *pft;
+  gdouble	    center_x;
+  gdouble	    center_y;
+  gdouble	    scale;
+  gdouble	    offset;
+  gboolean	    has_alpha;
+} IllusionParam_t;
+
+static void
+illusion_func (gint x,
+	       gint y,
+	       const guchar *src,
+	       guchar *dest,
+	       gint bpp,
+	       gpointer data)
+{
+  IllusionParam_t *param = (IllusionParam_t*) data;
+  gint      xx, yy, b;
+  gdouble   radius, cx, cy, angle;
+  guchar    pixel[4];
+
+  cy = ((gdouble) y - param->center_y) / param->scale; 
+  cx = ((gdouble) x - param->center_x) / param->scale;
+  
+  angle = floor (atan2 (cy, cx) * parameters.division / G_PI_2)
+    * G_PI_2 / parameters.division + (G_PI / parameters.division);
+  radius = sqrt ((gdouble) (cx * cx + cy * cy));
+
+  if (parameters.type1) 
+    {
+      xx = x - param->offset * cos (angle);
+      yy = y - param->offset * sin (angle);
+    }  
+  else				/* Type 2 */
+    {
+      xx = x - param->offset * sin (angle);
+      yy = y - param->offset * cos (angle);
+    }
+
+  gimp_pixel_fetcher_get_pixel2 (param->pft, xx, yy, PIXEL_SMEAR, pixel);
+
+  if (param->has_alpha)
+    {
+      guint alpha1 = src[bpp - 1];
+      guint alpha2 = pixel[bpp - 1];
+      guint alpha  = alpha1 + alpha2;
+	  
+      if ((dest[bpp - 1] = (alpha >> 1)))
+	{
+	  for (b = 0; b < bpp - 1; b++)
+	    dest[b] = ((1 - radius) * src[b] * alpha1 + 
+		       radius * pixel[b] * alpha2) / alpha;
+	}
+    }
+  else
+    {
+      for (b = 0; b < bpp; b++)
+	dest[b] = (1 - radius) * src[b] + radius * pixel[b];
+    }
+}
+
 static void
 filter (GimpDrawable *drawable)
 {
-  GimpPixelRgn srcPR, destPR;
-  guchar  **pixels;
-  guchar  **destpixels;
-  
-  gint    image_width;
-  gint    image_height;
-  gint    image_bpp;
-  gint    x1;
-  gint    y1;
-  gint    x2;
-  gint    y2;
-  gint    select_width;
-  gint    select_height;
-  gdouble center_x;
-  gdouble center_y;
+  IllusionParam_t param;
+  GimpRgnIterator *iter;
+  gint width, height;
+  gint x1, y1, x2, y2;
 
-  gint      x, y, b;
-  gint      xx = 0;
-  gint      yy = 0;
-  gdouble   scale, radius, cx, cy, angle, offset;
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  width = x2 - x1;
+  height = y2 - y1;
 
-  image_width     = gimp_drawable_width (drawable->drawable_id);
-  image_height    = gimp_drawable_height (drawable->drawable_id);
-  image_bpp       = gimp_drawable_bpp (drawable->drawable_id);
-  gimp_drawable_mask_bounds (drawable->drawable_id,&x1, &y1, &x2, &y2);
-  select_width    = x2 - x1;
-  select_height   = y2 - y1;
-  center_x        = x1 + (gdouble)select_width / 2;
-  center_y        = y1 + (gdouble)select_height / 2;
-  
-  gimp_pixel_rgn_init (&srcPR, drawable,
-		       0, 0, image_width, image_height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&destPR, drawable,
-		       0, 0, image_width, image_height, TRUE, TRUE);
+  param.pft = gimp_pixel_fetcher_new (drawable);
+  param.has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+  param.center_x = (x1 + x2) / 2.0;
+  param.center_y = (y1 + y2) / 2.0;
+  param.scale = sqrt (width * width + height * height) / 2;
+  param.offset = (gint) (param.scale / 2);
 
-  pixels     = g_new (guchar *, image_height);
-  destpixels = g_new (guchar *, image_height);
+  iter = gimp_rgn_iterator_new (drawable, run_mode);
+  gimp_rgn_iterator_src_dest (iter, illusion_func, &param);
+  gimp_rgn_iterator_free (iter);
 
-  for (y = 0; y < image_height; y++)
-    {
-      pixels[y]     = g_new (guchar, image_width * image_bpp);
-      destpixels[y] = g_new (guchar, image_width * image_bpp);
-      gimp_pixel_rgn_get_row (&srcPR, pixels[y], 0, y, image_width);
-    }
-
-  scale = sqrt (select_width * select_width + select_height * select_height) / 2;
-  offset = (gint) (scale / 2);
-
-  for (y = y1; y < y2; y++)
-    {
-      cy = ((gdouble)y - center_y) / scale; 
-      for (x = x1; x < x2; x++)
-	{
-	  cx = ((gdouble)x - center_x) / scale;
-	  angle = floor (atan2 (cy, cx) * parameters.division / G_PI_2)
-	    * G_PI_2 / parameters.division + (G_PI / parameters.division);
-	  radius = sqrt ((gdouble) (cx * cx + cy * cy));
-
-	  if (parameters.type1) 
-	    {
-	      xx = x - offset * cos (angle);
-	      yy = y - offset * sin (angle);
-	    }
-
-	  if (parameters.type2) 
-	    {
-	      xx = x - offset * sin (angle);
-	      yy = y - offset * cos (angle);
-	    }
-
-	  xx = CLAMP (xx, 0, image_width - 1);
-	  yy = CLAMP (yy, 0, image_height - 1);
-
-	  for (b = 0; b < image_bpp; b++)
-	    destpixels[y][x*image_bpp+b] =
-	      (1-radius) * pixels[y][x * image_bpp + b] 
-	      + radius * pixels[yy][xx * image_bpp + b];
-	}
-      gimp_pixel_rgn_set_row (&destPR, destpixels[y], 0, y, image_width);
-      gimp_progress_update ((double) (y - y1) / (double) select_height);
-    }
-
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id,
-			x1, y1, select_width, select_height);
-
-  for (y = y1; y < y2; y++) g_free (pixels[y-y1]);
-  g_free (pixels);
-  for (y = y1; y < y2; y++) g_free (destpixels[y-y1]);
-  g_free (destpixels);
+  gimp_pixel_fetcher_destroy (param.pft);
 }
 
 static void
@@ -338,8 +329,7 @@ filter_preview (void)
 	      xx = x - offset * cos (angle);
 	      yy = y - offset * sin (angle);
 	    }
-
-	  if (parameters.type2) 
+	  else 			/* Type 2 */
 	    {
 	      xx = x - offset * sin (angle);
 	      yy = y - offset * cos (angle);

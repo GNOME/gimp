@@ -146,8 +146,9 @@ static polarize_interface_t pcint =
 };
 
 static GimpDrawable *drawable;
+static GimpRunMode run_mode;
 
-static gint img_width, img_height, img_bpp, img_has_alpha;
+static gint img_width, img_height, img_has_alpha;
 static gint sel_x1, sel_y1, sel_x2, sel_y2;
 static gint sel_width, sel_height;
 
@@ -196,7 +197,6 @@ run (const gchar      *name,
 {
   static GimpParam values[1];
 
-  GimpRunMode run_mode;
   GimpPDBStatusType  status;
   double       xhsiz, yhsiz;
 
@@ -217,7 +217,6 @@ run (const gchar      *name,
 
   img_width     = gimp_drawable_width (drawable->drawable_id);
   img_height    = gimp_drawable_height (drawable->drawable_id);
-  img_bpp       = gimp_drawable_bpp (drawable->drawable_id);
   img_has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
@@ -317,114 +316,52 @@ run (const gchar      *name,
 }
 
 static void
+polarize_func (gint x,
+	       gint y,
+	       guchar *dest,
+	       gint bpp,
+	       gpointer data)
+{
+  double     cx, cy;
+
+  if (calc_undistorted_coords (x, y, &cx, &cy))
+    {
+      guchar     pixel1[4], pixel2[4], pixel3[4], pixel4[4];
+      guchar     *values[4] = {pixel1, pixel2, pixel3, pixel4};
+      GimpPixelFetcher *pft = (GimpPixelFetcher*) data;
+
+      gimp_pixel_fetcher_get_pixel (pft, cx, cy, pixel1);
+      gimp_pixel_fetcher_get_pixel (pft, cx + 1, cy, pixel2);
+      gimp_pixel_fetcher_get_pixel (pft, cx, cy + 1, pixel3);
+      gimp_pixel_fetcher_get_pixel (pft, cx + 1, cy + 1, pixel4);
+
+      gimp_bilinear_pixels_8 (dest, cx, cy, bpp, img_has_alpha, values);
+    }
+  else
+    {
+      gint b;
+      for (b = 0; b < bpp; b++)
+	{
+	  dest[b] = 255;
+	}	  
+    }
+}
+
+static void
 polarize (void)
 {
-  GimpPixelRgn  dest_rgn;
-  guchar    *dest, *d;
-  guchar     pixel[4][4];
-  guchar     pixel2[4];
-  gdouble    values[4];
-  gint       progress, max_progress;
-  double     cx, cy;
-  gint       x1, y1, x2, y2;
-  gint       x, y, b;
-  gpointer   pr;
-  
+  GimpRgnIterator *iter;
   GimpPixelFetcher *pft;
 
-  /* Get selection area */
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-
-  /* Initialize pixel region */
-  gimp_pixel_rgn_init (&dest_rgn, drawable,
-		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
-  
   pft = gimp_pixel_fetcher_new (drawable);
-
   gimp_pixel_fetcher_set_bg_color (pft);
 
-  progress     = 0;
-  max_progress = img_width * img_height;
-
   gimp_progress_init (_("Polarizing..."));
+  iter = gimp_rgn_iterator_new (drawable, run_mode);
+  gimp_rgn_iterator_dest (iter, polarize_func, pft);
 
-  for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
-    {
-      dest = dest_rgn.data;
-
-      for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
-	{
-	  d = dest;
-
-	  for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
-	    {
-	      if (calc_undistorted_coords (x, y, &cx, &cy))
-		{
-		  gimp_pixel_fetcher_get_pixel (pft, cx, cy, pixel[0]);
-		  gimp_pixel_fetcher_get_pixel (pft, cx + 1, cy, pixel[1]);
-		  gimp_pixel_fetcher_get_pixel (pft, cx, cy + 1, pixel[2]);
-		  gimp_pixel_fetcher_get_pixel (pft, cx + 1, cy + 1, pixel[3]);
-
-                  if (img_has_alpha)
-                    {
-                      gdouble alpha;
-                      values[0] = pixel[0][img_bpp-1];
-                      values[1] = pixel[1][img_bpp-1];
-                      values[2] = pixel[2][img_bpp-1];
-                      values[3] = pixel[3][img_bpp-1];
-                      alpha = gimp_bilinear (cx, cy, values);
-                      d[img_bpp-1] = alpha;
-
-                      if (d[img_bpp-1]) 
-                        {
-                          for (b = 0; b < img_bpp-1; b++)
-                            {
-                              values[0] = pixel[0][img_bpp-1] * pixel[0][b];
-                              values[1] = pixel[1][img_bpp-1] * pixel[1][b];
-                              values[2] = pixel[2][img_bpp-1] * pixel[2][b];
-                              values[3] = pixel[3][img_bpp-1] * pixel[3][b];
-
-                              d[b] = gimp_bilinear (cx, cy, values)/alpha;
-                            }
-                        }
-                    }
-                  else
-                    {
-                      for (b = 0; b < img_bpp; b++)
-                        {
-                          values[0] = pixel[0][b];
-                          values[1] = pixel[1][b];
-                          values[2] = pixel[2][b];
-                          values[3] = pixel[3][b];
-              
-                          d[b] = gimp_bilinear (cx, cy, values);
-                        }
-                    }
-		}
-	      else
-		{
-		  gimp_pixel_fetcher_get_pixel (pft, x, y, pixel2);
-		  for (b = 0; b < img_bpp; b++)
-		    {
-		      d[b] = 255;
-		    }	  
-		}
-
-	      d += dest_rgn.bpp;
-	    }
-      
-	  dest += dest_rgn.rowstride;
-	}
-      progress += dest_rgn.w *dest_rgn.h;
-
-      gimp_progress_update ((double) progress / max_progress);
-    }
-  
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_rgn_iterator_free (iter);
+  gimp_pixel_fetcher_destroy (pft);
 }
 
 static gboolean
@@ -468,18 +405,16 @@ calc_undistorted_coords (gdouble  wx,
 	{
 	  if (wy > cen_y)
 	    {
-	      phi = G_PI - atan (((double)(wx - cen_x))/((double)(wy - cen_y)));
-	      r   = sqrt (SQR (wx - cen_x) + SQR (wy - cen_y));
+	      phi = G_PI - atan (((double)(wx - cen_x))/
+				 ((double)(wy - cen_y)));
 	    }
 	  else if (wy < cen_y)
 	    {
 	      phi = atan (((double)(wx - cen_x))/((double)(cen_y - wy)));
-	      r   = sqrt (SQR (wx - cen_x) + SQR (cen_y - wy));
 	    }
 	  else
 	    {
 	      phi = G_PI / 2;
-	      r   = wx - cen_x; /* cen_x - x1; */
 	    }
 	}
       else if (wx < cen_x)
@@ -488,19 +423,20 @@ calc_undistorted_coords (gdouble  wx,
 	    {
 	      phi = 2 * G_PI - atan (((double)(cen_x -wx)) /
 				     ((double)(cen_y - wy)));
-	      r   = sqrt (SQR (cen_x - wx) + SQR (cen_y - wy));
 	    }
 	  else if (wy > cen_y)
 	    {
-	      phi = G_PI + atan (((double)(cen_x - wx))/((double)(wy - cen_y)));
-	      r   = sqrt (SQR (cen_x - wx) + SQR (wy - cen_y));
+	      phi = G_PI + atan (((double)(cen_x - wx))/
+				 ((double)(wy - cen_y)));
 	    }
 	  else
 	    {
 	      phi = 1.5 * G_PI;
-	      r   = cen_x - wx; /* cen_x - x1; */
 	    }
 	}
+
+      r   = sqrt (SQR (wx - cen_x) + SQR (wy - cen_y));
+
       if (wx != cen_x)
 	{
 	  m = fabs (((double)(wy - cen_y)) / ((double)(wx - cen_x)));
@@ -545,21 +481,6 @@ calc_undistorted_coords (gdouble  wx,
 	y_calc = (y2 - y1)/rmax   * r   + y1;
       else
 	y_calc = y2 - (y2 - y1)/rmax * r;
-    
-      xi = (int) (x_calc+0.5);
-      yi = (int) (y_calc+0.5);
-    
-      if (WITHIN(0, xi, img_width - 1) && WITHIN(0, yi, img_height - 1))
-	{
-	  *x = x_calc;
-	  *y = y_calc;
-      
-	  inside = TRUE;
-	}
-      else
-	{
-	  inside = FALSE;
-	}
     }
   else
     {
@@ -572,14 +493,12 @@ calc_undistorted_coords (gdouble  wx,
     
       if (phi >= 1.5 * G_PI)
 	phi2 = 2 * G_PI - phi;
+      else if (phi >= G_PI)
+	phi2 = phi - G_PI;
+      else if (phi >= 0.5 * G_PI)
+	phi2 = G_PI - phi;
       else
-	if (phi >= G_PI)
-	  phi2 = phi - G_PI;
-	else
-	  if (phi >= 0.5 * G_PI)
-	    phi2 = G_PI - phi;
-	  else
-	    phi2 = phi;
+	phi2 = phi;
     
       xx = tan (phi2);
       if (xx != 0)
@@ -625,39 +544,32 @@ calc_undistorted_coords (gdouble  wx,
 	  x_calc = (double)xm - xx;
 	  y_calc = (double)ym - yy;
 	}
-      else
-	if (phi >= G_PI)
-	  {
-	    x_calc = (double)xm - xx;
-	    y_calc = (double)ym + yy;
-	  }
-	else
-	  if (phi >= 0.5 * G_PI)
-	    {
-	      x_calc = (double)xm + xx;
-	      y_calc = (double)ym + yy;
-	    }
-	  else
-	    {
-	      x_calc = (double)xm + xx;
-	      y_calc = (double)ym - yy;
-	    }
-    
-      xi = (int)(x_calc + 0.5);
-      yi = (int)(y_calc + 0.5);
-  
-      if (WITHIN(0, xi, img_width - 1) && WITHIN(0, yi, img_height - 1)) {
-	*x = x_calc;
-	*y = y_calc;
-      
-	inside = TRUE;
-      }
+      else if (phi >= G_PI)
+	{
+	  x_calc = (double)xm - xx;
+	  y_calc = (double)ym + yy;
+	}
+      else if (phi >= 0.5 * G_PI)
+	{
+	  x_calc = (double)xm + xx;
+	  y_calc = (double)ym + yy;
+	}
       else
 	{
-	  inside = FALSE;
+	  x_calc = (double)xm + xx;
+	  y_calc = (double)ym - yy;
 	}
     }
-  
+
+  xi = (int) (x_calc + 0.5);
+  yi = (int) (y_calc + 0.5);
+
+  inside = (WITHIN (0, xi, img_width - 1) && WITHIN (0, yi, img_height - 1));
+  if (inside)
+    {
+      *x = x_calc;
+      *y = y_calc;
+    }
   return inside;
 }
 

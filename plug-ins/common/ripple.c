@@ -117,6 +117,8 @@ static RippleInterface rpint =
   FALSE   /*  run  */
 };
 
+static GimpRunMode run_mode;
+
 /***** Functions *****/
 
 MAIN ()
@@ -160,7 +162,6 @@ run (const gchar      *name,
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
-  GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
@@ -250,222 +251,169 @@ run (const gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
+typedef struct {
+  GimpPixelFetcher	*pft;
+  gint 			 width;
+  gint			 height;
+  gboolean 		 has_alpha;
+} RippleParam_t;
+
+static void
+ripple_vertical (gint x,
+		 gint y,
+		 guchar *dest,
+		 gint bpp,
+		 gpointer data)
+{
+  RippleParam_t *param = (RippleParam_t*) data;
+  GimpPixelFetcher *pft;
+  guchar   pixel[4][4];
+  gdouble  needy;
+  gint	   yi, height;
+
+  pft = param->pft;
+  height = param->height;
+
+  needy = y + displace_amount(x);
+  yi = floor(needy);
+  
+  /* Tile the image. */
+  if (rvals.edges == WRAP)
+    {
+      needy = fmod(needy + height, height);
+      yi = (yi + height) % height;
+    }
+  /* Smear out the edges of the image by repeating pixels. */
+  else if (rvals.edges == SMEAR)
+    {
+      yi = CLAMP (yi, 0, height - 1);
+    }
+  
+  if (rvals.antialias)
+    {
+      if (yi == height - 1)
+	{
+	  gimp_pixel_fetcher_get_pixel (pft, x, yi, dest);
+	}
+      else if (needy < 0 && needy > -1)
+	{
+	  gimp_pixel_fetcher_get_pixel (pft, x, 0, dest);
+	}
+      else if (yi == height - 2 || yi == 0)
+	{
+	  gimp_pixel_fetcher_get_pixel (pft, x, yi, pixel[0]);
+	  gimp_pixel_fetcher_get_pixel (pft, x, yi + 1, pixel[1]);
+	  
+	  average_two_pixels (dest, pixel, needy, bpp, param->has_alpha);
+	}
+      else
+	{
+	  gimp_pixel_fetcher_get_pixel (pft, x, yi, pixel[0]);
+	  gimp_pixel_fetcher_get_pixel (pft, x, yi + 1, pixel[1]);
+	  gimp_pixel_fetcher_get_pixel (pft, x, yi - 1, pixel[2]);
+	  gimp_pixel_fetcher_get_pixel (pft, x, yi + 2, pixel[3]);
+	  
+	  average_four_pixels (dest, pixel, needy, bpp, param->has_alpha);
+	}
+    } /* antialias */
+  else
+    {
+      gimp_pixel_fetcher_get_pixel (pft, x, yi, dest);
+    }
+}
+
+static void
+ripple_horizontal (gint x,
+		 gint y,
+		 guchar *dest,
+		 gint bpp,
+		 gpointer data)
+{
+  RippleParam_t *param = (RippleParam_t*) data;
+  GimpPixelFetcher *pft;
+  guchar   pixel[4][4];
+  gdouble  needx;
+  gint	   xi, width;
+
+  pft = param->pft;
+  width = param->width;
+
+  needx = x + displace_amount(y);
+  xi = floor (needx);
+  
+  /* Tile the image. */
+  if (rvals.edges == WRAP)
+    {
+      needx = fmod((needx + width), width);
+      xi = (xi + width) % width;
+    }
+  /* Smear out the edges of the image by repeating pixels. */
+  else if (rvals.edges == SMEAR)
+    {
+      xi = CLAMP(xi, 0, width - 1);
+    }
+  
+  if (rvals.antialias)
+    {
+      if (xi == width - 1)
+	{
+	  gimp_pixel_fetcher_get_pixel (pft, xi, y, dest);
+	}
+      else if (floor(needx) ==  -1)
+	{
+	  gimp_pixel_fetcher_get_pixel (pft, 0, y, dest);
+	}
+      
+      else if (xi == width - 2 || xi == 0)
+	{
+	  gimp_pixel_fetcher_get_pixel (pft, xi, y, pixel[0]);
+	  gimp_pixel_fetcher_get_pixel (pft, xi + 1, y, pixel[1]);
+	  
+	  average_two_pixels (dest, pixel, needx, bpp, param->has_alpha);
+	}
+      else
+	{
+	  gimp_pixel_fetcher_get_pixel (pft, xi, y, pixel[0]);
+	  gimp_pixel_fetcher_get_pixel (pft, xi + 1, y, pixel[1]);
+	  gimp_pixel_fetcher_get_pixel (pft, xi - 1, y, pixel[2]);
+	  gimp_pixel_fetcher_get_pixel (pft, xi + 2, y, pixel[3]);
+	  
+	  average_four_pixels (dest, pixel, needx, bpp, param->has_alpha);
+	}
+    } /* antialias */
+  
+  else
+    {
+      gimp_pixel_fetcher_get_pixel (pft, xi, y, dest);
+    }
+}
+
 static void
 ripple (GimpDrawable *drawable)
 {
-  GimpPixelRgn dest_rgn;
-  gpointer  pr;
-  GimpPixelFetcher *pft;
-  gint     width, height;
-  gint     bytes;
-  gboolean has_alpha;
-  guchar  *destline;
-  guchar  *dest;
-  guchar  *otherdest;
-  guchar   pixel[4][4];
-  gint     x1, y1, x2, y2;
-  gint     x, y;
-  gint     progress, max_progress;
-  gdouble  needx, needy;
+  GimpRgnIterator *iter;
+  RippleParam_t param;
 
-  gint xi, yi;
-
-  pft = gimp_pixel_fetcher_new (drawable);
-
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
-
-  width  = drawable->width;
-  height = drawable->height;
-  bytes  = drawable->bpp;
+  param.pft = gimp_pixel_fetcher_new (drawable);
+  param.has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+  param.width  = drawable->width;
+  param.height = drawable->height;
 
   if ( rvals.tile )
     {
       rvals.edges = WRAP;
-      rvals.period = (width / (width / rvals.period) *
+      rvals.period = (param.width / (param.width / rvals.period) *
 		      (rvals.orientation == HORIZONTAL) +
-		      height / (height / rvals.period) *
+		      param.height / (param.height / rvals.period) *
 		      (rvals.orientation == VERTICAL));
     }
 
-  progress     = 0;
-  max_progress = (x2 - x1) * (y2 - y1);
+  iter = gimp_rgn_iterator_new (drawable, run_mode);
+  gimp_rgn_iterator_dest (iter, (rvals.orientation == VERTICAL)
+			  ? ripple_vertical : ripple_horizontal, &param);
+  gimp_rgn_iterator_free (iter);
 
-  /* Ripple the image.  It's a pretty simple algorithm.  If horizontal
-     is selected, then every row is displaced a number of pixels that
-     follows the pattern of the waveform selected.  The effect is
-     just reproduced with columns if vertical is selected.
-  */
-
-  gimp_pixel_rgn_init (&dest_rgn, drawable,
-		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
-
-  for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
-    {
-      if (rvals.orientation == VERTICAL)
-	{
-          destline = dest_rgn.data;
-
-          for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
-	    {
-              dest = destline;
-
-              for (y = dest_rgn.y; y < dest_rgn.y + dest_rgn.h; y++)
-		{
-                  otherdest = dest;
-
-                  needy = y + displace_amount(x);
-                  yi = floor(needy);
-
-		  /* Tile the image. */
-                  if (rvals.edges == WRAP)
-		    {
-                      needy = fmod(needy + height, height);
-                      yi = (yi + height) % height;
-		    }
-		  /* Smear out the edges of the image by repeating pixels. */
-                  else if (rvals.edges == SMEAR)
-		    {
-		      yi = CLAMP (yi, 0, height - 1);
-		    }
-
-                  if (rvals.antialias)
-		    {
-                      if (yi == height - 1)
-			{
-			  gimp_pixel_fetcher_get_pixel (pft, x, yi, otherdest);
-			  otherdest += bytes;
-			}
-                      else if (needy < 0 && needy > -1)
-			{
-			  gimp_pixel_fetcher_get_pixel (pft, x, 0, otherdest);
-			  otherdest += bytes;
-			}
-                      else if (yi == height - 2 || yi == 0)
-			{
-			  gimp_pixel_fetcher_get_pixel (pft, x, yi, pixel[0]);
-			  gimp_pixel_fetcher_get_pixel (pft, x, yi + 1, 
-							pixel[1]);
-
-                          average_two_pixels (otherdest, pixel,
-                                              needy, bytes, has_alpha);
-                          otherdest += bytes;
-			}
-                      else
-			{
-			  gimp_pixel_fetcher_get_pixel (pft, x, yi, pixel[0]);
-			  gimp_pixel_fetcher_get_pixel (pft, x, yi + 1, 
-							pixel[1]);
-			  gimp_pixel_fetcher_get_pixel (pft, x, yi - 1, 
-							pixel[2]);
-			  gimp_pixel_fetcher_get_pixel (pft, x, yi + 2, 
-							pixel[3]);
-
-                          average_four_pixels (otherdest, pixel,
-                                               needy, bytes, has_alpha);
-                          otherdest += bytes;
-                      }
-		    } /* antialias */
-                  else
-		    {
-		      gimp_pixel_fetcher_get_pixel (pft, x, yi, otherdest);
-		    }
-                  dest += dest_rgn.rowstride;
-		} /* for */
-
-	      destline += bytes;
-	    } /* for */
-
-          progress += dest_rgn.w * dest_rgn.h;
-          gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
-	}
-      else /* HORIZONTAL */
-	{
-          destline = dest_rgn.data;
-
-          for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
-	    {
-              dest = destline;
-
-              for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
-		{
-                  needx = x + displace_amount(y);
-                  xi = floor (needx);
-
-		  /* Tile the image. */
-                  if (rvals.edges == WRAP)
-		    {
-                      needx = fmod((needx + width), width);
-                      xi = (xi + width) % width;
-		    }
-		  /* Smear out the edges of the image by repeating pixels. */
-                  else if (rvals.edges == SMEAR)
-		    {
-		      xi = CLAMP(xi, 0, width - 1);
-		    }
-
-                  if ( rvals.antialias)
-		    {
-                      if (xi == width - 1)
-			{
-			  gimp_pixel_fetcher_get_pixel (pft, xi, y, dest);
-			  dest += bytes;
-			}
-                      else if (floor(needx) ==  -1)
-			{
-			  gimp_pixel_fetcher_get_pixel (pft, 0, y, dest);
-			  dest += bytes;
-			}
-
-                      else if (xi == width - 2 || xi == 0)
-			{
-			  gimp_pixel_fetcher_get_pixel (pft, xi, y, pixel[0]);
-			  gimp_pixel_fetcher_get_pixel (pft, xi + 1, y, 
-							pixel[1]);
-
-                          average_two_pixels (dest, pixel,
-                                              needx, bytes, has_alpha);
-                          dest += bytes;
-			}
-                      else
-			{
-			  gimp_pixel_fetcher_get_pixel (pft, xi, y, pixel[0]);
-			  gimp_pixel_fetcher_get_pixel (pft, xi + 1, y, 
-							pixel[1]);
-			  gimp_pixel_fetcher_get_pixel (pft, xi - 1, y, 
-							pixel[2]);
-			  gimp_pixel_fetcher_get_pixel (pft, xi + 2, y, 
-							pixel[3]);
-
-                          average_four_pixels (dest, pixel,
-                                               needx, bytes, has_alpha);
-                          dest += bytes;
-			}
-		    } /* antialias */
-
-                  else
-		    {
-		      gimp_pixel_fetcher_get_pixel (pft, xi, y, dest);
-		      dest += bytes;
-		    }
-		} /* for */
-
-              destline += dest_rgn.rowstride;
-	    } /* for */
-
-          progress += dest_rgn.w * dest_rgn.h;
-          gimp_progress_update ((double) progress / (double) max_progress);
-	}
-    }  /* for  */
-
-  gimp_pixel_fetcher_destroy (pft);
-
-  /*  update the region  */
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_pixel_fetcher_destroy (param.pft);
 }
 
 static gint

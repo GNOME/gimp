@@ -1,3 +1,16 @@
+2003-09-24  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* libgimp/gimpmisc.[ch]: code indentation
+
+	* plug-ins/common/illusion.c: fix for #72874 (Incorrect RGBA 
+	resampling in Illusion plug-in) plus code clean-up.
+
+	* plug-ins/common/sinus.c: fix for #122379. Removed logo from UI.
+
+	* plug-ins/common/diffraction.c
+	* plug-ins/common/polar.c
+	* plug-ins/common/ripple.c: code clean-up
+
 2003-09-24  Sven Neumann  <sven@gimp.org>
 
 	* NEWS: list what's new since the last release.
