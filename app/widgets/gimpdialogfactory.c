@@ -357,9 +357,7 @@ gimp_dialog_factory_find_entry (GimpDialogFactory *factory,
 
   for (list = factory->registered_dialogs; list; list = g_list_next (list))
     {
-      GimpDialogFactoryEntry *entry;
-
-      entry = (GimpDialogFactoryEntry *) list->data;
+      GimpDialogFactoryEntry *entry = list->data;
 
       if (! strcmp (identifier, entry->identifier))
         return entry;
@@ -379,9 +377,7 @@ gimp_dialog_factory_find_session_info (GimpDialogFactory *factory,
 
   for (list = factory->session_infos; list; list = g_list_next (list))
     {
-      GimpSessionInfo *info;
-
-      info = (GimpSessionInfo *) list->data;
+      GimpSessionInfo *info = list->data;
 
       if ((info->toplevel_entry &&
            ! strcmp (identifier, info->toplevel_entry->identifier)) ||
@@ -792,7 +788,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
       for (list = factory->session_infos; list; list = g_list_next (list))
         {
-          info = (GimpSessionInfo *) list->data;
+          info = list->data;
 
           if ((info->toplevel_entry == entry) ||
               (info->dockable_entry == entry))
@@ -869,7 +865,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
       for (list = factory->session_infos; list; list = g_list_next (list))
         {
-          info = (GimpSessionInfo *) list->data;
+          info = list->data;
 
           /*  take the first empty slot  */
           if (! info->toplevel_entry &&

@@ -504,6 +504,7 @@ gimp_session_info_deserialize (GScanner *scanner,
   GimpDialogFactory *factory;
   GimpSessionInfo   *info = NULL;
   GTokenType         token;
+  gboolean           skip = FALSE;
   gchar             *factory_name;
   gchar             *entry_name;
 
@@ -559,15 +560,10 @@ gimp_session_info_deserialize (GScanner *scanner,
     {
       info->toplevel_entry = gimp_dialog_factory_find_entry (factory,
                                                              entry_name);
-      g_free (entry_name);
+      skip = (info->toplevel_entry == NULL);
+    }
 
-      if (! info->toplevel_entry)
-	goto error;
-    }
-  else
-    {
-      g_free (entry_name);
-    }
+  g_free (entry_name);
 
   token = G_TOKEN_LEFT_PAREN;
 
@@ -651,13 +647,16 @@ gimp_session_info_deserialize (GScanner *scanner,
     {
       token = G_TOKEN_RIGHT_PAREN;
 
-      if (g_scanner_peek_next_token (scanner) == token)
+      if (!skip && g_scanner_peek_next_token (scanner) == token)
         factory->session_infos = g_list_append (factory->session_infos, info);
+      else
+        gimp_session_info_free (info);
     }
   else
     {
     error:
-      gimp_session_info_free (info);
+      if (info)
+        gimp_session_info_free (info);
     }
 
   g_scanner_scope_remove_symbol (scanner, scope, "position");
