@@ -1,3 +1,7 @@
+2003-09-02  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/paint-funcs.c: coding style and indentation.
+
 2003-09-01  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/gimp-composite-mmx.c
