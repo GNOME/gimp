@@ -21,6 +21,7 @@ bugs
   
 important issues
 
+  * brushes look inverted
   * zero-copy PDL support
   * gimp_init, gimp_deinit
   * duplicate HAVE_VPRINTF in gimp
@@ -28,8 +29,8 @@ important issues
 [DONE]  * put it into the cvs tree
   * weighted movement in drawing tools
   * -DMIN_PERL_DEFINE
-  * PF_PALETTE (maybe not)
-  * kill RUN_INTERACTIVE/run_mode-shit
+[DONE]  * PF_PALETTE (maybe not) <-- NOT
+[DONE]  * kill RUN_INTERACTIVE/run_mode-shit
   * --function localfunc to select one of the registered scripts
   * brush etc. buttons (maybe use gimp's interface, but
     only when local(?))

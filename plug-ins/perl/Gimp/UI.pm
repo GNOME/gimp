@@ -80,16 +80,15 @@ sub new($$$$) {
    $menu;
 }
 
-package Gimp::UI::PatternSelect;
+package Gimp::UI::PreviewSelect;
 
 use Gtk;
 
 @ISA='Gtk::Button';
-register_type Gimp::UI::PatternSelect;
+register_type Gimp::UI::PreviewSelect;
 
 sub GTK_CLASS_INIT {
    my $class = shift;
-   
    add_arg_type $class "active","GtkString",3;
 }
 
@@ -98,15 +97,16 @@ sub GTK_OBJECT_SET_ARG {
    if ($arg eq "active") {
       my $count;
       
-      $self->{set_dialog_preview}->($value);
-      $value=$self->{dialog_pattern};
-      $self->{label}->set($value);
-      $self->{list}->foreach(sub {
-         if ($_[0]->children->get eq $value) {
-            $self->{list}->select_item($count);
-         };
-         $count++;
-      });
+      if (!defined $self->{value} || $value ne $self->{value}) {
+         $self->{value}=$value=$self->set_preview($value);
+         $self->{label}->set($value);
+         $self->{list}->foreach(sub {
+            if ($_[0]->children->get eq $value) {
+               $self->{list}->select_item($count);
+            };
+            $count++;
+         });
+      }
    }
 }
 
@@ -122,54 +122,33 @@ sub GTK_OBJECT_INIT {
    $self->{label}=$label;
    
    my $w = new Gtk::Dialog;
-   $w->set_title("Pattern Selection Dialog");
+   $w->set_title($self->get_title);
    $w->set_usize(400,300);
    
    (my $h=new Gtk::HBox 0,0)->show;
    $w->vbox->pack_start($h,1,1,0);
    
-   my $cp=new Gtk::Preview "color";
-   my $gp=new Gtk::Preview "grayscale";
-   
-   $self->{set_dialog_preview} = sub {
-      my ($name,$w,$h,$bpp,$mask)=Gimp->patterns_get_pattern_data ($_[0]);
-      unless (defined $name) {
-         $name=Gimp->patterns_get_pattern;
-         ($name,$w,$h,$bpp,$mask)=Gimp->patterns_get_pattern_data ($name);
-      }
-      hide $cp;
-      hide $gp;
-      my $p = $bpp == 1 ? $gp : $cp;
-      show $p;
-      $p->size ($w, $h);
-      while(--$h) {
-        $p->draw_row (substr ($mask, $w*$bpp*$h), 0, $h, $w);
-      }
-      $p->draw(undef);
-      
-      $self->{dialog_pattern}=$name;
-   };
+   (my $preview = $self->new_preview)->show;
    
    (my $s=new Gtk::ScrolledWindow undef,undef)->show;
    $s->set_policy(-automatic, -automatic);
    $s->set_usize(200,300);
    $h->pack_start($s,1,1,0);
-   $h->pack_start($cp,1,1,0);
-   $h->pack_start($gp,1,1,0);
+   $h->pack_start($preview,1,1,0);
    
    my $l=new Gtk::List;
    $l->set_selection_mode(-single);
    $l->set_selection_mode(-browse);
    $self->{list}=$l;
    
-   for(Gimp->patterns_list) {
+   for($self->get_list) {
       $l->add(new Gtk::ListItem $_);
    }
    
    $l->show_all;
    $l->signal_connect("selection_changed",sub {
       $l->selection and
-         $self->{set_dialog_preview}->($l->selection->children->get);
+         $self->set_preview($l->selection->children->get);
    });
    $s->add ($l);
    
@@ -194,6 +173,51 @@ sub GTK_OBJECT_INIT {
    $self->signal_connect("clicked",sub {show $w});
 }
 
+package Gimp::UI::PatternSelect;
+
+use Gtk;
+
+@ISA = 'Gimp::UI::PreviewSelect';
+register_type Gimp::UI::PatternSelect;
+
+sub get_title { "Pattern Selection Dialog" }
+sub get_list { Gimp->patterns_list }
+
+sub new_preview {
+   my $self = shift;
+   my $cp = $self->{"color_preview"}=new Gtk::Preview "color";
+   my $gp = $self->{"gray_preview"} =new Gtk::Preview "grayscale";
+   my $preview = new Gtk::HBox 0,0;
+   $preview->add($cp);
+   $preview->add($gp);
+   $preview;
+}
+
+sub set_preview {
+   my $self = shift;
+   my $value = shift;
+   
+   my $cp = $self->{"color_preview"};
+   my $gp = $self->{"gray_preview"};
+   
+   my ($name,$w,$h,$bpp,$mask)=Gimp->patterns_get_pattern_data ($value);
+   unless (defined $name) {
+      $name=Gimp->patterns_get_pattern;
+      ($name,$w,$h,$bpp,$mask)=Gimp->patterns_get_pattern_data ($name);
+   }
+   hide $cp;
+   hide $gp;
+   my $p = $bpp == 1 ? $gp : $cp;
+   show $p;
+   $p->size ($w, $h);
+   while(--$h) {
+     $p->draw_row (substr ($mask, $w*$bpp*$h), 0, $h, $w);
+   }
+   $p->draw(undef);
+   
+   $name;
+}
+
 sub new {
    new Gtk::Widget @_;
 }
@@ -202,84 +226,39 @@ package Gimp::UI::BrushSelect;
 
 use Gtk;
 
-@ISA='Gtk::Button';
+@ISA='Gimp::UI::PreviewSelect';
 register_type Gimp::UI::BrushSelect;
 
-sub GTK_CLASS_INIT {
-   my $class = shift;
-   
-   add_arg_type $class "active","GtkString",3;
-}
+sub get_title { "Brush Selection Dialog" }
+sub get_list { Gimp->brushes_list }
 
-sub GTK_OBJECT_SET_ARG {
-   my($self,$arg,$id,$value) = @_;
-   if ($arg eq "active") {
-      $arg = Gimp->brushes_get_brush unless exists $self->{brushes}->{$arg};
-      $self->{label}->set($arg);
-      $self->{list}->select_item($self->{brushes}->{$arg});
-   }
-}
-
-sub GTK_OBJECT_GET_ARG {
-   my($self,$arg,$id) = @_;
-   $self->{label}->get;
-}
-
-sub GTK_OBJECT_INIT {
+sub new_preview {
    my $self=shift;
-   (my $label = new Gtk::Label "")->show;
-   $self->add($label);
-   $self->{label}=$label;
+   $self->{"preview"}=new Gtk::Preview "grayscale";
+}
+
+sub set_preview {
+   my $self = shift;
+   my $value = shift;
    
-   my $w = new Gtk::Dialog;
-   $w->set_title("Brush Selection Dialog");
-   $w->set_usize(400,300);
+   my $p = $self->{"preview"};
    
-   (my $h=new Gtk::HBox 0,0)->show;
-   
-   (my $s=new Gtk::ScrolledWindow undef,undef)->show;
-   $s->set_policy(-automatic, -automatic);
-   $s->set_usize(200,300);
-   $w->vbox->pack_start($s,1,1,0);
-   
-   my $l=new Gtk::List;
-   $l->set_selection_mode(-single);
-   $l->set_selection_mode(-browse);
-   $self->{list}=$l;
-   
-   my $count=0;
-   
-   for(Gimp->brushes_list) {
-      $l->add(new Gtk::ListItem $_);
-      $self->{brushes}->{$_}=$count++;
+   my ($name,$opacity,$spacing,$mode,$w,$h,$mask)=eval { Gimp->brushes_get_brush_data ($value) };
+   if ($@) {
+      $name=Gimp->brushes_get_brush;
+      ($name,$opacity,$spacing,$mode,$w,$h,$mask)=Gimp->brushes_get_brush_data ($name);
    }
+   $mask=pack("C*",@$mask);
+   hide $p;
+   my $l=length($mask);
+   $p->size ($w, $h);
+   while(--$h) {
+     $p->draw_row (substr ($mask, $w*$h), 0, $h, $w);
+   }
+   $p->draw(undef);
+   show $p;
    
-   my $dialog_selection;
-   
-   $l->show_all;
-   $l->signal_connect("selection_changed",sub {
-      $dialog_selection = $l->selection->children->get
-         if $l->selection;
-   });
-   $s->add ($l);
-   
-   my $button = new Gtk::Button "OK";
-   signal_connect $button "clicked", sub {
-      hide $w;
-      $label->set($dialog_selection)
-         if $l->selection;
-   };
-   $w->action_area->pack_start($button,1,1,0);
-   can_default $button 1;
-   grab_default $button;
-   show $button;
-   
-   $button = new Gtk::Button "Cancel";
-   signal_connect $button "clicked", sub {hide $w};
-   $w->action_area->pack_start($button,1,1,0);
-   show $button;
-   
-   $self->signal_connect("clicked",sub {show $w});
+   $name;
 }
 
 sub new {
@@ -290,87 +269,27 @@ package Gimp::UI::GradientSelect;
 
 use Gtk;
 
-@ISA='Gtk::Button';
+@ISA='Gimp::UI::PreviewSelect';
 register_type Gimp::UI::GradientSelect;
 
-sub GTK_CLASS_INIT {
-   my $class = shift;
-   
-   add_arg_type $class "active","GtkString",3;
+sub get_title { "Gradient Selection Dialog" }
+sub get_list { keys %gradients }
+
+sub new_preview {
+   my $self = shift;
+   new Gtk::Frame;
 }
 
-sub GTK_OBJECT_SET_ARG {
-   my($self,$arg,$id,$value) = @_;
-   if ($arg eq "active") {
-      $arg = Gimp->gradients_get_active unless exists $self->{gradients}->{$arg};
-      $self->{label}->set($arg);
-      $self->{list}->select_item($self->{gradients}->{$arg});
-   }
-}
-
-sub GTK_OBJECT_GET_ARG {
-   my($self,$arg,$id) = @_;
-   $self->{label}->get;
-}
-
-sub GTK_OBJECT_INIT {
-   my $self=shift;
-   (my $label = new Gtk::Label "")->show;
-   $self->add($label);
-   $self->{label}=$label;
-   
-   my $w = new Gtk::Dialog;
-   $w->set_title("Gradient Selection Dialog");
-   $w->set_usize(400,300);
-   
-   (my $h=new Gtk::HBox 0,0)->show;
-   
-   (my $s=new Gtk::ScrolledWindow undef,undef)->show;
-   $s->set_policy(-automatic, -automatic);
-   $s->set_usize(200,300);
-   $w->vbox->pack_start($s,1,1,0);
-   
-   my $l=new Gtk::List;
-   $l->set_selection_mode(-single);
-   $l->set_selection_mode(-browse);
-   $self->{list}=$l;
-   
-   my $count=0;
-   
-   for(Gimp->gradients_get_list) {
-      $l->add(new Gtk::ListItem $_);
-      $self->{gradients}->{$_}=$count++;
-   }
-   
-   my $dialog_selection;
-   
-   $l->show_all;
-   $l->signal_connect("selection_changed",sub {
-      $dialog_selection = $l->selection->children->get
-         if $l->selection;
-   });
-   $s->add ($l);
-   
-   my $button = new Gtk::Button "OK";
-   signal_connect $button "clicked", sub {
-      hide $w;
-      $label->set($dialog_selection)
-         if $l->selection;
-   };
-   $w->action_area->pack_start($button,1,1,0);
-   can_default $button 1;
-   grab_default $button;
-   show $button;
-   
-   $button = new Gtk::Button "Cancel";
-   signal_connect $button "clicked", sub {hide $w};
-   $w->action_area->pack_start($button,1,1,0);
-   show $button;
-   
-   $self->signal_connect("clicked",sub {show $w});
+sub set_preview {
+   my $self = shift;
+   my $value = shift;
+   exists $gradients{$value} ? $value : Gimp->gradients_get_active;
 }
 
 sub new {
+   unless (defined %gradients) {
+      undef @gradients{Gimp->gradients_get_list};
+   }
    new Gtk::Widget @_;
 }
 

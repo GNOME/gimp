@@ -286,7 +286,7 @@ sub interact($$$@) {
            
 #           (my $c = new Gtk::Button "Load")->show;
 #           signal_connect $c "clicked", sub {$res = 2; main_quit Gtk};
-#           $g->attach($c,1,2,$res,$res+1,{},{},4,2);
+##           $g->attach($c,1,2,$res,$res+1,{},{},4,2);
 #           $a->pack_start ($c,1,1,0);
 #           set_tip $t $c,"Load an image into the Gimp (NYI)";
            
@@ -392,7 +392,7 @@ sub interact($$$@) {
      return undef if $res == 0;
      @_ = map {&$_} @getvals;
      return (1,@_) if $res == 1;
-     Gimp->file_load(&Gimp::RUN_NONINTERACTIVE,"","");
+#     Gimp->file_load(&Gimp::RUN_INTERACTIVE,"","");
    }
 }
 

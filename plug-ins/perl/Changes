@@ -1,5 +1,8 @@
 Revision history for Gimp-Perl extension.
 
+	- t/run.t does much less when no tests are requested
+	- cleaned up Gimp::UI learned much about Gtk (but still not much)
+
 1.044 Sat Oct 24 03:54:47 CEST 1998
 	- allow PF_PATTERN etc. to be usable as commandline arguments
 	- added parasite support -> untested so far
