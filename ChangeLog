@@ -1,5 +1,10 @@
 2004-01-17  Henrik Brix Andersen  <brix@gimp.org>
 
+	* app/core/gimpimage-snap.c (gimp_image_snap_point): forgot to
+	change two G_MAXINT to G_MAXDOUBLE.
+
+2004-01-17  Henrik Brix Andersen  <brix@gimp.org>
+
 	Finally fixed bug #125864:
 
 	* app/core/gimpimage-guides.c (gimp_image_find_guide): iterate

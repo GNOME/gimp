@@ -230,8 +230,8 @@ gimp_image_snap_point (GimpImage *gimage,
       return FALSE;
     }
 
-  minxdist = G_MAXINT;
-  minydist = G_MAXINT;
+  minxdist = G_MAXDOUBLE;
+  minydist = G_MAXDOUBLE;
 
   if (snap_to_guides && gimage->guides != NULL)
     {
