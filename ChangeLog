@@ -1,7 +1,7 @@
 2000-02-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpdnd.[ch]: added a frame around all dnd previews. Fixed a
-	memleak (GdkPixmap's must be gtk_pixmap_unref()'ed after adding
+	memleak (GdkPixmap's must be gdk_pixmap_unref()'ed after adding
 	them to a GtkPixmap).
 
 2000-02-08  Michael Natterer  <mitch@gimp.org>
