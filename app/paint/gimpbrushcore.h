@@ -26,6 +26,8 @@
 #define BRUSH_CORE_SUBSAMPLE        4
 #define BRUSH_CORE_SOLID_SUBSAMPLE  2
 
+#define PRESSURE_SCALE              1.5
+
 
 #define GIMP_TYPE_BRUSH_CORE            (gimp_brush_core_get_type ())
 #define GIMP_BRUSH_CORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BRUSH_CORE, GimpBrushCore))

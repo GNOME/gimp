@@ -1,3 +1,8 @@
+2004-05-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimpbrushcore.h
+	* app/paint/gimppaintcore.h: some cleanup.
+
 2004-05-26  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-layer-select.c
