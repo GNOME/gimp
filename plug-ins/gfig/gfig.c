@@ -3464,7 +3464,7 @@ select_brush_press(GtkWidget *widget,
 		  gpointer   data)
 {
    BRUSHDESC *bdesc = g_malloc0(sizeof(BRUSHDESC)); 
-   gimp_interactive_selection_brush("Gfig brush selection",mygimp_brush_get(),gfig_brush_invoker,NULL);
+   gimp_interactive_selection_brush("Gfig brush selection",mygimp_brush_get(),0.0,0,0,gfig_brush_invoker,NULL);
 
    bdesc->bpp = 3; 
    bdesc->bname = mygimp_brush_get();
