@@ -66,7 +66,6 @@ typedef union
   SFColor       sfa_color;
   gint32        sfa_toggle;
   gchar *       sfa_value;
-  gchar *       sfa_string;
   SFAdjustment  sfa_adjustment;
 } SFArgValue;
 
@@ -120,6 +119,8 @@ static void       script_fu_cleanup_widgets  (SFScript *script);
 static void       script_fu_ok_callback      (GtkWidget *widget,
 					      gpointer   data);
 static void       script_fu_close_callback   (GtkWidget *widget,
+					      gpointer   data);
+static void       script_fu_reset_callback   (GtkWidget *widget,
 					      gpointer   data);
 static void       script_fu_menu_callback    (gint32     id,
 					      gpointer   data);
@@ -462,6 +463,7 @@ script_fu_add_script (LISP a)
 		  if (!TYPEP (car (a), tc_string))
 		    return my_err ("script-fu-register: value defaults must be string values", NIL);
 		  script->arg_defaults[i].sfa_value = g_strdup (get_c_string (car (a)));
+		  script->arg_values[i].sfa_value =  g_strdup (script->arg_defaults[i].sfa_value);
 
 		  args[i + 1].type = PARAM_STRING;
 		  args[i + 1].name = "value";
@@ -471,7 +473,8 @@ script_fu_add_script (LISP a)
 		case SF_STRING:
 		  if (!TYPEP (car (a), tc_string))
 		    return my_err ("script-fu-register: string defaults must be string values", NIL);
-		  script->arg_defaults[i].sfa_string = g_strdup (get_c_string (car (a)));
+		  script->arg_defaults[i].sfa_value = g_strdup (get_c_string (car (a)));
+		  script->arg_values[i].sfa_value =  g_strdup (script->arg_defaults[i].sfa_value);
 
 		  args[i + 1].type = PARAM_STRING;
 		  args[i + 1].name = "string";
@@ -773,10 +776,9 @@ script_fu_free_script (SFScript *script)
 	    case SF_COLOR:
 	      break;
 	    case SF_VALUE:
+	    case SF_STRING:  
 	      g_free (script->arg_defaults[i].sfa_value);
-	      break;
-	    case SF_STRING:
-	      g_free (script->arg_defaults[i].sfa_string);
+	      g_free (script->arg_values[i].sfa_value);
 	      break;
 	    case SF_ADJUSTMENT:
 	      break;
@@ -891,7 +893,7 @@ script_fu_interface (SFScript *script)
   gtk_widget_show (label);
 
   /*  The argument table  */
-  table = gtk_table_new (script->num_args, 2, FALSE);
+  table = gtk_table_new (script->num_args + 1, 2, FALSE);
   gtk_container_border_width (GTK_CONTAINER (table), 4);
   gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
 
@@ -919,22 +921,22 @@ script_fu_interface (SFScript *script)
 	    case SF_IMAGE:
 	      menu = gimp_image_menu_new (NULL, script_fu_menu_callback,
 					  &script->arg_values[i].sfa_image,
-					  script->arg_defaults[i].sfa_image);
+					  script->arg_values[i].sfa_image);
 	      break;
 	    case SF_DRAWABLE:
 	      menu = gimp_drawable_menu_new (NULL, script_fu_menu_callback,
 					     &script->arg_values[i].sfa_drawable,
-					     script->arg_defaults[i].sfa_drawable);
+					     script->arg_values[i].sfa_drawable);
 	      break;
 	    case SF_LAYER:
 	      menu = gimp_layer_menu_new (NULL, script_fu_menu_callback,
 					  &script->arg_values[i].sfa_layer,
-					  script->arg_defaults[i].sfa_layer);
+					  script->arg_values[i].sfa_layer);
 	      break;
 	    case SF_CHANNEL:
 	      menu = gimp_channel_menu_new (NULL, script_fu_menu_callback,
 					    &script->arg_values[i].sfa_channel,
-					    script->arg_defaults[i].sfa_channel);
+					    script->arg_values[i].sfa_channel);
 	      break;
 	    default:
 	      menu = NULL;
@@ -946,7 +948,7 @@ script_fu_interface (SFScript *script)
 	case SF_COLOR:
 	  script->args_widgets[i] = gtk_button_new();
 
-	  script->arg_values[i].sfa_color.preview = gtk_preview_new(GTK_PREVIEW_COLOR);
+	  script->arg_values[i].sfa_color.preview = gtk_preview_new (GTK_PREVIEW_COLOR);
 	  gtk_preview_size (GTK_PREVIEW (script->arg_values[i].sfa_color.preview),
 			    COLOR_SAMPLE_WIDTH, COLOR_SAMPLE_HEIGHT);
 	  gtk_container_add (GTK_CONTAINER (script->args_widgets[i]),
@@ -972,17 +974,11 @@ script_fu_interface (SFScript *script)
 	  break;
 
 	case SF_VALUE:
-	  script->args_widgets[i] = gtk_entry_new ();
-	  gtk_widget_set_usize (script->args_widgets[i], TEXT_WIDTH, 0);
-	  gtk_entry_set_text (GTK_ENTRY (script->args_widgets[i]),
-			      script->arg_defaults[i].sfa_value);
-	  break;
-
 	case SF_STRING:
 	  script->args_widgets[i] = gtk_entry_new ();
 	  gtk_widget_set_usize (script->args_widgets[i], TEXT_WIDTH, 0);
 	  gtk_entry_set_text (GTK_ENTRY (script->args_widgets[i]),
-			      script->arg_defaults[i].sfa_string);
+			      script->arg_values[i].sfa_value);
 	  break;
 
 	case SF_ADJUSTMENT:
@@ -1022,19 +1018,33 @@ script_fu_interface (SFScript *script)
 	  break;
 	}
       hbox = gtk_hbox_new (FALSE, 0);
-      gtk_box_pack_start (GTK_BOX(hbox), script->args_widgets[i],
+      gtk_box_pack_start (GTK_BOX (hbox), script->args_widgets[i],
                           ((script->arg_types[i] == SF_VALUE) || (script->arg_types[i] == SF_STRING)),
                           ((script->arg_types[i] == SF_VALUE) || (script->arg_types[i] == SF_STRING)), 0);
       gtk_widget_show (hbox);
 
       gtk_table_attach (GTK_TABLE (table), hbox, /* script->args_widgets[i], */
 			1, 2, i, i + 1,
-                        GTK_FILL | ((script->arg_types[i] == SF_VALUE) ?
-                                                     GTK_EXPAND : 0),
+                        GTK_FILL | (((script->arg_types[i] == SF_VALUE) || (script->arg_types[i] == SF_STRING))  
+				    ? GTK_EXPAND : 0),
                         GTK_FILL, 4, 2);
       gtk_widget_show (script->args_widgets[i]);
     }
+
   gtk_widget_show (table);
+
+  /*  Reset to defaults */
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
+  gtk_container_border_width (GTK_CONTAINER (hbox), 4);
+
+  button = gtk_button_new_with_label (" Reset to Defaults ");
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+                      (GtkSignalFunc) script_fu_reset_callback,
+                      NULL);
+  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+  gtk_widget_show (hbox);
 
   /*  Action area  */
   hbox = gtk_hbox_new (0, 2);
@@ -1188,9 +1198,13 @@ script_fu_ok_callback (GtkWidget *widget,
 	  break;
 	case SF_VALUE:
 	  text = gtk_entry_get_text (GTK_ENTRY (script->args_widgets[i]));
+	  g_free (script->arg_values[i].sfa_value);
+	  script->arg_values[i].sfa_value = g_strdup (text); 
 	  break;
 	case SF_STRING:
 	  text = gtk_entry_get_text (GTK_ENTRY (script->args_widgets[i]));
+	  g_free (script->arg_values[i].sfa_value);
+	  script->arg_values[i].sfa_value = g_strdup (text); 
 	  g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", text);
 	  text = buffer;
 	  break;
@@ -1198,13 +1212,13 @@ script_fu_ok_callback (GtkWidget *widget,
 	  switch (script->arg_defaults[i].sfa_adjustment.type)
 	    {
 	    case SF_SLIDER:
-	      g_snprintf (buffer, 24, "%f", script->arg_values[i].sfa_adjustment.adj->value);
+	      script->arg_values[i].sfa_adjustment.value = script->arg_values[i].sfa_adjustment.adj->value;
+	      g_snprintf (buffer, 24, "%f", script->arg_values[i].sfa_adjustment.value);
 	      text = buffer;
 	      break;
 	    case SF_SPINNER:
-	      g_snprintf (buffer, 24, "%f", 
-			  gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (script->args_widgets[i])));
-	      text = buffer;
+	      script->arg_values[i].sfa_adjustment.value = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (script->args_widgets[i]));
+	      g_snprintf (buffer, 24, "%f", script->arg_values[i].sfa_adjustment.value);		       text = buffer;
 	      break;
 	    default:
 	      break;
@@ -1246,6 +1260,55 @@ script_fu_close_callback (GtkWidget *widget,
     script_fu_cleanup_widgets(sf_interface.script);
 
   gtk_main_quit ();
+}
+
+static void
+script_fu_reset_callback (GtkWidget *widget,
+			  gpointer   data)
+{
+  SFScript *script;
+  int i,j;
+
+  if ((script = sf_interface.script) == NULL)
+    return;
+
+  for (i = 0; i < script->num_args; i++)
+    switch (script->arg_types[i])
+      {
+      case SF_IMAGE:
+      case SF_DRAWABLE:
+      case SF_LAYER:
+      case SF_CHANNEL:
+	break;
+      case SF_COLOR:
+	for (j = 0; j < 4; j++)
+	  {
+	    script->arg_values[i].sfa_color.color[j] = script->arg_defaults[i].sfa_color.color[j];
+	  }
+	script_fu_color_preview (script->arg_values[i].sfa_color.preview, 
+				 script->arg_values[i].sfa_color.color);
+	break;
+      case SF_TOGGLE:
+	script->arg_values[i].sfa_toggle = script->arg_defaults[i].sfa_toggle;
+	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (script->args_widgets[i]),
+				     script->arg_values[i].sfa_toggle);
+	break;
+      case SF_VALUE:
+      case SF_STRING:
+	g_free (script->arg_values[i].sfa_value);
+	script->arg_values[i].sfa_value = g_strdup (script->arg_defaults[i].sfa_value); 
+
+	gtk_entry_set_text (GTK_ENTRY (script->args_widgets[i]), 
+			    script->arg_values[i].sfa_value);
+	break;
+      case SF_ADJUSTMENT:
+	script->arg_values[i].sfa_adjustment.value = script->arg_defaults[i].sfa_adjustment.value;
+	gtk_adjustment_set_value (script->arg_values[i].sfa_adjustment.adj, 
+				  script->arg_values[i].sfa_adjustment.value);
+	break;
+      default:
+	break;
+      }
 }
 
 static void

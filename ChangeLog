@@ -1,3 +1,9 @@
+Sun Aug  9 14:15:42 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-scripts.c: The scripf-fu dialog
+	now remembers your last settings and has a "Reset to Defaults"
+	button.
+
 1998-08-07  Raja R Harinath  <harinath@cs.umn.edu>
 
 	* plug-ins/script-fu/Makefile.am (INCLUDES): 
