@@ -1,5 +1,16 @@
 2002-02-07  Nathan Summers  <rock@gimp.org>
 
+        * app/tools/gimptoolmodule.[ch]: New class that uses GTypeModule to
+        dynamically load tool plugins.  Does not quite work yet, but builds
+        correctly.
+
+        * app/tools/tools.c: added some code to test the GimpToolModule code.
+
+        * app/tools/Makefile.am: added gimptoolmodule to the build.
+
+
+2002-02-07  Nathan Summers  <rock@gimp.org>
+
 	* app/gimprc.c
         * app/config/gimpcoreconfig.[ch]
         * app/core/gimpcoreconfig.[ch]
