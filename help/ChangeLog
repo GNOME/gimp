@@ -1,3 +1,7 @@
+2001-07-26  Sven Neumann  <sven@gimp.org>
+
+	* C/dialogs/paths/paths.html: fixed broken image link.
+
 2001-07-02  Sven Neumann  <sven@gimp.org>
 
 	Touched just about every file and added a whole bunch of new ones.
