@@ -1,3 +1,8 @@
+2004-04-09  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/jpeg.c: Uglier workaround for bug #138357, since
+	the previous one did break error handling. Fixes bug #139571.
+
 2004-04-09  Henrik Brix Andersen  <brix@gimp.org>
 
 	* README.i18n: s/14/20/ plus whitespace clean-up.

@@ -700,14 +700,17 @@ COM_handler (j_decompress_ptr cinfo)
 
 typedef struct my_error_mgr
 {
-  /* This field should be first to guarantee proper alignment of the
-   * setjmp_buffer on all platforms. Specifically, on linux ia64 this
-   * needs to be 16-byte aligned and some glibc/icc combinations don't 
-   * guarantee this. See bug #138357 for details.
-   */
-  jmp_buf               setjmp_buffer;  /* for return to caller */
-
   struct jpeg_error_mgr pub;            /* "public" fields */
+
+#ifdef __ia64__
+  /* Ugh, the jmp_buf field needs to be 16-byte aligned on ia64 and some
+   * glibc/icc combinations don't guarantee this. So we pad. See bug #138357
+   * for details.
+   */
+  long double           dummy;
+#endif
+
+  jmp_buf               setjmp_buffer;  /* for return to caller */
 } *my_error_ptr;
 
 /*
