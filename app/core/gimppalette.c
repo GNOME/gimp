@@ -52,7 +52,8 @@ static TempBuf  * gimp_palette_get_new_preview  (GimpViewable      *viewable,
                                                  gint               width,
                                                  gint               height);
 static void       gimp_palette_dirty            (GimpData          *data);
-static gboolean   gimp_palette_save             (GimpData          *data);
+static gboolean   gimp_palette_save             (GimpData          *data,
+                                                 GError           **error);
 static gchar    * gimp_palette_get_extension    (GimpData          *data);
 
 static void       gimp_palette_entry_free       (GimpPaletteEntry  *entry);
@@ -273,8 +274,9 @@ gimp_palette_get_standard (void)
 }
 
 GimpData *
-gimp_palette_load (const gchar *filename,
-                   gboolean     stingy_memory_use)
+gimp_palette_load (const gchar  *filename,
+                   gboolean      stingy_memory_use,
+                   GError      **error)
 {
   GimpPalette *palette;
   gchar        str[1024];
@@ -286,14 +288,16 @@ gimp_palette_load (const gchar *filename,
 
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (*filename != '\0', NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   r = g = b = 0;
 
   /*  Open the requested file  */
   if (! (fp = fopen (filename, "r")))
     {
-      g_message (_("Failed to open palette file '%s': %s"), 
-		 filename, g_strerror (errno));
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
+                   _("Could not open '%s' for reading: %s"),
+                   filename, g_strerror (errno));
       return NULL;
     }
 
@@ -306,12 +310,16 @@ gimp_palette_load (const gchar *filename,
     {
       /* bad magic, but maybe it has \r\n at the end of lines? */
       if (!strcmp (str, "GIMP Palette\r"))
-	g_message (_("Loading palette '%s':\n"
-		     "Corrupt palette: missing magic header\n"
-		     "Does this file need converting from DOS?"), filename);
+	g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                     _("Loading palette '%s':\n"
+                       "Corrupt palette: missing magic header\n"
+                       "Does this file need converting from DOS?"),
+                     filename);
       else
-	g_message (_("Loading palette '%s':\n"
-		     "Corrupt palette: missing magic header"), filename);
+	g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                     _("Loading palette '%s':\n"
+                       "Corrupt palette: missing magic header"),
+                     filename);
 
       fclose (fp);
 
@@ -324,9 +332,9 @@ gimp_palette_load (const gchar *filename,
 
   if (! fgets (str, 1024, fp))
     {
-      g_message (_("Loading palette '%s':\nRead error in line %d."),
-		 filename, linenum);
-
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Loading palette '%s':\nRead error in line %d."),
+                   filename, linenum);
       fclose (fp);
       g_object_unref (G_OBJECT (palette));
       return NULL;
@@ -349,9 +357,9 @@ gimp_palette_load (const gchar *filename,
 
       if (! fgets (str, 1024, fp))
 	{
-	  g_message (_("Loading palette '%s':\nRead error in line %d."),
-		     filename, linenum);
-
+	  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                       _("Loading palette '%s':\nRead error in line %d."),
+                       filename, linenum);
 	  fclose (fp);
 	  g_object_unref (G_OBJECT (palette));
 	  return NULL;
@@ -370,7 +378,6 @@ gimp_palette_load (const gchar *filename,
 	      g_message (_("Loading palette '%s':\n"
 			   "Invalid number of columns in line %d."),
 			 filename, linenum);
-
 	      columns = 0;
 	    }
 
@@ -378,9 +385,9 @@ gimp_palette_load (const gchar *filename,
 
 	  if (! fgets (str, 1024, fp))
 	    {
-	      g_message (_("Loading palette '%s':\nRead error in line %d."),
-			 filename, linenum);
-
+	      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                           _("Loading palette '%s':\nRead error in line %d."),
+                           filename, linenum);
 	      fclose (fp);
 	      g_object_unref (G_OBJECT (palette));
 	      return NULL;
@@ -396,7 +403,6 @@ gimp_palette_load (const gchar *filename,
       basename = g_path_get_basename (filename);
 
       gimp_object_set_name (GIMP_OBJECT (palette), basename);
-
       g_free (basename);
     }
 
@@ -449,9 +455,9 @@ gimp_palette_load (const gchar *filename,
 	  if (feof (fp))
 	    break;
 
-	  g_message (_("Loading palette '%s':\nRead error in line %d."),
-		     filename, linenum);
-
+	  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                       _("Loading palette '%s':\nRead error in line %d."),
+                       filename, linenum);
 	  fclose (fp);
 	  g_object_unref (G_OBJECT (palette));
 	  return NULL;
@@ -475,7 +481,8 @@ gimp_palette_dirty (GimpData *data)
 }
 
 static gboolean
-gimp_palette_save (GimpData *data)
+gimp_palette_save (GimpData  *data,
+                   GError   **error)
 {
   GimpPalette      *palette;
   GimpPaletteEntry *entry;
@@ -485,10 +492,11 @@ gimp_palette_save (GimpData *data)
 
   palette = GIMP_PALETTE (data);
 
-  if (! (fp = fopen (GIMP_DATA (palette)->filename, "w")))
+  if (! (fp = fopen (data->filename, "w")))
     {
-      g_message (_("Cannot save palette '%s':\n%s"),
-		 GIMP_DATA (palette)->filename, g_strerror (errno));
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
+                   _("Could not open '%s' for writing: %s"),
+                   data->filename, g_strerror (errno));
       return FALSE;
     }
 
@@ -508,9 +516,6 @@ gimp_palette_save (GimpData *data)
     }
 
   fclose (fp);
-
-  if (GIMP_DATA_CLASS (parent_class)->save)
-    return GIMP_DATA_CLASS (parent_class)->save (data);
 
   return TRUE;
 }

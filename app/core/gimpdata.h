@@ -26,6 +26,15 @@
 #include "gimpviewable.h"
 
 
+typedef enum
+{
+  GIMP_DATA_ERROR_OPEN,   /*  opening data file failed   */
+  GIMP_DATA_ERROR_READ,   /*  reading data file failed   */
+  GIMP_DATA_ERROR_WRITE,  /*  writing data file failed   */
+  GIMP_DATA_ERROR_DELETE  /*  deleting data file failed  */
+} GimpDataError;
+
+
 #define GIMP_TYPE_DATA            (gimp_data_get_type ())
 #define GIMP_DATA(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DATA, GimpData))
 #define GIMP_DATA_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DATA, GimpDataClass))
@@ -49,17 +58,22 @@ struct _GimpDataClass
 {
   GimpViewableClass  parent_class;
 
-  void       (* dirty)         (GimpData *data);
-  gboolean   (* save)          (GimpData *data);
-  gchar    * (* get_extension) (GimpData *data);
-  GimpData * (* duplicate)     (GimpData *data,
+  /*  signals  */
+  void       (* dirty)         (GimpData  *data);
+
+  /*  virtual functions  */
+  gboolean   (* save)          (GimpData  *data,
+                                GError   **error);
+  gchar    * (* get_extension) (GimpData  *data);
+  GimpData * (* duplicate)     (GimpData  *data,
                                 gboolean  stingy_memory_use);
 };
 
 
 GType         gimp_data_get_type         (void) G_GNUC_CONST;
 
-gboolean      gimp_data_save             (GimpData     *data);
+gboolean      gimp_data_save             (GimpData     *data,
+                                          GError      **error);
 
 void          gimp_data_dirty            (GimpData     *data);
 gboolean      gimp_data_delete_from_disk (GimpData     *data,
@@ -70,11 +84,16 @@ const gchar * gimp_data_get_extension    (GimpData     *data);
 void          gimp_data_set_filename     (GimpData     *data,
 					  const gchar  *filename);
 void          gimp_data_create_filename  (GimpData     *data,
-					  const gchar  *filename,
+					  const gchar  *basename,
 					  const gchar  *data_path);
 
 GimpData    * gimp_data_duplicate        (GimpData     *data,
                                           gboolean      stingy_memory_use);
+
+
+#define GIMP_DATA_ERROR (gimp_data_error_quark ())
+
+GQuark        gimp_data_error_quark      (void) G_GNUC_CONST;
 
 
 #endif /* __GIMP_DATA_H__ */

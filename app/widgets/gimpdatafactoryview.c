@@ -21,9 +21,6 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <string.h>
-
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -286,45 +283,12 @@ gimp_data_factory_view_duplicate_clicked (GtkWidget           *widget,
   if (data && gimp_container_have (view->factory->container,
 				   GIMP_OBJECT (data)))
     {
-      GimpBaseConfig *base_config;
-      GimpData       *new_data;
+      GimpData *new_data;
 
-      base_config = GIMP_BASE_CONFIG (view->factory->gimp->config);
-
-      new_data = gimp_data_duplicate (data, base_config->stingy_memory_use);
+      new_data = gimp_data_factory_data_duplicate (view->factory, data);
 
       if (new_data)
 	{
-	  const gchar *name;
-	  gchar       *ext;
-	  gint         copy_len;
-	  gint         number;
-	  gchar       *new_name;
-
-	  name = gimp_object_get_name (GIMP_OBJECT (data));
-
-	  ext      = strrchr (name, '#');
-	  copy_len = strlen (_("copy"));
-
-	  if ((strlen (name) >= copy_len                                 &&
-	       strcmp (&name[strlen (name) - copy_len], _("copy")) == 0) ||
-	      (ext && (number = atoi (ext + 1)) > 0                      &&
-	       ((gint) (log10 (number) + 1)) == strlen (ext + 1)))
-	    {
-	      /* don't have redundant "copy"s */
-	      new_name = g_strdup (name);
-	    }
-	  else
-	    {
-	      new_name = g_strdup_printf (_("%s copy"), name);
-	    }
-
-	  gimp_object_set_name (GIMP_OBJECT (new_data), new_name);
-
-	  g_free (new_name);
-
-	  gimp_container_add (view->factory->container, GIMP_OBJECT (new_data));
-
 	  gimp_context_set_by_type (GIMP_CONTAINER_EDITOR (view)->view->context,
 				    view->factory->container->children_type,
 				    GIMP_OBJECT (new_data));

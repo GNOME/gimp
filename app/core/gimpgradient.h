@@ -75,7 +75,12 @@ GimpData            * gimp_gradient_new              (const gchar   *name,
                                                       gboolean       stingy_memory_use);
 GimpData            * gimp_gradient_get_standard     (void);
 GimpData            * gimp_gradient_load             (const gchar   *filename,
-                                                      gboolean       stingy_memory_use);
+                                                      gboolean       stingy_memory_use,
+                                                      GError       **error);
+
+gboolean              gimp_gradient_save_as_pov      (GimpGradient  *gradient,
+                                                      const gchar   *filename,
+                                                      GError       **error);
 
 void                  gimp_gradient_get_color_at     (GimpGradient  *gradient,
 						      gdouble        pos,

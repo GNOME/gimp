@@ -53,7 +53,8 @@ static TempBuf  * gimp_gradient_get_new_preview (GimpViewable      *viewable,
 						 gint               width,
 						 gint               height);
 static void       gimp_gradient_dirty           (GimpData          *data);
-static gboolean   gimp_gradient_save            (GimpData          *data);
+static gboolean   gimp_gradient_save            (GimpData          *data,
+                                                 GError           **error);
 static gchar    * gimp_gradient_get_extension   (GimpData          *data);
 static GimpData * gimp_gradient_duplicate       (GimpData          *data,
                                                  gboolean           stingy_memory_use);
@@ -314,8 +315,9 @@ gimp_gradient_get_standard (void)
 }
 
 GimpData *
-gimp_gradient_load (const gchar *filename,
-                    gboolean     stingy_memory_use)
+gimp_gradient_load (const gchar  *filename,
+                    gboolean      stingy_memory_use,
+                    GError      **error)
 {
   GimpGradient        *gradient;
   GimpGradientSegment *seg;
@@ -327,14 +329,23 @@ gimp_gradient_load (const gchar *filename,
   gchar                line[1024];
 
   g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   file = fopen (filename, "rb");
   if (!file)
-    return NULL;
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
+                   _("Could not open '%s' for reading: %s"),
+                   filename, g_strerror (errno));
+      return NULL;
+    }
 
   fgets (line, 1024, file);
   if (strcmp (line, "GIMP Gradient\n") != 0)
     {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Fatal Parse Error: '%s' is not a GIMP Gradient file"),
+                   filename);
       fclose (file);
       return NULL;
     }
@@ -367,7 +378,6 @@ gimp_gradient_load (const gchar *filename,
       basename = g_path_get_basename (filename);
 
       gimp_object_set_name (GIMP_OBJECT (gradient), basename);
-
       g_free (basename);
     }
 
@@ -375,8 +385,9 @@ gimp_gradient_load (const gchar *filename,
 
   if (num_segments < 1)
     {
-      g_message ("Fatal parsing error:\nGradient file '%s' is corrupt.",
-		 filename);
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Fatal parsing error:\nGradient file '%s' is corrupt."),
+                   filename);
       g_object_unref (G_OBJECT (gradient));
       fclose (file);
       return NULL;
@@ -459,7 +470,8 @@ gimp_gradient_dirty (GimpData *data)
 }
 
 static gboolean
-gimp_gradient_save (GimpData *data)
+gimp_gradient_save (GimpData  *data,
+                    GError   **error)
 {
   GimpGradient        *gradient;
   GimpGradientSegment *seg;
@@ -471,7 +483,9 @@ gimp_gradient_save (GimpData *data)
   file = fopen (data->filename, "wb");
   if (! file)
     {
-      g_message (_("Unable to save '%s':\n%s"), data->filename, g_strerror (errno));
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
+                   _("Could not open '%s' for writing: %s"),
+                   data->filename, g_strerror (errno));
       return FALSE;
     }
 
@@ -536,10 +550,98 @@ gimp_gradient_get_extension (GimpData *data)
   return GIMP_GRADIENT_FILE_EXTENSION;
 }
 
+gboolean
+gimp_gradient_save_as_pov (GimpGradient  *gradient,
+                           const gchar   *filename,
+                           GError       **error)
+{
+  FILE                *file;
+  GimpGradientSegment *seg;
+  gchar                buf[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar                color_buf[4][G_ASCII_DTOSTR_BUF_SIZE];
+
+  g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), FALSE);
+  g_return_val_if_fail (filename != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  file = fopen (filename, "wb");
+
+  if (! file)
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
+                   _("Could not open '%s' for writing: %s"),
+                   filename, g_strerror (errno));
+      return FALSE;
+    }
+  else
+    {
+      fprintf (file, "/* color_map file created by the GIMP */\n");
+      fprintf (file, "/* http://www.gimp.org/               */\n");
+
+      fprintf (file, "color_map {\n");
+
+      for (seg = gradient->segments; seg; seg = seg->next)
+	{
+	  /* Left */
+          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                           seg->left);
+          g_ascii_formatd (color_buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                           seg->left_color.r);
+          g_ascii_formatd (color_buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                           seg->left_color.g);
+          g_ascii_formatd (color_buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                           seg->left_color.b);
+          g_ascii_formatd (color_buf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                           1.0 - seg->left_color.a);
+
+	  fprintf (file, "\t[%s color rgbt <%s, %s, %s, %s>]\n",
+		   buf,
+                   color_buf[0], color_buf[1], color_buf[2], color_buf[3]);
+
+	  /* Middle */
+          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                           seg->middle);
+          g_ascii_formatd (color_buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                           (seg->left_color.r + seg->right_color.r) / 2.0);
+          g_ascii_formatd (color_buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                           (seg->left_color.g + seg->right_color.g) / 2.0);
+          g_ascii_formatd (color_buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                           (seg->left_color.b + seg->right_color.b) / 2.0);
+          g_ascii_formatd (color_buf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                           1.0 - (seg->left_color.a + seg->right_color.a) / 2.0);
+
+	  fprintf (file, "\t[%s color rgbt <%s, %s, %s, %s>]\n",
+		   buf,
+		   color_buf[0], color_buf[1], color_buf[2], color_buf[3]);
+
+	  /* Right */
+          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                           seg->right);
+          g_ascii_formatd (color_buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                           seg->right_color.r);
+          g_ascii_formatd (color_buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                           seg->right_color.g);
+          g_ascii_formatd (color_buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                           seg->right_color.b);
+          g_ascii_formatd (color_buf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+                           1.0 - seg->right_color.a);
+
+	  fprintf (file, "\t[%s color rgbt <%s, %s, %s, %s>]\n",
+		   buf,
+		   color_buf[0], color_buf[1], color_buf[2], color_buf[3]);
+	}
+
+      fprintf (file, "} /* color_map */\n");
+      fclose (file);
+    }
+
+  return TRUE;
+}
+
 void
 gimp_gradient_get_color_at (GimpGradient *gradient,
-			    gdouble     pos,
-			    GimpRGB    *color)
+			    gdouble       pos,
+			    GimpRGB      *color)
 {
   gdouble              factor = 0.0;
   GimpGradientSegment *seg;

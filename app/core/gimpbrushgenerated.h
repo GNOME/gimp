@@ -65,7 +65,8 @@ GimpData  * gimp_brush_generated_new          (gfloat       radius,
 					       gfloat       aspect_ratio,
                                                gboolean     stingy_memory_use);
 GimpData  * gimp_brush_generated_load         (const gchar *file_name,
-                                               gboolean     stingy_memory_use);
+                                               gboolean     stingy_memory_use,
+                                               GError     **error);
 
 void    gimp_brush_generated_freeze           (GimpBrushGenerated *brush);
 void    gimp_brush_generated_thaw             (GimpBrushGenerated *brush);

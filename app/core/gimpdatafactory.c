@@ -21,6 +21,9 @@
 
 #include "config.h"
 
+#include <stdlib.h>
+#include <string.h>
+
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -38,14 +41,14 @@
 #include "libgimp/gimpintl.h"
 
 
-static void    gimp_data_factory_class_init  (GimpDataFactoryClass *klass);
-static void    gimp_data_factory_init        (GimpDataFactory      *factory);
+static void    gimp_data_factory_class_init    (GimpDataFactoryClass *klass);
+static void    gimp_data_factory_init          (GimpDataFactory      *factory);
 
-static void    gimp_data_factory_finalize    (GObject              *object);
+static void    gimp_data_factory_finalize      (GObject              *object);
 
-static gsize   gimp_data_factory_get_memsize (GimpObject           *object);
+static gsize   gimp_data_factory_get_memsize   (GimpObject           *object);
 
-static void    gimp_data_factory_data_load_callback (GimpDatafileData *file_data);
+static void    gimp_data_factory_load_callback (GimpDatafileData     *file_data);
 
 
 static GimpObjectClass *parent_class = NULL;
@@ -100,7 +103,7 @@ gimp_data_factory_init (GimpDataFactory *factory)
 {
   factory->gimp                   = NULL;
   factory->container              = NULL;
-  factory->data_path              = NULL;
+  factory->path_property_name     = NULL;
   factory->loader_entries         = NULL;
   factory->n_loader_entries       = 0;
   factory->data_new_func          = NULL;
@@ -116,8 +119,14 @@ gimp_data_factory_finalize (GObject *object)
 
   if (factory->container)
     {
-      g_object_unref (G_OBJECT (factory->container));
+      g_object_unref (factory->container);
       factory->container = NULL;
+    }
+
+  if (factory->path_property_name)
+    {
+      g_free (factory->path_property_name);
+      factory->path_property_name = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -137,19 +146,19 @@ gimp_data_factory_get_memsize (GimpObject *object)
 }
 
 GimpDataFactory *
-gimp_data_factory_new (Gimp                              *gimp,
-                       GType                              data_type,
-		       const gchar                      **data_path,
-		       const GimpDataFactoryLoaderEntry  *loader_entries,
-		       gint                               n_loader_entries,
-		       GimpDataNewFunc                    new_func,
-		       GimpDataGetStandardFunc            standard_func)
+gimp_data_factory_new (Gimp                             *gimp,
+                       GType                             data_type,
+		       const gchar                      *path_property_name,
+		       const GimpDataFactoryLoaderEntry *loader_entries,
+		       gint                              n_loader_entries,
+		       GimpDataNewFunc                   new_func,
+		       GimpDataGetStandardFunc           standard_func)
 {
   GimpDataFactory *factory;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (g_type_is_a (data_type, GIMP_TYPE_DATA), NULL);
-  g_return_val_if_fail (data_path != NULL, NULL);
+  g_return_val_if_fail (path_property_name != NULL, NULL);
   g_return_val_if_fail (loader_entries != NULL, NULL);
   g_return_val_if_fail (n_loader_entries > 0, NULL);
 
@@ -158,7 +167,7 @@ gimp_data_factory_new (Gimp                              *gimp,
   factory->gimp                   = gimp;
   factory->container              = gimp_data_list_new (data_type);
 
-  factory->data_path              = data_path;
+  factory->path_property_name     = g_strdup (path_property_name);
 
   factory->loader_entries         = loader_entries;
   factory->n_loader_entries       = n_loader_entries;
@@ -173,19 +182,27 @@ void
 gimp_data_factory_data_init (GimpDataFactory *factory,
 			     gboolean         no_data /* FIXME */)
 {
+  gchar *path = NULL;
+
   g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
 
   gimp_container_freeze (factory->container);
 
   gimp_data_factory_data_free (factory);
 
-  if (factory->data_path && *factory->data_path)
+  g_object_get (G_OBJECT (factory->gimp->config),
+                factory->path_property_name, &path,
+                NULL);
+
+  if (path && strlen (path))
     {
-      gimp_datafiles_read_directories (*factory->data_path,
+      gimp_datafiles_read_directories (path,
                                        G_FILE_TEST_EXISTS,
-				       gimp_data_factory_data_load_callback,
+				       gimp_data_factory_load_callback,
 				       factory);
     }
+
+  g_free (path);
 
   gimp_container_thaw (factory->container);  
 }
@@ -193,37 +210,58 @@ gimp_data_factory_data_init (GimpDataFactory *factory,
 void
 gimp_data_factory_data_save (GimpDataFactory *factory)
 {
-  GimpList *gimp_list;
-  GList    *list;
+  gchar *path = NULL;
 
   g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
 
   if (gimp_container_num_children (factory->container) == 0)
     return;
 
-  if (! (factory->data_path && *factory->data_path))
-    return;
+  g_object_get (G_OBJECT (factory->gimp->config),
+                factory->path_property_name, &path,
+                NULL);
 
-  gimp_list = GIMP_LIST (factory->container);
-
-  gimp_container_freeze (factory->container);
-
-  for (list = gimp_list->list; list; list = g_list_next (list))
+  if (path && strlen (path))
     {
-      GimpData *data;
+      GimpList *gimp_list;
+      GList    *list;
 
-      data = GIMP_DATA (list->data);
+      gimp_list = GIMP_LIST (factory->container);
 
-      if (! data->filename)
-	gimp_data_create_filename (data,
-				   GIMP_OBJECT (data)->name,
-				   *factory->data_path);
+      gimp_container_freeze (factory->container);
 
-      if (data->dirty)
-	gimp_data_save (data);
+      for (list = gimp_list->list; list; list = g_list_next (list))
+        {
+          GimpData *data;
+
+          data = GIMP_DATA (list->data);
+
+          if (! data->filename)
+            gimp_data_create_filename (data, GIMP_OBJECT (data)->name, path);
+
+          if (data->dirty)
+            {
+              GError *error = NULL;
+
+              if (! gimp_data_save (data, &error))
+                {
+                  /*  check if there actually was an error (no error
+                   *  means the data class does not implement save)
+                   */
+                  if (error)
+                    {
+                      g_message (_("Warning: Failed to save data:\n%s"),
+                                 error->message);
+                      g_clear_error (&error);
+                    }
+                }
+            }
+        }
+
+      gimp_container_thaw (factory->container);
     }
 
-  gimp_container_thaw (factory->container);
+  g_free (path);
 }
 
 void
@@ -303,6 +341,57 @@ gimp_data_factory_data_new (GimpDataFactory *factory,
 }
 
 GimpData *
+gimp_data_factory_data_duplicate (GimpDataFactory *factory,
+                                  GimpData        *data)
+{
+  GimpBaseConfig *base_config;
+  GimpData       *new_data;
+
+  g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
+  g_return_val_if_fail (GIMP_IS_DATA (data), NULL);
+
+  base_config = GIMP_BASE_CONFIG (factory->gimp->config);
+
+  new_data = gimp_data_duplicate (data, base_config->stingy_memory_use);
+
+  if (new_data)
+    {
+      const gchar *name;
+      gchar       *ext;
+      gint         copy_len;
+      gint         number;
+      gchar       *new_name;
+
+      name = gimp_object_get_name (GIMP_OBJECT (data));
+
+      ext      = strrchr (name, '#');
+      copy_len = strlen (_("copy"));
+
+      if ((strlen (name) >= copy_len                                 &&
+           strcmp (&name[strlen (name) - copy_len], _("copy")) == 0) ||
+          (ext && (number = atoi (ext + 1)) > 0                      &&
+           ((gint) (log10 (number) + 1)) == strlen (ext + 1)))
+        {
+          /* don't have redundant "copy"s */
+          new_name = g_strdup (name);
+        }
+      else
+        {
+          new_name = g_strdup_printf (_("%s copy"), name);
+        }
+
+      gimp_object_set_name (GIMP_OBJECT (new_data), new_name);
+
+      g_free (new_name);
+
+      gimp_container_add (factory->container, GIMP_OBJECT (new_data));
+      g_object_unref (new_data);
+    }
+
+  return new_data;
+}
+
+GimpData *
 gimp_data_factory_data_get_standard (GimpDataFactory *factory)
 {
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
@@ -314,7 +403,7 @@ gimp_data_factory_data_get_standard (GimpDataFactory *factory)
 }
 
 static void
-gimp_data_factory_data_load_callback (GimpDatafileData *file_data)
+gimp_data_factory_load_callback (GimpDatafileData *file_data)
 {
   GimpDataFactory *factory;
   gint             i;
@@ -347,16 +436,20 @@ gimp_data_factory_data_load_callback (GimpDatafileData *file_data)
   {
     GimpBaseConfig *base_config;
     GimpData       *data;
+    GError         *error = NULL;
 
     base_config = GIMP_BASE_CONFIG (factory->gimp->config);
 
     data = (GimpData *)
       (* factory->loader_entries[i].load_func) (file_data->filename,
-                                                base_config->stingy_memory_use);
+                                                base_config->stingy_memory_use,
+                                                &error);
 
     if (! data)
       {
-	g_message (_("Warning: Failed to load data from\n'%s'"), file_data->filename);
+	g_message (_("Warning: Failed to load data:\n%s"),
+                   error->message);
+        g_clear_error (&error);
       }
     else
       {

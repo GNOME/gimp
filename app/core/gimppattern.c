@@ -18,6 +18,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -281,8 +282,9 @@ gimp_pattern_get_standard (void)
 }
 
 GimpData *
-gimp_pattern_load (const gchar *filename,
-                   gboolean     stingy_memory_use)
+gimp_pattern_load (const gchar  *filename,
+                   gboolean      stingy_memory_use,
+                   GError      **error)
 {
   GimpPattern   *pattern = NULL;
   gint           fd;
@@ -291,14 +293,25 @@ gimp_pattern_load (const gchar *filename,
   gchar         *name    = NULL;
 
   g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   fd = open (filename, O_RDONLY | _O_BINARY);
   if (fd == -1)
-    return NULL;
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
+                   _("Could not open '%s' for reading: %s"),
+                   filename, g_strerror (errno));
+      return NULL;
+    }
 
   /*  Read in the header size  */
   if (read (fd, &header, sizeof (header)) != sizeof (header))
-    goto error;
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Could not read %d bytes from '%s': %s"),
+                   sizeof (header), filename, g_strerror (errno));
+      goto error;
+    }
 
   /*  rearrange the bytes in each unsigned int  */
   header.header_size  = g_ntohl (header.header_size);
@@ -312,18 +325,20 @@ gimp_pattern_load (const gchar *filename,
   if (header.magic_number != GPATTERN_MAGIC || header.version != 1 || 
       header.header_size <= sizeof (header)) 
     {
-      g_message (_("Unknown pattern format version %d in '%s'."),
-		 header.version, filename);
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Unknown pattern format version %d in '%s'."),
+                   header.version, filename);
       goto error;
     }
   
   /*  Check for supported bit depths  */
   if (header.bytes != 1 && header.bytes != 3)
     {
-      g_message (_("Unsupported pattern depth %d\n"
-		 "in file '%s'.\n"
-		 "GIMP Patterns must be GRAY or RGB.\n"),
-                 header.bytes, filename);
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Unsupported pattern depth %d\n"
+                     "in file '%s'.\n"
+                     "GIMP Patterns must be GRAY or RGB.\n"),
+                   header.bytes, filename);
       goto error;
     }
 
@@ -334,7 +349,9 @@ gimp_pattern_load (const gchar *filename,
 
       if ((read (fd, name, bn_size)) < bn_size)
         {
-          g_message (_("Error in GIMP pattern file '%s'."), filename);
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                       _("Error in GIMP pattern file '%s'."),
+                       filename);
 	  goto error;
         }
         
@@ -358,15 +375,16 @@ gimp_pattern_load (const gchar *filename,
             header.width * header.height * header.bytes) <
       header.width * header.height * header.bytes)
     {
-      g_message (_("Fatal parsing error: Pattern file '%s' appears truncated."),
-		 filename);
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Fatal parsing error: "
+                     "Pattern file '%s' appears truncated."),
+                   filename);
       goto error;
     }
 
   close (fd);
 
   gimp_object_set_name (GIMP_OBJECT (pattern), name);
-
   g_free (name);
 
   gimp_data_set_filename (GIMP_DATA (pattern), filename);
@@ -374,6 +392,8 @@ gimp_pattern_load (const gchar *filename,
   /*  Swap the pattern to disk (if we're being stingy with memory) */
   if (stingy_memory_use)
     temp_buf_swap (pattern->mask);
+
+  GIMP_DATA (pattern)->dirty = FALSE;
 
   return GIMP_DATA (pattern);
 

@@ -150,75 +150,17 @@ static void
 gradients_save_as_pov_ok_callback (GtkWidget    *widget,
 				   GimpGradient *gradient)
 {
-  GtkFileSelection    *filesel;
-  const gchar         *filename;
-  FILE                *file;
-  GimpGradientSegment *seg;
-  gchar                buf[3][G_ASCII_DTOSTR_BUF_SIZE];
+  GtkFileSelection *filesel;
+  const gchar      *filename;
+  GError           *error = NULL;
 
   filesel  = GTK_FILE_SELECTION (gtk_widget_get_toplevel (widget));
   filename = gtk_file_selection_get_filename (filesel);
 
-  file = fopen (filename, "wb");
-
-  if (!file)
+  if (! gimp_gradient_save_as_pov (gradient, filename, &error))
     {
-      g_message ("Could not open \"%s\"", filename);
-    }
-  else
-    {
-      fprintf (file, "/* color_map file created by the GIMP */\n");
-      fprintf (file, "/* http://www.gimp.org/               */\n");
-
-      fprintf (file, "color_map {\n");
-
-      for (seg = gradient->segments; seg; seg = seg->next)
-	{
-	  /* Left */
-          g_ascii_formatd (buf[0],  G_ASCII_DTOSTR_BUF_SIZE, "%f", 
-                           seg->left_color.r);
-          g_ascii_formatd (buf[1],  G_ASCII_DTOSTR_BUF_SIZE, "%f", 
-                           seg->left_color.g);
-          g_ascii_formatd (buf[2],  G_ASCII_DTOSTR_BUF_SIZE, "%f", 
-                           seg->left_color.b);
-          g_ascii_formatd (buf[3],  G_ASCII_DTOSTR_BUF_SIZE, "%f", 
-                           1.0 - seg->left_color.a);
-
-	  fprintf (file, "\t[%f color rgbt <%s, %s, %s, %s>]\n",
-		   seg->left,
-                   buf[0], buf[1], buf[2], buf[3]);
-
-	  /* Middle */
-          g_ascii_formatd (buf[0],  G_ASCII_DTOSTR_BUF_SIZE, "%f", 
-                           (seg->left_color.r + seg->right_color.r) / 2.0);
-          g_ascii_formatd (buf[1],  G_ASCII_DTOSTR_BUF_SIZE, "%f", 
-                           (seg->left_color.g + seg->right_color.g) / 2.0);
-          g_ascii_formatd (buf[2],  G_ASCII_DTOSTR_BUF_SIZE, "%f", 
-                           (seg->left_color.b + seg->right_color.b) / 2.0);
-          g_ascii_formatd (buf[3],  G_ASCII_DTOSTR_BUF_SIZE, "%f", 
-                           1.0 - (seg->left_color.a + seg->right_color.a) / 2.0);
-
-	  fprintf (file, "\t[%f color rgbt <%s, %s, %s, %s>]\n",
-		   seg->middle,
-		   buf[0], buf[1], buf[2], buf[3]);
-
-	  /* Right */
-          g_ascii_formatd (buf[0],  G_ASCII_DTOSTR_BUF_SIZE, "%f", 
-                           seg->right_color.r);
-          g_ascii_formatd (buf[1],  G_ASCII_DTOSTR_BUF_SIZE, "%f", 
-                           seg->right_color.g);
-          g_ascii_formatd (buf[2],  G_ASCII_DTOSTR_BUF_SIZE, "%f", 
-                           seg->right_color.b);
-          g_ascii_formatd (buf[3],  G_ASCII_DTOSTR_BUF_SIZE, "%f", 
-                           1.0 - seg->right_color.a);
-
-	  fprintf (file, "\t[%f color rgbt <%s, %s, %s, %s>]\n",
-		   seg->right,
-		   buf[0], buf[1], buf[2], buf[3]);
-	}
-
-      fprintf (file, "} /* color_map */\n");
-      fclose (file);
+      g_message (error->message);
+      g_clear_error (&error);
     }
 
   gtk_widget_destroy (GTK_WIDGET (filesel));

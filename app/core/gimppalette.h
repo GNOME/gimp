@@ -68,7 +68,8 @@ GimpData         * gimp_palette_new            (const gchar      *name,
                                                 gboolean          stingy_memory_use);
 GimpData         * gimp_palette_get_standard   (void);
 GimpData         * gimp_palette_load           (const gchar      *filename,
-                                                gboolean          stingy_memory_use);
+                                                gboolean          stingy_memory_use,
+                                                GError          **error);
 
 GimpPaletteEntry * gimp_palette_add_entry      (GimpPalette      *palette,
 					        const gchar      *name,

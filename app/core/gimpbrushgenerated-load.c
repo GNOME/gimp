@@ -20,6 +20,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -39,6 +40,8 @@
 
 #include "gimpbrushgenerated.h"
 
+#include "libgimp/gimpintl.h"
+
 
 #define OVERSAMPLING 5
 
@@ -47,11 +50,12 @@
 static void   gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass);
 static void   gimp_brush_generated_init       (GimpBrushGenerated      *brush);
 
-static gboolean   gimp_brush_generated_save          (GimpData *data);
-static void       gimp_brush_generated_dirty         (GimpData *data);
-static gchar    * gimp_brush_generated_get_extension (GimpData *data);
-static GimpData * gimp_brush_generated_duplicate     (GimpData *data,
-                                                      gboolean  stingy_memory_use);
+static gboolean   gimp_brush_generated_save          (GimpData  *data,
+                                                      GError   **error);
+static void       gimp_brush_generated_dirty         (GimpData  *data);
+static gchar    * gimp_brush_generated_get_extension (GimpData  *data);
+static GimpData * gimp_brush_generated_duplicate     (GimpData  *data,
+                                                      gboolean   stingy_memory_use);
 
 
 static GimpBrushClass *parent_class = NULL;
@@ -111,21 +115,21 @@ gimp_brush_generated_init (GimpBrushGenerated *brush)
 }
 
 static gboolean
-gimp_brush_generated_save (GimpData *data)
+gimp_brush_generated_save (GimpData  *data,
+                           GError   **error)
 {
   GimpBrushGenerated *brush;
   FILE               *fp;
   gchar               buf[G_ASCII_DTOSTR_BUF_SIZE];
-
-  g_return_val_if_fail (data != NULL, FALSE);
-  g_return_val_if_fail (GIMP_IS_BRUSH_GENERATED (data), FALSE);
 
   brush = GIMP_BRUSH_GENERATED (data);
 
   /*  we are (finaly) ready to try to save the generated brush file  */
   if ((fp = fopen (data->filename, "wb")) == NULL)
     {
-      g_warning ("Unable to save file %s", data->filename);
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
+                   _("Could not open '%s' for writing: %s"),
+                   data->filename, g_strerror (errno));
       return FALSE;
     }
 
@@ -369,26 +373,45 @@ gimp_brush_generated_new (gfloat   radius,
 }
 
 GimpData *
-gimp_brush_generated_load (const gchar *filename,
-                           gboolean     stingy_memory_use)
+gimp_brush_generated_load (const gchar  *filename,
+                           gboolean      stingy_memory_use,
+                           GError      **error)
 {
   GimpBrushGenerated *brush;
   FILE               *fp;
   gchar               string[256];
 
+  g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
   if ((fp = fopen (filename, "rb")) == NULL)
-    return NULL;
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
+                   _("Could not open '%s' for reading: %s"),
+                   filename, g_strerror (errno));
+      return NULL;
+    }
 
   /* make sure the file we are reading is the right type */
   fgets (string, 255, fp);
-  
+
   if (strncmp (string, "GIMP-VBR", 8) != 0)
-    return NULL;
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Fatal Parse Error: '%s' is not a GIMP Brush file"),
+                   filename);
+      return NULL;
+    }
 
   /* make sure we are reading a compatible version */
   fgets (string, 255, fp);
   if (strncmp (string, "1.0", 3))
-    return NULL;
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Fatal Parse Error: '%s': unknown GIMP Brush version"),
+                   filename);
+      return NULL;
+    }
 
   /* create new brush */
   brush = GIMP_BRUSH_GENERATED (g_object_new (GIMP_TYPE_BRUSH_GENERATED, NULL));
@@ -427,10 +450,10 @@ gimp_brush_generated_load (const gchar *filename,
 
   gimp_brush_generated_thaw (brush);
 
-  GIMP_DATA (brush)->dirty = FALSE;
-
   if (stingy_memory_use)
     temp_buf_swap (GIMP_BRUSH (brush)->mask);
+
+  GIMP_DATA (brush)->dirty = FALSE;
 
   return GIMP_DATA (brush);
 }
@@ -438,7 +461,6 @@ gimp_brush_generated_load (const gchar *filename,
 void
 gimp_brush_generated_freeze (GimpBrushGenerated *brush)
 {
-  g_return_if_fail (brush != NULL);
   g_return_if_fail (GIMP_IS_BRUSH_GENERATED (brush));
 
   brush->freeze++;
@@ -447,7 +469,6 @@ gimp_brush_generated_freeze (GimpBrushGenerated *brush)
 void
 gimp_brush_generated_thaw (GimpBrushGenerated *brush)
 {
-  g_return_if_fail (brush != NULL);
   g_return_if_fail (GIMP_IS_BRUSH_GENERATED (brush));
   
   if (brush->freeze > 0)

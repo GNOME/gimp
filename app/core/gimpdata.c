@@ -43,9 +43,6 @@
 enum
 {
   DIRTY,
-  SAVE,
-  GET_EXTENSION,
-  DUPLICATE,
   LAST_SIGNAL
 };
 
@@ -114,34 +111,6 @@ gimp_data_class_init (GimpDataClass *klass)
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  data_signals[SAVE] = 
-    g_signal_new ("save",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_LAST,
-		  G_STRUCT_OFFSET (GimpDataClass, save),
-		  NULL, NULL,
-		  gimp_marshal_BOOLEAN__VOID,
-		  G_TYPE_BOOLEAN, 0);
-
-  data_signals[GET_EXTENSION] = 
-    g_signal_new ("get_extension",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_LAST,
-		  G_STRUCT_OFFSET (GimpDataClass, get_extension),
-		  NULL, NULL,
-		  gimp_marshal_POINTER__VOID,
-		  G_TYPE_POINTER, 0);
-
-  data_signals[DUPLICATE] = 
-    g_signal_new ("duplicate",
-		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_LAST,
-		  G_STRUCT_OFFSET (GimpDataClass, duplicate),
-		  NULL, NULL,
-		  gimp_marshal_OBJECT__BOOLEAN,
-		  GIMP_TYPE_DATA, 1,
-                  G_TYPE_BOOLEAN);
-
   object_class->finalize          = gimp_data_finalize;
 
   gimp_object_class->name_changed = gimp_data_name_changed;
@@ -201,11 +170,14 @@ gimp_data_get_memsize (GimpObject *object)
 }
 
 gboolean
-gimp_data_save (GimpData *data)
+gimp_data_save (GimpData  *data,
+                GError   **error)
 {
   gboolean success = FALSE;
 
   g_return_val_if_fail (GIMP_IS_DATA (data), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+  g_return_val_if_fail (data->filename != NULL, FALSE);
 
   if (data->internal)
     {
@@ -213,15 +185,8 @@ gimp_data_save (GimpData *data)
       return TRUE;
     }
 
-  if (! data->filename)
-    {
-      g_warning ("%s(): can't save data with NULL filename",
-		 G_GNUC_FUNCTION);
-      return FALSE;
-    }
-
-  g_signal_emit (G_OBJECT (data), data_signals[SAVE], 0,
-		 &success);
+  if (GIMP_DATA_GET_CLASS (data)->save)
+    success = GIMP_DATA_GET_CLASS (data)->save (data, error);
 
   if (success)
     data->dirty = FALSE;
@@ -258,7 +223,7 @@ gimp_data_delete_from_disk (GimpData  *data,
 
   if (unlink (data->filename) == -1)
     {
-      g_set_error (error, 0, 0,
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_DELETE,
                    _("Could not delete '%s': %s"),
                    data->filename, g_strerror (errno));
       return FALSE;
@@ -270,14 +235,12 @@ gimp_data_delete_from_disk (GimpData  *data,
 const gchar *
 gimp_data_get_extension (GimpData *data)
 {
-  const gchar *extension = NULL;
-
   g_return_val_if_fail (GIMP_IS_DATA (data), NULL);
 
-  g_signal_emit (G_OBJECT (data), data_signals[GET_EXTENSION], 0,
-		 &extension);
+  if (GIMP_DATA_GET_CLASS (data)->get_extension)
+    return GIMP_DATA_GET_CLASS (data)->get_extension (data);
 
-  return extension;
+  return NULL;
 }
 
 void
@@ -306,7 +269,6 @@ gimp_data_create_filename (GimpData    *data,
   gchar *safe_name;
   gint   i;
   gint   unum = 1;
-  FILE  *file;
 
   g_return_if_fail (GIMP_IS_DATA (data));
   g_return_if_fail (basename != NULL);
@@ -334,22 +296,18 @@ gimp_data_create_filename (GimpData    *data,
 
   g_free (filename);
 
-  while ((file = fopen (fullpath, "r")))
+  while (g_file_test (fullpath, G_FILE_TEST_EXISTS))
     {
-      fclose (file);
-
       g_free (fullpath);
 
-      filename = g_strdup_printf ("%s_%d%s",
+      filename = g_strdup_printf ("%s-%d%s",
 				  safe_name,
-                                  unum,
+                                  unum++,
 				  gimp_data_get_extension (data));
 
       fullpath = g_build_filename (dir, filename, NULL);
 
       g_free (filename);
-
-      unum++;
     }
 
   g_free (dir);
@@ -364,10 +322,20 @@ GimpData *
 gimp_data_duplicate (GimpData *data,
                      gboolean  stingy_memory_use)
 {
-  GimpData *new_data = NULL;
+  g_return_val_if_fail (GIMP_IS_DATA (data), NULL);
 
-  g_signal_emit (G_OBJECT (data), data_signals[DUPLICATE], 0,
-		 stingy_memory_use, &new_data);
+  if (GIMP_DATA_GET_CLASS (data)->duplicate)
+    return GIMP_DATA_GET_CLASS (data)->duplicate (data, stingy_memory_use);
 
-  return new_data;
+  return NULL;
+}
+
+GQuark
+gimp_data_error_quark (void)
+{
+  static GQuark q = 0;
+  if (q == 0)
+    q = g_quark_from_static_string ("gimp-data-error-quark");
+
+  return q;
 }

@@ -1,3 +1,35 @@
+2002-12-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdata.[ch]: use GError for reporting load/save
+	errors. Added gimp_data_error_quark() and a GimpDataError enum.
+	Made simple virtual functions out of save(), get_extension()
+	and duplicate() because they don't need to be signals.
+
+	* app/core/gimpbrush.[ch]
+	* app/core/gimpbrushgenerated.[ch]
+	* app/core/gimpbrushpipe.[ch]
+	* app/core/gimpgradient.[ch]
+	* app/core/gimppalette.[ch]
+	* app/core/gimppattern.[ch]: changed accordingly. Set data->dirty
+	to FALSE in each _load() function.
+
+	* app/core/gimpdatafactory.[ch]: report GError messages here.
+	Changed the ugly factory->path pointer location hack to
+	factory->path_property_name and get the path from
+	factory->gimp->config. Added gimp_data_factory_data_duplicate()
+	implementation which was already declared in the header.
+
+	* app/core/gimp.c: pass the path property name to
+	gimp_data_factory_new().
+
+	* app/widgets/gimpdatafactoryview.c: removed the duplicate
+	implementation and call gimp_data_factory_data_duplicate().
+
+	* app/core/gimpgradient.[ch]: added gimp_gradient_save_as_pov().
+
+	* app/gui/gradients-commands.c: removed save_as_pov implementation
+	and call gimp_gradient_save_as_pov().
+
 2002-12-01  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig-blurbs.h: small cleanup.
