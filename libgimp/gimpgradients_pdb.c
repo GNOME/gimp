@@ -72,7 +72,7 @@ gimp_gradients_get_list (gint *num_gradients)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gchar **gradient_names = NULL;
+  gchar **gradient_list = NULL;
   gint i;
 
   return_vals = gimp_run_procedure ("gimp_gradients_get_list",
@@ -84,14 +84,14 @@ gimp_gradients_get_list (gint *num_gradients)
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       *num_gradients = return_vals[1].data.d_int32;
-      gradient_names = g_new (gchar *, *num_gradients);
+      gradient_list = g_new (gchar *, *num_gradients);
       for (i = 0; i < *num_gradients; i++)
-	gradient_names[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+	gradient_list[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return gradient_names;
+  return gradient_list;
 }
 
 /**

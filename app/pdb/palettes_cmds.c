@@ -91,30 +91,16 @@ static Argument *
 palettes_get_list_invoker (Gimp     *gimp,
                            Argument *args)
 {
-  gboolean success = TRUE;
   Argument *return_args;
-  gchar **palettes;
-  GList *list;
-  gint i = 0;
+  gint32 num_palettes;
+  gchar **palette_list;
 
-  palettes = g_new (gchar *, gimp->palette_factory->container->num_children);
+  palette_list = gimp_container_get_name_array (gimp->palette_factory->container, &num_palettes);
 
-  for (list = GIMP_LIST (gimp->palette_factory->container)->list;
-       list;
-       list = g_list_next (list))
-    {
-      palettes[i++] = g_strdup (GIMP_OBJECT (list->data)->name);
-    }
+  return_args = procedural_db_return_args (&palettes_get_list_proc, TRUE);
 
-  success = (i > 0);
-
-  return_args = procedural_db_return_args (&palettes_get_list_proc, success);
-
-  if (success)
-    {
-      return_args[1].value.pdb_int = gimp->palette_factory->container->num_children;
-      return_args[2].value.pdb_pointer = palettes;
-    }
+  return_args[1].value.pdb_int = num_palettes;
+  return_args[2].value.pdb_pointer = palette_list;
 
   return return_args;
 }

@@ -81,30 +81,16 @@ static Argument *
 patterns_get_list_invoker (Gimp     *gimp,
                            Argument *args)
 {
-  gboolean success = TRUE;
   Argument *return_args;
-  gchar **patterns;
-  GList *list;
-  gint i = 0;
+  gint32 num_patterns;
+  gchar **pattern_list;
 
-  patterns = g_new (gchar *, gimp->pattern_factory->container->num_children);
+  pattern_list = gimp_container_get_name_array (gimp->pattern_factory->container, &num_patterns);
 
-  for (list = GIMP_LIST (gimp->pattern_factory->container)->list;
-       list;
-       list = g_list_next (list))
-    {
-      patterns[i++] = g_strdup (GIMP_OBJECT (list->data)->name);
-    }
+  return_args = procedural_db_return_args (&patterns_get_list_proc, TRUE);
 
-  success = (i > 0);
-
-  return_args = procedural_db_return_args (&patterns_get_list_proc, success);
-
-  if (success)
-    {
-      return_args[1].value.pdb_int = gimp->pattern_factory->container->num_children;
-      return_args[2].value.pdb_pointer = patterns;
-    }
+  return_args[1].value.pdb_int = num_patterns;
+  return_args[2].value.pdb_pointer = pattern_list;
 
   return return_args;
 }

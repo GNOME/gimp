@@ -82,33 +82,15 @@ path_list_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  gint32 num_paths = 0;
-  gchar **path_list = NULL;
+  gint32 num_paths;
+  gchar **path_list;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   if (success)
-    {
-      num_paths = gimp_container_num_children (gimage->vectors);
-    
-      if (num_paths > 0)
-	{
-	  gint   count = 0;
-	  GList *list;
-    
-	  path_list = g_new (gchar *, num_paths);
-    
-	  for (list = GIMP_LIST (gimage->vectors)->list;
-	       list;
-	       list = g_list_next (list))
-	    {
-	      path_list[count++] =
-		g_strdup (gimp_object_get_name (GIMP_OBJECT (list->data)));
-	    }
-	}
-    }
+    path_list = gimp_container_get_name_array (gimage->vectors, &num_paths);
 
   return_args = procedural_db_return_args (&path_list_proc, success);
 

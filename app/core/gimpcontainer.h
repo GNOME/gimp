@@ -103,7 +103,7 @@ void         gimp_container_thaw               (GimpContainer       *container);
 gboolean     gimp_container_frozen             (GimpContainer       *container);
 
 void         gimp_container_clear              (GimpContainer       *container);
-gboolean     gimp_container_have               (GimpContainer       *container,
+gboolean     gimp_container_have               (const GimpContainer *container,
 						GimpObject          *object);
 void         gimp_container_foreach            (GimpContainer       *container,
 						GFunc                func,
@@ -115,6 +115,9 @@ GimpObject * gimp_container_get_child_by_index (const GimpContainer *container,
 						gint                 index);
 gint         gimp_container_get_child_index    (const GimpContainer *container,
 						const GimpObject    *object);
+
+gchar     ** gimp_container_get_name_array     (const GimpContainer *container,
+                                                gint                *length);
 
 GQuark       gimp_container_add_handler        (GimpContainer       *container,
 						const gchar         *signame,

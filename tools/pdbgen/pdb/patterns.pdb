@@ -82,29 +82,12 @@ HELP
     @outargs = (
 	{ name => 'pattern_list', type => 'stringarray',
 	  desc => 'The list of pattern names',
-	  alias => 'patterns',
 	  array => { name => 'num_patterns',
-		     desc => 'The number of patterns in the pattern list',
-		     alias => 'gimp->pattern_factory->container->num_children',
-                     no_declare => 1 } }
+		     desc => 'The number of patterns in the pattern list' } }
     );
 
     %invoke = (
-	vars => [ 'GList *list', 'gint i = 0' ],
-	code => <<'CODE'
-{
-  patterns = g_new (gchar *, gimp->pattern_factory->container->num_children);
-
-  for (list = GIMP_LIST (gimp->pattern_factory->container)->list;
-       list;
-       list = g_list_next (list))
-    {
-      patterns[i++] = g_strdup (GIMP_OBJECT (list->data)->name);
-    }
-
-  success = (i > 0);
-}
-CODE
+	code => 'pattern_list = gimp_container_get_name_array (gimp->pattern_factory->container, &num_patterns);'
     );
 }
 

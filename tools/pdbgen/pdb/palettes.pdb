@@ -100,29 +100,12 @@ HELP
     @outargs = (
         { name => 'palette_list', type => 'stringarray',
           desc => 'The list of palette names',
-          alias => 'palettes',
           array => { name => 'num_palettes',
-                     desc => 'The number of palettes in the list',
-                     alias => 'gimp->palette_factory->container->num_children',
-                     no_declare => 1 } }
+                     desc => 'The number of palettes in the list' } }
     );
 
     %invoke = (
-        vars => [ 'GList *list', 'gint i = 0' ],
-        code => <<'CODE'
-{
-  palettes = g_new (gchar *, gimp->palette_factory->container->num_children);
-
-  for (list = GIMP_LIST (gimp->palette_factory->container)->list;
-       list;
-       list = g_list_next (list))
-    {
-      palettes[i++] = g_strdup (GIMP_OBJECT (list->data)->name);
-    }
-
-  success = (i > 0);
-}
-CODE
+        code => 'palette_list = gimp_container_get_name_array (gimp->palette_factory->container, &num_palettes);'
     );
 }
 

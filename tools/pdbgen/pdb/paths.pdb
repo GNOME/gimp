@@ -37,34 +37,14 @@ HELP
     $inargs[0]->{desc} = 'The ID of the image to list the paths from';
 
     @outargs = (
-	{ name => 'path_list', type => 'stringarray', init => 1,
+	{ name => 'path_list', type => 'stringarray',
 	  desc => 'List of the paths belonging to this image',
-	  array => { name => 'num_paths', init => 1,
+	  array => { name => 'num_paths',
 		     desc => 'The number of paths returned' } }
     );
 
     %invoke = (
-	code => <<'CODE'
-{
-  num_paths = gimp_container_num_children (gimage->vectors);
-
-  if (num_paths > 0)
-    {
-      gint   count = 0;
-      GList *list;
-
-      path_list = g_new (gchar *, num_paths);
-
-      for (list = GIMP_LIST (gimage->vectors)->list;
-           list;
-           list = g_list_next (list))
-        {
-	  path_list[count++] =
-            g_strdup (gimp_object_get_name (GIMP_OBJECT (list->data)));
-        }
-    }
-}
-CODE
+	code => 'path_list = gimp_container_get_name_array (gimage->vectors, &num_paths);'
     );
 }
 

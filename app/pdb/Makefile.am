@@ -18,6 +18,7 @@ libapppdb_a_SOURCES = \
 	fileops_cmds.c		\
 	floating_sel_cmds.c	\
 	font_select_cmds.c	\
+	fonts_cmds.c		\
 	gimprc_cmds.c		\
 	gradient_select_cmds.c	\
 	gradients_cmds.c	\

@@ -102,30 +102,16 @@ static Argument *
 brushes_get_list_invoker (Gimp     *gimp,
                           Argument *args)
 {
-  gboolean success = TRUE;
   Argument *return_args;
-  gchar **brushes;
-  GList *list;
-  int i = 0;
+  gint32 num_brushes;
+  gchar **brush_list;
 
-  brushes = g_new (char *, gimp->brush_factory->container->num_children);
+  brush_list = gimp_container_get_name_array (gimp->brush_factory->container, &num_brushes);
 
-  for (list = GIMP_LIST (gimp->brush_factory->container)->list;
-       list;
-       list = g_list_next (list))
-    {
-      brushes[i++] = g_strdup (GIMP_OBJECT (list->data)->name);
-    }
+  return_args = procedural_db_return_args (&brushes_get_list_proc, TRUE);
 
-  success = (i > 0);
-
-  return_args = procedural_db_return_args (&brushes_get_list_proc, success);
-
-  if (success)
-    {
-      return_args[1].value.pdb_int = gimp->brush_factory->container->num_children;
-      return_args[2].value.pdb_pointer = brushes;
-    }
+  return_args[1].value.pdb_int = num_brushes;
+  return_args[2].value.pdb_pointer = brush_list;
 
   return return_args;
 }

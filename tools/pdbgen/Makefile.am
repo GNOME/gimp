@@ -13,6 +13,7 @@ pdb_sources = \
 	pdb/fileops.pdb		\
 	pdb/floating_sel.pdb	\
 	pdb/font_select.pdb	\
+	pdb/fonts.pdb		\
 	pdb/gimprc.pdb		\
 	pdb/gradient_select.pdb	\
 	pdb/gradients.pdb	\

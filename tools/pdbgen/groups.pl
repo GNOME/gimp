@@ -11,6 +11,7 @@
     fileops
     floating_sel
     font_select
+    fonts
     gimprc
     gradient_select
     gradients

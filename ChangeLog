@@ -1,3 +1,33 @@
+2003-09-04  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpcontainer.[ch]: added new function
+	gimp_container_get_name_array().
+
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/gradients.pdb
+	* tools/pdbgen/pdb/palettes.pdb
+	* tools/pdbgen/pdb/paths.pdb
+	* tools/pdbgen/pdb/patterns.pdb: use the new GimpContainer function
+	instead of duplicating this code over and over again.
+
+	* app/pdb/brushes_cmds.c
+	* app/pdb/gradients_cmds.c
+	* app/pdb/palettes_cmds.c
+	* app/pdb/paths_cmds.c
+	* app/pdb/patterns_cmds.c
+	* libgimp/gimpgradients_pdb.c: regenerated.
+
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/pdb/fonts.pdb: added new file that defines a simple
+	PDB API for fonts.
+
+	* tools/pdbgen/groups.pl
+	* app/pdb/Makefile.am
+	* app/pdb/fonts_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimp_pdb.h
+	* libgimp/gimpfonts_pdb.[ch]: (re)generated.
+
 2003-09-04  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpbezierstroke.c: Changed the direct dragging

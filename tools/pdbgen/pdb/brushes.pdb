@@ -104,29 +104,12 @@ HELP
     @outargs = (
 	{ name => 'brush_list', type => 'stringarray',
 	  desc => 'The list of brush names',
-	  alias => 'brushes',
 	  array => { name => 'num_brushes',
-		     desc => 'The number of brushes in the brush list',
-		     alias => 'gimp->brush_factory->container->num_children',
-                     no_declare => 1 } }
+		     desc => 'The number of brushes in the brush list' } }
     );
 
     %invoke = (
-	vars => [ 'GList *list', 'int i = 0' ],
-	code => <<'CODE'
-{
-  brushes = g_new (char *, gimp->brush_factory->container->num_children);
-
-  for (list = GIMP_LIST (gimp->brush_factory->container)->list;
-       list;
-       list = g_list_next (list))
-    {
-      brushes[i++] = g_strdup (GIMP_OBJECT (list->data)->name);
-    }
-
-  success = (i > 0);
-}
-CODE
+	code => 'brush_list = gimp_container_get_name_array (gimp->brush_factory->container, &num_brushes);'
     );
 }
 

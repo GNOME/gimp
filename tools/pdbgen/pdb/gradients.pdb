@@ -57,30 +57,14 @@ HELP
     &pdb_misc;
 
     @outargs = (
-	{ name => 'gradient_names', type => 'stringarray',
-	  desc => 'The list of gradient names', alias => 'gradients',
+	{ name => 'gradient_list', type => 'stringarray',
+	  desc => 'The list of gradient names',
 	  array => { name => 'num_gradients',
-		     desc => 'The number of loaded gradients',
-		     alias => 'gimp->gradient_factory->container->num_children',
-                     no_declare => 1 } }
+		     desc => 'The number of loaded gradients' } }
     );
 
     %invoke = (
-	vars => [ 'GList *list', 'gint i = 0' ],
-	code => <<'CODE'
-{
-  gradients = g_new (gchar *, gimp->gradient_factory->container->num_children);
-
-  for (list = GIMP_LIST (gimp->gradient_factory->container)->list;
-       list;
-       list = g_list_next (list))
-    {
-      gradients[i++] = g_strdup (GIMP_OBJECT (list->data)->name);
-    }
-
-  success = (i > 0);
-}
-CODE
+	code => 'gradient_list = gimp_container_get_name_array (gimp->gradient_factory->container, &num_gradients);'
     );
 }
 
