@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.1.21\n"
 "POT-Creation-Date: 1999-09-12 17:58+0200\n"
-"PO-Revision-Date: 2000-05-09 11:10+02:00\n"
+"PO-Revision-Date: 2000-05-10 23:07+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -247,9 +247,6 @@ msgstr "<Image>/Filtry/Vyobrazení/Zvýraznìní hran"
 msgid "a color must have three components (array elements)"
 msgstr "barva musí mít tøi komponenty (prvky pole)"
 
-msgid "<Toolbox>/Xtns/Render/Pixelgenerator"
-msgstr "<Toolbox>/Roz¹./Vyobrazení/Generátor pixelù"
-
 msgid "Spin Layer SRC (250ms)"
 msgstr "Vrstva víøení ZDROJ (250 ms)"
 
@@ -276,9 +273,6 @@ msgstr "Text"
 
 msgid "<Image>/Select/Round Rectangular Selection"
 msgstr "<Image>/Výbìr/Zaoblený obdélníkový výbìr"
-
-msgid "<Image>/Filters/Map/Pixelmap"
-msgstr "<Image>/Filtry/Mapování/Pixelová mapa"
 
 msgid "/Xtns/Perl"
 msgstr "/Roz¹./Perl"
@@ -333,6 +327,9 @@ msgstr "funkce/macro \"$name\" nebylo nalezeno v $class"
 
 msgid "accepted tcp connection from "
 msgstr "pøijato tcp spojení od "
+
+msgid "<Toolbox>/Xtns/Render/Pixelgenerator..."
+msgstr "<Toolbox>/Roz¹./Vyobrazení/Generátor pixelù..."
 
 msgid "illegal parasite specification, expected three array members"
 msgstr "neplatné urèení parazita, oèekáváno tøíèlenné pole"
@@ -580,6 +577,9 @@ msgstr "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
 msgid "Synopsis"
 msgstr "Osnova"
 
+msgid "<Image>/Filters/Map/Pixelmap..."
+msgstr "<Image>/Filtry/Mapování/Pixelová mapa..."
+
 msgid "Color"
 msgstr "Barva"
 
@@ -768,7 +768,7 @@ msgid "<Image>/Filters/Logulator/Cool Metal"
 msgstr "<Image>/Filtry/Logulátor/Zchladlý kov"
 
 msgid "<Image>/Filters/Logulator/Carved"
-msgstr "<Image>/Filtry/Logulátor/Krájet"
+msgstr "<Image>/Filtry/Logulátor/Øezba"
 
 msgid "<Image>/Filters/Logulator/Textured"
 msgstr "<Image>/Filtry/Logulátor/Texturovat"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.1.21\n"
 "POT-Creation-Date: 2000-05-08 23:52+0200\n"
-"PO-Revision-Date: 2000-05-09 16:25+02:00\n"
+"PO-Revision-Date: 2000-05-10 13:04+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -309,7 +309,7 @@ msgstr "<Image>/Skript-fu/Stín/Efekt Xach..."
 
 #: plug-ins/script-fu/scripts/carve-it.scm:0
 msgid "<Image>/Script-Fu/Stencil Ops/Carve-It..."
-msgstr "<Image>/Skript-fu/Stín/©ablony/Rozkrájet..."
+msgstr "<Image>/Skript-fu/Stín/©ablony/Vyøezat..."
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 msgid "<Image>/Script-Fu/Stencil Ops/Chrome-It..."
@@ -365,7 +365,7 @@ msgstr "<Toolbox>/Roz¹./Skript-fu/Loga/Fleky..."
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
-msgstr "<Toolbox>/Roz¹./Skript-fu/Loga/Krájet..."
+msgstr "<Toolbox>/Roz¹./Skript-fu/Loga/Øezba..."
 
 #: plug-ins/script-fu/scripts/chalk.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
@@ -848,23 +848,23 @@ msgstr "Okraj"
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 msgid "Buffer Amount (% Height of Text)"
-msgstr ""
+msgstr "Velikost bufferu (% vý¹ky textu)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "Bumpmap (Alpha Layer) Blur Radius"
-msgstr ""
+msgstr "Polomìr rozostøení mapy vyvý¹ení (alfa vrtsty)"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
 msgid "Burst Color"
-msgstr ""
+msgstr "Barva pronikání"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 msgid "Carve Raised Text"
-msgstr ""
+msgstr "Text vyøezaný do vý¹ky"
 
 #: plug-ins/script-fu/scripts/carve-it.scm:0
 msgid "Carve White Areas"
-msgstr ""
+msgstr "Vyøezaný bílý text"
 
 #: plug-ins/script-fu/scripts/news-text.scm:0
 msgid "Cell Size (pixels)"
@@ -876,40 +876,40 @@ msgstr "Barva køídy"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Chip Amount"
-msgstr ""
+msgstr "Velikost od¹típnutí"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Chrome Balance"
-msgstr ""
+msgstr "Vyvá¾enost chromování"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Chrome Factor"
-msgstr ""
+msgstr "Faktor chromování"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Chrome Lightness"
-msgstr ""
+msgstr "Svìtlost chromování"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Chrome Saturation"
-msgstr ""
+msgstr "Systost chromování"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 msgid "Chrome White Areas"
-msgstr ""
+msgstr "Pochromovat bílé oblasti"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 msgid "Circuit Seed"
-msgstr ""
+msgstr "Hnízdo okruhu"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Clear Unselected Maskarea"
-msgstr ""
+msgstr "Vymazat nevybrané oblast masky"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 msgid "Color 1"
@@ -931,7 +931,7 @@ msgstr "Barva"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Columns"
-msgstr "Sloupcù"
+msgstr "Sloupce"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Create New Image"
@@ -950,6 +950,8 @@ msgid ""
 "Darken Only\n"
 "(Better, but only for Images with alot of White)"
 msgstr ""
+"Pouze ztmavení\n"
+"(lep¹í, ale pouze na obrázky s mno¾stvím bílé)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
@@ -982,7 +984,7 @@ msgstr "Popis"
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Detail Level"
-msgstr ""
+msgstr "Podrobná úroveò"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
 msgid "Diameter"
@@ -1224,7 +1226,7 @@ msgstr "Rámeèky"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "From Top-Left to Bottom-Right"
-msgstr ""
+msgstr "Odshora zleva dolù doprava"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
@@ -1235,43 +1237,43 @@ msgstr ""
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
 msgid "Glow Color"
-msgstr ""
+msgstr "Barva ¾áru"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 msgid "Glow Radius"
-msgstr ""
+msgstr "Polomìr ¾áru"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0 plug-ins/script-fu/scripts/lava.scm:0
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Gradient"
-msgstr ""
+msgstr "Pøechod"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 msgid "Granularity (0 - 15)"
-msgstr ""
+msgstr "Zrnitost (0-15)"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Granularity (1 is Low)"
-msgstr ""
+msgstr "Zrnitost (1 je malá)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Granularity"
-msgstr ""
+msgstr "Zrnitost"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "Graph Scale"
-msgstr ""
+msgstr "Mìøítko grafu"
 
 #: plug-ins/script-fu/scripts/grid-system.scm:0
 msgid "Grids X"
-msgstr ""
+msgstr "X møí¾"
 
 #: plug-ins/script-fu/scripts/grid-system.scm:0
 msgid "Grids Y"
-msgstr ""
+msgstr "Y møí¾"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
@@ -1279,185 +1281,187 @@ msgstr ""
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Height"
-msgstr ""
+msgstr "Vý¹ka"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Highlight Balance"
-msgstr ""
+msgstr "Vyvá¾ení svìtel"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Highlight Color"
-msgstr ""
+msgstr "Barva svìtel"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Highlight Opacity"
-msgstr ""
+msgstr "Krytí svìtel"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Highlight X Offset"
-msgstr ""
+msgstr "X posun svìtel"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Highlight Y Offset"
-msgstr ""
+msgstr "Y posun svìtel"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "Hit Rate"
-msgstr ""
+msgstr "Pomìrná èetnost"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Hue Rate"
-msgstr ""
+msgstr "Èetnost odstínù"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "IIR"
-msgstr ""
+msgstr "IIR"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Image Height"
-msgstr ""
+msgstr "Vý¹ka obrázku"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Image Size"
-msgstr ""
+msgstr "Velikost obrázku"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Image Width"
-msgstr ""
+msgstr "©íøka obrázku"
 
 #: plug-ins/script-fu/scripts/carve-it.scm:0
 msgid "Image to Carve"
-msgstr ""
+msgstr "Obrázek k vyøezání"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Index Image"
-msgstr ""
+msgstr "Indexový obrázek"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Index to n Colors (0 = Remain RGB)"
-msgstr ""
+msgstr "Indexovaný v n barvách (0 = nechat RGB)"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Insert Layer Names"
-msgstr ""
+msgstr "Vlo¾it jména vrstev"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "Intermediate Frames"
-msgstr ""
+msgstr "Mezilehlá políèka"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Interpolate"
-msgstr ""
+msgstr "Interpolovat"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "Invert direction"
-msgstr ""
+msgstr "Obrátit smìr"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Invert"
-msgstr ""
+msgstr "Invertovat"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Keep Background"
-msgstr ""
+msgstr "Zachovat pozadí"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Keep Bump Layer"
-msgstr ""
+msgstr "Zachovat vrstvu vyvý¹ení"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 #: plug-ins/script-fu/scripts/lava.scm:0
 #: plug-ins/script-fu/scripts/predator.scm:0
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Keep Selection"
-msgstr ""
+msgstr "Zachovat výbìr"
 
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Land Height"
-msgstr ""
+msgstr "Vý¹ka zemì"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Left"
-msgstr ""
+msgstr "Nalevo"
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "Lighting (degrees)"
-msgstr ""
+msgstr "Osvìtlení (stupnì)"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "Looped"
-msgstr ""
+msgstr "Smyèka"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Lower Color (Active)"
-msgstr ""
+msgstr "Dolní barva (aktivní)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Lower Color"
-msgstr ""
+msgstr "Dolní barva"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 msgid "Lower-Right color"
-msgstr ""
+msgstr "Pravá dolní barva"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Make New Background"
-msgstr ""
+msgstr "Vytvoøit nové pozadí"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm:0
 msgid "Mask Opacity"
-msgstr ""
+msgstr "Krytí masky"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm:0
 msgid "Mask Size"
-msgstr ""
+msgstr "Velikost masky"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "Max. Blur Radius"
-msgstr ""
+msgstr "Nejvy¹¹í polomìr rozostøení"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid ""
 "Mosaic Tile Type\n"
 "Squares 0, Hex 1, Oct 2"
 msgstr ""
+"Typ dla¾dic mozaiky\n"
+"ètverce 0, ¹estiúhelníky 1, osmiúhelníky 2"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Mottle"
-msgstr ""
+msgstr "Skvrnka"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 msgid "No Background (only for separate layer)"
-msgstr ""
+msgstr "Bez pozadí (pouze pro samostatné vrstvy)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Not Pressed (Active)"
-msgstr ""
+msgstr "Nestisknuto (aktivní)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Not Pressed"
-msgstr ""
+msgstr "Nestisknuto"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "Number of Bands"
-msgstr ""
+msgstr "Poèet pruhù"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Number of Colors"
-msgstr ""
+msgstr "Poèet barev"
 
 #: plug-ins/gap/sel-to-anim-img.scm:0
 msgid "Number of Copies"
-msgstr ""
+msgstr "Poèet kopií"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
@@ -1470,17 +1474,17 @@ msgstr "Poèet èar"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 msgid "Number of Times to Whirl"
-msgstr ""
+msgstr "Poèet opakování víru"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Number of X Tiles"
-msgstr ""
+msgstr "X poèet dla¾dic"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Number of Y Tiles"
-msgstr ""
+msgstr "Y poèet dla¾dic"
 
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Number"
@@ -1506,7 +1510,7 @@ msgstr "Posun Y"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 msgid "Oilify Mask Size"
-msgstr ""
+msgstr "Velikost masky olejomalby"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
@@ -1520,20 +1524,20 @@ msgstr "Orientace"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Outer Border"
-msgstr ""
+msgstr "Vnìj¹í hranice"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "Outline Blur Radius"
-msgstr ""
+msgstr "Polomìr rozostøení obrysu"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 msgid "Outline Color"
-msgstr ""
+msgstr "Barva obrysu"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Outline Size"
-msgstr ""
+msgstr "Velikost obrysu"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Pad Color"
@@ -1588,11 +1592,11 @@ msgstr "Vzorek"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
-msgstr ""
+msgstr "Polomìr pera / koleèka [0,0:1,0]"
 
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "Pixel Amount"
-msgstr ""
+msgstr "Velikost pixelù"
 
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "Pixelize"
@@ -1602,7 +1606,7 @@ msgstr "Pixelizovat"
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Pressed"
-msgstr ""
+msgstr "Stisknuto"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 msgid "Quarter Size"
@@ -1663,12 +1667,12 @@ msgstr "Napravo"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "Rippling Strength"
-msgstr ""
+msgstr "Síla èeøení"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Roughness"
-msgstr ""
+msgstr "Drsnost"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Round Ratio"
@@ -1676,11 +1680,11 @@ msgstr "Pomìr zaoblení"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Rows"
-msgstr ""
+msgstr "Øady"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Rows/Cols"
-msgstr ""
+msgstr "Øady/sloupce"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
@@ -1755,7 +1759,7 @@ msgstr "Ostrost (stupnì)"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Shear Length"
-msgstr ""
+msgstr "Délka støihu"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
@@ -1765,66 +1769,66 @@ msgstr "Velikost"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Smooth Horizontally"
-msgstr ""
+msgstr "Vyhladit vodorovnì"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Smooth Vertically"
-msgstr ""
+msgstr "Vyhladit svisle"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Smooth"
-msgstr ""
+msgstr "Vyhladit"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Space Between Layers"
-msgstr ""
+msgstr "Rozestup mezi vrstvami"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #: plug-ins/script-fu/scripts/select_to_brush.scm:0
 msgid "Spacing"
-msgstr ""
+msgstr "Rozestup"
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "Sphere Color"
-msgstr ""
+msgstr "Barva koule"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Spread"
-msgstr ""
+msgstr "Roz¹íøit"
 
 #: plug-ins/script-fu/scripts/coffee.scm:0
 msgid "Stains"
-msgstr ""
+msgstr "Skvrny"
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "Start Angle"
-msgstr ""
+msgstr "Poèáteèní úhel"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "Start Blend"
-msgstr ""
+msgstr "Poèátek mísení"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "Start X"
-msgstr ""
+msgstr "X poèátek"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "Start Y"
-msgstr ""
+msgstr "Y poèátek"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Starting Blend"
-msgstr ""
+msgstr "Poèáteèní mísení"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 msgid "Supersample"
-msgstr ""
+msgstr "Pøevzorkování"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "TRUE = Detail in Middle, FALSE = Tile"
-msgstr ""
+msgstr "TRUE = detail uprostøed, FALSE = dla¾dice"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Text Color (Active)"
@@ -1958,15 +1962,15 @@ msgstr "Pou¾ít pøekrytí vzorkù"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Use Pattern for Outline instead of Gradient"
-msgstr ""
+msgstr "Pou¾ít na obrysy vzorku místo pøechodu"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Use Pattern for Text instead of Gradient"
-msgstr ""
+msgstr "Pou¾ít na text vzorku místo pøechodu"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "Use Selection Bounds Instead of Belows"
-msgstr ""
+msgstr "Pou¾ít hranic výbìru místo ní¾e uvedeného"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "Wavelength"
