@@ -1,3 +1,18 @@
+2004-11-02  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/drawable_transform.pdb (flip): renamed
+	parameter "center" to "auto_center" and removed
+	"transform_direction". Renamed rotate() to rotate_free() and
+	added a "gboolean auto_center" parameter. Added new function
+	rotate() which takes enum GimpRotationType instead of an
+	arbiatrary angle so the flip and rotate APIs are symmetric.
+
+	* libgimp/gimp.def: added the gimp_drawable_transform_* stuff.
+
+	* app/pdb/drawable_transform_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpdrawabletransform_pdb.[ch]: regenerated.
+
 2004-11-02  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/image-scale-dialog.c (image_scale_callback): actually

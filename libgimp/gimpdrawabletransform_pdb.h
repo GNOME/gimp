@@ -31,9 +31,8 @@ G_BEGIN_DECLS
 
 gint32 gimp_drawable_transform_flip        (gint32                 drawable_ID,
 					    GimpOrientationType    flip_type,
-					    gboolean               center,
+					    gboolean               auto_center,
 					    gdouble                axis,
-					    GimpTransformDirection transform_direction,
 					    gboolean               clip_result);
 gint32 gimp_drawable_transform_flip_free   (gint32                 drawable_ID,
 					    gdouble                x0,
@@ -60,7 +59,14 @@ gint32 gimp_drawable_transform_perspective (gint32                 drawable_ID,
 					    gint                   recursion_level,
 					    gboolean               clip_result);
 gint32 gimp_drawable_transform_rotate      (gint32                 drawable_ID,
+					    GimpRotationType       rotate_type,
+					    gboolean               auto_center,
+					    gint                   center_x,
+					    gint                   center_y,
+					    gboolean               clip_result);
+gint32 gimp_drawable_transform_rotate_free (gint32                 drawable_ID,
 					    gdouble                angle,
+					    gboolean               auto_center,
 					    gint                   center_x,
 					    gint                   center_y,
 					    GimpTransformDirection transform_direction,

@@ -68,9 +68,9 @@ BLURB
 This procedure flips the specified drawable if no selection exists. If
 a selection exists, the portion of the drawable which lies under the
 selection is cut from the drawable and made into a floating selection
-which is then flipped.  If center is set to true, the flip is around
-the image center. Otherwise, the coordinate of the axis needs to be
-specified.
+which is then flipped.  If auto_center is set to true, the flip is
+around the selection's center. Otherwise, the coordinate of the axis
+needs to be specified.
 
 The return value is the ID of the flipped drawable. If there was no
 selection, this will be equal to the drawable ID supplied as input.
@@ -83,12 +83,10 @@ HELP
         &drawable_arg,
         { name => 'flip_type', type => &std_orientation_enum,
           desc => 'Type of flip: %%desc%%' },
-        { name => 'center', type => 'boolean',
-          desc => 'Whether to automatically position the axis in the image center' },
+        { name => 'auto_center', type => 'boolean',
+          desc => 'Whether to automatically position the axis in the selection center' },
         { name => 'axis', type => 'float',
           desc => 'coord. of flip axis' },
-        { name => 'transform_direction', type => 'enum GimpTransformDirection',
-          desc => 'Direction of Transformation: { %%desc%% }' },
         { name => 'clip_result', type => 'boolean',
           desc => 'Whether to clip results' }
     );
@@ -106,8 +104,8 @@ HELP
       gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
     {
       success = gimp_drawable_transform_flip (drawable, context,
-                                              transform_direction,
-                                              center, axis,
+                                              flip_type,
+                                              auto_center, axis,
                                               clip_result);
     }
 }
@@ -174,13 +172,10 @@ HELP
 
       /* Transform the selection */
       success = gimp_drawable_transform_affine (drawable, context,
-                                                &matrix,
-                                                transform_direction,
-                                                interpolation,
-                                                supersample,
+                                                &matrix, transform_direction,
+                                                interpolation, supersample,
                                                 recursion_level,
-                                                clip_result,
-                                                progress);
+                                                clip_result, progress);
       if (progress)
         gimp_progress_end (progress);
     }
@@ -262,12 +257,10 @@ HELP
 
       /* Perspective the selection */
       success = gimp_drawable_transform_affine (drawable, context,
-                                                &matrix,
-                                                transform_direction,
+                                                &matrix, transform_direction,
                                                 interpolation, supersample,
                                                 recursion_level,
-                                                clip_result,
-                                                progress);
+                                                clip_result, progress);
 
       if (progress)
         gimp_progress_end (progress);
@@ -296,8 +289,63 @@ HELP
 
     @inargs = (
         &drawable_arg,
+        { name => 'rotate_type', type => 'enum GimpRotationType',
+          desc => 'Type of rotation: %%desc%%' },
+        { name => 'auto_center', type => 'boolean',
+          desc => 'Whether to automatically rotate around the selection center' },
+        { name => 'center_x', type => 'int32',
+          desc => 'The hor. coordinate of the center of rotation' },
+        { name => 'center_y', type => 'int32',
+          desc => 'The vert. coordinate of the center of rotation' },
+        { name => 'clip_result', type => 'boolean',
+          desc => 'Whether to clip results' }
+    );
+
+    @outargs = ( &drawable_out_arg('rotated') );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  gint x, y, width, height;
+
+  success = gimp_item_is_attached (GIMP_ITEM (drawable));
+
+  if (success &&
+      gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+    {
+      success = gimp_drawable_transform_rotate (drawable, context,
+                                                rotate_type,
+                                                auto_center, center_x, center_y,
+                                                clip_result);
+    }
+}
+CODE
+    );
+}
+
+sub drawable_transform_rotate_free {
+    $blurb = <<'BLURB';
+Rotate the specified drawable about given coordinates through the specified angle.
+BLURB
+
+    $help = <<'HELP';
+This function rotates the specified drawable if no selection
+exists. If a selection exists, the portion of the drawable which lies
+under the selection is cut from the drawable and made into a floating
+selection which is then rotated by the specified amount. The return
+value is the ID of the rotated drawable.  If there was no selection,
+this will be equal to the drawable ID supplied as input. Otherwise,
+this will be the newly created and rotated drawable.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+        &drawable_arg,
         { name => 'angle', type => 'float',
           desc => 'The angle of rotation (radians)' },
+        { name => 'auto_center', type => 'boolean',
+          desc => 'Whether to automatically rotate around the selection center' },
         { name => 'center_x', type => 'int32',
           desc => 'The hor. coordinate of the center of rotation' },
         { name => 'center_y', type => 'int32',
@@ -320,8 +368,12 @@ HELP
       GimpMatrix3 matrix;
 
       /* Assemble the transformation matrix */
-      gimp_transform_matrix_rotate_center (center_x, center_y, angle,
-                                           &matrix);
+      if (auto_center)
+        gimp_transform_matrix_rotate (x, y, width, height, angle,
+                                      &matrix);
+      else
+        gimp_transform_matrix_rotate_center (center_x, center_y, angle,
+                                             &matrix);
 
       if (progress)
         gimp_progress_start (progress, _("Rotating..."), FALSE);
@@ -406,11 +458,10 @@ HELP
 
       /* Scale the selection */
       success = gimp_drawable_transform_affine (drawable, context,
-                                                &matrix,
-                                                transform_direction,
+                                                &matrix, transform_direction,
                                                 interpolation, supersample,
                                                 recursion_level,
-                                                 clip_result, progress);
+                                                clip_result, progress);
 
       if (progress)
         gimp_progress_end (progress);
@@ -473,8 +524,7 @@ HELP
 
       /* Shear the selection */
       success = gimp_drawable_transform_affine (drawable, context,
-                                                &matrix,
-                                                transform_direction,
+                                                &matrix, transform_direction,
                                                 interpolation, supersample,
                                                 recursion_level,
                                                 clip_result, progress);
@@ -659,9 +709,9 @@ CODE
 
 @procs = qw(drawable_transform_flip drawable_transform_flip_free
             drawable_transform_perspective
-            drawable_transform_rotate drawable_transform_scale
-            drawable_transform_shear drawable_transform_2d
-            drawable_transform_matrix);
+            drawable_transform_rotate drawable_transform_rotate_free
+            drawable_transform_scale drawable_transform_shear
+            drawable_transform_2d drawable_transform_matrix);
 
 %exports = (app => [@procs], lib => [@procs]);
 

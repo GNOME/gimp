@@ -29,9 +29,8 @@
  * gimp_drawable_transform_flip:
  * @drawable_ID: The affected drawable.
  * @flip_type: Type of flip.
- * @center: Whether to automatically position the axis in the image center.
+ * @auto_center: Whether to automatically position the axis in the selection center.
  * @axis: coord. of flip axis.
- * @transform_direction: Direction of Transformation.
  * @clip_result: Whether to clip results.
  *
  * Flip the specified drawable either vertically or horizontally.
@@ -39,11 +38,11 @@
  * This procedure flips the specified drawable if no selection exists.
  * If a selection exists, the portion of the drawable which lies under
  * the selection is cut from the drawable and made into a floating
- * selection which is then flipped. If center is set to true, the flip
- * is around the image center. Otherwise, the coordinate of the axis
- * needs to be specified. The return value is the ID of the flipped
- * drawable. If there was no selection, this will be equal to the
- * drawable ID supplied as input. Otherwise, this will be the newly
+ * selection which is then flipped. If auto_center is set to true, the
+ * flip is around the selection's center. Otherwise, the coordinate of
+ * the axis needs to be specified. The return value is the ID of the
+ * flipped drawable. If there was no selection, this will be equal to
+ * the drawable ID supplied as input. Otherwise, this will be the newly
  * created and flipped drawable.
  *
  * Returns: The flipped drawable.
@@ -51,12 +50,11 @@
  * Since: GIMP 2.2
  */
 gint32
-gimp_drawable_transform_flip (gint32                 drawable_ID,
-			      GimpOrientationType    flip_type,
-			      gboolean               center,
-			      gdouble                axis,
-			      GimpTransformDirection transform_direction,
-			      gboolean               clip_result)
+gimp_drawable_transform_flip (gint32              drawable_ID,
+			      GimpOrientationType flip_type,
+			      gboolean            auto_center,
+			      gdouble             axis,
+			      gboolean            clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -66,9 +64,8 @@ gimp_drawable_transform_flip (gint32                 drawable_ID,
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_INT32, flip_type,
-				    GIMP_PDB_INT32, center,
+				    GIMP_PDB_INT32, auto_center,
 				    GIMP_PDB_FLOAT, axis,
-				    GIMP_PDB_INT32, transform_direction,
 				    GIMP_PDB_INT32, clip_result,
 				    GIMP_PDB_END);
 
@@ -237,7 +234,62 @@ gimp_drawable_transform_perspective (gint32                 drawable_ID,
 /**
  * gimp_drawable_transform_rotate:
  * @drawable_ID: The affected drawable.
+ * @rotate_type: Type of rotation.
+ * @auto_center: Whether to automatically rotate around the selection center.
+ * @center_x: The hor. coordinate of the center of rotation.
+ * @center_y: The vert. coordinate of the center of rotation.
+ * @clip_result: Whether to clip results.
+ *
+ * Rotate the specified drawable about given coordinates through the
+ * specified angle.
+ *
+ * This function rotates the specified drawable if no selection exists.
+ * If a selection exists, the portion of the drawable which lies under
+ * the selection is cut from the drawable and made into a floating
+ * selection which is then rotated by the specified amount. The return
+ * value is the ID of the rotated drawable. If there was no selection,
+ * this will be equal to the drawable ID supplied as input. Otherwise,
+ * this will be the newly created and rotated drawable.
+ *
+ * Returns: The rotated drawable.
+ *
+ * Since: GIMP 2.2
+ */
+gint32
+gimp_drawable_transform_rotate (gint32           drawable_ID,
+				GimpRotationType rotate_type,
+				gboolean         auto_center,
+				gint             center_x,
+				gint             center_y,
+				gboolean         clip_result)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 ret_drawable_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp_drawable_transform_rotate",
+				    &nreturn_vals,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_INT32, rotate_type,
+				    GIMP_PDB_INT32, auto_center,
+				    GIMP_PDB_INT32, center_x,
+				    GIMP_PDB_INT32, center_y,
+				    GIMP_PDB_INT32, clip_result,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    ret_drawable_ID = return_vals[1].data.d_drawable;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return ret_drawable_ID;
+}
+
+/**
+ * gimp_drawable_transform_rotate_free:
+ * @drawable_ID: The affected drawable.
  * @angle: The angle of rotation (radians).
+ * @auto_center: Whether to automatically rotate around the selection center.
  * @center_x: The hor. coordinate of the center of rotation.
  * @center_y: The vert. coordinate of the center of rotation.
  * @transform_direction: Direction of Transformation.
@@ -262,24 +314,26 @@ gimp_drawable_transform_perspective (gint32                 drawable_ID,
  * Since: GIMP 2.2
  */
 gint32
-gimp_drawable_transform_rotate (gint32                 drawable_ID,
-				gdouble                angle,
-				gint                   center_x,
-				gint                   center_y,
-				GimpTransformDirection transform_direction,
-				GimpInterpolationType  interpolation,
-				gboolean               supersample,
-				gint                   recursion_level,
-				gboolean               clip_result)
+gimp_drawable_transform_rotate_free (gint32                 drawable_ID,
+				     gdouble                angle,
+				     gboolean               auto_center,
+				     gint                   center_x,
+				     gint                   center_y,
+				     GimpTransformDirection transform_direction,
+				     GimpInterpolationType  interpolation,
+				     gboolean               supersample,
+				     gint                   recursion_level,
+				     gboolean               clip_result)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 ret_drawable_ID = -1;
 
-  return_vals = gimp_run_procedure ("gimp_drawable_transform_rotate",
+  return_vals = gimp_run_procedure ("gimp_drawable_transform_rotate_free",
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, drawable_ID,
 				    GIMP_PDB_FLOAT, angle,
+				    GIMP_PDB_INT32, auto_center,
 				    GIMP_PDB_INT32, center_x,
 				    GIMP_PDB_INT32, center_y,
 				    GIMP_PDB_INT32, transform_direction,

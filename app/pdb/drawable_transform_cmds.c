@@ -41,6 +41,7 @@ static ProcRecord drawable_transform_flip_proc;
 static ProcRecord drawable_transform_flip_free_proc;
 static ProcRecord drawable_transform_perspective_proc;
 static ProcRecord drawable_transform_rotate_proc;
+static ProcRecord drawable_transform_rotate_free_proc;
 static ProcRecord drawable_transform_scale_proc;
 static ProcRecord drawable_transform_shear_proc;
 static ProcRecord drawable_transform_2d_proc;
@@ -53,6 +54,7 @@ register_drawable_transform_procs (Gimp *gimp)
   procedural_db_register (gimp, &drawable_transform_flip_free_proc);
   procedural_db_register (gimp, &drawable_transform_perspective_proc);
   procedural_db_register (gimp, &drawable_transform_rotate_proc);
+  procedural_db_register (gimp, &drawable_transform_rotate_free_proc);
   procedural_db_register (gimp, &drawable_transform_scale_proc);
   procedural_db_register (gimp, &drawable_transform_shear_proc);
   procedural_db_register (gimp, &drawable_transform_2d_proc);
@@ -69,9 +71,8 @@ drawable_transform_flip_invoker (Gimp         *gimp,
   Argument *return_args;
   GimpDrawable *drawable;
   gint32 flip_type;
-  gboolean center;
+  gboolean auto_center;
   gdouble axis;
-  gint32 transform_direction;
   gboolean clip_result;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
@@ -82,15 +83,11 @@ drawable_transform_flip_invoker (Gimp         *gimp,
   if (flip_type < GIMP_ORIENTATION_HORIZONTAL || flip_type > GIMP_ORIENTATION_VERTICAL)
     success = FALSE;
 
-  center = args[2].value.pdb_int ? TRUE : FALSE;
+  auto_center = args[2].value.pdb_int ? TRUE : FALSE;
 
   axis = args[3].value.pdb_float;
 
-  transform_direction = args[4].value.pdb_int;
-  if (transform_direction < GIMP_TRANSFORM_FORWARD || transform_direction > GIMP_TRANSFORM_BACKWARD)
-    success = FALSE;
-
-  clip_result = args[5].value.pdb_int ? TRUE : FALSE;
+  clip_result = args[4].value.pdb_int ? TRUE : FALSE;
 
   if (success)
     {
@@ -102,8 +99,8 @@ drawable_transform_flip_invoker (Gimp         *gimp,
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
         {
           success = gimp_drawable_transform_flip (drawable, context,
-                                                  transform_direction,
-                                                  center, axis,
+                                                  flip_type,
+                                                  auto_center, axis,
                                                   clip_result);
         }
     }
@@ -130,18 +127,13 @@ static ProcArg drawable_transform_flip_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "center",
-    "Whether to automatically position the axis in the image center"
+    "auto_center",
+    "Whether to automatically position the axis in the selection center"
   },
   {
     GIMP_PDB_FLOAT,
     "axis",
     "coord. of flip axis"
-  },
-  {
-    GIMP_PDB_INT32,
-    "transform_direction",
-    "Direction of Transformation: { GIMP_TRANSFORM_FORWARD (0), GIMP_TRANSFORM_BACKWARD (1) }"
   },
   {
     GIMP_PDB_INT32,
@@ -163,13 +155,13 @@ static ProcRecord drawable_transform_flip_proc =
 {
   "gimp_drawable_transform_flip",
   "Flip the specified drawable either vertically or horizontally.",
-  "This procedure flips the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then flipped. If center is set to true, the flip is around the image center. Otherwise, the coordinate of the axis needs to be specified. The return value is the ID of the flipped drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and flipped drawable.",
+  "This procedure flips the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then flipped. If auto_center is set to true, the flip is around the selection's center. Otherwise, the coordinate of the axis needs to be specified. The return value is the ID of the flipped drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and flipped drawable.",
   "João S. O. Bueno Calligaris",
   "João S. O. Bueno Calligaris",
   "2004",
   NULL,
   GIMP_INTERNAL,
-  6,
+  5,
   drawable_transform_flip_inargs,
   1,
   drawable_transform_flip_outargs,
@@ -244,13 +236,10 @@ drawable_transform_flip_free_invoker (Gimp         *gimp,
 
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
-                                                    &matrix,
-                                                    transform_direction,
-                                                    interpolation,
-                                                    supersample,
+                                                    &matrix, transform_direction,
+                                                    interpolation, supersample,
                                                     recursion_level,
-                                                    clip_result,
-                                                    progress);
+                                                    clip_result, progress);
           if (progress)
             gimp_progress_end (progress);
         }
@@ -420,12 +409,10 @@ drawable_transform_perspective_invoker (Gimp         *gimp,
 
           /* Perspective the selection */
           success = gimp_drawable_transform_affine (drawable, context,
-                                                    &matrix,
-                                                    transform_direction,
+                                                    &matrix, transform_direction,
                                                     interpolation, supersample,
                                                     recursion_level,
-                                                    clip_result,
-                                                    progress);
+                                                    clip_result, progress);
 
           if (progress)
             gimp_progress_end (progress);
@@ -549,40 +536,27 @@ drawable_transform_rotate_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
-  gdouble angle;
+  gint32 rotate_type;
+  gboolean auto_center;
   gint32 center_x;
   gint32 center_y;
-  gint32 transform_direction;
-  gint32 interpolation;
-  gboolean supersample;
-  gint32 recursion_level;
   gboolean clip_result;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
     success = FALSE;
 
-  angle = args[1].value.pdb_float;
-
-  center_x = args[2].value.pdb_int;
-
-  center_y = args[3].value.pdb_int;
-
-  transform_direction = args[4].value.pdb_int;
-  if (transform_direction < GIMP_TRANSFORM_FORWARD || transform_direction > GIMP_TRANSFORM_BACKWARD)
+  rotate_type = args[1].value.pdb_int;
+  if (rotate_type < GIMP_ROTATE_90 || rotate_type > GIMP_ROTATE_270)
     success = FALSE;
 
-  interpolation = args[5].value.pdb_int;
-  if (interpolation < GIMP_INTERPOLATION_NONE || interpolation > GIMP_INTERPOLATION_CUBIC)
-    success = FALSE;
+  auto_center = args[2].value.pdb_int ? TRUE : FALSE;
 
-  supersample = args[6].value.pdb_int ? TRUE : FALSE;
+  center_x = args[3].value.pdb_int;
 
-  recursion_level = args[7].value.pdb_int;
-  if (recursion_level <= 0)
-    success = FALSE;
+  center_y = args[4].value.pdb_int;
 
-  clip_result = args[8].value.pdb_int ? TRUE : FALSE;
+  clip_result = args[5].value.pdb_int ? TRUE : FALSE;
 
   if (success)
     {
@@ -593,24 +567,10 @@ drawable_transform_rotate_invoker (Gimp         *gimp,
       if (success &&
           gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
         {
-          GimpMatrix3 matrix;
-
-          /* Assemble the transformation matrix */
-          gimp_transform_matrix_rotate_center (center_x, center_y, angle,
-                                               &matrix);
-
-          if (progress)
-            gimp_progress_start (progress, _("Rotating..."), FALSE);
-
-          /* Rotate the selection */
-          success = gimp_drawable_transform_affine (drawable, context,
-                                                    &matrix, transform_direction,
-                                                    interpolation, supersample,
-                                                    recursion_level,
-                                                    clip_result, progress);
-
-          if (progress)
-            gimp_progress_end (progress);
+          success = gimp_drawable_transform_rotate (drawable, context,
+                                                    rotate_type,
+                                                    auto_center, center_x, center_y,
+                                                    clip_result);
         }
     }
 
@@ -630,9 +590,163 @@ static ProcArg drawable_transform_rotate_inargs[] =
     "The affected drawable"
   },
   {
+    GIMP_PDB_INT32,
+    "rotate_type",
+    "Type of rotation: GIMP_ROTATE_90 (0), GIMP_ROTATE_180 (1), GIMP_ROTATE_270 (2)"
+  },
+  {
+    GIMP_PDB_INT32,
+    "auto_center",
+    "Whether to automatically rotate around the selection center"
+  },
+  {
+    GIMP_PDB_INT32,
+    "center_x",
+    "The hor. coordinate of the center of rotation"
+  },
+  {
+    GIMP_PDB_INT32,
+    "center_y",
+    "The vert. coordinate of the center of rotation"
+  },
+  {
+    GIMP_PDB_INT32,
+    "clip_result",
+    "Whether to clip results"
+  }
+};
+
+static ProcArg drawable_transform_rotate_outargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The rotated drawable"
+  }
+};
+
+static ProcRecord drawable_transform_rotate_proc =
+{
+  "gimp_drawable_transform_rotate",
+  "Rotate the specified drawable about given coordinates through the specified angle.",
+  "This function rotates the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then rotated by the specified amount. The return value is the ID of the rotated drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and rotated drawable.",
+  "João S. O. Bueno Calligaris",
+  "João S. O. Bueno Calligaris",
+  "2004",
+  NULL,
+  GIMP_INTERNAL,
+  6,
+  drawable_transform_rotate_inargs,
+  1,
+  drawable_transform_rotate_outargs,
+  { { drawable_transform_rotate_invoker } }
+};
+
+static Argument *
+drawable_transform_rotate_free_invoker (Gimp         *gimp,
+                                        GimpContext  *context,
+                                        GimpProgress *progress,
+                                        Argument     *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpDrawable *drawable;
+  gdouble angle;
+  gboolean auto_center;
+  gint32 center_x;
+  gint32 center_y;
+  gint32 transform_direction;
+  gint32 interpolation;
+  gboolean supersample;
+  gint32 recursion_level;
+  gboolean clip_result;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! (GIMP_IS_DRAWABLE (drawable) && ! gimp_item_is_removed (GIMP_ITEM (drawable))))
+    success = FALSE;
+
+  angle = args[1].value.pdb_float;
+
+  auto_center = args[2].value.pdb_int ? TRUE : FALSE;
+
+  center_x = args[3].value.pdb_int;
+
+  center_y = args[4].value.pdb_int;
+
+  transform_direction = args[5].value.pdb_int;
+  if (transform_direction < GIMP_TRANSFORM_FORWARD || transform_direction > GIMP_TRANSFORM_BACKWARD)
+    success = FALSE;
+
+  interpolation = args[6].value.pdb_int;
+  if (interpolation < GIMP_INTERPOLATION_NONE || interpolation > GIMP_INTERPOLATION_CUBIC)
+    success = FALSE;
+
+  supersample = args[7].value.pdb_int ? TRUE : FALSE;
+
+  recursion_level = args[8].value.pdb_int;
+  if (recursion_level <= 0)
+    success = FALSE;
+
+  clip_result = args[9].value.pdb_int ? TRUE : FALSE;
+
+  if (success)
+    {
+      gint x, y, width, height;
+
+      success = gimp_item_is_attached (GIMP_ITEM (drawable));
+
+      if (success &&
+          gimp_drawable_mask_intersect (drawable, &x, &y, &width, &height))
+        {
+          GimpMatrix3 matrix;
+
+          /* Assemble the transformation matrix */
+          if (auto_center)
+            gimp_transform_matrix_rotate (x, y, width, height, angle,
+                                          &matrix);
+          else
+            gimp_transform_matrix_rotate_center (center_x, center_y, angle,
+                                                 &matrix);
+
+          if (progress)
+            gimp_progress_start (progress, _("Rotating..."), FALSE);
+
+          /* Rotate the selection */
+          success = gimp_drawable_transform_affine (drawable, context,
+                                                    &matrix, transform_direction,
+                                                    interpolation, supersample,
+                                                    recursion_level,
+                                                    clip_result, progress);
+
+          if (progress)
+            gimp_progress_end (progress);
+        }
+    }
+
+  return_args = procedural_db_return_args (&drawable_transform_rotate_free_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (drawable));
+
+  return return_args;
+}
+
+static ProcArg drawable_transform_rotate_free_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The affected drawable"
+  },
+  {
     GIMP_PDB_FLOAT,
     "angle",
     "The angle of rotation (radians)"
+  },
+  {
+    GIMP_PDB_INT32,
+    "auto_center",
+    "Whether to automatically rotate around the selection center"
   },
   {
     GIMP_PDB_INT32,
@@ -671,7 +785,7 @@ static ProcArg drawable_transform_rotate_inargs[] =
   }
 };
 
-static ProcArg drawable_transform_rotate_outargs[] =
+static ProcArg drawable_transform_rotate_free_outargs[] =
 {
   {
     GIMP_PDB_DRAWABLE,
@@ -680,9 +794,9 @@ static ProcArg drawable_transform_rotate_outargs[] =
   }
 };
 
-static ProcRecord drawable_transform_rotate_proc =
+static ProcRecord drawable_transform_rotate_free_proc =
 {
-  "gimp_drawable_transform_rotate",
+  "gimp_drawable_transform_rotate_free",
   "Rotate the specified drawable about given coordinates through the specified angle.",
   "This function rotates the specified drawable if no selection exists. If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then rotated by the specified amount. The return value is the ID of the rotated drawable. If there was no selection, this will be equal to the drawable ID supplied as input. Otherwise, this will be the newly created and rotated drawable.",
   "João S. O. Bueno Calligaris",
@@ -690,11 +804,11 @@ static ProcRecord drawable_transform_rotate_proc =
   "2004",
   NULL,
   GIMP_INTERNAL,
-  9,
-  drawable_transform_rotate_inargs,
+  10,
+  drawable_transform_rotate_free_inargs,
   1,
-  drawable_transform_rotate_outargs,
-  { { drawable_transform_rotate_invoker } }
+  drawable_transform_rotate_free_outargs,
+  { { drawable_transform_rotate_free_invoker } }
 };
 
 static Argument *
@@ -767,11 +881,10 @@ drawable_transform_scale_invoker (Gimp         *gimp,
 
           /* Scale the selection */
           success = gimp_drawable_transform_affine (drawable, context,
-                                                    &matrix,
-                                                    transform_direction,
+                                                    &matrix, transform_direction,
                                                     interpolation, supersample,
                                                     recursion_level,
-                                                     clip_result, progress);
+                                                    clip_result, progress);
 
           if (progress)
             gimp_progress_end (progress);
@@ -930,8 +1043,7 @@ drawable_transform_shear_invoker (Gimp         *gimp,
 
           /* Shear the selection */
           success = gimp_drawable_transform_affine (drawable, context,
-                                                    &matrix,
-                                                    transform_direction,
+                                                    &matrix, transform_direction,
                                                     interpolation, supersample,
                                                     recursion_level,
                                                     clip_result, progress);
