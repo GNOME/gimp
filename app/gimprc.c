@@ -35,11 +35,13 @@
 
 #include "libgimpcolor/gimpcolor.h"
 
-#include "apptypes.h"
+#include "core/core-types.h"
+#include "tools/tools-types.h"
 #include "widgets/widgets-types.h"
 
+#include "core/gimptoolinfo.h"
+
 #include "tools/gimptool.h"
-#include "tools/gimptoolinfo.h"
 
 #include "widgets/gimpdialogfactory.h"
 

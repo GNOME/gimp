@@ -28,9 +28,8 @@
 
 #include "libgimpmath/gimpmath.h"
 
-#include "apptypes.h"
+#include "core-types.h"
 
-#include "appenv.h"
 #include "gimpdata.h"
 #include "gimpdatalist.h"
 

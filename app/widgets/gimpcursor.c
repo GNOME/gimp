@@ -20,7 +20,7 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "core/core-types.h"
 
 #include "appenv.h"
 #include "cursorutil.h"

@@ -31,12 +31,12 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "libgimp/gimpenv.h"
+
+#include "core-types.h"
 
 #include "gimpdata.h"
 #include "gimpmarshal.h"
-
-#include "libgimp/gimpenv.h"
 
 
 enum

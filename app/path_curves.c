@@ -17,14 +17,20 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#include <math.h>
-#include <glib.h>
-#include <gdk/gdk.h>
-#include "apptypes.h"
+#include "config.h"
+
+#include <gtk/gtk.h>
+
+#include "libgimpmath/gimpmath.h"
+
+#include "core/core-types.h"
+#include "tools/tools-types.h"
+
 #include "path_curves.h"
 #include "path_bezier.h"
 
 #include "tools/gimpdrawtool.h"
+
 
 /* only here temporarily */
 PathSegment * path_split_segment   (PathSegment *, gdouble);

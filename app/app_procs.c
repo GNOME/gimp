@@ -44,7 +44,7 @@
 #include "libgimp/gimpfeatures.h"
 #include "libgimp/gimpenv.h"
 
-#include "apptypes.h"
+#include "core/core-types.h"
 
 #include "paint-funcs/paint-funcs.h"
 

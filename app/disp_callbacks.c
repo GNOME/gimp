@@ -25,7 +25,8 @@
 
 #include "libgimpcolor/gimpcolor.h"
 
-#include "apptypes.h"
+#include "core/core-types.h"
+#include "tools/tools-types.h"
 
 #include "paint-funcs/paint-funcs.h"
 
@@ -33,11 +34,11 @@
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimppattern.h"
+#include "core/gimptoolinfo.h"
 
 #include "tools/gimpbucketfilltool.h"
 #include "tools/gimpfuzzyselecttool.h"
 #include "tools/gimpmovetool.h"
-#include "tools/gimptoolinfo.h"
 #include "tools/tool_manager.h"
 
 #include "cursorutil.h"

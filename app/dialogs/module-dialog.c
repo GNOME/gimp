@@ -35,7 +35,7 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "core/core-types.h"
 
 #include "core/gimplist.h"
 
@@ -217,8 +217,8 @@ module_db_init (void)
   modules = gimp_list_new (MODULE_INFO_TYPE, GIMP_CONTAINER_POLICY_WEAK);
 
   if (g_module_supported ())
-    datafiles_read_directories (module_path, 0 /* no flags */,
-				module_initialize, NULL);
+    gimp_datafiles_read_directories (module_path, 0 /* no flags */,
+				     module_initialize, NULL);
 #ifdef DUMP_DB
   gimp_container_foreach (modules, print_module_info, NULL);
 #endif
@@ -1135,8 +1135,8 @@ browser_refresh_callback (GtkWidget *widget,
   kill_list = NULL;
 
   /* walk filesystem and add new things we find */
-  datafiles_read_directories (module_path, 0 /* no flags */,
-			      module_initialize, NULL);
+  gimp_datafiles_read_directories (module_path, 0 /* no flags */,
+				   module_initialize, NULL);
 }
 
 

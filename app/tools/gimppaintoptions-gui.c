@@ -22,16 +22,16 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "tools-types.h"
 
 #include "core/gimpcontext.h"
+#include "core/gimptoolinfo.h"
 
 #include "widgets/gtkhwrapbox.h"
 
 #include "gimprc.h"
 
 #include "gimptool.h"
-#include "gimptoolinfo.h"
 #include "paint_options.h"
 #include "tool_manager.h"
 

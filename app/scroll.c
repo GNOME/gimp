@@ -22,7 +22,8 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "core/core-types.h"
+#include "tools/tools-types.h"
 
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"

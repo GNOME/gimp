@@ -23,7 +23,8 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "core/core-types.h"
+#include "tools/tools-types.h"
 
 #include "paint-funcs/paint-funcs.h"
 

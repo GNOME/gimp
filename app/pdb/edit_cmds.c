@@ -23,9 +23,10 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "core/core-types.h"
 #include "procedural_db.h"
 
+#include "appenums.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimplayer.h"
 #include "drawable.h"

@@ -32,6 +32,7 @@
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
+#include "core/gimptoolinfo.h"
 
 #include "widgets/gimpcontainerlistview.h"
 #include "widgets/gimpcontainergridview.h"
@@ -44,7 +45,6 @@
 #include "widgets/gimplistitem.h"
 #include "widgets/gimppreview.h"
 
-#include "tools/gimptoolinfo.h"
 #include "tools/tool_manager.h"
 #include "tools/tool_options_dialog.h"
 

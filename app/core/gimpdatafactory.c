@@ -25,7 +25,7 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "core-types.h"
 
 #include "datafiles.h"
 #include "gimpdata.h"
@@ -157,9 +157,9 @@ gimp_data_factory_data_init (GimpDataFactory *factory,
 
   if (factory->data_path && *factory->data_path)
     {
-      datafiles_read_directories (*factory->data_path, 0,
-				  gimp_data_factory_data_load_callback,
-				  factory);
+      gimp_datafiles_read_directories (*factory->data_path, 0,
+				       gimp_data_factory_data_load_callback,
+				       factory);
     }
 
   gimp_container_thaw (factory->container);  
@@ -275,8 +275,8 @@ gimp_data_factory_data_load_callback (const gchar *filename,
     {
       if (factory->loader_entries[i].extension)
         {
-          if (datafiles_check_extension (filename,
-					 factory->loader_entries[i].extension))
+          if (gimp_datafiles_check_extension (filename,
+					      factory->loader_entries[i].extension))
 	    {
               goto insert;
             }

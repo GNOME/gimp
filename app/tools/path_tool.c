@@ -27,21 +27,17 @@
  * segments between two anchors.
  */
 
-/*
-#include <math.h>
-
-
-#include "path_curves.h"
 #include "config.h"
-#include "libgimp/gimpintl.h"
-*/
 
-#include <glib.h>
-#include <gdk/gdk.h>
-#include "apptypes.h"
+#include <gtk/gtk.h>
+
+#include "tools-types.h"
+
 #include "path_curves.h"
 #include "path_tool.h"
 #include "gimppathtool.h"
+
+#include "libgimp/gimpintl.h"
 
 /*
  * Every new curve-type has to have a parameter between 0 and 1, and

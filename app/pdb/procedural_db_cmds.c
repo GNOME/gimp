@@ -26,9 +26,11 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "core/core-types.h"
+#include "tools/tools-types.h"
 #include "procedural_db.h"
 
+#include "appenums.h"
 
 #ifdef HAVE_GLIBC_REGEX
 #include <regex.h>

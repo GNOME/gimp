@@ -29,7 +29,7 @@
 #include "libgimpwidgets/gimpwidgets.h"
 #include "libgimp/gimpcolorselector.h"
 
-#include "apptypes.h"
+#include "core/core-types.h"
 
 #include "widgets/gimpdnd.h"
 

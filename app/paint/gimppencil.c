@@ -22,7 +22,7 @@
 
 #include "libgimpcolor/gimpcolor.h"
 
-#include "apptypes.h"
+#include "tools-types.h"
 
 #include "paint-funcs/paint-funcs.h"
 

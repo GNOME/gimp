@@ -26,8 +26,7 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
-#include "widgets/widgets-types.h"
+#include "widgets-types.h"
 
 #include "core/gimpimage.h"
 #include "core/gimpbrush.h"
@@ -40,9 +39,9 @@
 #include "core/gimplayermask.h"
 #include "core/gimppalette.h"
 #include "core/gimppattern.h"
+#include "core/gimptoolinfo.h"
 
 #include "tools/gimptool.h"
-#include "tools/gimptoolinfo.h"
 #include "tools/tool_manager.h"
 
 #include "gui/file-open-dialog.h"

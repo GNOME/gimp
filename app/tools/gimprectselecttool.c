@@ -25,12 +25,13 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "tools-types.h"
 
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpmarshal.h"
+#include "core/gimptoolinfo.h"
 
 #include "cursorutil.h"
 #include "gdisplay.h"
@@ -38,7 +39,6 @@
 
 #include "gimpeditselectiontool.h"
 #include "gimprectselecttool.h"
-#include "gimptoolinfo.h"
 #include "selection_options.h"
 #include "tool_options.h"
 #include "tool_manager.h"

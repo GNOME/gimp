@@ -25,7 +25,8 @@
 
 #include "libgimpmath/gimpmath.h"
 
-#include "apptypes.h"
+#include "core/core-types.h"
+#include "tools/tools-types.h"
 
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"

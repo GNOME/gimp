@@ -27,11 +27,12 @@
 #include "libgimp/gimpenv.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "core/core-types.h"
+#include "tools/tools-types.h"
 
 #include "core/gimplist.h"
+#include "core/gimptoolinfo.h"
 
-#include "tools/gimptoolinfo.h"
 #include "tools/tool_manager.h"
 
 #include "channels-commands.h"

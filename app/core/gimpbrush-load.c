@@ -41,7 +41,7 @@
 
 #include <stdio.h>
 
-#include "apptypes.h"
+#include "core-types.h"
 
 #include "brush_scale.h"
 #include "gimpbrush.h"

@@ -22,7 +22,7 @@
 
 #include "libgimpwidgets/gimpwidgetstypes.h"
 
-#include "apptypes.h"
+#include "core/core-types.h"
 
 
 /*  enums  */

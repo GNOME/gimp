@@ -40,11 +40,12 @@
 #define _O_BINARY 0
 #endif
 
-#include "apptypes.h"
+#include "core-types.h"
 
 #include "gimpimage.h"
 #include "gimppattern.h"
 #include "gimppattern-header.h"
+
 #include "gimprc.h"
 #include "temp_buf.h"
 

@@ -25,7 +25,7 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "tools-types.h"
 
 #include "paint-funcs/paint-funcs.h"
 
@@ -36,6 +36,7 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimplayer.h"
 #include "core/gimpmarshal.h"
+#include "core/gimptoolinfo.h"
 
 #include "gui/info-dialog.h"
 #include "cursorutil.h"
@@ -52,7 +53,6 @@
 #include "tile_manager.h"
 #include "tile.h"
 
-#include "gimptoolinfo.h"
 #include "tool_manager.h"
 #include "tool_options.h"
 #include "transform_options.h"

@@ -25,7 +25,7 @@
 
 #include "widgets-types.h"
 
-#include "tools/gimptoolinfo.h"
+#include "core/gimptoolinfo.h"
 
 #include "gimptoolinfopreview.h"
 

@@ -27,7 +27,8 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "core/core-types.h"
+#include "tools/tools-types.h"
 
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
@@ -36,9 +37,9 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-duplicate.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimptoolinfo.h"
 
 #include "tools/gimptool.h"
-#include "tools/gimptoolinfo.h"
 #include "tools/tool_manager.h"
 
 #include "commands.h"

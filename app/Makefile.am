@@ -93,86 +93,38 @@ gimp_SOURCES = \
 	user_install.c		\
 	user_install.h		\
 ##
-## stuff that needs to be sorted into yet undecided subsystems, split up,
-## removed or otherwise tortured
+## stuff for core/
 ##
-	app_procs.c		\
-	app_procs.h		\
-	appenums.h		\
-	appenv.h		\
-	apptypes.h		\
-	asupsample.c		\
-	asupsample.h		\
-	authors.h		\
-	batch.c			\
-	batch.h			\
+	datafiles.c		\
+	datafiles.h		\
+	floating_sel.c		\
+	floating_sel.h		\
+	fsdither.h		\
+	gimppreviewcache.h	\
+	gimppreviewcache.c	\
+	parasitelist.c		\
+	parasitelist.h		\
+	scan_convert.c		\
+	scan_convert.h		\
+##
+## lowlevel stuff for base/
+##
 	boundary.c		\
 	boundary.h		\
 	brush_scale.c		\
 	brush_scale.h		\
-	color_transfer.c	\
-	color_transfer.h	\
-	context_manager.c	\
-	context_manager.h	\
-	datafiles.c		\
-	datafiles.h		\
-	drawable.c		\
-	drawable.h		\
-	errors.c		\
-	errors.h		\
-	file-open.c		\
-	file-open.h		\
-	file-save.c		\
-	file-save.h		\
-	file-utils.h		\
-	file-utils.c		\
-	floating_sel.c		\
-	floating_sel.h		\
-	fsdither.h		\
-	general.c		\
-	general.h		\
-	gimage.c		\
-	gimage.h		\
-	gimphelp.c		\
-	gimphelp.h		\
 	gimphistogram.c		\
 	gimphistogram.h		\
 	gimplut.c		\
 	gimplut.h		\
-	gimpparasite.c		\
-	gimpparasite.h		\
-	gimppreviewcache.h	\
-	gimppreviewcache.c	\
-	gimprc.c		\
-	gimprc.h		\
-	gimpunit.c		\
-	image_new.c		\
-	image_new.h		\
-	libgimp_glue.c		\
-	libgimp_glue.h		\
 	lut_funcs.c		\
 	lut_funcs.h		\
-	main.c			\
-	parasitelist.c		\
-	parasitelist.h		\
-	path.c			\
-	path.h			\
-	pathP.h			\
-	path_transform.h	\
-	path_curves.h		\
-	path_curves.c		\
-	path_bezier.h		\
-	path_bezier.c		\
 	pixel_processor.c	\
 	pixel_processor.h	\
 	pixel_region.c		\
 	pixel_region.h		\
 	pixel_surround.c	\
 	pixel_surround.h	\
-	plug_in.c		\
-	plug_in.h		\
-	scan_convert.c		\
-	scan_convert.h		\
 	temp_buf.c		\
 	temp_buf.h		\
 	tile.c			\
@@ -185,6 +137,58 @@ gimp_SOURCES = \
 	tile_manager_pvt.h	\
 	tile_swap.c		\
 	tile_swap.h		\
+##
+## stuff that needs to be sorted into yet undecided subsystems, split up,
+## removed or otherwise tortured
+##
+	app_procs.c		\
+	app_procs.h		\
+	appenums.h		\
+	appenv.h		\
+	apptypes.h		\
+	authors.h		\
+	batch.c			\
+	batch.h			\
+	color_transfer.c	\
+	color_transfer.h	\
+	context_manager.c	\
+	context_manager.h	\
+	drawable.c		\
+	drawable.h		\
+	errors.c		\
+	errors.h		\
+	file-open.c		\
+	file-open.h		\
+	file-save.c		\
+	file-save.h		\
+	file-utils.h		\
+	file-utils.c		\
+	general.c		\
+	general.h		\
+	gimage.c		\
+	gimage.h		\
+	gimphelp.c		\
+	gimphelp.h		\
+	gimpparasite.c		\
+	gimpparasite.h		\
+	gimprc.c		\
+	gimprc.h		\
+	gimpunit.c		\
+	image_new.c		\
+	image_new.h		\
+	libgimp_glue.c		\
+	libgimp_glue.h		\
+	main.c			\
+	path.c			\
+	path.h			\
+	pathP.h			\
+	path_transform.h	\
+	path_curves.h		\
+	path_curves.c		\
+	path_bezier.h		\
+	path_bezier.c		\
+	plug_in.c		\
+	plug_in.h		\
 	undo.c			\
 	undo.h			\
 	undo_types.h		\

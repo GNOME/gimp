@@ -24,7 +24,7 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "core/core-types.h"
 
 #include "app_procs.h"
 #include "context_manager.h"

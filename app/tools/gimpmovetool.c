@@ -22,7 +22,7 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "tools-types.h"
 
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"

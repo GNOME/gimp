@@ -57,13 +57,13 @@
 #define getegid() 0
 #endif
 
-#include "apptypes.h"
-
-#include "docindex.h"
-#include "gui/menus.h"
+#include "core/core-types.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+
+#include "docindex.h"
+#include "gui/menus.h"
 
 #include "gimprc.h"
 #include "file-save.h"

@@ -25,20 +25,26 @@ EXTRA_DIST = \
 lib_LTLIBRARIES = libgimpcolor-1.3.la
 
 libgimpcolor_1_3_la_SOURCES = \
-	gimpcolor.h		\
-	gimpcolortypes.h	\
-	gimpcolorspace.c	\
-	gimpcolorspace.h	\
-	gimphsv.c		\
-	gimphsv.h		\
-	gimprgb.c		\
+	gimpcolor.h			\
+	gimpcolortypes.h		\
+	gimpadaptivesupersample.c	\
+	gimpadaptivesupersample.h	\
+	gimpbilinear.c			\
+	gimpbilinear.h			\
+	gimpcolorspace.c		\
+	gimpcolorspace.h		\
+	gimphsv.c			\
+	gimphsv.h			\
+	gimprgb.c			\
 	gimprgb.h
 
 libgimpcolorinclude_HEADERS = \
-	gimpcolor.h		\
-	gimpcolortypes.h	\
-	gimpcolorspace.h	\
-	gimphsv.h		\
+	gimpcolor.h			\
+	gimpcolortypes.h		\
+	gimpadaptivesupersample.h	\
+	gimpbilinear.h			\
+	gimpcolorspace.h		\
+	gimphsv.h			\
 	gimprgb.h
 
 libgimpcolor_1_3_la_LDFLAGS = \

@@ -16,55 +16,28 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#include "config.h"
+#ifndef __TOOLS_TYPES_H__
+#define __TOOLS_TYPES_H__
 
-#include <gtk/gtk.h>
-
-#include "libgimpcolor/gimpcolor.h"
 
 #include "core/core-types.h"
 
-#include "core/gimpcontext.h"
 
-#include "libgimp_glue.h"
+/*  tools  */
+
+typedef struct _GimpTool            GimpTool;
+typedef struct _GimpPaintTool       GimpPaintTool;
+typedef struct _GimpDrawTool        GimpDrawTool;
+typedef struct _GimpPathTool        GimpPathTool;
+typedef struct _GimpTransformTool   GimpTransformTool;
+
+typedef struct _GimpBezierSelectPoint  GimpBezierSelectPoint;
+typedef struct _GimpBezierSelectTool   GimpBezierSelectTool;
 
 
-gboolean
-gimp_palette_set_foreground (const GimpRGB *color)
-{
-  g_return_val_if_fail (color != NULL, FALSE);
+/*  stuff  */
 
-  gimp_context_set_foreground (NULL, color);
+typedef struct _SelectionOptions    SelectionOptions;
 
-  return TRUE;
-}
 
-gboolean
-gimp_palette_get_foreground (GimpRGB *color)
-{
-  g_return_val_if_fail (color != NULL, FALSE);
-
-  gimp_context_get_foreground (NULL, color);
-
-  return TRUE;
-}
-
-gboolean
-gimp_palette_set_background (const GimpRGB *color)
-{
-  g_return_val_if_fail (color != NULL, FALSE);
-
-  gimp_context_set_background (NULL, color);
-
-  return TRUE;
-}
-
-gboolean
-gimp_palette_get_background (GimpRGB *color)
-{
-  g_return_val_if_fail (color != NULL, FALSE);
-
-  gimp_context_get_background (NULL, color);
-
-  return TRUE;
-}
+#endif /* __TOOLS_TYPES_H__ */

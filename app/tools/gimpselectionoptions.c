@@ -22,7 +22,9 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "tools-types.h"
+
+#include "core/gimptoolinfo.h"
 
 #include "gimprc.h"
 
@@ -31,7 +33,6 @@
 #include "gimpiscissorstool.h"
 #include "gimprectselecttool.h"
 #include "gimptool.h"
-#include "gimptoolinfo.h"
 #include "selection_options.h"
 #include "tool_manager.h"
 

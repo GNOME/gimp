@@ -22,6 +22,9 @@
 
 #include "gimpdata.h"
 
+/* FIXME: remove the GimpPaintTool dependency  */
+#include "tools/tools-types.h"
+
 
 #define GIMP_BRUSH_FILE_EXTENSION        ".gbr"
 #define GIMP_BRUSH_PIXMAP_FILE_EXTENSION ".gpb"

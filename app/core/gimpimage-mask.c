@@ -20,13 +20,13 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "core-types.h"
+
+/* FIXME: move the "stroke" stuff into the core entirely */
+#include "tools/tools-types.h"
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "tools/gimptool.h"
-#include "tools/gimppainttool.h"
-#include "tools/paint_options.h"
 #include "tools/tool_manager.h"
 
 #include "gimpchannel.h"

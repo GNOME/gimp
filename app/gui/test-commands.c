@@ -23,7 +23,8 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "core/core-types.h"
+#include "tools/tools-types.h"
 #include "widgets/widgets-types.h"
 
 #include "core/gimpchannel.h"

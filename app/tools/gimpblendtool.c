@@ -26,7 +26,7 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "tools-types.h"
 
 #include "paint-funcs/paint-funcs.h"
 
@@ -35,11 +35,11 @@
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimptoolinfo.h"
 
 #include "widgets/gimpdnd.h"
 
 #include "appenv.h"
-#include "asupsample.h"
 #include "cursorutil.h"
 #include "drawable.h"
 #include "errors.h"
@@ -53,7 +53,6 @@
 #include "tile_manager.h"
 
 #include "gimpblendtool.h"
-#include "gimptoolinfo.h"
 #include "paint_options.h"
 #include "tool_manager.h"
 

@@ -26,7 +26,7 @@
 
 #include "libgimpmath/gimpmath.h"
 
-#include "apptypes.h"
+#include "tools-types.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"

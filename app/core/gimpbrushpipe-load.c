@@ -43,9 +43,8 @@
 
 #include "libgimpmath/gimpmath.h"
 
-#include "apptypes.h"
+#include "core-types.h"
 
-#include "appenv.h"
 #include "gimpbrush.h"
 #include "gimpbrush-header.h"
 #include "gimpbrushpipe.h"

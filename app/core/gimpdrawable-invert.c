@@ -20,7 +20,7 @@
 
 #include <glib.h>
 
-#include "apptypes.h"
+#include "core-types.h"
 
 #include "drawable.h"
 #include "gimpdrawable.h"

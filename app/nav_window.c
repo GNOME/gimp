@@ -25,7 +25,7 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "core/core-types.h"
 
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"

@@ -25,13 +25,13 @@
 
 #include "libgimpcolor/gimpcolor.h"
 
-#include "apptypes.h"
+#include "core-types.h"
 
-#include "tools/gimptoolinfo.h"
+/* FIXME: make a GimpToolFactory out of the tool_manager and put it here */
+#include "tools/tools-types.h"
+
 #include "tools/tool_manager.h"
 
-#include "context_manager.h"
-#include "gdisplay.h"
 #include "gimpbrush.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
@@ -41,6 +41,10 @@
 #include "gimpmarshal.h"
 #include "gimppalette.h"
 #include "gimppattern.h"
+#include "gimptoolinfo.h"
+
+#include "context_manager.h"
+#include "gdisplay.h"
 #include "gimprc.h"
 #include "temp_buf.h"
 

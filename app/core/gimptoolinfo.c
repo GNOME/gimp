@@ -20,15 +20,17 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "core/core-types.h"
+#include "tools/tools-types.h"
 
-#include "core/gimpcontext.h"
+#include "gimpcontext.h"
+#include "gimptoolinfo.h"
 
 #include "context_manager.h"
-#include "gimptoolinfo.h"
 #include "temp_buf.h"
 
-#include "gimprectselecttool.h"
+/* GRMPF */
+#include "tools/gimprectselecttool.h"
 
 
 static void      gimp_tool_info_class_init      (GimpToolInfoClass *klass);

@@ -26,7 +26,7 @@
 #include "libgimpwidgets/gimpwidgets.h"
 #include "libgimpmath/gimpmath.h"
 
-#include "apptypes.h"
+#include "tools-types.h"
 
 #include "core/gimpchannel.h"
 #include "core/gimpmarshal.h"
@@ -49,7 +49,6 @@
 
 #include "gimpeditselectiontool.h"
 #include "gimpbezierselecttool.h"
-#include "gimptoolinfo.h"
 #include "selection_options.h"
 #include "tool_options.h"
 #include "tool_manager.h"

@@ -21,16 +21,16 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "apptypes.h"
+#include "tools-types.h"
 
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 
-#include "cursorutil.h"
 #include "gimpdrawtool.h"
-#include "gdisplay.h"
-
 #include "gimpselectiontool.h"
+
+#include "cursorutil.h"
+#include "gdisplay.h"
 
 
 static void   gimp_selection_tool_class_init    (GimpSelectionToolClass *klass);

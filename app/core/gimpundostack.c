@@ -20,9 +20,8 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "core-types.h"
 
-#include "gimpcontainer.h"
 #include "gimpimage.h"
 #include "gimplist.h"
 #include "gimpundo.h"
@@ -48,7 +47,8 @@ gimp_undo_stack_get_type (void)
 {
   static GtkType undo_stack_type = 0;
 
-  if (! undo_stack_type)    {
+  if (! undo_stack_type)
+    {
       static const GtkTypeInfo undo_stack_info =
       {
         "GimpUndoStack",
@@ -63,7 +63,7 @@ gimp_undo_stack_get_type (void)
 
       undo_stack_type = gtk_type_unique (GIMP_TYPE_UNDO, 
                                          &undo_stack_info);
-  }
+    }
 
   return undo_stack_type;
 }

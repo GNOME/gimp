@@ -35,11 +35,11 @@
 #include "core/gimpdatafactory.h"
 #include "core/gimpgradient.h"
 #include "core/gimppattern.h"
+#include "core/gimptoolinfo.h"
 
 #include "widgets/gimpdnd.h"
 #include "widgets/gimppreview.h"
 
-#include "tools/gimptoolinfo.h"
 #include "tools/tool_manager.h"
 
 #include "appenv.h"

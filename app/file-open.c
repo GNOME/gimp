@@ -57,7 +57,7 @@
 #define getegid() 0
 #endif
 
-#include "apptypes.h"
+#include "core/core-types.h"
 
 #include "core/gimpimage.h"
 

@@ -42,7 +42,7 @@
 
 #include "libgimpmath/gimpmath.h"
 
-#include "apptypes.h"
+#include "core/core-types.h"
 
 #include "core/gimpimage.h"
 

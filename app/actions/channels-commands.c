@@ -23,7 +23,7 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "core/core-types.h"
 
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"

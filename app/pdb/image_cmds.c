@@ -24,9 +24,10 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "core/core-types.h"
 #include "procedural_db.h"
 
+#include "appenums.h"
 #include "context_manager.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"

@@ -45,7 +45,7 @@
 #endif
 #endif /* G_OS_WIN32 */
 
-#include "apptypes.h"
+#include "core/core-types.h"
 
 #include "datafiles.h"
 #include "gimprc.h"
@@ -102,8 +102,8 @@ is_script (const gchar *filename)
 #endif
 
 gboolean
-datafiles_check_extension (const gchar *filename,
-			   const gchar *extension)
+gimp_datafiles_check_extension (const gchar *filename,
+				const gchar *extension)
 {
   gint name_len;
   gint ext_len;
@@ -121,10 +121,10 @@ datafiles_check_extension (const gchar *filename,
 }
 
 void
-datafiles_read_directories (const gchar            *path_str,
-			    GimpDataFileFlags       flags,
-			    GimpDataFileLoaderFunc  loader_func,
-			    gpointer                loader_data)
+gimp_datafiles_read_directories (const gchar            *path_str,
+				 GimpDataFileFlags       flags,
+				 GimpDataFileLoaderFunc  loader_func,
+				 gpointer                loader_data)
 {
   gchar *local_path;
   GList *path;
@@ -196,7 +196,7 @@ datafiles_read_directories (const gchar            *path_str,
 }
 
 time_t
-datafile_atime (void)
+gimp_datafile_atime (void)
 {
   if (filestat_valid)
     return filestat.st_atime;
@@ -205,7 +205,7 @@ datafile_atime (void)
 }
 
 time_t
-datafile_mtime (void)
+gimp_datafile_mtime (void)
 {
   if (filestat_valid)
     return filestat.st_mtime;
@@ -214,7 +214,7 @@ datafile_mtime (void)
 }
 
 time_t
-datafile_ctime (void)
+gimp_datafile_ctime (void)
 {
   if (filestat_valid)
     return filestat.st_ctime;

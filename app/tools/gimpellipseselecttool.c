@@ -22,16 +22,16 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "tools-types.h"
 
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimptoolinfo.h"
 
 #include "gdisplay.h"
 
 #include "gimpellipseselecttool.h"
-#include "gimptoolinfo.h"
 #include "selection_options.h"
 #include "tool_options.h"
 #include "tool_manager.h"

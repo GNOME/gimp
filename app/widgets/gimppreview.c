@@ -38,8 +38,7 @@
 #include "core/gimpmarshal.h"
 #include "core/gimppalette.h"
 #include "core/gimppattern.h"
-
-#include "tools/gimptoolinfo.h"
+#include "core/gimptoolinfo.h"
 
 #include "gimpbrushpreview.h"
 #include "gimpdnd.h"

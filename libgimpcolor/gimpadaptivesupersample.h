@@ -30,20 +30,6 @@ extern "C" {
 /*  adaptive supersampling function taken from LibGCK  */
 
 
-typedef void (* GimpRenderFunc)   (gdouble   x,
-                                   gdouble   y,
-                                   GimpRGB  *color,
-                                   gpointer  data);
-typedef void (* GimpPutPixelFunc) (gint      x,
-                                   gint      y,
-                                   GimpRGB  *color,
-                                   gpointer  data);
-typedef void (* GimpProgressFunc) (gint      min,
-                                   gint      max,
-                                   gint      current,
-                                   gpointer  data);
-
-
 gulong   gimp_adaptive_supersample_area (gint              x1,
                                          gint              y1,
                                          gint              x2,

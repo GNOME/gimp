@@ -20,11 +20,13 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
- 
-#include "gdisplay.h"
-#include "gimpdrawtool.h"
 #include "libgimpmath/gimpmath.h"
+
+#include "tools-types.h"
+ 
+#include "gimpdrawtool.h"
+
+#include "gdisplay.h"
 
 
 enum

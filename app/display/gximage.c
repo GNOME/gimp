@@ -20,12 +20,12 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "core/core-types.h"
 
 #include "appenv.h"
 #include "colormaps.h"
-#include "gimage.h"
 #include "gximage.h"
+
 
 typedef struct _GXImage  GXImage;
 

@@ -27,7 +27,7 @@
 
 #include "libgimpmath/gimpmath.h"
 
-#include "apptypes.h"
+#include "core-types.h"
 
 #include "paint-funcs/paint-funcs.h"
 

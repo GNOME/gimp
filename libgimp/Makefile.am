@@ -156,10 +156,6 @@ libgimp_1_3_la_SOURCES = \
 	\
 	gimpenv.c			\
 	gimpenv.h			\
-	gimpadaptivesupersample.c	\
-	gimpadaptivesupersample.h	\
-	gimpbilinear.c			\
-	gimpbilinear.h			\
 	gimpsignal.c			\
 	gimpsignal.h			\
 	gimputils.c			\
@@ -198,8 +194,6 @@ gimpinclude_HEADERS = \
 	gimp.h				\
 	gimptypes.h			\
 	${PDB_WRAPPERS_H}		\
-	gimpadaptivesupersample.h	\
-	gimpbilinear.h			\
 	gimpchannel.h			\
 	gimpdrawable.h			\
 	gimpenums.h			\

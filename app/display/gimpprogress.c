@@ -22,7 +22,7 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "core/core-types.h"
 
 #include "gdisplay.h"
 #include "gimpprogress.h"

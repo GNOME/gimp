@@ -17,13 +17,18 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#include <math.h>
+#include "config.h"
 
-#include <glib.h>
-#include <gdk/gdk.h>
-#include "apptypes.h"
+#include <gtk/gtk.h>
+
+#include "libgimpmath/gimpmath.h"
+
+#include "core/core-types.h"
+#include "tools/tools-types.h"
+
 #include "path_curves.h"
 #include "path_bezier.h"
+
 
 #define HANDLE_HALFWIDTH 3
 #define HANDLE_WIDTH 6

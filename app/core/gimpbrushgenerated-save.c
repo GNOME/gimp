@@ -32,9 +32,8 @@
 
 #include "libgimpmath/gimpmath.h"
 
-#include "apptypes.h"
+#include "core-types.h"
 
-#include "appenv.h"
 #include "gimpbrushgenerated.h"
 #include "gimprc.h"
 #include "gimpbrush.h"
@@ -48,8 +47,9 @@
 
 
 /*  local function prototypes  */
-static void     gimp_brush_generated_class_init  (GimpBrushGeneratedClass *klass);
-static void       gimp_brush_generated_init      (GimpBrushGenerated *brush);
+static void   gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass);
+static void   gimp_brush_generated_init       (GimpBrushGenerated      *brush);
+
 static void       gimp_brush_generated_destroy   (GtkObject          *object);
 static gboolean   gimp_brush_generated_save      (GimpData           *data);
 static void       gimp_brush_generated_dirty     (GimpData           *data);

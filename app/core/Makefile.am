@@ -3,6 +3,7 @@
 noinst_LTLIBRARIES = libappcore.la
 
 libappcore_la_SOURCES = \
+	core-types.h			\
 	gimpbrush.c			\
 	gimpbrush.h			\
 	gimpbrush-header.h		\
@@ -63,6 +64,8 @@ libappcore_la_SOURCES = \
 	gimppalette.h			\
 	gimppalette-import.c		\
 	gimppalette-import.h		\
+	gimptoolinfo.c			\
+	gimptoolinfo.h			\
 	gimpundo.c			\
 	gimpundo.h			\
 	gimpundostack.c			\

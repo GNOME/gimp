@@ -30,67 +30,6 @@
 #include "appenums.h"
 
 
-/*  base objects  */
-
-typedef struct _GimpObject          GimpObject;
-
-typedef struct _GimpContainer       GimpContainer;
-typedef struct _GimpList            GimpList;
-typedef struct _GimpDataList        GimpDataList;
-
-typedef struct _GimpDataFactory     GimpDataFactory;
-
-typedef struct _GimpContext         GimpContext;
-
-typedef struct _GimpViewable        GimpViewable;
-
-
-/*  drawable objects  */
-
-typedef struct _GimpDrawable        GimpDrawable;
-
-typedef struct _GimpChannel         GimpChannel;
-
-typedef struct _GimpLayer           GimpLayer;
-typedef struct _GimpLayerMask       GimpLayerMask;
-
-typedef struct _GimpImage           GimpImage;
-
-
-/*  data objects  */
-
-typedef struct _GimpData            GimpData;
-
-typedef struct _GimpBrush	    GimpBrush;
-typedef struct _GimpBrushGenerated  GimpBrushGenerated;
-typedef struct _GimpBrushPipe       GimpBrushPipe;
-
-typedef struct _GimpGradient        GimpGradient;
-
-typedef struct _GimpPattern         GimpPattern;
-
-typedef struct _GimpPalette         GimpPalette;
-
-
-/*  tools  */
-
-typedef struct _GimpToolInfo        GimpToolInfo;
-
-typedef struct _GimpTool            GimpTool;
-typedef struct _GimpPaintTool       GimpPaintTool;
-typedef struct _GimpDrawTool        GimpDrawTool;
-typedef struct _GimpPathTool        GimpPathTool;
-typedef struct _GimpTransformTool   GimpTransformTool;
-
-typedef struct _GimpBezierSelectPoint  GimpBezierSelectPoint;
-typedef struct _GimpBezierSelectTool   GimpBezierSelectTool;
-
-/*  undo objects  */
-
-typedef struct _GimpUndo            GimpUndo;
-typedef struct _GimpUndoStack       GimpUndoStack;
-
-
 /*  other stuff  */
 
 typedef struct _Argument            Argument;
@@ -152,8 +91,6 @@ typedef struct _ScanConvertPoint    ScanConvertPoint;
 
 typedef struct _Selection           Selection;
 
-typedef struct _SelectionOptions    SelectionOptions;
-
 
 /*  some undo stuff  */
 
@@ -173,18 +110,9 @@ typedef void       (* TileValidateProc)         (TileManager *tm,
 
 typedef void       (* ToolOptionsResetFunc)     (ToolOptions *tool_options);
 
-typedef void       (* GimpProgressFunc)         (gint         min,
-						 gint         max,
-						 gint         current,
-						 gpointer     data);
-
 typedef void       (* ImageMapApplyFunc)        (PixelRegion *srcPR,
 						 PixelRegion *destPR,
 						 gpointer     data);
-
-typedef void       (* GimpDataFileLoaderFunc)   (const gchar *filename,
-						 gpointer     loader_data);
-typedef GimpData * (* GimpDataObjectLoaderFunc) (const gchar *filename);
 
 
 #endif /* __APPTYPES_H__ */

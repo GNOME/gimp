@@ -38,7 +38,7 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "core/core-types.h"
 
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"

@@ -24,7 +24,8 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "core/core-types.h"
+#include "tools/tools-types.h"
 #include "widgets/widgets-types.h"
 
 #include "paint-funcs/paint-funcs.h"
@@ -34,13 +35,13 @@
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimplist.h"
+#include "core/gimptoolinfo.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdnd.h"
 #include "widgets/gimppreview.h"
 #include "widgets/gtkhwrapbox.h"
 
-#include "tools/gimptoolinfo.h"
 #include "tools/tool_manager.h"
 
 #include "color-area.h"

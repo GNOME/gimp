@@ -25,7 +25,7 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "core/core-types.h"
 
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
@@ -48,6 +48,7 @@
 
 #define IMPORT_PREVIEW_WIDTH  80
 #define IMPORT_PREVIEW_HEIGHT 80
+
 
 typedef enum
 {

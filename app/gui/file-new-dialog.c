@@ -24,7 +24,7 @@
 #include "libgimpwidgets/gimpwidgets.h"
 #include "libgimp/gimplimits.h"
 
-#include "apptypes.h"
+#include "core/core-types.h"
 
 #include "file-new-dialog.h"
 #include "gdisplay.h"

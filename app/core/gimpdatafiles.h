@@ -19,8 +19,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __DATAFILES_H__
-#define __DATAFILES_H__
+#ifndef __GIMP_DATAFILES_H__
+#define __GIMP_DATAFILES_H__
 
 #include <time.h>
 
@@ -32,22 +32,22 @@ typedef enum
 } GimpDataFileFlags;
 
 
-gboolean   datafiles_check_extension  (const gchar            *filename,
-				       const gchar            *extension);
+gboolean   gimp_datafiles_check_extension  (const gchar            *filename,
+					    const gchar            *extension);
 
-void       datafiles_read_directories (const gchar            *path_str,
-				       GimpDataFileFlags       flags,
-				       GimpDataFileLoaderFunc  loader_func,
-				       gpointer                loader_data);
+void       gimp_datafiles_read_directories (const gchar            *path_str,
+					    GimpDataFileFlags       flags,
+					    GimpDataFileLoaderFunc  loader_func,
+					    gpointer                loader_data);
 
 /* Return the current datafiles access, modification
  *  or change time. The current datafile is the one for
  *  which the "DataFileLoaderFunc" function has been called
  *  on.
  */
-time_t   datafile_atime (void);
-time_t   datafile_mtime (void);
-time_t   datafile_ctime (void);
+time_t   gimp_datafile_atime (void);
+time_t   gimp_datafile_mtime (void);
+time_t   gimp_datafile_ctime (void);
 
 
-#endif  /*  __DATAFILES_H__ */
+#endif  /*  __GIMP_DATAFILES_H__ */

@@ -28,14 +28,14 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimp/gimpenv.h"
 
-#include "apptypes.h"
+#include "core-types.h"
 
 #include "gimppalette.h"
+
 #include "gimprc.h"
 #include "temp_buf.h"
-
-#include "libgimp/gimpenv.h"
 
 #include "libgimp/gimpintl.h"
 

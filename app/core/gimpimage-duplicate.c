@@ -26,7 +26,10 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "core-types.h"
+
+/* FIXME: remove the Path <-> BezierSelect dependency */
+#include "tools/tools-types.h"
 
 #include "paint-funcs/paint-funcs.h"
 

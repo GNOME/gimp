@@ -79,7 +79,7 @@
 
 #include "libgimp/gimpenv.h"
 
-#include "apptypes.h"
+#include "core/core-types.h"
 
 #include "libgimp/gimpparasite.h"
 #include "libgimp/gimpprotocol.h"
@@ -319,8 +319,8 @@ plug_in_init (void)
     plug_in_init_shm ();
 
   /* search for binaries in the plug-in directory path */
-  datafiles_read_directories (plug_in_path, MODE_EXECUTABLE,
-			      plug_in_init_file, NULL);
+  gimp_datafiles_read_directories (plug_in_path, MODE_EXECUTABLE,
+				   plug_in_init_file, NULL);
 
   /* read the pluginrc file for cached data */
   filename = NULL;
@@ -2370,8 +2370,8 @@ plug_in_init_file (const gchar *filename,
       plug_in_def = NULL;
     }
 
-  plug_in_def = plug_in_def_new (filename);
-  plug_in_def->mtime = datafile_mtime ();
+  plug_in_def        = plug_in_def_new (filename);
+  plug_in_def->mtime = gimp_datafile_mtime ();
   plug_in_def->query = TRUE;
 
   plug_in_defs = g_slist_append (plug_in_defs, plug_in_def);

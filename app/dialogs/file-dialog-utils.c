@@ -23,7 +23,7 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "core/core-types.h"
 
 #include "gdisplay.h"
 #include "gimpui.h"

@@ -23,7 +23,7 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "core-types.h"
 
 #include "gimpcontainer.h"
 #include "gimpmarshal.h"

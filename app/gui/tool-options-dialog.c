@@ -22,11 +22,12 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "tools-types.h"
 #include "widgets/widgets-types.h"
 
 #include "core/gimpcontext.h"
 #include "core/gimplist.h"
+#include "core/gimptoolinfo.h"
 
 #include "widgets/gimpdnd.h"
 #include "widgets/gimppreview.h"
@@ -35,7 +36,6 @@
 #include "gimpui.h"
 
 #include "gimptool.h"
-#include "gimptoolinfo.h"
 #include "tool_options.h"
 #include "tool_options_dialog.h"
 #include "tool_manager.h"

@@ -20,7 +20,7 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "core-types.h"
 
 #include "paint-funcs/paint-funcs.h"
 

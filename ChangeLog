@@ -1,3 +1,31 @@
+2001-05-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/asupsample.[ch]: removed.
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/tools/Makefile.am
+	* app/tools/tools-types.h: new files.
+
+	* app/tools/gimptoolinfo.[ch]: removed.
+	* app/core/gimptoolinfo.[ch]: added here.
+
+	* libgimp/Makefile.am
+	* libgimp/gimp.h
+	* libgimp/gimpadaptivesupersample.[ch]
+	* libgimp/gimpbilinear.[ch]: removed here...
+
+	* libgimpcolor/Makefile.am
+	* libgimpcolor/gimpcolortypes.h
+	* libgimpcolor/gimpadaptivesupersample.[ch]
+	* libgimpcolor/gimpbilinear.[ch]: ..and added here.
+
+	* tools/pdbgen/app.pl
+	* tools/pdbgen/pdb/paths.pdb
+
+	* app/*.c: changed tons of #include's
+
 2001-05-09  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in

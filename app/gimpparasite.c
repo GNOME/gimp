@@ -24,7 +24,7 @@
 #include <unistd.h>
 #endif
 
-#include "apptypes.h"
+#include "core/core-types.h"
 
 #include "app_procs.h"
 #include "parasitelist.h"

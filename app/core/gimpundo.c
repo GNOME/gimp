@@ -20,11 +20,12 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "core-types.h"
 
 #include "gimpimage.h"
-#include "gimprc.h"
 #include "gimpundo.h"
+
+#include "gimprc.h"
 #include "temp_buf.h"
 
 

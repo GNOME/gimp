@@ -16,7 +16,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-
 #include "config.h"
 
 #include <gtk/gtk.h>
@@ -24,12 +23,13 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "apptypes.h"
+#include "tools-types.h"
+
+#include "core/gimptoolinfo.h"
 
 #include "gimprc.h"
 
 #include "gimptool.h"
-#include "gimptoolinfo.h"
 #include "gimptransformtool.h"
 #include "transform_options.h"
 #include "tool_manager.h"

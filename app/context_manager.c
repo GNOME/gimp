@@ -20,7 +20,7 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
+#include "core/core-types.h"
 
 #include "core/gimpbrush.h"
 #include "core/gimpbrushgenerated.h"
@@ -32,9 +32,9 @@
 #include "core/gimpimage.h"
 #include "core/gimppalette.h"
 #include "core/gimppattern.h"
+#include "core/gimptoolinfo.h"
 
 #include "tools/gimptool.h"
-#include "tools/gimptoolinfo.h"
 #include "tools/paint_options.h"
 #include "tools/tool_manager.h"
 
