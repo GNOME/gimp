@@ -6,6 +6,10 @@
 	pixmap brushes in the list are separately allocated ones. Don't
 	read the pattern names into dummy buffers, just seek past.
 
+	(A sample pixmap brush hose file (hi aspi, xach and yosh!) is at
+	http://www.iki.fi/tml/gimp/developers.gih. Put it in the brushes
+	directory)
+
 	* app/pixmapbrush.c (pixmapbrush_motion): Now works better, and
 	actually steps through the pixmaps in the hose's list. The
 	paint_core->brush (which points to a brush hose in the cases we're
