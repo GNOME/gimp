@@ -1626,6 +1626,8 @@ gimp_prop_size_entry_new (GObject                   *config,
     set_param_spec (NULL,
                     GIMP_SIZE_ENTRY (sizeentry)->unitmenu, unit_param_spec);
 
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), unit_value);
+
   if (update_policy == GIMP_SIZE_ENTRY_UPDATE_SIZE)
     gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
                                     resolution, FALSE);
@@ -1633,7 +1635,6 @@ gimp_prop_size_entry_new (GObject                   *config,
   gimp_size_entry_set_value_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
                                         lower, upper);
 
-  gimp_size_entry_set_unit  (GIMP_SIZE_ENTRY (sizeentry), unit_value);
   gimp_size_entry_set_value (GIMP_SIZE_ENTRY (sizeentry), 0, value);
 
   g_object_set_data (G_OBJECT (sizeentry), "gimp-config-param-spec",
@@ -1928,6 +1929,8 @@ gimp_prop_coordinates_connect (GObject     *config,
     set_param_spec (NULL,
                     GIMP_SIZE_ENTRY (sizeentry)->unitmenu, unit_param_spec);
 
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), unit_value);
+
   switch (GIMP_SIZE_ENTRY (sizeentry)->update_policy)
     {
     case GIMP_SIZE_ENTRY_UPDATE_SIZE:
@@ -1963,7 +1966,6 @@ gimp_prop_coordinates_connect (GObject     *config,
       break;
     }
 
-  gimp_size_entry_set_unit   (GIMP_SIZE_ENTRY (sizeentry), unit_value);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0, x_value);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1, y_value);
 

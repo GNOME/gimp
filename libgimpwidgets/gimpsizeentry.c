@@ -69,6 +69,7 @@ struct _GimpSizeEntryField
   gdouble        max_refval;
   gint           refval_digits;
 
+  gboolean       value_boundaries;
   gint           stop_recursion;
 };
 
@@ -612,6 +613,8 @@ gimp_size_entry_set_size (GimpSizeEntry *gse,
  * NOTE: In most cases you won't be interested in these values because the
  *       #GimpSizeEntry's purpose is to shield the programmer from unit
  *       calculations. Use gimp_size_entry_set_refval_boundaries() instead.
+ *       Whatever you do, don't mix these calls. A size entry should either
+ *       be clamped by the value or the reference value.
  **/
 void
 gimp_size_entry_set_value_boundaries (GimpSizeEntry *gse,
@@ -626,8 +629,9 @@ gimp_size_entry_set_value_boundaries (GimpSizeEntry *gse,
   g_return_if_fail (lower <= upper);
 
   gsef = (GimpSizeEntryField*) g_slist_nth_data (gse->fields, field);
-  gsef->min_value = lower;
-  gsef->max_value = upper;
+  gsef->min_value        = lower;
+  gsef->max_value        = upper;
+  gsef->value_boundaries = TRUE;
 
   GTK_ADJUSTMENT (gsef->value_adjustment)->lower = gsef->min_value;
   GTK_ADJUSTMENT (gsef->value_adjustment)->upper = gsef->max_value;
@@ -1134,9 +1138,14 @@ gimp_size_entry_update_unit (GimpSizeEntry *gse,
                                        gimp_size_entry_value_callback,
                                        gsef);
 
-      gimp_size_entry_set_refval_boundaries (gse, i,
-					     gsef->min_refval,
-                                             gsef->max_refval);
+      if (gsef->value_boundaries)
+        gimp_size_entry_set_value_boundaries (gse, i,
+                                              gsef->min_value,
+                                              gsef->max_value);
+      else
+        gimp_size_entry_set_refval_boundaries (gse, i,
+                                               gsef->min_refval,
+                                               gsef->max_refval);
 
       g_signal_handlers_unblock_by_func (gsef->value_adjustment,
                                          gimp_size_entry_value_callback,
