@@ -143,7 +143,10 @@ render_setup (GimpCheckType check_type,
   g_free (render_empty_buf);
   g_free (render_temp_buf);
 
-#define MAX_PREVIEW_SIZE 256  /* EEK */
+#ifdef __GNUC__
+#warning #define MAX_PREVIEW_SIZE 1024  /* GIMP_PREVIEW_MAX_SIZE (EEK) */
+#endif
+#define MAX_PREVIEW_SIZE 1024  /* GIMP_PREVIEW_MAX_SIZE (EEK) */
 
   /*  calculate check buffer for previews  */
   if (TRUE /* preview_size */)
