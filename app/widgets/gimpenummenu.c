@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "widgets-types.h"
 
 #include "gimpenummenu.h"
@@ -423,6 +425,7 @@ gimp_enum_radio_box_new_with_range (GType       enum_type,
   return vbox;
 }
 
+
 /**
  * gimp_enum_radio_frame_new:
  * @enum_type: the #GType of an enum.
@@ -508,4 +511,113 @@ gimp_enum_radio_frame_new_with_range (GType        enum_type,
   gtk_widget_show (radio_box);
 
   return frame;
+}
+
+
+/**
+ * gimp_enum_stock_box_new:
+ * @enum_type: the #GType of an enum.
+ * @stock_prefix: the prefix of the group of stock ids to use.
+ * @callback: a callback to connect to the "toggled" signal of each
+ *            #GtkRadioButton that is created.
+ * @callback_data: data to pass to the @callback.
+ * @first_button: returns the first button in the created group.
+ *
+ * Creates a horizontal box of radio buttons with stock icons.  The
+ * stock_id for each icon is created by appending the enum_value's
+ * nick to the given @stock_prefix.
+ * 
+ * Return value: a new #GtkHbox holding a group of #GtkRadioButtons.
+ **/
+GtkWidget *
+gimp_enum_stock_box_new (GType         enum_type,
+                         const gchar  *stock_prefix,
+                         GCallback     callback,
+                         gpointer      callback_data,
+                         GtkWidget   **first_button)
+{
+  GEnumClass *enum_class;
+  GtkWidget  *box;
+
+  g_return_val_if_fail (G_TYPE_IS_ENUM (enum_type), NULL);
+
+  enum_class = g_type_class_ref (enum_type);
+
+  box = gimp_enum_stock_box_new_with_range (enum_type,
+                                            enum_class->minimum,
+                                            enum_class->maximum,
+                                            stock_prefix,
+                                            callback, callback_data,
+                                            first_button);
+  
+  g_type_class_unref (enum_class);
+
+  return box;
+}
+
+GtkWidget *
+gimp_enum_stock_box_new_with_range (GType         enum_type,
+                                    gint          minimum,
+                                    gint          maximum,
+                                    const gchar  *stock_prefix,
+                                    GCallback     callback,
+                                    gpointer      callback_data,
+                                    GtkWidget   **first_button)
+{
+  GtkWidget  *hbox;
+  GtkWidget  *button;
+  GtkWidget  *image;
+  GEnumClass *enum_class;
+  GEnumValue *value;
+  gchar      *stock_id;
+  GSList     *group = NULL;
+
+  g_return_val_if_fail (G_TYPE_IS_ENUM (enum_type), NULL);
+  g_return_val_if_fail (stock_prefix != NULL, NULL);
+
+  enum_class = g_type_class_ref (enum_type);
+
+  hbox = gtk_hbox_new (FALSE, 1);
+  g_object_weak_ref (G_OBJECT (hbox),
+                     (GWeakNotify) g_type_class_unref, enum_class);
+
+  if (first_button)
+    *first_button = NULL;
+
+  for (value = enum_class->values; value->value_name; value++)
+    {
+      if (value->value < minimum || value->value > maximum)
+        continue;
+
+      button = gtk_radio_button_new (group);
+
+      if (first_button && *first_button == NULL)
+        *first_button = button;
+
+      stock_id = g_strconcat (stock_prefix, "-", value->value_nick, NULL);
+      image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_MENU);
+
+      if (image)
+        {
+          gtk_container_add (GTK_CONTAINER (button), image);
+          gtk_widget_show (image);
+        }
+
+      if (value->value_name)
+        gimp_help_set_help_data (button, value->value_name, NULL);
+
+      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
+      gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
+
+      g_object_set_data (G_OBJECT (button), "gimp-item-data",
+                         GINT_TO_POINTER (value->value));
+
+      if (callback)
+        g_signal_connect (button, "toggled",
+                          callback,
+                          callback_data);
+    }
+
+  return hbox;  
 }

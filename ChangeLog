@@ -1,5 +1,20 @@
 2003-02-05  Sven Neumann  <sven@gimp.org>
 
+	* app/text/gimptext.c: added some blurbs that will show up as
+	tooltips in the text tool options. Tweaked default values.
+	
+	* app/text/gimptextlayout.c (gimp_text_layout_position): if
+	gravity is none (the default), position the layout according to its
+	justification.
+
+	* app/widgets/gimpenummenu.[ch]: added new functions that create a
+	hbox of radio buttons with icons from an enum type.
+
+	* app/widgets/gimppropwidgets.[ch]: added a property widget
+	constructors for the new enum_stock_box.
+
+2003-02-05  Sven Neumann  <sven@gimp.org>
+
 	* app/text/text-enums.[ch]
 	* app/text/gimptext.[ch]: replaced GimpTextAlignment with
 	GimpTextJustification. Added indentation property.

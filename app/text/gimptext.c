@@ -33,6 +33,9 @@
 
 #include "gimptext.h"
 
+#include "libgimp/gimpintl.h"
+
+
 enum
 {
   PROP_0,
@@ -140,21 +143,25 @@ gimp_text_class_init (GimpTextClass *klass)
 				  &black,
 				  0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_JUSTIFICATION,
-                                "justify", NULL,
+                                "justify",
+                                 NULL,
                                  GIMP_TYPE_TEXT_JUSTIFICATION,
                                  GIMP_TEXT_JUSTIFY_LEFT,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_INDENTATION,
-				   "indent", NULL,
+				   "indent",
+                                   _("How many pixels the "
+                                     "first line should be shorter."),
 				   -8192.0, 8192.0, 0.0,
 				   0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LINE_SPACING,
-				   "line-spacing", NULL,
+				   "line-spacing",
+                                   _("Additional line spacing (in pixels)."),
 				   -8192.0, 8192.0, 0.0,
 				   0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LETTER_SPACING,
 				   "letter-spacing", NULL,
-                                    0.0, 64.0, 1.0,
+                                    -8192.0, 8192.0, 0.0,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_FIXED_WIDTH,
                                 "fixed-width", NULL,
@@ -166,7 +173,7 @@ gimp_text_class_init (GimpTextClass *klass)
                                 0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_GRAVITY,
                                 "gravity", NULL,
-                                 GIMP_TYPE_GRAVITY_TYPE, GIMP_GRAVITY_CENTER,
+                                 GIMP_TYPE_GRAVITY_TYPE, GIMP_GRAVITY_NONE,
                                  0);
 
   /*  border does only exist to implement the old text API  */

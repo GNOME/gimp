@@ -289,12 +289,13 @@ gimp_text_layout_render (GimpTextLayout *layout)
 static void
 gimp_text_layout_position (GimpTextLayout *layout)
 {
-  GimpText       *text;
-  PangoRectangle  ink;
-  PangoRectangle  logical;
-  gint            x1, y1;
-  gint            x2, y2;
-  gboolean        fixed;
+  GimpText        *text;
+  PangoRectangle   ink;
+  PangoRectangle   logical;
+  GimpGravityType  gravity;
+  gint             x1, y1;
+  gint             x2, y2;
+  gboolean         fixed;
 
   layout->extents.x      = 0;
   layout->extents.x      = 0;
@@ -330,12 +331,13 @@ gimp_text_layout_position (GimpTextLayout *layout)
   layout->extents.width  = fixed ? text->fixed_width  : x2 - x1;
   layout->extents.height = fixed ? text->fixed_height : y2 - y1;
 
-  /* border should only be used by the compatibility API;
-     we assume that gravity is CENTER
-   */
+  gravity = text->gravity;
+
+  /* border should only be used by the compatibility API */
   if (text->border)
     {
       fixed = TRUE;
+      gravity = GIMP_GRAVITY_CENTER;
 
       layout->extents.width  += 2 * text->border;
       layout->extents.height += 2 * text->border;
@@ -347,14 +349,30 @@ gimp_text_layout_position (GimpTextLayout *layout)
   if (!fixed)
     return;
 
-  switch (text->gravity)
+  if (gravity == GIMP_GRAVITY_NONE)
     {
+      switch (pango_layout_get_alignment (layout->layout))
+        {
+        case PANGO_ALIGN_LEFT:
+          gravity = GIMP_GRAVITY_NORTH_WEST;
+          break;
+        case PANGO_ALIGN_CENTER:
+          gravity = GIMP_GRAVITY_NORTH;
+          break;
+        case PANGO_ALIGN_RIGHT:
+          gravity = GIMP_GRAVITY_NORTH_EAST;
+          break;
+        }
+    }
+
+  switch (gravity)
+    {
+    case GIMP_GRAVITY_NONE:
     case GIMP_GRAVITY_NORTH_WEST:
     case GIMP_GRAVITY_SOUTH_WEST:
     case GIMP_GRAVITY_WEST:
       break;
       
-    case GIMP_GRAVITY_NONE:
     case GIMP_GRAVITY_CENTER:
     case GIMP_GRAVITY_NORTH:
     case GIMP_GRAVITY_SOUTH:
@@ -370,12 +388,12 @@ gimp_text_layout_position (GimpTextLayout *layout)
 
   switch (text->gravity)
     {
+    case GIMP_GRAVITY_NONE:
     case GIMP_GRAVITY_NORTH:
     case GIMP_GRAVITY_NORTH_WEST:
     case GIMP_GRAVITY_NORTH_EAST:
       break;
 
-    case GIMP_GRAVITY_NONE:
     case GIMP_GRAVITY_CENTER:
     case GIMP_GRAVITY_WEST:
     case GIMP_GRAVITY_EAST:

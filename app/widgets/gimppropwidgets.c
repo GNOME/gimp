@@ -152,11 +152,11 @@ gimp_prop_check_button_notify (GObject    *config,
 /*  option menus  */
 /******************/
 
-static void        gimp_prop_option_menu_callback      (GtkWidget   *widget,
-                                                        GObject     *config);
-static void        gimp_prop_option_menu_notify        (GObject     *config,
-                                                        GParamSpec  *param_spec,
-                                                        GtkWidget   *menu);
+static void   gimp_prop_option_menu_callback (GtkWidget   *widget,
+                                              GObject     *config);
+static void   gimp_prop_option_menu_notify   (GObject     *config,
+                                              GParamSpec  *param_spec,
+                                              GtkWidget   *menu);
 
 GtkWidget *
 gimp_prop_boolean_option_menu_new (GObject     *config,
@@ -286,6 +286,103 @@ gimp_prop_option_menu_notify (GObject    *config,
 
   gimp_option_menu_set_history (GTK_OPTION_MENU (menu),
                                 GINT_TO_POINTER (value));
+}
+
+
+/*********************/
+/*  stock radio box  */
+/*********************/
+
+static void  gimp_prop_radio_button_callback (GtkWidget   *widget,
+                                              GObject     *config);
+static void  gimp_prop_radio_button_notify   (GObject     *config,
+                                              GParamSpec  *param_spec,
+                                              GtkWidget   *button);
+
+
+GtkWidget *
+gimp_prop_enum_stock_box_new (GObject     *config,
+                              const gchar *property_name,
+                              const gchar *stock_prefix,
+                              gint         minimum,
+                              gint         maximum)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *box;
+  GtkWidget  *button;
+  gint        value;
+
+  param_spec = check_param_spec (config, property_name,
+                                 G_TYPE_PARAM_ENUM, G_STRLOC);
+  if (! param_spec)
+    return NULL;
+
+  g_object_get (config,
+                property_name, &value,
+                NULL);
+
+  if (minimum != maximum)
+    {
+      box = gimp_enum_stock_box_new_with_range (param_spec->value_type,
+                                                minimum, maximum,
+                                                stock_prefix,
+                                                G_CALLBACK (gimp_prop_radio_button_callback),
+                                                config,
+                                                &button);
+    }
+  else
+    {
+      box = gimp_enum_stock_box_new (param_spec->value_type,
+                                     stock_prefix,
+                                     G_CALLBACK (gimp_prop_radio_button_callback),
+                                     config,
+                                     &button);
+    }
+    
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (button),
+                               GINT_TO_POINTER (value));
+
+  set_param_spec (G_OBJECT (box), NULL, param_spec);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_radio_button_notify),
+                  button);
+
+  return box;
+}
+
+static void
+gimp_prop_radio_button_callback (GtkWidget *widget,
+                                 GObject   *config)
+{
+  GParamSpec *param_spec;
+  gint        value;
+  
+  param_spec = get_param_spec (G_OBJECT (widget->parent));
+  if (! param_spec)
+    return;
+
+  value = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+                                              "gimp-item-data"));
+
+  g_object_set (config,
+                param_spec->name, value,
+                NULL);
+}
+
+static void
+gimp_prop_radio_button_notify (GObject    *config,
+                               GParamSpec *param_spec,
+                               GtkWidget  *button)
+{
+  gint value;
+
+  g_object_get (config,
+                param_spec->name, &value,
+                NULL);
+
+  gimp_radio_group_set_active (GTK_RADIO_BUTTON (button),
+                               GINT_TO_POINTER (value));
 }
 
 
