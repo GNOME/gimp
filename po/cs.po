@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.18\n"
-"POT-Creation-Date: 2000-03-09 22:32+0100\n"
-"PO-Revision-Date: 2000-03-09 22:37+01:00\n"
+"POT-Creation-Date: 2000-03-11 16:11+0100\n"
+"PO-Revision-Date: 2000-03-11 16:15+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -144,123 +144,123 @@ msgstr "Køivka není uzavøená!"
 msgid "Paintbrush operation failed."
 msgstr "©tìtec selhal."
 
-#: app/blend.c:272
+#: app/blend.c:294
 msgid "Offset:"
 msgstr "Posun:"
 
-#: app/blend.c:283
+#: app/blend.c:305
 msgid "FG to BG (RGB)"
 msgstr "Popøedí do pozadí (RGB)"
 
-#: app/blend.c:284
+#: app/blend.c:306
 msgid "FG to BG (HSV)"
 msgstr "Popøedí do pozadí (HSV)"
 
-#: app/blend.c:285
+#: app/blend.c:307
 msgid "FG to Transparent"
 msgstr "Pozadí do prùhlednosti"
 
-#: app/blend.c:286
-msgid "Custom from Editor"
-msgstr "Vlastní z editoru"
+#: app/blend.c:308
+msgid "Custom Gradient"
+msgstr "Vlastní pøechod"
 
-#: app/blend.c:290
+#: app/blend.c:312
 msgid "Blend:"
 msgstr "Mísení:"
 
-#: app/blend.c:298 app/gradient.c:533 app/preferences_dialog.c:2209
+#: app/blend.c:320 app/gradient.c:533 app/preferences_dialog.c:2209
 msgid "Linear"
 msgstr "Lineární"
 
-#: app/blend.c:299
+#: app/blend.c:321
 msgid "Bi-Linear"
 msgstr "Bilineární"
 
-#: app/blend.c:300
+#: app/blend.c:322
 msgid "Radial"
 msgstr "Radiální"
 
-#: app/blend.c:301
+#: app/blend.c:323
 msgid "Square"
 msgstr "Ètvercový"
 
-#: app/blend.c:302
+#: app/blend.c:324
 msgid "Conical (symmetric)"
 msgstr "Ku¾elový (symetrický)"
 
-#: app/blend.c:303
+#: app/blend.c:325
 msgid "Conical (asymmetric)"
 msgstr "Ku¾elový (nesymetrický)"
 
-#: app/blend.c:304
+#: app/blend.c:326
 msgid "Shapeburst (angular)"
 msgstr "Pronikající (úhlový)"
 
-#: app/blend.c:305
+#: app/blend.c:327
 msgid "Shapeburst (spherical)"
 msgstr "Pronikající (kulový)"
 
-#: app/blend.c:306
+#: app/blend.c:328
 msgid "Shapeburst (dimpled)"
 msgstr "Pronikající (dùlkový)"
 
-#: app/blend.c:307
+#: app/blend.c:329
 msgid "Spiral (clockwise)"
 msgstr "Spirála (ve smìru hodinových ruèièek)"
 
-#: app/blend.c:308
+#: app/blend.c:330
 msgid "Spiral (anticlockwise)"
 msgstr "Spirála (proti smìru hodinových ruèièek)"
 
-#: app/blend.c:312
+#: app/blend.c:334
 msgid "Gradient:"
 msgstr "Pøechod:"
 
-#: app/blend.c:320 app/preferences_dialog.c:1808
+#: app/blend.c:342 app/preferences_dialog.c:1808
 msgid "None"
 msgstr "Nic"
 
-#: app/blend.c:321
+#: app/blend.c:343
 msgid "Sawtooth Wave"
 msgstr "Pilová vlna"
 
-#: app/blend.c:322
+#: app/blend.c:344
 msgid "Triangular Wave"
 msgstr "Trojúhelníková vlna"
 
-#: app/blend.c:326
+#: app/blend.c:348
 msgid "Repeat:"
 msgstr "Opakování:"
 
-#: app/blend.c:345
+#: app/blend.c:367
 msgid "Adaptive Supersampling"
 msgstr "Adaptivní pøevzorkování"
 
-#: app/blend.c:373
+#: app/blend.c:395
 msgid "Max Depth:"
 msgstr "Nejvìt¹í hloubka:"
 
-#: app/blend.c:386 app/bucket_fill.c:127 app/fuzzy_select.c:661
+#: app/blend.c:408 app/bucket_fill.c:127 app/fuzzy_select.c:661
 msgid "Threshold:"
 msgstr "Práh:"
 
-#: app/blend.c:413
+#: app/blend.c:435
 msgid "Blend: Invalid for indexed images."
 msgstr "Mísení: Není povoleno pro indexované obrázky."
 
-#: app/blend.c:438
+#: app/blend.c:460
 msgid "Blend: 0, 0"
 msgstr "Mísení: 0, 0"
 
-#: app/blend.c:501
+#: app/blend.c:523
 msgid "Blend operation failed."
 msgstr "Mísení selhalo."
 
-#: app/blend.c:507
+#: app/blend.c:529
 msgid "Blending..."
 msgstr "Mísení..."
 
-#: app/blend.c:585 app/blend.c:595
+#: app/blend.c:607 app/blend.c:617
 msgid "Blend: "
 msgstr "Mísení: "
 
