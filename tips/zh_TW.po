@@ -1,14 +1,14 @@
 # traditional Chinese translation of gimp-tips.
-# Copyright (C) 2003 Free Software Foundation, Inc.
+# Copyright (C) 2003, 04 Free Software Foundation, Inc.
 # (partially based on Harry C.H. Chou's work)
-# Abel Cheung <maddog@linux.org.hk>, 2003.
+# Abel Cheung <maddog@linux.org.hk>, 2003-04.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp20-tips 1.3.22\n"
+"Project-Id-Version: gimp20-tips 2.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 22:57+0100\n"
-"PO-Revision-Date: 2003-11-05 21:06+0800\n"
+"POT-Creation-Date: 2004-03-23 21:58+0800\n"
+"PO-Revision-Date: 2004-03-23 22:17+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -44,7 +44,6 @@ msgstr ""
 "色而非前景顏色。"
 
 #: tips/gimp-tips.xml.in.h:5
-#, fuzzy
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -66,12 +65,11 @@ msgid ""
 "or \"Anchor Layer buttons\" in the Layers dialog, or use the menus to do the "
 "same."
 msgstr ""
-"對圖像進行任何操作前，浮動選擇區域必須先固定在新的圖層或是最後使用的圖層上。"
+"對影像進行任何操作前，浮動選擇區域必須先固定在新的圖層或是最後使用的圖層上。"
 "要進行以上的程序，可以在「圖層」對話方塊中選取「新增圖層」或「固定圖層」按"
 "鈕。另外在選單中也可以使用同樣的方法。"
 
 #: tips/gimp-tips.xml.in.h:8
-#, fuzzy
 msgid ""
 "After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
 "you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
@@ -88,8 +86,8 @@ msgid ""
 "selections will snap to the guides. You can remove guides by dragging them "
 "off the image with the Move tool."
 msgstr ""
-"在尺規上按下滑鼠左鍵並拖曳至圖像內就可以加入參考線。以後任何拖曳的選擇區域都"
-"會自動吸引至參考線上。如果要去除參考線，可利用「移動」工具將參考線拖曳到圖像"
+"在尺規上按下滑鼠左鍵並拖曳至影像內就可以加入參考線。以後任何拖曳的選擇區域都"
+"會自動吸引至參考線上。如果要去除參考線，可利用「移動」工具將參考線拖曳到影像"
 "範圍以外。"
 
 #: tips/gimp-tips.xml.in.h:10
@@ -99,18 +97,17 @@ msgid ""
 "&gt;Colors-&gt;Levels). If there are any color casts, you can correct them "
 "with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
 msgstr ""
-"如果掃描出來的相片色彩不太鮮豔，可以使用「色階」工具（圖像→色彩→色階）中的"
-"「自動」按鈕來改善圖像的色彩範圍。如果色彩有任何走樣，可以利用「曲線」工具"
-"（圖像→色彩→曲線）來修正。"
+"如果掃描出來的相片色彩不太鮮豔，可以使用「色階」工具（影像→色彩→色階）中的"
+"「自動」按鈕來改善影像的色彩範圍。如果色彩有任何走樣，可以利用「曲線」工具"
+"（影像→色彩→曲線）來修正。"
 
 #: tips/gimp-tips.xml.in.h:11
-#, fuzzy
 msgid ""
 "If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
 "with their current settings. You can use the Paintbrush in gradient mode or "
 "even the Eraser or the Smudge tool."
 msgstr ""
-"描畫路徑時（編輯→依選擇區域描邊），可以使用目前的繪畫工具和設定。您可以在漸層"
+"描畫路徑時（編輯→描畫路徑），可以使用目前的繪畫工具和設定。您可以在漸層"
 "模式中使用「畫筆」，甚至「橡皮擦」或「塗污」工具也可以。"
 
 #: tips/gimp-tips.xml.in.h:12
@@ -118,38 +115,36 @@ msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> multiple times "
 "in an image window to hide or show the toolbox and other dialogs."
 msgstr ""
-"如果畫面過於混亂，您可以在圖像視窗中重複按下 <tt>Tab</tt> 鍵來隱藏或顯示工具"
+"如果畫面過於混亂，您可以在影像視窗中重複按下 <tt>Tab</tt> 鍵來隱藏或顯示工具"
 "箱及其它對話方塊。"
 
 #: tips/gimp-tips.xml.in.h:13
-#, fuzzy
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
 "plug-in to work on the whole image."
 msgstr ""
-"絕大多數的增效模組只會對圖像目前的圖層產生效用。在某些情況下，您必須先合併所"
-"有圖層 (圖像→圖像平面化)，增效模組才會對整幅圖像產生效用。"
+"絕大多數的增效模組只會對影像目前的圖層產生效用。在某些情況下，您必須先合併所"
+"有圖層 (影像→影像平面化)，增效模組才會對整幅影像產生效用。"
 
 #: tips/gimp-tips.xml.in.h:14
 msgid ""
 "Nearly all image operations are performed by right-clicking on the image. "
 "And don't worry, you can undo most mistakes..."
 msgstr ""
-"幾乎所有的圖像處理都可以在圖像上按下右邊滑鼠按鈕來進行。不需太擔心，大部份的"
+"幾乎所有的影像處理都可以在影像上按下右邊滑鼠按鈕來進行。不需太擔心，大部份的"
 "錯誤都是可以復原的..."
 
 #: tips/gimp-tips.xml.in.h:15
-#, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
 "&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Transparency-&gt;Add "
 "Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
 msgstr ""
-"並非所有效果都適用於各類圖像。當某項功能無法使用時，選單的文字會以淺灰色表"
-"示。如果需要該種效果，可能需要將圖像的色系轉為 RGB (圖像→模式→RGB)、加入透明"
-"色版 (圖層→透明度→新增透明色版) 或者將它平面化 (圖像→圖像平面化)。"
+"並非所有效果都適用於各類影像。當某項功能無法使用時，選單的文字會以淺灰色表"
+"示。如果需要該種效果，可能需要將影像的色系轉為 RGB (影像→模式→RGB)、加入透明"
+"色版 (圖層→透明度→新增透明色版) 或者將它平面化 (影像→影像平面化)。"
 
 #: tips/gimp-tips.xml.in.h:16
 msgid ""
@@ -167,7 +162,7 @@ msgid ""
 "will be saved compressed. Of course loading compressed images works too."
 msgstr ""
 "GIMP 支援 gzip 直接壓縮/解壓。只要在檔名加上 <tt>.gz</tt> (或在安裝了 bzip2 "
-"的情況下使用 <tt>.bz2</tt>)，圖像會以壓縮狀態儲存。 當然直接打開壓縮圖檔也可"
+"的情況下使用 <tt>.bz2</tt>)，影像會以壓縮狀態儲存。 當然直接打開壓縮圖檔也可"
 "以。"
 
 #: tips/gimp-tips.xml.in.h:18
@@ -176,7 +171,7 @@ msgid ""
 "stack of slides or filters, such that looking through them you see a "
 "composite of their contents."
 msgstr ""
-"GIMP 使用圖層來組織圖像。可將圖層想像成一疊投影片或濾鏡，將它們重疊後可以看到"
+"GIMP 使用圖層來組織影像。可將圖層想像成一疊投影片或濾鏡，將它們重疊後可以看到"
 "整合後的內容。"
 
 #: tips/gimp-tips.xml.in.h:19
@@ -229,9 +224,9 @@ msgid ""
 "the layers and every aspect of your work-in-progress. Once a project is "
 "completed, you can save it as JPEG, PNG, GIF, ..."
 msgstr ""
-"如果儲存一幅將來可能會再修改的圖像，可試試使用 XCF，即 GIMP 內定使用的圖像格"
-"式 (延伸檔名為 <tt>.xcf</tt>)。這樣會保留所有圖層及任何圖像的細節。圖像完成"
-"後，可以將圖像另存為 JPEG、PNG、GIF 等等..."
+"如果儲存一幅將來可能會再修改的影像，可試試使用 XCF，即 GIMP 內定使用的影像格"
+"式 (延伸檔名為 <tt>.xcf</tt>)。這樣會保留所有圖層及任何影像的細節。影像完成"
+"後，可以將影像另存為 JPEG、PNG、GIF 等等..."
 
 #: tips/gimp-tips.xml.in.h:24
 msgid ""
@@ -250,7 +245,6 @@ msgid ""
 msgstr "您可以調整模糊選擇區域的範圍，方法是按下滑鼠按鈕後向左或右拖曳。"
 
 #: tips/gimp-tips.xml.in.h:26
-#, fuzzy
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -265,7 +259,7 @@ msgid ""
 "This will create a new image containing only that layer."
 msgstr ""
 "您可以在「圖層」對話方塊中拖曳一個圖層並將之放進工具箱內。這樣會產生一幅只含"
-"有該圖層的圖像。"
+"有該圖層的影像。"
 
 #: tips/gimp-tips.xml.in.h:28
 msgid ""
@@ -274,10 +268,9 @@ msgid ""
 "fill the current image or selection with that color."
 msgstr ""
 "GIMP 裡面很多東西都是可以拖曳的。舉個例子，從工具箱或色盤裡拖曳一種顏色出來並"
-"放到圖像上，會將目前的圖像或選擇區域填滿該種顏色。"
+"放到影像上，會將目前的影像或選擇區域填滿該種顏色。"
 
 #: tips/gimp-tips.xml.in.h:29
-#, fuzzy
 msgid ""
 "You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -327,14 +320,14 @@ msgid ""
 "You can use <tt>Alt</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
 msgstr ""
-"您可以用 <tt>Alt</tt>-<tt>Tab</tt> 來逐層顯示圖像中的所有圖層。(但必須注意視"
+"您可以用 <tt>Alt</tt>-<tt>Tab</tt> 來逐層顯示影像中的所有圖層。(但必須注意視"
 "窗管理程式會否攔截這個按鍵組合...)"
 
 #: tips/gimp-tips.xml.in.h:35
 msgid ""
 "You can use the middle mouse button to pan around the image, if it's larger "
 "than its display window."
-msgstr "當圖像大於顯示圖像的視窗時，可以用中央滑鼠按鈕抓住圖像在視窗內移動。"
+msgstr "當影像大於顯示影像的視窗時，可以用中央滑鼠按鈕抓住影像在視窗內移動。"
 
 #: tips/gimp-tips.xml.in.h:36
 msgid ""
@@ -343,8 +336,8 @@ msgid ""
 "by painting in the image and click on the button again to convert it back to "
 "a normal selection."
 msgstr ""
-"您可以使用繪畫工具來更改選擇區域。按下圖像視窗左下角的「快速遮罩」按鈕。透過"
-"在圖像上繪圖可以更改選擇區域，然後再按一次按鈕可以將之轉換為普通的選擇區域。"
+"您可以使用繪畫工具來更改選擇區域。按下影像視窗左下角的「快速遮罩」按鈕。透過"
+"在影像上繪圖可以更改選擇區域，然後再按一次按鈕可以將之轉換為普通的選擇區域。"
 
 #~ msgid "You can adjust and re-place a selection by using <tt>Alt</tt>-drag."
 #~ msgstr "您可以透過按下 <tt>Alt</tt> 鍵再拖曳滑鼠來調整及重新放置選擇區域。"

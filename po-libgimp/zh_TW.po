@@ -1,15 +1,15 @@
-# traditional chinese translation for gimp-libgimp.
-# Copyright (C) 2001, 2003 Free Software Foundation, Inc.
+# traditional Chinese translation of gimp-libgimp.
+# Copyright (C) 2001, 03, 04 Free Software Foundation, Inc.
 # Chun-Chung Chen <cjj@u.washington.edu>, 2001.
 # 林佳宏 <object@mis.mgt.ncu.edu.tw>, 2001.
-# Abel Cheung <maddog@linux.org.hk>, 2001, 2003.
+# Abel Cheung <maddog@linux.org.hk>, 2001, 2003-04.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp 1.3.18\n"
+"Project-Id-Version: gimp-libgimp 2.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-20 23:20+0100\n"
-"PO-Revision-Date: 2003-08-20 01:07+0800\n"
+"POT-Creation-Date: 2004-03-23 21:54+0800\n"
+"PO-Revision-Date: 2004-03-23 22:13+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr "筆刷選擇"
 
 #: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
 msgid "_Browse..."
-msgstr ""
+msgstr "瀏覽(_B)..."
 
 #: libgimp/gimpexport.c:215 libgimp/gimpexport.c:251
 #, c-format
@@ -49,7 +49,7 @@ msgstr "儲存為動畫"
 
 #: libgimp/gimpexport.c:243 libgimp/gimpexport.c:252 libgimp/gimpexport.c:261
 msgid "Flatten Image"
-msgstr "圖像平面化"
+msgstr "影像平面化"
 
 #: libgimp/gimpexport.c:260
 #, c-format
@@ -57,18 +57,18 @@ msgid "%s can't handle transparency"
 msgstr "%s 無法處理透明度"
 
 #: libgimp/gimpexport.c:269
-#, fuzzy, c-format
+#, c-format
 msgid "%s can't handle layer masks"
-msgstr "%s 無法處理圖層"
+msgstr "%s 無法處理圖層遮罩"
 
 #: libgimp/gimpexport.c:270
 msgid "Apply Layer Masks"
-msgstr ""
+msgstr "套用圖層遮罩"
 
 #: libgimp/gimpexport.c:278
 #, c-format
 msgid "%s can only handle RGB images"
-msgstr "%s 只能處理 RGB 圖像"
+msgstr "%s 只能處理 RGB 影像"
 
 #: libgimp/gimpexport.c:279 libgimp/gimpexport.c:317 libgimp/gimpexport.c:326
 msgid "Convert to RGB"
@@ -77,7 +77,7 @@ msgstr "轉換成 RGB"
 #: libgimp/gimpexport.c:287
 #, c-format
 msgid "%s can only handle grayscale images"
-msgstr "%s 只能處理灰階圖像"
+msgstr "%s 只能處理灰階影像"
 
 #: libgimp/gimpexport.c:288 libgimp/gimpexport.c:317 libgimp/gimpexport.c:338
 msgid "Convert to Grayscale"
@@ -86,20 +86,20 @@ msgstr "轉換成灰階"
 #: libgimp/gimpexport.c:296
 #, c-format
 msgid "%s can only handle indexed images"
-msgstr "%s 只能處理索引色圖像"
+msgstr "%s 只能處理索引色影像"
 
 #: libgimp/gimpexport.c:297 libgimp/gimpexport.c:326 libgimp/gimpexport.c:336
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"根據預設設定轉換成索引色圖像\n"
+"根據預設設定轉換成索引色影像\n"
 "(請自行調整結果)"
 
 #: libgimp/gimpexport.c:306
 #, fuzzy, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
-msgstr "%s 只能處理 RGB 或索引色圖像"
+msgstr "%s 只能處理 RGB 或索引色影像"
 
 #: libgimp/gimpexport.c:307
 #, fuzzy
@@ -107,23 +107,23 @@ msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"根據預設設定轉換成索引色圖像\n"
+"根據預設設定轉換成索引色影像\n"
 "(請自行調整結果)"
 
 #: libgimp/gimpexport.c:316
 #, c-format
 msgid "%s can only handle RGB or grayscale images"
-msgstr "%s 只能處理 RGB 或灰階圖像"
+msgstr "%s 只能處理 RGB 或灰階影像"
 
 #: libgimp/gimpexport.c:325
 #, c-format
 msgid "%s can only handle RGB or indexed images"
-msgstr "%s 只能處理 RGB 或索引色圖像"
+msgstr "%s 只能處理 RGB 或索引色影像"
 
 #: libgimp/gimpexport.c:335
 #, c-format
 msgid "%s can only handle grayscale or indexed images"
-msgstr "%s 只能處理灰階或索引色圖像"
+msgstr "%s 只能處理灰階或索引色影像"
 
 #: libgimp/gimpexport.c:346
 #, c-format
@@ -147,26 +147,23 @@ msgid "Export File"
 msgstr "匯出檔案"
 
 #: libgimp/gimpexport.c:461
-#, fuzzy
 msgid "_Ignore"
-msgstr "忽略"
+msgstr "忽略(_I)"
 
 #: libgimp/gimpexport.c:463
-#, fuzzy
 msgid "_Export"
-msgstr "匯出"
+msgstr "匯出(_E)"
 
-#. the headline
 #: libgimp/gimpexport.c:485
 #, fuzzy, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
-msgstr "圖像在儲存前必須匯出，原因如下："
+msgstr "影像在儲存前必須匯出，原因如下："
 
 #: libgimp/gimpexport.c:563
 msgid "The export conversion won't modify your original image."
-msgstr "匯出時的圖像轉換程序不會更改原有的圖像。"
+msgstr "匯出時的影像轉換程序不會更改原有的影像。"
 
 #: libgimp/gimpexport.c:665
 #, c-format
@@ -208,7 +205,7 @@ msgstr "百分比"
 
 #: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
 msgid "(invalid UTF-8 string)"
-msgstr ""
+msgstr "無效的 UTF-8 文字)"
 
 #: libgimpbase/gimputils.c:244
 #, c-format
@@ -241,24 +238,24 @@ msgid "%.1f MB"
 msgstr "%.1f MB"
 
 #: libgimpbase/gimputils.c:272
-#, fuzzy, c-format
+#, c-format
 msgid "%d MB"
-msgstr "%d KB"
+msgstr "%d MB"
 
 #: libgimpbase/gimputils.c:279
-#, fuzzy, c-format
+#, c-format
 msgid "%.2f GB"
-msgstr "%.2f MB"
+msgstr "%.2f GB"
 
 #: libgimpbase/gimputils.c:283
-#, fuzzy, c-format
+#, c-format
 msgid "%.1f GB"
-msgstr "%.1f MB"
+msgstr "%.1f GB"
 
 #: libgimpbase/gimputils.c:287
-#, fuzzy, c-format
+#, c-format
 msgid "%d GB"
-msgstr "%d KB"
+msgstr "%d GB"
 
 #: libgimpmodule/gimpmodule.c:177
 #, c-format
@@ -268,11 +265,9 @@ msgstr "載入模組：‘%s’\n"
 #: libgimpmodule/gimpmodule.c:194 libgimpmodule/gimpmodule.c:213
 #: libgimpmodule/gimpmodule.c:328 libgimpmodule/gimpmodule.c:356
 #: libgimpmodule/gimpmodule.c:450
-#, fuzzy, c-format
+#, c-format
 msgid "Module '%s' load error: %s"
-msgstr ""
-"載入模組‘%s’時出現錯誤：\n"
-"%s"
+msgstr "載入模組‘%s’時出現錯誤：%s"
 
 #: libgimpmodule/gimpmodule.c:283
 #, c-format
@@ -298,27 +293,23 @@ msgstr "未載入"
 #: libgimpthumb/gimpthumb-utils.c:196
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr ""
+msgstr "無法建立縮圖資料夾‘%s’。"
 
 #: libgimpwidgets/gimpcolorbutton.c:93
-#, fuzzy
 msgid "/_Foreground Color"
-msgstr "/前景顏色"
+msgstr "/前景顏色(_F)"
 
 #: libgimpwidgets/gimpcolorbutton.c:95
-#, fuzzy
 msgid "/_Background Color"
-msgstr "/背景顏色"
+msgstr "/背景顏色(_B)"
 
 #: libgimpwidgets/gimpcolorbutton.c:98
-#, fuzzy
 msgid "/Blac_k"
-msgstr "/黑"
+msgstr "/黑(_K)"
 
 #: libgimpwidgets/gimpcolorbutton.c:100
-#, fuzzy
 msgid "/_White"
-msgstr "/白"
+msgstr "/白(_W)"
 
 #: libgimpwidgets/gimpcolorscales.c:142
 msgid "Scales"
@@ -391,11 +382,11 @@ msgstr "16 進位數字(_X)："
 
 #: libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
-msgstr ""
+msgstr "目前顏色："
 
 #: libgimpwidgets/gimpcolorselection.c:225
 msgid "Old:"
-msgstr ""
+msgstr "原有顏色："
 
 #: libgimpwidgets/gimpfileentry.c:350
 msgid "Select Folder"
@@ -418,14 +409,12 @@ msgid "GigaBytes"
 msgstr "GB"
 
 #: libgimpwidgets/gimppatheditor.c:243
-#, fuzzy
 msgid "Writable"
-msgstr "三角"
+msgstr "可寫入"
 
 #: libgimpwidgets/gimppatheditor.c:252
-#, fuzzy
 msgid "Folder"
-msgstr "選取資料夾"
+msgstr "資料夾"
 
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
@@ -451,7 +440,7 @@ msgstr ""
 
 #: libgimpwidgets/gimpstock.c:117
 msgid "Paste as New"
-msgstr "貼上成為新圖像"
+msgstr "貼上成為新影像"
 
 #: libgimpwidgets/gimpstock.c:118
 msgid "Paste Into"
@@ -522,14 +511,13 @@ msgstr ""
 
 #: libgimpwidgets/gimpwidgets.c:1295
 msgid "_New Seed"
-msgstr ""
+msgstr "產生隨機數(_N)"
 
 #: libgimpwidgets/gimpwidgets.c:1308
 msgid "Seed random number generator with a generated random number"
 msgstr "使用產生出來的隨機數作為隨機數產生程序的來源數字"
 
 #: libgimpwidgets/gimpwidgets.c:1312
-#, fuzzy
 msgid "_Randomize"
 msgstr "隨機化(_R)"
 
@@ -542,9 +530,8 @@ msgid "Color Deficient Vision"
 msgstr "模擬色盲人士的視覺"
 
 #: modules/cdisplay_colorblind.c:464
-#, fuzzy
 msgid "Color _Deficiency Type:"
-msgstr "色盲類型："
+msgstr "色盲類型(_D)："
 
 #: modules/cdisplay_colorblind.c:473
 msgid "Protanopia (insensitivity to red)"
@@ -567,9 +554,8 @@ msgid "Gamma"
 msgstr "Gamma"
 
 #: modules/cdisplay_gamma.c:311
-#, fuzzy
 msgid "_Gamma:"
-msgstr "Gamma："
+msgstr "_Gamma："
 
 #: modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
@@ -580,9 +566,8 @@ msgid "Contrast"
 msgstr "對比"
 
 #: modules/cdisplay_highcontrast.c:308
-#, fuzzy
 msgid "Contrast C_ycles:"
-msgstr "對比"
+msgstr ""
 
 #: modules/cdisplay_proof.c:102
 msgid "Color proof filter using ICC color profile"
@@ -684,50 +669,3 @@ msgstr "水彩"
 msgid "Pressure"
 msgstr "壓力"
 
-#~ msgid "Preview"
-#~ msgstr "預覽"
-
-#~ msgid ""
-#~ "No %s in gimprc:\n"
-#~ "You need to add an entry like\n"
-#~ "(%s \"%s\")\n"
-#~ "to your %s file."
-#~ msgstr ""
-#~ "gimprc 中缺少了 %1$s 項目：\n"
-#~ "請在 %4$s 檔案加入類似\n"
-#~ "(%2$s \"%3$s\")\n"
-#~ "的項目。"
-
-#, fuzzy
-#~ msgid "Parameter Settings"
-#~ msgstr "圖樣選擇"
-
-#~ msgid "None (normal vision)"
-#~ msgstr "無 (正常視力)"
-
-#~ msgid "pixel"
-#~ msgstr "像素"
-
-#~ msgid "pixels"
-#~ msgstr "像素"
-
-#~ msgid "inches"
-#~ msgstr "英吋"
-
-#~ msgid "millimeter"
-#~ msgstr "毫米"
-
-#~ msgid "millimeters"
-#~ msgstr "毫米"
-
-#~ msgid "point"
-#~ msgstr "點"
-
-#~ msgid "points"
-#~ msgstr "點"
-
-#~ msgid "Select Directory"
-#~ msgstr "選擇目錄"
-
-#~ msgid "OK"
-#~ msgstr "確定"
