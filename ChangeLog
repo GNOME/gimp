@@ -1,4 +1,4 @@
-2003-08-12  Adam D. Moss  <adam@gimp.org>
+2003-09-08  Adam D. Moss  <adam@gimp.org>
 
 	* plug-ins/common/animoptimize.c: Disable the (pdb interfaces
         to the) semi-broken background/foreground stuff unless
