@@ -648,16 +648,19 @@ and operations involving multiple layers.
 </para>
 
 
+
 <!-- ##### MACRO gimp_image_convert_grayscale ##### -->
 <para>
 
 </para>
 
 
+
 <!-- ##### MACRO gimp_image_convert_indexed ##### -->
 <para>
 
 </para>
+
 
 
 <!-- ##### FUNCTION gimp_image_duplicate ##### -->
