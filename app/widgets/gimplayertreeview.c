@@ -243,11 +243,22 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
   tree_view     = GIMP_CONTAINER_TREE_VIEW (view);
   drawable_view = GIMP_DRAWABLE_TREE_VIEW (view);
 
+  /* The following used to read:
+   *
+   * tree_view->model_columns[tree_view->n_model_columns++] = ...
+   *
+   * but combining the two lead to gcc miscompiling the function on ppc/ia64
+   * (model_column_mask and model_column_mask_visible would have the same
+   * value, probably due to bad instruction reordering). See bug #113144 for
+   * more info.
+   */
   view->model_column_mask = tree_view->n_model_columns;
-  tree_view->model_columns[tree_view->n_model_columns++] = GIMP_TYPE_PREVIEW_RENDERER;
+  tree_view->model_columns[tree_view->n_model_columns] = GIMP_TYPE_PREVIEW_RENDERER;
+  tree_view->n_model_columns++;
 
   view->model_column_mask_visible = tree_view->n_model_columns;
-  tree_view->model_columns[tree_view->n_model_columns++] = G_TYPE_BOOLEAN;
+  tree_view->model_columns[tree_view->n_model_columns] = G_TYPE_BOOLEAN;
+  tree_view->n_model_columns++;
 
   view->options_box = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (view->options_box), 2);

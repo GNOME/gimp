@@ -1,9 +1,16 @@
-2003-10-12  Seth Burgess <sjburges@gimp.org>
+2003-10-12  Manish Singh  <yosh@gimp.org>
+
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimplayertreeview.c: split out indexed assignment and
+	increment to avoid miscompilation by gcc on ppc and ia64. Fixes
+	bug #113144.
+
+2003-10-12  Seth Burgess  <sjburges@gimp.org>
 	
 	* plug-ins/common/glasstile.c: make a minimum grid size of 2 for
 	preview.  Fixes bug #72053.
 
-2003-10-10  Pedro Gimeno  <pggimeno@wanadoo.es>
+2003-10-12  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* app/widgets/gimptoolbox.c (gimp_toolbox_init): Set the default
 	aspect ratio of the toolbox wrap box to 5:6.

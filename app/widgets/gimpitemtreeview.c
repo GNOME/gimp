@@ -272,11 +272,22 @@ gimp_item_tree_view_init (GimpItemTreeView      *view,
   tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   editor    = GIMP_EDITOR (view);
 
+  /* The following used to read:
+   *
+   * tree_view->model_columns[tree_view->n_model_columns++] = ...
+   *
+   * but combining the two lead to gcc miscompiling the function on ppc/ia64
+   * (model_column_mask and model_column_mask_visible would have the same
+   * value, probably due to bad instruction reordering). See bug #113144 for
+   * more info.
+   */
   view->model_column_visible = tree_view->n_model_columns;
-  tree_view->model_columns[tree_view->n_model_columns++] = G_TYPE_BOOLEAN;
+  tree_view->model_columns[tree_view->n_model_columns] = G_TYPE_BOOLEAN;
+  tree_view->n_model_columns++;
 
   view->model_column_linked = tree_view->n_model_columns;
-  tree_view->model_columns[tree_view->n_model_columns++] = G_TYPE_BOOLEAN;
+  tree_view->model_columns[tree_view->n_model_columns] = G_TYPE_BOOLEAN;
+  tree_view->n_model_columns++;
 
   view->gimage      = NULL;
   view->item_type   = G_TYPE_NONE;
