@@ -1,3 +1,13 @@
+2002-03-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/pattern-select.c
+	* app/gui/preferences-dialog.c: proofreading by bex.
+
+	* app/gui/brush-select.c
+	* app/gui/gradient-select.c
+	* app/gui/pattern-select.c: cleaned up the
+	foo_select_change_callbacks() functions a bit.
+
 2002-03-11  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/user-install-dialog.c: fixed typo (#74248).

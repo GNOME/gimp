@@ -217,7 +217,7 @@ gradient_select_change_callbacks (GradientSelect *gsp,
   /* Any procs registered to callback? */
   Argument *return_vals; 
 
-  if (!gsp || !gsp->callback_name || busy != 0)
+  if (!gsp || !gsp->callback_name || busy)
     return;
 
   busy = TRUE;
@@ -265,9 +265,10 @@ gradient_select_change_callbacks (GradientSelect *gsp,
 				GIMP_PDB_END);
  
       if (!return_vals || return_vals[0].value.pdb_int != GIMP_PDB_SUCCESS)
-	g_message (_("Failed to run gradient callback function.\n"
-		   "The corresponding plug-in may have crashed."));
-      else
+	g_message (_("Unable to run gradient callback.\n"
+                     "The corresponding plug-in may have crashed."));
+
+      if (return_vals)
 	procedural_db_destroy_args (return_vals, nreturn_vals);
     }
 

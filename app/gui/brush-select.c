@@ -366,6 +366,7 @@ brush_select_change_callbacks (BrushSelect *bsp,
     return;
 
   busy  = TRUE;
+
   name  = bsp->callback_name;
   brush = gimp_context_get_brush (bsp->context);
 
@@ -392,10 +393,12 @@ brush_select_change_callbacks (BrushSelect *bsp,
  
       if (!return_vals || return_vals[0].value.pdb_int != GIMP_PDB_SUCCESS)
 	g_message (_("Unable to run brush callback.\n"
-		   "The corresponding plug-in may have crashed."));
-      
-      procedural_db_destroy_args (return_vals, nreturn_vals);
+                     "The corresponding plug-in may have crashed."));
+
+      if (return_vals)
+        procedural_db_destroy_args (return_vals, nreturn_vals);
     }
+
   busy = FALSE;
 }
 

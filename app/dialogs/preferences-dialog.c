@@ -291,39 +291,39 @@ prefs_check_settings (Gimp *gimp)
   /*  First, check for invalid values...  */
   if (gimp->config->levels_of_undo < 0) 
     {
-      g_message (_("Error: Levels of undo must be zero or greater."));
+      g_warning ("Error: Levels of undo must be zero or greater.");
       gimp->config->levels_of_undo = old_levels_of_undo;
       return PREFS_CORRUPT;
     }
   if (gimprc.marching_speed < 50)
     {
-      g_message (_("Error: Marching speed must be 50 or greater."));
+      g_warning ("Error: Marching speed must be 50 or greater.");
       gimprc.marching_speed = old_marching_speed;
       return PREFS_CORRUPT;
     }
   if (gimp->config->default_width < 1)
     {
-      g_message (_("Error: Default width must be one or greater."));
+      g_warning ("Error: Default width must be one or greater.");
       gimp->config->default_width = old_default_width;
       return PREFS_CORRUPT;
     }
   if (gimp->config->default_height < 1)
     {
-      g_message (_("Error: Default height must be one or greater."));
+      g_warning ("Error: Default height must be one or greater.");
       gimp->config->default_height = old_default_height;
       return PREFS_CORRUPT;
     }
   if (gimp->config->default_units < GIMP_UNIT_INCH ||
       gimp->config->default_units >= gimp_unit_get_number_of_units ())
     {
-      g_message (_("Error: Default unit must be within unit range."));
+      g_warning ("Error: Default unit must be within unit range.");
       gimp->config->default_units = old_default_units;
       return PREFS_CORRUPT;
     }
   if (gimp->config->default_xresolution < GIMP_MIN_RESOLUTION ||
       gimp->config->default_yresolution < GIMP_MIN_RESOLUTION)
     {
-      g_message (_("Error: Default resolution must not be zero."));
+      g_warning ("Error: Default resolution must not be zero.");
       gimp->config->default_xresolution = old_default_xresolution;
       gimp->config->default_yresolution = old_default_yresolution;
       return PREFS_CORRUPT;
@@ -331,34 +331,34 @@ prefs_check_settings (Gimp *gimp)
   if (gimp->config->default_resolution_units < GIMP_UNIT_INCH ||
       gimp->config->default_resolution_units >= gimp_unit_get_number_of_units ())
     {
-      g_message (_("Error: Default resolution unit must be within unit range."));
+      g_warning ("Error: Default resolution unit must be within unit range.");
       gimp->config->default_resolution_units = old_default_resolution_units;
       return PREFS_CORRUPT;
     }
   if (gimprc.monitor_xres < GIMP_MIN_RESOLUTION ||
       gimprc.monitor_yres < GIMP_MIN_RESOLUTION)
     {
-      g_message (_("Error: Monitor resolution must not be zero."));
+      g_warning ("Error: Monitor resolution must not be zero.");
       gimprc.monitor_xres = old_monitor_xres;
       gimprc.monitor_yres = old_monitor_yres;
       return PREFS_CORRUPT;
     }
   if (gimprc.image_title_format == NULL)
     {
-      g_message (_("Error: Image title format must not be NULL."));
+      g_warning ("Error: Image title format must not be NULL.");
       gimprc.image_title_format = old_image_title_format;
       return PREFS_CORRUPT;
     }
   if (gimprc.image_status_format == NULL)
     {
-      g_message (_("Error: Image status format must not be NULL."));
+      g_warning ("Error: Image status format must not be NULL.");
       gimprc.image_status_format = old_image_status_format;
       return PREFS_CORRUPT;
     }
 
   if (base_config->num_processors < 1 || base_config->num_processors > 30) 
     {
-      g_message (_("Error: Number of processors must be between 1 and 30."));
+      g_warning ("Error: Number of processors must be between 1 and 30.");
       base_config->num_processors = old_num_processors;
       return PREFS_CORRUPT;
     }
@@ -2123,7 +2123,7 @@ preferences_dialog_create (Gimp *gimp)
 		    &edit_last_opened_size);
 
   /* Dialog Bahaviour */
-  vbox2 = prefs_frame_new (_("Dialog Behaviour"), GTK_CONTAINER (vbox));
+  vbox2 = prefs_frame_new (_("Dialog Behavior"), GTK_CONTAINER (vbox));
 
   prefs_check_button_new (_("Navigation Window per Display"),
                           &edit_nav_window_per_display, GTK_BOX (vbox2));
@@ -2141,7 +2141,7 @@ preferences_dialog_create (Gimp *gimp)
 
   prefs_check_button_new (_("Save Window Positions on Exit"),
                           &gimprc.save_session_info, GTK_BOX (vbox2));
-  prefs_check_button_new (_("Restore Saved Window Positions on Startup"),
+  prefs_check_button_new (_("Restore Saved Window Positions on Start-up"),
                           &gimprc.always_restore_session, GTK_BOX (vbox2));
 
   hbox = gtk_hbox_new (FALSE, 2);
@@ -2770,7 +2770,7 @@ preferences_dialog_create (Gimp *gimp)
 			   NULL);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("\"File > Save\" Saves the Image:"), 1.0, 0.5,
+                             _("\"File -> Save\" Saves the Image:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
                                      
   optionmenu =
