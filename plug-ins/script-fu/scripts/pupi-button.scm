@@ -99,13 +99,10 @@
 
 	 (radius (/ (* ratio height) 4))
 
-	 (width (+ (* 2 (+ radius xpadding)) bevel
-		       (- (text-width text-extents)
-			  (text-width (gimp-text-get-extents-fontname " "
-							     size
-							     PIXELS
-							     font)))))
-							     
+	 (width (+ (* 2 (+ radius xpadding))
+		   bevel
+		   (text-width text-extents)))
+
 	 (img (car (gimp-image-new width height RGB)))
 
 	 (bumpmap (car (gimp-layer-new img width height
