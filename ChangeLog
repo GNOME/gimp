@@ -1,5 +1,15 @@
 2002-10-15  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/dialogs-constructors.c: draw the tool icons in dockbook
+	tabs using GtkImages, not using GimpPreviews.
+
+	* app/widgets/gimptoolbox.c: added a "button_relief" style property
+	to GimpToolbox and changed the default style to GTK_RELIEF_NONE.
+
+	* themes/Default/gtkrc: document how to set the style here.
+
+2002-10-15  Sven Neumann  <sven@gimp.org>
+
 	* app/base/levels.[ch]: added the API for level correction using
 	black, gray and white point.
 

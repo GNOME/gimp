@@ -1116,31 +1116,33 @@ dialogs_palette_tab_func (GimpDockable *dockable,
   return preview;
 }
 
+static void
+dialogs_tool_tab_tool_changed (GimpContext  *context,
+                               GimpToolInfo *tool_info,
+                               GtkImage     *image)
+{
+  gtk_image_set_from_stock (image, tool_info->stock_id, image->icon_size);
+}
+
 static GtkWidget *
 dialogs_tool_tab_func (GimpDockable *dockable,
 		       GimpDockbook *dockbook,
 		       GtkIconSize   size)
 {
   GimpContext *context;
-  GtkWidget   *preview;
-  gint         width;
-  gint         height;
+  GtkWidget   *image;
 
   context = dockbook->dock->context;
 
-  gtk_icon_size_lookup (size, &width, &height);
-
-  preview =
-    gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_tool (context)),
-			   width, height, 1,
-			   FALSE, FALSE, FALSE);
+  image = gtk_image_new_from_stock (gimp_context_get_tool (context)->stock_id,
+                                    size);
 
   g_signal_connect_object (G_OBJECT (context), "tool_changed",
-			   G_CALLBACK (gimp_preview_set_viewable),
-			   G_OBJECT (preview),
-			   G_CONNECT_SWAPPED);
+			   G_CALLBACK (dialogs_tool_tab_tool_changed),
+			   G_OBJECT (image),
+			   0);
 
-  return preview;
+  return image;
 }
 
 static void
@@ -1148,7 +1150,11 @@ dialogs_tool_options_tool_changed (GimpContext  *context,
                                    GimpToolInfo *tool_info,
                                    GtkLabel     *label)
 {
-  gchar *text;
+  GtkImage *image;
+  gchar    *text;
+
+  if (image = g_object_get_data (G_OBJECT (label), "tool-icon"))
+    gtk_image_set_from_stock (image, tool_info->stock_id, image->icon_size);
 
   text = g_strdup_printf (_("%s Options"), tool_info->blurb);
 
@@ -1169,7 +1175,7 @@ dialogs_tool_options_tab_func (GimpDockable *dockable,
   GimpContext  *context;
   GimpToolInfo *tool_info;
   GtkWidget    *hbox;
-  GtkWidget    *preview;
+  GtkWidget    *image;
   GtkWidget    *label;
   gchar        *text;
   gint          width;
@@ -1183,16 +1189,10 @@ dialogs_tool_options_tab_func (GimpDockable *dockable,
 
   hbox = gtk_hbox_new (FALSE, 2);
 
-  preview = gimp_preview_new_full (GIMP_VIEWABLE (tool_info),
-                                   width, height, 0,
-                                   FALSE, FALSE, FALSE);
-  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
-  gtk_widget_show (preview);
-
-  g_signal_connect_object (G_OBJECT (context), "tool_changed",
-			   G_CALLBACK (gimp_preview_set_viewable),
-			   G_OBJECT (preview),
-			   G_CONNECT_SWAPPED);
+  image = gtk_image_new_from_stock (gimp_context_get_tool (context)->stock_id,
+                                    size);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_show (image);
 
   text = g_strdup_printf (_("%s Options"), tool_info->blurb);
 
@@ -1202,6 +1202,8 @@ dialogs_tool_options_tab_func (GimpDockable *dockable,
 
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
+
+  g_object_set_data (G_OBJECT (label), "tool-icon", image);
 
   g_signal_connect_object (G_OBJECT (context), "tool_changed",
 			   G_CALLBACK (dialogs_tool_options_tool_changed),

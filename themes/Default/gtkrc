@@ -75,6 +75,7 @@ style "gimp-default-style"
   GimpImageDock::minimal_width     = 250
   GimpImageDock::menu_preview_size = button
   GimpToolbox::tool_icon_size      = button
+  GimpToolbox::button_relief       = none
   GimpDockbook::tab_border         = 0
   GimpDockbook::tab_size           = button
   GimpDockable::content_border     = 2

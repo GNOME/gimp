@@ -52,6 +52,7 @@
 
 
 #define DEFAULT_TOOL_ICON_SIZE GTK_ICON_SIZE_BUTTON
+#define DEFAULT_BUTTON_RELIEF  GTK_RELIEF_NONE
 
 
 /*  local function prototypes  */
@@ -144,12 +145,21 @@ gimp_toolbox_class_init (GimpToolboxClass *klass)
   widget_class->size_allocate = gimp_toolbox_size_allocate;
   widget_class->style_set     = gimp_toolbox_style_set;
 
-  gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_enum ("tool_icon_size",
-                                                              NULL, NULL,
-                                                              GTK_TYPE_ICON_SIZE,
-                                                              DEFAULT_TOOL_ICON_SIZE,
-                                                              G_PARAM_READABLE));
+  gtk_widget_class_install_style_property
+    (widget_class,
+     g_param_spec_enum ("tool_icon_size",
+                        NULL, NULL,
+                        GTK_TYPE_ICON_SIZE,
+                        DEFAULT_TOOL_ICON_SIZE,
+                        G_PARAM_READABLE));
+
+  gtk_widget_class_install_style_property
+    (widget_class,
+     g_param_spec_enum ("button_relief",
+                        NULL, NULL,
+                        GTK_TYPE_RELIEF_STYLE,
+                        DEFAULT_BUTTON_RELIEF,
+                        G_PARAM_READABLE));
 }
 
 static void
@@ -279,11 +289,12 @@ static void
 gimp_toolbox_style_set (GtkWidget *widget,
                         GtkStyle  *previous_style)
 {
-  Gimp         *gimp;
-  GimpToolInfo *tool_info;
-  GtkWidget    *tool_button;
-  GtkIconSize   tool_icon_size;
-  GList        *list;
+  Gimp           *gimp;
+  GimpToolInfo   *tool_info;
+  GtkWidget      *tool_button;
+  GtkIconSize     tool_icon_size;
+  GtkReliefStyle  relief;
+  GList          *list;
 
   if (GTK_WIDGET_CLASS (parent_class)->style_set)
     GTK_WIDGET_CLASS (parent_class)->style_set (widget, previous_style);
@@ -295,6 +306,7 @@ gimp_toolbox_style_set (GtkWidget *widget,
 
   gtk_widget_style_get (widget,
                         "tool_icon_size", &tool_icon_size,
+                        "button_relief",  &relief,
                         NULL);
 
   for (list = GIMP_LIST (gimp->tool_info_list)->list;
@@ -314,6 +326,8 @@ gimp_toolbox_style_set (GtkWidget *widget,
 
           gtk_image_get_stock (image, &stock_id, NULL);
           gtk_image_set_from_stock (image, stock_id, tool_icon_size);
+
+          gtk_button_set_relief (tool_button, relief);
         }
     }
 
