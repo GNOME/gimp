@@ -1,5 +1,10 @@
 2005-02-11  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/preferences-dialog.c: reordered pages in an attempt
+	to list important settings first.
+
+2005-02-11  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: enable support for multiple processors by default.
 	Hyperthreading and multicore CPUs are becoming common and we
 	should try to give this as much testing as possible.

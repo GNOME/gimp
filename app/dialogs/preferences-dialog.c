@@ -714,7 +714,7 @@ prefs_notebook_append_page (Gimp          *gimp,
   gtk_tree_store_append (tree, iter, parent);
   gtk_tree_store_set (tree, iter,
                       0, small_pixbuf,
-                      1, tree_label,
+                      1, tree_label ? tree_label : notebook_label,
                       2, page_index,
                       3, notebook_label,
                       4, pixbuf,
@@ -1289,16 +1289,16 @@ prefs_dialog_new (Gimp       *gimp,
   page_index = 0;
 
 
-  /***************/
-  /*  New Image  */
-  /***************/
+  /*****************/
+  /*  Environment  */
+  /*****************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
-				     _("New Image"),
-                                     "new-image.png",
+				     _("Environment"),
+                                     "environment.png",
 				     GTK_TREE_STORE (tree),
-				     _("New Image"),
-				     GIMP_HELP_PREFS_NEW_IMAGE,
+                                     NULL,
+				     GIMP_HELP_PREFS_ENVIRONMENT,
 				     NULL,
 				     &top_iter,
 				     page_index++);
@@ -1306,51 +1306,58 @@ prefs_dialog_new (Gimp       *gimp,
   /* select this page in the tree */
   gtk_tree_selection_select_iter (sel, &top_iter);
 
-  table = prefs_table_new (1, GTK_CONTAINER (vbox));
+  size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
-  {
-    GtkWidget *combo;
+  vbox2 = prefs_frame_new (_("Resource Consumption"),
+                           GTK_CONTAINER (vbox), FALSE);
 
-    combo = gimp_container_combo_box_new (gimp->templates, NULL, 16, 0);
-    gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                               _("_Template:"),  0.0, 0.5,
-                               combo, 1, FALSE);
+#ifdef ENABLE_MP
+  table = prefs_table_new (5, GTK_CONTAINER (vbox2));
+#else
+  table = prefs_table_new (4, GTK_CONTAINER (vbox2));
+#endif /* ENABLE_MP */
 
-    gimp_container_view_select_item (GIMP_CONTAINER_VIEW (combo), NULL);
+  prefs_spin_button_add (object, "undo-levels", 1.0, 5.0, 0,
+                         _("Minimal number of _undo levels:"),
+                         GTK_TABLE (table), 0, size_group);
+  prefs_memsize_entry_add (object, "undo-size",
+                           _("Maximum undo _memory:"),
+                           GTK_TABLE (table), 1, size_group);
+  prefs_memsize_entry_add (object, "tile-cache-size",
+                           _("Tile cache _size:"),
+                           GTK_TABLE (table), 2, size_group);
+  prefs_memsize_entry_add (object, "max-new-image-size",
+                           _("Maximum _new image size:"),
+                           GTK_TABLE (table), 3, size_group);
 
-    g_signal_connect (combo, "select_item",
-                      G_CALLBACK (prefs_template_select_callback),
-                      core_config->default_image);
-  }
+#ifdef ENABLE_MP
+  prefs_spin_button_add (object, "num-processors", 1.0, 4.0, 0,
+                         _("Number of _processors to use:"),
+                         GTK_TABLE (table), 4, size_group);
+#endif /* ENABLE_MP */
 
-  editor = gimp_template_editor_new (core_config->default_image, gimp, FALSE);
-  gimp_template_editor_show_advanced (GIMP_TEMPLATE_EDITOR (editor), TRUE);
-  gtk_box_pack_start (GTK_BOX (vbox), editor, FALSE, FALSE, 0);
-  gtk_widget_show (editor);
+  /*  Image Thumbnails  */
+  vbox2 = prefs_frame_new (_("Image Thumbnails"), GTK_CONTAINER (vbox), FALSE);
 
+  table = prefs_table_new (2, GTK_CONTAINER (vbox2));
 
+  prefs_enum_combo_box_add (object, "thumbnail-size", 0, 0,
+                            _("Size of _thumbnails:"),
+                            GTK_TABLE (table), 0, size_group);
 
-  /******************/
-  /*  Default Grid  */
-  /******************/
-  vbox = prefs_notebook_append_page (gimp,
-                                     GTK_NOTEBOOK (notebook),
-				     _("Default Image Grid"),
-                                     "default-grid.png",
-				     GTK_TREE_STORE (tree),
-				     _("Default Grid"),
-				     GIMP_HELP_PREFS_DEFAULT_GRID,
-				     NULL,
-				     &top_iter,
-				     page_index++);
+  prefs_memsize_entry_add (object, "thumbnail-filesize-limit",
+                           _("Maximum _filesize for thumbnailing:"),
+                           GTK_TABLE (table), 1, size_group);
 
-  /*  Grid  */
-  editor = gimp_grid_editor_new (core_config->default_grid,
-                                 core_config->default_image->xresolution,
-                                 core_config->default_image->yresolution);
+  /*  File Saving  */
+  vbox2 = prefs_frame_new (_("Saving Images"), GTK_CONTAINER (vbox), FALSE);
 
-  gtk_container_add (GTK_CONTAINER (vbox), editor);
-  gtk_widget_show (editor);
+  prefs_check_button_add (object, "confirm-on-close",
+                          _("Confirm closing of unsa_ved images"),
+                          GTK_BOX (vbox2));
+
+  g_object_unref (size_group);
+  size_group = NULL;
 
 
   /***************/
@@ -1431,7 +1438,7 @@ prefs_dialog_new (Gimp       *gimp,
                                      _("Theme"),
                                      "theme.png",
                                      GTK_TREE_STORE (tree),
-                                     _("Theme"),
+                                     NULL,
                                      GIMP_HELP_PREFS_THEME,
                                      NULL,
                                      &top_iter,
@@ -1534,7 +1541,7 @@ prefs_dialog_new (Gimp       *gimp,
                                      _("Help System"),
                                      "help-system.png",
 				     GTK_TREE_STORE (tree),
-				     _("Help System"),
+				     NULL,
 				     GIMP_HELP_PREFS_HELP,
 				     NULL,
 				     &top_iter,
@@ -1588,7 +1595,7 @@ prefs_dialog_new (Gimp       *gimp,
                                      _("Tool Options"),
                                      "tool-options.png",
 				     GTK_TREE_STORE (tree),
-				     _("Tool Options"),
+				     NULL,
 				     GIMP_HELP_PREFS_TOOL_OPTIONS,
 				     NULL,
 				     &top_iter,
@@ -1656,7 +1663,7 @@ prefs_dialog_new (Gimp       *gimp,
                                      _("Toolbox"),
                                      "toolbox.png",
 				     GTK_TREE_STORE (tree),
-				     _("Toolbox"),
+				     NULL,
 				     GIMP_HELP_PREFS_TOOLBOX,
 				     NULL,
 				     &top_iter,
@@ -1680,6 +1687,67 @@ prefs_dialog_new (Gimp       *gimp,
                                     GTK_BOX (vbox2));
 
 
+  /***********************/
+  /*  Default New Image  */
+  /***********************/
+  vbox = prefs_notebook_append_page (gimp,
+                                     GTK_NOTEBOOK (notebook),
+				     _("Default New Image"),
+                                     "new-image.png",
+				     GTK_TREE_STORE (tree),
+				     _("Default Image"),
+				     GIMP_HELP_PREFS_NEW_IMAGE,
+				     NULL,
+				     &top_iter,
+				     page_index++);
+
+  table = prefs_table_new (1, GTK_CONTAINER (vbox));
+
+  {
+    GtkWidget *combo;
+
+    combo = gimp_container_combo_box_new (gimp->templates, NULL, 16, 0);
+    gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                               _("_Template:"),  0.0, 0.5,
+                               combo, 1, FALSE);
+
+    gimp_container_view_select_item (GIMP_CONTAINER_VIEW (combo), NULL);
+
+    g_signal_connect (combo, "select_item",
+                      G_CALLBACK (prefs_template_select_callback),
+                      core_config->default_image);
+  }
+
+  editor = gimp_template_editor_new (core_config->default_image, gimp, FALSE);
+  gimp_template_editor_show_advanced (GIMP_TEMPLATE_EDITOR (editor), TRUE);
+  gtk_box_pack_start (GTK_BOX (vbox), editor, FALSE, FALSE, 0);
+  gtk_widget_show (editor);
+
+
+
+  /******************/
+  /*  Default Grid  */
+  /******************/
+  vbox = prefs_notebook_append_page (gimp,
+                                     GTK_NOTEBOOK (notebook),
+				     _("Default Image Grid"),
+                                     "default-grid.png",
+				     GTK_TREE_STORE (tree),
+				     _("Default Grid"),
+				     GIMP_HELP_PREFS_DEFAULT_GRID,
+				     NULL,
+				     &top_iter,
+				     page_index++);
+
+  /*  Grid  */
+  editor = gimp_grid_editor_new (core_config->default_grid,
+                                 core_config->default_image->xresolution,
+                                 core_config->default_image->yresolution);
+
+  gtk_container_add (GTK_CONTAINER (vbox), editor);
+  gtk_widget_show (editor);
+
+
   /*******************/
   /*  Image Windows  */
   /*******************/
@@ -1688,7 +1756,7 @@ prefs_dialog_new (Gimp       *gimp,
 				     _("Image Windows"),
                                      "image-windows.png",
 				     GTK_TREE_STORE (tree),
-				     _("Image Windows"),
+				     NULL,
 				     GIMP_HELP_PREFS_IMAGE_WINDOW,
 				     NULL,
 				     &top_iter,
@@ -1911,7 +1979,7 @@ prefs_dialog_new (Gimp       *gimp,
 				     _("Display"),
                                      "display.png",
 				     GTK_TREE_STORE (tree),
-				     _("Display"),
+				     NULL,
 				     GIMP_HELP_PREFS_DISPLAY,
 				     NULL,
 				     &top_iter,
@@ -2033,7 +2101,7 @@ prefs_dialog_new (Gimp       *gimp,
 				     _("Color Management"),
                                      "color-management.png",
 				     GTK_TREE_STORE (tree),
-				     _("Color Management"),
+				     NULL,
 				     GIMP_HELP_PREFS_COLOR_MANAGEMENT,
 				     NULL,
 				     &top_iter,
@@ -2097,7 +2165,7 @@ prefs_dialog_new (Gimp       *gimp,
 				     _("Input Devices"),
                                      "input-devices.png",
 				     GTK_TREE_STORE (tree),
-				     _("Input Devices"),
+				     NULL,
 				     GIMP_HELP_PREFS_INPUT_DEVICES,
 				     NULL,
 				     &top_iter,
@@ -2188,7 +2256,7 @@ prefs_dialog_new (Gimp       *gimp,
 				     _("Window Management"),
                                      "window-management.png",
 				     GTK_TREE_STORE (tree),
-				     _("Window Management"),
+				     NULL,
 				     GIMP_HELP_PREFS_WINDOW_MANAGEMENT,
 				     NULL,
 				     &top_iter,
@@ -2239,73 +2307,6 @@ prefs_dialog_new (Gimp       *gimp,
   g_object_set_data (G_OBJECT (button), "clear-button", button2);
 
 
-  /*****************/
-  /*  Environment  */
-  /*****************/
-  vbox = prefs_notebook_append_page (gimp,
-                                     GTK_NOTEBOOK (notebook),
-				     _("Environment"),
-                                     "environment.png",
-				     GTK_TREE_STORE (tree),
-				     _("Environment"),
-				     GIMP_HELP_PREFS_ENVIRONMENT,
-				     NULL,
-				     &top_iter,
-				     page_index++);
-
-  size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-
-  vbox2 = prefs_frame_new (_("Resource Consumption"),
-                           GTK_CONTAINER (vbox), FALSE);
-
-#ifdef ENABLE_MP
-  table = prefs_table_new (5, GTK_CONTAINER (vbox2));
-#else
-  table = prefs_table_new (4, GTK_CONTAINER (vbox2));
-#endif /* ENABLE_MP */
-
-  prefs_spin_button_add (object, "undo-levels", 1.0, 5.0, 0,
-                         _("Minimal number of _undo levels:"),
-                         GTK_TABLE (table), 0, size_group);
-  prefs_memsize_entry_add (object, "undo-size",
-                           _("Maximum undo _memory:"),
-                           GTK_TABLE (table), 1, size_group);
-  prefs_memsize_entry_add (object, "tile-cache-size",
-                           _("Tile cache _size:"),
-                           GTK_TABLE (table), 2, size_group);
-  prefs_memsize_entry_add (object, "max-new-image-size",
-                           _("Maximum _new image size:"),
-                           GTK_TABLE (table), 3, size_group);
-
-#ifdef ENABLE_MP
-  prefs_spin_button_add (object, "num-processors", 1.0, 4.0, 0,
-                         _("Number of _processors to use:"),
-                         GTK_TABLE (table), 4, size_group);
-#endif /* ENABLE_MP */
-
-  /*  Image Thumbnails  */
-  vbox2 = prefs_frame_new (_("Image Thumbnails"), GTK_CONTAINER (vbox), FALSE);
-
-  table = prefs_table_new (2, GTK_CONTAINER (vbox2));
-
-  prefs_enum_combo_box_add (object, "thumbnail-size", 0, 0,
-                            _("Size of _thumbnails:"),
-                            GTK_TABLE (table), 0, size_group);
-
-  prefs_memsize_entry_add (object, "thumbnail-filesize-limit",
-                           _("Maximum _filesize for thumbnailing:"),
-                           GTK_TABLE (table), 1, size_group);
-
-  /*  File Saving  */
-  vbox2 = prefs_frame_new (_("Saving Images"), GTK_CONTAINER (vbox), FALSE);
-
-  prefs_check_button_add (object, "confirm-on-close",
-                          _("Confirm closing of unsa_ved images"),
-                          GTK_BOX (vbox2));
-
-  g_object_unref (size_group);
-  size_group = NULL;
-
   /*************/
   /*  Folders  */
   /*************/
@@ -2314,7 +2315,7 @@ prefs_dialog_new (Gimp       *gimp,
 				     _("Folders"),
                                      "folders.png",
 				     GTK_TREE_STORE (tree),
-				     _("Folders"),
+				     NULL,
 				     GIMP_HELP_PREFS_FOLDERS,
 				     NULL,
 				     &top_iter,
