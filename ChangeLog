@@ -1,3 +1,8 @@
+Tue Mar 16 19:12:08 CET 1999 Marc Lehmann <pcg@goof.com>
+
+        * app/batch.c: make the perl-server independent of script-fu. This
+        also speeds up starup considerably.
+
 1999-03-16  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/gdisplay.h: double the length of the cursor_format_str as
@@ -198,6 +203,7 @@ Fri Mar 12 21:30:57 GMT 1999 Andy Thomas <alt@gimp.org>
 	Thanks to Tan Koan-Sin <freedom@csie.nctu.edu.tw> for pointing 
 	this out.
 
+>>>>>>> 1.923
 Fri Mar 12 22:15:49 CET 1999 Marc Lehmann <pcg@goof.com>
 
         * libgimp/gimp.c: split gimp_quit into two functions, gimp_quit

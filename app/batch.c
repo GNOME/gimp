@@ -24,10 +24,12 @@ static void batch_run_cmd  (char              *cmd);
 static void batch_read     (gpointer           data,
 			    gint               source,
 			    GdkInputCondition  condition);
+static void batch_pserver  (int                run_mode,
+                            int                flags,
+                            int                extra);
 
 
 static ProcRecord *eval_proc;
-
 
 void
 batch_init ()
@@ -36,17 +38,38 @@ batch_init ()
 
   int read_from_stdin;
   int i;
+  int perl_server_already_running = 0;
 
   eval_proc = procedural_db_lookup ("extension_script_fu_eval");
-  if (!eval_proc)
-    {
-      g_message (_("script-fu not available: batch mode disabled\n"));
-      return;
-    }
 
   read_from_stdin = FALSE;
   for (i = 0; batch_cmds[i]; i++)
     {
+
+      /* until --batch-interp=xxx or something similar is implemented 
+       * and gimp-1.0 is not extinct use a shortcut to speed up starting the
+       * perl-server tremendously. This is also fully compatible to 1.0.
+       */
+      {
+        int run_mode, flags, extra;
+
+        if (sscanf (batch_cmds[i], "(extension%*[-_]perl%*[-_]server %i %i %i)", &run_mode, &flags, &extra) == 3)
+          {
+            if (!perl_server_already_running)
+             {
+               batch_pserver (run_mode, flags, extra);
+               perl_server_already_running = 1;
+             }
+            continue;
+          }
+      }
+      
+      if (!eval_proc)
+        {
+          g_message (_("script-fu not available: batch mode disabled\n"));
+          return;
+        }
+
       if (strcmp (batch_cmds[i], "-") == 0)
 	{
 	  if (!read_from_stdin)
@@ -163,4 +186,52 @@ batch_read (gpointer          data,
 	  g_string_truncate (string, 0);
 	}
     }
+}
+
+static void
+batch_pserver  (int                run_mode,
+                int                flags,
+                int                extra)
+{
+  ProcRecord *pserver_proc;
+  Argument *args;
+  Argument *vals;
+  int i;
+
+  pserver_proc = procedural_db_lookup ("extension_perl_server");
+
+  if (!pserver_proc)
+    {
+      g_message (_("extension_perl_server not available: unable to start the perl server\n"));
+      return;
+    }
+
+  args = g_new0 (Argument, pserver_proc->num_args);
+  for (i = 0; i < pserver_proc->num_args; i++)
+    args[i].arg_type = pserver_proc->args[i].arg_type;
+
+  args[0].value.pdb_int = run_mode;
+  args[1].value.pdb_int = flags;
+  args[2].value.pdb_int = extra;
+
+  vals = procedural_db_execute ("extension_perl_server", args);
+  switch (vals[0].value.pdb_int)
+    {
+    case PDB_EXECUTION_ERROR:
+      g_print (_("perl server: experienced an execution error.\n"));
+      break;
+    case PDB_CALLING_ERROR:
+      g_print (_("perl server: experienced a calling error.\n"));
+      break;
+    case PDB_SUCCESS:
+      g_print (_("perl server: executed successfully.\n"));
+      break;
+    default:
+      break;
+    }
+  
+  procedural_db_destroy_args (vals, pserver_proc->num_values);
+  g_free(args);
+
+  return;
 }
