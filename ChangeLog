@@ -1,5 +1,9 @@
 2003-07-07  Sven Neumann  <sven@gimp.org>
 
+	* libgimpmath/gimpvector.[ch]: added const qualifiers.
+	
+2003-07-07  Sven Neumann  <sven@gimp.org>
+
 	* libgimpmath/gimpmathtypes.h
 	* libgimpmath/gimpvector.h: moved struct declarations.
 

@@ -105,9 +105,9 @@ gimp_matrix3_mult (const GimpMatrix3 *matrix1,
 void
 gimp_matrix3_identity (GimpMatrix3 *matrix)
 {
-  static GimpMatrix3 identity = { { { 1.0, 0.0, 0.0 },
-                                    { 0.0, 1.0, 0.0 },
-                                    { 0.0, 0.0, 1.0 } } };
+  static const GimpMatrix3 identity = { { { 1.0, 0.0, 0.0 },
+                                          { 0.0, 1.0, 0.0 },
+                                          { 0.0, 0.0, 1.0 } } };
 
   *matrix = identity;
 }

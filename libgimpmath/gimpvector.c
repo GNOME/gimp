@@ -52,12 +52,9 @@ static const GimpVector3 gimp_vector3_unit_z = { 0.0, 0.0, 1.0 };
 /**************************************/
 
 gdouble
-gimp_vector2_inner_product (GimpVector2 *vector1,
-			    GimpVector2 *vector2)
+gimp_vector2_inner_product (const GimpVector2 *vector1,
+			    const GimpVector2 *vector2)
 {
-  g_assert (vector1 != NULL);
-  g_assert (vector2 != NULL);
-
   return (vector1->x * vector2->x + vector1->y * vector2->y);
 }
 
@@ -69,13 +66,10 @@ gimp_vector2_inner_product_val (GimpVector2 vector1,
 }
 
 GimpVector2
-gimp_vector2_cross_product (GimpVector2 *vector1,
-			    GimpVector2 *vector2)
+gimp_vector2_cross_product (const GimpVector2 *vector1,
+			    const GimpVector2 *vector2)
 {
   GimpVector2 normal;
-
-  g_assert (vector1 != NULL);
-  g_assert (vector2 != NULL);
 
   normal.x = vector1->x * vector2->y - vector1->y * vector2->x;
   normal.y = vector1->y * vector2->x - vector1->x * vector2->y;
@@ -96,10 +90,8 @@ gimp_vector2_cross_product_val (GimpVector2 vector1,
 }
 
 gdouble
-gimp_vector2_length (GimpVector2 *vector)
+gimp_vector2_length (const GimpVector2 *vector)
 {
-  g_assert (vector != NULL);
-
   return (sqrt (vector->x * vector->x + vector->y * vector->y));
 }
 
@@ -114,9 +106,8 @@ gimp_vector2_normalize (GimpVector2 *vector)
 {
   gdouble len;
 
-  g_assert (vector != NULL);
-
   len = gimp_vector2_length (vector);
+
   if (len != 0.0) 
     {
       len = 1.0 / len;
@@ -134,9 +125,10 @@ gimp_vector2_normalize_val (GimpVector2 vector)
 {
 
   GimpVector2 normalized;
-  gdouble len;
+  gdouble     len;
 
   len = gimp_vector2_length_val (vector);
+
   if (len != 0.0) 
     {
       len = 1.0 / len;
@@ -154,8 +146,6 @@ void
 gimp_vector2_mul (GimpVector2 *vector,
 		  gdouble      factor)
 {
-  g_assert (vector != NULL);
-
   vector->x *= factor;
   vector->y *= factor;
 }
@@ -168,19 +158,15 @@ gimp_vector2_mul_val (GimpVector2 vector,
   
   result.x = vector.x * factor;
   result.y = vector.y * factor;
-  
+
   return result;
 }
 
 void
-gimp_vector2_sub (GimpVector2 *result,
-		  GimpVector2 *vector1,
-		  GimpVector2 *vector2)
+gimp_vector2_sub (GimpVector2       *result,
+		  const GimpVector2 *vector1,
+		  const GimpVector2 *vector2)
 {
-  g_assert (vector1 != NULL);
-  g_assert (vector2 != NULL);
-  g_assert (result != NULL);
-
   result->x = vector1->x - vector2->x;
   result->y = vector1->y - vector2->y;
 }
@@ -202,15 +188,13 @@ gimp_vector2_set (GimpVector2 *vector,
 		  gdouble      x,
 		  gdouble      y)
 {
-  g_assert (vector != NULL);
-
   vector->x = x;
   vector->y = y;
 }
 
 GimpVector2
-gimp_vector2_new (gdouble      x,
-		  gdouble      y)
+gimp_vector2_new (gdouble x,
+		  gdouble y)
 {
   GimpVector2 vector;
 
@@ -221,14 +205,10 @@ gimp_vector2_new (gdouble      x,
 }
 
 void
-gimp_vector2_add (GimpVector2 *result,
-		  GimpVector2 *vector1,
-		  GimpVector2 *vector2)
+gimp_vector2_add (GimpVector2       *result,
+		  const GimpVector2 *vector1,
+		  const GimpVector2 *vector2)
 {
-  g_assert (vector1 != NULL);
-  g_assert (vector2 != NULL);
-  g_assert (result != NULL);
-
   result->x = vector1->x + vector2->x;
   result->y = vector1->y + vector2->y;
 }
@@ -248,8 +228,6 @@ gimp_vector2_add_val (GimpVector2 vector1,
 void
 gimp_vector2_neg (GimpVector2 *vector)
 {
-  g_assert (vector != NULL);
-
   vector->x *= -1.0;
   vector->y *= -1.0;
 }
@@ -270,8 +248,6 @@ gimp_vector2_rotate (GimpVector2 *vector,
 		     gdouble      alpha)
 {
   GimpVector2 result;
-
-  g_assert (vector != NULL);
 
   result.x = cos (alpha) * vector->x + sin (alpha) * vector->y;
   result.y = cos (alpha) * vector->y - sin (alpha) * vector->x;
@@ -296,12 +272,9 @@ gimp_vector2_rotate_val (GimpVector2 vector,
 /**************************************/
 
 gdouble
-gimp_vector3_inner_product (GimpVector3 *vector1,
-			    GimpVector3 *vector2)
+gimp_vector3_inner_product (const GimpVector3 *vector1,
+			    const GimpVector3 *vector2)
 {
-  g_assert (vector1 != NULL);
-  g_assert (vector2 != NULL);
-
   return (vector1->x * vector2->x +
 	  vector1->y * vector2->y +
 	  vector1->z * vector2->z);
@@ -317,13 +290,10 @@ gimp_vector3_inner_product_val (GimpVector3 vector1,
 }
 
 GimpVector3
-gimp_vector3_cross_product (GimpVector3 *vector1,
-			    GimpVector3 *vector2)
+gimp_vector3_cross_product (const GimpVector3 *vector1,
+			    const GimpVector3 *vector2)
 {
   GimpVector3 normal;
-
-  g_assert (vector1 != NULL);
-  g_assert (vector2 != NULL);
 
   normal.x = vector1->y * vector2->z - vector1->z * vector2->y;
   normal.y = vector1->z * vector2->x - vector1->x * vector2->z;
@@ -346,10 +316,8 @@ gimp_vector3_cross_product_val (GimpVector3 vector1,
 }
 
 gdouble
-gimp_vector3_length (GimpVector3 *vector)
+gimp_vector3_length (const GimpVector3 *vector)
 {
-  g_assert (vector != NULL);
-
   return (sqrt (vector->x * vector->x +
 		vector->y * vector->y +
 		vector->z * vector->z));
@@ -368,9 +336,8 @@ gimp_vector3_normalize (GimpVector3 *vector)
 {
   gdouble len;
 
-  g_assert (vector != NULL);
-
   len = gimp_vector3_length (vector);
+
   if (len != 0.0)
     {
       len = 1.0 / len;
@@ -388,9 +355,10 @@ GimpVector3
 gimp_vector3_normalize_val (GimpVector3 vector)
 {
   GimpVector3 result;
-  gdouble len;
+  gdouble     len;
 
   len = gimp_vector3_length_val (vector);
+
   if (len != 0.0)
     {
       len = 1.0 / len;
@@ -409,8 +377,6 @@ void
 gimp_vector3_mul (GimpVector3 *vector,
 		  gdouble      factor)
 {
-  g_assert (vector != NULL);
-
   vector->x *= factor;
   vector->y *= factor;
   vector->z *= factor;
@@ -430,14 +396,10 @@ gimp_vector3_mul_val (GimpVector3 vector,
 }
 
 void
-gimp_vector3_sub (GimpVector3 *result,
-		  GimpVector3 *vector1,
-		  GimpVector3 *vector2)
+gimp_vector3_sub (GimpVector3       *result,
+		  const GimpVector3 *vector1,
+		  const GimpVector3 *vector2)
 {
-  g_assert (vector1 != NULL);
-  g_assert (vector2 != NULL);
-  g_assert (result != NULL);
-
   result->x = vector1->x - vector2->x;
   result->y = vector1->y - vector2->y;
   result->z = vector1->z - vector2->z;
@@ -462,17 +424,15 @@ gimp_vector3_set (GimpVector3 *vector,
 		  gdouble      y,
 		  gdouble      z)
 {
-  g_assert (vector != NULL);
-
   vector->x = x;
   vector->y = y;
   vector->z = z;
 }
 
 GimpVector3 
-gimp_vector3_new (gdouble      x,
-		  gdouble      y,
-		  gdouble      z)
+gimp_vector3_new (gdouble  x,
+		  gdouble  y,
+		  gdouble  z)
 {
   GimpVector3 vector;
 
@@ -484,14 +444,10 @@ gimp_vector3_new (gdouble      x,
 }
 
 void
-gimp_vector3_add (GimpVector3 *result,
-		  GimpVector3 *vector1,
-		  GimpVector3 *vector2)
+gimp_vector3_add (GimpVector3       *result,
+		  const GimpVector3 *vector1,
+		  const GimpVector3 *vector2)
 {
-  g_assert (vector1 != NULL);
-  g_assert (vector2 != NULL);
-  g_assert (result != NULL);
-
   result->x = vector1->x + vector2->x;
   result->y = vector1->y + vector2->y;
   result->z = vector1->z + vector2->z;
@@ -513,8 +469,6 @@ gimp_vector3_add_val (GimpVector3 vector1,
 void
 gimp_vector3_neg (GimpVector3 *vector)
 {
-  g_assert (vector != NULL);
-
   vector->x *= -1.0;
   vector->y *= -1.0;
   vector->z *= -1.0;
@@ -539,8 +493,6 @@ gimp_vector3_rotate (GimpVector3 *vector,
 		     gdouble      gamma)
 {
   GimpVector3 s, t;
-
-  g_assert (vector != NULL);
 
   /* First we rotate it around the Z axis (XY plane).. */
   /* ================================================= */
@@ -601,19 +553,16 @@ gimp_vector3_rotate_val (GimpVector3 vector,
 /******************************************************************/
 
 void
-gimp_vector_2d_to_3d (gint         sx,
-		      gint         sy,
-		      gint         w,
-		      gint         h,
-		      gint         x,
-		      gint         y,
-		      GimpVector3 *vp,
-		      GimpVector3 *p)
+gimp_vector_2d_to_3d (gint               sx,
+		      gint               sy,
+		      gint               w,
+		      gint               h,
+		      gint               x,
+		      gint               y,
+		      const GimpVector3 *vp,
+		      GimpVector3       *p)
 {
   gdouble t = 0.0;
-
-  g_assert (vp != NULL);
-  g_assert (p != NULL);
 
   if (vp->x != 0.0)
     t = (p->z - vp->z) / vp->z;
@@ -641,7 +590,7 @@ gimp_vector_2d_to_3d_val (gint        sx,
 			  GimpVector3 p)
 {
   GimpVector3 result; 
-  gdouble t = 0.0;
+  gdouble     t = 0.0;
 
   if (vp.x != 0.0)
     t = (p.z - vp.z) / vp.z;
@@ -668,20 +617,17 @@ gimp_vector_2d_to_3d_val (gint        sx,
 /*********************************************************/
 
 void
-gimp_vector_3d_to_2d (gint         sx,
-		      gint         sy,
-		      gint         w,
-		      gint         h,
-		      gdouble     *x,
-		      gdouble     *y,
-		      GimpVector3 *vp,
-		      GimpVector3 *p)
+gimp_vector_3d_to_2d (gint               sx,
+		      gint               sy,
+		      gint               w,
+		      gint               h,
+		      gdouble           *x,
+		      gdouble           *y,
+		      const GimpVector3 *vp,
+		      const GimpVector3 *p)
 {
-  gdouble t;
+  gdouble     t;
   GimpVector3 dir;
-
-  g_assert (vp != NULL);
-  g_assert (p != NULL);
 
   gimp_vector3_sub (&dir, p, vp);
   gimp_vector3_normalize (&dir);
