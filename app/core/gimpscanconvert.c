@@ -23,6 +23,7 @@
 #include <glib-object.h>
 
 #include <libart_lgpl/libart.h>
+#include <libart_lgpl/art_svp_intersect.h>
 
 #include "libgimpmath/gimpmath.h"
 
@@ -151,6 +152,8 @@ gimp_scan_convert_add_points (GimpScanConvert *sc,
   sc->need_closing = TRUE;
 
   sc->vpath[sc->num_nodes].code = ART_END;
+  sc->vpath[sc->num_nodes].x = 0.0;
+  sc->vpath[sc->num_nodes].y = 0.0;
 }
 
 
@@ -166,6 +169,8 @@ gimp_scan_convert_close_add_points (GimpScanConvert *sc)
       sc->vpath[sc->num_nodes].y = sc->first.y;
       sc->num_nodes++;
       sc->vpath[sc->num_nodes].code = ART_END;
+      sc->vpath[sc->num_nodes].x = 0.0;
+      sc->vpath[sc->num_nodes].y = 0.0;
     }
 
   sc->need_closing = FALSE;
@@ -229,6 +234,8 @@ gimp_scan_convert_add_polyline (GimpScanConvert *sc,
       sc->num_nodes++;
     }
   sc->vpath[sc->num_nodes].code = ART_END;
+  sc->vpath[sc->num_nodes].x = 0.0;
+  sc->vpath[sc->num_nodes].y = 0.0;
 
   /* If someone wants to mix this function with _add_points ()
    * try to do something reasonable...
@@ -475,7 +482,8 @@ gimp_scan_convert_render (GimpScanConvert *sc,
 static void
 gimp_scan_convert_finish (GimpScanConvert *sc)
 {
-  ArtSVP   *svp, *svp2;
+  ArtSVP       *svp, *svp2;
+  ArtSvpWriter *swr;
 
   /* return gracefully on empty path */
   if (!sc->vpath)
@@ -498,7 +506,7 @@ gimp_scan_convert_finish (GimpScanConvert *sc)
    *     }
    * }
    */
-
+  
   if (sc->have_open)
     {
       gint i;
@@ -511,38 +519,14 @@ gimp_scan_convert_finish (GimpScanConvert *sc)
           }
     }
 
-#undef USE_PERTURB
+  svp = art_svp_from_vpath (sc->vpath);
 
-#ifdef USE_PERTURB
-  /*
-   * Current Libart (2.3.8) recommends a slight random distorsion
-   * of the path, because art_svp_uncross and art_svp_rewind_uncrossed
-   * are not yet numerically stable. It is actually possible to construct
-   * worst case scenarios. The slight perturbation should not have any
-   * visible effect.
-   */
+  swr = art_svp_writer_rewind_new (ART_WIND_RULE_ODDEVEN);
+  art_svp_intersector (svp, swr);
 
-  {
-    ArtVPath *vpath;
+  svp2 = art_svp_writer_rewind_reap (swr); /* this also frees swr */
 
-    pert_vpath = art_vpath_perturb (sc->vpath);
-   
-    svp  = art_svp_from_vpath (pert_vpath);
-    art_free (pert_vpath);
-  }
-#else
-  /*
-   * using perturb apparently does more harm than good for libart
-   * 2.3.16. I don't really understand this.  (Simon)
-   */
-  svp  = art_svp_from_vpath (sc->vpath);
-#endif
-
-  svp2 = art_svp_uncross (svp);
   art_svp_free (svp);
 
-  svp = art_svp_rewind_uncrossed (svp2, ART_WIND_RULE_ODDEVEN);
-  art_svp_free (svp2);
-
-  sc->svp = svp;
+  sc->svp = svp2;
 }
