@@ -299,7 +299,7 @@ retinex_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new (drawable, &rvals.preview);
+  preview = gimp_aspect_preview_new (drawable, &rvals.preview);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
 
@@ -405,39 +405,41 @@ retinex (GimpDrawable *drawable,
   guchar       *psrc = NULL;
   GimpPixelRgn  dst_rgn, src_rgn;
 
+  bytes = drawable->bpp;
+
   /*
    * Get the size of the current image or its selection.
    */
   if (preview)
     {
-      gimp_preview_get_position (preview, &x, &y);
       gimp_preview_get_size (preview, &width, &height);
+      src = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+                                              &width, &height, &bytes);
     }
-  else if (! gimp_drawable_mask_intersect (drawable->drawable_id,
-                                           &x, &y, &width, &height))
+  else
     {
-      return;
+      if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                          &x, &y, &width, &height))
+        return;
+
+      /* Allocate memory */
+      size = width * height * bytes;
+      src = g_try_malloc (sizeof (guchar) * size);
+
+      if (src == NULL)
+        {
+          g_warning ("Failed to allocate memory");
+          return;
+        }
+
+      memset (src, 0, sizeof (guchar) * size);
+
+      /* Fill allocated memory with pixel data */
+      gimp_pixel_rgn_init (&src_rgn, drawable,
+                           x, y, width, height,
+                           FALSE, FALSE);
+      gimp_pixel_rgn_get_rect (&src_rgn, src, x, y, width, height);
     }
-
-  bytes = drawable->bpp;
-
-  /* Allocate memory */
-  size = width * height * bytes;
-  src = g_try_malloc (sizeof (guchar) * size);
-
-  if (src == NULL)
-    {
-       g_warning ("Failed to allocate memory");
-       return;
-    }
-
-  memset (src, 0, sizeof (guchar) * size);
-
- /* Fill allocated memory with pixel data */
-  gimp_pixel_rgn_init (&src_rgn, drawable,
-                       x, y, width, height,
-                       FALSE, FALSE);
-  gimp_pixel_rgn_get_rect (&src_rgn, src, x, y, width, height);
 
   /*
     Algorithm for Multi-scale Retinex with color Restoration (MSRCR).
@@ -638,11 +640,12 @@ MSRCR (guchar *src, gint width, gint height, gint bytes, gboolean preview_mode)
   gfloat        alpha;
   gfloat        gain;
   gfloat        offset;
+  gdouble       max_preview;
 
   if (!preview_mode)
     {
       gimp_progress_init (_("Retinex: Filtering..."));
-      gimp_progress_update (1.0 / ((rvals.nscales * 3) + 3));
+      max_preview = 3 * rvals.nscales;
     }
 
   /* Allocate all the memory needed for algorithm*/
@@ -738,8 +741,8 @@ MSRCR (guchar *src, gint width, gint height, gint bytes, gboolean preview_mode)
             }
 
            if (!preview_mode)
-             gimp_progress_update ((1.0 + ((scale + 1) * (channel + 1))) /
-                                   ((rvals.nscales * 3) + 3));
+             gimp_progress_update ((channel * rvals.nscales + scale) /
+                                   max_preview);
         }
     }
   g_free(in);
@@ -769,9 +772,9 @@ MSRCR (guchar *src, gint width, gint height, gint bytes, gboolean preview_mode)
       pdst[2] = gain * ((log(alpha * (psrc[2]+1.)) - logl) * pdst[2]) + offset;
     }
 
-  if (!preview_mode)
+/*  if (!preview_mode)
     gimp_progress_update ((2.0 + (rvals.nscales * 3)) /
-                          ((rvals.nscales * 3) + 3));
+                          ((rvals.nscales * 3) + 3));*/
 
   /*
       Adapt the dynamics of the colors according to the statistics of the first and second order.

@@ -47,6 +47,7 @@ struct _Style
   GimpRGB       foreground;
   GimpRGB       background;
   gboolean      reverselines;
+  gint          ref_count;
 };
 
 void     set_foreground_callback           (GimpColorButton      *button,

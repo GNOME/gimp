@@ -1,3 +1,9 @@
+2004-11-13  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/retinex.c: use a GimpAspectPreview instead of a
+	GimpDrawablePreview. Fixes bug #157915. Also fixed the funny behaviour
+	of the progress bar.
+
 2004-11-13  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/gimputils.c (gimp_strip_uline): changed based on a
