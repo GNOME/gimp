@@ -1,3 +1,8 @@
+2000-12-11  Sven Neumann  <sven@gimp.org>
+
+	* app/gimphistogram.c (gimp_histogram_calculate_sub_region): 
+	corrected incrementor for the bpp == 4 case. Fixes bug #34738.
+
 2000-12-11  Vidar Madsen  <vidar@gimp.org>
 
 	* plug-ins/gimpressionist/repaint.c: Fixed a bug appearing

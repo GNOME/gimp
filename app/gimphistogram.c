@@ -197,7 +197,7 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 	     values[0][s[2]] += 1.0;
 	   else
 	     values[0][max] += 1.0;
-	   s += 3;
+	   s += 4;
 	 } break;
       }
       src += region->rowstride;
