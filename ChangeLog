@@ -1,3 +1,10 @@
+2004-01-19  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* plug-ins/common/compose.c (compose)
+	* plug-ins/common/decompose.c (decompose): fixed a lack of refresh
+	in the layer previews by adding calls to gimp_drawable_update()
+	where appropriate. Removed redundant gimp_drawable_flush() calls.
+
 2004-01-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpgradienteditor.[ch]: moved the first hint label

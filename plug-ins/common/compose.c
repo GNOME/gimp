@@ -577,12 +577,13 @@ compose (const gchar *compose_type,
   for (j = 0; j < num_images; j++)
     {
       g_free (src[j]);
-      gimp_drawable_flush (drawable_src[j]);
       gimp_drawable_detach (drawable_src[j]);
     }
   g_free (dst);
-  gimp_drawable_flush (drawable_dst);
   gimp_drawable_detach (drawable_dst);
+  gimp_drawable_update (layer_ID_dst, 0, 0,
+                        gimp_drawable_width (layer_ID_dst),
+                        gimp_drawable_height (layer_ID_dst));
 
   return image_ID_dst;
 }

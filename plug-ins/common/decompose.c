@@ -467,11 +467,13 @@ decompose (gint32  image_ID,
             image_ID_dst[j] = create_new_image (filename, layername,
                                                 width, height, GIMP_GRAY,
                                                 layer_ID_dst + j,
-                                                drawable_dst + j, pixel_rgn_dst + j);
+                                                drawable_dst + j,
+                                                pixel_rgn_dst + j);
           else
-            create_new_layer (image_ID_dst[0], layername,
-                              width, height, GIMP_GRAY,
-                              drawable_dst + j, pixel_rgn_dst + j);
+            layer_ID_dst[j] = create_new_layer (image_ID_dst[0], layername,
+                                                width, height, GIMP_GRAY,
+                                                drawable_dst + j,
+                                                pixel_rgn_dst + j);
         }
       else
         {
@@ -511,12 +513,13 @@ decompose (gint32  image_ID,
 
   for (j = 0; j < num_images; j++)
     {
-      gimp_drawable_flush (drawable_dst[j]);
       gimp_drawable_detach (drawable_dst[j]);
+      gimp_drawable_update (layer_ID_dst[j], 0, 0,
+                            gimp_drawable_width (layer_ID_dst[j]),
+                            gimp_drawable_height (layer_ID_dst[j]));
       g_free (dst[j]);
     }
 
-  gimp_drawable_flush (drawable_src);
   gimp_drawable_detach (drawable_src);
 
   return (decovals.as_layers ? 1 : num_images);
