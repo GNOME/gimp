@@ -1,5 +1,10 @@
 2003-02-05  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/randomize.c: applied a patch from David Necas
+	<yeti@physics.muni.cz> that fixes bug #105339.
+
+2003-02-05  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/Makefile.am
 	* libgimpbase/gimputils.[ch]: added new files that hold the new
 	gimp_utf8_strtrim() routine; it might be useful in more places.

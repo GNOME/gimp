@@ -440,11 +440,11 @@ randomize_prepare_row (GimpPixelRgn *pixel_rgn,
 {
   gint b;
 
-  if (y == 0)
+  if (y <= 0)
     {
       gimp_pixel_rgn_get_row(pixel_rgn, data, x, (y + 1), w);
     }
-  else if (y == pixel_rgn->h)
+  else if (y >= pixel_rgn->h)
     {
       gimp_pixel_rgn_get_row(pixel_rgn, data, x, (y - 1), w);
     }
@@ -746,7 +746,7 @@ randomize_dialog (void)
 			      TRUE, 0, 0,
 			      _("Percentage of pixels to be filtered"), NULL);
   g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
+                    G_CALLBACK (gimp_double_adjustment_update),
                     &pivals.rndm_pct);
 
   /*
