@@ -54,8 +54,8 @@
 #include "session.h"
 
 static void sessionrc_write_info (SessionInfo *, FILE *);
-static void session_open_dialog (gpointer unused, gpointer pinfo);
-static void session_reset_open_state (SessionInfo *info);
+static void session_open_dialog (SessionInfo *);
+static void session_reset_open_state (SessionInfo *);
 
 GList *session_info_updates = NULL;
 
@@ -198,10 +198,8 @@ sessionrc_write_info (SessionInfo *info, FILE *fp)
 }
 
 static void
-session_open_dialog (gpointer unused, gpointer pinfo)
+session_open_dialog (SessionInfo *info)
 {
-  SessionInfo *info = (SessionInfo*) pinfo;
-
   if (info == NULL || info->open == FALSE) 
     return;
 

@@ -1,3 +1,8 @@
+Thu Jul 23 01:53:09 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/rect_select.c: Display the selection-mode in the statusbar.
+	* app/session.c: Restoring saved sessions works again.
+
 Wed Jul 22 23:32:50 MEST 1998 Sven Neumann <sven@gimp.org>
 
         * docs/quick_reference.ps

@@ -315,7 +315,7 @@ rect_select_button_press (Tool           *tool,
 {
   GDisplay * gdisp;
   RectSelect * rect_sel;
-  gchar *size;
+  gchar *select_mode;
   int x, y;
 
   gdisp = (GDisplay *) gdisp_ptr;
@@ -380,11 +380,27 @@ rect_select_button_press (Tool           *tool,
     }
   rect_sel->context_id = gtk_statusbar_get_context_id (GTK_STATUSBAR(gdisp->statusbar),
 						      "selection");
-  size = g_new (gchar, 24); /* strlen("Selection:  x ") + 2*5 */
-  sprintf (size, "Selection: %d x %d", abs(rect_sel->w), abs(rect_sel->h));
-  gtk_statusbar_push(GTK_STATUSBAR (gdisp->statusbar), 
-		     rect_sel->context_id, size);
-  g_free (size);
+  select_mode = g_new (gchar, 21); /* strlen("Selection: INTERSECT") */
+  switch (rect_sel->op)
+    {
+    case ADD:
+      sprintf (select_mode, "Selection: ADD");
+      break;
+    case SUB:
+      sprintf (select_mode, "Selection: SUBTRACT");
+      break;
+    case INTERSECT:
+      sprintf (select_mode, "Selection: INTERSECT");
+      break;
+    case REPLACE:
+      sprintf (select_mode, "Selection: REPLACE");
+      break;
+    default:
+      break;
+    }
+  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), 
+		      rect_sel->context_id, select_mode);
+  g_free (select_mode);
   draw_core_start (rect_sel->core, gdisp->canvas->window, tool);
 }
 
@@ -576,7 +592,7 @@ rect_select_motion (Tool           *tool,
     }
   gtk_statusbar_pop (GTK_STATUSBAR(gdisp->statusbar), 
 		     rect_sel->context_id);
-  size = g_new (gchar, 24); /* strlen("Selection:  x ") + 2*5 */
+  size = g_new (gchar, 25); /* strlen("Selection:  x ") + 2*5 */
   sprintf (size, "Selection: %d x %d", abs(rect_sel->w), abs(rect_sel->h));
   gtk_statusbar_push (GTK_STATUSBAR(gdisp->statusbar), 
 		      rect_sel->context_id, size);
