@@ -154,7 +154,7 @@ select_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("select-all",          drawable);
   SET_SENSITIVE ("select-none",         drawable && sel);
-  SET_SENSITIVE ("select-invert",       drawable && sel);
+  SET_SENSITIVE ("select-invert",       drawable);
   SET_SENSITIVE ("select-from-vectors", vectors);
   SET_SENSITIVE ("select-float",        drawable && sel);
 

@@ -1,3 +1,8 @@
+2004-05-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/select-actions.c (select_actions_update): don't
+	make "select-invert" insensitive if there is no selection.
+
 2004-05-14  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/aa.c
