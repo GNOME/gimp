@@ -28,8 +28,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
-"POT-Creation-Date: 2001-10-17 20:14+0200\n"
-"PO-Revision-Date: 2001-10-17 20:14+0200\n"
+"POT-Creation-Date: 2001-10-26 12:54+0200\n"
+"PO-Revision-Date: 2001-10-26 12:55+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish/Dansk <sslug-locale@sslug.dk>\n"
 "MIME-Version: 1.0\n"
@@ -47,8 +47,8 @@ msgstr "Om"
 #. the 3 Action Buttons
 #: plug-ins/FractalExplorer/Dialogs.c:284
 #: plug-ins/FractalExplorer/Dialogs.c:1377
-#: plug-ins/FractalExplorer/FractalExplorer.c:846
-#: plug-ins/FractalExplorer/FractalExplorer.c:1465
+#: plug-ins/FractalExplorer/FractalExplorer.c:847
+#: plug-ins/FractalExplorer/FractalExplorer.c:1466
 #: plug-ins/Lighting/lighting_ui.c:1133 plug-ins/MapObject/mapobject_ui.c:1368
 #: plug-ins/bmp/bmpwrite.c:564 plug-ins/common/AlienMap.c:1398
 #: plug-ins/common/AlienMap.c:1662 plug-ins/common/AlienMap2.c:1390
@@ -74,8 +74,8 @@ msgstr "Om"
 #: plug-ins/common/gicon.c:441 plug-ins/common/gif.c:1147
 #: plug-ins/common/gif.c:1218 plug-ins/common/gih.c:854
 #: plug-ins/common/glasstile.c:260 plug-ins/common/gqbist.c:640
-#: plug-ins/common/grid.c:659 plug-ins/common/gtm.c:375
-#: plug-ins/common/hot.c:589 plug-ins/common/illusion.c:561
+#: plug-ins/common/grid.c:661 plug-ins/common/gtm.c:375
+#: plug-ins/common/hot.c:589 plug-ins/common/illusion.c:570
 #: plug-ins/common/iwarp.c:1142 plug-ins/common/jigsaw.c:2486
 #: plug-ins/common/jpeg.c:1595 plug-ins/common/lic.c:1021
 #: plug-ins/common/mail.c:467 plug-ins/common/mapcolor.c:558
@@ -106,7 +106,7 @@ msgstr "Om"
 #: plug-ins/fits/fits.c:987 plug-ins/flame/flame.c:634
 #: plug-ins/flame/flame.c:923 plug-ins/fp/fp_gtk.c:904
 #: plug-ins/gap/gap_arr_dialog.c:768 plug-ins/gap/gap_arr_dialog.c:1010
-#: plug-ins/gap/gap_decode_xanim.c:178 plug-ins/gap/gap_lib.c:231
+#: plug-ins/gap/gap_decode_xanim.c:178 plug-ins/gap/gap_lib.c:235
 #: plug-ins/gap/gap_mod_layer.c:147 plug-ins/gap/gap_mov_dialog.c:498
 #: plug-ins/gap/gap_mpege.c:191 plug-ins/gap/gap_resi_dialog.c:149
 #: plug-ins/gdyntext/gdyntext_ui.c:199 plug-ins/gdyntext/gdyntext_ui.c:573
@@ -129,9 +129,9 @@ msgstr "O.k."
 
 #. the  Action Button
 #: plug-ins/FractalExplorer/Dialogs.c:286
-#: plug-ins/FractalExplorer/FractalExplorer.c:740
-#: plug-ins/FractalExplorer/FractalExplorer.c:855
-#: plug-ins/FractalExplorer/FractalExplorer.c:1467
+#: plug-ins/FractalExplorer/FractalExplorer.c:741
+#: plug-ins/FractalExplorer/FractalExplorer.c:856
+#: plug-ins/FractalExplorer/FractalExplorer.c:1468
 #: plug-ins/Lighting/lighting_ui.c:1135 plug-ins/MapObject/mapobject_ui.c:1370
 #: plug-ins/bmp/bmpwrite.c:566 plug-ins/common/AlienMap.c:1400
 #: plug-ins/common/AlienMap2.c:1392 plug-ins/common/CML_explorer.c:1178
@@ -155,9 +155,9 @@ msgstr "O.k."
 #: plug-ins/common/gbr.c:570 plug-ins/common/gicon.c:443
 #: plug-ins/common/gif.c:1149 plug-ins/common/gif.c:1220
 #: plug-ins/common/gih.c:856 plug-ins/common/glasstile.c:262
-#: plug-ins/common/gqbist.c:642 plug-ins/common/grid.c:661
+#: plug-ins/common/gqbist.c:642 plug-ins/common/grid.c:663
 #: plug-ins/common/gtm.c:377 plug-ins/common/hot.c:591
-#: plug-ins/common/illusion.c:563 plug-ins/common/iwarp.c:1146
+#: plug-ins/common/illusion.c:572 plug-ins/common/iwarp.c:1146
 #: plug-ins/common/jigsaw.c:2488 plug-ins/common/jpeg.c:1597
 #: plug-ins/common/lic.c:1023 plug-ins/common/mail.c:469
 #: plug-ins/common/mapcolor.c:560 plug-ins/common/max_rgb.c:350
@@ -190,7 +190,7 @@ msgstr "O.k."
 #: plug-ins/gap/gap_dbbrowser_utils.c:210
 #: plug-ins/gap/gap_decode_mpeg_main.c:337 plug-ins/gap/gap_decode_xanim.c:176
 #: plug-ins/gap/gap_decode_xanim.c:341 plug-ins/gap/gap_filter_foreach.c:134
-#: plug-ins/gap/gap_lib.c:1027 plug-ins/gap/gap_mod_layer.c:149
+#: plug-ins/gap/gap_lib.c:1034 plug-ins/gap/gap_mod_layer.c:149
 #: plug-ins/gap/gap_mod_layer.c:264 plug-ins/gap/gap_mov_dialog.c:529
 #: plug-ins/gap/gap_mov_dialog.c:2680 plug-ins/gap/gap_mpege.c:189
 #: plug-ins/gap/gap_mpege.c:240 plug-ins/gap/gap_range_ops.c:1244
@@ -218,7 +218,7 @@ msgstr "Annullér"
 #: plug-ins/common/blinds.c:343 plug-ins/common/curve_bend.c:1503
 #: plug-ins/common/destripe.c:575 plug-ins/common/emboss.c:739
 #: plug-ins/common/fractaltrace.c:746 plug-ins/common/glasstile.c:276
-#: plug-ins/common/grid.c:680 plug-ins/common/illusion.c:580
+#: plug-ins/common/grid.c:682 plug-ins/common/illusion.c:589
 #: plug-ins/common/iwarp.c:1160 plug-ins/common/jigsaw.c:2511
 #: plug-ins/common/mapcolor.c:576 plug-ins/common/max_rgb.c:364
 #: plug-ins/common/nlfilt.c:587 plug-ins/common/noisify.c:506
@@ -685,13 +685,13 @@ msgid "Click here to cancel save procedure"
 msgstr "Klik her for at afbryde gemningen"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1982
-#: plug-ins/FractalExplorer/FractalExplorer.c:1253
+#: plug-ins/FractalExplorer/FractalExplorer.c:1254
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "Fil '%s' er ikke en Fraktaludforsker-fil"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1987
-#: plug-ins/FractalExplorer/FractalExplorer.c:1261
+#: plug-ins/FractalExplorer/FractalExplorer.c:1262
 #, c-format
 msgid ""
 "File '%s' is corrupt.\n"
@@ -700,15 +700,15 @@ msgstr ""
 "Filen '%s' er beskadiget.\n"
 "Linje %d-indstillingssektionen er ikke korrekt"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:212
+#: plug-ins/FractalExplorer/FractalExplorer.c:213
 msgid "<Image>/Filters/Render/Pattern/Fractal Explorer..."
 msgstr "<Image>/Filtre/Generér/Mønstre/Fraktaludforsker..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:351
+#: plug-ins/FractalExplorer/FractalExplorer.c:352
 msgid "Rendering Fractal..."
 msgstr "Genererer fraktal..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:731 plug-ins/gfig/gfig.c:5012
+#: plug-ins/FractalExplorer/FractalExplorer.c:732 plug-ins/gfig/gfig.c:5012
 #: plug-ins/gflare/gflare.c:3369
 #, c-format
 msgid ""
@@ -718,12 +718,12 @@ msgstr ""
 "Er du sikker på at du ønsker at slette\n"
 "'%s' fra listen og fra disken?"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:735
+#: plug-ins/FractalExplorer/FractalExplorer.c:736
 msgid "Delete Fractal"
 msgstr "Slet fraktal"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:740
-#: plug-ins/FractalExplorer/FractalExplorer.c:1400 plug-ins/gfig/gfig.c:3568
+#: plug-ins/FractalExplorer/FractalExplorer.c:741
+#: plug-ins/FractalExplorer/FractalExplorer.c:1401 plug-ins/gfig/gfig.c:3568
 #: plug-ins/gfig/gfig.c:5021 plug-ins/gflare/gflare.c:3102
 #: plug-ins/gflare/gflare.c:3378 plug-ins/gimpressionist/presets.c:648
 #: plug-ins/ifscompose/ifscompose.c:807 plug-ins/imagemap/imap_cmd_delete.c:53
@@ -731,20 +731,20 @@ msgstr "Slet fraktal"
 msgid "Delete"
 msgstr "Slet"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:825
+#: plug-ins/FractalExplorer/FractalExplorer.c:826
 msgid "Edit fractal name"
 msgstr "Redigér fraktalnavn"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:836
+#: plug-ins/FractalExplorer/FractalExplorer.c:837
 msgid "Fractal name:"
 msgstr "Fraktalnavn:"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:877
+#: plug-ins/FractalExplorer/FractalExplorer.c:878
 msgid "New Fractal"
 msgstr "Ny fraktal"
 
 # 'entry' kan oversættes med 'udtryk' fordi det er et Lisp-udtryk her
-#: plug-ins/FractalExplorer/FractalExplorer.c:1149
+#: plug-ins/FractalExplorer/FractalExplorer.c:1150
 #, c-format
 msgid ""
 "No fractalexplorer-path in gimprc:\n"
@@ -757,39 +757,39 @@ msgstr ""
 "(FractalExplorer-path \"%s\")\n"
 "til din %s-fil."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1166
+#: plug-ins/FractalExplorer/FractalExplorer.c:1167
 msgid ""
 "fractalexplorer-path misconfigured - the following directories were not found"
 msgstr ""
 "Fraktaludforsker-sti fejlagtigt opsat - de følgende mapper kunne ikke findes:"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1342
+#: plug-ins/FractalExplorer/FractalExplorer.c:1343
 msgid "My first fractal"
 msgstr "Min første fraktal"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1359
+#: plug-ins/FractalExplorer/FractalExplorer.c:1360
 msgid "Choose Fractal by double-clicking on it"
 msgstr "Vælg en fraktal ved at dobbeltklikke på den"
 
 #. Put buttons in
-#: plug-ins/FractalExplorer/FractalExplorer.c:1390 plug-ins/gfig/gfig.c:3537
+#: plug-ins/FractalExplorer/FractalExplorer.c:1391 plug-ins/gfig/gfig.c:3537
 msgid "Rescan"
 msgstr "Genskan"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1397
+#: plug-ins/FractalExplorer/FractalExplorer.c:1398
 msgid "Select directory and rescan collection"
 msgstr "Vælg mappe og genskan samlingen"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1408
+#: plug-ins/FractalExplorer/FractalExplorer.c:1409
 msgid "Delete currently selected fractal"
 msgstr "Slet den valgte fraktal"
 
 #. the dialog
-#: plug-ins/FractalExplorer/FractalExplorer.c:1460
+#: plug-ins/FractalExplorer/FractalExplorer.c:1461
 msgid "Rescan for Fractals"
 msgstr "Søg igen efter fraktaler"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1478
+#: plug-ins/FractalExplorer/FractalExplorer.c:1479
 msgid "Add FractalExplorer Path"
 msgstr "Tilføj sti for Fraktaludforsker"
 
@@ -1158,7 +1158,7 @@ msgstr "Omgivelsesreflektioner"
 msgid "Lighting Effects"
 msgstr "Lyseffekter"
 
-#: plug-ins/Lighting/lighting_ui.c:1187 plug-ins/common/grid.c:709
+#: plug-ins/Lighting/lighting_ui.c:1187 plug-ins/common/grid.c:711
 #: plug-ins/gap/gap_mov_dialog.c:507
 msgid "Update Preview"
 msgstr "Opdatér miniature"
@@ -2206,8 +2206,8 @@ msgstr "Justér synlige lag"
 #: plug-ins/common/destripe.c:636 plug-ins/common/edge.c:662
 #: plug-ins/common/emboss.c:559 plug-ins/common/engrave.c:236
 #: plug-ins/common/gauss_iir.c:378 plug-ins/common/gauss_rle.c:373
-#: plug-ins/common/glasstile.c:294 plug-ins/common/grid.c:720
-#: plug-ins/common/illusion.c:597 plug-ins/common/jpeg.c:1643
+#: plug-ins/common/glasstile.c:294 plug-ins/common/grid.c:722
+#: plug-ins/common/illusion.c:606 plug-ins/common/jpeg.c:1643
 #: plug-ins/common/lic.c:1090 plug-ins/common/max_rgb.c:381
 #: plug-ins/common/nlfilt.c:409 plug-ins/common/noisify.c:524
 #: plug-ins/common/nova.c:478 plug-ins/common/oilify.c:470
@@ -2430,13 +2430,13 @@ msgid "Blinds"
 msgstr "Blinde områder"
 
 #. attach labels
-#: plug-ins/common/blinds.c:373 plug-ins/common/grid.c:770
+#: plug-ins/common/blinds.c:373 plug-ins/common/grid.c:772
 #: plug-ins/common/ripple.c:638 plug-ins/common/tileit.c:451
 #: plug-ins/pagecurl/pagecurl.c:647
 msgid "Horizontal"
 msgstr "Vandret"
 
-#: plug-ins/common/blinds.c:374 plug-ins/common/grid.c:771
+#: plug-ins/common/blinds.c:374 plug-ins/common/grid.c:773
 #: plug-ins/common/ripple.c:639 plug-ins/common/tileit.c:459
 #: plug-ins/pagecurl/pagecurl.c:648
 msgid "Vertical"
@@ -2664,7 +2664,7 @@ msgstr "Farve til alfa"
 
 #: plug-ins/common/colortoalpha.c:429 plug-ins/common/mapcolor.c:652
 #: plug-ins/gap/gap_decode_mpeg_main.c:653 plug-ins/gap/gap_decode_xanim.c:224
-#: plug-ins/gap/gap_lib.c:2112 plug-ins/gap/gap_lib.c:2291
+#: plug-ins/gap/gap_lib.c:2126 plug-ins/gap/gap_lib.c:2321
 #: plug-ins/gap/gap_range_ops.c:253 plug-ins/gap/gap_range_ops.c:602
 #: plug-ins/gfli/gfli.c:847 plug-ins/gfli/gfli.c:916
 msgid "From:"
@@ -4061,48 +4061,48 @@ msgstr "<Image>/Filtre/Farver/Afbildning/Farveovergang"
 msgid "Gradient Map..."
 msgstr "Afbilder farveovergang..."
 
-#: plug-ins/common/grid.c:158
+#: plug-ins/common/grid.c:160
 msgid "<Image>/Filters/Render/Pattern/Grid..."
 msgstr "<Image>/Filtre/Generér/Mønstre/Gitter..."
 
-#: plug-ins/common/grid.c:242
+#: plug-ins/common/grid.c:244
 msgid "Drawing Grid..."
 msgstr "Tegner gitter..."
 
-#: plug-ins/common/grid.c:654 plug-ins/gfig/gfig.c:3396
+#: plug-ins/common/grid.c:656 plug-ins/gfig/gfig.c:3396
 #: plug-ins/imagemap/imap_menu.c:400 plug-ins/imagemap/imap_popup.c:148
 #: plug-ins/imagemap/imap_toolbar.c:163
 msgid "Grid"
 msgstr "Gitter"
 
-#: plug-ins/common/grid.c:772
+#: plug-ins/common/grid.c:774
 msgid "Intersection"
 msgstr "Skæring"
 
-#: plug-ins/common/grid.c:773
+#: plug-ins/common/grid.c:775
 msgid "Width: "
 msgstr "Bredde:"
 
 #. attach labels
-#: plug-ins/common/grid.c:830
+#: plug-ins/common/grid.c:832
 msgid "Spacing: "
 msgstr "Mellemrum: "
 
 #. attach labels
-#: plug-ins/common/grid.c:890
+#: plug-ins/common/grid.c:892
 msgid "Offset: "
 msgstr "Afstand:"
 
 #. attach color selectors
-#: plug-ins/common/grid.c:920
+#: plug-ins/common/grid.c:922
 msgid "Horizontal Color"
 msgstr "Vandret farve"
 
-#: plug-ins/common/grid.c:930
+#: plug-ins/common/grid.c:932
 msgid "Vertical Color"
 msgstr "Lodret farve"
 
-#: plug-ins/common/grid.c:940
+#: plug-ins/common/grid.c:942
 msgid "Intersection Color"
 msgstr "Skæringsfarve"
 
@@ -4281,27 +4281,27 @@ msgstr "Reducér mætning"
 msgid "Blacken"
 msgstr "Formørk"
 
-#: plug-ins/common/illusion.c:117
+#: plug-ins/common/illusion.c:118
 msgid "<Image>/Filters/Map/Illusion..."
 msgstr "<Image>/Filtre/Afbildning/Illusion..."
 
-#: plug-ins/common/illusion.c:181
+#: plug-ins/common/illusion.c:190
 msgid "Illusion..."
 msgstr "Tilføjer illusion..."
 
-#: plug-ins/common/illusion.c:556
+#: plug-ins/common/illusion.c:565
 msgid "Illusion"
 msgstr "Illusion"
 
-#: plug-ins/common/illusion.c:612
+#: plug-ins/common/illusion.c:621
 msgid "Division:"
 msgstr "Division:"
 
-#: plug-ins/common/illusion.c:621
+#: plug-ins/common/illusion.c:630
 msgid "Mode 1"
 msgstr "Tilstand 1"
 
-#: plug-ins/common/illusion.c:633
+#: plug-ins/common/illusion.c:642
 msgid "Mode 2"
 msgstr "Tilstand 2"
 
@@ -4723,8 +4723,8 @@ msgid "Destination color range"
 msgstr "Målfarveinterval"
 
 #: plug-ins/common/mapcolor.c:652 plug-ins/gap/gap_decode_mpeg_main.c:663
-#: plug-ins/gap/gap_decode_xanim.c:234 plug-ins/gap/gap_lib.c:2120
-#: plug-ins/gap/gap_lib.c:2299 plug-ins/gap/gap_range_ops.c:260
+#: plug-ins/gap/gap_decode_xanim.c:234 plug-ins/gap/gap_lib.c:2134
+#: plug-ins/gap/gap_lib.c:2329 plug-ins/gap/gap_range_ops.c:260
 #: plug-ins/gap/gap_range_ops.c:610 plug-ins/gfli/gfli.c:856
 #: plug-ins/gfli/gfli.c:925
 msgid "To:"
@@ -7689,7 +7689,7 @@ msgid "Overwrite All"
 msgstr "Overskriv alt"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:343 plug-ins/gap/gap_decode_xanim.c:347
-#: plug-ins/gap/gap_lib.c:1035 plug-ins/gap/gap_range_ops.c:1247
+#: plug-ins/gap/gap_lib.c:1042 plug-ins/gap/gap_range_ops.c:1247
 msgid "GAP Question"
 msgstr "GAP-spørgsmål"
 
@@ -8063,11 +8063,11 @@ msgstr "<Image>/Video/Kod/MPEG1..."
 msgid "<Image>/Video/Encode/MPEG2..."
 msgstr "<Image>/Video/Kod/MPEG2..."
 
-#: plug-ins/gap/gap_lib.c:242
+#: plug-ins/gap/gap_lib.c:246
 msgid "GAP Message"
 msgstr "GAP-besked"
 
-#: plug-ins/gap/gap_lib.c:904
+#: plug-ins/gap/gap_lib.c:911
 msgid ""
 "OPERATION CANCELLED.\n"
 "Current frame changed while dialog was open."
@@ -8076,20 +8076,20 @@ msgstr ""
 "Det aktuelle billede blev ændret\n"
 "mens vinduet var åbent."
 
-#: plug-ins/gap/gap_lib.c:926
+#: plug-ins/gap/gap_lib.c:933 plug-ins/gap/gap_lib.c:2198
 msgid ""
 "OPERATION CANCELLED.\n"
-"GAP-plugins works only with filenames\n"
-"that end with _0001.xcf.\n"
+"GAP plug-ins only work with filenames\n"
+"that end in numbers like _0001.xcf.\n"
 "==> Rename your image, then try again."
 msgstr ""
 "OPERATION AFBRUDT.\n"
-"GAP-udvidelsesmodulet virker kun med billeder\n"
-"hvis navne ender på _NNNN.xcf (fx: ani_0001.xcf).\n"
+"GAP-udvidelsesmodulet virker kun med filnavne\n"
+"hvis navne ender med tal som i _0001.xcf.\n"
 "\n"
 "Omdøb dit billede og prøv igen."
 
-#: plug-ins/gap/gap_lib.c:1013
+#: plug-ins/gap/gap_lib.c:1020
 msgid ""
 "You are using a file format != xcf\n"
 "Save Operations may result\n"
@@ -8099,73 +8099,78 @@ msgstr ""
 "Gemning kan resultere i tab af\n"
 "information om lag."
 
-#: plug-ins/gap/gap_lib.c:1029
+#: plug-ins/gap/gap_lib.c:1036
 msgid "Save Flattened"
 msgstr "Gem fladgjort"
 
-#: plug-ins/gap/gap_lib.c:1031
+#: plug-ins/gap/gap_lib.c:1038
 msgid "Save As Is"
 msgstr "Gem som det er"
 
-#: plug-ins/gap/gap_lib.c:1506 plug-ins/gap/gap_lib.c:1623
-#: plug-ins/gap/gap_lib.c:1702 plug-ins/gap/gap_lib.c:1709
-#: plug-ins/gap/gap_lib.c:1716 plug-ins/gap/gap_lib.c:1799
-#: plug-ins/gap/gap_lib.c:1821 plug-ins/gap/gap_lib.c:2710
+#: plug-ins/gap/gap_lib.c:1513 plug-ins/gap/gap_lib.c:1637
+#: plug-ins/gap/gap_lib.c:1716 plug-ins/gap/gap_lib.c:1723
+#: plug-ins/gap/gap_lib.c:1730 plug-ins/gap/gap_lib.c:1813
+#: plug-ins/gap/gap_lib.c:1835 plug-ins/gap/gap_lib.c:2740
 #, c-format
 msgid "Error: could not rename frame %ld to %ld"
 msgstr "Fejl: kunne ikke omdøbe billede %ld til %ld."
 
-#: plug-ins/gap/gap_lib.c:1611
+#: plug-ins/gap/gap_lib.c:1576
+#, c-format
+msgid "Error: could not save frame %s"
+msgstr "Fejl: kunne ikke gemme billede %s."
+
+#: plug-ins/gap/gap_lib.c:1625
 msgid "Duplicating frames..."
 msgstr "Kopierer billeder..."
 
-#: plug-ins/gap/gap_lib.c:1787
+#: plug-ins/gap/gap_lib.c:1801
 msgid "Renumber Framesequence..."
 msgstr "Omnummererer billedsekvens..."
 
-#: plug-ins/gap/gap_lib.c:1973
+#: plug-ins/gap/gap_lib.c:1987
 #, c-format
 msgid "Goto Frame (%ld/%ld)"
 msgstr "Gå til billede (%ld/%ld)"
 
-#: plug-ins/gap/gap_lib.c:1976
+#: plug-ins/gap/gap_lib.c:1990
 #, c-format
 msgid "Destination Frame Number (%ld  - %ld)"
 msgstr "Målbillednumre (%ld - %ld)"
 
-#: plug-ins/gap/gap_lib.c:1980 plug-ins/gap/gap_lib.c:2057
-#: plug-ins/gap/gap_lib.c:2245
+#: plug-ins/gap/gap_lib.c:1994 plug-ins/gap/gap_lib.c:2071
+#: plug-ins/gap/gap_lib.c:2275
 msgid "Number:"
 msgstr "Nummer:"
 
-#: plug-ins/gap/gap_lib.c:2041
+#: plug-ins/gap/gap_lib.c:2055
 #, c-format
 msgid "Delete Frames (%ld/%ld)"
 msgstr "Slet billeder (%ld/%ld)"
 
-#: plug-ins/gap/gap_lib.c:2044
+#: plug-ins/gap/gap_lib.c:2058
 #, c-format
 msgid "Delete Frames from %ld to (number)"
 msgstr "Slet billeder fra %ld til (nummer)"
 
-#: plug-ins/gap/gap_lib.c:2107
+#: plug-ins/gap/gap_lib.c:2121
 #, c-format
 msgid "Duplicate Frames (%ld/%ld)"
 msgstr "Kopiér billeder (%ld/%ld)"
 
-#: plug-ins/gap/gap_lib.c:2117
+#: plug-ins/gap/gap_lib.c:2131
 msgid "Source Range starts at this framenumber"
 msgstr "Kildeintervallet starter ved dette billednummer"
 
-#: plug-ins/gap/gap_lib.c:2125
+#: plug-ins/gap/gap_lib.c:2139
 msgid "Source Range ends at this framenumber"
 msgstr "Kildeintervallet slutter ved dette billednummer"
 
-#: plug-ins/gap/gap_lib.c:2128
+#: plug-ins/gap/gap_lib.c:2142
 msgid "N times:"
 msgstr "N gange:"
 
-#: plug-ins/gap/gap_lib.c:2135
+#: plug-ins/gap/gap_lib.c:2149
 msgid ""
 "Copy selected Range n-times  \n"
 "(you may type in Values > 99)"
@@ -8173,37 +8178,37 @@ msgstr ""
 "Kopier udvalgte rammer n gange \n"
 "(du kan indtaste værdier under 99)"
 
-#: plug-ins/gap/gap_lib.c:2137
+#: plug-ins/gap/gap_lib.c:2152
 msgid "Duplicate Frame Range"
 msgstr "Kopiér billedinterval"
 
-#: plug-ins/gap/gap_lib.c:2240
+#: plug-ins/gap/gap_lib.c:2270
 #, c-format
 msgid "Exchange current Frame (%ld)"
 msgstr "Ombyt nuværende billede (%ld)"
 
-#: plug-ins/gap/gap_lib.c:2244
+#: plug-ins/gap/gap_lib.c:2274
 msgid "With Frame (number)"
 msgstr "Med billede (nummer)"
 
-#: plug-ins/gap/gap_lib.c:2286
+#: plug-ins/gap/gap_lib.c:2316
 #, c-format
 msgid "Framesequence Shift (%ld/%ld)"
 msgstr "Forskydning af billedsekvens (%ld/%ld)"
 
-#: plug-ins/gap/gap_lib.c:2296
+#: plug-ins/gap/gap_lib.c:2326
 msgid "Affected Range starts at this framenumber"
 msgstr "Det berørte interval starter ved dette billednummer"
 
-#: plug-ins/gap/gap_lib.c:2304
+#: plug-ins/gap/gap_lib.c:2334
 msgid "Affected Range ends at this framenumber"
 msgstr "Det berørte interval slutter ved dette billednummer"
 
-#: plug-ins/gap/gap_lib.c:2307
+#: plug-ins/gap/gap_lib.c:2337
 msgid "N-Shift:"
 msgstr "N-forskydning:"
 
-#: plug-ins/gap/gap_lib.c:2312
+#: plug-ins/gap/gap_lib.c:2342
 msgid ""
 "Renumber the affected framesequence     \n"
 "(numbers are shifted in circle by N)"
@@ -8211,11 +8216,11 @@ msgstr ""
 "Omnummerér den påvirkede billedsekvens\n"
 "(numrene er forskudt cyklisk med N)"
 
-#: plug-ins/gap/gap_lib.c:2314
+#: plug-ins/gap/gap_lib.c:2344
 msgid "Framesequence shift"
 msgstr "Billedsekvensforskydning"
 
-#: plug-ins/gap/gap_lib.c:2922
+#: plug-ins/gap/gap_lib.c:2952
 #, c-format
 msgid ""
 "Can't execute more than 1 Video Function\n"

@@ -11,6 +11,7 @@
 # script -> program
 # utils -> værktøjer
 # web page themes -> hjemmesidetemaer
+# DB Browser -> proceduredatabase (browser er overflødigt)
 #
 # Bemærk at en hel del af oversættelserne af programnavnene optræder to
 # sammenhænge og derfor skal synkroniseres.
@@ -18,8 +19,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu/gnome-cvs\n"
-"POT-Creation-Date: 2001-10-13 00:08+0200\n"
-"PO-Revision-Date: 2001-08-27 17:11+0200\n"
+"POT-Creation-Date: 2001-10-26 12:56+0200\n"
+"PO-Revision-Date: 2001-10-26 13:01+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <sslug-locale@sslug.dk>\n"
 "MIME-Version: 1.0\n"
@@ -35,6 +36,8 @@ msgid "Script-Fu Console"
 msgstr "Script-Fu-konsol"
 
 #. Action area
+#: plug-ins/dbbrowser/dbbrowser_utils.c:159
+#: plug-ins/dbbrowser/dbbrowser_utils.c:176
 #: plug-ins/script-fu/script-fu-console.c:199
 #: plug-ins/script-fu/script-fu-scripts.c:2033
 msgid "Close"
@@ -138,14 +141,18 @@ msgstr ""
 "En eller flere af de skrifttyper du har valgt\n"
 "er ugyldige. Tjek venligst indstillingerne.\n"
 
+#. show the author & the copyright
+#: plug-ins/dbbrowser/dbbrowser_utils.c:518
 #: plug-ins/script-fu/script-fu-scripts.c:2004
 msgid "Author:"
 msgstr "Udvikler:"
 
+#: plug-ins/dbbrowser/dbbrowser_utils.c:548
 #: plug-ins/script-fu/script-fu-scripts.c:2010
 msgid "Copyright:"
 msgstr "Ophavsret:"
 
+#: plug-ins/dbbrowser/dbbrowser_utils.c:533
 #: plug-ins/script-fu/script-fu-scripts.c:2016
 msgid "Date:"
 msgstr "Dato:"
@@ -196,6 +203,67 @@ msgstr "Genindlæs alle tilgængelige programmer"
 #: plug-ins/script-fu/script-fu.c:1110
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Udvidelser/Script-Fu/Genopfrisk"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:148
+#: plug-ins/dbbrowser/dbbrowser_utils.c:167
+msgid "DB Browser (init...)"
+msgstr "Proceduredatabase (klargør...)"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:153
+#: plug-ins/dbbrowser/dbbrowser_utils.c:172
+msgid "Search by Name"
+msgstr "Søg efter navn"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:155
+#: plug-ins/dbbrowser/dbbrowser_utils.c:174
+msgid "Search by Blurb"
+msgstr "Søg efter beskrivelse"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:157
+msgid "Apply"
+msgstr "Anvend"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:226
+msgid "Search:"
+msgstr "Søg:"
+
+#. show the name
+#: plug-ins/dbbrowser/dbbrowser_utils.c:344
+msgid "Name:"
+msgstr "Navn:"
+
+#. show the description
+#: plug-ins/dbbrowser/dbbrowser_utils.c:360
+msgid "Blurb:"
+msgstr "Beskrivelse:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:382
+msgid "In:"
+msgstr "Ind:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:429
+msgid "Out:"
+msgstr "Ud:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:479
+msgid "Help:"
+msgstr "Hjælp:"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:643
+msgid "DB Browser (by name - please wait)"
+msgstr "Proceduredatabase (efter navn - vent venligst)"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:667
+msgid "DB Browser (by blurb - please wait)"
+msgstr "Proceduredatabase (efter beskrivelse - vent venligst)"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:677
+msgid "DB Browser (please wait)"
+msgstr "Proceduredatabase (vent venligst)"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:743
+msgid "DB Browser"
+msgstr "Proceduredatabase"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm:0
 msgid "<Image>/Edit/Copy Visible"
