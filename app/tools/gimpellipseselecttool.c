@@ -136,18 +136,11 @@ static void
 gimp_ellipse_select_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpRectSelectTool *rect_sel = GIMP_RECT_SELECT_TOOL (draw_tool);
-  gint                ix, iy;
-  gint                iw, ih;
 
-  gimp_rect_select_tool_coords_to_integer (draw_tool->gdisp,
-                                           rect_sel->x, rect_sel->y,
-                                           rect_sel->w, rect_sel->h,
-                                           &ix, &iy,
-                                           &iw, &ih);
   gimp_draw_tool_draw_arc (draw_tool,
                            FALSE,
-                           ix, iy,
-                           iw, ih,
+                           rect_sel->x, rect_sel->y,
+                           rect_sel->w, rect_sel->h,
                            0, 23040,
                            FALSE);
 }
