@@ -1,5 +1,10 @@
 2003-07-28  Sven Neumann  <sven@gimp.org>
 
+	* app/paint-funcs/paint-funcs.c (initial_sub_region)
+	(combine_sub_region): use g_alloca() instead of alloca().
+
+2003-07-28  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/Makefile.am (EXTRA_HEADERS): added gimpwin32-io.h.
 
 	* libgimpbase/gimpdatafiles.c: properly include the new header.

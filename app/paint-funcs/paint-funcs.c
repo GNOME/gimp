@@ -4282,8 +4282,8 @@ initial_sub_region (struct initial_regions_struct *st,
   InitialMode           type;
 
   /* use src->bytes + 1 since DISSOLVE always needs a buffer with alpha */
-  buf = alloca (MAX (src->w * (src->bytes + 1),
-                     dest->w * dest->bytes));
+  buf = g_alloca (MAX (src->w * (src->bytes + 1),
+		       dest->w * dest->bytes));
   data    = st->data;
   opacity = st->opacity;
   mode    = st->mode;
@@ -4445,9 +4445,9 @@ combine_sub_region (struct combine_regions_struct *st,
   TileRowHint           hint;
 
   /* use src2->bytes + 1 since DISSOLVE always needs a buffer with alpha */
-  buf = alloca (MAX (MAX (src1->w * src1->bytes,
-                          src2->w * (src2->bytes + 1)),
-                     dest->w * dest->bytes));
+  buf = g_alloca (MAX (MAX (src1->w * src1->bytes,
+			    src2->w * (src2->bytes + 1)),
+		       dest->w * dest->bytes));
 
   opacity    = st->opacity;
   mode       = st->mode;
