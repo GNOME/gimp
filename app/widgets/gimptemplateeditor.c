@@ -649,6 +649,8 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
   GimpAspectType  aspect;
   const gchar    *desc;
   gchar          *text;
+  gint            xres;
+  gint            yres;
 
   if (param_spec)
     {
@@ -690,13 +692,13 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
   gimp_enum_get_value (GIMP_TYPE_IMAGE_BASE_TYPE, template->image_type,
                        NULL, NULL, &desc, NULL);
 
-  if ((gint) template->xresolution != (gint) template->yresolution)
-    text = g_strdup_printf (_("%d x %d dpi, %s"),
-                            (gint) template->xresolution,
-                            (gint) template->yresolution, desc);
+  xres = ROUND (template->xresolution);
+  yres = ROUND (template->yresolution);
+
+  if (xres != yres)
+    text = g_strdup_printf (_("%d x %d dpi, %s"), xres, yres, desc);
   else
-    text = g_strdup_printf (_("%d dpi, %s"),
-                            (gint) template->yresolution, desc);
+    text = g_strdup_printf (_("%d dpi, %s"), yres, desc);
 
   gtk_label_set_text (GTK_LABEL (editor->more_label), text);
   g_free (text);

@@ -1,3 +1,10 @@
+2005-01-02  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpsizebox.c
+	* app/widgets/gimptemplateeditor.c: round displayed resolution
+	instead of just casting to integer values. Use image size limits
+	from libgimpbase/gimplimits.h instead of some arbitrary numbers.
+
 2005-01-02  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/plug-ins/clothify.py
