@@ -20,10 +20,10 @@ gimpdatafiles
 </para>
 
 @filename: 
+@basename: 
 @atime: 
 @mtime: 
 @ctime: 
-@user_data: 
 
 <!-- ##### FUNCTION gimp_datafiles_check_extension ##### -->
 <para>
