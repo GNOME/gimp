@@ -314,7 +314,7 @@ dialog_scale_update(GtkAdjustment * adjustment, gdouble * value)
 	gtk_signal_handler_block_by_data(GTK_OBJECT(entry), value);
 	gtk_entry_set_text(GTK_ENTRY(entry), buf);
 	gtk_signal_handler_unblock_by_data(GTK_OBJECT(entry), value);
-
+	set_cmap_preview();
 	dialog_update_preview();
     }
 }				/* dialog_scale_update */
@@ -324,16 +324,16 @@ dialog_scale_update(GtkAdjustment * adjustment, gdouble * value)
  *********************************************************************/
 
 void
-dialog_scale_int_update(GtkAdjustment * adjustment, gdouble * value)
+dialog_scale_int_update(GtkAdjustment * adjustment, gint * value)
 {
     GtkWidget          *entry;
     char                buf[MAXSTRLEN];
 
     if (*value != adjustment->value) {
-	*value = adjustment->value;
+	*value = (int) adjustment->value;
 
 	entry = gtk_object_get_user_data(GTK_OBJECT(adjustment));
-	sprintf(buf, "%i", (int) *value);
+	sprintf(buf, "%i", *value);
 
 	gtk_signal_handler_block_by_data(GTK_OBJECT(entry), value);
 	gtk_entry_set_text(GTK_ENTRY(entry), buf);
@@ -362,6 +362,33 @@ dialog_entry_update(GtkWidget * widget, gdouble * value)
 	    (new_value <= adjustment->upper)) {
 	    *value = new_value;
 	    adjustment->value = new_value;
+
+	    gtk_signal_emit_by_name(GTK_OBJECT(adjustment), "value_changed");
+
+	    dialog_update_preview();
+	}
+    }
+}				/* dialog_entry_update */
+
+/**********************************************************************
+ FUNCTION: dialog_entry_int_update
+ *********************************************************************/
+
+void
+dialog_entry_int_update(GtkWidget * widget, gint * value)
+{
+    GtkAdjustment      *adjustment;
+    gint             new_value;
+
+    new_value = atoi(gtk_entry_get_text(GTK_ENTRY(widget)));
+
+    if (*value != new_value) {
+	adjustment = gtk_object_get_user_data(GTK_OBJECT(widget));
+
+	if ((1.0*new_value >= adjustment->lower) &&
+	    (1.0*new_value <= adjustment->upper)) {
+	    *value = new_value;
+	    adjustment->value = 1.0*new_value;
 
 	    gtk_signal_emit_by_name(GTK_OBJECT(adjustment), "value_changed");
 

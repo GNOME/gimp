@@ -19,8 +19,9 @@ void                explorer_logo_ok_callback(GtkWidget * widget, gpointer data)
 void                explorer_about_callback(GtkWidget * widget, gpointer data);
 void                explorer_toggle_update(GtkWidget * widget, gpointer data);
 void                dialog_scale_update(GtkAdjustment * adjustment, gdouble * value);
-void                dialog_scale_int_update(GtkAdjustment * adjustment, gdouble * value);
+void                dialog_scale_int_update(GtkAdjustment * adjustment, gint * value);
 void                dialog_entry_update(GtkWidget * widget, gdouble * value);
+void                dialog_entry_int_update(GtkWidget * widget, gint * value);
 
 #endif
 

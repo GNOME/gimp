@@ -1,3 +1,13 @@
+1999-09-09  Kelly Lynn Martin  <kelly@poverty.bloomington.in.us>
+
+	* plug-ins/FractalExplorer/Callbacks.[ch]
+	* plug-ins/FractalExplorer/Dialogs.[ch]
+	* plug-ins/FractalExplorer/FractalExplorer.[ch]
+	* plug-ins/FractalExplorer/Globals.c
+	* plug-ins/FractalExplorer/Languages.[ch]: added support for
+	variable-size colormap (up to 8192 colors) and "log log" smoothing 
+	(see http://linas.org/art-gallery/escape/smooth.html).
+
 Thu Sep  9 18:52:28 CDT 1999 James Mitchell <mitchell@gimp.org>
 
 	* tips/gimp_tips.it.txt

@@ -1,6 +1,6 @@
 #include "Languages.h"
 
-char * msg[4][104] =
+char * msg[NLANGUAGES][NMESSAGES] =
 {
 
 /* English messages */
@@ -112,6 +112,10 @@ char * msg[4][104] =
   "Click here to cancel save procedure.",
   "Save settings",
   "This saves the currently selected language to the configuration file",
+  "Number of colors",
+  "Change the number of colors in the mapping",
+  "Use loglog smoothing",
+  "Use log log smoothing to eliminate \"banding\" in the result",
 },
 
 
@@ -224,6 +228,10 @@ char * msg[4][104] =
   "Cliquez ici pour imterropre la procédure d'enregistrement.",
   "Enregistrer langue",
   "Ceci enregistre la langue actuelle dans le fichier de configuration.",
+  "Number of colors",			/* FIXME!! */
+  "Change the number of colors in the mapping", /* FIXME!! */
+  "Use loglog smoothing",		/* FIXME!! */
+  "Use log log smoothing to eliminate \"banding\" in the result", /* FIXME!! */
 },
 
 /* Deutsche Mitteilungen */
@@ -334,6 +342,10 @@ char * msg[4][104] =
   "Klicken Sie hier, um den Speicherungsvorgang abzubrechen.",
   "Sprache abspeichern",
   "Klicken Sie hier, um die gewaehlte Sprache als Standard zu definieren und in die Konfigurationsdatei abzuspeichern.",
+  "Number of colors",			/* FIXME!! */
+  "Change the number of colors in the mapping", /* FIXME!! */
+  "Use loglog smoothing",		/* FIXME!! */
+  "Use log log smoothing to eliminate \"banding\" in the result", /* FIXME!! */
 },
 
 /* Schwedische Mitteilungen 
@@ -448,6 +460,10 @@ char * msg[4][104] =
   "Klicken Sie hier, um den Speicherungsvorgang abzubrechen.",
   "Sprache abspeichern",
   "Klicken Sie hier, um die gewaehlte Sprache als Standard zu definieren und in die Konfigurationsdatei abzuspeichern.",
+  "Number of colors",			/* FIXME!! */
+  "Change the number of colors in the mapping", /* FIXME!! */
+  "Use loglog smoothing",		/* FIXME!! */
+  "Use log log smoothing to eliminate \"banding\" in the result", /* FIXME!! */
 },
 
 };

@@ -250,7 +250,7 @@ run(char *name,
     case RUN_NONINTERACTIVE:
       /* Make sure all the arguments are present */
 
-	if (nparams != 21)
+	if (nparams != 22)
 	    status = STATUS_CALLING_ERROR;
 
 	if (status == STATUS_SUCCESS) {
@@ -272,6 +272,7 @@ run(char *name,
 	    wvals.redinvert = param[18].data.d_int8;
 	    wvals.greeninvert = param[19].data.d_int8;
 	    wvals.blueinvert = param[20].data.d_int8;
+	    wvals.ncolors = param[21].data.d_int8;
 	}
 	make_color_map();
 	break;
@@ -422,13 +423,16 @@ explorer_render_row(const guchar * src_row,
 			foldyinitx,
 			foldyinity,
                         xx=0,
+                        adjust,
                         cx,
                         cy;
     int                 zaehler,
                         color,
                         iteration;
+    int                 useloglog;
     cx = wvals.cx;
     cy = wvals.cy;
+    useloglog = wvals.useloglog;
     iteration = wvals.iter;
     for (col = 0; col < row_width; col++) {
 	a = xmin + (double) col *xdiff;
@@ -535,7 +539,12 @@ explorer_render_row(const guchar * src_row,
 		    }
 	    x = xx;
 	}
-	color = (int) (zaehler * 255.0 / iteration);
+	if (useloglog) {
+	  adjust = log(log(x*x+y*y)/2)/log(2);
+	} else {
+	  adjust = 0.0;
+	}
+	color = (int) (((zaehler - adjust) * (wvals.ncolors - 1)) / iteration);
 	dest_row[col * bytes] = colormap[color][0];
 	dest_row[col * bytes + 1] = colormap[color][1];
 	dest_row[col * bytes + 2] = colormap[color][2];

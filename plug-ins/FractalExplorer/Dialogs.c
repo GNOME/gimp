@@ -478,7 +478,7 @@ explorer_dialog(void)
     gtk_box_pack_start(GTK_BOX(toggle_vbox2), top_table2, FALSE, FALSE, 0);
     gtk_widget_show(top_table2);
 
-    frame = gtk_frame_new(msg[lng][MSG_COLORDENSITY]);
+    frame = gtk_frame_new(msg[lng][MSG_NUMCOLORS]);
     gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
     gtk_table_attach(GTK_TABLE(top_table2), frame, 0, 1, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 3, 3);
     gtk_widget_show(frame);
@@ -493,15 +493,44 @@ explorer_dialog(void)
     gtk_table_set_row_spacings(GTK_TABLE(table6), 0);
     gtk_box_pack_start(GTK_BOX(toggle_vbox), table6, FALSE, FALSE, 0);
     gtk_widget_show(table6);
-    dialog_create_int_value(msg[lng][MSG_RED], GTK_TABLE(table6), 0, &wvals.redstretch, 0, 128, msg[lng][MSG_REDINTENSITY], &(elements->red));
-    dialog_create_int_value(msg[lng][MSG_GREEN], GTK_TABLE(table6), 1, &wvals.greenstretch, 0, 128, msg[lng][MSG_GREENINTENSITY], &(elements->green));
-    dialog_create_int_value(msg[lng][MSG_BLUE], GTK_TABLE(table6), 2, &wvals.bluestretch, 0, 128, msg[lng][MSG_BLUEINTENSITY], &(elements->blue));
+    dialog_create_int_value(msg[lng][MSG_NUMCOLORS], GTK_TABLE(table6), 0, &wvals.ncolors, 2, MAXNCOLORS, msg[lng][MSG_CHGNUMCOLORS], &(elements->ncol));
+
+    elements->useloglog = toggle = gtk_check_button_new_with_label(msg[lng][MSG_USELOGLOG]);
+    gtk_box_pack_start(GTK_BOX(toggle_vbox), toggle, FALSE, FALSE, 0);
+    gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
+		       (GtkSignalFunc) explorer_toggle_update,
+		       &wvals.useloglog);
+    gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), wvals.useloglog);
+    gtk_widget_show(toggle);
+    set_tooltip(tips, toggle, msg[lng][MSG_USELOGLOGCOMMENT]);
+
+    gtk_widget_show(toggle_vbox);
+    gtk_widget_show(frame);
+
+    frame = gtk_frame_new(msg[lng][MSG_COLORDENSITY]);
+    gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
+    gtk_table_attach(GTK_TABLE(top_table2), frame, 0, 1, 1, 2, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 3, 3);
+    gtk_widget_show(frame);
+
+    toggle_vbox = gtk_vbox_new(FALSE, 0);
+    gtk_container_set_border_width(GTK_CONTAINER(toggle_vbox), 0);
+    gtk_container_add(GTK_CONTAINER(frame), toggle_vbox);
+    gtk_widget_show(toggle_vbox);
+
+    table6 = gtk_table_new(3, 3, FALSE);
+    gtk_container_set_border_width(GTK_CONTAINER(table6), 0);
+    gtk_table_set_row_spacings(GTK_TABLE(table6), 0);
+    gtk_box_pack_start(GTK_BOX(toggle_vbox), table6, FALSE, FALSE, 0);
+    gtk_widget_show(table6);
+    dialog_create_value(msg[lng][MSG_RED], GTK_TABLE(table6), 0, &wvals.redstretch, 0.0, 1.0, msg[lng][MSG_REDINTENSITY], &(elements->red));
+    dialog_create_value(msg[lng][MSG_GREEN], GTK_TABLE(table6), 1, &wvals.greenstretch, 0.0, 1.0, msg[lng][MSG_GREENINTENSITY], &(elements->green));
+    dialog_create_value(msg[lng][MSG_BLUE], GTK_TABLE(table6), 2, &wvals.bluestretch, 0.0, 1.0, msg[lng][MSG_BLUEINTENSITY], &(elements->blue));
     gtk_widget_show(toggle_vbox);
     gtk_widget_show(frame);
 
     frame3 = gtk_frame_new(msg[lng][MSG_COLORFUNCTION]);
     gtk_frame_set_shadow_type(GTK_FRAME(frame3), GTK_SHADOW_ETCHED_IN);
-    gtk_table_attach(GTK_TABLE(top_table2), frame3, 0, 1, 1, 2, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 3, 3);
+    gtk_table_attach(GTK_TABLE(top_table2), frame3, 0, 1, 2, 3, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 3, 3);
     gtk_widget_show(frame3);
 
     toggle_vbox3 = gtk_vbox_new(FALSE, 0);
@@ -679,7 +708,7 @@ explorer_dialog(void)
 
     frame = gtk_frame_new(msg[lng][MSG_COLORMODE]);
     gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
-    gtk_table_attach(GTK_TABLE(top_table2), frame, 0, 1, 2, 3, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 3, 3);
+    gtk_table_attach(GTK_TABLE(top_table2), frame, 0, 1, 3, 4, GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 3, 3);
     hbox = gtk_hbox_new(FALSE, 0);
     gtk_container_set_border_width(GTK_CONTAINER(hbox), 0);
     gtk_container_add(GTK_CONTAINER(frame), hbox);
@@ -711,7 +740,7 @@ explorer_dialog(void)
     gtk_box_pack_start(GTK_BOX(hbox), toggle_vbox, TRUE, TRUE, 10);
     cmap_preview = gtk_preview_new(GTK_PREVIEW_COLOR);
     gtk_preview_size(GTK_PREVIEW(cmap_preview), 32, 32);
-    gtk_box_pack_start(GTK_BOX(toggle_vbox), cmap_preview, FALSE, FALSE, 10);
+    gtk_box_pack_start(GTK_BOX(toggle_vbox), cmap_preview, TRUE, TRUE, 10);
     gtk_widget_show(cmap_preview);
     gtk_widget_show(toggle_vbox);
     gtk_widget_show(hbox);
@@ -896,9 +925,11 @@ dialog_update_preview()
 			tmpy=0,
 			foldyinitx,
 			foldyinity,
+                        adjust,
                         xx=0;
     int                 zaehler,
                         color;
+    int                 useloglog;
 			
     if (NULL == wint.preview)
 	return;
@@ -927,6 +958,7 @@ dialog_update_preview()
 
 	p_ul = wint.wimage;
 	iteration = (int) wvals.iter;
+	useloglog = wvals.useloglog;
 	for (ycoord = 0; ycoord < preview_height; ycoord++) {
 	    px = 0;
 
@@ -1035,7 +1067,12 @@ dialog_update_preview()
 		    }
 		    x = xx;
 		}
-		color = (int) (255.0 * zaehler / iteration);
+		if (useloglog) {
+		  adjust = log(log(x*x+y*y)/2)/log(2);
+		} else {
+		  adjust = 0.0;
+		}
+		color = (int) (((zaehler - adjust) * (wvals.ncolors -1))/ iteration);
 		p_ul[0] = colormap[color][0];
 		p_ul[1] = colormap[color][1];
 		p_ul[2] = colormap[color][2];
@@ -1119,7 +1156,7 @@ dialog_create_value(char *title, GtkTable * table, int row, gdouble * value,
  *********************************************************************/
 
 void
-dialog_create_int_value(char *title, GtkTable * table, int row, gdouble * value,
+dialog_create_int_value(char *title, GtkTable * table, int row, gint * value,
 	       int left, int right, const char *desc, scaledata * scalevalues)
 {
     GtkWidget          *label;
@@ -1136,7 +1173,7 @@ dialog_create_int_value(char *title, GtkTable * table, int row, gdouble * value,
     gtk_table_attach(table, label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
     gtk_widget_show(label);
 
-    scale_data = gtk_adjustment_new(*value, left, right,
+    scale_data = gtk_adjustment_new(1.0 *(*value), left, right,
 				    (right - left) / 200,
 				    (right - left) / 200,
 				    0);
@@ -1159,10 +1196,10 @@ dialog_create_int_value(char *title, GtkTable * table, int row, gdouble * value,
     gtk_object_set_user_data(GTK_OBJECT(entry), scale_data);
     gtk_object_set_user_data(scale_data, entry);
     gtk_widget_set_usize(entry, ENTRY_WIDTH - 20, 0);
-    sprintf(buf, "%i", (int) *value);
+    sprintf(buf, "%i", *value);
     gtk_entry_set_text(GTK_ENTRY(entry), buf);
     gtk_signal_connect(GTK_OBJECT(entry), "changed",
-		       (GtkSignalFunc) dialog_entry_update,
+		       (GtkSignalFunc) dialog_entry_int_update,
 		       value);
     gtk_table_attach(GTK_TABLE(table), entry, 2, 3, row, row + 1, 0, 0, 4, 0);
     gtk_widget_show(entry);
@@ -1181,8 +1218,9 @@ set_cmap_preview()
                         x,
                         y,
                         j;
-    guchar              b[96];
+    guchar             *b;
     guchar              c[GR_WIDTH*3];
+    int xsize, ysize;
 
     if (NULL == cmap_preview)
 	return;
@@ -1194,17 +1232,30 @@ set_cmap_preview()
 	return;
 		
     make_color_map();
+
+    for (ysize = 1; ysize * ysize * ysize < wvals.ncolors; ysize++) /**/;
+    xsize = wvals.ncolors / ysize;
+    while (xsize * ysize < wvals.ncolors) xsize++;
+    b = g_new(guchar, xsize * 3);
+
+    gtk_preview_size     (GTK_PREVIEW(cmap_preview), xsize, ysize*4);
+    gtk_widget_set_usize (GTK_WIDGET(cmap_preview),  xsize, ysize*4);
     
-    for (y = 0; y < 32; y += 4) {
-	for (x = 0; x < 32; x++) {
-	    i = x + (y / 4) * 32;
-	    for (j = 0; j < 3; j++)
+    for (y = 0; y < ysize*4; y += 4) {
+	for (x = 0; x < xsize; x++) {
+	    i = x + (y / 4) * xsize;
+	    if (i > wvals.ncolors) {
+	      for (j = 0; j < 3; j++) 
+		b[x * 3 + j] = 0;
+	    } else {
+	      for (j = 0; j < 3; j++)
 		b[x * 3 + j] = colormap[i][j];
+	    }
 	}
-	gtk_preview_draw_row(GTK_PREVIEW(cmap_preview), b, 0, y, 32);
-	gtk_preview_draw_row(GTK_PREVIEW(cmap_preview), b, 0, y + 1, 32);
-	gtk_preview_draw_row(GTK_PREVIEW(cmap_preview), b, 0, y + 2, 32);
-	gtk_preview_draw_row(GTK_PREVIEW(cmap_preview), b, 0, y + 3, 32);
+	gtk_preview_draw_row(GTK_PREVIEW(cmap_preview), b, 0, y, xsize);
+	gtk_preview_draw_row(GTK_PREVIEW(cmap_preview), b, 0, y + 1, xsize);
+	gtk_preview_draw_row(GTK_PREVIEW(cmap_preview), b, 0, y + 2, xsize);
+	gtk_preview_draw_row(GTK_PREVIEW(cmap_preview), b, 0, y + 3, xsize);
     }
 
 	for (x = 0; x < GR_WIDTH; x++) {
@@ -1222,6 +1273,7 @@ set_cmap_preview()
     gtk_widget_draw(cmap_preview, NULL);
     gtk_widget_draw(cmap_preview_long, NULL);
     gtk_widget_draw(cmap_preview_long2, NULL);
+    g_free(b);
 }
 
 /**********************************************************************
@@ -1243,27 +1295,28 @@ make_color_map()
                         pi = atan(1) * 4;
 
     if (wvals.colormode) {
-	g = gimp_gradients_sample_uniform(NCOLORS);
+	g = gimp_gradients_sample_uniform(wvals.ncolors);
     }
-    redstretch = wvals.redstretch;
-    greenstretch = wvals.greenstretch;
-    bluestretch = wvals.bluestretch;
-    for (i = 0; i < NCOLORS; i++)
+    redstretch = wvals.redstretch * 127.5;
+    greenstretch = wvals.greenstretch * 127.5;
+    bluestretch = wvals.bluestretch * 127.5;
+    for (i = 0; i < wvals.ncolors; i++)
 	if (wvals.colormode) {
 	    for (j = 0; j < 3; j++)
 		colormap[i][j] = (int) (g[i * 4 + j] * 255.0);
 	} else {
-	    r = gr = bl = i;
+	  double x = (i*2.0) / wvals.ncolors;
+	    r = gr = bl = 0;
 
 	    switch (wvals.redmode) {
 	    case SINUS:
-		r = (int) redstretch *(1.0 + sin((r / 128.0 - 1) * pi));
+		r = (int) redstretch *(1.0 + sin((x - 1) * pi));
 		break;
 	    case COSINUS:
-	        r = (int) redstretch *(1.0 + cos((r / 128.0 - 1) * pi));
+	        r = (int) redstretch *(1.0 + cos((x - 1) * pi));
 		break;
 	    case NONE:
-	        r = (int)(redstretch *(r / 128.0));
+	        r = (int)(redstretch *(x));
 		break;
 	    default:
 		break;
@@ -1271,37 +1324,37 @@ make_color_map()
 
 	    switch (wvals.greenmode) {
 	    case SINUS:
-		gr = (int) greenstretch *(1.0 + sin((gr / 128.0 - 1) * pi));
+		gr = (int) greenstretch *(1.0 + sin((x - 1) * pi));
 		break;
 	    case COSINUS:
-		gr = (int) greenstretch *(1.0 + cos((gr / 128.0 - 1) * pi));
+		gr = (int) greenstretch *(1.0 + cos((x - 1) * pi));
 		break;
 	    case NONE:
-	        gr = (int)(greenstretch *(gr / 128.0));
+	        gr = (int)(greenstretch *(x));
 		break;
 	    default:
 		break;
 	    }
 	    switch (wvals.bluemode) {
 	    case SINUS:
-		bl = (int) bluestretch *(1.0 + sin((bl / 128.0 - 1) * pi));
+		bl = (int) bluestretch *(1.0 + sin((x - 1) * pi));
 		break;
 	    case COSINUS:
-		bl = (int) bluestretch *(1.0 + cos((bl / 128.0 - 1) * pi));
+		bl = (int) bluestretch *(1.0 + cos((x - 1) * pi));
 		break;
 	    case NONE:
-	        bl = (int)(bluestretch *(bl / 128.0));
+	        bl = (int)(bluestretch *(x));
 		break;
 	    default:
 		break;
 	    }
-	    if (r == 256) {
+	    if (r > 255) {
 		r = 255;
 	    }
-	    if (gr == 256) {
+	    if (gr > 255) {
 		gr = 255;
 	    }
-	    if (bl == 256) {
+	    if (bl > 255) {
 		bl = 255;
 	    }
 	    if (wvals.redinvert) {
@@ -2071,9 +2124,9 @@ load_options(fractalexplorerOBJ * xxx, FILE * fp)
     xxx->opts.cx=-0.75;
     xxx->opts.cy=-0.2;
     xxx->opts.colormode=0;
-    xxx->opts.redstretch=128.0;
-    xxx->opts.greenstretch=128.0;
-    xxx->opts.bluestretch=128.0;
+    xxx->opts.redstretch=1.0;
+    xxx->opts.greenstretch=1.0;
+    xxx->opts.bluestretch=1.0;
     xxx->opts.redmode=1;
     xxx->opts.greenmode=1;
     xxx->opts.bluemode=1;

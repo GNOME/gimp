@@ -11,7 +11,7 @@ void                dialog_create_value(char *title, GtkTable * table,
 					scaledata * scalevalues);
 
 void                dialog_create_int_value(char *title, GtkTable * table, 
-					    int row, gdouble * value,
+					    int row, int * value,
 					    int left, int right, 
 					    const char *desc, 
 					    scaledata * scalevalues);

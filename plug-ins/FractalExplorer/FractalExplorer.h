@@ -16,7 +16,7 @@
 #define MAX_LOAD_LINE 256
 #define GR_WIDTH 325
 
-#define NCOLORS 256
+#define MAXNCOLORS 8192
 #define MAXSTRLEN 256
 
 #define SINUS 0
@@ -51,6 +51,8 @@ typedef struct {
     gint 		blueinvert;
     gint                alwayspreview;
     gint 		language;
+    gint                ncolors;
+    gint                useloglog;
     
 } explorer_vals_t;
 
@@ -62,7 +64,7 @@ typedef struct {
 
 typedef int         colorvalue[3];
 
-typedef colorvalue  clrmap[NCOLORS];
+typedef colorvalue  clrmap[MAXNCOLORS];
 
 typedef struct {
     GtkWidget          *text;
@@ -92,6 +94,7 @@ struct _DialogElements {
     scaledata           red;
     scaledata           green;
     scaledata           blue;
+    scaledata           ncol;
     GtkWidget          *redmodecos;
     GtkWidget          *redmodesin;
     GtkWidget          *redmodenone;
@@ -106,6 +109,8 @@ struct _DialogElements {
     GtkWidget          *blueinvert;
     GtkWidget          *colormode0;
     GtkWidget          *colormode1;
+    GtkWidget          *ncolors;
+    GtkWidget          *useloglog;
 };
 
 
@@ -285,7 +290,7 @@ extern int          ready_now;
 extern explorer_vals_t     
                     zooms[100];
 extern DialogElements
-                    *elements;
+                   *elements;
 extern int          zoomindex;
 extern int          zoommax;
 extern gdouble     *gg;
