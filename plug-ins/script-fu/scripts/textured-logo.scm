@@ -103,7 +103,7 @@
                     SF-DRAWABLE   "Drawable" 0
 		    SF-ADJUSTMENT _"Border Size (pixels)" '(20 1 100 1 10 0 1)
 		    SF-PATTERN    _"Pattern" "Fibers"
-		    SF-OPTION     _"Mosaic Tile Type" '(_"Squares" "Hexagons" "Octagons")
+		    SF-OPTION     _"Mosaic Tile Type" '(_"Squares" _"Hexagons" _"Octagons")
 		    SF-COLOR      _"Background Color" '(255 255 255)
 		    SF-COLOR      _"Starting Blend" '(32 106 0)
 		    SF-COLOR      _"Ending Blend" '(0 0 106)
@@ -138,7 +138,7 @@
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(200 1 1000 1 10 0 1)
 		    SF-FONT       _"Font" "-*-cuneifontlight-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-PATTERN    _"Text Pattern" "Fibers"
-		    SF-OPTION     _"Mosaic Tile Type" '(_"Squares" "Hexagons" "Octagons")
+		    SF-OPTION     _"Mosaic Tile Type" '(_"Squares" _"Hexagons" _"Octagons")
 		    SF-COLOR      _"Background Color" '(255 255 255)
 		    SF-COLOR      _"Starting Blend" '(32 106 0)
 		    SF-COLOR      _"Ending Blend" '(0 0 106)

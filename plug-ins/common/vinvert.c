@@ -128,7 +128,7 @@ run (char    *name,
 	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    {
 	      INIT_I18N();
-	      gimp_progress_init ("Value Invert...");
+	      gimp_progress_init (_("Value Invert..."));
 	    }
 
 	  vinvert (drawable);
