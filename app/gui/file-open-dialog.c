@@ -77,6 +77,8 @@ file_open_dialog_show (Gimp        *gimp,
   if (! fileload)
     fileload = file_open_dialog_create (gimp);
 
+  gimp_file_dialog_set_sensitive (GIMP_FILE_DIALOG (fileload), TRUE);
+
   gimp_file_dialog_set_uri (GIMP_FILE_DIALOG (fileload), gimage, uri);
 
   if (parent)
@@ -117,19 +119,22 @@ file_open_dialog_response (GtkWidget *open_dialog,
                            gint       response_id,
                            Gimp      *gimp)
 {
-  GSList   *uris;
-  GSList   *list;
-  gboolean  success = FALSE;
+  GimpFileDialog *dialog  = GIMP_FILE_DIALOG (open_dialog);
+  GSList         *uris;
+  GSList         *list;
+  gboolean        success = FALSE;
 
   if (response_id != GTK_RESPONSE_OK)
     {
-      gtk_widget_hide (open_dialog);
+      if (! dialog->busy)
+        gtk_widget_hide (open_dialog);
+
       return;
     }
 
   uris = gtk_file_chooser_get_uris (GTK_FILE_CHOOSER (open_dialog));
 
-  gtk_widget_set_sensitive (open_dialog, FALSE);
+  gimp_file_dialog_set_sensitive (dialog, FALSE);
 
   for (list = uris; list; list = g_slist_next (list))
     {
@@ -141,7 +146,7 @@ file_open_dialog_response (GtkWidget *open_dialog,
                                            gimp,
                                            list->data,
                                            list->data,
-                                           GIMP_FILE_DIALOG (open_dialog)->file_proc))
+                                           dialog->file_proc))
             {
               success = TRUE;
 
@@ -150,12 +155,15 @@ file_open_dialog_response (GtkWidget *open_dialog,
         }
 
       g_free (filename);
+
+      if (dialog->canceled)
+        break;
     }
 
   if (success)
     gtk_widget_hide (open_dialog);
 
-  gtk_widget_set_sensitive (open_dialog, TRUE);
+  gimp_file_dialog_set_sensitive (dialog, TRUE);
 
   g_slist_foreach (uris, (GFunc) g_free, NULL);
   g_slist_free (uris);

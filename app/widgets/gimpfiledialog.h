@@ -50,7 +50,11 @@ struct _GimpFileDialog
   GtkWidget            *proc_view;
 
   gboolean              progress_active;
+  gboolean              progress_cancelable;
   GtkWidget            *progress;
+
+  gboolean              busy;
+  gboolean              canceled;
 };
 
 struct _GimpFileDialogClass
@@ -67,6 +71,9 @@ GtkWidget * gimp_file_dialog_new           (Gimp                 *gimp,
                                             const gchar          *role,
                                             const gchar          *stock_id,
                                             const gchar          *help_id);
+
+void        gimp_file_dialog_set_sensitive (GimpFileDialog       *dialog,
+                                            gboolean              sensitive);
 
 void        gimp_file_dialog_set_file_proc (GimpFileDialog       *dialog,
                                             PlugInProcDef        *file_proc);

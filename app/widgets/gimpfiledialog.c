@@ -55,6 +55,8 @@ static void  gimp_file_dialog_progress_iface_init (GimpProgressInterface *progre
 
 static gboolean   gimp_file_dialog_delete_event    (GtkWidget        *widget,
                                                     GdkEventAny      *event);
+static void       gimp_file_dialog_response        (GtkDialog        *dialog,
+                                                    gint              response_id);
 
 static GimpProgress *
                    gimp_file_dialog_progress_start (GimpProgress     *progress,
@@ -76,8 +78,7 @@ static void  gimp_file_dialog_add_proc_selection   (GimpFileDialog   *dialog,
                                                     Gimp             *gimp,
                                                     GSList           *file_procs,
                                                     const gchar      *automatic,
-                                                    const gchar      *automatic_help_id,
-                                                    GtkWidget        *vbox);
+                                                    const gchar      *automatic_help_id);
 
 static void  gimp_file_dialog_selection_changed    (GtkFileChooser   *chooser,
                                                     GimpFileDialog   *dialog);
@@ -134,8 +135,11 @@ static void
 gimp_file_dialog_class_init (GimpFileDialogClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GtkDialogClass *dialog_class = GTK_DIALOG_CLASS (klass);
 
   widget_class->delete_event = gimp_file_dialog_delete_event;
+
+  dialog_class->response     = gimp_file_dialog_response;
 }
 
 static void
@@ -155,6 +159,21 @@ gimp_file_dialog_delete_event (GtkWidget   *widget,
   return TRUE;
 }
 
+static void
+gimp_file_dialog_response (GtkDialog *dialog,
+                           gint       response_id)
+{
+  GimpFileDialog *file_dialog = GIMP_FILE_DIALOG (dialog);
+
+  if (response_id != GTK_RESPONSE_OK && file_dialog->busy)
+    {
+      file_dialog->canceled = TRUE;
+
+      if (file_dialog->progress_active && file_dialog->progress_cancelable)
+        gimp_progress_cancel (GIMP_PROGRESS (dialog));
+    }
+}
+
 static GimpProgress *
 gimp_file_dialog_progress_start (GimpProgress *progress,
                                  const gchar  *message,
@@ -168,11 +187,11 @@ gimp_file_dialog_progress_start (GimpProgress *progress,
 
       gtk_progress_bar_set_text (bar, message);
       gtk_progress_bar_set_fraction (bar, 0.0);
-      /* gtk_widget_set_sensitive (dialog->cancel_button, cancelable); */
 
       gtk_widget_show (dialog->progress);
 
-      dialog->progress_active = TRUE;
+      dialog->progress_active     = TRUE;
+      dialog->progress_cancelable = cancelable;
 
       return progress;
     }
@@ -191,11 +210,11 @@ gimp_file_dialog_progress_end (GimpProgress *progress)
 
       gtk_progress_bar_set_text (bar, "");
       gtk_progress_bar_set_fraction (bar, 0.0);
-      /* gtk_widget_set_sensitive (dialog->cancel_button, FALSE); */
 
       gtk_widget_hide (dialog->progress);
 
-      dialog->progress_active = FALSE;
+      dialog->progress_active     = FALSE;
+      dialog->progress_cancelable = FALSE;
     }
 }
 
@@ -254,7 +273,6 @@ gimp_file_dialog_new (Gimp                 *gimp,
                       const gchar          *help_id)
 {
   GimpFileDialog *dialog;
-  GtkWidget      *extra_vbox;
   GSList         *file_procs;
   const gchar    *automatic;
   const gchar    *automatic_help_id;
@@ -304,18 +322,48 @@ gimp_file_dialog_new (Gimp                 *gimp,
 
   gimp_file_dialog_add_filters (dialog, gimp, file_procs);
 
-  extra_vbox = gtk_vbox_new (FALSE, 12);
-  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), extra_vbox);
-  gtk_widget_show (extra_vbox);
+  gimp_file_dialog_add_proc_selection (dialog, gimp, file_procs, automatic,
+                                       automatic_help_id);
 
   dialog->progress = gtk_progress_bar_new ();
-  gtk_box_pack_start (GTK_BOX (extra_vbox), dialog->progress, FALSE, FALSE, 0);
-  /* don't gtk_widget_show (dialog->progress); */
-
-  gimp_file_dialog_add_proc_selection (dialog, gimp, file_procs, automatic,
-                                       automatic_help_id, extra_vbox);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->vbox), dialog->progress,
+                    FALSE, FALSE, 0);
 
   return GTK_WIDGET (dialog);
+}
+
+void
+gimp_file_dialog_set_sensitive (GimpFileDialog *dialog,
+                                gboolean        sensitive)
+{
+  GList *children;
+  GList *list;
+
+  g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
+
+  children =
+    gtk_container_get_children (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox));
+
+  for (list = children; list; list = g_list_next (list))
+    {
+      /*  skip the last item (the action area) */
+      if (! g_list_next (list))
+        break;
+
+      gtk_widget_set_sensitive (list->data, sensitive);
+    }
+
+  g_list_free (children);
+
+  if (sensitive)
+    gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
+                                       GTK_RESPONSE_CANCEL, sensitive);
+
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
+                                     GTK_RESPONSE_OK, sensitive);
+
+  dialog->busy     = ! sensitive;
+  dialog->canceled = FALSE;
 }
 
 void
@@ -497,13 +545,13 @@ gimp_file_dialog_add_proc_selection (GimpFileDialog *dialog,
                                      Gimp           *gimp,
                                      GSList         *file_procs,
                                      const gchar    *automatic,
-                                     const gchar    *automatic_help_id,
-                                     GtkWidget      *vbox)
+                                     const gchar    *automatic_help_id)
 {
   GtkWidget *scrolled_window;
 
   dialog->proc_expander = gtk_expander_new_with_mnemonic (NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), dialog->proc_expander, TRUE, TRUE, 0);
+  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog),
+                                     dialog->proc_expander);
   gtk_widget_show (dialog->proc_expander);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);

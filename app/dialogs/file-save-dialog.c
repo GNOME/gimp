@@ -87,7 +87,7 @@ file_save_dialog_show (GimpImage *gimage,
   if (! filesave)
     filesave = file_save_dialog_create (gimage->gimp);
 
-  gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
+  gimp_file_dialog_set_sensitive (GIMP_FILE_DIALOG (filesave), TRUE);
 
   if (GTK_WIDGET_VISIBLE (filesave))
     {
@@ -116,7 +116,7 @@ file_save_a_copy_dialog_show (GimpImage *gimage,
   if (! filesave)
     filesave = file_save_dialog_create (gimage->gimp);
 
-  gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
+  gimp_file_dialog_set_sensitive (GIMP_FILE_DIALOG (filesave), TRUE);
 
   if (GTK_WIDGET_VISIBLE (filesave))
     {
@@ -161,17 +161,19 @@ file_save_dialog_response (GtkWidget *save_dialog,
                            gint       response_id,
                            Gimp      *gimp)
 {
-  GtkFileChooser *chooser = GTK_FILE_CHOOSER (save_dialog);
+  GimpFileDialog *dialog = GIMP_FILE_DIALOG (save_dialog);
   gchar          *uri;
   gchar          *filename;
 
   if (response_id != GTK_RESPONSE_OK)
     {
-      file_dialog_hide (save_dialog);
+      if (! dialog->busy)
+        file_dialog_hide (save_dialog);
+
       return;
     }
 
-  uri = gtk_file_chooser_get_uri (chooser);
+  uri = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (save_dialog));
 
   filename = g_filename_from_uri (uri, NULL, NULL);
 
@@ -181,9 +183,7 @@ file_save_dialog_response (GtkWidget *save_dialog,
     }
   else
     {
-      GimpFileDialog *dialog = GIMP_FILE_DIALOG (save_dialog);
-
-      gtk_widget_set_sensitive (save_dialog, FALSE);
+      gimp_file_dialog_set_sensitive (dialog, FALSE);
 
       if (file_save_dialog_save_image (save_dialog,
                                        dialog->gimage,
@@ -196,7 +196,7 @@ file_save_dialog_response (GtkWidget *save_dialog,
           file_dialog_hide (save_dialog);
         }
 
-      gtk_widget_set_sensitive (save_dialog, TRUE);
+      gimp_file_dialog_set_sensitive (dialog, TRUE);
     }
 
   g_free (uri);
@@ -250,7 +250,9 @@ file_save_overwrite (GtkWidget   *save_dialog,
   gtk_window_set_transient_for (GTK_WINDOW (query_box),
                                 GTK_WINDOW (save_dialog));
 
-  gtk_widget_set_sensitive (save_dialog, FALSE);
+  gimp_file_dialog_set_sensitive (GIMP_FILE_DIALOG (save_dialog), FALSE);
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (save_dialog),
+                                     GTK_RESPONSE_CANCEL, FALSE);
 
   gtk_widget_show (query_box);
 }
@@ -260,12 +262,14 @@ file_save_overwrite_callback (GtkWidget *widget,
                               gboolean   overwrite,
                               gpointer   data)
 {
-  OverwriteData *overwrite_data = data;
+  OverwriteData  *overwrite_data = data;
+  GimpFileDialog *dialog = GIMP_FILE_DIALOG (overwrite_data->save_dialog);
+
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
+                                     GTK_RESPONSE_CANCEL, TRUE);
 
   if (overwrite)
     {
-      GimpFileDialog *dialog = GIMP_FILE_DIALOG (overwrite_data->save_dialog);
-
       gtk_widget_hide (widget);
 
       if (file_save_dialog_save_image (overwrite_data->save_dialog,
@@ -278,9 +282,10 @@ file_save_overwrite_callback (GtkWidget *widget,
         {
           file_dialog_hide (overwrite_data->save_dialog);
         }
+
     }
 
-  gtk_widget_set_sensitive (overwrite_data->save_dialog, TRUE);
+  gimp_file_dialog_set_sensitive (dialog, TRUE);
 
   g_free (overwrite_data->uri);
   g_free (overwrite_data->raw_filename);

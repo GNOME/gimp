@@ -1,5 +1,28 @@
 2004-08-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpfiledialog.[ch]
+	(gimp_file_dialog_set_sensitive): new function which works on all
+	widgets in the dialog except the cancel button.
+
+	Remember if the active progress is cancelable and added two
+	booleans "busy" and "canceled". Added GtkDialog::response()
+	implementation which, if the dialog is busy, cancels the active
+	progress and sets the dialog's "canceled" state.
+
+	Moved the progress bar right above the action area so it is next
+	to the cancel button and in the same place for both open and save
+	dialogs.
+
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c: use the new API to make image loading
+	and saving cancelable again.
+
+	* app/widgets/gimpthumbbox.c: use the same stuff to make
+	thumbnailing cancelable. Increased the minimum height a bit so it
+	doesn't resize when the progress bars are shown.
+
+2004-08-10  Michael Natterer  <mitch@gimp.org>
+
 	Redid the whole internal progress stuff: don't pass around
 	progress_callback and progress_data; instead, provide a
 	pointer to a GimpProgressInterface which can be implemented
