@@ -802,7 +802,10 @@ gimp_paint_core_get_color_from_gradient (GimpPaintCore         *core,
 {
   gdouble pos;
 
-  pos = (gdouble) core->pixel_dist / gradient_length;
+  if (gradient_length > 0.0)
+    pos = (gdouble) core->pixel_dist / gradient_length;
+  else
+    pos = 1.0;
 
   /*  for the once modes, set pos close to 1.0 after the first chunk  */
   if ((mode == GIMP_GRADIENT_ONCE_FORWARD || 

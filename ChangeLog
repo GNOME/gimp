@@ -1,3 +1,15 @@
+2003-04-13  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/gimppaintoptions.c: changed the "fade-length" and
+	"gradient-length" minimum values to 0.0 for compatibility with
+	the PDB API.
+
+	* app/paint/gimppaintcore.c (gimp_paint_core_get_color_from_gradient):
+	check that gradient_length > 0.0 before dividing by it.
+
+	* plug-ins/gfig/gfig.c (gfig_paint_callback): push an undo group
+	around the paint operations (bug #110446).
+
 2003-04-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimptemplateview.c: made the names editable in the

@@ -159,7 +159,7 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                     0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FADE_LENGTH,
                                    "fade-length", NULL,
-                                   1e-5, 32767.0, DEFAULT_FADE_LENGTH,
+                                   0.0, 32767.0, DEFAULT_FADE_LENGTH,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_FADE_UNIT,
                                  "fade-unit", NULL,
@@ -171,7 +171,7 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                     DEFAULT_USE_GRADIENT, 0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_GRADIENT_LENGTH,
                                    "gradient-length", NULL,
-                                   1e-5, 32767.0, DEFAULT_GRADIENT_LENGTH,
+                                   0.0, 32767.0, DEFAULT_GRADIENT_LENGTH,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_GRADIENT_UNIT,
                                  "gradient-unit", NULL,
