@@ -1,5 +1,11 @@
 2005-01-07  Sven Neumann  <sven@gimp.org>
 
+	* app/composite/gimp-composite-x86.h
+	* app/composite/gimp-composite-sse.c: applied patch from Andreas
+	Jochens that fixes the build on amd64 with gcc-4.0 (bug #163041).
+
+2005-01-07  Sven Neumann  <sven@gimp.org>
+
 	* data/misc/gimp.desktop.in.in: changed Comment field as suggested
 	in bug #160990.
 
@@ -96,7 +102,7 @@
 	* app/menus/plug-in-menus.c: made the code a little more robust by
 	not relying on certain properties of the menu path.
 
-2005-01-03  Sven Neumann  <neumann@jpk.com>
+2005-01-03  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/gradient.pdb: do actually add the new procedure
 	gimp_gradient_is_editable().
@@ -137,7 +143,7 @@
 
 	* menus/image-menu.xml.in: added them to Image->View.
 
-2005-01-03  Sven Neumann  <neumann@jpk.com>
+2005-01-03  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/ifscompose/ifscompose.c: use g_free() to release memory
 	allocated using g_malloc().
@@ -744,7 +750,7 @@
 	* plug-ins/common/unsharp.c: more code cleanup and micro
 	optimizations.
 
-2004-12-21  Sven Neumann  <neumann@jpk.com>
+2004-12-21  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/unsharp.c: reverted the last change since it
 	introduced artefacts. Even had to increase the border around the

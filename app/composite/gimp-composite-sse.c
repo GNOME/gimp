@@ -48,6 +48,16 @@
 #define pminub(src,dst,tmp)  "pminub " "%%" #src ", %%" #dst
 #define pmaxub(src,dst,tmp)  "pmaxub " "%%" #src ", %%" #dst
 
+extern const guint32 rgba8_alpha_mask_64[2];
+extern const guint32 rgba8_b1_64[2];
+extern const guint32 rgba8_b255_64[2];
+extern const guint32 rgba8_w1_64[2];
+extern const guint32 rgba8_w2_64[2];
+extern const guint32 rgba8_w128_64[2];
+extern const guint32 rgba8_w256_64[2];
+extern const guint32 rgba8_w255_64[2];
+
+
 /*
  *
  */
