@@ -87,12 +87,9 @@ void rcm_switch_to_gray_from (GtkWidget *button,
 
 void rcm_preview_as_you_drag  (GtkWidget *button,
                                gpointer  *value);
-void rcm_selection_in_context (GtkWidget *button,
-                               gpointer  *value);
-void rcm_selection            (GtkWidget *button,
-                               gpointer  *value);
-void rcm_entire_image         (GtkWidget *button,
-                               gpointer  *value);
+
+void rcm_combo_callback       (GtkWidget *widget,
+                               gpointer   data);
 
 
 /* Circle events */

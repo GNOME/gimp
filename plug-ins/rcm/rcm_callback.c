@@ -49,6 +49,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 #include "libgimp/gimp.h"
 
 #include "rcm.h"
@@ -380,29 +381,15 @@ rcm_change_preview (void)
 }
 
 void
-rcm_selection_in_context (GtkWidget *button,
-			  gpointer  *value)
+rcm_combo_callback (GtkWidget *widget,
+                    gpointer   data)
 {
-  Current.reduced = rcm_reduce_image (Current.drawable, Current.mask,
-                                      MAX_PREVIEW_SIZE, SELECTION_IN_CONTEXT);
-  rcm_change_preview ();
-}
+  gint value;
 
-void
-rcm_selection (GtkWidget *button,
-	       gpointer  *value)
-{
-  Current.reduced = rcm_reduce_image (Current.drawable, Current.mask,
-                                      MAX_PREVIEW_SIZE, SELECTION);
-  rcm_change_preview ();
-}
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value);
 
-void
-rcm_entire_image (GtkWidget *button,
-		  gpointer  *value)
-{
   Current.reduced = rcm_reduce_image (Current.drawable, Current.mask,
-                                      MAX_PREVIEW_SIZE, ENTIRE_IMAGE);
+                                      MAX_PREVIEW_SIZE, value);
   rcm_change_preview ();
 }
 

@@ -601,11 +601,10 @@ rcm_create_misc (void)
   GtkWidget *label, *table;
   GtkWidget *units_frame, *units_vbox;
   GtkWidget *preview_frame, *preview_vbox;
-  GtkWidget *item, *menu, *root, *hbox;
+  GtkWidget *hbox;
+  GtkWidget *combo;
   GtkWidget *button;
-
-  GSList *units_group = NULL;
-  GSList *preview_group = NULL;
+  GSList    *units_group = NULL;
 
   /** Misc: Gray circle **/
   Current.Gray = rcm_create_gray ();
@@ -684,43 +683,19 @@ rcm_create_misc (void)
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 
-  /* create menu entries */
-  menu = gtk_menu_new ();
 
-  item = gtk_radio_menu_item_new_with_label (preview_group, _("Entire Layer"));
-  preview_group = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (item));
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-  gtk_widget_show (item);
+  combo = gimp_int_combo_box_new (_("Entire Layer"), ENTIRE_IMAGE,
+                                  _("Selection"),    SELECTION,
+                                  _("Context"),      SELECTION_IN_CONTEXT,
+                                  NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), Current.Slctn);
 
-  g_signal_connect (item, "activate",
-                    G_CALLBACK (rcm_entire_image),
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (rcm_combo_callback),
                     NULL);
 
-  item = gtk_radio_menu_item_new_with_label (preview_group, _("Selection"));
-  preview_group = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (item));
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-  gtk_widget_show (item);
-
-  g_signal_connect (item, "activate",
-                    G_CALLBACK (rcm_selection),
-                    NULL);
-
-  item = gtk_radio_menu_item_new_with_label (preview_group, _("Context"));
-  preview_group = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (item));
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-  gtk_widget_show (item);
-
-  g_signal_connect (item, "activate",
-                    G_CALLBACK (rcm_selection_in_context),
-                    NULL);
-
-  /* create (options) menu */
-  root =  gtk_option_menu_new ();
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (root), menu);
-  gtk_option_menu_set_history (GTK_OPTION_MENU (root), 4);
-  gtk_widget_show (root);
-
-  gtk_box_pack_start (GTK_BOX (hbox), root, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
+  gtk_widget_show (combo);
 
   table = gtk_table_new (2, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
@@ -771,7 +746,8 @@ rcm_dialog (void)
 
   /* Create sub-dialogs */
   Current.reduced = rcm_reduce_image (Current.drawable, Current.mask,
-				      MAX_PREVIEW_SIZE, ENTIRE_IMAGE);
+                                      MAX_PREVIEW_SIZE, Current.Slctn);
+
   previews = rcm_create_previews ();
   mains    = rcm_create_main ();
   miscs    = rcm_create_misc ();
