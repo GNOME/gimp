@@ -308,8 +308,9 @@ gimp_levels_tool_initialize (GimpTool    *tool,
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (l_tool->channel_menu),
                                  l_tool->channel);
 
-  if (! l_tool->color && l_tool->alpha)
-    l_tool->channel = 1;
+  /* FIXME: hack */
+  if (! l_tool->color)
+    l_tool->channel = (l_tool->channel == GIMP_HISTOGRAM_ALPHA) ? 1 : 0;
 
   levels_update (l_tool, ALL);
 
@@ -825,7 +826,8 @@ levels_update (GimpLevelsTool *tool,
     }
   else
     {
-      if (tool->channel == 2)
+      /* FIXME: hack */
+      if (tool->channel == 1)
         channel = GIMP_HISTOGRAM_ALPHA;
       else
         channel = GIMP_HISTOGRAM_VALUE;
@@ -868,9 +870,9 @@ levels_update (GimpLevelsTool *tool,
         case GIMP_HISTOGRAM_VALUE:
         case GIMP_HISTOGRAM_ALPHA:
           gimp_color_bar_set_buffers (GIMP_COLOR_BAR (tool->input_bar),
-                                      tool->levels->input[channel],
-                                      tool->levels->input[channel],
-                                      tool->levels->input[channel]);
+                                      tool->levels->input[tool->channel],
+                                      tool->levels->input[tool->channel],
+                                      tool->levels->input[tool->channel]);
           break;
 
         case GIMP_HISTOGRAM_RED:
@@ -911,8 +913,8 @@ levels_channel_callback (GtkWidget      *widget,
                                    tool->channel);
 
   /* FIXME: hack */
-  if (! tool->color && tool->alpha)
-    tool->channel = (tool->channel > 1) ? 2 : 1;
+  if (! tool->color)
+    tool->channel = (tool->channel == GIMP_HISTOGRAM_ALPHA) ? 1 : 0;
 
   levels_update (tool, ALL);
 }

@@ -1,3 +1,27 @@
+2004-06-28  Michael Natterer  <mitch@gimp.org>
+
+	Fixed bug #141930 while keeping bug #132322 fixed:
+
+	* app/base/curves.c (curves_lut_func)
+	* app/base/levels.c (levels_lut_func): changed meaning of channel
+	slots for GRAYA images: just as for GRAY images, expect the value
+	channel in slot 0 and the alpha channel in slot 1, so it matches
+	the meaning of slots of GimpHistogram (before this change, only
+	GRAY images had their value in slot 0 and GRAYA images had it in
+	slot 1, whereas the histogram had the value channel in slot 0,
+	which was breaking auto levels for GRAYA images).
+
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c
+	* tools/pdbgen/pdb/color.pdb: adjusted channel fiddling for GRAY
+	and GRAYA images accordingly.
+
+	* app/tools/gimpcurvestool.c (curves_update)
+	* app/tools/gimplevelstool.c (levels_update): call
+	gimp_color_bar_set_buffers() with the right buffers.
+
+	* app/pdb/color_cmds.c: regenerated.
+
 2004-06-28  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/gui.c (gui_initialize_after_callback): select the
