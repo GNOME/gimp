@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,11 +39,10 @@
 #include "imap_misc.h"
 #include "imap_object_popup.h"
 #include "imap_polygon.h"
+#include "imap_stock.h"
 #include "imap_table.h"
 
 #include "libgimp/stdplugins-intl.h"
-
-#include "polygon.xpm"
 
 #define MAX_POLYGON_POINTS 99
 
@@ -72,10 +71,10 @@ static void polygon_write_cern(Object_t* obj, gpointer param,
 static void polygon_write_ncsa(Object_t* obj, gpointer param, 
 			       OutputFunc_t output);
 static void polygon_do_popup(Object_t *obj, GdkEventButton *event);
-static char** polygon_get_icon_data(void);
+static const gchar* polygon_get_stock_icon_name(void);
 
 static ObjectClass_t polygon_class = {
-   N_("Polygon"),
+   N_("_Polygon"),
    NULL,			/* info_dialog */
    NULL,			/* icon */
    NULL,			/* mask */
@@ -101,7 +100,7 @@ static ObjectClass_t polygon_class = {
    polygon_write_cern,
    polygon_write_ncsa,
    polygon_do_popup,
-   polygon_get_icon_data
+   polygon_get_stock_icon_name
 };
 
 Object_t*
@@ -393,7 +392,7 @@ static gpointer
 polygon_create_info_widget(GtkWidget *frame)
 {
    PolygonProperties_t *props = g_new(PolygonProperties_t, 1);
-   GtkWidget *hbox, *swin, *table;
+   GtkWidget *hbox, *swin, *table, *label;
    GtkWidget *list;
    gint max_width = get_image_width();
    gint max_height = get_image_height();
@@ -438,39 +437,41 @@ polygon_create_info_widget(GtkWidget *frame)
    gtk_box_pack_start(GTK_BOX(hbox), table, FALSE, FALSE, FALSE);
    gtk_widget_show(table);
 
-   create_label_in_table(table, 0, 0, "x:");
-   props->x = create_spin_button_in_table(table, 0, 1, 1, 0, max_width - 1);
+   label = create_label_in_table(table, 0, 0, "_x:");
+   props->x = create_spin_button_in_table(table, label, 0, 1, 1, 0, 
+					  max_width - 1);
    gtk_signal_connect(GTK_OBJECT(props->x), "changed", 
 		      (GtkSignalFunc) x_changed_cb, (gpointer) props);
    gtk_widget_set_usize(props->x, 64, -1);
    create_label_in_table(table, 0, 2, _("pixels"));
 
-   create_label_in_table(table, 1, 0, "y:");
-   props->y = create_spin_button_in_table(table, 1, 1, 1, 0, max_height - 1);
+   label = create_label_in_table(table, 1, 0, "_y:");
+   props->y = create_spin_button_in_table(table, label, 1, 1, 1, 0, 
+					  max_height - 1);
    gtk_signal_connect(GTK_OBJECT(props->y), "changed", 
 		      (GtkSignalFunc) y_changed_cb, (gpointer) props);
    gtk_widget_set_usize(props->y, 64, -1);
    create_label_in_table(table, 1, 2, _("pixels"));
 
-   props->update = gtk_button_new_with_label(_("Update"));
+   props->update = gtk_button_new_with_mnemonic(_("_Update"));
    gtk_signal_connect(GTK_OBJECT(props->update), "clicked",
 		      GTK_SIGNAL_FUNC(update_button_clicked), props);
    gtk_table_attach_defaults(GTK_TABLE(table), props->update, 1, 2, 2, 3);
    gtk_widget_show(props->update);
 
-   props->insert = gtk_button_new_with_label(_("Insert"));
+   props->insert = gtk_button_new_with_mnemonic(_("_Insert"));
    gtk_signal_connect(GTK_OBJECT(props->insert), "clicked",
 		      GTK_SIGNAL_FUNC(insert_button_clicked), props);
    gtk_table_attach_defaults(GTK_TABLE(table), props->insert, 1, 2, 3, 4);
    gtk_widget_show(props->insert);
 
-   props->append = gtk_button_new_with_label(_("Append"));
+   props->append = gtk_button_new_with_mnemonic(_("A_ppend"));
    gtk_signal_connect(GTK_OBJECT(props->append), "clicked",
 		      GTK_SIGNAL_FUNC(append_button_clicked), props);
    gtk_table_attach_defaults(GTK_TABLE(table), props->append, 1, 2, 4, 5);
    gtk_widget_show(props->append);
 
-   props->remove = gtk_button_new_with_label(_("Remove"));
+   props->remove = gtk_button_new_with_mnemonic(_("_Remove"));
    gtk_signal_connect(GTK_OBJECT(props->remove), "clicked",
 		      GTK_SIGNAL_FUNC(remove_button_clicked), props);
    gtk_table_attach_defaults(GTK_TABLE(table), props->remove, 1, 2, 5, 6);
@@ -699,10 +700,10 @@ polygon_do_popup(Object_t *obj, GdkEventButton *event)
    }
 }
 
-static char** 
-polygon_get_icon_data(void)
+static const gchar* 
+polygon_get_stock_icon_name(void)
 {
-   return polygon_xpm;
+   return IMAP_STOCK_POLYGON;
 }
 
 static GList *_prev_link;

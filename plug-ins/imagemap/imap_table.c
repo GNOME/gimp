@@ -36,12 +36,14 @@ add_widget_to_table(GtkWidget *table, int row, int col, GtkWidget *w)
 }
 
 GtkWidget*
-create_spin_button_in_table(GtkWidget *table, int row, int col,
-			    int value, int min, int max)
+create_spin_button_in_table(GtkWidget *table, GtkWidget *label,
+			    int row, int col, int value, int min, int max)
 {
    GtkObject *adj = gtk_adjustment_new(value, min, max, 1, 1, 1);
    GtkWidget *button = gtk_spin_button_new(GTK_ADJUSTMENT(adj), 1, 0);
    gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(button), TRUE);
+   if (label)
+      gtk_label_set_mnemonic_widget(GTK_LABEL(label), button);
    return add_widget_to_table(table, row, col, button);
 }
 
@@ -70,11 +72,10 @@ create_label_in_table(GtkWidget *table, int row, int col, const char *text)
 }
 
 GtkWidget*
-create_entry_in_table(GtkWidget *table, int row, int col)
+create_entry_in_table(GtkWidget *table, GtkWidget *label, int row, int col)
 {
    GtkWidget *entry = gtk_entry_new();
-   gtk_table_attach_defaults(GTK_TABLE(table), entry, col, col + 1,
-			     row, row + 1);
-   gtk_widget_show(entry);
-   return entry;
+   if (label)
+      gtk_label_set_mnemonic_widget(GTK_LABEL(label), entry);
+   return add_widget_to_table(table, row, col, entry);
 }

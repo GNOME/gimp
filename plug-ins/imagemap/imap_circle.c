@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,11 +24,7 @@
 #include "config.h"
 
 #include <math.h>
-
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
+#include <stdlib.h>
 
 #include <gtk/gtk.h>
 
@@ -36,11 +32,10 @@
 #include "imap_main.h"
 #include "imap_misc.h"
 #include "imap_object_popup.h"
+#include "imap_stock.h"
 #include "imap_table.h"
 
 #include "libgimp/stdplugins-intl.h"
-
-#include "circle.xpm"
 
 static gboolean circle_is_valid(Object_t *obj);
 static Object_t *circle_clone(Object_t *obj);
@@ -63,10 +58,10 @@ static void circle_write_cern(Object_t* obj, gpointer param,
 			      OutputFunc_t output);
 static void circle_write_ncsa(Object_t* obj, gpointer param, 
 			      OutputFunc_t output);
-static char** circle_get_icon_data(void);
+static const gchar* circle_get_stock_icon_name(void);
 
 static ObjectClass_t circle_class = {
-   N_("Circle"),
+   N_("C_ircle"),
    NULL,			/* info_dialog */
    NULL,			/* icon */
    NULL,			/* mask */
@@ -92,7 +87,7 @@ static ObjectClass_t circle_class = {
    circle_write_cern,
    circle_write_ncsa,
    object_do_popup,
-   circle_get_icon_data
+   circle_get_stock_icon_name
 };
 
 Object_t*
@@ -255,7 +250,7 @@ static gpointer
 circle_create_info_widget(GtkWidget *frame)
 {
    CircleProperties_t *props = g_new(CircleProperties_t, 1);
-   GtkWidget *table;
+   GtkWidget *table, *label;
    gint max_width = get_image_width();
    gint max_height = get_image_height();
 
@@ -267,21 +262,23 @@ circle_create_info_widget(GtkWidget *frame)
    gtk_table_set_col_spacings(GTK_TABLE(table), 10);
    gtk_widget_show(table);
    
-   create_label_in_table(table, 0, 0, _("Center x:"));
-   props->x = create_spin_button_in_table(table, 0, 1, 1, 0, max_width - 1);
-   g_signal_connect(G_OBJECT(props->x), "changed", 
+   label = create_label_in_table(table, 0, 0, _("Center _x:"));
+   props->x = create_spin_button_in_table(table, label, 0, 1, 1, 0, 
+					  max_width - 1);
+   g_signal_connect(G_OBJECT(props->x), "value_changed", 
                     G_CALLBACK (x_changed_cb), (gpointer) props);
    create_label_in_table(table, 0, 2, _("pixels"));
 
-   create_label_in_table(table, 1, 0, _("Center y:"));
-   props->y = create_spin_button_in_table(table, 1, 1, 1, 0, max_height - 1);
-   g_signal_connect(G_OBJECT(props->y), "changed", 
+   label = create_label_in_table(table, 1, 0, _("Center _y:"));
+   props->y = create_spin_button_in_table(table, label, 1, 1, 1, 0, 
+					  max_height - 1);
+   g_signal_connect(G_OBJECT(props->y), "value_changed", 
                     G_CALLBACK (y_changed_cb), (gpointer) props);
    create_label_in_table(table, 1, 2, _("pixels"));
 
-   create_label_in_table(table, 2, 0, _("Radius:"));
-   props->r = create_spin_button_in_table(table, 2, 1, 1, 1, G_MAXINT);
-   g_signal_connect(G_OBJECT(props->r), "changed", 
+   label = create_label_in_table(table, 2, 0, _("_Radius:"));
+   props->r = create_spin_button_in_table(table, label, 2, 1, 1, 1, G_MAXINT);
+   g_signal_connect(G_OBJECT(props->r), "value_changed", 
                     G_CALLBACK (r_changed_cb), (gpointer) props);
    create_label_in_table(table, 2, 2, _("pixels"));
 
@@ -341,10 +338,10 @@ circle_write_ncsa(Object_t *obj, gpointer param, OutputFunc_t output)
 	  circle->x, circle->y, circle->x, circle->y + circle->r);
 }
 
-static char** 
-circle_get_icon_data(void)
+static const gchar*
+circle_get_stock_icon_name(void)
 {
-   return circle_xpm;
+   return IMAP_STOCK_CIRCLE;
 }
 
 static gint _start_x, _start_y;

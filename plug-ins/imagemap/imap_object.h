@@ -80,7 +80,7 @@ struct ObjectClass_t {
    void (*write_ncsa)(Object_t *obj, gpointer param, OutputFunc_t output);
    void (*do_popup)(Object_t *obj, GdkEventButton *event);
 
-   char **(*get_icon_data)(void);
+   const gchar* (*get_stock_icon_name)(void);
 };
 
 Object_t *object_ref(Object_t *obj);

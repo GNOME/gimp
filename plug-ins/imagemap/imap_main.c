@@ -77,6 +77,7 @@
 #include "imap_settings.h"
 #include "imap_source.h"
 #include "imap_statusbar.h"
+#include "imap_stock.h"
 #include "imap_string.h"
 #include "imap_toolbar.h"
 #include "imap_tools.h"
@@ -1354,6 +1355,8 @@ dialog(GimpDrawable *drawable)
    gtk_container_set_border_width(GTK_CONTAINER(main_vbox), 1);
    gtk_container_add(GTK_CONTAINER(dlg), main_vbox);
    gtk_widget_show(main_vbox);
+
+   init_stock_icons();
 
    /* Create menu */
    menu = make_menu(main_vbox, dlg);

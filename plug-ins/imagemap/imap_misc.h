@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,14 +29,17 @@ GtkWidget *make_toolbar_icon(GtkWidget *toolbar, GtkWidget *window,
 			     const char *tooltip,
 			     void (*callback)(GtkWidget*, gpointer), 
 			     gpointer udata);
-GtkWidget *make_toolbar_radio_icon(GtkWidget *toolbar, GtkWidget *window, 
-				   GtkWidget *prev, char **data, 
+GtkWidget *make_toolbar_stock_icon(GtkWidget *toolbar, const gchar *stock_id, 
 				   const char *identifier, 
+				   const char *tooltip, 
+				   void (*callback)(GtkWidget*, gpointer), 
+				   gpointer udata);
+GtkWidget *make_toolbar_radio_icon(GtkWidget *toolbar, const gchar *stock_id,
+				   GtkWidget *prev, const char *identifier, 
 				   const char *tooltip, 
 				   void (*callback)(GtkWidget*, gpointer),
 				   gpointer udata);
-GtkWidget *make_toolbar_toggle_icon(GtkWidget *toolbar, GtkWidget *window, 
-				    char **data, 
+GtkWidget *make_toolbar_toggle_icon(GtkWidget *toolbar, const gchar *stock_id,
 				    const char *identifier, 
 				    const char *tooltip, 
 				    void (*callback)(GtkWidget*, gpointer),

@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,11 +22,6 @@
  */
 
 #include "config.h"
-
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
 
 #include <gtk/gtk.h>
 
@@ -54,7 +49,7 @@ add_accelerator(GtkWidget *widget, guchar accelerator_key,
 static GtkWidget*
 append_item(GtkWidget *parent, GtkWidget *item)
 {
-   gtk_menu_append(GTK_MENU(parent), item);
+   gtk_menu_shell_append(GTK_MENU_SHELL(parent), item);
    gtk_widget_show(item);
    return item;
 }
@@ -63,8 +58,7 @@ static GtkWidget*
 append_active_item(GtkWidget *parent, GtkWidget *item, MenuCallback activate,
 		   gpointer data)
 {
-   gtk_signal_connect(GTK_OBJECT(item), "activate",
-		      GTK_SIGNAL_FUNC(activate), data);
+   g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(activate), data);
    return append_item(parent, item);
 }
 
@@ -79,13 +73,22 @@ make_item_with_label(GtkWidget *parent, gchar *label, MenuCallback activate,
 }
 
 GtkWidget*
+make_item_with_image(GtkWidget *parent, const gchar *stock_id, 
+		     MenuCallback activate, gpointer data)
+{
+   return append_active_item(parent, 
+			     gtk_image_menu_item_new_from_stock(
+				stock_id, accelerator_group),
+			     activate, data);
+}
+
+GtkWidget*
 prepend_item_with_label(GtkWidget *parent, gchar *label,
 			MenuCallback activate, gpointer data)
 {
    GtkWidget *item = gtk_menu_item_new_with_label(label);
-   gtk_menu_prepend(GTK_MENU(parent), item);
-   gtk_signal_connect(GTK_OBJECT(item), "activate",
-		      GTK_SIGNAL_FUNC(activate), data);
+   gtk_menu_shell_prepend(GTK_MENU_SHELL(parent), item);
+   g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(activate), data);
    gtk_widget_show(item);
 
    return item;
@@ -95,10 +98,9 @@ GtkWidget*
 insert_item_with_label(GtkWidget *parent, gint position, gchar *label,
 		       MenuCallback activate, gpointer data)
 {
-   GtkWidget *item = gtk_menu_item_new_with_label(label);
-   gtk_menu_insert(GTK_MENU(parent), item, position);
-   gtk_signal_connect(GTK_OBJECT(item), "activate",
-		      GTK_SIGNAL_FUNC(activate), data);
+   GtkWidget *item = gtk_image_menu_item_new_with_label(label);
+   gtk_menu_shell_insert(GTK_MENU_SHELL(parent), item, position);
+   g_signal_connect(G_OBJECT(item), "activate", G_CALLBACK(activate), data);
    gtk_widget_show(item);
 
    return item;
@@ -131,10 +133,9 @@ void
 insert_separator(GtkWidget *parent, gint position)
 {
    GtkWidget *item = gtk_menu_item_new();
-   gtk_menu_insert(GTK_MENU(parent), item, position);
+   gtk_menu_shell_insert(GTK_MENU_SHELL(parent), item, position);
    gtk_widget_show(item);
 }
-
 
 GtkWidget*
 make_sub_menu(GtkWidget *parent, gchar *label)
@@ -155,12 +156,12 @@ make_menu_bar_item(GtkWidget *menu_bar, gchar *label)
    GtkWidget *item = gtk_menu_item_new_with_label(label);
    GtkWidget *tearoff = gtk_tearoff_menu_item_new();
 
-   gtk_menu_insert(GTK_MENU(menu), tearoff, 0);
+   gtk_menu_shell_insert(GTK_MENU_SHELL(menu), tearoff, 0);
    gtk_widget_show(tearoff);
    gtk_widget_show(item);
 
    gtk_menu_item_set_submenu(GTK_MENU_ITEM(item), menu);
-   gtk_menu_bar_append(GTK_MENU_BAR(menu_bar), item);
+   gtk_menu_shell_append(GTK_MENU_SHELL(menu_bar), item);
    gtk_menu_set_accel_group(GTK_MENU(menu), accelerator_group);
 
    return menu;

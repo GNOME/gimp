@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,8 @@ typedef void (*MenuCallback)(GtkWidget *widget, gpointer data);
 
 void init_accel_group(GtkWidget *window);
 GtkWidget *make_item_with_label(GtkWidget *parent, gchar *label, 
+				MenuCallback activate, gpointer data);
+GtkWidget *make_item_with_image(GtkWidget *parent, const gchar *stock_id, 
 				MenuCallback activate, gpointer data);
 GtkWidget *prepend_item_with_label(GtkWidget *parent, gchar *label, 
 				   MenuCallback activate, gpointer data);

@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -165,50 +165,53 @@ make_guides_dialog()
    gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog->dialog)->vbox), table);
    gtk_widget_show(table);
 
-   create_label_in_table(table, 0, 0, _("Width"));
-   data->width = create_spin_button_in_table(table, 0, 1, 32, 1, 100);
+   label = create_label_in_table(table, 0, 0, _("_Width:"));
+   data->width = create_spin_button_in_table(table, label, 0, 1, 32, 1, 100);
    g_signal_connect(G_OBJECT(data->width), "changed",
                     G_CALLBACK(recalc_bounds), (gpointer) data);
 
-   create_label_in_table(table, 0, 2, _("Left Start at"));
-   data->left = create_spin_button_in_table(table, 0, 3, 0, 0, 100);
+   label = create_label_in_table(table, 0, 2, _("_Left Start at:"));
+   data->left = create_spin_button_in_table(table, label, 0, 3, 0, 0, 100);
    g_signal_connect(G_OBJECT(data->left), "changed",
                     G_CALLBACK(recalc_bounds), (gpointer) data);
 
-   create_label_in_table(table, 1, 0, _("Height"));
-   data->height = create_spin_button_in_table(table, 1, 1, 32, 1, 100);
+   label = create_label_in_table(table, 1, 0, _("_Height:"));
+   data->height = create_spin_button_in_table(table, label, 1, 1, 32, 1, 100);
    g_signal_connect(G_OBJECT(data->height), "changed",
                     G_CALLBACK(recalc_bounds), (gpointer) data);
 
-   create_label_in_table(table, 1, 2, _("Top Start at"));
-   data->top = create_spin_button_in_table(table, 1, 3, 0, 0, 100);
+   label = create_label_in_table(table, 1, 2, _("_Top Start at:"));
+   data->top = create_spin_button_in_table(table, label, 1, 3, 0, 0, 100);
    g_signal_connect(G_OBJECT(data->top), "changed",
                     G_CALLBACK(recalc_bounds), (gpointer) data);
 
-   create_label_in_table(table, 2, 0, _("Horz. Spacing"));
-   data->horz_spacing = create_spin_button_in_table(table, 2, 1, 0, 0, 100);
+   label = create_label_in_table(table, 2, 0, _("_Horz. Spacing"));
+   data->horz_spacing = create_spin_button_in_table(table, label, 2, 1, 0, 0, 
+						    100);
    g_signal_connect(G_OBJECT(data->horz_spacing), "changed",
                     G_CALLBACK(recalc_bounds), (gpointer) data);
 
-   create_label_in_table(table, 2, 2, _("No. Across"));
-   data->no_across = create_spin_button_in_table(table, 2, 3, 0, 0, 100);
+   label = create_label_in_table(table, 2, 2, _("_No. Across:"));
+   data->no_across = create_spin_button_in_table(table, label, 2, 3, 0, 0, 
+						 100);
    g_signal_connect(G_OBJECT(data->no_across), "changed",
                     G_CALLBACK(recalc_bounds), (gpointer) data);
 
-   create_label_in_table(table, 3, 0, _("Vert. Spacing"));
-   data->vert_spacing = create_spin_button_in_table(table, 3, 1, 0, 0, 100);
+   label = create_label_in_table(table, 3, 0, _("_Vert. Spacing:"));
+   data->vert_spacing = create_spin_button_in_table(table, label, 3, 1, 0, 0, 
+						    100);
    g_signal_connect(G_OBJECT(data->vert_spacing), "changed",
                     G_CALLBACK(recalc_bounds), (gpointer) data);
 
-   create_label_in_table(table, 3, 2, _("No. Down"));
-   data->no_down = create_spin_button_in_table(table, 3, 3, 0, 0, 100);
+   label = create_label_in_table(table, 3, 2, _("No. _Down"));
+   data->no_down = create_spin_button_in_table(table, label, 3, 3, 0, 0, 100);
    g_signal_connect(G_OBJECT(data->no_down), "changed",
                     G_CALLBACK(recalc_bounds), (gpointer) data);
 
    hbox = gtk_hbox_new(FALSE, 1);
    gtk_container_set_border_width(GTK_CONTAINER(hbox), 10);
    gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog->dialog)->vbox), hbox);
-   label = gtk_label_new(_("Base URL:"));
+   label = gtk_label_new_with_mnemonic(_("Base _URL:"));
    gtk_widget_show(label);
    gtk_container_add(GTK_CONTAINER(hbox), label);
    data->base_url = gtk_entry_new();

@@ -254,13 +254,13 @@ create_grid_settings_dialog()
    gtk_container_add(GTK_CONTAINER(frame), table);
 
    label = create_label_in_table(table, 0, 0, _("_Width"));
-   data->width = create_spin_button_in_table(table, 0, 1, 15, 1, 100);
+   data->width = create_spin_button_in_table(table, label, 0, 1, 15, 1, 100);
    g_signal_connect(G_OBJECT(data->width), "value_changed", 
                     G_CALLBACK (width_changed_cb), (gpointer) data);
    create_label_in_table(table, 0, 3, _("pixels"));
 
    label = create_label_in_table(table, 1, 0, _("_Height"));
-   data->height = create_spin_button_in_table(table, 1, 1, 15, 1, 100);
+   data->height = create_spin_button_in_table(table, label, 1, 1, 15, 1, 100);
    g_signal_connect(G_OBJECT(data->height), "value_changed", 
                     G_CALLBACK (height_changed_cb), (gpointer) data);
    create_label_in_table(table, 1, 3, _("pixels"));
@@ -282,12 +282,12 @@ create_grid_settings_dialog()
    gtk_container_add(GTK_CONTAINER(frame), table);
 
    label = create_label_in_table(table, 0, 2, _("pixels from l_eft"));
-   data->left = create_spin_button_in_table(table, 0, 0, 0, 0, 100);
+   data->left = create_spin_button_in_table(table, label, 0, 0, 0, 0, 100);
    g_signal_connect(G_OBJECT(data->left), "value_changed", 
                     G_CALLBACK (left_changed_cb), (gpointer) data);
 
    label = create_label_in_table(table, 1, 2, _("pixels from _top"));
-   data->top = create_spin_button_in_table(table, 1, 0, 0, 0, 100);
+   data->top = create_spin_button_in_table(table, label, 1, 0, 0, 0, 100);
    g_signal_connect(G_OBJECT(data->top), "value_changed", 
                     G_CALLBACK (top_changed_cb), (gpointer) data);
 

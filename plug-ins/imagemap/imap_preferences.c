@@ -495,12 +495,12 @@ create_menu_tab(PreferencesDialog_t *data, GtkWidget *notebook)
 
    label = create_label_in_table(table, 0, 0, 
 				 _("Number of Undo _levels (1 - 99):"));
-   data->undo_levels = create_spin_button_in_table(table, 0, 1, 1, 1, 
+   data->undo_levels = create_spin_button_in_table(table, label, 0, 1, 1, 1, 
 						   99);
 
    label = create_label_in_table(table, 1, 0, 
 				 _("Number of MRU _entries (1 - 16):"));
-   data->mru_size = create_spin_button_in_table(table, 1, 1, 1, 1, 16);
+   data->mru_size = create_spin_button_in_table(table, label, 1, 1, 1, 1, 16);
 
    label = gtk_label_new_with_mnemonic( _("_Menu"));
    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);

@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,6 +44,19 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+typedef struct {
+   DefaultDialog_t *dialog;
+   BrowseWidget_t *imagename;
+   GtkWidget	*filename;
+   GtkWidget	*title;
+   GtkWidget	*author;
+   GtkWidget	*default_url;
+   GtkWidget	*description;
+   GtkWidget	*ncsa;
+   GtkWidget	*cern;
+   GtkWidget	*csim;
+} SettingsDialog_t;
+
 static MapFormat_t _map_format = CSIM;
 
 static void
@@ -75,9 +88,8 @@ static SettingsDialog_t*
 make_settings_dialog()
 {
    SettingsDialog_t *data = g_new(SettingsDialog_t, 1);
-   GtkWidget *table, *vscrollbar, *frame, *hbox;
+   GtkWidget *table, *vscrollbar, *frame, *hbox, *label;
    DefaultDialog_t *dialog;
-   GSList    *group;
 
    dialog = data->dialog = make_default_dialog(_("Settings for this Mapfile"));
    default_dialog_set_ok_cb(dialog, settings_ok_cb, (gpointer) data);
@@ -98,13 +110,13 @@ make_settings_dialog()
    gtk_table_attach_defaults(GTK_TABLE(table), data->imagename->hbox, 1, 2, 
 			     1, 2);
 
-   create_label_in_table(table, 2, 0, _("Title:"));
-   data->title = create_entry_in_table(table, 2, 1);
-   create_label_in_table(table, 3, 0, _("Author:"));
-   data->author = create_entry_in_table(table, 3, 1);
-   create_label_in_table(table, 4, 0, _("Default URL:"));
-   data->default_url = create_entry_in_table(table, 4, 1);
-   create_label_in_table(table, 5, 0, _("Description:"));
+   label = create_label_in_table(table, 2, 0, _("_Title:"));
+   data->title = create_entry_in_table(table, label, 2, 1);
+   label = create_label_in_table(table, 3, 0, _("Aut_hor:"));
+   data->author = create_entry_in_table(table, label, 3, 1);
+   label = create_label_in_table(table, 4, 0, _("Default _URL:"));
+   data->default_url = create_entry_in_table(table, label, 4, 1);
+   label = create_label_in_table(table, 5, 0, _("_Description:"));
 
    data->description = gtk_text_new(NULL, NULL);
    gtk_text_set_editable(GTK_TEXT(data->description), TRUE);
@@ -126,23 +138,23 @@ make_settings_dialog()
    gtk_container_add(GTK_CONTAINER(frame), hbox);
    gtk_widget_show(hbox);
 
-   data->ncsa = gtk_radio_button_new_with_label(NULL, "NCSA");
-   gtk_signal_connect(GTK_OBJECT(data->ncsa), "toggled", 
-		      (GtkSignalFunc) type_toggled_cb, (gpointer) NCSA);
+   data->ncsa = gtk_radio_button_new_with_mnemonic_from_widget(NULL, "_NCSA");
+   g_signal_connect(G_OBJECT(data->ncsa), "toggled", 
+		    G_CALLBACK(type_toggled_cb), (gpointer) NCSA);
    gtk_box_pack_start(GTK_BOX(hbox), data->ncsa, TRUE, TRUE, 10);
    gtk_widget_show(data->ncsa);
 
-   group = gtk_radio_button_group(GTK_RADIO_BUTTON(data->ncsa));
-   data->cern = gtk_radio_button_new_with_label(group, "CERN");
-   gtk_signal_connect(GTK_OBJECT(data->cern), "toggled", 
-		      (GtkSignalFunc) type_toggled_cb, (gpointer) CERN);
+   data->cern = gtk_radio_button_new_with_mnemonic_from_widget(
+      GTK_RADIO_BUTTON(data->ncsa), "C_ERN");
+   g_signal_connect(G_OBJECT(data->cern), "toggled", 
+		    G_CALLBACK(type_toggled_cb), (gpointer) CERN);
    gtk_box_pack_start(GTK_BOX(hbox), data->cern, TRUE, TRUE, 10);
    gtk_widget_show(data->cern);
-
-   group = gtk_radio_button_group(GTK_RADIO_BUTTON(data->cern));
-   data->csim = gtk_radio_button_new_with_label(group, "CSIM");
-   gtk_signal_connect(GTK_OBJECT(data->csim), "toggled", 
-		      (GtkSignalFunc) type_toggled_cb, (gpointer) CSIM);
+   
+   data->csim = gtk_radio_button_new_with_mnemonic_from_widget(
+      GTK_RADIO_BUTTON(data->cern), "C_SIM");
+   g_signal_connect(G_OBJECT(data->csim), "toggled", 
+		    G_CALLBACK(type_toggled_cb), (gpointer) CSIM);
    gtk_box_pack_start(GTK_BOX(hbox), data->csim, TRUE, TRUE, 10);
    gtk_widget_show(data->csim);
 

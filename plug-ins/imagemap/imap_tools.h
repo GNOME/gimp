@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,8 +46,8 @@ void tools_select_circle(void);
 void tools_select_polygon(void);
 void tools_set_sensitive(gboolean sensitive);
 
-void arrow_on_button_press(GtkWidget *widget, GdkEventButton *event, 
-			   gpointer data);
+gboolean arrow_on_button_press(GtkWidget *widget, GdkEventButton *event, 
+			       gpointer data);
 
 #define tools_set_delete_command(tools, command) \
 	((tools)->cmd_delete = (command))

@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,21 +25,17 @@
 
 #include <stdlib.h> /* abs */
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
-#include "libgimp/stdplugins-intl.h"
+#include <libgimp/stdplugins-intl.h>
+#include <libgimp/gimpui.h>
+
 #include "imap_main.h"
 #include "imap_misc.h"
 #include "imap_object_popup.h"
 #include "imap_rectangle.h"
+#include "imap_stock.h"
 #include "imap_table.h"
-
-#include "rectangle.xpm"
 
 static gboolean rectangle_is_valid(Object_t *obj);
 static Object_t *rectangle_clone(Object_t *obj);
@@ -64,10 +60,10 @@ static void rectangle_write_cern(Object_t *obj, gpointer param,
 				 OutputFunc_t output);
 static void rectangle_write_ncsa(Object_t *obj, gpointer param, 
 				 OutputFunc_t output);
-static char** rectangle_get_icon_data(void);
+static const gchar* rectangle_get_stock_icon_name(void);
 
 static ObjectClass_t rectangle_class = {
-   N_("Rectangle"),
+   N_("_Rectangle"),
    NULL,			/* info_dialog */
    NULL,			/* icon */
    NULL,			/* mask */
@@ -93,7 +89,7 @@ static ObjectClass_t rectangle_class = {
    rectangle_write_cern,
    rectangle_write_ncsa,
    object_do_popup,
-   rectangle_get_icon_data
+   rectangle_get_stock_icon_name
 };
 
 Object_t*
@@ -328,13 +324,19 @@ typedef struct {
    GtkWidget *y;
    GtkWidget *width;
    GtkWidget *height;
+   GtkWidget *chain_button;
 } RectangleProperties_t;
 
 static void
 x_changed_cb(GtkWidget *widget, gpointer data)
 {
-   Object_t *obj = ((RectangleProperties_t*) data)->obj;
+   RectangleProperties_t *props = (RectangleProperties_t*) data;
+   Object_t *obj = props->obj;
    gint x = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(widget));
+
+   if (gimp_chain_button_get_active(GIMP_CHAIN_BUTTON(props->chain_button)))
+      gtk_spin_button_set_value(GTK_SPIN_BUTTON(props->y), x);
+
    ObjectToRectangle(obj)->x = x;
    edit_area_info_dialog_emit_geometry_signal(obj->class->info_dialog);
 }
@@ -370,11 +372,11 @@ static gpointer
 rectangle_create_info_widget(GtkWidget *frame)
 {
    RectangleProperties_t *props = g_new(RectangleProperties_t, 1);
-   GtkWidget *table;
+   GtkWidget *table, *label, *chain_button;
    gint max_width = get_image_width();
    gint max_height = get_image_height();
 
-   table = gtk_table_new(4, 3, FALSE);
+   table = gtk_table_new(4, 4, FALSE);
    gtk_container_add(GTK_CONTAINER(frame), table);
    gtk_container_set_border_width(GTK_CONTAINER(table), 10);
 
@@ -382,29 +384,38 @@ rectangle_create_info_widget(GtkWidget *frame)
    gtk_table_set_col_spacings(GTK_TABLE(table), 10);
    gtk_widget_show(table);
    
-   create_label_in_table(table, 0, 0, _("Upper left x:"));
-   props->x = create_spin_button_in_table(table, 0, 1, 1, 0, max_width - 1);
-   gtk_signal_connect(GTK_OBJECT(props->x), "changed", 
-		      (GtkSignalFunc) x_changed_cb, (gpointer) props);
-   create_label_in_table(table, 0, 2, _("pixels"));
+   label = create_label_in_table(table, 0, 0, _("Upper left _x:"));
+   props->x = create_spin_button_in_table(table, label, 0, 1, 1, 0, 
+					  max_width - 1);
+   g_signal_connect(G_OBJECT(props->x), "value_changed", 
+		    G_CALLBACK(x_changed_cb), (gpointer) props);
+   create_label_in_table(table, 0, 3, _("pixels"));
 
-   create_label_in_table(table, 1, 0, _("Upper left y:"));
-   props->y = create_spin_button_in_table(table, 1, 1, 1, 0, max_height - 1);
-   gtk_signal_connect(GTK_OBJECT(props->y), "changed", 
-		      (GtkSignalFunc) y_changed_cb, (gpointer) props);
-   create_label_in_table(table, 1, 2, _("pixels"));
+   label = create_label_in_table(table, 1, 0, _("Upper left _y:"));
+   props->y = create_spin_button_in_table(table, label, 1, 1, 1, 0, 
+					  max_height - 1);
+   g_signal_connect(G_OBJECT(props->y), "value_changed", 
+		    G_CALLBACK(y_changed_cb), (gpointer) props);
+   create_label_in_table(table, 1, 3, _("pixels"));
 
-   create_label_in_table(table, 2, 0, _("Width:"));
-   props->width = create_spin_button_in_table(table, 2, 1, 1, 1, max_width);
-   gtk_signal_connect(GTK_OBJECT(props->width), "changed", 
-		      (GtkSignalFunc) width_changed_cb, (gpointer) props);
-   create_label_in_table(table, 2, 2, _("pixels"));
+   label = create_label_in_table(table, 2, 0, _("_Width:"));
+   props->width = create_spin_button_in_table(table, label, 2, 1, 1, 1, 
+					      max_width);
+   g_signal_connect(G_OBJECT(props->width), "value_changed", 
+		    G_CALLBACK(width_changed_cb), (gpointer) props);
+   create_label_in_table(table, 2, 3, _("pixels"));
 
-   create_label_in_table(table, 3, 0, _("Height:"));
-   props->height = create_spin_button_in_table(table, 3, 1, 1, 1, max_height);
-   gtk_signal_connect(GTK_OBJECT(props->height), "changed", 
-		      (GtkSignalFunc) height_changed_cb, (gpointer) props);
-   create_label_in_table(table, 3, 2, _("pixels"));
+   label = create_label_in_table(table, 3, 0, _("_Height:"));
+   props->height = create_spin_button_in_table(table, label, 3, 1, 1, 1, 
+					       max_height);
+   g_signal_connect(G_OBJECT(props->height), "value_changed", 
+		    G_CALLBACK(height_changed_cb), (gpointer) props);
+   create_label_in_table(table, 3, 3, _("pixels"));
+
+   chain_button = gimp_chain_button_new(GIMP_CHAIN_RIGHT);
+   props->chain_button = chain_button;
+   gtk_table_attach_defaults(GTK_TABLE(table), chain_button, 2, 3, 2, 4);
+   gtk_widget_show(chain_button);
 
    return props;
 }
@@ -469,10 +480,10 @@ rectangle_write_ncsa(Object_t *obj, gpointer param, OutputFunc_t output)
 	  rectangle->x + rectangle->width, rectangle->y + rectangle->height);
 }
 
-static char**
-rectangle_get_icon_data(void)
+static const gchar*
+rectangle_get_stock_icon_name(void)
 {
-   return rectangle_xpm;
+   return IMAP_STOCK_RECTANGLE;
 }
 
 static Object_t*

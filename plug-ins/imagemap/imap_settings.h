@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,22 +23,6 @@
 
 #ifndef _IMAP_SETTINGS_H
 #define _IMAP_SETTINGS_H
-
-#include "imap_browse.h"
-#include "imap_default_dialog.h"
-
-typedef struct {
-   DefaultDialog_t *dialog;
-   BrowseWidget_t *imagename;
-   GtkWidget	*filename;
-   GtkWidget	*title;
-   GtkWidget	*author;
-   GtkWidget	*default_url;
-   GtkWidget	*description;
-   GtkWidget	*ncsa;
-   GtkWidget	*cern;
-   GtkWidget	*csim;
-} SettingsDialog_t;
 
 void do_settings_dialog(void);
 

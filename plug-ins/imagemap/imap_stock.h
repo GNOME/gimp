@@ -21,20 +21,18 @@
  *
  */
 
-#ifndef _IMAP_TABLE_H
-#define _IMAP_TABLE_H
+#ifndef _IMAP_STOCK_H
+#define _IMAP_STOCK_H
 
-GtkWidget *create_spin_button_in_table(GtkWidget *table, GtkWidget *label,
-				       int row, int col,
-				       int value, int min, int max);
-GtkWidget *create_check_button_in_table(GtkWidget *table, int row, int col,
-					const char *text);
-GtkWidget *create_radio_button_in_table(GtkWidget *table, GSList *group, 
-					int row, int col, const char *text);
-GtkWidget *create_label_in_table(GtkWidget *table, int row, int col, 
-				 const char *text);
-GtkWidget *create_entry_in_table(GtkWidget *table, GtkWidget *label, int row, 
-				 int col);
+#define IMAP_STOCK_MAP_INFO		"imap-map-info"
+#define IMAP_STOCK_TO_FRONT		"imap-to-front"
+#define IMAP_STOCK_TO_BACK		"imap-to-back"
+#define IMAP_STOCK_ARROW		"imap_arrow"
+#define IMAP_STOCK_RECTANGLE		"imap_rectangle"
+#define IMAP_STOCK_CIRCLE		"imap_circle"
+#define IMAP_STOCK_POLYGON		"imap_polygon"
+#define IMAP_STOCK_GRID			"imap_grid"
 
-#endif /* _IMAP_TABLE_H */
+void init_stock_icons(void);
 
+#endif /* _IMAP_STOCK_H */

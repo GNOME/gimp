@@ -376,6 +376,7 @@ object_emit_update_signal(Object_t *obj)
 GdkPixmap* 
 object_get_icon(Object_t *obj, GtkWidget *widget, GdkBitmap **mask)
 {
+#ifdef _NOT_READY_YET_
    if (!obj->class->icon) {
       GtkStyle  *style = gtk_widget_get_style(widget);
       obj->class->icon = 
@@ -384,6 +385,7 @@ object_get_icon(Object_t *obj, GtkWidget *widget, GdkBitmap **mask)
 				      obj->class->get_icon_data());
    }
    *mask = obj->class->mask;
+#endif
    return obj->class->icon;
 }
 
@@ -409,7 +411,7 @@ object_factory_create_object(ObjectFactory_t *factory, gint x, gint y)
    return factory->obj = factory->create_object(x, y);
 }
 
-static void
+static gboolean
 button_motion(GtkWidget *widget, GdkEventMotion *event, 
 	      ObjectFactory_t *factory)
 {
@@ -421,6 +423,8 @@ button_motion(GtkWidget *widget, GdkEventMotion *event,
    object_draw(factory->obj, widget->window);
    factory->set_xy(factory->obj, event->state, x, y);
    object_draw(factory->obj, widget->window);
+
+   return FALSE;
 }
 
 gboolean
@@ -434,7 +438,6 @@ object_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 
    if (event->type == GDK_2BUTTON_PRESS)
       return FALSE;
-
    round_to_grid(&x, &y);
 
    if (obj) {
@@ -443,11 +446,9 @@ object_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 	    g_signal_handlers_disconnect_by_func(G_OBJECT(widget), 
                                                  button_motion, 
                                                  factory);
-
 	    if (object_is_valid(obj)) {
 	       Command_t *command = create_command_new(get_shapes(), obj);
 	       command_execute(command);
-
 	       if (preferences->prompt_for_area_info)
 		  object_edit(obj, FALSE);
 	    } else {
@@ -478,10 +479,9 @@ object_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 	 obj = object_factory_create_object(factory, x, y);
 	 
 	 gdk_gc_set_function(preferences->normal_gc, GDK_EQUIV);
-	 
-	 g_signal_connect(G_OBJECT(widget), "motion_notify_event", 
-                          G_CALLBACK (button_motion),
-                          factory);   
+
+	 g_signal_connect(G_OBJECT(widget), "motion_notify_event",
+                          G_CALLBACK(button_motion), factory);
       }
    }
    return FALSE;

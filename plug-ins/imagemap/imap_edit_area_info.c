@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2000 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -183,78 +183,78 @@ create_link_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    gtk_widget_show(subtable);
 
    dialog->web_site = create_radio_button_in_table(subtable, NULL, 0, 0, 
-						   _("Web Site"));
+						   _("_Web Site"));
    g_signal_connect(G_OBJECT(dialog->web_site), "toggled", 
                     G_CALLBACK (select_web_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->web_site));
 
    dialog->ftp_site = create_radio_button_in_table(subtable, group, 0, 1, 
-						   _("Ftp Site"));
+						   _("_Ftp Site"));
    g_signal_connect(G_OBJECT(dialog->ftp_site), "toggled", 
                     G_CALLBACK (select_ftp_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->ftp_site));
 
    dialog->gopher = create_radio_button_in_table(subtable, group, 0, 2, 
-						 _("Gopher"));
+						 _("_Gopher"));
    g_signal_connect(G_OBJECT(dialog->gopher), "toggled", 
                     G_CALLBACK (select_gopher_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->gopher));
 
    dialog->other = create_radio_button_in_table(subtable, group, 0, 3, 
-						_("Other"));
+						_("Ot_her"));
    g_signal_connect(G_OBJECT(dialog->other), "toggled", 
                     G_CALLBACK (select_other_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->other));
 
    dialog->file = create_radio_button_in_table(subtable, group, 1, 0, 
-					       _("File"));
+					       _("F_ile"));
    g_signal_connect(G_OBJECT(dialog->file), "toggled", 
                     G_CALLBACK (select_file_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->file));
 
    dialog->wais = create_radio_button_in_table(subtable, group, 1, 1, 
-					       _("WAIS"));
+					       _("WAI_S"));
    g_signal_connect(G_OBJECT(dialog->wais), "toggled", 
                     G_CALLBACK (select_wais_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->wais));
 
    dialog->telnet = create_radio_button_in_table(subtable, group, 1, 2, 
-						 _("Telnet"));
+						 _("Tel_net"));
    g_signal_connect(G_OBJECT(dialog->telnet), "toggled", 
                     G_CALLBACK (select_telnet_cb), (gpointer) dialog);
    group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(dialog->telnet));
 
    dialog->email = create_radio_button_in_table(subtable, group, 1, 3, 
-						_("e-mail"));
+						_("e-_mail"));
    g_signal_connect(G_OBJECT(dialog->email), "toggled", 
                     G_CALLBACK (select_email_cb), (gpointer) dialog);
 
-   create_label_in_table(
+   label = create_label_in_table(
       table, 2, 0,
-      _("URL to activate when this area is clicked: (required)"));
+      _("_URL to activate when this area is clicked: (required)"));
 
    browse = browse_widget_new( _("Select HTML file"));
    browse_widget_set_filter(browse, relative_filter, (gpointer) dialog);
    gtk_table_attach_defaults(GTK_TABLE(table), browse->hbox, 0, 1, 3, 4);
    dialog->url = browse->file;
-   g_signal_connect(G_OBJECT(dialog->url), "changed", 
-                    G_CALLBACK(url_changed), dialog);
+   g_signal_connect(G_OBJECT(dialog->url), "changed", G_CALLBACK(url_changed), 
+		    dialog);
+   gtk_label_set_mnemonic_widget(GTK_LABEL(label), dialog->url);
 
    dialog->relative_link = create_check_button_in_table(table, 4, 0, 
-							_("Relative link"));
+							_("Relati_ve link"));
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dialog->relative_link), 
 				TRUE);
 
-   create_label_in_table(
+   label = create_label_in_table(
       table, 6, 0,
-      _("Target frame name/ID: (optional - used for FRAMES only)"));
-   dialog->target = create_entry_in_table(table, 7, 0);
+      _("_Target frame name/ID: (optional - used for FRAMES only)"));
+   dialog->target = create_entry_in_table(table, label, 7, 0);
 
-   create_label_in_table(table, 9, 0,
-			 _("Comment about this area: (optional)"));
-   dialog->comment = create_entry_in_table(table, 10, 0);
+   label = create_label_in_table(table, 9, 0, _("ALT te_xt: (optional)"));
+   dialog->comment = create_entry_in_table(table, label, 10, 0);
 
-   label = gtk_label_new(_("Link"));
+   label = gtk_label_new_with_mnemonic(_("_Link"));
    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), table, label);
 }
 
@@ -293,7 +293,7 @@ create_info_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    gtk_box_pack_start(GTK_BOX(vbox), frame, FALSE, FALSE, 0);
    gtk_widget_show(frame);
 
-   preview = gtk_check_button_new_with_label(_("Preview"));
+   preview = gtk_check_button_new_with_mnemonic(_("Pre_view"));
    g_signal_connect(G_OBJECT(preview), "toggled", 
                     G_CALLBACK (toggle_preview_cb), (gpointer) dialog);
    gtk_box_pack_start(GTK_BOX(vbox), preview, FALSE, FALSE, 0);
@@ -301,7 +301,7 @@ create_info_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
 
    dialog->infotab = obj->class->create_info_widget(frame);
 
-   label = gtk_label_new( gettext(obj->class->name));
+   label = gtk_label_new_with_mnemonic(gettext(obj->class->name));
    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
 }
 
@@ -319,19 +319,19 @@ create_java_script_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    gtk_table_set_row_spacings(GTK_TABLE(table), 10);
    gtk_widget_show(table);
    
-   create_label_in_table(table, 0, 0, "onMouseover:");
-   dialog->mouse_over = create_entry_in_table(table, 1, 0);
+   label = create_label_in_table(table, 0, 0, "o_nMouseover:");
+   dialog->mouse_over = create_entry_in_table(table, label, 1, 0);
 
-   create_label_in_table(table, 3, 0, "onMouseout:");
-   dialog->mouse_out = create_entry_in_table(table, 4, 0);
+   label = create_label_in_table(table, 3, 0, "on_Mouseout:");
+   dialog->mouse_out = create_entry_in_table(table, label, 4, 0);
 
-   create_label_in_table(table, 6, 0, "onFocus (HTML 4.0):");
-   dialog->focus = create_entry_in_table(table, 7, 0);
+   label = create_label_in_table(table, 6, 0, "on_Focus (HTML 4.0):");
+   dialog->focus = create_entry_in_table(table, label, 7, 0);
 
-   create_label_in_table(table, 9, 0, "onBlur (HTML 4.0):");
-   dialog->blur = create_entry_in_table(table, 10, 0);
+   label = create_label_in_table(table, 9, 0, "on_Blur (HTML 4.0):");
+   dialog->blur = create_entry_in_table(table, label, 10, 0);
 
-   label = gtk_label_new(_("JavaScript"));
+   label = gtk_label_new_with_mnemonic(_("_JavaScript"));
    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
 }
 

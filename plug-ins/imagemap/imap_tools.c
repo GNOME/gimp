@@ -33,16 +33,10 @@
 #include "imap_polygon.h"
 #include "imap_popup.h"
 #include "imap_rectangle.h"
+#include "imap_stock.h"
 #include "imap_tools.h"
 
 #include "libgimp/stdplugins-intl.h"
-
-#include "arrow.xpm"
-#include "rectangle.xpm"
-#include "circle.xpm"
-#include "polygon.xpm"
-#include "delete.xpm"
-#include "edit.xpm"
 
 static gboolean _callback_lock;
 static Tools_t _tools;
@@ -55,7 +49,7 @@ tools_command(GtkWidget *widget, gpointer data)
    command_execute(command);
 }
 
-void 
+gboolean
 arrow_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
    if (event->button == 1) {
@@ -66,6 +60,7 @@ arrow_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
    } else {
       do_popup_menu(event);
    }
+   return FALSE;
 }
 
 static void
@@ -122,7 +117,7 @@ make_tools(GtkWidget *window)
    GtkWidget *handlebox;
    GtkWidget *toolbar;
 
-   toolbar = gtk_toolbar_new ();
+   toolbar = gtk_toolbar_new();
    gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_ICONS);
    _tools.container = handlebox = gtk_handle_box_new();
    gtk_toolbar_set_orientation(GTK_TOOLBAR(toolbar), GTK_ORIENTATION_VERTICAL);
@@ -130,36 +125,32 @@ make_tools(GtkWidget *window)
 
    gtk_container_add(GTK_CONTAINER(handlebox), toolbar);
 
-   _tools.arrow = make_toolbar_radio_icon(toolbar, window, NULL, arrow_xpm, 
-					  _("Select"), 
+   _tools.arrow = make_toolbar_radio_icon(toolbar, IMAP_STOCK_ARROW,
+					  NULL, _("Select"), 
                                           _("Select existing area"), 
 					  arrow_clicked, NULL);
-   _tools.rectangle = make_toolbar_radio_icon(toolbar, window, _tools.arrow, 
-					      rectangle_xpm, 
-                                              _("Rectangle"), 
+   _tools.rectangle = make_toolbar_radio_icon(toolbar, IMAP_STOCK_RECTANGLE, 
+					      _tools.arrow, _("Rectangle"), 
 					      _("Define Rectangle area"), 
 					      rectangle_clicked, NULL);
-   _tools.circle = make_toolbar_radio_icon(toolbar, window, _tools.rectangle, 
-					   circle_xpm, 
-                                           _("Circle"),
+   _tools.circle = make_toolbar_radio_icon(toolbar, IMAP_STOCK_CIRCLE, 
+					   _tools.rectangle, _("Circle"),
 					   _("Define Circle/Oval area"), 
 					   circle_clicked, NULL);
-   _tools.polygon = make_toolbar_radio_icon(toolbar, window, _tools.circle, 
-					    polygon_xpm, 
-                                            _("Polygon"),
+   _tools.polygon = make_toolbar_radio_icon(toolbar, IMAP_STOCK_POLYGON, 
+					    _tools.circle, _("Polygon"),
 					    _("Define Polygon area"), 
 					    polygon_clicked, NULL);
    gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
-   _tools.edit = make_toolbar_icon(toolbar, window, edit_xpm, 
+   _tools.edit = make_toolbar_stock_icon(toolbar, GTK_STOCK_PROPERTIES,
                                    _("Edit"),
 				   _("Edit selected area info"), tools_command,
 				   &_tools.cmd_edit);
    gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
-   _tools.delete = make_toolbar_icon(toolbar, window, delete_xpm, 
+   _tools.delete = make_toolbar_stock_icon(toolbar, GTK_STOCK_DELETE,
                                      _("Delete"),
 				     _("Delete selected area"), tools_command,
 				     &_tools.cmd_delete);
-
    gtk_widget_show(toolbar);
    gtk_widget_show(handlebox);
 

@@ -153,6 +153,8 @@ imagemap_SOURCES = @STRIP_BEGIN@ \
 	imap_settings.h			\
 	imap_source.c			\
 	imap_source.h			\
+	imap_stock.c			\
+	imap_stock.h			\
 	imap_statusbar.c		\
 	imap_statusbar.h		\
 	imap_string.c			\

@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,22 +54,27 @@ make_toolbar_icon(GtkWidget *toolbar, GtkWidget *window, char **data,
 }
 
 GtkWidget*
-make_toolbar_radio_icon(GtkWidget *toolbar, GtkWidget *window, 
-			 GtkWidget *prev, char **data, 
-			 const char *identifier, const char *tooltip, 
+make_toolbar_stock_icon(GtkWidget *toolbar, const gchar *stock_id, 
+			const char *identifier, const char *tooltip, 
+			void (*callback)(GtkWidget*, gpointer), gpointer udata)
+{
+   GtkWidget *iconw;
+
+   iconw = gtk_image_new_from_stock(stock_id, GTK_ICON_SIZE_SMALL_TOOLBAR);
+   return gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
+				  identifier, tooltip, NULL, iconw,
+				  GTK_SIGNAL_FUNC(callback), udata);
+}
+
+GtkWidget*
+make_toolbar_radio_icon(GtkWidget *toolbar, const gchar *stock_id,
+			 GtkWidget *prev, const char *identifier, 
+			const char *tooltip, 
 			 void (*callback)(GtkWidget*, gpointer),
 			 gpointer udata)
 {
-   GtkWidget *iconw;
-   GdkPixmap *icon;
-   GdkBitmap *mask;
-   GtkStyle  *style;
-
-   style = gtk_widget_get_style(window);
-   icon = gdk_pixmap_create_from_xpm_d(window->window, &mask,
-				       &style->bg[GTK_STATE_NORMAL], 
-				       data);
-   iconw = gtk_pixmap_new(icon, mask);
+   GtkWidget *iconw = gtk_image_new_from_stock(stock_id, 
+					       GTK_ICON_SIZE_SMALL_TOOLBAR);
    return gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
 				     GTK_TOOLBAR_CHILD_RADIOBUTTON, prev,
 				     identifier, tooltip, NULL, iconw,
@@ -77,22 +82,13 @@ make_toolbar_radio_icon(GtkWidget *toolbar, GtkWidget *window,
 }
 
 GtkWidget*
-make_toolbar_toggle_icon(GtkWidget *toolbar, GtkWidget *window, 
-			 char **data, const char *identifier, 
-			 const char *tooltip, 
+make_toolbar_toggle_icon(GtkWidget *toolbar, const gchar *stock_id,
+			 const char *identifier, const char *tooltip, 
 			 void (*callback)(GtkWidget*, gpointer),
 			 gpointer udata)
 {
-   GtkWidget *iconw;
-   GdkPixmap *icon;
-   GdkBitmap *mask;
-   GtkStyle  *style;
-
-   style = gtk_widget_get_style(window);
-   icon = gdk_pixmap_create_from_xpm_d(window->window, &mask,
-				       &style->bg[GTK_STATE_NORMAL], 
-				       data);
-   iconw = gtk_pixmap_new(icon, mask);
+   GtkWidget *iconw = gtk_image_new_from_stock(stock_id, 
+					       GTK_ICON_SIZE_SMALL_TOOLBAR);
    return gtk_toolbar_append_element(GTK_TOOLBAR(toolbar),
 				     GTK_TOOLBAR_CHILD_TOGGLEBUTTON, NULL,
 				     identifier, tooltip, NULL, iconw,
