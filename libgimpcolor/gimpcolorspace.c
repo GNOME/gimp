@@ -446,12 +446,12 @@ gimp_hsv_to_rgb_int (gint *hue,
       s = *saturation / 255.0;
       v = *value      / 255.0;
 
-      f = h - ROUND (h);
+      f = h - (gint) h;
       p = v * (1.0 - s);
       q = v * (1.0 - (s * f));
       t = v * (1.0 - (s * (1.0 - f)));
 
-      switch (ROUND (h))
+      switch ((gint) h)
 	{
 	case 0:
 	  *hue        = ROUND (v * 255.0);

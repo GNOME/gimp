@@ -1,3 +1,9 @@
+2003-06-21  Sven Neumann  <sven@gimp.org>
+
+	* libgimpcolor/gimpcolorspace.c (gimp_hsv_to_rgb_int): removed
+	calls to ROUND() in two places where they should not have been
+	added. Fixes bug #115626.
+
 2003-06-20  Dave Neary  <bolsh@gimp.org>
 
 	* app/config/gimpdisplayconfig.c: Enable menus on 
