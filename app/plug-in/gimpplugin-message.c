@@ -34,6 +34,8 @@
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 
+#include "file/file-utils.h"
+
 #include "plug-in.h"
 #include "plug-ins.h"
 #include "plug-in-def.h"
@@ -94,7 +96,8 @@ plug_in_handle_message (PlugIn      *plug_in,
     case GP_CONFIG:
       g_message ("Plug-In \"%s\"\n(%s)\n\n"
 		 "sent a CONFIG message (should not happen)",
-                 plug_in->name, plug_in->prog);
+                 file_utils_filename_to_utf8 (plug_in->name),
+		 file_utils_filename_to_utf8 (plug_in->prog));
       plug_in_close (plug_in, TRUE);
       break;
 
@@ -105,14 +108,16 @@ plug_in_handle_message (PlugIn      *plug_in,
     case GP_TILE_ACK:
       g_message ("Plug-In \"%s\"\n(%s)\n\n"
 		 "sent a TILE_ACK message (should not happen)",
-                 plug_in->name, plug_in->prog);
+                 file_utils_filename_to_utf8 (plug_in->name),
+		 file_utils_filename_to_utf8 (plug_in->prog));
       plug_in_close (plug_in, TRUE);
       break;
 
     case GP_TILE_DATA:
       g_message ("Plug-In \"%s\"\n(%s)\n\n"
 		 "sent a TILE_DATA message (should not happen)",
-                 plug_in->name, plug_in->prog);
+                 file_utils_filename_to_utf8 (plug_in->name),
+		 file_utils_filename_to_utf8 (plug_in->prog));
       plug_in_close (plug_in, TRUE);
       break;
 
@@ -127,7 +132,8 @@ plug_in_handle_message (PlugIn      *plug_in,
     case GP_TEMP_PROC_RUN:
       g_message ("Plug-In \"%s\"\n(%s)\n\n"
 		 "sent a TEMP_PROC_RUN message (should not happen)",
-                 plug_in->name, plug_in->prog);
+                 file_utils_filename_to_utf8 (plug_in->name),
+		 file_utils_filename_to_utf8 (plug_in->prog));
       plug_in_close (plug_in, TRUE);
       break;
 
@@ -137,7 +143,8 @@ plug_in_handle_message (PlugIn      *plug_in,
 #else
       g_message ("Plug-In \"%s\"\n(%s)\n\n"
 		 "sent a TEMP_PROC_RETURN message (should not happen)",
-                 plug_in->name, plug_in->prog);
+                 file_utils_filename_to_utf8 (plug_in->name),
+		 file_utils_filename_to_utf8 (plug_in->prog));
       plug_in_close (plug_in, TRUE);
 #endif
       break;
@@ -226,7 +233,8 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
 	{
           g_message ("Plug-In \"%s\"\n(%s)\n\n"
                      "requested invalid drawable (killing)",
-                     plug_in->name, plug_in->prog);
+                     file_utils_filename_to_utf8 (plug_in->name),
+		     file_utils_filename_to_utf8 (plug_in->prog));
 	  plug_in_close (plug_in, TRUE);
 	  return;
 	}
@@ -242,7 +250,8 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
 	{
           g_message ("Plug-In \"%s\"\n(%s)\n\n"
                      "requested invalid tile (killing)",
-                     plug_in->name, plug_in->prog);
+                     file_utils_filename_to_utf8 (plug_in->name),
+		     file_utils_filename_to_utf8 (plug_in->prog));
 	  plug_in_close (plug_in, TRUE);
 	  return;
 	}
@@ -277,7 +286,8 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
 	{
           g_message ("Plug-In \"%s\"\n(%s)\n\n"
                      "requested invalid drawable (killing)",
-                     plug_in->name, plug_in->prog);
+                     file_utils_filename_to_utf8 (plug_in->name),
+		     file_utils_filename_to_utf8 (plug_in->prog));
 	  plug_in_close (plug_in, TRUE);
 	  return;
 	}
@@ -293,7 +303,8 @@ plug_in_handle_tile_req (PlugIn    *plug_in,
 	{
           g_message ("Plug-In \"%s\"\n(%s)\n\n"
                      "requested invalid tile (killing)",
-                     plug_in->name, plug_in->prog);
+                     file_utils_filename_to_utf8 (plug_in->name),
+		     file_utils_filename_to_utf8 (plug_in->prog));
 	  plug_in_close (plug_in, TRUE);
 	  return;
 	}
@@ -365,7 +376,8 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
               g_message ("WARNING: Plug-In \"%s\"\n(%s)\n\n"
                          "called deprecated procedure '%s'.\n"
                          "It should call '%s' instead!",
-                         plug_in->name, plug_in->prog,
+                         file_utils_filename_to_utf8 (plug_in->name),
+			 file_utils_filename_to_utf8 (plug_in->prog),
                          proc_run->name, proc_name);
             }
         }
@@ -506,7 +518,8 @@ plug_in_handle_temp_proc_return (PlugIn       *plug_in,
       g_message ("Plug-In \"%s\"\n(%s)\n\n"
 		 "sent a TEMP_PROC_RETURN message while not running "
                  "a temp proc (should not happen)",
-                 plug_in->name, plug_in->prog);
+                 file_utils_filename_to_utf8 (plug_in->name),
+		 file_utils_filename_to_utf8 (plug_in->prog));
       plug_in_close (plug_in, TRUE);
     }
 }
@@ -540,7 +553,8 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 			 "which does not take the standard <Toolbox> Plug-In "
                          "args.\n"
                          "(INT32)",
-                         plug_in->name, plug_in->prog,
+                         file_utils_filename_to_utf8 (plug_in->name),
+			 file_utils_filename_to_utf8 (plug_in->prog),
                          proc_install->name);
 	      return;
 	    }
@@ -557,7 +571,8 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
                          "which does not take the standard <Image> Plug-In "
                          "args.\n"
                          "(INT32, IMAGE, DRAWABLE)",
-                         plug_in->name, plug_in->prog,
+                         file_utils_filename_to_utf8 (plug_in->name),
+			 file_utils_filename_to_utf8 (plug_in->prog),
                          proc_install->name);
 	      return;
 	    }
@@ -574,7 +589,8 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
                          "which does not take the standard <Load> Plug-In "
                          "args.\n"
                          "(INT32, STRING, STRING)",
-                         plug_in->name, plug_in->prog,
+                         file_utils_filename_to_utf8 (plug_in->name),
+			 file_utils_filename_to_utf8 (plug_in->prog),
                          proc_install->name);
 	      return;
 	    }
@@ -593,7 +609,8 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
                          "which does not take the standard <Save> Plug-In "
                          "args.\n"
                          "(INT32, IMAGE, DRAWABLE, STRING, STRING)",
-                         plug_in->name, plug_in->prog,
+                         file_utils_filename_to_utf8 (plug_in->name),
+			 file_utils_filename_to_utf8 (plug_in->prog),
                          proc_install->name);
 	      return;
 	    }
@@ -605,7 +622,8 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
                      "in an invalid menu location.\n"
                      "Use either \"<Toolbox>\", \"<Image>\", "
                      "\"<Load>\", or \"<Save>\".",
-                     plug_in->name, plug_in->prog,
+                     file_utils_filename_to_utf8 (plug_in->name),
+		     file_utils_filename_to_utf8 (plug_in->prog),
                      proc_install->name);
 	  return;
 	}
@@ -626,7 +644,8 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
                      "attempted to install procedure \"%s\" "
                      "which fails to comply with the array parameter "
                      "passing standard.  Argument %d is noncompliant.",
-                     plug_in->name, plug_in->prog,
+                     file_utils_filename_to_utf8 (plug_in->name),
+		     file_utils_filename_to_utf8 (plug_in->prog),
                      proc_install->name, i);
 	  return;
 	}
@@ -671,7 +690,8 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
     {
       g_message ("Plug-In \"%s\"\n(%s)\n\n"
                  "attempted to install a procedure with invalid UTF-8 strings.",
-                 plug_in->name, plug_in->prog);
+                 file_utils_filename_to_utf8 (plug_in->name),
+		 file_utils_filename_to_utf8 (plug_in->prog));
       return;
     }
 
@@ -820,7 +840,8 @@ plug_in_handle_extension_ack (PlugIn *plug_in)
       g_message ("Plug-In \"%s\"\n(%s)\n\n"
 		 "sent an EXTENSION_ACK message while not being started "
                  "as extension (should not happen)",
-                 plug_in->name, plug_in->prog);
+                 file_utils_filename_to_utf8 (plug_in->name),
+		 file_utils_filename_to_utf8 (plug_in->prog));
       plug_in_close (plug_in, TRUE);
     }
 }
@@ -837,7 +858,8 @@ plug_in_handle_has_init (PlugIn *plug_in)
       g_message ("Plug-In \"%s\"\n(%s)\n\n"
 		 "sent an HAS_INIT message while not in query() "
                  "(should not happen)",
-                 plug_in->name, plug_in->prog);
+                 file_utils_filename_to_utf8 (plug_in->name),
+		 file_utils_filename_to_utf8 (plug_in->prog));
       plug_in_close (plug_in, TRUE);
     }
 }

@@ -83,7 +83,9 @@ static gchar * gimp_env_get_dir (const gchar *gimp_env_name,
  * directory or not.
  *
  * The returned string is allocated just once, and should *NOT* be
- * freed with g_free().
+ * freed with g_free(). The returned string is in the encoding used
+ * for filenames by the system, which isn't necessarily UTF-8 (never
+ * is on Windows).
  *
  * Returns: The user-specific GIMP settings directory.
  **/
@@ -172,7 +174,9 @@ gimp_directory (void)
  * Returns the name of a file in the user-specific GIMP settings directory.
  *
  * The returned string is allocated dynamically and *SHOULD* be freed
- * with g_free() after use.
+ * with g_free() after use. The returned string is in the encoding used
+ * for filenames by the system, which isn't necessarily UTF-8 (never
+ * is on Windows).
  *
  * Returns: The name of a file in the user-specific GIMP settings directory.
  **/
@@ -249,7 +253,9 @@ gimp_toplevel_directory (void)
  * from the executable's name is used.
  *
  * The returned string is allocated just once, and should *NOT* be
- * freed with g_free().
+ * freed with g_free(). The returned string is in the encoding used
+ * for filenames by the system, which isn't necessarily UTF-8 (never
+ * is on Windows).
  *
  * Returns: The top directory for GIMP data.
  **/
@@ -274,7 +280,9 @@ gimp_data_directory (void)
  * from the executable's name is used.
  *
  * The returned string is allocated just once, and should *NOT* be
- * freed with g_free().
+ * freed with g_free(). The returned string is in the encoding used
+ * for filenames by the system, which isn't necessarily UTF-8 (never
+ * is on Windows).
  *
  * Returns: The top directory for GIMP locale files.
  */
@@ -299,7 +307,9 @@ gimp_locale_directory (void)
  * from the executable's name is used.
  *
  * The returned string is allocated just once, and should *NOT* be
- * freed with g_free().
+ * freed with g_free(). The returned string is in the encoding used
+ * for filenames by the system, which isn't necessarily UTF-8 (never
+ * is on Windows).
  *
  * Returns: The top directory for GIMP config files.
  **/
@@ -324,7 +334,9 @@ gimp_sysconf_directory (void)
  * deduced from the executable's name is used.
  *
  * The returned string is allocated just once, and should *NOT* be
- * freed with g_free().
+ * freed with g_free(). The returned string is in the encoding used
+ * for filenames by the system, which isn't necessarily UTF-8 (never
+ * is on Windows).
  *
  * Returns: The top directory for GIMP plug_ins and modules.
  **/
@@ -345,7 +357,9 @@ gimp_plug_in_directory (void)
  * Returns the name of the GIMP's application-specific gtkrc file.
  *
  * The returned string is allocated just once, and should *NOT* be
- * freed with g_free().
+ * freed with g_free(). The returned string is in the encoding used
+ * for filenames by the system, which isn't necessarily UTF-8 (never
+ * is on Windows).
  *
  * Returns: The name of the GIMP's application-specific gtkrc file.
  **/

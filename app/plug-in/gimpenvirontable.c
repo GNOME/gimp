@@ -29,6 +29,8 @@
 
 #include "libgimpbase/gimpbase.h"
 
+#include "file/file-utils.h"
+
 #include "core-types.h"
 
 #include "gimpenvirontable.h"
@@ -283,7 +285,7 @@ gimp_environ_table_load_env_file (const GimpDatafileData *file_data,
       if (name[0] == '\0')
         {
           g_message (_("Empty variable name in environment file %s"),
-                     file_data->filename);
+                     file_utils_filename_to_utf8 (file_data->filename));
           continue;
         }
 
@@ -301,7 +303,7 @@ gimp_environ_table_load_env_file (const GimpDatafileData *file_data,
       if (! gimp_environ_table_legal_name (name))
         {
           g_message (_("Illegal variable name in environment file %s: %s"),
-                     file_data->filename, name);
+                     file_utils_filename_to_utf8 (file_data->filename), name);
           continue;
         }
 

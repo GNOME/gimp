@@ -33,6 +33,8 @@
 
 #include "base/temp-buf.h"
 
+#include "file/file-utils.h"
+
 #include "gimpimage.h"
 #include "gimpgradient.h"
 
@@ -354,7 +356,7 @@ gimp_gradient_load (const gchar  *filename,
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for reading: %s"),
-                   filename, g_strerror (errno));
+                   file_utils_filename_to_utf8 (filename), g_strerror (errno));
       return NULL;
     }
 
@@ -364,7 +366,7 @@ gimp_gradient_load (const gchar  *filename,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in gradient file '%s': "
                      "Not a GIMP gradient file."),
-                   filename);
+                   file_utils_filename_to_utf8 (filename));
       fclose (file);
       return NULL;
     }
@@ -380,7 +382,7 @@ gimp_gradient_load (const gchar  *filename,
 
       utf8 = gimp_any_to_utf8 (&line[strlen ("Name: ")], -1,
                                _("Invalid UTF-8 string in gradient file '%s'."),
-                               filename);
+                               file_utils_filename_to_utf8 (filename));
       g_strstrip (utf8);
 
       gimp_object_set_name (GIMP_OBJECT (gradient), utf8);
@@ -409,7 +411,7 @@ gimp_gradient_load (const gchar  *filename,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in gradient file '%s': "
                      "File is corrupt."),
-                   filename);
+                   file_utils_filename_to_utf8 (filename));
       g_object_unref (gradient);
       fclose (file);
       return NULL;
@@ -465,7 +467,7 @@ gimp_gradient_load (const gchar  *filename,
       else
         {
 	  g_message (_("Corrupt segment %d in gradient file '%s'."),
-		     i, filename);
+		     i, file_utils_filename_to_utf8 (filename));
 	}
 
       prev = seg;
@@ -507,7 +509,8 @@ gimp_gradient_save (GimpData  *data,
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for writing: %s"),
-                   data->filename, g_strerror (errno));
+                   file_utils_filename_to_utf8 (data->filename),
+		   g_strerror (errno));
       return FALSE;
     }
 
@@ -592,7 +595,7 @@ gimp_gradient_save_as_pov (GimpGradient  *gradient,
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for writing: %s"),
-                   filename, g_strerror (errno));
+                   file_utils_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
   else

@@ -45,6 +45,8 @@
 #define _O_TEMPORARY 0
 #endif
 
+#include "file/file-utils.h"
+
 #include "tile.h"
 #include "tile-private.h"
 #include "tile-swap.h"
@@ -182,7 +184,8 @@ tile_swap_exit1 (gpointer key,
       def_swap_file = swap_file->user_data;
       if (def_swap_file->swap_file_end != 0)
 	{
-	  g_warning ("swap file not empty: \"%s\"\n", swap_file->filename);
+	  g_warning ("swap file not empty: \"%s\"\n",
+		     file_utils_filename_to_utf8 (swap_file->filename));
 	  tile_swap_print_gaps (def_swap_file);
 	}
 

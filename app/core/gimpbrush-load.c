@@ -51,6 +51,8 @@
 
 #include "config/gimpbaseconfig.h"
 
+#include "file/file-utils.h"
+
 #include "gimpbrush.h"
 #include "gimpbrush-header.h"
 #include "gimpbrushgenerated.h"
@@ -412,7 +414,7 @@ gimp_brush_load (const gchar  *filename,
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for reading: %s"),
-                   filename, g_strerror (errno));
+                   file_utils_filename_to_utf8 (filename), g_strerror (errno));
       return NULL;
     }
 
@@ -554,7 +556,8 @@ gimp_brush_load_brush (gint          fd,
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Could not read %d bytes from '%s': %s"),
-                   (gint) sizeof (header), filename, g_strerror (errno));
+                   (gint) sizeof (header),
+		   file_utils_filename_to_utf8 (filename), g_strerror (errno));
       return NULL;
     }
 
@@ -589,7 +592,7 @@ gimp_brush_load_brush (gint          fd,
           g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Fatal parse error in brush file '%s': "
                          "Unknown depth %d."),
-                       filename, header.bytes);
+                       file_utils_filename_to_utf8 (filename), header.bytes);
           return NULL;
         }
       /*  fallthrough  */
@@ -602,7 +605,7 @@ gimp_brush_load_brush (gint          fd,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in brush file '%s': "
                      "Unknown version %d."),
-                   filename, header.version);
+                   file_utils_filename_to_utf8 (filename), header.version);
       return NULL;
     }
 
@@ -618,14 +621,14 @@ gimp_brush_load_brush (gint          fd,
 	  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Fatal parse error in brush file '%s': "
                          "File appears truncated."),
-                       filename);
+                       file_utils_filename_to_utf8 (filename));
 	  g_free (name);
 	  return NULL;
 	}
 
       utf8 = gimp_any_to_utf8 (name, -1,
                                _("Invalid UTF-8 string in brush file '%s'."),
-                               filename);
+                               file_utils_filename_to_utf8 (filename));
       g_free (name);
       name = utf8;
     }
@@ -723,7 +726,7 @@ gimp_brush_load_brush (gint          fd,
                    _("Fatal parse error in brush file '%s': "
                      "Unsupported brush depth %d\n"
                      "GIMP brushes must be GRAY or RGBA."),
-                   filename, header.bytes);
+                   file_utils_filename_to_utf8 (filename), header.bytes);
       g_free (name);
       return NULL;
     }
@@ -734,7 +737,7 @@ gimp_brush_load_brush (gint          fd,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in brush file '%s': "
                      "File appears truncated."),
-                   filename);
+                   file_utils_filename_to_utf8 (filename));
       g_free (name);
       return NULL;
     }

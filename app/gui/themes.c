@@ -33,6 +33,8 @@
 
 #include "core/gimp.h"
 
+#include "file/file-utils.h"
+
 #include "themes.h"
 
 #include "gimp-intl.h"
@@ -228,14 +230,15 @@ themes_apply_theme (Gimp        *gimp,
   themerc = gimp_personal_rc_file ("themerc");
 
   if (gimp->be_verbose)
-    g_print (_("Writing '%s'\n"), themerc);
+    g_print (_("Writing '%s'\n"),
+	     file_utils_filename_to_utf8 (themerc));
 
   file = fopen (themerc, "w");
 
   if (! file)
     {
       g_message (_("Could not open '%s' for writing: %s"),
-                 themerc, g_strerror (errno));
+                 file_utils_filename_to_utf8 (themerc), g_strerror (errno));
       goto cleanup;
     }
 
@@ -281,7 +284,8 @@ themes_directories_foreach (const GimpDatafileData *file_data,
 
   if (gimp->be_verbose)
     g_print (_("Adding theme '%s' (%s)\n"),
-             file_data->basename, file_data->filename);
+             file_utils_filename_to_utf8 (file_data->basename),
+	     file_utils_filename_to_utf8 (file_data->filename));
 
   g_hash_table_insert (themes_hash,
 		       g_strdup (file_data->basename),

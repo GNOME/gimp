@@ -40,6 +40,8 @@
 #include "config/gimpbaseconfig.h"
 #include "config/gimpconfig-path.h"
 
+#include "file/file-utils.h"
+
 #include "pixel-region.h"
 #include "temp-buf.h"
 
@@ -714,7 +716,8 @@ temp_buf_swap (TempBuf *buf)
   /*  Check if generated filename is valid  */
   if (g_file_test (filename, G_FILE_TEST_IS_DIR))
     {
-      g_message ("Error in temp buf caching: \"%s\" is a directory (cannot overwrite)", filename);
+      g_message ("Error in temp buf caching: \"%s\" is a directory (cannot overwrite)",
+		 file_utils_filename_to_utf8 (filename));
       g_free (filename);
       return;
     }
@@ -734,7 +737,8 @@ temp_buf_swap (TempBuf *buf)
         {
           unlink (filename);
           perror ("Write error on temp buf");
-          g_message ("Cannot write \"%s\"", filename);
+          g_message ("Cannot write \"%s\"",
+		     file_utils_filename_to_utf8 (filename));
           g_free (filename);
           return;
         }
@@ -743,7 +747,8 @@ temp_buf_swap (TempBuf *buf)
     {
       unlink (filename);
       perror ("Error in temp buf caching");
-      g_message ("Cannot write \"%s\"", filename);
+      g_message ("Cannot write \"%s\"",
+		 file_utils_filename_to_utf8 (filename));
       g_free (filename);
       return;
     }

@@ -55,6 +55,8 @@
 
 #include "core/gimp.h"
 
+#include "file/file-utils.h"
+
 #include "gimperrorconsole.h"
 #include "gimphelp-ids.h"
 #include "gimpitemfactory.h"
@@ -396,7 +398,7 @@ gimp_error_console_save_response (GtkWidget        *dialog,
                                            console->save_selection))
         {
           g_message (_("Error writing file '%s':\n%s"),
-                     filename, g_strerror (errno));
+                     file_utils_filename_to_utf8 (filename), g_strerror (errno));
           return;
         }
     }

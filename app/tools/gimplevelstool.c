@@ -49,6 +49,8 @@
 #include "core/gimpimagemap.h"
 #include "core/gimptoolinfo.h"
 
+#include "file/file-utils.h"
+
 #include "widgets/gimpenummenu.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimphistogramview.h"
@@ -1486,7 +1488,8 @@ file_dialog_response (GtkWidget      *dialog,
           g_message (l_tool->is_save ?
                      _("Could not open '%s' for writing: %s") :
                      _("Could not open '%s' for reading: %s"),
-                     filename, g_strerror (errno));
+                     file_utils_filename_to_utf8 (filename),
+		     g_strerror (errno));
           return;
         }
 
@@ -1496,7 +1499,8 @@ file_dialog_response (GtkWidget      *dialog,
         }
       else if (! levels_read_from_file (l_tool, file))
         {
-          g_message (("Error in reading file '%s'."), filename);
+          g_message (("Error in reading file '%s'."),
+		     file_utils_filename_to_utf8 (filename));
         }
 
       fclose (file);

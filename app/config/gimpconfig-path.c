@@ -28,6 +28,8 @@
 
 #include "libgimpbase/gimpenv.h"
 
+#include "file/file-utils.h"
+
 #include "gimpconfig-path.h"
 
 #include "gimp-intl.h"
@@ -104,7 +106,7 @@ gimp_config_path_expand_only (const gchar  *path,
 #ifndef G_OS_WIN32
       if (*p == '~')
 	{
-	  length += strlen (g_get_home_dir ());
+	  length += strlen (file_utils_filename_to_utf8 (g_get_home_dir ()));
 	  p += 1;
 	}
       else
@@ -124,18 +126,14 @@ gimp_config_path_expand_only (const gchar  *path,
             {
               s = NULL;
 
-              if (!s && strcmp (token, "gimp_dir") == 0)
+              if (strcmp (token, "gimp_dir") == 0)
                 s = gimp_directory ();
-
-              if (!s && strcmp (token, "gimp_data_dir") == 0)
+              else if (strcmp (token, "gimp_data_dir") == 0)
                 s = gimp_data_directory ();
-
-              if (!s &&
-                  ((strcmp (token, "gimp_plug_in_dir")) == 0 ||
-                   (strcmp (token, "gimp_plugin_dir")) == 0))
+              else if (strcmp (token, "gimp_plug_in_dir") == 0 ||
+		       strcmp (token, "gimp_plugin_dir") == 0)
                 s = gimp_plug_in_directory ();
-
-              if (!s && strcmp (token, "gimp_sysconf_dir") == 0)
+              else if (strcmp (token, "gimp_sysconf_dir") == 0)
                 s = gimp_sysconf_directory ();
 
               if (!s)
@@ -163,7 +161,7 @@ gimp_config_path_expand_only (const gchar  *path,
             substs = g_renew (gchar *, substs, 2 * (n_substs + SUBSTS_ALLOC));
 
           substs[2*n_substs]     = token;
-          substs[2*n_substs + 1] = (gchar *) s;
+          substs[2*n_substs + 1] = file_utils_filename_to_utf8 (s);
           n_substs++;
 
           length += strlen (s);
@@ -190,8 +188,8 @@ gimp_config_path_expand_only (const gchar  *path,
       if (*p == '~')
 	{
 	  *n = '\0';
-	  strcat (n, g_get_home_dir ());
-	  n += strlen (g_get_home_dir ());
+	  strcat (n, file_utils_filename_to_utf8 (g_get_home_dir ()));
+	  n += strlen (file_utils_filename_to_utf8 (g_get_home_dir ()));
 	  p += 1;
 	}
       else

@@ -36,6 +36,8 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
+#include "file/file-utils.h"
+
 #include "plug-in.h"
 #include "plug-ins.h"
 #include "plug-in-def.h"
@@ -131,7 +133,8 @@ plug_ins_init (Gimp               *gimp,
       filename = gimp_personal_rc_file ("pluginrc");
     }
 
-  (* status_callback) (_("Resource configuration"), filename, -1);
+  (* status_callback) (_("Resource configuration"),
+		       file_utils_filename_to_utf8 (filename), -1);
 
   if (! plug_in_rc_parse (gimp, filename, &error))
     {
@@ -152,7 +155,8 @@ plug_ins_init (Gimp               *gimp,
       plug_in_def = tmp->data;
 
       basename = g_path_get_basename (plug_in_def->prog);
-      (* status_callback) (NULL, basename, nth / n_plugins);
+      (* status_callback) (NULL, file_utils_filename_to_utf8 (basename),
+			   nth / n_plugins);
       g_free (basename);
 
       if (plug_in_def->needs_query)
@@ -160,7 +164,8 @@ plug_ins_init (Gimp               *gimp,
 	  gimp->write_pluginrc = TRUE;
 
 	  if (gimp->be_verbose)
-	    g_print (_("Querying plug-in: '%s'\n"), plug_in_def->prog);
+	    g_print (_("Querying plug-in: '%s'\n"),
+		     file_utils_filename_to_utf8 (plug_in_def->prog));
 
 	  plug_in_call_query (gimp, plug_in_def);
 	}
@@ -215,7 +220,8 @@ plug_ins_init (Gimp               *gimp,
       GError *error = NULL;
 
       if (gimp->be_verbose)
-	g_print (_("Writing '%s'\n"), filename);
+	g_print (_("Writing '%s'\n"),
+		 file_utils_filename_to_utf8 (filename));
 
       if (! plug_in_rc_write (gimp->plug_in_defs, filename, &error))
         {
@@ -294,7 +300,8 @@ plug_ins_init (Gimp               *gimp,
       plug_in_def = tmp->data;
 
       basename = g_path_get_basename (plug_in_def->prog);
-      (* status_callback) (NULL, basename, nth / n_plugins);
+      (* status_callback) (NULL, file_utils_filename_to_utf8 (basename),
+			   nth / n_plugins);
       g_free (basename);
 
       if (plug_in_def->has_init)
@@ -866,7 +873,7 @@ plug_ins_init_file (const GimpDatafileData *file_data,
       if (g_ascii_strcasecmp (file_data->basename, plug_in_name) == 0)
 	{
 	  g_printerr ("skipping duplicate plug-in: '%s'\n",
-                      file_data->filename);
+                      file_utils_filename_to_utf8 (file_data->filename));
 
           g_free (plug_in_name);
 

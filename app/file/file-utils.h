@@ -23,6 +23,8 @@
 #include <stdio.h>
 
 
+#include "plug-in/plug-in-types.h"
+
 gchar         * file_utils_filename_to_uri      (GSList        *procs,
                                                  const gchar   *filename,
                                                  GError       **error);
@@ -31,5 +33,6 @@ PlugInProcDef * file_utils_find_proc            (GSList        *procs,
 gchar         * file_utils_uri_to_utf8_basename (const gchar   *uri);
 gchar         * file_utils_uri_to_utf8_filename (const gchar   *uri);
 
+gchar         * file_utils_filename_to_utf8     (const gchar   *filename);
 
 #endif /* __FILE_UTILS_H__ */

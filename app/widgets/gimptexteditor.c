@@ -34,6 +34,8 @@
 
 #include "core/gimpmarshal.h"
 
+#include "file/file-utils.h"
+
 #include "gimpenummenu.h"
 #include "gimphelp-ids.h"
 #include "gimptexteditor.h"
@@ -370,7 +372,7 @@ gimp_text_editor_load_file (GtkTextBuffer *buffer,
   if (!file)
     {
       g_message (_("Could not open '%s' for reading: %s"),
-                 filename, g_strerror (errno));
+                 file_utils_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
 
@@ -398,7 +400,8 @@ gimp_text_editor_load_file (GtkTextBuffer *buffer,
     }
 
   if (remaining)
-    g_message (_("Invalid UTF-8 data in file '%s'."), filename);
+    g_message (_("Invalid UTF-8 data in file '%s'."),
+	       file_utils_filename_to_utf8 (filename));
 
   return TRUE;
 }

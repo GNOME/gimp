@@ -41,6 +41,8 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 
+#include "file/file-utils.h"
+
 #include "config-types.h"
 
 #include "gimpconfig-error.h"
@@ -90,12 +92,15 @@ gimp_scanner_new_file (const gchar  *filename,
 
       g_set_error (error, GIMP_CONFIG_ERROR, code,
                    _("Could not open '%s' for reading: %s"),
-                   filename, g_strerror (errno));
+                   file_utils_filename_to_utf8 (filename), g_strerror (errno));
 
       return NULL;
     }
 
-  scanner = gimp_scanner_new (filename, fd, error);
+  /* gimp_scanner_new() takes a "name" for the scanner, not a filename. Thus
+   * do convert to UTF-8.
+   */
+  scanner = gimp_scanner_new (file_utils_filename_to_utf8 (filename), fd, error);
 
   g_scanner_input_file (scanner, fd);
 
