@@ -38,7 +38,7 @@
     (gimp-selection-border img edge-size)
     (plug-in-noisify 1 img sparkle-layer FALSE hit-rate hit-rate hit-rate 0.0)
     (gimp-selection-none img)
-    (plug-in-sparkle 1 img sparkle-layer 0.03 0.45 width 6 15 1.0 1.0 0.0 0.0 FALSE FALSE FALSE 0)
+    (plug-in-sparkle 1 img sparkle-layer 0.03 0.49 width 6 15 1.0 0.0 0.0 0.0 FALSE FALSE FALSE 0)
     (gimp-selection-load selection)
     (gimp-selection-shrink img edge-size)
     (gimp-levels sparkle-layer 0 0 255 1.2 0 255)

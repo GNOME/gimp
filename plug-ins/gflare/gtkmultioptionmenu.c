@@ -280,6 +280,8 @@ gtk_multi_option_menu_size_allocate (GtkWidget     *widget,
 {
   GtkWidget *child;
   GtkAllocation child_allocation;
+  GtkMultiOptionMenu *multi_option_menu;
+  gint tmp;
 
   g_return_if_fail (widget != NULL);
   g_return_if_fail (GTK_IS_MULTI_OPTION_MENU (widget));
@@ -294,6 +296,27 @@ gtk_multi_option_menu_size_allocate (GtkWidget     *widget,
   child = GTK_BUTTON (widget)->child;
   if (child && GTK_WIDGET_VISIBLE (child))
     {
+      if ((allocation->width <= 1) && (allocation->height <= 1))
+        {
+          multi_option_menu = GTK_MULTI_OPTION_MENU (widget);
+
+          allocation->width = ((GTK_CONTAINER (widget)->border_width +
+			GTK_WIDGET (widget)->style->klass->xthickness) * 2 +
+			multi_option_menu->width +
+			MULTI_OPTION_INDICATOR_WIDTH +
+			MULTI_OPTION_INDICATOR_SPACING * 5 +
+			CHILD_LEFT_SPACING + CHILD_RIGHT_SPACING);
+          allocation->height = ((GTK_CONTAINER (widget)->border_width +
+			GTK_WIDGET (widget)->style->klass->ythickness) * 2 +
+			multi_option_menu->height +
+			CHILD_TOP_SPACING + CHILD_BOTTOM_SPACING);
+
+          tmp = (allocation->height - multi_option_menu->height +
+	                MULTI_OPTION_INDICATOR_HEIGHT +
+			MULTI_OPTION_INDICATOR_SPACING * 2);
+          allocation->height = MAX (allocation->height, tmp);
+
+        }
       child_allocation.x = (GTK_CONTAINER (widget)->border_width +
 			    GTK_WIDGET (widget)->style->klass->xthickness);
       child_allocation.y = (GTK_CONTAINER (widget)->border_width +

@@ -9,8 +9,6 @@ fp_SOURCES = \
 	fp.h		\
 	fp_gdk.c	\
 	fp_gtk.c	\
-	fp_hsv.c	\
-	fp_hsv.h	\
 	fp_misc.c	
 
 AM_CPPFLAGS = \

@@ -67,6 +67,7 @@
 #include <libgimp/gimpui.h>
 #include <libgimp/gimpmath.h>
 #include <libgimp/gimplimits.h>
+#include <libgimp/gimpcolorspace.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -162,12 +163,6 @@ static gint        nova_center_preview_expose    (GtkWidget     *widget,
 static gint        nova_center_preview_events    (GtkWidget     *widget,
 						  GdkEvent      *event,
 						  gpointer       data);
-
-static void        rgb_to_hsl (gdouble  r, gdouble  g, gdouble  b,
-			       gdouble *h, gdouble *s, gdouble *l);
-static void        hsl_to_rgb (gdouble  h, gdouble  s, gdouble  l,
-			       gdouble *r, gdouble *g, gdouble *b);
-
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -919,11 +914,11 @@ nova (GDrawable *drawable)
    gdouble new_alpha;
    gdouble compl_ratio;
    gdouble ratio;
-   gdouble r, g, b, h, s, lu;
+   gdouble h, s;
    gdouble spokecol;
    gint    i, j;
    gint    color[4];
-   gint    *spokecolor;
+   guchar  *spokecolor;
  
    /* initialize */
  
@@ -931,12 +926,9 @@ nova (GDrawable *drawable)
  
    srand (time (NULL));
    spoke = g_new (gdouble, pvals.nspoke);
-   spokecolor = g_new (gint, 3 * pvals.nspoke);
+   spokecolor = g_new (guchar, 3 * pvals.nspoke);
 
-   rgb_to_hsl (pvals.color[0] / 255.0,
-	       pvals.color[1] / 255.0,
-	       pvals.color[2]/255.0,
-	       &h, &s, &lu);
+   gimp_rgb_to_hsv4 (pvals.color, &h, &s, &v);
 
    for (i = 0; i < pvals.nspoke; i++)
      {
@@ -947,10 +939,7 @@ nova (GDrawable *drawable)
 	 h += 1.0;
        else if (h >= 1.0)
 	 h -= 1.0;
-       hsl_to_rgb (h, s, lu, &r, &g, &b);	
-       spokecolor[3*i+0] = 255.0 * r;
-       spokecolor[3*i+1] = 255.0 * g;
-       spokecolor[3*i+2] = 255.0 * b;
+       gimp_hsv_to_rgb4 (&spokecolor[3*i], h, s, v);       
      }
  
    gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
@@ -1052,108 +1041,3 @@ nova (GDrawable *drawable)
    g_free(spoke);
    g_free(spokecolor);
 }
- 
- /*
-  * RGB-HSL transforms.
-  * Ken Fishkin, Pixar Inc., January 1989.
-  */
-
- /*
-  * given r,g,b on [0 ... 1],
-  * return (h,s,l) on [0 ... 1]
-  */
-
-static void
-rgb_to_hsl (gdouble  r,
-	    gdouble  g,
-	    gdouble  b,
-	    gdouble *h,
-	    gdouble *s,
-	    gdouble *l)
-{
-   gdouble v;
-   gdouble m;
-   gdouble vm;
-   gdouble r2, g2, b2;
-
-   v = MAX(r,g);
-   v = MAX(v,b);
-   m = MIN(r,g);
-   m = MIN(m,b);
-
-   if ((*l = (m + v) / 2.0) <= 0.0)
-     return;
-   if ((*s = vm = v - m) > 0.0)
-     {
-       *s /= (*l <= 0.5) ? (v + m) : (2.0 - v - m) ;
-     }
-   else
-     return;
-
-   r2 = (v - r) / vm;
-   g2 = (v - g) / vm;
-   b2 = (v - b) / vm;
-
-   if (r == v)
-     *h = (g == m ? 5.0 + b2 : 1.0 - g2);
-   else if (g == v)
-     *h = (b == m ? 1.0 + r2 : 3.0 - b2);
-   else
-     *h = (r == m ? 3.0 + g2 : 5.0 - r2);
-
-   *h /= 6;
-}
-
- /*
-  * given h,s,l on [0..1],
-  * return r,g,b on [0..1]
-  */
-
-static void
-hsl_to_rgb (gdouble  h,
-	    gdouble  sl,
-	    gdouble  l,
-	    gdouble *r,
-	    gdouble *g,
-	    gdouble *b)
-{
-   gdouble v;
-
-   v = (l <= 0.5) ? (l * (1.0 + sl)) : (l + sl - l * sl);
-   if (v <= 0)
-     {
-       *r = *g = *b = 0.0;
-     }
-   else
-     {
-       gdouble m;
-       gdouble sv;
-       gint sextant;
-       gdouble fract, vsf, mid1, mid2;
-
-       m = l + l - v;
-       sv = (v - m) / v;
-       h *= 6.0;
-       sextant = h;
-       fract = h - sextant;
-       vsf = v * sv * fract;
-       mid1 = m + vsf;
-       mid2 = v - vsf;
-       switch (sextant)
-	 {
-	   case 0: *r = v; *g = mid1; *b = m; break;
-	   case 1: *r = mid2; *g = v; *b = m; break;
-	   case 2: *r = m; *g = v; *b = mid1; break;
-	   case 3: *r = m; *g = mid2; *b = v; break;
-	   case 4: *r = mid1; *g = m; *b = v; break;
-	   case 5: *r = v; *g = m; *b = mid2; break;
-	 }
-     }
-}
- 
-
-
-
-
-
-

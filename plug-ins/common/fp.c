@@ -27,10 +27,10 @@
 #include "config.h"
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/gimpcolorspace.h"
 #include "libgimp/stdplugins-intl.h"
 
 #include "fp.h"
-#include "fp_hsv.h"
 
 FP_Params Current =
 {
@@ -162,8 +162,10 @@ fp_row (const guchar *src_row,
       backupP[0] = P[1] = src_row[col*bytes+1];
       backupP[0] = P[2] = src_row[col*bytes+2];
 
-      
-      rgb_to_hsv(P[0]/255.0, P[1]/255.0, P[2]/255.0, &H, &S, &V);
+      H = P[0]/255.0;
+      S = P[1]/255.0;
+      V = P[2]/255.0;
+      gimp_rgb_to_hsv_double(&H, &S, &V);
       
       for (JudgeBy=BY_HUE; JudgeBy<JUDGE_BY; JudgeBy++) {
 	if (!Current.Touched[JudgeBy]) continue;

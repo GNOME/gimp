@@ -38,7 +38,7 @@
     (plug-in-noisify 1 img sparkle-layer FALSE 0.2 0.2 0.2 0.0)
     (plug-in-c-astretch 1 img sparkle-layer)
     (gimp-selection-none img)
-    (plug-in-sparkle 1 img sparkle-layer 0.03 0.45 (/ (min width height) 2) 6 15 1.0 1.0 0.0 0.0 FALSE FALSE FALSE 0)
+    (plug-in-sparkle 1 img sparkle-layer 0.03 0.5 (/ (min width height) 2) 6 15 1.0 0.0 0.0 0.0 FALSE FALSE FALSE 0)
     (gimp-levels sparkle-layer 1 0 255 0.2 0 255)
     (gimp-levels sparkle-layer 2 0 255 0.7 0 255)
     (gimp-selection-layer-alpha sparkle-layer)

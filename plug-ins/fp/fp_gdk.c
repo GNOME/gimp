@@ -4,7 +4,6 @@
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 #include "fp.h"
-#include "fp_hsv.h"
 
 extern AdvancedWindow AW;
 extern FP_Params Current;

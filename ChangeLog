@@ -1,3 +1,27 @@
+Wed Jan 19 12:50:55 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* plug-ins/gflare/gflare.c: Typo fix and typo update.
+
+Wed Jan 19 11:00:19 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	Applied patch from Martin Weber <martweb@gmx.net>:
+	* plug-ins/fp/fp_hsv.c removed
+	* plug-ins/fp/fp_hsv.h removed
+	* plug-ins/common/nova.c
+	* plug-ins/fp/Makefile.am
+	* plug-ins/fp/fp.c
+	* plug-ins/fp/fp_gdk.c
+	* plug-ins/fp/fp_gtk.c
+	* plug-ins/fp/fp_misc.c
+	* plug-ins/common/color_enhance.c: Removed unneccessary
+	rgb_to_hsv routines.
+	* plug-ins/gflare/gtkmultioptionmenu.c: Bugfix, not very
+	elegant but correct.
+	* plug-ins/common/sparkle.c: Bugfix.
+	* plug-ins/script-fu/scripts/frosty-logo.scm
+	* plug-ins/script-fu/scripts/t-o-p-logo.scm: Necessary for the
+	patched sparkle.
+
 2000-01-19  David Monniaux  <monniaux@quatramaran.ens.fr>
 
 	* plug-ins/gfig/gfig.c

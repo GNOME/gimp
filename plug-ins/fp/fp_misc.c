@@ -3,8 +3,8 @@
 #include <math.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/gimpcolorspace.h"
 #include "fp.h"
-#include "fp_hsv.h"
 
 extern FP_Params Current;
 
@@ -108,7 +108,10 @@ ReducedImage *Reduce_The_Image(GDrawable *drawable,
       G=src_row[whichcol*bytes+1];
       B=src_row[whichcol*bytes+2];
       
-      rgb_to_hsv(R/255.0,G/255.0,B/255.0,&H,&S,&V);
+      H = R/255.0;
+      S = G/255.0;
+      V = B/255.0;
+      gimp_rgb_to_hsv_double(&H,&S,&V);
 
       tempRGB[i*RW*bytes+j*bytes+0]=R;
       tempRGB[i*RW*bytes+j*bytes+1]=G;
@@ -351,13 +354,19 @@ fp_range_preview_spill(GtkWidget *preview, int type)
 	  data[3*j+2]=j-Current.Offset;
 	  break;
 	case BY_HUE:
-	  hsv_to_rgb((hsv)((j-Current.Offset+256)%256)/255.0, 1.0, .5, &R, &G, &B);
+	  R = (hsv)((j-Current.Offset+256)%256)/255.0;
+	  G = 1.0;
+	  B = .5;
+	  gimp_hsv_to_rgb_double(&R, &G, &B);
 	  data[3*j+0]=R*255;
 	  data[3*j+1]=G*255;
 	  data[3*j+2]=B*255;
 	  break;
 	case BY_SAT:
-	  hsv_to_rgb(.5,(hsv)((j-(gint)Current.Offset+256)%256)/255.0,.5,&R,&G,&B);
+	  R = .5;
+	  G = (hsv)((j-(gint)Current.Offset+256)%256)/255.0;
+	  B = .5;
+	  gimp_hsv_to_rgb_double(&R,&G,&B);
 	  data[3*j+0]=R*255;
 	  data[3*j+1]=G*255;
 	  data[3*j+2]=B*255;

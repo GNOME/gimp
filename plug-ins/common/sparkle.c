@@ -18,7 +18,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
  * You can contact Michael at mjhammel@csn.net
- * You can contact Martin at martin.weber@usa.net
+ * You can contact Martin at martweb@gmx.net
  * Note: set tabstops to 3 to make this more readable.
  */
 
@@ -45,7 +45,6 @@
 #define MAX_CHANNELS   4
 #define PSV            2  /* point spread value */
 #define EPSILON        0.001
-#define SQR(a)         ((a) * (a))
 
 #define  NATURAL    0
 #define  FOREGROUND 1
@@ -94,14 +93,15 @@ static gint      compute_lum_threshold (GDrawable * drawable,
 					gdouble    percentile);
 static void      sparkle               (GDrawable * drawable,
 					gint       threshold);
-static void      fspike                (GPixelRgn * dest_rgn,
+static void      fspike                (GPixelRgn * src_rgn,
+					GPixelRgn * dest_rgn,
 					gint       gray,
 					gint       x1,
 					gint       y1,
 					gint       x2,
 					gint       y2,
-					gdouble    xr,
-					gdouble    yr,
+					gint       xr,
+					gint       yr,
 					gint       tile_width,
 					gint       tile_height,
 					gdouble    inten,
@@ -139,7 +139,7 @@ static SparkleVals svals =
   4.0,	/* spike points */
   15.0,	/* spike angle */
   1.0,	/* spike density */
-  1.0,	/* opacity */
+  0.0,  /* opacity */
   0.0,	/* random hue */
   0.0,	/* random saturation */
   FALSE,	/* preserve_luminosity */
@@ -665,7 +665,7 @@ compute_lum_threshold (GDrawable *drawable,
   for (i = 255; i >= 0; i--)
     {
       sum += values[i];
-      if ((gdouble) sum / (gdouble) total > percentile)
+      if ((gdouble) sum > percentile * (gdouble) total)
 	{
 	  num_sparkles = sum;
 	  return i;
@@ -759,7 +759,7 @@ sparkle (GDrawable *drawable,
 	      {
 		nfrac = fabs ((gdouble) (lum + 1 - threshold) / (gdouble) (256 - threshold));
 		length = (gdouble) svals.spike_len * (gdouble) pow (nfrac, 0.8);
-		inten = svals.flare_inten * pow (nfrac, 1.0);
+		inten = svals.flare_inten * nfrac /* pow (nfrac, 1.0) */;
 
 		/* fspike im x,y intens rlength angle */
 		if (svals.spike_pts > 0)
@@ -771,12 +771,12 @@ sparkle (GDrawable *drawable,
 			spike_angle = svals.spike_angle;
 		    if (rand() <= RAND_MAX * svals.density)
 		      {
-		        fspike (&dest_rgn, gray, x1, y1, x2, y2,
+			fspike (&src_rgn, &dest_rgn, gray, x1, y1, x2, y2,
 			    x + src_rgn.x, y + src_rgn.y,
 			    tile_width, tile_height,
 			    inten, length, spike_angle);
 		        /* minor spikes */
-		        fspike (&dest_rgn, gray, x1, y1, x2, y2,
+			fspike (&src_rgn, &dest_rgn, gray, x1, y1, x2, y2,
 			    x + src_rgn.x, y + src_rgn.y,
 			    tile_width, tile_height,
 			    inten * 0.7, length * 0.7,
@@ -855,22 +855,22 @@ rpnt (GDrawable *drawable,
 	  else
 	      new = 255 - pixel[b];
 
-          if (svals.preserve_luminosity==TRUE)
-            {
-              if (new < color[b])
-                  new *= (1.0 - val * svals.opacity);
-              else
-                {
-                  new -= val * color[b] * svals.opacity;
-                  if (new < 0.0)
-                      new = 0.0;
-                  
-                }
-            }
-          new *= 1.0 - val * (1.0 - svals.opacity);
-          new += val * color[b];
+	  if (svals.preserve_luminosity==TRUE)
+	    {
+	      if (new < color[b])
+		  new *= (1.0 - val * (1.0 - svals.opacity));
+	      else
+		{
+		  new -= val * color[b] * (1.0 - svals.opacity);
+		  if (new < 0.0)
+		      new = 0.0;
 
-          if (new > 255) new = 255;
+		}
+	    }
+	  new *= 1.0 - val * svals.opacity;
+	  new += val * color[b];
+
+	  if (new > 255) new = 255;
 
 	  if (svals.invers != FALSE)
 	      pixel[b] = 255 - new;
@@ -883,14 +883,15 @@ rpnt (GDrawable *drawable,
 }
 
 static void
-fspike (GPixelRgn *dest_rgn,
+fspike (GPixelRgn *src_rgn,
+	GPixelRgn *dest_rgn,
 	gint       gray,
 	gint       x1,
 	gint       y1,
 	gint       x2,
 	gint       y2,
-	gdouble    xr,
-	gdouble    yr,
+	gint       xr,
+	gint       yr,
 	gint       tile_width,
 	gint       tile_height,
 	gdouble    inten,
@@ -908,7 +909,6 @@ fspike (GPixelRgn *dest_rgn,
   gint row, col;
   gint i;
   gint bytes;
-  gint x, y;
   gint ok;
   guchar pixel[MAX_CHANNELS];
   guchar color[MAX_CHANNELS];
@@ -921,10 +921,7 @@ fspike (GPixelRgn *dest_rgn,
   /* draw the major spikes */
   for (i = 0; i < svals.spike_pts; i++)
     {
-      x = (int) (xr + 0.5);
-      y = (int) (yr + 0.5);
-
-      gimp_pixel_rgn_get_pixel (dest_rgn, pixel, x, y);
+      gimp_pixel_rgn_get_pixel (dest_rgn, pixel, xr, yr);
 
       switch (svals.colortype)
       {
@@ -951,27 +948,27 @@ fspike (GPixelRgn *dest_rgn,
         }
       if (svals.random_hue > 0.0 || svals.random_saturation > 0.0)
         {
- 	       r = color[0];
- 	       g = color[1];
- 	       b = color[2];             
-               gimp_rgb_to_hls(&r, &g, &b);  
-               r+= (svals.random_hue * ((gdouble) rand() / (gdouble) RAND_MAX - 0.5))*255;
-               if (r >= 255.0)
-		 r -= 255.0;
-               else if (r < 0) 
-                 r += 255.0;
-               b+= (svals.random_saturation * (2 * (gdouble) rand() / (gdouble) RAND_MAX - 1.0))*255;
-               if (b > 1.0) b = 1.0;
-               gimp_hls_to_rgb(&r, &g, &b);
-               color[0] = r;
-               color[1] = g;
-               color[2] = b;
+	       r = 255 - color[0];
+	       g = 255 - color[1];
+	       b = 255 - color[2];             
+	       gimp_rgb_to_hsv(&r, &g, &b);  
+	       r+= (svals.random_hue * ((gdouble) rand() / (gdouble) RAND_MAX - 0.5))*255;
+	       if (r >= 255)
+		 r -= 255;
+	       else if (r < 0) 
+		 r += 255;
+	       b+= (svals.random_saturation * (2.0 * (gdouble) rand() /
+(gdouble) RAND_MAX - 1.0))*255;                if (b > 255) b = 255;
+	       gimp_hsv_to_rgb(&r, &g, &b);
+	       color[0] = 255 - r;
+	       color[1] = 255 - g;
+	       color[2] = 255 - b;
 	}
 
       dx = 0.2 * cos (theta * G_PI / 180.0);
       dy = 0.2 * sin (theta * G_PI / 180.0);
-      xrt = xr;
-      yrt = yr;
+      xrt = (gdouble) xr; /* (gdouble) is needed because some */
+      yrt = (gdouble) yr; /* compilers optimize too much otherwise */
       rpos = 0.2;
 
       do
@@ -984,9 +981,9 @@ fspike (GPixelRgn *dest_rgn,
             ok = TRUE;
 
 	  tile = rpnt (dest_rgn->drawable, tile, x1, y1, x2, y2, xrt, yrt, tile_width, tile_height, &row, &col, bytes, in, color);
-	  tile = rpnt (dest_rgn->drawable, tile, x1, y1, x2, y2, xrt + 1, yrt, tile_width, tile_height, &row, &col, bytes, in, color);
-	  tile = rpnt (dest_rgn->drawable, tile, x1, y1, x2, y2, xrt + 1, yrt + 1, tile_width, tile_height, &row, &col, bytes, in, color);
-	  tile = rpnt (dest_rgn->drawable, tile, x1, y1, x2, y2, xrt, yrt + 1, tile_width, tile_height, &row, &col, bytes, in, color);
+	  tile = rpnt (dest_rgn->drawable, tile, x1, y1, x2, y2, xrt + 1.0, yrt, tile_width, tile_height, &row, &col, bytes, in, color);
+	  tile = rpnt (dest_rgn->drawable, tile, x1, y1, x2, y2, xrt + 1.0, yrt + 1.0, tile_width, tile_height, &row, &col, bytes, in, color);
+	  tile = rpnt (dest_rgn->drawable, tile, x1, y1, x2, y2, xrt, yrt + 1.0, tile_width, tile_height, &row, &col, bytes, in, color);
 
 	  xrt += dx;
 	  yrt += dy;

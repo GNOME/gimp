@@ -4,7 +4,7 @@
  * Copyright (C) 1999 Martin Weber
  * Copyright (C) 1996 Federico Mena Quintero
  *
- * You can contact me at martin.weber@usa.net
+ * You can contact me at martweb@gmx.net
  * You can contact the original The Gimp authors at gimp@xcf.berkeley.edu
  *
  * This program is free software; you can redistribute it and/or modify
@@ -36,23 +36,19 @@
 
 #include "config.h"
 #include "libgimp/stdplugins-intl.h"
+#include "libgimp/gimpcolorspace.h"
 
 /* Declare local functions.
  */
 static void      query  (void);
 static void      run    (char      *name,
-			 int        nparams,
+			 gint        nparams,
 			 GParam    *param,
-			 int       *nreturn_vals,
+			 gint       *nreturn_vals,
 			 GParam   **return_vals);
 
 static void      Color_Enhance (GDrawable * drawable);
 static void      indexed_Color_Enhance (gint32 image_ID);
-
-static void calc_rgb_to_hsv(gint r, gint g, gint b, double *h, double
-  *s, double *v);
-static void calc_hsv_to_rgb(gint *r, gint *g, gint *b,
-  double h, double s, double v);
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -75,8 +71,8 @@ query (void)
     { PARAM_DRAWABLE, "drawable", "Input drawable" },
   };
   static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
+  static gint nargs = sizeof (args) / sizeof (args[0]);
+  static gint nreturn_vals = 0;
 
   INIT_I18N();
 
@@ -96,9 +92,9 @@ query (void)
 
 static void
 run (char    *name,
-     int      nparams,
+     gint      nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint     *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[1];
@@ -155,7 +151,7 @@ indexed_Color_Enhance(gint32 image_ID)  /* a.d.m. */
   guchar *cmap;
   gint ncols,i;
 
-  double vhi = 0.0, vlo = 1.0;
+  gdouble vhi = 0.0, vlo = 1.0;
 
   cmap = gimp_image_get_cmap (image_ID, &ncols);
 
@@ -168,34 +164,47 @@ indexed_Color_Enhance(gint32 image_ID)  /* a.d.m. */
   for (i=0;i<ncols;i++)
     {
       double h, s, v;
-      double c, m, y;
-      double k;
+      gint c, m, y;
+      gdouble k;
+      guchar map[3];
+      
       c = 255 - cmap[i*3+0];
       m = 255 - cmap[i*3+1];
       y = 255 - cmap[i*3+2];
       k = c;
       if (m < k) k = m;
       if (y < k) k = y;
-      calc_rgb_to_hsv(c - k, m - k, y - k, &h, &s, &v);
+      map[0] = c - k;
+      map[1] = m - k;
+      map[2] = y - k;
+      gimp_rgb_to_hsv4(map, &h, &s, &v);
       if (v > vhi) vhi = v;
       if (v < vlo) vlo = v;
     }
 
   for (i=0;i<ncols;i++)
     {
-      double h, s, v;
+      gdouble h, s, v;
       gint c, m, y;
-      double k;
+      gdouble k;
+      guchar map[3];
+      
       c = 255 - cmap[i*3+0];
       m = 255 - cmap[i*3+1];
       y = 255 - cmap[i*3+2];
       k = c;
       if (m < k) k = m;
       if (y < k) k = y;
-      calc_rgb_to_hsv(c - k, m - k, y - k, &h, &s, &v);
+      map[0] = c - k;
+      map[1] = m - k;
+      map[2] = y - k;
+      gimp_rgb_to_hsv4(map, &h, &s, &v);
       if (vhi!=vlo)
 	v = (v-vlo) / (vhi-vlo);
-      calc_hsv_to_rgb(&c, &m, &y, h, s, v);
+      gimp_hsv_to_rgb4(map, h, s, v);
+      c = map[0];
+      m = map[1];
+      y = map[2];
       c += k;
       if (c > 255) c = 255;
       m += k;
@@ -217,7 +226,7 @@ Color_Enhance (GDrawable *drawable)
   GPixelRgn src_rgn, dest_rgn;
   guchar *src, *s;
   guchar *dest, *d;
-  double  vhi = 0.0, vlo = 1.0;
+  gdouble  vhi = 0.0, vlo = 1.0;
   gint    progress, max_progress;
   gint    has_alpha, alpha;
   gint    x1, y1, x2, y2;
@@ -246,16 +255,21 @@ Color_Enhance (GDrawable *drawable)
 	    {
 	      if (!has_alpha || (has_alpha && s[alpha])) 
 		{
-		  double h, z, v;
-		  double c, m, y;
-		  double k;
+		  gdouble h, z, v;
+		  gint c, m, y;
+		  gdouble k;
+		  guchar map[3];
+		  
 		  c = 255 - s[0];
 		  m = 255 - s[1];
 		  y = 255 - s[2];
 		  k = c;
 		  if (m < k) k = m;
 		  if (y < k) k = y;
-		  calc_rgb_to_hsv(c - k, m - k, y - k, &h, &z, &v);
+		  map[0] = c - k;
+		  map[1] = m - k;
+		  map[2] = y - k;
+		  gimp_rgb_to_hsv4(map, &h, &z, &v);
 		  if (v > vhi) vhi = v;
 		  if (v < vlo) vlo = v;
 		}
@@ -269,7 +283,7 @@ Color_Enhance (GDrawable *drawable)
       /* Update progress */
       progress += src_rgn.w * src_rgn.h;
 
-      gimp_progress_update ((double) progress / (double) max_progress);
+      gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
     }
 
   /* Now substitute pixel vales */
@@ -288,19 +302,27 @@ Color_Enhance (GDrawable *drawable)
 
 	  for (x = 0; x < src_rgn.w; x++)
 	    {
-	      double h, z, v;
+	      gdouble h, z, v;
 	      gint c, m, y;
-	      double k;
+	      gdouble k;
+	      guchar map[3];
+	      
 	      c = 255 - s[0];
 	      m = 255 - s[1];
 	      y = 255 - s[2];
 	      k = c;
 	      if (m < k) k = m;
 	      if (y < k) k = y;
-	      calc_rgb_to_hsv(c - k, m - k, y - k, &h, &z, &v);
+	      map[0] = c - k;
+	      map[1] = m - k;
+	      map[2] = y - k;
+	      gimp_rgb_to_hsv4(map, &h, &z, &v);
 	      if (vhi!=vlo)
 		v = (v-vlo) / (vhi-vlo);
-	      calc_hsv_to_rgb(&c, &m , &y, h, z, v);
+	      gimp_hsv_to_rgb4(map, h, z, v);
+	      c = map[0];
+	      m = map[1];
+	      y = map[2];
 	      c += k;
 	      if (c > 255) c = 255;
 	      m += k;
@@ -326,7 +348,7 @@ Color_Enhance (GDrawable *drawable)
       /* Update progress */
       progress += src_rgn.w * src_rgn.h;
 
-      gimp_progress_update ((double) progress / (double) max_progress);
+      gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
     }
 
   /*  update the region  */
@@ -334,148 +356,3 @@ Color_Enhance (GDrawable *drawable)
   gimp_drawable_merge_shadow (drawable->id, TRUE);
   gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
 }
-
-static void
-calc_rgb_to_hsv(gint r, gint g, gint b, double *hue, double *sat, double
-*val) {
-  double red, green, blue;
-  double h, s, v;
-  double min, max;
-  double delta;
-
-  red   = (double)r / 255.0;
-  green = (double)g / 255.0;
-  blue  = (double)b / 255.0;
-
-  h = 0.0; /* Shut up -Wall */
-
-  if (red > green)
-    {
-      if (red > blue)
-	max = red;
-      else
-	max = blue;
-
-      if (green < blue)
-	min = green;
-      else
-	min = blue;
-    }
-  else
-    {
-      if (green > blue)
-	max = green;
-      else
-	max = blue;
-
-      if (red < blue)
-	min = red;
-      else
-	min = blue;
-    }
-
-  v = max;
-
-  if (max != 0.0)
-    s = (max - min) / max;
-  else
-    s = 0.0;
-
-  if (s == 0.0)
-    h = 0.0;
-  else
-    {
-      delta = max - min;
-
-      if (red == max)
-	h = (green - blue) / delta;
-      else if (green == max)
-	h = 2 + (blue - red) / delta;
-      else if (blue == max)
-	h = 4 + (red - green) / delta;
-
-      h /= 6.0;
-
-      if (h < 0.0)
-	h += 1.0;
-      else if (h > 1.0)
-	h -= 1.0;
-    }
-
-  *hue = h;
-  *sat = s;
-  *val = v;
-}
-
-static void
-calc_hsv_to_rgb(gint *r, gint *g, gint *b, double h, double s, double
-v) {
-  double hue, saturation, value;
-  double f, p, q, t;
-
-  if (s == 0.0)
-    {
-      h = v;
-      s = v;
-      v = v; /* heh */
-    }
-  else
-    {
-      hue        = h * 6.0;
-      saturation = s;
-      value      = v;
-
-      if (hue == 6.0)
-	hue = 0.0;
-
-      f = hue - (int) hue;
-      p = value * (1.0 - saturation);
-      q = value * (1.0 - saturation * f);
-      t = value * (1.0 - saturation * (1.0 - f));
-
-      switch ((int) hue)
-	{
-	case 0:
-	  h = value;
-	  s = t;
-	  v = p;
-	  break;
-
-	case 1:
-	  h = q;
-	  s = value;
-	  v = p;
-	  break;
-
-	case 2:
-	  h = p;
-	  s = value;
-	  v = t;
-	  break;
-
-	case 3:
-	  h = p;
-	  s = q;
-	  v = value;
-	  break;
-
-	case 4:
-	  h = t;
-	  s = p;
-	  v = value;
-	  break;
-
-	case 5:
-	  h = value;
-	  s = p;
-	  v = q;
-	  break;
-	}
-    }
-
-  *r = h*255;
-  *g = s*255;
-  *b = v*255;
-  
-}
-

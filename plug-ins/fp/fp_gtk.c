@@ -13,7 +13,6 @@
 #include "libgimp/stdplugins-intl.h"
 
 #include "fp.h"
-#include "fp_hsv.h"
 
 AdvancedWindow AW = { NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 
