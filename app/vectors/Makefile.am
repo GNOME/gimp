@@ -28,6 +28,10 @@ libappvectors_a_SOURCES = \
 	gimpvectors.h		\
 	gimpvectors-compat.c	\
 	gimpvectors-compat.h	\
+	gimpvectors-export.c	\
+	gimpvectors-export.h	\
+	gimpvectors-import.c	\
+	gimpvectors-import.h	\
 	gimpvectors-preview.c	\
 	gimpvectors-preview.h
 

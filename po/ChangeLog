@@ -1,3 +1,7 @@
+2003-09-10  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added a couple of new files.
+
 2003-09-09  Duarte Loreto <happyguy_pt@hotmail.com>
 
 	* pt.po: Updated Portuguese translation.
@@ -9,7 +13,7 @@
 
 2003-09-08  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Revision of Spanish translation by
+	* es.po: Revision of Spanish translation by
                  Francisco Javier F. Serrador <serrador@arrakis.es>.
 
 2003-09-07  Wang Jian  <lark@linux.net.cn>
@@ -18,8 +22,8 @@
 	Xie Yuheng <elephant@linux.net.cn>.
 
 2003-09-02  Hasbullah Bin Pit <sebol@ikhlas.com>
-                                                                                
-        * ms.po: Added Translation by
+
+	* ms.po: Added Translation by
                 MIMOS Open Source Development Group <ismas@mimos.my>
 
 2003-09-04 Marco Ciampa <ciampix@libero.it>
@@ -58,7 +62,7 @@
 
 2003-08-28  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2003-08-28  Changwoo Ryu  <cwryu@debian.org>
 
@@ -109,7 +113,7 @@
 
 2003-08-12  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2003-08-12  Nikos Charonitakis  <frolix68@yahoo.gr>
 
@@ -163,7 +167,7 @@
 
 2003-07-25  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2003-07-25  Vincent van Adrighem  <V.vanAdrighem@dirck.mine.nu>
 
@@ -381,7 +385,7 @@
 
 2003-05-23  Paul Duffy <dubhthach@frink.nuigalway.ie>
 
-        * ga.po: updated Irish Translation
+	* ga.po: updated Irish Translation
        
 2003-05-23  Sven Neumann  <sven@gimp.org>
 
@@ -444,7 +448,7 @@
 
 2003-04-28  Pablo Gonzalo del Campo  <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation by
+	* es.po: Updated Spanish translation by
                  Francisco Vila <francisco.vila@hispalinux.es>
 
 2003-04-27  Abel Cheung  <maddog@linux.org.hk>
@@ -461,7 +465,8 @@
 
 2003-04-22  Stanislav Visnovsky  <visnovsky@nenya.ms.mff.cuni.cz>
 
-	* sk.po: Updated Slovak translation by Zdenko Podobny <zdpo@mailbox.sk>.
+	* sk.po: Updated Slovak translation by Zdenko Podobny
+	<zdpo@mailbox.sk>.
 
 2003-04-19  Jan Morén  <jan.moren@lucs.lu.se>
 
@@ -493,7 +498,7 @@
 
 2003-04-13  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * pt.po: Updated Portuguese translation.
+	* pt.po: Updated Portuguese translation.
 
 2003-04-12  Miloslav Trmac  <mitr@volny.cz>
 
@@ -558,7 +563,7 @@
 
 2003-03-25  Pablo Gonzalo del Campo <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2003-03-21  Sven Neumann  <sven@gimp.org>
 
@@ -575,7 +580,7 @@
 
 2003-03-18  Pablo Gonzalo del Campo <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2003-03-16  Miloslav Trmac  <mitr@volny.cz>
 

@@ -1,3 +1,12 @@
+2003-09-10  Sven Neumann  <sven@gimp.org>
+
+	* app/vectors/Makefile.am
+	* app/vectors/gimpvectors-export.[ch]
+	* app/vectors/gimpvectors-import.[ch]: added stubs for
+	import/export of paths.
+
+	* app/vectors/gimpvectors-preview.h: cosmetics.
+
 2003-09-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/xcf/xcf-load.c

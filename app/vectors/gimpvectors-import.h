@@ -16,17 +16,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_VECTORS_PREVIEW_H__
-#define __GIMP_VECTORS_PREVIEW_H__
+#ifndef __GIMP_VECTORS_IMPORT_H__
+#define __GIMP_VECTORS_IMPORT_H__
 
 
-/*
- *  virtual function of GimpVectors -- dont't call directly
- */
-
-TempBuf * gimp_vectors_get_new_preview (GimpViewable *viewable,
-                                        gint          width,
-                                        gint          height);
+GimpVectors * gimp_vectors_import (GimpImage    *image,
+                                   const gchar  *filename,
+                                   GError      **error);
 
 
-#endif /* __GIMP_VECTORS_PREVIEW_H__ */
+#endif /* __GIMP_VECTORS_IMPORT_H__ */
