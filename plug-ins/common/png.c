@@ -37,6 +37,13 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.15  1999/04/19 00:17:49  mitch
+ *   1999-04-19  Michael Natterer  <mitschel@cs.tu-berlin.de>
+ *
+ *   	* plug-ins/png/png.c: applied gimp-ruth-990413-0.patch. Modified
+ *   	it to leave the image's unit untouched because png has only
+ *   	resolution and no unit info. Fixed some unrelated warnings.
+ *
  *   Revision 1.14  1999/04/15 21:48:59  yosh
  *   * applied gimp-lecorfec-99041[02]-0, changes follow
  *
@@ -495,9 +502,9 @@ static gint32
 load_image(char *filename)	/* I - File to load */
 {
   int		i,		/* Looping var */
-		bpp,		/* Bytes per pixel */
-		image_type,	/* Type of image */
-		layer_type,	/* Type of drawable/layer */
+		bpp = 0,	/* Bytes per pixel */
+		image_type = 0,	/* Type of image */
+		layer_type = 0,	/* Type of drawable/layer */
 		num_passes,	/* Number of interlace passes in file */
 		pass,		/* Current pass in file */
 		tile_height,	/* Height of tile in GIMP */
@@ -628,6 +635,22 @@ load_image(char *filename)	/* I - File to load */
     gimp_quit();
   };
 
+  /*
+   * Find out everything we can about the image resolution
+   */
+
+#ifdef GIMP_HAVE_RESOLUTION_INFO
+  if (info->valid & PNG_INFO_pHYs)
+    if (info->phys_unit_type == PNG_RESOLUTION_METER)
+      gimp_image_set_resolution(image,
+				((float) info->x_pixels_per_unit) * 0.0254,
+				((float) info->y_pixels_per_unit) * 0.0254);
+    else  /*  set aspect ratio as resolution  */
+      gimp_image_set_resolution(image,
+				((float) info->x_pixels_per_unit),
+				((float) info->y_pixels_per_unit));
+#endif /* GIMP_HAVE_RESOLUTION_INFO */
+
   gimp_image_set_filename(image, filename);
 
  /*
@@ -727,7 +750,7 @@ save_image(char   *filename,	/* I - File to save to */
 	   gint32 drawable_ID)	/* I - Current drawable */
 {
   int		i,		/* Looping var */
-		bpp,		/* Bytes per pixel */
+		bpp = 0,	/* Bytes per pixel */
 		type,		/* Type of drawable/layer */
 		num_passes,	/* Number of interlace passes in file */
 		pass,		/* Current pass in file */
@@ -744,6 +767,7 @@ save_image(char   *filename,	/* I - File to save to */
   guchar	**pixels,	/* Pixel rows */
 		*pixel;		/* Pixel data */
   char		progress[255];	/* Title for progress display... */
+  float	        xres, yres;	/* GIMP resolution (dpi) */
   gdouble	gamma;
 
  /*
@@ -816,6 +840,14 @@ save_image(char   *filename,	/* I - File to save to */
   info->interlace_type = pngvals.interlaced;
   info->valid          |= PNG_INFO_gAMA;
 
+#ifdef GIMP_HAVE_RESOLUTION_INFO
+  info->valid |= PNG_INFO_pHYs;
+  gimp_image_get_resolution(image_ID, &xres, &yres);
+  info->phys_unit_type = PNG_RESOLUTION_METER;
+  info->x_pixels_per_unit = (int) (xres * 39.37);
+  info->y_pixels_per_unit = (int) (yres * 39.37);
+#endif /* GIMP_HAVE_RESOLUTION_INFO */
+ 
   switch (type)
   {
     case RGB_IMAGE :
