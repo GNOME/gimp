@@ -36,13 +36,12 @@
 #include "gimpconfig.h"
 #include "gimpconfig-serialize.h"
 #include "gimpconfig-types.h"
+#include "gimpconfig-utils.h"
 
 
-static gboolean gimp_values_equal        (const GValue *a,
-                                          const GValue *b);
-static void     serialize_unknown_token  (const gchar  *key,
-                                          const gchar  *value,
-                                          gpointer      data);
+static void  serialize_unknown_token (const gchar  *key,
+                                      const gchar  *value,
+                                      gpointer      data);
 
 
 /**
@@ -159,7 +158,7 @@ gimp_config_serialize_changed_properties (GObject *new,
       g_object_get_property (new, prop_spec->name, &new_value);
       g_object_get_property (old, prop_spec->name, &old_value);
 
-      if (!gimp_values_equal (&new_value, &old_value))
+      if (!gimp_config_values_equal (&new_value, &old_value))
         {
           g_string_assign (str, "(");
           g_string_append (str, prop_spec->name);
@@ -311,38 +310,4 @@ serialize_unknown_token (const gchar *key,
   g_string_append_printf ((GString *) data, "(%s \"%s\")\n", key, escaped);
 
   g_free (escaped);
-}
-
-static gboolean
-gimp_values_equal (const GValue *a,
-                   const GValue *b)
-{
-  g_return_val_if_fail (G_VALUE_TYPE (a) == G_VALUE_TYPE (b), FALSE);
-
-  if (g_value_fits_pointer (a))
-    {
-      if (a->data[0].v_pointer == b->data[0].v_pointer)
-        return TRUE;
-
-      if (G_VALUE_HOLDS_STRING (a))
-        {
-          const gchar *a_str = g_value_get_string (a);
-          const gchar *b_str = g_value_get_string (b);
-
-          if (a_str && b_str)
-            return (strcmp (a_str, b_str) == 0);
-          else
-            return FALSE;
-        }
-      else
-        {
-          g_warning ("%s: Can not compare values of type %s.", 
-                     G_STRLOC, G_VALUE_TYPE_NAME (a));
-          return FALSE;
-        }
-    }
-  else
-    {
-      return (a->data[0].v_uint64 == b->data[0].v_uint64); 
-    }
 }

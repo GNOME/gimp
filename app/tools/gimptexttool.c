@@ -200,7 +200,6 @@ gimp_text_tool_init (GimpTextTool *text_tool)
                                                     gimprc.monitor_yres);
 
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
-  gimp_tool_control_set_cursor      (tool->control, GDK_FLEUR);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TEXT_TOOL_CURSOR);
 }
 

@@ -23,8 +23,11 @@
 #define __GIMP_CONFIG_UTILS_H__
 
 
-gchar * gimp_config_build_data_path    (const gchar *name);
-gchar * gimp_config_build_plug_in_path (const gchar *name);
+gboolean   gimp_config_values_equal       (const GValue *a,
+                                           const GValue *b);
+
+gchar    * gimp_config_build_data_path    (const gchar  *name);
+gchar    * gimp_config_build_plug_in_path (const gchar  *name);
 
 
 #endif  /* __GIMP_CONFIG_UTILS_H__ */

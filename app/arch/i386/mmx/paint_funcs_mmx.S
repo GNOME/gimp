@@ -16,10 +16,21 @@ Copyright (C) 1999, 2001 David Monniaux
 
 /* min(a,b) = a - max(a-b, 0) */
 
+
+#ifndef __MINGW32__
+
 .globl add_pixels_3a_3a
+	.type	 add_pixels_3a_3a,@function
+add_pixels_3a_3a:
+
+#else
+
+.globl _add_pixels_3a_3a
+_add_pixels_3a_3a:
+
+#endif
 
 .align 16
-add_pixels_3a_3a:
 	pushl	%edi
 	pushl	%ebx
 	movl	12(%esp), %edi
@@ -62,17 +73,29 @@ add_pixels_3a_3a:
 	psubb	%mm4, %mm2
 	pand	%mm0, %mm2
 	por	%mm2, %mm1
-	movd	%mm1, (%edi)	
-.add_pixels_3a_3a_end:		
+	movd	%mm1, (%edi)
+.add_pixels_3a_3a_end:
 	
 	emms
 	popl	%ebx
 	popl	%edi
 	ret
 
+
+#ifndef __MINGW32__
+
 .globl add_pixels_1a_1a
-.align 16
+	.type	 add_pixels_1a_1a,@function
 add_pixels_1a_1a:
+
+#else
+
+.globl _add_pixels_1a_1a
+_add_pixels_1a_1a:
+
+#endif
+
+.align 16
 	pushl	%edi
 	pushl	%ebx
 	movl	12(%esp), %edi
@@ -140,7 +163,7 @@ add_pixels_1a_1a:
 	movd	%mm1, %ebx
 	movw	%bx, (%edi)
 
-.add_pixels_1a_1a_end:		
+.add_pixels_1a_1a_end:
 	
 	emms
 	popl	%ebx
@@ -148,10 +171,20 @@ add_pixels_1a_1a:
 	ret
 
 
+#ifndef __MINGW32__
+
 .globl substract_pixels_3a_3a
+	.type	 substract_pixels_3a_3a,@function
+substract_pixels_3a_3a:
+
+#else
+
+.globl _substract_pixels_3a_3a
+_substract_pixels_3a_3a:
+
+#endif
 
 .align 16
-substract_pixels_3a_3a:
 	pushl	%edi
 	pushl	%ebx
 	movl	12(%esp), %edi
@@ -190,17 +223,28 @@ substract_pixels_3a_3a:
 	psubb	%mm4, %mm2
 	pand	%mm0, %mm2
 	por	%mm2, %mm1
-	movd	%mm1, (%edi)	
-.substract_pixels_3a_3a_end:		
+	movd	%mm1, (%edi)
+.substract_pixels_3a_3a_end:
 	
 	emms
 	popl	%ebx
 	popl	%edi
 	ret
 
+#ifndef __MINGW32__
+
 .globl substract_pixels_1a_1a
-.align 16
+	.type	 substract_pixels_1a_1a,@function
 substract_pixels_1a_1a:
+
+#else
+
+.globl _substract_pixels_1a_1a
+_substract_pixels_1a_1a:
+
+#endif
+
+.align 16
 	pushl	%edi
 	pushl	%ebx
 	movl	12(%esp), %edi
@@ -262,7 +306,7 @@ substract_pixels_1a_1a:
 	movd	%mm1, %ebx
 	movw	%bx, (%edi)
 
-.substract_pixels_1a_1a_end:		
+.substract_pixels_1a_1a_end:
 	
 	emms
 	popl	%ebx
@@ -270,10 +314,20 @@ substract_pixels_1a_1a:
 	ret
 
 
+#ifndef __MINGW32__
+
 .globl difference_pixels_3a_3a
+	.type	 difference_pixels_3a_3a,@function
+difference_pixels_3a_3a:
+
+#else
+
+.globl _difference_pixels_3a_3a
+_difference_pixels_3a_3a:
+
+#endif
 
 .align 16
-difference_pixels_3a_3a:
 	pushl	%edi
 	pushl	%ebx
 	movl	12(%esp), %edi
@@ -318,17 +372,28 @@ difference_pixels_3a_3a:
 	psubb	%mm4, %mm2
 	pand	%mm0, %mm2
 	por	%mm2, %mm1
-	movd	%mm1, (%edi)	
-.difference_pixels_3a_3a_end:		
+	movd	%mm1, (%edi)
+.difference_pixels_3a_3a_end:
 	
 	emms
 	popl	%ebx
 	popl	%edi
 	ret
 
+#ifndef __MINGW32__
+
 .globl difference_pixels_1a_1a
-.align 16
+	.type	 difference_pixels_1a_1a,@function
 difference_pixels_1a_1a:
+
+#else
+
+.globl _difference_pixels_1a_1a
+_difference_pixels_1a_1a:
+
+#endif
+
+.align 16
 	pushl	%edi
 	pushl	%ebx
 	movl	12(%esp), %edi
@@ -399,7 +464,7 @@ difference_pixels_1a_1a:
 	movd	%mm1, %ebx
 	movw	%bx, (%edi)
 
-.difference_pixels_1a_1a_end:		
+.difference_pixels_1a_1a_end:
 	
 	emms
 	popl	%ebx
@@ -407,10 +472,20 @@ difference_pixels_1a_1a:
 	ret
 
 
+#ifndef __MINGW32__
+
 .globl multiply_pixels_3a_3a
+	.type	 multiply_pixels_3a_3a,@function
+multiply_pixels_3a_3a:
+
+#else
+
+.globl _multiply_pixels_3a_3a
+_multiply_pixels_3a_3a:
+
+#endif
 
 .align 16
-multiply_pixels_3a_3a:
 	pushl	%edi
 	pushl	%ebx
 	movl	12(%esp), %edi
@@ -505,17 +580,28 @@ multiply_pixels_3a_3a:
 	psubb	%mm4, %mm2
 	pand	%mm0, %mm2
 	por	%mm2, %mm1
-	movd	%mm1, (%edi)	
-.multiply_pixels_3a_3a_end:		
+	movd	%mm1, (%edi)
+.multiply_pixels_3a_3a_end:
 	
 	emms
 	popl	%ebx
 	popl	%edi
 	ret
 
+#ifndef __MINGW32__
+
 .globl multiply_pixels_1a_1a
-.align 16
+	.type	 multiply_pixels_1a_1a,@function
 multiply_pixels_1a_1a:
+
+#else
+
+.globl _multiply_pixels_1a_1a
+_multiply_pixels_1a_1a:
+
+#endif
+
+.align 16
 	pushl	%edi
 	pushl	%ebx
 	movl	12(%esp), %edi
@@ -658,7 +744,7 @@ multiply_pixels_1a_1a:
 	movd	%mm1, %ebx
 	movw	%bx, (%edi)
 
-.multiply_pixels_1a_1a_end:		
+.multiply_pixels_1a_1a_end:
 	
 	emms
 	popl	%ebx
@@ -667,10 +753,20 @@ multiply_pixels_1a_1a:
 
 /* Could be perhaps more optimized */
 
+#ifndef __MINGW32__
+
 .globl darken_pixels_3a_3a
+	.type	 darken_pixels_3a_3a,@function
+darken_pixels_3a_3a:
+
+#else
+
+.globl _darken_pixels_3a_3a
+_darken_pixels_3a_3a:
+
+#endif
 
 .align 16
-darken_pixels_3a_3a:
 	pushl	%edi
 	pushl	%ebx
 	movl	12(%esp), %edi
@@ -703,17 +799,28 @@ darken_pixels_3a_3a:
 	psubusb %mm3, %mm4
 	psubb	%mm4, %mm2
 	movq	%mm2, %mm1
-	movd	%mm1, (%edi)	
-.darken_pixels_3a_3a_end:		
+	movd	%mm1, (%edi)
+.darken_pixels_3a_3a_end:
 	
 	emms
 	popl	%ebx
 	popl	%edi
 	ret
 
+#ifndef __MINGW32__
+
 .globl darken_pixels_1a_1a
-.align 16
+	.type	 darken_pixels_1a_1a,@function
 darken_pixels_1a_1a:
+
+#else
+
+.globl _darken_pixels_1a_1a
+_darken_pixels_1a_1a:
+
+#endif
+
+.align 16
 	pushl	%edi
 	pushl	%ebx
 	movl	12(%esp), %edi
@@ -766,7 +873,7 @@ darken_pixels_1a_1a:
 	movd	%mm1, %ebx
 	movw	%bx, (%edi)
 
-.darken_pixels_1a_1a_end:		
+.darken_pixels_1a_1a_end:
 	
 	emms
 	popl	%ebx
@@ -774,10 +881,20 @@ darken_pixels_1a_1a:
 	ret
 
 
+#ifndef __MINGW32__
+
 .globl lighten_pixels_3a_3a
+	.type	 lighten_pixels_3a_3a
+lighten_pixels_3a_3a:
+
+#else
+
+.globl _lighten_pixels_3a_3a
+_lighten_pixels_3a_3a:
+
+#endif
 
 .align 16
-lighten_pixels_3a_3a:
 	pushl	%edi
 	pushl	%ebx
 	movl	12(%esp), %edi
@@ -820,17 +937,28 @@ lighten_pixels_3a_3a:
 	psubb	%mm4, %mm2
 	pand	%mm0, %mm2
 	por	%mm2, %mm1
-	movd	%mm1, (%edi)	
-.lighten_pixels_3a_3a_end:		
+	movd	%mm1, (%edi)
+.lighten_pixels_3a_3a_end:
 	
 	emms
 	popl	%ebx
 	popl	%edi
 	ret
 
+#ifndef __MINGW32__
+
 .globl lighten_pixels_1a_1a
-.align 16
+	.type	 lighten_pixels_1a_1a
 lighten_pixels_1a_1a:
+
+#else
+
+.globl _lighten_pixels_1a_1a
+_lighten_pixels_1a_1a:
+
+#endif
+
+.align 16
 	pushl	%edi
 	pushl	%ebx
 	movl	12(%esp), %edi
@@ -898,7 +1026,7 @@ lighten_pixels_1a_1a:
 	movd	%mm1, %ebx
 	movw	%bx, (%edi)
 
-.lighten_pixels_1a_1a_end:		
+.lighten_pixels_1a_1a_end:
 	
 	emms
 	popl	%ebx
@@ -906,10 +1034,20 @@ lighten_pixels_1a_1a:
 	ret
 
 
+#ifndef __MINGW32__
+
 .globl screen_pixels_3a_3a
+	.type	 screen_pixels_3a_3a
+screen_pixels_3a_3a:
+
+#else
+
+.globl _screen_pixels_3a_3a
+_screen_pixels_3a_3a:
+
+#endif
 
 .align 16
-screen_pixels_3a_3a:
 	pushl	%edi
 	pushl	%ebx
 	movl	12(%esp), %edi
@@ -1024,17 +1162,28 @@ screen_pixels_3a_3a:
 
 	pand	%mm0, %mm3
 	por	%mm3, %mm1
-	movd	%mm1, (%edi)	
-.screen_pixels_3a_3a_end:		
+	movd	%mm1, (%edi)
+.screen_pixels_3a_3a_end:
 	
 	emms
 	popl	%ebx
 	popl	%edi
 	ret
 
+#ifndef __MINGW32__
+
 .globl screen_pixels_1a_1a
-.align 16
+	.type	 screen_pixels_1a_1a
 screen_pixels_1a_1a:
+
+#else
+
+.globl _screen_pixels_1a_1a
+_screen_pixels_1a_1a:
+
+#endif
+
+.align 16
 	pushl	%edi
 	pushl	%ebx
 	movl	12(%esp), %edi
@@ -1207,7 +1356,7 @@ screen_pixels_1a_1a:
 	movd	%mm1, %ebx
 	movw	%bx, (%edi)
 
-.screen_pixels_1a_1a_end:		
+.screen_pixels_1a_1a_end:
 	
 	emms
 	popl	%ebx
@@ -1217,10 +1366,20 @@ screen_pixels_1a_1a:
 .lower_ff:	.int 0x00FF00FF, 0x00FF00FF
 
 
+#ifndef __MINGW32__
+
 .globl overlay_pixels_3a_3a
+	.type	 overlay_pixels_3a_3a
+overlay_pixels_3a_3a:
+
+#else
+
+.globl _overlay_pixels_3a_3a
+_overlay_pixels_3a_3a:
+
+#endif
 
 .align 16
-overlay_pixels_3a_3a:
 	pushl	%edi
 	pushl	%ebx
 	movl	12(%esp), %edi
@@ -1247,17 +1406,28 @@ overlay_pixels_3a_3a:
 	movd	(%eax), %mm2
 	movd	(%edx), %mm3
 	call op_overlay
-	movd	%mm1, (%edi)	
-.overlay_pixels_3a_3a_end:		
+	movd	%mm1, (%edi)
+.overlay_pixels_3a_3a_end:
 	
 	emms
 	popl	%ebx
 	popl	%edi
 	ret
 
+#ifndef __MINGW32__
+
 .globl overlay_pixels_1a_1a
-.align 16
+	.type	 overlay_pixels_1a_1a
 overlay_pixels_1a_1a:
+
+#else
+
+.globl _overlay_pixels_1a_1a
+_overlay_pixels_1a_1a:
+
+#endif
+
+.align 16
 	pushl	%edi
 	pushl	%ebx
 	movl	12(%esp), %edi
@@ -1298,7 +1468,7 @@ overlay_pixels_1a_1a:
 	movd	%mm1, %ebx
 	movw	%bx, (%edi)
 
-.overlay_pixels_1a_1a_end:		
+.overlay_pixels_1a_1a_end:
 	
 	emms
 	popl	%ebx

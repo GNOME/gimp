@@ -39,6 +39,7 @@
 #include "gimpconfig.h"
 #include "gimpconfig-serialize.h"
 #include "gimpconfig-deserialize.h"
+#include "gimpconfig-utils.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -53,6 +54,9 @@ static void      gimp_config_iface_serialize    (GObject  *object,
                                                  gint      fd);
 static gboolean  gimp_config_iface_deserialize  (GObject  *object,
                                                  GScanner *scanner);
+static GObject  *gimp_config_iface_duplicate    (GObject  *object);
+static gboolean  gimp_config_iface_equal        (GObject  *a,
+                                                 GObject  *b);
 static void      gimp_config_scanner_message    (GScanner *scanner,
                                                  gchar    *message,
                                                  gboolean  is_error);
@@ -89,6 +93,8 @@ gimp_config_iface_init (GimpConfigInterface *gimp_config_iface)
 {
   gimp_config_iface->serialize   = gimp_config_iface_serialize;
   gimp_config_iface->deserialize = gimp_config_iface_deserialize;
+  gimp_config_iface->duplicate   = gimp_config_iface_duplicate;
+  gimp_config_iface->equal       = gimp_config_iface_equal;
 }
 
 static void
@@ -103,6 +109,84 @@ gimp_config_iface_deserialize (GObject  *object,
                                GScanner *scanner)
 {
   return gimp_config_deserialize_properties (object, scanner, FALSE);
+}
+
+static GObject *
+gimp_config_iface_duplicate (GObject *object)
+{
+  GObject       *dup;
+  GObjectClass  *klass;
+  GParamSpec   **property_specs;
+  guint          n_property_specs;
+  guint          i;
+
+  dup = g_object_new (G_TYPE_FROM_INSTANCE (object), NULL);
+
+  klass = G_OBJECT_GET_CLASS (object);
+
+  property_specs = g_object_class_list_properties (klass, &n_property_specs);
+
+  if (!property_specs)
+    return dup;
+
+  for (i = 0; i < n_property_specs; i++)
+    {
+      GParamSpec  *prop_spec;
+      GValue       value = { 0, };
+
+      prop_spec = property_specs[i];
+
+      if (! (prop_spec->flags & G_PARAM_READWRITE))
+        continue;
+
+      g_value_init (&value, prop_spec->value_type);
+      
+      g_object_get_property (object,  prop_spec->name, &value);
+      g_object_set_property (dup, prop_spec->name, &value);
+    }
+
+  return dup;
+}
+
+static gboolean
+gimp_config_iface_equal (GObject *a,
+                         GObject *b)
+{
+  GObjectClass  *klass;
+  GParamSpec   **property_specs;
+  guint          n_property_specs;
+  guint          i;
+  gboolean       equal = TRUE;
+
+  klass = G_OBJECT_GET_CLASS (a);
+
+  property_specs = g_object_class_list_properties (klass, &n_property_specs);
+  
+  for (i = 0; equal && i < n_property_specs; i++)
+    {
+      GParamSpec  *prop_spec;
+      GValue       a_value = { 0, };
+      GValue       b_value = { 0, };
+
+      prop_spec = property_specs[i];
+
+      if (! (prop_spec->flags & G_PARAM_READABLE))
+        continue;
+
+      g_value_init (&a_value, prop_spec->value_type);
+      g_value_init (&b_value, prop_spec->value_type);
+      g_object_get_property (a, prop_spec->name, &a_value);
+      g_object_get_property (b, prop_spec->name, &b_value);
+
+      equal = gimp_config_values_equal (&a_value, &b_value);
+
+      g_value_unset (&a_value);
+      g_value_unset (&b_value);
+    }
+
+  g_free (property_specs);
+
+  return equal;
 }
 
 /**
@@ -246,6 +330,63 @@ gimp_config_scanner_message (GScanner *scanner,
                _("Error while parsing '%s' in line %d:\n %s"), 
                scanner->input_name, scanner->line, message);
 }
+
+/**
+ * gimp_config_duplicate:
+ * @object: a #GObject that implements the #GimpConfigInterface.
+ * 
+ * Creates a copy of the passed object by copying all object
+ * properties. The default implementation of the #GimpConfigInterface
+ * only works for objects that are completely defined by their
+ * properties.
+ * 
+ * Return value: the duplicated #GObject.
+ **/
+GObject *
+gimp_config_duplicate (GObject *object)
+{
+  GimpConfigInterface *gimp_config_iface;
+
+  g_return_val_if_fail (G_IS_OBJECT (object), NULL);
+
+  gimp_config_iface = GIMP_GET_CONFIG_INTERFACE (object);
+
+  g_return_val_if_fail (gimp_config_iface != NULL, FALSE);
+
+  return gimp_config_iface->duplicate (object);
+}
+
+
+/**
+ * gimp_config_is_equal_to:
+ * @a: a #GObject that implements the #GimpConfigInterface.
+ * @b: another #GObject of the same type as @a.
+ * 
+ * Compares the two objects. The default implementation of the
+ * #GimpConfigInterface compares the object properties and thus only
+ * works for objects that are completely defined by their
+ * properties.
+ * 
+ * Return value: %TRUE if the two objects are equal.
+ **/
+gboolean
+gimp_config_is_equal_to (GObject *a,
+                         GObject *b)
+{
+  GimpConfigInterface *gimp_config_iface;
+
+  g_return_val_if_fail (G_IS_OBJECT (a), FALSE);
+  g_return_val_if_fail (G_IS_OBJECT (b), FALSE);
+  g_return_val_if_fail (G_TYPE_FROM_INSTANCE (a) != G_TYPE_FROM_INSTANCE (b),
+                        FALSE);
+
+  gimp_config_iface = GIMP_GET_CONFIG_INTERFACE (a);
+
+  g_return_val_if_fail (gimp_config_iface != NULL, FALSE);
+
+  return gimp_config_iface->equal (a, b);
+}
+
 
 /* 
  * Code to store and lookup unknown tokens (string key/value pairs).
@@ -419,59 +560,3 @@ gimp_config_destroy_unknown_tokens (GSList *unknown_tokens)
   
   g_slist_free (unknown_tokens);
 }
-
-
-/* 
- * Generic code useful when working with config objects.
- */
-
-/**
- * gimp_config_duplicate:
- * @object: a #GObject object to duplicate.
- * 
- * Creates a copy of the passed object by copying all object properties.
- * This only works for objects that are completely defined by their
- * properties.
- * 
- * Return value: the duplicated #GObject.
- **/
-GObject *
-gimp_config_duplicate (GObject *object)
-{
-  GObject       *dup;
-  GObjectClass  *klass;
-  GParamSpec   **property_specs;
-  guint          n_property_specs;
-  guint          i;
-
-  g_return_val_if_fail (G_IS_OBJECT (object), NULL);
-
-  dup = g_object_new (G_TYPE_FROM_INSTANCE (object), NULL);
-
-  klass = G_OBJECT_GET_CLASS (object);
-
-  property_specs = g_object_class_list_properties (klass, &n_property_specs);
-
-  if (!property_specs)
-    return dup;
-
-  for (i = 0; i < n_property_specs; i++)
-    {
-      GParamSpec  *prop_spec;
-      GValue       value = { 0, };
-
-      prop_spec = property_specs[i];
-
-      if (! (prop_spec->flags & G_PARAM_READWRITE))
-        continue;
-
-      g_value_init (&value, prop_spec->value_type);
-      
-      g_object_get_property (object,  prop_spec->name, &value);
-      g_object_set_property (dup, prop_spec->name, &value);
-    }
-
-  return dup;
-}
-
-

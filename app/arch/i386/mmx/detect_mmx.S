@@ -3,9 +3,20 @@
 
 .text
 .align 4
-.globl intel_cpu_features
 
+#ifndef __MINGW32__
+
+.globl intel_cpu_features
+	.type	 intel_cpu_features,@function
 intel_cpu_features:
+
+#else
+
+.globl _intel_cpu_features
+_intel_cpu_features:
+
+#endif
+
         pushl   %ebx
 	pushfl
 	popl %eax

@@ -1,3 +1,18 @@
+2002-05-04  Sven Neumann  <sven@gimp.org>
+
+	* app/arch/i386/mmx/detect_mmx.S
+	* app/arch/i386/mmx/paint_funcs_mmx.S: applied a patch from 
+	iccii@hotmail.com that promises to fix build on mingw (bug #80681).
+
+	* app/config/gimpconfig-serialize.c
+	* app/config/gimpconfig-utils.[ch]: moved value compare function to
+	gimpconfig-utils.
+
+	* app/config/gimpconfig.[ch]: added duplicate and compare functions
+	to GimpConfigInterface so derived interfaces can override them.
+
+	* app/tools/gimptexttool.c: fixed tool cursor.
+
 2002-05-03  Nick Lamb  <njl195@zepler.org.uk>
 
 	* plug-ins/common/tiff.c: Overbright alpha bug #77283 fixed

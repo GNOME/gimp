@@ -32,10 +32,13 @@ struct _GimpConfigInterface
 {
   GTypeInterface base_iface;
 
-  void     (* serialize)   (GObject   *object,
-                            gint       fd);
-  gboolean (* deserialize) (GObject   *object,
-                            GScanner  *scanner);
+  void      (* serialize)    (GObject  *object,
+                              gint      fd);
+  gboolean   (* deserialize) (GObject  *object,
+                              GScanner *scanner);
+  GObject * (* duplicate)    (GObject  *object);
+  gboolean  (* equal)        (GObject  *a,
+                              GObject  *b);
 };
 
 typedef void  (* GimpConfigForeachFunc) (const gchar *key,
@@ -53,6 +56,8 @@ gboolean      gimp_config_deserialize           (GObject      *object,
                                                  GError      **error);
 
 GObject     * gimp_config_duplicate             (GObject      *object);
+gboolean      gimp_config_equal                 (GObject      *a,
+                                                 GObject      *b);
 
 void          gimp_config_add_unknown_token     (GObject      *object,
                                                  const gchar  *key,
