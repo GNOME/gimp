@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.x\n"
-"POT-Creation-Date: 2003-02-24 12:03+0100\n"
+"POT-Creation-Date: 2003-02-25 12:05+0100\n"
 "PO-Revision-Date: 2003-02-21 12:40-0300\n"
 "Last-Translator: Pablo Gonzalo del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -76,13 +76,17 @@ msgstr "  -b, --batch <comandos>   Ejecutar en modo no interactivo.\n"
 msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
-msgstr "  -c, --console-messages   Mostrar las advertencias en la consola en vez de en una ventana.\n"
+msgstr ""
+"  -c, --console-messages   Mostrar las advertencias en la consola en vez de "
+"en una ventana.\n"
 
 #: app/main.c:461
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
-msgstr "  -d, --no-data            No cargar las brochas, los gradientes, paletas ni patrones.\n"
+msgstr ""
+"  -d, --no-data            No cargar las brochas, los gradientes, paletas ni "
+"patrones.\n"
 
 #: app/main.c:462
 msgid "  -i, --no-interface       Run without a user interface.\n"
@@ -120,7 +124,9 @@ msgstr "  --verbose                Mostrar mensajes de inicio.\n"
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
-msgstr "  --no-shm                 No compartir la memoria entre El GIMP y las extensiones (plug-ins).\n"
+msgstr ""
+"  --no-shm                 No compartir la memoria entre El GIMP y las "
+"extensiones (plug-ins).\n"
 
 #: app/main.c:471
 msgid "  --no-mmx                 Do not use MMX routines.\n"
@@ -129,7 +135,9 @@ msgstr "  --no-xshm                No utilizar las rutinas MMX.\n"
 # //R Posiblemente estará mal
 #: app/main.c:472
 msgid "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
-msgstr "  --debug-handlers         Activar depuración de manejadores de señales no fatales.\n"
+msgstr ""
+"  --debug-handlers         Activar depuración de manejadores de señales no "
+"fatales.\n"
 
 #: app/main.c:473
 msgid "  --display <display>      Use the designated X display.\n"
@@ -628,16 +636,23 @@ msgstr ""
 "modificada desde que se la abrió."
 
 #: app/config/gimprc-blurbs.h:300
-msgid "Sets the number of operations kept on the undo stack."
-msgstr "Establece la cantidad de operaciones mantenidas en la pila de deshacer."
-
-#: app/config/gimprc-blurbs.h:303
-msgid "Sets the maximum memory used by operations kept on the undo stack."
+msgid ""
+"Sets the minimal number of operations that can be undone. More undo levels "
+"are kept available until the undo-size limit is reached."
 msgstr ""
-"Establece la cantidad de memoria máxima utilizadas por las operaciones "
-"mantenidas en la pila de deshacer"
+"Establece la cantidad mínima de operaciones que pueden ser desechas. Mas niveles de "
+"deshacer son mantenidos disponibles hasta que el límite de niveles de deshacer es "
+"alcanzado."
 
-#: app/config/gimprc-blurbs.h:306
+#: app/config/gimprc-blurbs.h:304
+msgid ""
+"Sets an upper limit to the memory that is used per image to keep operations "
+"on the undo stack."
+msgstr ""
+"Establece el limite superior de la memoria que es utilizada por imagen para guardar las "
+"operaciones en la pila de deshacer."
+
+#: app/config/gimprc-blurbs.h:308
 msgid "When set to no the F1 help binding will be disabled."
 msgstr "Cuando se define como «no» la tecla F1 será deshabilitada."
 
@@ -870,11 +885,11 @@ msgstr "Grande (256x256)"
 
 #: app/core/core-enums.c:348
 msgid "Forward (Traditional)"
-msgstr "Adelantado (tradicional)"
+msgstr "Directa (tradicional)"
 
 #: app/core/core-enums.c:349
 msgid "Backward (Corrective)"
-msgstr "Anticuado (correctivo)"
+msgstr "Inversa (correctivo)"
 
 #: app/core/core-enums.c:409
 msgid "<<invalid>>"
@@ -1456,7 +1471,7 @@ msgid "Convert Image to Indexed"
 msgstr "Convertir la imagen a colores indexados"
 
 #: app/core/gimpimage-mask-select.c:53 app/core/gimpimage-mask-select.c:55
-#: app/tools/gimprectselecttool.c:93
+#: app/tools/gimprectselecttool.c:96
 msgid "Rect Select"
 msgstr "Selección rectangular"
 
@@ -5194,8 +5209,8 @@ msgid "Conservative Memory Usage"
 msgstr "Uso moderado de memoria"
 
 #: app/gui/preferences-dialog.c:1682
-msgid "Levels of Undo:"
-msgstr "Niveles de deshacer:"
+msgid "Minimal Number of Undo Levels:"
+msgstr "Cantidad mínima de niveles de deshacer:"
 
 #: app/gui/preferences-dialog.c:1685
 msgid "Maximum Undo Memory:"
@@ -6596,11 +6611,11 @@ msgstr "Centrado"
 msgid "Filled"
 msgstr "Relleno"
 
-#: app/text/gimptext.c:155
+#: app/text/gimptext.c:167
 msgid "How many pixels the first line should be shorter"
 msgstr "Cuantos píxeles deben ser recortados de la primera línea"
 
-#: app/text/gimptext.c:161
+#: app/text/gimptext.c:173
 msgid "Additional line spacing (in pixels)"
 msgstr "Espaciado de línea adicional (en píxeles)"
 
@@ -7521,31 +7536,31 @@ msgstr "Cuantizar no funciona en imágenes indexadas."
 msgid "Posterize _Levels:"
 msgstr "Nive_les de cuantización:"
 
-#: app/tools/gimprectselecttool.c:94
+#: app/tools/gimprectselecttool.c:97
 msgid "Select rectangular regions"
 msgstr "Seleccionar regiones rectangulares"
 
-#: app/tools/gimprectselecttool.c:95
+#: app/tools/gimprectselecttool.c:98
 msgid "/Tools/Selection Tools/Rect Select"
 msgstr "/Herramientas/Herramientas de selección/Selección rectangular"
 
-#: app/tools/gimprectselecttool.c:235
+#: app/tools/gimprectselecttool.c:238
 msgid "Selection: ADD"
 msgstr "Selección: AÑADIR"
 
-#: app/tools/gimprectselecttool.c:238
+#: app/tools/gimprectselecttool.c:241
 msgid "Selection: SUBTRACT"
 msgstr "Selección: SUSTRAER"
 
-#: app/tools/gimprectselecttool.c:241
+#: app/tools/gimprectselecttool.c:244
 msgid "Selection: INTERSECT"
 msgstr "Selección: INTERSECCIONAR"
 
-#: app/tools/gimprectselecttool.c:244
+#: app/tools/gimprectselecttool.c:247
 msgid "Selection: REPLACE"
 msgstr "Selección: REEMPLAZAR"
 
-#: app/tools/gimprectselecttool.c:459
+#: app/tools/gimprectselecttool.c:464
 msgid "Selection: "
 msgstr "Selección: "
 
@@ -8495,6 +8510,13 @@ msgstr "Cantidad de líneas de la rejilla"
 #: libgimptool/gimptoolenums.c:138
 msgid "Grid Line Spacing"
 msgstr "Espaciado de las líneas de la rejilla"
+
+#~ msgid "Sets the number of operations kept on the undo stack."
+#~ msgstr ""
+#~ "Establece la cantidad de operaciones mantenidas en la pila de deshacer."
+
+#~ msgid "Levels of Undo:"
+#~ msgstr "Niveles de deshacer:"
 
 #~ msgid "Undo History: %s"
 #~ msgstr "Historial de deshacer: %s"
