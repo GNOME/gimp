@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpdock.c
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2003 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -710,104 +710,3 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
 
   return FALSE;
 }
-
-
-/*
-
-static gboolean
-gimp_dock_separator_button_press (GtkWidget      *widget,
-				  GdkEventButton *bevent,
-				  gpointer        data)
-{
-  if (bevent->type == GDK_BUTTON_PRESS)
-    {
-      if (bevent->button == 1)
-        {
-          gtk_grab_add (widget);
-        }
-    }
-
-  return TRUE;
-}
-
-static gboolean
-gimp_dock_separator_button_release (GtkWidget      *widget,
-				    GdkEventButton *bevent,
-				    gpointer        data)
-{
-  if (bevent->button == 1)
-    {
-      gtk_grab_remove (widget);
-    }
-
-  return TRUE;
-}
-
-static void
-gimp_dock_tab_drag_begin (GtkWidget      *widget,
-			  GdkDragContext *context,
-			  gpointer        data)
-{
-  GimpDockable *dockable;
-  GtkWidget    *window;
-  GtkWidget    *frame;
-  GtkWidget    *label;
-
-  dockable = GIMP_DOCKABLE (data);
-
-  window = gtk_window_new (GTK_WINDOW_POPUP);
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-  gtk_container_add (GTK_CONTAINER (window), frame);
-  gtk_widget_show (frame);
-
-  label = gtk_label_new (dockable->name);
-  gtk_misc_set_padding (GTK_MISC (label), 10, 5);
-  gtk_container_add (GTK_CONTAINER (frame), label);
-  gtk_widget_show (label);
-
-  gtk_widget_show (window);
-
-  g_object_set_data_full (G_OBJECT (dockable), "gimp-dock-drag-widget",
-			  window,
-			  (GDestroyNotify) gtk_widget_destroy);
-
-  gtk_drag_set_icon_widget (context, window,
-			    -8, -8);
-}
-
-static void
-gimp_dock_tab_drag_end (GtkWidget      *widget,
-			GdkDragContext *context,
-			gpointer        data)
-{
-  GimpDockable *dockable;
-  GtkWidget    *drag_widget;
-
-  dockable = GIMP_DOCKABLE (data);
-
-  drag_widget = g_object_get_data (G_OBJECT (dockable),
-                                   "gimp-dock-drag-widget");
-
-  if (drag_widget)
-    {
-      GtkWidget *dock;
-
-      g_object_set_data (G_OBJECT (dockable), "gimp-dock-drag-widget", NULL);
-
-      dock = gimp_dock_new ();
-
-      gtk_window_set_position (GTK_WINDOW (dock), GTK_WIN_POS_MOUSE);
-
-      g_object_ref (dockable);
-
-      gimp_dock_remove (dockable->dock, dockable);
-      gimp_dock_add (GIMP_DOCK (dock), dockable, -1, -1);
-
-      g_object_unref (dockable);
-
-      gtk_widget_show (dock);
-    }
-}
-*/

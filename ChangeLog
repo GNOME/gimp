@@ -1,3 +1,18 @@
+2003-11-24  Michael Natterer  <mitch@gimp.org>
+
+	Fixed intra-session position management for file dialogs and newly
+	created docks:
+
+	* app/widgets/gimpdockable.c (gimp_dockable_detach)
+	* app/gui/file-dialog-utils.c (file_dialog_new): don't call
+	gtk_window_set_position() on session managed dialogs and docks.
+
+	* app/widgets/gimpdialogfactory.c (gimp_dialog_factory_add_dialog):
+	make sure new docks get GDK_HINT_USER_POS set so they remember
+	their positions across hide/show.
+
+	* app/widgets/gimpdock.c: removed unused disabled code.
+
 2003-11-24  Sven Neumann  <sven@gimp.org>
 
 	* Made 1.3.23 release.

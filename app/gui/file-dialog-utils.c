@@ -68,7 +68,6 @@ file_dialog_new (Gimp              *gimp,
 
   g_object_set_data (G_OBJECT (filesel), "gimp", gimp);
 
-  gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
   gtk_window_set_role (GTK_WINDOW (filesel), role);
 
   gimp_help_connect (filesel, gimp_standard_help_func, help_id, NULL);

@@ -817,8 +817,8 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
               info->toplevel_entry = entry;
 
               /*  if we create a new session info, we never call
-               *  gimp_dialog_factory_set_window_geometry(), but still
-               *  the dialog needs GDK_HINT_USER_POS so it keeps its
+               *  gimp_session_info_set_geometry(), but still the
+               *  dialog needs GDK_HINT_USER_POS so it keeps its
                *  position when hidden/shown within this(!) session.
                */
               if (entry->session_managed)
@@ -868,6 +868,15 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
           D (g_print ("%s: creating session info %p (widget %p) for dock\n",
                       G_GNUC_FUNCTION,
                       info, info->widget));
+
+          /*  if we create a new session info, we never call
+           *  gimp_session_info_set_geometry(), but still the
+           *  dialog needs GDK_HINT_USER_POS so it keeps its
+           *  position when hidden/shown within this(!) session.
+           */
+          g_signal_connect (dialog, "configure_event",
+                            G_CALLBACK (gimp_dialog_factory_set_user_pos),
+                            NULL);
 
 	  factory->session_infos = g_list_append (factory->session_infos, info);
 	}
