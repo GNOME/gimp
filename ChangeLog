@@ -1,3 +1,10 @@
+2000-10-19  Sven Neumann  <sven@gimp.org>
+
+	* app/authors.h
+	* tools/authorsgen/contributors: updated after Seth's change to
+	AUTHORS. Please do always change the file contributors, then run
+	authorsgen.
+
 2000-10-18  Seth Burgess <sjburges@gimp.org>
 
 	*app/color_cmds.c
