@@ -72,7 +72,7 @@
     (gimp-invert layer3)
     (plug-in-gauss-iir 1 img layer3 shadow-blur-radius TRUE TRUE)
 
-    (gimp-channel-ops-offset layer3 0 1 s-offset-x s-offset-y)
+    (gimp-drawable-offset layer3 0 1 s-offset-x s-offset-y)
 
     (gimp-layer-set-visible layer2 FALSE)
     (gimp-layer-set-visible pattern TRUE)
