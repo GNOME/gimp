@@ -1,3 +1,9 @@
+2004-06-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimptoolbox.c (gimp_toolbox_button_accel_changed):
+	do like GtkAccelLabel does and turn underscores in accels into
+	spaces so e.g. "Page_Up" becomes "Page Up".
+
 2004-06-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell.c: reordered drop destinations

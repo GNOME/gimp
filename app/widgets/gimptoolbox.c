@@ -570,6 +570,16 @@ gimp_toolbox_button_accel_find_func (GtkAccelKey *key,
 }
 
 static void
+gimp_toolbox_substitute_underscores (gchar *str)
+{
+  gchar *p;
+
+  for (p = str; *p; p++)
+    if (*p == '_')
+      *p = ' ';
+}
+
+static void
 gimp_toolbox_button_accel_changed (GtkAccelGroup   *accel_group,
                                    guint            unused1,
                                    GdkModifierType  unused2,
@@ -655,6 +665,7 @@ gimp_toolbox_button_accel_changed (GtkAccelGroup   *accel_group,
               tmp = gtk_accelerator_name (accel_key->accel_key, 0);
               if (tmp[0] != 0 && tmp[1] == 0)
                 tmp[0] = g_ascii_toupper (tmp[0]);
+              gimp_toolbox_substitute_underscores (tmp);
               g_string_append (gstring, tmp);
               g_free (tmp);
             }
