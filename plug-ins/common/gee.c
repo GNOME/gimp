@@ -44,13 +44,13 @@
 
 /* Declare local functions. */
 static void query (void);
-static void run   (gchar   *name,
-		   gint     nparams,
+static void run   (gchar      *name,
+		   gint        nparams,
 		   GimpParam  *param,
-		   gint    *nreturn_vals,
+		   gint       *nreturn_vals,
 		   GimpParam **return_vals);
 
-static void do_playback (void);
+static void do_playback            (void);
 
 static gint window_delete_callback (GtkWidget *widget,
 				    GdkEvent  *event,
@@ -61,9 +61,9 @@ static gint step_callback          (gpointer   data);
 static void toggle_feedbacktype    (GtkWidget *widget,
 				    gpointer   data);
 
-static void         render_frame        (void);
-static void         show_frame          (void);
-static void         init_preview_misc   (void);
+static void render_frame           (void);
+static void show_frame             (void);
+static void init_preview_misc      (void);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -100,7 +100,7 @@ static GtkPreview *preview = NULL;
 static gint32      image_id;
 static gint32      total_frames;
 static gint32     *layers;
-static GimpDrawable  *drawable;
+static GimpDrawable      *drawable;
 static GimpImageBaseType  imagetype;
 static guchar     *palette;
 static gint        ncolours;
@@ -131,8 +131,7 @@ query (void)
 			 "Adam D. Moss <adam@gimp.org>",
 			 "Adam D. Moss <adam@gimp.org>",
 			 "1998",
-			 N_("<Image>/Filters/Toys/The Egg..."),
-			 /*NULL,*/
+			 NULL,
 			 "RGB*, INDEXED*, GRAY*",
 			 GIMP_PLUGIN,
 			 nargs, 0,
@@ -140,14 +139,14 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     n_params,
+run (gchar      *name,
+     gint        n_params,
      GimpParam  *param, 
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpRunModeType run_mode;
+  static GimpParam  values[1];
+  GimpRunModeType   run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   *nreturn_vals = 1;
@@ -181,10 +180,9 @@ run (gchar   *name,
 }
 
 
-
 static void
-build_dialog (GimpImageBaseType basetype,
-	      char*      imagename)
+build_dialog (GimpImageBaseType  basetype,
+	      gchar             *imagename)
 {
   GtkWidget *dlg;
   GtkWidget *button;
@@ -286,9 +284,10 @@ build_dialog (GimpImageBaseType basetype,
 }
 
 
-static void init_lut(void)
+static void 
+init_lut (void)
 {
-  int i;
+  gint i;
 
   for (i=0; i<LUTSIZE; i++)
     {
@@ -299,7 +298,8 @@ static void init_lut(void)
 }
 
 
-static void do_playback(void)
+static void 
+do_playback (void)
 {
   layers    = gimp_image_get_layers (image_id, &total_frames);
   imagetype = gimp_image_base_type(image_id);
@@ -327,8 +327,9 @@ static void do_playback(void)
 /* Rendering Functions */
 
 /* Adam's silly algorithm. */
-void domap1(unsigned char *src, unsigned char *dest,
-	    int bx, int by, int cx, int cy)
+static void 
+domap1 (unsigned char *src, unsigned char *dest,
+	int bx, int by, int cx, int cy)
 {
   unsigned int dy;
   signed int bycxmcybx;
@@ -400,8 +401,9 @@ void domap1(unsigned char *src, unsigned char *dest,
 }
 
 /* 3bypp variant */
-void domap3(unsigned char *src, unsigned char *dest,
-	    int bx, int by, int cx, int cy)
+static void 
+domap3(unsigned char *src, unsigned char *dest,
+       int bx, int by, int cx, int cy)
 {
   unsigned int dy;
   signed int bycxmcybx;
@@ -481,7 +483,7 @@ void domap3(unsigned char *src, unsigned char *dest,
 
 
 static void
-render_frame(void)
+render_frame (void)
 {
   int i;
   static int frame = 0;
@@ -652,7 +654,7 @@ render_frame(void)
 
 
 static void
-show_frame(void)
+show_frame (void)
 {
 #ifdef RAPH_IS_HOME
 #else
@@ -663,10 +665,10 @@ show_frame(void)
 
 
 static void
-init_preview_misc(void)
+init_preview_misc (void)
 {
   GimpPixelRgn pixel_rgn;
-  int i;
+  gint i;
   gboolean has_alpha;
 
   if ((imagetype == GIMP_RGB) || (imagetype == GIMP_INDEXED))
@@ -814,11 +816,11 @@ init_preview_misc(void)
 /* Util. */
 
 static int
-do_step(void)
+do_step (void)
 {
-  render_frame();
+  render_frame ();
 
-  return(1);
+  return 1;
 }
 
 
@@ -832,8 +834,8 @@ window_delete_callback (GtkWidget *widget,
 {
   gtk_idle_remove (idle_tag);
 
-  gdk_flush();
-  gtk_main_quit();
+  gdk_flush ();
+  gtk_main_quit ();
 
   return FALSE;
 }

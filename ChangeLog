@@ -1,3 +1,10 @@
+2000-11-15  Sven Neumann  <sven@gimp.org>
+
+	* app/fileops.c: we used to g_free memory returned by strdup() here!
+	Also we used to append DIR_SEPARATORs to the filename shown in the
+	file_selector even if it already ended in one. Fixed all this, closed
+	a memleak and cleaned up the code.
+
 Mon Nov 13 01:28:24 PST 2000 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/common/url.c: set all the locale variables we can, to

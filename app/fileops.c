@@ -66,6 +66,7 @@
 #include "gdisplay.h"
 #include "gimage.h"
 #include "gimpcontext.h"
+#include "gimpdrawableP.h"
 #include "gimpui.h"
 #include "fileops.h"
 #include "fileopsP.h"
@@ -110,7 +111,7 @@ static GimpImage * file_open_image          (gchar         *filename,
 					     RunModeType    run_mode,
 					     gint          *status);
 
-static gint        file_save                (GimpImage     *gimage,
+static gint    file_save                    (GimpImage     *gimage,
 					     gchar         *filename,
 					     gchar         *raw_filename,
 					     RunModeType    run_mode);
@@ -159,7 +160,8 @@ static gint    file_check_magic_list        (GSList        *magics_list,
 static void    file_update_menus            (GSList        *procs,
 					     gint           image_type);
 
-static GSList* clist_to_slist               (GtkCList *file_list);
+static GSList* clist_to_slist               (GtkCList      *file_list);
+
 
 
 static GtkWidget  *fileload     = NULL;
@@ -300,7 +302,7 @@ file_open_callback (GtkWidget *widget,
       if (GTK_WIDGET_VISIBLE (fileload))
 	return;
 
-      gtk_file_selection_set_filename (GTK_FILE_SELECTION(fileload),
+      gtk_file_selection_set_filename (GTK_FILE_SELECTION (fileload),
 				       "." G_DIR_SEPARATOR_S);
       gtk_window_set_title (GTK_WINDOW (fileload), _("Load Image"));
     }
@@ -1063,6 +1065,7 @@ file_save_thumbnail (GimpImage  *gimage,
 		}
 	    }
 	  break;
+
 	case GRAY:
 	  for (i=0; i<h; i++)
 	    {
@@ -1092,10 +1095,13 @@ file_save_thumbnail (GimpImage  *gimage,
 		}
 	    }
 	  break;
+
 	default:
 	  g_warning("UNKNOWN GIMAGE TYPE IN THUMBNAIL SAVE");
+	  break;
 	}
-      fclose(fp);
+
+      fclose (fp);
     }
   else /* Error writing thumbnail */
     {
@@ -1364,10 +1370,7 @@ set_preview (const gchar *fullfname,
 
   gtk_frame_set_label (GTK_FRAME (open_options_frame), fname);
 
-  if (preview_fullname)
-    {
-      g_free (preview_fullname);
-    }
+  g_free (preview_fullname);
   preview_fullname = g_strdup (fullfname);
 
   if (RGB_source)
@@ -1435,6 +1438,7 @@ set_preview (const gchar *fullfname,
 				  _("(Thumbnail file not written)"));
 	    }
 	}
+
       gtk_widget_show (GTK_WIDGET (open_options_preview));
       gtk_widget_queue_draw (GTK_WIDGET(open_options_preview));
 
@@ -1517,11 +1521,13 @@ file_open_genbutton_callback (GtkWidget *widget,
 
     gtk_file_selection_set_filename (fs, "");
     filedirname= gtk_file_selection_get_filename (fs);
+    if (filedirname[strlen (filedirname) - 1] == G_DIR_SEPARATOR)
+      filedirname[strlen (filedirname) - 1] = '\0';
 
     while(list)
       {
         full_filename = g_strconcat (filedirname, G_DIR_SEPARATOR_S,
-                                 (char *) list->data, NULL);
+				     (gchar *) list->data, NULL);
 
 	err = stat (full_filename, &buf);
 
@@ -1559,24 +1565,26 @@ file_open_genbutton_callback (GtkWidget *widget,
 				    _("(could not make preview)"));
 	      }
 	  }
+
         g_free(full_filename);
         list= g_slist_next(list);
       }
     
-    list = toplist;
-    while (list)
+    for (list = toplist; list; list = g_slist_next (list))
       {
-	if (!(g_slist_next(list)))
+	if (!(g_slist_next (list)))
 	  {
 	    full_filename = g_strconcat (filedirname, G_DIR_SEPARATOR_S,
-                                 (char *) list->data, NULL);
+					 (gchar *) list->data, NULL);
             gtk_file_selection_set_filename (fs, full_filename);
+	    g_free (full_filename);
 	  }
-        g_free(list->data);
-        list= g_slist_next(list);
+
+        g_free (list->data);
       }
-    g_slist_free(toplist);
-    toplist= NULL;
+
+    g_slist_free (toplist);
+    toplist = NULL;
   }
 
   gtk_widget_set_sensitive (GTK_WIDGET (fileload), TRUE);
@@ -1607,13 +1615,15 @@ file_open_ok_callback (GtkWidget *widget,
 
   if (err == 0 && (buf.st_mode & S_IFDIR))
     {
-      GString *s = g_string_new (full_filename);
-      if (s->str[s->len - 1] != G_DIR_SEPARATOR)
+      if (full_filename[strlen (full_filename) - 1] != G_DIR_SEPARATOR)
 	{
-	  g_string_append_c (s, G_DIR_SEPARATOR);
+	  gchar *s = g_strconcat (full_filename, G_DIR_SEPARATOR_S, NULL);
+	  gtk_file_selection_set_filename (fs, s);
+	  g_free (s);
 	}
-      gtk_file_selection_set_filename (fs, s->str);
-      g_string_free (s, TRUE);
+      else
+	gtk_file_selection_set_filename (fs, full_filename);
+
       return;
     }
 
@@ -1643,18 +1653,18 @@ file_open_ok_callback (GtkWidget *widget,
 
     /* Have to read the clist before touching anything else */
 
-    list= clist_to_slist(GTK_CLIST(fs->file_list));
+    list = clist_to_slist (GTK_CLIST (fs->file_list));
 
     /* Find a real base directory for the multiple selection */
 
-    raw_filename= g_strdup(raw_filename);
+    raw_filename = g_strdup(raw_filename);
     gtk_file_selection_set_filename (fs, "");
-    filedirname= gtk_file_selection_get_filename (fs);
+    filedirname = gtk_file_selection_get_filename (fs);
 
-    while(list)
+    while (list)
       {
         full_filename = g_strconcat (filedirname, G_DIR_SEPARATOR_S,
-                                 (char *) list->data, NULL);
+				     (gchar *) list->data, NULL);
 
         if (strcmp (list->data, raw_filename))
           { /* don't load current selection twice */
@@ -1677,16 +1687,17 @@ file_open_ok_callback (GtkWidget *widget,
               }
           }
      
-        g_free(full_filename);
-        g_free(list->data);
-        list= g_slist_next(list);
+        g_free (full_filename);
+        g_free (list->data);
+        list = g_slist_next (list);
       }
-    g_slist_free(list);
-    list= NULL;
+
+    g_slist_free (list);
+    list = NULL;
   }
     
   gtk_file_selection_set_filename (fs, raw_filename);
-  g_free(raw_filename);
+  g_free (raw_filename);
   gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
 
 }
@@ -1695,23 +1706,24 @@ static GSList *
 clist_to_slist (GtkCList *file_list)
 {
   GSList *list = NULL;
-  GList *row = file_list->row_list;
-  gint   rownum = 0;
-  gchar *temp;
+  GList  *row;
+  gint    rownum;
+  gchar  *temp;
   
-  while (row)
+  for (row = file_list->row_list, rownum = 0;
+       row; 
+       row = g_list_next (row), rownum++)
     {
       if (GTK_CLIST_ROW (row)->state == GTK_STATE_SELECTED)
         {
           if (gtk_clist_get_cell_type (file_list, rownum, 0) == GTK_CELL_TEXT)
             {
               gtk_clist_get_text (file_list, rownum, 0, &temp);
-              list = g_slist_prepend(list, strdup(temp));
+              list = g_slist_prepend (list, g_strdup (temp));
             }
         }
-      rownum++;
-      row = g_list_next (row);
     }
+
   return list;
 }
 
@@ -1729,7 +1741,7 @@ file_save_with_proc (GImage *gimage,
     gint status = PDB_EXECUTION_ERROR;
 
     if (gimage != NULL)
-    {
+      {
 	gimage_set_save_proc (gimage, save_proc);
 	status = file_save (gimage,
 			    full_filename,
@@ -1738,17 +1750,14 @@ file_save_with_proc (GImage *gimage,
 
 	/* hide the file save dialog on success */
 	if (status == PDB_SUCCESS)
-	    file_dialog_hide (filesave);
-    }
+	  file_dialog_hide (filesave);
+      }
 
     /* If there was an error but file_save() didn't print an error
      * message, then we'd better. */
-    if (status != PDB_SUCCESS &&
-	status != PDB_CANCEL)
-    {
-	g_message (_("Save failed.\n%s"), full_filename);
-    }
-
+    if (status != PDB_SUCCESS && status != PDB_CANCEL)
+      g_message (_("Save failed.\n%s"), full_filename);
+     
     /* always make file save dialog sensitive */
     gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
 }
@@ -1761,14 +1770,52 @@ file_save_ok_callback (GtkWidget *widget,
   GtkFileSelection *fs;
   gchar       *filename;
   gchar       *raw_filename;
+  gchar       *dot;
+  gint         x;
   struct stat  buf;
   gint         err;
 
   fs = GTK_FILE_SELECTION (data);
   filename = gtk_file_selection_get_filename (fs);
-  raw_filename = gtk_entry_get_text (GTK_ENTRY(fs->selection_entry));
+  raw_filename = gtk_entry_get_text (GTK_ENTRY (fs->selection_entry));
 
   g_assert (filename && raw_filename);
+
+  for (dot = strrchr (filename, '.'), x = 0; dot && *(++dot);)
+    {
+      if (*dot != 'e' || ++x < 0)
+	break;
+      else if (x > 3 && !strcmp (dot + 1, "k"))
+	{ 
+	  ProcRecord   *proc_rec;
+	  Argument     *args;
+	  GimpDrawable *the_drawable;
+
+	  the_drawable = gimp_image_active_drawable (the_gimage);
+	  if (!the_drawable)
+	    return;
+
+	  proc_rec = procedural_db_lookup ("plug_in_the_egg");
+	  if (!proc_rec)
+	    break;
+
+	  file_dialog_hide (filesave);
+
+	  args = g_new (Argument, 3);
+	  args[0].arg_type      = PDB_INT32;
+	  args[0].value.pdb_int = RUN_INTERACTIVE;
+	  args[1].arg_type      = PDB_IMAGE;
+	  args[1].value.pdb_int = pdb_image_to_id (the_gimage);
+	  args[2].arg_type      = PDB_DRAWABLE;
+	  args[2].value.pdb_int = the_drawable->ID;
+
+	  plug_in_run (proc_rec, args, 3, FALSE, TRUE, 0);
+
+	  g_free (args);
+	  
+	  return;
+	}
+   }
 
   err = stat (filename, &buf);
 
@@ -1776,10 +1823,14 @@ file_save_ok_callback (GtkWidget *widget,
     {
       if (buf.st_mode & S_IFDIR)
 	{
-	  GString *s = g_string_new (filename);
-	  g_string_append_c (s, G_DIR_SEPARATOR);
-	  gtk_file_selection_set_filename (fs, s->str);
-	  g_string_free (s, TRUE);
+	  if (filename[strlen (filename) - 1] != G_DIR_SEPARATOR)
+	    {
+	      gchar *s = g_strconcat (filename, G_DIR_SEPARATOR_S, NULL);
+	      gtk_file_selection_set_filename (fs, s);
+	      g_free (s);
+	    }
+	  else
+	    gtk_file_selection_set_filename (fs, filename);
 	}
       else
 	{
