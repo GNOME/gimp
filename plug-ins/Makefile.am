@@ -6,6 +6,7 @@ SUBDIRS = 			\
 	dbbrowser		\
 	script-fu		\
 	struc			\
+	@WEBBROWSER@		\
 	@TIFF@			\
 	@JPEG@			\
 	@PNG@			\
@@ -112,7 +113,6 @@ SUBDIRS = 			\
 	vinvert			\
 	vpropagate		\
 	waves			\
-	webbrowser		\
 	whirlpinch		\
 	xwd			\
 	zealouscrop

@@ -63,11 +63,6 @@ AC_DEFUN(AC_GIMP_CHECK,
 		x_libs="-lXext $x_libs", ,
 		$x_libs)
 
-	dnl FIXME: I have to think of a better way
-	AC_CHECK_LIB(Xmu, XmuClientWindow,
-		x_libs="-lXmu $x_libs", ,
-		$x_libs)
-
 	X_LIBS="$X_LIBS -lgtk -lgdk -lglib $x_libs -lm"
 
  	LDFLAGS="$saved_ldflags $X_LDFLAGS $X_LIBS"
@@ -122,6 +117,13 @@ if eval "test x$GCC = xyes"; then
     fi
   fi
 fi
+
+dnl Test for Xmu
+  if test -z "$LIBXMU_LIB"; then
+    AC_CHECK_LIB(Xmu, XmuClientWindow,
+      WEBBROWSER="webbrowser"; LIBXMU_LIB='-lXmu',
+      AC_MSG_WARN(*** webbrowser plug-in will not be built ***))
+  fi
 
 dnl Test for libtiff
   if test -z "$LIBTIFF_LIB"; then
@@ -241,6 +243,8 @@ AC_PATH_PROG(EMACS, emacs, :)
 AC_SUBST(gimpdir)
 AC_SUBST(gimpdatadir)
 AC_SUBST(gimpplugindir)
+AC_SUBST(WEBBROWSER)
+AC_SUBST(LIBXMU_LIB)
 AC_SUBST(TIFF)
 AC_SUBST(LIBTIFF_LIB)
 AC_SUBST(JPEG)

@@ -16,7 +16,7 @@ LDADD = \
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(X_LIBS)				\
-					\
+	@LIBXMU_LIB@				\
 	-lc
 
 DEPS = \

@@ -1,0 +1,21 @@
+If you want to hack on the GIMP project, it will make you life easier
+to have the following packages installed:
+
+	- GNU autoconf 2.12
+	- GNU automake 1.2d
+		Available in ftp://ftp.cygnus.com/pub/tromey
+	- GNU libtool 1.0f
+
+These should be available by ftp from prep.ai.mit.edu or any of the
+fine GNU mirrors.  Beta software can be found at alpha.gnu.org.
+
+If you are accessing gnome via CVS, then you will need to take several
+steps to get it to compile.  These are:
+
+    cvsroot/gimp# aclocal; automake; autoconf
+
+N.b., the "configure" script will not exist until you take these
+steps.  
+
+Before running configure, make sure you have libtool in your path.
+

@@ -48,6 +48,7 @@ static char *scroll_text[] =
   "Francisco Bustamente",
   "Ed Connel",
   "Andreas Dilger",
+  "Misha Dynin",
   "Larry Ewing",
   "David Forsyth",
   "Jim Geuther",
