@@ -262,17 +262,31 @@ gimp_menu_position (GtkMenu  *menu,
 
   screen = gtk_widget_get_screen (GTK_WIDGET (menu));
 
-  screen_width  = gdk_screen_get_width (screen)  + 2;
-  screen_height = gdk_screen_get_height (screen) + 2;
+  screen_width  = gdk_screen_get_width (screen);
+  screen_height = gdk_screen_get_height (screen);
 
-  *x = CLAMP (pointer_x, 2, MAX (0, screen_width  - requisition.width));
-  *y = CLAMP (pointer_y, 2, MAX (0, screen_height - requisition.height));
+  if (gtk_widget_get_direction (GTK_WIDGET (menu)) == GTK_TEXT_DIR_RTL)
+    {
+      *x = pointer_x - 2 - requisition.width;
 
-  *x += (pointer_x <= *x) ? 2 : -2;
-  *y += (pointer_y <= *y) ? 2 : -2;
+      if (*x < 0)
+        *x = pointer_x + 2;
+    }
+  else
+    {
+      *x = pointer_x + 2;
 
-  *x = MAX (*x, 0);
-  *y = MAX (*y, 0);
+      if (*x + requisition.width > screen_width)
+        *x = pointer_x - 2 - requisition.width;
+    }
+
+  *y = pointer_y + 2;
+
+  if (*y + requisition.height > screen_height)
+    *y = pointer_y - 2 - requisition.height;
+
+  if (*x < 0) *x = 0;
+  if (*y < 0) *y = 0;
 }
 
 /**

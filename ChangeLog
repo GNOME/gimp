@@ -1,3 +1,9 @@
+2003-09-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpwidgets-utils.c (gimp_menu_position)
+	* app/widgets/gimpcontainerpopup.c (gimp_container_popup_show):
+	more menus which pop up correctly with RTL languages.
+
 2003-09-24  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpwidgets.c (gimp_table_attach_aligned): use a

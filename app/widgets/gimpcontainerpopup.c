@@ -424,8 +424,8 @@ gimp_container_popup_show (GimpContainerPopup *popup,
   GdkScreen      *screen;
   gint            orig_x;
   gint            orig_y;
-  gint            scr_width;
-  gint            scr_height;
+  gint            screen_width;
+  gint            screen_height;
   gint            x;
   gint            y;
 
@@ -443,20 +443,30 @@ gimp_container_popup_show (GimpContainerPopup *popup,
 
   screen = gtk_widget_get_screen (widget);
 
-  scr_width  = gdk_screen_get_width (screen);
-  scr_height = gdk_screen_get_height (screen);
+  screen_width  = gdk_screen_get_width (screen);
+  screen_height = gdk_screen_get_height (screen);
 
-  x = orig_x;
+  if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
+    {
+      x = orig_x + widget->allocation.width - requisition.width;
+
+      if (x < 0)
+        x -= widget->allocation.width - requisition.width;
+    }
+  else
+    {
+      x = orig_x;
+
+      if (x + requisition.width > screen_width)
+        x += widget->allocation.width - requisition.width;
+    }
+
   y = orig_y + widget->allocation.height;
 
-  if ((x + requisition.width) > scr_width)
-    x += (widget->allocation.width - requisition.width);
-
-  if ((y + requisition.height) > scr_height)
+  if (y + requisition.height > screen_height)
     y = orig_y - requisition.height;
 
   gtk_window_move (GTK_WINDOW (popup), x, y);
-
   gtk_widget_show (GTK_WIDGET (popup));
 }
 
