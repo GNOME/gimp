@@ -743,23 +743,20 @@ paint_core_get_color_from_gradient (PaintCore *paint_core,
 {
   double y;
   double distance;      /* distance in current brush stroke */
-  double temp_opacity;  /* so i can blank out stuff */
 
   distance = paint_core->pixel_dist;
   y = ((double) distance / gradient_length);
-  temp_opacity = 1.0;
 
-  /* for the once modes, set alpha to 0.0 after the first chunk */
-  if (y >= 1.0 && (mode == ONCE_FORWARD || mode == ONCE_BACKWARDS))
-    temp_opacity = 0.0; 
+  /* for the once modes, set y close to 1.0 after the first chunk */
+  if ( (mode == ONCE_FORWARD || mode == ONCE_BACKWARDS) && y >= 1.0 )
+    y = 0.9999999; 
 
-  if ( ((int)y & 1 && mode != LOOP_SAWTOOTH) || mode == ONCE_BACKWARDS )
+  if ( (((int)y & 1) && mode != LOOP_SAWTOOTH) || mode == ONCE_BACKWARDS )
     y = 1.0 - (y - (int)y);
   else
     y = y - (int)y;
 
   gradient_get_color_at (gimp_context_get_gradient (NULL), y, r, g, b, a);
-  *a = (temp_opacity * *a);
 }
   
 

@@ -49,16 +49,10 @@ commit access: yes
 
 Name: Sven Neuman
 Email: sven@gimp.org
-url: http://www-public.rz.uni-duesseldorf.de/~neumanns/gimp/
+url: http://sven.gimp.org
 ircnick: Sven
-expertise: GUI enhancements, Session managment, Script-Fu 
-current work: 	well, currently there are only a few plans:
-		- helping Wolfgang Hofer with the integration of GAP
-		  (GIMP Animation Plugin)
-		- looking into german translation and i18n stuff
-		- more GUI enhancements like displaying lengths in 
-		  realworld units (cm, inch) now that we have 
-		  resolution info in the core 
+expertise: GUI, Pressure Support, Export, Session managment, Script-Fu 
+current work: everything that's broken
 commit access: yes
 
 Name: Marc Lehmann
@@ -189,5 +183,12 @@ Email: gregm@comstar.net
 ircnick: Centove
 expertise: rpm specs file (and probably some more ;)
 current work: gimp.specs file
+commit access: yes
+
+Name: Michael Natterer
+Email: mitch@gimp.org
+ircnick: 
+expertise: GUI, Help System, Context System
+current work: 
 commit access: yes
 

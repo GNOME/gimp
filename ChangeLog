@@ -1,3 +1,12 @@
+Wed Dec 22 22:11:35 CET 1999  Sven Neumann <sven@gimp.org>
+
+	* MAINTAINERS: updated my entry and added Mitch
+
+	* app/paint_core.c: Changed the behaviour of the Gradient Brush to
+	continue with the end color when using "Once Forward/Backward" modes.
+	Isn't that what was wanted in the first place? It feels much more
+	intuitive and useful to me. Please complain if you don't like this.
+	
 Tue Dec 21 08:48:17 CET 1999  Marc Lehmann <pcg@goof.com>
 
         * MAINTAINERS: Added Gregory McLean as gimp.specs maintainer/
