@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-09-19 17:30+0200\n"
-"PO-Revision-Date: 2003-09-29 18:06+0200\n"
+"PO-Revision-Date: 2003-10-01 13:12+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -6205,23 +6205,20 @@ msgid "Pixel Dimensions"
 msgstr "Dimensione in pixel"
 
 #: app/gui/resize-dialog.c:217
-#, fuzzy
 msgid "Layer Boundary Size"
-msgstr "/Dimensione confine del livello..."
+msgstr "Dimensione confine del livello"
 
 #: app/gui/resize-dialog.c:218
 msgid "Set Layer Boundary Size"
 msgstr "Configura confine del livello"
 
 #: app/gui/resize-dialog.c:224
-#, fuzzy
 msgid "Canvas Size"
-msgstr "Configura dimensione della superficie"
+msgstr "Dimensione della superficie"
 
 #: app/gui/resize-dialog.c:225
-#, fuzzy
 msgid "Set Image Canvas Size"
-msgstr "Configura dimensione della superficie"
+msgstr "Configura la dimensione della superficie"
 
 #. the original width & height labels
 #: app/gui/resize-dialog.c:280 app/tools/gimpscaletool.c:174
@@ -6314,48 +6311,40 @@ msgid "The GIMP"
 msgstr "The GIMP"
 
 #: app/gui/templates-commands.c:133
-#, fuzzy
 msgid "New Template"
-msgstr "Visualizzazione"
+msgstr "Nuovo modello"
 
 #: app/gui/templates-commands.c:135
-#, fuzzy
 msgid "Create a New Template"
-msgstr "Commento utilizzato per le nuove immagini"
+msgstr "Crea un nuovo modello"
 
 #: app/gui/templates-commands.c:202 app/gui/templates-commands.c:204
-#, fuzzy
 msgid "Edit Template"
-msgstr "Replica"
+msgstr "Modifica modello"
 
 #: app/gui/templates-menu.c:43
-#, fuzzy
 msgid "/_Create Image from Template..."
-msgstr "Commento utilizzato per le nuove immagini"
+msgstr "/_Crea immagine dal modello..."
 
 #: app/gui/templates-menu.c:51
-#, fuzzy
 msgid "/_New Template..."
-msgstr "Visualizzazione"
+msgstr "/_Nuovo modello..."
 
 #: app/gui/templates-menu.c:56
-#, fuzzy
 msgid "/D_uplicate Template..."
-msgstr "/Duplica tracciato"
+msgstr "/D_uplica modello..."
 
 #: app/gui/templates-menu.c:61
-#, fuzzy
 msgid "/_Edit Template..."
-msgstr "Cancella palette"
+msgstr "/_Modifica palette..."
 
 #: app/gui/templates-menu.c:66
-#, fuzzy
 msgid "/_Delete Template..."
-msgstr "Cancella palette"
+msgstr "/_Cancella modello..."
 
 #: app/gui/tips-dialog.c:94
 msgid "<b>Your GIMP tips file appears to be missing!</b>"
-msgstr ""
+msgstr "<p>Manca il file dei suggerimenti di GIMP!</p>"
 
 #: app/gui/tips-dialog.c:96
 #, fuzzy, c-format
@@ -6372,21 +6361,19 @@ msgstr ""
 
 #: app/gui/tips-dialog.c:133
 msgid "GIMP Tip of the Day"
-msgstr "GIMP Suggerimenti del giorno"
+msgstr "Suggerimenti del giorno di GIMP"
 
 #: app/gui/tips-dialog.c:197
 msgid "Show tip next time GIMP starts"
 msgstr "Mostra suggerimenti al prossimo avvio"
 
 #: app/gui/tips-dialog.c:221
-#, fuzzy
 msgid "_Previous Tip"
-msgstr "Precedente"
+msgstr "_Precedente"
 
 #: app/gui/tips-dialog.c:231
-#, fuzzy
 msgid "_Next Tip"
-msgstr "Successivo"
+msgstr "_Successivo"
 
 #. This is a special string to specify the language identifier to
 #. look for in the gimp-tips.xml file. Please translate the C in it
@@ -6395,7 +6382,7 @@ msgstr "Successivo"
 #.
 #: app/gui/tips-parser.c:165
 msgid "tips-locale:C"
-msgstr ""
+msgstr "tips-locale:it"
 
 #: app/gui/tool-options-dialog.c:100
 #, fuzzy
