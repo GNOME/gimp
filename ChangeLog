@@ -1,5 +1,10 @@
 2004-02-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimp-units.c (gimp_units_init, _exit): removed
+	redundant g_return_if_fail()s.
+
+2004-02-13  Michael Natterer  <mitch@gimp.org>
+
 	Fixed GimpData's default "writable" and "deletable" behaviour:
 
 	* app/core/gimpdata.c (gimp_data_init): default to writable and

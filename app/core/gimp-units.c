@@ -51,7 +51,6 @@ static GTokenType gimp_unitrc_unit_info_deserialize (GScanner *scanner,
 void
 gimp_units_init (Gimp *gimp)
 {
-  g_return_if_fail (gimp != NULL);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   gimp->user_units   = NULL;
@@ -61,7 +60,6 @@ gimp_units_init (Gimp *gimp)
 void
 gimp_units_exit (Gimp *gimp)
 {
-  g_return_if_fail (gimp != NULL);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   if (gimp->user_units)
