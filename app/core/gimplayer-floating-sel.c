@@ -105,7 +105,8 @@ floating_sel_remove (GimpLayer *layer)
 void
 floating_sel_anchor (GimpLayer *layer)
 {
-  GimpImage *gimage;
+  GimpImage    *gimage;
+  GimpDrawable *drawable;
 
   if (! (gimage = gimp_item_get_image (GIMP_ITEM (layer))))
     return;
@@ -136,8 +137,26 @@ floating_sel_anchor (GimpLayer *layer)
 			  GIMP_ITEM (layer)->width,
 			  GIMP_ITEM (layer)->height, TRUE);
 
+  drawable = layer->fs.drawable;
+
   /*  remove the floating selection  */
   gimp_image_remove_layer (gimage, layer);
+
+  /*  activate the drawable the floating selection was attached to  */
+  if (GIMP_IS_LAYER_MASK (drawable))
+    {
+      GimpLayerMask *mask = GIMP_LAYER_MASK (drawable);
+
+      gimp_image_set_active_layer (gimage, gimp_layer_mask_get_layer (mask));
+    }
+  else if (GIMP_IS_CHANNEL (drawable))
+    {
+      gimp_image_set_active_channel (gimage, GIMP_CHANNEL (drawable));
+    }
+  else
+    {
+      gimp_image_set_active_layer (gimage, GIMP_LAYER (drawable));
+    }
 
   /*  end the group undo  */
   gimp_image_undo_group_end (gimage);

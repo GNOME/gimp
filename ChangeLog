@@ -1,5 +1,12 @@
 2004-01-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimplayer-floating-sel.c (floating_sel_anchor):
+	explicitly activate the drawable the floating selection was
+	attached to (function was relying on implicit voodoo that
+	happened 1.2). Fixes bug #132162.
+
+2004-01-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpitem.[ch]: added "gboolean use_default_values"
 	to GimpItem::stroke().
 
