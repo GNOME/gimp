@@ -38,7 +38,6 @@ SUBDIRS = 			\
 	Lighting		\
 	MapObject		\
 	bmp			\
-	borderaverage		\
 	faxg3			\
 	fits			\
 	flame			\

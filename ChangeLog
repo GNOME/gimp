@@ -1,3 +1,9 @@
+Sun Apr 30 14:45:16 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	* configure.in
+	* plug-ins/common/borderaverage.c: moved from it's own directory to
+	common
+
 2000-04-30  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpprotocol.h: forgot to actually bump the version number.

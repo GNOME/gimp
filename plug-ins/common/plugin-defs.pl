@@ -10,6 +10,7 @@
     'autostretch_hsv' => { libdep => 'glib' },
     'blinds' => { libdep => 'gtk', ui => 1 },
     'blur' => { libdep => 'gtk', ui => 1 },
+    'borderaverage' => { libdep => 'gtk', ui => 1 },
     'bumpmap' => { libdep => 'gtk', ui => 1 },
     'bz2' => { libdep => 'glib' },
     'c_astretch' => { libdep => 'glib' },

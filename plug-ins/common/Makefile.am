@@ -9,7 +9,6 @@ EXTRA_DIST = \
 	winprint.c
 
 AM_CPPFLAGS = \
-	$(MAILER) \
 	-DLOCALEDIR=\""$(localedir)"\"
 
 INCLUDES = \
@@ -29,6 +28,7 @@ libexec_PROGRAMS = \
 	autostretch_hsv \
 	blinds \
 	blur \
+	borderaverage \
 	bumpmap \
 	bz2 \
 	c_astretch \
@@ -251,6 +251,15 @@ blur_SOURCES = \
 	blur.c
 
 blur_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
+	$(top_builddir)/libgimp/libgimp.la	\
+	$(GTK_LIBS)				\
+	$(INTLLIBS)
+
+borderaverage_SOURCES = \
+	borderaverage.c
+
+borderaverage_LDADD = \
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
