@@ -1,5 +1,9 @@
 2004-01-26  Manish Singh  <yosh@gimp.org>
 
+	* gimp-zip.in: use new versioning defines.
+
+2004-01-26  Manish Singh  <yosh@gimp.org>
+
 	* configure.in: add m4_defines for gimp_unstable and gimp_full_name,
 	and define a GIMP_VISIBLE_NAME based on that.
 
