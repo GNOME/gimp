@@ -1,3 +1,13 @@
+2004-07-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-types.h: #define MIN and MAX values for
+	GimpCoords.pressure, .tilt and .wheel.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_get_event_coords)
+	(gimp_display_shell_get_device_coords): use the #defines instead
+	of hardcoded magic values when CLAMP()ing event or device values.
+
 2004-07-05  Sven Neumann  <sven@gimp.org>
 
 	* modules/Makefile.am: link all modules with libgimpmodule.
