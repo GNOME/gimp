@@ -95,13 +95,16 @@ static void   run        (const gchar      *name,
 
 
 static GtkWidget * gimp_plugin_desc           (void);
+
 static gboolean    find_existing_mpath        (GtkTreeModel     *model,
                                                gchar            *mpath,
                                                GtkTreeIter      *return_iter);
+
 static void        list_store_select_callback (GtkTreeSelection *selection,
                                                PDesc            *pdesc);
 static void        tree_store_select_callback (GtkTreeSelection *selection,
                                                PDesc            *pdesc);
+
 static void        procedure_general_select_callback (PDesc *pdesc,
                                                       PInfo *pinfo);
 
@@ -136,7 +139,7 @@ query (void)
     { GIMP_PDB_INT32, "run_mode", "Interactive, [non-interactive]" }
   };
 
-  gimp_install_procedure ("plug_in_plug_in_details_gtk",
+  gimp_install_procedure ("plug_in_plug_in_details",
                           "Displays plugin details",
                           "Helps browse the plugin menus system. You can "
                           "search for plugin names, sort by name or menu "
@@ -174,7 +177,7 @@ run (const gchar      *name,
 
   INIT_I18N ();
 
-  if (strcmp (name, "plug_in_plug_in_details_gtk") == 0)
+  if (strcmp (name, "plug_in_plug_in_details") == 0)
     {
       GtkWidget *plugin_dialog;
 
@@ -633,6 +636,7 @@ find_existing_mpath (GtkTreeModel *model,
   GtkTreeIter  parent;
 
   path = gtk_tree_path_new_first ();
+
   if (gtk_tree_model_get_iter (model, &parent, path) == FALSE)
     {
       gtk_tree_path_free (path);
@@ -966,7 +970,7 @@ gimp_plugin_desc (void)
 
   /* the dialog box */
   plugindesc->dlg =
-    gimp_dialog_new (_("Plugin Descriptions"), "plugindetailsgtk2",
+    gimp_dialog_new (_("Plugin Descriptions"), "plugindetails",
                      NULL, 0,
                      gimp_standard_help_func, "filters/plugindetails.html",
 
@@ -1001,38 +1005,48 @@ gimp_plugin_desc (void)
   gtk_box_pack_start (GTK_BOX (vbox), notebook, TRUE, TRUE, 0);
 
   /* list : list in a scrolled_win */
-  list_store = gtk_list_store_new(LIST_N_COLUMNS,
-                                  G_TYPE_STRING,
-                                  G_TYPE_STRING,
-                                  G_TYPE_STRING,
-                                  G_TYPE_STRING,
-                                  G_TYPE_POINTER);
-  list_view =  gtk_tree_view_new_with_model (GTK_TREE_MODEL (list_store));
-  plugindesc->list_view =  GTK_TREE_VIEW (list_view);
-  g_object_unref (G_OBJECT (list_store));
+  list_store = gtk_list_store_new (LIST_N_COLUMNS,
+                                   G_TYPE_STRING,
+                                   G_TYPE_STRING,
+                                   G_TYPE_STRING,
+                                   G_TYPE_STRING,
+                                   G_TYPE_POINTER);
+
+  list_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (list_store));
+  g_object_unref (list_store);
+
+  plugindesc->list_view = GTK_TREE_VIEW (list_view);
 
   renderer = gtk_cell_renderer_text_new ();
-  column = gtk_tree_view_column_new_with_attributes (_("Name"), renderer,
-                                                      "text", LIST_NAME_COLUMN,
-                                                      NULL);
+  column = gtk_tree_view_column_new_with_attributes (_("Name"),
+                                                     renderer,
+                                                     "text",
+                                                     LIST_NAME_COLUMN,
+                                                     NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), column);
 
   renderer = gtk_cell_renderer_text_new ();
-  column = gtk_tree_view_column_new_with_attributes (_("Ins Date"), renderer,
-                                                      "text", LIST_DATE_COLUMN,
-                                                      NULL);
+  column = gtk_tree_view_column_new_with_attributes (_("Ins Date"),
+                                                     renderer,
+                                                     "text",
+                                                     LIST_DATE_COLUMN,
+                                                     NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), column);
 
   renderer = gtk_cell_renderer_text_new ();
-  column = gtk_tree_view_column_new_with_attributes (_("Menu Path"), renderer,
-                                                      "text", LIST_PATH_COLUMN,
-                                                      NULL);
+  column = gtk_tree_view_column_new_with_attributes (_("Menu Path"),
+                                                     renderer,
+                                                     "text",
+                                                     LIST_PATH_COLUMN,
+                                                     NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), column);
 
   renderer = gtk_cell_renderer_text_new ();
-  column = gtk_tree_view_column_new_with_attributes (_("Image Types"), renderer,
-                                                      "text", LIST_IMAGE_TYPES_COLUMN,
-                                                      NULL);
+  column = gtk_tree_view_column_new_with_attributes (_("Image Types"),
+                                                     renderer,
+                                                     "text",
+                                                     LIST_IMAGE_TYPES_COLUMN,
+                                                     NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (list_view), column);
 
 /*  g_signal_connect (plugindesc->clist, "click_column",
@@ -1047,7 +1061,7 @@ gimp_plugin_desc (void)
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (list_view));
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_BROWSE);
-  g_signal_connect (G_OBJECT (selection), "changed",
+  g_signal_connect (selection, "changed",
                     G_CALLBACK (list_store_select_callback),
                     plugindesc);
 
@@ -1058,15 +1072,17 @@ gimp_plugin_desc (void)
   gtk_widget_show (swindow);
 
   /* notebook->ctree */
-  tree_store = gtk_tree_store_new(LIST_N_COLUMNS,
-                                  G_TYPE_STRING,
-                                  G_TYPE_STRING,
-                                  G_TYPE_STRING,
-                                  G_TYPE_STRING,
-                                  G_TYPE_POINTER);
-  tree_view =  gtk_tree_view_new_with_model (GTK_TREE_MODEL (tree_store));
-  plugindesc->tree_view =  GTK_TREE_VIEW (tree_view);
-  g_object_unref (G_OBJECT (tree_store));
+  tree_store = gtk_tree_store_new (LIST_N_COLUMNS,
+                                   G_TYPE_STRING,
+                                   G_TYPE_STRING,
+                                   G_TYPE_STRING,
+                                   G_TYPE_STRING,
+                                   G_TYPE_POINTER);
+
+  tree_view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (tree_store));
+  g_object_unref (tree_store);
+
+  plugindesc->tree_view = GTK_TREE_VIEW (tree_view);
 
   renderer = gtk_cell_renderer_text_new ();
   column = gtk_tree_view_column_new_with_attributes (_("Menu Path/Name"), 
@@ -1099,7 +1115,7 @@ gimp_plugin_desc (void)
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree_view));
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_BROWSE);
-  g_signal_connect (G_OBJECT (selection), "changed",
+  g_signal_connect (selection, "changed",
                     G_CALLBACK (tree_store_select_callback),
                     plugindesc);
 
