@@ -432,6 +432,7 @@
     <menu action="plug-in-menu" name="Filters">
       <menuitem action="plug-in-repeat" />
       <menuitem action="plug-in-reshow" />
+      <menuitem action="plug-in-reset-all" />
       <separator />
       <menu action="plug-in-blur-menu" name="Blur" />
       <menu action="plug-in-colors-menu" name="Colors">

@@ -29,14 +29,29 @@
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
 
+#include "pdb/procedural_db.h"
+
 #include "plug-in/plug-in-run.h"
 #include "plug-in/plug-in-proc.h"
+
+#include "widgets/gimphelp-ids.h"
 
 #include "display/gimpdisplay.h"
 
 #include "actions.h"
 #include "plug-in-commands.h"
 
+#include "gimp-intl.h"
+
+
+/*  local function prototypes  */
+
+static void   plug_in_reset_all_callback (GtkWidget *widget,
+                                          gboolean   reset_all,
+                                          gpointer   data);
+
+
+/*  public functions  */
 
 void
 plug_in_run_cmd_callback (GtkAction     *action,
@@ -164,4 +179,43 @@ plug_in_repeat_cmd_callback (GtkAction *action,
                   gimp_image_get_ID (gdisp->gimage),
                   gimp_item_get_ID (GIMP_ITEM (drawable)),
                   interactive);
+}
+
+void
+plug_in_reset_all_cmd_callback (GtkAction *action,
+                                gpointer   data)
+{
+  Gimp      *gimp;
+  GtkWidget *qbox;
+
+  gimp = action_data_get_gimp (data);
+  if (! gimp)
+    return;
+
+  qbox = gimp_query_boolean_box (_("Reset all Filters"),
+                                 NULL,
+                                 gimp_standard_help_func,
+                                 GIMP_HELP_FILTER_RESET_ALL,
+                                 GTK_STOCK_DIALOG_QUESTION,
+                                 _("Do you really want to reset all "
+                                   "filters to default values?"),
+                                 GIMP_STOCK_RESET, GTK_STOCK_CANCEL,
+                                 NULL, NULL,
+                                 plug_in_reset_all_callback,
+                                 gimp);
+  gtk_widget_show (qbox);
+}
+
+
+/*  private functions  */
+
+static void
+plug_in_reset_all_callback (GtkWidget *widget,
+                            gboolean   reset_all,
+                            gpointer   data)
+{
+  Gimp *gimp = GIMP (data);
+
+  if (reset_all)
+    procedural_db_free_data (gimp);
 }

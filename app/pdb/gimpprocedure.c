@@ -87,25 +87,7 @@ procedural_db_free (Gimp *gimp)
       gimp->procedural_compat_ht = NULL;
     }
 
-  if (gimp->procedural_db_data_list)
-    {
-      PDBData *data;
-      GList   *list;
-
-      for (list = gimp->procedural_db_data_list;
-           list;
-           list = g_list_next (list))
-        {
-          data = (PDBData *) list->data;
-
-          g_free (data->identifier);
-          g_free (data->data);
-          g_free (data);
-        }
-
-      g_list_free (gimp->procedural_db_data_list);
-      gimp->procedural_db_data_list = NULL;
-    }
+  procedural_db_free_data (gimp);
 }
 
 void
@@ -557,6 +539,32 @@ procedural_db_destroy_args (Argument *args,
     }
 
   g_free (args);
+}
+
+void
+procedural_db_free_data (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (gimp->procedural_db_data_list)
+    {
+      PDBData *data;
+      GList   *list;
+
+      for (list = gimp->procedural_db_data_list;
+           list;
+           list = g_list_next (list))
+        {
+          data = (PDBData *) list->data;
+
+          g_free (data->identifier);
+          g_free (data->data);
+          g_free (data);
+        }
+
+      g_list_free (gimp->procedural_db_data_list);
+      gimp->procedural_db_data_list = NULL;
+    }
 }
 
 void

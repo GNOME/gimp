@@ -79,7 +79,12 @@ static GimpActionEntry plug_in_actions[] =
   { "plug-in-web-menu",            NULL, N_("_Web")           },
   { "plug-in-animation-menu",      NULL, N_("An_imation")     },
   { "plug-in-combine-menu",        NULL, N_("C_ombine")       },
-  { "plug-in-toys-menu",           NULL, N_("To_ys")          }
+  { "plug-in-toys-menu",           NULL, N_("To_ys")          },
+
+  { "plug-in-reset-all", GIMP_STOCK_RESET,
+    N_("Reset all Filters..."), NULL, NULL,
+    G_CALLBACK (plug_in_reset_all_cmd_callback),
+    GIMP_HELP_FILTER_RESET_ALL }
 };
 
 static GimpEnumActionEntry plug_in_repeat_actions[] =

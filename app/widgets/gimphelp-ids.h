@@ -252,6 +252,7 @@
 
 #define GIMP_HELP_FILTER_REPEAT                   "gimp-filter-repeat"
 #define GIMP_HELP_FILTER_RESHOW                   "gimp-filter-reshow"
+#define GIMP_HELP_FILTER_RESET_ALL                "gimp-filter-reset-all"
 
 #define GIMP_HELP_TOOLBOX                         "gimp-toolbox"
 #define GIMP_HELP_TOOLBOX_COLOR_AREA              "gimp-toolbox-color-area"

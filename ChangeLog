@@ -1,3 +1,19 @@
+2004-07-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/pdb/procedural_db.[ch] (procedural_db_free_data): new
+	function which clears the whole list of data set by plug-ins.
+
+	(procedural_db_free): use it.
+
+	* app/actions/plug-in-actions.c
+	* app/actions/plug-in-commands.[ch]: added action, callback and
+	confirmation dialog for "Reset all filters to default values".
+	Somehow addresses bug #81015.
+
+	* app/widgets/gimphelp-ids.h: added a help ID for the new action.
+
+	* menus/image-menu.xml.in: added it to the "Filters" submenu.
+
 2004-07-26  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpcellrenderercolor.c
