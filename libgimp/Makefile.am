@@ -162,7 +162,7 @@ libgimp_1_3_la_SOURCES = \
 	gimpfontselect.c	\
 	gimpfontselect.h	\
 	gimpgradientselect.c	\
-	gimpdradientselect.h	\
+	gimpgradientselect.h	\
 	gimpimage.c		\
 	gimpimage.h		\
 	gimplayer.c		\

@@ -1,5 +1,7 @@
 2003-07-21  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/Makefile.am (libgimp_1_3_la_SOURCES): fixed a typo.
+
 	* app/widgets/gimpdevicestatus.c: removed an unused function.
 
 2003-07-20  Tor Lillqvist  <tml@iki.fi>
