@@ -37,8 +37,9 @@
 
 #include "cpu-accel.h"
 
+#if defined(ARCH_X86) && defined(USE_MMX) && defined(__GNUC__)
 
-#ifdef ARCH_X86
+#define HAVE_ACCEL 1
 
 typedef enum
 {
@@ -135,6 +136,8 @@ arch_get_vendor (void)
 #ifdef ARCH_X86_64
   if (strcmp (id, "AuthenticAMD") == 0)
     return ARCH_X86_VENDOR_AMD;
+  else if (strcmp (id, "GenuineIntel") == 0)
+    return ARCH_X86_VENDOR_INTEL;
 #else
   if (strcmp (id, "GenuineIntel") == 0)
     return ARCH_X86_VENDOR_INTEL;
@@ -287,6 +290,33 @@ arch_accel_cyrix (void)
   return caps;
 }
 
+#ifdef USE_SSE
+static jmp_buf sigill_return;
+
+static void
+sigill_handler (gint n)
+{
+  longjmp (sigill_return, 1);
+}
+
+static gboolean
+arch_accel_sse_os_support (void)
+{
+  if (setjmp (sigill_return))
+    {
+      return FALSE;
+    }
+  else
+    {
+      signal (SIGILL, sigill_handler);
+      __asm__ __volatile__ ("xorps %xmm0, %xmm0");
+      signal (SIGILL, SIG_DFL);
+    }
+
+  return TRUE;
+}
+#endif /* USE_SSE */
+
 static guint32
 arch_accel (void)
 {
@@ -320,21 +350,20 @@ arch_accel (void)
       break;
     }
 
+#ifdef USE_SSE
+  if ((caps & CPU_ACCEL_X86_SSE) && !arch_accel_sse_os_support ())
+    caps &= ~(CPU_ACCEL_X86_SSE | CPU_ACCEL_X86_SSE2);
+#endif
+
   return caps;
 }
 
-static jmp_buf sigill_return;
-
-static void
-sigill_handler (gint n)
-{
-  longjmp (sigill_return, 1);
-}
-
-#endif /* ARCH_X86 */
+#endif /* ARCH_X86 && USE_MMX && __GNUC__ */
 
 
-#if defined (ARCH_PPC) && defined (USE_ALTIVEC)
+#if defined (ARCH_PPC) && defined (USE_ALTIVEC) && defined(__GNUC__)
+
+#define HAVE_ACCEL 1
 
 static          sigjmp_buf   jmpbuf;
 static volatile sig_atomic_t canjump = 0;
@@ -366,22 +395,22 @@ arch_accel (void)
   canjump = 1;
 
   asm volatile ("mtspr 256, %0\n\t"
-		"vand %%v0, %%v0, %%v0"
-		:
-		: "r" (-1));
+                "vand %%v0, %%v0, %%v0"
+                :
+                : "r" (-1));
 
   signal (SIGILL, SIG_DFL);
 
   return CPU_ACCEL_PPC_ALTIVEC;
 }
 
-#endif /* ARCH_PPC */
+#endif /* ARCH_PPC && USE_ALTIVEC && __GNUC__ */
 
 
 guint32
 cpu_accel (void)
 {
-#if defined (ARCH_X86) || (defined (ARCH_PPC) && defined (USE_ALTIVEC))
+#ifdef HAVE_ACCEL
   static guint32 accel = ~0U;
 
   if (accel != ~0U)
@@ -389,26 +418,9 @@ cpu_accel (void)
 
   accel = arch_accel ();
 
-#ifdef USE_SSE
-  /* test OS support for SSE */
-  if (accel & CPU_ACCEL_X86_SSE)
-    {
-      if (setjmp (sigill_return))
-	{
-	  accel &= ~(CPU_ACCEL_X86_SSE | CPU_ACCEL_X86_SSE2);
-	}
-      else
-	{
-	  signal (SIGILL, sigill_handler);
-	  __asm__ __volatile__ ("xorps %xmm0, %xmm0");
-	  signal (SIGILL, SIG_DFL);
-	}
-    }
-#endif /* USE_SSE */
-
   return accel;
 
-#else /* !ARCH_X86 && !ARCH_PPC/USE_ALTIVEC */
+#else /* !HAVE_ACCEL */
   return 0;
 #endif
 }

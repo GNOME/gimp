@@ -1,3 +1,13 @@
+2004-06-13  Manish Singh  <yosh@gimp.org>
+
+	* app/base/cpu-accel.c: Reorged, to address bug #142907 and
+	bug #143069. Accel implementations #define HAVE_ACCEL, and cpu_accel()
+	keys on that. Both PPC and X86 implementations check for __GNUC__.
+	X86 stuff is only used with USE_MMX is defined. The SSE OS check
+	is now checked in arch_accel(), not cpu_accel(). Finally, the
+	arch x86_64 checks now are EM64T aware (which didn't matter in
+	practice).
+
 2004-06-13  Philip Lafleur  <plafleur@cvs.gnome.org>
 
 	* app/display/gimpdisplayshell-preview.c: use drawable_mask_bounds()
