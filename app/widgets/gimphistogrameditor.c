@@ -442,9 +442,15 @@ gimp_histogram_editor_item_visible (GtkTreeModel *model,
 static void
 gimp_histogram_editor_menu_update (GimpHistogramEditor *editor)
 {
-  GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (editor->menu));
+  GimpHistogramView *view = GIMP_HISTOGRAM_BOX (editor->box)->view;
+  GtkTreeModel      *model;
+
+  model = gtk_combo_box_get_model (GTK_COMBO_BOX (editor->menu));
 
   gtk_tree_model_filter_refilter (GTK_TREE_MODEL_FILTER (model));
+
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (editor->menu),
+                                 gimp_histogram_view_get_channel (view));
 }
 
 static void
