@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
 "POT-Creation-Date: 2000-08-21 10:34-0700\n"
-"PO-Revision-Date: 2000-06-30 10:34+01:00\n"
+"PO-Revision-Date: 2000-09-09 10:34+01:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish/Dansk <sslug-locale@sslug.dk>\n"
 "MIME-Version: 1.0\n"
@@ -2063,7 +2063,7 @@ msgstr "Advarsel: det er en fil i gammelt format."
 #: plug-ins/common/CML_explorer.c:2419
 msgid "Warning: Hmmm, it's a parameter file for newer CML_explorer than me."
 msgstr ""
-"Advarsel: Hmmm, dette er en parameterfil for en nyere CML_explorer end mig."
+"Advarsel: Hmm, dette er en parameterfil for en nyere CML_explorer end mig."
 
 #: plug-ins/common/CML_explorer.c:2480
 msgid "Error: failed to load parameters"
@@ -4287,9 +4287,8 @@ msgid "Size: unknown"
 msgstr "Størrelse: ukendt"
 
 #: plug-ins/common/jpeg.c:1590
-#, fuzzy
 msgid "Save as JPEG"
-msgstr "Gem som PNG"
+msgstr "Gem som JPEG"
 
 #. sg - preview
 #: plug-ins/common/jpeg.c:1613
@@ -4297,7 +4296,6 @@ msgid "Image Preview"
 msgstr "Forhåndsvisning af billede"
 
 #: plug-ins/common/jpeg.c:1622
-#, fuzzy
 msgid "Preview (in image window)"
 msgstr "Forhåndsvisning (i billedvinduet)"
 
@@ -4310,12 +4308,10 @@ msgid "Smoothing:"
 msgstr "Udjævning"
 
 #: plug-ins/common/jpeg.c:1702
-#, fuzzy
 msgid "Restart markers"
-msgstr "Genstart markering"
+msgstr "Genstart markeringer"
 
 #: plug-ins/common/jpeg.c:1710
-#, fuzzy
 msgid "Restart frequency (rows):"
 msgstr "Genstart frekvenser (rækker):"
 
@@ -4328,9 +4324,8 @@ msgid "Progressive"
 msgstr "Progressiv"
 
 #: plug-ins/common/jpeg.c:1768
-#, fuzzy
 msgid "Force baseline JPEG (Readable by all decoders)"
-msgstr "Tving \"Baseline JPEG\" (alle dekoder kan læse dette)"
+msgstr "Tving Baseline JPEG (alle dekodere kan læse dette)"
 
 #: plug-ins/common/jpeg.c:1790
 msgid "Subsampling:"
@@ -4349,12 +4344,10 @@ msgid "Floating-point"
 msgstr "Flydende tal"
 
 #: plug-ins/common/jpeg.c:1809
-#, fuzzy
 msgid "DCT method (Speed/quality tradeoff):"
 msgstr "DCT metode (hastighed eller kvalitet):"
 
 #: plug-ins/common/jpeg.c:1826
-#, fuzzy
 msgid "Image comments"
 msgstr "Billedkommentarer"
 
@@ -5295,6 +5288,8 @@ msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr ""
+"Når den ændres, bliver det resulterende billede skaleret til at passe til "
+"den givne størrelse uden at ændre størrelsesforhold."
 
 #. Unit
 #: plug-ins/common/ps.c:2864
@@ -8370,7 +8365,6 @@ msgid "Move Path"
 msgstr "Bevægelses-sti"
 
 #: plug-ins/gap/gap_mov_dialog.c:503
-#, fuzzy
 msgid "Show PreviewFrame with Selected SrcLayer at current Controlpoint"
 msgstr ""
 "Vis Forhåndsvisnings-ramme med valgte\n"
@@ -8381,10 +8375,9 @@ msgid "Anim Preview"
 msgstr "Anim forhåndsvisning"
 
 #: plug-ins/gap/gap_mov_dialog.c:514
-#, fuzzy
 msgid "Generate Animated Preview as multilayer image"
 msgstr ""
-"genererer animeret forhåndsvisning\n"
+"Generér animeret forhåndsvisning\n"
 "som flerlags-billede"
 
 #. parameter settings
@@ -8407,7 +8400,6 @@ msgstr "Første ramme:"
 #. constrain
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:568
-#, fuzzy
 msgid "First handled frame"
 msgstr "Første bearbejdede ramme"
 
@@ -8426,7 +8418,6 @@ msgstr "Sidste ramme:"
 #. constrain
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:583
-#, fuzzy
 msgid "Last handled frame"
 msgstr "Sidste bearbejdede ramme"
 
@@ -8445,7 +8436,6 @@ msgstr "Forhåndsvisnings-ramme:"
 #. constrain
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:598
-#, fuzzy
 msgid "Frame to show when UpdPreview button is pressed"
 msgstr ""
 "Ramme der skal vises når UpdPreview\n"
@@ -8466,14 +8456,13 @@ msgstr "lag-stak:"
 #. constrain
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:614
-#, fuzzy
 msgid ""
 "How to insert SrcLayer into the Dst. Frame's Layerstack\n"
 "0 means on top i.e. in front"
 msgstr ""
 "Hvordan kilde-lag skal indsættes i\n"
 "lag-stakken på mål-rammen\n"
-"0 er for oven"
+"0 er for oven, dvs. forrest"
 
 #. toggle force visibility
 #: plug-ins/gap/gap_mov_dialog.c:626
@@ -8490,7 +8479,6 @@ msgid "Clip To Frame"
 msgstr "Klip til ramme"
 
 #: plug-ins/gap/gap_mov_dialog.c:644
-#, fuzzy
 msgid "Clip all copied Src-Layers at Frame Boundaries"
 msgstr "Beskær alle kopierede kilde-lag ved ramme-grænser"
 
@@ -8598,7 +8586,6 @@ msgid "Stepmode:"
 msgstr "Skridtmodus:"
 
 #: plug-ins/gap/gap_mov_dialog.c:1999
-#, fuzzy
 msgid "How to fetch the next SrcLayer at the next handled frame"
 msgstr ""
 "Hvordan det næste kilde-lag skal tages     \n"
@@ -8610,7 +8597,6 @@ msgid "Handle:"
 msgstr "Anker:"
 
 #: plug-ins/gap/gap_mov_dialog.c:2023
-#, fuzzy
 msgid "How to place the SrcLayer at Controlpoint Coordinates"
 msgstr ""
 "Hvordan det næste kilde-lag skal placeres     \n"
@@ -8653,11 +8639,8 @@ msgstr "Skalér kilde-lags bredde i procent"
 #. constrain
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:2161
-#, fuzzy
 msgid "Scale SrcLayer's Height in percent"
-msgstr ""
-"Skalér kilde-lags højde\n"
-"i procent"
+msgstr "Skalér kilde-lags højde i procent"
 
 #. label text
 #. scalesize spinsize
@@ -8668,7 +8651,6 @@ msgstr ""
 #. constrain
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:2178
-#, fuzzy
 msgid "SrcLayer's Opacity in percent"
 msgstr "Kilde-lagets uigennemsigtighed i procent"
 
@@ -8717,12 +8699,11 @@ msgid "Add Point"
 msgstr "Tilføj punkt"
 
 #: plug-ins/gap/gap_mov_dialog.c:2297
-#, fuzzy
 msgid ""
 "Add Controlpoint at end\n"
 "(the last Point is duplicated)"
 msgstr ""
-"Tilføj kontrolpunkt ved slutningen \n"
+"Tilføj kontrolpunkt ved slutningen\n"
 "(det sidste punkt bliver duplikeret)"
 
 #. toggle clip_to_image
@@ -8731,13 +8712,10 @@ msgid "Show Path"
 msgstr "Vis sti"
 
 #: plug-ins/gap/gap_mov_dialog.c:2308
-#, fuzzy
 msgid ""
 "Show Path Lines and enable pick/drag with left button or move with right "
 "button"
-msgstr ""
-"Gør sti-liner synlige og muliggør\n"
-"vælg/træk med venstre knap\n"
+msgstr "Vis sti-liner og muliggør vælg/træk med venstre knap "
 "eller flyt med højre knap"
 
 #: plug-ins/gap/gap_mov_dialog.c:2318
@@ -8747,7 +8725,6 @@ msgid "Insert Point"
 msgstr "Indsæt punkt"
 
 #: plug-ins/gap/gap_mov_dialog.c:2326
-#, fuzzy
 msgid ""
 "Insert Controlpoint\n"
 "(the current Point is duplicated)"
@@ -8802,23 +8779,19 @@ msgid "Clear Point"
 msgstr "Fjern punkt"
 
 #: plug-ins/gap/gap_mov_dialog.c:2404
-#, fuzzy
 msgid "Reset the current Controlpoint to default Values"
-msgstr ""
-"Sæt det aktuelle kontrolpunkt tilbage\n"
-"til standardværdier"
+msgstr "Sæt det aktuelle kontrolpunkt tilbage til standardværdier"
 
 #: plug-ins/gap/gap_mov_dialog.c:2408
 msgid "Clear All Points"
 msgstr "Fjern alle punkter"
 
 #: plug-ins/gap/gap_mov_dialog.c:2416
-#, fuzzy
 msgid ""
 "Reset all Controlpoints to default Values but dont change the path (X/Y "
 "Values)"
 msgstr ""
-"Indstil alle kontrolpunkter til forvalgte værdier\n"
+"Indstil alle kontrolpunkter til forvalgte værdier "
 "men ændr ikke stien (X/Y værdier)"
 
 #: plug-ins/gap/gap_mov_dialog.c:2423
@@ -8826,13 +8799,11 @@ msgid "Rotate Follow"
 msgstr "Rotér med følgning"
 
 #: plug-ins/gap/gap_mov_dialog.c:2434
-#, fuzzy
 msgid ""
 "Set Rotation for all Controlpoints to follow the shape of the path.\n"
 "(Shift: use Rotation of contolpoint 1 as offset)"
 msgstr ""
-"Sæt rotation for alle kontrolpunkter\n"
-"til at følge stiens form.\n"
+"Sæt rotation for alle kontrolpunkter til at følge stiens form.\n"
 "(Skift: brug rotation for kontrolpunkt 1 som afsæt)"
 
 #: plug-ins/gap/gap_mov_dialog.c:2441
@@ -8910,13 +8881,12 @@ msgstr ""
 "Venligst reducér kontrolpunkter eller udvælg flere rammer"
 
 #: plug-ins/gap/gap_mov_dialog.c:3010
-#, fuzzy
 msgid ""
 "Can't operate with current Controlpoint\n"
 "or Keyframe settings"
 msgstr ""
 "Kan ikke arbejde med det aktuelle kontrolpunkt\n"
-"eller nøgleramme indstillinger"
+"eller nøgleramme-indstillinger"
 
 #: plug-ins/gap/gap_mov_dialog.c:3017
 msgid "Reset Keyframes"
@@ -9874,6 +9844,8 @@ msgid ""
 " Current layer isn't a GDynText layer or it has no alpha channel. Forcing "
 "new layer creation."
 msgstr ""
+" Det aktuelle lag er ikke et GDynText lag eller det har ikke noget alfa-lag. Tvinger "
+"oprettelse af nyt lag."
 
 #: plug-ins/gdyntext/gdyntext.c:313 plug-ins/gdyntext/gdyntext.c:448
 msgid "GDynText Layer"
@@ -9884,66 +9856,56 @@ msgid "GIMP Dynamic Text"
 msgstr "GIMP Dynamisk Tekst"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:126
-#, fuzzy
 msgid "GDynText: Messages Window"
-msgstr "GDynText beskedsvindue"
+msgstr "GDynText: beskedsvindue"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:152
-#, fuzzy
 msgid "GDynText: About ..."
-msgstr "GDynText: indlæs tekst"
+msgstr "GDynText: Om ..."
 
 #: plug-ins/gdyntext/gdyntext_ui.c:245 plug-ins/gflare/gflare.c:4727
 msgid "none"
 msgstr "ingen"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:246
-#, fuzzy
 msgid "bottom-left"
-msgstr "For neden til venstre"
+msgstr "nederst til venstre"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:247
-#, fuzzy
 msgid "bottom-center"
-msgstr "For neden til venstre"
+msgstr "nederst til venstre"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:248
-#, fuzzy
 msgid "bottom-right"
-msgstr "For neden til højre"
+msgstr "Nederst til højre"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:249
 msgid "middle-left"
-msgstr ""
+msgstr "midterst til venstre"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:250
-#, fuzzy
 msgid "center"
-msgstr "Center"
+msgstr "center"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:251
 msgid "middle-right"
-msgstr ""
+msgstr "midterst til højre"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:252
-#, fuzzy
 msgid "top-left"
-msgstr "For oven til venstre"
+msgstr "Øverst til venstre"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:253
-#, fuzzy
 msgid "top-center"
-msgstr "Center"
+msgstr "Øverst i midten"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:254
-#, fuzzy
 msgid "top-right"
-msgstr "For oven til højre"
+msgstr "Øverst til højre"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:263
-#, fuzzy
 msgid "GDynText"
-msgstr "GDynText lag"
+msgstr "GDynText"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:299
 msgid "Toggle creation of a new layer"
@@ -9963,7 +9925,7 @@ msgstr "Tekstfarve"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:339
 msgid "Toggle anti-aliased text"
-msgstr "Skift mellemanti-aliaset tekst "
+msgstr "Skift mellem anti-aliaset tekst "
 
 #: plug-ins/gdyntext/gdyntext_ui.c:352
 msgid "Left aligned text"
@@ -9991,18 +9953,20 @@ msgid ""
 "Layer\n"
 "Alignment"
 msgstr ""
+"Lag\n"
+"Justering"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:419
-#, fuzzy
 msgid "Set layer alignment"
-msgstr "Sæt lag som forbundne"
+msgstr "Sæt lag justering"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:449
-#, fuzzy
 msgid ""
 "Line\n"
 "Spacing"
-msgstr "linieafstand"
+msgstr ""
+"linie\n"
+"afstand"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:471
 msgid "Set text rotation (degrees)"
@@ -10033,36 +9997,33 @@ msgid "GDynText: CharMap"
 msgstr "GDynText: tegntabel"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:920
-#, fuzzy
 msgid "GDynText: Load text"
 msgstr "GDynText: indlæs tekst"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:965
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning file \"%s\" is larger than the maximum allowed text length (%d).\n"
-msgstr "Advarsel fil \"%s\" er større end den maksimalt tilladte længde (%d)."
+msgstr "Advarsel fil \"%s\" er større end den maksimalt tilladte længde (%d).\n"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:976
-#, fuzzy, c-format
+#, c-format
 msgid "Error opening \"%s\"!\n"
-msgstr "fejl ved åbning af \"%s\"!"
+msgstr "fejl ved åbning af \"%s\"!\n"
 
 #: plug-ins/gdyntext/gdyntextcompat.c:119
-#, fuzzy, c-format
+#, c-format
 msgid ""
 " WARNING: GDynText is too old! A newer version is required to handle this "
 "layer. Get it from %s"
 msgstr ""
-"ADVARSEL: GDynText er for gammel!\n"
-"  du kan tabe data ved at ændre af denne tekst.\n"
-"  En nyere version er krævet for at behandle dette lag.\n"
-"  Få det fra %s\n"
+"ADVARSEL: GDynText er for gammel! En nyere version er krævet for at behandle dette lag.\n"
+"  Få det fra %s"
 
 #: plug-ins/gdyntext/gdyntextcompat.c:172
-#, fuzzy, c-format
+#, c-format
 msgid " Upgrading old GDynText layer to %s."
-msgstr "Konvertér gamle GDynText-lag til %s\n"
+msgstr " Opgraderer gamle GDynText-lag til %s"
 
 #: plug-ins/gdyntext/message_window.c:114
 msgid "Dismiss"
@@ -12550,17 +12511,16 @@ msgid "Density:"
 msgstr "Tæthed:"
 
 #: plug-ins/print/gimp_color_window.c:219
-#, fuzzy
 msgid "Dither Algorithm:"
-msgstr "Prims algoritme"
+msgstr "Dither algoritme:"
 
 #.
 #. * Create the main dialog
 #.
 #: plug-ins/print/gimp_main_window.c:221
-#, fuzzy, c-format
+#, c-format
 msgid "%s -- Print v%s"
-msgstr "Udskriv v%s"
+msgstr "%s -- Udskriv v%s"
 
 #: plug-ins/print/gimp_main_window.c:230
 msgid ""
@@ -12587,13 +12547,12 @@ msgid "Center Image"
 msgstr "Centrér billede"
 
 #: plug-ins/print/gimp_main_window.c:314
-#, fuzzy
 msgid "Units:"
-msgstr "Enheder"
+msgstr "Enheder:"
 
 #: plug-ins/print/gimp_main_window.c:326
 msgid "cm"
-msgstr ""
+msgstr "cm"
 
 #.
 #. *  Printer settings frame...
@@ -12615,9 +12574,8 @@ msgid "Media Source:"
 msgstr "Mediekilde:"
 
 #: plug-ins/print/gimp_main_window.c:454
-#, fuzzy
 msgid "Ink Type:"
-msgstr "Lænketype"
+msgstr "Blæktype:"
 
 #: plug-ins/print/gimp_main_window.c:465
 msgid "Portrait"
@@ -12651,27 +12609,24 @@ msgstr "Eksperimentel lineær skalering"
 #. * Image type
 #.
 #: plug-ins/print/gimp_main_window.c:545
-#, fuzzy
 msgid "Image Type"
-msgstr "Billedtyper"
+msgstr "Billedtype"
 
 #: plug-ins/print/gimp_main_window.c:555
-#, fuzzy
 msgid "Line Art"
-msgstr "Lineær"
+msgstr "Linjekunst"
 
 #: plug-ins/print/gimp_main_window.c:566
-#, fuzzy
 msgid "Solid Colors"
-msgstr "Anden farve"
+msgstr "Simple farver"
 
 #: plug-ins/print/gimp_main_window.c:577
 msgid "Photograph"
-msgstr ""
+msgstr "Fotografi"
 
 #: plug-ins/print/gimp_main_window.c:588
 msgid "Monochrome"
-msgstr ""
+msgstr "Sort/hvid"
 
 #.
 #. * Scaling...
