@@ -123,10 +123,45 @@ tilebuf_clone  (
       newt->width = t->width;
       newt->height = t->height;
 
+      g_warning ("finish writing tilebuf_clone()");
       /* tile16_clone (t, newt); */
     }
   
   return newt;
+}
+
+
+void
+tilebuf_info (
+              TileBuf * t
+              )
+{
+  if (t)
+    {
+      trace_begin ("TileBuf 0x%x", t);
+      trace_printf ("%d by %d tiled buffer", t->width, t->height);
+      trace_printf ("%s %s %s",
+                    tag_string_precision (tag_precision (tilebuf_tag (t))),
+                    tag_string_format (tag_format (tilebuf_tag (t))),
+                    tag_string_alpha (tag_alpha (tilebuf_tag (t))));
+      if (t->tiles)
+        {
+          int i = tile16_index (t, t->width-1, t->height-1) + 1;
+          while (i--)
+            {
+              if (t->tiles[i].valid)
+                {
+                  trace_printf ("  Tile %d, ref %d, data %x",
+                                i, t->tiles[i].ref_count, t->tiles[i].data);
+                }
+            }
+        }
+      else
+        {
+          trace_printf ("  No tiles");
+        }
+      trace_end ();
+    }
 }
 
 
@@ -174,6 +209,7 @@ tilebuf_set_precision  (
                         Precision x
                         )
 {
+  g_warning ("finish writing tilebuf_set_precision()");
   return tilebuf_precision (t);
 }
 
@@ -184,6 +220,7 @@ tilebuf_set_format  (
                      Format x
                      )
 {
+  g_warning ("finish writing tilebuf_set_format()");
   return tilebuf_format (t);
 }
 
@@ -194,6 +231,7 @@ tilebuf_set_alpha  (
                     Alpha x
                     )
 {
+  g_warning ("finish writing tilebuf_set_alpha()");
   return tilebuf_alpha (t);
 }
 
@@ -272,10 +310,12 @@ tilebuf_unref  (
     {
       Tile16 * tile = &t->tiles[i];
       
-      if (tile->ref_count == 0)
+      tile16_ref_count--;
+      tile->ref_count--;
+
+      if (tile->ref_count <= 0)
         {
-          tile16_ref_count--;
-          tile->ref_count--;
+          tile->ref_count = 0;
 
           /* swap tile out */
         }
@@ -354,10 +394,14 @@ tilebuf_portion_width  (
                         )
 {
   if (t)
-    if (x+TILE16_WIDTH > t->width)
-      return tile16_xoffset (t, t->width);
-    else
-      return TILE16_WIDTH;
+    {
+      int offset = tile16_xoffset (t, x);
+      int base = x - offset;
+      if (base+TILE16_WIDTH > t->width)
+        return tile16_xoffset (t, t->width) - offset;
+      else
+        return TILE16_WIDTH - offset;
+    }
   return 0;
 }
 
@@ -370,10 +414,14 @@ tilebuf_portion_height  (
                          )
 {
   if (t)
-    if (y+TILE16_HEIGHT > t->height)
-      return tile16_yoffset (t, t->height);
-    else
-      return TILE16_HEIGHT;
+    {
+      int offset = tile16_yoffset (t, y);
+      int base = y - offset;
+      if (base+TILE16_HEIGHT > t->height)
+        return tile16_yoffset (t, t->height) - offset;
+      else
+        return TILE16_HEIGHT - offset;
+    }
   return 0;
 }
 
@@ -391,9 +439,12 @@ tile16_index (
 {
   if (t)
     {
-      x = x / TILE16_WIDTH;
-      y = y / TILE16_HEIGHT;
-      return (y * (t->width + TILE16_WIDTH - 1) / TILE16_WIDTH + x);
+      if ((x < t->width) && (y < t->height))    
+        {
+          x = x / TILE16_WIDTH;
+          y = y / TILE16_HEIGHT;
+          return (y * ((t->width + TILE16_WIDTH - 1) / TILE16_WIDTH) + x);
+        }
     }
   return -1;
 }
@@ -444,6 +495,7 @@ tilebuf_to_tm  (
                 TILE16_WIDTH *
                 TILE16_HEIGHT *
                 tag_bytes (tilebuf_tag (t));
+              /* FIXME: ref tile16 */
               tile_ref (tile);
               memcpy (tile->data, t->tiles[i].data, n);
               tile_unref (tile, TRUE);
@@ -461,9 +513,8 @@ tilebuf_from_tm  (
 {
   if (t && tm)
     {  
-      int i = ( ( (t->width + TILE16_WIDTH - 1) / TILE16_WIDTH ) *
-                ( (t->height + TILE16_HEIGHT - 1) / TILE16_HEIGHT ) );
-      
+      int i = tile16_index (t, t->width-1, t->height-1) + 1;
+
       while (i--)
         {
           Tile * tile = tile_manager_get (tm, i, 0);

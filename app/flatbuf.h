@@ -28,6 +28,7 @@ typedef struct _FlatBuf FlatBuf;
 FlatBuf *      flatbuf_new            (Tag, int w, int h);
 void           flatbuf_delete         (FlatBuf *);
 FlatBuf *      flatbuf_clone          (FlatBuf *);
+void           flatbuf_info           (FlatBuf *);
 
 Tag            flatbuf_tag            (FlatBuf *);
 Precision      flatbuf_precision      (FlatBuf *);

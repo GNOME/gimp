@@ -57,6 +57,7 @@ void              pixelarea_init          (PixelArea *,
                                            struct _Canvas *, struct _Canvas *,
                                            int x, int y, int w, int h,
                                            int will_dirty);
+void              pixelarea_info          (PixelArea *);
 
 void              pixelarea_getdata       (PixelArea *, struct _PixelRow *, int);
 void              pixelarea_copy_row      (PixelArea *, struct _PixelRow *,

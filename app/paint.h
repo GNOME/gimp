@@ -29,6 +29,7 @@ typedef struct _Paint Paint;
 Paint *                paint_new            (Tag, struct _GimpDrawable *);
 void                   paint_delete         (Paint *);
 Paint *                paint_clone          (Paint *);
+void                   paint_info           (Paint *);
 
 Tag                    paint_tag            (Paint *);
 Precision              paint_precision      (Paint *);

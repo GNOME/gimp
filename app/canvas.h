@@ -38,6 +38,7 @@ enum _Tiling
 Canvas *       canvas_new            (Tag, int w, int h, Tiling);
 void           canvas_delete         (Canvas *);
 Canvas *       canvas_clone          (Canvas *);
+void           canvas_info           (Canvas *);
 
 Tag            canvas_tag            (Canvas *);
 Precision      canvas_precision      (Canvas *);

@@ -28,6 +28,7 @@ typedef struct _TileBuf  TileBuf;
 TileBuf *        tilebuf_new            (Tag, int w, int h);
 void             tilebuf_delete         (TileBuf *);
 TileBuf *        tilebuf_clone          (TileBuf *);
+void             tilebuf_info           (TileBuf *);
 
 Tag              tilebuf_tag            (TileBuf *);
 Precision        tilebuf_precision      (TileBuf *);

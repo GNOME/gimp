@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <stdarg.h>
 
 #include "appenv.h"
 #include "brushes.h"
@@ -111,11 +112,56 @@ trace_exit  (
 
 
 void 
+trace_begin  (
+              char * format,
+              ...
+              )
+{
+  va_list args, args2;
+  char *buf;
+
+  va_start (args, format);
+  va_start (args2, format);
+  buf = g_vsprintf (format, &args, &args2);
+  va_end (args);
+  va_end (args2);
+
+  fputs (indent+level, stdout);
+  fputs (buf, stdout);
+  fputs (": {\n", stdout);
+
+  level -= 2;
+}
+
+
+void 
+trace_end  (
+            void
+            )
+{
+  level += 2;
+  printf ("%s}\n", indent+level);
+}
+
+
+void 
 trace_printf  (
-               char * msg
+               char * format,
+               ...
                )
 {
-  printf ("%s%s\n", indent+level, msg);
+  va_list args, args2;
+  char *buf;
+
+  va_start (args, format);
+  va_start (args2, format);
+  buf = g_vsprintf (format, &args, &args2);
+  va_end (args);
+  va_end (args2);
+
+  fputs (indent+level, stdout);
+  fputs (buf, stdout);
+  fputc ('\n', stdout);
 }
 
 
@@ -320,6 +366,8 @@ paint_core_16_finish  (
     TileManager * tm = canvas_to_tm (undo_tiles);
     drawable_apply_image (drawable, paint_core->x1, paint_core->y1,
                           paint_core->x2, paint_core->y2, tm, TRUE);
+    /* temp deleteion until drawable_apply_image handles Canvas directly */
+    canvas_delete (undo_tiles);
     undo_tiles = NULL;
   }
 
@@ -609,20 +657,20 @@ paint_core_16_area  (
   int   x1, y1, x2, y2;
   
 
-  /* adjust the x and y coordinates to the upper left corner of the brush */
-  x = (int) paint_core->curx;
-  y = (int) paint_core->cury;
-
-  bw = canvas_width (paint_core->brush_mask) / 2 + 1;
-  bh = canvas_height (paint_core->brush_mask) / 2 + 1;
+  bw = canvas_width (paint_core->brush_mask);
+  bh = canvas_height (paint_core->brush_mask);
+  
+  /* adjust the x and y coordinates to the upper left corner of the brush */  
+  x = (int) paint_core->curx - bw / 2;
+  y = (int) paint_core->cury - bh / 2;
   
   dw = drawable_width (drawable);
   dh = drawable_height (drawable);
 
-  x1 = CLAMP (x - bw, 0, dw);
-  y1 = CLAMP (y - bh, 0, dh);
-  x2 = CLAMP (x + bw, 0, dw);
-  y2 = CLAMP (y + bh, 0, dh);
+  x1 = CLAMP (x - 1 , 0, dw);
+  y1 = CLAMP (y - 1, 0, dh);
+  x2 = CLAMP (x + bw + 1, 0, dw);
+  y2 = CLAMP (y + bh + 1, 0, dh);
 
   /* save the boundaries of this paint hit */
   paint_core->x = x1;
@@ -667,6 +715,8 @@ paint_core_16_area_original  (
   x2 = CLAMP (x2, 0, drawable_width (drawable));
   y2 = CLAMP (y2, 0, drawable_height (drawable));
 
+  g_warning ("finish writing paint_core_16_area_original()");
+  
 #if 0
   PixelArea srcPR, destPR;
   Tag   tag;
@@ -737,8 +787,6 @@ paint_core_16_area_paste  (
 {
   Canvas *brush_mask;
 
-  trace_enter ("paint_core_16_area_paste");
-  
   if (! drawable_gimage (drawable))
     return;
   
@@ -760,8 +808,6 @@ paint_core_16_area_paste  (
     }
   
   painthit_finish (drawable, paint_core, canvas_buf);
-
-  trace_exit ();
 }
 
 

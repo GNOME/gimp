@@ -115,6 +115,34 @@ canvas_clone  (
 }
 
 
+void
+canvas_info (
+             Canvas *c
+             )
+{
+  if (c)
+    {
+      trace_begin ("Canvas 0x%x", c);
+      switch (c->tiling)
+        {
+        case TILING_YES:
+        case TILING_ALWAYS:
+          tilebuf_info (c->tile_data);
+          break;
+        case TILING_NO:
+        case TILING_NEVER:
+          flatbuf_info (c->flat_data);
+          break;
+        case TILING_MAYBE:
+        default:
+          trace_printf ("Unknown image data");
+          break;
+        }
+      trace_end ();
+    }
+}
+
+
 Tag 
 canvas_tag  (
              Canvas * c
@@ -174,7 +202,7 @@ canvas_set_precision  (
                        Precision p
                        )
 {
-  /* WRITEME */
+  g_warning ("finish writing ()");
   return canvas_precision (c);
 }
 
@@ -185,7 +213,7 @@ canvas_set_format  (
                     Format f
                     )
 {
-  /* WRITEME */
+  g_warning ("finish writing canvas_set_format()");
   return canvas_format (c);
 }
 
@@ -196,7 +224,7 @@ canvas_set_alpha  (
                    Alpha a
                    )
 {
-  /* WRITEME */
+  g_warning ("finish writing canvas_set_alpha()");
   return canvas_alpha (c);
 }
 
@@ -207,7 +235,7 @@ canvas_set_tiling  (
                     Tiling t
                     )
 {
-  /* WRITEME */
+  g_warning ("finish writing canvas_set_tiling()");
   return canvas_tiling (c);
 }
 
@@ -249,13 +277,13 @@ canvas_ref  (
              int y
              )
 {
+  guint rc = FALSE;
   if (c)
     if (c->tile_data)
-      return tilebuf_ref (c->tile_data, x, y);
+      rc = tilebuf_ref (c->tile_data, x, y);
     else if (c->flat_data)
-      return flatbuf_ref (c->flat_data, x, y);
-
-  return FALSE;
+      rc = flatbuf_ref (c->flat_data, x, y);
+  return rc;
 }
 
 
@@ -287,6 +315,8 @@ canvas_init  (
       tilebuf_init (c->tile_data, src->tile_data, x, y);
     else if ((c->flat_data) && (src->flat_data))
       flatbuf_init (c->flat_data, src->flat_data, x, y);
+    else
+      g_warning ("canvas_init() failed to init");
 }
 
 
@@ -448,4 +478,15 @@ canvas_to_tm (
     }
 
   return NULL;
+}
+
+
+void
+canvas_init_tm (
+                Canvas *c,
+                TileManager * tm
+                )
+{
+  if (c)
+    tilebuf_to_tm (c->tile_data, tm);
 }

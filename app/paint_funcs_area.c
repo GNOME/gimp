@@ -3184,8 +3184,6 @@ combine_areas  (
   
   Tag buf_tag = tag_new (tag_format (src1_tag), prec, ALPHA_YES);
   
-  trace_enter ("combine_areas");
-
   if ( tag_alpha(src1_tag) == ALPHA_YES )
     buf_size = src1_width * src1_bytes;
   else
@@ -3345,8 +3343,6 @@ combine_areas  (
     } 
     if (buf_row_data)
       g_free (buf_row_data);
-
-    trace_exit();
 }
 
 

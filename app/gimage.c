@@ -605,8 +605,6 @@ gimage_apply_painthit  (
 {
   int operation;
 
-  trace_enter ("gimage_apply_painthit");
-
   /* make sure we're doing something legal */
   operation = valid_combinations
     [drawable_type (drawable)]
@@ -688,21 +686,20 @@ gimage_apply_painthit  (
       int active [MAX_CHANNELS];
       
       gimage_get_active_channels (gimage, drawable, active);
-#if 0
+
       if (mask)
         combine_areas (&src1PR, src2PR, &destPR, &maskPR, NULL,
                        opacity, mode, active, operation);
       else
         combine_areas (&src1PR, src2PR, &destPR, NULL, NULL,
                        opacity, mode, active, operation);
-#endif
     }
 
+    canvas_init_tm (d, drawable_data (drawable));
+    
     canvas_delete (d);
     canvas_delete (m);
   }
-
-  trace_exit ();  
 }
 
 

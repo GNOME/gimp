@@ -88,6 +88,21 @@ pixelarea_init  (
 
 
 void 
+pixelarea_info  (
+                 PixelArea * pa
+                 )
+{
+  trace_begin ("PixelArea 0x%x", pa);
+  trace_printf ("coord (%d,%d)", pa->x, pa->y);
+  trace_printf ("start (%d,%d)", pa->startx, pa->starty);
+  trace_printf ("width (%d,%d)", pa->w, pa->h);
+  trace_printf ("canvas: 0x%x   init: 0x%x", pa->canvas, pa->init);
+  trace_printf ("dirty: 0x%d", pa->dirty);
+  trace_end ();
+}
+
+
+void 
 pixelarea_getdata  (
                     PixelArea * pa,
                     PixelRow * pr,

@@ -72,13 +72,16 @@ flatbuf_delete (
                 FlatBuf * f
                 )
 {
-  if (f->data)
-    g_free (f->data);
+  if (f)
+    {
+      if (f->data)
+        g_free (f->data);
 
-  if (f->swapped)
-    /* flatbuf_swap_free (f) */ ;
+      if (f->swapped)
+        /* flatbuf_swap_free (f) */ ;
 
-  g_free (f);
+      g_free (f);
+    }
 }
 
 
@@ -87,24 +90,46 @@ flatbuf_clone (
                FlatBuf * f
                )
 {
-  FlatBuf *newf;
+  FlatBuf *newf = NULL;
 
-  newf = (FlatBuf *) g_malloc (sizeof (FlatBuf));
+  if (f)
+    {
+      newf = (FlatBuf *) g_malloc (sizeof (FlatBuf));
 
-  newf->tag = f->tag;
-  newf->width = f->width;
-  newf->height = f->height;
+      newf->tag = f->tag;
+      newf->width = f->width;
+      newf->height = f->height;
 
-  newf->data = g_malloc (f->width * f->height * tag_bytes(f->tag));
-  flatbuf_ref (f, 0, 0);
-  memcpy (newf->data, f->data, f->width * f->height * tag_bytes(f->tag));
-  flatbuf_unref (f, 0, 0);
+      newf->data = g_malloc (f->width * f->height * tag_bytes(f->tag));
+      flatbuf_ref (f, 0, 0);
+      memcpy (newf->data, f->data, f->width * f->height * tag_bytes(f->tag));
+      flatbuf_unref (f, 0, 0);
 
-  newf->refcount = 1;
-  newf->swapped = FALSE;
-  newf->filename = NULL;
+      newf->refcount = 1;
+      newf->swapped = FALSE;
+      newf->filename = NULL;
+    }
   
   return newf;
+}
+
+
+void
+flatbuf_info (
+              FlatBuf * f
+              )
+{
+  if (f)
+    {
+      trace_begin ("Flatbuf 0x%x", f);
+      trace_printf ("%d by %d flat buffer", f->width, f->height);
+      trace_printf ("%s %s %s",
+                    tag_string_precision (tag_precision (flatbuf_tag (f))),
+                    tag_string_format (tag_format (flatbuf_tag (f))),
+                    tag_string_alpha (tag_alpha (flatbuf_tag (f))));
+      trace_printf ("ref %d for 0x%x", f->refcount, f->data);
+      trace_end ();
+    }
 }
 
 
@@ -113,7 +138,9 @@ flatbuf_tag (
              FlatBuf * f
              )
 {
-  return f->tag;
+  if (f)
+    return f->tag;
+  return tag_null ();
 }
 
 
@@ -122,7 +149,7 @@ flatbuf_precision (
                    FlatBuf * f
                    )
 {
-  return tag_precision (f->tag);
+  return tag_precision (flatbuf_tag (f));
 }
 
 
@@ -131,7 +158,7 @@ flatbuf_format (
                 FlatBuf * f
                 )
 {
-  return tag_format (f->tag);
+  return tag_format (flatbuf_tag (f));
 }
 
 
@@ -140,7 +167,7 @@ flatbuf_alpha (
                FlatBuf * f
                )
 {
-  return tag_alpha (f->tag);
+  return tag_alpha (flatbuf_tag (f));
 }
 
 
@@ -151,6 +178,7 @@ flatbuf_set_precision (
                        )
 {
   /* WRITEME */
+  g_warning ("finish writing flatbuf_set_precision()");
   return flatbuf_precision (f);
 }
 
@@ -162,6 +190,7 @@ flatbuf_set_format (
                     )
 {
   /* WRITEME */
+  g_warning ("finish writing flatbuf_set_format()");
   return flatbuf_format (f);
 }
 
@@ -173,6 +202,7 @@ flatbuf_set_alpha (
                    )
 {
   /* WRITEME */
+  g_warning ("finish writing flatbuf_set_alpha()");
   return flatbuf_alpha (f);
 }
 
@@ -182,7 +212,9 @@ flatbuf_width  (
                 FlatBuf * f
                 )
 {
-  return f->width;
+  if (f)
+    return f->width;
+  return 0;
 }
 
 
@@ -191,7 +223,9 @@ flatbuf_height  (
                  FlatBuf * f
                  )
 {
-  return f->height;
+  if (f)
+    return f->height;
+  return 0;
 }
 
 
@@ -202,10 +236,13 @@ flatbuf_ref  (
               int y
               )
 {
-  f->refcount++;
-  if (f->refcount == 1)
+  if (f)
     {
-      /* swap in */
+      f->refcount++;
+      if (f->refcount == 1)
+        {
+          /* swap in */
+        }
     }
   return FALSE;
 }
@@ -218,10 +255,13 @@ flatbuf_unref  (
                 int y
                 )
 {
-  f->refcount--;
-  if (f->refcount == 0)
+  if (f)
     {
-      /* swap out */
+      f->refcount--;
+      if (f->refcount == 0)
+        {
+          /* swap out */
+        }
     }
 }
 
@@ -246,12 +286,9 @@ flatbuf_data (
               int y
               )
 {
-  if ((x >= f->width) ||
-      (y >= f->height))
-    {
-      return NULL;
-    }
-  return (guchar*)f->data + ((y * f->width) + x) * tag_bytes (f->tag);
+  if (f && (x < f->width) && (y < f->height))
+    return (guchar*)f->data + ((y * f->width) + x) * tag_bytes (f->tag);
+  return NULL;
 }
 
 
@@ -262,12 +299,9 @@ flatbuf_rowstride  (
                     int y
                     )
 {
-  if ((x >= f->width) ||
-      (y >= f->height))
-    {
-      return 0;
-    }
-  return f->width * tag_bytes (f->tag);
+  if (f && (x < f->width) && (y < f->height))
+    return f->width * tag_bytes (f->tag);
+  return 0;
 }
 
 
@@ -278,13 +312,9 @@ flatbuf_portion_width  (
                         int y
                         )
 {
-  if ((f == NULL) ||
-      (x >= f->width) ||
-      (y >= f->height))
-    {
-      return 0;
-    }
-  return f->width - x;
+  if (f && (x < f->width) && (y < f->height))
+    return f->width - x;
+  return 0;
 }
 
 
@@ -295,13 +325,9 @@ flatbuf_portion_height  (
                          int y
                          )
 {
-  if ((f == NULL) ||
-      (x >= f->width) ||
-      (y >= f->height))
-    {
-      return 0;
-    }
-  return f->height - y;
+  if (f && (x < f->width) && (y < f->height))
+    return f->height - y;
+  return 0;
 }
 
 
@@ -321,15 +347,18 @@ flatbuf_to_tb (
                TempBuf * tb
                )
 {
-  tb->bytes     = tag_bytes (fb->tag);
-  tb->width     = fb->width;
-  tb->height    = fb->height;
-  tb->x         = 0;
-  tb->y         = 0;
-  tb->swapped   = FALSE;
-  tb->filename  = NULL;
-  tb->data      = g_malloc (tb->bytes * tb->width * tb->height);
-  memcpy (tb->data, fb->data, tb->bytes * tb->width * tb->height);
+  if (fb && tb)
+    {
+      tb->bytes     = tag_bytes (fb->tag);
+      tb->width     = fb->width;
+      tb->height    = fb->height;
+      tb->x         = 0;
+      tb->y         = 0;
+      tb->swapped   = FALSE;
+      tb->filename  = NULL;
+      tb->data      = g_malloc (tb->bytes * tb->width * tb->height);
+      memcpy (tb->data, fb->data, tb->bytes * tb->width * tb->height);
+    }
 }
 
 
@@ -339,12 +368,15 @@ flatbuf_from_tb (
                  TempBuf * tb
                  )
 {
-  fb->tag       = tag_by_bytes (tb->bytes);
-  fb->width     = tb->width;
-  fb->height    = tb->height;
-  fb->refcount  = 1;
-  fb->swapped   = FALSE;
-  fb->filename  = NULL;
-  fb->data      = g_malloc (tb->bytes * tb->width * tb->height);
-  memcpy (fb->data, tb->data, tb->bytes * tb->width * tb->height);
+  if (fb && tb)
+    {
+      fb->tag       = tag_by_bytes (tb->bytes);
+      fb->width     = tb->width;
+      fb->height    = tb->height;
+      fb->refcount  = 1;
+      fb->swapped   = FALSE;
+      fb->filename  = NULL;
+      fb->data      = g_malloc (tb->bytes * tb->width * tb->height);
+      memcpy (fb->data, tb->data, tb->bytes * tb->width * tb->height);
+    }
 }

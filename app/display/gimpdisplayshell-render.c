@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "appenv.h"
+#include "canvas.h"
 #include "colormaps.h"
 #include "errors.h"
 #include "gimprc.h"
@@ -27,7 +28,6 @@
 #include "pixel_region.h"
 #include "scale.h"
 #include "tag.h"
-
 
 typedef struct _RenderInfo  RenderInfo;
 typedef void (*RenderFunc) (RenderInfo *info);
@@ -397,7 +397,9 @@ render_image (GDisplay *gdisp,
   	break;
        case PRECISION_NONE:
         break;
-    } 
+    }
+
+  canvas_delete (info.src_canvas);
 }
 
 
@@ -5000,6 +5002,7 @@ render_image_init_info (RenderInfo *info,
 
 #define IMAGE_RENDER_C_5_cw
   info->src_tiles = gimage_projection (gdisp->gimage);
+  info->src_canvas = canvas_from_tm (info->src_tiles);
   /*info->src_canvas = gimage_projection_canvas (gdisp->gimage); */
   info->scale = render_image_accelerate_scaling (w, info->x, info->src_bpp, info->scalesrc, info->scaledest);
   {
@@ -5100,7 +5103,10 @@ render_image_canvas_fault (RenderInfo *info)
   canvas_ref( info->src_canvas, x_portion, y_portion); 
   data = canvas_data (info->src_canvas, info->src_x, info->src_y);
   if (!data)
-    return NULL; 
+    {
+      canvas_unref( info->src_canvas, x_portion, y_portion); 
+      return NULL;
+    }
   scale = info->scale;
   step = info->scalesrc * info->src_bpp;
   dest = tile_buf;
@@ -5131,7 +5137,10 @@ render_image_canvas_fault (RenderInfo *info)
               canvas_ref (info->src_canvas, x_portion, y_portion ); 
               data = canvas_data (info->src_canvas, x_portion, y_portion );
               if(!data)
-		return NULL;
+                {
+                  canvas_unref (info->src_canvas, x_portion, y_portion ); 
+                  return NULL;
+                }
 	      portion_width = canvas_portion_width ( info->src_canvas, 
 					  x_portion,
 					  y_portion );

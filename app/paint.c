@@ -73,19 +73,6 @@ static int load_float_indexed (Paint *, Tag, gfloat *);
 
 
 
-enum ChannelName
-{
-  Chan_RED,
-  Chan_GREEN,
-  Chan_BLUE,
-  Chan_GRAY,
-  Chan_ALPHA,
-  Chan_HUE,
-  Chan_SATURATION,
-  Chan_VALUE
-};
-
-
 
 Paint *
 paint_new (
@@ -134,6 +121,40 @@ paint_clone (
 }
 
 
+void
+paint_info (
+            Paint * p
+            )
+{
+  if (p)
+    {
+      trace_begin ("Paint 0x%x", p);
+      trace_printf ("%s %s %s",
+                    tag_string_precision (tag_precision (paint_tag (p))),
+                    tag_string_format (tag_format (paint_tag (p))),
+                    tag_string_alpha (tag_alpha (paint_tag (p))));
+      trace_printf ("%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x%x",
+                    p->data[0],
+                    p->data[1],
+                    p->data[2],
+                    p->data[3],
+                    p->data[4],
+                    p->data[5],
+                    p->data[6],
+                    p->data[7],
+                    p->data[8],
+                    p->data[9],
+                    p->data[10],
+                    p->data[11],
+                    p->data[12],
+                    p->data[13],
+                    p->data[14],
+                    p->data[15]);
+      trace_end ();
+    }
+}
+
+
 Tag
 paint_tag (
            Paint * p
@@ -178,6 +199,7 @@ paint_set_precision (
                      Precision  precision
                      )
 {
+  g_warning ("finish writing paint_set_precision()");
   return tag_precision (paint_tag (p));
 }
 
@@ -188,6 +210,7 @@ paint_set_format (
                   Format  format
                   )
 {
+  g_warning ("finish writing paint_set_format()");
   return tag_format (paint_tag (p));
 }
 
@@ -198,6 +221,7 @@ paint_set_alpha (
                  Alpha   alpha
                  )
 {
+  g_warning ("finish writing paint_set_alpha()");
   return tag_alpha (paint_tag (p));
 }
 
@@ -208,7 +232,7 @@ paint_component (
                  guint    component
                  )
 {
-  /* WRITEME */
+  g_warning ("finish writing paint_component()");
   return NULL;
 }
 
@@ -220,7 +244,7 @@ paint_set_component (
                      void *    value
                      )
 {
-  /* WRITEME */
+  g_warning ("finish writing paint_set_component()");
   return FALSE;
 }
 
@@ -306,7 +330,7 @@ load_u8 (
          guint8 * data
          )
 {
-  /* WRITEME */
+  g_warning ("finish writing load_u8()");
   return FALSE;
 }
      
@@ -318,7 +342,7 @@ load_u16 (
           guint16 * data
           )
 {
-  /* WRITEME */
+  g_warning ("finish writing load_u16()");
   return FALSE;
 }
      
@@ -360,7 +384,7 @@ load_float_rgb (
         guint8  a;
 
         if (tag_alpha (tag) == ALPHA_YES)
-            a = data[3];
+            a = data[3] * 255;
         else
             a = 255;
         
@@ -426,6 +450,7 @@ load_float_rgb (
             break;
 
           case FORMAT_INDEXED:
+            g_warning ("finish writing load_float_rgb() u16 indexed");
           default:
             return FALSE;        
           }
@@ -457,6 +482,7 @@ load_float_rgb (
             break;
 
           case FORMAT_INDEXED:
+            g_warning ("finish writing load_float_rgb() float indexed");
           default:
             return FALSE;        
           }
@@ -476,8 +502,116 @@ load_float_gray (
                  gfloat * data
                  )
 {
-  /* WRITEME */
-  return FALSE;
+  switch (paint_precision (paint))
+    {
+    case PRECISION_U8:  /*----------------------------------------*/
+      {
+        guint8 *d = (guint8 *) paint_data (paint);
+        guint8  a;
+
+        if (tag_alpha (tag) == ALPHA_YES)
+            a = data[1] * 255;
+        else
+            a = 255;
+        
+        switch (paint_format (paint))
+          {
+          case FORMAT_RGB:
+            d[0] = data[0] * 255;
+            d[1] = data[0] * 255;
+            d[2] = data[0] * 255;
+            if (paint_alpha (paint) == ALPHA_YES)
+              d[3] = a;
+            break;
+            
+          case FORMAT_GRAY:
+            d[0] = data[0] * 255;
+            if (paint_alpha (paint) == ALPHA_YES)
+              d[1] = a;
+            break;
+
+          case FORMAT_INDEXED:
+            {
+              GImage *g;
+              if ((g = drawable_gimage (paint_drawable (paint))) == NULL)
+                return FALSE;
+              d[0] = map_rgb_to_indexed (g->cmap,
+                                         g->num_cols,
+                                         g->ID,
+                                         (int) (data[0] * 255),
+                                         (int) (data[0] * 255),
+                                         (int) (data[0] * 255));
+              if (paint_alpha (paint) == ALPHA_YES)
+                d[1] = a;
+            }
+            break;
+          default:
+            return FALSE;        
+          }
+      }
+      break;
+
+      
+    case PRECISION_U16:    /*----------------------------------------*/
+      {
+        guint16 *d = (guint16 *) paint_data (paint);
+        switch (paint_format (paint))
+          {
+          case FORMAT_RGB:
+            d[0] = data[0] * 65535;
+            d[1] = data[0] * 65535;
+            d[2] = data[0] * 65535;
+            if (paint_alpha (paint) == ALPHA_YES)
+              d[3] = 65535;
+            break;
+            
+          case FORMAT_GRAY:
+            d[0] = data[0] * 65535;
+            if (paint_alpha (paint) == ALPHA_YES)
+              d[1] = 65535;
+            break;
+
+          case FORMAT_INDEXED:
+            g_warning ("finish writing load_float_rgb() u16 indexed");
+          default:
+            return FALSE;        
+          }
+
+      }
+      break;
+
+      
+    case PRECISION_FLOAT: /*----------------------------------------*/
+      {
+        gfloat *d = (gfloat *) paint_data (paint);
+
+        switch (paint_format (paint))
+          {
+          case FORMAT_RGB:
+            d[0] = data[0];
+            d[1] = data[0];
+            d[2] = data[0];
+            if (paint_alpha (paint) == ALPHA_YES)
+              d[3] = 1;
+            break;
+            
+          case FORMAT_GRAY:
+            d[0] = data[0];
+            if (paint_alpha (paint) == ALPHA_YES)
+              d[1] = 1;
+            break;
+
+          case FORMAT_INDEXED:
+            g_warning ("finish writing load_float_rgb() float indexed");
+          default:
+            return FALSE;        
+          }
+      }
+
+    default:
+      return FALSE;
+    }
+  return TRUE;
 }
 
 
@@ -488,9 +622,7 @@ load_float_indexed (
                     gfloat * data
                     )
 {
-  /* the semantics of this are a little fuzzy yet, but i think this
-     can be made to work... */
-  /* WRITEME */
+  g_warning ("finish writing load_float_indexed()");
   return FALSE;
 }
 
