@@ -1389,8 +1389,8 @@ plug_in_parse_fractalexplorer_path (void)
     {
       g_message (_("No fractalexplorer-path in gimprc:\n"
 		   "You need to add an entry like\n"
-		   "(fractalexplorer-path \"${gimp_dir}/fractalexplorer:${gimp_data_dir}/fractalexplorer\n"
-		   "to your ~/.gimprc/gimprc file\n"));
+		   "(fractalexplorer-path \"${gimp_dir}/fractalexplorer:${gimp_data_dir}/fractalexplorer\")\n"
+		   "to your ~/.gimp-1.1/gimprc file\n"));
       gimp_destroy_params (return_vals, nreturn_vals);
       return;
     }
@@ -2015,7 +2015,7 @@ fractalexplorer_rescan_add_entry_callback (GtkWidget *w,
 {
   static GtkWidget *window = NULL;
 
-  /* Call up the file sel dialouge */
+  /* Call up the file sel dialogue */
   window = gtk_file_selection_new (_("Add FractalExplorer path"));
   gtk_window_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
   gtk_object_set_user_data(GTK_OBJECT(window),(gpointer)client_data);
