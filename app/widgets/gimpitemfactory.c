@@ -217,8 +217,6 @@ static GimpItemFactoryEntry image_entries[] =
     "edit/undo.html", NULL },
   { { N_("/Edit/Redo"), "<control>R", edit_redo_cmd_callback, 0 },
     "edit/redo.html", NULL },
-  { { N_("/Edit/Undo History..."), NULL, edit_undo_history_cmd_callback, 0},
-    "edit/dialogs/undo_history.html", NULL },
 
   { { "/Edit/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
@@ -511,6 +509,9 @@ static GimpItemFactoryEntry image_entries[] =
     "dialogs/error_console.html", NULL },
   { { N_("/Dialogs/Display Filters..."), NULL, dialogs_display_filters_cmd_callback, 0 },
     "dialogs/display_filters/display_filters.html", NULL },
+  { { N_("/Dialogs/Undo History..."), NULL, dialogs_undo_history_cmd_callback, 0},
+    "dialogs/undo_history.html", NULL },
+
 
   { { "/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
