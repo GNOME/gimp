@@ -59,6 +59,12 @@ struct _GimpColorDisplayStackClass
   void (* reordered) (GimpColorDisplayStack *stack,
                       GimpColorDisplay      *display,
                       gint                   position);
+
+  /* Padding for future expansion */
+  void (* _gimp_reserved1) (void);
+  void (* _gimp_reserved2) (void);
+  void (* _gimp_reserved3) (void);
+  void (* _gimp_reserved4) (void);
 };
 
 

@@ -1,3 +1,31 @@
+2004-01-29  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: reset binary age because of struct changes below.
+	* m4macros/gimp-2.0.m4: require GIMP 1.3.26.
+
+	* libgimpmodule/gimpmodule.h
+	* libgimpmodule/gimpmoduledb.h
+	* libgimpthumb/gimpthumbnail.h
+	* libgimpwidgets/gimpbutton.h
+	* libgimpwidgets/gimpchainbutton.h
+	* libgimpwidgets/gimpcolorarea.h
+	* libgimpwidgets/gimpcolorbutton.h
+	* libgimpwidgets/gimpcolordisplay.h
+	* libgimpwidgets/gimpcolordisplaystack.h
+	* libgimpwidgets/gimpcolornotebook.h
+	* libgimpwidgets/gimpcolorscale.h
+	* libgimpwidgets/gimpcolorselection.h
+	* libgimpwidgets/gimpcolorselector.h
+	* libgimpwidgets/gimpdialog.h
+	* libgimpwidgets/gimpfileentry.h
+	* libgimpwidgets/gimpmemsizeentry.h
+	* libgimpwidgets/gimpoffsetarea.h
+	* libgimpwidgets/gimppickbutton.h
+	* libgimpwidgets/gimppixmap.h
+	* libgimpwidgets/gimpsizeentry.h
+	* libgimpwidgets/gimpunitmenu.h: added 4 function pointers padding
+	to all class structures.
+
 2004-01-28  Michael Natterer  <mitch@gimp.org>
 
 	Added infrastructure to make sure we don't write to the global

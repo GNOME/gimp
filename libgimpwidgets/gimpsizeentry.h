@@ -64,6 +64,12 @@ struct _GimpSizeEntryClass
   void (* value_changed)  (GimpSizeEntry *gse);
   void (* refval_changed) (GimpSizeEntry *gse);
   void (* unit_changed)   (GimpSizeEntry *gse);
+
+  /* Padding for future expansion */
+  void (* _gimp_reserved1) (void);
+  void (* _gimp_reserved2) (void);
+  void (* _gimp_reserved3) (void);
+  void (* _gimp_reserved4) (void);
 };
 
 

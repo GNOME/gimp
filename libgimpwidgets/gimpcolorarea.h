@@ -64,6 +64,12 @@ struct _GimpColorAreaClass
   GtkDrawingAreaClass  parent_class;
 
   void (* color_changed) (GimpColorArea *area);
+
+  /* Padding for future expansion */
+  void (* _gimp_reserved1) (void);
+  void (* _gimp_reserved2) (void);
+  void (* _gimp_reserved3) (void);
+  void (* _gimp_reserved4) (void);
 };
 
 

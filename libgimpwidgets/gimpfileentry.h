@@ -58,6 +58,12 @@ struct _GimpFileEntryClass
   GtkHBoxClass  parent_class;
 
   void (* filename_changed) (GimpFileEntry *entry);
+
+  /* Padding for future expansion */
+  void (* _gimp_reserved1) (void);
+  void (* _gimp_reserved2) (void);
+  void (* _gimp_reserved3) (void);
+  void (* _gimp_reserved4) (void);
 };
 
 

@@ -63,6 +63,12 @@ struct _GimpColorButtonClass
   GimpButtonClass  parent_class;
 
   void (* color_changed) (GimpColorButton *button);
+
+  /* Padding for future expansion */
+  void (* _gimp_reserved1) (void);
+  void (* _gimp_reserved2) (void);
+  void (* _gimp_reserved3) (void);
+  void (* _gimp_reserved4) (void);
 };
 
 

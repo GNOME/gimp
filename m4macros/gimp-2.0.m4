@@ -31,7 +31,7 @@ AC_ARG_ENABLE(gimptest, [  --disable-gimptest      do not try to compile and run
     no_gimp=yes
   fi
 
-  min_gimp_version=ifelse([$1], ,1.3.24,$1)
+  min_gimp_version=ifelse([$1], ,1.3.26,$1)
   AC_MSG_CHECKING(for GIMP - version >= $min_gimp_version)
 
   if test x$PKG_CONFIG != xno ; then
