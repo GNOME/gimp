@@ -1729,12 +1729,12 @@ save_dialog ()
   /* DCT method */
   menu = gtk_menu_new ();
 
-  add_menu_item(menu, _("Integer"), 0, dct_callback);
-  add_menu_item(menu, _("Fast integer"), 1, dct_callback);
+  add_menu_item(menu, _("Fast integer"),   1, dct_callback);
+  add_menu_item(menu, _("Integer"),        0, dct_callback);
   add_menu_item(menu, _("Floating-point"), 2, dct_callback);
 
   dct_menu = gtk_option_menu_new ();
-
+ 
   label = gtk_label_new (_("DCT method (speed/quality tradeoff)"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 8, 9, GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
@@ -1742,6 +1742,7 @@ save_dialog ()
   gtk_widget_show (label);
   gtk_widget_show (dct_menu);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (dct_menu), menu);
+  gtk_option_menu_set_history (GTK_OPTION_MENU (dct_menu), 1);
 
   dtype = gimp_drawable_type (drawable_ID_global);
   if (dtype != RGB_IMAGE && dtype != RGBA_IMAGE) 

@@ -1436,11 +1436,11 @@ file_pref_cmd_callback (GtkWidget *widget,
   optionmenu =
     gimp_option_menu_new (file_prefs_toggle_callback,
 			  (gpointer) interpolation_type,
-			  _("Nearest Neighbor"), &interpolation_type,
+			  _("Nearest Neighbor (Fast)"), &interpolation_type,
 			  (gpointer) NEAREST_NEIGHBOR_INTERPOLATION,
 			  _("Linear"), &interpolation_type,
 			  (gpointer) LINEAR_INTERPOLATION,
-			  _("Cubic"), &interpolation_type,
+			  _("Cubic (Slow)"), &interpolation_type,
 			  (gpointer) CUBIC_INTERPOLATION,
 			  NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0,
