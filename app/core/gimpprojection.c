@@ -313,8 +313,6 @@ gdisplay_format_title (GDisplay *gdisp,
 static void
 gdisplay_delete (GDisplay *gdisp)
 {
-  GimpContext *context;
-
   g_hash_table_remove (display_ht, gdisp->shell);
   g_hash_table_remove (display_ht, gdisp->canvas);
 
@@ -368,11 +366,6 @@ gdisplay_delete (GDisplay *gdisp)
 
   if (gdisp->nav_popup)
     nav_popup_free(gdisp->nav_popup);
-
-  /*  set the active display to NULL if it was this display  */
-  context = gimp_context_get_user ();
-  if (gimp_context_get_display (context) == gdisp)
-    gimp_context_set_display (context, NULL);
 
   gtk_widget_unref (gdisp->shell);
 

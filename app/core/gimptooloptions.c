@@ -106,7 +106,7 @@ tool_options_paint_mode_update (GtkWidget *widget,
   context = (GimpContext *) gtk_object_get_user_data (GTK_OBJECT (widget));
 
   gimp_context_set_paint_mode (GIMP_CONTEXT (context),
-			       (long) data);
+			       (LayerModeEffects) data);
 }
 
 void

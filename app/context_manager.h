@@ -25,6 +25,5 @@ void   context_manager_init (void);
 void   context_manager_free (void);
 
 void   context_manager_set_global_paint_options (gboolean global);
-void   context_manager_set_tool                 (ToolType tool_type);
 
 #endif /* __CONTEXT_MANAGER_H__ */

@@ -1627,7 +1627,7 @@ paint_mode_menu_callback (GtkWidget *widget,
   if (bsp == brush_select_dialog)
     {
       gimp_context_set_paint_mode (gimp_context_get_user (),
-				   (int) data);
+				   (LayerModeEffects) data);
     }
   else
     {

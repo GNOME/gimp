@@ -257,7 +257,7 @@ static GimpItemFactoryEntry image_entries[] =
     "view/dot_for_dot.html", NULL },
   { { N_("/View/Info Window..."), "<control><shift>I", view_window_info_cmd_callback, 0 },
     "view/dialogs/info_window.html", NULL },
-  { { N_("/View/Nav. Window..."), NULL, view_window_nav_cmd_callback, 0 },
+  { { N_("/View/Nav. Window..."), "<control><shift>N", view_window_nav_cmd_callback, 0 },
     "view/dialogs/navigation_window.html", NULL },
 
   { { N_("/View/---"), NULL, NULL, 0, "<Separator>" },
@@ -288,10 +288,10 @@ static GimpItemFactoryEntry image_entries[] =
     "image/colors/equalize.html", NULL },
   { { N_("/Image/Colors/Invert"), NULL, image_invert_cmd_callback, 0 },
     "image/colors/invert.html", NULL },
-  { { N_("/Image/Colors/---"), NULL, NULL, 0, "<Separator>" },
-    NULL, NULL },
   { { N_("/Image/Colors/Desaturate"), NULL, image_desaturate_cmd_callback, 0 },
     "image/colors/desaturate.html", NULL },
+  { { N_("/Image/Colors/---"), NULL, NULL, 0, "<Separator>" },
+    NULL, NULL },
 
   { { N_("/Image/Channels/tearoff1"), NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
     NULL, NULL },

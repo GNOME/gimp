@@ -1,3 +1,36 @@
+1999-10-19  Michael Natterer  <mitch@gimp.org>
+
+	* gimpcontext.[ch]: changed the "parent context" implementation:
+
+	- Automatically connect/disconnect the "*_changed" signals when
+	  changing the parent and when setting the "defined" flag of the
+	  attributes.
+	- Store the former *_defined booleans in a single guint32.
+	- Added generic functions to set the "defined" flags of the
+	  attributes and to copy attributes between contexts.
+
+	The contexts now correctly handle disappearing images and
+	displays, so we don't have to explicitly reset them any more.
+
+	* context_manager.[ch]: adopted to the changed context
+	implementation, connect to the user context's "tool_changed"
+	signal to switch the per-tool contexts, don't connect to the
+	"removed" signal of the image context.
+
+	* brush_select.c
+	* tool_options.c: use LayerModeEffects instead of int when calling
+	gimp_context_set_paint_mode().
+
+	* gdisplay.c: no need to reset the active display when deleting it
+	because the context connects to the "destroy" signal of the shell
+	now.
+
+	* menus.c: a shortcut for the navigation window. Moved
+	<Image>/Image/Colors/Desaturate before the separator.
+
+	* tools.c: tools_select(): set the active tool of the user context
+	instead of calling a special context manager function.
+
 Thu Oct 19 05:57:10 BST 1999 Nick Lamb <njl195@zepler.org>
 
         * app/plug_in.h
@@ -37,7 +70,8 @@ Mon Oct 18 21:24:47 BST 1999 Andy Thomas <alt@gimp.org>
 	not on the curve the "new point" option will become selected and the
 	new point will be added.
 
-	2) The "new point" option is defaulted to on when a new image is created	or a new image is selected from the image menu.
+	2) The "new point" option is defaulted to on when a new image is
+	created	or a new image is selected from the image menu.
 
 	3) Move and flip tool now effect the path if it is locked.
 

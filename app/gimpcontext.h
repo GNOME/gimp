@@ -1,6 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * gimpcontext.h: Copyright (C) 1999 Michael Natterer <mitch@gimp.org>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -37,31 +39,45 @@
 
 typedef enum
 {
-  GIMP_CONTEXT_ARG_IMAGE      = 1 << 0,
-  GIMP_CONTEXT_ARG_DISPLAY    = 1 << 1,
-  GIMP_CONTEXT_ARG_TOOL       = 1 << 2,
-  GIMP_CONTEXT_ARG_FOREGROUND = 1 << 3,
-  GIMP_CONTEXT_ARG_BACKGROUND = 1 << 4,
-  GIMP_CONTEXT_ARG_OPACITY    = 1 << 5,
-  GIMP_CONTEXT_ARG_PAINT_MODE = 1 << 6,
-  GIMP_CONTEXT_ARG_BRUSH      = 1 << 7,
-  GIMP_CONTEXT_ARG_PATTERN    = 1 << 8,
-  GIMP_CONTEXT_ARG_GRADIENT   = 1 << 9,
-  
-  /* aliases
-   */
-  GIMP_CONTEXT_ARG_PAINT      = GIMP_CONTEXT_ARG_FOREGROUND |
-                                GIMP_CONTEXT_ARG_BACKGROUND |
-                                GIMP_CONTEXT_ARG_OPACITY |
-                                GIMP_CONTEXT_ARG_PAINT_MODE |
-                                GIMP_CONTEXT_ARG_BRUSH |
-                                GIMP_CONTEXT_ARG_PATTERN |
-                                GIMP_CONTEXT_ARG_GRADIENT,
-  GIMP_CONTEXT_ARG_ALL        = GIMP_CONTEXT_ARG_IMAGE |
-                                GIMP_CONTEXT_ARG_DISPLAY |
-                                GIMP_CONTEXT_ARG_TOOL |
-                                GIMP_CONTEXT_ARG_PAINT
-} GimpContextArgs;
+  GIMP_CONTEXT_ARG_IMAGE,
+  GIMP_CONTEXT_ARG_DISPLAY,
+  GIMP_CONTEXT_ARG_TOOL,
+  GIMP_CONTEXT_ARG_FOREGROUND,
+  GIMP_CONTEXT_ARG_BACKGROUND,
+  GIMP_CONTEXT_ARG_OPACITY,
+  GIMP_CONTEXT_ARG_PAINT_MODE,
+  GIMP_CONTEXT_ARG_BRUSH,
+  GIMP_CONTEXT_ARG_PATTERN,
+  GIMP_CONTEXT_ARG_GRADIENT,
+  GIMP_CONTEXT_NUM_ARGS
+} GimpContextArgType;
+
+typedef enum
+{
+  GIMP_CONTEXT_IMAGE_MASK      = 1 << 0,
+  GIMP_CONTEXT_DISPLAY_MASK    = 1 << 1,
+  GIMP_CONTEXT_TOOL_MASK       = 1 << 2,
+  GIMP_CONTEXT_FOREGROUND_MASK = 1 << 3,
+  GIMP_CONTEXT_BACKGROUND_MASK = 1 << 4,
+  GIMP_CONTEXT_OPACITY_MASK    = 1 << 5,
+  GIMP_CONTEXT_PAINT_MODE_MASK = 1 << 6,
+  GIMP_CONTEXT_BRUSH_MASK      = 1 << 7,
+  GIMP_CONTEXT_PATTERN_MASK    = 1 << 8,
+  GIMP_CONTEXT_GRADIENT_MASK   = 1 << 9,
+
+  /*  aliases  */
+  GIMP_CONTEXT_PAINT_ARGS_MASK = GIMP_CONTEXT_FOREGROUND_MASK |
+                                 GIMP_CONTEXT_BACKGROUND_MASK |
+                                 GIMP_CONTEXT_OPACITY_MASK |
+                                 GIMP_CONTEXT_PAINT_MODE_MASK |
+                                 GIMP_CONTEXT_BRUSH_MASK |
+                                 GIMP_CONTEXT_PATTERN_MASK |
+                                 GIMP_CONTEXT_GRADIENT_MASK,
+  GIMP_CONTEXT_ALL_ARGS_MASK   = GIMP_CONTEXT_IMAGE_MASK |
+                                 GIMP_CONTEXT_DISPLAY_MASK |
+                                 GIMP_CONTEXT_TOOL_MASK |
+                                 GIMP_CONTEXT_PAINT_ARGS_MASK
+} GimpContextArgMask;
 
 typedef struct _GimpContext GimpContext;
 typedef struct _GimpContextClass GimpContextClass;
@@ -73,37 +89,21 @@ struct _GimpContext
   gchar		   *name;
   GimpContext	   *parent;
 
-  /*  FIXME: the solution of having a boolean for each attribute and the
-   *         name "defined" need some brainstorming
-   */
-  gboolean	    image_defined;
-  GimpImage	   *image;
+  guint32           defined_args;
 
-  gboolean	    display_defined;
+  GimpImage	   *image;
   GDisplay	   *display;
 
-  gboolean          tool_defined;
   ToolType          tool;
 
-  gboolean          foreground_defined;
   guchar            foreground[3];
-
-  gboolean          background_defined;
   guchar            background[3];
 
-  gboolean	    opacity_defined;
   gdouble	    opacity;
-
-  gboolean	    paint_mode_defined;
   LayerModeEffects  paint_mode;
 
-  gboolean          brush_defined;
   GimpBrush        *brush;
-
-  gboolean          pattern_defined;
   GPattern         *pattern;
-
-  gboolean          gradient_defined;
   gradient_t       *gradient;
 };
 
@@ -141,12 +141,9 @@ struct _GimpContextClass
 
 GtkType       gimp_context_get_type       (void);
 GimpContext * gimp_context_new            (gchar       *name,
-					   GimpContext *template,
-					   GimpContext *parent);
+					   GimpContext *template);
 
-/*  TODO: - gimp_context_set_parent ()
- *        - gimp_context_get_parent ()
- *        - gimp_context_find ()
+/*  TODO: - gimp_context_find ()
  *
  *        probably interacting with the context manager:
  *        - gimp_context_push () which will call gimp_context_set_parent()
@@ -174,45 +171,55 @@ GimpContext * gimp_context_get_default    (void);
 GimpContext * gimp_context_get_standard   (void);
 
 /*  functions for manipulating a single context
- *
- *  FIXME: this interface may be ok but the implementation is
- *         ugly code duplication. There needs to be a generic way.
  */
-gchar       * gimp_context_get_name           (GimpContext *context);
+gchar       * gimp_context_get_name       (GimpContext *context);
 
-GimpContext * gimp_context_get_parent         (GimpContext *context);
-void          gimp_context_set_parent         (GimpContext *context,
-					       GimpContext *parent);
+GimpContext * gimp_context_get_parent     (GimpContext *context);
+void          gimp_context_set_parent     (GimpContext *context,
+					   GimpContext *parent);
+void          gimp_context_unset_parent   (GimpContext *context);
+
+/*  define / undefinine context arguments
+ *
+ *  the value of an undefined argument will be taken from the parent context.
+ */
+void          gimp_context_define_arg     (GimpContext        *context,
+					   GimpContextArgType  arg,
+					   gboolean            defined);
+
+gboolean      gimp_context_arg_defined    (GimpContext        *context,
+					   GimpContextArgType  arg);
+
+void          gimp_context_define_args    (GimpContext        *context,
+					   guint32             args_mask,
+					   gboolean            defined);
+
+/*  copying context arguments
+ */
+void          gimp_context_copy_arg       (GimpContext        *src,
+					   GimpContext        *dest,
+					   GimpContextArgType  arg);
+
+void          gimp_context_copy_args      (GimpContext        *src,
+					   GimpContext        *dest,
+					   GimpContextArgMask  args_mask);
 
 /*  image  */
-
 GimpImage        * gimp_context_get_image          (GimpContext     *context);
 void               gimp_context_set_image          (GimpContext     *context,
 						    GimpImage       *image);
-gboolean           gimp_context_image_defined      (GimpContext     *context);
-void               gimp_context_define_image       (GimpContext     *context,
-						    gboolean         defined);
 
 /*  display  */
-
 GDisplay         * gimp_context_get_display        (GimpContext     *context);
 void               gimp_context_set_display        (GimpContext     *context,
 						    GDisplay        *display);
-gboolean           gimp_context_display_defined    (GimpContext     *context);
-void               gimp_context_define_display     (GimpContext     *context,
-						    gboolean         defined);
 
 /*  tool  */
-
 ToolType           gimp_context_get_tool           (GimpContext     *context);
 void               gimp_context_set_tool           (GimpContext     *context,
 						    ToolType         tool_type);
-gboolean           gimp_context_tool_defined       (GimpContext     *context);
-void               gimp_context_define_tool        (GimpContext     *context,
-						    gboolean         defined);
 
 /*  foreground color  */
-
 void               gimp_context_get_foreground     (GimpContext *context,
 						    guchar      *r,
 						    guchar      *g,
@@ -221,12 +228,8 @@ void               gimp_context_set_foreground     (GimpContext *context,
 						    gint         r,
 						    gint         g,
 						    gint         b);
-gboolean           gimp_context_foreground_defined (GimpContext *context);
-void               gimp_context_define_foreground  (GimpContext *context,
-						    gboolean     defined);
 
 /*  background color  */
-
 void               gimp_context_get_background     (GimpContext *context,
 						    guchar      *r,
 						    guchar      *g,
@@ -235,53 +238,30 @@ void               gimp_context_set_background     (GimpContext *context,
 						    gint         r,
 						    gint         g,
 						    gint         b);
-gboolean           gimp_context_background_defined (GimpContext *context);
-void               gimp_context_define_background  (GimpContext *context,
-						    gboolean     defined);
 
 /*  opacity  */
-
 gdouble            gimp_context_get_opacity        (GimpContext     *context);
 void               gimp_context_set_opacity        (GimpContext     *context,
 						    gdouble          opacity);
-gboolean           gimp_context_opacity_defined    (GimpContext     *context);
-void               gimp_context_define_opacity     (GimpContext     *context,
-						    gboolean         defined);
 
 /*  paint mode  */
-
 LayerModeEffects   gimp_context_get_paint_mode     (GimpContext     *context);
 void               gimp_context_set_paint_mode     (GimpContext     *context,
 						    LayerModeEffects paint_mode);
-gboolean           gimp_context_paint_mode_defined (GimpContext     *context);
-void               gimp_context_define_paint_mode  (GimpContext     *context,
-						    gboolean         defined);
 
 /*  brush  */
-
 GimpBrush        * gimp_context_get_brush          (GimpContext     *context);
 void               gimp_context_set_brush          (GimpContext     *context,
 						    GimpBrush       *brush);
-gboolean           gimp_context_brush_defined      (GimpContext     *context);
-void               gimp_context_define_brush       (GimpContext     *context,
-						    gboolean         defined);
 
 /*  pattern  */
-
 GPattern         * gimp_context_get_pattern        (GimpContext     *context);
 void               gimp_context_set_pattern        (GimpContext     *context,
 						    GPattern        *pattern);
-gboolean           gimp_context_pattern_defined    (GimpContext     *context);
-void               gimp_context_define_pattern     (GimpContext     *context,
-						    gboolean         defined);
 
 /*  gradient  */
-
 gradient_t       * gimp_context_get_gradient       (GimpContext     *context);
 void               gimp_context_set_gradient       (GimpContext     *context,
 						    gradient_t      *gradient);
-gboolean           gimp_context_gradient_defined   (GimpContext     *context);
-void               gimp_context_define_gradient    (GimpContext     *context,
-						    gboolean         defined);
 
 #endif /* __GIMP_CONTEXT_H__ */

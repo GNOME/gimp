@@ -696,8 +696,11 @@ active_tool_free (void)
 void
 tools_select (ToolType tool_type)
 {
-  /*  Care for switching to the tool's private context  */
-  context_manager_set_tool (tool_type);
+  /*  Care for switching to the tool's private context _before_ actually
+   *  switching the tool itself (the context manager needs to know the
+   *  old tool)
+   */
+  gimp_context_set_tool (gimp_context_get_user (), tool_type);
 
   if (active_tool)
     active_tool_free ();
