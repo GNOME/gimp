@@ -88,6 +88,7 @@ static void   gimp_by_color_select_tool_class_init (GimpByColorSelectToolClass *
 static void   gimp_by_color_select_tool_init       (GimpByColorSelectTool      *by_color_select);
 static void   gimp_by_color_select_tool_destroy    (GtkObject      *object);
 
+static void   gimp_by_color_select_tool_initialize_by_image (GimpImage    *gimage);
 
 static void   by_color_select_color_drop      (GtkWidget      *widget,
 					       const GimpRGB  *color,
@@ -116,6 +117,7 @@ static void   by_color_select_oper_update     (GimpTool       *tool,
 static void   by_color_select_control         (GimpTool       *tool,
 					       ToolAction      action,
 					       GDisplay       *gdisp);
+static void   by_color_select_mask_changed    (GimpImage      *gimage);
 
 static ByColorDialog * by_color_select_dialog_new  (void);
 
@@ -258,11 +260,11 @@ gimp_by_color_select_tool_select (GimpImage    *gimage,
 void
 gimp_by_color_select_tool_initialize_by_image (GimpImage *gimage)
 {
+
   /*  update the preview window  */
   if (by_color_dialog)
     {
       by_color_dialog->gimage = gimage;
-      gimage->by_color_select = TRUE;
       by_color_select_render (by_color_dialog, gimage);
       by_color_select_draw (by_color_dialog, gimage);
     }
@@ -292,6 +294,7 @@ gimp_by_color_select_tool_class_init (GimpByColorSelectToolClass *klass)
   tool_class->modifier_key   = by_color_select_modifier_update;
   tool_class->oper_update    = by_color_select_oper_update;
   tool_class->control        = by_color_select_control;
+
 
 }
 
@@ -515,8 +518,10 @@ by_color_select_button_press (GimpTool       *tool,
     gtk_widget_show (by_color_dialog->shell);
 
   /*  Update the by_color_dialog's active gdisp pointer  */
-  if (by_color_dialog->gimage)
-    by_color_dialog->gimage->by_color_select = FALSE;
+  /* if (by_color_dialog->gimage)
+   *   by_color_dialog->gimage->by_color_select = FALSE;
+   * Temporarily commented out. Do we need to do something to replace 
+   * this?*/
 
   if (by_color_dialog->gimage != gdisp->gimage)
     {
@@ -530,7 +535,8 @@ by_color_select_button_press (GimpTool       *tool,
     }
 
   by_color_dialog->gimage = gdisp->gimage;
-  gdisp->gimage->by_color_select = TRUE;
+  /* gdisp->gimage->by_color_select = TRUE;
+   * Temporarily commented out - do we need something to replace this? */
 
   gdk_pointer_grab (gdisp->canvas->window, FALSE,
                     GDK_POINTER_MOTION_HINT_MASK |
@@ -780,12 +786,25 @@ by_color_select_initialize (GimpTool *tool, GDisplay *gdisp)
 {
   /*  The "by color" dialog  */
   if (!by_color_dialog)
-    by_color_dialog = by_color_select_dialog_new ();
+    {
+      by_color_dialog = by_color_select_dialog_new ();
+      /* Catch the "mask_changed" signal and attach a handler that does 
+       * stuff with it. Need to do this somewhere with the relevant 
+       * GimpImage in context */
+      gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "mask_changed",
+			  by_color_select_mask_changed,	NULL);
+    }
   else
     if (!GTK_WIDGET_VISIBLE (by_color_dialog->shell))
       gtk_widget_show (by_color_dialog->shell);
-
+  
   gimp_by_color_select_tool_initialize_by_image (gdisp->gimage);
+}
+
+void by_color_select_mask_changed( GimpImage *gimage)
+{
+  if (by_color_dialog)
+    gimp_by_color_select_tool_initialize_by_image (gimage );
 }
 
 /****************************/
@@ -1202,11 +1221,12 @@ by_color_select_close_callback (GtkWidget *widget,
   
   gimp_dialog_hide (bcd->shell);
 
-  if (bcd->gimage && gimp_container_have (image_context,
-					  GIMP_OBJECT (bcd->gimage)))
-    {
-      bcd->gimage->by_color_select = FALSE;
-    }
+  /* if (bcd->gimage && gimp_container_have (image_context,
+   * 					  GIMP_OBJECT (bcd->gimage)))
+   *  {
+   *    bcd->gimage->by_color_select = FALSE;
+   *  }
+   * Temporarily commented out. */
 
   bcd->gimage = NULL;
 }

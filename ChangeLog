@@ -1,3 +1,15 @@
+2001-05-31  Dave Neary  <dneary@eircom.net>
+
+	* app/core/gimpimage.[ch]
+	* app/core/gimpimage-mask.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/undo.c: Added a "mask_changed" signal, to allow
+	gimpbycolorselect to update it's dialog properly, and take out a
+	silly dependency in gimpimage.
+
+	One outstanding issue is that now the dialog doesn't close
+	automatically when the tool context changes. Working on it :)
+	
 2001-05-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/base/Makefile.am

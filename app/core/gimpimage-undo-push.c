@@ -1114,15 +1114,6 @@ undo_pop_mask (GimpImage *gimage,
   /* we know the bounds */
   sel_mask->bounds_known = TRUE;
 
-  /*  if there is a "by color" selection dialog active
-   *  for this gimage's mask, send it an update notice
-   *
-   *  This should never happen... we should be using a signal to 
-   *  do this.
-   */
-  if (gimage->by_color_select)
-    gimp_by_color_select_tool_initialize_by_image (gimage);
-
   return TRUE;
 }
 

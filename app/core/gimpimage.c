@@ -166,6 +166,7 @@ enum
   ACTIVE_CHANNEL_CHANGED,
   COMPONENT_VISIBILITY_CHANGED,
   COMPONENT_ACTIVE_CHANGED,
+  MASK_CHANGED,
 
   CLEAN,
   DIRTY,
@@ -297,6 +298,15 @@ gimp_image_class_init (GimpImageClass *klass)
                     GTK_TYPE_NONE, 1,
 		    GTK_TYPE_INT);
 
+  gimp_image_signals[MASK_CHANGED] =
+    gtk_signal_new ("mask_changed",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpImageClass,
+				       mask_changed),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
+
   gimp_image_signals[CLEAN] =
     gtk_signal_new ("clean",
                     GTK_RUN_FIRST,
@@ -366,6 +376,7 @@ gimp_image_class_init (GimpImageClass *klass)
   klass->active_channel_changed       = NULL;
   klass->component_visibility_changed = NULL;
   klass->component_active_changed     = NULL;
+  klass->mask_changed                 = NULL;
 
   klass->clean                        = NULL;
   klass->dirty                        = NULL;
@@ -428,8 +439,6 @@ gimp_image_init (GimpImage *gimage)
   gimage->parasites             = parasite_list_new ();
 
   gimage->paths                 = NULL;
-
-  gimage->by_color_select       = FALSE;
 
   gimage->qmask_state           = FALSE;
   gimage->qmask_color.r         = 1.0;
@@ -1663,6 +1672,14 @@ gimp_image_mode_changed (GimpImage *gimage)
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[MODE_CHANGED]);
+}
+
+void
+gimp_image_mask_changed (GimpImage *gimage)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[MASK_CHANGED]);
 }
 
 void

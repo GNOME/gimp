@@ -159,6 +159,9 @@ gimage_mask_invalidate (GimpImage *gimage)
 		     0, 0,
 		     GIMP_DRAWABLE (layer)->width,
 		     GIMP_DRAWABLE (layer)->height);
+
+  /* Issue the MASK_CHANGED signal here */
+  gimp_image_mask_changed(gimage);
 }
 
 

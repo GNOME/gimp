@@ -110,9 +110,6 @@ struct _GimpImage
   gboolean           visible[MAX_CHANNELS]; /*  visible channels             */
   gboolean           active[MAX_CHANNELS];  /*  active channels              */
 
-  gboolean           by_color_select;       /*  TRUE if there's an active    */
-                                            /*  "by color" selection dialog  */
-
   gboolean           qmask_state;           /*  TRUE if qmask is on          */
   GimpRGB            qmask_color;           /*  rgba triplet of the color    */
 
@@ -148,6 +145,7 @@ struct _GimpImageClass
 					 ChannelType  channel);
   void (* component_active_changed)     (GimpImage   *gimage,
 					 ChannelType  channel);
+  void (* mask_changed)                 (GimpImage   *gimage);
 
   void (* clean)                        (GimpImage   *gimage);
   void (* dirty)                        (GimpImage   *gimage);
@@ -281,6 +279,7 @@ void            gimp_image_mode_changed      (GimpImage          *gimage);
 void            gimp_image_alpha_changed     (GimpImage          *gimage);
 void            gimp_image_size_changed      (GimpImage          *gimage);
 void            gimp_image_floating_selection_changed (GimpImage *gimage);
+void            gimp_image_mask_changed          (GimpImage      *gimage);
 
 
 /*  layer/channel functions  */
