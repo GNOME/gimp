@@ -344,13 +344,9 @@ rect_select_button_press (Tool           *tool,
     default:
       break;
     }
-  if (rect_sel->fixed_size) {
-    rect_sel->w = rect_sel->fixed_width;
-    rect_sel->h = rect_sel->fixed_height;
-  } else {	
-    rect_sel->w = 0;
-    rect_sel->h = 0;
-  }
+
+  rect_sel->w = 0;
+  rect_sel->h = 0;
 
   rect_sel->center = FALSE;
 
@@ -520,36 +516,31 @@ rect_select_motion (Tool           *tool,
 		       (double)rect_sel->fixed_width);
       tw = x - ox;
       th = y - oy;
-
-      /* 
-       * This is probably a poorly-optimized way to do it, but it gives
-       * nicer, more predictable results than the original agorithm
-       * FIXME: center-originating selections (Ctrl-drag) are broken now.
-       * -xach 
-       */
-
-      if ((abs(th) < (ratio * abs(tw))) && (abs(tw) > (abs(th) / ratio)))
-        {
-          w = tw;
-          h = (int)(tw * ratio);
-          /* h should have the sign of th */
-          if ((th < 0 && h > 0) || (th > 0 && h < 0))
-            h = -h;
-        } 
-      else 
-        {
-          h = th;
-          w = (int)(th / ratio);
-          /* w should have the sign of tw */
-          if ((tw < 0 && w > 0) || (tw > 0 && w < 0))
-            w = -w;
-        }
-    } else {
-      w = rect_sel->fixed_width;
-      h = rect_sel->fixed_height;
-      ox = x;
-      oy = y;
-    }
+       /* 
+        * This is probably an inefficient way to do it, but it gives
+        * nicer, more predictable results than the original agorithm
+        */
+ 
+       if ((abs(th) < (ratio * abs(tw))) && (abs(tw) > (abs(th) / ratio)))
+         {
+           w = tw;
+           h = (int)(tw * ratio);
+           /* h should have the sign of th */
+           if ((th < 0 && h > 0) || (th > 0 && h < 0))
+             h = -h;
+         } 
+       else 
+         {
+           h = th;
+           w = (int)(th / ratio);
+           /* w should have the sign of tw */
+           if ((tw < 0 && w > 0) || (tw > 0 && w < 0))
+             w = -w;
+         }
+     } else {
+       w = rect_sel->fixed_width;
+       h = rect_sel->fixed_height;
+     }
   } else {
     w = (x - ox);
     h = (y - oy);
@@ -576,8 +567,8 @@ rect_select_motion (Tool           *tool,
     {
       if (rect_sel->fixed_size) 
 	{
-	  rect_sel->x = ox - w / 2;
-	  rect_sel->y = oy - h / 2;
+	  rect_sel->x = ox - (w/2);
+	  rect_sel->y = oy - (h/2);
 	  rect_sel->w = w;
 	  rect_sel->h = h;
 	} 

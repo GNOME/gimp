@@ -1,3 +1,9 @@
+Sun Dec 20 00:55:21 MET 1998 Sven Neumann <sven@gimp.org>
+
+	* app/rect_select.c: applied the second patch from Xach with
+	a slight modification to get centered fixed-size selections
+	right.
+	
 Sat Dec 19 19:19:22 MET 1998 Sven Neumann <sven@gimp.org>
 
 	* app/rect_select.c: applied the patch from Xach. Corrects the
