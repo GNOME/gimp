@@ -7,19 +7,19 @@
 # translation of @GIMP 1.3@.po to @RU@
 # translation of @GIMP@.po to @RU@
 # translation of gimp.po to russian
-# Copyright (C) 1999-2002,2003, 2004 Free Software Foundation, Inc.
+# Copyright (C) 1999-2002,2003, 2004, 2005 Free Software Foundation, Inc.
 # Valek Filippov <frob@df.ru>, 1999-2002.
 # Anatoly A. Yakushin <jaa@altlinux.ru>, 2003, 2004.
-# Roxana Chernogolova <padavan@mail.ru>, 2003, 2004.
-# AnatolyA. Yakushin <jaa@altlinux.ru>, 2004.
+# AnatolyA. Yakushin <jaa@altlinux.ru>, 2004, 2005.
+# Roxana Chernogolova <mavka@justos.org>, 2003, 2004, 2005.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD.ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-28 16:58+0100\n"
-"PO-Revision-Date: 2004-11-23 14:55+0300\n"
-"Last-Translator: Roxana Chernogolova <padavan@mail.ru>\n"
+"POT-Creation-Date: 2005-01-07 00:13+0300\n"
+"PO-Revision-Date: 2005-01-07 00:17+0300\n"
+"Last-Translator: AnatolyA. Yakushin <jaa@altlinux.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -58,8 +58,7 @@ msgstr "Невозможно открыть '%s': %s"
 #: app/batch.c:84 app/batch.c:101
 #, c-format
 msgid "The batch interpreter '%s' is not available, batch mode disabled."
-msgstr ""
-"Интерпретатор '%s' недоступен, использование командного режима невозможно."
+msgstr "Интерпретатор '%s' недоступен, использование командного режима невозможно."
 
 #: app/main.c:211
 msgid ""
@@ -155,8 +154,7 @@ msgstr "  -s, --no-splash              Не показывать окно зап
 
 #: app/main.c:522
 msgid "  --session <name>         Use an alternate sessionrc file.\n"
-msgstr ""
-"  --session <name>        Использовать альтернативный файл sessionrc.\n"
+msgstr "  --session <name>        Использовать альтернативный файл sessionrc.\n"
 
 #: app/main.c:523
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
@@ -169,10 +167,8 @@ msgstr ""
 "gimprc.\n"
 
 #: app/main.c:525
-msgid ""
-"  --dump-gimprc            Output a gimprc file with default settings.\n"
-msgstr ""
-"  --dump-gimprc        ПОказать файл gimprc с параметрами по умолчанию.\n"
+msgid "  --dump-gimprc            Output a gimprc file with default settings.\n"
+msgstr "  --dump-gimprc        ПОказать файл gimprc с параметрами по умолчанию.\n"
 
 #: app/main.c:526
 msgid ""
@@ -183,8 +179,7 @@ msgstr ""
 "диалоговых окон.\n"
 
 #: app/main.c:527
-msgid ""
-"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
+msgid "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers         Разрешить отладку обработчиков сигналов для "
 "нефатальных сигналов.\n"
@@ -368,9 +363,8 @@ msgid "Templates"
 msgstr "Образцы"
 
 #: app/actions/actions.c:174
-#, fuzzy
 msgid "Text Editor"
-msgstr "Редактор текста GIMP"
+msgstr "Редактор текста"
 
 #: app/actions/actions.c:177 app/dialogs/dialogs.c:123
 #: app/dialogs/preferences-dialog.c:1585 app/dialogs/preferences-dialog.c:1588
@@ -752,8 +746,7 @@ msgstr "Удалить объект "
 #: app/actions/data-commands.c:167
 #, c-format
 msgid "Are you sure you want to delete '%s' from the list and from disk?"
-msgstr ""
-"Вы уверены в том, что хотите удалить '%s' из списка изображений и с диска?"
+msgstr "Вы уверены в том, что хотите удалить '%s' из списка изображений и с диска?"
 
 #: app/actions/dialogs-actions.c:38
 msgid "_Dialogs"
@@ -1165,9 +1158,8 @@ msgstr "_Копировать"
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: app/actions/edit-actions.c:93
-#, fuzzy
 msgid "Copy _Visible"
-msgstr "Видимый"
+msgstr "Скопировать видимое"
 
 #: app/actions/edit-actions.c:98
 msgid "_Paste"
@@ -1514,7 +1506,7 @@ msgstr "Сфера (уменьшающаяся)"
 #: app/actions/gradient-editor-actions.c:270
 #: app/actions/gradient-editor-actions.c:293
 msgid "(Varies)"
-msgstr ""
+msgstr "(Разница)"
 
 #: app/actions/gradient-editor-actions.c:278 app/actions/image-actions.c:123
 msgid "_RGB"
@@ -1823,9 +1815,8 @@ msgid "F_it Canvas to Layers"
 msgstr "По размеру слоев"
 
 #: app/actions/image-actions.c:85
-#, fuzzy
 msgid "_Print Size..."
-msgstr "Размер при печати:"
+msgstr "Размер при печати..."
 
 #: app/actions/image-actions.c:90
 msgid "_Scale Image..."
@@ -1868,7 +1859,6 @@ msgid "Resizing..."
 msgstr "Изменить размер..."
 
 #: app/actions/image-commands.c:242
-#, fuzzy
 msgid "Set Image Print Resolution"
 msgstr "Изменить разрешение изображения"
 
@@ -1889,9 +1879,8 @@ msgstr ""
 "что выделенная область пуста."
 
 #: app/actions/image-commands.c:484
-#, fuzzy
 msgid "Change Print Size"
-msgstr "Размер при печати:"
+msgstr "Изменить размер для печати"
 
 #: app/actions/image-commands.c:508 app/core/gimpimage-scale.c:71
 #: app/dialogs/image-scale-dialog.c:91
@@ -2680,14 +2669,12 @@ msgstr "Удалить образец"
 
 #: app/actions/templates-commands.c:243
 #, c-format
-msgid ""
-"Are you sure you want to delete template '%s' from the list and from disk?"
+msgid "Are you sure you want to delete template '%s' from the list and from disk?"
 msgstr "Вы уверены в том, что хотите удалить образец '%s' из списка и с диска?"
 
 #: app/actions/text-editor-actions.c:44
-#, fuzzy
 msgid "Open"
-msgstr "_Открыть..."
+msgstr "Открыть"
 
 #: app/actions/text-editor-actions.c:45
 msgid "Load text from file"
@@ -2703,7 +2690,7 @@ msgstr "Удалить текст"
 
 #: app/actions/text-editor-actions.c:59
 msgid "LTR"
-msgstr ""
+msgstr "LTR"
 
 #: app/actions/text-editor-actions.c:60 app/text/text-enums.c:51
 msgid "From left to right"
@@ -2711,7 +2698,7 @@ msgstr "Слева направо"
 
 #: app/actions/text-editor-actions.c:65
 msgid "RTL"
-msgstr ""
+msgstr "RTL"
 
 #: app/actions/text-editor-actions.c:66 app/text/text-enums.c:52
 msgid "From right to left"
@@ -2799,8 +2786,7 @@ msgstr "Сбросить параметры"
 
 #: app/actions/tool-options-commands.c:233
 msgid "Do you really want to reset all tool options to default values?"
-msgstr ""
-"Действительно вернуться к настройкам по умолчанию для всех инструментов?"
+msgstr "Действительно вернуться к настройкам по умолчанию для всех инструментов?"
 
 #: app/actions/tools-actions.c:47
 msgid "Tools Menu"
@@ -3038,19 +3024,19 @@ msgstr "Закрыть"
 
 #: app/actions/view-actions.c:78
 msgid "_Fit Image in Window"
-msgstr "Изображение к размеру окна"
+msgstr "Изображение к высоте окна"
 
 #: app/actions/view-actions.c:79
 msgid "Fit image in window"
-msgstr "Изображение к размеру окна"
+msgstr "Изображение к высоте окна"
 
 #: app/actions/view-actions.c:84
 msgid "Fit Image to Window"
-msgstr "Изображение к размеру окна"
+msgstr "Изображение к ширине окна"
 
 #: app/actions/view-actions.c:85
 msgid "Fit image to window"
-msgstr "Изображение к размеру окна"
+msgstr "Изображение к ширине окна"
 
 #: app/actions/view-actions.c:90
 msgid "_Info Window"
@@ -3469,8 +3455,7 @@ msgstr ""
 msgid ""
 "The window type hint that is set on dock windows. This may affect the way "
 "your window manager decorates and handles dock windows."
-msgstr ""
-"От этой настройки зависит то, какой вид придаст оконный менеджер панелям."
+msgstr "От этой настройки зависит то, какой вид придаст оконный менеджер панелям."
 
 #: app/config/gimprc-blurbs.h:121
 msgid "When enabled, the selected brush will be used for all tools."
@@ -3511,15 +3496,13 @@ msgstr ""
 "масштабе 1:1."
 
 #: app/config/gimprc-blurbs.h:167
-msgid ""
-"Install a private colormap; might be useful on 8-bit (256 colors) displays."
+msgid "Install a private colormap; might be useful on 8-bit (256 colors) displays."
 msgstr ""
 "Установить свою цветовую карту может быть полезно при работе с 8-битными "
 "(256 цветов) дисплеями."
 
 #: app/config/gimprc-blurbs.h:170
-msgid ""
-"Sets the level of interpolation used for scaling and other transformations."
+msgid "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 "Устанавливает уровень интерполяции, используемый при масштабировании и "
 "подобных изменениях."
@@ -3650,8 +3633,7 @@ msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr "Восстанавливать последнюю сохраненную позицию окон при каждом запуске."
 
 #: app/config/gimprc-blurbs.h:265
-msgid ""
-"Remember the current tool, pattern, color, and brush across GIMP sessions."
+msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr "Запомнить текущие инструменты, шаблоны, цвета и кисти."
 
 #: app/config/gimprc-blurbs.h:269
@@ -4175,11 +4157,11 @@ msgstr "Тире-точка-точка..."
 
 #: app/core/core-enums.c:604
 msgid "Stock ID"
-msgstr ""
+msgstr "Порядковый номер"
 
 #: app/core/core-enums.c:605
 msgid "Inline pixbuf"
-msgstr ""
+msgstr "Буфер изображений"
 
 #: app/core/core-enums.c:606
 msgid "Image file"
@@ -4590,19 +4572,19 @@ msgid "Could not read %d bytes from '%s': %s"
 msgstr "Невозможно прочесть %d байт из '%s': %s"
 
 #: app/core/gimpbrush.c:554
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
-msgstr "Неисправимая ошибка разбора файла кисти '%s': неизвестная глубина %d."
+msgstr "Неисправимая ошибка разбора файла кисти '%s': Ширина = 0 "
 
 #: app/core/gimpbrush.c:563
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Height = 0."
-msgstr "Неисправимая ошибка разбора файла кисти '%s': файл повреждён."
+msgstr "Неисправимая ошибка разбора файла кисти '%s': Высота = 0."
 
 #: app/core/gimpbrush.c:572
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
-msgstr "Неисправимая ошибка разбора файла кисти '%s': файл повреждён."
+msgstr "Неисправимая ошибка разбора файла кисти '%s': Размер = 0."
 
 #: app/core/gimpbrush.c:596
 #, c-format
@@ -4649,14 +4631,12 @@ msgstr "Неисправимая ошибка разбора файла кист
 #: app/core/gimpbrushgenerated.c:630
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version."
-msgstr ""
-"Неисправимая ошибка разбора файла кисти '%s': неизвестная версия кисти GIMP."
+msgstr "Неисправимая ошибка разбора файла кисти '%s': неизвестная версия кисти GIMP."
 
 #: app/core/gimpbrushgenerated.c:669
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush shape."
-msgstr ""
-"Неисправимая ошибка разбора файла кисти '%s': неизвестная версия кисти GIMP."
+msgstr "Неисправимая ошибка разбора файла кисти '%s': неизвестная версия кисти GIMP."
 
 #: app/core/gimpbrushgenerated.c:750
 #, c-format
@@ -4887,8 +4867,7 @@ msgstr "Неверное имя переменной в файле окруже�
 #: app/core/gimpgradient-load.c:72
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
-msgstr ""
-"Неисправимая ошибка разбора файла градиента '%s': это не файл градиента GIMP."
+msgstr "Неисправимая ошибка разбора файла градиента '%s': это не файл градиента GIMP."
 
 #: app/core/gimpgradient-load.c:87
 #, c-format
@@ -4909,6 +4888,8 @@ msgstr "Повреждённый сегмент %d в файле градиен�
 #, c-format
 msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
 msgstr ""
+"Файл градиента '%s' поврежден: сегмент не укладывается в промежуток от 0 до "
+"1."
 
 #: app/core/gimpgradient-load.c:281
 #, c-format
@@ -4929,8 +4910,7 @@ msgid "The foreground color of the grid."
 msgstr "Цвет переднего плана сетки"
 
 #: app/core/gimpgrid.c:139
-msgid ""
-"The background color of the grid; only used in double dashed line style."
+msgid "The background color of the grid; only used in double dashed line style."
 msgstr "Цвет фона сетки (для стиля \"Двойной пунктир\")"
 
 #: app/core/gimpgrid.c:145
@@ -4942,8 +4922,7 @@ msgid "Vertical spacing of grid lines."
 msgstr "Расстояние между вертикальными линиями"
 
 #: app/core/gimpgrid.c:159
-msgid ""
-"Horizontal offset of the first grid line; this may be a negative number."
+msgid "Horizontal offset of the first grid line; this may be a negative number."
 msgstr ""
 "Смещение по горизонтали для первой линии сетки. Значение может быть "
 "отрицательным."
@@ -5036,8 +5015,7 @@ msgstr "Объединить видимые контуры"
 
 #: app/core/gimpimage-merge.c:580
 msgid "Not enough visible paths for a merge. There must be at least two."
-msgstr ""
-"Недостаточно видимых контуров для объединения. Должно быть хотя бы два."
+msgstr "Недостаточно видимых контуров для объединения. Должно быть хотя бы два."
 
 #: app/core/gimpimage-qmask.c:67
 msgid "Enable Quick Mask"
@@ -5327,8 +5305,7 @@ msgstr ""
 
 #: app/core/gimplayer.c:1036
 msgid "Cannot add layer mask to layer which is not part of an image."
-msgstr ""
-"Невозможно добавить маску слоя к слою, не являющемуся частью изображения."
+msgstr "Невозможно добавить маску слоя к слою, не являющемуся частью изображения."
 
 #: app/core/gimplayer.c:1043
 msgid "Unable to add a layer mask since the layer already has one."
@@ -5369,12 +5346,12 @@ msgid "Move Layer Mask"
 msgstr "Переместить маску слоя"
 
 #: app/core/gimppalette-import.c:490
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unknown type of palette file:\n"
 "%s"
 msgstr ""
-"Файл не является палитрой RIFF:\n"
+"Неизвестный тип файла палитры:\n"
 "%s"
 
 #: app/core/gimppalette.c:375
@@ -5450,8 +5427,7 @@ msgstr ""
 
 #: app/core/gimppattern.c:357
 #, c-format
-msgid ""
-"Fatal parse error in pattern file '%s': Unknown pattern format version %d."
+msgid "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr ""
 "Неисправимая ошибка разбора файла шаблона '%s': неизвестная версия формата %"
 "d."
@@ -5628,7 +5604,6 @@ msgid "_Maximum number of colors:"
 msgstr "_Макс. число цветов:"
 
 #: app/dialogs/convert-dialog.c:206
-#, fuzzy
 msgid "_Remove unused colors from final palette"
 msgstr "_Удалить неиспользуемые цвета из окончательной палитры"
 
@@ -6194,11 +6169,14 @@ msgid "Configure Keyboard Shortcuts"
 msgstr "Настроить клавиши быстрого доступа"
 
 #: app/dialogs/preferences-dialog.c:551
-#, fuzzy
 msgid ""
 "To edit a shortcut key, click on the corresponding row and type a new "
 "accelerator, or press backspace to clear."
-msgstr "Нажмите сочетание клавиш или Backspace для отмены"
+msgstr ""
+"Чтобы редактировать клавишу быстрого доступа, нажмите на соответсвующей "
+"строке и\n"
+"введите новое сочетание клавиш. Чтобы удалить клавишу быстрого доступа "
+"нажмите Backspace."
 
 #: app/dialogs/preferences-dialog.c:595
 msgid ""
@@ -6209,11 +6187,10 @@ msgstr ""
 "умолчанию."
 
 #: app/dialogs/preferences-dialog.c:629
-#, fuzzy
 msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
-msgstr "При следующем запуске GIMP будут использованы настройки по умолчанию."
+msgstr "При следующем запуске GIMP будет использовано расположение окон по умолчанию."
 
 #: app/dialogs/preferences-dialog.c:663
 msgid ""
@@ -6815,9 +6792,8 @@ msgid "Select Theme Folders"
 msgstr "Выбрать каталоги тем"
 
 #: app/dialogs/print-size-dialog.c:128
-#, fuzzy
 msgid "Print Size"
-msgstr "Размер при печати:"
+msgstr "Размер при печати"
 
 #. the image size labels
 #: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:222
@@ -7325,8 +7301,7 @@ msgid "Click \"Continue\" to accept the settings above."
 msgstr "Нажмите \"Продолжить\", чтобы принять предложенные параметры."
 
 #: app/dialogs/user-install-dialog.c:1005
-msgid ""
-"<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
+msgid "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
 "<b>Для лучшей производительности GIMP некоторые параметры могут быть "
 "изменены.</b>"
@@ -7770,8 +7745,7 @@ msgid "(invalid UTF-8 string)"
 msgstr "(недопустимая строка UTF-8)"
 
 #: app/pdb/image_cmds.c:3898
-msgid ""
-"Image resolution is out of bounds, using the default resolution instead."
+msgid "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
 "Разрешение изображения вне допустимого,\n"
 "используется значение по умолчанию."
@@ -8154,7 +8128,7 @@ msgstr "Перемещение"
 
 #: app/tools/tools-enums.c:174
 msgid "Outline"
-msgstr ""
+msgstr "Обвести"
 
 #: app/tools/tools-enums.c:177
 msgid "Image + Grid"
@@ -8937,19 +8911,16 @@ msgid "_Move"
 msgstr "_Перемещение"
 
 #: app/tools/gimpmovetool.c:298 app/tools/gimpmovetool.c:576
-#, fuzzy
 msgid "Move Guide: "
-msgstr "Переместить направляющую"
+msgstr "Переместить направляющую:"
 
 #: app/tools/gimpmovetool.c:570
-#, fuzzy
 msgid "Cancel Guide"
-msgstr "Отмена"
+msgstr "Удалить направляющую"
 
 #: app/tools/gimpmovetool.c:576
-#, fuzzy
 msgid "Add Guide: "
-msgstr "Добавить направляющие"
+msgstr "Добавить направляющую: "
 
 #: app/tools/gimppaintbrushtool.c:52
 msgid "Paint fuzzy brush strokes"
@@ -9107,9 +9078,8 @@ msgid "Center X:"
 msgstr "Центр X:"
 
 #: app/tools/gimprotatetool.c:190
-#, fuzzy
 msgid "Center Y:"
-msgstr "Центр X:"
+msgstr "Центр Y:"
 
 #: app/tools/gimpscaletool.c:91
 msgid "Scale"
@@ -9220,8 +9190,7 @@ msgid "_Smudge"
 msgstr "Пале_ц"
 
 #: app/tools/gimptextoptions.c:146
-msgid ""
-"Hinting alters the font outline to produce a crisp bitmap at small sizes"
+msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "Инструктирование изменяет контуры символа, чтобы выдать более чёткие растры "
 "при маленьких размерах"
@@ -9502,8 +9471,7 @@ msgstr ""
 
 #: app/tools/gimpvectortool.c:1221
 msgid "Click-Drag to move the component around. (try SHIFT)"
-msgstr ""
-"Нажмите и потащите чтобы переместить элемент. (попробуйте нажать SHIFT)"
+msgstr "Нажмите и потащите чтобы переместить элемент. (попробуйте нажать SHIFT)"
 
 #: app/tools/gimpvectortool.c:1225
 msgid "Click-Drag to move the path around."
@@ -9627,14 +9595,12 @@ msgstr "Назначить"
 #: app/widgets/gimpactionview.c:536
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
-msgstr ""
-"Клавиши быстрого доступа \"%s\" использованы в пункте \"%s\" меню \"%s\"."
+msgstr "Клавиши быстрого доступа \"%s\" использованы в пункте \"%s\" меню \"%s\"."
 
 #: app/widgets/gimpactionview.c:540
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
-msgstr ""
-"Назначая эти клавиши вы отказываетесь от доступа по ним к пункту \"%s\"."
+msgstr "Назначая эти клавиши вы отказываетесь от доступа по ним к пункту \"%s\"."
 
 #: app/widgets/gimpactionview.c:607
 msgid "Removing shortcut failed."
@@ -9954,15 +9920,13 @@ msgid "Keyboard"
 msgstr "Клавиатура"
 
 #: app/widgets/gimpcontrollerkeyboard.c:230
-#, fuzzy
 msgid "Keyboard Events"
 msgstr "Клавиатура"
 
 #: app/widgets/gimpcontrollerkeyboard.c:231
 #: app/widgets/gimpcontrollerwheel.c:230
-#, fuzzy
 msgid "Ready"
-msgstr "Красный"
+msgstr "Готов"
 
 #: app/widgets/gimpcontrollerwheel.c:68
 msgid "Scroll Up (Shift + Control + Alt)"
@@ -10097,7 +10061,6 @@ msgid "Mouse Wheel"
 msgstr "Колесо мыши"
 
 #: app/widgets/gimpcontrollerwheel.c:229
-#, fuzzy
 msgid "Mouse Wheel Events"
 msgstr "Колесо мыши"
 
@@ -10124,21 +10087,19 @@ msgid "Background: %d, %d, %d"
 msgstr "Фон:  %d, %d, %d"
 
 #: app/widgets/gimpdock.c:348 app/widgets/gimpdock.c:359
-#, fuzzy
 msgid "Close all tabs?"
-msgstr "_Закрыть закладку"
+msgstr "Закрыть все закладки?"
 
 #: app/widgets/gimpdock.c:354
-#, fuzzy
 msgid "Close all Tabs"
-msgstr "_Закрыть закладку"
+msgstr "Закрыть все закладки"
 
 #: app/widgets/gimpdock.c:361
 #, c-format
 msgid ""
 "This window has %d tabs open. Closing the window will also close all its "
 "tabs."
-msgstr ""
+msgstr "Окно содержит %d открытых закладок. Закрытие окна приведет к их закрытию."
 
 #: app/widgets/gimpdock.c:474
 msgid "You can drop dockable dialogs here."
@@ -10312,8 +10273,7 @@ msgid "Could not find GIMP help browser."
 msgstr "Не удалось найти программу просмотра справки GIMP"
 
 #: app/widgets/gimphelp.c:189
-msgid ""
-"The GIMP help browser plug-in appears to be missing from your installation."
+msgid "The GIMP help browser plug-in appears to be missing from your installation."
 msgstr "В Вашей установке GIMP отсутствует просмотрщик справочной системы."
 
 #: app/widgets/gimphelp.c:213
@@ -10357,8 +10317,7 @@ msgid "Auto"
 msgstr "Авто"
 
 #: app/widgets/gimpimagedock.c:214
-msgid ""
-"When enabled the dialog automatically follows the image you are working on."
+msgid "When enabled the dialog automatically follows the image you are working on."
 msgstr ""
 "При включении этой функции содержимое диалога меняется в соответствии с тем, "
 "какое изображение активно в данный момент."
@@ -10585,11 +10544,11 @@ msgstr "Удалить параметры..."
 
 #: app/widgets/gimpuimanager.c:495
 msgid "Your GIMP installation is incomplete:"
-msgstr ""
+msgstr "Установка GIMP не была завершена:"
 
 #: app/widgets/gimpuimanager.c:497
 msgid "Plase make sure the menu XML files are correctly installed."
-msgstr ""
+msgstr "Убедитесь, что файлы меню корректно установлены."
 
 #: app/widgets/gimpundoeditor.c:255
 msgid "[ Base Image ]"
@@ -12771,3 +12730,4 @@ msgstr "Редактор изображений"
 
 #~ msgid "/Save Options to/new-separator"
 #~ msgstr "/Сохранить параметры как/новое"
+
