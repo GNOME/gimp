@@ -2,6 +2,14 @@
 
 	Merged from HEAD branch:
 
+	* plug-ins/bmp/bmpread.c: applied a patch from David Costanzo that
+	fixes handling of odd-length pixel encodings in "absolute mode" of
+	RLE4 compressed data (bug #171306).
+
+2005-03-24  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
 	* app/display/gimpstatusbar.c (gimp_statusbar_push_coords) 
 	(gimp_statusbar_set_cursor): use RINT() instead of ROUND() to get
 	proper rounding of negative values. Fixes bug #171497.
