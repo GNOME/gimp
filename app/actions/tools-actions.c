@@ -35,8 +35,8 @@
 #include "widgets/gimphelp-ids.h"
 
 #include "actions.h"
-#include "actions/tools-actions.h"
-#include "actions/tools-commands.h"
+#include "tools-actions.h"
+#include "tools-commands.h"
 
 #include "gimp-intl.h"
 

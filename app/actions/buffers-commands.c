@@ -39,54 +39,13 @@
 #include "gimp-intl.h"
 
 
+/*  local function prototypes  */
+
+static void   buffers_paste (GimpBufferView *view,
+                             gboolean        paste_into);
+
+
 /*  public functionss */
-
-static void
-buffers_paste (GimpBufferView *view,
-               gboolean        paste_into)
-{
-  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
-  GimpContainer       *container;
-  GimpContext         *context;
-  GimpBuffer          *buffer;
-
-  container = gimp_container_view_get_container (editor->view);
-  context   = gimp_container_view_get_context (editor->view);
-
-  buffer = gimp_context_get_buffer (context);
-
-  if (buffer && gimp_container_have (container, GIMP_OBJECT (buffer)))
-    {
-      GimpDisplay *gdisp  = gimp_context_get_display (context);
-      GimpImage   *gimage = NULL;
-      gint         x      = -1;
-      gint         y      = -1;
-      gint         width  = -1;
-      gint         height = -1;
-
-      if (gdisp)
-	{
-          GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-          gimp_display_shell_untransform_viewport (shell,
-                                                   &x, &y, &width, &height);
-
-          gimage = gdisp->gimage;
-        }
-      else
-        {
-          gimage = gimp_context_get_image (context);
-        }
-
-      if (gimage)
-        {
-	  gimp_edit_paste (gimage, gimp_image_active_drawable (gimage),
-			   buffer, paste_into, x, y, width, height);
-
-	  gimp_image_flush (gimage);
-	}
-    }
-}
 
 void
 buffers_paste_buffer_cmd_callback (GtkAction *action,
@@ -142,5 +101,55 @@ buffers_delete_buffer_cmd_callback (GtkAction *action,
   if (buffer && gimp_container_have (container, GIMP_OBJECT (buffer)))
     {
       gimp_container_remove (container, GIMP_OBJECT (buffer));
+    }
+}
+
+
+/*  private functions  */
+
+static void
+buffers_paste (GimpBufferView *view,
+               gboolean        paste_into)
+{
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (view);
+  GimpContainer       *container;
+  GimpContext         *context;
+  GimpBuffer          *buffer;
+
+  container = gimp_container_view_get_container (editor->view);
+  context   = gimp_container_view_get_context (editor->view);
+
+  buffer = gimp_context_get_buffer (context);
+
+  if (buffer && gimp_container_have (container, GIMP_OBJECT (buffer)))
+    {
+      GimpDisplay *gdisp  = gimp_context_get_display (context);
+      GimpImage   *gimage = NULL;
+      gint         x      = -1;
+      gint         y      = -1;
+      gint         width  = -1;
+      gint         height = -1;
+
+      if (gdisp)
+	{
+          GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+          gimp_display_shell_untransform_viewport (shell,
+                                                   &x, &y, &width, &height);
+
+          gimage = gdisp->gimage;
+        }
+      else
+        {
+          gimage = gimp_context_get_image (context);
+        }
+
+      if (gimage)
+        {
+	  gimp_edit_paste (gimage, gimp_image_active_drawable (gimage),
+			   buffer, paste_into, x, y, width, height);
+
+	  gimp_image_flush (gimage);
+	}
     }
 }

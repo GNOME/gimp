@@ -46,8 +46,6 @@
 #include "text/gimptext.h"
 #include "text/gimptextlayer.h"
 
-#include "pdb/procedural_db.h"
-
 #include "widgets/gimpdock.h"
 #include "widgets/gimpenumwidgets.h"
 #include "widgets/gimphelp-ids.h"

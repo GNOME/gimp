@@ -46,8 +46,6 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 
-#include "menus/menus.h"
-
 #include "dialogs/dialogs.h"
 
 #include "actions.h"

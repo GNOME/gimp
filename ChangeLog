@@ -1,5 +1,13 @@
 2004-09-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/buffers-commands.c
+	* app/actions/file-commands.c
+	* app/actions/layers-commands.c
+	* app/actions/plug-in-actions.c
+	* app/actions/tools-actions.c: removed useless #includes, cleanup.
+
+2004-09-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/dialogs/dialogs.[ch] (dialogs_init): added GimpMenuFactory
 	parameter and removed inclusion on "menus/menus.h".
 
