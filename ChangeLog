@@ -1,5 +1,10 @@
 2004-11-06  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/convert-dialog.c (convert_dialog_new): removed
+	trailing period from check button label. Fixes bug #157511.
+
+2004-11-06  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/resize-dialog.c (resize_dialog_reset): fixed most of
 	the Reset functionality (bug #157495). The offset box is still not
 	working correctly.
