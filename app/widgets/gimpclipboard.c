@@ -487,6 +487,15 @@ gimp_clipboard_format_compare (GdkPixbufFormat *a,
   gchar *b_name = gdk_pixbuf_format_get_name (b);
   gint   retval = 0;
 
+#ifdef GDK_WINDOWING_WIN32
+  /*  move BMP to the front of the list  */
+  if (strcmp (a_name, "bmp") == 0)
+    retval = -1;
+  else if (strcmp (b_name, "bmp") == 0)
+    retval = 1;
+  else
+#endif
+
   /*  move PNG to the front of the list  */
   if (strcmp (a_name, "png") == 0)
     retval = -1;
