@@ -657,7 +657,11 @@ create_device_status (void)
 
       gtk_window_set_title (GTK_WINDOW(deviceD->shell), _("Device Status"));
       gtk_window_set_policy (GTK_WINDOW (deviceD->shell), FALSE, FALSE, TRUE);
-      session_set_window_geometry (deviceD->shell, &device_status_session_info, TRUE);
+      /*  don't set the dialog's size, as the number of devices may have
+       *  changed since the last session
+       */
+      session_set_window_geometry (deviceD->shell,
+				   &device_status_session_info, FALSE);
 
       deviceD->num_devices = 0;
       tmp_list = devices_info;

@@ -1,3 +1,9 @@
+1999-03-10  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/devices.c: don't let session management set the size of the
+	"Device Status" dialog, as the number of devices may change
+	between sessions
+
 Mon Mar  8 16:45:06 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* Made 1.1.3 release
