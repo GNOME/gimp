@@ -1,3 +1,8 @@
+Mon May 17 00:15:35 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* plug-ins/displace/displace.c (run): Fixed a dumb typo reported
+        on gimp-developer by Claes G. Lindblad.
+
 Sat Apr  3 21:34:22 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* Made 1.0.4 release
