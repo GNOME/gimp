@@ -1,6 +1,6 @@
 # This is the German locale definition for Gimp.
 # Copyright (C) 1998-2000 Free Software Foundation, Inc.
-# Daniel Egger <Daniel.Egger@suse.de>
+# Daniel Egger <egger@suse.de>
 # Michael Natterer <mitch@gimp.org>
 # Sven Neumann <sven@gimp.org>
 #
@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.24\n"
 "POT-Creation-Date: 2000-07-29 22:43+0200\n"
-"PO-Revision-Date: 2000-07-29 22:46+02:00\n"
-"Last-Translator: Sven Neumann <sven@gimp.org>\n"
+"PO-Revision-Date: 2000-08-08 00:13+000\n"
+"Last-Translator: Daniel Egger <egger@suse.de>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -262,11 +262,11 @@ msgstr "Übergang schlug fehl."
 
 #: app/blend.c:529
 msgid "Blending..."
-msgstr "Übergang..."
+msgstr "Farbverlauf..."
 
 #: app/blend.c:607 app/blend.c:617
 msgid "Blend: "
-msgstr "Übergang: "
+msgstr "Farbverlauf: "
 
 #: app/brightness_contrast.c:127 app/brightness_contrast.c:209
 #: app/tools.c:1049
@@ -509,7 +509,7 @@ msgstr "Y:"
 #. The wrap around option
 #: app/channel_ops.c:164
 msgid "Wrap Around"
-msgstr "Herumwickeln"
+msgstr "Umwickeln"
 
 #: app/channel_ops.c:174 app/image_new.c:76 app/image_new.c:290
 #: app/layers_dialog.c:3584
@@ -809,7 +809,7 @@ msgstr "Auswahl verkleinern um:"
 
 #: app/commands.c:380
 msgid "Shrink from image border"
-msgstr "Verkleinere von Bildrand"
+msgstr "Verkleinere vom Bildrand"
 
 #: app/commands.c:402
 msgid "Grow Selection"
@@ -821,11 +821,11 @@ msgstr "Auswahl vergrößern um:"
 
 #: app/commands.c:425
 msgid "Border Selection"
-msgstr "Randauswahl"
+msgstr "Auswahl umranden"
 
 #: app/commands.c:428
 msgid "Border Selection by:"
-msgstr "Randauswahl um:"
+msgstr "Neue Auswahl größer um:"
 
 #: app/commands.c:1324
 msgid "Resize Error: Both width and height must be greater than zero."
@@ -913,7 +913,7 @@ msgstr ""
 
 #: app/convert.c:965
 msgid "Select Custom Palette"
-msgstr "Benutze eigene Palette"
+msgstr "Wählen sie eine Palette"
 
 #: app/convolve.c:171
 msgid "Convolve Type"
@@ -929,7 +929,7 @@ msgstr "Schärfen"
 
 #: app/crop.c:178 app/tools.c:372
 msgid "Crop & Resize"
-msgstr "Zuschneiden und Größe verändern"
+msgstr "Zuschneiden und Größe ändern"
 
 #: app/crop.c:189
 msgid "Current Layer only"
@@ -951,7 +951,7 @@ msgstr "Zuschneiden"
 
 #: app/crop.c:217 app/crop.c:1066
 msgid "Resize"
-msgstr "Größe verändern"
+msgstr "Größe ändern"
 
 #: app/crop.c:516 app/crop.c:524
 msgid "Crop: "
@@ -1068,7 +1068,7 @@ msgid ""
 "<Ctrl> Load Image dialog"
 msgstr ""
 "Öffne den ausgewählten Eintrag\n"
-"<Shift> Fenster rauf wenn bereits geöffnet\n"
+"<Shift> Fenster anheben wenn bereits geöffnet\n"
 "<Ctrl> Bild Öffnen-Dialog"
 
 #: app/docindex.c:118
@@ -1450,11 +1450,11 @@ msgstr "Graustufen"
 
 #: app/gdisplay.c:233
 msgid "indexed-empty"
-msgstr "Indiziert leer"
+msgstr "indiziert leer"
 
 #: app/gdisplay.c:233
 msgid "indexed"
-msgstr "Indiziert"
+msgstr "indiziert"
 
 #: app/gdisplay_color_ui.c:121
 msgid "Remove"
@@ -1844,7 +1844,7 @@ msgstr "Aus Ablage einfügen"
 
 #: app/global_edit.c:782
 msgid "Select a buffer to paste:"
-msgstr "Ablage zum Einfügen auswählen:"
+msgstr "Ablage zum Einfügen wählen:"
 
 #: app/global_edit.c:863
 msgid "Cut Named"
@@ -1933,7 +1933,7 @@ msgstr "Zeige alles"
 
 #: app/gradient.c:978
 msgid "Instant update"
-msgstr "Dauernd Auffrischen"
+msgstr "Dauernd auffrischen"
 
 #: app/gradient.c:1113 app/gradient.c:1965
 msgid "Default"
@@ -2017,8 +2017,8 @@ msgid ""
 "Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
 "move & compress"
 msgstr ""
-"Klick: Auswahl   Shift+Klick: Auswahl erweitern   Ziehen: "
-"VerschiebenShift+Ziehen: Verschieben und Stauchen"
+"Klick: Auswahl Shift+Klick: Auswahl erweitern Ziehen: "
+"Verschieben Shift+Ziehen: Verschieben und Stauchen"
 
 #: app/gradient.c:2872 app/gradient.c:2881
 #, c-format
@@ -2100,7 +2100,7 @@ msgstr "Segment spiegeln"
 
 #: app/gradient.c:3743 app/gradient.c:5391
 msgid "Replicate segment"
-msgstr "Segment duplizieren"
+msgstr "Segment replizieren"
 
 #: app/gradient.c:3748
 msgid "Blending function for selection"
@@ -2136,7 +2136,7 @@ msgstr "Auswahl spiegeln"
 
 #: app/gradient.c:3764 app/gradient.c:5392
 msgid "Replicate selection"
-msgstr "Auswahl duplizieren"
+msgstr "Auswahl replizieren"
 
 #: app/gradient.c:4048
 msgid "FG color"
@@ -2149,7 +2149,7 @@ msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: app/gradient.c:4616 app/gradient.c:4686
 msgid "(Varies)"
-msgstr "(veränderlich)"
+msgstr "(änderlich)"
 
 #: app/gradient.c:4838
 msgid "Split"
@@ -2209,7 +2209,7 @@ msgstr "Histogramm funktioniert nicht mit indizierten Bildern."
 
 #: app/histogram_tool.c:255
 msgid "Mean:"
-msgstr "Mittelwert:"
+msgstr "Durchschnitt:"
 
 #: app/histogram_tool.c:256
 msgid "Std Dev:"
@@ -2229,7 +2229,7 @@ msgstr "Anzahl:"
 
 #: app/histogram_tool.c:261
 msgid "Percentile:"
-msgstr "Protentsatz:"
+msgstr "Prozentsatz:"
 
 #: app/histogram_tool.c:294
 msgid "Information on Channel:"
@@ -2485,7 +2485,7 @@ msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to select a color from a colorrequester."
 msgstr ""
-"Vorder- und Hintergrundfarben. Die schwarzen und weißen Rechtecke setzen die "
+"Vorder- und Hintergrundfarben. Das schwarze und weiße Rechteck setzt die "
 "Farben zurück. Die Pfeile vertauschen die Farbe. Doppelklick öffnet den "
 "Farbauswahldialog"
 
@@ -2643,7 +2643,7 @@ msgid ""
 "Raise Layer    \n"
 "<Shift> To Top"
 msgstr ""
-"Ebene erhöhen  \n"
+"Ebene anheben  \n"
 "<Shift>       \n"
 "Nach ganz oben"
 
@@ -2740,11 +2740,11 @@ msgstr "Ebenenbreite:"
 
 #: app/layers_dialog.c:3579
 msgid "Layer Fill Type"
-msgstr "Ebenenfüllung"
+msgstr "Ebenenfüllart"
 
 #: app/layers_dialog.c:3658
 msgid "Edit Layer Attributes"
-msgstr "Ebenenmerkmale verändern"
+msgstr "Ebenenmerkmale ändern"
 
 #: app/layers_dialog.c:3685
 msgid "Layer name:"
@@ -2827,7 +2827,7 @@ msgstr "Werte"
 
 #: app/levels.c:235
 msgid "Levels for indexed drawables cannot be adjusted."
-msgstr "Werte für indizierte Bilder können nicht verändert werden. "
+msgstr "Werte für indizierte Bilder können nicht geändert werden. "
 
 #: app/levels.c:361
 msgid "Modify Levels for Channel:"
@@ -2851,7 +2851,7 @@ msgstr "Werte sichern"
 
 #: app/levels.c:1407
 msgid "Load/Save Levels"
-msgstr "Werte Öffne/Sichere"
+msgstr "Werte öffnen/sichern"
 
 #: app/magnify.c:111
 msgid "Magnify Tool"
@@ -2859,7 +2859,7 @@ msgstr "Vergrößern"
 
 #: app/magnify.c:121
 msgid "Allow Window Resizing"
-msgstr "Anpassen des Fensters"
+msgstr "Anpassen des Fensters erlauben"
 
 #: app/magnify.c:136
 msgid "Zoom in"
@@ -3341,7 +3341,7 @@ msgstr "/Bild/Transformationen/Rotieren"
 
 #: app/menus.c:395
 msgid "/Image/Canvas Size..."
-msgstr "/Bild/Größe verändern..."
+msgstr "/Bild/Größe ändern..."
 
 #: app/menus.c:397
 msgid "/Image/Scale Image..."
@@ -3371,7 +3371,7 @@ msgstr "/Ebenen/Stapel/Nächste Ebene"
 
 #: app/menus.c:420
 msgid "/Layers/Stack/Raise Layer"
-msgstr "/Ebenen/Stapel/Ebene erhöhen"
+msgstr "/Ebenen/Stapel/Ebene anheben"
 
 #: app/menus.c:422
 msgid "/Layers/Stack/Lower Layer"
@@ -3568,7 +3568,7 @@ msgstr "/Ebene anlegen..."
 #. <Layers>/Stack
 #: app/menus.c:605
 msgid "/Stack/Raise Layer"
-msgstr "/Stapel/Ebene erhöhen"
+msgstr "/Stapel/Ebene anheben"
 
 #: app/menus.c:607
 msgid "/Stack/Lower Layer"
@@ -3596,7 +3596,7 @@ msgstr "/Ebene löschen"
 
 #: app/menus.c:623
 msgid "/Layer Boundary Size..."
-msgstr "/Ebenengröße verändern... "
+msgstr "/Ebenengröße ändern... "
 
 #: app/menus.c:625
 msgid "/Layer to Imagesize"
@@ -3652,7 +3652,7 @@ msgstr "/Kanal anlegen..."
 
 #: app/menus.c:672
 msgid "/Raise Channel"
-msgstr "/Kanal erhöhen"
+msgstr "/Kanal anheben"
 
 #: app/menus.c:674
 msgid "/Lower Channel"
@@ -4095,7 +4095,7 @@ msgstr "Pfad %d"
 
 #: app/paths_dialog.c:985
 msgid "Edit Path Attributes"
-msgstr "Pfadmerkmale verändern"
+msgstr "Pfadmerkmale ändern"
 
 #: app/paths_dialog.c:988
 msgid "Enter a new name for the path"
@@ -4221,7 +4221,7 @@ msgstr ""
 "(%s)\n"
 "\n"
 "Das abgestürzte Plugin hat GIMP eventuell\n"
-"durcheinander gebracht. Am besten Sie speichern\n"
+"durcheinander gebracht. Am besten speichern Sie\n"
 "Ihre Bilder jetzt ab und starten GIMP neu."
 
 #: app/posterize.c:148
@@ -4662,7 +4662,7 @@ msgstr "Schreibe Vorschau-Dateien:"
 
 #: app/preferences_dialog.c:2272
 msgid "Only when Modified"
-msgstr "Nur wenn verändert"
+msgstr "Nur wenn geändert"
 
 #: app/preferences_dialog.c:2277
 msgid "\"File > Save\" Saves the Image:"
@@ -4731,7 +4731,7 @@ msgstr "Temporäres Verzeichnis:"
 
 #: app/preferences_dialog.c:2456
 msgid "Select Temp Dir"
-msgstr "Temporäres Verzeichnis auswählen"
+msgstr "Temporäres Verzeichnis wählen"
 
 #: app/preferences_dialog.c:2457
 msgid "Swap Dir:"
@@ -4739,7 +4739,7 @@ msgstr "Auslagerungsverzeichnis:"
 
 #: app/preferences_dialog.c:2457 app/user_install.c:1125
 msgid "Select Swap Dir"
-msgstr "Auslagerverzeichnis auswählen"
+msgstr "Auslagerverzeichnis wählen"
 
 #: app/preferences_dialog.c:2493
 msgid "Brushes Directories"
@@ -4747,7 +4747,7 @@ msgstr "Pinselverzeichnisse"
 
 #: app/preferences_dialog.c:2495
 msgid "Select Brushes Dir"
-msgstr "Pinselverzeichnis auswählen"
+msgstr "Pinselverzeichnis wählen"
 
 #: app/preferences_dialog.c:2497
 msgid "Generated Brushes"
@@ -4755,11 +4755,11 @@ msgstr "Erzeugte Pinsel"
 
 #: app/preferences_dialog.c:2497
 msgid "Generated Brushes Directories"
-msgstr "Erzeugte Pinsel Verzeichnisse"
+msgstr "Erzeugte-Pinsel Verzeichnisse"
 
 #: app/preferences_dialog.c:2499
 msgid "Select Generated Brushes Dir"
-msgstr "Verzeichnis für erzeugte Pinsel auswählen"
+msgstr "Verzeichnis für erzeugte Pinsel wählen"
 
 #: app/preferences_dialog.c:2501
 msgid "Patterns Directories"
@@ -4767,7 +4767,7 @@ msgstr "Musterverzeichnisse"
 
 #: app/preferences_dialog.c:2503
 msgid "Select Patterns Dir"
-msgstr "Musterverzeichnis auswählen"
+msgstr "Musterverzeichnis wählen"
 
 #: app/preferences_dialog.c:2505
 msgid "Palettes Directories"
@@ -4775,7 +4775,7 @@ msgstr "Palettenverzeichnisse"
 
 #: app/preferences_dialog.c:2507
 msgid "Select Palettes Dir"
-msgstr "Palettenverzeichnis auswählen"
+msgstr "Palettenverzeichnis wählen"
 
 #: app/preferences_dialog.c:2509
 msgid "Gradients Directories"
@@ -4783,7 +4783,7 @@ msgstr "Farbverlaufverzeichnisse"
 
 #: app/preferences_dialog.c:2511
 msgid "Select Gradients Dir"
-msgstr "Farbverlaufverzeichnis auswählen"
+msgstr "Farbverlaufverzeichnis wählen"
 
 #: app/preferences_dialog.c:2513
 msgid "Plug-Ins"
@@ -4791,11 +4791,11 @@ msgstr "Plugins"
 
 #: app/preferences_dialog.c:2513
 msgid "Plug-Ins Directories"
-msgstr "Plugins-Verzeichnisse"
+msgstr "Plugin-Verzeichnisse"
 
 #: app/preferences_dialog.c:2515
 msgid "Select Plug-Ins Dir"
-msgstr "Plugins-Verzeichnis auswählen"
+msgstr "Plugin-Verzeichnis wählen"
 
 #: app/preferences_dialog.c:2517
 msgid "Modules"
@@ -4807,7 +4807,7 @@ msgstr "Modulverzeichnisse"
 
 #: app/preferences_dialog.c:2519
 msgid "Select Modules Dir"
-msgstr "Modulverzeichnis auswählen"
+msgstr "Modulverzeichnis wählen"
 
 #: app/procedural_db.c:43
 msgid "Procedural Database"
@@ -4850,7 +4850,7 @@ msgstr "Vorläufige Prozedur"
 
 #: app/qmask.c:270
 msgid "Edit Qmask Attributes"
-msgstr "QMask Attribute verändern"
+msgstr "QMask Attribute ändern"
 
 #. The opacity scale
 #: app/qmask.c:298
@@ -4962,7 +4962,7 @@ msgstr "Skalierungs Informationen"
 
 #: app/scale_tool.c:83
 msgid "Current Width:"
-msgstr "Augenblickliche Breite:"
+msgstr "Aktuelle Breite:"
 
 #: app/scale_tool.c:98
 msgid "Scale Ratio X:"
@@ -4982,7 +4982,7 @@ msgstr "Scherneigung X:"
 
 #: app/shear_tool.c:344
 msgid "Shearing..."
-msgstr "Scherung..."
+msgstr "Scheren..."
 
 #. Create the shell
 #: app/text_tool.c:151 app/text_tool.c:400
@@ -5085,7 +5085,7 @@ msgstr "Elliptische Auswahl"
 
 #: app/tool_options.c:149
 msgid "Free-Hand Selection"
-msgstr "Freihandauswahl"
+msgstr "Freihand Auswahl"
 
 #: app/tool_options.c:151
 msgid "Fuzzy Selection"
@@ -5093,7 +5093,7 @@ msgstr "Unscharfe Auswahl"
 
 #: app/tool_options.c:153
 msgid "Bezier Selection"
-msgstr "Bezierauswahl"
+msgstr "Bezier Auswahl"
 
 #: app/tool_options.c:155 app/tools.c:288
 msgid "Intelligent Scissors"
@@ -5189,7 +5189,7 @@ msgstr "/Werkzeuge/Auswahlwerkzeuge/Rechteckige Auswahl"
 
 #: app/tools.c:154
 msgid "Select rectangular regions"
-msgstr "Wählt rechteckigen Bereich"
+msgstr "Rechteckigen Bereich wählen"
 
 #: app/tools.c:176
 msgid "Ellipse Select"
@@ -5201,7 +5201,7 @@ msgstr "/Werkzeuge/Auswahlwerkzeuge/Elliptische Auswahl"
 
 #: app/tools.c:182
 msgid "Select elliptical regions"
-msgstr "Wählt elliptischen Bereich"
+msgstr "Elliptischen Bereich wählen"
 
 #: app/tools.c:204
 msgid "Free Select"
@@ -5213,7 +5213,7 @@ msgstr "/Werkzeuge/Auswahlwerkzeuge/Freie Auswahl"
 
 #: app/tools.c:210
 msgid "Select hand-drawn regions"
-msgstr "Wählt Bereich frei Hand"
+msgstr "Bereich frei Hand wählen"
 
 #: app/tools.c:232
 msgid "Fuzzy Select"
@@ -5225,19 +5225,19 @@ msgstr "/Werkzeuge/Auswahlwerkzeuge/Unscharfe Auswahl"
 
 #: app/tools.c:238
 msgid "Select contiguous regions"
-msgstr "Wählt zusammenhängenden Bereich"
+msgstr "Zusammenhängenden Bereich wählen"
 
 #: app/tools.c:260
 msgid "Bezier Select"
-msgstr "Bezierauswahl"
+msgstr "Bezier Auswahl"
 
 #: app/tools.c:261
 msgid "/Tools/Select Tools/Bezier Select"
-msgstr "/Werkzeuge/Auswahlwerkzeuge/Bezierauswahl"
+msgstr "/Werkzeuge/Auswahlwerkzeuge/Bezier Auswahl"
 
 #: app/tools.c:266
 msgid "Select regions using Bezier curves"
-msgstr "Wählt Bereich mittels Bezierkurven"
+msgstr "Bereich mittels Bezierkurven wählen"
 
 #: app/tools.c:289
 msgid "/Tools/Select Tools/Intelligent Scissors"
@@ -5245,7 +5245,7 @@ msgstr "/Werkzeuge/Auswahlwerkzeuge/Intelligente Schere"
 
 #: app/tools.c:294
 msgid "Select shapes from image"
-msgstr "Umrisse aus Bild auswählen"
+msgstr "Umrisse aus Bild wählen"
 
 #: app/tools.c:316
 msgid "Move"
@@ -5273,11 +5273,11 @@ msgstr "Hinein- und herauszoomen"
 
 #: app/tools.c:373
 msgid "/Tools/Transform Tools/Crop & Resize"
-msgstr "/Werkzeuge/Transformationen/Zuschneiden und Größe verändern"
+msgstr "/Werkzeuge/Transformationen/Zuschneiden und Größe ändern"
 
 #: app/tools.c:378
 msgid "Crop or resize the image"
-msgstr "Verändert die Bildgöße"
+msgstr "Bildgöße ändern"
 
 #. the transform type radio buttons
 #: app/tools.c:400 app/tools.c:428 app/tools.c:456 app/tools.c:484
@@ -5291,7 +5291,7 @@ msgstr "/Werkzeuge/Transformationen/Transformation"
 
 #: app/tools.c:406 app/tools.c:434 app/tools.c:462 app/tools.c:490
 msgid "Rotation, scaling, shearing, perspective."
-msgstr "Drehen, Skalieren, Scheren, perspektivisch Verzerren."
+msgstr "Drehen, Skalieren, Scheren, perspektivisch Verzerren"
 
 #: app/tools.c:512
 msgid "Flip"
@@ -5323,7 +5323,7 @@ msgstr "/Werkzeuge/Farbpipette"
 
 #: app/tools.c:574
 msgid "Pick colors from the image"
-msgstr "Farben aus dem Bild auswählen"
+msgstr "Farben aus dem Bild wählen"
 
 #: app/tools.c:597
 msgid "/Tools/Paint Tools/Bucket Fill"
@@ -5335,7 +5335,7 @@ msgstr "Mit Farbe oder Muster füllen"
 
 #: app/tools.c:624
 msgid "Blend"
-msgstr "Übergang"
+msgstr "Farbverlauf"
 
 #: app/tools.c:625
 msgid "/Tools/Paint Tools/Blend"
@@ -5367,7 +5367,7 @@ msgstr "/Werkzeuge/Malwerkzeuge/Radierer"
 
 #: app/tools.c:714
 msgid "Erase to background or transparency"
-msgstr "Löscht bis zum Hintergrund oder Transparenz"
+msgstr "Nach Hintergrund oder Transparenz löschen"
 
 #: app/tools.c:737
 msgid "/Tools/Paint Tools/Airbrush"
@@ -5375,7 +5375,7 @@ msgstr "/Werkzeuge/Malwerkzeuge/Airbrush"
 
 #: app/tools.c:742
 msgid "Airbrush with variable pressure"
-msgstr "Airbrush mit variablem Druck"
+msgstr "Mit variablem Druck airbrushen"
 
 #: app/tools.c:764
 msgid "Clone"
@@ -5411,7 +5411,7 @@ msgstr "/Werkzeuge/Malwerkzeuge/Tinte"
 
 #: app/tools.c:826
 msgid "Draw in ink"
-msgstr "Zeichne in Tinte"
+msgstr "Mit Tinte zeichnen"
 
 #: app/tools.c:849
 msgid "/Tools/Paint Tools/DodgeBurn"
@@ -5439,7 +5439,7 @@ msgstr "Distanzen und Winkel messen"
 
 #: app/tools.c:993
 msgid "By Color Select"
-msgstr "Nach Farbe auswählen"
+msgstr "Nach Farbe wählen"
 
 #: app/tools.c:994
 msgid "/Select/By Color..."
@@ -5447,7 +5447,7 @@ msgstr "/Auswahl/Nach Farbe..."
 
 #: app/tools.c:999
 msgid "Select regions by color"
-msgstr "Bereiche nach Farbe auswählen"
+msgstr "Bereiche nach Farbe wählen"
 
 #: app/tools.c:1022
 msgid "/Image/Colors/Color Balance..."
@@ -5605,7 +5605,7 @@ msgstr "Bild"
 
 #: app/undo.c:2904
 msgid "image mod"
-msgstr "Bildveränderung"
+msgstr "Bildänderung"
 
 #: app/undo.c:2905
 msgid "mask"
@@ -5634,7 +5634,7 @@ msgstr "Ebene löschen"
 
 #: app/undo.c:2911
 msgid "layer mod"
-msgstr "Ebenenveränderung"
+msgstr "Ebenenänderung"
 
 #: app/undo.c:2912
 msgid "add layer mask"
@@ -5665,7 +5665,7 @@ msgstr "Kanal löschen"
 
 #: app/undo.c:2918
 msgid "channel mod"
-msgstr "Kanalveränderung"
+msgstr "Kanaländerung"
 
 #: app/undo.c:2919
 msgid "FS to layer"
@@ -5736,7 +5736,7 @@ msgstr "Schwebende Auswahl verankern"
 
 #: app/undo.c:2935
 msgid "gimage mod"
-msgstr "Bildveränderung"
+msgstr "Bildänderung"
 
 #: app/undo.c:2936
 msgid "crop"
@@ -5748,7 +5748,7 @@ msgstr "Ebene skalieren"
 
 #: app/undo.c:2938
 msgid "layer resize"
-msgstr "Ebenengröße verändern"
+msgstr "Ebenengröße ändern"
 
 #: app/undo.c:2939
 msgid "quickmask"
@@ -5764,7 +5764,7 @@ msgstr "Parasit entfernen"
 
 #: app/undo.c:2942
 msgid "resolution change"
-msgstr "Auflösung verändern"
+msgstr "Auflösung ändern"
 
 #: app/undo.c:2943
 msgid "image scale"
@@ -5772,7 +5772,7 @@ msgstr "Bild skalieren"
 
 #: app/undo.c:2944
 msgid "image resize"
-msgstr "Bildgröße verändern"
+msgstr "Bildgröße ändern"
 
 #: app/undo.c:2945
 msgid "misc"
