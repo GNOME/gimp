@@ -58,16 +58,17 @@ static void   base_tile_cache_size_notify (GObject        *config,
 
 /*  public functions  */
 
-void
+gboolean
 base_init (GimpBaseConfig *config,
            gboolean        use_cpu_accel)
 {
-  gchar *swapfile;
-  gchar *swapdir;
-  gchar *path;
+  gchar    *swapfile;
+  gchar    *swapdir;
+  gchar    *path;
+  gboolean  swap_is_ok;
 
-  g_return_if_fail (GIMP_IS_BASE_CONFIG (config));
-  g_return_if_fail (base_config == NULL);
+  g_return_val_if_fail (GIMP_IS_BASE_CONFIG (config), FALSE);
+  g_return_val_if_fail (base_config == NULL, FALSE);
 
   base_config = g_object_ref (config);
 
@@ -95,9 +96,13 @@ base_init (GimpBaseConfig *config,
 
   g_free (path);
 
+  swap_is_ok = tile_swap_test ();
+
   gimp_composite_init (use_cpu_accel);
 
   paint_funcs_setup ();
+
+  return swap_is_ok;
 }
 
 void

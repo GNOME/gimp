@@ -99,6 +99,7 @@ app_run (const gchar         *full_prog_name,
   GimpInitStatusFunc  update_status_func = NULL;
   Gimp               *gimp;
   GMainLoop          *loop;
+  gboolean            swap_is_ok;
 
   /*  Create an instance of the "Gimp" object which is the root of the
    *  core object system
@@ -196,7 +197,7 @@ app_run (const gchar         *full_prog_name,
   gimp_load_config (gimp, alternate_system_gimprc, alternate_gimprc);
 
   /*  initialize lowlevel stuff  */
-  base_init (GIMP_BASE_CONFIG (gimp->config), use_cpu_accel);
+  swap_is_ok = base_init (GIMP_BASE_CONFIG (gimp->config), use_cpu_accel);
 
   if (! no_interface)
     update_status_func = gui_init (gimp, no_splash);
@@ -212,6 +213,14 @@ app_run (const gchar         *full_prog_name,
   /*  Load all data files
    */
   gimp_restore (gimp, update_status_func);
+
+  /* display a warning when no test swap file could be generated */
+  if (! swap_is_ok)
+    g_message (_("Unable to open a test swap file. To avoid data loss "
+                 "please check the location and permissions of the swap "
+                 "directory defined in your Preferences "
+                 "(currently \"%s\")."),
+               GIMP_BASE_CONFIG (gimp->config)->swap_path);
 
   /*  enable autosave late so we don't autosave when the
    *  monitor resolution is set in gui_init()

@@ -51,6 +51,7 @@
 #include "tile-private.h"
 #include "tile-swap.h"
 
+#include "gimp-intl.h"
 
 #define MAX_OPEN_SWAP_FILES  16
 
@@ -326,6 +327,33 @@ tile_swap_compress (gint swap_num)
   tile_swap_command (NULL, SWAP_COMPRESS);
 }
 
+/* check if we can open a swap file */
+gboolean
+tile_swap_test ()
+{
+  SwapFile *swap_file;
+  int       swap_num = 1;
+
+  g_assert (initialize == FALSE);
+  swap_file = g_hash_table_lookup (swap_files, &swap_num);
+  g_assert (swap_file->fd == -1);
+
+  /* make sure this duplicates the open() call from tile_swap_open() */
+  swap_file->fd = open (swap_file->filename,
+                        O_CREAT | O_RDWR | _O_BINARY | _O_TEMPORARY,
+                        S_IREAD | S_IWRITE);
+
+  if (swap_file->fd != -1)
+    {
+      close (swap_file->fd);
+      swap_file->fd = -1;
+      unlink (swap_file->filename);
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
 static void
 tile_swap_init (void)
 {
@@ -413,13 +441,19 @@ tile_swap_open (SwapFile *swap_file)
       nopen_swap_files -= 1;
     }
 
+  /* duplicate this open() call in tile_swap_test() */
   swap_file->fd = open (swap_file->filename,
       			O_CREAT | O_RDWR | _O_BINARY | _O_TEMPORARY,
 			S_IRUSR | S_IWUSR);
 
   if (swap_file->fd == -1)
     {
-      g_message ("unable to open swap file...BAD THINGS WILL HAPPEN SOON");
+      g_message (_("Unable to open swap file. The Gimp has run out of memory "
+                   "and cannot use the swap file. Some parts of your images "
+                   "may be corrupted. Try to save your work using different "
+                   "filenames, restart the Gimp and check the location of the "
+                   "swap directory in your Preferences."));
+
       return;
     }
 

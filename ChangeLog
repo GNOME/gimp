@@ -1,3 +1,17 @@
+2004-03-15  Simon Budig  <simon@gimp.org>
+
+	* app/base/tile-swap.[ch]: Applied a modified version of a patch
+	from Raphaël, that implements a test if a swap file can be
+	created. Also make the failure message more verbose.
+
+	* app/base/base.[ch]: extend base_init() with a boolean return
+	to indicate if the test to create a swap file was OK.
+
+	* app/app_procs.c: Display a warning message at startup when the
+	test fails.
+
+	Fixes bug #64835.
+
 2004-03-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable.c (gimp_drawable_real_set_tiles): emit
