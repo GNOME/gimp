@@ -121,12 +121,12 @@ change_scale (GDisplay *gdisp,
 
       break;
     default :
-      scalesrc = dir/100;
+      scalesrc = dir%100;
       if (scalesrc < 1)
 	scalesrc = 1;
       else if (scalesrc > 0x10)
 	scalesrc = 0x10;
-      scaledest = dir%100;
+      scaledest = dir/100;
       if (scaledest < 1)
 	scaledest = 1;
       else if (scaledest > 0x10)
