@@ -46,7 +46,6 @@
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
-#include "resolution-calibrate-dialog.h"
 #include "user-install-dialog.h"
 
 #include "gimp-intl.h"
@@ -66,7 +65,6 @@ enum
   TREE_PAGE,
   LOG_PAGE,
   TUNING_PAGE,
-  RESOLUTION_PAGE,
   NUM_PAGES
 };
 
@@ -85,7 +83,6 @@ static void     user_install_response   (GtkWidget *widget,
 
 static gboolean user_install_run        (void);
 static void     user_install_tuning     (GimpRc    *gimprc);
-static void     user_install_resolution (GimpRc    *gimprc);
 
 
 /*  private stuff  */
@@ -101,7 +98,6 @@ static GtkWidget  *footer_label    = NULL;
 
 static GtkWidget  *log_page        = NULL;
 static GtkWidget  *tuning_page     = NULL;
-static GtkWidget  *resolution_page = NULL;
 
 static GtkRcStyle *title_style     = NULL;
 static GtkRcStyle *page_style      = NULL;
@@ -387,11 +383,6 @@ user_install_response (GtkWidget *widget,
       break;
 
     case TUNING_PAGE:
-      user_install_notebook_set_page (GTK_NOTEBOOK (notebook), ++notebook_index);
-      user_install_resolution (gimprc);
-      break;
-
-    case RESOLUTION_PAGE:
       gimp_rc_save (gimprc);
 
       g_object_unref (title_style);
@@ -401,10 +392,10 @@ user_install_response (GtkWidget *widget,
 
       gtk_main_quit ();
       return;
-      break;
 
     default:
       g_assert_not_reached ();
+      break;
     }
 }
 
@@ -933,18 +924,6 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
              _("<b>For optimal GIMP performance, some settings may have to "
                "be adjusted.</b>"));
 
-  /*  Page 5  */
-  page = resolution_page =
-    user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
-                                       _("Monitor Resolution"),
-                                       _("Click \"Continue\" to start "
-                                         "The GIMP."),
-                                       24);
-
-  add_label (GTK_BOX (resolution_page),
-             _("<b>To display images in their natural size, "
-               "GIMP needs to know your monitor resolution.</b>"));
-
   user_install_notebook_set_page (GTK_NOTEBOOK (notebook), 0);
 
   gtk_widget_show (dialog);
@@ -1177,148 +1156,4 @@ user_install_tuning (GimpRc *gimprc)
   PAGE_STYLE (label);
   gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
-}
-
-static void
-user_install_resolution_calibrate (GtkWidget *button,
-                                   gpointer   data)
-{
-  GdkPixbuf *pixbuf;
-  gchar     *filename;
-
-  filename = g_build_filename (gimp_data_directory (),
-                               "themes", "Default", "images", "preferences",
-                               "monitor.png", NULL);
-  pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
-  g_free (filename);
-
-  resolution_calibrate_dialog (GTK_WIDGET (data),
-                               pixbuf,
-                               title_style,
-                               page_style,
-                               G_CALLBACK (user_install_corner_expose));
-
-  if (pixbuf)
-    g_object_unref (pixbuf);
-}
-
-static void
-user_install_resolution (GimpRc *gimprc)
-{
-  GimpDisplayConfig *config = GIMP_DISPLAY_CONFIG (gimprc);
-  GtkWidget         *vbox;
-  GtkWidget         *hbox;
-  GtkWidget         *entry;
-  GimpChainButton   *chain;
-  GtkWidget         *toggle;
-  GtkWidget         *button;
-  GList             *list;
-  gdouble            xres, yres;
-  gchar             *pixels_per_unit;
-  gchar             *str;
-
-  gimp_get_screen_resolution (NULL, &xres, &yres);
-
-  vbox = gtk_vbox_new (FALSE, 8);
-  gtk_box_pack_start (GTK_BOX (resolution_page), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
-
-  add_label (GTK_BOX (vbox),
-             _("GIMP can obtain this information from the windowing system.  "
-               "However, usually this does not give useful values."));
-
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  str = g_strdup_printf
-    (_("Get Resolution from windowing system (Currently %d x %d dpi)"),
-     ROUND (xres), ROUND (yres));
-
-  toggle =
-    gimp_prop_check_button_new (G_OBJECT (gimprc),
-                                "monitor-resolution-from-windowing-system",
-                                str);
-  g_free (str);
-
-  PAGE_STYLE (GTK_BIN (toggle)->child);
-  gtk_box_pack_end (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
-
-  /*  manually  */
-  vbox = gtk_vbox_new (FALSE, 8);
-  gtk_box_pack_start (GTK_BOX (resolution_page), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
-
-  add_label (GTK_BOX (vbox),
-             _("Alternatively, you can set the monitor resolution manually."));
-
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  pixels_per_unit = g_strconcat (_("Pixels"), "/%s", NULL);
-
-  entry = gimp_prop_coordinates_new (G_OBJECT (gimprc),
-                                     "monitor-xresolution",
-                                     "monitor-yresolution",
-                                     NULL,
-                                     pixels_per_unit,
-                                     GIMP_SIZE_ENTRY_UPDATE_RESOLUTION,
-                                     0.0, 0.0, TRUE);
-  gtk_table_set_col_spacings (GTK_TABLE (entry), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (entry), 2);
-
-  g_free (pixels_per_unit);
-
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
-                                _("Horizontal"), 0, 1, 0.0);
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
-                                _("Vertical"),   0, 2, 0.0);
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
-                                _("dpi"),        1, 4, 0.0);
-
-  chain = GIMP_COORDINATES_CHAINBUTTON (entry);
-  PAGE_STYLE (GTK_WIDGET (chain->line1));
-  PAGE_STYLE (GTK_WIDGET (chain->line2));
-
-  for (list = GTK_TABLE (entry)->children; list; list = g_list_next (list))
-    {
-      GtkTableChild *child = (GtkTableChild *) list->data;
-
-      if (child && GTK_IS_LABEL (child->widget))
-        PAGE_STYLE (GTK_WIDGET (child->widget));
-    }
-
-  gtk_box_pack_end (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
-  gtk_widget_show (entry);
-  gtk_widget_set_sensitive (entry, !config->monitor_res_from_gdk);
-
-  /*  calibrate  */
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (resolution_page), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  add_label (GTK_BOX (hbox),
-             _("You can also press the \"Calibrate\" button to open a window "
-               "which lets you determine your monitor resolution "
-               "interactively."));
-
-  button = gtk_button_new_with_label (_("Calibrate"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 4, 0);
-  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_set_sensitive (button, !config->monitor_res_from_gdk);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (user_install_resolution_calibrate),
-                    entry);
-
-  g_object_set_data (G_OBJECT (toggle), "inverse_sensitive",
-                     entry);
-  g_object_set_data (G_OBJECT (entry), "inverse_sensitive",
-                     button);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_sensitive_update),
-                    NULL);
 }

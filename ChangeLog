@@ -1,5 +1,18 @@
 2004-06-10  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/user-install-dialog.c: removed the monitor calibration
+	from the user installation process. It's not a vital setting and
+	can be done from the Preferences dialog later.
+
+	* app/gui/resolution-calibrate-dialog.[ch]: simplified the
+	resolution calibration dialog by removing the hacks that were
+	needed for drawing it in the user-installation style.
+
+	* app/gui/preferences-dialog.c: changed accordingly. Also removed
+	the separator from the Display page.
+
+2004-06-10  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimptemplateeditor.[ch]: added an API to
 	expand/collapse the "Advanced Options" frame.
 

@@ -21,10 +21,7 @@
 
 
 void  resolution_calibrate_dialog (GtkWidget  *resolution_entry,
-                                   GdkPixbuf  *pixbuf,
-                                   GtkRcStyle *dialog_style,
-				   GtkRcStyle *ruler_style,
-				   GCallback   expose_callback);
+                                   GdkPixbuf  *pixbuf);
 
 
 #endif /* __RESOLUTION_CALIBRATE_DIALOG_H__ */

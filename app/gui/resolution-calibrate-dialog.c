@@ -29,10 +29,6 @@
 #include "gimp-intl.h"
 
 
-#define SET_STYLE(widget, style) \
-        if (style) gtk_widget_modify_style (widget, style)
-
-
 static GtkWidget *calibrate_entry = NULL;
 static gdouble    calibrate_xres  = 1.0;
 static gdouble    calibrate_yres  = 1.0;
@@ -44,36 +40,24 @@ static gint       ruler_height    = 1;
  * resolution_calibrate_dialog:
  * @resolution_entry: a #GimpSizeEntry to connect the dialog to
  * @pixbuf:           an optional #GdkPixbuf for the upper left corner
- * @dialog_style:     a #GtkStyle for the main dialog (used by the
- *                    user_installation_dialog)
- * @ruler_style:      a #GtkStyle for the rulers and the entry area
- *                    (used by the user_installation_dialog)
- * @expose_callback:  an "expose_event" handler used by the
- *                    user_installation_dialog
  *
  * Displays a dialog that allows the user to interactively determine
  * her monitor resolution. This dialog runs it's own GTK main loop and
  * is connected to a #GimpSizeEntry handling the resolution to be set.
- * The style and callback parameters must only be used by the
- * user_installation_dialog.
  **/
 void
 resolution_calibrate_dialog (GtkWidget  *resolution_entry,
-                             GdkPixbuf  *pixbuf,
-			     GtkRcStyle *dialog_style,
-			     GtkRcStyle *ruler_style,
-			     GCallback   expose_callback)
+                             GdkPixbuf  *pixbuf)
 {
-  GtkWidget *dialog;
-  GtkWidget *table;
-  GtkWidget *ebox;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *darea;
-  GtkWidget *ruler;
-  GtkWidget *label;
-  GdkScreen *screen;
-  GList     *list;
+  GtkWidget      *dialog;
+  GtkWidget      *table;
+  GtkWidget      *vbox;
+  GtkWidget      *hbox;
+  GtkWidget      *ruler;
+  GtkWidget      *label;
+  GdkScreen      *screen;
+  PangoAttrList  *attrs;
+  PangoAttribute *attr;
 
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (resolution_entry));
   g_return_if_fail (pixbuf == NULL || GDK_IS_PIXBUF (pixbuf));
@@ -92,8 +76,6 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
 			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			    NULL);
-
-  SET_STYLE (dialog, dialog_style);
 
   screen = gtk_widget_get_screen (dialog);
 
@@ -118,7 +100,6 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
     }
 
   ruler = gtk_hruler_new ();
-  SET_STYLE (ruler, ruler_style);
   gtk_widget_set_size_request (ruler, ruler_width, 32);
   gtk_ruler_set_range (GTK_RULER (ruler), 0, ruler_width, 0, ruler_width);
   gtk_table_attach (GTK_TABLE (table), ruler, 1, 3, 0, 1,
@@ -126,78 +107,38 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
   gtk_widget_show (ruler);
 
   ruler = gtk_vruler_new ();
-  SET_STYLE (ruler, ruler_style);
   gtk_widget_set_size_request (ruler, 32, ruler_height);
   gtk_ruler_set_range (GTK_RULER (ruler), 0, ruler_height, 0, ruler_height);
   gtk_table_attach (GTK_TABLE (table), ruler, 0, 1, 1, 3,
 		    GTK_SHRINK, GTK_SHRINK, 0, 0);
   gtk_widget_show (ruler);
 
-  ebox = gtk_event_box_new ();
-  SET_STYLE (ebox, ruler_style);
-  gtk_table_attach (GTK_TABLE (table), ebox, 1, 2, 1, 2,
-		    GTK_SHRINK, GTK_SHRINK, 0, 0);
-  gtk_widget_show (ebox);
-
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_container_add (GTK_CONTAINER (ebox), table);
-  gtk_widget_show (table);
-
-  darea = gtk_drawing_area_new ();
-  SET_STYLE (darea, dialog_style);
-  gtk_widget_set_size_request (darea, 16, 16);
-  if (expose_callback)
-    g_signal_connect (darea, "expose_event",
-                      G_CALLBACK (expose_callback),
-                      GINT_TO_POINTER (GTK_CORNER_TOP_LEFT));
-  gtk_table_attach (GTK_TABLE (table), darea, 0, 1, 0, 1,
-		    GTK_SHRINK, GTK_SHRINK, 0, 0);
-  gtk_widget_show (darea);
-
-  darea = gtk_drawing_area_new ();
-  SET_STYLE (darea, dialog_style);
-  gtk_widget_set_size_request (darea, 16, 16);
-  if (expose_callback)
-    g_signal_connect (darea, "expose_event",
-                      G_CALLBACK (expose_callback),
-                      GINT_TO_POINTER (GTK_CORNER_BOTTOM_LEFT));
-  gtk_table_attach (GTK_TABLE (table), darea, 0, 1, 2, 3,
-		    GTK_SHRINK, GTK_SHRINK, 0, 0);
-  gtk_widget_show (darea);
-
-  darea = gtk_drawing_area_new ();
-  SET_STYLE (darea, dialog_style);
-  gtk_widget_set_size_request (darea, 16, 16);
-  if (expose_callback)
-    g_signal_connect (darea, "expose_event",
-                      G_CALLBACK (expose_callback),
-                      GINT_TO_POINTER (GTK_CORNER_TOP_RIGHT));
-  gtk_table_attach (GTK_TABLE (table), darea, 2, 3, 0, 1,
-		    GTK_SHRINK, GTK_SHRINK, 0, 0);
-  gtk_widget_show (darea);
-
-  darea = gtk_drawing_area_new ();
-  SET_STYLE (darea, dialog_style);
-  gtk_widget_set_size_request (darea, 16, 16);
-  if (expose_callback)
-    g_signal_connect (darea, "expose_event",
-                      G_CALLBACK (expose_callback),
-                      GINT_TO_POINTER (GTK_CORNER_BOTTOM_RIGHT));
-  gtk_table_attach (GTK_TABLE (table), darea, 2, 3, 2, 3,
-		    GTK_SHRINK, GTK_SHRINK, 0, 0);
-  gtk_widget_show (darea);
-
-  vbox = gtk_vbox_new (FALSE, 16);
-  gtk_table_attach_defaults (GTK_TABLE (table), vbox, 1, 2, 1, 2);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_table_attach (GTK_TABLE (table), vbox, 1, 2, 1, 2,
+                    GTK_SHRINK, GTK_SHRINK, 0, 0);
   gtk_widget_show (vbox);
 
   label =
-    gtk_label_new (_("Measure the rulers and enter their lengths below."));
-  SET_STYLE (label, ruler_style);
+    gtk_label_new (_("Measure the rulers and enter their lengths:"));
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
+
+  attrs = pango_attr_list_new ();
+
+  attr = pango_attr_scale_new (PANGO_SCALE_LARGE);
+  attr->start_index = 0;
+  attr->end_index   = -1;
+  pango_attr_list_insert (attrs, attr);
+
+  attr = pango_attr_weight_new (PANGO_WEIGHT_BOLD);
+  attr->start_index = 0;
+  attr->end_index   = -1;
+  pango_attr_list_insert (attrs, attr);
+
+  gtk_label_set_attributes (GTK_LABEL (label), attrs);
+  pango_attr_list_unref (attrs);
 
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -229,18 +170,6 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
                     G_CALLBACK (gtk_widget_destroyed),
                     &calibrate_entry);
 
-  if (ruler_style)
-    {
-      for (list = GTK_TABLE (calibrate_entry)->children;
-	   list;
-	   list = g_list_next (list))
-	{
-	  GtkTableChild *child = (GtkTableChild *) list->data;
-
-	  if (child && GTK_IS_LABEL (child->widget))
-	    SET_STYLE (GTK_WIDGET (child->widget), ruler_style);
-	}
-    }
   gtk_box_pack_end (GTK_BOX (hbox), calibrate_entry, FALSE, FALSE, 0);
   gtk_widget_show (calibrate_entry);
 

@@ -398,8 +398,7 @@ prefs_resolution_calibrate_callback (GtkWidget *widget,
   image    = g_object_get_data (G_OBJECT (notebook), "image");
 
   resolution_calibrate_dialog (sizeentry,
-                               gtk_image_get_pixbuf (GTK_IMAGE (image)),
-                               NULL, NULL, NULL);
+                               gtk_image_get_pixbuf (GTK_IMAGE (image)));
 }
 
 static void
@@ -908,7 +907,6 @@ prefs_dialog_new (Gimp       *gimp,
   GtkWidget         *vbox;
   GtkWidget         *vbox2;
   GtkWidget         *hbox;
-  GtkWidget         *abox;
   GtkWidget         *button;
   GtkWidget         *fileselection;
   GtkWidget         *patheditor;
@@ -916,7 +914,6 @@ prefs_dialog_new (Gimp       *gimp,
   GtkWidget         *label;
   GtkWidget         *image;
   GtkWidget         *sizeentry;
-  GtkWidget         *separator;
   GtkWidget         *calibrate_button;
   PangoAttrList     *attrs;
   PangoAttribute    *attr;
@@ -1654,20 +1651,6 @@ prefs_dialog_new (Gimp       *gimp,
                            GTK_CONTAINER (vbox), FALSE);
 
   {
-    gdouble  xres, yres;
-    gchar   *str;
-
-    gimp_get_screen_resolution (NULL, &xres, &yres);
-
-    str = g_strdup_printf (_("(Currently %d x %d dpi)"),
-			   ROUND (xres), ROUND (yres));
-    label = gtk_label_new (str);
-    g_free (str);
-  }
-
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-
-  {
     gchar *pixels_per_unit = g_strconcat (_("Pixels"), "/%s", NULL);
 
     sizeentry = gimp_prop_coordinates_new (object,
@@ -1692,27 +1675,28 @@ prefs_dialog_new (Gimp       *gimp,
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry),
 				_("dpi"), 1, 4, 0.0);
 
-  gtk_container_add (GTK_CONTAINER (abox), sizeentry);
+  hbox = gtk_hbox_new (FALSE, 0);
+
+  gtk_box_pack_start (GTK_BOX (hbox), sizeentry, FALSE, FALSE, 24);
   gtk_widget_show (sizeentry);
   gtk_widget_set_sensitive (sizeentry, ! display_config->monitor_res_from_gdk);
 
-  hbox = gtk_hbox_new (FALSE, 6);
-
-  calibrate_button = gtk_button_new_with_mnemonic (_("C_alibrate"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (calibrate_button)->child), 4, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), calibrate_button, FALSE, FALSE, 0);
-  gtk_widget_show (calibrate_button);
-  gtk_widget_set_sensitive (calibrate_button,
-                            ! display_config->monitor_res_from_gdk);
-
-  g_signal_connect (calibrate_button, "clicked",
-		    G_CALLBACK (prefs_resolution_calibrate_callback),
-		    sizeentry);
-
   group = NULL;
 
-  button = gtk_radio_button_new_with_mnemonic (group,
-                                               _("From _Windowing System"));
+  {
+    gdouble  xres, yres;
+    gchar   *str;
+
+    gimp_get_screen_resolution (NULL, &xres, &yres);
+
+    str = g_strdup_printf (_("From _Windowing System (currently %d x %d dpi)"),
+			   ROUND (xres), ROUND (yres));
+
+    button = gtk_radio_button_new_with_mnemonic (group, str);
+
+    g_free (str);
+  }
+
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
@@ -1723,33 +1707,39 @@ prefs_dialog_new (Gimp       *gimp,
                      label);
   g_object_set_data (G_OBJECT (button), "inverse_sensitive",
                      sizeentry);
-  g_object_set_data (G_OBJECT (sizeentry), "inverse_sensitive",
-                     calibrate_button);
 
   g_signal_connect (button, "toggled",
 		    G_CALLBACK (prefs_resolution_source_callback),
 		    config);
-
-  gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  separator = gtk_hseparator_new ();
-  gtk_box_pack_start (GTK_BOX (vbox2), separator, FALSE, FALSE, 0);
-  gtk_widget_show (separator);
 
   button = gtk_radio_button_new_with_mnemonic (group, _("_Manually"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  gtk_box_pack_start (GTK_BOX (vbox2), abox, FALSE, FALSE, 0);
-  gtk_widget_show (abox);
-
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   if (! display_config->monitor_res_from_gdk)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  calibrate_button = gtk_button_new_with_mnemonic (_("C_alibrate..."));
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (calibrate_button)->child), 4, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), calibrate_button, FALSE, FALSE, 0);
+  gtk_widget_show (calibrate_button);
+  gtk_widget_set_sensitive (calibrate_button,
+                            ! display_config->monitor_res_from_gdk);
+
+  g_object_set_data (G_OBJECT (sizeentry), "inverse_sensitive",
+                     calibrate_button);
+
+  g_signal_connect (calibrate_button, "clicked",
+		    G_CALLBACK (prefs_resolution_calibrate_callback),
+		    sizeentry);
 
 
   /***********************/
