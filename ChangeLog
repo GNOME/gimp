@@ -1,3 +1,11 @@
+1999-12-20  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* plug-ins/common/blinds.c
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/deinterlace.c
+	* plug-ins/common/despeckle.c
+	* po-plug-ins/POTFILES.in: Added gettext support
+
 Sun Dec 19 23:59:33 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* app/Makefile.am
