@@ -1,5 +1,15 @@
 2000-03-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimpdrawable.c: gimp_drawable_get_color_at(): put the check
+	below back but only require a non-indexed drawable if the drawable
+	doesn't have an image.
+	(The function may call gimp_image_get_color() with gimage == NULL
+	for RGB and GRAY colors because we don't need a colormap to
+	transform them to RGB space).
+	This was the obscure special case (TM).
+
+2000-03-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimpdrawable.c: gimp_drawable_get_color_at(): don't
 	g_return_val_if_fail(!indexed, NULL) because the function seems to
 	work fine for all kinds of drawables. Fixes #6756. Or is this
