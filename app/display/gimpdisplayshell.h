@@ -195,21 +195,13 @@ void        gimp_display_shell_reconnect             (GimpDisplayShell *shell);
 void        gimp_display_shell_scaled                (GimpDisplayShell *shell);
 void        gimp_display_shell_scrolled              (GimpDisplayShell *shell);
 
-GimpGuide * gimp_display_shell_find_guide            (GimpDisplayShell *shell,
-                                                      gdouble           x,
-                                                      gdouble           y);
-gboolean    gimp_display_shell_snap_point            (GimpDisplayShell *shell,
-                                                      gdouble           x,
-                                                      gdouble           y,
-                                                      gdouble          *tx,
-                                                      gdouble          *ty);
-gboolean    gimp_display_shell_snap_rectangle        (GimpDisplayShell *shell,
-                                                      gdouble           x1,
-                                                      gdouble           y1,
-                                                      gdouble           x2,
-                                                      gdouble           y2,
-                                                      gdouble          *tx1,
-                                                      gdouble          *ty1);
+void        gimp_display_shell_snap_coords           (GimpDisplayShell *shell,
+                                                      GimpCoords       *coords,
+                                                      GimpCoords       *snapped_coords,
+                                                      gint              snap_offset_x,
+                                                      gint              snap_offset_y,
+                                                      gint              snap_width,
+                                                      gint              snap_height);
 
 gint        gimp_display_shell_mask_value            (GimpDisplayShell *shell,
                                                       gint              x,

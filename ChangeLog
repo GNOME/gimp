@@ -1,3 +1,26 @@
+2003-04-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptoolcontrol.[ch]: added an API to specify a
+	"snap_offset" and a "snap_width/height". Needed for tools which
+	want to snap to a rectangle and/or a position which is not the
+	current cursor position.
+
+	* app/display/gimpdisplayshell.[ch]: removed
+	gimp_display_shell_find_guide(), gimp_display_shell_snap_point()
+	and gimp_display_shell_snap_rectangle().
+	Added gimp_display_shell_snap_coords() which works on GimpCoords
+	and gets passed the above snap offsets.
+
+	* app/display/gimpdisplayshell-callbacks.c: use the new snap
+	function, using the values from GimpToolControl.
+
+	* app/tools/gimpcroptool.c: set snap offsets so the handles can be
+	guide-aligned after creating. Fixes bug #110957.
+
+	* app/tools/gimpeditselectiontool.c: removed snapping code (which
+	was broken anyway) and set appropriate snap offsets in
+	init_edit_selection().
+
 2003-04-16  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/print/gimp_main_window.c: 64-bit cleaniless cleanup.

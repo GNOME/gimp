@@ -178,9 +178,7 @@ gimp_edit_selection_tool_init (GimpEditSelectionTool *edit_selection_tool)
   tool = GIMP_TOOL (edit_selection_tool);
 
   gimp_tool_control_set_scroll_lock (tool->control, EDIT_SELECT_SCROLL_LOCK);
-  gimp_tool_control_set_snap_to     (tool->control, FALSE);
   gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_COMPRESS);
-
 
   edit_selection_tool->origx      = 0;
   edit_selection_tool->origy      = 0;
@@ -199,7 +197,6 @@ gimp_edit_selection_tool_snap (GimpEditSelectionTool *edit_select,
 {
   GimpDisplayShell *shell;
   gdouble           x1, y1;
-  gdouble           x2, y2;
   gdouble           dx, dy;
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
@@ -210,25 +207,6 @@ gimp_edit_selection_tool_snap (GimpEditSelectionTool *edit_select,
   x1 = edit_select->x1 + dx;
   y1 = edit_select->y1 + dy;
 
-  if (gimp_display_shell_get_show_guides (shell) &&
-      shell->snap_to_guides &&
-      gdisp->gimage->guides)
-    {
-      gint image_x1, image_y1;
-
-      x2 = edit_select->x2 + dx;
-      y2 = edit_select->y2 + dy;
-
-      if (gimp_image_snap_rectangle (gdisp->gimage,
-                                     ROUND (x1), ROUND (y1),
-                                     ROUND (x2), ROUND (y2),
-                                     &image_x1, &image_y1))
-        {
-          x1 = image_x1;
-          y1 = image_y1;
-        }
-    }
-  
   edit_select->x = (gint) RINT (x1) - (edit_select->x1 - edit_select->origx);
   edit_select->y = (gint) RINT (y1) - (edit_select->y1 - edit_select->origy);
 }
@@ -241,6 +219,7 @@ init_edit_selection (GimpTool    *tool,
 {
   GimpEditSelectionTool *edit_select;
   GimpDisplayShell      *shell;
+  GimpDrawable          *active_drawable;
   gint                   off_x, off_y;
   const gchar           *undo_desc;
 
@@ -278,8 +257,9 @@ init_edit_selection (GimpTool    *tool,
                                GIMP_UNDO_GROUP_LAYER_DISPLACE,
                                undo_desc);
 
-  gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
-                         &off_x, &off_y);
+  active_drawable = gimp_image_active_drawable (gdisp->gimage);
+
+  gimp_drawable_offsets (active_drawable, &off_x, &off_y);
 
   edit_select->edit_type = edit_type;
 
@@ -304,13 +284,80 @@ init_edit_selection (GimpTool    *tool,
    *  where the translation will result in floating the selection
    *  mask and translating the resulting layer
    */
-  gimp_drawable_mask_bounds (gimp_image_active_drawable (gdisp->gimage),
+  gimp_drawable_mask_bounds (active_drawable,
 			     &edit_select->x1, &edit_select->y1,
 			     &edit_select->x2, &edit_select->y2);
 
   gimp_edit_selection_tool_snap (edit_select, gdisp,
                                  RINT (edit_select->origx),
                                  RINT (edit_select->origy));
+
+  {
+    gint x1, y1, x2, y2;
+
+    switch (edit_select->edit_type)
+      {
+      case EDIT_MASK_TRANSLATE:
+        gimp_image_mask_bounds (gdisp->gimage, &x1, &y1, &x2, &y2);
+        break;
+
+      case EDIT_MASK_TO_LAYER_TRANSLATE:
+        x1 = edit_select->x1 + off_x;
+        y1 = edit_select->y1 + off_y;
+        x2 = edit_select->x2 + off_x;
+        y2 = edit_select->y2 + off_y;
+        break;
+
+      case EDIT_LAYER_TRANSLATE:
+      case EDIT_FLOATING_SEL_TRANSLATE:
+        {
+          GList     *layer_list;
+          GimpLayer *layer;
+          gint       x3, y3, x4, y4;
+
+          x1 = off_x;
+          y1 = off_y;
+
+          x2 = x1 + gimp_drawable_width (active_drawable);
+          y2 = y1 + gimp_drawable_height (active_drawable);
+
+          /*  Now, expand the rectangle to include all linked layers as well  */
+          for (layer_list = GIMP_LIST (gdisp->gimage->layers)->list;
+               layer_list;
+               layer_list = g_list_next (layer_list))
+            {
+              layer = (GimpLayer *) layer_list->data;
+
+              if ((layer != (GimpLayer *) active_drawable) &&
+                  gimp_layer_get_linked (layer))
+                {
+                  g_print ("linked!\n");
+
+                  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &x3, &y3);
+
+                  x4 = x3 + gimp_drawable_width (GIMP_DRAWABLE (layer));
+                  y4 = y3 + gimp_drawable_height (GIMP_DRAWABLE (layer));
+
+                  if (x3 < x1)
+                    x1 = x3;
+                  if (y3 < y1)
+                    y1 = y3;
+                  if (x4 > x2)
+                    x2 = x4;
+                  if (y4 > y2)
+                    y2 = y4;
+                }
+            }
+        }
+        break;
+      }
+
+    gimp_tool_control_set_snap_offsets (GIMP_TOOL (edit_select)->control,
+                                        x1 - coords->x,
+                                        y1 - coords->y,
+                                        x2 - x1,
+                                        y2 - y1);
+  }
 
   gimp_tool_control_activate (GIMP_TOOL (edit_select)->control);
   GIMP_TOOL (edit_select)->gdisp = gdisp;

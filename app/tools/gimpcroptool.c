@@ -300,6 +300,11 @@ gimp_crop_tool_button_press (GimpTool        *tool,
                                     FALSE))
         {
           crop->function = RESIZING_LEFT;
+
+          gimp_tool_control_set_snap_offsets (tool->control,
+                                              crop->x1 - coords->x,
+                                              crop->y1 - coords->y,
+                                              0, 0);
         }
       else if (gimp_draw_tool_on_handle (draw_tool, gdisp,
                                          coords->x, coords->y,
@@ -310,6 +315,11 @@ gimp_crop_tool_button_press (GimpTool        *tool,
                                          FALSE))
         {
           crop->function = RESIZING_RIGHT;
+
+          gimp_tool_control_set_snap_offsets (tool->control,
+                                              crop->x2 - coords->x,
+                                              crop->y2 - coords->y,
+                                              0, 0);
         }
       /*  If the cursor is in either the upper right or lower left boxes,
        *  The new function will be to translate the current crop area
@@ -330,6 +340,12 @@ gimp_crop_tool_button_press (GimpTool        *tool,
                                           FALSE))
         {
           crop->function = MOVING;
+
+          gimp_tool_control_set_snap_offsets (tool->control,
+                                              crop->x1 - coords->x,
+                                              crop->y1 - coords->y,
+                                              crop->x2 - crop->x1,
+                                              crop->y2 - crop->y1);
         }
       /*  If the pointer is in the rectangular region, crop or resize it!
        */
@@ -353,6 +369,8 @@ gimp_crop_tool_button_press (GimpTool        *tool,
     {
       if (gimp_tool_control_is_active (tool->control))
 	gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
+
+      gimp_tool_control_set_snap_offsets (tool->control, 0, 0, 0, 0);
 
       tool->gdisp = gdisp;
 
@@ -382,6 +400,8 @@ gimp_crop_tool_button_release (GimpTool        *tool,
   options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
 
   gimp_tool_pop_status (tool);
+
+  gimp_tool_control_set_snap_offsets (tool->control, 0, 0, 0, 0);
 
   if (! (state & GDK_BUTTON3_MASK))
     {
@@ -530,6 +550,34 @@ gimp_crop_tool_motion (GimpTool        *tool,
 
   /*  recalculate the coordinates for crop_draw based on the new values  */
   crop_recalc (crop);
+
+  switch (crop->function)
+    {
+    case RESIZING_LEFT:
+      gimp_tool_control_set_snap_offsets (tool->control,
+                                          crop->x1 - coords->x,
+                                          crop->y1 - coords->y,
+                                          0, 0);
+      break;
+
+    case RESIZING_RIGHT:
+      gimp_tool_control_set_snap_offsets (tool->control,
+                                          crop->x2 - coords->x,
+                                          crop->y2 - coords->y,
+                                          0, 0);
+      break;
+
+    case MOVING:
+      gimp_tool_control_set_snap_offsets (tool->control,
+                                          crop->x1 - coords->x,
+                                          crop->y1 - coords->y,
+                                          crop->x2 - crop->x1,
+                                          crop->y2 - crop->y1);
+      break;
+
+    default:
+      break;
+    }
 
   if (crop->function == CREATING      || 
       crop->function == RESIZING_LEFT ||

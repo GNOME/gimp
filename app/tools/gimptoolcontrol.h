@@ -43,6 +43,10 @@ struct _GimpToolControl
 
   gboolean       scroll_lock;        /*  allow scrolling or not               */
   gboolean       auto_snap_to;       /*  snap to guides automatically         */
+  gint           snap_offset_x;
+  gint           snap_offset_y;
+  gint           snap_width;
+  gint           snap_height;
   gboolean       preserve;           /*  Preserve this tool across drawable   *
                                       *  changes                              */
   gboolean       handle_empty_image; /*  invoke the tool on images without    *
@@ -99,6 +103,17 @@ gboolean           gimp_tool_control_handles_empty_image        (GimpToolControl
 void               gimp_tool_control_set_snap_to                (GimpToolControl    *control,
                                                                  gboolean            snap_to);
 gboolean           gimp_tool_control_auto_snap_to               (GimpToolControl    *control);
+
+void               gimp_tool_control_set_snap_offsets           (GimpToolControl    *control,
+                                                                 gint                offset_x,
+                                                                 gint                offset_y,
+                                                                 gint                width,
+                                                                 gint                height);
+void               gimp_tool_control_snap_offsets               (GimpToolControl    *control,
+                                                                 gint               *offset_x,
+                                                                 gint               *offset_y,
+                                                                 gint               *width,
+                                                                 gint               *height);
 
 GdkCursorType      gimp_tool_control_get_cursor                 (GimpToolControl    *control);
 

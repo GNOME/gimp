@@ -929,114 +929,49 @@ gimp_display_shell_scrolled (GimpDisplayShell *shell)
   g_signal_emit (shell, display_shell_signals[SCROLLED], 0);
 }
 
-GimpGuide *
-gimp_display_shell_find_guide (GimpDisplayShell *shell,
-                               gdouble           x,
-                               gdouble           y)
+void
+gimp_display_shell_snap_coords (GimpDisplayShell *shell,
+                                GimpCoords       *coords,
+                                GimpCoords       *snapped_coords,
+                                gint              snap_offset_x,
+                                gint              snap_offset_y,
+                                gint              snap_width,
+                                gint              snap_height)
 {
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (coords != NULL);
+  g_return_if_fail (snapped_coords != NULL);
 
-  if (gimp_display_shell_get_show_guides (shell))
-    {
-      gdouble image_x, image_y;
-
-      gimp_display_shell_untransform_xy_f (shell,
-                                           x, y,
-                                           &image_x, &image_y,
-                                           TRUE);
-
-      return gimp_image_find_guide (shell->gdisp->gimage,
-                                    (gint) image_x,
-                                    (gint) image_y);
-    }
-
-  return NULL;
-}
-
-gboolean
-gimp_display_shell_snap_point (GimpDisplayShell *shell,
-                               gdouble           x,
-                               gdouble           y,
-                               gdouble          *tx,
-                               gdouble          *ty)
-{
-  gboolean snapped = FALSE;
-
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
-  g_return_val_if_fail (tx != NULL, FALSE);
-  g_return_val_if_fail (ty != NULL, FALSE);
-
-  *tx = x;
-  *ty = y;
+  *snapped_coords = *coords;
 
   if (gimp_display_shell_get_show_guides (shell) &&
       shell->snap_to_guides                      &&
       shell->gdisp->gimage->guides)
     {
-      gdouble  image_x, image_y;
-      gint     image_tx, image_ty;
+      gint tx, ty;
 
-      gimp_display_shell_untransform_xy_f (shell,
-                                           x, y,
-                                           &image_x, &image_y,
-                                           TRUE);
-
-      snapped = gimp_image_snap_point (shell->gdisp->gimage,
-                                       (gint) image_x,
-                                       (gint) image_y,
-                                       &image_tx,
-                                       &image_ty);
-
-      if (snapped)
+      if (snap_width > 0 && snap_height > 0)
         {
-          gimp_display_shell_transform_xy_f (shell,
-                                             (gdouble) image_tx,
-                                             (gdouble) image_ty,
-                                             tx, ty,
-                                             FALSE);
+          gimp_image_snap_rectangle (shell->gdisp->gimage,
+                                     coords->x + snap_offset_x,
+                                     coords->y + snap_offset_y,
+                                     coords->x + snap_offset_x + snap_width,
+                                     coords->y + snap_offset_y + snap_height,
+                                     &tx,
+                                     &ty);
         }
+      else
+        {
+          gimp_image_snap_point (shell->gdisp->gimage,
+                                 coords->x + snap_offset_x,
+                                 coords->y + snap_offset_y,
+                                 &tx,
+                                 &ty);
+        }
+
+      snapped_coords->x = tx - snap_offset_x;
+      snapped_coords->y = ty - snap_offset_y;
     }
-
-  return snapped;
-}
-
-gboolean
-gimp_display_shell_snap_rectangle (GimpDisplayShell *shell,
-                                   gdouble           x1,
-                                   gdouble           y1,
-                                   gdouble           x2,
-                                   gdouble           y2,
-                                   gdouble          *tx1,
-                                   gdouble          *ty1)
-{
-  gdouble  nx1, ny1;
-  gdouble  nx2, ny2;
-  gboolean snap1, snap2;
-
-  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
-  g_return_val_if_fail (tx1 != NULL, FALSE);
-  g_return_val_if_fail (ty1 != NULL, FALSE);
-
-  *tx1 = x1;
-  *ty1 = y1;
-
-  snap1 = gimp_display_shell_snap_point (shell, x1, y1, &nx1, &ny1);
-  snap2 = gimp_display_shell_snap_point (shell, x2, y2, &nx2, &ny2);
-
-  if (snap1 || snap2)
-    {
-      if (x1 != nx1)
-	*tx1 = nx1;
-      else if (x2 != nx2)
-	*tx1 = x1 + (nx2 - x2);
-  
-      if (y1 != ny1)
-	*ty1 = ny1;
-      else if (y2 != ny2)
-	*ty1 = y1 + (ny2 - y2);
-    }
-
-  return snap1 || snap2;
 }
 
 gint

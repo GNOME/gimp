@@ -74,11 +74,16 @@ gimp_tool_control_init (GimpToolControl *control)
 
   control->toggled                = FALSE;
 
-  control->scroll_lock            = FALSE;                  /*  Allow scrolling                  */
-  control->auto_snap_to           = TRUE;                   /*  Snap to guides                   */
-  control->preserve               = TRUE;                   /*  Preserve across drawable change  */
-  control->handle_empty_image     = FALSE;                  /*  Require active drawable          */
-  control->motion_mode            = GIMP_MOTION_MODE_HINT;  /*  Use MOTION_HINT compression      */
+  control->scroll_lock            = FALSE;
+  control->auto_snap_to           = TRUE;
+  control->snap_offset_x          = 0;
+  control->snap_offset_y          = 0;
+  control->snap_width             = 0;
+  control->snap_height            = 0;
+
+  control->preserve               = TRUE;
+  control->handle_empty_image     = FALSE;
+  control->motion_mode            = GIMP_MOTION_MODE_HINT;
 
   control->cursor                 = GIMP_MOUSE_CURSOR;
   control->tool_cursor            = GIMP_TOOL_CURSOR_NONE;
@@ -163,6 +168,21 @@ gimp_tool_control_set_snap_to (GimpToolControl *control,
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
 
   control->auto_snap_to = snap_to ? TRUE : FALSE;
+}
+
+void
+gimp_tool_control_set_snap_offsets (GimpToolControl *control,
+                                    gint             offset_x,
+                                    gint             offset_y,
+                                    gint             width,
+                                    gint             height)
+{
+  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+
+  control->snap_offset_x = offset_x;
+  control->snap_offset_y = offset_y;
+  control->snap_width    = width;
+  control->snap_height   = height;
 }
 
 void
@@ -269,6 +289,21 @@ gimp_tool_control_auto_snap_to (GimpToolControl *control)
   g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
 
   return control->auto_snap_to;
+}
+
+void
+gimp_tool_control_snap_offsets (GimpToolControl *control,
+                                gint            *offset_x,
+                                gint            *offset_y,
+                                gint            *width,
+                                gint            *height)
+{
+  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+
+  if (offset_x) *offset_x = control->snap_offset_x;
+  if (offset_y) *offset_y = control->snap_offset_y;
+  if (width)    *width    = control->snap_width;
+  if (height)   *height   = control->snap_height;
 }
 
 gboolean

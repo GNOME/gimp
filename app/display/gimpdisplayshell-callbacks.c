@@ -35,6 +35,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-guides.h"
 #include "core/gimpimage-qmask.h"
 #include "core/gimplayer.h"
 #include "core/gimptoolinfo.h"
@@ -581,15 +582,15 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               {
                 if (gimp_tool_control_auto_snap_to (active_tool->control))
                   {
-                    gimp_display_shell_snap_point (shell,
-                                                   display_coords.x,
-                                                   display_coords.y,
-                                                   &display_coords.x,
-                                                   &display_coords.y);
+                    gint x, y, width, height;
 
-                    gimp_display_shell_untransform_coords (shell,
-                                                           &display_coords,
-                                                           &image_coords);
+                    gimp_tool_control_snap_offsets (active_tool->control,
+                                                    &x, &y, &width, &height);
+
+                    gimp_display_shell_snap_coords (shell,
+                                                    &image_coords,
+                                                    &image_coords,
+                                                    x, y, width, height);
 
                     update_cursor = TRUE;
                   }
@@ -669,15 +670,15 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                   {
                     if (gimp_tool_control_auto_snap_to (active_tool->control))
                       {
-                        gimp_display_shell_snap_point (shell,
-                                                       display_coords.x,
-                                                       display_coords.y,
-                                                       &display_coords.x,
-                                                       &display_coords.y);
+                        gint x, y, width, height;
 
-                        gimp_display_shell_untransform_coords (shell,
-                                                               &display_coords,
-                                                               &image_coords);
+                        gimp_tool_control_snap_offsets (active_tool->control,
+                                                        &x, &y, &width, &height);
+
+                        gimp_display_shell_snap_coords (shell,
+                                                        &image_coords,
+                                                        &image_coords,
+                                                        x, y, width, height);
 
                         update_cursor = TRUE;
                       }
@@ -900,15 +901,15 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
                 if (gimp_tool_control_auto_snap_to (active_tool->control))
                   {
-                    gimp_display_shell_snap_point (shell,
-                                                   display_coords.x,
-                                                   display_coords.y,
-                                                   &display_coords.x,
-                                                   &display_coords.y);
+                    gint x, y, width, height;
 
-                    gimp_display_shell_untransform_coords (shell,
-                                                           &display_coords,
-                                                           &image_coords);
+                    gimp_tool_control_snap_offsets (active_tool->control,
+                                                    &x, &y, &width, &height);
+
+                    gimp_display_shell_snap_coords (shell,
+                                                    &image_coords,
+                                                    &image_coords,
+                                                    x, y, width, height);
 
                     update_cursor = TRUE;
                   }
