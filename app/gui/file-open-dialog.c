@@ -27,13 +27,8 @@
 
 #include "gui-types.h"
 
-#include "config/gimpcoreconfig.h"
-
 #include "core/gimp.h"
 #include "core/gimpimage.h"
-#include "core/gimpimagefile.h"
-
-#include "plug-in/plug-in-proc.h"
 
 #include "file/file-open.h"
 #include "file/file-utils.h"

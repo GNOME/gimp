@@ -1,5 +1,15 @@
 2004-03-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpfiledialog.[ch] (gimp_file_dialog_set_image): 
+	new function which configures the dialog to save an image.
+
+	* app/gui/file-save-dialog.c: use it.
+
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c: removed useless #inlcudes.
+
+2004-03-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpfiledialog.[ch] (gimp_file_dialog_new): added
 	unused "GSList *file_procs" parameter.
 

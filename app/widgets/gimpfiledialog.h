@@ -70,6 +70,11 @@ GtkWidget * gimp_file_dialog_new           (Gimp            *gimp,
 void        gimp_file_dialog_set_file_proc (GimpFileDialog  *dialog,
                                             PlugInProcDef   *file_proc);
 
+void        gimp_file_dialog_set_image     (GimpFileDialog  *dialog,
+                                            GimpImage       *gimage,
+                                            gboolean         set_uri_and_proc,
+                                            gboolean         set_image_clean);
+
 
 G_END_DECLS
 

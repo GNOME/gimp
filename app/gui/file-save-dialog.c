@@ -30,9 +30,6 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 
-#include "plug-in/plug-in-proc.h"
-#include "plug-in/plug-in-run.h"
-
 #include "file/file-save.h"
 #include "file/file-utils.h"
 
@@ -83,8 +80,6 @@ file_save_dialog_show (GimpImage       *gimage,
                        GimpMenuFactory *menu_factory,
                        GtkWidget       *parent)
 {
-  gchar *filename;
-
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (GIMP_IS_MENU_FACTORY (menu_factory));
   g_return_if_fail (parent == NULL || GTK_IS_WIDGET (parent));
@@ -94,10 +89,6 @@ file_save_dialog_show (GimpImage       *gimage,
 
   if (! filesave)
     filesave = file_save_dialog_create (gimage->gimp, menu_factory);
-
-  GIMP_FILE_DIALOG (filesave)->gimage           = gimage;
-  GIMP_FILE_DIALOG (filesave)->set_uri_and_proc = TRUE;
-  GIMP_FILE_DIALOG (filesave)->set_image_clean  = TRUE;
 
   gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
 
@@ -109,17 +100,8 @@ file_save_dialog_show (GimpImage       *gimage,
 
   gtk_window_set_title (GTK_WINDOW (filesave), _("Save Image"));
 
-  filename = gimp_image_get_filename (gimage);
-
-  gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesave),
-                                   filename ?
-				   filename :
-                                   "." G_DIR_SEPARATOR_S);
-
-  g_free (filename);
-
-  gimp_item_factory_update (GIMP_FILE_DIALOG (filesave)->item_factory,
-                            gimp_image_active_drawable (gimage));
+  gimp_file_dialog_set_image (GIMP_FILE_DIALOG (filesave),
+                              gimage, TRUE, TRUE);
 
   file_dialog_show (filesave, parent);
 }
@@ -129,26 +111,15 @@ file_save_a_copy_dialog_show (GimpImage       *gimage,
                               GimpMenuFactory *menu_factory,
                               GtkWidget       *parent)
 {
-  const gchar *uri;
-  gchar       *filename = NULL;
-
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (GIMP_IS_MENU_FACTORY (menu_factory));
+  g_return_if_fail (parent == NULL || GTK_IS_WIDGET (parent));
 
   if (! gimp_image_active_drawable (gimage))
     return;
 
-  uri = gimp_object_get_name (GIMP_OBJECT (gimage));
-
-  if (uri)
-    filename = g_filename_from_uri (uri, NULL, NULL);
-
   if (! filesave)
     filesave = file_save_dialog_create (gimage->gimp, menu_factory);
-
-  GIMP_FILE_DIALOG (filesave)->gimage           = gimage;
-  GIMP_FILE_DIALOG (filesave)->set_uri_and_proc = FALSE;
-  GIMP_FILE_DIALOG (filesave)->set_image_clean  = FALSE;
 
   gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
 
@@ -160,15 +131,8 @@ file_save_a_copy_dialog_show (GimpImage       *gimage,
 
   gtk_window_set_title (GTK_WINDOW (filesave), _("Save a Copy of the Image"));
 
-  gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesave),
-                                   filename ?
-                                   filename :
-                                   "." G_DIR_SEPARATOR_S);
-
-  g_free (filename);
-
-  gimp_item_factory_update (GIMP_FILE_DIALOG (filesave)->item_factory,
-                            gimp_image_active_drawable (gimage));
+  gimp_file_dialog_set_image (GIMP_FILE_DIALOG (filesave),
+                              gimage, FALSE, FALSE);
 
   file_dialog_show (filesave, parent);
 }

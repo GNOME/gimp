@@ -39,6 +39,7 @@
 #include "plug-in/plug-in-proc.h"
 
 #include "gimpfiledialog.h"
+#include "gimpitemfactory.h"
 #include "gimpmenufactory.h"
 #include "gimpthumbbox.h"
 
@@ -250,6 +251,34 @@ gimp_file_dialog_set_file_proc (GimpFileDialog *dialog,
 
       g_string_free (s, TRUE);
     }
+}
+
+void
+gimp_file_dialog_set_image (GimpFileDialog *dialog,
+                            GimpImage      *gimage,
+                            gboolean        set_uri_and_proc,
+                            gboolean        set_image_clean)
+{
+  gchar *filename;
+
+  g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  dialog->gimage           = gimage;
+  dialog->set_uri_and_proc = set_uri_and_proc;
+  dialog->set_image_clean  = set_image_clean;
+
+  filename = gimp_image_get_filename (gimage);
+
+  gtk_file_selection_set_filename (GTK_FILE_SELECTION (dialog),
+                                   filename ?
+				   filename :
+                                   "." G_DIR_SEPARATOR_S);
+
+  g_free (filename);
+
+  gimp_item_factory_update (dialog->item_factory,
+                            gimp_image_active_drawable (gimage));
 }
 
 
