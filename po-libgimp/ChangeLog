@@ -1,3 +1,7 @@
+2002-08-28  Sven Neumann  <sven@gimp.org>
+
+	* ga.po: fixed fatal error.
+
 2002-08-28  Christophe Merlet  <christophe@merlet.net>
 
 	* fr.po: updated French translation.
