@@ -141,22 +141,23 @@ run (const gchar      *name,
   if (gimp_drawable_is_rgb (drawable->drawable_id) ||
       gimp_drawable_is_gray (drawable->drawable_id)  ||
       gimp_drawable_is_indexed (drawable->drawable_id))
-  {
-    if (interactive)
-      gimp_progress_init (_("Cropping..."));
+    {
+      if (interactive)
+        gimp_progress_init (_("Cropping..."));
 
-    gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width() + 1));
+      gimp_tile_cache_ntiles (MAX (drawable->width / gimp_tile_width (),
+                                   drawable->height / gimp_tile_height ()) + 1);
 
-    autocrop (drawable, image_id, interactive,
-              ! strcmp (name, "plug_in_autocrop_layer"));
+      autocrop (drawable, image_id, interactive,
+                strcmp (name, "plug_in_autocrop_layer") == 0);
 
-    if (interactive)
-      gimp_displays_flush ();
-  }
+      if (interactive)
+        gimp_displays_flush ();
+    }
   else
-  {
+    {
       status = GIMP_PDB_EXECUTION_ERROR;
-  }
+    }
 
  out:
   values[0].type = GIMP_PDB_STATUS;
@@ -177,7 +178,7 @@ autocrop (GimpDrawable *drawable,
   guchar       *buffer;
   guchar        color[4] = {0, 0, 0, 0};
   gint32        layer_id = 0;
-  
+
   width  = drawable->width;
   height = drawable->height;
   bytes  = drawable->bpp;
@@ -203,14 +204,13 @@ autocrop (GimpDrawable *drawable,
 
   /* Check how many of the top lines are uniform. */
   abort = FALSE;
-  for (y1 = 0; y1 < height; y1++)
+  for (y1 = 0; y1 < height && !abort; y1++)
     {
       gimp_pixel_rgn_get_row (&srcPR, buffer, 0, y1, width);
       for (i = 0; i < width && !abort; i++)
         abort = !colors_equal (color, buffer + i * bytes, bytes);
-
-      if (abort) break;
     }
+
   if (y1 == height - 1 && !abort)
     {
       /* whee - a plain color drawable. Do nothing. */
@@ -224,13 +224,11 @@ autocrop (GimpDrawable *drawable,
 
   /* Check how many of the bottom lines are uniform. */
   abort = FALSE;
-  for (y2 = height - 1; y2 >= 0; y2--)
+  for (y2 = height - 1; y2 >= 0 && !abort; y2--)
     {
       gimp_pixel_rgn_get_row (&srcPR, buffer, 0, y2, width);
       for (i = 0; i < width && !abort; i++)
         abort = !colors_equal (color, buffer + i * bytes, bytes);
-
-      if (abort) break;
     }
 
   y2 += 1; /* to make y2 - y1 == height */
@@ -240,13 +238,11 @@ autocrop (GimpDrawable *drawable,
 
   /* Check how many of the left lines are uniform. */
   abort = FALSE;
-  for (x1 = 0; x1 < width; x1++)
+  for (x1 = 0; x1 < width && !abort; x1++)
     {
       gimp_pixel_rgn_get_col (&srcPR, buffer, x1, y1, y2-y1);
       for (i = 0; i < y2-y1 && !abort; i++)
         abort = !colors_equal (color, buffer + i * bytes, bytes);
-
-      if (abort) break;
     }
 
   if (show_progress)
@@ -254,13 +250,11 @@ autocrop (GimpDrawable *drawable,
 
   /* Check how many of the right lines are uniform. */
   abort = FALSE;
-  for (x2 = width - 1; x2 >= 0; x2--)
+  for (x2 = width - 1; x2 >= 0 && !abort; x2--)
     {
       gimp_pixel_rgn_get_col (&srcPR, buffer, x2, y1, y2-y1);
       for (i = 0; i < y2-y1 && !abort; i++)
         abort = !colors_equal (color, buffer + i * bytes, bytes);
-
-      if (abort) break;
     }
 
   x2 += 1; /* to make x2 - x1 == width */
@@ -269,11 +263,11 @@ autocrop (GimpDrawable *drawable,
 
   gimp_drawable_detach (drawable);
 
-  if (x2-x1 != width || y2-y1 != height)
+  if (x2 - x1 != width || y2 - y1 != height)
     {
       if (layer_only)
         {
-          gimp_layer_resize (layer_id, x2-x1, y2-y1, -x1, -y1);
+          gimp_layer_resize (layer_id, x2 - x1, y2 - y1, -x1, -y1);
         }
       else
         {
@@ -291,14 +285,16 @@ autocrop (GimpDrawable *drawable,
                * partially outside the image area, we need to
                * resize the image to be able to crop properly.
                */
-              gimp_image_resize (image_id, x2-x1, y2-y1, -x1, -y1);
+              gimp_image_resize (image_id, x2 - x1, y2 - y1, -x1, -y1);
+
               x2 -= x1;
               y2 -= y1;
+
               x1 = y1 = 0;
             }
 
-          gimp_image_crop (image_id, x2-x1, y2-y1, x1, y1);
-          
+          gimp_image_crop (image_id, x2 - x1, y2 - y1, x1, y1);
+
           gimp_image_undo_group_end (image_id);
         }
     }

@@ -1,5 +1,10 @@
 2005-03-03  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/autocrop.c: allocate tile-cache size more
+	intelligently.
+
+2005-03-03  Sven Neumann  <sven@gimp.org>
+
 	* libgimpconfig/gimpconfig-params.h: removed linebreak from macro
 	definition; gtk-doc doesn't like this.
 
