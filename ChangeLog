@@ -1,3 +1,8 @@
+Sat Nov 27 03:51:41 MET 1999
+
+	* plug-ins/sgi/sgi.c: bail out nicely instead of aborting when
+	saving fails.
+
 Sat Nov 27 03:07:20 CET 1999  Marc Lehmann <pcg@goof.com>
 
 	* configure.in: Fix *the* perl configuration bug. tststs...

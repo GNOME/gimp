@@ -34,6 +34,12 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.15  1999/11/27 02:54:25  neo
+ *          * plug-ins/sgi/sgi.c: bail out nicely instead of aborting when
+ *           saving fails.
+ *
+ *   --Sven
+ *
  *   Revision 1.14  1999/11/26 20:58:26  neo
  *   more action_area beautifiction
  *
@@ -659,7 +665,8 @@ save_image (char   *filename,	 /* I - File to save to */
         zsize = 4;
         break;
     default:
-      g_error ("Image must be of type RGB or GRAY\n");
+      g_warning ("Image must be of type RGB or GRAY\n");
+      return FALSE;
       break;
     };
 
@@ -671,8 +678,8 @@ save_image (char   *filename,	 /* I - File to save to */
                  drawable->height, zsize);
   if (sgip == NULL)
   {
-    g_print("can't create image file\n");
-    gimp_quit();
+    g_warning ("can't create image file\n");
+    return FALSE;
   };
 
   if (strrchr(filename, '/') != NULL)
@@ -744,7 +751,7 @@ save_image (char   *filename,	 /* I - File to save to */
   g_free(rows[0]);
   g_free(rows);
 
-  return (1);
+  return TRUE;
 }
 
 
