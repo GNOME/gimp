@@ -1,6 +1,5 @@
 <SECTION>
 <FILE>gimpconfig-iface</FILE>
-GIMP_CONFIG_GET_INTERFACE
 GimpConfigInterface
 gimp_config_serialize_to_file
 gimp_config_serialize_to_fd
@@ -15,6 +14,7 @@ gimp_config_reset
 GIMP_CONFIG
 GIMP_IS_CONFIG
 GIMP_TYPE_CONFIG
+GIMP_CONFIG_GET_INTERFACE
 gimp_config_interface_get_type
 </SECTION>
 
@@ -58,7 +58,20 @@ GIMP_CONFIG_INSTALL_PROP_POINTER
 
 <SECTION>
 <FILE>gimpconfig-path</FILE>
+GimpConfigPathType
+gimp_param_spec_config_path
+gimp_param_spec_config_path_type
 gimp_config_path_expand
+gimp_config_build_data_path
+gimp_config_build_writable_path
+gimp_config_build_plug_in_path
+GIMP_VALUE_HOLDS_CONFIG_PATH
+<SUBSECTION Standard>
+GIMP_TYPE_CONFIG_PATH
+GIMP_TYPE_PARAM_CONFIG_PATH
+GIMP_IS_PARAM_SPEC_CONFIG_PATH
+gimp_config_path_get_type
+gimp_param_config_path_get_type
 </SECTION>
 
 <SECTION>

@@ -13,13 +13,13 @@
 
   <part id="libgimpconfig">
     <title>GIMP Config Library</title>
-    <xi:include href="xml/gimpconfig-deserialize.xml" />
-    <xi:include href="xml/gimpconfig-error.xml" />
+    <xi:include href="xml/gimpconfigtypes.xml" />
     <xi:include href="xml/gimpconfig-iface.xml" />
+    <xi:include href="xml/gimpconfig-deserialize.xml" />
+    <xi:include href="xml/gimpconfig-serialize.xml" />
+    <xi:include href="xml/gimpconfig-error.xml" />
     <xi:include href="xml/gimpconfig-params.xml" />
     <xi:include href="xml/gimpconfig-path.xml" />
-    <xi:include href="xml/gimpconfig-serialize.xml" />
-    <xi:include href="xml/gimpconfigtypes.xml" />
     <xi:include href="xml/gimpconfig-utils.xml" />
     <xi:include href="xml/gimpconfigwriter.xml" />
     <xi:include href="xml/gimpscanner.xml" />

@@ -15,14 +15,6 @@ High-level API functions for libgimpconfig.
 
 </para>
 
-<!-- ##### MACRO GIMP_CONFIG_GET_INTERFACE ##### -->
-<para>
-
-</para>
-
-@obj: 
-
-
 <!-- ##### STRUCT GimpConfigInterface ##### -->
 <para>
 

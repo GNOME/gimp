@@ -1,3 +1,12 @@
+2005-01-28  Sven Neumann  <sven@gimp.org>
+
+	* libgimpconfig/libgimpconfig-docs.sgml
+	* libgimpconfig/libgimpconfig-sections.txt: updated.
+
+	* libgimpconfig/tmpl/gimpconfig-iface.sgml
+	* libgimpconfig/tmpl/gimpconfig-params.sgml
+	* libgimpconfig/tmpl/gimpconfig-path.sgml: regenerated.
+
 2005-01-26  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/libgimpbase-docs.sgml
