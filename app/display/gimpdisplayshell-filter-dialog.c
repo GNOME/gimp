@@ -24,9 +24,13 @@
 
 #include "display-types.h"
 
+#include "core/gimpviewable.h"
+
 #include "widgets/gimpcolordisplayeditor.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpviewabledialog.h"
 
+#include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-filter.h"
 #include "gimpdisplayshell-filter-dialog.h"
@@ -65,17 +69,21 @@ gimp_display_shell_filter_dialog_new (GimpDisplayShell *shell)
   cdd = g_new0 (ColorDisplayDialog, 1);
 
   cdd->shell  = shell;
-  cdd->dialog = gimp_dialog_new (_("Color Display Filters"),
-                                 "gimp-display-filters",
-                                 GTK_WIDGET (cdd->shell),
-                                 GTK_DIALOG_DESTROY_WITH_PARENT,
-                                 gimp_standard_help_func,
-                                 GIMP_HELP_DISPLAY_FILTER_DIALOG,
+  cdd->dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (shell->gdisp->gimage),
+                                          _("Color Display Filters"),
+                                          "gimp-display-filters",
+                                          GIMP_STOCK_DISPLAY_FILTER,
+                                          _("Configure Color Display Filters"),
+                                          GTK_WIDGET (cdd->shell),
+                                          gimp_standard_help_func,
+                                          GIMP_HELP_DISPLAY_FILTER_DIALOG,
 
-                                 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                                 NULL);
+                                          NULL);
+
+  gtk_window_set_destroy_with_parent (GTK_WINDOW (cdd->dialog), TRUE);
 
   g_object_weak_ref (G_OBJECT (cdd->dialog), (GWeakNotify) g_free, cdd);
 

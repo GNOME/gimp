@@ -1,5 +1,15 @@
 2004-02-19  Michael Natterer  <mitch@gimp.org>
 
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-display-filter-16.png
+	* themes/Default/images/stock-display-filter-24.png
+	* libgimpwidgets/gimpstock.[ch]: added Jimmac's glasses.
+
+	* app/display/gimpdisplayshell-filter-dialog.c
+	* app/gui/image-menu.c: and use them.
+
+2004-02-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdasheditor.[ch]: removed static variables, don't
 	use GIMP_CONFIG_INSTALL_PROP_FOO() for non-config classes,
 	trailing whitespace, cleanup.

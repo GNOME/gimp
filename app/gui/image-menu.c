@@ -437,7 +437,8 @@ GimpItemFactoryEntry image_menu_entries[] =
     NULL,
     GIMP_HELP_NAVIGATION_DIALOG, NULL },
   { { N_("/View/Display _Filters..."), NULL,
-      view_display_filters_cmd_callback, 0 },
+      view_display_filters_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_DISPLAY_FILTER },
     NULL,
     GIMP_HELP_DISPLAY_FILTER_DIALOG, NULL },
 

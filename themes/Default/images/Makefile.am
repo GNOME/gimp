@@ -49,6 +49,7 @@ STOCK_MENU_IMAGES = \
 	stock-convert-rgb-16.png			\
 	stock-default-colors-12.png			\
 	stock-device-status-16.png			\
+	stock-display-filter-16.png			\
 	stock-eye-12.png				\
 	stock-flip-horizontal-16.png			\
 	stock-flip-vertical-16.png			\
@@ -136,6 +137,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-curve-free-16.png			\
 	stock-curve-smooth-16.png		\
 	stock-device-status-24.png		\
+	stock-display-filter-24.png		\
 	stock-duplicate-16.png			\
 	stock-edit-16.png			\
 	stock-eye-20.png			\

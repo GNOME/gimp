@@ -195,6 +195,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_TOOLS                    "gimp-tools"
 #define GIMP_STOCK_TOOL_OPTIONS             "gimp-tool-options"
 #define GIMP_STOCK_DEVICE_STATUS            "gimp-device-status"
+#define GIMP_STOCK_DISPLAY_FILTER           "gimp-display-filter"
 
 #define GIMP_STOCK_LIST                     "gimp-list"
 #define GIMP_STOCK_GRID                     "gimp-grid"
