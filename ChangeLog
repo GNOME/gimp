@@ -1,5 +1,13 @@
 2003-11-21  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpdialog.c: added a "role" property.
+
+	* app/widgets/gimptexteditor.c
+	* app/widgets/gimpviewabledialog.c: use it instead of calling
+	gtk_window_set_role().
+
+2003-11-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/plug-ins.c (plug_ins_help_domains): argh, need to
 	assign strings to (*array_retloc[i]), not just *array_retloc[i].
 	Fixes passing of the list of help domains to the help browser.

@@ -174,9 +174,8 @@ gimp_viewable_dialog_new (GimpViewable *viewable,
 
   dialog = g_object_new (GIMP_TYPE_VIEWABLE_DIALOG,
                          "title", title,
+                         "role",  role,
                          NULL);
-
-  gtk_window_set_role (GTK_WINDOW (dialog), role);
 
   if (parent)
     {

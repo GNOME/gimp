@@ -172,9 +172,9 @@ gimp_text_editor_new (const gchar   *title,
 
   editor = g_object_new (GIMP_TYPE_TEXT_EDITOR,
                          "title", title,
+                         "role",  "gimp-text-editor",
                          NULL);
 
-  gtk_window_set_role (GTK_WINDOW (editor), "gimp-text-editor");
   gimp_help_connect (GTK_WIDGET (editor), gimp_standard_help_func,
                      GIMP_HELP_TEXT_EDITOR_DIALOG, NULL);
 
