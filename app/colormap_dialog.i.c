@@ -704,6 +704,8 @@ ipal_set_image (GimpColormapDialog *ipal,
 	}
     }
 
+  ipal->col_index     = 0;
+  ipal->dnd_col_index = 0;
   if (gimage)
     {
       if (!ipal->image)
@@ -725,8 +727,6 @@ ipal_set_image (GimpColormapDialog *ipal,
       gtk_adjustment_changed (ipal->index_adjustment);
     }
   
-  ipal->col_index     = 0;
-  ipal->dnd_col_index = 0;
   gtk_widget_set_sensitive (ipal->add_item,
 			    (gimage && gimage->num_cols < 256));
   ipal_update_entries (ipal);
