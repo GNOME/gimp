@@ -1890,30 +1890,33 @@ edit_channel_query_ok_callback (GtkWidget *w,
   channel = options->channel_widget->channel;
   opacity = (int) (255 * options->opacity) / 100;
 
-  /*  Set the new channel name  */
-  if (GIMP_DRAWABLE(channel)->name)
-    g_free (GIMP_DRAWABLE(channel)->name);
-  GIMP_DRAWABLE(channel)->name = g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
-  gtk_label_set (GTK_LABEL (options->channel_widget->label), GIMP_DRAWABLE(channel)->name);
 
-  if (channel->opacity != opacity)
-    {
-      channel->opacity = opacity;
-      update = TRUE;
-    }
-  for (i = 0; i < 3; i++)
-    if (options->color_panel->color[i] != channel->col[i])
+  if (gimage_get_ID (options->channel_widget->ID)) {
+    
+    /*  Set the new channel name  */
+    if (GIMP_DRAWABLE(channel)->name)
+      g_free (GIMP_DRAWABLE(channel)->name);
+    GIMP_DRAWABLE(channel)->name = g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
+    gtk_label_set (GTK_LABEL (options->channel_widget->label), GIMP_DRAWABLE(channel)->name);
+    
+    if (channel->opacity != opacity)
       {
-	channel->col[i] = options->color_panel->color[i];
+	channel->opacity = opacity;
 	update = TRUE;
       }
-
-  if (update)
-    {
-      drawable_update (GIMP_DRAWABLE(channel), 0, 0, GIMP_DRAWABLE(channel)->width, GIMP_DRAWABLE(channel)->height);
-      gdisplays_flush ();
-    }
-
+    for (i = 0; i < 3; i++)
+      if (options->color_panel->color[i] != channel->col[i])
+	{
+	  channel->col[i] = options->color_panel->color[i];
+	  update = TRUE;
+	}
+    
+    if (update)
+      {
+	drawable_update (GIMP_DRAWABLE(channel), 0, 0, GIMP_DRAWABLE(channel)->width, GIMP_DRAWABLE(channel)->height);
+	gdisplays_flush ();
+      }
+  }
   color_panel_free (options->color_panel);
   gtk_widget_destroy (options->query_box);
   g_free (options);

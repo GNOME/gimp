@@ -1,3 +1,8 @@
+Sat May  2 15:20:54 EDT 1998  Matthew Wilson  <msw@gimp.org>
+
+	* app/channels_dialog.c: check to be sure that the gimage still
+	exists when editing a channel - fixes bug report from Sven
+
 Sat May  2 00:59:23 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* gimp.1: spelling corrections from Tamito Kajiyama
