@@ -1,3 +1,9 @@
+2004-07-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/preferences-dialog.c: renamed "Cleared saved foobar now"
+	buttons to "Reset saves foobar to default values". Fixes bug #5673.
+	Added mnemonics for all the configure/save/reset buttons.
+
 2004-07-29  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu-scripts.c (script_fu_free_script):
@@ -43,7 +49,7 @@
 	* app/tools/gimpbycolorselecttool.c (gimp_by_color_select_tool_init)
 	* app/tools/gimpcolorpickertool.c (gimp_color_picker_tool_init):
 	don't call gimp_tool_control_set_preserve (tool->control, FALSE)
-	because these tools don't cashe any image state and don't care
+	because these tools don't cache any image state and don't care
 	about the image changing under their feet.
 
 2004-07-28  Michael Natterer  <mitch@gimp.org>

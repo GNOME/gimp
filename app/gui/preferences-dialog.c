@@ -1337,7 +1337,7 @@ prefs_dialog_new (Gimp       *gimp,
                             _("Default _layer & channel preview size:"),
                             GTK_TABLE (table), 0, size_group);
   prefs_enum_combo_box_add (object, "navigation-preview-size", 0, 0,
-                            _("_Navigation preview size:"),
+                            _("Na_vigation preview size:"),
                             GTK_TABLE (table), 1, size_group);
 
   /* Keyboard Shortcuts */
@@ -1348,29 +1348,30 @@ prefs_dialog_new (Gimp       *gimp,
                           _("Show menu _mnemonics (access keys)"),
                           GTK_BOX (vbox2));
   prefs_check_button_add (object, "can-change-accels",
-                          _("Use dynamic _keyboard shortcuts"),
+                          _("Use _dynamic keyboard shortcuts"),
                           GTK_BOX (vbox2));
 
   button = prefs_button_add (GTK_STOCK_PREFERENCES,
-                             _("Configure Keyboard Shortcuts..."),
+                             _("Configure _Keyboard Shortcuts..."),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
                     G_CALLBACK (prefs_keyboard_shortcuts_dialog),
                     gimp);
 
   prefs_check_button_add (object, "save-accels",
-                          _("Save keyboard shortcuts on exit"),
+                          _("_Save keyboard shortcuts on exit"),
                           GTK_BOX (vbox2));
 
   button = prefs_button_add (GTK_STOCK_SAVE,
-                             _("Save Keyboard Shortcuts Now"),
+                             _("Save Keyboard Shortcuts _Now"),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
                     G_CALLBACK (prefs_menus_save_callback),
                     gimp);
 
-  button2 = prefs_button_add (GTK_STOCK_CLEAR,
-                              _("Clear Saved Keyboard Shortcuts Now"),
+  button2 = prefs_button_add (GIMP_STOCK_RESET,
+                              _("_Reset Saved Keyboard Shortcuts to "
+                                "Default Values"),
                               GTK_BOX (vbox2));
   g_signal_connect (button2, "clicked",
                     G_CALLBACK (prefs_menus_clear_callback),
@@ -1987,25 +1988,26 @@ prefs_dialog_new (Gimp       *gimp,
                            GTK_CONTAINER (vbox), FALSE);
 
   button = prefs_button_add (GTK_STOCK_PREFERENCES,
-                             _("Configure Extended Input Devices..."),
+                             _("Configure E_xtended Input Devices..."),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
                     G_CALLBACK (prefs_input_devices_dialog),
                     gimp);
 
   prefs_check_button_add (object, "save-device-status",
-                          _("Save input device settings on exit"),
+                          _("_Save input device settings on exit"),
                           GTK_BOX (vbox2));
 
   button = prefs_button_add (GTK_STOCK_SAVE,
-                             _("Save Input Device Settings Now"),
+                             _("Save Input Device Settings _Now"),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
                     G_CALLBACK (prefs_devices_save_callback),
                     gimp);
 
-  button2 = prefs_button_add (GTK_STOCK_CLEAR,
-                              _("Clear Saved Input Device Settings Now"),
+  button2 = prefs_button_add (GIMP_STOCK_RESET,
+                              _("_Reset Saved Input Device Settings to "
+                                "Default Values"),
                               GTK_BOX (vbox2));
   g_signal_connect (button2, "clicked",
                     G_CALLBACK (prefs_devices_clear_callback),
@@ -2239,14 +2241,15 @@ prefs_dialog_new (Gimp       *gimp,
                           GTK_BOX (vbox2));
 
   button = prefs_button_add (GTK_STOCK_SAVE,
-                             _("Save Window Positions Now"),
+                             _("Save Window Positions _Now"),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
                     G_CALLBACK (prefs_session_save_callback),
                     gimp);
 
-  button2 = prefs_button_add (GTK_STOCK_CLEAR,
-                              _("Clear Saved Window Positions Now"),
+  button2 = prefs_button_add (GIMP_STOCK_RESET,
+                              _("_Reset Saved Window Positions to "
+                                "Default Values"),
                               GTK_BOX (vbox2));
   g_signal_connect (button2, "clicked",
                     G_CALLBACK (prefs_session_clear_callback),
