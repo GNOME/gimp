@@ -56,6 +56,9 @@ gimp_proc_box_set_widget (GtkWidget *proc_box,
   GtkWidget *vbox;
   GtkWidget *child;
 
+  g_return_if_fail (GTK_IS_SCROLLED_WINDOW (proc_box));
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
   vbox = g_object_get_data (G_OBJECT (proc_box), "vbox");
 
   g_return_if_fail (GTK_IS_VBOX (vbox));
@@ -77,6 +80,9 @@ gimp_proc_box_show_message (GtkWidget   *proc_box,
 {
   GtkWidget *vbox;
   GtkWidget *child;
+
+  g_return_if_fail (GTK_IS_SCROLLED_WINDOW (proc_box));
+  g_return_if_fail (message != NULL);
 
   vbox = g_object_get_data (G_OBJECT (proc_box), "vbox");
 

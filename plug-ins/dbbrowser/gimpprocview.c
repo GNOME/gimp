@@ -44,7 +44,7 @@ static GtkWidget   * gimp_proc_view_create_params (GimpParamDef    *params,
                                                    GtkSizeGroup    *name_group,
                                                    GtkSizeGroup    *type_group,
                                                    GtkSizeGroup    *desc_group);
-static const gchar * GParamType_to_string         (GimpPDBArgType   type);
+static const gchar * GimpPDBArgType_to_string     (GimpPDBArgType   type);
 static const gchar * GimpPDBProcType_to_string    (GimpPDBProcType  type);
 
 
@@ -254,7 +254,7 @@ gimp_proc_view_create_params (GimpParamDef *params,
       gtk_widget_show (label);
 
       /* type */
-      type = GParamType_to_string (params[i].type);
+      type = GimpPDBArgType_to_string (params[i].type);
       label = gtk_label_new (type);
       gimp_label_set_attributes (GTK_LABEL (label),
                                  PANGO_ATTR_FAMILY, "monospace",
@@ -280,7 +280,7 @@ gimp_proc_view_create_params (GimpParamDef *params,
 }
 
 static const gchar *
-GParamType_to_string (GimpPDBArgType type)
+GimpPDBArgType_to_string (GimpPDBArgType type)
 {
   switch (type)
     {

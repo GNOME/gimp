@@ -68,7 +68,6 @@ typedef struct
 
   /* the currently selected procedure */
   gchar            *proc_name;
-  gchar            *scheme_proc_name;
   gchar            *proc_blurb;
   gchar            *proc_help;
   gchar            *proc_author;
@@ -80,6 +79,7 @@ typedef struct
   GimpParamDef     *params;
   GimpParamDef     *return_vals;
 
+  gboolean                     scheme_names;
   GimpProcBrowserApplyCallback apply_callback;
 } GimpDBBrowser;
 
@@ -103,7 +103,8 @@ static void   browser_convert_string    (gchar             *str);
 /*  public functions  */
 
 GtkWidget *
-gimp_proc_browser_dialog_new (GimpProcBrowserApplyCallback apply_callback)
+gimp_proc_browser_dialog_new (gboolean                     scheme_names,
+                              GimpProcBrowserApplyCallback apply_callback)
 {
   GimpDBBrowser   *browser;
   GtkWidget       *paned;
@@ -115,6 +116,7 @@ gimp_proc_browser_dialog_new (GimpProcBrowserApplyCallback apply_callback)
 
   browser = g_new0 (GimpDBBrowser, 1);
 
+  browser->scheme_names   = scheme_names ? TRUE : FALSE;
   browser->apply_callback = apply_callback;
 
   if (apply_callback)
@@ -242,7 +244,6 @@ gimp_proc_browser_dialog_new (GimpProcBrowserApplyCallback apply_callback)
   /* initialize the "return" value (for "apply") */
 
   browser->proc_name        = NULL;
-  browser->scheme_proc_name = NULL;
   browser->proc_blurb       = NULL;
   browser->proc_help        = NULL;
   browser->proc_author      = NULL;
@@ -299,9 +300,8 @@ browser_show_procedure (GimpDBBrowser *browser,
   g_free (browser->proc_name);
   browser->proc_name = g_strdup (proc_name);
 
-  g_free (browser->scheme_proc_name);
-  browser->scheme_proc_name = g_strdup (proc_name);
-  browser_convert_string (browser->scheme_proc_name);
+  if (browser->scheme_names)
+    browser_convert_string (browser->proc_name);
 
   g_free (browser->proc_blurb);
   g_free (browser->proc_help);
@@ -325,7 +325,7 @@ browser_show_procedure (GimpDBBrowser *browser,
                                 &browser->return_vals);
 
   gimp_proc_box_set_widget (browser->proc_box,
-                            gimp_proc_view_new (browser->scheme_proc_name,
+                            gimp_proc_view_new (browser->proc_name,
                                                 NULL,
                                                 browser->proc_blurb,
                                                 browser->proc_help,
@@ -348,7 +348,6 @@ browser_response (GtkWidget     *widget,
     {
     case GTK_RESPONSE_APPLY:
       browser->apply_callback (browser->proc_name,
-                               browser->scheme_proc_name,
                                browser->proc_blurb,
                                browser->proc_help,
                                browser->proc_author,

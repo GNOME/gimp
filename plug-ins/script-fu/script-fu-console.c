@@ -297,7 +297,6 @@ script_fu_response (GtkWidget *widget,
 
 static void
 apply_callback (const gchar        *proc_name,
-		const gchar        *scheme_proc_name,
 		const gchar        *proc_blurb,
 		const gchar        *proc_help,
 		const gchar        *proc_author,
@@ -316,7 +315,7 @@ apply_callback (const gchar        *proc_name,
     return;
 
   text = g_string_new ("(");
-  text = g_string_append (text, scheme_proc_name);
+  text = g_string_append (text, proc_name);
 
   for (i = 0; i < n_params; i++)
     {
@@ -335,7 +334,7 @@ script_fu_browse_callback (GtkWidget *widget,
 			   gpointer   data)
 {
   gtk_quit_add_destroy (1, (GtkObject *)
-                        gimp_proc_browser_dialog_new (apply_callback));
+                        gimp_proc_browser_dialog_new (TRUE, apply_callback));
 }
 
 static gboolean

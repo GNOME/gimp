@@ -121,7 +121,7 @@ run (const gchar      *name,
         gimp_ui_init ("dbbrowser", FALSE);
 
         gtk_quit_add_destroy (1, (GtkObject *)
-                              gimp_proc_browser_dialog_new (NULL));
+                              gimp_proc_browser_dialog_new (FALSE, NULL));
 
         gtk_main ();
         gdk_flush ();

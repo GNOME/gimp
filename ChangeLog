@@ -1,3 +1,13 @@
+2004-11-17  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/dbbrowser/gimpprocbox.c
+	* plug-ins/dbbrowser/gimpprocbrowser.[ch]
+	* plug-ins/dbbrowser/gimpprocview.c: some cleanup in preparation
+	of moving it to a more public place.
+
+	* plug-ins/dbbrowser/procedure-browser.c
+	* plug-ins/script-fu/script-fu-console.c: changed accordingly.
+
 2004-11-17  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am (DISTCHECK_CONFIGURE_FLAGS): removed --enable-gtk-doc

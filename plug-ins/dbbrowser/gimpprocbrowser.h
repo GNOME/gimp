@@ -26,7 +26,6 @@
 
 
 typedef void (* GimpProcBrowserApplyCallback) (const gchar        *proc_name,
-                                               const gchar        *scheme_proc_name,
                                                const gchar        *proc_blurb,
                                                const gchar        *proc_help,
                                                const gchar        *proc_author,
@@ -39,7 +38,8 @@ typedef void (* GimpProcBrowserApplyCallback) (const gchar        *proc_name,
                                                const GimpParamDef *return_vals);
 
 
-GtkWidget * gimp_proc_browser_dialog_new (GimpProcBrowserApplyCallback apply_callback);
+GtkWidget * gimp_proc_browser_dialog_new (gboolean                     scheme_names,
+                                          GimpProcBrowserApplyCallback apply_callback);
 
 
 #endif  /* __GIMP_PROC_BROWSER_H__ */
