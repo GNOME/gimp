@@ -925,9 +925,6 @@ ratio_callback (GtkWidget *widget,
   resize  = (Resize *) data;
   private = (ResizePrivate *) resize;
 
-  width  = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->size_se), 0);
-  height = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->size_se), 1);
-
   ratio_x = GTK_ADJUSTMENT (private->ratio_x_adj)->value;
   ratio_y = GTK_ADJUSTMENT (private->ratio_y_adj)->value;
 

@@ -1,3 +1,11 @@
+2003-09-23  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/resize-dialog.c (ratio_callback): removed redundant
+	calculations.
+
+	* plug-ins/common/svg.c: use a default size to handle the case
+	when librsvg cannot determine the SVG size.
+
 2003-09-23  Jakub Steiner <jimmac@ximian.com>
 
 	* data/images/gimp_splash.png: a tiny tribute to the path tool

@@ -39,6 +39,7 @@
 
 #define SVG_VERSION             "2.5.0"
 #define SVG_DEFAULT_RESOLUTION  72.0
+#define SVG_DEFAULT_SIZE        500
 #define SVG_PREVIEW_SIZE        128
 
 
@@ -315,7 +316,11 @@ load_set_size_callback (gint     *width,
 {
   SvgLoadVals *vals = data;
 
-  g_return_if_fail (*width > 0 && *height > 0);
+  if (*width < 1 || *height < 1)
+    {
+      *width  = SVG_DEFAULT_SIZE;
+      *height = SVG_DEFAULT_SIZE;
+    }
 
   if (!vals->width || !vals->height)
     return;
@@ -415,6 +420,12 @@ load_get_size_callback (gint     *width,
                         gpointer  data)
 {
   SvgLoadVals *vals = data;
+
+  if (*width < 1 || *height < 1)
+    {
+      *width  = SVG_DEFAULT_SIZE;
+      *height = SVG_DEFAULT_SIZE;
+    }
 
   vals->width  = *width;
   vals->height = *height;
@@ -834,9 +845,9 @@ load_dialog (const gchar *filename)
   gtk_widget_show (toggle);
 
   gimp_help_set_help_data (toggle,
-                           _("Import path elements of the SVG so they can "
-                             "be used with the GIMP path tool. This only "
-                             "works properly with an import ratio of 1.0."),
+                           _("Import path elements of the SVG so they can be "
+                             "used with the GIMP path tool. This may not work "
+                             "properly with import ratios other than 1.0."),
                            NULL);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), load_vals.import);
