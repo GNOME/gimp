@@ -38,7 +38,7 @@ as it will most probably have to open a dialog.
 @GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION: 
 @GIMP_EXPORT_NEEDS_ALPHA: 
 
-<!-- ##### ENUM GimpExportReturnType ##### -->
+<!-- ##### ENUM GimpExportReturn ##### -->
 <para>
 
 </para>

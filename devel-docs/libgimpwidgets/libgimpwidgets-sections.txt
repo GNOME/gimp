@@ -224,9 +224,8 @@ GIMP_OFFSET_AREA_GET_CLASS
 <TITLE>GimpDialog</TITLE>
 GimpDialog
 gimp_dialog_new
-gimp_dialog_newv
-gimp_dialog_create_action_area
-gimp_dialog_create_action_areav
+gimp_dialog_new_valist
+gimp_dialog_add_buttons_valist
 <SUBSECTION Standard>
 GIMP_TYPE_DIALOG
 GIMP_DIALOG
