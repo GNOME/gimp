@@ -66,7 +66,6 @@ static void   gimp_bucket_fill_options_get_property (GObject         *object,
                                                      GParamSpec      *pspec);
 
 static void   gimp_bucket_fill_options_reset        (GimpToolOptions *tool_options);
-static void   gimp_bucket_fill_options_set_defaults (GimpToolOptions *tool_options);
 static void   gimp_bucket_fill_options_notify (GimpBucketFillOptions *options,
                                                GParamSpec            *pspec,
                                                GtkWidget             *widget);
@@ -221,14 +220,6 @@ gimp_bucket_fill_options_get_property (GObject    *object,
 static void
 gimp_bucket_fill_options_reset (GimpToolOptions *tool_options)
 {
-  gimp_bucket_fill_options_set_defaults (tool_options);
-
-  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
-}
-
-static void
-gimp_bucket_fill_options_set_defaults (GimpToolOptions *tool_options)
-{
   GParamSpec *pspec;
 
   pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_options),
@@ -237,6 +228,8 @@ gimp_bucket_fill_options_set_defaults (GimpToolOptions *tool_options)
   if (pspec)
     G_PARAM_SPEC_DOUBLE (pspec)->default_value =
       GIMP_GUI_CONFIG (tool_options->tool_info->gimp->config)->default_threshold;
+
+  GIMP_TOOL_OPTIONS_CLASS (parent_class)->reset (tool_options);
 }
 
 GtkWidget *
@@ -310,8 +303,6 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
                              _("Threshold:"),
                              1.0, 16.0, 1,
                              FALSE, 0.0, 0.0);
-
-  gimp_bucket_fill_options_set_defaults (tool_options);
 
   return vbox;
 }
