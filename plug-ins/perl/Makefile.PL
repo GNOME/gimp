@@ -15,10 +15,6 @@ $|=1;
       logulator miff gimpmagick guide_remove guides_to_selection burst map_to_gradient
       fire povray
    );
-@shebang = (map("examples/$_",@examples),
-   qw(Perl-Server examples/example-net.pl examples/homepage-logo.pl
-      examples/example-fu.pl examples/example-oo.pl
-   ));
 
 if ($ARGV[0] ne "--writemakefile") {
    for(@ARGV) {

@@ -18,6 +18,7 @@ script-fu 4.9 vs. 3.3
 
 bugs
 
+  * update frosty-logo.scm  t-o-p-logo.scm starscape-logo.scm starburst-logo.scm
   * installation & Feature system (?)
   * map_to_gradient does not work on GRAYA thingies. Argh.
 [DONE]  * /root/gimprelease && TODO -> publish! PUSH PUSH

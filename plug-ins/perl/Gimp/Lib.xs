@@ -772,7 +772,7 @@ static int check_int (char *croak_str, SV *sv)
 }
 
 /* replacement newSVpv with only one argument.  */
-#define neuSVpv(arg) newSVpv((arg),0)
+#define neuSVpv(arg) ((arg) ? newSVpv((arg),0) : newSVsv (&PL_sv_undef))
 
 /* replacement newSViv which casts to unsigned char.  */
 #define newSVu8(arg) newSViv((unsigned char)(arg))
@@ -806,10 +806,7 @@ push_gimp_sv (GParam *arg, int array_as_ref)
       case PARAM_INT16:		sv = newSViv(arg->data.d_int16	); break;
       case PARAM_INT8:		sv = newSVu8(arg->data.d_int8	); break;
       case PARAM_FLOAT:		sv = newSVnv(arg->data.d_float	); break;
-      case PARAM_STRING:
-	sv = arg->data.d_string ? neuSVpv(arg->data.d_string)
-	                        : newSVsv (&PL_sv_undef);
-	break;
+      case PARAM_STRING:	sv = neuSVpv(arg->data.d_string ); break;
 	
       case PARAM_DISPLAY:
       case PARAM_IMAGE:	

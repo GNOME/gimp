@@ -1,6 +1,10 @@
 Revision history for Gimp-Perl extension.
 
+1.13  Wed Sep  8 02:55:43 CEST 1999
 	- removed some glib-1.1 compatibility cruft.
+        - gimpdocs troff output did not include the description.
+        - allow NULL strings in arrays to be returned as undef.
+        - gimpdoc now outputs the menupath and other info as well.
         
 1.12  Tue Aug 24 19:30:29 CEST 1999
 	- do not emit warning for function names prefixed with "+".

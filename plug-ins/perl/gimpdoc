@@ -4,7 +4,7 @@ use Gimp qw(:consts spawn_options=no-data);
 use Getopt::Std;
 #use Config '%Config';
 
-$VERSION=$Gimp::VERSION;
+$VERSION=2.0;
 
 getopts('rw:');
 
@@ -17,7 +17,7 @@ Usage: $me [-r] [-w dir] function...
 
 Options:
      -r      print raw tbl|nroff source.
-     -w dir  create html (use prefix dir when wriign out files)
+     -w dir  create html (use prefix dir when writing out files)
 
 EOF
    exit(1);
@@ -65,8 +65,25 @@ sub type2str {
   : "UNKNOWN($_[0])";
 }
 
+my %plugin_info;
+
+#'extension_db_browser' => ARRAY(0x8290e98)
+#   0  '<Toolbox>/Xtns/DB Browser'
+#   1  undef
+#   2  '/usr/app/lib/gimp/1.1/plug-ins/dbbrowser'
+#   3  ''
+#   4  936739664
+sub get_plugininfo {
+   eval {
+      my ($a, $b, $c, $d, $e, $f) = Gimp->plugins_query("");
+      for $i (0..$#$a) {
+         $plugin_info{$f->[$i]} = [map $_->[$i], $a, $b, $c, $d, $e];
+      }
+   }
+}
+
 sub format_html {
-   $created_by = "<br><hr><font size=-1>This page was created by <tt>gimpdoc</tt>, written by".
+   $created_by = "<br><hr><font size=-1>This page was created by <tt>gimpdoc</tt>, written by ".
                  "<a href=\"mailto:pcg\@goof.com\">Marc Lehmann &lt;pcg\@goof.com&gt;</a></font>";
    $nbsp = "&nbsp;";
    ($b1,$b0)=('<b>','</b>');
@@ -79,6 +96,9 @@ EOF
    $tr = "<tr>";
    $tend = "</table>";
    $body = '<body text="#000000" link="#1010c0" vlink="#101080" alink="#ff0000" bgcolor="#ffffff">';
+   $section = sub {
+      "<dt>$_[0]<dd>$_[1]";
+   };
    $header = <<'EOF';
 <html><head><title>Gimp PDB documentation - $name</title>$body
 <a href=\"$prev_fun.html\">$prev_fun</a> &lt;&lt; <a href=index.html>INDEX</a> &gt;&gt;
@@ -137,6 +157,9 @@ lw20 lw20 lw60.
 TYPE	NAME	DESCRIPTION
 EOF
    $tend = "\n.TE\n";
+   $section = sub {
+      ".SH $_[0]\n$_[1]\n";
+   };
    $header = <<'EOF';
 .TH \"$name\" \"gimpdoc\" \"$date\" \"$version\"
 .SH NAME
@@ -154,7 +177,7 @@ $author
 EOF
    *escape = sub {};
    *table_line = sub {
-      join("	",$_[0]." ",$_[1]." ","T{\n".$_[1]."\nT}")."\n"; 
+      join("	",$_[0]." ",$_[1]." ","T{\n".$_[2]."\nT}")."\n"; 
    }
 }
 
@@ -295,11 +318,16 @@ sub gen_desc {
    
    my($vals,$args)=gen_va(@vals,@args);
 
-   for ($blurb, $help, $author, $copyright, $date) {
+   my($menu_path, $accelerator, $path, $image_types, $mtime) = @{$plugin_info{$name}};
+   for ($blurb, $help, $author, $copyright, $date, $menu_path, $accelerator, $path, $image_types) {
       escape($_);
    }
 
    $r = eval "\"$header\"";
+
+   $r .= $section->("MENUPATH", $menu_path) if $menu_path;
+   $r .= $section->("IMAGETYPES", $image_types) if $image_types;
+   $r .= $section->("ACCELERATOR", $accelerator) if $accelerator;
    if ($nargs) {
       $r .= "${sh1}INPUT ARGUMENTS$sh0$theader";
       for (@args) {
@@ -320,9 +348,12 @@ sub gen_desc {
       @alts = @alts[0..5] if @alts > 6;
       $r .= "${sh1}SOME SYNTAX ALTERNATIVES$sh0". join($br, @alts). "\n";
    }
+   $r .= $section->("INSTALLATION PATH", $path) if $path;
    $r .= eval "\"$trailer\"";
    $r;
 }
+
+get_plugininfo;
 
 if ($opt_w) {
    format_html;
@@ -338,10 +369,10 @@ if ($opt_w) {
 
 The following pages contain a htmlified version of the <a
 href="http://www.gimp.org/"><b>Gimp</b></a> PDB documentation</b>. They
-were automatically generated on $today from gimp version $version, using
-the program <tt>gimpdoc</tt> (part of the $version distribution). If
-you have any questions please ask <a href=\"mailto:pcg\@goof.com\">Marc
-Lehmann &lt;pcg\@goof.com&gt;</a>
+were automatically generated on $today from $version, using the program
+<tt>gimpdoc</tt> (part of the $version distribution). If you have any
+questions please direct them to <a href=\"mailto:pcg\@goof.com\">Marc
+Lehmann &lt;pcg\@goof.com&gt;</a>.
 
 EOF
    my($listing,$head);
