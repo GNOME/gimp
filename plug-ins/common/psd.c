@@ -1997,9 +1997,10 @@ load_image (const gchar *name)
  		    /* Add alpha - otherwise cannot add layer mask */
  		    gimp_layer_add_alpha (layer_ID);
 
+#endif /* PANOTOOLS_FIX */
  		    /* Add layer mask */
 		    gimp_layer_add_mask (layer_ID, mask_id);
-#endif /* PANOTOOLS_FIX */
+
 		    drawable = gimp_drawable_get (mask_id);
 
 		    gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,

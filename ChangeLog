@@ -1,3 +1,12 @@
+2005-03-01  Jay Cox  <jaycox@gimp.org>
+
+	* plug-ins/common/psd.c:  Back port fix for loading layer masks.
+	Fixes bug #166976.
+	* plug-ins/common/psd_save.c: Back port fix for file corruption
+	bug.  Includes fix for excessive memory usage.  Fixes bug #167139
+	and bug #121871.
+
+
 2005-02-24  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/url.c: Handle HTTP 302 Redirect output from wget
