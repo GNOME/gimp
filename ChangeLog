@@ -1,5 +1,11 @@
 2003-11-02  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdock.c
+	* etc/gtkrc_user: draw the separators in normal color but make the
+	DND highlight use the bg color of the selected state.
+
+2003-11-02  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpdockable.c (gimp_dockable_realize): set a hand
 	cursor on the title area to indicate that the dockable can be
 	dragged here.

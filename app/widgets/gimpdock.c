@@ -63,15 +63,22 @@ static void        gimp_dock_real_book_added          (GimpDock       *dock,
                                                        GimpDockbook   *dockbook);
 static void        gimp_dock_real_book_removed        (GimpDock       *dock,
                                                        GimpDockbook   *dockbook);
-
-static void        gimp_dock_separator_realize        (GtkWidget      *widget,
+static void        gimp_dock_separator_drag_leave     (GtkWidget      *widget,
+                                                       GdkDragContext *context,
+                                                       guint           time,
+                                                       gpointer        data);
+static gboolean    gimp_dock_separator_drag_motion    (GtkWidget      *widget,
+                                                       GdkDragContext *context,
+                                                       gint            x,
+                                                       gint            y,
+                                                       guint           time,
                                                        gpointer        data);
 static gboolean    gimp_dock_separator_drag_drop      (GtkWidget      *widget,
 						       GdkDragContext *context,
 						       gint            x,
 						       gint            y,
 						       guint           time,
-						       gpointer        data);
+						       GimpDock       *dock);
 
 /*
 static gboolean    gimp_dock_separator_button_press   (GtkWidget      *widget,
@@ -241,12 +248,8 @@ gimp_dock_style_set (GtkWidget *widget,
   for (list = children; list; list = g_list_next (list))
     {
       if (GTK_IS_EVENT_BOX (list->data))
-        {
-          gtk_widget_set_size_request (GTK_WIDGET (list->data),
-                                       -1, separator_height);
-          gimp_dock_separator_realize (GTK_WIDGET (list->data),
-                                       GTK_BIN (list->data)->child);
-       }
+        gtk_widget_set_size_request (GTK_WIDGET (list->data),
+                                     -1, separator_height);
     }
 
   g_list_free (children);
@@ -291,14 +294,16 @@ gimp_dock_separator_new (GimpDock *dock)
   gimp_help_set_help_data (event_box,
                            _("You can drop dockable dialogs here."), NULL);
 
-  g_signal_connect (event_box, "realize",
-                   G_CALLBACK (gimp_dock_separator_realize),
-                   frame);
-
   gtk_drag_dest_set (GTK_WIDGET (event_box),
                      GTK_DEST_DEFAULT_ALL,
                      dialog_target_table, G_N_ELEMENTS (dialog_target_table),
                      GDK_ACTION_MOVE);
+  g_signal_connect (event_box, "drag_leave",
+		    G_CALLBACK (gimp_dock_separator_drag_leave),
+		    NULL);
+  g_signal_connect (event_box, "drag_motion",
+		    G_CALLBACK (gimp_dock_separator_drag_motion),
+		    NULL);
   g_signal_connect (event_box, "drag_drop",
 		    G_CALLBACK (gimp_dock_separator_drag_drop),
 		    dock);
@@ -539,18 +544,28 @@ gimp_dock_remove_book (GimpDock     *dock,
   g_object_unref (dockbook);
 }
 
-
-/*  fiddle with the color to make the drop area stand out  */
 static void
-gimp_dock_separator_realize (GtkWidget *widget,
-                             gpointer   data)
+gimp_dock_separator_drag_leave (GtkWidget      *widget,
+                                GdkDragContext *context,
+                                guint           time,
+                                gpointer        data)
 {
-  GdkColor *color;
+  gtk_widget_modify_bg (widget, GTK_STATE_NORMAL, NULL);
+}
 
-  color = gtk_widget_get_style (widget)->bg + GTK_STATE_SELECTED;
+static gboolean
+gimp_dock_separator_drag_motion (GtkWidget      *widget,
+                                 GdkDragContext *context,
+                                 gint            x,
+                                 gint            y,
+                                 guint           time,
+                                 gpointer        data)
+{
+  GdkColor *color = gtk_widget_get_style (widget)->bg + GTK_STATE_SELECTED;
 
   gtk_widget_modify_bg (widget, GTK_STATE_NORMAL, color);
-  gtk_widget_modify_bg (GTK_WIDGET (data), GTK_STATE_NORMAL, color);
+
+  return FALSE;
 }
 
 static gboolean
@@ -559,14 +574,9 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
 			       gint            x,
 			       gint            y,
 			       guint           time,
-			       gpointer        data)
+			       GimpDock       *dock)
 {
-  GimpDock  *dock;
-  GtkWidget *source;
-
-  dock = GIMP_DOCK (data);
-
-  source = gtk_drag_get_source_widget (context);
+  GtkWidget *source = gtk_drag_get_source_widget (context);
 
   if (source)
     {

@@ -54,8 +54,7 @@ binding "gimp-help-binding"
 # class "GtkWidget" binding "gimp-help-binding"
 
 
-# The dock separator is configurable using its name.
-# Note that it uses the bg color of the selected state.
+# The dock separator DND highlight color is configurable.
 
 style "gimp-red-separator-style"
 {
