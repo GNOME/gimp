@@ -70,3 +70,31 @@ drag & drop for layers (both in the dialog, and from image to image)
 more indicators of current status (X,Y position, selection size and
 placemtn etc ), maybe in another dialog, maybe a status bar?
 
+Clean up swapfiles?
+
+Automagically guess whats a good tilecache size?
+
+an artist palette type of color selector? (maybe based on raphs
+watercolor deal?) notebooked with the regular color selector?
+
+BETTER FONT SUPPORT! even if we have to go around X.
+and a better font selector too
+
+ability to get an exact count of the total number of colors
+in the image
+
+indexed/color reducing to arbitrary number of colors?
+
+Folding box for the toolbar. So you can have it be 9x3 like now, or
+1x27, or whatever... gyve has rought outlines of a widget to do this...
+
+optimise transform_core (special cases, fft stuff?, optimizations only
+	raph understands, etc...)
+
+brush-shaped cursors...
+
+pixmap brushes...
+
+
+
+
