@@ -29,8 +29,8 @@ void  gimp_error_log_func   (const gchar    *domain,
 			     const gchar    *message,
 			     gpointer        data);
 
-void  gimp_fatal_error      (gchar *, ...);
-void  gimp_terminate        (gchar *, ...);
+void  gimp_fatal_error      (const gchar *, ...);
+void  gimp_terminate        (const gchar *, ...);
 
 
 #endif /* __ERRORS_H__ */

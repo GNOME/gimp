@@ -1445,7 +1445,7 @@ undo_push_layer (GimpImage *gimage,
 
   if ((new = undo_push (gimage, size, type, TRUE)))
     {
-      gtk_object_ref (GTK_OBJECT (lu->layer));
+      g_object_ref (G_OBJECT (lu->layer));
 
       new->data      = lu_ptr;
       new->pop_func  = undo_pop_layer;
@@ -1541,7 +1541,7 @@ undo_free_layer (UndoState  state,
 
   lu = (LayerUndo *) lu_ptr;
 
-  gtk_object_unref (GTK_OBJECT (lu->layer));
+  g_object_unref (G_OBJECT (lu->layer));
   g_free (lu);
 }
 
@@ -1701,7 +1701,7 @@ undo_push_layer_mask (GimpImage *gimage,
   else
     {
       if (type == LAYER_MASK_REMOVE_UNDO)
-	gtk_object_unref (GTK_OBJECT (lmu->mask));
+	g_object_unref (G_OBJECT (lmu->mask));
 
       g_free (lmu);
       return FALSE;
@@ -1750,7 +1750,7 @@ undo_free_layer_mask (UndoState  state,
    */
   if ((state == REDO && type == LAYER_MASK_ADD_UNDO) ||
       (state == UNDO && type == LAYER_MASK_REMOVE_UNDO))
-    gtk_object_unref (GTK_OBJECT (lmu->mask));
+    g_object_unref (G_OBJECT (lmu->mask));
 
   g_free (lmu);
 }
@@ -1778,7 +1778,7 @@ undo_push_channel (GimpImage *gimage,
 
   if ((new = undo_push (gimage, size, type, TRUE)))
     {
-      gtk_object_ref (GTK_OBJECT (cu->channel));
+      g_object_ref (G_OBJECT (cu->channel));
 
       new->data      = cu_ptr;
       new->pop_func  = undo_pop_channel;
@@ -1857,7 +1857,7 @@ undo_free_channel (UndoState  state,
 
   cu = (ChannelUndo *) cu_ptr;
 
-  gtk_object_unref (GTK_OBJECT (cu->channel));
+  g_object_unref (G_OBJECT (cu->channel));
 
   g_free (cu);
 }

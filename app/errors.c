@@ -80,7 +80,7 @@ gimp_error_log_func (const gchar    *domain,
 }
 
 void
-gimp_fatal_error (gchar *fmt, ...)
+gimp_fatal_error (const gchar *fmt, ...)
 {
   va_list  args;
   gchar   *message;
@@ -134,7 +134,7 @@ gimp_fatal_error (gchar *fmt, ...)
 }
 
 void
-gimp_terminate (gchar *fmt, ...)
+gimp_terminate (const gchar *fmt, ...)
 {
   va_list  args;
   gchar   *message;

@@ -280,7 +280,7 @@ app_exit_finish (void)
 
   gimp_shutdown (the_gimp);
 
-  gtk_object_unref (GTK_OBJECT (the_gimp));
+  g_object_unref (G_OBJECT (the_gimp));
   the_gimp = NULL;
 
   base_exit ();

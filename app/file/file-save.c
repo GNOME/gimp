@@ -148,7 +148,7 @@ file_save (GimpImage   *gimage,
     }
 
   /* ref the image, so it can't get deleted during save */
-  gtk_object_ref (GTK_OBJECT (gimage));
+  g_object_ref (G_OBJECT (gimage));
 
   proc = &file_proc->db_info;
 
@@ -206,7 +206,7 @@ file_save (GimpImage   *gimage,
   g_free (return_vals);
   g_free (args);
 
-  gtk_object_unref (GTK_OBJECT (gimage));
+  g_object_unref (G_OBJECT (gimage));
 
   return status;
 }

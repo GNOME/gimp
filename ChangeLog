@@ -1,3 +1,13 @@
+2001-07-25  Sven Neumann  <sven@gimp.org>
+
+	* app_procs.c
+	* errors.c
+	* errors.h
+	* file-save.c
+	* gdisplay.c
+	* module_db.c
+	* undo.c: use GObject functions and const fixes.
+
 2001-07-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/brush-select.c

@@ -505,7 +505,7 @@ module_info_new (void)
 static void
 module_info_free (ModuleInfo *mod)
 {
-  gtk_object_unref (GTK_OBJECT (mod));
+  g_object_unref (G_OBJECT (mod));
 }
 
 

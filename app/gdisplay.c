@@ -468,7 +468,7 @@ gdisplay_delete (GDisplay *gdisp)
 
   /*  free the gimage  */
   gdisp->gimage->disp_count--;
-  gtk_object_unref (GTK_OBJECT (gdisp->gimage));
+  g_object_unref (G_OBJECT (gdisp->gimage));
 
   if (gdisp->nav_popup)
     nav_dialog_free (gdisp, gdisp->nav_popup);
@@ -2599,7 +2599,7 @@ gdisplay_reconnect (GDisplay  *gdisp,
 
   gtk_signal_disconnect_by_data (GTK_OBJECT (gdisp->gimage), gdisp);
   gdisp->gimage->disp_count--;
-  gtk_object_unref (GTK_OBJECT (gdisp->gimage));
+  g_object_unref (G_OBJECT (gdisp->gimage));
 
   instance = gimage->instance_count;
   gimage->instance_count++;
