@@ -1,3 +1,10 @@
+2004-11-08  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdrawable.c (gimp_drawable_mask_bounds)
+	(gimp_drawable_mask_intersect): initialize the return values before
+	checking if the drawable is attached. Keeps GIMP from going mad if
+	this assertion is ever triggered.
+
 2004-11-07  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/helpbrowser/dialog.c: don't connect the help browser to

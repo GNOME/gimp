@@ -1216,7 +1216,12 @@ gimp_drawable_mask_bounds (GimpDrawable *drawable,
   g_return_val_if_fail (x2 != NULL, FALSE);
   g_return_val_if_fail (y2 != NULL, FALSE);
 
-  item   = GIMP_ITEM (drawable);
+  item = GIMP_ITEM (drawable);
+
+  *x1 = 0;
+  *y1 = 0;
+  *x2 = gimp_item_width  (item);
+  *y2 = gimp_item_height (item);
 
   g_return_val_if_fail (gimp_item_is_attached (item), FALSE);
 
@@ -1237,11 +1242,6 @@ gimp_drawable_mask_bounds (GimpDrawable *drawable,
 
       return TRUE;
     }
-
-  *x1 = 0;
-  *y1 = 0;
-  *x2 = gimp_item_width  (item);
-  *y2 = gimp_item_height (item);
 
   return FALSE;
 }
@@ -1265,6 +1265,11 @@ gimp_drawable_mask_intersect (GimpDrawable *drawable,
 
   item = GIMP_ITEM (drawable);
 
+  *x      = 0;
+  *y      = 0;
+  *width  = gimp_item_width  (item);
+  *height = gimp_item_height (item);
+
   g_return_val_if_fail (gimp_item_is_attached (item), FALSE);
 
   gimage    = gimp_item_get_image (item);
@@ -1285,11 +1290,6 @@ gimp_drawable_mask_intersect (GimpDrawable *drawable,
                                        x, y,
                                        width, height);
     }
-
-  *x      = 0;
-  *y      = 0;
-  *width  = gimp_item_width  (item);
-  *height = gimp_item_height (item);
 
   return TRUE;
 }
