@@ -208,7 +208,7 @@ create_grid_settings_dialog()
    gtk_table_attach_defaults(GTK_TABLE(main_table), data->snap, 0, 1, 0, 1);
    gtk_widget_show(data->snap);
    
-   data->type_frame = frame = gtk_frame_new(_("Grid Visibility and Type"));
+   data->type_frame = frame = gimp_frame_new(_("Grid Visibility and Type"));
    gtk_widget_show(frame);
    gtk_table_attach_defaults(GTK_TABLE(main_table), frame, 0, 2, 1, 2);
    hbox = gtk_hbox_new(FALSE, 1);
@@ -240,7 +240,7 @@ create_grid_settings_dialog()
    gtk_box_pack_start(GTK_BOX(hbox), button, TRUE, TRUE, 10);
    gtk_widget_show(button);
    
-   data->granularity_frame = frame = gtk_frame_new(_("Grid Granularity"));
+   data->granularity_frame = frame = gimp_frame_new(_("Grid Granularity"));
    gtk_table_attach_defaults(GTK_TABLE(main_table), frame, 0, 1, 2, 3);
    table = gtk_table_new(2, 4, FALSE);
    gtk_container_set_border_width(GTK_CONTAINER(table), 10);
@@ -268,7 +268,7 @@ create_grid_settings_dialog()
    gtk_widget_show(table);
    gtk_widget_show(frame);
    
-   data->offset_frame = frame = gtk_frame_new(_("Grid Offset"));
+   data->offset_frame = frame = gimp_frame_new(_("Grid Offset"));
    gtk_table_attach_defaults(GTK_TABLE(main_table), frame, 1, 2, 2, 3);
    table = gtk_table_new(2, 3, FALSE);
    gtk_container_set_border_width(GTK_CONTAINER(table), 10);

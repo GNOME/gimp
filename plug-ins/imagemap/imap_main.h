@@ -48,6 +48,7 @@ void main_clear_dimension(void);
 void load(const gchar *filename);
 void save_as(const gchar *filename);
 void dump_output(gpointer param, OutputFunc_t output);
+GtkWidget *get_dialog(void);
 MRU_t *get_mru(void);
 MapInfo_t *get_map_info(void);
 PreferencesData_t *get_preferences(void);

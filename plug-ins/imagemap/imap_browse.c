@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2004 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,23 +59,28 @@ static void
 browse_cb (GtkWidget      *widget,
            BrowseWidget_t *browse)
 {
-   if (! browse->file_selection)
+   if (!browse->file_selection)
      {
        GtkWidget *dialog;
 
-       dialog = browse->file_selection = gtk_file_selection_new (browse->name);
+       dialog = browse->file_selection = 
+	 gtk_file_chooser_dialog_new (browse->name,
+				      GTK_WINDOW (gtk_widget_get_toplevel (widget)),
+				      GTK_FILE_CHOOSER_ACTION_OPEN,
+				      
+				      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+				      GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+				      
+				      NULL);
+       gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
-       gtk_window_set_transient_for (GTK_WINDOW (dialog),
-                                     GTK_WINDOW (gtk_widget_get_toplevel (widget)));
-
-       g_signal_connect (dialog, "delete_event",
-                         G_CALLBACK (gtk_true),
-                         NULL);
+       g_signal_connect (dialog, "destroy",
+			 G_CALLBACK (gtk_widget_destroyed),
+			 &dialog);
        g_signal_connect (dialog, "response",
                          G_CALLBACK (select_cb),
                          browse);
      }
-
    gtk_window_present (GTK_WINDOW (browse->file_selection));
 }
 
@@ -104,27 +109,27 @@ browse_widget_new(const gchar *name)
    browse->name = name;
    browse->filter = NULL;
 
-   browse->hbox = gtk_hbox_new(FALSE, 1);
-   gtk_widget_show(browse->hbox);
+   browse->hbox = gtk_hbox_new (FALSE, 1);
+   gtk_widget_show (browse->hbox);
 
-   browse->file = gtk_entry_new();
-   gtk_box_pack_start(GTK_BOX(browse->hbox), browse->file, TRUE, TRUE, 0);
-   gtk_drag_dest_set(browse->file, GTK_DEST_DEFAULT_ALL, target_table,
-		     2, GDK_ACTION_COPY);
-   g_signal_connect(browse->file, "drag_data_received",
-		    G_CALLBACK(handle_drop), NULL);
+   browse->file = gtk_entry_new ();
+   gtk_box_pack_start (GTK_BOX(browse->hbox), browse->file, TRUE, TRUE, 0);
+   gtk_drag_dest_set (browse->file, GTK_DEST_DEFAULT_ALL, target_table,
+		      2, GDK_ACTION_COPY);
+   g_signal_connect (browse->file, "drag_data_received",
+		     G_CALLBACK(handle_drop), NULL);
 
-   gtk_widget_show(browse->file);
+   gtk_widget_show (browse->file);
 
-   browse->button = button = gtk_button_new();
-   icon = gtk_image_new_from_stock(GTK_STOCK_OPEN, GTK_ICON_SIZE_BUTTON);
-   gtk_container_add(GTK_CONTAINER(button), icon);
-   gtk_widget_show(icon);
+   browse->button = button = gtk_button_new ();
+   icon = gtk_image_new_from_stock (GTK_STOCK_OPEN, GTK_ICON_SIZE_BUTTON);
+   gtk_container_add (GTK_CONTAINER (button), icon);
+   gtk_widget_show (icon);
 
-   gtk_box_pack_end(GTK_BOX(browse->hbox), button, FALSE, FALSE, 0);
-   g_signal_connect(button, "clicked", 
-		    G_CALLBACK(browse_cb), (gpointer) browse);
-   gtk_widget_show(button);
+   gtk_box_pack_end(GTK_BOX (browse->hbox), button, FALSE, FALSE, 0);
+   g_signal_connect (button, "clicked", 
+		     G_CALLBACK(browse_cb), (gpointer) browse);
+   gtk_widget_show (button);
 
    return browse;
 }
@@ -132,7 +137,7 @@ browse_widget_new(const gchar *name)
 void 
 browse_widget_set_filename(BrowseWidget_t *browse, const gchar *filename)
 {
-   gtk_entry_set_text(GTK_ENTRY(browse->file), filename);
+   gtk_entry_set_text (GTK_ENTRY (browse->file), filename);
 }
 
 void 

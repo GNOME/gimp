@@ -123,7 +123,7 @@ create_settings_dialog()
    gtk_widget_show(swin);
    gtk_container_add(GTK_CONTAINER(swin), view);
 
-   frame = gtk_frame_new(_("Map file format"));
+   frame = gimp_frame_new(_("Map file format"));
    gtk_widget_show(frame);
    gtk_table_attach_defaults(GTK_TABLE(table), frame, 1, 2, 9, 10);
    hbox = gtk_hbox_new(FALSE, 1);

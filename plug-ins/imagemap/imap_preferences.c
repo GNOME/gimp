@@ -443,7 +443,7 @@ create_general_tab(PreferencesDialog_t *data, GtkWidget *notebook)
    GtkWidget *frame;
    GtkWidget *hbox;
 
-   frame = gtk_frame_new( _("Default Map Type"));
+   frame = gimp_frame_new( _("Default Map Type"));
    gtk_widget_show(frame);
    gtk_table_attach_defaults(GTK_TABLE(table), frame, 0, 2, 0, 1);
    hbox = gtk_hbox_new(FALSE, 1);

@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2004 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,10 +39,10 @@ do_about_dialog(void)
       default_dialog_hide_cancel_button(dialog);
       default_dialog_hide_apply_button(dialog);
       default_dialog_hide_help_button(dialog);
-      default_dialog_set_label(dialog, _("Imagemap plug-in 2.0"));
+      default_dialog_set_label(dialog, _("Imagemap plug-in 2.2"));
       default_dialog_set_label(
-	 dialog, _("Copyright(c) 1999-2003 by Maurits Rijk"));
-      default_dialog_set_label(dialog, _("lpeek.mrijk@consunet.nl"));
+	 dialog, _("Copyright(c) 1999-2004 by Maurits Rijk"));
+      default_dialog_set_label(dialog, _("m.rijk@chello.nl"));
       default_dialog_set_label(
 	 dialog, _("  Released under the GNU General Public License  "));
    }

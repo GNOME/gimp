@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2004 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,24 +28,27 @@
 #include "imap_object.h"
 
 typedef struct {
-   GtkWidget	*container;
-   GtkWidget	*list;
-   GtkWidget	*selected_child;
-   GtkWidget	*arrow_up;
-   GtkWidget	*arrow_down;
-   GtkWidget	*remove;
-   GtkWidget	*edit;
-   ObjectList_t *object_list;
-   gint		selected_row;
-   gint		nr_rows;
-   gboolean	is_visible;
-   gboolean 	select_lock;
-   gboolean 	unselect_lock;
+  GtkListStore		*store;
+  GtkTreeSelection	*selection;
 
-   CommandFactory_t cmd_move_up;
-   CommandFactory_t cmd_move_down;
-   CommandFactory_t cmd_delete;
-   CommandFactory_t cmd_edit;
+  GtkWidget	*container;
+  GtkWidget	*list;
+  GtkWidget	*selected_child;
+  GtkWidget	*arrow_up;
+  GtkWidget	*arrow_down;
+  GtkWidget	*remove;
+  GtkWidget	*edit;
+  ObjectList_t *object_list;
+  gint		selected_row;
+  gint		nr_rows;
+  gboolean	is_visible;
+  gboolean 	select_lock;
+  gboolean	doubleclick;
+
+  CommandFactory_t cmd_move_up;
+  CommandFactory_t cmd_move_down;
+  CommandFactory_t cmd_delete;
+  CommandFactory_t cmd_edit;
 } Selection_t;
 
 Selection_t *make_selection(ObjectList_t *list);

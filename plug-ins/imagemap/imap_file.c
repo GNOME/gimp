@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2004 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,6 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "imap_default_dialog.h"
 #include "imap_file.h"
 #include "imap_main.h"
 #include "imap_misc.h"
@@ -60,45 +59,66 @@ open_cb (GtkFileSelection *fs,
 void
 do_file_open_dialog (void)
 {
-   static GtkWidget *dialog;
+  static GtkWidget *dialog;
 
-   if (! dialog)
-     {
-       dialog = gtk_file_selection_new (_("Load Imagemap"));
+  if (! dialog)
+    {
+      dialog =
+        gtk_file_chooser_dialog_new (_("Load Imagemap"),
+                                     NULL,
+                                     GTK_FILE_CHOOSER_ACTION_OPEN,
 
-       g_signal_connect (dialog, "delete_event",
-                         G_CALLBACK (gtk_true),
-                         NULL);
-       g_signal_connect (dialog, "response",
-                         G_CALLBACK (open_cb),
-                         NULL);
-     }
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
 
-   gtk_window_present (GTK_WINDOW (dialog));
+                                     NULL);
+
+      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+
+      g_signal_connect (dialog, "destroy",
+                        G_CALLBACK (gtk_widget_destroyed),
+                        &dialog);
+      g_signal_connect (dialog, "response",
+                        G_CALLBACK (open_cb),
+                        dialog);
+    }  
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 static void
-really_overwrite(gpointer data)
+really_overwrite_cb (GtkMessageDialog *dialog,
+		     gint              response_id,
+		     gpointer          data)
 {
-   gtk_widget_hide((GtkWidget*) data);
-   save_as(gtk_file_selection_get_filename(GTK_FILE_SELECTION(data)));
+  if (response_id == GTK_RESPONSE_YES)
+    {
+      save_as (gtk_file_selection_get_filename (GTK_FILE_SELECTION (data)));
+    }
+  gtk_widget_hide (GTK_WIDGET (dialog));
 }
 
 static void
-do_file_exists_dialog(gpointer data)
+do_file_exists_dialog (gpointer data)
 {
-   static DefaultDialog_t *dialog;
+  static GtkWidget *dialog;
 
-   if (!dialog) {
-      dialog = make_default_dialog(_("File exists!"));
-      default_dialog_hide_apply_button(dialog);
-      default_dialog_set_ok_cb(dialog, really_overwrite, data);
-      default_dialog_set_label(
-	 dialog,
-	 _("File already exists.\n"
-	 "  Do you really want to overwrite?  "));
-   }
-   default_dialog_show(dialog);
+  if (!dialog)
+    {
+      dialog = gtk_message_dialog_new_with_markup 
+	(GTK_WINDOW(get_dialog()), 
+	 GTK_DIALOG_DESTROY_WITH_PARENT,
+	 GTK_MESSAGE_QUESTION,
+	 GTK_BUTTONS_YES_NO,
+	 _("<span weight=\"bold\" size=\"larger\">File already exists.</span>\n\n"
+	   "Do you really want to overwrite?"));
+      g_signal_connect (dialog, "delete_event",
+			G_CALLBACK (gtk_true),
+			NULL);
+      g_signal_connect (dialog, "response",
+			G_CALLBACK (really_overwrite_cb),
+			data);
+    }
+  gtk_widget_show (dialog);
 }
 
 static void
@@ -109,9 +129,9 @@ save_cb (GtkFileSelection *fs,
   if (response_id == GTK_RESPONSE_OK)
     {
       const gchar *filename;
-
+      
       filename = gtk_file_selection_get_filename (fs);
-
+      
       if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
         {
           do_file_exists_dialog (fs);
@@ -127,32 +147,43 @@ save_cb (GtkFileSelection *fs,
 void
 do_file_save_as_dialog (void)
 {
-   static GtkWidget *dialog;
+  static GtkWidget *dialog;
 
-   if (! dialog)
-     {
-       dialog = gtk_file_selection_new (_("Save Imagemap"));
+  if (! dialog)
+    {
+      dialog =
+        gtk_file_chooser_dialog_new (_("Save Imagemap"),
+                                     NULL,
+                                     GTK_FILE_CHOOSER_ACTION_OPEN,
 
-       g_signal_connect (dialog, "delete_event",
-                         G_CALLBACK (gtk_true),
-                         NULL);
-       g_signal_connect (dialog, "response",
-                         G_CALLBACK (save_cb),
-                         NULL);
-     }
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
 
-   gtk_window_present (GTK_WINDOW (dialog));
+                                     NULL);
+
+      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+
+      g_signal_connect (dialog, "destroy",
+                        G_CALLBACK (gtk_widget_destroyed),
+                        &dialog);
+      g_signal_connect (dialog, "response",
+                        G_CALLBACK (save_cb),
+                        dialog);
+    }  
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
 do_file_error_dialog(const char *error, const char *filename)
 {
-   static Alert_t *alert;
-
-   if (!alert)
-      alert = create_alert(GTK_STOCK_DIALOG_ERROR);
-
-   alert_set_text(alert, error, gimp_filename_to_utf8 (filename));
-
-   default_dialog_show(alert->dialog);
+  static Alert_t *alert;
+  
+  if (!alert)
+    alert = create_alert (GTK_STOCK_DIALOG_ERROR);
+  
+  alert_set_text(alert, error, gimp_filename_to_utf8 (filename));
+  
+  alert_set_text (alert, error, filename);
+  
+  default_dialog_show (alert->dialog);
 }

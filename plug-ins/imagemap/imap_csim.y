@@ -316,17 +316,17 @@ csim_error(char* s)
 }
 
 gboolean
-load_csim(const char* filename)
+load_csim (const char* filename)
 {
-   gboolean status;
-   extern FILE *csim_in;
-   csim_in = fopen(filename, "r");
-   if (csim_in) {
-      _map_info = get_map_info();
-      status = !csim_parse();
-      fclose(csim_in);
-   } else {
-      status = FALSE;
-   }
-   return status;
+  gboolean status;
+  extern FILE *csim_in;
+  csim_in = fopen(filename, "r");
+  if (csim_in) {
+    _map_info = get_map_info();
+    status = !csim_parse();
+    fclose(csim_in);
+  } else {
+    status = FALSE;
+  }
+  return status;
 }

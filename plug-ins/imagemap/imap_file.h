@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2004 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,8 +28,8 @@ void do_file_open_dialog(void);
 void do_file_save_as_dialog(void);
 void do_file_error_dialog(const char *error, const char *filename);
 
-gboolean load_csim(const char* filename);
-gboolean load_cern(const char* filename);
-gboolean load_ncsa(const char* filename);
+gboolean load_csim (const char* filename);
+gboolean load_cern (const char* filename);
+gboolean load_ncsa (const char* filename);
 
 #endif /* _IMAP_FILE_H */

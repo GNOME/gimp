@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2004 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -192,7 +192,7 @@ create_link_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    gtk_table_set_row_spacings(GTK_TABLE(table), 10);
    gtk_widget_show(table);
    
-   frame = gtk_frame_new(_("Link Type"));
+   frame = gimp_frame_new(_("Link Type"));
    gtk_table_attach_defaults(GTK_TABLE(table), frame, 0, 2, 0, 1);
    gtk_widget_show(frame);
 
@@ -306,7 +306,7 @@ create_info_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    gtk_container_set_border_width(GTK_CONTAINER(vbox), 10);
    gtk_widget_show(vbox);
 
-   frame = gtk_frame_new(_("Dimensions"));
+   frame = gimp_frame_new(_("Dimensions"));
    gtk_box_pack_start(GTK_BOX(vbox), frame, FALSE, FALSE, 0);
    gtk_widget_show(frame);
 

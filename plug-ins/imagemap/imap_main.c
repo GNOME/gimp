@@ -178,6 +178,12 @@ run (const gchar      *name,
    values[0].data.d_status = status;
 }
 
+GtkWidget*
+get_dialog(void)
+{
+  return _dlg;
+}
+
 MRU_t*
 get_mru(void)
 {

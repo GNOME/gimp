@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2004 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -147,7 +147,7 @@ make_gimp_guides_dialog(void)
    default_dialog_set_ok_cb(dialog, gimp_guides_ok_cb, data);
    table = default_dialog_add_table(dialog, 3, 2);
 
-   frame = gtk_frame_new(_("Create"));
+   frame = gimp_frame_new(_("Create"));
    gtk_widget_show(frame);
    gtk_table_attach_defaults(GTK_TABLE(table), frame, 0, 1, 0, 1);
 
@@ -165,7 +165,7 @@ make_gimp_guides_dialog(void)
    gtk_box_pack_start(GTK_BOX(hbox), data->all, TRUE, TRUE, 10);
    gtk_widget_show(data->all);
 
-   frame = gtk_frame_new(_("Add Additional Guides"));
+   frame = gimp_frame_new(_("Add Additional Guides"));
    gtk_widget_show(frame);
    gtk_table_attach_defaults(GTK_TABLE(table), frame, 0, 1, 1, 2);
 
