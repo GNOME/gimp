@@ -54,31 +54,30 @@ struct _GimpDeviceManager
 
 /*  local function prototypes  */
 
-static GimpDeviceManager * gimp_device_manager_get (Gimp *gimp);
+static GimpDeviceManager * gimp_device_manager_get  (Gimp              *gimp);
+static void                gimp_device_manager_free (GimpDeviceManager *manager);
 
 
 /*  public functions  */
 
-void 
+void
 gimp_devices_init (Gimp                   *gimp,
                    GimpDeviceChangeNotify  change_notify)
 {
   GimpDeviceManager *manager;
-  GdkDevice         *device;
-  GimpDeviceInfo    *device_info;
   GList             *list;
   GdkDisplay        *display;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-
   g_return_if_fail (gimp_device_manager_get (gimp) == NULL);
 
-  display = gdk_display_get_default ();
   manager = g_new0 (GimpDeviceManager, 1);
 
   g_object_set_data_full (G_OBJECT (gimp),
                           GIMP_DEVICE_MANAGER_DATA_KEY, manager,
-                          (GDestroyNotify) g_free);
+                          (GDestroyNotify) gimp_device_manager_free);
+
+  display = gdk_display_get_default ();
 
   manager->device_info_list = gimp_list_new (GIMP_TYPE_DEVICE_INFO,
                                              GIMP_CONTAINER_POLICY_STRONG);
@@ -88,7 +87,8 @@ gimp_devices_init (Gimp                   *gimp,
   /*  create device info structures for present devices */
   for (list = gdk_display_list_devices (display); list; list = list->next)
     {
-      device = (GdkDevice *) list->data;
+      GdkDevice      *device = list->data;
+      GimpDeviceInfo *device_info;
 
       device_info = gimp_device_info_new (gimp, device->name);
       gimp_container_add (manager->device_info_list,
@@ -102,15 +102,9 @@ gimp_devices_init (Gimp                   *gimp,
 void
 gimp_devices_exit (Gimp *gimp)
 {
-  GimpDeviceManager *manager;
-
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (gimp_device_manager_get (gimp) != NULL);
 
-  manager = gimp_device_manager_get (gimp);
-
-  g_return_if_fail (manager != NULL);
-
-  g_object_unref (manager->device_info_list);
   g_object_set_data (G_OBJECT (gimp), GIMP_DEVICE_MANAGER_DATA_KEY, NULL);
 }
 
@@ -302,4 +296,13 @@ static GimpDeviceManager *
 gimp_device_manager_get (Gimp *gimp)
 {
   return g_object_get_data (G_OBJECT (gimp), GIMP_DEVICE_MANAGER_DATA_KEY);
+}
+
+static void
+gimp_device_manager_free (GimpDeviceManager *manager)
+{
+  if (manager->device_info_list)
+    g_object_unref (manager->device_info_list);
+
+  g_free (manager);
 }

@@ -1,3 +1,7 @@
+2003-11-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdevices.c: code review & cleanup.
+
 2003-11-14  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpmemsizeentry.[ch]: changed to use guint64
