@@ -595,18 +595,20 @@ msgid ""
 "Create a color-map with the options you specified above (color "
 "density/function). The result is visible in the preview image"
 msgstr ""
+"Створити в╕дображення кольор╕в ╕з вказаними вище параметрами (щ╕льн╕сть "
+"кольор╕в/функц╕я). Результат демонстру╓ться у в╕кн╕ перегляду."
 
 #: plug-ins/FractalExplorer/Dialogs.c:868
 msgid "Apply Active Gradient to Final Image"
-msgstr ""
+msgstr "Застосувати активний град╕╓нт до к╕нцевого зображення"
 
 #: plug-ins/FractalExplorer/Dialogs.c:879
 msgid "Create a color-map using a gradient from the gradient editor"
-msgstr ""
+msgstr "Створити в╕дображення кольор╕в використовуючи град╕╓нт з редактора град╕╓нт╕в"
 
 #: plug-ins/FractalExplorer/Dialogs.c:884
 msgid "FractalExplorer Gradient"
-msgstr ""
+msgstr "Град╕╓нт досл╕дника фрактал╕в"
 
 #: plug-ins/FractalExplorer/Dialogs.c:916
 msgid "Fractals"
@@ -662,7 +664,7 @@ msgstr "Клацн╕ть тут для в╕дм╕ни процедури збереження"
 #: plug-ins/FractalExplorer/FractalExplorer.c:1257
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
-msgstr ""
+msgstr "Файл \"%s\" не ╓ файлом досл╕дника фрактал╕в"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1987
 #: plug-ins/FractalExplorer/FractalExplorer.c:1265
@@ -671,6 +673,8 @@ msgid ""
 "File '%s' is corrupt.\n"
 "Line %d Option section incorrect"
 msgstr ""
+"Файл \"%s\" з╕псовано.\n"
+"Рядок %d розд╕лу параметр╕в нев╕рний"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:216
 msgid "<Image>/Filters/Render/Pattern/Fractal Explorer..."
@@ -3365,7 +3369,7 @@ msgstr "<Image>/Ф╕льтри/Спотворення/Гравюра..."
 
 #: plug-ins/common/engrave.c:191
 msgid "Engraving..."
-msgstr ""
+msgstr "Створення гравюри..."
 
 #: plug-ins/common/engrave.c:219
 msgid "Engrave"
@@ -3741,7 +3745,7 @@ msgstr "Параметри GIF"
 
 #: plug-ins/common/gif.c:1237
 msgid "Interlace"
-msgstr ""
+msgstr "Черезрядков╕сть"
 
 #: plug-ins/common/gif.c:1248
 msgid "GIF Comment:"
@@ -3754,19 +3758,19 @@ msgstr "Параметри ан╕мац╕йного GIF"
 
 #: plug-ins/common/gif.c:1316
 msgid "Loop forever"
-msgstr ""
+msgstr "В╕чний цикл"
 
 #: plug-ins/common/gif.c:1328
 msgid "Delay between Frames where Unspecified:"
-msgstr ""
+msgstr "Затримка м╕ж кадрами де не вказано:"
 
 #: plug-ins/common/gif.c:1340
 msgid "Milliseconds"
-msgstr ""
+msgstr "м╕л╕секунд"
 
 #: plug-ins/common/gif.c:1350
 msgid "Frame Disposal where Unspecified: "
-msgstr ""
+msgstr "Розм╕щення кадру де не вказано:"
 
 #: plug-ins/common/gif.c:1359
 msgid "I don't Care"
@@ -4238,7 +4242,7 @@ msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Шаблон/Головоломка..."
 
 #: plug-ins/common/jigsaw.c:450
 msgid "Assembling Jigsaw"
-msgstr ""
+msgstr "Складання головоломки"
 
 #: plug-ins/common/jigsaw.c:2481
 msgid "Jigsaw"
@@ -4246,7 +4250,7 @@ msgstr "Головоломка"
 
 #: plug-ins/common/jigsaw.c:2533
 msgid "Number of Tiles"
-msgstr ""
+msgstr "К╕льк╕сть елемент╕в"
 
 #: plug-ins/common/jigsaw.c:2548
 msgid "Number of pieces going across"
@@ -4258,11 +4262,11 @@ msgstr ""
 
 #: plug-ins/common/jigsaw.c:2572
 msgid "Bevel Edges"
-msgstr ""
+msgstr "Заокруглен╕ кра╖"
 
 #: plug-ins/common/jigsaw.c:2584
 msgid "Bevel Width:"
-msgstr ""
+msgstr "Ширина заокруглення:"
 
 #: plug-ins/common/jigsaw.c:2588
 msgid "Degree of slope of each piece's edge"
@@ -4274,7 +4278,7 @@ msgstr ""
 
 #: plug-ins/common/jigsaw.c:2619
 msgid "Jigsaw Style"
-msgstr ""
+msgstr "Стиль головоломки"
 
 #: plug-ins/common/jigsaw.c:2623
 msgid "Square"
@@ -5124,7 +5128,7 @@ msgstr "PNM: Передчасне зак╕нчення файлу."
 #: plug-ins/common/pnm.c:452
 #, c-format
 msgid "PNM: %s is not a valid file."
-msgstr "PNM: %s - нев╕рнай файл."
+msgstr "PNM: %s - нев╕рний файл."
 
 #: plug-ins/common/pnm.c:465
 msgid "PNM: File not in a supported format."
@@ -5473,7 +5477,7 @@ msgstr ""
 
 #: plug-ins/common/rotate.c:542
 msgid "Sorry, channels and masks can not be rotated."
-msgstr ""
+msgstr "Нажаль канали та маски не обертаються."
 
 #: plug-ins/common/rotate.c:548
 msgid "Rotating..."
@@ -5485,7 +5489,7 @@ msgstr "<Image>/Ф╕льтри/Кольори/В╕дображення/Замальовування за зразком..."
 
 #: plug-ins/common/sample_colorize.c:1363
 msgid "Sample Colorize"
-msgstr ""
+msgstr "Замальовування за зразком"
 
 #. gtk_container_set_border_width (GTK_CONTAINER (box2), 5);
 #: plug-ins/common/sample_colorize.c:1368 plug-ins/common/tileit.c:564

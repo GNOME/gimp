@@ -1446,7 +1446,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Hue Rate"
-msgstr "Коф╕ц╕╓нт в╕дт╕нку"
+msgstr "Показник в╕дт╕нку"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "IIR"
