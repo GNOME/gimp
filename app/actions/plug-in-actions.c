@@ -50,8 +50,6 @@
 
 static void     plug_in_actions_last_changed      (Gimp            *gimp,
                                                    GimpActionGroup *group);
-static void     plug_in_actions_update_last       (GimpActionGroup *group,
-                                                   gpointer         data);
 static gboolean plug_in_actions_check_translation (const gchar     *original,
                                                    const gchar     *translated);
 static void     plug_in_actions_build_path        (GimpActionGroup *group,
@@ -140,6 +138,7 @@ plug_in_actions_setup (GimpActionGroup *group)
   g_signal_connect_object (group->gimp, "last-plug-in-changed",
                            G_CALLBACK (plug_in_actions_last_changed),
                            group, 0);
+  plug_in_actions_last_changed (group->gimp, group);
 }
 
 void
@@ -171,32 +170,7 @@ plug_in_actions_update (GimpActionGroup *group,
           ! proc_def->prefixes      &&
           ! proc_def->magics)
         {
-          gboolean sensitive;
-
-          switch (type)
-            {
-            case GIMP_RGB_IMAGE:
-              sensitive = proc_def->image_types_val & PLUG_IN_RGB_IMAGE;
-              break;
-            case GIMP_RGBA_IMAGE:
-              sensitive = proc_def->image_types_val & PLUG_IN_RGBA_IMAGE;
-              break;
-            case GIMP_GRAY_IMAGE:
-              sensitive = proc_def->image_types_val & PLUG_IN_GRAY_IMAGE;
-              break;
-            case GIMP_GRAYA_IMAGE:
-              sensitive = proc_def->image_types_val & PLUG_IN_GRAYA_IMAGE;
-              break;
-            case GIMP_INDEXED_IMAGE:
-              sensitive = proc_def->image_types_val & PLUG_IN_INDEXED_IMAGE;
-              break;
-            case GIMP_INDEXEDA_IMAGE:
-              sensitive = proc_def->image_types_val & PLUG_IN_INDEXEDA_IMAGE;
-              break;
-            default:
-              sensitive = FALSE;
-              break;
-            }
+          gboolean sensitive = plug_in_proc_def_get_sensitive (proc_def, type);
 
           gimp_action_group_set_action_sensitive (group,
                                                   proc_def->db_info.name,
@@ -204,7 +178,17 @@ plug_in_actions_update (GimpActionGroup *group,
 	}
     }
 
-  plug_in_actions_update_last (group, data);
+  if (group->gimp->last_plug_in &&
+      plug_in_proc_def_get_sensitive (group->gimp->last_plug_in, type))
+    {
+      gimp_action_group_set_action_sensitive (group, "plug-in-repeat", TRUE);
+      gimp_action_group_set_action_sensitive (group, "plug-in-reshow", TRUE);
+    }
+  else
+    {
+      gimp_action_group_set_action_sensitive (group, "plug-in-repeat", FALSE);
+      gimp_action_group_set_action_sensitive (group, "plug-in-reshow", FALSE);
+    }
 }
 
 void
@@ -323,16 +307,9 @@ static void
 plug_in_actions_last_changed (Gimp            *gimp,
                               GimpActionGroup *group)
 {
-  plug_in_actions_update_last (group, NULL);
-}
-
-static void
-plug_in_actions_update_last (GimpActionGroup *group,
-                             gpointer         data)
-{
-  if (group->gimp->last_plug_in)
+  if (gimp->last_plug_in)
     {
-      PlugInProcDef *proc_def = group->gimp->last_plug_in;
+      PlugInProcDef *proc_def = gimp->last_plug_in;
       const gchar   *progname;
       const gchar   *domain;
       gchar         *label;
@@ -354,9 +331,6 @@ plug_in_actions_update_last (GimpActionGroup *group,
 
       g_free (repeat);
       g_free (reshow);
-
-      gimp_action_group_set_action_sensitive (group, "plug-in-repeat", TRUE);
-      gimp_action_group_set_action_sensitive (group, "plug-in-reshow", TRUE);
     }
   else
     {
@@ -364,9 +338,6 @@ plug_in_actions_update_last (GimpActionGroup *group,
                                           _("Repeat Last"));
       gimp_action_group_set_action_label (group, "plug-in-reshow",
                                           _("Re-Show Last"));
-
-      gimp_action_group_set_action_sensitive (group, "plug-in-repeat", FALSE);
-      gimp_action_group_set_action_sensitive (group, "plug-in-reshow", FALSE);
     }
 }
 

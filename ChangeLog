@@ -1,3 +1,14 @@
+2004-08-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in-proc.[ch] (plug_in_proc_def_get_sensitive):
+	new function which checks a GimpImageType against the
+	proc_def->image_types_val mask.
+
+	* app/actions/plug-in-actions.c: use the new function here. Also
+	separated setting the "Repeat last" and "Reshow last" actions'
+	labels from setting their sensitivity and made them use the same
+	sensitivity logic as all other plug-in actions. Fixes bug #149567.
+
 2004-08-07  Simon Budig  <simon@gimp.org>
 
 	* libgimpwidgets/gimpcolorscales.c: emit the COLOR_CHANGED signal

@@ -63,6 +63,8 @@ const gchar      * plug_in_proc_def_get_stock_id (const PlugInProcDef *proc_def)
 GdkPixbuf        * plug_in_proc_def_get_pixbuf   (const PlugInProcDef *proc_def);
 gchar            * plug_in_proc_def_get_help_id  (const PlugInProcDef *proc_def,
                                                   const gchar         *help_domain);
+gboolean          plug_in_proc_def_get_sensitive (const PlugInProcDef *proc_def,
+                                                  GimpImageType        image_type);
 
 
 #endif /* __PLUG_IN_PROC_H__ */

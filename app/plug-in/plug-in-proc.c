@@ -243,3 +243,39 @@ plug_in_proc_def_get_help_id (const PlugInProcDef *proc_def,
 
   return help_id;
 }
+
+gboolean
+plug_in_proc_def_get_sensitive (const PlugInProcDef *proc_def,
+                                GimpImageType        image_type)
+{
+  gboolean sensitive;
+
+  g_return_val_if_fail (proc_def != NULL, FALSE);
+
+  switch (image_type)
+    {
+    case GIMP_RGB_IMAGE:
+      sensitive = proc_def->image_types_val & PLUG_IN_RGB_IMAGE;
+      break;
+    case GIMP_RGBA_IMAGE:
+      sensitive = proc_def->image_types_val & PLUG_IN_RGBA_IMAGE;
+      break;
+    case GIMP_GRAY_IMAGE:
+      sensitive = proc_def->image_types_val & PLUG_IN_GRAY_IMAGE;
+      break;
+    case GIMP_GRAYA_IMAGE:
+      sensitive = proc_def->image_types_val & PLUG_IN_GRAYA_IMAGE;
+      break;
+    case GIMP_INDEXED_IMAGE:
+      sensitive = proc_def->image_types_val & PLUG_IN_INDEXED_IMAGE;
+      break;
+    case GIMP_INDEXEDA_IMAGE:
+      sensitive = proc_def->image_types_val & PLUG_IN_INDEXEDA_IMAGE;
+      break;
+    default:
+      sensitive = FALSE;
+      break;
+    }
+
+  return sensitive ? TRUE : FALSE;
+}
