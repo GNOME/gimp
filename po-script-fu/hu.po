@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-15 13:18+0200\n"
-"PO-Revision-Date: 2004-05-29 19:20+0200\n"
+"POT-Creation-Date: 2004-06-13 19:41+0200\n"
+"PO-Revision-Date: 2004-06-16 11:34+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -48,8 +48,7 @@ msgstr "A SIOD kimeneti csővezeték megnyitása sikertelen"
 
 #: plug-ins/script-fu/script-fu-console.c:633
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr ""
-"A Script-Fu kiértékelő módja csak nem-interaktív meghívást tesz lehetővé"
+msgstr "A Script-Fu kiértékelő módja csak nem-interaktív meghívást tesz lehetővé"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-scripts.c:1115
@@ -986,7 +985,7 @@ msgstr "Vetett árnyék"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:6
 msgid "Fill BG with Pattern"
-msgstr "Háttér feltöltése mintával"
+msgstr "Háttér kitöltése mintával"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:9
 msgid "Invert"
@@ -1248,7 +1247,7 @@ msgstr "Páros/páratlan"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:7
 msgid "Fill with BG"
-msgstr "Feltöltés háttérszínnel"
+msgstr "Kitöltés háttérszínnel"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:8
 msgid "Odd"
@@ -1394,16 +1393,12 @@ msgid "Shadow Weight (%)"
 msgstr "Árnyék szélessége (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
-msgstr ""
-"<Toolbox>/Kiterj./Script-Fu/Weblap-témák/Classic.Gimp.Org/_Nagy fejléc..."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Weblap-témák/Classic.Gimp.Org/_Nagy fejléc..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
-msgstr ""
-"<Toolbox>/Kiterj./Script-Fu/Weblap-témák/Classic.Gimp.Org/_Kis fejléc..."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Weblap-témák/Classic.Gimp.Org/_Kis fejléc..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "AutoCrop"
@@ -1447,29 +1442,25 @@ msgstr "Árnyék színe"
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
 "Label..."
-msgstr ""
-"<Toolbox>/Kiterj./Script-Fu/Weblap-témák/Classic.Gimp.Org/_Algomb-címke..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Weblap-témák/Classic.Gimp.Org/_Algomb-címke..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
 "Button Label..."
-msgstr ""
-"<Toolbox>/Kiterj./Script-Fu/Weblap-témák/Classic.Gimp.Org/A_l-algomb-címke..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Weblap-témák/Classic.Gimp.Org/A_l-algomb-címke..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
 "Labels..."
-msgstr ""
-"<Toolbox>/Kiterj./Script-Fu/Weblap-témák/Classic.Gimp.Org/Ál_talános címke..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Weblap-témák/Classic.Gimp.Org/Ál_talános címke..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
 "Label..."
-msgstr ""
-"<Toolbox>/Kiterj./Script-Fu/Weblap-témák/Classic.Gimp.Org/_Gombcímke..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Weblap-témák/Classic.Gimp.Org/_Gombcímke..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
@@ -1556,8 +1547,7 @@ msgstr "Keret mérete (képpont)"
 
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom _Gradient..."
-msgstr ""
-"<Toolbox>/Kiterj./Script-Fu/Segédeszközök/Testreszabott _színátmenet..."
+msgstr "<Toolbox>/Kiterj./Script-Fu/Segédeszközök/Testreszabott _színátmenet..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:1
 msgid "<Image>/Script-Fu/Render/_Grid..."
