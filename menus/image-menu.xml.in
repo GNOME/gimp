@@ -76,9 +76,10 @@
       <menuitem action="select-all" />
       <menuitem action="select-none" />
       <menuitem action="select-invert" />
-      <menuitem action="vectors-selection-from-vectors" />
       <menuitem action="select-float" />
       <menuitem action="tools-by-color-select-short" />
+      <menuitem action="vectors-selection-from-vectors" />
+      <menuitem action="dialogs-selection-editor" />
       <separator />
       <placeholder name="Outline">
         <menuitem action="select-feather" />

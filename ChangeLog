@@ -1,5 +1,9 @@
 2004-06-09  Sven Neumann  <sven@gimp.org>
 
+	* menus/image-menu.xml.in: added "Selection Editor" to the
+	Selection menu. Still hoping for the great menu reorganization
+	though...
+
 	* app/actions/select-actions.c (select_actions_update): "Save to
 	Channel" makes sense without a selection also, so don't set it
 	insensitive.
