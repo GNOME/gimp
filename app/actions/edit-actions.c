@@ -187,8 +187,8 @@ edit_actions_setup (GimpActionGroup *group,
 }
 
 void
-edit_action_update (GimpActionGroup *group,
-                    gpointer         data)
+edit_actions_update (GimpActionGroup *group,
+                     gpointer         data)
 {
   GimpDisplay      *gdisp    = NULL;
   GimpDisplayShell *shell    = NULL;

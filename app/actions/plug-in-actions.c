@@ -18,33 +18,48 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimplayer.h"
-#include "core/gimplist.h"
-#include "core/gimptoolinfo.h"
-#include "core/gimpundostack.h"
+
+#include "pdb/procedural_db.h"
 
 #include "plug-in/plug-ins.h"
+#include "plug-in/plug-in-proc.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
-
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
 
 #include "plug-in-actions.h"
 #include "plug-in-commands.h"
 
 #include "gimp-intl.h"
+
+
+typedef struct _PlugInActionEntry PlugInActionEntry;
+
+struct _PlugInActionEntry
+{
+  PlugInProcDef *proc_def;
+  const gchar   *locale_domain;
+  const gchar   *help_domain;
+};
+
+
+/*  local function prototypes  */
+
+static gboolean plug_in_actions_tree_traverse_func (gpointer           foo,
+                                                    PlugInActionEntry *entry,
+                                                    GimpActionGroup   *group);
 
 
 static GimpActionEntry plug_in_actions[] =
@@ -86,10 +101,15 @@ static GimpEnumActionEntry plug_in_repeat_actions[] =
 };
 
 
+/*  public functions  */
+
 void
 plug_in_actions_setup (GimpActionGroup *group,
                        gpointer         data)
 {
+  GSList *procs;
+  GTree  *action_entries;
+
   gimp_action_group_add_actions (group,
                                  plug_in_actions,
                                  G_N_ELEMENTS (plug_in_actions),
@@ -100,10 +120,114 @@ plug_in_actions_setup (GimpActionGroup *group,
                                       G_N_ELEMENTS (plug_in_repeat_actions),
                                       G_CALLBACK (plug_in_repeat_cmd_callback),
                                       data);
+
+  action_entries = g_tree_new_full ((GCompareDataFunc) g_utf8_collate, NULL,
+                                    g_free, g_free);
+
+  for (procs = group->gimp->plug_in_proc_defs;
+       procs;
+       procs = procs->next)
+    {
+      PlugInProcDef *proc_def = procs->data;
+
+      if (proc_def->prog         &&
+          proc_def->menu_path    &&
+          ! proc_def->extensions &&
+          ! proc_def->prefixes   &&
+          ! proc_def->magics)
+        {
+          PlugInActionEntry *entry;
+          const gchar       *progname;
+          const gchar       *locale_domain;
+          const gchar       *help_domain;
+          gchar             *key;
+
+          progname = plug_in_proc_def_get_progname (proc_def);
+
+          locale_domain = plug_ins_locale_domain (group->gimp,
+                                                  progname, NULL);
+          help_domain = plug_ins_help_domain (group->gimp,
+                                              progname, NULL);
+
+          entry = g_new0 (PlugInActionEntry, 1);
+
+          entry->proc_def      = proc_def;
+          entry->locale_domain = locale_domain;
+          entry->help_domain   = help_domain;
+
+          key = gimp_strip_uline (dgettext (locale_domain,
+                                            proc_def->menu_path));
+          g_tree_insert (action_entries, key, entry);
+        }
+    }
+
+  g_tree_foreach (action_entries,
+                  (GTraverseFunc) plug_in_actions_tree_traverse_func,
+                  group);
+  g_tree_destroy (action_entries);
 }
 
 void
 plug_in_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
+}
+
+void
+plug_in_actions_add_proc (GimpActionGroup *group,
+                          PlugInProcDef   *proc_def,
+                          const gchar     *locale_domain,
+                          const gchar     *help_domain)
+{
+  GimpActionEntry  entry;
+  gchar           *help_id;
+
+  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (proc_def != NULL);
+
+  help_id = plug_in_proc_def_get_help_id (proc_def, help_domain);
+
+  entry.name        = proc_def->db_info.name;
+  entry.stock_id    = NULL;
+  entry.label       = strrchr (proc_def->menu_path, '/') + 1;
+  entry.accelerator = proc_def->accelerator;
+  entry.tooltip     = NULL;
+  entry.callback    = G_CALLBACK (plug_in_run_cmd_callback);
+  entry.help_id     = help_id;
+
+  gimp_action_group_add_actions (group, &entry, 1, &proc_def->db_info);
+
+  g_free (help_id);
+}
+
+void
+plug_in_actions_remove_proc (GimpActionGroup *group,
+                             PlugInProcDef   *proc_def)
+{
+  GtkAction *action;
+
+  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (proc_def != NULL);
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
+                                        proc_def->db_info.name);
+
+  if (action)
+    gtk_action_group_remove_action (GTK_ACTION_GROUP (group), action);
+}
+
+
+/*  private functions  */
+
+static gboolean
+plug_in_actions_tree_traverse_func (gpointer           foo,
+                                    PlugInActionEntry *entry,
+                                    GimpActionGroup   *group)
+{
+  plug_in_actions_add_proc (group,
+                            entry->proc_def,
+                            entry->locale_domain,
+                            entry->help_domain);
+
+  return FALSE;
 }

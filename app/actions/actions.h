@@ -16,21 +16,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PLUG_IN_ACTIONS_H__
-#define __PLUG_IN_ACTIONS_H__
+#ifndef __ACTIONS_H__
+#define __ACTIONS_H__
 
 
-void   plug_in_actions_setup       (GimpActionGroup *group,
-                                    gpointer         data);
-void   plug_in_actions_update      (GimpActionGroup *group,
-                                    gpointer         data);
-
-void   plug_in_actions_add_proc    (GimpActionGroup *group,
-                                    PlugInProcDef   *proc_def,
-                                    const gchar     *locale_domain,
-                                    const gchar     *help_domain);
-void   plug_in_actions_remove_proc (GimpActionGroup *group,
-                                    PlugInProcDef   *proc_def);
+extern GimpActionFactory *global_action_factory;
 
 
-#endif /* __PLUG_IN_ACTIONS_H__ */
+void   actions_init (Gimp *gimp);
+void   actions_exit (Gimp *gimp);
+
+
+#endif /* __ACTIONS_H__ */

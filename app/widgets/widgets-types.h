@@ -33,6 +33,7 @@ typedef struct _GimpDeviceInfo               GimpDeviceInfo;
 typedef struct _GimpDialogFactory            GimpDialogFactory;
 typedef struct _GimpMenuFactory              GimpMenuFactory;
 
+typedef struct _GimpActionFactory            GimpActionFactory;
 typedef struct _GimpActionGroup              GimpActionGroup;
 typedef struct _GimpEnumAction               GimpEnumAction;
 typedef struct _GimpStringAction             GimpStringAction;

@@ -38,6 +38,8 @@ struct _GimpMenuFactoryEntry
   gboolean                   update_on_popup;
   guint                      n_entries;
   GimpItemFactoryEntry      *entries;
+
+  GList                     *action_groups;
 };
 
 
@@ -53,10 +55,11 @@ typedef struct _GimpMenuFactoryClass  GimpMenuFactoryClass;
 
 struct _GimpMenuFactory
 {
-  GimpObject  parent_instance;
+  GimpObject         parent_instance;
 
-  Gimp       *gimp;
-  GList      *registered_menus;
+  Gimp              *gimp;
+  GimpActionFactory *action_factory;
+  GList             *registered_menus;
 };
 
 struct _GimpMenuFactoryClass
@@ -67,7 +70,8 @@ struct _GimpMenuFactoryClass
 
 GType             gimp_menu_factory_get_type      (void) G_GNUC_CONST;
 
-GimpMenuFactory * gimp_menu_factory_new           (Gimp            *gimp);
+GimpMenuFactory * gimp_menu_factory_new           (Gimp              *gimp,
+                                                   GimpActionFactory *action_factory);
 
 void              gimp_menu_factory_menu_register (GimpMenuFactory *factory,
                                                    const gchar     *identifier,
@@ -82,6 +86,17 @@ void              gimp_menu_factory_menu_register (GimpMenuFactory *factory,
 GimpItemFactory * gimp_menu_factory_menu_new      (GimpMenuFactory *factory,
                                                    const gchar     *identifier,
                                                    GType            container_type,
+                                                   gpointer         callback_data,
+                                                   gboolean         create_tearoff);
+
+
+void           gimp_menu_factory_manager_register (GimpMenuFactory *factory,
+                                                   const gchar     *identifier,
+                                                   const gchar     *first_group,
+                                                   ...);
+
+GtkUIManager * gimp_menu_factory_manager_new      (GimpMenuFactory *factory,
+                                                   const gchar     *identifier,
                                                    gpointer         callback_data,
                                                    gboolean         create_tearoff);
 

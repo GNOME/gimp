@@ -19,6 +19,8 @@ noinst_LIBRARIES = libappwidgets.a
 libappwidgets_a_sources = \
 	widgets-enums.h			\
 	widgets-types.h			\
+	gimpactionfactory.c		\
+	gimpactionfactory.h		\
 	gimpactiongroup.c		\
 	gimpactiongroup.h		\
 	gimpbrusheditor.c		\

@@ -37,6 +37,7 @@
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpmenufactory.h"
 
+#include "actions/actions.h"
 #include "actions/file-commands.h"
 
 #include "brushes-menu.h"
@@ -100,6 +101,8 @@ menus_init (Gimp *gimp)
 
   menus_initialized = TRUE;
 
+  actions_init (gimp);
+
   /* We need to make sure the property is installed before using it */
   g_type_class_ref (GTK_TYPE_MENU);
 
@@ -108,7 +111,7 @@ menus_init (Gimp *gimp)
   g_signal_connect (gimp->config, "notify::can-change-accels",
                     G_CALLBACK (menu_can_change_accels), NULL);
 
-  global_menu_factory = gimp_menu_factory_new (gimp);
+  global_menu_factory = gimp_menu_factory_new (gimp, global_action_factory);
 
   gimp_menu_factory_menu_register (global_menu_factory, "<Toolbox>",
                                    _("Toolbox Menu"),
@@ -285,6 +288,8 @@ menus_exit (Gimp *gimp)
   g_signal_handlers_disconnect_by_func (gimp->config,
                                         menu_can_change_accels,
                                         NULL);
+
+  actions_exit (gimp);
 }
 
 void

@@ -190,16 +190,33 @@ gimp_action_group_get_property (GObject    *object,
  * Returns: the new #GimpActionGroup
  */
 GimpActionGroup *
-gimp_action_group_new (Gimp        *gimp,
-                       const gchar *name)
+gimp_action_group_new (Gimp                      *gimp,
+                       const gchar               *name,
+                       GimpActionGroupUpdateFunc  update_func)
 {
+  GimpActionGroup *group;
+
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  return g_object_new (GIMP_TYPE_ACTION_GROUP,
-                       "gimp", gimp,
-                       "name", name,
-                       NULL);
+  group = g_object_new (GIMP_TYPE_ACTION_GROUP,
+                        "gimp", gimp,
+                        "name", name,
+                        NULL);
+
+  group->update_func = update_func;
+
+  return group;
+}
+
+void
+gimp_action_group_update (GimpActionGroup *group,
+                          gpointer         update_data)
+{
+  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+
+  if (group->update_func)
+    group->update_func (group, update_data);
 }
 
 void

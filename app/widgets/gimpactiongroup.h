@@ -41,6 +41,8 @@ struct _GimpActionGroup
 
   Gimp           *gimp;
   gchar          *translation_domain;
+
+  GimpActionGroupUpdateFunc  update_func;
 };
 
 struct _GimpActionGroupClass
@@ -112,7 +114,11 @@ struct _GimpStringActionEntry
 
 GType            gimp_action_group_get_type (void);
 GimpActionGroup *gimp_action_group_new      (Gimp                  *gimp,
-                                             const gchar           *name);
+                                             const gchar           *name,
+                                             GimpActionGroupUpdateFunc );
+
+void   gimp_action_group_update             (GimpActionGroup       *group,
+                                             gpointer               update_data);
 
 void   gimp_action_group_add_actions        (GimpActionGroup       *group,
                                              GimpActionEntry       *entries,

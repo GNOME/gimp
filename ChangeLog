@@ -1,3 +1,32 @@
+2004-04-21  Michael Natterer  <mitch@gimp.org>
+
+	More unused action stuff:
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpactionfactory.[ch]: added a simple factory which
+	produces GimpActionGroups.
+
+	* app/widgets/gimpactiongroup.[ch]: added an "update_func" member
+	to the GimpActionGroup struct. Added it as parameter to
+	gimp_action_group_new(). Added function gimp_action_group_update().
+
+	* app/widgets/gimpmenufactory.[ch]: added an "action_factory"
+	member and constructor parameter. Added code to create
+	GtkUIManagers from registered action group identifiers.
+
+	* app/actions/Makefile.am
+	* app/actions/actions.[ch]: new files: create a
+	"global_action_factory" and register all action groups with it.
+
+	* app/actions/edit-actions.c: s/edit_action_update/edit_actions_update/
+
+	* app/actions/plug-in-actions.[ch]: added API to add/remove
+	plug-in procedure actions dynamically (unfinished).
+
+	* app/gui/menus.c (menus_init): call actions_init().
+	(menus_exit): call actions_exit().
+
 2004-04-21  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/Lighting/lighting_ui.c
