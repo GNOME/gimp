@@ -37,9 +37,6 @@ gint          gimp_image_mask_value       (GimpImage       *gimage,
                                            gint             y);
 gboolean      gimp_image_mask_is_empty    (GimpImage       *gimage);
 
-void          gimp_image_mask_clear       (GimpImage       *gimage,
-                                           const gchar     *undo_name);
-
 
 /*  pure wrappers around the resp. GimpSelection functions:  */
 

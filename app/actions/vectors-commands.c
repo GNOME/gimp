@@ -152,6 +152,7 @@ vectors_to_selection_cmd_callback (GtkWidget *widget,
   op = (GimpChannelOps) action;
 
   gimp_image_mask_select_vectors (gimage,
+                                  _("Path to Selection"),
                                   active_vectors,
                                   op,
                                   TRUE,

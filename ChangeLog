@@ -1,5 +1,30 @@
 2003-09-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-mask-select.[ch]: removed the _clear() wrapper.
+
+	* app/core/gimpimage-mask.[ch]: changed accordingly. Added
+	"const gchar *undo desc" parameter to
+	gimp_image_mask_select_vectors().
+
+	* app/core/gimpimage-qmask.c
+	* app/gui/vectors-commands.c
+	* app/text/gimptext-compat.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimprectselecttool.c
+	* app/widgets/gimpvectorstreeview.c
+	* tools/pdbgen/pdb/paths.pdb
+	* tools/pdbgen/pdb/selection.pdb: changed accordingly. Also
+	replaced some wrappers which still exist.
+
+	* tools/pdbgen/pdb/paths.pdb: stroke using gimp_item_stroke().
+
+	* app/pdb/paths_cmds.c
+	* app/pdb/selection_cmds.c: regenerated.
+
+2003-09-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage-mask.[ch]: removed the feather(), sharpen(),
 	all(), invert(), border(), grow() and shrink() wrappers.
 

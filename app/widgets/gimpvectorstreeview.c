@@ -268,6 +268,7 @@ gimp_vectors_tree_view_toselection_extended_clicked (GtkWidget           *widget
 	}
 
       gimp_image_mask_select_vectors (gimage,
+                                      _("Path to Selection"),
                                       GIMP_VECTORS (item),
                                       operation,
                                       TRUE,

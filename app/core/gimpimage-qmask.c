@@ -51,6 +51,7 @@ void
 gimp_image_set_qmask_state (GimpImage *gimage,
                             gboolean   qmask_state)
 {
+  GimpChannel *selection;
   GimpChannel *mask;
   GimpRGB      color;
 
@@ -58,6 +59,8 @@ gimp_image_set_qmask_state (GimpImage *gimage,
 
   if (qmask_state == gimage->qmask_state)
     return;
+
+  selection = gimp_image_get_mask (gimage);
 
   if (qmask_state)
     {
@@ -71,8 +74,10 @@ gimp_image_set_qmask_state (GimpImage *gimage,
           gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_QMASK,
                                        _("Enable QuickMask"));
 
-          if (gimp_image_mask_is_empty (gimage)) /* if no selection */
+          if (gimp_channel_is_empty (selection))
             {
+              /* if no selection */
+
               GimpLayer *layer;
 
               if ((layer = gimp_image_floating_sel (gimage)))
@@ -90,12 +95,16 @@ gimp_image_set_qmask_state (GimpImage *gimage,
                                           gimp_get_current_context (gimage->gimp),
                                           GIMP_TRANSPARENT_FILL);
             }
-          else /* if selection */
+          else
             {
-              mask = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (gimp_image_get_mask (gimage)),
-                                                        G_TYPE_FROM_INSTANCE (gimp_image_get_mask (gimage)),
+              /* if selection */
+
+              mask = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (selection),
+                                                        GIMP_TYPE_CHANNEL,
                                                         FALSE));
-              gimp_image_mask_clear (gimage, NULL);  /* Clear the selection */
+
+              /* Clear the selection */
+              gimp_channel_clear (selection, NULL, TRUE);
 
               gimp_channel_set_color (mask, &color, FALSE);
               gimp_item_rename (GIMP_ITEM (mask), "Qmask");

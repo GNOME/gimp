@@ -28,10 +28,9 @@
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
-#include "core/gimpdrawable.h"
+#include "core/gimpchannel.h"
 #include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -261,11 +260,13 @@ gimp_bucket_fill_tool_cursor_update (GimpTool        *tool,
 
   if (gimp_display_coords_in_active_drawable (gdisp, coords))
     {
+      GimpChannel *selection = gimp_image_get_mask (gdisp->gimage);
+
       /*  One more test--is there a selected region?
        *  if so, is cursor inside?
        */
-      if (gimp_image_mask_is_empty (gdisp->gimage) ||
-          gimp_image_mask_value (gdisp->gimage, coords->x, coords->y))
+      if (gimp_channel_is_empty (selection) ||
+          gimp_channel_value (selection, coords->x, coords->y))
         {
           switch (options->fill_mode)
             {

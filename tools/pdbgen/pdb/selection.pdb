@@ -98,7 +98,7 @@ HELP
     }
 
     %invoke = (
-	code => 'non_empty = gimp_image_mask_bounds (gimage, &x1, &y1, &x2, &y2);'
+	code => 'non_empty = gimp_channel_bounds (gimp_image_get_mask (gimage), &x1, &y1, &x2, &y2);'
     );
 }
 
@@ -118,7 +118,8 @@ HELP
     @outargs = (
 	{ name => 'value', type => '0 <= int32 <= 255',
 	  desc => 'Value of the selection: (%%desc%%)',
-	  alias => 'gimp_image_mask_value (gimage, x, y)', no_declare => 1 }
+	  alias => 'gimp_channel_value (gimp_image_get_mask (gimage), x, y)',
+          no_declare => 1 }
     );
 }
 
@@ -137,7 +138,8 @@ HELP
     @outargs = (
 	{ name => 'is_empty', type => 'boolean',
 	  desc => 'Is the selection empty?',
-	  alias => 'gimp_image_mask_is_empty (gimage)', no_declare => 1 }
+	  alias => 'gimp_channel_is_empty (gimp_image_get_mask (gimage))',
+          no_declare => 1 }
     );
 }
 
@@ -209,7 +211,7 @@ HELP
 
     @inargs = ( &std_image_arg );
 
-    %invoke = ( code => "gimp_image_mask_clear (gimage, NULL);" );
+    %invoke = ( code => "gimp_channel_clear (gimp_image_get_mask (gimage), NULL, TRUE);" );
 }
 
 sub selection_invert {
@@ -258,7 +260,7 @@ HELP
 
     @inargs = ( &std_image_arg );
 
-    %invoke = ( code => "gimp_image_mask_clear (gimage, NULL);" );
+    %invoke = ( code => "gimp_channel_clear (gimp_image_get_mask (gimage), NULL, TRUE);" );
 }
 
 sub selection_feather {

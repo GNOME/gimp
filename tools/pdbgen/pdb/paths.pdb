@@ -324,26 +324,12 @@ HELP
 
   if (vectors && drawable)
     {
-      GimpToolInfo     *tool_info;
-      GimpPaintOptions *paint_options;
-      GimpPaintCore    *core;
+      GimpToolInfo *tool_info;
 
       tool_info = gimp_context_get_tool (gimp_get_current_context (gimp));
 
-      if (! (tool_info && GIMP_IS_PAINT_OPTIONS (tool_info->tool_options)))
-        {
-          tool_info = (GimpToolInfo *)
-            gimp_container_get_child_by_name (gimp->tool_info_list,
-                                              "gimp-paintbrush-tool");
-        }
-
-      paint_options = GIMP_PAINT_OPTIONS (tool_info->tool_options);
-
-      core = g_object_new (tool_info->paint_info->paint_type, NULL);
-
-      gimp_paint_core_stroke_vectors (core, drawable, paint_options, vectors);
-
-      g_object_unref (core);
+      success = gimp_item_stroke (GIMP_ITEM (vectors), drawable,
+                                  tool_info->paint_info);
     }
   else
     success = FALSE;
@@ -644,6 +630,7 @@ HELP
 
   if (vectors)
     gimp_image_mask_select_vectors (gimage,
+                                    _("Path to Selection"),
                                     vectors,
                                     op,
                                     antialias,
@@ -659,11 +646,10 @@ CODE
 
 
 @headers = qw(<string.h> "core/gimp.h" "core/gimpcontext.h" "core/gimplist.h"
-              "core/gimppaintinfo.h" "core/gimptoolinfo.h"
-              "core/gimpimage-mask-select.h"
-              "paint/gimppaintcore-stroke.h" "paint/gimppaintoptions.h"
+              "core/gimptoolinfo.h" "core/gimpimage-mask-select.h"
               "vectors/gimpanchor.h" "vectors/gimpbezierstroke.h"
-              "vectors/gimpvectors.h" "vectors/gimpvectors-compat.h");
+              "vectors/gimpvectors.h" "vectors/gimpvectors-compat.h"
+              "gimp-intl.h");
 
 @procs = qw(path_list path_get_current path_set_current path_delete
 	    path_get_points path_set_points

@@ -52,6 +52,7 @@ void   gimp_image_mask_select_polygon   (GimpImage      *gimage,
                                          gdouble         feather_radius_y);
 
 void   gimp_image_mask_select_vectors   (GimpImage      *gimage,
+                                         const gchar    *undo_desc,
                                          GimpVectors    *vectors,
                                          GimpChannelOps  op,
                                          gboolean        antialias,

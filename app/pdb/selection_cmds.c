@@ -96,7 +96,7 @@ selection_bounds_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    non_empty = gimp_image_mask_bounds (gimage, &x1, &y1, &x2, &y2);
+    non_empty = gimp_channel_bounds (gimp_image_get_mask (gimage), &x1, &y1, &x2, &y2);
 
   return_args = procedural_db_return_args (&selection_bounds_proc, success);
 
@@ -187,7 +187,7 @@ selection_value_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&selection_value_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_image_mask_value (gimage, x, y);
+    return_args[1].value.pdb_int = gimp_channel_value (gimp_image_get_mask (gimage), x, y);
 
   return return_args;
 }
@@ -251,7 +251,7 @@ selection_is_empty_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&selection_is_empty_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_image_mask_is_empty (gimage);
+    return_args[1].value.pdb_int = gimp_channel_is_empty (gimp_image_get_mask (gimage));
 
   return return_args;
 }
@@ -439,7 +439,7 @@ selection_clear_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_image_mask_clear (gimage, NULL);
+    gimp_channel_clear (gimp_image_get_mask (gimage), NULL, TRUE);
 
   return procedural_db_return_args (&selection_clear_proc, success);
 }
@@ -607,7 +607,7 @@ selection_none_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_image_mask_clear (gimage, NULL);
+    gimp_channel_clear (gimp_image_get_mask (gimage), NULL, TRUE);
 
   return procedural_db_return_args (&selection_none_proc, success);
 }

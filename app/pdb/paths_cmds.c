@@ -34,10 +34,8 @@
 #include "core/gimpimage-mask-select.h"
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
-#include "core/gimppaintinfo.h"
 #include "core/gimptoolinfo.h"
-#include "paint/gimppaintcore-stroke.h"
-#include "paint/gimppaintoptions.h"
+#include "gimp-intl.h"
 #include "vectors/gimpanchor.h"
 #include "vectors/gimpbezierstroke.h"
 #include "vectors/gimpvectors-compat.h"
@@ -612,26 +610,12 @@ path_stroke_current_invoker (Gimp     *gimp,
     
       if (vectors && drawable)
 	{
-	  GimpToolInfo     *tool_info;
-	  GimpPaintOptions *paint_options;
-	  GimpPaintCore    *core;
+	  GimpToolInfo *tool_info;
     
 	  tool_info = gimp_context_get_tool (gimp_get_current_context (gimp));
     
-	  if (! (tool_info && GIMP_IS_PAINT_OPTIONS (tool_info->tool_options)))
-	    {
-	      tool_info = (GimpToolInfo *)
-		gimp_container_get_child_by_name (gimp->tool_info_list,
-						  "gimp-paintbrush-tool");
-	    }
-    
-	  paint_options = GIMP_PAINT_OPTIONS (tool_info->tool_options);
-    
-	  core = g_object_new (tool_info->paint_info->paint_type, NULL);
-    
-	  gimp_paint_core_stroke_vectors (core, drawable, paint_options, vectors);
-    
-	  g_object_unref (core);
+	  success = gimp_item_stroke (GIMP_ITEM (vectors), drawable,
+				      tool_info->paint_info);
 	}
       else
 	success = FALSE;
@@ -1165,6 +1149,7 @@ path_to_selection_invoker (Gimp     *gimp,
     
       if (vectors)
 	gimp_image_mask_select_vectors (gimage,
+					_("Path to Selection"),
 					vectors,
 					op,
 					antialias,

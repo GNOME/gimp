@@ -92,15 +92,6 @@ gimp_image_mask_is_empty (GimpImage *gimage)
 }
 
 void
-gimp_image_mask_clear (GimpImage   *gimage,
-                       const gchar *undo_desc)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  gimp_channel_clear (gimp_image_get_mask (gimage), undo_desc, TRUE);
-}
-
-void
 gimp_image_mask_push_undo (GimpImage   *gimage,
                            const gchar *undo_desc)
 {
@@ -231,7 +222,7 @@ gimp_image_mask_extract (GimpImage    *gimage,
       if (cut_image)
 	{
 	  /*  Clear the region  */
-	  gimp_image_mask_clear (gimage, NULL);
+	  gimp_channel_clear (sel_mask, NULL, TRUE);
 
 	  /*  Update the region  */
 	  gimp_image_update (gimage, 
@@ -316,7 +307,7 @@ gimp_image_mask_float (GimpImage    *gimage,
 
   /*  Clear the selection as if we had cut the pixels  */
   if (! cut_image)
-    gimp_image_mask_clear (gimage, NULL);
+    gimp_channel_clear (mask, NULL, TRUE);
 
   /* Create a new layer from the buffer, using the drawable's type
    *  because it may be different from the image's type if we cut from

@@ -34,7 +34,6 @@
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-contiguous-region.h"
-#include "core/gimpimage-mask.h"
 #include "core/gimpimage-mask-select.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimptoolinfo.h"
@@ -276,7 +275,8 @@ gimp_fuzzy_select_tool_button_release (GimpTool        *tool,
 	    floating_sel_anchor (gimp_image_floating_sel (gdisp->gimage));
 	  /*  Otherwise, clear the selection mask  */
 	  else
-	    gimp_image_mask_clear (gdisp->gimage, NULL);
+	    gimp_channel_clear (gimp_image_get_mask (gdisp->gimage), NULL,
+                                TRUE);
 
 	  gimp_image_flush (gdisp->gimage);
 	  return;
