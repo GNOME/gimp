@@ -1,3 +1,13 @@
+2001-05-06 Garry R. Osgood <grosgood@rcn.com>
+	* app/histogram_tool.c
+	histogram_tool_initialize() now aligns its option menu
+	and internal state to GIMP_HISTOGRAM_VALUE when it is
+	given a channel. Prior, only hid option menu, causing
+	crash reported in #54131 when internals attempted to
+	generate histogram on non-existent drawable component. 
+	Closes #54131.
+	
+
 2001-04-24  Michael Natterer  <mitch@gimp.org>
 
 	Plugged some memleaks:

@@ -223,7 +223,14 @@ histogram_tool_initialize (GDisplay *gdisp)
   if (histogram_tool_dialog->color)
     gtk_widget_show (histogram_tool_dialog->channel_menu);
   else
-    gtk_widget_hide (histogram_tool_dialog->channel_menu);
+    {
+      /* Channels can only have value histograms; reconfigure channel menu. */
+      /* Note: gimp_histogram_get_mean() in gimphistogram.c. garo 5/7/2001  */ 
+      histogram_tool_dialog->channel = GIMP_HISTOGRAM_VALUE;
+      gimp_option_menu_set_history (g_list_nth_data (gtk_container_children (GTK_CONTAINER (histogram_tool_dialog->channel_menu)), 1), GIMP_HISTOGRAM_VALUE);
+      gtk_widget_hide (histogram_tool_dialog->channel_menu);
+      histogram_tool_gradient_draw (histogram_tool_dialog->gradient, GIMP_HISTOGRAM_VALUE);
+    }
 
   /* calculate the histogram */
   pixel_region_init (&PR, drawable_data (histogram_tool_dialog->drawable), 0, 0,
