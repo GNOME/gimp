@@ -526,7 +526,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
                     tool);
 
   /*  input gamma spin  */
-  data = gtk_adjustment_new (1, 0.1, 10, 0.1, 1, 1);
+  data = gtk_adjustment_new (1, 0.1, 10, 0.01, 0.1, 1);
   tool->gamma = GTK_ADJUSTMENT (data);
 
   spinbutton = gtk_spin_button_new (tool->gamma, 0.5, 2);

@@ -34,8 +34,8 @@
 
 #define PLUG_IN_VERSION "0.10"
 
-#define SCALE_WIDTH   150
-#define ENTRY_WIDTH     4
+#define SCALE_WIDTH   120
+#define ENTRY_WIDTH     5
 
 /* Uncomment this line to get a rough estimate of how long the plug-in
  * takes to run.
@@ -681,7 +681,7 @@ unsharp_mask_dialog (GimpDrawable *drawable)
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
                               _("_Amount:"), SCALE_WIDTH, ENTRY_WIDTH,
-                              unsharp_params.amount, 0.0, 5.0, 0.01, 0.1, 2,
+                              unsharp_params.amount, 0.0, 10.0, 0.01, 0.1, 2,
                               TRUE, 0, 0,
                               NULL, NULL);
 

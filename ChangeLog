@@ -1,5 +1,12 @@
 2005-02-12  Sven Neumann  <sven@gimp.org>
 
+	Changes suggested in bug #167200:
+
+	* plug-ins/common/unsharp.c: increased maximum value for Amount.
+
+	* app/tools/gimplevelstool.c: changed increments for gamma
+	spinbutton.
+
 	* app/tools/gimpcoloroptions.c: increased maximum radius for color
 	picking to 300 pixels and made the slider logarithmic.
 
