@@ -236,6 +236,7 @@
                   "\tpsrlw     $8,        %%"#opr2"\n"
 
 typedef unsigned long long uint64;
+typedef struct { uint64 __uint64[2] } uint128;
 
 extern const guint32 rgba8_alpha_mask_64[2];
 extern const guint32 rgba8_b1_64[2];

@@ -341,6 +341,7 @@ gimp_composite_difference_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
   asm("emms");
 }
 
+#if 0
 void
 xxxgimp_composite_divide_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
 {
@@ -393,7 +394,7 @@ xxxgimp_composite_divide_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
                     "\tmovq      %%mm3,%0\n"
                     : "=m" (*d)
                     : "m" (*a), "m" (*b), "m" (*rgba8_alpha_mask_64)
-                    : pdivwuqX_clobber, "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
+                    : pdivwuqX_clobber, "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
       a++;
       b++;
       d++;
@@ -437,12 +438,14 @@ xxxgimp_composite_divide_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
                     "\tmovd      %%mm3,%0\n"
                     : "=m" (*d)
                     : "m" (*a), "m" (*b), "m" (*rgba8_alpha_mask_64)
-                    : pdivwuqX_clobber, "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
+                    : pdivwuqX_clobber, "%mm1", "%mm2", "%mm3", "%mm4", "%mm5");
     }
 
   asm("emms");
 }
+#endif
 
+#if 0
 void
 xxxgimp_composite_dodge_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
 {
@@ -536,6 +539,7 @@ xxxgimp_composite_dodge_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
 
   asm("emms");
 }
+#endif
 
 void
 gimp_composite_grain_extract_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
@@ -872,6 +876,7 @@ mmx_op_overlay(void)
                 );
 }
 
+#if 0
 void
 xxxgimp_composite_overlay_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
 {
@@ -994,7 +999,7 @@ xxxgimp_composite_overlay_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
 
   asm("emms");
 }
-
+#endif
 
 void
 gimp_composite_scale_rgba8_rgba8_rgba8_mmx (GimpCompositeContext *_op)
@@ -1425,7 +1430,7 @@ gimp_composite_burn_va8_va8_va8_mmx (GimpCompositeContext *_op)
                   "\tmovq      %%mm7,%2\n"
                   : /* empty */
                   : "+m" (*op.A), "+m" (*op.B), "+m" (*op.D), "m" (*va8_b255), "m" (*va8_w1), "m" (*va8_w255_64), "m" (*va8_alpha_mask)
-                  : "0", "1", "2", "%mm1", "%mm2", "%mm3", "%mm4");
+                  : "%mm1", "%mm2", "%mm3", "%mm4");
       op.A += 8;
       op.B += 8;
       op.D += 8;
@@ -1478,7 +1483,7 @@ gimp_composite_burn_va8_va8_va8_mmx (GimpCompositeContext *_op)
                   "\tmovd      %%mm7,%2\n"
                   : /* empty */
                   : "m" (*op.A), "m" (*op.B), "m" (*op.D), "m" (*va8_b255), "m" (*va8_w1), "m" (*va8_w255_64), "m" (*va8_alpha_mask)
-                  : "0", "1", "2", "%mm0", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5", "%mm6", "%mm7");
+                  : "%mm0", "%mm1", "%mm2", "%mm3", "%mm4", "%mm5", "%mm6", "%mm7");
   }
 
   asm("emms");

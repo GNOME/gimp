@@ -1,3 +1,12 @@
+2004-08-29  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite-mmx.c
+	* app/composite/gimp-composite-sse.c
+	* app/composite/gimp-composite-x86.h
+	* app/composite/gimp-composite-sse2.c:
+	The last changes to fix the the clobber registers bug #147013.
+	Commented out some dead code to be reviewed later.
+
 2004-08-29  Michael Natterer  <mitch@gimp.org>
 
 	Added an API to allow plug-ins to embed the progress for the
