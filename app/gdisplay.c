@@ -661,13 +661,10 @@ gdisplay_paint_area (GDisplay *gdisp,
   w = (x2 - x1);
   h = (y2 - y1);
 
-  /*  calculate the extents of the update as limited by what's visible  */
-  gdisplay_untransform_coords (gdisp, 0, 0, &x1, &y1, FALSE, FALSE);
-  gdisplay_untransform_coords (gdisp, gdisp->disp_width, gdisp->disp_height, &x2, &y2, FALSE, FALSE);
-
-  gimage_invalidate (gdisp->gimage, x, y, w, h, x1, y1, x2, y2);
-
-    /*  display the area  */
+  /* composite the area */
+  gimage_construct (gdisp->gimage, x, y, w, h);
+  
+  /*  display the area  */
   gdisplay_transform_coords (gdisp, x, y, &x1, &y1, FALSE);
   gdisplay_transform_coords (gdisp, x + w, y + h, &x2, &y2, FALSE);
   gdisplay_expose_area (gdisp, x1, y1, (x2 - x1), (y2 - y1));
@@ -1163,8 +1160,6 @@ gdisplays_update_area (int ID,
 {
   GDisplay *gdisp;
   GSList *list = display_list;
-  int x1, y1, x2, y2;
-  /*  int count = 0; */
 
   /*  traverse the linked list of displays  */
   while (list)
@@ -1172,30 +1167,7 @@ gdisplays_update_area (int ID,
       gdisp = (GDisplay *) list->data;
       if (gdisp->gimage->ID == ID)
 	{
-	  /*  We only need to update the first instance that
-	      we find of this gimage ID.  Otherwise, we would
-	      be reconverting the same region unnecessarily.   */
-
-	  /* Um.. I don't think so. If you only do this to the first
-	     instance, you don't update other gdisplays pointing to this
-	     gimage.  I'm going to comment this out to show how it was in
-	     case we need to change it back.  msw 4/15/1998
-	  */
-	  /*
-	  if (! count)
-	    gdisplay_add_update_area (gdisp, x, y, w, h);
-	  else
-	    {
-	      gdisplay_transform_coords (gdisp, x, y, &x1, &y1, 0);
-	      gdisplay_transform_coords (gdisp, x + w, y + h, &x2, &y2, 0);
-	      gdisplay_add_display_area (gdisp, x1, y1, (x2 - x1), (y2 - y1));
-	    }
-	  */
-
 	  gdisplay_add_update_area (gdisp, x, y, w, h);
-	  gdisplay_transform_coords (gdisp, x, y, &x1, &y1, 0);
-	  gdisplay_transform_coords (gdisp, x + w, y + h, &x2, &y2, 0);
-	  gdisplay_add_display_area (gdisp, x1, y1, (x2 - x1), (y2 - y1));
 	}
       list = g_slist_next (list);
     }
@@ -1254,7 +1226,6 @@ gdisplays_update_full (int ID)
 {
   GDisplay *gdisp;
   GSList *list = display_list;
-  int count = 0;
 
   /*  traverse the linked list of displays, handling each one  */
   while (list)
@@ -1262,16 +1233,9 @@ gdisplays_update_full (int ID)
       gdisp = (GDisplay *) list->data;
       if (gdisp->gimage->ID == ID)
 	{
-	  if (! count)
-	    gdisplay_add_update_area (gdisp, 0, 0,
-				      gdisp->gimage->width,
-				      gdisp->gimage->height);
-	  else
-	    gdisplay_add_display_area (gdisp, 0, 0,
-				       gdisp->disp_width,
-				       gdisp->disp_height);
-
-	  count++;
+          gdisplay_add_update_area (gdisp, 0, 0,
+                                    gdisp->gimage->width,
+                                    gdisp->gimage->height);
 	}
 
       list = g_slist_next (list);

@@ -1164,29 +1164,6 @@ gimage_construct (GImage *gimage, int x, int y, int w, int h)
   gimage_construct_channels (gimage, x, y, w, h);
 }
 
-void
-gimage_invalidate (GImage *gimage, int x, int y, int w, int h, int x1, int y1,
-		   int x2, int y2)
-{
-  Canvas * c = gimage_projection (gimage);
-  PixelArea a;
-  void * pag;
-
-  pixelarea_init (&a, c,
-                  x, y,
-                  w, h,
-                  TRUE);
-
-  for (pag = pixelarea_register_noref (1, &a);
-       pag;
-       pag = pixelarea_process (pag))
-    {
-      canvas_portion_unalloc (c,
-                              pixelarea_x (&a),
-                              pixelarea_y (&a));
-    }
-}
-
 static guint 
 gimage_validate  (
                   Canvas * c,

@@ -200,7 +200,6 @@ Channel *       gimage_lower_channel          (GImage *, Channel *);
 Channel *       gimage_add_channel            (GImage *, Channel *, int);
 Channel *       gimage_remove_channel         (GImage *, Channel *);
 void            gimage_construct              (GImage *, int, int, int, int);
-void            gimage_invalidate             (GImage *, int, int, int, int, int, int, int, int);
 
 
 /*  Access functions  */
