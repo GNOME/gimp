@@ -637,8 +637,8 @@ mblur_zoom (GimpDrawable *drawable)
 
 	      for (i = 0; i < n; ++i)
 		{
-		  xx = center_x + (x - center_x) * (1.0 + f * i);
-		  yy = center_y + (y - center_y) * (1.0 + f * i);
+		  xx = center_x + (x - center_x) * (1.0 - f * i);
+		  yy = center_y + (y - center_y) * (1.0 - f * i);
 
 		  if ((yy < sel_y1) || (yy >= sel_y2) ||
 		      (xx < sel_x1) || (xx >= sel_x2))

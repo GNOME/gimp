@@ -1,5 +1,10 @@
 2004-05-31  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/mblur.c (mblur_zoom): push pixels outwards not
+	to the center as suggested by Chad Daelhousen (bug #142968).
+
+2004-05-31  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/mblur.c: applied patch from William Skaggs that
 	adds the possibility to choose the center of radial and zoom
 	motion blurs (bug #113711).
