@@ -62,6 +62,7 @@ libexec_PROGRAMS = \
 	guillotine \
 	gz \
 	header \
+	csource \
 	hot \
 	hrz \
 	illusion \
@@ -544,6 +545,14 @@ header_SOURCES = \
 header_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GLIB_LIBS)				\
+	$(INTLLIBS)
+
+csource_SOURCES = \
+	csource.c
+
+csource_LDADD = \
+	$(top_builddir)/libgimp/libgimp.la	\
+	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
 hot_SOURCES = \

@@ -200,7 +200,10 @@ save_image (char   *filename,
         }
       fprintf (fp, "};\n");
       break;
-   } /* switch (drawable_type) */
+    default:
+      g_warning ("unhandled drawable type (%d)", drawable_type);
+      return FALSE;
+    } /* switch (drawable_type) */
 
   fclose (fp);
 

@@ -1,3 +1,12 @@
+Tue Jul  6 18:50:24 1999  Tim Janik  <timj@gtk.org>
+
+	* plug-ins/common/csource.c: new save-image plugin to dump a
+	straight c-source RGB or RGBA data array (most convenient
+	to create libart ArtPixBuf structures from).
+
+	* plug-ins/common/header.c (save_image): if we don't know the
+	image type, complain and don't claim to have handled it.
+
 1999-07-06  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
         * app/airbrush.c
