@@ -8,7 +8,7 @@ sub fire {
 
    my ($w,$h) = ($drawable->width, $drawable->height);
 
-   $drawable->layer or die "sorry, this function needs to call functions that work only for layers :(\n";
+   $drawable->is_layer or die "sorry, this function needs to call functions that work only for layers :(\n";
 
    $image->undo_push_group_start;
    $drawable->wind($threshold, 0, $strength, 0, 1);

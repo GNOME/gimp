@@ -35,7 +35,7 @@ register "plug_in_ditherize",
          sub {
    my($image,$drawable,$colours)=@_;
 
-   $drawable->layer or die "this plug-in only works for layers";
+   $drawable->is_layer or die "this plug-in only works for layers";
 
    # make sure somehting is selected
    $drawable->mask_bounds or $image->selection_all;

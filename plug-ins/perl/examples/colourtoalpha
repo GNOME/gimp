@@ -21,7 +21,7 @@ register "colour_to_alpha",
          sub {					# es folgt das eigentliche Skript...
    my($image,$drawable,$colour)=@_;
 
-   $drawable->layer or die "colour_to_alpha only works with layers\n";
+   $drawable->is_layer or die "colour_to_alpha only works with layers\n";
    $drawable->add_alpha unless $drawable->has_alpha;
 
    Gimp->progress_init ("Replacing colour...");
