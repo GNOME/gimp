@@ -47,6 +47,8 @@
 #include "cursors/resize_mask.xbm"
 #include "cursors/control.xbm"
 #include "cursors/control_mask.xbm"
+#include "cursors/anchor.xbm"
+#include "cursors/anchor_mask.xbm"
 #include "cursors/hand.xbm"
 #include "cursors/hand_mask.xbm"
 
@@ -97,6 +99,7 @@ enum
   GIMP_MOVE_CURSOR,
   GIMP_RESIZE_CURSOR,
   GIMP_CONTROL_CURSOR,
+  GIMP_ANCHOR_CURSOR,
   GIMP_HAND_CURSOR
 };
 
@@ -132,6 +135,11 @@ static BitmapCursor modifier_cursors[] =
     control_bits, control_mask_bits,
     control_width, control_height,
     control_x_hot, control_y_hot, NULL, NULL, NULL
+  },
+  {
+    anchor_bits, anchor_mask_bits,
+    anchor_width, anchor_height,
+    anchor_x_hot, anchor_y_hot, NULL, NULL, NULL
   },
   {
     hand_bits, hand_mask_bits,
@@ -254,6 +262,9 @@ gimp_change_win_cursor (GdkWindow      *win,
       break;
     case CURSOR_MODIFIER_CONTROL:
       modtype = GIMP_CONTROL_CURSOR;
+      break;
+    case CURSOR_MODIFIER_ANCHOR:
+      modtype = GIMP_ANCHOR_CURSOR;
       break;
     case CURSOR_MODIFIER_HAND:
       modtype = GIMP_HAND_CURSOR;

@@ -1,5 +1,15 @@
 2000-06-14  Michael Natterer  <mitch@gimp.org>
 
+	* Makefile.am
+	* cursors/gimp-tool-cursors.xcf
+	* cursors/anchor.xbm
+	* cursors/anchor_mask.xbm: new cursor modifier for the move tool.
+
+	* app/cursorutil.[ch]
+	* app/move.c: use the new modifier for anchoring floating selections.
+
+2000-06-14  Michael Natterer  <mitch@gimp.org>
+
 	* Makefile.am: typo.
 
 	* cursors/mouse_intersect[_mask].xbm: forgot to remove this one.

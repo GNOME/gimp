@@ -47,6 +47,8 @@ EXTRA_DIST = \
 	cursors/resize_mask.xbm			\
 	cursors/control.xbm			\
 	cursors/control_mask.xbm		\
+	cursors/anchor.xbm			\
+	cursors/anchor_mask.xbm			\
 	cursors/hand.xbm			\
 	cursors/hand_mask.xbm			\
 	\

@@ -367,9 +367,9 @@ move_tool_cursor_update (Tool           *tool,
 	  /*  if there is a floating selection, and this aint it...  */
 	  if (gimage_floating_sel (gdisp->gimage) &&
 	      !layer_is_floating_sel (layer))
-	    gdisplay_install_tool_cursor (gdisp, GDK_SB_DOWN_ARROW,
-					  TOOL_TYPE_NONE,
-					  CURSOR_MODIFIER_NONE,
+	    gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
+					  RECT_SELECT,
+					  CURSOR_MODIFIER_ANCHOR,
 					  FALSE);
 	  else if (layer == gdisp->gimage->active_layer)
 	    gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
