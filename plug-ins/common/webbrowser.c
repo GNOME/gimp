@@ -29,6 +29,9 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#ifdef G_OS_WIN32
+#include <windows.h>
+#endif
 
 #define PLUG_IN_NAME "plug_in_web_browser"
 
@@ -40,10 +43,12 @@ static void     run              (const gchar      *name,
                                   gint             *nreturn_vals,
                                   GimpParam       **return_vals);
 static gboolean browser_open_url (const gchar      *url);
+
+#ifndef G_OS_WIN32
 static gchar*   strreplace       (const gchar      *string,
                                   const gchar      *delimiter,
                                   const gchar      *replacement);
-
+#endif
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -114,6 +119,12 @@ run (const gchar      *name,
 static gboolean
 browser_open_url (const gchar *url)
 {
+#ifdef G_OS_WIN32
+
+  return ((gint) ShellExecute (HWND_DESKTOP, "open", url, NULL, NULL, SW_SHOWNORMAL) > 32);
+
+#else
+
   GError    *error = NULL;
   gchar     *browser;
   gchar     *cmd;
@@ -164,7 +175,11 @@ browser_open_url (const gchar *url)
   g_strfreev (argv);
 
   return retval;
+
+#endif
 }
+
+#ifndef G_OS_WIN32
 
 static gchar*
 strreplace (const gchar *string,
@@ -184,3 +199,5 @@ strreplace (const gchar *string,
 
   return ret;
 }
+
+#endif /* !G_OS_WIN32 */

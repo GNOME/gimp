@@ -52,8 +52,10 @@ static void  gimp_gui_config_get_property (GObject            *object,
 #define DEFAULT_THEME       "Default"
 
 #ifdef G_OS_WIN32
-#define DEFAULT_WEB_BROWSER "\"C:\Program Files\Internet Explorer\iexplore.exe\" \"%s\""
+#define DEFAULT_GIMP_HELP_BROWSER GIMP_HELP_BROWSER_WEBBROWSER
+#define DEFAULT_WEB_BROWSER "not used on Windows"
 #else
+#define DEFAULT_GIMP_HELP_BROWSER GIMP_HELP_BROWSER_GIMP
 #define DEFAULT_WEB_BROWSER "mozilla \"%s\""
 #endif
 
@@ -212,7 +214,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_HELP_BROWSER,
                                  "help-browser", HELP_BROWSER_BLURB,
                                  GIMP_TYPE_HELP_BROWSER_TYPE,
-                                 GIMP_HELP_BROWSER_GIMP,
+                                 DEFAULT_GIMP_HELP_BROWSER,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_WEB_BROWSER,
                                  "web-browser", WEB_BROWSER_BLURB,

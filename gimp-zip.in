@@ -1,0 +1,63 @@
+#!/bin/sh
+
+# Build zipfiles for GIMP on Win32: separate runtime and developer
+# packages, and a separate zipfile for the gif plug-in.
+
+ZIP=/tmp/gimp-@GIMP_VERSION@-`date +%Y%m%d`.zip
+DEVZIP=/tmp/gimp-dev-@GIMP_VERSION@-`date +%Y%m%d`.zip
+GIFZIP=/tmp/gimp-gif-@GIMP_VERSION@-`date +%Y%m%d`.zip
+
+cd @prefix@
+
+rm $ZIP
+zip -r $ZIP -@ <<EOF
+etc/gimp/@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@
+bin/gimp-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@.exe
+bin/libgimp-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
+bin/libgimpbase-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
+bin/libgimpcolor-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
+bin/libgimpmath-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
+bin/libgimpmodule-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
+bin/libgimpui-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
+bin/libgimpwidgets-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
+lib/gimp/@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@/environ
+lib/gimp/@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@/plug-ins
+share/gimp/@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@
+man/man1/gimp-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@.1
+man/man5/gimprc-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@.5
+EOF
+
+zip $ZIP lib/gimp/@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@/modules/*.dll
+zip $ZIP lib/locale/*/LC_MESSAGES/gimp20*.mo
+
+rm $DEVZIP
+zip -r $DEVZIP -@ <<EOF
+bin/gimptool-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@.exe
+lib/libgimp-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@.dll.a
+lib/gimp-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@.lib
+lib/gimp.def
+lib/libgimpbase-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@.dll.a
+lib/gimpbase-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@.lib
+lib/gimpbase.def
+lib/libgimpcolor-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@.dll.a
+lib/gimpcolor-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@.lib
+lib/gimpcolor.def
+lib/libgimpmath-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@.dll.a
+lib/gimpmath-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@.lib
+lib/gimpmath.def
+lib/libgimpmodule-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@.dll.a
+lib/gimpmodule-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@.lib
+lib/gimpmodule.def
+lib/libgimpui-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@.dll.a
+lib/gimpui-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@.lib
+lib/gimpui.def
+lib/libgimpwidgets-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@.dll.a
+lib/gimpwidgets-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@.lib
+lib/gimpwidgets.def
+include/gimp-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@
+man/man1/gimptool-@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@.1
+EOF
+
+zip -d $ZIP lib/gimp/@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@/plug-ins/gif.exe
+rm $GIFZIP
+zip $GIFZIP lib/gimp/@GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@/plug-ins/gif.exe

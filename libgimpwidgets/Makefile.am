@@ -17,9 +17,11 @@ libgimpwidgets_export_symbols = -export-symbols gimpwidgets.def
 
 install-libtool-import-lib:
 	$(INSTALL) .libs/libgimpwidgets-$(LT_RELEASE).dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) gimpwidgets.def $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
 	-rm $(DESTDIR)$(libdir)/libgimpwidgets-$(LT_RELEASE).dll.a
+	-rm $(DESTDIR)$(libdir)/gimpwidgets.def
 else
 install-libtool-import-lib:
 uninstall-libtool-import-lib:

@@ -1,5 +1,24 @@
 2003-10-09  Tor Lillqvist  <tml@iki.fi>
 
+	* gimp-zip.in: New file, shell script used to build zipfiles for
+	distribution of Windows runtime and developer packages.
+
+	* Makefile.am
+	* configure.in: Add it, expand it.
+
+	* libgimp*/Makefile.am: On Windows, install and uninstall the .def
+	files.
+
+	* app/config/gimpguiconfig.c: On Windows, don't use the internal
+	help browser by default, as it isn't there. Don't use a fixed
+	guess for Internet Explorer's path on Windows. We don't even need
+	to know the path to the web browser, we can use ShellExecute() in
+	the webbrowser plug-in.
+
+	* plug-ins/common/webbrowser.c: Use ShellExecute() on Windows.
+
+	* po*/makefile.cygwin: Remove, unmaintained.
+
 	* libgimpmath/gimpmath.def: Fix typo.
 
 	* libgimp/gimp.def: Add gimp_rgn_iterator_src_dest.

@@ -10,9 +10,11 @@ libgimpmodule_export_symbols = -export-symbols gimpmodule.def
 
 install-libtool-import-lib:
 	$(INSTALL) .libs/libgimpmodule-$(LT_RELEASE).dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) gimpmodule.def $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
 	-rm $(DESTDIR)$(libdir)/libgimpmodule-$(LT_RELEASE).dll.a
+	-rm $(DESTDIR)$(libdir)/gimpmodule.def
 else
 install-libtool-import-lib:
 uninstall-libtool-import-lib:

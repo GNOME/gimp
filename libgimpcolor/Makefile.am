@@ -17,9 +17,11 @@ libgimpcolor_export_symbols = -export-symbols gimpcolor.def
 
 install-libtool-import-lib:
 	$(INSTALL) .libs/libgimpcolor-$(LT_RELEASE).dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) gimpcolor.def $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
 	-rm $(DESTDIR)$(libdir)/libgimpcolor-$(LT_RELEASE).dll.a
+	-rm $(DESTDIR)$(libdir)/gimpcolor.def
 else
 install-libtool-import-lib:
 uninstall-libtool-import-lib:

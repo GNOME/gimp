@@ -17,9 +17,11 @@ libgimpmath_export_symbols = -export-symbols gimpmath.def
 
 install-libtool-import-lib:
 	$(INSTALL) .libs/libgimpmath-$(LT_RELEASE).dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) gimpmath.def $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
 	-rm $(DESTDIR)$(libdir)/libgimpmath-$(LT_RELEASE).dll.a
+	-rm $(DESTDIR)$(libdir)/gimpmath.def
 else
 install-libtool-import-lib:
 uninstall-libtool-import-lib:

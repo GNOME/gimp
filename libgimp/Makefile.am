@@ -18,10 +18,14 @@ libgimpui_export_symbols = -export-symbols gimpui.def
 install-libtool-import-lib:
 	$(INSTALL) .libs/libgimp-$(LT_RELEASE).dll.a $(DESTDIR)$(libdir)
 	$(INSTALL) .libs/libgimpui-$(LT_RELEASE).dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) gimp.def $(DESTDIR)$(libdir)
+	$(INSTALL) gimpui.def $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
 	-rm $(DESTDIR)$(libdir)/libgimp-$(LT_RELEASE).dll.a
 	-rm $(DESTDIR)$(libdir)/libgimpui-$(LT_RELEASE).dll.a
+	-rm $(DESTDIR)$(libdir)/gimp.def
+	-rm $(DESTDIR)$(libdir)/gimpui.def
 else
 install-libtool-import-lib:
 uninstall-libtool-import-lib:

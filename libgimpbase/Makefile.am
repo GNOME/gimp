@@ -10,9 +10,11 @@ libgimpbase_export_symbols = -export-symbols gimpbase.def
 
 install-libtool-import-lib:
 	$(INSTALL) .libs/libgimpbase-$(LT_RELEASE).dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) gimpbase.def $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
 	-rm $(DESTDIR)$(libdir)/libgimpbase-$(LT_RELEASE).dll.a
+	-rm $(DESTDIR)$(libdir)/gimpbase.def
 else
 install-libtool-import-lib:
 uninstall-libtool-import-lib:
