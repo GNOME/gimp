@@ -1077,7 +1077,6 @@ run (char    *name,
 	  break;
 
 	case GIMP_RUN_NONINTERACTIVE:
-	  /* We must have at least one dimension */
 	  if (nparams != ngih_save_args)
 	    {
 	      status = GIMP_PDB_CALLING_ERROR;
