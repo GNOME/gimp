@@ -1,3 +1,8 @@
+2003-06-23  Sven Neumann  <sven@gimp.org>
+
+	* data/misc/gimp.desktop.in.in: announce the fact that we
+	understand URI lists as command-line parameters.
+	
 2003-06-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/app_procs.c (app_init): enabled passing of file: URIs
