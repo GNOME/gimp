@@ -79,6 +79,12 @@ N_("Tools such as fuzzy-select and bucket fill find regions based on a " \
    "intensity from the original is greater than a specified threshold. " \
    "This value represents the default threshold.")
 
+#define DEFAULT_VIEW_BLURB \
+"Sets the default settings for the image view."
+
+#define DEFAULT_FULLSCREEN_VIEW_BLURB \
+"Sets the default settings used when an image is viewed in fullscreen mode."
+
 #define ENVIRON_PATH_BLURB \
 "Sets the environ search path."
 

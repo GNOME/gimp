@@ -28,22 +28,22 @@ gimp_cursor_mode_get_type (void)
 }
 
 
-static const GEnumValue gimp_display_padding_mode_enum_values[] =
+static const GEnumValue gimp_canvas_padding_mode_enum_values[] =
 {
-  { GIMP_DISPLAY_PADDING_MODE_DEFAULT, N_("From Theme"), "default" },
-  { GIMP_DISPLAY_PADDING_MODE_LIGHT_CHECK, N_("Light Check Color"), "light-check" },
-  { GIMP_DISPLAY_PADDING_MODE_DARK_CHECK, N_("Dark Check Color"), "dark-check" },
-  { GIMP_DISPLAY_PADDING_MODE_CUSTOM, N_("Custom Color"), "custom" },
+  { GIMP_CANVAS_PADDING_MODE_DEFAULT, N_("From Theme"), "default" },
+  { GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK, N_("Light Check Color"), "light-check" },
+  { GIMP_CANVAS_PADDING_MODE_DARK_CHECK, N_("Dark Check Color"), "dark-check" },
+  { GIMP_CANVAS_PADDING_MODE_CUSTOM, N_("Custom Color"), "custom" },
   { 0, NULL, NULL }
 };
 
 GType
-gimp_display_padding_mode_get_type (void)
+gimp_canvas_padding_mode_get_type (void)
 {
   static GType enum_type = 0;
 
   if (!enum_type)
-    enum_type = g_enum_register_static ("GimpDisplayPaddingMode", gimp_display_padding_mode_enum_values);
+    enum_type = g_enum_register_static ("GimpCanvasPaddingMode", gimp_canvas_padding_mode_enum_values);
 
   return enum_type;
 }

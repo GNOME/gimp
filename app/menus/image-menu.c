@@ -41,6 +41,7 @@
 #include "widgets/gimpitemfactory.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayoptions.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
 #include "display/gimpdisplayshell-selection.h"
@@ -1295,29 +1296,29 @@ void
 image_menu_update (GtkItemFactory *item_factory,
                    gpointer        data)
 {
-  Gimp                       *gimp          = NULL;
-  GimpDisplayShell           *shell         = NULL;
-  GimpDisplay                *gdisp         = NULL;
-  GimpImage                  *gimage        = NULL;
-  GimpDrawable               *drawable      = NULL;
-  GimpLayer                  *layer         = NULL;
-  GimpVectors                *vectors       = NULL;
-  GimpImageType               drawable_type = -1;
-  GimpRGB                     fg;
-  GimpRGB                     bg;
-  gboolean                    is_rgb        = FALSE;
-  gboolean                    is_gray       = FALSE;
-  gboolean                    is_indexed    = FALSE;
-  gboolean                    fs            = FALSE;
-  gboolean                    aux           = FALSE;
-  gboolean                    lm            = FALSE;
-  gboolean                    lp            = FALSE;
-  gboolean                    sel           = FALSE;
-  gboolean                    alpha         = FALSE;
-  gint                        lind          = -1;
-  gint                        lnum          = -1;
-  gboolean                    fullscreen    = FALSE;
-  GimpDisplayShellAppearance *appearance    = NULL;
+  Gimp               *gimp          = NULL;
+  GimpDisplay        *gdisp         = NULL;
+  GimpDisplayShell   *shell         = NULL;
+  GimpDisplayOptions *options       = NULL;
+  GimpImage          *gimage        = NULL;
+  GimpDrawable       *drawable      = NULL;
+  GimpLayer          *layer         = NULL;
+  GimpVectors        *vectors       = NULL;
+  GimpImageType       drawable_type = -1;
+  GimpRGB             fg;
+  GimpRGB             bg;
+  gboolean            is_rgb        = FALSE;
+  gboolean            is_gray       = FALSE;
+  gboolean            is_indexed    = FALSE;
+  gboolean            fs            = FALSE;
+  gboolean            aux           = FALSE;
+  gboolean            lm            = FALSE;
+  gboolean            lp            = FALSE;
+  gboolean            sel           = FALSE;
+  gboolean            alpha         = FALSE;
+  gint                lind          = -1;
+  gint                lnum          = -1;
+  gboolean            fullscreen    = FALSE;
 
   gimp = GIMP_ITEM_FACTORY (item_factory)->gimp;
 
@@ -1366,10 +1367,7 @@ image_menu_update (GtkItemFactory *item_factory,
 
       fullscreen = gimp_display_shell_get_fullscreen (shell);
 
-      if (fullscreen)
-        appearance = &shell->fullscreen_appearance;
-      else
-        appearance = &shell->appearance;
+      options = fullscreen ? shell->fullscreen_options : shell->options;
     }
 
   gimp_context_get_foreground (gimp_get_user_context (gimp), &fg);
@@ -1491,22 +1489,22 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/View/Display Filters...",  gdisp);
 
   SET_SENSITIVE ("/View/Show Selection",      gdisp);
-  SET_ACTIVE    ("/View/Show Selection",      gdisp && appearance->selection);
+  SET_ACTIVE    ("/View/Show Selection",      gdisp && options->show_selection);
   SET_SENSITIVE ("/View/Show Layer Boundary", gdisp);
-  SET_ACTIVE    ("/View/Show Layer Boundary", gdisp && appearance->active_layer);
-  SET_ACTIVE    ("/View/Show Guides",         gdisp && appearance->guides);
+  SET_ACTIVE    ("/View/Show Layer Boundary", gdisp && options->show_active_layer);
+  SET_ACTIVE    ("/View/Show Guides",         gdisp && options->show_guides);
   SET_ACTIVE    ("/View/Snap to Guides",      gdisp && shell->snap_to_guides);
-  SET_ACTIVE    ("/View/Show Grid",           gdisp && appearance->grid);
+  SET_ACTIVE    ("/View/Show Grid",           gdisp && options->show_grid);
   SET_ACTIVE    ("/View/Snap to Grid",        gdisp && shell->snap_to_grid);
 
   SET_SENSITIVE ("/View/Show Menubar",    gdisp);
-  SET_ACTIVE    ("/View/Show Menubar",    gdisp && appearance->menubar);
+  SET_ACTIVE    ("/View/Show Menubar",    gdisp && options->show_menubar);
   SET_SENSITIVE ("/View/Show Rulers",     gdisp);
-  SET_ACTIVE    ("/View/Show Rulers",     gdisp && appearance->rulers);
+  SET_ACTIVE    ("/View/Show Rulers",     gdisp && options->show_rulers);
   SET_SENSITIVE ("/View/Show Scrollbars", gdisp);
-  SET_ACTIVE    ("/View/Show Scrollbars", gdisp && appearance->scrollbars);
+  SET_ACTIVE    ("/View/Show Scrollbars", gdisp && options->show_scrollbars);
   SET_SENSITIVE ("/View/Show Statusbar",  gdisp);
-  SET_ACTIVE    ("/View/Show Statusbar",  gdisp && appearance->statusbar);
+  SET_ACTIVE    ("/View/Show Statusbar",  gdisp && options->show_statusbar);
 
   SET_SENSITIVE ("/View/Shrink Wrap", gdisp);
 

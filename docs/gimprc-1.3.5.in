@@ -157,74 +157,38 @@ Specify a default gradient.  The gradient is searched for in the specified
 gradient path.  This is a string value.
 
 .TP
-(default-grid
-    (xspacing 10.000000)
-    (yspacing 10.000000)
-    (spacing-unit inches)
-    (xoffset 0.000000)
-    (yoffset 0.000000)
-    (offset-unit inches)
-    (fgcolor (color-rgba 0.000000 0.000000 0.000000 1.000000))
-    (bgcolor (color-rgba 1.000000 1.000000 1.000000 1.000000))
-    (style intersections))
-
-Specify a default image grid.  This is a parameter list.
-
-.TP
 (default-font "Sans")
 
 Specify a default font.  The font is searched for in the fontconfig font path.
  This is a string value.
 
 .TP
-(default-comment "Created with The GIMP")
+(default-image
+    (width 256)
+    (height 256)
+    (unit inches)
+    (xresolution 72.000000)
+    (yresolution 72.000000)
+    (resolution-unit inches)
+    (image-type rgb)
+    (fill-type background-fill)
+    (comment "Created with The GIMP"))
 
-Sets the default comment.  This is a string value.
-
-.TP
-(default-image-type rgb)
-
-Sets the default image type in the "File/New" dialog.  Possible values are
-rgb, gray and indexed.
-
-.TP
-(default-image-width 256)
-
-Sets the default image width in the "File/New" dialog.  This is an integer
-value.
+Sets the default image in the "File/New" dialog.  This is a parameter list.
 
 .TP
-(default-image-height 256)
+(default-grid
+    (style intersections)
+    (fgcolor (color-rgba 0.000000 0.000000 0.000000 1.000000))
+    (bgcolor (color-rgba 1.000000 1.000000 1.000000 1.000000))
+    (xspacing 10.000000)
+    (yspacing 10.000000)
+    (spacing-unit inches)
+    (xoffset 0.000000)
+    (yoffset 0.000000)
+    (offset-unit inches))
 
-Sets the default image height in the "File/New" dialog.  This is an integer
-value.
-
-.TP
-(default-unit inches)
-
-Sets the default unit for new images and for the "File/New" dialog. This units
-will be used for coordinate display when not in dot-for-dot mode.  The unit
-can be one inches, millimeters, points or picas plus those in your user units
-database.
-
-.TP
-(default-xresolution 72.000000)
-
-Sets the default horizontal resolution for new images and for the "File/New"
-dialog. This value is always in dpi (dots per inch).  This is a float value.
-
-.TP
-(default-yresolution 72.000000)
-
-Sets the default vertical resolution for new images and for the "File/New"
-dialog. This value is always in dpi (dots per inch).  This is a float value.
-
-.TP
-(default-resolution-unit inches)
-
-Sets the units for the display of the default resolution in the "File/New"
-dialog.  The unit can be one inches, millimeters, points or picas plus those
-in your user units database.
+Specify a default image grid.  This is a parameter list.
 
 .TP
 (undo-levels 5)
@@ -234,13 +198,14 @@ kept available until the undo-size limit is reached.  This is an integer
 value.
 
 .TP
-(undo-size 1024k)
+(undo-size 4M)
 
 Sets an upper limit to the memory that is used per image to keep operations on
-the undo stack.  The integer size can contain a suffix of 'B', 'K', 'M' or 'G'
-which makes GIMP interpret the size as being specified in bytes, kilobytes,
-megabytes or gigabytes. If no suffix is specified the size defaults to being
-specified in kilobytes.
+the undo stack. Regardless of this setting, at least as many undo-levels as
+configured can be undone.  The integer size can contain a suffix of 'B', 'K',
+'M' or 'G' which makes GIMP interpret the size as being specified in bytes,
+kilobytes, megabytes or gigabytes. If no suffix is specified the size defaults
+to being specified in kilobytes.
 
 .TP
 (pluginrc-path "${gimp_dir}/pluginrc")
@@ -324,7 +289,7 @@ opened, otherwise it will be displayed with a scale of 1:1.  Possible values
 are yes and no.
 
 .TP
-(perfect-mouse no)
+(perfect-mouse yes)
 
 When enabled, the X server is queried for the mouse's current position on each
 motion event, rather than relying on the position hint.  This means painting
@@ -352,7 +317,7 @@ When enabled, all paint tools will show a preview of the current brush's
 outline.  Possible values are yes and no.
 
 .TP
-(image-title-format "%f-%p.%i (%t)")
+(image-title-format "%f-%p.%i (%t, %L) %z%%")
 
 Sets the text to appear in image window titles.  This is a format string;
 certain % character sequences are recognised and expanded as follows:
@@ -381,11 +346,13 @@ certain % character sequences are recognised and expanded as follows:
 .br
 %Cx expands to x if the image is clean, the empty string otherwise
 .br
-%m  memory used by the image
-.br
 %l  the number of layers
 .br
-%L  the name of the active layer/channel
+%L  the number of layers (long form)
+.br
+%m  memory used by the image
+.br
+%n  the name of the active layer/channel
 .br
 %w  image width in pixels
 .br
@@ -403,7 +370,7 @@ certain % character sequences are recognised and expanded as follows:
 .br
 
 .TP
-(image-status-format "%f-%p.%i (%t)")
+(image-status-format "%n (%m)")
 
 Sets the text to appear in image window status bars.  This is a format string;
 certain % character sequences are recognised and expanded as follows:
@@ -432,11 +399,13 @@ certain % character sequences are recognised and expanded as follows:
 .br
 %Cx expands to x if the image is clean, the empty string otherwise
 .br
-%m  memory used by the image
-.br
 %l  the number of layers
 .br
-%L  the name of the active layer/channel
+%L  the number of layers (long form)
+.br
+%m  memory used by the image
+.br
+%n  the name of the active layer/channel
 .br
 %w  image width in pixels
 .br
@@ -487,82 +456,35 @@ the image window.  Possible values are tiny, extra-small, small, medium,
 large, extra-large, huge, enormous and gigantic.
 
 .TP
-(show-menubar yes)
+(default-view
+    (show-menubar yes)
+    (show-rulers yes)
+    (show-scrollbars yes)
+    (show-statusbar yes)
+    (show-selection yes)
+    (show-active-layer yes)
+    (show-guides yes)
+    (show-grid no)
+    (padding-mode default)
+    (padding-color (color-rgba 1.000000 1.000000 1.000000 1.000000)))
 
-When enabled, the menubar is visible by default. This can also be toggled with
-the "View->Show Menubar" command.  Possible values are yes and no.
-
-.TP
-(show-rulers yes)
-
-When enabled, the rulers are visible by default. This can also be toggled with
-the "View->Show Rulers" command.  Possible values are yes and no.
-
-.TP
-(show-scrollbars yes)
-
-When enabled, the scrollbars are visible by default. This can also be toggled
-with the "View->Show Scrollbars" command.  Possible values are yes and no.
+Sets the default settings for the image view.  This is a parameter list.
 
 .TP
-(show-statusbar yes)
+(default-fullscreen-view
+    (show-menubar no)
+    (show-rulers no)
+    (show-scrollbars no)
+    (show-statusbar no)
+    (show-selection no)
+    (show-active-layer no)
+    (show-guides no)
+    (show-grid no)
+    (padding-mode custom)
+    (padding-color (color-rgba 0.000000 0.000000 0.000000 1.000000)))
 
-When enabled, the statusbar is visible by default. This can also be toggled
-with the "View->Show Statusbar" command.  Possible values are yes and no.
-
-.TP
-(canvas-padding-mode default)
-
-Specifies how the area around the image should be drawn.  Possible values are
-default, light-check, dark-check and custom.
-
-.TP
-(canvas-padding-color (color-rgba 1.000000 1.000000 1.000000 1.000000))
-
-Sets the canvas padding color used if the padding mode is set to custom color.
- The color is specified in the form (color-rgba red green blue alpha) with
-channel values as floats between 0.0 and 1.0.
-
-.TP
-(fullscreen-show-menubar no)
-
-When enabled, the menubar is visible by default in fullscreen mode. This can
-also be toggled with the "View->Show Menubar" command.  Possible values are
-yes and no.
-
-.TP
-(fullscreen-show-rulers no)
-
-When enabled, the rulers are visible by default in fullscreen mode. This can
-also be toggled with the "View->Show Rulers" command.  Possible values are yes
-and no.
-
-.TP
-(fullscreen-show-scrollbars no)
-
-When enabled, the scrollbars are visible by default in fullscreen mode. This
-can also be toggled with the "View->Show Scrollbars" command.  Possible values
-are yes and no.
-
-.TP
-(fullscreen-show-statusbar no)
-
-When enabled, the statusbar is visible by default in fullscreen mode. This can
-also be toggled with the "View->Show Statusbar" command.  Possible values are
-yes and no.
-
-.TP
-(fullscreen-canvas-padding-mode custom)
-
-Specifies how the area around the image should be drawn when in fullscreen
-mode.  Possible values are default, light-check, dark-check and custom.
-
-.TP
-(fullscreen-canvas-padding-color (color-rgba 0.000000 0.000000 0.000000 1.000000))
-
-Sets the canvas padding color used when in fullscreen mode and the padding
-mode is set to custom color.  The color is specified in the form (color-rgba
-red green blue alpha) with channel values as floats between 0.0 and 1.0.
+Sets the default settings used when an image is viewed in fullscreen mode. 
+This is a parameter list.
 
 .TP
 (transparency-size medium-checks)

@@ -31,6 +31,8 @@
 #endif
 #include "gui/gui-types.h"
 
+#include "config/gimpconfig.h"
+#include "config/gimpconfig-utils.h"
 #include "config/gimpdisplayconfig.h"
 
 #include "core/gimp.h"
@@ -63,6 +65,7 @@
 #include "tools/tool_manager.h"
 
 #include "gimpdisplay.h"
+#include "gimpdisplayoptions.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-callbacks.h"
@@ -94,6 +97,7 @@ enum
 static void      gimp_display_shell_class_init    (GimpDisplayShellClass *klass);
 static void      gimp_display_shell_init          (GimpDisplayShell      *shell);
 
+static void      gimp_display_shell_finalize           (GObject          *object);
 static void      gimp_display_shell_destroy            (GtkObject        *object);
 static void      gimp_display_shell_screen_changed     (GtkWidget        *widget,
                                                         GdkScreen        *previous);
@@ -145,11 +149,13 @@ gimp_display_shell_get_type (void)
 static void
 gimp_display_shell_class_init (GimpDisplayShellClass *klass)
 {
+  GObjectClass   *gobject_class;
   GtkObjectClass *object_class;
   GtkWidgetClass *widget_class;
 
-  object_class = GTK_OBJECT_CLASS (klass);
-  widget_class = GTK_WIDGET_CLASS (klass);
+  gobject_class = G_OBJECT_CLASS (klass);
+  object_class  = GTK_OBJECT_CLASS (klass);
+  widget_class  = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -179,6 +185,8 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
                   NULL, NULL,
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
+
+  gobject_class->finalize      = gimp_display_shell_finalize;
 
   object_class->destroy        = gimp_display_shell_destroy;
 
@@ -267,37 +275,16 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->paused_count          = 0;
 
-  shell->appearance.selection    = TRUE;
-  shell->appearance.active_layer = TRUE;
-  shell->appearance.guides       = TRUE;
-  shell->appearance.grid         = FALSE;
-  shell->appearance.menubar      = TRUE;
-  shell->appearance.rulers       = TRUE;
-  shell->appearance.scrollbars   = TRUE;
-  shell->appearance.statusbar    = TRUE;
-  shell->appearance.padding_mode = GIMP_DISPLAY_PADDING_MODE_DEFAULT;
-  gimp_rgba_set (&shell->appearance.padding_color,
-                 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
-  shell->appearance.padding_mode_set = FALSE;
+  shell->options               =
+    g_object_new (GIMP_TYPE_DISPLAY_OPTIONS, NULL);
+  shell->fullscreen_options    =
+    g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_FULLSCREEN, NULL);
 
-  shell->fullscreen_appearance.selection    = TRUE;
-  shell->fullscreen_appearance.active_layer = TRUE;
-  shell->fullscreen_appearance.guides       = TRUE;
-  shell->fullscreen_appearance.grid         = FALSE;
-  shell->fullscreen_appearance.menubar      = FALSE;
-  shell->fullscreen_appearance.rulers       = FALSE;
-  shell->fullscreen_appearance.scrollbars   = FALSE;
-  shell->fullscreen_appearance.statusbar    = FALSE;
-  shell->fullscreen_appearance.padding_mode = GIMP_DISPLAY_PADDING_MODE_CUSTOM;
-  gimp_rgba_set (&shell->fullscreen_appearance.padding_color,
-                 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
-  shell->fullscreen_appearance.padding_mode_set = FALSE;
-
-  shell->space_pressed             = FALSE;
-  shell->space_release_pending     = FALSE;
-  shell->scrolling                 = FALSE;
-  shell->scroll_start_x            = 0;
-  shell->scroll_start_y            = 0;
+  shell->space_pressed         = FALSE;
+  shell->space_release_pending = FALSE;
+  shell->scrolling             = FALSE;
+  shell->scroll_start_x        = 0;
+  shell->scroll_start_y        = 0;
   shell->button_press_before_focus = FALSE;
 
   gtk_window_set_wmclass (GTK_WINDOW (shell), "image_window", "Gimp");
@@ -348,15 +335,26 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   gimp_help_connect (GTK_WIDGET (shell), gimp_standard_help_func,
 		     GIMP_HELP_IMAGE_WINDOW, NULL);
+}
 
+static void
+gimp_display_shell_finalize (GObject *object)
+{
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (object);
+
+  if (shell->options)
+    g_object_unref (shell->options);
+
+  if (shell->fullscreen_options)
+    g_object_unref (shell->fullscreen_options);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
 gimp_display_shell_destroy (GtkObject *object)
 {
-  GimpDisplayShell *shell;
-
-  shell = GIMP_DISPLAY_SHELL (object);
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (object);
 
   if (shell->gdisp)
     {
@@ -519,19 +517,10 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   shell->dot_for_dot = config->default_dot_for_dot;
 
-  shell->appearance.menubar       = config->show_menubar;
-  shell->appearance.rulers        = config->show_rulers;
-  shell->appearance.scrollbars    = config->show_scrollbars;
-  shell->appearance.statusbar     = config->show_statusbar;
-  shell->appearance.padding_mode  = config->canvas_padding_mode;
-  shell->appearance.padding_color = config->canvas_padding_color;
-
-  shell->fullscreen_appearance.menubar       = config->fs_show_menubar;
-  shell->fullscreen_appearance.rulers        = config->fs_show_rulers;
-  shell->fullscreen_appearance.scrollbars    = config->fs_show_scrollbars;
-  shell->fullscreen_appearance.statusbar     = config->fs_show_statusbar;
-  shell->fullscreen_appearance.padding_mode  = config->fs_canvas_padding_mode;
-  shell->fullscreen_appearance.padding_color = config->fs_canvas_padding_color;
+  gimp_config_sync (GIMP_CONFIG (config->default_view),
+                    GIMP_CONFIG (shell->options), 0);
+  gimp_config_sync (GIMP_CONFIG (config->default_fullscreen_view),
+                    GIMP_CONFIG (shell->fullscreen_options), 0);
 
   /* adjust the initial scale -- so that window fits on screen the 75%
    * value is the same as in gimp_display_shell_shrink_wrap. It
@@ -662,7 +651,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   gtk_box_pack_start (GTK_BOX (main_vbox), menubar, FALSE, FALSE, 0);
 
-  if (shell->appearance.menubar)
+  if (shell->options->show_menubar)
     gtk_widget_show (menubar);
 
   /*  active display callback  */
@@ -793,7 +782,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   /*  create the contents of the right_vbox  *********************************/
   shell->padding_button = gimp_color_panel_new (_("Set Canvas Padding Color"),
-                                                &shell->appearance.padding_color,
+                                                &shell->options->padding_color,
                                                 GIMP_COLOR_AREA_FLAT,
                                                 15, 15);
   GTK_WIDGET_UNSET_FLAGS (shell->padding_button, GTK_CAN_FOCUS);
@@ -815,19 +804,19 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
     {
       { N_("/From Theme"), NULL,
         gimp_display_shell_color_button_menu_callback,
-        GIMP_DISPLAY_PADDING_MODE_DEFAULT, NULL },
+        GIMP_CANVAS_PADDING_MODE_DEFAULT, NULL },
       { N_("/Light Check Color"), NULL,
         gimp_display_shell_color_button_menu_callback,
-        GIMP_DISPLAY_PADDING_MODE_LIGHT_CHECK, NULL },
+        GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK, NULL },
       { N_("/Dark Check Color"), NULL,
         gimp_display_shell_color_button_menu_callback,
-        GIMP_DISPLAY_PADDING_MODE_DARK_CHECK, NULL },
+        GIMP_CANVAS_PADDING_MODE_DARK_CHECK, NULL },
 
       { "/---", NULL, NULL, 0, "<Separator>"},
 
       { N_("/Select Custom Color..."), NULL,
         gimp_display_shell_color_button_menu_callback,
-        GIMP_DISPLAY_PADDING_MODE_CUSTOM, "<StockItem>",
+        GIMP_CANVAS_PADDING_MODE_CUSTOM, "<StockItem>",
         GTK_STOCK_SELECT_COLOR },
       { N_("/As in Preferences"), NULL,
         gimp_display_shell_color_button_menu_callback,
@@ -910,7 +899,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   /*  show everything  *******************************************************/
 
-  if (shell->appearance.rulers)
+  if (shell->options->show_rulers)
     {
       gtk_widget_show (shell->origin);
       gtk_widget_show (shell->hrule);
@@ -919,7 +908,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   gtk_widget_show (shell->canvas);
 
-  if (shell->appearance.scrollbars)
+  if (shell->options->show_scrollbars)
     {
       gtk_widget_show (shell->vsb);
       gtk_widget_show (shell->hsb);
@@ -928,7 +917,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
       gtk_widget_show (shell->nav_ebox);
     }
 
-  if (shell->appearance.statusbar)
+  if (shell->options->show_statusbar)
     gtk_widget_show (shell->statusbar);
 
   gtk_widget_show (main_vbox);

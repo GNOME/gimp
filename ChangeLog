@@ -1,5 +1,37 @@
 2003-10-22  Sven Neumann  <sven@gimp.org>
 
+	* app/display/Makefile.am
+	* app/display/gimpdisplayoptions.[ch]: new files that implement
+	a GimpConfig object with GimpDisplayShell and GimpCanvas options.
+	Actually two classes, one for the normal view, a derived one with
+	different default values for fullscreen mode.
+
+	* app/display/display-enums.[ch]: renamed GimpDisplayPadding enum
+	to GimpCanvasPadding.
+
+	* app/config/config-types.h: added the GimpDisplayOptions typedef.
+
+	* app/config/gimprc-blurbs.h
+	* app/config/gimpdisplayconfig.[ch]: replaced a bunch of properties
+	with two instances of GimpDisplayOptions.
+
+	* app/display/gimpdisplayshell.[ch]: replaced the 
+	GimpDisplayShellAppearance struct with GimpDisplayOptions.
+
+	* app/display/gimpdisplayshell-appearance.[ch]
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-handlers.[ch]
+	* app/gui/image-menu.c: changed accordingly.
+
+	* app/gui/preferences-dialog.c: added a convenience function that
+	creates a view on a GimpDisplayOptions object. Not all values are
+	configurable here yet.
+
+	* docs/gimprc-1.3.5.in
+	* etc/gimprc: regenerated to document the gimprc format changes.
+
+2003-10-22  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpwidgets-utils.[ch]: added new function
 	gimp_rgb_set_gdk_color().
 

@@ -51,6 +51,7 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpdisplay.h"
+#include "gimpdisplayoptions.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-callbacks.h"
@@ -185,10 +186,9 @@ gimp_display_shell_events (GtkWidget        *widget,
 
     case GDK_WINDOW_STATE:
       {
-	GdkEventWindowState        *sevent;
-        GimpDisplayShellAppearance  appearance;
-        gboolean                    fullscreen;
-        gboolean                    padding_mode_set;
+	GdkEventWindowState *sevent;
+        GimpDisplayOptions  *options;
+        gboolean             fullscreen;
 
 	sevent = (GdkEventWindowState *) event;
 
@@ -199,35 +199,27 @@ gimp_display_shell_events (GtkWidget        *widget,
 
         fullscreen = gimp_display_shell_get_fullscreen (shell);
 
-        if (fullscreen)
-          {
-            padding_mode_set = shell->fullscreen_appearance.padding_mode_set;
+        options = fullscreen ? shell->fullscreen_options : shell->options;
 
-            appearance = shell->fullscreen_appearance;
-            shell->fullscreen_appearance = shell->appearance;
-
-            shell->fullscreen_appearance.padding_mode_set = padding_mode_set;
-          }
-        else
-          {
-            padding_mode_set = shell->appearance.padding_mode_set;
-
-            appearance = shell->appearance;
-            shell->appearance = shell->fullscreen_appearance;
-
-            shell->appearance.padding_mode_set = padding_mode_set;
-          }
-
-        gimp_display_shell_set_show_selection  (shell, appearance.selection);
-        gimp_display_shell_set_show_layer      (shell, appearance.active_layer);
-        gimp_display_shell_set_show_guides     (shell, appearance.guides);
-        gimp_display_shell_set_show_grid       (shell, appearance.grid);
-        gimp_display_shell_set_show_menubar    (shell, appearance.menubar);
-        gimp_display_shell_set_show_rulers     (shell, appearance.rulers);
-        gimp_display_shell_set_show_scrollbars (shell, appearance.scrollbars);
-        gimp_display_shell_set_show_statusbar  (shell, appearance.statusbar);
-        gimp_display_shell_set_padding         (shell, appearance.padding_mode,
-                                                &appearance.padding_color);
+        gimp_display_shell_set_show_menubar    (shell,
+                                                options->show_menubar);
+        gimp_display_shell_set_show_rulers     (shell,
+                                                options->show_rulers);
+        gimp_display_shell_set_show_scrollbars (shell,
+                                                options->show_scrollbars);
+        gimp_display_shell_set_show_statusbar  (shell,
+                                                options->show_statusbar);
+        gimp_display_shell_set_show_selection  (shell,
+                                                options->show_selection);
+        gimp_display_shell_set_show_layer      (shell,
+                                                options->show_active_layer);
+        gimp_display_shell_set_show_guides     (shell,
+                                                options->show_guides);
+        gimp_display_shell_set_show_grid       (shell,
+                                                options->show_grid);
+        gimp_display_shell_set_padding         (shell,
+                                                options->padding_mode,
+                                                &options->padding_color);
 
         gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
 				      "/View/Fullscreen", fullscreen);
@@ -255,10 +247,10 @@ void
 gimp_display_shell_canvas_realize (GtkWidget        *canvas,
                                    GimpDisplayShell *shell)
 {
-  GimpDisplayConfig      *config;
-  GimpDisplay            *gdisp;
-  GimpDisplayPaddingMode  padding_mode;
-  GimpRGB                 padding_color;
+  GimpDisplayConfig     *config;
+  GimpDisplay           *gdisp;
+  GimpCanvasPaddingMode  padding_mode;
+  GimpRGB                padding_color;
 
   gdisp  = shell->gdisp;
   config = GIMP_DISPLAY_CONFIG (gdisp->gimage->gimp->config);
@@ -1347,15 +1339,14 @@ gimp_display_shell_color_button_changed (GtkWidget        *widget,
   GimpRGB color;
 
   if (gimp_display_shell_get_fullscreen (shell))
-    shell->fullscreen_appearance.padding_mode_set = TRUE;
+    shell->fullscreen_options->padding_mode_set = TRUE;
   else
-    shell->appearance.padding_mode_set = TRUE;
+    shell->options->padding_mode_set = TRUE;
 
   gimp_color_button_get_color (GIMP_COLOR_BUTTON (widget), &color);
 
   gimp_display_shell_set_padding (shell,
-                                  GIMP_DISPLAY_PADDING_MODE_CUSTOM,
-                                  &color);
+                                  GIMP_CANVAS_PADDING_MODE_CUSTOM, &color);
 }
 
 void
@@ -1363,46 +1354,47 @@ gimp_display_shell_color_button_menu_callback (gpointer   callback_data,
                                                guint      callback_action,
                                                GtkWidget *widget)
 {
-  GimpDisplayShellAppearance *appearance;
-  GimpDisplayShell           *shell;
-  gboolean                    fullscreen;
+  GimpDisplayOptions *options;
+  GimpDisplayShell   *shell;
+  gboolean            fullscreen;
 
   shell = GIMP_DISPLAY_SHELL (callback_data);
 
   fullscreen = gimp_display_shell_get_fullscreen (shell);
 
   if (fullscreen)
-    appearance = &shell->fullscreen_appearance;
+    options = shell->fullscreen_options;
   else
-    appearance = &shell->appearance;
+    options = shell->options;
 
-  if (callback_action == GIMP_DISPLAY_PADDING_MODE_CUSTOM)
+  if (callback_action == GIMP_CANVAS_PADDING_MODE_CUSTOM)
     {
       gtk_button_clicked (GTK_BUTTON (shell->padding_button));
     }
   else if (callback_action == 0xffff)
     {
-      GimpDisplayConfig *config;
+      GimpDisplayConfig  *config;
+      GimpDisplayOptions *default_options;
 
       config = GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config);
 
-      appearance->padding_mode_set = FALSE;
+      options->padding_mode_set = FALSE;
 
       if (fullscreen)
-        gimp_display_shell_set_padding (shell,
-                                        config->fs_canvas_padding_mode,
-                                        &config->fs_canvas_padding_color);
+        default_options = config->default_fullscreen_view;
       else
-        gimp_display_shell_set_padding (shell,
-                                        config->canvas_padding_mode,
-                                        &config->canvas_padding_color);
+        default_options = config->default_view;
+
+      gimp_display_shell_set_padding (shell,
+                                      default_options->padding_mode,
+                                      &default_options->padding_color);
     }
   else
     {
-      appearance->padding_mode_set = TRUE;
+      options->padding_mode_set = TRUE;
 
       gimp_display_shell_set_padding (shell, callback_action,
-                                      &appearance->padding_color);
+                                      &options->padding_color);
     }
 }
 

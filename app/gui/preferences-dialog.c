@@ -573,7 +573,7 @@ prefs_format_string_select_callback (GtkTreeSelection *sel,
 }
 
 static GtkWidget *
-prefs_frame_new (gchar        *label,
+prefs_frame_new (const gchar  *label,
 		 GtkContainer *parent,
                  gboolean      expand)
 {
@@ -810,6 +810,41 @@ prefs_memsize_entry_add (GObject     *config,
                                entry, 1, TRUE);
 
   return entry;
+}
+
+static void
+prefs_display_options_frame_add (Gimp         *gimp,
+                                 GObject      *object,
+                                 const gchar  *label,
+                                 GtkContainer *parent)
+{
+  GtkBox    *box;
+  GtkWidget *table;
+  GtkWidget *button;
+
+  box = GTK_BOX (prefs_frame_new (label, parent, FALSE));
+
+  prefs_check_button_add (object,
+                          "show-menubar",    _("Show Menubar"),    box);
+  prefs_check_button_add (object,
+                          "show-rulers",     _("Show _Rulers"),    box);
+  prefs_check_button_add (object,
+                          "show-scrollbars", _("Show Scrollbars"), box);
+  prefs_check_button_add (object,
+                          "show-statusbar",  _("Show S_tatusbar"), box);
+
+  table = prefs_table_new (2, GTK_CONTAINER (box), FALSE);
+
+  prefs_enum_option_menu_add (object, "padding-mode", 0, 0,
+                              _("Canvas Padding Mode:"), GTK_TABLE (table), 0);
+
+  button = prefs_color_button_add (object, "padding-color",
+                                   _("Custom Padding Color:"),
+                                   _("Select Custom Canvas Padding Color"),
+                                   GTK_TABLE (table), 1);
+  gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
+                                gimp_get_user_context (gimp));
+
 }
 
 static void
@@ -1380,63 +1415,15 @@ prefs_dialog_new (Gimp       *gimp,
 				     &grandchild_iter,
 				     page_index++);
 
-  /*  Normal Mode  */
-  vbox2 = prefs_frame_new (_("Default Appearance in Normal Mode"),
-                           GTK_CONTAINER (vbox), FALSE);
+  prefs_display_options_frame_add (gimp,
+                                   G_OBJECT (display_config->default_view),
+                                   _("Default Appearance in Normal Mode"),
+                                   GTK_CONTAINER (vbox));
 
-  prefs_check_button_add (object, "show-menubar",
-                          _("Show Menubar"),
-                          GTK_BOX (vbox2));
-  prefs_check_button_add (object, "show-rulers",
-                          _("Show _Rulers"),
-                          GTK_BOX (vbox2));
-  prefs_check_button_add (object, "show-scrollbars",
-                          _("Show Scrollbars"),
-                          GTK_BOX (vbox2));
-  prefs_check_button_add (object, "show-statusbar",
-                          _("Show S_tatusbar"),
-                          GTK_BOX (vbox2));
-
-  table = prefs_table_new (2, GTK_CONTAINER (vbox2), FALSE);
-
-  prefs_enum_option_menu_add (object, "canvas-padding-mode", 0, 0,
-                              _("Canvas Padding Mode:"),
-                              GTK_TABLE (table), 0);
-  button = prefs_color_button_add (object, "canvas-padding-color",
-                                   _("Custom Padding Color:"),
-                                   _("Select Custom Canvas Padding Color"),
-                                   GTK_TABLE (table), 1);
-  gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
-                                gimp_get_user_context (gimp));
-
-  /*  Fullscreen Mode  */
-  vbox2 = prefs_frame_new (_("Default Appearance in Fullscreen Mode"),
-                           GTK_CONTAINER (vbox), FALSE);
-
-  prefs_check_button_add (object, "fullscreen-show-menubar",
-                          _("Show Menubar"),
-                          GTK_BOX (vbox2));
-  prefs_check_button_add (object, "fullscreen-show-rulers",
-                          _("Show _Rulers"),
-                          GTK_BOX (vbox2));
-  prefs_check_button_add (object, "fullscreen-show-scrollbars",
-                          _("Show Scrollbars"),
-                          GTK_BOX (vbox2));
-  prefs_check_button_add (object, "fullscreen-show-statusbar",
-                          _("Show S_tatusbar"),
-                          GTK_BOX (vbox2));
-
-  table = prefs_table_new (2, GTK_CONTAINER (vbox2), FALSE);
-
-  prefs_enum_option_menu_add (object, "fullscreen-canvas-padding-mode", 0, 0,
-                              _("Canvas Padding Mode:"),
-                              GTK_TABLE (table), 0);
-  button = prefs_color_button_add (object, "fullscreen-canvas-padding-color",
-                                   _("Custom Padding Color:"),
-                                   _("Select Custom Canvas Padding Color"),
-                                   GTK_TABLE (table), 1);
-  gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
-                                gimp_get_user_context (gimp));
+  prefs_display_options_frame_add (gimp,
+                                   G_OBJECT (display_config->default_fullscreen_view),
+                                   _("Default Appearance in Fullscreen Mode"),
+                                   GTK_CONTAINER (vbox));
 
 
   /****************************************************************/

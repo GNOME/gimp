@@ -34,6 +34,7 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpdisplay.h"
+#include "gimpdisplayoptions.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-callbacks.h"
@@ -116,8 +117,8 @@ static gboolean   gimp_display_shell_idle_update_icon       (gpointer          d
 void
 gimp_display_shell_connect (GimpDisplayShell *shell)
 {
-  GimpDisplayConfig *display_config;
   GimpImage         *gimage;
+  GimpDisplayConfig *display_config;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_DISPLAY (shell->gdisp));
@@ -192,6 +193,7 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                     "notify::transparency-type",
                     G_CALLBACK (gimp_display_shell_check_notify_handler),
                     shell);
+
   g_signal_connect (gimage->gimp->config,
                     "notify::image-title-format",
                     G_CALLBACK (gimp_display_shell_title_notify_handler),
@@ -216,22 +218,24 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                     "notify::monitor-yresolution",
                     G_CALLBACK (gimp_display_shell_monitor_res_notify_handler),
                     shell);
-  g_signal_connect (gimage->gimp->config,
-                    "notify::canvas-padding-mode",
+
+  g_signal_connect (display_config->default_view,
+                    "notify::padding-mode",
                     G_CALLBACK (gimp_display_shell_padding_notify_handler),
                     shell);
-  g_signal_connect (gimage->gimp->config,
-                    "notify::canvas-padding-color",
+  g_signal_connect (display_config->default_view,
+                    "notify::padding-color",
                     G_CALLBACK (gimp_display_shell_padding_notify_handler),
                     shell);
-  g_signal_connect (gimage->gimp->config,
-                    "notify::fullscreen-canvas-padding-mode",
+  g_signal_connect (display_config->default_fullscreen_view,
+                    "notify::padding-mode",
                     G_CALLBACK (gimp_display_shell_padding_notify_handler),
                     shell);
-  g_signal_connect (gimage->gimp->config,
-                    "notify::fullscreen-canvas-padding-color",
+  g_signal_connect (display_config->default_fullscreen_view,
+                    "notify::padding-color",
                     G_CALLBACK (gimp_display_shell_padding_notify_handler),
                     shell);
+
   g_signal_connect (gimage->gimp->config,
                     "notify::marching-ants-speed",
                     G_CALLBACK (gimp_display_shell_ants_speed_notify_handler),
@@ -244,13 +248,16 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
 void
 gimp_display_shell_disconnect (GimpDisplayShell *shell)
 {
-  GimpImage *gimage;
+  GimpImage         *gimage;
+  GimpDisplayConfig *display_config;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_DISPLAY (shell->gdisp));
   g_return_if_fail (GIMP_IS_IMAGE (shell->gdisp->gimage));
 
   gimage = shell->gdisp->gimage;
+
+  display_config = GIMP_DISPLAY_CONFIG (gimage->gimp->config);
 
   if (shell->icon_idle_id)
     {
@@ -261,10 +268,10 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
   g_signal_handlers_disconnect_by_func (gimage->gimp->config,
                                         gimp_display_shell_ants_speed_notify_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (gimage->gimp->config,
+  g_signal_handlers_disconnect_by_func (display_config->default_view,
                                         gimp_display_shell_padding_notify_handler,
                                         shell);
-  g_signal_handlers_disconnect_by_func (gimage->gimp->config,
+  g_signal_handlers_disconnect_by_func (display_config->default_fullscreen_view,
                                         gimp_display_shell_monitor_res_notify_handler,
                                         shell);
   g_signal_handlers_disconnect_by_func (gimage->gimp->config,
@@ -502,15 +509,15 @@ gimp_display_shell_check_notify_handler (GObject          *config,
                                          GParamSpec       *param_spec,
                                          GimpDisplayShell *shell)
 {
-  GimpDisplayPaddingMode padding_mode;
-  GimpRGB                padding_color;
+  GimpCanvasPaddingMode padding_mode;
+  GimpRGB               padding_color;
 
   gimp_display_shell_get_padding (shell, &padding_mode, &padding_color);
 
   switch (padding_mode)
     {
-    case GIMP_DISPLAY_PADDING_MODE_LIGHT_CHECK:
-    case GIMP_DISPLAY_PADDING_MODE_DARK_CHECK:
+    case GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK:
+    case GIMP_CANVAS_PADDING_MODE_DARK_CHECK:
       gimp_display_shell_set_padding (shell, padding_mode, &padding_color);
       break;
 
@@ -574,20 +581,20 @@ gimp_display_shell_padding_notify_handler (GObject          *config,
                                            GParamSpec       *param_spec,
                                            GimpDisplayShell *shell)
 {
-  GimpDisplayConfig      *display_config;
-  gboolean                fullscreen;
-  GimpDisplayPaddingMode  padding_mode;
-  GimpRGB                 padding_color;
+  GimpDisplayConfig     *display_config;
+  gboolean               fullscreen;
+  GimpCanvasPaddingMode  padding_mode;
+  GimpRGB                padding_color;
 
-  display_config = GIMP_DISPLAY_CONFIG (config);
+  display_config = GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config);
 
   fullscreen = gimp_display_shell_get_fullscreen (shell);
 
   /*  if the user did not set the padding mode for this display explicitely  */
-  if (! shell->fullscreen_appearance.padding_mode_set)
+  if (! shell->fullscreen_options->padding_mode_set)
     {
-      padding_mode  = display_config->fs_canvas_padding_mode;
-      padding_color = display_config->fs_canvas_padding_color;
+      padding_mode  = display_config->default_fullscreen_view->padding_mode;
+      padding_color = display_config->default_fullscreen_view->padding_color;
 
       if (fullscreen)
         {
@@ -595,21 +602,21 @@ gimp_display_shell_padding_notify_handler (GObject          *config,
        }
       else
         {
-          shell->fullscreen_appearance.padding_mode  = padding_mode;
-          shell->fullscreen_appearance.padding_color = padding_color;
+          shell->fullscreen_options->padding_mode  = padding_mode;
+          shell->fullscreen_options->padding_color = padding_color;
         }
     }
 
   /*  if the user did not set the padding mode for this display explicitely  */
-  if (! shell->appearance.padding_mode_set)
+  if (! shell->options->padding_mode_set)
     {
-      padding_mode  = display_config->canvas_padding_mode;
-      padding_color = display_config->canvas_padding_color;
+      padding_mode  = display_config->default_view->padding_mode;
+      padding_color = display_config->default_view->padding_color;
 
        if (fullscreen)
         {
-          shell->appearance.padding_mode  = padding_mode;
-          shell->appearance.padding_color = padding_color;
+          shell->options->padding_mode  = padding_mode;
+          shell->options->padding_color = padding_color;
        }
       else
         {

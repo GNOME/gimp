@@ -18,6 +18,8 @@ libappdisplay_a_sources = \
 	display-types.h				\
 	gimpdisplay.c				\
 	gimpdisplay.h				\
+	gimpdisplayoptions.c			\
+	gimpdisplayoptions.h			\
 	gimpdisplay-area.c			\
 	gimpdisplay-area.h			\
 	gimpdisplay-foreach.c			\

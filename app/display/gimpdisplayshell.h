@@ -27,26 +27,6 @@
 #include "gui/gui-types.h"
 
 
-typedef struct _GimpDisplayShellAppearance GimpDisplayShellAppearance;
-
-struct _GimpDisplayShellAppearance
-{
-  gboolean               selection;
-  gboolean               active_layer;
-  gboolean               guides;
-  gboolean               grid;
-
-  gboolean               menubar;
-  gboolean               rulers;
-  gboolean               scrollbars;
-  gboolean               statusbar;
-
-  GimpDisplayPaddingMode padding_mode;
-  GimpRGB                padding_color;
-  gboolean               padding_mode_set;
-};
-
-
 /* finding the effective screen resolution (double) */
 #define  SCREEN_XRES(s)   (s->dot_for_dot ? \
                            s->gdisp->gimage->xresolution : s->monitor_xres)
@@ -170,8 +150,8 @@ struct _GimpDisplayShell
   GQuark            vectors_thaw_handler;
   GQuark            vectors_visible_handler;
 
-  GimpDisplayShellAppearance appearance;
-  GimpDisplayShellAppearance fullscreen_appearance;
+  GimpDisplayOptions *options;
+  GimpDisplayOptions *fullscreen_options;
 
   /*  the state of gimp_display_shell_tool_events()  */
   gboolean          space_pressed;

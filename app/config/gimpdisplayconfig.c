@@ -28,6 +28,10 @@
 
 #include "config-types.h"
 
+#include "display/display-enums.h"
+#include "display/gimpdisplayoptions.h"
+
+#include "gimpconfig.h"
 #include "gimpconfig-params.h"
 #include "gimpconfig-types.h"
 #include "gimpconfig-utils.h"
@@ -39,6 +43,7 @@
 
 
 static void  gimp_display_config_class_init   (GimpDisplayConfigClass *klass);
+static void  gimp_display_config_init         (GimpDisplayConfig      *config);
 static void  gimp_display_config_finalize     (GObject      *object);
 static void  gimp_display_config_set_property (GObject      *object,
                                                guint         property_id,
@@ -49,9 +54,17 @@ static void  gimp_display_config_get_property (GObject      *object,
                                                GValue       *value,
                                                GParamSpec   *pspec);
 
+static void  gimp_display_config_view_notify       (GObject    *object,
+                                                    GParamSpec *pspec,
+                                                    gpointer    data);
+static void  gimp_display_config_fullscreen_notify (GObject    *object,
+                                                    GParamSpec *pspec,
+                                                    gpointer    data);
+
 
 #define DEFAULT_IMAGE_TITLE_FORMAT  "%f-%p.%i (%t, %L) %z%%"
 #define DEFAULT_IMAGE_STATUS_FORMAT "%n (%m)"
+
 
 enum
 {
@@ -73,18 +86,8 @@ enum
   PROP_MONITOR_YRESOLUTION,
   PROP_MONITOR_RES_FROM_GDK,
   PROP_NAV_PREVIEW_SIZE,
-  PROP_SHOW_MENUBAR,
-  PROP_SHOW_RULERS,
-  PROP_SHOW_SCROLLBARS,
-  PROP_SHOW_STATUSBAR,
-  PROP_CANVAS_PADDING_MODE,
-  PROP_CANVAS_PADDING_COLOR,
-  PROP_FS_SHOW_MENUBAR,
-  PROP_FS_SHOW_RULERS,
-  PROP_FS_SHOW_SCROLLBARS,
-  PROP_FS_SHOW_STATUSBAR,
-  PROP_FS_CANVAS_PADDING_MODE,
-  PROP_FS_CANVAS_PADDING_COLOR
+  PROP_DEFAULT_VIEW,
+  PROP_DEFAULT_FULLSCREEN_VIEW
 };
 
 static GObjectClass *parent_class = NULL;
@@ -107,7 +110,7 @@ gimp_display_config_get_type (void)
 	NULL,           /* class_data     */
 	sizeof (GimpDisplayConfig),
 	0,              /* n_preallocs    */
-	NULL            /* instance_init  */
+	(GInstanceInitFunc) gimp_display_config_init
       };
 
       config_type = g_type_register_static (GIMP_TYPE_CORE_CONFIG,
@@ -218,76 +221,49 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                  GIMP_PREVIEW_SIZE_MEDIUM,
                                  0);
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_MENUBAR,
-                                    "show-menubar", SHOW_MENUBAR_BLURB,
-                                    TRUE,
-                                    0);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_RULERS,
-                                    "show-rulers", SHOW_RULERS_BLURB,
-                                    TRUE,
-                                    0);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SCROLLBARS,
-                                    "show-scrollbars", SHOW_SCROLLBARS_BLURB,
-                                    TRUE,
-                                    0);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_STATUSBAR,
-                                    "show-statusbar", SHOW_STATUSBAR_BLURB,
-                                    TRUE,
-                                    0);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CANVAS_PADDING_MODE,
-                                 "canvas-padding-mode",
-                                 CANVAS_PADDING_MODE_BLURB,
-                                 GIMP_TYPE_DISPLAY_PADDING_MODE,
-                                 GIMP_DISPLAY_PADDING_MODE_DEFAULT,
-                                 0);
-  GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_CANVAS_PADDING_COLOR,
-                                  "canvas-padding-color",
-                                  CANVAS_PADDING_COLOR_BLURB,
-                                  &white,
-                                  0);
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_DEFAULT_VIEW,
+                                   "default-view",
+                                   DEFAULT_VIEW_BLURB,
+                                   GIMP_TYPE_DISPLAY_OPTIONS,
+                                   GIMP_PARAM_AGGREGATE);
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_DEFAULT_FULLSCREEN_VIEW,
+                                   "default-fullscreen-view",
+                                   DEFAULT_FULLSCREEN_VIEW_BLURB,
+                                   GIMP_TYPE_DISPLAY_OPTIONS,
+                                   GIMP_PARAM_AGGREGATE);
+}
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FS_SHOW_MENUBAR,
-                                    "fullscreen-show-menubar",
-                                    FS_SHOW_MENUBAR_BLURB,
-                                    FALSE,
-                                    0);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FS_SHOW_RULERS,
-                                    "fullscreen-show-rulers",
-                                    FS_SHOW_RULERS_BLURB,
-                                    FALSE,
-                                    0);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FS_SHOW_SCROLLBARS,
-                                    "fullscreen-show-scrollbars",
-                                    FS_SHOW_SCROLLBARS_BLURB,
-                                    FALSE,
-                                    0);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FS_SHOW_STATUSBAR,
-                                    "fullscreen-show-statusbar",
-                                    FS_SHOW_STATUSBAR_BLURB,
-                                    FALSE,
-                                    0);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FS_CANVAS_PADDING_MODE,
-                                 "fullscreen-canvas-padding-mode",
-                                 FS_CANVAS_PADDING_MODE_BLURB,
-                                 GIMP_TYPE_DISPLAY_PADDING_MODE,
-                                 GIMP_DISPLAY_PADDING_MODE_CUSTOM,
-                                 0);
-  GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_FS_CANVAS_PADDING_COLOR,
-                                  "fullscreen-canvas-padding-color",
-                                  FS_CANVAS_PADDING_COLOR_BLURB,
-                                  &black,
-                                  0);
+static void
+gimp_display_config_init (GimpDisplayConfig *config)
+{
+  config->default_view =
+    g_object_new (GIMP_TYPE_DISPLAY_OPTIONS, NULL);
+
+  g_signal_connect (config->default_view, "notify",
+                    G_CALLBACK (gimp_display_config_view_notify),
+                    config);
+
+  config->default_fullscreen_view =
+    g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_FULLSCREEN, NULL);
+
+  g_signal_connect (config->default_fullscreen_view, "notify",
+                    G_CALLBACK (gimp_display_config_fullscreen_notify),
+                    config);
 }
 
 static void
 gimp_display_config_finalize (GObject *object)
 {
-  GimpDisplayConfig *display_config;
-
-  display_config = GIMP_DISPLAY_CONFIG (object);
+  GimpDisplayConfig *display_config = GIMP_DISPLAY_CONFIG (object);
 
   g_free (display_config->image_title_format);
   g_free (display_config->image_status_format);
+
+  if (display_config->default_view)
+    g_object_unref (display_config->default_view);
+
+  if (display_config->default_fullscreen_view)
+    g_object_unref (display_config->default_fullscreen_view);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -298,9 +274,7 @@ gimp_display_config_set_property (GObject      *object,
 				  const GValue *value,
 				  GParamSpec   *pspec)
 {
-  GimpDisplayConfig *display_config;
-
-  display_config = GIMP_DISPLAY_CONFIG (object);
+  GimpDisplayConfig *display_config = GIMP_DISPLAY_CONFIG (object);
 
   switch (property_id)
     {
@@ -357,43 +331,15 @@ gimp_display_config_set_property (GObject      *object,
     case PROP_NAV_PREVIEW_SIZE:
       display_config->nav_preview_size = g_value_get_enum (value);
       break;
-
-    case PROP_SHOW_MENUBAR:
-      display_config->show_menubar = g_value_get_boolean (value);
+    case PROP_DEFAULT_VIEW:
+      if (g_value_get_object (value))
+        gimp_config_sync (GIMP_CONFIG (g_value_get_object (value)),
+                          GIMP_CONFIG (display_config->default_view), 0);
       break;
-    case PROP_SHOW_RULERS:
-      display_config->show_rulers = g_value_get_boolean (value);
-      break;
-    case PROP_SHOW_SCROLLBARS:
-      display_config->show_scrollbars = g_value_get_boolean (value);
-      break;
-    case PROP_SHOW_STATUSBAR:
-      display_config->show_statusbar = g_value_get_boolean (value);
-      break;
-    case PROP_CANVAS_PADDING_MODE:
-      display_config->canvas_padding_mode = g_value_get_enum (value);
-      break;
-    case PROP_CANVAS_PADDING_COLOR:
-      display_config->canvas_padding_color = *(GimpRGB *) g_value_get_boxed (value);
-      break;
-
-    case PROP_FS_SHOW_MENUBAR:
-      display_config->fs_show_menubar = g_value_get_boolean (value);
-      break;
-    case PROP_FS_SHOW_RULERS:
-      display_config->fs_show_rulers = g_value_get_boolean (value);
-      break;
-    case PROP_FS_SHOW_SCROLLBARS:
-      display_config->fs_show_scrollbars = g_value_get_boolean (value);
-      break;
-    case PROP_FS_SHOW_STATUSBAR:
-      display_config->fs_show_statusbar = g_value_get_boolean (value);
-      break;
-    case PROP_FS_CANVAS_PADDING_MODE:
-      display_config->fs_canvas_padding_mode = g_value_get_enum (value);
-      break;
-    case PROP_FS_CANVAS_PADDING_COLOR:
-      display_config->fs_canvas_padding_color = *(GimpRGB *) g_value_get_boxed (value);
+    case PROP_DEFAULT_FULLSCREEN_VIEW:
+      if (g_value_get_object (value))
+        gimp_config_sync (GIMP_CONFIG (g_value_get_object (value)),
+                          GIMP_CONFIG (display_config->default_fullscreen_view), 0);
       break;
 
     default:
@@ -408,9 +354,7 @@ gimp_display_config_get_property (GObject    *object,
 				  GValue     *value,
 				  GParamSpec *pspec)
 {
-  GimpDisplayConfig *display_config;
-
-  display_config = GIMP_DISPLAY_CONFIG (object);
+  GimpDisplayConfig *display_config = GIMP_DISPLAY_CONFIG (object);
 
   switch (property_id)
     {
@@ -465,47 +409,31 @@ gimp_display_config_get_property (GObject    *object,
     case PROP_NAV_PREVIEW_SIZE:
       g_value_set_enum (value, display_config->nav_preview_size);
       break;
-
-    case PROP_SHOW_MENUBAR:
-      g_value_set_boolean (value, display_config->show_menubar);
+    case PROP_DEFAULT_VIEW:
+      g_value_set_object (value, display_config->default_view);
       break;
-    case PROP_SHOW_RULERS:
-      g_value_set_boolean (value, display_config->show_rulers);
-      break;
-    case PROP_SHOW_SCROLLBARS:
-      g_value_set_boolean (value, display_config->show_scrollbars);
-      break;
-    case PROP_SHOW_STATUSBAR:
-      g_value_set_boolean (value, display_config->show_statusbar);
-      break;
-    case PROP_CANVAS_PADDING_MODE:
-      g_value_set_enum (value, display_config->canvas_padding_mode);
-      break;
-    case PROP_CANVAS_PADDING_COLOR:
-      g_value_set_boxed (value, &display_config->canvas_padding_color);
-      break;
-
-    case PROP_FS_SHOW_MENUBAR:
-      g_value_set_boolean (value, display_config->fs_show_menubar);
-      break;
-    case PROP_FS_SHOW_RULERS:
-      g_value_set_boolean (value, display_config->fs_show_rulers);
-      break;
-    case PROP_FS_SHOW_SCROLLBARS:
-      g_value_set_boolean (value, display_config->fs_show_scrollbars);
-      break;
-    case PROP_FS_SHOW_STATUSBAR:
-      g_value_set_boolean (value, display_config->fs_show_statusbar);
-      break;
-    case PROP_FS_CANVAS_PADDING_MODE:
-      g_value_set_enum (value, display_config->fs_canvas_padding_mode);
-      break;
-    case PROP_FS_CANVAS_PADDING_COLOR:
-      g_value_set_boxed (value, &display_config->fs_canvas_padding_color);
+    case PROP_DEFAULT_FULLSCREEN_VIEW:
+      g_value_set_object (value, display_config->default_fullscreen_view);
       break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_display_config_view_notify (GObject    *object,
+                                 GParamSpec *pspec,
+                                 gpointer    data)
+{
+  g_object_notify (G_OBJECT (data), "default-view");
+}
+
+static void
+gimp_display_config_fullscreen_notify (GObject    *object,
+                                       GParamSpec *pspec,
+                                       gpointer    data)
+{
+  g_object_notify (G_OBJECT (data), "default-fullscreen-view");
 }

@@ -38,39 +38,27 @@ typedef struct _GimpDisplayConfigClass GimpDisplayConfigClass;
 
 struct _GimpDisplayConfig
 {
-  GimpCoreConfig          parent_instance;
+  GimpCoreConfig      parent_instance;
 
-  gint                    marching_ants_speed;
-  gboolean                colormap_cycling;
-  gboolean                resize_windows_on_zoom;
-  gboolean                resize_windows_on_resize;
-  gboolean                default_dot_for_dot;
-  gboolean                initial_zoom_to_fit;
-  gboolean                perfect_mouse;
-  GimpCursorMode          cursor_mode;
-  gboolean                cursor_updating;
-  gboolean                show_brush_outline;
-  gchar                  *image_title_format;
-  gchar                  *image_status_format;
-  gboolean                confirm_on_close;
-  gdouble                 monitor_xres;
-  gdouble                 monitor_yres;
-  gboolean                monitor_res_from_gdk;
-  GimpPreviewSize         nav_preview_size;
-
-  gboolean                show_menubar;
-  gboolean                show_rulers;
-  gboolean                show_scrollbars;
-  gboolean                show_statusbar;
-  GimpDisplayPaddingMode  canvas_padding_mode;
-  GimpRGB                 canvas_padding_color;
-
-  gboolean                fs_show_menubar;
-  gboolean                fs_show_rulers;
-  gboolean                fs_show_scrollbars;
-  gboolean                fs_show_statusbar;
-  GimpDisplayPaddingMode  fs_canvas_padding_mode;
-  GimpRGB                 fs_canvas_padding_color;
+  gint                marching_ants_speed;
+  gboolean            colormap_cycling;
+  gboolean            resize_windows_on_zoom;
+  gboolean            resize_windows_on_resize;
+  gboolean            default_dot_for_dot;
+  gboolean            initial_zoom_to_fit;
+  gboolean            perfect_mouse;
+  GimpCursorMode      cursor_mode;
+  gboolean            cursor_updating;
+  gboolean            show_brush_outline;
+  gchar              *image_title_format;
+  gchar              *image_status_format;
+  gboolean            confirm_on_close;
+  gdouble             monitor_xres;
+  gdouble             monitor_yres;
+  gboolean            monitor_res_from_gdk;
+  GimpPreviewSize     nav_preview_size;
+  GimpDisplayOptions *default_view;
+  GimpDisplayOptions *default_fullscreen_view;
 };
 
 struct _GimpDisplayConfigClass

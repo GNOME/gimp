@@ -23,21 +23,22 @@
 #define __CONFIG_TYPES_H__
 
 
-typedef struct _GimpConfig          GimpConfig; /* dummy typedef */
-typedef struct _GimpConfigInterface GimpConfigInterface;
+typedef struct _GimpConfig           GimpConfig; /* dummy typedef */
+typedef struct _GimpConfigInterface  GimpConfigInterface;
 
-typedef struct _GimpBaseConfig      GimpBaseConfig;
-typedef struct _GimpCoreConfig      GimpCoreConfig;
-typedef struct _GimpDisplayConfig   GimpDisplayConfig;
-typedef struct _GimpGuiConfig       GimpGuiConfig;
-typedef struct _GimpPluginConfig    GimpPluginConfig;
-typedef struct _GimpRc              GimpRc;
+typedef struct _GimpBaseConfig       GimpBaseConfig;
+typedef struct _GimpCoreConfig       GimpCoreConfig;
+typedef struct _GimpDisplayConfig    GimpDisplayConfig;
+typedef struct _GimpGuiConfig        GimpGuiConfig;
+typedef struct _GimpPluginConfig     GimpPluginConfig;
+typedef struct _GimpRc               GimpRc;
 
-typedef struct _GimpConfigWriter    GimpConfigWriter;
-typedef struct _GimpXmlParser       GimpXmlParser;
+typedef struct _GimpConfigWriter     GimpConfigWriter;
+typedef struct _GimpXmlParser        GimpXmlParser;
 
-typedef struct _GimpGrid            GimpGrid;
-typedef struct _GimpTemplate        GimpTemplate;
+typedef struct _GimpDisplayOptions   GimpDisplayOptions;
+typedef struct _GimpGrid             GimpGrid;
+typedef struct _GimpTemplate         GimpTemplate;
 
 
 #endif /* __CONFIG_TYPES_H__ */

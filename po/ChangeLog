@@ -1,3 +1,7 @@
+2003-10-22  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added app/display/gimpdisplayoptions.c.
+
 2003-10-21  Miloslav Trmac  <mitr@volny.cz>
 
 	* cs.po: Updated Czech translation.
@@ -8,7 +12,7 @@
 
 2003-10-20  Marco Ciampa <ciampix@libero.it>
 
-	*  it.po: Updated italian translation.
+	* it.po: Updated italian translation.
 	
 2003-10-19  Jan Morén  <jan.moren@lucs.lu.se>
 
@@ -37,7 +41,7 @@
 
 2003-10-15  Marco Ciampa <ciampix@libero.it>
 
-	*  it.po: Updated italian translation.
+	* it.po: Updated italian translation.
 	
 2003-10-15  Sven Neumann  <sven@gimp.org>
 
