@@ -404,7 +404,7 @@ gimp_menu_add_none (GtkWidget *menu)
 {
   GtkWidget *menuitem;
 
-  menuitem = gtk_menu_item_new_with_label (_("None"));
+  menuitem = gtk_menu_item_new_with_label (_("(None)"));
   gtk_widget_set_sensitive (menuitem, FALSE);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
   gtk_widget_show (menuitem);

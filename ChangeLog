@@ -1,5 +1,13 @@
 2004-04-21  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpmenu.c (gimp_menu_add_none): use the same label as
+	in the new combo_box widgets.
+
+	* libgimpwidgets/gimpintcombobox.[ch]
+	* libgimpwidgets/gimpintstore.[ch]: use LibGIMP copyright headers.
+
+2004-04-21  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpdrawablecombobox.c
 	* libgimp/gimpimagecombobox.c
 	* libgimp/gimppixbuf.c
