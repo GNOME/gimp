@@ -1,3 +1,7 @@
+2003-07-08  Sven Neumann  <sven@gimp.org>
+
+	* gimp-tips.xml.in: fixed a wrong tip spotted by Raymond Ostertag.
+
 2003-07-05  Sven Neumann  <sven@gimp.org>
 
 	* gimp-tips.xml.in: removed a non-ASCII character. Seems to be

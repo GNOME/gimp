@@ -252,7 +252,7 @@
   </tip>
   <tip level="advanced">
     <_thetip>
-    <tt>Shift</tt>-click with the Bucket Fill tool to have it use
+    <tt>Ctrl</tt>-click with the Bucket Fill tool to have it use
     the background color instead of the foreground color.
     </_thetip>
   </tip>
