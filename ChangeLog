@@ -1,5 +1,13 @@
 2005-02-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_tool_events): put back some important
+	code that was accidentially removed when fixing bug #162823. Also
+	moved the calls to gtk_grab_add() and gtk_grab_remove() around a
+	bit.
+
+2005-02-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimptoolbox.c (toolbox_area_notify): apply evil
 	size_request hacks to the color/image/foo areas' wrapbox because
 	its child requisition/allocation code is apparently broken. Works
