@@ -309,7 +309,9 @@ transform_options_init (TransformOptions     *options,
   gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox), 
 		      options->clip_w, FALSE, FALSE, 0);
   gtk_widget_show (options->clip_w);
-  
+
+  /* Set options to default values */
+  transform_options_reset((ToolOptions *) options);
 }
 
 TransformOptions *
