@@ -1,3 +1,11 @@
+2000-08-09  Kevin Turner  <acapnotic@users.sourceforge.net>
+
+	* plug-ins/pygimp/gimpmodule.c (chn_getattr): under "layer",
+	remove the call to gimp_channel_get_layer_id() as this function
+	does not exist.  It would be well for someone who knows pygimp
+	better than I to review this change, but it keeps pygimp from
+	being *completely* broken.
+
 2000-08-09  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gfli/gfli.c: removed double install_procedure for 
@@ -94,6 +102,7 @@ Mon Aug  7 10:07:12 CEST 2000  Marc Lehmann <pcg@goof.com>
         * plug-ins/common/png.c: Applied patch from pk@kaempf.ch (closes
         bug #20029).
 
+>>>>>>> 1.2843
 2000-08-06  Asbjorn Pettersen  <asbjornP@dualog.no>
 
 	* app/plug_in.c (xspawnv): #define xspawnv spawnv    for OS/2

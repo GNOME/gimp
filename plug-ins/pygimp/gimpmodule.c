@@ -2716,7 +2716,19 @@ chn_getattr(self, name)
     if (!strcmp(name, "is_indexed"))
 	return PyInt_FromLong(gimp_drawable_is_indexed(self->ID));
     if (!strcmp(name, "layer")) {
-	id = gimp_channel_get_layer_id(self->ID);
+	/* id = gimp_channel_get_layer_id(self->ID); */
+	/* It isn't quite clear what that was supposed to achieve, but
+	   the gimp_channel_get_layer_id call no longer exists, which
+	   was breaking everything that tried to load gimpmodule.so.
+
+	   With no-one apparently maintaing it, the options seem to be:
+	    A) remove this "layer" attribute entirely, as it doesn't
+	       seem to make much sense.
+            B) Just return the channel ID.
+	   
+	    The latter seems more conservative, so that's what I'll do.
+	    -- acapnotic@users.sourceforge.net (08/09/2000) */
+	id = self->ID;
 	if (id == -1) {
 	    Py_INCREF(Py_None);
 	    return Py_None;
