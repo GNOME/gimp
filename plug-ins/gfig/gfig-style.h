@@ -26,78 +26,77 @@
 #ifndef __GFIG_STYLE_H__
 #define __GFIG_STYLE_H__
 
-void set_foreground_callback    (GimpColorButton *button,
-                                 gpointer         data);
+void     set_foreground_callback           (GimpColorButton      *button,
+                                            gpointer              data);
 
-void set_background_callback    (GimpColorButton *button,
-                                 gpointer         data);
-
-
-void gfig_brush_changed_callback (const gchar *brush_name,
-                                  gdouble opacity,
-                                  gint spacing,
-                                  GimpLayerModeEffects paint_mode,
-                                  gint width,
-                                  gint height,
-                                  const guchar *mask_data,
-                                  gboolean dialog_closing,
-                                  gpointer user_data);
+void     set_background_callback           (GimpColorButton      *button,
+                                            gpointer              data);
 
 
-void gfig_pattern_changed_callback (const gchar *pattern_name,
-                                    gint width,
-                                    gint height,
-                                    gint bpp,
-                                    const guchar *mask_data,
-                                    gboolean dialog_closing,
-                                    gpointer user_data);
+void     gfig_brush_changed_callback       (const gchar          *brush_name,
+                                            gdouble               opacity,
+                                            gint                  spacing,
+                                            GimpLayerModeEffects  paint_mode,
+                                            gint                  width,
+                                            gint                  height,
+                                            const guchar         *mask_data,
+                                            gboolean              dialog_closing,
+                                            gpointer              user_data);
 
-void gfig_gradient_changed_callback (const gchar *gradient_name,
-                                     gint width,
-                                     const gdouble *grad_data,
-                                     gboolean dialog_closing,
-                                     gpointer user_data);
+void     gfig_pattern_changed_callback     (const gchar          *pattern_name,
+                                            gint                  width,
+                                            gint                  height,
+                                            gint                  bpp,
+                                            const guchar         *mask_data,
+                                            gboolean              dialog_closing,
+                                            gpointer              user_data);
 
-void mygimp_brush_info              (gint *width,
-                                     gint *height);
+void     gfig_gradient_changed_callback    (const gchar          *gradient_name,
+                                            gint                  width,
+                                            const gdouble        *grad_data,
+                                            gboolean              dialog_closing,
+                                            gpointer              user_data);
 
-void gfig_read_gimp_style          (Style *style,
-                                    const gchar *name);
+void     mygimp_brush_info                 (gint                 *width,
+                                            gint                 *height);
 
-void gfig_style_append             (Style *style);
+void     gfig_read_gimp_style              (Style                *style,
+                                            const gchar          *name);
 
-void gfig_style_apply             (Style *style);
+void     gfig_style_append                 (Style                *style);
 
-void gfig_style_copy              (Style *style1,
-                                   Style *style0,
-                                   const gchar *name);
+void     gfig_style_apply                  (Style                *style);
 
-void gfig_rgba_copy               (GimpRGB *color1,
-                                   GimpRGB *color2);
+void     gfig_style_copy                   (Style                *style1,
+                                            Style                *style0,
+                                            const gchar          *name);
 
-void gfig_style_copy              (Style *style1,
-                                   Style *style0,
-                                   const gchar *name);
+void     gfig_rgba_copy                    (GimpRGB              *color1,
+                                            GimpRGB              *color2);
 
-gboolean gfig_load_style          (Style *style,
-                                   FILE    *fp);
+void     gfig_style_copy                   (Style                *style1,
+                                            Style                *style0,
+                                            const gchar          *name);
 
-gboolean gfig_skip_style          (Style *style,
-                                   FILE    *fp);
+gboolean gfig_load_style                   (Style                *style,
+                                            FILE                 *fp);
 
-gboolean gfig_load_styles         (GFigObj *gfig,
-                                   FILE *fp);
+gboolean gfig_skip_style                   (Style                *style,
+                                            FILE                 *fp);
 
-void gfig_save_style              (Style   *style,
-                                   GString *string);
+gboolean gfig_load_styles                  (GFigObj              *gfig,
+                                            FILE                 *fp);
 
-void gfig_style_save_as_attributes (Style   *style,
-                                    GString *string);
+void     gfig_save_style                   (Style                *style,
+                                            GString              *string);
 
-void gfig_save_styles             (GString *string);
+void     gfig_style_save_as_attributes     (Style                *style,
+                                            GString              *string);
 
-void gfig_style_set_context_from_style (Style *style);
+void     gfig_save_styles                  (GString              *string);
 
-void gfig_style_set_style_from_context (Style *style);
+void     gfig_style_set_context_from_style (Style                *style);
+
+void     gfig_style_set_style_from_context (Style                *style);
 
 #endif /* __GFIG_STYLE_H__ */

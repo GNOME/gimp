@@ -66,20 +66,20 @@ tool_options_star (GtkWidget *notebook,
 static void
 d_draw_star (Dobject *obj)
 {
-  DobjPoints * center_pnt;
-  DobjPoints * outer_radius_pnt;
-  DobjPoints * inner_radius_pnt;
-  gint16 shift_x;
-  gint16 shift_y;
-  gdouble ang_grid;
-  gdouble ang_loop;
-  gdouble outer_radius;
-  gdouble inner_radius;
-  gdouble offset_angle;
-  gint loop;
-  GdkPoint start_pnt;
-  GdkPoint first_pnt;
-  gboolean do_line = FALSE;
+  DobjPoints *center_pnt;
+  DobjPoints *outer_radius_pnt;
+  DobjPoints *inner_radius_pnt;
+  gint16      shift_x;
+  gint16      shift_y;
+  gdouble     ang_grid;
+  gdouble     ang_loop;
+  gdouble     outer_radius;
+  gdouble     inner_radius;
+  gdouble     offset_angle;
+  gint        loop;
+  GdkPoint    start_pnt;
+  GdkPoint    first_pnt;
+  gboolean    do_line = FALSE;
 
   center_pnt = obj->points;
 
@@ -124,7 +124,7 @@ d_draw_star (Dobject *obj)
   outer_radius = sqrt ((shift_x*shift_x) + (shift_y*shift_y));
 
   /* Lines */
-  ang_grid = 2*G_PI/(2.0*(gdouble) obj->type_data);
+  ang_grid = 2.0 * G_PI / (2.0 * (gdouble) obj->type_data);
   offset_angle = atan2 (shift_y, shift_x);
 
   shift_x = inner_radius_pnt->pnt.x - center_pnt->pnt.x;
@@ -178,22 +178,22 @@ d_paint_star (Dobject *obj)
 {
   /* first point center */
   /* Next point is radius */
-  gdouble *line_pnts;
-  gint seg_count = 0;
-  gint i = 0;
-  DobjPoints * center_pnt;
-  DobjPoints * outer_radius_pnt;
-  DobjPoints * inner_radius_pnt;
-  gint16 shift_x;
-  gint16 shift_y;
-  gdouble ang_grid;
-  gdouble ang_loop;
-  gdouble outer_radius;
-  gdouble inner_radius;
-  gdouble offset_angle;
-  gint loop;
-  GdkPoint first_pnt, last_pnt;
-  gboolean first = TRUE;
+  gdouble    *line_pnts;
+  gint        seg_count = 0;
+  gint        i = 0;
+  DobjPoints *center_pnt;
+  DobjPoints *outer_radius_pnt;
+  DobjPoints *inner_radius_pnt;
+  gint16      shift_x;
+  gint16      shift_y;
+  gdouble     ang_grid;
+  gdouble     ang_loop;
+  gdouble     outer_radius;
+  gdouble     inner_radius;
+  gdouble     offset_angle;
+  gint        loop;
+  GdkPoint    first_pnt, last_pnt;
+  gboolean    first = TRUE;
 
   g_assert (obj != NULL);
 
@@ -235,7 +235,7 @@ d_paint_star (Dobject *obj)
   outer_radius = sqrt ((shift_x*shift_x) + (shift_y*shift_y));
 
   /* Lines */
-  ang_grid = 2*G_PI/(2.0*(gdouble) obj->type_data);
+  ang_grid = 2.0 * G_PI / (2.0 * (gdouble) obj->type_data);
   offset_angle = atan2 (shift_y, shift_x);
 
   shift_x = inner_radius_pnt->pnt.x - center_pnt->pnt.x;
@@ -243,9 +243,9 @@ d_paint_star (Dobject *obj)
 
   inner_radius = sqrt ((shift_x*shift_x) + (shift_y*shift_y));
 
-  for (loop = 0 ; loop < 2*obj->type_data ; loop++)
+  for (loop = 0 ; loop < 2 * obj->type_data ; loop++)
     {
-      gdouble lx, ly;
+      gdouble  lx, ly;
       GdkPoint calc_pnt;
 
       ang_loop = (gdouble)loop * ang_grid + offset_angle;
@@ -289,13 +289,13 @@ d_paint_star (Dobject *obj)
 
   /* Reverse line if approp */
   if (selvals.reverselines)
-    reverse_pairs_list (&line_pnts[0], i/2);
+    reverse_pairs_list (&line_pnts[0], i / 2);
 
   /* Scale before drawing */
   if (selvals.scaletoimage)
-    scale_to_original_xy (&line_pnts[0], i/2);
+    scale_to_original_xy (&line_pnts[0], i / 2);
   else
-    scale_to_xy (&line_pnts[0], i/2);
+    scale_to_xy (&line_pnts[0], i / 2);
 
   gimp_free_select (gfig_context->image_id,
                     i, line_pnts,
@@ -369,8 +369,8 @@ d_update_star (GdkPoint *pnt)
       selvals.opts.showcontrol = 0;
       d_draw_star (obj_creating);
       outer_pnt->pnt = *pnt;
-      inner_pnt->pnt.x = pnt->x + (2*(center_pnt->pnt.x - pnt->x))/3;
-      inner_pnt->pnt.y = pnt->y + (2*(center_pnt->pnt.y - pnt->y))/3;
+      inner_pnt->pnt.x = pnt->x + (2 * (center_pnt->pnt.x - pnt->x)) / 3;
+      inner_pnt->pnt.y = pnt->y + (2 * (center_pnt->pnt.y - pnt->y)) / 3;
     }
   else
     {
@@ -380,8 +380,8 @@ d_update_star (GdkPoint *pnt)
       outer_pnt = center_pnt->next;
       /* Inner radius */
       d_pnt_add_line (obj_creating,
-                      pnt->x + (2*(center_pnt->pnt.x - pnt->x))/3,
-                      pnt->y + (2*(center_pnt->pnt.y - pnt->y))/3,
+                      pnt->x + (2 * (center_pnt->pnt.x - pnt->x)) / 3,
+                      pnt->y + (2 * (center_pnt->pnt.y - pnt->y)) / 3,
                       -1);
       inner_pnt = outer_pnt->next;
     }

@@ -16,21 +16,21 @@
 #include "gfig-style.h"
 
 
-static void gfig_read_parameter_string (gchar **text,
-                                        gint    nitems,
-                                        gchar  *name,
-                                        gchar  **style_entry);
+static void gfig_read_parameter_string   (gchar **text,
+                                          gint    nitems,
+                                          gchar  *name,
+                                          gchar  **style_entry);
 
 
-static void gfig_read_parameter_int    (gchar **text,
-                                        gint    nitems,
-                                        gchar  *name,
-                                        gint   *style_entry);
+static void gfig_read_parameter_int      (gchar **text,
+                                          gint    nitems,
+                                          gchar  *name,
+                                          gint   *style_entry);
 
-static void gfig_read_parameter_double (gchar  **text,
-                                        gint     nitems,
-                                        gchar   *name,
-                                        gdouble *style_entry);
+static void gfig_read_parameter_double   (gchar  **text,
+                                          gint     nitems,
+                                          gchar   *name,
+                                          gdouble *style_entry);
 
 static void gfig_read_parameter_gimp_rgb (gchar  **text,
                                           gint     nitems,
@@ -108,7 +108,7 @@ gfig_read_parameter_double (gchar  **text,
                             gchar   *name,
                             gdouble *style_entry)
 {
-  gint  n = 0;
+  gint   n = 0;
   gchar *ptr;
   gchar *endptr;
   gchar *tmpstr;
@@ -140,14 +140,14 @@ gfig_read_parameter_gimp_rgb (gchar  **text,
                               gchar   *name,
                               GimpRGB *style_entry)
 {
-  gint  n = 0;
+  gint   n = 0;
   gchar *ptr;
   gchar *tmpstr;
   gchar *endptr;
-  gchar colorstr_r[G_ASCII_DTOSTR_BUF_SIZE];
-  gchar colorstr_g[G_ASCII_DTOSTR_BUF_SIZE];
-  gchar colorstr_b[G_ASCII_DTOSTR_BUF_SIZE];
-  gchar colorstr_a[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar  colorstr_r[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar  colorstr_g[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar  colorstr_b[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar  colorstr_a[G_ASCII_DTOSTR_BUF_SIZE];
 
   style_entry->r = style_entry->g = style_entry->b = style_entry->a = 0.;
 
@@ -174,18 +174,17 @@ gfig_read_parameter_gimp_rgb (gchar  **text,
     }
 }
 
-
-
 gboolean
 gfig_load_style (Style *style,
                  FILE    *fp)
 {
-  gulong offset;
-  gchar load_buf2[MAX_LOAD_LINE];
-  gchar *style_text[100];
-  gint  nitems = 0;
-  gint  k;
-  gchar name[100];
+  gulong  offset;
+  gchar   load_buf2[MAX_LOAD_LINE];
+  gchar  *style_text[100];
+  gint    nitems = 0;
+  gint    k;
+  gchar   name[100];
+
   offset = ftell (fp);
 
   get_line (load_buf2, MAX_LOAD_LINE, fp, 0);
@@ -251,7 +250,7 @@ gfig_skip_style (Style *style,
                  FILE    *fp)
 {
   gulong offset;
-  gchar load_buf2[MAX_LOAD_LINE];
+  gchar  load_buf2[MAX_LOAD_LINE];
 
   offset = ftell (fp);
 

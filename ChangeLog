@@ -1,3 +1,17 @@
+2004-10-30  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfig/gfig-line.c
+	* plug-ins/gfig/gfig-line.h
+	* plug-ins/gfig/gfig-poly.c
+	* plug-ins/gfig/gfig-preview.c
+	* plug-ins/gfig/gfig-star.c
+	* plug-ins/gfig/gfig-style.c
+	* plug-ins/gfig/gfig-style.h: some more cleanups and UI tweaks. Still
+	work in progress.
+
+	* plug-ins/gfig/pix-data.h: removed this empty, unused file.
+
 2004-10-30  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpguiconfig.[ch]

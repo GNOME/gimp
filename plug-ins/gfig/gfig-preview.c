@@ -46,24 +46,25 @@
                        GDK_KEY_PRESS_MASK      | \
                        GDK_KEY_RELEASE_MASK)
 
-static gint x_pos_val;
-static gint y_pos_val;
-static gint pos_tag = -1;
-GtkWidget *status_label_dname;
-GtkWidget *status_label_fname;
+static gint       x_pos_val;
+static gint       y_pos_val;
+static gint       pos_tag = -1;
+GtkWidget        *status_label_dname;
+GtkWidget        *status_label_fname;
 static GtkWidget *pos_label;       /* XY pos marker */
 
-static void             gfig_preview_realize    (GtkWidget *widget);
-static gboolean         gfig_preview_events     (GtkWidget *widget,
-                                                 GdkEvent  *event);
 
-static gint             gfig_invscale_x         (gint x);
-static gint             gfig_invscale_y         (gint y);
-static GtkWidget*       gfig_pos_labels         (void);
-static GtkWidget*       make_pos_info           (void);
+static void       gfig_preview_realize (GtkWidget *widget);
+static gboolean   gfig_preview_events  (GtkWidget *widget,
+                                        GdkEvent  *event);
 
-static void             gfig_pos_update         (gint x,
-                                                 gint y);
+static gint       gfig_invscale_x      (gint x);
+static gint       gfig_invscale_y      (gint y);
+static GtkWidget *gfig_pos_labels      (void);
+static GtkWidget *make_pos_info        (void);
+
+static void       gfig_pos_update      (gint x,
+                                        gint y);
 
 GtkWidget *
 make_preview (void)
@@ -89,8 +90,8 @@ make_preview (void)
                           G_CALLBACK (gfig_preview_expose),
                           NULL);
 
-  gtk_drawing_area_size (GTK_DRAWING_AREA (gfig_context->preview), preview_width,
-                    preview_height);
+  gtk_drawing_area_size (GTK_DRAWING_AREA (gfig_context->preview),
+                         preview_width, preview_height);
 
   frame = gtk_frame_new (NULL);
 

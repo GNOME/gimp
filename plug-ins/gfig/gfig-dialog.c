@@ -61,10 +61,6 @@
 #include "gfig-star.h"
 #include "gfig-stock.h"
 
-#include "pix-data.h"
-
-#define PREVIEW_SIZE     400
-
 #define SCALE_WIDTH      120
 
 #define BRUSH_PREVIEW_SZ 32
@@ -153,33 +149,33 @@ static gchar         *gfig_path       = NULL;
 static GtkWidget     *page_menu_bg;
 
 
-static void      gfig_response             (GtkWidget *widget,
-                                            gint       response_id,
-                                            gpointer   data);
-static void      load_button_callback      (GtkWidget *widget,
-                                            gpointer   data);
-static void      merge_button_callback     (GtkWidget *widget,
-                                            gpointer   data);
-static void      gfig_new_gc               (void);
-static void      gfig_save_menu_callback   (GtkWidget *widget,
-                                            gpointer   data);
-static void      gfig_list_load_all        (const gchar *path);
-static void      gfig_list_free_all        (void);
-static void      create_save_file_chooser  (GFigObj   *obj,
-                                            gchar     *tpath,
-                                            GtkWidget *parent);
-static GtkWidget *draw_buttons             (GtkWidget *ww);
-static void      select_combo_callback     (GtkWidget *widget,
-                                            gpointer   data);
-static void      adjust_grid_callback      (GtkWidget *widget,
-                                            gpointer   data);
-static void      options_dialog_callback   (GtkWidget *widget,
-                                            gpointer   data);
-static gint      gfig_scale_x              (gint       x);
-static gint      gfig_scale_y              (gint       y);
-static void      toggle_show_image         (void);
-static void      gridtype_combo_callback   (GtkWidget *widget,
-                                            gpointer data);
+static void       gfig_response             (GtkWidget *widget,
+                                             gint       response_id,
+                                             gpointer   data);
+static void       load_button_callback      (GtkWidget *widget,
+                                             gpointer   data);
+static void       merge_button_callback     (GtkWidget *widget,
+                                             gpointer   data);
+static void       gfig_new_gc               (void);
+static void       gfig_save_menu_callback   (GtkWidget *widget,
+                                             gpointer   data);
+static void       gfig_list_load_all        (const gchar *path);
+static void       gfig_list_free_all        (void);
+static void       create_save_file_chooser  (GFigObj   *obj,
+                                             gchar     *tpath,
+                                             GtkWidget *parent);
+static GtkWidget *draw_buttons              (GtkWidget *notebook);
+static void       select_combo_callback     (GtkWidget *widget,
+                                             gpointer   data);
+static void       adjust_grid_callback      (GtkWidget *widget,
+                                             gpointer   data);
+static void       options_dialog_callback   (GtkWidget *widget,
+                                             gpointer   data);
+static gint       gfig_scale_x              (gint       x);
+static gint       gfig_scale_y              (gint       y);
+static void       toggle_show_image         (void);
+static void       gridtype_combo_callback   (GtkWidget *widget,
+                                             gpointer data);
 
 static void      gfig_load_file_chooser_response (GtkFileChooser *chooser,
                                                   gint            response_id,
@@ -221,6 +217,9 @@ gfig_dialog (void)
   gint          img_width;
   gint          img_height;
   GtkWidget    *toggle;
+  GtkWidget    *notebook;
+  GtkWidget    *right_vbox;
+  GtkWidget    *hbox;
 
   gimp_ui_init ("gfig", TRUE);
 
@@ -379,28 +378,31 @@ gfig_dialog (void)
                     NULL);
   gtk_widget_show (menuitem);
 
-
   main_hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (top_level_dlg)->vbox), main_hbox,
-                      TRUE, TRUE, 0);
-
-  /* Add buttons beside the preview frame */
-  gtk_box_pack_start (GTK_BOX (main_hbox), draw_buttons (top_level_dlg),
-                      FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (top_level_dlg)->vbox), main_hbox,
+                    TRUE, TRUE, 0);
 
   /* Preview itself */
   gtk_box_pack_start (GTK_BOX (main_hbox), make_preview (), FALSE, FALSE, 0);
 
   gtk_widget_show (gfig_context->preview);
 
+  right_vbox = gtk_vbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_hbox), right_vbox, FALSE, FALSE, 0);
+  gtk_widget_show (right_vbox);
+
   /* Style frame on right side */
   frame = gimp_frame_new ("Style");
-  gtk_box_pack_start (GTK_BOX (main_hbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (right_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
+
   vbox = gtk_vbox_new (FALSE, 3);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
   /* foreground color button in Style frame*/
@@ -476,11 +478,22 @@ gfig_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
 
+  /* Tool options notebook */
+  frame = gimp_frame_new ( _("Tool options"));
+  gtk_box_pack_start (GTK_BOX (right_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  notebook = gtk_notebook_new ();
+  gtk_container_add (GTK_CONTAINER (frame), notebook);
+  gtk_notebook_set_show_tabs (GTK_NOTEBOOK (notebook), FALSE);
+  gtk_notebook_set_show_border (GTK_NOTEBOOK (notebook), FALSE);
+  gtk_widget_show (notebook);
+
   /* "show image" checkbutton at bottom of style frame */
   toggle = gtk_check_button_new_with_label (_("Show image"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 gfig_context->show_background);
-  gtk_box_pack_end (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (right_vbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &gfig_context->show_background);
@@ -491,7 +504,7 @@ gfig_dialog (void)
 
   /* "snap to grid" checkbutton at bottom of style frame */
   toggle = gtk_check_button_new_with_label (_("Snap to grid"));
-  gtk_box_pack_end (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (right_vbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &selvals.opts.snap2grid);
@@ -500,7 +513,7 @@ gfig_dialog (void)
 
   /* "show grid" checkbutton at bottom of style frame */
   toggle = gtk_check_button_new_with_label (_("Show grid"));
-  gtk_box_pack_end (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (right_vbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &selvals.opts.drawgrid);
@@ -509,6 +522,11 @@ gfig_dialog (void)
                     NULL);
   gtk_widget_show (toggle);
   gfig_opt_widget.drawgrid = toggle;
+
+  /* Add buttons above the preview frame */
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (top_level_dlg)->vbox),
+                      draw_buttons (notebook),
+                      FALSE, FALSE, 0);
 
 
   /* Load saved objects */
@@ -847,116 +865,79 @@ tool_option_no_option (GtkWidget *notebook,
                     notebook);
 }
 
-#define SKIP_ROW   if (col != 0) {++row; col = 0;} \
-                   gtk_table_set_row_spacing (GTK_TABLE (table), row, 12); ++row
-
-#define TABLE_APPEND(button, text) \
-  gtk_table_attach_defaults (GTK_TABLE (table), (button), col, col+1, row, row+1);\
+#define BOX_APPEND(button, text) \
+  gtk_box_pack_start (GTK_BOX (hbox), (button), FALSE, FALSE, 0);\
   gtk_widget_show (button);\
-  gimp_help_set_help_data (button, (text), NULL);\
-  ++col; if (col == ncol) { ++row; col = 0; }
+  gimp_help_set_help_data (button, (text), NULL);
 
 static GtkWidget *
-draw_buttons (GtkWidget *ww)
+draw_buttons (GtkWidget *notebook)
 {
-  GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *button;
-  GtkWidget *frame;
   GtkWidget *image;
   GSList    *group = NULL;
-  GtkWidget *table;
-  gint       col, row;
-  gint       ncol;
-  GtkWidget *notebook;
-
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_widget_show (vbox);
 
   hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  /* Create group */
-  frame = gimp_frame_new ("Toolbox");
-  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  table = gtk_table_new (9, 4, FALSE);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
-
-  ncol = 4;
-  row = col = 0;
-
-  /* Tool options notebook */
-  frame = gimp_frame_new ( _("Tool options"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  notebook = gtk_notebook_new ();
-  gtk_container_add (GTK_CONTAINER (frame), notebook);
-  gtk_notebook_set_show_tabs (GTK_NOTEBOOK (notebook), FALSE);
-  gtk_notebook_set_show_border (GTK_NOTEBOOK (notebook), FALSE);
-  gtk_widget_show (notebook);
-
-  /* Put buttons in */
+  /* Tools buttons */
   button = but_with_pix (GFIG_STOCK_LINE, &group, LINE);
-  TABLE_APPEND (button, _("Create line"));
+  BOX_APPEND (button, _("Create line"));
   tool_option_no_option (notebook, button);
 
   button = but_with_pix (GFIG_STOCK_CIRCLE, &group, CIRCLE);
-  TABLE_APPEND (button, _("Create circle"));
+  BOX_APPEND (button, _("Create circle"));
   tool_option_no_option (notebook, button);
 
   button = but_with_pix (GFIG_STOCK_ELLIPSE, &group, ELLIPSE);
-  TABLE_APPEND (button, _("Create ellipse"));
+  BOX_APPEND (button, _("Create ellipse"));
   tool_option_no_option (notebook, button);
 
   button = but_with_pix (GFIG_STOCK_CURVE, &group, ARC);
-  TABLE_APPEND (button, _("Create arc"));
+  BOX_APPEND (button, _("Create arc"));
   tool_option_no_option (notebook, button);
 
   button = but_with_pix (GFIG_STOCK_POLYGON, &group, POLY);
-  TABLE_APPEND (button, _("Create reg polygon"));
+  BOX_APPEND (button, _("Create reg polygon"));
   tool_options_poly (notebook, button);
 
   button = but_with_pix (GFIG_STOCK_STAR, &group, STAR);
-  TABLE_APPEND (button, _("Create star"));
+  BOX_APPEND (button, _("Create star"));
   tool_options_star (notebook, button);
 
   button = but_with_pix (GFIG_STOCK_SPIRAL, &group, SPIRAL);
-  TABLE_APPEND (button, _("Create spiral"));
+  BOX_APPEND (button, _("Create spiral"));
   tool_options_spiral (notebook, button);
 
   button = but_with_pix (GFIG_STOCK_BEZIER, &group, BEZIER);
-  TABLE_APPEND (button, _("Create bezier curve. "
+  BOX_APPEND (button, _("Create bezier curve. "
                           "Shift + Button ends object creation."));
   tool_options_bezier (notebook, button);
 
-  SKIP_ROW;
+  //SKIP_ROW;
 
   button = but_with_pix (GFIG_STOCK_MOVE_OBJECT, &group, MOVE_OBJ);
-  TABLE_APPEND (button, _("Move an object"));
+  BOX_APPEND (button, _("Move an object"));
   tool_option_no_option (notebook, button);
 
   button = but_with_pix (GFIG_STOCK_MOVE_POINT, &group, MOVE_POINT);
-  TABLE_APPEND (button, _("Move a single point"));
+  BOX_APPEND (button, _("Move a single point"));
   tool_option_no_option (notebook, button);
 
   button = but_with_pix (GFIG_STOCK_COPY_OBJECT, &group, COPY_OBJ);
-  TABLE_APPEND (button, _("Copy an object"));
+  BOX_APPEND (button, _("Copy an object"));
   tool_option_no_option (notebook, button);
 
   button = but_with_pix (GFIG_STOCK_DELETE_OBJECT, &group, DEL_OBJ);
-  TABLE_APPEND (button, _("Delete an object"));
+  BOX_APPEND (button, _("Delete an object"));
   tool_option_no_option (notebook, button);
 
   button = but_with_pix (GIMP_STOCK_TOOL_RECT_SELECT, &group, SELECT_OBJ);
-  TABLE_APPEND (button, _("Select an object"));
+  BOX_APPEND (button, _("Select an object"));
   tool_option_no_option (notebook, button);
 
-  SKIP_ROW;
+  //SKIP_ROW;
 
   button = gtk_button_new ();
   g_signal_connect (button, "clicked",
@@ -966,7 +947,7 @@ draw_buttons (GtkWidget *ww)
                                     GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
-  TABLE_APPEND (button, _("Raise selected object"));
+  BOX_APPEND (button, _("Raise selected object"));
 
   button = gtk_button_new ();
   g_signal_connect (button, "clicked",
@@ -976,7 +957,7 @@ draw_buttons (GtkWidget *ww)
                                     GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
-  TABLE_APPEND (button, _("Lower selected object"));
+  BOX_APPEND (button, _("Lower selected object"));
 
   button = gtk_button_new ();
   g_signal_connect (button, "clicked",
@@ -986,7 +967,7 @@ draw_buttons (GtkWidget *ww)
                                     GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
-  TABLE_APPEND (button, _("Raise selected object to top"));
+  BOX_APPEND (button, _("Raise selected object to top"));
 
   button = gtk_button_new ();
   g_signal_connect (button, "clicked",
@@ -996,7 +977,7 @@ draw_buttons (GtkWidget *ww)
                                     GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
-  TABLE_APPEND (button, _("Lower selected object to bottom"));
+  BOX_APPEND (button, _("Lower selected object to bottom"));
 
   button = gtk_button_new ();
   g_signal_connect (button, "clicked",
@@ -1006,7 +987,7 @@ draw_buttons (GtkWidget *ww)
                                     GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
-  TABLE_APPEND (button, _("Show previous object"));
+  BOX_APPEND (button, _("Show previous object"));
 
   button = gtk_button_new ();
   g_signal_connect (button, "clicked",
@@ -1016,15 +997,15 @@ draw_buttons (GtkWidget *ww)
                                     GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
-  TABLE_APPEND (button, _("Show next object"));
+  BOX_APPEND (button, _("Show next object"));
 
   button = gtk_button_new_with_label (_("All"));
   g_signal_connect (button, "clicked",
                     G_CALLBACK (select_button_clicked),
                     GINT_TO_POINTER (OBJ_SELECT_EQ));
-  TABLE_APPEND (button, _("Show all objects"));
+  BOX_APPEND (button, _("Show all objects"));
 
-  return vbox;
+  return hbox;
 }
 
 static void

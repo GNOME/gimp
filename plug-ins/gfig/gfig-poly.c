@@ -43,8 +43,8 @@
 
 static gint poly_num_sides = 3; /* Default to three sided object */
 
-static void       d_draw_poly (Dobject *obj);
-static Dobject  * d_copy_poly (Dobject * obj);
+static void      d_draw_poly (Dobject *obj);
+static Dobject  *d_copy_poly (Dobject *obj);
 
 void
 tool_options_poly (GtkWidget *notebook,
@@ -116,7 +116,7 @@ d_draw_poly (Dobject *obj)
 
   for (loop = 0 ; loop < obj->type_data ; loop++)
     {
-      gdouble lx, ly;
+      gdouble  lx, ly;
       GdkPoint calc_pnt;
 
       ang_loop = (gdouble)loop * ang_grid + offset_angle;
@@ -190,7 +190,7 @@ d_paint_poly (Dobject *obj)
   radius = sqrt ((shift_x*shift_x) + (shift_y*shift_y));
 
   /* Lines */
-  ang_grid = 2*G_PI/(gdouble) obj->type_data;
+  ang_grid = 2.0 * G_PI/(gdouble) obj->type_data;
   offset_angle = atan2 (shift_y, shift_x);
 
   for (loop = 0 ; loop < obj->type_data ; loop++)
@@ -299,7 +299,7 @@ d_poly2lines (Dobject *obj)
   radius = sqrt ((shift_x*shift_x) + (shift_y*shift_y));
 
   /* Lines */
-  ang_grid = 2*G_PI/(gdouble) obj->type_data;
+  ang_grid = 2.0 * G_PI / (gdouble) obj->type_data;
   offset_angle = atan2 (shift_y, shift_x);
 
   for (loop = 0 ; loop < obj->type_data ; loop++)
@@ -369,7 +369,7 @@ d_star2lines (Dobject *obj)
   g_assert (obj != NULL);
 
   /* count - add one to close polygon */
-  seg_count = 2*obj->type_data + 1;
+  seg_count = 2 * obj->type_data + 1;
 
   center_pnt = obj->points;
 
@@ -410,22 +410,22 @@ d_star2lines (Dobject *obj)
   outer_radius = sqrt ((shift_x*shift_x) + (shift_y*shift_y));
 
   /* Lines */
-  ang_grid = 2*G_PI/(2.0*(gdouble) obj->type_data);
+  ang_grid = 2.0 * G_PI / (2.0 * (gdouble) obj->type_data);
   offset_angle = atan2 (shift_y, shift_x);
 
   shift_x = inner_radius_pnt->pnt.x - center_pnt->pnt.x;
   shift_y = inner_radius_pnt->pnt.y - center_pnt->pnt.y;
 
-  inner_radius = sqrt ((shift_x*shift_x) + (shift_y*shift_y));
+  inner_radius = sqrt ((shift_x * shift_x) + (shift_y * shift_y));
 
-  for (loop = 0 ; loop < 2*obj->type_data ; loop++)
+  for (loop = 0 ; loop < 2 * obj->type_data ; loop++)
     {
-      gdouble lx, ly;
+      gdouble  lx, ly;
       GdkPoint calc_pnt;
 
       ang_loop = (gdouble)loop * ang_grid + offset_angle;
 
-      if (loop%2)
+      if (loop % 2)
         {
           lx = inner_radius * cos (ang_loop);
           ly = inner_radius * sin (ang_loop);

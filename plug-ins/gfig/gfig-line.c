@@ -79,10 +79,10 @@ d_draw_line (Dobject *obj)
 void
 d_paint_line (Dobject *obj)
 {
-  DobjPoints * spnt;
-  gdouble *line_pnts;
-  gint seg_count = 0;
-  gint i = 0;
+  DobjPoints *spnt;
+  gdouble    *line_pnts;
+  gint        seg_count = 0;
+  gint        i = 0;
 
   for (spnt = obj->points; spnt; spnt = spnt->next)
     seg_count++;
