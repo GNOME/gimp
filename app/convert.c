@@ -1373,10 +1373,14 @@ convert_image (GImage		 *gimage,
     }
 
   /* colourmap stuff */
+  if (gimage->cmap)
+    {
+      g_free (gimage->cmap);
+      gimage->cmap = NULL;
+    }
+
   if (new_type == INDEXED)
     {
-      if (gimage->cmap)
-	g_free (gimage->cmap);
       gimage->cmap = (unsigned char *) g_malloc (COLORMAP_SIZE);
 
       if (remdups &&
@@ -1436,6 +1440,8 @@ convert_image (GImage		 *gimage,
 	  gimage->num_cols = quantobj->actual_number_of_colors;
 	}
     }
+  else
+    gimage->num_cols = 0;
 
   /*  Delete the quantizer object, if there is one */
   if (quantobj) 

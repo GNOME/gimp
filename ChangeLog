@@ -1,3 +1,9 @@
+2003-08-30  Manish Singh  <yosh@gimp.org>
+
+	* app/convert.c: free the colormap and set colormap size to 0 after
+	converting from indexed. Should make gimp_image_get_cmap() behave as
+	advertised again. (fixes #121033)
+
 2003-08-29  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/common/ps.c (ps_open): [Win32] Don't write the gs
