@@ -153,8 +153,8 @@ static ProcArg file_load_outargs[] =
 static ProcRecord file_load_proc =
 {
   "gimp_file_load",
-  "Loads a file by invoking the right handler.",
-  "This procedure invokes the correct file load handler using magic if possible, and falling back on the file's extension and/or prefix if not. The name of the file to load is typically a full pathname, and the name entered is what the user actually typed before prepending a directory path. The reason for this is that if the user types http://www.xcf/~gimp/ he wants to fetch a URL, and the full pathname will not look like a URL.",
+  "Loads a file by invoking the right load handler.",
+  "This procedure invokes the correct file load handler using magic if possible, and falling back on the file's extension and/or prefix if not. The name of the file to load is typically a full pathname, and the name entered is what the user actually typed before prepending a directory path. The reason for this is that if the user types http://www.xcf/~gimp/ he wants to fetch a URL, and the full pathname will not look like a URL.\"",
   "Josh MacDonald",
   "Josh MacDonald",
   "1997",
