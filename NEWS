@@ -30,6 +30,19 @@ Bugs fixed in GIMP 2.2.5
   accelerators (bug #169339)
 - corrected mousewheel section of default controllerrc (bug #171083)
 - fixed build on amd64/gcc-4.0 (bug #300227)
+- unset Keep Transparency from Color to Alpha plug-in.
+- fixed crash caused by Histogram dockable in RGB mode (bug #170116)
+- fixed statusbar display for negative moves (bug #171497)
+- fixed a couple of problems in the BMP plug-in (bug #171306, bug #171453
+  and bug #171562)
+- fixed bug in Resize dialog if previews are turned off (bug #171827)
+- fixed disappearing previews in Rotate Colormap plug-in (bug #172284)
+- fixed deletion of fractals in Fractal Explorer plug-in (bug #172347)
+- fixed preview in Deinterlace plug-in (bug #172589)
+- fixed crashes on exit in some locales (bug #172581)
+- fixed installation directories for message catalogs (bug #169274)
+- handle deletion of layers and channels that have a floating selection
+  attached (bug #168582)
 
 
 Bugs fixed in GIMP 2.2.4
