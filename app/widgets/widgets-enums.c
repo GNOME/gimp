@@ -46,5 +46,24 @@ gimp_zoom_type_get_type (void)
 }
 
 
+static const GEnumValue gimp_histogram_scale_enum_values[] =
+{
+  { GIMP_HISTOGRAM_SCALE_LINEAR, N_("Linear"), "linear" },
+  { GIMP_HISTOGRAM_SCALE_LOGARITHMIC, N_("Logarithmic"), "logarithmic" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_histogram_scale_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpHistogramScale", gimp_histogram_scale_enum_values);
+
+  return enum_type;
+}
+
+
 /* Generated data ends here */
 

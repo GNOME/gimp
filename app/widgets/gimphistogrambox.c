@@ -182,6 +182,10 @@ gimp_histogram_box_init (GimpHistogramBox *box)
   g_signal_connect (box->gradient, "expose_event",
                     G_CALLBACK (gimp_histogram_box_gradient_expose),
                     box);
+
+  g_signal_connect_swapped (view, "notify::channel",
+			    G_CALLBACK (gtk_widget_queue_draw),
+			    box->gradient);
 }
 
 static void
@@ -332,6 +336,5 @@ gimp_histogram_box_set_channel (GimpHistogramBox     *box,
     return;
 
   gimp_histogram_view_set_channel (box->histogram, channel);
-  gtk_widget_queue_draw (box->gradient);
 }
 

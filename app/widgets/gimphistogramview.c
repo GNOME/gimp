@@ -39,12 +39,26 @@ enum
   LAST_SIGNAL
 };
 
+enum
+{
+  PROP_0,
+  PROP_CHANNEL,
+  PROP_SCALE
+};
 
 static void  gimp_histogram_view_class_init (GimpHistogramViewClass *klass);
 static void  gimp_histogram_view_init       (GimpHistogramView      *view);
-static void  gimp_histogram_view_finalize   (GObject                *object);
-static gboolean  gimp_histogram_view_expose (GtkWidget              *widget,
-                                             GdkEventExpose         *event);
+static void  gimp_histogram_view_finalize     (GObject             *object);
+static void  gimp_histogram_view_set_property (GObject             *object,
+					       guint                property_id,
+					       const GValue        *value,
+					       GParamSpec          *pspec);
+static void  gimp_histogram_view_get_property (GObject             *object,
+					       guint                property_id,
+					       GValue              *value,
+					       GParamSpec          *pspec);
+static gboolean  gimp_histogram_view_expose   (GtkWidget           *widget,
+					       GdkEventExpose      *event);
 
 
 static guint histogram_view_signals[LAST_SIGNAL] = { 0 };
@@ -102,17 +116,33 @@ gimp_histogram_view_class_init (GimpHistogramViewClass *klass)
 		  G_TYPE_INT,
 		  G_TYPE_INT);
 
+  object_class->get_property = gimp_histogram_view_get_property;
+  object_class->set_property = gimp_histogram_view_set_property;
   object_class->finalize     = gimp_histogram_view_finalize;
+
   widget_class->expose_event = gimp_histogram_view_expose;
 
   klass->range_changed = NULL;
+
+  g_object_class_install_property (object_class, PROP_CHANNEL,
+				   g_param_spec_enum ("channel", NULL, NULL,
+						      GIMP_TYPE_HISTOGRAM_CHANNEL,
+						      GIMP_HISTOGRAM_VALUE,
+						      G_PARAM_READWRITE |
+						      G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_SCALE,
+				   g_param_spec_enum ("scale", NULL, NULL,
+						      GIMP_TYPE_HISTOGRAM_SCALE,
+						      GIMP_HISTOGRAM_SCALE_LOGARITHMIC,
+						      G_PARAM_READWRITE |
+						      G_PARAM_CONSTRUCT));
 }
 
 static void 
 gimp_histogram_view_init (GimpHistogramView *view)
 {
   view->histogram = NULL;
-  view->channel   = GIMP_HISTOGRAM_VALUE;
   view->start     = 0;
   view->end       = 255;
 }
@@ -129,12 +159,56 @@ gimp_histogram_view_finalize (GObject *object)
     }
 }
 
+static void
+gimp_histogram_view_set_property (GObject      *object,
+				  guint         property_id,
+				  const GValue *value,
+				  GParamSpec   *pspec)
+{
+  GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (object);
+
+  switch (property_id)
+    {
+    case PROP_CHANNEL:
+      gimp_histogram_view_set_channel (view, g_value_get_enum (value));
+      break;
+    case PROP_SCALE:
+      gimp_histogram_view_set_scale (view, g_value_get_enum (value));
+      break;
+   default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }      
+}
+
+static void
+gimp_histogram_view_get_property (GObject      *object,
+				  guint         property_id,
+				  GValue       *value,
+				  GParamSpec   *pspec)
+{
+  GimpHistogramView *view = GIMP_HISTOGRAM_VIEW (object);
+
+  switch (property_id)
+    {
+    case PROP_CHANNEL:
+      g_value_set_enum (value, view->channel);
+      break;
+    case PROP_SCALE:
+      g_value_set_enum (value, view->scale);
+      break;
+   default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }      
+}
+
 static gboolean
 gimp_histogram_view_expose (GtkWidget      *widget,
                             GdkEventExpose *event)
 {
   GimpHistogramView *view;
-  gint               x, y;
+  gint               x;
   gint               width, height;
   gdouble            max;
 
@@ -149,10 +223,18 @@ gimp_histogram_view_expose (GtkWidget      *widget,
   /*  find the maximum value  */
   max = gimp_histogram_get_maximum (view->histogram, view->channel);
 
-  if (max > 0.0)
-    max = log (max);
-  else
-    max = 1.0;
+  switch (view->scale)
+    {
+    case GIMP_HISTOGRAM_SCALE_LINEAR:
+      break;
+
+    case GIMP_HISTOGRAM_SCALE_LOGARITHMIC:
+      if (max > 0.0)
+	max = log (max);
+      else
+	max = 1.0;
+      break;
+    }
 
   /*  Draw the axis  */
   gdk_draw_line (widget->window, widget->style->black_gc,
@@ -161,13 +243,28 @@ gimp_histogram_view_expose (GtkWidget      *widget,
   /*  Draw the spikes  */
   for (x = 0; x < width; x++)
     {
-      gdouble v = gimp_histogram_get_value (view->histogram, view->channel,
+      gint    y;
+      gdouble v = gimp_histogram_get_value (view->histogram,
+					    view->channel,
                                             (x * 256) / width);
 
-      if (v > 0.0)
-        y = (gint) ((height * log (v)) / max);
-      else
-        y = 0;
+      if (v <= 0.0)
+	continue;
+
+      switch (view->scale)
+	{
+	case GIMP_HISTOGRAM_SCALE_LINEAR:
+	  y = (gint) ((height * v) / max);
+	  break;
+
+	case GIMP_HISTOGRAM_SCALE_LOGARITHMIC:
+	  y = (gint) ((height * log (v)) / max);
+	  break;
+
+	default:
+	  y = 0;
+	  break;
+	}
 
       gdk_draw_line (widget->window,
                      widget->style->black_gc,
@@ -179,6 +276,9 @@ gimp_histogram_view_expose (GtkWidget      *widget,
     {
       gint x1 = (width * MIN (view->start, view->end)) / 256;
       gint x2 = (width * MAX (view->start, view->end)) / 255;
+
+      if (x2 == x1)
+	x2++;
 
       if (!view->range_gc)
         {
@@ -319,17 +419,41 @@ gimp_histogram_view_set_range (GimpHistogramView *view,
 }
 
 void
-gimp_histogram_view_set_channel (GimpHistogramView *view,
-                                 gint               channel)
+gimp_histogram_view_set_channel (GimpHistogramView    *view,
+                                 GimpHistogramChannel  channel)
 {
   g_return_if_fail (GIMP_IS_HISTOGRAM_VIEW (view));
 
   view->channel = channel;
 
+  g_object_notify (G_OBJECT (view), "channel");
+
   gtk_widget_queue_draw (GTK_WIDGET (view));
 
+  /* FIXME: shouldn't emit range_checked here */
   g_signal_emit (view, histogram_view_signals[RANGE_CHANGED], 0,
                  view->start, view->end);
+}
+
+GimpHistogramChannel
+gimp_histogram_view_get_channel (GimpHistogramView *view)
+{
+  g_return_val_if_fail (GIMP_IS_HISTOGRAM_VIEW (view), 0);
+
+  return view->channel;
+}
+
+void
+gimp_histogram_view_set_scale (GimpHistogramView   *view,
+			       GimpHistogramScale   scale)
+{
+  g_return_if_fail (GIMP_IS_HISTOGRAM_VIEW (view));
+
+  view->scale = scale;
+
+  g_object_notify (G_OBJECT (view), "scale");
+
+  gtk_widget_queue_draw (GTK_WIDGET (view));
 }
 
 GimpHistogram *

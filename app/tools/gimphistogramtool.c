@@ -38,6 +38,7 @@
 #include "widgets/gimpenummenu.h"
 #include "widgets/gimphistogrambox.h"
 #include "widgets/gimphistogramview.h"
+#include "widgets/gimppropwidgets.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
@@ -54,24 +55,22 @@ typedef struct _HistogramToolDialog HistogramToolDialog;
 
 struct _HistogramToolDialog
 {
-  GtkWidget            *shell;
+  GtkWidget         *shell;
 
-  GtkWidget            *info_labels[6];
-  GtkWidget            *channel_menu;
-  GimpHistogramBox     *histogram_box;
-  GimpHistogram        *hist;
-  GtkWidget            *gradient;
+  GtkWidget         *info_labels[6];
+  GtkWidget         *channel_menu;
+  GimpHistogramBox  *histogram_box;
+  GimpHistogram     *hist;
+  GtkWidget         *gradient;
 
-  gdouble               mean;
-  gdouble               std_dev;
-  gdouble               median;
-  gdouble               pixels;
-  gdouble               count;
-  gdouble               percentile;
+  gdouble            mean;
+  gdouble            std_dev;
+  gdouble            median;
+  gdouble            pixels;
+  gdouble            count;
+  gdouble            percentile;
 
-  GimpDrawable         *drawable;
-  GimpHistogramChannel  channel;
-  gboolean              color;
+  GimpDrawable      *drawable;
 };
 
 
@@ -93,8 +92,6 @@ static void   histogram_tool_close_callback   (GtkWidget            *widget,
 static gboolean histogram_set_sensitive_callback 
                                               (gpointer              item_data,
                                                HistogramToolDialog  *htd);
-static void   histogram_tool_channel_callback (GtkWidget            *widget,
-					       gpointer              data);
 static void   histogram_tool_dialog_update    (HistogramToolDialog  *htd,
 					       gint                  start,
 					       gint                  end);
@@ -199,13 +196,10 @@ gimp_histogram_tool_initialize (GimpTool    *tool,
   gtk_widget_show (histogram_dialog->shell);
 
   histogram_dialog->drawable = drawable;
-  histogram_dialog->color    = gimp_drawable_is_rgb (drawable);
 
   gimp_option_menu_set_sensitive (GTK_OPTION_MENU (histogram_dialog->channel_menu),
                                   (GimpOptionMenuSensitivityCallback) histogram_set_sensitive_callback,
                                   histogram_dialog);
-  gimp_option_menu_set_history (GTK_OPTION_MENU (histogram_dialog->channel_menu),
-                                GINT_TO_POINTER (histogram_dialog->channel));
 
   /* calculate the histogram */
   pixel_region_init (&PR, gimp_drawable_data (drawable),
@@ -255,9 +249,10 @@ histogram_tool_histogram_range (GimpHistogramView *widget,
 				gint               end,
 				gpointer           data)
 {
-  HistogramToolDialog *htd;
-  gdouble              pixels;
-  gdouble              count;
+  HistogramToolDialog  *htd;
+  GimpHistogramChannel  channel;
+  gdouble               pixels;
+  gdouble               count;
 
   htd = (HistogramToolDialog *) data;
 
@@ -265,12 +260,14 @@ histogram_tool_histogram_range (GimpHistogramView *widget,
       gimp_histogram_nchannels (htd->hist) <= 0)
     return;
 
+  channel = gimp_histogram_view_get_channel (htd->histogram_box->histogram);
+
   pixels = gimp_histogram_get_count (htd->hist, 0, 255);
   count  = gimp_histogram_get_count (htd->hist, start, end);
 
-  htd->mean       = gimp_histogram_get_mean    (htd->hist, htd->channel, start, end);
-  htd->std_dev    = gimp_histogram_get_std_dev (htd->hist, htd->channel, start, end);
-  htd->median     = gimp_histogram_get_median  (htd->hist, htd->channel, start, end);
+  htd->mean       = gimp_histogram_get_mean    (htd->hist, channel, start, end);
+  htd->std_dev    = gimp_histogram_get_std_dev (htd->hist, channel, start, end);
+  htd->median     = gimp_histogram_get_median  (htd->hist, channel, start, end);
   htd->pixels     = pixels;
   htd->count      = count;
   htd->percentile = count / pixels;
@@ -323,6 +320,7 @@ histogram_tool_dialog_new (GimpToolInfo *tool_info)
   GtkWidget *vbox;
   GtkWidget *table;
   GtkWidget *label;
+  GtkWidget *menu;
   gint       i;
   gint       x, y;
 
@@ -337,7 +335,6 @@ histogram_tool_dialog_new (GimpToolInfo *tool_info)
   };
 
   htd = g_new0 (HistogramToolDialog, 1);
-  htd->channel = GIMP_HISTOGRAM_VALUE;
   htd->hist = gimp_histogram_new (GIMP_BASE_CONFIG (tool_info->gimp->config));
 
   /*  The shell and main vbox  */
@@ -359,6 +356,10 @@ histogram_tool_dialog_new (GimpToolInfo *tool_info)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (htd->shell)->vbox), vbox);
   gtk_widget_show (vbox);
 
+  /*  Create the histogram view first  */
+  htd->histogram_box =
+    GIMP_HISTOGRAM_BOX (gimp_histogram_box_new (_("Intensity Range:")));
+
   /*  The option menu for selecting channels  */
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -368,16 +369,13 @@ histogram_tool_dialog_new (GimpToolInfo *tool_info)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  htd->channel_menu = 
-    gimp_enum_option_menu_new (GIMP_TYPE_HISTOGRAM_CHANNEL,
-                               G_CALLBACK (histogram_tool_channel_callback),
-                               htd);
+  htd->channel_menu =
+    gimp_prop_enum_option_menu_new (G_OBJECT (htd->histogram_box->histogram),
+				    "channel", 0, 0);
   gtk_box_pack_start (GTK_BOX (hbox), htd->channel_menu, FALSE, FALSE, 0);
   gtk_widget_show (htd->channel_menu);
 
   /*  The histogram tool histogram  */
-  htd->histogram_box =
-    GIMP_HISTOGRAM_BOX (gimp_histogram_box_new (_("Intensity Range:")));
   gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (htd->histogram_box),
                       TRUE, TRUE, 0);
   gtk_widget_show (GTK_WIDGET (htd->histogram_box));
@@ -385,6 +383,21 @@ histogram_tool_dialog_new (GimpToolInfo *tool_info)
   g_signal_connect (htd->histogram_box->histogram, "range_changed",
                     G_CALLBACK (histogram_tool_histogram_range),
                     htd);
+
+  /*  The option menu for selecting the histogram scale  */
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new (_("Histogram Scale:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  menu =
+    gimp_prop_enum_option_menu_new (G_OBJECT (htd->histogram_box->histogram),
+				    "scale", 0, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
+  gtk_widget_show (menu);
 
   /*  The table containing histogram information  */
   table = gtk_table_new (3, 4, TRUE);
@@ -432,19 +445,6 @@ histogram_tool_close_callback (GtkWidget *widget,
   active_tool->drawable = NULL;
 }
 
-static void
-histogram_tool_channel_callback (GtkWidget *widget,
-				 gpointer   data)
-{
-  HistogramToolDialog *htd;
-
-  htd = (HistogramToolDialog *) data;
-
-  gimp_menu_item_update (widget, &htd->channel);
-
-  gimp_histogram_box_set_channel (htd->histogram_box, htd->channel);
-}
-
 static gboolean
 histogram_set_sensitive_callback (gpointer             item_data,
                                   HistogramToolDialog *htd)
@@ -458,7 +458,7 @@ histogram_set_sensitive_callback (gpointer             item_data,
     case GIMP_HISTOGRAM_RED:
     case GIMP_HISTOGRAM_GREEN:
     case GIMP_HISTOGRAM_BLUE:
-      return htd->color;
+      return gimp_drawable_is_rgb (htd->drawable);
     case GIMP_HISTOGRAM_ALPHA:
       return gimp_drawable_has_alpha (htd->drawable);
     }

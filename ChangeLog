@@ -1,3 +1,20 @@
+2003-01-25  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/widgets-enums.h: added a new enum to specify how to
+	display histograms.
+
+	* app/widgets/widgets-enums.c: regenerated.
+
+	* app/widgets/gimphistogramview.[ch]: added a scale property and
+	made channel a property. Added support for linear histograms based
+	on a patch from Akkana (see bug #72951).
+
+	* app/widgets/gimphistogrambox.c: redraw the gradient when the
+	histogram view notifies it that the displayed channel has changed.
+
+	* app/tools/gimphistogramtool.c: added a menu to configure the
+	histogram scale.
+
 2003-01-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdocumentlist.[ch]

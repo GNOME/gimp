@@ -48,6 +48,17 @@ typedef enum
 } GimpZoomType;
 
 
+#define GIMP_TYPE_HISTOGRAM_SCALE (gimp_histogram_scale_get_type ())
+
+GType gimp_histogram_scale_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_HISTOGRAM_SCALE_LINEAR,       /*< desc="Linear"      >*/
+  GIMP_HISTOGRAM_SCALE_LOGARITHMIC   /*< desc="Logarithmic" >*/
+} GimpHistogramScale;
+
+
 /*
  * non-registered enums; register them if needed
  */
@@ -141,6 +152,5 @@ typedef enum  /*< skip, proxy-skip >*/
   GIMP_DEVICE_VALUE_PATTERN    = 1 << 7,
   GIMP_DEVICE_VALUE_GRADIENT   = 1 << 8
 } GimpDeviceValues;
-
 
 #endif /* __WIDGETS_ENUMS_H__ */
