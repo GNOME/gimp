@@ -283,6 +283,8 @@ gimp_SOURCES = \
 	module_db.h		\
 	move.c			\
 	move.h			\
+	nav_window.c		\
+	nav_window.h		\
 	ops_buttons.c		\
 	ops_buttons.h		\
 	palette.c		\

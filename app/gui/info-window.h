@@ -23,6 +23,9 @@
 InfoDialog *info_window_create (void *);
 void        info_window_free   (InfoDialog *);
 void        info_window_update (InfoDialog *, void *);
-
+void        info_window_update_RGB  (InfoDialog *,
+				     void *,
+				     gdouble,
+				     gdouble);
 
 #endif /*  __INFO_WINDOW_H__  */

@@ -39,6 +39,7 @@
 #include "gradient.h"
 #include "image_render.h"
 #include "info_window.h"
+#include "nav_window.h"
 #include "interface.h"
 #include "invert.h"
 #include "lc_dialog.h"
@@ -533,6 +534,19 @@ view_window_info_cmd_callback (GtkWidget *widget,
     gdisp->window_info_dialog = info_window_create ((void *) gdisp);
 
   info_dialog_popup (gdisp->window_info_dialog);
+}
+
+void
+view_window_nav_cmd_callback (GtkWidget *widget,
+			      gpointer   client_data)
+{
+  GDisplay * gdisp;
+  return_if_no_display (gdisp);
+
+  if (! gdisp->window_nav_dialog)
+    gdisp->window_nav_dialog = nav_window_create ((void *) gdisp);
+
+  info_dialog_popup (gdisp->window_nav_dialog);
 }
 
 void

@@ -51,6 +51,7 @@ void view_zoom_1_4_callback             (GtkWidget *, gpointer);
 void view_zoom_1_8_callback             (GtkWidget *, gpointer);
 void view_zoom_1_16_callback            (GtkWidget *, gpointer);
 void view_window_info_cmd_callback      (GtkWidget *, gpointer);
+void view_window_nav_cmd_callback       (GtkWidget *, gpointer);
 void view_toggle_selection_cmd_callback (GtkWidget *, gpointer);
 void view_toggle_rulers_cmd_callback    (GtkWidget *, gpointer);
 void view_toggle_guides_cmd_callback    (GtkWidget *, gpointer);

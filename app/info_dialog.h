@@ -50,6 +50,7 @@ struct _InfoDialog
   GtkWidget   *shell;
   GtkWidget   *vbox;
   GtkWidget   *info_table;
+  GtkWidget   *info_notebook;
 
   GSList      *field_list;
   int          nfields;
@@ -60,6 +61,7 @@ struct _InfoDialog
 /*  Info Dialog functions  */
 
 InfoDialog *info_dialog_new            (gchar           *title);
+InfoDialog *info_dialog_notebook_new   (gchar           *title);
 void        info_dialog_free           (InfoDialog      *idialog);
 
 void        info_dialog_popup          (InfoDialog      *idialog);

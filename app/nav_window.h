@@ -1,5 +1,6 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ * Copyright (C) 1999 Andy Thomas alt@gimp.org
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,28 +16,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#ifndef __SCROLL_H__
-#define __SCROLL_H__
+#ifndef __NAV_WINDOW_H__
+#define __NAV_WINDOW_H__
 
-#include "gdisplay.h"
+#include "info_dialog.h"
 
-/*  app init and exit routines  */
-void init_scrolling (void);
-void free_scrolling (void);
+InfoDialog *nav_window_create (void *);
+void        nav_window_free   (InfoDialog *);
+void        nav_window_update_window_marker(InfoDialog *);
 
-/*  routines for scrolling the image via the scrollbars  */
-void scrollbar_disconnect (GtkAdjustment *, gpointer);
-gint scrollbar_vert_update (GtkAdjustment *, gpointer);
-gint scrollbar_horz_update (GtkAdjustment *, gpointer);
-
-/*  routines for grabbing the image and scrolling via the pointer  */
-void start_grab_and_scroll (GDisplay *, GdkEventButton *);
-void end_grab_and_scroll (GDisplay *, GdkEventButton *);
-void grab_and_scroll (GDisplay *, GdkEventMotion *);
-void scroll_to_pointer_position (GDisplay *, GdkEventMotion *);
-
-/* generic scroll-by-offset function */
-gint  scroll_display (GDisplay *, gint, gint);
-
-
-#endif  /*  __SCROLL_H__  */
+#endif /*  __NAV_WINDOW_H__  */

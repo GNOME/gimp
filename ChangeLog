@@ -1,3 +1,37 @@
+Thu Aug 12 23:15:53 BST 1999 Andy Thomas <alt@gimp.org>
+
+	* app/commands.c
+	* app/commands.h
+	* app/disp_callbacks.c
+	* app/gdisplay.c
+	* app/gdisplay.h
+	* app/info_dialog.c
+	* app/info_dialog.h
+	* app/info_window.c
+	* app/info_window.h
+	* app/menus.c
+	* app/scale.c
+	* app/scroll.c
+	* app/scroll.h
+	* app/nav_window.c (new)
+	* app/nav_window.h (new)
+	* pixmap/dropper.xpm (new)
+
+	New "navigator" image (accessed via <Image>/Window Nav..). This gives
+	an outline of the location of the current view on an image. Eg if your
+	image window is only showing part of an image then the Window Navigation	window will outline the area viewed. You can "drag" the outlined 
+	square around the viewport and the main image will scroll. Additional
+	a single click outside the square will center the image at that 
+	location.
+
+	Also started to add additional information to a new page inside the
+	Window information dialog (currently only pixel value is shown).
+
+	Both these features are currently work in progress and unfinished. 
+	In particular the Navigator does not keep in step with changes
+	to the basic image (however it does keep in step with image size changes	and if you modify the size of the image viewing window). It also
+	does not display the transparent areas of images very nicely. 
+	 
 1999-08-13  Tor Lillqvist  <tml@iki.fi>
 
 	* app/makefile.{cygwin,msc} (gimp_OBJECTS): Add newest files.

@@ -139,15 +139,14 @@ info_dialog_delete_callback (GtkWidget *w,
   return TRUE;
 }
 
-/*  public functions  */
-
-InfoDialog *
-info_dialog_new (char *title)
+static InfoDialog *
+info_dialog_new_extended (char *title,gboolean inNotebook)
 {
   InfoDialog *idialog;
   GtkWidget  *shell;
   GtkWidget  *vbox;
   GtkWidget  *info_table;
+  GtkWidget  *info_notebook;
 
   idialog = g_new (InfoDialog, 1);
   idialog->field_list = NULL;
@@ -167,16 +166,47 @@ info_dialog_new (char *title)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (shell)->vbox), vbox, TRUE, TRUE, 0);
 
   info_table = gtk_table_new (2, 0, FALSE);
-  gtk_box_pack_start (GTK_BOX (vbox), info_table, TRUE, TRUE, 0);
+
+  if(inNotebook)
+    {
+      info_notebook = gtk_notebook_new();
+      gtk_notebook_append_page(GTK_NOTEBOOK(info_notebook),
+			       info_table,
+			       gtk_label_new (_("General")));
+      gtk_box_pack_start (GTK_BOX (vbox), info_notebook, TRUE, TRUE, 0);
+    }
+  else
+    {
+      info_notebook = NULL;
+      gtk_box_pack_start (GTK_BOX (vbox), info_table, TRUE, TRUE, 0);
+    }
 
   idialog->shell = shell;
   idialog->vbox = vbox;
   idialog->info_table = info_table;
+  idialog->info_notebook = info_notebook;
+  
+  if(inNotebook)
+    gtk_widget_show (idialog->info_notebook);
 
   gtk_widget_show (idialog->info_table);
   gtk_widget_show (idialog->vbox);
 
   return idialog;
+}
+
+/*  public functions  */
+
+InfoDialog *
+info_dialog_notebook_new (char *title)
+{
+  return info_dialog_new_extended(title,TRUE);
+}
+
+InfoDialog *
+info_dialog_new (char *title)
+{
+  return info_dialog_new_extended(title,FALSE);
 }
 
 void

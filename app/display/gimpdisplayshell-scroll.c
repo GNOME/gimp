@@ -21,15 +21,13 @@
 #include "scroll.h"
 #include "cursorutil.h"
 #include "tools.h"
+#include "nav_window.h"
 
 
 /*  This is the delay before dithering begins
  *  for example, after an operation such as scrolling
  */
 #define DITHER_DELAY 250  /*  milliseconds  */
-
-/*  Locally defined functions  */
-static int scroll_display (GDisplay *, int, int);
 
 /*  STATIC variables  */
 /*  These are the values of the initial pointer grab   */
@@ -127,10 +125,10 @@ scroll_to_pointer_position (GDisplay       *gdisp,
 }
 
 
-static int
+int
 scroll_display (GDisplay *gdisp,
-		int       x_offset,
-		int       y_offset)
+		gint      x_offset,
+		gint      y_offset)
 {
   int old_x, old_y;
   int src_x, src_y;
@@ -201,6 +199,8 @@ scroll_display (GDisplay *gdisp,
       if (x_offset || y_offset)
 	gdisplays_flush ();
 
+      if (gdisp->window_nav_dialog) 
+ 	nav_window_update_window_marker(gdisp->window_nav_dialog); 
 
       /* Make sure graphics expose events are processed before scrolling
        * again */

@@ -35,6 +35,7 @@
 #include "interface.h"
 #include "lc_dialog.h"
 #include "menus.h"
+#include "nav_window.h"
 #include "plug_in.h"
 #include "qmask.h"
 #include "scale.h"
@@ -97,6 +98,7 @@ gdisplay_new (GimpImage    *gimage,
   gdisp->dot_for_dot = TRUE;
   gdisp->gimage = gimage;
   gdisp->window_info_dialog = NULL;
+  gdisp->window_nav_dialog = NULL;
   gdisp->depth = g_visual->depth;
   gdisp->select = NULL;
   gdisp->ID = display_num++;
@@ -328,6 +330,10 @@ gdisplay_delete (GDisplay *gdisp)
   /*  insure that if a window information dialog exists, it is removed  */
   if (gdisp->window_info_dialog)
     info_window_free (gdisp->window_info_dialog);
+
+  /* Remove navigation dialog if we have one */
+  if(gdisp->window_nav_dialog)
+    nav_window_free(gdisp->window_nav_dialog);
 
   /*  set the active display to NULL if it was this display  */
   context = gimp_context_get_user ();
@@ -1010,7 +1016,7 @@ gdisplay_update_cursor (GDisplay *gdisp, int x, int y)
 	}
     }
 
-  gdisplay_untransform_coords(gdisp, x, y, &t_x, &t_y, TRUE, TRUE);
+  gdisplay_untransform_coords(gdisp, x, y, &t_x, &t_y, FALSE, FALSE);
 
   active_drawable = gimp_image_active_drawable (gdisp->gimage);
 
@@ -1022,6 +1028,10 @@ gdisplay_update_cursor (GDisplay *gdisp, int x, int y)
 	  t_y >= active_drawable->height)
 	{
 	  gtk_label_set (GTK_LABEL (gdisp->cursor_label), "");
+	  info_window_update_RGB(gdisp->window_info_dialog,
+				 gdisp,
+				 -1,
+				 -1);
 	} 
       else 
 	{
@@ -1042,6 +1052,10 @@ gdisplay_update_cursor (GDisplay *gdisp, int x, int y)
 		 (double) t_y * unit_factor / gdisp->gimage->yresolution);
 	    }
 	  gtk_label_set (GTK_LABEL (gdisp->cursor_label), buffer);
+	  info_window_update_RGB(gdisp->window_info_dialog,
+				 gdisp,
+				 t_x,
+				 t_y);
 	}
     }
 
@@ -1051,6 +1065,7 @@ gdisplay_update_cursor (GDisplay *gdisp, int x, int y)
   
   if (new_cursor)
     gdisplay_flush (gdisp);
+
 }
 
 

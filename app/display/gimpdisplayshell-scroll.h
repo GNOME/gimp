@@ -35,4 +35,8 @@ void end_grab_and_scroll (GDisplay *, GdkEventButton *);
 void grab_and_scroll (GDisplay *, GdkEventMotion *);
 void scroll_to_pointer_position (GDisplay *, GdkEventMotion *);
 
+/* generic scroll-by-offset function */
+gint  scroll_display (GDisplay *, gint, gint);
+
+
 #endif  /*  __SCROLL_H__  */

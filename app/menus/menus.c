@@ -143,6 +143,7 @@ static GtkItemFactoryEntry image_entries[] =
   { N_("/View/Zoom/1:16"), NULL, view_zoom_1_16_callback, 0 },
   { N_("/View/Dot for dot"), NULL, view_dot_for_dot_callback, 0, "<ToggleItem>"},
   { N_("/View/Window Info..."), "<control><shift>I", view_window_info_cmd_callback, 0 },
+  { N_("/View/Window Nav..."), NULL, view_window_nav_cmd_callback, 0 },
 
   { N_("/View/---"), NULL, NULL, 0, "<Separator>" },
   { N_("/View/Toggle Selection"), "<control>T", view_toggle_selection_cmd_callback, 0, "<ToggleItem>" },

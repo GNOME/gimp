@@ -111,6 +111,7 @@ struct _GDisplay
   guint progressid;               /*  id of statusbar message for progress    */
 
   InfoDialog *window_info_dialog; /*  dialog box for image information        */
+  InfoDialog *window_nav_dialog;  /*  dialog box for image navigation         */
 
   int color_type;                 /*  is this an RGB or GRAY colormap         */
 
