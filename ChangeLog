@@ -1,3 +1,10 @@
+2002-01-02  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimppixmap.c: made a warning more verbose.
+
+	* libgimpwidgets/gimppixmap.h: no need to fiddle around with evil
+	#defines now that it's ported to GtkImage.
+
 2001-12-30  Manish Singh  <yosh@gimp.org>
 
 	* app/gui/module-browser.c: add a shadow to the scrolled window, so

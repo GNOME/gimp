@@ -131,7 +131,7 @@ gimp_pixmap_set (GimpPixmap  *pixmap,
 
 	  if (sscanf (xpm_data[0], "%d %d", &width, &height) != 2)
 	    {
-	      g_warning ("passed pointer is no XPM data");
+	      g_warning ("%s: passed pointer is no XPM data", G_STRLOC);
 	    }
 	  else
 	    {
