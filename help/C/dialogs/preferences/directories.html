@@ -71,7 +71,7 @@ NAME="DIALOGS-PREFERENCES-DIRECTORIES"
 >Directories</A
 ></H1
 ><A
-NAME="AEN4663"
+NAME="AEN4850"
 ></A
 ><P
 >    <SPAN
@@ -85,57 +85,75 @@ CLASS="APPLICATION"
 >    The top view in <SPAN
 CLASS="GUILABEL"
 >Directories</SPAN
-> controls Temp Dir
-    and Swap Dir. The
+> controls
+    <SPAN
+CLASS="GUILABEL"
+>Temp Dir</SPAN
+> and <SPAN
+CLASS="GUILABEL"
+>Swap Dir</SPAN
+>. The
     Swap Dir is, by default, in your personal
     <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
 > directory located in your home
-    directory. Often your home directory is on an
-    <SPAN
+    directory. Often your home directory is on an <SPAN
 CLASS="ACRONYM"
 >NFS</SPAN
-> (UNIX) or <SPAN
+>
+    (UNIX) or <SPAN
 CLASS="ACRONYM"
 >SMB</SPAN
->
-    <SPAN
+> <SPAN
 CLASS="TRADEMARK"
 >Windows</SPAN
->&trade; server. If it is,
-    <SPAN
+>&trade; server.
+    If it is, <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
-> will have its memory swap slowed down due
-    to network latency. It is therefore very important that the
-    <SPAN
+> will have its memory swap
+    slowed down due to network latency. It is therefore very important that
+    the <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
-> directory is a local directory
-    such as <TT
+> directory is a local directory such
+    as <TT
 CLASS="FILENAME"
 >/tmp</TT
-> under
-    Unix or <TT
+> under Unix or <TT
 CLASS="FILENAME"
 >C:\temp</TT
 > under
     <SPAN
 CLASS="TRADEMARK"
 >Windows</SPAN
->&trade;. The temp dir is a directory where
-    GIMP will store temporary files such as palettes that you work
-    with. The temp dir should not be in a public directory such as
-    /tmp, but a directory to which only you have read and write access.
+>&trade;. The temp dir is a directory where GIMP
+    will store temporary files such as the palettes that work with but more
+    important the image data itself that cannot be kept in memory. The temp
+    dir should not be in a public directory such as <TT
+CLASS="FILENAME"
+>/tmp</TT
+>, but a directory to which only you
+    have read and write access.
   </P
 ><P
->    The subcategories such as Brushes, Patterns, and Plug-Ins controls
-    where <SPAN
+>    The subcategories such as <SPAN
+CLASS="GUIBUTTON"
+>Brushes</SPAN
+>,
+    <SPAN
+CLASS="GUIBUTTON"
+>Patterns</SPAN
+>, and <SPAN
+CLASS="GUIBUTTON"
+>Plug-Ins</SPAN
+>
+    control where <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
-> will search for those items
-    and in which order.
+> will search for those
+    items and in which order.
   </P
 ><P
 ></P
@@ -146,16 +164,15 @@ CLASS="VARIABLELIST"
 >Change a Search Path</DT
 ><DD
 ><P
->	  Mark it by clicking on it.  Type the changed path or browse
-	  the files system with the <SPAN
+>	  Mark it by clicking on it.  Type the changed path or browse the
+	  files system with the <SPAN
 CLASS="GUIBUTTON"
 >...</SPAN
-> browse
-	  button.  Press <B
+> browse button.
+	  Press <B
 CLASS="KEYCAP"
 >Enter</B
-> to
-	  activate the new path.
+> to activate the new path.
 	</P
 ></DD
 ><DT
@@ -166,7 +183,8 @@ CLASS="KEYCAP"
 	  <SPAN
 CLASS="INLINEMEDIAOBJECT"
 ><IMG
-SRC="../../../images/raise_directory.png"
+SRC="../../images/raise_directory.png"
+ALT="button showing a upwards arrow"
 ></IMG
 ></SPAN
 >
@@ -174,7 +192,8 @@ SRC="../../../images/raise_directory.png"
 	  <SPAN
 CLASS="INLINEMEDIAOBJECT"
 ><IMG
-SRC="../../../images/lower_directory.png"
+SRC="../../images/lower_directory.png"
+ALT="button showing a downwards arrow"
 ></IMG
 ></SPAN
 >
@@ -189,11 +208,12 @@ SRC="../../../images/lower_directory.png"
 	  <SPAN
 CLASS="INLINEMEDIAOBJECT"
 ><IMG
-SRC="../../../images/new_directory.png"
+SRC="../../images/new_directory.png"
+ALT="button showing a sheet"
 ></IMG
 ></SPAN
 >
-	  button.  Type the path or browse the files system with the
+	  . Type the path or browse the files system with the
 	  <SPAN
 CLASS="GUIBUTTON"
 >...</SPAN
@@ -201,8 +221,7 @@ CLASS="GUIBUTTON"
 	  <B
 CLASS="KEYCAP"
 >Enter</B
-> to
-	  activate the path.
+> to activate the path.
 	</P
 ></DD
 ><DT
@@ -213,11 +232,12 @@ CLASS="KEYCAP"
 	  <SPAN
 CLASS="INLINEMEDIAOBJECT"
 ><IMG
-SRC="../../../images/delete_directory.png"
+SRC="../../images/delete_directory.png"
+ALT="button showing a thrashcan"
 ></IMG
 ></SPAN
 >
-	  icon.
+	  .
 	</P
 ></DD
 ></DL

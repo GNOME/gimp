@@ -71,114 +71,138 @@ NAME="DIALOGS-BRUSH-SELECTION"
 >The Brush Selection Dialog</A
 ></H1
 ><A
-NAME="AEN4715"
-></A
-><A
-NAME="AEN4717"
+NAME="AEN4916"
 ></A
 ><P
->    In this dialog you choose which brush you want to use and the <A
-HREF="../dialogs/brush_selection.html#DIALOGS-BRUSH-SELECTION-SETTINGS"
->settings</A
-> you
-    want to apply to the brush. The dialog displays all the available
-    brushes.  You may also notice some of
-    <SPAN
+>    The Brush Selection Dialog allows the choosing of various brushes
+    and settings that can be used by the brush tools. The dialog
+    displays all of the brushes available to <SPAN
 CLASS="APPLICATION"
->GIMP</SPAN
->'s special features like colored
-    brushes (pixmap brushes), brushes with a red triangle in the right
-    corner (so-called <SPAN
-CLASS="QUOTE"
->"Image Hose"</SPAN
-> brushes), brushes with
-    artistic text, little flourishes and doodles, etc.
+>The
+    GIMP</SPAN
+>.
   </P
 ><P
->    All of those brushes are relatively easy to create in
+>    As can be clearly seen, brush types that are available to
     <SPAN
 CLASS="APPLICATION"
->GIMP</SPAN
-> and save in the appropriate
-    format. <SPAN
+>The GIMP</SPAN
+> are not only basic shaped
+    brushes. Brushes with a small red triangle in the lower right corner
+    of the brush preview are called
+    <A
+HREF="../glossary.html#GLOSSARY-IMAGE-HOSE"
+>      Image Hose
+    </A
+>
+    brushes. There are also brushes that contain text or shapes. These
+    so called pixmap brushes are one of <SPAN
 CLASS="APPLICATION"
->GIMP</SPAN
-> also provides you with a
+>The
+    GIMP</SPAN
+>'s more powerful features.
+  </P
+><P
+>    Brushes are relatively easy to create for use within
+    <SPAN
+CLASS="APPLICATION"
+>The GIMP</SPAN
+> and indeed a simple
     <A
 HREF="../dialogs/brush_editor.html"
->Brush Editor</A
-> dialog
-    where you can create and edit brushes. <A
-NAME="AEN4727"
-HREF="#FTN.AEN4727"
->[1]</A
+>      Brush Editor
+    </A
 >
+    is included with the program. Click the <SPAN
+CLASS="GUIBUTTON"
+>New</SPAN
+>
+    button to invoke the editor.
+  </P
+><P
+>    Creating brushes for use with
+    <SPAN
+CLASS="APPLICATION"
+>The GIMP</SPAN
+> requires that the newly edited
+    image that would be used as a brush be saved in an appropriate
+    location and that the filetype is specified accordingly.
+    
   </P
 ><DIV
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><H2
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><A
-NAME="DIALOGS-BRUSH-SELECTION-PREVIEW"
->Preview and Brush Information</A
+NAME="AEN4930"
+>Preview and brush information</A
 ></H2
 ><P
->      You will see that some of the brushes in the dialog have a
-      little <SPAN
-CLASS="GUIICON"
->+</SPAN
-> sign. The <SPAN
-CLASS="GUIICON"
->+</SPAN
-> sign
-      is indicating that the brush preview is scaled to fit the space.
-      To view the real size of the brush, click and hold on the
-      <SPAN
-CLASS="GUIBUTTON"
->brush square</SPAN
-> and the real size brush will
-      appear (and disappear when you release the mouse).
+>      The upper region of the Brush Dialog window shows a graphical
+      representation of the available brushes.
     </P
-><P
->      When you choose a brush, the name and the size of the brush will
-      appear in the brush dialog. The brush
-      size is measured in pixels.
-    </P
-></DIV
-><DIV
-CLASS="SECT2"
-><H2
-CLASS="SECT2"
-><A
-NAME="DIALOGS-BRUSH-SELECTION-SETTINGS"
->Settings</A
-></H2
 ><P
 >      <SPAN
-CLASS="GUILABEL"
->Spacing</SPAN
-> is the distance between your brush
-      marks. If you set the spacing to 100, the brushmarks will be
-      like a string of pearls. If you set the spacing to zero, the
-      brushmarks will create a solid, brush-shaped line. If the
-      spacing is higher than 100, the brushmarks will form a dotted
-      line.
+CLASS="INLINEMEDIAOBJECT"
+><IMG
+SRC="../images-C/dialogs/brush-dialog.png"
+></IMG
+></SPAN
+>
+    </P
+><P
+>      Above the brush preview area is listed the name of the brush and
+      the pixel size is mentioned in brackets.
+    </P
+><P
+>      Brushes within the preview area that have a <SPAN
+CLASS="GUIICON"
+>+</SPAN
+>
+      symbol located in the bottom right corner have been scaled to fit
+      the preview area. To view the full size brush previe, click
+      <SPAN
+CLASS="MOUSEBUTTON"
+>Button1</SPAN
+>
+      and hold. The full size preview will be displayed whilst the mouse
+      button is held.
     </P
 ></DIV
 ><DIV
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><H2
-CLASS="SECT2"
+CLASS="SIMPLESECT"
 ><A
-NAME="DIALOGS-BRUSH-SELECTION-PIXMAPBRUSHES"
+NAME="AEN4942"
+>Brush Spacing</A
+></H2
+><P
+>      The <SPAN
+CLASS="GUIBUTTON"
+>Spacing</SPAN
+> slider adjusts the distance in
+      pixels between stroke renderings. A higher setting here will
+      increase the space between renderings thus creating a dotted line
+      effect when painting. A lower setting will decrease the distance
+      between brush renderings and thus create a solid brush stroke when
+      painting.
+    </P
+></DIV
+><DIV
+CLASS="SIMPLESECT"
+><H2
+CLASS="SIMPLESECT"
+><A
+NAME="AEN4946"
 >Pixmap Brushes</A
 ></H2
 ><P
->      Pixmap brushes are small images that can be used as a brush.
-      Since the brush is an image, you can't alter its color. The
-      color setting in the toolbox will not apply to this image.
-
-      <DIV
+>      Pixmap brushes are small images that can be used as a normal
+      brush. Because the brush is considered an image, brush color can
+      not be changed.
+    </P
+><DIV
 CLASS="NOTE"
 ><P
 ></P
@@ -192,32 +216,38 @@ WIDTH="25"
 ALIGN="CENTER"
 VALIGN="TOP"
 ><IMG
-SRC="../../images/note.png"
+SRC="../stylesheet-images/note.gif"
 HSPACE="5"
 ALT="Note"></TD
 ><TD
 ALIGN="LEFT"
 VALIGN="TOP"
 ><P
->	  If you use color as a pressure sensitivity when you paint
-	  you will be able to change the color of the pixmap brush.
-	</P
+>        If the input device being used to paint with supports pressure
+        sensitivity, the color of the pixmap brush will be mapped to
+        pressure.
+      </P
 ></TD
 ></TR
 ></TABLE
 ></DIV
->
-    </P
+></DIV
+><DIV
+CLASS="SIMPLESECT"
 ><H2
-CLASS="BRIDGEHEAD"
->Additional Information</H2
+CLASS="SIMPLESECT"
+><A
+NAME="AEN4951"
+>Additional Information</A
+></H2
 ><P
->      Default Keyboard Shortcut: <B
-CLASS="KEYCAP"
->Shift</B
->-<B
+>      Defualt Keyboard Shortcut:
+      <B
 CLASS="KEYCAP"
 >Ctrl</B
+>-<B
+CLASS="KEYCAP"
+>Shift</B
 >-<B
 CLASS="KEYCAP"
 >B</B
@@ -225,34 +255,6 @@ CLASS="KEYCAP"
     </P
 ></DIV
 ></DIV
-><H3
-CLASS="FOOTNOTES"
->Notes</H3
-><TABLE
-BORDER="0"
-CLASS="FOOTNOTES"
-WIDTH="100%"
-><TR
-><TD
-ALIGN="LEFT"
-VALIGN="TOP"
-WIDTH="5%"
-><A
-NAME="FTN.AEN4727"
-HREF="../dialogs/brush_selection.html#AEN4727"
->[1]</A
-></TD
-><TD
-ALIGN="LEFT"
-VALIGN="TOP"
-WIDTH="95%"
-><P
-> you can
-    only edit brushes that are created in the brush
-    editor </P
-></TD
-></TR
-></TABLE
 ><DIV
 CLASS="NAVFOOTER"
 ><HR

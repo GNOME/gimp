@@ -71,38 +71,43 @@ NAME="MODULES-BROWSER"
 >Module Browser</A
 ></H1
 ><A
-NAME="AEN569"
+NAME="AEN561"
 ></A
 ><P
->    The Module Brower is an interface for
-    currently loaded and available modules in
+>    The <SPAN
+CLASS="GUIMENUITEM"
+>Module Browser</SPAN
+> is an interface that
+    displays the currently loaded and available modules in
     <SPAN
 CLASS="APPLICATION"
->GIMP</SPAN
->, along with information about the
-    module. The current <SPAN
+>The GIMP</SPAN
+>. The checkbox,
+    <SPAN
+CLASS="GUIBUTTON"
+>Autoload during startup</SPAN
+>, determines whether the
+    selected module will load itself automatically when
+    <SPAN
 CLASS="APPLICATION"
->GIMP</SPAN
-> uses modules
-    only for color selectors (there is also a gamma display module).
-    In the module browser you can set if these
-    modules should be loaded at start up (this button is
-    non-functional at the moment and all modules will be loaded by
-    default).
+>The GIMP</SPAN
+> is started. The default action is to
+    do so.
   </P
 ><P
->    You can also unload a module on the fly, e.g. you may not want the
-    <SPAN
-CLASS="GUILABEL"
->watercolor color selector</SPAN
->. If you unload a
-    module, the functionality provided by the module will no longer be
-    available in your current <SPAN
-CLASS="APPLICATION"
->GIMP</SPAN
+>    Modules can also be unloaded. Clicking the <SPAN
+CLASS="GUIBUTTON"
+>Unload</SPAN
 >
-    session. To enable the functionality again, you have to mark the
-    module and reload it.
+    button will do this. There is, however, no benefit to be had by doing
+    this. Once a module is unloaded, the functionality provided by the module
+    will no longer be available to the user. To reload the module, thus
+    providing the missing functionality, highlight the module in the listing
+    at the top of the dialog and click <SPAN
+CLASS="GUIBUTTON"
+>Load</SPAN
+>. The
+    module will be dynamically reloaded and immediately available.
   </P
 ></DIV
 ><DIV
