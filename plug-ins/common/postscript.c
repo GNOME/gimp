@@ -2357,7 +2357,7 @@ save_gray  (FILE   *ofp,
 
   if (ferror (ofp))
     {
-      g_message (_("write error occured"));
+      g_message (_("Write error occurred"));
       return (FALSE);
     }
   return (TRUE);
@@ -2489,7 +2489,7 @@ save_bw (FILE   *ofp,
 
   if (ferror (ofp))
     {
-      g_message (_("write error occured"));
+      g_message (_("Write error occurred"));
       return (FALSE);
     }
   return (TRUE);
@@ -2639,7 +2639,7 @@ save_index (FILE   *ofp,
 
   if (ferror (ofp))
     {
-      g_message (_("write error occured"));
+      g_message (_("Write error occurred"));
       return (FALSE);
     }
   return (TRUE);
@@ -2767,7 +2767,7 @@ save_rgb (FILE   *ofp,
 
   if (ferror (ofp))
     {
-      g_message (_("write error occured"));
+      g_message (_("Write error occurred"));
       return (FALSE);
     }
   return (TRUE);

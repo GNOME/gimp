@@ -407,7 +407,7 @@ sparkle_dialog (void)
               svals.spike_angle, -1, 360, 1, 15, 0,
               TRUE, 0, 0,
               _("Adjust the Spike Angle "
-                "(-1 means a Random Angle is choosen)"), NULL);
+                "(-1 means a Random Angle is chosen)"), NULL);
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &svals.spike_angle);

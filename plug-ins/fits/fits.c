@@ -828,7 +828,7 @@ save_direct (FITS_FILE *ofp,
 
   if (ferror (ofp->fp))
     {
-      g_message (_("Write error occured"));
+      g_message (_("Write error occurred"));
       return (FALSE);
     }
   return (TRUE);
@@ -952,7 +952,7 @@ save_index (FITS_FILE *ofp,
 
   if (ferror (ofp->fp))
     {
-      g_message (_("Write error occured"));
+      g_message (_("Write error occurred"));
       return (FALSE);
     }
   return (TRUE);

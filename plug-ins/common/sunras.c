@@ -1454,7 +1454,7 @@ save_index (FILE    *ofp,
 
   if (ferror (ofp))
     {
-      g_message (_("Write error occured"));
+      g_message (_("Write error occurred"));
       return (FALSE);
     }
   return (TRUE);
@@ -1562,7 +1562,7 @@ save_rgb (FILE   *ofp,
 
   if (ferror (ofp))
     {
-      g_message (_("Write error occured"));
+      g_message (_("Write error occurred"));
       return (FALSE);
     }
   return (TRUE);

@@ -565,7 +565,7 @@ unit_editor_dialog (void)
                             0);
   gtk_toolbar_insert_stock (GTK_TOOLBAR (toolbar), GIMP_STOCK_DUPLICATE,
                             _("Create a new unit with the currently "
-                              "seleted unit as template."), NULL,
+                              "selected unit as template."), NULL,
                             G_CALLBACK (duplicate_callback), tv,
                             1);
 

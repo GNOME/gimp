@@ -1,5 +1,15 @@
 2004-05-23  Sven Neumann  <sven@gimp.org>
 
+	More fixes for bug #142996:
+
+	* plug-ins/common/postscript.c
+	* plug-ins/common/sparkle.c
+	* plug-ins/common/sunras.c
+	* plug-ins/common/uniteditor.c
+	* plug-ins/fits/fits.c: fixed typos.
+
+2004-05-23  Sven Neumann  <sven@gimp.org>
+
 	Fixes for bug #142996:
 	
 	* app/gui/preferences-dialog.c: added missing gettext call. 
