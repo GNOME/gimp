@@ -1,3 +1,31 @@
+2004-11-17  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/dbbrowser/Makefile.am: make libgimpprocbrowser a libtooled
+	library.
+
+	* plug-ins/dbbrowser/gimpprocbrowser.[ch]: add a user_data pointer
+	for GimpProcBrowserApplyCallback.
+
+	* plug-ins/dbbrowser/gimpprocbrowser.c: only convert the name to
+	scheme style if scheme_names in the proc info pane too.
+
+	* plug-ins/dbbrowser/procedure-browser.c
+	* plug-ins/script-fu/script-fu-console.c: pass NULL as user_data.
+
+	* plug-ins/script-fu/Makefile.am: reference libgimpprocbrowser.la.
+
+	* plug-ins/pygimp/Makefile.am
+	* plug-ins/pygimp/procbrowser.c: new module, which wraps
+	libgimprocbrowser.
+
+	* plug-ins/pygimp/gimpmodule.c
+	* plug-ins/pygimp/pygimp.h
+	* plug-ins/pygimp/pygimp-pdb.c: export GimpPDBFunction so other
+	modules can use it.
+
+	* plug-ins/pygimp/plug-ins/pdbbrowse.py
+	* plug-ins/pygimp/plug-ins/gimpcons.py: use gimpprocbrowser.
+
 2004-11-17  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu-interface.c: added a utility

@@ -1259,6 +1259,12 @@ initgimp()
     PyDict_SetItemString(d, "PixelRgn", (PyObject *)&PyGimpPixelRgn_Type);
     PyDict_SetItemString(d, "Parasite", (PyObject *)&PyGimpParasite_Type);
 
+    /* these are private, for use in gimpprocbrowser */
+    PyDict_SetItemString(d, "_PDBFunction",
+			 (PyObject *)&PyGimpPDBFunction_Type);
+    PyDict_SetItemString(d, "_pdb_function_new",
+			 PyCObject_FromVoidPtr(pygimp_pdb_function_new, NULL));
+
     PyDict_SetItemString(d, "version",
 			 i=Py_BuildValue("(iii)",
 					 gimp_major_version,

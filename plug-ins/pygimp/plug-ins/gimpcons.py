@@ -47,29 +47,42 @@ def plug_in_python_fu_console():
     cons = gtkcons.Console(namespace=namespace, quit_cb=bye)
 
     def browse(button, cons):
-        import pygtk
-        pygtk.require('2.0')
+        import gimpprocbrowser
 
-        import gtk, pdbbrowse
+        def on_apply(proc): 
+            cmd = ''
 
-        def ok_clicked(button, browse, cons=cons):
-            cons.line.set_text(browse.cmd)
-            browse.destroy()
+            if len(proc.return_vals) > 0:
+                cmd = ', '.join([x[1] for x in proc.return_vals]) + ' = '
 
-        win = pdbbrowse.BrowseWin(ok_button=ok_clicked)
-        win.connect("destroy", bye)
-        win.set_modal(TRUE)
-        win.show()
-        gtk.main()
+            if '-' in proc.proc_name:
+                cmd = cmd + "pdb['%s']" % proc.proc_name
+            else:
+                cmd = cmd + "pdb.%s" % proc.proc_name
+
+            if len(proc.params) > 0 and proc.params[0][1] == 'run_mode':
+                params = proc.params[1:]
+            else:
+                params = proc.params
+
+            cmd = cmd + "(%s)" % ', '.join([x[1] for x in params])
+
+            cons.line.set_text(cmd)
+    
+        dlg = gimpprocbrowser.dialog_new(on_apply)
 
     button = gtk.Button("Browse")
     button.connect("clicked", browse, cons)
+
     cons.inputbox.pack_end(button, expand=FALSE)
     button.show()
+
     win.add(cons)
     cons.show()
+
     win.set_default_size(475, 300)
     win.show()
+
     cons.init()
 
     # flush the displays every half second

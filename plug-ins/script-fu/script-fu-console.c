@@ -306,7 +306,8 @@ apply_callback (const gchar        *proc_name,
 		gint                n_params,
 		gint                n_return_vals,
 		const GimpParamDef *params,
-		const GimpParamDef *return_vals)
+		const GimpParamDef *return_vals,
+		gpointer            user_data)
 {
   gint     i;
   GString *text;
@@ -334,7 +335,7 @@ script_fu_browse_callback (GtkWidget *widget,
 			   gpointer   data)
 {
   gtk_quit_add_destroy (1, (GtkObject *)
-                        gimp_proc_browser_dialog_new (TRUE, apply_callback));
+                        gimp_proc_browser_dialog_new (TRUE, apply_callback, NULL));
 }
 
 static gboolean

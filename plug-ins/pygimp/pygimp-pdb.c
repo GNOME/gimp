@@ -50,7 +50,7 @@ typedef struct {
     GimpParamDef *params, *return_vals;
 } PyGimpPDBFunction;
 
-static PyObject *pygimp_pdb_function_new(char *name);
+static PyObject *pygimp_pdb_function_new_from_proc_db(char *name);
 
 /* ---------------------------------------------------------------- */
 
@@ -599,7 +599,7 @@ pdb_subscript(PyGimpPDB *self, PyObject *key)
 	PyErr_SetString(PyExc_TypeError, "Subscript must be a string");
 	return NULL;
     }
-    r = (PyObject *)pygimp_pdb_function_new(PyString_AsString(key));
+    r = (PyObject *)pygimp_pdb_function_new_from_proc_db(PyString_AsString(key));
     if (r == NULL) {
 	PyErr_Clear();
 	PyErr_SetObject(PyExc_KeyError, key);
@@ -624,7 +624,7 @@ pdb_getattro(PyGimpPDB *self, PyObject *attr)
     if (ret)
 	return ret;
     PyErr_Clear();
-    return pygimp_pdb_function_new(PyString_AsString(attr));
+    return pygimp_pdb_function_new_from_proc_db(PyString_AsString(attr));
 }
 
 PyTypeObject PyGimpPDB_Type = {
@@ -675,11 +675,11 @@ PyTypeObject PyGimpPDB_Type = {
 
 
 static PyObject *
-pygimp_pdb_function_new(char *name)
+pygimp_pdb_function_new_from_proc_db(char *name)
 {
-    PyGimpPDBFunction *self;
+    PyObject *ret;
     char *b,*h,*a,*c,*d;
-    int np, nr, i;
+    int np, nr;
     GimpPDBProcType pt;
     GimpParamDef *p, *r;
 
@@ -689,37 +689,11 @@ pygimp_pdb_function_new(char *name)
 	return NULL;
     }
 
-    self = PyObject_NEW(PyGimpPDBFunction, &PyGimpPDBFunction_Type);
-    if (self == NULL)
-	return NULL;
-
-    self->name = g_strdup(name);
-    self->proc_name = PyString_FromString(name?name:"");
-    self->proc_blurb = PyString_FromString(b?b:"");
-    self->proc_help = PyString_FromString(h?h:"");
-    self->proc_author = PyString_FromString(a?a:"");
-    self->proc_copyright = PyString_FromString(c?c:"");
-    self->proc_date = PyString_FromString(d?d:"");
-    self->proc_type = PyInt_FromLong(pt);
-    self->nparams = np;
-    self->nreturn_vals = nr;
-    self->params = p;
-    self->return_vals = r;
-
-    self->py_params = PyTuple_New(np);
-    for (i = 0; i < np; i++)
-	PyTuple_SetItem(self->py_params, i,
-			Py_BuildValue("(iss)", p[i].type, p[i].name,
-				      p[i].description));
-    self->py_return_vals = PyTuple_New(nr);
-    for (i = 0; i < nr; i++)
-	PyTuple_SetItem(self->py_return_vals, i,
-			Py_BuildValue("(iss)", r[i].type, r[i].name,
-				      r[i].description));
+    ret = pygimp_pdb_function_new(name, b, h, a, c, d, pt, np, nr, p, r);
 
     g_free(b); g_free(h); g_free(a); g_free(c); g_free(d);
-	
-    return (PyObject *)self;
+
+    return ret;
 }
 
 static void
@@ -899,3 +873,48 @@ PyTypeObject PyGimpPDBFunction_Type = {
     (allocfunc)0,			/* tp_alloc */
     (newfunc)0,				/* tp_new */
 };
+
+PyObject *
+pygimp_pdb_function_new(const char *name, const char *blurb, const char *help,
+			const char *author, const char *copyright,
+			const char *date, GimpPDBProcType proc_type,
+			int n_params, int n_return_vals,
+			GimpParamDef *params, GimpParamDef *return_vals)
+{
+    PyGimpPDBFunction *self;
+    int i;
+
+    self = PyObject_NEW(PyGimpPDBFunction, &PyGimpPDBFunction_Type);
+    if (self == NULL)
+	return NULL;
+
+    self->name = g_strdup(name);
+    self->proc_name = PyString_FromString(name ? name : "");
+    self->proc_blurb = PyString_FromString(blurb ? blurb : "");
+    self->proc_help = PyString_FromString(help ? help : "");
+    self->proc_author = PyString_FromString(author ? author : "");
+    self->proc_copyright = PyString_FromString(copyright ? copyright : "");
+    self->proc_date = PyString_FromString(date ? date : "");
+    self->proc_type = PyInt_FromLong(proc_type);
+    self->nparams = n_params;
+    self->nreturn_vals = n_return_vals;
+    self->params = params;
+    self->return_vals = return_vals;
+
+    self->py_params = PyTuple_New(n_params);
+    for (i = 0; i < n_params; i++)
+	PyTuple_SetItem(self->py_params, i,
+			Py_BuildValue("(iss)",
+				      params[i].type,
+				      params[i].name,
+				      params[i].description));
+
+    self->py_return_vals = PyTuple_New(n_return_vals);
+    for (i = 0; i < n_return_vals; i++)
+	PyTuple_SetItem(self->py_return_vals, i,
+			Py_BuildValue("(iss)",
+				      return_vals[i].type,
+				      return_vals[i].name,
+				      return_vals[i].description));
+    return (PyObject *)self;
+}

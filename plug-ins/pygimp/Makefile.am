@@ -5,16 +5,17 @@ libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSIO
 libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
 libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
+libgimpprocbrowser = $(top_builddir)/plug-ins/dbbrowser/libgimpprocbrowser.la
 
 SUBDIRS = doc plug-ins
 
 AM_CFLAGS = $(PYGIMP_EXTRA_CFLAGS)
 
-INCLUDES = -I$(top_srcdir) $(PYTHON_INCLUDES) $(GLIB_CFLAGS)
+INCLUDES = -I$(top_srcdir) $(PYTHON_INCLUDES) $(PYGTK_CFLAGS) $(GTK_CFLAGS)
 
 pygimpdir = $(gimpplugindir)/python
 
-pygimp_LTLIBRARIES = gimpmodule.la
+pygimp_LTLIBRARIES = gimpmodule.la gimpprocbrowsermodule.la
 
 gimpmodule_la_SOURCES = \
 	gimpmodule.c		\
@@ -35,6 +36,22 @@ gimpmodule_la_LIBADD = \
 	$(libgimpbase)		\
 	$(GLIB_LIBS)		\
 	$(RT_LIBS)
+
+gimpprocbrowsermodule_la_SOURCES = \
+	procbrowser.c
+
+gimpprocbrowsermodule_la_LDFLAGS = -module -avoid-version
+
+gimpprocbrowsermodule_la_LIBADD = \
+	$(libgimpprocbrowser)	\
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimp)		\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)
 
 pygimp_PYTHON = \
 	gimpplugin.py	\

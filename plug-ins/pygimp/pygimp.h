@@ -38,7 +38,13 @@ PyObject *pygimp_pdb_new(void);
 
 extern PyTypeObject PyGimpPDBFunction_Type;
 #define pygimp_pdb_function_check(v) (PyObject_TypeCheck(v, &PyGimpPDBFunction_Type))
-
+PyObject *pygimp_pdb_function_new(const char *name, const char *blurb,
+				  const char *help, const char *author,
+				  const char *copyright, const char *date,
+				  GimpPDBProcType proc_type,
+				  int n_params, int n_return_vals,
+				  GimpParamDef *params,
+				  GimpParamDef *return_vals);
 
 typedef struct {
     PyObject_HEAD

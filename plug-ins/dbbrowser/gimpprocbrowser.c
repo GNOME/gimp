@@ -81,6 +81,7 @@ typedef struct
 
   gboolean                     scheme_names;
   GimpProcBrowserApplyCallback apply_callback;
+  gpointer                     user_data;
 } GimpDBBrowser;
 
 
@@ -104,7 +105,8 @@ static void   browser_convert_string    (gchar             *str);
 
 GtkWidget *
 gimp_proc_browser_dialog_new (gboolean                     scheme_names,
-                              GimpProcBrowserApplyCallback apply_callback)
+                              GimpProcBrowserApplyCallback apply_callback,
+                              gpointer                     user_data)
 {
   GimpDBBrowser   *browser;
   GtkWidget       *paned;
@@ -118,6 +120,7 @@ gimp_proc_browser_dialog_new (gboolean                     scheme_names,
 
   browser->scheme_names   = scheme_names ? TRUE : FALSE;
   browser->apply_callback = apply_callback;
+  browser->user_data      = user_data;
 
   if (apply_callback)
     {
@@ -357,7 +360,8 @@ browser_response (GtkWidget     *widget,
                                browser->n_params,
                                browser->n_return_vals,
                                browser->params,
-                               browser->return_vals);
+                               browser->return_vals,
+                               browser->user_data);
       break;
 
     case RESPONSE_SEARCH:
@@ -440,7 +444,9 @@ browser_response (GtkWidget     *widget,
             gchar *label;
 
             label = g_strdup (proc_list[i]);
-            browser_convert_string (label);
+
+            if (browser->scheme_names)
+              browser_convert_string (label);
 
             gtk_list_store_append (browser->store, &iter);
             gtk_list_store_set (browser->store, &iter,
