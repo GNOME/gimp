@@ -37,6 +37,7 @@ static void      run          (const gchar      *name,
                                GimpParam       **return_vals);
 
 static gboolean  glob_match   (const gchar      *pattern,
+                               gboolean          filename_encoding,
                                gint             *num_matches,
                                gchar          ***matches);
 static gboolean  glob_fnmatch (const gchar      *pattern,
@@ -58,7 +59,9 @@ query (void)
 {
   static GimpParamDef glob_args[] =
   {
-    { GIMP_PDB_STRING,      "pattern" ,  "The glob pattern (in UTF-8 encoding)"}
+    { GIMP_PDB_STRING,  "pattern" ,  "The glob pattern (in UTF-8 encoding)" },
+    { GIMP_PDB_INT32,   "encoding",  "Encoding of the returned names: "
+                                     "{ UTF-8 (0), filename encoding (1) }" }
   };
 
   static GimpParamDef glob_return_vals[] =
@@ -74,9 +77,7 @@ query (void)
                           "(e.g., batch-conversion). See the glob(7) manpage "
                           "for more info. Note however that this isn't a "
                           "full-featured glob implementation. It only handles "
-                          "simple patterns like \"/home/foo/bar/*.jpg\". "
-                          "The pattern is expected to be in UTF-8 encoding "
-                          "and all returned names are UTF-8 encoded as well.",
+                          "simple patterns like \"/home/foo/bar/*.jpg\".",
                           "Sven Neumann",
                           "Sven Neumann",
                           "2004",
@@ -104,12 +105,17 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
 
-  if (strcmp (name, PROCEDURE_NAME) == 0)
+  if (strcmp (name, PROCEDURE_NAME) == 0 && nparams >= 1)
     {
-      gchar **matches;
-      gint    num_matches;
+      gchar    **matches;
+      gint       num_matches;
+      gboolean   filename_encoding = FALSE;
 
-      if (! glob_match (param[0].data.d_string, &num_matches, &matches))
+      if (nparams > 1)
+        filename_encoding = param[0].data.d_int32 ? TRUE : FALSE;
+
+      if (! glob_match (param[0].data.d_string, filename_encoding,
+                        &num_matches, &matches))
         {
           values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
           return;
@@ -130,6 +136,7 @@ run (const gchar      *name,
 
 static gboolean
 glob_match (const gchar   *pattern,
+            gboolean       filename_encoding,
             gint          *num_matches,
             gchar       ***matches)
 {
@@ -181,24 +188,32 @@ glob_match (const gchar   *pattern,
        filename;
        filename = g_dir_read_name (dir))
     {
+      gchar *path;
       gchar *name;
 
       if (dirname)
-        {
-          gchar *path = g_build_filename (dirname, filename, NULL);
-
-          name = g_filename_to_utf8 (path, -1, NULL, NULL, NULL);
-          g_free (path);
-        }
+        path = g_build_filename (dirname, filename, NULL);
       else
-        {
-          name = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
-        }
+        path = g_strdup (filename);
+
+      name = g_filename_to_utf8 (path, -1, NULL, NULL, NULL);
 
       if (name && glob_fnmatch (pattern, name))
-        g_ptr_array_add (array, name);
-      else
-        g_free (name);
+        {
+          if (filename_encoding)
+            {
+              g_ptr_array_add (array, path);
+              path = NULL;
+            }
+          else
+            {
+              g_ptr_array_add (array, name);
+              name = NULL;
+            }
+        }
+
+      g_free (path);
+      g_free (name);
     }
 
   g_dir_close (dir);
