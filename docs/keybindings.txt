@@ -6,31 +6,34 @@ GIMP. For more information on what the commands do, use the
 help system (press F1) or the GUM (GIMP Users Manual) which is
 available at http://manual.gimp.org/.
 
-The GIMP allows menu keybindings to be dynamically re-assigned. 
-So if you don't like these, they are easy enough to change. To
-do this, just highlight the menu item of your choice, and press
-the desired new key combination. If that combination is already
-assigned, the old command will lose it's binding.
+The GIMP allows menu keybindings to be dynamically re-assigned.
+So if you don't like these, they are easy enough to change.  To
+do this, you should first activate the "Dynamic Keyboard
+Shortcuts" in the preferences dialog.  Then you can just
+highlight the menu item of your choice, and press the desired new
+key combination.  If that combination is already assigned, the
+old command will lose its binding.
 
-The GIMP also comes with a menurc that will implement Adobe 
-Photoshop style keybindings, if you are used to Photoshop, this 
-may prove helpful. To use it, rename ps-menurc to menurc and
-put it in ~/gimp-1.2, overwriting the one that is already there
-(you may want to make a backup first).
+Keyboard keys are shown as Capital letters, but lower case is OK.
 
-1. ToolBox
+This is a modification of the keybindings text Version 1.1.0: by:
+    Adrian Likins <adrian@gimp.org>
+    Piers Cornwell <piers.cornwell@usa.net>
+
+1. File Menu Functions
 ==========
 
 File
     New.................................Ctrl+N
     Open................................Ctrl+O
+    Open recent.........................Ctrl+1..4
     Dialogs >
-	Layers, Channels & Paths........Ctrl+L
 	Tool Options....................Shift+Ctrl+T
+	Layers..........................Ctrl+L
 	Brushes.........................Shift+Ctrl+B
 	Patterns........................Shift+Ctrl+P
 	Gradients.......................Ctrl+G
-	Palette.........................Ctrl+P
+	Palettes........................Ctrl+P
     Quit................................Ctrl+Q
 
 Help
@@ -44,10 +47,12 @@ Help
 File
     New.................................Ctrl+N
     Open................................Ctrl+O
+    Open recent.........................Ctrl+1,Ctrl+2,Ctrl+3,Ctrl+4
     Save................................Ctrl+S
+    Save as.............................Shift+Ctrl+S
     Close...............................Ctrl+W
-    Quit................................Ctrl+Q	
-	
+    Quit................................Ctrl+Q
+
 Edit
     Undo................................Ctrl+Z
     Redo................................Ctrl+R
@@ -63,45 +68,45 @@ Edit
     Fill with BG Color..................Ctrl+.
 
 Select
-    Invert..............................Ctrl+I
     All.................................Ctrl+A
     None................................Shift+Ctrl+A
+    Invert..............................Ctrl+I
     Float...............................Shift+Ctrl+L
     Feather.............................Shift+Ctrl+F
     Sharpen.............................Shift+Ctrl+H
+    Toggle Quickmask....................Shift+Q
 
 View
-    Zoom in.............................=
-    Zoom out............................-
-    Zoom >	
-	1:1.............................1
+    Zoom in............................ =
+    Zoom out........................... -
+    Zoom to fit window..................Shift+Ctrl+E
+    Zoom >
+	1:1............................ 1
     Info Window.........................Shift+Ctrl+I
     Nav Window..........................Shift+Ctrl+N
-    Toggle Selection....................Ctrl+T
-    Toggle Rulers.......................Shift+Ctrl+R
-    Toggle Statusbar....................Shift+Ctrl+S
-    Toggle Guides.......................Shift+Ctrl+T	
-    Shrink Wrap.........................Ctrl+E
+    Show Selection......................Ctrl+T
+    Show Guides.........................Shift+Ctrl+T
+    Show Rulers.........................Shift+Ctrl+R
+    Shrink wrap.........................Ctrl+E
+    Full Screen.........................F11
 
 Image
-    Mode >
-	RGB.............................Alt+R
-	Grayscale.......................Alt+G
-	Indexed.........................Alt+I
-    Transforms >
-	Offset..........................Shift+Ctrl+O
     Duplicate...........................Ctrl+D
+    Merge Visible Layers ...............Ctrl+M
 
 Layers
-    Stack >
-	Previous Layer..................Pg Dn
-	Next Layer......................Pg Up		
-	Raise Layer.....................Shift+Pg Dn
-	Lower Layer.....................Shift+Pg Up
-	Layer to Top....................Ctrl+Pg Dn
-	Layer to Bottom.................Ctrl+Pg Up
     Anchor Layer........................Ctrl+H
-    Merge Visible Layers................Ctrl+M
+    Merge Down..........................Shift+Ctrl+M
+    Stack >
+	Previous Layer..................Pg Up
+	Next Layer......................Pg Down
+	Raise Layer.....................Shift+Pg Up
+	Lower Layer.....................Shift+Pg Down
+	Layer to Top....................Ctrl+Pg Up
+	Layer to Bottom.................Ctrl+Pg Down
+
+    Transform>
+        Offset..........................Shift+Ctrl+O
 
 Tools
     Default Colors......................D
@@ -111,102 +116,98 @@ Tools
 	Ellipse Select..................E
 	Free Select.....................F
 	Fuzzy Select....................Z
-	Bezier Select...................B
+	By Color Select.................Shift+O
 	Intelligent Scissors............I
-    Transform Tools >
-	Move............................M
-	Crop & Resize...................Shift+C
-	Transform.......................Shift+T
-	Flip............................Shift+F
-    Magnify.............................Shift+M
-    Text................................T
-    Color Picker........................O
+	Bezier Select...................B
     Paint Tools >
 	Bucket Fill.....................Shift+B
 	Blend...........................L
-	Pencil..........................Shift+P
+	Pencil..........................N
 	Paintbrush......................P
 	Eraser..........................Shift+E
 	Airbrush........................A
+	Ink.............................K
 	Clone...........................C
 	Convolve........................V
-	Ink.............................K
 	DodgeBurn.......................Shift+D
-	Smudge..........................Shift+S
+	Smudge..........................S
+    Transform Tools >
+	Move............................M
+	Crop & Resize...................Shift+C
+	Rotate..........................Shift+R
+	Scale...........................Shift+T
+	Sheer...........................Shift+S
+	Perspective.....................Shift+P
+	Flip............................Shift+F
+        Color Picker....................O
+	Text............................T
 
 Dialogs
-    Layers, Channels & Paths............Ctrl+L
+    Layers..............................Ctrl+L
     Brushes.............................Shift+Ctrl+B
     Patterns............................Shift+Ctrl+P
     Gradients...........................Ctrl+G
     Palette.............................Ctrl+P
 
 Filters
-    Repeat Last.........................Alt+F
-    Re-Show Last........................Shift+Alt+F
+    Repeat "GFig".......................Alt+F
+    Re-Show "GFig"......................Shift+Alt+F
 
-3. Gradient Editor
+3.  Editors
 ==================
 
-Gradient Ops Menu
-    Left Endpoint Color.................L
-    Load From >
-	Left neighbors right endpoint...Ctrl+L
-	Right endpoint..................Alt+L
-    Right Endpoint Color................R
-    Load From >
-	Right neighbours right endpoint.Ctrl+R
-	Left Endpoint...................Alt+R
+Gradient Menu
+
+    New gradient........................Ctrl+N
+    Flip segment........................F
+    Replicate segment...................R
     Split segment at midpoint...........S
     Split segment uniformly.............U
     Delete segment......................D
     Re-center segments midpoint.........C
     Re-distribute handles in segment....Ctrl+C
-    Selection Operands >
-	Flip segment....................F
-	Replicate segment...............M
-	Blend endpoints colors..........B
-	Blend endpoints opacity.........Ctrl+B    
+    Blend endpoints colors..............B
+    Blend endpoints opacity.............Ctrl+B
 
 4. Layers & Channels
 ====================
 
-Layers Ops menu
+Layers menu
     New Layer...........................Ctrl+N
-    Stack >
-	Raise Layer.....................Ctrl+F
-	Lower Layer.....................Ctrl+B
-	Layer to Top....................Shift+Ctrl+F
-	Layer to Bottom.................Shift+Ctrl+B
+    Raise Layer.........................Ctrl+F
+    Layer to Top........................Shift+Ctrl+F
+    Lower Layer.........................Ctrl+B
+    Layer to Bottom.....................Shift+Ctrl+B
     Duplicate Layer.....................Ctrl+C
     Anchor Layer........................Ctrl+H
+    Merge Down..........................Shift+Ctrl+M
     Delete Layer........................Ctrl+X
     Layer Boundary Size.................Ctrl+R
     Scale Layer.........................Ctrl+S
-    Merge Visible Layers................Ctrl+M
-    Merge Down..........................Shift+Ctrl+M
 
-Channel Ops Menu
+Channel Menu
     New Channel.........................Ctrl+N
     Raise Channel.......................Ctrl+F
     Lower Channel.......................Ctrl+B
     Duplicate Channel...................Ctrl+C
     Channel to Selection................Ctrl+S
-    Delete Channel......................Ctrl+X 
+    Delete Channel......................Ctrl+X
+
     
-Paths Ops Menu
+Paths Menu
     New Path............................Ctrl+N
+    Raise Path..........................Ctrl+F
+    Lower Path..........................Ctrl+B
     Duplicate Path......................Ctrl+U
     Path to Selection...................Ctrl+S
     Selection to Path...................Ctrl+P
     Stroke Path.........................Ctrl+T
-    Delete Path.........................Ctrl+X 
     Copy Path...........................Ctrl+C
     Paste Path..........................Ctrl+V
     Import Path.........................Ctrl+I
     Export Path.........................Ctrl+E
+    Delete Path.........................Ctrl+X
 
 
-Version 1.1.0:
-    Adrian Likins <adrian@gimp.org>
-    Piers Cornwell <piers.cornwell@usa.net>
+
+
