@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.4.1\n"
-"POT-Creation-Date: 2002-03-07 02:11+0000\n"
+"POT-Creation-Date: 2002-03-28 14:51+0100\n"
 "PO-Revision-Date: 2002-03-07 02:15+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
@@ -213,19 +213,19 @@ msgstr "_Reiniciar"
 msgid "Visible"
 msgstr "Visível"
 
-#: libgimpwidgets/gimpstock.c:143
+#: libgimpwidgets/gimpstock.c:155
 msgid "Transform"
 msgstr "Transformar"
 
-#: libgimpwidgets/gimpstock.c:146
+#: libgimpwidgets/gimpstock.c:158
 msgid "Rotate"
 msgstr "Rodar"
 
-#: libgimpwidgets/gimpstock.c:147
+#: libgimpwidgets/gimpstock.c:159
 msgid "Scale"
 msgstr "Escalar"
 
-#: libgimpwidgets/gimpstock.c:148
+#: libgimpwidgets/gimpstock.c:160
 msgid "Shear"
 msgstr "Cortar Rente"
 
@@ -245,7 +245,7 @@ msgstr "Unidade"
 msgid "Factor"
 msgstr "Factor"
 
-#: libgimpwidgets/gimpwidgets.c:801
+#: libgimpwidgets/gimpwidgets.c:842
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -254,11 +254,11 @@ msgstr ""
 "da geração de números aleatórios - isto permite-lhe repetir uma dada "
 "operação \"aleatória\""
 
-#: libgimpwidgets/gimpwidgets.c:806
+#: libgimpwidgets/gimpwidgets.c:847
 msgid "Time"
 msgstr "Hora"
 
-#: libgimpwidgets/gimpwidgets.c:815
+#: libgimpwidgets/gimpwidgets.c:856
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -266,15 +266,15 @@ msgstr ""
 "Criar semente de geração aleatória de números a partir da hora actual - isto "
 "garante-lhe uma aleatoriedade razoável"
 
-#: libgimpwidgets/gimpwidgets.c:1129
+#: libgimpwidgets/gimpwidgets.c:1170
 msgid "Bytes"
 msgstr "Bytes"
 
-#: libgimpwidgets/gimpwidgets.c:1130
+#: libgimpwidgets/gimpwidgets.c:1171
 msgid "KiloBytes"
 msgstr "KiloBytes"
 
-#: libgimpwidgets/gimpwidgets.c:1131
+#: libgimpwidgets/gimpwidgets.c:1172
 msgid "MegaBytes"
 msgstr "MegaBytes"
 

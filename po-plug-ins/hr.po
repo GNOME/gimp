@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
-"POT-Creation-Date: 2002-03-07 18:12+0100\n"
+"POT-Creation-Date: 2002-03-28 14:51+0100\n"
 "PO-Revision-Date: 2000-11-04 15:00+0100\n"
 "Last-Translator: ®eljan Rikalo <zeljko@linuxfreak.com>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
@@ -2561,30 +2561,30 @@ msgstr "<Image>/Slika/Boje/Auto/Pojaèanje Boje"
 msgid "Color Enhance..."
 msgstr "Pojaèanje Boje..."
 
-#: plug-ins/common/colorify.c:139
+#: plug-ins/common/colorify.c:130
 msgid "<Image>/Filters/Colors/Colorify..."
 msgstr "<Image>/Filteri/Boje/Obojaj..."
 
-#: plug-ins/common/colorify.c:204
+#: plug-ins/common/colorify.c:189
 msgid "Colorifying..."
 msgstr "Bojam..."
 
-#: plug-ins/common/colorify.c:305
+#: plug-ins/common/colorify.c:302
 msgid "Colorify"
 msgstr "Obojanost"
 
-#: plug-ins/common/colorify.c:322 plug-ins/common/colortoalpha.c:415
+#: plug-ins/common/colorify.c:319 plug-ins/common/colortoalpha.c:415
 #: plug-ins/common/ps.c:2698 plug-ins/common/xpm.c:437
 #: plug-ins/gimpressionist/color.c:54 plug-ins/gimpressionist/color.c:59
 #: plug-ins/imagemap/imap_menu.c:335 plug-ins/print/gimp_main_window.c:758
 msgid "Color"
 msgstr "Boja"
 
-#: plug-ins/common/colorify.c:335
+#: plug-ins/common/colorify.c:333
 msgid "Custom Color:"
 msgstr "Posebna boja: "
 
-#: plug-ins/common/colorify.c:340
+#: plug-ins/common/colorify.c:338
 msgid "Colorify Custom Color"
 msgstr "Obojaj posebnu boju"
 

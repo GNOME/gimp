@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
-"POT-Creation-Date: 2002-03-07 18:12+0100\n"
+"POT-Creation-Date: 2002-03-28 14:51+0100\n"
 "PO-Revision-Date: 2001-03-15 16:23+0100\n"
 "Last-Translator: Fatih Demir <kabalak@gtranslator.org>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -2350,30 +2350,30 @@ msgstr ""
 msgid "Color Enhance..."
 msgstr ""
 
-#: plug-ins/common/colorify.c:139
+#: plug-ins/common/colorify.c:130
 msgid "<Image>/Filters/Colors/Colorify..."
 msgstr ""
 
-#: plug-ins/common/colorify.c:204
+#: plug-ins/common/colorify.c:189
 msgid "Colorifying..."
 msgstr ""
 
-#: plug-ins/common/colorify.c:305
+#: plug-ins/common/colorify.c:302
 msgid "Colorify"
 msgstr ""
 
-#: plug-ins/common/colorify.c:322 plug-ins/common/colortoalpha.c:415
+#: plug-ins/common/colorify.c:319 plug-ins/common/colortoalpha.c:415
 #: plug-ins/common/ps.c:2698 plug-ins/common/xpm.c:437
 #: plug-ins/gimpressionist/color.c:54 plug-ins/gimpressionist/color.c:59
 #: plug-ins/imagemap/imap_menu.c:335 plug-ins/print/gimp_main_window.c:758
 msgid "Color"
 msgstr "Renk"
 
-#: plug-ins/common/colorify.c:335
+#: plug-ins/common/colorify.c:333
 msgid "Custom Color:"
 msgstr ""
 
-#: plug-ins/common/colorify.c:340
+#: plug-ins/common/colorify.c:338
 msgid "Colorify Custom Color"
 msgstr ""
 

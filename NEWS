@@ -23,6 +23,8 @@ Overview of Changes in GIMP 1.3.5
 - Parse unitrc and document history using GScanner [Mitch] 
 - Fixes for build on Win32 [Hans]
 - Treeviewified user installation dialog [Yosh]
+- Bugfixes
+- More stuff not mentioned here (see the ChangeLog)
 
 Other Contributors:
   Rebecca Walter, Tuomas Kuosmanen, Marcel Telka

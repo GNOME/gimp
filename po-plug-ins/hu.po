@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
-"POT-Creation-Date: 2002-03-07 18:12+0100\n"
+"POT-Creation-Date: 2002-03-28 14:51+0100\n"
 "PO-Revision-Date: 2001-09-17 09:53+0200\n"
 "Last-Translator: Emese Kovacs <emese@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
@@ -2403,30 +2403,30 @@ msgstr "<Image>/Kép/Színek/Automatikus/Színjavítás"
 msgid "Color Enhance..."
 msgstr "Színjavítás..."
 
-#: plug-ins/common/colorify.c:139
+#: plug-ins/common/colorify.c:130
 msgid "<Image>/Filters/Colors/Colorify..."
 msgstr "<Image>/Szűrők/Színek/Színezés..."
 
-#: plug-ins/common/colorify.c:204
+#: plug-ins/common/colorify.c:189
 msgid "Colorifying..."
 msgstr "Színezés..."
 
-#: plug-ins/common/colorify.c:305
+#: plug-ins/common/colorify.c:302
 msgid "Colorify"
 msgstr "Színezés"
 
-#: plug-ins/common/colorify.c:322 plug-ins/common/colortoalpha.c:415
+#: plug-ins/common/colorify.c:319 plug-ins/common/colortoalpha.c:415
 #: plug-ins/common/ps.c:2698 plug-ins/common/xpm.c:437
 #: plug-ins/gimpressionist/color.c:54 plug-ins/gimpressionist/color.c:59
 #: plug-ins/imagemap/imap_menu.c:335 plug-ins/print/gimp_main_window.c:758
 msgid "Color"
 msgstr "Szín"
 
-#: plug-ins/common/colorify.c:335
+#: plug-ins/common/colorify.c:333
 msgid "Custom Color:"
 msgstr "Egyéni szín:"
 
-#: plug-ins/common/colorify.c:340
+#: plug-ins/common/colorify.c:338
 msgid "Colorify Custom Color"
 msgstr "Egyéni szín színezése"
 

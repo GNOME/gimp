@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 1.3.0\n"
-"POT-Creation-Date: 2002-03-09 00:09+0100\n"
+"POT-Creation-Date: 2002-03-28 14:51+0100\n"
 "PO-Revision-Date: 2001-08-21 14:04+0200\n"
 "Last-Translator: Softcatalà <tradgnome@softcatala.org>\n"
 "Language-Team: Catalan\n"
@@ -215,19 +215,19 @@ msgstr ""
 msgid "Visible"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:143
+#: libgimpwidgets/gimpstock.c:155
 msgid "Transform"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:146
+#: libgimpwidgets/gimpstock.c:158
 msgid "Rotate"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:147
+#: libgimpwidgets/gimpstock.c:159
 msgid "Scale"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:148
+#: libgimpwidgets/gimpstock.c:160
 msgid "Shear"
 msgstr ""
 
@@ -247,7 +247,7 @@ msgstr "Unitat"
 msgid "Factor"
 msgstr "Factor"
 
-#: libgimpwidgets/gimpwidgets.c:801
+#: libgimpwidgets/gimpwidgets.c:842
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -256,11 +256,11 @@ msgstr ""
 "partida del generador de números aleatoris; això us permetrà repetir una "
 "operació \"aleatòria\" determinada"
 
-#: libgimpwidgets/gimpwidgets.c:806
+#: libgimpwidgets/gimpwidgets.c:847
 msgid "Time"
 msgstr "Hora"
 
-#: libgimpwidgets/gimpwidgets.c:815
+#: libgimpwidgets/gimpwidgets.c:856
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -268,15 +268,15 @@ msgstr ""
 "Fixa el punt de partida del generador de números aleatoris a partir de "
 "l'hora actual; això garanteix una aleatorietat raonable"
 
-#: libgimpwidgets/gimpwidgets.c:1129
+#: libgimpwidgets/gimpwidgets.c:1170
 msgid "Bytes"
 msgstr "Octets"
 
-#: libgimpwidgets/gimpwidgets.c:1130
+#: libgimpwidgets/gimpwidgets.c:1171
 msgid "KiloBytes"
 msgstr "Quilooctets"
 
-#: libgimpwidgets/gimpwidgets.c:1131
+#: libgimpwidgets/gimpwidgets.c:1172
 msgid "MegaBytes"
 msgstr "Megaoctets"
 

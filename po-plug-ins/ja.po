@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2\n"
-"POT-Creation-Date: 2002-03-13 14:37+0100\n"
+"POT-Creation-Date: 2002-03-28 14:51+0100\n"
 "PO-Revision-Date: 2002-03-13 18:33+0900\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -2390,30 +2390,30 @@ msgstr "<Image>/画像/色/自動/色強調"
 msgid "Color Enhance..."
 msgstr "色を強調しています..."
 
-#: plug-ins/common/colorify.c:139
+#: plug-ins/common/colorify.c:130
 msgid "<Image>/Filters/Colors/Colorify..."
 msgstr "<Image>/フィルタ/色/単色塗り..."
 
-#: plug-ins/common/colorify.c:204
+#: plug-ins/common/colorify.c:189
 msgid "Colorifying..."
 msgstr "単色塗り中..."
 
-#: plug-ins/common/colorify.c:305
+#: plug-ins/common/colorify.c:302
 msgid "Colorify"
 msgstr "単色塗り"
 
-#: plug-ins/common/colorify.c:322 plug-ins/common/colortoalpha.c:415
+#: plug-ins/common/colorify.c:319 plug-ins/common/colortoalpha.c:415
 #: plug-ins/common/ps.c:2698 plug-ins/common/xpm.c:437
 #: plug-ins/gimpressionist/color.c:54 plug-ins/gimpressionist/color.c:59
 #: plug-ins/imagemap/imap_menu.c:335 plug-ins/print/gimp_main_window.c:758
 msgid "Color"
 msgstr "カラー"
 
-#: plug-ins/common/colorify.c:335
+#: plug-ins/common/colorify.c:333
 msgid "Custom Color:"
 msgstr "カスタムカラー:"
 
-#: plug-ins/common/colorify.c:340
+#: plug-ins/common/colorify.c:338
 msgid "Colorify Custom Color"
 msgstr "単色塗りカスタムカラー"
 

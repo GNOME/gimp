@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins\n"
-"POT-Creation-Date: 2002-03-07 18:12+0100\n"
+"POT-Creation-Date: 2002-03-28 14:51+0100\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Românã <ro@li.org>\n"
@@ -2507,33 +2507,33 @@ msgstr "/Imagine/Culori/Automat/Egalizeazã"
 msgid "Color Enhance..."
 msgstr "Balanþa de culori"
 
-#: plug-ins/common/colorify.c:139
+#: plug-ins/common/colorify.c:130
 #, fuzzy
 msgid "<Image>/Filters/Colors/Colorify..."
 msgstr "/Filtre/Culori"
 
-#: plug-ins/common/colorify.c:204
+#: plug-ins/common/colorify.c:189
 msgid "Colorifying..."
 msgstr ""
 
-#: plug-ins/common/colorify.c:305
+#: plug-ins/common/colorify.c:302
 #, fuzzy
 msgid "Colorify"
 msgstr "Culoare"
 
-#: plug-ins/common/colorify.c:322 plug-ins/common/colortoalpha.c:415
+#: plug-ins/common/colorify.c:319 plug-ins/common/colortoalpha.c:415
 #: plug-ins/common/ps.c:2698 plug-ins/common/xpm.c:437
 #: plug-ins/gimpressionist/color.c:54 plug-ins/gimpressionist/color.c:59
 #: plug-ins/imagemap/imap_menu.c:335 plug-ins/print/gimp_main_window.c:758
 msgid "Color"
 msgstr "Culoare"
 
-#: plug-ins/common/colorify.c:335
+#: plug-ins/common/colorify.c:333
 #, fuzzy
 msgid "Custom Color:"
 msgstr "Numãr de culori"
 
-#: plug-ins/common/colorify.c:340
+#: plug-ins/common/colorify.c:338
 msgid "Colorify Custom Color"
 msgstr ""
 

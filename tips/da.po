@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP tips\n"
-"POT-Creation-Date: 2002-03-09 18:29+0100\n"
+"POT-Creation-Date: 2002-03-28 13:57+0100\n"
 "PO-Revision-Date: 2002-03-07 21:38+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -280,10 +280,10 @@ msgstr ""
 "på flere baner og så konvertere dem til markeringer."
 
 #: tips/gimp-tips.xml.in.h:28
+#, fuzzy
 msgid ""
-"You can drag a layer from the <i>Layers, Channels and Paths</i> dialog and "
-"drop it onto the toolbox. This will create a new image containing only that "
-"layer."
+"You can drag a layer from the \"Layers, Channels and Paths\" dialog and drop "
+"it onto the toolbox. This will create a new image containing only that layer."
 msgstr ""
 "Du kan trække et lag fra <i>Lag, kanaler og baner</i>-vinduet og slippe det "
 "i værktøjskassen. Dette opretter et nyt billede som kun indeholder det lag."

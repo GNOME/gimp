@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
-"POT-Creation-Date: 2002-03-09 00:09+0100\n"
+"POT-Creation-Date: 2002-03-28 14:51+0100\n"
 "PO-Revision-Date: 2002-03-02 17:09+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -216,19 +216,19 @@ msgstr "_Nulstil"
 msgid "Visible"
 msgstr "Synlig"
 
-#: libgimpwidgets/gimpstock.c:143
+#: libgimpwidgets/gimpstock.c:155
 msgid "Transform"
 msgstr "Transformér"
 
-#: libgimpwidgets/gimpstock.c:146
+#: libgimpwidgets/gimpstock.c:158
 msgid "Rotate"
 msgstr "Rotér"
 
-#: libgimpwidgets/gimpstock.c:147
+#: libgimpwidgets/gimpstock.c:159
 msgid "Scale"
 msgstr "Skalér"
 
-#: libgimpwidgets/gimpstock.c:148
+#: libgimpwidgets/gimpstock.c:160
 msgid "Shear"
 msgstr "Trapezér"
 
@@ -248,7 +248,7 @@ msgstr "Enhed"
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:801
+#: libgimpwidgets/gimpwidgets.c:842
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -257,11 +257,11 @@ msgstr ""
 "generatoren af tilfældige tal - dette tillader dig at gentage en given "
 "\"tilfældig\" operation"
 
-#: libgimpwidgets/gimpwidgets.c:806
+#: libgimpwidgets/gimpwidgets.c:847
 msgid "Time"
 msgstr "Tid"
 
-#: libgimpwidgets/gimpwidgets.c:815
+#: libgimpwidgets/gimpwidgets.c:856
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -269,15 +269,15 @@ msgstr ""
 "Start generatoren af tilfældige tal med den aktuelle tid - dette garanterer "
 "en god tilfældighed"
 
-#: libgimpwidgets/gimpwidgets.c:1129
+#: libgimpwidgets/gimpwidgets.c:1170
 msgid "Bytes"
 msgstr "Byte"
 
-#: libgimpwidgets/gimpwidgets.c:1130
+#: libgimpwidgets/gimpwidgets.c:1171
 msgid "KiloBytes"
 msgstr "Kilobyte"
 
-#: libgimpwidgets/gimpwidgets.c:1131
+#: libgimpwidgets/gimpwidgets.c:1172
 msgid "MegaBytes"
 msgstr "Megabyte"
 

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins 1.4\n"
-"POT-Creation-Date: 2002-03-07 19:29-0500\n"
+"POT-Creation-Date: 2002-03-28 14:51+0100\n"
 "PO-Revision-Date: 2002-03-13 14:41+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -53,9 +53,7 @@ msgstr "Realtime náhµad"
 
 #: plug-ins/FractalExplorer/Dialogs.c:367
 msgid "If you enable this option the preview will be redrawn automatically"
-msgstr ""
-"Ak povolíte tú mo¾nos», potom náhµad bude automaticky "
-"prekresµovaný"
+msgstr "Ak povolíte tú mo¾nos», potom náhµad bude automaticky prekresµovaný"
 
 #: plug-ins/FractalExplorer/Dialogs.c:370
 msgid "Redraw"
@@ -148,8 +146,8 @@ msgid ""
 "Change the iteration value. The higher it is, the more details will be "
 "calculated, which will take more time"
 msgstr ""
-"Zmena poètu iterácií. Èím je ich viac, tým viac detailov, ktoré zaberú "
-"viac èasu, bude poèítaných."
+"Zmena poètu iterácií. Èím je ich viac, tým viac detailov, ktoré zaberú viac "
+"èasu, bude poèítaných."
 
 #: plug-ins/FractalExplorer/Dialogs.c:502
 msgid "CX:"
@@ -160,8 +158,8 @@ msgid ""
 "Change the CX value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
 msgstr ""
-"Zmena CX hodnoty (zmení vzhµad v¹etkých fraktálov okrem "
-"Mandelbrotovho a Sierpinskeho)"
+"Zmena CX hodnoty (zmení vzhµad v¹etkých fraktálov okrem Mandelbrotovho a "
+"Sierpinskeho)"
 
 #: plug-ins/FractalExplorer/Dialogs.c:514
 msgid "CY:"
@@ -172,8 +170,8 @@ msgid ""
 "Change the CY value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
 msgstr ""
-"Zmena CY hodnoty (zmení vzhµad v¹etkých fraktálov okrem "
-"Mandelbrotovho a Sierpinskeho)"
+"Zmena CY hodnoty (zmení vzhµad v¹etkých fraktálov okrem Mandelbrotovho a "
+"Sierpinskeho)"
 
 #: plug-ins/FractalExplorer/Dialogs.c:528 plug-ins/common/CML_explorer.c:1234
 #: plug-ins/gfig/gfig.c:3549
@@ -273,8 +271,7 @@ msgstr "Pou¾i» loglog vyhladzovanie"
 #: plug-ins/FractalExplorer/Dialogs.c:667
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
 msgstr ""
-"Na eliminovanie \"páskovania\" vo výsledkoch sa pou¾ije "
-"log log vyhladzovanie"
+"Na eliminovanie \"páskovania\" vo výsledkoch sa pou¾ije log log vyhladzovanie"
 
 #. Color Density frame
 #: plug-ins/FractalExplorer/Dialogs.c:671
@@ -381,8 +378,8 @@ msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
 msgstr ""
-"Pou¾ije lineárne mapovanie namiesto trigonometrických funkcií "
-"pre tento farebný kanál"
+"Pou¾ije lineárne mapovanie namiesto trigonometrických funkcií pre tento "
+"farebný kanál"
 
 #: plug-ins/FractalExplorer/Dialogs.c:753
 #: plug-ins/FractalExplorer/Dialogs.c:794
@@ -397,8 +394,8 @@ msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
 msgstr ""
-"Ak povolíte toto nastavenie, tak vy¹¹ie farebné hodnoty budú "
-"nahradené ni¾¹ími a naopak"
+"Ak povolíte toto nastavenie, tak vy¹¹ie farebné hodnoty budú nahradené "
+"ni¾¹ími a naopak"
 
 #. Greenmode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:766 plug-ins/common/AlienMap.c:1496
@@ -428,9 +425,8 @@ msgid ""
 "Create a color-map with the options you specified above (color density/"
 "function). The result is visible in the preview image"
 msgstr ""
-"Vytvorí farebnú mapu s vy¹¹ie ¹pecifikovanými vlastnos»ami "
-"(farebná intenzita/funkcia). Výsledok je viditeµný na obrázku "
-"v náhµade."
+"Vytvorí farebnú mapu s vy¹¹ie ¹pecifikovanými vlastnos»ami (farebná "
+"intenzita/funkcia). Výsledok je viditeµný na obrázku v náhµade."
 
 #: plug-ins/FractalExplorer/Dialogs.c:881
 msgid "Apply Active Gradient to Final Image"
@@ -558,8 +554,11 @@ msgstr ""
 "do súboru %s."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1172
-msgid "fractalexplorer-path misconfigured - the following folders were not found:"
-msgstr "Zle nakonfigurovaná fractalexplorer-path - nasledujúce prieèinky neboli nájdené:"
+msgid ""
+"fractalexplorer-path misconfigured - the following folders were not found:"
+msgstr ""
+"Zle nakonfigurovaná fractalexplorer-path - nasledujúce prieèinky neboli "
+"nájdené:"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1339
 msgid "My first fractal"
@@ -805,7 +804,8 @@ msgstr "Okolie:"
 
 #: plug-ins/Lighting/lighting_ui.c:757 plug-ins/MapObject/mapobject_ui.c:922
 msgid "Amount of original color to show where no direct light falls"
-msgstr "Mno¾stvo pôvodnej farby na zobrazenie miesta, kam nedopadá priame svetlo"
+msgstr ""
+"Mno¾stvo pôvodnej farby na zobrazenie miesta, kam nedopadá priame svetlo"
 
 #: plug-ins/Lighting/lighting_ui.c:769 plug-ins/Lighting/lighting_ui.c:808
 #: plug-ins/MapObject/mapobject_ui.c:934 plug-ins/MapObject/mapobject_ui.c:974
@@ -1170,8 +1170,8 @@ msgstr "Zobrazi»/skry» náhµad na drátový model"
 #. memory mapped file data
 #. must check file size
 #: plug-ins/bmp/bmpread.c:52 plug-ins/common/CEL.c:263
-#: plug-ins/common/gbr.c:294 plug-ins/common/gih.c:630
-#: plug-ins/common/gifload.c:302 plug-ins/common/hrz.c:332
+#: plug-ins/common/gbr.c:294 plug-ins/common/gifload.c:302
+#: plug-ins/common/gih.c:630 plug-ins/common/hrz.c:332
 #: plug-ins/common/jpeg.c:731 plug-ins/common/pat.c:263
 #: plug-ins/common/pcx.c:298 plug-ins/common/pix.c:323
 #: plug-ins/common/png.c:424 plug-ins/common/png.c:426
@@ -1233,7 +1233,8 @@ msgstr "Pozadie"
 
 #: plug-ins/bmp/bmpwrite.c:104
 msgid "BMP: cannot operate on unknown image types or alpha images"
-msgstr "BMP: nie je mo¾né pracova» s neznámym typom obrázku alebo s alfa obrázkami"
+msgstr ""
+"BMP: nie je mo¾né pracova» s neznámym typom obrázku alebo s alfa obrázkami"
 
 #: plug-ins/bmp/bmpwrite.c:167
 #, c-format
@@ -1304,7 +1305,8 @@ msgstr "Pou¾i» funkciu kosínus na èervený komponent"
 
 #: plug-ins/common/AlienMap.c:1488
 msgid "Red channel: use linear mapping instead of any trigonometrical function"
-msgstr "Èervený kanál: pou¾i» linerálne mapovanie namiesto trigometrickej funkcie"
+msgstr ""
+"Èervený kanál: pou¾i» linerálne mapovanie namiesto trigometrickej funkcie"
 
 #: plug-ins/common/AlienMap.c:1507
 msgid "Use sine-function for green component."
@@ -1315,8 +1317,10 @@ msgid "Use cosine-function for green component."
 msgstr "Pou¾i» funkciu kosínus na zelený komponent"
 
 #: plug-ins/common/AlienMap.c:1511
-msgid "Green channel: use linear mapping instead of any trigonometrical function"
-msgstr "Zelený kanál: pou¾i» linerálne mapovanie namiesto trigometrickej funkcie"
+msgid ""
+"Green channel: use linear mapping instead of any trigonometrical function"
+msgstr ""
+"Zelený kanál: pou¾i» linerálne mapovanie namiesto trigometrickej funkcie"
 
 #: plug-ins/common/AlienMap.c:1530
 msgid "Use sine-function for blue component."
@@ -1327,8 +1331,10 @@ msgid "Use cosine-function for blue component."
 msgstr "Pou¾i» funkciu kosínus na modrý komponent"
 
 #: plug-ins/common/AlienMap.c:1534
-msgid "Blue channel: use linear mapping instead of any trigonometrical function"
-msgstr "Modrý kanál: pou¾i» linerálne mapovanie namiesto trigometrickej funkcie"
+msgid ""
+"Blue channel: use linear mapping instead of any trigonometrical function"
+msgstr ""
+"Modrý kanál: pou¾i» linerálne mapovanie namiesto trigometrickej funkcie"
 
 #: plug-ins/common/AlienMap.c:1664
 msgid "About AlienMap"
@@ -1768,8 +1774,8 @@ msgid ""
 "(2) all mutation rates equal to zero."
 msgstr ""
 "Tlaèítko \"Upravi» hniezdo\" je odkaz na mòa.\n"
-"Rovnaké hniezdo vytvára rovnaký obrázok, pokiaµ (1) ¹írky obrázkov sú rovnaké "
-"(to je dôvod, preèo sú obrázky na obrazovke iné ako v náhµade) a (2) "
+"Rovnaké hniezdo vytvára rovnaký obrázok, pokiaµ (1) ¹írky obrázkov sú "
+"rovnaké (to je dôvod, preèo sú obrázky na obrazovke iné ako v náhµade) a (2) "
 "a v¹etky miery mutácií sú nulové."
 
 #: plug-ins/common/CML_explorer.c:1439
@@ -1937,7 +1943,9 @@ msgstr "Varovanie: toto je starý formát súboru."
 
 #: plug-ins/common/CML_explorer.c:2437
 msgid "Warning: Hmmm, it's a parameter file for newer CML_explorer than me."
-msgstr "Varovanie: Hmm, toto je súbor parametrov pre nov¹í CML_prieskumník ako je tento."
+msgstr ""
+"Varovanie: Hmm, toto je súbor parametrov pre nov¹í CML_prieskumník ako je "
+"tento."
 
 #: plug-ins/common/CML_explorer.c:2498
 msgid "Error: failed to load parameters"
@@ -2387,30 +2395,30 @@ msgstr "<Image>/Vrstva/Farby/Auto/Vylep¹enie farieb"
 msgid "Color Enhance..."
 msgstr "Vylep¹enie farieb..."
 
-#: plug-ins/common/colorify.c:139
+#: plug-ins/common/colorify.c:130
 msgid "<Image>/Filters/Colors/Colorify..."
 msgstr "<Image>/Filtre/Farby/Zafarbenie..."
 
-#: plug-ins/common/colorify.c:204
+#: plug-ins/common/colorify.c:189
 msgid "Colorifying..."
 msgstr "Farbím..."
 
-#: plug-ins/common/colorify.c:305
+#: plug-ins/common/colorify.c:302
 msgid "Colorify"
 msgstr "Zafarbenie"
 
-#: plug-ins/common/colorify.c:322 plug-ins/common/colortoalpha.c:415
+#: plug-ins/common/colorify.c:319 plug-ins/common/colortoalpha.c:415
 #: plug-ins/common/ps.c:2698 plug-ins/common/xpm.c:437
 #: plug-ins/gimpressionist/color.c:54 plug-ins/gimpressionist/color.c:59
 #: plug-ins/imagemap/imap_menu.c:335 plug-ins/print/gimp_main_window.c:758
 msgid "Color"
 msgstr "Farba"
 
-#: plug-ins/common/colorify.c:335
+#: plug-ins/common/colorify.c:333
 msgid "Custom Color:"
 msgstr "Vlastná farba:"
 
-#: plug-ins/common/colorify.c:340
+#: plug-ins/common/colorify.c:338
 msgid "Colorify Custom Color"
 msgstr "Zafarbenie vlastnou farbou"
 
@@ -2735,7 +2743,8 @@ msgstr "<Image>/Filtre/Deformácie/Ohýbanie podµa krivky..."
 
 #: plug-ins/common/curve_bend.c:815
 msgid "CurveBend operates on layers only (but was called on channel or mask)"
-msgstr "Ohýbanie pracuje iba s vrstvami (alebo bolo volané na kanál alebo masku)"
+msgstr ""
+"Ohýbanie pracuje iba s vrstvami (alebo bolo volané na kanál alebo masku)"
 
 #. The shell and main vbox
 #: plug-ins/common/curve_bend.c:1358
@@ -3564,8 +3573,7 @@ msgid ""
 "An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
 msgstr ""
-"Zastaralý výtvor Adama D. Mossa / adam@gimp.org / adam@foxbox.org / "
-"1998-2000"
+"Zastaralý výtvor Adama D. Mossa / adam@gimp.org / adam@foxbox.org / 1998-2000"
 
 #: plug-ins/common/gicon.c:434
 msgid "Save as GIcon"
@@ -3611,8 +3619,8 @@ msgid ""
 "the image borders, or cancel this save."
 msgstr ""
 "Obrázok, ktorý sa pokú¹ate ulo¾i» ako GIF,\n"
-"obsahuje vrstvy ktoré presahujú aktuálne okraje"
-"obrázku. Obávam sa, ¾e to nie je v GIFe nie je\n"
+"obsahuje vrstvy ktoré presahujú aktuálne okrajeobrázku. Obávam sa, ¾e to nie "
+"je v GIFe nie je\n"
 "povolené.\n"
 "\n"
 "Mô¾ete si vybra» bu¹ orezanie vrstiev, alebo\n"
@@ -3907,8 +3915,8 @@ msgid ""
 "If checked GTM will replace any rectangular sections of identically colored "
 "blocks with one large cell with ROWSPAN and COLSPAN values."
 msgstr ""
-"So za¹krtnutou voµbou GTM budú µubovoµné identicky zafarbené obdå¾nikové plochy "
-"nahradené jednou veµkou bunkou s hodnotami ROWSPAN a COLSPAN."
+"So za¹krtnutou voµbou GTM budú µubovoµné identicky zafarbené obdå¾nikové "
+"plochy nahradené jednou veµkou bunkou s hodnotami ROWSPAN a COLSPAN."
 
 #: plug-ins/common/gtm.c:474
 msgid "Compress TD tags"
@@ -3920,8 +3928,8 @@ msgid ""
 "and the cellcontent.  This is only necessary for pixel level positioning "
 "control."
 msgstr ""
-"Za¹trnutie tejto znaèky spôsobí, ¾e v GTM nebude vynechaný biely priestor "
-" medzi znaèkami TD a obsahom bunky. Toto je nevyhnutné pre ovládanie bodovej "
+"Za¹trnutie tejto znaèky spôsobí, ¾e v GTM nebude vynechaný biely priestor  "
+"medzi znaèkami TD a obsahom bunky. Toto je nevyhnutné pre ovládanie bodovej "
 "úrovne pozícií."
 
 #: plug-ins/common/gtm.c:490
@@ -3995,7 +4003,8 @@ msgstr "gz: chýba rozli¹ujúca prípona, zapisuje sa ako gzipovaný xcf\n"
 
 #: plug-ins/common/gz.c:444
 msgid "gz: no sensible extension, attempting to load with file magic\n"
-msgstr "gz: chýba rozli¹ujúca prípona, pokú¹am sa naèíta» súbor magických èísel\n"
+msgstr ""
+"gz: chýba rozli¹ujúca prípona, pokú¹am sa naèíta» súbor magických èísel\n"
 
 #: plug-ins/common/hot.c:233
 msgid "<Image>/Filters/Colors/Hot..."
@@ -5104,8 +5113,8 @@ msgid ""
 "If unchecked the mapping will put the bottom row in the middle and the top "
 "row on the outside.  If checked it will be the opposite."
 msgstr ""
-"Bez za¹krtnutia zaène uklada» dolný riadok do stredu a hornú radu von. "
-"Pri za¹krtnutej voµbe je to naopak."
+"Bez za¹krtnutia zaène uklada» dolný riadok do stredu a hornú radu von. Pri "
+"za¹krtnutej voµbe je to naopak."
 
 #: plug-ins/common/polar.c:1029
 msgid "To Polar"
@@ -5116,8 +5125,8 @@ msgid ""
 "If unchecked the image will be circularly mapped onto a rectangle.  If "
 "checked the image will be mapped onto a circle."
 msgstr ""
-"Bez za¹krtnutia bude obrázok kruhovo mapovaný na obdå¾nik."
-"Pri za¹krtnutej voµbe je to naopak."
+"Bez za¹krtnutia bude obrázok kruhovo mapovaný na obdå¾nik.Pri za¹krtnutej "
+"voµbe je to naopak."
 
 #: plug-ins/common/ps.c:865
 msgid "PS: can't open file for reading"
@@ -5226,8 +5235,8 @@ msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
 msgstr ""
-"Pri zapnutí bude veµkos» obrázku zvolená tak, aby vyplnila dané rozmery "
-"bez zmeny pomeru strán"
+"Pri zapnutí bude veµkos» obrázku zvolená tak, aby vyplnila dané rozmery bez "
+"zmeny pomeru strán"
 
 #. Unit
 #: plug-ins/common/ps.c:2880
@@ -6202,10 +6211,11 @@ msgstr ""
 "za¹krtnutí tohoto ståpca."
 
 #: plug-ins/common/uniteditor.c:547
-msgid "This string will be used to identify a unit in GIMP's configuration files."
+msgid ""
+"This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
-"Tento re»azec bude pou¾itý na identifikáciu jednotky v konfiguraènom "
-"súbore programu GIMP."
+"Tento re»azec bude pou¾itý na identifikáciu jednotky v konfiguraènom súbore "
+"programu GIMP."
 
 #: plug-ins/common/uniteditor.c:549
 msgid "How many units make up an inch."
@@ -6226,8 +6236,8 @@ msgid ""
 "The unit's symbol if it has one (e.g. \"'\" for inches). Use the unit's "
 "abbreviation if it doesn't have a symbol."
 msgstr ""
-"Symbol jednotky, ak je nejaký (napr. \"'\" pre palce). Pou¾ite jednotka "
-"nemá symbol, tak pou¾ite jej skratku."
+"Symbol jednotky, ak je nejaký (napr. \"'\" pre palce). Pou¾ite jednotka nemá "
+"symbol, tak pou¾ite jej skratku."
 
 #: plug-ins/common/uniteditor.c:559
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
@@ -7456,8 +7466,8 @@ msgstr "Vytvori» ¹pirálu"
 #: plug-ins/gfig/gfig.c:2165
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr ""
-"Vytvorenie Bézierovej krivky. Shift + tlaèítko my¹i "
-"ukonèí vytváranie objektu."
+"Vytvorenie Bézierovej krivky. Shift + tlaèítko my¹i ukonèí vytváranie "
+"objektu."
 
 #: plug-ins/gfig/gfig.c:2171
 msgid "Move an object"
@@ -7500,8 +7510,8 @@ msgid ""
 "ellipses if Approx. Circles/Ellipses toggle is set."
 msgstr ""
 "Pri kreslení obrázku pou¾ite ¹tetec/ceruzku alebo rozpra¹ovaè. Vzorka kreslí "
-"s aktuálnym ¹tetcom vzorku. Pou¾ije sa na kru¾niciach/elipsách, ak je nastavený "
-"prepínaè Pribli¾né kru¾nice/elipsy."
+"s aktuálnym ¹tetcom vzorku. Pou¾ije sa na kru¾niciach/elipsách, ak je "
+"nastavený prepínaè Pribli¾né kru¾nice/elipsy."
 
 #: plug-ins/gfig/gfig.c:2771 plug-ins/rcm/rcm_dialog.c:130
 msgid "Original"
@@ -7590,8 +7600,8 @@ msgid ""
 "Approx. circles & ellipses using lines. Allows the use of brush fading with "
 "these types of objects."
 msgstr ""
-"Pribli¾né kru¾nice a elipsy pou¾ívajúce èiary. Umo¾òujú pou¾itie "
-"miznúceho ¹tetca pri tomto type objektov."
+"Pribli¾né kru¾nice a elipsy pou¾ívajúce èiary. Umo¾òujú pou¾itie miznúceho "
+"¹tetca pri tomto type objektov."
 
 #: plug-ins/gfig/gfig.c:2935
 msgid "Gfig brush selection"
@@ -7945,7 +7955,8 @@ msgstr ""
 
 #: plug-ins/gflare/gflare.c:1052
 msgid "gflare-path misconfigured - the following folders were not found:"
-msgstr "zle nakonfigurovaná gflare-path - nasledujúce prieèinky neboli nájdené:"
+msgstr ""
+"zle nakonfigurovaná gflare-path - nasledujúce prieèinky neboli nájdené:"
 
 #: plug-ins/gflare/gflare.c:1418
 #, c-format
@@ -8351,7 +8362,8 @@ msgid "Shadow depth:"
 msgstr "Håbka tieòa:"
 
 #: plug-ins/gimpressionist/general.c:317
-msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgid ""
+"The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "Håbka vrhaného tieòa, t.j. ako ïaleko od objektov budú"
 
 #: plug-ins/gimpressionist/general.c:323
@@ -8761,11 +8773,13 @@ msgid "The largest brush to create"
 msgstr "Najväè¹í vytváraný ¹tetec"
 
 #: plug-ins/gimpressionist/size.c:140
-msgid "Let the value (brightness) of the region determine the size of the stroke"
+msgid ""
+"Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Nech hodnota (jas) oblasti urèí rozmer »ahu"
 
 #: plug-ins/gimpressionist/size.c:150
-msgid "The distance from the center of the image determines the size of the stroke"
+msgid ""
+"The distance from the center of the image determines the size of the stroke"
 msgstr "Vzdialenos» od stredu obrázka urèí rozmer »ahu"
 
 #: plug-ins/gimpressionist/size.c:160
@@ -10327,4 +10341,3 @@ msgstr "Chyba: Súbor XJT vlastností %s nie je mo¾né èíta»"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Chyba: Súbor XJT vlastností %s je prázdny"
-

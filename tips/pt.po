@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.4\n"
-"POT-Creation-Date: 2002-03-09 18:29+0100\n"
+"POT-Creation-Date: 2002-03-28 13:57+0100\n"
 "PO-Revision-Date: 2002-03-08 09:04+0100\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
@@ -282,10 +282,10 @@ msgstr ""
 "trabalhar em múltiplos caminhos e converte-los em selecções."
 
 #: tips/gimp-tips.xml.in.h:28
+#, fuzzy
 msgid ""
-"You can drag a layer from the <i>Layers, Channels and Paths</i> dialog and "
-"drop it onto the toolbox. This will create a new image containing only that "
-"layer."
+"You can drag a layer from the \"Layers, Channels and Paths\" dialog and drop "
+"it onto the toolbox. This will create a new image containing only that layer."
 msgstr ""
 "Pode arrastar uma camada do diálogo <i>Camadas, Canais e Caminhos</i> e "
 "larga-la na caixa de ferramentas. Isto irá criar uma nova imagem contendo "

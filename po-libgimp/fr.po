@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 1.1.29\n"
-"POT-Creation-Date: 2002-03-09 00:09+0100\n"
+"POT-Creation-Date: 2002-03-28 14:51+0100\n"
 "PO-Revision-Date: 2000-11-24 15:46+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
@@ -221,19 +221,19 @@ msgstr ""
 msgid "Visible"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:143
+#: libgimpwidgets/gimpstock.c:155
 msgid "Transform"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:146
+#: libgimpwidgets/gimpstock.c:158
 msgid "Rotate"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:147
+#: libgimpwidgets/gimpstock.c:159
 msgid "Scale"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:148
+#: libgimpwidgets/gimpstock.c:160
 msgid "Shear"
 msgstr ""
 
@@ -253,7 +253,7 @@ msgstr "Unité"
 msgid "Factor"
 msgstr "Facteur"
 
-#: libgimpwidgets/gimpwidgets.c:801
+#: libgimpwidgets/gimpwidgets.c:842
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -262,11 +262,11 @@ msgstr ""
 "du générateur de nombres aléatoires. Cela vous permet d'avoir une séquence "
 "aléatoire reproductible en fournissant la même graine."
 
-#: libgimpwidgets/gimpwidgets.c:806
+#: libgimpwidgets/gimpwidgets.c:847
 msgid "Time"
 msgstr "Heure"
 
-#: libgimpwidgets/gimpwidgets.c:815
+#: libgimpwidgets/gimpwidgets.c:856
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -274,15 +274,15 @@ msgstr ""
 "Prend l'heure actuelle comme graine du générateur de nombres aléatoires. "
 "Cela garanti un aléa raisonnable."
 
-#: libgimpwidgets/gimpwidgets.c:1129
+#: libgimpwidgets/gimpwidgets.c:1170
 msgid "Bytes"
 msgstr "Octets"
 
-#: libgimpwidgets/gimpwidgets.c:1130
+#: libgimpwidgets/gimpwidgets.c:1171
 msgid "KiloBytes"
 msgstr "KiloOctets"
 
-#: libgimpwidgets/gimpwidgets.c:1131
+#: libgimpwidgets/gimpwidgets.c:1172
 msgid "MegaBytes"
 msgstr "MégaOctets"
 

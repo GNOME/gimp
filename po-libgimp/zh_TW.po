@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 1.3.0\n"
-"POT-Creation-Date: 2002-03-09 00:09+0100\n"
+"POT-Creation-Date: 2002-03-28 14:51+0100\n"
 "PO-Revision-Date: 2001-11-25 05:26+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Traditional Chinese <zh-l10n@linux.org.tw>\n"
@@ -216,19 +216,19 @@ msgstr ""
 msgid "Visible"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:143
+#: libgimpwidgets/gimpstock.c:155
 msgid "Transform"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:146
+#: libgimpwidgets/gimpstock.c:158
 msgid "Rotate"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:147
+#: libgimpwidgets/gimpstock.c:159
 msgid "Scale"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:148
+#: libgimpwidgets/gimpstock.c:160
 msgid "Shear"
 msgstr ""
 
@@ -248,7 +248,7 @@ msgstr "單位"
 msgid "Factor"
 msgstr "比例"
 
-#: libgimpwidgets/gimpwidgets.c:801
+#: libgimpwidgets/gimpwidgets.c:842
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -256,25 +256,25 @@ msgstr ""
 "如果不按「時間」按鈕，將會使用此數值作為亂數產生器\n"
 "的種子 - 這樣允許你重複地產生同一系列的亂數"
 
-#: libgimpwidgets/gimpwidgets.c:806
+#: libgimpwidgets/gimpwidgets.c:847
 msgid "Time"
 msgstr "時間"
 
-#: libgimpwidgets/gimpwidgets.c:815
+#: libgimpwidgets/gimpwidgets.c:856
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
 msgstr "以目前的時間作為隨機數產生器的種子 - 這保證一定程度的隨機化"
 
-#: libgimpwidgets/gimpwidgets.c:1129
+#: libgimpwidgets/gimpwidgets.c:1170
 msgid "Bytes"
 msgstr "位元組"
 
-#: libgimpwidgets/gimpwidgets.c:1130
+#: libgimpwidgets/gimpwidgets.c:1171
 msgid "KiloBytes"
 msgstr "千位元組"
 
-#: libgimpwidgets/gimpwidgets.c:1131
+#: libgimpwidgets/gimpwidgets.c:1172
 msgid "MegaBytes"
 msgstr "百萬位元組"
 
