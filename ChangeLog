@@ -1,3 +1,8 @@
+2003-03-26  Sven Neumann  <sven@gimp.org>
+
+	* configure.in (ALL_LINGUAS): removed "yi" until po files were
+	added to po-libgimp, po-plug-ins and po-script-fu.
+
 2003-03-26  Christian Rose  <menthos@menthos.com>
 
 	* configure.in: Added "yi" to ALL_LINGUAS.
