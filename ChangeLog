@@ -1,5 +1,10 @@
 2003-09-24  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
+	* plug-ins/common/illusion.c: applied rest of patch from 
+	yeti@physics.muni.cz to solve #72874
+
+2003-09-24  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
 	* libgimp/gimpmisc.[ch]: code indentation
 
 	* plug-ins/common/illusion.c: fix for #72874 (Incorrect RGBA 

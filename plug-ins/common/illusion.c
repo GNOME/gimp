@@ -234,7 +234,7 @@ illusion_func (gint x,
     {
       guint alpha1 = src[bpp - 1];
       guint alpha2 = pixel[bpp - 1];
-      guint alpha  = alpha1 + alpha2;
+      guint alpha  = (1 - radius) * alpha1 + radius * alpha2;
 	  
       if ((dest[bpp - 1] = (alpha >> 1)))
 	{
@@ -338,12 +338,28 @@ filter_preview (void)
 	  xx = CLAMP (xx, 0, image_width - 1);
 	  yy = CLAMP (yy, 0, image_height - 1);
 
-	  for (b = 0; b < image_bpp; b++)
-	    destpixels[y][x*image_bpp+b] =
-	      (1-radius) * pixels[y][x * image_bpp + b] 
-	      + radius * pixels[yy][xx * image_bpp + b];
-	}
+          if (image_bpp == 2 || image_bpp == 4)
+            {
+              gdouble alpha1 = pixels[y][x * image_bpp + image_bpp - 1];
+              gdouble alpha2 = pixels[yy][xx * image_bpp + image_bpp - 1];
+              gdouble alpha = (1 - radius) * alpha1 + radius * alpha2;
 
+	      for (b = 0; alpha > 0 && b < image_bpp - 1; b++)
+                {
+                  destpixels[y][x * image_bpp+b] =
+                    ((1-radius) * alpha1 * pixels[y][x * image_bpp + b]
+                     + radius * alpha2 * pixels[yy][xx * image_bpp + b])/alpha;
+                }
+              destpixels[y][x * image_bpp + image_bpp-1] = alpha;
+            }
+	  else
+            {
+	      for (b = 0; b < image_bpp; b++)
+	        destpixels[y][x*image_bpp+b] =
+	          (1-radius) * pixels[y][x * image_bpp + b] 
+	          + radius * pixels[yy][xx * image_bpp + b];
+            }
+	}
       gimp_fixme_preview_do_row (preview, y, image_width, destpixels[y]);
     }
 
