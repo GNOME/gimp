@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.19\n"
 "POT-Creation-Date: 2000-04-06 21:32+0200\n"
-"PO-Revision-Date: 2000-04-07 00:25+02:00\n"
+"PO-Revision-Date: 2000-04-10 10:16+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -4299,7 +4299,7 @@ msgstr "Nejsou dostupné ¾ádné stopy pro pou¾ití s tímto nástrojem."
 
 #: app/paint_funcs.c:85 app/tool_options.c:897
 msgid "Behind"
-msgstr "Zakrytí"
+msgstr "Pod kresbou"
 
 #: app/paint_funcs.c:91
 msgid "Subtraction"
