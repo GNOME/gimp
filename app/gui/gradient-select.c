@@ -45,32 +45,32 @@
 
 #include "libgimp/gimpintl.h"
 
-static void gradient_change_callbacks        (GradientSelect *gsp,
-					      gboolean        closing);
-static gradient_t * gradient_select_drag_gradient (GtkWidget      *widget,
-						   gpointer        data);
-static void gradient_select_drop_gradient    (GtkWidget      *widget,
-					      gradient_t     *gradient,
-					      gpointer        data);
-static void gradient_select_gradient_changed  (GimpContext    *context,
-					       gradient_t     *gradient,
-					       GradientSelect *gsp);
-static void gradient_select_select            (GradientSelect *gsp,
-					       gradient_t     *gradient);
+static void gradient_change_callbacks            (GradientSelect *gsp,
+						  gboolean        closing);
+static gradient_t* gradient_select_drag_gradient (GtkWidget      *widget,
+					          gpointer        data);
+static void gradient_select_drop_gradient        (GtkWidget      *widget,
+						  gradient_t     *gradient,
+						  gpointer        data);
+static void gradient_select_gradient_changed     (GimpContext    *context,
+						  gradient_t     *gradient,
+						  GradientSelect *gsp);
+static void gradient_select_select               (GradientSelect *gsp,
+						  gradient_t     *gradient);
 
-static gint gradient_select_button_press     (GtkWidget      *widget,
-					      GdkEventButton *bevent,
-					      gpointer        data);
-static void gradient_select_list_item_update (GtkWidget      *widget, 
-					      gint            row,
-					      gint            column,
-					      GdkEventButton *event,
-					      gpointer        data);
+static gint gradient_select_button_press         (GtkWidget      *widget,
+						  GdkEventButton *bevent,
+						  gpointer        data);
+static void gradient_select_list_item_update     (GtkWidget      *widget, 
+						  gint            row,
+						  gint            column,
+						  GdkEventButton *event,
+						  gpointer        data);
 
-static void gradient_select_close_callback   (GtkWidget      *widget,
-					      gpointer        data);
-static void gradient_select_edit_callback    (GtkWidget      *widget,
-					      gpointer        data);
+static void gradient_select_close_callback       (GtkWidget      *widget,
+						  gpointer        data);
+static void gradient_select_edit_callback        (GtkWidget      *widget,
+						  gpointer        data);
 
 /*  dnd stuff  */
 static GtkTargetEntry clist_target_table[] =
@@ -552,6 +552,13 @@ gradient_select_button_press (GtkWidget      *widget,
   GradientSelect *gsp;
 
   gsp = (GradientSelect *) data;
+
+  if (bevent->button == 1 && bevent->type == GDK_2BUTTON_PRESS)
+    {
+      gradient_select_edit_callback (widget, data);
+
+      return TRUE;
+    }
 
   if (bevent->button == 2)
     {

@@ -1,5 +1,10 @@
+Wed Jan  5 21:46:07 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/gradient_select.c: open the gradient editor on double-click
+
 2000-01-05  Garry R. Osgood <gosgood@idt.net>
-	*app/undo.c: GimpChannel->bounds_known field on the
+
+	* app/undo.c: GimpChannel->bounds_known field on the
 	image Selection Mask channel was never invalidated when restored
 	via undo_pop_channel_mod(). Caused PixelRegion iterators calculating
 	new selection boundaries to use cached image dimensions, thereby
