@@ -717,10 +717,10 @@ gimp_drawable_fill (GimpDrawable  *drawable,
 
     case GIMP_INDEXED:
       {
-        gint index;
+        guchar index;
 
-        gimp_image_transform_color (gimage, drawable, &i, GIMP_RGB, c);
-        c[INDEXED_PIX] = i;
+        gimp_image_transform_color (gimage, drawable, &index, GIMP_RGB, c);
+        c[INDEXED_PIX] = index;
         c[ALPHA_I_PIX] = c[ALPHA_PIX];
 
         if (drawable_type != GIMP_INDEXEDA_IMAGE)

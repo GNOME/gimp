@@ -1,5 +1,10 @@
 2003-09-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawable.c (gimp_drawable_fill): made my last
+	commit compile. Sorry.
+
+2003-09-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdrawable.c: code cleanup.
 	(gimp_drawable_fill): use the INTENSITY() of the passed GimpRGB to
 	fill GIMP_GRAY drawables, not just the RED_PIX. Cleanup.
