@@ -139,16 +139,15 @@ convert_segment (GSList **scanlines, int width, int height,
 }
 
 
-#define FIXME
 /* this should be the only precision dependent routine here */
 static void
-scan_convert_helper (
-                     Channel * mask,
-                     GSList ** scanlines,
-                     int width,
-                     int height,
-                     int antialias
-                     )
+scan_convert_helper_u8 (
+                        Channel * mask,
+                        GSList ** scanlines,
+                        int width,
+                        int height,
+                        int antialias
+                        )
 {
   PixelArea maskPR;
   PixelRow bufRow;
@@ -237,6 +236,127 @@ scan_convert_helper (
     }
 }
 
+
+static void
+scan_convert_helper_u16 (
+                         Channel * mask,
+                         GSList ** scanlines,
+                         int width,
+                         int height,
+                         int antialias
+                         )
+{
+  PixelArea maskPR;
+  PixelRow bufRow;
+  GSList * list;
+  guint16 * buf = NULL;
+  guint16 * b = NULL;
+  int * vals = NULL;
+  int val;
+  int start, end;
+  int x, x2, w;
+  int i, j;
+
+  
+  pixelarea_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)),
+                  0, 0, 
+                  0, 0,
+                  TRUE);
+
+  if (antialias)
+    {
+      buf = (guint16 *) g_malloc (width / SUPERSAMPLE * sizeof (guint16));
+      vals = (int *) g_malloc (sizeof (int) * width);
+      pixelrow_init (&bufRow, drawable_tag (GIMP_DRAWABLE (mask)),
+                     (guchar*) buf, width/SUPERSAMPLE);
+    }
+
+  for (i = 0; i < height; i++)
+    {
+      list = scanlines[i];
+
+      /*  zero the vals array  */
+      if (antialias && !(i % SUPERSAMPLE))
+	memset (vals, 0, width * sizeof (int));
+
+      while (list)
+	{
+	  x = (long) list->data;
+	  list = g_slist_next(list);
+	  if (!list)
+	      g_message ("Cannot properly scanline convert polygon!\n");
+	  else
+	    {
+	      /*  bounds checking  */
+	      x = BOUNDS (x, 0, width);
+	      x2 = BOUNDS ((long) list->data, 0, width);
+
+	      w = x2 - x;
+
+	      if (w > 0)
+		{
+		  if (! antialias)
+		    channel_add_segment (mask, x, i, w, 1.0);
+		  else
+		    for (j = 0; j < w; j++)
+		      vals[j + x] += 65535;
+		}
+
+	      list = g_slist_next (list);
+	    }
+	}
+
+      if (antialias && !((i+1) % SUPERSAMPLE))
+	{
+	  b = buf;
+	  start = 0;
+	  end = width;
+	  for (j = start; j < end; j += SUPERSAMPLE)
+	    {
+	      val = 0;
+	      for (x = 0; x < SUPERSAMPLE; x++)
+		val += vals[j + x];
+
+	      *b++ = (guint16) (val / SUPERSAMPLE2);
+	    }
+
+	  pixelarea_write_row (&maskPR, &bufRow, 0, (i / SUPERSAMPLE), (width / SUPERSAMPLE));
+	}
+
+      g_slist_free (scanlines[i]);
+    }
+
+  if (antialias)
+    {
+      g_free (vals);
+      g_free (buf);
+    }
+}
+
+
+static void
+scan_convert_helper (
+                     Channel * mask,
+                     GSList ** scanlines,
+                     int width,
+                     int height,
+                     int antialias
+                     )
+{
+  switch (tag_precision (drawable_tag (GIMP_DRAWABLE(mask))))
+    {
+    case PRECISION_U8:
+      scan_convert_helper_u8 (mask, scanlines, width, height, antialias);
+      break;
+    case PRECISION_U16:
+      scan_convert_helper_u16 (mask, scanlines, width, height, antialias);
+      break;
+    case PRECISION_FLOAT:
+    case PRECISION_NONE:
+      g_warning ("scan_convert_helper bad precision");
+      break;
+    }
+}
 
 static Channel *
 scan_convert (int gimage_ID, int num_pts, FreeSelectPoint *pts,
