@@ -10,9 +10,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-22 22:31+0100\n"
-"PO-Revision-Date: 2003-11-20 01:15+0000\n"
+"Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
+"POT-Creation-Date: 2003-11-26 01:07+0000\n"
+"PO-Revision-Date: 2003-11-26 01:10+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -128,14 +128,14 @@ msgid "Image Types:"
 msgstr "Tipos de Imagem:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1995
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error while executing\n"
 "%s\n"
 "%s"
 msgstr ""
-"Erro do Script-Fu durante a execução\n"
-" %s\n"
+"Erro durante a execução\n"
+"%s\n"
 "%s"
 
 #: plug-ins/script-fu/script-fu-server.c:602

@@ -11,9 +11,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 01:38+0100\n"
-"PO-Revision-Date: 2003-11-22 02:20+0000\n"
+"Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
+"POT-Creation-Date: 2003-11-26 01:05+0000\n"
+"PO-Revision-Date: 2003-11-26 01:10+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -381,7 +381,7 @@ msgstr "Gradiente FractalExpler "
 msgid "_Fractals"
 msgstr "_Fractais"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1804 plug-ins/bmp/bmpwrite.c:187
+#: plug-ins/FractalExplorer/Dialogs.c:1804 plug-ins/bmp/bmpwrite.c:198
 #: plug-ins/common/CEL.c:498 plug-ins/common/CML_explorer.c:2127
 #: plug-ins/common/curve_bend.c:814 plug-ins/common/dicom.c:643
 #: plug-ins/common/gbr.c:542 plug-ins/common/gif.c:996
@@ -423,7 +423,7 @@ msgid "Save Fractal Parameters"
 msgstr "Gravas Parâmetros Fractais"
 
 #. Do not rely on librsvg setting GError on failure!
-#: plug-ins/FractalExplorer/Dialogs.c:2106 plug-ins/bmp/bmpread.c:97
+#: plug-ins/FractalExplorer/Dialogs.c:2106 plug-ins/bmp/bmpread.c:118
 #: plug-ins/common/CEL.c:253 plug-ins/common/CML_explorer.c:2327
 #: plug-ins/common/curve_bend.c:866 plug-ins/common/dicom.c:293
 #: plug-ins/common/gbr.c:295 plug-ins/common/gih.c:630
@@ -1133,12 +1133,12 @@ msgstr "Exibir _Quadro de Antevisão"
 msgid "Show/hide preview wireframe"
 msgstr "Exibe/oculta quadro de antevisão"
 
-#: plug-ins/bmp/bmpread.c:67
+#: plug-ins/bmp/bmpread.c:87
 msgid "Bad colormap"
 msgstr "Mapa de cor inadequado"
 
 #. Set up progress display
-#: plug-ins/bmp/bmpread.c:102 plug-ins/common/CEL.c:258
+#: plug-ins/bmp/bmpread.c:123 plug-ins/common/CEL.c:258
 #: plug-ins/common/dicom.c:284 plug-ins/common/gbr.c:300
 #: plug-ins/common/gifload.c:301 plug-ins/common/gih.c:635
 #: plug-ins/common/hrz.c:342 plug-ins/common/jpeg.c:768
@@ -1155,24 +1155,24 @@ msgstr "Mapa de cor inadequado"
 msgid "Opening '%s'..."
 msgstr "A Abrir '%s'..."
 
-#: plug-ins/bmp/bmpread.c:113 plug-ins/bmp/bmpread.c:121
-#: plug-ins/bmp/bmpread.c:126 plug-ins/bmp/bmpread.c:133
-#: plug-ins/bmp/bmpread.c:146
+#: plug-ins/bmp/bmpread.c:134 plug-ins/bmp/bmpread.c:142
+#: plug-ins/bmp/bmpread.c:147 plug-ins/bmp/bmpread.c:154
+#: plug-ins/bmp/bmpread.c:167 plug-ins/bmp/bmpread.c:294
 #, c-format
 msgid "'%s' is not a valid BMP file"
 msgstr "'%s' não é um ficheiro BMP válido"
 
-#: plug-ins/bmp/bmpread.c:158 plug-ins/bmp/bmpread.c:176
-#: plug-ins/bmp/bmpread.c:196 plug-ins/bmp/bmpread.c:214
-#: plug-ins/bmp/bmpread.c:232 plug-ins/bmp/bmpread.c:237
-#: plug-ins/bmp/bmpread.c:242
+#: plug-ins/bmp/bmpread.c:179 plug-ins/bmp/bmpread.c:197
+#: plug-ins/bmp/bmpread.c:217 plug-ins/bmp/bmpread.c:235
+#: plug-ins/bmp/bmpread.c:253 plug-ins/bmp/bmpread.c:258
+#: plug-ins/bmp/bmpread.c:263
 #, c-format
 msgid "Error reading BMP file header from '%s'"
 msgstr "Erro ao ler cabeçalho do ficheiro BMP de '%s'"
 
 #. Create an indexed-alpha layer to hold the image...
-#: plug-ins/bmp/bmpread.c:328 plug-ins/bmp/bmpread.c:336
-#: plug-ins/bmp/bmpread.c:344 plug-ins/common/CEL.c:296
+#: plug-ins/bmp/bmpread.c:383 plug-ins/bmp/bmpread.c:391
+#: plug-ins/bmp/bmpread.c:399 plug-ins/common/CEL.c:296
 #: plug-ins/common/blinds.c:311 plug-ins/common/compose.c:614
 #: plug-ins/common/decompose.c:572 plug-ins/common/dicom.c:438
 #: plug-ins/common/film.c:975 plug-ins/common/gifload.c:857
@@ -1190,19 +1190,19 @@ msgstr "Erro ao ler cabeçalho do ficheiro BMP de '%s'"
 msgid "Background"
 msgstr "Fundo"
 
-#: plug-ins/bmp/bmpwrite.c:125 plug-ins/common/dicom.c:613
+#: plug-ins/bmp/bmpwrite.c:136 plug-ins/common/dicom.c:613
 #: plug-ins/common/pcx.c:574
 msgid "Cannot save images with alpha channel."
 msgstr "Incapaz de gravar imagens com canal alfa."
 
-#: plug-ins/bmp/bmpwrite.c:171 plug-ins/common/dicom.c:628
+#: plug-ins/bmp/bmpwrite.c:182 plug-ins/common/dicom.c:628
 #: plug-ins/common/ps.c:966 plug-ins/common/xwd.c:521 plug-ins/fits/fits.c:441
 #: plug-ins/xjt/xjt.c:1687
 msgid "Cannot operate on unknown image types."
 msgstr "Incapaz de operar em tipos de imagens desconhecidos."
 
 #. And let's begin the progress
-#: plug-ins/bmp/bmpwrite.c:198 plug-ins/common/CEL.c:503
+#: plug-ins/bmp/bmpwrite.c:209 plug-ins/common/CEL.c:503
 #: plug-ins/common/gbr.c:547 plug-ins/common/gif.c:1003
 #: plug-ins/common/gih.c:1223 plug-ins/common/gtm.c:246
 #: plug-ins/common/hrz.c:471 plug-ins/common/jpeg.c:1252
@@ -1218,16 +1218,16 @@ msgstr "Incapaz de operar em tipos de imagens desconhecidos."
 msgid "Saving '%s'..."
 msgstr "A Gravar '%s'..."
 
-#: plug-ins/bmp/bmpwrite.c:542
+#: plug-ins/bmp/bmpwrite.c:553
 msgid "Save as BMP"
 msgstr "Gravar como BMP"
 
 #. parameter settings
-#: plug-ins/bmp/bmpwrite.c:552
+#: plug-ins/bmp/bmpwrite.c:563
 msgid "Save Options"
 msgstr "Opções Gravação"
 
-#: plug-ins/bmp/bmpwrite.c:560
+#: plug-ins/bmp/bmpwrite.c:571
 msgid "_RLE encoded"
 msgstr "Codificação _RLE"
 
@@ -2041,14 +2041,12 @@ msgid "Frame %d of %d"
 msgstr "Quadro %d de %d"
 
 #: plug-ins/common/animoptimize.c:196
-#, fuzzy
 msgid "<Image>/Filters/Animation/_Optimize (for GIF)"
-msgstr "<Image>/Filtros/Animação/_Optimizar"
+msgstr "<Image>/Filtros/Animação/_Optimizar (para GIF)"
 
 #: plug-ins/common/animoptimize.c:214
-#, fuzzy
 msgid "<Image>/Filters/Animation/_Optimize (difference)"
-msgstr "<Image>/Filtros/Animação/_Optimizar"
+msgstr "<Image>/Filtros/Animação/_Optimizar (diferença)"
 
 #: plug-ins/common/animoptimize.c:231
 msgid "<Image>/Filters/Animation/_UnOptimize"

@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 01:38+0100\n"
-"PO-Revision-Date: 2003-11-20 01:20+0000\n"
+"Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
+"POT-Creation-Date: 2003-11-26 01:02+0000\n"
+"PO-Revision-Date: 2003-11-26 01:10+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -399,11 +399,11 @@ msgstr "Tripla He_x:"
 
 #: libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
-msgstr ""
+msgstr "Actual:"
 
 #: libgimpwidgets/gimpcolorselection.c:225
 msgid "Old:"
-msgstr ""
+msgstr "Antigo:"
 
 #: libgimpwidgets/gimpfileentry.c:331
 msgid "Select Folder"
@@ -413,15 +413,15 @@ msgstr "Seleccionar Pasta"
 msgid "Select File"
 msgstr "Seleccionar Ficheiro"
 
-#: libgimpwidgets/gimpmemsizeentry.c:233
+#: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "KiloBytes"
 msgstr "KiloBytes"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: libgimpwidgets/gimpmemsizeentry.c:235
 msgid "MegaBytes"
 msgstr "MegaBytes"
 
-#: libgimpwidgets/gimpmemsizeentry.c:235
+#: libgimpwidgets/gimpmemsizeentry.c:236
 msgid "GigaBytes"
 msgstr "GigaBytes"
 
@@ -539,9 +539,8 @@ msgid "Color Deficient Vision"
 msgstr "Visão Deficiente Cor"
 
 #: modules/cdisplay_colorblind.c:464
-#, fuzzy
 msgid "Color _Deficiency Type:"
-msgstr "Tipo Deficiência Cor:"
+msgstr "Tipo _Deficiência Cor:"
 
 #: modules/cdisplay_colorblind.c:473
 msgid "Protanopia (insensitivity to red)"
@@ -564,9 +563,8 @@ msgid "Gamma"
 msgstr "Gama"
 
 #: modules/cdisplay_gamma.c:311
-#, fuzzy
 msgid "_Gamma:"
-msgstr "Gama:"
+msgstr "_Gama:"
 
 #: modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
@@ -577,45 +575,44 @@ msgid "Contrast"
 msgstr "Contraste"
 
 #: modules/cdisplay_highcontrast.c:308
-#, fuzzy
 msgid "Contrast C_ycles:"
-msgstr "Cíclos Contraste:"
+msgstr "Cícl_os Contraste:"
 
 #: modules/cdisplay_proof.c:102
 msgid "Color proof filter using ICC color profile"
-msgstr ""
+msgstr "Filtro prova cor utilizando perfil cor ICC"
 
 #: modules/cdisplay_proof.c:166
 msgid "Color Proof"
-msgstr ""
+msgstr "Prova Cor"
 
 #: modules/cdisplay_proof.c:319
 msgid "Perceptual"
-msgstr ""
+msgstr "Perceptiva"
 
 #: modules/cdisplay_proof.c:321
 msgid "Relative Colorimetric"
-msgstr ""
+msgstr "Colométrica Relativa"
 
 #: modules/cdisplay_proof.c:325
 msgid "Absolute Colorimetric"
-msgstr ""
+msgstr "Colométrica Absoluta"
 
 #: modules/cdisplay_proof.c:331
 msgid "_Intent:"
-msgstr ""
+msgstr "_Intenção:"
 
 #: modules/cdisplay_proof.c:334
 msgid "Choose an ICC Color Profile"
-msgstr ""
+msgstr "Seleccione um Perfil de Cor ICC"
 
 #: modules/cdisplay_proof.c:337
 msgid "_Profile:"
-msgstr ""
+msgstr "_Perfil:"
 
 #: modules/cdisplay_proof.c:345
 msgid "_Black Point Compensation"
-msgstr ""
+msgstr "Compensação Ponto _Preto"
 
 #: modules/colorsel_cmyk.c:73
 msgid "CMYK color selector"
