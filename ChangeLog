@@ -1,5 +1,10 @@
 2003-04-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimptemplateview.c: made the names editable in the
+	tree view.
+
+2003-04-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpcontext.c (gimp_context_deserialize_property)
 	* app/core/gimpcontainer.c (gimp_container_deserialize): g_free()
 	the string returned by gimp_scanner_parse_string(). Replace

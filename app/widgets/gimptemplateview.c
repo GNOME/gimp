@@ -38,10 +38,10 @@
 #include "core/gimpimage.h"
 #include "core/gimptemplate.h"
 
-#include "gimpcontainerview.h"
+#include "gimpcontainertreeview.h"
 #include "gimptemplateview.h"
 #include "gimpdnd.h"
-#include "gimpwidgets-utils.h"
+#include "gimppreviewrenderer.h"
 
 #include "gimp-intl.h"
 
@@ -62,6 +62,11 @@ static void   gimp_template_view_select_item    (GimpContainerEditor *editor,
                                                  GimpViewable        *viewable);
 static void   gimp_template_view_activate_item  (GimpContainerEditor *editor,
                                                  GimpViewable        *viewable);
+
+static void gimp_template_view_tree_name_edited (GtkCellRendererText *cell,
+                                                 const gchar         *path_str,
+                                                 const gchar         *new_name,
+                                                 GimpTemplateView    *view);
 
 
 static GimpContainerEditorClass *parent_class = NULL;
@@ -141,6 +146,23 @@ gimp_template_view_new (GimpViewType     view_type,
     }
 
   editor = GIMP_CONTAINER_EDITOR (template_view);
+
+  if (GIMP_IS_CONTAINER_TREE_VIEW (editor->view))
+    {
+      GimpContainerTreeView *tree_view;
+
+      tree_view = GIMP_CONTAINER_TREE_VIEW (editor->view);
+
+      tree_view->name_cell->mode = GTK_CELL_RENDERER_MODE_EDITABLE;
+      GTK_CELL_RENDERER_TEXT (tree_view->name_cell)->editable = TRUE;
+
+      tree_view->editable_cells = g_list_prepend (tree_view->editable_cells,
+                                                  tree_view->name_cell);
+
+      g_signal_connect (tree_view->name_cell, "edited",
+                        G_CALLBACK (gimp_template_view_tree_name_edited),
+                        template_view);
+    }
 
   template_view->new_button =
     gimp_editor_add_button (GIMP_EDITOR (editor->view),
@@ -372,4 +394,42 @@ gimp_template_view_activate_item (GimpContainerEditor *editor,
       gimp_template_create_image (editor->view->context->gimp,
                                   GIMP_TEMPLATE (viewable));
     }
+}
+
+static void
+gimp_template_view_tree_name_edited (GtkCellRendererText *cell,
+                                     const gchar         *path_str,
+                                     const gchar         *new_name,
+                                     GimpTemplateView    *view)
+{
+  GimpContainerTreeView *tree_view;
+  GimpContainerView     *container_view;
+  GtkTreePath           *path;
+  GtkTreeIter            iter;
+
+  tree_view = GIMP_CONTAINER_TREE_VIEW (GIMP_CONTAINER_EDITOR (view)->view);
+
+  container_view = GIMP_CONTAINER_VIEW (tree_view);
+
+  path = gtk_tree_path_new_from_string (path_str);
+
+  if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
+    {
+      GimpPreviewRenderer *renderer;
+      GimpObject          *object;
+
+      gtk_tree_model_get (tree_view->model, &iter,
+                          tree_view->model_column_renderer, &renderer,
+                          -1);
+
+      object = GIMP_OBJECT (renderer->viewable);
+
+      gimp_object_set_name (object, new_name);
+      gimp_list_uniquefy_name (GIMP_LIST (container_view->context->gimp->templates),
+                               object, TRUE);
+
+      g_object_unref (renderer);
+    }
+
+  gtk_tree_path_free (path);
 }
