@@ -17,8 +17,6 @@
 
 #undef use_oldmmx
 
-extern void xxx_3a(rgba8_t *, rgba8_t *, rgba8_t *, u_long);
-
 
 static void
 print_rgba8(rgba8_t *p)
@@ -67,7 +65,7 @@ comp_rgba8(char *str, rgba8_t *rgba8A, rgba8_t *rgba8B, rgba8_t *expected, rgba8
       break;
   }
 
-  return fail_count;
+  return (fail_count);
 }
 
 static int
@@ -99,7 +97,7 @@ comp_va8(char *str, va8_t *va8A, va8_t *va8B, va8_t *expected, va8_t *got, u_lon
       break;
   }
 
-  return fail_count;
+  return (fail_count);
 }
 
 static void
@@ -112,22 +110,6 @@ dump_rgba8(char *str, rgba8_t *rgba, u_long length)
   for (i = 0; i < length; i++) {
     printf("%5d: ", i);
     print_rgba8(&rgba[i]);
-    printf("\n");
-  }
-}
-
-void
-xxx_3a(rgba8_t *a, rgba8_t *b, rgba8_t *c, u_long length)
-{
-  int i;
-
-  for (i = 0; i < length; i++) {
-    printf("%5d: ", i);
-    print_rgba8(&a[i]);
-    printf(" ");
-    print_rgba8(&b[i]);
-    printf(" ");
-    print_rgba8(&c[i]);
     printf("\n");
   }
 }
@@ -153,8 +135,17 @@ main (int argc, char *argv[])
   unsigned long i;
   unsigned long n_pixels;
 
-  iterations = atoi(argv[1]);
-  n_pixels = atol(argv[2]);
+		iterations = 1;
+		n_pixels = 500001;
+
+		if (argc > 1) {
+				iterations = atoi(argv[1]);
+				if (argc > 2) {
+						n_pixels = atol(argv[2]);
+				}
+		}
+
+		printf("iterations %d, n_pixels %lu\n", iterations, n_pixels);
 
   rgba8A = (rgba8_t *) calloc(sizeof(rgba8_t), n_pixels+1);
   rgba8B = (rgba8_t *) calloc(sizeof(rgba8_t), n_pixels+1);

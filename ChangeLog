@@ -1,5 +1,10 @@
 2003-07-15  Helvetix Victorinox  <helvetix@gimp.org>
- 
+
+	* app/composite/gimp-composite-dispatch.c: added to cvs AGAIN.
+
+	* app/composite/test-composite.c: by default check each
+	compositing function 1 time, with a 500001 pixel array.
+
 	* app/composite/gimp-composite-generic.h: Use
 	GimpCompositeFunction as the type for all compositing functions.
  
