@@ -351,7 +351,7 @@ CP1
       memcpy ($var, return_vals[$argc].data.d_$type,
 	      $numvar * sizeof ($datatype));
 CP2
-                    $out->{memcpy} = 1 unless ($ch || $cf);
+                    $out->{headers} = "#include <string.h>\n" unless ($ch || $cf);
                 }
 		elsif ($type ne 'color') {
 		    # The return value variable
@@ -637,7 +637,7 @@ HEADER
         print CFILE $lgpl_top;
         print CFILE " * $cname\n";
         print CFILE $lgpl_bottom;
-	print CFILE qq/#include <string.h>\n\n/ if $out->{memcpy};
+        print CFILE $out->{headers}, "\n" if exists $out->{headers};
 	print CFILE qq/#include "gimp.h"\n/;
 	print CFILE qq/#include "gimpprivate.h"\n/ if $privatevars;
 	print CFILE "\n", $extra->{code} if exists $extra->{code};
