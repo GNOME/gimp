@@ -1,5 +1,16 @@
 2005-01-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-snap.c: moved variables to local scopes,
+	assign the snapped coords unconditionally (also if we don't snap),
+	cleanup.
+
+	(gimp_image_snap_rectangle): entirely rewritten to use local
+	mindist_x, mindist_y variables instead of fiddling with lots of
+	boolean variables. Implemented vectors snapping as if the required
+	GimpStroke functions existed (#defined them). Simon, your turn :)
+
+2005-01-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/plug-in-commands.c
 	* app/actions/vectors-commands.c: GIMP_PROGRESS(NULL) is perfectly
 	valid, no need to say gdisp ? GIMP_PROGRESS(gdisp) : NULL.
