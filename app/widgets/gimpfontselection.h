@@ -53,6 +53,7 @@ struct _GimpFontSelectionClass
   GtkHBoxClass          parent_class;
 
   void (* font_changed) (GimpFontSelection *fontsel);
+  void (* activate)     (GimpFontSelection *fontsel);
 };
 
 

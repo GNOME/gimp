@@ -1,3 +1,10 @@
+2002-10-09  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimptexttool.c
+	* app/widgets/gimpfontselection.[ch]
+	* app/widgets/gimpwidgets-utils.[ch]: started to implement the
+	text tool GUI as suggested in #84151.
+
 2002-10-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimppalette.c (gimp_palette_get_new_preview): adjust

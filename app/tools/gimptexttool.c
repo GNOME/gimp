@@ -35,6 +35,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpfontselection.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 
@@ -73,6 +74,14 @@ struct _TextOptions
   GimpUnit         unit;
   GimpUnit         unit_d;
   GtkWidget       *unit_w;
+
+  gdouble          line_spacing;
+  gdouble          line_spacing_d;
+  GtkObject       *line_spacing_w;
+
+  gdouble          letter_spacing;
+  gdouble          letter_spacing_d;
+  GtkObject       *letter_spacing_w;
 };
 
 
@@ -370,6 +379,7 @@ text_tool_options_new (GimpToolInfo *tool_info)
   GtkWidget    *table;
   GtkWidget    *size_spinbutton;
   GtkWidget    *border_spinbutton;
+  GtkWidget    *spin_button;
 
   options = g_new0 (TextOptions, 1);
 
@@ -377,18 +387,22 @@ text_tool_options_new (GimpToolInfo *tool_info)
 
   ((GimpToolOptions *) options)->reset_func = text_tool_options_reset;
 
-  options->fontname_d                   = DEFAULT_FONT;
-  options->border  = options->border_d  = 0;
-  options->size    = options->size_d    = DEFAULT_FONT_SIZE;
-  options->unit    = options->unit_d    = GIMP_UNIT_PIXEL;
+  options->fontname_d                                 = DEFAULT_FONT;
+  options->border         = options->border_d         = 0;
+  options->size           = options->size_d           = DEFAULT_FONT_SIZE;
+  options->unit           = options->unit_d           = GIMP_UNIT_PIXEL;
+  options->line_spacing   = options->line_spacing_d   = 1.0;
+  options->letter_spacing = options->letter_spacing_d = 1.0;
 
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;
 
-  table = gtk_table_new (4, 3, FALSE);
+  table = gtk_table_new (4, 5, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_row_spacing  (GTK_TABLE (table), 3, 12);
   gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (table), FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
   pango_context = pango_ft2_get_context (gimprc.monitor_xres,
                                          gimprc.monitor_yres);
@@ -405,7 +419,7 @@ text_tool_options_new (GimpToolInfo *tool_info)
                              options->font_selection, 2, FALSE);
 
   options->size_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                                          _("Size:"), -1, 5,
+                                          _("_Size:"), -1, 5,
                                           options->size,
                                           1.0, 256.0, 1.0, 50.0, 1,
                                           FALSE, 1e-5, 32767.0,
@@ -418,7 +432,7 @@ text_tool_options_new (GimpToolInfo *tool_info)
                     &options->size);
 
   options->border_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-                                            _("Border:"), -1, 5,
+                                            _("_Border:"), -1, 5,
                                             options->border,
                                             0.0, 100.0, 1.0, 50.0, 1,
                                             FALSE, 0.0, 32767.0,
@@ -446,7 +460,27 @@ text_tool_options_new (GimpToolInfo *tool_info)
                     G_CALLBACK (gimp_unit_menu_update),
                     &options->unit);
 
-  gtk_widget_show (table);
+  spin_button = gimp_spin_button_new (&options->letter_spacing_w,
+                                      options->letter_spacing,
+                                      0.0, 64.0, 0.1, 1.0, 0.0, 1.0, 2);
+  gtk_entry_set_width_chars (GTK_ENTRY (spin_button), 5);
+  gimp_table_attach_stock (GTK_TABLE (table), 0, 4,
+                           GIMP_STOCK_LETTER_SPACING, spin_button);
+
+  g_signal_connect (G_OBJECT (options->letter_spacing_w), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &options->letter_spacing);
+
+  spin_button = gimp_spin_button_new (&options->line_spacing_w,
+                                      options->line_spacing,
+                                      0.0, 64.0, 0.1, 1.0, 0.0, 1.0, 2);
+  gtk_entry_set_width_chars (GTK_ENTRY (spin_button), 5);
+  gimp_table_attach_stock (GTK_TABLE (table), 0, 5,
+                           GIMP_STOCK_LINE_SPACING, spin_button);
+
+  g_signal_connect (G_OBJECT (options->line_spacing_w), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &options->line_spacing);
 
   return (GimpToolOptions *) options;
 }
@@ -478,4 +512,9 @@ text_tool_options_reset (GimpToolOptions *tool_options)
       spinbutton =
         g_object_get_data (G_OBJECT (spinbutton), "set_digits");
     }
+
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->line_spacing_w),
+                            options->line_spacing_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->letter_spacing_w),
+                            options->letter_spacing_d);
 }

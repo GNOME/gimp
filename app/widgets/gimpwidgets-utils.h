@@ -43,7 +43,12 @@ void     gimp_window_add_accel_group       (GtkWindow      *window,
 void     gimp_window_remove_accel_group    (GtkWindow      *window,
 					    GtkItemFactory *item_factory);
 
-gpointer gimp_widget_get_callback_context  (GtkWidget *widget);
+gpointer gimp_widget_get_callback_context  (GtkWidget      *widget);
 
+void     gimp_table_attach_stock           (GtkTable       *table,
+                                            gint            column,
+                                            gint            row,
+                                            const gchar    *stock_id,
+                                            GtkWidget      *widget);
 
 #endif /* __GIMP_WIDGETS_UTILS_H__ */

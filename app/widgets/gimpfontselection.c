@@ -48,7 +48,7 @@ static void     gimp_font_selection_class_init        (GimpFontSelectionClass *k
 static void     gimp_font_selection_init              (GimpFontSelection      *fontsel);
 static void     gimp_font_selection_finalize          (GObject                *object);
 static void     gimp_font_selection_real_font_changed (GimpFontSelection      *fontsel);
-
+static void     gimp_font_selection_real_activate     (GimpFontSelection      *fontsel);
 static void     gimp_font_selection_browse_callback   (GtkWidget *widget,
                                                        gpointer   data);
 static void     gimp_font_selection_entry_callback    (GtkWidget *widget,
@@ -60,6 +60,7 @@ static gboolean gimp_font_selection_entry_focus_out   (GtkWidget *widget,
 enum
 {
   FONT_CHANGED,
+  ACTIVATE,
   LAST_SIGNAL
 };
 
@@ -99,9 +100,11 @@ gimp_font_selection_get_type (void)
 static void
 gimp_font_selection_class_init (GimpFontSelectionClass *klass)
 {
-  GObjectClass *object_class;
+  GObjectClass   *object_class;
+  GtkWidgetClass *widget_class;
 
   object_class = G_OBJECT_CLASS (klass);
+  widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -109,15 +112,26 @@ gimp_font_selection_class_init (GimpFontSelectionClass *klass)
     g_signal_new ("font_changed",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
-		  G_STRUCT_OFFSET (GimpFontSelectionClass,
-				   font_changed),
+		  G_STRUCT_OFFSET (GimpFontSelectionClass, font_changed),
+		  NULL, NULL,
+		  gimp_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
+
+  gimp_font_selection_signals[ACTIVATE] = 
+    g_signal_new ("activate",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
+		  G_STRUCT_OFFSET (GimpFontSelectionClass, activate),
 		  NULL, NULL,
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   object_class->finalize = gimp_font_selection_finalize;
 
+  widget_class->activate_signal = gimp_font_selection_signals[ACTIVATE];
+
   klass->font_changed = gimp_font_selection_real_font_changed;
+  klass->activate     = gimp_font_selection_real_activate;
 }
 
 static void
@@ -126,7 +140,7 @@ gimp_font_selection_init (GimpFontSelection *fontsel)
   GtkWidget *button;
   GtkWidget *image;
 
-  fontsel->context   = NULL;
+  fontsel->context = NULL;
 
   fontsel->valid = gtk_image_new_from_stock (GTK_STOCK_NO, GTK_ICON_SIZE_MENU);
   gtk_box_pack_start (GTK_BOX (fontsel), fontsel->valid, FALSE, FALSE, 0);
@@ -202,6 +216,12 @@ gimp_font_selection_font_changed (GimpFontSelection *fontsel)
 
   g_signal_emit (G_OBJECT (fontsel), 
                  gimp_font_selection_signals[FONT_CHANGED], 0);
+}
+
+static void
+gimp_font_selection_real_activate (GimpFontSelection *fontsel)
+{
+  gtk_widget_activate (fontsel->entry);
 }
 
 static void
@@ -339,9 +359,7 @@ gimp_font_selection_browse_callback (GtkWidget *widget,
   GimpFontSelection *fontsel = GIMP_FONT_SELECTION (data);
 
   if (!fontsel->dialog)
-    {
-      fontsel->dialog = gimp_font_selection_dialog_new (fontsel);
-    }
+    fontsel->dialog = gimp_font_selection_dialog_new (fontsel);
 
   gimp_font_selection_dialog_show (fontsel->dialog);
 }
