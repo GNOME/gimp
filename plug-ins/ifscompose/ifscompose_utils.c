@@ -25,12 +25,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#ifdef __GNUC__
-#warning FIXME: GDK_DISABLE_DEPRECATED
-#endif
-
-#undef GDK_DISABLE_DEPRECATED
-
 #include <gdk/gdk.h>
 
 #include <libgimp/gimp.h>
@@ -712,33 +706,36 @@ aff_element_compute_boundary (AffElement  *elem,
 
 void 
 aff_element_draw (AffElement  *elem,
-		  gint         selected,
+		  gboolean     selected,
 		  gint         width,
 		  gint         height, 
 		  GdkDrawable *win,
 		  GdkGC       *normal_gc,
 		  GdkGC       *selected_gc,
-		  GdkFont     *font)
+		  PangoLayout *layout)
 {
-  GdkGC *gc;
-  gint string_width = gdk_string_width (font,elem->name);
-  gint string_height = font->ascent  + font->descent + 2;
+  PangoRectangle  rect;
+  GdkGC          *gc;
+
+  pango_layout_set_text (layout, elem->name, -1);
+  pango_layout_get_pixel_extents (layout, NULL, &rect);
 
   if (selected)
     gc = selected_gc;
   else
     gc = normal_gc;
 
-  gdk_draw_string(win,font,gc,
-		  elem->v.x*width-string_width/2,
-		  elem->v.y*width+string_height/2,elem->name);
+  gdk_draw_layout (win, gc,
+                   elem->v.x * width - rect.width  / 2,
+                   elem->v.y * width + rect.height / 2,
+                   layout);
 
   if (elem->click_boundary != elem->draw_boundary)
-    gdk_draw_polygon(win,normal_gc,FALSE,elem->click_boundary->points,
-		     elem->click_boundary->npoints);
+    gdk_draw_polygon (win, normal_gc, FALSE, elem->click_boundary->points,
+                      elem->click_boundary->npoints);
 
-  gdk_draw_polygon(win,gc,FALSE,elem->draw_boundary->points,
-		   elem->draw_boundary->npoints);
+  gdk_draw_polygon (win, gc, FALSE, elem->draw_boundary->points,
+                    elem->draw_boundary->npoints);
 }
 
 AffElement *
@@ -914,7 +911,7 @@ ifs_render (AffElement     **elements,
 			           by roundoff*/
   /* create the brush */
   if (!preview)
-    brush = create_brush(vals,&brush_size,&brush_offset);
+    brush = create_brush (vals,&brush_size,&brush_offset);
 
   x = y = 0;
   r = g = b = 0;

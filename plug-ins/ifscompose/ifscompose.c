@@ -99,7 +99,7 @@ typedef struct
 {
   IfsComposeVals   ifsvals;
   AffElement     **elements;
-  gint            *element_selected;
+  gboolean        *element_selected;
   gint             current_element;
 } UndoItem;
 
@@ -1560,12 +1560,13 @@ set_current_element (gint index)
   update_values ();
 }
 
-static gint
+static gboolean
 design_area_expose (GtkWidget      *widget,
 		    GdkEventExpose *event)
 {
-  gint i;
-  gint cx, cy;
+  PangoLayout *layout;
+  gint         i;
+  gint         cx, cy;
 
   if (!ifsDesign->selected_gc)
     {
@@ -1587,34 +1588,38 @@ design_area_expose (GtkWidget      *widget,
   cx = ifsvals.center_x * widget->allocation.width;
   cy = ifsvals.center_y * widget->allocation.width;
   gdk_draw_line (ifsDesign->pixmap,
-		widget->style->fg_gc[widget->state],
-		cx - 10, cy, cx + 10, cy);
+                 widget->style->fg_gc[widget->state],
+                 cx - 10, cy, cx + 10, cy);
   gdk_draw_line (ifsDesign->pixmap,
-		widget->style->fg_gc[widget->state],
-		cx, cy - 10, cx, cy + 10);
+                 widget->style->fg_gc[widget->state],
+                 cx, cy - 10, cx, cy + 10);
+
+  layout = gtk_widget_create_pango_layout (widget, NULL);
 
   for (i = 0; i < ifsvals.num_elements; i++)
     {
       aff_element_draw (elements[i], element_selected[i],
-		       widget->allocation.width,
-		       widget->allocation.height,
-		       ifsDesign->pixmap,
-		       widget->style->fg_gc[widget->state],
-		       ifsDesign->selected_gc,
-		       gtk_style_get_font (ifsDesign->area->style));
+                        widget->allocation.width,
+                        widget->allocation.height,
+                        ifsDesign->pixmap,
+                        widget->style->fg_gc[widget->state],
+                        ifsDesign->selected_gc,
+                        layout);
     }
 
+  g_object_unref (layout);
+
   gdk_draw_drawable (widget->window,
-		    widget->style->fg_gc[GTK_WIDGET_STATE (widget)],
-		    ifsDesign->pixmap,
-		    event->area.x, event->area.y,
-		    event->area.x, event->area.y,
-		    event->area.width, event->area.height);
+                     widget->style->fg_gc[GTK_WIDGET_STATE (widget)],
+                     ifsDesign->pixmap,
+                     event->area.x, event->area.y,
+                     event->area.x, event->area.y,
+                     event->area.width, event->area.height);
 
   return FALSE;
 }
 
-static gint
+static gboolean
 design_area_configure (GtkWidget         *widget,
 		       GdkEventConfigure *event)
 {
@@ -1682,7 +1687,7 @@ design_area_button_press (GtkWidget      *widget,
 	   || !element_selected[ifsD->current_element] ))
     {
       for (i = 0; i < ifsvals.num_elements; i++)
-	element_selected[i] = 0;
+	element_selected[i] = FALSE;
     }
 
   if (ifsD->current_element >= 0)
@@ -1883,7 +1888,8 @@ undo_begin (void)
 
   undo_ring[new_index].ifsvals = ifsvals;
   undo_ring[new_index].elements = g_new (AffElement *,ifsvals.num_elements);
-  undo_ring[new_index].element_selected = g_new (gint, ifsvals.num_elements);
+  undo_ring[new_index].element_selected = g_new (gboolean,
+                                                 ifsvals.num_elements);
   undo_ring[new_index].current_element = ifsD->current_element;
 
   for (i = 0; i < ifsvals.num_elements; i++)
@@ -1920,7 +1926,7 @@ undo_exchange (gint el)
 {
   gint i;
   AffElement **telements;
-  gint *tselected;
+  gboolean *tselected;
   IfsComposeVals tifsvals;
   gint tcurrent;
   gdouble width = ifsDesign->area->allocation.width;
@@ -2509,7 +2515,7 @@ ifs_compose_set_defaults (void)
   ifsvals.num_elements = 3;
   elements = g_realloc (elements, ifsvals.num_elements * sizeof(AffElement *));
   element_selected = g_realloc (element_selected,
-				ifsvals.num_elements * sizeof(gint));
+				ifsvals.num_elements * sizeof(gboolean));
 
   elements[0] = aff_element_new (0.3, 0.37 * ifsvals.aspect_ratio, &color,
 				 ++count_for_naming);
@@ -2646,7 +2652,7 @@ ifsfile_replace_ifsvals (IfsComposeVals *new_ifsvals,
     }
 
   element_selected = g_realloc (element_selected,
-                                ifsvals.num_elements * sizeof(gint));
+                                ifsvals.num_elements * sizeof(gboolean));
   for (i = 0; i < ifsvals.num_elements; i++)
     element_selected[i] = FALSE;
 
@@ -2791,7 +2797,7 @@ ifs_compose_new_callback (GtkWidget *widget,
   ifsvals.num_elements++;
   elements = g_realloc (elements, ifsvals.num_elements * sizeof (AffElement *));
   element_selected = g_realloc (element_selected,
-				ifsvals.num_elements * sizeof (gint));
+				ifsvals.num_elements * sizeof (gboolean));
 
   for (i = 0; i < ifsvals.num_elements-1; i++)
     element_selected[i] = FALSE;
@@ -2801,7 +2807,7 @@ ifs_compose_new_callback (GtkWidget *widget,
   set_current_element (ifsvals.num_elements-1);
 
   ifsD->selected_orig = g_realloc (ifsD->selected_orig,
-				  ifsvals.num_elements*sizeof(AffElement));
+				  ifsvals.num_elements * sizeof(AffElement));
   aff_element_compute_trans (elem, width, height,
 			      ifsvals.center_x, ifsvals.center_y);
 

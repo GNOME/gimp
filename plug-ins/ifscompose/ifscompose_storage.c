@@ -135,7 +135,8 @@ ifsvals_parse_color (GScanner *scanner,
 /* Parse a float which (unlike G_TOKEN_FLOAT) can be negative
  */
 static GTokenType
-parse_genuine_float (GScanner *scanner, gdouble *result)
+parse_genuine_float (GScanner *scanner,
+                     gdouble  *result)
 {
   gboolean negate = FALSE;
   GTokenType token;
@@ -158,7 +159,8 @@ parse_genuine_float (GScanner *scanner, gdouble *result)
 }
 
 static GTokenType
-ifsvals_parse_element (GScanner *scanner, AffElementVals *result)
+ifsvals_parse_element (GScanner       *scanner,
+                       AffElementVals *result)
 {
   GTokenType token;
   GTokenType expected_token;
@@ -297,16 +299,18 @@ ifsvals_parse_element (GScanner *scanner, AffElementVals *result)
  *************************************************************/
 
 static gboolean
-ifsvals_parse (GScanner *scanner, IfsComposeVals *vals, AffElement ***elements)
+ifsvals_parse (GScanner         *scanner,
+               IfsComposeVals   *vals,
+               AffElement     ***elements)
 {
-  GTokenType token, expected_token;
-  AffElement *el;
-  IfsComposeVals new_vals;
-  GimpRGB  color;
+  GTokenType      token, expected_token;
+  AffElement     *el;
+  IfsComposeVals  new_vals;
+  GimpRGB         color;
 
   GList *el_list = NULL;
   GList *tmp_list;
-  int i;
+  gint   i;
 
   new_vals = *vals;
   new_vals.num_elements = 0;
@@ -413,12 +417,14 @@ ifsvals_parse (GScanner *scanner, IfsComposeVals *vals, AffElement ***elements)
 }
 
 gboolean
-ifsvals_parse_string (char *str, IfsComposeVals *vals, AffElement ***elements)
+ifsvals_parse_string (const gchar      *str,
+                      IfsComposeVals   *vals,
+                      AffElement     ***elements)
 {
   GScanner *scanner = g_scanner_new (NULL);
-  gboolean result;
-  gint i;
-  
+  gboolean  result;
+  gint      i;
+
   scanner->config->symbol_2_token = TRUE;
   scanner->config->scan_identifier_1char = TRUE;
   scanner->input_name = "IfsCompose Saved Data";
@@ -447,13 +453,16 @@ ifsvals_parse_string (char *str, IfsComposeVals *vals, AffElement ***elements)
  *     The stringified result (free with g_free)
  *************************************************************/
 
-char *
-ifsvals_stringify (IfsComposeVals *vals, AffElement **elements)
+gchar *
+ifsvals_stringify (IfsComposeVals  *vals,
+                   AffElement     **elements)
 {
-  gint i;
-  gchar buf[G_ASCII_DTOSTR_BUF_SIZE];
-  gchar cbuf[3][G_ASCII_DTOSTR_BUF_SIZE];
-  GString *result = g_string_new (NULL);
+  gint     i;
+  gchar    buf[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar    cbuf[3][G_ASCII_DTOSTR_BUF_SIZE];
+  GString *result;
+
+  result = g_string_new (NULL);
 
   g_string_append_printf (result, "iterations %d\n", vals->iterations);
   g_string_append_printf (result, "max_memory %d\n", vals->max_memory);

@@ -1,5 +1,12 @@
 2003-07-01  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/ifscompose/ifscompose.[ch]
+	* plug-ins/ifscompose/ifscompose_utils.c: use Pango to draw text.
+
+	* plug-ins/ifscompose/ifscompose_storage.c: minor code cleanup.
+
+2003-07-01  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: bumped version number to 1.3.17.
 
 2003-07-01  Michael Natterer  <mitch@gimp.org>

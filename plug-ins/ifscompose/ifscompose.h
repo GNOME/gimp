@@ -117,11 +117,14 @@ void        aff_element_compute_boundary     (AffElement *elem, gint width,
 					      gint height,
 					      AffElement **elements, 
 					      int num_elements);
-void        aff_element_draw                 (AffElement *elem, gint selected,
-					      gint width, gint height,
+void        aff_element_draw                 (AffElement  *elem,
+                                              gint         selected,
+					      gint         width,
+                                              gint         height,
 					      GdkDrawable *win,
-					      GdkGC *normal_gc,GdkGC *selected_gc,
-					      GdkFont *font);
+					      GdkGC       *normal_gc,
+                                              GdkGC       *selected_gc,
+					      PangoLayout *layout);
 
 
 void ifs_render (AffElement **elements, gint num_elements,
@@ -129,10 +132,11 @@ void ifs_render (AffElement **elements, gint num_elements,
 		 IfsComposeVals *vals, gint band_y, gint band_height,
 		 guchar *data, guchar *mask, guchar *nhits, gint preview);
 
-char *   ifsvals_stringify    (IfsComposeVals *vals, AffElement **elements);
-gboolean ifsvals_parse_string (char           *str,
-			       IfsComposeVals *vals,
-			       AffElement   ***elements);
+gchar    * ifsvals_stringify    (IfsComposeVals   *vals,
+                                 AffElement      **elements);
+gboolean   ifsvals_parse_string (const gchar      *str,
+                                 IfsComposeVals   *vals,
+                                 AffElement     ***elements);
 
 
 
