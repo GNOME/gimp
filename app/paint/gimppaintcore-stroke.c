@@ -64,9 +64,7 @@ gimp_paint_core_stroke (GimpPaintCore    *core,
           core->cur_coords = strokes[i];
 
           gimp_paint_core_interpolate (core, drawable, paint_options);
-
-          core->last_coords = core->cur_coords;
-       }
+	}
 
       gimp_paint_core_paint (core, drawable, paint_options, FINISH_PAINT);
 
@@ -153,8 +151,6 @@ gimp_paint_core_stroke_vectors (GimpPaintCore    *core,
               core->cur_coords = g_array_index (coords, GimpCoords, i);
 
               gimp_paint_core_interpolate (core, drawable, paint_options);
-
-              core->last_coords = core->cur_coords;
             }
 
           if (closed)
@@ -162,8 +158,6 @@ gimp_paint_core_stroke_vectors (GimpPaintCore    *core,
               core->cur_coords = g_array_index (coords, GimpCoords, 0);
 
               gimp_paint_core_interpolate (core, drawable, paint_options);
-
-              core->last_coords = core->cur_coords;
             }
 
           g_array_free (coords, TRUE);

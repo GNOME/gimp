@@ -347,6 +347,11 @@ gimp_paint_tool_button_press (GimpTool        *tool,
 
       core->start_coords = core->cur_coords;
       core->last_coords  = core->cur_coords;
+
+      core->distance     = 0.0;
+      core->pixel_dist   = 0.0;
+
+
     }
   else if (paint_tool->draw_line)
     {
@@ -381,8 +386,6 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   if (paint_tool->draw_line)
     {
       gimp_paint_core_interpolate (core, drawable, paint_options);
-
-      core->last_coords = core->cur_coords;
     }
   else
     {
@@ -473,8 +476,6 @@ gimp_paint_tool_motion (GimpTool        *tool,
 
   if (core->flags & CORE_TRACES_ON_WINDOW)
     gimp_paint_core_paint (core, drawable, paint_options, POSTTRACE_PAINT);
-
-  core->last_coords = core->cur_coords;
 }
 
 static void

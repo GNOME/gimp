@@ -1,3 +1,15 @@
+2003-08-21  Jay Cox  <jaycox@gimp.org>
+
+	* app/paint/gimppaintcore.c: paint_core_interpolate now takes care
+	of setting core->last_coords.  Don't reset core->distance in
+	paint_core_start (fixes problem with shift-click brush strokes).
+	Improved brush placement for stroked selections in
+	paint_core_interpolate.
+	* app/paint/gimppaintcore-stroke.c: dont need to set
+	core->last_coords anymore.
+	* app/tools/gimppainttool.c: dont need to set core->last_coords
+	anymore.  Set core->distance in gimp_paint_tool_button_press.
+
 2003-08-21  Sven Neumann  <sven@gimp.org>
 
 	* m4macros/gimp-2.0.m4: set the default minimum version to 1.3.18.

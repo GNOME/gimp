@@ -444,8 +444,6 @@ gimp_paint_core_start (GimpPaintCore    *core,
 
   core->x1           = core->x2 = core->cur_coords.x;
   core->y1           = core->y2 = core->cur_coords.y;
-  core->distance     = 0.0;
-  core->pixel_dist   = 0.0;
 
   core->last_paint.x = -1e6;
   core->last_paint.y = -1e6;
@@ -711,10 +709,21 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
        *  make thin lines (say, with a 1x1 brush) prettier while leaving
        *  lines with larger brush spacing as they used to look in 1.2.x.
        */
+
       dt = core->spacing / dist;
       n = (gint) (initial / core->spacing + 1.0 + EPSILON);
       t0 = (n * core->spacing - initial) / dist;
       num_points = 1 + (gint) floor ((1 + EPSILON - t0) / dt);
+
+      /* if we arnt going to paint anything this time and the brush
+       * has only moved on one axis return without updating the brush
+       * position, distance etc. so that we can more accurately space
+       * brush strokes when curves are supplied to us in single pixel
+       * chunks.
+       */
+
+      if (num_points == 0 && (delta.x == 0 || delta.y == 0))
+	return;
     }
   else if (fabs (st_factor) < EPSILON)
     {
@@ -843,6 +852,9 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
 
   core->distance   = total;
   core->pixel_dist = pixel_initial + pixel_dist;
+
+  core->last_coords = core->cur_coords;
+
 }
 
 
