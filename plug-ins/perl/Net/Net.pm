@@ -173,20 +173,15 @@ sub start_server {
       push(@args,"--no-data") if $opt=~s/(^|:)no-?data//;
       push(@args,"-i") unless $opt=~s/(^|:)gui//;
       push(@args,"--verbose") if $Gimp::verbose;
-         print STDERR $Gimp::Config{GIMP},
-              "--no-splash",
-              @args,
-              "-b",
-              "(extension-perl-server $args)",
-              "(gimp_quit 0)",
-              "(gimp-quit 0)";
       { # block to suppress warning with broken perls (e.g. 5.004)
          exec $Gimp::Config{GIMP},
               "--no-splash",
+              "--no-splash-image",
+              "--enable-stack-trace", "never",
+              "--console-messages",
               @args,
               "-b",
               "(extension-perl-server $args)",
-              "(gimp_quit 0)",
               "(gimp-quit 0)";
       }
       exit(255);

@@ -1,7 +1,4 @@
-#!/usr/app/bin/perl
-
-eval 'exec /usr/app/bin/perl  -S $0 ${1+"$@"}'
-    if 0; # not running under some shell
+#!/usr/bin/perl
 
 #BEGIN {$^W=1};
 

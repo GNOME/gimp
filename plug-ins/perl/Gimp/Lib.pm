@@ -43,15 +43,15 @@ sub import {}
 # does not work.
 
 sub gimp_image_list {
-   map _autobless($_,&Gimp::GIMP_PDB_IMAGE),gimp_call_procedure "gimp_image_list";
+   map _autobless($_,&Gimp::PDB_IMAGE),gimp_call_procedure "gimp_image_list";
 }
 
 sub gimp_image_get_layers {
-   map _autobless($_,&Gimp::GIMP_PDB_LAYER),gimp_call_procedure "gimp_image_get_layers",@_;
+   map _autobless($_,&Gimp::PDB_LAYER),gimp_call_procedure "gimp_image_get_layers",@_;
 }
 
 sub gimp_image_get_channels {
-   map _autobless($_,&Gimp::GIMP_PDB_CHANNEL),gimp_call_procedure "gimp_image_get_channels",@_;
+   map _autobless($_,&Gimp::PDB_CHANNEL),gimp_call_procedure "gimp_image_get_channels",@_;
 }
 
 # "server-side" perl code evaluation

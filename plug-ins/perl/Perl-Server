@@ -1,7 +1,4 @@
-#!/usr/app/bin/perl
-
-eval 'exec /usr/app/bin/perl  -S $0 ${1+"$@"}'
-    if 0; # not running under some shell
+#!/usr/bin/perl
 
 # you can enable unix sockets, tcp sockets, or both (or neither...)
 #
@@ -169,7 +166,6 @@ sub extension_perl_server {
   if ($run_mode == &Gimp::RUN_NONINTERACTIVE) {
      if ($ps_flags & &Gimp::_PS_FLAG_BATCH) {
         my($fh) = local *FH;
-        print "CSOCKET would be $extra\n";
         open $fh,"+<&$extra" or die __"unable to open Gimp::Net communications socket: $!\n";
         select $fh; $|=1; select STDOUT;
         reply $fh,"PERL-SERVER",$Gimp::_PROT_VERSION;
