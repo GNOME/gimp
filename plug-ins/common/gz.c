@@ -401,19 +401,22 @@ save_image (gchar  *filename,
   startupinfo.cbReserved2 = 0;
   startupinfo.lpReserved2 = NULL;
   startupinfo.hStdInput = (HANDLE) _get_osfhandle (fileno (in));
-  startupinfo.hStdOutput = (HANDLE)  _get_osfhandle (fileno (out));
+  startupinfo.hStdOutput = (HANDLE) _get_osfhandle (fileno (out));
   startupinfo.hStdError = GetStdHandle (STD_ERROR_HANDLE);
 
   if (!CreateProcess (NULL, "minigzip", NULL, NULL,
 		      TRUE, NORMAL_PRIORITY_CLASS, NULL, NULL,
 		      &startupinfo, &processinfo))
     {
-      g_message ("gz: CreateProcess failed. Minigzip.exe not in the ?\n");
+      g_message ("gz: CreateProcess failed. Minigzip.exe not installed or not in PATH?\n");
+      unlink (tmpname);
       g_free (tmpname);
-      _exit (127);
+      return GIMP_PDB_EXECUTION_ERROR;
     }
   CloseHandle (processinfo.hThread);
   WaitForSingleObject (processinfo.hProcess, INFINITE);
+  fclose (in);
+  fclose (out);
 #endif /* G_OS_WIN32 */
 
   unlink (tmpname);
@@ -436,7 +439,6 @@ load_image (gchar             *filename,
   gint    process_status;
 #else
   FILE   *in, *out;
-  SECURITY_ATTRIBUTES secattr;
   STARTUPINFO         startupinfo;
   PROCESS_INFORMATION processinfo;
 #endif
@@ -504,7 +506,7 @@ load_image (gchar             *filename,
 	}
     }
 #endif
-#else
+#else  /* G_OS_WIN32 */
   in = fopen (filename, "rb");
   out = fopen (tmpname, "wb");
 
@@ -525,9 +527,10 @@ load_image (gchar             *filename,
 		      TRUE, NORMAL_PRIORITY_CLASS, NULL, NULL,
 		      &startupinfo, &processinfo))
     {
-      g_message ("gz: CreateProcess failed: %d\n", GetLastError ());
+      g_message ("gz: CreateProcess failed. Minigzip.exe not installed or not in PATH?\n");
       g_free (tmpname);
-      _exit (127);
+      *status = GIMP_PDB_EXECUTION_ERROR;
+      return -1;
     }
   CloseHandle (processinfo.hThread);
   WaitForSingleObject (processinfo.hProcess, INFINITE);

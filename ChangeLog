@@ -1,5 +1,11 @@
 2001-12-31  Tor Lillqvist  <tml@iki.fi>
 
+	* plug-ins/common/gz.c (save_image, load_image): (Win32) Improve
+	error handling in case minigzip.exe is not installed (bug# 67135).
+
+	* gimp-zip.in: Include minizip.exe (for the gz plug-in) (bug# 67135).
+	Put gif plug-in in a separate zipfile.
+
 	* libgimp/gimpenv.c (gimp_directory): (Win32) When no home
 	directory has been found, and we use a user-specific directory in
 	the GIMP installation directory: If the user name contains

@@ -1,9 +1,11 @@
 #!/bin/sh
 
-# Build zipfiles for GIMP on Win32: separate runtime and developer packages
+# Build zipfiles for GIMP on Win32: separate runtime and developer
+# packages, and a separate zipfile for the gif plug-in.
 
 ZIP=/tmp/gimp-@GIMP_VERSION@-`date +%Y%m%d`.zip
 DEVZIP=/tmp/gimp-dev-@GIMP_VERSION@-`date +%Y%m%d`.zip
+GIFZIP=/tmp/gimp-gif-@GIMP_VERSION@-`date +%Y%m%d`.zip
 
 cd @prefix@
 
@@ -11,6 +13,7 @@ rm $ZIP
 zip -r $ZIP -@ <<EOF
 etc/gimp/1.2
 bin/gimp.exe
+bin/minigzip.exe
 lib/libgimp-@GIMP_MAJOR_VERSION@-@GIMP_MINOR_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
 lib/libgimpui-@GIMP_MAJOR_VERSION@-@GIMP_MINOR_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
 lib/libgck-@GIMP_MAJOR_VERSION@-@GIMP_MINOR_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
@@ -21,8 +24,6 @@ man/man5/gimprc.5
 EOF
 
 zip -r $ZIP lib/locale/*/LC_MESSAGES/gimp*.mo
-
-zip -d $ZIP lib/gimp/1.2/plug-ins/gif.exe
 
 rm $DEVZIP
 zip -r $DEVZIP -@ <<EOF
@@ -36,3 +37,7 @@ lib/gck.lib
 include/libgimp
 man/man1/gimptool.1
 EOF
+
+zip -d $ZIP lib/gimp/1.2/plug-ins/gif.exe
+rm $GIFZIP
+zip $GIFZIP lib/gimp/1.2/plug-ins/gif.exe
