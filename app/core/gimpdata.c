@@ -84,19 +84,19 @@ gimp_data_get_type (void)
       static const GTypeInfo data_info =
       {
         sizeof (GimpDataClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_data_class_init,
-	NULL,		/* class_finalize */
-	NULL,		/* class_data     */
-	sizeof (GimpData),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_data_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_data_class_init,
+        NULL,		/* class_finalize */
+        NULL,		/* class_data     */
+        sizeof (GimpData),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_data_init,
       };
 
       data_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
-					  "GimpData",
-					  &data_info, 0);
+                                          "GimpData",
+                                          &data_info, 0);
   }
 
   return data_type;
@@ -137,8 +137,8 @@ static void
 gimp_data_init (GimpData *data)
 {
   data->filename  = NULL;
-  data->writeable = TRUE;
-  data->dirty     = FALSE;
+  data->writeable = FALSE;
+  data->dirty     = TRUE;
   data->internal  = FALSE;
 }
 
@@ -306,6 +306,7 @@ gimp_data_create_filename (GimpData    *data,
   g_return_if_fail (GIMP_IS_DATA (data));
   g_return_if_fail (basename != NULL);
   g_return_if_fail (dest_dir != NULL);
+  g_return_if_fail (g_path_is_absolute (dest_dir));
 
   safe_name = g_strdup (basename);
   if (safe_name[0] == '.')
@@ -363,9 +364,10 @@ gimp_data_duplicate (GimpData *data,
 GQuark
 gimp_data_error_quark (void)
 {
-  static GQuark q = 0;
-  if (q == 0)
-    q = g_quark_from_static_string ("gimp-data-error-quark");
+  static GQuark quark = 0;
 
-  return q;
+  if (! quark)
+    quark = g_quark_from_static_string ("gimp-data-error-quark");
+
+  return quark;
 }

@@ -184,9 +184,7 @@ gimp_brush_init (GimpBrush *brush)
 static void
 gimp_brush_finalize (GObject *object)
 {
-  GimpBrush *brush;
-
-  brush = GIMP_BRUSH (object);
+  GimpBrush *brush = GIMP_BRUSH (object);
 
   if (brush->mask)
     {
@@ -207,10 +205,8 @@ static gint64
 gimp_brush_get_memsize (GimpObject *object,
                         gint64     *gui_size)
 {
-  GimpBrush *brush;
+  GimpBrush *brush   = GIMP_BRUSH (object);
   gint64     memsize = 0;
-
-  brush = GIMP_BRUSH (object);
 
   if (brush->mask)
     memsize += temp_buf_get_memsize (brush->mask);
@@ -230,9 +226,7 @@ gimp_brush_get_popup_size (GimpViewable *viewable,
                            gint         *popup_width,
                            gint         *popup_height)
 {
-  GimpBrush *brush;
-
-  brush = GIMP_BRUSH (viewable);
+  GimpBrush *brush = GIMP_BRUSH (viewable);
 
   if (brush->mask->width > width || brush->mask->height > height)
     {
@@ -250,7 +244,7 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
 			    gint          width,
 			    gint          height)
 {
-  GimpBrush *brush;
+  GimpBrush *brush      = GIMP_BRUSH (viewable);
   gint       brush_width;
   gint       brush_height;
   TempBuf   *mask_buf   = NULL;
@@ -261,8 +255,6 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
   guchar    *buf;
   gint       x, y;
   gboolean   scale = FALSE;
-
-  brush = GIMP_BRUSH (viewable);
 
   mask_buf   = gimp_brush_get_mask (brush);
   pixmap_buf = gimp_brush_get_pixmap (brush);
@@ -341,9 +333,7 @@ static gchar *
 gimp_brush_get_description (GimpViewable  *viewable,
                             gchar        **tooltip)
 {
-  GimpBrush *brush;
-
-  brush = GIMP_BRUSH (viewable);
+  GimpBrush *brush = GIMP_BRUSH (viewable);
 
   if (tooltip)
     *tooltip = NULL;
@@ -364,36 +354,29 @@ GimpData *
 gimp_brush_new (const gchar *name,
                 gboolean     stingy_memory_use)
 {
-  GimpBrush *brush;
-
   g_return_val_if_fail (name != NULL, NULL);
 
-  brush = GIMP_BRUSH (gimp_brush_generated_new (5.0, 0.5, 0.0, 1.0,
-                                                stingy_memory_use));
-
-  gimp_object_set_name (GIMP_OBJECT (brush), name);
-
-  return GIMP_DATA (brush);
+  return gimp_brush_generated_new (name, 5.0, 0.5, 0.0, 1.0,
+                                   stingy_memory_use);
 }
 
 GimpData *
 gimp_brush_get_standard (void)
 {
-  static GimpBrush *standard_brush = NULL;
+  static GimpData *standard_brush = NULL;
 
   if (! standard_brush)
     {
-      standard_brush = GIMP_BRUSH (gimp_brush_generated_new (5.0, 0.5,
-                                                             0.0, 1.0,
-                                                             FALSE));
+      standard_brush = gimp_brush_new ("Standard", FALSE);
 
-      gimp_object_set_name (GIMP_OBJECT (standard_brush), "Standard");
+      standard_brush->dirty    = FALSE;
+      standard_brush->internal = TRUE;
 
       /*  set ref_count to 2 --> never swap the standard brush  */
       g_object_ref (standard_brush);
     }
 
-  return GIMP_DATA (standard_brush);
+  return standard_brush;
 }
 
 GimpData *
@@ -405,6 +388,7 @@ gimp_brush_load (const gchar  *filename,
   gint       fd;
 
   g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (g_path_is_absolute (filename), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   fd = open (filename, O_RDONLY | _O_BINARY);
@@ -630,7 +614,12 @@ gimp_brush_load_brush (gint          fd,
   if (!name)
     name = g_strdup (_("Unnamed"));
 
-  brush = g_object_new (GIMP_TYPE_BRUSH, NULL);
+  brush = g_object_new (GIMP_TYPE_BRUSH,
+                        "name", name,
+                        NULL);
+
+  g_free (name);
+
   brush->mask = temp_buf_new (header.width, header.height, 1, 0, 0, NULL);
 
   mask = temp_buf_data (brush->mask);
@@ -721,7 +710,6 @@ gimp_brush_load_brush (gint          fd,
                      "Unsupported brush depth %d\n"
                      "GIMP brushes must be GRAY or RGBA."),
                    gimp_filename_to_utf8 (filename), header.bytes);
-      g_free (name);
       return NULL;
     }
 
@@ -732,12 +720,8 @@ gimp_brush_load_brush (gint          fd,
                    _("Fatal parse error in brush file '%s': "
                      "File appears truncated."),
                    gimp_filename_to_utf8 (filename));
-      g_free (name);
       return NULL;
     }
-
-  gimp_object_set_name (GIMP_OBJECT (brush), name);
-  g_free (name);
 
   brush->spacing  = header.spacing;
   brush->x_axis.x = header.width  / 2.0;

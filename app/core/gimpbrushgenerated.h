@@ -59,7 +59,8 @@ struct _GimpBrushGeneratedClass
 
 GType       gimp_brush_generated_get_type     (void) G_GNUC_CONST;
 
-GimpData  * gimp_brush_generated_new          (gfloat       radius,
+GimpData  * gimp_brush_generated_new          (const gchar *name,
+                                               gfloat       radius,
 					       gfloat       hardness,
 					       gfloat       angle,
 					       gfloat       aspect_ratio,

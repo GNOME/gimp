@@ -1,3 +1,25 @@
+2004-01-29  Michael Natterer  <mitch@gimp.org>
+
+	GimpData code review:
+
+	* app/core/gimpdata.c (gimp_data_init): default to
+	writable = FALSE and dirty = TRUE.
+
+	* app/core/gimpbrushgenerated.[ch]: added "const gchar *name" to
+	gimp_brush_generated_new().
+
+	* app/core/gimpbrush.c
+	* app/core/gimpbrushgenerated.c
+	* app/core/gimpbrushpipe.c
+	* app/core/gimpgradient.c
+	* app/core/gimppalette.c
+	* app/core/gimppattern.c: set all standard datas to clean and
+	internal, check for g_path_is_absolute() in all load functions,
+	pass the data's name as construct property to g_object_new()
+	instead of calling gimp_object_set_name() after creation, fixed
+	some UTF-8 handling, spacing, indentation, coding style, general
+	cleanup.
+
 2004-01-29  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpcurvestool.c

@@ -92,19 +92,19 @@ gimp_brush_pipe_get_type (void)
       static const GTypeInfo brush_info =
       {
         sizeof (GimpBrushPipeClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_brush_pipe_class_init,
-	NULL,		/* class_finalize */
-	NULL,		/* class_data     */
-	sizeof (GimpBrushPipe),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_brush_pipe_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_brush_pipe_class_init,
+        NULL,		/* class_finalize */
+        NULL,		/* class_data     */
+        sizeof (GimpBrushPipe),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_brush_pipe_init,
       };
 
       brush_type = g_type_register_static (GIMP_TYPE_BRUSH,
-					   "GimpBrushPipe",
-					   &brush_info, 0);
+                                           "GimpBrushPipe",
+                                           &brush_info, 0);
     }
 
   return brush_type;
@@ -151,11 +151,7 @@ gimp_brush_pipe_init (GimpBrushPipe *pipe)
 static void
 gimp_brush_pipe_finalize (GObject *object)
 {
-  GimpBrushPipe *pipe;
-
-  g_return_if_fail (GIMP_IS_BRUSH_PIPE (object));
-
-  pipe = GIMP_BRUSH_PIPE (object);
+  GimpBrushPipe *pipe = GIMP_BRUSH_PIPE (object);
 
   if (pipe->rank)
     {
@@ -201,11 +197,9 @@ static gint64
 gimp_brush_pipe_get_memsize (GimpObject *object,
                              gint64     *gui_size)
 {
-  GimpBrushPipe *pipe;
+  GimpBrushPipe *pipe    = GIMP_BRUSH_PIPE (object);
   gint64         memsize = 0;
   gint           i;
-
-  pipe = GIMP_BRUSH_PIPE (object);
 
   memsize += pipe->dimension * (sizeof (gint) /* rank   */ +
                                 sizeof (gint) /* stride */ +
@@ -227,9 +221,7 @@ gimp_brush_pipe_get_popup_size (GimpViewable   *viewable,
                                 gint           *popup_width,
                                 gint           *popup_height)
 {
-  GimpBrush *brush;
-
-  brush = GIMP_BRUSH (viewable);
+  GimpBrush *brush = GIMP_BRUSH (viewable);
 
   *popup_width  = brush->mask->width;
   *popup_height = brush->mask->height;
@@ -242,12 +234,10 @@ gimp_brush_pipe_select_brush (GimpBrush  *brush,
                               GimpCoords *last_coords,
                               GimpCoords *cur_coords)
 {
-  GimpBrushPipe *pipe;
+  GimpBrushPipe *pipe = GIMP_BRUSH_PIPE (brush);
   gint           i, brushix, ix;
   gdouble        angle;
   GRand         *gr;
-
-  pipe = GIMP_BRUSH_PIPE (brush);
 
   if (pipe->nbrushes == 1)
     return GIMP_BRUSH (pipe->current);
@@ -263,6 +253,7 @@ gimp_brush_pipe_select_brush (GimpBrush  *brush,
 	case PIPE_SELECT_INCREMENTAL:
 	  ix = (pipe->index[i] + 1) % pipe->rank[i];
 	  break;
+
 	case PIPE_SELECT_ANGULAR:
 	  angle = atan2 (cur_coords->y - last_coords->y,
 			 cur_coords->x - last_coords->x);
@@ -275,31 +266,36 @@ gimp_brush_pipe_select_brush (GimpBrush  *brush,
 	    angle -= 2.0 * G_PI;
 	  ix = RINT (angle / (2.0 * G_PI) * pipe->rank[i]);
 	  break;
+
 	case PIPE_SELECT_RANDOM:
 	  /* This probably isn't the right way */
 	  ix = g_rand_int_range (gr, 0, pipe->rank[i]);
 	  break;
+
 	case PIPE_SELECT_PRESSURE:
 	  ix = RINT (cur_coords->pressure * (pipe->rank[i] - 1));
 	  break;
+
 	case PIPE_SELECT_TILT_X:
-	  ix = RINT (cur_coords->xtilt / 2.0 * pipe->rank[i]) + pipe->rank[i]/2;
+	  ix = RINT (cur_coords->xtilt / 2.0 * pipe->rank[i]) + pipe->rank[i] / 2;
 	  break;
+
 	case PIPE_SELECT_TILT_Y:
-	  ix = RINT (cur_coords->ytilt / 2.0 * pipe->rank[i]) + pipe->rank[i]/2;
+	  ix = RINT (cur_coords->ytilt / 2.0 * pipe->rank[i]) + pipe->rank[i] / 2;
 	  break;
+
 	case PIPE_SELECT_CONSTANT:
 	default:
 	  ix = pipe->index[i];
 	  break;
 	}
 
-      pipe->index[i] = CLAMP (ix, 0, pipe->rank[i]-1);
+      pipe->index[i] = CLAMP (ix, 0, pipe->rank[i] - 1);
       brushix += pipe->stride[i] * pipe->index[i];
     }
 
   /* Make sure is inside bounds */
-  brushix = CLAMP (brushix, 0, pipe->nbrushes-1);
+  brushix = CLAMP (brushix, 0, pipe->nbrushes - 1);
 
   pipe->current = pipe->brushes[brushix];
 
@@ -313,10 +309,8 @@ gimp_brush_pipe_want_null_motion (GimpBrush  *brush,
                                   GimpCoords *last_coords,
                                   GimpCoords *cur_coords)
 {
-  GimpBrushPipe *pipe;
+  GimpBrushPipe *pipe = GIMP_BRUSH_PIPE (brush);
   gint           i;
-
-  pipe = GIMP_BRUSH_PIPE (brush);
 
   if (pipe->nbrushes == 1)
     return TRUE;
@@ -344,9 +338,11 @@ gimp_brush_pipe_load (const gchar  *filename,
   gint               fd;
 
   g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (g_path_is_absolute (filename), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   fd = open (filename, O_RDONLY | _O_BINARY);
+
   if (fd == -1)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
@@ -364,22 +360,21 @@ gimp_brush_pipe_load (const gchar  *filename,
 
   if (buffer->len > 0 && buffer->len < 1024)
     {
-      pipe = g_object_new (GIMP_TYPE_BRUSH_PIPE, NULL);
+      gchar *utf8 =
+        gimp_any_to_utf8 (buffer->str, buffer->len,
+                          _("Invalid UTF-8 string in brush file '%s'."),
+                          gimp_filename_to_utf8 (filename));
 
-      if (g_utf8_validate (buffer->str, buffer->len, NULL))
-        {
-          gimp_object_set_name (GIMP_OBJECT (pipe), buffer->str);
-        }
-      else
-        {
-          g_message (_("Invalid UTF-8 string in brush file '%s'."),
-                     gimp_filename_to_utf8 (filename));
-          gimp_object_set_name (GIMP_OBJECT (pipe), _("Unnamed"));
-        }
+      pipe = g_object_new (GIMP_TYPE_BRUSH_PIPE,
+                           "name", utf8,
+                           NULL);
+
+      g_free (utf8);
     }
+
   g_string_free (buffer, TRUE);
 
-  if (!pipe)
+  if (! pipe)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in brush file '%s': "

@@ -163,10 +163,8 @@ static gint64
 gimp_pattern_get_memsize (GimpObject *object,
                           gint64     *gui_size)
 {
-  GimpPattern *pattern;
+  GimpPattern *pattern = GIMP_PATTERN (object);
   gint64       memsize = 0;
-
-  pattern = GIMP_PATTERN (object);
 
   if (pattern->mask)
     memsize += temp_buf_get_memsize (pattern->mask);
@@ -201,12 +199,10 @@ gimp_pattern_get_new_preview (GimpViewable *viewable,
 			      gint          width,
 			      gint          height)
 {
-  GimpPattern *pattern;
+  GimpPattern *pattern = GIMP_PATTERN (viewable);
   TempBuf     *temp_buf;
   gint         copy_width;
   gint         copy_height;
-
-  pattern = GIMP_PATTERN (viewable);
 
   copy_width  = MIN (width,  pattern->mask->width);
   copy_height = MIN (height, pattern->mask->height);
@@ -269,9 +265,9 @@ gimp_pattern_new (const gchar *name,
 
   g_return_val_if_fail (name != NULL, NULL);
 
-  pattern = g_object_new (GIMP_TYPE_PATTERN, NULL);
-
-  gimp_object_set_name (GIMP_OBJECT (pattern), name);
+  pattern = g_object_new (GIMP_TYPE_PATTERN,
+                          "name", name,
+                          NULL);
 
   pattern->mask = temp_buf_new (32, 32, 3, 0, 0, NULL);
 
@@ -294,33 +290,20 @@ gimp_pattern_new (const gchar *name,
 GimpData *
 gimp_pattern_get_standard (void)
 {
-  static GimpPattern *standard_pattern = NULL;
+  static GimpData *standard_pattern = NULL;
 
   if (! standard_pattern)
     {
-      guchar *data;
-      gint    row, col;
+      standard_pattern = gimp_pattern_new ("Standard", FALSE);
 
-      standard_pattern = g_object_new (GIMP_TYPE_PATTERN, NULL);
-
-      gimp_object_set_name (GIMP_OBJECT (standard_pattern), "Standard");
-
-      standard_pattern->mask = temp_buf_new (32, 32, 3, 0, 0, NULL);
-
-      data = temp_buf_data (standard_pattern->mask);
-
-      for (row = 0; row < standard_pattern->mask->height; row++)
-	for (col = 0; col < standard_pattern->mask->width; col++)
-	  {
-	    memset (data, (col % 2) && (row % 2) ? 255 : 0, 3);
-	    data += 3;
-	  }
+      standard_pattern->dirty    = FALSE;
+      standard_pattern->internal = TRUE;
 
       /*  set ref_count to 2 --> never swap the standard pattern  */
       g_object_ref (standard_pattern);
     }
 
-  return GIMP_DATA (standard_pattern);
+  return standard_pattern;
 }
 
 GimpData *
@@ -335,6 +318,7 @@ gimp_pattern_load (const gchar  *filename,
   gchar         *name    = NULL;
 
   g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (g_path_is_absolute (filename), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   fd = open (filename, O_RDONLY | _O_BINARY);
@@ -401,6 +385,7 @@ gimp_pattern_load (const gchar  *filename,
                          "Could not read %d bytes: %s"),
                        gimp_filename_to_utf8 (filename), bn_size,
 		       g_strerror (errno));
+          g_free (name);
 	  goto error;
         }
 
@@ -411,10 +396,14 @@ gimp_pattern_load (const gchar  *filename,
       name = utf8;
     }
 
-  if (!name)
+  if (! name)
     name = g_strdup (_("Unnamed"));
 
-  pattern = g_object_new (GIMP_TYPE_PATTERN, NULL);
+  pattern = g_object_new (GIMP_TYPE_PATTERN,
+                          "name", name,
+                          NULL);
+
+  g_free (name);
 
   pattern->mask = temp_buf_new (header.width, header.height, header.bytes,
                                 0, 0, NULL);
@@ -433,9 +422,6 @@ gimp_pattern_load (const gchar  *filename,
 
   close (fd);
 
-  gimp_object_set_name (GIMP_OBJECT (pattern), name);
-  g_free (name);
-
   /*  Swap the pattern to disk (if we're being stingy with memory) */
   if (stingy_memory_use)
     temp_buf_swap (pattern->mask);
@@ -445,8 +431,6 @@ gimp_pattern_load (const gchar  *filename,
  error:
   if (pattern)
     g_object_unref (pattern);
-  else if (name)
-    g_free (name);
 
   close (fd);
 

@@ -67,7 +67,6 @@ static TempBuf  * gimp_palette_get_new_preview  (GimpViewable      *viewable,
                                                  gint               height);
 static gchar    * gimp_palette_get_description  (GimpViewable      *viewable,
                                                  gchar            **tooltip);
-static void       gimp_palette_dirty            (GimpData          *data);
 static gboolean   gimp_palette_save             (GimpData          *data,
                                                  GError           **error);
 static gchar    * gimp_palette_get_extension    (GimpData          *data);
@@ -92,19 +91,19 @@ gimp_palette_get_type (void)
       static const GTypeInfo palette_info =
       {
         sizeof (GimpPaletteClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_palette_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpPalette),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_palette_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_palette_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpPalette),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_palette_init,
       };
 
       palette_type = g_type_register_static (GIMP_TYPE_DATA,
-					     "GimpPalette",
-					     &palette_info, 0);
+                                             "GimpPalette",
+                                             &palette_info, 0);
     }
 
   return palette_type;
@@ -135,7 +134,6 @@ gimp_palette_class_init (GimpPaletteClass *klass)
   viewable_class->get_new_preview  = gimp_palette_get_new_preview;
   viewable_class->get_description  = gimp_palette_get_description;
 
-  data_class->dirty                = gimp_palette_dirty;
   data_class->save                 = gimp_palette_save;
   data_class->get_extension        = gimp_palette_get_extension;
   data_class->duplicate            = gimp_palette_duplicate;
@@ -168,15 +166,13 @@ static gint64
 gimp_palette_get_memsize (GimpObject *object,
                           gint64     *gui_size)
 {
-  GimpPalette *palette;
+  GimpPalette *palette = GIMP_PALETTE (object);
   GList       *list;
   gint64       memsize = 0;
 
-  palette = GIMP_PALETTE (object);
-
   for (list = palette->colors; list; list = g_list_next (list))
     {
-      GimpPaletteEntry *entry = (GimpPaletteEntry *) list->data;
+      GimpPaletteEntry *entry = list->data;
 
       memsize += sizeof (GList) + sizeof (GimpPaletteEntry);
 
@@ -208,11 +204,9 @@ gimp_palette_get_popup_size (GimpViewable *viewable,
                              gint         *popup_width,
                              gint         *popup_height)
 {
-  GimpPalette *palette;
+  GimpPalette *palette = GIMP_PALETTE (viewable);
   gint         p_width;
   gint         p_height;
-
-  palette = GIMP_PALETTE (viewable);
 
   if (! palette->n_colors)
     return FALSE;
@@ -240,7 +234,7 @@ gimp_palette_get_new_preview (GimpViewable *viewable,
 			      gint          width,
 			      gint          height)
 {
-  GimpPalette      *palette;
+  GimpPalette      *palette  = GIMP_PALETTE (viewable);
   GimpPaletteEntry *entry;
   TempBuf          *temp_buf;
   guchar           *buf;
@@ -251,8 +245,6 @@ gimp_palette_get_new_preview (GimpViewable *viewable,
   gint              rows;
   gint              cell_size;
   gint              x, y, i;
-
-  palette = GIMP_PALETTE (viewable);
 
   temp_buf = temp_buf_new (width, height,
                            3,
@@ -324,33 +316,30 @@ GimpData *
 gimp_palette_new (const gchar *name,
                   gboolean     stingy_memory_use)
 {
-  GimpPalette *palette = NULL;
-
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (*name != '\0', NULL);
 
-  palette = g_object_new (GIMP_TYPE_PALETTE,
-                          "name", name,
-                          NULL);
-
-  gimp_data_dirty (GIMP_DATA (palette));
-
-  return GIMP_DATA (palette);
+  return g_object_new (GIMP_TYPE_PALETTE,
+                       "name", name,
+                       NULL);
 }
 
 GimpData *
 gimp_palette_get_standard (void)
 {
-  static GimpPalette *standard_palette = NULL;
+  static GimpData *standard_palette = NULL;
 
   if (! standard_palette)
     {
-      standard_palette = g_object_new (GIMP_TYPE_PALETTE, NULL);
+      standard_palette = gimp_palette_new ("Standard", FALSE);
 
-      gimp_object_set_name (GIMP_OBJECT (standard_palette), "Standard");
+      standard_palette->dirty    = FALSE;
+      standard_palette->internal = TRUE;
+
+      g_object_ref (standard_palette);
     }
 
-  return GIMP_DATA (standard_palette);
+  return standard_palette;
 }
 
 GimpData *
@@ -361,19 +350,20 @@ gimp_palette_load (const gchar  *filename,
   GimpPalette *palette;
   gchar        str[1024];
   gchar       *tok;
-  FILE        *fp;
+  FILE        *file;
   gint         r, g, b;
   GimpRGB      color;
   gint         linenum;
 
   g_return_val_if_fail (filename != NULL, NULL);
-  g_return_val_if_fail (*filename != '\0', NULL);
+  g_return_val_if_fail (g_path_is_absolute (filename), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   r = g = b = 0;
 
-  /*  Open the requested file  */
-  if (! (fp = fopen (filename, "r")))
+  file = fopen (filename, "r");
+
+  if (! file)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for reading: %s"),
@@ -383,7 +373,7 @@ gimp_palette_load (const gchar  *filename,
 
   linenum = 0;
 
-  fread (str, 13, 1, fp);
+  fread (str, 13, 1, file);
   str[13] = '\0';
   linenum++;
   if (strcmp (str, "GIMP Palette\n"))
@@ -401,20 +391,20 @@ gimp_palette_load (const gchar  *filename,
                        "Missing magic header."),
                      gimp_filename_to_utf8 (filename));
 
-      fclose (fp);
+      fclose (file);
 
       return NULL;
     }
 
   palette = g_object_new (GIMP_TYPE_PALETTE, NULL);
 
-  if (! fgets (str, 1024, fp))
+  if (! fgets (str, 1024, file))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in palette file '%s': "
                      "Read error in line %d."),
                    gimp_filename_to_utf8 (filename), linenum);
-      fclose (fp);
+      fclose (file);
       g_object_unref (palette);
       return NULL;
     }
@@ -433,13 +423,13 @@ gimp_palette_load (const gchar  *filename,
       gimp_object_set_name (GIMP_OBJECT (palette), utf8);
       g_free (utf8);
 
-      if (! fgets (str, 1024, fp))
+      if (! fgets (str, 1024, file))
 	{
 	  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Fatal parse error in palette file '%s': "
                          "Read error in line %d."),
                        gimp_filename_to_utf8 (filename), linenum);
-	  fclose (fp);
+	  fclose (file);
 	  g_object_unref (palette);
 	  return NULL;
 	}
@@ -463,13 +453,13 @@ gimp_palette_load (const gchar  *filename,
 
 	  palette->n_columns = columns;
 
-	  if (! fgets (str, 1024, fp))
+	  if (! fgets (str, 1024, file))
 	    {
 	      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                            _("Fatal parse error in palette file '%s': "
                              "Read error in line %d."),
                            gimp_filename_to_utf8 (filename), linenum);
-	      fclose (fp);
+	      fclose (file);
 	      g_object_unref (palette);
 	      return NULL;
 	    }
@@ -491,7 +481,7 @@ gimp_palette_load (const gchar  *filename,
       g_free (utf8);
     }
 
-  while (! feof (fp))
+  while (! feof (file))
     {
       if (str[0] != '#')
 	{
@@ -539,16 +529,16 @@ gimp_palette_load (const gchar  *filename,
 	  gimp_palette_add_entry (palette, tok, &color);
 	}
 
-      if (! fgets (str, 1024, fp))
+      if (! fgets (str, 1024, file))
 	{
-	  if (feof (fp))
+	  if (feof (file))
 	    break;
 
 	  g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Fatal parse error in palette file '%s': "
                          "Read error in line %d."),
                        gimp_filename_to_utf8 (filename), linenum);
-	  fclose (fp);
+	  fclose (file);
 	  g_object_unref (palette);
 	  return NULL;
 	}
@@ -556,31 +546,22 @@ gimp_palette_load (const gchar  *filename,
       linenum++;
     }
 
-  fclose (fp);
+  fclose (file);
 
   return GIMP_DATA (palette);
-}
-
-static void
-gimp_palette_dirty (GimpData *data)
-{
-  if (GIMP_DATA_CLASS (parent_class)->dirty)
-    GIMP_DATA_CLASS (parent_class)->dirty (data);
 }
 
 static gboolean
 gimp_palette_save (GimpData  *data,
                    GError   **error)
 {
-  GimpPalette      *palette;
-  GimpPaletteEntry *entry;
-  GList            *list;
-  FILE             *fp;
-  guchar            r, g, b;
+  GimpPalette *palette = GIMP_PALETTE (data);
+  GList       *list;
+  FILE        *file;
 
-  palette = GIMP_PALETTE (data);
+  file = fopen (data->filename, "w");
 
-  if (! (fp = fopen (data->filename, "w")))
+  if (! file)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for writing: %s"),
@@ -589,22 +570,21 @@ gimp_palette_save (GimpData  *data,
       return FALSE;
     }
 
-  fprintf (fp, "GIMP Palette\n");
-  fprintf (fp, "Name: %s\n", GIMP_OBJECT (palette)->name);
-  fprintf (fp, "Columns: %d\n#\n", CLAMP (palette->n_columns, 0, 256));
+  fprintf (file, "GIMP Palette\n");
+  fprintf (file, "Name: %s\n", GIMP_OBJECT (palette)->name);
+  fprintf (file, "Columns: %d\n#\n", CLAMP (palette->n_columns, 0, 256));
 
   for (list = palette->colors; list; list = g_list_next (list))
     {
-      entry = (GimpPaletteEntry *) list->data;
+      GimpPaletteEntry *entry = list->data;
+      guchar            r, g, b;
 
       gimp_rgb_get_uchar (&entry->color, &r, &g, &b);
 
-      fprintf (fp, "%3d %3d %3d\t%s\n",
-	       r, g, b,
-	       entry->name);
+      fprintf (file, "%3d %3d %3d\t%s\n", r, g, b, entry->name);
     }
 
-  fclose (fp);
+  fclose (file);
 
   return TRUE;
 }
@@ -619,11 +599,9 @@ static GimpData *
 gimp_palette_duplicate (GimpData *data,
                         gboolean  stingy_memory_use)
 {
-  GimpPalette *palette;
+  GimpPalette *palette = GIMP_PALETTE (data);
   GimpPalette *new;
   GList       *list;
-
-  palette = GIMP_PALETTE (data);
 
   new = g_object_new (GIMP_TYPE_PALETTE, NULL);
 
@@ -659,7 +637,8 @@ gimp_palette_add_entry (GimpPalette *palette,
   palette->colors    = g_list_append (palette->colors, entry);
   palette->n_colors += 1;
 
-  gimp_data_dirty (GIMP_DATA (palette));
+  /*  will make the palette dirty too  */
+  gimp_object_name_changed (GIMP_OBJECT (palette));
 
   return entry;
 }
@@ -703,7 +682,8 @@ gimp_palette_delete_entry (GimpPalette      *palette,
 				  &color);
 	}
 
-      gimp_data_dirty (GIMP_DATA (palette));
+      /*  will make the palette dirty too  */
+      gimp_object_name_changed (GIMP_OBJECT (palette));
     }
 }
 

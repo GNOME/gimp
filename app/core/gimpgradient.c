@@ -97,19 +97,19 @@ gimp_gradient_get_type (void)
       static const GTypeInfo gradient_info =
       {
         sizeof (GimpGradientClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_gradient_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpGradient),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_gradient_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_gradient_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpGradient),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_gradient_init,
       };
 
       gradient_type = g_type_register_static (GIMP_TYPE_DATA,
-					      "GimpGradient",
-					      &gradient_info, 0);
+                                              "GimpGradient",
+                                              &gradient_info, 0);
   }
 
   return gradient_type;
@@ -312,16 +312,19 @@ gimp_gradient_new (const gchar *name,
 GimpData *
 gimp_gradient_get_standard (void)
 {
-  static GimpGradient *standard_gradient = NULL;
+  static GimpData *standard_gradient = NULL;
 
   if (! standard_gradient)
     {
-      standard_gradient = GIMP_GRADIENT (gimp_gradient_new ("Standard", FALSE));
+      standard_gradient = gimp_gradient_new ("Standard", FALSE);
+
+      standard_gradient->dirty    = FALSE;
+      standard_gradient->internal = TRUE;
 
       g_object_ref (standard_gradient);
     }
 
-  return GIMP_DATA (standard_gradient);
+  return standard_gradient;
 }
 
 GimpData *
@@ -339,6 +342,7 @@ gimp_gradient_load (const gchar  *filename,
   gchar                line[1024];
 
   g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (g_path_is_absolute (filename), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   file = fopen (filename, "rb");
@@ -469,9 +473,7 @@ gimp_gradient_load (const gchar  *filename,
 static void
 gimp_gradient_dirty (GimpData *data)
 {
-  GimpGradient *gradient;
-
-  gradient = GIMP_GRADIENT (data);
+  GimpGradient *gradient = GIMP_GRADIENT (data);
 
   gradient->last_visited = NULL;
 
@@ -483,14 +485,13 @@ static gboolean
 gimp_gradient_save (GimpData  *data,
                     GError   **error)
 {
-  GimpGradient        *gradient;
+  GimpGradient        *gradient = GIMP_GRADIENT (data);
   GimpGradientSegment *seg;
   gint                 num_segments;
   FILE                *file;
 
-  gradient = GIMP_GRADIENT (data);
-
   file = fopen (data->filename, "wb");
+
   if (! file)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
