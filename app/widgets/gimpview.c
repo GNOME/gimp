@@ -35,6 +35,7 @@
 #include "base/temp-buf.h"
 
 #include "core/gimpbrush.h"
+#include "core/gimpbuffer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
@@ -44,6 +45,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "gimpbrushpreview.h"
+#include "gimpbufferpreview.h"
 #include "gimpdnd.h"
 #include "gimpdrawablepreview.h"
 #include "gimpgradientpreview.h"
@@ -322,6 +324,10 @@ gimp_preview_new_by_type (GimpViewable *viewable)
   else if (GIMP_IS_PALETTE (viewable))
     {
       preview = gtk_type_new (GIMP_TYPE_PALETTE_PREVIEW);
+    }
+  else if (GIMP_IS_BUFFER (viewable))
+    {
+      preview = gtk_type_new (GIMP_TYPE_BUFFER_PREVIEW);
     }
   else if (GIMP_IS_TOOL_INFO (viewable))
     {

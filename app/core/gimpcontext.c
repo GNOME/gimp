@@ -36,6 +36,7 @@
 #include "tools/tool_manager.h"
 
 #include "gimpbrush.h"
+#include "gimpbuffer.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpdatafactory.h"
@@ -187,6 +188,19 @@ static void gimp_context_real_set_palette    (GimpContext      *context,
 static void gimp_context_copy_palette        (GimpContext      *src,
 					      GimpContext      *dest);
 
+/*  buffer  */
+static void gimp_context_buffer_dirty        (GimpBuffer       *buffer,
+					      GimpContext      *context);
+static void gimp_context_buffer_removed      (GimpContainer    *container,
+					      GimpBuffer       *buffer,
+					      GimpContext      *context);
+static void gimp_context_buffer_list_thaw    (GimpContainer    *container,
+					      GimpContext      *context);
+static void gimp_context_real_set_buffer     (GimpContext      *context,
+					      GimpBuffer       *buffer);
+static void gimp_context_copy_buffer         (GimpContext      *src,
+					      GimpContext      *dest);
+
 
 /*  arguments & signals  */
 
@@ -203,7 +217,8 @@ enum
   ARG_BRUSH,
   ARG_PATTERN,
   ARG_GRADIENT,
-  ARG_PALETTE
+  ARG_PALETTE,
+  ARG_BUFFER
 };
 
 enum
@@ -219,6 +234,7 @@ enum
   PATTERN_CHANGED,
   GRADIENT_CHANGED,
   PALETTE_CHANGED,
+  BUFFER_CHANGED,
   LAST_SIGNAL
 };
 
@@ -234,7 +250,8 @@ static gchar *gimp_context_arg_names[] =
   "GimpContext::brush",
   "GimpContext::pattern",
   "GimpContext::gradient",
-  "GimpContext::palette"
+  "GimpContext::palette",
+  "GimpContext::buffer"
 };
 
 static GimpContextCopyArgFunc gimp_context_copy_arg_funcs[] =
@@ -249,7 +266,8 @@ static GimpContextCopyArgFunc gimp_context_copy_arg_funcs[] =
   gimp_context_copy_brush,
   gimp_context_copy_pattern,
   gimp_context_copy_gradient,
-  gimp_context_copy_palette
+  gimp_context_copy_palette,
+  gimp_context_copy_buffer
 };
 
 static GtkType gimp_context_arg_types[] =
@@ -261,6 +279,7 @@ static GtkType gimp_context_arg_types[] =
   GTK_TYPE_NONE,
   GTK_TYPE_NONE,
   GTK_TYPE_NONE,
+  0,
   0,
   0,
   0,
@@ -279,7 +298,8 @@ static gchar *gimp_context_signal_names[] =
   "brush_changed",
   "pattern_changed",
   "gradient_changed",
-  "palette_changed"
+  "palette_changed",
+  "buffer_changed"
 };
 
 static GtkSignalFunc gimp_context_signal_handlers[] =
@@ -294,7 +314,8 @@ static GtkSignalFunc gimp_context_signal_handlers[] =
   gimp_context_real_set_brush,
   gimp_context_real_set_pattern,
   gimp_context_real_set_gradient,
-  gimp_context_real_set_palette
+  gimp_context_real_set_palette,
+  gimp_context_real_set_buffer
 };
 
 
@@ -336,6 +357,7 @@ gimp_context_class_init (GimpContextClass *klass)
   gimp_context_arg_types[GIMP_CONTEXT_ARG_PATTERN]  = GIMP_TYPE_PATTERN;
   gimp_context_arg_types[GIMP_CONTEXT_ARG_GRADIENT] = GIMP_TYPE_GRADIENT;
   gimp_context_arg_types[GIMP_CONTEXT_ARG_PALETTE]  = GIMP_TYPE_PALETTE;
+  gimp_context_arg_types[GIMP_CONTEXT_ARG_BUFFER]   = GIMP_TYPE_BUFFER;
 
   gtk_object_add_arg_type (gimp_context_arg_names[IMAGE_CHANGED],
 			   GTK_TYPE_POINTER, GTK_ARG_READWRITE,
@@ -370,6 +392,9 @@ gimp_context_class_init (GimpContextClass *klass)
   gtk_object_add_arg_type (gimp_context_arg_names[PALETTE_CHANGED],
 			   GTK_TYPE_POINTER, GTK_ARG_READWRITE,
 			   ARG_PALETTE);
+  gtk_object_add_arg_type (gimp_context_arg_names[BUFFER_CHANGED],
+			   GTK_TYPE_POINTER, GTK_ARG_READWRITE,
+			   ARG_BUFFER);
 
   gimp_context_signals[IMAGE_CHANGED] =
     gtk_signal_new (gimp_context_signal_names[IMAGE_CHANGED],
@@ -481,6 +506,16 @@ gimp_context_class_init (GimpContextClass *klass)
 		    GTK_TYPE_NONE, 1,
 		    GTK_TYPE_POINTER);
 
+  gimp_context_signals[BUFFER_CHANGED] =
+    gtk_signal_new (gimp_context_signal_names[BUFFER_CHANGED],
+		    GTK_RUN_FIRST,
+		    object_class->type,
+		    GTK_SIGNAL_OFFSET (GimpContextClass,
+				       buffer_changed),
+		    gtk_marshal_NONE__POINTER,
+		    GTK_TYPE_NONE, 1,
+		    GTK_TYPE_POINTER);
+
   gtk_object_class_add_signals (object_class, gimp_context_signals,
 				LAST_SIGNAL);
 
@@ -499,6 +534,7 @@ gimp_context_class_init (GimpContextClass *klass)
   klass->pattern_changed    = NULL;
   klass->gradient_changed   = NULL;
   klass->palette_changed    = NULL;
+  klass->buffer_changed     = NULL;
 }
 
 static void
@@ -531,6 +567,8 @@ gimp_context_init (GimpContext *context)
 
   context->palette       = NULL;
   context->palette_name  = NULL;
+
+  context->buffer        = NULL;
 
   context_list = g_slist_prepend (context_list, context);
 }
@@ -610,6 +648,12 @@ gimp_context_destroy (GtkObject *object)
       context->palette_name = NULL;
     }
 
+  if (context->buffer)
+    {
+      gtk_object_unref (GTK_OBJECT (context->buffer));
+      context->buffer = NULL;
+    }
+
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
@@ -657,6 +701,9 @@ gimp_context_set_arg (GtkObject *object,
       break;
     case ARG_PALETTE:
       gimp_context_set_palette (context, GTK_VALUE_POINTER (*arg));
+      break;
+    case ARG_BUFFER:
+      gimp_context_set_buffer (context, GTK_VALUE_POINTER (*arg));
       break;
     default:
       break;
@@ -706,6 +753,9 @@ gimp_context_get_arg (GtkObject *object,
       break;
     case ARG_PALETTE:
       GTK_VALUE_POINTER (*arg) = gimp_context_get_palette (context);
+      break;
+    case ARG_BUFFER:
+      GTK_VALUE_POINTER (*arg) = gimp_context_get_buffer (context);
       break;
     default:
       arg->type = GTK_TYPE_INVALID;
@@ -814,6 +864,17 @@ gimp_context_new (const gchar *name,
   gtk_signal_connect_while_alive (GTK_OBJECT (global_palette_factory->container),
 				  "thaw",
 				  GTK_SIGNAL_FUNC (gimp_context_palette_list_thaw),
+				  context,
+				  GTK_OBJECT (context));
+
+  gtk_signal_connect_while_alive (GTK_OBJECT (named_buffers),
+				  "remove",
+				  GTK_SIGNAL_FUNC (gimp_context_buffer_removed),
+				  context,
+				  GTK_OBJECT (context));
+  gtk_signal_connect_while_alive (GTK_OBJECT (named_buffers),
+				  "thaw",
+				  GTK_SIGNAL_FUNC (gimp_context_buffer_list_thaw),
 				  context,
 				  GTK_OBJECT (context));
 
@@ -2347,4 +2408,172 @@ gimp_context_copy_palette (GimpContext *src,
       g_free (dest->palette_name);
       dest->palette_name = g_strdup (src->palette_name);
     }
+}
+
+
+/*****************************************************************************/
+/*  buffer  ******************************************************************/
+
+/*
+static GimpBuffer *standard_buffer = NULL;
+*/
+
+GimpBuffer *
+gimp_context_get_buffer (GimpContext *context)
+{
+  context_check_current (context);
+  context_return_val_if_fail (context, NULL);
+
+  return context->buffer;
+}
+
+void
+gimp_context_set_buffer (GimpContext *context,
+			 GimpBuffer *buffer)
+{
+  context_check_current (context);
+  context_return_if_fail (context);
+  context_find_defined (context, GIMP_CONTEXT_BUFFER_MASK);
+
+  gimp_context_real_set_buffer (context, buffer);
+}
+
+void
+gimp_context_buffer_changed (GimpContext *context)
+{
+  context_check_current (context);
+  context_return_if_fail (context);
+
+  gtk_signal_emit (GTK_OBJECT (context),
+		   gimp_context_signals[BUFFER_CHANGED],
+		   context->buffer);
+}
+
+/*  the active buffer was modified  */
+static void
+gimp_context_buffer_dirty (GimpBuffer  *buffer,
+			   GimpContext *context)
+{
+  /*
+  g_free (context->buffer_name);
+  context->buffer_name = g_strdup (GIMP_OBJECT (buffer)->name);
+  */
+
+  gimp_context_buffer_changed (context);
+}
+
+/*  the global gradient list is there again after refresh  */
+static void
+gimp_context_buffer_list_thaw (GimpContainer *container,
+			       GimpContext   *context)
+{
+  /*
+  GimpBuffer *buffer;
+
+  if (! context->buffer_name)
+    context->buffer_name = g_strdup (gimprc.default_buffer);
+
+  if ((buffer = (GimpBuffer *)
+       gimp_container_get_child_by_name (container,
+					 context->buffer_name)))
+    {
+      gimp_context_real_set_buffer (context, buffer);
+      return;
+    }
+  */
+
+  if (gimp_container_num_children (container))
+    gimp_context_real_set_buffer
+      (context,
+       GIMP_BUFFER (gimp_container_get_child_by_index (container, 0)));
+  else
+    gimp_context_buffer_changed (context);
+
+  /*
+  else
+    gimp_context_real_set_buffer (context,
+				  GIMP_BUFFER (gimp_buffer_get_standard ()));
+  */
+}
+
+/*  the active buffer disappeared  */
+static void
+gimp_context_buffer_removed (GimpContainer *container,
+			     GimpBuffer    *buffer,
+			     GimpContext   *context)
+{
+  if (buffer == context->buffer)
+    {
+      context->buffer = NULL;
+
+      gtk_signal_disconnect_by_func (GTK_OBJECT (buffer),
+				     gimp_context_buffer_dirty,
+				     context);
+      gtk_object_unref (GTK_OBJECT (buffer));
+
+      if (! gimp_container_frozen (container))
+	gimp_context_buffer_list_thaw (container, context);
+    }
+}
+
+static void
+gimp_context_real_set_buffer (GimpContext *context,
+			      GimpBuffer  *buffer)
+{
+  /*
+  if (! standard_buffer)
+    standard_buffer = GIMP_BUFFER (gimp_buffer_get_standard ());
+  */
+
+  if (context->buffer == buffer)
+    return;
+
+  /*
+  if (context->buffer_name && buffer != standard_buffer)
+    {
+      g_free (context->buffer_name);
+      context->buffer_name = NULL;
+    }
+  */
+
+  /*  disconnect from the old buffer's signals  */
+  if (context->buffer)
+    {
+      gtk_signal_disconnect_by_func (GTK_OBJECT (context->buffer),
+				     gimp_context_buffer_dirty,
+				     context);
+      gtk_object_unref (GTK_OBJECT (context->buffer));
+    }
+
+  context->buffer = buffer;
+
+  if (buffer)
+    {
+      gtk_object_ref (GTK_OBJECT (buffer));
+      gtk_signal_connect (GTK_OBJECT (buffer), "name_changed",
+			  GTK_SIGNAL_FUNC (gimp_context_buffer_dirty),
+			  context);
+
+      /*
+      if (buffer != standard_buffer)
+	context->buffer_name = g_strdup (GIMP_OBJECT (buffer)->name);
+      */
+    }
+
+  gimp_context_buffer_changed (context);
+}
+
+static void
+gimp_context_copy_buffer (GimpContext *src,
+			  GimpContext *dest)
+{
+  gimp_context_real_set_buffer (dest, src->buffer);
+
+  /*
+  if ((!src->buffer || src->buffer == standard_buffer) && src->buffer_name)
+    {
+      g_free (dest->buffer_name);
+      dest->buffer_name = g_strdup (src->buffer_name);
+    }
+  */
 }

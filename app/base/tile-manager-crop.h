@@ -16,43 +16,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#include "config.h"
-
-#include <glib.h>
-
-#include "libgimpmath/gimpmath.h"
-
-#include "apptypes.h"
-
-#include "color_transfer.h"
+#ifndef __TILE_MANAGER_CROP_H__
+#define __TILE_MANAGER_CROP_H__
 
 
-/*  for lightening  */
-gdouble  highlights_add[256];
-gdouble  midtones_add[256];
-gdouble  shadows_add[256];
-
-/*  for darkening  */
-gdouble  highlights_sub[256];
-gdouble  midtones_sub[256];
-gdouble  shadows_sub[256];
+TileManager * tile_manager_crop (TileManager  *tiles,
+				 gint          border);
 
 
-/*  color transfer functions  */
-void
-color_transfer_init (void)
-{
-  gint i;
-
-  for (i = 0; i < 256; i++)
-    {
-      highlights_add[i] =
-	shadows_sub[255 - i] = (1.075 - 1 / ((gdouble) i / 16.0 + 1));
-
-      midtones_add[i] =
-	midtones_sub[i] = 0.667 * (1 - SQR (((gdouble) i - 127.0) / 127.0));
-
-      shadows_add[i] =
-	highlights_sub[i] = 0.667 * (1 - SQR (((gdouble) i - 127.0) / 127.0));
-    }
-}
+#endif  /* __TILE_MANAGER_CROP_H__ */

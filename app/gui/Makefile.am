@@ -30,6 +30,10 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	dialogs-commands.h		\
 	dialogs-constructors.c		\
 	dialogs-constructors.h		\
+	edit-commands.c			\
+	edit-commands.h			\
+	file-commands.c			\
+	file-commands.h			\
 	file-dialog-utils.c		\
 	file-dialog-utils.h		\
 	file-new-dialog.c		\
@@ -44,6 +48,8 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	gradient-select.c		\
 	gui.c				\
 	gui.h				\
+	image-commands.c		\
+	image-commands.h		\
 	indicator-area.c		\
 	indicator-area.h		\
 	info-dialog.c			\
@@ -74,6 +80,8 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	resize-dialog.h			\
 	resolution-calibrate-dialog.c	\
 	resolution-calibrate-dialog.h	\
+	select-commands.c		\
+	select-commands.h		\
 	session.c			\
 	session.h			\
 	splash.c			\
@@ -86,6 +94,8 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	tool-options-dialog.h		\
 	toolbox.c			\
 	toolbox.h			\
+	view-commands.c			\
+	view-commands.h			\
 @STRIP_END@
 
 EXTRA_DIST = @STRIP_BEGIN@ \

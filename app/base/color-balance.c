@@ -34,10 +34,10 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpcolorbalancetool.h"
+#include "gimpcolorbalancetool-transfer.h"
 #include "tool_manager.h"
 #include "tool_options.h"
 
-#include "color_transfer.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "image_map.h"
@@ -156,6 +156,8 @@ gimp_color_balance_tool_class_init (GimpColorBalanceToolClass *klass)
 
   tool_class->initialize = gimp_color_balance_tool_initialize;
   tool_class->control    = gimp_color_balance_tool_control;
+
+  gimp_color_balance_tool_transfer_init ();
 }
 
 static void

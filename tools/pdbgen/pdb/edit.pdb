@@ -106,7 +106,7 @@ HELP
     );
 
     &invoke('layer != NULL');
-    $cmd = "layer = edit_paste (gimage, drawable, global_buf, paste_into);\n";
+    $cmd = "layer = edit_paste (gimage, drawable, global_buffer, paste_into);\n";
     $invoke{code} =~ s/(success.*$)/"$cmd  $1"/me;
 }
 
@@ -165,7 +165,7 @@ HELP
 }
 
 # For edit_paste
-$extra{app}->{decls} = "extern TileManager *global_buf;\n";
+$extra{app}->{decls} = "extern TileManager *global_buffer;\n";
 
 @procs = qw(edit_cut edit_copy edit_paste edit_clear edit_fill edit_stroke);
 %exports = (app => [@procs], lib => [@procs]);

@@ -47,14 +47,12 @@
 #include "appenv.h"
 #include "app_procs.h"
 #include "batch.h"
-#include "color_transfer.h"
 #include "colormaps.h"
 #include "context_manager.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
 #include "gimprc.h"
 #include "gimpparasite.h"
-#include "global_edit.h"
 #include "plug_in.h"
 #include "module_db.h"
 
@@ -235,8 +233,6 @@ app_init (void)
       message_handler = MESSAGE_BOX;
     }
 
-  color_transfer_init ();
-
   if (! no_interface)
     {
       gui_restore ();
@@ -270,8 +266,6 @@ app_exit_finish (void)
 
   module_db_free ();
   gdisplays_delete ();
-  global_edit_free ();
-  named_buffers_free ();
   context_manager_free ();
   plug_in_kill ();
   procedural_db_free ();

@@ -22,6 +22,8 @@ libapptools_a_SOURCES = @STRIP_BEGIN@ \
 	gimpclonetool.h			\
 	gimpcolorbalancetool.c		\
 	gimpcolorbalancetool.h		\
+	gimpcolorbalancetool-transfer.c	\
+	gimpcolorbalancetool-transfer.h	\
 	gimpcolorpickertool.c		\
 	gimpcolorpickertool.h		\
 	gimpconvolvetool.c		\

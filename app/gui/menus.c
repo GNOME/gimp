@@ -46,13 +46,18 @@
 #include "commands.h"
 #include "dialog_handler.h"
 #include "dialogs-commands.h"
+#include "edit-commands.h"
+#include "file-commands.h"
 #include "file-open-dialog.h"
 #include "file-save-dialog.h"
 #include "gdisplay.h"
+#include "image-commands.h"
 #include "layers-commands.h"
 #include "menus.h"
 #include "paths-dialog.h"
+#include "select-commands.h"
 #include "test-commands.h"
+#include "view-commands.h"
 
 #include "gimphelp.h"
 #include "gimprc.h"
@@ -370,23 +375,23 @@ static GimpItemFactoryEntry image_entries[] =
 
   /*  <Image>/View/Zoom  */
 
-  { { N_("/View/Zoom/16:1"), NULL, view_zoom_16_1_cmd_callback, 0 },
+  { { N_("/View/Zoom/16:1"), NULL, view_zoom_cmd_callback, 1601 },
     "view/zoom.html", NULL },
-  { { N_("/View/Zoom/8:1"), NULL, view_zoom_8_1_cmd_callback, 0 },
+  { { N_("/View/Zoom/8:1"), NULL, view_zoom_cmd_callback, 801 },
     "view/zoom.html", NULL },
-  { { N_("/View/Zoom/4:1"), NULL, view_zoom_4_1_cmd_callback, 0 },
+  { { N_("/View/Zoom/4:1"), NULL, view_zoom_cmd_callback, 401 },
     "view/zoom.html", NULL },
-  { { N_("/View/Zoom/2:1"), NULL, view_zoom_2_1_cmd_callback, 0 },
+  { { N_("/View/Zoom/2:1"), NULL, view_zoom_cmd_callback, 201 },
     "view/zoom.html", NULL },
-  { { N_("/View/Zoom/1:1"), "1", view_zoom_1_1_cmd_callback, 0 },
+  { { N_("/View/Zoom/1:1"), "1", view_zoom_cmd_callback, 101 },
     "view/zoom.html", NULL },
-  { { N_("/View/Zoom/1:2"), NULL, view_zoom_1_2_cmd_callback, 0 },
+  { { N_("/View/Zoom/1:2"), NULL, view_zoom_cmd_callback, 102 },
     "view/zoom.html", NULL },
-  { { N_("/View/Zoom/1:4"), NULL, view_zoom_1_4_cmd_callback, 0 },
+  { { N_("/View/Zoom/1:4"), NULL, view_zoom_cmd_callback, 104 },
     "view/zoom.html", NULL },
-  { { N_("/View/Zoom/1:8"), NULL, view_zoom_1_8_cmd_callback, 0 },
+  { { N_("/View/Zoom/1:8"), NULL, view_zoom_cmd_callback, 108 },
     "view/zoom.html", NULL },
-  { { N_("/View/Zoom/1:16"), NULL, view_zoom_1_16_cmd_callback, 0 },
+  { { N_("/View/Zoom/1:16"), NULL, view_zoom_cmd_callback, 116 },
     "view/zoom.html", NULL },
 
   { { N_("/View/Dot for Dot"), NULL, view_dot_for_dot_cmd_callback, 0, "<ToggleItem>" },
@@ -929,6 +934,16 @@ static GimpItemFactoryEntry dialogs_entries[] =
     NULL, NULL },
   { { N_("/Add Tab/Image Grid..."), NULL, dialogs_add_tab_cmd_callback,
       GPOINTER_TO_UINT ("gimp:image-grid") },
+    NULL, NULL },
+
+  { { "/Add Tab/---", NULL, NULL, 0, "<Separator>" },
+    NULL, NULL },
+
+  { { N_("/Add Tab/Buffer List..."), NULL, dialogs_add_tab_cmd_callback,
+      GPOINTER_TO_UINT ("gimp:buffer-list") },
+    NULL, NULL },
+  { { N_("/Add Tab/Buffer Grid..."), NULL, dialogs_add_tab_cmd_callback,
+      GPOINTER_TO_UINT ("gimp:buffer-grid") },
     NULL, NULL }
 };
 static guint n_dialogs_entries = (sizeof (dialogs_entries) /

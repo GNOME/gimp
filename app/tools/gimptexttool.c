@@ -38,6 +38,7 @@
 
 #include "base/pixel-region.h"
 #include "base/tile-manager.h"
+#include "base/tile-manager-crop.h"
 #include "base/tile.h"
 
 #include "paint-funcs/paint-funcs.h"
@@ -53,7 +54,6 @@
 #include "errors.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
-#include "global_edit.h"
 #include "plug_in.h"
 #include "undo.h"
 
@@ -600,7 +600,7 @@ text_gdk_image_to_region (GdkImage    *image,
   guchar * data;
 
   scale2 = scale * scale;
-/* GDK_WINDOWING is defined only with GTk+ 1.3 */
+
 #ifndef GDK_WINDOWING_WIN32
   black.red = black.green = black.blue = 0;
   gdk_colormap_alloc_color (gdk_colormap_get_system (), &black, FALSE, TRUE);
@@ -608,6 +608,7 @@ text_gdk_image_to_region (GdkImage    *image,
 #else
   black_pixel = 0;
 #endif
+
   data = textPR->data;
 
   for (y = 0, scaley = 0; y < textPR->h; y++, scaley += scale)
@@ -626,7 +627,6 @@ text_gdk_image_to_region (GdkImage    *image,
 
 	  /*  store the alpha value in the data  */
 	  *data++= (guchar) ((value * 255) / scale2);
-
 	}
     }
 }
@@ -678,7 +678,7 @@ text_render (GimpImage    *gimage,
 
   /* Dont crop the text if border is negative */
   crop = (border >= 0);
-  if (!crop) 
+  if (!crop)
     border = 0;
 
   /* load the font in */
@@ -692,7 +692,7 @@ text_render (GimpImage    *gimage,
       return NULL;
     }
   xfs = GDK_FONT_XFONT (font);
-  if (xfs->min_byte1 != 0 || xfs->max_byte1 != 0) 
+  if (xfs->min_byte1 != 0 || xfs->max_byte1 != 0)
     {
       gchar *fname;
 
@@ -821,7 +821,7 @@ text_render (GimpImage    *gimage,
     }
 
   /*  Crop the mask buffer  */
-  newmask = crop ? crop_buffer (mask, border) : mask;
+  newmask = crop ? tile_manager_crop (mask, border) : mask;
   if (newmask != mask)
     tile_manager_destroy (mask);
 
@@ -878,9 +878,9 @@ text_render (GimpImage    *gimage,
 
       tile_manager_destroy (newmask);
     }
-  else 
+  else
     {
-      if (newmask) 
+      if (newmask)
 	{
 	  g_message ("text_render: could not allocate image");
           tile_manager_destroy (newmask);

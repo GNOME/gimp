@@ -85,7 +85,7 @@ static void   gimp_data_factory_view_data_activate     (GtkWidget           *con
 							GimpDataFactoryView *view);
 
 
-static GtkVBoxClass *parent_class = NULL;
+static GimpContainerEditorClass *parent_class = NULL;
 
 
 GtkType
@@ -107,7 +107,7 @@ gimp_data_factory_view_get_type (void)
         (GtkClassInitFunc) NULL
       };
 
-      view_type = gtk_type_unique (GTK_TYPE_VBOX, &view_info);
+      view_type = gtk_type_unique (GIMP_TYPE_CONTAINER_EDITOR, &view_info);
     }
 
   return view_type;
@@ -120,7 +120,7 @@ gimp_data_factory_view_class_init (GimpDataFactoryViewClass *klass)
 
   object_class = (GtkObjectClass *) klass;
 
-  parent_class = gtk_type_class (GTK_TYPE_VBOX);
+  parent_class = gtk_type_class (GIMP_TYPE_CONTAINER_EDITOR);
 
   object_class->destroy = gimp_data_factory_view_destroy;
 }
@@ -128,20 +128,15 @@ gimp_data_factory_view_class_init (GimpDataFactoryViewClass *klass)
 static void
 gimp_data_factory_view_init (GimpDataFactoryView *view)
 {
-  GtkWidget *pixmap;
+  GimpContainerEditor *editor;
+  GtkWidget           *pixmap;
 
-  view->view = NULL;
-
-  gtk_box_set_spacing (GTK_BOX (view), 2);
-
-  view->button_box = gtk_hbox_new (TRUE, 2);
-  gtk_box_pack_end (GTK_BOX (view), view->button_box, FALSE, FALSE, 0);
-  gtk_widget_show (view->button_box);
+  editor = GIMP_CONTAINER_EDITOR (view);
 
   /* new */
 
   view->new_button = gtk_button_new ();
-  gtk_box_pack_start (GTK_BOX (view->button_box), view->new_button,
+  gtk_box_pack_start (GTK_BOX (editor->button_box), view->new_button,
 		      TRUE, TRUE, 0);
   gtk_widget_show (view->new_button);
 
@@ -158,7 +153,7 @@ gimp_data_factory_view_init (GimpDataFactoryView *view)
   /* duplicate */
 
   view->duplicate_button = gtk_button_new ();
-  gtk_box_pack_start (GTK_BOX (view->button_box), view->duplicate_button,
+  gtk_box_pack_start (GTK_BOX (editor->button_box), view->duplicate_button,
 		      TRUE, TRUE, 0);
   gtk_widget_show (view->duplicate_button);
 
@@ -175,7 +170,7 @@ gimp_data_factory_view_init (GimpDataFactoryView *view)
   /* edit */
 
   view->edit_button = gtk_button_new ();
-  gtk_box_pack_start (GTK_BOX (view->button_box), view->edit_button,
+  gtk_box_pack_start (GTK_BOX (editor->button_box), view->edit_button,
 		      TRUE, TRUE, 0);
   gtk_widget_show (view->edit_button);
 
@@ -192,7 +187,7 @@ gimp_data_factory_view_init (GimpDataFactoryView *view)
   /* delete */
 
   view->delete_button = gtk_button_new ();
-  gtk_box_pack_start (GTK_BOX (view->button_box), view->delete_button,
+  gtk_box_pack_start (GTK_BOX (editor->button_box), view->delete_button,
 		      TRUE, TRUE, 0);
   gtk_widget_show (view->delete_button);
 
@@ -209,7 +204,7 @@ gimp_data_factory_view_init (GimpDataFactoryView *view)
   /* refresh */
 
   view->refresh_button = gtk_button_new ();
-  gtk_box_pack_start (GTK_BOX (view->button_box), view->refresh_button,
+  gtk_box_pack_start (GTK_BOX (editor->button_box), view->refresh_button,
 		      TRUE, TRUE, 0);
   gtk_widget_show (view->refresh_button);
 
@@ -261,35 +256,17 @@ gimp_data_factory_view_new (GimpViewType      view_type,
   factory_view->factory        = factory;
   factory_view->data_edit_func = edit_func;
 
-  switch (view_type)
+  if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (factory_view),
+					 view_type,
+					 factory->container,
+					 context,
+					 preview_size,
+					 min_items_x,
+					 min_items_y))
     {
-    case GIMP_VIEW_TYPE_GRID:
-      factory_view->view =
-	GIMP_CONTAINER_VIEW (gimp_container_grid_view_new (factory->container,
-							   context,
-							   preview_size,
-							   min_items_x,
-							   min_items_y));
-      break;
-
-    case GIMP_VIEW_TYPE_LIST:
-      factory_view->view =
-	GIMP_CONTAINER_VIEW (gimp_container_list_view_new (factory->container,
-							   context,
-							   preview_size,
-							   min_items_x,
-							   min_items_y));
-      break;
-
-    default:
-      g_warning ("%s(): unknown GimpViewType passed", G_GNUC_FUNCTION);
       gtk_object_unref (GTK_OBJECT (factory_view));
       return NULL;
     }
-
-  gtk_container_add (GTK_CONTAINER (factory_view),
-		     GTK_WIDGET (factory_view->view));
-  gtk_widget_show (GTK_WIDGET (factory_view->view));
 
   gtk_signal_connect_while_alive
     (GTK_OBJECT (context),
@@ -299,7 +276,7 @@ gimp_data_factory_view_new (GimpViewType      view_type,
      GTK_OBJECT (factory_view));
 
   gtk_signal_connect_while_alive
-    (GTK_OBJECT (factory_view->view), "activate_item",
+    (GTK_OBJECT (GIMP_CONTAINER_EDITOR (factory_view)->view), "activate_item",
      GTK_SIGNAL_FUNC (gimp_data_factory_view_data_activate),
      factory_view,
      GTK_OBJECT (factory_view));
@@ -356,7 +333,7 @@ gimp_data_factory_view_new_clicked (GtkWidget           *widget,
 
       if (data)
 	{
-	  gimp_context_set_by_type (view->view->context,
+	  gimp_context_set_by_type (GIMP_CONTAINER_EDITOR (view)->view->context,
 				    view->factory->container->children_type,
 				    GIMP_OBJECT (data));
 
@@ -372,7 +349,7 @@ gimp_data_factory_view_duplicate_clicked (GtkWidget           *widget,
   GimpData *data;
 
   data = (GimpData *)
-    gimp_context_get_by_type (view->view->context,
+    gimp_context_get_by_type (GIMP_CONTAINER_EDITOR (view)->view->context,
 			      view->factory->container->children_type);
 
   if (data && gimp_container_have (view->factory->container,
@@ -414,7 +391,7 @@ gimp_data_factory_view_duplicate_clicked (GtkWidget           *widget,
 
 	  gimp_container_add (view->factory->container, GIMP_OBJECT (new_data));
 
-	  gimp_context_set_by_type (view->view->context,
+	  gimp_context_set_by_type (GIMP_CONTAINER_EDITOR (view)->view->context,
 				    view->factory->container->children_type,
 				    GIMP_OBJECT (new_data));
 
@@ -435,7 +412,7 @@ gimp_data_factory_view_duplicate_dropped (GtkWidget           *widget,
   if (viewable && gimp_container_have (view->factory->container,
 				       GIMP_OBJECT (viewable)))
     {
-      gimp_context_set_by_type (view->view->context,
+      gimp_context_set_by_type (GIMP_CONTAINER_EDITOR (view)->view->context,
 				view->factory->container->children_type,
 				GIMP_OBJECT (viewable));
 
@@ -450,7 +427,7 @@ gimp_data_factory_view_edit_clicked (GtkWidget           *widget,
   GimpData *data;
 
   data = (GimpData *)
-    gimp_context_get_by_type (view->view->context,
+    gimp_context_get_by_type (GIMP_CONTAINER_EDITOR (view)->view->context,
 			      view->factory->container->children_type);
 
   if (view->data_edit_func                           &&
@@ -474,7 +451,7 @@ gimp_data_factory_view_edit_dropped (GtkWidget    *widget,
   if (viewable && gimp_container_have (view->factory->container,
 				       GIMP_OBJECT (viewable)))
     {
-      gimp_context_set_by_type (view->view->context,
+      gimp_context_set_by_type (GIMP_CONTAINER_EDITOR (view)->view->context,
 				view->factory->container->children_type,
 				GIMP_OBJECT (viewable));
 
@@ -521,7 +498,7 @@ gimp_data_factory_view_delete_clicked (GtkWidget           *widget,
   GimpData *data;
 
   data = (GimpData *)
-    gimp_context_get_by_type (view->view->context,
+    gimp_context_get_by_type (GIMP_CONTAINER_EDITOR (view)->view->context,
 			      view->factory->container->children_type);
 
   if (data && gimp_container_have (view->factory->container,
@@ -573,7 +550,7 @@ gimp_data_factory_view_delete_dropped (GtkWidget    *widget,
   if (viewable && gimp_container_have (view->factory->container,
 				       GIMP_OBJECT (viewable)))
     {
-      gimp_context_set_by_type (view->view->context,
+      gimp_context_set_by_type (GIMP_CONTAINER_EDITOR (view)->view->context,
 				view->factory->container->children_type,
 				GIMP_OBJECT (viewable));
 

@@ -103,12 +103,12 @@ gimp_pattern_class_init (GimpPatternClass *klass)
 
   parent_class = gtk_type_class (GIMP_TYPE_DATA);
 
-  object_class->destroy = gimp_pattern_destroy;
+  object_class->destroy           = gimp_pattern_destroy;
 
   viewable_class->get_new_preview = gimp_pattern_get_new_preview;
 
-  data_class->get_extension = gimp_pattern_get_extension;
-  data_class->duplicate     = gimp_pattern_duplicate;
+  data_class->get_extension       = gimp_pattern_get_extension;
+  data_class->duplicate           = gimp_pattern_duplicate;
 }
 
 static void

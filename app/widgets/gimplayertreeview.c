@@ -388,7 +388,7 @@ gimp_layer_list_view_anchor_dropped (GtkWidget    *widget,
 }
 
 
-/*  Paint Mode, Opacity and Preservce trans. callbacks  */
+/*  Paint Mode, Opacity and Preserve trans. callbacks  */
 
 #define BLOCK() \
         gtk_signal_handler_block_by_func (GTK_OBJECT (layer), \

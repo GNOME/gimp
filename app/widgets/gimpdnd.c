@@ -29,13 +29,14 @@
 
 #include "widgets-types.h"
 
-#include "core/gimpimage.h"
 #include "core/gimpbrush.h"
+#include "core/gimpbuffer.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpgradient.h"
+#include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimppalette.h"
@@ -75,6 +76,7 @@ typedef enum
   GIMP_DND_DATA_PATTERN,
   GIMP_DND_DATA_GRADIENT,
   GIMP_DND_DATA_PALETTE,
+  GIMP_DND_DATA_BUFFER,
   GIMP_DND_DATA_TOOL,
 
   GIMP_DND_DATA_LAST = GIMP_DND_DATA_TOOL
@@ -190,6 +192,12 @@ static void        gimp_dnd_set_gradient_data (GtkWidget     *widget,
 static void        gimp_dnd_set_palette_data  (GtkWidget     *widget,
 					       GtkSignalFunc  set_palette_func,
 					       gpointer       set_palette_data,
+					       guchar        *vals,
+					       gint           format,
+					       gint           length);
+static void        gimp_dnd_set_buffer_data   (GtkWidget     *widget,
+					       GtkSignalFunc  set_buffer_func,
+					       gpointer       set_buffer_data,
 					       guchar        *vals,
 					       gint           format,
 					       gint           length);
@@ -344,6 +352,17 @@ static GimpDndDataDef dnd_data_defs[] =
     gimp_dnd_get_viewable_icon,
     gimp_dnd_get_data_data,
     gimp_dnd_set_palette_data
+  },
+
+  {
+    GIMP_TARGET_BUFFER,
+
+    "gimp_dnd_set_buffer_func",
+    "gimp_dnd_set_buffer_data",
+
+    gimp_dnd_get_viewable_icon,
+    gimp_dnd_get_data_data,
+    gimp_dnd_set_buffer_data
   },
 
   {
@@ -901,6 +920,10 @@ gimp_dnd_data_type_get_by_gtk_type (GtkType  type)
     {
       dnd_type = GIMP_DND_DATA_PALETTE;
     }
+  else if (gtk_type_is_a (type, GIMP_TYPE_BUFFER))
+    {
+      dnd_type = GIMP_DND_DATA_BUFFER;
+    }
   else if (gtk_type_is_a (type, GIMP_TYPE_TOOL_INFO))
     {
       dnd_type = GIMP_DND_DATA_TOOL;
@@ -1369,6 +1392,39 @@ gimp_dnd_set_palette_data (GtkWidget     *widget,
     (* (GimpDndDropViewableFunc) set_palette_func) (widget,
 						    GIMP_VIEWABLE (palette),
 						    set_palette_data);
+}
+
+
+/**************************/
+/*  buffer dnd functions  */
+/**************************/
+
+static void
+gimp_dnd_set_buffer_data (GtkWidget     *widget,
+			  GtkSignalFunc  set_buffer_func,
+			  gpointer       set_buffer_data,
+			  guchar        *vals,
+			  gint           format,
+			  gint           length)
+{
+  GimpBuffer *buffer;
+  gchar      *name;
+
+  if ((format != 8) || (length < 1))
+    {
+      g_warning ("Received invalid buffer data\n");
+      return;
+    }
+
+  name = (gchar *) vals;
+
+  buffer = (GimpBuffer *)
+    gimp_container_get_child_by_name (named_buffers, name);
+
+  if (buffer)
+    (* (GimpDndDropViewableFunc) set_buffer_func) (widget,
+						   GIMP_VIEWABLE (buffer),
+						   set_buffer_data);
 }
 
 

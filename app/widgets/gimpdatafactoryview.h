@@ -23,17 +23,10 @@
 #define __GIMP_DATA_FACTORY_VIEW_H__
 
 
-#include <gtk/gtkvbox.h>
+#include "gimpcontainereditor.h"
 
 
 typedef void (* GimpDataEditFunc) (GimpData *data);
-
-
-typedef enum
-{
-  GIMP_VIEW_TYPE_GRID,
-  GIMP_VIEW_TYPE_LIST
-} GimpViewType;
 
 
 #define GIMP_TYPE_DATA_FACTORY_VIEW            (gimp_data_factory_view_get_type ())
@@ -47,30 +40,27 @@ typedef struct _GimpDataFactoryViewClass  GimpDataFactoryViewClass;
 
 struct _GimpDataFactoryView
 {
-  GtkVBox            parent_instance;
+  GimpContainerEditor  parent_instance;
 
-  GimpDataFactory   *factory;
-  GimpDataEditFunc   data_edit_func;
+  GimpDataFactory     *factory;
+  GimpDataEditFunc     data_edit_func;
 
-  GimpContainerView *view;
+  GtkWidget           *new_button;
+  GtkWidget           *duplicate_button;
+  GtkWidget           *edit_button;
+  GtkWidget           *delete_button;
 
-  GtkWidget         *button_box;
-
-  GtkWidget         *new_button;
-  GtkWidget         *duplicate_button;
-  GtkWidget         *edit_button;
-  GtkWidget         *delete_button;
-
-  GtkWidget         *refresh_button;
+  GtkWidget           *refresh_button;
 };
 
 struct _GimpDataFactoryViewClass
 {
-  GtkVBoxClass  parent_class;
+  GimpContainerEditorClass  parent_class;
 };
 
 
 GtkType     gimp_data_factory_view_get_type (void);
+
 GtkWidget * gimp_data_factory_view_new      (GimpViewType      view_type,
 					     GimpDataFactory  *factory,
 					     GimpDataEditFunc  edit_func,

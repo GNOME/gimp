@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __COLOR_TRANSFER_H__
-#define __COLOR_TRANSFER_H__
+#ifndef __GIMP_COLOR_BALANCE_TOOL_TRANSFER_H__
+#define __GIMP_COLOR_BALANCE_TOOL_TRANSFER_H__
 
 
 /*  color transfer data  */
@@ -34,8 +34,7 @@ extern gdouble  midtones_sub[];
 extern gdouble  shadows_sub[];
 
 
-/*  color transfer functions  */
-void   color_transfer_init (void);
+void   gimp_color_balance_tool_transfer_init (void);
 
 
-#endif  /*  __COLOR_TRANSFER_H__  */
+#endif  /*  __GIMP_COLOR_BALANCE_TOOL_TRANSFER_H__  */

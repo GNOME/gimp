@@ -76,6 +76,8 @@ typedef struct _GimpContext         GimpContext;
 
 typedef struct _GimpViewable        GimpViewable;
 
+typedef struct _GimpBuffer          GimpBuffer;
+
 typedef struct _GimpToolInfo        GimpToolInfo;
 
 

@@ -38,6 +38,7 @@
 #include "gdisplay.h"
 
 #include "appenv.h"
+#include "context_manager.h"
 #include "drawable.h"
 #include "gimage.h"
 #include "gimprc.h"
@@ -53,7 +54,6 @@ static GList              *fill_type_names = NULL;
 static GimpImageNewValues  last_values;
 static gboolean            current_cut_buffer = FALSE;
 
-extern TileManager        *global_buf;
 
 static void
 image_new_init (void)
@@ -156,10 +156,10 @@ image_new_create_window (const GimpImageNewValues *create_values,
   /*  If a cut buffer exists, default to using its size for the new image
    *  also check to see if a new_image has been opened
    */
-  if (global_buf && current_cut_buffer)
+  if (global_buffer && current_cut_buffer)
     {
-      values->width  = tile_manager_width (global_buf);
-      values->height = tile_manager_height (global_buf);
+      values->width  = tile_manager_width (global_buffer);
+      values->height = tile_manager_height (global_buffer);
     }
 
   ui_new_image_window_create (values);

@@ -54,6 +54,7 @@ typedef struct
   gdouble size;
 } NewImageInfo;
 
+
 /*  new image local functions  */
 static void file_new_confirm_dialog      (NewImageInfo *);
 
@@ -62,6 +63,7 @@ static void file_new_reset_callback      (GtkWidget *, gpointer);
 static void file_new_cancel_callback     (GtkWidget *, gpointer);
 static void file_new_resolution_callback (GtkWidget *, gpointer);
 static void file_new_image_size_callback (GtkWidget *, gpointer);
+
 
 static void
 file_new_ok_callback (GtkWidget *widget,
@@ -304,28 +306,6 @@ file_new_image_size_callback (GtkWidget *widget,
 }
 
 void
-file_new_cmd_callback (GtkWidget *widget,
-		       gpointer   callback_data,
-		       guint      callback_action)
-{
-  GDisplay *gdisp;
-  GimpImage *image = NULL;
-
-  /*  Before we try to determine the responsible gdisplay,
-   *  make sure this wasn't called from the toolbox
-   */
-  if (callback_action)
-    {
-      gdisp = gdisplay_active ();
-
-      if (gdisp)
-        image = gdisp->gimage;
-    }
-
-  image_new_create_window (NULL, image);
-}
-
-void
 ui_new_image_window_create (const GimpImageNewValues *values_orig)
 {
   NewImageInfo       *info;
@@ -344,8 +324,8 @@ ui_new_image_window_create (const GimpImageNewValues *values_orig)
   GtkWidget *spinbutton;
   GtkWidget *spinbutton2;
   GtkWidget *radio_box;
-  GSList *group;
-  GList *list;
+  GSList    *group;
+  GList     *list;
 
   info = g_new (NewImageInfo, 1);
   info->values = values = image_new_values_new (values_orig);

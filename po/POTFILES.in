@@ -54,12 +54,15 @@ app/gui/colormap-dialog.c
 app/gui/commands.c
 app/gui/convert-dialog.c
 app/gui/dialogs-constructors.c
+app/gui/edit-commands.c
+app/gui/file-commands.c
 app/gui/file-new-dialog.c
 app/gui/file-open-dialog.c
 app/gui/file-save-dialog.c
 app/gui/gradient-editor.c
 app/gui/gradient-select.c
 app/gui/gui.c
+app/gui/image-commands.c
 app/gui/indicator-area.c
 app/gui/info-dialog.c
 app/gui/info-window.c
@@ -75,10 +78,12 @@ app/gui/pattern-select.c
 app/gui/preferences-dialog.c
 app/gui/resize-dialog.c
 app/gui/resolution-calibrate-dialog.c
+app/gui/select-commands.c
 app/gui/splash.c
 app/gui/tips-dialog.c
 app/gui/toolbox.c
 app/gui/tool-options-dialog.c
+app/gui/view-commands.c
 
 app/pdb/image_cmds.c
 app/pdb/internal_procs.c

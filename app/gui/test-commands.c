@@ -217,7 +217,7 @@ data_factory_view_new (GimpViewType      view_type,
 
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      GTK_SIGNAL_FUNC (container_view_scale_callback),
-		      GIMP_DATA_FACTORY_VIEW (view)->view);
+		      GIMP_CONTAINER_EDITOR (view)->view);
 
   gtk_widget_show (dialog);
 }

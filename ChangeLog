@@ -1,3 +1,87 @@
+2001-06-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/color_transfer.[ch]: removed.
+
+	* app/tools/Makefile.am
+	* app/tools/gimpcolorbalancetool-transfer.[ch]: added.
+
+	* app/tools/gimpcolorbalancetool.c: changed accordingly.
+
+	* app/base/Makefile.am
+	* app/base/tile-manager-crop.[ch]: formerly known as crop_buffer().
+
+	* app/tools/gimptexttool.c: changed accordingly.
+
+	* app/context_manager.[ch]: added the global clipboard and the
+	named buffer list here.
+
+	* app/app_procs.c: don't call color_transfer_init() and don't free
+	the buffer stuff (done by the context manager now).
+
+	* app/errorconsole.c: don't #include "gui/commands.h"
+
+	* app/global_edit.[ch]: removed lots of stuff which is now done by
+	gui/edit-commands.* or the new GimpBuffer object. The "paste
+	named" dialog will go away and this file will be moved to core/
+	soon.
+
+	* app/image_new.c: no need to declare the global_buffer extern any
+	more.
+
+	* app/qmask.c: don't #include "global_edit.h"
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpbuffer.[ch]: new object (aka named buffer)
+
+	* app/core/gimpcontext.[ch]: added a GimpBuffer attribute.
+
+	* app/core/gimpimage.[ch]: one s/int/gboolean/.
+
+	* app/core/gimppattern.c: hmm...
+
+	* app/gui/commands.[ch]: split up in small files:
+
+	* app/gui/Makefile.am
+	* app/gui/edit-commands.[ch]
+	* app/gui/file-commands.[ch]
+	* app/gui/image-commands.[ch]
+	* app/gui/select-commands.[ch]
+	* app/gui/view-commands.[ch]: new files.
+
+	* app/gui/dialogs-constructors.[ch]
+	* app/gui/dialogs.c: added the named buffer list & grid.
+
+	* app/gui/file-new-dialog.[ch]
+	* app/gui/menus.c
+	* app/gui/palette-editor.c
+	* app/gui/test-commands.c: changed accordingly.
+
+	* app/pdb/edit_cmds.c
+	* tools/pdbgen/pdb/edit.pdb: changed for the global_edit stuff.
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpbufferpreview.[ch]
+	* app/widgets/gimpbufferview.[ch]
+	* app/widgets/gimpcontainereditor.[ch]: new widgets.
+
+	* app/widgets/gimpcontainerview-utils.c
+	* app/widgets/gimpdatafactoryview.[ch]
+	* app/widgets/gimpdnd.[ch]
+	* app/widgets/gimpdrawablepreview.c
+	* app/widgets/gimplayerlistview.c
+	* app/widgets/gimppreview.c
+	* app/widgets/widgets-types.h: changed accordingly for the new
+	GimpBuffer object and it's views, misc. cleanups.
+
+	* pixmaps/Makefile.am
+	* pixmaps/paste-as-new.xpm
+	* pixmaps/paste-into.xpm
+	* pixmaps/paste.xpm: new pixmaps (they all look the same... Tigert? ;-)
+
+	* po/POTFILES.in: added the new files.
+
 2001-06-25  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/burn-in-anim.scm: added Burn-In script

@@ -34,7 +34,7 @@
 #include "drawable.h"
 #include "global_edit.h"
 
-extern TileManager *global_buf;
+extern TileManager *global_buffer;
 
 static ProcRecord edit_cut_proc;
 static ProcRecord edit_copy_proc;
@@ -163,7 +163,7 @@ edit_paste_invoker (Argument *args)
   if (success)
     {
       gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
-      layer = edit_paste (gimage, drawable, global_buf, paste_into);
+      layer = edit_paste (gimage, drawable, global_buffer, paste_into);
       success = layer != NULL;
     }
 

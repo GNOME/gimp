@@ -72,6 +72,8 @@ GtkWidget * dialogs_palette_list_view_new  (GimpDialogFactory *factory,
 					    GimpContext       *context);
 GtkWidget * dialogs_tool_list_view_new     (GimpDialogFactory *factory,
 					    GimpContext       *context);
+GtkWidget * dialogs_buffer_list_view_new   (GimpDialogFactory *factory,
+					    GimpContext       *context);
 
 GtkWidget * dialogs_image_grid_view_new    (GimpDialogFactory *factory,
 					    GimpContext       *context);
@@ -84,6 +86,8 @@ GtkWidget * dialogs_gradient_grid_view_new (GimpDialogFactory *factory,
 GtkWidget * dialogs_palette_grid_view_new  (GimpDialogFactory *factory,
 					    GimpContext       *context);
 GtkWidget * dialogs_tool_grid_view_new     (GimpDialogFactory *factory,
+					    GimpContext       *context);
+GtkWidget * dialogs_buffer_grid_view_new   (GimpDialogFactory *factory,
 					    GimpContext       *context);
 
 GtkWidget * dialogs_layer_list_view_new    (GimpDialogFactory *factory,

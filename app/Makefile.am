@@ -98,8 +98,6 @@ gimp_SOURCES = @STRIP_BEGIN@ \
 	apptypes.h		\
 	batch.c			\
 	batch.h			\
-	color_transfer.c	\
-	color_transfer.h	\
 	context_manager.c	\
 	context_manager.h	\
 	drawable.c		\

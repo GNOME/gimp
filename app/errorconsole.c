@@ -53,7 +53,6 @@
 
 #include "apptypes.h"
 
-#include "gui/commands.h"
 #include "dialog_handler.h"
 
 #include "appenv.h"

@@ -23,8 +23,10 @@
 #include "widgets/widgets-types.h"
 
 #include "base/temp-buf.h"
+#include "base/tile-manager.h"
 
 #include "core/gimpbrush.h"
+#include "core/gimpbuffer.h"
 #include "core/gimpimage.h"
 #include "core/gimppalette.h"
 #include "core/gimppattern.h"
@@ -42,6 +44,7 @@ static gchar * gimp_container_view_image_name_func   (GtkWidget *widget);
 static gchar * gimp_container_view_brush_name_func   (GtkWidget *widget);
 static gchar * gimp_container_view_pattern_name_func (GtkWidget *widget);
 static gchar * gimp_container_view_palette_name_func (GtkWidget *widget);
+static gchar * gimp_container_view_buffer_name_func  (GtkWidget *widget);
 
 
 /*  public functions  */
@@ -69,6 +72,10 @@ gimp_container_view_get_built_in_name_func (GtkType  type)
     {
       return gimp_container_view_palette_name_func;
     }
+  else if (type == GIMP_TYPE_BUFFER)
+    {
+      return gimp_container_view_buffer_name_func;
+    }
 
   return NULL;
 }
@@ -80,7 +87,8 @@ gimp_container_view_is_built_in_name_func (GimpItemGetNameFunc  get_name_func)
       get_name_func == gimp_container_view_image_name_func   ||
       get_name_func == gimp_container_view_brush_name_func   ||
       get_name_func == gimp_container_view_pattern_name_func ||
-      get_name_func == gimp_container_view_palette_name_func)
+      get_name_func == gimp_container_view_palette_name_func ||
+      get_name_func == gimp_container_view_buffer_name_func)
     {
       return TRUE;
     }
@@ -218,6 +226,29 @@ gimp_container_view_palette_name_func (GtkWidget *widget)
 	return g_strdup_printf ("%s (%d)",
 				GIMP_OBJECT (palette)->name,
 				palette->n_colors);
+    }
+
+  return g_strdup ("EEK");
+}
+
+static gchar *
+gimp_container_view_buffer_name_func (GtkWidget *widget)
+{
+  GimpPreview  *preview;
+
+  preview = gimp_container_view_get_name_func_preview (widget);
+
+  if (preview)
+    {
+      GimpBuffer *buffer;
+
+      buffer = GIMP_BUFFER (preview->viewable);
+
+      if (buffer)
+	return g_strdup_printf ("%s (%d x %d)",
+				GIMP_OBJECT (buffer)->name,
+				tile_manager_width (buffer->tiles),
+				tile_manager_height (buffer->tiles));
     }
 
   return g_strdup ("EEK");

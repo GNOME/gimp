@@ -34,6 +34,8 @@ libappbase_a_SOURCES = @STRIP_BEGIN@ \
 	tile-manager.c		\
 	tile-manager.h		\
 	tile-manager-private.h	\
+	tile-manager-crop.c	\
+	tile-manager-crop.h	\
 	tile-swap.c		\
 	tile-swap.h		\
 @STRIP_END@

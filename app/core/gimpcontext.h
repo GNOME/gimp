@@ -45,6 +45,7 @@ typedef enum
   GIMP_CONTEXT_ARG_PATTERN,
   GIMP_CONTEXT_ARG_GRADIENT,
   GIMP_CONTEXT_ARG_PALETTE,
+  GIMP_CONTEXT_ARG_BUFFER,
   GIMP_CONTEXT_NUM_ARGS
 } GimpContextArgType;
 
@@ -61,6 +62,7 @@ typedef enum
   GIMP_CONTEXT_PATTERN_MASK    = 1 <<  8,
   GIMP_CONTEXT_GRADIENT_MASK   = 1 <<  9,
   GIMP_CONTEXT_PALETTE_MASK    = 1 << 10,
+  GIMP_CONTEXT_BUFFER_MASK     = 1 << 11,
 
   /*  aliases  */
   GIMP_CONTEXT_PAINT_ARGS_MASK = (GIMP_CONTEXT_FOREGROUND_MASK |
@@ -74,6 +76,7 @@ typedef enum
 				  GIMP_CONTEXT_DISPLAY_MASK    |
 				  GIMP_CONTEXT_TOOL_MASK       |
 				  GIMP_CONTEXT_PALETTE_MASK    |
+				  GIMP_CONTEXT_BUFFER_MASK     |
 				  GIMP_CONTEXT_PAINT_ARGS_MASK)
 } GimpContextArgMask;
 
@@ -110,6 +113,8 @@ struct _GimpContext
 
   GimpPalette      *palette;
   gchar            *palette_name;
+
+  GimpBuffer       *buffer;
 };
 
 struct _GimpContextClass
@@ -140,6 +145,8 @@ struct _GimpContextClass
 			       GimpGradient     *gradient);
   void (* palette_changed)    (GimpContext      *context,
 			       GimpPalette      *palette);
+  void (* buffer_changed)     (GimpContext      *context,
+			       GimpBuffer       *buffer);
 };
 
 GtkType       gimp_context_get_type          (void);
@@ -303,6 +310,13 @@ GimpPalette      * gimp_context_get_palette        (GimpContext     *context);
 void               gimp_context_set_palette        (GimpContext     *context,
 						    GimpPalette     *palette);
 void               gimp_context_palette_changed    (GimpContext     *context);
+
+
+/*  buffer  */
+GimpBuffer       * gimp_context_get_buffer         (GimpContext     *context);
+void               gimp_context_set_buffer         (GimpContext     *context,
+						    GimpBuffer      *palette);
+void               gimp_context_buffer_changed     (GimpContext     *context);
 
 
 #endif /* __GIMP_CONTEXT_H__ */

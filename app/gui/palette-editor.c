@@ -490,7 +490,7 @@ palette_dialog_new (gboolean editor)
     }
 
   if (editor)
-    gtk_list_set_selection_mode (GTK_LIST (GIMP_CONTAINER_LIST_VIEW (GIMP_DATA_FACTORY_VIEW (palette_dialog->view)->view)->gtk_list),
+    gtk_list_set_selection_mode (GTK_LIST (GIMP_CONTAINER_LIST_VIEW (GIMP_CONTAINER_EDITOR (palette_dialog->view)->view)->gtk_list),
 				 GTK_SELECTION_EXTENDED);
 
   gtk_signal_connect (GTK_OBJECT (palette_dialog->context), "palette_changed",
@@ -1310,7 +1310,7 @@ palette_dialog_do_merge_callback (GtkWidget *widget,
 
   palette_dialog = (PaletteDialog *) data;
 
-  sel_list = GTK_LIST (GIMP_CONTAINER_LIST_VIEW (GIMP_DATA_FACTORY_VIEW (palette_dialog->view)->view)->gtk_list)->selection;
+  sel_list = GTK_LIST (GIMP_CONTAINER_LIST_VIEW (GIMP_CONTAINER_EDITOR (palette_dialog->view)->view)->gtk_list)->selection;
 
   while (sel_list)
     {

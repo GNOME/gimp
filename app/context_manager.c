@@ -22,9 +22,12 @@
 
 #include "core/core-types.h"
 
+#include "base/tile-manager.h"
+
 #include "core/gimpbrush.h"
 #include "core/gimpbrushgenerated.h"
 #include "core/gimpbrushpipe.h"
+#include "core/gimpbuffer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpgradient.h"
@@ -55,6 +58,16 @@
  *  the list of all images
  */
 GimpContainer *image_context = NULL;
+
+/*
+ *  the global cut buffer
+ */
+TileManager *global_buffer = NULL;
+
+/*
+ *  the list of named cut buffers
+ */
+GimpContainer *named_buffers = NULL;
 
 /*
  *  the global data lists
@@ -190,6 +203,15 @@ context_manager_init (void)
   /* Create the context of all existing images */
   image_context = gimp_list_new (GIMP_TYPE_IMAGE, GIMP_CONTAINER_POLICY_WEAK);
 
+  gtk_object_ref (GTK_OBJECT (image_context));
+  gtk_object_sink (GTK_OBJECT (image_context));
+
+  /* Create the list of all named cut buffers */
+  named_buffers = gimp_list_new (GIMP_TYPE_BUFFER, GIMP_CONTAINER_POLICY_STRONG);
+
+  gtk_object_ref (GTK_OBJECT (named_buffers));
+  gtk_object_sink (GTK_OBJECT (named_buffers));
+
   /* Create the global data factories */
   global_brush_factory =
     gimp_data_factory_new (GIMP_TYPE_BRUSH,
@@ -293,6 +315,18 @@ context_manager_free (void)
   gimp_data_factory_data_free (global_pattern_factory);
   gimp_data_factory_data_free (global_gradient_factory);
   gimp_data_factory_data_free (global_palette_factory);
+
+  gtk_object_unref (GTK_OBJECT (named_buffers));
+  named_buffers = NULL;
+
+  if (global_buffer)
+    {
+      tile_manager_destroy (global_buffer);
+      global_buffer = NULL;
+    }
+
+  gtk_object_unref (GTK_OBJECT (image_context));
+  image_context = NULL;
 }
 
 void

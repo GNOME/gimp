@@ -1044,7 +1044,7 @@ void
 gimp_image_apply_image (GimpImage	 *gimage,
 			GimpDrawable	 *drawable,
 			PixelRegion	 *src2PR,
-			gint              undo,
+			gboolean          undo,
 			gint              opacity,
 			LayerModeEffects  mode,
 			/*  alternative to using drawable tiles as src1: */
@@ -1151,7 +1151,7 @@ void
 gimp_image_replace_image (GimpImage    *gimage, 
 			  GimpDrawable *drawable, 
 			  PixelRegion  *src2PR,
-			  gint          undo, 
+			  gboolean      undo, 
 			  gint          opacity,
 			  PixelRegion  *maskPR,
 			  gint          x, 

@@ -115,6 +115,7 @@ typedef struct _GimpPatternPreview    GimpPatternPreview;
 typedef struct _GimpPalettePreview    GimpPalettePreview;
 typedef struct _GimpGradientPreview   GimpGradientPreview;
 typedef struct _GimpToolInfoPreview   GimpToolInfoPreview;
+typedef struct _GimpBufferPreview     GimpBufferPreview;
 
 typedef struct _GimpContainerMenu     GimpContainerMenu;
 typedef struct _GimpContainerMenuImpl GimpContainerMenuImpl;
@@ -124,10 +125,14 @@ typedef struct _GimpMenuItem          GimpMenuItem;
 typedef struct _GimpContainerView     GimpContainerView;
 typedef struct _GimpContainerListView GimpContainerListView;
 typedef struct _GimpContainerGridView GimpContainerGridView;
-typedef struct _GimpDataFactoryView   GimpDataFactoryView;
+
 typedef struct _GimpDrawableListView  GimpDrawableListView;
 typedef struct _GimpLayerListView     GimpLayerListView;
 typedef struct _GimpChannelListView   GimpChannelListView;
+
+typedef struct _GimpContainerEditor   GimpContainerEditor;
+typedef struct _GimpDataFactoryView   GimpDataFactoryView;
+typedef struct _GimpBufferView        GimpBufferView;
 
 typedef struct _GimpListItem          GimpListItem;
 typedef struct _GimpChannelListItem   GimpChannelListItem;

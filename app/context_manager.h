@@ -26,6 +26,16 @@
 extern GimpContainer *image_context;
 
 /*
+ *  the global cut buffer
+ */
+extern TileManager *global_buffer;
+
+/*
+ *  the list of named cut buffers
+ */
+extern GimpContainer *named_buffers;
+
+/*
  *  the global data factories which contain the global data lists
  */
 extern GimpDataFactory *global_brush_factory;

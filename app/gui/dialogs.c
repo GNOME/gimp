@@ -67,12 +67,15 @@ static const GimpDialogFactoryEntry dock_entries[] =
   { "gimp:gradient-list", dialogs_gradient_list_view_new, FALSE, FALSE, FALSE },
   { "gimp:palette-list",  dialogs_palette_list_view_new,  FALSE, FALSE, FALSE },
   { "gimp:tool-list",     dialogs_tool_list_view_new,     FALSE, FALSE, FALSE },
+  { "gimp:buffer-list",   dialogs_buffer_list_view_new,   FALSE, FALSE, FALSE },
+
   { "gimp:image-grid",    dialogs_image_grid_view_new,    FALSE, FALSE, FALSE },
   { "gimp:brush-grid",    dialogs_brush_grid_view_new,    FALSE, FALSE, FALSE },
   { "gimp:pattern-grid",  dialogs_pattern_grid_view_new,  FALSE, FALSE, FALSE },
   { "gimp:gradient-grid", dialogs_gradient_grid_view_new, FALSE, FALSE, FALSE },
   { "gimp:palette-grid",  dialogs_palette_grid_view_new,  FALSE, FALSE, FALSE },
   { "gimp:tool-grid",     dialogs_tool_grid_view_new,     FALSE, FALSE, FALSE },
+  { "gimp:buffer-grid",   dialogs_buffer_grid_view_new,   FALSE, FALSE, FALSE },
 
   { "gimp:layer-list",    dialogs_layer_list_view_new,    FALSE, FALSE, FALSE },
   { "gimp:channel-list",  dialogs_channel_list_view_new,  FALSE, FALSE, FALSE },

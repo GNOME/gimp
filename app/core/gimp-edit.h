@@ -20,9 +20,6 @@
 #define __GLOBAL_EDIT_H__
 
 
-TileManager * crop_buffer              (TileManager  *tiles,
-					gint          border);
-
 TileManager * edit_cut                 (GimpImage    *gimage,
 					GimpDrawable *drawable);
 TileManager * edit_copy                (GimpImage    *gimage,
@@ -31,7 +28,7 @@ GimpLayer   * edit_paste               (GimpImage    *gimage,
 					GimpDrawable *drawable,
 					TileManager  *paste,
 					gboolean      paste_into);
-gboolean      edit_paste_as_new        (GimpImage    *gimage,
+GimpImage   * edit_paste_as_new        (GimpImage    *gimage,
 					TileManager  *tiles);
 gboolean      edit_clear               (GimpImage    *gimage,
 					GimpDrawable *drawable);
@@ -39,17 +36,7 @@ gboolean      edit_fill                (GimpImage    *gimage,
 					GimpDrawable *drawable,
 					GimpFillType  fill_type);
 
-gboolean      global_edit_cut          (GDisplay    *gdisp);
-gboolean      global_edit_copy         (GDisplay    *gdisp);
-gboolean      global_edit_paste        (GDisplay    *gdisp,
-					gboolean     paste_into);
-gboolean      global_edit_paste_as_new (GDisplay    *gdisp);
-void          global_edit_free         (void);
-
-gboolean      named_edit_cut           (GDisplay    *gdisp);
-gboolean      named_edit_copy          (GDisplay    *gdisp);
-gboolean      named_edit_paste         (GDisplay    *gdisp);
-void          named_buffers_free       (void);
+gboolean      named_edit_paste         (GimpImage   *gimage);
 
 
 #endif  /*  __GLOBAL_EDIT_H__  */

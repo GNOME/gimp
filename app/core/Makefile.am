@@ -11,6 +11,8 @@ libappcore_a_SOURCES = @STRIP_BEGIN@ \
 	gimpbrushgenerated.h		\
 	gimpbrushpipe.c			\
 	gimpbrushpipe.h			\
+	gimpbuffer.c			\
+	gimpbuffer.h			\
 	gimpchannel.c			\
 	gimpchannel.h			\
 	gimpcontainer.c			\

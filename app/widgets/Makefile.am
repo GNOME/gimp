@@ -6,6 +6,10 @@ libappwidgets_a_SOURCES = @STRIP_BEGIN@ \
 	widgets-types.h			\
 	gimpbrushpreview.c		\
 	gimpbrushpreview.h		\
+	gimpbufferpreview.c		\
+	gimpbufferpreview.h		\
+	gimpbufferview.c		\
+	gimpbufferview.h		\
 	gimpchannellistitem.c		\
 	gimpchannellistitem.h		\
 	gimpchannellistview.c		\
@@ -14,6 +18,8 @@ libappwidgets_a_SOURCES = @STRIP_BEGIN@ \
 	gimpcolorpanel.h		\
 	gimpcomponentlistitem.c		\
 	gimpcomponentlistitem.h		\
+	gimpcontainereditor.c		\
+	gimpcontainereditor.h		\
 	gimpcontainergridview.c		\
 	gimpcontainergridview.h		\
 	gimpcontainerlistview.c		\

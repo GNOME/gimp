@@ -108,7 +108,7 @@ gimp_drawable_preview_get_size (GimpPreview *preview,
   drawable = GIMP_DRAWABLE (preview->viewable);
   gimage   = gimp_drawable_gimage (drawable);
 
-  if (gimage)
+  if (gimage && ! preview->is_popup)
     {
       gimp_preview_calc_size (preview,
 			      gimage->width,

@@ -39,12 +39,13 @@
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
-#include "global_edit.h"
 #include "qmask.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
+
+typedef struct _EditQmaskOptions EditQmaskOptions;
 
 struct _EditQmaskOptions
 {
@@ -55,10 +56,7 @@ struct _EditQmaskOptions
   GimpImage   *gimage;
 };
 
-typedef struct _EditQmaskOptions EditQmaskOptions;
 
-/*  Global variables  */
-/*  Static variables  */
 /*  Prototypes */
 static void edit_qmask_channel_query         (GDisplay        *gdisp);
 static void edit_qmask_query_ok_callback     (GtkWidget       *widget, 
