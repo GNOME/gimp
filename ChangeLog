@@ -1,3 +1,8 @@
+2004-08-03  DindinX  <david@dindinx.org>
+
+	* plug-ins/winicon/icodialog.c: ported to GimpPreviewArea. Still needs
+	work.
+
 2004-08-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainergridview.c

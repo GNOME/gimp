@@ -23,11 +23,6 @@
 
 #include <stdio.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -53,7 +48,7 @@ ico_preview_new(gint32 layer)
 {
   GtkWidget *icon_preview;
 
-  icon_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  icon_preview = gimp_preview_area_new ();
   ico_fill_preview_with_thumb (icon_preview, layer);
 
   return icon_preview;
@@ -62,18 +57,12 @@ ico_preview_new(gint32 layer)
 
 static void
 ico_fill_preview_with_thumb (GtkWidget *widget,
-			     gint32     drawable_ID)
+                             gint32     drawable_ID)
 {
   guchar  *drawable_data;
   gint     bpp;
-  gint     x,y;
   gint     width;
   gint     height;
-  guchar  *src;
-  gdouble  r, g, b, a;
-  gdouble  c0, c1;
-  guchar  *p0, *p1;
-  guchar  *even, *odd;
 
   width  = gimp_drawable_width (drawable_ID);
   height = gimp_drawable_height (drawable_ID);
@@ -90,74 +79,16 @@ ico_fill_preview_with_thumb (GtkWidget *widget,
   if (width < 1 || height < 1)
     return;
 
-  gtk_preview_size (GTK_PREVIEW (widget), width, height);
+  gtk_widget_set_size_request (widget, width, height);
+  GIMP_PREVIEW_AREA (widget)->width = width;
+  GIMP_PREVIEW_AREA (widget)->height = height;
 
-  even = g_malloc (width * 3);
-  odd  = g_malloc (width * 3);
-  src = drawable_data;
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (widget),
+                          0, 0, width, height,
+                          gimp_drawable_type (drawable_ID),
+                          drawable_data,
+                          bpp * width);
 
-  for (y = 0; y < height; y++)
-    {
-      p0 = even;
-      p1 = odd;
-
-      for (x = 0; x < width; x++)
-	{
-	  if (bpp == 4)
-	    {
-	      r = ((gdouble) src[x*4 + 0]) / 255.0;
-	      g = ((gdouble) src[x*4 + 1]) / 255.0;
-	      b = ((gdouble) src[x*4 + 2]) / 255.0;
-	      a = ((gdouble) src[x*4 + 3]) / 255.0;
-	    }
-	  else if (bpp == 3)
-	    {
-	      r = ((gdouble) src[x*3 + 0]) / 255.0;
-	      g = ((gdouble) src[x*3 + 1]) / 255.0;
-	      b = ((gdouble) src[x*3 + 2]) / 255.0;
-	      a = 1.0;
-	    }
-	  else
-	    {
-	      r = ((gdouble) src[x*bpp + 0]) / 255.0;
-	      g = b = r;
-	      if (bpp == 2)
-		a = ((gdouble) src[x*2 + 1]) / 255.0;
-	      else
-		a = 1.0;
-	    }
-
-	  if ((x / GIMP_CHECK_SIZE_SM) & 1)
-	    {
-	      c0 = GIMP_CHECK_LIGHT;
-	      c1 = GIMP_CHECK_DARK;
-	    }
-	  else
-	    {
-	      c0 = GIMP_CHECK_DARK;
-	      c1 = GIMP_CHECK_LIGHT;
-	    }
-
-	*p0++ = (c0 + (r - c0) * a) * 255.0;
-	*p0++ = (c0 + (g - c0) * a) * 255.0;
-	*p0++ = (c0 + (b - c0) * a) * 255.0;
-
-	*p1++ = (c1 + (r - c1) * a) * 255.0;
-	*p1++ = (c1 + (g - c1) * a) * 255.0;
-	*p1++ = (c1 + (b - c1) * a) * 255.0;
-
-      }
-
-      if ((y / GIMP_CHECK_SIZE_SM) & 1)
-	gtk_preview_draw_row (GTK_PREVIEW (widget), odd,  0, y, width);
-      else
-	gtk_preview_draw_row (GTK_PREVIEW (widget), even, 0, y, width);
-
-      src += width * bpp;
-    }
-
-  g_free (even);
-  g_free (odd);
   g_free (drawable_data);
 }
 
@@ -166,13 +97,15 @@ ico_fill_preview_with_thumb (GtkWidget *widget,
    which then gets added to the dialog's main vbox. */
 static GtkWidget*
 ico_create_icon_hbox (GtkWidget *icon_preview,
-		      gint32     layer,
+                      gint32     layer,
                       gint       layer_num)
 {
   GtkWidget *hbox;
+  GtkWidget *alignment;
   GtkWidget *combo;
 
   hbox = gtk_hbox_new (FALSE, 6);
+  alignment = gtk_alignment_new (0.5, 0.5, 0, 0);
 
   /* To make life easier for the callbacks, we store the
      layer's ID and stacking number with the hbox. */
@@ -184,7 +117,9 @@ ico_create_icon_hbox (GtkWidget *icon_preview,
 
   g_object_set_data (G_OBJECT (hbox), "icon_preview", icon_preview);
   gtk_widget_show (icon_preview);
-  gtk_box_pack_start (GTK_BOX (hbox), icon_preview, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), alignment, TRUE, TRUE, 0);
+  gtk_widget_show (alignment);
+  gtk_container_add (GTK_CONTAINER (alignment), icon_preview);
 
   combo = gimp_int_combo_box_new (_("1 bpp, 1-bit alpha, 2-slot palette"),   1,
                                   _("4 bpp, 1-bit alpha, 16-slot palette"),  4,
@@ -216,11 +151,11 @@ ico_specs_dialog_new (gint num_layers)
   gint      *icon_depths, i;
 
   dialog = gimp_dialog_new (_("GIMP Windows Icon Plugin"), "winicon",
-			     NULL, 0,
-			     gimp_standard_help_func, "plug-in-winicon",
-			     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			     GTK_STOCK_OK,     GTK_RESPONSE_OK,
-			     NULL);
+                             NULL, 0,
+                             gimp_standard_help_func, "plug-in-winicon",
+                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                             NULL);
 
   /* We store an array that holds each icon's requested bit depth
      with the dialog. It's queried when the dialog is closed so the
@@ -337,9 +272,9 @@ ico_specs_dialog_update_icon_preview (GtkWidget *dialog,
   gimp_image_add_layer (tmp_image, tmp_layer, 0);
 
   gimp_pixel_rgn_init (&src_pixel_rgn, gimp_drawable_get (layer),
-		       0, 0, w, h, TRUE, FALSE);
+                       0, 0, w, h, TRUE, FALSE);
   gimp_pixel_rgn_init (&dst_pixel_rgn, gimp_drawable_get (tmp_layer),
-		       0, 0, w, h, TRUE, FALSE);
+                       0, 0, w, h, TRUE, FALSE);
 
   buffer = g_malloc (w * h * 4);
   gimp_pixel_rgn_get_rect (&src_pixel_rgn, buffer, 0, 0, w, h);
