@@ -1,3 +1,13 @@
+2000-10-21  Austin Donnelly  <austin@gimp.org>
+
+	* plug-ins/common/nlfilt.c: minor patch from David Hodson
+	    <hodsond@ozemail.com.au> to fix off-by-one error in previous fix.
+
+	* AUTHORS
+	* app/authors.h
+	* tools/authorsgen/contributors: Add the prolific David Hodson
+	    to the authors list.
+
 2000-10-19  Seth Burgess  <sjburges@gimp.org>
   
     	* plug-ins/common/xbm.c : oops, should have compiled it before

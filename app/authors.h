@@ -66,6 +66,7 @@ static gchar *authors[] =
 #endif
   "James Henstridge",
   "Eric Hernes",
+  "David Hodson",
   "Christoph Hoegl",
   "Wolfgang Hofer",
   "Jan Hubicka",

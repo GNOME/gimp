@@ -264,7 +264,7 @@ pluginCore (struct piArgs *argp)
   gimp_pixel_rgn_init (&srcPr, drw, 0, 0, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&dstPr, drw, 0, 0, width, height, TRUE, TRUE);
 
-  /* source buffer gives one pixel buffer around current row */
+  /* source buffer gives one pixel margin all around destination buffer */
   srcbuf = g_new0 (guchar, exrowsize * 3);
   dstbuf = g_new0 (guchar, rowsize);
 
@@ -278,9 +278,11 @@ pluginCore (struct piArgs *argp)
 
   /* first row */
   gimp_pixel_rgn_get_row (&srcPr, thisrow, 0, 0, width);
+  /* copy thisrow[0] to thisrow[-1], thisrow[width-1] to thisrow[width] */
   memcpy (thisrow - Bpp, thisrow, Bpp);
   memcpy (thisrow + rowsize, thisrow + rowsize - Bpp, Bpp);
-  memcpy (lastrow, thisrow, exrowsize);
+  /* copy whole thisrow to lastrow */
+  memcpy (lastrow - Bpp, thisrow - Bpp, exrowsize);
 
   for (y = 0; y < height - 1; y++)
     {
@@ -292,6 +294,7 @@ pluginCore (struct piArgs *argp)
       memcpy (nextrow + rowsize, nextrow + rowsize - Bpp, Bpp);
       nlfiltRow (lastrow, thisrow, nextrow, dstbuf, width, Bpp, filtno);
       gimp_pixel_rgn_set_row (&dstPr, dstbuf, 0, y, width);
+      /* rotate row buffers */
       temprow = lastrow; lastrow = thisrow;
       thisrow = nextrow; nextrow = temprow;
     }
@@ -713,6 +716,10 @@ gint noisevariance;      /* global so that pixel processing code can get at it q
 #define RUNSCALE(x) (((x) + (1 << (SCALEB-1))) >> SCALEB)       /* rounded un-scale */
 #define UNSCALE(x) ((x) >> SCALEB)
 
+/* Note: modified by David Hodson, nlfiltRow now accesses
+ * srclast, srcthis, and srcnext from [-Bpp] to [width*Bpp-1].
+ * Beware if you use this code anywhere else!
+ */
 static void
 nlfiltRow(guchar *srclast, guchar *srcthis, guchar *srcnext, guchar *dst,
           gint width, gint Bpp, gint filtno) {
