@@ -67,6 +67,7 @@ PDB_WRAPPERS_O = \
 	gimpplugin_pdb.obj \
 	gimpproceduraldb_pdb.obj \
 	gimpselection_pdb.obj \
+	gimpselectiontools_pdb.obj \
 	gimptexttool_pdb.obj \
 	gimptools_pdb.obj \
 	gimpundo_pdb.obj \
@@ -91,7 +92,6 @@ gimp_OBJECTS = \
 #	$(gimpi_OBJECTS) \
 	gimpchannel.obj \
 	gimpdrawable.obj \
-	gimpgradientselect.obj \
 	gimphelp.obj \
 	gimpimage.obj \
 	gimplayer.obj \

@@ -1,3 +1,30 @@
+2001-10-28  Hans Breuer  <hans@breuer.org>
+
+	* config.h.win32 : define HAVE_DIRENT_H, it's from build/win32/dirent
+
+	* app/*/makefile.msc : updated
+	* app/file/makefile.msc app/display/makefile.msc : new files
+
+	* app/user_install.c : make the G_OS_WIN32 part compile again (fn -> filename)
+
+	* app/core/gimptoolinfo.c (gimp_tool_info_init) : cosmetic change,
+	make implementation signature static like the local prototype
+
+	* app/pdb/gradients_cmds.c app/pdb/palette_cmds.c : include <string.h>
+	for strlen () / strcmp () by ...
+	* tools/pdbgen/pdb/gradients.pdb tools/pdbgen/pdb/palette.pdb :
+	... changing the perl source here
+
+	* app/widgets/gimpdocumentview.c : #include <string.h>
+
+	* libgimp/makefile.msc : 
+	* libgimpwidgets/gimpwidgets.def : updated
+
+	* plug-ins/makefile.msc : reflect the fact that DIRENT functions
+	are removed from glib. Also define the questionable GETTEXT_PACKAGE
+	and LOCALEDIR which are required to compile, not adapted to NLS
+	support for win32 yet
+  
 2001-10-28  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/nlfilt.c

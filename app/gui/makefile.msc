@@ -23,6 +23,7 @@ OBJECTS = \
 	brush-editor.obj \
 	brush-select.obj \
 	brushes-commands.obj \
+	buffers-commands.obj \
 	channels-commands.obj \
 	color-area.obj \
 	color-notebook.obj \
@@ -34,6 +35,7 @@ OBJECTS = \
 	dialogs.obj \
 	dialogs-commands.obj \
 	dialogs-constructors.obj \
+	documents-commands.obj \
 	edit-commands.obj \
 	error-console-dialog.obj \
 	file-commands.obj \
@@ -52,6 +54,7 @@ OBJECTS = \
 	layer-select.obj \
 	layers-commands.obj \
 	menus.obj \
+	module-browser.obj \
 	offset-dialog.obj \
 	palette-editor.obj \
 	palette-import-dialog.obj \
@@ -82,8 +85,9 @@ INCLUDES = \
 all : \
 	$(PRJ_TOP)\config.h \
 	$(PACKAGE).lib \
+!IFDEF DLLGIMP
 	$(PACKAGE)-$(PKG_VER).dll
-
+!ENDIF
 
 $(PRJ_TOP)\config.h: $(PRJ_TOP)\config.h.win32
 	copy $(PRJ_TOP)\config.h.win32 $(PRJ_TOP)\config.h

@@ -347,7 +347,7 @@ CODE
  
 
 
-@headers = qw("core/gimp.h" "core/gimpcontext.h"
+@headers = qw(<string.h> "core/gimp.h" "core/gimpcontext.h"
               "core/gimpdatafactory.h" "core/gimplist.h" "core/gimppalette.h");
 
 @procs = qw(palette_get_foreground palette_get_background

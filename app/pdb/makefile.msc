@@ -54,6 +54,7 @@ OBJECTS = \
 	plug_in_cmds.obj \
 	procedural_db_cmds.obj \
 	selection_cmds.obj \
+	selection_tools_cmds.obj \
 	text_tool_cmds.obj \
 	tools_cmds.obj \
 	undo_cmds.obj \
@@ -68,8 +69,9 @@ INCLUDES = \
 all : \
 	$(PRJ_TOP)\config.h \
 	$(PACKAGE).lib \
+!IFDEF DLLGIMP
 	$(PACKAGE)-$(PKG_VER).dll
-
+!ENDIF
 
 $(PRJ_TOP)\config.h: $(PRJ_TOP)\config.h.win32
 	copy $(PRJ_TOP)\config.h.win32 $(PRJ_TOP)\config.h

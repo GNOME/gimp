@@ -965,7 +965,7 @@ user_install_run (void)
       filename = g_build_filename (quoted_data_dir, USER_INSTALL, NULL);
 
       command = g_strdup_printf ("%s %s %s %s",
-                                 fn,
+                                 filename,
                                  quoted_data_dir,
                                  quoted_user_dir,
                                  quoted_sysconf_dir);

@@ -86,7 +86,7 @@ gimp_tool_info_class_init (GimpToolInfoClass *klass)
   viewable_class->get_new_preview = gimp_tool_info_get_new_preview;
 }
 
-void
+static void
 gimp_tool_info_init (GimpToolInfo *tool_info)
 {
   tool_info->tool_type    = G_TYPE_NONE;

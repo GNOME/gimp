@@ -176,6 +176,7 @@ OBJECTS = \
 	Events.obj \
 	FractalExplorer.obj \
 	Globals.obj
+EXTRALIBS = $(DIRENT_LIBS)
 !ENDIF
 
 !IFDEF EXTRA_Lighting
@@ -278,6 +279,7 @@ OBJECTS = \
 	gap_exchange_image.obj \
 	gap_pdb_calls.obj \
 	resize.obj
+EXTRALIBS = $(DIRENT_LIBS)
 !ENDIF
 
 !IFDEF EXTRA_gdyntext
@@ -289,6 +291,14 @@ OBJECTS = \
 	gdyntext_ui.obj \
 	message_window.obj \
 	gdyntextcompat.obj
+!ENDIF
+
+!IFDEF EXTRA_gfig
+EXTRALIBS = $(DIRENT_LIBS)
+!ENDIF
+
+!IFDEF EXTRA_gflare
+EXTRALIBS = $(DIRENT_LIBS)
 !ENDIF
 
 !IFDEF EXTRA_gfli
@@ -436,7 +446,7 @@ OBJECTS = \
 	script-fu-scripts.obj \
 	script-fu-text-console.obj \
 	..\dbbrowser\dbbrowser_utils.obj
-EXTRALIBS = ..\..\regexrepl\regexrepl.lib
+EXTRALIBS = ..\..\regexrepl\regexrepl.lib $(DIRENT_LIBS)
 EXTRACFLAGS = -DREGEX_MALLOC
 HAVE_RESOURCE = YES
 !ENDIF
@@ -493,6 +503,8 @@ OBJECTS = \
 	repaint.obj \
 	size.obj \
 	sizemap.obj
+
+EXTRALIBS = $(DIRENT_LIBS)
 !ENDIF
 
 !IFDEF EXTRA_guash
@@ -578,7 +590,9 @@ RTL = -MDd
 
 CC = cl -nologo -G5 -GF $(OPTIMIZE) $(RTL) -W2 -Zm200
 
-CFLAGS = -DHAVE_CONFIG_H $(EXTRACFLAGS) -I. -I$(GIMPTOP) -I$(PLUGINDIR) $(GTK2_CFLAGS) -I$(INTL)
+CFLAGS = -DHAVE_CONFIG_H $(EXTRACFLAGS) $(DIRENT_CFLAGS) \
+	-DGETTEXT_PACKAGE=\"libgimp14\" -DLOCALEDIR=\"?\" \
+	-I. -I$(GIMPTOP) -I$(PLUGINDIR) $(GTK2_CFLAGS) $(INTL_CFLAGS)
 
 LDFLAGS = /link /subsystem:console /machine:ix86 $(LINKDEBUG)
 

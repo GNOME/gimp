@@ -1,4 +1,5 @@
 EXPORTS
+	gimp_button_extended_clicked
 	gimp_button_get_type
 	gimp_button_new
 	gimp_chain_button_get_active
@@ -6,22 +7,15 @@ EXPORTS
 	gimp_chain_button_new
 	gimp_chain_button_set_active
 	gimp_color_area_get_color
-	gimp_color_area_get_color
-	gimp_color_area_get_type
 	gimp_color_area_get_type
 	gimp_color_area_has_alpha
 	gimp_color_area_new
-	gimp_color_area_new
-	gimp_color_area_set_color
 	gimp_color_area_set_color
 	gimp_color_area_set_type
 	gimp_color_button_get_color
-	gimp_color_button_get_color
-	gimp_color_button_get_type
 	gimp_color_button_get_type
 	gimp_color_button_has_alpha
 	gimp_color_button_new
-	gimp_color_button_set_color
 	gimp_color_button_set_color
 	gimp_color_button_set_type
 	gimp_context_help
@@ -90,8 +84,8 @@ EXPORTS
 	gimp_size_entry_set_value
 	gimp_size_entry_set_value_boundaries
 	gimp_spin_button_new
-	gimp_stock_init
 	gimp_standard_help_func
+	gimp_stock_init
 	gimp_table_attach_aligned
 	gimp_toggle_button_sensitive_update
 	gimp_toggle_button_update

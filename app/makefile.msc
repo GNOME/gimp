@@ -11,7 +11,7 @@ top_srcdir = $(PRJ_TOP)
 top_builddir = $(PRJ_TOP)
 includedir = $(PRJ_TOP)
 LT_RELEASE = $(PKG_VER)
-SUBDIRS = paint-funcs base core pdb xcf tools widgets gui
+SUBDIRS = paint-funcs base xcf core file display pdb tools widgets gui
 
 sub-all: 
 	for %d in ($(SUBDIRS)) do nmake -nologo -f makefile.msc sub-one THIS=%d
@@ -29,17 +29,20 @@ PKG_LINK = \
 	widgets/appwidgets.lib \
 	core/appcore.lib \
 	base/appbase.lib \
+	file/appfile.lib \
+	display/appdisplay.lib \
 	xcf/xcf.lib \
 	$(PRJ_TOP)/regexrepl/regexrepl.lib \
 	$(top_builddir)/libgimpcolor/gimpcolor-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpmath/gimpmath-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpbase/gimpbase-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpwidgets/gimpwidgets-$(LT_RELEASE).lib \
+	$(DIRENT_LIBS) \
 	$(GLIB_LIBS) \
 	$(GTK2_LIBS) \
 	$(GIMP_THREAD_LIBS) \
 	$(GIMP_MP_LIBS) \
-	$(INTLLIBS) \
+	$(INTL_LIBS) \
 	$(PANGO)\pango\pangoft2-$(PANGO_VER).lib
 
 gimp_LDFLAGS = \
@@ -60,30 +63,16 @@ mmx_sources = \
 OBJECTS = \
 	colormaps.obj \
 	devices.obj \
-	docindex.obj \
 	gimpprogress.obj \
 	nav_window.obj \
 	ops_buttons.obj \
 	qmask.obj \
 	undo_history.obj \
-	disp_callbacks.obj \
-	gdisplay.obj \
-	gdisplay_ops.obj \
-	gximage.obj \
-	image_render.obj \
-	interface.obj \
-	scale.obj \
-	scroll.obj \
-	selection.obj \
 	image_map.obj \
-	module_db.obj \
 	user_install.obj \
 	floating_sel.obj \
 	general.obj \
 	gimprc.obj \
-	file-open.obj \
-	file-save.obj \
-	file-utils.obj \
 	plug_in.obj \
 	path.obj \
 	path_curves.obj \
