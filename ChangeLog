@@ -1,3 +1,10 @@
+2004-07-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainertreeview.c: connect to
+	"editing-canceled" of the name cell renderer and restore the
+	original text in the callback. Doesn't work reliably until GTK+
+	bug #145463 is fixed.
+
 2004-07-05  Sven Neumann  <sven@gimp.org>
 
 	* app/plug-in/plug-in-rc.c (plug_in_icon_deserialize): fixed a

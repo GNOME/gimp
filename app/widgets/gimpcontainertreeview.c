@@ -86,6 +86,9 @@ static gboolean  gimp_container_tree_view_select_item (GimpContainerView      *v
 static void     gimp_container_tree_view_clear_items  (GimpContainerView      *view);
 static void gimp_container_tree_view_set_preview_size (GimpContainerView      *view);
 
+static void gimp_container_tree_view_name_canceled    (GtkCellRendererText    *cell,
+                                                       GimpContainerTreeView  *tree_view);
+
 static void gimp_container_tree_view_selection_changed (GtkTreeSelection      *sel,
                                                         GimpContainerTreeView *tree_view);
 static gboolean gimp_container_tree_view_button_press (GtkWidget              *widget,
@@ -258,6 +261,10 @@ gimp_container_tree_view_constructor (GType                  type,
                                        "text",       COLUMN_NAME,
                                        "attributes", COLUMN_NAME_ATTRIBUTES,
                                        NULL);
+
+  g_signal_connect (tree_view->name_cell, "editing-canceled",
+                    G_CALLBACK (gimp_container_tree_view_name_canceled),
+                    tree_view);
 
   tree_view->renderer_cells = g_list_prepend (tree_view->renderer_cells,
                                               tree_view->renderer_cell);
@@ -728,6 +735,36 @@ gimp_container_tree_view_set_preview_size (GimpContainerView *view)
 /*  callbacks  */
 
 static void
+gimp_container_tree_view_name_canceled (GtkCellRendererText   *cell,
+                                        GimpContainerTreeView *tree_view)
+{
+  GtkTreeIter iter;
+
+  g_print ("editing canceled\n");
+
+  if (gtk_tree_selection_get_selected (tree_view->selection, NULL, &iter))
+    {
+      GimpPreviewRenderer *renderer;
+      gchar               *name;
+
+      gtk_tree_model_get (tree_view->model, &iter,
+                          tree_view->model_column_renderer, &renderer,
+                          -1);
+
+      name = gimp_viewable_get_description (renderer->viewable, NULL);
+
+      g_print ("restoring '%s'\n", name);
+
+      gtk_list_store_set (GTK_LIST_STORE (tree_view->model), &iter,
+                          tree_view->model_column_name, name,
+                          -1);
+
+      g_free (name);
+      g_object_unref (renderer);
+    }
+}
+
+static void
 gimp_container_tree_view_selection_changed (GtkTreeSelection      *selection,
                                             GimpContainerTreeView *tree_view)
 {
@@ -906,9 +943,6 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                 {
                   if (edit_cell)
                     {
-#ifdef __GNUC__
-#warning FIXME: make sure the orig text gets restored when cancelling editing
-#endif
                       if (edit_cell == tree_view->name_cell)
                         {
                           const gchar *real_name;
