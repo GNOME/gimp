@@ -1,4 +1,13 @@
+Sun Mar 26 00:41:56 CET 2000  Sven Neumann  <sven@gimp.org>
+
+	* app/convert.c: reverted Martins change since it gives no
+	noticeable speedup. Martin, you are definitely not in the 
+	position to mess around with Adams code. There even was a pretty
+	clear comment that those values have to match the ones defined
+	in gimpcolorspace.h.
+	
 Sat Mar 25 21:09:40 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
 	* plug-ins/common/ps.c: Applied changes from Peter
 	Kirchgessner (V 1.10).
 
