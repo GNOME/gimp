@@ -40,6 +40,7 @@
 #include "config/gimpconfig-utils.h"
 
 #include "text/gimptext.h"
+#include "text/gimptext-vectors.h"
 #include "text/gimptextlayer.h"
 
 #include "widgets/gimpdialogfactory.h"
@@ -89,6 +90,7 @@ static void   gimp_text_tool_draw           (GimpDrawTool      *draw_tool);
 static void   gimp_text_tool_connect        (GimpTextTool      *tool,
 					     GimpText          *text);
 
+static void   gimp_text_tool_create_vectors (GimpTextTool      *text_tool);
 static void   gimp_text_tool_create_layer   (GimpTextTool      *text_tool);
 
 static void   gimp_text_tool_editor         (GimpTextTool      *text_tool);
@@ -141,7 +143,7 @@ gimp_text_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
-					  "GimpTextTool", 
+					  "GimpTextTool",
                                           &tool_info, 0);
     }
 
@@ -284,6 +286,25 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
 {
 }
 
+
+static void
+gimp_text_tool_create_vectors (GimpTextTool *text_tool)
+{
+  GimpVectors *vectors;
+  GimpImage   *gimage;
+
+  if (! text_tool->text)
+    return;
+
+  gimage = text_tool->gdisp->gimage;
+
+  vectors = gimp_text_vectors_new (gimage, text_tool->text);
+
+  /* FIXME: position vectors */
+
+  gimp_image_add_vectors (gimage, vectors, -1);
+}
+
 static void
 gimp_text_tool_create_layer (GimpTextTool *text_tool)
 {
@@ -327,16 +348,26 @@ gimp_text_tool_connect (GimpTextTool *tool,
                         GimpText     *text)
 {
   GimpTextOptions *options;
+  GtkWidget       *button;
 
   if (tool->text == text)
     return;
 
   options = GIMP_TEXT_OPTIONS (GIMP_TOOL (tool)->tool_info->tool_options);
 
+  button = g_object_get_data (G_OBJECT (options), "gimp-text-to-vectors");
+
   if (tool->text)
     {
-      gimp_config_disconnect (G_OBJECT (options->text),
-                              G_OBJECT (tool->text));
+      if (button)
+        {
+          gtk_widget_set_sensitive (button, FALSE);
+          g_signal_handlers_disconnect_by_func (button,
+                                                gimp_text_tool_create_vectors,
+                                                tool);
+        }
+
+      gimp_config_disconnect (G_OBJECT (options->text), G_OBJECT (tool->text));
 
       g_object_unref (tool->text);
       tool->text = NULL;
@@ -347,12 +378,19 @@ gimp_text_tool_connect (GimpTextTool *tool,
   if (text)
     {
       tool->text = g_object_ref (text);
-      
+
       gimp_config_copy_properties (G_OBJECT (tool->text),
 				   G_OBJECT (options->text));
 
-      gimp_config_connect (G_OBJECT (options->text),
-                           G_OBJECT (tool->text));
+      gimp_config_connect (G_OBJECT (options->text), G_OBJECT (tool->text));
+
+      if (button)
+        {
+          g_signal_connect_swapped (button, "clicked",
+                                    G_CALLBACK (gimp_text_tool_create_vectors),
+                                    tool);
+          gtk_widget_set_sensitive (button, TRUE);
+        }
     }
 }
 
@@ -384,7 +422,7 @@ gimp_text_tool_editor (GimpTextTool *text_tool)
   if (! text_tool->text)
     {
       GClosure *closure;
-      
+
       closure = g_cclosure_new (G_CALLBACK (gimp_text_tool_buffer_changed),
                                 text_tool, NULL);
       g_object_watch_closure (G_OBJECT (text_tool->editor), closure);

@@ -23,11 +23,14 @@
 
 #include <glib-object.h>
 #include <pango/pangoft2.h>
+#include <freetype/ftglyph.h>
 #include <freetype/ftoutln.h>
 
 #include "text/text-types.h"
 
 #include "core/gimpimage.h"
+
+#include "vectors/gimpbezierstroke.h"
 #include "vectors/gimpvectors.h"
 
 #include "gimptext.h"
@@ -42,9 +45,10 @@ typedef struct _RenderContext  RenderContext;
 struct _RenderContext
 {
   GimpVectors  *vectors;
-  
-  FT_Vector     current_point;
-  FT_Vector     last_point;
+  GimpStroke   *stroke;
+  GimpAnchor   *anchor;
+  gint          offset_x;
+  gint          offset_y;
 };
 
 
@@ -88,41 +92,102 @@ gimp_text_vectors_new (GimpImage *image,
 }
 
 
-static gint 
+static void
+gimp_text_vector_coords (RenderContext   *context,
+                         const FT_Vector *vector,
+                         GimpCoords      *coords)
+{
+  coords->x        = context->offset_x + (gdouble) vector->x / 64.0;
+  coords->y        = context->offset_y - (gdouble) vector->y / 64.0;
+  coords->pressure = 1.0;
+  coords->xtilt    = 0.5;
+  coords->ytilt    = 0.5;
+  coords->wheel    = 0.5;
+}
+
+static gint
 moveto (FT_Vector *to,
 	gpointer   data)
 {
   RenderContext *context = (RenderContext *) data;
+  GimpCoords     coords;
+
+  g_printerr ("moveto  %f, %f\n", to->x / 64.0, to->y / 64.0);
+
+  gimp_text_vector_coords (context, to, &coords);
+
+  context->stroke = gimp_bezier_stroke_new ();
+  gimp_vectors_stroke_add (context->vectors, context->stroke);
+
+  context->anchor =
+    gimp_bezier_stroke_extend (GIMP_BEZIER_STROKE (context->stroke),
+                               &coords, NULL, EXTEND_SIMPLE);
 
   return 0;
 }
 
-static gint 
+static gint
 lineto (FT_Vector *to,
-	gpointer   data)       
+	gpointer   data)
 {
   RenderContext *context = (RenderContext *) data;
+  GimpCoords     coords;
+
+  g_printerr ("lineto  %f, %f\n", to->x / 64.0, to->y / 64.0);
+
+  if (! context->stroke)
+    return 0;
+
+  gimp_text_vector_coords (context, to, &coords);
+
+  context->anchor =
+    gimp_bezier_stroke_extend (GIMP_BEZIER_STROKE (context->stroke),
+                               &coords, context->anchor, EXTEND_SIMPLE);
 
   return 0;
 }
 
-static gint 
+static gint
 conicto (FT_Vector *control,
 	 FT_Vector *to,
 	 gpointer   data)
 {
   RenderContext *context = (RenderContext *) data;
+  GimpCoords     coords;
+
+  g_printerr ("conicto %f, %f\n", to->x / 64.0, to->y / 64.0);
+
+  if (! context->stroke)
+    return 0;
+
+  gimp_text_vector_coords (context, to, &coords);
+
+  context->anchor =
+    gimp_bezier_stroke_extend (GIMP_BEZIER_STROKE (context->stroke),
+                               &coords, context->anchor, EXTEND_SIMPLE);
 
   return 0;
 }
 
-static gint 
+static gint
 cubicto (FT_Vector *control1,
 	 FT_Vector *control2,
 	 FT_Vector *to,
 	 gpointer   data)
 {
   RenderContext *context = (RenderContext *) data;
+  GimpCoords     coords;
+
+  g_printerr ("cubicto %f, %f\n", to->x / 64.0, to->y / 64.0);
+
+  if (! context->stroke)
+    return 0;
+
+  gimp_text_vector_coords (context, to, &coords);
+
+  context->anchor =
+    gimp_bezier_stroke_extend (GIMP_BEZIER_STROKE (context->stroke),
+                               &coords, context->anchor, EXTEND_SIMPLE);
 
   return 0;
 }
@@ -130,24 +195,40 @@ cubicto (FT_Vector *control1,
 
 static void
 gimp_text_render_vectors (PangoFont     *font,
-			  PangoGlyph    *glyph,
+			  PangoGlyph    *pango_glyph,
 			  gint           flags,
 			  gint           x,
 			  gint           y,
 			  RenderContext *context)
 {
-  FT_Face                 face;
-  const FT_Outline_Funcs  outline_funcs = 
+  const FT_Outline_Funcs  outline_funcs =
   {
     moveto,
     lineto,
     conicto,
-    cubicto
+    cubicto,
+    0,
+    0
   };
 
-  face = pango_ft2_font_get_face (font);
-  
-  FT_Load_Glyph (face, (FT_UInt) glyph, flags);
+  FT_Face   face;
+  FT_Glyph  glyph;
 
-  FT_Outline_Decompose ((FT_Outline *) face->glyph, &outline_funcs, &context);
+  face = pango_ft2_font_get_face (font);
+
+  FT_Load_Glyph (face, (FT_UInt) pango_glyph, flags);
+
+  FT_Get_Glyph (face->glyph, &glyph);
+
+  if (face->glyph->format == FT_GLYPH_FORMAT_OUTLINE)
+    {
+      FT_OutlineGlyph outline_glyph = (FT_OutlineGlyph) glyph;
+
+      context->offset_x = x;
+      context->offset_y = y;
+
+      FT_Outline_Decompose (&outline_glyph->outline, &outline_funcs, context);
+    }
+
+  FT_Done_Glyph (glyph);
 }

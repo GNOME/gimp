@@ -1,3 +1,10 @@
+2003-07-24  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimptext-vectors.c: more work on glyph decomposition.
+
+	* app/tools/gimptextoptions.c
+	* app/tools/gimptexttool.c: added button to create a path from text.
+
 2003-07-24  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpmenu.c: removed the GWeakNotify stuff again and free

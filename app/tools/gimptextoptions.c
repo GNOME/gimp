@@ -107,7 +107,7 @@ gimp_text_options_get_type (void)
   return type;
 }
 
-static void 
+static void
 gimp_text_options_class_init (GimpTextOptionsClass *klass)
 {
   GObjectClass *object_class;
@@ -198,9 +198,9 @@ gimp_text_options_notify_font (GimpContext *context,
 
   g_signal_handlers_unblock_by_func (text,
                                      gimp_text_notify_font,
-                                     context);  
+                                     context);
 }
-                               
+
 static void
 gimp_text_notify_font (GimpText    *text,
                        GParamSpec  *pspec,
@@ -220,7 +220,7 @@ gimp_text_notify_font (GimpText    *text,
   g_signal_handlers_block_by_func (context,
                                    gimp_text_options_notify_font,
                                    text);
-  
+
   g_object_set (context,
                 "font", font,
                 NULL);
@@ -278,7 +278,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
   digits = gimp_unit_get_digits (options->text->font_size_unit);
   spinbutton = gimp_prop_spin_button_new (config, "font-size",
-					  1.0, 10.0, digits); 
+					  1.0, 10.0, digits);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              _("_Size:"), 1.0, 0.5,
                              spinbutton, 1, FALSE);
@@ -334,10 +334,18 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
                            _("Line\nSpacing:"), 0.0,
 			   spinbutton, 1, GIMP_STOCK_LINE_SPACING);
 
+  button = gtk_button_new_with_label (_("Create Path from Text"));
+  gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_set_sensitive (button, FALSE);
+  gtk_widget_show (button);
+
+  g_object_set_data (G_OBJECT (tool_options),
+                     "gimp-text-to-vectors", button);
+
   return vbox;
 }
 
-                          
+
 static void
 gimp_text_options_dir_changed (GimpTextEditor *editor,
                                GimpText       *text)
