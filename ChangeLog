@@ -1,3 +1,8 @@
+2004-10-23  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/vectors-commands.c: added missing controls to the
+	path import and export dialogs.
+
 2004-10-23  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/newsprint.c: cleaned it up, fixed a (documented)

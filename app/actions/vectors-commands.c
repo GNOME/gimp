@@ -436,6 +436,8 @@ vectors_import_cmd_callback (GtkAction *action,
   GimpImage     *gimage;
   GtkWidget     *widget;
   GtkWidget     *dialog;
+  GtkWidget     *vbox;
+  GtkWidget     *button;
   GtkFileFilter *filter;
   return_if_no_image (gimage, data);
   return_if_no_widget (widget, data);
@@ -476,7 +478,23 @@ vectors_import_cmd_callback (GtkAction *action,
 
   gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
 
-  /*  FIXME: add controls for merge and scale options  */
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), vbox);
+  gtk_widget_show (vbox);
+
+  button = gtk_check_button_new_with_mnemonic (_("_Merge imported paths"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), FALSE);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_object_set_data (G_OBJECT (dialog), "gimp-vectors-import-merge", button);
+
+  button = gtk_check_button_new_with_mnemonic (_("_Scale imported paths to fit image"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), FALSE);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_object_set_data (G_OBJECT (dialog), "gimp-vectors-import-scale", button);
 
   gtk_widget_show (dialog);
 }
@@ -489,6 +507,7 @@ vectors_export_cmd_callback (GtkAction *action,
   GimpVectors *vectors;
   GtkWidget   *widget;
   GtkWidget   *dialog;
+  GtkWidget   *combo;
   return_if_no_vectors (gimage, vectors, data);
   return_if_no_widget (widget, data);
 
@@ -515,7 +534,14 @@ vectors_export_cmd_callback (GtkAction *action,
                     G_CALLBACK (gtk_true),
                     NULL);
 
-  /*  FIXME: add control for saving all or just the active vectors  */
+  combo = gimp_int_combo_box_new (_("Export the active path"),           TRUE,
+                                  _("Export all paths from this image"), FALSE,
+                                  NULL);
+
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), FALSE);
+  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), combo);
+
+  g_object_set_data (G_OBJECT (dialog), "gimp-vectors-export-active", combo);
 
   gtk_widget_show (dialog);
 }
@@ -631,12 +657,23 @@ vectors_import_response (GtkWidget *dialog,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
+      GtkWidget   *button;
       const gchar *filename;
+      gboolean     merge;
+      gboolean     scale;
       GError      *error = NULL;
 
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
-      if (gimp_vectors_import_file (gimage, filename, FALSE, FALSE, -1, &error))
+      button = g_object_get_data (G_OBJECT (dialog),
+                                  "gimp-vectors-import-merge");
+      merge = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button));
+
+      button = g_object_get_data (G_OBJECT (dialog),
+                                  "gimp-vectors-import-scale");
+      scale = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button));
+
+      if (gimp_vectors_import_file (gimage, filename, merge, scale, -1, &error))
         {
           gimp_image_flush (gimage);
         }
@@ -659,12 +696,23 @@ vectors_export_response (GtkWidget *dialog,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
+      GtkWidget   *combo;
+      GimpVectors *vectors = NULL;
       const gchar *filename;
-      GError      *error = NULL;
+      gboolean     active  = FALSE;
+      GError      *error   = NULL;
 
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
-      if (! gimp_vectors_export_file (gimage, NULL, filename, &error))
+      combo = g_object_get_data (G_OBJECT (dialog),
+                                 "gimp-vectors-export-active");
+
+      gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo), &active);
+
+      if (active)
+        vectors = gimp_image_get_active_vectors (gimage);
+
+      if (! gimp_vectors_export_file (gimage, vectors, filename, &error))
         {
           g_message (error->message);
           g_error_free (error);
