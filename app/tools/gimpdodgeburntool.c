@@ -52,7 +52,7 @@ static void   gimp_dodge_burn_tool_cursor_update (GimpTool        *tool,
                                                   GdkModifierType  state,
                                                   GimpDisplay     *gdisp);
 
-static GtkWidget * gimp_dodge_burn_options_gui  (GimpToolOptions *tool_options);
+static GtkWidget * gimp_dodge_burn_options_gui   (GimpToolOptions *tool_options);
 
 
 static GimpPaintToolClass *parent_class = NULL;
@@ -106,9 +106,7 @@ gimp_dodge_burn_tool_get_type (void)
 static void
 gimp_dodge_burn_tool_class_init (GimpDodgeBurnToolClass *klass)
 {
-  GimpToolClass	*tool_class;
-
-  tool_class = GIMP_TOOL_CLASS (klass);
+  GimpToolClass	*tool_class = GIMP_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -119,11 +117,7 @@ gimp_dodge_burn_tool_class_init (GimpDodgeBurnToolClass *klass)
 static void
 gimp_dodge_burn_tool_init (GimpDodgeBurnTool *dodgeburn)
 {
-  GimpTool	*tool;
-  GimpPaintTool *paint_tool;
-
-  tool       = GIMP_TOOL (dodgeburn);
-  paint_tool = GIMP_PAINT_TOOL (dodgeburn);
+  GimpTool *tool = GIMP_TOOL (dodgeburn);
 
   gimp_tool_control_set_tool_cursor        (tool->control,
                                             GIMP_DODGE_TOOL_CURSOR);

@@ -37,8 +37,7 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_ink_tool_class_init (GimpInkToolClass *klass);
-static void   gimp_ink_tool_init       (GimpInkTool      *tool);
+static void   gimp_ink_tool_init (GimpInkTool *tool);
 
 
 void
@@ -71,27 +70,22 @@ gimp_ink_tool_get_type (void)
       static const GTypeInfo tool_info =
       {
         sizeof (GimpInkToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_ink_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpInkTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_ink_tool_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        NULL,           /* class_init     */
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpInkTool),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_ink_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_PAINT_TOOL,
-					  "GimpInkTool",
+                                          "GimpInkTool",
                                           &tool_info, 0);
     }
 
   return tool_type;
-}
-
-static void
-gimp_ink_tool_class_init (GimpInkToolClass *klass)
-{
 }
 
 static void

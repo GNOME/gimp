@@ -42,8 +42,6 @@ static void        gimp_smudge_tool_init   (GimpSmudgeTool  *tool);
 static GtkWidget * gimp_smudge_options_gui (GimpToolOptions *tool_options);
 
 
-/* global functions  */
-
 void
 gimp_smudge_tool_register (GimpToolRegisterCallback  callback,
                            gpointer                  data)

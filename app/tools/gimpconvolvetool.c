@@ -19,22 +19,11 @@
 #include "config.h"
 
 #include <gtk/gtk.h>
-#include <gdk/gdkkeysyms.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
 
-#include "base/pixel-region.h"
-#include "base/temp-buf.h"
-
-#include "paint-funcs/paint-funcs.h"
-
-#include "core/gimp.h"
-#include "core/gimpbrush.h"
-#include "core/gimpcontext.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimpconvolveoptions.h"
@@ -48,13 +37,6 @@
 #include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
-
-
-#define FIELD_COLS     4
-#define MIN_BLUR      64         /*  (8/9 original pixel)   */
-#define MAX_BLUR       0.25      /*  (1/33 original pixel)  */
-#define MIN_SHARPEN -512
-#define MAX_SHARPEN  -64
 
 
 static void   gimp_convolve_tool_class_init     (GimpConvolveToolClass *klass);
@@ -75,8 +57,6 @@ static GtkWidget * gimp_convolve_options_gui    (GimpToolOptions       *options)
 
 static GimpPaintToolClass *parent_class;
 
-
-/*  public functions  */
 
 void
 gimp_convolve_tool_register (GimpToolRegisterCallback  callback,
@@ -123,14 +103,10 @@ gimp_convolve_tool_get_type (void)
   return tool_type;
 }
 
-/* static functions  */
-
 static void
 gimp_convolve_tool_class_init (GimpConvolveToolClass *klass)
 {
-  GimpToolClass *tool_class;
-
-  tool_class = GIMP_TOOL_CLASS (klass);
+  GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -141,11 +117,7 @@ gimp_convolve_tool_class_init (GimpConvolveToolClass *klass)
 static void
 gimp_convolve_tool_init (GimpConvolveTool *convolve)
 {
-  GimpTool      *tool;
-  GimpPaintTool *paint_tool;
-
-  tool       = GIMP_TOOL (convolve);
-  paint_tool = GIMP_PAINT_TOOL (convolve);
+  GimpTool *tool = GIMP_TOOL (convolve);
 
   gimp_tool_control_set_tool_cursor            (tool->control,
                                                 GIMP_BLUR_TOOL_CURSOR);

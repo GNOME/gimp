@@ -74,13 +74,13 @@ static TempBuf * gimp_paint_core_real_get_paint_area (GimpPaintCore    *core,
                                                       GimpDrawable     *drawable,
                                                       GimpPaintOptions *options);
 
-static void   paint_mask_to_canvas_tiles (GimpPaintCore    *core,
-                                          PixelRegion      *paint_maskPR,
-                                          gdouble           paint_opacity);
-static void   paint_mask_to_canvas_buf   (GimpPaintCore    *core,
-                                          PixelRegion      *paint_maskPR,
-                                          gdouble           paint_opacity);
-static void   canvas_tiles_to_canvas_buf (GimpPaintCore    *core);
+static void      paint_mask_to_canvas_tiles          (GimpPaintCore    *core,
+                                                      PixelRegion      *paint_maskPR,
+                                                      gdouble           paint_opacity);
+static void      paint_mask_to_canvas_buf            (GimpPaintCore    *core,
+                                                      PixelRegion      *paint_maskPR,
+                                                      gdouble           paint_opacity);
+static void      canvas_tiles_to_canvas_buf          (GimpPaintCore    *core);
 
 
 static GimpObjectClass *parent_class = NULL;
@@ -139,6 +139,7 @@ gimp_paint_core_init (GimpPaintCore *core)
   core->ID           = global_core_ID++;
 
   core->distance     = 0.0;
+  core->pixel_dist   = 0.0;
   core->x1           = 0;
   core->y1           = 0;
   core->x2           = 0;
@@ -213,9 +214,9 @@ gimp_paint_core_real_get_paint_area (GimpPaintCore    *core,
 
 void
 gimp_paint_core_paint (GimpPaintCore      *core,
-		       GimpDrawable       *drawable,
+                       GimpDrawable       *drawable,
                        GimpPaintOptions   *paint_options,
-		       GimpPaintCoreState  paint_state,
+                       GimpPaintCoreState  paint_state,
                        guint32             time)
 {
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
@@ -242,7 +243,7 @@ gimp_paint_core_paint (GimpPaintCore      *core,
 
 gboolean
 gimp_paint_core_start (GimpPaintCore    *core,
-		       GimpDrawable     *drawable,
+                       GimpDrawable     *drawable,
                        GimpPaintOptions *paint_options,
                        GimpCoords       *coords)
 {
@@ -294,7 +295,7 @@ gimp_paint_core_start (GimpPaintCore    *core,
 
 void
 gimp_paint_core_finish (GimpPaintCore *core,
-			GimpDrawable  *drawable)
+                        GimpDrawable  *drawable)
 {
   GimpPaintInfo *paint_info;
   GimpImage     *gimage;
@@ -481,16 +482,16 @@ gimp_paint_core_constrain (GimpPaintCore *core)
    *       be a superset of those plotted for the longer line.
    */
   if (fabs (dx) > fabs (dy))
-    core->cur_coords.y = core->last_coords.y +
-                         gimp_paint_core_constrain_helper (dx,dy);
+    core->cur_coords.y = (core->last_coords.y +
+                          gimp_paint_core_constrain_helper (dx,dy));
   else
-    core->cur_coords.x = core->last_coords.x +
-                         gimp_paint_core_constrain_helper (dy,dx);
+    core->cur_coords.x = (core->last_coords.x +
+                          gimp_paint_core_constrain_helper (dy,dx));
 }
 
 void
 gimp_paint_core_interpolate (GimpPaintCore    *core,
-			     GimpDrawable     *drawable,
+                             GimpDrawable     *drawable,
                              GimpPaintOptions *paint_options,
                              guint32           time)
 {
@@ -507,8 +508,8 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
 /*  protected functions  */
 
 TempBuf *
-gimp_paint_core_get_paint_area (GimpPaintCore *core,
-				GimpDrawable  *drawable,
+gimp_paint_core_get_paint_area (GimpPaintCore    *core,
+                                GimpDrawable     *drawable,
                                 GimpPaintOptions *paint_options)
 {
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), NULL);
@@ -522,20 +523,20 @@ gimp_paint_core_get_paint_area (GimpPaintCore *core,
 
 TempBuf *
 gimp_paint_core_get_orig_image (GimpPaintCore *core,
-				GimpDrawable  *drawable,
-				gint           x1,
-				gint           y1,
-				gint           x2,
-				gint           y2)
+                                GimpDrawable  *drawable,
+                                gint           x1,
+                                gint           y1,
+                                gint           x2,
+                                gint           y2)
 {
   PixelRegion  srcPR;
   PixelRegion  destPR;
   Tile        *undo_tile;
+  gboolean     release_tile;
   gint         h;
-  gint         refd;
   gint         pixelwidth;
-  gint         dwidth;
-  gint         dheight;
+  gint         drawable_width;
+  gint         drawable_height;
   guchar      *s;
   guchar      *d;
   gpointer     pr;
@@ -545,18 +546,18 @@ gimp_paint_core_get_orig_image (GimpPaintCore *core,
                                     x1, y1,
                                     (x2 - x1), (y2 - y1));
 
-  dwidth  = gimp_item_width  (GIMP_ITEM (drawable));
-  dheight = gimp_item_height (GIMP_ITEM (drawable));
+  drawable_width  = gimp_item_width  (GIMP_ITEM (drawable));
+  drawable_height = gimp_item_height (GIMP_ITEM (drawable));
 
-  x1 = CLAMP (x1, 0, dwidth);
-  y1 = CLAMP (y1, 0, dheight);
-  x2 = CLAMP (x2, 0, dwidth);
-  y2 = CLAMP (y2, 0, dheight);
+  x1 = CLAMP (x1, 0, drawable_width);
+  y1 = CLAMP (y1, 0, drawable_height);
+  x2 = CLAMP (x2, 0, drawable_width);
+  y2 = CLAMP (y2, 0, drawable_height);
 
   /*  configure the pixel regions  */
   pixel_region_init (&srcPR, gimp_drawable_data (drawable),
                      x1, y1,
-		     (x2 - x1), (y2 - y1),
+                     (x2 - x1), (y2 - y1),
                      FALSE);
 
   destPR.bytes     = core->orig_buf->bytes;
@@ -576,36 +577,38 @@ gimp_paint_core_get_orig_image (GimpPaintCore *core,
       /*  If the undo tile corresponding to this location is valid, use it  */
       undo_tile = tile_manager_get_tile (core->undo_tiles,
                                          srcPR.x, srcPR.y,
-					 FALSE, FALSE);
+                                         FALSE, FALSE);
 
       if (tile_is_valid (undo_tile))
-	{
-	  refd = 1;
-	  undo_tile = tile_manager_get_tile (core->undo_tiles,
+        {
+          release_tile = TRUE;
+
+          undo_tile = tile_manager_get_tile (core->undo_tiles,
                                              srcPR.x, srcPR.y,
-					     TRUE, FALSE);
-	  s = (guchar *) tile_data_pointer (undo_tile, 0, 0) +
-	    srcPR.rowstride * (srcPR.y % TILE_HEIGHT) +
-	    srcPR.bytes * (srcPR.x % TILE_WIDTH); /* dubious... */
-	}
+                                             TRUE, FALSE);
+	  s = ((guchar *) tile_data_pointer (undo_tile, 0, 0) +
+               srcPR.rowstride * (srcPR.y % TILE_HEIGHT) +
+               srcPR.bytes * (srcPR.x % TILE_WIDTH)); /* dubious... */
+        }
       else
-	{
-	  refd = 0;
-	  s = srcPR.data;
-	}
+        {
+          release_tile = FALSE;
+
+          s = srcPR.data;
+        }
 
       d = destPR.data;
       pixelwidth = srcPR.w * srcPR.bytes;
       h = srcPR.h;
       while (h --)
-	{
-	  memcpy (d, s, pixelwidth);
-	  s += srcPR.rowstride;
-	  d += destPR.rowstride;
-	}
+        {
+          memcpy (d, s, pixelwidth);
+          s += srcPR.rowstride;
+          d += destPR.rowstride;
+        }
 
-      if (refd)
-	tile_release (undo_tile, FALSE);
+      if (release_tile)
+        tile_release (undo_tile, FALSE);
     }
 
   return core->orig_buf;
@@ -711,11 +714,11 @@ gimp_paint_core_paste (GimpPaintCore            *core,
  */
 void
 gimp_paint_core_replace (GimpPaintCore            *core,
-			 PixelRegion              *paint_maskPR,
-			 GimpDrawable             *drawable,
-			 gdouble                   paint_opacity,
-			 gdouble                   image_opacity,
-			 GimpPaintApplicationMode  mode)
+                         PixelRegion              *paint_maskPR,
+                         GimpDrawable             *drawable,
+                         gdouble                   paint_opacity,
+                         gdouble                   image_opacity,
+                         GimpPaintApplicationMode  mode)
 {
   GimpImage   *gimage;
   PixelRegion  srcPR;
@@ -725,9 +728,9 @@ gimp_paint_core_replace (GimpPaintCore            *core,
   if (! gimp_drawable_has_alpha (drawable))
     {
       gimp_paint_core_paste (core, paint_maskPR, drawable,
-			     paint_opacity,
+                             paint_opacity,
                              image_opacity, GIMP_NORMAL_MODE,
-			     mode);
+                             mode);
       return;
     }
 
@@ -822,9 +825,9 @@ canvas_tiles_to_canvas_buf (GimpPaintCore *core)
   srcPR.data      = temp_buf_data (core->canvas_buf);
 
   pixel_region_init (&maskPR, core->canvas_tiles,
-		     core->canvas_buf->x,
+                     core->canvas_buf->x,
                      core->canvas_buf->y,
-		     core->canvas_buf->width,
+                     core->canvas_buf->width,
                      core->canvas_buf->height,
                      FALSE);
 
@@ -841,9 +844,9 @@ paint_mask_to_canvas_tiles (GimpPaintCore *core,
 
   /*   combine the paint mask and the canvas tiles  */
   pixel_region_init (&srcPR, core->canvas_tiles,
-		     core->canvas_buf->x,
+                     core->canvas_buf->x,
                      core->canvas_buf->y,
-		     core->canvas_buf->width,
+                     core->canvas_buf->width,
                      core->canvas_buf->height,
                      TRUE);
 
@@ -893,18 +896,18 @@ gimp_paint_core_validate_undo_tiles (GimpPaintCore *core,
   for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
     {
       for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
-	{
-	  dest_tile = tile_manager_get_tile (core->undo_tiles, j, i,
+        {
+          dest_tile = tile_manager_get_tile (core->undo_tiles, j, i,
                                              FALSE, FALSE);
 
-	  if (! tile_is_valid (dest_tile))
-	    {
-	      src_tile = tile_manager_get_tile (gimp_drawable_data (drawable),
-						j, i, TRUE, FALSE);
-	      tile_manager_map_tile (core->undo_tiles, j, i, src_tile);
-	      tile_release (src_tile, FALSE);
-	    }
-	}
+          if (! tile_is_valid (dest_tile))
+            {
+              src_tile = tile_manager_get_tile (gimp_drawable_data (drawable),
+                                                j, i, TRUE, FALSE);
+              tile_manager_map_tile (core->undo_tiles, j, i, src_tile);
+              tile_release (src_tile, FALSE);
+            }
+        }
     }
 }
 
@@ -922,17 +925,17 @@ gimp_paint_core_validate_canvas_tiles (GimpPaintCore *core,
   for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
     {
       for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
-	{
-	  tile = tile_manager_get_tile (core->canvas_tiles, j, i,
+        {
+          tile = tile_manager_get_tile (core->canvas_tiles, j, i,
                                         FALSE, FALSE);
 
-	  if (! tile_is_valid (tile))
-	    {
-	      tile = tile_manager_get_tile (core->canvas_tiles, j, i,
+          if (! tile_is_valid (tile))
+            {
+              tile = tile_manager_get_tile (core->canvas_tiles, j, i,
                                             TRUE, TRUE);
-	      memset (tile_data_pointer (tile, 0, 0), 0, tile_size (tile));
-	      tile_release (tile, TRUE);
-	    }
-	}
+              memset (tile_data_pointer (tile, 0, 0), 0, tile_size (tile));
+              tile_release (tile, TRUE);
+            }
+        }
     }
 }

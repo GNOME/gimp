@@ -86,8 +86,6 @@ static GtkWidget * gimp_clone_options_gui      (GimpToolOptions *tool_options);
 static GimpPaintToolClass *parent_class;
 
 
-/* public functions  */
-
 void
 gimp_clone_tool_register (GimpToolRegisterCallback  callback,
                           gpointer                  data)
@@ -134,18 +132,12 @@ gimp_clone_tool_get_type (void)
   return tool_type;
 }
 
-/* static functions  */
-
 static void
 gimp_clone_tool_class_init (GimpCloneToolClass *klass)
 {
-  GObjectClass      *object_class;
-  GimpToolClass     *tool_class;
-  GimpDrawToolClass *draw_tool_class;
-
-  object_class    = G_OBJECT_CLASS (klass);
-  tool_class      = GIMP_TOOL_CLASS (klass);
-  draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+  GObjectClass      *object_class    = G_OBJECT_CLASS (klass);
+  GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
+  GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -161,11 +153,7 @@ gimp_clone_tool_class_init (GimpCloneToolClass *klass)
 static void
 gimp_clone_tool_init (GimpCloneTool *clone)
 {
-  GimpTool      *tool;
-  GimpPaintTool *paint_tool;
-
-  tool       = GIMP_TOOL (clone);
-  paint_tool = GIMP_PAINT_TOOL (clone);
+  GimpTool *tool = GIMP_TOOL (clone);
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_CLONE_TOOL_CURSOR);
 }
@@ -201,9 +189,7 @@ gimp_clone_tool_button_press (GimpTool        *tool,
                               GdkModifierType  state,
                               GimpDisplay     *gdisp)
 {
-  GimpPaintTool *paint_tool;
-
-  paint_tool = GIMP_PAINT_TOOL (tool);
+  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
 
   if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) == GDK_CONTROL_MASK)
     GIMP_CLONE (paint_tool->core)->set_source = TRUE;
@@ -221,9 +207,7 @@ gimp_clone_tool_motion (GimpTool        *tool,
                         GdkModifierType  state,
                         GimpDisplay     *gdisp)
 {
-  GimpPaintTool *paint_tool;
-
-  paint_tool = GIMP_PAINT_TOOL (tool);
+  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
 
   if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) == GDK_CONTROL_MASK)
     GIMP_CLONE (paint_tool->core)->set_source = TRUE;
@@ -273,9 +257,7 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
 static void
 gimp_clone_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpTool *tool;
-
-  tool = GIMP_TOOL (draw_tool);
+  GimpTool *tool = GIMP_TOOL (draw_tool);
 
   if (gimp_tool_control_is_active (tool->control))
     {
@@ -285,9 +267,7 @@ gimp_clone_tool_draw (GimpDrawTool *draw_tool)
 
       if (draw_tool->gdisp && options->clone_type == GIMP_IMAGE_CLONE)
         {
-          GimpClone *clone;
-
-          clone = GIMP_CLONE (GIMP_PAINT_TOOL (draw_tool)->core);
+          GimpClone *clone = GIMP_CLONE (GIMP_PAINT_TOOL (draw_tool)->core);
 
           if (clone->src_drawable)
             {

@@ -38,8 +38,6 @@
 static void   gimp_pencil_tool_init (GimpPencilTool *pencil);
 
 
-/*  functions  */
-
 void
 gimp_pencil_tool_register (GimpToolRegisterCallback  callback,
                            gpointer                  data)

@@ -42,8 +42,6 @@ static void        gimp_airbrush_tool_init   (GimpAirbrushTool *airbrush);
 static GtkWidget * gimp_airbrush_options_gui (GimpToolOptions  *tool_options);
 
 
-/*  functions  */
-
 void
 gimp_airbrush_tool_register (GimpToolRegisterCallback  callback,
 			     gpointer                  data)

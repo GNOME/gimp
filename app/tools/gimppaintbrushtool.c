@@ -38,8 +38,6 @@
 static void   gimp_paintbrush_tool_init (GimpPaintbrushTool *tool);
 
 
-/*  public functions  */
-
 void
 gimp_paintbrush_tool_register (GimpToolRegisterCallback  callback,
                                gpointer                  data)
@@ -85,9 +83,6 @@ gimp_paintbrush_tool_get_type (void)
 
   return tool_type;
 }
-
-
-/*  private functions  */
 
 static void
 gimp_paintbrush_tool_init (GimpPaintbrushTool *paintbrush)

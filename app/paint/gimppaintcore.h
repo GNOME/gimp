@@ -71,10 +71,10 @@ struct _GimpPaintCore
   gboolean     use_pressure;  /*  look at coords->pressure         */
 
   TileManager *undo_tiles;    /*  tiles which have been modified   */
-  TileManager *canvas_tiles;  /*  the mask used for painting       */
+  TileManager *canvas_tiles;  /*  the buffer to paint the mask to  */
 
   TempBuf     *orig_buf;      /*  the unmodified drawable pixels   */
-  TempBuf     *canvas_buf;    /*  the buffer to paint to           */
+  TempBuf     *canvas_buf;    /*  the buffer to paint pixels to    */
 
 };
 
