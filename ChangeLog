@@ -1,5 +1,34 @@
 2004-07-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpactionfactory.[ch]
+	* app/widgets/gimpactiongroup.[ch]: added "label" and "stock-id"
+	properties to GtkActionGroup and allow to register them in the
+	GimpActionFactory.
+
+	* app/actions/actions.c: register user visible labels and icons
+	with all action groups.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpactionview.[ch]: new widget which shows a
+	treeview of action groups and their actions & shortcuts.
+
+	* app/widgets/gimpaction.[ch]: added gimp_action_name_compare()
+	utility function.
+
+	* app/widgets/gimpwidgets-utils.[ch]: added
+	gimp_get_accel_string() utility function.
+
+	* app/widgets/gimpcontrollers.[ch]: added
+	gimp_controllers_get_ui_manager() which will be used for setting
+	up the controller mapping dialog.
+
+	* app/gui/preferences-dialog.c: added a "Configure Keyboard
+	Shortcuts" button which pops up a GimpControllerView. Work in
+	progress...
+
+2004-07-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/image-actions.c: make sure that the "image-new" and
 	"image-new-from-image" actions always have the same shortcut.
 

@@ -100,6 +100,8 @@ gimp_action_factory_finalize (GObject *object)
       GimpActionFactoryEntry *entry = list->data;
 
       g_free (entry->identifier);
+      g_free (entry->label);
+      g_free (entry->stock_id);
       g_free (entry);
     }
 
@@ -126,6 +128,8 @@ gimp_action_factory_new (Gimp *gimp)
 void
 gimp_action_factory_group_register (GimpActionFactory         *factory,
                                     const gchar               *identifier,
+                                    const gchar               *label,
+                                    const gchar               *stock_id,
                                     GimpActionGroupSetupFunc   setup_func,
                                     GimpActionGroupUpdateFunc  update_func)
 {
@@ -133,12 +137,15 @@ gimp_action_factory_group_register (GimpActionFactory         *factory,
 
   g_return_if_fail (GIMP_IS_ACTION_FACTORY (factory));
   g_return_if_fail (identifier != NULL);
+  g_return_if_fail (label != NULL);
   g_return_if_fail (setup_func != NULL);
   g_return_if_fail (update_func != NULL);
 
   entry = g_new0 (GimpActionFactoryEntry, 1);
 
   entry->identifier  = g_strdup (identifier);
+  entry->label       = g_strdup (label);
+  entry->stock_id    = g_strdup (stock_id);
   entry->setup_func  = setup_func;
   entry->update_func = update_func;
 
@@ -166,6 +173,8 @@ gimp_action_factory_group_new (GimpActionFactory *factory,
 
           group = gimp_action_group_new (factory->gimp,
                                          entry->identifier,
+                                         entry->label,
+                                         entry->stock_id,
                                          user_data,
                                          entry->update_func);
 

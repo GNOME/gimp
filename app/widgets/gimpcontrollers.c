@@ -237,6 +237,20 @@ gimp_controllers_get_list (Gimp *gimp)
   return manager->controllers;
 }
 
+GimpUIManager *
+gimp_controllers_get_ui_manager (Gimp *gimp)
+{
+  GimpControllerManager *manager;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  manager = gimp_controller_manager_get (gimp);
+
+  g_return_val_if_fail (manager != NULL, NULL);
+
+  return manager->ui_manager;
+}
+
 GimpController *
 gimp_controllers_get_wheel (Gimp *gimp)
 {

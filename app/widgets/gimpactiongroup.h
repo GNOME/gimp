@@ -37,10 +37,13 @@ typedef struct _GimpActionGroupClass GimpActionGroupClass;
 
 struct _GimpActionGroup
 {
-  GtkActionGroup  parent_instance;
+  GtkActionGroup             parent_instance;
 
-  Gimp           *gimp;
-  gpointer        user_data;
+  Gimp                      *gimp;
+  gchar                     *label;
+  gchar                     *stock_id;
+
+  gpointer                   user_data;
 
   GimpActionGroupUpdateFunc  update_func;
 };
@@ -129,6 +132,8 @@ struct _GimpPlugInActionEntry
 GType            gimp_action_group_get_type (void);
 GimpActionGroup *gimp_action_group_new      (Gimp                  *gimp,
                                              const gchar           *name,
+                                             const gchar           *label,
+                                             const gchar           *stock_id,
                                              gpointer               user_data,
                                              GimpActionGroupUpdateFunc update_func);
 

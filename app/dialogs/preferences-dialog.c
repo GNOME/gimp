@@ -38,6 +38,7 @@
 #include "core/gimplist.h"
 #include "core/gimptemplate.h"
 
+#include "widgets/gimpactionview.h"
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpcontainercombobox.h"
 #include "widgets/gimpcontainerview.h"
@@ -49,6 +50,7 @@
 #include "widgets/gimpgrideditor.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimppropwidgets.h"
+#include "widgets/gimpuimanager.h"
 #include "widgets/gimptemplateeditor.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -80,10 +82,12 @@ static void   prefs_resolution_source_callback    (GtkWidget  *widget,
 static void   prefs_resolution_calibrate_callback (GtkWidget  *widget,
                                                    GtkWidget  *sizeentry);
 static void   prefs_input_devices_dialog          (GtkWidget  *widget,
-                                                   gpointer    user_data);
+                                                   Gimp       *gimp);
 static void   prefs_input_dialog_able_callback    (GtkWidget  *widget,
                                                    GdkDevice  *device,
                                                    gpointer    data);
+static void   prefs_keyboard_shortcuts_dialog     (GtkWidget  *widget,
+                                                   Gimp       *gimp);
 
 
 /*  private variables  */
@@ -407,11 +411,9 @@ prefs_resolution_calibrate_callback (GtkWidget *widget,
 
 static void
 prefs_input_devices_dialog (GtkWidget *widget,
-                            gpointer   user_data)
+                            Gimp      *gimp)
 {
   static GtkWidget *input_dialog = NULL;
-
-  Gimp *gimp = GIMP (user_data);
 
   if (input_dialog)
     {
@@ -454,6 +456,46 @@ prefs_input_dialog_able_callback (GtkWidget *widget,
                                   gpointer   data)
 {
   gimp_device_info_changed_by_device (device);
+}
+
+static void
+prefs_keyboard_shortcuts_dialog (GtkWidget *widget,
+                                 Gimp      *gimp)
+{
+  GtkWidget *dialog;
+  GtkWidget *scrolled_window;
+  GtkWidget *view;
+
+  dialog = gimp_dialog_new (_("Configure Keyboard Shortcuts"),
+                            "gimp-keyboard-shortcuts-dialog",
+                            gtk_widget_get_toplevel (widget),
+                            GTK_DIALOG_DESTROY_WITH_PARENT,
+                            gimp_standard_help_func,
+                            GIMP_HELP_PREFS_INTERFACE,
+
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
+
+                            NULL);
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (gtk_widget_destroy),
+                    NULL);
+
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
+                                       GTK_SHADOW_IN);
+  gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), scrolled_window);
+  gtk_widget_show (scrolled_window);
+
+  view = gimp_action_view_new (gimp_ui_managers_from_name ("<Image>")->data,
+                               TRUE);
+  gtk_widget_set_size_request (view, 300, 400);
+  gtk_container_add (GTK_CONTAINER (scrolled_window), view);
+  gtk_widget_show (view);
+
+  gtk_widget_show (dialog);
 }
 
 static GtkWidget *
@@ -1165,6 +1207,13 @@ prefs_dialog_new (Gimp       *gimp,
   /* Keyboard Shortcuts */
   vbox2 = prefs_frame_new (_("Keyboard Shortcuts"),
                            GTK_CONTAINER (vbox), FALSE);
+
+  button = prefs_button_add (GTK_STOCK_PREFERENCES,
+                             _("Configure Keyboard Shortcuts..."),
+                             GTK_BOX (vbox2));
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (prefs_keyboard_shortcuts_dialog),
+                    gimp);
 
   prefs_check_button_add (object, "can-change-accels",
                           _("Use dynamic _keyboard shortcuts"),

@@ -141,6 +141,7 @@ typedef struct _GimpFontSelect               GimpFontSelect;
 
 /*  misc widgets  */
 
+typedef struct _GimpActionView               GimpActionView;
 typedef struct _GimpColorBar                 GimpColorBar;
 typedef struct _GimpColorDisplayEditor       GimpColorDisplayEditor;
 typedef struct _GimpColorFrame               GimpColorFrame;

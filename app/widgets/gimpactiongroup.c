@@ -43,7 +43,9 @@
 enum
 {
   PROP_0,
-  PROP_GIMP
+  PROP_GIMP,
+  PROP_LABEL,
+  PROP_STOCK_ID
 };
 
 
@@ -54,6 +56,7 @@ static GObject * gimp_action_group_constructor (GType                  type,
                                                 guint                  n_params,
                                                 GObjectConstructParam *params);
 static void   gimp_action_group_dispose        (GObject               *object);
+static void   gimp_action_group_finalize       (GObject               *object);
 static void   gimp_action_group_set_property   (GObject               *object,
                                                 guint                  prop_id,
                                                 const GValue          *value,
@@ -104,6 +107,7 @@ gimp_action_group_class_init (GimpActionGroupClass *klass)
 
   object_class->constructor  = gimp_action_group_constructor;
   object_class->dispose      = gimp_action_group_dispose;
+  object_class->finalize     = gimp_action_group_finalize;
   object_class->set_property = gimp_action_group_set_property;
   object_class->get_property = gimp_action_group_get_property;
 
@@ -111,6 +115,20 @@ gimp_action_group_class_init (GimpActionGroupClass *klass)
                                    g_param_spec_object ("gimp",
                                                         NULL, NULL,
                                                         GIMP_TYPE_GIMP,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_LABEL,
+                                   g_param_spec_string ("label",
+                                                        NULL, NULL,
+                                                        NULL,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_STOCK_ID,
+                                   g_param_spec_string ("stock-id",
+                                                        NULL, NULL,
+                                                        NULL,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
@@ -186,6 +204,26 @@ gimp_action_group_dispose (GObject *object)
 }
 
 static void
+gimp_action_group_finalize (GObject *object)
+{
+  GimpActionGroup *group = GIMP_ACTION_GROUP (object);
+
+  if (group->label)
+    {
+      g_free (group->label);
+      group->label = NULL;
+    }
+
+  if (group->stock_id)
+    {
+      g_free (group->stock_id);
+      group->stock_id = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
 gimp_action_group_set_property (GObject      *object,
                                 guint         prop_id,
                                 const GValue *value,
@@ -197,6 +235,12 @@ gimp_action_group_set_property (GObject      *object,
     {
     case PROP_GIMP:
       group->gimp = g_value_get_object (value);
+      break;
+    case PROP_LABEL:
+      group->label = g_value_dup_string (value);
+      break;
+    case PROP_STOCK_ID:
+      group->stock_id = g_value_dup_string (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -217,6 +261,12 @@ gimp_action_group_get_property (GObject    *object,
     case PROP_GIMP:
       g_value_set_object (value, group->gimp);
       break;
+    case PROP_LABEL:
+      g_value_set_string (value, group->label);
+      break;
+    case PROP_STOCK_ID:
+      g_value_set_string (value, group->stock_id);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
@@ -227,6 +277,8 @@ gimp_action_group_get_property (GObject    *object,
  * gimp_action_group_new:
  * @gimp:        the @Gimp instance this action group belongs to
  * @name:        the name of the action group.
+ * @label:       the user visible label of the action group.
+ * @stock_id:    the icon of the action group.
  * @user_data:   the user_data for #GtkAction callbacks.
  * @update_func: the function that will be called on
  *               gimp_action_group_update().
@@ -240,6 +292,8 @@ gimp_action_group_get_property (GObject    *object,
 GimpActionGroup *
 gimp_action_group_new (Gimp                      *gimp,
                        const gchar               *name,
+                       const gchar               *label,
+                       const gchar               *stock_id,
                        gpointer                   user_data,
                        GimpActionGroupUpdateFunc  update_func)
 {
@@ -249,8 +303,10 @@ gimp_action_group_new (Gimp                      *gimp,
   g_return_val_if_fail (name != NULL, NULL);
 
   group = g_object_new (GIMP_TYPE_ACTION_GROUP,
-                        "gimp", gimp,
-                        "name", name,
+                        "gimp",     gimp,
+                        "name",     name,
+                        "label",    label,
+                        "stock-id", stock_id,
                         NULL);
 
   group->user_data   = user_data;

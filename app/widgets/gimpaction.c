@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
@@ -239,6 +241,14 @@ gimp_action_new (const gchar *name,
                        "tooltip",  tooltip,
                        "stock_id", stock_id,
                        NULL);
+}
+
+gint
+gimp_action_name_compare (GimpAction  *action1,
+                          GimpAction  *action2)
+{
+  return strcmp (gtk_action_get_name ((GtkAction *) action1),
+                 gtk_action_get_name ((GtkAction *) action2));
 }
 
 

@@ -50,11 +50,14 @@ struct _GimpActionClass
 };
 
 
-GType        gimp_action_get_type  (void);
-GimpAction * gimp_action_new       (const gchar *name,
-                                    const gchar *label,
-                                    const gchar *tooltip,
-                                    const gchar *stock_id);
+GType        gimp_action_get_type     (void);
+GimpAction * gimp_action_new          (const gchar *name,
+                                       const gchar *label,
+                                       const gchar *tooltip,
+                                       const gchar *stock_id);
+
+gint         gimp_action_name_compare (GimpAction  *action1,
+                                       GimpAction  *action2);
 
 
 #endif  /* __GIMP_ACTION_H__ */
