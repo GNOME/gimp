@@ -236,195 +236,6 @@ static GimpDndDataDef dnd_data_defs[] =
   }
 };
 
-/****************************/
-/*  drawable dnd functions  */
-/****************************/
-
-void
-gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
-				    GdkDragContext *context,
-				    GimpDrawable   *drawable,
-				    GdkGC          *gc)
-{
-  GdkPixmap *drag_pixmap;
-  GImage    *gimage;
-  TempBuf   *tmpbuf;
-  gint       bpp;
-  gint       x, y;
-  guchar    *src;
-  gdouble    r, g, b, a;
-  gdouble    c0, c1;
-  guchar    *p0, *p1, *even, *odd;
-  gint       width;
-  gint       height;
-  gdouble    ratio;
-  gint       offx, offy;
-
-  if (! preview_size)
-    return;
-
-  gimage = gimp_drawable_gimage (drawable);
-
-  if (gimage->width > gimage->height)
-    ratio = (gdouble) DRAG_PREVIEW_SIZE / (gdouble) gimage->width;
-  else
-    ratio = (gdouble) DRAG_PREVIEW_SIZE / (gdouble) gimage->height;
-
-  width =  (gint) (ratio * gimage->width);
-  height = (gint) (ratio * gimage->height);
-
-  if (width < 1) 
-    width = 1;
-  if (height < 1)
-    height = 1;
-
-  gimp_drawable_offsets (drawable, &offx, &offy);
-
-  offx = (int) (ratio * offx);
-  offy = (int) (ratio * offy);
-
-  drag_pixmap = gdk_pixmap_new (widget->window,
-				width+2, height+2, -1);
-
-  gdk_draw_rectangle (drag_pixmap, 
-		      /*  Is this always valid???  */
-		      widget->style->bg_gc[GTK_STATE_NORMAL],
-		      TRUE,
-		      0, 0,
-		      width + 2,
-		      height + 2);
-
-  gdk_draw_rectangle (drag_pixmap, 
-		      gc,
-		      FALSE,
-		      0, 0,
-		      width + 1,
-		      height + 1);
-
-  /*  readjust for actual layer size  */
-  width  = (gint) (ratio * gimp_drawable_width  (drawable));
-  height = (gint) (ratio * gimp_drawable_height (drawable));
-
-  if (width < 1) 
-    width = 1;
-  if (height < 1)
-    height = 1;
-
-  if (GIMP_IS_LAYER (drawable))
-    {
-      tmpbuf = layer_preview (GIMP_LAYER (drawable), width, height);
-    }
-  else if (GIMP_IS_LAYER_MASK (drawable))
-    {
-      tmpbuf =
-	layer_mask_preview (layer_mask_get_layer (GIMP_LAYER_MASK (drawable)),
-			    width, height);
-    }
-  else if (GIMP_IS_CHANNEL (drawable))
-    {
-      tmpbuf = channel_preview (GIMP_CHANNEL (drawable), width, height);
-    }
-  else
-    {
-      gdk_pixmap_unref (drag_pixmap);
-      return;
-    }
-
-  bpp = tmpbuf->bytes;
-
-  /*  Draw the thumbnail with checks  */
-  src = temp_buf_data (tmpbuf);
-
-  even = g_malloc (width * 3);
-  odd  = g_malloc (width * 3);
-  
-  for (y = 0; y < height; y++)
-    {
-      p0 = even;
-      p1 = odd;
-
-      for (x = 0; x < width; x++)
-	{
-	  if (bpp == 4)
-	    {
-	      r = ((gdouble) src[x*4+0]) / 255.0;
-	      g = ((gdouble) src[x*4+1]) / 255.0;
-	      b = ((gdouble) src[x*4+2]) / 255.0;
-	      a = ((gdouble) src[x*4+3]) / 255.0;
-	    }
-	  else if (bpp == 3)
-	    {
-	      r = ((gdouble) src[x*3+0]) / 255.0;
-	      g = ((gdouble) src[x*3+1]) / 255.0;
-	      b = ((gdouble) src[x*3+2]) / 255.0;
-	      a = 1.0;
-	    }
-	  else
-	    {
-	      r = ((gdouble) src[x*bpp+0]) / 255.0;
-	      g = b = r;
-	      if (bpp == 2)
-		a = ((gdouble) src[x*bpp+1]) / 255.0;
-	      else
-		a = 1.0;
-	    }
-
-	  if ((x / GIMP_CHECK_SIZE_SM) & 1)
-	    {
-	      c0 = GIMP_CHECK_LIGHT;
-	      c1 = GIMP_CHECK_DARK;
-	    }
-	  else
-	    {
-	      c0 = GIMP_CHECK_DARK;
-	      c1 = GIMP_CHECK_LIGHT;
-	    }
-
-	  *p0++ = (c0 + (r - c0) * a) * 255.0;
-	  *p0++ = (c0 + (g - c0) * a) * 255.0;
-	  *p0++ = (c0 + (b - c0) * a) * 255.0;
-
-	  *p1++ = (c1 + (r - c1) * a) * 255.0;
-	  *p1++ = (c1 + (g - c1) * a) * 255.0;
-	  *p1++ = (c1 + (b - c1) * a) * 255.0;
-
-	}
-      
-      if ((y / GIMP_CHECK_SIZE_SM) & 1)
-	{
-	  gdk_draw_rgb_image (drag_pixmap, gc,
-			      1+offx, y+1+offy,
-			      width,
-			      1,
-			      GDK_RGB_DITHER_NORMAL,
-			      (guchar *) odd,
-			      3);
-	}
-      else
-	{
-	  gdk_draw_rgb_image (drag_pixmap, gc,
-			      1+offx, y+1+offy,
-			      width,
-			      1,
-			      GDK_RGB_DITHER_NORMAL,
-			      (guchar *) even,
-			      3);
-	}
-      src += width * bpp;
-    }
-
-  g_free (even);
-  g_free (odd);
-
-  gtk_drag_set_icon_pixmap (context,
-			    gtk_widget_get_colormap (widget),
-			    drag_pixmap,
-			    NULL,
-			    DRAG_ICON_OFFSET, DRAG_ICON_OFFSET);
-
-  gdk_pixmap_unref (drag_pixmap);
-}
-
 /********************************/
 /*  general data dnd functions  */
 /********************************/
@@ -462,12 +273,26 @@ gimp_dnd_data_drag_begin (GtkWidget      *widget,
 
   if (icon_widget)
     {
+      GtkWidget *frame;
+      GtkWidget *window;
+
+      window = gtk_window_new (GTK_WINDOW_POPUP);
+      gtk_widget_realize (window);
+
+      frame = gtk_frame_new (NULL);
+      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
+      gtk_container_add (GTK_CONTAINER (window), frame);
+      gtk_widget_show (frame);
+
+      gtk_container_add (GTK_CONTAINER (frame), icon_widget);
+      gtk_widget_show (icon_widget);
+
       gtk_object_set_data_full (GTK_OBJECT (widget),
 				"gimp-dnd-data-widget",
-				icon_widget,
+				window,
 				(GtkDestroyNotify) gtk_widget_destroy);
 
-      gtk_drag_set_icon_widget (context, icon_widget,
+      gtk_drag_set_icon_widget (context, window,
 				DRAG_ICON_OFFSET, DRAG_ICON_OFFSET);
     }
 }
@@ -649,26 +474,32 @@ gimp_dnd_get_color_icon (GtkWidget     *widget,
 			 GtkSignalFunc  get_color_func,
 			 gpointer       get_color_data)
 {
-  GtkWidget *icon_widget;
-  GdkColor bg;
+  GtkWidget *preview;
   guchar r, g, b;
-
-  icon_widget = gtk_window_new (GTK_WINDOW_POPUP);
-  gtk_widget_set_app_paintable (GTK_WIDGET (icon_widget), TRUE);
-  gtk_widget_set_usize (icon_widget, 32, 32);
-  gtk_widget_realize (icon_widget);
+  guchar row[DRAG_PREVIEW_SIZE * 3];
+  gint   i;
 
   (* (GimpDndDragColorFunc) get_color_func) (widget, &r, &g, &b,
 					     get_color_data);
 
-  bg.red   = r + (r << 8);
-  bg.green = g + (g << 8);
-  bg.blue  = b + (b << 8);
+  for (i = 0; i < DRAG_PREVIEW_SIZE; i++)
+    {
+      row[i * 3]     = r;
+      row[i * 3 + 1] = g;
+      row[i * 3 + 2] = b;
+    }
 
-  gdk_color_alloc (gtk_widget_get_colormap (icon_widget), &bg);
-  gdk_window_set_background (icon_widget->window, &bg);
+  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (preview), 
+                    DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);      
 
-  return icon_widget;
+  for (i = 0; i < DRAG_PREVIEW_SIZE; i++)
+    {
+      gtk_preview_draw_row (GTK_PREVIEW (preview), row,
+			    0, i, DRAG_PREVIEW_SIZE);
+    }
+
+  return preview;
 }
 
 static guchar *
@@ -753,7 +584,6 @@ gimp_dnd_get_brush_icon (GtkWidget     *widget,
 			 GtkSignalFunc  get_brush_func,
 			 gpointer       get_brush_data)
 {
-  GtkWidget *icon_widget;
   GtkWidget *preview;
   GimpBrush *brush;
 
@@ -762,20 +592,14 @@ gimp_dnd_get_brush_icon (GtkWidget     *widget,
   if (! brush)
     return NULL;
 
-  icon_widget = gtk_window_new (GTK_WINDOW_POPUP);
-  gtk_widget_set_app_paintable (GTK_WIDGET (icon_widget), TRUE);
-  gtk_widget_realize (icon_widget);
-
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (preview), 
                     DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);      
-  gtk_container_add (GTK_CONTAINER (icon_widget), preview);
-  gtk_widget_show (preview);
 
   draw_brush (GTK_PREVIEW (preview), brush, 
 	      DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE, FALSE);
 
-  return icon_widget;
+  return preview;
 }
 
 static guchar *
@@ -861,7 +685,6 @@ gimp_dnd_get_pattern_icon (GtkWidget     *widget,
 			   GtkSignalFunc  get_pattern_func,
 			   gpointer       get_pattern_data)
 {
-  GtkWidget *icon_widget;
   GtkWidget *preview;
   GPattern  *pattern;
 
@@ -871,20 +694,14 @@ gimp_dnd_get_pattern_icon (GtkWidget     *widget,
   if (! pattern)
     return NULL;
 
-  icon_widget = gtk_window_new (GTK_WINDOW_POPUP);
-  gtk_widget_set_app_paintable (GTK_WIDGET (icon_widget), TRUE);
-  gtk_widget_realize (icon_widget);
-
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (preview), 
                     DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);      
-  gtk_container_add (GTK_CONTAINER (icon_widget), preview);
-  gtk_widget_show (preview);
 
   draw_pattern (GTK_PREVIEW (preview), pattern,
 		DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);
 
-  return icon_widget;
+  return preview;
 }
 
 static guchar *
@@ -969,7 +786,6 @@ gimp_dnd_get_gradient_icon (GtkWidget     *widget,
 			    GtkSignalFunc  get_gradient_func,
 			    gpointer       get_gradient_data)
 {
-  GtkWidget  *icon_widget;
   GtkWidget  *preview;
   gradient_t *gradient;
 
@@ -979,20 +795,14 @@ gimp_dnd_get_gradient_icon (GtkWidget     *widget,
   if (! gradient)
     return NULL;
 
-  icon_widget = gtk_window_new (GTK_WINDOW_POPUP);
-  gtk_widget_set_app_paintable (GTK_WIDGET (icon_widget), TRUE);
-  gtk_widget_realize (icon_widget);
-
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (preview), 
                     DRAG_PREVIEW_SIZE * 2, DRAG_PREVIEW_SIZE / 2);      
-  gtk_container_add (GTK_CONTAINER (icon_widget), preview);
-  gtk_widget_show (preview);
 
   draw_gradient (GTK_PREVIEW (preview), gradient,
 		 DRAG_PREVIEW_SIZE * 2, DRAG_PREVIEW_SIZE / 2);
 
-  return icon_widget;
+  return preview;
 }
 
 static guchar *
@@ -1129,7 +939,7 @@ gimp_dnd_get_tool_icon (GtkWidget     *widget,
 			GtkSignalFunc  get_tool_func,
 			gpointer       get_tool_data)
 {
-  GtkWidget *icon_widget;
+  GdkPixmap *tool_pixmap;
   GtkWidget *tool_icon;
   ToolType   tool_type;
 
@@ -1139,15 +949,13 @@ gimp_dnd_get_tool_icon (GtkWidget     *widget,
   if (((gint) tool_type < 0) || ((gint) tool_type >= num_tools))
     return NULL;
 
-  icon_widget = gtk_window_new (GTK_WINDOW_POPUP);
-  gtk_widget_set_app_paintable (GTK_WIDGET (icon_widget), TRUE);
-  gtk_widget_realize (icon_widget);
+  tool_pixmap = create_tool_pixmap (widget, tool_type);
 
-  tool_icon = gtk_pixmap_new (create_tool_pixmap (widget, tool_type), NULL);
-  gtk_container_add (GTK_CONTAINER (icon_widget), tool_icon);
-  gtk_widget_show (tool_icon);
+  tool_icon = gtk_pixmap_new (tool_pixmap, NULL);
 
-  return icon_widget;
+  gdk_pixmap_unref (tool_pixmap);
+
+  return tool_icon;
 }
 
 static guchar *
@@ -1221,4 +1029,215 @@ gimp_dnd_tool_dest_set (GtkWidget           *widget,
   gimp_dnd_data_dest_set (GIMP_DND_DATA_TOOL, widget,
 			  GTK_SIGNAL_FUNC (set_tool_func),
 			  data);
+}
+
+/****************************/
+/*  drawable dnd functions  */
+/****************************/
+
+void
+gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
+				    GdkDragContext *context,
+				    GimpDrawable   *drawable,
+				    GdkGC          *gc)
+{
+  GtkWidget *window;
+  GtkWidget *frame;
+  GtkWidget *preview;
+
+  gboolean  drag_connected;
+
+  GImage    *gimage;
+  TempBuf   *tmpbuf;
+  gint       bpp;
+  gint       x, y;
+  guchar    *src;
+  gdouble    r, g, b, a;
+  gdouble    c0, c1;
+  guchar    *p0, *p1, *even, *odd;
+  gint       width;
+  gint       height;
+  gdouble    ratio;
+  gint       offx, offy;
+
+  if (! preview_size)
+    return;
+
+  gimage = gimp_drawable_gimage (drawable);
+
+  if (gimage->width > gimage->height)
+    ratio = (gdouble) DRAG_PREVIEW_SIZE / (gdouble) gimage->width;
+  else
+    ratio = (gdouble) DRAG_PREVIEW_SIZE / (gdouble) gimage->height;
+
+  width =  (gint) (ratio * gimage->width);
+  height = (gint) (ratio * gimage->height);
+
+  if (width < 1) 
+    width = 1;
+  if (height < 1)
+    height = 1;
+
+  gimp_drawable_offsets (drawable, &offx, &offy);
+
+  offx = (int) (ratio * offx);
+  offy = (int) (ratio * offy);
+
+  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (preview), width, height);
+
+  even = g_new (guchar, width * 3);
+
+  for (x = 0; x < width; x++)
+    {
+      even[x * 3]     = 255;
+      even[x * 3 + 1] = 255;
+      even[x * 3 + 2] = 255;
+    }
+
+  for (y = 0; y < height; y++)
+    {
+      gtk_preview_draw_row (GTK_PREVIEW (preview), even,
+			    0, y, width);
+    }
+
+  g_free (even);
+
+  /*  readjust for actual layer size  */
+  width  = (gint) (ratio * gimp_drawable_width  (drawable));
+  height = (gint) (ratio * gimp_drawable_height (drawable));
+
+  if (width < 1) 
+    width = 1;
+  if (height < 1)
+    height = 1;
+
+  if (GIMP_IS_LAYER (drawable))
+    {
+      tmpbuf = layer_preview (GIMP_LAYER (drawable), width, height);
+    }
+  else if (GIMP_IS_LAYER_MASK (drawable))
+    {
+      tmpbuf =
+	layer_mask_preview (layer_mask_get_layer (GIMP_LAYER_MASK (drawable)),
+			    width, height);
+    }
+  else if (GIMP_IS_CHANNEL (drawable))
+    {
+      tmpbuf = channel_preview (GIMP_CHANNEL (drawable), width, height);
+    }
+  else
+    {
+      gtk_widget_destroy (preview);
+      return;
+    }
+
+  bpp = tmpbuf->bytes;
+
+  /*  Draw the thumbnail with checks  */
+  src = temp_buf_data (tmpbuf);
+
+  even = g_new (guchar, width * 3);
+  odd  = g_new (guchar, width * 3);
+  
+  for (y = 0; y < height; y++)
+    {
+      p0 = even;
+      p1 = odd;
+
+      for (x = 0; x < width; x++)
+	{
+	  if (bpp == 4)
+	    {
+	      r = ((gdouble) src[x*4+0]) / 255.0;
+	      g = ((gdouble) src[x*4+1]) / 255.0;
+	      b = ((gdouble) src[x*4+2]) / 255.0;
+	      a = ((gdouble) src[x*4+3]) / 255.0;
+	    }
+	  else if (bpp == 3)
+	    {
+	      r = ((gdouble) src[x*3+0]) / 255.0;
+	      g = ((gdouble) src[x*3+1]) / 255.0;
+	      b = ((gdouble) src[x*3+2]) / 255.0;
+	      a = 1.0;
+	    }
+	  else
+	    {
+	      r = ((gdouble) src[x*bpp+0]) / 255.0;
+	      g = b = r;
+	      if (bpp == 2)
+		a = ((gdouble) src[x*bpp+1]) / 255.0;
+	      else
+		a = 1.0;
+	    }
+
+	  if ((x / GIMP_CHECK_SIZE_SM) & 1)
+	    {
+	      c0 = GIMP_CHECK_LIGHT;
+	      c1 = GIMP_CHECK_DARK;
+	    }
+	  else
+	    {
+	      c0 = GIMP_CHECK_DARK;
+	      c1 = GIMP_CHECK_LIGHT;
+	    }
+
+	  *p0++ = (c0 + (r - c0) * a) * 255.0;
+	  *p0++ = (c0 + (g - c0) * a) * 255.0;
+	  *p0++ = (c0 + (b - c0) * a) * 255.0;
+
+	  *p1++ = (c1 + (r - c1) * a) * 255.0;
+	  *p1++ = (c1 + (g - c1) * a) * 255.0;
+	  *p1++ = (c1 + (b - c1) * a) * 255.0;
+
+	}
+
+      if ((y / GIMP_CHECK_SIZE_SM) & 1)
+	{
+	  gtk_preview_draw_row (GTK_PREVIEW (preview), odd,
+				offx, y + offy, width);
+	}
+      else
+	{
+	  gtk_preview_draw_row (GTK_PREVIEW (preview), even,
+				offx, y + offy, width);
+	}
+      src += width * bpp;
+    }
+
+  g_free (even);
+  g_free (odd);
+
+  window = gtk_window_new (GTK_WINDOW_POPUP);
+  gtk_widget_realize (window);
+
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
+  gtk_container_add (GTK_CONTAINER (window), frame);
+  gtk_widget_show (frame);
+
+  gtk_container_add (GTK_CONTAINER (frame), preview);
+  gtk_widget_show (preview);
+
+  drag_connected =
+    (gboolean) gtk_object_get_data (GTK_OBJECT (widget),
+				    "gimp_dnd_drag_connected");
+
+  if (! drag_connected)
+    {
+      gtk_signal_connect (GTK_OBJECT (widget), "drag_end",
+			  GTK_SIGNAL_FUNC (gimp_dnd_data_drag_end),
+			  NULL);
+
+      gtk_object_set_data (GTK_OBJECT (widget), "gimp_dnd_drag_connected",
+			   (gpointer) TRUE);
+    }
+
+  gtk_object_set_data_full (GTK_OBJECT (widget),
+			    "gimp-dnd-data-widget",
+			    window,
+			    (GtkDestroyNotify) gtk_widget_destroy);
+
+  gtk_drag_set_icon_widget (context, window,
+			    DRAG_ICON_OFFSET, DRAG_ICON_OFFSET);
 }

@@ -98,13 +98,6 @@ typedef enum
   GIMP_DROP_BELOW
 } GimpDropType;
 
-/*  drawable dnd functions  */
-
-void  gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
-					  GdkDragContext *context,
-					  GimpDrawable   *drawable,
-					  GdkGC          *gc);
-
 /*  color dnd functions  */
 
 typedef void (* GimpDndDropColorFunc) (GtkWidget *, guchar, guchar, guchar,
@@ -183,5 +176,12 @@ void  gimp_dnd_tool_source_set     (GtkWidget               *widget,
 void  gimp_dnd_tool_dest_set       (GtkWidget               *widget,
 				    GimpDndDropToolFunc   set_tool_func,
 				    gpointer                 data);
+
+/*  drawable dnd functions  */
+
+void  gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
+					  GdkDragContext *context,
+					  GimpDrawable   *drawable,
+					  GdkGC          *gc);
 
 #endif /* __GIMP_DND_H__ */
