@@ -131,6 +131,9 @@ void         gimp_canvas_draw_rgb          (GimpCanvas      *canvas,
 void         gimp_canvas_set_clip_rect     (GimpCanvas      *canvas,
                                             GimpCanvasStyle  style,
                                             GdkRectangle    *rect);
+void         gimp_canvas_set_clip_region   (GimpCanvas      *canvas,
+                                            GimpCanvasStyle  style,
+                                            GdkRegion       *region);
 void         gimp_canvas_set_stipple_index (GimpCanvas      *canvas,
                                             GimpCanvasStyle  style,
                                             guint            index);

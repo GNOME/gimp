@@ -50,6 +50,7 @@
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "gimpcanvas.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayoptions.h"
 #include "gimpdisplayshell.h"
@@ -318,6 +319,7 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
                                   GdkEventExpose   *eevent,
                                   GimpDisplayShell *shell)
 {
+  GdkRegion    *region = NULL;
   GdkRectangle *rects;
   gint          n_rects;
   gint          i;
@@ -326,7 +328,39 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
   if (! shell->gdisp || ! shell->gdisp->shell)
     return TRUE;
 
+  /*  If the call to gimp_display_shell_pause() would cause a redraw,
+   *  we need to make sure that no XOR drawing happens on areas that
+   *  have already been cleared by the windowing system.
+   */
+  if (shell->paused_count == 0)
+    {
+      GdkRectangle  area;
+
+      area.x      = 0;
+      area.y      = 0;
+      area.width  = shell->disp_width;
+      area.height = shell->disp_height;
+
+      region = gdk_region_rectangle (&area);
+
+      gdk_region_subtract (region, eevent->region);
+
+      gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
+                                   GIMP_CANVAS_STYLE_XOR, region);
+      gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
+                                   GIMP_CANVAS_STYLE_XOR_DASHED, region);
+    }
+
   gimp_display_shell_pause (shell);
+
+  if (region)
+    {
+      gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
+                                   GIMP_CANVAS_STYLE_XOR, NULL);
+      gimp_canvas_set_clip_region (GIMP_CANVAS (shell->canvas),
+                                   GIMP_CANVAS_STYLE_XOR_DASHED, NULL);
+      gdk_region_destroy (region);
+    }
 
   gdk_region_get_rectangles (eevent->region, &rects, &n_rects);
 

@@ -1,5 +1,15 @@
 2003-11-11  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpcanvas.[ch]: added gimp_canvas_set_clip_region().
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_expose): if gimp_display_shell_pause()
+	would cause a redraw, make sure that no XOR drawing happens on
+	areas that have already been cleared by the windowing system.
+	Fixes bug #115712.
+
+2003-11-11  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-selection.[ch]: some more cleanup.
 
 2003-11-11  Sven Neumann  <sven@gimp.org>

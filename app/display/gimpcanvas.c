@@ -549,6 +549,22 @@ gimp_canvas_set_clip_rect (GimpCanvas      *canvas,
 }
 
 void
+gimp_canvas_set_clip_region (GimpCanvas      *canvas,
+                             GimpCanvasStyle  style,
+                             GdkRegion       *region)
+{
+  if (! canvas->gc[style])
+    {
+      if (! region)
+        return;
+
+      canvas->gc[style] = gimp_canvas_gc_new (canvas, style);
+    }
+
+  gdk_gc_set_clip_region (canvas->gc[style], region);
+}
+
+void
 gimp_canvas_set_stipple_index (GimpCanvas      *canvas,
                                GimpCanvasStyle  style,
                                guint            index)
