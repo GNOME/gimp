@@ -56,6 +56,8 @@
 #include "tools/tool_manager.h"
 
 #include "dialogs/stroke-dialog.h"
+#include "dialogs/vectors-export-dialog.h"
+#include "dialogs/vectors-import-dialog.h"
 #include "dialogs/vectors-options-dialog.h"
 
 #include "actions.h"
@@ -72,17 +74,20 @@ static void   vectors_new_vectors_response  (GtkWidget            *widget,
 static void   vectors_edit_vectors_response (GtkWidget            *widget,
                                              gint                  response_id,
                                              VectorsOptionsDialog *options);
-static void   vectors_import_response       (GtkWidget            *dialog,
+static void   vectors_import_response       (GtkWidget            *widget,
                                              gint                  response_id,
-                                             GimpImage            *gimage);
-static void   vectors_export_response       (GtkWidget            *dialog,
+                                             VectorsImportDialog  *dialog);
+static void   vectors_export_response       (GtkWidget            *widget,
                                              gint                  response_id,
-                                             GimpImage            *gimage);
+                                             VectorsExportDialog  *dialog);
 
 
 /*  private variables  */
 
-static gchar *vectors_name = NULL;
+static gchar    *vectors_name               = NULL;
+static gboolean  vectors_import_merge       = FALSE;
+static gboolean  vectors_import_scale       = FALSE;
+static gboolean  vectors_export_active_only = TRUE;
 
 
 /*  public functions  */
@@ -433,117 +438,42 @@ void
 vectors_import_cmd_callback (GtkAction *action,
                              gpointer   data)
 {
-  GimpImage     *gimage;
-  GtkWidget     *widget;
-  GtkWidget     *dialog;
-  GtkWidget     *vbox;
-  GtkWidget     *button;
-  GtkFileFilter *filter;
+  VectorsImportDialog *dialog;
+  GimpImage           *gimage;
+  GtkWidget           *widget;
   return_if_no_image (gimage, data);
   return_if_no_widget (widget, data);
 
-  dialog = gtk_file_chooser_dialog_new (_("Import Paths from SVG"), NULL,
-                                        GTK_FILE_CHOOSER_ACTION_OPEN,
+  dialog = vectors_import_dialog_new (gimage, widget,
+                                      vectors_import_merge,
+                                      vectors_import_scale);
 
-                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                        GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
-
-                                        NULL);
-
-  g_object_weak_ref (G_OBJECT (gimage),
-                     (GWeakNotify) gtk_widget_destroy, dialog);
-
-  gtk_window_set_screen (GTK_WINDOW (dialog), gtk_widget_get_screen (widget));
-
-  gtk_window_set_role (GTK_WINDOW (dialog), "gimp-vectors-import");
-  gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
-
-  g_signal_connect (dialog, "response",
+  g_signal_connect (dialog->dialog, "response",
                     G_CALLBACK (vectors_import_response),
-                    gimage);
-  g_signal_connect (dialog, "delete_event",
-                    G_CALLBACK (gtk_true),
-                    NULL);
+                    dialog);
 
-  filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("All Files (*.*)"));
-  gtk_file_filter_add_pattern (filter, "*");
-  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
-
-  filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("Scalable SVG image (*.svg)"));
-  gtk_file_filter_add_pattern (filter, "*.[Ss][Vv][Gg]");
-  gtk_file_filter_add_mime_type (filter, "image/svg+xml");
-  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
-
-  gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
-
-  vbox = gtk_vbox_new (FALSE, 6);
-  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), vbox);
-  gtk_widget_show (vbox);
-
-  button = gtk_check_button_new_with_mnemonic (_("_Merge imported paths"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), FALSE);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_object_set_data (G_OBJECT (dialog), "gimp-vectors-import-merge", button);
-
-  button = gtk_check_button_new_with_mnemonic (_("_Scale imported paths to fit image"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), FALSE);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_object_set_data (G_OBJECT (dialog), "gimp-vectors-import-scale", button);
-
-  gtk_widget_show (dialog);
+  gtk_widget_show (dialog->dialog);
 }
 
 void
 vectors_export_cmd_callback (GtkAction *action,
                              gpointer   data)
 {
-  GimpImage   *gimage;
-  GimpVectors *vectors;
-  GtkWidget   *widget;
-  GtkWidget   *dialog;
-  GtkWidget   *combo;
+  VectorsExportDialog *dialog;
+  GimpImage           *gimage;
+  GimpVectors         *vectors;
+  GtkWidget           *widget;
   return_if_no_vectors (gimage, vectors, data);
   return_if_no_widget (widget, data);
 
-  dialog = gtk_file_chooser_dialog_new (_("Export Path to SVG"), NULL,
-                                        GTK_FILE_CHOOSER_ACTION_SAVE,
+  dialog = vectors_export_dialog_new (gimage, widget,
+                                      vectors_export_active_only);
 
-                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                        GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
-
-                                        NULL);
-
-  g_object_weak_ref (G_OBJECT (gimage),
-                     (GWeakNotify) gtk_widget_destroy, dialog);
-
-  gtk_window_set_screen (GTK_WINDOW (dialog), gtk_widget_get_screen (widget));
-
-  gtk_window_set_role (GTK_WINDOW (dialog), "gimp-vectors-export");
-  gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
-
-  g_signal_connect (dialog, "response",
+  g_signal_connect (dialog->dialog, "response",
                     G_CALLBACK (vectors_export_response),
-                    gimage);
-  g_signal_connect (dialog, "delete_event",
-                    G_CALLBACK (gtk_true),
-                    NULL);
+                    dialog);
 
-  combo = gimp_int_combo_box_new (_("Export the active path"),           TRUE,
-                                  _("Export all paths from this image"), FALSE,
-                                  NULL);
-
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), FALSE);
-  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), combo);
-
-  g_object_set_data (G_OBJECT (dialog), "gimp-vectors-export-active", combo);
-
-  gtk_widget_show (dialog);
+  gtk_widget_show (dialog->dialog);
 }
 
 void
@@ -651,31 +581,25 @@ vectors_edit_vectors_response (GtkWidget            *widget,
 }
 
 static void
-vectors_import_response (GtkWidget *dialog,
-                         gint       response_id,
-                         GimpImage *gimage)
+vectors_import_response (GtkWidget           *widget,
+                         gint                 response_id,
+                         VectorsImportDialog *dialog)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GtkWidget   *button;
       const gchar *filename;
-      gboolean     merge;
-      gboolean     scale;
       GError      *error = NULL;
 
-      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+      vectors_import_merge = dialog->merge_vectors;
+      vectors_import_scale = dialog->scale_vectors;
 
-      button = g_object_get_data (G_OBJECT (dialog),
-                                  "gimp-vectors-import-merge");
-      merge = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button));
+      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (widget));
 
-      button = g_object_get_data (G_OBJECT (dialog),
-                                  "gimp-vectors-import-scale");
-      scale = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button));
-
-      if (gimp_vectors_import_file (gimage, filename, merge, scale, -1, &error))
+      if (gimp_vectors_import_file (dialog->image, filename,
+                                    vectors_import_merge, vectors_import_scale,
+                                    -1, &error))
         {
-          gimp_image_flush (gimage);
+          gimp_image_flush (dialog->image);
         }
       else
         {
@@ -684,42 +608,33 @@ vectors_import_response (GtkWidget *dialog,
         }
     }
 
-  g_object_weak_unref (G_OBJECT (gimage),
-                       (GWeakNotify) gtk_widget_destroy, dialog);
-  gtk_widget_destroy (dialog);
+  gtk_widget_destroy (widget);
 }
 
 static void
-vectors_export_response (GtkWidget *dialog,
-                         gint       response_id,
-                         GimpImage *gimage)
+vectors_export_response (GtkWidget           *widget,
+                         gint                 response_id,
+                         VectorsExportDialog *dialog)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GtkWidget   *combo;
       GimpVectors *vectors = NULL;
       const gchar *filename;
-      gboolean     active  = FALSE;
       GError      *error   = NULL;
 
-      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+      vectors_export_active_only = dialog->active_only;
 
-      combo = g_object_get_data (G_OBJECT (dialog),
-                                 "gimp-vectors-export-active");
+      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (widget));
 
-      gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo), &active);
+      if (vectors_export_active_only)
+        vectors = gimp_image_get_active_vectors (dialog->image);
 
-      if (active)
-        vectors = gimp_image_get_active_vectors (gimage);
-
-      if (! gimp_vectors_export_file (gimage, vectors, filename, &error))
+      if (! gimp_vectors_export_file (dialog->image, vectors, filename, &error))
         {
           g_message (error->message);
           g_error_free (error);
         }
     }
 
-  g_object_weak_unref (G_OBJECT (gimage),
-                       (GWeakNotify) gtk_widget_destroy, dialog);
-  gtk_widget_destroy (dialog);
+  gtk_widget_destroy (widget);
 }

@@ -62,6 +62,10 @@ libappdialogs_a_SOURCES = \
 	tips-parser.h			\
 	user-install-dialog.c		\
 	user-install-dialog.h		\
+	vectors-export-dialog.c		\
+	vectors-export-dialog.h		\
+	vectors-import-dialog.c		\
+	vectors-import-dialog.h		\
 	vectors-options-dialog.c	\
 	vectors-options-dialog.h
 
