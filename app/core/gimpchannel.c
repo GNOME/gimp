@@ -640,7 +640,7 @@ gimp_channel_stroke (GimpItem     *item,
   else if (GIMP_IS_PAINT_INFO (stroke_desc))
     {
       GimpImage        *gimage     = gimp_item_get_image (item);
-      GimpPaintInfo    *paint_info = GIMP_PAINT_INFO (stroke_desc);;
+      GimpPaintInfo    *paint_info = GIMP_PAINT_INFO (stroke_desc);
       GimpPaintOptions *paint_options;
       GimpPaintCore    *core;
 

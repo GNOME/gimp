@@ -187,7 +187,7 @@ gimp_text_tool_control (GimpTool       *tool,
 			GimpToolAction  action,
 			GimpDisplay    *gdisp)
 {
-  GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);;
+  GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
 
   switch (action)
     {
@@ -218,7 +218,7 @@ gimp_text_tool_button_press (GimpTool        *tool,
 			     GdkModifierType  state,
 			     GimpDisplay     *gdisp)
 {
-  GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);;
+  GimpTextTool *text_tool = GIMP_TEXT_TOOL (tool);
   GimpDrawable *drawable;
   GimpText     *text  = NULL;
   gint          off_x = 0;

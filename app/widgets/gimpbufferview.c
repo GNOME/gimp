@@ -219,7 +219,7 @@ gimp_buffer_view_paste (GimpBufferView *view,
       gint         x      = -1;
       gint         y      = -1;
       gint         width  = -1;
-      gint         height = -1;;
+      gint         height = -1;
 
       if (gdisp)
 	{
