@@ -16,7 +16,6 @@ app/gimphelp.c
 app/gimpprogress.c
 app/gimprc.c
 app/gimpunit.c
-app/global_edit.c
 app/image_new.c
 app/interface.c
 app/main.c
@@ -27,13 +26,13 @@ app/qmask.c
 app/undo.c
 app/undo_history.c
 app/user_install.c
-app/xcf.c
 
 app/core/gimpbrush.c
 app/core/gimpbrushpipe.c
 app/core/gimpchannel.c
 app/core/gimpdatafactory.c
 app/core/gimpdrawable.c
+app/core/gimpedit.c
 app/core/gimpimage.c
 app/core/gimpimage-convert.c
 app/core/gimpimage-mask.c
@@ -146,6 +145,13 @@ app/widgets/gimpimagedock.c
 app/widgets/gimplayerlistview.c
 app/widgets/gimpwidgets-constructors.h
 app/widgets/gimpwidgets-utils.c
+
+app/xcf/xcf-load.c
+app/xcf/xcf-read.c
+app/xcf/xcf-save.c
+app/xcf/xcf-seek.c
+app/xcf/xcf-write.c
+app/xcf/xcf.c
 
 modules/colorsel_gtk.c
 modules/colorsel_triangle.c
