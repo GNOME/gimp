@@ -337,7 +337,7 @@ gfig_preview_realize (GtkWidget *widget)
 }
 
 static void
-draw_background ()
+draw_background (void)
 {
   if (! back_pixbuf)
     back_pixbuf = gimp_image_get_thumbnail (gfig_context->image_id,

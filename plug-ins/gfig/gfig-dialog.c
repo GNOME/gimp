@@ -189,7 +189,7 @@ static void      options_dialog_callback   (GtkWidget *widget,
 static gint      gfig_scale_x              (gint       x);
 static gint      gfig_scale_y              (gint       y);
 static void      toggle_show_image         (void);
-static void      gridtype_combo_callback   (GtkWidget *widget, 
+static void      gridtype_combo_callback   (GtkWidget *widget,
                                             gpointer data);
 
 static void      gfig_load_file_chooser_response (GtkFileChooser *chooser,
@@ -214,9 +214,6 @@ gfig_dialog (void)
 {
   GtkWidget *main_hbox;
   GtkWidget *vbox;
-  gint tmpwidth, tmpheight;
-  gint bpp, rowstride;
-  guchar *back_data;
   GFigObj   *gfig;
   GimpParasite *parasite;
   gint          newlayer;
@@ -234,10 +231,7 @@ gfig_dialog (void)
   img_width  = gimp_drawable_width (gfig_context->drawable_id);
   img_height = gimp_drawable_height (gfig_context->drawable_id);
 
-  tmpwidth = preview_width;
-  tmpheight = preview_height;
-
-  /* 
+  /*
    * See if there is a "gfig" parasite.  If so, this is a gfig layer,
    * and we start by clearing it to transparent.
    * If not, we create a new transparent layer.
@@ -277,28 +271,6 @@ gfig_dialog (void)
 
 
   gfig_drawable = gimp_drawable_get (gfig_context->drawable_id);
-
-  /*
-   * Make a thumbnail of the image to use as a background for the preview.
-   */
-/*   back_data = gimp_image_get_thumbnail_data (gfig_context->image_id, */
-/*                                              &tmpwidth, &tmpheight, &bpp); */
-
-/*   rowstride = tmpwidth * bpp; */
-
-/*   /\* we only handle RGB because GdkPixbuf doesn't do grayscale *\/ */
-/*   if (bpp == 3) */
-/*     back_pixbuf = gdk_pixbuf_new_from_data (back_data, GDK_COLORSPACE_RGB, FALSE, */
-/*                                             8, tmpwidth, tmpheight, rowstride,  */
-/*                                             NULL, NULL); */
-/*   else if (bpp == 4) */
-/*     back_pixbuf = gdk_pixbuf_new_from_data (back_data, GDK_COLORSPACE_RGB, TRUE, */
-/*                                             8, tmpwidth, tmpheight, rowstride,  */
-/*                                             NULL, NULL); */
-/*   back_pixbuf = gimp_image_get_thumbnail (gfig_context->image_id, */
-/*                                        tmpwidth, tmpheight, */
-/*                                        GIMP_PIXBUF_LARGE_CHECKS); */
-  back_pixbuf = NULL;
 
   gfig_stock_init ();
 
@@ -354,7 +326,7 @@ gfig_dialog (void)
 
   /* build the menu */
   menubar = gtk_menu_bar_new ();
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (top_level_dlg)->vbox), 
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (top_level_dlg)->vbox),
                       menubar, FALSE, FALSE, 0);
   gtk_widget_show (menubar);
 
@@ -441,25 +413,25 @@ gfig_dialog (void)
 
   /* foreground color button in Style frame*/
   gfig_context->fg_color = (GimpRGB*)g_malloc (sizeof (GimpRGB));
-  gfig_context->fg_color_button = gimp_color_button_new ("Foreground", 
-                                                    SEL_BUTTON_WIDTH, 
-                                                    SEL_BUTTON_HEIGHT, 
-                                                    gfig_context->fg_color, 
+  gfig_context->fg_color_button = gimp_color_button_new ("Foreground",
+                                                    SEL_BUTTON_WIDTH,
+                                                    SEL_BUTTON_HEIGHT,
+                                                    gfig_context->fg_color,
                                                     GIMP_COLOR_AREA_SMALL_CHECKS);
   g_signal_connect (gfig_context->fg_color_button, "color-changed",
                     G_CALLBACK (set_foreground_callback),
                     gfig_context->fg_color);
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (gfig_context->fg_color_button),
                                &gfig_context->current_style->foreground);
-  gtk_box_pack_start (GTK_BOX (vbox), gfig_context->fg_color_button, 
+  gtk_box_pack_start (GTK_BOX (vbox), gfig_context->fg_color_button,
                       FALSE, FALSE, 0);
   gtk_widget_show (gfig_context->fg_color_button);
 
   /* background color button in Style frame */
   gfig_context->bg_color = (GimpRGB*)g_malloc (sizeof (GimpRGB));
-  gfig_context->bg_color_button = gimp_color_button_new ("Background", 
-                                           SEL_BUTTON_WIDTH, SEL_BUTTON_HEIGHT, 
-                                           gfig_context->bg_color, 
+  gfig_context->bg_color_button = gimp_color_button_new ("Background",
+                                           SEL_BUTTON_WIDTH, SEL_BUTTON_HEIGHT,
+                                           gfig_context->bg_color,
                                            GIMP_COLOR_AREA_SMALL_CHECKS);
   g_signal_connect (gfig_context->bg_color_button, "color-changed",
                     G_CALLBACK (set_background_callback),
@@ -470,35 +442,35 @@ gfig_dialog (void)
   gtk_widget_show (gfig_context->bg_color_button);
 
   /* brush selector in Style frame */
-  gfig_context->brush_select 
+  gfig_context->brush_select
     = gimp_brush_select_widget_new ("Brush", gfig_context->current_style->brush_name,
-                                    -1, -1, -1, 
-                                    gfig_brush_changed_callback, 
+                                    -1, -1, -1,
+                                    gfig_brush_changed_callback,
                                     NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), gfig_context->brush_select, 
+  gtk_box_pack_start (GTK_BOX (vbox), gfig_context->brush_select,
                       FALSE, FALSE, 0);
   gtk_widget_show (gfig_context->brush_select);
 
   /* pattern selector in Style frame */
-  gfig_context->pattern_select 
+  gfig_context->pattern_select
     = gimp_pattern_select_widget_new ("Pattern", gfig_context->current_style->pattern,
-                                      gfig_pattern_changed_callback, 
+                                      gfig_pattern_changed_callback,
                                       NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), gfig_context->pattern_select, 
+  gtk_box_pack_start (GTK_BOX (vbox), gfig_context->pattern_select,
                       FALSE, FALSE, 0);
   gtk_widget_show (gfig_context->pattern_select);
 
   /* gradient selector in Style frame */
-  gfig_context->gradient_select 
+  gfig_context->gradient_select
     = gimp_gradient_select_widget_new ("Gradient", gfig_context->current_style->gradient,
                                        gfig_gradient_changed_callback,
                                        NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), gfig_context->gradient_select, 
+  gtk_box_pack_start (GTK_BOX (vbox), gfig_context->gradient_select,
                       FALSE, FALSE, 0);
   gtk_widget_show (gfig_context->gradient_select);
 
   /* fill style combo box in Style frame  */
-  gfig_context->fillstyle_combo = combo 
+  gfig_context->fillstyle_combo = combo
     = gimp_int_combo_box_new (_("Pattern"),    FILL_PATTERN,
                               _("Foreground"), FILL_FOREGROUND,
                               _("Background"), FILL_BACKGROUND,
@@ -802,7 +774,7 @@ create_save_file_chooser (GFigObj   *obj,
       gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (window), tmp);
     }
 
-  
+
 
   fprintf (stderr, "Got here.\n");
   gtk_window_present (GTK_WINDOW (window));
@@ -992,9 +964,9 @@ options_dialog_callback (GtkWidget *widget,
   options_dlg = gimp_dialog_new (_("Options"), "gfig",
                               NULL, 0,
                               gimp_standard_help_func, HELP_ID,
-                              
+
                               GTK_STOCK_CLOSE,  GTK_RESPONSE_OK,
-                              
+
                               NULL);
 
   vbox = GTK_DIALOG (options_dlg)->vbox;
@@ -1128,9 +1100,9 @@ adjust_grid_callback (GtkWidget *widget,
   grid_dlg = gimp_dialog_new (_("Grid"), "gfig",
                               NULL, 0,
                               gimp_standard_help_func, HELP_ID,
-                              
+
                               GTK_STOCK_CLOSE,  GTK_RESPONSE_OK,
-                              
+
                               NULL);
 
   vbox = GTK_DIALOG (grid_dlg)->vbox;
@@ -1758,8 +1730,12 @@ gfig_paint_callback (void)
 
   gimp_displays_flush ();
 
-  g_free (back_pixbuf);
-  back_pixbuf = NULL;
+  if (back_pixbuf)
+    {
+      g_object_unref (back_pixbuf);
+      back_pixbuf = NULL;
+    }
+
   gfig_preview_expose (gfig_context->preview, NULL);
 }
 
