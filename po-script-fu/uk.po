@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins-1.1.19\n"
-"POT-Creation-Date: 2000-08-11 17:26+0300\n"
+"POT-Creation-Date: 2000-08-17 12:11+0300\n"
 "PO-Revision-Date: 2000-03-10 11:26+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -1601,7 +1601,7 @@ msgstr "К╕льк╕сть рядк╕в"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 msgid "Number of Times to Whirl"
-msgstr ""
+msgstr "К╕льк╕сть повтор╕в для вихору"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
@@ -1688,28 +1688,28 @@ msgstr "Заповнення навколо тексту"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Padding X"
-msgstr ""
+msgstr "Заповнення X"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Padding Y"
-msgstr ""
+msgstr "Заповнення Y"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Padding for Transparent Regions"
-msgstr ""
+msgstr "Заповнення для прозорих д╕лянок"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 msgid "Padding"
-msgstr ""
+msgstr "Заповнення"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Pattern (Outline)"
-msgstr ""
+msgstr "Шаблон (контур)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Pattern (Overlay)"
-msgstr ""
+msgstr "Шаблон (перекривання)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Pattern (Text)"
@@ -2073,7 +2073,7 @@ msgstr "Прозоре тло"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Turn from Left to Right"
-msgstr ""
+msgstr "Повернути зл╕ва направо"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
@@ -2130,19 +2130,19 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Whirl Amount"
-msgstr ""
+msgstr "К╕льк╕сть вихор╕в"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 msgid "Whirl Angle"
-msgstr ""
+msgstr "Кут вихору"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "Width of Bands"
-msgstr ""
+msgstr "Ширина стр╕чок"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "Width of Gaps"
-msgstr ""
+msgstr "Ширина пром╕жк╕в"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
 #: plug-ins/script-fu/scripts/gradient-example.scm:0
