@@ -1,4 +1,4 @@
-2002-11-19  Sven Neumann  <sven@gimp.org>
+2002-11-20  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/maze/maze.[ch]
 	* plug-ins/algorithms.c: make it compile. I'm not sure if this is the
