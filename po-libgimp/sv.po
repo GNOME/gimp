@@ -8,9 +8,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
-"POT-Creation-Date: 2003-02-18 00:43+0100\n"
-"PO-Revision-Date: 2003-01-10 16:34+0100\n"
-"Last-Translator: Christian Rose <menthos@menthos.com>\n"
+"POT-Creation-Date: 2003-02-25 18:11+0100\n"
+"PO-Revision-Date: 2003-02-25 18:10+0100\n"
+"Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -423,6 +423,7 @@ msgstr "Skapa slumptalsfrö till slumptalsgeneratorn med ett genererat slumptal"
 #: modules/cdisplay_colorblind.c:122
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr ""
+"Simulationsfilter för färgbristfällighet (Brettel-Vienot-Mollon-algoritm)"
 
 #: modules/cdisplay_colorblind.c:188
 msgid "Color Deficient Vision"
@@ -434,12 +435,11 @@ msgstr "Typ av färgbristfällighet:"
 
 #: modules/cdisplay_colorblind.c:483
 msgid "None (normal vision)"
-msgstr ""
+msgstr "Ingen (normal syn)"
 
 #: modules/cdisplay_colorblind.c:487
-#, fuzzy
 msgid "Protanopia (insensitivity to red)"
-msgstr "Protonopi (okänslighet för rött)"
+msgstr "Protanopi (okänslighet för rött)"
 
 #: modules/cdisplay_colorblind.c:491
 msgid "Deuteranopia (insensitivity to green)"
