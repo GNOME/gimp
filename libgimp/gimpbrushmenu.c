@@ -85,7 +85,7 @@ static gboolean gimp_brush_select_preview_events  (GtkWidget    *widget,
 static void     gimp_brush_select_preview_update  (GtkWidget    *preview,
                                                    gint          brush_width,
                                                    gint          brush_height,
-                                                   const gchar  *mask_data);
+                                                   const guchar *mask_data);
 static void     gimp_brush_select_popup_open      (BrushSelect  *brush_sel,
                                                    gint          x,
                                                    gint          y);
@@ -405,10 +405,10 @@ gimp_brush_select_preview_events (GtkWidget   *widget,
 }
 
 static void
-gimp_brush_select_preview_update (GtkWidget   *preview,
-                                  gint         brush_width,
-                                  gint         brush_height,
-                                  const gchar *mask_data)
+gimp_brush_select_preview_update (GtkWidget    *preview,
+                                  gint          brush_width,
+                                  gint          brush_height,
+                                  const guchar *mask_data)
 {
   guchar       *buf;
   guchar       *b;

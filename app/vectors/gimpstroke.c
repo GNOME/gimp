@@ -156,7 +156,7 @@ gimp_stroke_init (GimpStroke *stroke)
   stroke->anchors     = NULL;
   stroke->temp_anchor = NULL;
   stroke->closed      = FALSE;
-};
+}
 
 static void
 gimp_stroke_finalize (GObject *object)

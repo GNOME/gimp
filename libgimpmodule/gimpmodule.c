@@ -160,8 +160,8 @@ gimp_module_finalize (GObject *object)
 static gboolean
 gimp_module_load (GTypeModule *module)
 {
-  GimpModule *gimp_module;
-  gpointer    symbol;
+  GimpModule             *gimp_module;
+  GimpModuleRegisterFunc  func;
 
   g_return_val_if_fail (GIMP_IS_MODULE (module), FALSE);
 
@@ -180,7 +180,8 @@ gimp_module_load (GTypeModule *module)
     return FALSE;
 
   /* find the gimp_module_register symbol */
-  if (! g_module_symbol (gimp_module->module, "gimp_module_register", &symbol))
+  if (! g_module_symbol (gimp_module->module, "gimp_module_register",
+                         (gpointer *) &func))
     {
       gimp_module_set_last_error (gimp_module,
                                   "Missing gimp_module_register() symbol");
@@ -195,7 +196,7 @@ gimp_module_load (GTypeModule *module)
       return FALSE;
     }
 
-  gimp_module->register_module = symbol;
+  gimp_module->register_module = func;
 
   if (! gimp_module->register_module (module))
     {
@@ -290,7 +291,7 @@ gimp_module_query_module (GimpModule *module)
 {
   const GimpModuleInfo *info;
   gboolean              close_module = FALSE;
-  gpointer              symbol;
+  GimpModuleQueryFunc   func;
 
   g_return_val_if_fail (GIMP_IS_MODULE (module), FALSE);
 
@@ -303,7 +304,8 @@ gimp_module_query_module (GimpModule *module)
     }
 
   /* find the gimp_module_query symbol */
-  if (! g_module_symbol (module->module, "gimp_module_query", &symbol))
+  if (! g_module_symbol (module->module, "gimp_module_query",
+                         (gpointer *) &func))
     {
       gimp_module_set_last_error (module,
                                   "Missing gimp_module_query() symbol");
@@ -318,7 +320,7 @@ gimp_module_query_module (GimpModule *module)
       return FALSE;
     }
 
-  module->query_module = symbol;
+  module->query_module = func;
 
   if (module->info)
     {

@@ -55,7 +55,7 @@ enum
   PROP_SWAP_PATH,
   PROP_STINGY_MEMORY_USE,
   PROP_NUM_PROCESSORS,
-  PROP_TILE_CACHE_SIZE,
+  PROP_TILE_CACHE_SIZE
 };
 
 static GObjectClass *parent_class = NULL;

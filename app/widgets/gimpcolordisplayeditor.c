@@ -529,7 +529,7 @@ gimp_display_shell_filter_dialog_new (GimpDisplayShell *shell)
 {
   ColorDisplayDialog *cdd;
   GType              *filter_types;
-  gint                n_filter_types;
+  guint               n_filter_types;
   gint                i;
 
   cdd = g_new0 (ColorDisplayDialog, 1);

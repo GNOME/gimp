@@ -1230,7 +1230,7 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
       GdkColor    fg;
       GdkColor    bg;
 
-      const gchar stipple[] =
+      const guchar stipple[] =
       {
 	0xF0,    /*  ####----  */
 	0xE1,    /*  ###----#  */
@@ -1255,7 +1255,8 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
 
         values.fill = GDK_OPAQUE_STIPPLED;
         values.stipple = gdk_bitmap_create_from_data (shell->canvas->window,
-                                                      (gchar *) stipple, 8, 1);
+                                                      (const gchar *) stipple,
+                                                      8, 1);
         normal_hgc = gdk_gc_new_with_values (shell->canvas->window, &values,
                                              GDK_GC_FILL |
                                              GDK_GC_STIPPLE);
@@ -1265,7 +1266,8 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
 
         values.fill = GDK_OPAQUE_STIPPLED;
         values.stipple = gdk_bitmap_create_from_data (shell->canvas->window,
-                                                      (gchar *) stipple, 1, 8);
+                                                      (const gchar *) stipple,
+                                                      1, 8);
         normal_vgc = gdk_gc_new_with_values (shell->canvas->window, &values,
                                              GDK_GC_FILL |
                                              GDK_GC_STIPPLE);
@@ -1285,7 +1287,8 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
 
         values.fill = GDK_OPAQUE_STIPPLED;
         values.stipple = gdk_bitmap_create_from_data (shell->canvas->window,
-                                                      (gchar *) stipple, 8, 1);
+                                                      (const gchar *) stipple,
+                                                      8, 1);
         active_hgc = gdk_gc_new_with_values (shell->canvas->window, &values,
                                              GDK_GC_FILL |
                                              GDK_GC_STIPPLE);
@@ -1295,7 +1298,8 @@ gimp_display_shell_draw_guide (GimpDisplayShell *shell,
 
         values.fill = GDK_OPAQUE_STIPPLED;
         values.stipple = gdk_bitmap_create_from_data (shell->canvas->window,
-                                                      (gchar *) stipple, 1, 8);
+                                                      (const gchar *) stipple,
+                                                      1, 8);
         active_vgc = gdk_gc_new_with_values (shell->canvas->window, &values,
                                              GDK_GC_FILL |
                                              GDK_GC_STIPPLE);
@@ -1349,7 +1353,7 @@ gimp_display_shell_draw_guides (GimpDisplayShell *shell)
       GList     *list;
       GimpGuide *guide;
 
-      for (list = shell->gdisp->gimage->guides; list; list = g_list_next (list))
+      for (list = shell->gdisp->gimage->guides; list; list = list->next)
 	{
 	  guide = (GimpGuide *) list->data;
 

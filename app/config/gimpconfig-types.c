@@ -205,7 +205,7 @@ memsize_to_string (const GValue *src_value,
     str = g_strdup_printf ("%lu", size);
 
   g_value_set_string_take_ownership (dest_value, str);
-};
+}
 
 static void
 string_to_memsize (const GValue *src_value,
@@ -215,7 +215,7 @@ string_to_memsize (const GValue *src_value,
 
   if (!str || !gimp_memsize_set_from_string (dest_value, str))
     g_warning ("Can't convert string to GimpMemsize.");
-};
+}
 
 
 static void
@@ -225,7 +225,7 @@ unit_to_string (const GValue *src_value,
   GimpUnit unit = (GimpUnit) g_value_get_int (src_value);
 
   g_value_set_string (dest_value, gimp_unit_get_identifier (unit));
-};
+}
 
 static void
 string_to_unit (const GValue *src_value,
@@ -254,4 +254,4 @@ string_to_unit (const GValue *src_value,
 
  error:
   g_warning ("Can't convert string to GimpUnit.");
-};
+}

@@ -1,3 +1,35 @@
+2003-07-02  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/edit-commands.c	
+	* app/gui/image-menu.c: added "Fill with Pattern" menu entry as
+	suggested in bug #116365.
+
+	* app/base/temp-buf.c
+	* app/base/tile-swap.c
+	* app/config/gimpbaseconfig.c
+	* app/config/gimpconfig-types.c
+	* app/display/gimpdisplayshell-filter-dialog.c
+	* app/display/gimpdisplayshell.c
+	* app/file/file-utils.c
+	* app/paint-funcs/paint-funcs-types.h
+	* app/tools/gimpdrawtool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimpiscissorstool.h
+	* app/tools/gimptextoptions.c
+	* app/paint-funcs/paint-funcs-types.h
+	* app/vectors/gimpbezierstroke.c
+	* app/vectors/gimpstroke.c
+	* app/vectors/gimpvectors.c	
+	* app/vectors/vectors-types.h
+	* libgimp/gimpbrushmenu.c
+	* libgimp/gimpmisc.h	
+	* libgimpmodule/gimpmodule.c: fixed some minor issues found
+	compiling with -pedantic.
+
+	* app/pdb/misc_tools_cmds.c
+	* tools/pdbgen/pdb/misc_tools.pdb: adapt to the changed order of
+	arguments for gimp_image_pick_color().
+
 2003-07-02  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpbase/gimpbasetypes.h: changed GimpDatafileLoaderFunc to

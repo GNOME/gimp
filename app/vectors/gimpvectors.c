@@ -221,7 +221,7 @@ gimp_vectors_init (GimpVectors *vectors)
 {
   vectors->strokes      = NULL;
   vectors->freeze_count = 0;
-};
+}
 
 static void
 gimp_vectors_finalize (GObject *object)
@@ -807,7 +807,7 @@ gimp_vectors_anchor_delete (GimpVectors *vectors,
   g_return_if_fail (GIMP_IS_VECTORS (vectors));
   g_return_if_fail (anchor != NULL);
 
-  return GIMP_VECTORS_GET_CLASS (vectors)->anchor_delete (vectors, anchor);
+  GIMP_VECTORS_GET_CLASS (vectors)->anchor_delete (vectors, anchor);
 }
 
 static void

@@ -970,7 +970,7 @@ ink_paste (GimpInkTool  *ink_tool,
   GimpContext *context;
   PixelRegion  srcPR;
   gint         offx, offy;
-  gchar        col[MAX_CHANNELS];
+  guchar       col[MAX_CHANNELS];
 
   if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
     return;

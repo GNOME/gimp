@@ -143,7 +143,7 @@ static void
 gimp_bezier_stroke_init (GimpBezierStroke *bezier_stroke)
 {
   /* pass */
-};
+}
 
 static void
 gimp_bezier_stroke_finalize (GObject *object)

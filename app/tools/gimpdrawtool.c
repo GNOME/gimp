@@ -174,10 +174,15 @@ gimp_draw_tool_control (GimpTool       *tool,
 static void
 gimp_draw_tool_draw (GimpDrawTool *draw_tool)
 {
-  if (draw_tool->gdisp)
-    {
+  if (draw_tool->draw_state == GIMP_DRAW_TOOL_STATE_VISIBLE)
+    draw_tool->draw_state = GIMP_DRAW_TOOL_STATE_INVISIBLE;
+  else
+    draw_tool->draw_state = GIMP_DRAW_TOOL_STATE_VISIBLE;
+
+ if (draw_tool->gdisp)
+   {
       GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
-    }
+   }
 }
 
 void
@@ -210,8 +215,6 @@ gimp_draw_tool_start (GimpDrawTool *draw_tool,
                               draw_tool->join_style);
 
   gimp_draw_tool_draw (draw_tool);
-
-  draw_tool->draw_state = GIMP_DRAW_TOOL_STATE_VISIBLE;
 }
 
 void
@@ -224,7 +227,6 @@ gimp_draw_tool_stop (GimpDrawTool *draw_tool)
       gimp_draw_tool_draw (draw_tool);
     }
 
-  draw_tool->draw_state   = GIMP_DRAW_TOOL_STATE_INVISIBLE;
   draw_tool->paused_count = 0;
 
   draw_tool->gdisp = NULL;
@@ -252,8 +254,6 @@ gimp_draw_tool_pause (GimpDrawTool *draw_tool)
 
   if (draw_tool->paused_count == 0)
     {
-      draw_tool->draw_state = GIMP_DRAW_TOOL_STATE_INVISIBLE;
-
       gimp_draw_tool_draw (draw_tool);
     }
 
@@ -271,8 +271,6 @@ gimp_draw_tool_resume (GimpDrawTool *draw_tool)
 
       if (draw_tool->paused_count == 0)
         {
-          draw_tool->draw_state = GIMP_DRAW_TOOL_STATE_VISIBLE;
-
           gimp_draw_tool_draw (draw_tool);
         }
     }

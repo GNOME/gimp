@@ -360,12 +360,12 @@ file_convert_string (gchar *instr,
 		     gint  *nmem)
 {
   /* Convert a string in C-notation to array of char */
-  guchar *uin = (guchar *) instr;
+  guchar *uin  = (guchar *) instr;
   guchar *uout = (guchar *) outmem;
   guchar  tmp[5], *tmpptr;
-  gint    k;
+  guint   k;
 
-  while ((*uin != '\0') && ((((char *)uout) - outmem) < maxmem))
+  while ((*uin != '\0') && ((((gchar *) uout) - outmem) < maxmem))
     {
       if (*uin != '\\')   /* Not an escaped character ? */
         {
@@ -388,7 +388,7 @@ file_convert_string (gchar *instr,
                   break;
               }
             *tmpptr = '\0';
-            sscanf ((char *)tmp, "%o", &k);
+            sscanf ((gchar *) tmp, "%o", &k);
             *(uout++) = k;
             break;
 
@@ -462,7 +462,7 @@ file_check_single_magic (gchar  *offset,
       if (g_ascii_isdigit (num_operator_ptr[1]))
         {
           if (num_operator_ptr[1] != '0')      /* decimal */
-            sscanf (num_operator_ptr+1, "%ld", &num_operatorval);
+            sscanf (num_operator_ptr+1, "%lu", &num_operatorval);
           else if (num_operator_ptr[2] == 'x') /* hexadecimal */
             sscanf (num_operator_ptr+3, "%lx", &num_operatorval);
           else                                 /* octal */

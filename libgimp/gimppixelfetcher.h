@@ -35,7 +35,7 @@ enum
 {
   PIXEL_WRAP,
   PIXEL_SMEAR,
-  PIXEL_BLACK,
+  PIXEL_BLACK
 };
 
 typedef struct _GimpPixelFetcher GimpPixelFetcher;

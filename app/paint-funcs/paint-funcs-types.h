@@ -40,7 +40,7 @@ typedef enum /*< pdb-skip >*/
   INITIAL_INDEXED,
   INITIAL_INDEXED_ALPHA,
   INITIAL_INTENSITY,
-  INITIAL_INTENSITY_ALPHA,
+  INITIAL_INTENSITY_ALPHA
 } InitialMode;
 
 /*  Combine two source regions with the help of an optional mask
@@ -70,7 +70,7 @@ typedef enum /*< pdb-skip >*/
   ERASE_INDEXED,
   ANTI_ERASE_INTEN,
   ANTI_ERASE_INDEXED,
-  COLOR_ERASE_INTEN,
+  COLOR_ERASE_INTEN
 } CombinationMode;
 
 

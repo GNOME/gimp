@@ -395,12 +395,12 @@ color_picker_invoker (Gimp     *gimp,
       if (success)
 	success = gimp_image_pick_color (gimage,
 					 drawable,
-					 sample_merged,
 					 (gint) x, (gint) y,
+					 sample_merged,
 					 sample_average,
 					 average_radius,
-					 &color,
 					 NULL,
+					 &color,
 					 NULL);
     }
 

@@ -30,7 +30,7 @@ typedef struct _GimpAnchor GimpAnchor;
 typedef enum
 {
   GIMP_ANCHOR_ANCHOR,
-  GIMP_ANCHOR_CONTROL,
+  GIMP_ANCHOR_CONTROL
 } GimpAnchorType;
 
 typedef enum
@@ -38,13 +38,13 @@ typedef enum
   GIMP_ANCHOR_FEATURE_NONE,
   GIMP_ANCHOR_FEATURE_EDGE,
   GIMP_ANCHOR_FEATURE_ALIGNED,
-  GIMP_ANCHOR_FEATURE_SYMMETRIC,
+  GIMP_ANCHOR_FEATURE_SYMMETRIC
 } GimpAnchorFeatureType;
 
 typedef enum
 {
   EXTEND_SIMPLE,
-  EXTEND_EDITABLE,
+  EXTEND_EDITABLE
 } GimpVectorExtendMode;
 
 typedef struct _GimpStroke            GimpStroke;
