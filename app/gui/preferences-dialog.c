@@ -1543,21 +1543,20 @@ preferences_dialog_create (void)
   old_tile_cache_size = edit_tile_cache_size;
 
   /* Create the dialog */
-  prefs_dlg =
-    gimp_dialog_new (_("Preferences"), "gimp_preferences",
-		     prefs_help_func,
-		     "dialogs/preferences/preferences.html",
-		     GTK_WIN_POS_NONE,
-		     FALSE, TRUE, FALSE,
+  prefs_dlg = gimp_dialog_new (_("Preferences"), "gimp_preferences",
+                               prefs_help_func,
+                               "dialogs/preferences/preferences.html",
+                               GTK_WIN_POS_NONE,
+                               FALSE, TRUE, FALSE,
 
-		     GTK_STOCK_OK, prefs_ok_callback,
-		     NULL, NULL, NULL, TRUE, FALSE,
-		     GTK_STOCK_SAVE, prefs_save_callback,
-		     NULL, NULL, NULL, FALSE, FALSE,
-		     GTK_STOCK_CANCEL, prefs_cancel_callback,
-		     NULL, NULL, NULL, FALSE, TRUE,
+                               GTK_STOCK_OK, prefs_ok_callback,
+                               NULL, NULL, NULL, TRUE, FALSE,
+                               GTK_STOCK_SAVE, prefs_save_callback,
+                               NULL, NULL, NULL, FALSE, FALSE,
+                               GTK_STOCK_CANCEL, prefs_cancel_callback,
+                               NULL, NULL, NULL, FALSE, TRUE,
 
-		     NULL);
+                               NULL);
 
   /* The main hbox */
   hbox = gtk_hbox_new (FALSE, 6);
@@ -1566,6 +1565,11 @@ preferences_dialog_create (void)
   gtk_widget_show (hbox);
 
   /* The categories tree */
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
   tree = gtk_tree_store_new (2, G_TYPE_STRING, G_TYPE_INT);
   tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (tree));
   g_object_unref (G_OBJECT (tree));
@@ -1575,7 +1579,7 @@ preferences_dialog_create (void)
 					       gtk_cell_renderer_text_new (),
 					       "text", 0, NULL);
 
-  gtk_box_pack_start (GTK_BOX (hbox), tv, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), tv);
 
   /* The main preferences notebook */
   frame = gtk_frame_new (NULL);

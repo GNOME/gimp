@@ -1,3 +1,11 @@
+2001-09-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/preferences-dialog.c: added a frame around the tree.
+
+	* app/widgets/gimphistogramview.c: forgot to pass the "detail" to
+	g_signal_emit(). Should fix the histogram tool. Thanks to Seth for
+	debugging.
+
 2001-09-28  Wang Jian  <lark@linux.net.cn>
 
 	* configure.in(ALL_LINGUAS): Added zh_CN

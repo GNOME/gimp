@@ -216,7 +216,7 @@ histogram_widget_events (HistogramWidget *histogram,
       gdk_pointer_ungrab (bevent->time);
 
       g_signal_emit (G_OBJECT(histogram),
-                     histogram_widget_signals[RANGE_CHANGED],
+                     histogram_widget_signals[RANGE_CHANGED], 0,
                      MIN (histogram->start, histogram->end),
                      MAX (histogram->start, histogram->end));
       break;
@@ -274,7 +274,7 @@ histogram_widget_update (HistogramWidget *histogram_widget,
 
   /*  Give a range callback  */
   g_signal_emit (G_OBJECT (histogram_widget),
-                 histogram_widget_signals[RANGE_CHANGED],
+                 histogram_widget_signals[RANGE_CHANGED], 0,
                  MIN (histogram_widget->start, histogram_widget->end),
                  MAX (histogram_widget->start, histogram_widget->end));
 }
@@ -301,7 +301,7 @@ histogram_widget_channel (HistogramWidget *histogram,
 
   /*  Give a range callback  */
   g_signal_emit (G_OBJECT (histogram),
-                 histogram_widget_signals[RANGE_CHANGED],
+                 histogram_widget_signals[RANGE_CHANGED], 0,
                  MIN (histogram->start, histogram->end),
                  MAX (histogram->start, histogram->end));
 }
