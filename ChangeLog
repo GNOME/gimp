@@ -1,3 +1,8 @@
+2004-09-12  Nathan Summers  <rock@gimp.org>
+
+	* app/tools/gimpcroptool.c: disable crop and resize buttons while the 
+	operation is being processed.  Fixes #152372.
+
 2004-09-12  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/aa.c (aa_dialog): use a combo box for format
