@@ -41,12 +41,15 @@ EXTRA_DIST = \
 	pixmaps/duplicate.xpm	\
 	pixmaps/eek.xpm		\
 	pixmaps/eye.xbm		\
+	pixmaps/first.xpm	\
+	pixmaps/last.xpm	\
 	pixmaps/layer.xbm	\
 	pixmaps/linked.xbm	\
 	pixmaps/locked.xbm	\
 	pixmaps/lower.xpm	\
 	pixmaps/mask.xbm	\
 	pixmaps/navbutton.xpm	\
+	pixmaps/next.xpm	\
 	pixmaps/new.xpm		\
 	pixmaps/no.xpm		\
 	pixmaps/raise.xpm	\
@@ -56,11 +59,14 @@ EXTRA_DIST = \
 	pixmaps/penedit.xpm	\
 	pixmaps/pennorm.xpm	\
 	pixmaps/penstroke.xpm	\
+	pixmaps/play.xpm	\
+	pixmaps/prev.xpm	\
 	pixmaps/qmasksel.xpm	\
 	pixmaps/qmasknosel.xpm	\
 	pixmaps/question.xpm	\
 	pixmaps/topath.xpm	\
 	pixmaps/toselection.xpm	\
+	pixmaps/update.xpm      \
 	pixmaps/yes.xpm         \
 	pixmaps/zoom_in.xpm	\
 	pixmaps/zoom_out.xpm	\

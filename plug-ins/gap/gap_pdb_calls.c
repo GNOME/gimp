@@ -5,7 +5,7 @@
  * IMPORTANT Notes:
  *   some Procedures have changed their Interface from GIMP 1.0.2 to GIMP 1.1
  *   in that cases the procedure parameters are checked and the call is done
- *   in 1.0.2 or 1.1 style repectivly.
+ *   in 1.0.2 or 1.1 style respectivly.
  *
  *   some of these procedures are not available in the official GIMP 1.0.2 releases
  *   (and prior releases)
@@ -37,6 +37,8 @@
  */
 
 /* revision history:
+ * version 1.1.14a; 2000/01/09  hof: thumbnail save/load,
+ *                              Procedures for video_info file
  * version 0.98.00; 1998/11/28  hof: 1.st (pre) release (GAP port to GIMP 1.1)
  */
 #include <stdio.h>
@@ -833,3 +835,263 @@ gint   p_gimp_drawable_set_image(gint32 drawable_id, gint32 image_id)
    return(-1);
 }	/* end p_gimp_drawable_set_image */
 
+/* ============================================================================
+ * p_gimp_gimprc_query
+ *   
+ * ============================================================================
+ */
+char*
+p_gimp_gimprc_query(char *key)
+{
+  GParam *return_vals;
+  gint nreturn_vals;
+  char *value;
+
+  return_vals = gimp_run_procedure ("gimp_gimprc_query",
+				    &nreturn_vals,
+				    PARAM_STRING, key,
+				    PARAM_END);
+
+  value = NULL;
+  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  {
+      if(return_vals[1].data.d_string != NULL)
+      {
+        value = g_strdup(return_vals[1].data.d_string);
+      }
+  }
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return(value);
+}
+
+
+/* ============================================================================
+ * p_gimp_file_save_thumbnail
+ *   
+ * ============================================================================
+ */
+
+gint
+p_gimp_file_save_thumbnail(gint32 image_id, char* filename)
+{
+   static char     *l_called_proc = "gimp_file_save_thumbnail";
+   GParam          *return_vals;
+   int              nreturn_vals;
+
+   if (p_pdb_procedure_available(l_called_proc) >= 0)
+   {
+      return_vals = gimp_run_procedure (l_called_proc,
+                                    &nreturn_vals,
+                                    PARAM_IMAGE,     image_id,
+				    PARAM_STRING,    filename,
+                                    PARAM_END);
+                                    
+      if (return_vals[0].data.d_status == STATUS_SUCCESS)
+      {
+         return (0);
+      }
+      printf("GAP: Error: PDB call of %s failed\n", l_called_proc);
+   }
+   else
+   {
+      printf("GAP: Warning: Procedure %s not found. %s\n",
+                          l_called_proc,
+			  "(cannot save thumbnails)");
+   }
+   return(-1);
+}	/* end p_gimp_file_save_thumbnail */
+
+/* ============================================================================
+ * p_gimp_file_load_thumbnail
+ *   
+ * ============================================================================
+ */
+
+gint
+p_gimp_file_load_thumbnail(char* filename, gint32 *th_width, gint32 *th_height, unsigned char **th_data)
+{
+   static char     *l_called_proc = "gimp_file_load_thumbnail";
+   GParam          *return_vals;
+   int              nreturn_vals;
+   int              bytesize;
+   unsigned  char  *l_ptr;
+
+   *th_data = NULL;
+   if (p_pdb_procedure_available(l_called_proc) >= 0)
+   {
+      return_vals = gimp_run_procedure (l_called_proc,
+                                    &nreturn_vals,
+ 				    PARAM_STRING,    filename,
+                                    PARAM_END);
+                                    
+      if (return_vals[0].data.d_status == STATUS_SUCCESS)
+      {
+         *th_width = return_vals[1].data.d_int32;
+         *th_height = return_vals[2].data.d_int32;
+	 l_ptr = return_vals[3].data.d_int8array;
+
+	 bytesize = 3 * (*th_width) * (*th_height);
+         *th_data  = g_malloc(bytesize);
+	 if((*th_data != NULL) && (l_ptr != NULL))
+	 {
+
+           /* BUG in the PDB Interface in gimp.1.1.14
+	    *   the return_vals[3].data.d_int8array does NOT really point
+	    *   to the thumbnail data (as it should)
+	    *   and we retrieve only NONSENSE DATA here.
+	    *
+	    *  (maybe we need an additional data length parameter
+	    *   as it is usual for array parameter passing ?)
+	    */
+
+	   memcpy(*th_data, l_ptr, bytesize);
+           return (0);
+	 }
+      }
+      printf("GAP: Error: PDB call of %s failed\n", l_called_proc);
+   }
+   else
+   {
+      printf("GAP: Warning: Procedure %s not found. %s\n",
+                          l_called_proc,
+			  "(cannot load thumbnails)");
+   }
+   return(-1);
+}	/* end p_gimp_file_load_thumbnail */
+
+
+
+gint   p_gimp_image_thumbnail(gint32 image_id, gint32 width, gint32 height,
+                              gint32 *th_width, gint32 *th_height, gint32 *th_bpp,
+			      gint32 *th_data_count, unsigned char **th_data)
+{
+   static char     *l_called_proc = "gimp_image_thumbnail";
+   GParam          *return_vals;
+   int              nreturn_vals;
+   unsigned  char  *l_ptr;
+   gint32          *l_ptr32;
+
+   *th_data = NULL;
+   if (p_pdb_procedure_available(l_called_proc) >= 0)
+   {
+      return_vals = gimp_run_procedure (l_called_proc,
+                                    &nreturn_vals,
+ 				    PARAM_IMAGE,    image_id,
+ 				    PARAM_INT32,    width,
+ 				    PARAM_INT32,    height,
+                                    PARAM_END);
+                                    
+      if (return_vals[0].data.d_status == STATUS_SUCCESS)
+      {
+         *th_width  = return_vals[1].data.d_int32;
+         *th_height = return_vals[2].data.d_int32;
+         *th_bpp    = return_vals[3].data.d_int32;
+         *th_data_count = return_vals[4].data.d_int32;
+	 l_ptr = return_vals[5].data.d_int8array;
+
+         *th_data  = g_malloc(*th_data_count);
+	 if((*th_data != NULL) && (l_ptr != NULL))
+	 {
+	   memcpy(*th_data, l_ptr, *th_data_count);
+           return (0);
+	 }
+      }
+      printf("GAP: Error: PDB call of %s failed\n", l_called_proc);
+   }
+   else
+   {
+      printf("GAP: Warning: Procedure %s not found. %s\n",
+                          l_called_proc,
+			  "(cannot get image thumbnail)");
+   }
+   return(-1);
+}	/* end p_gimp_image_thumbnail */
+
+
+/* ============================================================================
+ * Procedures to get/set the video_info_file 
+ * ============================================================================
+ */
+
+char *
+p_alloc_video_info_name(char *basename)
+{
+  int   l_len;
+  char *l_str;
+
+  if(basename == NULL)
+  {
+    return(NULL);
+  }
+
+  l_len = strlen(basename);
+  l_str = g_malloc(l_len+8);
+  
+  sprintf(l_str, "%svin.gap", basename);
+  return(l_str);
+}
+
+int
+p_set_video_info(t_video_info *vin_ptr, char *basename)
+{
+  FILE *l_fp;
+  char  *l_vin_filename;
+  int   l_rc;
+    
+  l_rc = -1;
+  l_vin_filename = p_alloc_video_info_name(basename);
+  if(l_vin_filename)
+  {
+      l_fp = fopen(l_vin_filename, "w");
+      if(l_fp)
+      {
+         fprintf(l_fp, "# GIMP / GAP Videoinfo file\n");
+         fprintf(l_fp, "(framerate %f) # 1.0 upto 100.0 frames per sec\n", (float)vin_ptr->framerate);
+         fprintf(l_fp, "(timezoom %d)  # 1 upto 100 frames\n", (int)vin_ptr->timezoom );
+         fclose(l_fp);
+         l_rc = 0;
+       }
+       g_free(l_vin_filename);
+  }
+  return(l_rc);
+}
+
+t_video_info *
+p_get_video_info(char *basename)
+{
+  FILE *l_fp;
+  char  *l_vin_filename;
+  t_video_info *l_vin_ptr;
+  char         l_buf[4000];
+  int   l_len;
+  
+  l_vin_ptr = g_malloc(sizeof(t_video_info));
+  l_vin_ptr->timezoom = 1;
+  l_vin_ptr->framerate = 24.0;
+  
+  l_vin_filename = p_alloc_video_info_name(basename);
+  if(l_vin_filename)
+  {
+     l_fp = fopen(l_vin_filename, "r");
+     if(l_fp)
+     {
+       while(NULL != fgets(l_buf, 4000-1, l_fp))
+       {
+ 	  l_len = strlen("(framerate ");
+	  if(strncmp(l_buf, "(framerate ", l_len) == 0)
+	  {
+	     l_vin_ptr->framerate = atof(&l_buf[l_len]);
+	  }
+	  l_len = strlen("(timezoom ");
+	  if (strncmp(l_buf, "(timezoom ", l_len ) == 0)
+	  {
+	     l_vin_ptr->timezoom = atol(&l_buf[l_len]);
+	  }
+       }
+       fclose(l_fp);
+     }
+     g_free(l_vin_filename);
+  }
+  return(l_vin_ptr);
+}

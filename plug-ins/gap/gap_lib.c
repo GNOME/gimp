@@ -28,6 +28,8 @@
  */
 
 /* revision history:
+ * 1.1.14a; 1999/12/18   hof: handle .xvpics on fileops (copy, rename and delete)
+ *                            new: p_get_frame_nr,
  * 1.1.9a;  1999/09/14   hof: handle frame filenames with framenumbers
  *                            that are not the 4digit style. (like frame1.xcf)
  * 1.1.8a;  1999/08/31   hof: for AnimFrame Filtypes != XCF:
@@ -53,7 +55,7 @@
  */
 #include "config.h"
  
-/* SYTEM (UNIX) includes */ 
+/* SYSTEM (UNIX) includes */ 
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -89,8 +91,8 @@
 /* GAP includes */
 #include "gap_layer_copy.h"
 #include "gap_lib.h"
+#include "gap_pdb_calls.h"
 #include "gap_arr_dialog.h"
-#include "gap_mov_dialog.h"
 #include "gap_exchange_image.h"
 
 extern      int gap_debug; /* ==0  ... dont print debug infos */
@@ -107,6 +109,43 @@ static int   p_rename_frame(t_anim_info *ainfo_ptr, long from_nr, long to_nr);
 static int   p_delete_frame(t_anim_info *ainfo_ptr, long nr);
 static int   p_del(t_anim_info *ainfo_ptr, long cnt);
 static int   p_decide_save_as(gint32 image_id, char *sav_name);
+
+/* ============================================================================
+ * p_alloc_fname_thumbnail
+ *   return the thumbnail name (in .xvpics subdir)
+ *   for the given filename
+ * ============================================================================
+ */
+char *
+p_alloc_fname_thumbnail(char *name)
+{
+  int   l_len;
+  int   l_idx;
+  char *l_str;
+  
+  if(name == NULL)
+  {
+    return(g_strdup("\0"));
+  }
+
+  l_len = strlen(name);
+  l_str = g_malloc(l_len+10);
+  strcpy(l_str, name);
+  if(l_len > 0)
+  {
+     for(l_idx = l_len -1; l_idx > 0; l_idx--)
+     {
+        if((name[l_idx] == G_DIR_SEPARATOR) || (name[l_idx] == DIR_ROOT))
+	{
+	   l_idx++;
+	   break;
+	}
+     }
+     sprintf(&l_str[l_idx], ".xvpics%s%s", G_DIR_SEPARATOR_S, &name[l_idx]);      
+  }
+  if(gap_debug) printf("p_alloc_fname_thumbnail: thumbname=%s:\n", l_str );
+  return(l_str);
+}
 
 /* ============================================================================
  * p_strdup_*_underscore
@@ -227,6 +266,32 @@ int p_file_exists(char *fname)
 }	/* end p_file_exists */
 
 /* ============================================================================
+ * p_image_file_copy
+ *    (copy the imagefile and its thumbnail)
+ * ============================================================================
+ */
+int p_image_file_copy(char *fname, char *fname_copy)
+{
+   char          *l_from_fname_thumbnail;
+   char          *l_to_fname_thumbnail;
+   int            l_rc;
+
+   l_from_fname_thumbnail = p_alloc_fname_thumbnail(fname);
+   l_to_fname_thumbnail = p_alloc_fname_thumbnail(fname_copy);
+   
+   l_rc = p_file_copy(fname, fname_copy);
+   if((l_from_fname_thumbnail) 
+   && (l_to_fname_thumbnail))
+   {
+     p_file_copy(l_from_fname_thumbnail, l_to_fname_thumbnail);
+   }
+   
+   if(l_from_fname_thumbnail) g_free(l_from_fname_thumbnail);
+   if(l_to_fname_thumbnail) g_free(l_to_fname_thumbnail);
+   return(l_rc);
+}
+
+/* ============================================================================
  * p_file_copy
  * ============================================================================
  */
@@ -293,15 +358,23 @@ int p_file_copy(char *fname, char *fname_copy)
 int p_delete_frame(t_anim_info *ainfo_ptr, long nr)
 {
    char          *l_fname;
+   char          *l_fname_thumbnail;
    int            l_rc;
    
    l_fname = p_alloc_fname(ainfo_ptr->basename, nr, ainfo_ptr->extension);
    if(l_fname == NULL) { return(1); }
+
+   l_fname_thumbnail = p_alloc_fname_thumbnail(l_fname);
+   if(l_fname_thumbnail == NULL) { return(1); }
      
    if(gap_debug) fprintf(stderr, "\nDEBUG p_delete_frame: %s\n", l_fname);
    l_rc = remove(l_fname);
+     
+   if(gap_debug) fprintf(stderr, "\nDEBUG p_delete_frame: %s\n", l_fname_thumbnail);
+   remove(l_fname_thumbnail);
    
    g_free(l_fname);
+   g_free(l_fname_thumbnail);
    
    return(l_rc);
    
@@ -315,6 +388,8 @@ int p_rename_frame(t_anim_info *ainfo_ptr, long from_nr, long to_nr)
 {
    char          *l_from_fname;
    char          *l_to_fname;
+   char          *l_from_fname_thumbnail;
+   char          *l_to_fname_thumbnail;
    int            l_rc;
    
    l_from_fname = p_alloc_fname(ainfo_ptr->basename, from_nr, ainfo_ptr->extension);
@@ -323,12 +398,22 @@ int p_rename_frame(t_anim_info *ainfo_ptr, long from_nr, long to_nr)
    l_to_fname = p_alloc_fname(ainfo_ptr->basename, to_nr, ainfo_ptr->extension);
    if(l_to_fname == NULL) { g_free(l_from_fname); return(1); }
    
+   l_from_fname_thumbnail = p_alloc_fname_thumbnail(l_from_fname);
+   if(l_from_fname_thumbnail == NULL) { return(1); }
+   
+   l_to_fname_thumbnail = p_alloc_fname_thumbnail(l_to_fname);
+   if(l_to_fname_thumbnail == NULL) { g_free(l_from_fname_thumbnail); return(1); }
+   
      
    if(gap_debug) fprintf(stderr, "\nDEBUG p_rename_frame: %s ..to.. %s\n", l_from_fname, l_to_fname);
    l_rc = rename(l_from_fname, l_to_fname);
+   if(gap_debug) fprintf(stderr, "\nDEBUG p_rename_frame: %s ..to.. %s\n", l_from_fname_thumbnail, l_to_fname_thumbnail);
+   rename(l_from_fname_thumbnail, l_to_fname_thumbnail);
    
    g_free(l_from_fname);
    g_free(l_to_fname);
+   g_free(l_from_fname_thumbnail);
+   g_free(l_to_fname_thumbnail);
    
    return(l_rc);
    
@@ -728,6 +813,52 @@ void p_free_ainfo(t_anim_info **ainfo)
 
 
 /* ============================================================================
+ * p_get_frame_nr
+ * ============================================================================
+ */
+long
+p_get_frame_nr_from_name(char *fname)
+{
+  long number;
+  int  len;
+  char *basename;
+  if(fname == NULL) return(-1);
+  
+  basename = p_alloc_basename(fname, &number);
+  if(basename == NULL) return(-1);
+  
+  len = strlen(basename);
+  g_free(basename);
+  
+  if(number > 0)  return(number);
+
+  if(fname[len]  == '0') return(number);
+/*
+ *   if(fname[len]  == '_')
+ *   {
+ *     if(fname[len+1]  == '0') return(TRUE);
+ *   }
+ */
+  return(-1);
+}
+
+long
+p_get_frame_nr(gint32 image_id)
+{
+  char *fname;
+  long  number;
+  
+  number = -1;
+  fname = gimp_image_get_filename(image_id);
+  if(fname)
+  {
+     number = p_get_frame_nr_from_name(fname);
+     g_free(fname);
+  }
+  return (number);
+}
+
+/* ============================================================================
  * p_chk_framechange
  *
  * check if the current frame nr has changed. 
@@ -948,6 +1079,8 @@ gint32 p_save_named_image(gint32 image_id, char *sav_name, GRunModeType run_mode
 
   if(gap_debug) fprintf(stderr, "DEBUG: after    p_save_named_image: '%s' nlayers=%d image=%d drw=%d run_mode=%d\n", sav_name, (int)l_nlayers, (int)image_id, (int)l_drawable->id, (int)run_mode);
 
+  p_gimp_file_save_thumbnail(image_id, sav_name);
+
   g_free (l_layers_list);
   g_free (l_drawable);
 
@@ -1104,7 +1237,10 @@ int p_save_named_frame(gint32 image_id, char *sav_name)
          * so lets try a  copy ; remove sequence
          */
          if(gap_debug) fprintf(stderr, "DEBUG: p_save_named_frame: RENAME 2nd try\n");
-         if(0 == p_file_copy(l_tmpname, sav_name))  remove(l_tmpname);
+         if(0 == p_file_copy(l_tmpname, sav_name))
+	 {
+	    remove(l_tmpname);
+	 }
          else
          {
             fprintf(stderr, "ERROR in p_save_named_frame: cant rename %s to %s\n",
@@ -1124,6 +1260,8 @@ int p_save_named_frame(gint32 image_id, char *sav_name)
        remove(l_tmpname);
     }
   }
+
+  p_gimp_file_save_thumbnail(image_id, sav_name);
 
   g_free(l_tmpname);  /* free temporary name */
 
@@ -1461,6 +1599,7 @@ int p_dup(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
    l_hi   = l_lo + l_cnt2;
    while(l_lo > l_src_nr_max)
    {
+     sprintf(g_errtxt, "BEFORE rename frame %ld to %ld\n", l_lo, l_hi);
      if(0 != p_rename_frame(ainfo_ptr, l_lo, l_hi))
      {
         sprintf(g_errtxt, "Error: could not rename frame %ld to %ld\n", l_lo, l_hi);
@@ -1487,7 +1626,7 @@ int p_dup(t_anim_info *ainfo_ptr, long cnt, long range_from, long range_to)
       l_dup_name = p_alloc_fname(ainfo_ptr->basename, l_hi, ainfo_ptr->extension);
       if((l_dup_name != NULL) && (l_curr_name != NULL))
       {
-         p_file_copy(l_curr_name, l_dup_name);
+         p_image_file_copy(l_curr_name, l_dup_name);
          g_free(l_dup_name);
          g_free(l_curr_name);
       }

@@ -99,6 +99,7 @@ libexec_PROGRAMS = \
 	gap_plugins		\
 	gap_filter		\
 	gap_frontends		\
+	gap_navigator_dialog	\
 	$(GAP_DECODE_MPEG)
 
 EXTRA_PROGRAMS = \
@@ -181,6 +182,20 @@ gap_decode_mpeg_SOURCES = \
 	gap_arr_dialog.h	\
 	gap_pdb_calls.c		\
 	gap_pdb_calls.h
+
+
+gap_navigator_dialog_SOURCES = \
+	gap_navigator_dialog.c	\
+	gap_lib.c		\
+	gap_lib.h		\
+	gap_arr_dialog.c	\
+	gap_arr_dialog.h	\
+	gap_pdb_calls.c		\
+	gap_pdb_calls.h		\
+	gap_layer_copy.c        \
+	gap_layer_copy.h        \
+	gap_exchange_image.c    \
+	gap_exchange_image.h
 
 
 AM_CPPFLAGS = \

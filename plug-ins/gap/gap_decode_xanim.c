@@ -48,6 +48,7 @@
  */
 
 /* revision history
+ * 1.1.14a;  1999/11/22  hof: fixed gcc warning (too many arguments for format)
  * 1.1.13a;  1999/11/22  hof: first release
  */
  
@@ -545,12 +546,12 @@ p_rename_frames(gint32 frame_from, gint32 frame_to, char *basename, char *ext)
      
      if (strcmp(l_src_frame, l_dst_frame) != 0)
      {
-        /* check overwrire if Destination frame already exsts */
+        /* check overwrite if Destination frame already exsts */
 	l_overwrite_mode = p_overwrite_dialog(l_dst_frame, l_overwrite_mode);
 	if (l_overwrite_mode < 0)
 	{
 	     sprintf(global_errlist,
-	             _("frames are not extracted, because overwrite was cancelled"),
+	             _("frames are not extracted, because overwrite of %s was cancelled"),
 	             l_dst_frame);
 	     return(-1);
 	}

@@ -33,7 +33,8 @@
 #endif
 
 #ifdef DEBUG
-static void parasite_print(Parasite *p)
+static void 
+parasite_print (Parasite *p)
 {
   if (p == NULL)
   {
@@ -53,22 +54,24 @@ static void parasite_print(Parasite *p)
 #endif
 
 Parasite *
-parasite_new (const char *name, guint32 flags,
-	      guint32 size, const void *data)
+parasite_new (const char *name, 
+	      guint32     flags,
+	      guint32     size, 
+	      const void *data)
 {
   Parasite *p;
   p = g_new (Parasite, 1);
   if (name)
-    p->name = g_strdup(name);
+    p->name = g_strdup (name);
   else
-  {
-    g_free (p);
-    return NULL;
-  }
+    {
+      g_free (p);
+      return NULL;
+    }
   p->flags = (flags & 0xFF);
   p->size = size;
   if (size)
-    p->data = g_memdup(data, size);
+    p->data = g_memdup (data, size);
   else
     p->data = NULL;
   return p;
@@ -80,14 +83,15 @@ parasite_free (Parasite *parasite)
   if (parasite == NULL)
     return;
   if (parasite->name)
-    g_free(parasite->name);
+    g_free (parasite->name);
   if (parasite->data)
-    g_free(parasite->data);
-  g_free(parasite);
+    g_free (parasite->data);
+  g_free (parasite);
 }
 
 int
-parasite_is_type (const Parasite *parasite, const char *name)
+parasite_is_type (const Parasite *parasite, 
+		  const char     *name)
 {
   if (!parasite || !parasite->name)
     return FALSE;
@@ -104,7 +108,8 @@ parasite_copy (const Parasite *parasite)
 }
 
 int
-parasite_compare (const Parasite *a, const Parasite *b)
+parasite_compare (const Parasite *a, 
+		  const Parasite *b)
 {
   if (a && b && a->name && b->name && strcmp(a->name, b->name) == 0 &&
       a->flags == b->flags && a->size == b->size )
@@ -118,7 +123,7 @@ parasite_compare (const Parasite *a, const Parasite *b)
 }
 
 gulong
-parasite_flags(const Parasite *p)
+parasite_flags (const Parasite *p)
 {
   if (p == NULL)
     return 0;
@@ -126,7 +131,7 @@ parasite_flags(const Parasite *p)
 }
 
 int
-parasite_is_persistent(const Parasite *p)
+parasite_is_persistent (const Parasite *p)
 {
   if (p == NULL)
     return FALSE;
@@ -134,7 +139,7 @@ parasite_is_persistent(const Parasite *p)
 }
 
 int
-parasite_is_undoable(const Parasite *p)
+parasite_is_undoable (const Parasite *p)
 {
   if (p == NULL)
     return FALSE;
@@ -142,7 +147,8 @@ parasite_is_undoable(const Parasite *p)
 }
 
 int
-parasite_has_flag(const Parasite *p, gulong flag)
+parasite_has_flag (const Parasite *p, 
+		   gulong          flag)
 {
   if (p == NULL)
     return FALSE;
@@ -150,23 +156,28 @@ parasite_has_flag(const Parasite *p, gulong flag)
 }
 
 const char *
-parasite_name(const Parasite *p)
+parasite_name (const Parasite *p)
 {
   if (p)
     return p->name;
   return NULL;
 }
 
-void *parasite_data(const Parasite *p)
+void *
+parasite_data (const Parasite *p)
 {
   if (p)
     return p->data;
   return NULL;
 }
 
-long parasite_data_size(const Parasite *p)
+long 
+parasite_data_size (const Parasite *p)
 {
   if (p)
     return p->size;
   return 0;
 }
+
+
+

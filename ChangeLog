@@ -1,3 +1,35 @@
+Tue Jan 11 01:50:41 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* libgimp/parasite.c
+	* app/gimpparasite.c
+	* app/parasitelist.c: indentation (actually I was searching for a 
+	memleak, but had no luck so far)
+
+	* app/blob.c: raise the maximum image size that will make the ink tool
+	fail to 16384 x 16384  (sort of fixes bug #4464)
+
+	* Makefile.am
+ 	* pixmaps/first.xpm
+ 	* pixmaps/last.xpm
+	* pixmaps/next.xpm
+ 	* pixmaps/play.xpm
+ 	* pixmaps/prev.xpm
+ 	* pixmaps/update.xpm: new icons 
+ 
+	* plug-ins/gap/gap_decode_mpeg_main.c
+	* plug-ins/gap/gap_decode_xanim.c
+	* plug-ins/gap/gap_lib.c
+	* plug-ins/gap/gap_lib.h
+	* plug-ins/gap/gap_main.c
+	* plug-ins/gap/gap_pdb_calls.c
+	* plug-ins/gap/gap_pdb_calls.h
+	* plug-ins/gap/gap_range_ops.c: changes by Wolfgang Hofer
+
+	* plug-ins/gap/Makefile.am
+	* plug-ins/gap/gap_navigator_dialog.c: new GAP VCR Navigator brought 
+	to you by Wolfgang Hofer <hof@hotbot.com>. Needs some work, but is
+	already very nice, IMHO
+
 Mon Jan 10 01:13:02 PST 2000 Manish Singh <yosh@gimp.org>
 
 	* tools/pdbgen/pdb/gimage.pdb: Made appropriate changes to

@@ -36,30 +36,33 @@ static ParasiteList *parasites = NULL;
 void 
 gimp_init_parasites()
 {
-  g_return_if_fail(parasites == NULL);
-  parasites = parasite_list_new();
-  gimp_parasiterc_load();
+  g_return_if_fail (parasites == NULL);
+  parasites = parasite_list_new ();
+  gimp_parasiterc_load ();
 }
 
 void
 gimp_parasite_attach (Parasite *p)
 {
-  parasite_list_add(parasites, p);
+  parasite_list_add (parasites, p);
 }
 
 void
 gimp_parasite_detach (const char *name)
 {
-  parasite_list_remove(parasites, name);
+  parasite_list_remove (parasites, name);
 }
 
 Parasite *
 gimp_parasite_find (const char *name)
 {
-  return parasite_list_find(parasites, name);
+  return parasite_list_find (parasites, name);
 }
 
-static void list_func(char *key, Parasite *p, char ***cur)
+static void 
+list_func (char       *key, 
+	   Parasite   *p, 
+	   char     ***cur)
 {
   *(*cur)++ = (char *) g_strdup (key);
 }
@@ -67,7 +70,7 @@ static void list_func(char *key, Parasite *p, char ***cur)
 char **
 gimp_parasite_list (gint *count)
 {
-  char **list, **cur;
+  gchar **list, **cur;
 
   *count = parasite_list_length (parasites);
   cur = list = (char **) g_malloc (sizeof (char *) * *count);
@@ -77,7 +80,10 @@ gimp_parasite_list (gint *count)
   return list;
 }
 
-static void save_func(char *key, Parasite *p, FILE *fp)
+static void 
+save_func (char     *key, 
+	   Parasite *p, 
+	   FILE     *fp)
 {
   if (parasite_is_persistent (p))
     {
@@ -115,7 +121,7 @@ static void save_func(char *key, Parasite *p, FILE *fp)
 }
 
 void
-gimp_parasiterc_save(void)
+gimp_parasiterc_save (void)
 {
   char *filename;
   FILE *fp;
@@ -135,17 +141,17 @@ gimp_parasiterc_save(void)
   fclose (fp);
 
   if (rename(gimp_personal_rc_file ("#parasiterc.tmp~"),
-	     gimp_personal_rc_file("parasiterc")) != 0)
+	     gimp_personal_rc_file ("parasiterc")) != 0)
     unlink(gimp_personal_rc_file ("#parasiterc.tmp~"));
 }
 
 void
-gimp_parasiterc_load()
+gimp_parasiterc_load (void)
 {
   char *filename;
 
   filename = gimp_personal_rc_file ("parasiterc");
-  app_init_update_status(NULL, filename, -1);
+  app_init_update_status (NULL, filename, -1);
   parse_gimprc_file (filename);
   g_free (filename);
 }

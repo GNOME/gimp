@@ -452,8 +452,24 @@ blob_line (Blob *b, int x0, int y0, int x1, int y1)
 #define TABLE_SIZE 256
 
 #define ELLIPSE_SHIFT 2
-#define TABLE_SHIFT 14
-#define TOTAL_SHIFT (ELLIPSE_SHIFT + TABLE_SHIFT)
+#define TABLE_SHIFT   12
+#define TOTAL_SHIFT   (ELLIPSE_SHIFT + TABLE_SHIFT)
+
+/*
+ * The choose of this values limits the maximal image_size to 
+ * 16384 x 16384 pixels. The values will overflow as soon as 
+ * x or y > INT_MAX / (1 << (ELLIPSE_SHIFT + TABLE_SHIFT)) / SUBSAMPLE
+ * 
+ * Alternatively the code could be change the code as follows:
+ *
+ *   xc_base = floor (xc)
+ *   xc_shift = 0.5 + (xc - xc_base) * (1 << TOTAL_SHIFT);
+ * 
+ *    gint x = xc_base + (xc_shift + c * xp_shift + s * xq_shift +
+ *             (1 << (TOTAL_SHIFT - 1))) >> TOTAL_SHIFT;
+ *
+ * which would change the limit from the image to the ellipse size
+ */
 
 static int trig_initialized = 0;
 static int trig_table[TABLE_SIZE];

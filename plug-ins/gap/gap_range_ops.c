@@ -32,6 +32,8 @@
  */
 
 /* revision history
+ * 1.1.14a  2000/01/06   hof: gap_range_to_multilayer: use framerate (from video info file) in framenames
+ *                            bugfix: gap_range_to_multilayer: first save current frame
  * 1.1.10a  1999/10/22   hof: bugfix: have to use the changed PDB-Interface
  *                            for gimp_convert_indexed
  *                            (with extended dither options and extra dialog window)
@@ -74,6 +76,7 @@
 /* GAP includes */
 #include "gap_layer_copy.h"
 #include "gap_lib.h"
+#include "gap_pdb_calls.h"
 #include "gap_match.h"
 #include "gap_arr_dialog.h"
 #include "gap_resi_dialog.h"
@@ -918,9 +921,11 @@ gint32 gap_range_to_multilayer(GRunModeType run_mode, gint32 image_id,
   gint32  l_rc;
   long   l_from, l_to;
   t_anim_info *ainfo_ptr;
+  t_video_info *vin_ptr;
   gint32    l_sel_mode;
   gint32    l_sel_case;
   gint32    l_sel_invert;
+  gdouble   l_framerate;
   
   char      l_sel_pattern[MAX_LAYERNAME];
 
@@ -932,8 +937,14 @@ gint32 gap_range_to_multilayer(GRunModeType run_mode, gint32 image_id,
     {
       if(run_mode == RUN_INTERACTIVE)
       {
-
-         strcpy(frame_basename, "frame_[####]");
+	 l_framerate = 24.0;
+         vin_ptr = p_get_video_info(ainfo_ptr->basename);
+         if(vin_ptr)
+	 {
+	   if(vin_ptr->framerate > 0) l_framerate = vin_ptr->framerate;
+	   g_free(vin_ptr);
+	 }	 
+         sprintf(frame_basename, "frame_[####] (%dms)", (int)(1000/l_framerate));
          framerate = 0;
          l_rc = p_range_to_multilayer_dialog (ainfo_ptr, &l_from, &l_to,
                                 &flatten_mode, &bg_visible,
@@ -959,13 +970,17 @@ gint32 gap_range_to_multilayer(GRunModeType run_mode, gint32 image_id,
 
       if(l_rc >= 0)
       {
-         new_image_id = p_frames_to_multilayer(ainfo_ptr, l_from, l_to, 
-                                               flatten_mode, bg_visible,
-                                               framerate, frame_basename,
-					       l_sel_mode, sel_case,
-					       sel_invert, &l_sel_pattern[0]);
-         gimp_display_new(new_image_id);
-         l_rc = new_image_id;
+         l_rc = p_save_named_frame(ainfo_ptr->image_id, ainfo_ptr->old_filename);
+         if(l_rc >= 0)
+         {
+           new_image_id = p_frames_to_multilayer(ainfo_ptr, l_from, l_to, 
+                                        	 flatten_mode, bg_visible,
+                                        	 framerate, frame_basename,
+						 l_sel_mode, sel_case,
+						 sel_invert, &l_sel_pattern[0]);
+           gimp_display_new(new_image_id);
+           l_rc = new_image_id;
+	 }
       }
     }
     p_free_ainfo(&ainfo_ptr);

@@ -25,6 +25,7 @@
  */
 
 /* revision history:
+ * 1.1.14a; 2000/01/02   hof: new: p_get_frame_nr
  * 1.1.8a;  1999/08/31   hof: new: p_strdup_del_underscore and p_strdup_add_underscore
  * 0.99.00; 1999/03/15   hof: prepared for win/dos filename conventions
  * 0.96.02; 1998/08/05   hof: extended gap_dup (duplicate range instead of singele frame)
@@ -77,7 +78,6 @@ typedef struct t_anim_info {
    long         last_frame_nr;
 } t_anim_info;
 
-
 /* procedures used in other gap*.c files */
 int          p_file_exists(char *fname);
 int          p_file_copy(char *fname, char *fname_copy);
@@ -98,6 +98,11 @@ char*  p_gzip (char *orig_name, char *new_name, char *zip);
 char*  p_strdup_add_underscore(char *name);
 char*  p_strdup_del_underscore(char *name);
 
+long  p_get_frame_nr(gint32 image_id);
+long  p_get_frame_nr_from_name(char *fname);
+char *p_alloc_fname_thumbnail(char *name);
+int   p_image_file_copy(char *fname, char *fname_copy);
+
 /* animation menu fuctions provided by gap_lib.c */
 
 int gap_next(GRunModeType run_mode, gint32 image_id);
@@ -112,7 +117,6 @@ int gap_exchg(GRunModeType run_mode, gint32 image_id, int nr);
 int gap_shift(GRunModeType run_mode, gint32 image_id, int nr, long range_from, long range_to);
 
 void p_msg_win(GRunModeType run_mode, char *msg);
-
 
 #endif
 

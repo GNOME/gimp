@@ -58,6 +58,8 @@
 /*
  * Changelog:
  *
+ * 2000/01/06 v1.1.14a:  hof: save thumbnails .xvpics p_gimp_file_save_thumbnail
+ *                       store framerate in video_info file
  * 1999/11/25 v1.1.11.b: Initial release. [hof] 
  *                       (based on plug-ins/common/mpeg.c v1.1 99/05/31 by Adam D. Moss)
  */
@@ -85,6 +87,7 @@
 
 /* GAP includes */
 #include "gap_arr_dialog.h"
+#include "gap_pdb_calls.h"
 
 /* Includes for extra LIBS */
 #include "mpeg.h"
@@ -164,7 +167,7 @@ query ()
                           _("Split MPEG1 movies into single frames (image files on disk) and load 1st frame. audio tracks are ignored"),
                           "Wolfgang Hofer (hof@hotbot.com)",
                           "Wolfgang Hofer",
-                          "1999/11/18",
+                          "2000/01/01",
                           N_("<Image>/Video/Split Video to Frames/MPEG1"),
 			  NULL,
                           PROC_PLUG_IN,
@@ -176,7 +179,7 @@ query ()
                           _("Split MPEG1 movies into single frames (image files on disk) and load 1st frame. audio tracks are ignored"),
                           "Wolfgang Hofer (hof@hotbot.com)",
                           "Wolfgang Hofer",
-                          "1999/11/18",
+                          "2000/01/01",
                           N_("<Toolbox>/Xtns/Split Video to Frames/MPEG1"),
 			  NULL,
                           PROC_EXTENSION,
@@ -340,23 +343,36 @@ p_overwrite_dialog(char *filename, gint overwrite_mode)
 }
 
 static gint
-MPEG_frame_period_ms(gint mpeg_rate_code)
+MPEG_frame_period_ms(gint mpeg_rate_code, char *basename)
 {
+  gint    l_rc;
+  gdouble l_framerate;
+  t_video_info *vin_ptr;
+  
+  vin_ptr = p_get_video_info(basename);
+  l_rc = 0;
   switch(mpeg_rate_code)
   {
-    case 1: return 44; /* ~23 fps */
-    case 2: return 42; /*  24 fps */
-    case 3: return 40; /*  25 fps */
-    case 4: return 33; /* ~30 fps */
-    case 5: return 33; /*  30 fps */
-    case 6: return 20; /*  50 fps */
-    case 7: return 17; /* ~60 fps */
-    case 8: return 17; /*  60 fps */
+    case 1: l_rc = 44; l_framerate = 23.976; break;
+    case 2: l_rc = 42; l_framerate = 24.0;   break;
+    case 3: l_rc = 40; l_framerate = 25.0;   break;
+    case 4: l_rc = 33; l_framerate = 29.97;  break;
+    case 5: l_rc = 33; l_framerate = 30.0;   break;
+    case 6: l_rc = 20; l_framerate = 50.0;   break;
+    case 7: l_rc = 17; l_framerate = 59.94;  break;
+    case 8: l_rc = 17; l_framerate = 60.0;   break;
     case 0: /* ? */
     default:
       printf("mpeg: warning - this MPEG has undefined timing.\n");
-      return 0;
+      break;
   }
+  if(vin_ptr)
+  {
+    if(l_rc != 0)  vin_ptr->framerate = l_framerate;
+    p_set_video_info(vin_ptr ,basename);
+    g_free(vin_ptr);
+  }
+  return(l_rc);
 }
 
 
@@ -427,11 +443,11 @@ load_image (char   *filename,
 
   data = g_malloc(img.Size);
 
-  delay = MPEG_frame_period_ms(img.PictureRate);
+  delay = MPEG_frame_period_ms(img.PictureRate, basename);
 
   /*
   printf("  <%d : %d>  %dx%d - d%d - bmp%d - ps%d - s%d\n",
-	 img.PictureRate, MPEG_frame_period_ms(img.PictureRate),
+	 img.PictureRate, delay,
 	 img.Width,img.Height,img.Depth,img.BitmapPad,img.PixelSize,img.Size);
 	 */
 
@@ -567,6 +583,7 @@ load_image (char   *filename,
 			           PARAM_STRING, framename,
 			           PARAM_STRING, framename, /* raw name ? */
 			           PARAM_END);
+           p_gimp_file_save_thumbnail(image_ID, framename);
 	 }
 
        }

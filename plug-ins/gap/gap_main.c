@@ -38,9 +38,10 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-static char *gap_main_version =  "1.1.13a; 1999/11/26";
+static char *gap_main_version =  "1.1.14a; 2000/01/01";
 
 /* revision history:
+ * gimp    1.1.14a; 2000/01/01  hof: bugfix params for gap_dup in noninteractive mode
  * gimp    1.1.13a; 1999/11/26  hof: splitted frontends for external programs (mpeg encoders)
  *                                   to gap_frontends_main.c
  * gimp    1.1.11a; 1999/11/15  hof: changed Menunames (AnimFrames to Video, Submenu Encode)
@@ -804,7 +805,7 @@ run (char    *name,
 
         image_id = param[1].data.d_image;
         nr       = param[3].data.d_int32;  /* how often to copy current frame */
-        if (n_params != 6)
+        if (n_params > 5)
         {
            range_from = param[4].data.d_int32;  /* frame nr to start */	
            range_to   = param[5].data.d_int32;  /* frame nr to stop  */	

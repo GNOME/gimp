@@ -21,6 +21,8 @@
  */
 
 /* revision history:
+ * version 1.1.14a; 2000/01/06  hof: thumbnail save/load,
+ *                              Procedures for video_info file
  * version 0.98.00; 1998/11/30  hof: all PDB-calls of GIMP PDB-Procedures
  */
 
@@ -28,6 +30,12 @@
 #define _GAP_PDB_CALLS_H
 
 #include "libgimp/gimp.h"
+
+typedef struct t_video_info {
+   gdouble     framerate;    /* playback rate in frames per second */
+   gint32      timezoom;
+} t_video_info;
+
 
 gint p_pdb_procedure_available(char *proc_name);
 gint p_get_gimp_selection_bounds (gint32 image_id, gint32 *x1, gint32 *y1, gint32 *x2, gint32 *y2);
@@ -53,4 +61,19 @@ gint32 p_gimp_channel_ops_duplicate  (gint32     image_ID);
 
 gint   p_gimp_drawable_set_image(gint32 drawable_id, gint32 image_id);
 
+char*  p_gimp_gimprc_query(char *key);
+
+gint   p_gimp_file_save_thumbnail(gint32 image_id, char* filename);
+gint   p_gimp_file_load_thumbnail(char* filename, gint32 *th_width, gint32 *th_height, unsigned char **th_data);
+
+gint   p_gimp_image_thumbnail(gint32 image_id, gint32 width, gint32 height,
+                              gint32 *th_width, gint32 *th_height, gint32 *th_bpp,
+			      gint32 *th_data_count, unsigned char **th_data);
+
+
+
+
+char *p_alloc_video_info_name(char *basename);
+int   p_set_video_info(t_video_info *vin_ptr, char *basename);
+t_video_info *p_get_video_info(char *basename);
 #endif
