@@ -1510,7 +1510,6 @@ file_open_genbutton_callback (GtkWidget *widget,
   GSList *list, *toplist;
   GtkFileSelection *fs;
   gchar *full_filename = NULL;
-  gchar *filename;
   gchar *dirname;
   struct stat buf;
   gint err;
@@ -1696,6 +1695,7 @@ file_open_ok_callback (GtkWidget *widget,
     list = NULL;
   }    
   g_free (raw_filename);
+  g_free (dirname);
 
   gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
 }
