@@ -363,7 +363,7 @@ pixel_regions_process (void *PRI_ptr)
 	    {
 	      /* only set the dirty flag if PRH->dirty_tiles = true */
 	      tile_release (PRH->PR->curtile,
-			    PRH->PR->dirty * PRI->dirty_tiles);
+			    PRH->PR->dirty && PRI->dirty_tiles);
 	      PRH->PR->curtile = NULL;
 	    }
 

@@ -1,3 +1,29 @@
+Mon Dec 13 19:25:39 GMT 1999  Adam D. Moss <adam@gimp.org
+
+	* app/tile.c 
+	* app/tile.h
+	* app/tile_manager.c
+	* app/tile_swap.c:
+
+	Allocate Tile's array of TileRowHints dynamically.  Make type
+	of TileRowHint explicit since it's fairly space-critical.
+	Can save several hundred K of memory with this and struct
+	changes.
+
+	Added warnings for old basically-untested-or-insane
+	paths through the tile referencing code.
+
+	* app/tile_pvt.h: Shrink down and rearrange fields of Tile
+	struct to save some space with gcc's padding for most people.
+
+	* app/paint_funcs.c: Use tile_sanitize_rowhints() to ensure
+          that rowhints have been allocated before use.
+
+	* app/channel_ops.c
+	* app/gdisplay.c
+	* app/pixel_region.c: Cosmetic, sanity or unfinished debug
+          changes (the latter commented out) for fun and reference.
+
 1999-12-13  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
 
 	* po/POTFILES.in: Added missing app/path_tool.c.

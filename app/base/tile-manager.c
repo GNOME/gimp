@@ -157,8 +157,16 @@ tile_manager_get (TileManager *tm,
 
   if (wantwrite && !wantread)
     {
-      g_warning("WRITE-ONLY TILE... OUCHIE");
+      g_warning("WRITE-ONLY TILE... UNTESTED!");
     }
+
+  /*
+  if ((*tile_ptr)->share_count &&
+      (*tile_ptr)->write_count)
+    fprintf(stderr," >> MEEPITY %d,%d << ",
+	    (*tile_ptr)->share_count,
+	    (*tile_ptr)->write_count
+	    ); */
 
   if (wantread) 
     {
@@ -169,17 +177,25 @@ tile_manager_get (TileManager *tm,
 	    {
 	      /* Copy-on-write required */
 	      Tile *newtile = g_new (Tile, 1);
+
 	      tile_init (newtile, (*tile_ptr)->bpp);
 	      newtile->ewidth  = (*tile_ptr)->ewidth;
 	      newtile->eheight = (*tile_ptr)->eheight;
 	      newtile->valid   = (*tile_ptr)->valid;
 	      newtile->data    = g_new (guchar, tile_size (newtile));
 
-	      i = newtile->eheight;
-	      while (i--)
-		{
-		  newtile->rowhint[i] = (*tile_ptr)->rowhint[i];
-		}
+	      if (!newtile->valid)
+		g_warning ("Oh boy, r/w tile is invalid... we suck.  Please report.");
+
+              if ((*tile_ptr)->rowhint)
+              {
+                tile_sanitize_rowhints (newtile);
+	        i = newtile->eheight;
+	        while (i--)
+		  {
+		    newtile->rowhint[i] = (*tile_ptr)->rowhint[i];
+		  }
+              }
 
 	      if ((*tile_ptr)->data != NULL) 
 		{
@@ -199,8 +215,13 @@ tile_manager_get (TileManager *tm,
 	    }
 
 	  (*tile_ptr)->write_count++;
-	  (*tile_ptr)->dirty = 1;
+	  (*tile_ptr)->dirty = TRUE;
 	}
+	/*       else
+	{
+	  if ((*tile_ptr)->write_count)
+	    fprintf(stderr,"STINK! r/o on r/w tile /%d\007  ",(*tile_ptr)->write_count);
+	} */
       TILE_MUTEX_UNLOCK (*tile_ptr);
       tile_lock (*tile_ptr);
     }
@@ -233,6 +254,17 @@ tile_manager_validate (TileManager *tm,
 
   if (tm->validate_proc)
     (* tm->validate_proc) (tm, tile);
+
+/* DEBUG STUFF ->  if (tm->user_data)
+    {
+      //      fprintf(stderr,"V%p  ",tm->user_data);
+      fprintf(stderr,"V");
+    }
+  else
+    {
+      fprintf(stderr,"v");
+    } */
+
 }
 
 void
@@ -286,6 +318,7 @@ tile_invalidate (Tile **tile_ptr, TileManager *tm, int tile_num)
     {
       /* This tile is shared.  Replace it with a new, invalid tile. */
       Tile *newtile = g_new (Tile, 1);
+
       tile_init (newtile, tile->bpp);
       newtile->ewidth  = tile->ewidth;
       newtile->eheight = tile->eheight;
@@ -399,6 +432,9 @@ tile_manager_map (TileManager *tm,
   tile_ptr = &tm->tiles[tile_num];
 
   /*  printf(")");fflush(stdout);*/
+
+  if (!srctile->valid)
+    g_warning("tile_manager_map: srctile not validated yet!  please report.");
 
   TILE_MUTEX_LOCK (*tile_ptr);
   if ((*tile_ptr)->ewidth  != srctile->ewidth ||

@@ -30,8 +30,8 @@
 
 #define MAX_OPEN_SWAP_FILES  16
 
+#include "tile.h"
 #include "tile_swap.h"
-
 #include "tile_pvt.h"			/* ick. */
 
 typedef struct _SwapFile      SwapFile;
@@ -180,6 +180,13 @@ tile_swap_exit1 (gpointer key,
 void
 tile_swap_exit ()
 {
+#ifdef HINTS_SANITY
+  extern int tile_exist_peak;
+
+  fprintf(stderr,"Tile exist peak was %d Tile structs (%d bytes)",
+	   tile_exist_peak, tile_exist_peak * sizeof(Tile));
+#endif
+
   if (swap_files)
     g_hash_table_foreach (swap_files, tile_swap_exit1, NULL);
 }

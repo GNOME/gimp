@@ -1222,13 +1222,15 @@ gdisplay_paint_area (GDisplay *gdisp,
 
   /*  calculate the extents of the update as limited by what's visible  */
   gdisplay_untransform_coords (gdisp, 0, 0, &x1, &y1, FALSE, FALSE);
-  gdisplay_untransform_coords (gdisp, gdisp->disp_width, gdisp->disp_height, &x2, &y2, FALSE, FALSE);
+  gdisplay_untransform_coords (gdisp, gdisp->disp_width, gdisp->disp_height,
+			       &x2, &y2, FALSE, FALSE);
 
   gimage_invalidate (gdisp->gimage, x, y, w, h, x1, y1, x2, y2);
 
     /*  display the area  */
   gdisplay_transform_coords (gdisp, x, y, &x1, &y1, FALSE);
   gdisplay_transform_coords (gdisp, x + w, y + h, &x2, &y2, FALSE);
+
   gdisplay_expose_area (gdisp, x1, y1, (x2 - x1), (y2 - y1));
 }
 

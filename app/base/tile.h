@@ -19,16 +19,18 @@
 
 typedef struct _Tile Tile;
 
-typedef enum
-{
-  TILEROWHINT_BROKEN = 0,
-  TILEROWHINT_OPAQUE,
-  TILEROWHINT_TRANSPARENT,
-  TILEROWHINT_MIXED,
-  TILEROWHINT_OUTOFRANGE,
-  TILEROWHINT_UNDEFINED,
-  TILEROWHINT_UNKNOWN
-} TileRowHint;
+/*  explicit guchar type rather than enum since gcc chooses an int
+ *  representation but arrays of TileRowHints are quite space-critical
+ *  in GIMP.
+ */
+typedef guchar TileRowHint;
+#define TILEROWHINT_BROKEN      0
+#define TILEROWHINT_OPAQUE      1
+#define TILEROWHINT_TRANSPARENT 2
+#define TILEROWHINT_MIXED       3
+#define TILEROWHINT_OUTOFRANGE  4
+#define TILEROWHINT_UNDEFINED   5
+#define TILEROWHINT_UNKNOWN     6
 
 
 /* Initializes the fields of a tile to "good" values.
@@ -68,6 +70,7 @@ void tile_mark_valid (Tile *tile);
 /* DOCUMENT ME -- adm */
 TileRowHint tile_get_rowhint (Tile *tile, int yoff);
 void tile_set_rowhint (Tile *tile, int yoff, TileRowHint rowhint);
+void tile_sanitize_rowhints (Tile *tile);
 
 void *tile_data_pointer (Tile *tile, int xoff, int yoff);
 

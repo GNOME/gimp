@@ -741,10 +741,8 @@ duplicate_projection (GimpImage *oldgimage, GimpImage *newgimage,
   if (newgimage->construct_flag)
 #endif
     {
-
-      /* We don't want to copy a half-redrawn projection, so force a flush. */
-      gdisplays_finish_draw();
-      gdisplays_flush_now();
+      tile_manager_set_user_data(gimp_image_projection (newgimage),
+				 (void *) newgimage);
 
       /*
       newgimage->proj_type = oldgimage->proj_type;
@@ -752,13 +750,15 @@ duplicate_projection (GimpImage *oldgimage, GimpImage *newgimage,
       newgimage->proj_level = oldgimage->proj_level;
       
       gimage_projection_realloc (new_gimage);*/
-      /*
+
+      
       pixel_region_init (&srcPR, gimp_image_projection (oldgimage), 0, 0,
 			 oldgimage->width, oldgimage->height, FALSE);
       pixel_region_init (&destPR, gimp_image_projection (newgimage), 0, 0,
 			 newgimage->width, newgimage->height, TRUE);
-			 copy_region(&srcPR, &destPR);*/
-
+      copy_region(&srcPR, &destPR);
+      
+      /*
       pixel_region_init (&srcPR, gimp_image_projection (oldgimage),
 			 newgdisplay->disp_xoffset, newgdisplay->disp_yoffset,
 			 newgdisplay->disp_width, newgdisplay->disp_height,
@@ -768,6 +768,37 @@ duplicate_projection (GimpImage *oldgimage, GimpImage *newgimage,
 			 newgdisplay->disp_width, newgdisplay->disp_height,
 			 TRUE);
       copy_region(&srcPR, &destPR);
+      */
+
+      if (1)
+      {
+	GDisplay* gdisp;
+	int x,y,w,h;
+	int x1, y1, x2, y2;
+	
+	gdisp = newgdisplay;
+
+	fprintf (stderr, " [pointers: %p, %p ] ", oldgimage, gdisp->gimage);
+
+	gdisplay_untransform_coords (gdisp, 0, 0, &x1, &y1, FALSE, FALSE);
+	gdisplay_untransform_coords (gdisp, gdisp->disp_width, gdisp->disp_height,
+				     &x2, &y2, FALSE, FALSE);
+
+	fprintf(stderr," <%dx%d %dx%d %d,%d->%d,%d> ",
+		oldgimage->width, oldgimage->height,
+		newgimage->width, newgimage->height,
+		x1,y1, x2,y2);
+
+	gimage_invalidate_without_render (gdisp->gimage, 0,0,
+					  gdisp->gimage->width,
+					  gdisp->gimage->height,
+					  //	  64,64,128,128);
+					  //					  newgdisplay->disp_width,newgdisplay->disp_height,
+					  //					  newgdisplay->disp_width+newgdisplay->disp_xoffset,newgdisplay->disp_height+newgdisplay->disp_yoffset
+					  x1, y1, x2, y2
+					  );
+	
+      }
     }
 }
 #endif
@@ -781,7 +812,11 @@ channel_ops_duplicate (GimpImage *gimage)
 
   new_gimage = duplicate (gimage);
 
+  /* We don't want to copy a half-redrawn projection, so force a flush. */
+  /* gdisplays_finish_draw();
+  gdisplays_flush_now(); */
+
   new_gdisp = gdisplay_new (new_gimage, 0x0101);
-  
-  /* duplicate_projection(gimage, new_gimage, new_gdisp); */
+
+  /* duplicate_projection(gimage, new_gimage, new_gdisp);*/
 }

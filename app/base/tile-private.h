@@ -40,23 +40,23 @@ struct _Tile
   guint dirty : 1;    /* is the tile dirty? has it been modified? */
   guint valid : 1;    /* is the tile valid? */
 
-  /* An array of hints for rendering purposes */
-  TileRowHint rowhint[TILE_HEIGHT];
+  unsigned char  bpp;     /* the bytes per pixel (1, 2, 3 or 4) */
+  unsigned short ewidth;  /* the effective width of the tile */
+  unsigned short eheight; /* the effective height of the tile */
+                          /*  a tile's effective width and height may be smaller
+			   *  (but not larger) than TILE_WIDTH and TILE_HEIGHT.
+			   *  this is to handle edge tiles of a drawable.
+			   */
+
+  TileRowHint *rowhint;   /* An array of hints for rendering purposes */
 
   guchar *data;       /* the data for the tile. this may be NULL in which
 		       *  case the tile data is on disk.
 		       */
 
-  int ewidth;         /* the effective width of the tile */
-  int eheight;        /* the effective height of the tile */
-                      /*  a tile's effective width and height may be smaller
-		       *  (but not larger) than TILE_WIDTH and TILE_HEIGHT.
-		       *  this is to handle edge tiles of a drawable.
-		       */
-  int bpp;            /* the bytes per pixel (1, 2, 3 or 4) */
-  int swap_num;       /* the index into the file table of the file to be used
-		       *  for swapping. swap_num 1 is always the global swap file.
-		       */
+  int swap_num; /* the index into the file table of the file to be used
+		 *  for swapping. swap_num 1 is always the global swap file.
+		 */
   off_t swap_offset;  /* the offset within the swap file of the tile data.
 		       *  if the tile data is in memory this will be set to -1.
 		       */

@@ -13,6 +13,25 @@ static void tile_destroy (Tile *tile);
 
 int tile_count = 0;
 
+void
+tile_sanitize_rowhints (Tile *tile)
+{
+  int height, y;
+
+  /*  If tile has rowhints array already, do nothing.  */
+  if (tile->rowhint)
+    return;
+
+  height = tile->eheight;
+  
+  tile->rowhint = g_new (TileRowHint, height);
+  
+  for (y=0; y<height; y++)
+    {
+      tile->rowhint[y] = TILEROWHINT_UNKNOWN;
+    }
+}
+
 TileRowHint
 tile_get_rowhint (Tile *tile, int yoff)
 {
@@ -23,7 +42,7 @@ tile_get_rowhint (Tile *tile, int yoff)
     }
   else
     g_error("GET_ROWHINT OUT OF RANGE");
-/*    return TILEROWHINT_OUTOFRANGE; */
+  return TILEROWHINT_OUTOFRANGE;
 #else
   return tile->rowhint[yoff];  
 #endif
@@ -48,8 +67,6 @@ void
 tile_init (Tile *tile,
 	   int   bpp)
 {
-  int y;
-
   tile->ref_count = 0;
   tile->write_count = 0;
   tile->share_count = 0;
@@ -64,11 +81,7 @@ tile_init (Tile *tile,
   tile->tlink = NULL;
   tile->next = tile->prev = NULL;
   tile->listhead = NULL;
-
-  for (y=0; y<TILE_HEIGHT; y++)
-    {
-      tile->rowhint[y] = TILEROWHINT_UNKNOWN;
-    }
+  tile->rowhint = NULL;
 
 #ifdef USE_PTHREADS
   {
@@ -81,6 +94,11 @@ tile_init (Tile *tile,
 int tile_ref_count = 0;
 int tile_share_count = 0;
 int tile_active_count = 0;
+
+#ifdef HINTS_SANITY
+int tile_exist_peak = 0;
+int tile_exist_count = 0;
+#endif
 
 void
 tile_lock (Tile *tile)
@@ -144,10 +162,13 @@ tile_release (Tile *tile, int dirty)
       int y;
 
       tile->write_count -= 1;
-      
-      for (y = 0; y < tile->eheight; y++)
+
+      if (tile->rowhint)
 	{
-	  tile->rowhint[y] = TILEROWHINT_UNKNOWN;
+	  for (y = 0; y < tile->eheight; y++)
+	    {
+	      tile->rowhint[y] = TILEROWHINT_UNKNOWN;
+	    }
 	}
     }
 
@@ -156,7 +177,7 @@ tile_release (Tile *tile, int dirty)
       tile_active_count--;
       if (tile->share_count == 0)
 	{
-	  /* tile is dead */
+	  /* tile is truly dead */
 	  tile_destroy (tile);
 	  return;			/* skip terminal unlock */
 	}
@@ -180,6 +201,12 @@ tile_alloc (Tile *tile)
   /* Allocate the data for the tile.
    */
   tile->data = g_new (guchar, tile_size (tile));
+
+#ifdef HINTS_SANITY
+  tile_exist_count++;
+  if (tile_exist_count > tile_exist_peak)
+    tile_exist_peak = tile_exist_count;
+#endif
 }
 
 static void
@@ -200,6 +227,11 @@ tile_destroy (Tile *tile)
       g_free (tile->data);
       tile->data = NULL;
     }
+  if (tile->rowhint) 
+    {
+      g_free (tile->rowhint);
+      tile->rowhint = NULL;
+    }
   if (tile->swap_offset != -1)
     {
       /* If the tile is on disk, then delete its
@@ -213,6 +245,10 @@ tile_destroy (Tile *tile)
   TILE_MUTEX_UNLOCK (tile); 
   g_free (tile);
   tile_count --;
+
+#ifdef HINTS_SANITY
+  tile_exist_count--;
+#endif
 }
 
 
@@ -270,7 +306,7 @@ tile_attach (Tile *tile, void *tm, int tile_num)
 {
   TileLink *tmp;
 
-  if (tile->share_count > 0 && !tile->valid) 
+  if ((tile->share_count > 0) && (!tile->valid)) 
     {
       /* trying to share invalid tiles is problematic, not to mention silly */
       tile_manager_validate ((TileManager*) tile->tlink->tm, tile);
@@ -300,15 +336,17 @@ tile_detach (Tile *tile, void *tm, int tile_num)
 	  tile->ref_count, tile->share_count);
 #endif
 
-  for (link = &tile->tlink; *link; link = &(*link)->next)
+  for (link = &tile->tlink;
+       *link != NULL;
+       link = &(*link)->next)
     {
-      if ((*link)->tm == tm && (*link)->tile_num == tile_num)
+      if (((*link)->tm == tm) && ((*link)->tile_num == tile_num))
 	break;
     }
 
   if (*link == NULL) 
     {
-      g_warning ("Tried to detach a nonattached tile");
+      g_warning ("Tried to detach a nonattached tile -- TILE BUG!");
       return;
     }
 
