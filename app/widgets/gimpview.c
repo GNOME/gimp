@@ -25,6 +25,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
@@ -236,9 +237,7 @@ gimp_preview_init (GimpPreview *preview)
   preview->height       = 8;
   preview->border_width = 0;
 
-  preview->border_color[0] = 0;
-  preview->border_color[1] = 0;
-  preview->border_color[2] = 0;
+  gimp_rgba_set (&preview->border_color, 0.0, 0.0, 0.0, 1.0);
 
   preview->is_popup     = FALSE;
   preview->clickable    = FALSE;
@@ -410,47 +409,6 @@ gimp_preview_new_full (GimpViewable *viewable,
 }
 
 void
-gimp_preview_set_size (GimpPreview *preview,
-		       gint         preview_size,
-		       gint         border_width)
-{
-  gint width, height;
-
-  g_return_if_fail (preview != NULL);
-  g_return_if_fail (GIMP_IS_PREVIEW (preview));
-  g_return_if_fail (preview_size > 0 && preview_size <= 256);
-  g_return_if_fail (border_width >= 0 && border_width <= 16);
-
-  gimp_preview_get_size (preview, preview_size, &width, &height);
-
-  gimp_preview_set_size_full (preview,
-			      width,
-			      height,
-			      border_width);
-}
-
-void
-gimp_preview_set_size_full (GimpPreview *preview,
-			    gint         width,
-			    gint         height,
-			    gint         border_width)
-{
-  g_return_if_fail (preview != NULL);
-  g_return_if_fail (GIMP_IS_PREVIEW (preview));
-  g_return_if_fail (width  > 0 && width  <= 256);
-  g_return_if_fail (height > 0 && height <= 256);
-  g_return_if_fail (border_width >= 0 && border_width <= 16);
-
-  preview->width        = width;
-  preview->height       = height;
-  preview->border_width = border_width;
-
-  gtk_preview_size (GTK_PREVIEW (preview),
-		    width  + 2 * preview->border_width,
-		    height + 2 * preview->border_width);
-}
-
-void
 gimp_preview_set_viewable (GimpPreview  *preview,
 			   GimpViewable *viewable)
 {
@@ -507,6 +465,63 @@ gimp_preview_set_viewable (GimpPreview  *preview,
       gtk_signal_connect (GTK_OBJECT (preview->viewable), "destroy",
 			  GTK_SIGNAL_FUNC (gtk_widget_destroyed),
 			  &preview->viewable);
+
+      gimp_preview_render (preview);
+    }
+}
+
+void
+gimp_preview_set_size (GimpPreview *preview,
+		       gint         preview_size,
+		       gint         border_width)
+{
+  gint width, height;
+
+  g_return_if_fail (preview != NULL);
+  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+  g_return_if_fail (preview_size > 0 && preview_size <= 256);
+  g_return_if_fail (border_width >= 0 && border_width <= 16);
+
+  gimp_preview_get_size (preview, preview_size, &width, &height);
+
+  gimp_preview_set_size_full (preview,
+			      width,
+			      height,
+			      border_width);
+}
+
+void
+gimp_preview_set_size_full (GimpPreview *preview,
+			    gint         width,
+			    gint         height,
+			    gint         border_width)
+{
+  g_return_if_fail (preview != NULL);
+  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+  g_return_if_fail (width  > 0 && width  <= 256);
+  g_return_if_fail (height > 0 && height <= 256);
+  g_return_if_fail (border_width >= 0 && border_width <= 16);
+
+  preview->width        = width;
+  preview->height       = height;
+  preview->border_width = border_width;
+
+  gtk_preview_size (GTK_PREVIEW (preview),
+		    width  + 2 * preview->border_width,
+		    height + 2 * preview->border_width);
+}
+
+void
+gimp_preview_set_border_color (GimpPreview   *preview,
+			       const GimpRGB *color)
+{
+  g_return_if_fail (preview != NULL);
+  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+  g_return_if_fail (color != NULL);
+
+  if (gimp_rgb_distance (&preview->border_color, color))
+    {
+      preview->border_color = *color;
 
       gimp_preview_render (preview);
     }
@@ -864,10 +879,16 @@ gimp_preview_render_and_flush (GimpPreview *preview,
   gint      image_bytes;
   gint      offset;
   gint      border;
+  guchar    border_color[3];
 
   width  = preview->width;
   height = preview->height;
   border = preview->border_width;
+
+  gimp_rgb_get_uchar (&preview->border_color,
+		      &border_color[0],
+		      &border_color[1],
+		      &border_color[2]);
 
   alpha = ALPHA_PIX;
 
@@ -923,9 +944,9 @@ gimp_preview_render_and_flush (GimpPreview *preview,
   /*  Set the border color once before rendering  */
   for (j = 0; j < width + border * 2; j++)
     {
-      render_temp_buf[j * 3 + 0] = preview->border_color[0];
-      render_temp_buf[j * 3 + 1] = preview->border_color[1];
-      render_temp_buf[j * 3 + 2] = preview->border_color[2];
+      render_temp_buf[j * 3 + 0] = border_color[0];
+      render_temp_buf[j * 3 + 1] = border_color[1];
+      render_temp_buf[j * 3 + 2] = border_color[2];
     }
 
   for (i = 0; i < border; i++)

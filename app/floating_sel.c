@@ -63,7 +63,7 @@ floating_sel_attach (GimpLayer    *layer,
     }
 
   /*  set the drawable and allocate a backing store  */
-  layer->preserve_trans = TRUE;
+  gimp_layer_set_preserve_trans (layer, TRUE);
   layer->fs.drawable = drawable;
   layer->fs.backing_store =
     tile_manager_new (GIMP_DRAWABLE (layer)->width,
@@ -450,8 +450,8 @@ floating_sel_composite (GimpLayer *layer,
 	  if (GIMP_IS_LAYER (layer->fs.drawable))
 	    {
 	      d_layer = GIMP_LAYER (layer->fs.drawable);
-	      if ((preserve_trans = d_layer->preserve_trans))
-		d_layer->preserve_trans = FALSE;
+	      if ((preserve_trans = gimp_layer_get_preserve_trans (d_layer)))
+		gimp_layer_set_preserve_trans (d_layer, FALSE);
 	    }
 	  else
 	    preserve_trans = FALSE;
@@ -471,13 +471,15 @@ floating_sel_composite (GimpLayer *layer,
 	   *  passed to this function
 	   */
 	  gimp_image_apply_image (gimage, layer->fs.drawable, &fsPR,
-				  undo, layer->opacity, layer->mode,
+				  undo,
+				  gimp_layer_get_opacity (layer),
+				  gimp_layer_get_mode (layer),
 				  NULL,
 				  (x1 - offx), (y1 - offy));
 
 	  /*  restore preserve transparency  */
 	  if (preserve_trans)
-	    d_layer->preserve_trans = TRUE;
+	    gimp_layer_set_preserve_trans (d_layer, TRUE);
 
 	  /*  restore gimage active channels  */
 	  for (i = 0; i < MAX_CHANNELS; i++)

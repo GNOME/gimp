@@ -1161,7 +1161,9 @@ tools_select_cmd_callback (GtkWidget *widget,
 
   gimp_context_set_tool (gimp_context_get_user (), tool_info);
 
-  /* #warning FIXME (let the tool manager to this stuff) */
+#ifdef __GNUC__
+#warning FIXME (let the tool manager to this stuff)
+#endif
 
   /*  Paranoia  */
   active_tool->drawable = NULL;

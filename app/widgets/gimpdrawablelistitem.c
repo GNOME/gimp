@@ -29,12 +29,11 @@
 
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gimpchannel.h"
 #include "gimpcontainer.h"
 #include "gimpdnd.h"
 #include "gimpdrawablelistitem.h"
+#include "gimpdrawablelistview.h"
 #include "gimpimage.h"
-#include "gimplayer.h"
 #include "gimppreview.h"
 #include "gimpviewable.h"
 
@@ -246,21 +245,23 @@ gimp_drawable_list_item_drag_drop (GtkWidget      *widget,
 
   if (return_val)
     {
-      if (GIMP_IS_LAYER (src_viewable))
+      if (widget->parent && GIMP_IS_DRAWABLE_LIST_VIEW (widget->parent))
         {
-          gimp_image_position_layer (gimp_drawable_gimage (GIMP_DRAWABLE (src_viewable)),
-                                     GIMP_LAYER (src_viewable),
-                                     dest_index,
-                                     TRUE);
+          GimpDrawableListView *list_view;
+
+          list_view = GIMP_DRAWABLE_LIST_VIEW (widget->parent);
+
+          list_view->reorder_drawable_func (list_view->gimage,
+                                            GIMP_DRAWABLE (src_viewable),
+                                            dest_index,
+                                            TRUE);
+
           gdisplays_flush ();
         }
-      else if (GIMP_IS_CHANNEL (src_viewable))
+      else
         {
-          gimp_image_position_channel (gimp_drawable_gimage (GIMP_DRAWABLE (src_viewable)),
-                                       GIMP_CHANNEL (src_viewable),
-                                       dest_index,
-                                       TRUE);
-          gdisplays_flush ();
+          g_warning ("%s(): GimpDrawableListItem is not "
+                     "part of a GimpDrawableListView", G_GNUC_FUNCTION);
         }
     }
 
@@ -307,6 +308,7 @@ gimp_drawable_list_item_eye_toggled (GtkWidget *widget,
       drawable_update (drawable, 0, 0,
                        drawable->width,
                        drawable->height);
+
       gdisplays_flush ();
     }
 }

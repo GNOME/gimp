@@ -30,6 +30,7 @@
 #include "tools/gimpbucketfilltool.h"
 #include "tools/gimpfuzzyselecttool.h"
 #include "tools/gimpmovetool.h"
+#include "tools/gimptoolinfo.h"
 #include "tools/tool_manager.h"
 
 #include "appenv.h"
@@ -926,6 +927,7 @@ gdisplay_bucket_fill (GtkWidget      *widget,
   GimpDrawable *drawable;
   TileManager  *buf_tiles;
   PixelRegion   bufPR;
+  GimpToolInfo *tool_info;
   GimpContext  *context;
   gint          x1, x2, y1, y2;
   gint          bytes;
@@ -946,12 +948,16 @@ gdisplay_bucket_fill (GtkWidget      *widget,
   gimp_add_busy_cursors ();
 
   /*  Get the bucket fill context  */
-#if 0
-if (! global_paint_options)
-#warning FIXME    context = tool_info[BUCKET_FILL].tool_context;
+  tool_info = tool_manager_get_info_by_type (GIMP_TYPE_BUCKET_FILL_TOOL);
+
+  if (tool_info && tool_info->context)
+    {
+      context = tool_info->context;
+    }
   else
-#endif
-    context = gimp_context_get_user ();
+    {
+      context = gimp_context_get_user ();
+    }
 
   /*  Transform the passed data for the dest image  */
   if (fill_mode == FG_BUCKET_FILL)

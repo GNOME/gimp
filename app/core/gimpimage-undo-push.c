@@ -1263,7 +1263,9 @@ undo_pop_transform (GimpImage *gimage,
 		    UndoType   type,
 		    gpointer   tu_ptr)
 {
-  /* #warning very bogus */
+#ifdef __GNUC__
+#warning very bogus
+#endif
 #if 0
   TransformCore *tc;
   TransformUndo *tu;
@@ -1350,7 +1352,9 @@ undo_push_paint (GimpImage *gimage,
     }
 }
 
-    /* #warning super bogosity error */
+#ifdef __GNUC__
+#warning super bogosity error
+#endif
 static gboolean
 undo_pop_paint (GimpImage *gimage,
 		UndoState  state,

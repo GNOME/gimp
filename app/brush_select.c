@@ -270,7 +270,7 @@ brush_select_new (gchar   *title,
 
   /*  Create the paint mode option menu  */
   bsp->option_menu =
-    paint_mode_menu_new (paint_mode_menu_callback, (gpointer) bsp,
+    paint_mode_menu_new (paint_mode_menu_callback, (gpointer) bsp, TRUE,
 			 gimp_context_get_paint_mode (bsp->context));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Mode:"), 1.0, 0.5,

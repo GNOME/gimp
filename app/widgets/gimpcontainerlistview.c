@@ -200,6 +200,9 @@ gimp_container_list_view_new (GimpContainer *container,
   return GTK_WIDGET (list_view);
 }
 
+
+/*  GimpContainerView methods  */
+
 static gpointer
 gimp_container_list_view_insert_item (GimpContainerView *view,
 				      GimpViewable      *viewable,
@@ -385,6 +388,9 @@ gimp_container_list_view_set_preview_size (GimpContainerView  *view)
   gtk_widget_queue_resize (list_view->gtk_list);
 }
 
+
+/*  GtkClist callbacks  */
+
 static void
 gimp_container_list_view_item_selected (GtkWidget *widget,
 					GtkWidget *child,
@@ -396,6 +402,9 @@ gimp_container_list_view_item_selected (GtkWidget *widget,
 
   gimp_container_view_item_selected (GIMP_CONTAINER_VIEW (data), viewable);
 }
+
+
+/*  GtkListItem callbacks  */
 
 static gint
 gimp_container_list_view_item_activated (GtkWidget      *widget,

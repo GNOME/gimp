@@ -382,7 +382,7 @@ HELP
     {
       tmp_layer = (GimpLayer *) layer_list->data;
 
-      if ((tmp_layer == layer) || tmp_layer->linked)
+      if ((tmp_layer == layer) || gimp_layer_get_linked (tmp_layer))
 	gimp_layer_translate (tmp_layer, offx, offy);
     }
 }
@@ -470,7 +470,7 @@ HELP
 
 &layer_accessors('visible', 'boolean', 'visibility', 1, 0);
 
-&layer_accessors('preserve_trans', 'boolean', 'preserve transperancy', 0, 1);
+&layer_accessors('preserve_trans', 'boolean', 'preserve transperancy', 1, 1);
 
 #&layer_accessors('apply_mask', 'boolean', 'apply mask', 0, 1,
 #		 [ <<'CODE1', <<'CODE2' ]);
@@ -513,15 +513,15 @@ HELP
 #HELP
 #CODE2
 
-&layer_accessors('opacity', '0 <= float <= 100', 'opacity', 0, 0,
+&layer_accessors('opacity', '0 <= float <= 100', 'opacity', 1, 0,
 		 [ '$outargs[0]->{alias} =
-		        "(layer->opacity * 100.0) / 255.0"',
+		        "gimp_layer_get_opacity (layer) * 100.0"',
 		   '$invoke{code} =~
-			s%(opacity);$%(int) (($1 * 255) / 100);%' ]);
+			s%opacity\);%opacity / 100.0\);%' ]);
 
-&layer_accessors('mode', 'enum LayerModeEffects', 'combination mode', 0, 0);
+&layer_accessors('mode', 'enum LayerModeEffects', 'combination mode', 1, 0);
 
-&layer_accessors('linked', 'boolean', 'linked state', 0, 0,
+&layer_accessors('linked', 'boolean', 'linked state', 1, 0,
 		 <<'CODE');
     $author = $copyright = 'Wolfgang Hofer';
     $date = '1998';

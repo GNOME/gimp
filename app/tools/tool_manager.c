@@ -116,7 +116,9 @@ tool_manager_initialize_tool (GimpTool *tool, /* FIXME: remove tool param */
    */
   if (GIMP_TOOL_CLASS (GTK_OBJECT (tool)->klass)->initialize && ! gdisp)
     {
-      /* #warning FIXME   tool_type = RECT_SELECT; */
+#ifdef __GNUC__
+#warning FIXME   tool_type = RECT_SELECT;
+#endif
     }
 
   /*  Force the emission of the "tool_changed" signal
@@ -215,8 +217,9 @@ tool_manager_control_active (ToolAction  action,
 }
 
 
-
-    /* #warning bogosity alert */
+#ifdef __GNUC__
+#warning bogosity alert
+#endif
 #if 0
 void
 tools_register (ToolType     tool_type,

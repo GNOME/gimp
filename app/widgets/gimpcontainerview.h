@@ -48,6 +48,8 @@ struct _GimpContainerViewClass
 {
   GtkVBoxClass  parent_class;
 
+  void     (* set_container)    (GimpContainerView *view,
+				 GimpContainer     *container);
   gpointer (* insert_item)      (GimpContainerView *view,
 				 GimpViewable      *object,
 				 gint               index);

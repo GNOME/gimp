@@ -327,11 +327,6 @@ gimp_list_item_real_set_viewable (GimpListItem *list_item,
                                 GTK_OBJECT (viewable)->klass->type,
 				gimp_list_item_drag_viewable,
 				NULL);
-
-  gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (list_item),
-                                  GTK_DEST_DEFAULT_ALL,
-                                  GTK_OBJECT (viewable)->klass->type,
-                                  GDK_ACTION_MOVE | GDK_ACTION_COPY);
 }
 
 void
@@ -348,9 +343,20 @@ gimp_list_item_set_reorderable (GimpListItem  *list_item,
   list_item->reorderable = reorderable;
 
   if (reorderable)
-    list_item->container = container;
+    {
+      list_item->container = container;
+
+      gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (list_item),
+                                      GTK_DEST_DEFAULT_ALL,
+                                      container->children_type,
+                                      GDK_ACTION_MOVE | GDK_ACTION_COPY);
+    }
   else
-    list_item->container = NULL;
+    {
+      list_item->container = NULL;
+
+      gtk_drag_dest_unset (GTK_WIDGET (list_item));
+    }
 }
 
 gboolean

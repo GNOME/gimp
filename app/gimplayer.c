@@ -53,6 +53,9 @@
 
 enum
 {
+  OPACITY_CHANGED,
+  MODE_CHANGED,
+  PRESERVE_TRANS_CHANGED,
   MASK_CHANGED,
   LAST_SIGNAL
 };
@@ -112,6 +115,33 @@ gimp_layer_class_init (GimpLayerClass *klass)
   viewable_class = (GimpViewableClass *) klass;
 
   parent_class = gtk_type_class (GIMP_TYPE_DRAWABLE);
+
+  layer_signals[OPACITY_CHANGED] =
+    gtk_signal_new ("opacity_changed",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpLayerClass,
+				       opacity_changed),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
+
+  layer_signals[MODE_CHANGED] =
+    gtk_signal_new ("mode_changed",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpLayerClass,
+				       mode_changed),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
+
+  layer_signals[PRESERVE_TRANS_CHANGED] =
+    gtk_signal_new ("preserve_trans_changed",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpLayerClass,
+				       preserve_trans_changed),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
 
   layer_signals[MASK_CHANGED] =
     gtk_signal_new ("mask_changed",
@@ -1365,8 +1395,98 @@ gimp_layer_is_floating_sel (GimpLayer *layer)
   return (layer->fs.drawable != NULL);
 }
 
-gboolean
-gimp_layer_linked (GimpLayer *layer)
+void
+gimp_layer_set_opacity (GimpLayer *layer,
+                        gdouble    opacity)
 {
+  gint layer_opacity;
+
+  g_return_if_fail (layer != NULL);
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+
+  layer_opacity = (gint) (opacity * 255.999);
+
+  if (layer->opacity != layer_opacity)
+    {
+      layer->opacity = layer_opacity;
+
+      gtk_signal_emit (GTK_OBJECT (layer), layer_signals[OPACITY_CHANGED]);
+    }
+}
+
+gdouble
+gimp_layer_get_opacity (GimpLayer *layer)
+{
+  g_return_val_if_fail (layer != NULL, 1.0);
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), 1.0);
+
+  return (gdouble) layer->opacity / 255.0;
+}
+
+void
+gimp_layer_set_mode (GimpLayer        *layer,
+                     LayerModeEffects  mode)
+{
+  g_return_if_fail (layer != NULL);
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+
+  if (layer->mode != mode)
+    {
+      layer->mode = mode;
+
+      gtk_signal_emit (GTK_OBJECT (layer), layer_signals[MODE_CHANGED]);
+    }
+}
+
+LayerModeEffects
+gimp_layer_get_mode (GimpLayer *layer)
+{
+  g_return_val_if_fail (layer != NULL, NORMAL_MODE);
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), NORMAL_MODE);
+
+  return layer->mode;
+}
+
+void
+gimp_layer_set_preserve_trans (GimpLayer *layer,
+                               gboolean   preserve)
+{
+  g_return_if_fail (layer != NULL);
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+
+  if (layer->preserve_trans != preserve)
+    {
+      layer->preserve_trans = preserve ? TRUE : FALSE;
+
+      gtk_signal_emit (GTK_OBJECT (layer),
+                       layer_signals[PRESERVE_TRANS_CHANGED]);
+    }
+}
+
+gboolean
+gimp_layer_get_preserve_trans (GimpLayer *layer)
+{
+  g_return_val_if_fail (layer != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
+
+  return layer->preserve_trans;
+}
+
+void
+gimp_layer_set_linked (GimpLayer *layer,
+                       gboolean   linked)
+{
+  g_return_if_fail (layer != NULL);
+  g_return_if_fail (GIMP_IS_LAYER (layer));
+
+  layer->linked = linked ? TRUE : FALSE;
+}
+
+gboolean
+gimp_layer_get_linked (GimpLayer *layer)
+{
+  g_return_val_if_fail (layer != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
+
   return layer->linked;
 }

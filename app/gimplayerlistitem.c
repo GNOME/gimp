@@ -23,6 +23,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "apptypes.h"
@@ -63,8 +64,18 @@ static void       gimp_layer_list_item_mask_changed (GimpLayer         *layer,
                                                      GimpLayerListItem *layer_item);
 static void       gimp_layer_list_item_update_state (GtkWidget         *widget);
 
+static void      gimp_layer_list_item_layer_clicked (GtkWidget         *widget,
+                                                     GimpLayer         *layer);
+static void       gimp_layer_list_item_mask_clicked (GtkWidget         *widget,
+                                                     GimpLayerMask     *mask);
+
 
 static GimpDrawableListItemClass *parent_class = NULL;
+
+static GimpRGB  black_color;
+static GimpRGB  white_color;
+static GimpRGB  green_color;
+static GimpRGB  red_color;
 
 
 GtkType
@@ -111,6 +122,11 @@ gimp_layer_list_item_class_init (GimpLayerListItemClass *klass)
   widget_class->state_changed   = gimp_layer_list_item_state_changed;
 
   list_item_class->set_viewable = gimp_layer_list_item_set_viewable;
+
+  gimp_rgba_set (&black_color, 0.0, 0.0, 0.0, 1.0);
+  gimp_rgba_set (&white_color, 1.0, 1.0, 1.0, 1.0);
+  gimp_rgba_set (&green_color, 0.0, 1.0, 0.0, 1.0);
+  gimp_rgba_set (&red_color,   1.0, 0.0, 0.0, 1.0);
 }
 
 static void
@@ -134,6 +150,10 @@ gimp_layer_list_item_set_viewable (GimpListItem *list_item,
 
   layer_item = GIMP_LAYER_LIST_ITEM (list_item);
   layer      = GIMP_LAYER (GIMP_PREVIEW (list_item->preview)->viewable);
+
+  gtk_signal_connect (GTK_OBJECT (list_item->preview), "clicked",
+                      GTK_SIGNAL_FUNC (gimp_layer_list_item_layer_clicked),
+                      layer);
 
   if (gimp_layer_get_mask (layer))
     {
@@ -259,12 +279,18 @@ gimp_layer_list_item_mask_changed (GimpLayer         *layer,
       layer_item->mask_preview = gimp_preview_new (GIMP_VIEWABLE (mask),
                                                    list_item->preview_size,
                                                    2, FALSE);
+
       GIMP_PREVIEW (layer_item->mask_preview)->clickable = TRUE;
+
       gtk_box_pack_start (GTK_BOX (list_item->hbox), layer_item->mask_preview,
                           FALSE, FALSE, 0);
       gtk_box_reorder_child (GTK_BOX (list_item->hbox),
                              layer_item->mask_preview, 2);
       gtk_widget_show (layer_item->mask_preview);
+
+      gtk_signal_connect (GTK_OBJECT (layer_item->mask_preview), "clicked",
+                          GTK_SIGNAL_FUNC (gimp_layer_list_item_mask_clicked),
+                          mask);
 
       gtk_signal_connect_object
         (GTK_OBJECT (mask), "apply_changed",
@@ -298,8 +324,8 @@ gimp_layer_list_item_update_state (GtkWidget *widget)
   GimpLayer         *layer;
   GimpLayerMask     *mask;
   GimpPreview       *preview;
-  guchar             layer_color[3] = { 0, 0, 0 };
-  guchar             mask_color[3]  = { 0, 0, 0 };
+  GimpRGB           *layer_color = &black_color;
+  GimpRGB           *mask_color  = &black_color;
 
   layer_item = GIMP_LAYER_LIST_ITEM (widget);
   list_item  = GIMP_LIST_ITEM (widget);
@@ -314,15 +340,11 @@ gimp_layer_list_item_update_state (GtkWidget *widget)
     case GTK_STATE_SELECTED:
       if (! mask || (mask && ! gimp_layer_mask_get_edit (mask)))
         {
-          layer_color[0] = 255;
-          layer_color[1] = 255;
-          layer_color[2] = 255;
+          layer_color = &white_color;
         }
       else
         {
-          mask_color[0] = 255;
-          mask_color[1] = 255;
-          mask_color[2] = 255;
+          mask_color = &white_color;
         }
       break;
 
@@ -332,30 +354,39 @@ gimp_layer_list_item_update_state (GtkWidget *widget)
 
   preview = GIMP_PREVIEW (list_item->preview);
 
-  if (preview->border_color[0] != layer_color[0] ||
-      preview->border_color[1] != layer_color[1] ||
-      preview->border_color[2] != layer_color[2])
-    {
-      preview->border_color[0] = layer_color[0];
-      preview->border_color[1] = layer_color[1];
-      preview->border_color[2] = layer_color[2];
-
-      gimp_preview_render (preview);
-    }
+  gimp_preview_set_border_color (preview, layer_color);
 
   if (mask)
     {
       preview = GIMP_PREVIEW (layer_item->mask_preview);
 
-      if (preview->border_color[0] != mask_color[0] ||
-          preview->border_color[1] != mask_color[1] ||
-          preview->border_color[2] != mask_color[2])
-        {
-          preview->border_color[0] = mask_color[0];
-          preview->border_color[1] = mask_color[1];
-          preview->border_color[2] = mask_color[2];
-
-          gimp_preview_render (preview);
-        }
+      gimp_preview_set_border_color (preview, mask_color);
     }
+}
+
+static void
+gimp_layer_list_item_layer_clicked (GtkWidget *widget,
+                                    GimpLayer *layer)
+{
+  GimpLayerMask *mask;
+
+  g_print ("layer clicked\n");
+
+  mask = gimp_layer_get_mask (layer);
+
+  if (mask)
+    {
+      if (gimp_layer_mask_get_edit (mask))
+        gimp_layer_mask_set_edit (mask, FALSE);
+    }
+}
+
+static void
+gimp_layer_list_item_mask_clicked (GtkWidget     *widget,
+                                   GimpLayerMask *mask)
+{
+  g_print ("mask clicked\n");
+
+  if (! gimp_layer_mask_get_edit (mask))
+    gimp_layer_mask_set_edit (mask, TRUE);
 }

@@ -483,7 +483,7 @@ gimp_edit_selection_tool_motion (GimpTool       *tool,
 		layer = (GimpLayer *) layer_list->data;
 
 		if (layer == gdisp->gimage->active_layer || 
-		    gimp_layer_linked (layer))
+		    gimp_layer_get_linked (layer))
 		  {
 		    gimp_layer_translate (layer, xoffset, yoffset);
 		  }
@@ -697,7 +697,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 	  layer = (GimpLayer *) layer_list->data;
 
 	  if (((layer) != gdisp->gimage->active_layer) &&
-	      gimp_layer_linked (layer))
+	      gimp_layer_get_linked (layer))
 	    {
 	      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 	      gdisplay_transform_coords (gdisp, off_x, off_y, &x3, &y3, FALSE);
@@ -957,7 +957,7 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
 	      layer = (GimpLayer *) layer_list->data;
 
 	      if (((layer) == gdisp->gimage->active_layer) || 
-		  gimp_layer_linked (layer))
+		  gimp_layer_get_linked (layer))
 		{
 		  gimp_layer_translate (layer, inc_x, inc_y);
 		}

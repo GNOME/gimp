@@ -104,6 +104,7 @@ typedef struct _GimpContainerListView GimpContainerListView;
 typedef struct _GimpContainerGridView GimpContainerGridView;
 typedef struct _GimpDataFactoryView   GimpDataFactoryView;
 typedef struct _GimpDrawableListView  GimpDrawableListView;
+typedef struct _GimpLayerListView     GimpLayerListView;
 
 typedef struct _GimpListItem          GimpListItem;
 typedef struct _GimpDrawableListItem  GimpDrawableListItem;

@@ -3049,7 +3049,7 @@ gimp_image_merge_layers (GimpImage *gimage,
        *  the layers alpha channel. 
        */
       if (bottom->mode != DISSOLVE_MODE)
-	bottom->mode = NORMAL_MODE;
+	gimp_layer_set_mode (bottom, NORMAL_MODE);
     }
 
   /* Copy the tattoo and parasites of the bottom layer to the new layer */
@@ -3114,7 +3114,7 @@ gimp_image_merge_layers (GimpImage *gimage,
 
   /* Save old mode in undo */
   if (bottom)
-    bottom->mode = bottom_mode;
+    gimp_layer_set_mode (bottom, bottom_mode);
 
   g_slist_free (reverse_list);
 

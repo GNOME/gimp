@@ -36,13 +36,13 @@ struct _GimpLayer
 {
   GimpDrawable      parent_instance;
 
-  gboolean          linked;           /*  control linkage                */
-  gboolean          preserve_trans;   /*  preserve transparency          */
-
-  GimpLayerMask    *mask;             /*  possible layer mask            */
-
   gint              opacity;          /*  layer opacity                  */
   LayerModeEffects  mode;             /*  layer combination mode         */
+  gboolean          preserve_trans;   /*  preserve transparency          */
+
+  gboolean          linked;           /*  control linkage                */
+
+  GimpLayerMask    *mask;             /*  possible layer mask            */
 
   /*  Floating selections  */
   struct
@@ -61,7 +61,10 @@ struct _GimpLayerClass
 {
   GimpDrawableClass  parent_class;
 
-  void (* mask_changed) (GimpLayer *layer);
+  void (* opacity_changed)        (GimpLayer *layer);
+  void (* mode_changed)           (GimpLayer *layer);
+  void (* preserve_trans_changed) (GimpLayer *layer);
+  void (* mask_changed)           (GimpLayer *layer);
 };
 
 
@@ -137,9 +140,25 @@ gint            gimp_layer_pick_correlate      (GimpLayer        *layer,
 						gint              y);
 
 GimpLayerMask * gimp_layer_get_mask            (GimpLayer        *layer);
+
 gboolean        gimp_layer_has_alpha           (GimpLayer        *layer);
 gboolean        gimp_layer_is_floating_sel     (GimpLayer        *layer);
-gboolean        gimp_layer_linked              (GimpLayer        *layer);
+
+void            gimp_layer_set_opacity         (GimpLayer        *layer,
+                                                gdouble           opacity);
+gdouble         gimp_layer_get_opacity         (GimpLayer        *layer);
+
+void            gimp_layer_set_mode            (GimpLayer        *layer,
+                                                LayerModeEffects  mode);
+LayerModeEffects gimp_layer_get_mode           (GimpLayer        *layer);
+
+void            gimp_layer_set_preserve_trans  (GimpLayer        *layer,
+                                                gboolean          preserve);
+gboolean        gimp_layer_get_preserve_trans  (GimpLayer        *layer);
+
+void            gimp_layer_set_linked          (GimpLayer        *layer,
+                                                gboolean          linked);
+gboolean        gimp_layer_get_linked          (GimpLayer        *layer);
 
 
 #endif /* __GIMP_LAYER_H__ */

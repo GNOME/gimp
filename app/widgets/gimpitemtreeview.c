@@ -31,6 +31,8 @@
 #include "gimpdrawablelistview.h"
 #include "gimpdnd.h"
 #include "gimpimage.h"
+#include "gimplayer.h"
+#include "gimplayerlistview.h"
 #include "gimplistitem.h"
 #include "gimpmarshal.h"
 #include "gimprc.h"
@@ -67,10 +69,12 @@ static void   gimp_drawable_list_view_new_clicked       (GtkWidget            *w
 static void   gimp_drawable_list_view_new_dropped       (GtkWidget            *widget,
 							 GimpViewable         *viewable,
 							 gpointer              data);
+
 static void   gimp_drawable_list_view_raise_clicked     (GtkWidget            *widget,
 							 GimpDrawableListView *view);
 static void   gimp_drawable_list_view_lower_clicked     (GtkWidget            *widget,
 							 GimpDrawableListView *view);
+
 static void  gimp_drawable_list_view_duplicate_drawable (GimpDrawableListView *view,
 							 GimpDrawable         *drawable);
 static void   gimp_drawable_list_view_duplicate_clicked (GtkWidget            *widget,
@@ -78,6 +82,7 @@ static void   gimp_drawable_list_view_duplicate_clicked (GtkWidget            *w
 static void   gimp_drawable_list_view_duplicate_dropped (GtkWidget            *widget,
 							 GimpViewable         *viewable,
 							 gpointer              drawable);
+
 static void   gimp_drawable_list_view_edit_drawable     (GimpDrawableListView *view,
 							 GimpDrawable         *drawable);
 static void   gimp_drawable_list_view_edit_clicked      (GtkWidget            *widget,
@@ -85,6 +90,7 @@ static void   gimp_drawable_list_view_edit_clicked      (GtkWidget            *w
 static void   gimp_drawable_list_view_edit_dropped      (GtkWidget            *widget,
 							 GimpViewable         *viewable,
 							 gpointer              drawable);
+
 static void   gimp_drawable_list_view_delete_drawable   (GimpDrawableListView *view,
 							 GimpDrawable         *drawable);
 static void   gimp_drawable_list_view_delete_clicked    (GtkWidget            *widget,
@@ -281,25 +287,6 @@ gimp_drawable_list_view_destroy (GtkObject *object)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
-static gpointer
-gimp_drawable_list_view_insert_item (GimpContainerView *view,
-				     GimpViewable      *viewable,
-				     gint               index)
-{
-  gpointer list_item = NULL;
-
-  if (GIMP_CONTAINER_VIEW_CLASS (parent_class)->insert_item)
-    list_item = GIMP_CONTAINER_VIEW_CLASS (parent_class)->insert_item (view,
-								       viewable,
-								       index);
-
-  if (list_item)
-    gimp_list_item_set_reorderable (GIMP_LIST_ITEM (list_item),
-				    TRUE, view->container);
-
-  return (gpointer) list_item;
-}
-
 GtkWidget *
 gimp_drawable_list_view_new (GimpImage               *gimage,
 			     GtkType                  drawable_type,
@@ -325,7 +312,14 @@ gimp_drawable_list_view_new (GimpImage               *gimage,
   g_return_val_if_fail (remove_drawable_func != NULL, NULL);
   g_return_val_if_fail (copy_drawable_func != NULL, NULL);
 
-  list_view = gtk_type_new (GIMP_TYPE_DRAWABLE_LIST_VIEW);
+  if (drawable_type == GIMP_TYPE_LAYER)
+    {
+      list_view = gtk_type_new (GIMP_TYPE_LAYER_LIST_VIEW);
+    }
+  else
+    {
+      list_view = gtk_type_new (GIMP_TYPE_DRAWABLE_LIST_VIEW);
+    }
 
   view = GIMP_CONTAINER_VIEW (list_view);
 
@@ -420,9 +414,33 @@ gimp_drawable_list_view_set_image (GimpDrawableListView *view,
       gtk_signal_connect (GTK_OBJECT (view->gimage), view->signal_name,
 			  GTK_SIGNAL_FUNC (gimp_drawable_list_view_drawable_changed),
 			  view);
+
+      gimp_drawable_list_view_drawable_changed (view->gimage, view);
     }
 
   gtk_widget_set_sensitive (view->new_button, (view->gimage != NULL));
+}
+
+
+/*  GimpContainerView methods  */
+
+static gpointer
+gimp_drawable_list_view_insert_item (GimpContainerView *view,
+				     GimpViewable      *viewable,
+				     gint               index)
+{
+  gpointer list_item = NULL;
+
+  if (GIMP_CONTAINER_VIEW_CLASS (parent_class)->insert_item)
+    list_item = GIMP_CONTAINER_VIEW_CLASS (parent_class)->insert_item (view,
+								       viewable,
+								       index);
+
+  if (list_item)
+    gimp_list_item_set_reorderable (GIMP_LIST_ITEM (list_item),
+				    TRUE, view->container);
+
+  return list_item;
 }
 
 static void
@@ -497,6 +515,9 @@ gimp_drawable_list_view_activate_item (GimpContainerView *view,
 					 GIMP_DRAWABLE (item));
 }
 
+
+/*  "New" functions  */
+
 static void
 gimp_drawable_list_view_new_drawable (GimpDrawableListView *view,
 				      GimpDrawable         *drawable)
@@ -529,6 +550,9 @@ gimp_drawable_list_view_new_dropped (GtkWidget    *widget,
       gimp_drawable_list_view_new_drawable (view, GIMP_DRAWABLE (viewable));
     }
 }
+
+
+/*  "Duplicate" functions  */
 
 static void
 gimp_drawable_list_view_duplicate_drawable (GimpDrawableListView *view,
@@ -569,6 +593,9 @@ gimp_drawable_list_view_duplicate_dropped (GtkWidget    *widget,
 						  GIMP_DRAWABLE (viewable));
     }
 }
+
+
+/*  "Raise/Lower" functions  */
 
 static void
 gimp_drawable_list_view_raise_clicked (GtkWidget            *widget,
@@ -612,6 +639,9 @@ gimp_drawable_list_view_lower_clicked (GtkWidget            *widget,
     }
 }
 
+
+/*  "Edit" functions  */
+
 static void
 gimp_drawable_list_view_edit_drawable (GimpDrawableListView *view,
 				       GimpDrawable         *drawable)
@@ -645,6 +675,9 @@ gimp_drawable_list_view_edit_dropped (GtkWidget    *widget,
       gimp_drawable_list_view_edit_drawable (view, GIMP_DRAWABLE (viewable));
     }
 }
+
+
+/*  "Delete" functions  */
 
 static void
 gimp_drawable_list_view_delete_drawable (GimpDrawableListView *view,
@@ -681,6 +714,9 @@ gimp_drawable_list_view_delete_dropped (GtkWidget    *widget,
       gimp_drawable_list_view_delete_drawable (view, GIMP_DRAWABLE (viewable));
     }
 }
+
+
+/*  GimpImage callbacks  */
 
 static void
 gimp_drawable_list_view_drawable_changed (GimpImage            *gimage,

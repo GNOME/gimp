@@ -22,6 +22,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpcolor/gimpcolor.h"
+
 #include "apptypes.h"
 
 #include "appenv.h"
@@ -62,6 +64,9 @@ static void   gimp_container_grid_view_highlight_item (GimpContainerView      *v
 
 
 static GimpContainerViewClass *parent_class = NULL;
+
+static GimpRGB  white_color;
+static GimpRGB  black_color;
 
 
 GtkType
@@ -115,6 +120,9 @@ gimp_container_grid_view_class_init (GimpContainerGridViewClass *klass)
   klass->white_style->bg[GTK_STATE_NORMAL].green = 0xffff;
   klass->white_style->bg[GTK_STATE_NORMAL].blue  = 0xffff;
   klass->white_style->bg[GTK_STATE_NORMAL].pixel = g_white_pixel;
+
+  gimp_rgba_set (&white_color, 1.0, 1.0, 1.0, 1.0);
+  gimp_rgba_set (&black_color, 0.0, 0.0, 0.0, 1.0);
 }
 
 static void
@@ -222,9 +230,7 @@ gimp_container_grid_view_insert_item (GimpContainerView *view,
 				   1,
 				   FALSE, TRUE, TRUE);
 
-  GIMP_PREVIEW (preview)->border_color[0] = 255;
-  GIMP_PREVIEW (preview)->border_color[1] = 255;
-  GIMP_PREVIEW (preview)->border_color[2] = 255;
+  GIMP_PREVIEW (preview)->border_color = white_color;
 
   gtk_wrap_box_pack (GTK_WRAP_BOX (grid_view->wrap_box), preview,
 		     FALSE, FALSE, FALSE, FALSE);
@@ -361,13 +367,7 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
   preview = gtk_object_get_data (GTK_OBJECT (view), "last_selected_item");
 
   if (preview)
-    {
-      preview->border_color[0] = 255;
-      preview->border_color[1] = 255;
-      preview->border_color[2] = 255;
-
-      gtk_signal_emit_by_name (GTK_OBJECT (preview), "render");
-    }
+    gimp_preview_set_border_color (preview, &white_color);
 
   if (insert_data)
     preview = GIMP_PREVIEW (insert_data);
@@ -401,11 +401,7 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
                                     (row + 1) * item_height - adj->page_size);
         }
 
-      preview->border_color[0] = 0;
-      preview->border_color[1] = 0;
-      preview->border_color[2] = 0;
-
-      gtk_signal_emit_by_name (GTK_OBJECT (preview), "render");
+      gimp_preview_set_border_color (preview, &black_color);
     }
 
   gtk_object_set_data (GTK_OBJECT (view), "last_selected_item", preview);

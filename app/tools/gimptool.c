@@ -94,7 +94,9 @@ static guint gimp_tool_signals[LAST_SIGNAL] = { 0 };
 static GimpObjectClass *parent_class = NULL;
 
 
-/* #warning FIXME: check what global_tool_ID was used for */
+#ifdef __GNUC__
+#warning FIXME: check what global_tool_ID was used for
+#endif
 
 /* static gint global_tool_ID = 0; */
 
@@ -417,6 +419,8 @@ gimp_tool_real_button_press (GimpTool       *tool,
 {
   tool->gdisp    = gdisp;
   tool->drawable = gimp_image_active_drawable (gdisp->gimage);
+
+  tool->state = ACTIVE;
 }
 
 static void
@@ -424,6 +428,7 @@ gimp_tool_real_button_release (GimpTool       *tool,
 			       GdkEventButton *bevent,
 			       GDisplay       *gdisp)
 {
+  tool->state = INACTIVE;
 }
 
 static void
@@ -452,8 +457,9 @@ gimp_tool_real_cursor_update (GimpTool       *tool,
 			      GdkEventMotion *mevent,
 			      GDisplay       *gdisp)
 {
-  gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW,
-				GIMP_TOOL_CURSOR_NONE,
+  gdisplay_install_tool_cursor (gdisp,
+                                GDK_TOP_LEFT_ARROW,
+				tool->tool_cursor,
 				GIMP_CURSOR_MODIFIER_NONE);
 }
 
@@ -557,7 +563,9 @@ STUB(convolve_non_gui)
 STUB(convolve_non_gui_default)
 STUB(path_transform_xy)
 
-     /* #warning obsolete crap */
+#ifdef __GNUC__
+#warning obsolete crap
+#endif
 #ifdef STONE_AGE
 ToolInfo tool_info[] =
 {

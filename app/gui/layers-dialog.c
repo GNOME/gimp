@@ -52,6 +52,8 @@
 #include "temp_buf.h"
 #include "undo.h"
 
+#include "tools/paint_options.h"
+
 #include "libgimp/gimplimits.h"
 
 #include "libgimp/gimpintl.h"
@@ -378,29 +380,10 @@ layers_dialog_create (void)
   gtk_box_pack_start (GTK_BOX (util_box), label, FALSE, FALSE, 2);
   gtk_widget_show (label);
 
-  layersD->mode_option_menu = 
-    gimp_option_menu_new2 (FALSE, paint_mode_menu_callback,
-			   NULL, (gpointer) NORMAL_MODE,
-			   _("Normal"),          (gpointer) NORMAL_MODE,       NULL,
-			   _("Dissolve"),        (gpointer) DISSOLVE_MODE,     NULL,
-			   _("Multiply"),        (gpointer) MULTIPLY_MODE,     NULL,
-			   _("Divide"),          (gpointer) DIVIDE_MODE,       NULL,
-			   _("Screen"),          (gpointer) SCREEN_MODE,       NULL,
-			   _("Overlay"),         (gpointer) OVERLAY_MODE,      NULL,
-			   _("Dodge"),           (gpointer) DODGE_MODE,        NULL,
-			   _("Burn"),            (gpointer) BURN_MODE,         NULL,
-			   _("Hard Light"),      (gpointer) HARDLIGHT_MODE,    NULL,
-			   _("Difference"),      (gpointer) DIFFERENCE_MODE,   NULL,
-			   _("Addition"),        (gpointer) ADDITION_MODE,     NULL,
-			   _("Subtract"),        (gpointer) SUBTRACT_MODE,     NULL,
-			   _("Darken Only"),     (gpointer) DARKEN_ONLY_MODE,  NULL,
-			   _("Lighten Only"),    (gpointer) LIGHTEN_ONLY_MODE, NULL,
-			   _("Hue"),             (gpointer) HUE_MODE,          NULL,
-			   _("Saturation"),      (gpointer) SATURATION_MODE,   NULL,
-			   _("Color"),           (gpointer) COLOR_MODE,        NULL,
-			   _("Value"),           (gpointer) VALUE_MODE,        NULL,
-			   NULL);
-  
+  layersD->mode_option_menu = paint_mode_menu_new (paint_mode_menu_callback,
+                                                   NULL,
+                                                   FALSE, NORMAL_MODE);
+
   gtk_box_pack_start (GTK_BOX (util_box), layersD->mode_option_menu,
 		      FALSE, FALSE, 2);
   gtk_widget_show (layersD->mode_option_menu);
@@ -1403,7 +1386,7 @@ paint_mode_menu_callback (GtkWidget *widget,
 
       if (layer->mode != mode)
 	{
-	  layer->mode = mode;
+	  gimp_layer_set_mode (layer, mode);
 
 	  drawable_update (GIMP_DRAWABLE (layer), 0, 0,
 			   GIMP_DRAWABLE (layer)->width,
@@ -1419,18 +1402,17 @@ opacity_scale_update (GtkAdjustment *adjustment,
 {
   GimpImage *gimage;
   GimpLayer *layer;
-  gint       opacity;
+  gdouble    opacity;
 
   if (! (gimage = layersD->gimage) ||
       ! (layer  = gimp_image_get_active_layer (gimage)))
     return;
 
-  /*  add the 0.001 to insure there are no subtle rounding errors  */
-  opacity = (gint) (adjustment->value * 2.55 + 0.001);
+  opacity = adjustment->value / 100.0;
 
-  if (layer->opacity != opacity)
+  if (gimp_layer_get_opacity (layer) != opacity)
     {
-      layer->opacity = opacity;
+      gimp_layer_set_opacity (layer, opacity);
 
       drawable_update (GIMP_DRAWABLE (layer), 0, 0,
 		       GIMP_DRAWABLE (layer)->width,
@@ -1450,10 +1432,7 @@ preserve_trans_update (GtkWidget *widget,
       ! (layer  = gimp_image_get_active_layer (gimage)))
     return;
 
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    layer->preserve_trans = TRUE;
-  else
-    layer->preserve_trans = FALSE;
+  gimp_layer_set_preserve_trans (layer, GTK_TOGGLE_BUTTON (widget)->active);
 }
 
 
@@ -3430,8 +3409,17 @@ layer_widget_layer_flush (GtkWidget *widget,
        *  2)  The paint mode menu
        *  3)  The preserve trans button
        */
+      gtk_signal_handler_block_by_func (GTK_OBJECT (layersD->opacity_data),
+                                        opacity_scale_update,
+                                        layersD);
+
       gtk_adjustment_set_value (GTK_ADJUSTMENT (layersD->opacity_data),
-				(gfloat) layer_widget->layer->opacity / 2.55);
+				gimp_layer_get_opacity (layer_widget->layer) * 100.0);
+
+      gtk_signal_handler_unblock_by_func (GTK_OBJECT (layersD->opacity_data),
+                                          opacity_scale_update,
+                                          layersD);
+
       gimp_option_menu_set_history (GTK_OPTION_MENU (layersD->mode_option_menu),
 				    (gpointer) layer_widget->layer->mode);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (layersD->preserve_trans),
@@ -3895,14 +3883,15 @@ layers_dialog_add_mask_query (GimpLayer *layer)
   if (gimage->selection_mask)
     {
       options->add_mask_type = ADD_SELECTION_MASK;
+
       frame = gimp_radio_group_new2 (TRUE, _("Initialize Layer Mask to:"),
 				     gimp_radio_button_update,
 				     &options->add_mask_type,
 				     (gpointer) options->add_mask_type,
 
-				     _("Show Selection"),
+				     _("Selection"),
 				     (gpointer) ADD_SELECTION_MASK, NULL,
-				     _("Hide Selection"),
+				     _("Inverse Selection"),
 				     (gpointer) ADD_INV_SELECTION_MASK, NULL,
 				     _("White (Full Opacity)"),
 				     (gpointer) ADD_WHITE_MASK, NULL,

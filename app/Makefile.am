@@ -317,6 +317,8 @@ gimp_SOURCES = \
 	gimpimagepreview.c		\
 	gimplayerlistitem.h		\
 	gimplayerlistitem.c		\
+	gimplayerlistview.h		\
+	gimplayerlistview.c		\
 	gimplistitem.h			\
 	gimplistitem.c			\
 	gimppalettepreview.h		\

@@ -611,7 +611,7 @@ layer_translate_invoker (Argument *args)
 	    {
 	      tmp_layer = (GimpLayer *) layer_list->data;
 	
-	      if ((tmp_layer == layer) || tmp_layer->linked)
+	      if ((tmp_layer == layer) || gimp_layer_get_linked (tmp_layer))
 		gimp_layer_translate (tmp_layer, offx, offy);
 	    }
     
@@ -740,7 +740,7 @@ layer_set_offsets_invoker (Argument *args)
 	    {
 	      tmp_layer = (GimpLayer *) layer_list->data;
 	
-	      if ((tmp_layer == layer) || tmp_layer->linked)
+	      if ((tmp_layer == layer) || gimp_layer_get_linked (tmp_layer))
 		gimp_layer_translate (tmp_layer,
 				(offx - GIMP_DRAWABLE (layer)->offset_x),
 				(offy - GIMP_DRAWABLE (layer)->offset_y));
@@ -1119,7 +1119,7 @@ layer_get_preserve_trans_invoker (Argument *args)
   return_args = procedural_db_return_args (&layer_get_preserve_trans_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = layer->preserve_trans;
+    return_args[1].value.pdb_int = gimp_layer_get_preserve_trans (layer);
 
   return return_args;
 }
@@ -1172,7 +1172,7 @@ layer_set_preserve_trans_invoker (Argument *args)
   preserve_trans = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    layer->preserve_trans = preserve_trans;
+    gimp_layer_set_preserve_trans (layer, preserve_trans);
 
   return procedural_db_return_args (&layer_set_preserve_trans_proc, success);
 }
@@ -1221,7 +1221,7 @@ layer_get_opacity_invoker (Argument *args)
   return_args = procedural_db_return_args (&layer_get_opacity_proc, success);
 
   if (success)
-    return_args[1].value.pdb_float = (layer->opacity * 100.0) / 255.0;
+    return_args[1].value.pdb_float = gimp_layer_get_opacity (layer) * 100.0;
 
   return return_args;
 }
@@ -1276,7 +1276,7 @@ layer_set_opacity_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    layer->opacity = (int) ((opacity * 255) / 100);
+    gimp_layer_set_opacity (layer, opacity / 100.0);
 
   return procedural_db_return_args (&layer_set_opacity_proc, success);
 }
@@ -1325,7 +1325,7 @@ layer_get_mode_invoker (Argument *args)
   return_args = procedural_db_return_args (&layer_get_mode_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = layer->mode;
+    return_args[1].value.pdb_int = gimp_layer_get_mode (layer);
 
   return return_args;
 }
@@ -1380,7 +1380,7 @@ layer_set_mode_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    layer->mode = mode;
+    gimp_layer_set_mode (layer, mode);
 
   return procedural_db_return_args (&layer_set_mode_proc, success);
 }
@@ -1429,7 +1429,7 @@ layer_get_linked_invoker (Argument *args)
   return_args = procedural_db_return_args (&layer_get_linked_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = layer->linked;
+    return_args[1].value.pdb_int = gimp_layer_get_linked (layer);
 
   return return_args;
 }
@@ -1482,7 +1482,7 @@ layer_set_linked_invoker (Argument *args)
   linked = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    layer->linked = linked;
+    gimp_layer_set_linked (layer, linked);
 
   return procedural_db_return_args (&layer_set_linked_proc, success);
 }

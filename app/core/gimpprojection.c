@@ -2040,7 +2040,9 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
       SET_SENSITIVE ("Image/Mode/RGB", (base_type != RGB));
       SET_SENSITIVE ("Image/Mode/Grayscale", (base_type != GRAY));
       SET_SENSITIVE ("Image/Mode/Indexed...", (base_type != INDEXED));
-      /* #warning FIXME (set_menu_sensitivity) */
+#ifdef __GNUC__
+#warning FIXME (set_menu_sensitivity)
+#endif
 #if 0
       SET_SENSITIVE ("Image/Histogram...", lp);
 #endif

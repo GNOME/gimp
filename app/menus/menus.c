@@ -1791,7 +1791,9 @@ menus_init (void)
       menus_tools_create (GIMP_TOOL_INFO (list->data));
     }
   /*  reorder <Image>/Image/Colors  */
-  /*#warning FIXME (reorder <Image>/Image/Colors) */
+#ifdef __GNUC__
+#warning FIXME (reorder <Image>/Image/Colors)
+#endif
 #if 0 
    menu_item = gtk_item_factory_get_widget (image_factory,
 					   tool_info[POSTERIZE].menu_path);

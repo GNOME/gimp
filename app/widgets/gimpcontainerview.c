@@ -32,6 +32,7 @@
 
 enum
 {
+  SET_CONTAINER,
   INSERT_ITEM,
   REMOVE_ITEM,
   REORDER_ITEM,
@@ -46,6 +47,9 @@ enum
 static void   gimp_container_view_class_init  (GimpContainerViewClass *klass);
 static void   gimp_container_view_init        (GimpContainerView      *panel);
 static void   gimp_container_view_destroy     (GtkObject              *object);
+
+static void   gimp_container_view_real_set_container (GimpContainerView *view,
+						      GimpContainer     *container);
 
 static void   gimp_container_view_clear_items (GimpContainerView      *view);
 static void   gimp_container_view_real_clear_items (GimpContainerView *view);
@@ -109,6 +113,16 @@ gimp_container_view_class_init (GimpContainerViewClass *klass)
   object_class = (GtkObjectClass *) klass;
   
   parent_class = gtk_type_class (GTK_TYPE_VBOX);
+
+  view_signals[SET_CONTAINER] =
+    gtk_signal_new ("set_container",
+                    GTK_RUN_LAST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpContainerViewClass,
+                                       set_container),
+                    gtk_marshal_NONE__OBJECT,
+                    GTK_TYPE_NONE, 1,
+                    GIMP_TYPE_OBJECT);
 
   view_signals[INSERT_ITEM] =
     gtk_signal_new ("insert_item",
@@ -188,6 +202,7 @@ gimp_container_view_class_init (GimpContainerViewClass *klass)
 
   object_class->destroy = gimp_container_view_destroy;
 
+  klass->set_container    = gimp_container_view_real_set_container;
   klass->insert_item      = NULL;
   klass->remove_item      = NULL;
   klass->reorder_item     = NULL;
@@ -238,6 +253,14 @@ gimp_container_view_set_container (GimpContainerView *view,
   if (container == view->container)
     return;
 
+  gtk_signal_emit (GTK_OBJECT (view), view_signals[SET_CONTAINER],
+		   container);
+}
+
+static void
+gimp_container_view_real_set_container (GimpContainerView *view,
+					GimpContainer     *container)
+{
   if (view->container)
     {
       gimp_container_view_select_item (view, NULL);

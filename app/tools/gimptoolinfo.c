@@ -27,8 +27,7 @@
 #include "gimptoolinfo.h"
 #include "temp_buf.h"
 
-/* FIXME: include rect_select.h here */
-#include "gimpcolorpickertool.h"
+#include "gimprectselecttool.h"
 
 
 static void      gimp_tool_info_class_init      (GimpToolInfoClass *klass);
@@ -245,7 +244,7 @@ gimp_tool_info_get_standard (void)
   if (! standard_tool_info)
     {
       standard_tool_info =
-	gimp_tool_info_new (GIMP_TYPE_COLOR_PICKER_TOOL,
+	gimp_tool_info_new (GIMP_TYPE_RECT_SELECT_TOOL,
                             FALSE,
 			    "gimp:standard_tool",
 			    "Standard Tool",

@@ -1,3 +1,70 @@
+2001-03-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/apptypes.h
+	* app/gimplayerlistview.[ch]: new subclass of GimpDrawableListView
+	(the upcoming replacement of the layers dialog). Connects to the
+	new GimpLayer signals using the layer container as signal proxy
+	(see below).
+
+	* app/gimpcontainerview.[ch]: made "set_container" a virtual
+	function.  This is needed by the GimpLayerListView to
+	connect/disconnect signals. Subclasses implementing this method
+	MUST obey the following order of instructions:
+
+	1. disconnect from signals related to GimpContainerView->container
+	2. chain up (!!!)
+	3. connect to signals related to GimpContainerView->container
+
+	And yes, I will add DocBook files for all those new objects :)
+
+	* app/gimppreview.[ch]: made "border_color" a GimpRGB instead of
+	guchar[3]. Added gimp_preview_set_border_color().
+
+	* app/gimpcontainergridview.c
+	* app/gimplayerlistitem.c: use gimp_preview_set_border_color().
+
+	* app/gimpcontainerlistview.c
+	* app/gimpdrawablelistview.c: cleanup.
+
+	* app/gimpdrawablelistitem.c: we can safely asume that our parent
+	widget is a GimpDrawableListView and use it's "reorder_drawable"
+	function pointer (after checking that it's there).
+
+	* app/gimplistitem.c: connect the correct DND type when changing
+	the container of a list item with "reorderable" enabled.
+
+	* app/gimplayer.[ch]: added accessors and "*_changed" signals for
+	layer->mode, layer->opacity and layer->preserve_trans.
+
+	* app/disp_callbacks.c: fixed a FIXME: use the correct bucket fill
+	tool context again.
+
+	* app/tools/paint_options.[ch]: paint_mode_menu_new(): added a
+	boolean which toggles the "Behind" item on/off to the same
+	constructor can be used for all paint mode menus.
+
+	* app/tools/gimptoolinfo.c: rect. select is the standard tool again.
+
+	* app/brush_select.c
+	* app/floating_sel.c
+	* app/gimpimage.c
+	* app/layers_dialog.c
+	* app/pdb/layer_cmds.c
+	* app/tools/gimpeditselectiontool.c
+	* tools/pdbgen/pdb/layer.pdb: use the new layer accessors and the
+	paint_mode_menu constructor.
+
+	* app/commands.c
+	* app/gdisplay.c
+	* app/menus.c
+	* app/undo.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimptool.c
+	* app/tools/paint_options.c
+	* app/tools/tool_manager.c: put the #warning's back inside
+	#ifdef __GNUC__
+
 2001-03-10  Daniel Egger  <egger@suse.de>
 
 	* plug-ins/common/sobel.c: Applied patch from
