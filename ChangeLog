@@ -1,3 +1,12 @@
+2003-02-09  Manish Singh  <yosh@gimp.org>
+
+	* libgimp/gimp.c: implemented plug-in debugging hooks. Also, use
+	G_LOG_DOMAIN instead of hardcoding "LibGimp" for g_log_set_handler.
+
+	* devel-docs/debug-plug-ins.txt: documenyed here
+
+	* devel-docs/Makefile.am: add new file
+
 2003-02-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpcontext.[ch]: simplified everything a lot by

@@ -89,6 +89,16 @@
 
 #include "gimp.h"
 
+/* Maybe this should go in a public header if we add other things to it */
+typedef enum {
+  GIMP_DEBUG_PID                = 1 << 0,
+  GIMP_DEBUG_FATAL_WARNINGS     = 1 << 1,
+  GIMP_DEBUG_QUERY              = 1 << 2,
+  GIMP_DEBUG_INIT               = 1 << 3,
+  GIMP_DEBUG_RUN                = 1 << 4,
+
+  GIMP_DEBUG_DEFAULT            = (GIMP_DEBUG_RUN | GIMP_DEBUG_FATAL_WARNINGS)
+} GimpDebugFlag;
 
 #define WRITE_BUFFER_SIZE  1024
 
@@ -97,6 +107,8 @@ void gimp_extension_ack     (void);
 void gimp_read_expect_msg   (WireMessage *msg,
 			     gint         type);
 
+
+static void       gimp_debug_stop              (void);
 
 #ifndef G_OS_WIN32
 static void       gimp_plugin_sigfatal_handler (gint            sig_num);
@@ -151,6 +163,20 @@ static GimpStackTraceMode stack_trace_mode = GIMP_STACK_TRACE_NEVER;
 
 static GHashTable *temp_proc_ht = NULL;
 
+static guint gimp_debug_flags = 0;
+
+static const GDebugKey gimp_debug_keys[] = {
+  {"pid",            GIMP_DEBUG_PID},
+  {"fatal-warnings", GIMP_DEBUG_FATAL_WARNINGS},
+  {"fw",             GIMP_DEBUG_FATAL_WARNINGS},
+  {"query",          GIMP_DEBUG_QUERY},
+  {"init",           GIMP_DEBUG_INIT},
+  {"run",            GIMP_DEBUG_RUN},
+  {"on",             GIMP_DEBUG_DEFAULT}
+};
+
+static const guint gimp_ndebug_keys = sizeof (gimp_debug_keys) / sizeof (GDebugKey);
+
 #ifdef G_OS_WIN32
 static GimpPlugInInfo *PLUG_IN_INFO_PTR;
 #define PLUG_IN_INFO (*PLUG_IN_INFO_PTR)
@@ -176,7 +202,9 @@ int
 gimp_main (int   argc,
 	   char *argv[])
 {
-  gchar *basename;
+  gchar       *basename;
+  const gchar *env_string;
+  gchar       *debug_string;
 
 #ifdef G_OS_WIN32
   gint i, j, k;
@@ -228,6 +256,30 @@ gimp_main (int   argc,
 
   g_set_prgname (basename);
 
+  env_string = g_getenv ("GIMP_PLUGIN_DEBUG");
+
+  if (env_string)
+    {
+      debug_string = strchr (env_string, ',');
+
+      if (debug_string)
+        {
+          gint len = debug_string - env_string;
+
+	  if ((strlen (basename) == len) &&
+              (strncmp (basename, env_string, len) == 0))
+            {
+              gimp_debug_flags = g_parse_debug_string (debug_string + 1,
+                                                       gimp_debug_keys,
+                                                       gimp_ndebug_keys);
+            }
+        }
+      else if (strcmp (env_string, basename) == 0)
+        {
+          gimp_debug_flags = GIMP_DEBUG_DEFAULT;
+        }
+    }
+
   g_free (basename);
 
   stack_trace_mode = (GimpStackTraceMode) CLAMP (atoi (argv[5]),
@@ -278,7 +330,7 @@ gimp_main (int   argc,
   /* set handler both for the "LibGimp" and ""
      domains */
 
-  g_log_set_handler ("LibGimp",
+  g_log_set_handler (G_LOG_DOMAIN,
 		     G_LOG_LEVEL_MESSAGE,
 		     gimp_message_func,
 		     NULL);
@@ -287,11 +339,23 @@ gimp_main (int   argc,
 		     gimp_message_func,
 		     NULL);
 
+  if (gimp_debug_flags & GIMP_DEBUG_FATAL_WARNINGS)
+    {
+      GLogLevelFlags fatal_mask;
+
+      fatal_mask = g_log_set_always_fatal (G_LOG_FATAL_MASK);
+      fatal_mask |= G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL;
+      g_log_set_always_fatal (fatal_mask);
+    }
+
   if (strcmp (argv[4], "-query") == 0)
     {
       if (PLUG_IN_INFO.init_proc)
         gp_has_init_write (_writechannel, NULL);
-        
+
+      if (gimp_debug_flags & GIMP_DEBUG_QUERY)
+        gimp_debug_stop ();
+
       if (PLUG_IN_INFO.query_proc)
 	(* PLUG_IN_INFO.query_proc) ();
 	
@@ -301,12 +365,20 @@ gimp_main (int   argc,
 
   if (strcmp (argv[4], "-init") == 0)
     {
+      if (gimp_debug_flags & GIMP_DEBUG_INIT)
+        gimp_debug_stop ();
+
       if (PLUG_IN_INFO.init_proc)
 	(* PLUG_IN_INFO.init_proc) ();
 	
       gimp_close ();
       return 0;
     }
+
+  if (gimp_debug_flags & GIMP_DEBUG_RUN)
+    gimp_debug_stop ();
+  else if (gimp_debug_flags & GIMP_DEBUG_PID)
+    g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "Here I am!\n");
 
   temp_proc_ht = g_hash_table_new (g_str_hash, g_str_equal);
 
@@ -342,6 +414,17 @@ gimp_quit (void)
 {
   gimp_close ();
   exit (0);
+}
+
+static void
+gimp_debug_stop (void)
+{
+#ifndef G_OS_WIN32
+  g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "Waiting for debugger...\n");
+  kill (getpid (), SIGSTOP);
+#else
+  g_log (G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "Debugging not implemented on Win32\n");
+#endif
 }
 
 
