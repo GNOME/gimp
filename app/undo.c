@@ -803,15 +803,20 @@ undo_pop_layer_displace (GImage *gimage,
     {
       old_offsets[0] = GIMP_DRAWABLE(layer)->offset_x;
       old_offsets[1] = GIMP_DRAWABLE(layer)->offset_y;
-      drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
 
       GIMP_DRAWABLE(layer)->offset_x = info[1];
       GIMP_DRAWABLE(layer)->offset_y = info[2];
-      drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
+      drawable_update (GIMP_DRAWABLE(layer), 0, 0,
+		       GIMP_DRAWABLE(layer)->width,
+		       GIMP_DRAWABLE(layer)->height);
+      
       if (layer->mask) 
 	{
 	  GIMP_DRAWABLE(layer->mask)->offset_x = info[1];
 	  GIMP_DRAWABLE(layer->mask)->offset_y = info[2];
+	  drawable_update (GIMP_DRAWABLE(layer->mask), 0, 0,
+			   GIMP_DRAWABLE(layer->mask)->width,
+			   GIMP_DRAWABLE(layer->mask)->height);
 	}
 
 
