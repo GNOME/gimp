@@ -1,5 +1,18 @@
 2002-04-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimagefile.[ch]: made gimp_imagefile_save_thumbnail()
+	return a gboolean indicating success.
+
+	* app/file/file-save.c
+	* tools/pdbgen/pdb/fileops.pdb: use gimp_imagefile_save_thumbnail()
+	to save thumbnails.
+
+	* app/file/file-utils.[ch]: removed the .xvpics thumbnail saving code.
+
+	* app/pdb/fileops_cmds.c: regenerated.
+
+2002-04-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/file/file-open.[ch]: all functions return the opened image
 	and the pdb status plus a GError now. Removed all g_message()
 	calls from file_open_image(). Instead, display all error messages

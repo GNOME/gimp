@@ -46,6 +46,7 @@
 #include "core/gimpdocuments.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimpimagefile.h"
 
 #include "pdb/procedural_db.h"
 
@@ -162,29 +163,37 @@ file_save (GimpImage     *gimage,
 
   if (status == GIMP_PDB_SUCCESS)
     {
+      GimpImagefile *imagefile;
+
       /*  set this image to clean  */
       gimp_image_clean_all (gimage);
 
-      gimp_documents_add (gimage->gimp, uri);
-
-      /*  use the same plug-in for this image next time  */
-      /* DISABLED - gets stuck on first saved format... needs
-	 attention --Adam */
-      /* gimage_set_save_proc(gimage, file_proc); */
-
-      /* Write a thumbnail for the saved image, where appropriate */
-      if (gimage->gimp->config->write_thumbnails)
-	{
-          TempBuf *tempbuf;
-
-          tempbuf = make_thumb_tempbuf (gimage);
-          file_save_thumbnail (gimage, filename, tempbuf);
-	}
+      imagefile = gimp_documents_add (gimage->gimp, uri);
 
       if (set_uri)
 	{
 	  /*  set the image title  */
 	  gimp_image_set_uri (gimage, uri);
+	}
+
+      /* Write a thumbnail for the saved image, where appropriate */
+      if (gimage->gimp->config->write_thumbnails)
+	{
+          if (set_uri)
+            {
+              gimp_imagefile_save_thumbnail (imagefile, gimage);
+            }
+          else
+            {
+              gchar *saved_uri;
+
+              saved_uri = GIMP_OBJECT (gimage)->name;
+              GIMP_OBJECT (gimage)->name = (gchar *) uri;
+
+              gimp_imagefile_save_thumbnail (imagefile, gimage);
+
+              GIMP_OBJECT (gimage)->name = saved_uri;
+            }
 	}
     }
 

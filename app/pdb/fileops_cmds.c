@@ -44,6 +44,7 @@
 #include "base/base-config.h"
 #include "core/gimp.h"
 #include "core/gimpimage.h"
+#include "core/gimpimagefile.h"
 #include "file/file-utils.h"
 #include "plug-in/plug-in-proc.h"
 #include "plug-in/plug-in.h"
@@ -330,7 +331,9 @@ file_save_thumbnail_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   GimpImage *gimage;
   gchar *filename;
-  TempBuf *thumb;
+  GimpImagefile *imagefile;
+  gchar *uri;
+  const gchar *image_uri;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (gimage == NULL)
@@ -342,9 +345,31 @@ file_save_thumbnail_invoker (Gimp     *gimp,
 
   if (success)
     {
-      thumb = make_thumb_tempbuf (gimage);
-      if (! file_save_thumbnail (gimage, filename, thumb))
+      image_uri = gimp_object_get_name (GIMP_OBJECT (gimage));
+      if (! image_uri)
 	success = FALSE;
+    
+      if (success)
+	{
+	  uri = g_filename_to_uri (filename, NULL, NULL);
+	  if (! uri)
+	    success = FALSE;
+    
+	  if (success)
+	    {
+	      if (strcmp (uri, image_uri))
+		success = FALSE;
+    
+	      if (success)
+		{
+		  imagefile = gimp_imagefile_new (uri);
+		  success = gimp_imagefile_save_thumbnail (imagefile, gimage);
+		  g_object_unref (G_OBJECT (imagefile));
+		}
+    
+	      g_free (uri);
+	    }
+	}
     }
 
   return procedural_db_return_args (&file_save_thumbnail_proc, success);

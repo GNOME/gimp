@@ -98,7 +98,7 @@ static TempBuf     * gimp_imagefile_get_new_preview (GimpViewable   *viewable,
 
 static TempBuf     * gimp_imagefile_read_png_thumb  (GimpImagefile  *imagefile,
                                                      gint            size);
-static void          gimp_imagefile_save_png_thumb  (GimpImagefile  *imagefile,
+static gboolean      gimp_imagefile_save_png_thumb  (GimpImagefile  *imagefile,
                                                      GimpImage      *gimage,
                                                      const gchar    *thumb_name,
                                                      time_t          image_mtime,
@@ -376,46 +376,51 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile)
     }
 }
 
-void
+gboolean
 gimp_imagefile_save_thumbnail (GimpImagefile *imagefile,
                                GimpImage     *gimage)
 {
   const gchar *uri;
+  const gchar *image_uri;
   gchar       *filename;
   gchar       *thumb_name;
   time_t       image_mtime;
   off_t        image_size;
+  gboolean     success = FALSE;
 
-  g_return_if_fail (GIMP_IS_IMAGEFILE (imagefile));
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+  g_return_val_if_fail (GIMP_IS_IMAGEFILE (imagefile), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
-  uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
+  uri       = gimp_object_get_name (GIMP_OBJECT (imagefile));
+  image_uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
 
-  g_return_if_fail (! strcmp (uri, gimp_object_get_name (GIMP_OBJECT (gimage))));
+  g_return_val_if_fail (uri && image_uri && ! strcmp (uri, image_uri), FALSE);
 
   filename = g_filename_from_uri (uri, NULL, NULL);
 
   /*  no thumbnails of remote images :-(  */
   if (! filename)
-    return;
+    return FALSE;
 
   thumb_name =
     gimp_imagefile_png_thumb_path (uri, GIMP_IMAGEFILE_THUMB_SIZE_NORMAL);
 
   /*  the thumbnail directory doesn't exist and couldn't be created */
   if (! thumb_name)
-    return;
+    return FALSE;
 
   if (gimp_imagefile_test (filename, &image_mtime, &image_size))
     {
-      gimp_imagefile_save_png_thumb (imagefile,
-                                     gimage,
-                                     thumb_name,
-                                     image_mtime,
-                                     image_size);
+      success = gimp_imagefile_save_png_thumb (imagefile,
+                                               gimage,
+                                               thumb_name,
+                                               image_mtime,
+                                               image_size);
     }
 
   g_free (thumb_name);
+
+  return success;
 }
 
 static void
@@ -745,7 +750,7 @@ gimp_imagefile_read_png_thumb (GimpImagefile *imagefile,
   return temp_buf;
 }
 
-static void
+static gboolean
 gimp_imagefile_save_png_thumb (GimpImagefile *imagefile,
                                GimpImage     *gimage,
                                const gchar   *thumb_name,
@@ -756,6 +761,7 @@ gimp_imagefile_save_png_thumb (GimpImagefile *imagefile,
   gchar       *temp_name = NULL;
   GdkPixbuf   *pixbuf;
   gint         width, height;
+  gboolean     success = FALSE;
 
   uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
 
@@ -809,17 +815,19 @@ gimp_imagefile_save_png_thumb (GimpImagefile *imagefile,
     s_str = g_strdup_printf ("%ld", image_size);
     l_str = g_strdup_printf ("%d",  gimage->layers->num_children);
 
-    if (! gdk_pixbuf_save (pixbuf, thumb_name, "png", &error,
-                           TAG_DESCRIPTION,        desc,
-                           TAG_SOFTWARE,           "The GIMP",
-                           TAG_THUMB_URI,          uri,
-                           TAG_THUMB_MTIME,        t_str,
-                           TAG_THUMB_SIZE,         s_str,
-                           TAG_THUMB_IMAGE_WIDTH,  w_str,
-                           TAG_THUMB_IMAGE_HEIGHT, h_str,
-                           TAG_THUMB_GIMP_TYPE,    type_str,
-                           TAG_THUMB_GIMP_LAYERS,  l_str,
-                           NULL))
+    success =  gdk_pixbuf_save (pixbuf, thumb_name, "png", &error,
+                                TAG_DESCRIPTION,        desc,
+                                TAG_SOFTWARE,           "The GIMP",
+                                TAG_THUMB_URI,          uri,
+                                TAG_THUMB_MTIME,        t_str,
+                                TAG_THUMB_SIZE,         s_str,
+                                TAG_THUMB_IMAGE_WIDTH,  w_str,
+                                TAG_THUMB_IMAGE_HEIGHT, h_str,
+                                TAG_THUMB_GIMP_TYPE,    type_str,
+                                TAG_THUMB_GIMP_LAYERS,  l_str,
+                                NULL);
+
+    if (! success)
       {
         g_message (_("Couldn't write thumbnail for '%s'\nas '%s'.\n%s"), 
                    uri, thumb_name, error->message);
@@ -839,6 +847,8 @@ gimp_imagefile_save_png_thumb (GimpImagefile *imagefile,
   g_free (temp_name);
 
   gimp_imagefile_update (imagefile);
+
+  return success;
 }
 
 static const gchar *

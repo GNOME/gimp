@@ -34,14 +34,10 @@ gchar         * file_utils_uri_to_utf8_filename (const gchar   *uri);
 
 /* .xvpics thumbnail stuff  */
 
-TempBuf       * make_thumb_tempbuf    (GimpImage     *gimage);
 guchar        * readXVThumb           (const gchar   *fnam,
 				       gint          *w,
 				       gint          *h,
 				       gchar        **imginfo /* caller frees if != NULL */);
-gboolean        file_save_thumbnail   (GimpImage     *gimage,
-				       const char    *full_source_filename,
-				       TempBuf       *tempbuf);
 
 
 #endif /* __FILE_UTILS_H__ */

@@ -83,7 +83,7 @@ GType           gimp_imagefile_get_type         (void) G_GNUC_CONST;
 GimpImagefile * gimp_imagefile_new              (const gchar   *uri);
 void            gimp_imagefile_update           (GimpImagefile *imagefile);
 void            gimp_imagefile_create_thumbnail (GimpImagefile *imagefile);
-void            gimp_imagefile_save_thumbnail   (GimpImagefile *imagefile,
+gboolean        gimp_imagefile_save_thumbnail   (GimpImagefile *imagefile,
                                                  GimpImage     *gimage);
 const gchar   * gimp_imagefile_get_description  (GimpImagefile *imagefile);
 

@@ -242,12 +242,35 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'TempBuf *thumb' ],
+	vars => [ 'GimpImagefile *imagefile', 'gchar *uri',
+                  'const gchar *image_uri' ],
 	code => <<'CODE'
 {
-  thumb = make_thumb_tempbuf (gimage);
-  if (! file_save_thumbnail (gimage, filename, thumb))
+  image_uri = gimp_object_get_name (GIMP_OBJECT (gimage));
+  if (! image_uri)
     success = FALSE;
+
+  if (success)
+    {
+      uri = g_filename_to_uri (filename, NULL, NULL);
+      if (! uri)
+        success = FALSE;
+
+      if (success)
+        {
+          if (strcmp (uri, image_uri))
+            success = FALSE;
+
+          if (success)
+            {
+              imagefile = gimp_imagefile_new (uri);
+              success = gimp_imagefile_save_thumbnail (imagefile, gimage);
+              g_object_unref (G_OBJECT (imagefile));
+            }
+
+          g_free (uri);
+        }
+    }
 }
 CODE
     );
@@ -415,7 +438,7 @@ CODE
     );
 }
 
-@headers = qw(<sys/types.h> <unistd.h> "core/gimp.h"
+@headers = qw(<sys/types.h> <unistd.h> "core/gimp.h" "core/gimpimagefile.h"
               "plug-in/plug-in.h" "plug-in/plug-ins.h" "plug-in/plug-in-proc.h"
               "file/file-utils.h");
 
