@@ -1,3 +1,10 @@
+Thu Jun 25 17:25:01 PDT 1998 Adrian Likine <adrian@gimp.org>
+
+	* Makefile.am:
+	* app/app_procs.c:
+	* gimp1_1_splash.ppm: Some cosmetic changes to
+	better reflect the development stage of gimp.
+
 Tue Jun 23 22:26:09 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* configure.in: compile everything with -D_REENTRANT
@@ -327,7 +334,8 @@ Sat Jun 13 15:46:55 EDT 1998 Adrian Likins <adrian@gimp.org>
 
 	*app/file_new_dialog.c: more file new tweaks,
 	now uses spinbuttons. I'm still not sure this change is
-	for the better, let me know.
+	for the better, let me know. Pretty heavily based
+	on a patch by Nuke Skyjumper <nuke@bayside.net>
 
 Fri Jun 12 14:17:54 EDT 1998 Adrian Likins <adrian@gimp.org>
 

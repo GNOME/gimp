@@ -151,7 +151,7 @@ splash_logo_load_size (GtkWidget *window)
   if (logo_pixmap)
     return TRUE;
 
-  sprintf (buf, "%s/gimp_splash.ppm", DATADIR);
+  sprintf (buf, "%s/gimp1_1_splash.ppm", DATADIR);
 
   fp = fopen (buf, "r");
   if (!fp)
@@ -186,7 +186,7 @@ splash_logo_load (GtkWidget *window)
   if (logo_pixmap)
     return TRUE;
 
-  sprintf (buf, "%s/gimp_splash.ppm", DATADIR);
+  sprintf (buf, "%s/gimp1_1_splash.ppm", DATADIR);
 
   fp = fopen (buf, "r");
   if (!fp)
