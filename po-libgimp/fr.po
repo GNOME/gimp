@@ -1,15 +1,17 @@
-# gimp po-plug-ins/fr.po
+# gimp-libgimp fr.po
 # Copyright (C) 1998 Free Software Foundation, Inc.
 # Vincent Renardias <vincent@ldsol.com>, 1998, 1999.
 # David Monniaux <monniaux@ens.fr>, 1999.
 # Joaquim Fellmann <joaquim@hrnet.fr>, 2000.
+# Christophe Merlet (RedFox) <christophe@merlet.net>, 2000.
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.1.15\n"
-"POT-Creation-Date: 2000-08-30 00:31-0700\n"
-"PO-Revision-Date: 1999-11-05 15:37+0100\n"
-"Last-Translator: Joaquim Fellmann <joaquim@hrnet.fr>\n"
+"Project-Id-Version: gimp-libgimp 1.1.26\n"
+"POT-Creation-Date: 2000-10-02 11:19+0200\n"
+"PO-Revision-Date: 2000-10-02 11:17+0200\n"
+"Last-Translator: Christophe Merlet (RedFox) <christophe@merlet.net>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -17,95 +19,84 @@ msgstr ""
 
 #: libgimp/gimpcolorbutton.c:118
 msgid "/Use Foreground Color"
-msgstr "/Utiliser la couleur d'avant plan"
+msgstr "/Utiliser la couleur de premier plan"
 
 #: libgimp/gimpcolorbutton.c:119
 msgid "/Use Background Color"
-msgstr "/Utiliser la couleur d'arrière plan"
+msgstr "/Utiliser la couleur d'arrière-plan"
 
 #: libgimp/gimpexport.c:158 libgimp/gimpexport.c:185
-#, fuzzy
 msgid "can't handle layers"
-msgstr "je ne peux gérer les calques"
+msgstr "ne peut gérer les calques"
 
 #: libgimp/gimpexport.c:159 libgimp/gimpexport.c:168
 msgid "Merge Visible Layers"
 msgstr "Fusionner les calques visibles"
 
 #: libgimp/gimpexport.c:167 libgimp/gimpexport.c:176
-#, fuzzy
 msgid "can only handle layers as animation frames"
-msgstr "je peux uniquement gérer les calques en tant qu'images d'une animation"
+msgstr "ne gère les calques qu'en tant qu'images d'une animation"
 
 #: libgimp/gimpexport.c:168 libgimp/gimpexport.c:177
 msgid "Save as Animation"
-msgstr "Sauver en tant qu'animation"
+msgstr "Enregistrer en tant qu'animation"
 
 #: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186 libgimp/gimpexport.c:195
 msgid "Flatten Image"
 msgstr "Aplatir l'image"
 
 #: libgimp/gimpexport.c:194
-#, fuzzy
 msgid "can't handle transparency"
-msgstr "je ne peux gérer la transparence"
+msgstr "ne peut gérer la transparence"
 
 #: libgimp/gimpexport.c:203
-#, fuzzy
 msgid "can only handle RGB images"
-msgstr "Je ne gère que les images RVB."
+msgstr "ne gère que les images RVB"
 
 #: libgimp/gimpexport.c:204 libgimp/gimpexport.c:232 libgimp/gimpexport.c:241
 msgid "Convert to RGB"
 msgstr "Convertir en RVB"
 
 #: libgimp/gimpexport.c:212
-#, fuzzy
 msgid "can only handle grayscale images"
-msgstr "Je ne gère que les images en niveaux de gris"
+msgstr "ne peut gérer que les images en niveaux de gris"
 
 #: libgimp/gimpexport.c:213 libgimp/gimpexport.c:232 libgimp/gimpexport.c:253
 msgid "Convert to Grayscale"
 msgstr "Convertir en niveaux de gris"
 
 #: libgimp/gimpexport.c:221
-#, fuzzy
 msgid "can only handle indexed images"
-msgstr "je ne gère que les images indexées"
+msgstr "ne peut gérer que les images indexées"
 
 #: libgimp/gimpexport.c:222 libgimp/gimpexport.c:241 libgimp/gimpexport.c:251
-#, fuzzy
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
 "Convertir en couleurs indexées en utilisant\n"
 "les réglages par défaut (faites-le à la main\n"
-"pour régler le résultat)."
+"pour régler le résultat)"
 
 #: libgimp/gimpexport.c:231
-#, fuzzy
 msgid "can only handle RGB or grayscale images"
-msgstr "je ne gère que les images RVB ou en niveaux de gris"
+msgstr "ne gère que les images RVB ou en niveaux de gris"
 
 #: libgimp/gimpexport.c:240
-#, fuzzy
 msgid "can only handle RGB or indexed images"
-msgstr "je ne gère que les images RVB ou indexées"
+msgstr "ne gère que les images RVB ou indexées"
 
 #: libgimp/gimpexport.c:250
-#, fuzzy
 msgid "can only handle grayscale or indexed images"
-msgstr "je ne gère que les images en nveau de gris ou indexées"
+msgstr "ne gère que les images en niveau de gris ou indexées"
 
 #: libgimp/gimpexport.c:261
-#, fuzzy
 msgid "needs an alpha channel"
-msgstr "j'ai besoin d'un canal Aplpha"
+msgstr "a besoin d'un canal alpha"
 
 #: libgimp/gimpexport.c:262
 msgid "Add Alpha Channel"
-msgstr "Ajouter un Canal Alpha"
+msgstr "Ajouter un canal alpha"
 
 #.
 #. *  Plug-ins have called gtk_init () before calling gimp_export ().
@@ -141,7 +132,7 @@ msgstr ""
 #. the footline
 #: libgimp/gimpexport.c:418
 msgid "The export conversion won't modify your original image."
-msgstr "La conversion exporter ne modifier pas l'image d'origine."
+msgstr "La conversion exporter ne modifiera pas l'image d'origine."
 
 #: libgimp/gimpfileselection.c:391
 msgid "Select File"
@@ -151,7 +142,7 @@ msgstr "Sélection du fichier"
 #: libgimp/gimpquerybox.c:293 libgimp/gimpquerybox.c:356
 #: libgimp/gimpunitmenu.c:499
 msgid "OK"
-msgstr "Confirmer"
+msgstr "Valider"
 
 #: libgimp/gimpunitmenu.c:238
 msgid "More..."
