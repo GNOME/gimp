@@ -11813,8 +11813,8 @@ msgstr ""
 "<html><head><title>Dokument nicht gefunden</title></head><body "
 "bgcolor=\"#ffffff\"><center><p>%s<h3>Konnte Dokument nicht "
 "finden</h3><tt>%s</tt></center><p><small>Entweder heisst das, dass die Hilfe "
-"noch nicht geschrieben wurde, oder es ihre Installation ist nicht "
-"funktionierend. Bitte überprüfen Sie das sorgfältig, bevor Sie einen "
+"noch nicht geschrieben wurde, oder ihre Installation funktioniert nicht"
+"Bitte überprüfen Sie das sorgfältig, bevor Sie einen "
 "Bug-Report schicken.</small></body></html>"
 
 #: plug-ins/helpbrowser/helpbrowser.c:111
