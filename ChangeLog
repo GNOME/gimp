@@ -1,3 +1,13 @@
+2004-05-21  Nathan Summers  <rock@gimp.org>
+
+	Somehow some of the changes from my commit on 2004-05-18 seem to have
+	gotten lost, including the addition to the ChangeLog.  Sorry about that.
+	Recommitted.
+
+	* NEWS: Clarified end-user visible features.  
+	Made sundry small grammar and consistancy fixes.  
+	Reorganized list of changes slightly.
+
 2004-05-21  Sven Neumann  <sven@gimp.org>
 
 	* app/paint/gimppaintcore.c (gimp_paint_core_interpolate): better

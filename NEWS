@@ -10,7 +10,7 @@ Overview of Changes since 2.0
 =============================
 
 GIMP 2.1 includes the following enhancements:
- - Major user interface improvements
+ - Major user interface improvements.
    * Work has begun to make the GIMP user interface comply better with
      the GNOME HIG. This is an ongoing effort and the interface is still
      inconsistent at the moment.
@@ -30,7 +30,7 @@ GIMP 2.1 includes the following enhancements:
      + makes the order and visibility of tools in the toolbox configurable
      + allows keeping toolbox and dock windows above other windows (if the WM 
        supports this hint)
- - Some changes to plug-ins
+ - Some changes to plug-ins.
    * Plug-ins can now register the same procedures in multiple places (the
      API to register menu entries has been changed in a backward-compatible 
      fashion.)
@@ -38,5 +38,5 @@ GIMP 2.1 includes the following enhancements:
    * File plug-ins can now register a mime-type.
    * The obsolete AlienMap and GIcon plug-ins were removed.  AlienMap 2 does
      everything than AlienMap did, and the GIMP-specific GIcon format has not
-     been used by anything for quites some time now.
+     been used by anything for quite some time now.
    * A plug-in to load and save windows icon files has been added.
