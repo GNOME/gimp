@@ -295,7 +295,7 @@ tool_options_dialog_reset_callback (GtkWidget *widget,
     {
       g_warning ("%s(): no tool info registered for %s",
                  G_GNUC_FUNCTION,
-		 gtk_type_name (GTK_OBJECT (active_tool)->klass->type));
+		 g_type_name (G_TYPE_FROM_INSTANCE (active_tool)));
     }
 
   if (tool_info->tool_options->reset_func)

@@ -78,7 +78,9 @@ splash_create (void)
   GtkWidget *logo_hbox;
   GtkStyle  *style;
 
-  win_initstatus = gtk_window_new (GTK_WINDOW_DIALOG);
+  win_initstatus = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  gtk_window_set_type_hint (GTK_WINDOW (win_initstatus),
+                            GDK_WINDOW_TYPE_HINT_DIALOG);
 
   gtk_window_set_title (GTK_WINDOW (win_initstatus), _("GIMP Startup"));
   gtk_window_set_wmclass (GTK_WINDOW (win_initstatus), "gimp_startup", "Gimp");

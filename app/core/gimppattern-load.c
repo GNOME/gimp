@@ -65,10 +65,10 @@ static GimpData * gimp_pattern_duplicate       (GimpData         *data);
 static GimpDataClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_pattern_get_type (void)
 {
-  static GtkType pattern_type = 0;
+  static GType pattern_type = 0;
 
   if (! pattern_type)
     {
@@ -101,7 +101,7 @@ gimp_pattern_class_init (GimpPatternClass *klass)
   viewable_class = (GimpViewableClass *) klass;
   data_class     = (GimpDataClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_DATA);
+  parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy           = gimp_pattern_destroy;
 
@@ -125,7 +125,10 @@ gimp_pattern_destroy (GtkObject *object)
   pattern = GIMP_PATTERN (object);
 
   if (pattern->mask)
-    temp_buf_free (pattern->mask);
+    {
+      temp_buf_free (pattern->mask);
+      pattern->mask = NULL;
+    }
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -341,7 +344,7 @@ gimp_pattern_load (const gchar *filename)
 
  error:
   if (pattern)
-    gtk_object_unref (GTK_OBJECT (pattern));
+    g_object_unref (G_OBJECT (pattern));
   else if (name)
     g_free (name);
 
@@ -353,7 +356,6 @@ gimp_pattern_load (const gchar *filename)
 TempBuf *
 gimp_pattern_get_mask (const GimpPattern *pattern)
 {
-  g_return_val_if_fail (pattern != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_PATTERN (pattern), NULL);
 
   return pattern->mask;

@@ -113,7 +113,7 @@ palettes_menu_set_sensitivity (GimpContainerEditor *editor)
         menus_set_sensitive ("<Palettes>/" menu, (condition) != 0)
 
   SET_SENSITIVE ("Duplicate Palette",
-		 palette && GIMP_DATA_CLASS (GTK_OBJECT (palette)->klass)->duplicate);
+		 palette && GIMP_DATA_GET_CLASS (palette)->duplicate);
   SET_SENSITIVE ("Edit Palette...",
 		 palette && GIMP_DATA_FACTORY_VIEW (editor)->data_edit_func);
   SET_SENSITIVE ("Delete Palette...",

@@ -136,14 +136,16 @@ static void    gimp_transform_tool_draw        (GimpDrawTool           *draw_too
 static TranInfo           old_trans_info;
 InfoDialog               *transform_info        = NULL;
 static gboolean           transform_info_inited = FALSE;
-static GimpDrawToolClass *parent_class          = NULL;
-static guint gimp_transform_tool_signals[LAST_SIGNAL] = { 0 };
+
+static GimpDrawToolClass *parent_class = NULL;
+
+static guint   gimp_transform_tool_signals[LAST_SIGNAL] = { 0 };
 
 
-GtkType
+GType
 gimp_transform_tool_get_type (void)
 {
-  static GtkType tool_type = 0;
+  static GType tool_type = 0;
 
   if (! tool_type)
     {
@@ -176,21 +178,18 @@ gimp_transform_tool_class_init (GimpTransformToolClass *klass)
   tool_class   = (GimpToolClass *) klass;
   draw_class   = (GimpDrawToolClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_DRAW_TOOL);
+  parent_class = g_type_class_peek_parent (klass);
 
   gimp_transform_tool_signals[TRANSFORM] =
-    gtk_signal_new ("transform",
-    		    GTK_RUN_LAST,
-    		    object_class->type,
-    		    GTK_SIGNAL_OFFSET (GimpTransformToolClass,
-    		    		       transform),
-    		    gimp_marshal_POINTER__POINTER_INT,
-    		    GTK_TYPE_POINTER, 2,
-    		    GTK_TYPE_POINTER,
-    		    GTK_TYPE_INT);
-
-  gtk_object_class_add_signals (object_class, gimp_transform_tool_signals,
-				LAST_SIGNAL);
+    g_signal_new ("transform",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_LAST,
+		  G_STRUCT_OFFSET (GimpTransformToolClass, transform),
+		  NULL, NULL,
+		  gimp_cclosure_marshal_POINTER__POINTER_INT,
+		  G_TYPE_POINTER, 2,
+		  G_TYPE_POINTER,
+		  G_TYPE_INT);
 
   object_class->destroy      = gimp_transform_tool_destroy;
 
@@ -452,7 +451,7 @@ gimp_transform_tool_button_press (GimpTool           *tool,
 
 	  if (transform_info && !transform_info_inited)
 	    {
-	      GtkType tool_type;
+	      GType tool_type;
 
 	      tool_type =
 		gimp_context_get_tool (gimp_get_user_context (gdisp->gimage->gimp))->tool_type;
@@ -611,7 +610,7 @@ gimp_transform_tool_doit (GimpTransformTool  *gt_tool,
       /*  create and initialize the transform_undo structure  */
       tu = g_new0 (TransformUndo, 1);
       tu->tool_ID   = tool->ID;
-      tu->tool_type = GTK_OBJECT (tool)->klass->type;
+      tu->tool_type = G_TYPE_FROM_INSTANCE (tool);
 
       for (i = 0; i < TRAN_INFO_SIZE; i++)
 	tu->trans_info[i] = old_trans_info[i];

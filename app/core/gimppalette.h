@@ -27,10 +27,10 @@
 
 
 #define GIMP_TYPE_PALETTE            (gimp_palette_get_type ())
-#define GIMP_PALETTE(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_PALETTE, GimpPalette))
-#define GIMP_IS_PALETTE(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_PALETTE))
-#define GIMP_PALETTE_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PALETTE, GimpPaletteClass))
-#define GIMP_IS_PALETTE_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PALETTE))
+#define GIMP_PALETTE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PALETTE, GimpPalette))
+#define GIMP_IS_PALETTE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PALETTE))
+#define GIMP_PALETTE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PALETTE, GimpPaletteClass))
+#define GIMP_IS_PALETTE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PALETTE))
 
 
 typedef struct _GimpPaletteEntry GimpPaletteEntry;
@@ -63,7 +63,7 @@ struct _GimpPaletteClass
 };
 
 
-GtkType            gimp_palette_get_type       (void);
+GType              gimp_palette_get_type       (void);
 
 GimpData         * gimp_palette_new            (const gchar      *name);
 GimpData         * gimp_palette_get_standard   (void);

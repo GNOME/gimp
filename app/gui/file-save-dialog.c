@@ -320,15 +320,16 @@ file_save_ok_callback (GtkWidget *widget,
 		       gpointer   data)
 {
   GtkFileSelection *fs;
-  gchar            *filename;
-  gchar            *raw_filename;
+  const gchar      *filename;
+  const gchar      *raw_filename;
   gchar            *dot;
   gint              x;
   struct stat       buf;
   gint              err;
 
   fs = GTK_FILE_SELECTION (data);
-  filename = gtk_file_selection_get_filename (fs);
+
+  filename     = gtk_file_selection_get_filename (fs);
   raw_filename = gtk_entry_get_text (GTK_ENTRY (fs->selection_entry));
 
   g_assert (filename && raw_filename);

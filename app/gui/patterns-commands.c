@@ -69,7 +69,7 @@ patterns_menu_set_sensitivity (GimpContainerEditor *editor)
         menus_set_sensitive ("<Patterns>/" menu, (condition) != 0)
 
   SET_SENSITIVE ("Duplicate Pattern",
-		 pattern && GIMP_DATA_CLASS (GTK_OBJECT (pattern)->klass)->duplicate);
+		 pattern && GIMP_DATA_GET_CLASS (pattern)->duplicate);
   SET_SENSITIVE ("Edit Pattern...",
 		 pattern && GIMP_DATA_FACTORY_VIEW (editor)->data_edit_func);
   SET_SENSITIVE ("Delete Pattern...",

@@ -69,10 +69,10 @@ static gdouble    gimp_gradient_calc_sphere_decreasing_factor (gdouble  middle,
 static GimpDataClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_gradient_get_type (void)
 {
-  static GtkType gradient_type = 0;
+  static GType gradient_type = 0;
 
   if (! gradient_type)
     {
@@ -105,7 +105,7 @@ gimp_gradient_class_init (GimpGradientClass *klass)
   viewable_class = (GimpViewableClass *) klass;
   data_class     = (GimpDataClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_DATA);
+  parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy = gimp_gradient_destroy;
 
@@ -478,7 +478,6 @@ gimp_gradient_get_color_at (GimpGradient *gradient,
   gdouble              middle;
   GimpRGB              rgb;
 
-  g_return_if_fail (gradient != NULL);
   g_return_if_fail (GIMP_IS_GRADIENT (gradient));
   g_return_if_fail (color != NULL);
 
@@ -611,7 +610,6 @@ gimp_gradient_get_segment_at (GimpGradient *gradient,
 {
   GimpGradientSegment *seg;
 
-  g_return_val_if_fail (gradient != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), NULL);
 
   /* handle FP imprecision at the edges of the gradient */

@@ -32,10 +32,10 @@ extern "C" {
 
 
 #define GIMP_TYPE_CHANNEL_LIST_ITEM            (gimp_channel_list_item_get_type ())
-#define GIMP_CHANNEL_LIST_ITEM(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_CHANNEL_LIST_ITEM, GimpChannelListItem))
-#define GIMP_CHANNEL_LIST_ITEM_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CHANNEL_LIST_ITEM, GimpChannelListItemClass))
-#define GIMP_IS_CHANNEL_LIST_ITEM(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_CHANNEL_LIST_ITEM))
-#define GIMP_IS_CHANNEL_LIST_ITEM_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CHANNEL_LIST_ITEM))
+#define GIMP_CHANNEL_LIST_ITEM(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CHANNEL_LIST_ITEM, GimpChannelListItem))
+#define GIMP_CHANNEL_LIST_ITEM_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CHANNEL_LIST_ITEM, GimpChannelListItemClass))
+#define GIMP_IS_CHANNEL_LIST_ITEM(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CHANNEL_LIST_ITEM))
+#define GIMP_IS_CHANNEL_LIST_ITEM_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CHANNEL_LIST_ITEM))
 
 
 typedef struct _GimpChannelListItemClass  GimpChannelListItemClass;

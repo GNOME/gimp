@@ -24,10 +24,10 @@
 
 
 #define GIMP_TYPE_LAYER_MASK            (gimp_layer_mask_get_type ())
-#define GIMP_LAYER_MASK(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_LAYER_MASK, GimpLayerMask))
-#define GIMP_LAYER_MASK_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LAYER_MASK, GimpLayerMaskClass))
-#define GIMP_IS_LAYER_MASK(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_LAYER_MASK))
-#define GIMP_IS_LAYER_MASK_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LAYER_MASK))
+#define GIMP_LAYER_MASK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_LAYER_MASK, GimpLayerMask))
+#define GIMP_LAYER_MASK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LAYER_MASK, GimpLayerMaskClass))
+#define GIMP_IS_LAYER_MASK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_LAYER_MASK))
+#define GIMP_IS_LAYER_MASK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LAYER_MASK))
 
 
 typedef struct _GimpLayerMaskClass  GimpLayerMaskClass;

@@ -136,7 +136,7 @@ gimp_image_menu_new (GimpConstraintFunc constraint,
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    (GtkSignalFunc) gimp_menu_callback,
 			    &images[i]);
-	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_widget_show (menuitem);
 
 	g_free (label);
@@ -151,7 +151,7 @@ gimp_image_menu_new (GimpConstraintFunc constraint,
     {
       menuitem = gtk_menu_item_new_with_label ("none");
       gtk_widget_set_sensitive (menuitem, FALSE);
-      gtk_menu_append (GTK_MENU (menu), menuitem);
+      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
       gtk_widget_show (menuitem);
     }
 
@@ -244,7 +244,7 @@ gimp_layer_menu_new (GimpConstraintFunc constraint,
 	      gtk_box_pack_start (GTK_BOX (hbox), wlabel, TRUE, TRUE, 4);
 	      gtk_widget_show (wlabel);
 
-	      gtk_menu_append (GTK_MENU (menu), menuitem);
+	      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	      gtk_widget_show (menuitem);
 
 	      g_free (label);
@@ -268,7 +268,7 @@ gimp_layer_menu_new (GimpConstraintFunc constraint,
     {
       menuitem = gtk_menu_item_new_with_label ("none");
       gtk_widget_set_sensitive (menuitem, FALSE);
-      gtk_menu_append (GTK_MENU (menu), menuitem);
+      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
       gtk_widget_show (menuitem);
     }
 
@@ -357,7 +357,7 @@ gimp_channel_menu_new (GimpConstraintFunc constraint,
 	      gtk_box_pack_start (GTK_BOX (hbox), wlabel, TRUE, TRUE, 4);
 	      gtk_widget_show (wlabel);
 
-	      gtk_menu_append (GTK_MENU (menu), menuitem);
+	      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	      gtk_widget_show (menuitem);
 
 	      g_free (label);
@@ -381,7 +381,7 @@ gimp_channel_menu_new (GimpConstraintFunc constraint,
     {
       menuitem = gtk_menu_item_new_with_label ("none");
       gtk_widget_set_sensitive (menuitem, FALSE);
-      gtk_menu_append (GTK_MENU (menu), menuitem);
+      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
       gtk_widget_show (menuitem);
     }
 
@@ -473,7 +473,7 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
 	      gtk_box_pack_start (GTK_BOX (hbox), wlabel, TRUE, TRUE, 4);
 	      gtk_widget_show (wlabel);
 
-	      gtk_menu_append (GTK_MENU (menu), menuitem);
+	      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	      gtk_widget_show (menuitem);
 
 	      g_free (label);
@@ -537,7 +537,7 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
 	      gtk_box_pack_start (GTK_BOX (hbox), wlabel, TRUE, TRUE, 4);
 	      gtk_widget_show (wlabel);
 
-	      gtk_menu_append (GTK_MENU (menu), menuitem);
+	      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	      gtk_widget_show (menuitem);
 
 	      g_free (label);
@@ -561,7 +561,7 @@ gimp_drawable_menu_new (GimpConstraintFunc constraint,
     {
       menuitem = gtk_menu_item_new_with_label ("none");
       gtk_widget_set_sensitive (menuitem, FALSE);
-      gtk_menu_append (GTK_MENU (menu), menuitem);
+      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
       gtk_widget_show (menuitem);
     }
 

@@ -31,10 +31,11 @@ extern "C" {
 
 
 #define GIMP_TYPE_PATH_EDITOR            (gimp_path_editor_get_type ())
-#define GIMP_PATH_EDITOR(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_PATH_EDITOR, GimpPathEditor))
-#define GIMP_PATH_EDITOR_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PATH_EDITOR, GimpPathEditorClass))
-#define GIMP_IS_PATH_EDITOR(obj)         (GTK_CHECK_TYPE (obj, GIMP_TYPE_PATH_EDITOR))
-#define GIMP_IS_PATH_EDITOR_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PATH_EDITOR))
+#define GIMP_PATH_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PATH_EDITOR, GimpPathEditor))
+#define GIMP_PATH_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PATH_EDITOR, GimpPathEditorClass))
+#define GIMP_IS_PATH_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_PATH_EDITOR))
+#define GIMP_IS_PATH_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PATH_EDITOR))
+
 
 typedef struct _GimpPathEditorClass  GimpPathEditorClass;
 
@@ -64,9 +65,10 @@ struct _GimpPathEditorClass
   void (* path_changed) (GimpPathEditor *gpe);
 };
 
+
 /* For information look into the C source or the html documentation */
 
-GtkType     gimp_path_editor_get_type (void);
+GType       gimp_path_editor_get_type (void);
 
 GtkWidget * gimp_path_editor_new      (const gchar    *filesel_title,
 				       const gchar    *path);

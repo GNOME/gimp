@@ -423,8 +423,6 @@ file_new_dialog_create (GimpImage *gimage)
   /*  height in units  */
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
   spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 2);
-  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
-                                   GTK_SHADOW_NONE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_widget_set_usize (spinbutton, 75, 0);
   /*  add the "height in units" spinbutton to the sizeentry  */
@@ -436,8 +434,6 @@ file_new_dialog_create (GimpImage *gimage)
   hbox = gtk_hbox_new (FALSE, 2);
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
   spinbutton2 = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 0);
-  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton2),
-                                   GTK_SHADOW_NONE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton2), TRUE);
   gtk_widget_set_usize (spinbutton2, 75, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton2, FALSE, FALSE, 0);
@@ -459,8 +455,6 @@ file_new_dialog_create (GimpImage *gimage)
   /*  width in units  */
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
   spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 2);
-  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
-                                   GTK_SHADOW_NONE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_widget_set_usize (spinbutton, 75, 0);
   /*  add the "width in units" spinbutton to the sizeentry  */
@@ -473,8 +467,6 @@ file_new_dialog_create (GimpImage *gimage)
   gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 2, 0, 1);
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
   spinbutton2 = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 0);
-  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton2),
-                                   GTK_SHADOW_NONE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton2), TRUE);
   gtk_widget_set_usize (spinbutton2, 75, 0);
   /*  add the "width in pixels" spinbutton to the main table  */
@@ -531,8 +523,6 @@ file_new_dialog_create (GimpImage *gimage)
   /*  the resolution sizeentry  */
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
   spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 2);
-  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
-				   GTK_SHADOW_NONE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_widget_set_usize (spinbutton, 75, 0);
 

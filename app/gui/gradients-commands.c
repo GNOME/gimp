@@ -96,7 +96,7 @@ gradients_menu_set_sensitivity (GimpContainerEditor *editor)
         menus_set_sensitive ("<Gradients>/" menu, (condition) != 0)
 
   SET_SENSITIVE ("Duplicate Gradient",
-		 gradient && GIMP_DATA_CLASS (GTK_OBJECT (gradient)->klass)->duplicate);
+		 gradient && GIMP_DATA_GET_CLASS (gradient)->duplicate);
   SET_SENSITIVE ("Edit Gradient...",
 		 gradient && GIMP_DATA_FACTORY_VIEW (editor)->data_edit_func);
   SET_SENSITIVE ("Delete Gradient...",
@@ -162,7 +162,7 @@ gradients_save_as_pov_ok_callback (GtkWidget    *widget,
 				   GimpGradient *gradient)
 {
   GtkFileSelection    *filesel;
-  gchar               *filename;
+  const gchar         *filename;
   FILE                *file;
   GimpGradientSegment *seg;
 

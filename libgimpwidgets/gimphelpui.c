@@ -143,9 +143,9 @@ gimp_help_connect_help_accel (GtkWidget    *widget,
 		      "GtkTipsQuery::emit_always", TRUE,
 		      NULL);
 
-      gtk_signal_connect (GTK_OBJECT (tips_query), "widget_selected",
-			  GTK_SIGNAL_FUNC (gimp_help_tips_query_widget_selected),
-			  NULL);
+      g_signal_connect (G_OBJECT (tips_query), "widget_selected",
+			G_CALLBACK (gimp_help_tips_query_widget_selected),
+			NULL);
 
       /*  FIXME: EEEEEEEEEEEEEEEEEEEEK, this is very ugly and forbidden...
        *  does anyone know a way to do this tips query stuff without
@@ -155,27 +155,32 @@ gimp_help_connect_help_accel (GtkWidget    *widget,
       gtk_widget_realize (tips_query);
     }
 
-  if (! gtk_signal_lookup ("tips_query", GTK_OBJECT (widget)->klass->type))
+  g_print ("FIXME: gimp_help_connect_help_accel\n");
+
+  /*
+  if (! gtk_signal_lookup ("tips_query", G_TYPE_FROM_INSTANCE (widget)))
     {
       gtk_object_class_user_signal_new (GTK_OBJECT (widget)->klass,
 					"tips_query",
 					GTK_RUN_LAST,
-					gtk_signal_default_marshaller,
-					GTK_TYPE_NONE,
+					g_cclosure_marshal_VOID__VOID,
+					G_TYPE_NONE,
 					0,
 					NULL);
 
       gtk_object_class_user_signal_new (GTK_OBJECT (widget)->klass,
 					"help",
 					GTK_RUN_LAST,
-					gtk_signal_default_marshaller,
-					GTK_TYPE_NONE,
+					g_cclosure_marshal_VOID__VOID,
+					G_TYPE_NONE,
 					0,
 					NULL);
     }
+  */
 
   gimp_help_set_help_data (widget, NULL, help_data);
 
+  /*
   gtk_signal_connect (GTK_OBJECT (widget), "help",
 		      GTK_SIGNAL_FUNC (gimp_help_callback),
 		      (gpointer) help_func);
@@ -183,10 +188,15 @@ gimp_help_connect_help_accel (GtkWidget    *widget,
   gtk_signal_connect (GTK_OBJECT (widget), "tips_query",
 		      GTK_SIGNAL_FUNC (gimp_help_tips_query_start),
 		      (gpointer) tips_query);
+  */
 
   gtk_widget_add_events (widget, GDK_BUTTON_PRESS_MASK);
 
   /*  a new accelerator group for this widget  */
+#ifdef __GNUC__
+#warning FIXME: fix help
+#endif
+#if 0
   accel_group = gtk_accel_group_new ();
 
   /*  FIXME: does not work for some reason...
@@ -203,6 +213,7 @@ gimp_help_connect_help_accel (GtkWidget    *widget,
 		       GTK_OBJECT (widget), "tips_query");
 
   gtk_accel_group_attach (accel_group, GTK_OBJECT (widget));
+#endif
 }
 
 /**

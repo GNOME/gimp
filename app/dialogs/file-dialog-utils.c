@@ -68,9 +68,9 @@ file_dialog_update_name (PlugInProcDef *proc,
 {
   if (proc->extensions_list)
     {
-      gchar *text;
-      gchar *last_dot;
-      GString *s;
+      const gchar *text;
+      gchar       *last_dot;
+      GString     *s;
 
       text = gtk_entry_get_text (GTK_ENTRY (GTK_FILE_SELECTION (filesel)->selection_entry));
       last_dot = strrchr (text, '.');

@@ -26,6 +26,8 @@
 
 #include "base/gimphistogram.h"
 
+#include "core/gimpmarshal.h"
+
 #include "gimphistogramview.h"
 
 
@@ -91,17 +93,15 @@ histogram_widget_class_init (HistogramWidgetClass *klass)
   object_class = GTK_OBJECT_CLASS (klass);
 
   histogram_widget_signals[RANGE_CHANGED] =
-    gtk_signal_new ("range_changed",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (HistogramWidgetClass, range_changed),
-		    gtk_marshal_NONE__INT_INT,
-		    GTK_TYPE_NONE, 2,
-		    GTK_TYPE_INT,
-		    GTK_TYPE_INT);
-
-  gtk_object_class_add_signals (GTK_OBJECT_CLASS (klass),
-				histogram_widget_signals, LAST_SIGNAL);
+    g_signal_new ("range_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (HistogramWidgetClass, range_changed),
+		  NULL, NULL,
+		  gimp_cclosure_marshal_VOID__INT_INT,
+		  G_TYPE_NONE, 2,
+		  G_TYPE_INT,
+		  G_TYPE_INT);
 
   klass->range_changed = NULL;
 }

@@ -640,8 +640,6 @@ layers_new_layer_query (GimpImage *gimage)
   /*  The size sizeentry  */
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
   spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 2);
-  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
-				   GTK_SHADOW_NONE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_widget_set_usize (spinbutton, 75, 0);
   

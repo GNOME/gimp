@@ -29,35 +29,20 @@
 #include "gimppixmap.h"
 
 
-static void gimp_pixmap_realize           (GtkWidget  *widget);
-static void gimp_pixmap_create_from_xpm_d (GimpPixmap *pixmap);
+static void   gimp_pixmap_class_init        (GimpPixmapClass *klass);
+static void   gimp_pixmap_init              (GimpPixmap      *pixmap);
+
+static void   gimp_pixmap_realize           (GtkWidget       *widget);
+static void   gimp_pixmap_create_from_xpm_d (GimpPixmap      *pixmap);
 
 
 static GtkPixmapClass *parent_class = NULL;
 
 
-static void
-gimp_pixmap_class_init (GimpPixmapClass *class)
-{
-  GtkWidgetClass *widget_class;
-
-  widget_class = (GtkWidgetClass *) class;
-
-  parent_class = gtk_type_class (gtk_pixmap_get_type ());
-
-  widget_class->realize = gimp_pixmap_realize;
-}
-
-static void
-gimp_pixmap_init (GimpPixmap *pixmap)
-{
-  pixmap->xpm_data = NULL;
-}
-
-GtkType
+GType
 gimp_pixmap_get_type (void)
 {
-  static guint pixmap_type = 0;
+  static GType pixmap_type = 0;
 
   if (!pixmap_type)
     {
@@ -77,6 +62,24 @@ gimp_pixmap_get_type (void)
     }
 
   return pixmap_type;
+}
+
+static void
+gimp_pixmap_class_init (GimpPixmapClass *klass)
+{
+  GtkWidgetClass *widget_class;
+
+  widget_class = (GtkWidgetClass *) klass;
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  widget_class->realize = gimp_pixmap_realize;
+}
+
+static void
+gimp_pixmap_init (GimpPixmap *pixmap)
+{
+  pixmap->xpm_data = NULL;
 }
 
 /**

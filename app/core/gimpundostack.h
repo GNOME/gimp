@@ -24,10 +24,10 @@
 
 
 #define GIMP_TYPE_UNDO_STACK            (gimp_undo_stack_get_type ())
-#define GIMP_UNDO_STACK(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_UNDO_STACK, GimpUndoStack))
-#define GIMP_UNDO_STACK_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_UNDO_STACK, GimpUndoStackClass))
-#define GIMP_IS_UNDO_STACK(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_UNDO_STACK))
-#define GIMP_IS_UNDO_STACK_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_UNDO_STACK))
+#define GIMP_UNDO_STACK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_UNDO_STACK, GimpUndoStack))
+#define GIMP_UNDO_STACK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_UNDO_STACK, GimpUndoStackClass))
+#define GIMP_IS_UNDO_STACK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_UNDO_STACK))
+#define GIMP_IS_UNDO_STACK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_UNDO_STACK))
 
 
 typedef struct _GimpUndoStackClass GimpUndoStackClass;

@@ -30,9 +30,9 @@ EXTRA_DIST = \
 
 SUBDIRS = 			\
 	libgck			\
-	dbbrowser		\
-	script-fu		\
-	$(GIMP_PERL)		\
+##	dbbrowser		\
+##	script-fu		\
+##	$(GIMP_PERL)		\
 	FractalExplorer		\
 	Lighting		\
 	MapObject		\
@@ -41,15 +41,15 @@ SUBDIRS = 			\
 	fits			\
 	flame			\
 	fp			\
-	gap			\
-	gdyntext		\
-	gfig			\
-        gflare			\
+##	gap			\
+##	gdyntext		\
+##	gfig			\
+##	gflare			\
 	gfli			\
-	gimpressionist		\
+##	gimpressionist		\
 	$(HELPBROWSER)		\
 	ifscompose		\
-	imagemap		\
+##	imagemap		\
 	maze			\
 	mosaic			\
 	pagecurl		\

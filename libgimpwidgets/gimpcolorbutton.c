@@ -116,25 +116,23 @@ gimp_color_button_class_init (GimpColorButtonClass *klass)
   widget_class = (GtkWidgetClass *) klass;
   button_class = (GtkButtonClass *) klass;
  
-  parent_class = gtk_type_class (gtk_widget_get_type ());
+  parent_class = g_type_class_peek_parent (klass);
 
   gimp_color_button_signals[COLOR_CHANGED] = 
-    gtk_signal_new ("color_changed",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpColorButtonClass,
-				       color_changed),
-		    gtk_signal_default_marshaller,
-		    GTK_TYPE_NONE,
-		    0);
-
-  gtk_object_class_add_signals (object_class, gimp_color_button_signals, 
-				LAST_SIGNAL);
+    g_signal_new ("color_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpColorButtonClass, color_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   klass->color_changed        = NULL;
 
   object_class->destroy       = gimp_color_button_destroy;
+
   widget_class->state_changed = gimp_color_button_state_changed;
+
   button_class->clicked       = gimp_color_button_clicked;
 }
 
@@ -148,9 +146,9 @@ gimp_color_button_init (GimpColorButton *gcb)
 
   gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
   gcb->color_area = gimp_color_area_new (&color, FALSE, GDK_BUTTON2_MASK);
-  gtk_signal_connect (GTK_OBJECT (gcb->color_area), "color_changed",
-		      gimp_color_button_color_changed,
-		      gcb);
+  g_signal_connect (G_OBJECT (gcb->color_area), "color_changed",
+		    G_CALLBACK (gimp_color_button_color_changed),
+		    gcb);
 
   gtk_container_add (GTK_CONTAINER (gcb), gcb->color_area);
   gtk_widget_show (gcb->color_area);
@@ -361,7 +359,7 @@ gimp_color_button_clicked (GtkButton *button)
     {
       gcb->dialog = gtk_color_selection_dialog_new (gcb->title);
 
-      gtk_color_selection_set_opacity (GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->colorsel), gimp_color_button_has_alpha (gcb));
+      gtk_color_selection_set_current_alpha (GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->colorsel), gimp_color_button_has_alpha (gcb));
       gtk_color_selection_set_color (GTK_COLOR_SELECTION (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->colorsel), dcolor);
 
       gtk_widget_destroy (GTK_COLOR_SELECTION_DIALOG (gcb->dialog)->help_button);

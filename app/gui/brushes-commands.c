@@ -69,7 +69,7 @@ brushes_menu_set_sensitivity (GimpContainerEditor *editor)
         menus_set_sensitive ("<Brushes>/" menu, (condition) != 0)
 
   SET_SENSITIVE ("Duplicate Brush",
-		 brush && GIMP_DATA_CLASS (GTK_OBJECT (brush)->klass)->duplicate);
+		 brush && GIMP_DATA_GET_CLASS (brush)->duplicate);
   SET_SENSITIVE ("Edit Brush...",
 		 brush && GIMP_IS_BRUSH_GENERATED (brush));
   SET_SENSITIVE ("Delete Brush...",

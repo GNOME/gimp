@@ -1718,6 +1718,10 @@ preferences_dialog_create (void)
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
+#ifdef __GNUC__
+#warning FIXME: replace GtkText
+#endif
+#if 0
   text = gtk_text_new (NULL, NULL);
   gtk_text_set_editable (GTK_TEXT (text), TRUE);
   gtk_text_insert (GTK_TEXT (text), NULL, NULL, NULL,
@@ -1727,6 +1731,7 @@ preferences_dialog_create (void)
 		      &the_gimp->config->default_comment);
   gtk_container_add (GTK_CONTAINER (hbox), text);
   gtk_widget_show (text);
+#endif
 
   /* Display page */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),

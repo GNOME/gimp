@@ -1,8 +1,21 @@
 ## Process this file with automake to produce Makefile.in
 
+AM_CPPFLAGS = @STRIP_BEGIN@ \
+	-DG_LOG_DOMAIN=\"Gimp-Core\"	\
+	@GIMP_THREAD_FLAGS@ 		\
+	@GIMP_MP_FLAGS@			\
+@STRIP_END@
+
+INCLUDES = @STRIP_BEGIN@ \
+	-I$(top_srcdir)			\
+	-I$(top_srcdir)/app		\
+	$(GTK_CFLAGS)			\
+	-I$(includedir)			\
+@STRIP_END@
+
 noinst_LIBRARIES = libappcore.a
 
-libappcore_a_SOURCES = @STRIP_BEGIN@ \
+libappcore_a_sources = @STRIP_BEGIN@ \
 	core-types.h			\
 	gimp.c				\
 	gimp.h				\
@@ -72,8 +85,6 @@ libappcore_a_SOURCES = @STRIP_BEGIN@ \
 	gimplayermask.h			\
 	gimplist.c			\
 	gimplist.h			\
-	gimpmarshal.c			\
-	gimpmarshal.h			\
 	gimpobject.c			\
 	gimpobject.h			\
 	gimppattern.c			\
@@ -103,21 +114,44 @@ libappcore_a_SOURCES = @STRIP_BEGIN@ \
 	gimpviewable.h			\
 @STRIP_END@
 
+libappcore_a_built_sources = @STRIP_BEGIN@ \
+	stamp-gimpmarshal.h		\
+	gimpmarshal.c			\
+	gimpmarshal.h			\
+@STRIP_END@
+
+libappcore_a_extra_sources = @STRIP_BEGIN@ \
+	gimpmarshal.list		\
+@STRIP_END@
+
+libappcore_a_SOURCES = $(libappcore_a_built_sources) $(libappcore_a_sources)
+
 EXTRS_DIST = \
-	makefile.msc
+	makefile.msc			\
+	$(libappcore_a_extra_sources)
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
-	-DG_LOG_DOMAIN=\"Gimp-Core\"	\
-	@GIMP_THREAD_FLAGS@ 		\
-	@GIMP_MP_FLAGS@			\
-@STRIP_END@
+#
+# rules to generate built sources
+#
+# setup autogeneration dependancies
+gen_sources = xgen-gmh xgen-gmc
+CLEANFILES += $(gen_sources)
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_srcdir)			\
-	-I$(top_srcdir)/app		\
-	$(GTK_CFLAGS)			\
-	-I$(includedir)			\
-@STRIP_END@
+$(srcdir)/stamp-gimpmarshal.h: gimpmarshal.list gimpmarshal.h
+	echo "#ifndef __GIMP_MARSHAL_H__" > xgen-gmh \
+	&& echo "#define __GIMP_MARSHAL_H__" >> xgen-gmh \
+	&& glib-genmarshal --nostdinc --prefix=gimp_cclosure_marshal $(srcdir)/gimpmarshal.list --header >> xgen-gmh \
+	&& echo "#endif /* __GIMP_MARSHAL_H__ */" >> xgen-gmh \
+	&& (cmp -s xgen-gmh $(srcdir)/gimpmarshal.h || cp xgen-gmh $(srcdir)/gimpmarshal.h) \
+	&& rm -f xgen-gmh xgen-gmh~ \
+	&& echo timestamp > $@
+$(srcdir)/gimpmarshal.c: $(srcdir)/stamp-gimpmarshal.h
+	echo "#include <glib.h>" > xgen-gmc \
+	&& echo "#include <glib-object.h>" >> xgen-gmc \
+	&& echo "#include \"gimpmarshal.h\"" >> xgen-gmc \
+	&& glib-genmarshal --nostdinc --prefix=gimp_cclosure_marshal $(srcdir)/gimpmarshal.list --body >> xgen-gmc \
+	&& cp xgen-gmc $(srcdir)/gimpmarshal.c \
+	&& rm -f xgen-gmc xgen-gmc~
 
 .PHONY: files
 

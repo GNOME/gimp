@@ -362,9 +362,9 @@ toolbox_create (void)
    * device would change to that and not change back. So we check
    * manually that all devices have a cursor, before establishing the check.
    */
-  for (list = gdk_input_list_devices (); list; list = g_list_next (list))
+  for (list = gdk_devices_list (); list; list = g_list_next (list))
     {
-      if (! ((GdkDeviceInfo *) (list->data))->has_cursor)
+      if (! ((GdkDevice *) (list->data))->has_cursor)
 	break;
     }
 
@@ -401,7 +401,6 @@ toolbox_create (void)
   gtk_wrap_box_set_line_justify (GTK_WRAP_BOX (wbox), GTK_JUSTIFY_LEFT);
   /*  magic number to set a default 5x5 layout  */
   gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (wbox), 5.0 / 5.9);
-  gtk_container_set_border_width (GTK_CONTAINER (wbox), 0);
   gtk_box_pack_start (GTK_BOX (main_vbox), wbox, TRUE, TRUE, 0);
   gtk_widget_show (wbox);
 
@@ -456,17 +455,13 @@ toolbox_style_set_callback (GtkWidget *window,
 {
   GdkGeometry  geometry;
   GtkStyle    *style;
-  gint         xthickness;
-  gint         ythickness;
 
   style = gtk_widget_get_style (window);
-  xthickness = ((GtkStyleClass *) style->klass)->xthickness;
-  ythickness = ((GtkStyleClass *) style->klass)->ythickness;
-  
-  geometry.min_width  =  2 + 24 + 2 * xthickness;
-  geometry.min_height = 80 + 24 + 2 * ythickness;
-  geometry.width_inc  =      24 + 2 * xthickness;
-  geometry.height_inc =      24 + 2 * ythickness;
+
+  geometry.min_width  =  2 + 26 + 2 * style->xthickness;
+  geometry.min_height = 80 + 26 + 2 * style->ythickness;
+  geometry.width_inc  =      26 + 2 * style->xthickness;
+  geometry.height_inc =      26 + 2 * style->ythickness;
 
   gtk_window_set_geometry_hints (GTK_WINDOW (window), 
 				 NULL,

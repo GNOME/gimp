@@ -124,13 +124,13 @@ gimp_component_list_item_init (GimpComponentListItem *list_item)
   gtk_container_add (GTK_CONTAINER (abox), list_item->eye_button);
   gtk_widget_show (list_item->eye_button);
 
-  gtk_signal_connect (GTK_OBJECT (list_item->eye_button), "realize",
-                      GTK_SIGNAL_FUNC (gimp_list_item_button_realize),
-                      list_item);
+  g_signal_connect (G_OBJECT (list_item->eye_button), "realize",
+		    G_CALLBACK (gimp_list_item_button_realize),
+		    list_item);
 
-  gtk_signal_connect (GTK_OBJECT (list_item->eye_button), "state_changed",
-                      GTK_SIGNAL_FUNC (gimp_list_item_button_state_changed),
-                      list_item);
+  g_signal_connect (G_OBJECT (list_item->eye_button), "state_changed",
+		    G_CALLBACK (gimp_list_item_button_state_changed),
+		    list_item);
 
   pixmap = gimp_pixmap_new (eye_xpm);
   gtk_container_add (GTK_CONTAINER (list_item->eye_button), pixmap);
@@ -218,21 +218,19 @@ gimp_component_list_item_set_viewable (GimpListItem *list_item,
   if (active)
     gtk_item_select (GTK_ITEM (list_item));
 
-  gtk_signal_connect (GTK_OBJECT (component_item->eye_button), "toggled",
-                      GTK_SIGNAL_FUNC (gimp_component_list_item_eye_toggled),
-                      list_item);
+  g_signal_connect (G_OBJECT (component_item->eye_button), "toggled",
+		    G_CALLBACK (gimp_component_list_item_eye_toggled),
+		    list_item);
 
-  gtk_signal_connect_while_alive
-    (GTK_OBJECT (viewable), "component_visibility_changed",
-     GTK_SIGNAL_FUNC (gimp_component_list_item_visibility_changed),
-     list_item,
-     GTK_OBJECT (list_item));
+  g_signal_connect_object (G_OBJECT (viewable), "component_visibility_changed",
+			   G_CALLBACK (gimp_component_list_item_visibility_changed),
+			   G_OBJECT (list_item),
+			   0);
 
-  gtk_signal_connect_while_alive
-    (GTK_OBJECT (viewable), "component_active_changed",
-     GTK_SIGNAL_FUNC (gimp_component_list_item_active_changed),
-     list_item,
-     GTK_OBJECT (list_item));
+  g_signal_connect_object (G_OBJECT (viewable), "component_active_changed",
+			   G_CALLBACK (gimp_component_list_item_active_changed),
+			   G_OBJECT (list_item),
+			   0);
 }
 
 static void
@@ -265,16 +263,16 @@ gimp_component_list_item_eye_toggled (GtkWidget *widget,
           gtk_widget_set_usize (GTK_WIDGET (widget), -1, -1);
         }
 
-      gtk_signal_handler_block_by_func (GTK_OBJECT (gimage),
-                                        gimp_component_list_item_visibility_changed,
-                                        list_item);
+      g_signal_handlers_block_by_func (G_OBJECT (gimage),
+				       gimp_component_list_item_visibility_changed,
+				       list_item);
 
       gimp_image_set_component_visible (gimage, component_item->channel,
 					visible);
 
-      gtk_signal_handler_unblock_by_func (GTK_OBJECT (gimage),
-                                          gimp_component_list_item_visibility_changed,
-                                          list_item);
+      g_signal_handlers_unblock_by_func (G_OBJECT (gimage),
+					 gimp_component_list_item_visibility_changed,
+					 list_item);
 
       gdisplays_update_area (gimage, 0, 0, gimage->width, gimage->height);
       gdisplays_flush ();
@@ -315,15 +313,15 @@ gimp_component_list_item_visibility_changed (GimpImage   *gimage,
           gtk_widget_set_usize (GTK_WIDGET (toggle), -1, -1);
         }
 
-      gtk_signal_handler_block_by_func (GTK_OBJECT (toggle),
-                                        gimp_component_list_item_eye_toggled,
-                                        list_item);
+      g_signal_handlers_block_by_func (G_OBJECT (toggle),
+				       gimp_component_list_item_eye_toggled,
+				       list_item);
 
       gtk_toggle_button_set_active (toggle, visible);
 
-      gtk_signal_handler_unblock_by_func (GTK_OBJECT (toggle),
-                                          gimp_component_list_item_eye_toggled,
-                                          list_item);
+      g_signal_handlers_unblock_by_func (G_OBJECT (toggle),
+					 gimp_component_list_item_eye_toggled,
+					 list_item);
     }
 }
 

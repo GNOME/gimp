@@ -54,8 +54,8 @@ static void           gimp_list_item_real_set_viewable (GimpListItem  *list_item
                                                         GimpViewable  *viewable);
 static void       gimp_list_item_real_set_preview_size (GimpListItem  *list_item);
 
-static void           gimp_list_item_draw          (GtkWidget         *widget,
-                                                    GdkRectangle      *area);
+static gboolean       gimp_list_item_expose_event  (GtkWidget         *widget,
+                                                    GdkEventExpose    *eevent);
 static void           gimp_list_item_drag_leave    (GtkWidget         *widget,
                                                     GdkDragContext    *context,
                                                     guint              time);
@@ -115,31 +115,32 @@ gimp_list_item_class_init (GimpListItemClass *klass)
   object_class = (GtkObjectClass *) klass;
   widget_class = (GtkWidgetClass *) klass;
 
-  parent_class = gtk_type_class (GTK_TYPE_LIST_ITEM);
+  parent_class = g_type_class_peek_parent (klass);
 
   list_item_signals[SET_VIEWABLE] = 
-    gtk_signal_new ("set_viewable",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpListItemClass,
-                                       set_viewable),
-                    gtk_marshal_NONE__OBJECT,
-                    GTK_TYPE_NONE, 1,
-                    GIMP_TYPE_VIEWABLE);
+    g_signal_new ("set_viewable",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpListItemClass, set_viewable),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__OBJECT,
+		  G_TYPE_NONE, 1,
+		  GIMP_TYPE_VIEWABLE);
 
   list_item_signals[SET_PREVIEW_SIZE] = 
-    gtk_signal_new ("set_preview_size",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpListItemClass,
-                                       set_preview_size),
-                    gtk_marshal_NONE__OBJECT,
-                    GTK_TYPE_NONE, 0);
+    g_signal_new ("set_preview_size",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpListItemClass, set_preview_size),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__INT,
+		  G_TYPE_NONE, 1,
+		  G_TYPE_INT);
 
-  widget_class->draw        = gimp_list_item_draw;
-  widget_class->drag_leave  = gimp_list_item_drag_leave;
-  widget_class->drag_motion = gimp_list_item_drag_motion;
-  widget_class->drag_drop   = gimp_list_item_drag_drop;
+  widget_class->expose_event = gimp_list_item_expose_event;
+  widget_class->drag_leave   = gimp_list_item_drag_leave;
+  widget_class->drag_motion  = gimp_list_item_drag_motion;
+  widget_class->drag_drop    = gimp_list_item_drag_drop;
 
   klass->set_viewable       = gimp_list_item_real_set_viewable;
   klass->set_preview_size   = gimp_list_item_real_set_preview_size;
@@ -164,16 +165,16 @@ gimp_list_item_init (GimpListItem *list_item)
   list_item->get_name_func = NULL;
 }
 
-static void
-gimp_list_item_draw (GtkWidget    *widget,
-                     GdkRectangle *area)
+static gboolean
+gimp_list_item_expose_event (GtkWidget      *widget,
+			     GdkEventExpose *eevent)
 {
   GimpListItem *list_item;
 
   list_item = GIMP_LIST_ITEM (widget);
 
-  if (GTK_WIDGET_CLASS (parent_class)->draw)
-    GTK_WIDGET_CLASS (parent_class)->draw (widget, area);
+  if (GTK_WIDGET_CLASS (parent_class)->expose_event)
+    GTK_WIDGET_CLASS (parent_class)->expose_event (widget, eevent);
 
   if (list_item->drop_type != GIMP_DROP_NONE)
     {
@@ -187,13 +188,19 @@ gimp_list_item_draw (GtkWidget    *widget,
       gdk_gc_set_line_attributes (widget->style->black_gc, 5, GDK_LINE_SOLID,
 				  GDK_CAP_BUTT, GDK_JOIN_MITER);
 
+      gdk_gc_set_clip_rectangle (widget->style->black_gc, &eevent->area);
+
       gdk_draw_line (widget->window, widget->style->black_gc,
 		     x, y,
                      widget->allocation.width - 3, y);
 
+      gdk_gc_set_clip_rectangle (widget->style->black_gc, NULL);
+
       gdk_gc_set_line_attributes (widget->style->black_gc, 0, GDK_LINE_SOLID,
 				  GDK_CAP_BUTT, GDK_JOIN_MITER);
     }
+
+  return FALSE;
 }
 
 static void
@@ -341,10 +348,10 @@ gimp_list_item_real_set_viewable (GimpListItem *list_item,
 
   gimp_gtk_drag_source_set_by_type (GTK_WIDGET (list_item),
 				    GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
-				    GTK_OBJECT (viewable)->klass->type,
+				    G_TYPE_FROM_INSTANCE (viewable),
 				    GDK_ACTION_MOVE | GDK_ACTION_COPY);
   gimp_dnd_viewable_source_set (GTK_WIDGET (list_item),
-                                GTK_OBJECT (viewable)->klass->type,
+                                G_TYPE_FROM_INSTANCE (viewable),
 				gimp_list_item_drag_viewable,
 				NULL);
 }

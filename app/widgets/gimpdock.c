@@ -79,10 +79,10 @@ static guint n_dialog_targets = (sizeof (dialog_target_table) /
 				 sizeof (dialog_target_table[0]));
 
 
-GtkType
+GType
 gimp_dock_get_type (void)
 {
-  static GtkType dock_type = 0;
+  static GType dock_type = 0;
 
   if (! dock_type)
     {
@@ -111,7 +111,7 @@ gimp_dock_class_init (GimpDockClass *klass)
 
   object_class = (GtkObjectClass *) klass;
 
-  parent_class = gtk_type_class (GTK_TYPE_WINDOW);
+  parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy = gimp_dock_destroy;
 }
@@ -150,10 +150,16 @@ gimp_dock_destroy (GtkObject *object)
 
   dock = GIMP_DOCK (object);
 
+  g_print ("gimp_dock_destroy()\n");
+
   while (dock->dockbooks)
     gimp_dock_remove_book (dock, GIMP_DOCKBOOK (dock->dockbooks->data));
 
-  gtk_object_unref (GTK_OBJECT (dock->context));
+  if (dock->context)
+    {
+      g_object_unref (G_OBJECT (dock->context));
+      dock->context = NULL;
+    }
 
   if (GTK_OBJECT_CLASS (parent_class))
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -177,16 +183,16 @@ gimp_dock_separator_new (GimpDock *dock)
                      GTK_DEST_DEFAULT_ALL,
                      dialog_target_table, n_dialog_targets,
                      GDK_ACTION_MOVE);
-  gtk_signal_connect (GTK_OBJECT (event_box), "drag_drop",
-		      GTK_SIGNAL_FUNC (gimp_dock_separator_drag_drop),
-		      dock);
+  g_signal_connect (G_OBJECT (event_box), "drag_drop",
+		    GTK_SIGNAL_FUNC (gimp_dock_separator_drag_drop),
+		    dock);
 
-  gtk_signal_connect (GTK_OBJECT (event_box), "button_press_event",
-		      GTK_SIGNAL_FUNC (gimp_dock_separator_button_press),
-		      dock);
-  gtk_signal_connect (GTK_OBJECT (event_box), "button_release_event",
-		      GTK_SIGNAL_FUNC (gimp_dock_separator_button_release),
-		      dock);
+  g_signal_connect (G_OBJECT (event_box), "button_press_event",
+		    G_CALLBACK (gimp_dock_separator_button_press),
+		    dock);
+  g_signal_connect (G_OBJECT (event_box), "button_release_event",
+		    G_CALLBACK (gimp_dock_separator_button_release),
+		    dock);
 
   return event_box;
 }
@@ -199,10 +205,7 @@ gimp_dock_add (GimpDock     *dock,
 {
   GimpDockbook *dockbook;
 
-  g_return_if_fail (dock != NULL);
   g_return_if_fail (GIMP_IS_DOCK (dock));
-
-  g_return_if_fail (dockable != NULL);
   g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
 
   g_return_if_fail (dockable->dockbook == NULL);
@@ -216,10 +219,7 @@ void
 gimp_dock_remove (GimpDock     *dock,
 		  GimpDockable *dockable)
 {
-  g_return_if_fail (dock != NULL);
   g_return_if_fail (GIMP_IS_DOCK (dock));
-
-  g_return_if_fail (dockable != NULL);
   g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
 
   g_return_if_fail (dockable->dockbook != NULL);
@@ -237,10 +237,7 @@ gimp_dock_add_book (GimpDock     *dock,
   GtkWidget *separator;
   gint       length;
 
-  g_return_if_fail (dock != NULL);
   g_return_if_fail (GIMP_IS_DOCK (dock));
-
-  g_return_if_fail (dockbook != NULL);
   g_return_if_fail (GIMP_IS_DOCKBOOK (dockbook));
 
   g_return_if_fail (dockbook->dock == NULL);
@@ -250,7 +247,7 @@ gimp_dock_add_book (GimpDock     *dock,
   if (index >= length || index < 0)
     index = length;
 
-  dockbook->dock = dock;
+  dockbook->dock  = dock;
   dock->dockbooks = g_list_insert (dock->dockbooks, dockbook, index);
 
   index *= 2;
@@ -266,6 +263,14 @@ gimp_dock_add_book (GimpDock     *dock,
   gtk_widget_show (separator);
 }
 
+gboolean
+gimp_dock_idle_destroy (gpointer data)
+{
+  gtk_widget_destroy (GTK_WIDGET (data));
+
+  return FALSE;
+}
+
 void
 gimp_dock_remove_book (GimpDock     *dock,
 		       GimpDockbook *dockbook)
@@ -275,10 +280,7 @@ gimp_dock_remove_book (GimpDock     *dock,
   gint   index;
   gint   book_index;
 
-  g_return_if_fail (dock != NULL);
   g_return_if_fail (GIMP_IS_DOCK (dock));
-
-  g_return_if_fail (dockbook != NULL);
   g_return_if_fail (GIMP_IS_DOCKBOOK (dockbook));
 
   g_return_if_fail (dockbook->dock == dock);
@@ -286,7 +288,7 @@ gimp_dock_remove_book (GimpDock     *dock,
   length = g_list_length (dock->dockbooks);
   index  = g_list_index (dock->dockbooks, dockbook);
 
-  dockbook->dock = NULL;
+  dockbook->dock  = NULL;
   dock->dockbooks = g_list_remove (dock->dockbooks, dockbook);
 
   children   = gtk_container_children (GTK_CONTAINER (dock->vbox));
@@ -312,8 +314,7 @@ gimp_dock_remove_book (GimpDock     *dock,
 
   if (length == 1)
     {
-      gtk_widget_destroy (GTK_WIDGET (dock));
-      return;
+      g_idle_add (gimp_dock_idle_destroy, dock);
     }
 }
 

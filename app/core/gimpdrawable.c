@@ -114,28 +114,25 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   gimp_object_class = (GimpObjectClass *) klass;
   viewable_class    = (GimpViewableClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_VIEWABLE);
+  parent_class = g_type_class_peek_parent (klass);
 
   gimp_drawable_signals[VISIBILITY_CHANGED] =
-    gtk_signal_new ("visibility_changed",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpDrawableClass,
-                                       visibility_changed),
-                    gtk_signal_default_marshaller,
-                    GTK_TYPE_NONE, 0);
+    g_signal_new ("visibility_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpDrawableClass, visibility_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   gimp_drawable_signals[REMOVED] =
-    gtk_signal_new ("removed",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpDrawableClass,
-                                       removed),
-                    gtk_signal_default_marshaller,
-                    GTK_TYPE_NONE, 0);
-
-  gtk_object_class_add_signals (object_class, gimp_drawable_signals,
-				LAST_SIGNAL);
+    g_signal_new ("removed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpDrawableClass, removed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   object_class->destroy              = gimp_drawable_destroy;
 
@@ -183,13 +180,19 @@ gimp_drawable_destroy (GtkObject *object)
 		       GINT_TO_POINTER (drawable->ID));
 
   if (drawable->tiles)
-    tile_manager_destroy (drawable->tiles);
+    {
+      tile_manager_destroy (drawable->tiles);
+      drawable->tiles = NULL;
+    }
 
   if (drawable->preview_cache)
     gimp_preview_cache_invalidate (&drawable->preview_cache);
 
   if (drawable->parasites)
-    gtk_object_unref (GTK_OBJECT (drawable->parasites));
+    {
+      g_object_unref (G_OBJECT (drawable->parasites));
+      drawable->parasites = NULL;
+    }
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -656,7 +659,7 @@ gimp_drawable_removed (GimpDrawable *drawable)
   g_return_if_fail (drawable != NULL);
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
-  gtk_signal_emit (GTK_OBJECT (drawable), gimp_drawable_signals[REMOVED]);
+  g_signal_emit (G_OBJECT (drawable), gimp_drawable_signals[REMOVED], 0);
 }
 
 gboolean
@@ -732,8 +735,8 @@ gimp_drawable_set_visible (GimpDrawable *drawable,
     {
       drawable->visible = visible;
 
-      gtk_signal_emit (GTK_OBJECT (drawable),
-                       gimp_drawable_signals[VISIBILITY_CHANGED]);
+      g_signal_emit (G_OBJECT (drawable),
+		     gimp_drawable_signals[VISIBILITY_CHANGED], 0);
 
       gimp_drawable_update (drawable,
 			    0, 0,

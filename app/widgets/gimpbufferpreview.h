@@ -32,10 +32,10 @@ extern "C" {
 
 
 #define GIMP_TYPE_BUFFER_PREVIEW            (gimp_buffer_preview_get_type ())
-#define GIMP_BUFFER_PREVIEW(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_BUFFER_PREVIEW, GimpBufferPreview))
-#define GIMP_BUFFER_PREVIEW_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BUFFER_PREVIEW, GimpBufferPreviewClass))
-#define GIMP_IS_BUFFER_PREVIEW(obj)         (GTK_CHECK_TYPE (obj, GIMP_TYPE_BUFFER_PREVIEW))
-#define GIMP_IS_BUFFER_PREVIEW_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BUFFER_PREVIEW))
+#define GIMP_BUFFER_PREVIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BUFFER_PREVIEW, GimpBufferPreview))
+#define GIMP_BUFFER_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BUFFER_PREVIEW, GimpBufferPreviewClass))
+#define GIMP_IS_BUFFER_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_BUFFER_PREVIEW))
+#define GIMP_IS_BUFFER_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BUFFER_PREVIEW))
 
 
 typedef struct _GimpBufferPreviewClass  GimpBufferPreviewClass;

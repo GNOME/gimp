@@ -105,14 +105,14 @@ tool_manager_init (Gimp *gimp)
 
   tool_manager->image_dirty_handler_id =
     gimp_container_add_handler (gimp->images, "dirty",
-				GTK_SIGNAL_FUNC (tool_manager_image_dirty),
+				G_CALLBACK (tool_manager_image_dirty),
 				tool_manager);
 
   user_context = gimp_get_user_context (gimp);
 
-  gtk_signal_connect (GTK_OBJECT (user_context), "tool_changed",
-		      GTK_SIGNAL_FUNC (tool_manager_tool_changed),
-		      tool_manager);
+  g_signal_connect (G_OBJECT (user_context), "tool_changed",
+		    G_CALLBACK (tool_manager_tool_changed),
+		    tool_manager);
 
   /*  Create a context to store the paint options of the
    *  global paint options mode
@@ -289,12 +289,12 @@ tool_manager_initialize_tool (Gimp     *gimp,
 
   tool_manager = tool_manager_get (gimp);
 
-  tool_type = GTK_OBJECT (tool)->klass->type;
+  tool_type = G_TYPE_FROM_INSTANCE (tool);
 
   /*  Tools which have an init function have dialogs and
    *  cannot be initialized without a display
    */
-  if (GIMP_TOOL_CLASS (GTK_OBJECT (tool)->klass)->initialize && ! gdisp)
+  if (GIMP_TOOL_GET_CLASS (tool)->initialize && ! gdisp)
     {
       tool_info = tool_manager_get_info_by_type (gimp,
 						 GIMP_TYPE_RECT_SELECT_TOOL);
@@ -504,7 +504,7 @@ tool_manager_get_info_by_tool (Gimp     *gimp,
   g_return_val_if_fail (tool != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_TOOL (tool), NULL);
 
-  return tool_manager_get_info_by_type (gimp, GTK_OBJECT (tool)->klass->type);
+  return tool_manager_get_info_by_type (gimp, G_TYPE_FROM_INSTANCE (tool));
 }
 
 const gchar *
@@ -620,23 +620,23 @@ tool_manager_tool_changed (GimpContext  *user_context,
       /*  there may be contexts waiting for the user_context's "tool_changed"
        *  signal, so stop emitting it.
        */
-      gtk_signal_emit_stop_by_name (GTK_OBJECT (user_context), "tool_changed");
+      g_signal_stop_emission_by_name (G_OBJECT (user_context), "tool_changed");
 
-      if (GTK_OBJECT (tool_manager->active_tool)->klass->type !=
+      if (G_TYPE_FROM_INSTANCE (tool_manager->active_tool) !=
 	  tool_info->tool_type)
 	{
-	  gtk_signal_handler_block_by_func (GTK_OBJECT (user_context),
-					    tool_manager_tool_changed,
-					    data);
+	  g_signal_handlers_block_by_func (G_OBJECT (user_context),
+					   tool_manager_tool_changed,
+					   data);
 
 	  /*  explicitly set the current tool  */
 	  gimp_context_set_tool (user_context,
 				 tool_manager_get_info_by_tool (user_context->gimp,
 								tool_manager->active_tool));
 
-	  gtk_signal_handler_unblock_by_func (GTK_OBJECT (user_context),
-					      tool_manager_tool_changed,
-					      data);
+	  g_signal_handlers_unblock_by_func (G_OBJECT (user_context),
+					     tool_manager_tool_changed,
+					     data);
 	}
 
       return;

@@ -189,7 +189,7 @@ gimp_brush_pipe_class_init (GimpBrushPipeClass *klass)
   object_class = (GtkObjectClass *) klass;
   brush_class  = (GimpBrushClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_BRUSH);
+  parent_class = g_type_class_peek_parent (klass);
 
   brush_class->select_brush     = gimp_brush_pipe_select_brush;
   brush_class->want_null_motion = gimp_brush_pipe_want_null_motion;

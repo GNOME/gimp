@@ -24,9 +24,9 @@
 
 
 #define HISTOGRAM_WIDGET_TYPE         (histogram_widget_get_type ())
-#define HISTOGRAM_WIDGET(obj)         GTK_CHECK_CAST (obj, histogram_widget_get_type (), HistogramWidget)
-#define IS_HISTOGRAM_WIDGET(obj)      GTK_CHECK_TYPE (obj, histogram_widget_get_type ())
-#define HISTOGRAM_WIDGET_CLASS(klass) GTK_CHECK_CLASS_CAST (klass, histogram_widget_get_type (), HistogramWidget)
+#define HISTOGRAM_WIDGET(obj)         G_TYPE_CHECK_INSTANCE_CAST (obj, histogram_widget_get_type (), HistogramWidget)
+#define IS_HISTOGRAM_WIDGET(obj)      G_TYPE_CHECK_INSTANCE_TYPE (obj, histogram_widget_get_type ())
+#define HISTOGRAM_WIDGET_CLASS(klass) G_TYPE_CHECK_CLASS_CAST (klass, histogram_widget_get_type (), HistogramWidget)
 
 
 typedef struct _HistogramWidgetClass HistogramWidgetClass;

@@ -31,10 +31,11 @@
 
 
 #define GIMP_TYPE_BRUSH            (gimp_brush_get_type ())
-#define GIMP_BRUSH(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_BRUSH, GimpBrush))
-#define GIMP_BRUSH_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRUSH, GimpBrushClass))
-#define GIMP_IS_BRUSH(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_BRUSH))
-#define GIMP_IS_BRUSH_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BRUSH))
+#define GIMP_BRUSH(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BRUSH, GimpBrush))
+#define GIMP_BRUSH_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRUSH, GimpBrushClass))
+#define GIMP_IS_BRUSH(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BRUSH))
+#define GIMP_IS_BRUSH_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BRUSH))
+#define GIMP_BRUSH_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BRUSH, GimpBrushClass))
 
 
 typedef struct _GimpBrushClass GimpBrushClass;
@@ -63,7 +64,7 @@ struct _GimpBrushClass
 };
 
 
-GtkType     gimp_brush_get_type        (void);
+GType       gimp_brush_get_type        (void);
 
 GimpData  * gimp_brush_new             (const gchar     *name);
 GimpData  * gimp_brush_get_standard    (void);

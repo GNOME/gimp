@@ -67,10 +67,10 @@ static gint   gimp_container_list_view_item_activated (GtkWidget              *w
 static GimpContainerViewClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_container_list_view_get_type (void)
 {
-  static guint list_view_type = 0;
+  static GType list_view_type = 0;
 
   if (! list_view_type)
     {
@@ -102,9 +102,9 @@ gimp_container_list_view_class_init (GimpContainerListViewClass *klass)
   object_class         = (GtkObjectClass *) klass;
   container_view_class = (GimpContainerViewClass *) klass;
   
-  parent_class = gtk_type_class (GIMP_TYPE_CONTAINER_VIEW);
+  parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy = gimp_container_list_view_destroy;
+  object_class->destroy                  = gimp_container_list_view_destroy;
 
   container_view_class->insert_item      = gimp_container_list_view_insert_item;
   container_view_class->remove_item      = gimp_container_list_view_remove_item;
@@ -141,11 +141,10 @@ gimp_container_list_view_init (GimpContainerListView *list_view)
 			  (list_view->scrolled_win)->vscrollbar,
                           GTK_CAN_FOCUS);
 
-  gtk_signal_connect_while_alive
-    (GTK_OBJECT (list_view->gtk_list), "select_child",
-     GTK_SIGNAL_FUNC (gimp_container_list_view_item_selected),
-     list_view,
-     GTK_OBJECT (list_view));
+  g_signal_connect_object (G_OBJECT (list_view->gtk_list), "select_child",
+			   G_CALLBACK (gimp_container_list_view_item_selected),
+			   G_OBJECT (list_view),
+			   0);
 
   gtk_widget_show (list_view->gtk_list);
   gtk_widget_show (list_view->scrolled_win);
@@ -187,8 +186,8 @@ gimp_container_list_view_new (GimpContainer *container,
 
   window_border =
     GTK_SCROLLED_WINDOW (list_view->scrolled_win)->vscrollbar->requisition.width +
-    GTK_SCROLLED_WINDOW_CLASS (GTK_OBJECT (list_view->scrolled_win)->klass)->scrollbar_spacing +
-    list_view->scrolled_win->style->klass->xthickness * 4;
+    GTK_SCROLLED_WINDOW_GET_CLASS (list_view->scrolled_win)->scrollbar_spacing +
+    list_view->scrolled_win->style->xthickness * 4;
 
   gtk_widget_set_usize (list_view->gtk_list->parent,
 			(preview_size + 2) * min_items_x + window_border,
@@ -221,9 +220,9 @@ gimp_container_list_view_insert_item (GimpContainerView *view,
   gimp_list_item_set_name_func (GIMP_LIST_ITEM (list_item),
 				view->get_name_func);
 
-  gtk_signal_connect (GTK_OBJECT (list_item), "button_press_event",
-		      GTK_SIGNAL_FUNC (gimp_container_list_view_item_activated),
-		      list_view);
+  g_signal_connect (G_OBJECT (list_item), "button_press_event",
+		    G_CALLBACK (gimp_container_list_view_item_activated),
+		    list_view);
 
   gtk_widget_show (list_item);
 
@@ -332,15 +331,15 @@ gimp_container_list_view_select_item (GimpContainerView *view,
       index = gimp_container_get_child_index (view->container,
 					      GIMP_OBJECT (viewable));
 
-      gtk_signal_handler_block_by_func (GTK_OBJECT (list_view->gtk_list),
-					gimp_container_list_view_item_selected,
-					list_view);
+      g_signal_handlers_block_by_func (G_OBJECT (list_view->gtk_list),
+				       gimp_container_list_view_item_selected,
+				       list_view);
 
       gtk_list_select_child (GTK_LIST (list_view->gtk_list), list_item);
 
-      gtk_signal_handler_unblock_by_func (GTK_OBJECT (list_view->gtk_list),
-					  gimp_container_list_view_item_selected,
-					  list_view);
+      g_signal_handlers_unblock_by_func (G_OBJECT (list_view->gtk_list),
+					 gimp_container_list_view_item_selected,
+					 list_view);
 
       if (index * item_height < adj->value)
 	{

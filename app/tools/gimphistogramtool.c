@@ -383,16 +383,19 @@ histogram_tool_dialog_new (void)
   gtk_box_pack_start (GTK_BOX (htd->channel_menu), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  option_menu = gimp_option_menu_new2
-    (FALSE, histogram_tool_channel_callback,
-     htd, (gpointer) htd->channel,
+  option_menu =
+    gimp_option_menu_new2 (FALSE,
+			   G_CALLBACK (histogram_tool_channel_callback),
+			   htd,
+			   (gpointer) htd->channel,
 
-     _("Value"), (gpointer) GIMP_HISTOGRAM_VALUE, NULL,
-     _("Red"),   (gpointer) GIMP_HISTOGRAM_RED, NULL,
-     _("Green"), (gpointer) GIMP_HISTOGRAM_GREEN, NULL,
-     _("Blue"),  (gpointer) GIMP_HISTOGRAM_BLUE, NULL,
+			   _("Value"), (gpointer) GIMP_HISTOGRAM_VALUE, NULL,
+			   _("Red"),   (gpointer) GIMP_HISTOGRAM_RED, NULL,
+			   _("Green"), (gpointer) GIMP_HISTOGRAM_GREEN, NULL,
+			   _("Blue"),  (gpointer) GIMP_HISTOGRAM_BLUE, NULL,
 
-     NULL);
+			   NULL);
+
   gtk_box_pack_start (GTK_BOX (htd->channel_menu), option_menu, FALSE, FALSE, 0);
   gtk_widget_show (option_menu);
 

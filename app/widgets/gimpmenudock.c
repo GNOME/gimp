@@ -61,10 +61,10 @@ static void   gimp_image_dock_auto_clicked          (GtkWidget          *widget,
 static GimpDockClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_image_dock_get_type (void)
 {
-  static GtkType dock_type = 0;
+  static GType dock_type = 0;
 
   if (! dock_type)
     {
@@ -93,7 +93,7 @@ gimp_image_dock_class_init (GimpImageDockClass *klass)
 
   object_class = (GtkObjectClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_DOCK);
+  parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy = gimp_image_dock_destroy;
 }
@@ -117,15 +117,19 @@ gimp_image_dock_init (GimpImageDock *dock)
   gtk_box_pack_start (GTK_BOX (hbox), dock->option_menu, TRUE, TRUE, 0);
   gtk_widget_show (dock->option_menu);
 
+  g_signal_connect (G_OBJECT (dock->option_menu), "destroy",
+		    G_CALLBACK (gtk_widget_destroyed),
+		    &dock->option_menu);
+
   dock->auto_button = gtk_toggle_button_new_with_label (_("Auto"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dock->auto_button),
 				dock->auto_follow_active);
   gtk_box_pack_start (GTK_BOX (hbox), dock->auto_button, FALSE, FALSE, 0);
   gtk_widget_show (dock->auto_button);
 
-  gtk_signal_connect (GTK_OBJECT (dock->auto_button), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_image_dock_auto_clicked),
-		      dock);
+  g_signal_connect (G_OBJECT (dock->auto_button), "clicked",
+		    G_CALLBACK (gimp_image_dock_auto_clicked),
+		    dock);
 }
 
 static void
@@ -138,8 +142,13 @@ gimp_image_dock_destroy (GtkObject *object)
   /*  remove the image menu and the auto button manually here because
    *  of weird cross-connections with GimpDock's context
    */
-  gtk_container_remove (GTK_CONTAINER (GIMP_DOCK (dock)->main_vbox),
-			dock->option_menu->parent);
+  if (GIMP_DOCK (dock)->main_vbox &&
+      dock->option_menu           &&
+      dock->option_menu->parent)
+    {
+      gtk_container_remove (GTK_CONTAINER (GIMP_DOCK (dock)->main_vbox),
+			    dock->option_menu->parent);
+    }
 
   if (GTK_OBJECT_CLASS (parent_class))
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -152,10 +161,7 @@ gimp_image_dock_new (GimpDialogFactory *factory,
   GimpImageDock *image_dock;
   GimpDock      *dock;
 
-  g_return_val_if_fail (factory != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
-
-  g_return_val_if_fail (image_container != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_CONTAINER (image_container), NULL);
 
   image_dock = gtk_type_new (GIMP_TYPE_IMAGE_DOCK);
@@ -179,17 +185,15 @@ gimp_image_dock_new (GimpDialogFactory *factory,
     gimp_context_copy_arg (factory->context, dock->context,
 			   GIMP_CONTEXT_ARG_IMAGE);
 
-  gtk_signal_connect_while_alive
-    (GTK_OBJECT (factory->context), "image_changed",
-     GTK_SIGNAL_FUNC (gimp_image_dock_factory_image_changed),
-     dock,
-     GTK_OBJECT (dock));
+  g_signal_connect_object (G_OBJECT (factory->context), "image_changed",
+			   G_CALLBACK (gimp_image_dock_factory_image_changed),
+			   G_OBJECT (dock),
+			   0);
 
-  gtk_signal_connect_while_alive
-    (GTK_OBJECT (dock->context), "image_changed",
-     GTK_SIGNAL_FUNC (gimp_image_dock_image_changed),
-     dock,
-     GTK_OBJECT (dock));
+  g_signal_connect_object (G_OBJECT (dock->context), "image_changed",
+			   G_CALLBACK (gimp_image_dock_image_changed),
+			   G_OBJECT (dock),
+			   0);
 
   image_dock->menu = gimp_container_menu_new (image_container,
 					      dock->context, 24);
@@ -204,7 +208,6 @@ void
 gimp_image_dock_set_auto_follow_active (GimpImageDock *image_dock,
 					gboolean       auto_follow_active)
 {
-  g_return_if_fail (image_dock != NULL);
   g_return_if_fail (GIMP_IS_IMAGE_DOCK (image_dock));
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (image_dock->auto_button),
@@ -215,7 +218,6 @@ void
 gimp_image_dock_set_show_image_menu (GimpImageDock *image_dock,
 				     gboolean       show)
 {
-  g_return_if_fail (image_dock != NULL);
   g_return_if_fail (GIMP_IS_IMAGE_DOCK (image_dock));
 
   if (show)
@@ -268,7 +270,7 @@ gimp_image_dock_image_changed (GimpContext *context,
 	  /*  stop the emission of the original signal (the emission of
 	   *  the recursive signal is finished)
 	   */
-	  gtk_signal_emit_stop_by_name (GTK_OBJECT (context), "image_changed");
+	  g_signal_stop_emission_by_name (G_OBJECT (context), "image_changed");
 	}
     }
 }

@@ -32,10 +32,10 @@ extern "C" {
 
 
 #define GIMP_TYPE_PALETTE_PREVIEW            (gimp_palette_preview_get_type ())
-#define GIMP_PALETTE_PREVIEW(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_PALETTE_PREVIEW, GimpPalettePreview))
-#define GIMP_PALETTE_PREVIEW_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PALETTE_PREVIEW, GimpPalettePreviewClass))
-#define GIMP_IS_PALETTE_PREVIEW(obj)         (GTK_CHECK_TYPE (obj, GIMP_TYPE_PALETTE_PREVIEW))
-#define GIMP_IS_PALETTE_PREVIEW_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PALETTE_PREVIEW))
+#define GIMP_PALETTE_PREVIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PALETTE_PREVIEW, GimpPalettePreview))
+#define GIMP_PALETTE_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PALETTE_PREVIEW, GimpPalettePreviewClass))
+#define GIMP_IS_PALETTE_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_PALETTE_PREVIEW))
+#define GIMP_IS_PALETTE_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PALETTE_PREVIEW))
 
 
 typedef struct _GimpPalettePreviewClass  GimpPalettePreviewClass;

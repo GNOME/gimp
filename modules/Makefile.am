@@ -23,7 +23,8 @@ EXTRA_DIST = \
 
 libexec_LTLIBRARIES = @STRIP_BEGIN@ \
 	libcolorsel_triangle.la		\
-	libcolorsel_water.la		\
+##	libcolorsel_gtk.la		\
+##	libcolorsel_water.la		\
 @STRIP_END@
 
 EXTRA_LTLIBRARIES +=
@@ -36,9 +37,9 @@ libcolorsel_triangle_la_SOURCES = colorsel_triangle.c
 libcolorsel_triangle_la_LDFLAGS = -avoid-version -module
 libcolorsel_triangle_la_LIBADD = $(GTK_LIBS)
 
-libcolorsel_water_la_SOURCES = colorsel_water.c
-libcolorsel_water_la_LDFLAGS = -avoid-version -module
-libcolorsel_water_la_LIBADD = $(GTK_LIBS)
+## libcolorsel_water_la_SOURCES = colorsel_water.c
+## libcolorsel_water_la_LDFLAGS = -avoid-version -module
+## libcolorsel_water_la_LIBADD = $(GTK_LIBS)
 
 ## libcdisplay_gamma_la_SOURCES = cdisplay_gamma.c
 ## libcdisplay_gamma_la_LDFLAGS = -avoid-version -module

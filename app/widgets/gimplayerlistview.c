@@ -154,8 +154,10 @@ gimp_layer_list_view_init (GimpLayerListView *view)
   gtk_widget_show (label);
 
   view->paint_mode_menu =
-    gimp_paint_mode_menu_new (gimp_layer_list_view_paint_mode_menu_callback,
-			      view, FALSE, NORMAL_MODE);
+    gimp_paint_mode_menu_new (G_CALLBACK (gimp_layer_list_view_paint_mode_menu_callback),
+			      view,
+			      FALSE,
+			      NORMAL_MODE);
   gtk_box_pack_start (GTK_BOX (hbox), view->paint_mode_menu, FALSE, FALSE, 0);
   gtk_widget_show (view->paint_mode_menu);
 
@@ -173,9 +175,9 @@ gimp_layer_list_view_init (GimpLayerListView *view)
   gtk_container_add (GTK_CONTAINER (abox), view->preserve_trans_toggle);
   gtk_widget_show (view->preserve_trans_toggle);
 
-  gtk_signal_connect (GTK_OBJECT (view->preserve_trans_toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_layer_list_view_preserve_button_toggled),
-		      view);
+  g_signal_connect (G_OBJECT (view->preserve_trans_toggle), "toggled",
+		    G_CALLBACK (gimp_layer_list_view_preserve_button_toggled),
+		    view);
 
   gimp_help_set_help_data (view->preserve_trans_toggle,
 			   _("Keep Transparency"), "#keep_trans_button");
@@ -193,9 +195,9 @@ gimp_layer_list_view_init (GimpLayerListView *view)
   view->opacity_adjustment =
     GTK_ADJUSTMENT (gtk_adjustment_new (100.0, 0.0, 100.0, 1.0, 1.0, 0.0));
 
-  gtk_signal_connect (GTK_OBJECT (view->opacity_adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_layer_list_view_opacity_scale_changed),
-		      view);
+  g_signal_connect (G_OBJECT (view->opacity_adjustment), "value_changed",
+		    G_CALLBACK (gimp_layer_list_view_opacity_scale_changed),
+		    view);
 
   slider = gtk_hscale_new (view->opacity_adjustment);
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_RIGHT);
@@ -215,9 +217,9 @@ gimp_layer_list_view_init (GimpLayerListView *view)
 
   gimp_help_set_help_data (view->anchor_button, _("Anchor"), NULL);
 
-  gtk_signal_connect (GTK_OBJECT (view->anchor_button), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_layer_list_view_anchor_clicked),
-		      view);
+  g_signal_connect (G_OBJECT (view->anchor_button), "clicked",
+		    G_CALLBACK (gimp_layer_list_view_anchor_clicked),
+		    view);
 
   pixmap = gimp_pixmap_new (anchor_xpm);
   gtk_container_add (GTK_CONTAINER (view->anchor_button), pixmap);
@@ -279,15 +281,15 @@ gimp_layer_list_view_set_container (GimpContainerView *view,
     {
       layer_view->mode_changed_handler_id =
 	gimp_container_add_handler (view->container, "mode_changed",
-				    gimp_layer_list_view_layer_signal_handler,
+				    G_CALLBACK (gimp_layer_list_view_layer_signal_handler),
 				    view);
       layer_view->opacity_changed_handler_id =
 	gimp_container_add_handler (view->container, "opacity_changed",
-				    gimp_layer_list_view_layer_signal_handler,
+				    G_CALLBACK (gimp_layer_list_view_layer_signal_handler),
 				    view);
       layer_view->preserve_trans_changed_handler_id =
 	gimp_container_add_handler (view->container, "preserve_trans_changed",
-				    gimp_layer_list_view_layer_signal_handler,
+				    G_CALLBACK (gimp_layer_list_view_layer_signal_handler),
 				    view);
     }
 }
@@ -393,11 +395,11 @@ gimp_layer_list_view_anchor_dropped (GtkWidget    *widget,
 /*  Paint Mode, Opacity and Preserve trans. callbacks  */
 
 #define BLOCK() \
-        gtk_signal_handler_block_by_func (GTK_OBJECT (layer), \
+        g_signal_handlers_block_by_func (G_OBJECT (layer), \
 	gimp_layer_list_view_layer_signal_handler, view)
 
 #define UNBLOCK() \
-        gtk_signal_handler_unblock_by_func (GTK_OBJECT (layer), \
+        g_signal_handlers_unblock_by_func (G_OBJECT (layer), \
 	gimp_layer_list_view_layer_signal_handler, view)
 
 
@@ -417,7 +419,7 @@ gimp_layer_list_view_paint_mode_menu_callback (GtkWidget         *widget,
       LayerModeEffects mode;
 
       mode = (LayerModeEffects)
-	GPOINTER_TO_INT (gtk_object_get_user_data (GTK_OBJECT (widget)));
+	GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget), "user_data"));
 
       if (gimp_layer_get_mode (layer) != mode)
 	{
@@ -505,12 +507,12 @@ gimp_layer_list_view_layer_signal_handler (GimpLayer         *layer,
 
 
 #define BLOCK(object,function) \
-        gtk_signal_handler_block_by_func (GTK_OBJECT (object), \
-	                                  (function), view)
+        g_signal_handlers_block_by_func (G_OBJECT (object), \
+	                                 (function), view)
 
 #define UNBLOCK(object,function) \
-        gtk_signal_handler_unblock_by_func (GTK_OBJECT (object), \
-	                                    (function), view)
+        g_signal_handlers_unblock_by_func (G_OBJECT (object), \
+	                                   (function), view)
 
 static void
 gimp_layer_list_view_update_options (GimpLayerListView *view,

@@ -27,10 +27,10 @@
 
 
 #define GIMP_TYPE_LIST            (gimp_list_get_type ())
-#define GIMP_LIST(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_LIST, GimpList))
-#define GIMP_LIST_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LIST, GimpListClass))
-#define GIMP_IS_LIST(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_LIST))
-#define GIMP_IS_LIST_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LIST))
+#define GIMP_LIST(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_LIST, GimpList))
+#define GIMP_LIST_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LIST, GimpListClass))
+#define GIMP_IS_LIST(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_LIST))
+#define GIMP_IS_LIST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LIST))
 
 
 typedef struct _GimpListClass GimpListClass;

@@ -24,14 +24,14 @@ extern GSList *save_procs;
 
 
 GimpPDBStatusType   file_save           (GimpImage     *gimage,
-					 gchar         *filename,
-					 gchar         *raw_filename,
+					 const gchar   *filename,
+					 const gchar   *raw_filename,
 					 RunModeType    run_mode,
 					 gboolean       set_filename);
 
 gboolean            file_save_with_proc (GimpImage     *gimage,
-					 gchar         *full_filename,
-					 gchar         *raw_filename,
+					 const gchar   *full_filename,
+					 const gchar   *raw_filename,
 					 PlugInProcDef *save_proc,
 					 gboolean       set_filename);
 

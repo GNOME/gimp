@@ -38,51 +38,79 @@
 #include "pixmaps/lower.xpm"
 
 
-/*  forward declaration  */
-static void gimp_path_editor_select_callback   (GtkWidget *widget,
-						gpointer   data);
-static void gimp_path_editor_deselect_callback (GtkWidget *widget,
-						gpointer   data);
-static void gimp_path_editor_new_callback      (GtkWidget *widget,
-						gpointer   data);
-static void gimp_path_editor_move_callback     (GtkWidget *widget,
-						gpointer   data);
-static void gimp_path_editor_filesel_callback  (GtkWidget *widget,
-						gpointer   data);
-static void gimp_path_editor_delete_callback   (GtkWidget *widget,
-						gpointer   data);
-
 enum
 {
   PATH_CHANGED,
   LAST_SIGNAL
 };
 
+
+static void   gimp_path_editor_class_init        (GimpPathEditorClass *klass);
+static void   gimp_path_editor_init              (GimpPathEditor      *gpe);
+
+static void   gimp_path_editor_select_callback   (GtkWidget           *widget,
+						  gpointer             data);
+static void   gimp_path_editor_deselect_callback (GtkWidget           *widget,
+						  gpointer             data);
+static void   gimp_path_editor_new_callback      (GtkWidget           *widget,
+						  gpointer             data);
+static void   gimp_path_editor_move_callback     (GtkWidget           *widget,
+						  gpointer             data);
+static void   gimp_path_editor_filesel_callback  (GtkWidget           *widget,
+						  gpointer             data);
+static void   gimp_path_editor_delete_callback   (GtkWidget           *widget,
+						  gpointer             data);
+
+
 static guint gimp_path_editor_signals[LAST_SIGNAL] = { 0 };
 
 static GtkVBoxClass *parent_class = NULL;
 
+
+GType
+gimp_path_editor_get_type (void)
+{
+  static GType gpe_type = 0;
+
+  if (! gpe_type)
+    {
+      GtkTypeInfo gpe_info =
+      {
+	"GimpPathEditor",
+	sizeof (GimpPathEditor),
+	sizeof (GimpPathEditorClass),
+	(GtkClassInitFunc) gimp_path_editor_class_init,
+	(GtkObjectInitFunc) gimp_path_editor_init,
+	/* reserved_1 */ NULL,
+	/* reserved_2 */ NULL,
+        (GtkClassInitFunc) NULL
+      };
+
+      gpe_type = gtk_type_unique (gtk_vbox_get_type (), &gpe_info);
+    }
+  
+  return gpe_type;
+}
+
 static void
-gimp_path_editor_class_init (GimpPathEditorClass *class)
+gimp_path_editor_class_init (GimpPathEditorClass *klass)
 {
   GtkObjectClass *object_class;
 
-  object_class = (GtkObjectClass *) class;
+  object_class = (GtkObjectClass *) klass;
 
-  parent_class = gtk_type_class (gtk_vbox_get_type ());
+  parent_class = g_type_class_peek_parent (klass);
 
   gimp_path_editor_signals[PATH_CHANGED] = 
-    gtk_signal_new ("path_changed",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpPathEditorClass,
-				       path_changed),
-		    gtk_signal_default_marshaller, GTK_TYPE_NONE, 0);
+    g_signal_new ("path_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpPathEditorClass, path_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
-  gtk_object_class_add_signals (object_class, gimp_path_editor_signals, 
-				LAST_SIGNAL);
-
-  class->path_changed = NULL;
+  klass->path_changed = NULL;
 }
 
 static void
@@ -147,31 +175,6 @@ gimp_path_editor_init (GimpPathEditor *gpe)
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_window),
 					 gpe->dir_list);
   gtk_widget_show (gpe->dir_list);
-}
-
-GtkType
-gimp_path_editor_get_type (void)
-{
-  static GtkType gpe_type = 0;
-
-  if (!gpe_type)
-    {
-      GtkTypeInfo gpe_info =
-      {
-	"GimpPathEditor",
-	sizeof (GimpPathEditor),
-	sizeof (GimpPathEditorClass),
-	(GtkClassInitFunc) gimp_path_editor_class_init,
-	(GtkObjectInitFunc) gimp_path_editor_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
-      };
-
-      gpe_type = gtk_type_unique (gtk_vbox_get_type (), &gpe_info);
-    }
-  
-  return gpe_type;
 }
 
 /**

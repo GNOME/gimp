@@ -32,10 +32,10 @@ extern "C" {
 
 
 #define GIMP_TYPE_SIZE_ENTRY            (gimp_size_entry_get_type ())
-#define GIMP_SIZE_ENTRY(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_SIZE_ENTRY, GimpSizeEntry))
-#define GIMP_SIZE_ENTRY_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SIZE_ENTRY, GimpSizeEntryClass))
-#define GIMP_IS_SIZE_ENTRY(obj)         (GTK_CHECK_TYPE (obj, GIMP_TYPE_SIZE_ENTRY))
-#define GIMP_IS_SIZE_ENTRY_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SIZE_ENTRY))
+#define GIMP_SIZE_ENTRY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SIZE_ENTRY, GimpSizeEntry))
+#define GIMP_SIZE_ENTRY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SIZE_ENTRY, GimpSizeEntryClass))
+#define GIMP_IS_SIZE_ENTRY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_SIZE_ENTRY))
+#define GIMP_IS_SIZE_ENTRY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SIZE_ENTRY))
 
 typedef struct _GimpSizeEntryClass  GimpSizeEntryClass;
 

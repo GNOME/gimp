@@ -74,7 +74,6 @@ get_standard_colormaps (void)
   g_visual = gdk_rgb_get_visual ();
   g_cmap   = gdk_rgb_get_cmap ();
 
-  gtk_widget_set_default_visual (g_visual);
   gtk_widget_set_default_colormap (g_cmap);
 
   set_app_colors ();

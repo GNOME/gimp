@@ -82,10 +82,10 @@ static guint brush_signals[LAST_SIGNAL] = { 0 };
 static GimpDataClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_brush_get_type (void)
 {
-  static GtkType type = 0;
+  static GType type = 0;
 
   if (! type)
     {
@@ -117,18 +117,16 @@ gimp_brush_class_init (GimpBrushClass *klass)
   viewable_class = (GimpViewableClass *) klass;
   data_class     = (GimpDataClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_DATA);
+  parent_class = g_type_class_peek_parent (klass);
 
   brush_signals[SPACING_CHANGED] = 
-    gtk_signal_new ("spacing_changed",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpBrushClass,
-                                       spacing_changed),
-                    gtk_signal_default_marshaller,
-                    GTK_TYPE_NONE, 0);
-
-  gtk_object_class_add_signals (object_class, brush_signals, LAST_SIGNAL);
+    g_signal_new ("spacing_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpBrushClass, spacing_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   object_class->destroy           = gimp_brush_destroy;
 
@@ -386,7 +384,6 @@ gimp_brush_get_pixmap (const GimpBrush *brush)
 gint
 gimp_brush_get_spacing (const GimpBrush *brush)
 {
-  g_return_val_if_fail (brush != NULL, 0);
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), 0);
 
   return brush->spacing;
@@ -396,7 +393,6 @@ void
 gimp_brush_set_spacing (GimpBrush *brush,
 			gint       spacing)
 {
-  g_return_if_fail (brush != NULL);
   g_return_if_fail (GIMP_IS_BRUSH (brush));
 
   if (brush->spacing != spacing)
@@ -410,10 +406,9 @@ gimp_brush_set_spacing (GimpBrush *brush,
 void
 gimp_brush_spacing_changed (GimpBrush *brush)
 {
-  g_return_if_fail (brush != NULL);
   g_return_if_fail (GIMP_IS_BRUSH (brush));
 
-  gtk_signal_emit (GTK_OBJECT (brush), brush_signals[SPACING_CHANGED]);
+  g_signal_emit (G_OBJECT (brush), brush_signals[SPACING_CHANGED], 0);
 }
 
 GimpBrush *
@@ -490,7 +485,7 @@ gimp_brush_load_brush (gint         fd,
 	  g_message (_("GIMP brush file appears to be truncated: \"%s\"."),
 		     filename);
 	  g_free (name);
-	  gtk_object_unref (GTK_OBJECT (brush));
+	  g_object_unref (G_OBJECT (brush));
 	  return NULL;
 	}
       break;
@@ -509,7 +504,7 @@ gimp_brush_load_brush (gint         fd,
 	      g_message (_("GIMP brush file appears to be truncated: \"%s\"."),
 			 filename);
 	      g_free (name);
-	      gtk_object_unref (GTK_OBJECT (brush));
+	      g_object_unref (G_OBJECT (brush));
 	      return NULL;
 	    }
 	}

@@ -120,15 +120,19 @@ about_dialog_create (void)
   GtkWidget *aboutframe;
   GtkWidget *label;
   GtkWidget *alignment;
+#if 0
   GtkStyle  *style;
   GdkFont   *font;
+#endif
   gint       max_width;
   gint       i;
   gchar     *label_text;
 
   if (! about_dialog)
     {
-      about_dialog = gtk_window_new (GTK_WINDOW_DIALOG);
+      about_dialog = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+      gtk_window_set_type_hint (GTK_WINDOW (about_dialog),
+				GDK_WINDOW_TYPE_HINT_DIALOG);
       gtk_window_set_wmclass (GTK_WINDOW (about_dialog), "about_dialog", "Gimp");
       gtk_window_set_title (GTK_WINDOW (about_dialog), _("About the GIMP"));
       gtk_window_set_policy (GTK_WINDOW (about_dialog), FALSE, FALSE, FALSE);
@@ -194,6 +198,10 @@ about_dialog_create (void)
       gdk_window_set_background (logo_area->window, &logo_area->style->black);
 
       /* this is a font, provide only one single font definition */
+#ifdef __GNUC__
+#warning FIXME: font description
+#endif
+#if 0
       font = gdk_font_load (_("-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"));
       if (font)
 	{
@@ -204,6 +212,7 @@ about_dialog_create (void)
 	  gtk_widget_push_style (style);
 	  gtk_style_unref (style);
 	}
+#endif
       label_text = g_strdup_printf (_("Version %s brought to you by"),
 				    GIMP_VERSION);
       label = gtk_label_new (label_text);
@@ -216,7 +225,9 @@ about_dialog_create (void)
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
       gtk_widget_show (label);
 
+#if 0
       gtk_widget_pop_style ();
+#endif
 
       alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
       gtk_box_pack_start (GTK_BOX (vbox), alignment, FALSE, TRUE, 0);

@@ -57,10 +57,10 @@ static guint           object_signals[LAST_SIGNAL] = { 0 };
 static GtkObjectClass *parent_class = NULL;
 
 
-GtkType 
+GType 
 gimp_object_get_type (void)
 {
-  static GtkType object_type = 0;
+  static GType object_type = 0;
 
   if (! object_type)
     {
@@ -89,27 +89,25 @@ gimp_object_class_init (GimpObjectClass *klass)
 
   object_class = (GtkObjectClass *) klass;
 
-  parent_class = gtk_type_class (GTK_TYPE_OBJECT);
+  parent_class = g_type_class_peek_parent (klass);
 
   gtk_object_add_arg_type ("GimpObject::name", GTK_TYPE_STRING,
 			   GTK_ARG_READWRITE, ARG_NAME);
 
   object_signals[NAME_CHANGED] =
-    gtk_signal_new ("name_changed",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpObjectClass,
-				       name_changed),
-		    gtk_signal_default_marshaller,
-		    GTK_TYPE_NONE, 0);
-
-  gtk_object_class_add_signals (object_class, object_signals, LAST_SIGNAL);
+    g_signal_new ("name_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpObjectClass, name_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   object_class->destroy = gimp_object_destroy;
   object_class->set_arg = gimp_object_set_arg;
   object_class->get_arg = gimp_object_get_arg;
 
-  klass->name_changed = NULL;
+  klass->name_changed   = NULL;
 }
 
 static void
@@ -125,8 +123,11 @@ gimp_object_destroy (GtkObject *object)
 
   gimp_object = GIMP_OBJECT (object);
 
-  g_free (gimp_object->name);
-  gimp_object->name = NULL;
+  if (gimp_object->name)
+    {
+      g_free (gimp_object->name);
+      gimp_object->name = NULL;
+    }
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -175,7 +176,6 @@ void
 gimp_object_set_name (GimpObject  *object,
 		      const gchar *name)
 {
-  g_return_if_fail (object);
   g_return_if_fail (GIMP_IS_OBJECT (object));
 
   if ((!object->name && !name) ||
@@ -192,7 +192,6 @@ gimp_object_set_name (GimpObject  *object,
 const gchar *
 gimp_object_get_name (const GimpObject  *object)
 {
-  g_return_val_if_fail (object, NULL);
   g_return_val_if_fail (GIMP_IS_OBJECT (object), NULL);
 
   return object->name;
@@ -201,8 +200,7 @@ gimp_object_get_name (const GimpObject  *object)
 void
 gimp_object_name_changed (GimpObject  *object)
 {
-  g_return_if_fail (object);
   g_return_if_fail (GIMP_IS_OBJECT (object));
 
-  gtk_signal_emit (GTK_OBJECT (object), object_signals[NAME_CHANGED]);
+  g_signal_emit (G_OBJECT (object), object_signals[NAME_CHANGED], 0);
 }

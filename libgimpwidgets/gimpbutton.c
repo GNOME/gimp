@@ -78,25 +78,23 @@ gimp_button_get_type (void)
 static void
 gimp_button_class_init (GimpButtonClass *klass)
 {
-  GtkObjectClass *object_class;
+  GObjectClass   *object_class;
   GtkWidgetClass *widget_class;
 
-  object_class = (GtkObjectClass *) klass;
+  object_class = (GObjectClass *) klass;
   widget_class = (GtkWidgetClass *) klass;
 
-  parent_class = gtk_type_class (GTK_TYPE_BUTTON);
+  parent_class = g_type_class_peek_parent (klass);
 
   button_signals[EXTENDED_CLICKED] = 
-    gtk_signal_new ("extended_clicked",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpButtonClass,
-				       extended_clicked),
-                    gtk_marshal_NONE__UINT,
-		    GTK_TYPE_NONE, 1,
-		    GTK_TYPE_UINT);
-
-  gtk_object_class_add_signals (object_class, button_signals, LAST_SIGNAL);
+    g_signal_new ("extended_clicked",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpButtonClass, extended_clicked),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__UINT,
+		  G_TYPE_NONE, 1,
+		  G_TYPE_UINT);
 
   widget_class->button_press_event   = gimp_button_button_press;
   widget_class->button_release_event = gimp_button_button_release;

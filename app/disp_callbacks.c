@@ -103,13 +103,13 @@ gdisplay_check_device_cursor (GDisplay *gdisp)
   /*  gdk_input_list_devices returns an internal list, so we shouldn't
    *  free it afterwards
    */
-  for (list = gdk_input_list_devices(); list; list = g_list_next (list))
+  for (list = gdk_devices_list (); list; list = g_list_next (list))
     {
-      GdkDeviceInfo *info = (GdkDeviceInfo *) list->data;
+      GdkDevice *device = (GdkDevice *) list->data;
 
-      if (info->deviceid == current_device)
+      if (device == current_device)
 	{
-	  gdisp->draw_cursor = !info->has_cursor;
+	  gdisp->draw_cursor = ! device->has_cursor;
 	  break;
 	}
     }
@@ -492,8 +492,13 @@ gdisplay_canvas_events (GtkWidget *canvas,
        */
       if (mevent->is_hint)
 	{
+#ifdef __GNUC__
+#warning FIXME: replace gdk_input_window_get_pointer()
+#endif
+#if 0
 	  gdk_input_window_get_pointer (canvas->window, current_device, &tx, &ty,
 					NULL, NULL, NULL, NULL);
+#endif
 	}
       else
 	{
@@ -600,8 +605,10 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  /* For all modifier keys: call the tools modifier_key_func */
 	  if (active_tool && !gimp_image_is_empty (gdisp->gimage))
 	    {
+#if 0
 	      gdk_input_window_get_pointer (canvas->window, current_device,
 					    &tx, &ty, NULL, NULL, NULL, NULL);
+#endif
 	      gimp_tool_modifier_key (active_tool, kevent, gdisp);
 	      return_val = TRUE;
 	    }
@@ -626,9 +633,11 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  /* For all modifier keys: call the tools modifier_key_func */
 	  if (active_tool && !gimp_image_is_empty (gdisp->gimage))
 	    {
+#if 0
 	      gdk_input_window_get_pointer (canvas->window, current_device,
 	                                    &tx, &ty, NULL, NULL, NULL, NULL);
 	      gimp_tool_modifier_key (active_tool, kevent, gdisp);
+#endif
 	      return_val = TRUE;
 	    }
 	  break;

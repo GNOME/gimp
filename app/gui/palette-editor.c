@@ -397,7 +397,7 @@ palette_editor_name_activate (GtkWidget     *widget,
 			      PaletteEditor *palette_editor)
 {
   GimpPalette *palette;
-  gchar       *entry_text;
+  const gchar *entry_text;
 
   palette = gimp_context_get_palette (palette_editor->context);
 
@@ -425,14 +425,14 @@ palette_editor_create_popup_menu (PaletteEditor *palette_editor)
   palette_editor->popup_menu = menu = gtk_menu_new ();
 
   menu_item = gtk_menu_item_new_with_label (_("New"));
-  gtk_menu_append (GTK_MENU (menu), menu_item);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
   gtk_signal_connect (GTK_OBJECT (menu_item), "activate", 
 		      GTK_SIGNAL_FUNC (palette_editor_new_entry_callback),
 		      palette_editor);
   gtk_widget_show (menu_item);
 
   menu_item = gtk_menu_item_new_with_label (_("Edit"));
-  gtk_menu_append (GTK_MENU (menu), menu_item);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
 
   gtk_signal_connect (GTK_OBJECT (menu_item), "activate", 
 		      GTK_SIGNAL_FUNC (palette_editor_edit_entry_callback),
@@ -445,7 +445,7 @@ palette_editor_create_popup_menu (PaletteEditor *palette_editor)
   gtk_signal_connect (GTK_OBJECT (menu_item), "activate", 
 		      GTK_SIGNAL_FUNC (palette_editor_delete_entry_callback),
 		      palette_editor);
-  gtk_menu_append (GTK_MENU (menu), menu_item);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
   gtk_widget_show (menu_item);
 
   palette_editor->delete_menu_item = menu_item;

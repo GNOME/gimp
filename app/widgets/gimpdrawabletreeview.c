@@ -140,10 +140,10 @@ static guint  view_signals[LAST_SIGNAL] = { 0 };
 static GimpContainerListViewClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_drawable_list_view_get_type (void)
 {
-  static guint view_type = 0;
+  static GType view_type = 0;
 
   if (! view_type)
     {
@@ -174,19 +174,17 @@ gimp_drawable_list_view_class_init (GimpDrawableListViewClass *klass)
   object_class         = (GtkObjectClass *) klass;
   container_view_class = (GimpContainerViewClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_CONTAINER_LIST_VIEW);
+  parent_class = g_type_class_peek_parent (klass);
 
   view_signals[SET_IMAGE] =
-    gtk_signal_new ("set_image",
-                    GTK_RUN_LAST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpDrawableListViewClass,
-                                       set_image),
-                    gtk_marshal_NONE__OBJECT,
-                    GTK_TYPE_NONE, 1,
-                    GIMP_TYPE_OBJECT);
-
-  gtk_object_class_add_signals (object_class, view_signals, LAST_SIGNAL);
+    g_signal_new ("set_image",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_LAST,
+		  G_STRUCT_OFFSET (GimpDrawableListViewClass, set_image),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__OBJECT,
+		  G_TYPE_NONE, 1,
+		  GIMP_TYPE_OBJECT);
 
   object_class->destroy               = gimp_drawable_list_view_destroy;
 
@@ -222,9 +220,9 @@ gimp_drawable_list_view_init (GimpDrawableListView *view)
 
   gimp_help_set_help_data (view->new_button, _("New"), NULL);
 
-  gtk_signal_connect (GTK_OBJECT (view->new_button), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_drawable_list_view_new_clicked),
-		      view);
+  g_signal_connect (G_OBJECT (view->new_button), "clicked",
+		    G_CALLBACK (gimp_drawable_list_view_new_clicked),
+		    view);
 
   pixmap = gimp_pixmap_new (new_xpm);
   gtk_container_add (GTK_CONTAINER (view->new_button), pixmap);
@@ -240,12 +238,12 @@ gimp_drawable_list_view_init (GimpDrawableListView *view)
   gimp_help_set_help_data (view->raise_button, _("Raise          \n"
 						 "<Shift> To Top"), NULL);
 
-  gtk_signal_connect (GTK_OBJECT (view->raise_button), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_drawable_list_view_raise_clicked),
-		      view);
-  gtk_signal_connect (GTK_OBJECT (view->raise_button), "extended_clicked",
-		      GTK_SIGNAL_FUNC (gimp_drawable_list_view_raise_extended_clicked),
-		      view);
+  g_signal_connect (G_OBJECT (view->raise_button), "clicked",
+		    G_CALLBACK (gimp_drawable_list_view_raise_clicked),
+		    view);
+  g_signal_connect (G_OBJECT (view->raise_button), "extended_clicked",
+		    G_CALLBACK (gimp_drawable_list_view_raise_extended_clicked),
+		    view);
 
   pixmap = gimp_pixmap_new (raise_xpm);
   gtk_container_add (GTK_CONTAINER (view->raise_button), pixmap);
@@ -261,12 +259,12 @@ gimp_drawable_list_view_init (GimpDrawableListView *view)
   gimp_help_set_help_data (view->lower_button, _("Lower             \n"
 						 "<Shift> To Bottom"), NULL);
 
-  gtk_signal_connect (GTK_OBJECT (view->lower_button), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_drawable_list_view_lower_clicked),
-		      view);
-  gtk_signal_connect (GTK_OBJECT (view->lower_button), "extended_clicked",
-		      GTK_SIGNAL_FUNC (gimp_drawable_list_view_lower_extended_clicked),
-		      view);
+  g_signal_connect (G_OBJECT (view->lower_button), "clicked",
+		    G_CALLBACK (gimp_drawable_list_view_lower_clicked),
+		    view);
+  g_signal_connect (G_OBJECT (view->lower_button), "extended_clicked",
+		    G_CALLBACK (gimp_drawable_list_view_lower_extended_clicked),
+		    view);
 
   pixmap = gimp_pixmap_new (lower_xpm);
   gtk_container_add (GTK_CONTAINER (view->lower_button), pixmap);
@@ -281,9 +279,9 @@ gimp_drawable_list_view_init (GimpDrawableListView *view)
 
   gimp_help_set_help_data (view->duplicate_button, _("Duplicate"), NULL);
 
-  gtk_signal_connect (GTK_OBJECT (view->duplicate_button), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_drawable_list_view_duplicate_clicked),
-		      view);  
+  g_signal_connect (G_OBJECT (view->duplicate_button), "clicked",
+		    G_CALLBACK (gimp_drawable_list_view_duplicate_clicked),
+		    view);  
 
   pixmap = gimp_pixmap_new (duplicate_xpm);
   gtk_container_add (GTK_CONTAINER (view->duplicate_button), pixmap);
@@ -298,9 +296,9 @@ gimp_drawable_list_view_init (GimpDrawableListView *view)
 
   gimp_help_set_help_data (view->edit_button, _("Edit"), NULL);
 
-  gtk_signal_connect (GTK_OBJECT (view->edit_button), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_drawable_list_view_edit_clicked),
-		      view);  
+  g_signal_connect (G_OBJECT (view->edit_button), "clicked",
+		    G_CALLBACK (gimp_drawable_list_view_edit_clicked),
+		    view);  
 
   pixmap = gimp_pixmap_new (edit_xpm);
   gtk_container_add (GTK_CONTAINER (view->edit_button), pixmap);
@@ -315,9 +313,9 @@ gimp_drawable_list_view_init (GimpDrawableListView *view)
 
   gimp_help_set_help_data (view->delete_button, _("Delete"), NULL);
 
-  gtk_signal_connect (GTK_OBJECT (view->delete_button), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_drawable_list_view_delete_clicked),
-		      view);  
+  g_signal_connect (G_OBJECT (view->delete_button), "clicked",
+		    G_CALLBACK (gimp_drawable_list_view_delete_clicked),
+		    view);  
 
   pixmap = gimp_pixmap_new (delete_xpm);
   gtk_container_add (GTK_CONTAINER (view->delete_button), pixmap);
@@ -338,10 +336,14 @@ gimp_drawable_list_view_destroy (GtkObject *object)
 
   view = GIMP_DRAWABLE_LIST_VIEW (object);
 
-  gimp_drawable_list_view_set_image (view, NULL);
+  if (view->gimage)
+    gimp_drawable_list_view_set_image (view, NULL);
 
-  g_free (view->signal_name);
-  view->signal_name = NULL;
+  if (view->signal_name)
+    {
+      g_free (view->signal_name);
+      view->signal_name = NULL;
+    }
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -463,7 +465,8 @@ gimp_drawable_list_view_set_image (GimpDrawableListView *view,
   g_return_if_fail (GIMP_IS_DRAWABLE_LIST_VIEW (view));
   g_return_if_fail (! gimage || GIMP_IS_IMAGE (gimage));
 
-  gtk_signal_emit (GTK_OBJECT (view), view_signals[SET_IMAGE], gimage);
+  g_signal_emit (G_OBJECT (view), view_signals[SET_IMAGE], 0,
+		 gimage);
 }
 
 static void
@@ -479,15 +482,15 @@ gimp_drawable_list_view_real_set_image (GimpDrawableListView *view,
 
   if (view->gimage)
     {
-      gtk_signal_disconnect_by_func (GTK_OBJECT (view->gimage),
-				     gimp_drawable_list_view_drawable_changed,
-				     view);
-      gtk_signal_disconnect_by_func (GTK_OBJECT (view->gimage),
-				     gimp_drawable_list_view_size_changed,
-				     view);
-      gtk_signal_disconnect_by_func (GTK_OBJECT (view->gimage),
-				     gimp_drawable_list_view_floating_selection_changed,
-				     view);
+      g_signal_handlers_disconnect_by_func (G_OBJECT (view->gimage),
+					    gimp_drawable_list_view_drawable_changed,
+					    view);
+      g_signal_handlers_disconnect_by_func (G_OBJECT (view->gimage),
+					    gimp_drawable_list_view_size_changed,
+					    view);
+      g_signal_handlers_disconnect_by_func (G_OBJECT (view->gimage),
+					    gimp_drawable_list_view_floating_selection_changed,
+					    view);
 
       gimp_container_view_set_container (GIMP_CONTAINER_VIEW (view), NULL);
     }
@@ -502,15 +505,15 @@ gimp_drawable_list_view_real_set_image (GimpDrawableListView *view,
 
       gimp_container_view_set_container (GIMP_CONTAINER_VIEW (view), container);
 
-      gtk_signal_connect (GTK_OBJECT (view->gimage), view->signal_name,
-			  GTK_SIGNAL_FUNC (gimp_drawable_list_view_drawable_changed),
-			  view);
-      gtk_signal_connect (GTK_OBJECT (view->gimage), "size_changed",
-			  GTK_SIGNAL_FUNC (gimp_drawable_list_view_size_changed),
-			  view);
-      gtk_signal_connect (GTK_OBJECT (view->gimage), "floating_selection_changed",
-			  GTK_SIGNAL_FUNC (gimp_drawable_list_view_floating_selection_changed),
-			  view);
+      g_signal_connect (G_OBJECT (view->gimage), view->signal_name,
+			G_CALLBACK (gimp_drawable_list_view_drawable_changed),
+			view);
+      g_signal_connect (G_OBJECT (view->gimage), "size_changed",
+			G_CALLBACK (gimp_drawable_list_view_size_changed),
+			view);
+      g_signal_connect (G_OBJECT (view->gimage), "floating_selection_changed",
+			G_CALLBACK (gimp_drawable_list_view_floating_selection_changed),
+			view);
 
       gimp_drawable_list_view_drawable_changed (view->gimage, view);
 

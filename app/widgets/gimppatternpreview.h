@@ -32,10 +32,10 @@ extern "C" {
 
 
 #define GIMP_TYPE_PATTERN_PREVIEW            (gimp_pattern_preview_get_type ())
-#define GIMP_PATTERN_PREVIEW(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_PATTERN_PREVIEW, GimpPatternPreview))
-#define GIMP_PATTERN_PREVIEW_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PATTERN_PREVIEW, GimpPatternPreviewClass))
-#define GIMP_IS_PATTERN_PREVIEW(obj)         (GTK_CHECK_TYPE (obj, GIMP_TYPE_PATTERN_PREVIEW))
-#define GIMP_IS_PATTERN_PREVIEW_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PATTERN_PREVIEW))
+#define GIMP_PATTERN_PREVIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PATTERN_PREVIEW, GimpPatternPreview))
+#define GIMP_PATTERN_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PATTERN_PREVIEW, GimpPatternPreviewClass))
+#define GIMP_IS_PATTERN_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_PATTERN_PREVIEW))
+#define GIMP_IS_PATTERN_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PATTERN_PREVIEW))
 
 
 typedef struct _GimpPatternPreviewClass  GimpPatternPreviewClass;

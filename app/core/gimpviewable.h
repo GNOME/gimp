@@ -27,10 +27,10 @@
 
 
 #define GIMP_TYPE_VIEWABLE            (gimp_viewable_get_type ())
-#define GIMP_VIEWABLE(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_VIEWABLE, GimpViewable))
-#define GIMP_VIEWABLE_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_VIEWABLE, GimpViewableClass))
-#define GIMP_IS_VIEWABLE(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_VIEWABLE))
-#define GIMP_IS_VIEWABLE_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_VIEWABLE))
+#define GIMP_VIEWABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VIEWABLE, GimpViewable))
+#define GIMP_VIEWABLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_VIEWABLE, GimpViewableClass))
+#define GIMP_IS_VIEWABLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_VIEWABLE))
+#define GIMP_IS_VIEWABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_VIEWABLE))
 
 
 typedef struct _GimpViewableClass GimpViewableClass;
@@ -56,7 +56,7 @@ struct _GimpViewableClass
 };
 
 
-GtkType   gimp_viewable_get_type           (void);
+GType     gimp_viewable_get_type           (void);
 
 void      gimp_viewable_invalidate_preview (GimpViewable *viewable);
 void      gimp_viewable_size_changed       (GimpViewable *viewable);

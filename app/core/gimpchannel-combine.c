@@ -90,7 +90,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
 
   object_class = (GtkObjectClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_DRAWABLE);
+  parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy = gimp_channel_destroy;
 }
@@ -1512,7 +1512,7 @@ gimp_channel_translate (GimpChannel *mask,
       copy_region (&srcPR, &destPR);
 
       /*  free the temporary mask  */
-      gtk_object_unref (GTK_OBJECT (tmp_mask));
+      g_object_unref (G_OBJECT (tmp_mask));
     }
 
   /*  calculate new bounds  */

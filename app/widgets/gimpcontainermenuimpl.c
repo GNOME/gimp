@@ -100,9 +100,9 @@ gimp_container_menu_impl_class_init (GimpContainerMenuImplClass *klass)
   object_class         = (GtkObjectClass *) klass;
   container_menu_class = (GimpContainerMenuClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_CONTAINER_MENU);
+  parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy = gimp_container_menu_impl_destroy;
+  object_class->destroy                  = gimp_container_menu_impl_destroy;
 
   container_menu_class->insert_item      = gimp_container_menu_impl_insert_item;
   container_menu_class->remove_item      = gimp_container_menu_impl_remove_item;
@@ -151,11 +151,11 @@ gimp_container_menu_new (GimpContainer *container,
   gtk_widget_set_usize (menu_impl->empty_item,
 			-1,
 			preview_size +
-			2 * menu_impl->empty_item->style->klass->ythickness);
+			2 * menu_impl->empty_item->style->ythickness);
   gtk_widget_set_sensitive (menu_impl->empty_item, FALSE);
   gtk_widget_show (menu_impl->empty_item);
 
-  gtk_menu_append (GTK_MENU (menu), menu_impl->empty_item);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_impl->empty_item);
 
   if (container)
     gimp_container_menu_set_container (menu, container);
@@ -185,7 +185,7 @@ gimp_container_menu_impl_insert_item (GimpContainerMenu *menu,
 		      GTK_SIGNAL_FUNC (gimp_container_menu_impl_item_selected),
 		      menu);
 
-  gtk_menu_insert (GTK_MENU (menu), menu_item, index);
+  gtk_menu_shell_insert (GTK_MENU_SHELL (menu), menu_item, index);
   gtk_widget_show (menu_item);
 
   gtk_menu_reorder_child (GTK_MENU (menu),

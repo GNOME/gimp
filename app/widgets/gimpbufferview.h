@@ -27,10 +27,10 @@
 
 
 #define GIMP_TYPE_BUFFER_VIEW            (gimp_buffer_view_get_type ())
-#define GIMP_BUFFER_VIEW(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_BUFFER_VIEW, GimpBufferView))
-#define GIMP_BUFFER_VIEW_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BUFFER_VIEW, GimpBufferViewClass))
-#define GIMP_IS_BUFFER_VIEW(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_BUFFER_VIEW))
-#define GIMP_IS_BUFFER_VIEW_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BUFFER_VIEW))
+#define GIMP_BUFFER_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BUFFER_VIEW, GimpBufferView))
+#define GIMP_BUFFER_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BUFFER_VIEW, GimpBufferViewClass))
+#define GIMP_IS_BUFFER_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BUFFER_VIEW))
+#define GIMP_IS_BUFFER_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BUFFER_VIEW))
 
 
 typedef struct _GimpBufferViewClass  GimpBufferViewClass;

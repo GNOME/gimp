@@ -27,10 +27,10 @@
 
 
 #define GIMP_TYPE_CONTAINER_MENU_IMPL            (gimp_container_menu_impl_get_type ())
-#define GIMP_CONTAINER_MENU_IMPL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_CONTAINER_MENU_IMPL, GimpContainerMenuImpl))
-#define GIMP_CONTAINER_MENU_IMPL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTAINER_MENU_IMPL, GimpContainerMenuImplClass))
-#define GIMP_IS_CONTAINER_MENU_IMPL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_CONTAINER_MENU_IMPL))
-#define GIMP_IS_CONTAINER_MENU_IMPL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTAINER_MENU_IMPL))
+#define GIMP_CONTAINER_MENU_IMPL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTAINER_MENU_IMPL, GimpContainerMenuImpl))
+#define GIMP_CONTAINER_MENU_IMPL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTAINER_MENU_IMPL, GimpContainerMenuImplClass))
+#define GIMP_IS_CONTAINER_MENU_IMPL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTAINER_MENU_IMPL))
+#define GIMP_IS_CONTAINER_MENU_IMPL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTAINER_MENU_IMPL))
 
 
 typedef struct _GimpContainerMenuImplClass  GimpContainerMenuImplClass;

@@ -24,10 +24,10 @@
 
 
 #define GIMP_TYPE_TOOL_INFO            (gimp_tool_info_get_type ())
-#define GIMP_TOOL_INFO(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_TOOL_INFO, GimpToolInfo))
-#define GIMP_IS_TOOL_INFO(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_TOOL_INFO))
-#define GIMP_TOOL_INFO_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_INFO, GimpToolInfoClass))
-#define GIMP_IS_TOOL_INFO_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL_INFO))
+#define GIMP_TOOL_INFO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_INFO, GimpToolInfo))
+#define GIMP_IS_TOOL_INFO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOOL_INFO))
+#define GIMP_TOOL_INFO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_INFO, GimpToolInfoClass))
+#define GIMP_IS_TOOL_INFO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL_INFO))
 
 
 typedef struct _GimpToolInfoClass GimpToolInfoClass;

@@ -126,8 +126,8 @@ gimp_constrained_hwrap_box_size_request (GtkWidget      *widget,
       viewport_width =
 	(scrolled_win->allocation.width -
 	 GTK_SCROLLED_WINDOW (scrolled_win)->vscrollbar->allocation.width -
-	 GTK_SCROLLED_WINDOW_CLASS (GTK_OBJECT (scrolled_win)->klass)->scrollbar_spacing -
-	 scrolled_win->style->klass->xthickness * 2);
+	 GTK_SCROLLED_WINDOW_GET_CLASS (scrolled_win)->scrollbar_spacing -
+	 scrolled_win->style->xthickness * 2);
 
       columns = 
 	(viewport_width + wbox->hspacing) / (child_width + wbox->hspacing);
@@ -185,8 +185,8 @@ gimp_constrained_hwrap_box_size_allocate (GtkWidget     *widget,
       viewport_width =
 	(scrolled_win->allocation.width -
 	 GTK_SCROLLED_WINDOW (scrolled_win)->vscrollbar->allocation.width -
-	 GTK_SCROLLED_WINDOW_CLASS (GTK_OBJECT (scrolled_win)->klass)->scrollbar_spacing -
-	 scrolled_win->style->klass->xthickness * 2);
+	 GTK_SCROLLED_WINDOW_GET_CLASS (scrolled_win)->scrollbar_spacing -
+	 scrolled_win->style->xthickness * 2);
 
       allocation->width = viewport_width;
 

@@ -190,22 +190,20 @@ gimp_rect_select_tool_class_init (GimpRectSelectToolClass *klass)
   tool_class      = (GimpToolClass *) klass;
   draw_tool_class = (GimpDrawToolClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_SELECTION_TOOL);
+  parent_class = g_type_class_peek_parent (klass);
 
   rect_select_signals[RECT_SELECT] =
-    gtk_signal_new ("rect_select",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpRectSelectToolClass,
-                                       rect_select),
-                    gimp_marshal_NONE__INT_INT_INT_INT,
-                    GTK_TYPE_NONE, 4,
-                    GTK_TYPE_INT,
-                    GTK_TYPE_INT,
-                    GTK_TYPE_INT,
-                    GTK_TYPE_INT);
-
-  gtk_object_class_add_signals (object_class, rect_select_signals, LAST_SIGNAL);
+    g_signal_new ("rect_select",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpRectSelectToolClass, rect_select),
+		  NULL, NULL,
+		  gimp_cclosure_marshal_VOID__INT_INT_INT_INT,
+		  G_TYPE_NONE, 4,
+		  G_TYPE_INT,
+		  G_TYPE_INT,
+		  G_TYPE_INT,
+		  G_TYPE_INT);
 
   object_class->destroy      = gimp_rect_select_tool_destroy;
 

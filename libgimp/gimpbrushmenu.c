@@ -112,7 +112,8 @@ brush_popup_open (gint      x,
   y = (y + bsel->height > scr_h) ? scr_h - bsel->height : y;
   gtk_preview_size (GTK_PREVIEW (bsel->device_brushpreview), bsel->width, bsel->height);
 
-  gtk_widget_popup (bsel->device_brushpopup, x, y);
+  gtk_widget_set_uposition (bsel->device_brushpopup, x, y);
+  gtk_widget_show (bsel->device_brushpopup);
   
   /*  Draw the brush  */
   buf = g_new (gchar, bsel->width);

@@ -31,6 +31,7 @@
 #include "base/temp-buf.h"
 
 #include "core/gimpimage.h"
+#include "core/gimpmarshal.h"
 
 #include "gimpnavigationpreview.h"
 
@@ -106,20 +107,18 @@ gimp_navigation_preview_class_init (GimpNavigationPreviewClass *klass)
   widget_class  = (GtkWidgetClass *) klass;
   preview_class = (GimpPreviewClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_IMAGE_PREVIEW);
+  parent_class = g_type_class_peek_parent (klass);
 
   preview_signals[MARKER_CHANGED] = 
-    gtk_signal_new ("marker_changed",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpNavigationPreviewClass,
-				       marker_changed),
-                    gtk_marshal_NONE__INT_INT,
-		    GTK_TYPE_NONE, 2,
-		    GTK_TYPE_INT,
-		    GTK_TYPE_INT);
-
-  gtk_object_class_add_signals (object_class, preview_signals, LAST_SIGNAL);
+    g_signal_new ("marker_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpNavigationPreviewClass, marker_changed),
+		  NULL, NULL,
+		  gimp_cclosure_marshal_VOID__INT_INT,
+		  G_TYPE_NONE, 2,
+		  G_TYPE_INT,
+		  G_TYPE_INT);
 
   object_class->destroy              = gimp_navigation_preview_destroy;
 

@@ -25,6 +25,7 @@
 #include "tools-types.h"
 
 #include "core/gimpimage.h"
+#include "core/gimpmarshal.h"
 
 #include "gimptool.h"
 #include "tool_manager.h"
@@ -122,107 +123,105 @@ gimp_tool_class_init (GimpToolClass *klass)
   
   object_class = (GtkObjectClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_OBJECT);
+  parent_class = g_type_class_peek_parent (klass);
 
   gimp_tool_signals[INITIALIZE] =
-    gtk_signal_new ("initialize",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpToolClass,
-				       initialize),
-		    gtk_marshal_NONE__POINTER, 
-		    GTK_TYPE_NONE, 1,
-		    GTK_TYPE_POINTER); 
+    g_signal_new ("initialize",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpToolClass, initialize),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__POINTER, 
+		  G_TYPE_NONE, 1,
+		  G_TYPE_POINTER); 
 
   gimp_tool_signals[CONTROL] =
-    gtk_signal_new ("control",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpToolClass,
-				       control),
-		    gtk_marshal_NONE__INT_POINTER, 
-		    GTK_TYPE_NONE, 2,
-		    GTK_TYPE_INT,
-		    GTK_TYPE_POINTER); 
+    g_signal_new ("control",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpToolClass, control),
+		  NULL, NULL,
+		  gimp_cclosure_marshal_VOID__INT_POINTER, 
+		  G_TYPE_NONE, 2,
+		  G_TYPE_INT,
+		  G_TYPE_POINTER); 
 
   gimp_tool_signals[BUTTON_PRESS] =
-    gtk_signal_new ("button_press",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpToolClass,
-				       button_press),
-		    gtk_marshal_NONE__POINTER_POINTER,
-		    GTK_TYPE_NONE, 2,
-		    GTK_TYPE_POINTER,
-		    GTK_TYPE_POINTER);
+    g_signal_new ("button_press",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpToolClass, button_press),
+		  NULL, NULL,
+		  gimp_cclosure_marshal_VOID__POINTER_POINTER,
+		  G_TYPE_NONE, 2,
+		  G_TYPE_POINTER,
+		  G_TYPE_POINTER);
 
   gimp_tool_signals[BUTTON_RELEASE] =
-    gtk_signal_new ("button_release",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpToolClass,
-				       button_release),
-		    gtk_marshal_NONE__POINTER_POINTER, 
-		    GTK_TYPE_NONE, 2,
-		    GTK_TYPE_POINTER,
-		    GTK_TYPE_POINTER); 
+    g_signal_new ("button_release",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpToolClass, button_release),
+		  NULL, NULL,
+		  gimp_cclosure_marshal_VOID__POINTER_POINTER, 
+		  G_TYPE_NONE, 2,
+		  G_TYPE_POINTER,
+		  G_TYPE_POINTER); 
 
   gimp_tool_signals[MOTION] =
-    gtk_signal_new ("motion",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpToolClass,
-				       motion),
-		    gtk_marshal_NONE__POINTER_POINTER, 
-		    GTK_TYPE_NONE, 2,
-		    GTK_TYPE_POINTER,
-		    GTK_TYPE_POINTER); 
+    g_signal_new ("motion",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpToolClass, motion),
+		  NULL, NULL,
+		  gimp_cclosure_marshal_VOID__POINTER_POINTER, 
+		  G_TYPE_NONE, 2,
+		  G_TYPE_POINTER,
+		  G_TYPE_POINTER); 
 
   gimp_tool_signals[ARROW_KEY] =
-    gtk_signal_new ("arrow_key",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpToolClass,
-				       arrow_key),
-		    gtk_marshal_NONE__POINTER_POINTER, 
-		    GTK_TYPE_NONE, 2,
-		    GTK_TYPE_POINTER,
-		    GTK_TYPE_POINTER); 
+    g_signal_new ("arrow_key",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpToolClass, arrow_key),
+		  NULL, NULL,
+		  gimp_cclosure_marshal_VOID__POINTER_POINTER, 
+		  G_TYPE_NONE, 2,
+		  G_TYPE_POINTER,
+		  G_TYPE_POINTER); 
 
   gimp_tool_signals[MODIFIER_KEY] =
-    gtk_signal_new ("modifier_key",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpToolClass,
-				       modifier_key),
-		    gtk_marshal_NONE__POINTER_POINTER, 
-		    GTK_TYPE_NONE, 2,
-		    GTK_TYPE_POINTER,
-		    GTK_TYPE_POINTER); 
+    g_signal_new ("modifier_key",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpToolClass, modifier_key),
+		  NULL, NULL,
+		  gimp_cclosure_marshal_VOID__POINTER_POINTER, 
+		  G_TYPE_NONE, 2,
+		  G_TYPE_POINTER,
+		  G_TYPE_POINTER); 
 
   gimp_tool_signals[CURSOR_UPDATE] =
-    gtk_signal_new ("cursor_update",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpToolClass,
-				       cursor_update),
-		    gtk_marshal_NONE__POINTER_POINTER, 
-		    GTK_TYPE_NONE, 2,
-		    GTK_TYPE_POINTER,
-		    GTK_TYPE_POINTER);
+    g_signal_new ("cursor_update",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpToolClass, cursor_update),
+		  NULL, NULL,
+		  gimp_cclosure_marshal_VOID__POINTER_POINTER, 
+		  G_TYPE_NONE, 2,
+		  G_TYPE_POINTER,
+		  G_TYPE_POINTER);
 
   gimp_tool_signals[OPER_UPDATE] =
-    gtk_signal_new ("oper_update",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpToolClass,
-				       oper_update),
-		    gtk_marshal_NONE__POINTER_POINTER, 
-		    GTK_TYPE_NONE, 2,
-		    GTK_TYPE_POINTER,
-		    GTK_TYPE_POINTER); 
-
-  gtk_object_class_add_signals (object_class, gimp_tool_signals, LAST_SIGNAL);  
+    g_signal_new ("oper_update",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpToolClass, oper_update),
+		  NULL, NULL,
+		  gimp_cclosure_marshal_VOID__POINTER_POINTER, 
+		  G_TYPE_NONE, 2,
+		  G_TYPE_POINTER,
+		  G_TYPE_POINTER); 
 
   object_class->destroy = gimp_tool_destroy;
 
@@ -382,7 +381,7 @@ gimp_tool_get_PDB_string (GimpTool *tool)
   
   object = GTK_OBJECT (tool);
 
-  klass = GIMP_TOOL_CLASS (object->klass);
+  klass = GIMP_TOOL_GET_CLASS (object);
 
   return klass->pdb_string;
 }

@@ -128,7 +128,7 @@ gimp_channel_list_view_class_init (GimpChannelListViewClass *klass)
   container_view_class = (GimpContainerViewClass *) klass;
   drawable_view_class  = (GimpDrawableListViewClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_DRAWABLE_LIST_VIEW);
+  parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy                  = gimp_channel_list_view_destroy;
 
@@ -159,12 +159,12 @@ gimp_channel_list_view_init (GimpChannelListView *view)
 		     view->component_list);
   gtk_widget_show (view->component_list);
 
-  gtk_signal_connect (GTK_OBJECT (view->component_list), "select_child",
-		      GTK_SIGNAL_FUNC (gimp_channel_list_view_component_toggle),
-		      view);
-  gtk_signal_connect (GTK_OBJECT (view->component_list), "unselect_child",
-		      GTK_SIGNAL_FUNC (gimp_channel_list_view_component_toggle),
-		      view);
+  g_signal_connect (G_OBJECT (view->component_list), "select_child",
+		    G_CALLBACK (gimp_channel_list_view_component_toggle),
+		    view);
+  g_signal_connect (G_OBJECT (view->component_list), "unselect_child",
+		    G_CALLBACK (gimp_channel_list_view_component_toggle),
+		    view);
 
   /*  To Selection button  */
 
@@ -181,12 +181,12 @@ gimp_channel_list_view_init (GimpChannelListView *view)
 			     "<Ctrl> Subtract      "
 			     "<Shift><Ctrl> Intersect"), NULL);
 
-  gtk_signal_connect (GTK_OBJECT (view->toselection_button), "clicked",
-		      GTK_SIGNAL_FUNC (gimp_channel_list_view_toselection_clicked),
-		      view);
-  gtk_signal_connect (GTK_OBJECT (view->toselection_button), "extended_clicked",
-		      GTK_SIGNAL_FUNC (gimp_channel_list_view_toselection_extended_clicked),
-		      view);
+  g_signal_connect (G_OBJECT (view->toselection_button), "clicked",
+		    G_CALLBACK (gimp_channel_list_view_toselection_clicked),
+		    view);
+  g_signal_connect (G_OBJECT (view->toselection_button), "extended_clicked",
+		    G_CALLBACK (gimp_channel_list_view_toselection_extended_clicked),
+		    view);
 
   pixmap = gimp_pixmap_new (toselection_xpm);
   gtk_container_add (GTK_CONTAINER (view->toselection_button), pixmap);
@@ -233,9 +233,9 @@ gimp_channel_list_view_set_image (GimpDrawableListView *view,
 
       gimp_channel_list_view_clear_components (channel_view);
 
-      gtk_signal_disconnect_by_func (GTK_OBJECT (view->gimage),
-				     gimp_channel_list_view_mode_changed,
-				     channel_view);
+      g_signal_handlers_disconnect_by_func (G_OBJECT (view->gimage),
+					    gimp_channel_list_view_mode_changed,
+					    channel_view);
     }
 
   if (GIMP_DRAWABLE_LIST_VIEW_CLASS (parent_class)->set_image)
@@ -248,9 +248,9 @@ gimp_channel_list_view_set_image (GimpDrawableListView *view,
 
       gimp_channel_list_view_create_components (channel_view);
 
-      gtk_signal_connect (GTK_OBJECT (view->gimage), "mode_changed",
-			  GTK_SIGNAL_FUNC (gimp_channel_list_view_mode_changed),
-			  channel_view);
+      g_signal_connect (G_OBJECT (view->gimage), "mode_changed",
+			G_CALLBACK (gimp_channel_list_view_mode_changed),
+			channel_view);
     }
 }
 
@@ -466,15 +466,15 @@ gimp_channel_list_view_create_components (GimpChannelListView *view)
 static void
 gimp_channel_list_view_clear_components (GimpChannelListView *view)
 {
-  gtk_signal_handler_block_by_func (GTK_OBJECT (view->component_list),
-				    gimp_channel_list_view_component_toggle,
-				    view);
+  g_signal_handlers_block_by_func (G_OBJECT (view->component_list),
+				   gimp_channel_list_view_component_toggle,
+				   view);
 
   gtk_list_clear_items (GTK_LIST (view->component_list), 0, -1);
 
-  gtk_signal_handler_unblock_by_func (GTK_OBJECT (view->component_list),
-				      gimp_channel_list_view_component_toggle,
-				      view);
+  g_signal_handlers_unblock_by_func (G_OBJECT (view->component_list),
+				     gimp_channel_list_view_component_toggle,
+				     view);
 }
 
 static void
@@ -494,15 +494,15 @@ gimp_channel_list_view_component_toggle (GtkList             *list,
 
   component_item = GIMP_COMPONENT_LIST_ITEM (child);
 
-  gtk_signal_handler_block_by_func (GTK_OBJECT (view->component_list),
-				    gimp_channel_list_view_component_toggle,
-				    view);
+  g_signal_handlers_block_by_func (G_OBJECT (view->component_list),
+				   gimp_channel_list_view_component_toggle,
+				   view);
 
   gimp_image_set_component_active (GIMP_DRAWABLE_LIST_VIEW (view)->gimage,
 				   component_item->channel,
 				   child->state == GTK_STATE_SELECTED);
 
-  gtk_signal_handler_unblock_by_func (GTK_OBJECT (view->component_list),
-				      gimp_channel_list_view_component_toggle,
-				      view);
+  g_signal_handlers_unblock_by_func (G_OBJECT (view->component_list),
+				     gimp_channel_list_view_component_toggle,
+				     view);
 }

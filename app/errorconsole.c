@@ -79,8 +79,10 @@ static void
 error_console_clear_callback (GtkWidget	*widget,
 			      gpointer	 data)
 {
+#if 0
   gtk_editable_delete_text
     (GTK_EDITABLE (text), 0, gtk_text_get_length (GTK_TEXT (text)));
+#endif
 }
 
 void
@@ -97,6 +99,7 @@ gint
 error_console_write_file (gchar *path,
 			  gint   textscope)
 {
+#if 0
   gint fd;
   gint text_length;
   gint bytes_written;
@@ -151,6 +154,7 @@ error_console_write_file (gchar *path,
     }
 
   close (fd);
+#endif
   return TRUE;
 }
 
@@ -158,9 +162,9 @@ static void
 error_console_file_ok_callback (GtkWidget *widget,
 				gpointer   data)
 {
-  GtkWidget *filesel;
-  gchar	    *filename;
-  gint	     textscope;
+  GtkWidget   *filesel;
+  const gchar *filename;
+  gint	       textscope;
 
   filesel = (GtkWidget *) data;
   filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (filesel));
@@ -184,6 +188,7 @@ error_console_file_ok_callback (GtkWidget *widget,
 static void
 error_console_menu_callback (gint textscope)
 {
+#if 0
   GtkWidget *filesel;
 
   if (!(GTK_TEXT (text)->editable.has_selection) &&
@@ -219,6 +224,7 @@ error_console_menu_callback (gint textscope)
 				"dialogs/error_console.html");
 
   gtk_widget_show (filesel);
+#endif
 }
 
 static gint
@@ -226,6 +232,7 @@ text_clicked_callback (GtkWidget      *widget,
 		       GdkEventButton *event, 
 		       gpointer	       data)
 {
+#if 0
   GtkMenu *menu = (GtkMenu *) data;
   GtkText *gtext;
   
@@ -263,7 +270,7 @@ text_clicked_callback (GtkWidget      *widget,
     default:
       break;
     }
-
+#endif
   return TRUE; 
 }
 
@@ -304,19 +311,23 @@ error_console_create (void)
   menu = gtk_menu_new ();
 
   menuitem = gtk_menu_item_new_with_label (_("Write all errors to file..."));
-  gtk_menu_append (GTK_MENU (menu), menuitem);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
   gtk_signal_connect_object (GTK_OBJECT(menuitem), "activate",
 			     (GtkSignalFunc) error_console_menu_callback,
 			     (gpointer) ERRORS_ALL);
   gtk_widget_show (menuitem);
   
   menuitem = gtk_menu_item_new_with_label (_("Write selection to file..."));
-  gtk_menu_append (GTK_MENU (menu), menuitem);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
   gtk_signal_connect_object (GTK_OBJECT(menuitem), "activate",
 			     (GtkSignalFunc) error_console_menu_callback,
 			     (gpointer) ERRORS_SELECTION);
   gtk_widget_show (menuitem);
 
+#ifdef __GNUC__
+#warning FIXME: replace GtkText
+#endif
+#if 0
   /*  The output text widget  */
   text = gtk_text_new (NULL, NULL);
   gtk_text_set_editable (GTK_TEXT (text), FALSE);
@@ -335,6 +346,7 @@ error_console_create (void)
   gtk_table_attach (GTK_TABLE (table), vscrollbar, 1, 2, 0, 1,
                     GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (vscrollbar);
+#endif
 
   gtk_widget_show (error_console);
 
@@ -366,7 +378,9 @@ error_console_add (gchar *errormsg)
     
   if (errormsg)
     {
+#if 0
       gtk_text_insert (GTK_TEXT (text), NULL, NULL, NULL, errormsg, -1);
       gtk_text_insert (GTK_TEXT (text), NULL, NULL, NULL, "\n", -1);
+#endif
     }
 }

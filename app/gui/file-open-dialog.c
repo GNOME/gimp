@@ -63,8 +63,8 @@
 
 /*  local function prototypes  */
 
-static gint     file_open_with_proc_and_display (gchar         *filename,
-						 gchar         *raw_filename,
+static gint     file_open_with_proc_and_display (const gchar   *filename,
+						 const gchar   *raw_filename,
 						 PlugInProcDef *file_proc);
 static void     file_open_dialog_create         (void);
 static void     file_open_genbutton_callback    (GtkWidget     *widget,
@@ -156,7 +156,7 @@ file_open_dialog_show (void)
 }
 
 gint
-file_open_with_display (gchar *filename)
+file_open_with_display (const gchar *filename)
 {
   return file_open_with_proc_and_display (filename, filename, NULL);
 }
@@ -165,8 +165,8 @@ file_open_with_display (gchar *filename)
 /*  private functions  */
 
 static gint
-file_open_with_proc_and_display (gchar         *filename,
-                                 gchar         *raw_filename,
+file_open_with_proc_and_display (const gchar   *filename,
+                                 const gchar   *raw_filename,
                                  PlugInProcDef *file_proc)
 {
   GimpImage *gimage;
@@ -445,7 +445,7 @@ set_preview (const gchar *fullfname,
   guchar      *raw_thumb;
   gint         tnw,tnh, i;
   gchar       *pname;
-  gchar       *fname;
+  const gchar *fname;
   gchar       *tname;
   gchar       *imginfo = NULL;
   struct stat  file_stat;
@@ -581,7 +581,7 @@ static void
 file_open_clistrow_callback (GtkWidget *widget,
 			     gint       row)
 {
-  gchar *fullfname = NULL;
+  const gchar *fullfname;
 
   fullfname = gtk_file_selection_get_filename (GTK_FILE_SELECTION (fileload));
 
@@ -602,7 +602,7 @@ file_open_genbutton_callback (GtkWidget *widget,
   /* added for multi-file preview generation... */
   GtkFileSelection *fs;
   gchar            *full_filename = NULL;
-  gchar            *filedirname;
+  gchar            *filedirname   = NULL;
   struct stat       buf;
   gint              err;
 
@@ -629,11 +629,12 @@ file_open_genbutton_callback (GtkWidget *widget,
     /* Find a real base directory for the multiple selection */
 
     gtk_file_selection_set_filename (fs, "");
-    filedirname= gtk_file_selection_get_filename (fs);
+    filedirname = g_strdup (gtk_file_selection_get_filename (fs));
+
     if (filedirname[strlen (filedirname) - 1] == G_DIR_SEPARATOR)
       filedirname[strlen (filedirname) - 1] = '\0';
 
-    while(list)
+    while (list)
       {
         full_filename = g_strconcat (filedirname, G_DIR_SEPARATOR_S,
 				     (gchar *) list->data, NULL);
@@ -641,7 +642,8 @@ file_open_genbutton_callback (GtkWidget *widget,
 	err = stat (full_filename, &buf);
 
 	if (! (err == 0 && (buf.st_mode & S_IFDIR)))
-	  { /* Is not directory. */
+	  {
+	    /* Is not directory. */
 	    gint dummy;
 
 	    gimage_to_be_thumbed = file_open_image (the_gimp,
@@ -677,13 +679,13 @@ file_open_genbutton_callback (GtkWidget *widget,
 	      }
 	  }
 
-        g_free(full_filename);
-        list= g_slist_next(list);
+        g_free (full_filename);
+        list = g_slist_next (list);
       }
     
     for (list = toplist; list; list = g_slist_next (list))
       {
-	if (!(g_slist_next (list)))
+	if (! g_slist_next (list))
 	  {
 	    full_filename = g_strconcat (filedirname, G_DIR_SEPARATOR_S,
 					 (gchar *) list->data, NULL);
@@ -696,6 +698,8 @@ file_open_genbutton_callback (GtkWidget *widget,
 
     g_slist_free (toplist);
     toplist = NULL;
+
+    g_free (filedirname);
   }
 
   gtk_widget_set_sensitive (GTK_WIDGET (fileload), TRUE);
@@ -709,14 +713,15 @@ file_open_ok_callback (GtkWidget *widget,
   GtkFileSelection *fs;
   gchar            *full_filename;
   gchar            *raw_filename;
-  gchar            *filedirname;
+  const gchar      *filedirname;
   struct stat       buf;
   gint              err;
   gint              status;
 
   fs = GTK_FILE_SELECTION (data);
-  full_filename = gtk_file_selection_get_filename (fs);
-  raw_filename = gtk_entry_get_text (GTK_ENTRY(fs->selection_entry));
+
+  full_filename = g_strdup (gtk_file_selection_get_filename (fs));
+  raw_filename  = g_strdup (gtk_entry_get_text (GTK_ENTRY(fs->selection_entry)));
 
   g_assert (full_filename && raw_filename);
 
@@ -771,12 +776,15 @@ file_open_ok_callback (GtkWidget *widget,
 
     /* Find a real base directory for the multiple selection */
 
-    raw_filename = g_strdup(raw_filename);
+    raw_filename = g_strdup (raw_filename);
+
     gtk_file_selection_set_filename (fs, "");
     filedirname = gtk_file_selection_get_filename (fs);
 
     while (list)
       {
+	g_free (full_filename);
+
         full_filename = g_strconcat (filedirname, G_DIR_SEPARATOR_S,
 				     (gchar *) list->data, NULL);
 
@@ -789,7 +797,7 @@ file_open_ok_callback (GtkWidget *widget,
               { /* Is not directory. */
 
                 status = file_open_with_proc_and_display (full_filename,
-                                                          (gchar *) list->data,
+                                                          (const gchar *) list->data,
                                                           load_file_proc);
 
                 if (status == GIMP_PDB_SUCCESS)
@@ -803,7 +811,6 @@ file_open_ok_callback (GtkWidget *widget,
               }
           }
      
-        g_free (full_filename);
         g_free (list->data);
         list = g_slist_next (list);
       }
@@ -813,9 +820,10 @@ file_open_ok_callback (GtkWidget *widget,
   }
     
   gtk_file_selection_set_filename (fs, raw_filename);
-  g_free (raw_filename);
   gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
 
+  g_free (full_filename);
+  g_free (raw_filename);
 }
 
 static GSList *

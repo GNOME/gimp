@@ -38,7 +38,7 @@ struct _InfoField
   GtkObject     *obj;
   gpointer       value_ptr;
 
-  GtkSignalFunc  callback;
+  GCallback      callback;
   gpointer       callback_data;
 };
 
@@ -77,8 +77,8 @@ GtkWidget  *info_dialog_add_label      (InfoDialog      *idialog,
 GtkWidget  *info_dialog_add_entry      (InfoDialog      *idialog,
 					gchar           *title,
 					gchar           *text_ptr,
-					GtkSignalFunc    callback,
-					gpointer         data);
+					GCallback        callback,
+					gpointer         callback_data);
 
 GtkWidget  *info_dialog_add_scale      (InfoDialog      *idialog,
 					gchar           *title,
@@ -89,8 +89,8 @@ GtkWidget  *info_dialog_add_scale      (InfoDialog      *idialog,
 					gfloat           page_increment,
 					gfloat           page_size,
 					gint             digits,
-					GtkSignalFunc    callback,
-					gpointer         data);
+					GCallback        callback,
+					gpointer         callback_data);
 
 GtkWidget  *info_dialog_add_spinbutton (InfoDialog      *idialog,
 					gchar           *title,
@@ -102,8 +102,8 @@ GtkWidget  *info_dialog_add_spinbutton (InfoDialog      *idialog,
 					gfloat           page_size,
 					gfloat           climb_rate,
 					gint             digits,
-					GtkSignalFunc    callback,
-					gpointer         data);
+					GCallback        callback,
+					gpointer         callback_data);
 
 GtkWidget  *info_dialog_add_sizeentry  (InfoDialog      *idialog,
 					gchar           *title,
@@ -115,7 +115,7 @@ GtkWidget  *info_dialog_add_sizeentry  (InfoDialog      *idialog,
 					gboolean         menu_show_percent,
 					gboolean         show_refval,
 					GimpSizeEntryUpdatePolicy update_policy,
-					GtkSignalFunc    callback,
-					gpointer         data);
+					GCallback        callback,
+					gpointer         callback_data);
 
 #endif  /*  __INFO_DIALOG_H__  */

@@ -812,11 +812,12 @@ measure_tool_options_new (void)
     gtk_check_button_new_with_label (_("Use Info Window"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->use_info_window_w),
 				options->use_info_window_d);
-  gtk_box_pack_start (GTK_BOX (vbox), options->use_info_window_w, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (options->use_info_window_w), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &options->use_info_window);
-  gtk_widget_show (options->use_info_window_w);
+  gtk_box_pack_start (GTK_BOX (vbox), options->use_info_window_w,
+		      FALSE, FALSE, 0);
+
+  g_signal_connect (G_OBJECT (options->use_info_window_w), "toggled",
+		    G_CALLBACK (gimp_toggle_button_update),
+		    &options->use_info_window);
 
   return options;
 }

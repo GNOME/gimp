@@ -78,7 +78,7 @@ gimp_buffer_class_init (GimpBufferClass *klass)
   object_class   = (GtkObjectClass *) klass;
   viewable_class = (GimpViewableClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_VIEWABLE);
+  parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy           = gimp_buffer_destroy;
 

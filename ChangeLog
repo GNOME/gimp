@@ -1,3 +1,90 @@
+2001-07-24  Michael Natterer  <mitch@gimp.org>
+
+	Port to glib/gtk+ 2.0 episode I (every segfault has it's beginning)
+
+	* configure.in: require glib/gtk+ >= 1.3.7, commented out the
+	gtkxmhtml stuff.
+
+	From now on, you will need glib, pango, atk and gtk+ HEAD from CVS
+	to hack or use GIMP HEAD.
+
+	Beware, it crashes randomly :)
+
+	* app/core/Makefile.am
+	* app/core/gimpmarshal.list: new file plus rules to generate
+	gimpmarshal.[ch] from it.
+
+	* app/core/*
+	* app/tools/*
+	* app/widgets/*
+	* libgimpwidgets/*: started to use the glib object system. All
+	core/ objects are still gtk objects however. All signals are
+	created using g_signal_new(). There are many gtk+ artefacts left.
+	Finally, we will _not_ use the gtk_signal_foo() wrappers and
+	friends any more.
+
+	* app/colormaps.c
+	* app/devices.[ch]
+	* app/disp_callbacks.c
+	* app/errorconsole.c
+	* app/file-save.[ch]
+	* app/interface.c
+	* app/module_db.c
+	* app/nav_window.c
+	* app/ops_buttons.c
+	* app/scroll.c
+	* app/user_install.c
+	* app/gui/about-dialog.c
+	* app/gui/brush-editor.c
+	* app/gui/brushes-commands.c
+	* app/gui/color-notebook.c
+	* app/gui/colormap-dialog.c
+	* app/gui/dialogs-commands.c
+	* app/gui/dialogs-constructors.c
+	* app/gui/file-commands.c
+	* app/gui/file-dialog-utils.c
+	* app/gui/file-new-dialog.c
+	* app/gui/file-open-dialog.[ch]
+	* app/gui/file-save-dialog.c
+	* app/gui/gradient-editor.c
+	* app/gui/gradients-commands.c
+	* app/gui/image-commands.c
+	* app/gui/info-dialog.[ch]
+	* app/gui/layer-select.c
+	* app/gui/layers-commands.c
+	* app/gui/menus.c
+	* app/gui/offset-dialog.c
+	* app/gui/palette-editor.c
+	* app/gui/palettes-commands.c
+	* app/gui/patterns-commands.c
+	* app/gui/preferences-dialog.c
+	* app/gui/resize-dialog.[ch]
+	* app/gui/splash.c
+	* app/gui/tips-dialog.c
+	* app/gui/tool-options-dialog.c
+	* app/gui/toolbox.c
+	* app/gui/tools-commands.c
+	* libgimp/gimpbrushmenu.c
+	* libgimp/gimpmenu.c
+	* libgimp/gimppatternmenu.c
+	* libgimp/gimpui.c
+	* libgimpbase/gimpenv.c: tons and tons of changes like "const
+	gchar*", switch from GdkDeviceInfo to GdkDevice (very incomplete
+	and currently disables), lots of s/gtk_signal/g_signal/,
+	removal/replacement of deprecated stuff,
+	s/GtkSignalFunc/GCallback/ and lots of small changes and fixes 
+	while I was on it, zillions of warnings left...
+
+	* modules/Makefile.am: disabled the water color selector
+	temporarily (XInput issues).
+
+	* plug-ins/Makefile.am
+	* plug-ins/common/.cvsignore
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/plugin-defs.pl: simply excluded all plug-ins
+	which did not build (including Script-Fu). They are trivial to
+	fix.
+
 2001-07-23  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/winclipboard.c

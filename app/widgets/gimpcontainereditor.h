@@ -37,10 +37,11 @@ typedef enum
 
 
 #define GIMP_TYPE_CONTAINER_EDITOR            (gimp_container_editor_get_type ())
-#define GIMP_CONTAINER_EDITOR(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_CONTAINER_EDITOR, GimpContainerEditor))
-#define GIMP_CONTAINER_EDITOR_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTAINER_EDITOR, GimpContainerEditorClass))
-#define GIMP_IS_CONTAINER_EDITOR(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_CONTAINER_EDITOR))
-#define GIMP_IS_CONTAINER_EDITOR_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTAINER_EDITOR))
+#define GIMP_CONTAINER_EDITOR(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTAINER_EDITOR, GimpContainerEditor))
+#define GIMP_CONTAINER_EDITOR_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTAINER_EDITOR, GimpContainerEditorClass))
+#define GIMP_IS_CONTAINER_EDITOR(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTAINER_EDITOR))
+#define GIMP_IS_CONTAINER_EDITOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTAINER_EDITOR))
+#define GIMP_CONTAINER_EDITOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONTAINER_EDITOR, GimpContainerEditorClass))
 
 
 typedef struct _GimpContainerEditorClass  GimpContainerEditorClass;
@@ -68,7 +69,7 @@ struct _GimpContainerEditorClass
 };
 
 
-GtkType     gimp_container_editor_get_type  (void);
+GType       gimp_container_editor_get_type  (void);
 
 
 /*  protected  */
@@ -86,7 +87,7 @@ GtkWidget * gimp_container_editor_add_button (GimpContainerEditor  *editor,
 					      gchar               **xpm_data,
 					      const gchar          *tooltip,
 					      const gchar          *help_data,
-					      GtkSignalFunc         callback);
+					      GCallback             callback);
 void        gimp_container_editor_enable_dnd (GimpContainerEditor  *editor,
 					      GtkButton            *button);
 

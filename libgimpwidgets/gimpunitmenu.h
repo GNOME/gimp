@@ -31,10 +31,10 @@ extern "C" {
 
 
 #define GIMP_TYPE_UNIT_MENU            (gimp_unit_menu_get_type ())
-#define GIMP_UNIT_MENU(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_UNIT_MENU, GimpUnitMenu))
-#define GIMP_UNIT_MENU_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_UNIT_MENU, GimpUnitMenuClass))
-#define GIMP_IS_UNIT_MENU(obj)         (GTK_CHECK_TYPE (obj, GIMP_TYPE_UNIT_MENU))
-#define GIMP_IS_UNIT_MENU_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_UNIT_MENU))
+#define GIMP_UNIT_MENU(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_UNIT_MENU, GimpUnitMenu))
+#define GIMP_UNIT_MENU_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_UNIT_MENU, GimpUnitMenuClass))
+#define GIMP_IS_UNIT_MENU(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_UNIT_MENU))
+#define GIMP_IS_UNIT_MENU_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_UNIT_MENU))
 
 typedef struct _GimpUnitMenuClass  GimpUnitMenuClass;
 

@@ -821,13 +821,16 @@ color_notebook_page_switch (GtkWidget       *widget,
 			    guint            page_num,
 			    gpointer         data)
 {
+  GtkWidget             *page_widget;
   ColorNotebook         *cnp;
   ColorSelectorInstance *csel;
   gint                   i;
 
   cnp = (ColorNotebook *) data;
 
-  csel = gtk_object_get_data (GTK_OBJECT (page->child), "gimp_color_notebook");
+  page_widget = gtk_notebook_get_nth_page (GTK_NOTEBOOK (widget), page_num);
+
+  csel = g_object_get_data (G_OBJECT (page_widget), "gimp_color_notebook");
 
   g_return_if_fail (cnp != NULL && csel != NULL);
 

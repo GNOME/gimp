@@ -34,10 +34,10 @@ typedef enum
 
 
 #define GIMP_TYPE_CONTAINER            (gimp_container_get_type ())
-#define GIMP_CONTAINER(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_CONTAINER, GimpContainer))
-#define GIMP_CONTAINER_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTAINER, GimpContainerClass))
-#define GIMP_IS_CONTAINER(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_CONTAINER))
-#define GIMP_IS_CONTAINER_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTAINER))
+#define GIMP_CONTAINER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTAINER, GimpContainer))
+#define GIMP_CONTAINER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTAINER, GimpContainerClass))
+#define GIMP_IS_CONTAINER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTAINER))
+#define GIMP_IS_CONTAINER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTAINER))
 
 
 typedef struct _GimpContainerClass GimpContainerClass;
@@ -47,7 +47,7 @@ struct _GimpContainer
   GimpObject           parent_instance;
 
   /*  public, read-only  */
-  GtkType              children_type;
+  GType                children_type;
   GimpContainerPolicy  policy;
   gint                 num_children;
 
@@ -83,9 +83,9 @@ struct _GimpContainerClass
 };
 
 
-GtkType      gimp_container_get_type           (void);
+GType        gimp_container_get_type           (void);
 
-GtkType      gimp_container_children_type      (const GimpContainer *container);
+GType        gimp_container_children_type      (const GimpContainer *container);
 GimpContainerPolicy gimp_container_policy      (const GimpContainer *container);
 gint         gimp_container_num_children       (const GimpContainer *container);
 
@@ -119,8 +119,8 @@ gboolean     gimp_container_frozen             (GimpContainer       *container);
 
 GQuark       gimp_container_add_handler        (GimpContainer       *container,
 						const gchar         *signame,
-						GtkSignalFunc        handler,
-						gpointer             user_data);
+						GCallback            callback,
+						gpointer             callback_data);
 void         gimp_container_remove_handler     (GimpContainer       *container,
 						GQuark               id);
 

@@ -86,7 +86,7 @@ gimp_data_list_class_init (GimpDataListClass *klass)
   
   container_class = (GimpContainerClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_LIST);
+  parent_class = g_type_class_peek_parent (klass);
 
   container_class->add    = gimp_data_list_add;
   container_class->remove = gimp_data_list_remove;
@@ -124,7 +124,7 @@ gimp_data_list_remove (GimpContainer *container,
   list = GIMP_LIST (container);
 
   gtk_signal_disconnect_by_func (GTK_OBJECT (object),
-				 gimp_data_list_object_renamed_callback,
+				 G_CALLBACK (gimp_data_list_object_renamed_callback),
 				 container);
 
   list->list = g_list_remove (list->list, object);
@@ -225,7 +225,7 @@ gimp_data_list_uniquefy_data_name (GimpDataList *data_list,
 	  if (have)
 	    gtk_signal_handler_block_by_func
 	      (GTK_OBJECT (object),
-	       gimp_data_list_object_renamed_callback,
+	       G_CALLBACK (gimp_data_list_object_renamed_callback),
 	       data_list);
 
 	  gimp_object_set_name (object, new_name);
@@ -233,7 +233,7 @@ gimp_data_list_uniquefy_data_name (GimpDataList *data_list,
 	  if (have)
 	    gtk_signal_handler_unblock_by_func
 	      (GTK_OBJECT (object),
-	       gimp_data_list_object_renamed_callback,
+	       G_CALLBACK (gimp_data_list_object_renamed_callback),
 	       data_list);
 
 	  g_free (new_name);

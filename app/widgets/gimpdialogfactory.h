@@ -68,10 +68,11 @@ struct _GimpSessionInfo
 
 
 #define GIMP_TYPE_DIALOG_FACTORY            (gimp_dialog_factory_get_type ())
-#define GIMP_DIALOG_FACTORY(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_DIALOG_FACTORY, GimpDialogFactory))
-#define GIMP_DIALOG_FACTORY_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DIALOG_FACTORY, GimpDialogFactoryClass))
-#define GIMP_IS_DIALOG_FACTORY(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_DIALOG_FACTORY))
-#define GIMP_IS_DIALOG_FACTORY_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DIALOG_FACTORY))
+#define GIMP_DIALOG_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DIALOG_FACTORY, GimpDialogFactory))
+#define GIMP_DIALOG_FACTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DIALOG_FACTORY, GimpDialogFactoryClass))
+#define GIMP_IS_DIALOG_FACTORY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DIALOG_FACTORY))
+#define GIMP_IS_DIALOG_FACTORY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DIALOG_FACTORY))
+#define GIMP_DIALOG_FACTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DIALOG_FACTORY, GimpDialogFactoryClass))
 
 
 typedef struct _GimpDialogFactoryClass  GimpDialogFactoryClass;

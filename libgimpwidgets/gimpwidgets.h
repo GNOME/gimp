@@ -55,7 +55,7 @@ GtkWidget * gimp_option_menu_new   (gboolean            menu_only,
 
 				    /* specify menu items as va_list:
 				     *  gchar          *label,
-				     *  GtkSignalFunc   callback,
+				     *  GCallback       callback,
 				     *  gpointer        data,
 				     *  gpointer        user_data,
 				     *  GtkWidget     **widget_ptr,
@@ -65,7 +65,7 @@ GtkWidget * gimp_option_menu_new   (gboolean            menu_only,
 				    ...);
 
 GtkWidget * gimp_option_menu_new2  (gboolean            menu_only,
-				    GtkSignalFunc       menu_item_callback,
+				    GCallback           menu_item_callback,
 				    gpointer            data,
 				    gpointer            initial, /* user_data */
 
@@ -85,7 +85,7 @@ GtkWidget * gimp_radio_group_new   (gboolean            in_frame,
 
 				    /* specify radio buttons as va_list:
 				     *  const gchar    *label,
-				     *  GtkSignalFunc   callback,
+				     *  GCallback       callback,
 				     *  gpointer        data,
 				     *  gpointer        user_data,
 				     *  GtkWidget     **widget_ptr,
@@ -96,7 +96,7 @@ GtkWidget * gimp_radio_group_new   (gboolean            in_frame,
 
 GtkWidget * gimp_radio_group_new2  (gboolean            in_frame,
 				    const gchar        *frame_title,
-				    GtkSignalFunc       radio_button_callback,
+				    GCallback           radio_button_callback,
 				    gpointer            data,
 				    gpointer            initial, /* user_data */
 

@@ -163,19 +163,16 @@ gimp_colormap_dialog_class_init (GimpColormapDialogClass* klass)
 
   object_class = (GtkObjectClass*) klass;
 
-  parent_class = gtk_type_class (GTK_TYPE_VBOX);
+  parent_class = g_type_class_peek_parent (klass);
 
   gimp_colormap_dialog_signals[SELECTED] =
-    gtk_signal_new ("selected",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpColormapDialogClass,
-				       selected),
-		    gtk_signal_default_marshaller,
-		    GTK_TYPE_NONE, 0);
-
-  gtk_object_class_add_signals (object_class, gimp_colormap_dialog_signals,
-				LAST_SIGNAL);
+    g_signal_new ("selected",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpColormapDialogClass, selected),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   klass->selected = NULL;
 }
@@ -384,7 +381,7 @@ ipal_create_popup_menu (GimpColormapDialog *ipal)
   ipal->popup_menu = menu = gtk_menu_new ();
 
   menu_item = gtk_menu_item_new_with_label (_("Add"));
-  gtk_menu_append (GTK_MENU (menu), menu_item);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
   gtk_widget_show (menu_item);
 
   gtk_signal_connect (GTK_OBJECT (menu_item), "activate", 
@@ -394,7 +391,7 @@ ipal_create_popup_menu (GimpColormapDialog *ipal)
   ipal->add_item = menu_item;
 
   menu_item = gtk_menu_item_new_with_label (_("Edit"));
-  gtk_menu_append (GTK_MENU (menu), menu_item);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
   gtk_widget_show (menu_item);
 
   gtk_signal_connect (GTK_OBJECT (menu_item), "activate", 
@@ -746,8 +743,8 @@ static void
 hex_entry_change_cb (GtkEntry           *entry,
 		     GimpColormapDialog *ipal)
 {
-  gchar *s;
-  gulong i;
+  const gchar *s;
+  gulong       i;
 
   g_return_if_fail (ipal);
   g_return_if_fail (ipal->image);

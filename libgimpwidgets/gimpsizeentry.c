@@ -46,6 +46,7 @@ enum
   LAST_SIGNAL
 };
 
+
 struct _GimpSizeEntryField
 {
   GimpSizeEntry *gse;
@@ -93,21 +94,22 @@ static guint gimp_size_entry_signals[LAST_SIGNAL] = { 0 };
 
 static GtkTableClass *parent_class = NULL;
 
+
 static void
 gimp_size_entry_destroy (GtkObject *object)
 {
   GimpSizeEntry *gse;
-  GSList        *list;        
 
-  g_return_if_fail (object != NULL);
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (object));
 
   gse = GIMP_SIZE_ENTRY (object);
 
-  for (list = gse->fields; list; list = g_slist_next (list))
-    g_free (list->data);
-
-  g_slist_free (gse->fields);
+  if (gse->fields)
+    {
+      g_slist_foreach (gse->fields, (GFunc) g_free, NULL);
+      g_slist_free (gse->fields);
+      gse->fields = NULL;
+    }
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -120,40 +122,40 @@ gimp_size_entry_class_init (GimpSizeEntryClass *klass)
 
   object_class = (GtkObjectClass*) klass;
 
-  parent_class = gtk_type_class (GTK_TYPE_TABLE);
+  parent_class = g_type_class_peek_parent (klass);
 
-  gimp_size_entry_signals[VALUE_CHANGED] = 
-              gtk_signal_new ("value_changed",
-			      GTK_RUN_FIRST,
-			      object_class->type,
-			      GTK_SIGNAL_OFFSET (GimpSizeEntryClass,
-						 value_changed),
-			      gtk_signal_default_marshaller, GTK_TYPE_NONE, 0);
+  gimp_size_entry_signals[VALUE_CHANGED] =
+    g_signal_new ("value_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpSizeEntryClass, value_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
-  gimp_size_entry_signals[REFVAL_CHANGED] = 
-              gtk_signal_new ("refval_changed",
-			      GTK_RUN_FIRST,
-			      object_class->type,
-			      GTK_SIGNAL_OFFSET (GimpSizeEntryClass,
-						 refval_changed),
-			      gtk_signal_default_marshaller, GTK_TYPE_NONE, 0);
+  gimp_size_entry_signals[REFVAL_CHANGED] =
+    g_signal_new ("refval_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpSizeEntryClass, refval_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
-  gimp_size_entry_signals[UNIT_CHANGED] = 
-              gtk_signal_new ("unit_changed",
-			      GTK_RUN_FIRST,
-			      object_class->type,
-			      GTK_SIGNAL_OFFSET (GimpSizeEntryClass,
-						 unit_changed),
-			      gtk_signal_default_marshaller, GTK_TYPE_NONE, 0);
-
-  gtk_object_class_add_signals (object_class, gimp_size_entry_signals, 
-				LAST_SIGNAL);
+  gimp_size_entry_signals[UNIT_CHANGED] =
+    g_signal_new ("unit_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpSizeEntryClass, unit_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   object_class->destroy = gimp_size_entry_destroy;
 
-  klass->value_changed = NULL;
+  klass->value_changed  = NULL;
   klass->refval_changed = NULL;
-  klass->unit_changed = NULL;
+  klass->unit_changed   = NULL;
 }
 
 static void
@@ -169,10 +171,10 @@ gimp_size_entry_init (GimpSizeEntry *gse)
   gse->update_policy     = GIMP_SIZE_ENTRY_UPDATE_NONE;
 }
 
-GtkType
+GType
 gimp_size_entry_get_type (void)
 {
-  static guint gse_type = 0;
+  static GType gse_type = 0;
 
   if (! gse_type)
     {
@@ -314,8 +316,6 @@ gimp_size_entry_new (gint                       number_of_fields,
 			     (unit == GIMP_UNIT_PIXEL) ? gsef->refval_digits :
 			     (unit == GIMP_UNIT_PERCENT) ? 2 :
 			     GIMP_SIZE_ENTRY_DIGITS (unit));
-      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(gsef->value_spinbutton),
-				       GTK_SHADOW_NONE);
       gtk_widget_set_usize (gsef->value_spinbutton, spinbutton_usize, 0);
       gtk_table_attach_defaults (GTK_TABLE (gse), gsef->value_spinbutton,
 				 i+1, i+2,
@@ -336,8 +336,6 @@ gimp_size_entry_new (gint                       number_of_fields,
 	    gtk_spin_button_new (GTK_ADJUSTMENT (gsef->refval_adjustment),
 				 1.0,
 				 gsef->refval_digits);
-	  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (gsef->refval_spinbutton),
-					   GTK_SHADOW_NONE);
 	  gtk_widget_set_usize (gsef->refval_spinbutton, spinbutton_usize, 0);
 	  gtk_table_attach_defaults (GTK_TABLE (gse), gsef->refval_spinbutton,
 				     i + 1, i + 2, 1, 2);

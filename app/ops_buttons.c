@@ -132,6 +132,10 @@ ops_button_extended_clicked (GtkWidget *widget,
   else 
     modifier = OPS_BUTTON_MODIFIER_NONE;
 
+#ifdef __GNUC__
+#warning FIXME: remove ops_buttons
+#endif
+#if 0
   if (modifier > OPS_BUTTON_MODIFIER_NONE &&
       modifier < OPS_BUTTON_MODIFIER_LAST)
     {
@@ -142,4 +146,5 @@ ops_button_extended_clicked (GtkWidget *widget,
     } 
   else 
     (ops_button->callback) (widget, NULL);
+#endif
 }

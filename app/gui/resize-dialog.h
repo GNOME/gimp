@@ -73,16 +73,16 @@ typedef struct
 
 Resize * resize_widget_new (ResizeType    type,
 			    ResizeTarget  target,
-			    GtkObject    *object,
-			    gchar        *signal,
+			    GObject      *object,
+			    const gchar  *signal,
 			    gint          width,
 			    gint          height,
 			    gdouble       resolution_x,
 			    gdouble       resolution_y,
 			    GimpUnit      unit,
 			    gboolean      dot_for_dot,
-			    GtkSignalFunc ok_cb,
-			    GtkSignalFunc cancel_cb,
+			    GCallback     ok_cb,
+			    GCallback     cancel_cb,
 			    gpointer      user_data);
 
 

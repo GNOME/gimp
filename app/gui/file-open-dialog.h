@@ -25,7 +25,7 @@ void   file_open_dialog_menu_reset (void);
 
 void   file_open_dialog_show       (void);
 
-gint   file_open_with_display      (gchar *filename);
+gint   file_open_with_display      (const gchar *filename);
 
 
 #endif /* __FILE_OPEN_DIALOG_H__ */

@@ -87,34 +87,34 @@ gimp_undo_class_init (GimpUndoClass *klass)
   object_class = (GtkObjectClass *) klass;
   viewable_class = (GimpViewableClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_VIEWABLE);
+  parent_class = g_type_class_peek_parent (klass);
 
   undo_signals[PUSH] = 
-    gtk_signal_new ("push",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpUndoClass, push),
-                    gtk_marshal_NONE__POINTER,
-                    GTK_TYPE_NONE, 
-                    1, GTK_TYPE_POINTER);
+    g_signal_new ("push",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpUndoClass, push),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__POINTER,
+		  G_TYPE_NONE, 1,
+		  G_TYPE_POINTER);
 
   undo_signals[POP] = 
-    gtk_signal_new ("pop",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpUndoClass, pop),
-                    gtk_marshal_NONE__POINTER,
-                    GTK_TYPE_NONE, 
-                    1, GTK_TYPE_POINTER);
+    g_signal_new ("pop",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpUndoClass, pop),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__POINTER,
+		  G_TYPE_NONE, 1,
+		  G_TYPE_POINTER);
 
-  gtk_object_class_add_signals (object_class, undo_signals, LAST_SIGNAL);
-
-  object_class->destroy = gimp_undo_destroy;
+  object_class->destroy       = gimp_undo_destroy;
   
   viewable_class->get_preview = gimp_undo_get_preview;
 
-  klass->push = gimp_undo_real_push;
-  klass->pop  = gimp_undo_real_pop;
+  klass->push                 = gimp_undo_real_push;
+  klass->pop                  = gimp_undo_real_pop;
 }
 
 static void

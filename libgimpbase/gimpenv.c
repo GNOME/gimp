@@ -83,9 +83,10 @@ const gchar *
 gimp_directory (void)
 {
   static gchar *gimp_dir = NULL;
-  gchar *env_gimp_dir;
-  gchar *home_dir;
-  gchar *home_dir_sep;
+
+  const gchar  *env_gimp_dir;
+  const gchar  *home_dir;
+  gchar        *home_dir_sep;
 
   if (gimp_dir != NULL)
     return gimp_dir;
@@ -188,7 +189,8 @@ const gchar *
 gimp_data_directory (void)
 {
   static gchar *gimp_data_dir = NULL;
-  gchar *env_gimp_data_dir = NULL;
+
+  const gchar  *env_gimp_data_dir;
   
   if (gimp_data_dir != NULL)
     return gimp_data_dir;
@@ -264,7 +266,8 @@ const gchar *
 gimp_sysconf_directory (void)
 {
   static gchar *gimp_sysconf_dir = NULL;
-  gchar *env_gimp_sysconf_dir = NULL;
+
+  const gchar  *env_gimp_sysconf_dir;
   
   if (gimp_sysconf_dir != NULL)
     return gimp_sysconf_dir;
@@ -365,11 +368,11 @@ gimp_path_parse (const gchar  *path,
 		 gboolean      check,
 		 GList       **check_failed)
 {
-  gchar  *home;
-  gchar **patharray;
-  GList  *list = NULL;
-  GList  *fail_list = NULL;
-  gint    i;
+  const gchar  *home;
+  gchar       **patharray;
+  GList        *list = NULL;
+  GList        *fail_list = NULL;
+  gint          i;
 
   struct stat filestat;
   gint        err = FALSE;
@@ -385,7 +388,7 @@ gimp_path_parse (const gchar  *path,
     {
       GString *dir;
 
-      if (!patharray[i])
+      if (! patharray[i])
 	break;
 
 #ifndef G_OS_WIN32
@@ -523,12 +526,15 @@ gimp_path_get_user_writable_dir (GList *path)
       /* ugly hack to handle paths with an extra G_DIR_SEPARATOR
        * attached. The stat() in MSVCRT doesn't like that.
        */
-      gchar *dir = g_strdup ((gchar *) list->data);
-      gchar *p = dir;
-      gint pl;
+      gchar *dir;
+      gchar *p;
+      gint   pl;
+
+      p = dir = g_strdup ((gchar *) list->data);
 
       if (g_path_is_absolute (dir))
-	p = g_path_skip_root (dir);
+	p = (gchar *) g_path_skip_root (dir);
+
       pl = strlen (p);
       if (pl > 0 && p[pl-1] == G_DIR_SEPARATOR)
 	p[pl-1] = '\0';

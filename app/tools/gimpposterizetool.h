@@ -24,10 +24,10 @@
 
 
 #define GIMP_TYPE_POSTERIZE_TOOL            (gimp_posterize_tool_get_type ())
-#define GIMP_POSTERIZE_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_POSTERIZE_TOOL, GimpPosterizeTool))
-#define GIMP_IS_POSTERIZE_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_POSTERIZE_TOOL))
-#define GIMP_POSTERIZE_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_POSTERIZE_TOOL, GimpPosterizeToolClass))
-#define GIMP_IS_POSTERIZE_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_POSTERIZE_TOOL))
+#define GIMP_POSTERIZE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_POSTERIZE_TOOL, GimpPosterizeTool))
+#define GIMP_IS_POSTERIZE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_POSTERIZE_TOOL))
+#define GIMP_POSTERIZE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_POSTERIZE_TOOL, GimpPosterizeToolClass))
+#define GIMP_IS_POSTERIZE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_POSTERIZE_TOOL))
 
 
 typedef struct _GimpPosterizeTool      GimpPosterizeTool;

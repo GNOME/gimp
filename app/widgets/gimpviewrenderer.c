@@ -158,85 +158,83 @@ gimp_preview_class_init (GimpPreviewClass *klass)
   object_class = (GtkObjectClass *) klass;
   widget_class = (GtkWidgetClass *) klass;
 
-  parent_class = gtk_type_class (GTK_TYPE_PREVIEW);
+  parent_class = g_type_class_peek_parent (klass);
 
   preview_signals[CLICKED] = 
-    gtk_signal_new ("clicked",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpPreviewClass,
-				       clicked),
-                    gtk_signal_default_marshaller,
-		    GTK_TYPE_NONE, 0);
+    g_signal_new ("clicked",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpPreviewClass, clicked),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   preview_signals[DOUBLE_CLICKED] = 
-    gtk_signal_new ("double_clicked",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpPreviewClass,
-				       double_clicked),
-                    gtk_signal_default_marshaller,
-		    GTK_TYPE_NONE, 0);
+    g_signal_new ("double_clicked",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpPreviewClass, double_clicked),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   preview_signals[EXTENDED_CLICKED] = 
-    gtk_signal_new ("extended_clicked",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpPreviewClass,
-				       extended_clicked),
-                    gtk_marshal_NONE__UINT,
-		    GTK_TYPE_NONE, 1,
-		    GTK_TYPE_UINT);
+    g_signal_new ("extended_clicked",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpPreviewClass, extended_clicked),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__UINT,
+		  G_TYPE_NONE, 1,
+		  G_TYPE_UINT);
 
   preview_signals[CONTEXT] = 
-    gtk_signal_new ("context",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpPreviewClass,
-				       context),
-                    gtk_signal_default_marshaller,
-		    GTK_TYPE_NONE, 0);
+    g_signal_new ("context",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpPreviewClass, context),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   preview_signals[RENDER] = 
-    gtk_signal_new ("render",
-                    GTK_RUN_LAST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpPreviewClass,
-				       render),
-                    gtk_signal_default_marshaller,
-		    GTK_TYPE_NONE, 0);
+    g_signal_new ("render",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_LAST,
+		  G_STRUCT_OFFSET (GimpPreviewClass, render),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   preview_signals[GET_SIZE] = 
-    gtk_signal_new ("get_size",
-                    GTK_RUN_LAST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpPreviewClass,
-				       get_size),
-                    gimp_marshal_NONE__INT_POINTER_POINTER,
-		    GTK_TYPE_NONE, 3,
-		    GTK_TYPE_INT,
-		    GTK_TYPE_POINTER,
-		    GTK_TYPE_POINTER);
+    g_signal_new ("get_size",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_LAST,
+		  G_STRUCT_OFFSET (GimpPreviewClass, get_size),
+		  NULL, NULL,
+		  gimp_cclosure_marshal_VOID__INT_POINTER_POINTER,
+		  G_TYPE_NONE, 3,
+		  G_TYPE_INT,
+		  G_TYPE_POINTER,
+		  G_TYPE_POINTER);
 
   preview_signals[NEEDS_POPUP] = 
-    gtk_signal_new ("needs_popup",
-                    GTK_RUN_LAST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpPreviewClass,
-				       needs_popup),
-                    gtk_marshal_BOOL__NONE,
-		    GTK_TYPE_BOOL, 0);
+    g_signal_new ("needs_popup",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_LAST,
+		  G_STRUCT_OFFSET (GimpPreviewClass, needs_popup),
+		  NULL, NULL,
+		  gimp_cclosure_marshal_BOOLEAN__VOID,
+		  G_TYPE_BOOLEAN, 0);
 
   preview_signals[CREATE_POPUP] = 
-    gtk_signal_new ("create_popup",
-                    GTK_RUN_LAST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpPreviewClass,
-				       create_popup),
-                    gimp_marshal_POINTER__NONE,
-		    GTK_TYPE_POINTER, 0);
-
-  gtk_object_class_add_signals (object_class, preview_signals, LAST_SIGNAL);
+    g_signal_new ("create_popup",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_LAST,
+		  G_STRUCT_OFFSET (GimpPreviewClass, create_popup),
+		  NULL, NULL,
+		  gimp_cclosure_marshal_POINTER__VOID,
+		  G_TYPE_POINTER, 0);
 
   object_class->destroy              = gimp_preview_destroy;
 
@@ -418,12 +416,9 @@ gimp_preview_set_viewable (GimpPreview  *preview,
     {
       if (! preview->is_popup)
 	{
-	  GtkType type;
-
-	  type = GTK_OBJECT (preview->viewable)->klass->type;
-
 	  gtk_drag_source_unset (GTK_WIDGET (preview));
-	  gimp_dnd_viewable_source_unset (GTK_WIDGET (preview), type);
+	  gimp_dnd_viewable_source_unset (GTK_WIDGET (preview),
+					  G_TYPE_FROM_INSTANCE (preview->viewable));
 	}
 
       gtk_signal_disconnect_by_func (GTK_OBJECT (preview->viewable),
@@ -446,16 +441,12 @@ gimp_preview_set_viewable (GimpPreview  *preview,
     {
       if (! preview->is_popup)
 	{
-	  GtkType type;
-
-	  type = GTK_OBJECT (preview->viewable)->klass->type;
-
 	  gimp_gtk_drag_source_set_by_type (GTK_WIDGET (preview),
 					    GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
-					    type,
+					    G_TYPE_FROM_INSTANCE (preview->viewable),
 					    GDK_ACTION_COPY);
 	  gimp_dnd_viewable_source_set (GTK_WIDGET (preview),
-					type,
+					G_TYPE_FROM_INSTANCE (preview->viewable),
 					gimp_preview_drag_viewable,
 					NULL);
 	}
@@ -846,7 +837,8 @@ gimp_preview_popup_timeout (GimpPreview *preview)
   x = (x + popup_width  > scr_width)  ? scr_width  - popup_width  : x;
   y = (y + popup_height > scr_height) ? scr_height - popup_height : y;
 
-  gtk_widget_popup (window, x, y);
+  gtk_widget_set_uposition (window, x, y);
+  gtk_widget_show (window);
 
   gtk_object_set_data_full (GTK_OBJECT (preview), "preview_popup_window", window,
 			    (GtkDestroyNotify) gtk_widget_destroy);

@@ -1,84 +1,208 @@
-/* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- */
-
 #ifndef __GIMP_MARSHAL_H__
 #define __GIMP_MARSHAL_H__
 
+G_BEGIN_DECLS
 
-void   gimp_marshal_NONE__INT_INT_INT_INT     (GtkObject     *object,
-					       GtkSignalFunc  func,
-					       gpointer       func_data,
-					       GtkArg        *args);
+/* BOOLEAN:OBJECT (./gimpmarshal.list:25) */
+extern void gimp_cclosure_marshal_BOOLEAN__OBJECT (GClosure     *closure,
+                                                   GValue       *return_value,
+                                                   guint         n_param_values,
+                                                   const GValue *param_values,
+                                                   gpointer      invocation_hint,
+                                                   gpointer      marshal_data);
 
-void   gimp_marshal_NONE__INT_INT_INT         (GtkObject     *object,
-					       GtkSignalFunc  func,
-					       gpointer       func_data,
-					       GtkArg        *args);
+/* BOOLEAN:POINTER (./gimpmarshal.list:26) */
+extern void gimp_cclosure_marshal_BOOLEAN__POINTER (GClosure     *closure,
+                                                    GValue       *return_value,
+                                                    guint         n_param_values,
+                                                    const GValue *param_values,
+                                                    gpointer      invocation_hint,
+                                                    gpointer      marshal_data);
 
-void   gimp_marshal_NONE__INT_POINTER_POINTER (GtkObject     *object,
-					       GtkSignalFunc  func,
-					       gpointer       func_data,
-					       GtkArg        *args);
+/* BOOLEAN:VOID (./gimpmarshal.list:27) */
+extern void gimp_cclosure_marshal_BOOLEAN__VOID (GClosure     *closure,
+                                                 GValue       *return_value,
+                                                 guint         n_param_values,
+                                                 const GValue *param_values,
+                                                 gpointer      invocation_hint,
+                                                 gpointer      marshal_data);
 
-void   gimp_marshal_NONE__OBJECT_INT          (GtkObject     *object,
-					       GtkSignalFunc  func,
-					       gpointer       func_data,
-					       GtkArg        *args);
+/* INT:OBJECT (./gimpmarshal.list:29) */
+extern void gimp_cclosure_marshal_INT__OBJECT (GClosure     *closure,
+                                               GValue       *return_value,
+                                               guint         n_param_values,
+                                               const GValue *param_values,
+                                               gpointer      invocation_hint,
+                                               gpointer      marshal_data);
 
-void   gimp_marshal_NONE__DOUBLE              (GtkObject     *object,
-					       GtkSignalFunc  func,
-					       gpointer       func_data,
-					       GtkArg        *args);
+/* INT:POINTER (./gimpmarshal.list:30) */
+extern void gimp_cclosure_marshal_INT__POINTER (GClosure     *closure,
+                                                GValue       *return_value,
+                                                guint         n_param_values,
+                                                const GValue *param_values,
+                                                gpointer      invocation_hint,
+                                                gpointer      marshal_data);
 
-void   gimp_marshal_INT__POINTER              (GtkObject     *object,
-					       GtkSignalFunc  func,
-					       gpointer       func_data,
-					       GtkArg        *args);
+/* OBJECT:INT (./gimpmarshal.list:32) */
+extern void gimp_cclosure_marshal_OBJECT__INT (GClosure     *closure,
+                                               GValue       *return_value,
+                                               guint         n_param_values,
+                                               const GValue *param_values,
+                                               gpointer      invocation_hint,
+                                               gpointer      marshal_data);
 
-void   gimp_marshal_POINTER__NONE             (GtkObject     *object,
-					       GtkSignalFunc  func,
-					       gpointer       func_data,
-					       GtkArg        *args);
+/* OBJECT:POINTER (./gimpmarshal.list:33) */
+extern void gimp_cclosure_marshal_OBJECT__POINTER (GClosure     *closure,
+                                                   GValue       *return_value,
+                                                   guint         n_param_values,
+                                                   const GValue *param_values,
+                                                   gpointer      invocation_hint,
+                                                   gpointer      marshal_data);
 
-void   gimp_marshal_POINTER__INT              (GtkObject     *object,
-					       GtkSignalFunc  func,
-					       gpointer       func_data,
-					       GtkArg        *args);
+/* POINTER:INT (./gimpmarshal.list:35) */
+extern void gimp_cclosure_marshal_POINTER__INT (GClosure     *closure,
+                                                GValue       *return_value,
+                                                guint         n_param_values,
+                                                const GValue *param_values,
+                                                gpointer      invocation_hint,
+                                                gpointer      marshal_data);
 
-void   gimp_marshal_POINTER__INT_INT          (GtkObject     *object,
-					       GtkSignalFunc  func,
-					       gpointer       func_data,
-					       GtkArg        *args);
+/* POINTER:INT,INT (./gimpmarshal.list:36) */
+extern void gimp_cclosure_marshal_POINTER__INT_INT (GClosure     *closure,
+                                                    GValue       *return_value,
+                                                    guint         n_param_values,
+                                                    const GValue *param_values,
+                                                    gpointer      invocation_hint,
+                                                    gpointer      marshal_data);
 
-void   gimp_marshal_POINTER__POINTER          (GtkObject     *object,
-					       GtkSignalFunc  func,
-					       gpointer       func_data,
-					       GtkArg        *args);
+/* POINTER:OBJECT,INT (./gimpmarshal.list:37) */
+extern void gimp_cclosure_marshal_POINTER__OBJECT_INT (GClosure     *closure,
+                                                       GValue       *return_value,
+                                                       guint         n_param_values,
+                                                       const GValue *param_values,
+                                                       gpointer      invocation_hint,
+                                                       gpointer      marshal_data);
 
-void   gimp_marshal_POINTER__POINTER_INT      (GtkObject     *object,
-					       GtkSignalFunc  func,
-					       gpointer       func_data,
-					       GtkArg        *args);
+/* POINTER:POINTER (./gimpmarshal.list:38) */
+extern void gimp_cclosure_marshal_POINTER__POINTER (GClosure     *closure,
+                                                    GValue       *return_value,
+                                                    guint         n_param_values,
+                                                    const GValue *param_values,
+                                                    gpointer      invocation_hint,
+                                                    gpointer      marshal_data);
 
-void   gimp_marshal_POINTER__POINTER_INT_INT  (GtkObject     *object,
-					       GtkSignalFunc  func,
-					       gpointer       func_data,
-					       GtkArg        *args);
+/* POINTER:POINTER,INT (./gimpmarshal.list:39) */
+extern void gimp_cclosure_marshal_POINTER__POINTER_INT (GClosure     *closure,
+                                                        GValue       *return_value,
+                                                        guint         n_param_values,
+                                                        const GValue *param_values,
+                                                        gpointer      invocation_hint,
+                                                        gpointer      marshal_data);
 
+/* POINTER:POINTER,INT,INT (./gimpmarshal.list:40) */
+extern void gimp_cclosure_marshal_POINTER__POINTER_INT_INT (GClosure     *closure,
+                                                            GValue       *return_value,
+                                                            guint         n_param_values,
+                                                            const GValue *param_values,
+                                                            gpointer      invocation_hint,
+                                                            gpointer      marshal_data);
+
+/* POINTER:VOID (./gimpmarshal.list:41) */
+extern void gimp_cclosure_marshal_POINTER__VOID (GClosure     *closure,
+                                                 GValue       *return_value,
+                                                 guint         n_param_values,
+                                                 const GValue *param_values,
+                                                 gpointer      invocation_hint,
+                                                 gpointer      marshal_data);
+
+/* VOID:DOUBLE (./gimpmarshal.list:43) */
+extern void gimp_cclosure_marshal_VOID__DOUBLE (GClosure     *closure,
+                                                GValue       *return_value,
+                                                guint         n_param_values,
+                                                const GValue *param_values,
+                                                gpointer      invocation_hint,
+                                                gpointer      marshal_data);
+
+/* VOID:INT,INT (./gimpmarshal.list:44) */
+extern void gimp_cclosure_marshal_VOID__INT_INT (GClosure     *closure,
+                                                 GValue       *return_value,
+                                                 guint         n_param_values,
+                                                 const GValue *param_values,
+                                                 gpointer      invocation_hint,
+                                                 gpointer      marshal_data);
+
+/* VOID:INT,INT,INT (./gimpmarshal.list:45) */
+extern void gimp_cclosure_marshal_VOID__INT_INT_INT (GClosure     *closure,
+                                                     GValue       *return_value,
+                                                     guint         n_param_values,
+                                                     const GValue *param_values,
+                                                     gpointer      invocation_hint,
+                                                     gpointer      marshal_data);
+
+/* VOID:INT,INT,INT,INT (./gimpmarshal.list:46) */
+extern void gimp_cclosure_marshal_VOID__INT_INT_INT_INT (GClosure     *closure,
+                                                         GValue       *return_value,
+                                                         guint         n_param_values,
+                                                         const GValue *param_values,
+                                                         gpointer      invocation_hint,
+                                                         gpointer      marshal_data);
+
+/* VOID:INT,POINTER (./gimpmarshal.list:47) */
+extern void gimp_cclosure_marshal_VOID__INT_POINTER (GClosure     *closure,
+                                                     GValue       *return_value,
+                                                     guint         n_param_values,
+                                                     const GValue *param_values,
+                                                     gpointer      invocation_hint,
+                                                     gpointer      marshal_data);
+
+/* VOID:INT,POINTER,POINTER (./gimpmarshal.list:48) */
+extern void gimp_cclosure_marshal_VOID__INT_POINTER_POINTER (GClosure     *closure,
+                                                             GValue       *return_value,
+                                                             guint         n_param_values,
+                                                             const GValue *param_values,
+                                                             gpointer      invocation_hint,
+                                                             gpointer      marshal_data);
+
+/* VOID:OBJECT,INT (./gimpmarshal.list:49) */
+extern void gimp_cclosure_marshal_VOID__OBJECT_INT (GClosure     *closure,
+                                                    GValue       *return_value,
+                                                    guint         n_param_values,
+                                                    const GValue *param_values,
+                                                    gpointer      invocation_hint,
+                                                    gpointer      marshal_data);
+
+/* VOID:OBJECT,INT,POINTER (./gimpmarshal.list:50) */
+extern void gimp_cclosure_marshal_VOID__OBJECT_INT_POINTER (GClosure     *closure,
+                                                            GValue       *return_value,
+                                                            guint         n_param_values,
+                                                            const GValue *param_values,
+                                                            gpointer      invocation_hint,
+                                                            gpointer      marshal_data);
+
+/* VOID:OBJECT,POINTER (./gimpmarshal.list:51) */
+extern void gimp_cclosure_marshal_VOID__OBJECT_POINTER (GClosure     *closure,
+                                                        GValue       *return_value,
+                                                        guint         n_param_values,
+                                                        const GValue *param_values,
+                                                        gpointer      invocation_hint,
+                                                        gpointer      marshal_data);
+
+/* VOID:POINTER,INT (./gimpmarshal.list:52) */
+extern void gimp_cclosure_marshal_VOID__POINTER_INT (GClosure     *closure,
+                                                     GValue       *return_value,
+                                                     guint         n_param_values,
+                                                     const GValue *param_values,
+                                                     gpointer      invocation_hint,
+                                                     gpointer      marshal_data);
+
+/* VOID:POINTER,POINTER (./gimpmarshal.list:53) */
+extern void gimp_cclosure_marshal_VOID__POINTER_POINTER (GClosure     *closure,
+                                                         GValue       *return_value,
+                                                         guint         n_param_values,
+                                                         const GValue *param_values,
+                                                         gpointer      invocation_hint,
+                                                         gpointer      marshal_data);
+
+G_END_DECLS
 
 #endif /* __GIMP_MARSHAL_H__ */

@@ -23,7 +23,7 @@
 #define __GIMP_DOCKABLE_H__
 
 
-#include <gtk/gtkvbox.h>
+#include <gtk/gtkbin.h>
 
 
 typedef GtkWidget * (* GimpDockableGetTabFunc)     (GimpDockable *dockable,
@@ -34,10 +34,11 @@ typedef void        (* GimpDockableSetContextFunc) (GimpDockable *dockable,
 
 
 #define GIMP_TYPE_DOCKABLE            (gimp_dockable_get_type ())
-#define GIMP_DOCKABLE(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_DOCKABLE, GimpDockable))
-#define GIMP_DOCKABLE_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DOCKABLE, GimpDockableClass))
-#define GIMP_IS_DOCKABLE(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_DOCKABLE))
-#define GIMP_IS_DOCKABLE_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DOCKABLE))
+#define GIMP_DOCKABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DOCKABLE, GimpDockable))
+#define GIMP_DOCKABLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DOCKABLE, GimpDockableClass))
+#define GIMP_IS_DOCKABLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DOCKABLE))
+#define GIMP_IS_DOCKABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DOCKABLE))
+#define GIMP_DOCKABLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DOCKABLE, GimpDockableClass))
 
 
 typedef struct _GimpDockableClass GimpDockableClass;
@@ -52,6 +53,8 @@ struct _GimpDockable
 
   GimpDockbook *dockbook;
 
+  GimpContext  *context;
+
   GimpDockableGetTabFunc      get_tab_func;
   GimpDockableSetContextFunc  set_context_func;
 };
@@ -62,7 +65,8 @@ struct _GimpDockableClass
 };
 
 
-GtkType     gimp_dockable_get_type (void);
+GType       gimp_dockable_get_type (void);
+
 GtkWidget * gimp_dockable_new      (const gchar                *name,
 				    const gchar                *short_name,
 				    GimpDockableGetTabFunc      get_tab_func,

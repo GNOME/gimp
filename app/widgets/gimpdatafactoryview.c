@@ -130,31 +130,31 @@ gimp_data_factory_view_init (GimpDataFactoryView *view)
     gimp_container_editor_add_button (editor,
 				      new_xpm,
 				      _("New"), NULL,
-				      gimp_data_factory_view_new_clicked);
+				      G_CALLBACK (gimp_data_factory_view_new_clicked));
 
   view->duplicate_button =
     gimp_container_editor_add_button (editor,
 				      duplicate_xpm,
 				      _("Duplicate"), NULL,
-				      gimp_data_factory_view_duplicate_clicked);
+				      G_CALLBACK (gimp_data_factory_view_duplicate_clicked));
 
   view->edit_button =
     gimp_container_editor_add_button (editor,
 				      edit_xpm,
 				      _("Edit"), NULL,
-				      gimp_data_factory_view_edit_clicked);
+				      G_CALLBACK (gimp_data_factory_view_edit_clicked));
 
   view->delete_button =
     gimp_container_editor_add_button (editor,
 				      delete_xpm,
 				      _("Delete"), NULL,
-				      gimp_data_factory_view_delete_clicked);
+				      G_CALLBACK (gimp_data_factory_view_delete_clicked));
 
   view->refresh_button =
     gimp_container_editor_add_button (editor,
 				      refresh_xpm,
 				      _("Refresh"), NULL,
-				      gimp_data_factory_view_refresh_clicked);
+				      G_CALLBACK (gimp_data_factory_view_refresh_clicked));
 
   gtk_widget_set_sensitive (view->duplicate_button, FALSE);
   gtk_widget_set_sensitive (view->edit_button, FALSE);
@@ -417,9 +417,9 @@ gimp_data_factory_view_delete_clicked (GtkWidget           *widget,
 				gimp_data_factory_view_delete_callback,
 				delete_data);
 
-      gtk_signal_connect_object (GTK_OBJECT (dialog), "destroy",
-				 GTK_SIGNAL_FUNC (g_free),
-				 (GtkObject *) delete_data);
+      g_signal_connect_swapped (G_OBJECT (dialog), "destroy",
+				G_CALLBACK (g_free),
+				delete_data);
 
       g_free (str);
 
@@ -453,8 +453,7 @@ gimp_data_factory_view_select_item (GimpContainerEditor *editor,
   if (viewable && gimp_container_have (view->factory->container,
 				       GIMP_OBJECT (viewable)))
     {
-      duplicate_sensitive =
-	(GIMP_DATA_CLASS (GTK_OBJECT (viewable)->klass)->duplicate != NULL);
+      duplicate_sensitive = (GIMP_DATA_GET_CLASS (viewable)->duplicate != NULL);
 
       edit_sensitive   = (view->data_edit_func != NULL);
       delete_sensitive = TRUE;  /* TODO: check permissions */

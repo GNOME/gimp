@@ -38,10 +38,10 @@ extern "C" {
 
 
 #define GIMP_TYPE_COLOR_AREA            (gimp_color_area_get_type ())
-#define GIMP_COLOR_AREA(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_COLOR_AREA, GimpColorArea))
-#define GIMP_COLOR_AREA_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_AREA, GimpColorAreaClass))
-#define GIMP_IS_COLOR_AREA(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_COLOR_AREA))
-#define GIMP_IS_COLOR_AREA_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_AREA))
+#define GIMP_COLOR_AREA(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_AREA, GimpColorArea))
+#define GIMP_COLOR_AREA_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_AREA, GimpColorAreaClass))
+#define GIMP_IS_COLOR_AREA(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_AREA))
+#define GIMP_IS_COLOR_AREA_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_AREA))
 
 
 typedef enum

@@ -308,8 +308,6 @@ text_tool_options_new (void)
 		      &options->border);
   spinbutton =
     gtk_spin_button_new (GTK_ADJUSTMENT (options->border_w), 1.0, 0.0);
-  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
-				   GTK_SHADOW_NONE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_widget_set_usize (spinbutton, 75, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);

@@ -27,10 +27,10 @@
 
 
 #define GIMP_TYPE_IMAGE_DOCK            (gimp_image_dock_get_type ())
-#define GIMP_IMAGE_DOCK(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_IMAGE_DOCK, GimpImageDock))
-#define GIMP_IMAGE_DOCK_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_IMAGE_DOCK, GimpImageDockClass))
-#define GIMP_IS_IMAGE_DOCK(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_IMAGE_DOCK))
-#define GIMP_IS_IMAGE_DOCK_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_IMAGE_DOCK))
+#define GIMP_IMAGE_DOCK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_IMAGE_DOCK, GimpImageDock))
+#define GIMP_IMAGE_DOCK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_IMAGE_DOCK, GimpImageDockClass))
+#define GIMP_IS_IMAGE_DOCK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_IMAGE_DOCK))
+#define GIMP_IS_IMAGE_DOCK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_IMAGE_DOCK))
 
 
 typedef struct _GimpImageDockClass   GimpImageDockClass;

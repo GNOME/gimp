@@ -24,9 +24,9 @@
 
 
 #define GIMP_TYPE_SCALE_TOOL            (gimp_scale_tool_get_type ())
-#define GIMP_SCALE_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_SCALE_TOOL, GimpScaleTool))
-#define GIMP_IS_SCALE_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_SCALE_TOOL))
-#define GIMP_SCALE_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SCALE_TOOL, GimpScaleToolClass))
+#define GIMP_SCALE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SCALE_TOOL, GimpScaleTool))
+#define GIMP_IS_SCALE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SCALE_TOOL))
+#define GIMP_SCALE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SCALE_TOOL, GimpScaleToolClass))
 
 
 typedef struct _GimpScaleTool      GimpScaleTool;

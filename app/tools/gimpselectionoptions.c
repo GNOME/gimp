@@ -248,8 +248,6 @@ selection_options_init (SelectionOptions     *options,
 			    1.0, 50.0, 0.0);
       width_spinbutton =
 	gtk_spin_button_new (GTK_ADJUSTMENT (options->fixed_width_w), 1.0, 0.0);
-      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(width_spinbutton),
-				       GTK_SHADOW_NONE);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (width_spinbutton), TRUE);
       gtk_widget_set_usize (width_spinbutton, 75, 0);
       gtk_signal_connect (GTK_OBJECT (options->fixed_width_w), "value_changed",
@@ -264,8 +262,6 @@ selection_options_init (SelectionOptions     *options,
 			    1.0, 50.0, 0.0);
       height_spinbutton =
 	gtk_spin_button_new (GTK_ADJUSTMENT (options->fixed_height_w), 1.0, 0.0);
-      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(height_spinbutton),
-				       GTK_SHADOW_NONE);
       gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(height_spinbutton), TRUE);
       gtk_widget_set_usize (height_spinbutton, 75, 0);
       gtk_signal_connect (GTK_OBJECT (options->fixed_height_w), "value_changed",

@@ -75,7 +75,7 @@ gimp_undo_stack_class_init (GimpUndoStackClass *klass)
 
   object_class = (GtkObjectClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_UNDO);
+  parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy = gimp_undo_stack_destroy;
 }

@@ -58,10 +58,10 @@ static void       gimp_palette_entry_free       (GimpPaletteEntry  *entry);
 static GimpDataClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_palette_get_type (void)
 {
-  static GtkType palette_type = 0;
+  static GType palette_type = 0;
 
   if (! palette_type)
     {
@@ -94,7 +94,7 @@ gimp_palette_class_init (GimpPaletteClass *klass)
   viewable_class = (GimpViewableClass *) klass;
   data_class     = (GimpDataClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_DATA);
+  parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy = gimp_palette_destroy;
 
@@ -118,21 +118,17 @@ static void
 gimp_palette_destroy (GtkObject *object)
 {
   GimpPalette      *palette;
-  GimpPaletteEntry *entry;
-  GList            *list;
 
   g_return_if_fail (GIMP_IS_PALETTE (object));
 
   palette = GIMP_PALETTE (object);
 
-  for (list = palette->colors; list; list = g_list_next (list))
+  if (palette->colors)
     {
-      entry = (GimpPaletteEntry *) list->data;
-
-      gimp_palette_entry_free (entry);
+      g_list_foreach (palette->colors, (GFunc) gimp_palette_entry_free, NULL);
+      g_list_free (palette->colors);
+      palette->colors = NULL;
     }
-
-  g_list_free (palette->colors);
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -294,7 +290,7 @@ gimp_palette_load (const gchar *filename)
 		 filename, linenum);
 
       fclose (fp);
-      gtk_object_sink (GTK_OBJECT (palette));
+      g_object_unref (G_OBJECT (palette));
       return NULL;
     }
 
@@ -311,7 +307,7 @@ gimp_palette_load (const gchar *filename)
 		     filename, linenum);
 
 	  fclose (fp);
-	  gtk_object_sink (GTK_OBJECT (palette));
+	  g_object_unref (G_OBJECT (palette));
 	  return NULL;
 	}
 
@@ -340,7 +336,7 @@ gimp_palette_load (const gchar *filename)
 			 filename, linenum);
 
 	      fclose (fp);
-	      gtk_object_sink (GTK_OBJECT (palette));
+	      g_object_unref (G_OBJECT (palette));
 	      return NULL;
 	    }
 
@@ -407,7 +403,7 @@ gimp_palette_load (const gchar *filename)
 		     filename, linenum);
 
 	  fclose (fp);
-	  gtk_object_sink (GTK_OBJECT (palette));
+	  g_object_unref (G_OBJECT (palette));
 	  return NULL;
 	}
 

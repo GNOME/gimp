@@ -30,10 +30,10 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 #define GIMP_TYPE_OFFSET_AREA            (gimp_offset_area_get_type ())
-#define GIMP_OFFSET_AREA(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_OFFSET_AREA, GimpOffsetArea))
-#define GIMP_OFFSET_AREA_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_OFFSET_AREA, GimpOffsetAreaClass))
-#define GIMP_IS_OFFSET_AREA(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_OFFSET_AREA))
-#define GIMP_IS_OFFSET_AREA_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_OFFSET_AREA))
+#define GIMP_OFFSET_AREA(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OFFSET_AREA, GimpOffsetArea))
+#define GIMP_OFFSET_AREA_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_OFFSET_AREA, GimpOffsetAreaClass))
+#define GIMP_IS_OFFSET_AREA(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_OFFSET_AREA))
+#define GIMP_IS_OFFSET_AREA_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_OFFSET_AREA))
 
 
 typedef struct _GimpOffsetAreaClass  GimpOffsetAreaClass;

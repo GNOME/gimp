@@ -192,7 +192,9 @@ paint_options_init (PaintOptions         *options,
       gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
 
       options->paint_mode_w =
-	gimp_paint_mode_menu_new (paint_options_paint_mode_update, options, TRUE,
+	gimp_paint_mode_menu_new (G_CALLBACK (paint_options_paint_mode_update),
+				  options,
+				  TRUE,
 				  gimp_context_get_paint_mode (tool_info->context));
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 				 _("Mode:"), 1.0, 0.5,
@@ -566,8 +568,6 @@ paint_gradient_options_new (GtkType       tool_type,
                             1e-5, 32767.0, 1.0, 50.0, 0.0);
       spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (gradient->fade_out_w),
                                         1.0, 0.0);
-      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
-                                       GTK_SHADOW_NONE);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
       gtk_widget_set_usize (spinbutton, 75, 0);
       gtk_signal_connect (GTK_OBJECT (gradient->fade_out_w), "value_changed",
@@ -621,8 +621,6 @@ paint_gradient_options_new (GtkType       tool_type,
       spinbutton =
         gtk_spin_button_new (GTK_ADJUSTMENT (gradient->gradient_length_w),
                              1.0, 0.0);
-      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
-                                       GTK_SHADOW_NONE);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
       gtk_widget_set_usize (spinbutton, 75, 0);
       gtk_signal_connect (GTK_OBJECT (gradient->gradient_length_w), "value_changed",
@@ -654,16 +652,23 @@ paint_gradient_options_new (GtkType       tool_type,
       gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 3, 2, 3);
       gtk_widget_show (abox);
 
-      gradient->gradient_type_w = gimp_option_menu_new2
-        (FALSE, gimp_menu_item_update,
-         &gradient->gradient_type, (gpointer) gradient->gradient_type_d,
+      gradient->gradient_type_w =
+	gimp_option_menu_new2 (FALSE,
+			       G_CALLBACK (gimp_menu_item_update),
+			       &gradient->gradient_type,
+			       (gpointer) gradient->gradient_type_d,
 
-         _("Once Forward"),  (gpointer) ONCE_FORWARD, NULL,
-         _("Once Backward"), (gpointer) ONCE_BACKWARDS, NULL,
-         _("Loop Sawtooth"), (gpointer) LOOP_SAWTOOTH, NULL,
-         _("Loop Triangle"), (gpointer) LOOP_TRIANGLE, NULL,
+			       _("Once Forward"),
+			       GINT_TO_POINTER (ONCE_FORWARD), NULL,
+			       _("Once Backward"),
+			       GINT_TO_POINTER (ONCE_BACKWARDS), NULL,
+			       _("Loop Sawtooth"),
+			       GINT_TO_POINTER (LOOP_SAWTOOTH), NULL,
+			       _("Loop Triangle"),
+			       GINT_TO_POINTER (LOOP_TRIANGLE), NULL,
 
-         NULL);
+			       NULL);
+
       gtk_container_add (GTK_CONTAINER (abox), gradient->gradient_type_w);
       gtk_widget_show (gradient->gradient_type_w);
 

@@ -184,26 +184,29 @@ static guint gimp_image_signals[LAST_SIGNAL] = { 0 };
 static GimpViewableClass *parent_class = NULL;
 
 
-GtkType 
+GType 
 gimp_image_get_type (void) 
 {
-  static GtkType image_type = 0;
+  static GType image_type = 0;
 
   if (! image_type)
     {
-      GtkTypeInfo image_info =
+      static const GTypeInfo image_info =
       {
-        "GimpImage",
-        sizeof (GimpImage),
         sizeof (GimpImageClass),
-        (GtkClassInitFunc) gimp_image_class_init,
-        (GtkObjectInitFunc) gimp_image_init,
-        /* reserved_1 */ NULL,
-        /* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL,
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_image_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
+        sizeof (GimpImage),
+        0,              /* n_preallocs */
+        (GInstanceInitFunc) gimp_image_init,
       };
 
-      image_type = gtk_type_unique (GIMP_TYPE_VIEWABLE, &image_info);
+      image_type = g_type_register_static (GIMP_TYPE_VIEWABLE,
+					   "GimpImage",
+					   &image_info, 0);
     }
 
   return image_type;
@@ -220,134 +223,132 @@ gimp_image_class_init (GimpImageClass *klass)
   gimp_object_class = (GimpObjectClass *) klass;
   viewable_class    = (GimpViewableClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_VIEWABLE);
+  parent_class = g_type_class_peek_parent (klass);
 
   gimp_image_signals[MODE_CHANGED] =
-    gtk_signal_new ("mode_changed",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpImageClass,
-				       mode_changed),
-                    gtk_signal_default_marshaller,
-                    GTK_TYPE_NONE, 0);
+    g_signal_new ("mode_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpImageClass, mode_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   gimp_image_signals[ALPHA_CHANGED] =
-    gtk_signal_new ("alpha_changed",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpImageClass,
-				       alpha_changed),
-                    gtk_signal_default_marshaller,
-                    GTK_TYPE_NONE, 0);
+    g_signal_new ("alpha_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpImageClass, alpha_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   gimp_image_signals[FLOATING_SELECTION_CHANGED] =
-    gtk_signal_new ("floating_selection_changed",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpImageClass,
-				       floating_selection_changed),
-                    gtk_signal_default_marshaller,
-                    GTK_TYPE_NONE, 0);
+    g_signal_new ("floating_selection_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpImageClass, floating_selection_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   gimp_image_signals[ACTIVE_LAYER_CHANGED] =
-    gtk_signal_new ("active_layer_changed",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpImageClass,
-				       active_layer_changed),
-                    gtk_signal_default_marshaller,
-                    GTK_TYPE_NONE, 0);
+    g_signal_new ("active_layer_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpImageClass, active_layer_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   gimp_image_signals[ACTIVE_CHANNEL_CHANGED] =
-    gtk_signal_new ("active_channel_changed",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpImageClass,
-				       active_channel_changed),
-                    gtk_signal_default_marshaller,
-                    GTK_TYPE_NONE, 0);
+    g_signal_new ("active_channel_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpImageClass, active_channel_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   gimp_image_signals[COMPONENT_VISIBILITY_CHANGED] =
-    gtk_signal_new ("component_visibility_changed",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpImageClass,
-				       component_visibility_changed),
-                    gtk_marshal_NONE__INT,
-                    GTK_TYPE_NONE, 1,
-		    GTK_TYPE_INT);
+    g_signal_new ("component_visibility_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpImageClass, component_visibility_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__INT,
+		  G_TYPE_NONE, 1,
+		  G_TYPE_INT);
 
   gimp_image_signals[COMPONENT_ACTIVE_CHANGED] =
-    gtk_signal_new ("component_active_changed",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpImageClass,
-				       component_active_changed),
-                    gtk_marshal_NONE__INT,
-                    GTK_TYPE_NONE, 1,
-		    GTK_TYPE_INT);
+    g_signal_new ("component_active_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpImageClass, component_active_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__INT,
+		  G_TYPE_NONE, 1,
+		  G_TYPE_INT);
 
   gimp_image_signals[MASK_CHANGED] =
-    gtk_signal_new ("mask_changed",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpImageClass,
-				       mask_changed),
-                    gtk_signal_default_marshaller,
-                    GTK_TYPE_NONE, 0);
+    g_signal_new ("mask_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpImageClass, mask_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   gimp_image_signals[CLEAN] =
-    gtk_signal_new ("clean",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpImageClass,
-				       clean),
-                    gtk_signal_default_marshaller,
-                    GTK_TYPE_NONE, 0);
+    g_signal_new ("clean",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpImageClass, clean),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   gimp_image_signals[DIRTY] =
-    gtk_signal_new ("dirty",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpImageClass,
-				       dirty),
-                    gtk_signal_default_marshaller,
-                    GTK_TYPE_NONE, 0);
+    g_signal_new ("dirty",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpImageClass, dirty),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   gimp_image_signals[UPDATE] =
-    gtk_signal_new ("update",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpImageClass,
-				       update),
-                    gimp_marshal_NONE__INT_INT_INT_INT,
-                    GTK_TYPE_NONE, 4,
-		    GTK_TYPE_INT,
-		    GTK_TYPE_INT,
-		    GTK_TYPE_INT,
-		    GTK_TYPE_INT);
+    g_signal_new ("update",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpImageClass, update),
+		  NULL, NULL,
+		  gimp_cclosure_marshal_VOID__INT_INT_INT_INT,
+		  G_TYPE_NONE, 4,
+		  G_TYPE_INT,
+		  G_TYPE_INT,
+		  G_TYPE_INT,
+		  G_TYPE_INT);
 
   gimp_image_signals[COLORMAP_CHANGED] =
-    gtk_signal_new ("colormap_changed",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpImageClass,
-				       colormap_changed),
-                    gtk_marshal_NONE__INT,
-                    GTK_TYPE_NONE, 1,
-		    GTK_TYPE_INT);
+    g_signal_new ("colormap_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpImageClass, colormap_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__INT,
+		  G_TYPE_NONE, 1,
+		  G_TYPE_INT);
 
   gimp_image_signals[UNDO_EVENT] = 
-    gtk_signal_new ("undo_event",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpImageClass,
-				       undo_event),
-                    gtk_marshal_NONE__INT,
-                    GTK_TYPE_NONE, 1,
-		    GTK_TYPE_INT);
-
-  gtk_object_class_add_signals (object_class, gimp_image_signals, LAST_SIGNAL);
+    g_signal_new ("undo_event",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpImageClass, undo_event),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__INT,
+		  G_TYPE_NONE, 1,
+		  G_TYPE_INT);
 
   object_class->destroy               = gimp_image_destroy;
 
@@ -466,25 +467,25 @@ gimp_image_destroy (GtkObject *object)
   if (gimage->cmap)
     g_free (gimage->cmap);
   
-  gtk_object_unref (GTK_OBJECT (gimage->layers));
-  gtk_object_unref (GTK_OBJECT (gimage->channels));
+  g_object_unref (G_OBJECT (gimage->layers));
+  g_object_unref (G_OBJECT (gimage->channels));
   g_slist_free (gimage->layer_stack);
 
-  gtk_object_unref (GTK_OBJECT (gimage->selection_mask));
+  g_object_unref (G_OBJECT (gimage->selection_mask));
 
   if (gimage->comp_preview)
     temp_buf_free (gimage->comp_preview);
 
   if (gimage->parasites)
-    gtk_object_unref (GTK_OBJECT (gimage->parasites));
+    g_object_unref (G_OBJECT (gimage->parasites));
 
   g_list_foreach (gimage->guides, (GFunc) g_free, NULL);
   g_list_free (gimage->guides);
 
   undo_free (gimage);
 
-  gtk_object_unref (GTK_OBJECT (gimage->new_undo_stack));
-  gtk_object_unref (GTK_OBJECT (gimage->new_redo_stack));
+  g_object_unref (G_OBJECT (gimage->new_undo_stack));
+  g_object_unref (G_OBJECT (gimage->new_redo_stack));
 }
 
 static void
@@ -1712,9 +1713,8 @@ gimp_image_colormap_changed (GimpImage *gimage,
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (col < gimage->num_cols);
 
-  gtk_signal_emit (GTK_OBJECT (gimage),
-		   gimp_image_signals[COLORMAP_CHANGED],
-		   col);
+  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[COLORMAP_CHANGED], 0,
+		 col);
 }
 
 void
@@ -1722,7 +1722,7 @@ gimp_image_mode_changed (GimpImage *gimage)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[MODE_CHANGED]);
+  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[MODE_CHANGED], 0);
 }
 
 void
@@ -1730,7 +1730,7 @@ gimp_image_mask_changed (GimpImage *gimage)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[MASK_CHANGED]);
+  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[MASK_CHANGED], 0);
 }
 
 void
@@ -1738,7 +1738,7 @@ gimp_image_alpha_changed (GimpImage *gimage)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[ALPHA_CHANGED]);
+  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[ALPHA_CHANGED], 0);
 }
 
 void
@@ -1746,8 +1746,8 @@ gimp_image_floating_selection_changed (GimpImage *gimage)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gtk_signal_emit (GTK_OBJECT (gimage),
-		   gimp_image_signals[FLOATING_SELECTION_CHANGED]);
+  g_signal_emit (G_OBJECT (gimage),
+		 gimp_image_signals[FLOATING_SELECTION_CHANGED], 0);
 }
 
 void
@@ -1759,8 +1759,8 @@ gimp_image_update (GimpImage *gimage,
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[UPDATE],
-		   x, y, width, height);
+  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[UPDATE], 0,
+		 x, y, width, height);
 }
 
 
@@ -2556,9 +2556,9 @@ gimp_image_set_component_active (GimpImage   *gimage,
        */
       gimp_image_unset_active_channel (gimage);
 
-      gtk_signal_emit (GTK_OBJECT (gimage),
-		       gimp_image_signals[COMPONENT_ACTIVE_CHANGED],
-		       type);
+      g_signal_emit (G_OBJECT (gimage),
+		     gimp_image_signals[COMPONENT_ACTIVE_CHANGED], 0,
+		     type);
     }
 }
 
@@ -2624,9 +2624,9 @@ gimp_image_set_component_visible (GimpImage   *gimage,
     {
       gimage->visible[pixel] = visible ? TRUE : FALSE;
 
-      gtk_signal_emit (GTK_OBJECT (gimage),
-		       gimp_image_signals[COMPONENT_VISIBILITY_CHANGED],
-		       type);
+      g_signal_emit (G_OBJECT (gimage),
+		     gimp_image_signals[COMPONENT_VISIBILITY_CHANGED], 0,
+		     type);
     }
 }
 
@@ -2714,15 +2714,15 @@ gimp_image_set_active_layer (GimpImage *gimage,
     {
       gimage->active_layer = layer;
 
-      gtk_signal_emit (GTK_OBJECT (gimage),
-		       gimp_image_signals[ACTIVE_LAYER_CHANGED]);
+      g_signal_emit (G_OBJECT (gimage),
+		     gimp_image_signals[ACTIVE_LAYER_CHANGED], 0);
 
       if (gimage->active_channel)
 	{
 	  gimage->active_channel = NULL;
 
-	  gtk_signal_emit (GTK_OBJECT (gimage),
-			   gimp_image_signals[ACTIVE_CHANNEL_CHANGED]);
+	  g_signal_emit (G_OBJECT (gimage),
+			 gimp_image_signals[ACTIVE_CHANNEL_CHANGED], 0);
 	}
     }
 
@@ -2750,15 +2750,15 @@ gimp_image_set_active_channel (GimpImage   *gimage,
     {
       gimage->active_channel = channel;
 
-      gtk_signal_emit (GTK_OBJECT (gimage),
-		       gimp_image_signals[ACTIVE_CHANNEL_CHANGED]);
+      g_signal_emit (G_OBJECT (gimage),
+		     gimp_image_signals[ACTIVE_CHANNEL_CHANGED], 0);
 
       if (gimage->active_layer)
 	{
 	  gimage->active_layer = NULL;
 
-	  gtk_signal_emit (GTK_OBJECT (gimage),
-			   gimp_image_signals[ACTIVE_LAYER_CHANGED]);
+	  g_signal_emit (G_OBJECT (gimage),
+			 gimp_image_signals[ACTIVE_LAYER_CHANGED], 0);
 	}
     }
 
@@ -2779,8 +2779,8 @@ gimp_image_unset_active_channel (GimpImage *gimage)
     {
       gimage->active_channel = NULL;
 
-      gtk_signal_emit (GTK_OBJECT (gimage),
-		       gimp_image_signals[ACTIVE_CHANNEL_CHANGED]);
+      g_signal_emit (G_OBJECT (gimage),
+		     gimp_image_signals[ACTIVE_CHANNEL_CHANGED], 0);
 
       if (gimage->layer_stack)
 	{
@@ -3555,7 +3555,7 @@ gimp_image_remove_layer (GimpImage *gimage,
   
   undo_push_layer (gimage, LAYER_REMOVE_UNDO, lu);
 
-  gtk_object_ref (GTK_OBJECT (layer));
+  g_object_ref (G_OBJECT (layer));
 
   gimp_container_remove (gimage->layers, GIMP_OBJECT (layer));
   gimage->layer_stack = g_slist_remove (gimage->layer_stack, layer);  
@@ -3578,15 +3578,15 @@ gimp_image_remove_layer (GimpImage *gimage,
 	{
 	  gimage->active_layer = NULL;
 
-	  gtk_signal_emit (GTK_OBJECT (gimage),
-			   gimp_image_signals[ACTIVE_LAYER_CHANGED]);
+	  g_signal_emit (G_OBJECT (gimage),
+			 gimp_image_signals[ACTIVE_LAYER_CHANGED], 0);
 	}
     }
 
   /* Send out REMOVED signal from layer */
   gimp_drawable_removed (GIMP_DRAWABLE (layer));
 
-  gtk_object_unref (GTK_OBJECT (layer));
+  g_object_unref (G_OBJECT (layer));
 
   /*  invalidate the composite preview  */
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
@@ -3751,7 +3751,7 @@ gimp_image_remove_channel (GimpImage   *gimage,
   cu->prev_channel  = gimp_image_get_active_channel (gimage);
   undo_push_channel (gimage, CHANNEL_REMOVE_UNDO, cu);
 
-  gtk_object_ref (GTK_OBJECT (channel));
+  g_object_ref (G_OBJECT (channel));
 
   gimp_container_remove (gimage->channels, GIMP_OBJECT (channel));
 
@@ -3773,7 +3773,7 @@ gimp_image_remove_channel (GimpImage   *gimage,
 	}
     }
 
-  gtk_object_unref (GTK_OBJECT (channel));
+  g_object_unref (G_OBJECT (channel));
 
   /*  invalidate the composite preview  */
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (gimage));
@@ -3912,7 +3912,8 @@ void
 gimp_image_undo_event (GimpImage *gimage, 
 		       gint       event)
 {
-  gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[UNDO_EVENT], event);
+  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[UNDO_EVENT], 0,
+		 event);
 }
 
 
@@ -3952,7 +3953,8 @@ gimp_image_dirty (GimpImage *gimage)
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
   gimage->dirty++;
-  gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[DIRTY]);
+
+  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[DIRTY], 0);
 
   TRC (("dirty %d -> %d\n", gimage->dirty-1, gimage->dirty));
 
@@ -3965,7 +3967,8 @@ gimp_image_clean (GimpImage *gimage)
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
   gimage->dirty--;
-  gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[CLEAN]);
+
+  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[CLEAN], 0);
   
   TRC (("clean %d -> %d\n", gimage->dirty+1, gimage->dirty));
   
@@ -3979,7 +3982,7 @@ gimp_image_clean_all (GimpImage *gimage)
 
   gimage->dirty = 0;
 
-  gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[CLEAN]);
+  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[CLEAN], 0);
 }
 
 GimpLayer *

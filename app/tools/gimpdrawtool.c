@@ -85,19 +85,16 @@ gimp_draw_tool_class_init (GimpDrawToolClass *klass)
   object_class = (GtkObjectClass *) klass;
   tool_class   = (GimpToolClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_TOOL);
+  parent_class = g_type_class_peek_parent (klass);
 
   gimp_draw_tool_signals[DRAW] =
-    gtk_signal_new ("draw",
-    		    GTK_RUN_FIRST,
-    		    object_class->type,
-    		    GTK_SIGNAL_OFFSET (GimpDrawToolClass,
-    		    		       draw),
-    		    gtk_marshal_NONE__NONE,
-    		    GTK_TYPE_NONE, 0);
-
-  gtk_object_class_add_signals (object_class, gimp_draw_tool_signals,
-				LAST_SIGNAL);
+    g_signal_new ("draw",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpDrawToolClass, draw),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   object_class->destroy = gimp_draw_tool_destroy;
 

@@ -51,7 +51,7 @@ GtkWidget * device_status_create (void);
 gint   devices_check_change (GdkEvent     *event);
 
 /*  Loads stored device settings (tool, cursor, ...)  */
-void   select_device        (guint32       device);
+void   select_device        (GdkDevice    *device);
 
 /* Add information about one tool from rc file */
 void   devices_rc_update    (gchar        *name,
@@ -72,8 +72,8 @@ void   devices_rc_update    (gchar        *name,
 void   device_status_free   (void);
 
 
-/*  Current device id  */
-extern gint current_device;
+/*  Current device  */
+extern GdkDevice *current_device;
 
 
 #endif /* __DEVICES_H__ */

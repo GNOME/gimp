@@ -31,10 +31,10 @@ extern "C" {
 
 
 #define GIMP_TYPE_FILE_SELECTION            (gimp_file_selection_get_type ())
-#define GIMP_FILE_SELECTION(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_FILE_SELECTION, GimpFileSelection))
-#define GIMP_FILE_SELECTION_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FILE_SELECTION, GimpFileSelectionClass))
-#define GIMP_IS_FILE_SELECTION(obj)         (GTK_CHECK_TYPE (obj, GIMP_TYPE_FILE_SELECTION))
-#define GIMP_IS_FILE_SELECTION_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_FILE_SELECTION))
+#define GIMP_FILE_SELECTION(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FILE_SELECTION, GimpFileSelection))
+#define GIMP_FILE_SELECTION_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FILE_SELECTION, GimpFileSelectionClass))
+#define GIMP_IS_FILE_SELECTION(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_FILE_SELECTION))
+#define GIMP_IS_FILE_SELECTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_FILE_SELECTION))
 
 
 typedef struct _GimpFileSelectionClass  GimpFileSelectionClass;

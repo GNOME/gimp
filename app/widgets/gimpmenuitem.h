@@ -32,10 +32,10 @@ extern "C" {
 
 
 #define GIMP_TYPE_MENU_ITEM              (gimp_menu_item_get_type ())
-#define GIMP_MENU_ITEM(obj)              (GTK_CHECK_CAST ((obj), GIMP_TYPE_MENU_ITEM, GimpMenuItem))
-#define GIMP_MENU_ITEM_CLASS(klass)      (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MENU_ITEM, GimpMenuItemClass))
-#define GIMP_IS_MENU_ITEM(obj)           (GTK_CHECK_TYPE ((obj), GIMP_TYPE_MENU_ITEM))
-#define GIMP_IS_MENU_ITEM_CLASS(klass)   (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MENU_ITEM))
+#define GIMP_MENU_ITEM(obj)              (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MENU_ITEM, GimpMenuItem))
+#define GIMP_MENU_ITEM_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MENU_ITEM, GimpMenuItemClass))
+#define GIMP_IS_MENU_ITEM(obj)           (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MENU_ITEM))
+#define GIMP_IS_MENU_ITEM_CLASS(klass)   (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MENU_ITEM))
 
 
 typedef struct _GimpMenuItemClass  GimpMenuItemClass;

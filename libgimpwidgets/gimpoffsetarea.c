@@ -38,6 +38,7 @@ enum
   LAST_SIGNAL
 };
 
+
 static void      gimp_offset_area_destroy (GtkObject      *object);
 static void      gimp_offset_area_resize  (GimpOffsetArea *offset_area);
 static gboolean  gimp_offset_area_event   (GtkWidget      *widget,
@@ -62,30 +63,29 @@ gimp_offset_area_destroy (GtkObject *object)
 }
 
 static void
-gimp_offset_area_class_init (GimpOffsetAreaClass *class)
+gimp_offset_area_class_init (GimpOffsetAreaClass *klass)
 {
   GtkObjectClass *object_class;
   GtkWidgetClass *widget_class;
 
-  object_class = (GtkObjectClass *) class;
-  widget_class = (GtkWidgetClass *) class;
+  object_class = (GtkObjectClass *) klass;
+  widget_class = (GtkWidgetClass *) klass;
 
-  parent_class = gtk_type_class (gtk_drawing_area_get_type ());
+  parent_class = g_type_class_peek_parent (klass);
 
   gimp_offset_area_signals[OFFSETS_CHANGED] = 
-    gtk_signal_new ("offsets_changed",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpOffsetAreaClass,
-				       offsets_changed),
-                    gtk_marshal_NONE__INT_INT, 
-                    GTK_TYPE_NONE, 2,
-                    GTK_TYPE_INT, GTK_TYPE_INT);
-
-  gtk_object_class_add_signals (object_class, gimp_offset_area_signals, 
-				LAST_SIGNAL);
+    g_signal_new ("offsets_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpOffsetAreaClass, offsets_changed),
+		  NULL, NULL,
+		  gtk_marshal_VOID__INT_INT, 
+		  G_TYPE_NONE, 2,
+		  G_TYPE_INT,
+		  G_TYPE_INT);
 
   object_class->destroy = gimp_offset_area_destroy;
+
   widget_class->event   = gimp_offset_area_event;
 }
 

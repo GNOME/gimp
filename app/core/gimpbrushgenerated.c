@@ -94,7 +94,7 @@ gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass)
   object_class = (GtkObjectClass *) klass;
   data_class   = (GimpDataClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_BRUSH);
+  parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy = gimp_brush_generated_destroy;
 

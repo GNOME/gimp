@@ -28,6 +28,24 @@
 
 #include "pixmaps/chain.xpm"
 
+enum
+{
+  TOGGLED,
+  LAST_SIGNAL
+};
+
+static void   gimp_chain_button_class_init       (GimpChainButtonClass *klass);
+static void   gimp_chain_button_init             (GimpChainButton      *gcb);
+static void   gimp_chain_button_destroy          (GtkObject            *object);
+static void   gimp_chain_button_realize          (GtkWidget            *widget);
+
+static void   gimp_chain_button_clicked_callback (GtkWidget            *widget,
+						  GimpChainButton      *gcb);
+static gint   gimp_chain_button_draw_lines       (GtkWidget            *widget,
+						  GdkEventExpose       *eevent,
+						  GimpChainButton      *gcb);
+
+
 static gchar **gimp_chain_xpm[] =
 {
   chain_hor_xpm,
@@ -52,74 +70,62 @@ static guint gimp_chain_height[] =
   24
 };
 
-static void gimp_chain_button_destroy          (GtkObject       *object);
-static void gimp_chain_button_realize          (GtkWidget       *widget);
-
-static void gimp_chain_button_clicked_callback (GtkWidget       *widget,
-						GimpChainButton *gcb);
-static gint gimp_chain_button_draw_lines       (GtkWidget       *widget,
-						GdkEventExpose  *eevent,
-						GimpChainButton *gcb);
-
-enum
-{
-  TOGGLED,
-  LAST_SIGNAL
-};
 
 static guint gimp_chain_button_signals[LAST_SIGNAL] = { 0 };
 
 static GtkTableClass *parent_class = NULL;
 
 
-static void
-gimp_chain_button_destroy (GtkObject *object)
+GType
+gimp_chain_button_get_type (void)
 {
-  GimpChainButton *gcb = GIMP_CHAIN_BUTTON (object);
+  static GType gcb_type = 0;
 
-  g_return_if_fail (gcb != NULL);
+  if (! gcb_type)
+    {
+      GtkTypeInfo gcb_info =
+      {
+	"GimpChainButton",
+	sizeof (GimpChainButton),
+	sizeof (GimpChainButtonClass),
+	(GtkClassInitFunc) gimp_chain_button_class_init,
+	(GtkObjectInitFunc) gimp_chain_button_init,
+	/* reserved_1 */ NULL,
+	/* reserved_2 */ NULL,
+        (GtkClassInitFunc) NULL
+      };
 
-  if (gcb->broken)
-    gdk_pixmap_unref (gcb->broken);
-  if (gcb->broken_mask)
-    gdk_bitmap_unref (gcb->broken_mask);
+      gcb_type = gtk_type_unique (gtk_table_get_type (), &gcb_info);
+    }
 
-  if (gcb->chain)
-    gdk_pixmap_unref (gcb->chain);
-  if (gcb->chain_mask)
-    gdk_bitmap_unref (gcb->chain_mask);
-
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
+  return gcb_type;
 }
 
 static void
-gimp_chain_button_class_init (GimpChainButtonClass *class)
+gimp_chain_button_class_init (GimpChainButtonClass *klass)
 {
   GtkObjectClass *object_class;
   GtkWidgetClass *widget_class;
 
-  object_class = (GtkObjectClass*) class;
-  widget_class = (GtkWidgetClass *) class;
+  object_class = (GtkObjectClass *) klass;
+  widget_class = (GtkWidgetClass *) klass;
 
-  parent_class = gtk_type_class (gtk_table_get_type ());
+  parent_class = g_type_class_peek_parent (klass);
+
+  gimp_chain_button_signals[TOGGLED] = 
+    g_signal_new ("toggled",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpChainButtonClass, toggled),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   object_class->destroy = gimp_chain_button_destroy;
 
-  gimp_chain_button_signals[TOGGLED] = 
-    gtk_signal_new ("toggled",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpChainButtonClass,
-				       toggled),
-		    gtk_signal_default_marshaller, GTK_TYPE_NONE, 0);
-
-  gtk_object_class_add_signals (object_class, gimp_chain_button_signals, 
-				LAST_SIGNAL);
-
-  class->toggled = NULL;
-
   widget_class->realize = gimp_chain_button_realize;
+
+  klass->toggled        = NULL;
 }
 
 static void
@@ -151,29 +157,41 @@ gimp_chain_button_init (GimpChainButton *gcb)
 		      gcb);
 }
 
-GtkType
-gimp_chain_button_get_type (void)
+static void
+gimp_chain_button_destroy (GtkObject *object)
 {
-  static guint gcb_type = 0;
+  GimpChainButton *gcb;
 
-  if (!gcb_type)
+  g_return_if_fail (GIMP_IS_CHAIN_BUTTON (object));
+
+  gcb = GIMP_CHAIN_BUTTON (object);
+
+  if (gcb->broken)
     {
-      GtkTypeInfo gcb_info =
-      {
-	"GimpChainButton",
-	sizeof (GimpChainButton),
-	sizeof (GimpChainButtonClass),
-	(GtkClassInitFunc) gimp_chain_button_class_init,
-	(GtkObjectInitFunc) gimp_chain_button_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-        (GtkClassInitFunc) NULL
-      };
-
-      gcb_type = gtk_type_unique (gtk_table_get_type (), &gcb_info);
+      gdk_pixmap_unref (gcb->broken);
+      gcb->broken = NULL;
     }
 
-  return gcb_type;
+  if (gcb->broken_mask)
+    {
+      gdk_bitmap_unref (gcb->broken_mask);
+      gcb->broken_mask = NULL;
+    }
+
+  if (gcb->chain)
+    {
+      gdk_pixmap_unref (gcb->chain);
+      gcb->chain = NULL;
+    }
+
+  if (gcb->chain_mask)
+    {
+      gdk_bitmap_unref (gcb->chain_mask);
+      gcb->chain_mask = NULL;
+    }
+
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 /**

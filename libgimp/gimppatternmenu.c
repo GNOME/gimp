@@ -108,7 +108,8 @@ pattern_popup_open (gint     x,
   gtk_preview_size (GTK_PREVIEW (psel->device_patpreview), 
 		    psel->width, psel->height);
 
-  gtk_widget_popup (psel->device_patpopup, x, y);
+  gtk_widget_set_uposition (psel->device_patpopup, x, y);
+  gtk_widget_show (psel->device_patpopup);
   
   /*  Draw the pattern  */
   buf = g_new (gchar, psel->width * 3);

@@ -152,8 +152,8 @@ file_save_cmd_callback (GtkWidget *widget,
 	}
       else
 	{
-	  gchar *raw_filename;
-	  gint   status;
+	  const gchar *raw_filename;
+	  gint         status;
 
 	  raw_filename = g_basename (filename);
 	  

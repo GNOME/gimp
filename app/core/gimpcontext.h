@@ -76,10 +76,10 @@ typedef enum
 
 
 #define GIMP_TYPE_CONTEXT            (gimp_context_get_type ())
-#define GIMP_CONTEXT(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_CONTEXT, GimpContext))
-#define GIMP_CONTEXT_CLASS(klass)    (GTK_CHECK_CLASS_CAST (klass, GIMP_TYPE_CONTEXT, GimpContextClass))
-#define GIMP_IS_CONTEXT(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_CONTEXT))
-#define GIMP_IS_CONTEXT_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTEXT))
+#define GIMP_CONTEXT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTEXT, GimpContext))
+#define GIMP_CONTEXT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST (klass, GIMP_TYPE_CONTEXT, GimpContextClass))
+#define GIMP_IS_CONTEXT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTEXT))
+#define GIMP_IS_CONTEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTEXT))
 
 
 typedef struct _GimpContextClass GimpContextClass;
@@ -154,7 +154,7 @@ struct _GimpContextClass
 };
 
 
-GtkType       gimp_context_get_type          (void);
+GType         gimp_context_get_type          (void);
 
 GimpContext * gimp_context_new               (Gimp              *gimp,
 					      const gchar       *name,
@@ -195,17 +195,17 @@ void          gimp_context_copy_args         (GimpContext        *src,
 					      GimpContextArgMask  args_mask);
 
 
-/*  manipulate by GtkType  */
-GimpContextArgType   gimp_context_type_to_arg         (GtkType type);
-const gchar        * gimp_context_type_to_signal_name (GtkType type);
+/*  manipulate by GType  */
+GimpContextArgType   gimp_context_type_to_arg         (GType         type);
+const gchar        * gimp_context_type_to_signal_name (GType         type);
 
 GimpObject       * gimp_context_get_by_type        (GimpContext     *context,
-						    GtkType          type);
+						    GType            type);
 void               gimp_context_set_by_type        (GimpContext     *context,
-						    GtkType          type,
+						    GType            type,
 						    GimpObject      *object);
 void               gimp_context_changed_by_type    (GimpContext     *context,
-						    GtkType          type);
+						    GType            type);
 
 
 /*  image  */

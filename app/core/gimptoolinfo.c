@@ -79,7 +79,7 @@ gimp_tool_info_class_init (GimpToolInfoClass *klass)
   object_class   = (GtkObjectClass *) klass;
   viewable_class = (GimpViewableClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_DATA);
+  parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy = gimp_tool_info_destroy;
 
@@ -89,7 +89,7 @@ gimp_tool_info_class_init (GimpToolInfoClass *klass)
 void
 gimp_tool_info_init (GimpToolInfo *tool_info)
 {
-  tool_info->tool_type    = GTK_TYPE_NONE;
+  tool_info->tool_type    = G_TYPE_NONE;
 
   tool_info->blurb        = NULL;
   tool_info->help         = NULL;

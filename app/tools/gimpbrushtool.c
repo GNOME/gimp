@@ -44,6 +44,7 @@
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimpmarshal.h"
 
 #include "gimpdrawtool.h"
 #include "gimpdodgeburntool.h"
@@ -244,21 +245,18 @@ gimp_paint_tool_class_init (GimpPaintToolClass *klass)
   tool_class      = (GimpToolClass *) klass;
   draw_tool_class = (GimpDrawToolClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_DRAW_TOOL);
+  parent_class = g_type_class_peek_parent (klass);
 
   gimp_paint_tool_signals[PAINT] =
-    gtk_signal_new ("paint",
-    		    GTK_RUN_FIRST,
-    		    object_class->type,
-    		    GTK_SIGNAL_OFFSET (GimpPaintToolClass,
-    		    		       paint),
-		    gtk_marshal_NONE__POINTER_INT,
-		    GTK_TYPE_NONE, 2,
-		    GTK_TYPE_POINTER,
-		    GTK_TYPE_INT);
-
-  gtk_object_class_add_signals (object_class, gimp_paint_tool_signals,
-				LAST_SIGNAL);
+    g_signal_new ("paint",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpPaintToolClass, paint),
+		  NULL, NULL,
+		  gimp_cclosure_marshal_VOID__POINTER_INT,
+		  G_TYPE_NONE, 2,
+		  G_TYPE_POINTER,
+		  G_TYPE_INT);
 
   object_class->destroy      = gimp_paint_tool_destroy;
 
@@ -352,9 +350,11 @@ gimp_paint_tool_button_press (GimpTool       *tool,
 
   draw_line = FALSE;
 
-  paint_tool->curpressure = bevent->pressure;
-  paint_tool->curxtilt    = bevent->xtilt;
-  paint_tool->curytilt    = bevent->ytilt;
+#warning FIXME tilt, pressure
+
+  paint_tool->curpressure = 0; /* bevent->pressure; */
+  paint_tool->curxtilt    = 0; /* bevent->xtilt; */
+  paint_tool->curytilt    = 0; /* bevent->ytilt; */
   paint_tool->state       = bevent->state;
 
   if (gdisp != tool->gdisp ||
@@ -473,13 +473,11 @@ gimp_paint_tool_button_press (GimpTool       *tool,
        */
       if (paint_tool->lastx != paint_tool->curx
 	  || paint_tool->lasty != paint_tool->cury
-	  || (* GIMP_BRUSH_CLASS (GTK_OBJECT (paint_tool->brush)
-				  ->klass)->want_null_motion) (paint_tool))
+	  || GIMP_BRUSH_GET_CLASS (paint_tool->brush)->want_null_motion (paint_tool))
 	{
 	  if (paint_tool->flags & TOOL_CAN_HANDLE_CHANGING_BRUSH)
 	    paint_tool->brush =
-	      (* GIMP_BRUSH_CLASS (GTK_OBJECT (paint_tool->brush)
-				   ->klass)->select_brush) (paint_tool);
+	      GIMP_BRUSH_GET_CLASS (paint_tool->brush)->select_brush (paint_tool);
 
 	  gimp_paint_tool_paint (paint_tool, drawable, MOTION_PAINT);
 	}
@@ -551,9 +549,11 @@ gimp_paint_tool_motion (GimpTool       *tool,
       return;
     }
 
-  paint_tool->curpressure = mevent->pressure;
-  paint_tool->curxtilt    = mevent->xtilt;
-  paint_tool->curytilt    = mevent->ytilt;
+#warning FIXME: tilt, pressure
+
+  paint_tool->curpressure = 0; /* mevent->pressure; */
+  paint_tool->curxtilt    = 0; /* mevent->xtilt; */
+  paint_tool->curytilt    = 0; /* mevent->ytilt; */
   paint_tool->state       = mevent->state;
 
   gimp_paint_tool_interpolate (paint_tool,
@@ -619,7 +619,7 @@ gimp_paint_tool_cursor_update (GimpTool       *tool,
     {
       GtkType type;
 
-      type = GTK_OBJECT (tool)->klass->type;
+      type = G_TYPE_FROM_CLASS (G_OBJECT_GET_CLASS (tool));
 
       if (type == GIMP_TYPE_ERASER_TOOL)
 	{
@@ -1015,9 +1015,8 @@ gimp_paint_tool_interpolate (GimpPaintTool *paint_tool,
 	  current_brush = paint_tool->brush;
 
 	  if (paint_tool->flags & TOOL_CAN_HANDLE_CHANGING_BRUSH)
-	    paint_tool->brush     =
-	      (* GIMP_BRUSH_CLASS (GTK_OBJECT (paint_tool->brush)
-				   ->klass)->select_brush) (paint_tool);
+	    paint_tool->brush =
+	      GIMP_BRUSH_GET_CLASS (paint_tool->brush)->select_brush (paint_tool);
 	  gimp_paint_tool_paint(paint_tool, drawable, MOTION_PAINT);
 
 	  /*  restore the current brush pointer  */
@@ -1056,7 +1055,7 @@ gimp_paint_tool_finish (GimpPaintTool *paint_tool,
 
   pu = g_new0 (PaintUndo, 1);
   pu->tool_ID      = GIMP_TOOL (paint_tool)->ID;
-  pu->tool_type    = GTK_OBJECT (paint_tool)->klass->type;
+  pu->tool_type    = G_TYPE_FROM_CLASS (G_OBJECT_GET_CLASS (paint_tool));
   pu->lastx        = paint_tool->startx;
   pu->lasty        = paint_tool->starty;
   pu->lastpressure = paint_tool->startpressure;
@@ -1319,7 +1318,7 @@ gimp_paint_tool_calculate_brush_size (MaskBuf *mask,
 {
   scale = CLAMP (scale, 0.0, 1.0);
 
-  if (current_device == GDK_CORE_POINTER)
+  if (current_device == gdk_core_pointer)
     {
       *width  = mask->width;
       *height = mask->height;
@@ -1639,7 +1638,7 @@ gimp_paint_tool_get_brush_mask (GimpPaintTool	     *paint_tool,
 {
   MaskBuf *mask;
 
-  if (current_device == GDK_CORE_POINTER)
+  if (current_device == gdk_core_pointer)
     mask = paint_tool->brush->mask;
   else
     mask = gimp_paint_tool_scale_mask (paint_tool->brush->mask, scale);

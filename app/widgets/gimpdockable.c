@@ -37,13 +37,13 @@ static void   gimp_dockable_init       (GimpDockable      *dockable);
 static void   gimp_dockable_destroy    (GtkObject         *object);
 
 
-static GtkVBoxClass *parent_class = NULL;
+static GtkBinClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_dockable_get_type (void)
 {
-  static GtkType dockable_type = 0;
+  static GType dockable_type = 0;
 
   if (! dockable_type)
     {
@@ -72,7 +72,7 @@ gimp_dockable_class_init (GimpDockableClass *klass)
 
   object_class = (GtkObjectClass *) klass;
 
-  parent_class = gtk_type_class (GTK_TYPE_VBOX);
+  parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy = gimp_dockable_destroy;
 }
@@ -83,6 +83,7 @@ gimp_dockable_init (GimpDockable *dockable)
   dockable->name             = NULL;
   dockable->short_name       = NULL;
   dockable->dockbook         = NULL;
+  dockable->context          = NULL;
   dockable->get_tab_func     = NULL;
   dockable->set_context_func = NULL;
 }
@@ -94,10 +95,22 @@ gimp_dockable_destroy (GtkObject *object)
 
   dockable = GIMP_DOCKABLE (object);
 
-  gimp_dockable_set_context (dockable, NULL);
+  g_print ("gimp_dockable_destroy()\n");
 
-  g_free (dockable->name);
-  g_free (dockable->short_name);
+  if (dockable->context)
+    gimp_dockable_set_context (dockable, NULL);
+
+  if (dockable->name)
+    {
+      g_free (dockable->name);
+      dockable->name = NULL;
+    }
+
+  if (dockable->short_name)
+    {
+      g_free (dockable->short_name);
+      dockable->short_name = NULL;
+    }
 
   if (GTK_OBJECT_CLASS (parent_class))
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -130,12 +143,8 @@ gimp_dockable_get_tab_widget (GimpDockable *dockable,
 			      GimpDockbook *dockbook,
 			      gint          size)
 {
-  g_return_val_if_fail (dockable != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
-
-  g_return_val_if_fail (dockbook != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_DOCKBOOK (dockbook), NULL);
-
   g_return_val_if_fail (size >= -1 && size < 64, NULL);
 
   if (dockable->get_tab_func)
@@ -150,13 +159,16 @@ void
 gimp_dockable_set_context (GimpDockable *dockable,
 			   GimpContext  *context)
 {
-  g_return_if_fail (dockable != NULL);
   g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
-
   g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
 
-  if (dockable->set_context_func)
+  if (context != dockable->context)
     {
-      dockable->set_context_func (dockable, context);
+      if (dockable->set_context_func)
+	{
+	  dockable->set_context_func (dockable, context);
+	}
+
+      dockable->context = context;
     }
 }

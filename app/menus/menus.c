@@ -1634,7 +1634,7 @@ menus_filters_subdirs_to_top (GtkMenu *menu)
       GtkWidget *separator;
 
       separator = gtk_menu_item_new ();
-      gtk_menu_insert (menu, separator, pos);
+      gtk_menu_shell_insert (GTK_MENU_SHELL (menu), separator, pos);
       gtk_widget_show (separator);
     }
 }
@@ -2473,7 +2473,7 @@ menus_init (void)
     if (menu_item && menu_item->parent)
       {
 	separator = gtk_menu_item_new ();
-	gtk_menu_insert (GTK_MENU (menu_item->parent), separator, pos);
+	gtk_menu_shell_insert (GTK_MENU_SHELL (menu_item->parent), separator, pos);
 	gtk_widget_show (separator);
       }
   }

@@ -423,9 +423,10 @@ ink_options_new (void)
 			     _("Size:"), 1.0, 1.0,
 			     slider, 1, FALSE);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (options->size_w), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &options->size);
+
+  g_signal_connect (G_OBJECT (options->size_w), "value_changed",
+		    G_CALLBACK (gimp_double_adjustment_update),
+		    &options->size);
 
   /* angle adjust slider */
   options->tilt_angle_w =
@@ -436,9 +437,10 @@ ink_options_new (void)
 			     _("Angle:"), 1.0, 1.0,
 			     slider, 1, FALSE);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (options->tilt_angle_w), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &options->tilt_angle);
+
+  g_signal_connect (G_OBJECT (options->tilt_angle_w), "value_changed",
+		    G_CALLBACK (gimp_double_adjustment_update),
+		    &options->tilt_angle);
 
   /* sens sliders */
   frame = gtk_frame_new (_("Sensitivity"));
@@ -461,9 +463,10 @@ ink_options_new (void)
 			     _("Size:"), 1.0, 1.0,
 			     slider, 1, FALSE);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (options->sensitivity_w), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &options->sensitivity);
+
+  g_signal_connect (G_OBJECT (options->sensitivity_w), "value_changed",
+		    G_CALLBACK (gimp_double_adjustment_update),
+		    &options->sensitivity);
   
   /* tilt sens slider */
   options->tilt_sensitivity_w =
@@ -474,9 +477,10 @@ ink_options_new (void)
 			     _("Tilt:"), 1.0, 1.0,
 			     slider, 1, FALSE);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (options->tilt_sensitivity_w), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &options->tilt_sensitivity);
+
+  g_signal_connect (G_OBJECT (options->tilt_sensitivity_w), "value_changed",
+		    G_CALLBACK (gimp_double_adjustment_update),
+		    &options->tilt_sensitivity);
 
   /* velocity sens slider */
   options->vel_sensitivity_w =
@@ -487,9 +491,10 @@ ink_options_new (void)
 			     _("Speed:"), 1.0, 1.0,
 			     slider, 1, FALSE);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (options->vel_sensitivity_w), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &options->vel_sensitivity);
+
+  g_signal_connect (G_OBJECT (options->vel_sensitivity_w), "value_changed",
+		    G_CALLBACK (gimp_double_adjustment_update),
+		    &options->vel_sensitivity);
 
   /*  bottom hbox */
   hbox = gtk_hbox_new (FALSE, 2);
@@ -518,12 +523,13 @@ ink_options_new (void)
   gtk_misc_set_padding (GTK_MISC (pixmap_widget), 6, 0);
 
   radio_button = gtk_radio_button_new (NULL);
-  gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-		      GTK_SIGNAL_FUNC (ink_type_update), 
-		      (gpointer)blob_ellipse);
-
   gtk_container_add (GTK_CONTAINER (radio_button), pixmap_widget);
   gtk_box_pack_start (GTK_BOX (vbox), radio_button, FALSE, FALSE, 0);
+
+  g_signal_connect (G_OBJECT (radio_button), "toggled",
+		    G_CALLBACK (ink_type_update),
+		    (gpointer) blob_ellipse);
+
 
   options->function_w[0] = radio_button;
 
@@ -537,12 +543,13 @@ ink_options_new (void)
 
   radio_button =
     gtk_radio_button_new_from_widget (GTK_RADIO_BUTTON (radio_button));
-  gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-		      GTK_SIGNAL_FUNC (ink_type_update), 
-		      (gpointer)blob_square);
-  
   gtk_container_add (GTK_CONTAINER (radio_button), pixmap_widget);
   gtk_box_pack_start (GTK_BOX (vbox), radio_button, FALSE, FALSE, 0);
+
+  g_signal_connect (G_OBJECT (radio_button), "toggled",
+		    G_CALLBACK (ink_type_update), 
+		    (gpointer) blob_square);
+  
 
   options->function_w[1] = radio_button;
 
@@ -556,12 +563,13 @@ ink_options_new (void)
 
   radio_button =
     gtk_radio_button_new_from_widget (GTK_RADIO_BUTTON (radio_button));
-  gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-		      GTK_SIGNAL_FUNC (ink_type_update), 
-		      (gpointer)blob_diamond);
-
   gtk_container_add (GTK_CONTAINER (radio_button), pixmap_widget);
   gtk_box_pack_start (GTK_BOX (vbox), radio_button, FALSE, FALSE, 0);
+
+  g_signal_connect (G_OBJECT (radio_button), "toggled",
+		    G_CALLBACK (ink_type_update), 
+		    (gpointer) blob_diamond);
+
 
   options->function_w[2] = radio_button;
 
@@ -591,21 +599,22 @@ ink_options_new (void)
   gtk_widget_set_events (darea, 
 			 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK
 			 | GDK_POINTER_MOTION_MASK | GDK_EXPOSURE_MASK);
-  gtk_signal_connect (GTK_OBJECT (darea), "button_press_event",
-		      GTK_SIGNAL_FUNC (brush_widget_button_press),
-		      options->brush_w);
-  gtk_signal_connect (GTK_OBJECT (darea), "button_release_event",
-		      GTK_SIGNAL_FUNC (brush_widget_button_release),
-		      options->brush_w);
-  gtk_signal_connect (GTK_OBJECT (darea), "motion_notify_event",
-		      GTK_SIGNAL_FUNC (brush_widget_motion_notify),
-		      options->brush_w);
-  gtk_signal_connect (GTK_OBJECT (darea), "expose_event",
-		      GTK_SIGNAL_FUNC (brush_widget_expose), 
-		      options->brush_w);
-  gtk_signal_connect (GTK_OBJECT (darea), "realize",
-		      GTK_SIGNAL_FUNC (brush_widget_realize),
-		      options->brush_w);
+
+  g_signal_connect (G_OBJECT (darea), "button_press_event",
+		    G_CALLBACK (brush_widget_button_press),
+		    options->brush_w);
+  g_signal_connect (G_OBJECT (darea), "button_release_event",
+		    G_CALLBACK (brush_widget_button_release),
+		    options->brush_w);
+  g_signal_connect (G_OBJECT (darea), "motion_notify_event",
+		    G_CALLBACK (brush_widget_motion_notify),
+		    options->brush_w);
+  g_signal_connect (G_OBJECT (darea), "expose_event",
+		    G_CALLBACK (brush_widget_expose), 
+		    options->brush_w);
+  g_signal_connect (G_OBJECT (darea), "realize",
+		    G_CALLBACK (brush_widget_realize),
+		    options->brush_w);
 
   gtk_widget_show_all (hbox);
 
@@ -942,8 +951,12 @@ ink_button_press (GimpTool       *tool,
   tool->gdisp = gdisp;
   tool->state = ACTIVE;
 
-  b = ink_pen_ellipse (x, y, 
-		       bevent->pressure, bevent->xtilt, bevent->ytilt, 10.0);
+#warning FIXME: presure, tilt
+
+  b = ink_pen_ellipse (x, y,
+		       0, 0, 0,
+		       /* bevent->pressure, bevent->xtilt, bevent->ytilt, */
+		       10.0);
 
   ink_paste (ink_tool, drawable, b);
   ink_tool->last_blob = b;
@@ -1124,10 +1137,15 @@ ink_motion (GimpTool       *tool,
   ink_tool->lastx = x;
   ink_tool->lasty = y;
 
-  pressure = mevent->pressure;
+#warning FIXME: tilt, pressure
+
+  pressure = 0; /* mevent->pressure; */
   velocity = 10.0 * sqrt ((dist) / (double) (thistime - lasttime));
-  
-  b = ink_pen_ellipse (x, y, pressure, mevent->xtilt, mevent->ytilt, velocity);
+
+#warning FIXME: tilt, pressure
+
+  b = ink_pen_ellipse (x, y, pressure, 0, 0,
+		       /* mevent->xtilt, mevent->ytilt, */ velocity);
   blob_union = blob_convex_union (ink_tool->last_blob, b);
   g_free (ink_tool->last_blob);
   ink_tool->last_blob = b;

@@ -139,7 +139,7 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
   grid_view->name_label = gtk_label_new (_("(None)"));
   gtk_misc_set_alignment (GTK_MISC (grid_view->name_label), 0.0, 0.5);
   gtk_misc_set_padding (GTK_MISC (grid_view->name_label),
-			grid_view->name_label->style->klass->xthickness, 0);
+			grid_view->name_label->style->xthickness, 0);
   gtk_box_pack_start (GTK_BOX (grid_view), grid_view->name_label,
 		      FALSE, FALSE, 0);
   gtk_widget_show (grid_view->name_label);
@@ -162,7 +162,7 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
 
   gtk_widget_set_style
     (grid_view->wrap_box->parent,
-     GIMP_CONTAINER_GRID_VIEW_CLASS (GTK_OBJECT (grid_view)->klass)->white_style);
+     GIMP_CONTAINER_GRID_VIEW_GET_CLASS (grid_view)->white_style);
 
   gtk_container_set_focus_vadjustment
     (GTK_CONTAINER (grid_view->wrap_box->parent),
@@ -215,8 +215,8 @@ gimp_container_grid_view_new (GimpContainer *container,
 
   window_border =
     GTK_SCROLLED_WINDOW (grid_view->scrolled_win)->vscrollbar->requisition.width +
-    GTK_SCROLLED_WINDOW_CLASS (GTK_OBJECT (grid_view->scrolled_win)->klass)->scrollbar_spacing +
-    grid_view->scrolled_win->style->klass->xthickness * 4;
+    GTK_SCROLLED_WINDOW_GET_CLASS (grid_view->scrolled_win)->scrollbar_spacing +
+    grid_view->scrolled_win->style->xthickness * 4;
 
   gtk_widget_set_usize (grid_view->scrolled_win,
 			(preview_size + 2) * min_items_x + window_border,

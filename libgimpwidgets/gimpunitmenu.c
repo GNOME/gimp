@@ -35,81 +35,35 @@
 #include "libgimp/libgimp-intl.h"
 
 
-/*  private functions  */
-static const gchar * gimp_unit_menu_build_string (const gchar *format,
-						  GimpUnit     unit);
-static void          gimp_unit_menu_callback     (GtkWidget   *widget,
-						  gpointer     data);
-
 enum
 {
   UNIT_CHANGED,
   LAST_SIGNAL
 };
 
+
+static void          gimp_unit_menu_class_init   (GimpUnitMenuClass *klass);
+static void          gimp_unit_menu_init         (GimpUnitMenu      *gum);
+
+static void          gimp_unit_menu_destroy      (GtkObject   *object);
+
+static const gchar * gimp_unit_menu_build_string (const gchar *format,
+						  GimpUnit     unit);
+static void          gimp_unit_menu_callback     (GtkWidget   *widget,
+						  gpointer     data);
+
+
 static guint gimp_unit_menu_signals[LAST_SIGNAL] = { 0 };
 
 static GtkOptionMenuClass *parent_class = NULL;
 
-static void
-gimp_unit_menu_destroy (GtkObject *object)
-{
-  GimpUnitMenu *gum;
 
-  g_return_if_fail (object != NULL);
-  g_return_if_fail (GIMP_IS_UNIT_MENU (object));
-
-  gum = GIMP_UNIT_MENU (object);
-
-  if (gum->format)
-    g_free (gum->format);
-
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
-}
-
-static void
-gimp_unit_menu_class_init (GimpUnitMenuClass *klass)
-{
-  GtkObjectClass *object_class;
-
-  object_class = (GtkObjectClass*) klass;
-
-  parent_class = gtk_type_class (gtk_option_menu_get_type ());
-
-  gimp_unit_menu_signals[UNIT_CHANGED] = 
-    gtk_signal_new ("unit_changed",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpUnitMenuClass,
-				       unit_changed),
-		    gtk_signal_default_marshaller, GTK_TYPE_NONE, 0);
-
-  gtk_object_class_add_signals (object_class, gimp_unit_menu_signals, 
-				LAST_SIGNAL);
-
-  klass->unit_changed = NULL;
-
-  object_class->destroy = gimp_unit_menu_destroy;
-}
-
-static void
-gimp_unit_menu_init (GimpUnitMenu *gum)
-{
-  gum->format       = NULL;
-  gum->unit         = GIMP_UNIT_PIXEL;
-  gum->show_pixels  = FALSE;
-  gum->show_percent = FALSE;
-  gum->selection    = NULL;
-  gum->clist        = NULL;
-}
-
-GtkType
+GType
 gimp_unit_menu_get_type (void)
 {
-  static GtkType gum_type = 0;
+  static GType gum_type = 0;
 
-  if (!gum_type)
+  if (! gum_type)
     {
       GtkTypeInfo gum_info =
       {
@@ -127,6 +81,59 @@ gimp_unit_menu_get_type (void)
     }
   
   return gum_type;
+}
+
+static void
+gimp_unit_menu_class_init (GimpUnitMenuClass *klass)
+{
+  GtkObjectClass *object_class;
+
+  object_class = (GtkObjectClass *) klass;
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  gimp_unit_menu_signals[UNIT_CHANGED] = 
+    g_signal_new ("unit_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpUnitMenuClass, unit_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
+
+  object_class->destroy = gimp_unit_menu_destroy;
+
+  klass->unit_changed   = NULL;
+}
+
+static void
+gimp_unit_menu_init (GimpUnitMenu *gum)
+{
+  gum->format       = NULL;
+  gum->unit         = GIMP_UNIT_PIXEL;
+  gum->show_pixels  = FALSE;
+  gum->show_percent = FALSE;
+  gum->selection    = NULL;
+  gum->clist        = NULL;
+}
+
+static void
+gimp_unit_menu_destroy (GtkObject *object)
+{
+  GimpUnitMenu *gum;
+
+  g_return_if_fail (GIMP_IS_UNIT_MENU (object));
+
+  gum = GIMP_UNIT_MENU (object);
+
+  if (gum->format)
+    {
+      g_free (gum->format);
+      gum->format = NULL;
+    }
+
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 /**
@@ -187,7 +194,7 @@ gimp_unit_menu_new (const gchar *format,
 	      menuitem =
 		gtk_menu_item_new_with_label
 		(gimp_unit_menu_build_string (format, GIMP_UNIT_PERCENT));
-	      gtk_menu_append (GTK_MENU (menu), menuitem);
+	      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 				  GTK_SIGNAL_FUNC (gimp_unit_menu_callback),
 				  gum);
@@ -199,7 +206,7 @@ gimp_unit_menu_new (const gchar *format,
 	  if (show_pixels || show_percent)
 	    {
 	      menuitem = gtk_menu_item_new ();
-	      gtk_menu_append (GTK_MENU (menu), menuitem);
+	      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	      gtk_widget_set_sensitive (menuitem, FALSE);
 	      gtk_widget_show (menuitem);
 	    }
@@ -207,7 +214,7 @@ gimp_unit_menu_new (const gchar *format,
 
       menuitem =
 	gtk_menu_item_new_with_label (gimp_unit_menu_build_string (format, u));
-      gtk_menu_append (GTK_MENU (menu), menuitem);
+      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
       gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			  GTK_SIGNAL_FUNC (gimp_unit_menu_callback),
 			  gum);
@@ -220,13 +227,13 @@ gimp_unit_menu_new (const gchar *format,
       (unit != GIMP_UNIT_PERCENT))
     {
       menuitem = gtk_menu_item_new ();
-      gtk_menu_append (GTK_MENU (menu), menuitem);
+      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
       gtk_widget_set_sensitive (menuitem, FALSE);
       gtk_widget_show (menuitem);
       
       menuitem =
 	gtk_menu_item_new_with_label (gimp_unit_menu_build_string (format, unit));
-      gtk_menu_append (GTK_MENU (menu), menuitem);
+      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
       gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			  GTK_SIGNAL_FUNC (gimp_unit_menu_callback),
 			  gum);
@@ -238,13 +245,13 @@ gimp_unit_menu_new (const gchar *format,
   if (show_custom)
     {
       menuitem = gtk_menu_item_new ();
-      gtk_menu_append (GTK_MENU (menu), menuitem);
+      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
       gtk_widget_set_sensitive (menuitem, FALSE);
       gtk_widget_show (menuitem);
 
       menuitem =
 	gtk_menu_item_new_with_label (_("More..."));
-      gtk_menu_append (GTK_MENU (menu), menuitem);
+      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
       gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			  GTK_SIGNAL_FUNC (gimp_unit_menu_callback),
 			  gum);
@@ -310,7 +317,7 @@ gimp_unit_menu_set_unit (GimpUnitMenu *gum,
 	}
 
       menuitem = gtk_menu_item_new ();
-      gtk_menu_append (GTK_MENU (GTK_OPTION_MENU (gum)->menu), menuitem);
+      gtk_menu_shell_append (GTK_MENU_SHELL (GTK_OPTION_MENU (gum)->menu), menuitem);
       gtk_widget_set_sensitive (menuitem, FALSE);
       gtk_menu_reorder_child (GTK_MENU (GTK_OPTION_MENU (gum)->menu),
 			      menuitem, user_unit - 1);
@@ -319,7 +326,8 @@ gimp_unit_menu_set_unit (GimpUnitMenu *gum,
       menuitem =
 	gtk_menu_item_new_with_label (gimp_unit_menu_build_string (gum->format,
 								   unit));
-      gtk_menu_append (GTK_MENU (GTK_OPTION_MENU (gum)->menu), menuitem);
+      gtk_menu_shell_append (GTK_MENU_SHELL (GTK_OPTION_MENU (gum)->menu),
+			     menuitem);
       gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			  GTK_SIGNAL_FUNC (gimp_unit_menu_callback),
 			  gum);

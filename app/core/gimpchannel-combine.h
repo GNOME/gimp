@@ -28,10 +28,10 @@
 
 
 #define GIMP_TYPE_CHANNEL            (gimp_channel_get_type ())
-#define GIMP_CHANNEL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_CHANNEL, GimpChannel))
-#define GIMP_CHANNEL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CHANNEL, GimpChannelClass))
-#define GIMP_IS_CHANNEL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_CHANNEL))
-#define GIMP_IS_CHANNEL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CHANNEL))
+#define GIMP_CHANNEL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CHANNEL, GimpChannel))
+#define GIMP_CHANNEL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CHANNEL, GimpChannelClass))
+#define GIMP_IS_CHANNEL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CHANNEL))
+#define GIMP_IS_CHANNEL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CHANNEL))
 
 
 typedef struct _GimpChannelClass GimpChannelClass;

@@ -226,13 +226,15 @@ gimp_shear_tool_transform (GimpTransformTool       *transform_tool,
 				      _("Shear Magnitude X:"),
 				      &xshear_val,
 				      -65536, 65536, 1, 15, 1, 1, 0,
-				      shear_x_mag_changed, tool);
+				      G_CALLBACK (shear_x_mag_changed),
+				      tool);
 
 	  info_dialog_add_spinbutton (transform_info,
 				      _("Y:"),
 				      &yshear_val,
 				      -65536, 65536, 1, 15, 1, 1, 0,
-				      shear_y_mag_changed, tool);
+				      G_CALLBACK (shear_y_mag_changed),
+				      tool);
 	}
       gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), TRUE);
       transform_tool->trans_info[HORZ_OR_VERT] = ORIENTATION_UNKNOWN;

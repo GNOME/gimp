@@ -24,10 +24,10 @@
 
 
 #define GIMP_TYPE_LEVELS_TOOL            (gimp_levels_tool_get_type ())
-#define GIMP_LEVELS_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_LEVELS_TOOL, GimpLevelsTool))
-#define GIMP_IS_LEVELS_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_LEVELS_TOOL))
-#define GIMP_LEVELS_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LEVELS_TOOL, GimpLevelsToolClass))
-#define GIMP_IS_LEVELS_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LEVELS_TOOL))
+#define GIMP_LEVELS_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_LEVELS_TOOL, GimpLevelsTool))
+#define GIMP_IS_LEVELS_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_LEVELS_TOOL))
+#define GIMP_LEVELS_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LEVELS_TOOL, GimpLevelsToolClass))
+#define GIMP_IS_LEVELS_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LEVELS_TOOL))
 
 
 typedef struct _GimpLevelsTool      GimpLevelsTool;

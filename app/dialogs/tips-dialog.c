@@ -89,7 +89,9 @@ tips_dialog_create (void)
   if (tips_dialog)
     return tips_dialog;
 
-  tips_dialog = gtk_window_new (GTK_WINDOW_DIALOG);
+  tips_dialog = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  gtk_window_set_type_hint (GTK_WINDOW (tips_dialog),
+			    GDK_WINDOW_TYPE_HINT_DIALOG);
   gtk_window_set_wmclass (GTK_WINDOW (tips_dialog), "tip_of_the_day", "Gimp");
   gtk_window_set_title (GTK_WINDOW (tips_dialog), _("GIMP Tip of the Day"));
   gtk_window_set_position (GTK_WINDOW (tips_dialog), GTK_WIN_POS_CENTER);

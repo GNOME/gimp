@@ -807,7 +807,7 @@ clone_options_new (void)
   vbox = ((GimpToolOptions *) options)->main_vbox;
 
   frame = gimp_radio_group_new2 (TRUE, _("Source"),
-				 gimp_radio_button_update,
+				 G_CALLBACK (gimp_radio_button_update),
 				 &options->type, (gpointer) options->type,
 
 				 _("Image Source"), (gpointer) IMAGE_CLONE,
@@ -821,7 +821,7 @@ clone_options_new (void)
   gtk_widget_show (frame);
 
   frame = gimp_radio_group_new2 (TRUE, _("Alignment"),
-				 gimp_radio_button_update,
+				 G_CALLBACK (gimp_radio_button_update),
 				 &options->aligned, (gpointer) options->aligned,
 
 				 _("Non Aligned"), (gpointer) ALIGN_NO,

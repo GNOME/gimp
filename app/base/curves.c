@@ -695,14 +695,16 @@ curves_dialog_new (void)
   gtk_box_pack_start (GTK_BOX (channel_hbox), label, FALSE, FALSE, 0);
 
   cd->channel_menu = gimp_option_menu_new2
-    (FALSE, curves_channel_callback,
-     cd, (gpointer) cd->channel,
+    (FALSE,
+     G_CALLBACK (curves_channel_callback),
+     cd,
+     GINT_TO_POINTER (cd->channel),
 
-     _("Value"), (gpointer) GIMP_HISTOGRAM_VALUE, &channel_items[0],
-     _("Red"),   (gpointer) GIMP_HISTOGRAM_RED,   &channel_items[1],
-     _("Green"), (gpointer) GIMP_HISTOGRAM_GREEN, &channel_items[2],
-     _("Blue"),  (gpointer) GIMP_HISTOGRAM_BLUE,  &channel_items[3],
-     _("Alpha"), (gpointer) GIMP_HISTOGRAM_ALPHA, &channel_items[4],
+     _("Value"), GINT_TO_POINTER (GIMP_HISTOGRAM_VALUE), &channel_items[0],
+     _("Red"),   GINT_TO_POINTER (GIMP_HISTOGRAM_RED),   &channel_items[1],
+     _("Green"), GINT_TO_POINTER (GIMP_HISTOGRAM_GREEN), &channel_items[2],
+     _("Blue"),  GINT_TO_POINTER (GIMP_HISTOGRAM_BLUE),  &channel_items[3],
+     _("Alpha"), GINT_TO_POINTER (GIMP_HISTOGRAM_ALPHA), &channel_items[4],
 
      NULL);
 
@@ -729,9 +731,9 @@ curves_dialog_new (void)
   gtk_widget_set_events (cd->yrange, RANGE_MASK);
   gtk_container_add (GTK_CONTAINER (frame), cd->yrange);
 
-  gtk_signal_connect (GTK_OBJECT (cd->yrange), "event",
-		      GTK_SIGNAL_FUNC (curves_yrange_events),
-		      cd);
+  g_signal_connect (G_OBJECT (cd->yrange), "event",
+		    G_CALLBACK (curves_yrange_events),
+		    cd);
 
   gtk_widget_show (cd->yrange);
   gtk_widget_show (frame);
@@ -750,9 +752,9 @@ curves_dialog_new (void)
   gtk_widget_set_events (cd->graph, GRAPH_MASK);
   gtk_container_add (GTK_CONTAINER (frame), cd->graph);
 
-  gtk_signal_connect (GTK_OBJECT (cd->graph), "event",
-		      GTK_SIGNAL_FUNC (curves_graph_events),
-		      cd);
+  g_signal_connect (G_OBJECT (cd->graph), "event",
+		    G_CALLBACK (curves_graph_events),
+		    cd);
 
   gtk_widget_show (cd->graph);
   gtk_widget_show (frame);
@@ -768,9 +770,9 @@ curves_dialog_new (void)
   gtk_widget_set_events (cd->xrange, RANGE_MASK);
   gtk_container_add (GTK_CONTAINER (frame), cd->xrange);
 
-  gtk_signal_connect (GTK_OBJECT (cd->xrange), "event",
-		      GTK_SIGNAL_FUNC (curves_xrange_events),
-		      cd);
+  g_signal_connect (G_OBJECT (cd->xrange), "event",
+		    G_CALLBACK (curves_xrange_events),
+		    cd);
 
   gtk_widget_show (cd->xrange);
   gtk_widget_show (frame);
@@ -802,9 +804,9 @@ curves_dialog_new (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), cd->preview);
   gtk_box_pack_end (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
 
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (curves_preview_update),
-		      cd);
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+		    G_CALLBACK (curves_preview_update),
+		    cd);
 
   gtk_widget_show (toggle);
   gtk_widget_show (hbox);
@@ -818,18 +820,20 @@ curves_dialog_new (void)
   button = gtk_button_new_with_label (_("Load"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (curves_load_callback),
-		      cd->shell);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+		    G_CALLBACK (curves_load_callback),
+		    cd->shell);
 
   button = gtk_button_new_with_label (_("Save"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (curves_save_callback),
-		      cd->shell);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+		    G_CALLBACK (curves_save_callback),
+		    cd->shell);
 
   gtk_widget_show (hbbox);
   gtk_widget_show (vbox);
@@ -1754,19 +1758,21 @@ file_dialog_create (GtkWidget *parent)
   gtk_container_set_border_width (GTK_CONTAINER (file_dlg), 2);
   gtk_container_set_border_width (GTK_CONTAINER (GTK_FILE_SELECTION (file_dlg)->button_area), 2);
 
-  gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->cancel_button),
-		      "clicked", GTK_SIGNAL_FUNC (file_dialog_cancel_callback),
-		      NULL);
-  gtk_signal_connect (GTK_OBJECT (file_dlg), "delete_event",
-		      GTK_SIGNAL_FUNC (file_dialog_cancel_callback),
-		      NULL);
-  gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->ok_button),
-		      "clicked", GTK_SIGNAL_FUNC (file_dialog_ok_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (GTK_FILE_SELECTION (file_dlg)->cancel_button),
+		    "clicked",
+		    G_CALLBACK (file_dialog_cancel_callback),
+		    NULL);
+  g_signal_connect (G_OBJECT (file_dlg), "delete_event",
+		    G_CALLBACK (file_dialog_cancel_callback),
+		    NULL);
+  g_signal_connect (G_OBJECT (GTK_FILE_SELECTION (file_dlg)->ok_button),
+		    "clicked",
+		    G_CALLBACK (file_dialog_ok_callback),
+		    NULL);
 
-  gtk_signal_connect (GTK_OBJECT (parent), "unmap",
-		      GTK_SIGNAL_FUNC (file_dialog_cancel_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (parent), "unmap",
+		    G_CALLBACK (file_dialog_cancel_callback),
+		    NULL);
 
   temp = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "curves" G_DIR_SEPARATOR_S,
       			  gimp_directory ());
@@ -1780,8 +1786,8 @@ static void
 file_dialog_ok_callback (GtkWidget *widget,
 			 gpointer   data)
 {
-  FILE  *f;
-  gchar *filename;
+  FILE        *f;
+  const gchar *filename;
 
   filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_dlg));
 

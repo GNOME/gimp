@@ -295,7 +295,7 @@ static void
 brush_editor_name_activate (GtkWidget   *widget,
 			    BrushEditor *brush_editor)
 {
-  gchar *entry_text;
+  const gchar *entry_text;
 
   entry_text = gtk_entry_get_text (GTK_ENTRY (widget));
   gimp_object_set_name (GIMP_OBJECT (brush_editor->brush), entry_text);

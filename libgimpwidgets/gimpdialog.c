@@ -34,25 +34,32 @@
 #include "pixmaps/wilber.xpm"
 
 
+typedef void (* GimpDialogCancelCallback) (GtkWidget *widget,
+					   gpointer   data);
+
+
 /*  local callbacks of gimp_dialog_new ()  */
 static gint
 gimp_dialog_delete_callback (GtkWidget *widget,
 			     GdkEvent  *event,
 			     gpointer   data) 
 {
-  GtkSignalFunc  cancel_callback;
-  GtkWidget     *cancel_widget;
+  GimpDialogCancelCallback  cancel_callback;
+  GtkWidget                *cancel_widget;
 
-  cancel_callback =
-    (GtkSignalFunc) gtk_object_get_data (GTK_OBJECT (widget),
-					 "gimp_dialog_cancel_callback");
-  cancel_widget =
-    (GtkWidget*) gtk_object_get_data (GTK_OBJECT (widget),
-				      "gimp_dialog_cancel_widget");
+  cancel_callback = (GimpDialogCancelCallback)
+    g_object_get_data (G_OBJECT (widget),
+		       "gimp_dialog_cancel_callback");
+
+  cancel_widget = (GtkWidget *)
+    g_object_get_data (G_OBJECT (widget),
+		       "gimp_dialog_cancel_widget");
 
   /*  the cancel callback has to destroy the dialog  */
   if (cancel_callback)
-    (* cancel_callback) (cancel_widget, data);
+    {
+      cancel_callback (cancel_widget, data);
+    }
 
   return TRUE;
 }
@@ -348,15 +355,14 @@ gimp_dialog_create_action_areav (GtkDialog *dialog,
       /* otherwise just create the requested button. */
       else
         {
-	  if (hbbox == NULL)
+	  if (! hbbox)
 	    {
-	      /*  prepare the action_area  */
-	      gtk_container_set_border_width (GTK_CONTAINER (dialog->action_area), 2);
 	      gtk_box_set_homogeneous (GTK_BOX (dialog->action_area), FALSE);
 
 	      hbbox = gtk_hbutton_box_new ();
 	      gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-	      gtk_box_pack_end (GTK_BOX (dialog->action_area), hbbox, FALSE, FALSE, 0);
+	      gtk_box_pack_end (GTK_BOX (dialog->action_area), hbbox,
+				FALSE, FALSE, 0);
 	      gtk_widget_show (hbbox);
 	    }
 

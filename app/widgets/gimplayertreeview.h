@@ -27,10 +27,10 @@
 
 
 #define GIMP_TYPE_LAYER_LIST_VIEW            (gimp_layer_list_view_get_type ())
-#define GIMP_LAYER_LIST_VIEW(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_LAYER_LIST_VIEW, GimpLayerListView))
-#define GIMP_LAYER_LIST_VIEW_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LAYER_LIST_VIEW, GimpLayerListViewClass))
-#define GIMP_IS_LAYER_LIST_VIEW(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_LAYER_LIST_VIEW))
-#define GIMP_IS_LAYER_LIST_VIEW_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LAYER_LIST_VIEW))
+#define GIMP_LAYER_LIST_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_LAYER_LIST_VIEW, GimpLayerListView))
+#define GIMP_LAYER_LIST_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LAYER_LIST_VIEW, GimpLayerListViewClass))
+#define GIMP_IS_LAYER_LIST_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_LAYER_LIST_VIEW))
+#define GIMP_IS_LAYER_LIST_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LAYER_LIST_VIEW))
 
 
 typedef struct _GimpLayerListViewClass  GimpLayerListViewClass;

@@ -80,57 +80,76 @@ gimp_file_selection_destroy (GtkObject *object)
 {
   GimpFileSelection *gfs;
 
-  g_return_if_fail (object != NULL);
   g_return_if_fail (GIMP_IS_FILE_SELECTION (object));
 
   gfs = GIMP_FILE_SELECTION (object);
 
   if (gfs->file_selection)
-    gtk_widget_destroy (gfs->file_selection);
+    {
+      gtk_widget_destroy (gfs->file_selection);
+      gfs->file_selection = NULL;
+    }
 
   if (gfs->title)
-    g_free (gfs->title);
+    {
+      g_free (gfs->title);
+      gfs->title = NULL;
+    }
 
   if (gfs->yes_pixmap)
-    gdk_pixmap_unref (gfs->yes_pixmap);
+    {
+      gdk_pixmap_unref (gfs->yes_pixmap);
+      gfs->yes_pixmap = NULL;
+    }
+
   if (gfs->yes_mask)
-    gdk_bitmap_unref (gfs->yes_mask);
+    {
+      gdk_bitmap_unref (gfs->yes_mask);
+      gfs->yes_mask = NULL;
+    }
 
   if (gfs->no_pixmap)
-    gdk_pixmap_unref (gfs->no_pixmap);
+    {
+      gdk_pixmap_unref (gfs->no_pixmap);
+      gfs->no_pixmap = NULL;
+    }
+
   if (gfs->no_mask)
-    gdk_bitmap_unref (gfs->no_mask);
+    {
+      gdk_bitmap_unref (gfs->no_mask);
+      gfs->no_mask = NULL;
+    }
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void
-gimp_file_selection_class_init (GimpFileSelectionClass *class)
+gimp_file_selection_class_init (GimpFileSelectionClass *klass)
 {
   GtkObjectClass *object_class;
   GtkWidgetClass *widget_class;
 
-  object_class = (GtkObjectClass *) class;
-  widget_class = (GtkWidgetClass *) class;
+  object_class = (GtkObjectClass *) klass;
+  widget_class = (GtkWidgetClass *) klass;
 
-  parent_class = gtk_type_class (gtk_hbox_get_type ());
+  parent_class = g_type_class_peek_parent (klass);
 
   gimp_file_selection_signals[FILENAME_CHANGED] = 
-    gtk_signal_new ("filename_changed",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpFileSelectionClass,
-				       filename_changed),
-		    gtk_signal_default_marshaller, GTK_TYPE_NONE, 0);
+    g_signal_new ("filename_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpFileSelectionClass,
+				   filename_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
-  gtk_object_class_add_signals (object_class, gimp_file_selection_signals, 
-				LAST_SIGNAL);
+  object_class->destroy   = gimp_file_selection_destroy;
 
-  class->filename_changed = NULL;
+  widget_class->realize   = gimp_file_selection_realize;
 
-  object_class->destroy = gimp_file_selection_destroy;
-  widget_class->realize = gimp_file_selection_realize;
+  klass->filename_changed = NULL;
 }
 
 static void
@@ -212,7 +231,7 @@ gimp_file_selection_new (const gchar *title,
 {
   GimpFileSelection *gfs;
 
-  gfs = gtk_type_new (gimp_file_selection_get_type ());
+  gfs = gtk_type_new (GIMP_TYPE_FILE_SELECTION);
 
   gfs->title       = g_strdup (title);
   gfs->dir_only    = dir_only;
@@ -234,8 +253,7 @@ gimp_file_selection_new (const gchar *title,
 gchar *
 gimp_file_selection_get_filename (GimpFileSelection *gfs)
 {
-  g_return_val_if_fail (gfs != NULL, g_strdup (""));
-  g_return_val_if_fail (GIMP_IS_FILE_SELECTION (gfs), g_strdup (""));
+  g_return_val_if_fail (GIMP_IS_FILE_SELECTION (gfs), NULL);
 
   return gtk_editable_get_chars (GTK_EDITABLE (gfs->entry), 0, -1);
 }
@@ -254,7 +272,6 @@ void
 gimp_file_selection_set_filename (GimpFileSelection *gfs,
 				  const gchar       *filename)
 {
-  g_return_if_fail (gfs != NULL);
   g_return_if_fail (GIMP_IS_FILE_SELECTION (gfs));
 
   gtk_entry_set_text (GTK_ENTRY (gfs->entry), filename ? filename : "");
@@ -275,7 +292,7 @@ gimp_file_selection_realize (GtkWidget *widget)
     return;
 
   if (GTK_WIDGET_CLASS (parent_class)->realize)
-    (* GTK_WIDGET_CLASS (parent_class)->realize) (widget);
+    GTK_WIDGET_CLASS (parent_class)->realize (widget);
 
   style = gtk_widget_get_style (widget);
 
@@ -348,7 +365,7 @@ gimp_file_selection_filesel_ok_callback (GtkWidget *widget,
 					 gpointer   data)
 {
   GimpFileSelection *gfs;
-  gchar             *filename;
+  const gchar       *filename;
 
   gfs = GIMP_FILE_SELECTION (data);
   filename =

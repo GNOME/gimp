@@ -24,10 +24,10 @@
 
 
 #define GIMP_TYPE_AIRBRUSH_TOOL            (gimp_airbrush_tool_get_type ())
-#define GIMP_AIRBRUSH_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_AIRBRUSH_TOOL, GimpAirbrushTool))
-#define GIMP_IS_AIRBRUSH_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_AIRBRUSH_TOOL))
-#define GIMP_AIRBRUSH_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_AIRBRUSH_TOOL, GimpAirbrushToolClass))
-#define GIMP_IS_AIRBRUSH_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_AIRBRUSH_TOOL))
+#define GIMP_AIRBRUSH_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_AIRBRUSH_TOOL, GimpAirbrushTool))
+#define GIMP_IS_AIRBRUSH_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_AIRBRUSH_TOOL))
+#define GIMP_AIRBRUSH_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_AIRBRUSH_TOOL, GimpAirbrushToolClass))
+#define GIMP_IS_AIRBRUSH_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_AIRBRUSH_TOOL))
 
 
 typedef struct _GimpAirbrushTool      GimpAirbrushTool;

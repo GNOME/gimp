@@ -261,7 +261,8 @@ gimp_rotate_tool_transform (GimpTransformTool  *transform_tool,
 				       gdisp->gimage->unit, "%a",
 				       TRUE, TRUE, FALSE,
 				       GIMP_SIZE_ENTRY_UPDATE_SIZE,
-				       rotate_center_changed, tool);
+				       G_CALLBACK (rotate_center_changed),
+				       tool);
 
 	  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (sizeentry),
 				     GTK_SPIN_BUTTON (spinbutton2), NULL);

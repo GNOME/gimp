@@ -27,10 +27,10 @@
 
 
 #define GIMP_TYPE_PATTERN            (gimp_pattern_get_type ())
-#define GIMP_PATTERN(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_PATTERN, GimpPattern))
-#define GIMP_PATTERN_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PATTERN, GimpPatternClass))
-#define GIMP_IS_PATTERN(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_PATTERN))
-#define GIMP_IS_PATTERN_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PATTERN))
+#define GIMP_PATTERN(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PATTERN, GimpPattern))
+#define GIMP_PATTERN_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PATTERN, GimpPatternClass))
+#define GIMP_IS_PATTERN(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PATTERN))
+#define GIMP_IS_PATTERN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PATTERN))
 
 
 typedef struct _GimpPatternClass GimpPatternClass;
@@ -48,7 +48,7 @@ struct _GimpPatternClass
 };
 
 
-GtkType    gimp_pattern_get_type     (void);
+GType      gimp_pattern_get_type     (void);
 
 GimpData * gimp_pattern_new          (const gchar       *name);
 GimpData * gimp_pattern_get_standard (void);

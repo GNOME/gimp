@@ -37,10 +37,10 @@ extern "C" {
 
 
 #define GIMP_TYPE_CHAIN_BUTTON            (gimp_chain_button_get_type ())
-#define GIMP_CHAIN_BUTTON(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_CHAIN_BUTTON, GimpChainButton))
-#define GIMP_CHAIN_BUTTON_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CHAIN_BUTTON, GimpChainButtonClass))
-#define GIMP_IS_CHAIN_BUTTON(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_CHAIN_BUTTON))
-#define GIMP_IS_CHAIN_BUTTON_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CHAIN_BUTTON))
+#define GIMP_CHAIN_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CHAIN_BUTTON, GimpChainButton))
+#define GIMP_CHAIN_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CHAIN_BUTTON, GimpChainButtonClass))
+#define GIMP_IS_CHAIN_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CHAIN_BUTTON))
+#define GIMP_IS_CHAIN_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CHAIN_BUTTON))
 
 
 typedef struct _GimpChainButtonClass  GimpChainButtonClass;

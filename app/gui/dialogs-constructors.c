@@ -705,9 +705,9 @@ dialogs_path_list_view_new (GimpDialogFactory *factory,
 
   view = paths_dialog_create ();
 
-  gtk_signal_connect (GTK_OBJECT (view), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_widget_destroyed),
-		      &view);
+  g_signal_connect (G_OBJECT (view), "destroy",
+		    G_CALLBACK (gtk_widget_destroyed),
+		    &view);
 
   dockable = dialogs_dockable_new (view,
 				   "Path List", "Paths",
@@ -738,9 +738,9 @@ dialogs_indexed_palette_new (GimpDialogFactory *factory,
 
   dialogs_set_indexed_palette_context_func (GIMP_DOCKABLE (dockable), context);
 
-  gtk_signal_connect (GTK_OBJECT (view), "selected",
-		      GTK_SIGNAL_FUNC (dialogs_indexed_palette_selected),
-		      dockable);
+  g_signal_connect (G_OBJECT (view), "selected",
+		    G_CALLBACK (dialogs_indexed_palette_selected),
+		    dockable);
 
   return dockable;
 }
@@ -812,8 +812,8 @@ dialogs_indexed_palette_selected (GimpColormapDialog *dialog,
 {
   GimpContext *context;
 
-  context = (GimpContext *) gtk_object_get_data (GTK_OBJECT (dialog),
-						 "gimp-dialogs-context");
+  context = (GimpContext *) g_object_get_data (G_OBJECT (dialog),
+					       "gimp-dialogs-context");
 
   if (context)
     {
@@ -852,11 +852,10 @@ dialogs_brush_tab_func (GimpDockable *dockable,
 			   size, size, 1,
 			   FALSE, FALSE, FALSE);
 
-  gtk_signal_connect_object_while_alive
-    (GTK_OBJECT (context),
-     "brush_changed",
-     GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
-     GTK_OBJECT (preview));
+  g_signal_connect_object (G_OBJECT (context), "brush_changed",
+			   G_CALLBACK (gimp_preview_set_viewable),
+			   G_OBJECT (preview),
+			   G_CONNECT_SWAPPED);
 
   return preview;
 }
@@ -876,11 +875,10 @@ dialogs_pattern_tab_func (GimpDockable *dockable,
 			   size, size, 1,
 			   FALSE, FALSE, FALSE);
 
-  gtk_signal_connect_object_while_alive
-    (GTK_OBJECT (context),
-     "pattern_changed",
-     GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
-     GTK_OBJECT (preview));
+  g_signal_connect_object (G_OBJECT (context), "pattern_changed",
+			   G_CALLBACK (gimp_preview_set_viewable),
+			   G_OBJECT (preview),
+			   G_CONNECT_SWAPPED);
 
   return preview;
 }
@@ -900,11 +898,10 @@ dialogs_gradient_tab_func (GimpDockable *dockable,
 			   size, size, 1,
 			   FALSE, FALSE, FALSE);
 
-  gtk_signal_connect_object_while_alive
-    (GTK_OBJECT (context),
-     "gradient_changed",
-     GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
-     GTK_OBJECT (preview));
+  g_signal_connect_object (G_OBJECT (context), "gradient_changed",
+			   G_CALLBACK (gimp_preview_set_viewable),
+			   G_OBJECT (preview),
+			   G_CONNECT_SWAPPED);
 
   return preview;
 }
@@ -924,11 +921,10 @@ dialogs_palette_tab_func (GimpDockable *dockable,
 			   size, size, 1,
 			   FALSE, FALSE, FALSE);
 
-  gtk_signal_connect_object_while_alive
-    (GTK_OBJECT (context),
-     "palette_changed",
-     GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
-     GTK_OBJECT (preview));
+  g_signal_connect_object (G_OBJECT (context), "palette_changed",
+			   G_CALLBACK (gimp_preview_set_viewable),
+			   G_OBJECT (preview),
+			   G_CONNECT_SWAPPED);
 
   return preview;
 }
@@ -948,11 +944,10 @@ dialogs_tool_tab_func (GimpDockable *dockable,
 			   size, size, 1,
 			   FALSE, FALSE, FALSE);
 
-  gtk_signal_connect_object_while_alive
-    (GTK_OBJECT (context),
-     "tool_changed",
-     GTK_SIGNAL_FUNC (gimp_preview_set_viewable),
-     GTK_OBJECT (preview));
+  g_signal_connect_object (G_OBJECT (context), "tool_changed",
+			   G_CALLBACK (gimp_preview_set_viewable),
+			   G_OBJECT (preview),
+			   G_CONNECT_SWAPPED);
 
   return preview;
 }
@@ -963,8 +958,8 @@ dialogs_set_view_context_func (GimpDockable *dockable,
 {
   GimpContainerView *view;
 
-  view = (GimpContainerView *) gtk_object_get_data (GTK_OBJECT (dockable),
-						    "gimp-dialogs-view");
+  view = (GimpContainerView *) g_object_get_data (G_OBJECT (dockable),
+						  "gimp-dialogs-view");
 
   if (view)
     gimp_container_view_set_context (view, context);
@@ -976,8 +971,10 @@ dialogs_set_editor_context_func (GimpDockable *dockable,
 {
   GimpContainerEditor *editor;
 
-  editor = (GimpContainerEditor *) gtk_object_get_data (GTK_OBJECT (dockable),
-							"gimp-dialogs-view");
+  editor = (GimpContainerEditor *) g_object_get_data (G_OBJECT (dockable),
+						      "gimp-dialogs-view");
+
+  g_print ("dialogs_set_editor_context_func()\n");
 
   if (editor)
     gimp_container_view_set_context (editor->view, context);
@@ -989,28 +986,23 @@ dialogs_set_drawable_context_func (GimpDockable *dockable,
 {
   GimpDrawableListView *view;
 
-  view = (GimpDrawableListView *) gtk_object_get_data (GTK_OBJECT (dockable),
-						       "gimp-dialogs-view");
+  view = (GimpDrawableListView *) g_object_get_data (G_OBJECT (dockable),
+						     "gimp-dialogs-view");
 
   if (view)
     {
-      GimpContext *old_context;
-
-      old_context = (GimpContext *) gtk_object_get_data (GTK_OBJECT (view),
-							 "gimp-dialogs-context");
-
-      if (old_context)
+      if (dockable->context)
 	{
-	  gtk_signal_disconnect_by_func (GTK_OBJECT (old_context),
-					 GTK_SIGNAL_FUNC (dialogs_drawable_view_image_changed),
-					 view);
+	  g_signal_handlers_disconnect_by_func (G_OBJECT (dockable->context),
+						dialogs_drawable_view_image_changed,
+						view);
 	}
 
       if (context)
 	{
-	  gtk_signal_connect (GTK_OBJECT (context), "image_changed",
-			      GTK_SIGNAL_FUNC (dialogs_drawable_view_image_changed),
-			      view);
+	  g_signal_connect (G_OBJECT (context), "image_changed",
+			    G_CALLBACK (dialogs_drawable_view_image_changed),
+			    view);
 
 	  dialogs_drawable_view_image_changed (context,
 					       gimp_context_get_image (context),
@@ -1020,8 +1012,6 @@ dialogs_set_drawable_context_func (GimpDockable *dockable,
 	{
 	  dialogs_drawable_view_image_changed (NULL, NULL, view);
 	}
-
-      gtk_object_set_data (GTK_OBJECT (view), "gimp-dialogs-context", context);
     }
 }
 
@@ -1031,28 +1021,23 @@ dialogs_set_path_context_func (GimpDockable *dockable,
 {
   GtkWidget *view;
 
-  view = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (dockable),
-					    "gimp-dialogs-view");
+  view = (GtkWidget *) g_object_get_data (G_OBJECT (dockable),
+					  "gimp-dialogs-view");
 
   if (view)
     {
-      GimpContext *old_context;
-
-      old_context = (GimpContext *) gtk_object_get_data (GTK_OBJECT (view),
-							 "gimp-dialogs-context");
-
-      if (old_context)
+      if (dockable->context)
 	{
-	  gtk_signal_disconnect_by_func (GTK_OBJECT (old_context),
-					 GTK_SIGNAL_FUNC (dialogs_path_view_image_changed),
-					 view);
+	  g_signal_handlers_disconnect_by_func (G_OBJECT (dockable->context),
+						dialogs_path_view_image_changed,
+						view);
 	}
 
       if (context)
 	{
-	  gtk_signal_connect (GTK_OBJECT (context), "image_changed",
-			      GTK_SIGNAL_FUNC (dialogs_path_view_image_changed),
-			      view);
+	  g_signal_connect (G_OBJECT (context), "image_changed",
+			    G_CALLBACK (dialogs_path_view_image_changed),
+			    view);
 
 	  dialogs_path_view_image_changed (context,
 					   gimp_context_get_image (context),
@@ -1062,8 +1047,6 @@ dialogs_set_path_context_func (GimpDockable *dockable,
 	{
 	  dialogs_path_view_image_changed (NULL, NULL, view);
 	}
-
-      gtk_object_set_data (GTK_OBJECT (view), "gimp-dialogs-context", context);
     }
 }
 
@@ -1073,28 +1056,23 @@ dialogs_set_indexed_palette_context_func (GimpDockable *dockable,
 {
   GimpColormapDialog *view;
 
-  view = (GimpColormapDialog *) gtk_object_get_data (GTK_OBJECT (dockable),
-						     "gimp-dialogs-view");
+  view = (GimpColormapDialog *) g_object_get_data (G_OBJECT (dockable),
+						   "gimp-dialogs-view");
 
   if (view)
     {
-      GimpContext *old_context;
-
-      old_context = (GimpContext *) gtk_object_get_data (GTK_OBJECT (view),
-							 "gimp-dialogs-context");
-
-      if (old_context)
+      if (dockable->context)
 	{
-	  gtk_signal_disconnect_by_func (GTK_OBJECT (old_context),
-					 GTK_SIGNAL_FUNC (dialogs_indexed_palette_image_changed),
-					 view);
+	  g_signal_handlers_disconnect_by_func (G_OBJECT (dockable->context),
+						dialogs_indexed_palette_image_changed,
+						view);
 	}
 
       if (context)
 	{
-	  gtk_signal_connect (GTK_OBJECT (context), "image_changed",
-			      GTK_SIGNAL_FUNC (dialogs_indexed_palette_image_changed),
-			      view);
+	  g_signal_connect (G_OBJECT (context), "image_changed",
+			    G_CALLBACK (dialogs_indexed_palette_image_changed),
+			    view);
 
 	  dialogs_indexed_palette_image_changed (context,
 						 gimp_context_get_image (context),
@@ -1104,8 +1082,6 @@ dialogs_set_indexed_palette_context_func (GimpDockable *dockable,
 	{
 	  dialogs_indexed_palette_image_changed (NULL, NULL, view);
 	}
-
-      gtk_object_set_data (GTK_OBJECT (view), "gimp-dialogs-context", context);
     }
 }
 
@@ -1125,7 +1101,7 @@ dialogs_dockable_new (GtkWidget                  *widget,
   gtk_container_add (GTK_CONTAINER (dockable), widget);
   gtk_widget_show (widget);
 
-  gtk_object_set_data (GTK_OBJECT (dockable), "gimp-dialogs-view", widget);
+  g_object_set_data (G_OBJECT (dockable), "gimp-dialogs-view", widget);
 
   return dockable;
 }

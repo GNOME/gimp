@@ -67,7 +67,6 @@ libexec_PROGRAMS = @STRIP_BEGIN@ \
 	gee \
 	gee_zoom \
 	gicon \
-	gif \
 	gifload \
 	gih \
 	glasstile \
@@ -83,16 +82,13 @@ libexec_PROGRAMS = @STRIP_BEGIN@ \
 	illusion \
 	iwarp \
 	jigsaw \
-	$(JPEG) \
 	laplace \
 	lic \
-	mail \
 	mapcolor \
 	max_rgb \
 	mblur \
 	$(MPEG) \
 	newsprint \
-	nlfilt \
 	noisify \
 	normalize \
 	nova \
@@ -103,7 +99,6 @@ libexec_PROGRAMS = @STRIP_BEGIN@ \
 	pix \
 	pixelize \
 	plasma \
-	plugindetails \
 	$(PNG) \
 	pnm \
 	polar \
@@ -153,7 +148,6 @@ libexec_PROGRAMS = @STRIP_BEGIN@ \
 
 EXTRA_PROGRAMS = \
 	aa \
-	jpeg \
 	mpeg \
 	png \
 	psp \
@@ -803,20 +797,6 @@ gicon_LDADD = @STRIP_BEGIN@ \
 	$(INTLLIBS)							\
 @STRIP_END@
 
-gif_SOURCES = @STRIP_BEGIN@ \
-	gif.c	\
-@STRIP_END@
-
-gif_LDADD = @STRIP_BEGIN@ \
-	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
-	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
-	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
-	$(GTK_LIBS)							\
-	$(INTLLIBS)							\
-@STRIP_END@
-
 gifload_SOURCES = @STRIP_BEGIN@ \
 	gifload.c	\
 @STRIP_END@
@@ -1021,21 +1001,6 @@ jigsaw_LDADD = @STRIP_BEGIN@ \
 	$(INTLLIBS)							\
 @STRIP_END@
 
-jpeg_SOURCES = @STRIP_BEGIN@ \
-	jpeg.c	\
-@STRIP_END@
-
-jpeg_LDADD = @STRIP_BEGIN@ \
-	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
-	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
-	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
-	$(LIBJPEG)							\
-	$(GTK_LIBS)							\
-	$(INTLLIBS)							\
-@STRIP_END@
-
 laplace_SOURCES = @STRIP_BEGIN@ \
 	laplace.c	\
 @STRIP_END@
@@ -1055,20 +1020,6 @@ lic_SOURCES = @STRIP_BEGIN@ \
 @STRIP_END@
 
 lic_LDADD = @STRIP_BEGIN@ \
-	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
-	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
-	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
-	$(GTK_LIBS)							\
-	$(INTLLIBS)							\
-@STRIP_END@
-
-mail_SOURCES = @STRIP_BEGIN@ \
-	mail.c	\
-@STRIP_END@
-
-mail_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
@@ -1138,20 +1089,6 @@ newsprint_SOURCES = @STRIP_BEGIN@ \
 @STRIP_END@
 
 newsprint_LDADD = @STRIP_BEGIN@ \
-	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
-	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
-	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
-	$(GTK_LIBS)							\
-	$(INTLLIBS)							\
-@STRIP_END@
-
-nlfilt_SOURCES = @STRIP_BEGIN@ \
-	nlfilt.c	\
-@STRIP_END@
-
-nlfilt_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
@@ -1290,20 +1227,6 @@ plasma_SOURCES = @STRIP_BEGIN@ \
 @STRIP_END@
 
 plasma_LDADD = @STRIP_BEGIN@ \
-	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
-	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
-	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
-	$(GTK_LIBS)							\
-	$(INTLLIBS)							\
-@STRIP_END@
-
-plugindetails_SOURCES = @STRIP_BEGIN@ \
-	plugindetails.c	\
-@STRIP_END@
-
-plugindetails_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\

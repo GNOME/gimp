@@ -30,10 +30,10 @@ typedef void (* GimpDataEditFunc) (GimpData *data);
 
 
 #define GIMP_TYPE_DATA_FACTORY_VIEW            (gimp_data_factory_view_get_type ())
-#define GIMP_DATA_FACTORY_VIEW(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_DATA_FACTORY_VIEW, GimpDataFactoryView))
-#define GIMP_DATA_FACTORY_VIEW_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DATA_FACTORY_VIEW, GimpDataFactoryViewClass))
-#define GIMP_IS_DATA_FACTORY_VIEW(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_DATA_FACTORY_VIEW))
-#define GIMP_IS_DATA_FACTORY_VIEW_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DATA_FACTORY_VIEW))
+#define GIMP_DATA_FACTORY_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DATA_FACTORY_VIEW, GimpDataFactoryView))
+#define GIMP_DATA_FACTORY_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DATA_FACTORY_VIEW, GimpDataFactoryViewClass))
+#define GIMP_IS_DATA_FACTORY_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DATA_FACTORY_VIEW))
+#define GIMP_IS_DATA_FACTORY_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DATA_FACTORY_VIEW))
 
 
 typedef struct _GimpDataFactoryViewClass  GimpDataFactoryViewClass;

@@ -441,22 +441,20 @@ module_info_class_init (ModuleInfoClass *klass)
 
   object_class = (GtkObjectClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_OBJECT);
+  parent_class = g_type_class_peek_parent (klass);
 
   module_info_signals[MODIFIED] =
-    gtk_signal_new ("modified",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (ModuleInfoClass,
-				       modified),
-                    gtk_signal_default_marshaller,
-                    GTK_TYPE_NONE, 0);
-
-  gtk_object_class_add_signals (object_class, module_info_signals, LAST_SIGNAL);
+    g_signal_new ("modified",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  GTK_SIGNAL_OFFSET (ModuleInfoClass, modified),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   object_class->destroy = module_info_destroy;
 
-  klass->modified = NULL;
+  klass->modified       = NULL;
 }
 
 static void

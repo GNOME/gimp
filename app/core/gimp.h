@@ -30,10 +30,10 @@ typedef void (* GimpUnsetBusyFunc)     (Gimp      *gimp);
 
 
 #define GIMP_TYPE_GIMP            (gimp_get_type ())
-#define GIMP(obj)                 (GTK_CHECK_CAST ((obj), GIMP_TYPE_GIMP, Gimp))
-#define GIMP_CLASS(klass)         (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_GIMP, GimpClass))
-#define GIMP_IS_GIMP(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_GIMP))
-#define GIMP_IS_GIMP_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_GIMP))
+#define GIMP(obj)                 (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_GIMP, Gimp))
+#define GIMP_CLASS(klass)         (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_GIMP, GimpClass))
+#define GIMP_IS_GIMP(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_GIMP))
+#define GIMP_IS_GIMP_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_GIMP))
 
 
 typedef struct _GimpClass GimpClass;

@@ -32,10 +32,10 @@ extern "C" {
 
 
 #define GIMP_TYPE_COMPONENT_LIST_ITEM            (gimp_component_list_item_get_type ())
-#define GIMP_COMPONENT_LIST_ITEM(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_COMPONENT_LIST_ITEM, GimpComponentListItem))
-#define GIMP_COMPONENT_LIST_ITEM_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COMPONENT_LIST_ITEM, GimpComponentListItemClass))
-#define GIMP_IS_COMPONENT_LIST_ITEM(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_COMPONENT_LIST_ITEM))
-#define GIMP_IS_COMPONENT_LIST_ITEM_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COMPONENT_LIST_ITEM))
+#define GIMP_COMPONENT_LIST_ITEM(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COMPONENT_LIST_ITEM, GimpComponentListItem))
+#define GIMP_COMPONENT_LIST_ITEM_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COMPONENT_LIST_ITEM, GimpComponentListItemClass))
+#define GIMP_IS_COMPONENT_LIST_ITEM(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COMPONENT_LIST_ITEM))
+#define GIMP_IS_COMPONENT_LIST_ITEM_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COMPONENT_LIST_ITEM))
 
 
 typedef struct _GimpComponentListItemClass  GimpComponentListItemClass;

@@ -61,10 +61,10 @@ static guint data_signals[LAST_SIGNAL] = { 0 };
 static GimpViewableClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_data_get_type (void)
 {
-  static GtkType data_type = 0;
+  static GType data_type = 0;
 
   if (! data_type)
     {
@@ -95,54 +95,52 @@ gimp_data_class_init (GimpDataClass *klass)
   object_class      = (GtkObjectClass *) klass;
   gimp_object_class = (GimpObjectClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_VIEWABLE);
+  parent_class = g_type_class_peek_parent (klass);
 
   data_signals[DIRTY] = 
-    gtk_signal_new ("dirty",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpDataClass,
-                                       dirty),
-                    gtk_signal_default_marshaller,
-                    GTK_TYPE_NONE, 0);
+    g_signal_new ("dirty",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpDataClass, dirty),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   data_signals[SAVE] = 
-    gtk_signal_new ("save",
-                    GTK_RUN_LAST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpDataClass,
-                                       save),
-                    gtk_marshal_BOOL__NONE,
-                    GTK_TYPE_BOOL, 0);
+    g_signal_new ("save",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_LAST,
+		  G_STRUCT_OFFSET (GimpDataClass, save),
+		  NULL, NULL,
+		  gimp_cclosure_marshal_BOOLEAN__VOID,
+		  G_TYPE_BOOLEAN, 0);
 
   data_signals[GET_EXTENSION] = 
-    gtk_signal_new ("get_extension",
-                    GTK_RUN_LAST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpDataClass,
-                                       get_extension),
-                    gimp_marshal_POINTER__NONE,
-                    GTK_TYPE_POINTER, 0);
+    g_signal_new ("get_extension",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_LAST,
+		  G_STRUCT_OFFSET (GimpDataClass, get_extension),
+		  NULL, NULL,
+		  gimp_cclosure_marshal_POINTER__VOID,
+		  G_TYPE_POINTER, 0);
 
   data_signals[DUPLICATE] = 
-    gtk_signal_new ("duplicate",
-                    GTK_RUN_LAST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpDataClass,
-                                       duplicate),
-                    gimp_marshal_POINTER__NONE,
-                    GTK_TYPE_POINTER, 0);
+    g_signal_new ("duplicate",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_LAST,
+		  G_STRUCT_OFFSET (GimpDataClass, duplicate),
+		  NULL, NULL,
+		  gimp_cclosure_marshal_POINTER__VOID,
+		  G_TYPE_POINTER, 0);
 
-  gtk_object_class_add_signals (object_class, data_signals, LAST_SIGNAL);
-
-  object_class->destroy = gimp_data_destroy;
+  object_class->destroy           = gimp_data_destroy;
 
   gimp_object_class->name_changed = gimp_data_name_changed;
 
-  klass->dirty         = gimp_data_real_dirty;
-  klass->save          = NULL;
-  klass->get_extension = NULL;
-  klass->duplicate     = NULL;
+  klass->dirty                    = gimp_data_real_dirty;
+  klass->save                     = NULL;
+  klass->get_extension            = NULL;
+  klass->duplicate                = NULL;
 }
 
 static void
@@ -179,7 +177,6 @@ gimp_data_save (GimpData *data)
 {
   gboolean success = FALSE;
 
-  g_return_val_if_fail (data != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_DATA (data), FALSE);
 
   if (! data->filename)
@@ -189,8 +186,8 @@ gimp_data_save (GimpData *data)
       return FALSE;
     }
 
-  gtk_signal_emit (GTK_OBJECT (data), data_signals[SAVE],
-		   &success);
+  g_signal_emit (G_OBJECT (data), data_signals[SAVE], 0,
+		 &success);
 
   if (success)
     data->dirty = FALSE;
@@ -201,10 +198,9 @@ gimp_data_save (GimpData *data)
 void
 gimp_data_dirty (GimpData *data)
 {
-  g_return_if_fail (data != NULL);
   g_return_if_fail (GIMP_IS_DATA (data));
 
-  gtk_signal_emit (GTK_OBJECT (data), data_signals[DIRTY]);
+  g_signal_emit (G_OBJECT (data), data_signals[DIRTY], 0);
 }
 
 static void
@@ -218,7 +214,6 @@ gimp_data_real_dirty (GimpData *data)
 gboolean
 gimp_data_delete_from_disk (GimpData *data)
 {
-  g_return_val_if_fail (data != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_DATA (data), FALSE);
   g_return_val_if_fail (data->filename != NULL, FALSE);
 
@@ -237,11 +232,10 @@ gimp_data_get_extension (GimpData *data)
 {
   const gchar *extension = NULL;
 
-  g_return_val_if_fail (data != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_DATA (data), NULL);
 
-  gtk_signal_emit (GTK_OBJECT (data), data_signals[GET_EXTENSION],
-		   &extension);
+  g_signal_emit (G_OBJECT (data), data_signals[GET_EXTENSION], 0,
+		 &extension);
 
   return extension;
 }
@@ -250,7 +244,6 @@ void
 gimp_data_set_filename (GimpData    *data,
 			const gchar *filename)
 {
-  g_return_if_fail (data != NULL);
   g_return_if_fail (GIMP_IS_DATA (data));
 
   g_free (data->filename);
@@ -271,7 +264,6 @@ gimp_data_create_filename (GimpData    *data,
   gint   unum = 1;
   FILE  *file;
 
-  g_return_if_fail (data != NULL);
   g_return_if_fail (GIMP_IS_DATA (data));
   g_return_if_fail (basename != NULL);
   g_return_if_fail (data_path != NULL);
@@ -318,8 +310,8 @@ gimp_data_duplicate (GimpData *data)
 {
   GimpData *new_data = NULL;
 
-  gtk_signal_emit (GTK_OBJECT (data), data_signals[DUPLICATE],
-		   &new_data);
+  g_signal_emit (G_OBJECT (data), data_signals[DUPLICATE], 0,
+		 &new_data);
 
   return new_data;
 }

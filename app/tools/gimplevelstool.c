@@ -464,17 +464,25 @@ levels_dialog_new (void)
   gtk_box_pack_start (GTK_BOX (channel_hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  ld->channel_menu = gimp_option_menu_new2
-    (FALSE, levels_channel_callback,
-     ld, (gpointer) ld->channel,
+  ld->channel_menu =
+    gimp_option_menu_new2 (FALSE,
+			   G_CALLBACK (levels_channel_callback),
+			   ld,
+			   (gpointer) ld->channel,
 
-     _("Value"), (gpointer) GIMP_HISTOGRAM_VALUE, &color_option_items[0],
-     _("Red"),   (gpointer) GIMP_HISTOGRAM_RED,   &color_option_items[1],
-     _("Green"), (gpointer) GIMP_HISTOGRAM_GREEN, &color_option_items[2],
-     _("Blue"),  (gpointer) GIMP_HISTOGRAM_BLUE,  &color_option_items[3],
-     _("Alpha"), (gpointer) GIMP_HISTOGRAM_ALPHA, &color_option_items[4],
+			   _("Value"), (gpointer) GIMP_HISTOGRAM_VALUE,
+			   &color_option_items[0],
+			   _("Red"),   (gpointer) GIMP_HISTOGRAM_RED,
+			   &color_option_items[1],
+			   _("Green"), (gpointer) GIMP_HISTOGRAM_GREEN,
+			   &color_option_items[2],
+			   _("Blue"),  (gpointer) GIMP_HISTOGRAM_BLUE,
+			   &color_option_items[3],
+			   _("Alpha"), (gpointer) GIMP_HISTOGRAM_ALPHA,
+			   &color_option_items[4],
 
-     NULL);
+			   NULL);
+
   gtk_box_pack_start (GTK_BOX (channel_hbox), ld->channel_menu, FALSE, FALSE, 0);
   gtk_widget_show (ld->channel_menu);
 
@@ -1568,8 +1576,8 @@ static void
 file_dialog_ok_callback (GtkWidget *widget,
 			 gpointer   data)
 {
-  FILE  *f;
-  gchar *filename;
+  FILE        *f;
+  const gchar *filename;
 
   filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_dlg));
 

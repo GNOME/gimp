@@ -40,7 +40,7 @@ static void info_field_new              (InfoDialog    *idialog,
 					 GtkWidget     *widget,
 					 GtkObject     *object,
 					 gpointer       value_ptr,
-					 GtkSignalFunc  callback,
+					 GCallback      callback,
 					 gpointer       callback_data);
 static void update_field                (InfoField     *info_field);
 static gint info_dialog_delete_callback (GtkWidget     *widget,
@@ -55,7 +55,7 @@ info_field_new (InfoDialog    *idialog,
 		GtkWidget     *widget,
 		GtkObject     *obj,
 		gpointer       value_ptr,
-		GtkSignalFunc  callback,
+		GCallback      callback,
 		gpointer       callback_data)
 {
   GtkWidget *label;
@@ -99,43 +99,41 @@ info_field_new (InfoDialog    *idialog,
 static void
 update_field (InfoField *field)
 {
-  gchar *old_text;
-  gint   num;
-  gint   i;
+  const gchar *old_text;
+  gint         num;
+  gint         i;
 
   if (field->value_ptr == NULL)
     return;
 
   if (field->field_type != INFO_LABEL)
-    gtk_signal_handler_block_by_func (GTK_OBJECT (field->obj),
-				      field->callback,
-				      field->callback_data);
+    g_signal_handlers_block_by_func (G_OBJECT (field->obj),
+				     field->callback,
+				     field->callback_data);
 
   switch (field->field_type)
     {
     case INFO_LABEL:
-      gtk_label_get (GTK_LABEL (field->obj), &old_text);
-      if (strcmp (old_text, (gchar*) field->value_ptr))
-	gtk_label_set_text (GTK_LABEL (field->obj), (gchar*) field->value_ptr);
+      gtk_label_set_text (GTK_LABEL (field->obj), (gchar *) field->value_ptr);
       break;
 
     case INFO_ENTRY:
       old_text = gtk_entry_get_text (GTK_ENTRY (field->obj));
-      if (strcmp (old_text, (gchar*) field->value_ptr))
-	gtk_entry_set_text (GTK_ENTRY (field->obj), (gchar*) field->value_ptr);
+      if (strcmp (old_text, (gchar *) field->value_ptr))
+	gtk_entry_set_text (GTK_ENTRY (field->obj), (gchar *) field->value_ptr);
       break;
 
     case INFO_SCALE:
     case INFO_SPINBUTTON:
       gtk_adjustment_set_value (GTK_ADJUSTMENT (field->obj),
-				*((gdouble*) field->value_ptr));
+				*((gdouble *) field->value_ptr));
       break;
 
     case INFO_SIZEENTRY:
       num = GIMP_SIZE_ENTRY (field->obj)->number_of_fields;
       for (i = 0; i < num; i++)
 	gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (field->obj), i,
-				    ((gdouble*) field->value_ptr)[i]);
+				    ((gdouble *) field->value_ptr)[i]);
       break;
 
     default:
@@ -144,12 +142,12 @@ update_field (InfoField *field)
     }
 
   if (field->field_type != INFO_LABEL)
-    gtk_signal_handler_unblock_by_func (GTK_OBJECT (field->obj),
-					field->callback,
-					field->callback_data);
+    g_signal_handlers_unblock_by_func (G_OBJECT (field->obj),
+				       field->callback,
+				       field->callback_data);
 }
 
-static gint
+static gboolean
 info_dialog_delete_callback (GtkWidget *widget,
 			     GdkEvent  *event,
 			     gpointer   data)
@@ -179,8 +177,8 @@ info_dialog_new_extended (gchar        *title,
   gtk_window_set_wmclass (GTK_WINDOW (shell), "info_dialog", "Gimp");
   gtk_window_set_title (GTK_WINDOW (shell), title);
 
-  gtk_signal_connect (GTK_OBJECT (shell), "delete_event",
-		      GTK_SIGNAL_FUNC (info_dialog_delete_callback),
+  g_signal_connect (G_OBJECT (shell), "delete_event",
+		    G_CALLBACK (info_dialog_delete_callback),
 		      idialog);
 
   vbox = gtk_vbox_new (FALSE, 0);
@@ -305,7 +303,8 @@ info_dialog_add_label (InfoDialog    *idialog,
   label = gtk_label_new (text_ptr);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 
-  info_field_new (idialog, INFO_LABEL, title, label, NULL, (void*) text_ptr,
+  info_field_new (idialog, INFO_LABEL, title, label, NULL,
+		  text_ptr,
 		  NULL, NULL);
 
   return label;
@@ -313,10 +312,10 @@ info_dialog_add_label (InfoDialog    *idialog,
 
 GtkWidget *
 info_dialog_add_entry (InfoDialog    *idialog,
-		       char          *title,
-		       char          *text_ptr,
-		       GtkSignalFunc  callback,
-		       gpointer       data)
+		       gchar         *title,
+		       gchar         *text_ptr,
+		       GCallback      callback,
+		       gpointer       callback_data)
 {
   GtkWidget *entry;
 
@@ -327,11 +326,13 @@ info_dialog_add_entry (InfoDialog    *idialog,
   gtk_entry_set_text (GTK_ENTRY (entry), text_ptr ? text_ptr : "");
 
   if (callback)
-    gtk_signal_connect (GTK_OBJECT (entry), "changed",
-			GTK_SIGNAL_FUNC (callback), data);
+    g_signal_connect (G_OBJECT (entry), "changed",
+		      callback,
+		      callback_data);
 
-  info_field_new (idialog, INFO_ENTRY, title, entry, NULL, (void*) text_ptr,
-		  callback, data);
+  info_field_new (idialog, INFO_ENTRY, title, entry, NULL,
+		  text_ptr,
+		  callback, callback_data);
 
   return entry;
 }
@@ -346,8 +347,8 @@ info_dialog_add_scale   (InfoDialog    *idialog,
 			 gfloat         page_increment,
 			 gfloat         page_size,
 			 gint           digits,
-			 GtkSignalFunc  callback,
-			 gpointer       data)
+			 GCallback      callback,
+			 gpointer       callback_data)
 {
   GtkObject *adjustment;
   GtkWidget *scale;
@@ -364,11 +365,13 @@ info_dialog_add_scale   (InfoDialog    *idialog,
     gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
 
   if (callback)
-    gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-			GTK_SIGNAL_FUNC (callback), data);
+    g_signal_connect (G_OBJECT (adjustment), "value_changed",
+		      callback,
+		      callback_data);
 
   info_field_new (idialog, INFO_SCALE, title, scale, adjustment,
-		  (void*) value_ptr, callback, data);
+		  value_ptr,
+		  callback, callback_data);
 
   return scale;
 }
@@ -384,8 +387,8 @@ info_dialog_add_spinbutton (InfoDialog    *idialog,
 			    gfloat         page_size,
 			    gfloat         climb_rate,
 			    gint           digits,
-			    GtkSignalFunc  callback,
-			    gpointer       data)
+			    GCallback      callback,
+			    gpointer       callback_data)
 {
   GtkWidget *alignment;
   GtkObject *adjustment;
@@ -399,20 +402,21 @@ info_dialog_add_spinbutton (InfoDialog    *idialog,
 				   step_increment, page_increment, page_size);
   spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment),
 				    climb_rate, MAX (MIN (digits, 6), 0));
-  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
-				   GTK_SHADOW_NONE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_widget_set_usize (spinbutton, 75, 0);
 
   if (callback)
-    gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-			GTK_SIGNAL_FUNC (callback), data);
+    g_signal_connect (G_OBJECT (adjustment), "value_changed",
+		      callback,
+		      callback_data);
 
   gtk_container_add (GTK_CONTAINER (alignment), spinbutton);
   gtk_widget_show (spinbutton);
 
-  info_field_new (idialog, INFO_SPINBUTTON, title, alignment, adjustment,
-		  (void*) value_ptr, callback, data);
+  info_field_new (idialog, INFO_SPINBUTTON, title, alignment,
+		  adjustment,
+		  value_ptr,
+		  callback, callback_data);
 
   return spinbutton;
 }
@@ -428,8 +432,8 @@ info_dialog_add_sizeentry (InfoDialog                *idialog,
 			   gboolean                   menu_show_percent,
 			   gboolean                   show_refval,
 			   GimpSizeEntryUpdatePolicy  update_policy,
-			   GtkSignalFunc              callback,
-			   gpointer                   data)
+			   GCallback                  callback,
+			   gpointer                   callback_data)
 {
   GtkWidget *alignment;
   GtkWidget *sizeentry;
@@ -448,15 +452,17 @@ info_dialog_add_sizeentry (InfoDialog                *idialog,
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), i, value_ptr[i]);
 
   if (callback)
-    gtk_signal_connect (GTK_OBJECT (sizeentry), "value_changed",
-			GTK_SIGNAL_FUNC (callback), data);
+    g_signal_connect (G_OBJECT (sizeentry), "value_changed",
+		      callback,
+		      callback_data);
 
   gtk_container_add (GTK_CONTAINER (alignment), sizeentry);
   gtk_widget_show (sizeentry);
 
   info_field_new (idialog, INFO_SIZEENTRY, title, alignment,
 		  GTK_OBJECT (sizeentry),
-		  (void*) value_ptr, callback, data);
+		  value_ptr,
+		  callback, callback_data);
 
   return sizeentry;
 }

@@ -33,10 +33,10 @@ typedef enum
 
 
 #define GIMP_TYPE_TEXT_TOOL            (gimp_text_tool_get_type ())
-#define GIMP_TEXT_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_TEXT_TOOL, GimpTextTool))
-#define GIMP_IS_TEXT_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_TEXT_TOOL))
-#define GIMP_TEXT_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TEXT_TOOL, GimpTextToolClass))
-#define GIMP_IS_TEXT_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TEXT_TOOL))
+#define GIMP_TEXT_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TEXT_TOOL, GimpTextTool))
+#define GIMP_IS_TEXT_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TEXT_TOOL))
+#define GIMP_TEXT_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TEXT_TOOL, GimpTextToolClass))
+#define GIMP_IS_TEXT_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TEXT_TOOL))
 
 typedef struct _GimpTextTool GimpTextTool;
 typedef struct _GimpTextToolClass GimpTextToolClass;

@@ -56,10 +56,10 @@ static gint         gimp_list_get_child_index    (GimpContainer *container,
 static GimpContainerClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_list_get_type (void)
 {
-  static GtkType list_type = 0;
+  static GType list_type = 0;
 
   if (! list_type)
     {
@@ -90,9 +90,9 @@ gimp_list_class_init (GimpListClass *klass)
   object_class    = (GtkObjectClass *) klass;
   container_class = (GimpContainerClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_CONTAINER);
+  parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy = gimp_list_destroy;
+  object_class->destroy               = gimp_list_destroy;
 
   container_class->add                = gimp_list_add;
   container_class->remove             = gimp_list_remove;

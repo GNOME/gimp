@@ -110,6 +110,10 @@ scroll_to_pointer_position (GDisplay       *gdisp,
 
   if (scroll_display (gdisp, off_x, off_y))
     {
+#ifdef __GNUC__
+#warning FIXME: replace gdk_input_window_get_pointer()
+#endif
+#if 0
       gdk_input_window_get_pointer (gdisp->canvas->window, mevent->deviceid,
 				    &child_x, &child_y, 
 				    NULL, NULL, NULL, NULL);
@@ -117,6 +121,7 @@ scroll_to_pointer_position (GDisplay       *gdisp,
       if (child_x == mevent->x && child_y == mevent->y)
 	/*  Put this event back on the queue -- so it keeps scrolling */
 	gdk_event_put ((GdkEvent *) mevent);
+#endif
     }
 }
 

@@ -24,10 +24,10 @@
 
 
 #define GIMP_TYPE_COLOR_PANEL            (gimp_color_panel_get_type ())
-#define GIMP_COLOR_PANEL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_COLOR_PANEL, GimpColorPanel))
-#define GIMP_COLOR_PANEL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_PANEL, GimpColorPanelClass))
-#define GIMP_IS_COLOR_PANEL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_COLOR_PANEL))
-#define GIMP_IS_COLOR_PANEL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_PANEL))
+#define GIMP_COLOR_PANEL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_PANEL, GimpColorPanel))
+#define GIMP_COLOR_PANEL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_PANEL, GimpColorPanelClass))
+#define GIMP_IS_COLOR_PANEL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_PANEL))
+#define GIMP_IS_COLOR_PANEL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_PANEL))
 
 
 typedef struct _GimpColorPanel       GimpColorPanel;

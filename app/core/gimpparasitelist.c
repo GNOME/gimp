@@ -56,32 +56,29 @@ gimp_parasite_list_class_init (GimpParasiteListClass *klass)
   object_class = (GtkObjectClass *) klass;
 
   parasite_list_signals[ADD] =
-    gtk_signal_new ("add",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpParasiteListClass,
-                                       add),
-                    gtk_marshal_NONE__POINTER,
-                    GTK_TYPE_NONE, 1,
-                    GTK_TYPE_POINTER);
+    g_signal_new ("add",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpParasiteListClass, add),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__POINTER,
+		  G_TYPE_NONE, 1,
+		  G_TYPE_POINTER);
 
   parasite_list_signals[REMOVE] = 
-    gtk_signal_new ("remove",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpParasiteListClass,
-                                       remove),
-                    gtk_marshal_NONE__POINTER,
-                    GTK_TYPE_NONE, 1,
-                    GTK_TYPE_POINTER);
-
-  gtk_object_class_add_signals (object_class, parasite_list_signals,
-				LAST_SIGNAL);
+    g_signal_new ("remove",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpParasiteListClass, remove),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__POINTER,
+		  G_TYPE_NONE, 1,
+		  GTK_TYPE_POINTER);
 
   object_class->destroy = gimp_parasite_list_destroy;
 
-  klass->add    = NULL;
-  klass->remove = NULL;
+  klass->add            = NULL;
+  klass->remove         = NULL;
 }
 
 static void

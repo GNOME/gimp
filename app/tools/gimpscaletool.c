@@ -203,9 +203,11 @@ gimp_scale_tool_transform (GimpTransformTool  *tr_tool,
 				       gdisp->gimage->unit, "%a",
 				       TRUE, TRUE, FALSE,
 				       GIMP_SIZE_ENTRY_UPDATE_SIZE,
-				       gimp_scale_tool_size_changed, tool);
-	  gtk_signal_connect (GTK_OBJECT (sizeentry), "unit_changed",
-			      gimp_scale_tool_unit_changed, sc_tool);
+				       G_CALLBACK (gimp_scale_tool_size_changed),
+				       tool);
+	  g_signal_connect (G_OBJECT (sizeentry), "unit_changed",
+			    G_CALLBACK (gimp_scale_tool_unit_changed),
+			    sc_tool);
 
 	  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (sizeentry),
 				     GTK_SPIN_BUTTON (spinbutton), NULL);

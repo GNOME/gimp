@@ -709,51 +709,60 @@ blend_options_new (void)
 
   /*  the blend mode menu  */
   options->blend_mode_w = gimp_option_menu_new2
-    (FALSE, gimp_menu_item_update,
-     &options->blend_mode, (gpointer) options->blend_mode_d,
+    (FALSE,
+     G_CALLBACK (gimp_menu_item_update),
+     &options->blend_mode,
+     GINT_TO_POINTER (options->blend_mode_d),
 
-     _("FG to BG (RGB)"),     (gpointer) FG_BG_RGB_MODE, NULL,
-     _("FG to BG (HSV)"),     (gpointer) FG_BG_HSV_MODE, NULL,
-     _("FG to Transparent"),  (gpointer) FG_TRANS_MODE, NULL,
-     _("Custom Gradient"),    (gpointer) CUSTOM_MODE, NULL,
+     _("FG to BG (RGB)"),    GINT_TO_POINTER (FG_BG_RGB_MODE), NULL,
+     _("FG to BG (HSV)"),    GINT_TO_POINTER (FG_BG_HSV_MODE), NULL,
+     _("FG to Transparent"), GINT_TO_POINTER (FG_TRANS_MODE), NULL,
+     _("Custom Gradient"),   GINT_TO_POINTER (CUSTOM_MODE), NULL,
 
      NULL);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Blend:"), 1.0, 0.5,
 			     options->blend_mode_w, 1, TRUE);
 
   /*  the gradient type menu  */
   options->gradient_type_w = gimp_option_menu_new2
-    (FALSE, gradient_type_callback,
-     &options->gradient_type, (gpointer) options->gradient_type_d,
+    (FALSE,
+     G_CALLBACK (gradient_type_callback),
+     &options->gradient_type,
+     GINT_TO_POINTER (options->gradient_type_d),
 
-     _("Linear"),                 (gpointer) LINEAR, NULL,
-     _("Bi-Linear"),              (gpointer) BILINEAR, NULL,
-     _("Radial"),                 (gpointer) RADIAL, NULL,
-     _("Square"),                 (gpointer) SQUARE, NULL,
-     _("Conical (symmetric)"),    (gpointer) CONICAL_SYMMETRIC, NULL,
-     _("Conical (asymmetric)"),   (gpointer) CONICAL_ASYMMETRIC, NULL,
-     _("Shapeburst (angular)"),   (gpointer) SHAPEBURST_ANGULAR, NULL,
-     _("Shapeburst (spherical)"), (gpointer) SHAPEBURST_SPHERICAL, NULL,
-     _("Shapeburst (dimpled)"),   (gpointer) SHAPEBURST_DIMPLED, NULL,
-     _("Spiral (clockwise)"),     (gpointer) SPIRAL_CLOCKWISE, NULL,
-     _("Spiral (anticlockwise)"), (gpointer) SPIRAL_ANTICLOCKWISE, NULL,
+     _("Linear"),                 GINT_TO_POINTER (LINEAR), NULL,
+     _("Bi-Linear"),              GINT_TO_POINTER (BILINEAR), NULL,
+     _("Radial"),                 GINT_TO_POINTER (RADIAL), NULL,
+     _("Square"),                 GINT_TO_POINTER (SQUARE), NULL,
+     _("Conical (symmetric)"),    GINT_TO_POINTER (CONICAL_SYMMETRIC), NULL,
+     _("Conical (asymmetric)"),   GINT_TO_POINTER (CONICAL_ASYMMETRIC), NULL,
+     _("Shapeburst (angular)"),   GINT_TO_POINTER (SHAPEBURST_ANGULAR), NULL,
+     _("Shapeburst (spherical)"), GINT_TO_POINTER (SHAPEBURST_SPHERICAL), NULL,
+     _("Shapeburst (dimpled)"),   GINT_TO_POINTER (SHAPEBURST_DIMPLED), NULL,
+     _("Spiral (clockwise)"),     GINT_TO_POINTER (SPIRAL_CLOCKWISE), NULL,
+     _("Spiral (anticlockwise)"), GINT_TO_POINTER (SPIRAL_ANTICLOCKWISE), NULL,
 
      NULL);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Gradient:"), 1.0, 0.5,
 			     options->gradient_type_w, 1, TRUE);
 
   /*  the repeat option  */
   options->repeat_w = gimp_option_menu_new2
-    (FALSE, gimp_menu_item_update,
-     &options->repeat, (gpointer) options->repeat_d,
+    (FALSE,
+     G_CALLBACK (gimp_menu_item_update),
+     &options->repeat,
+     GINT_TO_POINTER (options->repeat_d),
 
-     _("None"),            (gpointer) REPEAT_NONE, NULL,
-     _("Sawtooth Wave"),   (gpointer) REPEAT_SAWTOOTH, NULL,
-     _("Triangular Wave"), (gpointer) REPEAT_TRIANGULAR, NULL,
+     _("None"),            GINT_TO_POINTER (REPEAT_NONE), NULL,
+     _("Sawtooth Wave"),   GINT_TO_POINTER (REPEAT_SAWTOOTH), NULL,
+     _("Triangular Wave"), GINT_TO_POINTER (REPEAT_TRIANGULAR), NULL,
 
      NULL);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
 			     _("Repeat:"), 1.0, 0.5,
 			     options->repeat_w, 1, TRUE);

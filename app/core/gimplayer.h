@@ -24,10 +24,10 @@
 
 
 #define GIMP_TYPE_LAYER            (gimp_layer_get_type ())
-#define GIMP_LAYER(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_LAYER, GimpLayer))
-#define GIMP_LAYER_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LAYER, GimpLayerClass))
-#define GIMP_IS_LAYER(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_LAYER))
-#define GIMP_IS_LAYER_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LAYER))
+#define GIMP_LAYER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_LAYER, GimpLayer))
+#define GIMP_LAYER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LAYER, GimpLayerClass))
+#define GIMP_IS_LAYER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_LAYER))
+#define GIMP_IS_LAYER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LAYER))
 
 
 typedef struct _GimpLayerClass GimpLayerClass;

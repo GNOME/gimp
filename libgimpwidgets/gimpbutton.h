@@ -31,10 +31,10 @@ extern "C" {
 
 
 #define GIMP_TYPE_BUTTON            (gimp_button_get_type ())
-#define GIMP_BUTTON(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_BUTTON, GimpButton))
-#define GIMP_BUTTON_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BUTTON, GimpButtonClass))
-#define GIMP_IS_BUTTON(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_BUTTON))
-#define GIMP_IS_BUTTON_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BUTTON))
+#define GIMP_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BUTTON, GimpButton))
+#define GIMP_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BUTTON, GimpButtonClass))
+#define GIMP_IS_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BUTTON))
+#define GIMP_IS_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BUTTON))
 
 
 typedef struct _GimpButtonClass  GimpButtonClass;

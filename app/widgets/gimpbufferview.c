@@ -103,7 +103,7 @@ gimp_buffer_view_class_init (GimpBufferViewClass *klass)
   object_class = (GtkObjectClass *) klass;
   editor_class = (GimpContainerEditorClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_CONTAINER_EDITOR);
+  parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy       = gimp_buffer_view_destroy;
 
@@ -122,25 +122,25 @@ gimp_buffer_view_init (GimpBufferView *view)
     gimp_container_editor_add_button (editor,
 				      paste_xpm,
 				      _("Paste"), NULL,
-				      gimp_buffer_view_paste_clicked);
+				      G_CALLBACK (gimp_buffer_view_paste_clicked));
 
   view->paste_into_button =
     gimp_container_editor_add_button (editor,
 				      paste_into_xpm,
 				      _("Paste Into"), NULL,
-				      gimp_buffer_view_paste_into_clicked);
+				      G_CALLBACK (gimp_buffer_view_paste_into_clicked));
 
   view->paste_as_new_button =
     gimp_container_editor_add_button (editor,
 				      paste_as_new_xpm,
 				      _("Paste as New"), NULL,
-				      gimp_buffer_view_paste_as_new_clicked);
+				      G_CALLBACK (gimp_buffer_view_paste_as_new_clicked));
 
   view->delete_button =
     gimp_container_editor_add_button (editor,
 				      delete_xpm,
 				      _("Delete"), NULL,
-				      gimp_buffer_view_delete_clicked);
+				      G_CALLBACK (gimp_buffer_view_delete_clicked));
 
   gtk_widget_set_sensitive (view->paste_button, FALSE);
   gtk_widget_set_sensitive (view->paste_into_button, FALSE);

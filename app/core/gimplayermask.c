@@ -89,36 +89,34 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
 
   object_class = (GtkObjectClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_CHANNEL);
+  parent_class = g_type_class_peek_parent (klass);
 
   layer_mask_signals[APPLY_CHANGED] =
-    gtk_signal_new ("apply_changed",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpLayerMaskClass,
-				       apply_changed),
-                    gtk_signal_default_marshaller,
-                    GTK_TYPE_NONE, 0);
+    g_signal_new ("apply_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpLayerMaskClass, apply_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   layer_mask_signals[EDIT_CHANGED] =
-    gtk_signal_new ("edit_changed",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpLayerMaskClass,
-				       edit_changed),
-                    gtk_signal_default_marshaller,
-                    GTK_TYPE_NONE, 0);
+    g_signal_new ("edit_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpLayerMaskClass, edit_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   layer_mask_signals[SHOW_CHANGED] =
-    gtk_signal_new ("show_changed",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpLayerMaskClass,
-				       show_changed),
-                    gtk_signal_default_marshaller,
-                    GTK_TYPE_NONE, 0);
-
-  gtk_object_class_add_signals (object_class, layer_mask_signals, LAST_SIGNAL);
+    g_signal_new ("show_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpLayerMaskClass, show_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   object_class->destroy = gimp_layer_mask_destroy;
 }
@@ -137,8 +135,7 @@ static void
 gimp_layer_mask_destroy (GtkObject *object)
 {
   GimpLayerMask *layer_mask;
-  
-  g_return_if_fail (object != NULL);
+
   g_return_if_fail (GIMP_IS_LAYER_MASK (object));
 
   layer_mask = GIMP_LAYER_MASK (object);
@@ -246,7 +243,6 @@ void
 gimp_layer_mask_set_apply (GimpLayerMask *layer_mask,
                            gboolean       apply)
 {
-  g_return_if_fail (layer_mask != NULL);
   g_return_if_fail (GIMP_IS_LAYER_MASK (layer_mask));
 
   if (layer_mask->apply_mask != apply)
@@ -265,15 +261,14 @@ gimp_layer_mask_set_apply (GimpLayerMask *layer_mask,
 				gimp_drawable_height (drawable));
         }
 
-      gtk_signal_emit (GTK_OBJECT (layer_mask),
-                       layer_mask_signals[APPLY_CHANGED]);
+      g_signal_emit (G_OBJECT (layer_mask),
+		     layer_mask_signals[APPLY_CHANGED], 0);
     }
 }
 
 gboolean
 gimp_layer_mask_get_apply (GimpLayerMask *layer_mask)
 {
-  g_return_val_if_fail (layer_mask != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER_MASK (layer_mask), FALSE);
 
   return layer_mask->apply_mask;
@@ -283,22 +278,20 @@ void
 gimp_layer_mask_set_edit (GimpLayerMask *layer_mask,
                           gboolean       edit)
 {
-  g_return_if_fail (layer_mask != NULL);
   g_return_if_fail (GIMP_IS_LAYER_MASK (layer_mask));
 
   if (layer_mask->edit_mask != edit)
     {
       layer_mask->edit_mask = edit;
 
-      gtk_signal_emit (GTK_OBJECT (layer_mask),
-                       layer_mask_signals[EDIT_CHANGED]);
+      g_signal_emit (G_OBJECT (layer_mask),
+		     layer_mask_signals[EDIT_CHANGED], 0);
     }
 }
 
 gboolean
 gimp_layer_mask_get_edit (GimpLayerMask *layer_mask)
 {
-  g_return_val_if_fail (layer_mask != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER_MASK (layer_mask), FALSE);
 
   return layer_mask->edit_mask;
@@ -308,7 +301,6 @@ void
 gimp_layer_mask_set_show (GimpLayerMask *layer_mask,
                           gboolean       show)
 {
-  g_return_if_fail (layer_mask != NULL);
   g_return_if_fail (GIMP_IS_LAYER_MASK (layer_mask));
 
   if (layer_mask->show_mask != show)
@@ -327,15 +319,14 @@ gimp_layer_mask_set_show (GimpLayerMask *layer_mask,
 				gimp_drawable_height (drawable));
         }
 
-      gtk_signal_emit (GTK_OBJECT (layer_mask),
-                       layer_mask_signals[SHOW_CHANGED]);
+      g_signal_emit (G_OBJECT (layer_mask),
+		     layer_mask_signals[SHOW_CHANGED], 0);
     }
 }
 
 gboolean
 gimp_layer_mask_get_show (GimpLayerMask *layer_mask)
 {
-  g_return_val_if_fail (layer_mask != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER_MASK (layer_mask), FALSE);
 
   return layer_mask->show_mask;

@@ -122,7 +122,7 @@ gimp_dialog_factory_class_init (GimpDialogFactoryClass *klass)
 
   object_class = (GtkObjectClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_OBJECT);
+  parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy = gimp_dialog_factory_destroy;
 
@@ -147,7 +147,7 @@ gimp_dialog_factory_destroy (GtkObject *object)
 
   factory = GIMP_DIALOG_FACTORY (object);
 
-  g_hash_table_remove (GIMP_DIALOG_FACTORY_CLASS (object->klass)->factories,
+  g_hash_table_remove (GIMP_DIALOG_FACTORY_GET_CLASS (object)->factories,
 		       GIMP_OBJECT (factory)->name);
 
   for (list = factory->registered_dialogs; list; list = g_list_next (list))

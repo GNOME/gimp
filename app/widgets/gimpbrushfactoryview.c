@@ -119,9 +119,9 @@ gimp_brush_factory_view_init (GimpBrushFactoryView *view)
 			     _("Spacing:"), 1.0, 1.0,
 			     view->spacing_scale, 1, FALSE);
 
-  gtk_signal_connect (GTK_OBJECT (view->spacing_adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_brush_factory_view_spacing_update),
-		      view);
+  g_signal_connect (G_OBJECT (view->spacing_adjustment), "value_changed",
+		    G_CALLBACK (gimp_brush_factory_view_spacing_update),
+		    view);
 
   view->spacing_changed_handler_id = 0;
 }
@@ -188,7 +188,7 @@ gimp_brush_factory_view_new (GimpViewType              view_type,
 
   gimp_container_add_handler
     (editor->view->container, "spacing_changed",
-     GTK_SIGNAL_FUNC (gimp_brush_factory_view_spacing_changed),
+     G_CALLBACK (gimp_brush_factory_view_spacing_changed),
      factory_view);
 
   return GTK_WIDGET (factory_view);
@@ -199,7 +199,6 @@ gimp_brush_factory_view_select_item (GimpContainerEditor *editor,
 				     GimpViewable        *viewable)
 {
   GimpBrushFactoryView *view;
-  GimpBrush            *brush;
 
   gboolean  edit_sensitive    = FALSE;
   gboolean  spacing_sensitive = FALSE;
@@ -207,26 +206,29 @@ gimp_brush_factory_view_select_item (GimpContainerEditor *editor,
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
 
-  view  = GIMP_BRUSH_FACTORY_VIEW (editor);
-  brush = GIMP_BRUSH (viewable);
+  view = GIMP_BRUSH_FACTORY_VIEW (editor);
 
-  if (brush &&
+  if (viewable &&
       gimp_container_have (GIMP_CONTAINER_EDITOR (view)->view->container,
-			   GIMP_OBJECT (brush)))
+			   GIMP_OBJECT (viewable)))
     {
+      GimpBrush *brush;
+
+      brush = GIMP_BRUSH (viewable);
+
       edit_sensitive    = GIMP_IS_BRUSH_GENERATED (brush);
       spacing_sensitive = TRUE;
 
-      gtk_signal_handler_block_by_func (GTK_OBJECT (view->spacing_adjustment),
-					gimp_brush_factory_view_spacing_update,
-					view);
+      g_signal_handlers_block_by_func (G_OBJECT (view->spacing_adjustment),
+				       gimp_brush_factory_view_spacing_update,
+				       view);
 
       gtk_adjustment_set_value (view->spacing_adjustment,
 				gimp_brush_get_spacing (brush));
 
-      gtk_signal_handler_unblock_by_func (GTK_OBJECT (view->spacing_adjustment),
-					  gimp_brush_factory_view_spacing_update,
-					  view);
+      g_signal_handlers_unblock_by_func (G_OBJECT (view->spacing_adjustment),
+					 gimp_brush_factory_view_spacing_update,
+					 view);
     }
 
   gtk_widget_set_sensitive (GIMP_DATA_FACTORY_VIEW (view)->edit_button,
@@ -240,14 +242,16 @@ gimp_brush_factory_view_spacing_changed (GimpBrush            *brush,
 {
   if (brush == GIMP_CONTAINER_EDITOR (view)->view->context->brush)
     {
-      gtk_signal_handler_block_by_func (GTK_OBJECT (view->spacing_adjustment),
-					gimp_brush_factory_view_spacing_update,
-					view);
+      g_signal_handlers_block_by_func (G_OBJECT (view->spacing_adjustment),
+				       gimp_brush_factory_view_spacing_update,
+				       view);
+
       gtk_adjustment_set_value (view->spacing_adjustment,
 				gimp_brush_get_spacing (brush));
-      gtk_signal_handler_unblock_by_func (GTK_OBJECT (view->spacing_adjustment),
-					  gimp_brush_factory_view_spacing_update,
-					  view);
+
+      g_signal_handlers_unblock_by_func (G_OBJECT (view->spacing_adjustment),
+					 gimp_brush_factory_view_spacing_update,
+					 view);
     }
 }
 
@@ -261,12 +265,14 @@ gimp_brush_factory_view_spacing_update (GtkAdjustment        *adjustment,
 
   if (brush && view->change_brush_spacing)
     {
-      gtk_signal_handler_block_by_func (GTK_OBJECT (brush),
-					gimp_brush_factory_view_spacing_changed,
-					view);
+      g_signal_handlers_block_by_func (G_OBJECT (brush),
+				       gimp_brush_factory_view_spacing_changed,
+				       view);
+
       gimp_brush_set_spacing (brush, adjustment->value);
-      gtk_signal_handler_unblock_by_func (GTK_OBJECT (brush),
-					  gimp_brush_factory_view_spacing_changed,
-					  view);
+
+      g_signal_handlers_unblock_by_func (G_OBJECT (brush),
+					 gimp_brush_factory_view_spacing_changed,
+					 view);
     }
 }

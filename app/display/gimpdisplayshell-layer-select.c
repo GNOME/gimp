@@ -158,7 +158,6 @@ layer_select_init (GimpImage *gimage,
 	gtk_widget_show (layer_select->shell);
     }
 
-  gdk_key_repeat_disable ();
   gdk_keyboard_grab (layer_select->shell->window, FALSE, time);
 }
 
@@ -241,7 +240,6 @@ static void
 layer_select_end (LayerSelect *layer_select,
 		  guint32      time)
 {
-  gdk_key_repeat_restore ();
   gdk_keyboard_ungrab (time);
 
   gtk_widget_hide (layer_select->shell);

@@ -92,17 +92,17 @@ gimp_menu_item_class_init (GimpMenuItemClass *klass)
 
   object_class = (GtkObjectClass *) klass;
 
-  parent_class = gtk_type_class (GTK_TYPE_MENU_ITEM);
+  parent_class = g_type_class_peek_parent (klass);
 
   menu_item_signals[SET_VIEWABLE] = 
-    gtk_signal_new ("set_viewable",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpMenuItemClass,
-                                       set_viewable),
-                    gtk_marshal_NONE__OBJECT,
-                    GTK_TYPE_NONE, 1,
-                    GIMP_TYPE_VIEWABLE);
+    g_signal_new ("set_viewable",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpMenuItemClass, set_viewable),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__OBJECT,
+		  G_TYPE_NONE, 1,
+		  GIMP_TYPE_VIEWABLE);
 
   klass->set_viewable = gimp_menu_item_real_set_viewable;
 }
@@ -172,10 +172,10 @@ gimp_menu_item_real_set_viewable (GimpMenuItem *menu_item,
 
   gimp_gtk_drag_source_set_by_type (GTK_WIDGET (menu_item),
 				    GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
-				    GTK_OBJECT (viewable)->klass->type,
+				    G_TYPE_FROM_INSTANCE (viewable),
 				    GDK_ACTION_MOVE | GDK_ACTION_COPY);
   gimp_dnd_viewable_source_set (GTK_WIDGET (menu_item),
-                                GTK_OBJECT (viewable)->klass->type,
+                                G_TYPE_FROM_INSTANCE (viewable),
 				gimp_menu_item_drag_viewable,
 				NULL);
 }

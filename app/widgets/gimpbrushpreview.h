@@ -32,10 +32,10 @@ extern "C" {
 
 
 #define GIMP_TYPE_BRUSH_PREVIEW            (gimp_brush_preview_get_type ())
-#define GIMP_BRUSH_PREVIEW(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_BRUSH_PREVIEW, GimpBrushPreview))
-#define GIMP_BRUSH_PREVIEW_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRUSH_PREVIEW, GimpBrushPreviewClass))
-#define GIMP_IS_BRUSH_PREVIEW(obj)         (GTK_CHECK_TYPE (obj, GIMP_TYPE_BRUSH_PREVIEW))
-#define GIMP_IS_BRUSH_PREVIEW_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BRUSH_PREVIEW))
+#define GIMP_BRUSH_PREVIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BRUSH_PREVIEW, GimpBrushPreview))
+#define GIMP_BRUSH_PREVIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRUSH_PREVIEW, GimpBrushPreviewClass))
+#define GIMP_IS_BRUSH_PREVIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_BRUSH_PREVIEW))
+#define GIMP_IS_BRUSH_PREVIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BRUSH_PREVIEW))
 
 
 typedef struct _GimpBrushPreviewClass  GimpBrushPreviewClass;

@@ -28,10 +28,10 @@
 
 
 #define GIMP_TYPE_CURVES_TOOL            (gimp_curves_tool_get_type ())
-#define GIMP_CURVES_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_CURVES_TOOL, GimpCurvesTool))
-#define GIMP_IS_CURVES_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_CURVES_TOOL))
-#define GIMP_CURVES_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CURVES_TOOL, GimpCurvesToolClass))
-#define GIMP_IS_CURVES_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CURVES_TOOL))
+#define GIMP_CURVES_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CURVES_TOOL, GimpCurvesTool))
+#define GIMP_IS_CURVES_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CURVES_TOOL))
+#define GIMP_CURVES_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CURVES_TOOL, GimpCurvesToolClass))
+#define GIMP_IS_CURVES_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CURVES_TOOL))
 
 
 typedef struct _GimpCurvesTool      GimpCurvesTool;

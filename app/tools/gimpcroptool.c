@@ -902,7 +902,8 @@ crop_info_create (GimpTool *tool)
 			       gdisp->dot_for_dot ? 
 			       GIMP_UNIT_PIXEL : gdisp->gimage->unit, "%a",
 			       TRUE, TRUE, FALSE, GIMP_SIZE_ENTRY_UPDATE_SIZE,
-			       crop_orig_changed, crop_info);
+			       G_CALLBACK (crop_orig_changed),
+			       crop_info);
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (origin_sizeentry),
 			     GTK_SPIN_BUTTON (spinbutton), NULL);
 
@@ -918,7 +919,8 @@ crop_info_create (GimpTool *tool)
 			       gdisp->dot_for_dot ? 
 			       GIMP_UNIT_PIXEL : gdisp->gimage->unit, "%a",
 			       TRUE, TRUE, FALSE, GIMP_SIZE_ENTRY_UPDATE_SIZE,
-			       crop_size_changed, crop_info);
+			       G_CALLBACK (crop_size_changed),
+			       crop_info);
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (size_sizeentry),
 			     GTK_SPIN_BUTTON (spinbutton), NULL);
 
@@ -1262,7 +1264,7 @@ crop_options_new (void)
 
   /*  tool toggle  */
   frame = gimp_radio_group_new2 (TRUE, _("Tool Toggle"),
-				 gimp_radio_button_update,
+				 G_CALLBACK (gimp_radio_button_update),
 				 &options->type, (gpointer) options->type,
 
 				 _("Crop"), (gpointer) CROP_CROP,

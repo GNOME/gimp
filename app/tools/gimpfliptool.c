@@ -398,8 +398,9 @@ flip_options_new (void)
   /*  tool toggle  */
   frame =
     gimp_radio_group_new2 (TRUE, _("Tool Toggle"),
-			   gimp_radio_button_update,
-			   &options->type, (gpointer) options->type,
+			   G_CALLBACK (gimp_radio_button_update),
+			   &options->type,
+			   (gpointer) options->type,
 
 			   _("Horizontal"), (gpointer) ORIENTATION_HORIZONTAL,
 			   &options->type_w[0],

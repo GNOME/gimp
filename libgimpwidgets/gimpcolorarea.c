@@ -111,24 +111,20 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
   object_class  = (GtkObjectClass*) klass;
   widget_class  = (GtkWidgetClass*) klass;
 
-  parent_class = gtk_type_class (gtk_preview_get_type ());
+  parent_class = g_type_class_peek_parent (klass);
 
   gimp_color_area_signals[COLOR_CHANGED] = 
-    gtk_signal_new ("color_changed",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpColorAreaClass,
-				       color_changed),
-		    gtk_signal_default_marshaller,
-		    GTK_TYPE_NONE,
-		    0);
+    g_signal_new ("color_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpColorAreaClass, color_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
-  gtk_object_class_add_signals (object_class, gimp_color_area_signals, 
-				LAST_SIGNAL);
+  klass->color_changed             = NULL;
 
-  klass->color_changed = NULL;
-
-  object_class->destroy = gimp_color_area_destroy;
+  object_class->destroy            = gimp_color_area_destroy;
 
   widget_class->realize            = gimp_color_area_realize;
   widget_class->size_allocate      = gimp_color_area_size_allocate;

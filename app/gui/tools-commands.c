@@ -109,7 +109,7 @@ tools_select_cmd_callback (GtkWidget *widget,
   /*  Complete the initialisation by doing the same stuff
    *  tools_initialize() does after it did what tools_select() does
    */
-  if (GIMP_TOOL_CLASS (GTK_OBJECT (active_tool)->klass)->initialize)
+  if (GIMP_TOOL_GET_CLASS (active_tool)->initialize)
     {
       gimp_tool_initialize (active_tool, gdisp);
 

@@ -78,7 +78,7 @@ gimp_data_factory_class_init (GimpDataFactoryClass *klass)
 
   object_class = (GtkObjectClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_OBJECT);
+  parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy = gimp_data_factory_destroy;
 }

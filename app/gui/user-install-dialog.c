@@ -582,8 +582,10 @@ user_install_dialog_create (Gimp *gimp)
   footer_label = gtk_label_new (NULL);
   PAGE_STYLE (footer_label);
   gtk_label_set_justify (GTK_LABEL (footer_label), GTK_JUSTIFY_RIGHT);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), footer_label,
-		    FALSE, FALSE, 8);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area), footer_label,
+		      FALSE, FALSE, 8);
+  gtk_box_reorder_child (GTK_BOX (GTK_DIALOG (dialog)->action_area),
+			 footer_label, 0);
   gtk_widget_show (footer_label);
 
   vbox = gtk_vbox_new (FALSE, 0);
@@ -1014,21 +1016,34 @@ user_install_run (void)
 
 	  vadj = GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
 	  vsb  = gtk_vscrollbar_new (vadj);
+#if 0
 	  log_text = gtk_text_new (NULL, vadj);
+#endif
 
 	  gtk_table_attach (GTK_TABLE (table), vsb, 1, 2, 0, 1,
 			    GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
+#if 0
 	  gtk_table_attach (GTK_TABLE (table), log_text, 0, 1, 0, 1,
 			    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
 			    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
 			    0, 0);
+#endif
 
 	  gtk_widget_show (vsb);
+#if 0
 	  gtk_widget_show (log_text);
+#endif
 	  gtk_widget_show (table);
 
 	  while (fgets (buffer, sizeof (buffer), pfp))
-	    gtk_text_insert (GTK_TEXT (log_text), NULL, NULL, NULL, buffer, -1);
+	    {
+#ifdef __GNUC__
+#warning FIXME: replace GtkText
+#endif
+#if 0
+	      gtk_text_insert (GTK_TEXT (log_text), NULL, NULL, NULL, buffer, -1);
+#endif
+	    }
 	  pclose (pfp);
 
 	  add_label (GTK_BOX (log_page),

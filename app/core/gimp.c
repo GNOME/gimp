@@ -97,7 +97,7 @@ gimp_class_init (GimpClass *klass)
 
   object_class = (GtkObjectClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_OBJECT);
+  parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy = gimp_destroy;
 }
@@ -257,6 +257,11 @@ Gimp *
 gimp_new (void)
 {
   Gimp *gimp;
+
+  /* EEK */
+  g_type_class_ref (GIMP_TYPE_CONTEXT);
+  g_type_class_ref (GIMP_TYPE_CONTAINER);
+  g_type_class_ref (GIMP_TYPE_IMAGE);
 
   gimp = gtk_type_new (GIMP_TYPE_GIMP);
 

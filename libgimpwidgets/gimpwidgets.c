@@ -57,8 +57,8 @@ gimp_option_menu_new (gboolean            menu_only,
 
 		      /* specify menu items as va_list:
 		       *  const gchar    *label,
-		       *  GtkSignalFunc   callback,
-		       *  gpointer        data,
+		       *  GCallback       callback,
+		       *  gpointer        callback_data,
 		       *  gpointer        user_data,
 		       *  GtkWidget     **widget_ptr,
 		       *  gboolean        active
@@ -71,8 +71,8 @@ gimp_option_menu_new (gboolean            menu_only,
 
   /*  menu item variables  */
   const gchar    *label;
-  GtkSignalFunc   callback;
-  gpointer        data;
+  GCallback       callback;
+  gpointer        callback_data;
   gpointer        user_data;
   GtkWidget     **widget_ptr;
   gboolean        active;
@@ -91,22 +91,22 @@ gimp_option_menu_new (gboolean            menu_only,
 
   for (i = 0; label; i++)
     {
-      callback   = va_arg (args, GtkSignalFunc);
-      data       = va_arg (args, gpointer);
-      user_data  = va_arg (args, gpointer);
-      widget_ptr = va_arg (args, GtkWidget **);
-      active     = va_arg (args, gboolean);
+      callback      = va_arg (args, GCallback);
+      callback_data = va_arg (args, gpointer);
+      user_data     = va_arg (args, gpointer);
+      widget_ptr    = va_arg (args, GtkWidget **);
+      active        = va_arg (args, gboolean);
 
       if (strcmp (label, "---"))
 	{
 	  menuitem = gtk_menu_item_new_with_label (label);
 
-	  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			      callback,
-			      data);
+	  g_signal_connect (G_OBJECT (menuitem), "activate",
+			    callback,
+			    callback_data);
 
 	  if (user_data)
-	    gtk_object_set_user_data (GTK_OBJECT (menuitem), user_data);
+	    g_object_set_data (G_OBJECT (menuitem), "user_data", user_data);
 	}
       else
 	{
@@ -115,7 +115,7 @@ gimp_option_menu_new (gboolean            menu_only,
 	  gtk_widget_set_sensitive (menuitem, FALSE);
 	}
 
-      gtk_menu_append (GTK_MENU (menu), menuitem);
+      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 
       if (widget_ptr)
 	*widget_ptr = menuitem;
@@ -151,7 +151,7 @@ gimp_option_menu_new (gboolean            menu_only,
  * @menu_only:          #TRUE if the function should return a #GtkMenu only.
  * @menu_item_callback: The callback each menu item's "activate" signal will
  *                      be connected with.
- * @data:               The data which will be passed to gtk_signal_connect().
+ * @callback_data:      The data which will be passed to g_signal_connect().
  * @initial:            The @user_data of the initially selected menu item.
  * @...:                A #NULL terminated @va_list describing the menu items.
  *
@@ -159,8 +159,8 @@ gimp_option_menu_new (gboolean            menu_only,
  **/
 GtkWidget *
 gimp_option_menu_new2 (gboolean         menu_only,
-		       GtkSignalFunc    menu_item_callback,
-		       gpointer         data,
+		       GCallback        menu_item_callback,
+		       gpointer         callback_data,
 		       gpointer         initial, /* user_data */
 
 		       /* specify menu items as va_list:
@@ -200,12 +200,12 @@ gimp_option_menu_new2 (gboolean         menu_only,
 	{
 	  menuitem = gtk_menu_item_new_with_label (label);
 
-	  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			      menu_item_callback,
-			      data);
+	  g_signal_connect (G_OBJECT (menuitem), "activate",
+			    menu_item_callback,
+			    callback_data);
 
 	  if (user_data)
-	    gtk_object_set_user_data (GTK_OBJECT (menuitem), user_data);
+	    g_object_set_data (G_OBJECT (menuitem), "user_data", user_data);
 	}
       else
 	{
@@ -214,7 +214,7 @@ gimp_option_menu_new2 (gboolean         menu_only,
 	  gtk_widget_set_sensitive (menuitem, FALSE);
 	}
 
-      gtk_menu_append (GTK_MENU (menu), menuitem);
+      gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 
       if (widget_ptr)
 	*widget_ptr = menuitem;
@@ -269,7 +269,7 @@ gimp_option_menu_set_history (GtkOptionMenu *option_menu,
       menu_item = GTK_WIDGET (list->data);
 
       if (GTK_IS_LABEL (GTK_BIN (menu_item)->child) &&
-	  gtk_object_get_user_data (GTK_OBJECT (menu_item)) == user_data)
+	  g_object_get_data (G_OBJECT (menu_item), "user_data") == user_data)
 	{
 	  break;
 	}
@@ -295,8 +295,8 @@ gimp_radio_group_new (gboolean            in_frame,
 
 		      /* specify radio buttons as va_list:
 		       *  const gchar    *label,
-		       *  GtkSignalFunc   callback,
-		       *  gpointer        data,
+		       *  GCallback       callback,
+		       *  gpointer        callback_data,
 		       *  gpointer        user_data,
 		       *  GtkWidget     **widget_ptr,
 		       *  gboolean        active,
@@ -309,12 +309,12 @@ gimp_radio_group_new (gboolean            in_frame,
   GSList    *group;
 
   /*  radio button variables  */
-  const gchar    *label;
-  GtkSignalFunc   callback;
-  gpointer        data;
-  gpointer        user_data;
-  GtkWidget     **widget_ptr;
-  gboolean        active;
+  const gchar  *label;
+  GCallback     callback;
+  gpointer      callback_data;
+  gpointer      user_data;
+  GtkWidget   **widget_ptr;
+  gboolean      active;
 
   va_list args;
 
@@ -327,11 +327,11 @@ gimp_radio_group_new (gboolean            in_frame,
   label = va_arg (args, const gchar *);
   while (label)
     {
-      callback   = va_arg (args, GtkSignalFunc);
-      data       = va_arg (args, gpointer);
-      user_data  = va_arg (args, gpointer);
-      widget_ptr = va_arg (args, GtkWidget **);
-      active     = va_arg (args, gboolean);
+      callback      = va_arg (args, GCallback);
+      callback_data = va_arg (args, gpointer);
+      user_data     = va_arg (args, gpointer);
+      widget_ptr    = va_arg (args, GtkWidget **);
+      active        = va_arg (args, gboolean);
 
       if (label != (gpointer) 1)
 	button = gtk_radio_button_new_with_label (group, label);
@@ -342,7 +342,7 @@ gimp_radio_group_new (gboolean            in_frame,
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
       if (user_data)
-	gtk_object_set_user_data (GTK_OBJECT (button), user_data);
+	g_object_set_data (G_OBJECT (button), "user_data", user_data);
 
       if (widget_ptr)
 	*widget_ptr = button;
@@ -350,9 +350,9 @@ gimp_radio_group_new (gboolean            in_frame,
       if (active)
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			  callback,
-			  data);
+      g_signal_connect (G_OBJECT (button), "toggled",
+			callback,
+			callback_data);
 
       gtk_widget_show (button);
 
@@ -384,8 +384,8 @@ gimp_radio_group_new (gboolean            in_frame,
  *                         a title.
  * @radio_button_callback: The callback each button's "toggled" signal will
  *                         be connected with.
- * @data:                  The data which will be passed to
- *                         gtk_signal_connect().
+ * @callback_data:         The data which will be passed to
+ *                         g_signal_connect().
  * @initial:               The @user_data of the initially pressed radio button.
  * @...:                   A #NULL terminated @va_list describing
  *                         the radio buttons.
@@ -395,8 +395,8 @@ gimp_radio_group_new (gboolean            in_frame,
 GtkWidget *
 gimp_radio_group_new2 (gboolean         in_frame,
 		       const gchar     *frame_title,
-		       GtkSignalFunc    radio_button_callback,
-		       gpointer         data,
+		       GCallback        radio_button_callback,
+		       gpointer         callback_data,
 		       gpointer         initial, /* user_data */
 
 		       /* specify radio buttons as va_list:
@@ -440,7 +440,7 @@ gimp_radio_group_new2 (gboolean         in_frame,
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
       if (user_data)
-	gtk_object_set_user_data (GTK_OBJECT (button), user_data);
+	g_object_set_data (G_OBJECT (button), "user_data", user_data);
 
       if (widget_ptr)
 	*widget_ptr = button;
@@ -448,9 +448,9 @@ gimp_radio_group_new2 (gboolean         in_frame,
       if (initial == user_data)
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			  radio_button_callback,
-			  data);
+      g_signal_connect (G_OBJECT (button), "toggled",
+			radio_button_callback,
+			callback_data);
 
       gtk_widget_show (button);
 
@@ -510,8 +510,6 @@ gimp_spin_button_new (GtkObject **adjustment,  /* return value */
 
   spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (*adjustment),
 				    climb_rate, digits);
-  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
-				   GTK_SHADOW_NONE);
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_widget_set_usize (spinbutton, 75, -1);
 
@@ -522,11 +520,15 @@ static void
 gimp_scale_entry_unconstrained_adjustment_callback (GtkAdjustment *adjustment,
 						    GtkAdjustment *other_adj)
 {
-  gtk_signal_handler_block_by_data (GTK_OBJECT (other_adj), adjustment);
+  g_signal_handlers_block_by_func (G_OBJECT (other_adj),
+				   gimp_scale_entry_unconstrained_adjustment_callback,
+				   adjustment);
 
   gtk_adjustment_set_value (other_adj, adjustment->value);
 
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (other_adj), adjustment);
+  g_signal_handlers_unblock_by_func (G_OBJECT (other_adj),
+				     gimp_scale_entry_unconstrained_adjustment_callback,
+				     adjustment);
 }
 
 /**
@@ -609,14 +611,14 @@ gimp_scale_entry_new (GtkTable    *table,
 					 step_increment, page_increment, 0.0,
 					 1.0, digits);
 
-      gtk_signal_connect
-	(GTK_OBJECT (constrained_adj), "value_changed",
-	 GTK_SIGNAL_FUNC (gimp_scale_entry_unconstrained_adjustment_callback),
+      g_signal_connect
+	(G_OBJECT (constrained_adj), "value_changed",
+	 G_CALLBACK (gimp_scale_entry_unconstrained_adjustment_callback),
 	 adjustment);
 
-      gtk_signal_connect
-	(GTK_OBJECT (adjustment), "value_changed",
-	 GTK_SIGNAL_FUNC (gimp_scale_entry_unconstrained_adjustment_callback),
+      g_signal_connect
+	(G_OBJECT (adjustment), "value_changed",
+	 G_CALLBACK (gimp_scale_entry_unconstrained_adjustment_callback),
 	 constrained_adj);
 
       return_adj = adjustment;
@@ -656,9 +658,9 @@ gimp_scale_entry_new (GtkTable    *table,
       gimp_help_set_help_data (spinbutton, tooltip, help_data);
     }
 
-  gtk_object_set_data (GTK_OBJECT (return_adj), "label", label);
-  gtk_object_set_data (GTK_OBJECT (return_adj), "scale", scale);
-  gtk_object_set_data (GTK_OBJECT (return_adj), "spinbutton", spinbutton);
+  g_object_set_data (G_OBJECT (return_adj), "label", label);
+  g_object_set_data (G_OBJECT (return_adj), "scale", scale);
+  g_object_set_data (G_OBJECT (return_adj), "spinbutton", spinbutton);
 
   return return_adj;
 }
@@ -737,19 +739,19 @@ gimp_random_seed_new (gint       *seed,
                              "time - this guarantees a reasonable "
                              "randomization"), NULL);
 
-  gtk_object_set_data (GTK_OBJECT (button), "time_true",
-		       GINT_TO_POINTER (time_true));
-  gtk_object_set_data (GTK_OBJECT (button), "time_false",
-		       GINT_TO_POINTER (time_false));
+  g_object_set_data (G_OBJECT (button), "time_true",
+		     GINT_TO_POINTER (time_true));
+  g_object_set_data (G_OBJECT (button), "time_false",
+		     GINT_TO_POINTER (time_false));
 
-  gtk_object_set_data (GTK_OBJECT (button), "inverse_sensitive",
-		       spinbutton);
+  g_object_set_data (G_OBJECT (button), "inverse_sensitive",
+		     spinbutton);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 *use_time == time_true);
 
-  gtk_object_set_data (GTK_OBJECT (hbox), "spinbutton", spinbutton);
-  gtk_object_set_data (GTK_OBJECT (hbox), "togglebutton", button);
+  g_object_set_data (G_OBJECT (hbox), "spinbutton", spinbutton);
+  g_object_set_data (G_OBJECT (hbox), "togglebutton", button);
 
   return hbox;
 }
@@ -947,15 +949,15 @@ gimp_coordinates_new (GimpUnit         unit,
   gcd->last_x                 = x;
   gcd->last_y                 = y;
 
-  gtk_signal_connect_object (GTK_OBJECT (sizeentry), "destroy",
-			     GTK_SIGNAL_FUNC (g_free),
-			     (GtkObject *) gcd);
+  g_signal_connect_swapped (G_OBJECT (sizeentry), "destroy",
+			    G_CALLBACK (g_free),
+			    gcd);
 
-  gtk_signal_connect (GTK_OBJECT (sizeentry), "value_changed", 
-                      GTK_SIGNAL_FUNC (gimp_coordinates_callback),
-                      gcd);
+  g_signal_connect (G_OBJECT (sizeentry), "value_changed", 
+		    G_CALLBACK (gimp_coordinates_callback),
+		    gcd);
 
-  gtk_object_set_data (GTK_OBJECT (sizeentry), "chainbutton", chainbutton);
+  g_object_set_data (G_OBJECT (sizeentry), "chainbutton", chainbutton);
 
   return sizeentry;
 }
@@ -985,12 +987,13 @@ gimp_mem_size_unit_callback (GtkWidget *widget,
 			     gpointer   data)
 {
   GimpMemSizeEntryData *gmsed;
-  guint divided_mem_size;
-  guint new_unit;
+  guint                 divided_mem_size;
+  guint                 new_unit;
 
   gmsed = (GimpMemSizeEntryData *)data;
 
-  new_unit = (guint) gtk_object_get_user_data (GTK_OBJECT (widget));
+  new_unit =
+    GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (widget), "user_data"));
 
   if (new_unit && new_unit != gmsed->mem_size_unit)
     {
@@ -1043,7 +1046,7 @@ gimp_mem_size_entry_new (GtkAdjustment *adjustment)
   gtk_widget_show (spinbutton);
 
   optionmenu =
-    gimp_option_menu_new2 (FALSE, gimp_mem_size_unit_callback,
+    gimp_option_menu_new2 (FALSE, G_CALLBACK (gimp_mem_size_unit_callback),
 			   gmsed, (gpointer) mem_size_unit,
 
 			   _("Bytes"),     (gpointer) 1, NULL,
@@ -1054,19 +1057,19 @@ gimp_mem_size_entry_new (GtkAdjustment *adjustment)
   gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
   gtk_widget_show (optionmenu);
 
-  gtk_signal_connect_object (GTK_OBJECT (hbox), "destroy",
-			     GTK_SIGNAL_FUNC (gtk_object_unref),
-			     GTK_OBJECT (adjustment));
-  gtk_signal_connect_object (GTK_OBJECT (hbox), "destroy",
-			     GTK_SIGNAL_FUNC (g_free),
-			     (GtkObject *) gmsed);
+  g_signal_connect_swapped (G_OBJECT (hbox), "destroy",
+			    G_CALLBACK (gtk_object_unref),
+			    adjustment);
+  g_signal_connect_swapped (G_OBJECT (hbox), "destroy",
+			    G_CALLBACK (g_free),
+			    gmsed);
 
-  gmsed->adjustment = adjustment;
-  gmsed->divided_adj = GTK_ADJUSTMENT (divided_adj);
+  gmsed->adjustment    = adjustment;
+  gmsed->divided_adj   = GTK_ADJUSTMENT (divided_adj);
   gmsed->mem_size_unit = mem_size_unit;
 
-  gtk_object_set_data (GTK_OBJECT (hbox), "spinbutton", spinbutton);
-  gtk_object_set_data (GTK_OBJECT (hbox), "optionmenu", optionmenu);
+  g_object_set_data (G_OBJECT (hbox), "spinbutton", spinbutton);
+  g_object_set_data (G_OBJECT (hbox), "optionmenu", optionmenu);
 
   return hbox;
 }
@@ -1128,7 +1131,7 @@ gimp_pixmap_button_new (gchar       **xpm_data,
  * @toggle_button: The #GtkToggleButton the "set_sensitive" and
  *                 "inverse_sensitive" lists are attached to.
  *
- * If you attached a pointer to a #GtkWidget with gtk_object_set_data() and
+ * If you attached a pointer to a #GtkWidget with g_object_set_data() and
  * the "set_sensitive" key to the #GtkToggleButton, the sensitive state of
  * the attached widget will be set according to the toggle button's
  * "active" state.
@@ -1209,8 +1212,8 @@ gimp_radio_button_update (GtkWidget *widget,
     {
       toggle_val = (gint *) data;
 
-      *toggle_val =
-	GPOINTER_TO_INT (gtk_object_get_user_data (GTK_OBJECT (widget)));
+      *toggle_val = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+							"user_data"));
     }
 
   gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
@@ -1230,7 +1233,8 @@ gimp_menu_item_update (GtkWidget *widget,
 
   item_val = (gint *) data;
 
-  *item_val = GPOINTER_TO_INT (gtk_object_get_user_data (GTK_OBJECT (widget)));
+  *item_val = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+						  "user_data"));
 }
 
 /**
@@ -1311,7 +1315,7 @@ gimp_double_adjustment_update (GtkAdjustment *adjustment,
  *
  * This callback can set the number of decimal digits of an arbitrary number
  * of #GtkSpinButton's. To use this functionality, attach the spinbuttons
- * as list of data pointers attached with gtk_object_set_data() with the
+ * as list of data pointers attached with g_object_set_data() with the
  * "set_digits" key.
  *
  * See gimp_toggle_button_sensitive_update() for a description of how

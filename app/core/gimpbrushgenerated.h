@@ -29,10 +29,10 @@
 
 
 #define GIMP_TYPE_BRUSH_GENERATED            (gimp_brush_generated_get_type ())
-#define GIMP_BRUSH_GENERATED(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_BRUSH_GENERATED, GimpBrushGenerated))
-#define GIMP_BRUSH_GENERATED_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRUSH_GENERATED, GimpBrushGeneratedClass))
-#define GIMP_IS_BRUSH_GENERATED(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_BRUSH_GENERATED))
-#define GIMP_IS_BRUSH_GENERATED_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BRUSH_GENERATED))
+#define GIMP_BRUSH_GENERATED(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BRUSH_GENERATED, GimpBrushGenerated))
+#define GIMP_BRUSH_GENERATED_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_BRUSH_GENERATED, GimpBrushGeneratedClass))
+#define GIMP_IS_BRUSH_GENERATED(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_BRUSH_GENERATED))
+#define GIMP_IS_BRUSH_GENERATED_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BRUSH_GENERATED))
 
 
 typedef struct _GimpBrushGeneratedClass GimpBrushGeneratedClass;

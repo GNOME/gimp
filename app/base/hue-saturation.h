@@ -36,10 +36,10 @@ typedef enum
 
 
 #define GIMP_TYPE_HUE_SATURATION_TOOL            (gimp_hue_saturation_tool_get_type ())
-#define GIMP_HUE_SATURATION_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_HUE_SATURATION_TOOL, GimpHueSaturationTool))
-#define GIMP_IS_HUE_SATURATION_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_HUE_SATURATION_TOOL))
-#define GIMP_HUE_SATURATION_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_HUE_SATURATION_TOOL, GimpHueSaturationToolClass))
-#define GIMP_IS_HUE_SATURATION_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_HUE_SATURATION_TOOL))
+#define GIMP_HUE_SATURATION_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_HUE_SATURATION_TOOL, GimpHueSaturationTool))
+#define GIMP_IS_HUE_SATURATION_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_HUE_SATURATION_TOOL))
+#define GIMP_HUE_SATURATION_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_HUE_SATURATION_TOOL, GimpHueSaturationToolClass))
+#define GIMP_IS_HUE_SATURATION_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_HUE_SATURATION_TOOL))
 
 
 typedef struct _GimpHueSaturationTool      GimpHueSaturationTool;

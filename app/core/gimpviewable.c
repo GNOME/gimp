@@ -52,10 +52,10 @@ static guint  viewable_signals[LAST_SIGNAL] = { 0 };
 static GimpObjectClass *parent_class = NULL;
 
 
-GtkType 
+GType 
 gimp_viewable_get_type (void)
 {
-  static GtkType viewable_type = 0;
+  static GType viewable_type = 0;
 
   if (! viewable_type)
     {
@@ -84,51 +84,47 @@ gimp_viewable_class_init (GimpViewableClass *klass)
 
   object_class = (GtkObjectClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_OBJECT);
+  parent_class = g_type_class_peek_parent (klass);
 
   viewable_signals[INVALIDATE_PREVIEW] =
-    gtk_signal_new ("invalidate_preview",
-		    GTK_RUN_FIRST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpViewableClass,
-				       invalidate_preview),
-		    gtk_signal_default_marshaller,
-		    GTK_TYPE_NONE, 0);
+    g_signal_new ("invalidate_preview",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpViewableClass, invalidate_preview),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   viewable_signals[SIZE_CHANGED] =
-    gtk_signal_new ("size_changed",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpViewableClass,
-				       size_changed),
-                    gtk_signal_default_marshaller,
-                    GTK_TYPE_NONE, 0);
+    g_signal_new ("size_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpViewableClass, size_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   viewable_signals[GET_PREVIEW] =
-    gtk_signal_new ("get_preview",
-		    GTK_RUN_LAST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpViewableClass,
-				       get_preview),
-		    gimp_marshal_POINTER__INT_INT,
-		    GTK_TYPE_POINTER, 3,
-		    GTK_TYPE_POINTER,
-		    GTK_TYPE_INT,
-		    GTK_TYPE_INT);
+    g_signal_new ("get_preview",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_LAST,
+		  G_STRUCT_OFFSET (GimpViewableClass, get_preview),
+		  NULL, NULL,
+		  gimp_cclosure_marshal_POINTER__INT_INT,
+		  G_TYPE_POINTER, 2,
+		  G_TYPE_INT,
+		  G_TYPE_INT);
 
   viewable_signals[GET_NEW_PREVIEW] =
-    gtk_signal_new ("get_new_preview",
-		    GTK_RUN_LAST,
-		    object_class->type,
-		    GTK_SIGNAL_OFFSET (GimpViewableClass,
-				       get_new_preview),
-		    gimp_marshal_POINTER__INT_INT,
-		    GTK_TYPE_POINTER, 3,
-		    GTK_TYPE_POINTER,
-		    GTK_TYPE_INT,
-		    GTK_TYPE_INT);
-
-  gtk_object_class_add_signals (object_class, viewable_signals, LAST_SIGNAL);
+    g_signal_new ("get_new_preview",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_LAST,
+		  G_STRUCT_OFFSET (GimpViewableClass, get_new_preview),
+		  NULL, NULL,
+		  gimp_cclosure_marshal_POINTER__INT_INT,
+		  G_TYPE_POINTER, 2,
+		  G_TYPE_INT,
+		  G_TYPE_INT);
 
   klass->invalidate_preview = gimp_viewable_real_invalidate_preview;
   klass->size_changed       = NULL;
@@ -144,28 +140,25 @@ gimp_viewable_init (GimpViewable *viewable)
 void
 gimp_viewable_invalidate_preview (GimpViewable *viewable)
 {
-  g_return_if_fail (viewable);
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
-  gtk_signal_emit (GTK_OBJECT (viewable), viewable_signals[INVALIDATE_PREVIEW]);
+  g_signal_emit (G_OBJECT (viewable), viewable_signals[INVALIDATE_PREVIEW], 0);
 }
 
 void
 gimp_viewable_size_changed (GimpViewable *viewable)
 {
-  g_return_if_fail (viewable);
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
-  gtk_signal_emit (GTK_OBJECT (viewable), viewable_signals[SIZE_CHANGED]);
+  g_signal_emit (G_OBJECT (viewable), viewable_signals[SIZE_CHANGED], 0);
 }
 
 static void
 gimp_viewable_real_invalidate_preview (GimpViewable *viewable)
 {
-  g_return_if_fail (viewable);
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
-  gtk_object_set_data (GTK_OBJECT (viewable), "static-viewable-preview", NULL);
+  g_object_set_data (G_OBJECT (viewable), "static-viewable-preview", NULL);
 }
 
 TempBuf *
@@ -175,20 +168,18 @@ gimp_viewable_get_preview (GimpViewable *viewable,
 {
   TempBuf *temp_buf = NULL;
 
-  g_return_val_if_fail (viewable, NULL);
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
-
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
 
-  gtk_signal_emit (GTK_OBJECT (viewable), viewable_signals[GET_PREVIEW],
-		   width, height, &temp_buf);
+  g_signal_emit (G_OBJECT (viewable), viewable_signals[GET_PREVIEW], 0,
+		 width, height, &temp_buf);
 
   if (temp_buf)
     return temp_buf;
 
-  temp_buf = gtk_object_get_data (GTK_OBJECT (viewable),
-				  "static-viewable-preview");
+  temp_buf = g_object_get_data (G_OBJECT (viewable),
+				"static-viewable-preview");
 
   if (temp_buf                   &&
       temp_buf->width  == width  &&
@@ -197,12 +188,12 @@ gimp_viewable_get_preview (GimpViewable *viewable,
 
   temp_buf = NULL;
 
-  gtk_signal_emit (GTK_OBJECT (viewable), viewable_signals[GET_NEW_PREVIEW],
-		   width, height, &temp_buf);
+  g_signal_emit (G_OBJECT (viewable), viewable_signals[GET_NEW_PREVIEW], 0,
+		 width, height, &temp_buf);
 
-  gtk_object_set_data_full (GTK_OBJECT (viewable), "static-viewable-preview",
-			    temp_buf,
-			    (GtkDestroyNotify) temp_buf_free);
+  g_object_set_data_full (G_OBJECT (viewable), "static-viewable-preview",
+			  temp_buf,
+			  (GDestroyNotify) temp_buf_free);
 
   return temp_buf;
 }
@@ -214,20 +205,18 @@ gimp_viewable_get_new_preview (GimpViewable *viewable,
 {
   TempBuf *temp_buf = NULL;
 
-  g_return_val_if_fail (viewable, NULL);
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
-
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
 
-  gtk_signal_emit (GTK_OBJECT (viewable), viewable_signals[GET_NEW_PREVIEW],
-		   width, height, &temp_buf);
+  g_signal_emit (G_OBJECT (viewable), viewable_signals[GET_NEW_PREVIEW], 0,
+		 width, height, &temp_buf);
 
   if (temp_buf)
     return temp_buf;
 
-  gtk_signal_emit (GTK_OBJECT (viewable), viewable_signals[GET_PREVIEW],
-		   width, height, &temp_buf);
+  g_signal_emit (G_OBJECT (viewable), viewable_signals[GET_PREVIEW], 0,
+		 width, height, &temp_buf);
 
   if (temp_buf)
     return temp_buf_copy (temp_buf, NULL);

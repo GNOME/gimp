@@ -786,7 +786,8 @@ by_color_select_control (GimpTool   *tool,
 }
 
 void
-by_color_select_initialize (GimpTool *tool, GDisplay *gdisp)
+by_color_select_initialize (GimpTool *tool,
+			    GDisplay *gdisp)
 {
   /*  The "by color" dialog  */
   if (!by_color_dialog)
@@ -794,9 +795,11 @@ by_color_select_initialize (GimpTool *tool, GDisplay *gdisp)
       by_color_dialog = by_color_select_dialog_new ();
       /* Catch the "mask_changed" signal and attach a handler that does 
        * stuff with it. Need to do this somewhere with the relevant 
-       * GimpImage in context */
-      gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "mask_changed",
-			  by_color_select_mask_changed,	NULL);
+       * GimpImage in context
+       */
+      g_signal_connect (G_OBJECT (gdisp->gimage), "mask_changed",
+			G_CALLBACK (by_color_select_mask_changed),
+			NULL);
     }
   else
     if (!GTK_WIDGET_VISIBLE (by_color_dialog->shell))
@@ -864,9 +867,9 @@ by_color_select_dialog_new (void)
   gtk_widget_set_events (bcd->preview, PREVIEW_EVENT_MASK);
   gtk_container_add (GTK_CONTAINER (frame), bcd->preview);
 
-  gtk_signal_connect (GTK_OBJECT (bcd->preview), "button_press_event",
-		      GTK_SIGNAL_FUNC (by_color_select_preview_events),
-		      bcd);
+  g_signal_connect (G_OBJECT (bcd->preview), "button_press_event",
+		    G_CALLBACK (by_color_select_preview_events),
+		    bcd);
 
   /*  dnd colors to the image window  */
   gtk_drag_dest_set (bcd->preview, 
@@ -897,19 +900,18 @@ by_color_select_dialog_new (void)
   gtk_widget_show (util_box);
 
   /*  Create the selection mode radio box  */
-  frame = 
-    gimp_radio_group_new2 (TRUE, _("Selection Mode"),
-			   gimp_radio_button_update,
-			   &bcd->operation,
-			   (gpointer) bcd->operation,
+  frame = gimp_radio_group_new2
+    (TRUE, _("Selection Mode"),
+     G_CALLBACK (gimp_radio_button_update),
+     &bcd->operation,
+     GINT_TO_POINTER (bcd->operation),
 
-			   _("Replace"),   (gpointer) SELECTION_REPLACE,
-			   &bcd->replace_button,
-			   _("Add"),       (gpointer) SELECTION_ADD, NULL,
-			   _("Subtract"),  (gpointer) SELECTION_SUB, NULL,
-			   _("Intersect"), (gpointer) SELECTION_INTERSECT, NULL,
+     _("Replace"),   GINT_TO_POINTER (SELECTION_REPLACE),   &bcd->replace_button,
+     _("Add"),       GINT_TO_POINTER (SELECTION_ADD),       NULL,
+     _("Subtract"),  GINT_TO_POINTER (SELECTION_SUB),       NULL,
+     _("Intersect"), GINT_TO_POINTER (SELECTION_INTERSECT), NULL,
 
-			   NULL);
+     NULL);
 
   gtk_box_pack_start (GTK_BOX (options_box), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -931,9 +933,9 @@ by_color_select_dialog_new (void)
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
 
-  gtk_signal_connect (GTK_OBJECT (bcd->threshold_adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &bcd->threshold);
+  g_signal_connect (G_OBJECT (bcd->threshold_adj), "value_changed",
+		    G_CALLBACK (gimp_int_adjustment_update),
+		    &bcd->threshold);
 
   gtk_widget_show (slider);
 
@@ -950,32 +952,35 @@ by_color_select_dialog_new (void)
 
   button = gtk_button_new_with_label (_("Invert"));
   gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 2, 0, 1);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (by_color_select_invert_callback),
-		      bcd);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+		    G_CALLBACK (by_color_select_invert_callback),
+		    bcd);
 
   button = gtk_button_new_with_label (_("All"));
   gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 1, 1, 2);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (by_color_select_select_all_callback),
-		      bcd);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+		    G_CALLBACK (by_color_select_select_all_callback),
+		    bcd);
 
   button = gtk_button_new_with_label (_("None"));
   gtk_table_attach_defaults (GTK_TABLE (table), button, 1, 2, 1, 2);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (by_color_select_select_none_callback),
-		      bcd);
   gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+		    G_CALLBACK (by_color_select_select_none_callback),
+		    bcd);
 
   gtk_widget_show (options_box);
   gtk_widget_show (hbox);
   gtk_widget_show (bcd->shell);
 
-  gtk_signal_connect_object (GTK_OBJECT (bcd->shell), "unmap_event",
-			     GTK_SIGNAL_FUNC (gimp_dialog_hide), 
-			     (gpointer) bcd->shell);
+  g_signal_connect_swapped (G_OBJECT (bcd->shell), "unmap_event",
+			    G_CALLBACK (gimp_dialog_hide), 
+			    bcd->shell);
 
   return bcd;
 }

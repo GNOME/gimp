@@ -39,7 +39,7 @@ dialogs_create_toplevel_cmd_callback (GtkWidget *widget,
 {
   if (action)
     {
-      gchar *identifier;
+      const gchar *identifier;
 
       identifier = g_quark_to_string ((GQuark) action);
 
@@ -55,7 +55,7 @@ dialogs_create_dockable_cmd_callback (GtkWidget *widget,
 {
   if (action)
     {
-      gchar *identifier;
+      const gchar *identifier;
 
       identifier = g_quark_to_string ((GQuark) action);
 
@@ -75,8 +75,8 @@ dialogs_add_tab_cmd_callback (GtkWidget *widget,
 
   if (dockbook && action)
     {
-      GtkWidget *dockable;
-      gchar     *identifier;
+      GtkWidget   *dockable;
+      const gchar *identifier;
 
       identifier = g_quark_to_string ((GQuark) action);
 

@@ -94,15 +94,13 @@ gimp_drawable_list_item_get_type (void)
 static void
 gimp_drawable_list_item_class_init (GimpDrawableListItemClass *klass)
 {
-  GtkObjectClass    *object_class;
   GtkWidgetClass    *widget_class;
   GimpListItemClass *list_item_class;
 
-  object_class    = (GtkObjectClass *) klass;
   widget_class    = (GtkWidgetClass *) klass;
   list_item_class = (GimpListItemClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_LIST_ITEM);
+  parent_class = g_type_class_peek_parent (klass);
 
   widget_class->drag_motion     = gimp_drawable_list_item_drag_motion;
   widget_class->drag_drop       = gimp_drawable_list_item_drag_drop;
@@ -126,13 +124,13 @@ gimp_drawable_list_item_init (GimpDrawableListItem *list_item)
   gtk_container_add (GTK_CONTAINER (abox), list_item->eye_button);
   gtk_widget_show (list_item->eye_button);
 
-  gtk_signal_connect (GTK_OBJECT (list_item->eye_button), "realize",
-                      GTK_SIGNAL_FUNC (gimp_list_item_button_realize),
-                      list_item);
+  g_signal_connect (G_OBJECT (list_item->eye_button), "realize",
+		    G_CALLBACK (gimp_list_item_button_realize),
+		    list_item);
 
-  gtk_signal_connect (GTK_OBJECT (list_item->eye_button), "state_changed",
-                      GTK_SIGNAL_FUNC (gimp_list_item_button_state_changed),
-                      list_item);
+  g_signal_connect (G_OBJECT (list_item->eye_button), "state_changed",
+		    G_CALLBACK (gimp_list_item_button_state_changed),
+		    list_item);
 
   pixmap = gimp_pixmap_new (eye_xpm);
   gtk_container_add (GTK_CONTAINER (list_item->eye_button), pixmap);
@@ -171,15 +169,14 @@ gimp_drawable_list_item_set_viewable (GimpListItem *list_item,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (drawable_item->eye_button),
                                 visible);
 
-  gtk_signal_connect (GTK_OBJECT (drawable_item->eye_button), "toggled",
-                      GTK_SIGNAL_FUNC (gimp_drawable_list_item_eye_toggled),
-                      list_item);
+  g_signal_connect (G_OBJECT (drawable_item->eye_button), "toggled",
+		    G_CALLBACK (gimp_drawable_list_item_eye_toggled),
+		    list_item);
 
-  gtk_signal_connect_while_alive
-    (GTK_OBJECT (viewable), "visibility_changed",
-     GTK_SIGNAL_FUNC (gimp_drawable_list_item_visibility_changed),
-     list_item,
-     GTK_OBJECT (list_item));
+  g_signal_connect_object (G_OBJECT (viewable), "visibility_changed",
+			   G_CALLBACK (gimp_drawable_list_item_visibility_changed),
+			   G_OBJECT (list_item),
+			   0);
 }
 
 static gboolean
@@ -294,15 +291,15 @@ gimp_drawable_list_item_eye_toggled (GtkWidget *widget,
           gtk_widget_set_usize (GTK_WIDGET (widget), -1, -1);
         }
 
-      gtk_signal_handler_block_by_func (GTK_OBJECT (drawable),
-                                        gimp_drawable_list_item_visibility_changed,
-                                        list_item);
+      g_signal_handlers_block_by_func (G_OBJECT (drawable),
+				       gimp_drawable_list_item_visibility_changed,
+				       list_item);
 
       gimp_drawable_set_visible (drawable, visible);
 
-      gtk_signal_handler_unblock_by_func (GTK_OBJECT (drawable),
-                                          gimp_drawable_list_item_visibility_changed,
-                                          list_item);
+      g_signal_handlers_unblock_by_func (G_OBJECT (drawable),
+					 gimp_drawable_list_item_visibility_changed,
+					 list_item);
 
       gdisplays_flush ();
     }
@@ -335,14 +332,14 @@ gimp_drawable_list_item_visibility_changed (GimpDrawable *drawable,
           gtk_widget_set_usize (GTK_WIDGET (toggle), -1, -1);
         }
 
-      gtk_signal_handler_block_by_func (GTK_OBJECT (toggle),
-                                        gimp_drawable_list_item_eye_toggled,
-                                        list_item);
+      g_signal_handlers_block_by_func (G_OBJECT (toggle),
+				       gimp_drawable_list_item_eye_toggled,
+				       list_item);
 
       gtk_toggle_button_set_active (toggle, visible);
 
-      gtk_signal_handler_unblock_by_func (GTK_OBJECT (toggle),
-                                          gimp_drawable_list_item_eye_toggled,
-                                          list_item);
+      g_signal_handlers_unblock_by_func (G_OBJECT (toggle),
+					 gimp_drawable_list_item_eye_toggled,
+					 list_item);
     }
 }

@@ -748,7 +748,7 @@ convolve_options_new (void)
   gtk_widget_show (hbox);
 
   frame = gimp_radio_group_new2 (TRUE, _("Convolve Type"),
-				 gimp_radio_button_update,
+				 G_CALLBACK (gimp_radio_button_update),
 				 &options->type, (gpointer) options->type,
 
 				 _("Blur"), (gpointer) BLUR_CONVOLVE,

@@ -138,11 +138,8 @@ gimp_container_editor_construct (GimpContainerEditor      *editor,
 				 gint                      min_items_y,
 				 GimpContainerContextFunc  context_func)
 {
-  g_return_val_if_fail (editor != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_CONTAINER_EDITOR (editor), FALSE);
-  g_return_val_if_fail (container != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
-  g_return_val_if_fail (context != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
 
   g_return_val_if_fail (preview_size > 0 && preview_size <= 64, FALSE);
@@ -180,23 +177,20 @@ gimp_container_editor_construct (GimpContainerEditor      *editor,
 		     GTK_WIDGET (editor->view));
   gtk_widget_show (GTK_WIDGET (editor->view));
 
-  gtk_signal_connect_while_alive
-    (GTK_OBJECT (editor->view), "select_item",
-     GTK_SIGNAL_FUNC (gimp_container_editor_select_item),
-     editor,
-     GTK_OBJECT (editor));
+  g_signal_connect_object (G_OBJECT (editor->view), "select_item",
+			   G_CALLBACK (gimp_container_editor_select_item),
+			   G_OBJECT (editor),
+			   0);
 
-  gtk_signal_connect_while_alive
-    (GTK_OBJECT (editor->view), "activate_item",
-     GTK_SIGNAL_FUNC (gimp_container_editor_activate_item),
-     editor,
-     GTK_OBJECT (editor));
+  g_signal_connect_object (G_OBJECT (editor->view), "activate_item",
+			   G_CALLBACK (gimp_container_editor_activate_item),
+			   G_OBJECT (editor),
+			   0);
 
-  gtk_signal_connect_while_alive
-    (GTK_OBJECT (editor->view), "context_item",
-     GTK_SIGNAL_FUNC (gimp_container_editor_context_item),
-     editor,
-     GTK_OBJECT (editor));
+  g_signal_connect_object (G_OBJECT (editor->view), "context_item",
+			   G_CALLBACK (gimp_container_editor_context_item),
+			   G_OBJECT (editor),
+			   0);
 
   /*  select the active item  */
   gimp_container_editor_select_item
@@ -214,12 +208,11 @@ gimp_container_editor_add_button (GimpContainerEditor  *editor,
 				  gchar               **xpm_data,
 				  const gchar          *tooltip,
 				  const gchar          *help_data,
-				  GtkSignalFunc         callback)
+				  GCallback             callback)
 {
   GtkWidget *pixmap;
   GtkWidget *button;
 
-  g_return_val_if_fail (editor != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_CONTAINER_EDITOR (editor), NULL);
   g_return_val_if_fail (xpm_data != NULL, NULL);
 
@@ -232,8 +225,9 @@ gimp_container_editor_add_button (GimpContainerEditor  *editor,
     gimp_help_set_help_data (button, tooltip, help_data);
 
   if (callback)
-    gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			callback, editor);
+    g_signal_connect (G_OBJECT (button), "clicked",
+		      callback,
+		      editor);
 
   pixmap = gimp_pixmap_new (xpm_data);
   gtk_container_add (GTK_CONTAINER (button), pixmap);
@@ -246,9 +240,7 @@ void
 gimp_container_editor_enable_dnd (GimpContainerEditor  *editor,
 				  GtkButton            *button)
 {
-  g_return_if_fail (editor != NULL);
   g_return_if_fail (GIMP_IS_CONTAINER_EDITOR (editor));
-  g_return_if_fail (button != NULL);
   g_return_if_fail (GTK_IS_BUTTON (button));
 
   g_return_if_fail (editor->view != NULL);
@@ -295,7 +287,7 @@ gimp_container_editor_select_item (GtkWidget           *widget,
 {
   GimpContainerEditorClass *klass;
 
-  klass = GIMP_CONTAINER_EDITOR_CLASS (GTK_OBJECT (editor)->klass);
+  klass = GIMP_CONTAINER_EDITOR_GET_CLASS (editor);
 
   if (klass->select_item)
     klass->select_item (editor, viewable);
@@ -309,7 +301,7 @@ gimp_container_editor_activate_item (GtkWidget           *widget,
 {
   GimpContainerEditorClass *klass;
 
-  klass = GIMP_CONTAINER_EDITOR_CLASS (GTK_OBJECT (editor)->klass);
+  klass = GIMP_CONTAINER_EDITOR_GET_CLASS (editor);
 
   if (klass->activate_item)
     klass->activate_item (editor, viewable);
@@ -323,7 +315,7 @@ gimp_container_editor_context_item (GtkWidget           *widget,
 {
   GimpContainerEditorClass *klass;
 
-  klass = GIMP_CONTAINER_EDITOR_CLASS (GTK_OBJECT (editor)->klass);
+  klass = GIMP_CONTAINER_EDITOR_GET_CLASS (editor);
 
   if (klass->context_item)
     klass->context_item (editor, viewable);

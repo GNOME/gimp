@@ -27,10 +27,10 @@
 
 
 #define GIMP_TYPE_DOCKBOOK            (gimp_dockbook_get_type ())
-#define GIMP_DOCKBOOK(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_DOCKBOOK, GimpDockbook))
-#define GIMP_DOCKBOOK_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DOCKBOOK, GimpDockbookClass))
-#define GIMP_IS_DOCKBOOK(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_DOCKBOOK))
-#define GIMP_IS_DOCKBOOK_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DOCKBOOK))
+#define GIMP_DOCKBOOK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DOCKBOOK, GimpDockbook))
+#define GIMP_DOCKBOOK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DOCKBOOK, GimpDockbookClass))
+#define GIMP_IS_DOCKBOOK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DOCKBOOK))
+#define GIMP_IS_DOCKBOOK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DOCKBOOK))
 
 
 typedef struct _GimpDockbookClass  GimpDockbookClass;

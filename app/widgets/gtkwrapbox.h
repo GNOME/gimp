@@ -34,11 +34,11 @@ extern "C" {
 
 /* --- type macros --- */
 #define GTK_TYPE_WRAP_BOX	     (gtk_wrap_box_get_type ())
-#define GTK_WRAP_BOX(obj)	     (GTK_CHECK_CAST ((obj), GTK_TYPE_WRAP_BOX, GtkWrapBox))
-#define GTK_WRAP_BOX_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GTK_TYPE_WRAP_BOX, GtkWrapBoxClass))
-#define GTK_IS_WRAP_BOX(obj)	     (GTK_CHECK_TYPE ((obj), GTK_TYPE_WRAP_BOX))
-#define GTK_IS_WRAP_BOX_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GTK_TYPE_WRAP_BOX))
-#define GTK_WRAP_BOX_GET_CLASS(obj)  (GTK_WRAP_BOX_CLASS (((GtkObject*) (obj))->klass))
+#define GTK_WRAP_BOX(obj)	     (G_TYPE_CHECK_INSTANCE_CAST ((obj), GTK_TYPE_WRAP_BOX, GtkWrapBox))
+#define GTK_WRAP_BOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GTK_TYPE_WRAP_BOX, GtkWrapBoxClass))
+#define GTK_IS_WRAP_BOX(obj)	     (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GTK_TYPE_WRAP_BOX))
+#define GTK_IS_WRAP_BOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GTK_TYPE_WRAP_BOX))
+#define GTK_WRAP_BOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GTK_TYPE_WRAP_BOX, GtkWrapBoxClass))
 
 
 /* --- typedefs --- */

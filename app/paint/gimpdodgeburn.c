@@ -686,8 +686,9 @@ gimp_dodgeburn_tool_options_new (void)
 
   /* the type (dodge or burn) */
   frame = gimp_radio_group_new2 (TRUE, _("Type"),
-				 gimp_radio_button_update,
-				 &options->type, (gpointer) options->type,
+				 G_CALLBACK (gimp_radio_button_update),
+				 &options->type,
+				 (gpointer) options->type,
 
 				 _("Dodge"), (gpointer) DODGE,
 				 &options->type_w[0],
@@ -702,8 +703,9 @@ gimp_dodgeburn_tool_options_new (void)
   /*  mode (highlights, midtones, or shadows)  */
   frame =
     gimp_radio_group_new2 (TRUE, _("Mode"),
-			   gimp_radio_button_update,
-			   &options->mode, (gpointer) options->mode,
+			   G_CALLBACK (gimp_radio_button_update),
+			   &options->mode,
+			   (gpointer) options->mode,
 
 			   _("Highlights"), (gpointer) DODGEBURN_HIGHLIGHTS, 
 			   &options->mode_w[0],

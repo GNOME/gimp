@@ -245,10 +245,11 @@ magnify_options_new (void)
   /*  tool toggle  */
   frame =
     gimp_radio_group_new2 (TRUE, _("Tool Toggle"),
-                           gimp_radio_button_update,
-                           &options->type, (gpointer) options->type,
+                           G_CALLBACK (gimp_radio_button_update),
+                           &options->type,
+			   (gpointer) options->type,
 
-                           _("Zoom in"), (gpointer) GIMP_ZOOM_IN,
+                           _("Zoom in"),  (gpointer) GIMP_ZOOM_IN,
                            &options->type_w[0],
                            _("Zoom out"), (gpointer) GIMP_ZOOM_OUT,
                            &options->type_w[1],

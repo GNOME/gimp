@@ -337,7 +337,7 @@ create_display_shell (GDisplay *gdisp,
   gtk_widget_set_events (GTK_WIDGET (gdisp->hrule),
 			 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
   gtk_signal_connect_object (GTK_OBJECT (gdisp->shell), "motion_notify_event",
-			     GTK_SIGNAL_FUNC (GTK_WIDGET_CLASS (GTK_OBJECT (gdisp->hrule)->klass)->motion_notify_event),
+			     GTK_SIGNAL_FUNC (GTK_WIDGET_GET_CLASS (gdisp->hrule)->motion_notify_event),
 			     GTK_OBJECT (gdisp->hrule));
   gtk_signal_connect (GTK_OBJECT (gdisp->hrule), "button_press_event",
 		      GTK_SIGNAL_FUNC (gdisplay_hruler_button_press),
@@ -350,7 +350,7 @@ create_display_shell (GDisplay *gdisp,
   gtk_widget_set_events (GTK_WIDGET (gdisp->vrule),
 			 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
   gtk_signal_connect_object (GTK_OBJECT (gdisp->shell), "motion_notify_event",
-			     GTK_SIGNAL_FUNC (GTK_WIDGET_CLASS (GTK_OBJECT (gdisp->vrule)->klass)->motion_notify_event),
+			     GTK_SIGNAL_FUNC (GTK_WIDGET_GET_CLASS (gdisp->vrule)->motion_notify_event),
 			     GTK_OBJECT (gdisp->vrule));
   gtk_signal_connect (GTK_OBJECT (gdisp->vrule), "button_press_event",
 		      GTK_SIGNAL_FUNC (gdisplay_vruler_button_press),
