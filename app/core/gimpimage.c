@@ -1319,13 +1319,110 @@ gimp_image_get_active_channels (GimpImage *gimage, GimpDrawable *drawable, int *
 
 
 void
-gimp_image_construct (GimpImage *gimage, int x, int y, int w, int h)
+gimp_image_construct (GimpImage *gimage, int x, int y, int w, int h,
+		      gboolean can_use_cowproject)
 {
+
+#if 0
+      int xoff, yoff;
+      
+
+	printf("************ ty:%d by:%d op:%d\n",
+	       gimage_projection_type(gimage),
+	       gimage_projection_bytes(gimage),
+	       gimage_projection_opacity(gimage)
+	       );fflush(stdout);
+      if (gimage->layers)
+	{
+	  gimp_drawable_offsets (GIMP_DRAWABLE((Layer*)(gimage->layers->data)),
+				 &xoff, &yoff);
+	  printf("-------\n%d,%d,%d,%d,%d,%d,%d,%d,%d\n",
+		 (gimage->layers != NULL) ,                /* There's a layer.      */
+		 (!g_slist_next(gimage->layers)) ,          /* It's the only layer.  */
+		 (layer_has_alpha((Layer*)(gimage->layers->data))) , /* It's !flat.  */
+		 /* It's visible.         */
+		 (drawable_visible (GIMP_DRAWABLE((Layer*)(gimage->layers->data)))) ,
+		 (drawable_width (GIMP_DRAWABLE((Layer*)(gimage->layers->data))) ==
+		  gimage->width) ,
+		 (drawable_height (GIMP_DRAWABLE((Layer*)(gimage->layers->data))) ==
+		  gimage->height) ,                         /* Covers all.           */
+		 /* Not indexed.          */
+		 (!drawable_indexed (GIMP_DRAWABLE((Layer*)(gimage->layers->data)))) ,
+		 (((Layer*)(gimage->layers->data))->opacity == OPAQUE_OPACITY) /*opaq */,
+		 ((xoff==0) && (yoff==0))
+		 );fflush(stdout);
+	}
+      else
+	{
+	  printf("GIMAGE @%p HAS NO LAYERS?! %d\n",
+		 gimage,
+		 g_slist_length(gimage->layers));
+	  fflush(stdout);
+	}
+
+      if (//can_use_cowproject &&
+      (gimage->layers) &&                         /* There's a layer.      */
+      (!g_slist_next(gimage->layers)) &&          /* It's the only layer.  */
+      (layer_has_alpha((Layer*)(gimage->layers->data))) && /* It's !flat.  */
+                                                  /* It's visible.         */
+      (drawable_visible (GIMP_DRAWABLE((Layer*)(gimage->layers->data)))) &&
+      (drawable_width (GIMP_DRAWABLE((Layer*)(gimage->layers->data))) ==
+       gimage->width) &&
+      (drawable_height (GIMP_DRAWABLE((Layer*)(gimage->layers->data))) ==
+       gimage->height) &&                         /* Covers all.           */
+                                                  /* Not indexed.          */
+      (!drawable_indexed (GIMP_DRAWABLE((Layer*)(gimage->layers->data)))) &&
+      (((Layer*)(gimage->layers->data))->opacity == OPAQUE_OPACITY) /*opaq */
+      )
+    {
+      int xoff, yoff;
+      
+      gimp_drawable_offsets (GIMP_DRAWABLE((Layer*)(gimage->layers->data)),
+			     &xoff, &yoff);
+
+
+      if ((xoff==0) && (yoff==0)) /* Starts at 0,0         */
+      {
+	PixelRegion srcPR, destPR;
+	void * pr;
+	
+	g_warning("Can use cow-projection hack.  Yay!");
+	
+	//	gimp_image_initialize_projection (gimage, x, y, w, h);
+
+	pixel_region_init (&srcPR, gimp_drawable_data
+			   (GIMP_DRAWABLE
+			    ((Layer*)(gimage->layers->data))),
+			   x, y, w,h, FALSE);
+	pixel_region_init (&destPR,
+			   gimp_image_projection (gimage),
+			   x, y, w,h, TRUE);
+	
+	//	tile_manager_set_validate_proc(destPR.tiles, NULL);
+
+	for (pr = pixel_regions_register (2, &srcPR, &destPR);
+	     pr != NULL;
+	     pr = pixel_regions_process (pr))
+	  {
+	    tile_manager_validate (srcPR.tiles,
+				   srcPR.curtile);
+	    tile_manager_map_over_tile (destPR.tiles,
+					destPR.curtile, srcPR.curtile);
+	  }
+
+	gimage->construct_flag = 1;
+	return;
+      }
+    }
+
+  g_warning("Can NOT use cow-projection hack.  Boo!");
+#endif
+  
   /*  set the construct flag, used to determine if anything
    *  has been written to the gimage raw image yet.
    */
   gimage->construct_flag = 0;
-
+  
   /*  First, determine if the projection image needs to be
    *  initialized--this is the case when there are no visible
    *  layers that cover the entire canvas--either because layers
@@ -1407,7 +1504,7 @@ gimp_image_invalidate (GimpImage *gimage, int x, int y, int w, int h, int x1, in
       }
 
   if ((endx - startx) > 0 && (endy - starty) > 0)
-    gimp_image_construct (gimage, startx, starty, (endx - startx), (endy - starty));
+    gimp_image_construct (gimage, startx, starty, (endx - startx), (endy - starty), TRUE);
 }
 
 void
@@ -1426,8 +1523,8 @@ gimp_image_validate (TileManager *tm, Tile *tile)
   tile_manager_get_tile_coordinates (tm, tile, &x, &y);
   w = tile_ewidth(tile);
   h = tile_eheight(tile);
-
-  gimp_image_construct (gimage, x, y, w, h);
+  
+  gimp_image_construct (gimage, x, y, w, h, FALSE);
 }
 
 int

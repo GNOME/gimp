@@ -1,3 +1,15 @@
+Mon Jan 18 22:55:19 GMT 1999 Adam D. Moss <adam@gimp.org>
+
+	* app/gimpimage.c app/gimpimage.h:
+
+	Part one of an effort to allow a one-layer gimage
+	to share tiles with its own projection courtesy of
+	copy-on-write, where sane.  This can save megabytes
+	when working with such images.
+
+	The code is 'mostly working' rather than 'perfect',
+	so it's disabled until I have time to finish it.
+
 Mon Jan 18 18:56:05 GMT 1999 Adam D. Moss <adam@gimp.org>
 
 	* plug-ins/psd/psd.c: Better guess at how PSD files store

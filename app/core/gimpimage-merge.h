@@ -193,7 +193,7 @@ Channel *       gimp_image_raise_channel          (GimpImage *, Channel *);
 Channel *       gimp_image_lower_channel          (GimpImage *, Channel *);
 Channel *       gimp_image_add_channel            (GimpImage *, Channel *, int);
 Channel *       gimp_image_remove_channel         (GimpImage *, Channel *);
-void            gimp_image_construct              (GimpImage *, int, int, int, int);
+void            gimp_image_construct              (GimpImage *, int, int, int, int, gboolean);
 void            gimp_image_invalidate             (GimpImage *, int, int, int, int, int, int, int, int);
 void            gimp_image_validate               (TileManager *, Tile *);
 
