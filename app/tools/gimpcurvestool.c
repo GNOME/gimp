@@ -590,7 +590,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbox), c_tool->channel_menu, FALSE, FALSE, 0);
   gtk_widget_show (c_tool->channel_menu);
 
-  button = gtk_button_new_with_label (_("Reset Channel"));
+  button = gtk_button_new_with_mnemonic (_("R_eset Channel"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -706,20 +706,17 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
 static void
 gimp_curves_tool_reset (GimpImageMapTool *image_map_tool)
 {
-  GimpCurvesTool *c_tool;
-  gint            i, j;
+  GimpCurvesTool       *c_tool;
+  GimpHistogramChannel  channel;
 
   c_tool = GIMP_CURVES_TOOL (image_map_tool);
 
   c_tool->grab_point = -1;
 
-  for (i = 0; i < 5; i++)
-    {
-      for (j = 0; j < 256; j++)
-        c_tool->curves->curve[i][j] = j;
-
-      curves_channel_reset (c_tool->curves, i);
-    }
+  for (channel =  GIMP_HISTOGRAM_VALUE;
+       channel <= GIMP_HISTOGRAM_ALPHA;
+       channel++)
+    curves_channel_reset (c_tool->curves, channel);
 
   curves_update (c_tool, GRAPH | XRANGE_TOP | DRAW);
 }
@@ -1026,14 +1023,10 @@ curves_channel_reset_callback (GtkWidget *widget,
                                gpointer   data)
 {
   GimpCurvesTool *c_tool;
-  gint            j;
 
   c_tool = GIMP_CURVES_TOOL (data);
 
   c_tool->grab_point = -1;
-
-  for (j = 0; j < 256; j++)
-    c_tool->curves->curve[c_tool->channel][j] = j;
 
   curves_channel_reset (c_tool->curves, c_tool->channel);
 

@@ -35,34 +35,34 @@ typedef struct _GimpCurvesToolClass GimpCurvesToolClass;
 
 struct _GimpCurvesTool
 {
-  GimpImageMapTool  parent_instance;
+  GimpImageMapTool      parent_instance;
 
-  Curves           *curves;
-  GimpLut          *lut;
+  Curves               *curves;
+  GimpLut              *lut;
 
   /* dialog */
-  gboolean          color;
-  gint              channel;
+  gboolean              color;
+  GimpHistogramChannel  channel;
 
-  gint              grab_point;
-  gint              last;
-  gint              leftmost;
-  gint              rightmost;
-  gint              col_value[5];
+  gint                  grab_point;
+  gint                  last;
+  gint                  leftmost;
+  gint                  rightmost;
+  gint                  col_value[5];
 
-  GtkWidget        *channel_menu;
-  GtkWidget        *xrange;
-  GtkWidget        *yrange;
-  GtkWidget        *graph;
-  GdkPixmap        *pixmap;
-  GtkWidget        *curve_type_menu;
+  GtkWidget            *channel_menu;
+  GtkWidget            *xrange;
+  GtkWidget            *yrange;
+  GtkWidget            *graph;
+  GdkPixmap            *pixmap;
+  GtkWidget            *curve_type_menu;
 
-  PangoLayout      *xpos_layout;
-  PangoLayout      *cursor_layout;
-  PangoRectangle    cursor_rect;
+  PangoLayout          *xpos_layout;
+  PangoLayout          *cursor_layout;
+  PangoRectangle        cursor_rect;
 
-  GtkWidget        *file_dialog;
-  gboolean          is_save;
+  GtkWidget            *file_dialog;
+  gboolean              is_save;
 };
 
 struct _GimpCurvesToolClass

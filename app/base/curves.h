@@ -35,11 +35,11 @@ struct _Curves
 };
 
 
-void    curves_init            (Curves *curves);
-void    curves_channel_reset   (Curves *curves,
-                                gint    channel);
-void    curves_calculate_curve (Curves *curves,
-                                gint    channel);
+void    curves_init            (Curves               *curves);
+void    curves_channel_reset   (Curves               *curves,
+                                GimpHistogramChannel  channel);
+void    curves_calculate_curve (Curves               *curves,
+                                GimpHistogramChannel  channel);
 gfloat  curves_lut_func        (Curves *curves,
 				gint    nchannels,
 				gint    channel,

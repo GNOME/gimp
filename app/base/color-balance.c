@@ -52,6 +52,30 @@ static gdouble  shadows_sub[256]    = { 0 };
 /*  public functions  */
 
 void
+color_balance_init (ColorBalance *cb)
+{
+  GimpTransferMode range;
+
+  g_return_if_fail (cb != NULL);
+
+  for (range = GIMP_SHADOWS; range <= GIMP_HIGHLIGHTS; range++)
+    color_balance_range_reset (cb, range);
+
+  cb->preserve_luminosity = TRUE;
+}
+
+void
+color_balance_range_reset (ColorBalance     *cb,
+                           GimpTransferMode  range)
+{
+  g_return_if_fail (cb != NULL);
+
+  cb->cyan_red[range]      = 0.0;
+  cb->magenta_green[range] = 0.0;
+  cb->yellow_blue[range]   = 0.0;
+}
+
+void
 color_balance_create_lookup_tables (ColorBalance *cb)
 {
   gdouble *cyan_red_transfer[3];
@@ -59,6 +83,8 @@ color_balance_create_lookup_tables (ColorBalance *cb)
   gdouble *yellow_blue_transfer[3];
   gint     i;
   gint32   r_n, g_n, b_n;
+
+  g_return_if_fail (cb != NULL);
 
   if (! transfer_initialized)
     {

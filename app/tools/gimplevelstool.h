@@ -36,35 +36,30 @@ typedef struct _GimpLevelsToolClass GimpLevelsToolClass;
 
 struct _GimpLevelsTool
 {
-  GimpImageMapTool   parent_instance;
+  GimpImageMapTool      parent_instance;
 
-  GimpLut           *lut;
-  gboolean           color;
-  gint               low_input[5];
-  gdouble            gamma[5];
-  gint               high_input[5];
-  gint               low_output[5];
-  gint               high_output[5];
+  GimpLut              *lut;
+  gboolean              color;
+  Levels               *levels;
 
   /* dialog */
-  gint               channel;
-  gint               active_slider;
-  gint               slider_pos[5];  /*  positions for the five sliders  */
-  guchar             input[5][256]; /* this is used only by the gui */
+  GimpHistogramChannel  channel;
+  gint                  active_slider;
+  gint                  slider_pos[5];  /*  positions for the five sliders  */
 
-  GimpHistogram     *hist;
-  GimpHistogramView *histogram;
-  GtkAdjustment     *low_input_data;
-  GtkAdjustment     *gamma_data;
-  GtkAdjustment     *high_input_data;
-  GtkAdjustment     *low_output_data;
-  GtkAdjustment     *high_output_data;
-  GtkWidget         *input_levels_da[2];
-  GtkWidget         *output_levels_da[2];
-  GtkWidget         *channel_menu;
+  GimpHistogram        *hist;
+  GimpHistogramView    *histogram;
+  GtkAdjustment        *low_input_data;
+  GtkAdjustment        *gamma_data;
+  GtkAdjustment        *high_input_data;
+  GtkAdjustment        *low_output_data;
+  GtkAdjustment        *high_output_data;
+  GtkWidget            *input_levels_da[2];
+  GtkWidget            *output_levels_da[2];
+  GtkWidget            *channel_menu;
 
-  GtkWidget         *file_dialog;
-  gboolean           is_save;
+  GtkWidget            *file_dialog;
+  gboolean              is_save;
 };
 
 struct _GimpLevelsToolClass

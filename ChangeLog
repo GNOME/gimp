@@ -1,5 +1,51 @@
 2002-09-04  Michael Natterer  <mitch@gimp.org>
 
+	More color correction stuff cleanup:
+
+	* app/base/Makefile.am
+	* app/base/base-types.h
+	* app/base/levels.[ch]: new files containing levels_lut_func(), a
+	new "Levels" parameter struct and the "auto levels" stuff.
+
+	* app/base/lut-funcs.[ch]: removed the levels stuff here, added
+	lots of g_return_if_fail().
+
+	* app/base/color-balance.[ch]
+	* app/base/hue-saturation.[ch]: added init() and reset() functions
+	so we don't need to duplicate this code in the tool and the pdb
+	wrappers.
+
+	* app/base/curves.[ch]: s/gint/GimpHistogramChannel/g, made
+	curves_channel_reset() initialize the curves array.
+
+	* app/tools/gimpcolorbalancetool.[ch]: use the new functions,
+	moved the "Range" frame to the top, added a per-range "Reset"
+	button, made the global "Reset" button reset all ranges and
+	the "Preserve Luminosity" toggle.
+
+	* app/tools/gimpcurvestool.[ch]: don't initialize the curves
+	array manually, as curves_channel_reset() does that,
+	s/gint/GimpHistogramChannel/g.
+
+	* app/tools/gimphuesaturationtool.c: use the new functions, added
+	a per-channel "Reset" button and made the global "Reset" button
+	reset all channels, cleaned up the GUI update function.
+
+	* app/tools/gimplevelstool.[ch]: changed to use the new Levels
+	parameter struct and it's utility functions. Removed stuff
+	which now lives in base/levels.c
+
+	* app/tools/gimpimagemaptool.c: align the "Preview" button
+	bottom-left, not bottom-right.
+
+	* tools/pdbgen/pdb/color.pdb: use the new stuff and removed
+	uglyness because using the "Levels" struct makes the code more
+	straightforward.
+
+	* app/pdb/color_cmds.c: regenerated.
+
+2002-09-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/color-select.c
 	* app/widgets/gimpselectioneditor.c
 	* app/widgets/gimptoolbox.c: removed some leftover GtkTargetEntry

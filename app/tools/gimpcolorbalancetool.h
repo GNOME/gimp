@@ -46,6 +46,7 @@ struct _GimpColorBalanceTool
   GtkAdjustment    *cyan_red_adj;
   GtkAdjustment    *magenta_green_adj;
   GtkAdjustment    *yellow_blue_adj;
+  GtkWidget        *preserve_toggle;
 };
 
 struct _GimpColorBalanceToolClass

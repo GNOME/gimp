@@ -30,7 +30,6 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -38,7 +37,7 @@
 
 #include "base/gimphistogram.h"
 #include "base/gimplut.h"
-#include "base/lut-funcs.h"
+#include "base/levels.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-histogram.h"
@@ -97,7 +96,6 @@ static void   gimp_levels_tool_map        (GimpImageMapTool *image_map_tool);
 static void   gimp_levels_tool_dialog     (GimpImageMapTool *image_map_tool);
 static void   gimp_levels_tool_reset      (GimpImageMapTool *image_map_tool);
 
-static void   levels_calculate_transfers           (GimpLevelsTool *l_tool);
 static void   levels_update                        (GimpLevelsTool *l_tool,
 						    gint            update);
 static void   levels_channel_callback              (GtkWidget      *widget,
@@ -223,8 +221,11 @@ gimp_levels_tool_init (GimpLevelsTool *l_tool)
   image_map_tool->shell_desc  = _("Adjust Color Levels");
 
   l_tool->lut                 = gimp_lut_new ();
+  l_tool->levels              = g_new0 (Levels, 1);
   l_tool->hist                = gimp_histogram_new ();
   l_tool->channel             = GIMP_HISTOGRAM_VALUE;
+
+  levels_init (l_tool->levels);
 }
 
 static void
@@ -238,6 +239,12 @@ gimp_levels_tool_finalize (GObject *object)
     {
       gimp_lut_free (l_tool->lut);
       l_tool->lut = NULL;
+    }
+
+  if (l_tool->levels)
+    {
+      g_free (l_tool->levels);
+      l_tool->levels = NULL;
     }
 
   if (l_tool->hist)
@@ -255,7 +262,6 @@ gimp_levels_tool_initialize (GimpTool    *tool,
 {
   GimpLevelsTool *l_tool;
   GimpDrawable   *drawable;
-  gint            i;
 
   l_tool = GIMP_LEVELS_TOOL (tool);
 
@@ -273,14 +279,7 @@ gimp_levels_tool_initialize (GimpTool    *tool,
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  for (i = 0; i < 5; i++)
-    {
-      l_tool->low_input[i]   = 0;
-      l_tool->gamma[i]       = 1.0;
-      l_tool->high_input[i]  = 255;
-      l_tool->low_output[i]  = 0;
-      l_tool->high_output[i] = 255;
-    }
+  levels_init (l_tool->levels);
 
   l_tool->channel = GIMP_HISTOGRAM_VALUE;
   l_tool->color   = gimp_drawable_is_rgb (drawable);
@@ -367,7 +366,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
                       l_tool->channel_menu, FALSE, FALSE, 0);
   gtk_widget_show (l_tool->channel_menu);
 
-  button = gtk_button_new_with_label (_("Reset Channel"));
+  button = gtk_button_new_with_mnemonic (_("R_eset Channel"));
   gtk_box_pack_start (GTK_BOX (channel_hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -592,8 +591,8 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (button);
 
   g_signal_connect (G_OBJECT (button), "clicked",
-		      G_CALLBACK (levels_auto_callback),
-		      l_tool);
+                    G_CALLBACK (levels_auto_callback),
+                    l_tool);
 
   button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
@@ -620,18 +619,10 @@ static void
 gimp_levels_tool_reset (GimpImageMapTool *image_map_tool)
 {
   GimpLevelsTool *l_tool;
-  gint            i;
 
   l_tool = GIMP_LEVELS_TOOL (image_map_tool);
 
-  for (i = 0; i < 5; i++)
-    {
-      l_tool->low_input[i]   = 0;
-      l_tool->gamma[i]       = 1.0;
-      l_tool->high_input[i]  = 255;
-      l_tool->low_output[i]  = 0;
-      l_tool->high_output[i] = 255;
-    }
+  levels_init (l_tool->levels);
 
   levels_update (l_tool, ALL);
 }
@@ -667,32 +658,6 @@ levels_erase_slider (GdkWindow *window,
 }
 
 static void
-levels_calculate_transfers (GimpLevelsTool *l_tool)
-{
-  gdouble inten;
-  gint    i, j;
-
-  /*  Recalculate the levels arrays  */
-  for (j = 0; j < 5; j++)
-    {
-      for (i = 0; i < 256; i++)
-	{
-	  /*  determine input intensity  */
-	  if (l_tool->high_input[j] != l_tool->low_input[j])
-	    inten = (double) (i - l_tool->low_input[j]) /
-	      (double) (l_tool->high_input[j] - l_tool->low_input[j]);
-	  else
-	    inten = (double) (i - l_tool->low_input[j]);
-
-	  inten = CLAMP (inten, 0.0, 1.0);
-	  if (l_tool->gamma[j] != 0.0)
-	    inten = pow (inten, (1.0 / l_tool->gamma[j]));
-	  l_tool->input[j][i] = (guchar) (inten * 255.0 + 0.5);
-	}
-    }
-}
-
-static void
 levels_update (GimpLevelsTool *l_tool,
 	       gint            update)
 {
@@ -712,36 +677,33 @@ levels_update (GimpLevelsTool *l_tool,
     }
 
   /*  Recalculate the transfer arrays  */
-  levels_calculate_transfers (l_tool);
+  levels_calculate_transfers (l_tool->levels);
 
   /* set up the lut */
-  levels_lut_setup (l_tool->lut,
-                    l_tool->gamma,
-                    l_tool->low_input,
-                    l_tool->high_input,
-		    l_tool->low_output,
-                    l_tool->high_output,
-		    gimp_drawable_bytes (GIMP_IMAGE_MAP_TOOL (l_tool)->drawable));
+  gimp_lut_setup (l_tool->lut,
+                  (GimpLutFunc) levels_lut_func,
+                  l_tool->levels,
+                  gimp_drawable_bytes (GIMP_IMAGE_MAP_TOOL (l_tool)->drawable));
 
   if (update & LOW_INPUT)
     gtk_adjustment_set_value (l_tool->low_input_data,
-                              l_tool->low_input[l_tool->channel]);
+                              l_tool->levels->low_input[l_tool->channel]);
 
   if (update & GAMMA)
     gtk_adjustment_set_value (l_tool->gamma_data,
-                              l_tool->gamma[l_tool->channel]);
+                              l_tool->levels->gamma[l_tool->channel]);
 
   if (update & HIGH_INPUT)
     gtk_adjustment_set_value (l_tool->high_input_data,
-                              l_tool->high_input[l_tool->channel]);
+                              l_tool->levels->high_input[l_tool->channel]);
 
   if (update & LOW_OUTPUT)
     gtk_adjustment_set_value (l_tool->low_output_data,
-                              l_tool->low_output[l_tool->channel]);
+                              l_tool->levels->low_output[l_tool->channel]);
 
   if (update & HIGH_OUTPUT)
     gtk_adjustment_set_value (l_tool->high_output_data,
-                              l_tool->high_output[l_tool->channel]);
+                              l_tool->levels->high_output[l_tool->channel]);
 
   if (update & INPUT_LEVELS)
     {
@@ -756,9 +718,9 @@ levels_update (GimpLevelsTool *l_tool,
 	case GIMP_HISTOGRAM_ALPHA:
 	  for (i = 0; i < DA_WIDTH; i++)
 	    {
-	      buf[3 * i + 0] = l_tool->input[sel_channel][i];
-	      buf[3 * i + 1] = l_tool->input[sel_channel][i];
-	      buf[3 * i + 2] = l_tool->input[sel_channel][i];
+	      buf[3 * i + 0] = l_tool->levels->input[sel_channel][i];
+	      buf[3 * i + 1] = l_tool->levels->input[sel_channel][i];
+	      buf[3 * i + 2] = l_tool->levels->input[sel_channel][i];
 	    }
 	  break;
 
@@ -767,9 +729,9 @@ levels_update (GimpLevelsTool *l_tool,
 	case GIMP_HISTOGRAM_BLUE:	  
 	  for (i = 0; i < DA_WIDTH; i++)
 	    {
-	      buf[3 * i + 0] = l_tool->input[GIMP_HISTOGRAM_RED][i];
-	      buf[3 * i + 1] = l_tool->input[GIMP_HISTOGRAM_GREEN][i];
-	      buf[3 * i + 2] = l_tool->input[GIMP_HISTOGRAM_BLUE][i];
+	      buf[3 * i + 0] = l_tool->levels->input[GIMP_HISTOGRAM_RED][i];
+	      buf[3 * i + 1] = l_tool->levels->input[GIMP_HISTOGRAM_GREEN][i];
+	      buf[3 * i + 2] = l_tool->levels->input[GIMP_HISTOGRAM_BLUE][i];
 	    }
 	  break;
 	}
@@ -838,14 +800,14 @@ levels_update (GimpLevelsTool *l_tool,
                            l_tool->slider_pos[2]);
 
       l_tool->slider_pos[0] =
-        DA_WIDTH * ((gdouble) l_tool->low_input[l_tool->channel] / 255.0);
+        DA_WIDTH * ((gdouble) l_tool->levels->low_input[l_tool->channel] / 255.0);
 
       l_tool->slider_pos[2] =
-        DA_WIDTH * ((gdouble) l_tool->high_input[l_tool->channel] / 255.0);
+        DA_WIDTH * ((gdouble) l_tool->levels->high_input[l_tool->channel] / 255.0);
 
       width = (double) (l_tool->slider_pos[2] - l_tool->slider_pos[0]) / 2.0;
       mid   = l_tool->slider_pos[0] + width;
-      tmp   = log10 (1.0 / l_tool->gamma[l_tool->channel]);
+      tmp   = log10 (1.0 / l_tool->levels->gamma[l_tool->channel]);
 
       l_tool->slider_pos[1] = (gint) (mid + width * tmp + 0.5);
 
@@ -871,10 +833,10 @@ levels_update (GimpLevelsTool *l_tool,
                            l_tool->slider_pos[4]);
 
       l_tool->slider_pos[3] =
-        DA_WIDTH * ((gdouble) l_tool->low_output[l_tool->channel] / 255.0);
+        DA_WIDTH * ((gdouble) l_tool->levels->low_output[l_tool->channel] / 255.0);
 
       l_tool->slider_pos[4] =
-        DA_WIDTH * ((gdouble) l_tool->high_output[l_tool->channel] / 255.0);
+        DA_WIDTH * ((gdouble) l_tool->levels->high_output[l_tool->channel] / 255.0);
 
       levels_draw_slider (l_tool->output_levels_da[1]->window,
 			  l_tool->output_levels_da[1]->style->black_gc,
@@ -903,7 +865,7 @@ levels_channel_callback (GtkWidget *widget,
     }
   else
     {
-      if (l_tool->channel > 1) 
+      if (l_tool->channel > 1)
 	{
 	  gimp_histogram_view_channel (l_tool->histogram, 1);
 	  l_tool->channel = 2;
@@ -912,7 +874,7 @@ levels_channel_callback (GtkWidget *widget,
 	{
 	  gimp_histogram_view_channel (l_tool->histogram, 0);
 	  l_tool->channel = 1;
-	} 
+	}
     }
 
   levels_update (l_tool, ALL);
@@ -926,12 +888,7 @@ levels_channel_reset_callback (GtkWidget *widget,
 
   l_tool = GIMP_LEVELS_TOOL (data);
 
-  l_tool->low_input[l_tool->channel]   = 0;
-  l_tool->gamma[l_tool->channel]       = 1.0;
-  l_tool->high_input[l_tool->channel]  = 255;
-  l_tool->low_output[l_tool->channel]  = 0;
-  l_tool->high_output[l_tool->channel] = 255;
-
+  levels_channel_reset (l_tool->levels, l_tool->channel);
   levels_update (l_tool, ALL);
 
   gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (l_tool));
@@ -961,86 +918,14 @@ levels_set_sensitive_callback (gpointer        item_data,
 }
 
 static void
-levels_adjust_channel (GimpLevelsTool *l_tool,
-		       GimpHistogram  *hist,
-		       gint            channel)
-{
-  gint    i;
-  gdouble count, new_count, percentage, next_percentage;
-
-  l_tool->gamma[channel]       = 1.0;
-  l_tool->low_output[channel]  = 0;
-  l_tool->high_output[channel] = 255;
-
-  count = gimp_histogram_get_count (hist, 0, 255);
-
-  if (count == 0.0)
-    {
-      l_tool->low_input[channel] = 0;
-      l_tool->high_input[channel] = 0;
-    }
-  else
-    {
-      /*  Set the low input  */
-      new_count = 0.0;
-
-      for (i = 0; i < 255; i++)
-	{
-	  new_count += gimp_histogram_get_value (hist, channel, i);
-	  percentage = new_count / count;
-	  next_percentage =
-	    (new_count + gimp_histogram_get_value (hist,
-						   channel,
-						   i + 1)) / count;
-	  if (fabs (percentage - 0.006) < fabs (next_percentage - 0.006))
-	    {
-	      l_tool->low_input[channel] = i + 1;
-	      break;
-	    }
-	}
-      /*  Set the high input  */
-      new_count = 0.0;
-      for (i = 255; i > 0; i--)
-	{
-	  new_count += gimp_histogram_get_value (hist, channel, i);
-	  percentage = new_count / count;
-	  next_percentage =
-	    (new_count + gimp_histogram_get_value (hist,
-						   channel,
-						   i - 1)) / count;
-	  if (fabs (percentage - 0.006) < fabs (next_percentage - 0.006))
-	    {
-	      l_tool->high_input[channel] = i - 1;
-	      break;
-	    }
-	}
-    }
-}
-
-static void
 levels_auto_callback (GtkWidget *widget,
 		      gpointer   data)
 {
   GimpLevelsTool *l_tool;
-  gint            channel;
 
   l_tool = GIMP_LEVELS_TOOL (data);
 
-  if (l_tool->color)
-    {
-      /*  Set the overall value to defaults  */
-      l_tool->low_input[GIMP_HISTOGRAM_VALUE]   = 0;
-      l_tool->gamma[GIMP_HISTOGRAM_VALUE]       = 1.0;
-      l_tool->high_input[GIMP_HISTOGRAM_VALUE]  = 255;
-      l_tool->low_output[GIMP_HISTOGRAM_VALUE]  = 0;
-      l_tool->high_output[GIMP_HISTOGRAM_VALUE] = 255;
-
-      for (channel = 0; channel < 3; channel ++)
-	levels_adjust_channel (l_tool, l_tool->hist, channel + 1);
-    }
-  else
-    levels_adjust_channel (l_tool, l_tool->hist, GIMP_HISTOGRAM_VALUE);
-
+  levels_auto (l_tool->levels, l_tool->hist, l_tool->color);
   levels_update (l_tool, ALL);
 
   gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (l_tool));
@@ -1056,14 +941,14 @@ levels_low_input_adjustment_update (GtkAdjustment *adjustment,
   l_tool = GIMP_LEVELS_TOOL (data);
 
   value = (gint) (adjustment->value + 0.5);
-  value = CLAMP (value, 0, l_tool->high_input[l_tool->channel]);
+  value = CLAMP (value, 0, l_tool->levels->high_input[l_tool->channel]);
 
   /*  enforce a consistent displayed value (low_input <= high_input)  */
   gtk_adjustment_set_value (adjustment, value);
 
-  if (l_tool->low_input[l_tool->channel] != value)
+  if (l_tool->levels->low_input[l_tool->channel] != value)
     {
-      l_tool->low_input[l_tool->channel] = value;
+      l_tool->levels->low_input[l_tool->channel] = value;
       levels_update (l_tool, INPUT_LEVELS | INPUT_SLIDERS | DRAW);
 
       gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (l_tool));
@@ -1078,9 +963,9 @@ levels_gamma_adjustment_update (GtkAdjustment *adjustment,
 
   l_tool = GIMP_LEVELS_TOOL (data);
 
-  if (l_tool->gamma[l_tool->channel] != adjustment->value)
+  if (l_tool->levels->gamma[l_tool->channel] != adjustment->value)
     {
-      l_tool->gamma[l_tool->channel] = adjustment->value;
+      l_tool->levels->gamma[l_tool->channel] = adjustment->value;
       levels_update (l_tool, INPUT_LEVELS | INPUT_SLIDERS | DRAW);
 
       gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (l_tool));
@@ -1097,14 +982,14 @@ levels_high_input_adjustment_update (GtkAdjustment *adjustment,
   l_tool = GIMP_LEVELS_TOOL (data);
 
   value = (gint) (adjustment->value + 0.5);
-  value = CLAMP (value, l_tool->low_input[l_tool->channel], 255);
+  value = CLAMP (value, l_tool->levels->low_input[l_tool->channel], 255);
 
   /*  enforce a consistent displayed value (high_input >= low_input)  */
   gtk_adjustment_set_value (adjustment, value);
 
-  if (l_tool->high_input[l_tool->channel] != value)
+  if (l_tool->levels->high_input[l_tool->channel] != value)
     {
-      l_tool->high_input[l_tool->channel] = value;
+      l_tool->levels->high_input[l_tool->channel] = value;
       levels_update (l_tool, INPUT_LEVELS | INPUT_SLIDERS | DRAW);
 
       gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (l_tool));
@@ -1122,9 +1007,9 @@ levels_low_output_adjustment_update (GtkAdjustment *adjustment,
 
   value = (gint) (adjustment->value + 0.5);
 
-  if (l_tool->low_output[l_tool->channel] != value)
+  if (l_tool->levels->low_output[l_tool->channel] != value)
     {
-      l_tool->low_output[l_tool->channel] = value;
+      l_tool->levels->low_output[l_tool->channel] = value;
       levels_update (l_tool, OUTPUT_LEVELS | OUTPUT_SLIDERS | DRAW);
 
       gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (l_tool));
@@ -1142,9 +1027,9 @@ levels_high_output_adjustment_update (GtkAdjustment *adjustment,
 
   value = (gint) (adjustment->value + 0.5);
 
-  if (l_tool->high_output[l_tool->channel] != value)
+  if (l_tool->levels->high_output[l_tool->channel] != value)
     {
-      l_tool->high_output[l_tool->channel] = value;
+      l_tool->levels->high_output[l_tool->channel] = value;
       levels_update (l_tool, OUTPUT_LEVELS | OUTPUT_SLIDERS | DRAW);
 
       gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (l_tool));
@@ -1220,12 +1105,12 @@ levels_input_da_events (GtkWidget      *widget,
       switch (l_tool->active_slider)
 	{
 	case 0:  /*  low input  */
-	  l_tool->low_input[l_tool->channel] =
+	  l_tool->levels->low_input[l_tool->channel] =
             ((gdouble) x / (gdouble) DA_WIDTH) * 255.0;
 
-	  l_tool->low_input[l_tool->channel] =
-            CLAMP (l_tool->low_input[l_tool->channel],
-                   0, l_tool->high_input[l_tool->channel]);
+	  l_tool->levels->low_input[l_tool->channel] =
+            CLAMP (l_tool->levels->low_input[l_tool->channel],
+                   0, l_tool->levels->high_input[l_tool->channel]);
 	  break;
 
 	case 1:  /*  gamma  */
@@ -1235,20 +1120,20 @@ levels_input_da_events (GtkWidget      *widget,
 	  x   = CLAMP (x, l_tool->slider_pos[0], l_tool->slider_pos[2]);
 	  tmp = (double) (x - mid) / width;
 
-	  l_tool->gamma[l_tool->channel] = 1.0 / pow (10, tmp);
+	  l_tool->levels->gamma[l_tool->channel] = 1.0 / pow (10, tmp);
 
 	  /*  round the gamma value to the nearest 1/100th  */
-	  sprintf (text, "%2.2f", l_tool->gamma[l_tool->channel]);
-	  l_tool->gamma[l_tool->channel] = atof (text);
+	  sprintf (text, "%2.2f", l_tool->levels->gamma[l_tool->channel]);
+	  l_tool->levels->gamma[l_tool->channel] = atof (text);
 	  break;
 
 	case 2:  /*  high input  */
-	  l_tool->high_input[l_tool->channel] =
+	  l_tool->levels->high_input[l_tool->channel] =
             ((gdouble) x / (gdouble) DA_WIDTH) * 255.0;
 
-	  l_tool->high_input[l_tool->channel] =
-            CLAMP (l_tool->high_input[l_tool->channel],
-                   l_tool->low_input[l_tool->channel], 255);
+	  l_tool->levels->high_input[l_tool->channel] =
+            CLAMP (l_tool->levels->high_input[l_tool->channel],
+                   l_tool->levels->low_input[l_tool->channel], 255);
 	  break;
 	}
 
@@ -1321,19 +1206,19 @@ levels_output_da_events (GtkWidget      *widget,
       switch (l_tool->active_slider)
 	{
 	case 3:  /*  low output  */
-	  l_tool->low_output[l_tool->channel] =
+	  l_tool->levels->low_output[l_tool->channel] =
             ((gdouble) x / (gdouble) DA_WIDTH) * 255.0;
 
-	  l_tool->low_output[l_tool->channel] =
-            CLAMP (l_tool->low_output[l_tool->channel], 0, 255);
+	  l_tool->levels->low_output[l_tool->channel] =
+            CLAMP (l_tool->levels->low_output[l_tool->channel], 0, 255);
 	  break;
 
 	case 4:  /*  high output  */
-	  l_tool->high_output[l_tool->channel] =
+	  l_tool->levels->high_output[l_tool->channel] =
             ((gdouble) x / (gdouble) DA_WIDTH) * 255.0;
 
-	  l_tool->high_output[l_tool->channel] =
-            CLAMP (l_tool->high_output[l_tool->channel], 0, 255);
+	  l_tool->levels->high_output[l_tool->channel] =
+            CLAMP (l_tool->levels->high_output[l_tool->channel], 0, 255);
 	  break;
 	}
 
@@ -1516,11 +1401,11 @@ levels_read_from_file (GimpLevelsTool *l_tool,
 
   for (i = 0; i < 5; i++)
     {
-      l_tool->low_input[i]   = low_input[i];
-      l_tool->high_input[i]  = high_input[i];
-      l_tool->low_output[i]  = low_output[i];
-      l_tool->high_output[i] = high_output[i];
-      l_tool->gamma[i]       = gamma[i];
+      l_tool->levels->low_input[i]   = low_input[i];
+      l_tool->levels->high_input[i]  = high_input[i];
+      l_tool->levels->low_output[i]  = low_output[i];
+      l_tool->levels->high_output[i] = high_output[i];
+      l_tool->levels->gamma[i]       = gamma[i];
     }
 
   levels_update (l_tool, ALL);
@@ -1542,11 +1427,11 @@ levels_write_to_file (GimpLevelsTool *l_tool,
   for (i = 0; i < 5; i++)
     {
       fprintf (file, "%d %d %d %d %s\n",
-	       l_tool->low_input[i],
-	       l_tool->high_input[i],
-	       l_tool->low_output[i],
-	       l_tool->high_output[i],
+	       l_tool->levels->low_input[i],
+	       l_tool->levels->high_input[i],
+	       l_tool->levels->low_output[i],
+	       l_tool->levels->high_output[i],
                g_ascii_formatd (buf,  G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                                l_tool->gamma[i]));
+                                l_tool->levels->gamma[i]));
     }
 }

@@ -34,10 +34,13 @@ struct _ColorBalance
 };
 
 
-void   color_balance_create_lookup_tables (ColorBalance       *cb);
-void   color_balance                      (PixelRegion        *srcPR,
-					   PixelRegion        *destPR,
-					   gpointer            data);
+void   color_balance_init                 (ColorBalance     *cb);
+void   color_balance_range_reset          (ColorBalance     *cb,
+                                           GimpTransferMode  range);
+void   color_balance_create_lookup_tables (ColorBalance     *cb);
+void   color_balance                      (PixelRegion      *srcPR,
+					   PixelRegion      *destPR,
+					   gpointer          data);
 
 
 #endif  /*  __COLOR_BALANCE_H__  */

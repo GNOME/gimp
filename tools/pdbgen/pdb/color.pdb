@@ -109,18 +109,17 @@ HELP
     foreach $arg (qw(input output)) {
 	foreach (qw(low high)) {
 	    push @inargs, { name => "${_}_$arg", type => '0 <= int32 <= 255',
-			    desc => "Intensity of ${_}est $arg: (%%desc%%)",
-			    alias => "${_}_${arg}v" }
+			    desc => "Intensity of ${_}est $arg: (%%desc%%)" }
 	}
 	push @inargs, { name => 'gamma', type => '0.1 <= float <= 10',
-			desc => 'Gamma correction factor: (%%desc%%)',
-			alias => 'gammav' }
+			desc => 'Gamma correction factor: (%%desc%%)' }
     }
     $#inargs--;
 
     %invoke = (
-	vars => [ 'PixelRegion srcPR, destPR', 'int x1, y1, x2, y2',
-		  'GimpLut *lut', 'int i' ],
+	headers => [ qw("base/levels.h") ],
+	vars => [ 'PixelRegion srcPR, destPR', 'Levels l', 'gint x1, y1, x2, y2',
+		  'GimpLut *lut' ],
 	code => <<'CODE'
 {
   if (gimp_drawable_is_indexed (drawable) ||
@@ -130,25 +129,21 @@ HELP
     success = FALSE;
   else
     {
-      for (i = 0; i < 5; i++)
-	{
-	  low_input[i]   = 0;
-	  high_input[i]  = 255;
-	  low_output[i]  = 0;
-	  high_output[i] = 255;
-	  gamma[i]       = 1.0;
-	}
+      lut = gimp_lut_new ();
 
-      low_input[channel]   = low_inputv;
-      high_input[channel]  = high_inputv;
-      gamma[channel]       = gammav;
-      low_output[channel]  = low_outputv;
-      high_output[channel] = high_outputv;
+      levels_init (&l);
+
+      l.low_input[channel]   = low_input;
+      l.high_input[channel]  = high_input;
+      l.gamma[channel]       = gamma;
+      l.low_output[channel]  = low_output;
+      l.high_output[channel] = high_output;
 
       /* setup the lut */
-      lut = levels_lut_new (gamma, low_input, high_input,
-			    low_output, high_output,
-			    gimp_drawable_bytes (drawable));
+      gimp_lut_setup (lut,
+                      (GimpLutFunc) levels_lut_func,
+		      &l,
+		      gimp_drawable_bytes (drawable));
 
       /* The application should occur only within selection bounds */
       gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
@@ -168,11 +163,6 @@ HELP
 }
 CODE
     );
-
-    foreach (@inargs[2..6]) {
-	my $type = $_->{type} =~ /float/ ? 'double' : 'int';
-	push @{$invoke{vars}}, "$type $_->{name}\[5]";
-    }
 }
 
 sub posterize {
@@ -482,7 +472,7 @@ HELP
 
     %invoke = (
 	headers => [ qw("base/color-balance.h") ],
-	vars => [ 'ColorBalance cb', 'gint i', 'gpointer pr',
+	vars => [ 'ColorBalance cb', 'PixelRegionIterator *pr',
 		  'PixelRegion srcPR, destPR', 'gint x1, y1, x2, y2' ],
 	code => <<'CODE'
 {
@@ -490,12 +480,7 @@ HELP
     success = FALSE;
   else
     {
-      for (i = 0; i < 3; i++)
-	{
-	  cb.cyan_red[i]      = 0.0;
-	  cb.magenta_green[i] = 0.0;
-	  cb.yellow_blue[i]   = 0.0;
-	}
+      color_balance_init (&cb);
 
       cb.preserve_luminosity = preserve_lum;
 
@@ -657,7 +642,7 @@ HELP
 
     %invoke = (
 	headers => [ qw("base/hue-saturation.h") ],
-	vars => [ 'HueSaturation hs', 'gint i', 'gpointer pr',
+	vars => [ 'HueSaturation hs', 'PixelRegionIterator *pr',
 		  'PixelRegion srcPR, destPR', 'gint x1, y1, x2, y2' ],
 	code => <<'CODE'
 {
@@ -665,12 +650,7 @@ HELP
     success = FALSE;
   else
     {
-      for (i = 0; i < 7; i++)
-	{
-	  hs.hue[i]        = 0.0;
-	  hs.lightness[i]  = 0.0;
-	  hs.saturation[i] = 0.0;
-	}
+      hue_saturation_init (&hs);
 
       hs.hue[hue_range]        = hue_offset;
       hs.lightness[hue_range]  = lightness;

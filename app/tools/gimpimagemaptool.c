@@ -199,7 +199,6 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
       GimpToolInfo *tool_info;
       GtkWidget    *shell;
       GtkWidget    *vbox;
-      GtkWidget    *hbox;
       GtkWidget    *toggle;
 
       tool_info = tool->tool_info;
@@ -230,15 +229,12 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
       gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
       gtk_container_add (GTK_CONTAINER (GTK_DIALOG (shell)->vbox), vbox);
 
-      hbox = gtk_hbox_new (FALSE, 0);
-      gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
-
       /*  The preview toggle  */
       toggle = gtk_check_button_new_with_mnemonic (_("_Preview"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                     image_map_tool->preview);
-      gtk_box_pack_end (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+      gtk_box_pack_end (GTK_BOX (image_map_tool->main_vbox), toggle,
+                        FALSE, FALSE, 0);
       gtk_widget_show (toggle);
 
       g_signal_connect (G_OBJECT (toggle), "toggled",

@@ -55,21 +55,6 @@ void      threshold_lut_setup           (GimpLut *lut,
 					 gdouble  value,
 					 gint     n_channels);
 
-/* levels */
-GimpLut * levels_lut_new                (gdouble *gamma,
-					 gint    *low_input,
-					 gint    *high_input,
-					 gint    *low_output,
-					 gint    *high_output,
-					 gint     n_channels);
-void      levels_lut_setup              (GimpLut *lut,
-					 gdouble *gamma,
-					 gint    *low_input,
-					 gint    *high_input,
-					 gint    *low_output,
-					 gint    *high_output,
-					 gint     n_channels);
-
 /* posterize */
 GimpLut * posterize_lut_new             (gint     levels,
 					 gint     n_channels);

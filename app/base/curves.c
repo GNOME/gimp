@@ -61,24 +61,30 @@ static CRMatrix CR_basis =
 void
 curves_init (Curves *curves)
 {
-  gint i, j;
+  GimpHistogramChannel channel;
 
-  for (i = 0; i < 5; i++)
+  g_return_if_fail (curves != NULL);
+
+  for (channel = GIMP_HISTOGRAM_VALUE;
+       channel <= GIMP_HISTOGRAM_ALPHA;
+       channel++)
     {
-      curves->curve_type[i] = CURVES_SMOOTH;
+      curves->curve_type[channel] = CURVES_SMOOTH;
 
-      for (j = 0; j < 256; j++)
-        curves->curve[i][j] = j;
-
-      curves_channel_reset (curves, i);
+      curves_channel_reset (curves, channel);
     }
 }
 
 void
-curves_channel_reset (Curves *curves,
-                      gint    channel)
+curves_channel_reset (Curves               *curves,
+                      GimpHistogramChannel  channel)
 {
   gint j;
+
+  g_return_if_fail (curves != NULL);
+
+  for (j = 0; j < 256; j++)
+    curves->curve[channel][j] = j;
 
   for (j = 0; j < 17; j++)
     {
@@ -93,13 +99,15 @@ curves_channel_reset (Curves *curves,
 }
 
 void
-curves_calculate_curve (Curves *curves,
-                        gint    channel)
+curves_calculate_curve (Curves               *curves,
+                        GimpHistogramChannel  channel)
 {
   gint i;
   gint points[17];
   gint num_pts;
   gint p1, p2, p3, p4;
+
+  g_return_if_fail (curves != NULL);
 
   switch (curves->curve_type[channel])
     {

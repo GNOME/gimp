@@ -34,6 +34,7 @@
 #include "base/gimphistogram.h"
 #include "base/gimplut.h"
 #include "base/hue-saturation.h"
+#include "base/levels.h"
 #include "base/lut-funcs.h"
 #include "base/pixel-processor.h"
 #include "base/pixel-region.h"
@@ -173,20 +174,15 @@ levels_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gint32 channel;
-  gint32 low_inputv;
-  gint32 high_inputv;
-  gdouble gammav;
-  gint32 low_outputv;
-  gint32 high_outputv;
+  gint32 low_input;
+  gint32 high_input;
+  gdouble gamma;
+  gint32 low_output;
+  gint32 high_output;
   PixelRegion srcPR, destPR;
-  int x1, y1, x2, y2;
+  Levels l;
+  gint x1, y1, x2, y2;
   GimpLut *lut;
-  int i;
-  int low_input[5];
-  int high_input[5];
-  double gamma[5];
-  int low_output[5];
-  int high_output[5];
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_DRAWABLE (drawable))
@@ -196,24 +192,24 @@ levels_invoker (Gimp     *gimp,
   if (channel < GIMP_VALUE_LUT || channel > GIMP_ALPHA_LUT)
     success = FALSE;
 
-  low_inputv = args[2].value.pdb_int;
-  if (low_inputv < 0 || low_inputv > 255)
+  low_input = args[2].value.pdb_int;
+  if (low_input < 0 || low_input > 255)
     success = FALSE;
 
-  high_inputv = args[3].value.pdb_int;
-  if (high_inputv < 0 || high_inputv > 255)
+  high_input = args[3].value.pdb_int;
+  if (high_input < 0 || high_input > 255)
     success = FALSE;
 
-  gammav = args[4].value.pdb_float;
-  if (gammav < 0.1 || gammav > 10.0)
+  gamma = args[4].value.pdb_float;
+  if (gamma < 0.1 || gamma > 10.0)
     success = FALSE;
 
-  low_outputv = args[5].value.pdb_int;
-  if (low_outputv < 0 || low_outputv > 255)
+  low_output = args[5].value.pdb_int;
+  if (low_output < 0 || low_output > 255)
     success = FALSE;
 
-  high_outputv = args[6].value.pdb_int;
-  if (high_outputv < 0 || high_outputv > 255)
+  high_output = args[6].value.pdb_int;
+  if (high_output < 0 || high_output > 255)
     success = FALSE;
 
   if (success)
@@ -225,25 +221,21 @@ levels_invoker (Gimp     *gimp,
 	success = FALSE;
       else
 	{
-	  for (i = 0; i < 5; i++)
-	    {
-	      low_input[i]   = 0;
-	      high_input[i]  = 255;
-	      low_output[i]  = 0;
-	      high_output[i] = 255;
-	      gamma[i]       = 1.0;
-	    }
+	  lut = gimp_lut_new ();
     
-	  low_input[channel]   = low_inputv;
-	  high_input[channel]  = high_inputv;
-	  gamma[channel]       = gammav;
-	  low_output[channel]  = low_outputv;
-	  high_output[channel] = high_outputv;
+	  levels_init (&l);
+    
+	  l.low_input[channel]   = low_input;
+	  l.high_input[channel]  = high_input;
+	  l.gamma[channel]       = gamma;
+	  l.low_output[channel]  = low_output;
+	  l.high_output[channel] = high_output;
     
 	  /* setup the lut */
-	  lut = levels_lut_new (gamma, low_input, high_input,
-				low_output, high_output,
-				gimp_drawable_bytes (drawable));
+	  gimp_lut_setup (lut,
+			  (GimpLutFunc) levels_lut_func,
+			  &l,
+			  gimp_drawable_bytes (drawable));
     
 	  /* The application should occur only within selection bounds */
 	  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
@@ -781,8 +773,7 @@ color_balance_invoker (Gimp     *gimp,
   gdouble magenta_green;
   gdouble yellow_blue;
   ColorBalance cb;
-  gint i;
-  gpointer pr;
+  PixelRegionIterator *pr;
   PixelRegion srcPR, destPR;
   gint x1, y1, x2, y2;
 
@@ -814,12 +805,7 @@ color_balance_invoker (Gimp     *gimp,
 	success = FALSE;
       else
 	{
-	  for (i = 0; i < 3; i++)
-	    {
-	      cb.cyan_red[i]      = 0.0;
-	      cb.magenta_green[i] = 0.0;
-	      cb.yellow_blue[i]   = 0.0;
-	    }
+	  color_balance_init (&cb);
     
 	  cb.preserve_luminosity = preserve_lum;
     
@@ -1084,8 +1070,7 @@ hue_saturation_invoker (Gimp     *gimp,
   gdouble lightness;
   gdouble saturation;
   HueSaturation hs;
-  gint i;
-  gpointer pr;
+  PixelRegionIterator *pr;
   PixelRegion srcPR, destPR;
   gint x1, y1, x2, y2;
 
@@ -1115,12 +1100,7 @@ hue_saturation_invoker (Gimp     *gimp,
 	success = FALSE;
       else
 	{
-	  for (i = 0; i < 7; i++)
-	    {
-	      hs.hue[i]        = 0.0;
-	      hs.lightness[i]  = 0.0;
-	      hs.saturation[i] = 0.0;
-	    }
+	  hue_saturation_init (&hs);
     
 	  hs.hue[hue_range]        = hue_offset;
 	  hs.lightness[hue_range]  = lightness;
