@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.1.19\n"
-"POT-Creation-Date: 2000-04-21 14:20+0200\n"
-"PO-Revision-Date: 2000-04-21 14:27+02:00\n"
+"POT-Creation-Date: 2000-04-26 10:12+0200\n"
+"PO-Revision-Date: 2000-04-26 11:57+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -73,7 +73,7 @@ msgstr "O programu"
 #: plug-ins/common/noisify.c:333 plug-ins/common/nova.c:364
 #: plug-ins/common/oilify.c:462 plug-ins/common/papertile.c:248
 #: plug-ins/common/pat.c:428 plug-ins/common/pixelize.c:289
-#: plug-ins/common/plasma.c:295 plug-ins/common/png.c:1030
+#: plug-ins/common/plasma.c:295 plug-ins/common/png.c:1026
 #: plug-ins/common/pnm.c:950 plug-ins/common/polar.c:943
 #: plug-ins/common/ps.c:2550 plug-ins/common/ps.c:2731
 #: plug-ins/common/psp.c:443 plug-ins/common/randomize.c:710
@@ -155,7 +155,7 @@ msgstr "OK"
 #: plug-ins/common/nova.c:366 plug-ins/common/oilify.c:464
 #: plug-ins/common/papertile.c:250 plug-ins/common/pat.c:430
 #: plug-ins/common/pixelize.c:291 plug-ins/common/plasma.c:297
-#: plug-ins/common/png.c:1032 plug-ins/common/pnm.c:952
+#: plug-ins/common/png.c:1028 plug-ins/common/pnm.c:952
 #: plug-ins/common/polar.c:945 plug-ins/common/ps.c:2552
 #: plug-ins/common/ps.c:2733 plug-ins/common/psp.c:445
 #: plug-ins/common/randomize.c:712 plug-ins/common/ripple.c:598
@@ -1451,8 +1451,8 @@ msgstr "Ukázat/skrýt náhledový drátový model"
 #: plug-ins/common/gbr.c:284 plug-ins/common/gifload.c:308
 #: plug-ins/common/hrz.c:340 plug-ins/common/jpeg.c:748
 #: plug-ins/common/pat.c:263 plug-ins/common/pcx.c:318
-#: plug-ins/common/pix.c:329 plug-ins/common/png.c:419
-#: plug-ins/common/png.c:421 plug-ins/common/pnm.c:416
+#: plug-ins/common/pix.c:329 plug-ins/common/png.c:416
+#: plug-ins/common/png.c:418 plug-ins/common/pnm.c:416
 #: plug-ins/common/psd.c:1708 plug-ins/common/sunras.c:443
 #: plug-ins/common/tga.c:430 plug-ins/common/tiff.c:445
 #: plug-ins/common/xbm.c:675 plug-ins/common/xpm.c:335
@@ -1499,7 +1499,7 @@ msgstr "%s: ¹patná barevná mapa\n"
 #: plug-ins/common/lic.c:903 plug-ins/common/papertile.c:314
 #: plug-ins/common/pat.c:306 plug-ins/common/pcx.c:349
 #: plug-ins/common/pcx.c:355 plug-ins/common/pix.c:373
-#: plug-ins/common/png.c:567 plug-ins/common/pnm.c:504
+#: plug-ins/common/png.c:563 plug-ins/common/pnm.c:504
 #: plug-ins/common/psd.c:2089 plug-ins/common/smooth_palette.c:237
 #: plug-ins/common/sunras.c:921 plug-ins/common/tga.c:1015
 #: plug-ins/common/tiff.c:655 plug-ins/common/tile.c:264
@@ -2131,7 +2131,7 @@ msgstr "Zarovnání viditelných vrstev"
 #: plug-ins/common/max_rgb.c:277 plug-ins/common/nlfilt.c:400
 #: plug-ins/common/noisify.c:345 plug-ins/common/nova.c:376
 #: plug-ins/common/oilify.c:474 plug-ins/common/pixelize.c:301
-#: plug-ins/common/plasma.c:309 plug-ins/common/png.c:1041
+#: plug-ins/common/plasma.c:309 plug-ins/common/png.c:1037
 #: plug-ins/common/polar.c:984 plug-ins/common/randomize.c:728
 #: plug-ins/common/ripple.c:692 plug-ins/common/scatter_hsv.c:445
 #: plug-ins/common/sel_gauss.c:258 plug-ins/common/sharpen.c:627
@@ -4982,7 +4982,7 @@ msgstr "Pohled pøes strom"
 msgid "Search:"
 msgstr "Hledat:"
 
-#: plug-ins/common/png.c:400
+#: plug-ins/common/png.c:393 plug-ins/common/png.c:727
 #, c-format
 msgid ""
 "%s\n"
@@ -5001,19 +5001,28 @@ msgstr ""
 "%s\n"
 "neznámý barevný model PNG"
 
-#: plug-ins/common/png.c:1025
+#: plug-ins/common/png.c:737
+#, c-format
+msgid ""
+"%s\n"
+"Couldn't create file"
+msgstr ""
+"%s\n"
+"Nelze vytvoøit soubor"
+
+#: plug-ins/common/png.c:1021
 msgid "Save as PNG"
 msgstr "Zapsat jako PNG"
 
-#: plug-ins/common/png.c:1054
+#: plug-ins/common/png.c:1050
 msgid "Interlacing (Adam7)"
 msgstr "Prokládání (Adam7)"
 
-#: plug-ins/common/png.c:1063
+#: plug-ins/common/png.c:1059
 msgid "Skip Ancillary Chunks"
 msgstr "Pøeskoèit podru¾né èásti"
 
-#: plug-ins/common/png.c:1080
+#: plug-ins/common/png.c:1076
 msgid "Compression Level:"
 msgstr "Úroveò komprese:"
 
@@ -9545,15 +9554,15 @@ msgstr "Vlo¾it"
 msgid "Insert the selected char at the cursor position"
 msgstr "Vlo¾it vybraný znak na pozici kurzoru"
 
-#: plug-ins/gdyntext/font_selection.c:138
+#: plug-ins/gdyntext/font_selection.c:142
 msgid "MAX_FONTS exceeded. Some fonts may be missing."
 msgstr "Pøekroèeno MAX_FONTS. Nìkterá písma mohou chybìt."
 
 #. "-*-(fn)-(wg)-(sl)-(sp)-*-(px)-(po * 10)-*-*-*-*-*-*"
-#: plug-ins/gdyntext/font_selection.c:210
-#: plug-ins/gdyntext/font_selection.c:264
-#: plug-ins/gdyntext/font_selection.c:351
-#: plug-ins/gdyntext/font_selection.c:375 plug-ins/imagemap/imap_circle.c:265
+#: plug-ins/gdyntext/font_selection.c:214
+#: plug-ins/gdyntext/font_selection.c:268
+#: plug-ins/gdyntext/font_selection.c:355
+#: plug-ins/gdyntext/font_selection.c:379 plug-ins/imagemap/imap_circle.c:265
 #: plug-ins/imagemap/imap_circle.c:271 plug-ins/imagemap/imap_circle.c:277
 #: plug-ins/imagemap/imap_grid.c:202 plug-ins/imagemap/imap_grid.c:208
 #: plug-ins/imagemap/imap_polygon.c:437 plug-ins/imagemap/imap_polygon.c:444
@@ -9564,17 +9573,17 @@ msgstr "Pøekroèeno MAX_FONTS. Nìkterá písma mohou chybìt."
 msgid "pixels"
 msgstr "pixely"
 
-#: plug-ins/gdyntext/font_selection.c:211
-#: plug-ins/gdyntext/font_selection.c:351
+#: plug-ins/gdyntext/font_selection.c:215
+#: plug-ins/gdyntext/font_selection.c:355
 msgid "points"
 msgstr "body"
 
-#: plug-ins/gdyntext/font_selection.c:311
+#: plug-ins/gdyntext/font_selection.c:315
 #, c-format
 msgid "Unknown font family \"%s\".\n"
 msgstr "Neznámá rodina písma \"%s\".\n"
 
-#: plug-ins/gdyntext/font_selection.c:335
+#: plug-ins/gdyntext/font_selection.c:339
 #, c-format
 msgid "Unknown font style \"%s\" for family \"%s\".\n"
 msgstr "Neznámý styl \"%s\" pro rodinu písma \"%s\".\n"
