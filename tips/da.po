@@ -1,14 +1,14 @@
 # Danish translation of GIMP tips.
-# Copyright (C) 2002 Free Software Foundation, Inc.
-# Ole Laursen <olau@hardworking.dk>, 2002.
+# Copyright (C) 2002, 03 Free Software Foundation, Inc.
+# Ole Laursen <olau@hardworking.dk>, 2002, 03.
 #
 # Se ../po/da.po for en liste over konventioner i Gimp'en.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP tips\n"
-"POT-Creation-Date: 2002-11-09 19:45+0100\n"
-"PO-Revision-Date: 2002-03-07 21:38+0100\n"
+"POT-Creation-Date: 2003-03-10 21:19+0100\n"
+"PO-Revision-Date: 2003-03-10 21:19+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -280,13 +280,12 @@ msgstr ""
 "på flere baner og så konvertere dem til markeringer."
 
 #: tips/gimp-tips.xml.in.h:28
-#, fuzzy
 msgid ""
 "You can drag a layer from the \"Layers, Channels and Paths\" dialog and drop "
 "it onto the toolbox. This will create a new image containing only that layer."
 msgstr ""
-"Du kan trække et lag fra <i>Lag, kanaler og baner</i>-vinduet og slippe det "
-"i værktøjskassen. Dette opretter et nyt billede som kun indeholder det lag."
+"Du kan trække et lag fra \"Lag, kanaler og baner\"-vinduet og slippe det i "
+"værktøjskassen. Dette opretter et nyt billede som kun indeholder det lag."
 
 #: tips/gimp-tips.xml.in.h:29
 msgid ""
