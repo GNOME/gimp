@@ -317,10 +317,10 @@ CODE
 		    unless (exists $_->{retval}) {
 			$var = "*$var"; $dh = "(*"; $df = ")";
 			if ($type eq 'stringarray') {
-			    $arglist .= "$datatype**$_->{libname}";
+			    $arglist .= "$datatype**$_->{libname}, ";
 			}
 			else {
-			    $arglist .= "$datatype **$_->{libname}";
+			    $arglist .= "$datatype **$_->{libname}, ";
 			}
 			$argdesc .= " * \@$_->{libname}: $desc";
 		    }

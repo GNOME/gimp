@@ -1,3 +1,8 @@
+2004-10-05  Manish Singh  <yosh@gimp.org>
+
+	* tools/pdbgen/lib.pl: Fix array return value generation when there
+	are more args after it.
+
 2004-10-06  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version number to 2.1.7.
