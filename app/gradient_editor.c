@@ -5939,6 +5939,9 @@ grad_dump_gradient (gradient_t *grad,
 {
   grad_segment_t *seg;
 
+  g_return_if_fail (grad != NULL);
+  g_return_if_fail (file != NULL);  
+
   fprintf (file, "Name: \"%s\"\n", grad->name);
   fprintf (file, "Dirty: %d\n", grad->dirty);
   fprintf (file, "Filename: \"%s\"\n", grad->filename);
@@ -6045,7 +6048,7 @@ seg_get_segment_at (gradient_t *grad,
     }
 
   /* Oops: we should have found a segment, but we didn't */
-  grad_dump_gradient (curr_gradient, stderr);
+  grad_dump_gradient (grad, stderr);
   gimp_fatal_error ("seg_get_segment_at(): "
                     "No matching segment for position %0.15f", pos);
 
