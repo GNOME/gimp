@@ -883,7 +883,7 @@ mov_apv_callback (GtkWidget *widget,
       if(l_new_image_id < 0)
       {
 	 p_msg_win(RUN_INTERACTIVE,
-         _("Generate Animate Preview failed\n"));
+         _("Generate Animated Preview failed\n"));
       }
       else
       {

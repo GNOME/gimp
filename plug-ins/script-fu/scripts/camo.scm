@@ -91,7 +91,7 @@
  "Chris Gutteridge / ECS @ University of Southampton, England"
  ""
  SF-ADJUSTMENT _"Image Size" '(256 10 1000 1 10 0 1)
- SF-ADJUSTMENT _"Granularity (0 - 15)" '(7 0 15 1 1 0 0)
+ SF-ADJUSTMENT _"Granularity (0-15)" '(7 0 15 1 1 0 0)
  SF-COLOR _"Color 1"      '(33 100 58)
  SF-COLOR _"Color 2"      '(170 170 60)
  SF-COLOR _"Color 3"      '(150 115 100)

@@ -357,7 +357,7 @@ void gdt_get_values(GdtVals *data)
 	  data->messages = g_list_append (data->messages, 
 					  g_strdup_printf (_("WARNING: GDynText is too old!\n"
 							     "  You may loose some data by changing this text.\n"
-							     "  A newer version is reqired to handle this layer.\n"
+							     "  A newer version is required to handle this layer.\n"
 							     "  Get it from %s\n"), GDYNTEXT_WEB_PAGE));
 }
 
