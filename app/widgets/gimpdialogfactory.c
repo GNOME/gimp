@@ -558,6 +558,8 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
                   toplevel = gtk_widget_get_toplevel (dialog);
 
                   gtk_window_present (GTK_WINDOW (toplevel));
+
+                  gimp_dockable_blink (GIMP_DOCKABLE (dialog));
                 }
             }
         }

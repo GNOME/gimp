@@ -87,6 +87,7 @@ static gboolean   gimp_dockable_menu_button_press (GtkWidget      *button,
 static void       gimp_dockable_close_clicked     (GtkWidget      *button,
                                                    GimpDockable   *dockable);
 static gboolean   gimp_dockable_show_menu         (GimpDockable   *dockable);
+static gboolean   gimp_dockable_blink_timeout     (GimpDockable   *dockable);
 
 static void       gimp_dockable_title_changed     (GimpDocked     *docked,
                                                    GimpDockable   *dockable);
@@ -279,6 +280,13 @@ gimp_dockable_destroy (GtkObject *object)
     {
       gtk_widget_unparent (dockable->close_button);
       dockable->close_button = NULL;
+    }
+
+  if (dockable->blink_timeout_id)
+    {
+      g_source_remove (dockable->blink_timeout_id);
+      dockable->blink_timeout_id = 0;
+      dockable->blink_counter    = 0;
     }
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -532,6 +540,15 @@ gimp_dockable_expose_event (GtkWidget      *widget,
           gint text_x;
           gint text_y;
 
+          if (dockable->blink_counter & 1)
+            {
+              gtk_paint_box (widget->style, widget->window,
+                             GTK_STATE_SELECTED, GTK_SHADOW_NONE,
+                             &expose_area, widget, "",
+                             title_area.x, title_area.y,
+                             title_area.width, title_area.height);
+            }
+
           if (! dockable->title_layout)
             {
               GtkBin *bin   = GTK_BIN (dockable);
@@ -642,6 +659,9 @@ gimp_dockable_forall (GtkContainer *container,
   GTK_CONTAINER_CLASS (parent_class)->forall (container, include_internals,
                                               callback, callback_data);
 }
+
+
+/*  public functions  */
 
 GtkWidget *
 gimp_dockable_new (const gchar *name,
@@ -871,6 +891,24 @@ gimp_dockable_detach (GimpDockable *dockable)
   gtk_widget_show (dock);
 }
 
+void
+gimp_dockable_blink (GimpDockable *dockable)
+{
+  g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
+
+  if (dockable->blink_timeout_id)
+    g_source_remove (dockable->blink_timeout_id);
+
+  dockable->blink_timeout_id =
+    g_timeout_add (150, (GSourceFunc) gimp_dockable_blink_timeout,
+                   dockable);
+
+  gimp_dockable_blink_timeout (dockable);
+}
+
+
+/*  private functions  */
+
 static void
 gimp_dockable_get_title_area (GimpDockable *dockable,
                               GdkRectangle *area)
@@ -1043,6 +1081,29 @@ gimp_dockable_show_menu (GimpDockable *dockable)
                             GTK_WIDGET (dockable),
                             gimp_dockable_menu_position, dockable,
                             (GtkDestroyNotify) gimp_dockable_menu_end, dockable);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_dockable_blink_timeout (GimpDockable *dockable)
+{
+  if (GTK_WIDGET_DRAWABLE (dockable))
+    {
+      GdkRectangle area;
+
+      gimp_dockable_get_title_area (dockable, &area);
+      gtk_widget_queue_draw_area (GTK_WIDGET (dockable),
+                                  area.x, area.y, area.width, area.height);
+    }
+
+  if (dockable->blink_counter++ > 3)
+    {
+      dockable->blink_timeout_id = 0;
+      dockable->blink_counter    = 0;
+
+      return FALSE;
+    }
 
   return TRUE;
 }
