@@ -142,6 +142,7 @@ gimpinclude_HEADERS = \
 	gimpcolordisplay.h	\
 	gimpcolorselector.h	\
 	gimp.h			\
+	gimpcompat.h		\
 	gimptypes.h		\
 	${PDB_WRAPPERS_H}	\
 	gimpchannel.h		\

@@ -1,3 +1,7 @@
+2002-09-25  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/Makefile.am: install gimpcompat.h
+
 2002-09-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpchannel.c (gimp_channel_sharpen): set
