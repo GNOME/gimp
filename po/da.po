@@ -7,28 +7,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP /gnome-cvs\n"
 "POT-Creation-Date: 2000-06-18 19:40-0700\n"
-"PO-Revision-Date: 2000-06-25 23:31+02:00\n"
+"PO-Revision-Date: 2000-07-22 23:31+02:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-#: app/about_dialog.c:256
+#: app/about_dialog.c:277
 msgid "About the GIMP"
 msgstr "Om GIMP"
 
 #. this is a font, provide only one single font definition
-#: app/about_dialog.c:307
+#: app/about_dialog.c:336
 msgid "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 
-#: app/about_dialog.c:317
+#: app/about_dialog.c:346
 #, c-format
 msgid "Version %s brought to you by"
 msgstr "Version %s bragt til dig af"
 
-#: app/about_dialog.c:357
+#: app/about_dialog.c:387
 msgid "Please visit http://www.gimp.org/ for more info"
 msgstr "Se venligst http://www.gimp.org/ for mere information"
 
@@ -481,7 +481,7 @@ msgid "copy"
 msgstr "kopi"
 
 #. formulate the new layer_mask name
-#: app/channel.c:196 app/gradient.c:1599 app/layer.c:329 app/layer.c:1746
+#: app/channel.c:196 app/gradient.c:1599 app/layer.c:329 app/layer.c:1752
 #, c-format
 msgid "%s copy"
 msgstr "%s kopi"
@@ -2856,44 +2856,44 @@ msgstr "Zoom ind"
 msgid "Zoom out"
 msgstr "Zoom ud"
 
-#: app/main.c:280
+#: app/main.c:296
 msgid "GIMP version"
 msgstr "GIMP version"
 
-#: app/main.c:284
+#: app/main.c:300
 #, c-format
 msgid "Usage: %s [option ...] [files ...]\n"
 msgstr "Brug: %s [flag ...] [filer ...]\n"
 
-#: app/main.c:285
+#: app/main.c:301
 msgid "Valid options are:\n"
 msgstr "Gyldige flag:\n"
 
-#: app/main.c:286
+#: app/main.c:302
 msgid "  -h --help                Output this help.\n"
 msgstr "  -h --help                Vis denne hjælpetekst.\n"
 
-#: app/main.c:287
+#: app/main.c:303
 msgid "  -v --version             Output version info.\n"
 msgstr "  -v --version             Vis versionsinformation.\n"
 
-#: app/main.c:288
+#: app/main.c:304
 msgid "  -b --batch <commands>    Run in batch mode.\n"
 msgstr "  -b --batch <kommandoer>  Kør i batch-tilstand.\n"
 
-#: app/main.c:289
+#: app/main.c:305
 msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
 msgstr "  -g --gimprc <gimprc>     Brug en alternativ gimprc fil.\n"
 
-#: app/main.c:290
+#: app/main.c:306
 msgid "  -n --no-interface        Run without a user interface.\n"
 msgstr "  -n --no-interface        Kør uden brugergrænseflade.\n"
 
-#: app/main.c:291
+#: app/main.c:307
 msgid "  -r --restore-session     Try to restore saved session.\n"
 msgstr "  -r --restore-session     Prøv at gendanne en gemt session.\n"
 
-#: app/main.c:292
+#: app/main.c:308
 msgid ""
 "  --no-data                Do not load patterns, gradients, palettes, "
 "brushes.\n"
@@ -2901,19 +2901,19 @@ msgstr ""
 "  --no-data                Indlæs ikke mønstre, gradienter, paletter og "
 "pensler.\n"
 
-#: app/main.c:293
+#: app/main.c:309
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Vis meddelelser under opstart.\n"
 
-#: app/main.c:294
+#: app/main.c:310
 msgid "  --no-splash              Do not show the startup window.\n"
 msgstr "  --no-splash              Vis ikke opstartsvinduet.\n"
 
-#: app/main.c:295
+#: app/main.c:311
 msgid "  --no-splash-image        Do not add an image to the startup window.\n"
 msgstr "  --no-splash-image        Vis ikke billede i opstartsvinduet.\n"
 
-#: app/main.c:296
+#: app/main.c:312
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and its "
 "plugins.\n"
@@ -2921,12 +2921,12 @@ msgstr ""
 "  --no-shm            Brug ikke delt hukommelse mellem GIMP og dens "
 "indstik.\n"
 
-#: app/main.c:297
+#: app/main.c:313
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr ""
 "  --no-xshm                Brug ikke X-udvidelsen for delt hukommelse.\n"
 
-#: app/main.c:298
+#: app/main.c:314
 msgid ""
 "  --console-messages       Display warnings to console instead of a dialog "
 "box.\n"
@@ -2934,19 +2934,30 @@ msgstr ""
 "  --console-messages       Vis advarsler i konsollen istedetfor i en "
 "dialogboks.\n"
 
-#: app/main.c:299
-msgid "  --debug-handlers         Enable debugging signal handlers.\n"
-msgstr "  --debug-handlers         Brug aflusningssignalhåndtagene.\n"
+#: app/main.c:315
+msgid ""
+"  --debug-handlers         Enable debugging signal handlers for non-fatal "
+"signals.\n"
+msgstr "  --debug-handlers         Aktivér aflusningssignalbehandling for "
+"ikke-fatale signaler.\n"
 
-#: app/main.c:300
+#: app/main.c:316
+msgid "  --enable-stack-trace {never|query|always}\n"
+msgstr "  --enable-stack-trace {never|query|always}\n"
+
+#: app/main.c:317
+msgid "                           Debugging mode for fatal signals.\n"
+msgstr "                            Aflusningsmodus for fatale signaler.\n"
+
+#: app/main.c:318
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <skærm>        Brug den angivede X-skærm.\n"
 
-#: app/main.c:301
+#: app/main.c:319
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr "  --system-gimprc <gimprc> Brug en alternativ system gimprc fil.\n"
 
-#: app/main.c:318
+#: app/main.c:336
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Dette konsolvindue vil lukke om ti sekunder)\n"
 
@@ -4156,38 +4167,38 @@ msgstr "Matrice:"
 msgid "Perspective..."
 msgstr "Perspektiv..."
 
-#: app/plug_in.c:324
+#: app/plug_in.c:329
 msgid "Resource configuration"
 msgstr "Resursekonfiguration"
 
-#: app/plug_in.c:331
+#: app/plug_in.c:336
 msgid "Plug-ins"
 msgstr "Indstik"
 
-#: app/plug_in.c:343
+#: app/plug_in.c:348
 #, c-format
 msgid "query plug-in: \"%s\"\n"
 msgstr "spørg indstik: \"%s\"\n"
 
-#: app/plug_in.c:379
+#: app/plug_in.c:384
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr "skriver \"%s\"\n"
 
-#: app/plug_in.c:394
+#: app/plug_in.c:399
 msgid "Starting extensions: "
 msgstr "Starter udvidelser: "
 
-#: app/plug_in.c:395
+#: app/plug_in.c:400
 msgid "Extensions"
 msgstr "Udvidelser"
 
-#: app/plug_in.c:822
+#: app/plug_in.c:831
 #, c-format
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr "Kunne ikke finde indstik: \"%s\""
 
-#: app/plug_in.c:1489
+#: app/plug_in.c:1491
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
