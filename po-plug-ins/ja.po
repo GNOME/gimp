@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.7\n"
-"POT-Creation-Date: 1999-07-03 23:47+0900\n"
+"POT-Creation-Date: 1999-07-17 11:11-0700\n"
 "PO-Revision-Date: 1999-07-05 03:30-0900\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@awa.tohoku.ac.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -447,7 +447,7 @@ msgstr ""
 #: plug-ins/common/depthmerge.c:746 plug-ins/common/destripe.c:695
 #: plug-ins/common/gif.c:1263 plug-ins/common/jpeg.c:1000
 #: plug-ins/common/mail.c:491 plug-ins/common/oilify.c:460
-#: plug-ins/common/png.c:825 plug-ins/common/ps.c:2023
+#: plug-ins/common/png.c:827 plug-ins/common/ps.c:2023
 #: plug-ins/common/ps.c:2290 plug-ins/common/xbm.c:959
 #: plug-ins/common/xpm.c:763 plug-ins/print/print.c:1104
 msgid "OK"
@@ -522,7 +522,7 @@ msgstr ""
 #: plug-ins/common/depthmerge.c:756 plug-ins/common/destripe.c:704
 #: plug-ins/common/gif.c:1172 plug-ins/common/jpeg.c:1009
 #: plug-ins/common/mail.c:502 plug-ins/common/oilify.c:469
-#: plug-ins/common/png.c:834 plug-ins/common/ps.c:2033
+#: plug-ins/common/png.c:836 plug-ins/common/ps.c:2033
 #: plug-ins/common/ps.c:2300 plug-ins/common/xbm.c:707
 #: plug-ins/common/xbm.c:969 plug-ins/common/xpm.c:772
 #: plug-ins/print/print.c:991 plug-ins/print/print.c:1097
@@ -888,7 +888,7 @@ msgstr "レンズ効果"
 #: plug-ins/common/apply_lens.c:439 plug-ins/common/blur.c:607
 #: plug-ins/common/checkerboard.c:399 plug-ins/common/cubism.c:356
 #: plug-ins/common/jpeg.c:1018 plug-ins/common/oilify.c:478
-#: plug-ins/common/png.c:845 plug-ins/common/xpm.c:781
+#: plug-ins/common/png.c:847 plug-ins/common/xpm.c:781
 msgid "Parameter Settings"
 msgstr "パラメータ設定"
 
@@ -1117,23 +1117,23 @@ msgstr "保存オプション"
 msgid "RLE encoded"
 msgstr "RLE エンコード"
 
-#: plug-ins/common/borderaverage.c:98
+#: plug-ins/borderaverage/borderaverage.c:98
 msgid "<Image>/Filters/Colors/Border Average"
 msgstr ""
 
-#: plug-ins/common/borderaverage.c:339
+#: plug-ins/borderaverage/borderaverage.c:339
 msgid "Border Size"
 msgstr "縁サイズ"
 
-#: plug-ins/common/borderaverage.c:339
+#: plug-ins/borderaverage/borderaverage.c:339
 msgid "Thickness"
 msgstr "太さ"
 
-#: plug-ins/common/borderaverage.c:342
+#: plug-ins/borderaverage/borderaverage.c:342
 msgid "Number of colors"
 msgstr "色数"
 
-#: plug-ins/common/borderaverage.c:345
+#: plug-ins/borderaverage/borderaverage.c:345
 msgid "Bucket Size:"
 msgstr "バケツサイズ:"
 
@@ -1656,7 +1656,8 @@ msgstr "画像を異なった種類のチャンネルに分解する"
 msgid ""
 "This function creates new gray images with different channel information in "
 "each of them"
-msgstr "この関数は画像の各チャンネルの情報を元に新しいグレースケール画像を生成する"
+msgstr ""
+"この関数は画像の各チャンネルの情報を元に新しいグレースケール画像を生成する"
 
 #: plug-ins/common/decompose.c:222
 msgid "<Image>/Image/Channel Ops/Decompose"
@@ -1700,7 +1701,10 @@ msgid ""
 "Taking as input two full-colour, full-alpha images and two corresponding "
 "grayscale depth maps, this plug-in combines the images based on which is "
 "closer (has a lower depth map value) at each point."
-msgstr "このプラグインはフルカラー, フルアルファ画像と対応する2つのグレースケール深度マップを元に, 各点においてマップ値を比較し, 小さいマップ値の点を用いて新しい画像を作成する."
+msgstr ""
+"このプラグインはフルカラー, "
+"フルアルファ画像と対応する2つのグレースケール深度マップを元に, "
+"各点においてマップ値を比較し, 小さいマップ値の点を用いて新しい画像を作成する."
 
 #: plug-ins/common/depthmerge.c:202
 msgid "<Image>/Filters/Combine/Depth Merge"
@@ -1838,7 +1842,7 @@ msgstr "GIF 形式で保存"
 msgid "GIF Options"
 msgstr "GIF オプション"
 
-#: plug-ins/common/gif.c:1294 plug-ins/common/png.c:854
+#: plug-ins/common/gif.c:1294 plug-ins/common/png.c:856
 msgid "Interlace"
 msgstr "インターレース"
 
@@ -2135,7 +2139,9 @@ msgstr "指定した描画対象を油絵のようにする"
 msgid ""
 "This function performs the well-known oil-paint effect on the specified "
 "drawable.  The size of the input mask is specified by 'mask_size'."
-msgstr "この関数は指定した描画対象を良く知られた油絵のように変換する. 入力マスクは 'mask_size' で指定する."
+msgstr ""
+"この関数は指定した描画対象を良く知られた油絵のように変換する. 入力マスクは "
+"'mask_size' で指定する."
 
 #: plug-ins/common/oilify.c:127
 msgid "<Image>/Filters/Artistic/Oilify"
@@ -2165,11 +2171,11 @@ msgstr "PNG ファイル形式の画像を読み込む"
 msgid "This plug-in loads Portable Network Graphics (PNG) files."
 msgstr "このプラグインは Portable Network Graphics (PNG) ファイルを読み込む."
 
-#: plug-ins/common/png.c:816
+#: plug-ins/common/png.c:818
 msgid "PNG Options"
 msgstr "PNG オプション"
 
-#: plug-ins/common/png.c:861
+#: plug-ins/common/png.c:863
 msgid "Compression level"
 msgstr "圧縮レベル"
 
@@ -2713,7 +2719,9 @@ msgstr "X10 や X11 ビットマップ (XBM) ファイル形式の画像を読み込む"
 msgid ""
 "Load a file in X10 or X11 bitmap (XBM) file format.  XBM is a lossless "
 "format for flat black-and-white (two color indexed) images."
-msgstr "X10 や X11 のビットマップ (XBM) ファイル形式の画像を読み込む. XBM は白黒画像に対する可逆ファイル形式である."
+msgstr ""
+"X10 や X11 のビットマップ (XBM) ファイル形式の画像を読み込む. XBM "
+"は白黒画像に対する可逆ファイル形式である."
 
 #: plug-ins/common/xbm.c:230
 msgid "Made with Gimp"
@@ -2796,7 +2804,8 @@ msgstr "xpm ファイル形式の画像を読み込む"
 
 #: plug-ins/common/xpm.c:182
 msgid "saves files in the xpm file format (if you're on a 16 bit display...)"
-msgstr "xpm ファイル形式で画像を保存する (16 bit ディスプレイを使用しているなら...)"
+msgstr ""
+"xpm ファイル形式で画像を保存する (16 bit ディスプレイを使用しているなら...)"
 
 #: plug-ins/common/xpm.c:756
 msgid "Save as Xpm"

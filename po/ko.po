@@ -12,7 +12,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.6\n"
-"POT-Creation-Date: 1999-07-08 11:58+0900\n"
+"POT-Creation-Date: 1999-07-17 11:23-0700\n"
 "PO-Revision-Date: 1999-07-08 03:50:14+0900\n"
 "Last-Translator: Sung-Hyun Nam <namsh@lgic.co.kr>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -351,7 +351,7 @@ msgstr ""
 #: app/color_balance.c:273 app/color_notebook.c:49 app/color_notebook.c:192
 #: app/color_select.c:155 app/color_select.c:210 app/convert.c:295
 #: app/curves.c:517 app/file_new_dialog.c:292 app/file_new_dialog.c:482
-#: app/hue_saturation.c:361 app/interface.c:1007 app/interface.c:1393
+#: app/hue_saturation.c:361 app/interface.c:1009 app/interface.c:1395
 #: app/layers_dialog.c:2901 app/layers_dialog.c:3119 app/layers_dialog.c:3262
 #: app/layers_dialog.c:3738 app/levels.c:335 app/module_db.c:263
 #: app/posterize.c:199 app/preferences_dialog.c:1469 app/resize.c:114
@@ -366,7 +366,7 @@ msgstr "예"
 #: app/curves.c:518 app/file_new_dialog.c:294 app/file_new_dialog.c:484
 #: app/gdisplay_ops.c:349 app/gimpprogress.c:135 app/global_edit.c:705
 #: app/gradient.c:1486 app/gradient.c:4566 app/gradient.c:4921
-#: app/hue_saturation.c:362 app/interface.c:911 app/interface.c:1008
+#: app/hue_saturation.c:362 app/interface.c:913 app/interface.c:1010
 #: app/layers_dialog.c:2902 app/layers_dialog.c:3120 app/layers_dialog.c:3263
 #: app/layers_dialog.c:3410 app/layers_dialog.c:3739 app/levels.c:336
 #: app/posterize.c:200 app/preferences_dialog.c:1473 app/resize.c:115
@@ -398,8 +398,8 @@ msgstr "미리보기"
 #. The close push button
 #: app/brush_edit.c:38 app/brush_select.c:135 app/by_color_select.c:664
 #: app/color_notebook.c:187 app/color_picker.c:209 app/color_select.c:205
-#: app/colormap_dialog.i.c:94 app/colormap_dialog.i.c:103 app/crop.c:1033
-#: app/devices.c:124 app/docindexif.c:95 app/errorconsole.c:230
+#: app/colormap_dialog.i.c:94 app/colormap_dialog.i.c:103 app/crop.c:1027
+#: app/devices.c:124 app/docindexif.c:100 app/errorconsole.c:230
 #: app/gdisplay_ops.c:348 app/gradient.c:646 app/gradient_select.c:76
 #: app/histogram_tool.c:262 app/info_window.c:121 app/lc_dialog.c:196
 #: app/palette.c:2235 app/palette_select.c:59 app/pattern_select.c:90
@@ -970,11 +970,11 @@ msgstr "Sharpen"
 msgid "Convolve Type"
 msgstr "곡선 종류"
 
-#: app/crop.c:170 app/crop.c:1031
+#: app/crop.c:170 app/crop.c:1025
 msgid "Crop"
 msgstr "잘라내기"
 
-#: app/crop.c:170 app/crop.c:1032
+#: app/crop.c:170 app/crop.c:1026
 msgid "Resize"
 msgstr "크기조정"
 
@@ -1000,43 +1000,43 @@ msgstr "툴 토글"
 msgid "Crop: "
 msgstr "잘라내기: "
 
-#: app/crop.c:1011
+#: app/crop.c:1005
 msgid "Crop: 0 x 0"
 msgstr "잘라내기: 0 x 0"
 
 #. create the info dialog
-#: app/crop.c:1039
+#: app/crop.c:1033
 msgid "Crop & Resize Information"
 msgstr ""
 
 #. add the information fields
-#: app/crop.c:1042
+#: app/crop.c:1036
 msgid "Origin X:"
 msgstr "X 시작:"
 
-#: app/crop.c:1045 app/file_new_dialog.c:753 app/resize.c:334 app/resize.c:419
-#: app/resize.c:577 app/rotate_tool.c:108 app/scale_tool.c:99
+#: app/crop.c:1039 app/file_new_dialog.c:753 app/resize.c:334 app/resize.c:419
+#: app/resize.c:577 app/rotate_tool.c:109 app/scale_tool.c:99
 #: app/shear_tool.c:83
 msgid "Y:"
 msgstr "Y:"
 
 #. the pixel size labels
-#: app/crop.c:1058 app/file_new_dialog.c:614 app/file_new_dialog.c:632
+#: app/crop.c:1052 app/file_new_dialog.c:614 app/file_new_dialog.c:632
 #: app/tool_options.c:405
 msgid "Width:"
 msgstr "넓이:"
 
-#: app/crop.c:1061 app/file_new_dialog.c:620 app/file_new_dialog.c:638
+#: app/crop.c:1055 app/file_new_dialog.c:620 app/file_new_dialog.c:638
 #: app/layers_dialog.c:2954 app/resize.c:245 app/resize.c:270 app/resize.c:514
 #: app/scale_tool.c:78 app/scale_tool.c:85 app/tool_options.c:427
 msgid "Height:"
 msgstr "높이:"
 
-#: app/crop.c:1083
+#: app/crop.c:1077
 msgid "From Selection"
 msgstr ""
 
-#: app/crop.c:1089
+#: app/crop.c:1083
 msgid "Auto Shrink"
 msgstr ""
 
@@ -1118,49 +1118,49 @@ msgstr "아래로 옮길만한 선택된 것이 없습니다."
 msgid "There's no selection to remove."
 msgstr "지울만한 선택된 것이 없습니다."
 
-#: app/docindexif.c:75
+#: app/docindexif.c:80
 msgid "Open"
 msgstr "열기"
 
-#: app/docindexif.c:75
+#: app/docindexif.c:80
 msgid "Open a file"
 msgstr "파일 열기"
 
-#: app/docindexif.c:80
+#: app/docindexif.c:85
 msgid "Up"
 msgstr "위로"
 
-#: app/docindexif.c:80
+#: app/docindexif.c:85
 msgid "Move the selected entry up in the index"
 msgstr "인덱스에서 선택된 엔트리 위로 이동"
 
-#: app/docindexif.c:85
+#: app/docindexif.c:90
 msgid "Down"
 msgstr "아래로"
 
-#: app/docindexif.c:85
+#: app/docindexif.c:90
 msgid "Move the selected entry down in the index"
 msgstr "인덱스에서 선택된 엔트리 아래로 이동"
 
-#: app/docindexif.c:90
+#: app/docindexif.c:95
 msgid "Remove"
 msgstr "삭제"
 
-#: app/docindexif.c:90
+#: app/docindexif.c:95
 msgid "Remove the selected entry from the index"
 msgstr "인덱스에서 선택된 엔트리 삭제"
 
-#: app/docindexif.c:95
+#: app/docindexif.c:100
 msgid "Close the Document Index"
 msgstr "문서 인덱스 닫기"
 
 #. Set the GOWindow title
-#: app/docindexif.c:213
+#: app/docindexif.c:218
 msgid "Document Index"
 msgstr "문서 색인"
 
 #. Set the initial status message
-#: app/docindexif.c:219
+#: app/docindexif.c:224
 msgid "GTK successfully started"
 msgstr "GDK가 성공적으로 시작됨"
 
@@ -1436,7 +1436,7 @@ msgstr ""
 msgid "indexed"
 msgstr ""
 
-#: app/gdisplay.c:2093
+#: app/gdisplay.c:2102
 msgid "gdisplays_flush() called recursively."
 msgstr ""
 
@@ -1521,41 +1521,41 @@ msgstr ""
 msgid "Layer type %d not supported."
 msgstr "계층 유형 %d는 지원되지 않습니다."
 
-#: app/gimpimage.c:596 app/gimpimage.c:690
+#: app/gimpimage.c:642 app/gimpimage.c:740
 msgid "gimp_image_apply_image sent illegal parameters"
 msgstr "gimp_image_apply_image가 비정상적인 파라미터를 보냈습니다"
 
-#: app/gimpimage.c:1096
+#: app/gimpimage.c:1172
 msgid "Unable to project indexed image."
 msgstr ""
 
-#: app/gimpimage.c:1982
+#: app/gimpimage.c:2109
 msgid "Layer cannot be raised any further"
 msgstr "더이상 계층을 올릴 수 없습니다"
 
-#: app/gimpimage.c:2056
+#: app/gimpimage.c:2184
 msgid "Layer cannot be lowered any further"
 msgstr "더이상 계층을 내릴 수 없습니다"
 
 #. layer_arg is already the top_layer
-#: app/gimpimage.c:2085
+#: app/gimpimage.c:2214
 msgid "Layer is already on top"
 msgstr "계층이 이미 최상층에 있습니다"
 
-#: app/gimpimage.c:2090
+#: app/gimpimage.c:2219
 msgid "Can't raise Layer without alpha"
 msgstr "알파없이 계층을 올릴 수 없습니다"
 
 #. there is no next layer below layer_arg
-#: app/gimpimage.c:2184
+#: app/gimpimage.c:2314
 msgid "Layer is already on bottom"
 msgstr "계층이 이미 최하층에 있습니다"
 
-#: app/gimpimage.c:2197
+#: app/gimpimage.c:2327
 msgid "BG has no alpha, layer was placed above"
 msgstr ""
 
-#: app/gimpimage.c:2259
+#: app/gimpimage.c:2390
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
@@ -1563,27 +1563,27 @@ msgstr ""
 "합칠 수 있을 만큼의 계층이 보이지 않습니다.\n"
 "적어도 두개는 보여야만 합니다."
 
-#: app/gimpimage.c:2337
+#: app/gimpimage.c:2468
 msgid "There are not enough visible layers for a merge down."
 msgstr ""
 
-#: app/gimpimage.c:2448 app/gimpimage.c:2481
+#: app/gimpimage.c:2581 app/gimpimage.c:2614
 msgid "gimp_image_merge_layers: could not allocate merge layer"
 msgstr ""
 
-#: app/gimpimage.c:2520
+#: app/gimpimage.c:2653
 msgid "gimp_image_merge_layers attempting to merge incompatible layers\n"
 msgstr ""
 
-#: app/gimpimage.c:2600
+#: app/gimpimage.c:2735
 msgid "gimp_image_add_layer: attempt to add layer to wrong image"
 msgstr ""
 
-#: app/gimpimage.c:2610
+#: app/gimpimage.c:2745
 msgid "gimp_image_add_layer: trying to add layer to image twice"
 msgstr ""
 
-#: app/gimpimage.c:2726
+#: app/gimpimage.c:2864
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1591,7 +1591,7 @@ msgstr ""
 "계층이 이미 마스크를 가지고 있으므로\n"
 "더 이상 추가할 수 없습니다."
 
-#: app/gimpimage.c:2730
+#: app/gimpimage.c:2868
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1599,7 +1599,7 @@ msgstr ""
 "색인된 이미지 안의 계층에는\n"
 "마스크를 추가할 수 없습니다."
 
-#: app/gimpimage.c:2734
+#: app/gimpimage.c:2872
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1607,27 +1607,27 @@ msgstr ""
 "알파 채널이 없는 계층에는\n"
 "마스크를 추가할 수 없습니다."
 
-#: app/gimpimage.c:2738
+#: app/gimpimage.c:2876
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 
-#: app/gimpimage.c:2842
+#: app/gimpimage.c:2983
 msgid "Channel cannot be raised any further"
 msgstr "더 이상 채널을 올릴 수 없습니다"
 
-#: app/gimpimage.c:2889
+#: app/gimpimage.c:3031
 msgid "Channel cannot be lowered any further"
 msgstr "더 이상 채널을 내릴 수 없습니다"
 
-#: app/gimpimage.c:2909
+#: app/gimpimage.c:3053
 msgid "gimp_image_add_channel: attempt to add channel to wrong image"
 msgstr ""
 
-#: app/gimpimage.c:2919
+#: app/gimpimage.c:3063
 msgid "gimp_image_add_channel: trying to add channel to image twice"
 msgstr ""
 
-#: app/gimpimage.c:3045 app/palette.c:525 app/palette.c:550 app/palette.c:909
+#: app/gimpimage.c:3190 app/palette.c:525 app/palette.c:550 app/palette.c:909
 #: app/palette.c:913 app/palette.c:2313 app/palette.c:2995
 msgid "Untitled"
 msgstr "제목없음"
@@ -2661,17 +2661,17 @@ msgstr ""
 "\n"
 "인스톨 실패. 시스템 관리자를 만나보십시오.\n"
 
-#: app/interface.c:323
+#: app/interface.c:325
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to select a color from a colorrequester."
 msgstr ""
 
-#: app/interface.c:539
+#: app/interface.c:541
 msgid "The GIMP"
 msgstr "The GIMP"
 
-#: app/interface.c:1386
+#: app/interface.c:1388
 msgid "GIMP Message"
 msgstr "GIMP 메시지"
 
@@ -3828,12 +3828,12 @@ msgstr ""
 msgid "/Export Path"
 msgstr ""
 
-#: app/menus.c:591
+#: app/menus.c:596
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr "파일 열기 에러: %s\n"
 
-#: app/menus.c:613 app/menus.c:694
+#: app/menus.c:618 app/menus.c:699
 #, c-format
 msgid "/File/MRU%02d"
 msgstr "/File/MRU%02d"
@@ -3842,83 +3842,83 @@ msgstr "/File/MRU%02d"
 msgid "Module DB"
 msgstr "모듈 DB"
 
-#: app/module_db.c:555
+#: app/module_db.c:567
 #, c-format
 msgid "load module: \"%s\"\n"
 msgstr ""
 
-#: app/module_db.c:562
+#: app/module_db.c:574
 #, c-format
 msgid "skipping module: \"%s\"\n"
 msgstr ""
 
-#: app/module_db.c:586
+#: app/module_db.c:598
 #, c-format
 msgid "module load error: %s: %s"
 msgstr ""
 
-#: app/module_db.c:604
+#: app/module_db.c:616
 msgid "missing module_init() symbol"
 msgstr ""
 
-#: app/module_db.c:607
+#: app/module_db.c:619
 #, c-format
 msgid "%s: module_init() symbol not found"
 msgstr ""
 
-#: app/module_db.c:760
+#: app/module_db.c:772
 msgid "<No modules>"
 msgstr "<모듈 없음>"
 
-#: app/module_db.c:773 app/module_db.c:782
+#: app/module_db.c:785 app/module_db.c:794
 msgid "on disk"
 msgstr ""
 
-#: app/module_db.c:773
+#: app/module_db.c:785
 msgid "only in memory"
 msgstr ""
 
-#: app/module_db.c:782
+#: app/module_db.c:794
 msgid "nowhere (click 'refresh')"
 msgstr ""
 
-#: app/module_db.c:818
+#: app/module_db.c:830
 msgid "Load"
 msgstr ""
 
-#: app/module_db.c:827
+#: app/module_db.c:839
 msgid "Unload"
 msgstr ""
 
-#: app/module_db.c:840
+#: app/module_db.c:852
 msgid "Purpose: "
 msgstr ""
 
-#: app/module_db.c:841
+#: app/module_db.c:853
 msgid "Author: "
 msgstr "저자: "
 
-#: app/module_db.c:842
+#: app/module_db.c:854
 msgid "Version: "
 msgstr "판번호: "
 
-#: app/module_db.c:843
+#: app/module_db.c:855
 msgid "Copyright: "
 msgstr "Copyright: "
 
-#: app/module_db.c:844
+#: app/module_db.c:856
 msgid "Date: "
 msgstr "날짜: "
 
-#: app/module_db.c:845
+#: app/module_db.c:857
 msgid "Location: "
 msgstr "위치: "
 
-#: app/module_db.c:846
+#: app/module_db.c:858
 msgid "State: "
 msgstr "State: "
 
-#: app/module_db.c:865
+#: app/module_db.c:877
 msgid "Autoload during startup"
 msgstr ""
 
@@ -4801,11 +4801,11 @@ msgstr ""
 msgid "Rotation Information"
 msgstr "회전 정보"
 
-#: app/rotate_tool.c:105
+#: app/rotate_tool.c:106
 msgid "Center X:"
 msgstr "중앙 X:"
 
-#: app/rotate_tool.c:400
+#: app/rotate_tool.c:401
 msgid "Rotating..."
 msgstr "회전..."
 
@@ -5388,11 +5388,11 @@ msgid ""
 "layers that contain layer masks."
 msgstr ""
 
-#: app/transform_core.c:1135
+#: app/transform_core.c:1140
 msgid "homogeneous coordinate = 0...\n"
 msgstr ""
 
-#: app/transform_core.c:1390
+#: app/transform_core.c:1395
 msgid "Transformation"
 msgstr ""
 
@@ -5579,7 +5579,7 @@ msgstr "파일 선택"
 msgid "Select"
 msgstr "선택"
 
-#: libgimp/gimpenv.c:81
+#: libgimp/gimpenv.c:82
 msgid "warning: no home directory."
 msgstr ""
 

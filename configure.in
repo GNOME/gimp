@@ -4,7 +4,7 @@ AC_INIT(gimprc.in)
 dnl Initialize automake stuff
 GIMP_MAJOR_VERSION=1
 GIMP_MINOR_VERSION=1
-GIMP_MICRO_VERSION=6
+GIMP_MICRO_VERSION=7
 GIMP_INTERFACE_AGE=0
 GIMP_BINARY_AGE=0
 GIMP_VERSION=$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION.$GIMP_MICRO_VERSION
@@ -639,6 +639,7 @@ plug-ins/FractalExplorer/fractalexplorer-examples/Makefile
 plug-ins/Lighting/Makefile
 plug-ins/MapObject/Makefile
 plug-ins/bmp/Makefile
+plug-ins/borderaverage/Makefile
 plug-ins/common/Makefile
 plug-ins/faxg3/Makefile
 plug-ins/fits/Makefile

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.1\n"
-"POT-Creation-Date: 1999-07-10 03:35+0200\n"
+"POT-Creation-Date: 1999-07-17 11:11-0700\n"
 "PO-Revision-Date: 1999-07-11 19:55+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -449,7 +449,7 @@ msgstr ""
 #: plug-ins/common/depthmerge.c:746 plug-ins/common/destripe.c:695
 #: plug-ins/common/gif.c:1263 plug-ins/common/jpeg.c:1000
 #: plug-ins/common/mail.c:491 plug-ins/common/oilify.c:460
-#: plug-ins/common/png.c:825 plug-ins/common/ps.c:2023
+#: plug-ins/common/png.c:827 plug-ins/common/ps.c:2023
 #: plug-ins/common/ps.c:2290 plug-ins/common/xbm.c:959
 #: plug-ins/common/xpm.c:763 plug-ins/print/print.c:1104
 msgid "OK"
@@ -524,7 +524,7 @@ msgstr ""
 #: plug-ins/common/depthmerge.c:756 plug-ins/common/destripe.c:704
 #: plug-ins/common/gif.c:1172 plug-ins/common/jpeg.c:1009
 #: plug-ins/common/mail.c:502 plug-ins/common/oilify.c:469
-#: plug-ins/common/png.c:834 plug-ins/common/ps.c:2033
+#: plug-ins/common/png.c:836 plug-ins/common/ps.c:2033
 #: plug-ins/common/ps.c:2300 plug-ins/common/xbm.c:707
 #: plug-ins/common/xbm.c:969 plug-ins/common/xpm.c:772
 #: plug-ins/print/print.c:991 plug-ins/print/print.c:1097
@@ -888,7 +888,7 @@ msgstr ""
 #: plug-ins/common/apply_lens.c:439 plug-ins/common/blur.c:607
 #: plug-ins/common/checkerboard.c:399 plug-ins/common/cubism.c:356
 #: plug-ins/common/jpeg.c:1018 plug-ins/common/oilify.c:478
-#: plug-ins/common/png.c:845 plug-ins/common/xpm.c:781
+#: plug-ins/common/png.c:847 plug-ins/common/xpm.c:781
 msgid "Parameter Settings"
 msgstr ""
 
@@ -1105,23 +1105,23 @@ msgstr ""
 msgid "RLE encoded"
 msgstr ""
 
-#: plug-ins/common/borderaverage.c:98
+#: plug-ins/borderaverage/borderaverage.c:98
 msgid "<Image>/Filters/Colors/Border Average"
 msgstr ""
 
-#: plug-ins/common/borderaverage.c:339
+#: plug-ins/borderaverage/borderaverage.c:339
 msgid "Border Size"
 msgstr ""
 
-#: plug-ins/common/borderaverage.c:339
+#: plug-ins/borderaverage/borderaverage.c:339
 msgid "Thickness"
 msgstr ""
 
-#: plug-ins/common/borderaverage.c:342
+#: plug-ins/borderaverage/borderaverage.c:342
 msgid "Number of colors"
 msgstr ""
 
-#: plug-ins/common/borderaverage.c:345
+#: plug-ins/borderaverage/borderaverage.c:345
 msgid "Bucket Size:"
 msgstr ""
 
@@ -1818,7 +1818,7 @@ msgstr ""
 msgid "GIF Options"
 msgstr ""
 
-#: plug-ins/common/gif.c:1294 plug-ins/common/png.c:854
+#: plug-ins/common/gif.c:1294 plug-ins/common/png.c:856
 msgid "Interlace"
 msgstr ""
 
@@ -2137,11 +2137,11 @@ msgstr "Laster filer i PNG filformat"
 msgid "This plug-in loads Portable Network Graphics (PNG) files."
 msgstr ""
 
-#: plug-ins/common/png.c:816
+#: plug-ins/common/png.c:818
 msgid "PNG Options"
 msgstr "PNG alternativer"
 
-#: plug-ins/common/png.c:861
+#: plug-ins/common/png.c:863
 msgid "Compression level"
 msgstr "Kompresjonsnivå"
 

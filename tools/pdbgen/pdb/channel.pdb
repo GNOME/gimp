@@ -81,10 +81,7 @@ sub channel_set_prop_proc {
 
     if ($type eq 'color') {
 	%invoke = (
-	    vars => [ 'int i' ],
-	    code => <<CODE
-  channel_set_color(channel, $prop);
-CODE
+	    code => "channel_set_color(channel, $prop);"
 	);
     }
 }
@@ -133,7 +130,7 @@ HELP
 	{ name => 'name', type => 'string',
 	  desc => 'The channel name' },
 	{ name => 'opacity', type => '0 <= float <= 100',
-	  desc => 'The channel opacity: (%%desc%%)', alias => 'opacity_arg' },
+	  desc => 'The channel opacity: (%%desc%%)' },
 	{ name => 'color', type => 'color',
 	  desc => 'The channel compositing color' }
     );
@@ -145,7 +142,6 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'int opacity' ],
 	code => <<'CODE'
 {
   channel_set_opacity (channel, opacity);

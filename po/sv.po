@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.6\n"
-"POT-Creation-Date: 1999-07-10 20:01+0200\n"
+"POT-Creation-Date: 1999-07-17 11:23-0700\n"
 "PO-Revision-Date: 1999-06-06 23:40+0200\n"
 "Last-Translator: Tomas Ögren <stric@ing.umu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -1516,98 +1516,98 @@ msgstr ""
 msgid "Unable to project indexed image."
 msgstr ""
 
-#: app/gimpimage.c:2106
+#: app/gimpimage.c:2109
 msgid "Layer cannot be raised any further"
 msgstr "Lagret kan ej höjas mer"
 
-#: app/gimpimage.c:2181
+#: app/gimpimage.c:2184
 msgid "Layer cannot be lowered any further"
 msgstr "Lagret kan ej sänkas mer"
 
 #. layer_arg is already the top_layer
-#: app/gimpimage.c:2211
+#: app/gimpimage.c:2214
 msgid "Layer is already on top"
 msgstr "Lagret är redan längst upp"
 
-#: app/gimpimage.c:2216
+#: app/gimpimage.c:2219
 msgid "Can't raise Layer without alpha"
 msgstr "Kan ej höja lager utan alfa-kanal"
 
 #. there is no next layer below layer_arg
-#: app/gimpimage.c:2311
+#: app/gimpimage.c:2314
 msgid "Layer is already on bottom"
 msgstr "Lagret är redan längst ner"
 
-#: app/gimpimage.c:2324
+#: app/gimpimage.c:2327
 msgid "BG has no alpha, layer was placed above"
 msgstr ""
 
-#: app/gimpimage.c:2387
+#: app/gimpimage.c:2390
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
 msgstr ""
 
-#: app/gimpimage.c:2465
+#: app/gimpimage.c:2468
 msgid "There are not enough visible layers for a merge down."
 msgstr ""
 "Det finns ej tillräckligt många synliga lager för att sammanfoga neråt."
 
-#: app/gimpimage.c:2578 app/gimpimage.c:2611
+#: app/gimpimage.c:2581 app/gimpimage.c:2614
 msgid "gimp_image_merge_layers: could not allocate merge layer"
 msgstr ""
 
-#: app/gimpimage.c:2650
+#: app/gimpimage.c:2653
 msgid "gimp_image_merge_layers attempting to merge incompatible layers\n"
 msgstr ""
 
-#: app/gimpimage.c:2732
+#: app/gimpimage.c:2735
 msgid "gimp_image_add_layer: attempt to add layer to wrong image"
 msgstr ""
 
-#: app/gimpimage.c:2742
+#: app/gimpimage.c:2745
 msgid "gimp_image_add_layer: trying to add layer to image twice"
 msgstr ""
 
-#: app/gimpimage.c:2861
+#: app/gimpimage.c:2864
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
 msgstr ""
 
-#: app/gimpimage.c:2865
+#: app/gimpimage.c:2868
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
 msgstr ""
 
-#: app/gimpimage.c:2869
+#: app/gimpimage.c:2872
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
 msgstr ""
 
-#: app/gimpimage.c:2873
+#: app/gimpimage.c:2876
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 
-#: app/gimpimage.c:2980
+#: app/gimpimage.c:2983
 msgid "Channel cannot be raised any further"
 msgstr ""
 
-#: app/gimpimage.c:3028
+#: app/gimpimage.c:3031
 msgid "Channel cannot be lowered any further"
 msgstr ""
 
-#: app/gimpimage.c:3050
+#: app/gimpimage.c:3053
 msgid "gimp_image_add_channel: attempt to add channel to wrong image"
 msgstr ""
 
-#: app/gimpimage.c:3060
+#: app/gimpimage.c:3063
 msgid "gimp_image_add_channel: trying to add channel to image twice"
 msgstr ""
 
-#: app/gimpimage.c:3187 app/palette.c:525 app/palette.c:550 app/palette.c:909
+#: app/gimpimage.c:3190 app/palette.c:525 app/palette.c:550 app/palette.c:909
 #: app/palette.c:913 app/palette.c:2313 app/palette.c:2995
 msgid "Untitled"
 msgstr "Namnlös"
@@ -3842,12 +3842,12 @@ msgstr ""
 msgid "/Export Path"
 msgstr ""
 
-#: app/menus.c:591
+#: app/menus.c:596
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr "Kunde inte öppna fil: %s\n"
 
-#: app/menus.c:613 app/menus.c:694
+#: app/menus.c:618 app/menus.c:699
 #, c-format
 msgid "/File/MRU%02d"
 msgstr "/Arkiv/MRU%02d"
@@ -3856,83 +3856,83 @@ msgstr "/Arkiv/MRU%02d"
 msgid "Module DB"
 msgstr "Modul DB"
 
-#: app/module_db.c:555
+#: app/module_db.c:567
 #, c-format
 msgid "load module: \"%s\"\n"
 msgstr "laddar modul: \"%s\"\n"
 
-#: app/module_db.c:562
+#: app/module_db.c:574
 #, c-format
 msgid "skipping module: \"%s\"\n"
 msgstr "hoppar över modul: \"%s\"\n"
 
-#: app/module_db.c:586
+#: app/module_db.c:598
 #, c-format
 msgid "module load error: %s: %s"
 msgstr "fel vid laddning av modul: %s: %s"
 
-#: app/module_db.c:604
+#: app/module_db.c:616
 msgid "missing module_init() symbol"
 msgstr "module_init() symbolen saknas"
 
-#: app/module_db.c:607
+#: app/module_db.c:619
 #, c-format
 msgid "%s: module_init() symbol not found"
 msgstr "%s: module_init() symbolen hittades ej"
 
-#: app/module_db.c:760
+#: app/module_db.c:772
 msgid "<No modules>"
 msgstr "<Inga moduler>"
 
-#: app/module_db.c:773 app/module_db.c:782
+#: app/module_db.c:785 app/module_db.c:794
 msgid "on disk"
 msgstr "på disk"
 
-#: app/module_db.c:773
+#: app/module_db.c:785
 msgid "only in memory"
 msgstr "endast i minnet"
 
-#: app/module_db.c:782
+#: app/module_db.c:794
 msgid "nowhere (click 'refresh')"
 msgstr "ingenstans (tryck på 'uppdatera')"
 
-#: app/module_db.c:818
+#: app/module_db.c:830
 msgid "Load"
 msgstr "Ladda"
 
-#: app/module_db.c:827
+#: app/module_db.c:839
 msgid "Unload"
 msgstr "Ladda ur"
 
-#: app/module_db.c:840
+#: app/module_db.c:852
 msgid "Purpose: "
 msgstr "Syfte: "
 
-#: app/module_db.c:841
+#: app/module_db.c:853
 msgid "Author: "
 msgstr "Författare: "
 
-#: app/module_db.c:842
+#: app/module_db.c:854
 msgid "Version: "
 msgstr "Version: "
 
-#: app/module_db.c:843
+#: app/module_db.c:855
 msgid "Copyright: "
 msgstr "Copyright: "
 
-#: app/module_db.c:844
+#: app/module_db.c:856
 msgid "Date: "
 msgstr "Datum: "
 
-#: app/module_db.c:845
+#: app/module_db.c:857
 msgid "Location: "
 msgstr "Placering: "
 
-#: app/module_db.c:846
+#: app/module_db.c:858
 msgid "State: "
 msgstr "Tillstånd: "
 
-#: app/module_db.c:865
+#: app/module_db.c:877
 msgid "Autoload during startup"
 msgstr "Ladda automatiskt vid start"
 
@@ -5607,7 +5607,7 @@ msgstr "Välj fil"
 msgid "Select"
 msgstr "Välj"
 
-#: libgimp/gimpenv.c:81
+#: libgimp/gimpenv.c:82
 msgid "warning: no home directory."
 msgstr "varning: ingen hemkatalog"
 

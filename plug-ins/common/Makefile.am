@@ -24,7 +24,6 @@ libexec_PROGRAMS = \
 	autostretch_hsv \
 	blinds \
 	blur \
-	borderaverage \
 	bumpmap \
 	bz2 \
 	c_astretch \
@@ -32,6 +31,7 @@ libexec_PROGRAMS = \
 	colorify \
 	compose \
 	convmatrix \
+	csource \
 	cubism \
 	decompose \
 	deinterlace \
@@ -62,7 +62,6 @@ libexec_PROGRAMS = \
 	guillotine \
 	gz \
 	header \
-	csource \
 	hot \
 	hrz \
 	illusion \
@@ -235,16 +234,6 @@ blur_LDADD = \
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
-borderaverage_SOURCES = \
-	borderaverage.c
-
-borderaverage_LDADD = \
-	$(top_builddir)/plug-ins/megawidget/libmegawidget.a	\
-	$(top_builddir)/plug-ins/libgck/gck/libgck.la	\
-	$(top_builddir)/libgimp/libgimp.la	\
-	$(GTK_LIBS)				\
-	$(INTLLIBS)
-
 bumpmap_SOURCES = \
 	bumpmap.c
 
@@ -299,6 +288,14 @@ convmatrix_SOURCES = \
 	convmatrix.c
 
 convmatrix_LDADD = \
+	$(top_builddir)/libgimp/libgimp.la	\
+	$(GTK_LIBS)				\
+	$(INTLLIBS)
+
+csource_SOURCES = \
+	csource.c
+
+csource_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -545,14 +542,6 @@ header_SOURCES = \
 header_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GLIB_LIBS)				\
-	$(INTLLIBS)
-
-csource_SOURCES = \
-	csource.c
-
-csource_LDADD = \
-	$(top_builddir)/libgimp/libgimp.la	\
-	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
 hot_SOURCES = \

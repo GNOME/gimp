@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
-"POT-Creation-Date: 1999-06-24 13:13+0200\n"
+"POT-Creation-Date: 1999-07-17 11:11-0700\n"
 "PO-Revision-Date: 1999-03-18 19:00+0100\n"
 "Last-Translator: Vincent Renardias <vincent@ldsol.com>\n"
 "Language-Team: Vincent Renardias <vincent@ldsol.com>\n"
@@ -458,9 +458,9 @@ msgstr "Graphe des réglages actuels"
 #: plug-ins/common/depthmerge.c:746 plug-ins/common/destripe.c:695
 #: plug-ins/common/gif.c:1263 plug-ins/common/jpeg.c:1000
 #: plug-ins/common/mail.c:491 plug-ins/common/oilify.c:460
-#: plug-ins/common/png.c:1180 plug-ins/common/ps.c:2023
+#: plug-ins/common/png.c:827 plug-ins/common/ps.c:2023
 #: plug-ins/common/ps.c:2290 plug-ins/common/xbm.c:959
-#: plug-ins/common/xpm.c:763 plug-ins/print/print.c:1279
+#: plug-ins/common/xpm.c:763 plug-ins/print/print.c:1104
 msgid "OK"
 msgstr "OK"
 
@@ -528,16 +528,16 @@ msgstr ""
 #: plug-ins/Lighting/lighting_ui.c:1062 plug-ins/bmp/bmpwrite.c:437
 #: plug-ins/common/CML_explorer.c:2690 plug-ins/common/apply_lens.c:430
 #: plug-ins/common/blur.c:621 plug-ins/common/bumpmap.c:979
-#: plug-ins/common/checkerboard.c:390 plug-ins/common/colorify.c:319
+#: plug-ins/common/checkerboard.c:390 plug-ins/common/colorify.c:323
 #: plug-ins/common/compose.c:825 plug-ins/common/convmatrix.c:723
 #: plug-ins/common/cubism.c:347 plug-ins/common/decompose.c:924
 #: plug-ins/common/depthmerge.c:756 plug-ins/common/destripe.c:704
 #: plug-ins/common/gif.c:1172 plug-ins/common/jpeg.c:1009
 #: plug-ins/common/mail.c:502 plug-ins/common/oilify.c:469
-#: plug-ins/common/png.c:1189 plug-ins/common/ps.c:2033
+#: plug-ins/common/png.c:836 plug-ins/common/ps.c:2033
 #: plug-ins/common/ps.c:2300 plug-ins/common/xbm.c:707
 #: plug-ins/common/xbm.c:969 plug-ins/common/xpm.c:772
-#: plug-ins/print/print.c:1166 plug-ins/print/print.c:1272
+#: plug-ins/print/print.c:991 plug-ins/print/print.c:1097
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -912,7 +912,7 @@ msgstr "Effet de lentille optique"
 #: plug-ins/common/apply_lens.c:439 plug-ins/common/blur.c:607
 #: plug-ins/common/checkerboard.c:399 plug-ins/common/cubism.c:356
 #: plug-ins/common/jpeg.c:1018 plug-ins/common/oilify.c:478
-#: plug-ins/common/png.c:1200 plug-ins/common/xpm.c:781
+#: plug-ins/common/png.c:847 plug-ins/common/xpm.c:781
 msgid "Parameter Settings"
 msgstr "Réglage des paramètres"
 
@@ -1067,8 +1067,8 @@ msgid "Saves files in Windows BMP file format"
 msgstr "Enregistre le fichier au format Windows BMP"
 
 #: plug-ins/bmp/bmpread.c:27 plug-ins/common/gifload.c:287
-#: plug-ins/common/jpeg.c:494 plug-ins/common/png.c:700
-#: plug-ins/common/png.c:702 plug-ins/common/xbm.c:523
+#: plug-ins/common/jpeg.c:494 plug-ins/common/png.c:345
+#: plug-ins/common/png.c:347 plug-ins/common/xbm.c:523
 #: plug-ins/common/xpm.c:300
 #, c-format
 msgid "Loading %s:"
@@ -1110,7 +1110,7 @@ msgstr "%s: mauvaise palette de couleurs\n"
 #: plug-ins/bmp/bmpread.c:210 plug-ins/bmp/bmpread.c:218
 #: plug-ins/bmp/bmpread.c:224 plug-ins/common/compose.c:562
 #: plug-ins/common/decompose.c:472 plug-ins/common/gifload.c:828
-#: plug-ins/common/jpeg.c:611 plug-ins/common/png.c:810
+#: plug-ins/common/jpeg.c:611 plug-ins/common/png.c:455
 #: plug-ins/common/xbm.c:612
 msgid "Background"
 msgstr "Fond"
@@ -1126,9 +1126,9 @@ msgid "can't open %s\n"
 msgstr "impossible d'ouvrir %s\n"
 
 #: plug-ins/bmp/bmpwrite.c:154 plug-ins/common/jpeg.c:759
-#: plug-ins/common/png.c:950 plug-ins/common/png.c:952
+#: plug-ins/common/png.c:595 plug-ins/common/png.c:597
 #: plug-ins/common/ps.c:673 plug-ins/common/xbm.c:777
-#: plug-ins/common/xpm.c:611 plug-ins/common/xwd.c:503
+#: plug-ins/common/xpm.c:611 plug-ins/common/xwd.c:507
 #, c-format
 msgid "Saving %s:"
 msgstr "Enregistrement de %s:"
@@ -1146,23 +1146,23 @@ msgstr "Options d'enregistrement"
 msgid "RLE encoded"
 msgstr "Compression RLE"
 
-#: plug-ins/common/borderaverage.c:98
+#: plug-ins/borderaverage/borderaverage.c:98
 msgid "<Image>/Filters/Colors/Border Average"
 msgstr "<Image>/Fichier/Couleurs/Moyenne de contour"
 
-#: plug-ins/common/borderaverage.c:339
+#: plug-ins/borderaverage/borderaverage.c:339
 msgid "Border Size"
 msgstr "Taille du bord"
 
-#: plug-ins/common/borderaverage.c:339
+#: plug-ins/borderaverage/borderaverage.c:339
 msgid "Thickness"
 msgstr "Épaisseur"
 
-#: plug-ins/common/borderaverage.c:342
+#: plug-ins/borderaverage/borderaverage.c:342
 msgid "Number of colors"
 msgstr "Nombre de couleurs"
 
-#: plug-ins/common/borderaverage.c:345
+#: plug-ins/borderaverage/borderaverage.c:345
 msgid "Bucket Size:"
 msgstr "Taille des Cases:"
 
@@ -1313,24 +1313,24 @@ msgstr "<Image>/Fichier/Couleurs/Coloriser"
 msgid "Colorifying..."
 msgstr "Colorisation..."
 
-#: plug-ins/common/colorify.c:304
+#: plug-ins/common/colorify.c:308
 msgid "Colorify"
 msgstr "Coloriser"
 
-#: plug-ins/common/colorify.c:310
+#: plug-ins/common/colorify.c:314
 msgid "Ok"
 msgstr "Ok"
 
-#: plug-ins/common/colorify.c:327 plug-ins/common/xpm.c:406
-#: plug-ins/print/print.c:1023
+#: plug-ins/common/colorify.c:331 plug-ins/common/xpm.c:406
+#: plug-ins/print/print.c:848
 msgid "Color"
 msgstr "Couleur"
 
-#: plug-ins/common/colorify.c:340
+#: plug-ins/common/colorify.c:344
 msgid "Custom Color: "
 msgstr "Couleur Personnalisée: "
 
-#: plug-ins/common/colorify.c:430
+#: plug-ins/common/colorify.c:434
 msgid "Colorify Custom Color"
 msgstr "Coloriser, couleur personnalisée"
 
@@ -1425,7 +1425,8 @@ msgstr "Composer une image à partir de plusieurs en tons de gris"
 #: plug-ins/common/compose.c:229
 msgid "This function creates a new image from multiple gray images"
 msgstr ""
-"Cette fonction crée une nouvelle image à partir de plusieurs images en tons de gris."
+"Cette fonction crée une nouvelle image à partir de plusieurs images en tons "
+"de gris."
 
 #: plug-ins/common/compose.c:234
 msgid "<Image>/Image/Channel Ops/Compose"
@@ -1694,7 +1695,8 @@ msgid ""
 "This function creates new gray images with different channel information in "
 "each of them"
 msgstr ""
-"Cette fonction crée de nouvelles images en tons de gris avec des informations de canaux pour chacune d'entre elles"
+"Cette fonction crée de nouvelles images en tons de gris avec des "
+"informations de canaux pour chacune d'entre elles"
 
 #: plug-ins/common/decompose.c:222
 msgid "<Image>/Image/Channel Ops/Decompose"
@@ -1890,7 +1892,7 @@ msgstr "Enregistrer en GIF"
 msgid "GIF Options"
 msgstr "Options GIF"
 
-#: plug-ins/common/gif.c:1294 plug-ins/common/png.c:1209
+#: plug-ins/common/gif.c:1294 plug-ins/common/png.c:856
 msgid "Interlace"
 msgstr "Entrelacement"
 
@@ -2214,19 +2216,19 @@ msgstr "Utiliser l'algorithme par intensité"
 msgid "Mask Size"
 msgstr "Taille du masque"
 
-#: plug-ins/common/png.c:504
+#: plug-ins/common/png.c:149
 msgid "Loads files in PNG file format"
 msgstr "Charge les fichiers enregistrés au format PNG"
 
-#: plug-ins/common/png.c:505
+#: plug-ins/common/png.c:150
 msgid "This plug-in loads Portable Network Graphics (PNG) files."
 msgstr "Cet appendice charge les fichiers Portable Network Graphics (PNG)."
 
-#: plug-ins/common/png.c:1171
+#: plug-ins/common/png.c:818
 msgid "PNG Options"
 msgstr "Options PNG"
 
-#: plug-ins/common/png.c:1216
+#: plug-ins/common/png.c:863
 msgid "Compression level"
 msgstr "Niveau de compression"
 
@@ -2324,135 +2326,135 @@ msgstr "300 PPP"
 msgid "600 DPI"
 msgstr "600 PPP"
 
-#: plug-ins/print/print.c:406
+#: plug-ins/print/print.c:229
 msgid "PostScript Level 1"
 msgstr "PostScript Level 1"
 
-#: plug-ins/print/print.c:408
+#: plug-ins/print/print.c:231
 msgid "PostScript Level 2"
 msgstr "PostScript Level 2"
 
-#: plug-ins/print/print.c:410
+#: plug-ins/print/print.c:233
 msgid "HP DeskJet 500, 520"
 msgstr "HP DeskJet 500, 520"
 
-#: plug-ins/print/print.c:412
+#: plug-ins/print/print.c:235
 msgid "HP DeskJet 500C, 540C"
 msgstr "HP DeskJet 500C, 540C"
 
-#: plug-ins/print/print.c:414
+#: plug-ins/print/print.c:237
 msgid "HP DeskJet 550C, 560C"
 msgstr "HP DeskJet 550C, 560C"
 
-#: plug-ins/print/print.c:416
+#: plug-ins/print/print.c:239
 msgid "HP DeskJet 600 series"
 msgstr "HP DeskJet 600 series"
 
-#: plug-ins/print/print.c:418
+#: plug-ins/print/print.c:241
 msgid "HP DeskJet 800 series"
 msgstr "HP DeskJet 800 series"
 
-#: plug-ins/print/print.c:420
+#: plug-ins/print/print.c:243
 msgid "HP DeskJet 1100C, 1120C"
 msgstr "HP DeskJet 1100C, 1120C"
 
-#: plug-ins/print/print.c:422
+#: plug-ins/print/print.c:245
 msgid "HP DeskJet 1200C, 1600C"
 msgstr "HP DeskJet 1200C, 1600C"
 
-#: plug-ins/print/print.c:424
+#: plug-ins/print/print.c:247
 msgid "HP LaserJet II series"
 msgstr "HP LaserJet II series"
 
-#: plug-ins/print/print.c:426
+#: plug-ins/print/print.c:249
 msgid "HP LaserJet III series"
 msgstr "HP LaserJet III series"
 
-#: plug-ins/print/print.c:428
+#: plug-ins/print/print.c:251
 msgid "HP LaserJet 4 series"
 msgstr "HP LaserJet 4 series"
 
-#: plug-ins/print/print.c:430
+#: plug-ins/print/print.c:253
 msgid "HP LaserJet 4V, 4Si"
 msgstr "HP LaserJet 4V, 4Si"
 
-#: plug-ins/print/print.c:432
+#: plug-ins/print/print.c:255
 msgid "HP LaserJet 5 series"
 msgstr "HP LaserJet 5 series"
 
-#: plug-ins/print/print.c:434
+#: plug-ins/print/print.c:257
 msgid "HP LaserJet 5Si"
 msgstr "HP LaserJet 5Si"
 
-#: plug-ins/print/print.c:436
+#: plug-ins/print/print.c:259
 msgid "HP LaserJet 6 series"
 msgstr "HP LaserJet 6 series"
 
-#: plug-ins/print/print.c:438
+#: plug-ins/print/print.c:261
 msgid "EPSON Stylus Color"
 msgstr "EPSON Stylus Color"
 
-#: plug-ins/print/print.c:440
+#: plug-ins/print/print.c:263
 msgid "EPSON Stylus Color Pro"
 msgstr "EPSON Stylus Color Pro"
 
-#: plug-ins/print/print.c:442
+#: plug-ins/print/print.c:265
 msgid "EPSON Stylus Color Pro XL"
 msgstr "EPSON Stylus Color Pro XL"
 
-#: plug-ins/print/print.c:444
+#: plug-ins/print/print.c:267
 msgid "EPSON Stylus Color 1500"
 msgstr "EPSON Stylus Color 1500"
 
-#: plug-ins/print/print.c:446
+#: plug-ins/print/print.c:269
 msgid "EPSON Stylus Color 400"
 msgstr "EPSON Stylus Color 400"
 
-#: plug-ins/print/print.c:448
+#: plug-ins/print/print.c:271
 msgid "EPSON Stylus Color 500"
 msgstr "EPSON Stylus Color 500"
 
-#: plug-ins/print/print.c:450
+#: plug-ins/print/print.c:273
 msgid "EPSON Stylus Color 600"
 msgstr "EPSON Stylus Color 600"
 
-#: plug-ins/print/print.c:452
+#: plug-ins/print/print.c:275
 msgid "EPSON Stylus Color 800"
 msgstr "EPSON Stylus Color 800"
 
-#: plug-ins/print/print.c:454
+#: plug-ins/print/print.c:277
 msgid "EPSON Stylus Color 1520"
 msgstr "EPSON Stylus Color 1520"
 
-#: plug-ins/print/print.c:456
+#: plug-ins/print/print.c:279
 msgid "EPSON Stylus Color 3000"
 msgstr "EPSON Stylus Color 3000"
 
-#: plug-ins/print/print.c:509
+#: plug-ins/print/print.c:332
 msgid "This plug-in prints images from The GIMP."
 msgstr "Cet appendice imprime des images depuis Gimp."
 
-#: plug-ins/print/print.c:510
+#: plug-ins/print/print.c:333
 msgid "Prints images to PostScript, PCL, or ESC/P2 printers."
 msgstr "Imprime des images vers des imprimantes PostScript, PCL ou ESC/P2."
 
-#: plug-ins/print/print.c:514
+#: plug-ins/print/print.c:337
 msgid "<Image>/File/Print"
 msgstr "<Image>/Fichier/Imprimer"
 
-#: plug-ins/print/print.c:827
+#: plug-ins/print/print.c:650
 msgid "Auto"
 msgstr "Auto"
 
-#: plug-ins/print/print.c:828
+#: plug-ins/print/print.c:651
 msgid "Portrait"
 msgstr "Portrait"
 
-#: plug-ins/print/print.c:829
+#: plug-ins/print/print.c:652
 msgid "Landscape"
 msgstr "Paysage"
 
-#: plug-ins/print/print.c:860
+#: plug-ins/print/print.c:685
 #, c-format
 msgid "Print v%s"
 msgstr "Impression Gimp v%s"
@@ -2460,126 +2462,126 @@ msgstr "Impression Gimp v%s"
 #.
 #. * Media size option menu...
 #.
-#: plug-ins/print/print.c:910
+#: plug-ins/print/print.c:735
 msgid "Media Size:"
 msgstr "Taille du support:"
 
 #.
 #. * Media type option menu...
 #.
-#: plug-ins/print/print.c:926
+#: plug-ins/print/print.c:751
 msgid "Media Type:"
 msgstr "Type de support:"
 
 #.
 #. * Media source option menu...
 #.
-#: plug-ins/print/print.c:942
+#: plug-ins/print/print.c:767
 msgid "Media Source:"
 msgstr "Alimentation:"
 
 #.
 #. * Orientation option menu...
 #.
-#: plug-ins/print/print.c:958
+#: plug-ins/print/print.c:783
 msgid "Orientation:"
 msgstr "Orientation:"
 
 #.
 #. * Resolution option menu...
 #.
-#: plug-ins/common/ps.c:1999 plug-ins/print/print.c:988
+#: plug-ins/common/ps.c:1999 plug-ins/print/print.c:813
 msgid "Resolution:"
 msgstr "Résolution:"
 
 #.
 #. * Output type toggles...
 #.
-#: plug-ins/print/print.c:1004
+#: plug-ins/print/print.c:829
 msgid "Output Type:"
 msgstr "Type de Sortie:"
 
-#: plug-ins/print/print.c:1013
+#: plug-ins/print/print.c:838
 msgid "B&W"
 msgstr "N&B"
 
 #.
 #. * Scaling...
 #.
-#: plug-ins/print/print.c:1036
+#: plug-ins/print/print.c:861
 msgid "Scaling:"
 msgstr "Échelle:"
 
-#: plug-ins/print/print.c:1071
+#: plug-ins/print/print.c:896
 msgid "Percent"
 msgstr "Pourcent"
 
-#: plug-ins/print/print.c:1080
+#: plug-ins/print/print.c:905
 msgid "PPI"
 msgstr "PPP"
 
 #.
 #. * Brightness slider...
 #.
-#: plug-ins/print/print.c:1092
+#: plug-ins/print/print.c:917
 msgid "Brightness:"
 msgstr "Luminosité:"
 
 #.
 #. * Printer option menu...
 #.
-#: plug-ins/print/print.c:1127
+#: plug-ins/print/print.c:952
 msgid "Printer:"
 msgstr "Imprimante:"
 
-#: plug-ins/print/print.c:1153 plug-ins/print/print.c:1186
+#: plug-ins/print/print.c:978 plug-ins/print/print.c:1011
 msgid "Setup"
 msgstr "Configuration"
 
-#: plug-ins/print/print.c:1173
+#: plug-ins/print/print.c:998
 msgid "Print"
 msgstr "Impression"
 
 #.
 #. * Printer driver option menu...
 #.
-#: plug-ins/print/print.c:1208
+#: plug-ins/print/print.c:1033
 msgid "Driver:"
 msgstr "Pilote:"
 
 #.
 #. * PPD file...
 #.
-#: plug-ins/print/print.c:1233
+#: plug-ins/print/print.c:1058
 msgid "PPD File:"
 msgstr "Fichier PPD:"
 
-#: plug-ins/print/print.c:1246
+#: plug-ins/print/print.c:1071
 msgid "Browse"
 msgstr "Parcourir"
 
 #.
 #. * Print command...
 #.
-#: plug-ins/print/print.c:1256
+#: plug-ins/print/print.c:1081
 msgid "Command:"
 msgstr "Commande:"
 
 #.
 #. * Output file selection dialog...
 #.
-#: plug-ins/print/print.c:1291
+#: plug-ins/print/print.c:1116
 msgid "Print To File?"
 msgstr "Imprimer dans un fichier?"
 
 #.
 #. * PPD file selection dialog...
 #.
-#: plug-ins/print/print.c:1301
+#: plug-ins/print/print.c:1126
 msgid "PPD File?"
 msgstr "Fichier PPD?"
 
-#: plug-ins/print/print.c:2287
+#: plug-ins/print/print.c:2112
 msgid "File"
 msgstr "Fichier"
 
@@ -2867,41 +2869,41 @@ msgstr "Enregistrer en Xpm"
 msgid "Alpha Threshold"
 msgstr "Seuil alpha"
 
-#: plug-ins/common/xwd.c:222 plug-ins/common/xwd.c:223
+#: plug-ins/common/xwd.c:226 plug-ins/common/xwd.c:227
 msgid "load file of the XWD file format"
 msgstr "charge un fichier enregistré au format XWD"
 
-#: plug-ins/common/xwd.c:234
+#: plug-ins/common/xwd.c:238
 msgid "saves files in the XWD file format"
 msgstr "enregistre le fichier au format XWD"
 
-#: plug-ins/common/xwd.c:235
+#: plug-ins/common/xwd.c:239
 msgid "XWD saving handles all image types except those with alpha channels."
 msgstr ""
 "La sauvegarde au format XWD gère tous les types d'images, sauf ceux avec des "
 "canaux alpha."
 
-#: plug-ins/common/xwd.c:331
+#: plug-ins/common/xwd.c:335
 msgid "can't open file for reading"
 msgstr "impossible d'ouvrir le fichier en lecture"
 
-#: plug-ins/common/xwd.c:347
+#: plug-ins/common/xwd.c:351
 msgid "can't open file as XWD file"
 msgstr "impossible d'ouvrir comme fichier XWD"
 
-#: plug-ins/common/xwd.c:362
+#: plug-ins/common/xwd.c:366
 msgid "can't get memory for colormap"
 msgstr "Pas assez de mémoire pour la palette."
 
-#: plug-ins/common/xwd.c:380
+#: plug-ins/common/xwd.c:384
 msgid "can't read color entries"
 msgstr "Je ne peux lire les entrées de couleurs."
 
-#: plug-ins/common/xwd.c:444
+#: plug-ins/common/xwd.c:448
 msgid "this image depth/format is not supported"
 msgstr "Ce format d'image ou cette profondeur ne sont pas gérés."
 
-#: plug-ins/common/xwd.c:448
+#: plug-ins/common/xwd.c:452
 #, c-format
 msgid ""
 "load_image (xwd): XWD-file %s has format %d, depth %d\n"
@@ -2912,37 +2914,36 @@ msgstr ""
 "profondeur %d et bits par pixel %d.\n"
 "De tels fichiers ne sont pas gérés actuellement.\n"
 
-#: plug-ins/common/xwd.c:476
+#: plug-ins/common/xwd.c:480
 msgid "XWD save cannot handle images with alpha channels"
 msgstr ""
 "Il est impossible de sauver des images avec canaux alpha au format XWD."
 
-#: plug-ins/common/xwd.c:487
+#: plug-ins/common/xwd.c:491
 msgid "cannot operate on unknown image types"
 msgstr "Impossible d'opérer sur un type d'image inconnu."
 
-#: plug-ins/common/xwd.c:496
+#: plug-ins/common/xwd.c:500
 msgid "can't open file for writing"
 msgstr "impossible d'ouvrir le fichier en écriture"
 
-#: plug-ins/common/xwd.c:1148
+#: plug-ins/common/xwd.c:1152
 msgid "EOF encountered on "
 msgstr "Fin de fichier lors de "
 
-#: plug-ins/common/xwd.c:1246 plug-ins/common/xwd.c:1408
-#: plug-ins/common/xwd.c:1605 plug-ins/common/xwd.c:1854
+#: plug-ins/common/xwd.c:1250 plug-ins/common/xwd.c:1412
+#: plug-ins/common/xwd.c:1609 plug-ins/common/xwd.c:1858
 msgid "EOF encountered on reading"
 msgstr "Fin de fichier lors de la lecture"
 
-#: plug-ins/common/xwd.c:1294
+#: plug-ins/common/xwd.c:1298
 msgid "No memory for mapping colors"
 msgstr "Pas de mémoire pour associer les couleurs"
 
-#: plug-ins/common/xwd.c:1978
+#: plug-ins/common/xwd.c:1982
 msgid "Error during writing indexed/grey image"
 msgstr "Erreur durant l'écriture d'une image indexée ou tons de gris"
 
-#: plug-ins/common/xwd.c:2067
+#: plug-ins/common/xwd.c:2071
 msgid "Error during writing rgb image"
 msgstr "Erreur durant l'écriture de l'image rgb"
-

@@ -24,6 +24,10 @@ foreach ($bins, $opts) { s/ \\\n$//s }
 print MK <<EOT;
 libexecdir = \$(gimpplugindir)/plug-ins
 
+EXTRA_DIST = \\
+	mkgen.pl	\\
+	plugin-defs.pl
+
 AM_CPPFLAGS = \\
 	-DLOCALEDIR=\\""\$(localedir)"\\"
 

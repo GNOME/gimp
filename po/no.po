@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.1\n"
-"POT-Creation-Date: 1999-07-11 18:28+0200\n"
+"POT-Creation-Date: 1999-07-17 11:23-0700\n"
 "PO-Revision-Date: 1999-07-11 19:39+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -1507,97 +1507,97 @@ msgstr ""
 msgid "Unable to project indexed image."
 msgstr ""
 
-#: app/gimpimage.c:2106
+#: app/gimpimage.c:2109
 msgid "Layer cannot be raised any further"
 msgstr ""
 
-#: app/gimpimage.c:2181
+#: app/gimpimage.c:2184
 msgid "Layer cannot be lowered any further"
 msgstr ""
 
 #. layer_arg is already the top_layer
-#: app/gimpimage.c:2211
+#: app/gimpimage.c:2214
 msgid "Layer is already on top"
 msgstr ""
 
-#: app/gimpimage.c:2216
+#: app/gimpimage.c:2219
 msgid "Can't raise Layer without alpha"
 msgstr ""
 
 #. there is no next layer below layer_arg
-#: app/gimpimage.c:2311
+#: app/gimpimage.c:2314
 msgid "Layer is already on bottom"
 msgstr ""
 
-#: app/gimpimage.c:2324
+#: app/gimpimage.c:2327
 msgid "BG has no alpha, layer was placed above"
 msgstr ""
 
-#: app/gimpimage.c:2387
+#: app/gimpimage.c:2390
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
 msgstr ""
 
-#: app/gimpimage.c:2465
+#: app/gimpimage.c:2468
 msgid "There are not enough visible layers for a merge down."
 msgstr ""
 
-#: app/gimpimage.c:2578 app/gimpimage.c:2611
+#: app/gimpimage.c:2581 app/gimpimage.c:2614
 msgid "gimp_image_merge_layers: could not allocate merge layer"
 msgstr ""
 
-#: app/gimpimage.c:2650
+#: app/gimpimage.c:2653
 msgid "gimp_image_merge_layers attempting to merge incompatible layers\n"
 msgstr ""
 
-#: app/gimpimage.c:2732
+#: app/gimpimage.c:2735
 msgid "gimp_image_add_layer: attempt to add layer to wrong image"
 msgstr ""
 
-#: app/gimpimage.c:2742
+#: app/gimpimage.c:2745
 msgid "gimp_image_add_layer: trying to add layer to image twice"
 msgstr ""
 
-#: app/gimpimage.c:2861
+#: app/gimpimage.c:2864
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
 msgstr ""
 
-#: app/gimpimage.c:2865
+#: app/gimpimage.c:2868
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
 msgstr ""
 
-#: app/gimpimage.c:2869
+#: app/gimpimage.c:2872
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
 msgstr ""
 
-#: app/gimpimage.c:2873
+#: app/gimpimage.c:2876
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 
-#: app/gimpimage.c:2980
+#: app/gimpimage.c:2983
 msgid "Channel cannot be raised any further"
 msgstr ""
 
-#: app/gimpimage.c:3028
+#: app/gimpimage.c:3031
 msgid "Channel cannot be lowered any further"
 msgstr ""
 
-#: app/gimpimage.c:3050
+#: app/gimpimage.c:3053
 msgid "gimp_image_add_channel: attempt to add channel to wrong image"
 msgstr ""
 
-#: app/gimpimage.c:3060
+#: app/gimpimage.c:3063
 msgid "gimp_image_add_channel: trying to add channel to image twice"
 msgstr ""
 
-#: app/gimpimage.c:3187 app/palette.c:525 app/palette.c:550 app/palette.c:909
+#: app/gimpimage.c:3190 app/palette.c:525 app/palette.c:550 app/palette.c:909
 #: app/palette.c:913 app/palette.c:2313 app/palette.c:2995
 msgid "Untitled"
 msgstr ""
@@ -3182,7 +3182,8 @@ msgstr "  --no-splash-image        Ikke vis bilde i oppstartsvinduet.\n"
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and its "
 "plugins.\n"
-msgstr "  --no-shm            Ikke bruk delt minne mellom GIMP og dens tillegg.\n"
+msgstr ""
+"  --no-shm            Ikke bruk delt minne mellom GIMP og dens tillegg.\n"
 
 #: app/main.c:304
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
@@ -3192,7 +3193,9 @@ msgstr "  --no-xshm                Ikke bruk X-utvidelsen for delt minne.\n"
 msgid ""
 "  --console-messages       Display warnings to console instead of a dialog "
 "box.\n"
-msgstr "  --console-messages       Vis advarsler på konsollet i stedet for i en dialogboks.\n"
+msgstr ""
+"  --console-messages       Vis advarsler på konsollet i stedet for i en "
+"dialogboks.\n"
 
 #: app/main.c:306
 msgid "  --debug-handlers         Enable debugging signal handlers.\n"
@@ -3789,12 +3792,12 @@ msgstr "/Importer sti"
 msgid "/Export Path"
 msgstr "/Eksporter sti"
 
-#: app/menus.c:591
+#: app/menus.c:596
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr "Feil under åpning av fil: %s\n"
 
-#: app/menus.c:613 app/menus.c:694
+#: app/menus.c:618 app/menus.c:699
 #, c-format
 msgid "/File/MRU%02d"
 msgstr "/Fil/MRU%02d"
@@ -3803,83 +3806,83 @@ msgstr "/Fil/MRU%02d"
 msgid "Module DB"
 msgstr "Modul DB"
 
-#: app/module_db.c:555
+#: app/module_db.c:567
 #, c-format
 msgid "load module: \"%s\"\n"
 msgstr "last modul: \"%s\"\n"
 
-#: app/module_db.c:562
+#: app/module_db.c:574
 #, c-format
 msgid "skipping module: \"%s\"\n"
 msgstr "hopper over modul: \"%s\"\n"
 
-#: app/module_db.c:586
+#: app/module_db.c:598
 #, c-format
 msgid "module load error: %s: %s"
 msgstr "feil under lasting av modul: %s: %s"
 
-#: app/module_db.c:604
+#: app/module_db.c:616
 msgid "missing module_init() symbol"
 msgstr "manglende module_init() symbol"
 
-#: app/module_db.c:607
+#: app/module_db.c:619
 #, c-format
 msgid "%s: module_init() symbol not found"
 msgstr "%s: module_init() symbol ikke funnet"
 
-#: app/module_db.c:760
+#: app/module_db.c:772
 msgid "<No modules>"
 msgstr "<Ingen moduler>"
 
-#: app/module_db.c:773 app/module_db.c:782
+#: app/module_db.c:785 app/module_db.c:794
 msgid "on disk"
 msgstr "på disk"
 
-#: app/module_db.c:773
+#: app/module_db.c:785
 msgid "only in memory"
 msgstr "kun i minne"
 
-#: app/module_db.c:782
+#: app/module_db.c:794
 msgid "nowhere (click 'refresh')"
 msgstr "ingensteder (klikk 'gjenles')"
 
-#: app/module_db.c:818
+#: app/module_db.c:830
 msgid "Load"
 msgstr "Last"
 
-#: app/module_db.c:827
+#: app/module_db.c:839
 msgid "Unload"
 msgstr "Frigi"
 
-#: app/module_db.c:840
+#: app/module_db.c:852
 msgid "Purpose: "
 msgstr "Mening: "
 
-#: app/module_db.c:841
+#: app/module_db.c:853
 msgid "Author: "
 msgstr "Forfatter: "
 
-#: app/module_db.c:842
+#: app/module_db.c:854
 msgid "Version: "
 msgstr "Versjon: "
 
-#: app/module_db.c:843
+#: app/module_db.c:855
 msgid "Copyright: "
 msgstr "Lisens: "
 
-#: app/module_db.c:844
+#: app/module_db.c:856
 msgid "Date: "
 msgstr "Dato: "
 
-#: app/module_db.c:845
+#: app/module_db.c:857
 msgid "Location: "
 msgstr "Plassering: "
 
-#: app/module_db.c:846
+#: app/module_db.c:858
 msgid "State: "
 msgstr "Tilstand: "
 
-#: app/module_db.c:865
+#: app/module_db.c:877
 msgid "Autoload during startup"
 msgstr "Autolasting under oppstart"
 
@@ -4182,7 +4185,9 @@ msgstr "kunne ikke kjøre tillegg: %s"
 msgid ""
 "plug-in \"%s\" attempted to install procedure \"%s\" which does not take the "
 "standard plug-in args"
-msgstr "Tillegg \"%s\" prøvde å installere prosedyre \"%s\" som ikke tar standard argumenter for tillegg"
+msgstr ""
+"Tillegg \"%s\" prøvde å installere prosedyre \"%s\" som ikke tar standard "
+"argumenter for tillegg"
 
 #: app/plug_in.c:1697
 #, c-format
@@ -4190,7 +4195,8 @@ msgid ""
 "plug-in \"%s\" attempted to install procedure \"%s\" in an invalid menu "
 "location.  Use either \"<Toolbox>\", \"<Image>\", \"<Load>\", or \"<Save>\"."
 msgstr ""
-"Tillegg \"%s\" prøvde å installere prosedyre \"%s\" i en ugyldig menyplassering.\n"
+"Tillegg \"%s\" prøvde å installere prosedyre \"%s\" i en ugyldig "
+"menyplassering.\n"
 "Bruk enten \"<Verktøyskrin>\", \"<Bilde>,\"<Last>\", eller \"<Lagre>\"."
 
 #: app/plug_in.c:1717
@@ -4199,7 +4205,8 @@ msgid ""
 "plug_in \"%s\" attempted to install procedure \"%s\" which fails to comply "
 "with the array parameter passing standard.  Argument %d is noncompliant."
 msgstr ""
-"Tillegg \"%s\" prøvde å installere prosedyre \"%s\" som ikke følger standarden for\n"
+"Tillegg \"%s\" prøvde å installere prosedyre \"%s\" som ikke følger "
+"standarden for\n"
 "sending av arrayparametere. Argument %d følger ikke standarden."
 
 #: app/plug_in.c:2149
@@ -4274,7 +4281,8 @@ msgstr "Feil: Tittelformat for bildet må ikke være NULL."
 
 #: app/preferences_dialog.c:536
 msgid "You will need to restart GIMP for these changes to take effect."
-msgstr "Du vil måtte starte GIMP på nytt for at disse endringene skal tre i kraft."
+msgstr ""
+"Du vil måtte starte GIMP på nytt for at disse endringene skal tre i kraft."
 
 #: app/preferences_dialog.c:1467
 msgid "Preferences"
@@ -4866,7 +4874,10 @@ msgid ""
 "\n"
 "If you don't have scalable fonts, try turning off antialiasing in the tool "
 "options."
-msgstr "\nHvis du ikke har skalerbare skrifttyper, prøv å slå av antialiasing i alternativene for verktøy."
+msgstr ""
+"\n"
+"Hvis du ikke har skalerbare skrifttyper, prøv å slå av antialiasing i "
+"alternativene for verktøy."
 
 #: app/text_tool.c:722
 msgid "Text Layer"
@@ -5561,7 +5572,7 @@ msgstr "Velg fil"
 msgid "Select"
 msgstr "Velg"
 
-#: libgimp/gimpenv.c:81
+#: libgimp/gimpenv.c:82
 msgid "warning: no home directory."
 msgstr "advarsel: ingen hjemmekatalog"
 

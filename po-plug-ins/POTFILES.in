@@ -11,7 +11,7 @@ plug-ins/common/blur.c
 plug-ins/bmp/bmp.c
 plug-ins/bmp/bmpread.c
 plug-ins/bmp/bmpwrite.c
-plug-ins/common/borderaverage.c
+plug-ins/borderaverage/borderaverage.c
 plug-ins/common/bumpmap.c
 plug-ins/common/bz2.c
 plug-ins/common/checkerboard.c

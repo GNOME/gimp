@@ -50,6 +50,9 @@ EXTRA_DIST = \
 	pixmaps/penedit.xpm	\
 	pixmaps/pennorm.xpm	\
 	pixmaps/penstroke.xpm	\
+	pixmaps/qmasksel.xpm	\
+	pixmaps/qmasknosel.xpm	\
+	pixmaps/topath.xpm	\
 	pixmaps/toselection.xpm	\
 	pixmaps/yes.xpm         \
 	pixmaps/zoom_in.xpm	\

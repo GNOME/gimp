@@ -79,7 +79,7 @@ EXTRA_DIST = \
 	iter_ALT/old/plug_in_CentralReflection_iter_ALT.inc	\
 	iter_ALT/old/plug_in_anamorphose_iter_ALT.inc		\
 	iter_ALT/old/plug_in_blur2_iter_ALT.inc			\
-	iter_ALT/old/plug-in_colorify_iter_ALT.inc		\
+	iter_ALT/old/plug_in_colorify_iter_ALT.inc		\
 	iter_ALT/old/plug_in_encript_iter_ALT.inc		\
 	iter_ALT/old/plug_in_figures_iter_ALT.inc		\
 	iter_ALT/old/plug_in_gflare_iter_ALT.inc		\
