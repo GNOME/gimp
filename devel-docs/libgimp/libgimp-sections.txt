@@ -69,8 +69,6 @@ GimpGradientSegmentColor
 GimpGradientSegmentType
 GimpHistogramChannel
 GimpIconType
-GimpImageBaseType
-GimpImageType
 GimpOffsetType
 GimpGradientType
 GimpHueRange

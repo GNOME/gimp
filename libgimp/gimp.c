@@ -48,7 +48,7 @@
 #define WAIT_ANY -1
 #endif
 
-#include <glib.h>
+#include <glib-object.h>
 
 #ifndef G_OS_WIN32
 #include "libgimpbase/gimpsignal.h"

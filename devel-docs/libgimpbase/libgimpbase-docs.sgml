@@ -13,6 +13,7 @@
 
   <part id="libgimpbase">
     <title>GIMP Base Library</title>
+    <xi:include href="xml/gimpbaseenums.xml" />
     <xi:include href="xml/gimpbasetypes.xml" />
     <xi:include href="xml/gimpversion.xml" />
     <xi:include href="xml/gimplimits.xml" />

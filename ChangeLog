@@ -1,5 +1,35 @@
 2004-07-29  Sven Neumann  <sven@gimp.org>
 
+	* app/core/core-enums.h: removed enums GimpImageType and
+	GimpImageBaseType ...
+
+	* libgimpbase/gimpbaseenums.h: ... and added them here. Also moved
+	all enums from gimpbasetypes.h to this new file.
+
+	* libgimpbase/Makefile.am
+	* tools/pdbgen/Makefile.am: changed accordingly.
+
+	* app/core/core-enums.c
+	* libgimp/gimpenums.h
+	* libgimpbase/gimpbaseenums.c
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* libgimpbase/gimpparasite.c
+	* libgimpbase/gimpprotocol.c
+	* libgimp/gimp.c: include <glib-object.h>
+
+	* libgimpbase/gimpbasetypes.[ch]: added API to set and get a
+	translation domain on a GType. This is used for translatable enum
+	values.
+
+	* libgimpbase/gimputils.[ch]: added API to retrieve the translated
+	name for an enum value.
+
+	* app/widgets/gimpenumstore.c
+	* app/widgets/gimpenumwidgets.c: use the new API in libgimpbase.
+
+2004-07-29  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpdrawable.c: fixed gtk-doc comments.
 
 2004-07-29  Dave Neary  <bolsh@gimp.org>

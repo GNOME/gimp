@@ -1,0 +1,105 @@
+<!-- ##### SECTION Title ##### -->
+gimpbaseenums
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### ENUM GimpImageBaseType ##### -->
+<para>
+
+</para>
+
+@GIMP_RGB: 
+@GIMP_GRAY: 
+@GIMP_INDEXED: 
+
+<!-- ##### ENUM GimpImageType ##### -->
+<para>
+
+</para>
+
+@GIMP_RGB_IMAGE: 
+@GIMP_RGBA_IMAGE: 
+@GIMP_GRAY_IMAGE: 
+@GIMP_GRAYA_IMAGE: 
+@GIMP_INDEXED_IMAGE: 
+@GIMP_INDEXEDA_IMAGE: 
+
+<!-- ##### ENUM GimpPDBArgType ##### -->
+<para>
+
+</para>
+
+@GIMP_PDB_INT32: 
+@GIMP_PDB_INT16: 
+@GIMP_PDB_INT8: 
+@GIMP_PDB_FLOAT: 
+@GIMP_PDB_STRING: 
+@GIMP_PDB_INT32ARRAY: 
+@GIMP_PDB_INT16ARRAY: 
+@GIMP_PDB_INT8ARRAY: 
+@GIMP_PDB_FLOATARRAY: 
+@GIMP_PDB_STRINGARRAY: 
+@GIMP_PDB_COLOR: 
+@GIMP_PDB_REGION: 
+@GIMP_PDB_DISPLAY: 
+@GIMP_PDB_IMAGE: 
+@GIMP_PDB_LAYER: 
+@GIMP_PDB_CHANNEL: 
+@GIMP_PDB_DRAWABLE: 
+@GIMP_PDB_SELECTION: 
+@GIMP_PDB_BOUNDARY: 
+@GIMP_PDB_PATH: 
+@GIMP_PDB_PARASITE: 
+@GIMP_PDB_STATUS: 
+@GIMP_PDB_END: 
+
+<!-- ##### ENUM GimpPDBProcType ##### -->
+<para>
+
+</para>
+
+@GIMP_INTERNAL: 
+@GIMP_PLUGIN: 
+@GIMP_EXTENSION: 
+@GIMP_TEMPORARY: 
+
+<!-- ##### ENUM GimpPDBStatusType ##### -->
+<para>
+
+</para>
+
+@GIMP_PDB_EXECUTION_ERROR: 
+@GIMP_PDB_CALLING_ERROR: 
+@GIMP_PDB_PASS_THROUGH: 
+@GIMP_PDB_SUCCESS: 
+@GIMP_PDB_CANCEL: 
+
+<!-- ##### ENUM GimpMessageHandlerType ##### -->
+<para>
+
+</para>
+
+@GIMP_MESSAGE_BOX: 
+@GIMP_CONSOLE: 
+@GIMP_ERROR_CONSOLE: 
+
+<!-- ##### ENUM GimpStackTraceMode ##### -->
+<para>
+
+</para>
+
+@GIMP_STACK_TRACE_NEVER: 
+@GIMP_STACK_TRACE_QUERY: 
+@GIMP_STACK_TRACE_ALWAYS: 
+

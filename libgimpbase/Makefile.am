@@ -65,9 +65,12 @@ lib_LTLIBRARIES = libgimpbase-2.0.la
 ../libgimpbase/gimpversion.h: gimpversion.h
 	@:
 
-libgimpbase_2_0_la_SOURCES = \
+
+libgimpbase_sources = \
 	gimpbase.h		\
+	gimpbaseenums.h		\
 	gimpbasetypes.h		\
+	gimpbasetypes.c		\
 	gimplimits.h		\
 	gimpversion.h		\
 	\
@@ -95,8 +98,15 @@ libgimpbase_2_0_la_SOURCES = \
 	gimpwire.c		\
 	gimpwire.h
 
+libgimpbase_built_sources = \
+	gimpbaseenums.c
+
+libgimpbase_2_0_la_SOURCES = $(libgimpbase_sources) $(libgimpbase_built_sources)
+
+
 libgimpbaseinclude_HEADERS = \
 	gimpbase.h		\
+	gimpbaseenums.h		\
 	gimpbasetypes.h		\
 	gimplimits.h		\
 	gimpversion.h		\
@@ -110,6 +120,7 @@ libgimpbaseinclude_HEADERS = \
 	gimpunit.h		\
 	gimputils.h
 
+
 libgimpbase_2_0_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined) 			\
@@ -119,6 +130,26 @@ libgimpbase_2_0_la_DEPENDENCIES = $(gimpbase_def)
 
 libgimpbase_2_0_la_LIBADD = $(GLIB_LIBS)
 
+
 install-data-local: install-ms-lib install-libtool-import-lib
 
 uninstall-local: uninstall-ms-lib uninstall-libtool-import-lib
+
+
+#
+# rules to generate built sources
+#
+
+gen_sources = xgen-bec
+CLEANFILES = $(gen_sources)
+
+$(srcdir)/gimpbaseenums.c: $(srcdir)/gimpbaseenums.h $(GIMP_MKENUMS)
+	$(GIMP_MKENUMS) \
+		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"gimpbasetypes.h\"\n#include \"libgimp/libgimp-intl.h\"" \
+		--fprod "\n/* enumerations from \"@filename@\" */" \
+		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \
+		--vprod "    { @VALUENAME@, @valuedesc@, \"@valuenick@\" }," \
+		--vtail "    { 0, NULL, NULL }\n  };\n\n  static GType type = 0;\n\n  if (! type)\n  {\n    type = g_@type@_register_static (\"@EnumName@\", values);\n    gimp_type_set_translation_domain (type, GETTEXT_PACKAGE \"-libgimp\");\n  }\n\n  return type;\n}\n" \
+		$(srcdir)/gimpbaseenums.h > xgen-bec \
+	&& cp xgen-bec $(@F) \
+	&& rm -f xgen-bec

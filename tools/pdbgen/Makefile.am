@@ -56,7 +56,7 @@ EXTRA_DIST = \
 	$(pdb_sources)
 
 enum_headers = \
-	../../libgimpbase/gimpbasetypes.h	\
+	../../libgimpbase/gimpbaseenums.h	\
 	../../app/base/base-enums.h		\
 	../../app/core/core-enums.h		\
 	../../app/text/text-enums.h		\

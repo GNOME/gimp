@@ -264,33 +264,6 @@ typedef enum
 } GimpIconType;
 
 
-#define GIMP_TYPE_IMAGE_BASE_TYPE (gimp_image_base_type_get_type ())
-
-GType gimp_image_base_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_RGB,     /*< desc="RGB color"     >*/
-  GIMP_GRAY,    /*< desc="Grayscale"     >*/
-  GIMP_INDEXED  /*< desc="Indexed color" >*/
-} GimpImageBaseType;
-
-
-#define GIMP_TYPE_IMAGE_TYPE (gimp_image_type_get_type ())
-
-GType gimp_image_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_RGB_IMAGE,      /*< desc="RGB"             >*/
-  GIMP_RGBA_IMAGE,     /*< desc="RGB-alpha"       >*/
-  GIMP_GRAY_IMAGE,     /*< desc="Grayscale"       >*/
-  GIMP_GRAYA_IMAGE,    /*< desc="Grayscale-alpha" >*/
-  GIMP_INDEXED_IMAGE,  /*< desc="Indexed"         >*/
-  GIMP_INDEXEDA_IMAGE  /*< desc="Indexed-alpha"   >*/
-} GimpImageType;
-
-
 #define GIMP_TYPE_ORIENTATION_TYPE (gimp_orientation_type_get_type ())
 
 GType gimp_orientation_type_get_type (void) G_GNUC_CONST;

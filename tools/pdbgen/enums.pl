@@ -20,9 +20,30 @@
 package Gimp::CodeGen::enums;
 
 %enums = (
+    GimpImageBaseType =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_RGB GIMP_GRAY GIMP_INDEXED) ],
+	  mapping => { GIMP_RGB => '0',
+		       GIMP_GRAY => '1',
+		       GIMP_INDEXED => '2' }
+	},
+    GimpImageType =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_RGB_IMAGE GIMP_RGBA_IMAGE GIMP_GRAY_IMAGE
+			  GIMP_GRAYA_IMAGE GIMP_INDEXED_IMAGE
+			  GIMP_INDEXEDA_IMAGE) ],
+	  mapping => { GIMP_RGB_IMAGE => '0',
+		       GIMP_RGBA_IMAGE => '1',
+		       GIMP_GRAY_IMAGE => '2',
+		       GIMP_GRAYA_IMAGE => '3',
+		       GIMP_INDEXED_IMAGE => '4',
+		       GIMP_INDEXEDA_IMAGE => '5' }
+	},
     GimpUnit =>
 	{ contig => 1,
-	  header => 'libgimpbase/gimpbasetypes.h',
+	  header => 'libgimpbase/gimpbaseenums.h',
 	  symbols => [ qw(GIMP_UNIT_PIXEL GIMP_UNIT_INCH GIMP_UNIT_MM
 			  GIMP_UNIT_POINT GIMP_UNIT_PICA GIMP_UNIT_END) ],
 	  mapping => { GIMP_UNIT_PIXEL => '0',
@@ -34,7 +55,7 @@ package Gimp::CodeGen::enums;
 	},
     GimpPDBArgType =>
 	{ contig => 1,
-	  header => 'libgimpbase/gimpbasetypes.h',
+	  header => 'libgimpbase/gimpbaseenums.h',
 	  symbols => [ qw(GIMP_PDB_INT32 GIMP_PDB_INT16 GIMP_PDB_INT8
 			  GIMP_PDB_FLOAT GIMP_PDB_STRING GIMP_PDB_INT32ARRAY
 			  GIMP_PDB_INT16ARRAY GIMP_PDB_INT8ARRAY
@@ -70,7 +91,7 @@ package Gimp::CodeGen::enums;
 	},
     GimpPDBProcType =>
 	{ contig => 1,
-	  header => 'libgimpbase/gimpbasetypes.h',
+	  header => 'libgimpbase/gimpbaseenums.h',
 	  symbols => [ qw(GIMP_INTERNAL GIMP_PLUGIN GIMP_EXTENSION
 			  GIMP_TEMPORARY) ],
 	  mapping => { GIMP_INTERNAL => '0',
@@ -80,7 +101,7 @@ package Gimp::CodeGen::enums;
 	},
     GimpPDBStatusType =>
 	{ contig => 1,
-	  header => 'libgimpbase/gimpbasetypes.h',
+	  header => 'libgimpbase/gimpbaseenums.h',
 	  symbols => [ qw(GIMP_PDB_EXECUTION_ERROR GIMP_PDB_CALLING_ERROR
 			  GIMP_PDB_PASS_THROUGH GIMP_PDB_SUCCESS
 			  GIMP_PDB_CANCEL) ],
@@ -92,7 +113,7 @@ package Gimp::CodeGen::enums;
 	},
     GimpMessageHandlerType =>
 	{ contig => 1,
-	  header => 'libgimpbase/gimpbasetypes.h',
+	  header => 'libgimpbase/gimpbaseenums.h',
 	  symbols => [ qw(GIMP_MESSAGE_BOX GIMP_CONSOLE GIMP_ERROR_CONSOLE) ],
 	  mapping => { GIMP_MESSAGE_BOX => '0',
 		       GIMP_CONSOLE => '1',
@@ -100,7 +121,7 @@ package Gimp::CodeGen::enums;
 	},
     GimpStackTraceMode =>
 	{ contig => 1,
-	  header => 'libgimpbase/gimpbasetypes.h',
+	  header => 'libgimpbase/gimpbaseenums.h',
 	  symbols => [ qw(GIMP_STACK_TRACE_NEVER GIMP_STACK_TRACE_QUERY
 			  GIMP_STACK_TRACE_ALWAYS) ],
 	  mapping => { GIMP_STACK_TRACE_NEVER => '0',
@@ -298,27 +319,6 @@ package Gimp::CodeGen::enums;
 	  mapping => { GIMP_ICON_TYPE_STOCK_ID => '0',
 		       GIMP_ICON_TYPE_INLINE_PIXBUF => '1',
 		       GIMP_ICON_TYPE_IMAGE_FILE => '2' }
-	},
-    GimpImageBaseType =>
-	{ contig => 1,
-	  header => 'core/core-enums.h',
-	  symbols => [ qw(GIMP_RGB GIMP_GRAY GIMP_INDEXED) ],
-	  mapping => { GIMP_RGB => '0',
-		       GIMP_GRAY => '1',
-		       GIMP_INDEXED => '2' }
-	},
-    GimpImageType =>
-	{ contig => 1,
-	  header => 'core/core-enums.h',
-	  symbols => [ qw(GIMP_RGB_IMAGE GIMP_RGBA_IMAGE GIMP_GRAY_IMAGE
-			  GIMP_GRAYA_IMAGE GIMP_INDEXED_IMAGE
-			  GIMP_INDEXEDA_IMAGE) ],
-	  mapping => { GIMP_RGB_IMAGE => '0',
-		       GIMP_RGBA_IMAGE => '1',
-		       GIMP_GRAY_IMAGE => '2',
-		       GIMP_GRAYA_IMAGE => '3',
-		       GIMP_INDEXED_IMAGE => '4',
-		       GIMP_INDEXEDA_IMAGE => '5' }
 	},
     GimpOrientationType =>
 	{ contig => 1,

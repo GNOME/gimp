@@ -26,6 +26,15 @@ gimpdatafiles
 @mtime: 
 @ctime: 
 
+<!-- ##### USER_FUNCTION GimpDatafileLoaderFunc ##### -->
+<para>
+
+</para>
+
+@file_data: 
+@user_data: 
+
+
 <!-- ##### FUNCTION gimp_datafiles_check_extension ##### -->
 <para>
 

@@ -24,8 +24,9 @@
 
 #include <string.h>
 
-#include <glib.h>
+#include <glib-object.h>
 
+#include "gimpbasetypes.h"
 #include "gimputils.h"
 
 #include "libgimp/libgimp-intl.h"
@@ -299,4 +300,76 @@ gimp_escape_uline (const gchar *str)
   *p = '\0';
 
   return escaped;
+}
+
+
+/**
+ * gimp_enum_get_value:
+ * @enum_type:  the #GType of a registered enum
+ * @value:      an integer value
+ * @value_nick: return location for the value's nick (or %NULL)
+ * @value_name: return location for the value's translated name (or %NULL)
+ *
+ * Checks if @value is valid for the enum registered as @enum_type.
+ * If the value exists in that enum, its nick and its translated name
+ * are returned (if @value_nick and @value_name are not %NULL).
+ *
+ * Return value: %TRUE if @value is valid for the @enum_type,
+ *               %FALSE otherwise
+ *
+ * Since: GIMP 2.2
+ **/
+gboolean
+gimp_enum_get_value (GType         enum_type,
+                     gint          value,
+                     const gchar **value_nick,
+                     const gchar **value_name)
+{
+  GEnumClass *enum_class;
+  GEnumValue *enum_value;
+
+  g_return_val_if_fail (G_TYPE_IS_ENUM (enum_type), FALSE);
+
+  enum_class = g_type_class_peek (enum_type);
+  enum_value = g_enum_get_value (enum_class, value);
+
+  if (enum_value)
+    {
+      if (value_nick)
+        *value_nick = enum_value->value_nick;
+
+      if (value_name)
+        *value_name = (enum_value->value_name ?
+                       dgettext (gimp_type_get_translation_domain (enum_type),
+                                 enum_value->value_name) :
+                       NULL);
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+/**
+ * gimp_enum_value_get_name:
+ * @enum_class: a #GEnumClass
+ * @enum_value: a #GEnumValue from @enum_class
+ *
+ * Retrieves the translated name for a given @enum_value.
+ *
+ * Return value: the translated name of the enum value
+ *
+ * Since: GIMP 2.2
+ **/
+const gchar *
+gimp_enum_value_get_name (GEnumClass *enum_class,
+                          GEnumValue *enum_value)
+{
+  GType  type = G_TYPE_FROM_CLASS (enum_class);
+
+  if (enum_value->value_name)
+    return dgettext (gimp_type_get_translation_domain (type),
+                     enum_value->value_name);
+
+  return NULL;
 }

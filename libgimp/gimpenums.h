@@ -184,23 +184,6 @@ typedef enum
 
 typedef enum
 {
-  GIMP_RGB,
-  GIMP_GRAY,
-  GIMP_INDEXED
-} GimpImageBaseType;
-
-typedef enum
-{
-  GIMP_RGB_IMAGE,
-  GIMP_RGBA_IMAGE,
-  GIMP_GRAY_IMAGE,
-  GIMP_GRAYA_IMAGE,
-  GIMP_INDEXED_IMAGE,
-  GIMP_INDEXEDA_IMAGE
-} GimpImageType;
-
-typedef enum
-{
   GIMP_NORMAL_MODE,
   GIMP_DISSOLVE_MODE,
   GIMP_BEHIND_MODE,

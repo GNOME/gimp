@@ -1,11 +1,23 @@
 <SECTION>
 <FILE>gimpbasetypes</FILE>
+gimp_type_set_translation_domain
+gimp_type_get_translation_domain
+</SECTION>
+
+<SECTION>
+<FILE>gimpbaseenums</FILE>
+GimpImageBaseType
+GimpImageType
 GimpPDBArgType
 GimpPDBProcType
 GimpPDBStatusType
 GimpMessageHandlerType
 GimpStackTraceMode
-GimpDatafileLoaderFunc
+<SUBSECTION Standard>
+GIMP_TYPE_IMAGE_BASE_TYPE
+gimp_image_base_type_get_type
+GIMP_TYPE_IMAGE_TYPE
+gimp_image_type_get_type
 </SECTION>
 
 <SECTION>
@@ -143,6 +155,8 @@ gimp_filename_to_utf8
 gimp_utf8_strtrim
 gimp_escape_uline
 gimp_strip_uline
+gimp_enum_value_get_name
+gimp_enum_get_value
 </SECTION>
 
 <SECTION>
@@ -189,6 +203,7 @@ GIMP_CHECK_VERSION
 <SECTION>
 <FILE>gimpdatafiles</FILE>
 GimpDatafileData
+GimpDatafileLoaderFunc
 gimp_datafiles_check_extension
 gimp_datafiles_read_directories
 </SECTION>

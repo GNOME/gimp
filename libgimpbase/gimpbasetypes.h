@@ -24,6 +24,7 @@
 #include <libgimpcolor/gimpcolortypes.h>
 #include <libgimpmath/gimpmathtypes.h>
 
+#include <libgimpbase/gimpbaseenums.h>
 
 G_BEGIN_DECLS
 
@@ -38,77 +39,9 @@ typedef void (* GimpDatafileLoaderFunc) (const GimpDatafileData *file_data,
                                          gpointer                user_data);
 
 
-typedef enum
-{
-  GIMP_UNIT_PIXEL   = 0,
-
-  GIMP_UNIT_INCH    = 1,
-  GIMP_UNIT_MM      = 2,
-  GIMP_UNIT_POINT   = 3,
-  GIMP_UNIT_PICA    = 4,
-
-  GIMP_UNIT_END     = 5,
-
-  GIMP_UNIT_PERCENT = 65536 /*< pdb-skip >*/
-} GimpUnit;
-
-typedef enum
-{
-  GIMP_PDB_INT32,
-  GIMP_PDB_INT16,
-  GIMP_PDB_INT8,
-  GIMP_PDB_FLOAT,
-  GIMP_PDB_STRING,
-  GIMP_PDB_INT32ARRAY,
-  GIMP_PDB_INT16ARRAY,
-  GIMP_PDB_INT8ARRAY,
-  GIMP_PDB_FLOATARRAY,
-  GIMP_PDB_STRINGARRAY,
-  GIMP_PDB_COLOR,
-  GIMP_PDB_REGION,
-  GIMP_PDB_DISPLAY,
-  GIMP_PDB_IMAGE,
-  GIMP_PDB_LAYER,
-  GIMP_PDB_CHANNEL,
-  GIMP_PDB_DRAWABLE,
-  GIMP_PDB_SELECTION,
-  GIMP_PDB_BOUNDARY,
-  GIMP_PDB_PATH,
-  GIMP_PDB_PARASITE,
-  GIMP_PDB_STATUS,
-  GIMP_PDB_END
-} GimpPDBArgType;
-
-typedef enum
-{
-  GIMP_INTERNAL,
-  GIMP_PLUGIN,
-  GIMP_EXTENSION,
-  GIMP_TEMPORARY
-} GimpPDBProcType;
-
-typedef enum
-{
-  GIMP_PDB_EXECUTION_ERROR,
-  GIMP_PDB_CALLING_ERROR,
-  GIMP_PDB_PASS_THROUGH,
-  GIMP_PDB_SUCCESS,
-  GIMP_PDB_CANCEL
-} GimpPDBStatusType;
-
-typedef enum
-{
-  GIMP_MESSAGE_BOX,
-  GIMP_CONSOLE,
-  GIMP_ERROR_CONSOLE
-} GimpMessageHandlerType;
-
-typedef enum
-{
-  GIMP_STACK_TRACE_NEVER,
-  GIMP_STACK_TRACE_QUERY,
-  GIMP_STACK_TRACE_ALWAYS
-} GimpStackTraceMode;
+void           gimp_type_set_translation_domain (GType        type,
+                                                 const gchar *domain);
+const gchar *  gimp_type_get_translation_domain (GType        type);
 
 
 G_END_DECLS

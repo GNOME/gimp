@@ -1,3 +1,10 @@
+2004-07-29  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added libgimpbase/gimpbaseenums.c. This file
+	contains enums that used to live in the core.
+
+	* de.po: moved enum translations from the core domain.
+
 2004-07-27  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: added libgimpbase/gimpmemsize.c.

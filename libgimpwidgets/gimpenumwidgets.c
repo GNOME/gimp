@@ -23,13 +23,12 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
 #include "gimpenumwidgets.h"
-
-#include "gimp-intl.h"
 
 
 /**
@@ -96,11 +95,14 @@ gimp_enum_radio_box_new_with_range (GType       enum_type,
 
   for (value = enum_class->values; value->value_name; value++)
     {
+      const gchar *name;
+
       if (value->value < minimum || value->value > maximum)
         continue;
 
-      button = gtk_radio_button_new_with_mnemonic (group,
-                                                   gettext (value->value_name));
+      name = gimp_enum_value_get_name (enum_class, value);
+
+      button = gtk_radio_button_new_with_mnemonic (group, name);
 
       if (first_button && *first_button == NULL)
         *first_button = button;
@@ -307,8 +309,9 @@ gimp_enum_stock_box_new_with_range (GType         enum_type,
           gtk_widget_show (image);
         }
 
-      if (value->value_name)
-        gimp_help_set_help_data (button, gettext (value->value_name), NULL);
+      gimp_help_set_help_data (button,
+                               gimp_enum_value_get_name (enum_class, value),
+                               NULL);
 
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);

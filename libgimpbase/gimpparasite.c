@@ -27,7 +27,8 @@
 #include <unistd.h>
 #endif
 #include <string.h>
-#include <glib.h>
+
+#include <glib-object.h>
 
 #ifdef G_OS_WIN32
 #include <process.h>		/* For _getpid() */

@@ -1,3 +1,16 @@
+2004-07-29  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpenums.sgml: updated.
+
+	* libgimpbase/libgimpbase-docs.sgml
+	* libgimpbase/libgimpbase-sections.txt
+	* libgimpbase/tmpl/gimpbaseenums.sgml
+	* libgimpbase/tmpl/gimpbasetypes.sgml
+	* libgimpbase/tmpl/gimpdatafiles.sgml
+	* libgimpbase/tmpl/gimputils.sgml: moved stuff around and updated
+	for new enums and functions.
+
 2004-07-27  Sven Neumann  <sven@gimp.org>
 
 	* app/app-docs.sgml

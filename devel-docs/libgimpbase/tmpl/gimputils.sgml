@@ -63,3 +63,25 @@ Utilities of general interest
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_enum_value_get_name ##### -->
+<para>
+
+</para>
+
+@enum_class: 
+@enum_value: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_enum_get_value ##### -->
+<para>
+
+</para>
+
+@enum_type: 
+@value: 
+@value_nick: 
+@value_name: 
+@Returns: 
+
+
