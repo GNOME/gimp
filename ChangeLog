@@ -1,3 +1,8 @@
+2004-02-10  Henrik Brix Andersen  <brix@gimp.org>
+
+	* app/gui/preferences-dialog.c (prefs_dialog_new): prefix preview
+	size labels with "Default" to avoid misunderstandings.
+
 2004-02-10  Sven Neumann  <sven@gimp.org>
 
 	* themes/Default/images/Makefile.am (CORE_IMAGES): use the
