@@ -1,10 +1,15 @@
 2003-08-27  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpitemfactory.c (gimp_item_factory_translate_func):
+	removed debugging output.
+
+2003-08-27  Sven Neumann  <sven@gimp.org>
+
 	* Made 1.3.19 release.
 
 2003-08-27  Sven Neumann  <sven@gimp.org>
 
-	* plug-ins/common/edge.c (run): made the PDB interface backwards
+	* plug-ins/common/edge.c (run): made the PDB interface backward
 	compatible by allowing the last parameter to be omitted.
 
 2003-08-27  Dave Neary  <bolsh@gimp.org>

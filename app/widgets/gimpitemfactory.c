@@ -1013,8 +1013,6 @@ gimp_item_factory_translate_func (const gchar *path,
 	  complete    = g_strconcat (item_factory->path, complete, NULL);
 	  translation = g_strdup (dgettext (domain, complete));
 
-          g_print ("moving plug-in translation to trash: %s\n", translation);
-
           gimp_factory->translation_trash =
             g_list_prepend (gimp_factory->translation_trash, translation);
 
@@ -1063,8 +1061,6 @@ gimp_item_factory_translate_func (const gchar *path,
 	   */
 	  complete    = g_strdup (complete);
 	  translation = g_strdup (gettext (complete));
-
-          g_print ("moving core translation to trash: %s\n", translation);
 
           gimp_factory->translation_trash =
             g_list_prepend (gimp_factory->translation_trash, translation);
