@@ -28,8 +28,6 @@
 #include "core/gimpcontext.h"
 #include "core/gimpunit.h"
 
-#include "widgets/gimphelp.h"
-
 #include "app_procs.h"
 
 #define __LIBGIMP_GLUE_C__
@@ -162,10 +160,4 @@ const gchar *
 gimp_unit_get_plural (GimpUnit unit)
 {
   return _gimp_unit_get_plural (the_gimp, unit);
-}
-
-void
-gimp_standard_help_func (const gchar *help_data)
-{
-  gimp_help (the_gimp, NULL, help_data);
 }

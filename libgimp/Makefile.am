@@ -157,7 +157,6 @@ libgimp_1_3_la_SOURCES = \
 	gimpchannel.h		\
 	gimpdrawable.c		\
 	gimpdrawable.h		\
-	gimphelp.c		\
 	gimpimage.c		\
 	gimpimage.h		\
 	gimplayer.c		\

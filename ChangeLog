@@ -1,5 +1,30 @@
 2003-05-25  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimphelpui.[ch]: added a GimpHelpFunc parameter to
+	_gimp_help_init(). Implement gimp_standard_help_func() here and
+	use the function pointer passed to _gimp_help_init().
+
+	* libgimpwidgets/gimpwidgets-private.[ch]: removed
+	standard_help_func from GimpWidgetsVTable. Require it as paramater
+	to gimp_widgets_init() and pass it to _gimp_help_init().
+
+	* libgimpwidgets/gimpunitmenu.c: use gimp_standard_help_func
+	directly again.
+
+	* app/libgimp_glue.[ch]: removed gimp_standard_help_func().
+
+	* libgimp/Makefile.am
+	* libgimp/gimphelp.c: removed this file (containing
+	gimp_standard_help_func()).
+
+	* app/gui/gui.c: added private gimp_help_func() and pass it to
+	gimp_widgets_init().
+
+	* libgimp/gimpui.c: added private gimp_ui_help_func() and pass it
+	to gimp_widgets_init().
+
+2003-05-25  Michael Natterer  <mitch@gimp.org>
+
 	* data/misc/Makefile.am: forgot some hardcoded "1.3" here.
 
 2003-05-25  Michael Natterer  <mitch@gimp.org>

@@ -525,7 +525,7 @@ gimp_unit_menu_create_selection (GimpUnitMenu *menu)
 
   menu->selection =
     gimp_dialog_new (_("Unit Selection"), "unit_selection",
-		     _gimp_eek.standard_help_func,
+                     gimp_standard_help_func,
                      "dialogs/unit_selection.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,

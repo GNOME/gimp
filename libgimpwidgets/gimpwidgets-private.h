@@ -28,8 +28,6 @@ typedef struct _GimpWidgetsVTable GimpWidgetsVTable;
 
 struct _GimpWidgetsVTable
 {
-  void          (* standard_help_func)                (const gchar *help_data);
-
   gboolean      (* palette_get_background)            (GimpRGB  *background);
   gboolean      (* palette_get_foreground)            (GimpRGB  *background);
  
@@ -55,7 +53,8 @@ extern GimpWidgetsVTable _gimp_eek;
 G_BEGIN_DECLS
 
 
-void  gimp_widgets_init (GimpWidgetsVTable *vtable);
+void  gimp_widgets_init (GimpWidgetsVTable *vtable,
+                         GimpHelpFunc       standard_help_func);
 
 
 G_END_DECLS

@@ -25,6 +25,14 @@
 #include "libgimpwidgets/gimpwidgets.h"
 #include "libgimpwidgets/gimpwidgets-private.h"
 
+
+/*  local function prototypes  */
+
+static void  gimp_ui_help_func (const gchar *help_data);
+
+
+/*  public functions  */
+
 /**
  * gimp_ui_init:
  * @prog_name: The name of the plug-in which will be passed as argv[0] to
@@ -82,7 +90,6 @@ gimp_ui_init (const gchar *prog_name,
     gtk_preview_set_gamma (gimp_gamma ());
 
   /*  Initialize the eeky vtable needed by libgimpwidgets  */
-  vtable.standard_help_func       = gimp_standard_help_func;
   vtable.palette_get_background   = gimp_palette_get_background;
   vtable.palette_get_foreground   = gimp_palette_get_foreground;
   vtable.unit_get_number_of_units = gimp_unit_get_number_of_units;
@@ -95,10 +102,19 @@ gimp_ui_init (const gchar *prog_name,
   vtable.unit_get_singular        = gimp_unit_get_singular;
   vtable.unit_get_plural          = gimp_unit_get_plural;
 
-  gimp_widgets_init (&vtable);
+  gimp_widgets_init (&vtable, gimp_ui_help_func);
 
   if (! gimp_show_tool_tips ())
     gimp_help_disable_tooltips ();
 
   initialized = TRUE;
+}
+
+
+/*  private functions  */
+
+static void
+gimp_ui_help_func (const gchar *help_data)
+{
+  gimp_help (gimp_get_progname (), (gchar *) help_data);
 }

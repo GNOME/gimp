@@ -45,6 +45,7 @@
 
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimphelp.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -57,10 +58,14 @@
 #include "menus.h"
 #include "session.h"
 
+#include "app_procs.h" /* FIXME */
+
 #include "gimp-intl.h"
 
 
 /*  local function prototypes  */
+
+static void         gui_help_func               (const gchar      *help_data);
 
 static void         gui_threads_enter           (Gimp             *gimp);
 static void         gui_threads_leave           (Gimp             *gimp);
@@ -118,8 +123,6 @@ gui_libs_init (gint    *argc,
     return FALSE;
 
   /*  Initialize the eeky vtable needed by libgimpwidgets  */
-  vtable.standard_help_func       = gimp_standard_help_func;
-
   vtable.palette_get_background   = gimp_palette_get_background;
   vtable.palette_get_foreground   = gimp_palette_get_foreground;
 
@@ -133,7 +136,7 @@ gui_libs_init (gint    *argc,
   vtable.unit_get_singular        = gimp_unit_get_singular;
   vtable.unit_get_plural          = gimp_unit_get_plural;
 
-  gimp_widgets_init (&vtable);
+  gimp_widgets_init (&vtable, gui_help_func);
 
   g_type_class_ref (GIMP_TYPE_COLOR_SELECT);
   
@@ -396,6 +399,12 @@ gui_get_screen_resolution (gdouble *xres,
 
 
 /*  private functions  */
+
+static void
+gui_help_func (const gchar *help_data)
+{
+  gimp_help (the_gimp, NULL, help_data);
+}
 
 static void
 gui_threads_enter (Gimp *gimp)

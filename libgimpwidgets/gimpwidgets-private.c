@@ -39,7 +39,8 @@ GimpWidgetsVTable _gimp_eek;
 
 
 void
-gimp_widgets_init (GimpWidgetsVTable *vtable)
+gimp_widgets_init (GimpWidgetsVTable *vtable,
+                   GimpHelpFunc       standard_help_func)
 {
   static gboolean  gimp_widgets_initialized = FALSE;
 
@@ -56,12 +57,10 @@ gimp_widgets_init (GimpWidgetsVTable *vtable)
   };
 
   g_return_if_fail (vtable != NULL);
+  g_return_if_fail (standard_help_func != NULL);
 
   if (gimp_widgets_initialized)
-    {
-      g_error ("gimp_widgets_init() must only be called once!");
-      return;
-    }
+    g_error ("gimp_widgets_init() must only be called once!");
 
   _gimp_eek = *vtable;
 
@@ -78,7 +77,7 @@ gimp_widgets_init (GimpWidgetsVTable *vtable)
   g_list_foreach (icon_list, (GFunc) g_object_unref, NULL);
   g_list_free (icon_list);
 
-  _gimp_help_init ();
+  _gimp_help_init (standard_help_func);
 
   gimp_widgets_initialized = TRUE;
 }

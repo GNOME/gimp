@@ -28,13 +28,12 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-void  _gimp_help_init              (void);
+void  _gimp_help_init              (GimpHelpFunc  standard_help_func);
 
 void  gimp_help_enable_tooltips    (void);
 void  gimp_help_disable_tooltips   (void);
 
 /*  the standard gimp help function
- *  (has different implementations in the main app and in libgimp)
  */
 void  gimp_standard_help_func      (const gchar  *help_data);
 
