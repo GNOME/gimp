@@ -139,8 +139,8 @@ gimp_drawable_set_name (gint32  drawable_ID,
 }
 
 void
-gimp_drawable_set_visible (gint32 drawable_ID,
-			   gint   visible)
+gimp_drawable_set_visible (gint32   drawable_ID,
+			   gboolean visible)
 {
   if (gimp_drawable_is_layer (drawable_ID))
     gimp_layer_set_visible (drawable_ID, visible);

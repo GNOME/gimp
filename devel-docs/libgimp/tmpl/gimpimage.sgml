@@ -592,30 +592,27 @@ gimpimage
 @bytes: 
 
 
-<!-- ##### MACRO gimp_image_convert_rgb ##### -->
+<!-- ##### FUNCTION gimp_image_convert_rgb ##### -->
 <para>
 
 </para>
 
-<!-- # Unused Parameters # -->
 @image_ID: 
 
 
-<!-- ##### MACRO gimp_image_convert_grayscale ##### -->
+<!-- ##### FUNCTION gimp_image_convert_grayscale ##### -->
 <para>
 
 </para>
 
-<!-- # Unused Parameters # -->
 @image_ID: 
 
 
-<!-- ##### MACRO gimp_image_convert_indexed ##### -->
+<!-- ##### FUNCTION gimp_image_convert_indexed ##### -->
 <para>
 
 </para>
 
-<!-- # Unused Parameters # -->
 @image_ID: 
 @dither_type: 
 @palette_type: 
@@ -625,13 +622,12 @@ gimpimage
 @palette: 
 
 
-<!-- ##### MACRO gimp_image_duplicate ##### -->
+<!-- ##### FUNCTION gimp_image_duplicate ##### -->
 <para>
 
 </para>
 
-@Returns: 
-<!-- # Unused Parameters # -->
 @image_ID: 
+@Returns: 
 
 

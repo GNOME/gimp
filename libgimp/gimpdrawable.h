@@ -54,6 +54,8 @@ gchar        * gimp_drawable_name               (gint32        drawable_ID);
 gboolean       gimp_drawable_visible            (gint32        drawable_ID);
 void           gimp_drawable_set_name           (gint32        drawable_ID,
 						 gchar        *name);
+void           gimp_drawable_set_visible        (gint32        drawable_ID,
+						 gboolean      visible);
 GimpTile     * gimp_drawable_get_tile           (GimpDrawable *drawable,
 						 gint          shadow,
 						 gint          row,

@@ -80,6 +80,15 @@ gimpdrawable
 @name: 
 
 
+<!-- ##### FUNCTION gimp_drawable_set_visible ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@visible: 
+
+
 <!-- ##### FUNCTION gimp_drawable_get_tile ##### -->
 <para>
 
@@ -297,23 +306,21 @@ gimpdrawable
 
 
 
-<!-- ##### MACRO gimp_drawable_image_id ##### -->
+<!-- ##### FUNCTION gimp_drawable_image_id ##### -->
 <para>
 
 </para>
 
-@Returns: 
-<!-- # Unused Parameters # -->
 @drawable_ID: 
+@Returns: 
 
 
-<!-- ##### MACRO gimp_drawable_bpp ##### -->
+<!-- ##### FUNCTION gimp_drawable_bpp ##### -->
 <para>
 
 </para>
 
-@Returns: 
-<!-- # Unused Parameters # -->
 @drawable_ID: 
+@Returns: 
 
 

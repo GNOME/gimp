@@ -15,6 +15,7 @@ GimpParamColor
 GimpParamRegion
 GimpParamData
 GimpParam
+set_gimp_PLUG_IN_INFO_PTR
 MAIN
 gimp_main
 gimp_default_display
@@ -125,6 +126,7 @@ GimpPaintApplicationMode
 GimpRepeatMode
 GimpRunModeType
 GimpSizeType
+GimpStackTraceMode
 GimpTransferMode
 GFillType
 GImageType
@@ -592,6 +594,7 @@ gimp_drawable_delete
 gimp_drawable_name
 gimp_drawable_visible
 gimp_drawable_set_name
+gimp_drawable_set_visible
 gimp_drawable_get_tile
 gimp_drawable_get_tile2
 gimp_drawable_get_thumbnail_data

@@ -1,3 +1,8 @@
+2000-07-29  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpdrawable.[ch]: gimp_drawable_set_visible(): the
+	"visible" parameter is boolean.
+
 2000-07-24  Seth Burgess <sjburges@gimp.org>
 	
 	* plug-ins/common/jpeg.c: fixed various capitalization issues
