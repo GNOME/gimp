@@ -419,8 +419,8 @@ void  rgb_to_hls            (int *, int *, int *);
 void  hls_to_rgb            (int *, int *, int *);
 
 /* Opacities */
-#define TRANSPARENT        0
-#define OPAQUE             255
+#define TRANSPARENT_OPACITY        0
+#define OPAQUE_OPACITY             255
 
 /*  Layer Modes  */
 #define NORMAL_MODE        0

@@ -190,7 +190,7 @@ app_init_update_status(char *label1val,
 	  gtk_progress_bar_update(GTK_PROGRESS_BAR(pbar), pct_progress);
 	}
       gtk_widget_draw(win_initstatus, &area);
-      idle_tag = gtk_idle_add(my_idle_proc, NULL);
+      idle_tag = gtk_idle_add((GtkFunction) my_idle_proc, NULL);
       gtk_main_iteration();
       gtk_idle_remove(idle_tag);
     }

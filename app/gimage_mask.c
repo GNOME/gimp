@@ -341,7 +341,7 @@ gimage_mask_float (gimage, drawable, off_x, off_y)
   tiles = gimage_mask_extract (gimage, drawable, TRUE, FALSE);
 
   /*  Create a new layer from the buffer  */
-  layer = layer_from_tiles (gimage, drawable, tiles, "Floated Layer", OPAQUE, NORMAL);
+  layer = layer_from_tiles (gimage, drawable, tiles, "Floated Layer", OPAQUE_OPACITY, NORMAL);
 
   /*  Set the offsets  */
   GIMP_DRAWABLE(layer)->offset_x = tiles->x + off_x;
@@ -628,14 +628,14 @@ gimage_mask_stroke_paint_func (paint_core, drawable, state)
     return NULL;
 
   /*  set the alpha channel  */
-  col[area->bytes - 1] = OPAQUE;
+  col[area->bytes - 1] = OPAQUE_OPACITY;
 
   /*  color the pixels  */
   color_pixels (temp_buf_data (area), col,
 		area->width * area->height, area->bytes);
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
-  paint_core_paste_canvas (paint_core, drawable, OPAQUE,
+  paint_core_paste_canvas (paint_core, drawable, OPAQUE_OPACITY,
 			   (int) (get_brush_opacity () * 255),
 			   get_brush_paint_mode (), SOFT, CONSTANT);
 

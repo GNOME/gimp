@@ -91,8 +91,8 @@ but that one.  Shift-click again to show all layers.
 Ctrl-click on the layer mask's preview in the Layers dialog toggles
 the effect of the layer mask.
 
-Alt-shift-click on the layer mask's preview in the Layers dialog
-toggles viewing the mask directly.
+Alt-click on the layer mask's preview in the Layers dialog toggles
+viewing the mask directly.
 
 You can use Alt-Tab to cycle through all layers in an image (if your
 window manager doesn't trap those keys...)

@@ -79,7 +79,7 @@ image_map_do (gpointer data)
   /*  apply the results  */
   pixel_region_init (&shadowPR, gimage->shadow, x, y, w, h, FALSE);
   gimage_apply_image (gimage, _image_map->drawable, &shadowPR,
-		      FALSE, OPAQUE, REPLACE_MODE, NULL, x, y);
+		      FALSE, OPAQUE_OPACITY, REPLACE_MODE, NULL, x, y);
 
   /*  display the results  */
   if (_image_map->gdisp)

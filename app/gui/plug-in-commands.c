@@ -1967,9 +1967,8 @@ plug_in_query (char      *filename,
 	    }
 
 	  plug_in_pop ();
+	  plug_in_destroy (plug_in);
 	}
-
-      plug_in_destroy (plug_in);
     }
 }
 

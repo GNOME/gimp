@@ -761,7 +761,7 @@ paint_core_solidify_mask (brush_mask)
       data++;
       for (j = 0; j < brush_mask->width; j++)
 	{
-	  *data++ = (*src++) ? OPAQUE : TRANSPARENT;
+	  *data++ = (*src++) ? OPAQUE_OPACITY : TRANSPARENT_OPACITY;
 	}
       data++;
     }
@@ -984,7 +984,7 @@ paint_to_canvas_tiles (paint_core, brush_mask, brush_opacity)
 		     canvas_buf->width, canvas_buf->height, FALSE);
 
   /*  apply the canvas tiles to the canvas buf  */
-  apply_mask_to_region (&srcPR, &maskPR, OPAQUE);
+  apply_mask_to_region (&srcPR, &maskPR, OPAQUE_OPACITY);
 }
 
 static void

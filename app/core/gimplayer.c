@@ -430,15 +430,15 @@ layer_create_mask (layer, add_mask_type)
   LayerMask *mask;
   char * mask_name;
   unsigned char black[3] = {0, 0, 0};
-  unsigned char white_mask = OPAQUE;
-  unsigned char black_mask = TRANSPARENT;
+  unsigned char white_mask = OPAQUE_OPACITY;
+  unsigned char black_mask = TRANSPARENT_OPACITY;
 
   mask_name = (char *) g_malloc (strlen (GIMP_DRAWABLE(layer)->name) + strlen ("mask") + 2);
   sprintf (mask_name, "%s mask", GIMP_DRAWABLE(layer)->name);
 
   /*  Create the layer mask  */
   mask = layer_mask_new (GIMP_DRAWABLE(layer)->gimage_ID, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height,
-		      mask_name, OPAQUE, black);
+		      mask_name, OPAQUE_OPACITY, black);
   GIMP_DRAWABLE(mask)->offset_x = GIMP_DRAWABLE(layer)->offset_x;
   GIMP_DRAWABLE(mask)->offset_y = GIMP_DRAWABLE(layer)->offset_y;
 
@@ -540,7 +540,7 @@ layer_apply_mask (layer, mode)
       pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
       pixel_region_init (&maskPR, GIMP_DRAWABLE(layer->mask)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
 
-      apply_mask_to_region (&srcPR, &maskPR, OPAQUE);
+      apply_mask_to_region (&srcPR, &maskPR, OPAQUE_OPACITY);
       GIMP_DRAWABLE(layer)->preview_valid = FALSE;
 
       layer->mask = NULL;

@@ -512,7 +512,7 @@ load_image (char *filename)
 		      *d++ = alpha_val;
 		    }
 		  else
-		    *d++ = gray_val;
+		    *d++ = maxval - gray_val;
 		  for (k= 0; alpha + k < num_extra; ++k)
 		    {
 		      NEXTSAMPLE;

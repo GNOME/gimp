@@ -252,7 +252,7 @@ airbrush_motion (PaintCore *paint_core,
     return;
 
   /*  color the pixels  */
-  col[area->bytes - 1] = OPAQUE;
+  col[area->bytes - 1] = OPAQUE_OPACITY;
 
   /*  color the pixels  */
   color_pixels (temp_buf_data (area), col,

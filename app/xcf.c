@@ -2163,6 +2163,8 @@ xcf_read_int8 (FILE     *fp,
   while (count > 0)
     {
       bytes = fread ((char*) data, sizeof (char), count, fp);
+      if (bytes <= 0) /* something bad happened */
+        break;
       count -= bytes;
       data += bytes;
     }

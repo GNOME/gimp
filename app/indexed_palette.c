@@ -393,7 +393,7 @@ indexed_palette_area_events (GtkWidget *widget,
 {
   GImage *gimage;
   GdkEventButton *bevent;
-  int r, g, b;
+  guchar r, g, b;
 
   if (!indexedP)
     return FALSE;
@@ -408,7 +408,7 @@ indexed_palette_area_events (GtkWidget *widget,
 
       if (bevent->button == 1)
 	{
-	  indexedP->col_index = 16 * (bevent->y / CELL_HEIGHT) + (bevent->x / CELL_WIDTH);
+	  indexedP->col_index = 16 * ((int)bevent->y / CELL_HEIGHT) + ((int)bevent->x / CELL_WIDTH);
 	  r = gimage->cmap[indexedP->col_index * 3 + 0];
 	  g = gimage->cmap[indexedP->col_index * 3 + 1];
 	  b = gimage->cmap[indexedP->col_index * 3 + 2];

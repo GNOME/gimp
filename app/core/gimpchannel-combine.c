@@ -105,7 +105,7 @@ static void
 channel_validate (TileManager *tm, Tile *tile, int level)
 {
   /*  Set the contents of the tile to empty  */
-  memset (tile->data, TRANSPARENT, tile->ewidth * tile->eheight);
+  memset (tile->data, TRANSPARENT_OPACITY, tile->ewidth * tile->eheight);
 }
 
 

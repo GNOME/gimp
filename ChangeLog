@@ -1,3 +1,25 @@
+Sat Jan 24 17:23:13 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* app/indexed_palette.c: fix for wrong color selected in indexed
+	palette dialog
+
+	* app/xcf.c: don't crash on bad input (0 byte files)
+
+	* app/plug_in.h
+	* app/plug_in.c: fixes Gimp's most obscure bug. Failed plugin
+	queries are handle correctly now
+
+	* app/commands.c: added marching ants speed to preferences
+
+	* plug-ins/tiff/tiff.c: correction for inversion for MINISWHITE
+	images without alpha
+
+	* plug-ins/pcx/pcx.c: updated to new version
+
+	* app/paint_funcs.h: changed OPAQUE and TRANSPARENT to
+	OPAQUE_OPACITY and TRANSPARENT_OPACITY to avoid possible
+	conflicts. All affects .c files changed.
+
 Sat Jan 24 15:16:40 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* app/app_procs.c (make_initialization_status_window): Changed
@@ -24,22 +46,6 @@ Tue Jan 13 21:36:07 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* ltconfig
 	* ltmain.sh: downgraded to libtool 1.0f at Jay's suggestion
-
-	* app/gimage.c: Fix for the "merge to alpha" bug from Nathan
-	Summers
-
-	* app/text_tool.c: Fix for the font spec bug from Nathan
-	Summers
-
-	* plug-ins/maze/maze.c
-	* plug-ins/rotate/rotate.c: updated from registry
-
-	* plug-ins/blur/blur.c
-	* plug-ins/randomize/randomize.c
-	* plug-ins/vpropagate/vpropagate.c
-	* plug-ins/warp/warp.c: more portability fixes for DEC OSF1
-	
-Mon Jan 12 14:49:19 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* plug-ins/fractaltrace/fractaltrace.c (query): ymax argument was
 	listed twice.  Fixed.

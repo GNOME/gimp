@@ -556,7 +556,7 @@ bucket_fill_line_color (buf, mask, col, has_alpha, bytes, width)
 	  if (mask)
 	    buf[alpha] = *mask++;
 	  else
-	    buf[alpha] = OPAQUE;
+	    buf[alpha] = OPAQUE_OPACITY;
 	}
 
       buf += bytes;
@@ -594,7 +594,7 @@ bucket_fill_line_pattern (buf, mask, pattern, has_alpha, bytes, x, y, width)
 	  if (mask)
 	    buf[alpha] = *mask++;
 	  else
-	    buf[alpha] = OPAQUE;
+	    buf[alpha] = OPAQUE_OPACITY;
 	}
 
       buf += bytes;

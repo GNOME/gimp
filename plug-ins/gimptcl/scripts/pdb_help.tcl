@@ -30,7 +30,7 @@
 
 proc gimptcl_query {} {
     gimp-install-procedure "pdb_help" \
-	"Interactive Help with the Procedureal Database" \
+	"Interactive Help with the Procedural Database" \
 	"Pick a PDB proc; then press `Query' for information" \
 	"Eric L. Hernes" \
 	"Eric L. Hernes" \

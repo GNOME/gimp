@@ -373,7 +373,7 @@ offset (GImage *gimage,
 	{
 	  palette_get_background (&fill[0], &fill[1], &fill[2]);
 	  if (drawable_has_alpha (drawable))
-	    fill[drawable_bytes (drawable) - 1] = OPAQUE;
+	    fill[drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
 	}
 
       if (offset_x >= 0 && offset_y >= 0)

@@ -271,7 +271,7 @@ edit_paste (GImage      *gimage,
   int cx, cy;
 
   /*  Make a new floating layer  */
-  float_layer = layer_from_tiles (gimage, drawable, paste, "Pasted Layer", OPAQUE, NORMAL);
+  float_layer = layer_from_tiles (gimage, drawable, paste, "Pasted Layer", OPAQUE_OPACITY, NORMAL);
 
   if (float_layer)
     {
@@ -320,7 +320,7 @@ edit_clear (GImage *gimage,
 
   gimage_get_background (gimage, drawable, col);
   if (drawable_has_alpha (drawable))
-    col [drawable_bytes (drawable) - 1] = OPAQUE;
+    col [drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
 
   drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
@@ -332,7 +332,7 @@ edit_clear (GImage *gimage,
   color_region (&bufPR, col);
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimage_apply_image (gimage, drawable, &bufPR, 1, OPAQUE,
+  gimage_apply_image (gimage, drawable, &bufPR, 1, OPAQUE_OPACITY,
 		      ERASE_MODE, NULL, x1, y1);
 
   /*  update the image  */
@@ -358,7 +358,7 @@ edit_fill (GImage *gimage,
 
   gimage_get_background (gimage, drawable, col);
   if (drawable_has_alpha (drawable))
-    col [drawable_bytes (drawable) - 1] = OPAQUE;
+    col [drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
 
   drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
@@ -370,7 +370,7 @@ edit_fill (GImage *gimage,
   color_region (&bufPR, col);
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimage_apply_image (gimage, drawable, &bufPR, 1, OPAQUE,
+  gimage_apply_image (gimage, drawable, &bufPR, 1, OPAQUE_OPACITY,
 		      NORMAL_MODE, NULL, x1, y1);
 
   /*  update the image  */

@@ -690,7 +690,7 @@ gimage_replace_image (GImage *gimage, GimpDrawable *drawable, PixelRegion *src2P
       tempPR.h = y2 - y1;
       tempPR.data = temp_data;
 
-      apply_mask_to_region (&tempPR, maskPR, OPAQUE);
+      apply_mask_to_region (&tempPR, maskPR, OPAQUE_OPACITY);
 
       tempPR.x = 0;
       tempPR.y = 0;
@@ -1943,7 +1943,7 @@ gimage_merge_layers (GImage *gimage, link_ptr merge_list, MergeType merge_type)
 	case INDEXED: type = INDEXED_GIMAGE; break;
 	}
       merge_layer = layer_new (gimage->ID, gimage->width, gimage->height,
-			       type, drawable_name (GIMP_DRAWABLE(layer)), OPAQUE, NORMAL_MODE);
+			       type, drawable_name (GIMP_DRAWABLE(layer)), OPAQUE_OPACITY, NORMAL_MODE);
 
       if (!merge_layer) {
 	warning("gimage_merge_layers: could not allocate merge layer");
@@ -2479,7 +2479,7 @@ gimage_is_flat (GImage *gimage)
       /*  What makes a flat image?
        *  1) the solitary layer is exactly gimage-sized and placed
        *  2) no layer mask
-       *  3) opacity == OPAQUE
+       *  3) opacity == OPAQUE_OPACITY
        *  4) all channels must be visible
        */
       drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
@@ -2488,7 +2488,7 @@ gimage_is_flat (GImage *gimage)
 	  (off_x != 0) ||
 	  (off_y != 0) ||
 	  (layer->mask != NULL) ||
-	  (layer->opacity != OPAQUE) ||
+	  (layer->opacity != OPAQUE_OPACITY) ||
 	  (ac_visible == FALSE))
 	flat = FALSE;
     }
@@ -2698,17 +2698,17 @@ gimage_projection_opacity (GImage *gimage)
   Layer * layer;
 
   /*  If the gimage is flat, return the opacity of the active layer
-   *  Otherwise, we'll pass back OPAQUE
+   *  Otherwise, we'll pass back OPAQUE_OPACITY
    */
   if (gimage_is_flat (gimage))
     {
       if ((layer =  (gimage->active_layer)))
 	return layer->opacity;
       else
-	return OPAQUE;
+	return OPAQUE_OPACITY;
     }
   else
-    return OPAQUE;
+    return OPAQUE_OPACITY;
 }
 
 void
