@@ -1,3 +1,7 @@
+2004-06-19  Sven Neumann  <sven@gimp.org>
+
+	* devel-docs/parasites.txt: document "exif-data" parasite.
+
 2004-06-18  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/film.c: Don't use deprecated gimp_text functions,

@@ -109,7 +109,7 @@ Global data follows no strict rules.
 
 "jpeg-exif-data" (IMAGE)
         The ExifData structure serialized into a uchar* blob from
-        libexif. 
+        libexif. This is deprecated in favor of "exif-data".
 
 "png-save-defaults" (GLOBAL, PERSISTENT)
         Default save parameters used by the PNG plug-in.
@@ -152,6 +152,10 @@ Global data follows no strict rules.
 	used by the XBM plugin to store mouse cursor hot spots.
 
 	Example: a hot spot at coordinates (5,5) is stored as "5 5"
+
+"exif-data" (IMAGE, PERSISTENT)
+        The ExifData structure serialized into a character array by
+        libexif (using exif_data_save_data).
 
 "icc-profile" (IMAGE, PERSISTENT)
 	This contains an ICC profile describing the color space the
