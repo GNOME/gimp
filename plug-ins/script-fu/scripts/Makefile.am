@@ -73,7 +73,7 @@ scriptdata_DATA = \
 	texture.jpg				\
 	texture1.jpg				\
 	texture2.jpg				\
-	texture3.jpg				\			
+	texture3.jpg				\
 	textured-logo.scm			\
 	title-header.scm			\
 	trochoid.scm				\
