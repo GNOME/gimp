@@ -1,5 +1,11 @@
 2003-10-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdock.c (gimp_dock_style_set): call
+	gimp_dock_separator_realize() on all drop separators so their
+	color follows the theme change. Fixes bug #119735.
+
+2003-10-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimperrorconsole.c (gimp_error_console_add): scroll
 	to the added message.
 

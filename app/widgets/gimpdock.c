@@ -244,6 +244,8 @@ gimp_dock_style_set (GtkWidget *widget,
         {
           gtk_widget_set_size_request (GTK_WIDGET (list->data),
                                        -1, separator_height);
+          gimp_dock_separator_realize (GTK_WIDGET (list->data),
+                                       GTK_BIN (list->data)->child);
        }
     }
 
@@ -290,8 +292,8 @@ gimp_dock_separator_new (GimpDock *dock)
                            _("You can drop dockable dialogs here."), NULL);
 
   g_signal_connect (event_box, "realize",
-		    G_CALLBACK (gimp_dock_separator_realize),
-		    frame);
+                   G_CALLBACK (gimp_dock_separator_realize),
+                   frame);
 
   gtk_drag_dest_set (GTK_WIDGET (event_box),
                      GTK_DEST_DEFAULT_ALL,
