@@ -97,7 +97,7 @@ layer_select_init (GImage  *gimage,
       layer_select->shell = gtk_window_new (GTK_WINDOW_POPUP);
       gtk_window_set_wmclass (GTK_WINDOW (layer_select->shell), "layer_select", "Gimp");
       gtk_window_set_title (GTK_WINDOW (layer_select->shell), "Layer Select");
-      gtk_window_position (GTK_WINDOW (layer_select->shell), GTK_WIN_POS_MOUSE);
+      gtk_window_set_position (GTK_WINDOW (layer_select->shell), GTK_WIN_POS_MOUSE);
       gtk_signal_connect (GTK_OBJECT (layer_select->shell), "event",
 			  (GtkSignalFunc) layer_select_events,
 			  layer_select);

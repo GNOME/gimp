@@ -60,7 +60,7 @@ tips_dialog_create ()
       tips_dialog = gtk_window_new (GTK_WINDOW_DIALOG);
       gtk_window_set_wmclass (GTK_WINDOW (tips_dialog), "tip_of_the_day", "Gimp");
       gtk_window_set_title (GTK_WINDOW (tips_dialog), _("GIMP Tip of the day"));
-      gtk_window_position (GTK_WINDOW (tips_dialog), GTK_WIN_POS_CENTER);
+      gtk_window_set_position (GTK_WINDOW (tips_dialog), GTK_WIN_POS_CENTER);
       gtk_signal_connect (GTK_OBJECT (tips_dialog), "delete_event",
 			  GTK_SIGNAL_FUNC (tips_dialog_hide), NULL);
       /* destroy the tips window if the mainlevel gtk_main() function is left */
@@ -71,12 +71,12 @@ tips_dialog_create ()
       gtk_widget_show (vbox);
 
       hbox1 = gtk_hbox_new (FALSE, 5);
-      gtk_container_border_width (GTK_CONTAINER (hbox1), 10);
+      gtk_container_set_border_width (GTK_CONTAINER (hbox1), 10);
       gtk_box_pack_start (GTK_BOX (vbox), hbox1, FALSE, TRUE, 0);
       gtk_widget_show (hbox1);
 
       hbox2 = gtk_hbox_new (FALSE, 5);
-      gtk_container_border_width (GTK_CONTAINER (hbox2), 10);
+      gtk_container_set_border_width (GTK_CONTAINER (hbox2), 10);
       gtk_box_pack_end (GTK_BOX (vbox), hbox2, FALSE, TRUE, 0);
       gtk_widget_show (hbox2);
 

@@ -1,3 +1,29 @@
+Thu Dec  3 16:51:42 CST 1998 Shawn T. Amundson <amundson@gtk.org>
+
+	* app/channel_ops.c
+	* app/color_balance.c
+	* app/color_select.c
+	* app/commands.c
+	* app/convert.c
+	* app/curves.c
+	* app/docindex.c
+	* app/errorconsole.c
+	* app/file_new_dialog.c
+	* app/fileops.c
+	* app/gdisplay_ops.c
+	* app/histogram_tool.c
+	* app/info_dialog.c
+	* app/layer_select.c
+	* app/levels.c
+	* app/pattern_select.c
+	* app/plug_in.c
+	* app/posterize.c
+	* app/resize.c
+	* app/threshold.c
+	* app/tips_dialog.c: use gtk_container_set_border_width and
+          gtk_window_set_position instead of deprecated versions
+
+
 Tue Dec  1 22:12:08 CST 1998 Larry Ewing  <lewing@gimp.org>
 
 	* app/bezier_select.c: fixed the dialog destroy handling in the

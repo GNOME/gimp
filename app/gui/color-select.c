@@ -194,12 +194,12 @@ color_select_new (int                  r,
 		      (GtkSignalFunc) color_select_delete_callback, csp);
   
   main_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_border_width (GTK_CONTAINER (main_vbox), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 2);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (csp->shell)->vbox), main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
   main_hbox = gtk_hbox_new (FALSE, 2);
-  gtk_container_border_width (GTK_CONTAINER (main_hbox), 0);
+  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 0);
   gtk_box_pack_start (GTK_BOX (main_vbox), main_hbox, TRUE, TRUE, 2);
   gtk_widget_show (main_hbox);
 
@@ -241,7 +241,7 @@ color_select_new (int                  r,
 
   /*  The right vertical box with old/new color area and color space sliders  */
   right_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_border_width (GTK_CONTAINER (right_vbox), 0);
+  gtk_container_set_border_width (GTK_CONTAINER (right_vbox), 0);
   gtk_box_pack_start (GTK_BOX (main_hbox), right_vbox, TRUE, TRUE, 0);
   gtk_widget_show (right_vbox);
 

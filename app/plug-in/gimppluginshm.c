@@ -3151,10 +3151,10 @@ plug_in_progress_init (PlugIn *plug_in,
       gtk_signal_connect (GTK_OBJECT (plug_in->progress), "destroy",
 			  (GtkSignalFunc) plug_in_progress_cancel,
 			  plug_in);
-      gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (plug_in->progress)->action_area), 2);
+      gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (plug_in->progress)->action_area), 2);
 
       vbox = gtk_vbox_new (FALSE, 2);
-      gtk_container_border_width (GTK_CONTAINER (vbox), 2);
+      gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
       gtk_box_pack_start (GTK_BOX (GTK_DIALOG (plug_in->progress)->vbox), vbox, TRUE, TRUE, 0);
       gtk_widget_show (vbox);
 

@@ -484,14 +484,14 @@ file_new_cmd_callback (GtkWidget           *widget,
   vals->dlg = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (vals->dlg), "new_image", "Gimp");
   gtk_window_set_title (GTK_WINDOW (vals->dlg), _("New Image"));
-  gtk_window_position (GTK_WINDOW (vals->dlg), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position (GTK_WINDOW (vals->dlg), GTK_WIN_POS_MOUSE);
 
   /* handle the wm close signal */
   gtk_signal_connect (GTK_OBJECT (vals->dlg), "delete_event",
 		      GTK_SIGNAL_FUNC (file_new_delete_callback),
 		      vals);
 
-  gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (vals->dlg)->action_area), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (vals->dlg)->action_area), 2);
 
   button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
@@ -514,7 +514,7 @@ file_new_cmd_callback (GtkWidget           *widget,
 
 
   vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (vals->dlg)->vbox),
 		      vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
@@ -629,7 +629,7 @@ file_new_cmd_callback (GtkWidget           *widget,
 
   /* hbox containing the label, the spinbutton, and the optionmenu */
   hbox = gtk_hbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (hbox), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
   gtk_container_add(GTK_CONTAINER (frame), hbox);
   gtk_widget_show(hbox);
 
@@ -680,7 +680,7 @@ file_new_cmd_callback (GtkWidget           *widget,
 
   /* hbox containing thje Image ype and fill type frames */
   hbox = gtk_hbox_new(FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (hbox), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
   gtk_widget_show(hbox);
 
@@ -691,7 +691,7 @@ file_new_cmd_callback (GtkWidget           *widget,
 
   /* radio buttons and box */
   radio_box = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (radio_box), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (radio_box), 2);
   gtk_container_add (GTK_CONTAINER (frame), radio_box);
   gtk_widget_show (radio_box);
 
@@ -724,7 +724,7 @@ file_new_cmd_callback (GtkWidget           *widget,
   gtk_widget_show (frame);
 
   radio_box = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (radio_box), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (radio_box), 2);
   gtk_container_add (GTK_CONTAINER (frame), radio_box);
   gtk_widget_show (radio_box);
 

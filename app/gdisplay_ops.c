@@ -346,7 +346,7 @@ gdisplay_close_warning_dialog (char     *image_name,
   /* should this be image_window or the actual image name??? */
   gtk_window_set_wmclass (GTK_WINDOW (mbox), "really_close", "Gimp");
   gtk_window_set_title (GTK_WINDOW (mbox), image_name);
-  gtk_window_position (GTK_WINDOW (mbox), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position (GTK_WINDOW (mbox), GTK_WIN_POS_MOUSE);
   gtk_object_set_user_data (GTK_OBJECT (mbox), gdisp);
 
   gtk_signal_connect (GTK_OBJECT (mbox), "delete_event",

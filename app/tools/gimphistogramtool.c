@@ -461,7 +461,7 @@ histogram_tool_new_dialog ()
 		      htd);
 
   vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 1);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (htd->shell)->vbox), vbox, TRUE, TRUE, 0);
 
   /*  The option menu for selecting channels  */

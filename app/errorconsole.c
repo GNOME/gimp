@@ -155,7 +155,7 @@ error_console_menu_callback (gint textscope)
     }
   
   filesel = gtk_file_selection_new (_("Save error log to file..."));
-  gtk_window_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
   gtk_window_set_wmclass (GTK_WINDOW (filesel), "save_errors", "Gimp");
   gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->cancel_button),
 			     "clicked", (GtkSignalFunc) gtk_widget_destroy,
@@ -209,8 +209,8 @@ error_console_create_window (void)
   gtk_window_set_policy (GTK_WINDOW(error_console), TRUE, TRUE, FALSE);
   gtk_signal_connect (GTK_OBJECT (error_console), "delete_event",
 		      (GtkSignalFunc) error_console_close_callback, NULL);
-  gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (error_console)->vbox), 2);
-  gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (error_console)->action_area), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (error_console)->vbox), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (error_console)->action_area), 2);
 
   /*  Action area  */
   button = gtk_button_new_with_label (_("Close"));
@@ -238,7 +238,7 @@ error_console_create_window (void)
   table = gtk_table_new (2, 2, FALSE);
   gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);
-  gtk_container_border_width (GTK_CONTAINER (table), 0);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 0);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (error_console)->vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 

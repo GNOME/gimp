@@ -757,7 +757,7 @@ image_resize_cmd_callback (GtkWidget *widget,
   gtk_window_set_wmclass (GTK_WINDOW (image_resize->shell), "image_resize", "Gimp");
   gtk_window_set_title (GTK_WINDOW (image_resize->shell), _("Image Resize"));
   gtk_window_set_policy (GTK_WINDOW (image_resize->shell), FALSE, FALSE, TRUE);
-  gtk_window_position (GTK_WINDOW (image_resize->shell), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position (GTK_WINDOW (image_resize->shell), GTK_WIN_POS_MOUSE);
 
   /* handle the wm close signal */
   gtk_signal_connect (GTK_OBJECT (image_resize->shell), "delete_event",
@@ -766,7 +766,7 @@ image_resize_cmd_callback (GtkWidget *widget,
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 1);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (image_resize->shell)->vbox), vbox, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), image_resize->resize->resize_widget, FALSE, FALSE, 0);
 
@@ -804,7 +804,7 @@ image_scale_cmd_callback (GtkWidget *widget,
   gtk_window_set_wmclass (GTK_WINDOW (image_scale->shell), "image_scale", "Gimp");
   gtk_window_set_title (GTK_WINDOW (image_scale->shell), _("Image Scale"));
   gtk_window_set_policy (GTK_WINDOW (image_scale->shell), FALSE, FALSE, TRUE);
-  gtk_window_position (GTK_WINDOW (image_scale->shell), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position (GTK_WINDOW (image_scale->shell), GTK_WIN_POS_MOUSE);
 
   /* handle the wm close signal */
   gtk_signal_connect (GTK_OBJECT (image_scale->shell), "delete_event",
@@ -813,7 +813,7 @@ image_scale_cmd_callback (GtkWidget *widget,
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 1);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (image_scale->shell)->vbox), vbox, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), image_scale->resize->resize_widget, FALSE, FALSE, 0);
 

@@ -269,7 +269,7 @@ make_idea_window( int x, int y )
 		      NULL );
   
   /* Add the main vbox to the window */
-  gtk_container_border_width( GTK_CONTAINER( ideas->window ), 0 );
+  gtk_container_set_border_width( GTK_CONTAINER( ideas->window ), 0 );
   gtk_container_add( GTK_CONTAINER( ideas->window ), main_vbox );
   gtk_widget_show( main_vbox );
 

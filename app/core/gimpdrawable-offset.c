@@ -127,7 +127,7 @@ channel_ops_offset (GimpImage* gimage)
 
   /*  The vbox for first column of options  */
   vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 1);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (off_d->dlg)->vbox), vbox, TRUE, TRUE, 0);
 
   /*  the table for offsets  */
@@ -165,7 +165,7 @@ channel_ops_offset (GimpImage* gimage)
   gtk_frame_set_shadow_type (GTK_FRAME (off_d->fill_options), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (vbox), off_d->fill_options, FALSE, TRUE, 0);
   toggle_vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (toggle_vbox), 5);
+  gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 5);
   gtk_container_add (GTK_CONTAINER (off_d->fill_options), toggle_vbox);
 
   toggle = gtk_radio_button_new_with_label (group, "Background");

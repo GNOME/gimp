@@ -129,7 +129,7 @@ pattern_select_new (gchar * title,
   gtk_window_set_policy(GTK_WINDOW(psp->shell), FALSE, TRUE, FALSE);
 
   vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 1);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (psp->shell)->vbox), vbox, TRUE, TRUE, 0);
 
   /* handle the wm close event */
@@ -142,7 +142,7 @@ pattern_select_new (gchar * title,
 
   /*  Create the active pattern label  */
   label_box = gtk_hbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (label_box), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (label_box), 2);
   gtk_box_pack_start (GTK_BOX (psp->options_box), label_box, FALSE, FALSE, 0);
   psp->pattern_name = gtk_label_new ("Active");
   gtk_box_pack_start (GTK_BOX (label_box), psp->pattern_name, FALSE, FALSE, 2);

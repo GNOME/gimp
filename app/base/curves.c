@@ -462,7 +462,7 @@ curves_new_dialog ()
 		      cd);
   
   vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (cd->shell)->vbox), vbox, TRUE, TRUE, 0);
 
   /*  The option menu for selecting channels  */
@@ -483,7 +483,7 @@ curves_new_dialog ()
 
   /*  The table for the yrange and the graph  */
   table = gtk_table_new (2, 2, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
   /*  The range drawing area  */

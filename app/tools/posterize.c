@@ -298,7 +298,7 @@ posterize_new_dialog ()
 		      pd);
 
   vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (pd->shell)->vbox), vbox, TRUE, TRUE, 0);
 
   /*  Horizontal box for levels text widget  */

@@ -328,19 +328,19 @@ convert_to_indexed (GimpImage *gimage)
 
   frame = gtk_frame_new (_("Palette Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 2);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog->shell)->vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show(frame);
   vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_container_border_width (GTK_CONTAINER (GTK_BOX (GTK_DIALOG (dialog->shell)->vbox)), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_BOX (GTK_DIALOG (dialog->shell)->vbox)), 4);
   /* put the vbox in the frame */
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show(vbox);
 
   /*  'generate palette'  */
   hbox = gtk_hbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   toggle = gtk_radio_button_new_with_label (group, _("Generate optimal palette: "));
@@ -467,10 +467,10 @@ convert_to_indexed (GimpImage *gimage)
   frame = gtk_frame_new (_("Dither Options"));
   {
     gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-    gtk_container_border_width (GTK_CONTAINER (frame), 2);
+    gtk_container_set_border_width (GTK_CONTAINER (frame), 2);
     gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog->shell)->vbox), frame, TRUE, TRUE, 0);
     vbox = gtk_vbox_new (FALSE, 1);
-    gtk_container_border_width (GTK_CONTAINER (vbox), 1);
+    gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
     /* put the vbox in the frame */
     gtk_container_add (GTK_CONTAINER (frame), vbox);
     gtk_widget_show(vbox);
@@ -505,12 +505,12 @@ convert_to_indexed (GimpImage *gimage)
       frame = gtk_frame_new (_(" [ Warning ] "));
       {
 	gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-	gtk_container_border_width (GTK_CONTAINER (frame), 2);
+	gtk_container_set_border_width (GTK_CONTAINER (frame), 2);
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog->shell)->vbox), frame, TRUE, TRUE, 0);
 
 	table = gtk_table_new (2, 1, FALSE);
 	{
-	  gtk_container_border_width (GTK_CONTAINER (table), 1);
+	  gtk_container_set_border_width (GTK_CONTAINER (table), 1);
 	  gtk_container_add (GTK_CONTAINER (frame), table);
 
 	  text = gtk_text_new (NULL, NULL);

@@ -489,7 +489,7 @@ file_open_callback (GtkWidget *w,
   if (!fileload)
     {
       fileload = gtk_file_selection_new (_("Load Image"));
-      gtk_window_position (GTK_WINDOW (fileload), GTK_WIN_POS_MOUSE);
+      gtk_window_set_position (GTK_WINDOW (fileload), GTK_WIN_POS_MOUSE);
       gtk_window_set_wmclass (GTK_WINDOW (fileload), "load_image", "Gimp");
       gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (fileload)->cancel_button),
 				 "clicked",
@@ -524,7 +524,7 @@ file_open_callback (GtkWidget *w,
       gtk_frame_set_shadow_type (GTK_FRAME (open_options), GTK_SHADOW_ETCHED_IN);
 
       hbox = gtk_hbox_new (FALSE, 1);
-      gtk_container_border_width (GTK_CONTAINER (hbox), 5);
+      gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
       gtk_container_add (GTK_CONTAINER (open_options), hbox);
       gtk_widget_show (hbox);
 
@@ -583,7 +583,7 @@ file_save_as_callback (GtkWidget *w,
     {
       filesave = gtk_file_selection_new (_("Save Image"));
       gtk_window_set_wmclass (GTK_WINDOW (filesave), "save_image", "Gimp");
-      gtk_window_position (GTK_WINDOW (filesave), GTK_WIN_POS_MOUSE);
+      gtk_window_set_position (GTK_WINDOW (filesave), GTK_WIN_POS_MOUSE);
       gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (filesave)->cancel_button),
 			  "clicked",
 			  GTK_SIGNAL_FUNC (file_dialog_hide),
@@ -614,7 +614,7 @@ file_save_as_callback (GtkWidget *w,
       gtk_frame_set_shadow_type (GTK_FRAME (save_options), GTK_SHADOW_ETCHED_IN);
 
       hbox = gtk_hbox_new (FALSE, 1);
-      gtk_container_border_width (GTK_CONTAINER (hbox), 5);
+      gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
       gtk_container_add (GTK_CONTAINER (save_options), hbox);
       gtk_widget_show (hbox);
 
@@ -1106,7 +1106,7 @@ file_overwrite (char *filename, char* raw_filename)
   overwrite_box->obox = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (overwrite_box->obox), "file_exists", "Gimp");
   gtk_window_set_title (GTK_WINDOW (overwrite_box->obox), _("File Exists!"));
-  gtk_window_position (GTK_WINDOW (overwrite_box->obox), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position (GTK_WINDOW (overwrite_box->obox), GTK_WIN_POS_MOUSE);
 
   gtk_signal_connect (GTK_OBJECT (overwrite_box->obox),
 		      "delete_event",
@@ -1114,7 +1114,7 @@ file_overwrite (char *filename, char* raw_filename)
 		      overwrite_box);
 
   vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 1);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (overwrite_box->obox)->vbox), vbox, TRUE, TRUE, 0);
 
   label = gtk_label_new (overwrite_text);

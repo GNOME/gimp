@@ -121,11 +121,11 @@ info_dialog_new (char *title)
 		      idialog);
 
   vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 1);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (shell)->vbox), vbox, TRUE, TRUE, 0);
 
   info_table = gtk_table_new (0, 0, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (info_table), 5);
+  gtk_container_set_border_width (GTK_CONTAINER (info_table), 5);
   gtk_box_pack_start (GTK_BOX (vbox), info_table, TRUE, TRUE, 0);
 
   idialog->shell = shell;
