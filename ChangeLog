@@ -2,10 +2,14 @@ Sat Jul 03 11:27:47 1999  Tor Lillqvist  <tml@iki.fi>
 
 1999-07-03  Tor Lillqvist  <tml@iki.fi>
 
+	It is now possible to build a fully functioning GIMP on Win32 with
+ 	free tools only. (gcc and friends running on cygwin, but producing
+	binaries that don't use the cygwin runtime, gcc -mno-cygwin.)
+
 	* README.win32: Advice about gcc.
 
 	* libgimp/gimp.{c,h,def}: New way to get address of PLUG_IN_INFO
- 	to the gimp dll. Do it a bit like the EMX port. Much cleaner.  Now
+ 	to the gimp dll. Do it a bit like the EMX port. Much cleaner. Now
  	works well also when built with gcc.
 
 	* app/gimprc.c: Remove gratuituous printf.
