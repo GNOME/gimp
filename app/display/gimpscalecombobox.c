@@ -252,7 +252,7 @@ gimp_scale_combo_box_set_scale (GimpScaleComboBox *combo_box,
                           SCALE, &this,
                           -1);
 
-      if (this == scale)
+      if (fabs (this - scale) < 0.01)
         break;
     }
 

@@ -1,3 +1,8 @@
+2005-01-19  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpscalecombobox.c (gimp_scale_combo_box_set_scale):
+	don't use == to compare floating point values.
+
 2005-01-18  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/bumpmap.c: make sure bumpmap_init_params()
