@@ -1,5 +1,35 @@
 2004-05-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontainergridview.[ch]
+	* app/widgets/gimpcontainertreeview.[ch]: removed "reorderable"
+	from gimp_container_foo_view_new().
+
+	* app/widgets/gimpcontainereditor.[ch]: removed "reorderable" from
+	gimp_container_editor_construct(). Automatically set the view to
+	reorderable if the viewed container has no sort_func.
+
+	* app/widgets/gimpbufferview.c
+	* app/widgets/gimpdatafactoryview.c
+	* app/widgets/gimpdocumentview.c
+	* app/widgets/gimpimageview.c
+	* app/widgets/gimptemplateview.c
+	* app/widgets/gimptoolview.c
+	* app/widgets/gimpundoeditor.c: removed reoderable stuff because
+	GimpContainerEditor does this generically now.
+
+	* app/widgets/gimpcontainerpopup.c
+	* app/widgets/gimpfontview.c: set reorderable to FALSE because
+	they should not be reodered even if they don't have a sort_func.
+
+	* app/gui/font-select.c: removed reorderable stuff. Some cleanup.
+
+	* app/gui/brush-select.c
+	* app/gui/gradient-select.c
+	* app/gui/palette-select.c
+	* app/gui/pattern-select.c: same cleanups as in font-select.c
+
+2004-05-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimpbrushcore.c
 	* app/paint/gimpdodgeburn.c
 	* app/paint/gimppaintcore.[ch]

@@ -179,12 +179,11 @@ palette_select_free (PaletteSelect *psp)
 PaletteSelect *
 palette_select_get_by_callback (const gchar *callback_name)
 {
-  GSList        *list;
-  PaletteSelect *psp;
+  GSList *list;
 
   for (list = palette_active_dialogs; list; list = g_slist_next (list))
     {
-      psp = (PaletteSelect *) list->data;
+      PaletteSelect *psp = list->data;
 
       if (psp->callback_name && ! strcmp (callback_name, psp->callback_name))
 	return psp;
@@ -196,20 +195,19 @@ palette_select_get_by_callback (const gchar *callback_name)
 void
 palette_select_dialogs_check (void)
 {
-  PaletteSelect *psp;
-  GSList        *list;
+  GSList *list;
 
   list = palette_active_dialogs;
 
   while (list)
     {
-      psp = (PaletteSelect *) list->data;
+     PaletteSelect *psp = list->data;
 
       list = g_slist_next (list);
 
       if (psp->callback_name)
         {
-          if (!  procedural_db_lookup (psp->context->gimp, psp->callback_name))
+          if (! procedural_db_lookup (psp->context->gimp, psp->callback_name))
             palette_select_response (NULL, GTK_RESPONSE_CLOSE, psp);
         }
     }
@@ -227,7 +225,7 @@ palette_select_change_callbacks (PaletteSelect *psp,
 
   static gboolean busy = FALSE;
 
-  if (! (psp && psp->callback_name) || busy)
+  if (! psp->callback_name || busy)
     return;
 
   busy = TRUE;
@@ -240,13 +238,13 @@ palette_select_change_callbacks (PaletteSelect *psp,
   if (proc && palette)
     {
       Argument *return_vals;
-      gint      nreturn_vals;
+      gint      n_return_vals;
 
       return_vals =
 	procedural_db_run_proc (psp->context->gimp,
                                 psp->context,
 				psp->callback_name,
-				&nreturn_vals,
+				&n_return_vals,
 				GIMP_PDB_STRING, GIMP_OBJECT (palette)->name,
 				GIMP_PDB_INT32,  palette->n_colors,
 				GIMP_PDB_INT32,  closing,
@@ -257,7 +255,7 @@ palette_select_change_callbacks (PaletteSelect *psp,
                      "The corresponding plug-in may have crashed."));
 
       if (return_vals)
-        procedural_db_destroy_args (return_vals, nreturn_vals);
+        procedural_db_destroy_args (return_vals, n_return_vals);
     }
 
   busy = FALSE;

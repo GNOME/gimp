@@ -65,8 +65,7 @@ GType       gimp_container_grid_view_get_type (void) G_GNUC_CONST;
 GtkWidget * gimp_container_grid_view_new      (GimpContainer *container,
 					       GimpContext   *context,
 					       gint           preview_size,
-                                               gint           preview_border_width,
-                                               gboolean       reorderable);
+                                               gint           preview_border_width);
 
 
 #endif  /*  __GIMP_CONTAINER_GRID_VIEW_H__  */

@@ -176,7 +176,6 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 					 view_type,
 					 factory->container, context,
 					 preview_size, preview_border_width,
-                                         FALSE, /* reorderable */
 					 menu_factory, menu_identifier,
                                          ui_identifier))
     {

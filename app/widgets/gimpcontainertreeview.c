@@ -376,8 +376,7 @@ GtkWidget *
 gimp_container_tree_view_new (GimpContainer *container,
                               GimpContext   *context,
                               gint           preview_size,
-                              gint           preview_border_width,
-                              gboolean       reorderable)
+                              gint           preview_border_width)
 {
   GimpContainerTreeView *tree_view;
   GimpContainerView     *view;
@@ -391,9 +390,7 @@ gimp_container_tree_view_new (GimpContainer *container,
                         preview_border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH,
                         NULL);
 
-  tree_view = g_object_new (GIMP_TYPE_CONTAINER_TREE_VIEW,
-                            "reorderable", reorderable,
-                            NULL);
+  tree_view = g_object_new (GIMP_TYPE_CONTAINER_TREE_VIEW, NULL);
 
   view = GIMP_CONTAINER_VIEW (tree_view);
 

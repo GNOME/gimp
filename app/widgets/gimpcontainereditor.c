@@ -28,7 +28,7 @@
 #include "widgets-types.h"
 
 #include "core/gimpcontext.h"
-#include "core/gimpcontainer.h"
+#include "core/gimplist.h"
 #include "core/gimpviewable.h"
 
 #include "gimpcontainereditor.h"
@@ -142,7 +142,6 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
 				 GimpContext         *context,
 				 gint                 preview_size,
                                  gint                 preview_border_width,
-                                 gboolean             reorderable,
 				 GimpMenuFactory     *menu_factory,
                                  const gchar         *menu_identifier,
                                  const gchar         *ui_identifier)
@@ -165,8 +164,7 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
 	GIMP_CONTAINER_VIEW (gimp_container_grid_view_new (container,
                                                            context,
                                                            preview_size,
-                                                           preview_border_width,
-                                                           reorderable));
+                                                           preview_border_width));
       break;
 
     case GIMP_VIEW_TYPE_LIST:
@@ -174,14 +172,17 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
 	GIMP_CONTAINER_VIEW (gimp_container_tree_view_new (container,
                                                            context,
                                                            preview_size,
-                                                           preview_border_width,
-                                                           reorderable));
+                                                           preview_border_width));
       break;
 
     default:
       g_warning ("%s: unknown GimpViewType passed", G_STRFUNC);
       return FALSE;
     }
+
+  if (GIMP_IS_LIST (container))
+    gimp_container_view_set_reorderable (GIMP_CONTAINER_VIEW (editor->view),
+                                         ! GIMP_LIST (container)->sort_func);
 
   if (menu_factory && menu_identifier && ui_identifier)
     gimp_editor_create_menu (GIMP_EDITOR (editor->view),

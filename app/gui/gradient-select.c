@@ -177,12 +177,11 @@ gradient_select_free (GradientSelect *gsp)
 GradientSelect *
 gradient_select_get_by_callback (const gchar *callback_name)
 {
-  GSList         *list;
-  GradientSelect *gsp;
+  GSList *list;
 
   for (list = gradient_active_dialogs; list; list = g_slist_next (list))
     {
-      gsp = (GradientSelect *) list->data;
+      GradientSelect *gsp = list->data;
 
       if (gsp->callback_name && ! strcmp (callback_name, gsp->callback_name))
 	return gsp;
@@ -194,14 +193,13 @@ gradient_select_get_by_callback (const gchar *callback_name)
 void
 gradient_select_dialogs_check (void)
 {
-  GradientSelect *gsp;
-  GSList         *list;
+  GSList *list;
 
   list = gradient_active_dialogs;
 
   while (list)
     {
-      gsp = (GradientSelect *) list->data;
+      GradientSelect *gsp = list->data;
 
       list = g_slist_next (list);
 
@@ -225,7 +223,7 @@ gradient_select_change_callbacks (GradientSelect *gsp,
 
   static gboolean  busy = FALSE;
 
-  if (! (gsp && gsp->callback_name) || busy)
+  if (! gsp->callback_name || busy)
     return;
 
   busy = TRUE;
@@ -238,7 +236,7 @@ gradient_select_change_callbacks (GradientSelect *gsp,
   if (proc && gradient)
     {
       Argument *return_vals;
-      gint      nreturn_vals;
+      gint      n_return_vals;
       gdouble  *values, *pv;
       double    pos, delta;
       GimpRGB   color;
@@ -267,7 +265,7 @@ gradient_select_change_callbacks (GradientSelect *gsp,
 	procedural_db_run_proc (gsp->context->gimp,
                                 gsp->context,
 				gsp->callback_name,
-				&nreturn_vals,
+				&n_return_vals,
 				GIMP_PDB_STRING,     GIMP_OBJECT (gradient)->name,
 				GIMP_PDB_INT32,      gsp->sample_size * 4,
 				GIMP_PDB_FLOATARRAY, values,
@@ -279,7 +277,7 @@ gradient_select_change_callbacks (GradientSelect *gsp,
                      "The corresponding plug-in may have crashed."));
 
       if (return_vals)
-	procedural_db_destroy_args (return_vals, nreturn_vals);
+	procedural_db_destroy_args (return_vals, n_return_vals);
     }
 
   busy = FALSE;

@@ -109,7 +109,6 @@ gimp_font_view_new (GimpViewType     view_type,
                                          view_type,
                                          container,context,
                                          preview_size, preview_border_width,
-                                         FALSE, /* reorderable */
                                          menu_factory, "<Fonts>",
                                          "/fonts-popup"))
     {
@@ -118,6 +117,9 @@ gimp_font_view_new (GimpViewType     view_type,
     }
 
   editor = GIMP_CONTAINER_EDITOR (font_view);
+
+  gimp_container_view_set_reorderable (GIMP_CONTAINER_VIEW (editor->view),
+                                       FALSE);
 
   font_view->refresh_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "fonts",

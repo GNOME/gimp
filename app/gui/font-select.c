@@ -120,8 +120,7 @@ font_select_new (Gimp        *gimp,
   /*  The Font List  */
   font_select->view = gimp_container_tree_view_new (gimp->fonts,
                                                     font_select->context,
-                                                    GIMP_PREVIEW_SIZE_MEDIUM, 1,
-                                                    FALSE);
+                                                    GIMP_PREVIEW_SIZE_MEDIUM, 1);
 
   gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (font_select->view),
                                        5 * (GIMP_PREVIEW_SIZE_MEDIUM + 2),
@@ -159,12 +158,11 @@ font_select_free (FontSelect *font_select)
 FontSelect *
 font_select_get_by_callback (const gchar *callback_name)
 {
-  GSList        *list;
-  FontSelect *font_select;
+  GSList *list;
 
   for (list = font_active_dialogs; list; list = g_slist_next (list))
     {
-      font_select = (FontSelect *) list->data;
+      FontSelect *font_select = list->data;
 
       if (font_select->callback_name && !
           strcmp (callback_name, font_select->callback_name))
@@ -177,21 +175,20 @@ font_select_get_by_callback (const gchar *callback_name)
 void
 font_select_dialogs_check (void)
 {
-  FontSelect *font_select;
-  GSList        *list;
+  GSList *list;
 
   list = font_active_dialogs;
 
   while (list)
     {
-      font_select = (FontSelect *) list->data;
+      FontSelect *font_select = list->data;
 
       list = g_slist_next (list);
 
       if (font_select->callback_name)
         {
-          if (!  procedural_db_lookup (font_select->context->gimp,
-                                       font_select->callback_name))
+          if (! procedural_db_lookup (font_select->context->gimp,
+                                      font_select->callback_name))
             font_select_response (NULL, GTK_RESPONSE_CLOSE, font_select);
         }
     }
@@ -209,7 +206,7 @@ font_select_change_callbacks (FontSelect *font_select,
 
   static gboolean busy = FALSE;
 
-  if (! (font_select && font_select->callback_name) || busy)
+  if (! font_select->callback_name || busy)
     return;
 
   busy = TRUE;
@@ -223,13 +220,13 @@ font_select_change_callbacks (FontSelect *font_select,
   if (proc && font)
     {
       Argument *return_vals;
-      gint      nreturn_vals;
+      gint      n_return_vals;
 
       return_vals =
 	procedural_db_run_proc (font_select->context->gimp,
                                 font_select->context,
 				font_select->callback_name,
-				&nreturn_vals,
+				&n_return_vals,
 				GIMP_PDB_STRING, GIMP_OBJECT (font)->name,
 				GIMP_PDB_INT32,  closing,
 				GIMP_PDB_END);
@@ -239,7 +236,7 @@ font_select_change_callbacks (FontSelect *font_select,
                      "The corresponding plug-in may have crashed."));
 
       if (return_vals)
-        procedural_db_destroy_args (return_vals, nreturn_vals);
+        procedural_db_destroy_args (return_vals, n_return_vals);
     }
 
   busy = FALSE;

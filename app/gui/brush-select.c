@@ -245,12 +245,11 @@ brush_select_free (BrushSelect *bsp)
 BrushSelect *
 brush_select_get_by_callback (const gchar *callback_name)
 {
-  GSList      *list;
-  BrushSelect *bsp;
+  GSList *list;
 
   for (list = brush_active_dialogs; list; list = g_slist_next (list))
     {
-      bsp = (BrushSelect *) list->data;
+      BrushSelect *bsp = list->data;
 
       if (bsp->callback_name && ! strcmp (callback_name, bsp->callback_name))
 	return bsp;
@@ -290,7 +289,7 @@ brush_select_change_callbacks (BrushSelect *bsp,
 
   static gboolean busy = FALSE;
 
-  if (! (bsp && bsp->callback_name) || busy)
+  if (! bsp->callback_name || busy)
     return;
 
   busy  = TRUE;
@@ -303,13 +302,13 @@ brush_select_change_callbacks (BrushSelect *bsp,
   if (proc && brush)
     {
       Argument *return_vals;
-      gint      nreturn_vals;
+      gint      n_return_vals;
 
       return_vals =
 	procedural_db_run_proc (bsp->context->gimp,
                                 bsp->context,
 				bsp->callback_name,
-				&nreturn_vals,
+				&n_return_vals,
 				GIMP_PDB_STRING,    GIMP_OBJECT (brush)->name,
 				GIMP_PDB_FLOAT,     gimp_context_get_opacity (bsp->context) * 100.0,
 				GIMP_PDB_INT32,     bsp->spacing_value,
@@ -327,7 +326,7 @@ brush_select_change_callbacks (BrushSelect *bsp,
                      "The corresponding plug-in may have crashed."));
 
       if (return_vals)
-        procedural_db_destroy_args (return_vals, nreturn_vals);
+        procedural_db_destroy_args (return_vals, n_return_vals);
     }
 
   busy = FALSE;

@@ -112,7 +112,6 @@ gimp_image_view_new (GimpViewType     view_type,
                                          view_type,
                                          container, context,
                                          preview_size, preview_border_width,
-                                         TRUE, /* reorderable */
                                          menu_factory, "<Images>",
                                          "/images-popup"))
     {

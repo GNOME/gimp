@@ -239,8 +239,7 @@ GtkWidget *
 gimp_container_grid_view_new (GimpContainer *container,
                               GimpContext   *context,
                               gint           preview_size,
-                              gint           preview_border_width,
-                              gboolean       reorderable)
+                              gint           preview_border_width)
 {
   GimpContainerGridView *grid_view;
   GimpContainerView     *view;
@@ -254,9 +253,7 @@ gimp_container_grid_view_new (GimpContainer *container,
                         preview_border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH,
                         NULL);
 
-  grid_view = g_object_new (GIMP_TYPE_CONTAINER_GRID_VIEW,
-                            "reorderable", reorderable,
-                            NULL);
+  grid_view = g_object_new (GIMP_TYPE_CONTAINER_GRID_VIEW, NULL);
 
   view = GIMP_CONTAINER_VIEW (grid_view);
 
