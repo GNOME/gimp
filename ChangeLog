@@ -1,3 +1,7 @@
+Sat Apr 18 11:45:04 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* Made 0.99.27 release
+
 Sat Apr 18 11:37:46 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/dbbrowser/dbbrowser_util.c: make text entry for function
