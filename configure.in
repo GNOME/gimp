@@ -96,7 +96,7 @@ fi
 
 
 dnl i18n stuff
-ALL_LINGUAS="fr sv ja it fi ko de hu nl pl"
+ALL_LINGUAS="fr sv ja it fi ko de hu nl pl ru"
 AM_GNU_GETTEXT
 
 dnl Check for GTK+
