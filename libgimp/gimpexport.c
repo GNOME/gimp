@@ -178,6 +178,15 @@ static ExportAction export_action_animate_or_flatten =
   0
 };
 
+static ExportAction export_action_merge_flat =
+{
+  export_flatten,
+  NULL,
+  N_("can't Handle Layers"),
+  { N_("Flatten Image"), NULL },
+  0
+};
+
 static ExportAction export_action_flatten =
 {
   export_flatten,
@@ -512,7 +521,7 @@ gimp_export_image (gint32                 *image_ID,
 	  if (background_has_alpha || capabilities & NEEDS_ALPHA)
 	    actions = g_slist_prepend (actions, &export_action_merge);
 	  else
-	    actions = g_slist_prepend (actions, &export_action_flatten);
+	    actions = g_slist_prepend (actions, &export_action_merge_flat);
 	}
     }
 

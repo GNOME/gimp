@@ -1,5 +1,12 @@
 2000-06-26  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpexport.c: added a new export_action type
+	so PNG for example correctly shows "PNG can't handle layers"
+	even if the suggested action is to flatten the image since
+	the background has no alpha-channel. Fixes bug #15085.
+
+2000-06-26  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/url.c: use a fixed-size buffer to make 
 	the code ANSI compliant. Fixes bug #15338.
 
