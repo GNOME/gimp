@@ -1,3 +1,8 @@
+2004-08-08  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/ifscompose/README.ifscompose: fix out of date info,
+	pointed out by the author.
+	
 2004-08-08  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/Makefile.am: do not build test-preview-area by

@@ -5,10 +5,6 @@ IfsCompose is a plug-in for the GIMP that allows
 the creation of Iterated Function System fractals by direct
 manipulation onscreen of the component transforms.
 
-Although v0.6.1 is fairly full featured, it is still lacking some
-essentials. Most importantly, it is not yet possible to save fractals
-in unrendered form for future modification. The rendering code could
-also use some more work.
 
 IFS Fractals
 ------------
