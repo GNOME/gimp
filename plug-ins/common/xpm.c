@@ -16,9 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/* XPM plugin version 1.2.5 */
+/* XPM plugin version 1.2.6 */
 
 /*
+1.2.6 fixes crash when saving indexed images (bug #109567)
+
 1.2.5 only creates a "None" color entry if the image has alpha (bug #108034)
 
 1.2.4 displays an error message if saving fails (bug #87588)
@@ -667,6 +669,9 @@ save_image (gchar  *filename,
   if (indexed)
     {
       guchar *cmap = gimp_image_get_cmap (image_ID, &ncolors);
+      guchar *c;
+
+      c = cmap;
 
       if (alpha)
 	ncolors++;
@@ -683,9 +688,9 @@ save_image (gchar  *filename,
 	  gchar *string;
 	  guchar r, g, b;
 
-	  r = *(cmap++);
-	  g = *(cmap++);
-	  b = *(cmap++);
+	  r = *c++;
+	  g = *c++;
+	  b = *c++;
 
 	  string = g_new (gchar, 8);
 	  sprintf (string, "#%02X%02X%02X", (int)r, (int)g, (int)b);

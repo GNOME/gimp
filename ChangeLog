@@ -1,5 +1,10 @@
 2003-03-31  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/xpm.c (save_image): free the original cmap
+	pointer, not the one we used for iteration (fixes bug #109567).
+
+2003-03-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdrawable-transform-utils.c
 	(gimp_drawable_transform_matrix_perspective): applied patch from
 	Øyvind Kolås that fixes bug #109570.
