@@ -774,6 +774,7 @@ script_fu_interface (SFScript *script)
   sprintf (title, "Script-Fu: %s", script->description);
 
   dlg = gtk_dialog_new ();
+  gtk_quit_add_destroy (1, GTK_OBJECT (dlg));
   gtk_window_set_title (GTK_WINDOW (dlg), title);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) script_fu_close_callback,
@@ -915,8 +916,7 @@ script_fu_interface (SFScript *script)
   gtk_widget_show (dlg);
 
   gtk_main ();
-
-  gtk_widget_destroy (dlg);
+  
   g_free (script->args_widgets);
   gdk_flush ();
 }

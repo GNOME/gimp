@@ -1,3 +1,8 @@
+Sat Mar 14 00:50:31 1998  Tim Janik  <timj@gimp.org>
+
+	* plug-ins/script-fu/script-fu-scripts.c: only destroy the dialog at
+	the end of gtk_main() if it still exists.
+
 Fri Mar 13 16:54:12 CST 1998  Larry Ewing  <lewing@gimp.org>
 
 	* app/image_render.c:  added some g_return_if_fails to the render
