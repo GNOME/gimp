@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2004-04-16 20:51-0400\n"
-"PO-Revision-Date: 2004-04-16 20:58-0400\n"
+"POT-Creation-Date: 2004-04-22 12:13-0400\n"
+"PO-Revision-Date: 2004-04-22 20:58-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -7981,8 +7981,8 @@ msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Hue-Saturation operates only on RGB colour layers."
 
 #: app/tools/gimphuesaturationtool.c:263
-msgid "_Master"
-msgstr "_Master"
+msgid "M_aster"
+msgstr "M_aster"
 
 #: app/tools/gimphuesaturationtool.c:264
 msgid "_R"
@@ -9973,3 +9973,4 @@ msgstr "XCF error: unsupported XCF file version %d encountered"
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "Create and edit images or photographs"
+
