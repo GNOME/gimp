@@ -686,8 +686,14 @@ gdisplay_origin_menu_position (GtkMenu  *menu,
 
   gdk_window_get_origin (origin->window, &origin_x, &origin_y);
 
-  *x = origin_x + origin->allocation.x + origin->allocation.width;
-  *y = origin_y + origin->allocation.y + origin->allocation.height / 2;
+  *x = origin_x + origin->allocation.x + origin->allocation.width - 1;
+  *y = origin_y + origin->allocation.y + (origin->allocation.height - 1) / 2;
+
+  if (*x + GTK_WIDGET (menu)->allocation.width > gdk_screen_width ())
+    *x -= (GTK_WIDGET (menu)->allocation.width + origin->allocation.width);
+
+  if (*y + GTK_WIDGET (menu)->allocation.height > gdk_screen_height ())
+    *y -= (GTK_WIDGET (menu)->allocation.height);
 }
 
 gint
