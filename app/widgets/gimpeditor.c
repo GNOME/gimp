@@ -202,6 +202,7 @@ gimp_editor_menu_position (GtkMenu  *menu,
 {
   GtkRequisition  requisition;
   GtkWidget      *editor;
+  GdkScreen      *screen;
   gint            editor_x;
   gint            editor_y;
 
@@ -214,13 +215,15 @@ gimp_editor_menu_position (GtkMenu  *menu,
   *x = editor_x + editor->allocation.x + 2;
   *y = editor_y + editor->allocation.y + 2;
 
-  if (*x + requisition.width > gdk_screen_width ())
+  screen = gtk_widget_get_screen (GTK_WIDGET (menu));
+
+  if (*x + requisition.width > gdk_screen_get_width (screen))
     *x -= requisition.width;
 
   if (*x < 0)
     *x = 0;
 
-  if (*y + requisition.height > gdk_screen_height ())
+  if (*y + requisition.height > gdk_screen_get_height (screen))
     *y -= requisition.height;
 
   if (*y < 0)

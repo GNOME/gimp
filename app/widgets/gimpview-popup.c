@@ -171,6 +171,7 @@ gimp_preview_popup_timeout (GimpPreviewPopup *popup)
   GtkWidget *window;
   GtkWidget *frame;
   GtkWidget *preview;
+  GdkScreen *screen;
   gint       orig_x;
   gint       orig_y;
   gint       scr_width;
@@ -198,8 +199,10 @@ gimp_preview_popup_timeout (GimpPreviewPopup *popup)
   gtk_widget_show (preview);
 
   gdk_window_get_origin (popup->widget->window, &orig_x, &orig_y);
-  scr_width  = gdk_screen_width ();
-  scr_height = gdk_screen_height ();
+
+  screen = gtk_widget_get_screen (popup->widget);
+  scr_width  = gdk_screen_get_width (screen);
+  scr_height = gdk_screen_get_height (screen);
 
   x = orig_x + popup->button_x - (popup->popup_width  >> 1);
   y = orig_y + popup->button_y - (popup->popup_height >> 1);

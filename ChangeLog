@@ -1,3 +1,19 @@
+2003-09-09  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell.c
+	* app/display/gimpnavigationview.c
+	* app/gui/resolution-calibrate-dialog.c
+	* app/widgets/gimpcontainerpopup.c
+	* app/widgets/gimpdialogfactory.c
+	* app/widgets/gimpeditor.c
+	* app/widgets/gimppreview-popup.c
+	* app/widgets/gimpwidgets-utils.c: get the size from the current
+	screen, not always from the default one.
+
+	* plug-ins/common/wmf.c: ask GIMP for the monitor resolution instead
+	of taking the value from GDK.
+
 2003-09-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimp.[ch]: added "gboolean console_messages" to the

@@ -90,7 +90,7 @@ static void   gimp_dialog_factories_restore_foreach   (gconstpointer      key,
 static void   gimp_dialog_factories_clear_foreach     (gconstpointer      key,
 						       GimpDialogFactory *factory,
 						       gpointer           data);
-static void   gimp_dialog_factory_get_window_info     (GtkWidget         *window, 
+static void   gimp_dialog_factory_get_window_info     (GtkWidget         *window,
 						       GimpSessionInfo   *info);
 static void   gimp_dialog_factory_set_window_geometry (GtkWidget         *window,
 						       GimpSessionInfo   *info);
@@ -292,7 +292,7 @@ gimp_dialog_factory_from_name (const gchar *name)
   factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
   if (! factory_class)
     return NULL;
-  
+
   /*  hack to keep the toolbox on the pool position  */
   if (strcmp (name, "toolbox") == 0)
     name = "";
@@ -470,7 +470,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
 
       if (dialog)
 	{
-	  g_object_set_data (G_OBJECT (dialog), "gimp-dialog-factory", 
+	  g_object_set_data (G_OBJECT (dialog), "gimp-dialog-factory",
                              factory);
 	  g_object_set_data (G_OBJECT (dialog), "gimp-dialog-factory-entry",
                              entry);
@@ -561,13 +561,13 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
  * @factory:    a #GimpDialogFactory
  * @identifier: the identifier of the dialog as registered with
  *              gimp_dialog_factory_register_entry()
- * @preview_size: 
- * 
+ * @preview_size:
+ *
  * Creates a new toplevel dialog or a #GimpDockable, depending on whether
  * %factory is a toplevel of dockable factory.
  *
  * Implicitly raises singleton dialogs.
- * 
+ *
  * Return value: the newly created dialog or an already existing singleton
  *               dialog.
  **/
@@ -592,12 +592,12 @@ gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
  * @identifier: the identifier of the dialog as registered with
  *              gimp_dialog_factory_register_entry()
  * @preview_size:
- * 
+ *
  * Raises an already existing toplevel dialog or #GimpDockable if it was
  * already created by this %facory.
  *
  * Implicitly creates a new dialog if it was not found.
- * 
+ *
  * Return value: the raised or newly created dialog.
  **/
 GtkWidget *
@@ -622,14 +622,14 @@ gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
  * @identifier: the identifier of the dialog as registered with
  *              gimp_dialog_factory_register_entry()
  * @preview_size:
- * 
+ *
  * Creates a new #GimpDockable in the context of the #GimpDock it will be
  * added to.
  *
  * Implicitly raises & returns an already existing singleton dockable,
  * so callers should check that dockable->dockbook is NULL before trying
  * to add it to it's #GimpDockbook.
- * 
+ *
  * Return value: the newly created #GimpDockable or an already existing
  *               singleton dockable.
  **/
@@ -653,12 +653,12 @@ gimp_dialog_factory_dockable_new (GimpDialogFactory *factory,
 /**
  * gimp_dialog_factory_dock_new:
  * @factory: a #GimpDialogFacotry
- * 
+ *
  * Returns a new #GimpDock in this %factory's context. We use a function
  * pointer passed to this %factory's constructor instead of simply
  * gimp_dock_new() because we may want different instances of
  * #GimpDialogFactory create different subclasses of #GimpDock.
- * 
+ *
  * Return value: the newly created #GimpDock.
  **/
 GtkWidget *
@@ -699,7 +699,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
       return;
     }
 
-  dialog_factory = g_object_get_data (G_OBJECT (dialog), 
+  dialog_factory = g_object_get_data (G_OBJECT (dialog),
                                       "gimp-dialog-factory");
   entry = g_object_get_data (G_OBJECT (dialog), "gimp-dialog-factory-entry");
 
@@ -871,7 +871,7 @@ gimp_dialog_factory_add_foreign (GimpDialogFactory *factory,
   g_return_if_fail (GTK_IS_WIDGET (dialog));
   g_return_if_fail (GTK_WIDGET_TOPLEVEL (dialog));
 
-  dialog_factory = g_object_get_data (G_OBJECT (dialog), 
+  dialog_factory = g_object_get_data (G_OBJECT (dialog),
                                       "gimp-dialog-factory");
   entry = g_object_get_data (G_OBJECT (dialog), "gimp-dialog-factory-entry");
 
@@ -898,7 +898,7 @@ gimp_dialog_factory_add_foreign (GimpDialogFactory *factory,
       return;
     }
 
-  g_object_set_data (G_OBJECT (dialog), "gimp-dialog-factory", 
+  g_object_set_data (G_OBJECT (dialog), "gimp-dialog-factory",
                      factory);
   g_object_set_data (G_OBJECT (dialog), "gimp-dialog-factory-entry",
                      entry);

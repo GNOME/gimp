@@ -55,16 +55,16 @@ resolution_calibrate_ok (GtkWidget *button,
 
   calibrate_xres = (gdouble)ruler_width  * calibrate_xres / x;
   calibrate_yres = (gdouble)ruler_height * calibrate_yres / y;
-  
-  chain_button = g_object_get_data (G_OBJECT (resolution_entry), 
+
+  chain_button = g_object_get_data (G_OBJECT (resolution_entry),
                                     "chain_button");
-  if (chain_button && 
+  if (chain_button &&
       ABS (x -y) > GIMP_MIN_RESOLUTION)
     gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain_button), FALSE);
 
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (resolution_entry), 
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (resolution_entry),
                               0, calibrate_xres);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (resolution_entry), 
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (resolution_entry),
                               1, calibrate_yres);
 
   gtk_widget_destroy (GTK_WIDGET (data));
@@ -102,15 +102,16 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
   GtkWidget *darea;
   GtkWidget *ruler;
   GtkWidget *label;
+  GdkScreen *screen;
   GList     *list;
 
   g_return_if_fail (GIMP_IS_SIZE_ENTRY (resolution_entry));
   g_return_if_fail (pixbuf == NULL || GDK_IS_PIXBUF (pixbuf));
-  
+
   /*  this dialog can only exist once  */
   if (calibrate_entry)
-    return;  
-  
+    return;
+
   dialog = gimp_dialog_new (_("Calibrate Monitor Resolution"),
 			    "calibrate_resolution",
 			    NULL, NULL,
@@ -139,8 +140,10 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
   SET_STYLE (dialog, dialog_style);
   gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 8);
 
-  ruler_width  = gdk_screen_width ();
-  ruler_height = gdk_screen_height ();
+  screen = gtk_widget_get_screen (dialog);
+
+  ruler_width  = gdk_screen_get_width (screen);
+  ruler_height = gdk_screen_get_height (screen);
 
   ruler_width  = ruler_width  - 300 - (ruler_width  % 100);
   ruler_height = ruler_height - 300 - (ruler_height % 100);
@@ -149,7 +152,7 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
   gtk_container_set_border_width (GTK_CONTAINER (table), 8);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), table);
   gtk_widget_show (table);
-  
+
   if (pixbuf)
     {
       GtkWidget *image = gtk_image_new_from_pixbuf (pixbuf);
@@ -175,7 +178,7 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
   gtk_widget_show (ruler);
 
   ebox = gtk_event_box_new ();
-  SET_STYLE (ebox, ruler_style);  
+  SET_STYLE (ebox, ruler_style);
   gtk_table_attach (GTK_TABLE (table), ebox, 1, 2, 1, 2,
 		    GTK_SHRINK, GTK_SHRINK, 0, 0);
   gtk_widget_show (ebox);
@@ -185,7 +188,7 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
   gtk_widget_show (table);
 
   darea = gtk_drawing_area_new ();
-  SET_STYLE (darea, dialog_style);  
+  SET_STYLE (darea, dialog_style);
   gtk_widget_set_size_request (darea, 16, 16);
   if (expose_callback)
     g_signal_connect (darea, "expose_event",
@@ -196,7 +199,7 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
   gtk_widget_show (darea);
 
   darea = gtk_drawing_area_new ();
-  SET_STYLE (darea, dialog_style);  
+  SET_STYLE (darea, dialog_style);
   gtk_widget_set_size_request (darea, 16, 16);
   if (expose_callback)
     g_signal_connect (darea, "expose_event",
@@ -207,7 +210,7 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
   gtk_widget_show (darea);
 
   darea = gtk_drawing_area_new ();
-  SET_STYLE (darea, dialog_style);  
+  SET_STYLE (darea, dialog_style);
   gtk_widget_set_size_request (darea, 16, 16);
   if (expose_callback)
     g_signal_connect (darea, "expose_event",
@@ -218,7 +221,7 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
   gtk_widget_show (darea);
 
   darea = gtk_drawing_area_new ();
-  SET_STYLE (darea, dialog_style);  
+  SET_STYLE (darea, dialog_style);
   gtk_widget_set_size_request (darea, 16, 16);
   if (expose_callback)
     g_signal_connect (darea, "expose_event",
@@ -231,8 +234,8 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
   vbox = gtk_vbox_new (FALSE, 16);
   gtk_table_attach_defaults (GTK_TABLE (table), vbox, 1, 2, 1, 2);
   gtk_widget_show (vbox);
-  
-  label = 
+
+  label =
     gtk_label_new (_("Measure the rulers and enter their lengths below."));
   SET_STYLE (label, ruler_style);
   gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
@@ -244,9 +247,9 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  calibrate_xres = 
+  calibrate_xres =
     gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (resolution_entry), 0);
-  calibrate_yres = 
+  calibrate_yres =
     gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (resolution_entry), 1);
 
   calibrate_entry =

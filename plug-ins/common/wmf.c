@@ -1104,6 +1104,7 @@ load_image (const gchar *filename)
   GdkColor *colors;
   guchar *rtbl, *gtbl, *btbl;
   guint rmask, gmask, bmask, rshift, gshift, bshift;
+  gdouble xres, yres;
 
   int argc;
   char **argv;
@@ -1132,7 +1133,7 @@ load_image (const gchar *filename)
     }
 
   g_memmove (&apm_head.Key, buffer, 4);
-  
+
   if (GUINT32_FROM_LE (apm_head.Key) == 0x9ac6cdd7)
     {
       if (!ReadOK (fp, buffer + SIZE_WMFHEAD,
@@ -1174,11 +1175,9 @@ load_image (const gchar *filename)
   window.org_x = window.org_y = 0;
   window.valid = FALSE;
 
-#ifdef GTK_HAVE_FEATURES_1_1_2
-  pixs_per_in = (int) (25.4 * gdk_screen_width () / gdk_screen_width_mm ());
-#else
-  pixs_per_in = 72;
-#endif
+  gimp_get_monitor_resolution (&xres, &yres);
+  pixs_per_in = (int) ((xres + yres) / 2.0);
+
 #ifdef DEBUG
   g_print ("pixs_per_in: %d\n", pixs_per_in);
 #endif
@@ -1253,7 +1252,7 @@ load_image (const gchar *filename)
 	  /* XXX */
 	  sync_record (record.Size, 4, fp);
 	  break;
-	  
+
 	case SaveDC:
 	  dc = g_new (DC, 1);
 	  if (canvas == NULL)
@@ -1455,7 +1454,7 @@ load_image (const gchar *filename)
 	    case MM_LOMETRIC:
 	      units_per_in = 254;
 	      goto set_window_and_viewport;
-	      
+
 	    case MM_TEXT:
 	      units_per_in = pixs_per_in;
 	      goto set_window_and_viewport;

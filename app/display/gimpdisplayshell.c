@@ -488,6 +488,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   GtkWidget         *arrow;
   GtkWidget         *image;
   GtkWidget         *menubar;
+  GdkScreen         *screen;
   gint               image_width, image_height;
   gint               n_width, n_height;
   gint               s_width, s_height;
@@ -528,8 +529,10 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
    * value is the same as in gimp_display_shell_shrink_wrap. It
    * probably should be a user-configurable option.
    */
-  s_width  = gdk_screen_width () * 0.75;
-  s_height = gdk_screen_height () * 0.75;
+  screen = gtk_widget_get_screen (GTK_WIDGET (shell));
+
+  s_width  = gdk_screen_get_width (screen)  * 0.75;
+  s_height = gdk_screen_get_height (screen) * 0.75;
 
   scalesrc  = SCALESRC (shell);
   scaledest = SCALEDEST (shell);
@@ -1592,16 +1595,19 @@ gimp_display_shell_draw_cursor (GimpDisplayShell *shell)
 void
 gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
 {
-  gint     disp_width, disp_height;
-  gint     width, height;
-  gint     shell_width, shell_height;
-  gint     max_auto_width, max_auto_height;
-  gint     border_x, border_y;
-  gint     s_width, s_height;
-  gboolean resize = FALSE;
+  GdkScreen *screen;
+  gint       disp_width, disp_height;
+  gint       width, height;
+  gint       shell_width, shell_height;
+  gint       max_auto_width, max_auto_height;
+  gint       border_x, border_y;
+  gint       s_width, s_height;
+  gboolean   resize = FALSE;
 
-  s_width  = gdk_screen_width ();
-  s_height = gdk_screen_height ();
+  screen = gtk_widget_get_screen (GTK_WIDGET (shell));
+
+  s_width  = gdk_screen_get_width (screen);
+  s_height = gdk_screen_get_height (screen);
 
   width  = SCALEX (shell, shell->gdisp->gimage->width);
   height = SCALEY (shell, shell->gdisp->gimage->height);

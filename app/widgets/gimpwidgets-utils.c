@@ -105,7 +105,7 @@ gimp_message_box (const gchar *stock_id,
 
 	  if (msg_box->repeat_count > 1)
 	    {
-	      gchar *text = g_strdup_printf (_("Message repeated %d times."), 
+	      gchar *text = g_strdup_printf (_("Message repeated %d times."),
 					     msg_box->repeat_count);
 	      gtk_label_set_text (GTK_LABEL (msg_box->repeat_label), text);
 	      g_free (text);
@@ -169,7 +169,7 @@ gimp_message_box (const gchar *stock_id,
   image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_DIALOG);
   gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-  gtk_widget_show (image);  
+  gtk_widget_show (image);
 
   vbox = gtk_vbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
@@ -230,7 +230,7 @@ gimp_message_box_close_callback (GtkWidget *widget,
 
   /*  Destroy the box  */
   gtk_widget_destroy (msg_box->mbox);
-  
+
   /* make this box available again */
   message_boxes = g_list_remove (message_boxes, msg_box);
 
@@ -245,11 +245,12 @@ gimp_menu_position (GtkMenu  *menu,
 		    gint     *y,
                     gpointer  data)
 {
-  GtkRequisition requisition;
-  gint           pointer_x;
-  gint           pointer_y;
-  gint           screen_width;
-  gint           screen_height;
+  GtkRequisition  requisition;
+  GdkScreen      *screen;
+  gint            pointer_x;
+  gint            pointer_y;
+  gint            screen_width;
+  gint            screen_height;
 
   g_return_if_fail (GTK_IS_MENU (menu));
   g_return_if_fail (x != NULL);
@@ -259,8 +260,10 @@ gimp_menu_position (GtkMenu  *menu,
 
   gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
 
-  screen_width  = gdk_screen_width ()  + 2;
-  screen_height = gdk_screen_height () + 2;
+  screen = gtk_widget_get_screen (GTK_WIDGET (menu));
+
+  screen_width  = gdk_screen_get_width (screen)  + 2;
+  screen_height = gdk_screen_get_height (screen) + 2;
 
   *x = CLAMP (pointer_x, 2, MAX (0, screen_width  - requisition.width));
   *y = CLAMP (pointer_y, 2, MAX (0, screen_height - requisition.height));
@@ -294,7 +297,7 @@ gimp_table_attach_stock (GtkTable    *table,
   gtk_table_attach (table, label, 0, 1, row, row + 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
- 
+
   if (widget)
     {
       g_return_if_fail (GTK_IS_WIDGET (widget));
@@ -307,7 +310,7 @@ gimp_table_attach_stock (GtkTable    *table,
     }
 
   image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
-  
+
   if (image)
     {
       gtk_misc_set_alignment (GTK_MISC (image), 0.0, 0.5);
@@ -461,7 +464,7 @@ gimp_get_mod_separator (void)
  * @screen: a #GdkScreen or %NULL
  * @xres: returns the horizontal screen resolution (in dpi)
  * @yres: returns the vertical screen resolution (in dpi)
- * 
+ *
  * Retrieves the screen resolution from GDK. If @screen is %NULL, the
  * default screen is used.
  **/
@@ -524,12 +527,12 @@ gimp_get_screen_resolution (GdkScreen *screen,
  * gimp_rgb_get_gdk_color:
  * @rgb: the source color as #GimpRGB
  * @gdk_color: pointer to a #GdkColor
- * 
+ *
  * Initializes @gdk_color from a #GimpRGB. This function does not
  * allocate the color for you. Depending on how you want to use it,
  * you may have to call gdk_colormap_alloc_color().
  **/
-void          
+void
 gimp_rgb_get_gdk_color (const GimpRGB *rgb,
                         GdkColor      *gdk_color)
 {
@@ -537,9 +540,9 @@ gimp_rgb_get_gdk_color (const GimpRGB *rgb,
 
   g_return_if_fail (rgb != NULL);
   g_return_if_fail (gdk_color != NULL);
-  
+
   gimp_rgb_get_uchar (rgb, &r, &g, &b);
-  
+
   gdk_color->red   = (r << 8) | r;
   gdk_color->green = (g << 8) | g;
   gdk_color->blue  = (b << 8) | b;

@@ -257,6 +257,7 @@ gimp_navigation_view_popup (GimpDisplayShell *shell,
 {
   GimpNavigationView    *view;
   GimpNavigationPreview *preview;
+  GdkScreen             *screen;
   gint                   x, y;
   gint                   x_org, y_org;
 
@@ -316,12 +317,15 @@ gimp_navigation_view_popup (GimpDisplayShell *shell,
    * but then it works as usual. Probably better than a popup that
    * is completely unusable in the lower right of the screen.
    *
-   * Warping the pointer would be another solution ... 
+   * Warping the pointer would be another solution ...
    */
-  x = CLAMP (x, 0, (gdk_screen_width ()  -
+
+  screen = gtk_widget_get_screen (widget);
+
+  x = CLAMP (x, 0, (gdk_screen_get_width (screen)  -
                     GIMP_PREVIEW (preview)->renderer->width  -
                     4 * widget->style->xthickness));
-  y = CLAMP (y, 0, (gdk_screen_height () -
+  y = CLAMP (y, 0, (gdk_screen_get_height (screen) -
                     GIMP_PREVIEW (preview)->renderer->height -
                     4 * widget->style->ythickness));
 

@@ -420,13 +420,14 @@ void
 gimp_container_popup_show (GimpContainerPopup *popup,
                            GtkWidget          *widget)
 {
-  GtkRequisition requisition;
-  gint           orig_x;
-  gint           orig_y;
-  gint           scr_width;
-  gint           scr_height;
-  gint           x;
-  gint           y;
+  GtkRequisition  requisition;
+  GdkScreen      *screen;
+  gint            orig_x;
+  gint            orig_y;
+  gint            scr_width;
+  gint            scr_height;
+  gint            x;
+  gint            y;
 
   g_return_if_fail (GIMP_IS_CONTAINER_POPUP (popup));
   g_return_if_fail (GTK_IS_WIDGET (widget));
@@ -440,8 +441,10 @@ gimp_container_popup_show (GimpContainerPopup *popup,
       orig_y += widget->allocation.y;
     }
 
-  scr_width  = gdk_screen_width ();
-  scr_height = gdk_screen_height ();
+  screen = gtk_widget_get_screen (widget);
+
+  scr_width  = gdk_screen_get_width (screen);
+  scr_height = gdk_screen_get_height (screen);
 
   x = orig_x;
   y = orig_y + widget->allocation.height;
