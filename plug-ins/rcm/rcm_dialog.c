@@ -49,10 +49,9 @@
 #include "rcm_gdk.h"
 #include "rcm_callback.h"
 #include "rcm_dialog.h"
+#include "rcm_stock.h"
 
-#include "pixmaps/rcm_360.xpm"
-#include "pixmaps/rcm_a_b.xpm"
-#include "pixmaps/rcm_cw.xpm"
+#include "images/rcm-stock-pixbufs.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -174,59 +173,6 @@ rcm_create_previews (void)
 }
 
 
-/* Main: Create one pixmap button */
-
-static void
-rcm_create_pixmap_button (GtkWidget  **label,
-			  GtkWidget  **button,
-			  GtkWidget  **label_box,
-			  GCallback    callback,
-			  gpointer     data,
-			  const gchar *text,
-			  GtkWidget   *parent,
-			  gint         pos)
-{
-  /* create button */
-  *button = gtk_button_new ();
-  g_signal_connect (*button, "clicked",
-                    callback,
-                    data);
-  gtk_widget_show (*button);
-
-  gtk_table_attach (GTK_TABLE (parent), *button,
-                    0, 1, pos, pos + 1,
-                    GTK_EXPAND | GTK_FILL, GTK_FILL, 4, 2);
-
-  /* create hbox */
-  *label_box = gtk_hbox_new (FALSE, 0);
-  gtk_widget_show (*label_box);
-
-  /* create label */
-  *label = gtk_label_new (text);
-  gtk_widget_show (*label);
-
-  /* put label and pixmap in hbox */
-  gtk_box_pack_end (GTK_BOX (*label_box), *label, TRUE, FALSE, 0);
-
-  /* create hbox in button */
-  gtk_container_add (GTK_CONTAINER (*button), *label_box);
-}
-
-
-/* Set buttons pixmaps */
-
-static void
-rcm_set_pixmaps (RcmCircle *circle)
-{
-  rcm_set_pixmap (&circle->cw_ccw_pixmap, circle->cw_ccw_button->parent,
-                  circle->cw_ccw_box, rcm_cw_xpm);
-  rcm_set_pixmap (&circle->a_b_pixmap, circle->a_b_button->parent,
-                  circle->a_b_box, rcm_a_b_xpm);
-  rcm_set_pixmap (&circle->f360_pixmap, circle->f360_button->parent,
-                  circle->f360_box, rcm_360_xpm);
-}
-
-
 /* Main: One circles with values and buttons */
 
 static RcmCircle*
@@ -234,7 +180,7 @@ rcm_create_one_circle (gint   height,
 		       gchar *label_content)
 {
   GtkWidget     *frame, *button_table, *legend_table;
-  GtkWidget     *label, *label_box, *button, *entry;
+  GtkWidget     *label, *button, *entry;
   GtkAdjustment *adj;
   RcmCircle     *st;
 
@@ -287,30 +233,47 @@ rcm_create_one_circle (gint   height,
   gtk_widget_show (button_table);
 
   /** Main: Circle: Buttons **/
-  rcm_create_pixmap_button (&label, &button, &label_box,
-                            G_CALLBACK (rcm_cw_ccw), st,
-                            (st->angle->cw_ccw>0) ?
-                            _("Switch to clockwise") : _("Switch to c/clockwise"),
-                            button_table, 0);
+
+  button = gtk_button_new_from_stock (st->angle->cw_ccw > 0 ?
+                                      STOCK_COLORMAP_SWITCH_CLOCKWISE :
+                                      STOCK_COLORMAP_SWITCH_COUNTERCLOCKWISE);
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (rcm_cw_ccw),
+                    st);
+  gtk_widget_show (button);
+  gtk_table_attach (GTK_TABLE (button_table), button,
+                    0, 1, 0, 1,
+                    GTK_EXPAND | GTK_FILL, GTK_FILL, 4, 2);
 
   st->cw_ccw_pixmap = NULL;
   st->cw_ccw_button = button;
-  st->cw_ccw_box    = label_box;
-  st->cw_ccw_label  = label;
+  st->cw_ccw_box    = NULL;
+  st->cw_ccw_label  = NULL;
 
-  rcm_create_pixmap_button (&label, &button, &label_box,
-                            G_CALLBACK (rcm_a_to_b), st,
-                            _("Change order of arrows"), button_table, 1);
+  button = gtk_button_new_from_stock (STOCK_COLORMAP_CHANGE_ORDER);
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (rcm_a_to_b),
+                    st);
+  gtk_widget_show (button);
+  gtk_table_attach (GTK_TABLE (button_table), button,
+                    0, 1, 1, 2,
+                    GTK_EXPAND | GTK_FILL, GTK_FILL, 4, 2);
+
   st->a_b_pixmap = NULL;
-  st->a_b_box    = label_box;
+  st->a_b_box    = NULL;
   st->a_b_button = button;
 
-  rcm_create_pixmap_button (&label, &button, &label_box,
-                            G_CALLBACK (rcm_360_degrees), st,
-                            _("Select all"), button_table, 2);
+  button = gtk_button_new_from_stock (STOCK_COLORMAP_SELECT_ALL);
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (rcm_360_degrees),
+                    st);
+  gtk_widget_show (button);
+  gtk_table_attach (GTK_TABLE (button_table), button,
+                    0, 1, 2, 3,
+                    GTK_EXPAND | GTK_FILL, GTK_FILL, 4, 2);
 
   st->f360_pixmap = NULL;
-  st->f360_box    = label_box;
+  st->f360_box    = NULL;
   st->f360_button = button;
 
   /** Main: Circle: Legend **/
@@ -668,6 +631,9 @@ rcm_dialog (void)
   /* init GTK and install colormap */
   gimp_ui_init ("rcm", TRUE);
 
+  /* init stock icons */
+  rcm_stock_init ();
+
   /* Create dialog */
   dlg = gimp_dialog_new (_("Colormap Rotation"), "rcm",
                          NULL, 0,
@@ -716,9 +682,6 @@ rcm_dialog (void)
   rcm_render_circle (Current.From->preview, SUM, MARGIN);
   rcm_render_circle (Current.To->preview, SUM, MARGIN);
   rcm_render_circle (Current.Gray->preview, GRAY_SUM, GRAY_MARGIN);
-
-  rcm_set_pixmaps (Current.From);
-  rcm_set_pixmaps (Current.To);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
 

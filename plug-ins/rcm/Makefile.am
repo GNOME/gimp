@@ -28,13 +28,9 @@ rcm_SOURCES = \
 	rcm_gdk.c	\
 	rcm_gdk.h	\
 	rcm_misc.c	\
-	rcm_misc.h
-
-EXTRA_DIST = \
-	pixmaps/rcm_360.xpm	\
-	pixmaps/rcm_a_b.xpm	\
-	pixmaps/rcm_ccw.xpm	\
-	pixmaps/rcm_cw.xpm
+	rcm_misc.h	\
+	rcm_stock.c	\
+	rcm_stock.h
 
 INCLUDES = \
 	-I$(top_srcdir)	\

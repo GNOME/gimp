@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-14 11:35+0100\n"
-"PO-Revision-Date: 2004-11-14 11:36+0100\n"
+"PO-Revision-Date: 2004-11-17 11:42+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -555,7 +555,7 @@ msgstr "Sichtbar"
 
 #: libgimpwidgets/gimpstock.c:154 libgimpwidgets/gimpstock.c:158
 msgid "_Stroke"
-msgstr "_Strich"
+msgstr "_Nachziehen"
 
 #: libgimpwidgets/gimpstock.c:170
 msgid "L_etter Spacing"

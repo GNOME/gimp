@@ -41,11 +41,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -57,11 +52,9 @@
 #include "rcm_gdk.h"
 #include "rcm_dialog.h"
 #include "rcm_callback.h"
+#include "rcm_stock.h"
 
-#include "libgimp/stdplugins-intl.h"
-
-#include "pixmaps/rcm_ccw.xpm"
-#include "pixmaps/rcm_cw.xpm"
+#include "images/rcm-stock-pixbufs.h"
 
 
 /* Misc functions */
@@ -90,33 +83,6 @@ rcm_units_string (gint units)
   }
 }
 
-void
-rcm_set_pixmap (GtkWidget **widget,
-		GtkWidget  *parent,
-		GtkWidget  *label_box,
-		char      **pixmap_data)
-{
-  GdkPixmap *pixmap;
-  GdkBitmap *mask;
-  GtkStyle  *style;
-
-  /* create pixmap */
-
-  style = gtk_widget_get_style (parent);
-  pixmap = gdk_pixmap_create_from_xpm_d (parent->window, &mask,
-                                         &style->bg[GTK_STATE_NORMAL],
-                                         pixmap_data);
-
-  if (*widget != NULL)
-    gtk_widget_destroy (*widget);
-
-  *widget = gtk_pixmap_new (pixmap, mask);
-
-  gtk_box_pack_start (GTK_BOX (label_box), *widget, FALSE, FALSE, 3);
-
-  gtk_widget_show (*widget);
-}
-
 
 /* Circle buttons */
 
@@ -125,11 +91,12 @@ rcm_360_degrees (GtkWidget *button,
 		 RcmCircle *circle)
 {
   circle->action_flag = DO_NOTHING;
-  gtk_widget_queue_draw(circle->preview);
+  gtk_widget_queue_draw (circle->preview);
   circle->angle->beta = circle->angle->alpha-circle->angle->cw_ccw * 0.001;
-  rcm_draw_arrows(circle->preview->window, circle->preview->style->black_gc, circle->angle);
+  rcm_draw_arrows (circle->preview->window, circle->preview->style->black_gc,
+                   circle->angle);
   circle->action_flag = VIRGIN;
-  rcm_render_preview(Current.Bna->after, CURRENT);
+  rcm_render_preview (Current.Bna->after, CURRENT);
 }
 
 void
@@ -138,13 +105,13 @@ rcm_cw_ccw (GtkWidget *button,
 {
   circle->angle->cw_ccw *= -1;
 
-  rcm_set_pixmap (&circle->cw_ccw_pixmap, circle->cw_ccw_button->parent,
-		  circle->cw_ccw_box,
-                  (circle->angle->cw_ccw>0) ? rcm_cw_xpm : rcm_ccw_xpm);
-
-  gtk_label_set_text (GTK_LABEL (circle->cw_ccw_label),
-		      (circle->angle->cw_ccw>0) ?
-		      _("Switch to clockwise") : _("Switch to c/clockwise"));
+  g_object_set (button,
+                "label",
+                (circle->angle->cw_ccw>0) ?
+                STOCK_COLORMAP_SWITCH_CLOCKWISE :
+                STOCK_COLORMAP_SWITCH_COUNTERCLOCKWISE,
+                "use_stock", TRUE,
+                NULL);
 
   rcm_a_to_b (button, circle);
 }
@@ -436,7 +403,8 @@ rcm_button_press_event (GtkWidget *widget,
   clicked_angle = angle_mod_2PI (arctg (CENTER-bevent->y, bevent->x-CENTER));
   circle->prev_clicked = clicked_angle;
 
-  if ((sqrt (SQR (bevent->y-CENTER) + SQR (bevent->x-CENTER)) > RADIUS * EACH_OR_BOTH) &&
+  if ((sqrt (SQR (bevent->y-CENTER) +
+             SQR (bevent->x-CENTER)) > RADIUS * EACH_OR_BOTH) &&
       (min_prox (*alpha, *beta, clicked_angle) < G_PI / 12))
     {
       circle->mode = EACH;
@@ -505,7 +473,8 @@ rcm_motion_notify_event (GtkWidget *widget,
   values.foreground = Current.From->preview->style->white;
   values.function = GDK_XOR;
   xor_gc = gdk_gc_new_with_values (Current.From->preview->window,
-				   &values, GDK_GC_FOREGROUND | GDK_GC_FUNCTION);
+				   &values,
+                                   GDK_GC_FOREGROUND | GDK_GC_FUNCTION);
 
   gdk_window_get_pointer (widget->window, &x, &y, NULL);
   clicked_angle = angle_mod_2PI (arctg (CENTER-y, x-CENTER));
@@ -645,7 +614,8 @@ rcm_gray_motion_notify_event (GtkWidget *widget,
   values.foreground = Current.From->preview->style->white;
   values.function = GDK_XOR;
   xor_gc = gdk_gc_new_with_values (Current.From->preview->window,
-				   &values, GDK_GC_FOREGROUND | GDK_GC_FUNCTION);
+				   &values,
+                                   GDK_GC_FOREGROUND | GDK_GC_FUNCTION);
 
   if (circle->action_flag == DRAG_START)
     {

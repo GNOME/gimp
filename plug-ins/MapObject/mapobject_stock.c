@@ -106,4 +106,6 @@ mapobject_stock_init (void)
 
   gtk_stock_add_static (mapobject_stock_items,
                         G_N_ELEMENTS (mapobject_stock_items));
+
+  initialized = TRUE;
 }
