@@ -584,7 +584,7 @@ load_image (char *filename)
                           if (gray16_val > alpha16_val) 
 			     gray16_val = alpha16_val;
 			  if (alpha16_val)
-			    *d16++ = (gray16_val * 65535) /(gfloat)alpha16_val + .5;
+			    *d16++ = ((guint32)gray16_val * 65535) /(gfloat)alpha16_val + .5;
 			  else
 			    *d16++ = 0;
 			  *d16++ = alpha16_val;
@@ -766,9 +766,9 @@ load_image (char *filename)
 			  green16_val = alpha16_val;
 		       if (blue16_val > alpha16_val) 
 			  blue16_val = alpha16_val;
-		      *d_16++ = ((int)red16_val * 65535) / (gfloat)alpha16_val + .5;
-		      *d_16++ = ((int)green16_val * 65535) / (gfloat)alpha16_val + .5;
-		      *d_16++ = ((int)blue16_val * 65535) / (gfloat)alpha16_val + .5;
+		      *d_16++ = ((guint32)red16_val * 65535) / (gfloat)alpha16_val + .5;
+		      *d_16++ = ((guint32)green16_val * 65535) / (gfloat)alpha16_val + .5;
+		      *d_16++ = ((guint32)blue16_val * 65535) / (gfloat)alpha16_val + .5;
 		    }
 		    else
 		    {
