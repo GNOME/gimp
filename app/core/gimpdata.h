@@ -50,8 +50,9 @@ struct _GimpData
   GimpViewable  parent_instance;
 
   gchar        *filename;
-  gboolean      dirty;
-  gboolean      internal;
+  guint         writeable : 1;
+  guint         dirty     : 1;
+  guint         internal  : 1;
 };
 
 struct _GimpDataClass

@@ -76,28 +76,28 @@ gint n_patterns_menu_entries = G_N_ELEMENTS (patterns_menu_entries);
 
 void
 patterns_menu_update (GtkItemFactory *factory,
-                      gpointer        data)
+                      gpointer        user_data)
 {
   GimpContainerEditor *editor;
   GimpPattern         *pattern;
-  gboolean             internal = FALSE;
+  GimpData            *data = NULL;
 
-  editor = GIMP_CONTAINER_EDITOR (data);
+  editor = GIMP_CONTAINER_EDITOR (user_data);
 
   pattern = gimp_context_get_pattern (editor->view->context);
 
   if (pattern)
-    internal = GIMP_DATA (pattern)->internal;
+    data = GIMP_DATA (pattern);
 
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
   SET_SENSITIVE ("/Duplicate Pattern",
-		 pattern && GIMP_DATA_GET_CLASS (pattern)->duplicate);
+		 pattern && GIMP_DATA_GET_CLASS (data)->duplicate);
   SET_SENSITIVE ("/Edit Pattern...",
 		 pattern && GIMP_DATA_FACTORY_VIEW (editor)->data_edit_func);
   SET_SENSITIVE ("/Delete Pattern...",
-		 pattern && ! internal);
+		 pattern && data->writeable && !data->internal);
 
 #undef SET_SENSITIVE
 }

@@ -1,3 +1,39 @@
+2003-02-26  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdata.[ch]: added a writeable field to GimpData and
+	set it from gimp_data_set_filename().
+
+	* app/gui/brushes-menu.c
+	* app/gui/gradients-menu.c
+	* app/gui/palettes-menu.c
+	* app/gui/patterns-menu.c
+	* app/widgets/gimpbrushfactoryview.c
+	* app/widgets/gimpdatafactoryview.c
+	* app/widgets/gimpgradienteditor.c: look at data->writeable when
+	setting widgets sensitivity.
+
+	* app/gui/user-install-dialog.c (user_install_dialog_create): reduce
+	some of the dialog clutter by not showing the directories created for
+	plug-ins.
+
+	* app/core/gimpviewable.[ch]: added a default_stock_id to
+	GimpViewableClass so we don't need to hold a copy in each instance.
+	Added accessor functions to set and get the stock_id.
+
+	* app/core/gimptoolinfo.c
+	* app/gui/dialogs-constructors.c
+	* app/gui/image-menu.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimpimagemaptool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimptransformtool.c
+	* app/widgets/gimpcellrendererviewable.c
+	* app/widgets/gimppreview.c
+	* app/widgets/gimptoolbox.c: use gimp_viewable_get_stock_id().
+
+	* app/text/gimptextlayer.c: set a text icon as default stock_id.
+
 2003-02-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpviewable.[ch]: added "gchar *stock_id" to the

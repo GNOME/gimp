@@ -316,13 +316,14 @@ static HistogramToolDialog *
 histogram_tool_dialog_new (GimpToolInfo *tool_info)
 {
   HistogramToolDialog *htd;
-  GtkWidget *hbox;
-  GtkWidget *vbox;
-  GtkWidget *table;
-  GtkWidget *label;
-  GtkWidget *menu;
-  gint       i;
-  gint       x, y;
+  GtkWidget   *hbox;
+  GtkWidget   *vbox;
+  GtkWidget   *table;
+  GtkWidget   *label;
+  GtkWidget   *menu;
+  const gchar *stock_id;
+  gint         i;
+  gint         x, y;
 
   static const gchar *histogram_info_names[] =
   {
@@ -337,12 +338,14 @@ histogram_tool_dialog_new (GimpToolInfo *tool_info)
   htd = g_new0 (HistogramToolDialog, 1);
   htd->hist = gimp_histogram_new (GIMP_BASE_CONFIG (tool_info->gimp->config));
 
+  stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+
   /*  The shell and main vbox  */
   htd->shell =
     gimp_viewable_dialog_new (NULL,
                               tool_info->blurb,
                               GIMP_OBJECT (tool_info)->name,
-                              GIMP_VIEWABLE (tool_info)->stock_id,
+                              stock_id,
                               _("View Image Histogram"),
                               tool_manager_help_func, NULL,
 

@@ -853,14 +853,17 @@ image_menu_setup (GimpItemFactory *factory)
 
         if (tool_info->menu_path)
           {
-            GimpItemFactoryEntry entry;
+            GimpItemFactoryEntry  entry;
+            const gchar          *stock_id;
+
+            stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
 
             entry.entry.path            = tool_info->menu_path;
             entry.entry.accelerator     = tool_info->menu_accel;
             entry.entry.callback        = tools_select_cmd_callback;
             entry.entry.callback_action = 0;
             entry.entry.item_type       = "<StockItem>";
-            entry.entry.extra_data      = GIMP_VIEWABLE (tool_info)->stock_id;
+            entry.entry.extra_data      = stock_id;
             entry.quark_string          = NULL;
             entry.help_page             = tool_info->help_data;
             entry.description           = NULL;

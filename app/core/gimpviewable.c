@@ -128,6 +128,7 @@ gimp_viewable_class_init (GimpViewableClass *klass)
 
   gimp_object_class->get_memsize = gimp_viewable_get_memsize;
 
+  klass->default_stock_id        = "gtk-dialog-question";
   klass->name_changed_signal     = "name_changed";
 
   klass->invalidate_preview      = gimp_viewable_real_invalidate_preview;
@@ -141,7 +142,7 @@ gimp_viewable_class_init (GimpViewableClass *klass)
 static void
 gimp_viewable_init (GimpViewable *viewable)
 {
-  viewable->stock_id = g_strdup ("gtk-dialog-question");
+  viewable->stock_id = NULL;
 }
 
 static void
@@ -445,4 +446,25 @@ gimp_viewable_get_new_preview_pixbuf (GimpViewable *viewable,
     }
 
   return pixbuf;
+}
+
+const gchar *
+gimp_viewable_get_stock_id (GimpViewable *viewable)
+{
+  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
+
+  if (viewable->stock_id)
+    return (const gchar *) viewable->stock_id;
+
+  return GIMP_VIEWABLE_GET_CLASS (viewable)->default_stock_id;
+}
+
+void
+gimp_viewable_set_stock_id (GimpViewable *viewable,
+                            const gchar  *stock_id)
+{
+  g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
+
+  g_free (viewable->stock_id);
+  viewable->stock_id = g_strdup (stock_id);
 }

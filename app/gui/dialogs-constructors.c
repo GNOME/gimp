@@ -1280,9 +1280,10 @@ dialogs_tool_tab_tool_changed (GimpContext  *context,
                                GimpToolInfo *tool_info,
                                GtkImage     *image)
 {
-  gtk_image_set_from_stock (image,
-                            GIMP_VIEWABLE (tool_info)->stock_id,
-                            image->icon_size);
+  const gchar *stock_id;
+
+  stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+  gtk_image_set_from_stock (image, stock_id, image->icon_size);
 }
 
 static GtkWidget *
@@ -1298,7 +1299,8 @@ dialogs_tool_tab_func (GimpDockable *dockable,
 
   viewable = GIMP_VIEWABLE (gimp_context_get_tool (context));
 
-  image = gtk_image_new_from_stock (viewable->stock_id, size);
+  image = gtk_image_new_from_stock (gimp_viewable_get_stock_id (viewable),
+                                    size);
 
   g_signal_connect_object (context, "tool_changed",
 			   G_CALLBACK (dialogs_tool_tab_tool_changed),
@@ -1316,9 +1318,12 @@ dialogs_tool_options_tool_changed (GimpContext  *context,
   GtkImage *image;
 
   if ((image = g_object_get_data (G_OBJECT (label), "tool-icon")))
-    gtk_image_set_from_stock (image,
-                              GIMP_VIEWABLE (tool_info)->stock_id,
-                              image->icon_size);
+    {
+      const gchar *stock_id;
+
+      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+      gtk_image_set_from_stock (image, stock_id, image->icon_size);
+    }
 
   gtk_label_set_text (label, tool_info->blurb);
 
@@ -1339,6 +1344,7 @@ dialogs_tool_options_tab_func (GimpDockable *dockable,
   GtkWidget    *label;
   gint          width;
   gint          height;
+  const gchar  *stock_id;
 
   context = dockbook->dock->context;
 
@@ -1348,8 +1354,8 @@ dialogs_tool_options_tab_func (GimpDockable *dockable,
 
   hbox = gtk_hbox_new (FALSE, 2);
 
-  image = gtk_image_new_from_stock (GIMP_VIEWABLE (tool_info)->stock_id,
-                                    size);
+  stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+  image = gtk_image_new_from_stock (stock_id, size);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
 

@@ -89,28 +89,28 @@ gint n_palettes_menu_entries = G_N_ELEMENTS (palettes_menu_entries);
 
 void
 palettes_menu_update (GtkItemFactory *factory,
-                      gpointer        data)
+                      gpointer        user_data)
 {
   GimpContainerEditor *editor;
   GimpPalette         *palette;
-  gboolean             internal = FALSE;
+  GimpData            *data = NULL;
 
-  editor = GIMP_CONTAINER_EDITOR (data);
+  editor = GIMP_CONTAINER_EDITOR (user_data);
 
   palette = gimp_context_get_palette (editor->view->context);
 
   if (palette)
-    internal = GIMP_DATA (palette)->internal;
+    data = GIMP_DATA (palette);
 
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
   SET_SENSITIVE ("/Duplicate Palette",
-		 palette && GIMP_DATA_GET_CLASS (palette)->duplicate);
+		 palette && GIMP_DATA_GET_CLASS (data)->duplicate);
   SET_SENSITIVE ("/Edit Palette...",
 		 palette && GIMP_DATA_FACTORY_VIEW (editor)->data_edit_func);
   SET_SENSITIVE ("/Delete Palette...",
-		 palette && ! internal);
+		 palette && data->writeable && !data->internal);
   SET_SENSITIVE ("/Merge Palettes...",
 		 FALSE); /* FIXME palette && GIMP_IS_CONTAINER_LIST_VIEW (editor->view)); */
 

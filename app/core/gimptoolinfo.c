@@ -205,9 +205,7 @@ gimp_tool_info_new (Gimp         *gimp,
   tool_info->help_domain       = g_strdup (help_domain);
   tool_info->help_data         = g_strdup (help_data);
 
-  if (viewable->stock_id)
-    g_free (viewable->stock_id);
-  viewable->stock_id = g_strdup (stock_id);
+  gimp_viewable_set_stock_id (viewable, stock_id);
 
   return tool_info;
 }

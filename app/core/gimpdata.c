@@ -24,6 +24,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -125,9 +126,10 @@ gimp_data_class_init (GimpDataClass *klass)
 static void
 gimp_data_init (GimpData *data)
 {
-  data->filename = NULL;
-  data->dirty    = FALSE;
-  data->internal = FALSE;
+  data->filename  = NULL;
+  data->writeable = TRUE;
+  data->dirty     = FALSE;
+  data->internal  = FALSE;
 }
 
 static void
@@ -255,7 +257,24 @@ gimp_data_set_filename (GimpData    *data,
 
   g_free (data->filename);
 
-  data->filename = g_strdup (filename);
+  data->filename  = NULL;
+  data->writeable = TRUE;
+
+  if (filename)
+    {
+      data->filename  = g_strdup (filename);
+
+      if (access (filename, W_OK) &&     /* check if the file is writeable  */
+          access (filename, F_OK) == 0)  /* or doesn't exist                */
+        {
+          gchar *dirname = g_path_get_dirname (filename);
+
+          if (access (dirname, W_OK | X_OK)) /* check if we can write to the dir */
+            data->writeable = FALSE;
+
+          g_free (dirname);
+        }
+    }
 }
 
 void

@@ -202,9 +202,7 @@ gimp_brush_factory_view_select_item (GimpContainerEditor *editor,
 				     GimpViewable        *viewable)
 {
   GimpBrushFactoryView *view;
-
-  gboolean  edit_sensitive    = FALSE;
-  gboolean  spacing_sensitive = FALSE;
+  gboolean              spacing_sensitive = FALSE;
 
   if (GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item)
     GIMP_CONTAINER_EDITOR_CLASS (parent_class)->select_item (editor, viewable);
@@ -219,7 +217,6 @@ gimp_brush_factory_view_select_item (GimpContainerEditor *editor,
 
       brush = GIMP_BRUSH (viewable);
 
-      edit_sensitive    = GIMP_IS_BRUSH_GENERATED (brush);
       spacing_sensitive = TRUE;
 
       g_signal_handlers_block_by_func (view->spacing_adjustment,
@@ -234,8 +231,6 @@ gimp_brush_factory_view_select_item (GimpContainerEditor *editor,
 					 view);
     }
 
-  gtk_widget_set_sensitive (GIMP_DATA_FACTORY_VIEW (view)->edit_button,
-			    edit_sensitive);
   gtk_widget_set_sensitive (view->spacing_scale, spacing_sensitive);
 }
 

@@ -1099,11 +1099,11 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
   if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog)
     {
       GimpToolInfo *tool_info;
-      gchar        *stock_id;
+      const gchar  *stock_id;
 
       tool_info = GIMP_TOOL (tr_tool)->tool_info;
 
-      stock_id = GIMP_VIEWABLE (tool_info)->stock_id;
+      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
 
       tr_tool->info_dialog =
         info_dialog_new (NULL,

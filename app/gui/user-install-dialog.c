@@ -284,34 +284,22 @@ tree_items[] =
   },
   {
     TRUE, "fractalexplorer",
-    N_("This is folder used to store user defined fractals to\n"
-       "be used by the FractalExplorer plug-in.  The GIMP\n"
-       "checks this folder in addition to the systemwide\n"
-       "FractalExplorer installation when searching for fractals."),
+    NULL,
     TREE_ITEM_MKDIR_ONLY, NULL
   },  
   {
     TRUE, "gfig",
-    N_("This folder is used to store user defined figures to\n"
-       "be used by the GFig plug-in.  The GIMP checks this\n"
-       "folder in addition to the systemwide GFig installation\n"
-       "when searching for gfig figures."),
+    NULL,
     TREE_ITEM_MKDIR_ONLY, NULL
   },
   {
     TRUE, "gflare",
-    N_("This folder is used to store user defined gflares to\n"
-       "be used by the GFlare plug-in.  The GIMP checks this\n"
-       "folder in addition to the systemwide GFlares\n"
-       "installation when searching for gflares."),
+    NULL,
     TREE_ITEM_MKDIR_ONLY, NULL
   },
   {
     TRUE, "gimpressionist",
-    N_("This folder is used to store user defined data to be\n"
-       "used by the Gimpressionist plug-in.  The GIMP checks\n"
-       "this folder in addition to the systemwide Gimpressionist\n"
-       "installation when searching for data."),
+    NULL,
     TREE_ITEM_MKDIR_ONLY, NULL
   }  
 };
@@ -867,6 +855,9 @@ user_install_dialog_create (const gchar *alternate_system_gimprc,
 
     for (i = 0; i < G_N_ELEMENTS (tree_items); i++)
       {
+        if (!tree_items[i].description)
+          continue;
+
 	gtk_tree_store_append (tree, &child, &iter);
 	gtk_tree_store_set (tree, &child,
 			    DIRENT_COLUMN, tree_items[i].text,

@@ -280,10 +280,12 @@ gimp_cell_renderer_viewable_render (GtkCellRenderer      *cell,
       gint          height_diff = 1024;
       GtkIconSize   icon_size = GTK_ICON_SIZE_MENU;
       GdkPixbuf    *pixbuf;
+      const gchar  *stock_id;
 
       viewable = cellviewable->viewable;
 
-      icon_set = gtk_style_lookup_icon_set (widget->style, viewable->stock_id);
+      stock_id = gimp_viewable_get_stock_id (viewable);
+      icon_set = gtk_style_lookup_icon_set (widget->style, stock_id);
 
       gtk_icon_set_get_sizes (icon_set, &sizes, &n_sizes);
 

@@ -76,28 +76,28 @@ gint n_brushes_menu_entries = G_N_ELEMENTS (brushes_menu_entries);
 
 void
 brushes_menu_update (GtkItemFactory *factory,
-                     gpointer        data)
+                     gpointer        user_data)
 {
   GimpContainerEditor *editor;
   GimpBrush           *brush;
-  gboolean             internal = FALSE;
+  GimpData            *data = NULL;
 
-  editor = GIMP_CONTAINER_EDITOR (data);
+  editor = GIMP_CONTAINER_EDITOR (user_data);
 
   brush = gimp_context_get_brush (editor->view->context);
 
   if (brush)
-    internal = GIMP_DATA (brush)->internal;
+    data = GIMP_DATA (brush);
 
 #define SET_SENSITIVE(menu,condition) \
         gimp_item_factory_set_sensitive (factory, menu, (condition) != 0)
 
   SET_SENSITIVE ("/Duplicate Brush",
-		 brush && GIMP_DATA_GET_CLASS (brush)->duplicate);
+		 brush && GIMP_DATA_GET_CLASS (data)->duplicate);
   SET_SENSITIVE ("/Edit Brush...",
 		 brush && GIMP_DATA_FACTORY_VIEW (editor)->data_edit_func);
   SET_SENSITIVE ("/Delete Brush...",
-		 brush && ! internal);
+		 brush && data->writeable && !data->internal);
 
 #undef SET_SENSITIVE
 }

@@ -431,14 +431,11 @@ gimp_data_factory_view_select_item (GimpContainerEditor *editor,
   if (viewable && gimp_container_have (view->factory->container,
 				       GIMP_OBJECT (viewable)))
     {
-      GimpData *data;
+      GimpData *data = GIMP_DATA (viewable);
 
-      data = GIMP_DATA (viewable);
-
-      duplicate_sensitive = (GIMP_DATA_GET_CLASS (viewable)->duplicate != NULL);
-
-      edit_sensitive   = (view->data_edit_func != NULL);
-      delete_sensitive = ! data->internal;  /* TODO: check permissions */
+      duplicate_sensitive = (GIMP_DATA_GET_CLASS (data)->duplicate != NULL);
+      edit_sensitive      = (view->data_edit_func != NULL);
+      delete_sensitive    = data->writeable && !data->internal;
     }
 
   gtk_widget_set_sensitive (view->duplicate_button, duplicate_sensitive);

@@ -507,7 +507,7 @@ gimp_gradient_editor_set_data (GimpDataEditor *editor,
         }
     }
 
-  if (data && ! data->internal)
+  if (data && data->writeable && !data->internal)
     gtk_widget_set_sensitive (gradient_editor->control, TRUE);
   else
     gtk_widget_set_sensitive (gradient_editor->control, FALSE);

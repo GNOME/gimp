@@ -967,8 +967,9 @@ gimp_preview_real_render (GimpPreview *preview)
     }
   else /* no preview available */
     {
-      GdkPixbuf *pixbuf;
-      gint       width, height;
+      GdkPixbuf   *pixbuf;
+      const gchar *stock_id;
+      gint         width, height;
 
       if (preview->buffer)
         {
@@ -982,10 +983,11 @@ gimp_preview_real_render (GimpPreview *preview)
           preview->no_preview_pixbuf = NULL;
         }
 
-      pixbuf = gtk_widget_render_icon (GTK_WIDGET (preview),
-                                       preview->viewable->stock_id,
-                                       GTK_ICON_SIZE_DIALOG,
-                                       NULL);
+      stock_id = gimp_viewable_get_stock_id (preview->viewable);
+      pixbuf   = gtk_widget_render_icon (GTK_WIDGET (preview),
+                                         stock_id,
+                                         GTK_ICON_SIZE_DIALOG,
+                                         NULL);
       if (pixbuf)
         {
           width  = gdk_pixbuf_get_width (pixbuf);

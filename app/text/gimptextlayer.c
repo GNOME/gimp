@@ -106,13 +106,14 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->dispose          = gimp_text_layer_dispose;
+  object_class->dispose            = gimp_text_layer_dispose;
 
-  gimp_object_class->get_memsize = gimp_text_layer_get_memsize;
+  gimp_object_class->get_memsize   = gimp_text_layer_get_memsize;
 
-  viewable_class->get_preview    = gimp_text_layer_get_preview;
+  viewable_class->default_stock_id = "gimp-tool-text";
+  viewable_class->get_preview      = gimp_text_layer_get_preview;
 
-  item_class->duplicate          = gimp_text_layer_duplicate;
+  item_class->duplicate            = gimp_text_layer_duplicate;
 }
 
 static void

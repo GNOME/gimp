@@ -937,16 +937,19 @@ crop_info_create (GimpCropTool *crop)
   GtkWidget        *spinbutton;
   GtkWidget        *bbox;
   GtkWidget        *button;
+  const gchar      *stock_id;
 
   tool = GIMP_TOOL (crop);
 
   gdisp = tool->gdisp;
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
+  stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool->tool_info));
+
   crop->crop_info = info_dialog_new (NULL,
                                      tool->tool_info->blurb,
                                      GIMP_OBJECT (tool->tool_info)->name,
-                                     GIMP_VIEWABLE (tool->tool_info)->stock_id,
+                                     stock_id,
                                      _("Crop & Resize Information"),
                                      tool_manager_help_func, NULL);
 
