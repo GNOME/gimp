@@ -279,7 +279,6 @@ HELP
 	      
     %invoke = (
 	success => 'TRUE',
-	vars => [ 'PlugInDef *plug_in_def' ],
 	code => <<'CODE',
 {
   if (current_plug_in && current_plug_in->query)
@@ -313,7 +312,6 @@ HELP
 
     %invoke = (
         success => 'TRUE',
-        vars => [ 'PlugInDef *plug_in_def' ],
         code => <<'CODE',
 {
   if (current_plug_in && current_plug_in->query)

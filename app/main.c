@@ -42,6 +42,8 @@
 
 #include "core/core-types.h"
 
+#include "config/gimpconfig.h"
+
 #include "gui/gui.h"
 
 #include "appenv.h"
@@ -142,6 +144,27 @@ main (int    argc,
     {
       gui_libs_init (&argc, &argv);
     }
+
+  /* test code for GimpConfig, will go away */
+  {
+    GimpConfig *config;
+    gchar      *filename;
+
+    config = g_object_new (GIMP_TYPE_CONFIG, NULL);
+
+    filename = gimp_personal_rc_file ("foorc");
+    gimp_object_set_name (GIMP_OBJECT (config), filename);
+    g_free (filename);
+
+    g_signal_connect_swapped (G_OBJECT (config), "notify",
+                              G_CALLBACK (g_print),
+                              "GimpConfig property changed\n");
+
+    gimp_config_serialize (config);
+    gimp_config_deserialize (config);
+
+    g_object_unref (config);
+  }
 
 #if defined (HAVE_SHM_H) || defined (G_OS_WIN32)
   use_shm = TRUE;

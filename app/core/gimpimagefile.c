@@ -30,6 +30,7 @@
 #endif
 
 #include <glib-object.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "core-types.h"
 

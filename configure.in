@@ -860,6 +860,7 @@ libgimpwidgets/makefile.mingw
 app/Makefile
 app/makefile.mingw
 app/base/Makefile
+app/config/Makefile
 app/core/Makefile
 app/display/Makefile
 app/file/Makefile

@@ -84,7 +84,3 @@ libgimpwidgets_1_3_la_LDFLAGS = @STRIP_BEGIN@ \
 @STRIP_END@
 
 libgimpwidgets_1_3_la_LIBADD = $(GLIB_LIBS) -lm
-
-## this is probably cruft, but may not be.  -klm
-##makefile.mingw: $(top_builddir)/config.status $(top_srcdir)/libgimpwidgets/makefile.mingw.in
-##	cd $(top_builddir) && CONFIG_FILES=libgimpwidgets/$@ CONFIG_HEADERS= $(SHELL) ./config.status

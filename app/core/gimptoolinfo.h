@@ -20,6 +20,8 @@
 #define __GIMP_TOOL_INFO_H__
 
 
+#include <gdk-pixbuf/gdk-pixbuf.h>
+
 #include "gimpdata.h"
 
 

@@ -53,7 +53,7 @@ struct _GimpImage
 {
   GimpViewable       parent_instance;
 
-  Gimp              *gimp;                  /* The GIMP we image belongs to  */
+  Gimp              *gimp;                  /*  the GIMP the image belongs to*/
 
   gint               ID;                    /*  provides a unique ID         */
 
@@ -79,7 +79,7 @@ struct _GimpImage
   TileManager       *shadow;                /*  shadow buffer tiles          */
 
   /*  Projection attributes  */
-  gint               construct_flag;        /*  flag for construction        */
+  gboolean           construct_flag;        /*  flag for construction        */
   GimpImageType      proj_type;             /*  type of the projection image */
   gint               proj_bytes;            /*  bpp in projection image      */
   gint               proj_level;            /*  projection level             */

@@ -414,7 +414,6 @@ plugin_domain_register_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   gchar *domain_name;
   gchar *domain_path;
-  PlugInDef *plug_in_def;
 
   domain_name = (gchar *) args[0].value.pdb_pointer;
   if (domain_name == NULL)
@@ -472,7 +471,6 @@ plugin_help_register_invoker (Gimp     *gimp,
 {
   gboolean success = TRUE;
   gchar *help_path;
-  PlugInDef *plug_in_def;
 
   help_path = (gchar *) args[0].value.pdb_pointer;
   if (help_path == NULL)

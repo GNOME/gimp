@@ -20,8 +20,6 @@
 #define __CORE_TYPES_H__
 
 
-#include <gdk-pixbuf/gdk-pixbuf.h>  /* EEK */
-
 #include "libgimpbase/gimpbasetypes.h"
 #include "libgimpmath/gimpmath.h"
 
@@ -198,6 +196,20 @@ typedef enum /*< skip >*/
   GIMP_TRANSFORM_FORWARD,
   GIMP_TRANSFORM_BACKWARD
 } GimpTransformDirection;
+
+typedef enum /*< skip >*/
+{
+  GIMP_PREVIEW_SIZE_NONE        = 0,
+  GIMP_PREVIEW_SIZE_TINY        = 16,
+  GIMP_PREVIEW_SIZE_EXTRA_SMALL = 24,
+  GIMP_PREVIEW_SIZE_SMALL       = 32,
+  GIMP_PREVIEW_SIZE_MEDIUM      = 48,
+  GIMP_PREVIEW_SIZE_LARGE       = 64,
+  GIMP_PREVIEW_SIZE_EXTRA_LARGE = 96,
+  GIMP_PREVIEW_SIZE_HUGE        = 128,
+  GIMP_PREVIEW_SIZE_ENORMOUS    = 192,
+  GIMP_PREVIEW_SIZE_GIGANTIC    = 256
+} GimpPreviewSize;
 
 
 /*  base objects  */

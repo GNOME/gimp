@@ -467,7 +467,7 @@ gimp_image_init (GimpImage *gimage)
 
   gimage->shadow                = NULL;
 
-  gimage->construct_flag        = -1;
+  gimage->construct_flag        = FALSE;
   gimage->proj_type             = RGBA_GIMAGE;
   gimage->projection            = NULL;
 
@@ -2260,7 +2260,7 @@ gimp_image_construct_layers (GimpImage *gimage,
   PixelRegion  src1PR, src2PR, maskPR;
   PixelRegion * mask;
   GList       *list;
-  GList       *reverse_list = NULL;
+  GList       *reverse_list;
   gint         off_x;
   gint         off_y;
 
@@ -2268,36 +2268,8 @@ gimp_image_construct_layers (GimpImage *gimage,
   if ((layer = gimp_image_floating_sel (gimage)))
     floating_sel_composite (layer, x, y, w, h, FALSE);
 
-  /* Note added by Raph Levien, 27 Jan 1998
 
-     This looks it was intended as an optimization, but it seems to
-     have correctness problems. In particular, if all channels are
-     turned off, the screen simply does not update the projected
-     image. It should be black. Turning off this optimization seems to
-     restore correct behavior. At some future point, it may be
-     desirable to turn the optimization back on.
-
-     */
-#if 0
-  /*  If all channels are not visible, simply return  */
-  switch (gimp_image_base_type (gimage))
-    {
-    case RGB:
-      if (! gimp_image_get_component_visible (gimage, RED_CHANNEL) &&
-	  ! gimp_image_get_component_visible (gimage, GREEN_CHANNEL) &&
-	  ! gimp_image_get_component_visible (gimage, BLUE_CHANNEL))
-	return;
-      break;
-    case GRAY:
-      if (! gimp_image_get_component_visible (gimage, GRAY_CHANNEL))
-	return;
-      break;
-    case INDEXED:
-      if (! gimp_image_get_component_visible (gimage, INDEXED_CHANNEL))
-	return;
-      break;
-    }
-#endif
+  reverse_list = NULL;
 
   for (list = GIMP_LIST (gimage->layers)->list; 
        list; 
@@ -2323,8 +2295,10 @@ gimp_image_construct_layers (GimpImage *gimage,
 
       x1 = CLAMP (off_x, x, x + w);
       y1 = CLAMP (off_y, y, y + h);
-      x2 = CLAMP (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer)), x, x + w);
-      y2 = CLAMP (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer)), y, y + h);
+      x2 = CLAMP (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer)), 
+                  x, x + w);
+      y2 = CLAMP (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer)), 
+                  y, y + h);
 
       /* configure the pixel regions  */
       pixel_region_init (&src1PR, gimp_image_projection (gimage), 
@@ -2388,7 +2362,7 @@ gimp_image_construct_layers (GimpImage *gimage,
 	    }
 	}
 
-      gimage->construct_flag = 1;  /*  something was projected  */
+      gimage->construct_flag = TRUE;  /*  something was projected  */
     }
 
   g_list_free (reverse_list);
@@ -2433,7 +2407,7 @@ gimp_image_construct_channels (GimpImage *gimage,
 
 	  project_channel (gimage, channel, &src1PR, &src2PR);
 
-	  gimage->construct_flag = 1;
+	  gimage->construct_flag = TRUE;
 	}
     }
 
@@ -2535,7 +2509,7 @@ gimp_image_construct (GimpImage *gimage,
   /*  set the construct flag, used to determine if anything
    *  has been written to the gimage raw image yet.
    */
-  gimage->construct_flag = 0;
+  gimage->construct_flag = FALSE;
 
   if (gimage->layers)
     {
@@ -2544,17 +2518,19 @@ gimp_image_construct (GimpImage *gimage,
     }
 
   if ((gimage->layers) &&                         /* There's a layer.      */
-      (! g_slist_next (gimage->layers)) &&        /* It's the only layer.  */
-      (gimp_layer_has_alpha ((GimpLayer *) (gimage->layers->data))) && /* It's !flat.  */
-                                                  /* It's visible.         */
+      (! g_slist_next (gimage->layers)) &&        /* It's the only layer.  */ 
+      (gimp_layer_has_alpha ((GimpLayer *) (gimage->layers->data))) &&
+                                                  /* It's !flat.           */
       (gimp_drawable_get_visible (GIMP_DRAWABLE (gimage->layers->data))) &&
+                                                  /* It's visible.         */
       (gimp_drawable_width (GIMP_DRAWABLE (gimage->layers->data)) ==
        gimage->width) &&
       (gimp_drawable_height (GIMP_DRAWABLE (gimage->layers->data)) ==
        gimage->height) &&                         /* Covers all.           */
-                                                  /* Not indexed.          */
       (!gimp_drawable_is_indexed (GIMP_DRAWABLE (gimage->layers->data))) &&
-      (((GimpLayer *)(gimage->layers->data))->opacity == OPAQUE_OPACITY) /*opaq */
+                                                  /* Not indexed.          */
+      (((GimpLayer *)(gimage->layers->data))->opacity == OPAQUE_OPACITY)
+                                                  /* Opaque                */      
       )
     {
       gint xoff;
@@ -2585,14 +2561,14 @@ gimp_image_construct (GimpImage *gimage,
 					  destPR.curtile, srcPR.curtile);
 	    }
 
-	  gimage->construct_flag = 1;
+	  gimage->construct_flag = TRUE;
 	  gimp_image_construct_channels (gimage, x, y, w, h);
 
 	  return;
 	}
     }
 #else
-  gimage->construct_flag = 0;
+  gimage->construct_flag = FALSE;
 #endif
   
   /*  First, determine if the projection image needs to be

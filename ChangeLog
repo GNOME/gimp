@@ -1,3 +1,44 @@
+2001-11-27  Sven Neumann  <sven@gimp.org>
+
+	* configure.in
+	* app/Makefile.am
+	* app/config/gimpconfig.[ch]
+	* app/config/gimpconfig-serialize.[ch]
+	* app/config/gimpconfig-deserialize.[ch]: added new base class
+	GimpConfig that knows how to serialize and deserialize it's properties
+	in sexp format. Contains two example properties that will go into
+	derived classes once this is really used.
+
+	* app/main.c: deserialize and serialize the test GimpConfig object to
+	~/.gimp-1.3/foorc (only for debugging).
+
+	* app/widgets/widgets-types.h
+	* app/core/core-types.h: moved GimpPreviewSize enum to core-types.
+
+	* app/core/core-types.h: don't include gdk-pixbuf.h.
+
+	* app/core/gimptoolinfo.h
+	* app/core/gimpimagefile.c: include gdk-pixbuf.h.
+
+	* app/core/gimpimage.[ch]: made construct_flag a gboolean.
+
+	* app/core/gimpdrawable-invert.c
+	* app/core/gimpunit.c
+	
+	* tools/pdbgen/pdb/plug_in.pdb
+	* app/pdb/plug_in_cmds.c: removed unused variables.
+
+	* app/display/Makefile.am: removed .PHONY and files cruft
+
+	* app/Makefile.am
+	* libgimp/Makefile.am
+	* libgimpbase/Makefile.am
+	* libgimpcolor/Makefile.am
+	* libgimpmath/Makefile.am
+	* libgimpwidgets/Makefile.am
+	* plug-ins/Makefile.am: removed commented out makefile.mingw rules.
+	If we ever need them again, they can easily be resurrected from CVS.
+	
 2001-11-26  Kelly Martin  <kmartin@pyrzqxgl.org>
 
 	* app/Makefile.am
@@ -421,7 +462,7 @@
 	* plug-ins/script-fu/script-fu-enums.h
 	* plug-ins/script-fu/script-fu-scripts.c
 	* plug-ins/script-fu/siod-wrapper.c: applied a modified version of a
-	patch from Matteo Nastasi <nastasi@tiscalinet.it> that adds the new 
+	patch from Matteo Nastasi <matteo.nastasi@milug.org> that adds the new 
 	Script-Fu parameter type SF-DIRNAME.
 
 	* plug-ins/script-fu/scripts/test-sphere.scm: use SF-DIRNAME.

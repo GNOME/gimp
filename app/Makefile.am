@@ -1,6 +1,18 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = paint-funcs base core xcf file pdb plug-in display tools widgets gui
+SUBDIRS = \
+	paint-funcs	\
+	base 		\
+	core		\
+	config		\
+	xcf		\
+	file		\
+	pdb		\
+	plug-in		\
+	display		\
+	tools		\
+	widgets		\
+	gui
 
 scriptdata =
 
@@ -138,6 +150,7 @@ gimp_1_3_LDADD = @STRIP_BEGIN@ \
 	xcf/libappxcf.a							\
 	file/libappfile.a						\
 	pdb/libapppdb.a							\
+	config/libappconfig.a						\
 	paint-funcs/libapppaint-funcs.a					\
 	base/libappbase.a						\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
@@ -151,7 +164,3 @@ gimp_1_3_LDADD = @STRIP_BEGIN@ \
 	$(INTLLIBS)							\
 	$(REGEXREPL)							\
 @STRIP_END@
-
-## this is probably cruft, but may not be.  -klm
-## makefile.mingw: $(top_builddir)/config.status $(top_srcdir)/app/makefile.mingw.in
-##	cd $(top_builddir) && CONFIG_FILES=app/$@ CONFIG_HEADERS= $(SHELL) ./config.status
