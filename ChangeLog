@@ -1,5 +1,10 @@
 2004-07-28  DindinX  <david.odin@cpe.fr>
 
+	*  plug-ins/common/unsharp.c: Added a toggle button to enable/disable
+	preview updating. Should fix #144972.
+
+2004-07-28  DindinX  <david.odin@cpe.fr>
+
 	* plug-ins/common/shift.c
 	* plug-ins/common/sinus.c
 	* plug-ins/common/snoise.c

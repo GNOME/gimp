@@ -74,35 +74,36 @@ static void      run   (const gchar      *name,
                         gint             *nreturn_vals,
                         GimpParam       **return_vals);
 
-static inline void  blur_line         (gdouble       *ctable,
-                                       gdouble       *cmatrix,
-                                       gint           cmatrix_length,
-                                       guchar        *cur_col,
-                                       guchar        *dest_col,
-                                       gint           y,
-                                       glong          bytes);
-static gint      gen_convolve_matrix  (gdouble        std_dev,
-                                       gdouble      **cmatrix);
-static gdouble * gen_lookup_table     (gdouble       *cmatrix,
-                                       gint           cmatrix_length);
-static void      unsharp_region       (GimpPixelRgn   srcPTR,
-                                       GimpPixelRgn   dstPTR,
-                                       gint           width,
-                                       gint           height,
-                                       gint           bytes,
-                                       gdouble        radius,
-                                       gdouble        amount,
-                                       gint           x1,
-                                       gint           x2,
-                                       gint           y1,
-                                       gint           y2);
+static inline void  blur_line            (gdouble       *ctable,
+                                          gdouble       *cmatrix,
+                                          gint           cmatrix_length,
+                                          guchar        *cur_col,
+                                          guchar        *dest_col,
+                                          gint           y,
+                                          glong          bytes);
+static gint      gen_convolve_matrix     (gdouble        std_dev,
+                                          gdouble      **cmatrix);
+static gdouble * gen_lookup_table        (gdouble       *cmatrix,
+                                          gint           cmatrix_length);
+static void      unsharp_region          (GimpPixelRgn   srcPTR,
+                                          GimpPixelRgn   dstPTR,
+                                          gint           width,
+                                          gint           height,
+                                          gint           bytes,
+                                          gdouble        radius,
+                                          gdouble        amount,
+                                          gint           x1,
+                                          gint           x2,
+                                          gint           y1,
+                                          gint           y2);
 
-static void      unsharp_mask         (GimpDrawable  *drawable,
-                                       gdouble        radius,
-                                       gdouble        amount);
+static void      unsharp_mask            (GimpDrawable  *drawable,
+                                          gdouble        radius,
+                                          gdouble        amount);
 
-static gboolean  unsharp_mask_dialog  (void);
-static void      preview_update       (void);
+static gboolean  unsharp_mask_dialog     (void);
+static void      preview_update          (void);
+static void      preview_toggle_callback (GtkWidget *toggle);
 
 
 /* create a few globals, set default values */
@@ -123,10 +124,11 @@ GimpPlugInInfo PLUG_IN_INFO =
   };
 
 static  GimpRunMode   run_mode;
-static  GtkWidget    *preview  = NULL;         /* Preview widget */
-static  GimpDrawable *drawable = NULL;         /* Current image  */
-static  gint          delta_x  = 0;            /* preview x offset */
-static  gint          delta_y  = 0;            /* preview y offset */
+static  GtkWidget    *preview        = NULL;   /* Preview widget */
+static  gboolean      show_preview   = TRUE;   /* Should we update the preview? */
+static  GimpDrawable *drawable       = NULL;   /* Current image  */
+static  gint          delta_x        = 0;      /* preview x offset */
+static  gint          delta_y        = 0;      /* preview y offset */
 
 MAIN ()
      
@@ -654,6 +656,8 @@ unsharp_preview_new (void)
   GtkWidget *frame;
   GtkObject *adj;
   GtkWidget *scrollbar;
+  GtkWidget *preview_toggle;
+  
   gint       sel_width;
   gint       sel_height;
   gint       x1, y1, x2, y2;
@@ -666,7 +670,7 @@ unsharp_preview_new (void)
   preview_width  = MIN (sel_width, PREVIEW_SIZE);
   preview_height = MIN (sel_height, PREVIEW_SIZE);
 
-  table = gtk_table_new (2, 2, FALSE);
+  table = gtk_table_new (3, 2, FALSE);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
@@ -716,6 +720,15 @@ unsharp_preview_new (void)
   gtk_table_attach (GTK_TABLE (table), scrollbar, 1, 2, 0, 1,
                     0, GTK_FILL, 0, 0);
   gtk_widget_show (scrollbar);
+
+  preview_toggle = gtk_check_button_new_with_mnemonic (_("_Preview"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (preview_toggle),
+                                show_preview);
+  gtk_table_attach (GTK_TABLE (table), preview_toggle,
+                    0, 1, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (preview_toggle);
+  g_signal_connect (preview_toggle, "toggled",
+                    G_CALLBACK (preview_toggle_callback), NULL);
 
   return table;
 }
@@ -825,6 +838,18 @@ unsharp_mask_dialog (void)
 
 /*  preview functions  */
 static void
+preview_toggle_callback (GtkWidget *toggle)
+{
+   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle)))
+    {
+      show_preview = TRUE;
+      preview_update ();
+    }
+  else
+    show_preview = FALSE;
+}
+
+static void
 preview_update (void)
 {
   /* drawable */
@@ -857,6 +882,9 @@ preview_update (void)
   gint         x, y;               /* Current location in image */
 
   gint row,buf_y, offset;          /* Preview loop control      */
+
+  if (!show_preview)
+    return;
 
   /* Get drawable info */
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
