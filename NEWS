@@ -1,3 +1,7 @@
+What's new in GIMP 1.0.3
+
+* GTK+ 1.2 support. Now the GIMP *requires* GTK+ 1.2
+
 What's new in GIMP 1.0.2
 
 * Evil GIF infinite file bug introduced in 1.0.1 fixed

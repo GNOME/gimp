@@ -29,6 +29,7 @@ doesn't load parameter screen on images that don't have alpha
 Previous...Inherited code from Ray Lehtiniemi, who inherited it from S & P.
 */
 
+#include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

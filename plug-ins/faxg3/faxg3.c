@@ -24,6 +24,7 @@
 #define VERSION "0.6"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <fcntl.h>

@@ -48,6 +48,7 @@
  * to allow the plug-in to build with Digitals compiler.
  */
 
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
