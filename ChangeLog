@@ -1,5 +1,8 @@
 Sat Aug 15 14:09:12 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
+	* app/transform_core.c (transform_core_do): Fixed a merge error
+	that I missed on the last commit.
+
 	* blend.c boundary.c by_color_select.c channel.c color_picker.c
  	  convert.c drawable_cmds.c file_new_dialog.c flip_tool.c
  	  floating_sel.c fuzzy_select.c gimage_mask.c gimpimage.c

@@ -1195,11 +1195,6 @@ transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
   x2 = x1 + float_tiles->width;
   y2 = y1 + float_tiles->height;
 
-  transform_point (matrix, x1, y1, &dx1, &dy1);
-  transform_point (matrix, x2, y1, &dx2, &dy2);
-  transform_point (matrix, x1, y2, &dx3, &dy3);
-  transform_point (matrix, x2, y2, &dx4, &dy4);
-
   /*  Find the bounding coordinates  */
   if (active_tool && transform_tool_clip ())
     {
