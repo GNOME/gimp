@@ -1,3 +1,7 @@
+2004-10-11  Marco Ciampa  <ciampix@libero.it>
+
+	* it.po: updated italian translation.
+
 2004-10-07  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: gz.c and bz2.c are now compressor.c

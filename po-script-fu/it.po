@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-05 01:53+0200\n"
-"PO-Revision-Date: 2004-09-23 23:22+0200\n"
+"POT-Creation-Date: 2004-10-11 08:24+0200\n"
+"PO-Revision-Date: 2004-10-11 08:29+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -32,9 +32,8 @@ msgid "Current Command"
 msgstr "Comando corrente"
 
 #: plug-ins/script-fu/script-fu-console.c:267
-#, fuzzy
 msgid "_Browse..."
-msgstr "Naviga..."
+msgstr "_Naviga..."
 
 #: plug-ins/script-fu/script-fu-console.c:548
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
@@ -171,7 +170,7 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Aggio_rna gli script"
 #: plug-ins/dbbrowser/gimpprocbrowser.c:123
 #: plug-ins/dbbrowser/gimpprocbrowser.c:137
 msgid "Procedure Browser"
-msgstr ""
+msgstr "Navigatore delle procedure"
 
 #: plug-ins/dbbrowser/gimpprocbrowser.c:127
 #: plug-ins/dbbrowser/gimpprocbrowser.c:141
@@ -202,40 +201,39 @@ msgstr "Ricerca - attendere"
 #: plug-ins/dbbrowser/gimpprocbrowser.c:424
 #, c-format
 msgid "%d Procedures"
-msgstr ""
+msgstr "%d procedure"
 
 #: plug-ins/dbbrowser/gimpprocbrowser.c:467
 msgid "No matches"
 msgstr "Nessun riscontro"
 
 #: plug-ins/dbbrowser/gimpprocview.c:133
-#, fuzzy
 msgid "Parameters"
-msgstr "Diametro"
+msgstr "Parametri"
 
 #: plug-ins/dbbrowser/gimpprocview.c:146
 msgid "Return Values"
-msgstr ""
+msgstr "Valori restituiti"
 
 #: plug-ins/dbbrowser/gimpprocview.c:159
 msgid "Additional Information"
-msgstr ""
+msgstr "Informazioni aggiuntive"
 
 #: plug-ins/dbbrowser/gimpprocview.c:319
 msgid "Internal GIMP procedure"
-msgstr ""
+msgstr "Procedura interna di GIMP"
 
 #: plug-ins/dbbrowser/gimpprocview.c:320
 msgid "GIMP Plug-In"
-msgstr ""
+msgstr "Plug-in di GIMP"
 
 #: plug-ins/dbbrowser/gimpprocview.c:321
 msgid "GIMP Extension"
-msgstr ""
+msgstr "Estensione di GIMP"
 
 #: plug-ins/dbbrowser/gimpprocview.c:322
 msgid "Temporary Procedure"
-msgstr ""
+msgstr "Procedura temporanea"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/3D _Outline..."
@@ -688,7 +686,7 @@ msgid "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
 msgstr "<Toolbox>/Xtns/Script-Fu/Utilità/_ASCII a immagine..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:5
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Buffer amount (% height of text)"
 msgstr "Dimensione buffer (% altezza del testo)"
 
@@ -1994,12 +1992,17 @@ msgid "Pattern name"
 msgstr "Nome motivo"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
-msgid "<Image>/Script-Fu/Selection/_Round..."
-msgstr "<Image>/Script-Fu/Selezione/Ci_rcolare..."
+msgid "<Image>/Select/Modify/Rounded R_ectangle..."
+msgstr "<Image>/Selezione/Modifica/R_ettangolo arrotondato..."
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:2
-msgid "Relative radius"
-msgstr "Raggio relativo"
+msgid "Concave"
+msgstr "Concavo"
+
+#: plug-ins/script-fu/scripts/selection-round.scm.h:4
+#, no-c-format
+msgid "Radius (%)"
+msgstr "Raggio (%)"
 
 #: plug-ins/script-fu/scripts/slide.scm.h:1
 msgid "<Image>/Script-Fu/Decor/_Slide..."
@@ -2446,33 +2449,3 @@ msgstr "Spostamento illuminazione in Y"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight opacity"
 msgstr "Opacità illuminazione"
-
-#~ msgid "_About"
-#~ msgstr "_Informazioni"
-
-#~ msgid "DB Browser"
-#~ msgstr "Navigazione DB"
-
-#~ msgid "Name:"
-#~ msgstr "Nome:"
-
-#~ msgid "Blurb:"
-#~ msgstr "Descrizione:"
-
-#~ msgid "In:"
-#~ msgstr "Ingresso:"
-
-#~ msgid "Out:"
-#~ msgstr "Uscita:"
-
-#~ msgid "Help:"
-#~ msgstr "Aiuto:"
-
-#~ msgid "Font Size (pixels)"
-#~ msgstr "Dimensione font (pixel)"
-
-#~ msgid "Text Color"
-#~ msgstr "Colore testo"
-
-#~ msgid "Transparent Background"
-#~ msgstr "Sfondo trasparente"
