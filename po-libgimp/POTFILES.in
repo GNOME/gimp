@@ -36,6 +36,7 @@ libgimpwidgets/gimppatheditor.c
 libgimpwidgets/gimppickbutton.c
 libgimpwidgets/gimppreviewarea.c
 libgimpwidgets/gimppreview.c
+libgimpwidgets/gimppropwidgets.c
 libgimpwidgets/gimpquerybox.c
 libgimpwidgets/gimpstock.c
 libgimpwidgets/gimpunitmenu.c
