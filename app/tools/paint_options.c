@@ -33,6 +33,7 @@
 #include "paint_options.h"
 #include "tool_manager.h"
 
+#include "gimpairbrushtool.h"
 #include "gimpblendtool.h"
 #include "gimpbucketfilltool.h"
 #include "gimpdodgeburntool.h"

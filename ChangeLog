@@ -1,3 +1,13 @@
+2001-04-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/Makefile.am
+	* app/tools/gimpairbrushtool.[ch]: back again.
+
+	* app/tools/gimptool.[ch]
+	* app/tools/paint_options.c
+	* app/tools/tool_manager.c
+	* app/tools/tools.c: changed accordingly.
+
 2001-03-31  Michael Natterer  <mitch@gimp.org>
 
 	* app/apptypes.h

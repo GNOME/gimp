@@ -482,8 +482,6 @@ gimp_tool_help_func (const gchar *help_data)
 
 #define STUB(x) void * x (void){g_message ("stub function %s called",#x); return NULL;}
 
-STUB(airbrush_non_gui)
-STUB(airbrush_non_gui_default)
 STUB(by_color_select_initialize_by_image)
 STUB(by_color_select)
 STUB(perspective_find_transform)
@@ -633,34 +631,6 @@ ToolInfo tool_info[] =
       0, 0, NULL, NULL, NULL
     }
   }, /* perspective */
-
-  {
-    NULL,
-    N_("Airbrush"),
-    N_("/Tools/Paint Tools/Airbrush"),
-    "A",
-    (char **) airbrush_bits,
-    NULL,
-    NULL,
-    N_("Airbrush with variable pressure"),
-    "tools/airbrush.html",
-    AIRBRUSH,
-    tools_new_airbrush,
-    tools_free_airbrush,
-    NULL,
-    NULL,
-    NULL,
-    {
-      airbrush_small_bits, airbrush_small_mask_bits,
-      airbrush_small_width, airbrush_small_height,
-      0, 0, NULL, NULL, NULL
-    },
-    {
-      NULL, NULL,
-      0, 0,
-      0, 0, NULL, NULL, NULL
-    }
-  },
 
   {
     NULL,

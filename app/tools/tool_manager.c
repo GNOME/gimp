@@ -41,6 +41,7 @@
 #include "tool_options.h"
 #include "tool_options_dialog.h"
 
+#include "gimpairbrushtool.h"
 #include "gimppaintbrushtool.h"
 #include "gimpdodgeburntool.h"
 #include "gimperasertool.h"

@@ -25,7 +25,6 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimpbrush.h"
@@ -33,26 +32,29 @@
 #include "gimpgradient.h"
 #include "gimpimage.h"
 #include "paint_funcs.h"
-#include "paint_core.h"
 #include "selection.h"
 #include "temp_buf.h"
 
-#include "airbrush.h"
+#include "gimpairbrushtool.h"
 #include "paint_options.h"
-#include "tools.h"
+#include "gimptool.h"
+#include "tool_manager.h"
 
 #include "libgimp/gimpintl.h"
+
+#include "pixmaps2.h"
 
 
 /*  The maximum amount of pressure that can be exerted  */
 #define MAX_PRESSURE  0.075
 
 /* Default pressure setting */
+#define AIRBRUSH_RATE_DEFAULT        0.0
 #define AIRBRUSH_PRESSURE_DEFAULT    10.0
 #define AIRBRUSH_INCREMENTAL_DEFAULT FALSE
 
-#define OFF           0
-#define ON            1
+#define OFF 0
+#define ON  1
 
 /*  the airbrush structures  */
 
@@ -60,8 +62,8 @@ typedef struct _AirbrushTimeout AirbrushTimeout;
 
 struct _AirbrushTimeout
 {
-  PaintCore    *paint_core;
-  GimpDrawable *drawable;
+  GimpPaintTool *paint_tool;
+  GimpDrawable  *drawable;
 };
 
 typedef struct _AirbrushOptions AirbrushOptions;
@@ -82,61 +84,409 @@ struct _AirbrushOptions
 
 /*  local function prototypes  */
 
-static gpointer   airbrush_paint_func         (PaintCore    *paint_core,
-					       GimpDrawable *drawable,
-					       PaintState    state);
-static gpointer   airbrush_non_gui_paint_func (PaintCore    *paint_core,
-					       GimpDrawable *drawable,
-					       PaintState    state);
+static void   gimp_airbrush_tool_class_init (GimpAirbrushToolClass *klass);
+static void   gimp_airbrush_tool_init       (GimpAirbrushTool      *airbrush);
 
+static void   gimp_airbrush_tool_destroy    (GtkObject             *object);
 
-/*  the airbrush tool options  */
-static AirbrushOptions *airbrush_options = NULL; 
+static void   gimp_airbrush_tool_paint      (GimpPaintTool         *paint_tool,
+					     GimpDrawable          *drawable,
+					     PaintState             state);
+static void   gimp_airbrush_tool_motion     (GimpPaintTool         *paint_tool,
+					     GimpDrawable          *drawable,
+					     PaintPressureOptions  *pressure_options,
+					     gdouble                pressure,
+					     PaintApplicationMode   mode);
+static gint   airbrush_time_out             (gpointer               data);
+
+static AirbrushOptions * airbrush_options_new   (void);
+static void              airbrush_options_reset (ToolOptions *tool_options);
+
 
 /*  local variables  */
 static gint             timer;  /*  timer for successive paint applications  */
 static gint             timer_state = OFF;       /*  state of airbrush tool  */
 static AirbrushTimeout  airbrush_timeout;
 
+static gdouble          non_gui_rate;
 static gdouble          non_gui_pressure;
 static gboolean         non_gui_incremental;
 
-/*  forward function declarations  */
-static void   airbrush_motion   (PaintCore *, GimpDrawable *,
-				 PaintPressureOptions *,
-				 gdouble, PaintApplicationMode);
-static gint   airbrush_time_out (gpointer);
+static AirbrushOptions *airbrush_options = NULL; 
+
+static GimpPaintToolClass *parent_class = NULL;
 
 
 /*  functions  */
 
+void
+gimp_airbrush_tool_register (void)
+{
+  tool_manager_register_tool (GIMP_TYPE_AIRBRUSH_TOOL,
+                              TRUE,
+                              "gimp:airbrush_tool",
+                              _("Airbrush"),
+                              _("Airbrush with variable pressure"),
+                              N_("/Tools/Paint Tools/Airbrush"), "A",
+                              NULL, "tools/airbrush.html",
+                              (const gchar **) airbrush_bits);
+}
+
+GtkType
+gimp_airbrush_tool_get_type (void)
+{
+  static GtkType tool_type = 0;
+
+  if (! tool_type)
+    {
+      GtkTypeInfo tool_info =
+      {
+        "GimpAirbrushTool",
+        sizeof (GimpAirbrushTool),
+        sizeof (GimpAirbrushToolClass),
+        (GtkClassInitFunc) gimp_airbrush_tool_class_init,
+        (GtkObjectInitFunc) gimp_airbrush_tool_init,
+        /* reserved_1 */ NULL,
+        /* reserved_2 */ NULL,
+        NULL
+      };
+
+      tool_type = gtk_type_unique (GIMP_TYPE_PAINT_TOOL, &tool_info);
+    }
+
+  return tool_type;
+}
+
+static void 
+gimp_airbrush_tool_class_init (GimpAirbrushToolClass *klass)
+{
+  GtkObjectClass     *object_class;
+  GimpPaintToolClass *paint_tool_class;
+
+  object_class     = (GtkObjectClass *) klass;
+  paint_tool_class = (GimpPaintToolClass *) klass;
+
+  parent_class = gtk_type_class (GIMP_TYPE_PAINT_TOOL);
+
+  object_class->destroy   = gimp_airbrush_tool_destroy;
+
+  paint_tool_class->paint = gimp_airbrush_tool_paint;
+}
+
 static void
-airbrush_options_reset (void)
+gimp_airbrush_tool_init (GimpAirbrushTool *airbrush)
+{
+  GimpTool      *tool;
+  GimpPaintTool *paint_tool;
+
+  tool       = GIMP_TOOL (airbrush);
+  paint_tool = GIMP_PAINT_TOOL (airbrush);
+
+  if (! airbrush_options)
+    {
+      airbrush_options = airbrush_options_new ();
+
+      tool_manager_register_tool_options (GIMP_TYPE_AIRBRUSH_TOOL,
+                                          (ToolOptions *) airbrush_options);
+     }
+
+   tool->tool_cursor = GIMP_AIRBRUSH_TOOL_CURSOR;
+
+   paint_tool->pick_colors  = TRUE;
+   paint_tool->flags       |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
+}
+             
+static void
+gimp_airbrush_tool_destroy (GtkObject *object)
+{
+  if (timer_state == ON)
+    {
+      gtk_timeout_remove (timer);
+      timer_state = OFF;
+    }
+
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static void
+gimp_airbrush_tool_paint (GimpPaintTool *paint_tool,
+			  GimpDrawable  *drawable,
+			  PaintState     state)
+{
+  PaintPressureOptions *pressure_options;
+  gdouble               pressure;
+  gdouble               rate;
+  gboolean              incremental;
+  GimpBrush            *brush;
+
+  if (!drawable) 
+    return;
+
+  if (airbrush_options)
+    {
+      pressure_options = airbrush_options->paint_options.pressure_options;
+      pressure         = airbrush_options->pressure;
+      rate             = airbrush_options->rate;
+      incremental      = airbrush_options->paint_options.incremental;
+    }
+  else
+    {
+      pressure_options = &non_gui_pressure_options;
+      pressure         = non_gui_pressure;
+      rate             = non_gui_rate;
+      incremental      = non_gui_incremental;
+    }
+
+  brush = gimp_context_get_brush (NULL);
+
+  switch (state)
+    {
+    case INIT_PAINT:
+      if (timer_state == ON)
+	{
+	  g_warning ("killing stray timer, please report to lewing@gimp.org");
+	  gtk_timeout_remove (timer);
+	  timer_state = OFF;
+	}
+      break;
+
+    case MOTION_PAINT:
+      if (timer_state == ON)
+	{
+	  gtk_timeout_remove (timer);
+	  timer_state = OFF;
+	}
+
+      gimp_airbrush_tool_motion (paint_tool, drawable,
+				 pressure_options,
+				 pressure,
+				 incremental ? INCREMENTAL : CONSTANT);
+
+      if (rate != 0.0)
+	{
+	  gdouble timeout;
+
+	  airbrush_timeout.paint_tool = paint_tool;
+	  airbrush_timeout.drawable   = drawable;
+
+	  timeout = (pressure_options->rate ? 
+		     (10000 / (rate * 2.0 * paint_tool->curpressure)) : 
+		     (10000 / rate));
+
+	  timer = gtk_timeout_add (timeout, airbrush_time_out, NULL);
+	  timer_state = ON;
+	}
+      break;
+
+    case FINISH_PAINT:
+      if (timer_state == ON)
+	{
+	  gtk_timeout_remove (timer);
+	  timer_state = OFF;
+	}
+      break;
+
+    default:
+      break;
+    }
+}
+
+static gint
+airbrush_time_out (gpointer client_data)
+{
+  PaintPressureOptions *pressure_options;
+  gdouble               pressure;
+  gdouble               rate;
+  gboolean              incremental;
+
+  if (airbrush_options)
+    {
+      pressure_options = airbrush_options->paint_options.pressure_options;
+      pressure         = airbrush_options->pressure;
+      rate             = airbrush_options->rate;
+      incremental      = airbrush_options->paint_options.incremental;
+    }
+  else
+    {
+      pressure_options = &non_gui_pressure_options;
+      pressure         = non_gui_pressure;
+      rate             = non_gui_rate;
+      incremental      = non_gui_incremental;
+    }
+
+  gimp_airbrush_tool_motion (airbrush_timeout.paint_tool,
+			     airbrush_timeout.drawable,
+			     pressure_options,
+			     pressure,
+			     incremental ? INCREMENTAL : CONSTANT);
+  gdisplays_flush ();
+
+  /*  restart the timer  */
+  if (rate != 0.0)
+    {
+      if (pressure_options->rate)
+	{
+	  /* set a new timer */
+	  timer = gtk_timeout_add ((10000 / (rate * 2.0 * airbrush_timeout.paint_tool->curpressure)), 
+				   airbrush_time_out, NULL);
+	  return FALSE;
+	}
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static void
+gimp_airbrush_tool_motion (GimpPaintTool        *paint_tool,
+			   GimpDrawable	        *drawable,
+			   PaintPressureOptions *pressure_options,
+			   gdouble               pressure,
+			   PaintApplicationMode  mode)
+{
+  GimpImage *gimage;
+  TempBuf   *area;
+  guchar     col[MAX_CHANNELS];
+  gdouble    scale;
+
+  if (!drawable) 
+    return;
+
+  if (! (gimage = gimp_drawable_gimage (drawable)))
+    return;
+
+  if (pressure_options->size)
+    scale = paint_tool->curpressure;
+  else
+    scale = 1.0;
+
+  if (! (area = gimp_paint_tool_get_paint_area (paint_tool, drawable, scale)))
+    return;
+
+  /*  color the pixels  */
+  if (pressure_options->color)
+    {
+      GimpRGB color;
+      
+      gimp_gradient_get_color_at (gimp_context_get_gradient (NULL),
+				  paint_tool->curpressure, &color);
+
+      gimp_rgba_get_uchar (&color,
+			   &col[RED_PIX],
+			   &col[GREEN_PIX],
+			   &col[BLUE_PIX],
+			   &col[ALPHA_PIX]);
+
+      mode = INCREMENTAL;
+      color_pixels (temp_buf_data (area), col,
+		    area->width * area->height, area->bytes);
+    }
+  else if (paint_tool->brush && paint_tool->brush->pixmap)
+    {
+      mode = INCREMENTAL;
+      gimp_paint_tool_color_area_with_pixmap (paint_tool, gimage,
+					      drawable, area, 
+					      scale, SOFT);
+    }
+  else
+    {
+      gimp_image_get_foreground (gimage, drawable, col);
+      col[area->bytes - 1] = OPAQUE_OPACITY;
+      color_pixels (temp_buf_data (area), col,
+		    area->width * area->height, area->bytes);
+    }
+
+  if (pressure_options->pressure)
+    pressure = pressure * 2.0 * paint_tool->curpressure;
+
+  /*  paste the newly painted area to the image  */
+  gimp_paint_tool_paste_canvas (paint_tool, drawable,
+				MIN (pressure, 255),
+				(gint) (gimp_context_get_opacity (NULL) * 255),
+				gimp_context_get_paint_mode (NULL),
+				SOFT, scale, mode);
+}
+
+gboolean
+airbrush_non_gui_default (GimpDrawable *drawable,
+			  gint          num_strokes,
+			  gdouble      *stroke_array)
 {
   AirbrushOptions *options = airbrush_options;
 
-  paint_options_reset ((PaintOptions *) options);
+  gdouble pressure = AIRBRUSH_PRESSURE_DEFAULT;
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->rate_w),
-			    options->rate_d);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->pressure_w),
-			    options->pressure_d);
+  if (options)
+    pressure = options->pressure;
+
+  return airbrush_non_gui (drawable, pressure, num_strokes, stroke_array);
+}
+
+gboolean
+airbrush_non_gui (GimpDrawable *drawable,
+    		  gdouble       pressure,
+		  gint          num_strokes,
+		  gdouble      *stroke_array)
+{
+  static GimpAirbrushTool *non_gui_airbrush = NULL;
+
+  GimpPaintTool *paint_tool;
+  gint           i;
+
+  if (! non_gui_airbrush)
+    {
+      non_gui_airbrush = gtk_type_new (GIMP_TYPE_AIRBRUSH_TOOL);
+    }
+
+  paint_tool = GIMP_PAINT_TOOL (non_gui_airbrush);
+
+  if (gimp_paint_tool_start (paint_tool, drawable,
+                             stroke_array[0],
+                             stroke_array[1]))
+    {
+      non_gui_rate        = AIRBRUSH_RATE_DEFAULT;
+      non_gui_pressure    = pressure;
+      non_gui_incremental = AIRBRUSH_INCREMENTAL_DEFAULT;
+
+      paint_tool->startx = paint_tool->lastx = stroke_array[0];
+      paint_tool->starty = paint_tool->lasty = stroke_array[1];
+
+      gimp_airbrush_tool_paint (paint_tool, drawable, MOTION_PAINT);
+
+      for (i = 1; i < num_strokes; i++)
+	{
+	  paint_tool->curx = stroke_array[i * 2 + 0];
+	  paint_tool->cury = stroke_array[i * 2 + 1];
+
+	  gimp_paint_tool_interpolate (paint_tool, drawable);
+
+	  paint_tool->lastx = paint_tool->curx;
+	  paint_tool->lasty = paint_tool->cury;
+	}
+
+      gimp_paint_tool_finish (paint_tool, drawable);
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 static AirbrushOptions *
 airbrush_options_new (void)
 {
   AirbrushOptions *options;
+  GtkWidget       *vbox;
+  GtkWidget       *table;
+  GtkWidget       *scale;
 
-  GtkWidget *vbox;
-  GtkWidget *table;
-  GtkWidget *scale;
-
-  /*  the new airbrush tool options structure  */
-  options = g_new (AirbrushOptions, 1);
+  options = g_new0 (AirbrushOptions, 1);
   paint_options_init ((PaintOptions *) options,
-		      AIRBRUSH,
+		      GIMP_TYPE_AIRBRUSH_TOOL,
 		      airbrush_options_reset);
+
   options->rate     = options->rate_d     = 80.0;
   options->pressure = options->pressure_d = AIRBRUSH_PRESSURE_DEFAULT;
 
@@ -179,265 +529,17 @@ airbrush_options_new (void)
   return options;
 }
 
-Tool *
-tools_new_airbrush (void)
-{
-  Tool * tool;
-  PaintCore * private;
-
-  /*  The tool options  */
-  if (! airbrush_options)
-    {
-      airbrush_options = airbrush_options_new ();
-      tools_register (AIRBRUSH, (ToolOptions *) airbrush_options);
-    }
-
-  tool = paint_core_new (AIRBRUSH);
-
-  private = (PaintCore *) tool->private;
-  private->paint_func = airbrush_paint_func;
-  private->pick_colors = TRUE;
-  private->flags |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
-
-  return tool;
-}
-
-static gpointer
-airbrush_paint_func (PaintCore    *paint_core,
-		     GimpDrawable *drawable,
-		     PaintState    state)
-{
-  GimpBrush *brush;
-  gdouble    rate;
-
-  if (!drawable) 
-    return NULL;
-
-  brush = gimp_context_get_brush (NULL);
-  switch (state)
-    {
-    case INIT_PAINT :
-      /* timer_state = OFF; */
-      if (timer_state == ON)
-	{
-	  g_warning ("killing stray timer, please report to lewing@gimp.org");
-	  gtk_timeout_remove (timer);
-	}
-      timer_state = OFF;
-      break;
-
-    case MOTION_PAINT :
-      if (timer_state == ON)
-	gtk_timeout_remove (timer);
-      timer_state = OFF;
-
-      airbrush_motion (paint_core, drawable,
-		       airbrush_options->paint_options.pressure_options,
-		       airbrush_options->pressure,
-		       airbrush_options->paint_options.incremental ?
-		       INCREMENTAL : CONSTANT);
-
-      if (airbrush_options->rate != 0.0)
-	{
-	  airbrush_timeout.paint_core = paint_core;
-	  airbrush_timeout.drawable = drawable;
-	  rate = airbrush_options->paint_options.pressure_options->rate ? 
-	    (10000 / (airbrush_options->rate * 2.0 * paint_core->curpressure)) : 
-	    (10000 / airbrush_options->rate);
-	  timer = gtk_timeout_add (rate, airbrush_time_out, NULL);
-	  timer_state = ON;
-	}
-      break;
-
-    case FINISH_PAINT :
-      if (timer_state == ON)
-	gtk_timeout_remove (timer);
-      timer_state = OFF;
-      break;
-
-    default :
-      break;
-    }
-
-  return NULL;
-}
-
-
-void
-tools_free_airbrush (Tool *tool)
-{
-  if (timer_state == ON)
-    gtk_timeout_remove (timer);
-  timer_state = OFF;
-
-  paint_core_free (tool);
-}
-
-
-static gint
-airbrush_time_out (gpointer client_data)
-{
-  /*  service the timer  */
-  airbrush_motion (airbrush_timeout.paint_core,
-		   airbrush_timeout.drawable,
-		   airbrush_options->paint_options.pressure_options,
-		   airbrush_options->pressure,
-		   airbrush_options->paint_options.incremental ?
-		   INCREMENTAL : CONSTANT);
-  gdisplays_flush ();
-
-  /*  restart the timer  */
-  if (airbrush_options->rate != 0.0)
-    {
-      if (airbrush_options->paint_options.pressure_options->rate)
-	{
-	  /* set a new timer */
-	  timer = gtk_timeout_add ((10000 / (airbrush_options->rate * 2.0 * airbrush_timeout.paint_core->curpressure)), 
-				   airbrush_time_out, NULL);
-	  return FALSE;
-	}
-      else 
-	return TRUE;
-    }
-  else
-    return FALSE;
-}
-
-
 static void
-airbrush_motion (PaintCore	      *paint_core,
-		 GimpDrawable	      *drawable,
-		 PaintPressureOptions *pressure_options,
-		 double		       pressure,
-		 PaintApplicationMode  mode)
+airbrush_options_reset (ToolOptions *tool_options)
 {
-  GImage  *gimage;
-  TempBuf *area;
-  guchar   col[MAX_CHANNELS];
-  gdouble  scale;
+  AirbrushOptions *options;
 
-  if (!drawable) 
-    return;
+  options = (AirbrushOptions *) tool_options;
 
-  if (! (gimage = gimp_drawable_gimage (drawable)))
-    return;
+  paint_options_reset (tool_options);
 
-  if (pressure_options->size)
-    scale = paint_core->curpressure;
-  else
-    scale = 1.0;
-
-  if (! (area = paint_core_get_paint_area (paint_core, drawable, scale)))
-    return;
-
-  /*  color the pixels  */
-  if (pressure_options->color)
-    {
-      GimpRGB color;
-      
-      gimp_gradient_get_color_at (gimp_context_get_gradient (NULL),
-				  paint_core->curpressure, &color);
-
-      gimp_rgba_get_uchar (&color,
-			   &col[RED_PIX],
-			   &col[GREEN_PIX],
-			   &col[BLUE_PIX],
-			   &col[ALPHA_PIX]);
-
-      mode = INCREMENTAL;
-      color_pixels (temp_buf_data (area), col,
-		    area->width * area->height, area->bytes);
-    }
-  else if (paint_core->brush && paint_core->brush->pixmap)
-    {
-      mode = INCREMENTAL;
-      paint_core_color_area_with_pixmap (paint_core, gimage, drawable, area, 
-					 scale, SOFT);
-    }
-  else
-    {
-      gimp_image_get_foreground (gimage, drawable, col);
-      col[area->bytes - 1] = OPAQUE_OPACITY;
-      color_pixels (temp_buf_data (area), col,
-		    area->width * area->height, area->bytes);
-    }
-
-  if (pressure_options->pressure)
-    pressure = pressure * 2.0 * paint_core->curpressure;
-
-  /*  paste the newly painted area to the image  */
-  paint_core_paste_canvas (paint_core, drawable,
-			   MIN (pressure, 255),
-			   (gint) (gimp_context_get_opacity (NULL) * 255),
-			   gimp_context_get_paint_mode (NULL),
-			   SOFT, scale, mode);
-}
-
-static gpointer
-airbrush_non_gui_paint_func (PaintCore    *paint_core,
-			     GimpDrawable *drawable,
-			     PaintState    state)
-{
-  airbrush_motion (paint_core, drawable, &non_gui_pressure_options, 
-		   non_gui_pressure, non_gui_incremental);
-
-  return NULL;
-}
-
-gboolean
-airbrush_non_gui_default (GimpDrawable *drawable,
-			  gint          num_strokes,
-			  gdouble      *stroke_array)
-{
-  AirbrushOptions *options = airbrush_options;
-  gdouble pressure = AIRBRUSH_PRESSURE_DEFAULT;
-
-  if(options)
-    pressure = options->pressure;
-
-  return airbrush_non_gui (drawable, pressure, num_strokes, stroke_array);
-}
-
-gboolean
-airbrush_non_gui (GimpDrawable *drawable,
-    		  gdouble       pressure,
-		  gint          num_strokes,
-		  gdouble      *stroke_array)
-{
-  gint i;
-
-  if (paint_core_init (&non_gui_paint_core, drawable,
-		       stroke_array[0], stroke_array[1]))
-    {
-      /* Set the paint core's paint func */
-      non_gui_paint_core.paint_func = airbrush_non_gui_paint_func;
-
-      non_gui_pressure = pressure;
-
-      non_gui_paint_core.startx = non_gui_paint_core.lastx = stroke_array[0];
-      non_gui_paint_core.starty = non_gui_paint_core.lasty = stroke_array[1];
-
-      airbrush_non_gui_paint_func (&non_gui_paint_core, drawable, 0);
-
-      for (i = 1; i < num_strokes; i++)
-	{
-	  non_gui_paint_core.curx = stroke_array[i * 2 + 0];
-	  non_gui_paint_core.cury = stroke_array[i * 2 + 1];
-
-	  paint_core_interpolate (&non_gui_paint_core, drawable);
-
-	  non_gui_paint_core.lastx = non_gui_paint_core.curx;
-	  non_gui_paint_core.lasty = non_gui_paint_core.cury;
-	}
-
-      /* Finish the painting */
-      paint_core_finish (&non_gui_paint_core, drawable, -1);
-
-      /* Cleanup */
-      paint_core_cleanup ();
-
-      return TRUE;
-    }
-
-  return FALSE;
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->rate_w),
+			    options->rate_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->pressure_w),
+			    options->pressure_d);
 }
