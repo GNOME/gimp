@@ -1339,7 +1339,14 @@ crop_aspect_changed (GtkWidget    *widget,
 
   crop->y2 = crop->y1 + ((gdouble) (crop->x2 - crop->x1) / crop->aspect_ratio);
 
-  crop->change_aspect_ratio = FALSE;
+  if (crop->y2 >= crop->y1 + 1)
+    crop->change_aspect_ratio = FALSE;
+  else
+    {
+      crop->change_aspect_ratio = TRUE;
+      crop->y2 = crop->y1 + 1;
+    }
+
   crop_recalc (crop, TRUE);
   crop->change_aspect_ratio = TRUE;
 
