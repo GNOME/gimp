@@ -456,13 +456,11 @@ gimp_image_resize (GimpImage *gimage,
   gimage->height = new_height;
 
   /*  Resize all channels  */
-  list = gimage->channels;
-  while (list)
+  for (list = gimage->channels; list; list = g_slist_next (list))
     {
       channel = (Channel *) list->data;
-      channel_resize (channel, new_width, new_height, offset_x, offset_y);
-      list = g_slist_next (list);
 
+      channel_resize (channel, new_width, new_height, offset_x, offset_y);
     }
 
   /*  Reposition or remove any guides  */
@@ -482,14 +480,16 @@ gimp_image_resize (GimpImage *gimage,
 	  if (guide->position < 0 || guide->position > new_height)
 	    gimp_image_delete_guide (gimage, guide);
 	  break;
+
 	case ORIENTATION_VERTICAL:
 	  undo_push_guide (gimage, guide);
 	  guide->position += offset_x;
 	  if (guide->position < 0 || guide->position > new_width)
 	    gimp_image_delete_guide (gimage, guide);
 	  break;
+
 	default:
-	  g_error("Unknown guide orientation I.\n");
+	  g_error ("Unknown guide orientation\n");
 	}
     }
 
@@ -499,12 +499,11 @@ gimp_image_resize (GimpImage *gimage,
   gimage_mask_invalidate (gimage);
 
   /*  Reposition all layers  */
-  list = gimage->layers;
-  while (list)
+  for (list = gimage->layers; list; list = g_slist_next (list))
     {
       layer = (Layer *) list->data;
+
       layer_translate (layer, offset_x, offset_y);
-      list = g_slist_next (list);
     }
 
   /*  Make sure the projection matches the gimage size  */
@@ -1313,9 +1312,9 @@ gimp_image_set_tattoo_state (GimpImage *gimage,
   if (plist && plist->bz_paths)
     {
       Tattoo  ptattoo;
-      GSList *pl = plist->bz_paths;
+      GSList *pl;
 
-      while (pl)
+      for (pl = plist->bz_paths; pl; pl = g_slist_next (pl))
 	{
 	  pptr = pl->data;
 
@@ -1323,8 +1322,6 @@ gimp_image_set_tattoo_state (GimpImage *gimage,
 	  
 	  if (ptattoo > maxval)
 	    maxval = ptattoo;
-	  
-	  pl = pl->next;
 	}
     }
 
@@ -2314,14 +2311,12 @@ gimp_image_pick_correlate_layer (GimpImage *gimage,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
-  list = gimage->layers;
-  while (list)
+  for (list = gimage->layers; list; list = g_slist_next (list))
     {
       layer = (Layer *) list->data;
+
       if (layer_pick_correlate (layer, x, y))
 	return layer;
-
-      list = g_slist_next (list);
     }
 
   return NULL;
@@ -2534,21 +2529,23 @@ gimp_image_merge_visible_layers (GimpImage *gimage,
       had_floating_sel = TRUE;
     }
 
-  layer_list = gimage->layers;
-  while (layer_list)
+  for (layer_list = gimage->layers;
+       layer_list;
+       layer_list = g_slist_next (layer_list))
     {
       layer = (Layer *) layer_list->data;
-      if (drawable_visible (GIMP_DRAWABLE(layer)))
-	merge_list = g_slist_append (merge_list, layer);
 
-      layer_list = g_slist_next (layer_list);
+      if (drawable_visible (GIMP_DRAWABLE (layer)))
+	merge_list = g_slist_append (merge_list, layer);
     }
 
   if (merge_list && merge_list->next)
     {
       gimp_add_busy_cursors ();
+
       layer = gimp_image_merge_layers (gimage, merge_list, merge_type);
       g_slist_free (merge_list);
+
       gimp_remove_busy_cursors (NULL);
 
       return layer;
@@ -2583,14 +2580,14 @@ gimp_image_flatten (GimpImage *gimage)
   if (gimp_image_floating_sel (gimage))
     floating_sel_anchor (gimage->floating_sel);
 
-  layer_list = gimage->layers;
-  while (layer_list)
+  for (layer_list = gimage->layers;
+       layer_list;
+       layer_list = g_slist_next (layer_list))
     {
       layer = (Layer *) layer_list->data;
+
       if (drawable_visible (GIMP_DRAWABLE (layer)))
 	merge_list = g_slist_append (merge_list, layer);
-
-      layer_list = g_slist_next (layer_list);
     }
 
   layer = gimp_image_merge_layers (gimage, merge_list, FLATTEN_IMAGE);
@@ -2860,41 +2857,45 @@ gimp_image_merge_layers (GimpImage *gimage,
       /*  determine what sort of operation is being attempted and
        *  if it's actually legal...
        */
-      operation = valid_combinations [drawable_type (GIMP_DRAWABLE(merge_layer))][drawable_bytes (GIMP_DRAWABLE(layer))];
+      operation =
+	valid_combinations[drawable_type (GIMP_DRAWABLE (merge_layer))][drawable_bytes (GIMP_DRAWABLE (layer))];
+
       if (operation == -1)
 	{
 	  g_message ("gimp_image_merge_layers attempting to merge incompatible layers\n");
 	  return NULL;
 	}
 
-      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
+      drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
       x3 = CLAMP (off_x, x1, x2);
       y3 = CLAMP (off_y, y1, y2);
-      x4 = CLAMP (off_x + drawable_width (GIMP_DRAWABLE(layer)), x1, x2);
-      y4 = CLAMP (off_y + drawable_height (GIMP_DRAWABLE(layer)), y1, y2);
+      x4 = CLAMP (off_x + drawable_width (GIMP_DRAWABLE (layer)), x1, x2);
+      y4 = CLAMP (off_y + drawable_height (GIMP_DRAWABLE (layer)), y1, y2);
 
       /* configure the pixel regions  */
       pixel_region_init (&src1PR, 
-			 drawable_data (GIMP_DRAWABLE(merge_layer)), 
+			 drawable_data (GIMP_DRAWABLE (merge_layer)), 
 			 (x3 - x1), (y3 - y1), (x4 - x3), (y4 - y3), 
 			 TRUE);
       pixel_region_init (&src2PR, 
-			 drawable_data (GIMP_DRAWABLE(layer)), 
+			 drawable_data (GIMP_DRAWABLE (layer)), 
 			 (x3 - off_x), (y3 - off_y),
 			 (x4 - x3), (y4 - y3), 
 			 FALSE);
 
-      if (layer->mask)
+      if (layer->mask && layer->apply_mask)
 	{
 	  pixel_region_init (&maskPR, 
-			     drawable_data (GIMP_DRAWABLE(layer->mask)), 
+			     drawable_data (GIMP_DRAWABLE (layer->mask)), 
 			     (x3 - off_x), (y3 - off_y),
 			     (x4 - x3), (y4 - y3), 
 			     FALSE);
 	  mask = &maskPR;
 	}
       else
-	mask = NULL;
+	{
+	  mask = NULL;
+	}
 
       combine_regions (&src1PR, &src2PR, &src1PR, mask, NULL,
 		       layer->opacity, layer->mode, active, operation);
@@ -2931,21 +2932,21 @@ gimp_image_merge_layers (GimpImage *gimage,
 
   /* set the name after the original layers have been removed so we don't
      end up with #2 appended to the name */
-  drawable_set_name (GIMP_DRAWABLE(merge_layer), name);
+  drawable_set_name (GIMP_DRAWABLE (merge_layer), name);
   g_free (name);
 
   /*  End the merge undo group  */
   undo_push_group_end (gimage);
 
   /*  Update the gimage  */
-  GIMP_DRAWABLE(merge_layer)->visible = TRUE;
+  GIMP_DRAWABLE (merge_layer)->visible = TRUE;
 
-  gtk_signal_emit (GTK_OBJECT(gimage), gimp_image_signals[RESTRUCTURE]);
+  gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[RESTRUCTURE]);
 
-  drawable_update (GIMP_DRAWABLE(merge_layer), 
+  drawable_update (GIMP_DRAWABLE (merge_layer), 
 		   0, 0, 
-		   drawable_width (GIMP_DRAWABLE(merge_layer)), 
-		   drawable_height (GIMP_DRAWABLE(merge_layer)));
+		   drawable_width (GIMP_DRAWABLE (merge_layer)), 
+		   drawable_height (GIMP_DRAWABLE (merge_layer)));
 
   /*reinit_layer_idlerender (gimage, merge_layer);*/
 
@@ -3112,10 +3113,10 @@ gimp_image_add_layer_mask (GimpImage *gimage,
       return (NULL);
     }
 
-  if ((drawable_width (GIMP_DRAWABLE(layer)) !=
-       drawable_width (GIMP_DRAWABLE(mask))) ||
-      (drawable_height (GIMP_DRAWABLE(layer)) !=
-       drawable_height (GIMP_DRAWABLE(mask))))
+  if ((drawable_width (GIMP_DRAWABLE (layer)) !=
+       drawable_width (GIMP_DRAWABLE (mask))) ||
+      (drawable_height (GIMP_DRAWABLE (layer)) !=
+       drawable_height (GIMP_DRAWABLE (mask))))
     {
       g_message(_("Cannot add layer mask of different dimensions than specified layer."));
       return NULL;

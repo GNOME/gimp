@@ -1,3 +1,8 @@
+2000-12-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimpimage.c: gimp_image_merge_layers(): apply the layer mask
+	only if layer->apply_mask is TRUE, cleanup.
+
 2000-12-27  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/mosaic/mosaic.c
