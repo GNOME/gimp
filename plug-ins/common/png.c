@@ -37,6 +37,16 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.11  1999/01/02 23:27:58  yosh
+ *   * app/Makefile.am
+ *   * plug-ins/script-fu/scripts/Makefile.am: use -DREGEX_MALLOC,
+ *   seems to be more portable
+ *
+ *   * plug-ins/png/png.c: use a default gamma of 2.2 when gamma
+ *   correction isn't enabled
+ *
+ *   -Yosh
+ *
  *   Revision 1.10  1998/11/09 02:04:34  yosh
  *           * Makefile.am
  *           * README.i18n: new file, explains i18n stuff
@@ -143,6 +153,7 @@
 #define PLUG_IN_VERSION		"1.1.6 - 17 May 1998"
 #define SCALE_WIDTH		125
 
+#define DEFAULT_GAMMA		2.20
 
 /*
  * Structures...
@@ -623,7 +634,7 @@ save_image(char   *filename,	/* I - File to save to */
   guchar	**pixels,	/* Pixel rows */
 		*pixel;		/* Pixel data */
   char		progress[255];	/* Title for progress display... */
-
+  gdouble	gamma;
 
  /*
   * Setup the PNG data structures...
@@ -681,10 +692,12 @@ save_image(char   *filename,	/* I - File to save to */
 
   png_set_compression_level(pp, pngvals.compression_level);
 
+  gamma = gimp_gamma();
+
   info->width          = drawable->width;
   info->height         = drawable->height;
   info->bit_depth      = 8;
-  info->gamma          = gimp_gamma();
+  info->gamma          = gamma != 1.00 ? gamma : DEFAULT_GAMMA;
   info->sig_bit.red    = 8;
   info->sig_bit.green  = 8;
   info->sig_bit.blue   = 8;

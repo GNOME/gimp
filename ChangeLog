@@ -1,3 +1,12 @@
+Sat Jan  2 15:26:31 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* app/Makefile.am
+	* plug-ins/script-fu/scripts/Makefile.am: use -DREGEX_MALLOC,
+	seems to be more portable
+
+	* plug-ins/png/png.c: use a default gamma of 2.2 when gamma
+	correction isn't enabled
+
 Fri Jan  1 19:28:23 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* app/blend.c: remove bogus constification
