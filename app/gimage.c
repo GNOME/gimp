@@ -1949,7 +1949,8 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
   /*  Start a merge undo group  */
   undo_push_group_start (gimage, LAYER_MERGE_UNDO);
 
-  if (merge_type == FlattenImage)
+  if (merge_type == FlattenImage ||
+      !layer_has_alpha (layer))
     {
       switch (gimage_base_type (gimage))
 	{
