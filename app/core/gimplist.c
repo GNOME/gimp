@@ -370,24 +370,36 @@ gimp_list_sort_by_name (GimpList *list)
   gimp_list_sort (list, (GCompareFunc) gimp_object_name_collate);
 }
 
+/**
+ * gimp_list_uniquefy_name:
+ * @gimp_list: a #GimpList
+ * @object:    a #GimpObject
+ * @notify:    whether to notify listeners about the name change
+ *
+ * This function ensures that @object has a name that isn't already
+ * used by another object in @gimp_list. If the name of @object needs
+ * to be changed, the value of @notify decides if the "name_changed"
+ * signal should be emitted or if the name should be changed silently.
+ * The latter might be useful under certain circumstances in order to
+ * avoid recursion.
+ **/
 void
 gimp_list_uniquefy_name (GimpList   *gimp_list,
                          GimpObject *object,
-                         gboolean    use_set_name)
+                         gboolean    notify)
 {
-  GList      *list;
-  GList      *list2;
-  GimpObject *object2;
-  gint        unique_ext = 0;
-  gchar      *new_name   = NULL;
-  gchar      *ext;
+  GList *list;
+  GList *list2;
+  gint   unique_ext = 0;
+  gchar *new_name   = NULL;
+  gchar *ext;
 
   g_return_if_fail (GIMP_IS_LIST (gimp_list));
   g_return_if_fail (GIMP_IS_OBJECT (object));
 
   for (list = gimp_list->list; list; list = g_list_next (list))
     {
-      object2 = GIMP_OBJECT (list->data);
+      GimpObject *object2 = GIMP_OBJECT (list->data);
 
       if (object != object2 &&
 	  strcmp (gimp_object_get_name (GIMP_OBJECT (object)),
@@ -441,14 +453,14 @@ gimp_list_uniquefy_name (GimpList   *gimp_list,
             }
           while (list2);
 
-          if (use_set_name)
+          if (notify)
             {
               gimp_object_set_name (object, new_name);
               g_free (new_name);
             }
           else
             {
-              g_free (object->name);
+              gimp_object_name_free (object);
               object->name = new_name;
             }
 

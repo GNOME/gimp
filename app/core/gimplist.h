@@ -59,7 +59,7 @@ void            gimp_list_sort          (GimpList            *list,
 void            gimp_list_sort_by_name  (GimpList            *list);
 void            gimp_list_uniquefy_name (GimpList            *gimp_list,
                                          GimpObject          *object,
-                                         gboolean             use_set_name);
+                                         gboolean             notify);
 
 
 #endif  /* __GIMP_LIST_H__ */

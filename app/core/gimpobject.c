@@ -60,7 +60,6 @@ static void    gimp_object_get_property      (GObject         *object,
 static gsize   gimp_object_real_get_memsize  (GimpObject      *object,
                                               gsize           *gui_size);
 static void    gimp_object_name_normalize    (GimpObject      *object);
-static void    gimp_object_name_free         (GimpObject      *object);
 
 
 static guint   object_signals[LAST_SIGNAL] = { 0 };
@@ -263,6 +262,15 @@ gimp_object_set_name_safe (GimpObject  *object,
   gimp_object_name_changed (object);
 }
 
+/**
+ * gimp_object_get_name:
+ * @object: a #GimpObject
+ *
+ * This function gives access to the name of a GimpObject. The
+ * returned name belongs to the object and must not be freed.
+ *
+ * Return value: a pointer to the @object's name
+ **/
 const gchar *
 gimp_object_get_name (const GimpObject *object)
 {
@@ -271,12 +279,48 @@ gimp_object_get_name (const GimpObject *object)
   return object->name;
 }
 
+/**
+ * gimp_object_name_changed:
+ * @object: a #GimpObject
+ *
+ * Causes the "name_changed" signal to be emitted.
+ **/
 void
 gimp_object_name_changed (GimpObject *object)
 {
   g_return_if_fail (GIMP_IS_OBJECT (object));
 
   g_signal_emit (object, object_signals[NAME_CHANGED], 0);
+}
+
+/**
+ * gimp_object_name_free:
+ * @object: a #GimpObject
+ *
+ * Frees the name of @object and sets the name pointer to %NULL. Also
+ * takes care of the normalized name that the object might be caching.
+ *
+ * In general you should be using gimp_object_set_name() instead. But
+ * if you ever need to free the object name but don't want the
+ * "name_changed" signal to be emitted, then use this function. Never
+ * ever free the object name directly!
+ **/
+void
+gimp_object_name_free (GimpObject *object)
+{
+  if (object->normalized)
+    {
+      if (object->normalized != object->name)
+        g_free (object->normalized);
+
+      object->normalized = NULL;
+    }
+
+  if (object->name)
+    {
+      g_free (object->name);
+      object->name = NULL;
+    }
 }
 
 /**
@@ -323,24 +367,6 @@ gimp_object_name_normalize (GimpObject *object)
           g_free (key);
           object->normalized = object->name;
         }
-    }
-}
-
-static void
-gimp_object_name_free (GimpObject *object)
-{
-  if (object->normalized)
-    {
-      if (object->normalized != object->name)
-        g_free (object->normalized);
-
-      object->normalized = NULL;
-    }
-
-  if (object->name)
-    {
-      g_free (object->name);
-      object->name = NULL;
     }
 }
 

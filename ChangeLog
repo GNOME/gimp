@@ -1,5 +1,15 @@
 2003-11-16  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpobject.[ch]: exposed gimp_object_name_free() and
+	added documentation.
+
+	* app/core/gimplist.[ch] (gimp_list_uniquefy_name): use
+	gimp_object_name_free() when changing the object name silently.
+	Renamed "use_set_name" parameter to "notify" and documented the
+	function.
+
+2003-11-16  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpobject.c: fixed a bad oversight in the
 	implementation of normalized object names. Introduced the helper
 	function gimp_object_name_free() that takes care of freeing
