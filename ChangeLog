@@ -1,3 +1,17 @@
+2004-05-02  Sven Neumann  <sven@gimp.org>
+
+	* menus/Makefile.am: added a rule to generate gtkuimanager XML
+	files using an XSL transformation.
+
+	* menus/menus.xsl: a simple XSLT to generate a menubar and a popup
+	menu with identical content.
+
+	* menus/image-menu.xml: removed this file from CVS ...
+
+	* menus/image-menu.xml.in: ... and added this instead.
+
+	* HACKING: xsltproc is now needed to build from CVS.
+
 2004-05-01  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: check for xmllint and xsltproc but don't require

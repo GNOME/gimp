@@ -2,7 +2,12 @@
 
 menudatadir = $(gimpdatadir)/menus
 
+menudata_in_files = image-menu.xml.in
+
+menudata_built_files = $(menudata_in_files:.xml.in=.xml)
+
 menudata_DATA = \
+	$(menudata_built_files)		\
 	brushes-menu.xml		\
 	buffers-menu.xml		\
 	channels-menu.xml		\
@@ -15,7 +20,6 @@ menudata_DATA = \
 	fonts-menu.xml			\
 	gradient-editor-menu.xml	\
 	gradients-menu.xml		\
-	image-menu.xml			\
 	images-menu.xml			\
 	layers-menu.xml			\
 	palette-editor-menu.xml		\
@@ -29,7 +33,18 @@ menudata_DATA = \
 
 EXTRA_DIST = \
 	$(menudata_DATA)		\
-	gtkuimanager.dtd
+	gtkuimanager.dtd		\
+	menus.xsl
+
+MAINTAINERCLEAN_FILES = $(menudata_built_files)
+
+
+%.xml: %.xml.in menus.xsl
+if HAVE_XSLTPROC
+	$(XSLTPROC) menus.xsl $< > $(@) || rm -f $(@)
+else
+	@echo "xsltproc is needed to build the menus XML files"; exit 1;
+endif
 
 
 validate: $(menudata_DATA)
