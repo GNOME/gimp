@@ -23,37 +23,24 @@
  * This plug-in composes RGB-images from several types of channels
  */
 
-/* Event history:
- * V 1.00, PK, 29-Jul-97, Creation
- * V 1.01, nn, 20-Dec-97, Add default case in switch for hsv_to_rgb ()
- * V 1.02, PK, 18-Sep-98, Change variable names in Parameter definition.
- *         Otherwise script-fu merges parameters (reported by Patrick Valsecchi)
- *         Check images for same width/height (interactive mode)
- *         Use drawables in interactive menu
- *         Use g_message in interactive mode
- *         Check sensitivity of menues (thanks to Kevin Turner,
- *           kevint@poboxes.com)
- * V1.03, PK, 17-Mar-99, Update for GIMP 1.1.3
- *         Allow image ID 0
- *         Prepare for localization
+/*  Lab colorspace support originally written by Alexey Dyachenko,
+ *  merged into the officical plug-in by Sven Neumann.
  */
-static char ident[] = "@(#) GIMP Compose plug-in v1.03 17-Mar-99";
 
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+#include <libgimpmath/gimpmath.h>
 
 #include "libgimp/stdplugins-intl.h"
+
 
 /* Declare local functions
  */
@@ -86,6 +73,8 @@ static void  compose_cmy       (guchar **src,
 				gint    *incr, gint numpix, guchar *dst);
 static void  compose_cmyk      (guchar **src,
 				gint    *incr, gint numpix, guchar *dst);
+static void  compose_lab       (guchar **src,
+                                gint    *incr, gint numpix, guchar *dst);
 static void  compose_ycbcr470  (guchar **src,
 				gint    *incr, gint numpix, guchar *dst);
 static void  compose_ycbcr709  (guchar **src,
@@ -109,6 +98,12 @@ static void      compose_ok_callback         (GtkWidget *widget,
                                               gpointer   data);
 static void      compose_type_toggle_update  (GtkWidget *widget,
                                               gpointer   data);
+
+
+/* LAB colorspace constants */
+const double Xn	= 0.951;
+const double Yn	= 1.0;
+const double Zn	= 1.089;
 
 /* Maximum number of images to compose */
 #define MAX_COMPOSE_IMAGES 4
@@ -175,6 +170,13 @@ static COMPOSE_DSC compose_dsc[] =
       N_("Black:") },
     { NULL, NULL, NULL, NULL },
     "cmyk-compose", compose_cmyk },
+  { N_("LAB"), 3,
+    { "L",
+      "A",
+      "B",
+      NULL },
+    { NULL, NULL, NULL, NULL },
+    "lab-compose", compose_lab },
   { "YCbCr_ITU_R470", 3,
     { N_("Luma_y470:"),
       N_("Blueness_cb470:"),
@@ -205,8 +207,6 @@ static COMPOSE_DSC compose_dsc[] =
     "ycbcr709F-compose",  compose_ycbcr709f },
 };
 
-#define MAX_COMPOSE_TYPES (G_N_ELEMENTS (compose_dsc))
-
 
 typedef struct
 {
@@ -224,7 +224,7 @@ typedef struct
   GtkWidget *channel_menu[MAX_COMPOSE_IMAGES];  /* The menues */
 
   gint32     select_ID[MAX_COMPOSE_IMAGES];     /* Image Ids selected by menu */
-  gint       compose_flag[MAX_COMPOSE_TYPES];   /* toggle data of compose type */
+  gint       compose_flag[G_N_ELEMENTS (compose_dsc)];   /* toggle data of compose type */
   gboolean   run;
 } ComposeInterface;
 
@@ -452,30 +452,31 @@ compose (const gchar *compose_type,
   gint i, j;
   gint num_layers;
   gint32 layer_ID_dst, image_ID_dst;
-  guchar *src[MAX_COMPOSE_IMAGES], *dst = (guchar *)ident;
+  guchar *src[MAX_COMPOSE_IMAGES];
+  guchar *dst;
   GimpImageType gdtype_dst;
   GimpDrawable *drawable_src[MAX_COMPOSE_IMAGES], *drawable_dst;
   GimpPixelRgn pixel_rgn_src[MAX_COMPOSE_IMAGES], pixel_rgn_dst;
-  
+
   /* Search type of composing */
   compose_idx = -1;
-  for (j = 0; j < MAX_COMPOSE_TYPES; j++)
+  for (j = 0; j < G_N_ELEMENTS (compose_dsc); j++)
     {
       if (g_ascii_strcasecmp (compose_type, compose_dsc[j].compose_type) == 0)
 	compose_idx = j;
     }
   if (compose_idx < 0)
     return (-1);
-  
+
   num_images = compose_dsc[compose_idx].num_images;
   tile_height = gimp_tile_height ();
-  
+
   /* Check image sizes */
   if (compose_by_drawable)
     {
       width = gimp_drawable_width (compose_ID[0]);
       height = gimp_drawable_height (compose_ID[0]);
-      
+
       for (j = 1; j < num_images; j++)
 	{
 	  if ((width != (gint)gimp_drawable_width (compose_ID[j])) ||
@@ -492,7 +493,7 @@ compose (const gchar *compose_type,
     {
       width = gimp_image_width (compose_ID[0]);
       height = gimp_image_height (compose_ID[0]);
-      
+
       for (j = 1; j < num_images; j++)
 	{
 	  if ((width != (gint)gimp_image_width (compose_ID[j])) ||
@@ -502,12 +503,12 @@ compose (const gchar *compose_type,
 	      return -1;
 	    }
 	}
-      
+
       /* Get first layer/drawable for all input images */
       for (j = 0; j < num_images; j++)
 	{
 	  gint32 *g32;
-	
+
 	  /* Get first layer of image */
 	  g32 = gimp_image_get_layers (compose_ID[j], &num_layers);
 	  if ((g32 == NULL) || (num_layers <= 0))
@@ -521,7 +522,7 @@ compose (const gchar *compose_type,
 	  g_free (g32);
 	}
     }
-  
+
   /* Get pixel region for all input drawables */
   for (j = 0; j < num_images; j++)
     {
@@ -529,19 +530,19 @@ compose (const gchar *compose_type,
       incr_src[j] = drawable_src[j]->bpp;
       if ((incr_src[j] != 1) && (incr_src[j] != 2))
 	{
-	  g_message (_("Image is not a gray image (bpp=%d)"), 
+	  g_message (_("Image is not a gray image (bpp=%d)"),
 		     incr_src[j]);
 	  return -1;
 	}
-      
+
       /* Get pixel region */
       gimp_pixel_rgn_init (&(pixel_rgn_src[j]), drawable_src[j], 0, 0,
 			   width, height, FALSE, FALSE);
-      
+
       /* Get memory for retrieving information */
       src[j] = g_new (guchar, tile_height * width * drawable_src[j]->bpp);
     }
-  
+
   /* Create new image */
   gdtype_dst = (compose_dsc[compose_idx].compose_fun == compose_rgba)
     ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
@@ -586,7 +587,7 @@ compose (const gchar *compose_type,
   g_free (dst);
   gimp_drawable_flush (drawable_dst);
   gimp_drawable_detach (drawable_dst);
-  
+
   return image_ID_dst;
 }
 
@@ -639,7 +640,7 @@ compose_rgb (guchar **src,
   gint red_incr   = incr_src[0];
   gint green_incr = incr_src[1];
   gint blue_incr  = incr_src[2];
-  
+
   if ((red_incr == 1) && (green_incr == 1) && (blue_incr == 1))
     {
       while (count-- > 0)
@@ -677,7 +678,7 @@ compose_rgba (guchar **src,
   gint green_incr = incr_src[1];
   gint blue_incr  = incr_src[2];
   gint alpha_incr = incr_src[3];
-  
+
   if ((red_incr == 1) && (green_incr == 1) && (blue_incr == 1) &&
       (alpha_incr == 1))
     {
@@ -719,8 +720,8 @@ compose_hsv (guchar **src,
 
   while (count-- > 0)
     {
-      gimp_hsv_to_rgb4 (rgb_dst, (gdouble) *hue_src / 255.0, 
-			         (gdouble) *sat_src / 255.0, 
+      gimp_hsv_to_rgb4 (rgb_dst, (gdouble) *hue_src / 255.0,
+			         (gdouble) *sat_src / 255.0,
 			         (gdouble) *val_src / 255.0);
       rgb_dst += 3;
       hue_src += hue_incr;
@@ -817,7 +818,79 @@ compose_cmyk (guchar **src,
     }
 }
 
-/* these are here so the code is more readable and we can use 
+static void
+compose_lab (guchar **src,
+             gint    *incr_src,
+             gint     numpix,
+             guchar  *dst)
+{
+  register guchar *l_src = src[0];
+  register guchar *a_src = src[1];
+  register guchar *b_src = src[2];
+  register guchar *rgb_dst = dst;
+
+  register gint count = numpix;
+  gint l_incr = incr_src[0], a_incr = incr_src[1], b_incr = incr_src[2];
+
+  gdouble red, green, blue;
+  gdouble x, y, z;
+  gdouble l, a, b;
+
+  gdouble p, yyn;
+  gdouble ha, hb, sqyyn;
+
+  while (count-- > 0)
+    {
+      l = *l_src / 2.550;
+      a = ( *a_src - 128.0 ) / 1.27;
+      b = ( *b_src - 128.0 ) / 1.27;
+
+      p = (l + 16.) / 116.;
+      yyn = p*p*p;
+
+      if (yyn > 0.008856)
+        {
+          y = Yn * yyn;
+          ha = (p + a/500.);
+          x = Xn * ha*ha*ha;
+          hb = (p - b/200.);
+          z = Zn * hb*hb*hb;
+        }
+      else
+        {
+          y = Yn * l/903.3;
+          sqyyn = pow(l/903.3,1./3.);
+          ha = a/500./7.787 + sqyyn;
+          x = Xn * ha*ha*ha;
+          hb = sqyyn - b/200./7.787;
+          z = Zn * hb*hb*hb;
+        };
+
+      red   =  3.063 * x - 1.393 * y - 0.476 * z;
+      green = -0.969 * x + 1.876 * y + 0.042 * z;
+      blue  =  0.068 * x - 0.229 * y + 1.069 * z;
+
+      red   = ( red   > 0 ) ? red   : 0;
+      green = ( green > 0 ) ? green : 0;
+      blue  = ( blue  > 0 ) ? blue  : 0;
+
+      red   = ( red   < 1.0 ) ? red   : 1.0;
+      green = ( green < 1.0 ) ? green : 1.0;
+      blue  = ( blue  < 1.0 ) ? blue  : 1.0;
+
+      rgb_dst[0] = (guchar) ( red   * 255.999 );
+      rgb_dst[1] = (guchar) ( green * 255.999 );
+      rgb_dst[2] = (guchar) ( blue  * 255.999 );
+
+      rgb_dst += 3;
+      l_src += l_incr;
+      a_src += a_incr;
+      b_src += b_incr;
+    }
+}
+
+
+/* these are here so the code is more readable and we can use
    the standart values instead of some scaled and rounded fixpoint values */
 #define FIX(a) ((int)((a)*256.0*256.0 + 0.5))
 #define FIXY(a) ((int)((a)*256.0*256.0*255.0/219.0 + 0.5))
@@ -842,17 +915,17 @@ compose_ycbcr470 (guchar **src,
   while (count-- > 0)
     {
       int r,g,b,y,cb,cr;
-      y = *y_src  - 16;  
-      cb= *cb_src - 128; 
+      y = *y_src  - 16;
+      cb= *cb_src - 128;
       cr= *cr_src - 128;
       y_src  += y_incr;
       cb_src += cb_incr;
       cr_src += cr_incr;
-      
+
       r = (FIXY(1.0)*y                   + FIXC(1.4022)*cr + FIX(0.5))>>16;
       g = (FIXY(1.0)*y - FIXC(0.3456)*cb - FIXC(0.7145)*cr + FIX(0.5))>>16;
       b = (FIXY(1.0)*y + FIXC(1.7710)*cb                   + FIX(0.5))>>16;
-      
+
       if(((unsigned)r) > 255) r = ((r>>10)&255)^255;
       if(((unsigned)g) > 255) g = ((g>>10)&255)^255;
       if(((unsigned)b) > 255) b = ((b>>10)&255)^255;
@@ -878,21 +951,21 @@ compose_ycbcr709 (guchar **src,
   gint y_incr  = incr_src[0];
   gint cb_incr = incr_src[1];
   gint cr_incr = incr_src[2];
-  
+
   while (count-- > 0)
     {
       int r,g,b,y,cb,cr;
-      y = *y_src  - 16;  
-      cb= *cb_src - 128; 
+      y = *y_src  - 16;
+      cb= *cb_src - 128;
       cr= *cr_src - 128;
       y_src  += y_incr;
       cb_src += cb_incr;
       cr_src += cr_incr;
-      
+
       r = (FIXY(1.0)*y                   + FIXC(1.5748)*cr + FIX(0.5))>>16;
       g = (FIXY(1.0)*y - FIXC(0.1873)*cb - FIXC(0.4681)*cr + FIX(0.5))>>16;
       b = (FIXY(1.0)*y + FIXC(1.8556)*cb                   + FIX(0.5))>>16;
-      
+
       if(((unsigned)r) > 255) r = ((r>>10)&255)^255;
       if(((unsigned)g) > 255) g = ((g>>10)&255)^255;
       if(((unsigned)b) > 255) b = ((b>>10)&255)^255;
@@ -918,21 +991,21 @@ compose_ycbcr470f (guchar **src,
   gint y_incr  = incr_src[0];
   gint cb_incr = incr_src[1];
   gint cr_incr = incr_src[2];
-  
+
   while (count-- > 0)
     {
       int r,g,b,y,cb,cr;
-      y = *y_src;  
-      cb= *cb_src - 128; 
+      y = *y_src;
+      cb= *cb_src - 128;
       cr= *cr_src - 128;
       y_src  += y_incr;
       cb_src += cb_incr;
       cr_src += cr_incr;
-      
+
       r = (FIX(1.0)*y                  + FIX(1.4022)*cr + FIX(0.5))>>16;
       g = (FIX(1.0)*y - FIX(0.3456)*cb - FIX(0.7145)*cr + FIX(0.5))>>16;
       b = (FIX(1.0)*y + FIX(1.7710)*cb                  + FIX(0.5))>>16;
-      
+
       if(((unsigned)r) > 255) r = ((r>>10)&255)^255;
       if(((unsigned)g) > 255) g = ((g>>10)&255)^255;
       if(((unsigned)b) > 255) b = ((b>>10)&255)^255;
@@ -958,21 +1031,21 @@ compose_ycbcr709f (guchar **src,
   gint y_incr  = incr_src[0];
   gint cb_incr = incr_src[1];
   gint cr_incr = incr_src[2];
-  
+
   while (count-- > 0)
     {
       int r,g,b,y,cb,cr;
-      y = *y_src;  
-      cb= *cb_src - 128; 
+      y = *y_src;
+      cb= *cb_src - 128;
       cr= *cr_src - 128;
       y_src  += y_incr;
       cb_src += cb_incr;
       cr_src += cr_incr;
-      
+
       r = (FIX(1.0)*y                   + FIX(1.5748)*cr + FIX(0.5))>>16;
       g = (FIX(1.0)*y - FIX(0.1873)*cb  - FIX(0.4681)*cr + FIX(0.5))>>16;
       b = (FIX(1.0)*y + FIX(1.8556)*cb                   + FIX(0.5))>>16;
-      
+
       if(((unsigned)r) > 255) r = ((r>>10)&255)^255;
       if(((unsigned)g) > 255) g = ((g>>10)&255)^255;
       if(((unsigned)b) > 255) b = ((b>>10)&255)^255;
@@ -1002,7 +1075,7 @@ compose_dialog (const gchar *compose_type,
 
   /* Check default compose type */
   compose_idx = -1;
-  for (j = 0; j < MAX_COMPOSE_TYPES; j++)
+  for (j = 0; j < G_N_ELEMENTS (compose_dsc); j++)
     {
       if (g_ascii_strcasecmp (compose_type, compose_dsc[j].compose_type) == 0)
 	compose_idx = j;
@@ -1102,10 +1175,10 @@ compose_dialog (const gchar *compose_type,
   /* Set sensitivity of last menu */
   gtk_widget_set_sensitive (composeint.channel_menu[3],
                             compose_dsc[compose_idx].channel_name[3] != NULL);
-  
+
   /* Compose types */
   group = NULL;
-  for (j = 0; j < MAX_COMPOSE_TYPES; j++)
+  for (j = 0; j < G_N_ELEMENTS (compose_dsc); j++)
     {
       toggle = gtk_radio_button_new_with_label (group,
 						gettext (compose_dsc[j].compose_type));
@@ -1167,7 +1240,7 @@ compose_ok_callback (GtkWidget *widget,
   for (j = 0; j < MAX_COMPOSE_IMAGES; j++)
     composevals.compose_ID[j] = composeint.select_ID[j];
 
-  for (j = 0; j < MAX_COMPOSE_TYPES; j++)
+  for (j = 0; j < G_N_ELEMENTS (compose_dsc); j++)
     {
       if (composeint.compose_flag[j])
 	{
