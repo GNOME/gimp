@@ -10,10 +10,10 @@ SUBDIRS = \
 	xcf		\
 	file		\
 	plug-in		\
-	display		\
 	tools		\
 	widgets		\
 	gui		\
+	display		\
 	pdb
 
 scriptdata =

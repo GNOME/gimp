@@ -105,7 +105,6 @@ Enums and definitions.
 @GIMP_FS_DITHER: 
 @GIMP_FSLOWBLEED_DITHER: 
 @GIMP_FIXED_DITHER: 
-@GIMP_NODESTRUCT_DITHER: 
 
 <!-- ##### ENUM GimpConvertPaletteType ##### -->
 <para>

@@ -52,9 +52,9 @@ struct _ColorBalanceDialog
 {
   GtkWidget        *shell;
 
-  GtkAdjustment    *cyan_red_data;
-  GtkAdjustment    *magenta_green_data;
-  GtkAdjustment    *yellow_blue_data;
+  GtkAdjustment    *cyan_red_adj;
+  GtkAdjustment    *magenta_green_adj;
+  GtkAdjustment    *yellow_blue_adj;
 
   GimpDrawable     *drawable;
   ImageMap         *image_map;
@@ -69,7 +69,7 @@ struct _ColorBalanceDialog
 
   gboolean          preserve_luminosity;
   gboolean          preview;
-  GimpTransferMode  application_mode;
+  GimpTransferMode  transfer_mode;
 };
 
 
@@ -79,9 +79,9 @@ void    gimp_color_balance_tool_register (Gimp                     *gimp,
 GType   gimp_color_balance_tool_get_type (void) G_GNUC_CONST;
 
 
-void   color_balance                      (PixelRegion       *srcPR,
-					   PixelRegion       *destPR,
-					   void              *data);
+void   color_balance                      (PixelRegion        *srcPR,
+					   PixelRegion        *destPR,
+					   void               *data);
 
 void   color_balance_create_lookup_tables (ColorBalanceDialog *cbd);
 

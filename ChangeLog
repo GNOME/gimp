@@ -1,3 +1,10 @@
+2002-03-20  Sven Neumann  <sven@gimp.org>
+
+	* app/Makefile.am: moved display after gui to make the build work
+	with the latest "truly ugly hack" in app/display/Makefile.am.
+
+	* app/tools/gimpcolorbalancetool.[ch]: dialog overhaul.
+
 2002-03-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-in.[ch]: badly chopped into the new files below.
