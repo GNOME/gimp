@@ -1,3 +1,8 @@
+2003-10-25  DindinX <david@dindinx.net>
+
+	* plug-ins/gimpressionist/Makefile.am: added a real dependency for
+	gimpressionist.c on logo-pixbuf.h.
+
 2003-10-25  Sven Neumann  <sven@gimp.org>
 
 	* configure.in (ALL_LINUGUAS): added "ms" (Malay) now that all po
