@@ -180,8 +180,8 @@ gimp_pixmap_create_from_xpm_d (GimpPixmap *pixmap)
   gtk_pixmap_set (GTK_PIXMAP (pixmap), gdk_pixmap, mask);
 
   if (gdk_pixmap)
-    gdk_pixmap_unref (gdk_pixmap);
+    gdk_drawable_unref (gdk_pixmap);
 
   if (mask)
-    gdk_bitmap_unref (mask);
+    gdk_drawable_unref (mask);
 }

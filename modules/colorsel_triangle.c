@@ -483,7 +483,7 @@ color_selection_callback (GtkWidget *widget,
   gdouble      hue, sat, val;
   gint         hx,hy, sx,sy, vx,vy;
 
-  coldata = gtk_object_get_user_data (GTK_OBJECT (widget));
+  coldata = g_object_get_data (G_OBJECT (widget), "colorselect");
 
   switch (event->type)
     {
@@ -632,17 +632,17 @@ create_preview (ColorSelect *coldata)
   gtk_widget_set_events (GTK_WIDGET (preview), PREVIEW_MASK );
   gtk_preview_size (GTK_PREVIEW (preview), PREVIEWSIZE, PREVIEWSIZE);
 
-  gtk_object_set_user_data (GTK_OBJECT (preview), coldata);
+  g_object_set_data (G_OBJECT (preview), "colorselect", coldata);
 
-  gtk_signal_connect (GTK_OBJECT (preview), "motion_notify_event",
-		      GTK_SIGNAL_FUNC (color_selection_callback),
-		      NULL);
-  gtk_signal_connect (GTK_OBJECT (preview), "button_press_event",
-		      GTK_SIGNAL_FUNC (color_selection_callback),
-		      NULL);
-  gtk_signal_connect (GTK_OBJECT (preview), "button_release_event",
-		      GTK_SIGNAL_FUNC (color_selection_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (preview), "motion_notify_event",
+                    G_CALLBACK (color_selection_callback),
+                    NULL);
+  g_signal_connect (G_OBJECT (preview), "button_press_event",
+                    G_CALLBACK (color_selection_callback),
+                    NULL);
+  g_signal_connect (G_OBJECT (preview), "button_release_event",
+                    G_CALLBACK (color_selection_callback),
+                    NULL);
 
   for (i=0; i < 3 * PREVIEWSIZE; i += 3)
     buf[i] = buf[i+1] = buf[i+2] = BGCOLOR;

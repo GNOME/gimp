@@ -150,14 +150,15 @@ colorsel_gtk_new (const GimpHSV             *hsv,
   colorsel_gtk_set_color (p, hsv, rgb);
 
   /* EEK: to be removed */
-  gtk_signal_connect_object_after
-    (GTK_OBJECT (GTK_COLOR_SELECTION (p->selector)->sample_area), "realize",
-     GTK_SIGNAL_FUNC (colorsel_gtk_widget_hide),
-     GTK_OBJECT (GTK_COLOR_SELECTION (p->selector)->sample_area->parent));
+  g_signal_connect (G_OBJECT (GTK_COLOR_SELECTION (p->selector)->sample_area),
+                    "realize",
+                    G_CALLBACK (colorsel_gtk_widget_hide),
+                    GTK_COLOR_SELECTION (p->selector)->sample_area->parent,
+                    G_CONNECT_SWAPPED | G_CONNECT_AFTER);
 
-  gtk_signal_connect (GTK_OBJECT (p->selector), "color_changed",
-		      GTK_SIGNAL_FUNC (colorsel_gtk_update),
-		      p);
+  g_signal_connect (G_OBJECT (p->selector), "color_changed",
+                    G_CALLBACK (colorsel_gtk_update),
+                    p);
 
   vbox = gtk_vbox_new (TRUE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);

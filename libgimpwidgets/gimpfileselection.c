@@ -98,25 +98,25 @@ gimp_file_selection_destroy (GtkObject *object)
 
   if (gfs->yes_pixmap)
     {
-      gdk_pixmap_unref (gfs->yes_pixmap);
+      gdk_drawable_unref (gfs->yes_pixmap);
       gfs->yes_pixmap = NULL;
     }
 
   if (gfs->yes_mask)
     {
-      gdk_bitmap_unref (gfs->yes_mask);
+      gdk_drawable_unref (gfs->yes_mask);
       gfs->yes_mask = NULL;
     }
 
   if (gfs->no_pixmap)
     {
-      gdk_pixmap_unref (gfs->no_pixmap);
+      gdk_drawable_unref (gfs->no_pixmap);
       gfs->no_pixmap = NULL;
     }
 
   if (gfs->no_mask)
     {
-      gdk_bitmap_unref (gfs->no_mask);
+      gdk_drawable_unref (gfs->no_mask);
       gfs->no_mask = NULL;
     }
 

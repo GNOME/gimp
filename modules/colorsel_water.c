@@ -433,18 +433,18 @@ colorsel_water_new (const GimpHSV             *hsv,
   select_area_draw (preview);
 
   /* Event signals */
-  gtk_signal_connect (GTK_OBJECT (event_box), "motion_notify_event",
-		      GTK_SIGNAL_FUNC (motion_notify_event),
-		      coldata);
-  gtk_signal_connect (GTK_OBJECT (event_box), "button_press_event",
-		      GTK_SIGNAL_FUNC (button_press_event),
-		      coldata);
-  gtk_signal_connect (GTK_OBJECT (event_box), "button_release_event",
-		      GTK_SIGNAL_FUNC (button_release_event),
-		      coldata);
-  gtk_signal_connect (GTK_OBJECT (event_box), "proximity_out_event",
-		      GTK_SIGNAL_FUNC (proximity_out_event),
-		      coldata);
+  g_signal_connect (G_OBJECT (event_box), "motion_notify_event",
+                    G_CALLBACK (motion_notify_event),
+                    coldata);
+  g_signal_connect (G_OBJECT (event_box), "button_press_event",
+                    G_CALLBACK (button_press_event),
+                    coldata);
+  g_signal_connect (G_OBJECT (event_box), "button_release_event",
+                    G_CALLBACK (button_release_event),
+                    coldata);
+  g_signal_connect (G_OBJECT (event_box), "proximity_out_event",
+                    G_CALLBACK (proximity_out_event),
+                    coldata);
 
   gtk_widget_set_events (event_box,
 			 GDK_EXPOSURE_MASK            |
@@ -463,9 +463,9 @@ colorsel_water_new (const GimpHSV             *hsv,
 
   adj = gtk_adjustment_new (200.0 - coldata->pressure_adjust * 100.0,
 			    0.0, 200.0, 1.0, 1.0, 0.0);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (pressure_adjust_update),
-		      coldata);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (pressure_adjust_update),
+                    coldata);
   scale = gtk_vscale_new (GTK_ADJUSTMENT (adj));
   gtk_scale_set_digits (GTK_SCALE (scale), 0);
   gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);

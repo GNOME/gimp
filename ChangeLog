@@ -1,5 +1,14 @@
 2001-07-31  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpfileselection.c
+	* libgimpwidgets/gimppixmap.c: replaced deprecated GDK calls
+	
+	* modules/colorsel_gtk.c
+	* modules/colorsel_triangle.c
+	* modules/colorsel_water.c: GObject porting.
+
+2001-07-31  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpbrushmenu.c
 	* libgimp/gimpexport.c
 	* libgimp/gimpgradientmenu.c
