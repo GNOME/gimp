@@ -1,3 +1,8 @@
+2002-09-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpchannel.c (gimp_channel_sharpen): set
+	channel->bounds_known to FALSE (fixes #93853).
+
 2002-09-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/plug-in-menus.c: escape underscores in plug-in menu
