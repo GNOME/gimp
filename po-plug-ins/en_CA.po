@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-26 01:00-0500\n"
-"PO-Revision-Date: 2005-01-26 14:31-0400\n"
+"POT-Creation-Date: 2005-02-06 18:26-0500\n"
+"PO-Revision-Date: 2005-02-06 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -7300,10 +7300,6 @@ msgstr "Merging..."
 msgid "Unsharp Mask"
 msgstr "Unsharp Mask"
 
-#: plug-ins/common/url.c:85 plug-ins/imagemap/imap_selection.c:382
-msgid "URL"
-msgstr "URL"
-
 #: plug-ins/common/video.c:44
 msgid "_Staggered"
 msgstr "_Staggered"
@@ -10312,6 +10308,10 @@ msgstr "Upper left _y:"
 msgid "#"
 msgstr "#"
 
+#: plug-ins/imagemap/imap_selection.c:382
+msgid "URL"
+msgstr "URL"
+
 #: plug-ins/imagemap/imap_selection.c:400
 msgid "ALT Text"
 msgstr "ALT Text"
@@ -10376,7 +10376,7 @@ msgstr "Export Preview"
 msgid "EXIF data will be ignored."
 msgstr "EXIF data will be ignored."
 
-#: plug-ins/jpeg/jpeg-exif.c:79
+#: plug-ins/jpeg/jpeg-exif.c:88
 msgid ""
 "According to the EXIF data, this image is rotated. Would you like GIMP to "
 "rotate it into the standard orientation?"
@@ -11379,6 +11379,10 @@ msgstr "_TWAIN..."
 #: plug-ins/twain/twain.c:489
 msgid "Transferring TWAIN data..."
 msgstr "Transferring TWAIN data..."
+
+#: plug-ins/uri/uri.c:79
+msgid "URI"
+msgstr "URI"
 
 #: plug-ins/winicon/icodialog.c:123
 msgid "1 bpp, 1-bit alpha, 2-slot palette"

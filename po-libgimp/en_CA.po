@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-02 20:19-0500\n"
-"PO-Revision-Date: 2005-02-02 20:02-0400\n"
+"POT-Creation-Date: 2005-02-06 18:26-0500\n"
+"PO-Revision-Date: 2005-02-06 20:02-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -813,6 +813,11 @@ msgstr "Check Style"
 msgid "_Preview"
 msgstr "_Preview"
 
+#: libgimpwidgets/gimppropwidgets.c:1686
+#, c-format
+msgid "This text input field is limited to %d characters."
+msgstr "This text input field is limited to %d characters."
+
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
 msgstr "Anchor"
@@ -921,51 +926,51 @@ msgstr "Seed random number generator with a generated random number"
 msgid "_Randomize"
 msgstr "_Randomize"
 
-#: modules/cdisplay_colorblind.c:68
+#: modules/cdisplay_colorblind.c:67
 msgid "Protanopia (insensitivity to red"
 msgstr "Protanopia (insensitivity to red)"
 
-#: modules/cdisplay_colorblind.c:70
+#: modules/cdisplay_colorblind.c:69
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Deuteranopia (insensitivity to green)"
 
-#: modules/cdisplay_colorblind.c:72
+#: modules/cdisplay_colorblind.c:71
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopia (insensitivity to blue)"
 
-#: modules/cdisplay_colorblind.c:163
+#: modules/cdisplay_colorblind.c:147
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "Colour deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 
-#: modules/cdisplay_colorblind.c:256
+#: modules/cdisplay_colorblind.c:237
 msgid "Color Deficient Vision"
 msgstr "Colour Deficient Vision"
 
-#: modules/cdisplay_colorblind.c:554
+#: modules/cdisplay_colorblind.c:472
 msgid "Color _Deficiency Type:"
 msgstr "Colour _Deficiency Type:"
 
-#: modules/cdisplay_gamma.c:105
+#: modules/cdisplay_gamma.c:91
 msgid "Gamma color display filter"
 msgstr "Gamma colour display filter"
 
-#: modules/cdisplay_gamma.c:178
+#: modules/cdisplay_gamma.c:160
 msgid "Gamma"
 msgstr "Gamma"
 
-#: modules/cdisplay_gamma.c:352
+#: modules/cdisplay_gamma.c:251
 msgid "_Gamma:"
 msgstr "_Gamma:"
 
-#: modules/cdisplay_highcontrast.c:105
+#: modules/cdisplay_highcontrast.c:91
 msgid "High Contrast color display filter"
 msgstr "High Contrast colour display filter"
 
-#: modules/cdisplay_highcontrast.c:178
+#: modules/cdisplay_highcontrast.c:160
 msgid "Contrast"
 msgstr "Contrast"
 
-#: modules/cdisplay_highcontrast.c:352
+#: modules/cdisplay_highcontrast.c:251
 msgid "Contrast C_ycles:"
 msgstr "Contrast C_ycles:"
 
@@ -981,27 +986,27 @@ msgstr "Relative Colourimetric"
 msgid "Absolute Colorimetric"
 msgstr "Absolute Colourimetric"
 
-#: modules/cdisplay_proof.c:147
+#: modules/cdisplay_proof.c:129
 msgid "Color proof filter using ICC color profile"
 msgstr "Colour proof filter using ICC colour profile"
 
-#: modules/cdisplay_proof.c:251
+#: modules/cdisplay_proof.c:223
 msgid "Color Proof"
 msgstr "Colour Proof"
 
-#: modules/cdisplay_proof.c:462
+#: modules/cdisplay_proof.c:348
 msgid "_Intent:"
 msgstr "_Intent:"
 
-#: modules/cdisplay_proof.c:465
+#: modules/cdisplay_proof.c:352
 msgid "Choose an ICC Color Profile"
 msgstr "Choose an ICC Colour Profile"
 
-#: modules/cdisplay_proof.c:468
+#: modules/cdisplay_proof.c:355
 msgid "_Profile:"
 msgstr "_Profile:"
 
-#: modules/cdisplay_proof.c:476
+#: modules/cdisplay_proof.c:360
 msgid "_Black Point Compensation"
 msgstr "_Black Point Compensation"
 
