@@ -907,7 +907,7 @@ save_image (gchar  *filename,
     case GIMP_INDEXED_IMAGE:
       cmap = gimp_image_get_cmap (image_ID, &colors);
       
-      gimp_palette_get_background_rgb (&background);
+      gimp_palette_get_background (&background);
       gimp_rgb_get_uchar (&background, &bgred, &bggreen, &bgblue);
 
       for (i = 0; i < colors; i++)

@@ -666,7 +666,7 @@ pixel_fetcher_set_bg_color (pixel_fetcher_t *pf)
 {
   GimpRGB  background;
 
-  gimp_palette_get_background_rgb (&background);
+  gimp_palette_get_background (&background);
 
   switch (pf->img_bpp)
     {

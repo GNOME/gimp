@@ -167,7 +167,7 @@ run (gchar      *name,
 
 	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    {
-	      gimp_palette_set_foreground_rgb (&result_color);
+	      gimp_palette_set_foreground (&result_color);
 	    }
 	  if (run_mode == GIMP_RUN_INTERACTIVE)
 	    {
@@ -189,10 +189,7 @@ run (gchar      *name,
   values[0].data.d_status = status;
 	
   values[1].type = GIMP_PDB_COLOR;
-  gimp_rgb_get_uchar (&result_color,
-		      &values[0].data.d_color.red,
-		      &values[1].data.d_color.green,
-		      &values[2].data.d_color.blue);
+  values[1].data.d_color = result_color;
 
   gimp_drawable_detach (drawable);
 }

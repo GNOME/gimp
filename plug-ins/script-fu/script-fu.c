@@ -697,13 +697,16 @@ marshall_proc_db_call (LISP a)
 	    success = FALSE;
 	  if (success)
 	    {
+	      guchar color[3];
+
 	      args[i].type = GIMP_PDB_COLOR;
 	      color_list = car (a);
-	      args[i].data.d_color.red = get_c_long (car (color_list));
-	      color_list = cdr (color_list);
-	      args[i].data.d_color.green = get_c_long (car (color_list));
-	      color_list = cdr (color_list);
-	      args[i].data.d_color.blue = get_c_long (car (color_list));
+	      color[0] = get_c_long (car (color_list));
+	      color[1] = get_c_long (car (color_list));
+	      color[2] = get_c_long (car (color_list));
+
+	      gimp_rgb_set_uchar (&args[i].data.d_color, 
+				  color[0], color[1], color[2]);
 	    }
 	  break;
 
@@ -951,12 +954,16 @@ marshall_proc_db_call (LISP a)
 	      break;
 
 	    case GIMP_PDB_COLOR:
-	      intermediate_val = cons (flocons ((int) values[i + 1].data.d_color.red),
-				       cons (flocons ((int) values[i + 1].data.d_color.green),
-					     cons (flocons ((int) values[i + 1].data.d_color.blue),
-						   NIL)));
-	      return_val = cons (intermediate_val, return_val);
-	      break;
+	      {
+		guchar color[3];
+		gimp_rgb_get_uchar (&values[i + 1].data.d_color, color, color + 1, color + 2);
+		intermediate_val = cons (flocons ((int) color[0]),
+					 cons (flocons ((int) color[1]),
+					       cons (flocons ((int) color[2]),
+						     NIL)));
+		return_val = cons (intermediate_val, return_val);
+		break;
+	      }
 
 	    case GIMP_PDB_REGION:
 	      return my_err ("Regions are currently unsupported as return values", NIL);

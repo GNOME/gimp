@@ -191,32 +191,32 @@ run (gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
 	{
-	  grid_cfg.hwidth    = MAX (0, param[3].data.d_int32);
-	  grid_cfg.hspace    = MAX (1, param[4].data.d_int32);
-	  grid_cfg.hoffset   = MAX (0, param[5].data.d_int32);
-	  gimp_rgba_set_uchar (&grid_cfg.hcolor,
-			       param[6].data.d_color.red,
-			       param[6].data.d_color.green,
-			       param[6].data.d_color.blue,
-			       param[7].data.d_int8);
+	  grid_cfg.hwidth  = MAX (0, param[3].data.d_int32);
+	  grid_cfg.hspace  = MAX (1, param[4].data.d_int32);
+	  grid_cfg.hoffset = MAX (0, param[5].data.d_int32);
+	  grid_cfg.hcolor  = param[6].data.d_color;
 
-	  grid_cfg.vwidth    = MAX (0, param[8].data.d_int32);
-	  grid_cfg.vspace    = MAX (1, param[9].data.d_int32);
-	  grid_cfg.voffset   = MAX (0, param[10].data.d_int32);
-	  gimp_rgba_set_uchar (&grid_cfg.vcolor,
-			       param[11].data.d_color.red,
-			       param[11].data.d_color.green,
-			       param[11].data.d_color.blue,
-			       param[12].data.d_int8);
+	  /*  FIXME: this used to be the alpha value
+	                     param[7].data.d_int8;
+	   */
 
-	  grid_cfg.iwidth    = MAX (0, param[13].data.d_int32);
-	  grid_cfg.ispace    = MAX (0, param[14].data.d_int32);
-	  grid_cfg.ioffset   = MAX (0, param[15].data.d_int32);
-	  gimp_rgba_set_uchar (&grid_cfg.icolor,
-			       param[16].data.d_color.red,
-			       param[16].data.d_color.green,
-			       param[16].data.d_color.blue,
-			       param[17].data.d_int8);
+	  grid_cfg.vwidth  = MAX (0, param[8].data.d_int32);
+	  grid_cfg.vspace  = MAX (1, param[9].data.d_int32);
+	  grid_cfg.voffset = MAX (0, param[10].data.d_int32);
+	  grid_cfg.vcolor  = param[11].data.d_color;
+        
+          /*  FIXME: this used to be the alpha value
+			     param[12].data.d_int8;
+	   */
+
+	  grid_cfg.iwidth  = MAX (0, param[13].data.d_int32);
+	  grid_cfg.ispace  = MAX (0, param[14].data.d_int32);
+	  grid_cfg.ioffset = MAX (0, param[15].data.d_int32);
+	  grid_cfg.icolor  = param[16].data.d_color;
+
+	  /*  FIXME: this used to be the alpha value	  
+			     param[17].data.d_int8);
+	   */
 	}
     }
   else

@@ -901,12 +901,12 @@ fspike (GimpPixelRgn *src_rgn,
       break;
 
     case FOREGROUND:
-      gimp_palette_get_foreground_rgb (&gimp_color);
+      gimp_palette_get_foreground (&gimp_color);
       gimp_rgb_get_uchar (&gimp_color, &pixel[0], &pixel[1], &pixel[2]);
       break;
 	
     case BACKGROUND:
-      gimp_palette_get_background_rgb (&gimp_color);
+      gimp_palette_get_background (&gimp_color);
       gimp_rgb_get_uchar (&gimp_color, &pixel[0], &pixel[1], &pixel[2]);
       break;
     }

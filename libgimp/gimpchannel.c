@@ -49,14 +49,12 @@ gimp_channel_new (gint32   image_ID,
 		  guint    width,
 		  guint    height,
 		  gdouble  opacity,
-		  guchar  *color)
+		  GimpRGB *color)
 {
   return _gimp_channel_new (image_ID,
 			    width,
 			    height,
 			    name,
 			    opacity,
-			    color[0],
-			    color[1],
-			    color[2]);
+			    color);
 }

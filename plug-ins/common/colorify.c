@@ -187,12 +187,7 @@ run (gchar      *name,
 	status = GIMP_PDB_CALLING_ERROR;
 
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  gimp_rgb_set_uchar (&cvals.color,
-			      param[3].data.d_color.red,
-			      param[3].data.d_color.green,
-			      param[3].data.d_color.blue);
-	}
+	cvals.color = param[3].data.d_color;
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:

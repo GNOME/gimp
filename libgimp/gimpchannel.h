@@ -36,7 +36,7 @@ gint32  gimp_channel_new (gint32    image_ID,
 			  guint     width,
 			  guint     height,
 			  gdouble   opacity,
-			  guchar   *color);
+			  GimpRGB  *color);
 
 
 #ifdef __cplusplus

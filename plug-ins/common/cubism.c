@@ -272,7 +272,7 @@ cubism (GimpDrawable *drawable)
     }
   else
     {
-      gimp_palette_get_background_rgb (&background);
+      gimp_palette_get_background (&background);
       switch (gimp_drawable_type (drawable->id))
 	{
 	case GIMP_RGBA_IMAGE:

@@ -40,7 +40,6 @@
 #include <libgimp/gimpimage.h>
 #include <libgimp/gimplayer.h>
 #include <libgimp/gimplimits.h>
-#include <libgimp/gimppalette.h>
 #include <libgimp/gimpparasite.h>
 #include <libgimp/gimppixelrgn.h>
 #include <libgimp/gimpproceduraldb.h>
@@ -117,13 +116,6 @@ struct _GimpParamDef
   gchar          *description;
 };
 
-struct _GimpParamColor
-{
-  guint8 red;
-  guint8 green;
-  guint8 blue;
-};
-
 struct _GimpParamRegion
 {
   gint32 x;
@@ -144,7 +136,7 @@ union _GimpParamData
   gint8            *d_int8array;
   gdouble          *d_floatarray;
   gchar           **d_stringarray;
-  GimpParamColor    d_color;
+  GimpRGB           d_color;
   GimpParamRegion   d_region;
   gint32            d_display;
   gint32            d_image;

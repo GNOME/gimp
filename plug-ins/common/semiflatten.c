@@ -182,7 +182,7 @@ semiflatten (GimpDrawable *drawable)
   gint         x1, y1, x2, y2;
 
   /* Fetch the GIMP current background colour, to semi-flatten against */
-  gimp_palette_get_background_rgb (&background);
+  gimp_palette_get_background (&background);
   gimp_rgb_get_uchar (&background, &bgred, &bggreen, &bgblue);
 
   /* Get the input area. This is the bounding box of the selection in

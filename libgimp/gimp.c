@@ -421,7 +421,6 @@ gimp_run_procedure (gchar *name,
   GimpPDBArgType  param_type;
   GimpParam      *return_vals;
   va_list         args;
-  guchar         *color;
   gint            i;
 
   proc_run.name = name;
@@ -475,7 +474,6 @@ gimp_run_procedure (gchar *name,
           (void) va_arg (args, gchar **);
           break;
         case GIMP_PDB_COLOR:
-          (void) va_arg (args, guchar *);
           break;
         case GIMP_PDB_PARASITE:
           (void) va_arg (args, GimpParasite *);
@@ -533,10 +531,6 @@ gimp_run_procedure (gchar *name,
           proc_run.params[i].data.d_stringarray = va_arg (args, gchar **);
           break;
         case GIMP_PDB_COLOR:
-	  color = va_arg (args, guchar *);
-          proc_run.params[i].data.d_color.red   = color[0];
-          proc_run.params[i].data.d_color.green = color[1];
-          proc_run.params[i].data.d_color.blue  = color[2];
           break;
         case GIMP_PDB_REGION:
           break;

@@ -146,8 +146,6 @@ libgimp_la_SOURCES = \
 	gimplayer.c			\
 	gimplayer.h			\
 	gimplimits.h			\
-	gimppalette.c			\
-	gimppalette.h			\
 	gimpparasite.c			\
 	gimpparasite.h			\
 	gimpparasiteio.c		\
@@ -212,7 +210,6 @@ gimpinclude_HEADERS = \
 	gimplayer.h			\
 	gimplimits.h			\
 	gimpmodule.h			\
-	gimppalette.h			\
 	gimpparasite.h			\
 	gimpparasiteio.h		\
 	gimppixelrgn.h			\

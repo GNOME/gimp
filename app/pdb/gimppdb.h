@@ -22,13 +22,14 @@
 
 struct _Argument
 {
-  PDBArgType    arg_type;       /*  argument type  */
+  PDBArgType    arg_type;       /*  argument type        */
 
   union _ArgValue
   {
-    gint32      pdb_int;        /*  Integer type  */
+    gint32      pdb_int;        /*  Integer type         */
     gdouble     pdb_float;      /*  Floating point type  */
-    gpointer    pdb_pointer;    /*  Pointer type  */
+    gpointer    pdb_pointer;    /*  Pointer type         */
+    GimpRGB     pdb_color;      /*  Color type           */
   } value;
 };
 

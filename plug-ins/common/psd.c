@@ -1589,8 +1589,9 @@ void extract_data_and_channels(guchar* src, gint gimpstep, gint psstep,
     int pix, chan;
     gint32 channel_ID;
     GimpDrawable* chdrawable;
-    guchar colour[3]= {0, 0, 0};
+    GimpRGB colour;
 
+    gimp_rgb_set (&colour, 0.0, 0.0, 0.0);
 
     for (chan=gimpstep; chan<psstep; chan++)
       {
@@ -1603,7 +1604,7 @@ void extract_data_and_channels(guchar* src, gint gimpstep, gint psstep,
 	channel_ID = gimp_channel_new(image_ID,
 				      psd_image.aux_channel[chan-gimpstep].name ? psd_image.aux_channel[chan-gimpstep].name : _("Unnamed channel"),
 				      width, height,
-				      100.0, colour);
+				      100.0, &colour);
 	gimp_image_add_channel(image_ID, channel_ID, 0);
 	gimp_channel_set_visible(channel_ID, FALSE);
 
@@ -1640,7 +1641,9 @@ void extract_channels(guchar* src, gint num_wanted, gint psstep,
     int pix, chan;
     gint32 channel_ID;
     GimpDrawable* chdrawable;
-    guchar colour[3]= {0, 0, 0};
+    GimpRGB colour;
+
+    gimp_rgb_set (&colour, 0.0, 0.0, 0.0);
 
     for (chan=psstep-num_wanted; chan<psstep; chan++)
       {
@@ -1653,7 +1656,7 @@ void extract_channels(guchar* src, gint num_wanted, gint psstep,
 	channel_ID = gimp_channel_new(image_ID,
 				      psd_image.aux_channel[chan-(psstep-num_wanted)].name ? psd_image.aux_channel[chan-(psstep-num_wanted)].name : "Unnamed channel",
 				      width, height,
-				      100.0, colour);
+				      100.0, &colour);
 	gimp_image_add_channel(image_ID, channel_ID, 0);
 	gimp_channel_set_visible(channel_ID, FALSE);
 

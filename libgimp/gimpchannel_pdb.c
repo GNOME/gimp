@@ -30,9 +30,7 @@
  * @height: The channel height.
  * @name: The channel name.
  * @opacity: The channel opacity.
- * @red:
- * @green:
- * @blue: The channel compositing color.
+ * @color: The channel compositing color.
  *
  * Create a new channel.
  *
@@ -52,18 +50,11 @@ _gimp_channel_new (gint32   image_ID,
 		   gint     height,
 		   gchar   *name,
 		   gdouble  opacity,
-		   guchar   red,
-		   guchar   green,
-		   guchar   blue)
+		   GimpRGB *color)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gint32 channel_ID = -1;
-  guchar color[3];
-
-  color[0] = red;
-  color[1] = green;
-  color[2] = blue;
 
   return_vals = gimp_run_procedure ("gimp_channel_new",
 				    &nreturn_vals,
@@ -402,9 +393,7 @@ gimp_channel_set_opacity (gint32  channel_ID,
 /**
  * gimp_channel_get_color:
  * @channel_ID: The channel.
- * @red:
- * @green:
- * @blue: The channel compositing color.
+ * @color: The channel compositing color.
  *
  * Get the compositing color of the specified channel.
  *
@@ -413,10 +402,8 @@ gimp_channel_set_opacity (gint32  channel_ID,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_channel_get_color (gint32  channel_ID,
-			guchar *red,
-			guchar *green,
-			guchar *blue)
+gimp_channel_get_color (gint32   channel_ID,
+			GimpRGB *color)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -430,52 +417,7 @@ gimp_channel_get_color (gint32  channel_ID,
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
   if (success)
-    {
-      *red = return_vals[1].data.d_color.red;
-      *green = return_vals[1].data.d_color.green;
-      *blue = return_vals[1].data.d_color.blue;
-    }
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_channel_set_color:
- * @channel_ID: The channel.
- * @red:
- * @green:
- * @blue: The new channel compositing color.
- *
- * Set the compositing color of the specified channel.
- *
- * This procedure sets the specified channel's compositing color.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_channel_set_color (gint32 channel_ID,
-			guchar red,
-			guchar green,
-			guchar blue)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-  guchar color[3];
-
-  color[0] = red;
-  color[1] = green;
-  color[2] = blue;
-
-  return_vals = gimp_run_procedure ("gimp_channel_set_color",
-				    &nreturn_vals,
-				    GIMP_PDB_CHANNEL, channel_ID,
-				    GIMP_PDB_COLOR, color,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+    *color = return_vals[1].data.d_color;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 

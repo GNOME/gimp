@@ -425,8 +425,8 @@ run (gchar      *name,
 	      break;
 	    }
 
-	  gimp_palette_get_foreground_rgb (plvals.colors);
-	  gimp_palette_get_background_rgb (plvals.colors + 1);
+	  gimp_palette_get_foreground (plvals.colors);
+	  gimp_palette_get_background (plvals.colors + 1);
 
 	  gimp_rgb_set (plvals.colors + 2, 0.0, 0.0, 0.0);
 	  gimp_rgb_set (plvals.colors + 3, 1.0, 1.0, 1.0);
@@ -452,10 +452,7 @@ run (gchar      *name,
 
 	      for (j = 0; j < 4; j++)
 		{
-		  gimp_rgb_set_uchar (plvals.colors + j,
-				      param[3+j].data.d_color.red,
-				      param[3+j].data.d_color.green,
-				      param[3+j].data.d_color.blue);
+		  plvals.colors[j] = param[3+j].data.d_color;
 		}
 	      plvals.map_mode = param[7].data.d_int32;
 	    }
@@ -463,8 +460,8 @@ run (gchar      *name,
 	    {
 	      gimp_get_data (name, &plvals);
 
-	      gimp_palette_get_foreground_rgb (plvals.colors);
-	      gimp_palette_get_background_rgb (plvals.colors + 1);
+	      gimp_palette_get_foreground (plvals.colors);
+	      gimp_palette_get_background (plvals.colors + 1);
 
 	      if (!dialog (param[2].data.d_drawable))
 		break;

@@ -2447,12 +2447,16 @@ plug_in_add_to_db (void)
 
           if (proc_def->image_types)
             {
-              return_vals = procedural_db_execute ("gimp_register_save_handler", args);
+              return_vals = 
+		procedural_db_execute ("gimp_register_save_handler", 
+				       args);
               g_free (return_vals);
             }
           else
             {
-              return_vals = procedural_db_execute ("gimp_register_magic_load_handler", args);
+              return_vals = 
+		procedural_db_execute ("gimp_register_magic_load_handler", 
+				       args);
               g_free (return_vals);
             }
 	}
@@ -2904,9 +2908,8 @@ plug_in_params_to_args (GPParam *params,
 {
   Argument  *args;
   gchar    **stringarray;
-  guchar    *colorarray;
-  gint count;
-  gint i, j;
+  gint       count;
+  gint       i, j;
 
   if (nparams == 0)
     return NULL;
@@ -2942,7 +2945,8 @@ plug_in_params_to_args (GPParam *params,
 	    {
 	      count = args[i-1].value.pdb_int;
 	      args[i].value.pdb_pointer = g_new (gint32, count);
-	      memcpy (args[i].value.pdb_pointer, params[i].data.d_int32array, count * 4);
+	      memcpy (args[i].value.pdb_pointer, 
+		      params[i].data.d_int32array, count * 4);
 	    }
 	  else
 	    {
@@ -2954,7 +2958,8 @@ plug_in_params_to_args (GPParam *params,
 	    {
 	      count = args[i-1].value.pdb_int;
 	      args[i].value.pdb_pointer = g_new (gint16, count);
-	      memcpy (args[i].value.pdb_pointer, params[i].data.d_int16array, count * 2);
+	      memcpy (args[i].value.pdb_pointer, 
+		      params[i].data.d_int16array, count * 2);
 	    }
 	  else
 	    {
@@ -2966,7 +2971,8 @@ plug_in_params_to_args (GPParam *params,
 	    {
 	      count = args[i-1].value.pdb_int;
 	      args[i].value.pdb_pointer = g_new (gint8, count);
-	      memcpy (args[i].value.pdb_pointer, params[i].data.d_int8array, count);
+	      memcpy (args[i].value.pdb_pointer, 
+		      params[i].data.d_int8array, count);
 	    }
 	  else
 	    {
@@ -2978,7 +2984,8 @@ plug_in_params_to_args (GPParam *params,
 	    {
 	      count = args[i-1].value.pdb_int;
 	      args[i].value.pdb_pointer = g_new (gdouble, count);
-	      memcpy (args[i].value.pdb_pointer, params[i].data.d_floatarray, count * 8);
+	      memcpy (args[i].value.pdb_pointer, 
+		      params[i].data.d_floatarray, count * 8);
 	    }
 	  else
 	    {
@@ -2988,7 +2995,8 @@ plug_in_params_to_args (GPParam *params,
 	case PDB_STRINGARRAY:
 	  if (full_copy)
 	    {
-	      args[i].value.pdb_pointer = g_new (gchar*, args[i-1].value.pdb_int);
+	      args[i].value.pdb_pointer = g_new (gchar *, 
+						 args[i-1].value.pdb_int);
 	      stringarray = args[i].value.pdb_pointer;
 
 	      for (j = 0; j < args[i-1].value.pdb_int; j++)
@@ -3000,11 +3008,7 @@ plug_in_params_to_args (GPParam *params,
 	    }
 	  break;
 	case PDB_COLOR:
-	  args[i].value.pdb_pointer = g_new (guchar, 3);
-	  colorarray    = args[i].value.pdb_pointer;
-	  colorarray[0] = params[i].data.d_color.red;
-	  colorarray[1] = params[i].data.d_color.green;
-	  colorarray[2] = params[i].data.d_color.blue;
+	  args[i].value.pdb_color = params[i].data.d_color;
 	  break;
 	case PDB_REGION:
 	  g_message ("the \"region\" arg type is not currently supported");
@@ -3038,7 +3042,7 @@ plug_in_params_to_args (GPParam *params,
 	    args[i].value.pdb_pointer =
 	      gimp_parasite_copy ((GimpParasite *) &(params[i].data.d_parasite));
 	  else
-	    args[i].value.pdb_pointer = (void *)&(params[i].data.d_parasite);
+	    args[i].value.pdb_pointer = (gpointer) &(params[i].data.d_parasite);
 	  break;
 	case PDB_STATUS:
 	  args[i].value.pdb_int = params[i].data.d_status;
@@ -3058,8 +3062,7 @@ plug_in_args_to_params (Argument *args,
 {
   GPParam  *params;
   gchar   **stringarray;
-  guchar   *colorarray;
-  gint i, j;
+  gint      i, j;
 
   if (nargs == 0)
     return NULL;
@@ -3157,19 +3160,7 @@ plug_in_args_to_params (Argument *args,
 	    }
 	  break;
 	case PDB_COLOR:
-	  colorarray = args[i].value.pdb_pointer;
-	  if( colorarray )
-	    {
-	      params[i].data.d_color.red   = colorarray[0];
-	      params[i].data.d_color.green = colorarray[1];
-	      params[i].data.d_color.blue  = colorarray[2];
-	    }
-	  else
-	    {
-	      params[i].data.d_color.red   = 0;
-	      params[i].data.d_color.green = 0;
-	      params[i].data.d_color.blue  = 0;
-	    }
+	  params[i].data.d_color = args[i].value.pdb_color;
 	  break;
 	case PDB_REGION:
 	  g_message ("the \"region\" arg type is not currently supported");
@@ -3373,7 +3364,6 @@ plug_in_args_destroy (Argument *args,
 	    }
 	  break;
 	case PDB_COLOR:
-	  g_free (args[i].value.pdb_pointer);
 	  break;
 	case PDB_REGION:
 	  g_message ("the \"region\" arg type is not currently supported");

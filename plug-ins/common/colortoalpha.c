@@ -157,7 +157,7 @@ run (gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_palette_get_foreground_rgb (&pvals.color);
+      gimp_palette_get_foreground (&pvals.color);
       gimp_get_data ("plug_in_colortoalpha", &pvals);
       if (! colortoalpha_dialog (drawable ))
 	{ 
@@ -169,13 +169,9 @@ run (gchar      *name,
     case GIMP_RUN_NONINTERACTIVE:
       if (nparams != 3)
 	status = GIMP_PDB_CALLING_ERROR;
+
       if (status == GIMP_PDB_SUCCESS)
-	{
-	  gimp_rgb_set_uchar (&pvals.color,
-			      param[3].data.d_color.red,
-			      param[3].data.d_color.green,
-			      param[3].data.d_color.blue);
-	}
+	pvals.color = param[3].data.d_color;
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:

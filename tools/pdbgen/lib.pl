@@ -80,11 +80,6 @@ sub generate {
 	my $funcname = "gimp_$name"; my $wrapped = ""; my %usednames;
 	my $retdesc = "";
 
-	# The 'color' argument is special cased to accept and return the
-	# individual color components. This is to maintain backwards
-	# compatibility, but it certainly won't fly for other color models
-	# It also makes the code a bit messier.
-
 	# Find the return argument (defaults to the first arg if not
 	# explicity set
 	my $retarg  = undef; $retvoid = 0;
@@ -101,17 +96,10 @@ sub generate {
 	    }
 	}
 
-	my $rettype; my $retcol = 0;
+	my $rettype;
 	if ($retarg) {
-	    my ($type) = &arg_parse($retarg->{type});
-	    if ($type ne 'color') {
-		$rettype = &libtype($retarg);
-		chop $rettype unless $rettype =~ /\*$/;
-	    }
-	    else {
-		# Color returns three components in pointers passed in
-		$rettype = 'void'; $retcol = 1;
-	    }
+	    $rettype = &libtype($retarg);
+	    chop $rettype unless $rettype =~ /\*$/;
 
 	    $retarg->{retval} = 1;
 
@@ -123,7 +111,7 @@ sub generate {
 	}
 
 	# The parameters to the function
-	my $arglist = ""; my $argpass = ""; my $color = ""; my $privatevars = 0; 
+	my $arglist = ""; my $argpass = ""; my $privatevars = 0; 
 	my $argdesc = "";
 	foreach (@inargs) {
 	    my ($type) = &arg_parse($_->{type});
@@ -138,7 +126,7 @@ sub generate {
 	    if (exists $_->{implicit_fill}) {
 		$privatevars++;
 	    }
-	    elsif ($type ne 'color') {
+	    else {
 		$arglist .= &libtype($_);
 		$arglist .= $_->{name};
 		$arglist .= '_ID' if $id;
@@ -147,21 +135,6 @@ sub generate {
 		$argdesc .= " * \@$_->{name}";
 		$argdesc .= '_ID' if $id;
 		$argdesc .= ": $desc";
-	    }
-	    else {
-		# A color needs to stick the components into a 3-element array
-		chop ($color = <<CODE);
-
-  guchar $_->{name}\[3];
-
-  $_->{name}\[0] = red;
-  $_->{name}\[1] = green;
-  $_->{name}\[2] = blue;
-CODE
-
-		$arglist .= "guchar red, guchar green, guchar blue, ";
-
-		$argdesc .= " * \@red:\n * \@green:\n * \@blue: $desc";
 	    }
 
 	    # This is what's passed into gimp_run_procedure
@@ -193,7 +166,7 @@ CODE
 	}
 
 	# We only need to bother with this if we have to return a value
-	if ($rettype ne 'void' || $retcol || $retvoid) {
+	if ($rettype ne 'void' || $retvoid) {
 	    my $once = 0;
 	    my $firstvar;
 	    my @initnums;
@@ -216,7 +189,7 @@ CODE
 			push @initnums, $_;
 		    }
 		}
-		elsif (exists $_->{retval} && $type ne 'color') {
+		elsif (exists $_->{retval}) {
 		    $return_args .= "\n" . ' ' x 2;
 		    $return_args .= &libtype($_);
 
@@ -254,7 +227,7 @@ CODE
 		    }
 		}
 		elsif ($retvoid) {
-		    push @initnums, $_;
+		    push @initnums, $_ unless exists $arg->{struct};
 		}
 	    }
 
@@ -352,14 +325,15 @@ CP1
 	      $numvar * sizeof ($datatype));
 CP2
                 }
-		elsif ($type ne 'color') {
+		else {
 		    # The return value variable
 		    $var = "";
 
 		    unless (exists $_->{retval}) {
 			$var .= '*';
 			$arglist .= &libtype($_);
-			$arglist .= "*$_->{libname}";
+			$arglist .= '*' unless exists $arg->{struct};
+			$arglist .= "$_->{libname}";
 			$arglist .= '_ID' if $id;
 			$arglist .= ', ';
 
@@ -377,18 +351,6 @@ CP2
     $var = ${ch}return_vals[$argc].data.d_$type${cf};
 CODE
 		}
-		else {
-		    # Colors are returned in parts using pointers
-		    $arglist .= "guchar \*red, guchar \*green, guchar \*blue, ";
-		    $return_marshal .= <<CODE;
-    {
-      \*red = return_vals[$argc].data.d_color.red;
-      \*green = return_vals[$argc].data.d_color.green;
-      \*blue = return_vals[$argc].data.d_color.blue;
-    }
-CODE
-		    $argdesc .= " * \@red:\n * \@green:\n * \@blue: $desc";
-		}
 
                 if ($argdesc) {
                     unless ($argdesc =~ /[\.\!\?]$/) { $argdesc .= '.' }
@@ -404,7 +366,7 @@ CODE
   gimp_destroy_params (return_vals, nreturn_vals);
 
 CODE
-	    unless ($retcol || $retvoid) {
+	    unless ($retvoid) {
 		$return_marshal .= ' ' x 2 . "return $firstvar;";
 	    }
 	    else {
@@ -484,7 +446,7 @@ $rettype
 $wrapped$funcname ($clist)
 {
   GimpParam *return_vals;
-  gint nreturn_vals;$return_args$color
+  gint nreturn_vals;$return_args
 
   return_vals = gimp_run_procedure ("$funcname",
 				    \&nreturn_vals,$argpass

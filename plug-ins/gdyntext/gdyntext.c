@@ -175,10 +175,7 @@ gdt_run (gchar       *name,
 	  gdtvals.alignment	  = param[5].data.d_int32;
 	  gdtvals.rotation	  = param[6].data.d_int32;
 	  gdtvals.line_spacing	  = param[7].data.d_int32;
-	  gimp_rgb_set_uchar (&gdtvals.color,
-			      param[8].data.d_color.red,
-			      param[8].data.d_color.green,
-			      param[8].data.d_color.blue);
+	  gdtvals.color           = param[8].data.d_color;
 	  gdtvals.layer_alignment = param[9].data.d_int32;
 	  strncpy(gdtvals.xlfd, param[10].data.d_string, sizeof(gdtvals.xlfd));
 	}
@@ -239,7 +236,7 @@ gdt_load (GdtVals *data)
 	  strcpy (data->text, "");
 	  strcpy (data->xlfd, "");
 
-	  gimp_palette_get_foreground_rgb (&data->color);
+	  gimp_palette_get_foreground (&data->color);
 
 	  data->antialias         = TRUE;
 	  data->alignment 	  = LEFT;
@@ -471,10 +468,10 @@ gdt_render_text_p (GdtVals  *data,
   gimp_drawable_offsets (data->layer_id, &layer_ox, &layer_oy);
   
   /* get foreground color */
-  gimp_palette_get_foreground_rgb (&old_color);
+  gimp_palette_get_foreground (&old_color);
   
   /* set foreground color to the wanted text color */
-  gimp_palette_set_foreground_rgb (&data->color);
+  gimp_palette_set_foreground (&data->color);
   
   /* write text */
   for (i = 0; text_lines[i]; i++) 
@@ -519,7 +516,7 @@ gdt_render_text_p (GdtVals  *data,
   g_free (text_lines_w);
   
   /* set foreground color to the old one */
-  gimp_palette_set_foreground_rgb (&old_color);
+  gimp_palette_set_foreground (&old_color);
   
   /* apply rotation */
   if (data->rotation != 0 && abs(data->rotation) != 360) 

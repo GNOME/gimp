@@ -630,7 +630,7 @@ save_image (gchar  *filename,
       to_frame = nframes;
     }
 
-  gimp_palette_get_background_rgb (&background);
+  gimp_palette_get_background (&background);
   gimp_rgb_get_uchar (&background, &red, &green, &blue);
 
   switch (gimp_image_base_type (image_id))

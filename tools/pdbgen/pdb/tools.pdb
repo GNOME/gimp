@@ -283,12 +283,14 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("tools/by_color_select.h") ],
-	vars => [ 'GimpImage *gimage' ],
+        headers => [ qw("libgimpcolor/gimpcolor.h" 
+	                "tools/by_color_select.h") ],
+	vars => [ 'GimpImage *gimage', 'guchar fixme[3]' ],
 	code => <<'CODE'
 {
   gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
-  by_color_select (gimage, drawable, color, threshold, operation,
+  gimp_rgb_get_uchar (&color, fixme, fixme + 1, fixme + 2);
+  by_color_select (gimage, drawable, fixme, threshold, operation,
 		   antialias, feather, feather_radius, sample_merged);
 }
 CODE
@@ -406,12 +408,13 @@ HELP
     $inargs[1]->{no_success} = 1;
 
     @outargs = (
-	{ name => 'color', type => 'color',
+	{ name => 'color', type => 'color', void_ret => 1,
 	  desc => 'The return color', init => 1 }
     );
 
     %invoke = (
-	headers => [ qw("tools/color_picker.h") ],
+	headers => [ qw("libgimpcolor/gimpcolor.h"
+                        "tools/color_picker.h") ],
 	code => <<'CODE'
 {
   if (!sample_merged)
@@ -424,10 +427,12 @@ HELP
 			  save_color);
   if (success)
     {
-      color = g_new (guchar, 3);
-      color[RED_PIX] = col_value[RED_PIX];
-      color[GREEN_PIX] = col_value[GREEN_PIX];
-      color[BLUE_PIX] = col_value[BLUE_PIX];
+      color = g_new (GimpRGB, 1);
+      gimp_rgba_set_uchar (color, 
+		           col_value[RED_PIX],
+		           col_value[GREEN_PIX],
+		           col_value[BLUE_PIX],
+		           col_value[ALPHA_PIX]);
     }
 }
 CODE

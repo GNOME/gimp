@@ -241,9 +241,7 @@ gimp_bucket_fill (gint32               drawable_ID,
 /**
  * gimp_by_color_select:
  * @drawable_ID: The affected drawable.
- * @red:
- * @green:
- * @blue: The color to select.
+ * @color: The color to select.
  * @threshold: Threshold in intensity levels %%desc%%.
  * @operation: The selection operation.
  * @antialias: Antialiasing.
@@ -271,25 +269,18 @@ gimp_bucket_fill (gint32               drawable_ID,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_by_color_select (gint32         drawable_ID,
-		      guchar         red,
-		      guchar         green,
-		      guchar         blue,
-		      gint           threshold,
-		      GimpChannelOps operation,
-		      gboolean       antialias,
-		      gboolean       feather,
-		      gdouble        feather_radius,
-		      gboolean       sample_merged)
+gimp_by_color_select (gint32          drawable_ID,
+		      GimpRGB        *color,
+		      gint            threshold,
+		      GimpChannelOps  operation,
+		      gboolean        antialias,
+		      gboolean        feather,
+		      gdouble         feather_radius,
+		      gboolean        sample_merged)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
-  guchar color[3];
-
-  color[0] = red;
-  color[1] = green;
-  color[2] = blue;
 
   return_vals = gimp_run_procedure ("gimp_by_color_select",
 				    &nreturn_vals,
@@ -418,9 +409,7 @@ gimp_clone_default (gint32   drawable_ID,
  * @sample_average: Average the color of all the pixels in a specified radius.
  * @average_radius: The radius of pixels to average.
  * @save_color: Save the color to the active palette.
- * @red:
- * @green:
- * @blue: The return color.
+ * @color: The return color.
  *
  * Determine the color at the given drawable coordinates
  *
@@ -447,9 +436,7 @@ gimp_color_picker (gint32    image_ID,
 		   gboolean  sample_average,
 		   gdouble   average_radius,
 		   gboolean  save_color,
-		   guchar   *red,
-		   guchar   *green,
-		   guchar   *blue)
+		   GimpRGB  *color)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -470,11 +457,7 @@ gimp_color_picker (gint32    image_ID,
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
   if (success)
-    {
-      *red = return_vals[1].data.d_color.red;
-      *green = return_vals[1].data.d_color.green;
-      *blue = return_vals[1].data.d_color.blue;
-    }
+    *color = return_vals[1].data.d_color;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 

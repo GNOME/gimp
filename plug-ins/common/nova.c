@@ -278,10 +278,7 @@ run (gchar       *name,
         {
           pvals.xcenter   = param[3].data.d_int32;
           pvals.ycenter   = param[4].data.d_int32;
-	  gimp_rgb_set_uchar (&pvals.color,
-			      param[5].data.d_color.red,
-			      param[5].data.d_color.green,
-			      param[5].data.d_color.blue);
+	  pvals.color     = param[5].data.d_color;
           pvals.radius    = param[6].data.d_int32;
           pvals.nspoke    = param[7].data.d_int32;
 	  pvals.randomhue = param[8].data.d_int32;

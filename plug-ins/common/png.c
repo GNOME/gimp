@@ -858,7 +858,7 @@ save_image (gchar  *filename,	        /* I - File to save to */
     {
       GimpRGB color;
 
-      gimp_palette_get_background_rgb (&color);
+      gimp_palette_get_background (&color);
       gimp_rgb_get_uchar (&color, &red, &green, &blue);
       
       background.index = 0;
@@ -1017,7 +1017,7 @@ static void respin_cmap (png_structp pp, png_infop info, gint32 image_ID) {
 
     /* Apps with no natural background will use this instead, see
        elsewhere for the bKGD chunk being written to use index 0 */
-    gimp_palette_get_background_rgb (&color);
+    gimp_palette_get_background (&color);
     gimp_rgb_get_uchar (&color, after+0, after+1, after+2);
 
     /* One transparent palette entry, alpha == 0 */

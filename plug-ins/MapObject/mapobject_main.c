@@ -297,10 +297,7 @@ run (gchar      *name,
             mapvals.beta                    = param[17].data.d_float;
             mapvals.gamma                   = param[18].data.d_float;
             mapvals.lightsource.type        = (LightType) param[19].data.d_int32;
-	    gimp_rgb_set_uchar (&mapvals.lightsource.color,
-				param[20].data.d_color.red,
-				param[20].data.d_color.green,
-				param[20].data.d_color.blue);
+	    mapvals.lightsource.color       = param[20].data.d_color;
             mapvals.lightsource.position.x  = param[21].data.d_float;
             mapvals.lightsource.position.y  = param[22].data.d_float;
             mapvals.lightsource.position.z  = param[23].data.d_float;

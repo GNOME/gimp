@@ -26,25 +26,10 @@
  */
 
 
-gboolean   gimp_palette_set_foreground     (guchar         r,
-					    guchar         g,
-					    guchar         b);
-gboolean   gimp_palette_get_foreground     (guchar        *r,
-					    guchar        *g,
-					    guchar        *b);
-
-gboolean   gimp_palette_set_foreground_rgb (const GimpRGB *color);
-gboolean   gimp_palette_get_foreground_rgb (GimpRGB       *rgb);
-
-gboolean   gimp_palette_set_background     (guchar         r,
-					    guchar         g,
-					    guchar         b);
-gboolean   gimp_palette_get_background     (guchar        *r,
-					    guchar        *g,
-					    guchar        *b);
-
-gboolean   gimp_palette_set_background_rgb (const GimpRGB *color);
-gboolean   gimp_palette_get_background_rgb (GimpRGB       *rgb);
+gboolean   gimp_palette_set_foreground (const GimpRGB *color);
+gboolean   gimp_palette_get_foreground (GimpRGB       *rgb);
+gboolean   gimp_palette_set_background (const GimpRGB *color);
+gboolean   gimp_palette_get_background (GimpRGB       *rgb);
 
 
 #endif /* __LIBGIMP_GLUE_H__ */

@@ -2589,15 +2589,15 @@ gfig_gen_brush_preview (BrushDesc *bdesc)
    * restore colours
    */
 
-  gimp_palette_get_foreground_rgb (&foreground);
-  gimp_palette_get_background_rgb (&background);
+  gimp_palette_get_foreground (&foreground);
+  gimp_palette_get_background (&background);
 
   saved_bname = mygimp_brush_get ();
 
   gimp_rgba_set (&color, 1.0, 1.0, 1.0, 1.0);
-  gimp_palette_set_background_rgb (&color);
+  gimp_palette_set_background (&color);
   gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
-  gimp_palette_set_foreground_rgb (&color);
+  gimp_palette_set_foreground (&color);
 
   mygimp_brush_set (bdesc->bname);
 
@@ -2617,8 +2617,8 @@ gfig_gen_brush_preview (BrushDesc *bdesc)
 	      layer_ID,
 	      2, line_pnts);
 
-  gimp_palette_set_background_rgb (&background);  
-  gimp_palette_set_foreground_rgb (&foreground);
+  gimp_palette_set_background (&background);  
+  gimp_palette_set_foreground (&foreground);
 
   mygimp_brush_set (saved_bname);
 

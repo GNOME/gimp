@@ -260,10 +260,7 @@ run (gchar      *name,
                     mapvals.env_mapped              = (gint) param[6].data.d_int32;
                     mapvals.bumpmaptype             = (gint) param[7].data.d_int32;
                     mapvals.lightsource.type        = (LightType) param[8].data.d_int32;
-		    gimp_rgb_set (&mapvals.lightsource.color,
-				  param[9].data.d_color.red,
-				  param[9].data.d_color.green,
-				  param[9].data.d_color.blue);
+		    mapvals.lightsource.color       = param[9].data.d_color;
                     mapvals.lightsource.position.x  = param[10].data.d_float;
                     mapvals.lightsource.position.y  = param[11].data.d_float;
                     mapvals.lightsource.position.z  = param[12].data.d_float;

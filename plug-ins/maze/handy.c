@@ -53,8 +53,8 @@ get_colors (GimpDrawable *drawable,
   GimpRGB foreground;
   GimpRGB background;
 
-  gimp_palette_get_foreground_rgb (&foreground);
-  gimp_palette_get_background_rgb (&background);
+  gimp_palette_get_foreground (&foreground);
+  gimp_palette_get_background (&background);
 
   fg[0] = fg[1] = fg[2] = fg[3] = 255;
   bg[0] = bg[1] = bg[2] = bg[3] = 255;

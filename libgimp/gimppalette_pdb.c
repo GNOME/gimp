@@ -25,9 +25,7 @@
 
 /**
  * gimp_palette_get_foreground:
- * @red:
- * @green:
- * @blue: The foreground color.
+ * @foreground: The foreground color.
  *
  * Get the current GIMP foreground color.
  *
@@ -38,9 +36,7 @@
  * Returns: TRUE on success.
  */
 gboolean
-gimp_palette_get_foreground (guchar *red,
-			     guchar *green,
-			     guchar *blue)
+gimp_palette_get_foreground (GimpRGB *foreground)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -53,11 +49,7 @@ gimp_palette_get_foreground (guchar *red,
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
   if (success)
-    {
-      *red = return_vals[1].data.d_color.red;
-      *green = return_vals[1].data.d_color.green;
-      *blue = return_vals[1].data.d_color.blue;
-    }
+    *foreground = return_vals[1].data.d_color;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
@@ -66,9 +58,7 @@ gimp_palette_get_foreground (guchar *red,
 
 /**
  * gimp_palette_get_background:
- * @red:
- * @green:
- * @blue: The background color.
+ * @background: The background color.
  *
  * Get the current GIMP background color.
  *
@@ -79,9 +69,7 @@ gimp_palette_get_foreground (guchar *red,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_palette_get_background (guchar *red,
-			     guchar *green,
-			     guchar *blue)
+gimp_palette_get_background (GimpRGB *background)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -94,11 +82,7 @@ gimp_palette_get_background (guchar *red,
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
   if (success)
-    {
-      *red = return_vals[1].data.d_color.red;
-      *green = return_vals[1].data.d_color.green;
-      *blue = return_vals[1].data.d_color.blue;
-    }
+    *background = return_vals[1].data.d_color;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
@@ -107,9 +91,7 @@ gimp_palette_get_background (guchar *red,
 
 /**
  * gimp_palette_set_foreground:
- * @red:
- * @green:
- * @blue: The foreground color.
+ * @foreground: The foreground color.
  *
  * Set the current GIMP foreground color.
  *
@@ -120,18 +102,11 @@ gimp_palette_get_background (guchar *red,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_palette_set_foreground (guchar red,
-			     guchar green,
-			     guchar blue)
+gimp_palette_set_foreground (GimpRGB *foreground)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
-  guchar foreground[3];
-
-  foreground[0] = red;
-  foreground[1] = green;
-  foreground[2] = blue;
 
   return_vals = gimp_run_procedure ("gimp_palette_set_foreground",
 				    &nreturn_vals,
@@ -147,9 +122,7 @@ gimp_palette_set_foreground (guchar red,
 
 /**
  * gimp_palette_set_background:
- * @red:
- * @green:
- * @blue: The background color.
+ * @background: The background color.
  *
  * Set the current GIMP background color.
  *
@@ -161,18 +134,11 @@ gimp_palette_set_foreground (guchar red,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_palette_set_background (guchar red,
-			     guchar green,
-			     guchar blue)
+gimp_palette_set_background (GimpRGB *background)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
-  guchar background[3];
-
-  background[0] = red;
-  background[1] = green;
-  background[2] = blue;
 
   return_vals = gimp_run_procedure ("gimp_palette_set_background",
 				    &nreturn_vals,

@@ -305,7 +305,7 @@ run (gchar  *name,
   tile_height = gimp_tile_height();
 
   /* get currently selected foreground pixel color */
-  gimp_palette_get_foreground_rgb (&color);
+  gimp_palette_get_foreground (&color);
   gimp_rgb_get_uchar (&color, 
 		      &color_pixel[0],
 		      &color_pixel[1],

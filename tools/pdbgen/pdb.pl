@@ -31,7 +31,7 @@ package Gimp::CodeGen::pdb;
     floatarray  => { name  => 'FLOATARRAY' , type  => 'gdouble *', array => 1 },
     stringarray => { name  => 'STRINGARRAY', type  => 'gchar **' , array => 1 },
 
-    color  => { name => 'COLOR' , type => 'guchar *' },
+    color  => { name => 'COLOR' , type => 'GimpRGB *', struct => 1 },
 
     display    => { name => 'DISPLAY',
 		    type => 'GDisplay *',

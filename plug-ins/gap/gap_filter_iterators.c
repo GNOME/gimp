@@ -419,7 +419,7 @@ static void p_delta_LightSettings(t_LightSettings *val, t_LightSettings *val_fro
 #include "iter_ALT/mod/plug_in_depth_merge_iter_ALT.inc"
 #include "iter_ALT/mod/plug_in_despeckle_iter_ALT.inc"
 #include "iter_ALT/mod/plug_in_emboss_iter_ALT.inc"
-#include "iter_ALT/mod/plug_in_exchange_iter_ALT.inc"
+/*  #include "iter_ALT/mod/plug_in_exchange_iter_ALT.inc" */
 #include "iter_ALT/mod/plug_in_flame_iter_ALT.inc"
 #include "iter_ALT/mod/plug_in_lighting_iter_ALT.inc"
 #include "iter_ALT/mod/plug_in_map_object_iter_ALT.inc"
@@ -555,7 +555,7 @@ static t_iter_ALT_tab   g_iter_ALT_tab[] =
   , { "plug_in_emboss",  p_plug_in_emboss_iter_ALT }
   , { "plug_in_encript",  p_plug_in_encript_iter_ALT }
   , { "plug_in_engrave",  p_plug_in_engrave_iter_ALT }
-  , { "plug_in_exchange",  p_plug_in_exchange_iter_ALT }
+/*    , { "plug_in_exchange",  p_plug_in_exchange_iter_ALT } */
 /*, { "plug_in_export_palette",  p_plug_in_export_palette_iter_ALT }              */
   , { "plug_in_figures",  p_plug_in_figures_iter_ALT }
 /*, { "plug_in_film",  p_plug_in_film_iter_ALT }                                  */

@@ -652,7 +652,7 @@ blinds_get_bg (guchar *bg)
 {
   GimpRGB  background;
 
-  gimp_palette_get_background_rgb (&background);
+  gimp_palette_get_background (&background);
 
   switch (gimp_drawable_type (blindsdrawable->id))
     {

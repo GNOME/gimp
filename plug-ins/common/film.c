@@ -304,18 +304,12 @@ run (gchar   *name,
           filmvals.keep_height       = (param[3].data.d_int32 <= 0);
           filmvals.film_height       = (filmvals.keep_height ?
 					128 : param[3].data.d_int32);
-	  gimp_rgb_set_uchar (&filmvals.film_color, 
-			      param[4].data.d_color.red,
-			      param[4].data.d_color.green,
-			      param[4].data.d_color.blue);
+	  filmvals.film_color        = param[4].data.d_color;
           filmvals.number_start      = param[5].data.d_int32;
           k = sizeof (filmvals.number_fontf);
           strncpy (filmvals.number_fontf, param[6].data.d_string, k);
           filmvals.number_fontf[k-1] = '\0';
-	  gimp_rgb_set_uchar (&filmvals.number_color,
-			      param[7].data.d_color.red,
-			      param[7].data.d_color.green,
-			      param[7].data.d_color.blue);
+	  filmvals.number_color      = param[7].data.d_color;
           filmvals.number_pos[0]     = param[8].data.d_int32;
           filmvals.number_pos[1]     = param[9].data.d_int32;
           filmvals.num_images        = param[10].data.d_int32;
@@ -398,7 +392,7 @@ film (void)
 
   tile_height = gimp_tile_height ();
   /* Save foreground colour */
-  gimp_palette_get_foreground_rgb (&foreground);
+  gimp_palette_get_foreground (&foreground);
 
   if (filmvals.keep_height) /* Search maximum picture height */
     {
@@ -539,7 +533,7 @@ film (void)
 	  if ((number_height > 0) &&
 	      (filmvals.number_pos[0] || filmvals.number_pos[1]))
 	    {
-	      gimp_palette_set_foreground_rgb (&filmvals.number_color);
+	      gimp_palette_set_foreground (&filmvals.number_color);
 
 	      if (filmvals.number_pos[0])
 		draw_number (layer_ID_dst, filmvals.number_start + picture_count,
@@ -551,7 +545,7 @@ film (void)
 			     film_height - (hole_offset + number_height)/2,
 			     number_height);
 
-	      gimp_palette_set_foreground_rgb (&foreground);
+	      gimp_palette_set_foreground (&foreground);
 	    }
 
 	  picture_x0 += picture_width + (picture_space/2);
@@ -571,7 +565,7 @@ film (void)
   gimp_floating_sel_anchor (gimp_image_floating_selection (image_ID_dst));
 
   /* Restore foreground */
-  gimp_palette_set_foreground_rgb (&foreground);
+  gimp_palette_set_foreground (&foreground);
 
   return image_ID_dst;
 }

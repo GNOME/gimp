@@ -29,113 +29,41 @@
 
 
 gboolean
-gimp_palette_set_foreground (guchar r,
-			     guchar g,
-			     guchar b)
+gimp_palette_set_foreground (const GimpRGB *rgb)
 {
-  GimpRGB color;
+  g_return_val_if_fail (rgb != NULL, FALSE);
 
-  gimp_rgba_set_uchar (&color, r, g, b, 255);
-
-  gimp_context_set_foreground (NULL, &color);
+  gimp_context_set_foreground (NULL, rgb);
 
   return TRUE;
 }
 
 gboolean
-gimp_palette_get_foreground (guchar *r,
-			     guchar *g,
-			     guchar *b)
+gimp_palette_get_foreground (GimpRGB *rgb)
 {
-  GimpRGB color;
+  g_return_val_if_fail (rgb != NULL, FALSE);
 
-  gimp_context_get_foreground (NULL, &color);
-
-  gimp_rgb_get_uchar (&color, r, g, b);
+  gimp_context_get_foreground (NULL, rgb);
 
   return TRUE;
 }
 
 gboolean
-gimp_palette_set_foreground_rgb (const GimpRGB *rgb)
+gimp_palette_set_background (const GimpRGB *rgb)
 {
-  guchar r, g, b;
-
   g_return_val_if_fail (rgb != NULL, FALSE);
 
-  gimp_rgb_get_uchar (rgb, &r, &g, &b);
-
-  return gimp_palette_set_foreground (r, g, b);
-}
-
-gboolean
-gimp_palette_get_foreground_rgb (GimpRGB *rgb)
-{
-  guchar r, g, b;
-  
-  g_return_val_if_fail (rgb != NULL, FALSE);
-
-  if (gimp_palette_get_foreground (&r, &g, &b))
-    {
-      gimp_rgb_set_uchar (rgb, r, g, b);
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-gboolean
-gimp_palette_set_background (guchar r,
-			     guchar g,
-			     guchar b)
-{
-  GimpRGB color;
-
-  gimp_rgba_set_uchar (&color, r, g, b, 255);
-
-  gimp_context_set_background (NULL, &color);
+  gimp_context_set_background (NULL, rgb);
 
   return TRUE;
 }
 
 gboolean
-gimp_palette_get_background (guchar *r,
-			     guchar *g,
-			     guchar *b)
+gimp_palette_get_background (GimpRGB *rgb)
 {
-  GimpRGB color;
+  g_return_val_if_fail (rgb != NULL, FALSE);
 
-  gimp_context_get_background (NULL, &color);
-
-  gimp_rgb_get_uchar (&color, r, g, b);
+  gimp_context_get_background (NULL, rgb);
 
   return TRUE;
-}
-
-gboolean
-gimp_palette_set_background_rgb (const GimpRGB *rgb)
-{
-  guchar r, g, b;
-
-  g_return_val_if_fail (rgb != NULL, FALSE);
-
-  gimp_rgb_get_uchar (rgb, &r, &g, &b);
-
-  return gimp_palette_set_background (r, g, b);
-}
-
-gboolean
-gimp_palette_get_background_rgb (GimpRGB *rgb)
-{
-  guchar r, g, b;
-  
-  g_return_val_if_fail (rgb != NULL, FALSE);
-
-  if (gimp_palette_get_background (&r, &g, &b))
-    {
-      gimp_rgb_set_uchar (rgb, r, g, b);
-      return TRUE;
-    }
-
-  return FALSE;
 }

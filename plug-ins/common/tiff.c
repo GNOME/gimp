@@ -426,7 +426,7 @@ load_image (gchar *filename)
   channel_data *channel= NULL;
 
   gushort *redmap, *greenmap, *bluemap;
-  guchar   colors[3]= {0, 0, 0};
+  GimpRGB  color;
   guchar   cmap[768];
 
   gint   i, j, worst_case = 0;
@@ -441,6 +441,8 @@ load_image (gchar *filename)
   uint32 profile_size;
   guchar *icc_profile;
 #endif
+
+  gimp_rgb_set (&color, 0.0, 0.0, 0.0);
 
   TIFFSetWarningHandler (tiff_warning);
   TIFFSetErrorHandler (tiff_error);
@@ -687,7 +689,7 @@ load_image (gchar *filename)
     /* Add alpha channels as appropriate */
     for (i= 1; i <= extra; ++i) {
       channel[i].ID= gimp_channel_new(image, _("TIFF Channel"), cols, rows,
-                                                            100.0, colors);
+				      100.0, &color);
       gimp_image_add_channel(image, channel[i].ID, 0);
       channel[i].drawable= gimp_drawable_get (channel[i].ID);
     }

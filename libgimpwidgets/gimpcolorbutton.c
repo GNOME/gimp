@@ -31,7 +31,7 @@
 #include "gimpcolorarea.h"
 #include "gimpcolorbutton.h"
 
-#include "libgimp/gimppalette.h"
+#include "libgimp/gimppalette_pdb.h"
 
 #include "libgimp/libgimp-intl.h"
 
@@ -426,7 +426,7 @@ gimp_color_button_use_fg (gpointer   callback_data,
   g_return_if_fail (GIMP_IS_COLOR_BUTTON (callback_data));
 
   gimp_color_button_get_color (GIMP_COLOR_BUTTON (callback_data), &color);
-  gimp_palette_get_foreground_rgb (&color);
+  gimp_palette_get_foreground (&color);
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (callback_data), &color);
 }
 
@@ -441,7 +441,7 @@ gimp_color_button_use_bg (gpointer   callback_data,
   g_return_if_fail (GIMP_IS_COLOR_BUTTON (callback_data));
 
   gimp_color_button_get_color (GIMP_COLOR_BUTTON (callback_data), &color);
-  gimp_palette_get_background_rgb (&color);
+  gimp_palette_get_background (&color);
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (callback_data), &color);
 }
 

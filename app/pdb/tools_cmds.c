@@ -54,6 +54,7 @@
 #include "tools/transform_core.h"
 #include "undo.h"
 
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 
 static ProcRecord airbrush_proc;
@@ -536,7 +537,7 @@ by_color_select_invoker (Argument *args)
 {
   gboolean success = TRUE;
   GimpDrawable *drawable;
-  guchar *color;
+  GimpRGB *color;
   gint32 threshold;
   gint32 operation;
   gboolean antialias;
@@ -544,12 +545,13 @@ by_color_select_invoker (Argument *args)
   gdouble feather_radius;
   gboolean sample_merged;
   GimpImage *gimage;
+  guchar fixme[3];
 
   drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
-  color = (guchar *) args[1].value.pdb_pointer;
+  color = (GimpRGB *) args[1].value.pdb_pointer;
 
   threshold = args[2].value.pdb_int;
   if (threshold < 0 || threshold > 255)
@@ -570,7 +572,8 @@ by_color_select_invoker (Argument *args)
   if (success)
     {
       gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
-      by_color_select (gimage, drawable, color, threshold, operation,
+      gimp_rgb_get_uchar (&color, fixme, fixme + 1, fixme + 2);
+      by_color_select (gimage, drawable, fixme, threshold, operation,
 		       antialias, feather, feather_radius, sample_merged);
     }
 
@@ -809,7 +812,7 @@ color_picker_invoker (Argument *args)
   gboolean sample_average;
   gdouble average_radius;
   gboolean save_color;
-  guchar *color = NULL;
+  GimpRGB *color = NULL;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
@@ -843,10 +846,12 @@ color_picker_invoker (Argument *args)
 			      save_color);
       if (success)
 	{
-	  color = g_new (guchar, 3);
-	  color[RED_PIX] = col_value[RED_PIX];
-	  color[GREEN_PIX] = col_value[GREEN_PIX];
-	  color[BLUE_PIX] = col_value[BLUE_PIX];
+	  color = g_new (GimpRGB, 1);
+	  gimp_rgba_set_uchar (color, 
+			       col_value[RED_PIX],
+			       col_value[GREEN_PIX],
+			       col_value[BLUE_PIX],
+			       col_value[ALPHA_PIX]);
 	}
     }
 

@@ -1216,14 +1216,8 @@ run (gchar      *name,
 	  svals.tiling       = param[7].data.d_int32;
 	  svals.perturbation = param[8].data.d_int32;
 	  svals.colors       = param[9].data.d_int32;
-	  gimp_rgb_set_uchar (&svals.col1,
-			      param[10].data.d_color.red,
-			      param[10].data.d_color.green,
-			      param[10].data.d_color.blue);
-	  gimp_rgb_set_uchar (&svals.col2,
-			      param[11].data.d_color.red,
-			      param[11].data.d_color.green,
-			      param[11].data.d_color.blue);
+	  svals.col1         = param[10].data.d_color;
+	  svals.col2         = param[11].data.d_color;
 	  gimp_rgb_set_alpha (&svals.col1, param[12].data.d_float);
 	  gimp_rgb_set_alpha (&svals.col2, param[13].data.d_float);
 	  svals.colorization = param[14].data.d_int32;
@@ -1349,8 +1343,8 @@ prepare_coef (params *p)
 	  gimp_rgb_set (&color2, 0.0, 0.0, 0.0);
 	  break;
 	case USE_FG_BG:
-	  gimp_palette_get_background_rgb (&color1);
-	  gimp_palette_get_foreground_rgb (&color2);
+	  gimp_palette_get_background (&color1);
+	  gimp_palette_get_foreground (&color2);
 	  break;
 	}
     }

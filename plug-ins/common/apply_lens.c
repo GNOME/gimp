@@ -261,7 +261,7 @@ drawlens (GimpDrawable *drawable)
   guchar   bgr_red, bgr_blue, bgr_green;
   guchar   alphaval;
 
-  gimp_palette_get_background_rgb (&background);
+  gimp_palette_get_background (&background);
   gimp_rgb_get_uchar (&background, 
 		      &bgr_red, &bgr_green, &bgr_blue);
 

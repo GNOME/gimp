@@ -707,7 +707,7 @@ filter (void)
       break;
 
     case BACKGROUND_TYPE_FOREGROUND:
-      gimp_palette_get_foreground_rgb (&color);
+      gimp_palette_get_foreground (&color);
       gimp_rgb_get_uchar (&color, &pixel[0], &pixel[1], &pixel[2]);
       pixel[3] = 255;
       for (y = clear_y0; y < clear_y1; y++)
@@ -724,7 +724,7 @@ filter (void)
       break;
 
     case BACKGROUND_TYPE_BACKGROUND:
-      gimp_palette_get_background_rgb (&color);
+      gimp_palette_get_background (&color);
       gimp_rgb_get_uchar (&color, &pixel[0], &pixel[1], &pixel[2]);
       pixel[3] = 255;
       for (y = clear_y0; y < clear_y1; y++)
@@ -885,19 +885,19 @@ plugin_run (gchar   *name,
 	case GIMP_RUN_NONINTERACTIVE:
 	  if (numof_params == 11)
 	    {
-	      p.params.tile_size       = params[3].data.d_int32;
-	      p.params.division_x      = p.drawable->width  / p.params.tile_size;
-	      p.params.division_y      = p.drawable->height / p.params.tile_size;
-	      p.params.move_max_rate   = params[4].data.d_float;
-	      p.params.fractional_type = (FractionalType)params[5].data.d_int32;
-	      p.params.wrap_around     = params[6].data.d_int32;
-	      p.params.centering       = params[7].data.d_int32;
-	      p.params.background_type = (BackgroundType)params[8].data.d_int32;
-	      gimp_rgba_set_uchar (&p.params.background_color,
-				   params[9].data.d_color.red,
-				   params[9].data.d_color.green,
-				   params[9].data.d_color.blue,
-				   params[10].data.d_int32);
+	      p.params.tile_size        = params[3].data.d_int32;
+	      p.params.division_x       = p.drawable->width  / p.params.tile_size;
+	      p.params.division_y       = p.drawable->height / p.params.tile_size;
+	      p.params.move_max_rate    = params[4].data.d_float;
+	      p.params.fractional_type  = (FractionalType)params[5].data.d_int32;
+	      p.params.wrap_around      = params[6].data.d_int32;
+	      p.params.centering        = params[7].data.d_int32;
+	      p.params.background_type  = (BackgroundType)params[8].data.d_int32;
+	      p.params.background_color = params[9].data.d_color;
+
+	      /*  FIXME:  this used to be the alpha value 
+				          params[10].data.d_int32
+	       */
 	      p.run = TRUE;
 	    }
 	  else

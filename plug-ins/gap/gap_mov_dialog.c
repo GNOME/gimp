@@ -2395,7 +2395,7 @@ mov_path_prevw_draw ( t_mov_path_preview *path_ptr, gint update )
          gtk_widget_draw(path_ptr->preview, NULL);
       }
  
-      gimp_palette_get_foreground_rgb (&foreground);
+      gimp_palette_get_foreground (&foreground);
       gimp_rgb_get_uchar (&foreground, &l_red, &l_green, &l_blue);
       fg.pixel = gdk_rgb_xpixel_from_rgb ((l_red << 16) | (l_green << 8) | l_blue);
         

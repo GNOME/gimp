@@ -24,27 +24,21 @@ sub color_blurb {
 sub color_arg {
     my $ground = (shift) . "ground";
     {
-	name  => $ground,
-	type  => 'color',
-	desc  => "The $ground color",
-	alias => 'col'
+	name     => $ground,
+	type     => 'color',
+	desc     => "The $ground color",
+	alias    => 'color',
+	void_ret => 1
     }
 }
 
 sub invoke_get {
     %invoke = (
 	headers => [ qw("gimpimage.h" "gimpcontext.h") ],
-	vars => [ 'GimpRGB color' ],
 	code => <<CODE
 {
-  gimp_context_get_@{[shift]}ground (NULL, &color);
-
-  col = (guchar *) g_new (guchar, 3);
-
-  gimp_rgb_get_uchar (&color,
-                      &col[RED_PIX],
-                      &col[GREEN_PIX],
-                      &col[BLUE_PIX]);
+  color = g_new (GimpRGB, 1);
+  gimp_context_get_@{[shift]}ground (NULL, color);
 }
 CODE
     );
@@ -53,16 +47,12 @@ CODE
 sub invoke_set {
     %invoke = (
 	headers => [ qw("gimpimage.h") ],
-	vars => [ 'GimpRGB color' ],
+	vars => [ 'GimpRGB rgb_color' ],
 	code => <<CODE
 {
-  gimp_rgba_set_uchar (&color,
-                       col[RED_PIX],
-		       col[GREEN_PIX],
-		       col[BLUE_PIX],
-		       255);
-
-  gimp_context_set_@{[shift]}ground (NULL, &color);
+  rgb_color = *color;
+  rgb_color.a = 1.0;
+  gimp_context_set_@{[shift]}ground (NULL, &rgb_color);
 }
 CODE
     );

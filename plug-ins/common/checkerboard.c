@@ -208,8 +208,8 @@ check (GimpDrawable *drawable)
 
   /* Get the foreground and background colors */
 
-  gimp_palette_get_foreground_rgb (&foreground);
-  gimp_palette_get_background_rgb (&background);
+  gimp_palette_get_foreground (&foreground);
+  gimp_palette_get_background (&background);
 
   switch (gimp_drawable_type (drawable->id))
     {

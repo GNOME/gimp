@@ -887,6 +887,7 @@ script_fu_script_proc (gchar       *name,
 	    status = GIMP_PDB_CALLING_ERROR;
 	  if (status == GIMP_PDB_SUCCESS)
 	    {
+	      guchar color[3];
 	      gchar *text = NULL;
 	      gchar *command;
 	      gchar *c;
@@ -965,10 +966,10 @@ script_fu_script_proc (gchar       *name,
                           break;
 
                         case SF_COLOR:
+			  gimp_rgb_get_uchar (&params[i + 1].data.d_color,
+					      color, color + 1, color + 2);
                           g_snprintf (buffer, sizeof (buffer), "'(%d %d %d)",
-				      params[i + 1].data.d_color.red,
-				      params[i + 1].data.d_color.green,
-				      params[i + 1].data.d_color.blue);
+				      color[0], color[1], color[2]);
                           text = buffer;
                           break;
 

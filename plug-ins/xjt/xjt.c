@@ -1429,6 +1429,7 @@ p_write_channel_prp(gchar *dirname,
 {
   t_param_prop   l_param;
   gint           l_ofsx, l_ofsy;
+  GimpRGB        color;
   guchar         l_r, l_g, l_b;
 
   fprintf(fp, "%s", channel_shortname);
@@ -1452,7 +1453,8 @@ p_write_channel_prp(gchar *dirname,
   l_param.int_val1 = gimp_channel_get_show_masked(channel_id);
   p_write_prop (fp, PROP_SHOW_MASKED, &l_param, wr_all_prp);
 
-  gimp_channel_get_color(channel_id, &l_r, &l_g, &l_b);
+  gimp_channel_get_color(channel_id, &color);
+  gimp_rgb_get_uchar (&color, &l_r, &l_g, &l_b);
   l_param.int_val1 = l_r;
   l_param.int_val2 = l_g;
   l_param.int_val3 = l_b;
@@ -3430,13 +3432,13 @@ load_xjt_image (gchar *filename)
            /* load should overwrite the layer_mask with data from jpeg file */
 
            l_channel_id = xjpg_load_channel (l_jpg_file,
-	                               l_image_id,
-	                               l_channel_id,
-                                       l_channel_prp_ptr->name,
-			               l_channel_prp_ptr->opacity,
-			               l_channel_prp_ptr->color_r,
-			               l_channel_prp_ptr->color_g,
-			               l_channel_prp_ptr->color_b);
+					     l_image_id,
+					     l_channel_id,
+					     l_channel_prp_ptr->name,
+					     l_channel_prp_ptr->opacity,
+					     l_channel_prp_ptr->color_r,
+					     l_channel_prp_ptr->color_g,
+					     l_channel_prp_ptr->color_b);
            g_free(l_jpg_file);
            if(l_channel_id >= 0)
            {

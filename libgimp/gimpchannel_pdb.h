@@ -36,9 +36,7 @@ gint32   _gimp_channel_new            (gint32    image_ID,
 				       gint      height,
 				       gchar    *name,
 				       gdouble   opacity,
-				       guchar    red,
-				       guchar    green,
-				       guchar    blue);
+				       GimpRGB  *color);
 gint32   gimp_channel_copy            (gint32    channel_ID);
 gboolean gimp_channel_delete          (gint32    channel_ID);
 gchar*   gimp_channel_get_name        (gint32    channel_ID);
@@ -54,13 +52,7 @@ gdouble  gimp_channel_get_opacity     (gint32    channel_ID);
 gboolean gimp_channel_set_opacity     (gint32    channel_ID,
 				       gdouble   opacity);
 gboolean gimp_channel_get_color       (gint32    channel_ID,
-				       guchar   *red,
-				       guchar   *green,
-				       guchar   *blue);
-gboolean gimp_channel_set_color       (gint32    channel_ID,
-				       guchar    red,
-				       guchar    green,
-				       guchar    blue);
+				       GimpRGB  *color);
 gint     gimp_channel_get_tattoo      (gint32    channel_ID);
 gboolean gimp_channel_set_tattoo      (gint32    channel_ID,
 				       gint      tattoo);

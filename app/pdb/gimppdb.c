@@ -261,10 +261,10 @@ procedural_db_run_proc (gchar *name,
 	case PDB_INT16:
 	case PDB_INT8:
         case PDB_DISPLAY:
-	  params[i].value.pdb_int = (gint32) va_arg (args, int);
+	  params[i].value.pdb_int = (gint32) va_arg (args, gint);
 	  break;
         case PDB_FLOAT:
-          params[i].value.pdb_float = (gdouble) va_arg (args, double);
+          params[i].value.pdb_float = (gdouble) va_arg (args, gdouble);
           break;
         case PDB_STRING:
         case PDB_INT32ARRAY:
@@ -272,8 +272,10 @@ procedural_db_run_proc (gchar *name,
         case PDB_INT8ARRAY:
         case PDB_FLOATARRAY:
         case PDB_STRINGARRAY:
+          params[i].value.pdb_pointer = va_arg (args, gpointer);
+          break;
         case PDB_COLOR:
-          params[i].value.pdb_pointer = va_arg (args, void *);
+	  params[i].value.pdb_color = (GimpRGB) va_arg (args, GimpRGB);
           break;
         case PDB_REGION:
           break;
@@ -284,13 +286,13 @@ procedural_db_run_proc (gchar *name,
         case PDB_SELECTION:
         case PDB_BOUNDARY:
         case PDB_PATH:
-	  params[i].value.pdb_int = (gint32) va_arg (args, int);
+	  params[i].value.pdb_int = (gint32) va_arg (args, gint);
 	  break;
         case PDB_PARASITE:
-          params[i].value.pdb_pointer = va_arg (args, void *);
+          params[i].value.pdb_pointer = va_arg (args, gpointer);
           break;
         case PDB_STATUS:
-	  params[i].value.pdb_int = (gint32) va_arg (args, int);
+	  params[i].value.pdb_int = (gint32) va_arg (args, gint);
 	  break;
 	case PDB_END:
 	  break;
