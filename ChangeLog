@@ -1,5 +1,9 @@
 Sat May  1 11:05:02 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
 
+	* plug-ins/ps/ps.c (read_pnmraw_type): skip '\r';
+	* plug-ins/screenshot/screenshot.c (shoot): Use spawnlp() instead of
+ 	fork().
+
 	* plug-ins/hrz/hrz.c (load_image): Use g_malloc instead of mmap
 	for OS/2.
 

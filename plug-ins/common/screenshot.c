@@ -46,6 +46,9 @@
 #include <errno.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#ifdef __EMX__
+#include <process.h>
+#endif
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
@@ -281,6 +284,7 @@ shoot (void)
     }
   xwdargv[i] = NULL;
   
+#ifndef __EMX__
   /* fork off a xwd process */
   if ((pid = fork ()) < 0)
     {
@@ -295,6 +299,14 @@ shoot (void)
       return;
     }
   else
+#else /* __EMX__ */
+  pid = spawnvp (P_NOWAIT, XWD, xwdargv);
+  if (pid == -1)
+    {
+      g_message ("screenshot: spawn failed: %s\n", g_strerror (errno));
+      return;
+    }
+#endif
     {
       waitpid (pid, &status, 0);
 	      
