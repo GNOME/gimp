@@ -20,6 +20,7 @@
  */
 
 #include "config.h"
+#include <string.h>
 
 #include <libgimp/gimp.h>
 
@@ -35,6 +36,12 @@ static char rcsid[] = "$Id$";
 #define NSAMPLES      256
 #define LUMINOSITY(X) (GIMP_RGB_INTENSITY (X[0], X[1], X[2]) + 0.5)
 
+typedef enum
+  {
+    GRADIENT_MODE = 1,
+    PALETTE_MODE
+  } MapMode;
+
 /* Declare a local function.
  */
 static void     query       (void);
@@ -44,8 +51,14 @@ static void     run         (const gchar      *name,
                              gint             *nreturn_vals,
                              GimpParam       **return_vals);
 
-static void     gradmap     (GimpDrawable     *drawable);
-static guchar * get_samples (GimpDrawable     *drawable);
+static void     map                  (GimpDrawable     *drawable,
+                                      MapMode           mode);
+static guchar * get_samples_gradient (GimpDrawable     *drawable);
+static guchar * get_samples_palette  (GimpDrawable     *drawable);
+static void     map_func             (const guchar     *src,
+                                      guchar           *dest,
+                                      gint              bpp,
+                                      gpointer          data);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -90,6 +103,29 @@ query (void)
                           args, NULL);
 
   gimp_plugin_menu_register ("plug_in_gradmap", "<Image>/Filters/Colors/Map");
+
+  gimp_install_procedure ("plug_in_palettemap",
+                          "Map the contents of the specified drawable with "
+                          "the active palette",
+                          "This plug-in maps the contents of the specified "
+                          "drawable with the active palette. It calculates "
+                          "luminosity of each pixel and replaces the pixel "
+                          "by the palette sample  at the corresponding "
+                          "index. A complete black "
+                          "pixel becomes the lowest palette entry, "
+                          "and complete white becomes the highest. Works on "
+                          "both Grayscale and RGB image with/without alpha "
+                          "channel.",
+                          "Bill Skaggs",
+                          "Bill Skaggs",
+                          "2004",
+                          N_("_Palette Map"),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_palettemap", "<Image>/Filters/Colors/Map");
 }
 
 static void
@@ -121,17 +157,29 @@ run (const gchar      *name,
   if (gimp_drawable_is_rgb (drawable->drawable_id) ||
       gimp_drawable_is_gray (drawable->drawable_id))
     {
-      gimp_progress_init (_("Gradient Map..."));
-      gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
+      MapMode  mode = 0;
 
-      gradmap (drawable);
+      if ( !strcmp (name, "plug_in_gradmap"))
+        {
+          mode = GRADIENT_MODE;
+          gimp_progress_init (_("Gradient Map..."));
+        }
+      else if ( !strcmp (name, "plug_in_palettemap"))
+        {
+          mode = PALETTE_MODE;
+          gimp_progress_init (_("Palette Map..."));
+        }
+      else
+        status = GIMP_PDB_EXECUTION_ERROR;
+
+      if (mode)
+        map (drawable, mode);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
     }
   else
     {
-      /* g_message ("gradmap: cannot operate on indexed color images"); */
       status = GIMP_PDB_EXECUTION_ERROR;
     }
 
@@ -145,18 +193,19 @@ typedef struct
   guchar   *samples;
   gboolean  is_rgb;
   gboolean  has_alpha;
-} GradMapParam;
+  MapMode   mode;
+} MapParam;
 
 static void
-gradmap_func (const guchar *src,
+map_func (const guchar *src,
               guchar       *dest,
               gint          bpp,
               gpointer      data)
 {
-  GradMapParam *param = data;
-  gint          lum;
-  gint          b;
-  guchar       *samp;
+  MapParam *param = data;
+  gint      lum;
+  gint      b;
+  guchar   *samp;
 
   lum = (param->is_rgb) ? LUMINOSITY (src) : src[0];
   samp = &param->samples[lum * bpp];
@@ -175,15 +224,27 @@ gradmap_func (const guchar *src,
 }
 
 static void
-gradmap (GimpDrawable *drawable)
+map (GimpDrawable *drawable,
+     MapMode       mode)
 {
-  GradMapParam param;
+  MapParam param;
 
   param.is_rgb = gimp_drawable_is_rgb (drawable->drawable_id);
   param.has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
-  param.samples = get_samples (drawable);
 
-  gimp_rgn_iterate2 (drawable, 0 /* unused */, gradmap_func, &param);
+  switch (mode)
+    {
+    case GRADIENT_MODE:
+      param.samples = get_samples_gradient (drawable);
+      break;
+    case PALETTE_MODE:
+      param.samples = get_samples_palette (drawable);
+      break;
+    default:
+      g_error ("plug_in_gradmap: invalid mode");
+    }
+
+  gimp_rgn_iterate2 (drawable, 0 /* unused */, map_func, &param);
 }
 
 /*
@@ -191,12 +252,12 @@ gradmap (GimpDrawable *drawable)
   Each sample has (gimp_drawable_bpp (drawable->drawable_id)) bytes.
  */
 static guchar *
-get_samples (GimpDrawable *drawable)
+get_samples_gradient (GimpDrawable *drawable)
 {
   gchar   *gradient_name;
   gint     n_f_samples;
   gdouble *f_samples, *f_samp;  /* float samples */
-  guchar  *b_samples, *b_samp;  /* byte samples */
+  guchar  *byte_samples, *b_samp;  /* byte samples */
   gint     bpp, color, has_alpha, alpha;
   gint     i, j;
 
@@ -213,11 +274,11 @@ get_samples (GimpDrawable *drawable)
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   alpha     = (has_alpha ? bpp - 1 : bpp);
 
-  b_samples = g_new (guchar, NSAMPLES * bpp);
+  byte_samples = g_new (guchar, NSAMPLES * bpp);
 
   for (i = 0; i < NSAMPLES; i++)
     {
-      b_samp = &b_samples[i * bpp];
+      b_samp = &byte_samples[i * bpp];
       f_samp = &f_samples[i * 4];
       if (color)
         for (j = 0; j < 3; j++)
@@ -231,5 +292,51 @@ get_samples (GimpDrawable *drawable)
 
   g_free (f_samples);
 
-  return b_samples;
+  return byte_samples;
+}
+
+/*
+  Returns 256 samples of the palette.
+  Each sample has (gimp_drawable_bpp (drawable->drawable_id)) bytes.
+ */
+static guchar *
+get_samples_palette (GimpDrawable *drawable)
+{
+  gchar   *palette_name;
+  GimpRGB  color_sample;
+  guchar  *byte_samples;
+  guchar  *b_samp;
+  gint     bpp, color, has_alpha, alpha;
+  gint     i;
+  gint     num_colors;
+
+  palette_name = gimp_context_get_palette ();
+  gimp_palette_get_info (palette_name, &num_colors);
+
+  bpp       = gimp_drawable_bpp (drawable->drawable_id);
+  color     = gimp_drawable_is_rgb (drawable->drawable_id);
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+  alpha     = (has_alpha ? bpp - 1 : bpp);
+
+  byte_samples = g_new (guchar, NSAMPLES * bpp);
+
+  for (i = 0; i < NSAMPLES; i++)
+    {
+      b_samp = &byte_samples[i * bpp];
+
+      if (i < num_colors)
+        gimp_palette_entry_get_color (palette_name, i, &color_sample);
+
+      if (color)
+        gimp_rgb_get_uchar (&color_sample,
+                            b_samp, b_samp + 1, b_samp + 2);
+      else
+        *b_samp = gimp_rgb_intensity_uchar (&color_sample);
+
+      if (has_alpha)
+        b_samp[alpha] = 255;
+
+    }
+
+  return byte_samples;
 }
