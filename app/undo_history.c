@@ -149,11 +149,17 @@ static GdkPixmap *clear_pixmap = NULL;
 static GdkBitmap *clear_mask   = NULL;
 
 
-static void undo_history_undo_event     (GtkWidget *widget,
-                                         gint       ev,
-                                         gpointer   data);
-static void undo_history_clean_callback (GtkWidget *widget,
-                                         gpointer   data);
+static void undo_history_undo_event          (GtkWidget *widget,
+                                              gint       ev,
+                                              gpointer   data);
+static void undo_history_clean_callback      (GtkWidget *widget,
+                                              gpointer   data);
+
+static void undo_history_select_row_callback (GtkWidget *widget,
+                                              gint       row,
+                                              gint       column,
+                                              gpointer   event,
+                                              gpointer   data);
 
 
 /**************************************************************/
@@ -566,7 +572,9 @@ undo_history_undo_event (GtkWidget *widget,
   clist = GTK_CLIST (st->clist); 
 
   /* block select events */
-  gtk_signal_handler_block_by_data (GTK_OBJECT (st->clist), st);
+  g_signal_handlers_block_by_func (G_OBJECT (st->clist), 
+                                   undo_history_select_row_callback,
+                                   st);
 
   switch (event)
     {
@@ -635,7 +643,9 @@ undo_history_undo_event (GtkWidget *widget,
   if (st->gimage->dirty == 0)
     gtk_clist_set_pixmap (clist, cur_selection, 1, clean_pixmap, clean_mask);
 
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (st->clist), st);
+  g_signal_handlers_unblock_by_func (G_OBJECT (st->clist), 
+                                     undo_history_select_row_callback,
+                                     st);
 
   st->old_selection = cur_selection;
   undo_history_set_sensitive (st, clist->rows);

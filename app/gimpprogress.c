@@ -311,22 +311,26 @@ progress_signal_setup (GimpProgress *p,
   /* remove any existing signal handlers */
   if (p->cancel_callback)
     {
-      gtk_signal_disconnect_by_func (GTK_OBJECT (button),
-				     p->cancel_callback, p->cancel_data);
+      g_signal_handlers_disconnect_by_func (G_OBJECT (button),
+                                            p->cancel_callback, 
+                                            p->cancel_data);
       if (dialog)
-	gtk_signal_disconnect_by_func (GTK_OBJECT (dialog),
-				       p->cancel_callback, p->cancel_data);
+	g_signal_handlers_disconnect_by_func (G_OBJECT (dialog),
+                                              p->cancel_callback, 
+                                              p->cancel_data);
     }
 
   /* add the new handlers */
   if (cancel_callback)
     {
-      gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			  cancel_callback, cancel_data);
+      g_signal_connect (G_OBJECT (button), "clicked",
+                        G_CALLBACK (cancel_callback), 
+                        cancel_data);
 
       if (dialog)
-	gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-			    cancel_callback, cancel_data);
+	g_signal_connect (G_OBJECT (dialog), "destroy",
+                          G_CALLBACK (cancel_callback), 
+                          cancel_data);
     }
 
   gtk_widget_set_sensitive (GTK_WIDGET (button),

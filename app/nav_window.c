@@ -128,9 +128,6 @@ static void   nav_dialog_draw_sqr             (NavigationDialog *nav_dialog,
 static gboolean   nav_dialog_preview_events   (GtkWidget        *widget, 
 					       GdkEvent         *event, 
 					       gpointer          data);
-static gboolean   nav_dialog_expose_event     (GtkWidget        *widget, 
-					       GdkEvent         *event, 
-					       gpointer          data);
 
 static void   nav_dialog_idle_update_preview  (NavigationDialog *nav_dialog);
 static void   nav_dialog_update_preview       (NavigationDialog *nav_dialog);
@@ -199,20 +196,20 @@ nav_dialog_create (GDisplay *gdisp)
 				       GTK_WIN_POS_MOUSE,
 				       FALSE, TRUE, TRUE,
 
-				       "_delete_event_", nav_dialog_close_callback,
+				       "_delete_event_", 
+                                       nav_dialog_close_callback,
 				       nav_dialog, NULL, NULL, TRUE, TRUE,
 
 				       NULL);
 
   g_free (title);
 
-  gtk_widget_hide (GTK_WIDGET (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_BIN (nav_dialog->shell)->child)), 0)));
-
+  gtk_dialog_set_has_separator (GTK_DIALOG (nav_dialog->shell), FALSE);
   gtk_widget_hide (GTK_DIALOG (nav_dialog->shell)->action_area);
 
-  gtk_signal_connect_object (GTK_OBJECT (nav_dialog->shell), "destroy",
-			     GTK_SIGNAL_FUNC (g_free),
-			     (GtkObject *) nav_dialog);
+  g_object_weak_ref (G_OBJECT (nav_dialog->shell),
+                     g_free,
+                     nav_dialog);
 
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (nav_dialog->shell)->vbox), abox,
@@ -246,9 +243,9 @@ nav_dialog_create (GDisplay *gdisp)
     gtk_container_add (GTK_CONTAINER (frame), preview);
     gtk_widget_show (preview);
 
-    gtk_signal_connect (GTK_OBJECT (preview), "marker_changed",
-			GTK_SIGNAL_FUNC (nav_dialog_marker_changed),
-			nav_dialog);
+    g_signal_connect (G_OBJECT (preview), "marker_changed",
+                      G_CALLBACK (nav_dialog_marker_changed),
+                      nav_dialog);
 
     nav_dialog->new_preview = preview;
   }
@@ -260,15 +257,14 @@ nav_dialog_create (GDisplay *gdisp)
 
   if (! g_object_get_data (G_OBJECT (gdisp->gimage), "nav_handlers_installed"))
     {
-      gtk_signal_connect_after (GTK_OBJECT (gdisp->gimage), "dirty",
-				GTK_SIGNAL_FUNC (nav_image_need_update),
-				nav_dialog);
-      gtk_signal_connect_after (GTK_OBJECT (gdisp->gimage), "clean",
-				GTK_SIGNAL_FUNC (nav_image_need_update),
-				nav_dialog);
+      g_signal_connect (G_OBJECT (gdisp->gimage), "dirty",
+                        G_CALLBACK (nav_image_need_update),
+                        nav_dialog);
+      g_signal_connect (G_OBJECT (gdisp->gimage), "clean",
+                        G_CALLBACK (nav_image_need_update),
+                        nav_dialog);
 
-      g_object_set_data (G_OBJECT (gdisp->gimage), 
-                         "nav_handlers_installed",
+      g_object_set_data (G_OBJECT (gdisp->gimage), "nav_handlers_installed",
                          nav_dialog);
     }
   
@@ -367,9 +363,9 @@ nav_dialog_follow_auto (void)
     {
       nav_window_auto = nav_dialog_create (gdisp);
 
-      gtk_signal_connect (GTK_OBJECT (context), "display_changed",
-			  GTK_SIGNAL_FUNC (nav_dialog_display_changed),
-			  nav_window_auto);
+      g_signal_connect (G_OBJECT (context), "display_changed",
+                        G_CALLBACK (nav_dialog_display_changed),
+                        nav_window_auto);
     }
 
   nav_dialog_popup (nav_window_auto);
@@ -472,9 +468,9 @@ nav_popup_click_handler (GtkWidget      *widget,
       nav_dialog->shell = gtk_window_new (GTK_WINDOW_POPUP);
       gtk_widget_set_events (nav_dialog->shell, PREVIEW_MASK);
 
-      gtk_signal_connect_object (GTK_OBJECT (nav_dialog->shell), "destroy",
-				 GTK_SIGNAL_FUNC (g_free),
-				 (GtkObject *) nav_dialog);
+      g_object_weak_ref (G_OBJECT (nav_dialog->shell),
+                         g_free,
+                         nav_dialog);
 
       frame = gtk_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
@@ -823,17 +819,12 @@ create_preview_widget (NavigationDialog *nav_dialog)
 
   set_size_data (nav_dialog);
 
-  gtk_preview_size (GTK_PREVIEW (nav_dialog->preview),
-		    nav_dialog->pwidth,
-		    nav_dialog->pheight);
+  gtk_preview_size (GTK_PREVIEW (preview), 
+                    nav_dialog->pwidth, nav_dialog->pheight);
 
-  gtk_signal_connect (GTK_OBJECT (preview), "event",
-		      GTK_SIGNAL_FUNC (nav_dialog_preview_events),
-		      nav_dialog);
-
-  gtk_signal_connect_after (GTK_OBJECT (preview), "expose_event",
-			    GTK_SIGNAL_FUNC (nav_dialog_expose_event),
-			    nav_dialog);
+  g_signal_connect (G_OBJECT (preview), "event",
+                    G_CALLBACK (nav_dialog_preview_events),
+                    nav_dialog);
 }
 
 static gboolean
@@ -1208,13 +1199,10 @@ nav_dialog_inside_preview_square (NavigationDialog *nav_dialog,
 				  gint              x,
 				  gint              y)
 {
-  if (x > nav_dialog->dispx &&
-      x < (nav_dialog->dispx + nav_dialog->dispwidth) &&
-      y > nav_dialog->dispy &&
-      y < nav_dialog->dispy + nav_dialog->dispheight)
-    return TRUE;
-
-  return FALSE;
+  return (x > nav_dialog->dispx &&
+          x < nav_dialog->dispx + nav_dialog->dispwidth &&
+          y > nav_dialog->dispy &&
+          y < nav_dialog->dispy + nav_dialog->dispheight);
 }
 
 static gboolean
@@ -1244,7 +1232,13 @@ nav_dialog_preview_events (GtkWidget *widget,
   switch (event->type)
     {
     case GDK_EXPOSE:
-      break;
+      /* call default handler explicitly, then draw the square */
+      GTK_WIDGET_GET_CLASS (widget)->expose_event (widget, 
+                                                   (GdkEventExpose *) event);
+      nav_dialog_draw_sqr (nav_dialog, FALSE,
+			   nav_dialog->dispx, nav_dialog->dispy,
+			   nav_dialog->dispwidth, nav_dialog->dispheight);
+      return TRUE;
 
     case GDK_MAP:
       if (nav_dialog->ptype == NAV_POPUP)
@@ -1423,52 +1417,6 @@ nav_dialog_preview_events (GtkWidget *widget,
   return FALSE;
 }
 
-static gboolean
-nav_dialog_expose_event (GtkWidget *widget,
-			 GdkEvent  *event,
-			 gpointer   data)
-{
-  NavigationDialog *nav_dialog;
-  GDisplay         *gdisp;
-
-  nav_dialog = (NavigationDialog *) data;
-
-  if (! nav_dialog || nav_dialog->frozen)
-    return FALSE;
-
-  gdisp = nav_dialog->gdisp;
-
-  switch (event->type)
-    {
-    case GDK_EXPOSE:
-      /* we must have the grab if in nav_popup */
-
-      gtk_signal_handler_block_by_func
-	(GTK_OBJECT (widget),
-	 GTK_SIGNAL_FUNC (nav_dialog_expose_event),
-	 data);
-
-      gtk_widget_draw (nav_dialog->preview, NULL); 
-
-      gtk_signal_handler_unblock_by_func
-	(GTK_OBJECT (widget),
-	 GTK_SIGNAL_FUNC (nav_dialog_expose_event),
-	 data);
-
-      nav_dialog_draw_sqr (nav_dialog, FALSE,
-			   nav_dialog->dispx, nav_dialog->dispy,
-			   nav_dialog->dispwidth, nav_dialog->dispheight);
-
-      if (! gtk_grab_get_current () && nav_dialog->ptype == NAV_POPUP)
-	nav_dialog_grab_pointer (nav_dialog, nav_dialog->preview);
-      break;
-
-    default:
-      break;
-    }
-
-  return FALSE;
-}
 
 static void
 nav_image_need_update (GimpImage *gimage,
@@ -1563,9 +1511,9 @@ nav_create_button_area (NavigationDialog *nav_dialog)
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  gtk_signal_connect (GTK_OBJECT (button), "clicked", 
-		      GTK_SIGNAL_FUNC (navwindow_zoomout),
-		      nav_dialog);
+  g_signal_connect (G_OBJECT (button), "clicked", 
+                    G_CALLBACK (navwindow_zoomout),
+                    nav_dialog);
 
   /*  user zoom ratio  */
   g_snprintf (scale_str, MAX_SCALE_BUF, "%d:%d",
@@ -1581,16 +1529,16 @@ nav_create_button_area (NavigationDialog *nav_dialog)
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  gtk_signal_connect (GTK_OBJECT (button), "clicked", 
-		      GTK_SIGNAL_FUNC (navwindow_zoomin),
-		      nav_dialog);
+  g_signal_connect (G_OBJECT (button), "clicked", 
+                    G_CALLBACK (navwindow_zoomin),
+                    nav_dialog);
 
   nav_dialog->zoom_adjustment =
     gtk_adjustment_new (0.0, -15.0, 16.0, 1.0, 1.0, 1.0);
 
-  gtk_signal_connect (GTK_OBJECT (nav_dialog->zoom_adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (zoom_adj_changed),
-		      nav_dialog);
+  g_signal_connect (G_OBJECT (nav_dialog->zoom_adjustment), "value_changed",
+                    G_CALLBACK (zoom_adj_changed),
+                    nav_dialog);
 
   hscale = gtk_hscale_new (GTK_ADJUSTMENT (nav_dialog->zoom_adjustment));
   gtk_scale_set_draw_value (GTK_SCALE (hscale), FALSE);
@@ -1647,12 +1595,12 @@ nav_dialog_display_changed (GimpContext *context,
        */
       if (! g_object_get_data (G_OBJECT (gimage), "nav_handlers_installed"))
 	{
-	  gtk_signal_connect_after (GTK_OBJECT (gimage), "dirty",
-				    GTK_SIGNAL_FUNC (nav_image_need_update),
-				    nav_dialog);
-	  gtk_signal_connect_after (GTK_OBJECT (gimage), "clean",
-				    GTK_SIGNAL_FUNC (nav_image_need_update),
-				    nav_dialog);
+	  g_signal_connect (G_OBJECT (gimage), "dirty",
+                            G_CALLBACK (nav_image_need_update),
+                            nav_dialog);
+	  g_signal_connect (G_OBJECT (gimage), "clean",
+                            G_CALLBACK (nav_image_need_update),
+                            nav_dialog);
 
 	  g_object_set_data (G_OBJECT (gimage),
                              "nav_handlers_installed",

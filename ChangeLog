@@ -1,5 +1,22 @@
 2001-08-01  Sven Neumann  <sven@gimp.org>
 
+	* app/docindex.c
+	* app/gdisplay_color_ui.c
+	* app/gimpprogress.c
+	* app/nav_window.c
+	* app/path.c
+	* app/scale.c
+	* app/undo_history.c
+	* app/user_install.c
+	* app/gui/resolution-calibrate-dialog.[ch]: converted uses of  
+	gtk_signal_* to g_signal_*. 
+
+	Changed expose_event handlers that used to be connected using 
+	signal_connect_after to call the default handler, do the additional 
+	drawing, then stop the signal emission by returning TRUE.
+
+2001-08-01  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpairbrushtool.c
 	* app/tools/gimpblendtool.c
 	* app/tools/gimpbrightnesscontrasttool.c
@@ -22,7 +39,7 @@
 	* app/tools/paint_options.c
 	* app/tools/selection_options.c
 	* app/tools/transform_options.c: got rid of all remaining gtk_signal 
-	wrappers.
+	wrappers in the tools directory.
 
 2001-08-01  Sven Neumann  <sven@gimp.org>
 

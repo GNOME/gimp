@@ -184,12 +184,12 @@ make_dialog (ColorDisplayDialog *cdd)
   gtk_clist_set_auto_sort (GTK_CLIST (cdd->src), TRUE);
   gtk_container_add (GTK_CONTAINER (scrolled_win), cdd->src);
 
-  gtk_signal_connect (GTK_OBJECT (cdd->src), "select_row",
-		      GTK_SIGNAL_FUNC (select_src),
-		      cdd);
-  gtk_signal_connect (GTK_OBJECT (cdd->src), "unselect_row",
-                      GTK_SIGNAL_FUNC (unselect_src),
-                      cdd);
+  g_signal_connect (G_OBJECT (cdd->src), "select_row",
+                    G_CALLBACK (select_src),
+                    cdd);
+  g_signal_connect (G_OBJECT (cdd->src), "unselect_row",
+                    G_CALLBACK (unselect_src),
+                    cdd);
 
   vbbox = gtk_vbutton_box_new ();
   gtk_vbutton_box_set_layout_default (GTK_BUTTONBOX_START);
@@ -209,12 +209,12 @@ make_dialog (ColorDisplayDialog *cdd)
   gtk_clist_column_titles_passive (GTK_CLIST (cdd->dest));
   gtk_container_add (GTK_CONTAINER (scrolled_win), cdd->dest);
 
-  gtk_signal_connect (GTK_OBJECT (cdd->dest), "select_row",
-		      GTK_SIGNAL_FUNC (select_dest),
-		      cdd);
-  gtk_signal_connect (GTK_OBJECT (cdd->dest), "unselect_row",
-                      GTK_SIGNAL_FUNC (unselect_dest),
-                      cdd);
+  g_signal_connect (G_OBJECT (cdd->dest), "select_row",
+                    G_CALLBACK (select_dest),
+                    cdd);
+  g_signal_connect (G_OBJECT (cdd->dest), "unselect_row",
+                    G_CALLBACK (unselect_dest),
+                    cdd);
 
   for (i = 0; i < 5; i++)
     {
@@ -222,9 +222,9 @@ make_dialog (ColorDisplayDialog *cdd)
 	 gtk_button_new_with_label (gettext (buttons[i].label));
        gtk_box_pack_start (GTK_BOX (vbbox), cdd->buttons[i], FALSE, FALSE, 0);
 
-       gtk_signal_connect (GTK_OBJECT (cdd->buttons[i]), "clicked",
-			   GTK_SIGNAL_FUNC (buttons[i].callback),
-			   cdd);
+       g_signal_connect (G_OBJECT (cdd->buttons[i]), "clicked",
+                         G_CALLBACK (buttons[i].callback),
+                         cdd);
        gtk_widget_set_sensitive (cdd->buttons[i], FALSE);
     }
 

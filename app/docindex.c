@@ -844,8 +844,9 @@ open_idea_window (void)
   /* Load and Show window */
   load_idea_manager (ideas);
 
-  gtk_signal_connect_after (GTK_OBJECT (ideas->list), "selection_changed",
-			    GTK_SIGNAL_FUNC (ops_buttons_update),
-			    NULL);
+  g_signal_connect (G_OBJECT (ideas->list), "selection_changed",
+                    G_CALLBACK (ops_buttons_update),
+                    NULL);
+
   ops_buttons_update (NULL, NULL);
 }

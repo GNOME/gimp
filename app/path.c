@@ -218,10 +218,9 @@ path_list_new (GimpImage *gimage,
   pip->last_selected_row = last_selected_row;
   
   /* add connector to image delete/destroy */
-  pip->sig_id = gtk_signal_connect (GTK_OBJECT (gimage),
-				    "destroy",
-				    GTK_SIGNAL_FUNC (paths_dialog_destroy_cb),
-				    pip);
+  pip->sig_id = g_signal_connect (G_OBJECT (gimage), "destroy",
+                                  G_CALLBACK (paths_dialog_destroy_cb),
+                                  pip);
   
   pip->bz_paths = bz_paths;
 

@@ -397,12 +397,20 @@ user_install_cancel_callback (GtkWidget *widget,
   timeout = gtk_timeout_add (1024, (GtkFunction) gtk_exit, (gpointer) 0);
 }
 
-static gint
+static gboolean
 user_install_corner_expose (GtkWidget      *widget,
 			    GdkEventExpose *eevent,
 			    gpointer        data)
 {
-  switch ((GtkCornerType) data)
+  GtkCornerType corner;
+
+  /* call default handler explicitly, then draw the corners */
+  if (GTK_WIDGET_GET_CLASS (widget)->expose_event)
+    GTK_WIDGET_GET_CLASS (widget)->expose_event (widget, eevent);
+  
+  corner = GPOINTER_TO_INT (data);
+
+  switch (corner)
     {
     case GTK_CORNER_TOP_LEFT:
       gdk_draw_arc (widget->window,
@@ -449,7 +457,7 @@ user_install_corner_expose (GtkWidget      *widget,
       break;
       
     default:
-      return FALSE;
+      break;
     }
 
   return TRUE;
@@ -620,9 +628,9 @@ user_install_dialog_create (Gimp *gimp)
   darea = gtk_drawing_area_new ();
   TITLE_STYLE (darea);  
   gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 16, 16);
-  gtk_signal_connect_after (GTK_OBJECT (darea), "expose_event",
-			    GTK_SIGNAL_FUNC (user_install_corner_expose),
-			    (gpointer) GTK_CORNER_TOP_LEFT);
+  g_signal_connect (G_OBJECT (darea), "expose_event",
+                    G_CALLBACK (user_install_corner_expose),
+                    GINT_TO_POINTER (GTK_CORNER_TOP_LEFT));
   gtk_table_attach (GTK_TABLE (table), darea, 0, 1, 0, 1,
 		    GTK_SHRINK, GTK_SHRINK, 0, 0);
   gtk_widget_show (darea);
@@ -630,9 +638,9 @@ user_install_dialog_create (Gimp *gimp)
   darea = gtk_drawing_area_new ();
   TITLE_STYLE (darea);
   gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 16, 16);
-  gtk_signal_connect_after (GTK_OBJECT (darea), "expose_event",
-			    GTK_SIGNAL_FUNC (user_install_corner_expose),
-			    (gpointer) GTK_CORNER_BOTTOM_LEFT);
+  g_signal_connect (G_OBJECT (darea), "expose_event",
+                    G_CALLBACK (user_install_corner_expose),
+                    GINT_TO_POINTER (GTK_CORNER_BOTTOM_LEFT));
   gtk_table_attach (GTK_TABLE (table), darea, 0, 1, 2, 3,
 		    GTK_SHRINK, GTK_SHRINK, 0, 0);
   gtk_widget_show (darea);
@@ -1113,7 +1121,7 @@ user_install_resolution_calibrate (GtkWidget *button,
   resolution_calibrate_dialog (resolution_entry, 
 			       title_style,
 			       page_style,
-			       GTK_SIGNAL_FUNC (user_install_corner_expose));
+			       G_CALLBACK (user_install_corner_expose));
 }
 
 static void

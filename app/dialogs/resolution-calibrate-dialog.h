@@ -20,10 +20,10 @@
 #define __RESOLUTION_CALIBRATE_DIALOG_H__
 
 
-void  resolution_calibrate_dialog (GtkWidget     *resolution_entry,
-				   GtkRcStyle    *dialog_style,
-				   GtkRcStyle    *ruler_style,
-				   GtkSignalFunc  expose_callback);
+void  resolution_calibrate_dialog (GtkWidget  *resolution_entry,
+				   GtkRcStyle *dialog_style,
+				   GtkRcStyle *ruler_style,
+				   GCallback   expose_callback);
 
 
 #endif /* __RESOLUTION_CALIBRATE_DIALOG_H__ */

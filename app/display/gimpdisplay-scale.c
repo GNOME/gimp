@@ -224,8 +224,8 @@ setup_scale (GDisplay *gdisp)
   gdisp->vsbdata->page_increment = (gdisp->disp_height / 2);
   gdisp->vsbdata->step_increment = stepy;
 
-  gtk_signal_emit_by_name (GTK_OBJECT (gdisp->hsbdata), "changed");
-  gtk_signal_emit_by_name (GTK_OBJECT (gdisp->vsbdata), "changed");
+  g_signal_emit_by_name (G_OBJECT (gdisp->hsbdata), "changed", 0);
+  g_signal_emit_by_name (G_OBJECT (gdisp->vsbdata), "changed", 0);
 
   hruler = GTK_RULER (gdisp->hrule);
   vruler = GTK_RULER (gdisp->vrule);
