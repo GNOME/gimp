@@ -49,6 +49,7 @@ Bugs fixed in GIMP 2.0pre3
 - 130118: Allow non-UTF8 characters in the GIMP home directory (Mitch)
 - 122026: Workaround a bug in gdk_draw_segments() (David Odin)
 - 133280: Remove deleted scripts from the menu (Mitch)
+- 133270: Replace deprecated enum values in scripts (Kevin Cozens)
 - 133180: Sort menu entries for save and load procedures (Mitch)
 - 131563: Use percentages for zoom ratios (Simon, Sven)
 
