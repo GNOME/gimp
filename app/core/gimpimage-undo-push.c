@@ -633,8 +633,9 @@ typedef struct _GuideUndo GuideUndo;
 
 struct _GuideUndo
 {
-  GimpGuide *guide;
-  gint       position;
+  GimpGuide           *guide;
+  gint                 position;
+  GimpOrientationType  orientation;
 };
 
 static gboolean undo_pop_image_guide  (GimpUndo            *undo,
@@ -665,8 +666,9 @@ gimp_image_undo_push_image_guide (GimpImage   *gimage,
 
       gu = new->data;
 
-      gu->guide    = gimp_image_guide_ref (guide);
-      gu->position = guide->position;
+      gu->guide       = gimp_image_guide_ref (guide);
+      gu->position    = guide->position;
+      gu->orientation = guide->orientation;
 
       return TRUE;
     }
@@ -679,12 +681,14 @@ undo_pop_image_guide (GimpUndo            *undo,
                       GimpUndoMode         undo_mode,
                       GimpUndoAccumulator *accum)
 {
-  GuideUndo *gu;
-  gint       old_position;
+  GuideUndo           *gu;
+  gint                 old_position;
+  GimpOrientationType  old_orientation;
 
   gu = (GuideUndo *) undo->data;
 
-  old_position = gu->guide->position;
+  old_position    = gu->guide->position;
+  old_orientation = gu->guide->orientation;
 
   if (gu->guide->position == -1)
     {
@@ -704,7 +708,10 @@ undo_pop_image_guide (GimpUndo            *undo,
       gimp_image_update_guide (undo->gimage, gu->guide);
     }
 
-  gu->position = old_position;
+  gu->guide->orientation = gu->orientation;
+
+  gu->position    = old_position;
+  gu->orientation = old_orientation;
 
   return TRUE;
 }

@@ -1,3 +1,8 @@
+2003-05-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-undo-push.c: remember the guide's orientation
+	in the guide undo. Needed for gimp_image_rotate().
+
 2003-05-20  Sven Neumann  <sven@gimp.org>
 
 	* app/core/core-enums.[ch]: added new enum GimpRotationType.
