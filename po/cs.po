@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.15\n"
-"POT-Creation-Date: 2000-01-16 19:36+0100\n"
-"PO-Revision-Date: 2000-01-16 19:45+01:00\n"
+"POT-Creation-Date: 2000-01-19 11:12+0100\n"
+"PO-Revision-Date: 2000-01-19 12:36+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2198,7 +2198,7 @@ msgstr "Pøímá barva"
 
 #: app/info_window.c:225
 msgid "A:"
-msgstr "A:"
+msgstr "Alfa:"
 
 #: app/info_window.c:230
 msgid "B:"
@@ -2235,7 +2235,7 @@ msgstr "Zvìt¹ení:"
 
 #: app/info_window.c:335
 msgid "Display Type:"
-msgstr "Druh zobrazování:"
+msgstr "Typ zobrazení:"
 
 #: app/info_window.c:337
 msgid "Visual Class:"
@@ -2311,7 +2311,7 @@ msgstr "Tvar"
 
 #: app/install.c:83
 msgid "The GIMP is not properly installed for the current user\n"
-msgstr "GIMP není øádnì instalován pro aktuálního u¾ivatele\n"
+msgstr "GIMP není pro aktuálního u¾ivatele øádnì nainstalován\n"
 
 #: app/install.c:84
 msgid ""
@@ -2526,10 +2526,10 @@ msgid ""
 "\t\twhen searching for gflares.\n"
 msgstr ""
 "\t\tToto je podadresáø, kam je mo¾né ukládat\n"
-"\t\tu¾ivatelem definované plameny u¾ívané zásuvným modulem gflare.\n"
+"\t\tu¾ivatelem definované P-záøe u¾ívané zásuvným modulem gflare.\n"
 "\t\tDle implicitního gimprc souboru se pøi hledání\n"
-"\t\tplamenù kontroluje tento podadresáø spolu\n"
-"\t\tse systémovou instalací gflare plamenù.\n"
+"\t\tP-záøí kontroluje tento podadresáø spolu\n"
+"\t\tse systémovou instalací gflare P-záøí.\n"
 
 #: app/install.c:209
 msgid ""
@@ -4196,7 +4196,7 @@ msgstr "nikde (stisknìte 'Zaktualizovat')"
 
 #: app/module_db.c:838
 msgid "Unload"
-msgstr "Nenaètený"
+msgstr "Uvolnit"
 
 #: app/module_db.c:852
 msgid "Purpose: "
@@ -4228,7 +4228,7 @@ msgstr "Stav: "
 
 #: app/module_db.c:877
 msgid "Autoload during startup"
-msgstr "Èteno automaticky bìhem spou¹tìní"
+msgstr "Èíst automaticky bìhem spou¹tìní"
 
 #: app/move.c:453
 msgid "Move Tool Options"
@@ -5665,7 +5665,11 @@ msgstr "Transformace"
 msgid "/Tools/Transform"
 msgstr "/Nástroje/Transformace"
 
-#: app/tools.c:233 app/tools.c:249 app/tools.c:265 app/tools.c:281
+#: app/tools.c:233
+msgid "Rotation, scaling, shearing, perspective."
+msgstr "Rotace, zmìna velikosti, naklánìní, perspektiva."
+
+#: app/tools.c:249 app/tools.c:265 app/tools.c:281
 msgid "Transform the layer or selection"
 msgstr "Transformace vrstvy nebo výbìru"
 
