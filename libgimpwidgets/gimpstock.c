@@ -451,6 +451,8 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_PORTRAIT,                 stock_portrait_16                 },
   { GIMP_STOCK_LANDSCAPE,                stock_landscape_16                },
 
+  { GIMP_STOCK_CLOSE,                    stock_close_12                    },
+  { GIMP_STOCK_MENU,                     stock_menu_12                     },
   { GIMP_STOCK_DEFAULT_COLORS,           stock_default_colors_12           },
   { GIMP_STOCK_SWAP_COLORS,              stock_swap_colors_12              },
 

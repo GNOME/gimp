@@ -30,6 +30,7 @@ STOCK_MENU_IMAGES = \
 	stock-channel-green-16.png			\
 	stock-channel-red-16.png			\
 	stock-channels-16.png				\
+	stock-close-12.png				\
 	stock-convert-grayscale-16.png			\
 	stock-convert-indexed-16.png			\
 	stock-convert-rgb-16.png			\
@@ -61,6 +62,7 @@ STOCK_MENU_IMAGES = \
 	stock-layer-to-imagesize-16.png			\
 	stock-layers-16.png				\
 	stock-list-16.png				\
+	stock-menu-12.png				\
 	stock-merge-down-16.png				\
 	stock-navigation-16.png				\
 	stock-path-16.png				\

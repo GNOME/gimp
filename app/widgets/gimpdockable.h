@@ -26,12 +26,14 @@
 #include <gtk/gtkbin.h>
 
 
-typedef GtkWidget * (* GimpDockableGetPreviewFunc) (GimpDockable *dockable,
-                                                    GimpContext  *context,
-						    GtkIconSize   size,
-                                                    gpointer      get_preview_data);
-typedef void        (* GimpDockableSetContextFunc) (GimpDockable *dockable,
-						    GimpContext  *context);
+typedef GtkWidget       * (* GimpDockableGetPreviewFunc) (GimpDockable *dockable,
+                                                          GimpContext  *context,
+                                                          GtkIconSize   size,
+                                                          gpointer      get_preview_data);
+typedef void              (* GimpDockableSetContextFunc) (GimpDockable *dockable,
+                                                          GimpContext  *context);
+typedef GimpItemFactory * (* GimpDockableGetMenuFunc)    (GimpDockable *dockable,
+                                                          gpointer     *item_factory_data);
 
 
 #define GIMP_TYPE_DOCKABLE            (gimp_dockable_get_type ())
@@ -58,21 +60,27 @@ struct _GimpDockable
 
   GimpContext  *context;
 
+  GtkWidget    *menu_button;
+  GtkWidget    *close_button;
+
   GimpDockableGetPreviewFunc  get_preview_func;
   gpointer                    get_preview_data;
   GimpDockableSetContextFunc  set_context_func;
+  GimpDockableGetMenuFunc     get_menu_func;
 };
 
 struct _GimpDockableClass
 {
   GtkBinClass  parent_class;
 
-  GtkWidget * (* get_tab_widget) (GimpDockable *dockable,
-                                  GimpContext  *context,
-                                  GimpTabStyle  tab_style,
-				  GtkIconSize   size);
-  void        (* set_context)    (GimpDockable *dockable,
-				  GimpContext  *context);
+  GtkWidget       * (* get_tab_widget) (GimpDockable *dockable,
+                                        GimpContext  *context,
+                                        GimpTabStyle  tab_style,
+                                        GtkIconSize   size);
+  void              (* set_context)    (GimpDockable *dockable,
+                                        GimpContext  *context);
+  GimpItemFactory * (* get_menu)       (GimpDockable *dockable,
+                                        gpointer     *item_factory_data);
 };
 
 
@@ -84,14 +92,17 @@ GtkWidget * gimp_dockable_new      (const gchar                *name,
                                     const gchar                *help_id,
 				    GimpDockableGetPreviewFunc  get_preview_func,
                                     gpointer                    get_preview_data,
-				    GimpDockableSetContextFunc  set_context_func);
+				    GimpDockableSetContextFunc  set_context_func,
+                                    GimpDockableGetMenuFunc     get_menu_func);
 
-GtkWidget * gimp_dockable_get_tab_widget (GimpDockable           *dockable,
-                                          GimpContext            *context,
-                                          GimpTabStyle            tab_style,
-					  GtkIconSize             size);
-void        gimp_dockable_set_context    (GimpDockable           *dockable,
-					  GimpContext            *context);
+GtkWidget       * gimp_dockable_get_tab_widget (GimpDockable           *dockable,
+                                                GimpContext            *context,
+                                                GimpTabStyle            tab_style,
+                                                GtkIconSize             size);
+void              gimp_dockable_set_context    (GimpDockable           *dockable,
+                                                GimpContext            *context);
+GimpItemFactory * gimp_dockable_get_menu       (GimpDockable           *dockable,
+                                                gpointer               *item_factory_data);
 
 
 #endif /* __GIMP_DOCKABLE_H__ */

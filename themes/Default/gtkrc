@@ -74,9 +74,18 @@ style "gimp-hscale-style"
 class "GtkHScale" style "gimp-hscale-style"
 
 
-style "gimp-grid-view-style" = "gimp-dock-style"
+style "gimp-grid-view-style" = "gimp-default-style"
 {
   bg[NORMAL] = { 1.0, 1.0, 1.0 }
 }
 
 widget "*GimpContainerGridView*GtkViewport*" style "gimp-grid-view-style"
+
+
+style "gimp-dockable-button-style" = "gimp-default-style"
+{
+  GtkButton::focus_line_width   = 0
+  GtkButton::focus_line_padding = 0
+}
+
+widget "*GimpDockable.GtkButton*" style "gimp-dockable-button-style"

@@ -1,5 +1,22 @@
 2003-09-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdockable.[ch]: added a title bar showing the
+	dockable's name, a "close" and a "menu" button. Not quite
+	finished, but almost...
+
+	* app/gui/dialogs-constructors.c: changed accordingly.
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-close-12.png
+	* themes/Default/images/stock-menu-12.png: new icons for the above.
+
+	* libgimpwidgets/gimpstock.[ch]: register them.
+
+	* themes/Default/gtkrc: remove any focus spacing from the
+	dockables' new buttons since they can't get the focus anyway.
+
+2003-09-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/images-menu.c (images_menu_update): fixed typo.
 
 2003-09-21  Simon Budig  <simon@gimp.org>
