@@ -612,6 +612,8 @@ static void
 gimp_dockable_add (GtkContainer *container,
                    GtkWidget    *widget)
 {
+  GimpDockable *dockable;
+
   g_return_if_fail (GTK_BIN (container)->child == NULL);
 
   GTK_CONTAINER_CLASS (parent_class)->add (container, widget);
@@ -619,6 +621,10 @@ gimp_dockable_add (GtkContainer *container,
   g_signal_connect (widget, "title_changed",
                     G_CALLBACK (gimp_dockable_title_changed),
                     container);
+
+  /*  not all tab styles are supported by all children  */
+  dockable = GIMP_DOCKABLE (container);
+  gimp_dockable_set_tab_style (dockable, dockable->tab_style);
 }
 
 static void
