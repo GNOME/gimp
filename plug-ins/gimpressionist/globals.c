@@ -6,9 +6,9 @@
 #include "gimpressionist.h"
 #include "ppmtool.h"
 
-gboolean img_has_alpha = FALSE;
-GRand *random_generator;
-gimpressionist_vals_t pcvals;
+gboolean               img_has_alpha = FALSE;
+GRand                 *random_generator;
+gimpressionist_vals_t  pcvals;
 
 /*
  * The default values for the application, to be initialized at startup.
@@ -62,7 +62,8 @@ static const gimpressionist_vals_t defaultpcvals = {
   0, 0.0
 };
 
-void restore_default_values(void)
+void
+restore_default_values (void)
 {
-    pcvals = defaultpcvals;
+  pcvals = defaultpcvals;
 }

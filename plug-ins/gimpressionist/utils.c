@@ -16,19 +16,21 @@
 
 /* Mathematical Utilities */
 
-double dist(double x, double y, double end_x, double end_y)
+double
+dist (double x, double y, double end_x, double end_y)
 {
   double dx = end_x - x;
   double dy = end_y - y;
-  return sqrt(dx * dx + dy * dy);
+  return sqrt (dx * dx + dy * dy);
 }
 
-double getsiz_proto (double x, double y, int n, smvector_t *vec,
-                     double smstrexp, int voronoi)
+double
+getsiz_proto (double x, double y, int n, smvector_t *vec,
+              double smstrexp, int voronoi)
 {
-  int i;
+  int    i;
   double sum, ssum, dst;
-  int first = 0, last;
+  int    first = 0, last;
 
   if ((x < 0.0) || (x > 1.0))
     g_warning ("HUH? x = %f\n",x);
@@ -55,7 +57,7 @@ double getsiz_proto (double x, double y, int n, smvector_t *vec,
       gdouble bestdist = -1.0;
       for (i = 0; i < n; i++)
          {
-           dst = dist(x, y, vec[i].x, vec[i].y);
+           dst = dist (x, y, vec[i].x, vec[i].y);
            if ((bestdist < 0.0) || (dst < bestdist))
              {
                bestdist = dst;
@@ -75,8 +77,8 @@ double getsiz_proto (double x, double y, int n, smvector_t *vec,
     {
       gdouble s = vec[i].str;
 
-      dst = dist(x,y,vec[i].x,vec[i].y);
-      dst = pow(dst, smstrexp);
+      dst = dist (x,y,vec[i].x,vec[i].y);
+      dst = pow (dst, smstrexp);
       if (dst < 0.0001)
         dst = 0.0001;
       s = s / dst;
@@ -85,7 +87,7 @@ double getsiz_proto (double x, double y, int n, smvector_t *vec,
       ssum += 1.0/dst;
   }
   sum = sum / ssum / 100.0;
-  return CLAMP(sum, 0.0, 1.0);
+  return CLAMP (sum, 0.0, 1.0);
 }
 
 
@@ -97,7 +99,8 @@ static GList *parsepath_cached_path = NULL;
 /* This function is memoized. Once it finds the value it permanently
  * caches it
  * */
-GList * parsepath (void)
+GList *
+parsepath (void)
 {
   gchar *gimpdatasubdir, *defaultpath, *tmps;
 
@@ -144,27 +147,29 @@ GList * parsepath (void)
   return parsepath_cached_path;
 }
 
-static void my_g_free (gpointer data, gpointer userdata)
+static void
+my_g_free (gpointer data, gpointer userdata)
 {
-    g_free(data);
+  g_free (data);
 }
 
-void free_parsepath_cache(void)
+void
+free_parsepath_cache (void)
 {
-    if (parsepath_cached_path != NULL)
-        return
-    g_list_foreach(parsepath_cached_path, my_g_free, NULL);
-    g_list_free(parsepath_cached_path);
-    parsepath_cached_path = NULL;
-}
+  if (parsepath_cached_path != NULL)
+    return;
 
+  g_list_foreach (parsepath_cached_path, my_g_free, NULL);
+  g_list_free (parsepath_cached_path);
+  parsepath_cached_path = NULL;
+}
 
 gchar *
 findfile (const gchar *fn)
 {
   GList *rcpath;
-  GList        *thispath;
-  gchar        *filename;
+  GList *thispath;
+  gchar *filename;
 
   g_return_val_if_fail (fn != NULL, NULL);
 
@@ -189,76 +194,86 @@ void
 reselect (GtkWidget *view,
           gchar     *fname)
 {
-  GtkTreeModel *model;
+  GtkTreeModel     *model;
   GtkTreeSelection *selection;
-  GtkTreeIter iter;
-  char *tmpfile;
+  GtkTreeIter       iter;
+  char             *tmpfile;
 
-  tmpfile = strrchr(fname, '/');
+  tmpfile = strrchr (fname, '/');
   if (tmpfile)
     fname = ++tmpfile;
 
   model = gtk_tree_view_get_model (GTK_TREE_VIEW (view));
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
 
-  if (gtk_tree_model_get_iter_first (model, &iter)) {
-    gboolean quit = FALSE;
-    do {
-      gchar *name;
+  if (gtk_tree_model_get_iter_first (model, &iter))
+    {
+      gboolean quit = FALSE;
+      do
+        {
+          gchar *name;
 
-      gtk_tree_model_get (model, &iter, 0, &name, -1);
-      if (!strcmp(name, fname)) {
-        GtkTreePath *tree_path;
-        gtk_tree_selection_select_iter (selection, &iter);
-        tree_path = gtk_tree_model_get_path (model,
-                                             &iter);
-        gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (view),
-                                      tree_path,
-                                      NULL,
-                                      TRUE,
-                                      0.5,
-                                      0.5);
-        gtk_tree_path_free (tree_path);
-        quit = TRUE;
-      }
-      g_free (name);
+          gtk_tree_model_get (model, &iter, 0, &name, -1);
+          if (!strcmp(name, fname))
+            {
+              GtkTreePath *tree_path;
+              gtk_tree_selection_select_iter (selection, &iter);
+              tree_path = gtk_tree_model_get_path (model,
+                                                   &iter);
+              gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (view),
+                                            tree_path,
+                                            NULL,
+                                            TRUE,
+                                            0.5,
+                                            0.5);
+              gtk_tree_path_free (tree_path);
+              quit = TRUE;
+            }
+          g_free (name);
 
-    } while ((!quit) && gtk_tree_model_iter_next (model, &iter));
-  }
+        } while ((!quit) && gtk_tree_model_iter_next (model, &iter));
+    }
 }
 
-static void readdirintolist_real(char *subdir, GtkWidget *view,
-    char *selected, gboolean with_filename_column,
-    gchar *(*get_object_name_cb)
-    (gchar *dir, gchar * filename, void * context),
-    void * context)
+static void
+readdirintolist_real(char         *subdir,
+                     GtkWidget    *view,
+                     char         *selected,
+                     gboolean      with_filename_column,
+                     gchar      *(*get_object_name_cb) (gchar *dir,
+                                                        gchar *filename,
+                                                        void  *context),
+                     void         *context)
 {
-  gchar *fpath;
-  const gchar *de;
-  GDir *dir;
-  GList *flist = NULL;
-  GtkTreeIter iter;
-  GtkListStore *store;
+  gchar           *fpath;
+  const gchar     *de;
+  GDir            *dir;
+  GList           *flist = NULL;
+  GtkTreeIter      iter;
+  GtkListStore     *store;
   GtkTreeSelection *selection;
 
   store = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (view)));
 
-  if (selected) {
-    if (!selected[0])
-      selected = NULL;
-    else {
-      char *nsel;
-      nsel = strrchr(selected, '/');
-      if (nsel) selected = ++nsel;
+  if (selected)
+    {
+      if (!selected[0])
+        selected = NULL;
+      else
+        {
+          char *nsel;
+
+          nsel = strrchr (selected, '/');
+          if (nsel) selected = ++nsel;
+        }
     }
-  }
 
   dir = g_dir_open (subdir, 0, NULL);
 
   if (!dir)
     return;
 
-  for(;;)
+  for (;;)
     {
       gboolean file_exists;
 
@@ -273,10 +288,10 @@ static void readdirintolist_real(char *subdir, GtkWidget *view,
       if (!file_exists)
         continue;
 
-      flist = g_list_insert_sorted(flist, g_strdup(de),
-				   (GCompareFunc)g_ascii_strcasecmp);
+      flist = g_list_insert_sorted (flist, g_strdup (de),
+                                    (GCompareFunc)g_ascii_strcasecmp);
     }
-  g_dir_close(dir);
+  g_dir_close (dir);
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
 
@@ -306,12 +321,12 @@ static void readdirintolist_real(char *subdir, GtkWidget *view,
         }
 
       if (selected)
-	{
-	  if (!strcmp(flist->data, selected))
-	    {
-	      gtk_tree_selection_select_iter (selection, &iter);
-	    }
-	}
+        {
+          if (!strcmp (flist->data, selected))
+            {
+              gtk_tree_selection_select_iter (selection, &iter);
+            }
+        }
       g_free (flist->data);
       flist = g_list_remove (flist, flist->data);
     }
@@ -319,18 +334,22 @@ static void readdirintolist_real(char *subdir, GtkWidget *view,
   if (!selected)
     {
       if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (store), &iter))
-	gtk_tree_selection_select_iter (selection, &iter);
+        gtk_tree_selection_select_iter (selection, &iter);
     }
 }
 
-void readdirintolist_extended(char *subdir, GtkWidget *view, char *selected,
-                              gboolean with_filename_column,
-                              gchar *(*get_object_name_cb)
-                              (gchar *dir, gchar *filename, void *context),
-                              void * context)
+void
+readdirintolist_extended (char         *subdir,
+                          GtkWidget    *view,
+                          char         *selected,
+                          gboolean      with_filename_column,
+                          gchar      *(*get_object_name_cb) (gchar *dir,
+                                                             gchar *filename,
+                                                             void *context),
+                          void * context)
 {
   char *tmpdir;
-  GList *thispath = parsepath();
+  GList *thispath = parsepath ();
 
   while (thispath)
     {
@@ -342,7 +361,8 @@ void readdirintolist_extended(char *subdir, GtkWidget *view, char *selected,
     }
 }
 
-void readdirintolist (char *subdir, GtkWidget *view, char *selected)
+void
+readdirintolist (char *subdir, GtkWidget *view, char *selected)
 {
   readdirintolist_extended (subdir, view, selected, FALSE, NULL, NULL);
 }
@@ -359,22 +379,28 @@ void readdirintolist (char *subdir, GtkWidget *view, char *selected)
  *      This is useful to group buttons. Just reset the variable to NULL,
  *      to create a new group.
  * */
-GtkWidget *create_radio_button (GtkWidget *box, int orient_type,
-                                void (*callback)(GtkWidget *wg, void *d),
-                                gchar *label, gchar *help_string,
-                                GSList **radio_group,
-                                GtkWidget **buttons_array
-                               )
+GtkWidget *
+create_radio_button (GtkWidget   *box,
+                     int          orient_type,
+                     void       (*callback) (GtkWidget *wg, void *d),
+                     gchar       *label,
+                     gchar       *help_string,
+                     GSList     **radio_group,
+                     GtkWidget  **buttons_array)
 {
   GtkWidget *tmpw;
+
   buttons_array[orient_type] = tmpw =
       gtk_radio_button_new_with_label ((*radio_group), label);
   gtk_box_pack_start (GTK_BOX (box), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
+
   g_signal_connect (tmpw, "clicked",
-		    G_CALLBACK (callback), GINT_TO_POINTER (orient_type));
+                    G_CALLBACK (callback), GINT_TO_POINTER (orient_type));
   gimp_help_set_help_data (tmpw, help_string, NULL);
+
   *radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (tmpw));
+
   return tmpw;
 }
 

@@ -1,3 +1,10 @@
+2004-09-03  DindinX  <david@dindinx.org>
+
+	* plug-ins/gimpressionist/*.c: made the code much more readable by
+	applying the gimp's coding standard (intentation, space, etc.), and
+	remove the GTK_DISABLE_DEPRECATED warnings, since these files don't use
+	any deprecated stuff anymore.
+
 2004-09-02  Michael Schumacher <schumaml@cvs.gnome.org>
 
 	* libgimp/gimpui.def

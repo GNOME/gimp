@@ -41,7 +41,8 @@ static GtkListStore *store;
 static gchar        *selected_preset_orig_name = NULL;
 static gchar        *selected_preset_filename = NULL;
 
-static gboolean can_delete_preset (const gchar *abs)
+static gboolean
+can_delete_preset (const gchar *abs)
 {
   gchar *user_data_dir;
   gboolean ret;
@@ -58,13 +59,15 @@ static gboolean can_delete_preset (const gchar *abs)
   return ret;
 }
 
-void preset_save_button_set_sensitive (gboolean s)
+void
+preset_save_button_set_sensitive (gboolean s)
 {
   if (GTK_IS_WIDGET (presetsavebutton))
     gtk_widget_set_sensitive (GTK_WIDGET (presetsavebutton), s);
 }
 
-void preset_free(void)
+void
+preset_free (void)
 {
   g_free (selected_preset_orig_name);
   g_free (selected_preset_filename);
@@ -94,9 +97,9 @@ get_early_line_from_preset (gchar *full_path, const gchar *prefix)
       fgets (line, 10, f);
       if (!strncmp (line, PRESETMAGIC, 4))
         {
-          for (line_idx = 0; line_idx<5; line_idx++)
+          for (line_idx = 0; line_idx < 5; line_idx++)
             {
-              if (!fgets (line, sizeof(line), f))
+              if (!fgets (line, sizeof (line), f))
                 break;
               g_strchomp (line);
               if (!strncmp (line, prefix, prefix_len))
@@ -127,7 +130,7 @@ get_object_name (gchar *dir, gchar *filename, void *context)
   if (unprocessed_line)
     {
       ret = g_strcompress (unprocessed_line);
-      g_free(unprocessed_line);
+      g_free (unprocessed_line);
     }
   else
     {
@@ -178,7 +181,7 @@ preset_create_filename (const gchar *basename,
       g_free (fullpath);
 
       filename = g_strdup_printf ("%s-%d",
-				  safe_name,
+                                  safe_name,
                                   unum++);
 
       fullpath = g_build_filename (dest_dir, filename, NULL);
@@ -192,7 +195,8 @@ preset_create_filename (const gchar *basename,
 }
 
 
-static void add_factory_defaults (void)
+static void
+add_factory_defaults (void)
 {
   GtkTreeIter iter;
 
@@ -206,72 +210,87 @@ static void add_factory_defaults (void)
 
 }
 
-static void preset_refresh_presets(void)
+static void
+preset_refresh_presets (void)
 {
   gtk_list_store_clear (store);
   add_factory_defaults ();
   preset_read_dir_into_list ();
 }
 
-static int load_old_preset (const gchar *fname)
+static int
+load_old_preset (const gchar *fname)
 {
   FILE *f;
-  int len;
+  int   len;
 
-  f = fopen(fname, "rb");
-  if(!f) {
-    fprintf(stderr, "Error opening file \"%s\" for reading!%c\n", fname, 7);
-    return -1;
-  }
-  len = fread(&pcvals, 1, sizeof(pcvals), f);
-  fclose(f);
+  f = fopen (fname, "rb");
+  if (!f)
+    {
+      fprintf (stderr, "Error opening file \"%s\" for reading!%c\n", fname, 7);
+      return -1;
+    }
+  len = fread (&pcvals, 1, sizeof (pcvals), f);
+  fclose (f);
 
   return 0;
 }
 
-static unsigned int hexval (char c)
+static unsigned int
+hexval (char c)
 {
   c = g_ascii_tolower (c);
-  if((c >= 'a') && (c <= 'f')) return c - 'a' + 10;
-  if((c >= '0') && (c <= '9')) return c - '0';
+  if ((c >= 'a') && (c <= 'f'))
+    return c - 'a' + 10;
+  if ((c >= '0') && (c <= '9'))
+    return c - '0';
   return 0;
 }
 
-static char *parse_rgb_string (const gchar *s)
+static char *
+parse_rgb_string (const gchar *s)
 {
   static char col[3];
-  col[0] = (hexval(s[0]) << 4) | hexval(s[1]);
-  col[1] = (hexval(s[2]) << 4) | hexval(s[3]);
-  col[2] = (hexval(s[4]) << 4) | hexval(s[5]);
+  col[0] = (hexval (s[0]) << 4) | hexval (s[1]);
+  col[1] = (hexval (s[2]) << 4) | hexval (s[3]);
+  col[2] = (hexval (s[4]) << 4) | hexval (s[5]);
   return col;
 }
 
-static void set_orient_vector (const gchar *str)
+static void
+set_orient_vector (const gchar *str)
 {
   const gchar *tmps = str;
   int n;
 
-  n = atoi(tmps);
+  n = atoi (tmps);
 
-  if(!(tmps = strchr(tmps, ','))) return;
+  if (!(tmps = strchr (tmps, ',')))
+    return;
   pcvals.orient_vectors[n].x = g_ascii_strtod (++tmps, NULL);
 
-  if(!(tmps = strchr(tmps, ','))) return;
+  if (!(tmps = strchr (tmps, ',')))
+    return;
   pcvals.orient_vectors[n].y = g_ascii_strtod (++tmps, NULL);
 
-  if(!(tmps = strchr(tmps, ','))) return;
+  if (!(tmps = strchr (tmps, ',')))
+    return;
   pcvals.orient_vectors[n].dir = g_ascii_strtod (++tmps, NULL);
 
-  if(!(tmps = strchr(tmps, ','))) return;
+  if (!(tmps = strchr (tmps, ',')))
+    return;
   pcvals.orient_vectors[n].dx = g_ascii_strtod (++tmps, NULL);
 
-  if(!(tmps = strchr(tmps, ','))) return;
+  if (!(tmps = strchr (tmps, ',')))
+    return;
   pcvals.orient_vectors[n].dy = g_ascii_strtod (++tmps, NULL);
 
-  if(!(tmps = strchr(tmps, ','))) return;
+  if (!(tmps = strchr (tmps, ',')))
+    return;
   pcvals.orient_vectors[n].str = g_ascii_strtod (++tmps, NULL);
 
-  if(!(tmps = strchr(tmps, ','))) return;
+  if (!(tmps = strchr (tmps, ',')))
+    return;
   pcvals.orient_vectors[n].type = atoi (++tmps);
 
 }
@@ -279,25 +298,30 @@ static void set_orient_vector (const gchar *str)
 static void set_size_vector (const gchar *str)
 {
   const gchar *tmps = str;
-  int n;
+  int          n;
 
-  n = atoi(tmps);
+  n = atoi (tmps);
 
-  if(!(tmps = strchr(tmps, ','))) return;
+  if (!(tmps = strchr (tmps, ',')))
+    return;
   pcvals.size_vectors[n].x = g_ascii_strtod (++tmps, NULL);
 
-  if(!(tmps = strchr(tmps, ','))) return;
+  if (!(tmps = strchr (tmps, ',')))
+    return;
   pcvals.size_vectors[n].y = g_ascii_strtod (++tmps, NULL);
 
-  if(!(tmps = strchr(tmps, ','))) return;
+  if (!(tmps = strchr (tmps, ',')))
+    return;
   pcvals.size_vectors[n].siz = g_ascii_strtod (++tmps, NULL);
 
-  if(!(tmps = strchr(tmps, ','))) return;
+  if (!(tmps = strchr (tmps, ',')))
+    return;
   pcvals.size_vectors[n].str = g_ascii_strtod (++tmps, NULL);
 
 }
 
-static void parse_desc (const gchar *str, gchar *d, gssize d_len)
+static void
+parse_desc (const gchar *str, gchar *d, gssize d_len)
 {
   gchar *dest = g_strcompress (str);
 
@@ -306,185 +330,197 @@ static void parse_desc (const gchar *str, gchar *d, gssize d_len)
   g_free (dest);
 }
 
-static void set_values (const gchar *key, const gchar *val)
+static void
+set_values (const gchar *key, const gchar *val)
 {
-  if(!strcmp(key, "desc"))
-    parse_desc(val, presetdesc, sizeof (presetdesc));
-  else if(!strcmp(key, "orientnum"))
-    pcvals.orient_num = atoi(val);
-  else if(!strcmp(key, "orientfirst"))
+  if (!strcmp (key, "desc"))
+    parse_desc (val, presetdesc, sizeof (presetdesc));
+  else if (!strcmp (key, "orientnum"))
+    pcvals.orient_num = atoi (val);
+  else if (!strcmp (key, "orientfirst"))
     pcvals.orient_first = g_ascii_strtod (val, NULL);
-  else if(!strcmp(key, "orientlast"))
+  else if (!strcmp (key, "orientlast"))
     pcvals.orient_last = g_ascii_strtod (val, NULL);
-  else if(!strcmp(key, "orienttype"))
+  else if (!strcmp (key, "orienttype"))
    pcvals.orient_type = orientation_type_input (atoi (val));
 
-  else if(!strcmp(key, "sizenum"))
-    pcvals.size_num = atoi(val);
-  else if(!strcmp(key, "sizefirst"))
+  else if (!strcmp (key, "sizenum"))
+    pcvals.size_num = atoi (val);
+  else if (!strcmp (key, "sizefirst"))
     pcvals.size_first = g_ascii_strtod (val, NULL);
-  else if(!strcmp(key, "sizelast"))
+  else if (!strcmp (key, "sizelast"))
     pcvals.size_last = g_ascii_strtod (val, NULL);
-  else if(!strcmp(key, "sizetype"))
+  else if (!strcmp (key, "sizetype"))
    pcvals.size_type = size_type_input (atoi (val));
 
-  else if(!strcmp(key, "brushrelief"))
+  else if (!strcmp (key, "brushrelief"))
     pcvals.brush_relief = g_ascii_strtod (val, NULL);
-  else if(!strcmp(key, "brushscale")) {
-    /* For compatibility */
-    pcvals.size_num = 1;
-    pcvals.size_first = pcvals.size_last = g_ascii_strtod (val, NULL);
-  }
-  else if(!strcmp(key, "brushdensity"))
+  else if (!strcmp (key, "brushscale"))
+    {
+      /* For compatibility */
+      pcvals.size_num = 1;
+      pcvals.size_first = pcvals.size_last = g_ascii_strtod (val, NULL);
+    }
+  else if (!strcmp (key, "brushdensity"))
     pcvals.brush_density = g_ascii_strtod (val, NULL);
-  else if(!strcmp(key, "brushgamma"))
+  else if (!strcmp (key, "brushgamma"))
     pcvals.brushgamma = g_ascii_strtod (val, NULL);
-  else if(!strcmp(key, "brushaspect"))
+  else if (!strcmp (key, "brushaspect"))
     pcvals.brush_aspect = g_ascii_strtod (val, NULL);
 
-  else if(!strcmp(key, "generalbgtype"))
-    pcvals.general_background_type = general_bg_type_input (atoi(val));
-  else if(!strcmp(key, "generaldarkedge"))
+  else if (!strcmp (key, "generalbgtype"))
+    pcvals.general_background_type = general_bg_type_input (atoi (val));
+  else if (!strcmp (key, "generaldarkedge"))
     pcvals.general_dark_edge = g_ascii_strtod (val, NULL);
-  else if(!strcmp(key, "generalpaintedges"))
-    pcvals.general_paint_edges = atoi(val);
-  else if(!strcmp(key, "generaltileable"))
-    pcvals.general_tileable = atoi(val);
-  else if(!strcmp(key, "generaldropshadow"))
-    pcvals.general_drop_shadow = atoi(val);
-  else if(!strcmp(key, "generalshadowdarkness"))
+  else if (!strcmp (key, "generalpaintedges"))
+    pcvals.general_paint_edges = atoi (val);
+  else if (!strcmp (key, "generaltileable"))
+    pcvals.general_tileable = atoi (val);
+  else if (!strcmp (key, "generaldropshadow"))
+    pcvals.general_drop_shadow = atoi (val);
+  else if (!strcmp (key, "generalshadowdarkness"))
     pcvals.general_shadow_darkness = g_ascii_strtod (val, NULL);
-  else if(!strcmp(key, "generalshadowdepth"))
-    pcvals.general_shadow_depth = atoi(val);
-  else if(!strcmp(key, "generalshadowblur"))
-    pcvals.general_shadow_blur = atoi(val);
-  else if(!strcmp(key, "devthresh"))
+  else if (!strcmp (key, "generalshadowdepth"))
+    pcvals.general_shadow_depth = atoi (val);
+  else if (!strcmp (key, "generalshadowblur"))
+    pcvals.general_shadow_blur = atoi (val);
+  else if (!strcmp (key, "devthresh"))
     pcvals.devthresh = g_ascii_strtod (val, NULL);
 
-  else if(!strcmp(key, "paperrelief"))
+  else if (!strcmp (key, "paperrelief"))
     pcvals.paper_relief = g_ascii_strtod (val, NULL);
-  else if(!strcmp(key, "paperscale"))
+  else if (!strcmp (key, "paperscale"))
     pcvals.paper_scale = g_ascii_strtod (val, NULL);
-  else if(!strcmp(key, "paperinvert"))
-    pcvals.paper_invert = atoi(val);
-  else if(!strcmp(key, "paperoverlay"))
-    pcvals.paper_overlay = atoi(val);
+  else if (!strcmp (key, "paperinvert"))
+    pcvals.paper_invert = atoi (val);
+  else if (!strcmp (key, "paperoverlay"))
+    pcvals.paper_overlay = atoi (val);
 
-  else if(!strcmp(key, "placetype"))
+  else if (!strcmp (key, "placetype"))
     pcvals.place_type = place_type_input (atoi (val));
-  else if(!strcmp(key, "placecenter"))
-    pcvals.placement_center = atoi(val);
+  else if (!strcmp (key, "placecenter"))
+    pcvals.placement_center = atoi (val);
 
-  else if(!strcmp(key, "selectedbrush"))
+  else if (!strcmp (key, "selectedbrush"))
     g_strlcpy (pcvals.selected_brush, val, sizeof (pcvals.selected_brush));
-  else if(!strcmp(key, "selectedpaper"))
+  else if (!strcmp (key, "selectedpaper"))
     g_strlcpy (pcvals.selected_paper, val, sizeof (pcvals.selected_paper));
 
-  else if(!strcmp(key, "color")){
-    char *c = parse_rgb_string(val);
-    gimp_rgba_set_uchar(&pcvals.color, c[0], c[1], c[2], 255);
-  }
+  else if (!strcmp (key, "color"))
+    {
+      char *c = parse_rgb_string (val);
+      gimp_rgba_set_uchar (&pcvals.color, c[0], c[1], c[2], 255);
+    }
 
-  else if(!strcmp(key, "numorientvector"))
-    pcvals.num_orient_vectors = atoi(val);
-  else if(!strcmp(key, "orientvector"))
-    set_orient_vector(val);
-  else if(!strcmp(key, "orientangoff"))
+  else if (!strcmp (key, "numorientvector"))
+    pcvals.num_orient_vectors = atoi (val);
+  else if (!strcmp (key, "orientvector"))
+    set_orient_vector (val);
+  else if (!strcmp (key, "orientangoff"))
    pcvals.orient_angle_offset = g_ascii_strtod (val, NULL);
-  else if(!strcmp(key, "orientstrexp"))
+  else if (!strcmp (key, "orientstrexp"))
    pcvals.orient_strength_exponent = g_ascii_strtod (val, NULL);
-  else if(!strcmp(key, "orientvoronoi"))
-   pcvals.orient_voronoi = atoi(val);
+  else if (!strcmp (key, "orientvoronoi"))
+   pcvals.orient_voronoi = atoi (val);
 
-  else if(!strcmp(key, "numsizevector"))
-    pcvals.num_size_vectors = atoi(val);
-  else if(!strcmp(key, "sizevector"))
-    set_size_vector(val);
-  else if(!strcmp(key, "sizestrexp"))
+  else if (!strcmp (key, "numsizevector"))
+    pcvals.num_size_vectors = atoi (val);
+  else if (!strcmp (key, "sizevector"))
+    set_size_vector (val);
+  else if (!strcmp (key, "sizestrexp"))
    pcvals.size_strength_exponent = g_ascii_strtod (val, NULL);
-  else if(!strcmp(key, "sizevoronoi"))
-   pcvals.size_voronoi = atoi(val);
+  else if (!strcmp (key, "sizevoronoi"))
+   pcvals.size_voronoi = atoi (val);
 
-  else if(!strcmp(key, "colortype"))
+  else if (!strcmp (key, "colortype"))
     pcvals.color_type = color_type_input (atoi (val));
-  else if(!strcmp(key, "colornoise"))
+  else if (!strcmp (key, "colornoise"))
     pcvals.color_noise = g_ascii_strtod (val, NULL);
 }
 
-static int load_preset(const gchar *fn)
+static int
+load_preset (const gchar *fn)
 {
-  char line[1024] = "";
+  char  line[1024] = "";
   FILE *f;
 
-  f = fopen(fn, "rt");
-  if(!f) {
-    fprintf(stderr, "Error opening file \"%s\" for reading!\n", fn);
-    return -1;
-  }
-  fgets(line,10,f);
-  if(strncmp(line,PRESETMAGIC,4)) {
-    fclose(f);
-    return load_old_preset(fn);
-  }
-  restore_default_values();
-  while(!feof(f)) {
-    char *tmps;
-    if(!fgets(line,1024,f))
-      break;
-    g_strchomp (line);
-    tmps = strchr (line, '=');
-    if(!tmps)
-      continue;
-    *tmps = '\0';
-    tmps++;
-    set_values(line, tmps);
-  }
-  fclose(f);
+  f = fopen (fn, "rt");
+  if (!f)
+    {
+      fprintf (stderr, "Error opening file \"%s\" for reading!\n", fn);
+      return -1;
+    }
+  fgets (line, 10, f);
+  if (strncmp (line, PRESETMAGIC, 4))
+    {
+      fclose (f);
+      return load_old_preset (fn);
+    }
+
+  restore_default_values ();
+
+  while (!feof (f))
+    {
+      char *tmps;
+
+      if (!fgets (line, 1024, f))
+        break;
+      g_strchomp (line);
+      tmps = strchr (line, '=');
+      if (!tmps)
+        continue;
+      *tmps = '\0';
+      tmps++;
+      set_values (line, tmps);
+    }
+  fclose (f);
   return 0;
 }
 
-int select_preset(const gchar *preset)
+int
+select_preset (const gchar *preset)
 {
-    int ret = SELECT_PRESET_OK;
-    /* I'm copying this behavior as is. As it seems applying the
-     * factory_defaults preset does nothing, which I'm not sure
-     * if that was what the author intended.
-     *              -- Shlomi Fish
-     */
-    if (strcmp (preset, factory_defaults))
-      {
-        gchar *rel = g_build_filename ("Presets", preset, NULL);
-        gchar *abs = findfile (rel);
+  int ret = SELECT_PRESET_OK;
+  /* I'm copying this behavior as is. As it seems applying the
+   * factory_defaults preset does nothing, which I'm not sure
+   * if that was what the author intended.
+   *              -- Shlomi Fish
+   */
+  if (strcmp (preset, factory_defaults))
+    {
+      gchar *rel = g_build_filename ("Presets", preset, NULL);
+      gchar *abs = findfile (rel);
 
-        g_free (rel);
+      g_free (rel);
 
-        if (abs)
-          {
-            if (load_preset (abs))
-              {
-                ret = SELECT_PRESET_LOAD_FAILED;
-              }
-            g_free (abs);
-          }
-        else
-          {
-            ret = SELECT_PRESET_FILE_NOT_FOUND;
-          }
-      }
-    if (ret == SELECT_PRESET_OK)
-      {
-        /* This is so the colorbrushes param (that is not stored in the
-         * preset will be set correctly upon the preset loading.
-         * */
-        set_colorbrushes (pcvals.selected_brush);
-      }
+      if (abs)
+        {
+          if (load_preset (abs))
+            {
+              ret = SELECT_PRESET_LOAD_FAILED;
+            }
+          g_free (abs);
+        }
+      else
+        {
+          ret = SELECT_PRESET_FILE_NOT_FOUND;
+        }
+    }
+  if (ret == SELECT_PRESET_OK)
+    {
+      /* This is so the colorbrushes param (that is not stored in the
+       * preset will be set correctly upon the preset loading.
+       * */
+      set_colorbrushes (pcvals.selected_brush);
+    }
 
-    return ret;
+  return ret;
 }
 
-static void apply_preset(GtkWidget *w, GtkTreeSelection *selection)
+static void
+apply_preset (GtkWidget *w, GtkTreeSelection *selection)
 {
-  GtkTreeIter iter;
+  GtkTreeIter   iter;
   GtkTreeModel *model;
 
   if (gtk_tree_selection_get_selected (selection, &model, &iter))
@@ -494,7 +530,7 @@ static void apply_preset(GtkWidget *w, GtkTreeSelection *selection)
       gtk_tree_model_get (model, &iter, PRESETS_LIST_COLUMN_FILENAME,
                           &preset, -1);
 
-      select_preset(preset);
+      select_preset (preset);
 
       restore_values ();
 
@@ -504,7 +540,8 @@ static void apply_preset(GtkWidget *w, GtkTreeSelection *selection)
     }
 }
 
-static void delete_preset(GtkWidget *w, GtkTreeSelection *selection)
+static void
+delete_preset (GtkWidget *w, GtkTreeSelection *selection)
 {
   GtkTreeIter iter;
   GtkTreeModel *model;
@@ -541,12 +578,13 @@ static void delete_preset(GtkWidget *w, GtkTreeSelection *selection)
     }
 }
 
-static void save_preset(void);
+static void save_preset (void);
 
-static void preset_desc_callback(GtkTextBuffer *buffer, gpointer data)
+static void
+preset_desc_callback (GtkTextBuffer *buffer, gpointer data)
 {
-  char *str;
-  GtkTextIter start, end;
+  char        *str;
+  GtkTextIter  start, end;
 
   gtk_text_buffer_get_bounds (buffer, &start, &end);
   str = gtk_text_buffer_get_text (buffer, &start, &end, FALSE);
@@ -556,8 +594,8 @@ static void preset_desc_callback(GtkTextBuffer *buffer, gpointer data)
 
 static void
 save_preset_response (GtkWidget *widget,
-                    gint       response_id,
-                    gpointer   data)
+                      gint       response_id,
+                      gpointer   data)
 {
   gtk_widget_destroy (widget);
 
@@ -569,9 +607,9 @@ static void
 create_save_preset (void)
 {
   static GtkWidget *window = NULL;
-  GtkWidget *box, *label;
-  GtkWidget *swin, *text;
-  GtkTextBuffer *buffer;
+  GtkWidget        *box, *label;
+  GtkWidget        *swin, *text;
+  GtkTextBuffer    *buffer;
 
   if (window)
     {
@@ -601,16 +639,16 @@ create_save_preset (void)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (window)->vbox), box);
   gtk_widget_show (box);
 
-  label = gtk_label_new( _("Description:"));
+  label = gtk_label_new (_("Description:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_box_pack_start(GTK_BOX (box), label, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   swin = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(swin),
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (swin),
                                        GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER(box), swin);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW(swin),
+  gtk_container_add (GTK_CONTAINER (box), swin);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (swin),
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_widget_show (swin);
 
@@ -621,15 +659,17 @@ create_save_preset (void)
 
   text = gtk_text_view_new_with_buffer (buffer);
   gtk_widget_set_size_request (text, -1, 192);
-  gtk_container_add (GTK_CONTAINER(swin), text);
+  gtk_container_add (GTK_CONTAINER (swin), text);
   gtk_widget_show (text);
 
   gtk_widget_show (window);
 }
 
-static void save_preset(void)
+static void
+save_preset (void)
 {
   const gchar *preset_name;
+
   gchar *fname, *presets_dir_path;
   FILE  *f;
   GList *thispath;
@@ -678,7 +718,7 @@ static void save_preset(void)
     }
   else
     {
-      fname = preset_create_filename(preset_name, presets_dir_path);
+      fname = preset_create_filename (preset_name, presets_dir_path);
     }
   g_free (presets_dir_path);
 
@@ -697,67 +737,67 @@ static void save_preset(void)
       return;
     }
 
-  fprintf(f, "%s\n", PRESETMAGIC);
+  fprintf (f, "%s\n", PRESETMAGIC);
   desc_escaped = g_strescape (presetdesc, NULL);
-  fprintf(f, "desc=%s\n", desc_escaped);
+  fprintf (f, "desc=%s\n", desc_escaped);
   g_free (desc_escaped);
   preset_name_escaped = g_strescape (preset_name, NULL);
-  fprintf(f, "name=%s\n", preset_name_escaped);
+  fprintf (f, "name=%s\n", preset_name_escaped);
   g_free (preset_name_escaped);
-  fprintf(f, "orientnum=%d\n", pcvals.orient_num);
-  fprintf(f, "orientfirst=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orient_first));
-  fprintf(f, "orientlast=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orient_last));
-  fprintf(f, "orienttype=%d\n", pcvals.orient_type);
+  fprintf (f, "orientnum=%d\n", pcvals.orient_num);
+  fprintf (f, "orientfirst=%s\n",
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orient_first));
+  fprintf (f, "orientlast=%s\n",
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orient_last));
+  fprintf (f, "orienttype=%d\n", pcvals.orient_type);
 
-  fprintf(f, "sizenum=%d\n", pcvals.size_num);
-  fprintf(f, "sizefirst=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.size_first));
-  fprintf(f, "sizelast=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.size_last));
-  fprintf(f, "sizetype=%d\n", pcvals.size_type);
+  fprintf (f, "sizenum=%d\n", pcvals.size_num);
+  fprintf (f, "sizefirst=%s\n",
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.size_first));
+  fprintf (f, "sizelast=%s\n",
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.size_last));
+  fprintf (f, "sizetype=%d\n", pcvals.size_type);
 
-  fprintf(f, "brushrelief=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.brush_relief));
-  fprintf(f, "brushdensity=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.brush_density));
-  fprintf(f, "brushgamma=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.brushgamma));
-  fprintf(f, "brushaspect=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.brush_aspect));
+  fprintf (f, "brushrelief=%s\n",
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.brush_relief));
+  fprintf (f, "brushdensity=%s\n",
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.brush_density));
+  fprintf (f, "brushgamma=%s\n",
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.brushgamma));
+  fprintf (f, "brushaspect=%s\n",
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.brush_aspect));
 
-  fprintf(f, "generalbgtype=%d\n", pcvals.general_background_type);
-  fprintf(f, "generaldarkedge=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.general_dark_edge));
-  fprintf(f, "generalpaintedges=%d\n", pcvals.general_paint_edges);
-  fprintf(f, "generaltileable=%d\n", pcvals.general_tileable);
-  fprintf(f, "generaldropshadow=%d\n", pcvals.general_drop_shadow);
-  fprintf(f, "generalshadowdarkness=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.general_shadow_darkness));
-  fprintf(f, "generalshadowdepth=%d\n", pcvals.general_shadow_depth);
-  fprintf(f, "generalshadowblur=%d\n", pcvals.general_shadow_blur);
-  fprintf(f, "devthresh=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.devthresh));
+  fprintf (f, "generalbgtype=%d\n", pcvals.general_background_type);
+  fprintf (f, "generaldarkedge=%s\n",
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.general_dark_edge));
+  fprintf (f, "generalpaintedges=%d\n", pcvals.general_paint_edges);
+  fprintf (f, "generaltileable=%d\n", pcvals.general_tileable);
+  fprintf (f, "generaldropshadow=%d\n", pcvals.general_drop_shadow);
+  fprintf (f, "generalshadowdarkness=%s\n",
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.general_shadow_darkness));
+  fprintf (f, "generalshadowdepth=%d\n", pcvals.general_shadow_depth);
+  fprintf (f, "generalshadowblur=%d\n", pcvals.general_shadow_blur);
+  fprintf (f, "devthresh=%s\n",
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.devthresh));
 
-  fprintf(f, "paperrelief=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.paper_relief));
-  fprintf(f, "paperscale=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.paper_scale));
-  fprintf(f, "paperinvert=%d\n", pcvals.paper_invert);
-  fprintf(f, "paperoverlay=%d\n", pcvals.paper_overlay);
+  fprintf (f, "paperrelief=%s\n",
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.paper_relief));
+  fprintf (f, "paperscale=%s\n",
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.paper_scale));
+  fprintf (f, "paperinvert=%d\n", pcvals.paper_invert);
+  fprintf (f, "paperoverlay=%d\n", pcvals.paper_overlay);
 
-  fprintf(f, "selectedbrush=%s\n", pcvals.selected_brush);
-  fprintf(f, "selectedpaper=%s\n", pcvals.selected_paper);
+  fprintf (f, "selectedbrush=%s\n", pcvals.selected_brush);
+  fprintf (f, "selectedpaper=%s\n", pcvals.selected_paper);
 
-  gimp_rgb_get_uchar(&pcvals.color, &color[0], &color[1], &color[2]);
-  fprintf(f, "color=%02x%02x%02x\n", color[0], color[1], color[2]);
+  gimp_rgb_get_uchar (&pcvals.color, &color[0], &color[1], &color[2]);
+  fprintf (f, "color=%02x%02x%02x\n", color[0], color[1], color[2]);
 
-  fprintf(f, "placetype=%d\n", pcvals.place_type);
-  fprintf(f, "placecenter=%d\n", pcvals.placement_center);
+  fprintf (f, "placetype=%d\n", pcvals.place_type);
+  fprintf (f, "placecenter=%d\n", pcvals.placement_center);
 
-  fprintf(f, "numorientvector=%d\n", pcvals.num_orient_vectors);
-  for(i = 0; i < pcvals.num_orient_vectors; i++)
+  fprintf (f, "numorientvector=%d\n", pcvals.num_orient_vectors);
+  for (i = 0; i < pcvals.num_orient_vectors; i++)
     {
       g_ascii_formatd (vbuf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orient_vectors[i].x);
       g_ascii_formatd (vbuf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.orient_vectors[i].y);
@@ -771,15 +811,15 @@ static void save_preset(void)
                pcvals.orient_vectors[i].type);
     }
 
-  fprintf(f, "orientangoff=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", 
-                           pcvals.orient_angle_offset));
-  fprintf(f, "orientstrexp=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", 
-                           pcvals.orient_strength_exponent));
-  fprintf(f, "orientvoronoi=%d\n", pcvals.orient_voronoi);
+  fprintf (f, "orientangoff=%s\n",
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                            pcvals.orient_angle_offset));
+  fprintf (f, "orientstrexp=%s\n",
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                            pcvals.orient_strength_exponent));
+  fprintf (f, "orientvoronoi=%d\n", pcvals.orient_voronoi);
 
-  fprintf(f, "numsizevector=%d\n", pcvals.num_size_vectors);
+  fprintf (f, "numsizevector=%d\n", pcvals.num_size_vectors);
   for (i = 0; i < pcvals.num_size_vectors; i++)
     {
       g_ascii_formatd (vbuf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.size_vectors[i].x);
@@ -789,13 +829,13 @@ static void save_preset(void)
       fprintf (f, "sizevector=%d,%s,%s,%s,%s\n", i,
                vbuf[0], vbuf[1], vbuf[2], vbuf[3]);
     }
-  fprintf(f, "sizestrexp=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.size_strength_exponent));
-  fprintf(f, "sizevoronoi=%d\n", pcvals.size_voronoi);
+  fprintf (f, "sizestrexp=%s\n",
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.size_strength_exponent));
+  fprintf (f, "sizevoronoi=%d\n", pcvals.size_voronoi);
 
-  fprintf(f, "colortype=%d\n", pcvals.color_type);
-  fprintf(f, "colornoise=%s\n",
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.color_noise));
+  fprintf (f, "colortype=%d\n", pcvals.color_type);
+  fprintf (f, "colornoise=%s\n",
+           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f", pcvals.color_noise));
 
   fclose (f);
   preset_refresh_presets ();
@@ -804,7 +844,8 @@ static void save_preset(void)
   g_free (fname);
 }
 
-static void read_description(const char *fn)
+static void
+read_description (const char *fn)
 {
   char *rel_fname;
   char *fname;
@@ -823,7 +864,7 @@ static void read_description(const char *fn)
         }
       else
         {
-          set_preset_description_text("");
+          set_preset_description_text ("");
         }
       return;
     }
@@ -832,7 +873,7 @@ static void read_description(const char *fn)
   gtk_widget_set_sensitive (delete_button, can_delete_preset (fname));
 
   unprocessed_line = get_early_line_from_preset (fname, "desc=");
-  g_free(fname);
+  g_free (fname);
 
   if (unprocessed_line)
     {
@@ -865,13 +906,13 @@ static void presets_list_select_preset (GtkTreeSelection *selection,
       /* TODO : Maybe make the factory defaults behavior in regards
        * to the preset's object name and filename more robust?
        * */
-      if(strcmp(preset_filename, factory_defaults))
+      if (strcmp (preset_filename, factory_defaults))
         {
-          gtk_entry_set_text (GTK_ENTRY(presetnameentry), preset_name);
+          gtk_entry_set_text (GTK_ENTRY (presetnameentry), preset_name);
           g_free (selected_preset_orig_name);
           g_free (selected_preset_filename);
           selected_preset_orig_name = g_strdup (preset_name);
-          selected_preset_filename = g_strdup(selected_preset_filename);
+          selected_preset_filename = g_strdup (selected_preset_filename);
         }
       read_description (preset_filename);
       g_free (preset_name);
@@ -880,23 +921,23 @@ static void presets_list_select_preset (GtkTreeSelection *selection,
 }
 
 static GtkWidget *
-create_presets_list(GtkWidget *parent)
+create_presets_list (GtkWidget *parent)
 {
-  GtkListStore *store;
-  GtkTreeSelection *selection;
-  GtkCellRenderer *renderer;
+  GtkListStore      *store;
+  GtkTreeSelection  *selection;
+  GtkCellRenderer   *renderer;
   GtkTreeViewColumn *column;
-  GtkWidget *swin, *view;
+  GtkWidget         *swin, *view;
 
   swin = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (swin),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
-  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(swin),
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (swin),
                                        GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (parent), swin, FALSE, FALSE, 0);
   gtk_widget_show (swin);
-  gtk_widget_set_size_request(swin, 150,-1);
+  gtk_widget_set_size_request (swin, 150,-1);
 
   store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
   view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
@@ -919,14 +960,15 @@ create_presets_list(GtkWidget *parent)
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_BROWSE);
-  g_signal_connect (selection, "changed", 
+  g_signal_connect (selection, "changed",
                     G_CALLBACK (presets_list_select_preset),
                     NULL);
 
   return view;
 }
 
-void create_presetpage(GtkNotebook *notebook)
+void
+create_presetpage (GtkNotebook *notebook)
 {
   GtkWidget *vbox, *hbox, *box1, *box2, *thispage;
   GtkWidget *view;
@@ -941,23 +983,23 @@ void create_presetpage(GtkNotebook *notebook)
   gtk_widget_show (thispage);
 
   box1 = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start(GTK_BOX (thispage), box1, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (thispage), box1, FALSE, FALSE, 0);
   gtk_widget_show (box1);
 
   presetnameentry = tmpw = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (box1), tmpw, FALSE, FALSE, 0);
-  gtk_widget_set_size_request(tmpw, 150, -1);
-  gtk_widget_show(tmpw);
-
-  presetsavebutton = tmpw = gtk_button_new_with_label( _("Save current..."));
-  gtk_box_pack_start(GTK_BOX(box1), tmpw, FALSE, FALSE, 0);
+  gtk_widget_set_size_request (tmpw, 150, -1);
   gtk_widget_show (tmpw);
-  g_signal_connect (tmpw, "clicked", G_CALLBACK(create_save_preset), NULL);
+
+  presetsavebutton = tmpw = gtk_button_new_with_label ( _("Save current..."));
+  gtk_box_pack_start (GTK_BOX (box1), tmpw, FALSE, FALSE, 0);
+  gtk_widget_show (tmpw);
+  g_signal_connect (tmpw, "clicked", G_CALLBACK (create_save_preset), NULL);
   gimp_help_set_help_data
     (tmpw, _("Save the current settings to the specified file"), NULL);
 
   box1 = gtk_hbox_new (FALSE, 12);
-  gtk_box_pack_start(GTK_BOX (thispage), box1, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (thispage), box1, TRUE, TRUE, 0);
   gtk_widget_show (box1);
 
   presetlist = view = create_presets_list (box1);
@@ -974,26 +1016,26 @@ void create_presetpage(GtkNotebook *notebook)
   gtk_widget_show (hbox);
 
   box2 = gtk_vbox_new (FALSE, 6);
-  gtk_box_pack_start(GTK_BOX (hbox), box2, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), box2, FALSE, FALSE, 0);
   gtk_widget_show (box2);
 
   tmpw = gtk_button_new_from_stock (GTK_STOCK_APPLY);
-  gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
-  g_signal_connect (tmpw, "clicked", G_CALLBACK(apply_preset), selection);
+  g_signal_connect (tmpw, "clicked", G_CALLBACK (apply_preset), selection);
   gimp_help_set_help_data
     (tmpw, _("Reads the selected Preset into memory"), NULL);
 
   tmpw = delete_button = gtk_button_new_from_stock (GTK_STOCK_DELETE);
-  gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE,0);
+  gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE,0);
   gtk_widget_show (tmpw);
-  g_signal_connect (tmpw, "clicked", G_CALLBACK(delete_preset), selection);
+  g_signal_connect (tmpw, "clicked", G_CALLBACK (delete_preset), selection);
   gimp_help_set_help_data (tmpw, _("Deletes the selected Preset"), NULL);
 
   tmpw = gtk_button_new_from_stock (GTK_STOCK_REFRESH);
-  gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE,0);
+  gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE,0);
   gtk_widget_show (tmpw);
-  g_signal_connect (tmpw, "clicked", G_CALLBACK(preset_refresh_presets), NULL);
+  g_signal_connect (tmpw, "clicked", G_CALLBACK (preset_refresh_presets), NULL);
   gimp_help_set_help_data (tmpw, _("Reread the folder of Presets"), NULL);
 
   presetdesclabel = tmpw = gtk_label_new (NULL);
@@ -1005,8 +1047,8 @@ void create_presetpage(GtkNotebook *notebook)
   gtk_widget_set_size_request (tmpw, 200, -1);
 
   gtk_misc_set_alignment (GTK_MISC (tmpw), 0.0, 0.0);
-  gtk_box_pack_start(GTK_BOX (vbox), tmpw, TRUE, TRUE, 0);
-  gtk_widget_show(tmpw);
+  gtk_box_pack_start (GTK_BOX (vbox), tmpw, TRUE, TRUE, 0);
+  gtk_widget_show (tmpw);
 
   preset_read_dir_into_list ();
 

@@ -30,14 +30,16 @@
 
 static GtkWidget *dlg = NULL;
 
-void store_values (void)
+void
+store_values (void)
 {
   paper_store ();
   brush_store ();
   general_store ();
 }
 
-void restore_values (void)
+void
+restore_values (void)
 {
   brush_restore ();
   paper_restore ();
@@ -50,26 +52,26 @@ void restore_values (void)
   update_orientmap_dialog ();
 }
 
-GtkWidget *create_one_column_list (GtkWidget *parent,
-                                   void (*changed_cb)
-                                   (GtkTreeSelection *selection, 
-                                    gpointer data))
+GtkWidget *
+create_one_column_list (GtkWidget *parent,
+                        void (*changed_cb) (GtkTreeSelection *selection,
+                                            gpointer data))
 {
-  GtkListStore *store;
-  GtkTreeSelection *selection;
-  GtkCellRenderer *renderer;
+  GtkListStore      *store;
+  GtkTreeSelection  *selection;
+  GtkCellRenderer   *renderer;
   GtkTreeViewColumn *column;
-  GtkWidget *swin, *view;
+  GtkWidget         *swin, *view;
 
   swin = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (swin),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
-  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(swin),
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (swin),
                                        GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (parent), swin, FALSE, FALSE, 0);
   gtk_widget_show (swin);
-  gtk_widget_set_size_request(swin, 150,-1);
+  gtk_widget_set_size_request (swin, 150,-1);
 
   store = gtk_list_store_new (1, G_TYPE_STRING);
   view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
@@ -88,8 +90,7 @@ GtkWidget *create_one_column_list (GtkWidget *parent,
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
   gtk_tree_selection_set_mode (selection, GTK_SELECTION_BROWSE);
-  g_signal_connect (selection, "changed", G_CALLBACK (changed_cb),
-                    NULL);
+  g_signal_connect (selection, "changed", G_CALLBACK (changed_cb), NULL);
 
   return view;
 }
@@ -130,7 +131,7 @@ show_about (void)
 
   vbox = gtk_vbox_new (TRUE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start(GTK_BOX (GTK_DIALOG (window)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   logobox = gtk_hbox_new (FALSE, 0);
@@ -220,7 +221,7 @@ create_dialog (void)
 
   notebook = gtk_notebook_new ();
   gtk_box_pack_start (GTK_BOX (hbox), notebook, TRUE, TRUE, 5);
-  gtk_widget_show(notebook);
+  gtk_widget_show (notebook);
 
   create_presetpage (GTK_NOTEBOOK (notebook));
   create_paperpage (GTK_NOTEBOOK (notebook));
