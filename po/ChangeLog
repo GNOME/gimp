@@ -1,3 +1,10 @@
+2002-04-12  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: removed app/gradient.c again. This file has been
+	removed a long time ago.
+
+	* de.po: updated german translation.
+
 2002-04-12  Zbigniew Chyla  <cyba@gnome.pl>
 
 	* pl.po: Updated Polish translation by
@@ -11,7 +18,8 @@
 
 2002-04-02  Stanislav Visnovsky  <visnovsky@nenya.ms.mff.cuni.cz>
 
-	* sk.po: Updated Slovak translation by Zdenko Podobny <zdpo@mailbox.sk>.
+	* sk.po: Updated Slovak translation by 
+	Zdenko Podobny <zdpo@mailbox.sk>.
 
 2002-04-01  Duarte Loreto <happyguy_pt@hotmail.com>
 
