@@ -1,3 +1,9 @@
+2000-06-25  Tuomas Kuosmanen  <tigert@tigert.gimp.org>
+
+	* cursors/bezier_select_small.xbm
+	* cursors/bezier_select_small_mask.xbm: Updated the bezier
+	tool cursor bitmap to a more compact one
+
 2000-06-24  Sven Neumann  <sven@gimp.org>
 
 	* autogen.sh: applied patch from Sesse <sgunderson@bigfoot.com>
