@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu/gnome-cvs\n"
-"POT-Creation-Date: 2001-07-26 14:09+0200\n"
-"PO-Revision-Date: 2001-09-22 13:17+0200\n"
-"Last-Translator: Emese Kovács  <emese@gnome.hu>\n"
+"POT-Creation-Date: 2001-09-22 15:41+0200\n"
+"PO-Revision-Date: 2001-09-22 16:06+02:00\n"
+"Last-Translator: Emese Kovacs  <emese@gnome.hu>\n"
 "Language-Team: Hungarian  <hu@gnome.hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-2\n"
@@ -51,8 +51,7 @@ msgstr "A folyam megnyitása a SIOD kimeneti csõvezetéken sikertelen"
 
 #: plug-ins/script-fu/script-fu-console.c:628
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr ""
-"A Script-Fu kiértékelõ módja csak nem-interaktív meghívást tesz lehetõvé"
+msgstr "A Script-Fu kiértékelõ módja csak nem-interaktív meghívást tesz lehetõvé"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-scripts.c:1206
@@ -619,9 +618,7 @@ msgstr "<Toolbox>/Kit./Script-Fu/Weblap témák/Idegen ragyogás/Gomb..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
-msgstr ""
-"<Toolbox>/Kit./Script-Fu/Weblap témák/Idegen ragyogás/Vízszintes "
-"elválasztó..."
+msgstr "<Toolbox>/Kit./Script-Fu/Weblap témák/Idegen ragyogás/Vízszintes elválasztó..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
@@ -663,15 +660,13 @@ msgstr "<Toolbox>/Kit./Script-Fu/Weblap témák/Gimp.Org/Tube Button Label..."
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
-msgstr ""
-"<Toolbox>/Kit./Script-Fu/Weblap témák/Gimp.Org/Tube Sub-Button Label..."
+msgstr "<Toolbox>/Kit./Script-Fu/Weblap témák/Gimp.Org/Tube Sub-Button Label..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
 "Label..."
-msgstr ""
-"<Toolbox>/Kit./Script-Fu/Weblap témák/Gimp.Org/Tube Sub-Sub-Button Label..."
+msgstr "<Toolbox>/Kit./Script-Fu/Weblap témák/Gimp.Org/Tube Sub-Sub-Button Label..."
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
@@ -776,11 +771,11 @@ msgstr "Élsimítás"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Apply Generated Layermask"
-msgstr ""
+msgstr "Generált rétegmaszk alkalmazása"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Apply Layer Mask (or discard)"
-msgstr ""
+msgstr "Rétegmaszk alkalmazása (vagy eldobása)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 msgid "AutoCrop"
@@ -846,7 +841,7 @@ msgid "Base Color"
 msgstr "Alapszín"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
-msgid "Base Radius (pixel)"
+msgid "Base Radius (pixels)"
 msgstr "Alapsugár (képpont)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
@@ -873,7 +868,7 @@ msgstr "Színátmenet (szöveg)"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "Blend Mode"
-msgstr "Színátmenetmód"
+msgstr "Színátmenet mód"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
@@ -910,39 +905,39 @@ msgstr "Függõleges elmosás"
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 msgid "Blur X"
-msgstr ""
+msgstr "X elmosás"
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 msgid "Blur Y"
-msgstr ""
+msgstr "Y elmosás"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 msgid "Border Color"
-msgstr ""
+msgstr "Keret színe"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Border Size (pixels)"
-msgstr ""
+msgstr "Keret mérete (képpont)"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Border Size"
-msgstr ""
+msgstr "Keret mérete"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 msgid "Border X Size"
-msgstr ""
+msgstr "Keret X mérete"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 msgid "Border Y Size"
-msgstr ""
+msgstr "Keret Y mérete"
 
 #: plug-ins/script-fu/scripts/font-map.scm:0
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Border"
-msgstr ""
+msgstr "Keret"
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 msgid "Buffer Amount (% Height of Text)"
@@ -1045,13 +1040,15 @@ msgstr "Egyéni színátmenet"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 msgid "Dark Color"
-msgstr ""
+msgstr "Sötét szín"
 
 #: plug-ins/script-fu/scripts/coffee.scm:0
 msgid ""
 "Darken Only\n"
 "(Better, but only for Images with alot of White)"
 msgstr ""
+"Csak sötétít\n"
+"(jobb, de csak sok fehéret tartalmazó képeknél)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
@@ -1101,7 +1098,7 @@ msgstr "Le"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Drop Shadow Blur Radius"
-msgstr ""
+msgstr "Vetett árnyék elmosásának sugara"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Drop Shadow Color"
@@ -1172,15 +1169,15 @@ msgstr "Befejezõ szín"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "End X"
-msgstr ""
+msgstr "Befejezõ X"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "End Y"
-msgstr ""
+msgstr "Befejezõ Y"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Ending Blend"
-msgstr ""
+msgstr "Színátmenet befejezése"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
@@ -1190,7 +1187,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Erase before Draw"
-msgstr ""
+msgstr "Törlés rajzolás elõtt"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Erase"
@@ -1218,11 +1215,11 @@ msgstr "FG-BG-RGB"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "FG-Transparent"
-msgstr ""
+msgstr "FG-Átlátszó"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "Fade Away"
-msgstr ""
+msgstr "Áttûnés"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Fade From %"
@@ -1243,7 +1240,7 @@ msgstr "Fájlnév"
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "Fill Angle"
-msgstr ""
+msgstr "Feltöltés szöge"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Fill BG with Pattern"
@@ -1264,7 +1261,7 @@ msgstr "Feltöltés háttérszínnel"
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Flatten Image"
-msgstr ""
+msgstr "Kép lapítása"
 
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Font Color"
@@ -1354,7 +1351,7 @@ msgstr "Betûtípus"
 
 #: plug-ins/script-fu/scripts/font-map.scm:0
 msgid "Fonts"
-msgstr "Betûkészletek"
+msgstr "Betûtípusok"
 
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Foreground Color"
@@ -1385,15 +1382,15 @@ msgstr ""
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
 msgid "Glow Color"
-msgstr ""
+msgstr "Ragyogás színe"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 msgid "Glow Radius"
-msgstr ""
+msgstr "Ragyogás sugara"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
 msgid "Glow Size (pixels * 4)"
-msgstr ""
+msgstr "Ragyogás mérete (* 4 képpont)"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
@@ -1419,11 +1416,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/grid-system.scm:0
 msgid "Grids X"
-msgstr ""
+msgstr "X rács"
 
 #: plug-ins/script-fu/scripts/grid-system.scm:0
 msgid "Grids Y"
-msgstr ""
+msgstr "Y rács"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
@@ -1435,7 +1432,7 @@ msgstr "Magasság"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Hexagons"
-msgstr ""
+msgstr "Hatszögek"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
@@ -1469,7 +1466,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "IIR"
-msgstr ""
+msgstr "IIR"
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
@@ -1493,15 +1490,15 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Index Image"
-msgstr ""
+msgstr "Kép indexelése"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Index to n Colors (0 = Remain RGB)"
-msgstr ""
+msgstr "Kép indexelése n színre (0 = RGB marad)"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Insert Layer Names"
-msgstr ""
+msgstr "Rétegnevek beszúrása"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "Intermediate Frames"
@@ -1509,11 +1506,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Interpolate"
-msgstr ""
+msgstr "Interpolálás"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "Invert direction"
-msgstr ""
+msgstr "Irány megfordítása"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Invert"
@@ -1521,7 +1518,7 @@ msgstr "Megfordít"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Keep Background"
-msgstr ""
+msgstr "Háttér megtartása"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
 #: plug-ins/script-fu/scripts/chip-away.scm:0
@@ -1537,7 +1534,7 @@ msgstr "Kijelölés megtartása"
 
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Land Height"
-msgstr ""
+msgstr "Terepmagasság"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
@@ -1550,11 +1547,11 @@ msgstr "Megvilágítás (fokban)"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "Looped"
-msgstr ""
+msgstr "Ismétlés"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Lower Color (Active)"
-msgstr "Alsó szín (Aktív)"
+msgstr "Alsó szín (aktív)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Lower Color"
@@ -1570,7 +1567,7 @@ msgstr "Új háttér készítése"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm:0
 msgid "Mask Opacity"
-msgstr "Maszk átlátszósága"
+msgstr "Maszk átlátszatlansága"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm:0
 msgid "Mask Size"
@@ -1578,11 +1575,11 @@ msgstr "Maszk mérte"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "Max. Blur Radius"
-msgstr ""
+msgstr "Max. elmosás sugara"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Mosaic Tile Type"
-msgstr ""
+msgstr "Mozaikcsempe típusa"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Mottle"
@@ -1590,11 +1587,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 msgid "No Background (only for separate layer)"
-msgstr ""
+msgstr "Nincs háttér (csak külön rétegre)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Not Pressed (Active)"
-msgstr "Nem lenyomott (Aktív)"
+msgstr "Nem lenyomott (aktív)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Not Pressed"
@@ -1602,25 +1599,25 @@ msgstr "Nem lenyomott"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "Number of Bands"
-msgstr ""
+msgstr "Sávok száma"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Number of Colors"
-msgstr ""
+msgstr "Színek száma"
 
 #: plug-ins/gap/sel-to-anim-img.scm:0
 msgid "Number of Copies"
-msgstr ""
+msgstr "Másolatok száma"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "Number of Frames"
-msgstr ""
+msgstr "Képkockák száma"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "Number of Lines"
-msgstr ""
+msgstr "Sorok száma"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 msgid "Number of Times to Whirl"
@@ -1629,20 +1626,20 @@ msgstr ""
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Number of X Tiles"
-msgstr ""
+msgstr "X csempék száma"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Number of Y Tiles"
-msgstr ""
+msgstr "Y csempék száma"
 
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Number"
-msgstr ""
+msgstr "Szám"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Octagons"
-msgstr ""
+msgstr "Nyolcszög"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Odd"
@@ -1654,17 +1651,17 @@ msgstr "Eltolás (képpont)"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "Offset Radius"
-msgstr ""
+msgstr "Eltolás sugara"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Offset X"
-msgstr "Eltolás X"
+msgstr "X eltolás"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Offset Y"
-msgstr "Eltolás Y"
+msgstr "Y eltolás"
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm:0
 msgid "Offsets (pixels * 2)"
@@ -1682,11 +1679,11 @@ msgstr "Átlátszatlanság"
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Orientation"
-msgstr "Irányítás"
+msgstr "Irány"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Outer Border"
-msgstr ""
+msgstr "Külsõ szél"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "Outline Blur Radius"
@@ -1732,7 +1729,7 @@ msgstr "Helykitöltés"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Pattern (Outline)"
-msgstr ""
+msgstr "Minta (körvonal)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Pattern (Overlay)"
@@ -1740,7 +1737,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Pattern (Text)"
-msgstr ""
+msgstr "Minta (szöveg)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
@@ -1759,7 +1756,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "Pixel Amount"
-msgstr ""
+msgstr "Képpontok mennyisége"
 
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "Pixelize"
@@ -1773,7 +1770,7 @@ msgstr "Lenyomott"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 msgid "Quarter Size"
-msgstr ""
+msgstr "Negyed méret"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "RLE"
@@ -1792,11 +1789,11 @@ msgstr "Sugár"
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Random Seed"
-msgstr ""
+msgstr "Véletlenszám generátor"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "Randomness"
-msgstr ""
+msgstr "Véletlen mennyisége"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Relative Distance of Horizon"
@@ -1813,7 +1810,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Remove Background"
-msgstr ""
+msgstr "Háttér törlése"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Ribbon Spacing"
@@ -1870,13 +1867,13 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Select-By-Color Threshold"
-msgstr ""
+msgstr "Kijelölés szín alapján küszöbértéke"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 #: plug-ins/script-fu/scripts/lava.scm:0
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "Separate Layer"
-msgstr ""
+msgstr "Külön réteg"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Sepia"
@@ -1949,7 +1946,7 @@ msgstr "Simítás"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Space Between Layers"
-msgstr ""
+msgstr "Rétegek közötti tér"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #: plug-ins/script-fu/scripts/select_to_brush.scm:0
@@ -1982,7 +1979,7 @@ msgstr "Foltok"
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "Start Angle"
-msgstr ""
+msgstr "Kezdõ szög"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
@@ -1991,15 +1988,15 @@ msgstr "Kezdõ szín"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "Start X"
-msgstr ""
+msgstr "Kezdõ X"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "Start Y"
-msgstr ""
+msgstr "Kezdõ Y"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Starting Blend"
-msgstr ""
+msgstr "Színátmenet indítása"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 msgid "Supersample"
@@ -2093,7 +2090,7 @@ msgstr "Küszöb (nagyobb 1 <-->255 kisebb)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Tile"
-msgstr ""
+msgstr "Csempe"
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
@@ -2104,7 +2101,7 @@ msgstr "Átlátszó háttér"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Turn from Left to Right"
-msgstr ""
+msgstr "Fordítás balról jobbra"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
@@ -2113,7 +2110,7 @@ msgstr "Fel"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Upper Color (Active)"
-msgstr "Felsõ szín (Aktív)"
+msgstr "Felsõ szín (aktív)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Upper Color"
@@ -2133,7 +2130,7 @@ msgstr "Aktuális színátmenet használata"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Use Growing Selection"
-msgstr ""
+msgstr "Növekvõ kijelölés használata"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Use Pattern Overlay"
@@ -2169,11 +2166,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "Width of Bands"
-msgstr ""
+msgstr "Sávok szélesságe"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "Width of Gaps"
-msgstr ""
+msgstr "Rések szélessége"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
 #: plug-ins/script-fu/scripts/gradient-example.scm:0
@@ -2189,5 +2186,4 @@ msgstr "Szélesség"
 #: plug-ins/script-fu/scripts/slide.scm:0
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
-msgstr ""
-
+msgstr "Munka a másolaton"
