@@ -1,3 +1,14 @@
+2000-09-15  Kevin Turner  <acapnotic@users.sourceforge.net>
+
+	* app/gdisplay_color_ui.c (color_display_cancel_callback): 
+	(color_display_ok_callback): add calls to dialog_unregister
+	before destroying the dialog.  Closes bug "segfault after using
+	'Display Filters'".
+
+	* app/dialog_handler.c: add paranoid graceful robust checking
+	of active_dialogs to all public methods, in an attempt to minimize
+	damage in case some module causes an error like the one above.
+
 2000-09-15  Nick Lamb  <njl195@zepler.org.uk>
 
 	* plug-ins/common/png.c: possible fix for #22805

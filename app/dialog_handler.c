@@ -64,6 +64,11 @@ static gboolean doing_update = FALSE;
  */
 static GSList * active_dialogs = NULL;
 
+/* Used as a placeholder when a member of active_dialogs is removed due to
+ * a detected error. 
+ */
+static GSList error_tmp_list = { NULL, NULL };
+
 /*  Those have a special behaviour  */
 static DialogState * toolbox_shell  = NULL;
 static DialogState * fileload_shell = NULL;
@@ -147,8 +152,19 @@ dialog_idle_all (void)
   for (list = active_dialogs; list; list = g_slist_next (list))
     {
       dstate = (DialogState *) list->data;
-  
-      if(GTK_WIDGET_VISIBLE (dstate->dialog))
+
+      if(!GTK_IS_WIDGET(dstate->dialog) || 
+	 (GTK_WIDGET_VISIBLE(dstate->dialog) && !dstate->dialog->window))
+	{
+	  g_warning("%s discovered non-widget thing %p in list of "
+		    "active_dialogs.  Calling dialog_unregister on it.\n",
+		    G_GNUC_PRETTY_FUNCTION, dstate->dialog);
+
+	  error_tmp_list.next=list->next;
+	  list=&error_tmp_list;
+	  dialog_unregister(dstate->dialog);
+	}
+      else if(GTK_WIDGET_VISIBLE (dstate->dialog))
 	{
 	  change_win_cursor (dstate->dialog->window, GDK_WATCH,
 			     TOOL_TYPE_NONE, CURSOR_MODIFIER_NONE, FALSE);
@@ -180,7 +196,18 @@ dialog_unidle_all (void)
     {
       dstate = (DialogState *) list->data;
 
-      if (GTK_WIDGET_VISIBLE (dstate->dialog))
+      if(!GTK_IS_WIDGET(dstate->dialog) || 
+	 (GTK_WIDGET_VISIBLE(dstate->dialog) && !dstate->dialog->window))
+	{
+	  g_warning("%s discovered non-widget thing %p in list of "
+		    "active_dialogs.  Calling dialog_unregister on it.\n",
+		    G_GNUC_PRETTY_FUNCTION, dstate->dialog);
+
+	  error_tmp_list.next=list->next;
+	  list=&error_tmp_list;
+	  dialog_unregister(dstate->dialog);
+	}
+      else if (GTK_WIDGET_VISIBLE (dstate->dialog))
 	{
 	  unset_win_cursor (dstate->dialog->window);
 	}
@@ -264,10 +291,36 @@ dialog_unregister (GtkWidget *dialog)
 void 
 dialog_toggle (void)
 {
+  GSList *list;
+
   if (doing_update)
     return;
 
   doing_update = TRUE;
+
+  /* Paranoid error checking on our active_dialogs list, because
+     3rd party modules access this list through dialog_register 
+     and we don't want them wreaking havoc on our internal state.
+     Attempts to recover gracefully, but *is not bulletproof* since
+     GTK_IS_WIDGET *may* succeed, even if it's pointing to garbage,
+     if the garbage looks a little like a widget structure. */
+  for (list = active_dialogs; list; list = g_slist_next (list))
+    {
+      DialogState* dstate = (DialogState *) list->data;
+
+      if(!GTK_IS_WIDGET(dstate->dialog))
+	{
+	  g_warning("%s discovered non-widget thing %p in list of "
+		    "active_dialogs.  Calling dialog_unregister on it.\n",
+		    G_GNUC_PRETTY_FUNCTION, dstate->dialog);
+
+	  /* We must find the next list element before the current one
+	     is destroyed by the call to unregister. */
+	  error_tmp_list.next=list->next;
+	  list=&error_tmp_list;
+	  dialog_unregister(dstate->dialog);
+	}
+    }
 
   switch (dialogs_showing)
     {

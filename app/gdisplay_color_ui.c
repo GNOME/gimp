@@ -207,6 +207,7 @@ color_display_ok_callback (GtkWidget *widget,
   GDisplay *gdisp = cdd->gdisp;
   GList *list;
 
+  dialog_unregister(cdd->shell);
   gtk_widget_destroy (GTK_WIDGET (cdd->shell));
   gdisp->cd_ui = NULL;
 
@@ -237,6 +238,7 @@ color_display_cancel_callback (GtkWidget *widget,
   GList *list;
   GList *next;
 
+  dialog_unregister(cdd->shell);
   gtk_widget_destroy (GTK_WIDGET (cdd->shell));
   gdisp->cd_ui = NULL;
   
