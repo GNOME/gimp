@@ -89,11 +89,11 @@
 (script-fu-register
     "script-fu-distress-selection"
     "<Image>/Script-Fu/Selection/Distress Selection..."
-    "foo"
+    "No description"
     "Chris Gutteridge"
     "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
     "23rd April 1998"
-    "RGB RGBA"
+    "RGB*"
     SF-IMAGE "The Image" 0
     SF-DRAWABLE "The Layer" 0
     SF-VALUE "Threshold (bigger 1<-->255 smaller)" "127"

@@ -85,7 +85,7 @@
 		    "1996"
 		    ""
 		    SF-PATTERN "Text Pattern" "Fibers"
-		    SF-ADJUSTMENT "Mosaic Tile Type\n Squares 0, HEX 1, Oct 2" '(0 0 2 1 1 0 1)
+		    SF-ADJUSTMENT "Mosaic Tile Type\n Squares 0, Hex 1, Oct 2" '(0 0 2 1 1 0 1)
 		    SF-STRING "Text String" "The GIMP"
 		    SF-ADJUSTMENT "Font Size (pixels)" '(200 1 1000 1 10 0 1)
 		    SF-FONT "Font" "-*-cuneifontlight-*-r-*-*-24-*-*-*-p-*-*-*"

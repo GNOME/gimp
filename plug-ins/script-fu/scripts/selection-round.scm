@@ -124,36 +124,11 @@
 
 (script-fu-register "script-fu-selection-round"
 		    "<Image>/Script-Fu/Selection/Round..."
-		    "Rounds the active selection. The selection should be 
-                     rectangular."
+		    "Rounds the active selection. The selection should be rectangular."
 		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"
 		    "1998/02/06"
-		    "RGB RGBA GRAY GRAYA INDEXED INDEXEDA"
+		    "*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
 		    SF-ADJUSTMENT "Relative Radius" '(1 0 128 .1 1 1 1))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

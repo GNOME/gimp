@@ -80,11 +80,11 @@
 (script-fu-register
     "script-fu-old-photo"
     "<Image>/Script-Fu/Decor/Old Photo..."
-    "foo"
+    "Makes the image look like an old photo"
     "Chris Gutteridge"
     "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
     "16th April 1998"
-    "RGB RGBA GRAY GRAYA"
+    "RGB* GRAY*"
     SF-IMAGE "The Image" 0
     SF-DRAWABLE "The Layer" 0
     SF-TOGGLE "Defocus?" TRUE

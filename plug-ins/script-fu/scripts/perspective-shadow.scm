@@ -183,7 +183,7 @@
 		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"
 		    "1999/12/21"
-		    "RGB RGBA GRAY GRAYA"
+		    "RGB* GRAY*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
 		    SF-ADJUSTMENT "Angle" '(45 0 180 1 10 1 0)

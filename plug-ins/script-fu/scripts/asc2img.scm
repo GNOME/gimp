@@ -245,11 +245,11 @@
 (script-fu-register
  "script-fu-asc-2-img-layer"
  "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
- "foo"
+ "Create a new layer of text from a simple text file"
  "Chris Gutteridge: cjg@ecs.soton.ac.uk"
  "30th April 1998"
  "Chris Gutteridge / ECS @ University of Southampton, England"
- "bar"
+ "*"
  SF-IMAGE "Image" 0
  SF-DRAWABLE "Layer" 0
  SF-FILENAME "File Name"       "afile"

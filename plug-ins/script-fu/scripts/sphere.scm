@@ -51,7 +51,7 @@
 
 (script-fu-register "script-fu-sphere"
 		    "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
-		    "Simple spheres with drop shadows"
+		    "Simple sphere with a drop shadow"
 		    "Spencer Kimball"
 		    "Spencer Kimball"
 		    "1996"

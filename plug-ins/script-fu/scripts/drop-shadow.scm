@@ -157,12 +157,11 @@
 
 (script-fu-register "script-fu-drop-shadow"
 		    "<Image>/Script-Fu/Shadow/Drop-Shadow..."
-		    "Add a drop-shadow of the current selection or 
-                     alpha-channel"
+		    "Add a drop-shadow of the current selection or alpha-channel"
 		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"
 		    "1999/12/21"
-		    "RGB RGBA GRAY GRAYA"
+		    "RGB* GRAY*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
 		    SF-ADJUSTMENT "X Offset" '(8 -4096 4096 1 10 0 1)
@@ -171,27 +170,3 @@
 		    SF-COLOR "Color" '(0 0 0)
 		    SF-ADJUSTMENT "Opacity" '(80 0 100 1 10 0 0)
 		    SF-TOGGLE "Allow Resizing" TRUE)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

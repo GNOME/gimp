@@ -307,7 +307,7 @@
 
 (script-fu-register "script-fu-make-brush-elliptical-feathered"
             "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
-            "Create size of brush"
+            "Makes a feathered elliptical brush of specified size"
             "Seth Burgess <sjburges@ou.edu>"
             "Seth Burgess"
             "1997"

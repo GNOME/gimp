@@ -149,11 +149,11 @@
 (script-fu-register
     "script-fu-fuzzy-border"
     "<Image>/Script-Fu/Decor/Fuzzy Border..."
-    "foo"
+    "Fade border to chosen color"
     "Chris Gutteridge"
     "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
     "3rd April 1998"
-    "RGB RGBA GRAY GRAYA"
+    "RGB* GRAY*"
     SF-IMAGE "The Image" 0
     SF-DRAWABLE "The Layer" 0
     SF-COLOR "Color"      '(255 255 255)

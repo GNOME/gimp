@@ -76,7 +76,7 @@
 
 (script-fu-register "script-fu-alien-glow-bullet"
 		    "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
-		    "Create a Bullet with an Alien Glow them for web pages"
+		    "Create a Bullet with an Alien Glow theme for web pages"
 		    "Adrian Likins"
 		    "Adrian Likins"
 		    "1997"
@@ -85,8 +85,4 @@
 		    SF-COLOR "Glow Color" '(63 252 0)
 		    SF-COLOR "Background Color" '(0 0 0)
 		    SF-TOGGLE "Flatten Image?" TRUE)
-
-
-
-
 

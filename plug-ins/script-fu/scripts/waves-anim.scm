@@ -90,7 +90,7 @@
 		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"
 		    "1997/13/12"
-		    "RGB RGBA GRAY GRAYA"
+		    "RGB* GRAY*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
 		    SF-ADJUSTMENT "Amplitude"        '(10  1  101 1 10 1 0)

@@ -1,4 +1,4 @@
-; Newsprint text
+; Speed text
 ; Copyright (c) 1998 Austin Donnelly <austin@greenend.org.uk>
 ;
 ;

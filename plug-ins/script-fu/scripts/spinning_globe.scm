@@ -106,7 +106,7 @@
     "Chris Gutteridge"
     "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
     "16th April 1998"
-    "RGB RGBA GRAY GRAYA"
+    "RGB* GRAY*"
     SF-IMAGE "The Image" 0
     SF-DRAWABLE "The Layer" 0
     SF-VALUE "Frames:" "10"

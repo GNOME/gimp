@@ -215,7 +215,7 @@
 		    "Daniel Cotting (cotting@mygale.org)"
 		    "Daniel Cotting"
 		    "December 1997"
-		    "RGB RGBA"
+		    "RGB*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
 		    SF-VALUE  "Number of frames" "10"

@@ -63,11 +63,11 @@
 (script-fu-register
     "script-fu-tile-blur"
 	"<Image>/Filters/Blur/Tilable Blur..."
-    "foo"
+    "Blurs image edges so that the final result tiles seamlessly"
     "Chris Gutteridge"
     "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
     "25th April 1998"
-    "RGBA RGB"
+    "RGB*"
     SF-IMAGE "The Image" 0
     SF-DRAWABLE "The Layer" 0
     SF-ADJUSTMENT "Radius" '(5 0 128 1 1 0 0)

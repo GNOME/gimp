@@ -71,13 +71,10 @@
 ; approriate for mass consumption
 ;		    "<Image>/Select/Selection to Image"
 		    "<Image>/Script-Fu/Selection/To Image"
-		    "Convert a selection to image"
+		    "Convert a selection to an image"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"
 		    "10/07/97"
-		    "RGB RGBA GRAY GRAYA"
+		    "RGB* GRAY*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0)
-
-
-

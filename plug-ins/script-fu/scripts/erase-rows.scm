@@ -26,7 +26,7 @@
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"
 		    "June 1997"
-		    "RGB*, GRAY*, INDEXED*"
+		    "RGB* GRAY* INDEXED*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
 		    SF-VALUE "Rows/cols" "'rows"

@@ -122,7 +122,7 @@
 
 (script-fu-register "script-fu-alien-glow-right-arrow"
 		    "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
-		    "Create aan X-file deal"
+		    "Create an X-file deal"
 		    "Adrian Likins"
 		    "Adrian Likins"
 		    "1997"
@@ -132,17 +132,3 @@
 		    SF-COLOR "Glow Color" '(63 252 0)
 		    SF-COLOR "Background Color" '(0 0 0)
 		    SF-TOGGLE "Flatten Image" TRUE)
-
-
-
-
-
-
-
-
-
-
-
-
-
-

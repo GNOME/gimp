@@ -238,28 +238,3 @@
 		    SF-FONT "Font" "-*-utopia-*-r-*-*-24-*-*-*-p-*-*-*"
 		    SF-COLOR "Font Color" '(255 180 0)
 		    SF-TOGGLE "Work on copy" TRUE)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,3 +1,7 @@
+Sun Feb 13 01:19:30 GMT 2000 Nick Lamb <njl195@zepler.org.uk>
+
+	* plug-ins/script-fu/scripts/*: Tidying up, typos, better help
+
 Sun Feb 13 01:09:42 CET 2000  Marc Lehmann <pcg@goof.com>
 
         * po/gimp.pot, plug-ins/perl/po/gimp-perl.pot: Removed from CVS.

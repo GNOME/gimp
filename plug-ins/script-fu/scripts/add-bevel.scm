@@ -207,7 +207,7 @@
 		    "Andrew Donkin <ard@cs.waikato.ac.nz>"
 		    "Andrew Donkin"
 		    "1997/11/06"
-		    "RGB RGBA GRAY GRAYA"
+		    "RGB* GRAY*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
 		    SF-ADJUSTMENT "Thickness" '(5 0 30 1 2 0 0)

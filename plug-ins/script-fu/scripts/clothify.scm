@@ -43,7 +43,7 @@
 		    "Tim Newsome <drz@froody.bloke.com>"
 		    "Tim Newsome"
 		    "4/11/97"
-		    "RGB*, GRAY*"
+		    "RGB* GRAY*"
 		    SF-IMAGE "Input Image" 0
 		    SF-DRAWABLE "Input Drawable" 0
 		    SF-VALUE "X Blur" "9"

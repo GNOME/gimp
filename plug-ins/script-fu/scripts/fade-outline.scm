@@ -191,7 +191,7 @@
     "Wolfgang Hofer <hof@hotbot.com>"
     "Wolfgang Hofer"
     "10 Nov 1999"
-    "RGB RGBA GRAY GRAYA"
+    "RGB* GRAY*"
     SF-IMAGE "The Image" 0
     SF-DRAWABLE "The Layer" 0
     SF-VALUE "Border Size" "10"

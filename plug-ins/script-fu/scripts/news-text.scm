@@ -58,7 +58,7 @@
 
 (script-fu-register "script-fu-newsprint-text"
 		    "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
-		    "apply a screen to text"
+		    "Apply a screen to text"
 		    "Austin Donnelly"
 		    "Austin Donnelly"
 		    "1998"

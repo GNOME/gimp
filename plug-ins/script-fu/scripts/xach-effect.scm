@@ -116,7 +116,7 @@
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"
 		    "9/28/97"
-		    "RGB RGBA GRAY GRAYA"
+		    "RGB* GRAY*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
 		    SF-ADJUSTMENT "highlight X offset" '(-1 -100 100 1 10 0 1)

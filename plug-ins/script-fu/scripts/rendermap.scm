@@ -67,13 +67,13 @@
 (script-fu-register
  "script-fu-render-map"
  "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
- "foo"
+ "Another pattern which resembles a map"
  "Chris Gutteridge: cjg@ecs.soton.ac.uk"
  "28th April 1998"
  "Chris Gutteridge / ECS @ University of Southampton, England"
  ""
  SF-ADJUSTMENT "Image Size" '(256 0 2048 1 10 0 0)
- SF-ADJUSTMENT "Granularity (0 - 15)" '(4 0 15 1 1 0 0)
+ SF-ADJUSTMENT "Granularity" '(4 0 15 1 1 0 0)
  SF-GRADIENT "Gradient" "Land_and_Sea"
  SF-TOGGLE "TRUE = Detail in middle, FALSE = tile" FALSE
 )

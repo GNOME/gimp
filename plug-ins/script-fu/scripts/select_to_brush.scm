@@ -93,11 +93,11 @@
  ; I like this script under the main selection menu, but that doesnt seem quite kosher
 ;		    "<Image>/Select/Selection To Brush"
 		    "<Image>/Script-Fu/Selection/To Brush..."
-		    "Convert a selection to a brush"
+		    "Convert a selection to a greyscale brush"
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"
 		    "10/07/97"
-		    "RGB RGBA GRAY GRAYA"
+		    "RGB* GRAY*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
 ;		    SF-STRING "Home directory" "/home/aklikins/"

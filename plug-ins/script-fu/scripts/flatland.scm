@@ -20,7 +20,7 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 ;
-; FaltLand 
+; FlatLand 
 ;
 ;    When used with the Land gradient It produces a tileble pattern that
 ;    looks a lot like a map. 
@@ -67,7 +67,3 @@
 		    SF-VALUE "Detail Level" "3.0"
 		    SF-VALUE "X Scale" "4"
 		    SF-VALUE "Y Scale" "4")
-
-
-
-

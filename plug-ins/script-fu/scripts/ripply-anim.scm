@@ -97,7 +97,7 @@
 		    "Adam D. Moss (adam@foxbox.org)"
 		    "Adam D. Moss"
 		    "1997"
-		    "RGB*, GRAY*"
+		    "RGB* GRAY*"
 		    SF-IMAGE "Image to Animage" 0
 		    SF-DRAWABLE "Drawable to Animate" 0
 		    SF-ADJUSTMENT "Rippling Strentgh" '(3 0 256 1 10 3 0)

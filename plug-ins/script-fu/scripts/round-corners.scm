@@ -130,28 +130,3 @@
 		    SF-ADJUSTMENT "Blur Radius" '(15 0 1024 1 10 0 1)
 		    SF-TOGGLE "Add Background" TRUE
 		    SF-TOGGLE "Work on Copy" TRUE)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

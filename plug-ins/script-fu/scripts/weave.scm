@@ -351,11 +351,11 @@
 
 (script-fu-register "script-fu-weave"
 		    "<Image>/Script-Fu/Alchemy/Weave..."
-		    "Weave effect a la Alien Skin"
+		    "Weave effect like Alien Skin"
 		    "Federico Mena Quintero"
 		    "Federico Mena Quintero"
 		    "June 1997"
-		    "RGB*, GRAY*"
+		    "RGB* GRAY*"
 		    SF-IMAGE "Image to weave" 0
 		    SF-DRAWABLE "Drawable to weave" 0
 		    SF-ADJUSTMENT "Ribbon width"     '(30  0 256 1 10 1 1)

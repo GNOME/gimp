@@ -127,7 +127,7 @@
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"
 		    "10/17/97"
-		    "RGB RGBA GRAY GRAYA"
+		    "RGB* GRAY*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
 		    SF-VALUE "Oilify mask size" "17"
@@ -135,9 +135,3 @@
 		    SF-TOGGLE "No background? (only for seperate layer)" FALSE
 		    SF-TOGGLE "Keep Selection?" TRUE
 		    SF-TOGGLE "Seperate Layer?" TRUE)
-
-
-
-
-
-

@@ -223,33 +223,9 @@
 		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"
 		    "1999/12/21"
-		    "RGB RGBA GRAY GRAYA"
+		    "RGB* GRAY*"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
 		    SF-ADJUSTMENT "Intermediate Frames" '(3 1 1024 1 10 0 1)
 		    SF-ADJUSTMENT "Max. Blur Radius" '(0 0 1024 1 10 0 1)
 		    SF-TOGGLE "Looped" TRUE)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

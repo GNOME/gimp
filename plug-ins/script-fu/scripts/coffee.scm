@@ -59,11 +59,11 @@
 (script-fu-register
     "script-fu-coffee-stain"
     "<Image>/Script-Fu/Decor/Coffee Stain..."
-    "foo"
+    "Draws realistic looking coffee stains"
     "Chris Gutteridge"
     "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
     "25th April 1998"
-    "RGBA RGB"
+    "RGB*"
     SF-IMAGE "The Image" 0
     SF-DRAWABLE "The Layer" 0
     SF-VALUE "Stains" "3"

@@ -67,7 +67,7 @@
 
 (script-fu-register "script-fu-land"
 		    "<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
-		    "A Topgraphic Map  pattern"
+		    "A Topgraphic map pattern"
 		    "Adrian Likins <aklikins@eos.ncsu.edu>"
 		    "Adrian Likins"
 		    "1997"
@@ -81,7 +81,3 @@
 		    SF-VALUE "X Scale" "4.0"
 		    SF-VALUE "Y Scale" "4.0"
 		    SF-GRADIENT "gradient" "Land_1")
-
-
-
-
