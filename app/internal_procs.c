@@ -177,6 +177,12 @@ internal_procs_init ()
   procedural_db_register (&gimage_disable_undo_proc); pcount++;
   procedural_db_register (&gimage_clean_all_proc); pcount++;
   procedural_db_register (&gimage_floating_sel_proc); pcount++;
+  procedural_db_register (&gimp_image_add_hguide_proc); pcount++;
+  procedural_db_register (&gimp_image_add_vguide_proc); pcount++;
+  procedural_db_register (&gimp_image_delete_guide_proc); pcount++;
+  procedural_db_register (&gimp_image_findnext_guide_proc); pcount++;
+  procedural_db_register (&gimp_image_get_guide_orientation_proc); pcount++;
+  procedural_db_register (&gimp_image_get_guide_position_proc); pcount++;
 
   app_init_update_status(NULL, "GImage mask procedures",
 			 pcount/total_pcount);

@@ -1,6 +1,7 @@
 #ifndef __GIMPIMAGE_H__
 #define __GIMPIMAGE_H__
 
+#include "procedural_db.h"
 #include "gimpimageF.h"
 
 #include "boundary.h"
@@ -81,6 +82,7 @@ struct _Guide
   int ref_count;
   int position;
   int orientation;
+  guint32 guide_ID;
 };
 
 
@@ -197,5 +199,12 @@ void            gimp_image_invalidate_preview     (GimpImage *);
 void            gimp_image_invalidate_previews    (void);
 
 
+/* Exported for PDB */
+extern ProcRecord gimp_image_add_hguide_proc;
+extern ProcRecord gimp_image_add_vguide_proc;
+extern ProcRecord gimp_image_delete_guide_proc;
+extern ProcRecord gimp_image_findnext_guide_proc;
+extern ProcRecord gimp_image_get_guide_orientation_proc;
+extern ProcRecord gimp_image_get_guide_position_proc;
 
 #endif

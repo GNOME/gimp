@@ -119,4 +119,6 @@ gimage_foreach (GFunc func, gpointer user_data);
 #define gimage_preview_valid gimp_image_preview_valid
 #define gimage_invalidate_preview gimp_image_invalidate_preview
 
+extern guint32 next_guide_id;
+
 #endif /* __GIMAGE_H__ */

@@ -1438,6 +1438,7 @@ xcf_load_image_props (XcfInfo *info,
 		guide = g_new (Guide, 1);
 		guide->position = position;
 		guide->orientation = orientation;
+		guide->guide_ID = next_guide_id++;
 
 		gimage->guides = g_list_prepend (gimage->guides, guide);
 	      }

@@ -1,3 +1,12 @@
+Mon Aug 31 18:15:16 BST 1998 Adam D. Moss <adam@gimp.org>
+
+	* app/gimage.h app/gimpimage.c app/gimpimage.h
+	app/internal_procs.c app/layer.c app/xcf.c:
+	Guide creation/deletion/query is now available as
+	PDB procedures.  Not yet directly exported to libgimp,
+	and needs to be moved into gimage_cmds.c, but it
+	works.
+
 Mon Aug 31 11:35:00 CST 1998 Seth Burgess <sjburges@gimp.org>
 	* app/gimage.c
 	* app/gimpimage.c: Applied Zach's fix for layer merge opacity.  I
