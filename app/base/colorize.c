@@ -36,9 +36,9 @@ colorize_init (Colorize *colorize)
 
   g_return_if_fail (colorize != NULL);
 
-  colorize->hue        = 0.0;
-  colorize->lightness  = 100.0;
-  colorize->saturation = 100.0;
+  colorize->hue        = 360.0 / 2;
+  colorize->lightness  = 100.0 / 2;
+  colorize->saturation = 100.0 / 2;
 
   for (i = 0; i < 256; i ++)
     {
