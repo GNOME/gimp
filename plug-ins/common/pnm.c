@@ -581,10 +581,10 @@ pnm_load_raw (PNMScanner *scan,
 	      PNMInfo    *info,
 	      GimpPixelRgn  *pixel_rgn)
 {
-  unsigned char *data, *d;
-  int            x, y, i;
-  int            start, end, scanlines;
-  int            fd;
+  guchar *data, *d;
+  gint    x, y, i;
+  gint    start, end, scanlines;
+  gint    fd;
 
   data = g_malloc (gimp_tile_height () * info->xres * info->np);
   fd = pnmscanner_fd(scan);
@@ -607,8 +607,11 @@ pnm_load_raw (PNMScanner *scan,
 	  if (info->maxval != 255)	/* Normalize if needed */
 	    {
 	      for (x = 0; x < info->xres * info->np; x++)
-		d[x] = (unsigned char)(255.0*(double)(d[x]) / (double)(info->maxval));
-	    }
+		{
+                  d[x] = MIN (d[x], info->maxval); /* guard against overflow */
+                  d[x] = 255.0 * (gdouble) d[x] / (gdouble) info->maxval;
+                }
+            }
 
 	  d += info->xres * info->np;
 	}

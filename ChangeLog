@@ -1,5 +1,11 @@
 2003-06-11  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/pnm.c (pnm_load_raw): improved handling of
+	invalid PGM files by clamping all pixel values to the specified
+	maximum value (see Debian bug #195066).
+
+2003-06-11  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimptoolbox.[ch]: added a container that keeps
 	references to the buttons which are not added to the wrap box.
 	Just to make sure they are destroyed on exit.
