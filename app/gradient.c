@@ -852,7 +852,7 @@ grad_create_gradient_editor(void)
 
 	g_editor->list = gtk_list_new();
 	gtk_list_set_selection_mode(GTK_LIST(g_editor->list), GTK_SELECTION_BROWSE);
-	gtk_container_add(GTK_CONTAINER(listbox), g_editor->list);
+	gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(listbox), g_editor->list);
 	gtk_container_set_focus_vadjustment(GTK_CONTAINER(g_editor->list),
 					    gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(listbox)));
 	GTK_WIDGET_UNSET_FLAGS(GTK_SCROLLED_WINDOW(listbox)->vscrollbar, GTK_CAN_FOCUS);

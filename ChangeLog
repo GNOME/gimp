@@ -1,3 +1,9 @@
+Sun Mar 14 23:27:38 1999  Owen Taylor  <otaylor@redhat.com>
+
+	* app/channels_dialog.c app/global_edit.c app/gradient.c
+	  app/layers_dialog.c app/text_tool.c:
+	Use gtk_scrolled_window_add_with_viewport()
+
 Sun Mar 14 15:27:15 EST 1999 Matt Wilson <msw@gimp.org>
 
 	* gimp.spec: updated to use new group entries.

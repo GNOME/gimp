@@ -225,7 +225,7 @@ channels_dialog_create ()
       gtk_box_pack_start (GTK_BOX (vbox), listbox, TRUE, TRUE, 2);
 
       channelsD->channel_list = gtk_list_new ();
-      gtk_container_add (GTK_CONTAINER (listbox), channelsD->channel_list);
+      gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (listbox), channelsD->channel_list);
       gtk_list_set_selection_mode (GTK_LIST (channelsD->channel_list), GTK_SELECTION_MULTIPLE);
       gtk_signal_connect (GTK_OBJECT (channelsD->channel_list), "event",
 			  (GtkSignalFunc) channel_list_events,
