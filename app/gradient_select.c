@@ -53,6 +53,7 @@
 #include "palette.h"
 #include "session.h"
 #include "actionarea.h"
+#include "dialog_handler.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -463,6 +464,7 @@ gsel_new_selection(gchar * title,
   
   /*  The shell and main vbox  */
   gsp->shell = gtk_dialog_new ();
+
   gtk_window_set_wmclass (GTK_WINDOW (gsp->shell), "gradselection", "Gimp");
   
   gtk_window_set_policy(GTK_WINDOW(gsp->shell), FALSE, TRUE, FALSE);
@@ -567,7 +569,10 @@ grad_create_gradient_editor(void)
   if(gradient_select_dialog == NULL)
     {
       gradient_select_dialog = gsel_new_selection(_("Gradients"),NULL);
-  
+
+      /* register this one only */
+      dialog_register(gradient_select_dialog->shell);
+
       session_set_window_geometry (gradient_select_dialog->shell, &gradient_select_session_info, TRUE);
     }
   else

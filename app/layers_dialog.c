@@ -59,6 +59,8 @@
 
 #include "layer_pvt.h"
 
+#include "dialog_handler.h"
+
 
 #define PREVIEW_EVENT_MASK GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK | GDK_ENTER_NOTIFY_MASK
 #define BUTTON_EVENT_MASK  GDK_EXPOSURE_MASK | GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK | \
@@ -309,7 +311,10 @@ lc_dialog_create (GimpImage* gimage)
   if (lc_shell == NULL)
     {
       lc_shell = gtk_dialog_new ();
-      
+
+      /* register this one only */
+      dialog_register(lc_shell);
+
       gtk_window_set_title (GTK_WINDOW (lc_shell), _("Layers & Channels"));
       gtk_window_set_wmclass (GTK_WINDOW (lc_shell), "layers_and_channels", "Gimp");
       session_set_window_geometry (lc_shell, &lc_dialog_session_info, TRUE);

@@ -108,6 +108,8 @@ gimp_SOURCES = \
 	devices.c		\
 	devices.h		\
 	dialog_types.h		\
+	dialog_handler.c	\
+	dialog_handler.h	\
 	disp_callbacks.c	\
 	disp_callbacks.h	\
 	docindex.c		\

@@ -56,6 +56,7 @@
 #include "threshold.h"
 #include "tools.h"
 #include "transform_tool.h"
+#include "dialog_handler.h"
 
 #include "config.h"
 #include "libgimp/gimpintl.h"
@@ -702,6 +703,10 @@ tools_options_dialog_new ()
 
   /*  The shell and main vbox  */
   options_shell = gtk_dialog_new ();
+
+  /* Register dialog */
+  dialog_register(options_shell);
+
   gtk_window_set_wmclass (GTK_WINDOW (options_shell), "tool_options", "Gimp");
   gtk_window_set_title (GTK_WINDOW (options_shell), _("Tool Options"));
   gtk_window_set_policy (GTK_WINDOW (options_shell), FALSE, TRUE, TRUE);

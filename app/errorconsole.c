@@ -31,6 +31,7 @@
 
 #include "commands.h"
 #include "session.h"
+#include "dialog_handler.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -202,6 +203,10 @@ error_console_create_window (void)
   GtkWidget	*menuitem;
 
   error_console = gtk_dialog_new ();
+
+  /* register this one only */
+  dialog_register(error_console);
+
   gtk_window_set_title (GTK_WINDOW (error_console), _("GIMP Error console"));
   session_set_window_geometry (error_console, &error_console_session_info, TRUE); 
   /* The next line should disappear when setting the size works in SM */

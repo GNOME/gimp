@@ -40,6 +40,7 @@
 #include "palette_entries.h"
 #include "session.h"
 #include "palette_select.h"
+#include "dialog_handler.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -1027,6 +1028,9 @@ palette_create()
       top_level_palette = new_top_palette(TRUE);
 /*       top_level_palette = palette_new_selection(_("Palette"),NULL); */
       session_set_window_geometry (top_level_palette->shell, &palette_session_info, TRUE);
+      /* register this one only */
+      dialog_register(top_level_palette->shell);
+
       gtk_widget_show(top_level_palette->shell);
       palette_scroll_clist_to_current(top_level_palette);
     }

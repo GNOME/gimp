@@ -442,6 +442,10 @@ create_toolbox ()
   GtkAccelGroup *table;
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+
+  /* Register dialog */
+  dialog_register_toolbox(window);
+
   gtk_window_set_wmclass (GTK_WINDOW (window), "toolbox", "Gimp");
   gtk_window_set_title (GTK_WINDOW (window), _("The GIMP"));
   session_set_window_geometry (window, &toolbox_session_info, TRUE);

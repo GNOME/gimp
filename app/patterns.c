@@ -35,6 +35,7 @@
 #include "general.h"
 #include "gimprc.h"
 #include "menus.h"
+#include "dialog_handler.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -307,6 +308,9 @@ create_pattern_dialog ()
     {
       /*  Create the dialog...  */
       pattern_select_dialog = pattern_select_new (NULL,NULL);
+
+      /* register this one only */
+      dialog_register(pattern_select_dialog->shell);
     }
   else
     {

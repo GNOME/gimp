@@ -32,7 +32,7 @@
 #include "scroll.h"
 #include "tools.h"
 #include "gimage.h"
-
+#include "dialog_handler.h"
 
 #define HORIZONTAL  1
 #define VERTICAL    2
@@ -372,6 +372,11 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	    layer_select_init (gdisp->gimage, 1, kevent->time);
 	  if (kevent->state & GDK_CONTROL_MASK && !gimage_is_empty (gdisp->gimage))
 	    layer_select_init (gdisp->gimage, -1, kevent->time);
+
+	  /* Hide or show all dialogs */
+	  if (!kevent->state)
+	    dialog_toggle();
+
 	  return_val = TRUE;
 	  break;
 

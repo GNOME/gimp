@@ -29,6 +29,7 @@
 #include "palette.h"
 #include "session.h"
 #include "tools.h"
+#include "dialog_handler.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -127,7 +128,10 @@ create_input_dialog (void)
   if (!inputd)
     {
       inputd = gtk_input_dialog_new();
-      
+
+      /* register this one only */
+      dialog_register(inputd);
+
       gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG(inputd)->action_area), 2);
 
       gtk_signal_connect (GTK_OBJECT(GTK_INPUT_DIALOG(inputd)->save_button),
@@ -653,6 +657,9 @@ create_device_status (void)
     {
       deviceD = g_new (DeviceInfoDialog, 1);
       deviceD->shell = gtk_dialog_new ();
+
+      /* register this one only */
+      dialog_register(deviceD->shell);
 
       gtk_window_set_title (GTK_WINDOW(deviceD->shell), _("Device Status"));
       gtk_window_set_policy (GTK_WINDOW (deviceD->shell), FALSE, FALSE, TRUE);

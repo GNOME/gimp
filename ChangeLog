@@ -1,3 +1,33 @@
+Sun Jan 10 22:41:51 GMT 1999 Andy Thomas <alt@picnic.demon.co.uk>
+
+	New
+	* app/dialog_handler.c
+	* app/dialog_handler.h
+
+	Changed
+	* app/disp_callbacks.c
+	* app/gradient_select.c
+	* app/tools.c
+	* app/interface.c
+	* app/patterns.c
+	* app/gimpbrushlist.c
+	* app/palette.c
+	* app/layers_dialog.c
+	* app/devices.c
+	* app/errorconsole.c
+
+	Can now hide/show all main dialogs using the TAB key in any window.
+	However....
+	there is a bug in gtk that causes the Gimp the crash if you show
+	and then hide a lot of dialogs (eg if you have all dialogs visible
+	and press the TAB key repeatedly). I have email-ed an example to
+	the gtk bug list.
+	Also I can't seem to be able to catch the SHIFT-TAB combination
+	(suggestions welcome ;-) so the first press of the tab hide all 
+	dialogs the second press reshows only the toolbox and the third
+	press reshows all. Comments please if you find this behaviour 
+	non-intuitive.
+
 Sun Jan 10 21:42:11 GMT 1999  Austin Donnelly  <austin@greenend.org.uk>
 
 	* app/brush_select.c

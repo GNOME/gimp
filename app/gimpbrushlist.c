@@ -41,6 +41,7 @@
 #include "gimpbrush.h"
 #include "gimplistP.h"
 #include "gimpbrushlistP.h"
+#include "dialog_handler.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -409,6 +410,9 @@ create_brush_dialog ()
     {
       /*  Create the dialog...  */
       brush_select_dialog = brush_select_new (NULL,NULL,0.0,0,0);
+      
+      /* register this one only */
+      dialog_register(brush_select_dialog->shell);
     }
   else
     {
