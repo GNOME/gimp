@@ -57,6 +57,9 @@ STOCK_VARIABLES = @STRIP_BEGIN@ \
 	$(srcdir)/images/stock-menu-qmask-off.png		\
 	stock_menu_qmask_on  					\
 	$(srcdir)/images/stock-menu-qmask-on.png		\
+	\
+	stock_wilber_eek					\
+	$(srcdir)/images/stock-wilber-eek.png			\
 @STRIP_END@
 
 STOCK_TOOL_VARIABLES = @STRIP_BEGIN@ \

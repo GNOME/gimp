@@ -94,6 +94,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_TOOL_THRESHOLD           "gimp-tool-threshold"
 #define GIMP_STOCK_TOOL_ZOOM                "gimp-tool-zoom"
 
+#define GIMP_STOCK_WILBER_EEK               "gimp-wilber-eek"
 
 void   gimp_stock_init (void);
 

@@ -1,5 +1,27 @@
 2002-02-07  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpwidgets-utils.c (gimp_message_box): changed the
+	message dialog icon to WARNING since we mostly use this for
+	warnings. We should change the API so that gimp_message knows
+	about the severity of the message it displays.
+	
+	* themes/Default/images/stock-wilber-16x16.png
+	* themes/Default/images/stock-wilber-32x32.png
+	* themes/Default/images/stock-wilber-48x48.png
+	* themes/Default/images/stock-wilber-64x64.png: slightly better icons.
+
+	* themes/Default/Makefile.am
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-wilber-eek.png: added a new eek wilber
+	based on suggestions made in bug-report #65194. Actually I'd like it
+	be more eeeky, so feel free to submit a better one.
+	
+	* libgimpwidgets/gimpstock.[ch]: register the new stock icon.
+
+	* app/gui/gui.c (gui_really_quit_dialog): use STOCK_WILBER_EEK.
+
+2002-02-07  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/file-new-dialog.c
 	* app/gui/resize-dialog.c
 	* app/tools/gimpbrightnesscontrasttool.c

@@ -42,6 +42,7 @@ STOCK_IMAGES = @STRIP_BEGIN@ \
 	stock-menu-navigation.png		\
 	stock-menu-qmask-off.png		\
 	stock-menu-qmask-on.png			\
+	stock-wilber-eek.png			\
 @STRIP_END@
 
 WILBER_IMAGES = @STRIP_BEGIN@ \

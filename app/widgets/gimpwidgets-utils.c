@@ -71,7 +71,7 @@ gimp_message_box (const gchar *message,
   GtkWidget   *image;
   GtkWidget   *label;
   GList       *list;
-  const gchar *stock_id = GTK_STOCK_DIALOG_INFO;
+  const gchar *stock_id = GTK_STOCK_DIALOG_WARNING;
 
   if (!message)
     return;

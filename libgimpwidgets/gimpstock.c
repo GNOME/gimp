@@ -219,7 +219,9 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_TOOL_SMUDGE,              stock_tool_button_smudge              },
   { GIMP_STOCK_TOOL_TEXT,                stock_tool_button_text                },
   { GIMP_STOCK_TOOL_THRESHOLD,           stock_tool_button_threshold           },
-  { GIMP_STOCK_TOOL_ZOOM,                stock_tool_button_zoom                }
+  { GIMP_STOCK_TOOL_ZOOM,                stock_tool_button_zoom                },
+
+  { GIMP_STOCK_WILBER_EEK,               stock_wilber_eek                      }
 };
 
 static struct
