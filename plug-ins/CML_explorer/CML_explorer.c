@@ -2,9 +2,9 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * CML_explorer.c -- This is a plug-in for The GIMP 1.0
- * Time-stamp: <1997/11/15 01:49:09 narazaki@InetQ.or.jp>
+ * Time-stamp: <1997/11/22 23:54:47 narazaki@InetQ.or.jp>
  * Copyright (C) 1997 Shuji Narazaki <narazaki@InetQ.or.jp>
- * Version: 1.0.9
+ * Version: 1.0.11
  * URL: http://www.inetq.or.jp/~narazaki/TheGIMP/
  *
  * This program is free software; you can redistribute it and/or modify
@@ -497,10 +497,11 @@ run (char	*name,
      int	*nreturn_vals,
      GParam	**return_vals)
 {
-  static GParam	 values[1];
+  GParam	*values;
   GStatusType	status = STATUS_EXECUTION_ERROR;
   GRunModeType	run_mode;
 
+  values = g_new (GParam, 1);
   run_mode = param[0].data.d_int32;
   drawable_id = param[2].data.d_drawable;
 
@@ -1901,7 +1902,7 @@ CML_copy_parameters_callback (GtkWidget *widget, gpointer data)
 
   if (copy_source == copy_destination)
     {
-      gtkW_message_dialog (2, "Warning: the source and the destination are the same channel.");
+      gtkW_message_dialog (TRUE, "Warning: the source and the destination are the same channel.");
       gdk_flush ();
       return;
     }
@@ -2086,7 +2087,7 @@ CML_execute_save_to_file (GtkWidget *widget, gpointer client_data)
       guchar buffer[CML_LINE_SIZE];
 
       sprintf (buffer, "Error: could not open \"%s\"", filename);
-      gtkW_message_dialog (1, buffer);
+      gtkW_message_dialog (TRUE, buffer);
       return;
     }
   else
@@ -2131,7 +2132,7 @@ CML_execute_save_to_file (GtkWidget *widget, gpointer client_data)
 	guchar buffer[CML_LINE_SIZE];
 
 	sprintf (buffer, "Parameters were saved to \"%s\"", filename);
-	gtkW_message_dialog (1, buffer);
+	gtkW_message_dialog (TRUE, buffer);
       }
 #endif
       if ( sizeof (VALS.last_file_name) <= strlen (filename))
@@ -2279,7 +2280,7 @@ CML_load_parameter_file (guchar *filename, gint interactive_mode)
       if (interactive_mode)
 	{
 	  sprintf (buffer, "Error: could not open \"%s\"", filename);
-	  gtkW_message_dialog (1, buffer);
+	  gtkW_message_dialog (TRUE, buffer);
 	}
       return FALSE;
     }
@@ -2301,16 +2302,16 @@ CML_load_parameter_file (guchar *filename, gint interactive_mode)
       if (version == 0)
 	{
 	  if (interactive_mode)
-	    gtkW_message_dialog (1, "Error: it's not CML parameter file.");
+	    gtkW_message_dialog (TRUE, "Error: it's not CML parameter file.");
 	  fclose(file);
 	  return FALSE;
 	}
       if (interactive_mode)
 	{
 	  if (version < PARAM_FILE_FORMAT_VERSION)
-	    gtkW_message_dialog (1, "Warning: it's an old format file.");
+	    gtkW_message_dialog (TRUE, "Warning: it's an old format file.");
 	  if (PARAM_FILE_FORMAT_VERSION < version)
-	    gtkW_message_dialog (1, "Warning: Hmmm, it's a parameter file for newer CML_explorer than me.");
+	    gtkW_message_dialog (TRUE, "Warning: Hmmm, it's a parameter file for newer CML_explorer than me.");
 	}
       for (channel_id = 0; flag && (channel_id < 3); channel_id++)
 	{
@@ -2371,7 +2372,7 @@ CML_load_parameter_file (guchar *filename, gint interactive_mode)
   if (flag == FALSE)
     {
       if (interactive_mode)
-	gtkW_message_dialog (1, "Error: failed to load paramters");
+	gtkW_message_dialog (TRUE, "Error: failed to load paramters");
     }
   else
     {
