@@ -141,8 +141,6 @@ static gdouble cos_lut[ITERATIONS + 1];
 static gdouble param_lut1[ITERATIONS + 1];
 static gdouble param_lut2[ITERATIONS + 1];
 
-static GimpRunMode run_mode;
-
 
 /***** Functions *****/
 
@@ -197,6 +195,8 @@ run (const gchar      *name,
 
   GimpDrawable      *active_drawable;
   GimpPDBStatusType  status;
+  GimpRunMode        run_mode;
+
 
   /* Initialize */
 
@@ -332,7 +332,7 @@ diffraction (GimpDrawable *drawable)
   param.dvert  = -10.0 / (y2 - y1 - 1);
 
   gimp_progress_init (_("Creating diffraction pattern..."));
-  iter = gimp_rgn_iterator_new (drawable, run_mode);
+  iter = gimp_rgn_iterator_new (drawable, 0);
   gimp_rgn_iterator_dest (iter, diffraction_func, &param);
   gimp_rgn_iterator_free (iter);
 }

@@ -1761,7 +1761,6 @@ static VideoValues vvals =
   FALSE,
 };
 
-static  GimpRunMode run_mode;
 
 /* Declare local functions.
  */
@@ -1834,6 +1833,7 @@ run (const gchar      *name,
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
@@ -1958,7 +1958,7 @@ video (GimpDrawable *drawable)
 {
   GimpRgnIterator *iter;
 
-  iter = gimp_rgn_iterator_new (drawable, run_mode);
+  iter = gimp_rgn_iterator_new (drawable, 0);
   gimp_rgn_iterator_src_dest (iter, video_func, NULL);
   gimp_rgn_iterator_free (iter);
 }

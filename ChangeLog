@@ -1,3 +1,16 @@
+2004-09-02  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/borderaverage.c
+	* plug-ins/common/checkerboard.c
+	* plug-ins/common/diffraction.c
+	* plug-ins/common/illusion.c
+	* plug-ins/common/polar.c
+	* plug-ins/common/ripple.c
+	* plug-ins/common/spread.c
+	* plug-ins/common/video.c: don't pass run_mode to
+	gimp_rgn_iterator_new(), it's unused. Removes the need for ir being
+	a global variable.
+
 2004-09-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplay.c

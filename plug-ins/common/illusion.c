@@ -81,7 +81,6 @@ static gint          preview_width, preview_height, preview_bpp;
 static guchar       *preview_cache;
 
 static GimpDrawable *drawable;
-static GimpRunMode     run_mode;
 
 
 MAIN ()
@@ -123,6 +122,7 @@ run (const gchar      *name,
 {
   static GimpParam   returnv[1];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpRunMode        run_mode;
 
   INIT_I18N ();
 
@@ -276,7 +276,7 @@ filter (GimpDrawable *drawable)
   param.scale = sqrt (width * width + height * height) / 2;
   param.offset = (gint) (param.scale / 2);
 
-  iter = gimp_rgn_iterator_new (drawable, run_mode);
+  iter = gimp_rgn_iterator_new (drawable, 0);
   gimp_rgn_iterator_src_dest (iter, illusion_func, &param);
   gimp_rgn_iterator_free (iter);
 

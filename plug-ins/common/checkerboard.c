@@ -38,7 +38,6 @@ typedef struct data
   gint   size;
 } CheckVals;
 
-static GimpRunMode run_mode;
 
 static void      query  (void);
 static void      run    (const gchar       *name,
@@ -111,6 +110,7 @@ run (const gchar      *name,
   static GimpParam   values[1];
   GimpDrawable      *drawable;
   gint32             image_ID;
+  GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   INIT_I18N ();
@@ -235,7 +235,7 @@ do_checkerboard_pattern (GimpDrawable *drawable)
       cvals.size = 1;
     }
 
-  iter = gimp_rgn_iterator_new (drawable, run_mode);
+  iter = gimp_rgn_iterator_new (drawable, 0);
   gimp_rgn_iterator_dest (iter, checkerboard_func, &param);
   gimp_rgn_iterator_free (iter);
 }

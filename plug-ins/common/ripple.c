@@ -105,7 +105,6 @@ static RippleValues rvals =
   TRUE        /* tile        */
 };
 
-static GimpRunMode run_mode;
 
 /***** Functions *****/
 
@@ -153,6 +152,7 @@ run (const gchar      *name,
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
@@ -399,7 +399,7 @@ ripple (GimpDrawable *drawable)
 		      (rvals.orientation == VERTICAL));
     }
 
-  iter = gimp_rgn_iterator_new (drawable, run_mode);
+  iter = gimp_rgn_iterator_new (drawable, 0);
   gimp_rgn_iterator_dest (iter, (rvals.orientation == VERTICAL)
 			  ? ripple_vertical : ripple_horizontal, &param);
   gimp_rgn_iterator_free (iter);

@@ -138,7 +138,6 @@ static polarize_vals_t pcvals =
 };
 
 static GimpDrawable *drawable;
-static GimpRunMode run_mode;
 
 static gint img_width, img_height, img_has_alpha;
 static gint sel_x1, sel_y1, sel_x2, sel_y2;
@@ -194,7 +193,8 @@ run (const gchar      *name,
   static GimpParam values[1];
 
   GimpPDBStatusType  status;
-  double       xhsiz, yhsiz;
+  GimpRunMode        run_mode;
+  gdouble            xhsiz, yhsiz;
 
   status   = GIMP_PDB_SUCCESS;
   run_mode = param[0].data.d_int32;
@@ -362,7 +362,7 @@ polarize (void)
 
   gimp_progress_init (_("Polarizing..."));
 
-  iter = gimp_rgn_iterator_new (drawable, run_mode);
+  iter = gimp_rgn_iterator_new (drawable, 0);
   gimp_rgn_iterator_dest (iter, polarize_func, pft);
   gimp_rgn_iterator_free (iter);
 

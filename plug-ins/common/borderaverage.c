@@ -70,8 +70,6 @@ static borderaverage_data =
   4
 };
 
-static GimpRunMode run_mode;
-
 MAIN ()
 
 static void
@@ -118,6 +116,7 @@ run (const gchar      *name,
   GimpDrawable      *drawable;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpRGB            result_color;
+  GimpRunMode        run_mode;
 
   INIT_I18N ();
 
@@ -271,7 +270,7 @@ borderaverage (GimpDrawable *drawable,
   /*  allocate row buffer  */
   buffer = g_new (guchar, (x2 - x1) * bytes);
 
-  iter = gimp_rgn_iterator_new (drawable, run_mode);
+  iter = gimp_rgn_iterator_new (drawable, 0);
   gimp_rgn_iterator_src (iter, borderaverage_func, &param);
   gimp_rgn_iterator_free (iter);
 

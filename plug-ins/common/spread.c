@@ -67,8 +67,6 @@ static SpreadValues spvals =
   5   /*  vertical spread amount    */
 };
 
-static GimpRunMode        run_mode;
-
 
 /***** Functions *****/
 
@@ -118,6 +116,7 @@ run (const gchar      *name,
   static GimpParam   values[1];
   gint32             image_ID;
   GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
@@ -277,7 +276,7 @@ spread (GimpDrawable *drawable)
   param.width     = drawable->width;
   param.height    = drawable->height;
 
-  iter = gimp_rgn_iterator_new (drawable, run_mode);
+  iter = gimp_rgn_iterator_new (drawable, 0);
   gimp_rgn_iterator_dest (iter, spread_func, &param);
   gimp_rgn_iterator_free (iter);
   g_rand_free (param.gr);
