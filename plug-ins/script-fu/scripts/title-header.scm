@@ -7,7 +7,7 @@
 ; ************************************************************************
 ; Changed on Feb 4, 1999 by Piet van Oostrum <piet@cs.uu.nl>
 ; For use with GIMP 1.1.
-verted to use the *-fontname form.
+;
 ; The corresponding parameters have been replaced by an SF-FONT parameter.
 ; The call to gimp-palette-set-background has been given a real layer
 ; (although it is not used) otherwise gimp 1.1 crashed.

@@ -43,48 +43,48 @@ extern FILE *siod_output;
 extern void  gimp_extension_process (guint timeout);
 extern void  gimp_extension_ack     (void);
 
-extern void  init_subrs (void);
-extern void  init_trace (void);
-extern void  init_regex (void);
+extern void  init_subrs   (void);
+extern void  init_trace   (void);
+extern void  init_regex   (void);
 
-extern long  nlength      (LISP obj);
-extern LISP  leval_define (LISP args,
-			   LISP env);
+extern long  nlength      (LISP   obj);
+extern LISP  leval_define (LISP   args,
+			   LISP   env);
 
-extern void  fput_st (FILE  *f,
-		      gchar *st);
+extern void  fput_st      (FILE  *f,
+			   gchar *st);
 
 /* Declare local functions.
  */
-static void      sfquit (void);
-static void      query  (void);
-static void      run    (gchar        *name,
-			 gint          nparams,
-			 GimpParam    *param,
-			 gint         *nreturn_vals,
-			 GimpParam   **return_vals);
+static void  sfquit (void);
+static void  query  (void);
+static void  run    (gchar        *name,
+		     gint          nparams,
+		     GimpParam    *param,
+		     gint         *nreturn_vals,
+		     GimpParam   **return_vals);
 
-static gint      init_interp              (void);
-static void      init_gimp                (void);
-static void      init_procedures          (void);
-static void      init_constants           (void);
-static void      convert_string           (gchar *str);
+static gint  init_interp              (void);
+static void  init_gimp                (void);
+static void  init_procedures          (void);
+static void  init_constants           (void);
+static void  convert_string           (gchar *str);
 
-static gint      sputs_fcn                (gchar *st,
-					   void  *dest);
-static LISP      lprin1s                  (LISP   exp,
-					   gchar *dest);
+static gint  sputs_fcn                (gchar *st,
+				       void  *dest);
+static LISP  lprin1s                  (LISP   exp,
+				       gchar *dest);
 
-static LISP      marshall_proc_db_call    (LISP a);
-static LISP      script_fu_register_call  (LISP a);
-static LISP      script_fu_quit_call      (LISP a);
+static LISP  marshall_proc_db_call    (LISP a);
+static LISP  script_fu_register_call  (LISP a);
+static LISP  script_fu_quit_call      (LISP a);
 
-static void      script_fu_auxillary_init (void);
-static void      script_fu_refresh_proc   (gchar      *name,
-					   gint        nparams,
-					   GimpParam  *params,
-					   gint       *nreturn_vals,
-					   GimpParam **return_vals);
+static void  script_fu_auxillary_init (void);
+static void  script_fu_refresh_proc   (gchar      *name,
+				       gint        nparams,
+				       GimpParam  *params,
+				       gint       *nreturn_vals,
+				       GimpParam **return_vals);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -107,8 +107,9 @@ static gchar *siod_argv[] =
 };
 
 static gint script_fu_base = TRUE;
-       gint script_fu_done = FALSE;
 extern gint server_mode;
+
+gint script_fu_done = FALSE;  /*  declared extern in script-fu-server.c  */
 
 
 MAIN ()
@@ -223,24 +224,24 @@ run (gchar      *name,
   script_fu_find_scripts ();
 
   /*
-   *  The main, automatically installed script fu extension--
-   *    For things like logos and effects that are runnable from GIMP menus
+   *  The main, automatically installed script fu extension.
+   *  For things like logos and effects that are runnable from GIMP menus.
    */
   if (strcmp (name, "extension_script_fu") == 0)
     {
-      static GimpParam values[1];
+      static GimpParam  values[1];
       GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
       /*  Acknowledge that the extension is properly initialized  */
       gimp_extension_ack ();
 
-      while (1)
+      while (TRUE)
 	gimp_extension_process (0);
 
       *nreturn_vals = 1;
-      *return_vals = values;
+      *return_vals  = values;
 
-      values[0].type = GIMP_PDB_STATUS;
+      values[0].type          = GIMP_PDB_STATUS;
       values[0].data.d_status = status;
     }
   /*
@@ -310,11 +311,12 @@ init_procedures (void)
   gint             i;
 
   /*  register the database execution procedure  */
-  init_lsubr ("gimp-proc-db-call", marshall_proc_db_call);
+  init_lsubr ("gimp-proc-db-call",  marshall_proc_db_call);
   init_lsubr ("script-fu-register", script_fu_register_call);
-  init_lsubr ("script-fu-quit", script_fu_quit_call);
+  init_lsubr ("script-fu-quit",     script_fu_quit_call);
 
-  gimp_procedural_db_query (".*", ".*", ".*", ".*", ".*", ".*", ".*", &num_procs, &proc_list);
+  gimp_procedural_db_query (".*", ".*", ".*", ".*", ".*", ".*", ".*", 
+			    &num_procs, &proc_list);
 
   /*  Register each procedure as a scheme func  */
   for (i = 0; i < num_procs; i++)
@@ -334,7 +336,7 @@ init_procedures (void)
 	{
 	  LISP args = NIL;
 	  LISP code = NIL;
-	  int j;
+	  gint j;
 
 	  /*  convert the names to scheme-like naming conventions  */
 	  convert_string (proc_name);
@@ -356,7 +358,9 @@ init_procedures (void)
 	  args = cons (cintern (proc_name), args);
 
 	  /*  set the acture pdb procedure name  */
-	  code = cons (cons (cintern ("quote"), cons (cintern (proc_list[i]), NIL)), code);
+	  code = cons (cons (cintern ("quote"), 
+			     cons (cintern (proc_list[i]), NIL)), 
+		       code);
 	  code = cons (cintern ("gimp-proc-db-call"), code);
 
 	  leval_define (cons (args, cons (code, NIL)), NIL);
@@ -380,12 +384,14 @@ init_constants (void)
 {
   gchar *gimp_plugin_dir;
 
-  setvar (cintern ("gimp-data-dir"), strcons (-1, gimp_data_directory ()), NIL);
+  setvar (cintern ("gimp-data-dir"), 
+	  strcons (-1, gimp_data_directory ()), NIL);
 
   gimp_plugin_dir = gimp_gimprc_query ("gimp_plugin_dir");
   if (gimp_plugin_dir)
     {
-      setvar (cintern ("gimp-plugin-dir"), strcons (-1, gimp_plugin_dir), NIL);
+      setvar (cintern ("gimp-plugin-dir"), 
+	      strcons (-1, gimp_plugin_dir), NIL);
       g_free (gimp_plugin_dir);
     }
   
@@ -393,57 +399,57 @@ init_constants (void)
   init_generated_constants ();
 
   /* These are for backwards compatibility; they should be removed sometime */
-  setvar (cintern ("NORMAL"), flocons (0), NIL);
-  setvar (cintern ("DISSOLVE"), flocons (1), NIL);
-  setvar (cintern ("BEHIND"), flocons (2), NIL);
-  setvar (cintern ("MULTIPLY"), flocons (3), NIL);
-  setvar (cintern ("SCREEN"), flocons (4), NIL);
-  setvar (cintern ("OVERLAY"), flocons (5), NIL);
-  setvar (cintern ("DIFFERENCE"), flocons (6), NIL);
-  setvar (cintern ("ADDITION"), flocons (7), NIL);
-  setvar (cintern ("SUBTRACT"), flocons (8), NIL);
-  setvar (cintern ("DARKEN-ONLY"), flocons (9), NIL);
-  setvar (cintern ("LIGHTEN-ONLY"), flocons (10), NIL);
-  setvar (cintern ("HUE"), flocons (11), NIL);
-  setvar (cintern ("SATURATION"), flocons (12), NIL);
-  setvar (cintern ("COLOR"), flocons (13), NIL);
-  setvar (cintern ("VALUE"), flocons (14), NIL);
-  setvar (cintern ("DIVIDE"), flocons (15), NIL);
+  setvar (cintern ("NORMAL"),         flocons (GIMP_NORMAL_MODE),       NIL);
+  setvar (cintern ("DISSOLVE"),       flocons (GIMP_DISSOLVE_MODE),     NIL);
+  setvar (cintern ("BEHIND"),         flocons (GIMP_BEHIND_MODE),       NIL);
+  setvar (cintern ("MULTIPLY"),       flocons (GIMP_MULTIPLY_MODE),     NIL);
+  setvar (cintern ("SCREEN"),         flocons (GIMP_SCREEN_MODE),       NIL);
+  setvar (cintern ("OVERLAY"),        flocons (GIMP_OVERLAY_MODE),      NIL);
+  setvar (cintern ("DIFFERENCE"),     flocons (GIMP_DIFFERENCE_MODE),   NIL);
+  setvar (cintern ("ADDITION"),       flocons (GIMP_ADDITION_MODE),     NIL);
+  setvar (cintern ("SUBTRACT"),       flocons (GIMP_SUBTRACT_MODE),     NIL);
+  setvar (cintern ("DARKEN-ONLY"),    flocons (GIMP_DARKEN_ONLY_MODE),  NIL);
+  setvar (cintern ("LIGHTEN-ONLY"),   flocons (GIMP_LIGHTEN_ONLY_MODE), NIL);
+  setvar (cintern ("HUE"),            flocons (GIMP_HUE_MODE),          NIL);
+  setvar (cintern ("SATURATION"),     flocons (GIMP_SATURATION_MODE),   NIL);
+  setvar (cintern ("COLOR"),          flocons (GIMP_COLOR_MODE),        NIL);
+  setvar (cintern ("VALUE"),          flocons (GIMP_VALUE_MODE),        NIL);
+  setvar (cintern ("DIVIDE"),         flocons (GIMP_DIVIDE_MODE),       NIL);
 
-  setvar (cintern ("BLUR"), flocons (0), NIL);
-  setvar (cintern ("SHARPEN"), flocons (1), NIL);
+  setvar (cintern ("BLUR"),           flocons (GIMP_BLUR_CONVOLVE),     NIL);
+  setvar (cintern ("SHARPEN"),        flocons (GIMP_SHARPEN_CONVOLVE),  NIL);
 
-  setvar (cintern ("RGB_IMAGE"), flocons (0), NIL);
-  setvar (cintern ("RGBA_IMAGE"), flocons (1), NIL);
-  setvar (cintern ("GRAY_IMAGE"), flocons (2), NIL);
-  setvar (cintern ("GRAYA_IMAGE"), flocons (3), NIL);
-  setvar (cintern ("INDEXED_IMAGE"), flocons (4), NIL);
-  setvar (cintern ("INDEXEDA_IMAGE"), flocons (5), NIL);
+  setvar (cintern ("RGB_IMAGE"),      flocons (GIMP_RGB_IMAGE),         NIL);
+  setvar (cintern ("RGBA_IMAGE"),     flocons (GIMP_RGBA_IMAGE),        NIL);
+  setvar (cintern ("GRAY_IMAGE"),     flocons (GIMP_GRAY_IMAGE),        NIL);
+  setvar (cintern ("GRAYA_IMAGE"),    flocons (GIMP_GRAYA_IMAGE),       NIL);
+  setvar (cintern ("INDEXED_IMAGE"),  flocons (GIMP_INDEXED_IMAGE),     NIL);
+  setvar (cintern ("INDEXEDA_IMAGE"), flocons (GIMP_INDEXEDA_IMAGE),    NIL);
 
   /* Useful misc stuff */
-  setvar (cintern ("TRUE"), flocons (1), NIL);
-  setvar (cintern ("FALSE"), flocons (0), NIL);
+  setvar (cintern ("TRUE"),           flocons (TRUE),  NIL);
+  setvar (cintern ("FALSE"),          flocons (FALSE), NIL);
 
   /*  Script-fu types  */
-  setvar (cintern ("SF-IMAGE"), flocons (SF_IMAGE), NIL);
-  setvar (cintern ("SF-DRAWABLE"), flocons (SF_DRAWABLE), NIL);
-  setvar (cintern ("SF-LAYER"), flocons (SF_LAYER), NIL);
-  setvar (cintern ("SF-CHANNEL"), flocons (SF_CHANNEL), NIL);
-  setvar (cintern ("SF-COLOR"), flocons (SF_COLOR), NIL);
-  setvar (cintern ("SF-TOGGLE"), flocons (SF_TOGGLE), NIL);
-  setvar (cintern ("SF-VALUE"), flocons (SF_VALUE), NIL);
-  setvar (cintern ("SF-STRING"), flocons (SF_STRING), NIL);
-  setvar (cintern ("SF-FILENAME"), flocons (SF_FILENAME), NIL);
-  setvar (cintern ("SF-ADJUSTMENT"), flocons (SF_ADJUSTMENT), NIL);
-  setvar (cintern ("SF-FONT"), flocons (SF_FONT), NIL);
-  setvar (cintern ("SF-PATTERN"), flocons (SF_PATTERN), NIL);
-  setvar (cintern ("SF-BRUSH"), flocons (SF_BRUSH), NIL);
-  setvar (cintern ("SF-GRADIENT"), flocons (SF_GRADIENT), NIL);
-  setvar (cintern ("SF-OPTION"), flocons (SF_OPTION), NIL);
+  setvar (cintern ("SF-IMAGE"),       flocons (SF_IMAGE),      NIL);
+  setvar (cintern ("SF-DRAWABLE"),    flocons (SF_DRAWABLE),   NIL);
+  setvar (cintern ("SF-LAYER"),       flocons (SF_LAYER),      NIL);
+  setvar (cintern ("SF-CHANNEL"),     flocons (SF_CHANNEL),    NIL);
+  setvar (cintern ("SF-COLOR"),       flocons (SF_COLOR),      NIL);
+  setvar (cintern ("SF-TOGGLE"),      flocons (SF_TOGGLE),     NIL);
+  setvar (cintern ("SF-VALUE"),       flocons (SF_VALUE),      NIL);
+  setvar (cintern ("SF-STRING"),      flocons (SF_STRING),     NIL);
+  setvar (cintern ("SF-FILENAME"),    flocons (SF_FILENAME),   NIL);
+  setvar (cintern ("SF-ADJUSTMENT"),  flocons (SF_ADJUSTMENT), NIL);
+  setvar (cintern ("SF-FONT"),        flocons (SF_FONT),       NIL);
+  setvar (cintern ("SF-PATTERN"),     flocons (SF_PATTERN),    NIL);
+  setvar (cintern ("SF-BRUSH"),       flocons (SF_BRUSH),      NIL);
+  setvar (cintern ("SF-GRADIENT"),    flocons (SF_GRADIENT),   NIL);
+  setvar (cintern ("SF-OPTION"),      flocons (SF_OPTION),     NIL);
 
   /* for SF_ADJUSTMENT */
-  setvar (cintern ("SF-SLIDER"), flocons (SF_SLIDER), NIL);
-  setvar (cintern ("SF-SPINNER"), flocons (SF_SPINNER), NIL);
+  setvar (cintern ("SF-SLIDER"),      flocons (SF_SLIDER),     NIL);
+  setvar (cintern ("SF-SPINNER"),     flocons (SF_SPINNER),    NIL);
 }
 
 static void
@@ -460,8 +466,9 @@ static gint
 sputs_fcn (gchar *st,
 	   void  *dest)
 {
-  strcpy (*((char**)dest), st);
-  *((char**)dest) += strlen(st);
+  strcpy (*((gchar**)dest), st);
+  *((gchar**)dest) += strlen (st);
+
   return (1);
 }
 
@@ -470,12 +477,16 @@ lprin1s (LISP   exp,
 	 gchar *dest)
 {
   struct gen_printio s;
-  s.putc_fcn = NULL;
-  s.puts_fcn = sputs_fcn;
+
+  s.putc_fcn    = NULL;
+  s.puts_fcn    = sputs_fcn;
   s.cb_argument = &dest;
+
   lprin1g (exp, &s);
+
   return (NIL);
 }
+
 
 static LISP
 marshall_proc_db_call (LISP a)
@@ -513,7 +524,8 @@ marshall_proc_db_call (LISP a)
 		   "The procedure to be executed and the arguments it requires "
 		   "(possibly none) must be specified.", NIL);
 
-  /*  Derive the pdb procedure name from the argument or first argument of a list  */
+  /*  Derive the pdb procedure name from the argument 
+      or first argument of a list  */
   if (TYPEP (a, tc_cons))
     proc_name = get_c_string (car (a));
   else
@@ -523,29 +535,30 @@ marshall_proc_db_call (LISP a)
   script_fu_report_cc (proc_name);
 
   /*  Attempt to fetch the procedure from the database  */
-  if (!gimp_procedural_db_proc_info (proc_name, 
-				     &proc_blurb, 
-				     &proc_help, 
-				     &proc_author,
-				     &proc_copyright,
-				     &proc_date,
-				     &proc_type,
-				     &nparams, &nreturn_vals,
-				     &params, &return_vals))
+  if (! gimp_procedural_db_proc_info (proc_name, 
+				      &proc_blurb, 
+				      &proc_help, 
+				      &proc_author,
+				      &proc_copyright,
+				      &proc_date,
+				      &proc_type,
+				      &nparams, &nreturn_vals,
+				      &params, &return_vals))
     return my_err ("Invalid procedure name specified.", NIL);
 
 
   /*  Check the supplied number of arguments  */
   if ((nlength (a) - 1) != nparams)
     {
-      sprintf (error_str, "Invalid arguments supplied to %s--(# args: %ld, expecting: %d)",
-	       proc_name, (nlength (a) - 1), nparams);
+      g_snprintf (error_str, sizeof (error_str), 
+		  "Invalid arguments supplied to %s--(# args: %ld, expecting: %d)",
+		  proc_name, (nlength (a) - 1), nparams);
       return my_err (error_str, NIL);
     }
 
   /*  Marshall the supplied arguments  */
   if (nparams)
-    args = (GimpParam *) g_new (GimpParam, nparams);
+    args = g_new (GimpParam, nparams);
   else
     args = NULL;
 
@@ -563,6 +576,7 @@ marshall_proc_db_call (LISP a)
 	      args[i].data.d_int32 = get_c_long (car (a));
 	    }
 	  break;
+
 	case GIMP_PDB_INT16:
 	  if (!TYPEP (car (a), tc_flonum))
 	    success = FALSE;
@@ -572,6 +586,7 @@ marshall_proc_db_call (LISP a)
 	      args[i].data.d_int16 = (gint16) get_c_long (car (a));
 	    }
 	  break;
+
 	case GIMP_PDB_INT8:
 	  if (!TYPEP (car (a), tc_flonum))
 	    success = FALSE;
@@ -581,6 +596,7 @@ marshall_proc_db_call (LISP a)
 	      args[i].data.d_int8 = (gint8) get_c_long (car (a));
 	    }
 	  break;
+
 	case GIMP_PDB_FLOAT:
 	  if (!TYPEP (car (a), tc_flonum))
 	    success = FALSE;
@@ -590,6 +606,7 @@ marshall_proc_db_call (LISP a)
 	      args[i].data.d_float = get_c_double (car (a));
 	    }
 	  break;
+
 	case GIMP_PDB_STRING:
 	  if (!TYPEP (car (a), tc_string))
 	    success = FALSE;
@@ -599,33 +616,40 @@ marshall_proc_db_call (LISP a)
 	      args[i].data.d_string = get_c_string (car (a));
 	    }
 	  break;
+
 	case GIMP_PDB_INT32ARRAY:
 	  if (!TYPEP (car (a), tc_long_array))
 	    success = FALSE;
 	  if (success)
 	    {
 	      args[i].type = GIMP_PDB_INT32ARRAY;
-	      args[i].data.d_int32array = (gint32*) (car (a))->storage_as.long_array.data;
+	      args[i].data.d_int32array = 
+		(gint32*) (car (a))->storage_as.long_array.data;
 	    }
 	  break;
+
 	case GIMP_PDB_INT16ARRAY:
 	  if (!TYPEP (car (a), tc_long_array))
 	    success = FALSE;
 	  if (success)
 	    {
 	      args[i].type = GIMP_PDB_INT16ARRAY;
-	      args[i].data.d_int16array = (gint16*) (car (a))->storage_as.long_array.data;
+	      args[i].data.d_int16array = 
+		(gint16*) (car (a))->storage_as.long_array.data;
 	    }
 	  break;
+
 	case GIMP_PDB_INT8ARRAY:
 	  if (!TYPEP (car (a), tc_byte_array))
 	    success = FALSE;
 	  if (success)
 	    {
 	      args[i].type = GIMP_PDB_INT8ARRAY;
-	      args[i].data.d_int8array = (gint8*) (car (a))->storage_as.string.data;
+	      args[i].data.d_int8array = 
+		(gint8*) (car (a))->storage_as.string.data;
 	    }
 	  break;
+
 	case GIMP_PDB_FLOATARRAY:
 	  if (!TYPEP (car (a), tc_double_array))
 	    success = FALSE;
@@ -635,6 +659,7 @@ marshall_proc_db_call (LISP a)
 	      args[i].data.d_floatarray = (car (a))->storage_as.double_array.data;
 	    }
 	  break;
+
 	case GIMP_PDB_STRINGARRAY:
 	  if (!TYPEP (car (a), tc_cons))
 	    success = FALSE;
@@ -653,7 +678,8 @@ marshall_proc_db_call (LISP a)
 		num_strings = args[i - 1].data.d_int32;
 		if (nlength (list) != num_strings)
 		  return my_err ("String array argument has incorrectly specified length", NIL);
-		array = args[i].data.d_stringarray = g_new (char *, num_strings);
+		array = args[i].data.d_stringarray = 
+		  g_new (char *, num_strings);
 
 		for (j = 0; j < num_strings; j++)
 		  {
@@ -663,6 +689,7 @@ marshall_proc_db_call (LISP a)
 	      }
 	    }
 	  break;
+
 	case GIMP_PDB_COLOR:
 	  if (!TYPEP (car (a), tc_cons))
 	    success = FALSE;
@@ -677,9 +704,12 @@ marshall_proc_db_call (LISP a)
 	      args[i].data.d_color.blue = get_c_long (car (color_list));
 	    }
 	  break;
+
 	case GIMP_PDB_REGION:
-	  return my_err ("Regions are currently unsupported as arguments", car (a));
+	  return my_err ("Regions are currently unsupported as arguments", 
+			 car (a));
 	  break;
+
 	case GIMP_PDB_DISPLAY:
 	  if (!TYPEP (car (a), tc_flonum))
 	    success = FALSE;
@@ -689,6 +719,7 @@ marshall_proc_db_call (LISP a)
 	      args[i].data.d_int32 = get_c_long (car (a));
 	    }
 	  break;
+
 	case GIMP_PDB_IMAGE:
 	  if (!TYPEP (car (a), tc_flonum))
 	    success = FALSE;
@@ -698,6 +729,7 @@ marshall_proc_db_call (LISP a)
 	      args[i].data.d_int32 = get_c_long (car (a));
 	    }
 	  break;
+
 	case GIMP_PDB_LAYER:
 	  if (!TYPEP (car (a), tc_flonum))
 	    success = FALSE;
@@ -707,6 +739,7 @@ marshall_proc_db_call (LISP a)
 	      args[i].data.d_int32 = get_c_long (car (a));
 	    }
 	  break;
+
 	case GIMP_PDB_CHANNEL:
 	  if (!TYPEP (car (a), tc_flonum))
 	    success = FALSE;
@@ -716,6 +749,7 @@ marshall_proc_db_call (LISP a)
 	      args[i].data.d_int32 = get_c_long (car (a));
 	    }
 	  break;
+
 	case GIMP_PDB_DRAWABLE:
 	  if (!TYPEP (car (a), tc_flonum))
 	    success = FALSE;
@@ -725,6 +759,7 @@ marshall_proc_db_call (LISP a)
 	      args[i].data.d_int32 = get_c_long (car (a));
 	    }
 	  break;
+
 	case GIMP_PDB_SELECTION:
 	  if (!TYPEP (car (a), tc_flonum))
 	    success = FALSE;
@@ -734,12 +769,17 @@ marshall_proc_db_call (LISP a)
 	      args[i].data.d_int32 = get_c_long (car (a));
 	    }
 	  break;
+
 	case GIMP_PDB_BOUNDARY:
-	  return my_err ("Boundaries are currently unsupported as arguments", car (a));
+	  return my_err ("Boundaries are currently unsupported as arguments", 
+			 car (a));
 	  break;
+
 	case GIMP_PDB_PATH:
-	  return my_err ("Paths are currently unsupported as arguments", car (a));
+	  return my_err ("Paths are currently unsupported as arguments", 
+			 car (a));
 	  break;
+
 	case GIMP_PDB_PARASITE:
 	  if (!TYPEP (car (a), tc_cons))
 	    success = FALSE;
@@ -765,9 +805,11 @@ marshall_proc_db_call (LISP a)
 		(void*) (car (intermediate_val))->storage_as.string.data;
 	    }
 	  break;
+
 	case GIMP_PDB_STATUS:
 	  return my_err ("Status is for return types, not arguments", car (a));
 	  break;
+
 	default:
 	  return my_err ("Unknown argument type", NIL);
 	}
@@ -782,11 +824,13 @@ marshall_proc_db_call (LISP a)
 
   /*  Check the return status  */
   if (! values)
-	{
-	  strcpy (error_str, "Procedural database execution did not return a status:\n    ");
-	  lprin1s (a_saved, error_str + strlen(error_str));
+    {
+      strcpy (error_str, "Procedural database execution did not return a status:\n    ");
+      lprin1s (a_saved, error_str + strlen(error_str));
+      
       return my_err (error_str, NIL);
-	}
+    }
+
   switch (values[0].data.d_status)
     {
     case GIMP_PDB_EXECUTION_ERROR:
@@ -809,22 +853,31 @@ marshall_proc_db_call (LISP a)
 	  switch (return_vals[i].type)
 	    {
 	    case GIMP_PDB_INT32:
-	      return_val = cons (flocons (values[i + 1].data.d_int32), return_val);
+	      return_val = cons (flocons (values[i + 1].data.d_int32), 
+				 return_val);
 	      break;
+
 	    case GIMP_PDB_INT16:
-	      return_val = cons (flocons (values[i + 1].data.d_int32), return_val);
+	      return_val = cons (flocons (values[i + 1].data.d_int32), 
+				 return_val);
 	      break;
+
 	    case GIMP_PDB_INT8:
-	      return_val = cons (flocons (values[i + 1].data.d_int32), return_val);
+	      return_val = cons (flocons (values[i + 1].data.d_int32), 
+				 return_val);
 	      break;
+
 	    case GIMP_PDB_FLOAT:
-	      return_val = cons (flocons (values[i + 1].data.d_float), return_val);
+	      return_val = cons (flocons (values[i + 1].data.d_float), 
+				 return_val);
 	      break;
+
 	    case GIMP_PDB_STRING:
 	      string = (gchar *) values[i + 1].data.d_string;
 	      string_len = strlen (string);
 	      return_val = cons (strcons (string_len, string), return_val);
 	      break;
+
 	    case GIMP_PDB_INT32ARRAY:
 	      {
 		LISP array;
@@ -832,14 +885,18 @@ marshall_proc_db_call (LISP a)
 
 		array = arcons (tc_long_array, values[i].data.d_int32, 0);
 		for (j = 0; j < values[i].data.d_int32; j++)
-		  array->storage_as.long_array.data[j] = values[i + 1].data.d_int32array[j];
-
+		  {
+		    array->storage_as.long_array.data[j] = 
+		      values[i + 1].data.d_int32array[j];
+		  }
 		return_val = cons (array, return_val);
 	      }
 	      break;
+
 	    case GIMP_PDB_INT16ARRAY:
 	      return my_err ("Arrays are currently unsupported as return values", NIL);
 	      break;
+
 	    case GIMP_PDB_INT8ARRAY:
 	      {
 		LISP array;
@@ -847,11 +904,14 @@ marshall_proc_db_call (LISP a)
 
 		array = arcons (tc_byte_array, values[i].data.d_int32, 0);
 		for (j = 0; j < values[i].data.d_int32; j++)
-		  array->storage_as.string.data[j] = values[i + 1].data.d_int8array[j];
-
+		  {
+		    array->storage_as.string.data[j] = 
+		      values[i + 1].data.d_int8array[j];
+		  }
 		return_val = cons (array, return_val);
 	      }
 	      break;
+
 	    case GIMP_PDB_FLOATARRAY:
 	      {
 		LISP array;
@@ -859,11 +919,14 @@ marshall_proc_db_call (LISP a)
 
 		array = arcons (tc_double_array, values[i].data.d_int32, 0);
 		for (j = 0; j < values[i].data.d_int32; j++)
-		  array->storage_as.double_array.data[j] = values[i + 1].data.d_floatarray[j];
-
+		  {
+		    array->storage_as.double_array.data[j] = 
+		      values[i + 1].data.d_floatarray[j];
+		  }
 		return_val = cons (array, return_val);
 	      }
 	      break;
+
 	    case GIMP_PDB_STRINGARRAY:
 	      /*  string arrays are always implemented such that the previous
 	       *  return value contains the number of strings in the array
@@ -877,12 +940,14 @@ marshall_proc_db_call (LISP a)
 		for (j = 0; j < num_strings; j++)
 		  {
 		    string_len = strlen (array[j]);
-		    string_array = cons (strcons (string_len, array[j]), string_array);
+		    string_array = cons (strcons (string_len, array[j]), 
+					 string_array);
 		  }
 
 		return_val = cons (nreverse (string_array), return_val);
 	      }
 	      break;
+
 	    case GIMP_PDB_COLOR:
 	      intermediate_val = cons (flocons ((int) values[i + 1].data.d_color.red),
 				       cons (flocons ((int) values[i + 1].data.d_color.green),
@@ -890,62 +955,81 @@ marshall_proc_db_call (LISP a)
 						   NIL)));
 	      return_val = cons (intermediate_val, return_val);
 	      break;
+
 	    case GIMP_PDB_REGION:
 	      return my_err ("Regions are currently unsupported as return values", NIL);
 	      break;
+
 	    case GIMP_PDB_DISPLAY:
-	      return_val = cons (flocons (values[i + 1].data.d_int32), return_val);
+	      return_val = cons (flocons (values[i + 1].data.d_int32), 
+				 return_val);
 	      break;
+
 	    case GIMP_PDB_IMAGE:
-	      return_val = cons (flocons (values[i + 1].data.d_int32), return_val);
+	      return_val = cons (flocons (values[i + 1].data.d_int32), 
+				 return_val);
 	      break;
+
 	    case GIMP_PDB_LAYER:
-	      return_val = cons (flocons (values[i + 1].data.d_int32), return_val);
+	      return_val = cons (flocons (values[i + 1].data.d_int32), 
+				 return_val);
 	      break;
+
 	    case GIMP_PDB_CHANNEL:
-	      return_val = cons (flocons (values[i + 1].data.d_int32), return_val);
+	      return_val = cons (flocons (values[i + 1].data.d_int32), 
+				 return_val);
 	      break;
+
 	    case GIMP_PDB_DRAWABLE:
-	      return_val = cons (flocons (values[i + 1].data.d_int32), return_val);
+	      return_val = cons (flocons (values[i + 1].data.d_int32), 
+				 return_val);
 	      break;
+
 	    case GIMP_PDB_SELECTION:
-	      return_val = cons (flocons (values[i + 1].data.d_int32), return_val);
+	      return_val = cons (flocons (values[i + 1].data.d_int32), 
+				 return_val);
 	      break;
+
 	    case GIMP_PDB_BOUNDARY:
 	      return my_err ("Boundaries are currently unsupported as return values", NIL);
 	      break;
+
 	    case GIMP_PDB_PATH:
 	      return my_err ("Paths are currently unsupported as return values", NIL);
 	      break;
+
 	    case GIMP_PDB_PARASITE:
 	      {
 		LISP name, flags, data;
 
 		if (values[i + 1].data.d_parasite.name == NULL)
-		{
-		  return_val = my_err("Error: null parasite", NIL);
-		}
+		  {
+		    return_val = my_err("Error: null parasite", NIL);
+		  }
 		else
-		{
-		  string_len = strlen (values[i + 1].data.d_parasite.name);
-		  name    = strcons (string_len,
-				     values[i + 1].data.d_parasite.name);
-
-		  flags   = flocons (values[i + 1].data.d_parasite.flags);
-		  data    = arcons (tc_byte_array,
-				    values[i+1].data.d_parasite.size, 0);
-		  memcpy(data->storage_as.string.data,
-			 values[i+1].data.d_parasite.data, 
-			 values[i+1].data.d_parasite.size); 
-
-		  intermediate_val = cons (name, cons(flags, cons(data, NIL)));
-		  return_val = cons (intermediate_val, return_val);
-		}
+		  {
+		    string_len = strlen (values[i + 1].data.d_parasite.name);
+		    name    = strcons (string_len,
+				       values[i + 1].data.d_parasite.name);
+		    
+		    flags   = flocons (values[i + 1].data.d_parasite.flags);
+		    data    = arcons (tc_byte_array,
+				      values[i+1].data.d_parasite.size, 0);
+		    memcpy(data->storage_as.string.data,
+			   values[i+1].data.d_parasite.data, 
+			   values[i+1].data.d_parasite.size); 
+		    
+		    intermediate_val = cons (name, 
+					     cons(flags, cons(data, NIL)));
+		    return_val = cons (intermediate_val, return_val);
+		  }
 	      }
 	      break;
+
 	    case GIMP_PDB_STATUS:
 	      return my_err ("Procedural database execution returned multiple status values", NIL);
 	      break;
+
 	    default:
 	      return my_err ("Unknown return type", NIL);
 	    }
@@ -961,8 +1045,7 @@ marshall_proc_db_call (LISP a)
   gimp_destroy_params (values, nvalues);
 
   /*  free up arguments and values  */
-  if (args)
-    g_free (args);
+  g_free (args);
 
   /*  free the query information  */
   g_free (proc_blurb);
@@ -1039,15 +1122,15 @@ script_fu_refresh_proc (gchar       *name,
 			gint        *nreturn_vals,
 			GimpParam  **return_vals)
 {
-  static GimpParam values[1];
+  static GimpParam  values[1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   /*  Reload all of the available scripts  */
   script_fu_find_scripts ();
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
