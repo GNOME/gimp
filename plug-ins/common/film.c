@@ -1349,7 +1349,7 @@ create_advanced_tab (GtkWidget *notebook)
   GtkWidget *button;
   gint       row;
 
-  frame = gtk_frame_new (_("All Values are Fractions of the Film Heigh"));
+  frame = gtk_frame_new (_("All Values are Fractions of the Film Height"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), frame,
                             gtk_label_new_with_mnemonic (_("Ad_vanced")));

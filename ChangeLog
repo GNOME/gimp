@@ -1,5 +1,9 @@
 2004-04-14  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/film.c: fixed typo (bug #140039).
+
+2004-04-14  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: bumped version to 2.1.0, interface age 0, binary
 	age 0. Changed library versioning to include gimp_minor_version
 	similar to how gtk+ does it.
