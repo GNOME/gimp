@@ -149,6 +149,7 @@ gimp_brush_class_init (GimpBrushClass *klass)
 
   klass->select_brush             = gimp_brush_real_select_brush;
   klass->want_null_motion         = gimp_brush_real_want_null_motion;
+  klass->spacing_changed          = NULL;
 }
 
 static void
@@ -208,21 +209,21 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
 			    gint          width,
 			    gint          height)
 {
-  GimpBrush   *brush;
-  gboolean     scale      = FALSE;
-  gint         brush_width;
-  gint         brush_height;
-  gint         offset_x;
-  gint         offset_y;
-  TempBuf     *mask_buf   = NULL;
-  TempBuf     *pixmap_buf = NULL;
-  TempBuf     *return_buf = NULL;
-  guchar       white[3] = { 255, 255, 255 };
-  guchar      *mask;
-  guchar      *buf;
-  guchar      *b;
-  guchar       bg;
-  gint         x, y;
+  GimpBrush *brush;
+  gboolean   scale      = FALSE;
+  gint       brush_width;
+  gint       brush_height;
+  gint       offset_x;
+  gint       offset_y;
+  TempBuf   *mask_buf   = NULL;
+  TempBuf   *pixmap_buf = NULL;
+  TempBuf   *return_buf = NULL;
+  guchar     white[3] = { 255, 255, 255 };
+  guchar    *mask;
+  guchar    *buf;
+  guchar    *b;
+  guchar     bg;
+  gint       x, y;
 
   brush = GIMP_BRUSH (viewable);
 

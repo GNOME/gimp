@@ -53,14 +53,16 @@ struct _GimpBrushClass
 {
   GimpDataClass parent_class;
 
-  void (* spacing_changed) (GimpBrush *brush);
+  /*  virtual functions  */
+  GimpBrush * (* select_brush)     (GimpBrush  *brush,
+                                    GimpCoords *last_coords,
+                                    GimpCoords *cur_coords);
+  gboolean    (* want_null_motion) (GimpBrush  *brush,
+                                    GimpCoords *last_coords,
+                                    GimpCoords *cur_coords);
 
-  GimpBrush * (* select_brush)     (GimpBrush     *brush,
-                                    GimpCoords    *last_coords,
-                                    GimpCoords    *cur_coords);
-  gboolean    (* want_null_motion) (GimpBrush     *brush,
-                                    GimpCoords    *last_coords,
-                                    GimpCoords    *cur_coords);
+  /*  signals  */
+  void        (* spacing_changed)  (GimpBrush  *brush);
 };
 
 
