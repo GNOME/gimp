@@ -43,7 +43,7 @@
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
 
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
 #include <io.h>
 #endif
 

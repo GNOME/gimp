@@ -1,3 +1,51 @@
+Mon Oct  4 12:16:44 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/app_procs.c
+	* app/appenv.h
+	* app/batch.c
+	* app/datafiles.c
+	* app/errorconsole.c
+	* app/errors.c
+	* app/fileops.[ch]
+	* app/general.c
+	* app/gimprc.c
+	* app/install.c
+	* app/main.c
+	* app/module_db.c
+	* app/plug_in.[ch]
+	* app/temp_buf.c
+	* app/tile_swap.c
+	* libgimp/gimp.[ch]
+	* libgimp/gimpenv.c
+	* libgimp/gimpfileselection.c
+	* libgimp/gimpwire.c
+	* libgimp/parasite.c
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/common/gbr.c
+	* plug-ins/common/gz.c
+	* plug-ins/common/hrz.c
+	* plug-ins/common/pat.c
+	* plug-ins/common/pnm.c
+	* plug-ins/common/ps.c
+	* plug-ins/faxg3/faxg3.c
+	* plug-ins/gap/gap_lib.h
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gimpressionist/gimpressionist.c
+	* plug-ins/script-fu/interp_slib.c
+	* plug-ins/script-fu/script-fu-console.c
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/script-fu.c
+	* tools/gcg/gcg.c: use G_OS_WIN32 and G_HAVE_CYGWIN #defines
+
+	* app/app_procs.c
+	* app/gdisplay_color.[ch]
+	* app/gdisplay_color_ui.c: make the ui usable
+
+	* app/gdisplay.c: enable cdisplay support
+
+	* modules/Makefile.am
+	* modules/cdisplay_gamma.c: moved gamma functionality to separate lib
+
 Mon Oct  4 19:02:08 CEST 1999 Olof S Kylander <olof@gimp.org>
 
 	* Makefile.am fix of a typo

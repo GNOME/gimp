@@ -340,6 +340,9 @@ gdisplay_delete (GDisplay *gdisp)
       gdisp->idle_render.active = FALSE;
     }
 
+  /* detach any color displays */
+  gdisplay_color_detach_all (gdisp);
+
   /* get rid of signals handled by this display */
   gtk_signal_disconnect_by_data (GTK_OBJECT (gdisp->gimage), gdisp);
   
@@ -1256,6 +1259,12 @@ gdisplay_display_area (GDisplay *gdisp,
   int x2, y2;
   int dx, dy;
   int i, j;
+  GList *list;
+  guchar *buf;
+  int bpp;
+
+  buf = gximage_get_data ();
+  bpp = gximage_get_bpp ();
 
   sx = SCALEX (gdisp, gdisp->gimage->width);
   sy = SCALEY (gdisp, gdisp->gimage->height);
@@ -1333,6 +1342,15 @@ gdisplay_display_area (GDisplay *gdisp,
 					      dx, dy,
 					      0, 0, 0, 0);
 #endif
+
+	list = gdisp->cd_list;
+	while (list)
+	  {
+	    ColorDisplayNode *node = (ColorDisplayNode *) list->data;
+	    node->cd_convert (node->cd_ID, buf, dx, dy, bpp);
+	    list = list->next;
+	  }
+
 	gximage_put (gdisp->canvas->window,
 		     j, i, dx, dy,
 		     gdisp->offset_x,

@@ -24,22 +24,28 @@
 typedef struct _ColorDisplayNode ColorDisplayNode;
 
 struct _ColorDisplayNode {
-  char                   *cd_name;
   gpointer                cd_ID; 
+  char                   *cd_name;
   GimpColorDisplayConvert cd_convert;
 };
-
-void gdisplay_color_init       (void);
-void gdisplay_color_attach     (GDisplay   *gdisp,
-				const char *name);
-void gdisplay_color_detach     (GDisplay   *gdisp,
-				const char *name);
-void gdisplay_color_detach_all (GDisplay   *gdisp);
 
 typedef void (*GimpCDFunc) (const char *name,
 			    gpointer    user_data);
 
-void gimp_color_display_foreach (GimpCDFunc func,
-				 gpointer   user_data);
+void   color_display_init      (void);
+void   color_display_foreach   (GimpCDFunc func,
+			        gpointer   user_data);
+
+ColorDisplayNode * gdisplay_color_attach         (GDisplay         *gdisp,
+						  const char       *name);
+void               gdisplay_color_detach         (GDisplay         *gdisp,
+						  ColorDisplayNode *node);
+void               gdisplay_color_detach_destroy (GDisplay         *gdisp,
+						  ColorDisplayNode *node);
+void               gdisplay_color_detach_all     (GDisplay         *gdisp);
+void               gdisplay_color_reorder_up     (GDisplay         *gdisp,
+						  ColorDisplayNode *node);
+void               gdisplay_color_reorder_down   (GDisplay         *gdisp,
+						  ColorDisplayNode *node);
 
 #endif /* __GDISPLAY_COLOR_H__ */

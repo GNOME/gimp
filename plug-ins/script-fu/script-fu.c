@@ -147,7 +147,7 @@ query (void)
 			  PROC_EXTENSION,
 			  0, 0, NULL, NULL);
 
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
   gimp_install_procedure ("extension_script_fu_console",
 			  "Provides a console mode for script-fu development",
 			  "Provides an interface which allows interactive scheme development.",
@@ -238,7 +238,7 @@ run (char    *name,
       values[0].type = PARAM_STATUS;
       values[0].data.d_status = status;
     }
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
   /*
    *  The script-fu console for interactive SIOD development
    */
@@ -958,7 +958,7 @@ marshall_proc_db_call (LISP a)
 
   /*  reverse the return values  */
   return_val = nreverse (return_val);
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
   /*  if we're in server mode, listen for additional commands for 10 ms  */
   if (server_mode)
     script_fu_server_listen (10);

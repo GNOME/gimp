@@ -41,7 +41,7 @@
 #include "libgimp/gimp.h"
 
 /* G_DIR_SEPARATOR (is defined in glib.h if you have glib-1.2.0 or later) */
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
 
 /* Filenames in WIN/DOS Style */
 #ifndef G_DIR_SEPARATOR
@@ -49,7 +49,7 @@
 #endif
 #define DIR_ROOT ':'
 
-#else  /* !NATIVE_WIN32 */
+#else  /* !G_OS_WIN32 */
 
 /* Filenames in UNIX Style */
 #ifndef G_DIR_SEPARATOR
@@ -57,7 +57,7 @@
 #endif
 #define DIR_ROOT '/'
 
-#endif /* !NATIVE_WIN32 */
+#endif /* !G_OS_WIN32 */
 
 
 typedef struct t_anim_info {

@@ -41,7 +41,7 @@
 #include "siod.h"
 #include "script-fu-scripts.h"
 
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
 #define STRICT
 #include <windows.h>
 
@@ -57,7 +57,7 @@
 #define S_ISREG(m) ((m) & _S_IFREG)
 #endif
 
-#endif /* NATIVE_WIN32 */
+#endif /* G_OS_WIN32 */
 
 #if defined (GLIB_CHECK_VERSION) && GLIB_CHECK_VERSION (1,3,1)
 #define ESCAPE(string) g_strescape (string, NULL)
@@ -378,7 +378,7 @@ script_fu_find_scripts ()
 			      command = g_strdup_printf ("(load \"%s\")", qf);
 			      g_free (qf);
 			      repl_c_string (command, 0, 0, 1);
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
 			      /* No, I don't know why, but this is 
 			       * necessary on NT 4.0.
 			       */
@@ -631,7 +631,7 @@ script_fu_add_script (LISP a)
 		    return my_err ("script-fu-register: filename defaults must be string values", NIL);
 		  script->arg_defaults[i].sfa_file.filename = g_strdup (get_c_string (car (a)));
 
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
 		  /* Replace POSIX slashes with Win32 backslashes. This
 		   * is just so script-fus can be written with only
 		   * POSIX directory separators.

@@ -32,7 +32,7 @@
 #include <unistd.h>
 #endif
 
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
 #include <process.h>		/* For _getpid() */
 #endif
  
@@ -494,7 +494,7 @@ app_init (void)
   RESET_BAR();
   internal_procs_init ();
 
-  gdisplay_color_init ();
+  color_display_init ();
 
   RESET_BAR();
   parse_buffers_init ();
@@ -789,7 +789,7 @@ toast_old_temp_files (void)
          */
 
 	int pid = atoi (entry->d_name + 9);
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
 	if (kill (pid, 0))
 #else
 	/* On Windows, you can't remove open files anyhow,

@@ -47,7 +47,7 @@ extern int we_are_exiting;       /* this is used in session_get_window_info() */
 extern GimpSet* image_context;
 extern MessageHandlerType message_handler;
 
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
 char *quote_spaces (char *string);
 #endif
 

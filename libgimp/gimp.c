@@ -51,7 +51,7 @@
 #include <sys/select.h>
 #endif
 
-#ifdef WIN32
+#if defined(G_OS_WIN32) || defined(G_HAVE_CYGWIN)
 #  define STRICT
 #  include <windows.h>
 #  undef RGB
@@ -72,7 +72,7 @@ void gimp_extension_ack     (void);
 void gimp_read_expect_msg(WireMessage *msg, int type);
 
 
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
 static RETSIGTYPE gimp_signal        (int signum);
 #endif
 static int        gimp_write         (GIOChannel *channel , guint8 *buf, gulong count);
@@ -96,7 +96,7 @@ guint gimp_major_version = GIMP_MAJOR_VERSION;
 guint gimp_minor_version = GIMP_MINOR_VERSION;
 guint gimp_micro_version = GIMP_MICRO_VERSION;
 
-#ifdef WIN32
+#if defined(G_OS_WIN32) || defined(G_HAVE_CYGWIN)
 static HANDLE shm_handle;
 #endif
 
@@ -112,7 +112,7 @@ static guint write_buffer_index = 0;
 
 static GHashTable *temp_proc_ht = NULL;
 
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
 static GPlugInInfo *PLUG_IN_INFO_PTR;
 #define PLUG_IN_INFO (*PLUG_IN_INFO_PTR)
 void
@@ -137,7 +137,7 @@ int
 gimp_main (int   argc,
 	   char *argv[])
 {
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
   char *peer, *peer_fd;
   guint32 thread;
   int i, j, k;
@@ -145,7 +145,7 @@ gimp_main (int   argc,
 
   setlocale (LC_NUMERIC, "C");
 
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
   /* Check for exe file name with spaces in the path having been split up
    * by buggy NT C runtime, or something. I don't know why this happens
    * on NT (including w2k), but not on w95/98.
@@ -187,7 +187,7 @@ gimp_main (int   argc,
 
   progname = argv[0];
 
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
   /* No use catching these on Win32, the user won't get any meaningful
    * stack trace from glib anyhow. It's better to let Windows inform
    * about the program error, and offer debugging if the plug-in
@@ -215,7 +215,7 @@ gimp_main (int   argc,
 #endif
 #endif
 
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
   _readchannel = g_io_channel_unix_new (atoi (argv[2]));
   _writechannel = g_io_channel_unix_new (atoi (argv[3]));
 #ifdef __EMX__
@@ -243,7 +243,7 @@ gimp_main (int   argc,
       return 0;
     }
 
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
   /* Tell the GIMP our thread id */
   thread = GetCurrentThreadId ();
   wire_write_int32 (_writechannel, &thread, 1);
@@ -259,12 +259,12 @@ gimp_main (int   argc,
 }
 
 static void
-gimp_close ()
+gimp_close (void)
 {
   if (PLUG_IN_INFO.quit_proc)
     (* PLUG_IN_INFO.quit_proc) ();
 
-#ifdef WIN32
+#if defined(G_OS_WIN32) || defined(G_HAVE_CYGWIN)
   CloseHandle (shm_handle);
 #else
 #ifdef HAVE_SHM_H
@@ -277,7 +277,7 @@ gimp_close ()
 }
 
 void
-gimp_quit ()
+gimp_quit (void)
 {
   gimp_close ();
   exit (0);
@@ -1076,7 +1076,7 @@ gimp_single_message()
 void
 gimp_extension_process (guint timeout)
 {
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
   fd_set readfds;
   int select_val;
   struct timeval tv;
@@ -1120,11 +1120,10 @@ gimp_extension_process (guint timeout)
   if (PeekMessage (&msg, (HWND) -1, message, message, PM_NOREMOVE))
     gimp_single_message ();
 #endif
-
 }
 
 void
-gimp_extension_ack ()
+gimp_extension_ack (void)
 {
   /*  Send an extension initialization acknowledgement  */
   if (! gp_extension_ack_write (_writechannel))
@@ -1132,7 +1131,7 @@ gimp_extension_ack ()
 }
 
 void
-gimp_run_temp()
+gimp_run_temp (void)
 {
   gimp_single_message();
 }
@@ -1144,18 +1143,15 @@ gimp_request_wakeups (void)
     gimp_quit ();
 }
 
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
 static RETSIGTYPE
 gimp_signal (int signum)
 {
   static int caught_fatal_sig = 0;
 
   if (caught_fatal_sig)
-#ifdef NATIVE_WIN32
-    raise (signum);
-#else
     kill (getpid (), signum);
-#endif
+
   caught_fatal_sig = 1;
 
   fprintf (stderr, "\n%s: %s caught\n", progname, g_strsignal (signum));
@@ -1172,11 +1168,7 @@ gimp_signal (int signum)
     case SIGFPE:
 #endif
     case 123456:		/* Must have some case value... */
-#ifndef NATIVE_WIN32
       g_on_error_query (progname);
-#else
-      abort ();
-#endif
       break;
     default:
       break;
@@ -1327,7 +1319,7 @@ gimp_config (GPConfig *config)
 
   if (_shm_ID != -1)
     {
-#ifdef WIN32
+#if defined(G_OS_WIN32) || defined(G_HAVE_CYGWIN)
       /*
        * Use Win32 shared memory mechanisms for
        * transfering tile data

@@ -29,11 +29,21 @@ typedef struct _ColorDisplayDialog ColorDisplayDialog;
 struct _ColorDisplayDialog
 {
   GtkWidget *shell;
+
   GtkWidget *src;
   GtkWidget *dest;
+
+  gint src_row;
+  gint dest_row;
+
+  gboolean modified;
+
+  GList *old_nodes;
+ 
+  GDisplay *gdisp;
 };
 
-static ColorDisplayDialog cdd = { NULL, NULL, NULL };
+static ColorDisplayDialog cdd = { NULL, NULL, NULL, 0, 0, FALSE, NULL, NULL };
 
 typedef void (*ButtonCallback) (GtkWidget *, gpointer);
 
@@ -45,17 +55,38 @@ struct _ButtonInfo
   ButtonCallback  callback;
 };
 
-static void color_display_ok_callback        (GtkWidget *, gpointer);
-static void color_display_cancel_callback    (GtkWidget *, gpointer);
-static gint color_display_destroy_callback   (GtkWidget *, gpointer);
-static void color_display_add_callback       (GtkWidget *, gpointer);
-static void color_display_remove_callback    (GtkWidget *, gpointer);
-static void color_display_up_callback        (GtkWidget *, gpointer);
-static void color_display_down_callback      (GtkWidget *, gpointer);
-static void color_display_configure_callback (GtkWidget *, gpointer);
+static void color_display_ok_callback        (GtkWidget *widget,
+					      gpointer   data);
+static void color_display_cancel_callback    (GtkWidget *widget,
+					      gpointer   data);
+static void color_display_add_callback       (GtkWidget *widget,
+					      gpointer   data);
+static void color_display_remove_callback    (GtkWidget *widget,
+					      gpointer   data);
+static void color_display_up_callback        (GtkWidget *widget,
+					      gpointer   data);
+static void color_display_down_callback      (GtkWidget *widget,
+					      gpointer   data);
+static void color_display_configure_callback (GtkWidget *widget,
+					      gpointer   data);
 
-static void src_list_populate (const char *name,
-			       gpointer    user_data);
+static void src_list_populate  (const char *name,
+				gpointer    data);
+static void dest_list_populate (GList *node_list);
+
+static void select_src  (GtkWidget       *widget,
+			 gint             row,
+			 gint             column,
+			 GdkEventButton  *event,
+			 gpointer         data);
+static void select_dest (GtkWidget       *widget,
+			 gint             row,
+			 gint             column,
+			 GdkEventButton  *event,
+			 gpointer         data);
+
+#define LIST_WIDTH  180
+#define LIST_HEIGHT 180
 
 static void
 make_dialog (void)
@@ -102,9 +133,14 @@ make_dialog (void)
   titles[0] = _("Available Filters");
   titles[1] = NULL;
   cdd.src = gtk_clist_new_with_titles (1, titles);
+  gtk_widget_set_usize (cdd.src, LIST_WIDTH, LIST_HEIGHT);
   gtk_clist_column_titles_passive (GTK_CLIST (cdd.src));
   gtk_clist_set_auto_sort (GTK_CLIST (cdd.src), TRUE);
   gtk_container_add (GTK_CONTAINER (scrolled_win), cdd.src);
+
+  gtk_signal_connect (GTK_OBJECT (cdd.src), "select_row",
+		      GTK_SIGNAL_FUNC (select_src),
+		      NULL);
 
   vbbox = gtk_vbutton_box_new ();
   gtk_vbutton_box_set_layout_default (GTK_BUTTONBOX_START);
@@ -120,8 +156,13 @@ make_dialog (void)
   titles[0] = _("Active Filters");
   titles[1] = NULL;
   cdd.dest = gtk_clist_new_with_titles (1, titles);
+  gtk_widget_set_usize (cdd.dest, LIST_WIDTH, LIST_HEIGHT);
   gtk_clist_column_titles_passive (GTK_CLIST (cdd.dest));
   gtk_container_add (GTK_CONTAINER (scrolled_win), cdd.dest);
+
+  gtk_signal_connect (GTK_OBJECT (cdd.src), "select_row",
+		      GTK_SIGNAL_FUNC (select_dest),
+		      NULL);
 
   for (i = 0; i < 5; i++)
     {
@@ -142,46 +183,126 @@ static void
 color_display_ok_callback (GtkWidget *widget,
 			   gpointer   data)
 {
+  GList *list;
+
   gtk_widget_hide (GTK_WIDGET (data));
+
+  if (cdd.modified)
+    {
+      list = cdd.old_nodes;
+
+      while (list)
+	{
+	  if (!g_list_find (cdd.gdisp->cd_list, list->data))
+	    gdisplay_color_detach_destroy (cdd.gdisp, list->data);
+
+	  list = list->next;
+	}
+
+      g_list_free (cdd.old_nodes);
+    }
+
+  gdisplays_flush ();
 }
 
 static void
 color_display_cancel_callback (GtkWidget *widget,
 			       gpointer   data)
 {
-  gtk_widget_hide (GTK_WIDGET (data));
-}
+  GList *list;
 
-static gint
-color_display_destroy_callback (GtkWidget *widget,
-				gpointer   data)
-{
-  g_free (data);
-  return FALSE;
+  gtk_widget_hide (GTK_WIDGET (data));
+  
+  if (cdd.modified)
+    {
+      list = cdd.gdisp->cd_list;
+      cdd.gdisp->cd_list = cdd.old_nodes;
+
+      while (list)
+	{
+	  if (!g_list_find (cdd.old_nodes, list->data))
+	    gdisplay_color_detach_destroy (cdd.gdisp, list->data);
+
+	  list = list->next;
+	}
+    }
+
+  gdisplays_flush ();
 }
 
 static void
 color_display_add_callback (GtkWidget *widget,
 			    gpointer   data)
 {
+  gchar *name = NULL;
+  ColorDisplayNode *node;
+  gint row;
+
+  gtk_clist_get_text (GTK_CLIST (cdd.src), cdd.src_row, 0, &name);
+
+  cdd.modified = TRUE;
+
+  node = gdisplay_color_attach (cdd.gdisp, name);
+
+  row = gtk_clist_append (GTK_CLIST (cdd.dest), &name);
+  gtk_clist_set_row_data (GTK_CLIST (cdd.dest), row, node);
+
+  gdisplays_flush ();
 }
 
 static void
 color_display_remove_callback (GtkWidget *widget,
 			       gpointer   data)
 {
+  ColorDisplayNode *node;
+  
+  node = (ColorDisplayNode *) gtk_clist_get_row_data (GTK_CLIST (cdd.dest),
+						      cdd.dest_row);
+
+  gtk_clist_remove (GTK_CLIST (cdd.dest), cdd.dest_row);
+
+  cdd.modified = TRUE;
+
+  if (g_list_find (cdd.old_nodes, node))
+    gdisplay_color_detach (cdd.gdisp, node);
+  else
+    gdisplay_color_detach_destroy (cdd.gdisp, node);
+
+  gdisplays_flush ();
 }
 
 static void
 color_display_up_callback (GtkWidget *widget,
 			   gpointer   data)
 {
+  ColorDisplayNode *node;
+
+  node = (ColorDisplayNode *) gtk_clist_get_row_data (GTK_CLIST (cdd.dest),
+						      cdd.dest_row);
+
+  gtk_clist_row_move (GTK_CLIST (cdd.dest), cdd.dest_row, cdd.dest_row - 1);
+
+  gdisplay_color_reorder_up (cdd.gdisp, node);
+  cdd.modified = TRUE;
+
+  gdisplays_flush ();
 }
 
 static void
 color_display_down_callback (GtkWidget *widget,
 			     gpointer   data)
 {
+  ColorDisplayNode *node;
+
+  node = (ColorDisplayNode *) gtk_clist_get_row_data (GTK_CLIST (cdd.dest),
+						      cdd.dest_row);
+
+  gtk_clist_row_move (GTK_CLIST (cdd.dest), cdd.dest_row, cdd.dest_row + 1);
+
+  gdisplay_color_reorder_down (cdd.gdisp, node);
+  cdd.modified = TRUE;
+
+  gdisplays_flush ();
 }
 
 static void
@@ -199,14 +320,60 @@ gdisplay_color_ui (GDisplay *gdisp)
   gtk_clist_clear (GTK_CLIST (cdd.src));
   gtk_clist_clear (GTK_CLIST (cdd.dest));
 
-  gimp_color_display_foreach (src_list_populate, cdd.src);
+  color_display_foreach (src_list_populate, cdd.src);
+
+  if (gdisp)
+    {
+      cdd.old_nodes = gdisp->cd_list;
+      dest_list_populate (gdisp->cd_list);
+      gdisp->cd_list = g_list_copy (cdd.old_nodes);
+    }
+
+  cdd.gdisp = gdisp;
 
   gtk_widget_show (cdd.shell);
 }
 
 static void
 src_list_populate (const char *name,
-		   gpointer    user_data)
+		   gpointer    data)
 {
-  gtk_clist_append (GTK_CLIST (user_data), &name);
+  gtk_clist_append (GTK_CLIST (data), (gchar **) &name);
+}
+
+static void
+dest_list_populate (GList *node_list)
+{
+  ColorDisplayNode *node;
+  int row;
+
+  while (node_list)
+    {
+      node = (ColorDisplayNode *) node_list->data;
+
+      row = gtk_clist_append (GTK_CLIST (cdd.dest), &node->cd_name);
+      gtk_clist_set_row_data (GTK_CLIST (cdd.dest), row, node);
+
+      node_list = node_list->next;
+    }
+}
+
+static void
+select_src (GtkWidget       *widget,
+	    gint             row,
+	    gint             column,
+	    GdkEventButton  *event,
+	    gpointer         data)
+{
+  cdd.src_row = row; 
+}
+
+static void
+select_dest (GtkWidget       *widget,
+	     gint             row,
+	     gint             column,
+	     GdkEventButton  *event,
+	     gpointer         data)
+{
+  cdd.dest_row = row; 
 }

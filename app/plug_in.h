@@ -58,7 +58,7 @@ struct _PlugIn
 
   GIOChannel *my_read, *my_write;        /* App's read and write channels */
   GIOChannel *his_read, *his_write;      /* Plug-in's read and write channels */
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
   guint his_thread_id;			 /* Plug-in's thread ID */
   int his_read_fd;			 /* Plug-in's read pipe fd */
 #endif

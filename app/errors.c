@@ -42,7 +42,7 @@
 
 #include "libgimp/gimpintl.h"
 
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
 #include <windows.h>
 #endif
 
@@ -73,7 +73,7 @@ gimp_message_func (gchar *str)
 void
 gimp_fatal_error (gchar *fmt, ...)
 {
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
   va_list args;
 
   va_start (args, fmt);
@@ -99,7 +99,7 @@ gimp_fatal_error (gchar *fmt, ...)
 void
 gimp_terminate (gchar *fmt, ...)
 {
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
   va_list args;
 
   va_start (args, fmt);

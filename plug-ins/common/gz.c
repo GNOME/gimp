@@ -58,9 +58,9 @@
 
 #include "config.h"
 
-#include <glib.h>		/* For NATIVE_WIN32 */
+#include <glib.h>		/* For G_OS_WIN32 */
 
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
 #define STRICT
 #define WinMain WinMain_foo
 #include <windows.h>
@@ -297,7 +297,7 @@ save_image (char   *filename,
   gint retvals;
   char* ext;
   char* tmpname;
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
   FILE* f;
   int pid;
   int status;
@@ -343,7 +343,7 @@ save_image (char   *filename,
 /*     return -1; */
 /*   } */
 
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
 
 #ifndef __EMX__
 
@@ -385,7 +385,7 @@ save_image (char   *filename,
 	  return 0;
 	}
     }
-#else  /* NATIVE_WIN32 */
+#else  /* G_OS_WIN32 */
   secattr.nLength = sizeof (SECURITY_ATTRIBUTES);
   secattr.lpSecurityDescriptor = NULL;
   secattr.bInheritHandle = TRUE;
@@ -424,7 +424,7 @@ save_image (char   *filename,
   CloseHandle (processinfo.hThread);
   WaitForSingleObject (processinfo.hProcess, INFINITE);
 
-#endif /* NATIVE_WIN32 */
+#endif /* G_OS_WIN32 */
 
   unlink (tmpname);
 
@@ -438,7 +438,7 @@ load_image (char *filename, gint32 run_mode)
   gint retvals;
   char* ext;
   char* tmpname;
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
   int pid;
   int status;
 #else
@@ -462,7 +462,7 @@ load_image (char *filename, gint32 run_mode)
 
   tmpname = params[1].data.d_string;
 
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
 
 #ifndef __EMX__
 
@@ -543,7 +543,7 @@ load_image (char *filename, gint32 run_mode)
   CloseHandle (processinfo.hThread);
   WaitForSingleObject (processinfo.hProcess, INFINITE);
 
-#endif /* NATIVE_WIN32 */
+#endif /* G_OS_WIN32 */
 
   /* now that we un-gziped it, load the temp file */
 

@@ -38,7 +38,7 @@
 #include "pixmaps/yes.xpm"
 #include "pixmaps/no.xpm"
 
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
 # ifndef S_ISDIR
 #  define S_ISDIR(m) ((m) & _S_IFDIR)
 # endif

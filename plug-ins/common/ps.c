@@ -57,7 +57,7 @@ static char ident[]   = "@(#) GIMP PostScript/PDF file-plugin v1.07  14-Sep-99";
 #include "libgimp/gimpui.h"
 #include "libgimp/stdplugins-intl.h"
 
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
 #include <process.h>		/* For _getpid() */
 
 #define USE_REAL_OUTPUTFILE
@@ -964,7 +964,7 @@ get_bbox (char *filename,
 }
 
 static char *pnmfile;
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
 static char *indirfile = NULL;
 #endif
 
@@ -1038,7 +1038,7 @@ ps_open (char *filename,
 #endif
 
  gs = getenv ("GS_PROG");
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
  if (gs == NULL) gs = "gs";
 #else
  /* We want the console ghostscript application. It should be in the PATH */
@@ -1085,7 +1085,7 @@ ps_open (char *filename,
  /* ghostscript with a real outputfile. When ghostscript has finished,  */
  /* open the outputfile and return its filepointer. But be sure         */
  /* to close and remove the file within ps_close().                     */
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
   /* Work around braindead command line length limit.
    * Hmm, I wonder if this is necessary, but it doesn't harm...
    */
@@ -1125,7 +1125,7 @@ ps_close (FILE *ifp)
  /* If a real outputfile was used, close the file and remove it. */
  fclose (ifp);
  unlink (pnmfile);
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
  if (indirfile != NULL)
    unlink (indirfile);
 #endif

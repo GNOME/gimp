@@ -13,7 +13,7 @@
 
 #include "config.h"
 
-#include <glib.h>		/* Include early for NATIVE_WIN32 */
+#include <glib.h>		/* Include early for G_OS_WIN32 */
 #include <setjmp.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -27,7 +27,7 @@
 #include <string.h>
 #include <math.h>
 
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
 #include <io.h>
 #endif
 

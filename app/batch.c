@@ -70,7 +70,7 @@ batch_init ()
 	{
 	  if (!read_from_stdin)
 	    {
-#ifndef NATIVE_WIN32 /* for now */
+#ifndef G_OS_WIN32 /* for now */
 	      g_print ("reading batch commands from stdin\n");
 	      gdk_input_add (STDIN_FILENO, GDK_INPUT_READ, batch_read, NULL);
 	      read_from_stdin = TRUE;
@@ -129,7 +129,7 @@ batch_run_cmd (char *cmd)
   return;
 }
 
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
 
 static void
 batch_read (gpointer          data,
@@ -185,7 +185,7 @@ batch_read (gpointer          data,
     }
 }
 
-#endif /* !NATIVE_WIN32 */
+#endif /* !G_OS_WIN32 */
 
 static void
 batch_pserver  (int                run_mode,

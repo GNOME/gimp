@@ -25,7 +25,7 @@
 #include "gimpenv.h"
 #include "gimpintl.h"
 
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
 #define STRICT
 #include <windows.h>		/* For GetModuleFileName */
 #endif
@@ -82,7 +82,7 @@ gimp_directory ()
 	}
       else
 	{
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
 	  g_message (_("warning: no home directory."));
 #endif
 	  gimp_dir = g_strconcat (gimp_data_directory (),
@@ -129,7 +129,7 @@ gimp_data_directory ()
     }
   else
     {
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
 #ifndef __EMX__
       gimp_data_dir = DATADIR;
 #else

@@ -2683,7 +2683,7 @@ open_backup_file (char *filename,
     {
       *name_used = filename;
       oldfilename = g_strdup_printf ("%s.old", filename);
-#if defined(NATIVE_WIN32) || defined(__EMX__)
+#if defined(G_OS_WIN32) || defined(__EMX__)
       /* Can't rename open files... */
       fclose (*fp_old);
       /* Also, can't rename to an existing file name */
@@ -2695,7 +2695,7 @@ open_backup_file (char *filename,
 	  return g_strdup_printf (_("Can't rename %s to %s.old; %s"),
 				    filename, filename, g_strerror (errno));
 	}
-#if defined(NATIVE_WIN32) || defined(__EMX__)
+#if defined(G_OS_WIN32) || defined(__EMX__)
       /* Can't rename open files... */
       if ((*fp_old = fopen (oldfilename, "rt")) == NULL)
 	g_error (_("Couldn't reopen %s\n"), oldfilename);

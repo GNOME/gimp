@@ -35,7 +35,7 @@
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpenv.h"
 
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
 #  ifndef __EMX__
 #  define USER_INSTALL "user_install"
 #  else
@@ -339,7 +339,7 @@ help_quit_callback (GtkWidget *widget,
   gtk_exit (0);
 }
 
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
 
 char *
 quote_spaces (char *string)
@@ -430,7 +430,7 @@ install_run (InstallCallback callback)
   /*  Realize the text widget before inserting text strings  */
   gtk_widget_realize (text);
 
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
   gtk_text_insert (GTK_TEXT (text), font_strong, NULL, NULL, _("User Installation Log\n\n"), -1);
 #endif
 
@@ -456,7 +456,7 @@ install_run (InstallCallback callback)
 
   if (executable == TRUE)
     {
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
       char *quoted_data_dir, *quoted_user_dir;
 
       /* On Windows, it is common for the GIMP data directory
@@ -519,7 +519,7 @@ install_run (InstallCallback callback)
 	}
       else
 	executable = FALSE;
-#endif /* !NATIVE_WIN32 */
+#endif /* !G_OS_WIN32 */
     }
 
   if (executable == FALSE)
@@ -538,7 +538,7 @@ install_continue_callback (GtkWidget *widget,
 {
   InstallCallback callback;
 
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
   FreeConsole ();
 #endif
 

@@ -65,7 +65,7 @@
 #include <math.h>
 #include <gtk/gtk.h>
 
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
 #  include <io.h>
 #  ifndef W_OK
 #    define W_OK 2

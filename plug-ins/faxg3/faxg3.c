@@ -25,7 +25,7 @@
 
 #include "config.h"
 
-#include <glib.h>		/* For NATIVE_WIN32 */
+#include <glib.h>		/* For G_OS_WIN32 */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -36,7 +36,7 @@
 #include <string.h>
 #include <fcntl.h>
 
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
 #include <io.h>
 #endif
 

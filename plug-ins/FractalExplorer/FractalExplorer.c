@@ -45,7 +45,7 @@
 
 #include "config.h"
 
-#include <glib.h>		/* Include early for NATIVE_WIN32 */
+#include <glib.h>		/* Include early for G_OS_WIN32 */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -60,7 +60,7 @@
 #endif
 #include <ctype.h>
 
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
 #include <io.h>
 
 #ifndef W_OK

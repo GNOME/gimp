@@ -42,17 +42,17 @@
 #include <unistd.h>
 #endif
 
-#ifdef WIN32
+#if defined(G_OS_WIN32) || defined(G_HAVE_CYGWIN)
 #define STRICT
 #include <windows.h>
 #include <process.h>
 
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
 #include <fcntl.h>
 #include <io.h>
 #endif
 
-#ifdef __CYGWIN32__
+#ifdef G_HAVE_CYGWIN
 #define O_TEXT		0x0100	/* text file */
 #define _O_TEXT		0x0100	/* text file */
 #define O_BINARY	0x0200	/* binary file */
@@ -183,7 +183,7 @@ static ProcRecord *last_plug_in = NULL;
 static int shm_ID = -1;
 static guchar *shm_addr = NULL;
 
-#ifdef WIN32
+#if defined(G_OS_WIN32) || defined(G_HAVE_CYGWIN)
 static HANDLE shm_handle;
 #endif
 
@@ -220,7 +220,7 @@ plug_in_init_shm (void)
 #endif
     }
 #else
-#ifdef WIN32
+#if defined(G_OS_WIN32) || defined(G_HAVE_CYGWIN)
   /* Use Win32 shared memory mechanisms for
    * transfering tile data.
    */
@@ -421,7 +421,7 @@ plug_in_kill (void)
   GSList *tmp;
   PlugIn *plug_in;
   
-#ifdef WIN32
+#if defined(G_OS_WIN32) || defined(G_HAVE_CYGWIN)
   CloseHandle (shm_handle);
 #else
 #ifdef HAVE_SHM_H
@@ -829,7 +829,7 @@ plug_in_open (PlugIn *plug_in)
 	  return 0;
 	}
 
-#if defined(__CYGWIN32__) || defined(__EMX__)
+#if defined(G_HAVE_CYGWIN) || defined(__EMX__)
       /* Set to binary mode */
       setmode(my_read[0], _O_BINARY);
       setmode(my_write[0], _O_BINARY);
@@ -837,7 +837,7 @@ plug_in_open (PlugIn *plug_in)
       setmode(my_write[1], _O_BINARY);
 #endif
 
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
       plug_in->my_read = g_io_channel_unix_new (my_read[0]);
       plug_in->my_write = g_io_channel_unix_new (my_write[1]);
       plug_in->his_read = g_io_channel_unix_new (my_write[0]);
@@ -852,7 +852,7 @@ plug_in_open (PlugIn *plug_in)
 
       /* Remember the file descriptors for the pipes.
        */
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
       sprintf (plug_in->args[2], "%d",
 	       g_io_channel_unix_get_fd (plug_in->his_read));
       sprintf (plug_in->args[3], "%d",
@@ -889,7 +889,7 @@ plug_in_open (PlugIn *plug_in)
       fcntl(my_read[0], F_SETFD, 1);
       fcntl(my_write[1], F_SETFD, 1);
 #endif
-#if defined (__CYGWIN32__) || defined (NATIVE_WIN32) || defined(__EMX__)
+#if defined(G_OS_WIN32) || defined (G_HAVE_CYGWIN) || defined(__EMX__)
       plug_in->pid = _spawnv (_P_NOWAIT, plug_in->args[0], plug_in->args);
       if (plug_in->pid == -1)
 #else
@@ -926,7 +926,7 @@ plug_in_open (PlugIn *plug_in)
       g_io_channel_unref (plug_in->his_write);
       plug_in->his_write = NULL;
 
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
       /* The plug-in tells us its thread id */
       if (!plug_in->query)
 	{
@@ -961,7 +961,7 @@ plug_in_close (PlugIn *plug_in,
 	       int     kill_it)
 {
   int status;
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
   struct timeval tv;
 #endif
 
@@ -978,7 +978,7 @@ plug_in_close (PlugIn *plug_in,
 	  plug_in_pop ();
 
 	  /*  give the plug-in some time (10 ms)  */
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
 	  tv.tv_sec = 0;
 	  tv.tv_usec = 100;	/* But this is 0.1 ms? */
 	  select (0, NULL, NULL, NULL, &tv);
@@ -989,7 +989,7 @@ plug_in_close (PlugIn *plug_in,
 
       /* If necessary, kill the filter.
        */
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
       if (kill_it && plug_in->pid)
 	status = kill (plug_in->pid, SIGKILL);
 
@@ -1364,7 +1364,7 @@ plug_in_handle_message (WireMessage *msg)
       gtk_main_quit ();
       break;
     case GP_REQUEST_WAKEUPS:
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
       g_io_channel_win32_pipe_request_wakeups (current_plug_in->my_write,
 					       current_plug_in->his_thread_id,
 					       current_plug_in->his_read_fd);

@@ -29,13 +29,13 @@
 #include "libgimp/parasiteP.h"
 #include "libgimp/gimpunit.h"
 
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
 #  ifdef LIBGIMP_COMPILATION
 #    define GIMPVAR __declspec(dllexport)
 #  else  /* !LIBGIMP_COMPILATION */
 #    define GIMPVAR extern __declspec(dllimport)
 #  endif /* !LIBGIMP_COMPILATION */
-#else  /* !NATIVE_WIN32 */
+#else  /* !G_OS_WIN32 */
 #  define GIMPVAR extern
 #endif
 
@@ -178,7 +178,7 @@ struct _GParam
 };
 
 
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
 /* Define WinMain() because plug-ins are built as GUI applications. Also
  * define a main() in case some plug-in still is built as a console
  * application.

@@ -530,7 +530,7 @@ char *standalone = NULL;
 
 extern GPlugInInfo PLUG_IN_INFO;
 
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
 /* No standalone on win32. */
 MAIN()
 

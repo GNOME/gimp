@@ -42,12 +42,12 @@
 #include "script-fu-console.h"
 #include <plug-ins/dbbrowser/dbbrowser.h>
 
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
 #include <fcntl.h>
 #include <io.h>
 #endif
 
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
 
 #define TEXT_WIDTH  400
 #define TEXT_HEIGHT 400
@@ -560,7 +560,7 @@ script_fu_cc_key_function (GtkWidget   *widget,
 
 
 static FILE *
-script_fu_open_siod_console ()
+script_fu_open_siod_console (void)
 {
   if (siod_output == stdout)
     {
@@ -584,7 +584,7 @@ script_fu_open_siod_console ()
 }
 
 static void
-script_fu_close_siod_console ()
+script_fu_close_siod_console (void)
 {
   if (siod_output != stdout)
     fclose (siod_output);
@@ -592,7 +592,7 @@ script_fu_close_siod_console ()
   close (siod_output_pipe[1]);
 }
 
-#endif /* !NATIVE_WIN32 */
+#endif /* !G_OS_WIN32 */
 
 void
 script_fu_eval_run (char     *name,

@@ -46,7 +46,7 @@
 
 #include "libgimp/gimpintl.h"
 
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
 static RETSIGTYPE on_signal (int);
 #ifdef SIGCHLD
 static RETSIGTYPE on_sig_child (int);
@@ -140,7 +140,7 @@ main (int argc, char **argv)
   no_splash = FALSE;
   no_splash_image = FALSE;
 
-#if defined (HAVE_SHM_H) || defined (NATIVE_WIN32)
+#if defined (HAVE_SHM_H) || defined (G_OS_WIN32)
   use_shm = TRUE;
 #else
   use_shm = FALSE;
@@ -303,7 +303,7 @@ main (int argc, char **argv)
 
   g_set_message_handler ((GPrintFunc) gimp_message_func);
 
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
   /* No use catching these on Win32, the user won't get any 
    * stack trace from glib anyhow. It's better to let Windows inform
    * about the program error, and offer debugging (if the use
@@ -364,7 +364,7 @@ main (int argc, char **argv)
   return 0;
 }
 
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
 
 /* In case we build this as a windowed application */
 
@@ -399,13 +399,13 @@ on_error (const gchar    *domain,
 
 static int caught_fatal_sig = 0;
 
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
 
 static RETSIGTYPE
 on_signal (int sig_num)
 {
   if (caught_fatal_sig)
-#ifdef NATIVE_WIN32
+#ifdef G_OS_WIN32
     raise (sig_num);
 #else
     kill (getpid (), sig_num);
@@ -544,7 +544,7 @@ test_gserialize (void)
   if (to->test_array[1] != ts->test_array[1])
     g_message("int16array value 1 test failed(please email your system configuration to jaycox@earthlink.net): %d\n", to->test_array[1]);
 
-#ifndef NATIVE_WIN32
+#ifndef G_OS_WIN32
   g_message("Passed serialization test\n");
 #endif
 
