@@ -1,5 +1,11 @@
 2000-12-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/patterns.c: uniquefy pattern names before inserting them
+	into the list. This way DND (which passes only the pattern's
+	name) works as expected. Fixes #35258.
+
+2000-12-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* app/gimphistogramP.h: removed.
 

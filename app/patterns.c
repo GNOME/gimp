@@ -57,6 +57,7 @@ GPattern *active_pattern = NULL;
 GSList   *pattern_list   = NULL;
 gint      num_patterns   = 0;
 
+
 /*  static variables  */
 static GPattern *standard_pattern = NULL;
 
@@ -283,6 +284,11 @@ load_pattern (gchar *filename)
 {
   GPattern *pattern;
   gint      fd;
+  GSList   *list;
+  GSList   *list2;
+  gint      unique_ext = 0;
+  gchar    *ext;
+  gchar    *new_name = NULL;
 
   g_return_if_fail (filename != NULL);
 
@@ -300,6 +306,64 @@ load_pattern (gchar *filename)
   /*  Swap the pattern to disk (if we're being stingy with memory) */
   if (stingy_memory_use)
     temp_buf_swap (pattern->mask);
+
+  /* uniquefy pattern name */
+  for (list = pattern_list; list; list = g_slist_next (list))
+    {
+      if (! strcmp (((GPattern *) list->data)->name, pattern->name))
+	{
+	  ext = strrchr (pattern->name, '#');
+
+	  if (ext)
+	    {
+	      gchar *ext_str;
+
+	      unique_ext = atoi (ext + 1);
+
+	      ext_str = g_strdup_printf ("%d", unique_ext);
+
+	      /*  check if the extension really is of the form "#<n>"  */
+	      if (! strcmp (ext_str, ext + 1))
+		{
+		  *ext = '\0';
+		}
+	      else
+		{
+		  unique_ext = 0;
+		}
+
+	      g_free (ext_str);
+	    }
+	  else
+	    {
+	      unique_ext = 0;
+	    }
+
+	  do
+	    {
+	      unique_ext++;
+
+	      g_free (new_name);
+
+	      new_name = g_strdup_printf ("%s#%d", pattern->name, unique_ext);
+
+	      for (list2 = pattern_list; list2; list2 = g_slist_next (list2))
+		{
+		  if (! strcmp (((GPattern *) list2->data)->name, new_name))
+		    {
+		      break;
+		    }
+		}
+	    }
+	  while (list2);
+
+	  g_free (pattern->name);
+
+	  pattern->name = new_name;
+
+	  break;
+	}
+    }
 
   pattern_list = g_slist_insert_sorted (pattern_list, pattern,
 					pattern_compare_func);
