@@ -581,7 +581,7 @@ layers_new_layer_query (GimpImage *gimage,
     gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
                               _("New Layer"), "new_layer_options",
                               GTK_STOCK_NEW,
-                              _("New Layer Options"),
+                              _("Create a New Layer"),
                               gimp_standard_help_func,
                               "dialogs/layers/new_layer.html",
 
@@ -853,6 +853,8 @@ add_mask_query_ok_callback (GtkWidget *widget,
     {
       mask = gimp_layer_create_mask (layer, options->add_mask_type);
       gimp_layer_add_mask (layer, mask, TRUE);
+      g_object_unref (G_OBJECT (mask));
+
       gimp_image_flush (gimage);
     }
 
@@ -876,9 +878,9 @@ layers_add_mask_query (GimpLayer *layer)
   /*  The dialog  */
   options->query_box =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (layer),
-                              _("Add Mask"), "add_mask_options",
+                              _("Add Layer Mask"), "add_mask_options",
                               GTK_STOCK_ADD,
-                              _("Add Layer Mask Options"),
+                              _("Add a Mask to the Layer"),
                               gimp_standard_help_func,
                               "dialogs/layers/add_layer_mask.html",
 

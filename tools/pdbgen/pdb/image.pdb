@@ -677,7 +677,12 @@ HELP
 
     %invoke = (
 	code => <<'CODE'
-success = gimp_layer_add_mask (layer, mask, TRUE) != NULL;
+{
+  success = gimp_layer_add_mask (layer, mask, TRUE) != NULL;
+
+  if (success)
+    g_object_unref (G_OBJECT (mask));
+}
 CODE
     );
 }

@@ -1605,7 +1605,12 @@ image_add_layer_mask_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    success = gimp_layer_add_mask (layer, mask, TRUE) != NULL;
+    {
+      success = gimp_layer_add_mask (layer, mask, TRUE) != NULL;
+    
+      if (success)
+	g_object_unref (G_OBJECT (mask));
+    }
 
   return procedural_db_return_args (&image_add_layer_mask_proc, success);
 }

@@ -903,6 +903,7 @@ xcf_load_layer (XcfInfo   *info,
       GIMP_DRAWABLE (layer_mask)->offset_y = GIMP_DRAWABLE (layer)->offset_y;
 
       gimp_layer_add_mask (layer, layer_mask, FALSE);
+      g_object_unref (G_OBJECT (layer));
 
       layer->mask->apply_mask = apply_mask;
       layer->mask->edit_mask  = edit_mask;

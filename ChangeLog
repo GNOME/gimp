@@ -1,3 +1,15 @@
+2002-09-01  Michael Natterer  <mitch@gimp.org>
+
+	Refcount layer masks correctly. Fixes layer mask undo.
+
+	* app/core/gimplayer.c (gimp_layer_add_mask): ref the mask.
+
+	* app/xcf/xcf-load.c
+	* app/gui/layers-commands.c
+	* tools/pdbgen/pdb/image.pdb: unref layer masks after adding them.
+
+	* app/pdb/image_cmds.c: regenerated.
+
 2002-08-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/Makefile.am

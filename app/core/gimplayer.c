@@ -589,6 +589,7 @@ gimp_layer_add_mask (GimpLayer     *layer,
     }
 
   layer->mask = mask;
+  g_object_ref (G_OBJECT (layer->mask));
 
   gimp_layer_mask_set_layer (mask, layer);
 
