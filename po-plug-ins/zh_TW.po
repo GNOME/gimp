@@ -2,15 +2,15 @@
 # Copyright (C) 2001, 03, 04 Free Software Foundation, Inc.
 # 林佳宏 <object@mis.mgt.ncu.edu.tw>, 2001
 # Chun-Chung Chen (陳俊仲) <cjj@u.washington.edu>, 2001.
-# Abel Cheung <maddog@linux.org.hk>, 2001, 2003-04.
+# Abel Cheung <maddog@linuxhall.org>, 2001, 2003, 2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp20-std-plug-ins 2.0.0\n"
+"Project-Id-Version: gimp-std-plug-ins 2.0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-25 00:02+0200\n"
-"PO-Revision-Date: 2004-03-24 01:26+0800\n"
-"Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
+"POT-Creation-Date: 2004-09-29 18:26+0800\n"
+"PO-Revision-Date: 2004-09-29 18:34+0800\n"
+"Last-Translator: Abel Cheung <maddog@linuxhall.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,16 +18,16 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:533 plug-ins/gfig/gfig.c:2903
 #: plug-ins/gflare/gflare.c:898
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "No %s in gimprc:\n"
 "You need to add an entry like\n"
 "(%s \"%s\")\n"
 "to your %s file."
 msgstr ""
-"gimprc 中未定義 gfig-path︰\n"
-"您需要在 %2$s 檔案中加上類似\n"
-"(gfig-path \"%1$s\")\n"
+"gimprc 中未定義 %1$s︰\n"
+"您需要在 %4$s 檔案中加上類似\n"
+"(%2$s \"%3$s\")\n"
 "的項目。"
 
 #: plug-ins/FractalExplorer/Dialogs.c:553
@@ -903,23 +903,20 @@ msgid "Preview Options"
 msgstr "預覽選項"
 
 #: plug-ins/MapObject/mapobject_apply.c:273
-#, fuzzy
 msgid "Map to Plane..."
-msgstr "Laplace..."
+msgstr "映射至平面..."
 
 #: plug-ins/MapObject/mapobject_apply.c:276
 msgid "Map to Sphere..."
-msgstr ""
+msgstr "映射至球體..."
 
 #: plug-ins/MapObject/mapobject_apply.c:279
-#, fuzzy
 msgid "Map to Box..."
-msgstr "正在計算 RGB 最大最小值..."
+msgstr "映射至方體..."
 
 #: plug-ins/MapObject/mapobject_apply.c:282
-#, fuzzy
 msgid "Map to Cylinder..."
-msgstr "圓柱體"
+msgstr "映射至圓柱體..."
 
 #: plug-ins/MapObject/mapobject_main.c:200
 msgid "<Image>/Filters/Map/Map _Object..."
@@ -1817,7 +1814,7 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1534
 msgid "_Misc Ops."
-msgstr ""
+msgstr "其它選項(_M)"
 
 #: plug-ins/common/CML_explorer.c:1620
 msgid "Function Type:"
@@ -2505,7 +2502,7 @@ msgid "Save Channel Mixer Settings"
 msgstr ""
 
 #: plug-ins/common/channel_mixer.c:1223
-#, fuzzy, c-format
+#, c-format
 msgid "Parameters were saved to '%s'"
 msgstr "參數已儲存至‘%s’"
 
@@ -2575,7 +2572,7 @@ msgstr "<Image>/濾鏡/色彩/色彩轉為透明度(_A)..."
 
 #: plug-ins/common/colortoalpha.c:173
 msgid "Removing color..."
-msgstr ""
+msgstr "正在移除顏色..."
 
 #: plug-ins/common/colortoalpha.c:316
 msgid "Color to Alpha"
@@ -2586,9 +2583,10 @@ msgstr "色彩轉為透明"
 msgid "From:"
 msgstr "從："
 
+# does not express well in Chinese, so change form -- Abel
 #: plug-ins/common/colortoalpha.c:342
 msgid "Color to Alpha Color Picker"
-msgstr ""
+msgstr "選擇準備轉換為透明的顏色"
 
 #: plug-ins/common/colortoalpha.c:354
 msgid "to Alpha"
@@ -2856,7 +2854,7 @@ msgstr "使用 GLib 資料類型[guint8*] (_U)"
 #.
 #: plug-ins/common/csource.c:699
 msgid "Us_e Macros instead of Struct"
-msgstr "使用巨集而不用 Struct(_E)"
+msgstr "使用巨集而不用 _Struct"
 
 #. Use RLE
 #.
@@ -2907,9 +2905,8 @@ msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr "只適用於圖層上 (但企圖使用於色版或圖層遮罩)"
 
 #: plug-ins/common/curve_bend.c:727
-#, fuzzy
 msgid "Cannot operate on layers with masks."
-msgstr "不適用於索引色影像。"
+msgstr "不適用於有遮罩的圖層。"
 
 #: plug-ins/common/curve_bend.c:742
 msgid "Cannot operate on empty selections."
@@ -3667,7 +3664,6 @@ msgid "Image Selection"
 msgstr "選取影像"
 
 #: plug-ins/common/film.c:1352
-#, fuzzy
 msgid "All Values are Fractions of the Film Height"
 msgstr "所有數值都是依膠片高度計算的比例"
 
@@ -4572,7 +4568,7 @@ msgstr "匯出預覽圖"
 
 #: plug-ins/common/jpeg.c:758
 msgid "EXIF data will be ignored."
-msgstr ""
+msgstr "會略過 EXIF 資料。"
 
 #: plug-ins/common/jpeg.c:972
 msgid "JPEG preview"
@@ -4597,9 +4593,8 @@ msgid "Image Preview"
 msgstr "影像預覽"
 
 #: plug-ins/common/jpeg.c:1758
-#, fuzzy
 msgid "Preview in image window"
-msgstr "擷取一個視窗"
+msgstr ""
 
 #: plug-ins/common/jpeg.c:1791 plug-ins/xjt/xjt.c:888
 msgid "Quality:"
@@ -5568,7 +5563,7 @@ msgstr ""
 #: plug-ins/common/png.c:787
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
-msgstr ""
+msgstr "PNG 檔案‘%s’出現不明的色彩模式。"
 
 #: plug-ins/common/png.c:842
 msgid ""
@@ -5579,7 +5574,7 @@ msgstr ""
 #: plug-ins/common/png.c:1159
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
-msgstr ""
+msgstr "儲存‘%s’時發生錯誤，無法儲存影像。"
 
 #: plug-ins/common/png.c:1588
 msgid "Save as PNG"
@@ -5756,7 +5751,6 @@ msgstr "執行 ghostscript 時發生錯誤 (%s)"
 #: plug-ins/common/postscript.c:2587 plug-ins/common/postscript.c:2715
 #: plug-ins/common/sunras.c:1453 plug-ins/common/sunras.c:1561
 #: plug-ins/fits/fits.c:827 plug-ins/fits/fits.c:951
-#, fuzzy
 msgid "Write error occurred"
 msgstr "發生寫入錯誤"
 
@@ -6791,11 +6785,11 @@ msgstr ""
 
 #: plug-ins/common/svg.c:245 plug-ins/common/svg.c:628
 msgid "Unknown reason"
-msgstr ""
+msgstr "原因不詳"
 
 #: plug-ins/common/svg.c:249
 msgid "Rendering SVG..."
-msgstr ""
+msgstr "正在繪製 SVG..."
 
 #: plug-ins/common/svg.c:259
 msgid "Rendered SVG"
@@ -6819,7 +6813,7 @@ msgstr "開啟 SVG"
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
 #: plug-ins/common/svg.c:646
 msgid "Render Scalable Vector Graphics"
-msgstr ""
+msgstr "描繪 SVG"
 
 #: plug-ins/common/svg.c:705 plug-ins/print/gimp_main_window.c:1022
 #: plug-ins/print/gimp_main_window.c:1234
@@ -6851,7 +6845,7 @@ msgstr ""
 
 #: plug-ins/common/svg.c:865
 msgid "Merge Imported Paths"
-msgstr ""
+msgstr "合併所有匯入的路徑"
 
 #: plug-ins/common/tga.c:426
 #, c-format
@@ -7167,7 +7161,6 @@ msgid "Create a new unit from scratch."
 msgstr "定義新的長度單位"
 
 #: plug-ins/common/uniteditor.c:563
-#, fuzzy
 msgid "Create a new unit with the currently selected unit as template."
 msgstr "利用目前已選擇的單位作為範本來建立新的單位。"
 
@@ -7351,7 +7344,7 @@ msgstr ""
 
 #: plug-ins/common/warp.c:402
 msgid "Warp"
-msgstr ""
+msgstr "扭曲"
 
 #: plug-ins/common/warp.c:416
 msgid "Main Options"
@@ -7372,7 +7365,7 @@ msgstr ""
 
 #: plug-ins/common/warp.c:472
 msgid "Wrap"
-msgstr ""
+msgstr "扭曲"
 
 #: plug-ins/common/warp.c:487
 msgid "Smear"
@@ -9268,9 +9261,8 @@ msgid "How much to blur the drop shadow"
 msgstr "陰影模糊的程度"
 
 #: plug-ins/gimpressionist/general.c:210
-#, fuzzy
 msgid "Deviation threshold:"
-msgstr "綠色界限值(_R)："
+msgstr ""
 
 #: plug-ins/gimpressionist/general.c:214
 msgid "A bailout-value for adaptive selections"
@@ -9325,18 +9317,16 @@ msgid "Start angle:"
 msgstr "起始角度："
 
 #: plug-ins/gimpressionist/orientation.c:78
-#, fuzzy
 msgid "The starting angle of the first brush to create"
-msgstr "筆刷尺寸上限"
+msgstr ""
 
 #: plug-ins/gimpressionist/orientation.c:86
 msgid "Angle span:"
 msgstr ""
 
 #: plug-ins/gimpressionist/orientation.c:90
-#, fuzzy
 msgid "The angle span of the first brush to create"
-msgstr "筆刷尺寸上限"
+msgstr ""
 
 #: plug-ins/gimpressionist/orientation.c:114
 msgid ""
@@ -9584,7 +9574,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/presets.c:624
 msgid "_Presets"
-msgstr ""
+msgstr "預設值(_P)"
 
 #: plug-ins/gimpressionist/presets.c:639
 msgid "Save current..."
@@ -9600,7 +9590,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/presets.c:678
 msgid "Deletes the selected Preset"
-msgstr ""
+msgstr "刪除指定的預設值"
 
 #: plug-ins/gimpressionist/presets.c:684
 msgid "Reread the folder of Presets"
@@ -10753,9 +10743,8 @@ msgstr "正在繪畫迷宮..."
 
 #. $Id$
 #: plug-ins/maze/maze.h:2
-#, fuzzy
 msgid "Maze"
-msgstr "大理石紋"
+msgstr "迷宮"
 
 #. entscale == Entry and Scale pair function found in pixelize.c
 #: plug-ins/maze/maze_face.c:217
@@ -11295,9 +11284,8 @@ msgid "Set the scale (size) of the image"
 msgstr "指定影像的縮放比例 (尺寸)"
 
 #: plug-ins/print/gimp_main_window.c:1170
-#, fuzzy
 msgid "Scale by:"
-msgstr "比例 Z："
+msgstr "比例："
 
 #: plug-ins/print/gimp_main_window.c:1175
 msgid ""
@@ -11672,11 +11660,11 @@ msgstr "錯誤：無法讀取 XJT 屬性檔 %s。"
 msgid "Error: XJT property file '%s' is empty."
 msgstr "錯誤：XJT 屬性檔‘%s’是空的。"
 
-#~ msgid "write error occured"
-#~ msgstr "發生寫入錯誤"
-
 #~ msgid "M_inimum Height:"
 #~ msgstr "高度下限(_I)："
+
+#~ msgid "write error occured"
+#~ msgstr "發生寫入錯誤"
 
 #~ msgid "Only an indexed-alpha image can be saved in CEL format"
 #~ msgstr "只有索引化並帶透明的影像才可以以 CEL 格式儲存"

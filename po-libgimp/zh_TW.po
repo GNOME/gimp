@@ -2,15 +2,15 @@
 # Copyright (C) 2001, 03, 04 Free Software Foundation, Inc.
 # Chun-Chung Chen <cjj@u.washington.edu>, 2001.
 # 林佳宏 <object@mis.mgt.ncu.edu.tw>, 2001.
-# Abel Cheung <maddog@linux.org.hk>, 2001, 2003-04.
+# Abel Cheung <maddog@linuxhall.org>, 2001, 2003-04.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp 2.0.0\n"
+"Project-Id-Version: gimp-libgimp 2.0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-05 21:59+0200\n"
-"PO-Revision-Date: 2004-03-23 22:13+0800\n"
-"Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
+"POT-Creation-Date: 2004-09-29 18:25+0800\n"
+"PO-Revision-Date: 2004-09-29 18:34+0800\n"
+"Last-Translator: Abel Cheung <maddog@linuxhall.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -97,9 +97,9 @@ msgstr ""
 "(請自行調整結果)"
 
 #: libgimp/gimpexport.c:306
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
-msgstr "%s 只能處理 RGB 或索引色影像"
+msgstr "%s 只能處理點陣圖索引色 (兩種顏色) 影像"
 
 #: libgimp/gimpexport.c:307
 #, fuzzy
@@ -156,11 +156,11 @@ msgstr "匯出(_E)"
 
 #. the headline
 #: libgimp/gimpexport.c:485
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
-msgstr "影像在儲存前必須匯出，原因如下："
+msgstr "影像在儲存前必須匯出成為 %s，原因如下："
 
 #: libgimp/gimpexport.c:563
 msgid "The export conversion won't modify your original image."
@@ -206,7 +206,7 @@ msgstr "百分比"
 
 #: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
 msgid "(invalid UTF-8 string)"
-msgstr "無效的 UTF-8 文字)"
+msgstr "(無效的 UTF-8 文字)"
 
 #: libgimpbase/gimputils.c:244
 #, c-format

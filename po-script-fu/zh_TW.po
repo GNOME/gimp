@@ -1,16 +1,16 @@
 # traditional Chinese translation for gimp-script-fu.
-# Copyright (C) 2001, 2003 Free Software Foundation, Inc.
+# Copyright (C) 2001, 2003, 2004 Free Software Foundation, Inc.
 # Chun-Chung Chen (陳俊仲) <cjj@u.washington.edu>, 2001.
 # 林佳宏 <object@mis.mgt.ncu.edu.tw>, 2001.
-# Abel Cheung <maddog@linux.org.hk>, 2001, 2003.
+# Abel Cheung <maddog@linuxhall.org>, 2001, 2003, 2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu 1.3.22\n"
+"Project-Id-Version: gimp-script-fu 2.0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-25 00:02+0200\n"
-"PO-Revision-Date: 2003-11-05 13:31+0800\n"
-"Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
+"POT-Creation-Date: 2004-09-29 18:26+0800\n"
+"PO-Revision-Date: 2004-09-29 18:34+0800\n"
+"Last-Translator: Abel Cheung <maddog@linuxhall.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -114,17 +114,16 @@ msgstr "日期："
 
 #: plug-ins/script-fu/script-fu-scripts.c:1962
 msgid "Image Types:"
-msgstr "圖像類型："
+msgstr "影像類型："
 
 #: plug-ins/script-fu/script-fu-scripts.c:1991
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error while executing\n"
 "%s\n"
 "%s"
 msgstr ""
-"當執行 %s 時\n"
-"Script-Fu 發生錯誤\n"
+"當執行 %s 時發生錯誤\n"
 "%s"
 
 #: plug-ins/script-fu/script-fu-server.c:602
@@ -466,7 +465,7 @@ msgstr "保留 Bump 圖層"
 #: plug-ins/script-fu/scripts/slide.scm.h:6
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:6
 msgid "Work on Copy"
-msgstr "在圖像複製本上進行"
+msgstr "在影像複製本上進行"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:1
 msgid "<Image>/Script-Fu/Decor/Add _Border..."
@@ -504,7 +503,7 @@ msgstr "下"
 #: plug-ins/script-fu/scripts/camo.scm.h:5
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
 msgid "Flatten Image"
-msgstr "將圖像平面化"
+msgstr "將影像平面化"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
@@ -652,13 +651,12 @@ msgid "Width of Gaps"
 msgstr "間隔寬度"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Utils/_ASCII to Layer..."
-msgstr "<Image>/Script-Fu/工具/ASCII 轉為圖像圖層..."
+msgstr "<Image>/Script-Fu/工具/_ASCII 轉為圖層..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
-msgstr "<Toolbox>/擴展/Script-Fu/工具/_ASCII 轉為圖像..."
+msgstr "<Toolbox>/擴展/Script-Fu/工具/_ASCII 轉為影像..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:5
 #, no-c-format
@@ -904,7 +902,7 @@ msgstr "精細度"
 #: plug-ins/script-fu/scripts/camo.scm.h:7
 #: plug-ins/script-fu/scripts/rendermap.scm.h:7
 msgid "Image Size"
-msgstr "圖像尺寸"
+msgstr "影像尺寸"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:8
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:3
@@ -921,7 +919,7 @@ msgstr "雕刻白色區域"
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:3
 msgid "Image to Carve"
-msgstr "準備雕刻的圖像"
+msgstr "準備雕刻的影像"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
@@ -930,7 +928,7 @@ msgstr "<Toolbox>/擴展/Script-Fu/文字標誌/雕刻..."
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:2
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 msgid "Background Image"
-msgstr "背景圖像"
+msgstr "背景影像"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:3
 msgid "Carve Raised Text"
@@ -1102,7 +1100,7 @@ msgid ""
 "(Better, but only for Images with alot of White)"
 msgstr ""
 "只會變黑\n"
-"(比較適用於淺色圖像)"
+"(比較適用於淺色影像)"
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
@@ -1118,12 +1116,12 @@ msgstr "<Toolbox>/擴展/Script-Fu/文字標誌/漫畫書(_K)..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:8
 msgid "Outline Color"
-msgstr ""
+msgstr "輪廓顏色"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:9
 #: plug-ins/script-fu/scripts/glossy.scm.h:10
 msgid "Outline Size"
-msgstr "輪廓顏色"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Cool _Metal..."
@@ -1157,11 +1155,11 @@ msgstr "精細度(1 表示低)"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:4
 msgid "Smooth Horizontally"
-msgstr "水平方向模糊化"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:5
 msgid "Smooth Vertically"
-msgstr "垂直方向模糊化"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:6
 msgid "Spread"
@@ -1294,12 +1292,12 @@ msgstr "精細程度"
 #: plug-ins/script-fu/scripts/flatland.scm.h:3
 #: plug-ins/script-fu/scripts/land.scm.h:4
 msgid "Image Height"
-msgstr "圖像高度"
+msgstr "影像高度"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:4
 #: plug-ins/script-fu/scripts/land.scm.h:5
 msgid "Image Width"
-msgstr "圖像寬度"
+msgstr "影像寬度"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:5
 #: plug-ins/script-fu/scripts/land.scm.h:7
@@ -1321,45 +1319,43 @@ msgid "<Toolbox>/Xtns/Script-Fu/Utils/_Font Map..."
 msgstr "<Toolbox>/擴展/Script-Fu/工具/字型圖(_F)..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
-#, fuzzy
 msgid "Active Colors"
-msgstr "文字顏色"
+msgstr "使用中的顏色"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:3
 msgid "Black on White"
-msgstr ""
+msgstr "白底黑字"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:4
-#, fuzzy
 msgid "Font _Size (pixels)"
-msgstr "字型大小(像素)"
+msgstr "字型大小 [像素] (_S)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:5
 msgid "Use Font _Name as Text"
-msgstr ""
+msgstr "使用字型名稱作為會顯示的文字(_N)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:6
-#, fuzzy
 msgid "_Border (pixels)"
-msgstr "邊框大小(像素)"
+msgstr "邊框大小[像素](_B)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:7
-#, fuzzy
 msgid "_Color Scheme"
-msgstr "顏色 3"
+msgstr "色彩選擇(_C)"
 
+# Even english is not clear here, it means only those fonts you specified
+# (in regular expression) are shown -- Abel
 #: plug-ins/script-fu/scripts/font-map.scm.h:8
 msgid "_Filter (regexp)"
-msgstr ""
+msgstr "字型名稱過濾表示式 (rege_xp)"
 
+# This one is the same, english is not clear -- Abel
 #: plug-ins/script-fu/scripts/font-map.scm.h:9
 msgid "_Labels"
-msgstr ""
+msgstr "圖中顯示字型名稱(_L)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:10
-#, fuzzy
 msgid "_Text"
-msgstr "文字"
+msgstr "文字(_T)"
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/_Frosty..."
@@ -1387,16 +1383,14 @@ msgid "Shadow Weight (%)"
 msgstr "陰影高度(%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
-msgstr "<Toolbox>/擴展/Script-Fu/網頁佈景/Gimp.Org/大型標題(_B)..."
+msgstr "<Toolbox>/擴展/Script-Fu/網頁佈景/Classic.Gimp.Org/大型標題(_B)..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
-msgstr "<Toolbox>/擴展/Script-Fu/網頁佈景/Gimp.Org/小型標題(_S)..."
+msgstr "<Toolbox>/擴展/Script-Fu/網頁佈景/Classic.Gimp.Org/小型標題(_S)..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "AutoCrop"
@@ -1404,17 +1398,18 @@ msgstr "自動裁剪"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:4
 msgid "Dark Color"
-msgstr ""
+msgstr "深色"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:7
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:7
 msgid "Highlight Color"
 msgstr "高亮度區顏色"
 
+# "Index Image" = "Make image use indexed color" -- Abel
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:8
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:9
 msgid "Index Image"
-msgstr ""
+msgstr "使用索引色"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:9
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:10
@@ -1437,34 +1432,34 @@ msgid "Shadow Color"
 msgstr "陰影顏色"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
 "Label..."
 msgstr ""
-"<Toolbox>/擴展/Script-Fu/網頁佈景/Gimp.Org/管狀圖細分項目的按鈕標籤(_U)..."
+"<Toolbox>/擴展/Script-Fu/網頁佈景/Classic.Gimp.Org/管狀圖細分項目的按鈕標籤"
+"(_U)..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
 "Button Label..."
 msgstr ""
-"<Toolbox>/擴展/Script-Fu/網頁佈景/Gimp.Org/管狀圖再細分項目的按鈕標籤(_E)..."
+"<Toolbox>/擴展/Script-Fu/網頁佈景/Classic.Gimp.Org/管狀圖再細分項目的按鈕標籤"
+"(_E)..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
 "Labels..."
-msgstr "<Toolbox>/擴展/Script-Fu/網頁佈景/Gimp.Org/一般管狀圖標籤(_G)..."
+msgstr ""
+"<Toolbox>/擴展/Script-Fu/網頁佈景/Classic.Gimp.Org/一般管狀圖標籤(_G)..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
 "Label..."
-msgstr "<Toolbox>/擴展/Script-Fu/網頁佈景/Gimp.Org/管狀圖按鈕的標籤(_T)..."
+msgstr ""
+"<Toolbox>/擴展/Script-Fu/網頁佈景/Classic.Gimp.Org/管狀圖按鈕的標籤(_T)..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
@@ -1484,7 +1479,7 @@ msgstr "混色漸層(文字)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:9
 msgid "Outline Gradient Reverse"
-msgstr ""
+msgstr "輪廓使用相反方向漸層"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:11
 msgid "Pattern (Outline)"
@@ -1505,7 +1500,7 @@ msgstr "陰影"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:18
 msgid "Text Gradient Reverse"
-msgstr ""
+msgstr "文字內部使用相反方向漸層"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:19
 msgid "Use Pattern Overlay"
@@ -1555,15 +1550,15 @@ msgstr "<Toolbox>/擴展/Script-Fu/工具/自製漸層範例(_G)..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:1
 msgid "<Image>/Script-Fu/Render/_Grid..."
-msgstr ""
+msgstr "<Image>/Script-Fu/描繪/切開方塊(_G)..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:2
 msgid "X Divisions"
-msgstr ""
+msgstr "水平分隔方式"
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:3
 msgid "Y Divisions"
-msgstr ""
+msgstr "垂直分隔方式"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
 msgid "<Image>/Script-Fu/Utils/Draw _HSV Graph..."
@@ -1599,7 +1594,7 @@ msgstr "起點的垂直座標"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:9
 msgid "Use Selection Bounds Instead of Belows"
-msgstr "使用選擇範圍或圖像範圍，而不理會以下的數值"
+msgstr "使用選擇範圍或影像範圍，而不理會以下的數值"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
@@ -1615,7 +1610,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:1
 msgid "<Image>/Script-Fu/Utils/Show Image _Structure..."
-msgstr "<Image>/Script-Fu/工具/顯示圖像結構(_S)..."
+msgstr "<Image>/Script-Fu/工具/顯示影像結構(_S)..."
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:2
 msgid "Apply Layer Mask (or discard)"
@@ -1623,7 +1618,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:4
 msgid "Create New Image"
-msgstr "產生新的圖像"
+msgstr "產生新的影像"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:5
 msgid "Insert Layer Names"
@@ -1712,6 +1707,9 @@ msgid ""
 "     (filename (string-append data-dir\n"
 "\t\t\t      "
 msgstr ""
+")))\n"
+"     (filename (string-append data-dir\n"
+"\t\t\t      "
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:4
 msgid ""
@@ -1719,6 +1717,9 @@ msgid ""
 "     (filename (string-append data-dir\n"
 "               "
 msgstr ""
+")))\n"
+"     (filename (string-append data-dir\n"
+"               "
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:7
 msgid ""
@@ -1726,6 +1727,9 @@ msgid ""
 "    (filename (string-append data-dir\n"
 "               "
 msgstr ""
+")))\n"
+"    (filename (string-append data-dir\n"
+"               "
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:10
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elli_ptical, Feathered..."
@@ -1792,11 +1796,11 @@ msgstr "<Image>/Script-Fu/裝飾/舊照片(_O)..."
 
 #: plug-ins/script-fu/scripts/old-photo.scm.h:3
 msgid "Defocus"
-msgstr ""
+msgstr "散焦"
 
 #: plug-ins/script-fu/scripts/old-photo.scm.h:4
 msgid "Mottle"
-msgstr ""
+msgstr "斑點"
 
 #: plug-ins/script-fu/scripts/old-photo.scm.h:5
 msgid "Sepia"
@@ -1828,11 +1832,11 @@ msgstr "<Image>/Script-Fu/變化/鐵血戰士(_P)..."
 
 #: plug-ins/script-fu/scripts/predator.scm.h:2
 msgid "Edge Amount"
-msgstr ""
+msgstr "描邊粗幼度"
 
 #: plug-ins/script-fu/scripts/predator.scm.h:4
 msgid "Pixel Amount"
-msgstr ""
+msgstr "格子大小"
 
 #: plug-ins/script-fu/scripts/predator.scm.h:5
 msgid "Pixelize"
@@ -1886,13 +1890,14 @@ msgstr "頂部顏色(有輸入焦點)"
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render _Map..."
 msgstr "<Toolbox>/擴展/Script-Fu/圖樣/描繪地圖(_M)..."
 
+# Checked script, this parameter is useless -- Abel
 #: plug-ins/script-fu/scripts/rendermap.scm.h:2
 msgid "Behaviour"
-msgstr "描繪方式"
+msgstr "描繪方式 (不使用)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:3
 msgid "Detail in Middle"
-msgstr ""
+msgstr "中央部分較詳細"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:8
 msgid "Tile"
@@ -1941,7 +1946,7 @@ msgstr "加上影子"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:5
 msgid "Edge Radius"
-msgstr ""
+msgstr "圓角半徑"
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:1
 msgid ""
@@ -1949,6 +1954,9 @@ msgid ""
 "    (set! filename2 (string-append data-dir\n"
 "\t\t\t\t   "
 msgstr ""
+")))\n"
+"    (set! filename2 (string-append data-dir\n"
+"\t\t\t\t   "
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 msgid "<Image>/Script-Fu/Selection/To _Brush..."
@@ -1960,7 +1968,7 @@ msgstr "筆刷名稱"
 
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:1
 msgid "<Image>/Script-Fu/Selection/To _Image"
-msgstr "<Image>/Script-Fu/選擇區域/變成新圖像(_I)..."
+msgstr "<Image>/Script-Fu/選擇區域/變成新影像(_I)..."
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
 msgid ""
@@ -1968,16 +1976,17 @@ msgid ""
 "  (set! filename2 (string-append data-dir\n"
 "\t\t\t\t "
 msgstr ""
+")))\n"
+"  (set! filename2 (string-append data-dir\n"
+"\t\t\t\t "
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/To _Pattern..."
-msgstr "<Image>/Script-Fu/選擇區域/變成筆刷(_B)..."
+msgstr "<Image>/Script-Fu/選擇區域/變成圖樣(_P)..."
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:6
-#, fuzzy
 msgid "Pattern Name"
-msgstr "圖樣"
+msgstr "圖樣名稱"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
 msgid "<Image>/Script-Fu/Selection/_Round..."
@@ -1997,7 +2006,7 @@ msgstr "字型顏色"
 
 #: plug-ins/script-fu/scripts/slide.scm.h:4
 msgid "Number"
-msgstr ""
+msgstr "數字"
 
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
@@ -2013,7 +2022,7 @@ msgstr "<Toolbox>/擴展/Script-Fu/其它/球體(_S)..."
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:3
 msgid "Lighting (degrees)"
-msgstr ""
+msgstr "燈光方向(度)"
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:4
 msgid "Radius (pixels)"
@@ -2099,7 +2108,7 @@ msgstr "Lissajous"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:17
 msgid "Margin (pixels)"
-msgstr ""
+msgstr "留邊(像素)"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
 msgid "Outer Teeth"

@@ -3,15 +3,15 @@
 # 陳英傑 <r5224205@ms.cc.ntu.edu.tw>, 2001.
 # 林佳宏 <object@mis.mgt.ncu.edu.tw>, 2001.
 # Chun-Chung Chen (陳俊仲) <cjj@u.washington.edu>, 2001.
-# Abel Cheung <maddog@linux.org.hk>, 2001-2004.
+# Abel Cheung <maddog@linuxhall.org>, 2001, 03, 04.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 2.0.0\n"
+"Project-Id-Version: gimp 2.0.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-25 00:01+0200\n"
-"PO-Revision-Date: 2004-03-24 01:54+0800\n"
-"Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
+"POT-Creation-Date: 2004-09-29 18:25+0800\n"
+"PO-Revision-Date: 2004-09-29 18:33+0800\n"
+"Last-Translator: Abel Cheung <maddog@linuxhall.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,7 +23,7 @@ msgid ""
 "User installation was skipped because the '--no-interface' flag was used.\n"
 "To perform user installation, run the GIMP without the '--no-interface' flag."
 msgstr ""
-"在目前使用者的環境下，並未正確安裝 GIMP。\n"
+"GIMP 未能在目前使用者的環境下正確地安裝。\n"
 "因為使用‘--no-interface’選項，所以省略了用戶安裝的步驟。\n"
 "如果要進行用戶安裝程序，執行 GIMP 時請勿加上‘--no-interface’選項。"
 
@@ -34,6 +34,8 @@ msgid ""
 "location and permissions of the swap directory defined in your Preferences "
 "(currently \"%s\")."
 msgstr ""
+"無法開啟測試用的交換記憶檔案。為了避免損失資料，請檢查您在偏好設定中所指定的"
+"交換檔目錄 (目前為“%s”) 的位置和權限是否正確。"
 
 #: app/app_procs.c:282
 #, c-format
@@ -126,7 +128,7 @@ msgstr "  --display <display>      使用指定的 X 畫面來顯示程式。\n"
 
 #: app/main.c:524
 msgid "  -s, --no-splash          Do not show the startup window.\n"
-msgstr "  -s, --no-splash          不顯示啟動視窗。\n"
+msgstr "  -s, --no-splash          不顯示啟動畫面。\n"
 
 #: app/main.c:525
 msgid "  --session <name>         Use an alternate sessionrc file.\n"
@@ -169,6 +171,8 @@ msgid ""
 "  --pdb-compat-mode <off | on | warn>\n"
 "                           Procedural Database compatibility mode.\n"
 msgstr ""
+"  --pdb-compat-mode <off | on | warn>\n"
+"                           是否啟用程序資料庫的兼容模式。\n"
 
 #: app/main.c:535
 msgid "  -b, --batch <commands>   Process commands in batch mode.\n"
@@ -278,6 +282,9 @@ msgid ""
 "using different filenames, restart the Gimp and check the location of the "
 "swap directory in your Preferences."
 msgstr ""
+"無法開啟交換檔。GIMP 已耗盡記憶體，而且無法使用交換檔，這樣可能引致某部份影像"
+"內容損壞。請您嘗試使用另一個檔案名稱儲存影像，然後重新啟動 GIMP，在偏好設定中"
+"檢查有關交換檔資料夾的位置。"
 
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
@@ -419,7 +426,7 @@ msgstr "指定如何顯示影像周圍的空白區域。"
 msgid ""
 "Sets the canvas padding color used if the padding mode is set to custom "
 "color."
-msgstr ""
+msgstr "如果決定了使用自選的顏色來填補影像周圍的空白區域，則在這裡指定顏色。"
 
 #: app/config/gimprc-blurbs.h:30
 msgid "Ask for confirmation before closing an image without saving."
@@ -441,14 +448,13 @@ msgstr ""
 msgid ""
 "When enabled, this will ensure that each pixel of an image gets mapped to a "
 "pixel on the screen."
-msgstr "如選用本選項，影像的每一個像素相等於畫面的每一個像素。"
+msgstr "如啟用本選項，影像的每一個像素相等於畫面的每一個像素。"
 
 #: app/config/gimprc-blurbs.h:70
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:74
-#, fuzzy
 msgid ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
 "algorithm.  The seed fill starts at the initially selected pixel and "
@@ -468,15 +474,15 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:118
 msgid "When enabled, the selected brush will be used for all tools."
-msgstr ""
+msgstr "如啟用本選項，所有工具都會使用您選定的筆刷。"
 
 #: app/config/gimprc-blurbs.h:124
 msgid "When enabled, the selected gradient will be used for all tools."
-msgstr ""
+msgstr "如啟用本選項，所有工具都會使用您選定的漸層。"
 
 #: app/config/gimprc-blurbs.h:127
 msgid "When enabled, the selected pattern will be used for all tools."
-msgstr ""
+msgstr "如啟用本選項，所有工具都會使用您選定的圖樣。"
 
 #: app/config/gimprc-blurbs.h:143
 msgid "Sets the browser used by the help system."
@@ -492,14 +498,14 @@ msgstr "指定影像視窗標題中顯示的文字。"
 
 #: app/config/gimprc-blurbs.h:157
 msgid "When enabled, the GIMP will use a different info window per image view."
-msgstr "如選用本選項，GIMP 會為每幅影像分配獨立的資訊視窗。"
+msgstr "如啟用本選項，GIMP 會為每幅影像分配獨立的資訊視窗。"
 
 #: app/config/gimprc-blurbs.h:160
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
 msgstr ""
-"如選用本選項，GIMP 會確保開啟影像後，畫面中會完全顯示整幅影像，否則它會以原來"
+"如啟用本選項，GIMP 會確保開啟影像後，畫面中會完全顯示整幅影像，否則它會以原來"
 "尺寸顯示。"
 
 #: app/config/gimprc-blurbs.h:164
@@ -591,13 +597,13 @@ msgstr "為圖層及色版指定預覽圖的預設尺寸。"
 msgid ""
 "When enabled, the image window will automatically resize itself, whenever "
 "the physical image size changes."
-msgstr "如選用本選項，當影像的實際尺寸有變動時，影像視窗會自動調整尺寸。"
+msgstr "如啟用本選項，當影像的實際尺寸有變動時，影像視窗會自動調整尺寸。"
 
 #: app/config/gimprc-blurbs.h:246
 msgid ""
 "When enabled, the image window will automatically resize itself, when "
 "zooming into and out of images."
-msgstr "如選用本選項，當拉近或者拉遠影像時，影像視窗會自動調整尺寸。"
+msgstr "如啟用本選項，當拉近或者拉遠影像時，影像視窗會自動調整尺寸。"
 
 #: app/config/gimprc-blurbs.h:250
 msgid "Let GIMP try to restore your last saved session on each startup."
@@ -616,14 +622,14 @@ msgstr "當 GIMP 結束時儲存主要對話方塊的位置及尺寸。"
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
-msgstr "如選用本選項，使用任何繪畫工具時都會顯示目前的筆刷的形狀。"
+msgstr "如啟用本選項，使用任何繪畫工具時都會顯示目前的筆刷的形狀。"
 
 #: app/config/gimprc-blurbs.h:267
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
 msgstr ""
-"如選用本選項，預設會將選單列顯示出來。您也可以在「顯示→顯示選單列」中更改本設"
+"如啟用本選項，預設會將選單列顯示出來。您也可以在「顯示→顯示選單列」中更改本設"
 "定。"
 
 #: app/config/gimprc-blurbs.h:271
@@ -631,14 +637,14 @@ msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
 msgstr ""
-"如選用本選項，預設會將尺規顯示出來。您也可以在「顯示→顯示尺規」中更改本設定。"
+"如啟用本選項，預設會將尺規顯示出來。您也可以在「顯示→顯示尺規」中更改本設定。"
 
 #: app/config/gimprc-blurbs.h:275
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
-"如選用本選項，預設會將捲動列顯示出來。您也可以在「顯示→顯示捲動列」中更改本設"
+"如啟用本選項，預設會將捲動列顯示出來。您也可以在「顯示→顯示捲動列」中更改本設"
 "定。"
 
 #: app/config/gimprc-blurbs.h:279
@@ -646,7 +652,7 @@ msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
 msgstr ""
-"如選用本選項，預設會將狀態列顯示出來。您也可以在「顯示→顯示狀態列」中更改本設"
+"如啟用本選項，預設會將狀態列顯示出來。您也可以在「顯示→顯示狀態列」中更改本設"
 "定。"
 
 #: app/config/gimprc-blurbs.h:283
@@ -654,15 +660,15 @@ msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
 msgstr ""
-"如選用本選項，預設會將選擇區域顯示出來。您也可以在「顯示→顯示選擇區域」中更改"
-"本設定。"
+"如啟用本選項，預設會將選擇區域周圍的虛線顯示出來。您也可以在「顯示→顯示選擇區"
+"域」中更改本設定。"
 
 #: app/config/gimprc-blurbs.h:287
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
 msgstr ""
-"如選用本選項，預設會將圖層邊界顯示出來。您也可以在「顯示→顯示圖層邊界」中更改"
+"如啟用本選項，預設會將圖層邊界顯示出來。您也可以在「顯示→顯示圖層邊界」中更改"
 "本設定。"
 
 #: app/config/gimprc-blurbs.h:291
@@ -670,7 +676,7 @@ msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
 msgstr ""
-"如選用本選項，預設會將參考線顯示出來。您也可以在「顯示→顯示參考線」中更改本設"
+"如啟用本選項，預設會將參考線顯示出來。您也可以在「顯示→顯示參考線」中更改本設"
 "定。"
 
 #: app/config/gimprc-blurbs.h:295
@@ -678,6 +684,7 @@ msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
 msgstr ""
+"如啟用本選項，預設會將格線顯示出來。您也可以在「顯示→顯示格線」中更改本設定。"
 
 #: app/config/gimprc-blurbs.h:299
 msgid "Enable to display a handy GIMP tip on startup."
@@ -712,14 +719,14 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:319
 msgid "When enabled, menus can be torn off."
-msgstr "如選用本選項，可令選單脫離視窗。"
+msgstr "如啟用本選項，可令選單脫離視窗。"
 
 #: app/config/gimprc-blurbs.h:322
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
 msgstr ""
-"如選用本選項，當某個選單項目被選中時，您可即時按下適當的按鍵組合，來更改代表"
+"如啟用本選項，當某個選單項目被選中時，您可即時按下適當的按鍵組合，來更改代表"
 "這個選單項目的捷徑鍵。"
 
 #: app/config/gimprc-blurbs.h:326
@@ -777,7 +784,7 @@ msgstr "以方格代表透明度時，指定方格的尺寸。"
 msgid ""
 "When enabled, the GIMP will not save if the image is unchanged since opening "
 "it."
-msgstr "如選用本選項，GIMP 不會儲存沒有修改的影像。"
+msgstr "如啟用本選項，GIMP 不會儲存沒有修改的影像。"
 
 #: app/config/gimprc-blurbs.h:369
 msgid ""
@@ -788,23 +795,22 @@ msgstr ""
 "記憶體數目為止。"
 
 #: app/config/gimprc-blurbs.h:373
-#, fuzzy
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
 "as configured can be undone."
 msgstr ""
-"每幅影像都會將曾經使用操作程序保留在記憶中，以備將來復原時使用；這裡指定每幅"
-"影像個別佔用的記憶體上限。"
+"每幅影像都會將曾經進行的操作程序保留在記憶中，以備將來復原時使用；這裡指定每"
+"幅影像個別佔用的記憶體上限。但無論本設定是任何數值，還原操作程序的次數下限都"
+"一定有效。"
 
 #: app/config/gimprc-blurbs.h:378
-#, fuzzy
 msgid "Sets the size of the previews in the Undo History."
-msgstr "指定可復原的操作程序的數目上限。"
+msgstr "還原紀錄之中預覽圖的尺寸。"
 
 #: app/config/gimprc-blurbs.h:381
 msgid "When enabled, pressing F1 will open the help browser."
-msgstr "如選用本選項，按 F1 會顯示說明文件瀏覽器。"
+msgstr "如啟用本選項，按 F1 會顯示說明文件瀏覽器。"
 
 #: app/config/gimprc-blurbs.h:384
 #, c-format
@@ -814,6 +820,9 @@ msgid ""
 "contains '%s' it will be replaced with the URL, else the URL will be "
 "appended to the command with a space separating the two."
 msgstr ""
+"指定會使用的網頁瀏覽器。它可以用絕對路徑表示，或者可以只提供程式名稱，在後者"
+"的情況下會在用戶的 PATH 下搜尋。如果指令中出現‘%s’會以 URL 取代，否則 URL 會"
+"附加在指令之後，中間以空格隔開。"
 
 #: app/config/gimpscanner.c:220
 msgid "invalid UTF-8 string"
@@ -1011,7 +1020,7 @@ msgstr ""
 
 #: app/core/core-enums.c:282
 msgid "Bevel"
-msgstr ""
+msgstr "斜邊"
 
 #: app/core/core-enums.c:300
 msgid "Butt"
@@ -1023,19 +1032,19 @@ msgstr "自選"
 
 #: app/core/core-enums.c:321
 msgid "Line"
-msgstr ""
+msgstr "直線"
 
 #: app/core/core-enums.c:322
 msgid "Long Dashes"
-msgstr ""
+msgstr "長虛線"
 
 #: app/core/core-enums.c:323
 msgid "Medium Dashes"
-msgstr ""
+msgstr "中虛線"
 
 #: app/core/core-enums.c:324
 msgid "Short Dashes"
-msgstr ""
+msgstr "短虛線"
 
 #: app/core/core-enums.c:325
 msgid "Sparse Dots"
@@ -1055,11 +1064,11 @@ msgstr ""
 
 #: app/core/core-enums.c:329
 msgid "Dash Dot..."
-msgstr ""
+msgstr "線點..."
 
 #: app/core/core-enums.c:330
 msgid "Dash Dot Dot..."
-msgstr ""
+msgstr "線點點..."
 
 #: app/core/core-enums.c:348 app/core/core-enums.c:368
 #: app/display/gimpdisplayshell-title.c:219 app/widgets/widgets-enums.c:34
@@ -1231,14 +1240,12 @@ msgid "Move Item"
 msgstr "移動物件"
 
 #: app/core/core-enums.c:601
-#, fuzzy
 msgid "Scale Item"
-msgstr "縮放影像"
+msgstr "縮放物件"
 
 #: app/core/core-enums.c:602
-#, fuzzy
 msgid "Resize Item"
-msgstr "調整影像尺寸"
+msgstr "調整物件尺寸"
 
 #: app/core/core-enums.c:603 app/core/core-enums.c:633
 #: app/core/gimplayer.c:995 app/gui/layers-commands.c:1049
@@ -1263,9 +1270,8 @@ msgid "Anchor Floating Selection"
 msgstr "將浮動選擇區域的位置固定"
 
 #: app/core/core-enums.c:608 app/core/gimplayer-floating-sel.c:98
-#, fuzzy
 msgid "Remove Floating Selection"
-msgstr "浮動選擇區域"
+msgstr "移除浮動選擇區域"
 
 #: app/core/core-enums.c:609 app/core/gimp-edit.c:126
 #: app/widgets/gimpbufferview.c:154
@@ -2188,13 +2194,11 @@ msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "色盤檔案‘%s’中含有無效的 UTF-8 字串"
 
 #: app/core/gimppalette.c:447
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
-msgstr ""
-"載入色盤‘%s’：\n"
-"第 %d 行的欄位數目不正確。"
+msgstr "載入色盤‘%s’：第 %d 行的欄位數目不正確，改用預設值。"
 
 #. maybe we should just abort?
 #: app/core/gimppalette.c:493
@@ -2213,11 +2217,9 @@ msgid "Reading palette file '%s': Missing BLUE component in line %d."
 msgstr "讀取色盤檔案‘%s’：第 %d 行遺漏了藍色部份。"
 
 #: app/core/gimppalette.c:519
-#, fuzzy, c-format
+#, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
-msgstr ""
-"載入色盤‘%s’：\n"
-"第 %d 行的 RGB 值超出範圍。"
+msgstr "載入色盤檔案‘%s’：第 %d 行的 RGB 值超出範圍。"
 
 #: app/core/gimppalette.c:681
 msgid "Black"
@@ -2225,24 +2227,24 @@ msgstr "黑"
 
 #: app/core/gimppattern.c:337 app/core/gimppattern.c:384
 #: app/core/gimppattern.c:415
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in pattern file '%s': Could not read %d bytes: %s"
-msgstr "分析時出現嚴重錯誤：圖樣檔案‘%s’似乎是被截短了。"
+msgstr "分析圖樣檔案‘%s’時出現嚴重錯誤：有 %d 位元組無法讀入：%s。"
 
 #: app/core/gimppattern.c:357
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
-msgstr "分析時出現嚴重錯誤：圖樣檔案‘%s’似乎是被截短了。"
+msgstr "分析圖樣檔案‘%s’時出現嚴重錯誤：無法理解圖樣格式版本‘%d’。"
 
 #: app/core/gimppattern.c:367
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
-"不支援檔案‘%2$s’中指定的圖樣色彩深度 %1$d。\n"
-"GIMP 的圖樣必須使用 GRAY 或 RGB 色系。"
+"分析圖樣檔案‘%s’時出現嚴重錯誤：不支援色彩深度 %d。\n"
+"GIMP 的圖樣必須使用灰階或 RGB 色系。"
 
 #: app/core/gimppattern.c:393
 #, c-format
@@ -2261,7 +2263,7 @@ msgstr "羽化選擇範圍"
 
 #: app/core/gimpselection.c:197
 msgid "Sharpen Selection"
-msgstr ""
+msgstr "銳化選擇範圍"
 
 #: app/core/gimpselection.c:198 app/widgets/gimpselectioneditor.c:172
 msgid "Select None"
@@ -2318,13 +2320,12 @@ msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr ""
 
 #: app/core/gimptemplate.c:150
-#, fuzzy
 msgid "The horizontal image resolution."
-msgstr "影像水平解析度"
+msgstr "影像水平解析度。"
 
 #: app/core/gimptemplate.c:155
 msgid "The vertical image resolution."
-msgstr "影像垂直解析度"
+msgstr "影像垂直解析度。"
 
 #. pseudo unit
 #: app/core/gimpunit.c:55
@@ -2617,12 +2618,9 @@ msgid "Mode:"
 msgstr "模式："
 
 #: app/gui/brush-select.c:322
-#, fuzzy
 msgid ""
 "Unable to run brush callback. The corresponding plug-in may have crashed."
-msgstr ""
-"無法執行漸層的 callback。\n"
-"相應的增效模組可能已經不正常結束。"
+msgstr "無法執行筆刷的 callback。相應的增效模組可能已經不正常結束。"
 
 #: app/gui/brushes-menu.c:45
 msgid "/_Edit Brush..."
@@ -2666,9 +2664,8 @@ msgid "%s Channel Copy"
 msgstr "%s 色版複製本"
 
 #: app/gui/channels-commands.c:322
-#, fuzzy
 msgid "Empty Channel"
-msgstr "空白圖層複製本"
+msgstr "空白色版"
 
 #: app/gui/channels-commands.c:338
 msgid "New Channel Color"
@@ -3149,19 +3146,16 @@ msgid "/Remove Dangling E_ntries"
 msgstr "/移除已經不存在的項目(_N)"
 
 #: app/gui/drawable-commands.c:84
-#, fuzzy
 msgid "Desaturate operates only on RGB color layers."
-msgstr "去彩度只適用於 RGB 模式的可繪物件。"
+msgstr "去彩度只適用於 RGB 色彩的圖層。"
 
 #: app/gui/drawable-commands.c:102
-#, fuzzy
 msgid "Invert does not operate on indexed layers."
-msgstr "反相色彩不適用於索引色模式的可繪物件。"
+msgstr "反相色彩不適用於索引色的圖層。"
 
 #: app/gui/drawable-commands.c:120
-#, fuzzy
 msgid "Equalize does not operate on indexed layers."
-msgstr "亮度等化不適用於索引色的可繪物件。"
+msgstr "亮度等化不適用於索引色的圖層。"
 
 #: app/gui/edit-commands.c:196
 msgid "Cut Named"
@@ -3177,23 +3171,20 @@ msgstr "複製並命名"
 
 #: app/gui/edit-commands.c:290 app/gui/stroke-dialog.c:295
 #: app/gui/vectors-commands.c:292
-#, fuzzy
 msgid "There is no active layer or channel to stroke to."
-msgstr "目前沒有任何使用中的圖層或者色版可以用來描邊"
+msgstr "目前沒有任何使用中的圖層或者色版可以用來描邊。"
 
 #: app/gui/edit-commands.c:316
-#, fuzzy
 msgid "There is no active layer or channel to cut from."
-msgstr "目前沒有任何使用中的圖層或者色版可以用來描邊"
+msgstr "目前沒有任何使用中的圖層或者色版可以剪下。"
 
 #: app/gui/edit-commands.c:327 app/gui/edit-commands.c:363
 msgid "(Unnamed Buffer)"
 msgstr "(未命名的緩衝區)"
 
 #: app/gui/edit-commands.c:352
-#, fuzzy
 msgid "There is no active layer or channel to copy from."
-msgstr "目前沒有任何使用中的圖層或者色版可以用來描邊"
+msgstr "目前沒有任何使用中的圖層或者色版可以複製。"
 
 #: app/gui/error-console-menu.c:39
 msgid "/_Clear Errors"
@@ -3239,11 +3230,8 @@ msgid "Enter a name for this template"
 msgstr "請為該範本命名"
 
 #: app/gui/file-commands.c:301
-#, fuzzy
 msgid "Revert failed. No file name associated with this image."
-msgstr ""
-"還原失敗。\n"
-"本影像沒有檔案名稱。"
+msgstr "還原失敗。本影像沒有檔案名稱。"
 
 #: app/gui/file-commands.c:314
 #, c-format
@@ -3291,7 +3279,7 @@ msgid "From _Template:"
 msgstr "依範本(_T)："
 
 #: app/gui/file-new-dialog.c:270
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You are trying to create an image with an initial size of %s.\n"
 "\n"
@@ -3304,12 +3292,10 @@ msgstr ""
 "準備建立尺寸為 %s 的影像。\n"
 "\n"
 "如果肯定請選擇「確定」。\n"
-"如果並不想產生這麼大的影像，\n"
-"請選擇「取消」。\n"
+"如果您根本不想產生這麼大的影像，請選擇「取消」。\n"
 "\n"
-"如果想避免此對話方塊再次出現，\n"
-"請在偏好設定裡增大「最大影像\n"
-"尺寸」選項的數值(目前為 %s)"
+"如果想避免這個對話方塊再次出現，請在偏好設定裡增大「最大影像尺寸」選項的數值 "
+"(目前為 %s)。"
 
 #: app/gui/file-new-dialog.c:285
 msgid "Confirm Image Size"
@@ -3349,11 +3335,10 @@ msgid "/By Extension"
 msgstr "/依延伸檔名決定"
 
 #: app/gui/font-select.c:234
-#, fuzzy
 msgid ""
 "Unable to run font callback. The corresponding plug-in may have crashed."
 msgstr ""
-"無法執行漸層的 callback。\n"
+"無法執行字型的 callback。\n"
 "相應的增效模組可能已經不正常結束。"
 
 #: app/gui/fonts-menu.c:44
@@ -3432,13 +3417,13 @@ msgstr "分割"
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the selected segment."
-msgstr ""
+msgstr "請指定您選定的區段應該分為多少等份。"
 
 #: app/gui/gradient-editor-commands.c:657
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the segments in the selection."
-msgstr ""
+msgstr "請指定您選定的所有區段應該分為多少等份。"
 
 #: app/gui/gradient-editor-menu.c:64
 msgid "/L_eft Endpoint's Color..."
@@ -3505,7 +3490,6 @@ msgid "/blendingfunction/_Curved"
 msgstr "/blendingfunction/曲線(_C)"
 
 #: app/gui/gradient-editor-menu.c:178
-#, fuzzy
 msgid "/blendingfunction/_Sinusoidal"
 msgstr "/blendingfunction/弦波曲線(_S)"
 
@@ -3618,17 +3602,14 @@ msgid "Re-distribute _Handles in Selection"
 msgstr "重新分配所有選定的區段的控制點(_H)"
 
 #: app/gui/gradient-select.c:272
-#, fuzzy
 msgid ""
 "Unable to run gradient callback. The corresponding plug-in may have crashed."
-msgstr ""
-"無法執行漸層的 callback。\n"
-"相應的增效模組可能已經不正常結束。"
+msgstr "無法執行漸層的 callback。相應的增效模組可能已經不正常結束。"
 
 #: app/gui/gradients-commands.c:73
-#, fuzzy, c-format
+#, c-format
 msgid "Save '%s' as POV-Ray"
-msgstr "將“%s”另存為 POV-Ray"
+msgstr "將‘%s’另存為 POV-Ray"
 
 #: app/gui/gradients-menu.c:46
 msgid "/_Edit Gradient..."
@@ -3721,7 +3702,7 @@ msgid "Resize Error: Both width and height must be greater than zero."
 msgstr "調整尺寸發生錯誤：寬和高都必須大於零。"
 
 #: app/gui/image-commands.c:523
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You are trying to create an image with a size of %s.\n"
 "\n"
@@ -3734,26 +3715,20 @@ msgstr ""
 "準備建立尺寸為 %s 的影像。\n"
 "\n"
 "如果肯定請選擇「確定」。\n"
-"如果並不想產生這麼大的影像，\n"
-"請選擇「取消」。\n"
+"如果您根本不想產生這麼大的影像，請選擇「取消」。\n"
 "\n"
-"如果想避免此對話方塊再次出現，\n"
-"請在偏好設定裡增大「最大影像\n"
-"尺寸」選項的數值(目前為 %s)"
+"如果想避免此對話方塊再次出現，請在偏好設定裡增大「最大影像尺寸」選項的數值 "
+"(目前為 %s)。"
 
 #: app/gui/image-commands.c:535
 msgid "Image exceeds maximum image size"
-msgstr ""
+msgstr "影像尺寸超過最大限制"
 
 #: app/gui/image-commands.c:543
-#, fuzzy
 msgid ""
 "The chosen image size will shrink some layers completely away. Is this what "
 "you want?"
-msgstr ""
-"所選擇的影像將要縮小\n"
-"致使某些圖層完全消失。\n"
-"這是否您想要的結果？"
+msgstr "所選擇的影像將要縮小，致使某些圖層完全消失。這是否您想要的結果？"
 
 #: app/gui/image-commands.c:547
 msgid "Layer Too Small"
@@ -3794,7 +3769,7 @@ msgstr "/檔案/常用檔案/(無)"
 
 #: app/gui/image-menu.c:123 app/gui/toolbox-menu.c:71
 msgid "/File/Open Recent/Document _History"
-msgstr "/檔案/常用檔案/檔案紀錄(_H)"
+msgstr "/檔案/常用檔案/文件紀錄(_H)"
 
 #: app/gui/image-menu.c:131
 msgid "/File/_Save"
@@ -4030,9 +4005,8 @@ msgid "/View/Zoom/1:16  (6.25%)"
 msgstr "/顯示/放大縮小/1:16  (6.25%)"
 
 #: app/gui/image-menu.c:427
-#, fuzzy
 msgid "/View/Zoom/O_ther..."
-msgstr "/顯示/縮放/拉遠(_O)"
+msgstr "/顯示/縮放/其它(_T)..."
 
 #: app/gui/image-menu.c:434
 msgid "/View/_Info Window"
@@ -5273,12 +5247,9 @@ msgid "Preview"
 msgstr "預覽"
 
 #: app/gui/palette-select.c:250
-#, fuzzy
 msgid ""
 "Unable to run palette callback. The corresponding plug-in may have crashed."
-msgstr ""
-"無法執行漸層的 callback。\n"
-"相應的增效模組可能已經不正常結束。"
+msgstr "無法執行色盤的 callback。相應的增效模組可能已經不正常結束。"
 
 #: app/gui/palettes-commands.c:82
 msgid "Merge Palette"
@@ -5317,12 +5288,9 @@ msgid "/_Refresh Palettes"
 msgstr "/重新整理色盤(_R)"
 
 #: app/gui/pattern-select.c:252
-#, fuzzy
 msgid ""
 "Unable to run pattern callback. The corresponding plug-in may have crashed."
-msgstr ""
-"無法執行漸層的 callback。\n"
-"相應的增效模組可能已經不正常結束。"
+msgstr "無法執行圖樣的 callback。相應的增效模組可能已經不正常結束。"
 
 #. disabled because they are useless now
 #: app/gui/patterns-menu.c:47
@@ -5397,15 +5365,15 @@ msgstr "顯示參考線(_G)"
 
 #: app/gui/preferences-dialog.c:921
 msgid "Show Gri_d"
-msgstr ""
+msgstr "顯示格線(_D)"
 
 #: app/gui/preferences-dialog.c:927
 msgid "Canvas Padding Mode:"
-msgstr ""
+msgstr "影像外圍補白的方式："
 
 #: app/gui/preferences-dialog.c:930
 msgid "Custom Padding Color:"
-msgstr ""
+msgstr "指定影像外圍補白所用的顏色："
 
 #: app/gui/preferences-dialog.c:931
 msgid "Select Custom Canvas Padding Color"
@@ -5421,11 +5389,11 @@ msgstr "新的影像的佔用記憶上限："
 
 #: app/gui/preferences-dialog.c:1170
 msgid "Default Image Grid"
-msgstr ""
+msgstr "預設影像格線"
 
 #: app/gui/preferences-dialog.c:1173
 msgid "Default Grid"
-msgstr ""
+msgstr "預設格線"
 
 #: app/gui/preferences-dialog.c:1193
 msgid "User Interface"
@@ -5562,12 +5530,12 @@ msgstr "縮放"
 
 #: app/gui/preferences-dialog.c:1418
 msgid "Default _Interpolation:"
-msgstr "預設的內插法方式(_I)："
+msgstr "預設使用的內插法(_I)："
 
 #. Global Brush, Pattern, ...
 #: app/gui/preferences-dialog.c:1422
 msgid "Paint Options Shared Between Tools"
-msgstr ""
+msgstr "所有工具可以共用的繪圖選項"
 
 #: app/gui/preferences-dialog.c:1426
 msgid "_Brush"
@@ -5602,7 +5570,7 @@ msgstr "預設使用「點對點」模式(_D)"
 
 #: app/gui/preferences-dialog.c:1493
 msgid "Marching _Ants Speed:"
-msgstr "選擇區域虛線(Marching _Ants)的移動速度："
+msgstr "選擇區域虛線 (Marching _Ants) 的移動速度："
 
 #. Zoom & Resize Behavior
 #: app/gui/preferences-dialog.c:1497
@@ -5622,14 +5590,14 @@ msgid "Fit to Window"
 msgstr "符合視窗尺寸"
 
 #: app/gui/preferences-dialog.c:1512
-#, fuzzy
 msgid "Initial Zoom Ratio:"
 msgstr "開始時的縮放比例："
 
+# FIXME: This is mediocre translation -- Abel
 #. Pointer Movement Feedback
 #: app/gui/preferences-dialog.c:1516
 msgid "Pointer Movement Feedback"
-msgstr ""
+msgstr "移動滑鼠指標回饋方式"
 
 #: app/gui/preferences-dialog.c:1520
 msgid "Show _Brush Outline"
@@ -5725,9 +5693,10 @@ msgstr "8 位元色彩畫面"
 msgid "Minimum Number of Colors:"
 msgstr "顏色數目下限："
 
+# FIXME: Any good word for Colormap? -- Abel
 #: app/gui/preferences-dialog.c:1725
 msgid "Install Colormap"
-msgstr "安裝 Colormap"
+msgstr "使用自己的 Colormap"
 
 #: app/gui/preferences-dialog.c:1734 app/gui/user-install-dialog.c:964
 msgid "Monitor Resolution"
@@ -6028,11 +5997,11 @@ msgstr ""
 
 #: app/gui/qmask-menu.c:51
 msgid "/Mask _Selected Areas"
-msgstr ""
+msgstr "/遮廠已選取的區域(_S)"
 
 #: app/gui/qmask-menu.c:55
 msgid "/Mask _Unselected Areas"
-msgstr ""
+msgstr "/遮廠未選取的區域(_U)"
 
 #: app/gui/qmask-menu.c:62
 msgid "/_Configure Color and Opacity..."
@@ -6186,7 +6155,7 @@ msgstr "描邊"
 
 #: app/gui/stroke-dialog.c:190
 msgid "Stroke Using a Paint Tool"
-msgstr ""
+msgstr "使用繪畫工具來描邊"
 
 #: app/gui/stroke-dialog.c:214
 msgid "Paint Tool:"
@@ -7387,7 +7356,7 @@ msgstr "會更改選擇區域"
 #: app/tools/tools-enums.c:75 app/vectors/gimpvectors.c:235
 #: app/vectors/gimpvectors.c:534
 msgid "Transform Path"
-msgstr ""
+msgstr "變換路徑"
 
 #: app/tools/tools-enums.c:93
 msgid "Design"
@@ -7530,7 +7499,7 @@ msgstr "填色方式  %s"
 #: app/tools/gimpbucketfilloptions.c:266
 #, c-format
 msgid "Affected Area  %s"
-msgstr ""
+msgstr "受影響區域  %s"
 
 #: app/tools/gimpbucketfilloptions.c:269
 msgid "Fill Whole Selection"
@@ -7683,7 +7652,7 @@ msgstr "半徑："
 #: app/tools/gimpcolorpickeroptions.c:175
 #, c-format
 msgid "Pick Mode  %s"
-msgstr ""
+msgstr "選擇模式  %s"
 
 #: app/tools/gimpcolorpickertool.c:97
 msgid "Color Picker"
@@ -7945,9 +7914,8 @@ msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "「色相及彩度」只適用於 RGB 色系的圖層。"
 
 #: app/tools/gimphuesaturationtool.c:263
-#, fuzzy
 msgid "M_aster"
-msgstr "主要(_M)"
+msgstr "主要(_A)"
 
 #: app/tools/gimphuesaturationtool.c:264
 msgid "_R"
@@ -8458,7 +8426,7 @@ msgstr ""
 
 #: app/tools/gimptextoptions.c:178
 msgid "Indentation of the first line"
-msgstr ""
+msgstr "第一行縮排的距離"
 
 #: app/tools/gimptextoptions.c:183
 msgid "Modify line spacing"
@@ -8548,7 +8516,6 @@ msgid "Apply Threshold"
 msgstr ""
 
 #: app/tools/gimpthresholdtool.c:199
-#, fuzzy
 msgid "Threshold does not operate on indexed layers."
 msgstr "界限值不適用於索引色影像。"
 
@@ -8745,7 +8712,7 @@ msgstr ""
 
 #: app/tools/gimpvectortool.c:1187
 msgid "Click-Drag to move the path around."
-msgstr ""
+msgstr "按下後拖曳可以移動路徑。"
 
 #: app/tools/gimpvectortool.c:1190
 msgid "Click to insert an anchor on the path. (try SHIFT)"
@@ -8781,11 +8748,11 @@ msgstr "更改路徑名稱"
 
 #: app/vectors/gimpvectors.c:231
 msgid "Scale Path"
-msgstr ""
+msgstr "縮放路徑尺寸"
 
 #: app/vectors/gimpvectors.c:232
 msgid "Resize Path"
-msgstr ""
+msgstr "更改路徑尺寸"
 
 #: app/vectors/gimpvectors.c:233 app/vectors/gimpvectors.c:460
 msgid "Flip Path"
@@ -8851,6 +8818,8 @@ msgid ""
 "New Channel\n"
 "%s New Channel Dialog"
 msgstr ""
+"新增色版\n"
+"%s 顯示新增色版對話方塊"
 
 #: app/widgets/gimpchanneltreeview.c:123
 msgid "Duplicate Channel"
@@ -9922,529 +9891,3 @@ msgstr "製作/修改影像或相片"
 
 #~ msgid "Configure input devices"
 #~ msgstr "設定輸入裝置"
-
-#~ msgid ""
-#~ "  -S, --no-splash-image    Do not add an image to the startup window.\n"
-#~ msgstr "  -S, --no-splash-image    啟動視窗裡不會顯示影像。\n"
-
-#~ msgid "Image Mod"
-#~ msgstr "修改影像"
-
-#~ msgid "Layer Mod"
-#~ msgstr "修改圖層"
-
-#~ msgid "Channel Mod"
-#~ msgstr "修改色版"
-
-#~ msgid "Could not open"
-#~ msgstr "無法開啟"
-
-#~ msgid "/View/Zoom/1:4"
-#~ msgstr "/顯示/放大縮小/1:4"
-
-#~ msgid "/View/Zoom/1:8"
-#~ msgstr "/顯示/放大縮小/1:8"
-
-#~ msgid "Empty Layer Copy"
-#~ msgstr "空白圖層複製本"
-
-#~ msgid "Cannot create folder: %s"
-#~ msgstr "無法建立目錄：%s"
-
-#~ msgid "Misc Tool procedures"
-#~ msgstr "其它工具程序"
-
-#~ msgid "Modify Curves for Channel:"
-#~ msgstr "修改以下色版的曲線："
-
-#~ msgid "Modify Levels for Channel:"
-#~ msgstr "修改此色版的色階："
-
-#~ msgid "The GIMP (unstable)"
-#~ msgstr "The GIMP (不穩定版本)"
-
-#~ msgid "  -r, --restore-session    Try to restore saved session.\n"
-#~ msgstr "  -r, --restore-session    嘗試回復上次執行時的情況。\n"
-
-#~ msgid "Cannot open '%s' for reading: %s"
-#~ msgstr "無法開啟‘%s’來讀取資料：%s"
-
-#~ msgid "Cannot open '%s' for writing: %s"
-#~ msgstr "無法開啟‘%s’來寫入資料：%s"
-
-#~ msgid "Failed to open '%s' for writing: %s"
-#~ msgstr "無法開啟‘%s’來寫入資料：%s"
-
-#~ msgid "Failed to create file '%s': %s"
-#~ msgstr "無法新增檔案‘%s’：%s"
-
-#~ msgid "Failed to open file: '%s': %s"
-#~ msgstr "無法開啟檔案：‘%s’：%s"
-
-#~ msgid "Copy"
-#~ msgstr "複製"
-
-#~ msgid ""
-#~ "Fatal parsing error (unknown version %d):\n"
-#~ "Brush file '%s'"
-#~ msgstr ""
-#~ "分析時出現嚴重錯誤 (不明版本 %d)：\n"
-#~ "筆刷檔案‘%s’"
-
-#~ msgid "Failed to write thumbnail for '%s' as '%s': %s"
-#~ msgstr "無法將‘%s’的縮圖寫入為‘%s’：%s"
-
-#~ msgid "Failed to set permissions of thumbnail '%s': %s"
-#~ msgstr "設定縮圖檔‘%s’的存取權限時發生錯誤：%s"
-
-#~ msgid "Failed to create thumbnail folder '%s'."
-#~ msgstr "無法建立縮圖檔目錄‘%s’。"
-
-#~ msgid ""
-#~ "Loading palette '%s':\n"
-#~ "Corrupt palette: missing magic header"
-#~ msgstr ""
-#~ "載入色盤‘%s’：\n"
-#~ "色盤已損壞：未有出現正確的檔案標頭"
-
-#~ msgid "Unknown pattern format version %d in '%s'."
-#~ msgstr "出現不明的圖樣格式版本 %d(檔案為‘%s’)。"
-
-#~ msgid "Error in GIMP pattern file '%s'."
-#~ msgstr "GIMP 圖樣檔案‘%s’中出現錯誤。"
-
-#~ msgid "Visit http://www.gimp.org/ for more information"
-#~ msgstr "如果需要其它資料，請瀏覽 http://www.gimp.org/"
-
-#~ msgid "Current:"
-#~ msgstr "新："
-
-#~ msgid "Old:"
-#~ msgstr "舊："
-
-#~ msgid "Revert to old color"
-#~ msgstr "還原至以前的顏色"
-
-#~ msgid "Dimensions (W x H):"
-#~ msgstr "尺寸(寬×高)："
-
-#~ msgid "Colormap Cycling"
-#~ msgstr "Colormap 循環使用"
-
-#~ msgid "writing \"%s\"\n"
-#~ msgstr "寫入“%s”\n"
-
-#~ msgid "Too large!"
-#~ msgstr "太大了！"
-
-#~ msgid ""
-#~ "Are you sure you want to delete\n"
-#~ "template \"%s\" from the list?"
-#~ msgstr ""
-#~ "是否確定從清單中刪除範本\n"
-#~ "“%s”？"
-
-#~ msgid "Error opening file '%s': %s"
-#~ msgstr ""
-#~ "開啟檔案‘%s’時發生錯誤：\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "Can't open '%s' for writing:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "無法開啟‘%s’來寫入資料：\n"
-#~ "%s"
-
-#~ msgid "Font:"
-#~ msgstr "字型："
-
-#~ msgid "GIMP Font Selection"
-#~ msgstr "GIMP 字型選擇"
-
-#~ msgid "_Family:"
-#~ msgstr "字族(_F)："
-
-#~ msgid "_Style:"
-#~ msgstr "字款(_S)："
-
-#~ msgid "Pack my box with five dozen liquor jugs."
-#~ msgstr "This is Chinese: '中文測試' 0123456789"
-
-#~ msgid "Click to open the Font Selection Dialog"
-#~ msgstr "按下後會開啟字型選擇對話方塊。"
-
-#~ msgid ""
-#~ "Specifies how the area around the image should be drawn when in "
-#~ "fullscreen mode."
-#~ msgstr "指定在全螢幕模式中如何顯示影像周圍的空白區域。"
-
-#~ msgid ""
-#~ "Sets the canvas padding color used when in fullscreen mode and the "
-#~ "padding mode is set to custom color."
-#~ msgstr ""
-#~ "在全螢幕模式中，如果指定了使用自選顏色來填滿影像周圍的空白區域，就會使用這"
-#~ "個設定值中的顏色。"
-
-#~ msgid ""
-#~ "When enabled, the menubar is visible by default in fullscreen mode. This "
-#~ "can also be toggled with the \"View->Show Menubar\" command."
-#~ msgstr ""
-#~ "如選用本選項，在全螢幕模式中會預設顯示選單列。您也可以在「顯示→顯示選單"
-#~ "列」中更改本設定。"
-
-#~ msgid ""
-#~ "When enabled, the rulers are visible by default in fullscreen mode. This "
-#~ "can also be toggled with the \"View->Show Rulers\" command."
-#~ msgstr ""
-#~ "如選用本選項，在全螢幕模式中會預設顯示尺規。您也可以在「顯示→顯示尺規」中"
-#~ "更改本設定。"
-
-#~ msgid ""
-#~ "When enabled, the scrollbars are visible by default in fullscreen mode. "
-#~ "This can also be toggled with the \"View->Show Scrollbars\" command."
-#~ msgstr ""
-#~ "如選用本選項，在全螢幕模式中會預設顯示捲動列。您也可以在「顯示→顯示捲動"
-#~ "列」中更改本設定。"
-
-#~ msgid ""
-#~ "When enabled, the statusbar is visible by default in fullscreen mode. "
-#~ "This can also be toggled with the \"View->Show Statusbar\" command."
-#~ msgstr ""
-#~ "如選用本選項，在全螢幕模式中會預設顯示狀態列。您也可以在「顯示→顯示狀態"
-#~ "列」中更改本設定。"
-
-#~ msgid "/_Select Tab"
-#~ msgstr "/選取分頁(_S)"
-
-#~ msgid "N/A"
-#~ msgstr "無"
-
-#~ msgid "R:"
-#~ msgstr "紅："
-
-#~ msgid "G:"
-#~ msgstr "綠："
-
-#~ msgid "B:"
-#~ msgstr "藍："
-
-#~ msgid "H:"
-#~ msgstr "色相："
-
-#~ msgid "S:"
-#~ msgstr "彩度："
-
-#~ msgid "V:"
-#~ msgstr "亮度："
-
-#~ msgid "A:"
-#~ msgstr "透明："
-
-#~ msgid "Default Image Size and Unit"
-#~ msgstr "預設影像尺寸及長度單位"
-
-#~ msgid "Default Image Resolution and Resolution Unit"
-#~ msgstr "預設影像解析度及其長度單位"
-
-#~ msgid "Default Comment"
-#~ msgstr "預設的備註文字"
-
-#~ msgid "Comment Used for New Images"
-#~ msgstr "新影像的備註文字"
-
-#~ msgid "How many pixels the first line should be shorter"
-#~ msgstr "第一行應縮短多少距離 (像素)"
-
-#~ msgid "Additional line spacing (in pixels)"
-#~ msgstr "額外行距 (像素)"
-
-#~ msgid "Transform Active Layer"
-#~ msgstr "會更改使用中的圖層"
-
-#~ msgid "Transform Active Path"
-#~ msgstr "會更改使用中的路徑"
-
-#~ msgid "Intensity:"
-#~ msgstr "光度："
-
-#~ msgid "Hex Triplet:"
-#~ msgstr "16 進位表示："
-
-#~ msgid "View image histogram"
-#~ msgstr "觀看影像的色彩統計圖"
-
-#~ msgid "/Tools/Color Tools/_Histogram..."
-#~ msgstr "/工具/色彩工具/色彩統計圖(_H)..."
-
-#~ msgid "Histogram does not operate on indexed drawables."
-#~ msgstr "色彩統計圖不適用於索引色的可繪物件。"
-
-#~ msgid "View Image Histogram"
-#~ msgstr "顯示色彩統計圖"
-
-#~ msgid "Information on Channel:"
-#~ msgstr "色版資訊："
-
-#~ msgid "Measure angles and lengths"
-#~ msgstr "測量角度及長度"
-
-#~ msgid "degrees"
-#~ msgstr "度"
-
-#~ msgid "Selection from Channel"
-#~ msgstr "選取色版"
-
-#~ msgid "Selection from Alpha"
-#~ msgstr "選取透明區域"
-
-#~ msgid "Selection from Mask"
-#~ msgstr "選取圖層遮罩"
-
-#~ msgid ""
-#~ "The active layer has no mask\n"
-#~ "to convert to a selection."
-#~ msgstr ""
-#~ "使用中的圖層沒有遮罩\n"
-#~ "可以轉換為選擇區域。"
-
-#~ msgid "Paint operation failed."
-#~ msgstr "繪畫操作失敗。"
-
-#~ msgid "Image List"
-#~ msgstr "影像清單"
-
-#~ msgid "Brush List"
-#~ msgstr "筆刷清單"
-
-#~ msgid "Pattern List"
-#~ msgstr "圖樣清單"
-
-#~ msgid "Gradient List"
-#~ msgstr "漸層清單"
-
-#~ msgid "Palette List"
-#~ msgstr "色盤清單"
-
-#~ msgid "Tool List"
-#~ msgstr "工具清單"
-
-#~ msgid "Buffer List"
-#~ msgstr "緩衝區清單"
-
-#~ msgid "List of Templates"
-#~ msgstr "範本清單"
-
-#~ msgid "Layer List"
-#~ msgstr "圖層清單"
-
-#~ msgid "Channel List"
-#~ msgstr "色版清單"
-
-#~ msgid "Path List"
-#~ msgstr "路徑清單"
-
-#~ msgid "/_New Display"
-#~ msgstr "/新增檢視視窗(_N)"
-
-#~ msgid "/Layer to _Imagesize"
-#~ msgstr "/令圖層尺寸符合影像尺寸(_I)"
-
-#~ msgid "/_Delete Template..."
-#~ msgstr "/刪除範本(_D)..."
-
-#~ msgid "Save current settings as default values"
-#~ msgstr "將目前的設定儲存為預設值"
-
-#~ msgid "Restore saved default values"
-#~ msgstr "回復為已儲存的預設值"
-
-#~ msgid "Reset to factory defaults"
-#~ msgstr "回復為程式提供的預設值"
-
-#~ msgid "Blend: 0, 0"
-#~ msgstr "混色：0, 0"
-
-#~ msgid "Crop: 0 x 0"
-#~ msgstr "裁剪：0×0"
-
-#~ msgid "Move: 0, 0"
-#~ msgstr "移動：0, 0"
-
-#~ msgid "Move Selection Outline"
-#~ msgstr "移動選擇區域的輪廓"
-
-#~ msgid "Move Pixels"
-#~ msgstr "移動像素"
-
-#~ msgid "Vectors"
-#~ msgstr "向量"
-
-#~ msgid "the most promising path tool prototype... :-)"
-#~ msgstr "最有前途的路徑工具 :-)"
-
-#~ msgid "/Tools/_Vectors"
-#~ msgstr "/工具/向量(_V)"
-
-#~ msgid "Netscape"
-#~ msgstr "Netscape"
-
-#~ msgid "Keep Trans."
-#~ msgstr "保留透明度"
-
-#~ msgid "New Color"
-#~ msgstr "新增顏色"
-
-#~ msgid "open failed on %s: %s\n"
-#~ msgstr "開啟 %s 失敗：%s\n"
-
-#~ msgid "Color Editor"
-#~ msgstr "顏色選擇窗"
-
-#~ msgid "Appearence"
-#~ msgstr "外觀"
-
-#~ msgid "  Success\n"
-#~ msgstr "──成功\n"
-
-#~ msgid "  Failure: %s\n"
-#~ msgstr "  失敗：%s\n"
-
-#~ msgid "Once Forward"
-#~ msgstr "向前漸層"
-
-#~ msgid "Once Backward"
-#~ msgstr "向後漸層"
-
-#~ msgid "Loop Sawtooth"
-#~ msgstr "鋸齒式循環漸層"
-
-#~ msgid "Loop Triangle"
-#~ msgstr "三角型循環漸層"
-
-#~ msgid "Hex Triplet"
-#~ msgstr "16 進位表示"
-
-#~ msgid "Type:"
-#~ msgstr "類型："
-
-#~ msgid "PDB calling error %s"
-#~ msgstr "程序資料庫調用錯誤 %s"
-
-#~ msgid ""
-#~ "Incorrect arguments passed to procedural_db_run_proc:\n"
-#~ "Argument %d to '%s' should be a %s, but got passed a %s"
-#~ msgstr ""
-#~ "傳入 procedural_db_run_proc 的參數不正確：\n"
-#~ "%2$s 的第 %1$d 個參數應該是 %3$s，但事實上是 %4$s"
-
-#~ msgid "Clear Console"
-#~ msgstr "清除訊息視窗內容"
-
-#~ msgid "Tool Plug-Ins"
-#~ msgstr "工具增效模組"
-
-#~ msgid "Tool Plug-In Folders"
-#~ msgstr "工具增效模組資料夾"
-
-#~ msgid "Select Tool Plug-In Folders"
-#~ msgstr "選取工具增效模組資料夾"
-
-#~ msgid "/Image/Transform/Rotate Right"
-#~ msgstr "/影像/變換/向右旋轉"
-
-#~ msgid "/Layer/Transform/Rotate Left"
-#~ msgstr "/圖層/變換/向左旋轉"
-
-#~ msgid "New Point"
-#~ msgstr "新增端點"
-
-#~ msgid "Add Point"
-#~ msgstr "加入端點"
-
-#~ msgid "Delete Point"
-#~ msgstr "刪除端點"
-
-#~ msgid "Edit Point"
-#~ msgstr "修改端點"
-
-#~ msgid "Path %d"
-#~ msgstr "路徑 %d"
-
-#~ msgid "Failed to read from '%s'."
-#~ msgstr "無法從‘%s’讀入資料。"
-
-#~ msgid "No points specified in path file '%s'."
-#~ msgstr "路徑檔‘%s’中沒有指定任何端點。"
-
-#~ msgid "Failed to read path points from '%s'."
-#~ msgstr "無法從 %s 中讀入路徑端點。"
-
-#~ msgid "Load and Save Bezier Curves"
-#~ msgstr "載入/儲存貝茲曲線"
-
-#~ msgid "Bezier Select"
-#~ msgstr "選擇貝茲曲線區域"
-
-#~ msgid "Select regions using Bezier curves"
-#~ msgstr "使用貝茲曲線來選擇區域"
-
-#~ msgid "/Tools/Selection Tools/Bezier Select"
-#~ msgstr "/工具/選擇區域工具/選擇貝茲曲線區域"
-
-#~ msgid "Bezier path already closed."
-#~ msgstr "貝茲曲線的路徑已經閉合。"
-
-#~ msgid "Paintbrush operation failed."
-#~ msgstr "畫筆操作失敗。"
-
-#~ msgid "Input Device Settings"
-#~ msgstr "設定輸入裝置"
-
-#~ msgid ""
-#~ "Unable to add a layer mask to a\n"
-#~ "layer in an indexed image."
-#~ msgstr ""
-#~ "無法在索引色影像的\n"
-#~ "圖層中加上圖層遮罩。"
-
-#~ msgid "Layer Reposition"
-#~ msgstr "圖層重新定位"
-
-#~ msgid "Channel Reposition"
-#~ msgstr "色版重新定位"
-
-#~ msgid "Undo History: %s"
-#~ msgstr "復原紀錄：%s"
-
-#~ msgid "Image Undo History"
-#~ msgstr "影像復原紀錄"
-
-#~ msgid ""
-#~ "When the physical image size changes, setting this option to yes enables "
-#~ "the automatic resizing of windows."
-#~ msgstr "當影像的實際尺寸有變動時，設定本選項為 yes 會自動調整視窗的尺寸。"
-
-#~ msgid "Sets the size of the thumbnail saved with each image."
-#~ msgstr "指定每幅影像的縮圖的尺寸。"
-
-#~ msgid "Levels of Undo:"
-#~ msgstr "復原次數："
-
-#~ msgid "Unit:"
-#~ msgstr "長度單位："
-
-#~ msgid "parasite attached to item"
-#~ msgstr "依附在可繪物件上的附帶物件"
-
-#~ msgid "parasite detached from item"
-#~ msgstr "不再依附在可繪物件上的附帶物件"
-
-#~ msgid "Reset"
-#~ msgstr "重設"
-
-#~ msgid "No font chosen or font invalid."
-#~ msgstr "未選取字型或者字型無效。"
-
-#~ msgid "_Border:"
-#~ msgstr "邊界(_B)："
