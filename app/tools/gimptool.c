@@ -539,8 +539,6 @@ STUB(paths_dialog_export_path_callback)
 STUB(paths_dialog_edit_path_attributes_callback)
 STUB(dodgeburn_non_gui)
 STUB(dodgeburn_non_gui_default)
-STUB(eraser_non_gui)
-STUB(eraser_non_gui_default)
 STUB(transform_core_cut)
 STUB(flip_tool_flip)
 STUB(transform_core_paste)
@@ -821,35 +819,6 @@ ToolInfo tool_info[] =
 
   {
     NULL,
-    N_("Pencil"),
-    N_("/Tools/Paint Tools/Pencil"),
-    "<shift>P",
-    (char **) pencil_bits,
-    NULL,
-    NULL,
-    N_("Draw sharp pencil strokes"),
-    "tools/pencil.html",
-    PENCIL,
-    tools_new_pencil,
-    tools_free_pencil,
-    NULL,
-    NULL,
-    NULL,
-    {
-      pencil_small_bits, pencil_small_mask_bits,
-      pencil_small_width, pencil_small_height,
-      0, 0, NULL, NULL, NULL
-    },
-    {
-      NULL, NULL,
-      0, 0,
-      0, 0, NULL, NULL, NULL
-    }
-  },
-
-
-  {
-    NULL,
     N_("Airbrush"),
     N_("/Tools/Paint Tools/Airbrush"),
     "A",
@@ -923,34 +892,6 @@ ToolInfo tool_info[] =
     {
       clone_small_bits, clone_small_mask_bits,
       clone_small_width, clone_small_height,
-      0, 0, NULL, NULL, NULL
-    },
-    {
-      NULL, NULL,
-      0, 0,
-      0, 0, NULL, NULL, NULL
-    }
-  },
-
-  {
-    NULL,
-    N_("Eraser"),
-    N_("/Tools/Paint Tools/Eraser"),
-    "<shift>E",
-    (char **) erase_bits,
-    NULL,
-    NULL,
-    N_("Erase to background or transparency"),
-    "tools/eraser.html",
-    ERASER,
-    tools_new_eraser,
-    tools_free_eraser,
-    NULL,
-    NULL,
-    NULL,
-    {
-      eraser_small_bits, eraser_small_mask_bits,
-      eraser_small_width, eraser_small_height,
       0, 0, NULL, NULL, NULL
     },
     {

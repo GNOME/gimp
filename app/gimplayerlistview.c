@@ -157,6 +157,9 @@ gimp_layer_list_view_init (GimpLayerListView *view)
   gtk_box_pack_start (GTK_BOX (hbox), view->paint_mode_menu, FALSE, FALSE, 2);
   gtk_widget_show (view->paint_mode_menu);
 
+  gimp_help_set_help_data (view->paint_mode_menu, 
+			   NULL, "#paint_mode_menu");
+
   /*  Preserve transparency toggle  */
 
   view->preserve_trans_toggle =
@@ -168,6 +171,9 @@ gimp_layer_list_view_init (GimpLayerListView *view)
   gtk_signal_connect (GTK_OBJECT (view->preserve_trans_toggle), "toggled",
 		      GTK_SIGNAL_FUNC (gimp_layer_list_view_preserve_button_toggled),
 		      view);
+
+  gimp_help_set_help_data (view->preserve_trans_toggle,
+			   _("Keep Transparency"), "#keep_trans_button");
 
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (view->options_box), hbox, FALSE, FALSE, 0);
@@ -190,6 +196,8 @@ gimp_layer_list_view_init (GimpLayerListView *view)
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_RIGHT);
   gtk_box_pack_start (GTK_BOX (hbox), slider, TRUE, TRUE, 0);
   gtk_widget_show (slider);
+
+  gimp_help_set_help_data (slider, NULL, "#opacity_scale");
 
   /*  Anchor button  */
 

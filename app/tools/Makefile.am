@@ -27,8 +27,8 @@ libapptools_la_SOURCES = \
 	gimpeditselectiontool.h	\
 	gimpellipseselecttool.c	\
 	gimpellipseselecttool.h	\
-##	gimperasertool.c	\
-##	gimperasertool.h	\
+	gimperasertool.c	\
+	gimperasertool.h	\
 ##	gimpfliptool.c		\
 ##	gimpfliptool.h		\
 	gimpfreeselecttool.c	\

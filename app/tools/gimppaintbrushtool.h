@@ -47,21 +47,20 @@ struct _GimpPaintbrushToolClass
 void       gimp_paintbrush_tool_register (void);
 
 GtkType    gimp_paintbrush_tool_get_type (void);
-GimpTool * gimp_paintbrush_tool_new      (void);
 
 
 
 /* FIXME: this antique code doesn't follow the coding style */
 
-gboolean   gimp_paintbrush_tool_non_gui       (GimpDrawable *,
-					       gint          ,
-					       gdouble      *,
-					       gdouble       ,
-					       gint          ,
-					       gdouble       );
-gboolean gimp_paintbrush_tool_non_gui_default (GimpDrawable *,
-					       gint          ,
-					       gdouble      *);
+gboolean   gimp_paintbrush_tool_non_gui         (GimpDrawable *drawable,
+						 gint          num_srokes,
+						 gdouble      *stroke_array,
+						 gdouble       fade_out,
+						 gint          incremental,
+						 gdouble       gradient_length);
+gboolean   gimp_paintbrush_tool_non_gui_default (GimpDrawable *drawable,
+						 gint          num_strokes,
+						 gdouble      *stroke_array);
 
 
 #endif  /*  __GIMP_PAINTBRUSH_TOOL_H__  */

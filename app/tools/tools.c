@@ -68,8 +68,7 @@ register_tools (void)
   /* gimp_convolve_tool_register (): */
   /* gimp_clone_tool_register (); */
   /* gimp_airbrush_tool_register (); */
-  /* gimp_eraser_tool_register (); */
-  /* gimp_pencil_tool_register (); */
+  gimp_eraser_tool_register ();
   gimp_paintbrush_tool_register ();
   gimp_pencil_tool_register ();
   gimp_blend_tool_register ();

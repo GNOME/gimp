@@ -1,5 +1,25 @@
 2001-03-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimplayerlistview.c: added some help_data and tooltips.
+
+	* app/tools/Makefile.am
+	* app/tools/gimperasertool.[ch]: one more.
+
+	* app/tools/gimppaintbrushtool.[ch]
+	* app/tools/gimppenciltool.[ch]: made all paint tools look the same.
+
+	* app/tools/gimppainttool.c
+	* app/tools/gimptool.[ch]
+	* app/tools/paint_options.c
+	* app/tools/tools.c: changed accordingly.
+
+	* pixmaps/anchor.xpm: made it a bit smaller.
+
+	* pixmaps/refresh.xpm: replaced with the "Recurrence" icon from
+	evolution.
+
+2001-03-12  Michael Natterer  <mitch@gimp.org>
+
 	* pixmaps/Makefile.am
 	* pixmaps/edit.xpm: new pixmap. "Someone" needs to go over the
 	pixmaps one day ;)

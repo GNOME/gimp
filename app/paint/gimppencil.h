@@ -50,7 +50,6 @@ struct _GimpPencilToolClass
 void       gimp_pencil_tool_register (void);
 
 GtkType    gimp_pencil_tool_get_type (void);
-GimpTool * gimp_pencil_tool_new      (void);
 
 /* FIXME: Get rid of this non_gui stuff someday.  Preferably make
  *        everything use it interally for ease of macro recording.
@@ -62,4 +61,4 @@ gboolean   pencil_non_gui    (GimpDrawable *drawable,
 
 
 
-#endif  /*  __PENCIL_H__  */
+#endif  /*  __GIMP_PENCIL_TOOL_H__  */

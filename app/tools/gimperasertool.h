@@ -16,22 +16,47 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __ERASER_H__
-#define __ERASER_H__
+#ifndef __GIMP_ERASER_TOOL_H__
+#define __GIMP_ERASER_TOOL_H__
 
 
-gboolean   eraser_non_gui         (GimpDrawable *drawable,
-				   gint          num_strokes,
-				   gdouble      *stroke_array,
-				   gint          hardness,
-				   gint          method,
-				   gboolean      anti_erase);
-gboolean   eraser_non_gui_default (GimpDrawable *paint_core,
-				   gint          num_strokes,
-				   gdouble      *stroke_array);
-
-Tool     * tools_new_eraser       (void);
-void       tools_free_eraser      (Tool         *tool);
+#include "gimppainttool.h"
 
 
-#endif  /*  __ERASER_H__  */
+#define GIMP_TYPE_ERASER_TOOL            (gimp_eraser_tool_get_type ())
+#define GIMP_ERASER_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_ERASER_TOOL, GimpEraserTool))
+#define GIMP_IS_ERASER_TOOL(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_ERASER_TOOL))
+#define GIMP_ERASER_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_ERASER_TOOL, GimpEraserToolClass))
+#define GIMP_IS_ERASER_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_ERASER_TOOL))
+
+
+typedef struct _GimpEraserTool      GimpEraserTool;
+typedef struct _GimpEraserToolClass GimpEraserToolClass;
+
+struct _GimpEraserTool
+{
+  GimpPaintTool parent_instance;
+};
+
+struct _GimpEraserToolClass
+{
+  GimpPaintToolClass parent_class;
+};
+
+
+void       gimp_eraser_tool_register (void);
+
+GtkType    gimp_eraser_tool_get_type (void);
+
+gboolean   eraser_non_gui            (GimpDrawable *drawable,
+                                      gint          num_strokes,
+                                      gdouble      *stroke_array,
+                                      gint          hardness,
+                                      gint          method,
+                                      gboolean      anti_erase);
+gboolean   eraser_non_gui_default    (GimpDrawable *paint_core,
+                                      gint          num_strokes,
+                                      gdouble      *stroke_array);
+
+
+#endif  /*  __GIMP_ERASER_TOOL_H__  */

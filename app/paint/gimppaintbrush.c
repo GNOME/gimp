@@ -37,29 +37,17 @@
 #include "temp_buf.h"
 
 #include "gimppaintbrushtool.h"
-#include "gimppainttool.h"
 #include "paint_options.h"
-#include "tool_options.h"
 #include "tool_manager.h"
-
-#include "pixmaps2.h"
 
 #include "libgimp/gimpintl.h"
 
-/*  defines  */
-#define  PAINT_LEFT_THRESHOLD  0.05
+#include "pixmaps2.h"
 
-/* defaults for the tool options */
-#define PAINTBRUSH_DEFAULT_INCREMENTAL       FALSE
-#define PAINTBRUSH_DEFAULT_USE_FADE          FALSE
-#define PAINTBRUSH_DEFAULT_FADE_OUT          100.0
-#define PAINTBRUSH_DEFAULT_FADE_UNIT         GIMP_UNIT_PIXEL
-#define PAINTBRUSH_DEFAULT_USE_GRADIENT      FALSE
-#define PAINTBRUSH_DEFAULT_GRADIENT_LENGTH   100.0
-#define PAINTBRUSH_DEFAULT_GRADIENT_UNIT     GIMP_UNIT_PIXEL
-#define PAINTBRUSH_DEFAULT_GRADIENT_TYPE     LOOP_TRIANGLE
 
-/*  the paintbrush structures  */
+#define PAINT_LEFT_THRESHOLD           0.05
+#define PAINTBRUSH_DEFAULT_INCREMENTAL FALSE
+
 
 typedef struct _PaintbrushOptions PaintbrushOptions;
 
@@ -68,32 +56,49 @@ struct _PaintbrushOptions
   PaintOptions  paint_options;
 };
 
-/*  the paint brush tool options  */
-static PaintbrushOptions * paintbrush_options = NULL;
+
+static void   gimp_paintbrush_tool_class_init (GimpPaintbrushToolClass *klass);
+static void   gimp_paintbrush_tool_init       (GimpPaintbrushTool      *tool);
+
+static void   gimp_paintbrush_tool_paint      (GimpPaintTool        *paint_core,
+					       GimpDrawable         *drawable,
+					       PaintState            state);
+
+static void   gimp_paintbrush_tool_motion     (GimpPaintTool        *paint_tool,
+					       GimpDrawable         *drawable,
+					       PaintPressureOptions *pressure,
+					       PaintGradientOptions *gradient,
+					       gdouble               ,
+					       gdouble               ,
+					       PaintApplicationMode  ,
+					       GradientPaintMode     );
+
+static PaintbrushOptions * gimp_paintbrush_tool_options_new   (void);
+static void                gimp_paintbrush_tool_options_reset (void);
+
 
 /*  local variables  */
-static gdouble   non_gui_incremental;
+static gboolean non_gui_incremental = PAINTBRUSH_DEFAULT_INCREMENTAL;
+
+static PaintbrushOptions  *paintbrush_options = NULL;
 
 static GimpPaintToolClass *parent_class = NULL;
 
 
-/*  forward function declarations  */
-static void  gimp_paintbrush_tool_motion     (GimpPaintTool        *,
-					      GimpDrawable         *,
-					      PaintPressureOptions *,
-					      PaintGradientOptions *,
-					      gdouble               ,
-					      gdouble               ,
-					      PaintApplicationMode  ,
-					      GradientPaintMode     );
-static void gimp_paintbrush_tool_paint       (GimpPaintTool        *paint_core,
-					      GimpDrawable         *drawable,
-					      PaintState            state);
-static void gimp_paintbrush_tool_class_init  (GimpPaintbrushToolClass *klass);
-static void gimp_paintbrush_tool_init        (GimpPaintbrushTool      *tool);
-
-
 /*  functions  */
+
+void
+gimp_paintbrush_tool_register (void)
+{
+  tool_manager_register_tool (GIMP_TYPE_PAINTBRUSH_TOOL,
+			      TRUE,
+  			      "gimp:paintbrush_tool",
+  			      _("Paintbrush"),
+  			      _("Paint fuzzy brush strokes"),
+      			      N_("/Tools/Paint Tools/Paintbrush"), "P",
+  			      NULL, "tools/paintbrush.html",
+			      (const gchar **) paint_bits);
+}
 
 GtkType
 gimp_paintbrush_tool_get_type (void)
@@ -120,27 +125,39 @@ gimp_paintbrush_tool_get_type (void)
   return tool_type;
 }
 
-
 static void
-gimp_paintbrush_tool_options_reset (void)
+gimp_paintbrush_tool_class_init (GimpPaintbrushToolClass *klass)
 {
-  PaintbrushOptions *options = paintbrush_options;
+  GimpPaintToolClass *paint_tool_class;
 
-  paint_options_reset ((PaintOptions *) options);
+  paint_tool_class = (GimpPaintToolClass *) klass;
+
+  parent_class = gtk_type_class (GIMP_TYPE_PAINT_TOOL);
+
+  paint_tool_class->paint = gimp_paintbrush_tool_paint;
 }
 
-static PaintbrushOptions *
-gimp_paintbrush_tool_options_new (void)
+static void
+gimp_paintbrush_tool_init (GimpPaintbrushTool *paintbrush)
 {
-  PaintbrushOptions *options;
+  GimpTool      *tool;
+  GimpPaintTool *paint_tool;
 
-  /*  the new paint tool options structure  */
-  options = g_new0 (PaintbrushOptions, 1);
-  paint_options_init ((PaintOptions *) options,
-		      GIMP_TYPE_PAINTBRUSH_TOOL,
-		      gimp_paintbrush_tool_options_reset);
+  tool       = GIMP_TOOL (paintbrush);
+  paint_tool = GIMP_PAINT_TOOL (paintbrush);
 
-  return options;
+  if (! paintbrush_options)
+    {
+      paintbrush_options = gimp_paintbrush_tool_options_new ();
+
+      tool_manager_register_tool_options (GIMP_TYPE_PAINTBRUSH_TOOL,
+                                          (ToolOptions *) paintbrush_options);
+    }
+
+  tool->tool_cursor = GIMP_PAINTBRUSH_TOOL_CURSOR;
+
+  paint_tool->pick_colors =  TRUE;
+  paint_tool->flags       |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
 }
 
 static void
@@ -232,62 +249,6 @@ gimp_paintbrush_tool_paint (GimpPaintTool *paint_tool,
       break;
     }
 }
-
-
-GimpTool *
-gimp_paintbrush_tool_new (void)
-{
-  return gtk_type_new (GIMP_TYPE_PAINTBRUSH_TOOL);
-}
-
-static void
-gimp_paintbrush_tool_init (GimpPaintbrushTool *paintbrush)
-{
-  GimpTool      *tool;
-  GimpPaintTool *paint_tool;
-
-  tool       = GIMP_TOOL (paintbrush);
-  paint_tool = GIMP_PAINT_TOOL (paintbrush);
-
-  if (! paintbrush_options)
-    {
-      paintbrush_options = gimp_paintbrush_tool_options_new ();
-
-      tool_manager_register_tool_options (GIMP_TYPE_PAINTBRUSH_TOOL,
-                                          (ToolOptions *) paintbrush_options);
-    }
-
-  tool->tool_cursor = GIMP_PAINTBRUSH_TOOL_CURSOR;
-
-  paint_tool->pick_colors =  TRUE;
-  paint_tool->flags       |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
-}
-
-static void
-gimp_paintbrush_tool_class_init (GimpPaintbrushToolClass *klass)
-{
-  GimpPaintToolClass *paint_tool_class;
-
-  paint_tool_class = (GimpPaintToolClass *) klass;
-
-  parent_class = gtk_type_class (GIMP_TYPE_PAINT_TOOL);
-
-  paint_tool_class->paint = gimp_paintbrush_tool_paint;
-}
-
-void
-gimp_paintbrush_tool_register (void)
-{
-  tool_manager_register_tool (GIMP_TYPE_PAINTBRUSH_TOOL,
-			      TRUE,
-  			      "gimp:paintbrush_tool",
-  			      _("Paintbrush"),
-  			      _("Paint fuzzy brush strokes"),
-      			      N_("/Tools/Paint Tools/Paintbrush"), "P",
-  			      NULL, "tools/paintbrush.html",
-			      (const gchar **) paint_bits);
-}
-
 
 static void
 gimp_paintbrush_tool_motion (GimpPaintTool        *paint_tool,
@@ -383,7 +344,8 @@ gimp_paintbrush_tool_motion (GimpPaintTool        *paint_tool,
 			area->width * area->height, area->bytes);
 	}
 
-      opacity = (gdouble)temp_blend;
+      opacity = (gdouble) temp_blend;
+
       if (pressure_options->opacity)
 	opacity = opacity * 2.0 * paint_tool->curpressure;
 
@@ -396,6 +358,8 @@ gimp_paintbrush_tool_motion (GimpPaintTool        *paint_tool,
     }
 }
 
+
+/*  non-gui stuff  */
 
 static GimpPaintbrushTool *non_gui_paintbrush = NULL;
 
@@ -427,25 +391,22 @@ gimp_paintbrush_tool_non_gui_default (GimpDrawable *drawable,
       gimp_paint_tool_paint (paint_tool, drawable, MOTION_PAINT);
 
       for (i = 1; i < num_strokes; i++)
-       {
-         paint_tool->curx = stroke_array[i * 2 + 0];
-         paint_tool->cury = stroke_array[i * 2 + 1];
+	{
+	  paint_tool->curx = stroke_array[i * 2 + 0];
+	  paint_tool->cury = stroke_array[i * 2 + 1];
 
-         gimp_paint_tool_interpolate (paint_tool, drawable);
+	  gimp_paint_tool_interpolate (paint_tool, drawable);
 
-         paint_tool->lastx = paint_tool->curx;
-         paint_tool->lasty = paint_tool->cury;
-       }
+	  paint_tool->lastx = paint_tool->curx;
+	  paint_tool->lasty = paint_tool->cury;
+	}
 
-      /* Finish the painting */
       gimp_paint_tool_finish (paint_tool, drawable);
 
       return TRUE;
     }
-  else
-    {
-      return FALSE;
-    }
+
+  return FALSE;
 }
 
 gboolean
@@ -498,8 +459,31 @@ gimp_paintbrush_tool_non_gui (GimpDrawable *drawable,
 
       return TRUE;
     }
-  else
-    {
-      return FALSE;
-    }
+
+  return FALSE;
+}
+
+
+/*  tool options stuff  */
+
+static PaintbrushOptions *
+gimp_paintbrush_tool_options_new (void)
+{
+  PaintbrushOptions *options;
+
+  /*  the new paint tool options structure  */
+  options = g_new0 (PaintbrushOptions, 1);
+  paint_options_init ((PaintOptions *) options,
+		      GIMP_TYPE_PAINTBRUSH_TOOL,
+		      gimp_paintbrush_tool_options_reset);
+
+  return options;
+}
+
+static void
+gimp_paintbrush_tool_options_reset (void)
+{
+  PaintbrushOptions *options = paintbrush_options;
+
+  paint_options_reset ((PaintOptions *) options);
 }
