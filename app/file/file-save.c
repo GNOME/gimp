@@ -109,7 +109,7 @@ file_save_as (GimpImage      *gimage,
   Argument          *return_vals;
   GimpPDBStatusType  status;
   gint               i;
-  gchar             *filename;
+  gchar             *filename = NULL;
   gchar             *raw_filename_with_ext;
   gchar             *uri_with_ext;
 
