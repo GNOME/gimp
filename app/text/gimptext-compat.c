@@ -116,7 +116,7 @@ text_render (GimpImage    *gimage,
    */
   if (! gimp_channel_is_empty (gimp_image_get_mask (gimage)))
     gimp_channel_clear (gimp_image_get_mask (gimage), NULL, TRUE);
-  
+
   /*  If the drawable is NULL, create a new layer  */
   if (drawable == NULL)
     gimp_image_add_layer (gimage, layer, -1);
@@ -141,15 +141,19 @@ text_get_extents (const gchar *fontname,
   PangoFontDescription *font_desc;
   PangoContext         *context;
   PangoLayout          *layout;
+  PangoFontMap         *fontmap;
   PangoRectangle        rect;
 
   g_return_val_if_fail (fontname != NULL, FALSE);
   g_return_val_if_fail (text != NULL, FALSE);
 
   /* FIXME: resolution */
-  context = pango_ft2_get_context (72.0, 72.0);
+  fontmap = pango_ft2_font_map_new ();
+  context = pango_ft2_font_map_create_context (PANGO_FT2_FONT_MAP (fontmap));
+  g_object_unref (fontmap);
+
   layout = pango_layout_new (context);
-  g_object_unref (context);  
+  g_object_unref (context);
 
   font_desc = pango_font_description_from_string (fontname);
   pango_layout_set_font_description (layout, font_desc);
