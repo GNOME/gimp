@@ -1,3 +1,7 @@
+Tue Mar 24 04:19:55 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* app/convert.c: fix for fencepost error from Adam
+
 Mon Mar 23 18:08:59 PST 1998 Manish Singh <yosh@gimp.org>
 
         * app/gimage_mask.c

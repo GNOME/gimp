@@ -19,11 +19,7 @@
   /*
    * TODO for Convert:
    *
-   *   Make GRAYSCALE->INDEXED sane again (done?)
-   *
    *   Use palette of another open INDEXED image
-   *
-   * Post-1.0 TODO:
    *
    *   Different dither types
    *
@@ -31,6 +27,10 @@
    */
 
 /*
+ * 98/03/23 - fixed a longstanding fencepost - hopefully the *right*
+ *  way, *again*.  (anyone ELSE want a go?  okay, just kidding... :))
+ *  [Adam]
+ *
  * 97/11/14 - added a proper pdb interface and support for dithering
  *  to custom palettes (based on a patch by Eric Hernes) [Yosh]
  *
@@ -54,6 +54,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+
 #include "appenv.h"
 #include "actionarea.h"
 #include "convert.h"
@@ -532,7 +533,7 @@ indexed_ok_callback (GtkWidget *widget,
 		     dialog->dither, palette_type);
       gdisplays_flush ();
     }
-  
+
   gtk_widget_destroy (dialog->shell);
   g_free (dialog);
   dialog = NULL;
@@ -1013,7 +1014,10 @@ generate_histogram_rgb (Histogram  histogram,
 
   g_print ("col_limit = %d, nfc = %d\n", col_limit, num_found_cols);
 
-  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
+  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0,
+		     GIMP_DRAWABLE(layer)->width,
+		     GIMP_DRAWABLE(layer)->height,
+		     FALSE);
   for (pr = pixel_regions_register (1, &srcPR);
        pr != NULL;
        pr = pixel_regions_process (pr))
@@ -1066,8 +1070,8 @@ generate_histogram_rgb (Histogram  histogram,
 		       * existing colours
 		       */
 		      
-		      /* Remember the new colour we just found.
-		       */
+		      num_found_cols++;
+		      
 		      if (num_found_cols > col_limit)
 			{
 			  /* There are more colours in the image
@@ -1076,16 +1080,17 @@ generate_histogram_rgb (Histogram  histogram,
 			   *  quantizing at a later stage.
 			   */
 			  needs_quantize = TRUE;
-			  g_print ("max colours exceeded - needs quantize.\n");
+			  g_print ("\nmax colours exceeded - needs quantize.\n");
 			  goto already_found;
 			}
-
-		      found_cols[num_found_cols][0] = data[RED_PIX];
-		      found_cols[num_found_cols][1] = data[GREEN_PIX];
-		      found_cols[num_found_cols][2] = data[BLUE_PIX];
-		      
-		      num_found_cols++;
-		      
+		      else
+			{
+			  /* Remember the new colour we just found.
+			   */
+			  found_cols[num_found_cols-1][0] = data[RED_PIX];
+			  found_cols[num_found_cols-1][1] = data[GREEN_PIX];
+			  found_cols[num_found_cols-1][2] = data[BLUE_PIX];
+			}
 		    }
 		}
 	    already_found:
