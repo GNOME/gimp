@@ -1,5 +1,9 @@
 2004-03-19  Sven Neumann  <sven@gimp.org>
 
+	* etc/ps-menurc: updated PS keybindings contributed by Eric Pierce.
+
+2004-03-19  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimptexttool.[ch]: added a confirmation dialog that is
 	shown when the user attempts to modify a modified text layer.
 
