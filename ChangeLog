@@ -1,3 +1,12 @@
+2001-11-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-scroll.c: stop synthesizing expose
+	events but use gdk_window_invalidate_rect() and
+	gdk_window_process_updates() (both with "update_children == FALSE"
+	because the canvas has no children).
+
+	* app/tools/gimpmagnifytool.c: nothing.
+
 2001-11-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/Makefile.am

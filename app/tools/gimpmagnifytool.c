@@ -347,8 +347,8 @@ gimp_magnify_tool_button_release (GimpTool       *tool,
     {
       x1 = (magnify->w < 0) ? magnify->x + magnify->w : magnify->x;
       y1 = (magnify->h < 0) ? magnify->y + magnify->h : magnify->y;
-      w = (magnify->w < 0) ? -magnify->w : magnify->w;
-      h = (magnify->h < 0) ? -magnify->h : magnify->h;
+      w  = (magnify->w < 0) ? -magnify->w : magnify->w;
+      h  = (magnify->h < 0) ? -magnify->h : magnify->h;
       x2 = x1 + w;
       y2 = y1 + h;
 
@@ -408,6 +408,7 @@ gimp_magnify_tool_motion (GimpTool       *tool,
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, 0);
+
   magnify->w = (x - magnify->x);
   magnify->h = (y - magnify->y);
 

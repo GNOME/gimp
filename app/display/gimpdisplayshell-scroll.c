@@ -134,16 +134,20 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
        */
       while ((event = gdk_event_get_graphics_expose (shell->canvas->window)))
 	{
-	  gtk_widget_event (shell->canvas, event);
+          gdk_window_invalidate_rect (shell->canvas->window,
+                                      &event->expose.area,
+                                      FALSE);
 
-	  if (event->expose.count == 0)
-	    {
-	      gdk_event_free (event);
-	      break;
-	    }
+          if (event->expose.count == 0)
+            {
+              gdk_event_free (event);
+              break;
+            }
 
 	  gdk_event_free (event);
 	}
+
+      gdk_window_process_updates (shell->canvas->window, FALSE);
 
       return TRUE;
     }
@@ -167,4 +171,3 @@ gimp_display_shell_scroll_clamp_offsets (GimpDisplayShell *shell)
   shell->offset_y = CLAMP (shell->offset_y, 0,
 			   MAX (sy - shell->disp_height, 0));
 }
-
