@@ -45,22 +45,21 @@
 #include "tile-cache.h"
 #include "tile-swap.h"
 
-#include "appenv.h"
-
 
 GimpBaseConfig *base_config = NULL;
 
 
-static void   base_toast_old_temp_files   (void);
-static void   base_tile_cache_size_notify (GObject *config,
-                                           GParamSpec *param_spec,
-                                           gpointer    data);
+static void   base_toast_old_temp_files   (GimpBaseConfig *config);
+static void   base_tile_cache_size_notify (GObject        *config,
+                                           GParamSpec     *param_spec,
+                                           gpointer        data);
 
 
 /*  public functions  */
 
 void
-base_init (GimpBaseConfig *config)
+base_init (GimpBaseConfig *config,
+           gboolean        use_mmx)
 {
   gchar *swapfile;
   gchar *path;
@@ -83,15 +82,15 @@ base_init (GimpBaseConfig *config)
                     G_CALLBACK (base_tile_cache_size_notify),
                     NULL);
 
-  base_toast_old_temp_files ();
+  base_toast_old_temp_files (config);
 
   /* Add the swap file */
-  if (!base_config->swap_path)
-    g_object_set (G_OBJECT (base_config), "swap_path", g_get_tmp_dir ());
+  if (! config->swap_path)
+    g_object_set (G_OBJECT (config), "swap_path", g_get_tmp_dir ());
 
   swapfile = g_strdup_printf ("gimpswap.%lu", (unsigned long) getpid ());
 
-  path = g_build_filename (base_config->swap_path, swapfile, NULL);
+  path = g_build_filename (config->swap_path, swapfile, NULL);
 
   g_free (swapfile);
 
@@ -121,13 +120,13 @@ base_exit (void)
 /*  private functions  */
 
 static void
-base_toast_old_temp_files (void)
+base_toast_old_temp_files (GimpBaseConfig *config)
 {
   GDir *dir = NULL;
   const char *entry;
 
-  if (base_config->swap_path)
-    dir = g_dir_open (base_config->swap_path, 0, NULL);
+  if (config->swap_path)
+    dir = g_dir_open (config->swap_path, 0, NULL);
 
   if (!dir)
     return;
@@ -154,11 +153,8 @@ base_toast_old_temp_files (void)
 	  {
             gchar *filename;
 
-	    filename = g_build_filename (base_config->swap_path, entry,
-                                         NULL);
-
+	    filename = g_build_filename (config->swap_path, entry, NULL);
 	    unlink (filename);
-
             g_free (filename);
 	  }
       }

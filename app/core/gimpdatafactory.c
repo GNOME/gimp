@@ -27,6 +27,9 @@
 
 #include "core-types.h"
 
+#include "config/gimpbaseconfig.h"
+
+#include "gimp.h"
 #include "gimpcontext.h"
 #include "gimpdata.h"
 #include "gimpdatafactory.h"
@@ -95,6 +98,7 @@ gimp_data_factory_class_init (GimpDataFactoryClass *klass)
 static void
 gimp_data_factory_init (GimpDataFactory *factory)
 {
+  factory->gimp                   = NULL;
   factory->container              = NULL;
   factory->data_path              = NULL;
   factory->loader_entries         = NULL;
@@ -133,7 +137,8 @@ gimp_data_factory_get_memsize (GimpObject *object)
 }
 
 GimpDataFactory *
-gimp_data_factory_new (GType                              data_type,
+gimp_data_factory_new (Gimp                              *gimp,
+                       GType                              data_type,
 		       const gchar                      **data_path,
 		       const GimpDataFactoryLoaderEntry  *loader_entries,
 		       gint                               n_loader_entries,
@@ -142,6 +147,7 @@ gimp_data_factory_new (GType                              data_type,
 {
   GimpDataFactory *factory;
 
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (g_type_is_a (data_type, GIMP_TYPE_DATA), NULL);
   g_return_val_if_fail (data_path != NULL, NULL);
   g_return_val_if_fail (loader_entries != NULL, NULL);
@@ -149,6 +155,7 @@ gimp_data_factory_new (GType                              data_type,
 
   factory = g_object_new (GIMP_TYPE_DATA_FACTORY, NULL);
 
+  factory->gimp                   = gimp;
   factory->container              = gimp_data_list_new (data_type);
 
   factory->data_path              = data_path;
@@ -279,9 +286,12 @@ gimp_data_factory_data_new (GimpDataFactory *factory,
 
   if (factory->data_new_func)
     {
-      GimpData *data;
+      GimpBaseConfig *base_config;
+      GimpData       *data;
 
-      data = factory->data_new_func (name);
+      base_config = GIMP_BASE_CONFIG (factory->gimp->config);
+
+      data = factory->data_new_func (name, base_config->stingy_memory_use);
 
       gimp_container_add (factory->container, GIMP_OBJECT (data));
       g_object_unref (G_OBJECT (data));
@@ -335,9 +345,14 @@ gimp_data_factory_data_load_callback (GimpDatafileData *file_data)
 
  insert:
   {
-    GimpData *data;
+    GimpBaseConfig *base_config;
+    GimpData       *data;
 
-    data = (GimpData *) (* factory->loader_entries[i].load_func) (file_data->filename);
+    base_config = GIMP_BASE_CONFIG (factory->gimp->config);
+
+    data = (GimpData *)
+      (* factory->loader_entries[i].load_func) (file_data->filename,
+                                                base_config->stingy_memory_use);
 
     if (! data)
       {

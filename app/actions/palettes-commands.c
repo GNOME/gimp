@@ -155,7 +155,7 @@ palettes_merge_palettes_callback (GtkWidget *widget,
       return;
     }
 
-  new_palette = GIMP_PALETTE (gimp_palette_new (palette_name));
+  new_palette = GIMP_PALETTE (gimp_palette_new (palette_name, FALSE));
 
   while (sel_list)
     {

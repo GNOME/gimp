@@ -321,13 +321,15 @@ gimp_brush_get_extension (GimpData *data)
 }
 
 GimpData *
-gimp_brush_new (const gchar *name)
+gimp_brush_new (const gchar *name,
+                gboolean     stingy_memory_use)
 {
   GimpBrush *brush;
 
   g_return_val_if_fail (name != NULL, NULL);
 
-  brush = GIMP_BRUSH (gimp_brush_generated_new (5.0, 0.5, 0.0, 1.0));
+  brush = GIMP_BRUSH (gimp_brush_generated_new (5.0, 0.5, 0.0, 1.0,
+                                                stingy_memory_use));
 
   gimp_object_set_name (GIMP_OBJECT (brush), name);
 
@@ -341,8 +343,9 @@ gimp_brush_get_standard (void)
 
   if (! standard_brush)
     {
-      standard_brush =
-	GIMP_BRUSH (gimp_brush_generated_new (5.0, 0.5, 0.0, 1.0));
+      standard_brush = GIMP_BRUSH (gimp_brush_generated_new (5.0, 0.5,
+                                                             0.0, 1.0,
+                                                             FALSE));
 
       gimp_object_set_name (GIMP_OBJECT (standard_brush), "Standard");
 
@@ -354,7 +357,8 @@ gimp_brush_get_standard (void)
 }
 
 GimpData *
-gimp_brush_load (const gchar *filename)
+gimp_brush_load (const gchar *filename,
+                 gboolean     stingy_memory_use)
 {
   GimpBrush *brush;
   gint       fd;
@@ -375,7 +379,7 @@ gimp_brush_load (const gchar *filename)
   gimp_data_set_filename (GIMP_DATA (brush), filename);
 
   /*  Swap the brush to disk (if we're being stingy with memory) */
-  if (base_config->stingy_memory_use)
+  if (stingy_memory_use)
     {
       temp_buf_swap (brush->mask);
 

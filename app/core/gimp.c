@@ -574,7 +574,8 @@ gimp_initialize (Gimp               *gimp,
   g_return_if_fail (GIMP_IS_CORE_CONFIG (gimp->config));
 
   gimp->brush_factory =
-    gimp_data_factory_new (GIMP_TYPE_BRUSH,
+    gimp_data_factory_new (gimp,
+                           GIMP_TYPE_BRUSH,
 			   (const gchar **) &gimp->config->brush_path,
 			   brush_loader_entries,
 			   G_N_ELEMENTS (brush_loader_entries),
@@ -583,7 +584,8 @@ gimp_initialize (Gimp               *gimp,
   gimp_object_set_name (GIMP_OBJECT (gimp->brush_factory), "brush factory");
 
   gimp->pattern_factory =
-    gimp_data_factory_new (GIMP_TYPE_PATTERN,
+    gimp_data_factory_new (gimp,
+                           GIMP_TYPE_PATTERN,
 			   (const gchar **) &gimp->config->pattern_path,
 			   pattern_loader_entries,
 			   G_N_ELEMENTS (pattern_loader_entries),
@@ -592,7 +594,8 @@ gimp_initialize (Gimp               *gimp,
   gimp_object_set_name (GIMP_OBJECT (gimp->pattern_factory), "pattern factory");
 
   gimp->gradient_factory =
-    gimp_data_factory_new (GIMP_TYPE_GRADIENT,
+    gimp_data_factory_new (gimp,
+                           GIMP_TYPE_GRADIENT,
 			   (const gchar **) &gimp->config->gradient_path,
 			   gradient_loader_entries,
 			   G_N_ELEMENTS (gradient_loader_entries),
@@ -601,7 +604,8 @@ gimp_initialize (Gimp               *gimp,
   gimp_object_set_name (GIMP_OBJECT (gimp->gradient_factory), "gradient factory");
 
   gimp->palette_factory =
-    gimp_data_factory_new (GIMP_TYPE_PALETTE,
+    gimp_data_factory_new (gimp,
+                           GIMP_TYPE_PALETTE,
 			   (const gchar **) &gimp->config->palette_path,
 			   palette_loader_entries,
 			   G_N_ELEMENTS (palette_loader_entries),

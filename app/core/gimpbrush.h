@@ -68,9 +68,11 @@ struct _GimpBrushClass
 
 GType       gimp_brush_get_type         (void) G_GNUC_CONST;
 
-GimpData  * gimp_brush_new              (const gchar     *name);
+GimpData  * gimp_brush_new              (const gchar     *name,
+                                         gboolean         stingy_memory_use);
 GimpData  * gimp_brush_get_standard     (void);
-GimpData  * gimp_brush_load             (const gchar     *filename);
+GimpData  * gimp_brush_load             (const gchar     *filename,
+                                         gboolean         stingy_memory_use);
 
 GimpBrush * gimp_brush_load_brush       (gint             fd,
                                          const gchar     *filename);

@@ -26,8 +26,10 @@
 #include "gimpobject.h"
 
 
-typedef GimpData * (* GimpDataNewFunc)         (const gchar *name);
-typedef GimpData * (* GimpDataLoadFunc)        (const gchar *filename);
+typedef GimpData * (* GimpDataNewFunc)         (const gchar *name,
+                                                gboolean     stingy_memory_use);
+typedef GimpData * (* GimpDataLoadFunc)        (const gchar *filename,
+                                                gboolean     stingy_memory_use);
 typedef GimpData * (* GimpDataGetStandardFunc) (void);
 
 
@@ -54,6 +56,7 @@ struct _GimpDataFactory
 {
   GimpObject                         parent_instance;
 
+  Gimp                              *gimp;
   GimpContainer                     *container;
 
   const gchar                      **data_path;
@@ -73,7 +76,8 @@ struct _GimpDataFactoryClass
 
 GType             gimp_data_factory_get_type (void) G_GNUC_CONST;
 
-GimpDataFactory * gimp_data_factory_new      (GType                              data_type,
+GimpDataFactory * gimp_data_factory_new      (Gimp                              *gimp,
+                                              GType                              data_type,
 					      const gchar                      **data_path,
 					      const GimpDataFactoryLoaderEntry  *loader_entries,
 					      gint                               n_loader_entries,

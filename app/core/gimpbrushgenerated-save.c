@@ -47,10 +47,11 @@
 static void   gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass);
 static void   gimp_brush_generated_init       (GimpBrushGenerated      *brush);
 
-static gboolean   gimp_brush_generated_save      (GimpData           *data);
-static void       gimp_brush_generated_dirty     (GimpData           *data);
-static gchar    * gimp_brush_generated_get_extension (GimpData       *data);
-static GimpData * gimp_brush_generated_duplicate (GimpData           *data);
+static gboolean   gimp_brush_generated_save          (GimpData *data);
+static void       gimp_brush_generated_dirty         (GimpData *data);
+static gchar    * gimp_brush_generated_get_extension (GimpData *data);
+static GimpData * gimp_brush_generated_duplicate     (GimpData *data,
+                                                      gboolean  stingy_memory_use);
 
 
 static GimpBrushClass *parent_class = NULL;
@@ -174,7 +175,8 @@ gimp_brush_generated_get_extension (GimpData *data)
 }
 
 static GimpData *
-gimp_brush_generated_duplicate (GimpData *data)
+gimp_brush_generated_duplicate (GimpData *data,
+                                gboolean  stingy_memory_use)
 {
   GimpBrushGenerated *brush;
 
@@ -183,7 +185,8 @@ gimp_brush_generated_duplicate (GimpData *data)
   return gimp_brush_generated_new (brush->radius,
 				   brush->hardness,
 				   brush->angle,
-				   brush->aspect_ratio);
+				   brush->aspect_ratio,
+                                   stingy_memory_use);
 }
 
 static double
@@ -202,6 +205,11 @@ gauss (gdouble f)
   f = 1.0 -f;
   return (2.0 * f*f);
 }
+
+#ifdef __GNUC__
+#warning FIXME: extern GimpBaseConfig *base_config;
+#endif
+extern GimpBaseConfig *base_config;
 
 static void
 gimp_brush_generated_dirty (GimpData *data)
@@ -330,10 +338,11 @@ gimp_brush_generated_dirty (GimpData *data)
 }
 
 GimpData *
-gimp_brush_generated_new (gfloat radius,
-			  gfloat hardness,
-			  gfloat angle,
-			  gfloat aspect_ratio)
+gimp_brush_generated_new (gfloat   radius,
+			  gfloat   hardness,
+			  gfloat   angle,
+			  gfloat   aspect_ratio,
+                          gboolean stingy_memory_use)
 {
   GimpBrushGenerated *brush;
 
@@ -353,11 +362,15 @@ gimp_brush_generated_new (gfloat radius,
   /* render brush mask */
   gimp_data_dirty (GIMP_DATA (brush));
 
+  if (stingy_memory_use)
+    temp_buf_swap (GIMP_BRUSH (brush)->mask);
+
   return GIMP_DATA (brush);
 }
 
 GimpData *
-gimp_brush_generated_load (const gchar *filename)
+gimp_brush_generated_load (const gchar *filename,
+                           gboolean     stingy_memory_use)
 {
   GimpBrushGenerated *brush;
   FILE               *fp;
@@ -416,7 +429,7 @@ gimp_brush_generated_load (const gchar *filename)
 
   GIMP_DATA (brush)->dirty = FALSE;
 
-  if (base_config->stingy_memory_use)
+  if (stingy_memory_use)
     temp_buf_swap (GIMP_BRUSH (brush)->mask);
 
   return GIMP_DATA (brush);

@@ -2116,6 +2116,10 @@ gimp_context_real_set_brush (GimpContext *context,
   /*  disconnect from the old brush's signals  */
   if (context->brush)
     {
+      GimpBaseConfig *base_config;
+
+      base_config = GIMP_BASE_CONFIG (context->gimp->config);
+
       /*  make sure the active brush is swapped before we get a new one...  */
       if (base_config->stingy_memory_use &&
 	  context->brush->mask           &&
@@ -2135,6 +2139,10 @@ gimp_context_real_set_brush (GimpContext *context,
 
   if (brush)
     {
+      GimpBaseConfig *base_config;
+
+      base_config = GIMP_BASE_CONFIG (context->gimp->config);
+
       g_object_ref (G_OBJECT (brush));
 
       g_signal_connect_object (G_OBJECT (brush), "invalidate_preview",
@@ -2270,6 +2278,8 @@ static void
 gimp_context_real_set_pattern (GimpContext *context,
 			       GimpPattern *pattern)
 {
+  GimpBaseConfig *base_config;
+
   if (! standard_pattern)
     standard_pattern = GIMP_PATTERN (gimp_pattern_get_standard ());
 
@@ -2281,6 +2291,8 @@ gimp_context_real_set_pattern (GimpContext *context,
       g_free (context->pattern_name);
       context->pattern_name = NULL;
     }
+
+  base_config = GIMP_BASE_CONFIG (context->gimp->config);
 
   /*  make sure the active pattern is swapped before we get a new one...  */
   if (base_config->stingy_memory_use             &&
@@ -2303,6 +2315,10 @@ gimp_context_real_set_pattern (GimpContext *context,
 
   if (pattern)
     {
+      GimpBaseConfig *base_config;
+
+      base_config = GIMP_BASE_CONFIG (context->gimp->config);
+
       g_object_ref (G_OBJECT (pattern));
 
       g_signal_connect_object (G_OBJECT (pattern), "name_changed",

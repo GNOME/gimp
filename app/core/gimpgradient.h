@@ -71,9 +71,11 @@ struct _GimpGradientClass
 
 GType                 gimp_gradient_get_type         (void) G_GNUC_CONST;
 
-GimpData            * gimp_gradient_new              (const gchar   *name);
+GimpData            * gimp_gradient_new              (const gchar   *name,
+                                                      gboolean       stingy_memory_use);
 GimpData            * gimp_gradient_get_standard     (void);
-GimpData            * gimp_gradient_load             (const gchar   *filename);
+GimpData            * gimp_gradient_load             (const gchar   *filename,
+                                                      gboolean       stingy_memory_use);
 
 void                  gimp_gradient_get_color_at     (GimpGradient  *gradient,
 						      gdouble        pos,

@@ -51,6 +51,12 @@ static void     temp_buf_to_gray  (TempBuf *src_buf,
 				   TempBuf *dest_buf);
 
 
+#ifdef __GNUC__
+#warning FIXME: extern GimpBaseConfig *base_config;
+#endif
+extern GimpBaseConfig *base_config;
+
+
 /*  Memory management  */
 
 static guchar *
@@ -624,7 +630,7 @@ static TempBuf *cached_in_memory = NULL;
 
 
 static gchar *
-generate_unique_filename (void)
+generate_unique_filename (const gchar *temp_path)
 {
   pid_t  pid;
   gchar *swapfile;
@@ -636,7 +642,7 @@ generate_unique_filename (void)
                               (gint) pid,
                               swap_index++);
 
-  path = g_build_filename (base_config->temp_path, swapfile, NULL);
+  path = g_build_filename (temp_path, swapfile, NULL);
 
   g_free (swapfile);
 
@@ -673,7 +679,7 @@ temp_buf_swap (TempBuf *buf)
     return;
 
   /*  Get a unique filename for caching the data to a UNIX file  */
-  filename = generate_unique_filename ();
+  filename = generate_unique_filename (base_config->temp_path);
 
   /*  Check if generated filename is valid  */
   if (g_file_test (filename, G_FILE_TEST_IS_DIR))

@@ -138,8 +138,9 @@ gimp_data_class_init (GimpDataClass *klass)
 		  G_SIGNAL_RUN_LAST,
 		  G_STRUCT_OFFSET (GimpDataClass, duplicate),
 		  NULL, NULL,
-		  gimp_marshal_POINTER__VOID,
-		  G_TYPE_POINTER, 0);
+		  gimp_marshal_OBJECT__BOOLEAN,
+		  GIMP_TYPE_DATA, 1,
+                  G_TYPE_BOOLEAN);
 
   object_class->finalize          = gimp_data_finalize;
 
@@ -360,12 +361,13 @@ gimp_data_create_filename (GimpData    *data,
 }
 
 GimpData *
-gimp_data_duplicate (GimpData *data)
+gimp_data_duplicate (GimpData *data,
+                     gboolean  stingy_memory_use)
 {
   GimpData *new_data = NULL;
 
   g_signal_emit (G_OBJECT (data), data_signals[DUPLICATE], 0,
-		 &new_data);
+		 stingy_memory_use, &new_data);
 
   return new_data;
 }

@@ -64,7 +64,8 @@ static TempBuf  * gimp_pattern_get_new_preview (GimpViewable     *viewable,
                                                 gint              width,
                                                 gint              height);
 static gchar    * gimp_pattern_get_extension   (GimpData         *data);
-static GimpData * gimp_pattern_duplicate       (GimpData         *data);
+static GimpData * gimp_pattern_duplicate       (GimpData         *data,
+                                                gboolean          stingy_memory_use);
 
 
 static GimpDataClass *parent_class = NULL;
@@ -199,7 +200,8 @@ gimp_pattern_get_extension (GimpData *data)
 }
 
 static GimpData *
-gimp_pattern_duplicate (GimpData *data)
+gimp_pattern_duplicate (GimpData *data,
+                        gboolean  stingy_memory_use)
 {
   GimpPattern *pattern;
 
@@ -208,14 +210,15 @@ gimp_pattern_duplicate (GimpData *data)
   pattern->mask = temp_buf_copy (GIMP_PATTERN (data)->mask, NULL);
 
   /*  Swap the pattern to disk (if we're being stingy with memory) */
-  if (base_config->stingy_memory_use)
+  if (stingy_memory_use)
     temp_buf_swap (pattern->mask);
 
   return GIMP_DATA (pattern);
 }
 
 GimpData *
-gimp_pattern_new (const gchar *name)
+gimp_pattern_new (const gchar *name,
+                  gboolean     stingy_memory_use)
 {
   GimpPattern *pattern;
   guchar      *data;
@@ -239,7 +242,7 @@ gimp_pattern_new (const gchar *name)
       }
 
   /*  Swap the pattern to disk (if we're being stingy with memory) */
-  if (base_config->stingy_memory_use)
+  if (stingy_memory_use)
     temp_buf_swap (pattern->mask);
 
   return GIMP_DATA (pattern);
@@ -278,7 +281,8 @@ gimp_pattern_get_standard (void)
 }
 
 GimpData *
-gimp_pattern_load (const gchar *filename)
+gimp_pattern_load (const gchar *filename,
+                   gboolean     stingy_memory_use)
 {
   GimpPattern   *pattern = NULL;
   gint           fd;
@@ -368,7 +372,7 @@ gimp_pattern_load (const gchar *filename)
   gimp_data_set_filename (GIMP_DATA (pattern), filename);
 
   /*  Swap the pattern to disk (if we're being stingy with memory) */
-  if (base_config->stingy_memory_use)
+  if (stingy_memory_use)
     temp_buf_swap (pattern->mask);
 
   return GIMP_DATA (pattern);

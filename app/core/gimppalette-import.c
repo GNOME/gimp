@@ -56,7 +56,7 @@ gimp_palette_import_from_gradient (GimpGradient *gradient,
   g_return_val_if_fail (palette_name != NULL, NULL);
   g_return_val_if_fail (n_colors > 1, NULL);
 
-  palette = GIMP_PALETTE (gimp_palette_new (palette_name));
+  palette = GIMP_PALETTE (gimp_palette_new (palette_name, FALSE));
 
   dx = 1.0 / (n_colors - 1);
 
@@ -227,7 +227,7 @@ gimp_palette_import_image_make_palette (GHashTable  *h_array,
 			&sorted_list);
   sorted_list = g_slist_sort (sorted_list, gimp_palette_import_sort_colors);
 
-  palette = GIMP_PALETTE (gimp_palette_new (palette_name));
+  palette = GIMP_PALETTE (gimp_palette_new (palette_name, FALSE));
 
   g_object_set_data (G_OBJECT (palette), "import_n_colors",
 		     GINT_TO_POINTER (n_colors));
@@ -338,7 +338,7 @@ gimp_palette_import_from_indexed_image (GimpImage   *gimage,
   g_return_val_if_fail (gimp_image_base_type (gimage) == GIMP_INDEXED, NULL);
   g_return_val_if_fail (palette_name != NULL, NULL);
 
-  palette = GIMP_PALETTE (gimp_palette_new (palette_name));
+  palette = GIMP_PALETTE (gimp_palette_new (palette_name, FALSE));
 
   for (count= 0; count < gimage->num_cols; ++count)
     {

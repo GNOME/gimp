@@ -240,7 +240,8 @@ gimp_palette_get_new_preview (GimpViewable *viewable,
 }
 
 GimpData *
-gimp_palette_new (const gchar *name)
+gimp_palette_new (const gchar *name,
+                  gboolean     stingy_memory_use)
 {
   GimpPalette *palette = NULL;
 
@@ -272,7 +273,8 @@ gimp_palette_get_standard (void)
 }
 
 GimpData *
-gimp_palette_load (const gchar *filename)
+gimp_palette_load (const gchar *filename,
+                   gboolean     stingy_memory_use)
 {
   GimpPalette *palette;
   gchar        str[1024];

@@ -43,10 +43,6 @@
 #define ALPHA_I_PIX      1
 
 
-/* global config variable (temporary) */
-GimpBaseConfig *base_config;
-
-
 /* types */
 
 typedef struct _BoundSeg            BoundSeg;

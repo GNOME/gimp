@@ -52,7 +52,8 @@ struct _GimpDataClass
   void       (* dirty)         (GimpData *data);
   gboolean   (* save)          (GimpData *data);
   gchar    * (* get_extension) (GimpData *data);
-  GimpData * (* duplicate)     (GimpData *data);
+  GimpData * (* duplicate)     (GimpData *data,
+                                gboolean  stingy_memory_use);
 };
 
 
@@ -72,7 +73,8 @@ void          gimp_data_create_filename  (GimpData     *data,
 					  const gchar  *filename,
 					  const gchar  *data_path);
 
-GimpData    * gimp_data_duplicate        (GimpData     *data);
+GimpData    * gimp_data_duplicate        (GimpData     *data,
+                                          gboolean      stingy_memory_use);
 
 
 #endif /* __GIMP_DATA_H__ */

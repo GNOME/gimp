@@ -140,7 +140,7 @@ app_init (gint    gimp_argc,
                     NULL);
 
   /*  initialize lowlevel stuff  */
-  base_init (GIMP_BASE_CONFIG (gimprc));
+  base_init (GIMP_BASE_CONFIG (gimprc), use_mmx);
 
   gimp_set_config (the_gimp, GIMP_CORE_CONFIG (gimprc));
 

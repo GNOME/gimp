@@ -31,6 +31,9 @@
 
 #include "widgets-types.h"
 
+#include "config/gimpbaseconfig.h"
+
+#include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdata.h"
@@ -283,9 +286,12 @@ gimp_data_factory_view_duplicate_clicked (GtkWidget           *widget,
   if (data && gimp_container_have (view->factory->container,
 				   GIMP_OBJECT (data)))
     {
-      GimpData *new_data;
+      GimpBaseConfig *base_config;
+      GimpData       *new_data;
 
-      new_data = gimp_data_duplicate (data);
+      base_config = GIMP_BASE_CONFIG (view->factory->gimp->config);
+
+      new_data = gimp_data_duplicate (data, base_config->stingy_memory_use);
 
       if (new_data)
 	{

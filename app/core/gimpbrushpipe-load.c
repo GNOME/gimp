@@ -294,7 +294,8 @@ gimp_brush_pipe_want_null_motion (GimpBrush  *brush,
 }
 
 GimpData *
-gimp_brush_pipe_load (const gchar *filename)
+gimp_brush_pipe_load (const gchar *filename,
+                      gboolean     stingy_memory_use)
 {
   GimpBrushPipe     *pipe = NULL;
   GimpPixPipeParams  params;

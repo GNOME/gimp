@@ -19,7 +19,8 @@
 #ifndef __BASE_H__
 #define __BASE_H__
 
-void   base_init (GimpBaseConfig *config);
+void   base_init (GimpBaseConfig *config,
+                  gboolean        use_mmx);
 void   base_exit (void);
 
 

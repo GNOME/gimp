@@ -62,8 +62,10 @@ GType       gimp_brush_generated_get_type     (void) G_GNUC_CONST;
 GimpData  * gimp_brush_generated_new          (gfloat       radius,
 					       gfloat       hardness,
 					       gfloat       angle,
-					       gfloat       aspect_ratio);
-GimpData  * gimp_brush_generated_load         (const gchar *file_name);
+					       gfloat       aspect_ratio,
+                                               gboolean     stingy_memory_use);
+GimpData  * gimp_brush_generated_load         (const gchar *file_name,
+                                               gboolean     stingy_memory_use);
 
 void    gimp_brush_generated_freeze           (GimpBrushGenerated *brush);
 void    gimp_brush_generated_thaw             (GimpBrushGenerated *brush);

@@ -1,5 +1,43 @@
 2002-11-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/base/base-types.h: removed the global "base_config" variable.
+
+	* app/base/base.[ch]: added "gboolean use_mmx" to base_init().
+	Don't #include "appenv.h". Pass around more parameters to reduce
+	the usage of the global "paint_options" pointer.
+
+	* app/app_procs.c: pass "use_mmx" to base_init().
+
+	* app/base/temp-buf.c: pass "temp_path" around internally. Declare
+	"base_config" extern and added a #warning.
+
+	* app/core/gimpdata.[ch]
+	* app/core/gimpbrush.[ch]
+	* app/core/gimpbrushgenerated.[ch]
+	* app/core/gimpbrushpipe.[ch]
+	* app/core/gimpgradient.[ch]
+	* app/core/gimppalette.[ch]
+	* app/core/gimppattern.[ch]: added "gboolean stingy_memory_use"
+	parameters to all _new(), _load() and _duplicate() functions.
+
+	* app/core/gimpmarshal.list: GimpData::duplicate needs an
+	OBJECT__BOOLEAN marshaller now.
+
+	* app/core/gimpdatafactory.[ch]: added a "Gimp" pointer so the
+	factory can find the config. Pass base_config->stingy_memory_use
+	to the GimpData functions changed above.
+
+	* app/core/gimp-gradients.c
+	* app/core/gimp.c
+	* app/core/gimppalette-import.c
+	* app/gui/palettes-commands.c
+	* app/widgets/gimpdatafactoryview.c: changed accordingly.
+
+	* app/core/gimpcontext.c: get "stingy_memory_use" from
+	context->gimp->config.
+
+2002-11-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimp.[ch]: added gimp->edit_config which is a copy of
 	gimp->config except for GIMP_PARAM_RESTRT options. Create it in
 	gimp_set_config() which must be called before anything else after
