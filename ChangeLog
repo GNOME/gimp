@@ -1,3 +1,8 @@
+2003-09-24  Dave Neary  <bolsh@gimp.org>
+
+	* plug-ins/common/jpeg.c: Set default value for toggle, and 
+	only have it span one table cell.
+
 2003-09-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/dialogs-constructors.c (dialogs_get_view_menu_func):

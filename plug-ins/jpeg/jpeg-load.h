@@ -1871,13 +1871,16 @@ save_dialog (void)
 
 #ifdef HAVE_EXIF
   exif_toggle = gtk_check_button_new_with_label (_("Save EXIF data"));
-  gtk_table_attach (GTK_TABLE (table), exif_toggle, 0, 2, 7, 8,
+  gtk_table_attach (GTK_TABLE (table), exif_toggle, 0, 1, 7, 8,
 		    GTK_FILL, 0, 0, 0);
   gtk_widget_show (exif_toggle);
 
   g_signal_connect (exif_toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &jsvals.save_exif);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (exif_toggle),
+				jsvals.save_exif);
 #endif
 
   /* Subsampling */
