@@ -106,18 +106,18 @@ gimp_config_serialize_properties (GObject *object,
           str = g_value_dup_string (&tmp_value);
           g_value_unset (&tmp_value);
         }
-
-      if (cstr || str)
-        {
-          fprintf (file, "(%s %s)\n", prop_spec->name, cstr ? cstr : str);
-          g_free (str);
-        }
       else
         {
           g_warning ("couldn't serialize property %s::%s of type %s",
                      g_type_name (G_TYPE_FROM_INSTANCE (object)),
                      prop_spec->name, 
                      g_type_name (prop_spec->value_type));
+        }
+
+      if (cstr || str)
+        {
+          fprintf (file, "(%s %s)\n", prop_spec->name, cstr ? cstr : str);
+          g_free (str);
         }
 
       g_value_unset (&value);

@@ -278,7 +278,7 @@ gimp_config_deserialize_fundamental (GValue     *value,
     {
     case G_TYPE_STRING:
       if (scanner_string_utf8_valid (scanner, prop_spec->name))
-        g_value_set_string (value, scanner->value.v_string);
+        g_value_set_static_string (value, scanner->value.v_string);
       else
         return G_TOKEN_NONE;
       break;
@@ -431,9 +431,9 @@ gimp_config_deserialize_any (GValue     *value,
   g_scanner_get_next_token (scanner);
 
   g_value_init (&src, G_TYPE_STRING);
-  g_value_set_string (&src, scanner->value.v_identifier);
-      
+  g_value_set_static_string (&src, scanner->value.v_identifier);
   g_value_transform (&src, value);
+  g_value_unset (&src);
 
   return G_TOKEN_RIGHT_PAREN;
 }

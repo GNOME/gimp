@@ -32,9 +32,7 @@
 #include "gimpconfig-substitute.h"
 
 
-static inline gchar * jump_to_next_char (const gchar  *str,
-                                         glong        *length);
-static inline gchar * extract_token     (const gchar **str);
+static inline gchar * extract_token (const gchar **str);
 
 
 gchar * 
@@ -42,14 +40,15 @@ gimp_config_substitute_path (GObject     *object,
                              const gchar *path,
                              gboolean     use_env)
 {
-  const gchar *subst;
+  const gchar *s;
   const gchar *p;
-  gchar       *new_path = NULL;
   gchar       *n;
   gchar       *token;
-  glong        length = 0;
-  GSList      *list;
-  GSList      *substitutions = NULL;
+  gchar       *new_path  = NULL;
+  gchar      **substs    = NULL;
+  gint         n_substs  = 0;
+  glong        length    = 0;
+  gint         i;
 
   g_return_val_if_fail (G_IS_OBJECT (object), NULL);
   g_return_val_if_fail (path != NULL, NULL);
@@ -68,58 +67,72 @@ gimp_config_substitute_path (GObject     *object,
 #endif
       if ((token = extract_token (&p)) != NULL)
         {
-	  subst = gimp_config_lookup_unknown_token (object, token);
-
-	  if (!subst && use_env) 
-	    {
-	      if (!subst && strcmp (token, "gimp_dir") == 0)
-                subst = gimp_directory ();
-
-	      if (!subst && strcmp (token, "gimp_datadir") == 0)
-                subst = gimp_data_directory ();
-
-	      if (!subst && 
-                  ((strcmp (token, "gimp_plug_in_dir")) == 0 || 
-                   (strcmp (token, "gimp_plugin_dir")) == 0))
-                subst = gimp_plug_in_directory ();
-
-	      if (!subst && strcmp (token, "gimp_sysconfdir") == 0)
-                subst = gimp_sysconf_directory ();
-
-              if (!subst)
-                subst = g_getenv (token);
-
-#ifdef G_OS_WIN32
-	      /* The default user gimprc on Windows references
-	       * ${TEMP}, but not all Windows installations have that
-	       * environment variable, even if it should be kinda
-	       * standard. So special-case it.
-	       */
-	      if (!subst && strcmp (token, "TEMP") == 0)
-                subst = g_get_tmp_dir ();
-#endif
-            }
+          for (i = 0; i < n_substs; i++)
+            if (strcmp (substs[2*i], token) == 0)
+              break;
           
-          if (!subst)
+          if (i < n_substs)
             {
-              g_message ("token referenced but not defined: ${%s}", token);
-  
-              g_free (token);
-              goto cleanup;
+              s = substs[2*i+1];
+            }
+          else
+            {
+              s = gimp_config_lookup_unknown_token (object, token);
+
+              if (!s && use_env) 
+                {
+                  if (!s && strcmp (token, "gimp_dir") == 0)
+                    s = gimp_directory ();
+                  
+                  if (!s && strcmp (token, "gimp_datadir") == 0)
+                    s = gimp_data_directory ();
+                  
+                  if (!s && 
+                      ((strcmp (token, "gimp_plug_in_dir")) == 0 || 
+                       (strcmp (token, "gimp_plugin_dir")) == 0))
+                    s = gimp_plug_in_directory ();
+                  
+                  if (!s && strcmp (token, "gimp_sysconfdir") == 0)
+                    s = gimp_sysconf_directory ();
+                  
+                  if (!s)
+                    s = g_getenv (token);
+                  
+#ifdef G_OS_WIN32
+                  /* The default user gimprc on Windows references
+                   * ${TEMP}, but not all Windows installations have that
+                   * environment variable, even if it should be kinda
+                   * standard. So special-case it.
+                   */
+                  if (!s && strcmp (token, "TEMP") == 0)
+                    s = g_get_tmp_dir ();
+#endif
+                }
+          
+              if (!s)
+                {
+                  g_message ("token referenced but not defined: ${%s}", token);
+                  
+                  g_free (token);
+                  goto cleanup;
+                }
+
+              substs = g_renew (gchar *, substs, 2 * (n_substs + 1));
+              substs[2*n_substs]     = token;
+              substs[2*n_substs + 1] = (gchar *) s;
+              n_substs++;
             }
 
-          substitutions = g_slist_prepend (substitutions, g_strdup (subst));
-          substitutions = g_slist_prepend (substitutions, token);
-
-          length += strlen (subst);
+          length += strlen (s);
         }
       else
 	{
-          p = jump_to_next_char (p, &length);
+          length += g_utf8_skip[(guchar) *p];
+          p = g_utf8_next_char (p);
 	}
     }
 
-  if (!substitutions)
+  if (!substs)
     return g_strdup (path);
 
   new_path = g_new (gchar, length + 1);
@@ -141,15 +154,15 @@ gimp_config_substitute_path (GObject     *object,
 #endif
       if ((token = extract_token (&p)) != NULL)
         {
-          for (list = substitutions; list; list = g_slist_next (list))
+          for (i = 0; i < n_substs; i++)
             {
-              if (strcmp ((gchar *) list->data, token) == 0)
+              if (strcmp (substs[2*i], token) == 0)
                 {
-                  list = g_slist_next (list);
+                  s = substs[2*i+1];
 
                   *n = '\0';
-                  strcat (n, (const gchar *) list->data);
-                  n += strlen (list->data);
+                  strcat (n, s);
+                  n += strlen (s);
 
                   break;
                 }
@@ -166,28 +179,12 @@ gimp_config_substitute_path (GObject     *object,
   *n = '\0';
 
  cleanup:
-  for (list = substitutions; list; list = g_slist_next (list))
-    g_free (list->data);
+  for (i = 0; i < n_substs; i++)
+    g_free (substs[2*i]);
 
-  g_slist_free (substitutions);
+  g_free (substs);
 
   return new_path;  
-}
-
-static inline gchar *
-jump_to_next_char (const gchar *str,
-                   glong       *length)
-{
-  gchar *next;
-  
-  next = g_utf8_next_char (str);
-  
-  if (next)
-    *length += g_utf8_pointer_to_offset (str, next);
-  else
-    *length += strlen (str);
-  
-  return next;
 }
 
 static inline gchar *

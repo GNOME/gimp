@@ -1,3 +1,10 @@
+2001-12-12  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig-deserialize.c
+	* app/config/gimpconfig-serialize.c
+	* app/config/gimpconfig-substitute.c: plugged a memleak and applied
+	some optimizations.
+
 2001-12-11  Sven Neumann  <sven@gimp.org>
 
 	* app/core/core-enums.h
