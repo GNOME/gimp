@@ -1295,6 +1295,25 @@ if test "x$enable_python" != xno; then
   dnl check for PyGTK
   PKG_CHECK_MODULES(PYGTK, pygtk-2.0 >= pygtk_required_version)
   AC_SUBST(PYGTK_CFLAGS)
+
+  dnl enable -fno-strict-aliasing if compiler supports it
+  PYGIMP_EXTRA_CFLAGS=
+  case " $CFLAGS " in
+  *@<:@\	\ @:>@-fno-strict-aliasing@<:@\	\ @:>@*)
+    ;;
+  *)
+    pygimp_save_CFLAGS="$CFLAGS"
+    CFLAGS="$CFLAGS -fno-strict-aliasing"
+    AC_MSG_CHECKING([whether [$]CC understands -fno-strict-aliasing])
+    AC_TRY_COMPILE([], [], [pygimp_has_option=yes], [pygimp_has_option=no])
+    AC_MSG_RESULT($pygimp_has_option)
+    CFLAGS="$pygimp_save_CFLAGS"
+    if test "x$pygimp_has_option" = "xyes"; then
+      PYGIMP_EXTRA_CFLAGS="-fno-strict-aliasing"
+    fi
+    ;;
+  esac
+  AC_SUBST(PYGIMP_EXTRA_CFLAGS)
 fi
 AM_CONDITIONAL(BUILD_PYTHON, test "x$enable_python" != xno)
 

@@ -733,73 +733,185 @@ pygimp_gradients_get_list(PyObject *self)
 }
 
 static PyObject *
-pygimp_gradients_get_gradient(PyObject *self)
+pygimp_context_get_gradient(PyObject *self)
 {
-    return PyString_FromString(gimp_gradients_get_gradient());
+    char *name;
+    PyObject *ret;
+
+    name = gimp_context_get_gradient();
+    ret = PyString_FromString(name);
+    g_free(name);
+
+    return ret;
 }
 
 static PyObject *
-pygimp_gradients_set_gradient(PyObject *self, PyObject *args)
+pygimp_gradients_get_gradient(PyObject *self)
+{
+    if (PyErr_Warn(PyExc_DeprecationWarning, "use gimp.context_get_gradient") < 0)
+        return NULL;
+
+    return pygimp_context_get_gradient(self);
+}
+
+static PyObject *
+pygimp_context_set_gradient(PyObject *self, PyObject *args)
 {
     char *actv;
+
     if (!PyArg_ParseTuple(args, "s:gradients_set_gradient", &actv))
 	return NULL;
-    gimp_gradients_set_gradient(actv);
+
+    gimp_context_set_gradient(actv);
+
     Py_INCREF(Py_None);
     return Py_None;
 }
 
 static PyObject *
-pygimp_gradients_sample_uniform(PyObject *self, PyObject *args)
+pygimp_gradients_set_gradient(PyObject *self, PyObject *args)
+{
+    if (PyErr_Warn(PyExc_DeprecationWarning, "use gimp.context_set_gradient") < 0)
+        return NULL;
+
+    return pygimp_context_set_gradient(self, args);
+}
+
+static PyObject *
+pygimp_gradient_get_uniform_samples(PyObject *self, PyObject *args)
 {
     int num, reverse = FALSE;
-    int i, j;
+    char *name;
+    int nsamp;
     double *samp;
+    int i, j;
     PyObject *ret;
-    if (!PyArg_ParseTuple(args, "i|i:gradients_sample_uniform", &num, &reverse))
+
+    if (!PyArg_ParseTuple(args, "si|i:gradient_get_uniform_samples", &name, &num, &reverse))
 	return NULL;
-    samp = gimp_gradients_sample_uniform(num, reverse);
+
+    if (!gimp_gradient_get_uniform_samples(name, num, reverse, &nsamp, &samp)) {
+	PyErr_SetString(pygimp_error, "gradient_get_uniform_samples failed");
+	return NULL;
+    }
+
     ret = PyList_New(num);
     for (i = 0, j = 0; i < num; i++, j += 4)
 	PyList_SetItem(ret, i, Py_BuildValue("(dddd)", samp[j],
 					     samp[j+1], samp[j+2], samp[j+3]));
+
     g_free(samp);
+
     return ret;
 }
 
 static PyObject *
-pygimp_gradients_sample_custom(PyObject *self, PyObject *args)
+pygimp_gradient_get_custom_samples(PyObject *self, PyObject *args)
 {
     int num, reverse = FALSE;
-    int i, j;
+    char *name;
+    int nsamp;
     double *pos, *samp;
+    int i, j;
     PyObject *ret, *item;
-    if (!PyArg_ParseTuple(args, "O|i:gradients_sample_custom", &ret, &reverse))
+    gboolean success;
+
+    if (!PyArg_ParseTuple(args, "sO|i:gradient_get_uniform_samples", &name, &ret, &reverse))
 	return NULL;
+
     if (!PySequence_Check(ret)) {
 	PyErr_SetString(PyExc_TypeError,
 			"second arg must be a sequence");
 	return NULL;
     }
+
     num = PySequence_Length(ret);
     pos = g_new(gdouble, num);
+
     for (i = 0; i < num; i++) {
 	item = PySequence_GetItem(ret, i);
+
 	if (!PyFloat_Check(item)) {
 	    PyErr_SetString(PyExc_TypeError,
 			    "second arg must be a sequence of floats");
 	    g_free(pos);
 	    return NULL;
 	}
+
 	pos[i] = PyFloat_AsDouble(item);
     }
-    samp = gimp_gradients_sample_custom(num, pos, reverse);
+
+    success = gimp_gradient_get_custom_samples(name, num, pos, reverse,
+					       &nsamp, &samp);
     g_free(pos);
+
+    if (!success) {
+	PyErr_SetString(pygimp_error, "gradient_get_custom_samples failed");
+	return NULL;
+    }
+
     ret = PyList_New(num);
     for (i = 0, j = 0; i < num; i++, j += 4)
 	PyList_SetItem(ret, i, Py_BuildValue("(dddd)", samp[j],
 					     samp[j+1], samp[j+2], samp[j+3]));
+
     g_free(samp);
+
+    return ret;
+}
+
+static PyObject *
+pygimp_gradients_sample_uniform(PyObject *self, PyObject *args)
+{
+    char *name;
+    PyObject *arg_list, *str, *new_args, *ret;
+
+    if (PyErr_Warn(PyExc_DeprecationWarning, "use gimp.gradient_get_uniform_samples") < 0)
+        return NULL;
+
+    arg_list = PySequence_List(args);
+
+    name = gimp_context_get_gradient();
+
+    str = PyString_FromString(name);
+    g_free(name);
+
+    PyList_Insert(arg_list, 0, str);
+    Py_XDECREF(str);
+
+    new_args = PyList_AsTuple(arg_list);
+    Py_XDECREF(arg_list);
+
+    ret = pygimp_gradient_get_uniform_samples(self, new_args);
+    Py_XDECREF(new_args);
+
+    return ret;
+}
+
+static PyObject *
+pygimp_gradients_sample_custom(PyObject *self, PyObject *args)
+{
+    char *name;
+    PyObject *arg_list, *str, *new_args, *ret;
+
+    if (PyErr_Warn(PyExc_DeprecationWarning, "use gimp.gradient_get_custom_samples") < 0)
+        return NULL;
+
+    arg_list = PySequence_List(args);
+
+    name = gimp_context_get_gradient();
+
+    str = PyString_FromString(name);
+    g_free(name);
+
+    PyList_Insert(arg_list, 0, str);
+    Py_XDECREF(str);
+
+    new_args = PyList_AsTuple(arg_list);
+    Py_XDECREF(arg_list);
+
+    ret = pygimp_gradient_get_custom_samples(self, new_args);
+
     return ret;
 }
 
@@ -1028,8 +1140,12 @@ static struct PyMethodDef gimp_methods[] = {
     {"set_background",	(PyCFunction)pygimp_set_background,	METH_VARARGS},
     {"set_foreground",	(PyCFunction)pygimp_set_foreground,	METH_VARARGS},
     {"gradients_get_list",	(PyCFunction)pygimp_gradients_get_list,	METH_NOARGS},
+    {"context_get_gradient",	(PyCFunction)pygimp_context_get_gradient,	METH_NOARGS},
+    {"context_set_gradient",	(PyCFunction)pygimp_context_set_gradient,	METH_VARARGS},
     {"gradients_get_gradient",	(PyCFunction)pygimp_gradients_get_gradient,	METH_NOARGS},
     {"gradients_set_gradient",	(PyCFunction)pygimp_gradients_set_gradient,	METH_VARARGS},
+    {"gradient_get_uniform_samples",	(PyCFunction)pygimp_gradient_get_uniform_samples,	METH_VARARGS},
+    {"gradient_get_custom_samples",	(PyCFunction)pygimp_gradient_get_custom_samples,	METH_VARARGS},
     {"gradients_sample_uniform",	(PyCFunction)pygimp_gradients_sample_uniform,	METH_VARARGS},
     {"gradients_sample_custom",	(PyCFunction)pygimp_gradients_sample_custom,	METH_VARARGS},
     {"delete", (PyCFunction)pygimp_delete, METH_VARARGS},

@@ -8,6 +8,8 @@ libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 
 SUBDIRS = doc plug-ins
 
+AM_CFLAGS = $(PYGIMP_EXTRA_CFLAGS)
+
 INCLUDES = -I$(top_srcdir) $(PYTHON_INCLUDES) $(GLIB_CFLAGS)
 
 pygimpdir = $(gimpplugindir)/python
