@@ -3,7 +3,7 @@
 	* app/app_procs.[ch]: removed the gimp_busy boolean, check whether
 	user_installation is needed here, not in user_install.c, parse
 	gtkrc an friends only if(!no_interface), create the Gimp object
-	before parsing gimp's rc files an pas it to the parse functions,
+	before parsing gimp's rc files and pass it to the parse functions,
 	many other cleanups.
 
 	* app/appenums.h: added MessageHandlerType and StackTraceMode.
