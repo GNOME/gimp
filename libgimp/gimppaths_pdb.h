@@ -70,6 +70,9 @@ gboolean gimp_path_to_selection      (gint32           image_ID,
 				      gboolean         feather,
 				      gdouble          feather_radius_x,
 				      gdouble          feather_radius_y);
+gboolean gimp_path_import            (gint32           image_ID,
+				      const gchar     *filename,
+				      gboolean         merge);
 
 
 G_END_DECLS

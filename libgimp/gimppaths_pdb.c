@@ -555,3 +555,40 @@ gimp_path_to_selection (gint32          image_ID,
 
   return success;
 }
+
+/**
+ * gimp_path_import:
+ * @image_ID: The image.
+ * @filename: The name of the SVG file to import.
+ * @merge: Merge paths into a single vectors object.
+ *
+ * Import paths from an SVG file.
+ *
+ * This procedure imports path from an SVG file. This is a temporary
+ * solution until the new vectors PDB API is in place. Don't rely on
+ * this function being available in future GIMP releases.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_path_import (gint32       image_ID,
+		  const gchar *filename,
+		  gboolean     merge)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_path_import",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_STRING, filename,
+				    GIMP_PDB_INT32, merge,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
