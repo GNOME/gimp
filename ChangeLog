@@ -1,3 +1,7 @@
+Wed Sep 29 22:48:01 BST 1999 Adam D. Moss <adam@gimp.org>
+
+	* app/gimpbrushpipe.c: very minor fix.
+
 Wed Sep 29 21:56:52 BST 1999 Andy Thomas <alt@gimp.org>
 
 	* app/colourmap_dialog.i.c

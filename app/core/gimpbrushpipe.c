@@ -130,9 +130,6 @@ gimp_brush_pixmap_select_brush (PaintCore *paint_core)
     {
       switch (pipe->select[i])
 	{
-	case PIPE_SELECT_CONSTANT:
-	  ix = pipe->index[i];
-	  break;
 	case PIPE_SELECT_INCREMENTAL:
 	  ix = (pipe->index[i] + 1) % pipe->rank[i];
 	  break;
@@ -160,6 +157,10 @@ gimp_brush_pixmap_select_brush (PaintCore *paint_core)
 	  break;
 	case PIPE_SELECT_TILT_Y:
 	  ix = RINT (paint_core->curytilt / 2.0 * pipe->rank[i]) + pipe->rank[i]/2;
+	  break;
+	case PIPE_SELECT_CONSTANT:
+	default:
+	  ix = pipe->index[i];
 	  break;
 	}
       pipe->index[i] = BOUNDS (ix, 0, pipe->rank[i]-1);
