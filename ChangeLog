@@ -1,3 +1,8 @@
+2001-02-10  Stanislav Brabec  <utx@penguin.cz>
+
+	* plugins/common/despeckle.c: Fixed comparison *sort_ptr > black_level.
+        Patch from Martin Weber <martweb@gmx.net>.
+
 2001-02-07  Daniel Egger  <egger@suse.de>
 
         * configure.in: Changed link order in gtkxmhtml check
