@@ -687,7 +687,8 @@ CB_PasteImage (gboolean interactive,
   CloseClipboard ();
 
   /* shouldn't this be done by caller?? */
-  gimp_image_undo_enable (image_ID);
+  if (!gimp_image_undo_is_enabled (image_ID))
+    gimp_image_undo_enable (image_ID);
 
   return bRet;
 } /* CB_PasteImage */

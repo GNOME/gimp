@@ -84,6 +84,7 @@ OBJECTS = \
 	gimpmenuitem.obj \
 	gimpnavigationpreview.obj \
 	gimppaletteeditor.obj \
+	gimppatternfactoryview.obj \
 	gimppreview.obj \
 	gimppreview-popup.obj \
 	gimppreviewrenderer.obj \

@@ -1,3 +1,15 @@
+2004-04-11  Hans Breuer  <hans@breuer.org>
+
+	* app/makefile.msc : build sanity.obj
+	  app/text/makefile.msc : gimptextundo.obj
+	  app/widgets/makefile.msc : gimppatternfactoryview.obj
+
+	* plug-ins/common/winclipboard.c : don't call 
+	gimp_image_undo_enable() when it's not switched off. 
+	Otherwise the undo history would be destroyed with
+	Gimp-Core-CRITICAL **: file gimpimage.c: line 1579: assertion 
+	`gimage->undo_freeze_count > 0' failed
+
 2004-04-10  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptexttool.c (gimp_text_tool_apply): push an undo

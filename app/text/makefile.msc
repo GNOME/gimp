@@ -36,6 +36,7 @@ OBJECTS = \
 	gimptextlayer-xcf.obj \
 	gimptextlayout.obj \
 	gimptextlayout-render.obj \
+	gimptextundo.obj \
 	text-enums.obj \
 
 INCLUDES = \
