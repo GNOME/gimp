@@ -220,24 +220,6 @@ force_uninstall_from_perldirs ::
 force_uninstall_from_sitedirs ::
 	\$(PERL) -MExtUtils::Install -e 'uninstall(\$\$ARGV[0],1,0)' ".$self->catfile('$(SITEARCHEXP)','auto','$(FULLEXT)','.packlist')."
 
-install-po:
-";
-
-   print "Portable message object...";
-   if ($MSGFMT =~ /./) {
-      for (<po/*.po>) {
-         my($po)=m!/(.*)\.po$!; #/# for brainy vim
-         print " $po";
-         $postamble .= "	\$(MKPATH) \$(datadir)/locale/$po/LC_MESSAGES\n";
-         $postamble .= "	-\$(MSGFMT) -o \$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo po/$po.po\n";
-         $postamble .= "	-\$(CHMOD) 644 \$(datadir)/locale/$po/LC_MESSAGES/gimp-perl.mo\n";
-      }
-   } else {
-      print " skipped";
-   }
-   print "\n";
-   
-   $postamble .= "
 # generate tags file
 tags: .
 	ctags --lang=c `find . -name '*.xs' -print`
@@ -246,10 +228,6 @@ tags: .
 autoconf:
 	aclocal; autoheader; autoconf
         
-# merge messages into potfile
-msgmerge:
-	./po/update.sh
-
 # set \$VERSION in all modules
 setver:
 	\$(PERL) -pi -e 's/^(\\s*\\\$\$VERSION\\s*=\\s*).*\$\$/\$\${1}\$(VERSION);/' *.pm Gimp/*.pm UI/*.pm Net/*.pm
@@ -260,7 +238,7 @@ setver:
 }
 
 $GIMP_INC_NOUI = "-I../../ $GIMP_INC_NOUI" if $IN_GIMP;
-@DIRS= qw/Gimp Net UI/;
+@DIRS= qw/Gimp Net UI po/;
 
 $build_module = $IN_GIMP || $ENV{GIMP_PERL_MODULE_INC};
 # temporarily disabled because of politics
@@ -296,6 +274,9 @@ print "writing Gimp/Config.pm... ";
 }
 print "ok\n";
 
+@EXE_FILES = qw(gimpdoc xcftopnm embedxpm);
+push @EXE_FILES, qw(scm2perl scm2scm) if $PRD;
+
 WriteMakefile(
     'dist'	=> {
 	            PREOP	=> 'make setver && chmod -R u=rwX,go=rX . ;',
@@ -328,7 +309,7 @@ WriteMakefile(
     'LDFROM'	=> expand("\$(OBJECT) $LIBS $INTLLIBS"),
     'INC'	=> "$INC1 $GIMP_INC_NOUI $CPPFLAGS $CFLAGS",
     'DEFINE'	=> "$DEFINE1 $DEFS",
-    'EXE_FILES'	=> [qw(scm2perl scm2scm gimpdoc xcftopnm embedxpm)],
+    'EXE_FILES'	=> \@EXE_FILES,
     'macro'	=> \%cfg,
     'realclean'	=> { FILES => "config.status config.cache config.pl config.log config.h Gimp/Config.pm Makefile" },
     'clean'	=> { FILES => "Makefile.old stamp-h" },

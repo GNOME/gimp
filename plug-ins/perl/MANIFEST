@@ -130,6 +130,7 @@ examples/billboard
 examples/blended2
 pxgettext
 po/ChangeLog
+po/Makefile.PL
 po/de.po
 po/it.po
 po/cs.po

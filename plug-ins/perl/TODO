@@ -14,13 +14,14 @@ put under LGPL:
 
 gimpenv.c, gimpmodule.h, color_selector.h, color_display.h
 
+po/Makefile
+<Sven> schmorp: I think the makefile should have all (builds the pot-file and
+      calls msgfmt if po-files have changed),
++update-po (merges all po-files), install, uninstall eventually
+
 API generalization
    guide ->
    gimp_desaturate -> drawable
-
-firetext! AND _grayscale_ for map_gradient(!)
-
-sota-chrome pagesize of 2 is _wrong_
 
 bugs
   * damnit libintl crazy shit

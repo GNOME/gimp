@@ -47,6 +47,7 @@ $^W=0;
    LIBS			=> q[@LIBS@],
    INTLLIBS		=> q[@INTLLIBS@],
    MSGFMT		=> q[@MSGFMT@],
+   MSGMERGE		=> q[@MSGMERGE@],
 );
 
 sub expand {

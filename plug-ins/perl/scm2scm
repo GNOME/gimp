@@ -110,12 +110,12 @@ sub plug_in_constant {
         \&drop_1st
        ]
       ],
-   'api2' => [[
+   'api2' =>
       [
        [
         "^(gimp-image-disable-undo|gimp-image-enable-undo)\$",
         \&swap_last_two
-       }
+       ]
       ],
    '1.1' => ['nice','api1','api2'],
    '1.2' => ['nice','api1','api2'],

@@ -1,3 +1,8 @@
+Mon Feb 21 13:24:39 CET 2000  Marc Lehmann <pcg@goof.com>
+
+        * Makefile.PL: New file, should support the "standard" targets.
+        * update.sh: Sven wrote this better version.
+
 Mon Feb 21 01:15:28 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* .cvsignore: added a few files that shouldn't be in CVS
