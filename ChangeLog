@@ -1,5 +1,12 @@
 2004-06-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimp-utils.[ch]: added gimp_boolean_handled_accum().
+
+	* app/core/gimp.c
+	* app/widgets/gimpcontrollerinfo.c: use it.
+
+2004-06-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpcontainer.c (gimp_container_deserialize): add newly
 	created children to the container *after* deserializing them so
 	GimpContainer::add() callbacks get the already deserialized

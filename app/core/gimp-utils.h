@@ -42,5 +42,10 @@ gint64     gimp_g_list_get_memsize       (GList       *list,
 
 gchar    * gimp_get_default_language     (const gchar *category);
 
+gboolean   gimp_boolean_handled_accum    (GSignalInvocationHint *ihint,
+                                          GValue                *return_accu,
+                                          const GValue          *handler_return,
+                                          gpointer               dummy);
+
 
 #endif /* __APP_GIMP_UTILS_H__ */

@@ -138,30 +138,11 @@ gimp_get_type (void)
   return object_type;
 }
 
-gboolean
-gimp_boolean_handled_accumulator (GSignalInvocationHint *ihint,
-                                  GValue                *return_accu,
-                                  const GValue          *handler_return,
-                                  gpointer               dummy)
-{
-  gboolean continue_emission;
-  gboolean signal_handled;
-
-  signal_handled = g_value_get_boolean (handler_return);
-  g_value_set_boolean (return_accu, signal_handled);
-  continue_emission = ! signal_handled;
-
-  return continue_emission;
-}
-
 static void
 gimp_class_init (GimpClass *klass)
 {
-  GObjectClass    *object_class;
-  GimpObjectClass *gimp_object_class;
-
-  object_class      = G_OBJECT_CLASS (klass);
-  gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -190,7 +171,7 @@ gimp_class_init (GimpClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpClass, exit),
-                  gimp_boolean_handled_accumulator, NULL,
+                  gimp_boolean_handled_accum, NULL,
                   gimp_marshal_BOOLEAN__BOOLEAN,
                   G_TYPE_BOOLEAN, 1,
                   G_TYPE_BOOLEAN);
