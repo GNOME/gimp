@@ -22,6 +22,23 @@ Ink tool
    special device, Ink will vary its size based on the speed of your
    cursor. The results can be remarkably natural-looking.
 
+Smudge tool
+   This tool lets you push pixels around on the image as if you were
+   using your finger and "smudging" wet paint.
+
+Dodge & Burn tool
+   This tool lets you selectively darken or lighten the image.
+
+Quick Mask
+   With quick mask, you can quickly convert a selection to a visible
+   red mask and back again. You can edit the mask directly with
+   painting tools or plugins.
+
+Image selection thumbnails
+   For dialogs that allow you to choose which image they're associated
+   with, the menu now has a small thumbnail image to help you
+   determine which image you're selecting.
+
 'File New' dialog
    The new dialog for creating new images allows to use real life
    units like centimeters and inches along with a resolution entry.
@@ -149,6 +166,7 @@ New plug-ins
       * WaterSelect - a nifty way to select colors
       * NewsPrint - whee, you have to see that 
       * Guillotine - slices the image up along its guides 
+      * Unsharp Mask
 
 Internals
    Lots of changes were made to GIMP internals that I don't understand
@@ -190,6 +208,11 @@ Indexed images
 Win32 merging
    The patches required for compiling under Win32 are being integrated
    into the main GIMP source.
+
+Cursor changes
+   The cursors now visually indicate selection modes. It's much easier
+   to tell if you're adding, subtracting, or intersecting a selection
+   now. Cursors also change depending on your Path mode.
 
 Miscellaneous
    - The painting functions (brush, pencil, airbrush, etc.) have been
