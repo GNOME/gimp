@@ -351,6 +351,9 @@ msgstr "%s: PDB-Aufruf fehlgeschlagen"
 msgid "<Image>/Video/VCR Console..."
 msgstr "<Image>/Video/VCR Console..."
 
+msgid "<Image>/Filters/Animation/Seth Spin..."
+msgstr "<Image>/Filter/Animation/Seths Dreher..."
+
 msgid ", authorization required"
 msgstr ", Autorisierung notwendig"
 
@@ -987,9 +990,6 @@ msgstr "URL zu lang ($max > 1024)\n"
 
 msgid "illegal command received, aborting connection"
 msgstr "Ungültige Anfrage empfange, Vebrindung abgebrochen"
-
-msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
-msgstr "<Toolbox>/Xtns/Animation/Seths Dreher..."
 
 msgid "<Image>/Filters/Noise/Ditherize..."
 msgstr "<Image>/Filter/Rauschen/Rastern..."
