@@ -1,5 +1,10 @@
 2004-06-04  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptexttool.c (gimp_text_tool_class_init): allow to
+	move a text layer using the cursor keys (merged from HEAD branch).
+
+2004-06-04  Sven Neumann  <sven@gimp.org>
+
 	* app/paint/gimppaintoptions.c (DEFAULT_PRESSURE_PRESSURE):
 	applied a patch by Philip Lafleur that changes the default to
 	FALSE. Fixes bug #143626; merged from HEAD branch.
