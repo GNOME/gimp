@@ -175,15 +175,17 @@ struct GimpCompositeOperationEffects gimp_composite_operation_effects[] =
     { FALSE, FALSE, FALSE },      /*  GIMP_CONVERT */
   };
 
-struct {
-  char announce_function;
+struct
+{
+  gchar announce_function;
 } gimp_composite_debug;
 
-struct GimpCompositeOptions gimp_composite_options = {
+struct GimpCompositeOptions gimp_composite_options =
+{
   GIMP_COMPOSITE_OPTION_USE
 };
 
-char *gimp_composite_function_name[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N];
+gchar * gimp_composite_function_name[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N];
 void (*gimp_composite_function[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N])(GimpCompositeContext *);
 
 void
@@ -204,6 +206,7 @@ gimp_composite_dispatch (GimpCompositeContext *ctx)
                   gimp_composite_pixelformat_astext(ctx->pixelformat_D),
                   function);
         }
+
       (*function) (ctx);
     }
   else
@@ -222,57 +225,58 @@ gimp_composite_context_print (GimpCompositeContext *ctx)
   printf ("%p: op=%s\n  A=%s(%d):%p\n  B=%s(%d):%p\n  D=%s(%d):%p\n  M=%s(%d):%p\n  n_pixels=%lu\n",
           ctx,
           gimp_composite_mode_astext(ctx->op),
-          gimp_composite_pixelformat_astext(ctx->pixelformat_A), ctx->pixelformat_A, ctx->A, 
-          gimp_composite_pixelformat_astext(ctx->pixelformat_B), ctx->pixelformat_B, ctx->B, 
-          gimp_composite_pixelformat_astext(ctx->pixelformat_D), ctx->pixelformat_D, ctx->D, 
-          gimp_composite_pixelformat_astext(ctx->pixelformat_M), ctx->pixelformat_M, ctx->M, 
+          gimp_composite_pixelformat_astext(ctx->pixelformat_A), ctx->pixelformat_A, ctx->A,
+          gimp_composite_pixelformat_astext(ctx->pixelformat_B), ctx->pixelformat_B, ctx->B,
+          gimp_composite_pixelformat_astext(ctx->pixelformat_D), ctx->pixelformat_D, ctx->D,
+          gimp_composite_pixelformat_astext(ctx->pixelformat_M), ctx->pixelformat_M, ctx->M,
           ctx->n_pixels);
 }
 
-char *
+const gchar *
 gimp_composite_mode_astext (GimpCompositeOperation op)
 {
-  switch (op) {
-  case GIMP_COMPOSITE_NORMAL:     return ("GIMP_COMPOSITE_NORMAL");
-  case GIMP_COMPOSITE_DISSOLVE:   return ("GIMP_COMPOSITE_DISSOLVE");
-  case GIMP_COMPOSITE_BEHIND:     return ("GIMP_COMPOSITE_BEHIND");
-  case GIMP_COMPOSITE_MULTIPLY:   return ("GIMP_COMPOSITE_MULTIPLY");
-  case GIMP_COMPOSITE_SCREEN:     return ("GIMP_COMPOSITE_SCREEN");
-  case GIMP_COMPOSITE_OVERLAY:    return ("GIMP_COMPOSITE_OVERLAY");
-  case GIMP_COMPOSITE_DIFFERENCE: return ("GIMP_COMPOSITE_DIFFERENCE");
-  case GIMP_COMPOSITE_ADDITION:   return ("GIMP_COMPOSITE_ADDITION");
-  case GIMP_COMPOSITE_SUBTRACT:   return ("GIMP_COMPOSITE_SUBTRACT");
-  case GIMP_COMPOSITE_DARKEN:     return ("GIMP_COMPOSITE_DARKEN");
-  case GIMP_COMPOSITE_LIGHTEN:    return ("GIMP_COMPOSITE_LIGHTEN");
-  case GIMP_COMPOSITE_HUE:        return ("GIMP_COMPOSITE_HUE");
-  case GIMP_COMPOSITE_SATURATION: return ("GIMP_COMPOSITE_SATURATION");
-  case GIMP_COMPOSITE_COLOR_ONLY: return ("GIMP_COMPOSITE_COLOR_ONLY");
-  case GIMP_COMPOSITE_VALUE:      return ("GIMP_COMPOSITE_VALUE");
-  case GIMP_COMPOSITE_DIVIDE:     return ("GIMP_COMPOSITE_DIVIDE");
-  case GIMP_COMPOSITE_DODGE:      return ("GIMP_COMPOSITE_DODGE");
-  case GIMP_COMPOSITE_BURN:       return ("GIMP_COMPOSITE_BURN");
-  case GIMP_COMPOSITE_HARDLIGHT:  return ("GIMP_COMPOSITE_HARDLIGHT");
-  case GIMP_COMPOSITE_SOFTLIGHT:  return ("GIMP_COMPOSITE_SOFTLIGHT");
-  case GIMP_COMPOSITE_GRAIN_EXTRACT: return ("GIMP_COMPOSITE_GRAIN_EXTRACT");
-  case GIMP_COMPOSITE_GRAIN_MERGE:   return ("GIMP_COMPOSITE_GRAIN_MERGE");
-  case GIMP_COMPOSITE_COLOR_ERASE:   return ("GIMP_COMPOSITE_COLOR_ERASE");
-  case GIMP_COMPOSITE_ERASE:         return ("GIMP_COMPOSITE_ERASE");
-  case GIMP_COMPOSITE_REPLACE:       return ("GIMP_COMPOSITE_REPLACE");
-  case GIMP_COMPOSITE_ANTI_ERASE:    return ("GIMP_COMPOSITE_ANTI_ERASE");
-  case GIMP_COMPOSITE_BLEND:         return ("GIMP_COMPOSITE_BLEND");
-  case GIMP_COMPOSITE_SHADE:         return ("GIMP_COMPOSITE_SHADE");
-  case GIMP_COMPOSITE_SWAP:          return ("GIMP_COMPOSITE_SWAP");
-  case GIMP_COMPOSITE_SCALE:         return ("GIMP_COMPOSITE_SCALE");
-  case GIMP_COMPOSITE_CONVERT:       return ("GIMP_COMPOSITE_CONVERT");
-  case GIMP_COMPOSITE_XOR:          return ("GIMP_COMPOSITE_XOR");
-  default:
-    break;
-  }
+  switch (op)
+    {
+    case GIMP_COMPOSITE_NORMAL:        return ("GIMP_COMPOSITE_NORMAL");
+    case GIMP_COMPOSITE_DISSOLVE:      return ("GIMP_COMPOSITE_DISSOLVE");
+    case GIMP_COMPOSITE_BEHIND:        return ("GIMP_COMPOSITE_BEHIND");
+    case GIMP_COMPOSITE_MULTIPLY:      return ("GIMP_COMPOSITE_MULTIPLY");
+    case GIMP_COMPOSITE_SCREEN:        return ("GIMP_COMPOSITE_SCREEN");
+    case GIMP_COMPOSITE_OVERLAY:       return ("GIMP_COMPOSITE_OVERLAY");
+    case GIMP_COMPOSITE_DIFFERENCE:    return ("GIMP_COMPOSITE_DIFFERENCE");
+    case GIMP_COMPOSITE_ADDITION:      return ("GIMP_COMPOSITE_ADDITION");
+    case GIMP_COMPOSITE_SUBTRACT:      return ("GIMP_COMPOSITE_SUBTRACT");
+    case GIMP_COMPOSITE_DARKEN:        return ("GIMP_COMPOSITE_DARKEN");
+    case GIMP_COMPOSITE_LIGHTEN:       return ("GIMP_COMPOSITE_LIGHTEN");
+    case GIMP_COMPOSITE_HUE:           return ("GIMP_COMPOSITE_HUE");
+    case GIMP_COMPOSITE_SATURATION:    return ("GIMP_COMPOSITE_SATURATION");
+    case GIMP_COMPOSITE_COLOR_ONLY:    return ("GIMP_COMPOSITE_COLOR_ONLY");
+    case GIMP_COMPOSITE_VALUE:         return ("GIMP_COMPOSITE_VALUE");
+    case GIMP_COMPOSITE_DIVIDE:        return ("GIMP_COMPOSITE_DIVIDE");
+    case GIMP_COMPOSITE_DODGE:         return ("GIMP_COMPOSITE_DODGE");
+    case GIMP_COMPOSITE_BURN:          return ("GIMP_COMPOSITE_BURN");
+    case GIMP_COMPOSITE_HARDLIGHT:     return ("GIMP_COMPOSITE_HARDLIGHT");
+    case GIMP_COMPOSITE_SOFTLIGHT:     return ("GIMP_COMPOSITE_SOFTLIGHT");
+    case GIMP_COMPOSITE_GRAIN_EXTRACT: return ("GIMP_COMPOSITE_GRAIN_EXTRACT");
+    case GIMP_COMPOSITE_GRAIN_MERGE:   return ("GIMP_COMPOSITE_GRAIN_MERGE");
+    case GIMP_COMPOSITE_COLOR_ERASE:   return ("GIMP_COMPOSITE_COLOR_ERASE");
+    case GIMP_COMPOSITE_ERASE:         return ("GIMP_COMPOSITE_ERASE");
+    case GIMP_COMPOSITE_REPLACE:       return ("GIMP_COMPOSITE_REPLACE");
+    case GIMP_COMPOSITE_ANTI_ERASE:    return ("GIMP_COMPOSITE_ANTI_ERASE");
+    case GIMP_COMPOSITE_BLEND:         return ("GIMP_COMPOSITE_BLEND");
+    case GIMP_COMPOSITE_SHADE:         return ("GIMP_COMPOSITE_SHADE");
+    case GIMP_COMPOSITE_SWAP:          return ("GIMP_COMPOSITE_SWAP");
+    case GIMP_COMPOSITE_SCALE:         return ("GIMP_COMPOSITE_SCALE");
+    case GIMP_COMPOSITE_CONVERT:       return ("GIMP_COMPOSITE_CONVERT");
+    case GIMP_COMPOSITE_XOR:           return ("GIMP_COMPOSITE_XOR");
+    default:
+      break;
+    }
 
   return ("bad mode");
 }
 
-char *
+const gchar *
 gimp_composite_pixelformat_astext (GimpPixelFormat f)
 {
   switch (f) {
@@ -307,7 +311,6 @@ void
 gimp_composite_init (void)
 {
   const gchar *p;
-  guint32 cpu;
 
   if ((p = g_getenv ("GIMP_COMPOSITE")))
     {
@@ -318,11 +321,11 @@ gimp_composite_init (void)
               (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_USE) ? "yes" : "no",
               (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_VERBOSE) ? "yes" : "no");
 
-		gimp_composite_generic_install();
+  gimp_composite_generic_install ();
 
   if (! (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_INITIALISED))
     {
-						cpu = cpu_accel();
+      guint32 cpu = cpu_accel ();
 
 #ifdef ARCH_X86
       if (cpu & CPU_ACCEL_X86_MMX)
@@ -332,7 +335,7 @@ gimp_composite_init (void)
           gimp_composite_mmx_install ();
         }
 #if 1
-      if (cpu & CPU_ACCEL_X86_SSE || cpu_accel() & CPU_ACCEL_X86_MMXEXT)
+      if (cpu & CPU_ACCEL_X86_SSE || cpu & CPU_ACCEL_X86_MMXEXT)
         {
           extern void gimp_composite_sse_install (void);
           g_printerr (" +sse");
@@ -372,5 +375,6 @@ gimp_composite_init (void)
 
       gimp_composite_options.bits |= GIMP_COMPOSITE_OPTION_INITIALISED;
     }
-		g_printerr ("\n");
+
+  g_printerr ("\n");
 }
