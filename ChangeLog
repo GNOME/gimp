@@ -1,5 +1,10 @@
 2004-08-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpthumbbox.c (gimp_thumb_box_create_thumbnails):
+	fixed annoying resizing when thumbnailing exactly one image.
+
+2004-08-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/Makefile.am
 	* app/widgets/widgets-types.h
 	* app/widgets/gimpprogressbox.[ch]: new GtkVBox subclass featuring

@@ -489,7 +489,10 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
     gtk_widget_set_sensitive (toplevel, FALSE);
 
   if (box->uris)
-    gtk_widget_show (box->progress);
+    {
+      gtk_widget_hide (box->info);
+      gtk_widget_show (box->progress);
+    }
 
   n_uris = g_slist_length (box->uris);
 
@@ -501,7 +504,6 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
       gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (box->thumb_progress),
                                      0.0);
 
-      gtk_widget_hide (box->info);
       gtk_widget_show (box->thumb_progress);
 
       for (list = box->uris->next, i = 0;
@@ -560,13 +562,13 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
  canceled:
 
   if (n_uris > 1)
-    {
-      gtk_widget_hide (box->thumb_progress);
-      gtk_widget_show (box->info);
-    }
+    gtk_widget_hide (box->thumb_progress);
 
   if (box->uris)
-    gtk_widget_hide (box->progress);
+    {
+      gtk_widget_hide (box->progress);
+      gtk_widget_show (box->info);
+    }
 
   if (dialog)
     gimp_file_dialog_set_sensitive (dialog, TRUE);
