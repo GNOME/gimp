@@ -1,3 +1,10 @@
+2004-11-21  Kevin Cozens  <kcozens@cvs.gimp.org>
+
+	* plug-ins/script-fu/scripts/erase-rows.scm: Applied patch from BM
+	which makes the script work layers that have their top-left corner
+	at a position other than the top-left corner of the image.
+	Fixes bug #158863.
+
 2004-11-21  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/gfig/gfig-arc.c
