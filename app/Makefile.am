@@ -227,7 +227,7 @@ gimp_SOURCES = \
 	gradient_select.c	\
 	gradient_select_cmds.c	\
 	gradient.h		\
-	gradient_cmds.c		\
+	gradients_cmds.c	\
 	gtkwrapbox.c		\
 	gtkwrapbox.h		\
 	gtkhwrapbox.c		\

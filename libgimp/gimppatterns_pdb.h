@@ -31,10 +31,10 @@ extern "C" {
 
 
 gchar* gimp_patterns_get_pattern_data (gchar   *name,
-				       gint    *length,
 				       gint    *width,
 				       gint    *height,
 				       gint    *mask_bpp,
+				       gint    *mask_data_size,
 				       guint8 **mask_data);
 
 

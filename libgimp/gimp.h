@@ -82,6 +82,8 @@ extern "C" {
 #define gimp_drawable_image_id        gimp_drawable_image
 #define gimp_drawable_bpp             gimp_drawable_bytes
 
+#define gimp_channel_get_image_id     gimp_drawable_image
+
 #define gimp_layer_get_mask_id               gimp_layer_mask
 #define gimp_layer_get_image_id              gimp_drawable_image
 #define gimp_layer_is_floating_selection     gimp_layer_is_floating_sel

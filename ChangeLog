@@ -3,6 +3,45 @@
 	    Simon Budig  <Simon.Budig@unix-ag.org>
 	    Garry R. Osgood  <gosgood@idt.net>
 	    Seth Burgess <sjburges@gimp.org>
+	    Tuomas Kuosmanen <tigert@gimp.org>
+	    Tor Lillqvist <tml@iki.fi>
+	    Andy Thomas <alt@gimp.org>
+	    Andreas Bogk <andreas@andreas.org>
+	    Vincent Kolwitz <vincent@andreas.org>
+
+	The remaining bits ...    
+	
+	* tools/pdbgen/Makefile.am
+	* tools/pdbgen/groups.pl
+	* tools/pdbgen/pdb/gradient.pdb  -> gradients.pdb
+
+	* app/Makefile.am
+	* app/gradient_cmds.c  -> gradients_cmds.c
+	
+	* libgimp/gimpbrushes_pdb.[ch]
+	* libgimp/gimpfileops_pdb.[ch]
+	* libgimp/gimpguides_pdb.[ch]
+	* libgimp/gimphelp_pdb.[ch]
+	* libgimp/gimpmessage_pdb.[ch]
+	* libgimp/gimpparasite_pdb.[ch]
+	* libgimp/gimppatterns_pdb.[ch]
+	* libgimp/gimpplugin_pdb.[ch]: replaced with code based on
+	files generated using pdbgen
+
+	* libgimp/gimpbrushmenu.c
+	* libgimp/gimppatternmenu.c: 
+	reflect changes in gimp[brushes|patterns]_pdb.[ch] 
+	
+	* tools/pdbgen/pdb/gradient.pdb  -> gradients.pdb
+	
+	* tools/pdbgen/pdb/plug_in.pdb: made it create libgimp code 
+
+2000-06-01  Michael Natterer  <mitch@gimp.org>
+	    Sven Neumann  <sven@gimp.org>
+	    Simon Budig  <Simon.Budig@unix-ag.org>
+	    Garry R. Osgood  <gosgood@idt.net>
+	    Seth Burgess <sjburges@gimp.org>
+	    Tor Lillqvist <tml@iki.fi>
 
 	* libgimp/gimpchannel_pdb.[ch]
 	* libgimp/gimpproceduraldb_pdb.[ch]

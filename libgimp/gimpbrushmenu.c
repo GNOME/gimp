@@ -270,7 +270,7 @@ brush_select_invoker (gchar   *name,
   bsel->height = height;
   mask_d_sz    = width * height;
   bsel->mask_data = g_malloc (mask_d_sz);
-  g_memmove(bsel->mask_data, mask_data, mask_d_sz); 
+  g_memmove (bsel->mask_data, mask_data, mask_d_sz); 
 
   brush_pre_update (bsel->brush_preview,
 		    bsel->width, bsel->height, bsel->mask_data);
@@ -326,6 +326,7 @@ gimp_brush_select_widget (gchar                *dname,
   gint       init_spacing;
   GimpLayerModeEffects init_paint_mode;
   gdouble    init_opacity;
+  gint       mask_data_size;
   guint8    *mask_data;
   gchar     *brush_name;
   BSelect   *bsel;
@@ -366,6 +367,7 @@ gimp_brush_select_widget (gchar                *dname,
 					    &init_paint_mode,
 					    &width,
 					    &height,
+					    &mask_data_size,
 					    &mask_data);
   if (brush_name)
     {
@@ -431,6 +433,7 @@ gimp_brush_select_widget_set_popup (GtkWidget *widget,
   gint     init_spacing;
   GimpLayerModeEffects init_paint_mode;
   gdouble  init_opacity;
+  gint    *mask_data_size;
   guint8  *mask_data;
   gchar   *brush_name;
   BSelect *bsel;
@@ -445,6 +448,7 @@ gimp_brush_select_widget_set_popup (GtkWidget *widget,
 						&init_paint_mode,
 						&width,
 						&height,
+						&mask_data_size,
 						&mask_data);
 
       if (opacity == -1.0)

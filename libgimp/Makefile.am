@@ -37,7 +37,7 @@ PDB_WRAPPERS_C = \
 	gimpfileops_pdb.c		\
 	gimpfloatingsel_pdb.c		\
 	gimpgimprc_pdb.c		\
-	gimpgradient_pdb.c		\
+	gimpgradients_pdb.c		\
 	gimpgradientselect_pdb.c	\
 	gimpguides_pdb.c		\
 	gimphelp_pdb.c			\
@@ -70,7 +70,7 @@ PDB_WRAPPERS_H = \
 	gimpfileops_pdb.h		\
 	gimpfloatingsel_pdb.h		\
 	gimpgimprc_pdb.h		\
-	gimpgradient_pdb.h		\
+	gimpgradients_pdb.h		\
 	gimpgradientselect_pdb.h	\
 	gimpguides_pdb.h		\
 	gimphelp_pdb.h			\

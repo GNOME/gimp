@@ -25,10 +25,10 @@
 
 gchar *
 gimp_patterns_get_pattern_data (gchar   *name,
-				gint    *length,
 				gint    *width,
 				gint    *height,
 				gint    *mask_bpp,
+				gint    *mask_data_size,
 				guint8 **mask_data)
 {
   GParam *return_vals;
@@ -39,18 +39,22 @@ gimp_patterns_get_pattern_data (gchar   *name,
 				    PARAM_STRING, name,
 				    PARAM_END);
 
-  *length = 0;
   name = NULL;
+  *width = 0;
+  *height = 0;
+  *mask_bpp = 0;
+  *mask_data_size = 0;
+  *mask_data = NULL;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
     {
       name = g_strdup (return_vals[1].data.d_string);
       *width = return_vals[2].data.d_int32;
       *height = return_vals[3].data.d_int32;
       *mask_bpp = return_vals[4].data.d_int32;
-      *length = return_vals[5].data.d_int32;
-      *mask_data = g_new (guint8, *length);
+      *mask_data_size = return_vals[5].data.d_int32;
+      *mask_data = g_new (guint8, *mask_data_size);
       memcpy (*mask_data, return_vals[6].data.d_int8array,
-	      *length * sizeof (guint8));
+	      *mask_data_size * sizeof (guint8));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);

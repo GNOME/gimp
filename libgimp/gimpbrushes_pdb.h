@@ -37,6 +37,7 @@ gchar* gimp_brushes_get_brush_data (gchar                 *brush_name,
 				    GimpLayerModeEffects  *paint_mode,
 				    gint                  *width,
 				    gint                  *height,
+				    gint                  *mask_data_size,
 				    guint8               **mask_data);
 
 

@@ -12,7 +12,7 @@
     fileops
     floating_sel
     gimprc
-    gradient
+    gradients
     gradient_select
     guides
     help

@@ -105,7 +105,8 @@ pattern_popup_open (gint     x,
   y = (y < 0) ? 0 : y;
   x = (x + psel->width > scr_w) ? scr_w - psel->width : x;
   y = (y + psel->height > scr_h) ? scr_h - psel->height : y;
-  gtk_preview_size (GTK_PREVIEW (psel->device_patpreview), psel->width, psel->height);
+  gtk_preview_size (GTK_PREVIEW (psel->device_patpreview), 
+		    psel->width, psel->height);
 
   gtk_widget_popup (psel->device_patpopup, x, y);
   
@@ -291,10 +292,10 @@ gimp_pattern_select_widget (gchar                  *dname,
   GtkWidget *hbox;
   GtkWidget *pattern;
   GtkWidget *button;
-  gint       length;
   gint       width;
   gint       height;
   gint       bytes;
+  gint       mask_data_size;
   guint8    *mask_data;
   gchar     *pattern_name;
   PSelect   *psel;
@@ -330,11 +331,17 @@ gimp_pattern_select_widget (gchar                  *dname,
 
   /* Do initial pattern setup */
   pattern_name = 
-    gimp_patterns_get_pattern_data (ipattern, &length, &width, &height, &bytes, &mask_data);
+    gimp_patterns_get_pattern_data (ipattern, 
+				    &width, 
+				    &height, 
+				    &bytes, 
+				    &mask_data_size, 
+				    &mask_data);
 
   if(pattern_name)
     {
-      pattern_pre_update (psel->pattern_preview, width, height, bytes, mask_data);
+      pattern_pre_update (psel->pattern_preview, 
+			  width, height, bytes, mask_data);
       psel->mask_data    = mask_data;
       psel->pattern_name = pattern_name;
       psel->width        = width;
@@ -376,10 +383,10 @@ void
 gimp_pattern_select_widget_set_popup (GtkWidget *widget,
 				      gchar     *pname)
 {
-  gint      length;
   gint      width;
   gint      height;
   gint      bytes;
+  gint      mask_data_size;
   guint8   *mask_data;
   gchar    *pattern_name;
   PSelect  *psel;
@@ -390,7 +397,11 @@ gimp_pattern_select_widget_set_popup (GtkWidget *widget,
     {
       pattern_name = 
 	gimp_patterns_get_pattern_data (pname,
-					&length, &width, &height, &bytes, &mask_data);
+					&width, 
+					&height, 
+					&bytes, 
+					&mask_data_size,
+					&mask_data);
   
       pattern_select_invoker (pname, width, height, bytes, mask_data, 0, psel);
       

@@ -346,7 +346,7 @@ CODE
 
 @procs = qw(progress_init progress_update temp_PDB_name plugins_query
 	    plugin_domain_register plugin_help_register);
-%exports = (app => [@procs], lib => [@procs[0..2]]);
+%exports = (app => [@procs], lib => [@procs[0..2,4,5]]);
 
 $desc = 'Plug-in';
 

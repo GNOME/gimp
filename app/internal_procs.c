@@ -39,7 +39,7 @@ void register_edit_procs            (void);
 void register_fileops_procs         (void);
 void register_floating_sel_procs    (void);
 void register_gimprc_procs          (void);
-void register_gradient_procs        (void);
+void register_gradients_procs       (void);
 void register_gradient_select_procs (void);
 void register_guides_procs          (void);
 void register_help_procs            (void);
@@ -102,7 +102,7 @@ internal_procs_init (void)
   register_gimprc_procs ();
 
   app_init_update_status (NULL, _("Gradients"), 0.292);
-  register_gradient_procs ();
+  register_gradients_procs ();
 
   app_init_update_status (NULL, _("Gradient UI"), 0.307);
   register_gradient_select_procs ();

@@ -28,18 +28,22 @@ gimp_brushes_get_brush_data (gchar                 *brush_name,
 			     GimpLayerModeEffects  *paint_mode,
 			     gint                  *width,
 			     gint                  *height,
+			     gint                  *mask_data_size,
 			     guint8               **mask_data)
 {
   GParam *return_vals;
   gint nreturn_vals;
-  gint num_mask_data;
 
   return_vals = gimp_run_procedure ("gimp_brushes_get_brush_data",
 				    &nreturn_vals,
 				    PARAM_STRING, brush_name,
 				    PARAM_END);
 
-  brush_name = NULL;
+   brush_name = NULL;
+   *width = 0;
+   *height = 0;
+   *mask_data_size = 0;
+   *mask_data = NULL;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
     {
       brush_name = g_strdup (return_vals[1].data.d_string);
@@ -48,10 +52,10 @@ gimp_brushes_get_brush_data (gchar                 *brush_name,
       *paint_mode = return_vals[4].data.d_int32;
       *width = return_vals[5].data.d_int32;
       *height = return_vals[6].data.d_int32;
-      num_mask_data = return_vals[7].data.d_int32;
-      *mask_data = g_new (guint8, num_mask_data);
+      *mask_data_size = return_vals[7].data.d_int32;
+      *mask_data = g_new (guint8, *mask_data_size);
       memcpy (*mask_data, return_vals[8].data.d_int8array,
-	      num_mask_data * sizeof (guint8));
+	      *mask_data_size * sizeof (guint8));
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);

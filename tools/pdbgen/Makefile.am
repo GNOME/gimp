@@ -14,7 +14,7 @@ pdb_sources = \
 	pdb/fileops.pdb		\
 	pdb/floating_sel.pdb	\
 	pdb/gimprc.pdb		\
-	pdb/gradient.pdb	\
+	pdb/gradients.pdb	\
 	pdb/gradient_select.pdb	\
 	pdb/guides.pdb		\
 	pdb/help.pdb		\
