@@ -131,7 +131,7 @@ static void      do_tiles  (void);
 static gint      tiles_xy  (gint width, gint height,gint x,gint y,gint *nx,gint *ny);
 static void      all_update     (void);
 static void      alt_update     (void);
-static void      explict_update (gint);
+static void      explict_update (gboolean);
 
 static void      dialog_update_preview (void);
 static void	 cache_preview         (void);
@@ -212,10 +212,10 @@ static gint   do_vert = FALSE;
 static gint   opacity = 100;
 
 /* Stuff for the preview bit */
-static gint   sel_x1, sel_y1, sel_x2, sel_y2;
-static gint   sel_width, sel_height;
-static gint   preview_width, preview_height;
-static gint   has_alpha;
+static gint   	sel_x1, sel_y1, sel_x2, sel_y2;
+static gint   	sel_width, sel_height;
+static gint   	preview_width, preview_height;
+static gboolean	has_alpha;
 
 MAIN ()
 
@@ -452,7 +452,7 @@ tileit_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  toggle = gtk_check_button_new_with_label (_("Horizontal"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Horizontal"));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
   gtk_widget_show (toggle);
 
@@ -462,7 +462,7 @@ tileit_dialog (void)
 
   res_call.htoggle = toggle;
 
-  toggle = gtk_check_button_new_with_label (_("Vertical"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Vertical"));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
   gtk_widget_show (toggle);
 
@@ -493,7 +493,8 @@ tileit_dialog (void)
   gtk_container_add (GTK_CONTAINER (xframe), table);
   gtk_widget_show (table);
 
-  toggle = gtk_radio_button_new_with_label (orientation_group, _("All Tiles"));
+  toggle = gtk_radio_button_new_with_mnemonic (orientation_group, 
+					       _("A_ll Tiles"));
   orientation_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 4, 0, 1,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
@@ -506,8 +507,8 @@ tileit_dialog (void)
                     G_CALLBACK (tileit_radio_update),
                     &exp_call.type);
 
-  toggle = gtk_radio_button_new_with_label (orientation_group,
-					    _("Alternate Tiles"));
+  toggle = gtk_radio_button_new_with_mnemonic (orientation_group,
+					       _("Al_ternate Tiles"));
   orientation_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 4, 1, 2,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
@@ -520,14 +521,14 @@ tileit_dialog (void)
                     G_CALLBACK (tileit_radio_update),
                     &exp_call.type);
 
-  toggle = gtk_radio_button_new_with_label (orientation_group,
-                                            _("Explicit Tile"));
+  toggle = gtk_radio_button_new_with_mnemonic (orientation_group,
+					       _("_Explicit Tile"));
   orientation_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));  
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 2, 4,
 		    GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
   gtk_widget_show (toggle);
 
-  label = gtk_label_new (_("Row:"));
+  label = gtk_label_new_with_mnemonic (_("Ro_w:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 1, 2, 2, 3,
 		    GTK_FILL | GTK_SHRINK , GTK_FILL, 0, 0);
@@ -538,6 +539,7 @@ tileit_dialog (void)
 
   spinbutton = gimp_spin_button_new (&adj, 2, 1, 6, 1, 1, 0, 1, 0);
   gtk_widget_set_size_request (spinbutton, ENTRY_WIDTH, -1);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 2, 3,
 		    GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
   gtk_widget_show (spinbutton);
@@ -551,7 +553,7 @@ tileit_dialog (void)
   gtk_widget_set_sensitive (spinbutton, FALSE);
   g_object_set_data (G_OBJECT (label), "set_sensitive", spinbutton);
 
-  label = gtk_label_new ( _("Column:"));
+  label = gtk_label_new_with_mnemonic ( _("Col_umn:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_widget_show (label); 
   gtk_table_attach (GTK_TABLE (table), label, 1, 2, 3, 4,
@@ -562,6 +564,7 @@ tileit_dialog (void)
 
   spinbutton = gimp_spin_button_new (&adj, 2, 1, 6, 1, 1, 0, 1, 0);
   gtk_widget_set_size_request (spinbutton, ENTRY_WIDTH, -1);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 3, 4,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_widget_show (spinbutton);
@@ -582,7 +585,7 @@ tileit_dialog (void)
                     G_CALLBACK (tileit_radio_update),
                     &exp_call.type);
 
-  button = gtk_button_new_with_label (_("Apply"));
+  button = gtk_button_new_with_mnemonic (_("_Apply"));
   gtk_table_attach (GTK_TABLE (table), button, 3, 4, 2, 4, 0, 0, 0, 0);
   gtk_widget_show (button);
 
@@ -607,7 +610,7 @@ tileit_dialog (void)
   gtk_widget_show (table2);
 
   op_data = gimp_scale_entry_new (GTK_TABLE (table2), 0, 0,
-				  _("Opacity:"), SCALE_WIDTH, ENTRY_WIDTH,
+				  _("O_pacity:"), SCALE_WIDTH, ENTRY_WIDTH,
 				  opacity, 0, 100, 1, 10, 0,
 				  TRUE, 0, 0,
 				  NULL, NULL);
@@ -632,7 +635,7 @@ tileit_dialog (void)
   gtk_widget_set_sensitive (table2, has_alpha);
 
   size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				    "1 / (2 ** n)", SCALE_WIDTH, ENTRY_WIDTH,
+				    "1 / (2 ** _n)", SCALE_WIDTH, ENTRY_WIDTH,
 				    itvals.numtiles, 2, MAX_SEGS, 1, 1, 0,
 				    TRUE, 0, 0,
 				    NULL, NULL);
@@ -811,7 +814,7 @@ tileit_preview_events (GtkWidget *widget,
 }
 
 static void 
-explict_update (gint settile)
+explict_update (gboolean settile)
 {
   gint x,y;
 
@@ -828,7 +831,7 @@ explict_update (gint settile)
     }
 
   /* Set it */
-  if (settile == TRUE)
+  if (settile)
     tileactions[x-1][y-1] = (((do_horz) ? HORIZONTAL : 0) |
 			     ((do_vert) ? VERTICAL : 0));
 
@@ -961,7 +964,7 @@ cache_preview (void)
   gint y,x;
   guchar *src_rows;
   guchar *p;
-  gint isgrey = FALSE;
+  gboolean isgrey = FALSE;
 
   gimp_pixel_rgn_init (&src_rgn, tileitdrawable,
 		       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
@@ -978,19 +981,10 @@ cache_preview (void)
 
   if (tint.img_bpp < 3)
     {
-      tint.img_bpp = 3 + has_alpha;
+      tint.img_bpp = 3 + (has_alpha) ? 1 : 0;
     }
 
-  switch (gimp_drawable_type (tileitdrawable->drawable_id))
-    {
-    case GIMP_GRAYA_IMAGE:
-    case GIMP_GRAY_IMAGE:
-      isgrey = TRUE;
-      break;
-    default:
-      isgrey = FALSE;
-      break;
-    }
+  isgrey = gimp_drawable_is_gray (tileitdrawable->drawable_id);
 
   for (y = 0; y < preview_height; y++)
     {
@@ -1072,6 +1066,7 @@ do_tiles(void)
   guchar   *dest_row;
   guchar   *dest;
   gint      row, col;
+  gint	    bpp;
   guchar    pixel[4];
   int 	    nc,nr;
   int       i;
@@ -1084,7 +1079,9 @@ do_tiles(void)
   max_progress = sel_width * sel_height;
   
   img_bpp = gimp_drawable_bpp(tileitdrawable->drawable_id);
-  
+
+  bpp = (has_alpha) ? img_bpp - 1 : img_bpp;
+
   for (pr = gimp_pixel_rgns_register(1, &dest_rgn);
        pr != NULL; pr = gimp_pixel_rgns_process(pr)) {
     dest_row = dest_rgn.data;
@@ -1102,14 +1099,12 @@ do_tiles(void)
 		     col-sel_x1,row-sel_y1,
 		     &nc,&nr);
 	  tileit_get_pixel(nc+sel_x1,nr+sel_y1,pixel);
-	  for (i = 0; i < img_bpp; i++)
+	  for (i = 0; i < bpp; i++)
 	    *dest++ = pixel[i];
 	  
-	  if(an_action && has_alpha)
+	  if (has_alpha)
 	    {
-	      dest--;
-	      *dest = ((*dest)*opacity)/100;
-	      dest++;
+	      *dest++ = (pixel[bpp]*opacity)/100;
 	    }
 	}
       dest_row += dest_rgn.rowstride;
@@ -1222,7 +1217,7 @@ do_tiles_preview(guchar *dest_row,
 	dest_row[x*tint.img_bpp+i] = 
 	  src_rows[(px + (py*width))*bpp+i]; 
 
-      if(has_alpha && actiontype)
+      if (has_alpha)
 	dest_row[x*tint.img_bpp + (bpp - 1)] = 
 	  (dest_row[x*tint.img_bpp + (bpp - 1)]*opacity)/100;
 

@@ -1,3 +1,8 @@
+2002-05-25  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/tileit.c: fix for #82498 (Opacity only seems to work 
+	when tile is flipped). Also added mnemonics to dialog.
+
 2002-05-25  Sven Neumann  <sven@gimp.org>
 
 	* NEWS: updated.
