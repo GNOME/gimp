@@ -373,11 +373,11 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
-msgstr "<Toolbox>/Додатково/Script-Fu/Логотипи/Хром..."
+msgstr "<Toolbox>/Розш./Script-Fu/Логотипи/Хром..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Script-Fu/Логотипи/Ком╕кс..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."

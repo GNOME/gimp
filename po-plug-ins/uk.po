@@ -5391,7 +5391,7 @@ msgstr ""
 
 #: plug-ins/common/screenshot.c:146 plug-ins/winsnap/winsnap.c:1083
 msgid "<Toolbox>/File/Acquire/Screen Shot..."
-msgstr ""
+msgstr "<Toolbox>/Файл/Захопити/Зн╕мок екрану..."
 
 #. Main Dialog
 #: plug-ins/common/screenshot.c:393
@@ -6671,7 +6671,7 @@ msgstr ""
 
 #: plug-ins/common/xbm.c:238
 msgid "Created with The GIMP"
-msgstr ""
+msgstr "Створено в GIMP"
 
 #: plug-ins/common/xbm.c:671
 #, c-format
@@ -6720,7 +6720,7 @@ msgstr ""
 #. parameter settings
 #: plug-ins/common/xbm.c:1156
 msgid "XBM Options"
-msgstr ""
+msgstr "Параметри XBM"
 
 #. X10 format
 #: plug-ins/common/xbm.c:1167
@@ -6742,7 +6742,7 @@ msgstr ""
 
 #: plug-ins/common/xpm.c:796
 msgid "Save as XPM"
-msgstr ""
+msgstr "Зберегти як XPM"
 
 #: plug-ins/common/xpm.c:826
 msgid "Alpha Threshold:"
@@ -6806,7 +6806,7 @@ msgstr "<Image>/Зображення/Перетворення/Zealous Crop"
 
 #: plug-ins/common/zealouscrop.c:105
 msgid "ZealousCropping(tm)..."
-msgstr ""
+msgstr "ZealousCropping(tm)..."
 
 #: plug-ins/dbbrowser/dbbrowser.c:89
 msgid "<Toolbox>/Xtns/DB Browser..."
@@ -11449,7 +11449,7 @@ msgstr "╤нструменти"
 
 #: plug-ins/imagemap/imap_popup.c:142
 msgid "In"
-msgstr ""
+msgstr "д"
 
 #: plug-ins/imagemap/imap_popup.c:144
 msgid "Out"
@@ -11537,7 +11537,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_selection.c:336
 msgid "Comment"
-msgstr ""
+msgstr "Коментар"
 
 #: plug-ins/imagemap/imap_settings.c:68
 msgid "Settings for this Mapfile"
@@ -11545,11 +11545,11 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_settings.c:82
 msgid "Image name:"
-msgstr ""
+msgstr "Назва зображення:"
 
 #: plug-ins/imagemap/imap_settings.c:83
 msgid "Select Image File"
-msgstr ""
+msgstr "Виб╕р назви файлу"
 
 #: plug-ins/imagemap/imap_settings.c:87
 msgid "Title:"
@@ -11557,7 +11557,7 @@ msgstr "Заголовок:"
 
 #: plug-ins/imagemap/imap_settings.c:91
 msgid "Default URL:"
-msgstr ""
+msgstr "Типовий URL:"
 
 #: plug-ins/imagemap/imap_settings.c:108
 msgid "Map file format"
@@ -11569,7 +11569,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_toolbar.c:115
 msgid "Preferences"
-msgstr ""
+msgstr "Настройки"
 
 #: plug-ins/imagemap/imap_toolbar.c:142
 msgid "Zoom in"
@@ -12002,7 +12002,7 @@ msgstr ""
 
 #: plug-ins/print/print.c:968
 msgid "B&W"
-msgstr ""
+msgstr "Ч/Б"
 
 #: plug-ins/print/print.c:989
 msgid "Output Level:"
@@ -12294,7 +12294,7 @@ msgstr ""
 
 #: plug-ins/sinus/sinus.c:934
 msgid "Foreground & Background"
-msgstr ""
+msgstr "Передн╕й план ╕ тло"
 
 #: plug-ins/sinus/sinus.c:936
 msgid "Choose here:"
@@ -12450,15 +12450,15 @@ msgstr ""
 #: plug-ins/xjt/xjt.c:1227
 #, c-format
 msgid "Can't open (write): %s"
-msgstr "Неможливо в╕дкрити (запис): %s"
+msgstr "Неможливо в╕дкрити (записати): %s"
 
 #: plug-ins/xjt/xjt.c:1626
 msgid "xjt: cannot operate on indexed color images"
-msgstr ""
+msgstr "xjt: неможливо використовувати на ╕ндексованих зображеннях"
 
 #: plug-ins/xjt/xjt.c:1630
 msgid "xjt: cannot operate on unknown image types"
-msgstr ""
+msgstr "xjt: неможливо використовувати на зображеннях нев╕домого типу"
 
 #: plug-ins/xjt/xjt.c:1645 plug-ins/xjt/xjt.c:3263
 #, c-format
@@ -12468,29 +12468,20 @@ msgstr "Неможливо створити робочий каталог: %s"
 #: plug-ins/xjt/xjt.c:1654
 #, c-format
 msgid "Can't open : %s"
-msgstr "Неможливо в╕дкрити : %s"
+msgstr "Неможливо в╕дкрити: %s"
 
 #. stat error (file does not exist)
 #: plug-ins/xjt/xjt.c:2475 plug-ins/xjt/xjt.c:2482
 #, c-format
 msgid "Can't open (read): %s"
-msgstr "Неможливо в╕дкрити (зчитування): %s"
+msgstr "Неможливо в╕дкрити (зчитати): %s"
 
 #: plug-ins/xjt/xjt.c:3126
 #, c-format
 msgid "Error: Can't read XJT propertyfile %s"
-msgstr ""
+msgstr "Помилка: неможливо зчитати файл властивостей XJT %s"
 
 #: plug-ins/xjt/xjt.c:3131
 #, c-format
 msgid "Error, XJT propertyfile %s is empty"
-msgstr ""
-
-#~ msgid "XCF"
-#~ msgstr "XCF"
-
-#~ msgid "PPM"
-#~ msgstr "PPM"
-
-#~ msgid "JPEG"
-#~ msgstr "JPEG"
+msgstr "Помилка, файл властивостей XJT %s порожн╕й"

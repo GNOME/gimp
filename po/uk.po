@@ -3502,11 +3502,11 @@ msgstr "/Файл/Вийти"
 #. the underscore installs an accelerator using the character that follows
 #: app/menus.c:155
 msgid "/_Xtns"
-msgstr "/Додаткове"
+msgstr "/Розш."
 
 #: app/menus.c:157
 msgid "/Xtns/Module Browser..."
-msgstr "/Додаткове/Перегляд модул╕в..."
+msgstr "/Розш./Перегляд модул╕в..."
 
 #. <Toolbox>/Help
 #. the underscore installs an accelerator using the character that follows
