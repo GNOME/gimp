@@ -1,5 +1,9 @@
 2003-11-21  Sven Neumann  <sven@gimp.org>
 
+	* modules/cdisplay_proof.c: use a table to align the widgets.
+
+2003-11-21  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-filter-dialog.c: create the Display
 	Filter dialog transient for the display shell and destroy it with
 	its parent.

@@ -56,7 +56,7 @@ struct _CdisplayProof
 
   cmsHTRANSFORM     transform;
 
-  GtkWidget        *vbox;
+  GtkWidget        *table;
   GtkWidget        *optionmenu;
   GtkWidget        *toggle;
 };
@@ -183,7 +183,7 @@ cdisplay_proof_init (CdisplayProof *proof)
   proof->bpc       = FALSE;
   proof->transform = NULL;
   proof->filename  = NULL;
-  proof->vbox      = NULL;
+  proof->table     = NULL;
 
   cdisplay_proof_changed (GIMP_COLOR_DISPLAY (proof));
 }
@@ -193,11 +193,9 @@ cdisplay_proof_finalize (GObject *object)
 {
   CdisplayProof *proof = CDISPLAY_PROOF (object);
 
-  if (proof->vbox)
-    {
-      gtk_widget_destroy (proof->vbox);
-      proof->vbox = NULL;
-    }
+  if (proof->table)
+    gtk_widget_destroy (proof->table);
+
   if (proof->filename)
     {
       g_free (proof->filename);
@@ -299,25 +297,19 @@ static GtkWidget *
 cdisplay_proof_configure (GimpColorDisplay *display)
 {
   CdisplayProof *proof = CDISPLAY_PROOF (display);
-  GtkWidget     *label;
-  GtkWidget     *hbox;
-  GtkWidget     *fileopen;
+  GtkWidget     *entry;
 
-  if (proof->vbox)
-    gtk_widget_destroy (proof->vbox);
+  if (proof->table)
+    gtk_widget_destroy (proof->table);
 
-  proof->vbox = gtk_vbox_new (FALSE, 4);
-  g_signal_connect (proof->vbox, "destroy",
+  proof->table = gtk_table_new (3, 2, FALSE);
+
+  g_signal_connect (proof->table, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
-                    &proof->vbox);
+                    &proof->table);
 
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (proof->vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new_with_mnemonic (_("_Intent:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_table_set_col_spacings (GTK_TABLE (proof->table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (proof->table), 2);
 
   proof->optionmenu =
     gimp_int_option_menu_new (FALSE,
@@ -335,39 +327,32 @@ cdisplay_proof_configure (GimpColorDisplay *display)
 
                               NULL);
 
-  gtk_box_pack_start (GTK_BOX (hbox), proof->optionmenu, FALSE, FALSE, 0);
-  gtk_widget_show (proof->optionmenu);
+  gimp_table_attach_aligned (GTK_TABLE (proof->table), 0, 0,
+                             _("_Intent:"), 1.0, 0.5,
+                             proof->optionmenu, 1, TRUE);
 
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), proof->optionmenu);
+  entry = gimp_file_entry_new (_("Choose an ICC Color Profile"),
+                               proof->filename, FALSE, FALSE);
+  gimp_table_attach_aligned (GTK_TABLE (proof->table), 0, 1,
+                             _("_Profile:"), 1.0, 0.5,
+                             entry, 1, TRUE);
+
+  g_signal_connect (entry, "filename-changed",
+                    G_CALLBACK (proof_file_callback),
+                    proof);
 
   proof->toggle =
     gtk_check_button_new_with_mnemonic (_("_Black Point Compensation"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (proof->toggle), proof->bpc);
-  gtk_box_pack_start (GTK_BOX (hbox), proof->toggle, FALSE, FALSE, 0);
+  gtk_table_attach_defaults (GTK_TABLE (proof->table),
+                             proof->toggle, 1, 2, 2, 3);
   gtk_widget_show (proof->toggle);
 
   g_signal_connect (proof->toggle, "clicked",
 		    G_CALLBACK (proof_bpc_callback),
                     proof);
 
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (proof->vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new (_("Profile:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  fileopen = gimp_file_entry_new (_("Choose an ICC Color Profile"),
-                                  proof->filename, FALSE, FALSE);
-  gtk_box_pack_start (GTK_BOX (hbox), fileopen, FALSE, TRUE, 0);
-  gtk_widget_show (fileopen);
-
-  g_signal_connect (fileopen, "filename-changed",
-                    G_CALLBACK (proof_file_callback),
-                    proof);
-
-  return proof->vbox;
+  return proof->table;
 }
 
 static void
@@ -378,7 +363,7 @@ cdisplay_proof_configure_reset (GimpColorDisplay * display)
   proof->intent = INTENT_PERCEPTUAL;
   proof->bpc    = FALSE;
 
-  if (proof->vbox)
+  if (proof->table)
     {
       gimp_int_option_menu_set_history (GTK_OPTION_MENU (proof->optionmenu),
                                         INTENT_PERCEPTUAL);
