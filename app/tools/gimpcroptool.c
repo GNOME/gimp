@@ -90,7 +90,7 @@ static void   gimp_crop_tool_init           (GimpCropTool      *crop_tool);
 static void   gimp_crop_tool_finalize       (GObject         *object);
 
 static void   gimp_crop_tool_control        (GimpTool        *tool,
-					     ToolAction       action,
+					     GimpToolAction   action,
 					     GimpDisplay     *gdisp);
 static void   gimp_crop_tool_button_press   (GimpTool        *tool,
                                              GimpCoords      *coords,
@@ -267,9 +267,9 @@ gimp_crop_tool_finalize (GObject *object)
 }
 
 static void
-gimp_crop_tool_control (GimpTool    *tool,
-			ToolAction   action,
-			GimpDisplay *gdisp)
+gimp_crop_tool_control (GimpTool       *tool,
+			GimpToolAction  action,
+			GimpDisplay    *gdisp)
 {
   GimpCropTool *crop_tool;
 

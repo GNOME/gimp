@@ -83,7 +83,7 @@ typedef enum /*< pdb-skip >*/
 {
   INACTIVE,
   ACTIVE
-} ToolState;
+} GimpToolState;
 
 /*  Tool control actions  */
 typedef enum /*< pdb-skip >*/
@@ -91,7 +91,7 @@ typedef enum /*< pdb-skip >*/
   PAUSE,
   RESUME,
   HALT
-} ToolAction;
+} GimpToolAction;
 
 /* possible transform functions */
 typedef enum /*< pdb-skip >*/

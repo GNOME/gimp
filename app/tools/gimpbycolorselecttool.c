@@ -97,7 +97,7 @@ static void   by_color_select_initialize      (GimpTool        *tool,
 					       GimpDisplay     *gdisp);
 
 static void   by_color_select_control         (GimpTool        *tool,
-					       ToolAction       action,
+					       GimpToolAction   action,
 					       GimpDisplay     *gdisp);
 static void   by_color_select_button_press    (GimpTool        *tool,
                                                GimpCoords      *coords,
@@ -246,9 +246,9 @@ gimp_by_color_select_tool_init (GimpByColorSelectTool *by_color_select)
 }
 
 static void
-by_color_select_control (GimpTool    *tool,
-			 ToolAction   action,
-			 GimpDisplay *gdisp)
+by_color_select_control (GimpTool       *tool,
+			 GimpToolAction  action,
+			 GimpDisplay    *gdisp)
 {
   switch (action)
     {
@@ -266,6 +266,8 @@ by_color_select_control (GimpTool    *tool,
     default:
       break;
     }
+
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
 void

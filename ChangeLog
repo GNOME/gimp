@@ -1,3 +1,28 @@
+2002-02-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/tools-types.h
+	* app/tools/*.[ch]: chain up unconditionally in control(),
+	s/ToolAction/GimpToolAction/g, s/ToolState/GimpToolState/g.
+
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimppainttool.c: don't touch tool->paused_count
+	(setting it to 0 was a hack which should no longer be needed).
+
+	* app/tools/gimpdrawtool.c: check if the draw tool has actually
+	been started (draw_tool->gdisp != NULL) before calling it's
+	draw() function.
+
+	* app/tools/tool_manager.c: simplified tool_manager_control_active():
+	simply call gimp_tool_control() if gdisp == tool->gdisp.
+
+	* app/tools/gimptool.[ch]: gimp_tool_control(): do all the PAUSE,
+	RESUME and HALT voodoo here.
+
+	* app/tools/gimppainttool.c: implemented #9902 (Drawing straight
+	lines does not work between different views). It's an evil hack,
+	but clearly marked in the source.
+
 2002-02-18  Sven Neumann  <sven@gimp.org>
 
 	* app/app_procs.c

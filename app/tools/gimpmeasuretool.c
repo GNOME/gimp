@@ -78,7 +78,7 @@ static void   gimp_measure_tool_class_init      (GimpMeasureToolClass *klass);
 static void   gimp_measure_tool_init            (GimpMeasureTool      *tool);
 
 static void   gimp_measure_tool_control         (GimpTool        *tool,
-                                                 ToolAction       action,
+                                                 GimpToolAction   action,
                                                  GimpDisplay     *gdisp);
 static void   gimp_measure_tool_button_press    (GimpTool        *tool,
                                                  GimpCoords      *coords,
@@ -202,9 +202,9 @@ gimp_measure_tool_init (GimpMeasureTool *measure_tool)
 }
 
 static void
-gimp_measure_tool_control (GimpTool    *tool,
-                           ToolAction   action,
-                           GimpDisplay *gdisp)
+gimp_measure_tool_control (GimpTool       *tool,
+                           GimpToolAction  action,
+                           GimpDisplay    *gdisp)
 {
   GimpMeasureTool *measure_tool;
 

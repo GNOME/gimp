@@ -101,7 +101,7 @@ static void    gimp_edit_selection_tool_class_init (GimpEditSelectionToolClass *
 static void    gimp_edit_selection_tool_init       (GimpEditSelectionTool *edit_selection_tool);
 
 static void    gimp_edit_selection_tool_control        (GimpTool        *tool,
-                                                        ToolAction       action,
+                                                        GimpToolAction   action,
                                                         GimpDisplay     *gdisp);
 static void    gimp_edit_selection_tool_button_release (GimpTool        *tool,
                                                         GimpCoords      *coords,
@@ -730,9 +730,9 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 }
 
 static void
-gimp_edit_selection_tool_control (GimpTool    *tool,
-				  ToolAction   action,
-				  GimpDisplay *gdisp)
+gimp_edit_selection_tool_control (GimpTool       *tool,
+				  GimpToolAction  action,
+				  GimpDisplay    *gdisp)
 {
   switch (action)
     {

@@ -87,7 +87,7 @@ static void       gimp_color_picker_tool_init           (GimpColorPickerTool *co
 static void       gimp_color_picker_tool_finalize       (GObject         *object);
 
 static void       gimp_color_picker_tool_control        (GimpTool        *tool,
-                                                         ToolAction       action,
+                                                         GimpToolAction   action,
 					       		 GimpDisplay     *gdisp);
 static void       gimp_color_picker_tool_button_press   (GimpTool        *tool,
                                                          GimpCoords      *coords,
@@ -242,9 +242,9 @@ gimp_color_picker_tool_finalize (GObject *object)
 }
 
 static void
-gimp_color_picker_tool_control (GimpTool     *tool,
-				ToolAction   action,
-		      		GimpDisplay *gdisp)
+gimp_color_picker_tool_control (GimpTool       *tool,
+				GimpToolAction  action,
+		      		GimpDisplay    *gdisp)
 {
   switch (action)
     {
@@ -262,8 +262,7 @@ gimp_color_picker_tool_control (GimpTool     *tool,
       break;
     }
 
-  if (GIMP_TOOL_CLASS (parent_class)->control)
-    GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
 static void

@@ -131,11 +131,11 @@ struct _LevelsDialog
 static void   gimp_levels_tool_class_init (GimpLevelsToolClass *klass);
 static void   gimp_levels_tool_init       (GimpLevelsTool      *bc_tool);
 
-static void   gimp_levels_tool_initialize (GimpTool    *tool,
-					   GimpDisplay *gdisp);
-static void   gimp_levels_tool_control    (GimpTool    *tool,
-					   ToolAction   action,
-					   GimpDisplay *gdisp);
+static void   gimp_levels_tool_initialize (GimpTool       *tool,
+					   GimpDisplay    *gdisp);
+static void   gimp_levels_tool_control    (GimpTool       *tool,
+					   GimpToolAction  action,
+					   GimpDisplay    *gdisp);
 
 static LevelsDialog * levels_dialog_new            (void);
 
@@ -329,9 +329,9 @@ gimp_levels_tool_initialize (GimpTool    *tool,
 }
 
 static void
-gimp_levels_tool_control (GimpTool    *tool,
-			  ToolAction   action,
-			  GimpDisplay *gdisp)
+gimp_levels_tool_control (GimpTool       *tool,
+			  GimpToolAction  action,
+			  GimpDisplay    *gdisp)
 {
   switch (action)
     {
@@ -349,8 +349,7 @@ gimp_levels_tool_control (GimpTool    *tool,
       break;
     }
 
-  if (GIMP_TOOL_CLASS (parent_class)->control)
-    GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
 void

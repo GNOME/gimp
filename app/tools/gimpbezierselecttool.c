@@ -135,7 +135,7 @@ static void  gimp_bezier_select_tool_motion         (GimpTool         *tool,
                                                      GdkModifierType   state,
                                                      GimpDisplay      *gdisp);
 static void  gimp_bezier_select_tool_control        (GimpTool         *tool,
-                                                     ToolAction        action,
+                                                     GimpToolAction    action,
                                                      GimpDisplay      *gdisp);
 static void  gimp_bezier_select_tool_cursor_update  (GimpTool         *tool,
                                                      GimpCoords       *coords,
@@ -1915,9 +1915,9 @@ gimp_bezier_select_tool_cursor_update (GimpTool        *tool,
 }
 
 static void
-gimp_bezier_select_tool_control (GimpTool    *tool,
-				 ToolAction   action,
-				 GimpDisplay *gdisp)
+gimp_bezier_select_tool_control (GimpTool       *tool,
+				 GimpToolAction  action,
+				 GimpDisplay    *gdisp)
 {
   GimpBezierSelectTool * bezier_sel;
 
@@ -1925,15 +1925,15 @@ gimp_bezier_select_tool_control (GimpTool    *tool,
 
   switch (action)
     {
-    case PAUSE :
+    case PAUSE:
       gimp_draw_tool_pause ((GimpDrawTool *) bezier_sel);
       break;
 
-    case RESUME :
+    case RESUME:
       gimp_draw_tool_resume ((GimpDrawTool *) bezier_sel);
       break;
 
-    case HALT :
+    case HALT:
       gimp_draw_tool_stop ((GimpDrawTool *) bezier_sel);
       bezier_select_reset (bezier_sel);
       break;
@@ -2814,10 +2814,9 @@ bezier_paste_bezierselect_to_current (GimpDisplay          *gdisp,
 
   tool = tool_manager_get_active (gdisp->gimage->gimp);
 
-  tool->state        = ACTIVE;
-  tool->gdisp        = gdisp;
-  tool->drawable     = gimp_image_active_drawable (gdisp->gimage);  
-  tool->paused_count = 0;
+  tool->state    = ACTIVE;
+  tool->gdisp    = gdisp;
+  tool->drawable = gimp_image_active_drawable (gdisp->gimage);  
 
   bezier_select_reset (curSel);
 

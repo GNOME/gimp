@@ -39,7 +39,7 @@ void           tool_manager_pop_tool              (Gimp             *gimp);
 void           tool_manager_initialize_active     (Gimp             *gimp,
 						   GimpDisplay      *gdisp);
 void           tool_manager_control_active        (Gimp             *gimp,
-						   ToolAction        action,
+						   GimpToolAction    action,
 						   GimpDisplay      *gdisp);
 void           tool_manager_button_press_active   (Gimp             *gimp,
                                                    GimpCoords       *coords,

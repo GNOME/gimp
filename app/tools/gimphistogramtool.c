@@ -86,7 +86,7 @@ static void   gimp_histogram_tool_init       (GimpHistogramTool      *bc_tool);
 static void   gimp_histogram_tool_initialize (GimpTool             *tool,
 					      GimpDisplay          *gdisp);
 static void   gimp_histogram_tool_control    (GimpTool             *tool,
-					      ToolAction            action,
+					      GimpToolAction        action,
 					      GimpDisplay          *gdisp);
 
 static HistogramToolDialog *  histogram_tool_dialog_new (void);
@@ -224,9 +224,9 @@ gimp_histogram_tool_initialize (GimpTool    *tool,
 }
 
 static void
-gimp_histogram_tool_control (GimpTool    *tool,
-			     ToolAction   action,
-			     GimpDisplay *gdisp)
+gimp_histogram_tool_control (GimpTool       *tool,
+			     GimpToolAction  action,
+			     GimpDisplay    *gdisp)
 {
   switch (action)
     {
@@ -245,8 +245,7 @@ gimp_histogram_tool_control (GimpTool    *tool,
       break;
     }
 
-  if (GIMP_TOOL_CLASS (parent_class)->control)
-    GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
 

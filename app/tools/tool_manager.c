@@ -326,9 +326,9 @@ tool_manager_initialize_active (Gimp        *gimp,
 }
 
 void
-tool_manager_control_active (Gimp        *gimp,
-			     ToolAction   action,
-			     GimpDisplay *gdisp)
+tool_manager_control_active (Gimp           *gimp,
+			     GimpToolAction  action,
+			     GimpDisplay    *gdisp)
 {
   GimpToolManager *tool_manager;
 
@@ -341,42 +341,9 @@ tool_manager_control_active (Gimp        *gimp,
 
   if (tool_manager->active_tool->gdisp == gdisp)
     {
-      switch (action)
-        {
-        case PAUSE:
-          if (tool_manager->active_tool->paused_count == 0)
-            {
-              gimp_tool_control (tool_manager->active_tool,
-                                 action,
-                                 gdisp);
-            }
-
-          tool_manager->active_tool->paused_count++;
-          break;
-
-        case RESUME:
-          tool_manager->active_tool->paused_count--;
-
-          if (tool_manager->active_tool->paused_count == 0)
-            {
-              gimp_tool_control (tool_manager->active_tool,
-                                 action,
-                                 gdisp);
-            }
-          break;
-
-        case HALT:
-          gimp_tool_control (tool_manager->active_tool,
-                             action,
-                             gdisp);
-
-          tool_manager->active_tool->state        = INACTIVE;
-          tool_manager->active_tool->paused_count = 0;
-          break;
-
-        default:
-          break;
-        }
+      gimp_tool_control (tool_manager->active_tool,
+                         action,
+                         gdisp);
     }
   else if (action == HALT)
     {

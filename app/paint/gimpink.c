@@ -123,7 +123,7 @@ static void        gimp_ink_tool_init            (GimpInkTool      *tool);
 static void        gimp_ink_tool_finalize        (GObject          *object);
 
 static void        gimp_ink_tool_control         (GimpTool         *tool,
-                                                  ToolAction        tool_action,
+                                                  GimpToolAction    action,
                                                   GimpDisplay      *gdisp);
 static void        gimp_ink_tool_button_press    (GimpTool         *tool,
                                                   GimpCoords       *coords,
@@ -342,9 +342,9 @@ gimp_ink_tool_finalize (GObject *object)
 }
 
 static void
-gimp_ink_tool_control (GimpTool    *tool,
-                       ToolAction   action,
-                       GimpDisplay *gdisp)
+gimp_ink_tool_control (GimpTool       *tool,
+                       GimpToolAction  action,
+                       GimpDisplay    *gdisp)
 {
   GimpInkTool *ink_tool;
 
@@ -365,6 +365,8 @@ gimp_ink_tool_control (GimpTool    *tool,
     default:
       break;
     }
+
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
 static void
@@ -387,9 +389,8 @@ gimp_ink_tool_button_press (GimpTool        *tool,
 
   ink_init (ink_tool, drawable, coords->x, coords->y);
 
-  tool->state        = ACTIVE;
-  tool->gdisp        = gdisp;
-  tool->paused_count = 0;
+  tool->state = ACTIVE;
+  tool->gdisp = gdisp;
 
   /*  pause the current selection  */
   gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_PAUSE);

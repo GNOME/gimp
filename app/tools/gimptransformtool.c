@@ -69,7 +69,7 @@ static void   gimp_transform_tool_class_init  (GimpTransformToolClass *tool);
 static void   gimp_transform_tool_finalize         (GObject           *object);
 
 static void   gimp_transform_tool_control          (GimpTool          *tool,
-                                                    ToolAction         action,
+                                                    GimpToolAction     action,
                                                     GimpDisplay       *gdisp);
 static void   gimp_transform_tool_button_press     (GimpTool          *tool,
                                                     GimpCoords        *coords,
@@ -247,9 +247,9 @@ gimp_transform_tool_finalize (GObject *object)
 }
 
 static void
-gimp_transform_tool_control (GimpTool    *tool,
-			     ToolAction   action,
-			     GimpDisplay *gdisp)
+gimp_transform_tool_control (GimpTool       *tool,
+			     GimpToolAction  action,
+			     GimpDisplay    *gdisp)
 {
   GimpTransformTool *transform_tool;
 

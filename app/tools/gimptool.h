@@ -41,27 +41,26 @@ typedef struct _GimpToolClass GimpToolClass;
 
 struct _GimpTool
 {
-  GimpObject	parent_instance;
+  GimpObject     parent_instance;
 
-  GimpToolInfo *tool_info;
+  GimpToolInfo  *tool_info;
 
-  gint          ID;           /*  unique tool ID                              */
+  gint           ID;           /*  unique tool ID                             */
 
-  ToolState     state;        /*  state of tool activity                      */
-  gint          paused_count; /*  paused control count                        */
-  gboolean      scroll_lock;  /*  allow scrolling or not                      */
-  gboolean      auto_snap_to; /*  snap to guides automatically                */
+  GimpToolState  state;        /*  state of tool activity                     */
+  gint           paused_count; /*  paused control count                       */
 
-  gboolean      handle_empty_image; /*  invoke the tool on images without
-                                     *  active drawable
-                                     */
-  gboolean      perfectmouse;       /*  tool is affected by gimprc's
-                                     *  "prefectmouse" setting
-                                     */
+  GimpDisplay   *gdisp;        /*  pointer to currently active gdisp          */
+  GimpDrawable  *drawable;     /*  pointer to the tool's current drawable     */
 
-  gboolean      preserve;     /*  Preserve this tool across drawable changes  */
-  GimpDisplay  *gdisp;        /*  pointer to currently active gdisp           */
-  GimpDrawable *drawable;     /*  pointer to the tool's current drawable      */
+  gboolean       scroll_lock;        /*  allow scrolling or not               */
+  gboolean       auto_snap_to;       /*  snap to guides automatically         */
+  gboolean       preserve;           /*  Preserve this tool across drawable   *
+                                      *  changes                              */
+  gboolean       handle_empty_image; /*  invoke the tool on images without    *
+                                      *  active drawable                      */
+  gboolean       perfectmouse;       /*  tool is affected by gimprc's         *
+                                      *  "prefectmouse" setting               */
 
   GdkCursorType      cursor;
   GimpToolCursorType tool_cursor;
@@ -83,7 +82,7 @@ struct _GimpToolClass
   void (* initialize)     (GimpTool        *tool,
 			   GimpDisplay     *gdisp);
   void (* control)        (GimpTool        *tool,
-			   ToolAction       action,
+			   GimpToolAction   action,
 			   GimpDisplay     *gdisp);
 
   void (* button_press)   (GimpTool        *tool,
@@ -127,7 +126,7 @@ GType         gimp_tool_get_type           (void) G_GNUC_CONST;
 void          gimp_tool_initialize         (GimpTool           *tool,
                                             GimpDisplay        *gdisp);
 void	      gimp_tool_control            (GimpTool           *tool,
-                                            ToolAction          action,
+                                            GimpToolAction      action,
                                             GimpDisplay        *gdisp);
 
 void          gimp_tool_button_press       (GimpTool           *tool,

@@ -68,7 +68,7 @@ static void   gimp_move_tool_class_init     (GimpMoveToolClass *klass);
 static void   gimp_move_tool_init           (GimpMoveTool      *move_tool);
 
 static void   gimp_move_tool_control        (GimpTool          *tool,
-                                             ToolAction         tool_action,
+                                             GimpToolAction     action,
                                              GimpDisplay       *gdisp);
 static void   gimp_move_tool_button_press   (GimpTool          *tool,
                                              GimpCoords        *coords,
@@ -192,9 +192,9 @@ gimp_move_tool_init (GimpMoveTool *move_tool)
 }
 
 static void
-gimp_move_tool_control (GimpTool    *tool,
-                        ToolAction   action,
-                        GimpDisplay *gdisp)
+gimp_move_tool_control (GimpTool       *tool,
+                        GimpToolAction  action,
+                        GimpDisplay    *gdisp)
 {
   GimpMoveTool *move_tool;
 

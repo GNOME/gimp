@@ -97,7 +97,7 @@ static void   gimp_curves_tool_init           (GimpCurvesTool      *bc_tool);
 static void   gimp_curves_tool_initialize     (GimpTool        *tool,
 					       GimpDisplay     *gdisp);
 static void   gimp_curves_tool_control        (GimpTool        *tool,
-					       ToolAction       action,
+					       GimpToolAction   action,
 					       GimpDisplay     *gdisp);
 static void   gimp_curves_tool_button_press   (GimpTool        *tool,
                                                GimpCoords      *coords,
@@ -336,9 +336,9 @@ gimp_curves_tool_initialize (GimpTool    *tool,
 }
 
 static void
-gimp_curves_tool_control (GimpTool    *tool,
-			  ToolAction   action,
-			  GimpDisplay *gdisp)
+gimp_curves_tool_control (GimpTool       *tool,
+			  GimpToolAction  action,
+			  GimpDisplay    *gdisp)
 {
   switch (action)
     {
@@ -356,8 +356,7 @@ gimp_curves_tool_control (GimpTool    *tool,
       break;
     }
 
-  if (GIMP_TOOL_CLASS (parent_class)->control)
-    GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
 }
 
 static void

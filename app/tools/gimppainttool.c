@@ -62,8 +62,8 @@ static void   gimp_paint_tool_init           (GimpPaintTool       *paint_tool);
 
 static void   gimp_paint_tool_finalize       (GObject             *object);
 
-static void   gimp_paint_tool_control        (GimpTool	           *tool,
-					      ToolAction           action,
+static void   gimp_paint_tool_control        (GimpTool	          *tool,
+					      GimpToolAction       action,
 					      GimpDisplay         *gdisp);
 static void   gimp_paint_tool_button_press   (GimpTool            *tool,
                                               GimpCoords          *coords,
@@ -178,9 +178,9 @@ gimp_paint_tool_finalize (GObject *object)
 }
 
 static void
-gimp_paint_tool_control (GimpTool    *tool,
-			 ToolAction   action,
-			 GimpDisplay *gdisp)
+gimp_paint_tool_control (GimpTool       *tool,
+			 GimpToolAction  action,
+			 GimpDisplay    *gdisp)
 {
   GimpPaintTool *paint_tool;
   GimpDrawable  *drawable;
@@ -202,6 +202,31 @@ gimp_paint_tool_control (GimpTool    *tool,
                              (PaintOptions *) tool->tool_info->tool_options,
                              FINISH_PAINT);
       gimp_paint_core_cleanup (paint_tool->core);
+
+#if 0
+      /*  evil hack i'm thinking about...  --mitch  */
+      {
+        /*  HALT means the current display is going to go away (TM),
+         *  so try to find another display of the same image to make
+         *  straight line drawing continue to work...
+         */
+
+        GSList *list;
+
+        for (list = display_list; list; list = g_slist_next (list))
+          {
+            GimpDisplay *tmp_disp;
+
+            tmp_disp = (GimpDisplay *) list->data;
+
+            if (tmp_disp != gdisp && tmp_disp->gimage == gdisp->gimage)
+              {
+                tool->gdisp = tmp_disp;
+                break;
+              }
+          }
+      }
+#endif
       break;
 
     default:
@@ -223,9 +248,9 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   GimpPaintCore *core;
   PaintOptions  *paint_options;
   GimpBrush     *current_brush;
-  gboolean       draw_line;
   GimpDrawable  *drawable;
   GimpCoords     curr_coords;
+  gboolean       draw_line = FALSE;
 
   draw_tool  = GIMP_DRAW_TOOL (tool);
   paint_tool = GIMP_PAINT_TOOL (tool);
@@ -250,10 +275,21 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   if (draw_tool->gdisp)
     gimp_draw_tool_stop (draw_tool);
 
+  if (tool->gdisp          &&
+      tool->gdisp != gdisp &&
+      tool->gdisp->gimage == gdisp->gimage)
+    {
+      /*  if this is a different display, but the same image, HACK around
+       *  in tool internals AFTER stopping the current draw_tool, so
+       *  straight line drawing works across different views of the
+       *  same image.
+       */
+
+      tool->gdisp = gdisp;
+    }
+
   if (! gimp_paint_core_start (core, drawable, &curr_coords))
     return;
-
-  draw_line = FALSE;
 
   if ((gdisp != tool->gdisp) || ! (state & GDK_SHIFT_MASK))
     {
@@ -280,9 +316,8 @@ gimp_paint_tool_button_press (GimpTool        *tool,
 	}
     }
 
-  tool->state        = ACTIVE;
-  tool->gdisp        = gdisp;
-  tool->paused_count = 0;
+  tool->state = ACTIVE;
+  tool->gdisp = gdisp;
 
   /*  pause the current selection  */
   gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_PAUSE);
@@ -459,6 +494,19 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
 
   gimp_statusbar_pop (GIMP_STATUSBAR (shell->statusbar),
                       g_type_name (G_TYPE_FROM_INSTANCE (tool)));
+
+  if (tool->gdisp          &&
+      tool->gdisp != gdisp &&
+      tool->gdisp->gimage == gdisp->gimage)
+    {
+      /*  if this is a different display, but the same image, HACK around
+       *  in tool internals AFTER stopping the current draw_tool, so
+       *  straight line drawing works across different views of the
+       *  same image.
+       */
+
+      tool->gdisp = gdisp;
+    }
 
   if ((layer = gimp_image_get_active_layer (gdisp->gimage)))
     {

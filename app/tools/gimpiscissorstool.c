@@ -119,7 +119,7 @@ static void   gimp_iscissors_tool_init       (GimpIscissorsTool      *iscissors)
 static void   gimp_iscissors_tool_finalize       (GObject           *object);
 
 static void   gimp_iscissors_tool_control        (GimpTool          *tool,
-                                                  ToolAction         tool_action,
+                                                  GimpToolAction     action,
                                                   GimpDisplay       *gdisp);
 static void   gimp_iscissors_tool_button_press   (GimpTool          *tool,
                                                   GimpCoords        *coords,
@@ -360,9 +360,9 @@ gimp_iscissors_tool_finalize (GObject *object)
 }
 
 static void
-gimp_iscissors_tool_control (GimpTool    *tool,
-                             ToolAction   action,
-                             GimpDisplay *gdisp)
+gimp_iscissors_tool_control (GimpTool       *tool,
+                             GimpToolAction  action,
+                             GimpDisplay    *gdisp)
 {
   GimpIscissorsTool *iscissors;
   Iscissors_draw     draw;

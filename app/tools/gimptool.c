@@ -43,7 +43,7 @@ static void   gimp_tool_init                (GimpTool        *tool);
 static void   gimp_tool_real_initialize     (GimpTool        *tool,
 					     GimpDisplay     *gdisp);
 static void   gimp_tool_real_control        (GimpTool        *tool,
-					     ToolAction       tool_action,
+					     GimpToolAction   action,
 					     GimpDisplay     *gdisp);
 static void   gimp_tool_real_button_press   (GimpTool        *tool,
                                              GimpCoords      *coords,
@@ -134,19 +134,15 @@ gimp_tool_init (GimpTool *tool)
 
   tool->state                  = INACTIVE;
   tool->paused_count           = 0;
-  tool->scroll_lock            = FALSE;  /*  Allow scrolling  */
-  tool->auto_snap_to           = TRUE;   /*  Snap to guides   */
 
-  tool->handle_empty_image     = FALSE;  /*  Don't work without
-                                          *  active drawable
-                                          */
-  tool->perfectmouse           = FALSE;
-
-  tool->preserve               = TRUE;   /*  Preserve across drawable
-                                          *  changes
-                                          */
   tool->gdisp                  = NULL;
   tool->drawable               = NULL;
+
+  tool->scroll_lock            = FALSE;  /*  Allow scrolling                  */
+  tool->auto_snap_to           = TRUE;   /*  Snap to guides                   */
+  tool->preserve               = TRUE;   /*  Preserve across drawable change  */
+  tool->handle_empty_image     = FALSE;  /*  Require active drawable          */
+  tool->perfectmouse           = FALSE;  /*  Use MOTION_HINT compression      */
 
   tool->cursor                 = GIMP_MOUSE_CURSOR;
   tool->tool_cursor            = GIMP_TOOL_CURSOR_NONE;
@@ -169,13 +165,47 @@ gimp_tool_initialize (GimpTool    *tool,
 }
 
 void
-gimp_tool_control (GimpTool    *tool, 
-		   ToolAction   action, 
-		   GimpDisplay *gdisp)
+gimp_tool_control (GimpTool       *tool, 
+		   GimpToolAction  action, 
+		   GimpDisplay    *gdisp)
 {
   g_return_if_fail (GIMP_IS_TOOL (tool));
 
-  GIMP_TOOL_GET_CLASS (tool)->control (tool, action, gdisp);
+  switch (action)
+    {
+    case PAUSE:
+      if (tool->paused_count == 0)
+        {
+          GIMP_TOOL_GET_CLASS (tool)->control (tool, action, gdisp);
+        }
+
+      tool->paused_count++;
+      break;
+
+    case RESUME:
+      if (tool->paused_count > 0)
+        {
+          tool->paused_count--;
+
+          if (tool->paused_count == 0)
+            {
+              GIMP_TOOL_GET_CLASS (tool)->control (tool, action, gdisp);
+            }
+        }
+      else
+        {
+          g_warning ("gimp_tool_control(): "
+                     "unable to RESUME tool with tool->paused_count == 0");
+        }
+      break;
+
+    case HALT:
+      GIMP_TOOL_GET_CLASS (tool)->control (tool, action, gdisp);
+
+      tool->state        = INACTIVE;
+      tool->paused_count = 0;
+      break;
+    }
 }
 
 void
@@ -351,9 +381,9 @@ gimp_tool_real_initialize (GimpTool    *tool,
 }
 
 static void
-gimp_tool_real_control (GimpTool    *tool,
-			ToolAction   tool_action,
-			GimpDisplay *gdisp)
+gimp_tool_real_control (GimpTool       *tool,
+			GimpToolAction  action,
+			GimpDisplay    *gdisp)
 {
 }
 
@@ -434,11 +464,3 @@ gimp_tool_real_cursor_update (GimpTool        *tool,
                             tool->cursor_modifier);
     }
 }
-
-
-#define STUB(x) void * x (void){g_message ("stub function %s called",#x); return NULL;}
-
-STUB(clone_non_gui)
-STUB(clone_non_gui_default)
-STUB(convolve_non_gui)
-STUB(convolve_non_gui_default)

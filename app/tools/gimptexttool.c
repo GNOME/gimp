@@ -95,7 +95,7 @@ static void   gimp_text_tool_init            (GimpTextTool      *tool);
 static void   gimp_text_tool_finalize        (GObject         *object);
 
 static void   text_tool_control              (GimpTool        *tool,
-					      ToolAction       tool_action,
+					      GimpToolAction   action,
 					      GimpDisplay     *gdisp);
 static void   text_tool_button_press         (GimpTool        *tool,
                                               GimpCoords      *coords,
@@ -224,9 +224,9 @@ gimp_text_tool_finalize (GObject *object)
 }
 
 static void
-text_tool_control (GimpTool    *tool,
-		   ToolAction   action,
-		   GimpDisplay *gdisp)
+text_tool_control (GimpTool       *tool,
+		   GimpToolAction  action,
+		   GimpDisplay    *gdisp)
 {
   switch (action)
     {
