@@ -141,6 +141,14 @@ package Gimp::CodeGen::enums;
 		       GIMP_HARDLIGHT_MODE => '18',
 		       GIMP_COLOR_ERASE_MODE => '19' }
 	},
+    GimpTransferMode =>
+	{ contig => 1,
+	  header => 'base/base-enums.h',
+	  symbols => [ qw(GIMP_SHADOWS GIMP_MIDTONES GIMP_HIGHLIGHTS) ],
+	  mapping => { GIMP_SHADOWS => '0',
+		       GIMP_MIDTONES => '1',
+		       GIMP_HIGHLIGHTS => '2' }
+	},
     GimpConvolutionType =>
 	{ contig => 1,
 	  header => 'base/base-enums.h',
@@ -160,6 +168,20 @@ package Gimp::CodeGen::enums;
 		       GIMP_GREEN_LUT => '2',
 		       GIMP_BLUE_LUT => '3',
 		       GIMP_ALPHA_LUT => '4' }
+	},
+    GimpHueRange =>
+	{ contig => 1,
+	  header => 'base/base-enums.h',
+	  symbols => [ qw(GIMP_ALL_HUES GIMP_RED_HUES GIMP_YELLOW_HUES
+			  GIMP_GREEN_HUES GIMP_CYAN_HUES GIMP_BLUE_HUES
+			  GIMP_MAGENTA_HUES) ],
+	  mapping => { GIMP_ALL_HUES => '0',
+		       GIMP_RED_HUES => '1',
+		       GIMP_YELLOW_HUES => '2',
+		       GIMP_GREEN_HUES => '3',
+		       GIMP_CYAN_HUES => '4',
+		       GIMP_BLUE_HUES => '5',
+		       GIMP_MAGENTA_HUES => '6' }
 	},
     GimpBlendMode =>
 	{ contig => 1,
@@ -263,14 +285,6 @@ package Gimp::CodeGen::enums;
 	  mapping => { GIMP_REPEAT_NONE => '0',
 		       GIMP_REPEAT_SAWTOOTH => '1',
 		       GIMP_REPEAT_TRIANGULAR => '2' }
-	},
-    GimpTransferMode =>
-	{ contig => 1,
-	  header => 'core/core-enums.h',
-	  symbols => [ qw(GIMP_SHADOWS GIMP_MIDTONES GIMP_HIGHLIGHTS) ],
-	  mapping => { GIMP_SHADOWS => '0',
-		       GIMP_MIDTONES => '1',
-		       GIMP_HIGHLIGHTS => '2' }
 	},
     GimpChannelOps =>
 	{ contig => 1,
@@ -396,19 +410,6 @@ package Gimp::CodeGen::enums;
 	  mapping => { GIMP_RUN_INTERACTIVE => '0',
 		       GIMP_RUN_NONINTERACTIVE => '1',
 		       GIMP_RUN_WITH_LAST_VALS => '2' }
-	},
-    HueRange =>
-	{ contig => 1,
-	  header => 'tools/gimphuesaturationtool.h',
-	  symbols => [ qw(ALL_HUES RED_HUES YELLOW_HUES GREEN_HUES CYAN_HUES
-			  BLUE_HUES MAGENTA_HUES) ],
-	  mapping => { ALL_HUES => '0',
-		       RED_HUES => '1',
-		       YELLOW_HUES => '2',
-		       GREEN_HUES => '3',
-		       CYAN_HUES => '4',
-		       BLUE_HUES => '5',
-		       MAGENTA_HUES => '6' }
 	},
     SizeType =>
 	{ contig => 1,

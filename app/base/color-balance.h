@@ -16,74 +16,28 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_COLOR_BALANCE_DIALOG_H__
-#define __GIMP_COLOR_BALANCE_DIALOG_H__
+#ifndef __COLOR_BALANCE_H__
+#define __COLOR_BALANCE_H__
 
 
-#include "gimpimagemaptool.h"
-
-
-#define GIMP_TYPE_COLOR_BALANCE_TOOL            (gimp_color_balance_tool_get_type ())
-#define GIMP_COLOR_BALANCE_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLOR_BALANCE_TOOL, GimpColorBalanceTool))
-#define GIMP_COLOR_BALANCE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_BALANCE_TOOL, GimpColorBalanceToolClass))
-#define GIMP_IS_COLOR_BALANCE_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_BALANCE_TOOL))
-#define GIMP_COLOR_BALANCE_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLOR_BALANCE_TOOL, GimpColorBalanceToolClass))
-#define GIMP_IS_COLOR_BALANCE_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_BALANCE_TOOL))
-#define GIMP_COLOR_BALANCE_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_BALANCE_TOOL, GimpColorBalanceToolClass))
-
-
-typedef struct _GimpColorBalanceTool      GimpColorBalanceTool;
-typedef struct _GimpColorBalanceToolClass GimpColorBalanceToolClass;
-
-struct _GimpColorBalanceTool
+struct _ColorBalance
 {
-  GimpImageMapTool  parent_instance;
-};
+  gboolean preserve_luminosity;
 
-struct _GimpColorBalanceToolClass
-{
-  GimpImageMapToolClass  parent_class;
+  gdouble  cyan_red[3];
+  gdouble  magenta_green[3];
+  gdouble  yellow_blue[3];
+
+  guchar   r_lookup[256];
+  guchar   g_lookup[256];
+  guchar   b_lookup[256];
 };
 
 
-typedef struct _ColorBalanceDialog ColorBalanceDialog;
-
-struct _ColorBalanceDialog
-{
-  GtkWidget        *shell;
-
-  GtkAdjustment    *cyan_red_adj;
-  GtkAdjustment    *magenta_green_adj;
-  GtkAdjustment    *yellow_blue_adj;
-
-  GimpDrawable     *drawable;
-  ImageMap         *image_map;
-
-  gdouble           cyan_red[3];
-  gdouble           magenta_green[3];
-  gdouble           yellow_blue[3];
-
-  guchar            r_lookup[256];
-  guchar            g_lookup[256];
-  guchar            b_lookup[256];
-
-  gboolean          preserve_luminosity;
-  gboolean          preview;
-  GimpTransferMode  transfer_mode;
-};
-
-
-void    gimp_color_balance_tool_register (GimpToolRegisterCallback  callback,
-                                          gpointer                  data);
-
-GType   gimp_color_balance_tool_get_type (void) G_GNUC_CONST;
-
-
+void   color_balance_create_lookup_tables (ColorBalance       *cb);
 void   color_balance                      (PixelRegion        *srcPR,
 					   PixelRegion        *destPR,
-					   void               *data);
-
-void   color_balance_create_lookup_tables (ColorBalanceDialog *cbd);
+					   gpointer            data);
 
 
-#endif  /*  __GIMP_COLOR_BALANCE_GIMP_H__  */
+#endif  /*  __COLOR_BALANCE_H__  */

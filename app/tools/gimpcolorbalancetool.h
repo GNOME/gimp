@@ -38,6 +38,14 @@ typedef struct _GimpColorBalanceToolClass GimpColorBalanceToolClass;
 struct _GimpColorBalanceTool
 {
   GimpImageMapTool  parent_instance;
+
+  ColorBalance     *color_balance;
+
+  /*  dialog  */
+  GimpTransferMode  transfer_mode;
+  GtkAdjustment    *cyan_red_adj;
+  GtkAdjustment    *magenta_green_adj;
+  GtkAdjustment    *yellow_blue_adj;
 };
 
 struct _GimpColorBalanceToolClass
@@ -46,44 +54,10 @@ struct _GimpColorBalanceToolClass
 };
 
 
-typedef struct _ColorBalanceDialog ColorBalanceDialog;
-
-struct _ColorBalanceDialog
-{
-  GtkWidget        *shell;
-
-  GtkAdjustment    *cyan_red_adj;
-  GtkAdjustment    *magenta_green_adj;
-  GtkAdjustment    *yellow_blue_adj;
-
-  GimpDrawable     *drawable;
-  ImageMap         *image_map;
-
-  gdouble           cyan_red[3];
-  gdouble           magenta_green[3];
-  gdouble           yellow_blue[3];
-
-  guchar            r_lookup[256];
-  guchar            g_lookup[256];
-  guchar            b_lookup[256];
-
-  gboolean          preserve_luminosity;
-  gboolean          preview;
-  GimpTransferMode  transfer_mode;
-};
-
-
 void    gimp_color_balance_tool_register (GimpToolRegisterCallback  callback,
                                           gpointer                  data);
 
 GType   gimp_color_balance_tool_get_type (void) G_GNUC_CONST;
-
-
-void   color_balance                      (PixelRegion        *srcPR,
-					   PixelRegion        *destPR,
-					   void               *data);
-
-void   color_balance_create_lookup_tables (ColorBalanceDialog *cbd);
 
 
 #endif  /*  __GIMP_COLOR_BALANCE_GIMP_H__  */

@@ -16,82 +16,26 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_HUE_SATURATION_TOOL_H__
-#define __GIMP_HUE_SATURATION_TOOL_H__
+#ifndef __HUE_SATURATION_H__
+#define __HUE_SATURATION_H__
 
 
-#include "gimpimagemaptool.h"
-
-
-typedef enum
+struct _HueSaturation
 {
-  ALL_HUES,
-  RED_HUES,
-  YELLOW_HUES,
-  GREEN_HUES,
-  CYAN_HUES,
-  BLUE_HUES,
-  MAGENTA_HUES
-} HueRange;
+  gdouble hue[7];
+  gdouble lightness[7];
+  gdouble saturation[7];
 
-
-#define GIMP_TYPE_HUE_SATURATION_TOOL            (gimp_hue_saturation_tool_get_type ())
-#define GIMP_HUE_SATURATION_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_HUE_SATURATION_TOOL, GimpHueSaturationTool))
-#define GIMP_HUE_SATURATION_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_HUE_SATURATION_TOOL, GimpHueSaturationToolClass))
-#define GIMP_IS_HUE_SATURATION_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_HUE_SATURATION_TOOL))
-#define GIMP_IS_HUE_SATURATION_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_HUE_SATURATION_TOOL))
-#define GIMP_HUE_SATURATION_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_HUE_SATURATION_TOOL, GimpHueSaturationToolClass))
-
-
-typedef struct _GimpHueSaturationTool      GimpHueSaturationTool;
-typedef struct _GimpHueSaturationToolClass GimpHueSaturationToolClass;
-
-struct _GimpHueSaturationTool
-{
-  GimpImageMapTool  parent_instance;
-};
-
-struct _GimpHueSaturationToolClass
-{
-  GimpImageMapToolClass  parent_class;
+  gint    hue_transfer[6][256];
+  gint    lightness_transfer[6][256];
+  gint    saturation_transfer[6][256];
 };
 
 
-typedef struct _HueSaturationDialog HueSaturationDialog;
-
-struct _HueSaturationDialog
-{
-  GtkWidget     *shell;
-
-  GtkWidget     *hue_partition_da[6];
-
-  GtkAdjustment *hue_data;
-  GtkAdjustment *lightness_data;
-  GtkAdjustment *saturation_data;
-
-  GimpDrawable  *drawable;
-  ImageMap      *image_map;
-
-  gdouble        hue[7];
-  gdouble        lightness[7];
-  gdouble        saturation[7];
-
-  HueRange       hue_partition;
-  gboolean       preview;
-};
-
-
-void    gimp_hue_saturation_tool_register (GimpToolRegisterCallback  callback,
-                                           gpointer                  data);
-
-GType   gimp_hue_saturation_tool_get_type (void) G_GNUC_CONST;
-
-void   hue_saturation_free                (void);
-void   hue_saturation                     (PixelRegion          *srcPR,
-					   PixelRegion          *destPR,
-					   void                 *data);
-
-void   hue_saturation_calculate_transfers (HueSaturationDialog  *hsd);
+void   hue_saturation_calculate_transfers (HueSaturation *hs);
+void   hue_saturation                     (PixelRegion   *srcPR,
+					   PixelRegion   *destPR,
+					   gpointer       data);
 
 
 #endif  /*  __HUE_SATURATION_H__  */

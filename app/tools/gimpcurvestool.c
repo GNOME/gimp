@@ -36,11 +36,13 @@
 
 #include "tools-types.h"
 
+#include "base/curves.h"
 #include "base/gimphistogram.h"
 #include "base/gimplut.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimpimagemap.h"
 
 #include "widgets/gimpcursor.h"
 #include "widgets/gimpenummenu.h"
@@ -49,9 +51,6 @@
 
 #include "gimpcurvestool.h"
 #include "tool_manager.h"
-
-#include "app_procs.h"
-#include "image_map.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -64,7 +63,7 @@
 #define ALL           0xFF
 
 /*  NB: take care when changing these values: make sure the curve[] array in
- *  gimpcurvestool.h is large enough.
+ *  base/curves.h is large enough.
  */
 #define GRAPH_WIDTH    256
 #define GRAPH_HEIGHT   256
@@ -75,9 +74,6 @@
 #define RADIUS           3
 #define MIN_DISTANCE     8
 
-#define RANGE_MASK  GDK_EXPOSURE_MASK | \
-                    GDK_ENTER_NOTIFY_MASK
-
 #define GRAPH_MASK  GDK_EXPOSURE_MASK | \
 		    GDK_POINTER_MOTION_MASK | \
 		    GDK_POINTER_MOTION_HINT_MASK | \
@@ -87,117 +83,77 @@
 		    GDK_BUTTON1_MOTION_MASK
 
 
-typedef gdouble CRMatrix[4][4];
-
-
 /*  local function prototypes  */
 
 static void   gimp_curves_tool_class_init     (GimpCurvesToolClass *klass);
-static void   gimp_curves_tool_init           (GimpCurvesTool      *tool);
+static void   gimp_curves_tool_init           (GimpCurvesTool      *c_tool);
 
-static void   gimp_curves_tool_initialize     (GimpTool        *tool,
-					       GimpDisplay     *gdisp);
-static void   gimp_curves_tool_control        (GimpTool        *tool,
-					       GimpToolAction   action,
-					       GimpDisplay     *gdisp);
-static void   gimp_curves_tool_button_press   (GimpTool        *tool,
-                                               GimpCoords      *coords,
-                                               guint32          time,
-					       GdkModifierType  state,
-					       GimpDisplay     *gdisp);
-static void   gimp_curves_tool_button_release (GimpTool        *tool,
-                                               GimpCoords      *coords,
-                                               guint32          time,
-					       GdkModifierType  state,
-					       GimpDisplay     *gdisp);
-static void   gimp_curves_tool_motion         (GimpTool        *tool,
-                                               GimpCoords      *coords,
-                                               guint32          time,
-					       GdkModifierType  state,
-					       GimpDisplay     *gdisp);
+static void   gimp_curves_tool_finalize       (GObject          *object);
 
-static void   curves_color_update             (GimpTool        *tool,
-					       GimpDisplay     *gdisp,
-					       GimpDrawable    *drawable,
-					       gint             x,
-					       gint             y);
-static void   curves_add_point                (GimpDrawable    *drawable,
-					       gint             x,
-					       gint             y,
-					       gint             cchan);
+static void   gimp_curves_tool_initialize     (GimpTool         *tool,
+					       GimpDisplay      *gdisp);
+static void   gimp_curves_tool_button_press   (GimpTool         *tool,
+                                               GimpCoords       *coords,
+                                               guint32           time,
+					       GdkModifierType   state,
+					       GimpDisplay      *gdisp);
+static void   gimp_curves_tool_button_release (GimpTool         *tool,
+                                               GimpCoords       *coords,
+                                               guint32           time,
+					       GdkModifierType   state,
+					       GimpDisplay      *gdisp);
+static void   gimp_curves_tool_motion         (GimpTool         *tool,
+                                               GimpCoords       *coords,
+                                               guint32           time,
+					       GdkModifierType   state,
+					       GimpDisplay      *gdisp);
 
-static CurvesDialog * curves_dialog_new   (void);
+static void   gimp_curves_tool_map            (GimpImageMapTool *image_map_tool);
+static void   gimp_curves_tool_dialog         (GimpImageMapTool *image_map_tool);
+static void   gimp_curves_tool_reset          (GimpImageMapTool *image_map_tool);
 
-static void   curves_dialog_hide          (void);
-static void   curves_update               (CurvesDialog   *cd,
-					   gint            );
-static void   curves_plot_curve           (CurvesDialog   *cd,
-					   gint            ,
-					   gint            ,
-					   gint            ,
-					   gint            );
-static void   curves_preview              (CurvesDialog   *cd);
+static void   curves_color_update             (GimpTool         *tool,
+					       GimpDisplay      *gdisp,
+					       GimpDrawable     *drawable,
+					       gint              x,
+					       gint              y);
+static void   curves_add_point                (GimpCurvesTool   *c_tool,
+					       gint              x,
+					       gint              y,
+					       gint              cchan);
 
-static void   curves_channel_callback     (GtkWidget      *widget,
-					   gpointer        data);
+static void   curves_update                   (GimpCurvesTool   *c_tool,
+                                               gint              update);
 
-static gboolean curves_set_sensitive_callback 
-                                          (gpointer       item_data,
-                                           CurvesDialog   *cd);
-static void   curves_smooth_callback      (GtkWidget      *widget,
-					   gpointer        data);
-static void   curves_free_callback        (GtkWidget      *widget,
-					   gpointer        data);
+static void   curves_channel_callback         (GtkWidget        *widget,
+                                               gpointer          data);
+static void   curves_channel_reset_callback   (GtkWidget        *widget,
+                                               gpointer          data);
 
-static void   curves_channel_reset        (gint            );
-static void   curves_reset_callback       (GtkWidget      *widget,
-					   gpointer        data);
-static void   curves_ok_callback          (GtkWidget      *widget,
-					   gpointer        data);
-static void   curves_cancel_callback      (GtkWidget      *widget,
-					   gpointer        data);
-static void   curves_load_callback        (GtkWidget      *widget,
-					   gpointer        data);
-static void   curves_save_callback        (GtkWidget      *widget,
-					   gpointer        data);
-static void   curves_preview_update       (GtkWidget      *widget,
-					   gpointer        data);
-static gint   curves_xrange_events        (GtkWidget      *widget,
-					   GdkEvent       *event,
-					   CurvesDialog   *cd);
-static gint   curves_yrange_events        (GtkWidget      *widget,
-					   GdkEvent       *event,
-					   CurvesDialog   *cd);
-static gint   curves_graph_events         (GtkWidget      *widget,
-					   GdkEvent       *event,
-					   CurvesDialog   *cd);
-static void   curves_CR_compose           (CRMatrix        ,
-					   CRMatrix        ,
-					   CRMatrix        );
+static gboolean curves_set_sensitive_callback (gpointer          item_data,
+                                               GimpCurvesTool   *c_tool);
+static void   curves_smooth_callback          (GtkWidget        *widget,
+                                               gpointer          data);
+static void   curves_free_callback            (GtkWidget        *widget,
+                                               gpointer          data);
 
-static void   file_dialog_create          (GtkWidget      *widget);
-static void   file_dialog_ok_callback     (GtkWidget      *widget,
-					   gpointer        data);
-static void   file_dialog_cancel_callback (GtkWidget      *widget,
-					   gpointer        data);
+static void   curves_load_callback            (GtkWidget        *widget,
+                                               gpointer          data);
+static void   curves_save_callback            (GtkWidget        *widget,
+                                               gpointer          data);
+static gint   curves_graph_events             (GtkWidget        *widget,
+                                               GdkEvent         *event,
+                                               GimpCurvesTool   *c_tool);
 
-static gboolean  curves_read_from_file    (FILE           *f);
-static void      curves_write_to_file     (FILE           *f);
+static void       file_dialog_create          (GimpCurvesTool   *c_tool);
+static void       file_dialog_ok_callback     (GimpCurvesTool   *c_tool);
+static gboolean   file_dialog_cancel_callback (GimpCurvesTool   *c_tool);
 
+static gboolean   curves_read_from_file       (GimpCurvesTool   *c_tool,
+                                               FILE             *file);
+static void       curves_write_to_file        (GimpCurvesTool   *c_tool,
+                                               FILE             *file);
 
-static CurvesDialog * curves_dialog = NULL;
-
-/*  the curves file dialog  */
-static GtkWidget *file_dlg = NULL;
-static gboolean   load_save;
-
-static CRMatrix CR_basis =
-{
-  { -0.5,  1.5, -1.5,  0.5 },
-  {  1.0, -2.5,  2.0, -0.5 },
-  { -0.5,  0.0,  0.5,  0.0 },
-  {  0.0,  1.0,  0.0,  0.0 },
-};
 
 static GimpImageMapToolClass *parent_class = NULL;
 
@@ -248,108 +204,136 @@ gimp_curves_tool_get_type (void)
   return tool_type;
 }
 
+
+/*  private functions  */
+
 static void
 gimp_curves_tool_class_init (GimpCurvesToolClass *klass)
 {
-  GimpToolClass *tool_class;
+  GObjectClass          *object_class;
+  GimpToolClass         *tool_class;
+  GimpImageMapToolClass *image_map_tool_class;
 
-  tool_class = GIMP_TOOL_CLASS (klass);
+  object_class         = G_OBJECT_CLASS (klass);
+  tool_class           = GIMP_TOOL_CLASS (klass);
+  image_map_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  tool_class->initialize     = gimp_curves_tool_initialize;
-  tool_class->control        = gimp_curves_tool_control;
-  tool_class->button_press   = gimp_curves_tool_button_press;
-  tool_class->button_release = gimp_curves_tool_button_release;
-  tool_class->motion         = gimp_curves_tool_motion;
+  object_class->finalize       = gimp_curves_tool_finalize;
+
+  tool_class->initialize       = gimp_curves_tool_initialize;
+  tool_class->button_press     = gimp_curves_tool_button_press;
+  tool_class->button_release   = gimp_curves_tool_button_release;
+  tool_class->motion           = gimp_curves_tool_motion;
+
+  image_map_tool_class->map    = gimp_curves_tool_map;
+  image_map_tool_class->dialog = gimp_curves_tool_dialog;
+  image_map_tool_class->reset  = gimp_curves_tool_reset;
 }
 
 static void
-gimp_curves_tool_init (GimpCurvesTool *tool)
+gimp_curves_tool_init (GimpCurvesTool *c_tool)
 {
+  GimpImageMapTool *image_map_tool;
+  gint              i;
+
+  image_map_tool = GIMP_IMAGE_MAP_TOOL (c_tool);
+
+  image_map_tool->shell_title = _("Curves");
+  image_map_tool->shell_name  = "curves";
+
+  c_tool->curves  = g_new0 (Curves, 1);
+  c_tool->lut     = gimp_lut_new ();
+  c_tool->channel = GIMP_HISTOGRAM_VALUE;
+
+  curves_init (c_tool->curves);
+
+  for (i = 0;
+       i < (sizeof (c_tool->col_value) /
+            sizeof (c_tool->col_value[0]));
+       i++)
+    c_tool->col_value[i] = 0;
+}
+
+static void
+gimp_curves_tool_finalize (GObject *object)
+{
+  GimpCurvesTool *c_tool;
+
+  c_tool = GIMP_CURVES_TOOL (object);
+
+  if (c_tool->curves)
+    {
+      g_free(c_tool->curves);
+      c_tool->curves = NULL;
+    }
+
+  if (c_tool->lut)
+    {
+      gimp_lut_free (c_tool->lut);
+      c_tool->lut = NULL;
+    }
+
+  if (c_tool->pixmap)
+    {
+      g_object_unref (c_tool->pixmap);
+      c_tool->pixmap = NULL;
+    }
+
+  if (c_tool->cursor_layout)
+    {
+      g_object_unref (c_tool->cursor_layout);
+      c_tool->cursor_layout = NULL;
+    }
+
+  if (c_tool->xpos_layout)
+    {
+      g_object_unref (c_tool->xpos_layout);
+      c_tool->xpos_layout = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
 gimp_curves_tool_initialize (GimpTool    *tool,
 			     GimpDisplay *gdisp)
 {
-  gint i, j;
+  GimpCurvesTool *c_tool;
+  GimpDrawable   *drawable;
 
-  if (! gdisp)
-    {
-      curves_dialog_hide ();
-      return;
-    }
+  c_tool = GIMP_CURVES_TOOL (tool);
 
-  if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
+  if (gdisp &&
+      gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Curves for indexed drawables cannot be adjusted."));
       return;
     }
 
-  /*  The curves dialog  */
-  if (!curves_dialog)
-    {
-      curves_dialog = curves_dialog_new ();
-    }
-     
-  /*  Initialize the values  */
-  curves_dialog->channel = GIMP_HISTOGRAM_VALUE;
-  for (i = 0; i < 5; i++)
-    for (j = 0; j < 256; j++)
-      curves_dialog->curve[i][j] = j;
-  
-  for (i = 0; i < 5; i++)
-    {
-      curves_channel_reset (i);
-    }
+  drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  curves_dialog->drawable  = gimp_image_active_drawable (gdisp->gimage);
-  curves_dialog->color     = gimp_drawable_is_rgb (curves_dialog->drawable);
-  curves_dialog->image_map = image_map_create (gdisp, curves_dialog->drawable);
+  curves_init (c_tool->curves);
+
+  c_tool->color   = gimp_drawable_is_rgb (drawable);
+  c_tool->channel = GIMP_HISTOGRAM_VALUE;
+
+  c_tool->grab_point = -1;
+  c_tool->last       = 0;
+
+  GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
 
   /* set the sensitivity of the channel menu based on the drawable type */
-  gimp_option_menu_set_sensitive (GTK_OPTION_MENU (curves_dialog->channel_menu),
+  gimp_option_menu_set_sensitive (GTK_OPTION_MENU (c_tool->channel_menu),
                                   (GimpOptionMenuSensitivityCallback) curves_set_sensitive_callback,
-                                  curves_dialog);
+                                  c_tool);
 
   /* set the current selection */
-  gtk_option_menu_set_history (GTK_OPTION_MENU (curves_dialog->channel_menu),
-			       curves_dialog->channel);
+  gtk_option_menu_set_history (GTK_OPTION_MENU (c_tool->channel_menu),
+			       c_tool->channel);
 
-  gimp_lut_setup (curves_dialog->lut, 
-		  (GimpLutFunc) curves_lut_func,
-                  (gpointer) curves_dialog, 
-		  gimp_drawable_bytes (curves_dialog->drawable));
-
-  if (!GTK_WIDGET_VISIBLE (curves_dialog->shell))
-    gtk_widget_show (curves_dialog->shell);
-
-  curves_update (curves_dialog, GRAPH | DRAW);
-}
-
-static void
-gimp_curves_tool_control (GimpTool       *tool,
-			  GimpToolAction  action,
-			  GimpDisplay    *gdisp)
-{
-  switch (action)
-    {
-    case PAUSE:
-      break;
-
-    case RESUME:
-      break;
-
-    case HALT:
-      curves_dialog_hide ();
-      break;
-
-    default:
-      break;
-    }
-
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
+  curves_update (c_tool, ALL);
 }
 
 static void
@@ -359,34 +343,42 @@ gimp_curves_tool_button_press (GimpTool        *tool,
 			       GdkModifierType  state,
 			       GimpDisplay     *gdisp)
 {
-  GimpDrawable *drawable;
+  GimpCurvesTool *c_tool;
+  GimpDrawable   *drawable;
+
+  c_tool = GIMP_CURVES_TOOL (tool);
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
   tool->gdisp = gdisp;
 
+  g_assert (drawable == tool->drawable);
+
+#if 0
   if (drawable != tool->drawable)
     {
       gimp_tool_control_set_preserve (tool->control, TRUE);
-      image_map_abort (curves_dialog->image_map);
+      gimp_image_map_abort (GIMP_IMAGE_MAP_TOOL (tool)->image_map);
       gimp_tool_control_set_preserve (tool->control, FALSE);
 
       tool->drawable = drawable;
 
-      curves_dialog->drawable = drawable;
-      curves_dialog->color = gimp_drawable_is_rgb (drawable);
-      curves_dialog->image_map = image_map_create (gdisp, drawable);
+      c_tool->color  = gimp_drawable_is_rgb (drawable);
+
+      GIMP_IMAGE_MAP_TOOL (tool)->drawable  = drawable;
+      GIMP_IMAGE_MAP_TOOL (tool)->image_map = gimp_image_map_new (TRUE, drawable);
 
       gimp_option_menu_set_sensitive 
-        (GTK_OPTION_MENU (curves_dialog->channel_menu),
+        (GTK_OPTION_MENU (c_tool->channel_menu),
          (GimpOptionMenuSensitivityCallback) curves_set_sensitive_callback,
-         curves_dialog);
+         c_tool);
     }
+#endif
 
   gimp_tool_control_activate (tool->control);
 
   curves_color_update (tool, gdisp, drawable, coords->x, coords->y);
-  curves_update (curves_dialog, GRAPH | DRAW);
+  curves_update (c_tool, GRAPH | DRAW);
 }
 
 static void
@@ -396,30 +388,41 @@ gimp_curves_tool_button_release (GimpTool        *tool,
 				 GdkModifierType  state,
 				 GimpDisplay     *gdisp)
 {
-  GimpDrawable *drawable;
+  GimpCurvesTool *c_tool;
+  GimpDrawable   *drawable;
 
-  if (! curves_dialog || 
-      ! (drawable = gimp_image_active_drawable (gdisp->gimage)))
-     return;
+  c_tool = GIMP_CURVES_TOOL (tool);
+
+  drawable = gimp_image_active_drawable (gdisp->gimage);
 
   curves_color_update (tool, gdisp, drawable, coords->x, coords->y);
 
   if (state & GDK_SHIFT_MASK)
     {
-      curves_add_point (drawable, coords->x, coords->y, curves_dialog->channel);
-      curves_calculate_curve (curves_dialog);
+      curves_add_point (c_tool,
+                        coords->x, coords->y, c_tool->channel);
+
+      curves_calculate_curve (c_tool->curves, c_tool->channel);
     }
   else if (state & GDK_CONTROL_MASK)
     {
-      curves_add_point (drawable, coords->x, coords->y, GIMP_HISTOGRAM_VALUE);
-      curves_add_point (drawable, coords->x, coords->y, GIMP_HISTOGRAM_RED);
-      curves_add_point (drawable, coords->x, coords->y, GIMP_HISTOGRAM_GREEN);
-      curves_add_point (drawable, coords->x, coords->y, GIMP_HISTOGRAM_BLUE);
-      curves_add_point (drawable, coords->x, coords->y, GIMP_HISTOGRAM_ALPHA);
-      curves_calculate_curve (curves_dialog);
+      curves_add_point (c_tool,
+                        coords->x, coords->y, GIMP_HISTOGRAM_VALUE);
+      curves_add_point (c_tool,
+                        coords->x, coords->y, GIMP_HISTOGRAM_RED);
+      curves_add_point (c_tool,
+                        coords->x, coords->y, GIMP_HISTOGRAM_GREEN);
+      curves_add_point (c_tool,
+                        coords->x, coords->y, GIMP_HISTOGRAM_BLUE);
+      curves_add_point (c_tool,
+                        coords->x, coords->y, GIMP_HISTOGRAM_ALPHA);
+
+      curves_calculate_curve (c_tool->curves, c_tool->channel);
     }
 
-  curves_update (curves_dialog, GRAPH | DRAW);
+  gimp_tool_control_halt (tool->control);
+
+  curves_update (c_tool, GRAPH | DRAW);
 }
 
 static void
@@ -429,61 +432,15 @@ gimp_curves_tool_motion (GimpTool        *tool,
 			 GdkModifierType  state,
 			 GimpDisplay     *gdisp)
 {
-  GimpDrawable *drawable;
+  GimpCurvesTool *c_tool;
+  GimpDrawable   *drawable;
 
-  if (! curves_dialog ||
-      ! (drawable = gimp_image_active_drawable (gdisp->gimage)))
-     return;
+  c_tool = GIMP_CURVES_TOOL (tool);
+
+  drawable = gimp_image_active_drawable (gdisp->gimage);
 
   curves_color_update (tool, gdisp, drawable, coords->x, coords->y);
-  curves_update (curves_dialog, GRAPH | DRAW);
-}
-
-
-/*  curves machinery  */
-
-gfloat
-curves_lut_func (CurvesDialog *cd,
-		 gint          nchannels,
-		 gint          channel,
-		 gfloat        value)
-{
-  gfloat  f;
-  gint    index;
-  gdouble inten;
-  gint    j;
-
-  if (nchannels == 1)
-    j = 0;
-  else
-    j = channel + 1;
-
-  inten = value;
-
-  /* For color images this runs through the loop with j = channel +1
-     the first time and j = 0 the second time */
-  /* For bw images this runs through the loop with j = 0 the first and
-     only time  */
-  for (; j >= 0; j -= (channel + 1))
-  {
-    /* don't apply the overall curve to the alpha channel */
-    if (j == 0 && (nchannels == 2 || nchannels == 4)
-	&& channel == nchannels -1)
-      return inten;
-
-    if (inten < 0.0)
-      inten = cd->curve[j][0]/255.0;
-    else if (inten >= 1.0)
-      inten = cd->curve[j][255]/255.0;
-    else /* interpolate the curve */
-    {
-      index = floor(inten * 255.0);
-      f = inten*255.0 - index;
-      inten = ((1.0 - f) * cd->curve[j][index    ] + 
-	       (      f) * cd->curve[j][index + 1] ) / 255.0;
-    }
-  }
-  return inten;
+  curves_update (c_tool, GRAPH | DRAW);
 }
 
 static void
@@ -493,15 +450,18 @@ curves_color_update (GimpTool       *tool,
                      gint            x,
                      gint            y)
 {
-  guchar        *color;
-  gint           offx;
-  gint           offy;
-  gint           maxval;
-  gboolean       has_alpha;
-  gboolean       is_indexed;
-  GimpImageType  sample_type;
+  GimpCurvesTool *c_tool;
+  guchar         *color;
+  gint            offx;
+  gint            offy;
+  gint            maxval;
+  gboolean        has_alpha;
+  gboolean        is_indexed;
+  GimpImageType   sample_type;
 
-  if (!tool || !gimp_tool_control_is_active (tool->control))
+  c_tool = GIMP_CURVES_TOOL (tool);
+
+  if (! (tool && gimp_tool_control_is_active (tool->control)))
     return;
 
   gimp_drawable_offsets (drawable, &offx, &offy);
@@ -509,36 +469,37 @@ curves_color_update (GimpTool       *tool,
   x -= offx;
   y -= offy;
 
-  if (!(color = image_map_get_color_at (curves_dialog->image_map, x, y)))
+  if (! (color = gimp_image_map_get_color_at (GIMP_IMAGE_MAP_TOOL (tool)->image_map,
+                                              x, y)))
     return;
 
   sample_type = gimp_drawable_type (drawable);
   is_indexed  = gimp_drawable_is_indexed (drawable);
   has_alpha   = GIMP_IMAGE_TYPE_HAS_ALPHA (sample_type);
 
-  curves_dialog->col_value[GIMP_HISTOGRAM_RED] = color[RED_PIX];
-  curves_dialog->col_value[GIMP_HISTOGRAM_GREEN] = color[GREEN_PIX];
-  curves_dialog->col_value[GIMP_HISTOGRAM_BLUE] = color[BLUE_PIX];
+  c_tool->col_value[GIMP_HISTOGRAM_RED]   = color[RED_PIX];
+  c_tool->col_value[GIMP_HISTOGRAM_GREEN] = color[GREEN_PIX];
+  c_tool->col_value[GIMP_HISTOGRAM_BLUE]  = color[BLUE_PIX];
 
   if (has_alpha)
     {
-      curves_dialog->col_value [GIMP_HISTOGRAM_ALPHA] = color[3];
+      c_tool->col_value[GIMP_HISTOGRAM_ALPHA] = color[3];
     }
 
   if (is_indexed)
-    curves_dialog->col_value [GIMP_HISTOGRAM_ALPHA] = color[4];
+    c_tool->col_value[GIMP_HISTOGRAM_ALPHA] = color[4];
 
   maxval = MAX (color[RED_PIX], color[GREEN_PIX]);
-  curves_dialog->col_value[GIMP_HISTOGRAM_VALUE] = MAX (maxval, color[BLUE_PIX]);
+  c_tool->col_value[GIMP_HISTOGRAM_VALUE] = MAX (maxval, color[BLUE_PIX]);
 
   g_free (color);
 }
 
 static void
-curves_add_point (GimpDrawable *drawable,
-		  gint          x,
-		  gint          y,
-		  gint          cchan)
+curves_add_point (GimpCurvesTool *c_tool,
+		  gint            x,
+		  gint            y,
+		  gint            cchan)
 {
   /* Add point onto the curve */
   gint closest_point = 0;
@@ -546,17 +507,18 @@ curves_add_point (GimpDrawable *drawable,
   gint curvex;
   gint i;
 
-  switch (curves_dialog->curve_type[cchan])
+  switch (c_tool->curves->curve_type[cchan])
     {
-    case SMOOTH:
-      curvex = curves_dialog->col_value[cchan];
+    case CURVES_SMOOTH:
+      curvex   = c_tool->col_value[cchan];
       distance = G_MAXINT;
+
       for (i = 0; i < 17; i++)
 	{
-	  if (curves_dialog->points[cchan][i][0] != -1)
-	    if (abs (curvex - curves_dialog->points[cchan][i][0]) < distance)
+	  if (c_tool->curves->points[cchan][i][0] != -1)
+	    if (abs (curvex - c_tool->curves->points[cchan][i][0]) < distance)
 	      {
-		distance = abs (curvex - curves_dialog->points[cchan][i][0]);
+		distance = abs (curvex - c_tool->curves->points[cchan][i][0]);
 		closest_point = i;
 	      }
 	}
@@ -564,230 +526,153 @@ curves_add_point (GimpDrawable *drawable,
       if (distance > MIN_DISTANCE)
 	closest_point = (curvex + 8) / 16;
       
-      curves_dialog->points[cchan][closest_point][0] = curvex;
-      curves_dialog->points[cchan][closest_point][1] = curves_dialog->curve[cchan][curvex];
+      c_tool->curves->points[cchan][closest_point][0] = curvex;
+      c_tool->curves->points[cchan][closest_point][1] = c_tool->curves->curve[cchan][curvex];
       break;
       
-    case GFREE:
-      curves_dialog->curve[cchan][x] = 255 - y;
+    case CURVES_FREE:
+      c_tool->curves->curve[cchan][x] = 255 - y;
       break;
     }
 }
 
-void
-curves_free (void)
+static void
+gimp_curves_tool_map (GimpImageMapTool *image_map_tool)
 {
-  GimpTool *active_tool;
+  GimpCurvesTool *c_tool;
 
-  if (curves_dialog)
-    {
-      if (curves_dialog->image_map)
-	{
-	  active_tool = tool_manager_get_active (the_gimp);
+  c_tool = GIMP_CURVES_TOOL (image_map_tool);
 
-	  gimp_tool_control_set_preserve (active_tool->control, TRUE);
-	  image_map_abort (curves_dialog->image_map);
-	  gimp_tool_control_set_preserve (active_tool->control, FALSE);
-
-	  curves_dialog->image_map = NULL;
-	}
-
-      gtk_widget_destroy (curves_dialog->shell);
-
-      if (curves_dialog->pixmap)
-	g_object_unref (curves_dialog->pixmap);
-
-      if (curves_dialog->cursor_layout)
-        g_object_unref (curves_dialog->cursor_layout);
-      if (curves_dialog->xpos_layout)
-        g_object_unref (curves_dialog->xpos_layout);
-
-      if (curves_dialog->lut)
-        gimp_lut_free (curves_dialog->lut);
-
-      g_free (curves_dialog);
-      curves_dialog = NULL;
-    }
+  gimp_lut_setup (c_tool->lut, 
+		  (GimpLutFunc) curves_lut_func,
+                  c_tool->curves,
+		  gimp_drawable_bytes (image_map_tool->drawable));
+  gimp_image_map_apply (image_map_tool->image_map,
+                        (GimpImageMapApplyFunc) gimp_lut_process_2,
+                        c_tool->lut);
 }
+
 
 /*******************/
 /*  Curves dialog  */
 /*******************/
 
-static CurvesDialog *
-curves_dialog_new (void)
+static void
+gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
 {
-  CurvesDialog *cd;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *hbbox;
-  GtkWidget *label;
-  GtkWidget *frame;
-  GtkWidget *toggle;
-  GtkWidget *channel_hbox;
-  GtkWidget *table;
-  GtkWidget *button;
-  gint i, j;
+  GimpCurvesTool *c_tool;
+  GtkWidget      *hbox;
+  GtkWidget      *hbbox;
+  GtkWidget      *frame;
+  GtkWidget      *table;
+  GtkWidget      *button;
 
-  cd = g_new (CurvesDialog, 1);
-  cd->preview       = TRUE;
-  cd->pixmap        = NULL;
-  cd->xpos_layout   = NULL;
-  cd->cursor_layout = NULL;
-  cd->channel       = GIMP_HISTOGRAM_VALUE;
+  c_tool = GIMP_CURVES_TOOL (image_map_tool);
 
-  for (i = 0; i < 5; i++)
-    cd->curve_type[i] = SMOOTH;
-
-  for (i = 0; i < 5; i++)
-    for (j = 0; j < 256; j++)
-      cd->curve[i][j] = j;
-
-  for (i = 0; i < (sizeof (cd->col_value) / sizeof (cd->col_value[0])); i++)
-    cd->col_value[i] = 0;
-
-  cd->lut = gimp_lut_new ();
-
-  /*  The shell and main vbox  */
-  cd->shell = gimp_dialog_new (_("Curves"), "curves",
-			       tool_manager_help_func, NULL,
-			       GTK_WIN_POS_NONE,
-			       FALSE, TRUE, FALSE,
-
-			       GIMP_STOCK_RESET, curves_reset_callback,
-			       cd, NULL, NULL, FALSE, FALSE,
-
-			       GTK_STOCK_CANCEL, curves_cancel_callback,
-			       cd, NULL, NULL, FALSE, TRUE,
-
-			       GTK_STOCK_OK, curves_ok_callback,
-			       cd, NULL, NULL, TRUE, FALSE,
-
-			       NULL);
-
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (cd->shell)->vbox), vbox);
+  table = gtk_table_new (2, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), table,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
   /*  The option menu for selecting channels  */
-  channel_hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), channel_hbox, FALSE, FALSE, 0);
+  hbox = gtk_hbox_new (FALSE, 4);
 
-  label = gtk_label_new (_("Modify Curves for Channel:"));
-  gtk_box_pack_start (GTK_BOX (channel_hbox), label, FALSE, FALSE, 0);
-
-  cd->channel_menu = 
+  c_tool->channel_menu =
     gimp_enum_option_menu_new (GIMP_TYPE_HISTOGRAM_CHANNEL,
                                G_CALLBACK (curves_channel_callback),
-                               cd);
-  gtk_box_pack_start (GTK_BOX (channel_hbox), cd->channel_menu, FALSE, FALSE, 2);
+                               c_tool);
+  gtk_box_pack_start (GTK_BOX (hbox), c_tool->channel_menu, FALSE, FALSE, 0);
+  gtk_widget_show (c_tool->channel_menu);
 
-  gtk_widget_show (label);
-  gtk_widget_show (cd->channel_menu);
-  gtk_widget_show (channel_hbox);
+  button = gtk_button_new_with_label (_("Reset Channel"));
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (curves_channel_reset_callback),
+                    c_tool);
+
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("Modify Curves for Channel:"), 1.0, 0.5,
+                             hbox, 1, FALSE);
+
+  /*  The option menu for selecting the drawing method  */
+  c_tool->curve_type_menu =
+    gimp_option_menu_new (FALSE,
+
+                          _("Smooth"), curves_smooth_callback,
+                          c_tool, NULL, NULL, TRUE,
+
+                          _("Free"), curves_free_callback,
+                          c_tool, NULL, NULL, FALSE,
+
+                          NULL);
+
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                             _("Curve Type:"), 1.0, 0.5,
+                             c_tool->curve_type_menu, 1, TRUE);
 
   /*  The table for the yrange and the graph  */
   table = gtk_table_new (2, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), table,
+                      FALSE, FALSE, 0);
 
   /*  The range drawing area  */
   frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 0, 1,
 		    GTK_EXPAND, GTK_EXPAND, 0, 0);
-
-  cd->yrange = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (cd->yrange), YRANGE_WIDTH, YRANGE_HEIGHT);
-  gtk_widget_set_events (cd->yrange, RANGE_MASK);
-  gtk_container_add (GTK_CONTAINER (frame), cd->yrange);
-
-  g_signal_connect (G_OBJECT (cd->yrange), "event",
-		    G_CALLBACK (curves_yrange_events),
-		    cd);
-
-  gtk_widget_show (cd->yrange);
   gtk_widget_show (frame);
+
+  c_tool->yrange = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (c_tool->yrange), YRANGE_WIDTH, YRANGE_HEIGHT);
+  gtk_container_add (GTK_CONTAINER (frame), c_tool->yrange);
+  gtk_widget_show (c_tool->yrange);
 
   /*  The curves graph  */
   frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 0, 1,
 		    GTK_SHRINK | GTK_FILL,
 		    GTK_SHRINK | GTK_FILL, 0, 0);
-
-  cd->graph = gtk_drawing_area_new ();
-  gtk_widget_set_size_request (cd->graph,
-                               GRAPH_WIDTH + RADIUS * 2,
-                               GRAPH_HEIGHT + RADIUS * 2);
-  gtk_widget_set_events (cd->graph, GRAPH_MASK);
-  gtk_container_add (GTK_CONTAINER (frame), cd->graph);
-
-  g_signal_connect (G_OBJECT (cd->graph), "event",
-		    G_CALLBACK (curves_graph_events),
-		    cd);
-
-  gtk_widget_show (cd->graph);
   gtk_widget_show (frame);
+
+  c_tool->graph = gtk_drawing_area_new ();
+  gtk_widget_set_size_request (c_tool->graph,
+                               GRAPH_WIDTH  + RADIUS * 2,
+                               GRAPH_HEIGHT + RADIUS * 2);
+  gtk_widget_set_events (c_tool->graph, GRAPH_MASK);
+  gtk_container_add (GTK_CONTAINER (frame), c_tool->graph);
+  gtk_widget_show (c_tool->graph);
+
+  g_signal_connect (G_OBJECT (c_tool->graph), "event",
+		    G_CALLBACK (curves_graph_events),
+		    c_tool);
 
   /*  The range drawing area  */
   frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 1, 2,
 		    GTK_EXPAND, GTK_EXPAND, 0, 0);
-
-  cd->xrange = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (cd->xrange), XRANGE_WIDTH, XRANGE_HEIGHT);
-  gtk_widget_set_events (cd->xrange, RANGE_MASK);
-  gtk_container_add (GTK_CONTAINER (frame), cd->xrange);
-
-  g_signal_connect (G_OBJECT (cd->xrange), "event",
-		    G_CALLBACK (curves_xrange_events),
-		    cd);
-
-  gtk_widget_show (cd->xrange);
   gtk_widget_show (frame);
+
+  c_tool->xrange = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (c_tool->xrange), XRANGE_WIDTH, XRANGE_HEIGHT);
+  gtk_container_add (GTK_CONTAINER (frame), c_tool->xrange);
+  gtk_widget_show (c_tool->xrange);
+
   gtk_widget_show (table);
-
-  /*  Horizontal box for preview  */
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-
-  /*  The option menu for selecting the drawing method  */
-  label = gtk_label_new (_("Curve Type:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  cd->curve_type_menu = gimp_option_menu_new
-    (FALSE,
-
-     _("Smooth"), curves_smooth_callback, cd, NULL, NULL, TRUE,
-     _("Free"),   curves_free_callback,   cd, NULL, NULL, FALSE,
-
-     NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), cd->curve_type_menu, FALSE, FALSE, 2);
-  gtk_widget_show (cd->curve_type_menu);
-
-  gtk_widget_show (hbox);
-
-  /*  The preview toggle  */
-  toggle = gtk_check_button_new_with_label (_("Preview"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), cd->preview);
-  gtk_box_pack_end (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-
-  g_signal_connect (G_OBJECT (toggle), "toggled",
-		    G_CALLBACK (curves_preview_update),
-		    cd);
-
-  gtk_widget_show (toggle);
-  gtk_widget_show (hbox);
 
   /*  Horizontal button box for load / save  */
   hbbox = gtk_hbutton_box_new ();
   gtk_box_set_spacing (GTK_BOX (hbbox), 4);
   gtk_button_box_set_layout (GTK_BUTTON_BOX (hbbox), GTK_BUTTONBOX_SPREAD);
-  gtk_box_pack_end (GTK_BOX (vbox), hbbox, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (image_map_tool->main_vbox), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
 
   button = gtk_button_new_with_label (_("Load"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
@@ -796,7 +681,7 @@ curves_dialog_new (void)
 
   g_signal_connect (G_OBJECT (button), "clicked",
 		    G_CALLBACK (curves_load_callback),
-		    cd->shell);
+		    c_tool);
 
   button = gtk_button_new_with_label (_("Save"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
@@ -805,68 +690,77 @@ curves_dialog_new (void)
 
   g_signal_connect (G_OBJECT (button), "clicked",
 		    G_CALLBACK (curves_save_callback),
-		    cd->shell);
-
-  gtk_widget_show (hbbox);
-  gtk_widget_show (vbox);
-
-  return cd;
+		    c_tool);
 }
 
 static void
-curves_dialog_hide (void)
+gimp_curves_tool_reset (GimpImageMapTool *image_map_tool)
 {
-  if (curves_dialog)
-    curves_cancel_callback (NULL, (gpointer) curves_dialog);
+  GimpCurvesTool *c_tool;
+  gint            i, j;
+
+  c_tool = GIMP_CURVES_TOOL (image_map_tool);
+
+  c_tool->grab_point = -1;
+
+  for (i = 0; i < 5; i++)
+    {
+      for (j = 0; j < 256; j++)
+        c_tool->curves->curve[i][j] = j;
+
+      curves_channel_reset (c_tool->curves, i);
+    }
+
+  curves_update (c_tool, GRAPH | XRANGE_TOP | DRAW);
 }
 
 static void
-curve_print_loc (CurvesDialog *cd,
-		 gint          xpos,
-		 gint          ypos)
+curve_print_loc (GimpCurvesTool *c_tool,
+		 gint            xpos,
+		 gint            ypos)
 {
   gchar buf[32];
 
-  if (!cd->cursor_layout)
+  if (! c_tool->cursor_layout)
     {
-      cd->cursor_layout = gtk_widget_create_pango_layout (cd->graph,
-                                                          "x:888 y:888");
-      pango_layout_get_pixel_extents (cd->cursor_layout, 
-                                      NULL, &cd->cursor_rect);
+      c_tool->cursor_layout = gtk_widget_create_pango_layout (c_tool->graph,
+                                                              "x:888 y:888");
+      pango_layout_get_pixel_extents (c_tool->cursor_layout, 
+                                      NULL, &c_tool->cursor_rect);
     }
   
   if (xpos >= 0 && xpos <= 255 && ypos >=0 && ypos <= 255)
     {
-      gdk_draw_rectangle (cd->graph->window, 
-			  cd->graph->style->bg_gc[GTK_STATE_ACTIVE],
+      gdk_draw_rectangle (c_tool->graph->window, 
+			  c_tool->graph->style->bg_gc[GTK_STATE_ACTIVE],
 			  TRUE, 
-                          RADIUS*2 + 2, 
-                          RADIUS*2 + 2, 
-			  cd->cursor_rect.width  + 4,
-			  cd->cursor_rect.height + 5);
+                          RADIUS * 2 + 2, 
+                          RADIUS * 2 + 2, 
+			  c_tool->cursor_rect.width  + 4,
+			  c_tool->cursor_rect.height + 5);
 
-      gdk_draw_rectangle (cd->graph->window, 
-			  cd->graph->style->black_gc,
+      gdk_draw_rectangle (c_tool->graph->window, 
+			  c_tool->graph->style->black_gc,
 			  FALSE, 
-                          RADIUS*2 + 2, 
-                          RADIUS*2 + 2, 
-			  cd->cursor_rect.width  + 3, 
-			  cd->cursor_rect.height + 4);
+                          RADIUS * 2 + 2, 
+                          RADIUS * 2 + 2, 
+			  c_tool->cursor_rect.width  + 3, 
+			  c_tool->cursor_rect.height + 4);
       
       g_snprintf (buf, sizeof (buf), "x:%3d y:%3d",xpos, ypos);
-      pango_layout_set_text (cd->cursor_layout, buf, 11);
-      gdk_draw_layout (cd->graph->window, 
-                       cd->graph->style->black_gc,
-		       RADIUS*2 + 4 + cd->cursor_rect.x,
-		       RADIUS*2 + 5 + cd->cursor_rect.y,
-		       cd->cursor_layout);
+      pango_layout_set_text (c_tool->cursor_layout, buf, 11);
+      gdk_draw_layout (c_tool->graph->window, 
+                       c_tool->graph->style->black_gc,
+		       RADIUS * 2 + 4 + c_tool->cursor_rect.x,
+		       RADIUS * 2 + 5 + c_tool->cursor_rect.y,
+		       c_tool->cursor_layout);
     }
 }
 
 /* TODO: preview alpha channel stuff correctly.  -- austin, 20/May/99 */
 static void
-curves_update (CurvesDialog *cd,
-	       gint          update)
+curves_update (GimpCurvesTool *c_tool,
+	       gint            update)
 {
   gint  i, j;
   gchar buf[32];
@@ -874,13 +768,13 @@ curves_update (CurvesDialog *cd,
   gint  height;
   gint  sel_channel;
   
-  if (cd->color)
+  if (c_tool->color)
     {
-      sel_channel = cd->channel;
+      sel_channel = c_tool->channel;
     } 
   else 
     {
-      if (cd->channel == 2)
+      if (c_tool->channel == 2)
         sel_channel = GIMP_HISTOGRAM_ALPHA;
       else
         sel_channel = GIMP_HISTOGRAM_VALUE;
@@ -898,11 +792,11 @@ curves_update (CurvesDialog *cd,
 	    {
 	      for (j = 0; j < XRANGE_WIDTH ; j++)
 		{
-		  buf[j*3+0] = cd->curve[sel_channel][j];
-		  buf[j*3+1] = cd->curve[sel_channel][j];
-		  buf[j*3+2] = cd->curve[sel_channel][j];
+		  buf[j * 3 + 0] = c_tool->curves->curve[sel_channel][j];
+		  buf[j * 3 + 1] = c_tool->curves->curve[sel_channel][j];
+		  buf[j * 3 + 2] = c_tool->curves->curve[sel_channel][j];
 		}
-	      gtk_preview_draw_row (GTK_PREVIEW (cd->xrange),
+	      gtk_preview_draw_row (GTK_PREVIEW (c_tool->xrange),
 				    buf, 0, i, XRANGE_WIDTH);
 	    }
 	  break;
@@ -915,11 +809,11 @@ curves_update (CurvesDialog *cd,
 	      {
 		for (j = 0; j < XRANGE_WIDTH; j++)
 		  {
-		    buf[j*3+0] = cd->curve[GIMP_HISTOGRAM_RED][j];
-		    buf[j*3+1] = cd->curve[GIMP_HISTOGRAM_GREEN][j];
-		    buf[j*3+2] = cd->curve[GIMP_HISTOGRAM_BLUE][j];
+		    buf[j * 3 + 0] = c_tool->curves->curve[GIMP_HISTOGRAM_RED][j];
+		    buf[j * 3 + 1] = c_tool->curves->curve[GIMP_HISTOGRAM_GREEN][j];
+		    buf[j * 3 + 2] = c_tool->curves->curve[GIMP_HISTOGRAM_BLUE][j];
 		  }
-		gtk_preview_draw_row (GTK_PREVIEW (cd->xrange),
+		gtk_preview_draw_row (GTK_PREVIEW (c_tool->xrange),
 				      buf, 0, i, XRANGE_WIDTH);
 	      }
 	    break;
@@ -927,38 +821,37 @@ curves_update (CurvesDialog *cd,
 
 	default:
 	  g_warning ("unknown channel type %d, can't happen!?!?",
-		     cd->channel);
+		     c_tool->channel);
 	  break;
 	}
 
       if (update & DRAW)
-	{
-	  gtk_widget_queue_draw_area (cd->xrange,
-                                      0, 0,
-                                      XRANGE_WIDTH, XRANGE_HEIGHT / 2);
-	}
+        gtk_widget_queue_draw_area (c_tool->xrange,
+                                    0, 0,
+                                    XRANGE_WIDTH, XRANGE_HEIGHT / 2);
     }
+
   if (update & XRANGE_BOTTOM)
     {
       guchar buf[XRANGE_WIDTH * 3];
 
       for (i = 0; i < XRANGE_WIDTH; i++)
-      {
-	buf[i*3+0] = i;
-	buf[i*3+1] = i;
-	buf[i*3+2] = i;
-      }
+        {
+          buf[i * 3 + 0] = i;
+          buf[i * 3 + 1] = i;
+          buf[i * 3 + 2] = i;
+        }
 
       for (i = XRANGE_HEIGHT / 2; i < XRANGE_HEIGHT; i++)
-	gtk_preview_draw_row (GTK_PREVIEW (cd->xrange), buf, 0, i, XRANGE_WIDTH);
+	gtk_preview_draw_row (GTK_PREVIEW (c_tool->xrange),
+                              buf, 0, i, XRANGE_WIDTH);
 
       if (update & DRAW)
-	{
-	  gtk_widget_queue_draw_area (cd->xrange,
-                                      0, XRANGE_HEIGHT / 2,
-                                      XRANGE_WIDTH, XRANGE_HEIGHT / 2);
-	}
+        gtk_widget_queue_draw_area (c_tool->xrange,
+                                    0, XRANGE_HEIGHT / 2,
+                                    XRANGE_WIDTH, XRANGE_HEIGHT / 2);
     }
+
   if (update & YRANGE)
     {
       guchar buf[YRANGE_WIDTH * 3];
@@ -982,36 +875,40 @@ curves_update (CurvesDialog *cd,
 
 	    default:
 	      g_warning ("unknown channel type %d, can't happen!?!?",
-			 cd->channel);
+			 c_tool->channel);
 	      break;
 	    }
 
 	  for (j = 0; j < YRANGE_WIDTH * 3; j++)
 	    buf[j] = pix[j%3];
 
-	  gtk_preview_draw_row (GTK_PREVIEW (cd->yrange),
+	  gtk_preview_draw_row (GTK_PREVIEW (c_tool->yrange),
 				buf, 0, i, YRANGE_WIDTH);
 	}
 
       if (update & DRAW)
-	gtk_widget_queue_draw (cd->yrange);
+	gtk_widget_queue_draw (c_tool->yrange);
     }
-  if ((update & GRAPH) && (update & DRAW) && cd->pixmap != NULL)
+
+  if ((update & GRAPH) && (update & DRAW) && c_tool->pixmap)
     {
       GdkPoint points[256];
 
       /*  Clear the pixmap  */
-      gdk_draw_rectangle (cd->pixmap, cd->graph->style->bg_gc[GTK_STATE_NORMAL],
+      gdk_draw_rectangle (c_tool->pixmap,
+                          c_tool->graph->style->bg_gc[GTK_STATE_NORMAL],
 			  TRUE, 0, 0,
 			  GRAPH_WIDTH + RADIUS * 2, GRAPH_HEIGHT + RADIUS * 2);
 
       /*  Draw the grid lines  */
       for (i = 0; i < 5; i++)
 	{
-	  gdk_draw_line (cd->pixmap, cd->graph->style->dark_gc[GTK_STATE_NORMAL],
+	  gdk_draw_line (c_tool->pixmap,
+                         c_tool->graph->style->dark_gc[GTK_STATE_NORMAL],
 			 RADIUS, i * (GRAPH_HEIGHT / 4) + RADIUS,
 			 GRAPH_WIDTH + RADIUS, i * (GRAPH_HEIGHT / 4) + RADIUS);
-	  gdk_draw_line (cd->pixmap, cd->graph->style->dark_gc[GTK_STATE_NORMAL],
+	  gdk_draw_line (c_tool->pixmap,
+                         c_tool->graph->style->dark_gc[GTK_STATE_NORMAL],
 			 i * (GRAPH_WIDTH / 4) + RADIUS, RADIUS,
 			 i * (GRAPH_WIDTH / 4) + RADIUS, GRAPH_HEIGHT + RADIUS);
 	}
@@ -1020,53 +917,70 @@ curves_update (CurvesDialog *cd,
       for (i = 0; i < 256; i++)
 	{
 	  points[i].x = i + RADIUS;
-	  points[i].y = 255 - cd->curve[cd->channel][i] + RADIUS;
+	  points[i].y = 255 - c_tool->curves->curve[c_tool->channel][i] + RADIUS;
 	}
-      gdk_draw_points (cd->pixmap, cd->graph->style->black_gc, points, 256);
 
-      /*  Draw the points  */
-      if (cd->curve_type[cd->channel] == SMOOTH)
-	for (i = 0; i < 17; i++)
-	  {
-	    if (cd->points[cd->channel][i][0] != -1)
-	      gdk_draw_arc (cd->pixmap, cd->graph->style->black_gc, TRUE,
-			    cd->points[cd->channel][i][0],
-			    255 - cd->points[cd->channel][i][1],
-			    RADIUS * 2, RADIUS * 2, 0, 23040);
-	  }
+      if (c_tool->curves->curve_type[c_tool->channel] == CURVES_FREE)
+        {
+          gdk_draw_points (c_tool->pixmap,
+                           c_tool->graph->style->black_gc,
+                           points, 256);
+        }
+      else
+        {
+          gdk_draw_lines (c_tool->pixmap,
+                          c_tool->graph->style->black_gc,
+                          points, 256);
+
+          /*  Draw the points  */
+          for (i = 0; i < 17; i++)
+            {
+              if (c_tool->curves->points[c_tool->channel][i][0] != -1)
+                gdk_draw_arc (c_tool->pixmap,
+                              c_tool->graph->style->black_gc,
+                              TRUE,
+                              c_tool->curves->points[c_tool->channel][i][0],
+                              255 - c_tool->curves->points[c_tool->channel][i][1],
+                              RADIUS * 2, RADIUS * 2, 0, 23040);
+            }
+        }
 
       /* draw the color line */
-      gdk_draw_line (cd->pixmap, cd->graph->style->black_gc,
-		     cd->col_value[sel_channel]+RADIUS,RADIUS,
-		     cd->col_value[sel_channel]+RADIUS,GRAPH_HEIGHT + RADIUS);
+      gdk_draw_line (c_tool->pixmap,
+                     c_tool->graph->style->black_gc,
+		     c_tool->col_value[sel_channel] + RADIUS,
+                     RADIUS,
+		     c_tool->col_value[sel_channel] + RADIUS,
+                     GRAPH_HEIGHT + RADIUS);
 
       /* and xpos indicator */
-      g_snprintf (buf, sizeof (buf), "x:%d",cd->col_value[sel_channel]);
+      g_snprintf (buf, sizeof (buf), "x:%d", c_tool->col_value[sel_channel]);
 
-      if (!cd->xpos_layout)
-        cd->xpos_layout = gtk_widget_create_pango_layout (cd->graph, buf);
+      if (! c_tool->xpos_layout)
+        c_tool->xpos_layout = gtk_widget_create_pango_layout (c_tool->graph,
+                                                              buf);
       else
-        pango_layout_set_text (cd->xpos_layout, buf, -1);
+        pango_layout_set_text (c_tool->xpos_layout, buf, -1);
 
-      if ((cd->col_value[sel_channel]+RADIUS) < 127)
+      if ((c_tool->col_value[sel_channel] + RADIUS) < 127)
 	{
 	  offset = RADIUS + 4;
 	}
       else
 	{
-          pango_layout_get_pixel_size (cd->xpos_layout, &offset, &height);
+          pango_layout_get_pixel_size (c_tool->xpos_layout, &offset, &height);
           offset = - (offset + 2);
 	}
 
-      gdk_draw_layout (cd->pixmap,
-		       cd->graph->style->black_gc,
-		       cd->col_value[sel_channel] + offset,
+      gdk_draw_layout (c_tool->pixmap,
+		       c_tool->graph->style->black_gc,
+		       c_tool->col_value[sel_channel] + offset,
 		       GRAPH_HEIGHT - height - 2,
-		       cd->xpos_layout);
+		       c_tool->xpos_layout);
 
-      gdk_draw_drawable (cd->graph->window, 
-                         cd->graph->style->black_gc, 
-                         cd->pixmap,
+      gdk_draw_drawable (c_tool->graph->window, 
+                         c_tool->graph->style->black_gc, 
+                         c_tool->pixmap,
 			 0, 0, 
                          0, 0, 
                          GRAPH_WIDTH + RADIUS * 2, GRAPH_HEIGHT + RADIUS * 2);
@@ -1074,190 +988,56 @@ curves_update (CurvesDialog *cd,
 }
 
 static void
-curves_plot_curve (CurvesDialog *cd,
-		   gint          p1,
-		   gint          p2,
-		   gint          p3,
-		   gint          p4)
-{
-  CRMatrix geometry;
-  CRMatrix tmp1, tmp2;
-  CRMatrix deltas;
-  gdouble  x, dx, dx2, dx3;
-  gdouble  y, dy, dy2, dy3;
-  gdouble  d, d2, d3;
-  gint     lastx, lasty;
-  gint32   newx, newy;
-  gint     i;
-
-  /* construct the geometry matrix from the segment */
-  for (i = 0; i < 4; i++)
-    {
-      geometry[i][2] = 0;
-      geometry[i][3] = 0;
-    }
-
-  for (i = 0; i < 2; i++)
-    {
-      geometry[0][i] = cd->points[cd->channel][p1][i];
-      geometry[1][i] = cd->points[cd->channel][p2][i];
-      geometry[2][i] = cd->points[cd->channel][p3][i];
-      geometry[3][i] = cd->points[cd->channel][p4][i];
-    }
-
-  /* subdivide the curve 1000 times */
-  /* n can be adjusted to give a finer or coarser curve */
-  d = 1.0 / 1000;
-  d2 = d * d;
-  d3 = d * d * d;
-
-  /* construct a temporary matrix for determining the forward differencing deltas */
-  tmp2[0][0] = 0;     tmp2[0][1] = 0;     tmp2[0][2] = 0;    tmp2[0][3] = 1;
-  tmp2[1][0] = d3;    tmp2[1][1] = d2;    tmp2[1][2] = d;    tmp2[1][3] = 0;
-  tmp2[2][0] = 6*d3;  tmp2[2][1] = 2*d2;  tmp2[2][2] = 0;    tmp2[2][3] = 0;
-  tmp2[3][0] = 6*d3;  tmp2[3][1] = 0;     tmp2[3][2] = 0;    tmp2[3][3] = 0;
-
-  /* compose the basis and geometry matrices */
-  curves_CR_compose (CR_basis, geometry, tmp1);
-
-  /* compose the above results to get the deltas matrix */
-  curves_CR_compose (tmp2, tmp1, deltas);
-
-  /* extract the x deltas */
-  x = deltas[0][0];
-  dx = deltas[1][0];
-  dx2 = deltas[2][0];
-  dx3 = deltas[3][0];
-
-  /* extract the y deltas */
-  y = deltas[0][1];
-  dy = deltas[1][1];
-  dy2 = deltas[2][1];
-  dy3 = deltas[3][1];
-
-  lastx = CLAMP (x, 0, 255);
-  lasty = CLAMP (y, 0, 255);
-
-  cd->curve[cd->channel][lastx] = lasty;
-
-  /* loop over the curve */
-  for (i = 0; i < 1000; i++)
-    {
-      /* increment the x values */
-      x += dx;
-      dx += dx2;
-      dx2 += dx3;
-
-      /* increment the y values */
-      y += dy;
-      dy += dy2;
-      dy2 += dy3;
-
-      newx = CLAMP0255 (ROUND (x));
-      newy = CLAMP0255 (ROUND (y));
-
-      /* if this point is different than the last one...then draw it */
-      if ((lastx != newx) || (lasty != newy))
-	cd->curve[cd->channel][newx] = newy;
-
-      lastx = newx;
-      lasty = newy;
-    }
-}
-
-void
-curves_calculate_curve (CurvesDialog *cd)
-{
-  gint i;
-  gint points[17];
-  gint num_pts;
-  gint p1, p2, p3, p4;
-
-  switch (cd->curve_type[cd->channel])
-    {
-    case GFREE:
-      break;
-    case SMOOTH:
-      /*  cycle through the curves  */
-      num_pts = 0;
-      for (i = 0; i < 17; i++)
-	if (cd->points[cd->channel][i][0] != -1)
-	  points[num_pts++] = i;
-
-      /*  Initialize boundary curve points */
-      if (num_pts != 0)
-	{
-	  for (i = 0; i < cd->points[cd->channel][points[0]][0]; i++)
-	    cd->curve[cd->channel][i] = cd->points[cd->channel][points[0]][1];
-	  for (i = cd->points[cd->channel][points[num_pts - 1]][0]; i < 256; i++)
-	    cd->curve[cd->channel][i] = cd->points[cd->channel][points[num_pts - 1]][1];
-	}
-
-      for (i = 0; i < num_pts - 1; i++)
-	{
-	  p1 = (i == 0) ? points[i] : points[(i - 1)];
-	  p2 = points[i];
-	  p3 = points[(i + 1)];
-	  p4 = (i == (num_pts - 2)) ? points[(num_pts - 1)] : points[(i + 2)];
-
-	  curves_plot_curve (cd, p1, p2, p3, p4);
-	}
-      break;
-    }
-  gimp_lut_setup (cd->lut, (GimpLutFunc) curves_lut_func,
-		  (void *) cd, gimp_drawable_bytes (cd->drawable));
-
-}
-
-static void
-curves_preview (CurvesDialog *cd)
-{
-  GimpTool *active_tool;
-
-  if (!cd->image_map)
-    {
-      g_message ("curves_preview(): No image map");
-      return;
-    }
-
-  active_tool = tool_manager_get_active (the_gimp);
-
-  gimp_tool_control_set_preserve (active_tool->control, TRUE);
-  image_map_apply (cd->image_map,  (ImageMapApplyFunc)gimp_lut_process_2,
-		   (void *) cd->lut);
-  gimp_tool_control_set_preserve (active_tool->control, FALSE);
-}
-
-static void
 curves_channel_callback (GtkWidget *widget,
 			 gpointer   data)
 {
-  CurvesDialog *cd;
+  GimpCurvesTool *c_tool;
 
-  cd = (CurvesDialog *) data;
+  c_tool = GIMP_CURVES_TOOL (data);
 
-  gimp_menu_item_update (widget, &cd->channel);
+  gimp_menu_item_update (widget, &c_tool->channel);
 
-  if (!cd->color)
+  if (! c_tool->color)
     {
-      if (cd->channel > 1)
-        cd->channel = 2;
+      if (c_tool->channel > 1)
+        c_tool->channel = 2;
       else 
-        cd->channel = 1;
+        c_tool->channel = 1;
     }
 
-  gtk_option_menu_set_history (GTK_OPTION_MENU (cd->curve_type_menu), 
-			       cd->curve_type[cd->channel]);
+  gtk_option_menu_set_history (GTK_OPTION_MENU (c_tool->curve_type_menu),
+			       c_tool->curves->curve_type[c_tool->channel]);
 
-  curves_update (cd, XRANGE_TOP | YRANGE | GRAPH | DRAW);
+  curves_update (c_tool, XRANGE_TOP | YRANGE | GRAPH | DRAW);
+}
+
+static void
+curves_channel_reset_callback (GtkWidget *widget,
+                               gpointer   data)
+{
+  GimpCurvesTool *c_tool;
+  gint            j;
+
+  c_tool = GIMP_CURVES_TOOL (data);
+
+  c_tool->grab_point = -1;
+
+  for (j = 0; j < 256; j++)
+    c_tool->curves->curve[c_tool->channel][j] = j;
+
+  curves_channel_reset (c_tool->curves, c_tool->channel);
+
+  curves_update (c_tool, GRAPH | XRANGE_TOP | DRAW);
+
+  gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (c_tool));
 }
 
 static gboolean
-curves_set_sensitive_callback (gpointer      item_data,
-                               CurvesDialog *cd)
+curves_set_sensitive_callback (gpointer        item_data,
+                               GimpCurvesTool *c_tool)
 {
   GimpHistogramChannel  channel = GPOINTER_TO_INT (item_data);
-  
+
   switch (channel)
     {
     case GIMP_HISTOGRAM_VALUE:
@@ -1265,11 +1045,11 @@ curves_set_sensitive_callback (gpointer      item_data,
     case GIMP_HISTOGRAM_RED:
     case GIMP_HISTOGRAM_GREEN:
     case GIMP_HISTOGRAM_BLUE:
-      return cd->color;
+      return c_tool->color;
     case GIMP_HISTOGRAM_ALPHA:
-      return gimp_drawable_has_alpha (cd->drawable);
+      return gimp_drawable_has_alpha (GIMP_IMAGE_MAP_TOOL (c_tool)->drawable);
     }
-  
+
   return FALSE;
 }
 
@@ -1277,29 +1057,29 @@ static void
 curves_smooth_callback (GtkWidget *widget,
 			gpointer   data)
 {
-  CurvesDialog *cd;
-  gint   i;
-  gint32 index;
+  GimpCurvesTool *c_tool;
+  gint            i;
+  gint32          index;
 
-  cd = (CurvesDialog *) data;
+  c_tool = GIMP_CURVES_TOOL (data);
 
-  if (cd->curve_type[cd->channel] != SMOOTH)
+  if (c_tool->curves->curve_type[c_tool->channel] != CURVES_SMOOTH)
     {
-      cd->curve_type[cd->channel] = SMOOTH;
+      c_tool->curves->curve_type[c_tool->channel] = CURVES_SMOOTH;
 
       /*  pick representative points from the curve and make them control points  */
       for (i = 0; i <= 8; i++)
 	{
 	  index = CLAMP0255 (i * 32);
-	  cd->points[cd->channel][i * 2][0] = index;
-	  cd->points[cd->channel][i * 2][1] = cd->curve[cd->channel][index];
+	  c_tool->curves->points[c_tool->channel][i * 2][0] = index;
+	  c_tool->curves->points[c_tool->channel][i * 2][1] = c_tool->curves->curve[c_tool->channel][index];
 	}
 
-      curves_calculate_curve (cd);
-      curves_update (cd, GRAPH | DRAW);
+      curves_calculate_curve (c_tool->curves, c_tool->channel);
 
-      if (cd->preview)
-	curves_preview (cd);
+      curves_update (c_tool, GRAPH | XRANGE_TOP | DRAW);
+
+      gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (c_tool));
     }
 }
 
@@ -1307,210 +1087,54 @@ static void
 curves_free_callback (GtkWidget *widget,
 		      gpointer   data)
 {
-  CurvesDialog *cd;
+  GimpCurvesTool *c_tool;
 
-  cd = (CurvesDialog *) data;
+  c_tool = GIMP_CURVES_TOOL (data);
 
-  if (cd->curve_type[cd->channel] != GFREE)
+  if (c_tool->curves->curve_type[c_tool->channel] != CURVES_FREE)
     {
-      cd->curve_type[cd->channel] = GFREE;
-      curves_calculate_curve (cd);
-      curves_update (cd, GRAPH | DRAW);
+      c_tool->curves->curve_type[c_tool->channel] = CURVES_FREE;
 
-      if (cd->preview)
-	curves_preview (cd);
+      curves_calculate_curve (c_tool->curves, c_tool->channel);
+
+      curves_update (c_tool, GRAPH | DRAW);
+
+      gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (c_tool));
     }
 }
 
-static void
-curves_channel_reset (int i)
-{
-  gint j;
-
-  curves_dialog->grab_point = -1;
-
-  for (j = 0; j < 17; j++)
-  {
-    curves_dialog->points[i][j][0] = -1;
-    curves_dialog->points[i][j][1] = -1;
-  }
-  curves_dialog->points[i][0][0] = 0;
-  curves_dialog->points[i][0][1] = 0;
-  curves_dialog->points[i][16][0] = 255;
-  curves_dialog->points[i][16][1] = 255;
-}
-
-
-static void
-curves_reset_callback (GtkWidget *widget,
-		       gpointer   data)
-{
-  CurvesDialog *cd;
-  gint i;
-
-  cd = (CurvesDialog *) data;
-
-  /*  Initialize the values  */
-  for (i = 0; i < 256; i++)
-    cd->curve[cd->channel][i] = i;
-
-  curves_channel_reset (cd->channel);
-
-  curves_calculate_curve (cd);
-  curves_update (cd, GRAPH | XRANGE_TOP | DRAW);
-
-  if (cd->preview)
-    curves_preview (cd);
-}
-
-static void
-curves_ok_callback (GtkWidget *widget,
-		    gpointer   data)
-{
-  CurvesDialog *cd;
-  GimpTool     *active_tool;
-
-  cd = (CurvesDialog *) data;
-
-  gtk_widget_hide (cd->shell);
-
-  active_tool = tool_manager_get_active (the_gimp);
-
-  gimp_tool_control_set_preserve (active_tool->control, TRUE);  /* We're about to dirty... */
-
-  if (!cd->preview)
-    image_map_apply (cd->image_map, (ImageMapApplyFunc)gimp_lut_process_2,
-		     (void *) cd->lut);
-
-  if (cd->image_map)
-    image_map_commit (cd->image_map);
-
-  gimp_tool_control_set_preserve (active_tool->control, FALSE);
-
-  cd->image_map = NULL;
-
-  active_tool->gdisp    = NULL;
-  active_tool->drawable = NULL;
-}
-
-static void
-curves_cancel_callback (GtkWidget *widget,
-			gpointer   data)
-{
-  CurvesDialog *cd;
-  GimpTool     *active_tool;
-
-  cd = (CurvesDialog *) data;
-
-  gtk_widget_hide (cd->shell);
-
-  active_tool = tool_manager_get_active (the_gimp);
-
-  if (cd->image_map)
-    {
-      gimp_tool_control_set_preserve (active_tool->control, TRUE);
-      image_map_abort (cd->image_map);
-      gimp_tool_control_set_preserve (active_tool->control, FALSE);
-
-      gimp_image_flush (active_tool->gdisp->gimage);
-      cd->image_map = NULL;
-    }
-
-  active_tool->gdisp    = NULL;
-  active_tool->drawable = NULL;
-}
-
-static void
-curves_load_callback (GtkWidget *widget,
-		      gpointer   data)
-{
-  if (!file_dlg)
-    file_dialog_create (GTK_WIDGET (data));
-  else if (GTK_WIDGET_VISIBLE (file_dlg)) 
-    return;
-
-  load_save = TRUE;
-
-  gtk_window_set_title (GTK_WINDOW (file_dlg), _("Load Curves"));
-  gtk_widget_show (file_dlg);
-}
-
-static void
-curves_save_callback (GtkWidget *widget,
-		      gpointer   data)
-{
-  if (!file_dlg)
-    file_dialog_create (GTK_WIDGET (data));
-  else if (GTK_WIDGET_VISIBLE (file_dlg)) 
-    return;
-
-  load_save = FALSE;
-
-  gtk_window_set_title (GTK_WINDOW (file_dlg), _("Save Curves"));
-  gtk_widget_show (file_dlg);
-}
-
-static void
-curves_preview_update (GtkWidget *widget,
-		       gpointer   data)
-{
-  CurvesDialog *cd;
-  GimpTool     *active_tool;
-
-  cd = (CurvesDialog *) data;
-  
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    {
-      cd->preview = TRUE;
-      curves_preview (cd);
-    }
-  else
-    {
-      cd->preview = FALSE;
-      if (cd->image_map)
-	{
-	  active_tool = tool_manager_get_active (the_gimp);
-
-	  gimp_tool_control_set_preserve (active_tool->control, TRUE);
-	  image_map_clear (cd->image_map);
-	  gimp_tool_control_set_preserve (active_tool->control, FALSE);
-
-	  gimp_image_flush (active_tool->gdisp->gimage);
-	}
-    }
-}
-
-static gint
-curves_graph_events (GtkWidget    *widget,
-		     GdkEvent     *event,
-		     CurvesDialog *cd)
+static gboolean
+curves_graph_events (GtkWidget      *widget,
+		     GdkEvent       *event,
+		     GimpCurvesTool *c_tool)
 {
   static GdkCursorType cursor_type = GDK_TOP_LEFT_ARROW;
-  GdkCursorType new_type;
+
+  GdkCursorType   new_type;
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
-  gint i;
-  gint tx, ty;
-  gint x, y;
-  gint closest_point;
-  gint distance;
-  gint x1, x2, y1, y2;
+  gint            i;
+  gint            tx, ty;
+  gint            x, y;
+  gint            closest_point;
+  gint            distance;
+  gint            x1, x2, y1, y2;
 
   new_type      = GDK_X_CURSOR;
   closest_point = 0;
 
   /*  get the pointer position  */
-  gdk_window_get_pointer (cd->graph->window, &tx, &ty, NULL);
+  gdk_window_get_pointer (c_tool->graph->window, &tx, &ty, NULL);
   x = CLAMP ((tx - RADIUS), 0, 255);
   y = CLAMP ((ty - RADIUS), 0, 255);
 
   distance = G_MAXINT;
   for (i = 0; i < 17; i++)
     {
-      if (cd->points[cd->channel][i][0] != -1)
-	if (abs (x - cd->points[cd->channel][i][0]) < distance)
+      if (c_tool->curves->points[c_tool->channel][i][0] != -1)
+	if (abs (x - c_tool->curves->points[c_tool->channel][i][0]) < distance)
 	  {
-	    distance = abs (x - cd->points[cd->channel][i][0]);
+	    distance = abs (x - c_tool->curves->points[c_tool->channel][i][0]);
 	    closest_point = i;
 	  }
     }
@@ -1520,65 +1144,62 @@ curves_graph_events (GtkWidget    *widget,
   switch (event->type)
     {
     case GDK_EXPOSE:
-      if (cd->pixmap == NULL)
-	cd->pixmap = gdk_pixmap_new (cd->graph->window,
-				     GRAPH_WIDTH + RADIUS * 2,
-				     GRAPH_HEIGHT + RADIUS * 2, -1);
+      if (c_tool->pixmap == NULL)
+	c_tool->pixmap = gdk_pixmap_new (c_tool->graph->window,
+                                         GRAPH_WIDTH + RADIUS * 2,
+                                         GRAPH_HEIGHT + RADIUS * 2, -1);
 
-      curves_update (cd, GRAPH | DRAW);
+      curves_update (c_tool, GRAPH | DRAW);
       break;
 
     case GDK_BUTTON_PRESS:
       bevent = (GdkEventButton *) event;
       new_type = GDK_TCROSS;
 
-      switch (cd->curve_type[cd->channel])
+      switch (c_tool->curves->curve_type[c_tool->channel])
 	{
-	case SMOOTH:
+	case CURVES_SMOOTH:
 	  /*  determine the leftmost and rightmost points  */
-	  cd->leftmost = -1;
+	  c_tool->leftmost = -1;
 	  for (i = closest_point - 1; i >= 0; i--)
-	    if (cd->points[cd->channel][i][0] != -1)
+	    if (c_tool->curves->points[c_tool->channel][i][0] != -1)
 	      {
-		cd->leftmost = cd->points[cd->channel][i][0];
+		c_tool->leftmost = c_tool->curves->points[c_tool->channel][i][0];
 		break;
 	      }
-	  cd->rightmost = 256;
+	  c_tool->rightmost = 256;
 	  for (i = closest_point + 1; i < 17; i++)
-	    if (cd->points[cd->channel][i][0] != -1)
+	    if (c_tool->curves->points[c_tool->channel][i][0] != -1)
 	      {
-		cd->rightmost = cd->points[cd->channel][i][0];
+		c_tool->rightmost = c_tool->curves->points[c_tool->channel][i][0];
 		break;
 	      }
 
-	  cd->grab_point = closest_point;
-	  cd->points[cd->channel][cd->grab_point][0] = x;
-	  cd->points[cd->channel][cd->grab_point][1] = 255 - y;
-
+	  c_tool->grab_point = closest_point;
+	  c_tool->curves->points[c_tool->channel][c_tool->grab_point][0] = x;
+	  c_tool->curves->points[c_tool->channel][c_tool->grab_point][1] = 255 - y;
 	  break;
 
-	case GFREE:
-	  cd->curve[cd->channel][x] = 255 - y;
-	  cd->grab_point = x;
-	  cd->last = y;
+	case CURVES_FREE:
+	  c_tool->curves->curve[c_tool->channel][x] = 255 - y;
+	  c_tool->grab_point = x;
+	  c_tool->last = y;
 	  break;
 	}
       
-      curves_calculate_curve (cd);
-      curves_update (cd, GRAPH | XRANGE_TOP | DRAW);
-      gtk_grab_add (widget);
+      curves_calculate_curve (c_tool->curves, c_tool->channel);
 
+      curves_update (c_tool, GRAPH | XRANGE_TOP | DRAW);
+      gtk_grab_add (widget);
       break;
 
     case GDK_BUTTON_RELEASE:
       new_type = GDK_FLEUR;
-      cd->grab_point = -1;
+      c_tool->grab_point = -1;
 
-      if (cd->preview)
-	curves_preview (cd);
+      gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (c_tool));
 
       gtk_grab_remove (widget);
-
       break;
 
     case GDK_MOTION_NOTIFY:
@@ -1590,13 +1211,13 @@ curves_graph_events (GtkWidget    *widget,
 	  mevent->y = ty;
 	}
 
-      switch (cd->curve_type[cd->channel])
+      switch (c_tool->curves->curve_type[c_tool->channel])
 	{
-	case SMOOTH:
+	case CURVES_SMOOTH:
 	  /*  If no point is grabbed...  */
-	  if (cd->grab_point == -1)
+	  if (c_tool->grab_point == -1)
 	    {
-	      if (cd->points[cd->channel][closest_point][0] != -1)
+	      if (c_tool->curves->points[c_tool->channel][closest_point][0] != -1)
 		new_type = GDK_FLEUR;
 	      else
 		new_type = GDK_TCROSS;
@@ -1606,50 +1227,52 @@ curves_graph_events (GtkWidget    *widget,
 	    {
 	      new_type = GDK_TCROSS;
 
-	      cd->points[cd->channel][cd->grab_point][0] = -1;
+	      c_tool->curves->points[c_tool->channel][c_tool->grab_point][0] = -1;
 
-	      if (x > cd->leftmost && x < cd->rightmost)
+	      if (x > c_tool->leftmost && x < c_tool->rightmost)
 		{
 		  closest_point = (x + 8) / 16;
-		  if (cd->points[cd->channel][closest_point][0] == -1)
-		    cd->grab_point = closest_point;
-		  cd->points[cd->channel][cd->grab_point][0] = x;
-		  cd->points[cd->channel][cd->grab_point][1] = 255 - y;
+		  if (c_tool->curves->points[c_tool->channel][closest_point][0] == -1)
+		    c_tool->grab_point = closest_point;
+
+		  c_tool->curves->points[c_tool->channel][c_tool->grab_point][0] = x;
+		  c_tool->curves->points[c_tool->channel][c_tool->grab_point][1] = 255 - y;
 		}
 
-	      curves_calculate_curve (cd);
-	      curves_update (cd, GRAPH | XRANGE_TOP | DRAW);
+	      curves_calculate_curve (c_tool->curves, c_tool->channel);
+
+	      curves_update (c_tool, GRAPH | XRANGE_TOP | DRAW);
 	    }
 	  break;
 
-	case GFREE:
-	  if (cd->grab_point != -1)
+	case CURVES_FREE:
+	  if (c_tool->grab_point != -1)
 	    {
-	      if (cd->grab_point > x)
+	      if (c_tool->grab_point > x)
 		{
 		  x1 = x;
-		  x2 = cd->grab_point;
+		  x2 = c_tool->grab_point;
 		  y1 = y;
-		  y2 = cd->last;
+		  y2 = c_tool->last;
 		}
 	      else
 		{
-		  x1 = cd->grab_point;
+		  x1 = c_tool->grab_point;
 		  x2 = x;
-		  y1 = cd->last;
+		  y1 = c_tool->last;
 		  y2 = y;
 		}
 
 	      if (x2 != x1)
 		for (i = x1; i <= x2; i++)
-		  cd->curve[cd->channel][i] = 255 - (y1 + ((y2 - y1) * (i - x1)) / (x2 - x1));
+		  c_tool->curves->curve[c_tool->channel][i] = 255 - (y1 + ((y2 - y1) * (i - x1)) / (x2 - x1));
 	      else
-		cd->curve[cd->channel][x] = 255 - y;
+		c_tool->curves->curve[c_tool->channel][x] = 255 - y;
 
-	      cd->grab_point = x;
-	      cd->last = y;
+	      c_tool->grab_point = x;
+	      c_tool->last = y;
 
-	      curves_update (cd, GRAPH | XRANGE_TOP | DRAW);
+	      curves_update (c_tool, GRAPH | XRANGE_TOP | DRAW);
 	    }
 
 	  if (mevent->state & GDK_BUTTON1_MASK)
@@ -1668,180 +1291,164 @@ curves_graph_events (GtkWidget    *widget,
 	  cursor = gimp_cursor_new (cursor_type,
 				    GIMP_TOOL_CURSOR_NONE,
 				    GIMP_CURSOR_MODIFIER_NONE);
-	  gdk_window_set_cursor (cd->graph->window, cursor);
+	  gdk_window_set_cursor (c_tool->graph->window, cursor);
 	  gdk_cursor_unref (cursor);
 	}
 
-      curve_print_loc (cd, x, 255 - y);
-
+      curve_print_loc (c_tool, x, 255 - y);
       break;
 
     default:
       break;
     }
 
-  return FALSE;
-}
-
-static gint
-curves_xrange_events (GtkWidget    *widget,
-		      GdkEvent     *event,
-		      CurvesDialog *cd)
-{
-  switch (event->type)
-    {
-    case GDK_EXPOSE:
-      curves_update (cd, XRANGE_TOP | XRANGE_BOTTOM);
-      break;
-
-    case GDK_DELETE:
-      break;
-
-    default:
-      break;
-    }
-
-  return FALSE;
-}
-
-static gint
-curves_yrange_events (GtkWidget    *widget,
-		      GdkEvent     *event,
-		      CurvesDialog *cd)
-{
-  switch (event->type)
-    {
-    case GDK_EXPOSE:
-      curves_update (cd, YRANGE);
-      break;
-
-    default:
-      break;
-    }
-
-  return FALSE;
+  return TRUE;
 }
 
 static void
-curves_CR_compose (CRMatrix a,
-		   CRMatrix b,
-		   CRMatrix ab)
+curves_load_callback (GtkWidget *widget,
+		      gpointer   data)
 {
-  gint i, j;
+  GimpCurvesTool *c_tool;
 
-  for (i = 0; i < 4; i++)
-    {
-      for (j = 0; j < 4; j++)
-        {
-          ab[i][j] = (a[i][0] * b[0][j] +
-                      a[i][1] * b[1][j] +
-                      a[i][2] * b[2][j] +
-                      a[i][3] * b[3][j]);
-        }
-    }
+  c_tool = GIMP_CURVES_TOOL (data);
+
+  if (! c_tool->file_dialog)
+    file_dialog_create (c_tool);
+  else if (GTK_WIDGET_VISIBLE (c_tool->file_dialog))
+    return;
+
+  c_tool->is_save = FALSE;
+
+  gtk_window_set_title (GTK_WINDOW (c_tool->file_dialog), _("Load Curves"));
+  gtk_widget_show (c_tool->file_dialog);
 }
 
+static void
+curves_save_callback (GtkWidget *widget,
+		      gpointer   data)
+{
+  GimpCurvesTool *c_tool;
+
+  c_tool = GIMP_CURVES_TOOL (data);
+
+  if (! c_tool->file_dialog)
+    file_dialog_create (c_tool);
+  else if (GTK_WIDGET_VISIBLE (c_tool->file_dialog))
+    return;
+
+  c_tool->is_save = TRUE;
+
+  gtk_window_set_title (GTK_WINDOW (c_tool->file_dialog), _("Save Curves"));
+  gtk_widget_show (c_tool->file_dialog);
+}
 
 static void
-file_dialog_create (GtkWidget *parent)
+file_dialog_create (GimpCurvesTool *c_tool)
 {
-  gchar *temp;
+  GtkFileSelection *file_dlg;
+  gchar            *temp;
 
-  file_dlg = gtk_file_selection_new (_("Load/Save Curves"));
+  c_tool->file_dialog = gtk_file_selection_new ("");
+
+  file_dlg = GTK_FILE_SELECTION (c_tool->file_dialog);
+
   gtk_window_set_wmclass (GTK_WINDOW (file_dlg), "load_save_curves", "Gimp");
   gtk_window_set_position (GTK_WINDOW (file_dlg), GTK_WIN_POS_MOUSE);
 
   gtk_container_set_border_width (GTK_CONTAINER (file_dlg), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_FILE_SELECTION (file_dlg)->button_area), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (file_dlg->button_area), 2);
 
-  g_signal_connect (G_OBJECT (GTK_FILE_SELECTION (file_dlg)->cancel_button),
-		    "clicked",
-		    G_CALLBACK (file_dialog_cancel_callback),
-		    NULL);
-  g_signal_connect (G_OBJECT (file_dlg), "delete_event",
-		    G_CALLBACK (file_dialog_cancel_callback),
-		    NULL);
-  g_signal_connect (G_OBJECT (GTK_FILE_SELECTION (file_dlg)->ok_button),
-		    "clicked",
-		    G_CALLBACK (file_dialog_ok_callback),
-		    NULL);
+  g_signal_connect_swapped (G_OBJECT (file_dlg->cancel_button), "clicked",
+                            G_CALLBACK (file_dialog_cancel_callback),
+                            c_tool);
+  g_signal_connect_swapped (G_OBJECT (file_dlg->ok_button), "clicked",
+                            G_CALLBACK (file_dialog_ok_callback),
+                            c_tool);
 
-  g_signal_connect (G_OBJECT (parent), "unmap",
-		    G_CALLBACK (file_dialog_cancel_callback),
-		    NULL);
+  g_signal_connect_swapped (G_OBJECT (file_dlg), "delete_event",
+                            G_CALLBACK (file_dialog_cancel_callback),
+                            c_tool);
+  g_signal_connect_swapped (G_OBJECT (GIMP_IMAGE_MAP_TOOL (c_tool)->shell),
+                            "unmap",
+                            G_CALLBACK (file_dialog_cancel_callback),
+                            c_tool);
 
   temp = g_build_filename (gimp_directory (), "curves", NULL);
-  gtk_file_selection_set_filename (GTK_FILE_SELECTION (file_dlg), temp);
+  gtk_file_selection_set_filename (file_dlg, temp);
   g_free (temp);
 
-  gimp_help_connect (file_dlg, tool_manager_help_func, NULL);
+  gimp_help_connect (c_tool->file_dialog, tool_manager_help_func, NULL);
 }
 
 static void
-file_dialog_ok_callback (GtkWidget *widget,
-			 gpointer   data)
+file_dialog_ok_callback (GimpCurvesTool *c_tool)
 {
-  FILE        *f;
+  FILE        *file = NULL;
   const gchar *filename;
 
-  filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_dlg));
+  filename =
+    gtk_file_selection_get_filename (GTK_FILE_SELECTION (c_tool->file_dialog));
 
-  if (load_save)
+  if (! c_tool->is_save)
     {
-      f = fopen (filename, "rt");
+      file = fopen (filename, "rt");
 
-      if (!f)
+      if (! file)
 	{
 	  g_message (_("Failed to open file: '%s': %s"),
                      filename, g_strerror (errno));
 	  return;
 	}
 
-      if (!curves_read_from_file (f))
+      if (! curves_read_from_file (c_tool, file))
 	{
 	  g_message (("Error in reading file '%s'."), filename);
-	  return;
 	}
-
-      fclose (f);
     }
   else
     {
-      f = fopen (filename, "wt");
+      file = fopen (filename, "wt");
 
-      if (!f)
+      if (! file)
 	{
 	  g_message (_("Failed to open file: '%s': %s"),
                      filename, g_strerror (errno));
 	  return;
 	}
 
-      curves_write_to_file (f);
-
-      fclose (f);
+      curves_write_to_file (c_tool, file);
     }
 
-  file_dialog_cancel_callback (file_dlg, NULL);
-}
+  if (file)
+    fclose (file);
 
-static void
-file_dialog_cancel_callback (GtkWidget *widget,
-			     gpointer   data)
-{
-  gtk_widget_hide (file_dlg);
+  file_dialog_cancel_callback (c_tool);
 }
 
 static gboolean
-curves_read_from_file (FILE *f)
+file_dialog_cancel_callback (GimpCurvesTool *c_tool)
+{
+  if (c_tool->file_dialog)
+    {
+      gtk_widget_destroy (c_tool->file_dialog);
+      c_tool->file_dialog = NULL;
+    }
+
+  return TRUE;
+}
+
+static gboolean
+curves_read_from_file (GimpCurvesTool *c_tool,
+                       FILE           *file)
 {
   gint  i, j;
   gint  fields;
   gchar buf[50];
   gint  index[5][17];
   gint  value[5][17];
-  gint  current_channel;
   
-  if (!fgets (buf, 50, f))
+  if (! fgets (buf, 50, file))
     return FALSE;
 
   if (strcmp (buf, "# GIMP Curves File\n") != 0)
@@ -1851,7 +1458,7 @@ curves_read_from_file (FILE *f)
     {
       for (j = 0; j < 17; j++)
 	{
-	  fields = fscanf (f, "%d %d ", &index[i][j], &value[i][j]);
+	  fields = fscanf (file, "%d %d ", &index[i][j], &value[i][j]);
 	  if (fields != 2)
 	    {
 	      g_print ("fields != 2");
@@ -1862,60 +1469,55 @@ curves_read_from_file (FILE *f)
 
   for (i = 0; i < 5; i++)
     {
-      curves_dialog->curve_type[i] = SMOOTH;
+      c_tool->curves->curve_type[i] = CURVES_SMOOTH;
+
       for (j = 0; j < 17; j++)
 	{
-	  curves_dialog->points[i][j][0] = index[i][j];
-	  curves_dialog->points[i][j][1] = value[i][j];
+	  c_tool->curves->points[i][j][0] = index[i][j];
+	  c_tool->curves->points[i][j][1] = value[i][j];
 	}
     }
 
-  /* this is ugly, but works ... */
-  current_channel = curves_dialog->channel;
   for (i = 0; i < 5; i++)
-    {
-      curves_dialog->channel = i;
-      curves_calculate_curve (curves_dialog);
-    }
-  curves_dialog->channel = current_channel;
+    curves_calculate_curve (c_tool->curves, i);
 
-  curves_update (curves_dialog, ALL);
-  gtk_option_menu_set_history (GTK_OPTION_MENU (curves_dialog->curve_type_menu),
-			       SMOOTH);
+  curves_update (c_tool, ALL);
+  gtk_option_menu_set_history (GTK_OPTION_MENU (c_tool->curve_type_menu),
+			       CURVES_SMOOTH);
 
-  if (curves_dialog->preview)
-    curves_preview (curves_dialog);
+  gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (c_tool));
 
   return TRUE;
 }
 
 static void
-curves_write_to_file (FILE *f)
+curves_write_to_file (GimpCurvesTool *c_tool,
+                      FILE           *file)
 {
   gint   i, j;
   gint32 index;
 
   for (i = 0; i < 5; i++)
-    if (curves_dialog->curve_type[i] == GFREE)
+    if (c_tool->curves->curve_type[i] == CURVES_FREE)
       {  
 	/*  pick representative points from the curve and make them control points  */
 	for (j = 0; j <= 8; j++)
 	  {
 	    index = CLAMP0255 (j * 32);
-	    curves_dialog->points[i][j * 2][0] = index;
-	    curves_dialog->points[i][j * 2][1] = curves_dialog->curve[i][index];
+	    c_tool->curves->points[i][j * 2][0] = index;
+	    c_tool->curves->points[i][j * 2][1] = c_tool->curves->curve[i][index];
 	  }      
       }
-  
-  fprintf (f, "# GIMP Curves File\n");
+
+  fprintf (file, "# GIMP Curves File\n");
 
   for (i = 0; i < 5; i++)
     {
       for (j = 0; j < 17; j++)
-	fprintf (f, "%d %d ", curves_dialog->points[i][j][0], 
-		              curves_dialog->points[i][j][1]);
+	fprintf (file, "%d %d ",
+                 c_tool->curves->points[i][j][0], 
+                 c_tool->curves->points[i][j][1]);
       
-      fprintf (f, "\n");
+      fprintf (file, "\n");
     }
 }
-

@@ -36,16 +36,36 @@ typedef struct _GimpImageMapToolClass GimpImageMapToolClass;
 
 struct _GimpImageMapTool
 {
-  GimpTool  parent_instance;
+  GimpTool      parent_instance;
+
+  GimpDrawable *drawable;
+  GimpImageMap *image_map;
+
+  gboolean      preview;
+
+  /* the dialog */
+  const gchar  *shell_title;
+  const gchar  *shell_name;
+  GtkWidget    *shell;
+  GtkWidget    *title_preview;
+  GtkWidget    *title_label;
+  GtkWidget    *main_vbox;
 };
 
 struct _GimpImageMapToolClass
 {
   GimpToolClass  parent_class;
+
+  /* virtual functions */
+  void (* map)    (GimpImageMapTool *image_map_tool);
+  void (* dialog) (GimpImageMapTool *image_map_tool);
+  void (* reset)  (GimpImageMapTool *image_map_tool);
 };
 
 
 GType   gimp_image_map_tool_get_type (void) G_GNUC_CONST;
+
+void    gimp_image_map_tool_preview  (GimpImageMapTool *image_map_tool);
 
 
 #endif  /*  __GIMP_IMAGE_MAP_TOOL_H__  */

@@ -28,7 +28,7 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
-#include "core/core-enums.h"
+#include "base/base-enums.h"
 #include "core/gimpdrawable.h"
 #include "paint/gimpairbrush.h"
 #include "paint/gimpclone.h"

@@ -159,6 +159,17 @@ typedef enum
 
 typedef enum
 {
+  GIMP_ALL_HUES,
+  GIMP_RED_HUES,
+  GIMP_YELLOW_HUES,
+  GIMP_GREEN_HUES,
+  GIMP_CYAN_HUES,
+  GIMP_BLUE_HUES,
+  GIMP_MAGENTA_HUES
+} GimpHueRange;
+
+typedef enum
+{
   GIMP_RGB,
   GIMP_GRAY,
   GIMP_INDEXED
@@ -244,17 +255,6 @@ typedef enum
   GIMP_MIDTONES,
   GIMP_HIGHLIGHTS
 } GimpTransferMode;
-
-typedef enum
-{
-  GIMP_ALL_HUES,
-  GIMP_RED_HUES,
-  GIMP_YELLOW_HUES,
-  GIMP_GREEN_HUES,
-  GIMP_CYAN_HUES,
-  GIMP_BLUE_HUES,
-  GIMP_MAGENTA_HUES
-} GimpHueRange;
 
 typedef enum
 {

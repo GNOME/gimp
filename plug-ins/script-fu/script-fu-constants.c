@@ -108,6 +108,14 @@ init_generated_constants (void)
   setvar (cintern ("SPIRAL-CLOCKWISE"), flocons (9), NIL);
   setvar (cintern ("SPIRAL-ANTICLOCKWISE"), flocons (10), NIL);
 
+  setvar (cintern ("ALL-HUES"), flocons (0), NIL);
+  setvar (cintern ("RED-HUES"), flocons (1), NIL);
+  setvar (cintern ("YELLOW-HUES"), flocons (2), NIL);
+  setvar (cintern ("GREEN-HUES"), flocons (3), NIL);
+  setvar (cintern ("CYAN-HUES"), flocons (4), NIL);
+  setvar (cintern ("BLUE-HUES"), flocons (5), NIL);
+  setvar (cintern ("MAGENTA-HUES"), flocons (6), NIL);
+
   setvar (cintern ("RGB"), flocons (0), NIL);
   setvar (cintern ("GRAY"), flocons (1), NIL);
   setvar (cintern ("INDEXED"), flocons (2), NIL);
@@ -215,14 +223,6 @@ init_generated_constants (void)
   setvar (cintern ("UNIT-POINT"), flocons (3), NIL);
   setvar (cintern ("UNIT-PICA"), flocons (4), NIL);
   setvar (cintern ("UNIT-END"), flocons (5), NIL);
-
-  setvar (cintern ("ALL-HUES"), flocons (0), NIL);
-  setvar (cintern ("RED-HUES"), flocons (1), NIL);
-  setvar (cintern ("YELLOW-HUES"), flocons (2), NIL);
-  setvar (cintern ("GREEN-HUES"), flocons (3), NIL);
-  setvar (cintern ("CYAN-HUES"), flocons (4), NIL);
-  setvar (cintern ("BLUE-HUES"), flocons (5), NIL);
-  setvar (cintern ("MAGENTA-HUES"), flocons (6), NIL);
 
   setvar (cintern ("HORIZONTAL"), flocons (0), NIL);
   setvar (cintern ("VERTICAL"), flocons (1), NIL);

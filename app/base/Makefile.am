@@ -20,12 +20,18 @@ libappbase_a_SOURCES = \
 	boundary.h		\
 	brush-scale.c		\
 	brush-scale.h		\
+	color-balance.c		\
+	color-balance.h		\
+	curves.c		\
+	curves.h		\
 	$(mmx_sources)		\
 	detect-mmx.h		\
 	gimphistogram.c		\
 	gimphistogram.h		\
 	gimplut.c		\
 	gimplut.h		\
+	hue-saturation.c	\
+	hue-saturation.h	\
 	lut-funcs.c		\
 	lut-funcs.h		\
 	pixel-processor.c	\
@@ -36,6 +42,8 @@ libappbase_a_SOURCES = \
 	pixel-surround.h	\
 	temp-buf.c		\
 	temp-buf.h		\
+	threshold.c		\
+	threshold.h		\
 	tile.c			\
 	tile.h			\
 	tile-private.h		\

@@ -21,30 +21,28 @@
 #include "config.h"
 
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpbase/gimpbasetypes.h"
 
 #include "pdb-types.h"
-#include "tools/tools-types.h"
 #include "procedural_db.h"
 
 #include "base/base-enums.h"
+#include "base/color-balance.h"
+#include "base/curves.h"
 #include "base/gimphistogram.h"
 #include "base/gimplut.h"
+#include "base/hue-saturation.h"
 #include "base/lut-funcs.h"
 #include "base/pixel-processor.h"
 #include "base/pixel-region.h"
-#include "core/core-enums.h"
+#include "base/threshold.h"
 #include "core/gimpdrawable-desaturate.h"
 #include "core/gimpdrawable-equalize.h"
 #include "core/gimpdrawable-invert.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-#include "tools/gimpcolorbalancetool.h"
-#include "tools/gimpcurvestool.h"
-#include "tools/gimphuesaturationtool.h"
-#include "tools/gimpthresholdtool.h"
 
 static ProcRecord brightness_contrast_proc;
 static ProcRecord levels_proc;
@@ -229,17 +227,17 @@ levels_invoker (Gimp     *gimp,
 	{
 	  for (i = 0; i < 5; i++)
 	    {
-	      low_input[i] = 0;
-	      high_input[i] = 255;
-	      low_output[i] = 0;
+	      low_input[i]   = 0;
+	      high_input[i]  = 255;
+	      low_output[i]  = 0;
 	      high_output[i] = 255;
-	      gamma[i] = 1.0;
+	      gamma[i]       = 1.0;
 	    }
     
-	  low_input[channel] = low_inputv;
-	  high_input[channel] = high_inputv;
-	  gamma[channel] = gammav;
-	  low_output[channel] = low_outputv;
+	  low_input[channel]   = low_inputv;
+	  high_input[channel]  = high_inputv;
+	  gamma[channel]       = gammav;
+	  low_output[channel]  = low_outputv;
 	  high_output[channel] = high_outputv;
     
 	  /* setup the lut */
@@ -258,7 +256,7 @@ levels_invoker (Gimp     *gimp,
 	  pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
 					  &srcPR, &destPR);
     
-	  gimp_lut_free(lut);
+	  gimp_lut_free (lut);
 	  gimp_drawable_merge_shadow (drawable, TRUE);
 	  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 	}
@@ -560,10 +558,11 @@ curves_spline_invoker (Gimp     *gimp,
   gint32 channel;
   gint32 num_points;
   guint8 *control_pts;
-  CurvesDialog cd;
-  int x1, y1, x2, y2;
-  int i, j;
+  Curves c;
+  gint x1, y1, x2, y2;
+  gint j;
   PixelRegion srcPR, destPR;
+  GimpLut *lut;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
@@ -586,32 +585,22 @@ curves_spline_invoker (Gimp     *gimp,
 	success = FALSE;
       else
 	{
-	  cd.lut = gimp_lut_new ();
+	  lut = gimp_lut_new ();
     
-	  for (i = 0; i < 5; i++)
-	    for (j = 0; j < 256; j++)
-	      cd.curve[i][j] = j;
-    
-	  for (i = 0; i < 5; i++)
-	    for (j = 0; j < 17; j++)
-	      {
-		cd.points[i][j][0] = -1;
-		cd.points[i][j][1] = -1;
-	      }
-    
-	  for (i = 0; i < 5; i++)
-	      cd.curve_type[i] = SMOOTH;
-    
-	  cd.drawable = drawable;
-	  cd.channel = channel;
-	  cd.color = gimp_drawable_is_rgb (drawable);
+	  curves_init (&c);
     
 	  for (j = 0; j < num_points / 2; j++)
 	    {
-	      cd.points[cd.channel][j][0] = control_pts[j * 2];
-	      cd.points[cd.channel][j][1] = control_pts[j * 2 + 1];
+	      c.points[channel][j][0] = control_pts[j * 2];
+	      c.points[channel][j][1] = control_pts[j * 2 + 1];
 	    }
-	  curves_calculate_curve (&cd);
+    
+	  curves_calculate_curve (&c, channel);
+    
+	  gimp_lut_setup (lut,
+			  (GimpLutFunc) curves_lut_func,
+			  &c,
+			  gimp_drawable_bytes (drawable));
     
 	  /* The application should occur only within selection bounds */
 	  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
@@ -621,10 +610,10 @@ curves_spline_invoker (Gimp     *gimp,
 	  pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
 			     x1, y1, (x2 - x1), (y2 - y1), TRUE);
     
-	  pixel_regions_process_parallel ((p_func) gimp_lut_process, cd.lut, 2,
+	  pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
 					  &srcPR, &destPR);
     
-	  gimp_lut_free (cd.lut);
+	  gimp_lut_free (lut);
 	  gimp_drawable_merge_shadow (drawable, TRUE);
 	  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 	}
@@ -682,10 +671,11 @@ curves_explicit_invoker (Gimp     *gimp,
   gint32 channel;
   gint32 num_bytes;
   guint8 *curve;
-  CurvesDialog cd;
-  int x1, y1, x2, y2;
-  int i, j;
+  Curves c;
+  gint x1, y1, x2, y2;
+  gint j;
   PixelRegion srcPR, destPR;
+  GimpLut *lut;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
@@ -708,20 +698,17 @@ curves_explicit_invoker (Gimp     *gimp,
 	success = FALSE;
       else 
 	{
-	  for (i = 0; i < 5; i++)
-	    for (j = 0; j < 256; j++)
-	      cd.curve[i][j] = j;
+	  lut = gimp_lut_new ();
     
-	  cd.drawable = drawable;
-	  cd.channel = channel;
-	  cd.color = gimp_drawable_is_rgb (drawable);
+	  curves_init (&c);
     
 	  for (j = 0; j < 256; j++)
-	    cd.curve[cd.channel][j] = curve[j];
+	    c.curve[channel][j] = curve[j];
     
-	  cd.lut = gimp_lut_new ();
-	  gimp_lut_setup (cd.lut, (GimpLutFunc) curves_lut_func,
-			  (void *) &cd, gimp_drawable_bytes(drawable));
+	  gimp_lut_setup (lut,
+			  (GimpLutFunc) curves_lut_func,
+			  &c,
+			  gimp_drawable_bytes (drawable));
 	  
 	  /* The application should occur only within selection bounds */
 	  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
@@ -730,10 +717,10 @@ curves_explicit_invoker (Gimp     *gimp,
 	  pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
 			     x1, y1, (x2 - x1), (y2 - y1), TRUE);
     
-	  pixel_regions_process_parallel ((p_func) gimp_lut_process, cd.lut, 2,
+	  pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
 					  &srcPR, &destPR);
     
-	  gimp_lut_free (cd.lut);
+	  gimp_lut_free (lut);
 	  gimp_drawable_merge_shadow (drawable, TRUE);
 	  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 	}
@@ -793,11 +780,11 @@ color_balance_invoker (Gimp     *gimp,
   gdouble cyan_red;
   gdouble magenta_green;
   gdouble yellow_blue;
-  ColorBalanceDialog cbd;
-  int i;
-  void *pr;
+  ColorBalance cb;
+  gint i;
+  gpointer pr;
   PixelRegion srcPR, destPR;
-  int x1, y1, x2, y2;
+  gint x1, y1, x2, y2;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
@@ -829,17 +816,18 @@ color_balance_invoker (Gimp     *gimp,
 	{
 	  for (i = 0; i < 3; i++)
 	    {
-	      cbd.cyan_red[i] = 0.0;
-	      cbd.magenta_green[i] = 0.0;
-	      cbd.yellow_blue[i] = 0.0;
+	      cb.cyan_red[i]      = 0.0;
+	      cb.magenta_green[i] = 0.0;
+	      cb.yellow_blue[i]   = 0.0;
 	    }
     
-	  cbd.preserve_luminosity = preserve_lum;
-	  cbd.cyan_red[transfer_mode] = cyan_red;
-	  cbd.magenta_green[transfer_mode] = magenta_green;
-	  cbd.yellow_blue[transfer_mode] = yellow_blue;
+	  cb.preserve_luminosity = preserve_lum;
     
-	  color_balance_create_lookup_tables (&cbd);
+	  cb.cyan_red[transfer_mode]      = cyan_red;
+	  cb.magenta_green[transfer_mode] = magenta_green;
+	  cb.yellow_blue[transfer_mode]   = yellow_blue;
+    
+	  color_balance_create_lookup_tables (&cb);
     
 	  /* The application should occur only within selection bounds */
 	  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
@@ -849,9 +837,12 @@ color_balance_invoker (Gimp     *gimp,
 	  pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
 			     x1, y1, (x2 - x1), (y2 - y1), TRUE);
     
-	  for (pr = pixel_regions_register (2, &srcPR, &destPR); pr;
+	  for (pr = pixel_regions_register (2, &srcPR, &destPR);
+	       pr;
 	       pr = pixel_regions_process (pr))
-	    color_balance (&srcPR, &destPR, (void *) &cbd);
+	    {
+	      color_balance (&srcPR, &destPR, &cb);
+	    }
     
 	  gimp_drawable_merge_shadow (drawable, TRUE);
 	  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
@@ -1092,18 +1083,18 @@ hue_saturation_invoker (Gimp     *gimp,
   gdouble hue_offset;
   gdouble lightness;
   gdouble saturation;
-  HueSaturationDialog hsd;
-  int i;
-  void *pr;
+  HueSaturation hs;
+  gint i;
+  gpointer pr;
   PixelRegion srcPR, destPR;
-  int x1, y1, x2, y2;
+  gint x1, y1, x2, y2;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
   hue_range = args[1].value.pdb_int;
-  if (hue_range < ALL_HUES || hue_range > MAGENTA_HUES)
+  if (hue_range < GIMP_ALL_HUES || hue_range > GIMP_MAGENTA_HUES)
     success = FALSE;
 
   hue_offset = args[2].value.pdb_float;
@@ -1126,17 +1117,17 @@ hue_saturation_invoker (Gimp     *gimp,
 	{
 	  for (i = 0; i < 7; i++)
 	    {
-	      hsd.hue[i] = 0.0;
-	      hsd.lightness[i] = 0.0;
-	      hsd.saturation[i] = 0.0;
+	      hs.hue[i]        = 0.0;
+	      hs.lightness[i]  = 0.0;
+	      hs.saturation[i] = 0.0;
 	    }
     
-	  hsd.hue[hue_range] = hue_offset;
-	  hsd.lightness[hue_range] = lightness;
-	  hsd.saturation[hue_range] = saturation;
+	  hs.hue[hue_range]        = hue_offset;
+	  hs.lightness[hue_range]  = lightness;
+	  hs.saturation[hue_range] = saturation;
     
 	  /* Calculate the transfer arrays */
-	  hue_saturation_calculate_transfers (&hsd);
+	  hue_saturation_calculate_transfers (&hs);
     
 	  /* The application should occur only within selection bounds */
 	  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
@@ -1146,9 +1137,12 @@ hue_saturation_invoker (Gimp     *gimp,
 	  pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
 			     x1, y1, (x2 - x1), (y2 - y1), TRUE);
     
-	  for (pr = pixel_regions_register (2, &srcPR, &destPR); pr;
+	  for (pr = pixel_regions_register (2, &srcPR, &destPR);
+	       pr;
 	       pr = pixel_regions_process (pr))
-	    hue_saturation (&srcPR, &destPR, (void *) &hsd);
+	    {
+	      hue_saturation (&srcPR, &destPR, &hs);
+	    }
     
 	  gimp_drawable_merge_shadow (drawable, TRUE);
 	  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
@@ -1168,7 +1162,7 @@ static ProcArg hue_saturation_inargs[] =
   {
     GIMP_PDB_INT32,
     "hue_range",
-    "Range of affected hues: { ALL_HUES (0), RED_HUES (1), YELLOW_HUES (2), GREEN_HUES (3), CYAN_HUES (4), BLUE_HUES (5), MAGENTA_HUES (6) }"
+    "Range of affected hues: { GIMP_ALL_HUES (0), GIMP_RED_HUES (1), GIMP_YELLOW_HUES (2), GIMP_GREEN_HUES (3), GIMP_CYAN_HUES (4), GIMP_BLUE_HUES (5), GIMP_MAGENTA_HUES (6) }"
   },
   {
     GIMP_PDB_FLOAT,
@@ -1211,8 +1205,8 @@ threshold_invoker (Gimp     *gimp,
   GimpDrawable *drawable;
   gint32 low_threshold;
   gint32 high_threshold;
-  ThresholdDialog td;
-  int x1, y1, x2, y2;
+  Threshold tr;
+  gint x1, y1, x2, y2;
   PixelRegion srcPR, destPR;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
@@ -1233,9 +1227,9 @@ threshold_invoker (Gimp     *gimp,
 	success = FALSE;
       else
 	{
-	  td.color = gimp_drawable_is_rgb (drawable);
-	  td.low_threshold = low_threshold;
-	  td.high_threshold = high_threshold;
+	  tr.color          = gimp_drawable_is_rgb (drawable);
+	  tr.low_threshold  = low_threshold;
+	  tr.high_threshold = high_threshold;
     
 	  /* The application should occur only within selection bounds */
 	  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
@@ -1245,7 +1239,7 @@ threshold_invoker (Gimp     *gimp,
 	  pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
 			     x1, y1, (x2 - x1), (y2 - y1), TRUE);
     
-	  pixel_regions_process_parallel ((p_func) threshold_2, (void*) &td, 2,
+	  pixel_regions_process_parallel ((p_func) threshold_2, &tr, 2,
 					  &srcPR, &destPR);
     
 	  gimp_drawable_merge_shadow (drawable, TRUE);

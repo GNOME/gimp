@@ -23,18 +23,6 @@
 #include "gimpimagemaptool.h"
 
 
-typedef enum
-{
-  ALL_HUES,
-  RED_HUES,
-  YELLOW_HUES,
-  GREEN_HUES,
-  CYAN_HUES,
-  BLUE_HUES,
-  MAGENTA_HUES
-} HueRange;
-
-
 #define GIMP_TYPE_HUE_SATURATION_TOOL            (gimp_hue_saturation_tool_get_type ())
 #define GIMP_HUE_SATURATION_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_HUE_SATURATION_TOOL, GimpHueSaturationTool))
 #define GIMP_HUE_SATURATION_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_HUE_SATURATION_TOOL, GimpHueSaturationToolClass))
@@ -49,6 +37,15 @@ typedef struct _GimpHueSaturationToolClass GimpHueSaturationToolClass;
 struct _GimpHueSaturationTool
 {
   GimpImageMapTool  parent_instance;
+
+  HueSaturation    *hue_saturation;
+
+  /*  dialog  */
+  GimpHueRange      hue_partition;
+  GtkWidget        *hue_partition_da[6];
+  GtkAdjustment    *hue_data;
+  GtkAdjustment    *lightness_data;
+  GtkAdjustment    *saturation_data;
 };
 
 struct _GimpHueSaturationToolClass
@@ -57,41 +54,10 @@ struct _GimpHueSaturationToolClass
 };
 
 
-typedef struct _HueSaturationDialog HueSaturationDialog;
-
-struct _HueSaturationDialog
-{
-  GtkWidget     *shell;
-
-  GtkWidget     *hue_partition_da[6];
-
-  GtkAdjustment *hue_data;
-  GtkAdjustment *lightness_data;
-  GtkAdjustment *saturation_data;
-
-  GimpDrawable  *drawable;
-  ImageMap      *image_map;
-
-  gdouble        hue[7];
-  gdouble        lightness[7];
-  gdouble        saturation[7];
-
-  HueRange       hue_partition;
-  gboolean       preview;
-};
-
-
 void    gimp_hue_saturation_tool_register (GimpToolRegisterCallback  callback,
                                            gpointer                  data);
 
 GType   gimp_hue_saturation_tool_get_type (void) G_GNUC_CONST;
 
-void   hue_saturation_free                (void);
-void   hue_saturation                     (PixelRegion          *srcPR,
-					   PixelRegion          *destPR,
-					   void                 *data);
 
-void   hue_saturation_calculate_transfers (HueSaturationDialog  *hsd);
-
-
-#endif  /*  __HUE_SATURATION_H__  */
+#endif  /*  __GIMP_HUE_SATURATION_TOOL_H__  */

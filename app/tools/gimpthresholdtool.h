@@ -36,7 +36,15 @@ typedef struct _GimpThresholdToolClass GimpThresholdToolClass;
 
 struct _GimpThresholdTool
 {
-  GimpImageMapTool  parent_instance;
+  GimpImageMapTool   parent_instance;
+
+  Threshold         *threshold;
+
+  /*  dialog  */
+  GimpHistogram     *hist;
+  GimpHistogramView *histogram;
+  GtkAdjustment     *low_threshold_data;
+  GtkAdjustment     *high_threshold_data;  
 };
 
 struct _GimpThresholdToolClass
@@ -45,38 +53,10 @@ struct _GimpThresholdToolClass
 };
 
 
-typedef struct _ThresholdDialog ThresholdDialog;
-
-struct _ThresholdDialog
-{
-  GtkWidget         *shell;
-
-  GtkAdjustment     *low_threshold_data;
-  GtkAdjustment     *high_threshold_data;
-
-  GimpHistogramView *histogram;
-  GimpHistogram     *hist;
-
-  GimpDrawable      *drawable;
-  ImageMap          *image_map;
-
-  gint               color;
-  gint               low_threshold;
-  gint               high_threshold;
-
-  gboolean           preview;
-};
-
-
 void    gimp_threshold_tool_register (GimpToolRegisterCallback  callback,
                                       gpointer                  data);
 
 GType   gimp_threshold_tool_get_type (void) G_GNUC_CONST;
-
-
-void    threshold_2                  (gpointer     data,
-                                      PixelRegion *srcPR,
-                                      PixelRegion *destPR);
 
 
 #endif  /*  __GIMP_THRESHOLD_TOOL_H__  */

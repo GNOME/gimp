@@ -212,18 +212,6 @@ typedef enum  /*< pdb-skip >*/
 } GimpThumbnailSize;
 
 
-#define GIMP_TYPE_TRANSFER_MODE (gimp_transfer_mode_get_type ())
-
-GType gimp_transfer_mode_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_SHADOWS,     /*< desc="Shadows"    >*/
-  GIMP_MIDTONES,    /*< desc="Midtones"   >*/
-  GIMP_HIGHLIGHTS   /*< desc="Highlights" >*/
-} GimpTransferMode;
-
-
 #define GIMP_TYPE_TRANSFORM_DIRECTION (gimp_transform_direction_get_type ())
 
 GType gimp_transform_direction_get_type (void) G_GNUC_CONST;

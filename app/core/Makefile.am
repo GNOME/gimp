@@ -119,6 +119,8 @@ libappcore_a_sources = \
 	gimpimage-undo.h		\
 	gimpimagefile.c			\
 	gimpimagefile.h			\
+	gimpimagemap.c			\
+	gimpimagemap.h			\
 	gimpitem.c			\
 	gimpitem.h			\
 	gimplayer.c			\

@@ -275,26 +275,6 @@ gimp_thumbnail_size_get_type (void)
 }
 
 
-static const GEnumValue gimp_transfer_mode_enum_values[] =
-{
-  { GIMP_SHADOWS, N_("Shadows"), "shadows" },
-  { GIMP_MIDTONES, N_("Midtones"), "midtones" },
-  { GIMP_HIGHLIGHTS, N_("Highlights"), "highlights" },
-  { 0, NULL, NULL }
-};
-
-GType
-gimp_transfer_mode_get_type (void)
-{
-  static GType enum_type = 0;
-
-  if (!enum_type)
-    enum_type = g_enum_register_static ("GimpTransferMode", gimp_transfer_mode_enum_values);
-
-  return enum_type;
-}
-
-
 static const GEnumValue gimp_transform_direction_enum_values[] =
 {
   { GIMP_TRANSFORM_FORWARD, N_("Forward (Traditional)"), "forward" },

@@ -61,7 +61,6 @@ enum_headers = \
 	../../app/core/core-types.h			\
 	../../app/paint/paint-enums.h			\
 	../../app/plug-in/plug-in-types.h		\
-	../../app/tools/gimphuesaturationtool.h		\
 	../../app/tools/gimptexttool.h
 
 pdb_scripts = \

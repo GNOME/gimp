@@ -121,6 +121,18 @@ typedef enum  /*< pdb-skip >*/
 } GimpHistogramChannel;
 
 
+#define GIMP_TYPE_TRANSFER_MODE (gimp_transfer_mode_get_type ())
+
+GType gimp_transfer_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_SHADOWS,     /*< desc="Shadows"    >*/
+  GIMP_MIDTONES,    /*< desc="Midtones"   >*/
+  GIMP_HIGHLIGHTS   /*< desc="Highlights" >*/
+} GimpTransferMode;
+
+
 /*
  * non-registered enums; register them if needed
  */
@@ -141,6 +153,17 @@ typedef enum  /*< skip >*/
   GIMP_ALPHA_LUT,
   GIMP_GRAY_LUT = 0  /*< skip >*/
 } GimpChannelLutType;
+
+typedef enum  /*< skip >*/
+{
+  GIMP_ALL_HUES,
+  GIMP_RED_HUES,
+  GIMP_YELLOW_HUES,
+  GIMP_GREEN_HUES,
+  GIMP_CYAN_HUES,
+  GIMP_BLUE_HUES,
+  GIMP_MAGENTA_HUES
+} GimpHueRange;
 
 
 #endif /* __BASE_ENUMS_H__ */

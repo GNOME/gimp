@@ -1,3 +1,74 @@
+2002-08-26  Michael Natterer  <mitch@gimp.org>
+
+	Color correction tool chopping:
+
+	* app/Makefile.am
+	* app/image_map.[ch]: removed...
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpimagemap.[ch]: ...and added here as object.
+
+	* app/base/Makefile.am
+	* app/base/base-types.h
+	* app/base/color-balance.[ch]
+	* app/base/curves.[ch]
+	* app/base/hue-saturation.[ch]
+	* app/base/threshold.[ch]: the lowlevel color correction functions
+	plus their parameter structs cut out of the resp. tools.
+
+	* app/core/core-enums.[ch]: removed GimpTransferMode enum...
+
+	* app/base/base-enums.[ch]: ...added it here. Also added
+	GimpHueRange for the new hue-saturation files.
+
+	* tools/pdbgen/enums.pl
+	* libgimp/gimpenums.h
+	* plug-ins/script-fu/script-fu-constants.c: regenerated.
+
+	* app/tools/Makefile.am
+	* app/tools/gimpcolorbalancetool-transfer.c: removed (code went
+	to base/color-balance.c).
+
+	* app/tools/gimpimagemaptool.[ch]: added most code which was
+	diplicated in subclasses. Create the dialog here with a nice title
+	bar including image preview and name (fixes #66033). Added virtual
+	functions map(), dialog() and reset() which need to be implemented
+	by subclasses.
+
+	* app/tools/gimpbrightnesscontrasttool.[ch]
+	* app/tools/gimpcolorbalancetool.[ch]
+	* app/tools/gimpcurvestool.[ch]
+	* app/tools/gimphuesaturationtool.[ch]
+	* app/tools/gimplevelstool.[ch]
+	* app/tools/gimpposterizetool.[ch]
+	* app/tools/gimpthresholdtool.[ch]: removed tons of duplicated
+	code and simply implement GimpImageMapTool's virtual functions.
+	Removed all dialog structs and keep the variables in the tool
+	structs. The dialogs are now created on-the-fly and destroyed when
+	the tool goes away, which makes all callbacks much simpler and
+	safer. Lots of GUI & code cleanup in all dialogs.
+
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c: added separate "Reset Channel"
+	buttons and let the global "Reset" buttons reset all color
+	channels.
+
+	* app/tools/tools.c: the various antique foo_free() functions
+	don't exist any more.
+
+	* app/tools/gimphistogramtool.c: removed ImageMap field from
+	dialog struct (it was unused). Cleaned up dialog a bit.
+
+	* tools/pdbgen/Makefile.am: don't scan tools/gimphuesaturationtool.h
+	for enums.
+
+	* tools/pdbgen/pdb/color.pdb: use the new stuff from base/ and
+	don't include stuff from tools/ any more.
+
+	* app/pdb/color_cmds.c
+	* app/pdb/paint_tools_cmds.c: regenerated.
+
 2002-08-25  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/sel_gauss.c: allow radius < 1.0 (bug #90957).

@@ -132,17 +132,17 @@ HELP
     {
       for (i = 0; i < 5; i++)
 	{
-	  low_input[i] = 0;
-	  high_input[i] = 255;
-	  low_output[i] = 0;
+	  low_input[i]   = 0;
+	  high_input[i]  = 255;
+	  low_output[i]  = 0;
 	  high_output[i] = 255;
-	  gamma[i] = 1.0;
+	  gamma[i]       = 1.0;
 	}
 
-      low_input[channel] = low_inputv;
-      high_input[channel] = high_inputv;
-      gamma[channel] = gammav;
-      low_output[channel] = low_outputv;
+      low_input[channel]   = low_inputv;
+      high_input[channel]  = high_inputv;
+      gamma[channel]       = gammav;
+      low_output[channel]  = low_outputv;
       high_output[channel] = high_outputv;
 
       /* setup the lut */
@@ -161,7 +161,7 @@ HELP
       pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
 				      &srcPR, &destPR);
 
-      gimp_lut_free(lut);
+      gimp_lut_free (lut);
       gimp_drawable_merge_shadow (drawable, TRUE);
       gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }
@@ -336,9 +336,9 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("tools/gimpcurvestool.h") ],
-	vars => [ 'CurvesDialog cd', 'int x1, y1, x2, y2', 'int i, j',
-		  'PixelRegion srcPR, destPR' ],
+	headers => [ qw("base/curves.h") ],
+	vars => [ 'Curves c', 'gint x1, y1, x2, y2', 'gint j',
+		  'PixelRegion srcPR, destPR', 'GimpLut *lut' ],
 	code => <<'CODE'
 {
   if (gimp_drawable_is_indexed (drawable) || (num_points & 1) ||
@@ -346,32 +346,22 @@ HELP
     success = FALSE;
   else
     {
-      cd.lut = gimp_lut_new ();
+      lut = gimp_lut_new ();
 
-      for (i = 0; i < 5; i++)
-	for (j = 0; j < 256; j++)
-	  cd.curve[i][j] = j;
-
-      for (i = 0; i < 5; i++)
-	for (j = 0; j < 17; j++)
-	  {
-	    cd.points[i][j][0] = -1;
-	    cd.points[i][j][1] = -1;
-	  }
-
-      for (i = 0; i < 5; i++)
-	  cd.curve_type[i] = SMOOTH;
-
-      cd.drawable = drawable;
-      cd.channel = channel;
-      cd.color = gimp_drawable_is_rgb (drawable);
+      curves_init (&c);
 
       for (j = 0; j < num_points / 2; j++)
 	{
-	  cd.points[cd.channel][j][0] = control_pts[j * 2];
-	  cd.points[cd.channel][j][1] = control_pts[j * 2 + 1];
+	  c.points[channel][j][0] = control_pts[j * 2];
+	  c.points[channel][j][1] = control_pts[j * 2 + 1];
 	}
-      curves_calculate_curve (&cd);
+
+      curves_calculate_curve (&c, channel);
+
+      gimp_lut_setup (lut,
+                      (GimpLutFunc) curves_lut_func,
+		      &c,
+                      gimp_drawable_bytes (drawable));
 
       /* The application should occur only within selection bounds */
       gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
@@ -381,10 +371,10 @@ HELP
       pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
 			 x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
-      pixel_regions_process_parallel ((p_func) gimp_lut_process, cd.lut, 2,
+      pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
 				      &srcPR, &destPR);
 
-      gimp_lut_free (cd.lut);
+      gimp_lut_free (lut);
       gimp_drawable_merge_shadow (drawable, TRUE);
       gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }
@@ -418,9 +408,9 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("tools/gimpcurvestool.h") ],
-	vars => [ 'CurvesDialog cd', 'int x1, y1, x2, y2', 'int i, j',
-		  'PixelRegion srcPR, destPR' ],
+	headers => [ qw("base/curves.h") ],
+	vars => [ 'Curves c', 'gint x1, y1, x2, y2', 'gint j',
+		  'PixelRegion srcPR, destPR', 'GimpLut *lut' ],
 	code => <<'CODE'
 {
   if (gimp_drawable_is_indexed (drawable) || (num_bytes != 256) ||
@@ -428,20 +418,17 @@ HELP
     success = FALSE;
   else 
     {
-      for (i = 0; i < 5; i++)
-	for (j = 0; j < 256; j++)
-	  cd.curve[i][j] = j;
+      lut = gimp_lut_new ();
 
-      cd.drawable = drawable;
-      cd.channel = channel;
-      cd.color = gimp_drawable_is_rgb (drawable);
+      curves_init (&c);
 
       for (j = 0; j < 256; j++)
-	cd.curve[cd.channel][j] = curve[j];
+	c.curve[channel][j] = curve[j];
 
-      cd.lut = gimp_lut_new ();
-      gimp_lut_setup (cd.lut, (GimpLutFunc) curves_lut_func,
-		      (void *) &cd, gimp_drawable_bytes(drawable));
+      gimp_lut_setup (lut,
+                      (GimpLutFunc) curves_lut_func,
+		      &c,
+                      gimp_drawable_bytes (drawable));
       
       /* The application should occur only within selection bounds */
       gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
@@ -450,10 +437,10 @@ HELP
       pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
 			 x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
-      pixel_regions_process_parallel ((p_func) gimp_lut_process, cd.lut, 2,
+      pixel_regions_process_parallel ((p_func) gimp_lut_process, lut, 2,
 				      &srcPR, &destPR);
 
-      gimp_lut_free (cd.lut);
+      gimp_lut_free (lut);
       gimp_drawable_merge_shadow (drawable, TRUE);
       gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }
@@ -494,9 +481,9 @@ HELP
     }
 
     %invoke = (
-	headers => [ qw("tools/gimpcolorbalancetool.h") ],
-	vars => [ 'ColorBalanceDialog cbd', 'int i', 'void *pr',
-		  'PixelRegion srcPR, destPR', 'int x1, y1, x2, y2' ],
+	headers => [ qw("base/color-balance.h") ],
+	vars => [ 'ColorBalance cb', 'gint i', 'gpointer pr',
+		  'PixelRegion srcPR, destPR', 'gint x1, y1, x2, y2' ],
 	code => <<'CODE'
 {
   if (gimp_drawable_is_indexed (drawable))
@@ -505,17 +492,18 @@ HELP
     {
       for (i = 0; i < 3; i++)
 	{
-	  cbd.cyan_red[i] = 0.0;
-	  cbd.magenta_green[i] = 0.0;
-	  cbd.yellow_blue[i] = 0.0;
+	  cb.cyan_red[i]      = 0.0;
+	  cb.magenta_green[i] = 0.0;
+	  cb.yellow_blue[i]   = 0.0;
 	}
 
-      cbd.preserve_luminosity = preserve_lum;
-      cbd.cyan_red[transfer_mode] = cyan_red;
-      cbd.magenta_green[transfer_mode] = magenta_green;
-      cbd.yellow_blue[transfer_mode] = yellow_blue;
+      cb.preserve_luminosity = preserve_lum;
 
-      color_balance_create_lookup_tables (&cbd);
+      cb.cyan_red[transfer_mode]      = cyan_red;
+      cb.magenta_green[transfer_mode] = magenta_green;
+      cb.yellow_blue[transfer_mode]   = yellow_blue;
+
+      color_balance_create_lookup_tables (&cb);
 
       /* The application should occur only within selection bounds */
       gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
@@ -525,9 +513,12 @@ HELP
       pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
 			 x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
-      for (pr = pixel_regions_register (2, &srcPR, &destPR); pr;
+      for (pr = pixel_regions_register (2, &srcPR, &destPR);
+	   pr;
 	   pr = pixel_regions_process (pr))
-        color_balance (&srcPR, &destPR, (void *) &cbd);
+        {
+          color_balance (&srcPR, &destPR, &cb);
+        }
 
       gimp_drawable_merge_shadow (drawable, TRUE);
       gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
@@ -653,7 +644,7 @@ HELP
 
     @inargs = (
 	&drawable_arg,
-	{ name => 'hue_range', type => 'enum HueRange',
+	{ name => 'hue_range', type => 'enum GimpHueRange',
 	  desc => 'Range of affected hues: { %%desc%% }' },
 	{ name => 'hue_offset', type => '-180 <= float <= 180',
 	  desc => 'Hue offset in degrees: (%%desc%%)' }
@@ -665,9 +656,9 @@ HELP
     }
 
     %invoke = (
-	headers => [ qw("tools/gimphuesaturationtool.h") ],
-	vars => [ 'HueSaturationDialog hsd', 'int i', 'void *pr',
-		  'PixelRegion srcPR, destPR', 'int x1, y1, x2, y2' ],
+	headers => [ qw("base/hue-saturation.h") ],
+	vars => [ 'HueSaturation hs', 'gint i', 'gpointer pr',
+		  'PixelRegion srcPR, destPR', 'gint x1, y1, x2, y2' ],
 	code => <<'CODE'
 {
   if (gimp_drawable_is_indexed (drawable))
@@ -676,17 +667,17 @@ HELP
     {
       for (i = 0; i < 7; i++)
 	{
-	  hsd.hue[i] = 0.0;
-	  hsd.lightness[i] = 0.0;
-	  hsd.saturation[i] = 0.0;
+	  hs.hue[i]        = 0.0;
+	  hs.lightness[i]  = 0.0;
+	  hs.saturation[i] = 0.0;
 	}
 
-      hsd.hue[hue_range] = hue_offset;
-      hsd.lightness[hue_range] = lightness;
-      hsd.saturation[hue_range] = saturation;
+      hs.hue[hue_range]        = hue_offset;
+      hs.lightness[hue_range]  = lightness;
+      hs.saturation[hue_range] = saturation;
 
       /* Calculate the transfer arrays */
-      hue_saturation_calculate_transfers (&hsd);
+      hue_saturation_calculate_transfers (&hs);
 
       /* The application should occur only within selection bounds */
       gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
@@ -696,9 +687,12 @@ HELP
       pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
 			 x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
-      for (pr = pixel_regions_register (2, &srcPR, &destPR); pr;
+      for (pr = pixel_regions_register (2, &srcPR, &destPR);
+           pr;
 	   pr = pixel_regions_process (pr))
-        hue_saturation (&srcPR, &destPR, (void *) &hsd);
+        {
+          hue_saturation (&srcPR, &destPR, &hs);
+        }
 
       gimp_drawable_merge_shadow (drawable, TRUE);
       gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
@@ -727,8 +721,8 @@ HELP
     }
 
     %invoke = (
-	headers => [ qw("tools/gimpthresholdtool.h") ],
-	vars => [ 'ThresholdDialog td', 'int x1, y1, x2, y2',
+	headers => [ qw("base/threshold.h") ],
+	vars => [ 'Threshold tr', 'gint x1, y1, x2, y2',
 		  'PixelRegion srcPR, destPR' ],
 	code => <<'CODE'
 {
@@ -736,9 +730,9 @@ HELP
     success = FALSE;
   else
     {
-      td.color = gimp_drawable_is_rgb (drawable);
-      td.low_threshold = low_threshold;
-      td.high_threshold = high_threshold;
+      tr.color          = gimp_drawable_is_rgb (drawable);
+      tr.low_threshold  = low_threshold;
+      tr.high_threshold = high_threshold;
 
       /* The application should occur only within selection bounds */
       gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
@@ -748,7 +742,7 @@ HELP
       pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
 			 x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
-      pixel_regions_process_parallel ((p_func) threshold_2, (void*) &td, 2,
+      pixel_regions_process_parallel ((p_func) threshold_2, &tr, 2,
 				      &srcPR, &destPR);
 
       gimp_drawable_merge_shadow (drawable, TRUE);
@@ -761,8 +755,7 @@ CODE
 
 @headers = qw("base/gimphistogram.h" "base/gimplut.h" "base/lut-funcs.h"
 	      "base/pixel-region.h" "base/pixel-processor.h"
-              "core/gimpdrawable.h" "core/gimpimage.h"
-	      "tools/tools-types.h");
+              "core/gimpdrawable.h" "core/gimpimage.h");
 
 @procs = qw(brightness_contrast levels posterize desaturate equalize invert
 	    curves_spline curves_explicit color_balance histogram

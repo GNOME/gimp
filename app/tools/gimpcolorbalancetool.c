@@ -26,21 +26,18 @@
 
 #include "tools-types.h"
 
-#include "base/pixel-region.h"
+#include "base/color-balance.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimpimagemap.h"
 
 #include "display/gimpdisplay.h"
 
 #include "widgets/gimpenummenu.h"
 
 #include "gimpcolorbalancetool.h"
-#include "gimpcolorbalancetool-transfer.h"
 #include "tool_manager.h"
-
-#include "app_procs.h"
-#include "image_map.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -54,41 +51,30 @@
 /*  local function prototypes  */
 
 static void   gimp_color_balance_tool_class_init (GimpColorBalanceToolClass *klass);
-static void   gimp_color_balance_tool_init       (GimpTool                  *tool);
+static void   gimp_color_balance_tool_init       (GimpColorBalanceTool      *cb_tool);
 
-static void   gimp_color_balance_tool_initialize (GimpTool       *tool,
-						  GimpDisplay    *gdisp);
-static void   gimp_color_balance_tool_control    (GimpTool       *tool,
-						  GimpToolAction  action,
-						  GimpDisplay    *gdisp);
+static void   gimp_color_balance_tool_finalize   (GObject          *object);
 
-static ColorBalanceDialog * color_balance_dialog_new (void);
+static void   gimp_color_balance_tool_initialize (GimpTool         *tool,
+						  GimpDisplay      *gdisp);
 
-static void   color_balance_dialog_hide          (void);
-static void   color_balance_update               (ColorBalanceDialog *cbd,
-						  gint                update);
-static void   color_balance_preview              (ColorBalanceDialog *cbd);
-static void   color_balance_reset_callback       (GtkWidget          *widget,
-						  gpointer            data);
-static void   color_balance_ok_callback          (GtkWidget          *widget,
-						  gpointer            data);
-static void   color_balance_cancel_callback      (GtkWidget          *widget,
-						  gpointer            data);
-static void   color_balance_range_callback       (GtkWidget          *widget,
-						  gpointer            data);
-static void   color_balance_preserve_update      (GtkWidget          *widget,
-						  gpointer            data);
-static void   color_balance_preview_update       (GtkWidget          *widget,
-						  gpointer            data);
-static void   color_balance_cr_adjustment_update (GtkAdjustment      *adj,
-						  gpointer            data);
-static void   color_balance_mg_adjustment_update (GtkAdjustment      *adj,
-						  gpointer            data);
-static void   color_balance_yb_adjustment_update (GtkAdjustment      *adj,
-						  gpointer            data);
+static void   gimp_color_balance_tool_map        (GimpImageMapTool *image_map_tool);
+static void   gimp_color_balance_tool_dialog     (GimpImageMapTool *image_map_tool);
+static void   gimp_color_balance_tool_reset      (GimpImageMapTool *image_map_tool);
 
+static void   color_balance_update               (GimpColorBalanceTool *cb_tool,
+						  gint                  update);
+static void   color_balance_range_callback       (GtkWidget            *widget,
+						  gpointer              data);
+static void   color_balance_preserve_update      (GtkWidget            *widget,
+						  gpointer              data);
+static void   color_balance_cr_adjustment_update (GtkAdjustment        *adj,
+						  gpointer              data);
+static void   color_balance_mg_adjustment_update (GtkAdjustment        *adj,
+						  gpointer              data);
+static void   color_balance_yb_adjustment_update (GtkAdjustment        *adj,
+						  gpointer              data);
 
-static ColorBalanceDialog *color_balance_dialog = NULL;
 
 static GimpImageMapToolClass *parent_class = NULL;
 
@@ -142,150 +128,102 @@ gimp_color_balance_tool_get_type (void)
 static void
 gimp_color_balance_tool_class_init (GimpColorBalanceToolClass *klass)
 {
-  GimpToolClass *tool_class;
+  GObjectClass          *object_class;
+  GimpToolClass         *tool_class;
+  GimpImageMapToolClass *image_map_tool_class;
 
-  tool_class = GIMP_TOOL_CLASS (klass);
+  object_class         = G_OBJECT_CLASS (klass);
+  tool_class           = GIMP_TOOL_CLASS (klass);
+  image_map_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  tool_class->initialize = gimp_color_balance_tool_initialize;
-  tool_class->control    = gimp_color_balance_tool_control;
+  object_class->finalize       = gimp_color_balance_tool_finalize;
 
-  gimp_color_balance_tool_transfer_init ();
+  tool_class->initialize       = gimp_color_balance_tool_initialize;
+
+  image_map_tool_class->map    = gimp_color_balance_tool_map;
+  image_map_tool_class->dialog = gimp_color_balance_tool_dialog;
+  image_map_tool_class->reset  = gimp_color_balance_tool_reset;
 }
 
 static void
-gimp_color_balance_tool_init (GimpTool *tool)
+gimp_color_balance_tool_init (GimpColorBalanceTool *cb_tool)
 {
-  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
-  gimp_tool_control_set_preserve    (tool->control, FALSE);
-  gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_HINT);
-  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_NONE);
+  GimpImageMapTool *image_map_tool;
+
+  image_map_tool = GIMP_IMAGE_MAP_TOOL (cb_tool);
+
+  image_map_tool->shell_title = _("Color Balance");
+  image_map_tool->shell_name  = "color_balance";
+
+  cb_tool->color_balance      = g_new0 (ColorBalance, 1);
+  cb_tool->transfer_mode      = GIMP_MIDTONES;
+
+  cb_tool->color_balance->preserve_luminosity = TRUE;
+}
+
+static void
+gimp_color_balance_tool_finalize (GObject *object)
+{
+  GimpColorBalanceTool *cb_tool;
+
+  cb_tool = GIMP_COLOR_BALANCE_TOOL (object);
+
+  if (cb_tool->color_balance)
+    {
+      g_free (cb_tool->color_balance);
+      cb_tool->color_balance = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
 gimp_color_balance_tool_initialize (GimpTool    *tool,
 				    GimpDisplay *gdisp)
 {
-  gint i;
+  GimpColorBalanceTool *cb_tool;
+  gint                  i;
 
-  if (! gdisp)
-    {
-      color_balance_dialog_hide ();
-      return;
-    }
+  cb_tool = GIMP_COLOR_BALANCE_TOOL (tool);
 
-  if (! gimp_drawable_is_rgb (gimp_image_active_drawable (gdisp->gimage)))
+  if (gdisp &&
+      ! gimp_drawable_is_rgb (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Color balance operates only on RGB color drawables."));
       return;
     }
 
-  /*  The color balance dialog  */
-  if (!color_balance_dialog)
-    color_balance_dialog = color_balance_dialog_new ();
-  else
-    if (!GTK_WIDGET_VISIBLE (color_balance_dialog->shell))
-      gtk_widget_show (color_balance_dialog->shell);
+  cb_tool->color_balance->preserve_luminosity = TRUE;
 
   for (i = 0; i < 3; i++)
     {
-      color_balance_dialog->cyan_red[i]      = 0.0;
-      color_balance_dialog->magenta_green[i] = 0.0;
-      color_balance_dialog->yellow_blue[i]   = 0.0;
+      cb_tool->color_balance->cyan_red[i]      = 0.0;
+      cb_tool->color_balance->magenta_green[i] = 0.0;
+      cb_tool->color_balance->yellow_blue[i]   = 0.0;
     }
 
-  color_balance_dialog->drawable = gimp_image_active_drawable (gdisp->gimage);
-  color_balance_dialog->image_map =
-    image_map_create (gdisp, color_balance_dialog->drawable);
+  cb_tool->transfer_mode = GIMP_MIDTONES;
 
-  color_balance_update (color_balance_dialog, ALL);
+  GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
+
+  color_balance_update (cb_tool, ALL);
 }
 
 static void
-gimp_color_balance_tool_control (GimpTool       *tool,
-				 GimpToolAction  action,
-				 GimpDisplay    *gdisp)
+gimp_color_balance_tool_map (GimpImageMapTool *image_map_tool)
 {
-  switch (action)
-    {
-    case PAUSE:
-      break;
+  GimpColorBalanceTool *cb_tool;
 
-    case RESUME:
-      break;
+  cb_tool = GIMP_COLOR_BALANCE_TOOL (image_map_tool);
 
-    case HALT:
-      color_balance_dialog_hide ();
-      break;
-
-    default:
-      break;
-    }
-
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
+  color_balance_create_lookup_tables (cb_tool->color_balance);
+  gimp_image_map_apply (image_map_tool->image_map,
+                        color_balance,
+                        cb_tool->color_balance);
 }
 
-
-/*  color balance machinery  */
-
-void
-color_balance (PixelRegion *srcPR,
-	       PixelRegion *destPR,
-	       void        *data)
-{
-  ColorBalanceDialog *cbd;
-  guchar             *src, *s;
-  guchar             *dest, *d;
-  gboolean            alpha;
-  gint                r, g, b;
-  gint                r_n, g_n, b_n;
-  gint                w, h;
-
-  cbd = (ColorBalanceDialog *) data;
-
-  h = srcPR->h;
-  src = srcPR->data;
-  dest = destPR->data;
-  alpha = (srcPR->bytes == 4) ? TRUE : FALSE;
-
-  while (h--)
-    {
-      w = srcPR->w;
-      s = src;
-      d = dest;
-      while (w--)
-	{
-	  r = s[RED_PIX];
-	  g = s[GREEN_PIX];
-	  b = s[BLUE_PIX];
-
-	  r_n = cbd->r_lookup[r];
-	  g_n = cbd->g_lookup[g];
-	  b_n = cbd->b_lookup[b];
-
-	  if (cbd->preserve_luminosity)
-	    {
-	      gimp_rgb_to_hls_int (&r_n, &g_n, &b_n);
-	      g_n = gimp_rgb_to_l_int (r, g, b);
-	      gimp_hls_to_rgb_int (&r_n, &g_n, &b_n);
-	    }
-
-	  d[RED_PIX] = r_n;
-	  d[GREEN_PIX] = g_n;
- 	  d[BLUE_PIX] = b_n;
-
-	  if (alpha)
-	    d[ALPHA_PIX] = s[ALPHA_PIX];
-
-	  s += srcPR->bytes;
-	  d += destPR->bytes;
-	}
-
-      src += srcPR->rowstride;
-      dest += destPR->rowstride;
-    }
-}
 
 /**************************/
 /*  Color Balance dialog  */
@@ -332,45 +270,21 @@ create_levels_scale (const gchar   *left,
   return adj;
 }
 
-static ColorBalanceDialog *
-color_balance_dialog_new (void)
+static void
+gimp_color_balance_tool_dialog (GimpImageMapTool *image_map_tool)
 {
-  ColorBalanceDialog *cbd;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *table;
-  GtkWidget *toggle;
-  GtkWidget *frame;
+  GimpColorBalanceTool *cb_tool;
+  GtkWidget            *vbox;
+  GtkWidget            *hbox;
+  GtkWidget            *table;
+  GtkWidget            *toggle;
+  GtkWidget            *frame;
 
-  cbd = g_new0 (ColorBalanceDialog, 1);
-  cbd->preserve_luminosity = TRUE;
-  cbd->preview             = TRUE;
-  cbd->transfer_mode       = GIMP_MIDTONES;
-
-  /*  The shell and main vbox  */
-  cbd->shell = gimp_dialog_new (_("Color Balance"), "color_balance",
-				tool_manager_help_func, NULL,
-				GTK_WIN_POS_NONE,
-				FALSE, TRUE, FALSE,
-
-				GTK_STOCK_CANCEL, color_balance_cancel_callback,
-				cbd, NULL, NULL, FALSE, TRUE,
-
-				GIMP_STOCK_RESET, color_balance_reset_callback,
-				cbd, NULL, NULL, TRUE, FALSE,
-
-				GTK_STOCK_OK, color_balance_ok_callback,
-				cbd, NULL, NULL, TRUE, FALSE,
-
-				NULL);
-
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (cbd->shell)->vbox), vbox);
-  gtk_widget_show (vbox);
+  cb_tool = GIMP_COLOR_BALANCE_TOOL (image_map_tool);
 
   frame = gtk_frame_new (_("Color Levels"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), frame,
+                      FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   /*  The table containing sliders  */
@@ -381,36 +295,37 @@ color_balance_dialog_new (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  cbd->cyan_red_adj = 
+  cb_tool->cyan_red_adj = 
     create_levels_scale (_("Cyan"), _("Red"), table, 0);
-  g_signal_connect (G_OBJECT (cbd->cyan_red_adj), "value_changed",
+  g_signal_connect (G_OBJECT (cb_tool->cyan_red_adj), "value_changed",
                     G_CALLBACK (color_balance_cr_adjustment_update),
-                    cbd);
+                    cb_tool);
 
-  cbd->magenta_green_adj = 
+  cb_tool->magenta_green_adj = 
     create_levels_scale (_("Magenta"), _("Green"), table, 1);
-  g_signal_connect (G_OBJECT (cbd->magenta_green_adj), "value_changed",
+  g_signal_connect (G_OBJECT (cb_tool->magenta_green_adj), "value_changed",
                     G_CALLBACK (color_balance_mg_adjustment_update),
-                    cbd);
+                    cb_tool);
 
-  cbd->yellow_blue_adj = 
+  cb_tool->yellow_blue_adj = 
     create_levels_scale (_("Yellow"), _("Blue"), table, 2);
-  g_signal_connect (G_OBJECT (cbd->yellow_blue_adj), "value_changed",
+  g_signal_connect (G_OBJECT (cb_tool->yellow_blue_adj), "value_changed",
                     G_CALLBACK (color_balance_yb_adjustment_update),
-                    cbd);
+                    cb_tool);
 
   hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), hbox,
+                      FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   frame = gimp_enum_radio_frame_new (GIMP_TYPE_TRANSFER_MODE,
                                      gtk_label_new (_("Mode")),
                                      2,
                                      G_CALLBACK (color_balance_range_callback),
-                                     cbd,
+                                     cb_tool,
                                      &toggle);
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (toggle),
-                               GINT_TO_POINTER (cbd->transfer_mode));
+                               GINT_TO_POINTER (cb_tool->transfer_mode));
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -418,284 +333,94 @@ color_balance_dialog_new (void)
   gtk_box_pack_end (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  toggle = gtk_check_button_new_with_label (_("Preview"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), cbd->preview);
-  gtk_box_pack_end (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  g_signal_connect (G_OBJECT (toggle), "toggled",
-                    G_CALLBACK (color_balance_preview_update),
-                    cbd);
-  gtk_widget_show (toggle);
-
   toggle = gtk_check_button_new_with_label (_("Preserve Luminosity"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				cbd->preserve_luminosity);
+				cb_tool->color_balance->preserve_luminosity);
   gtk_box_pack_end (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (G_OBJECT (toggle), "toggled",
                     G_CALLBACK (color_balance_preserve_update),
-                    cbd);
+                    cb_tool);
   gtk_widget_show (toggle);
-
-  gtk_widget_show (cbd->shell);
-
-  return cbd;
 }
 
 static void
-color_balance_dialog_hide (void)
+gimp_color_balance_tool_reset (GimpImageMapTool *image_map_tool)
 {
-  if (color_balance_dialog)
-    color_balance_cancel_callback (NULL, (gpointer) color_balance_dialog);
+  GimpColorBalanceTool *cb_tool;
+
+  cb_tool = GIMP_COLOR_BALANCE_TOOL (image_map_tool);
+
+  cb_tool->color_balance->cyan_red[cb_tool->transfer_mode]      = 0.0;
+  cb_tool->color_balance->magenta_green[cb_tool->transfer_mode] = 0.0;
+  cb_tool->color_balance->yellow_blue[cb_tool->transfer_mode]   = 0.0;
+
+  color_balance_update (cb_tool, ALL);
 }
 
 static void
-color_balance_update (ColorBalanceDialog *cbd,
-		      gint                update)
+color_balance_update (GimpColorBalanceTool *cb_tool,
+		      gint                  update)
 {
+  GimpTransferMode tm;
+
+  tm = cb_tool->transfer_mode;
+
   if (update & CYAN_RED)
-    {
-      gtk_adjustment_set_value (cbd->cyan_red_adj,
-				cbd->cyan_red[cbd->transfer_mode]);
-    }
+    gtk_adjustment_set_value (cb_tool->cyan_red_adj,
+                              cb_tool->color_balance->cyan_red[tm]);
+
   if (update & MAGENTA_GREEN)
-    {
-      gtk_adjustment_set_value (cbd->magenta_green_adj,
-				cbd->magenta_green[cbd->transfer_mode]);
-    }
+    gtk_adjustment_set_value (cb_tool->magenta_green_adj,
+                              cb_tool->color_balance->magenta_green[tm]);
+
   if (update & YELLOW_BLUE)
-    {
-      gtk_adjustment_set_value (cbd->yellow_blue_adj,
-				cbd->yellow_blue[cbd->transfer_mode]);
-    }
-}
-
-void
-color_balance_create_lookup_tables (ColorBalanceDialog *cbd)
-{
-  gdouble *cyan_red_transfer[3];
-  gdouble *magenta_green_transfer[3];
-  gdouble *yellow_blue_transfer[3];
-  gint i;
-  gint32 r_n, g_n, b_n;
-
-  /*  Set the transfer arrays  (for speed)  */
-  cyan_red_transfer[GIMP_SHADOWS] = 
-    (cbd->cyan_red[GIMP_SHADOWS] > 0) ? shadows_add : shadows_sub;
-  cyan_red_transfer[GIMP_MIDTONES] = 
-    (cbd->cyan_red[GIMP_MIDTONES] > 0) ? midtones_add : midtones_sub;
-  cyan_red_transfer[GIMP_HIGHLIGHTS] = 
-    (cbd->cyan_red[GIMP_HIGHLIGHTS] > 0) ? highlights_add : highlights_sub;
-
-  magenta_green_transfer[GIMP_SHADOWS] = 
-    (cbd->magenta_green[GIMP_SHADOWS] > 0) ? shadows_add : shadows_sub;
-  magenta_green_transfer[GIMP_MIDTONES] = 
-    (cbd->magenta_green[GIMP_MIDTONES] > 0) ? midtones_add : midtones_sub;
-  magenta_green_transfer[GIMP_HIGHLIGHTS] = 
-    (cbd->magenta_green[GIMP_HIGHLIGHTS] > 0) ? highlights_add : highlights_sub;
-  yellow_blue_transfer[GIMP_SHADOWS] = 
-    (cbd->yellow_blue[GIMP_SHADOWS] > 0) ? shadows_add : shadows_sub;
-  yellow_blue_transfer[GIMP_MIDTONES] = 
-    (cbd->yellow_blue[GIMP_MIDTONES] > 0) ? midtones_add : midtones_sub;
-  yellow_blue_transfer[GIMP_HIGHLIGHTS] = 
-    (cbd->yellow_blue[GIMP_HIGHLIGHTS] > 0) ? highlights_add : highlights_sub;
-
-  for (i = 0; i < 256; i++)
-    {
-      r_n = i;
-      g_n = i;
-      b_n = i;
-
-      r_n += cbd->cyan_red[GIMP_SHADOWS] * cyan_red_transfer[GIMP_SHADOWS][r_n];
-      r_n = CLAMP0255 (r_n);
-      r_n += cbd->cyan_red[GIMP_MIDTONES] * cyan_red_transfer[GIMP_MIDTONES][r_n];
-      r_n = CLAMP0255 (r_n);
-      r_n += cbd->cyan_red[GIMP_HIGHLIGHTS] * cyan_red_transfer[GIMP_HIGHLIGHTS][r_n];
-      r_n = CLAMP0255 (r_n);
-
-      g_n += cbd->magenta_green[GIMP_SHADOWS] * magenta_green_transfer[GIMP_SHADOWS][g_n];
-      g_n = CLAMP0255 (g_n);
-      g_n += cbd->magenta_green[GIMP_MIDTONES] * magenta_green_transfer[GIMP_MIDTONES][g_n];
-      g_n = CLAMP0255 (g_n);
-      g_n += cbd->magenta_green[GIMP_HIGHLIGHTS] * magenta_green_transfer[GIMP_HIGHLIGHTS][g_n];
-      g_n = CLAMP0255 (g_n);
-
-      b_n += cbd->yellow_blue[GIMP_SHADOWS] * yellow_blue_transfer[GIMP_SHADOWS][b_n];
-      b_n = CLAMP0255 (b_n);
-      b_n += cbd->yellow_blue[GIMP_MIDTONES] * yellow_blue_transfer[GIMP_MIDTONES][b_n];
-      b_n = CLAMP0255 (b_n);
-      b_n += cbd->yellow_blue[GIMP_HIGHLIGHTS] * yellow_blue_transfer[GIMP_HIGHLIGHTS][b_n];
-      b_n = CLAMP0255 (b_n);
-
-      cbd->r_lookup[i] = r_n;
-      cbd->g_lookup[i] = g_n;
-      cbd->b_lookup[i] = b_n;
-    }
-}
-
-static void
-color_balance_preview (ColorBalanceDialog *cbd)
-{
-  GimpTool *active_tool;
-
-  active_tool = tool_manager_get_active (the_gimp);
-
-  if (!cbd->image_map)
-    {
-      g_message ("color_balance_preview(): No image map");
-      return;
-    }
-
-  gimp_tool_control_set_preserve (active_tool->control, TRUE);
-  color_balance_create_lookup_tables (cbd);
-  image_map_apply (cbd->image_map, color_balance, (void *) cbd);
-  gimp_tool_control_set_preserve (active_tool->control, FALSE);
-}
-
-static void
-color_balance_reset_callback (GtkWidget *widget,
-			      gpointer   data)
-{
-  ColorBalanceDialog *cbd;
-
-  cbd = (ColorBalanceDialog *) data;
-
-  cbd->cyan_red[cbd->transfer_mode]      = 0.0;
-  cbd->magenta_green[cbd->transfer_mode] = 0.0;
-  cbd->yellow_blue[cbd->transfer_mode]   = 0.0;
-
-  color_balance_update (cbd, ALL);
-
-  if (cbd->preview)
-    color_balance_preview (cbd);
-}
-
-static void
-color_balance_ok_callback (GtkWidget *widget,
-			   gpointer   data)
-{
-  ColorBalanceDialog *cbd;
-  GimpTool           *active_tool;
-
-  cbd = (ColorBalanceDialog *) data;
-
-  gtk_widget_hide (cbd->shell);
-  
-  active_tool = tool_manager_get_active (the_gimp);
-
-  gimp_tool_control_set_preserve (active_tool->control, TRUE);
-
-  if (!cbd->preview)
-    image_map_apply (cbd->image_map, color_balance, (void *) cbd);
-
-  if (cbd->image_map)
-    image_map_commit (cbd->image_map);
-
-  gimp_tool_control_set_preserve (active_tool->control, FALSE);
-
-  cbd->image_map = NULL;
-
-  active_tool->gdisp    = NULL;
-  active_tool->drawable = NULL;
-}
-
-static void
-color_balance_cancel_callback (GtkWidget *widget,
-			       gpointer   data)
-{
-  ColorBalanceDialog *cbd;
-  GimpTool           *active_tool;
-
-  cbd = (ColorBalanceDialog *) data;
-
-  gtk_widget_hide (cbd->shell);
-
-  active_tool = tool_manager_get_active (the_gimp);
-
-  if (cbd->image_map)
-    {
-      gimp_tool_control_set_preserve (active_tool->control, TRUE);
-      image_map_abort (cbd->image_map);
-      gimp_tool_control_set_preserve (active_tool->control, FALSE);
-
-      gimp_image_flush (active_tool->gdisp->gimage);
-      cbd->image_map = NULL;
-    }
-
-  active_tool->gdisp    = NULL;
-  active_tool->drawable = NULL;
+    gtk_adjustment_set_value (cb_tool->yellow_blue_adj,
+                              cb_tool->color_balance->yellow_blue[tm]);
 }
 
 static void
 color_balance_range_callback (GtkWidget *widget,
 			      gpointer   data)
 {
-  ColorBalanceDialog *cbd = (ColorBalanceDialog *) data;
+  GimpColorBalanceTool *cb_tool;
 
-  gimp_radio_button_update (widget, &cbd->transfer_mode);
+  cb_tool = GIMP_COLOR_BALANCE_TOOL (data);
 
-  color_balance_update (cbd, ALL);
+  gimp_radio_button_update (widget, &cb_tool->transfer_mode);
+
+  color_balance_update (cb_tool, ALL);
 }
 
 static void
 color_balance_preserve_update (GtkWidget *widget,
 			       gpointer   data)
 {
-  ColorBalanceDialog *cbd;
+  GimpColorBalanceTool *cb_tool;
 
-  cbd = (ColorBalanceDialog *) data;
+  cb_tool = GIMP_COLOR_BALANCE_TOOL (data);
 
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    cbd->preserve_luminosity = TRUE;
-  else
-    cbd->preserve_luminosity = FALSE;
+  cb_tool->color_balance->preserve_luminosity =
+    GTK_TOGGLE_BUTTON (widget)->active;
 
-  if (cbd->preview)
-    color_balance_preview (cbd);
-}
-
-static void
-color_balance_preview_update (GtkWidget *widget,
-			      gpointer   data)
-{
-  ColorBalanceDialog *cbd;
-  GimpTool           *active_tool;
-
-  cbd = (ColorBalanceDialog *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    {
-      cbd->preview = TRUE;
-      color_balance_preview (cbd);
-    }
-  else
-    {
-      cbd->preview = FALSE;
-      if (cbd->image_map)
-	{
-	  active_tool = tool_manager_get_active (the_gimp);
-
-	  gimp_tool_control_set_preserve (active_tool->control, TRUE);
-	  image_map_clear (cbd->image_map);
-	  gimp_tool_control_set_preserve (active_tool->control, FALSE);
-
-	  gimp_image_flush (active_tool->gdisp->gimage);
-	}
-    }
+  gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (cb_tool));
 }
 
 static void
 color_balance_cr_adjustment_update (GtkAdjustment *adjustment,
 				    gpointer       data)
 {
-  ColorBalanceDialog *cbd;
+  GimpColorBalanceTool *cb_tool;
+  GimpTransferMode      tm;
 
-  cbd = (ColorBalanceDialog *) data;
+  cb_tool = GIMP_COLOR_BALANCE_TOOL (data);
 
-  if (cbd->cyan_red[cbd->transfer_mode] != adjustment->value)
+  tm = cb_tool->transfer_mode;
+
+  if (cb_tool->color_balance->cyan_red[tm] != adjustment->value)
     {
-      cbd->cyan_red[cbd->transfer_mode] = adjustment->value;
+      cb_tool->color_balance->cyan_red[tm] = adjustment->value;
 
-      if (cbd->preview)
-	color_balance_preview (cbd);
+      gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (cb_tool));
     }
 }
 
@@ -703,16 +428,18 @@ static void
 color_balance_mg_adjustment_update (GtkAdjustment *adjustment,
 				    gpointer       data)
 {
-  ColorBalanceDialog *cbd;
+  GimpColorBalanceTool *cb_tool;
+  GimpTransferMode      tm;
 
-  cbd = (ColorBalanceDialog *) data;
+  cb_tool = GIMP_COLOR_BALANCE_TOOL (data);
 
-  if (cbd->magenta_green[cbd->transfer_mode] != adjustment->value)
+  tm = cb_tool->transfer_mode;
+
+  if (cb_tool->color_balance->magenta_green[tm] != adjustment->value)
     {
-      cbd->magenta_green[cbd->transfer_mode] = adjustment->value;
+      cb_tool->color_balance->magenta_green[tm] = adjustment->value;
 
-      if (cbd->preview)
-	color_balance_preview (cbd);
+      gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (cb_tool));
     }
 }
 
@@ -720,15 +447,17 @@ static void
 color_balance_yb_adjustment_update (GtkAdjustment *adjustment,
 				    gpointer       data)
 {
-  ColorBalanceDialog *cbd;
+  GimpColorBalanceTool *cb_tool;
+  GimpTransferMode      tm;
 
-  cbd = (ColorBalanceDialog *) data;
+  cb_tool = GIMP_COLOR_BALANCE_TOOL (data);
 
-  if (cbd->yellow_blue[cbd->transfer_mode] != adjustment->value)
+  tm = cb_tool->transfer_mode;
+
+  if (cb_tool->color_balance->yellow_blue[tm] != adjustment->value)
     {
-      cbd->yellow_blue[cbd->transfer_mode] = adjustment->value;
+      cb_tool->color_balance->yellow_blue[tm] = adjustment->value;
 
-      if (cbd->preview)
-	color_balance_preview (cbd);
+      gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (cb_tool));
     }
 }

@@ -28,13 +28,6 @@ gui_sources = \
 	undo_history.h
 
 ##
-## stuff that needs to be split up in core / ui files
-##
-core_ui_sources = \
-	image_map.c		\
-	image_map.h
-
-##
 ## stuff which is about to be replaced by new subsystems
 ##
 bye_sources = \
@@ -73,7 +66,6 @@ stuff_sources = \
 
 gimp_1_3_SOURCES = \
 	$(gui_sources)		\
-	$(core_ui_sources)	\
 	$(bye_sources)		\
 	$(stuff_sources)
 

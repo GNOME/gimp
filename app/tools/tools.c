@@ -161,7 +161,4 @@ tools_init (Gimp *gimp)
 void
 tools_exit (Gimp *gimp)
 {
-  hue_saturation_free ();
-  curves_free ();
-  levels_free ();
 }

@@ -16,67 +16,28 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_THRESHOLD_TOOL_H__
-#define __GIMP_THRESHOLD_TOOL_H__
+#ifndef __THRESHOLD_H__
+#define __THRESHOLD_H__
 
 
-#include "gimpimagemaptool.h"
-
-
-#define GIMP_TYPE_THRESHOLD_TOOL            (gimp_threshold_tool_get_type ())
-#define GIMP_THRESHOLD_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_THRESHOLD_TOOL, GimpThresholdTool))
-#define GIMP_THRESHOLD_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_THRESHOLD_TOOL, GimpThresholdToolClass))
-#define GIMP_IS_THRESHOLD_TOOL(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_THRESHOLD_TOOL))
-#define GIMP_IS_THRESHOLD_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_THRESHOLD_TOOL))
-#define GIMP_THRESHOLD_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_THRESHOLD_TOOL, GimpThresholdToolClass))
-
-
-typedef struct _GimpThresholdTool      GimpThresholdTool;
-typedef struct _GimpThresholdToolClass GimpThresholdToolClass;
-
-struct _GimpThresholdTool
+struct _Threshold
 {
-  GimpImageMapTool  parent_instance;
-};
-
-struct _GimpThresholdToolClass
-{
-  GimpImageMapToolClass  parent_class;
+  gboolean color;
+  gint     low_threshold;
+  gint     high_threshold;
 };
 
 
-typedef struct _ThresholdDialog ThresholdDialog;
+/*  this function just re-orders the arguments so we can use 
+ *  pixel_regions_process_paralell
+ */
+void   threshold_2 (gpointer     data,
+                    PixelRegion *srcPR,
+                    PixelRegion *destPR);
 
-struct _ThresholdDialog
-{
-  GtkWidget         *shell;
-
-  GtkAdjustment     *low_threshold_data;
-  GtkAdjustment     *high_threshold_data;
-
-  GimpHistogramView *histogram;
-  GimpHistogram     *hist;
-
-  GimpDrawable      *drawable;
-  ImageMap          *image_map;
-
-  gint               color;
-  gint               low_threshold;
-  gint               high_threshold;
-
-  gboolean           preview;
-};
+void   threshold   (PixelRegion *srcPR,
+                    PixelRegion *destPR,
+                    gpointer     data);
 
 
-void    gimp_threshold_tool_register (GimpToolRegisterCallback  callback,
-                                      gpointer                  data);
-
-GType   gimp_threshold_tool_get_type (void) G_GNUC_CONST;
-
-
-void    threshold_2                  (gpointer     data,
-                                      PixelRegion *srcPR,
-                                      PixelRegion *destPR);
-
-
-#endif  /*  __GIMP_THRESHOLD_TOOL_H__  */
+#endif  /*  __THRESHOLD_H__  */

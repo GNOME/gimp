@@ -73,7 +73,6 @@ struct _HistogramToolDialog
   gdouble            percentile;
 
   GimpDrawable      *drawable;
-  ImageMap          *image_map;
   gint               channel;
   gint               color;
 };
@@ -395,7 +394,7 @@ histogram_tool_dialog_new (void)
 
   /*  The histogram tool histogram  */
   frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
   htd->histogram = gimp_histogram_view_new (HISTOGRAM_WIDTH, HISTOGRAM_HEIGHT);
@@ -412,7 +411,7 @@ histogram_tool_dialog_new (void)
   grad_hbox = gtk_hbox_new (TRUE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), grad_hbox, FALSE, FALSE, 0);
   frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (grad_hbox), frame, FALSE, FALSE, 0);
 
   htd->gradient = gtk_preview_new (GTK_PREVIEW_COLOR);

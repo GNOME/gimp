@@ -31,19 +31,16 @@
 
 #include "tools-types.h"
 
-#include "base/pixel-region.h"
+#include "base/hue-saturation.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
+#include "core/gimpimagemap.h"
 
 #include "display/gimpdisplay.h"
 
 #include "gimphuesaturationtool.h"
 #include "tool_manager.h"
-
-#include "app_procs.h"
-#include "image_map.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -67,43 +64,32 @@
 static void   gimp_hue_saturation_tool_class_init (GimpHueSaturationToolClass *klass);
 static void   gimp_hue_saturation_tool_init       (GimpHueSaturationTool      *tool);
 
-static void   gimp_hue_saturation_tool_initialize (GimpTool       *tool,
-                                                   GimpDisplay    *gdisp);
-static void   gimp_hue_saturation_tool_control    (GimpTool       *tool,
-                                                   GimpToolAction  action,
-                                                   GimpDisplay    *gdisp);
+static void   gimp_hue_saturation_tool_finalize   (GObject          *object);
 
-static HueSaturationDialog * hue_saturation_dialog_new (void);
+static void   gimp_hue_saturation_tool_initialize (GimpTool         *tool,
+                                                   GimpDisplay      *gdisp);
 
-static void   hue_saturation_dialog_hide             (void);
-static void   hue_saturation_update                  (HueSaturationDialog *hsd,
-						      gint);
-static void   hue_saturation_preview                 (HueSaturationDialog *hsd);
-static void   hue_saturation_reset_callback          (GtkWidget *,
-						      gpointer);
-static void   hue_saturation_ok_callback             (GtkWidget *,
-						      gpointer);
-static void   hue_saturation_cancel_callback         (GtkWidget *,
-						      gpointer);
-static void   hue_saturation_partition_callback      (GtkWidget *,
-						      gpointer);
-static void   hue_saturation_preview_update          (GtkWidget *,
-						      gpointer);
-static void   hue_saturation_hue_adjustment_update        (GtkAdjustment *,
-							   gpointer);
-static void   hue_saturation_lightness_adjustment_update  (GtkAdjustment *,
-							   gpointer);
-static void   hue_saturation_saturation_adjustment_update (GtkAdjustment *,
-							   gpointer);
-static gint   hue_saturation_hue_partition_events    (GtkWidget *,
-						      GdkEvent *,
-						      HueSaturationDialog *hsd);
+static void   gimp_hue_saturation_tool_map        (GimpImageMapTool *image_map_tool);
+static void   gimp_hue_saturation_tool_dialog     (GimpImageMapTool *image_map_tool);
+static void   gimp_hue_saturation_tool_reset      (GimpImageMapTool *image_map_tool);
+
+static void   hue_saturation_update                  (GimpHueSaturationTool *hs_tool,
+						      gint                   update);
+static void   hue_saturation_partition_callback      (GtkWidget *widget,
+						      gpointer   data);
+static void   hue_saturation_hue_adjustment_update        (GtkAdjustment *adj,
+							   gpointer       data);
+static void   hue_saturation_lightness_adjustment_update  (GtkAdjustment *adj,
+							   gpointer       data);
+static void   hue_saturation_saturation_adjustment_update (GtkAdjustment *adj,
+							   gpointer       data);
+static gint   hue_saturation_hue_partition_events    (GtkWidget          *widget,
+						      GdkEvent           *event,
+						      GimpHueSaturationTool *hs_tool);
 
 
 /*  Local variables  */
-static gint hue_transfer[6][256];
-static gint lightness_transfer[6][256];
-static gint saturation_transfer[6][256];
+
 static gint default_colors[6][3] =
 {
   { 255,   0,   0 },
@@ -113,8 +99,6 @@ static gint default_colors[6][3] =
   {   0,   0, 255 },
   { 255,   0, 255 }
 };
-
-static HueSaturationDialog *hue_saturation_dialog = NULL;
 
 static GimpImageMapToolClass *parent_class = NULL;
 
@@ -165,248 +149,124 @@ gimp_hue_saturation_tool_get_type (void)
   return tool_type;
 }
 
+
+/*  private functions  */
+
 static void
 gimp_hue_saturation_tool_class_init (GimpHueSaturationToolClass *klass)
 {
-  GimpToolClass *tool_class;
+  GObjectClass          *object_class;
+  GimpToolClass         *tool_class;
+  GimpImageMapToolClass *image_map_tool_class;
 
-  tool_class = GIMP_TOOL_CLASS (klass);
+  object_class         = G_OBJECT_CLASS (klass);
+  tool_class           = GIMP_TOOL_CLASS (klass);
+  image_map_tool_class = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  tool_class->initialize = gimp_hue_saturation_tool_initialize;
-  tool_class->control    = gimp_hue_saturation_tool_control;
+  object_class->finalize       = gimp_hue_saturation_tool_finalize;
+
+  tool_class->initialize       = gimp_hue_saturation_tool_initialize;
+
+  image_map_tool_class->map    = gimp_hue_saturation_tool_map;
+  image_map_tool_class->dialog = gimp_hue_saturation_tool_dialog;
+  image_map_tool_class->reset  = gimp_hue_saturation_tool_reset;
 }
 
 static void
-gimp_hue_saturation_tool_init (GimpHueSaturationTool *tool)
+gimp_hue_saturation_tool_init (GimpHueSaturationTool *hs_tool)
 {
+  GimpImageMapTool *image_map_tool;
+
+  image_map_tool = GIMP_IMAGE_MAP_TOOL (hs_tool);
+
+  image_map_tool->shell_title = _("Hue-Saturation");
+  image_map_tool->shell_name  = "hue_saturation";
+
+  hs_tool->hue_saturation     = g_new0 (HueSaturation, 1);
+  hs_tool->hue_partition      = GIMP_ALL_HUES;
+}
+
+static void
+gimp_hue_saturation_tool_finalize (GObject *object)
+{
+  GimpHueSaturationTool *hs_tool;
+
+  hs_tool = GIMP_HUE_SATURATION_TOOL (object);
+
+  if (hs_tool->hue_saturation)
+    {
+      g_free (hs_tool->hue_saturation);
+      hs_tool->hue_saturation = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
 gimp_hue_saturation_tool_initialize (GimpTool    *tool,
 				     GimpDisplay *gdisp)
 {
-  gint i;
+  GimpHueSaturationTool *hs_tool;
+  gint                   i;
 
-  if (! gdisp)
-    {
-      hue_saturation_dialog_hide ();
-      return;
-    }
+  hs_tool = GIMP_HUE_SATURATION_TOOL (tool);
 
-  if (! gimp_drawable_is_rgb (gimp_image_active_drawable (gdisp->gimage)))
+  if (gdisp &&
+      ! gimp_drawable_is_rgb (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Hue-Saturation operates only on RGB color drawables."));
       return;
     }
 
-  /*  The "hue-saturation" dialog  */
-  if (!hue_saturation_dialog)
-    hue_saturation_dialog = hue_saturation_dialog_new ();
-  else
-    if (!GTK_WIDGET_VISIBLE (hue_saturation_dialog->shell))
-      gtk_widget_show (hue_saturation_dialog->shell);
-
   for (i = 0; i < 7; i++)
     {
-      hue_saturation_dialog->hue[i] = 0.0;
-      hue_saturation_dialog->lightness[i] = 0.0;
-      hue_saturation_dialog->saturation[i] = 0.0;
+      hs_tool->hue_saturation->hue[i]        = 0.0;
+      hs_tool->hue_saturation->lightness[i]  = 0.0;
+      hs_tool->hue_saturation->saturation[i] = 0.0;
     }
 
-  hue_saturation_dialog->drawable = gimp_image_active_drawable (gdisp->gimage);
-  hue_saturation_dialog->image_map =
-    image_map_create (gdisp, hue_saturation_dialog->drawable);
+  hs_tool->hue_partition = GIMP_ALL_HUES;
 
-  hue_saturation_update (hue_saturation_dialog, ALL);
+  GIMP_TOOL_CLASS (parent_class)->initialize (tool, gdisp);
+
+  hue_saturation_update (hs_tool, ALL);
 }
 
 static void
-gimp_hue_saturation_tool_control (GimpTool       *tool,
-				  GimpToolAction  action,
-				  GimpDisplay    *gdisp)
+gimp_hue_saturation_tool_map (GimpImageMapTool *image_map_tool)
 {
-  switch (action)
-    {
-    case PAUSE:
-      break;
+  GimpHueSaturationTool *hs_tool;
 
-    case RESUME:
-      break;
+  hs_tool = GIMP_HUE_SATURATION_TOOL (image_map_tool);
 
-    case HALT:
-      hue_saturation_dialog_hide ();
-      break;
-
-    default:
-      break;
-    }
-
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
+  gimp_image_map_apply (image_map_tool->image_map,
+                        hue_saturation,
+                        hs_tool->hue_saturation);
 }
 
-
-/*  hue saturation machinery  */
-
-void
-hue_saturation_calculate_transfers (HueSaturationDialog *hsd)
-{
-  gint value;
-  gint hue;
-  gint i;
-
-  /*  Calculate transfers  */
-  for (hue = 0; hue < 6; hue++)
-    for (i = 0; i < 256; i++)
-      {
-	value = (hsd->hue[0] + hsd->hue[hue + 1]) * 255.0 / 360.0;
-	if ((i + value) < 0)
-	  hue_transfer[hue][i] = 255 + (i + value);
-	else if ((i + value) > 255)
-	  hue_transfer[hue][i] = i + value - 255;
-	else
-	  hue_transfer[hue][i] = i + value;
-
-	/*  Lightness  */
-	value = (hsd->lightness[0] + hsd->lightness[hue + 1]) * 127.0 / 100.0;
-	value = CLAMP (value, -255, 255);
-	if (value < 0)
-	  lightness_transfer[hue][i] = (unsigned char) ((i * (255 + value)) / 255);
-	else
-	  lightness_transfer[hue][i] = (unsigned char) (i + ((255 - i) * value) / 255);
-
-	/*  Saturation  */
-	value = (hsd->saturation[0] + hsd->saturation[hue + 1]) * 255.0 / 100.0;
-	value = CLAMP (value, -255, 255);
-
-	/* This change affects the way saturation is computed. With the
-	   old code (different code for value < 0), increasing the
-	   saturation affected muted colors very much, and bright colors
-	   less. With the new code, it affects muted colors and bright
-	   colors more or less evenly. For enhancing the color in photos,
-	   the new behavior is exactly what you want. It's hard for me
-	   to imagine a case in which the old behavior is better.
-	*/
-	saturation_transfer[hue][i] = CLAMP ((i * (255 + value)) / 255, 0, 255);
-      }
-}
-
-void
-hue_saturation (PixelRegion *srcPR,
-		PixelRegion *destPR,
-		void        *user_data)
-{
-  HueSaturationDialog *hsd;
-  unsigned char *src, *s;
-  unsigned char *dest, *d;
-  int alpha;
-  int w, h;
-  int r, g, b;
-  int hue;
-
-  hsd = (HueSaturationDialog *) user_data;
-
-  /*  Set the transfer arrays  (for speed)  */
-  h = srcPR->h;
-  src = srcPR->data;
-  dest = destPR->data;
-  alpha = (srcPR->bytes == 4) ? TRUE : FALSE;
-
-  while (h--)
-    {
-      w = srcPR->w;
-      s = src;
-      d = dest;
-      while (w--)
-	{
-	  r = s[RED_PIX];
-	  g = s[GREEN_PIX];
-	  b = s[BLUE_PIX];
-
-	  gimp_rgb_to_hls_int (&r, &g, &b);
-
-	  if (r < 43)
-	    hue = 0;
-	  else if (r < 85)
-	    hue = 1;
-	  else if (r < 128)
-	    hue = 2;
-	  else if (r < 171)
-	    hue = 3;
-	  else if (r < 213)
-	    hue = 4;
-	  else
-	    hue = 5;
-
-	  r = hue_transfer[hue][r];
-	  g = lightness_transfer[hue][g];
-	  b = saturation_transfer[hue][b];
-
-	  gimp_hls_to_rgb_int (&r, &g, &b);
-
-	  d[RED_PIX] = r;
-	  d[GREEN_PIX] = g;
-	  d[BLUE_PIX] = b;
-
-	  if (alpha)
-	    d[ALPHA_PIX] = s[ALPHA_PIX];
-
-	  s += srcPR->bytes;
-	  d += destPR->bytes;
-	}
-
-      src += srcPR->rowstride;
-      dest += destPR->rowstride;
-    }
-}
-
-/*  hue saturation action functions  */
-
-void
-hue_saturation_free (void)
-{
-  GimpTool *active_tool;
-
-  active_tool = tool_manager_get_active (the_gimp);
-
-  if (hue_saturation_dialog)
-    {
-      if (hue_saturation_dialog->image_map)
-	{
-	  gimp_tool_control_set_preserve (active_tool->control, TRUE);
-	  image_map_abort (hue_saturation_dialog->image_map);
-	  gimp_tool_control_set_preserve (active_tool->control, FALSE);
-
-	  hue_saturation_dialog->image_map = NULL;
-	}
-      gtk_widget_destroy (hue_saturation_dialog->shell);
-    }
-}
 
 /***************************/
 /*  Hue-Saturation dialog  */
 /***************************/
 
-static HueSaturationDialog *
-hue_saturation_dialog_new (void)
+static void
+gimp_hue_saturation_tool_dialog (GimpImageMapTool *image_map_tool)
 {
-  HueSaturationDialog *hsd;
-  GtkWidget *main_vbox;
-  GtkWidget *main_hbox;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *table;
-  GtkWidget *label;
-  GtkWidget *slider;
-  GtkWidget *abox;
-  GtkWidget *spinbutton;
-  GtkWidget *toggle;
-  GtkWidget *radio_button;
-  GtkWidget *frame;
-  GtkObject *data;
-  GSList *group = NULL;
-  gint i;
+  GimpHueSaturationTool *hs_tool;
+  GtkWidget             *main_hbox;
+  GtkWidget             *vbox;
+  GtkWidget             *table;
+  GtkWidget             *label;
+  GtkWidget             *slider;
+  GtkWidget             *abox;
+  GtkWidget             *spinbutton;
+  GtkWidget             *radio_button;
+  GtkWidget             *frame;
+  GtkObject             *data;
+  GSList                *group = NULL;
+  gint                   i;
 
   gchar *hue_partition_names[] =
   {
@@ -419,34 +279,12 @@ hue_saturation_dialog_new (void)
     N_("M")
   };
 
-  hsd = g_new (HueSaturationDialog, 1);
-  hsd->hue_partition = ALL_HUES;
-  hsd->preview       = TRUE;
-
-  /*  The shell and main vbox  */
-  hsd->shell = gimp_dialog_new (_("Hue-Saturation"), "hue_saturation",
-				tool_manager_help_func, NULL,
-				GTK_WIN_POS_NONE,
-				FALSE, TRUE, FALSE,
-
-				GTK_STOCK_CANCEL, hue_saturation_cancel_callback,
-				hsd, NULL, NULL, FALSE, TRUE,
-
-				GIMP_STOCK_RESET, hue_saturation_reset_callback,
-				hsd, NULL, NULL, FALSE, FALSE,
-
-				GTK_STOCK_OK, hue_saturation_ok_callback,
-				hsd, NULL, NULL, TRUE, FALSE,
-
-				NULL);
-
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (hsd->shell)->vbox), main_vbox);
+  hs_tool = GIMP_HUE_SATURATION_TOOL (image_map_tool);
 
   /*  The main hbox containing hue partitions and sliders  */
   main_hbox = gtk_hbox_new (FALSE, 12);
-  gtk_box_pack_start (GTK_BOX (main_vbox), main_hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (image_map_tool->main_vbox), main_hbox,
+                      FALSE, FALSE, 0);
 
   /*  The table containing hue partitions  */
   table = gtk_table_new (7, 2, FALSE);
@@ -460,7 +298,7 @@ hue_saturation_dialog_new (void)
       radio_button = gtk_radio_button_new_with_label (group, gettext (hue_partition_names[i]));
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio_button));
       g_object_set_data (G_OBJECT (radio_button), "hue_partition",
-			   (gpointer) i);
+                         GINT_TO_POINTER (i));
 
       if (!i)
 	{
@@ -476,23 +314,25 @@ hue_saturation_dialog_new (void)
 	  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
 	  gtk_table_attach (GTK_TABLE (table), frame,  1, 2, i, i + 1,
 			    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-	  hsd->hue_partition_da[i - 1] = gtk_preview_new (GTK_PREVIEW_COLOR);
-	  gtk_preview_size (GTK_PREVIEW (hsd->hue_partition_da[i - 1]),
-			    DA_WIDTH, DA_HEIGHT);
-	  gtk_widget_set_events (hsd->hue_partition_da[i - 1],
-				 HUE_PARTITION_MASK);
-	  g_signal_connect (G_OBJECT (hsd->hue_partition_da[i - 1]), "event",
-                            G_CALLBACK (hue_saturation_hue_partition_events),
-                            hsd);
-	  gtk_container_add (GTK_CONTAINER (frame), hsd->hue_partition_da[i - 1]);
-
-	  gtk_widget_show (hsd->hue_partition_da[i - 1]);
 	  gtk_widget_show (frame);
+
+	  hs_tool->hue_partition_da[i - 1] = gtk_preview_new (GTK_PREVIEW_COLOR);
+	  gtk_preview_size (GTK_PREVIEW (hs_tool->hue_partition_da[i - 1]),
+			    DA_WIDTH, DA_HEIGHT);
+	  gtk_widget_set_events (hs_tool->hue_partition_da[i - 1],
+				 HUE_PARTITION_MASK);
+	  gtk_container_add (GTK_CONTAINER (frame),
+                             hs_tool->hue_partition_da[i - 1]);
+	  gtk_widget_show (hs_tool->hue_partition_da[i - 1]);
+
+	  g_signal_connect (G_OBJECT (hs_tool->hue_partition_da[i - 1]), "event",
+                            G_CALLBACK (hue_saturation_hue_partition_events),
+                            hs_tool);
 	}
 
       g_signal_connect (G_OBJECT (radio_button), "toggled",
                         G_CALLBACK (hue_saturation_partition_callback),
-                        hsd);
+                        hs_tool);
 
       gtk_widget_show (radio_button);
     }
@@ -521,9 +361,9 @@ hue_saturation_dialog_new (void)
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
 
   data = gtk_adjustment_new (0, -180, 180.0, 1.0, 1.0, 0.0);
-  hsd->hue_data = GTK_ADJUSTMENT (data);
+  hs_tool->hue_data = GTK_ADJUSTMENT (data);
 
-  slider = gtk_hscale_new (hsd->hue_data);
+  slider = gtk_hscale_new (hs_tool->hue_data);
   gtk_widget_set_size_request (slider, SLIDER_WIDTH, -1);
   gtk_scale_set_digits (GTK_SCALE (slider), 0);
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
@@ -533,15 +373,15 @@ hue_saturation_dialog_new (void)
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
 
   abox = gtk_vbox_new (FALSE, 0);
-  spinbutton = gtk_spin_button_new (hsd->hue_data, 1.0, 0);
+  spinbutton = gtk_spin_button_new (hs_tool->hue_data, 1.0, 0);
   gtk_widget_set_size_request (spinbutton, 74, -1);
   gtk_box_pack_end (GTK_BOX (abox), spinbutton, FALSE, FALSE, 0);
   gtk_table_attach (GTK_TABLE (table), abox, 2, 3, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
 
-  g_signal_connect (G_OBJECT (hsd->hue_data), "value_changed",
+  g_signal_connect (G_OBJECT (hs_tool->hue_data), "value_changed",
                     G_CALLBACK (hue_saturation_hue_adjustment_update),
-                    hsd);
+                    hs_tool);
 
   gtk_widget_show (label);
   gtk_widget_show (slider);
@@ -555,9 +395,9 @@ hue_saturation_dialog_new (void)
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
 
   data = gtk_adjustment_new (0, -100.0, 100.0, 1.0, 1.0, 0.0);
-  hsd->lightness_data = GTK_ADJUSTMENT (data);
+  hs_tool->lightness_data = GTK_ADJUSTMENT (data);
 
-  slider = gtk_hscale_new (hsd->lightness_data);
+  slider = gtk_hscale_new (hs_tool->lightness_data);
   gtk_widget_set_size_request (slider, SLIDER_WIDTH, -1);
   gtk_scale_set_digits (GTK_SCALE (slider), 0);
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
@@ -567,15 +407,15 @@ hue_saturation_dialog_new (void)
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
 
   abox = gtk_vbox_new (FALSE, 0);
-  spinbutton = gtk_spin_button_new (hsd->lightness_data, 1.0, 0);
+  spinbutton = gtk_spin_button_new (hs_tool->lightness_data, 1.0, 0);
   gtk_widget_set_size_request (spinbutton, 75, -1);
   gtk_box_pack_end (GTK_BOX (abox), spinbutton, FALSE, FALSE, 0);
   gtk_table_attach (GTK_TABLE (table), abox, 2, 3, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
 
-  g_signal_connect (G_OBJECT (hsd->lightness_data), "value_changed",
+  g_signal_connect (G_OBJECT (hs_tool->lightness_data), "value_changed",
                     G_CALLBACK (hue_saturation_lightness_adjustment_update),
-                    hsd);
+                    hs_tool);
 
   gtk_widget_show (label);
   gtk_widget_show (slider);
@@ -589,9 +429,9 @@ hue_saturation_dialog_new (void)
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
 
   data = gtk_adjustment_new (0, -100.0, 100.0, 1.0, 1.0, 0.0);
-  hsd->saturation_data = GTK_ADJUSTMENT (data);
+  hs_tool->saturation_data = GTK_ADJUSTMENT (data);
 
-  slider = gtk_hscale_new (hsd->saturation_data);
+  slider = gtk_hscale_new (hs_tool->saturation_data);
   gtk_widget_set_size_request (slider, SLIDER_WIDTH, -1);
   gtk_scale_set_digits (GTK_SCALE (slider), 0);
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
@@ -601,15 +441,15 @@ hue_saturation_dialog_new (void)
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
 
   abox = gtk_vbox_new (FALSE, 0);
-  spinbutton = gtk_spin_button_new (hsd->saturation_data, 1.0, 0);
+  spinbutton = gtk_spin_button_new (hs_tool->saturation_data, 1.0, 0);
   gtk_widget_set_size_request (spinbutton, 75, -1);
   gtk_box_pack_end (GTK_BOX (abox), spinbutton, FALSE, FALSE, 0);
   gtk_table_attach (GTK_TABLE (table), abox, 2, 3, 2, 3,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
 
-  g_signal_connect (G_OBJECT (hsd->saturation_data), "value_changed",
+  g_signal_connect (G_OBJECT (hs_tool->saturation_data), "value_changed",
                     G_CALLBACK (hue_saturation_saturation_adjustment_update),
-                    hsd);
+                    hs_tool);
 
   gtk_widget_show (label);
   gtk_widget_show (slider);
@@ -618,62 +458,45 @@ hue_saturation_dialog_new (void)
 
   gtk_widget_show (table);
 
-  /*  Horizontal box for preview toggle button  */
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-
-  /*  The preview toggle  */
-  toggle = gtk_check_button_new_with_label (_("Preview"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), hsd->preview);
-  gtk_box_pack_end (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
-
-  g_signal_connect (G_OBJECT (toggle), "toggled",
-                    G_CALLBACK (hue_saturation_preview_update),
-                    hsd);
-
-  gtk_widget_show (toggle);
-  gtk_widget_show (hbox);
-
   gtk_widget_show (vbox);
   gtk_widget_show (main_hbox);
-  gtk_widget_show (main_vbox);
-  gtk_widget_show (hsd->shell);
-
-  return hsd;
 }
 
 static void
-hue_saturation_dialog_hide (void)
+gimp_hue_saturation_tool_reset (GimpImageMapTool *image_map_tool)
 {
-  if (hue_saturation_dialog)
-    hue_saturation_cancel_callback (NULL, (gpointer) hue_saturation_dialog);
-} 
-  
+  GimpHueSaturationTool *hs_tool;
+
+  hs_tool = GIMP_HUE_SATURATION_TOOL (image_map_tool);
+
+  hs_tool->hue_saturation->hue[hs_tool->hue_partition]        = 0.0;
+  hs_tool->hue_saturation->lightness[hs_tool->hue_partition]  = 0.0;
+  hs_tool->hue_saturation->saturation[hs_tool->hue_partition] = 0.0;
+
+  hue_saturation_update (hs_tool, ALL);
+}
+
 static void
-hue_saturation_update (HueSaturationDialog *hsd,
-		       gint                 update)
+hue_saturation_update (GimpHueSaturationTool *hs_tool,
+		       gint                   update)
 {
-  gint i, j, b;
-  gint rgb[3];
+  gint   i, j, b;
+  gint   rgb[3];
   guchar buf[DA_WIDTH * 3];
 
   if (update & HUE_SLIDER)
-    {
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (hsd->hue_data),
-				hsd->hue[hsd->hue_partition]);
-    }
-  if (update & LIGHTNESS_SLIDER)
-    {
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (hsd->lightness_data),
-				hsd->lightness[hsd->hue_partition]);
-    }
-  if (update & SATURATION_SLIDER)
-    {
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (hsd->saturation_data),
-				hsd->saturation[hsd->hue_partition]);
-    }
+    gtk_adjustment_set_value (GTK_ADJUSTMENT (hs_tool->hue_data),
+                              hs_tool->hue_saturation->hue[hs_tool->hue_partition]);
 
-  hue_saturation_calculate_transfers (hsd);
+  if (update & LIGHTNESS_SLIDER)
+    gtk_adjustment_set_value (GTK_ADJUSTMENT (hs_tool->lightness_data),
+                              hs_tool->hue_saturation->lightness[hs_tool->hue_partition]);
+
+  if (update & SATURATION_SLIDER)
+    gtk_adjustment_set_value (GTK_ADJUSTMENT (hs_tool->saturation_data),
+                              hs_tool->hue_saturation->saturation[hs_tool->hue_partition]);
+
+  hue_saturation_calculate_transfers (hs_tool->hue_saturation);
 
   for (i = 0; i < 6; i++)
     {
@@ -683,9 +506,9 @@ hue_saturation_update (HueSaturationDialog *hsd,
 
       gimp_rgb_to_hls_int (rgb, rgb + 1, rgb + 2);
 
-      rgb[RED_PIX]   = hue_transfer[i][rgb[RED_PIX]];
-      rgb[GREEN_PIX] = lightness_transfer[i][rgb[GREEN_PIX]];
-      rgb[BLUE_PIX]  = saturation_transfer[i][rgb[BLUE_PIX]];
+      rgb[RED_PIX]   = hs_tool->hue_saturation->hue_transfer[i][rgb[RED_PIX]];
+      rgb[GREEN_PIX] = hs_tool->hue_saturation->lightness_transfer[i][rgb[GREEN_PIX]];
+      rgb[BLUE_PIX]  = hs_tool->hue_saturation->saturation_transfer[i][rgb[BLUE_PIX]];
 
       gimp_hls_to_rgb_int (rgb, rgb + 1, rgb + 2);
 
@@ -694,167 +517,47 @@ hue_saturation_update (HueSaturationDialog *hsd,
 	  buf[j * 3 + b] = (guchar) rgb[b];
 
       for (j = 0; j < DA_HEIGHT; j++)
-	gtk_preview_draw_row (GTK_PREVIEW (hsd->hue_partition_da[i]),
+	gtk_preview_draw_row (GTK_PREVIEW (hs_tool->hue_partition_da[i]),
 			      buf, 0, j, DA_WIDTH);
 
       if (update & DRAW)
-	gtk_widget_queue_draw (hsd->hue_partition_da[i]);
+	gtk_widget_queue_draw (hs_tool->hue_partition_da[i]);
     }
-}
-
-static void
-hue_saturation_preview (HueSaturationDialog *hsd)
-{
-  GimpTool *active_tool;
-
-  active_tool = tool_manager_get_active (the_gimp);
-
-  if (!hsd->image_map)
-    {
-      g_warning ("hue_saturation_preview(): No image map");
-      return;
-    }
-
-  gimp_tool_control_set_preserve (active_tool->control, TRUE);
-  image_map_apply (hsd->image_map, hue_saturation, (void *) hsd);
-  gimp_tool_control_set_preserve (active_tool->control, FALSE);
-}
-
-static void
-hue_saturation_reset_callback (GtkWidget *widget,
-			       gpointer   data)
-{
-  HueSaturationDialog *hsd;
-
-  hsd = (HueSaturationDialog *) data;
-
-  hsd->hue[hsd->hue_partition] = 0.0;
-  hsd->lightness[hsd->hue_partition] = 0.0;
-  hsd->saturation[hsd->hue_partition] = 0.0;
-
-  hue_saturation_update (hsd, ALL);
-
-  if (hsd->preview)
-    hue_saturation_preview (hsd);
-}
-
-static void
-hue_saturation_ok_callback (GtkWidget *widget,
-			    gpointer   data)
-{
-  HueSaturationDialog *hsd;
-  GimpTool            *active_tool;
-
-  hsd = (HueSaturationDialog *) data;
-
-  gtk_widget_hide (hsd->shell);
-
-  active_tool = tool_manager_get_active (the_gimp);
-
-  gimp_tool_control_set_preserve (active_tool->control, TRUE);
-
-  if (!hsd->preview)
-    image_map_apply (hsd->image_map, hue_saturation, (gpointer) hsd);
-
-  if (hsd->image_map)
-    image_map_commit (hsd->image_map);
-
-  gimp_tool_control_set_preserve (active_tool->control, FALSE);
-
-  hsd->image_map = NULL;
-
-  active_tool->gdisp    = NULL;
-  active_tool->drawable = NULL;
-}
-
-static void
-hue_saturation_cancel_callback (GtkWidget *widget,
-				gpointer   data)
-{
-  HueSaturationDialog *hsd;
-  GimpTool            *active_tool;
-
-  hsd = (HueSaturationDialog *) data;
-
-  gtk_widget_hide (hsd->shell);
-
-  active_tool = tool_manager_get_active (the_gimp);
-
-  if (hsd->image_map)
-    {
-      gimp_tool_control_set_preserve (active_tool->control, TRUE);
-      image_map_abort (hsd->image_map);
-      gimp_tool_control_set_preserve (active_tool->control, FALSE);
-
-      gimp_image_flush (active_tool->gdisp->gimage);
-      hsd->image_map = NULL;
-    }
-
-  active_tool->gdisp    = NULL;
-  active_tool->drawable = NULL;
 }
 
 static void
 hue_saturation_partition_callback (GtkWidget *widget,
 				   gpointer   data)
 {
-  HueSaturationDialog *hsd;
-  HueRange partition;
+  GimpHueSaturationTool *hs_tool;
+  GimpHueRange           partition;
 
-  hsd = (HueSaturationDialog *) data;
+  hs_tool = GIMP_HUE_SATURATION_TOOL (data);
 
-  partition = (HueRange) g_object_get_data (G_OBJECT (widget),
-					      "hue_partition");
-  hsd->hue_partition = partition;
+  partition = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+                                                  "hue_partition"));
+  hs_tool->hue_partition = partition;
 
-  hue_saturation_update (hsd, ALL);
-}
-
-static void
-hue_saturation_preview_update (GtkWidget *widget,
-			       gpointer   data)
-{
-  HueSaturationDialog *hsd;
-  GimpTool            *active_tool;
-
-  hsd = (HueSaturationDialog *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    {
-      hsd->preview = TRUE;
-      hue_saturation_preview (hsd);
-    }
-  else
-    {
-      hsd->preview = FALSE;
-      if (hsd->image_map)
-	{
-	  active_tool = tool_manager_get_active (the_gimp);
-
-	  gimp_tool_control_set_preserve (active_tool->control, TRUE);
-	  image_map_clear (hsd->image_map);
-	  gimp_tool_control_set_preserve (active_tool->control, FALSE);
-
-	  gimp_image_flush (active_tool->gdisp->gimage);
-	}
-    }
+  hue_saturation_update (hs_tool, ALL);
 }
 
 static void
 hue_saturation_hue_adjustment_update (GtkAdjustment *adjustment,
 				      gpointer       data)
 {
-  HueSaturationDialog *hsd;
+  GimpHueSaturationTool *hs_tool;
+  GimpHueRange           part;
 
-  hsd = (HueSaturationDialog *) data;
+  hs_tool = GIMP_HUE_SATURATION_TOOL (data);
 
-  if (hsd->hue[hsd->hue_partition] != adjustment->value)
+  part = hs_tool->hue_partition;
+
+  if (hs_tool->hue_saturation->hue[part] != adjustment->value)
     {
-      hsd->hue[hsd->hue_partition] = adjustment->value;
-      hue_saturation_update (hsd, DRAW);
+      hs_tool->hue_saturation->hue[part] = adjustment->value;
+      hue_saturation_update (hs_tool, DRAW);
 
-      if (hsd->preview)
-	hue_saturation_preview (hsd);
+      gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (hs_tool));
     }
 }
 
@@ -862,17 +565,19 @@ static void
 hue_saturation_lightness_adjustment_update (GtkAdjustment *adjustment,
 					    gpointer       data)
 {
-  HueSaturationDialog *hsd;
+  GimpHueSaturationTool *hs_tool;
+  GimpHueRange           part;
 
-  hsd = (HueSaturationDialog *) data;
+  hs_tool = GIMP_HUE_SATURATION_TOOL (data);
 
-  if (hsd->lightness[hsd->hue_partition] != adjustment->value)
+  part = hs_tool->hue_partition;
+
+  if (hs_tool->hue_saturation->lightness[part] != adjustment->value)
     {
-      hsd->lightness[hsd->hue_partition] = adjustment->value;
-      hue_saturation_update (hsd, DRAW);
+      hs_tool->hue_saturation->lightness[part] = adjustment->value;
+      hue_saturation_update (hs_tool, DRAW);
 
-      if (hsd->preview)
-	hue_saturation_preview (hsd);
+      gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (hs_tool));
     }
 }
 
@@ -880,29 +585,31 @@ static void
 hue_saturation_saturation_adjustment_update (GtkAdjustment *adjustment,
 					     gpointer       data)
 {
-  HueSaturationDialog *hsd;
+  GimpHueSaturationTool *hs_tool;
+  GimpHueRange           part;
 
-  hsd = (HueSaturationDialog *) data;
+  hs_tool = GIMP_HUE_SATURATION_TOOL (data);
 
-  if (hsd->saturation[hsd->hue_partition] != adjustment->value)
+  part = hs_tool->hue_partition;
+
+  if (hs_tool->hue_saturation->saturation[part] != adjustment->value)
     {
-      hsd->saturation[hsd->hue_partition] = adjustment->value;
-      hue_saturation_update (hsd, DRAW);
+      hs_tool->hue_saturation->saturation[part] = adjustment->value;
+      hue_saturation_update (hs_tool, DRAW);
 
-      if (hsd->preview)
-	hue_saturation_preview (hsd);
+      gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (hs_tool));
     }
 }
 
 static gint
-hue_saturation_hue_partition_events (GtkWidget           *widget,
-				     GdkEvent            *event,
-				     HueSaturationDialog *hsd)
+hue_saturation_hue_partition_events (GtkWidget             *widget,
+				     GdkEvent              *event,
+				     GimpHueSaturationTool *hs_tool)
 {
   switch (event->type)
     {
     case GDK_EXPOSE:
-      hue_saturation_update (hsd, HUE_PARTITION);
+      hue_saturation_update (hs_tool, HUE_PARTITION);
       break;
 
     default:
