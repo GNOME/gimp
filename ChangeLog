@@ -1,3 +1,14 @@
+2003-06-10  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/script-fu/scripts/coffee.scm: added an undo group
+	around all operations.
+
+	* plug-ins/script-fu/scripts/distress-selection.scm: replaced
+	undo disable/enable by an undo group.
+
+	Together fixes bug #114493. Removed weird spacing and indented
+	both scripts to make them readable.
+
 2003-06-09  Sven Neumann  <sven@gimp.org>
 
 	* Made 1.3.15 release.
