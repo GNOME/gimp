@@ -3,40 +3,50 @@ up-to-date and may not even be readable ;)
 
 shortcuts (don't ask)
 
+gimp -b "(extension-perl-server 0 0 0)"
 gimp ~/pix/ka001.jpg -b "(extension-perl-server 0 0 0)"
+file:///usr/app/lib/perl5/site_perl/i686-linux/PDL/HtmlDocs/
 
 bugs
 
+[DONE]  * gimptool 1.0 doesn't support -n or --noui
   * perl_fu_webify in homepage-logo.pl
-  * save_image should be called for non-null return values
-  * drawable is compatible to layer AND VICE VERSA (convert_sv2gimp)
-  * enable t/run.t again (but how? different solutions
+[????]  * save_image should be called for non-null return values
+[DONE]  * drawable is compatible to layer AND VICE VERSA (convert_sv2gimp)
+[DONE]  * enable t/run.t again (but how? different solutions
     for gimp-1.0 and gimp-1.1???)
   * wait for working gimp_file_load (or do it myself?)
-  * block display_new &c when Net
-  * Gimp::import should croak on import "garbage".
-  * memory leak on croak()? de-croakify the code!
+[DONE]  * block display_new &c when Net and --noui
+  * Gimp::import should croak on importing "garbage".
+[DONE]  * memory leak on croak()? de-croakify the code!
   
 important issues
 
-  * gimp_blend && 15 doesn't work
+  * wamp up homepage
+  * --ui and --noui for Gimp::Fu
+  * [PF_CUSTOM]
+  * Gimp::ping
+[DONE]  * Gimp::Net::get_connection ();
+[DONE]  * Gimp::Net::set_connection ($conn);
+  * clean up PKG_ANY vs. PKG_REAL_DRAWABLE
+  * allow plug-ins to register with only a drawable argument(!)
+    (fix this in Gimp)
+  * provide propper overwriting in Gimp::Net::pixel-_rgn ;(
+[DONE]  * gimp_blend && 15 doesn't work
   * gradient button
   * implement Perl-Server RSET and shared lock(!)
-[DONE]  * Gimp::lock && unlock
 [DONE]  * do not special-case INT32 in convert_sv2gimp
-  * substr 4th argument form for Net:: -> require 5.005!!!! DO IT!
+  * substr 4th argument form for Net:: -> require 5.005!!!! DO IT! PLEASE!!!!
   * use Gimp qw(GIMP_HOST=jfjf)???
-  * brushes look inverted
+[DONE]  * brushes are inverted
   * zero-copy PDL support
 [DONE]  * gimp_init, gimp_deinit
-[DONE]  * duplicate HAVE_VPRINTF in gimp
-[DONE]  * get rid of superfluous image arguments
   * weighted movement in drawing tools
   * -DMIN_PERL_DEFINE
   * --function localfunc to select one of the registered scripts
   * brush etc. buttons (maybe use gimp's interface, but
     only when local(?))
-  * help button ;)
+[DONE]  * help button ;)
   * create working progress when Net and $verbose
   * require Storable soon(!)
   * Gimp::Fu::command(?)

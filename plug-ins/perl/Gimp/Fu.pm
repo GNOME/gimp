@@ -169,15 +169,16 @@ sub interact($$$@) {
      $t = new Gtk::Tooltips;
      
      $w = new Gtk::Dialog;
-     set_title $w "$0";
+     set_title $w $0;
      
-     (my $h = new Gtk::HBox 0,2)->show;
-     $h->add(new Gtk::Label wrap_text($blurb,40))->show;
-     (my $p = new Gtk::Button "Help")->show;
-     $h->add($p);
+     my $h = new Gtk::HBox 0,2;
+     $h->add(new Gtk::Label wrap_text($blurb,40));
      $w->vbox->pack_start($h,1,1,0);
+     realize $h;
+     my $l = logo($h);
+     $h->add($l);
      
-     ($g = new Gtk::Table scalar@types,2,0)->show;
+     $g = new Gtk::Table scalar@types,2,0;
      $g->border_width(4);
      $w->vbox->pack_start($g,1,1,0);
      
@@ -212,7 +213,7 @@ sub interact($$$@) {
            my $def = "-*-courier-helvetica-o-normal--34-*-*-*-*-*-*-*";
            my $val;
            
-           (my $l=new Gtk::Label "!error!")->show;
+           my $l=new Gtk::Label "!error!";
            my $setval = sub {
               $val=$_[0];
               unless (defined $val && $fs->set_font_name ($val)) {
@@ -251,21 +252,21 @@ sub interact($$$@) {
            
         } elsif($type == PF_COLOR) {
            $a=new Gtk::HBox (0,5);
-           (my $b=new Gtk::ColorSelectButton -width => 90, -height => 18)->show;
+           my $b=new Gtk::ColorSelectButton -width => 90, -height => 18;
            $a->pack_start ($b,1,1,0);
            $value = [216, 152, 32] unless defined $value;
            push(@setvals,sub{$b->color(join " ",@{Gimp::canonicalize_color $_[0]})});
            push(@getvals,sub{[split ' ',$b->color]});
            set_tip $t $b,$desc;
            
-           (my $c = new Gtk::Button "FG")->show;
+           my $c = new Gtk::Button "FG";
            signal_connect $c "clicked", sub {
              $b->color(join " ",@{Gimp::Palette->get_foreground});
            };
            set_tip $t $c,"get current foreground colour from the gimp";
            $a->pack_start ($c,1,1,0);
            
-           (my $d = new Gtk::Button "BG")->show;
+           my $d = new Gtk::Button "BG";
            signal_connect $d "clicked", sub {
              $b->color(join " ",@{Gimp::Palette->get_background});
            };
@@ -280,14 +281,14 @@ sub interact($$$@) {
         } elsif($type == PF_IMAGE) {
            my $res;
            $a=new Gtk::HBox (0,5);
-           (my $b=new Gtk::OptionMenu)->show;
+           my $b=new Gtk::OptionMenu;
            $b->set_menu(new Gimp::UI::ImageMenu(sub {1},-1,$res));
            $a->pack_start ($b,1,1,0);
            push(@setvals,sub{});
            push(@getvals,sub{$res});
            set_tip $t $b,$desc;
            
-#           (my $c = new Gtk::Button "Load")->show;
+#           my $c = new Gtk::Button "Load";
 #           signal_connect $c "clicked", sub {$res = 2; main_quit Gtk};
 ##           $g->attach($c,1,2,$res,$res+1,{},{},4,2);
 #           $a->pack_start ($c,1,1,0);
@@ -341,20 +342,32 @@ sub interact($$$@) {
         
         $label=new Gtk::Label $label;
         $label->set_alignment(0,0.5);
-        show $label;
         $g->attach($label,0,1,$res,$res+1,{},{},4,2);
         $a && do {
            set_tip $t $a,$desc;
-           show $a;
            $g->attach($a,1,2,$res,$res+1,["expand","fill"],["expand","fill"],4,2);
         };
         $res++;
      }
      
-     (my $v=new Gtk::HBox 0,5)->show;
+     $button = new Gtk::Button "Help";
+     $g->attach($button,0,1,$res,$res+1,{},{},4,2);
+     signal_connect $button "clicked", sub {
+        my $helpwin = new Gtk::Dialog;
+        set_title $helpwin $0;
+        $helpwin->vbox->add(new Gtk::Label "Blurb:\n".wrap_text($blurb,40)
+                                          ."\n\nHelp:\n".wrap_text($help,40));
+        my $button = new Gtk::Button "Close";
+        signal_connect $button "clicked",sub { hide $helpwin };
+        $helpwin->action_area->add($button);
+        
+        show_all $helpwin;
+     };
+     
+     my $v=new Gtk::HBox 0,5;
      $g->attach($v,1,2,$res,$res+1,{},{},4,2);
      
-     ($button = new Gtk::Button "Defaults")->show;
+     $button = new Gtk::Button "Defaults";
      signal_connect $button "clicked", sub {
        for my $i (0..$#defaults) {
          $setvals[$i]->($defaults[$i]);
@@ -363,7 +376,7 @@ sub interact($$$@) {
      set_tip $t $button,"Reset all values to their default";
      $v->add($button);
      
-     ($button = new Gtk::Button "Previous")->show;
+     $button = new Gtk::Button "Previous";
      signal_connect $button "clicked", sub {
        for my $i (0..$#lastvals) {
          $setvals[$i]->($lastvals[$i]);
@@ -379,16 +392,14 @@ sub interact($$$@) {
      $w->action_area->pack_start($button,1,1,0);
      can_default $button 1;
      grab_default $button;
-     show $button;
      
      $button = new Gtk::Button "Cancel";
      signal_connect $button "clicked", sub {hide $w; main_quit Gtk};
      $w->action_area->pack_start($button,1,1,0);
-     show $button;
      
      $res=0;
      
-     show $w;
+     show_all $w;
      main Gtk;
      $w->destroy;
      
@@ -923,6 +934,44 @@ EOF
 sub logo {
    new Gtk::Pixmap(Gtk::Gdk::Pixmap->create_from_xpm_d($_[0]->window,$_[0]->style->black,
       #%XPM:logo%
+      '79 33 25 1', '  c None', '. c #020204', '+ c #848484', '@ c #444444',
+      '# c #C3C3C4', '$ c #252524', '% c #A5A5A4', '& c #646464', '* c #E4E4E4',
+      '= c #171718', '- c #989898', '; c #585858', '> c #D7D7D7', ', c #383838',
+      '\' c #B8B8B8', ') c #787878', '! c #F7F7F8', '~ c #0B0B0C', '{ c #8C8C8C',
+      '] c #4C4C4C', '^ c #CCCCCC', '/ c #2C2C2C', '( c #ABABAC', '_ c #6C6C6C',
+      ': c #EBEBEC',
+      '                                                                               ',
+      '                  ]&@;%                                                        ',
+      '     ;]_        ]];{_,&(              ^{__{^    #);^                           ',
+      '  ]);;+;)      ,//,@;@@)_           #_......_^  (..;                           ',
+      ' ;-\'\'@];@      /$=$/@_@;&          #]........]\' ^..{                           ',
+      ' @@_+%-,,]    ,/$///_^)&@;         -...{^>+./(  \'*^!  {{  ##(  ##\'   {{  ##(   ',
+      '    ;))@/;  //]);/$]_(\');]        %,..+   ^*!   #/,{ #,/%&..@*&..,^ >,,(;..,^  ',
+      '   /,)];]] ,/],+%;_%-#!#()_       \'...> >)_)_))\'\'.._ (..=~...=.~..; ^..=....=> ',
+      '   ,]]&;;] /@;->>+-+{(\'\'-+]       #...# #.....=\'\'..) \'..]*\'..$>>../-^..$##,..- ',
+      '   @_{@/, @$@_^*>(_;_&;{);\']      \'~..> ^,,/../-\'.._ (..{ ^..; \'=./-^..%  #..& ',
+      '   ,&);,& ,])-^:>#%#%+;)>->]       ;..)   >(..; \'..) \'..- #.._ -=./-^..(  ^..& ',
+      '   ,&&%]-&/]]_::^\'#--(#!:#:]&      ^...)^#-~..# \'.._ (..% #.._ %=./-^..,>*;..+ ',
+      '   ,/&%;{%;//_#^#+%+{%#!:-#%]]      -........{  \'..) \'..% #.._ %=./-^..~....~* ',
+      '   ;$@%+)#)@$/-\')%-+-)+^#@;)@,       #@..../\'   #~~) \'~~% #~=_ -/~,-^..)/..=\'  ',
+      '    ,@+(\'#);,={)]%^);@;&@=]] ,        %#\'#^(     (%(  (%   %%(  (%% ^..{>###   ',
+      '     ,@)^#;,/={)_\'-;///$$=;@ ,,                                     ^..{       ',
+      '     ],&)_=$==/])\'+),],,/$)@ @,                %(\'((\'((\'            ^..{       ',
+      '       @@]/=====@-)-]$$, ]_/ ,                 %=~~=~==&            >%%^       ',
+      '          =$@/@,@]/]$=/  ])$ &       {{{{      %=====~=_      \'-{%             ',
+      '          ,$// /$/@ /$,  $,,       %;@,,,;{>   (\'\'\'\'\'\'\'\'      #~.$-            ',
+      '          //=/ $,/; $,,   @@       ($......,>                 #~.${            ',
+      '          /$,  /,,,  @@   ,,       %$..],...{                 ^~.$-            ',
+      '           ],  ]@]   )&    ,       ($..>({..;  #\'+)\'^  ^#\'*>(-!~.${            ',
+      '           @,  --    (;    @       %$..^({..] *,..../* ^.._,.$!~.$-            ',
+      '           _,  @\'   ;\'     )       %$..@@...)!@.$#(=.; ^..~.~,!~.${            ',
+      '           ]/   ])  -      ]       ($......=>^..;--@.~^>...(^#:~.$-            ',
+      '           ;     ;-__      ;       ($../,])> %........#>..@(  #~.${            ',
+      '           _      )*       ]       %$..>{    \'..->^*>>\'>..;   #~.$-            ',
+      '           )      &&+      _       %$..\'     >=.]>>)&^ ^..;   #~.${            ',
+      '          ;-     @;];]    &-       ($..\'      \'~.....+ ^..;   #~.$-            ',
+      '          \')    ]_& @     __       %{))#       >_@,;\'  >)+(   #+){             ',
+      '         &%               @;                                                   '
       #%XPM%
    ))
 }

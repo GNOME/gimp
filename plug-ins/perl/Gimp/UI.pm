@@ -249,11 +249,12 @@ sub set_preview {
       ($name,$opacity,$spacing,$mode,$w,$h,$mask)=Gimp->brushes_get_brush_data ($name);
    }
    $mask=pack("C*",@$mask);
+   $xor="\xff" x $w;
    hide $p;
    my $l=length($mask);
    $p->size ($w, $h);
    while(--$h) {
-     $p->draw_row (substr ($mask, $w*$h), 0, $h, $w);
+     $p->draw_row (substr ($mask, $w*$h) ^ $xor, 0, $h, $w);
    }
    $p->draw(undef);
    show $p;

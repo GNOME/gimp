@@ -2,6 +2,9 @@ Revision history for Gimp-Perl extension.
 
 	- updated configure to require 1.0.2
 	- added some more scripts to the dist
+	- brushes are no longer shown inverted
+	- belp button && logo for Gimp::Fu. the first doesn't work properly
+	  and the second is ugly. feel free to send me a better version.
 
 1.048 Fri Nov 13 20:39:52 CET 1998
 	- Gimp::Fu::save_image now correctly respects the quality setting
