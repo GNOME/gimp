@@ -1,5 +1,10 @@
 2004-09-08  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimppreviewarea.c (gimp_preview_area_fill):
+	optimized solid color fills.
+
+2004-09-08  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimppreviewarea.c: factored out common code.
 	Reduced indentation level by closing a switch earlier.
 

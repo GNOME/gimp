@@ -1462,6 +1462,7 @@ gimp_preview_area_fill (GimpPreviewArea *area,
                         guchar           blue)
 {
   guchar *dest;
+  guchar *d;
   gint    row;
   gint    col;
 
@@ -1500,18 +1501,20 @@ gimp_preview_area_fill (GimpPreviewArea *area,
 
   dest = area->buf + x * 3 + y * area->rowstride;
 
-  for (row = 0; row < height; row++)
+  /*  colorize first row  */
+  for (col = 0, d = dest; col < width; col++, d+= 3)
     {
-      guchar *d = dest;
+      d[0] = red;
+      d[1] = green;
+      d[2] = blue;
+    }
 
-      for (col = 0; col < width; col++, d+= 3)
-        {
-          d[0] = red;
-          d[1] = green;
-          d[2] = blue;
-        }
+  /*  copy first row to remaining rows  */
+  for (row = 1, d = dest; row < height; row++)
+    {
+      d += area->rowstride;
 
-      dest += area->rowstride;
+      memcpy (d, dest, width * 3);
     }
 
   gtk_widget_queue_draw_area (GTK_WIDGET (area), x, y, width, height);
