@@ -36,7 +36,7 @@
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
-
+#include "libgimp/stdplugins-intl.h"
 
 typedef struct
 {
@@ -118,9 +118,11 @@ query ()
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("file_gicon_load",
-                          "loads files of the .ico file format",
-                          "FIXME: write help",
+                          _("loads files of the .ico file format"),
+                          _("FIXME: write help"),
 			  "Spencer Kimball",
 			  "Spencer Kimball",
                           "1997",
@@ -131,8 +133,8 @@ query ()
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_gicon_save",
-                          "saves files in the .ico file format",
-                          "FIXME: write help",
+                          _("saves files in the .ico file format"),
+                          _("FIXME: write help"),
 			  "Spencer Kimball",
 			  "Spencer Kimball",
                           "1997",
@@ -193,6 +195,7 @@ run (char    *name,
 	{
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
+      INIT_I18N_UI();
 	  init_gtk ();
 	  export = gimp_export_image (&image_ID, &drawable_ID, "GIcon", 
 				      (CAN_HANDLE_GRAY | CAN_HANDLE_ALPHA));
@@ -203,6 +206,7 @@ run (char    *name,
 	    }
 	  break;
 	default:
+      INIT_I18N();
 	  break;
 	}
 
@@ -268,7 +272,7 @@ load_image (char *filename)
   /*  Open the requested file  */
   if (! (fp = fopen (filename, "r")))
     {
-      fprintf (stderr, "gicon: can't open \"%s\"\n", filename);
+      fprintf (stderr, _("gicon: can't open \"%s\"\n"), filename);
       return -1;
     }
 
@@ -276,7 +280,7 @@ load_image (char *filename)
   fscanf (fp, "/*  %s icon image format -- S. Kimball, P. Mattis  */\n", name_buf);
   if (strcmp ("GIMP", name_buf))
     {
-      fprintf (stderr, "Not a GIcon file: %s!\n", filename);
+      fprintf (stderr, _("Not a GIcon file: %s!\n"), filename);
       return -1;
     }
 
@@ -429,7 +433,7 @@ save_dialog ()
   GtkWidget *table;
 
   dlg = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(dlg), "Save As GIcon");
+  gtk_window_set_title(GTK_WINDOW(dlg), _("Save As GIcon"));
   gtk_window_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
 		     (GtkSignalFunc) close_callback, NULL);
@@ -442,7 +446,7 @@ save_dialog ()
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) ok_callback,
@@ -451,7 +455,7 @@ save_dialog ()
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -472,7 +476,7 @@ save_dialog ()
   /**********************
    * label
    **********************/
-  label = gtk_label_new("Icon Name:");
+  label = gtk_label_new( _("Icon Name:"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
   gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show(label);

@@ -47,8 +47,10 @@
 #include <math.h>
 #include <time.h>
 
+#include "config.h"
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 /** qbist renderer ***********************************************************/
 
@@ -283,15 +285,15 @@ MAIN()
 
 void query(void)
 {
+  INIT_I18N();
+
         gimp_install_procedure(PLUG_IN_NAME, 
-                               "Create images based on a random genetic formula", 
-                               "This Plug-in is based on an article by "
-                               "Jörn Loviscach (appeared in c't 10/95, page 326). It generates modern art "
-                               "pictures from a random genetic formula.", 
+                               _("Create images based on a random genetic formula"), 
+                               _("This Plug-in is based on an article by Jörn Loviscach (appeared in c't 10/95, page 326). It generates modern art pictures from a random genetic formula."), 
                                "Jörn Loviscach, Jens Ch. Restemeier", 
                                "Jörn Loviscach, Jens Ch. Restemeier", 
                                PLUG_IN_VERSION, 
-                               "<Image>/Filters/Render/Pattern/Qbist...", 
+                               N_("<Image>/Filters/Render/Pattern/Qbist..."), 
                                "RGB*", 
                                PROC_PLUG_IN, 
                                nargs, 
@@ -320,6 +322,12 @@ void run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **ret
 	if (param[0].type!=PARAM_INT32)
 		status=STATUS_CALLING_ERROR;
         run_mode = param[0].data.d_int32;
+
+        if (run_mode == RUN_INTERACTIVE) {
+          INIT_I18N_UI();
+        } else {
+          INIT_I18N();
+        }
 
         if (param[2].type!=PARAM_DRAWABLE)
 		status=STATUS_CALLING_ERROR;
@@ -373,7 +381,7 @@ void run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **ret
 
 			optimize(qbist_info);
 
-			gimp_progress_init ("Qbist ...");
+			gimp_progress_init ( _("Qbist ..."));
 			for (row=sel_y1; row<sel_y2; row++) {
 				qbist(qbist_info, (gchar *)row_data, 0, row, sel_x2-sel_x1, sel_x2-sel_x1, sel_y2-sel_y1, img_bpp);
 				gimp_pixel_rgn_set_row(&imagePR, row_data, sel_x1, row, (sel_x2-sel_x1));
@@ -502,7 +510,7 @@ void file_selection_cancel(GtkWidget *widget, GtkWidget *file_select)
 void dialog_load(GtkWidget *widget, gpointer d)
 {
 	GtkWidget *file_select;
-	file_select = gtk_file_selection_new ("Load QBE file...");
+	file_select = gtk_file_selection_new ( _("Load QBE file..."));
 	gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (file_select)->ok_button), 
 		"clicked", (GtkSignalFunc) file_selection_load, 
 		(gpointer)file_select);
@@ -515,7 +523,7 @@ void dialog_load(GtkWidget *widget, gpointer d)
 void dialog_save(GtkWidget *widget, gpointer d)
 {
 	GtkWidget *file_select;
-	file_select=gtk_file_selection_new("Save (middle transform) as QBE file...");
+	file_select=gtk_file_selection_new( _("Save (middle transform) as QBE file..."));
 	gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (file_select)->ok_button), 
 		"clicked", (GtkSignalFunc) file_selection_save, 
 		(gpointer)file_select);
@@ -558,7 +566,7 @@ int dialog_create()
 	gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
 	dialog=gtk_dialog_new ();
-	gtk_window_set_title (GTK_WINDOW(dialog), "G-Qbist 1.10");
+	gtk_window_set_title (GTK_WINDOW(dialog), _("G-Qbist 1.10"));
 	gtk_signal_connect (GTK_OBJECT (dialog), "destroy", 
 		(GtkSignalFunc) dialog_close, 
 		NULL);
@@ -590,7 +598,7 @@ int dialog_create()
 
 	dialog_update_previews(NULL, NULL);
 	                                                                                                                          
-	button = gtk_button_new_with_label ("OK");
+	button = gtk_button_new_with_label ( _("OK"));
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 		(GtkSignalFunc) dialog_ok, 
 		(gpointer) dialog);
@@ -598,7 +606,7 @@ int dialog_create()
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
 	gtk_widget_show (button);
 
-	button = gtk_button_new_with_label ("Load");
+	button = gtk_button_new_with_label ( _("Load"));
 	gtk_signal_connect(GTK_OBJECT(button), "clicked", 
 		(GtkSignalFunc)dialog_load, 
 		(gpointer)dialog);
@@ -606,7 +614,7 @@ int dialog_create()
 	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
 	gtk_widget_show(button);
 
-	button = gtk_button_new_with_label ("Save");
+	button = gtk_button_new_with_label ( _("Save"));
 	gtk_signal_connect(GTK_OBJECT(button), "clicked", 
 		(GtkSignalFunc)dialog_save, 
 		(gpointer)dialog);
@@ -614,7 +622,7 @@ int dialog_create()
 	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
 	gtk_widget_show(button);
 
-	button = gtk_button_new_with_label ("Cancel");
+	button = gtk_button_new_with_label ( _("Cancel"));
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 		(GtkSignalFunc) dialog_cancel, 
 		(gpointer) dialog);

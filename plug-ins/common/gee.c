@@ -28,8 +28,9 @@
 #include <time.h>
 
 #include "glib.h"
-#include "libgimp/gimp.h"
 #include "gtk/gtk.h"
+#include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 /* Test for GTK1.2-style gdkrgb code, else use old 'preview' code. */
 #ifdef __GDK_RGB_H__
@@ -126,13 +127,15 @@ static void query()
   static int nargs = sizeof(args) / sizeof(args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure("plug_in_the_egg",
-			 "A big hello from the GIMP team!",
-			 "",
+			 _("A big hello from the GIMP team!"),
+			 _("FIXME: write help"),
 			 "Adam D. Moss <adam@gimp.org>",
 			 "Adam D. Moss <adam@gimp.org>",
 			 "1998",
-			 "<Image>/Filters/Toys/The Egg...",
+			 N_("<Image>/Filters/Toys/The Egg..."),
 			 /*NULL,*/
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
@@ -153,6 +156,8 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
   SRAND_FUNC (time(0));
 
   run_mode = param[0].data.d_int32;
+
+  INIT_I18N_UI();
 
   /*  if (run_mode == RUN_NONINTERACTIVE) {*/
     if (n_params != 3)
@@ -223,7 +228,7 @@ build_dialog(GImageType basetype,
 
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "GEE!  The GIMP E'er Egg!");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("GEE!  The GIMP E'er Egg!"));
 
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "delete_event",
@@ -233,7 +238,7 @@ build_dialog(GImageType basetype,
   
   /* Action area - 'close' button only. */
 
-  button = gtk_button_new_with_label ("** Thank you for choosing GIMP **");
+  button = gtk_button_new_with_label ( _("** Thank you for choosing GIMP **"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) window_close_callback,

@@ -52,8 +52,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "config.h"
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 /* Typedefs */
 
@@ -145,9 +147,11 @@ query ()
 
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("file_GTM_save",
-                          "GIMP Table Magic",
-                          "Allows you to draw an HTML table in GIMP. See help for more info.",
+                          _("GIMP Table Magic"),
+                          _("Allows you to draw an HTML table in GIMP. See help for more info."),
                           "Daniel Dunbar",
                           "Daniel Dunbar",
                           "1998",
@@ -169,6 +173,8 @@ run (char    *name,
 {
   static GParam values[2];
   GDrawable *drawable;
+
+  INIT_I18N_UI();
 
   drawable = gimp_drawable_get (param[2].data.d_int32);
 
@@ -217,7 +223,7 @@ save_image (char   *filename,
     fprintf (fp,"<CAPTION>%s</CAPTION>\n",gtmvals.captiontxt); 
 
   name = g_malloc (strlen (filename) + 11);
-  sprintf (name, "Saving %s:", filename);
+  sprintf (name, _("Saving %s:"), filename);
   gimp_progress_init (name);
   g_free (name);
 
@@ -349,7 +355,7 @@ static gint save_dialog ()
   gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "GIMP HTML Magic");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("GIMP HTML Magic"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
                       (GtkSignalFunc) save_close_callback,
@@ -378,7 +384,7 @@ static gint save_dialog ()
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) save_ok_callback,
@@ -387,7 +393,7 @@ static gint save_dialog ()
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -397,25 +403,25 @@ static gint save_dialog ()
 
   /* HTML Page Options */
 
-  frame = gtk_frame_new ("HTML Page Options");
+  frame = gtk_frame_new ( _("HTML Page Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg) -> vbox), frame, TRUE, TRUE, 0);
 
-  toggle = gtk_check_button_new_with_label ("Generate Full HTML Document");
+  toggle = gtk_check_button_new_with_label ( _("Generate Full HTML Document"));
   gtk_container_add (GTK_CONTAINER(frame), toggle);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) gtm_toggle_callback, 
 		      &gtmvals.fulldoc);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gtmvals.fulldoc);
   gtk_widget_show (toggle);
-  set_tooltip(tips,toggle,"If checked GTM will output a full HTML document with <HTML>, <BODY>, etc. tags instead of just the table html.");
+  set_tooltip(tips,toggle, _("If checked GTM will output a full HTML document with <HTML>, <BODY>, etc. tags instead of just the table html."));
 
   gtk_widget_show (frame);
 
   /* HTML Table Creation Options */
 
-  frame = gtk_frame_new ("Table Creation Options");
+  frame = gtk_frame_new ( _("Table Creation Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg) -> vbox), frame, TRUE, TRUE, 0);
@@ -424,32 +430,32 @@ static gint save_dialog ()
   gtk_container_border_width (GTK_CONTAINER (table), 10);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  toggle = gtk_check_button_new_with_label ("Use Cellspan");
+  toggle = gtk_check_button_new_with_label ( _("Use Cellspan"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 0, 1, GTK_FILL, 0, 5, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		     (GtkSignalFunc) gtm_toggle_callback, 
 		     &gtmvals.spantags);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gtmvals.spantags);
   gtk_widget_show (toggle);
-  set_tooltip(tips,toggle,"If checked GTM will replace any rectangular sections of identically colored blocks with one large cell with ROWSPAN and COLSPAN values.");
+  set_tooltip(tips,toggle, _("If checked GTM will replace any rectangular sections of identically colored blocks with one large cell with ROWSPAN and COLSPAN values."));
 
-  toggle = gtk_check_button_new_with_label ("Compress TD tags");
+  toggle = gtk_check_button_new_with_label ( _("Compress TD tags"));
   gtk_table_attach (GTK_TABLE (table), toggle, 1, 2, 0, 1, GTK_FILL, 0, 5, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		     (GtkSignalFunc) gtm_toggle_callback, 
 		     &gtmvals.tdcomp);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gtmvals.tdcomp);
   gtk_widget_show (toggle);
-  set_tooltip(tips,toggle,"Checking this tag will cause GTM to leave no whitespace between the TD tags and the cellcontent.  This is only necessary for pixel level positioning control.");
+  set_tooltip(tips,toggle, _("Checking this tag will cause GTM to leave no whitespace between the TD tags and the cellcontent.  This is only necessary for pixel level positioning control."));
 
-  toggle = gtk_check_button_new_with_label ("Caption");
+  toggle = gtk_check_button_new_with_label ( _("Caption"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 1, 2, GTK_FILL, 0, 5, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		     (GtkSignalFunc) gtm_toggle_callback, 
 		     &gtmvals.caption);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gtmvals.caption);
   gtk_widget_show (toggle);
-  set_tooltip(tips,toggle,"Check if you would like to have the table captioned.");
+  set_tooltip(tips,toggle, _("Check if you would like to have the table captioned."));
 
   entry = gtk_entry_new ();
   gtk_table_attach (GTK_TABLE (table), entry, 1, 2, 1, 2, GTK_FILL, 0, 5, 0);
@@ -459,9 +465,9 @@ static gint save_dialog ()
                     NULL);
   gtk_entry_set_text (GTK_ENTRY (entry), gtmvals.captiontxt);
   gtk_widget_show (entry);
-  set_tooltip(tips,entry,"The text for the table caption.");
+  set_tooltip(tips,entry, _("The text for the table caption."));
 
-  label = gtk_label_new ("Cell Content");
+  label = gtk_label_new ( _("Cell Content"));
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3, GTK_FILL, 0, 5, 0);
   gtk_widget_show (label);
 
@@ -473,14 +479,14 @@ static gint save_dialog ()
                     NULL);
   gtk_entry_set_text (GTK_ENTRY (entry), gtmvals.cellcontent);
   gtk_widget_show (entry);
-  set_tooltip(tips,entry,"The text to go into each cell.");
+  set_tooltip(tips,entry, _("The text to go into each cell."));
 
   gtk_widget_show (table);
   gtk_widget_show (frame);
  
   /* HTML Table Options */
 
-  frame = gtk_frame_new ("Table Options");
+  frame = gtk_frame_new ( _("Table Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg) -> vbox), frame, TRUE, TRUE, 0);
@@ -489,7 +495,7 @@ static gint save_dialog ()
   gtk_container_border_width (GTK_CONTAINER (table), 10);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  label = gtk_label_new ("Border");
+  label = gtk_label_new ( _("Border"));
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL, 0, 5, 0);
   gtk_widget_show (label);
 
@@ -502,9 +508,9 @@ static gint save_dialog ()
   sprintf(buffer, "%d", gtmvals.border);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_widget_show (entry);
-  set_tooltip(tips,entry,"The number of pixels in the table border.  Can only be a number.");
+  set_tooltip(tips,entry, _("The number of pixels in the table border.  Can only be a number."));
 
-  label = gtk_label_new ("Width");
+  label = gtk_label_new ( _("Width"));
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL, 0, 5, 0);
   gtk_widget_show (label);
     
@@ -516,9 +522,9 @@ static gint save_dialog ()
                       NULL);
   gtk_entry_set_text (GTK_ENTRY (entry), gtmvals.clwidth);
   gtk_widget_show (entry);
-  set_tooltip(tips,entry,"The width for each table cell.  Can be a number or a percent.");
+  set_tooltip(tips,entry, _("The width for each table cell.  Can be a number or a percent."));
 
-  label = gtk_label_new ("Height");
+  label = gtk_label_new ( _("Height"));
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3, GTK_FILL, 0, 5, 0);
   gtk_widget_show (label);
 
@@ -530,9 +536,9 @@ static gint save_dialog ()
                       NULL);
   gtk_entry_set_text (GTK_ENTRY (entry), gtmvals.clheight);
   gtk_widget_show (entry);
-  set_tooltip(tips,entry,"The height for each table cell.  Can be a number or a percent.");
+  set_tooltip(tips,entry, _("The height for each table cell.  Can be a number or a percent."));
 
-  label = gtk_label_new ("Cell-Padding");
+  label = gtk_label_new ( _("Cell-Padding"));
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1, GTK_FILL, 0, 5, 0);
   gtk_widget_show (label);
 
@@ -545,10 +551,10 @@ static gint save_dialog ()
   sprintf(buffer, "%d", gtmvals.cellpadding);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_widget_show (entry);
-  set_tooltip(tips,entry,"The amount of cellpadding.  Can only be a number.");
+  set_tooltip(tips,entry, _("The amount of cellpadding.  Can only be a number."));
 
 
-  label = gtk_label_new ("Cell-Spacing");
+  label = gtk_label_new ( _("Cell-Spacing"));
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 1, 2, GTK_FILL, 0, 5, 0);
   gtk_widget_show (label);
 
@@ -561,7 +567,7 @@ static gint save_dialog ()
   sprintf(buffer, "%d", gtmvals.cellspacing);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gtk_widget_show (entry);
-  set_tooltip(tips,entry,"The amount of cellspacing.  Can only be a number.");
+  set_tooltip(tips,entry, _("The amount of cellspacing.  Can only be a number."));
 
 
   gtk_widget_show (frame);

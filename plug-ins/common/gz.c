@@ -88,7 +88,9 @@
 #include <process.h>
 #endif
 
+#include "config.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 /* Author 1: Josh MacDonald (url.c) */
 /* Author 2: Daniel Risacher (gz.c) */
@@ -152,9 +154,11 @@ query ()
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("file_gz_load",
-                          "loads files compressed with gzip",
-                          "You need to have gzip installed.",
+                          _("loads files compressed with gzip"),
+                          _("You need to have gzip installed."),
                           "Daniel Risacher",
                           "Daniel Risacher, Spencer Kimball and Peter Mattis",
                           "1995-1997",
@@ -165,8 +169,8 @@ query ()
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_gz_save",
-                          "saves files compressed with gzip",
-                          "You need to have gzip installed",
+                          _("saves files compressed with gzip"),
+                          _("You need to have gzip installed"),
                           "Daniel Risacher",
                           "Daniel Risacher, Spencer Kimball and Peter Mattis",
                           "1995-1997",
@@ -195,6 +199,8 @@ run (char    *name,
   gint32 image_ID;
 
   run_mode = param[0].data.d_int32;
+
+  INIT_I18N();
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -258,7 +264,7 @@ static int spawn_gzip(char *filename, char* tmpname, char *parms, int *pid)
   int tfd;
   
   if (!(f = fopen(filename,"w"))){
-    g_message("gz: fopen failed: %s\n", g_strerror(errno));
+    g_message( _("gz: fopen failed: %s\n"), g_strerror(errno));
     return -1;
   }
 
@@ -267,7 +273,7 @@ static int spawn_gzip(char *filename, char* tmpname, char *parms, int *pid)
   /* make stdout for this process be the output file */
   if (dup2(fileno(f),fileno(stdout)) == -1)
     {
-      g_message ("gz: dup2 failed: %s\n", g_strerror(errno));
+      g_message ( _("gz: dup2 failed: %s\n"), g_strerror(errno));
       close(tfd);
       return -1;
     }
@@ -279,7 +285,7 @@ static int spawn_gzip(char *filename, char* tmpname, char *parms, int *pid)
   close(tfd);
   if (*pid == -1)
     {
-      g_message ("gz: spawn failed: %s\n", g_strerror(errno));
+      g_message ( _("gz: spawn failed: %s\n"), g_strerror(errno));
       return -1;
     }
   return 0;  
@@ -310,7 +316,7 @@ save_image (char   *filename,
 
   ext = find_extension(filename);
   if (0 == *ext) {
-    g_message("gz: no sensible extension, saving as gzip'd xcf\n");
+    g_message( _("gz: no sensible extension, saving as gzip'd xcf\n"));
     ext = ".xcf";
   }
 
@@ -350,7 +356,7 @@ save_image (char   *filename,
   /* fork off a gzip process */
   if ((pid = fork()) < 0)
     {
-      g_message ("gz: fork failed: %s\n", g_strerror(errno));
+      g_message ( _("gz: fork failed: %s\n"), g_strerror(errno));
       g_free (tmpname);
       return -1;
     }
@@ -358,18 +364,18 @@ save_image (char   *filename,
     {
 
       if (!(f = fopen(filename,"w"))) {
-	      g_message("gz: fopen failed: %s\n", g_strerror(errno));
+	      g_message( _("gz: fopen failed: %s\n"), g_strerror(errno));
 	      g_free (tmpname);
 	      _exit(127);
       }
 
       /* make stdout for this process be the output file */
       if (-1 == dup2(fileno(f),fileno(stdout)))
-	g_message ("gz: dup2 failed: %s\n", g_strerror(errno));
+	g_message ( _("gz: dup2 failed: %s\n"), g_strerror(errno));
 
       /* and gzip into it */
       execlp ("gzip", "gzip", "-cf", tmpname, NULL);
-      g_message ("gz: exec failed: gzip: %s\n", g_strerror(errno));
+      g_message ( _("gz: exec failed: gzip: %s\n"), g_strerror(errno));
       g_free (tmpname);
       _exit(127);
     }
@@ -387,7 +393,7 @@ save_image (char   *filename,
       if (!WIFEXITED(status) ||
 	  WEXITSTATUS(status) != 0)
 	{
-	  g_message ("gz: gzip exited abnormally on file %s\n", tmpname);
+	  g_message ( _("gz: gzip exited abnormally on file %s\n"), tmpname);
 	  g_free (tmpname);
 	  return 0;
 	}
@@ -401,7 +407,7 @@ save_image (char   *filename,
 		       &secattr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL))
       == INVALID_HANDLE_VALUE)
     {
-      g_message ("gz: CreateFile failed\n");
+      g_message ( _("gz: CreateFile failed\n"));
       g_free (tmpname);
       _exit (127);
     }
@@ -425,7 +431,7 @@ save_image (char   *filename,
 		      TRUE, NORMAL_PRIORITY_CLASS, NULL, NULL,
 		      &startupinfo, &processinfo))
     {
-      g_message ("gz: CreateProcess failed\n");
+      g_message ( _("gz: CreateProcess failed\n"));
       g_free (tmpname);
       _exit (127);
     }
@@ -461,7 +467,7 @@ load_image (char *filename, gint32 run_mode)
 
   ext = find_extension(filename);
   if (0 == *ext) {
-    g_message("gz: no sensible extension, attempting to load with file magic\n");
+    g_message( _("gz: no sensible extension, attempting to load with file magic\n"));
   }
 
   /* find a temp name */
@@ -480,7 +486,7 @@ load_image (char *filename, gint32 run_mode)
   /* fork off a g(un)zip and wait for it */
   if ((pid = fork()) < 0)
     {
-      g_message ("gz: fork failed: %s\n", g_strerror(errno));
+      g_message ( _("gz: fork failed: %s\n"), g_strerror(errno));
       g_free (tmpname);
       return -1;
     }
@@ -488,7 +494,7 @@ load_image (char *filename, gint32 run_mode)
     {
       FILE* f;
        if (!(f = fopen(tmpname,"w"))){
-	      g_message("gz: fopen failed: %s\n", g_strerror(errno));
+	      g_message( _("gz: fopen failed: %s\n"), g_strerror(errno));
 	      g_free (tmpname);
 	      _exit(127);
       }
@@ -497,12 +503,12 @@ load_image (char *filename, gint32 run_mode)
       if (-1 == dup2(fileno(f),fileno(stdout)))
 	{
 	  g_free (tmpname);
-	  g_message ("gz: dup2 failed: %s\n", g_strerror(errno));
+	  g_message ( _("gz: dup2 failed: %s\n"), g_strerror(errno));
 	}
       
       /* and unzip into it */
       execlp ("gzip", "gzip", "-cfd", filename, NULL);
-      g_message ("gz: exec failed: gunzip: %s\n", g_strerror(errno));
+      g_message ( _("gz: exec failed: gunzip: %s\n"), g_strerror(errno));
       g_free (tmpname);
       _exit(127);
     }
@@ -520,7 +526,7 @@ load_image (char *filename, gint32 run_mode)
       if (!WIFEXITED(status) ||
 	  WEXITSTATUS(status) != 0)
 	{
-	  g_message ("gz: gzip exited abnormally on file %s\n", filename);
+	  g_message ( _("gz: gzip exited abnormally on file %s\n"), filename);
 	  g_free (tmpname);
 	  return -1;
 	}
@@ -534,7 +540,7 @@ load_image (char *filename, gint32 run_mode)
 		       &secattr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL))
       == INVALID_HANDLE_VALUE)
     {
-      g_message ("gz: CreateFile failed\n");
+      g_message ( _("gz: CreateFile failed\n"));
       g_free (tmpname);
       _exit (127);
     }
@@ -558,7 +564,7 @@ load_image (char *filename, gint32 run_mode)
 		      TRUE, NORMAL_PRIORITY_CLASS, NULL, NULL,
 		      &startupinfo, &processinfo))
     {
-      g_message ("gz: CreateProcess failed: %d\n", GetLastError ());
+      g_message ( _("gz: CreateProcess failed: %d\n"), GetLastError ());
       g_free (tmpname);
       _exit (127);
     }

@@ -38,6 +38,7 @@
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
+#include "libgimp/stdplugins-intl.h"
 #include "app/brush_header.h"
 
 
@@ -120,9 +121,11 @@ query ()
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("file_gbr_load",
-                          "loads files of the .gbr file format",
-                          "FIXME: write help",
+                          _("loads files of the .gbr file format"),
+                          _("FIXME: write help"),
                           "Tim Newsome",
                           "Tim Newsome",
                           "1997",
@@ -133,8 +136,8 @@ query ()
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_gbr_save",
-                          "saves files in the .gbr file format",
-                          "Yeah!",
+                          _("saves files in the .gbr file format"),
+                          _("Yeah!"),
                           "Tim Newsome",
                           "Tim Newsome",
                           "1997",
@@ -193,6 +196,7 @@ run (char    *name,
 	{
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
+      INIT_I18N_UI();
 	  init_gtk ();
 	  export = gimp_export_image (&image_ID, &drawable_ID, "GBR", 
 				      CAN_HANDLE_GRAY);
@@ -204,6 +208,7 @@ run (char    *name,
 	    }
 	  break;
 	default:
+      INIT_I18N();
 	  break;
 	}
 
@@ -256,7 +261,7 @@ load_image (char *filename)
   int version_extra;
   
   temp = g_malloc(strlen (filename) + 11);
-  sprintf(temp, "Loading %s:", filename);
+  sprintf(temp, _("Loading %s:"), filename);
   gimp_progress_init(temp);
   g_free (temp);
   
@@ -318,7 +323,7 @@ load_image (char *filename)
   image_ID = gimp_image_new (ph.width, ph.height, (ph.bytes >= 3) ? RGB : GRAY);
   gimp_image_set_filename (image_ID, filename);
   
-  layer_ID = gimp_layer_new (image_ID, "Background", ph.width, ph.height,
+  layer_ID = gimp_layer_new (image_ID, _("Background"), ph.width, ph.height,
 			     (ph.bytes >= 3) ? RGB_IMAGE : GRAY_IMAGE, 100, NORMAL_MODE);
   gimp_image_add_layer (image_ID, layer_ID, 0);
 
@@ -362,7 +367,7 @@ save_image (char   *filename,
     return FALSE;
   
   temp = g_malloc(strlen (filename) + 10);
-  sprintf(temp, "Saving %s:", filename);
+  sprintf(temp, _("Saving %s:"), filename);
   gimp_progress_init(temp);
   g_free(temp);
   
@@ -374,7 +379,7 @@ save_image (char   *filename,
   
   if (fd == -1) 
     {
-      g_message("Unable to open %s", filename);
+      g_message( _("Unable to open %s"), filename);
       return 0;
     }
 
@@ -443,7 +448,7 @@ save_dialog (void)
   gchar buffer[12];
   
   dlg = gtk_dialog_new();
-  gtk_window_set_title (GTK_WINDOW(dlg), "Save As Brush");
+  gtk_window_set_title (GTK_WINDOW(dlg), _("Save As Brush"));
   gtk_window_position (GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT(dlg), "destroy",
 		      (GtkSignalFunc) close_callback, NULL);
@@ -456,7 +461,7 @@ save_dialog (void)
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) ok_callback,
@@ -465,7 +470,7 @@ save_dialog (void)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -486,7 +491,7 @@ save_dialog (void)
   /**********************
    * label
    **********************/
-  label = gtk_label_new("Spacing:");
+  label = gtk_label_new( _("Spacing:"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
   gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0,
 		   0);
@@ -508,7 +513,7 @@ save_dialog (void)
   /**********************
    * label
    **********************/
-  label = gtk_label_new("Description:");
+  label = gtk_label_new( _("Description:"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
   gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2, GTK_FILL, GTK_FILL, 0,
 		   0);

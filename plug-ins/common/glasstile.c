@@ -31,10 +31,11 @@
  * 
  */ 
 
-
 #include <stdlib.h>
+#include "config.h"
 #include "libgimp/gimp.h"
 #include "gtk/gtk.h"
+#include "libgimp/stdplugins-intl.h"
 
 /* --- Typedefs --- */
 typedef struct {
@@ -94,13 +95,15 @@ static void query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0; 
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_glasstile",
-			  "Divide the image into square glassblocks",
-			  "More here later",
+			  _("Divide the image into square glassblocks"),
+			  _("More here later"),
 			  "Karl-Johan Andersson", /* Author */
 			  "Karl-Johan Andersson", /* Copyright */
 			  "1997",
-			  "<Image>/Filters/Glass Effects/Glass Tile...",
+			  N_("<Image>/Filters/Glass Effects/Glass Tile..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -132,6 +135,7 @@ static void run (gchar   *name,
   switch (run_mode)
     {
     case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_glasstile", &gtvals);
       
@@ -144,6 +148,7 @@ static void run (gchar   *name,
       break;
       
     case RUN_NONINTERACTIVE:
+      INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 5)
 	status = STATUS_CALLING_ERROR;
@@ -159,6 +164,7 @@ static void run (gchar   *name,
       break;
       
     case RUN_WITH_LAST_VALS:
+      INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_glasstile", &gtvals);
       break;
@@ -172,7 +178,7 @@ static void run (gchar   *name,
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
 	{
-	  gimp_progress_init ("Glass Tile...");
+	  gimp_progress_init ( _("Glass Tile..."));
 	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 	  
 	  glasstile (drawable);
@@ -216,7 +222,7 @@ static gint glass_dialog ()
   gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Glass Tile");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Glass Tile"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) glass_close_callback,
@@ -230,7 +236,7 @@ static gint glass_dialog ()
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) glass_ok_callback,
@@ -239,7 +245,7 @@ static gint glass_dialog ()
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -248,7 +254,7 @@ static gint glass_dialog ()
   gtk_widget_show (button);
 
   /*  Parameter settings  */
-  frame = gtk_frame_new ("Parameter Settings");
+  frame = gtk_frame_new ( _("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -257,7 +263,7 @@ static gint glass_dialog ()
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   /* Horizontal scale - Width */
-  label = gtk_label_new ("Tile Width");
+  label = gtk_label_new ( _("Tile Width"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL, 0, 5, 0);
   /* xStart, xEnd, yStart, yEnd */
@@ -277,7 +283,7 @@ static gint glass_dialog ()
   gtk_widget_show (scale);
 
   /* Horizontal scale - Height */
-  label = gtk_label_new ("Tile Height");
+  label = gtk_label_new ( _("Tile Height"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL, 0, 5, 0);
 

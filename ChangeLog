@@ -1,3 +1,17 @@
+1999-12-26  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* plug-ins/common/gbr.c
+	* plug-ins/common/gee.c
+	* plug-ins/common/gicon.c
+	* plug-ins/common/glasstile.c
+	* plug-ins/common/gpb.c
+	* plug-ins/common/gqbist.c
+	* plug-ins/common/gradmap.c
+	* plug-ins/common/gtm.c
+	* plug-ins/common/gz.c
+	* plug-ins/common/hot.c
+	* po-plug-ins/POTFILES.in: Added gettext support.
+
 1999-12-25 Garry R. Osgood <gosgood@idt.net>
         Season's Greetings!
         * app/clone.c

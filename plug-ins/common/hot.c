@@ -67,8 +67,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "config.h"
 #include <libgimp/gimp.h>
 #include <gtk/gtk.h>
+#include "libgimp/stdplugins-intl.h"
 #include <plug-ins/megawidget/megawidget.h>
 
 struct Grgb {
@@ -202,17 +204,15 @@ query(void){
   static GParamDef *rets = NULL;
   static int nrets = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure("plug_in_hot",
-                         "Look for hot NTSC or PAL pixels ",
-                         "hot scans an image for pixels that will give "
-			 "unsave values of chrominance or composite "
-			 "signale amplitude when encoded into an NTSC "
-			 "or PAL signal.  Three actions can be performed on these ``hot'' "
-			 "pixels. (0) reduce luminance, (1) reduce saturation, or (2) Blacken.",
+                         _("Look for hot NTSC or PAL pixels "),
+                         _("hot scans an image for pixels that will give unsave values of chrominance or composite signale amplitude when encoded into an NTSC or PAL signal.  Three actions can be performed on these ``hot'' pixels. (0) reduce luminance, (1) reduce saturation, or (2) Blacken."),
                          "Eric L. Hernes, Alan Wm Paeth",
                          "Eric L. Hernes",
                          "1997",
-                         "<Image>/Filters/Colors/Hot...",
+                         N_("<Image>/Filters/Colors/Hot..."),
                          "RGB",
                          PROC_PLUG_IN,
                          nargs, nrets,
@@ -241,6 +241,7 @@ run(char *name, int nparam, GParam *param,
   rvals[0].data.d_status = STATUS_SUCCESS;
   switch (param[0].data.d_int32) {
     case RUN_INTERACTIVE:
+    INIT_I18N_UI();
       /* XXX: add code here for interactive running */
       if(args.mode == -1) {
          args.mode = mode_ntsc;
@@ -256,6 +257,7 @@ run(char *name, int nparam, GParam *param,
     break;
 
     case RUN_NONINTERACTIVE:
+    INIT_I18N();
       /* XXX: add code here for non-interactive running */
       if (nparam != 6) {
         rvals[0].data.d_status = STATUS_CALLING_ERROR;
@@ -272,6 +274,7 @@ run(char *name, int nparam, GParam *param,
     break;
 
     case RUN_WITH_LAST_VALS:
+    INIT_I18N();
       /* XXX: add code here for last-values running */
       if (pluginCore(&args)==-1) {
         rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
@@ -343,7 +346,7 @@ pluginCore(struct piArgs *argp) {
 
   build_tab(argp->mode);
 
-  gimp_progress_init("Hot");
+  gimp_progress_init( _("Hot"));
   prog_interval=height/10;
   
   for(y=0;y<height;y++) {
@@ -503,13 +506,17 @@ pluginCoreIA(struct piArgs *argp) {
      { NULL, 0 }
   };
   struct mwRadioGroup actions[] = {
-     { "Reduce Luminance", 0 },
-     { "Reduce Saturation", 0 },
-     { "Blacken (flag)", 0 },
+     { N_("Reduce Luminance"), 0 },
+     { N_("Reduce Saturation"), 0 },
+     { N_("Blacken (flag)"), 0 },
      { NULL, 0}
   };
   gchar **argv;
   gint argc;
+  gint i;
+
+  for (i = 0; actions[i].name != NULL; i++)
+     actions[i].name = gettext(actions[i].name);
 
   /* Set args */
   argc = 1;
@@ -520,7 +527,7 @@ pluginCoreIA(struct piArgs *argp) {
 
   actions[argp->action].var = 1;
 
-  dlg = mw_app_new("plug_in_hot", "Hot", &runp);
+  dlg = mw_app_new("plug_in_hot", _("Hot"), &runp);
   hbox = gtk_hbox_new(FALSE, 5);
   gtk_container_border_width(GTK_CONTAINER(hbox), 5);
   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), hbox, TRUE, TRUE, 0);
@@ -530,10 +537,10 @@ pluginCoreIA(struct piArgs *argp) {
   gtk_box_pack_start(GTK_BOX(hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show(vbox);
 
-  mw_toggle_button_new(vbox, NULL, "Create New Layer", &argp->new_layerp);
-  mw_radio_group_new(vbox, "Mode", modes);
+  mw_toggle_button_new(vbox, NULL, _("Create New Layer"), &argp->new_layerp);
+  mw_radio_group_new(vbox, _("Mode"), modes);
 
-  mw_radio_group_new(hbox, "Action", actions);
+  mw_radio_group_new(hbox, _("Action"), actions);
 
   gtk_widget_show(dlg);
   gtk_main();

@@ -49,7 +49,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "config.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 #ifdef RCSID
 static char rcsid[] = "$Id$";
@@ -96,22 +98,16 @@ query()
   static GParamDef *return_vals = NULL;
   static gint nargs = sizeof (args) / sizeof (args[0]);
   static gint nreturn_vals = 0;
-  gchar *help_string =
-    " This plug-in maps the contents of the specified drawable with"
-    " active gradient. It calculates luminosity of each pixel and"
-    " replaces the pixel by the sample of active gradient at the"
-    " position proportional to that luminosity. Complete black pixel"
-    " becomes the leftmost color of the gradient, and complete white"
-    " becomes the rightmost. Works on both Grayscale and RGB image"
-    " with/without alpha channel.";
+
+  INIT_I18N();
 
   gimp_install_procedure ("plug_in_gradmap",
-			  "Map the contents of the specified drawable with active gradient",
-			  help_string,
+                          _("Map the contents of the specified drawable with active gradient"),
+                          _(" This plug-in maps the contents of the specified drawable with active gradient. It calculates luminosity of each pixel and replaces the pixel by the sample of active gradient at the position proportional to that luminosity. Complete black pixel becomes the leftmost color of the gradient, and complete white becomes the rightmost. Works on both Grayscale and RGB image with/without alpha channel."),
 			  "Eiichi Takamori",
 			  "Eiichi Takamori",
 			  "1997",
-			  "<Image>/Filters/Colors/Map/Gradient Map",
+			  N_("<Image>/Filters/Colors/Map/Gradient Map"),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -132,6 +128,8 @@ run (gchar   *name,
 
   run_mode = param[0].data.d_int32;
 
+  INIT_I18N();
+
   *nreturn_vals = 1;
   *return_vals = values;
 
@@ -144,7 +142,7 @@ run (gchar   *name,
   /*  Make sure that the drawable is gray or RGB color	*/
   if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
 	{
-	  gimp_progress_init ("Gradient Map...");
+	  gimp_progress_init ( _("Gradient Map..."));
 	  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
 	  gradmap (drawable);

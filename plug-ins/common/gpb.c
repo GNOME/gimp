@@ -34,6 +34,7 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 #include <libgimp/parasiteio.h>
+#include "libgimp/stdplugins-intl.h"
 
 #include "app/brush_header.h"
 #include "app/pattern_header.h"
@@ -129,11 +130,11 @@ query ()
   };
   static int ngih_save_args = sizeof (gih_save_args) / sizeof (gih_save_args[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("file_gpb_save",
-			  "saves images in GIMP pixmap brush format", 
-                          "This plug-in saves a layer of an image in "
-			  "the GIMP pixmap brush format. "
-                          "The image must have an alpha channel.",
+                          _("saves images in GIMP pixmap brush format"), 
+                          _("This plug-in saves a layer of an image in the GIMP pixmap brush format. The image must have an alpha channel."),
                           "Tor Lillqvist",
                           "Tor Lillqvist",
                           "1999",
@@ -146,13 +147,8 @@ query ()
   gimp_register_save_handler ("file_gpb_save", "gpb", "");
 
   gimp_install_procedure ("file_gih_save",
-			  "saves images in GIMP pixmap brush pipe format", 
-                          "This plug-in saves an image in "
-			  "the GIMP pixmap brush pipe format. "
-                          "The image must have an alpha channel."
-			  "The image can be multi-layered, "
-			  "and additionally the layers can be divided into "
-			  "a rectangular array of brushes.",
+                          _("saves images in GIMP pixmap brush pipe format"), 
+                          _("This plug-in saves an image in the GIMP pixmap brush pipe format. The image must have an alpha channel. The image can be multi-layered, and additionally the layers can be divided into a rectangular array of brushes."),
                           "Tor Lillqvist",
                           "Tor Lillqvist",
                           "1999",
@@ -303,7 +299,7 @@ common_save_dialog (GtkWidget *dlg,
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) ok_callback,
@@ -312,7 +308,7 @@ common_save_dialog (GtkWidget *dlg,
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -329,7 +325,7 @@ common_save_dialog (GtkWidget *dlg,
   gtk_table_resize (GTK_TABLE (table),
 		    GTK_TABLE (table)->nrows + 1, GTK_TABLE (table)->ncols);
 
-  label = gtk_label_new ("Spacing (percent):");
+  label = gtk_label_new ( _("Spacing (percent):"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1,
 		    GTK_TABLE (table)->nrows - 1, GTK_TABLE (table)->nrows,
@@ -358,7 +354,7 @@ common_save_dialog (GtkWidget *dlg,
   gtk_table_resize (GTK_TABLE (table),
 		    GTK_TABLE (table)->nrows + 1, GTK_TABLE (table)->ncols);
 
-  label = gtk_label_new ("Description:");
+  label = gtk_label_new ( _("Description:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1,
 		    GTK_TABLE (table)->nrows - 1, GTK_TABLE (table)->nrows,
@@ -383,7 +379,7 @@ gpb_save_dialog ()
   GtkWidget *table;
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Save As Pixmap Brush");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Save As Pixmap Brush"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) close_callback, NULL);
@@ -434,7 +430,7 @@ gih_save_dialog (gint32 image_ID)
     }
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Save As Pixmap Brush Pipe");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Save As Pixmap Brush Pipe"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) close_callback, NULL);
@@ -454,7 +450,7 @@ gih_save_dialog (gint32 image_ID)
   gtk_table_resize (GTK_TABLE (table),
 		    GTK_TABLE (table)->nrows + 1, GTK_TABLE (table)->ncols);
 
-  label = gtk_label_new ("Cell size:");
+  label = gtk_label_new ( _("Cell size:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1,
 		    GTK_TABLE (table)->nrows - 1, GTK_TABLE (table)->nrows,
@@ -507,7 +503,7 @@ gih_save_dialog (gint32 image_ID)
 		      &cellh_adjust);
   gtk_widget_show (spinbutton);
 
-  label = gtk_label_new (" pixels");
+  label = gtk_label_new ( _(" pixels"));
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
   
@@ -525,7 +521,7 @@ gih_save_dialog (gint32 image_ID)
   gtk_table_resize (GTK_TABLE (table),
 		    GTK_TABLE (table)->nrows + 1, GTK_TABLE (table)->ncols);
 
-  label = gtk_label_new ("Number of cells:");
+  label = gtk_label_new ( _("Number of cells:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1,
 		    GTK_TABLE (table)->nrows - 1, GTK_TABLE (table)->nrows,
@@ -559,7 +555,7 @@ gih_save_dialog (gint32 image_ID)
   gtk_table_resize (GTK_TABLE (table),
 		    GTK_TABLE (table)->nrows + 1, GTK_TABLE (table)->ncols);
 
-  label = gtk_label_new ("Display as:");
+  label = gtk_label_new ( _("Display as:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1,
 		    GTK_TABLE (table)->nrows - 1, GTK_TABLE (table)->nrows,
@@ -576,7 +572,7 @@ gih_save_dialog (gint32 image_ID)
   cellh_adjust.other_count = &gihparms.cols;
   gtk_widget_show (label);
 
-  label = gtk_label_new (" rows of ");
+  label = gtk_label_new ( _(" rows of "));
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
   
@@ -588,15 +584,15 @@ gih_save_dialog (gint32 image_ID)
   cellw_adjust.other_count = &gihparms.rows;
   gtk_widget_show (label);
 
-  label = gtk_label_new (" columns on each layer");
+  label = gtk_label_new ( _(" columns on each layer"));
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
   
-  label = gtk_label_new (" (width mismatch!) ");
+  label = gtk_label_new ( _(" (width mismatch!) "));
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   cellw_adjust.warning_label = label;
   
-  label = gtk_label_new (" (height mismatch!) ");
+  label = gtk_label_new ( _(" (height mismatch!) "));
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   cellh_adjust.warning_label = label;
   
@@ -612,7 +608,7 @@ gih_save_dialog (gint32 image_ID)
   gtk_table_resize (GTK_TABLE (table),
 		    GTK_TABLE (table)->nrows + 1, GTK_TABLE (table)->ncols);
 
-  label = gtk_label_new ("Dimension:");
+  label = gtk_label_new ( _("Dimension:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1,
 		    GTK_TABLE (table)->nrows - 1, GTK_TABLE (table)->nrows,
@@ -642,7 +638,7 @@ gih_save_dialog (gint32 image_ID)
   gtk_table_resize (GTK_TABLE (table),
 		    GTK_TABLE (table)->nrows + 1, GTK_TABLE (table)->ncols);
 
-  label = gtk_label_new ("Ranks:");
+  label = gtk_label_new ( _("Ranks:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1,
 		    GTK_TABLE (table)->nrows - 1, GTK_TABLE (table)->nrows,
@@ -686,7 +682,7 @@ gih_save_dialog (gint32 image_ID)
   gtk_table_resize (GTK_TABLE (table),
 		    GTK_TABLE (table)->nrows + 1, GTK_TABLE (table)->ncols);
 
-  label = gtk_label_new ("Selection:");
+  label = gtk_label_new ( _("Selection:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1,
 		    GTK_TABLE (table)->nrows - 1, GTK_TABLE (table)->nrows,
@@ -751,7 +747,7 @@ try_fwrite (gpointer buffer,
 {
   if (fwrite (buffer, size, nitems, file) < nitems)
     {
-      g_message ("GPB: write error");
+      g_message ( _("GPB: write error"));
       fclose (file);
       return FALSE;
     }
@@ -908,7 +904,7 @@ gpb_save_image (char   *filename,
 
   if (!(gimp_drawable_has_alpha (drawable_ID)))
     {
-      g_warning ("drawable has no alpha channel -- aborting!\n");
+      g_warning ( _("drawable has no alpha channel -- aborting!\n"));
       return (FALSE);
     }
 
@@ -917,7 +913,7 @@ gpb_save_image (char   *filename,
 
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, FALSE, FALSE);
 
-  temp = g_strdup_printf ("Saving %s:", filename);
+  temp = g_strdup_printf ( _("Saving %s:"), filename);
   gimp_progress_init (temp);
   g_free (temp);
 
@@ -925,7 +921,7 @@ gpb_save_image (char   *filename,
 
   if (file == NULL)
     {
-      g_message ("GPB: can't open \"%s\"", filename);
+      g_message ( _("GPB: can't open \"%s\""), filename);
       return FALSE;
     }
 
@@ -957,7 +953,7 @@ gih_save_image (char   *filename,
   imageh = gimp_image_height (image_ID);
   gimp_tile_cache_size (gimp_tile_height () * imagew * 4);
 
-  msg = g_strdup_printf ("Saving %s:", filename);
+  msg = g_strdup_printf ( _("Saving %s:"), filename);
   gimp_progress_init (msg);
   g_free (msg);
 
@@ -965,7 +961,7 @@ gih_save_image (char   *filename,
 
   if (file == NULL)
     {
-      g_message ("GPB: can't open \"%s\"", filename);
+      g_message ( _("GPB: can't open \"%s\""), filename);
       return FALSE;
     }
 
@@ -1075,6 +1071,7 @@ run (char    *name,
 	{
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
+      INIT_I18N_UI();
 	  init_gtk ();
 	  export = gimp_export_image (&image_ID, &drawable_ID, "GPB", 
 				      (CAN_HANDLE_RGB | CAN_HANDLE_ALPHA | 
@@ -1087,6 +1084,7 @@ run (char    *name,
 	    }
 	  break;
 	default:
+      INIT_I18N();
 	  break;
 	}
 
@@ -1158,7 +1156,7 @@ run (char    *name,
 	  if (!gimp_drawable_has_alpha (layer_ID[layer]))
 	    {
 	      layer_name = gimp_layer_get_name (layer_ID[layer]);
-	      g_message ("Layer %s doesn't have an alpha channel, skipped",
+	      g_message ( _("Layer %s doesn't have an alpha channel, skipped"),
 			 layer_name);
 	      g_free (layer_name);
 	    }
