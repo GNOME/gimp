@@ -1,3 +1,9 @@
+2003-04-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpeditselectiontool.c
+	(gimp_edit_selection_tool_button_release): fixed boolean logic bug
+	introduced by the fix for bug #110173. Spotted by Pedro Gimeno.
+
 2003-04-09  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpbrushgenerated.c: fixed algorithm that calculates

@@ -375,7 +375,7 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
   /* thaw the undo again */
   gimp_image_undo_thaw (gdisp->gimage);
 
-  if (edit_select->cumlx != 0 && edit_select->cumly != 0)
+  if (edit_select->cumlx != 0 || edit_select->cumly != 0)
     {
       path_transform_xy (gdisp->gimage,
                          edit_select->cumlx, edit_select->cumly);
