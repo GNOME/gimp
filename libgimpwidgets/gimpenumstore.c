@@ -110,6 +110,22 @@ gimp_enum_store_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
+static void
+gimp_enum_store_add_value (GtkListStore *store,
+                           GEnumValue   *value)
+{
+  GtkTreeIter  iter;
+
+  gtk_list_store_append (store, &iter);
+  gtk_list_store_set (store, &iter,
+                      GIMP_ENUM_STORE_VALUE,     value->value,
+                      GIMP_ENUM_STORE_LABEL,     gettext (value->value_name),
+                      GIMP_ENUM_STORE_ICON,      NULL,
+                      GIMP_ENUM_STORE_USER_DATA, NULL,
+                      -1);
+}
+
+
 /**
  * gimp_enum_store_new:
  * @enum_type: the #GType of an enum.
@@ -139,6 +155,17 @@ gimp_enum_store_new (GType enum_type)
   return store;
 }
 
+/**
+ * gimp_enum_store_new_with_range:
+ * @enum_type: the #GType of an enum.
+ * @minimum: the minimum value to include
+ * @maximum: the maximum value to include
+ *
+ * Creates a new #GimpEnumStore like gimp_enum_store_new() but allows
+ * to limit the enum values to a certain range.
+ *
+ * Return value: a new #GimpEnumStore.
+ **/
 GtkListStore *
 gimp_enum_store_new_with_range (GType  enum_type,
                                 gint   minimum,
@@ -166,6 +193,17 @@ gimp_enum_store_new_with_range (GType  enum_type,
   return store;
 }
 
+/**
+ * gimp_enum_store_new_with_values
+ * @enum_type: the #GType of an enum.
+ * @n_values:  the number of enum values to include
+ * @...:       a list of enum values (exactly @n_values)
+ *
+ * Creates a new #GimpEnumStore like gimp_enum_store_new() but allows
+ * to list the enum values that should be added to the store.
+ *
+ * Return value: a new #GimpEnumStore.
+ **/
 GtkListStore *
 gimp_enum_store_new_with_values (GType enum_type,
                                  gint  n_values,
@@ -185,6 +223,16 @@ gimp_enum_store_new_with_values (GType enum_type,
   return store;
 }
 
+/**
+ * gimp_enum_store_new_with_values_valist:
+ * @enum_type: the #GType of an enum.
+ * @n_values:  the number of enum values to include
+ * @args:      a va_list of enum values (exactly @n_values)
+ *
+ * See gimp_enum_store_new_with_values().
+ *
+ * Return value: a new #GimpEnumStore.
+ **/
 GtkListStore *
 gimp_enum_store_new_with_values_valist (GType     enum_type,
                                         gint      n_values,
@@ -213,6 +261,17 @@ gimp_enum_store_new_with_values_valist (GType     enum_type,
   return store;
 }
 
+/**
+ * gimp_enum_store_lookup_by_value:
+ * @model: a #GimpEnumStore
+ * @value: an enum values to lookup in the @model
+ * @iter:  return location for the iter of the given @value
+ *
+ * Iterate over the @model looking for @value.
+ *
+ * Return value: %TRUE if the value has been located and @iter is
+ *               valid, %FALSE otherwise.
+ **/
 gboolean
 gimp_enum_store_lookup_by_value (GtkTreeModel *model,
                                  gint          value,
@@ -239,6 +298,19 @@ gimp_enum_store_lookup_by_value (GtkTreeModel *model,
   return iter_valid;
 }
 
+/**
+ * gimp_enum_store_lookup_by_value:
+ * @store:        a #GimpEnumStore
+ * @widget:       the widget used to create the icon pixbufs
+ * @stock_prefix: a prefix to create icon stock ID from enum values
+ *
+ * Creates a stock ID for each enum value in the @store by appending
+ * the value's nick to the given @stock_prefix inserting a hyphen
+ * between them. If an icon is registered for the resulting stock ID,
+ * it is rendered by @widget (which should be the @combo_box using
+ * this @store as it's model). The rendered pixbuf is then added to
+ * the @store in the %GIMP_ENUM_STORE_PIXBUF column.
+ **/
 void
 gimp_enum_store_set_icons (GimpEnumStore *store,
                            GtkWidget     *widget,
@@ -289,20 +361,4 @@ gimp_enum_store_set_icons (GimpEnumStore *store,
       if (pixbuf)
         g_object_unref (pixbuf);
     }
-}
-
-
-static void
-gimp_enum_store_add_value (GtkListStore *store,
-                           GEnumValue   *value)
-{
-  GtkTreeIter  iter;
-
-  gtk_list_store_append (store, &iter);
-  gtk_list_store_set (store, &iter,
-                      GIMP_ENUM_STORE_VALUE,     value->value,
-                      GIMP_ENUM_STORE_LABEL,     gettext (value->value_name),
-                      GIMP_ENUM_STORE_ICON,      NULL,
-                      GIMP_ENUM_STORE_USER_DATA, NULL,
-                      -1);
 }

@@ -65,9 +65,13 @@ gimp_enum_combo_box_get_type (void)
  * gimp_enum_combo_box_new:
  * @enum_type: the #GType of an enum.
  *
- * Creates a new #GtkComboBox using the #GimpEnumStore. The enum needs
- * to be registered to the type system and should have translatable
- * value names.
+ * Creates a #GtkComboBox readily filled with all enum values from a
+ * given @enum_type. The enum needs to be registered to the type
+ * system and should have translatable value names.
+ *
+ * This is just a convenience function. If you need more control over
+ * the enum values that appear in the combo_box, you can create your
+ * own #GimpEnumStore and use gimp_enum_combo_box_new_with_model().
  *
  * Return value: a new #GimpEnumComboBox.
  **/
@@ -88,6 +92,14 @@ gimp_enum_combo_box_new (GType enum_type)
   return combo_box;
 }
 
+/**
+ * gimp_enum_combo_box_new_with_model:
+ * @enum_type: the #GType of an enum.
+ *
+ * Creates a new #GimpEnumComboBox using the #GimpEnumStore as its model.
+ *
+ * Return value: a new #GimpEnumComboBox.
+ **/
 GtkWidget *
 gimp_enum_combo_box_new_with_model (GimpEnumStore *enum_store)
 {
@@ -115,6 +127,17 @@ gimp_enum_combo_box_new_with_model (GimpEnumStore *enum_store)
   return combo_box;
 }
 
+/**
+ * gimp_enum_combo_box_set_active:
+ * @combo_box: a #GimpEnumComboBox
+ * @value:     an enum value
+ *
+ * Looks up the item that belongs to the given @value and makes it the
+ * selected item in the @combo_box.
+ *
+ * Return value: %TRUE on success or %FALSE if there was no item for
+ *               this value.
+ **/
 gboolean
 gimp_enum_combo_box_set_active (GimpEnumComboBox *combo_box,
                                 gint              value)
@@ -135,6 +158,17 @@ gimp_enum_combo_box_set_active (GimpEnumComboBox *combo_box,
   return FALSE;
 }
 
+/**
+ * gimp_enum_combo_box_get_active:
+ * @combo_box: a #GimpEnumComboBox
+ * @value:     return location for enum value
+ *
+ * Retrieves the enum value of the selected (active) item in the
+ * @combo_box.
+ *
+ * Return value: %TRUE if @value has been set or %FALSE if no item was
+ * active.
+ **/
 gboolean
 gimp_enum_combo_box_get_active (GimpEnumComboBox *combo_box,
                                 gint             *value)
@@ -155,6 +189,14 @@ gimp_enum_combo_box_get_active (GimpEnumComboBox *combo_box,
   return FALSE;
 }
 
+/**
+ * gimp_enum_combo_box_set_stock_prefix:
+ * @combo_box:    a #GimpEnumComboBox
+ * @stock_prefix: a prefix to create icon stock ID from enum values
+ *
+ * Attempts to create and set icons for all items in the
+ * @combo_box. See gimp_enum_store_set_icons() for more info.
+ **/
 void
 gimp_enum_combo_box_set_stock_prefix (GimpEnumComboBox *combo_box,
                                       const gchar      *stock_prefix)
@@ -170,11 +212,33 @@ gimp_enum_combo_box_set_stock_prefix (GimpEnumComboBox *combo_box,
                              stock_prefix, GTK_ICON_SIZE_MENU);
 }
 
-/*  This is a kludge to allow to work around bug #135875  */
+/*  This is a kludge to allow to work around bug #135875.  */
+
+/**
+ * gimp_enum_combo_box_set_visible:
+ * @combo_box: a #GimpEnumComboBox
+ * @func:      a #GtkTreeModelFilterVisibleFunc
+ * @data:      a pointer that is passed to @func
+ *
+ * Sets a filter on the combo_box that selectively hides items. The
+ * registered callback @func is called with an iter for each item and
+ * returns %TRUE or %FALSE indicating whether the respective row
+ * should be visible or not.
+ *
+ * This function must only be called once for a @combo_box. If you
+ * want to refresh the visibility of the items in the @combo_box
+ * later, call gtk_tree_model_filter_refilter() on the @combo_box's
+ * model.
+ *
+ * This is a kludge to allow to work around the inability of
+ * #GtkComboBox to set the sensitivity of it's items (bug #135875).
+ * It should be removed as soon as this bug is fixed (probably with
+ * GTK+-2.6).
+ **/
 void
-gimp_enum_combo_box_set_visible (GimpEnumComboBox *combo_box,
-                                 GtkTreeModelFilterVisibleFunc func,
-                                 gpointer          data)
+gimp_enum_combo_box_set_visible (GimpEnumComboBox              *combo_box,
+                                 GtkTreeModelFilterVisibleFunc  func,
+                                 gpointer                       data)
 {
   GtkTreeModel       *model;
   GtkTreeModelFilter *filter;
@@ -183,19 +247,9 @@ gimp_enum_combo_box_set_visible (GimpEnumComboBox *combo_box,
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
 
-  if (GTK_IS_TREE_MODEL_FILTER (model))
-    {
-      filter = GTK_TREE_MODEL_FILTER (model);
-    }
-  else
-    {
-      filter = GTK_TREE_MODEL_FILTER (gtk_tree_model_filter_new (model, NULL));
-
-      gtk_combo_box_set_model (GTK_COMBO_BOX (combo_box),
-                               GTK_TREE_MODEL (filter));
-
-      g_object_unref (filter);
-    }
+  filter = GTK_TREE_MODEL_FILTER (gtk_tree_model_filter_new (model, NULL));
+  gtk_combo_box_set_model (GTK_COMBO_BOX (combo_box), GTK_TREE_MODEL (filter));
+  g_object_unref (filter);
 
   gtk_tree_model_filter_set_visible_func (filter, func, data, NULL);
   gtk_tree_model_filter_refilter (filter);

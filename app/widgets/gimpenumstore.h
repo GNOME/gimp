@@ -71,9 +71,9 @@ GtkListStore * gimp_enum_store_new_with_values_valist (GType    enum_type,
                                                        gint     n_values,
                                                        va_list  args);
 
-gboolean       gimp_enum_store_lookup_by_value   (GtkTreeModel *model,
-                                                  gint          value,
-                                                  GtkTreeIter  *iter);
+gboolean       gimp_enum_store_lookup_by_value  (GtkTreeModel  *model,
+                                                 gint           value,
+                                                 GtkTreeIter   *iter);
 
 void           gimp_enum_store_set_icons        (GimpEnumStore *store,
                                                  GtkWidget     *widget,

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
 
 <ui>
   <menubar>
@@ -15,7 +16,7 @@
       </menu>
       <separator />
       <menuitem action="dialogs-preferences" />
-      <menu action="dialogs-menu" />
+      <menu action="dialogs-menu">
         <menu action="dialogs-new-dock-menu">
           <menuitem action="dialogs-new-dock-lcp" />
           <menuitem action="dialogs-new-dock-data" />
