@@ -1,3 +1,10 @@
+2002-04-23  Nathan Summers  <rock@gimp.org>
+
+        * libgimptool/gimptoolmodule.[ch]
+        * plug-ins/tools/tool-safe-mode.c: More error checking. Introduced a
+        versioning scheme. Increment GIMP_TOOL_MODULE_ABI_VERSION any time you
+        break binary compatiblity.
+
 2002-04-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimptoolbox.c: display the tools' shortcuts in the
