@@ -1353,10 +1353,13 @@ transform_path (char *path,
   char *tmp;
   char *tmp2;
   int  substituted;
+  int  is_env;
+  UnknownToken *ut;
 
   home = getenv ("HOME");
   length = 0;
   substituted = FALSE;
+  is_env = FALSE;
 
   tmp = path;
   while (*tmp)
@@ -1383,9 +1386,32 @@ transform_path (char *path,
 	  *tmp = '\0';
 
 	  tmp2 = gimprc_find_token (token);
+	  if (tmp2 == NULL) 
+	    {
+	      /* maybe token is an environment variable */
+	      tmp2 = getenv (token);
+	      if (tmp2 != NULL)
+		{
+		  is_env = TRUE;
+		}
+	    }
 	  tmp2 = transform_path (tmp2, FALSE);
-	  gimprc_set_token (token, tmp2);
-
+	  if (is_env)
+	    {
+	      /* then add to list of unknown tokens */
+	      /* but only if it isn't already in list */
+	      if (gimprc_find_token (token) == NULL)
+		{
+		  ut = g_new (UnknownToken, 1);
+		  ut->token = g_strdup (token);
+		  ut->value = g_strdup (tmp2);
+		  unknown_tokens = g_list_append (unknown_tokens, ut);
+		}
+	    }
+	  else
+	    {
+	      gimprc_set_token (token, tmp2);
+	    }
 	  length += strlen (tmp2);
 
 	  *tmp = '}';
