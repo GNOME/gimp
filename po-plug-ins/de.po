@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.10\n"
-"POT-Creation-Date: 1999-11-25 12:08-0800\n"
+"POT-Creation-Date: 1999-11-29 11:06+0100\n"
 "PO-Revision-Date: 1999-11-22 23:17+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -15,15 +15,15 @@ msgstr ""
 
 #: plug-ins/AlienMap/AlienMap.c:189
 msgid "AlienMap Color Transformation Plug-In"
-msgstr ""
+msgstr "AlienMap Farbtransformation"
 
 #: plug-ins/AlienMap/AlienMap.c:190 plug-ins/AlienMap2/AlienMap2.c:213
 msgid "No help yet. Just try it and you'll see!"
-msgstr ""
+msgstr "Noch keine Hilfe vorhanden. Einfach Ausprobieren!"
 
 #: plug-ins/AlienMap/AlienMap.c:193
 msgid "1th May 1997"
-msgstr ""
+msgstr "1. Mai 1997"
 
 #: plug-ins/AlienMap/AlienMap.c:194
 msgid "<Image>/Filters/Colors/Map/Alien Map..."
@@ -31,11 +31,11 @@ msgstr "<Image>/Filter/Farben/Abbilden/Alien Map..."
 
 #: plug-ins/AlienMap/AlienMap.c:379
 msgid "AlienMap: Transforming ..."
-msgstr ""
+msgstr "AlienMap: Transformiere ..."
 
 #: plug-ins/AlienMap/AlienMap.c:666
 msgid "AlienMap"
-msgstr ""
+msgstr "AlienMap"
 
 #: plug-ins/AlienMap/AlienMap.c:710
 msgid "Change intensity of the red channel"
@@ -62,7 +62,7 @@ msgstr "Sinus"
 
 #: plug-ins/AlienMap/AlienMap.c:745
 msgid "Use sine-function for red component"
-msgstr ""
+msgstr "Benutze Sinusfunktion für die rote Komponente"
 
 #: plug-ins/AlienMap/AlienMap.c:747 plug-ins/AlienMap/AlienMap.c:789
 #: plug-ins/AlienMap/AlienMap.c:831
@@ -71,7 +71,7 @@ msgstr "Kosinus"
 
 #: plug-ins/AlienMap/AlienMap.c:755
 msgid "Use cosine-function for red component"
-msgstr ""
+msgstr "Benutze Kosinusfunktion für die rote Komponente"
 
 #: plug-ins/AlienMap/AlienMap.c:757 plug-ins/AlienMap/AlienMap.c:799
 #: plug-ins/AlienMap/AlienMap.c:841 plug-ins/common/CML_explorer.c:250
@@ -81,7 +81,7 @@ msgstr "Keine"
 
 #: plug-ins/AlienMap/AlienMap.c:765
 msgid "Red channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
+msgstr "Roter Kanal: Benutze lineare Abbildung anstelle trigonemetrischer Funktion"
 
 #. Greenmode toggle box
 #: plug-ins/AlienMap/AlienMap.c:772 plug-ins/common/compose.c:125
@@ -91,16 +91,16 @@ msgstr "Grün:"
 
 #: plug-ins/AlienMap/AlienMap.c:787
 msgid "Use sine-function for green component"
-msgstr ""
+msgstr "Benutze Sinusfunktion für die grüne Komponente"
 
 #: plug-ins/AlienMap/AlienMap.c:797
 msgid "Use cosine-function for green component"
-msgstr ""
+msgstr "Benutze Kosinusfunktion für die grüne Komponente"
 
 #: plug-ins/AlienMap/AlienMap.c:807
 msgid ""
 "Green channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
+msgstr "Grüner Kanal: Benutze lineare Abbildung anstelle trigonemetrischer Funktion"
 
 #. Bluemode toggle box
 #: plug-ins/AlienMap/AlienMap.c:814 plug-ins/common/compose.c:125
@@ -110,16 +110,17 @@ msgstr "Blau:"
 
 #: plug-ins/AlienMap/AlienMap.c:829
 msgid "Use sine-function for blue component"
-msgstr ""
+msgstr "Benutze Sinusfunktion für die blaue Komponente"
 
 #: plug-ins/AlienMap/AlienMap.c:839
 msgid "Use cosine-function for blue component"
-msgstr ""
+msgstr "Benutze Cosinusfunktion für die blaue Komponente"
 
 #: plug-ins/AlienMap/AlienMap.c:849
 msgid ""
 "Blue channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
+"Blauer Kanal: Benutze lineare Abbildung anstelle trigonemetrischer Funktion"
 
 #. Action area
 #: plug-ins/AlienMap/AlienMap.c:861 plug-ins/AlienMap/AlienMap.c:1163
@@ -132,7 +133,7 @@ msgstr ""
 #: plug-ins/common/compose.c:827 plug-ins/common/convmatrix.c:722
 #: plug-ins/common/cubism.c:337 plug-ins/common/decompose.c:993
 #: plug-ins/common/depthmerge.c:752 plug-ins/common/destripe.c:696
-#: plug-ins/common/film.c:1238 plug-ins/common/gif.c:1293
+#: plug-ins/common/film.c:1238 plug-ins/common/gif.c:1296
 #: plug-ins/common/grid.c:461 plug-ins/common/jpeg.c:1569
 #: plug-ins/common/lic.c:1251 plug-ins/common/mail.c:502
 #: plug-ins/common/mapcolor.c:340 plug-ins/common/nova.c:410
@@ -169,8 +170,8 @@ msgstr "Einstellungen annehmen und Filter anwenden"
 #: plug-ins/common/compose.c:836 plug-ins/common/convmatrix.c:731
 #: plug-ins/common/cubism.c:346 plug-ins/common/decompose.c:1002
 #: plug-ins/common/depthmerge.c:761 plug-ins/common/destripe.c:705
-#: plug-ins/common/film.c:1247 plug-ins/common/gif.c:1194
-#: plug-ins/common/gif.c:1302 plug-ins/common/grid.c:470
+#: plug-ins/common/film.c:1247 plug-ins/common/gif.c:1202
+#: plug-ins/common/gif.c:1305 plug-ins/common/grid.c:470
 #: plug-ins/common/jpeg.c:1578 plug-ins/common/lic.c:1260
 #: plug-ins/common/mail.c:511 plug-ins/common/mapcolor.c:349
 #: plug-ins/common/nova.c:419 plug-ins/common/oilify.c:477
@@ -214,7 +215,7 @@ msgstr "Über Alien Map"
 
 #: plug-ins/AlienMap/AlienMap.c:1172 plug-ins/AlienMap2/AlienMap2.c:1077
 msgid "This closes the information box"
-msgstr ""
+msgstr "Schliesst die Infobox"
 
 #: plug-ins/AlienMap/AlienMap.c:1214
 msgid ""
@@ -232,11 +233,11 @@ msgstr ""
 
 #: plug-ins/AlienMap2/AlienMap2.c:212
 msgid "AlienMap2 Color Transformation Plug-In"
-msgstr ""
+msgstr "AlienMap2 Farbtransformation"
 
 #: plug-ins/AlienMap2/AlienMap2.c:216
 msgid "24th April 1998"
-msgstr ""
+msgstr "24. April 1998"
 
 #: plug-ins/AlienMap2/AlienMap2.c:217
 msgid "<Image>/Filters/Colors/Map/Alien Map 2..."
@@ -244,59 +245,59 @@ msgstr "<Image>/Filter/Farben/Abbilden/Alien Map 2..."
 
 #: plug-ins/AlienMap2/AlienMap2.c:392
 msgid "AlienMap2: Transforming ..."
-msgstr ""
+msgstr "AlienMap2: Transformiere ..."
 
 #: plug-ins/AlienMap2/AlienMap2.c:658
 msgid "AlienMap2"
-msgstr ""
+msgstr "AlienMap2"
 
 #: plug-ins/AlienMap2/AlienMap2.c:703
 msgid "R/H-Frequency:"
-msgstr ""
+msgstr "R/H-Frequenz:"
 
 #: plug-ins/AlienMap2/AlienMap2.c:703
 msgid "Change frequency of the red/hue channel"
-msgstr ""
+msgstr "Ändere Frequenz des roten Kanals / des Farbtons (Hue)"
 
 #: plug-ins/AlienMap2/AlienMap2.c:706
 msgid "R/H-Phaseshift:"
-msgstr ""
+msgstr "R/H-Phasenverschiebung"
 
 #: plug-ins/AlienMap2/AlienMap2.c:706
 msgid "Change angle of the red/hue channel"
-msgstr ""
+msgstr "Ändere Phasenwinkel des roten Kanals / des Farbtons (Hue)"
 
 #: plug-ins/AlienMap2/AlienMap2.c:708
 msgid "G/S-Frequency:"
-msgstr ""
+msgstr "G/S-Frequenz:"
 
 #: plug-ins/AlienMap2/AlienMap2.c:708
 msgid "Change frequeny of the green/saturation channel"
-msgstr ""
+msgstr "Ändere Frequenz des grünen Kanals / der Sättigung"
 
 #: plug-ins/AlienMap2/AlienMap2.c:710
 msgid "G/S-Phaseshift:"
-msgstr ""
+msgstr "G/S-Phasenverschiebung:"
 
 #: plug-ins/AlienMap2/AlienMap2.c:710
 msgid "Change angle of the green/saturation channel"
-msgstr ""
+msgstr "Ändere Phasenwinkel des grünen Kanals / der Sättigung"
 
 #: plug-ins/AlienMap2/AlienMap2.c:711
 msgid "B/L-Frequency:"
-msgstr ""
+msgstr "B/L-Frequenz:"
 
 #: plug-ins/AlienMap2/AlienMap2.c:711
 msgid "Change frequency of the blue/luminance channel"
-msgstr ""
+msgstr "Ändere Frequenz des blauen Kanals / der Helligkeit (Luminance)"
 
 #: plug-ins/AlienMap2/AlienMap2.c:713
 msgid "B/L-Phaseshift:"
-msgstr ""
+msgstr "B/L-Phasenverschiebung:"
 
 #: plug-ins/AlienMap2/AlienMap2.c:713
 msgid "Change angle of the blue/luminance channel"
-msgstr ""
+msgstr "Ändere Phasenwinkel des blauen Kanals / der Helligkeit (Luminance)"
 
 #. Mode toggle box
 #: plug-ins/AlienMap2/AlienMap2.c:717 plug-ins/gap/gap_mov_dialog.c:1297
@@ -305,47 +306,47 @@ msgstr "Modus:"
 
 #: plug-ins/AlienMap2/AlienMap2.c:724
 msgid "RGB_MODEL color model"
-msgstr ""
+msgstr "RGB Farbraum"
 
 #: plug-ins/AlienMap2/AlienMap2.c:733
 msgid "Use RGB_MODEL color model"
-msgstr ""
+msgstr "Benutze den RGB Farbraum"
 
 #: plug-ins/AlienMap2/AlienMap2.c:735
 msgid "HSL_MODEL color model"
-msgstr ""
+msgstr "HSV Farbraum"
 
 #: plug-ins/AlienMap2/AlienMap2.c:743
 msgid "Use HSL_MODEL color model"
-msgstr ""
+msgstr "Benutze HSV Farbraum"
 
 #: plug-ins/AlienMap2/AlienMap2.c:745
 msgid "Modify red/hue channel"
-msgstr ""
+msgstr "Verändere roten Kanal / Farbton"
 
 #: plug-ins/AlienMap2/AlienMap2.c:753
 msgid "Use function for red/hue component"
-msgstr ""
+msgstr "Benutze Funktion für roten Kanal / Farbton"
 
 #: plug-ins/AlienMap2/AlienMap2.c:755
 msgid "Modify green/saturation channel"
-msgstr ""
+msgstr "Verändere grünen Kanal / Sättigung"
 
 #: plug-ins/AlienMap2/AlienMap2.c:763
 msgid "Use function for green/saturation component"
-msgstr ""
+msgstr "Benutze Funktion für grünen Kanal / Sättigung"
 
 #: plug-ins/AlienMap2/AlienMap2.c:765
 msgid "Modify blue/luminance channel"
-msgstr ""
+msgstr "Verändere blauen Kanal / Helligkeit"
 
 #: plug-ins/AlienMap2/AlienMap2.c:773
 msgid "Use function for blue/luminance component"
-msgstr ""
+msgstr "Benutze Funktion für blauen Kanal / Helligkeit"
 
 #: plug-ins/AlienMap2/AlienMap2.c:1056
 msgid "About Alien Map 2"
-msgstr ""
+msgstr "Über Alien Map 2"
 
 #: plug-ins/AlienMap2/AlienMap2.c:1119
 msgid ""
@@ -1012,7 +1013,7 @@ msgstr "Zufallszahlen von init-Zahl, gemeinsam"
 #: plug-ins/gap/gap_mov_dialog.c:253 plug-ins/gimpressionist/orientation.c:191
 #: plug-ins/gimpressionist/size.c:189
 msgid "Hue"
-msgstr "Ton"
+msgstr "Farbton"
 
 #: plug-ins/common/CML_explorer.c:375 plug-ins/common/CML_explorer.c:383
 #: plug-ins/common/CML_explorer.c:1430 plug-ins/common/CML_explorer.c:1750
@@ -1844,17 +1845,20 @@ msgstr "Mit benutzerdefinierter Farbe einfärben"
 
 #: plug-ins/common/colortoalpha.c:109
 msgid "Convert the color in an image to alpha"
-msgstr ""
+msgstr "Wandelt eine Farbe im Bild in Transparenz um"
 
 #: plug-ins/common/colortoalpha.c:110
 msgid ""
 "This replaces as much of a given color as possible in each pixel with a "
 "corresponding amount of alpha, then readjusts the color accordingly."
 msgstr ""
+"Ersetzt für jeden Pixel soviel wie möglich einer vorgegebenen Farbe "
+"durch einen entsprechenden Anteil an Transparenz und verändert die Farbe "
+"entsprechend."
 
 #: plug-ins/common/colortoalpha.c:113
 msgid "7th Aug 1999"
-msgstr ""
+msgstr "7. August 1999"
 
 #: plug-ins/common/colortoalpha.c:114
 msgid "<Image>/Filters/Colors/Color To Alpha..."
@@ -1862,7 +1866,7 @@ msgstr "<Image>/Filter/Farben/Farbe zu Transparenz..."
 
 #: plug-ins/common/colortoalpha.c:404
 msgid "Color To Alpha"
-msgstr ""
+msgstr "Farbe zu Transparenz"
 
 #: plug-ins/common/colortoalpha.c:436 plug-ins/common/mapcolor.c:399
 msgid "From:"
@@ -1894,7 +1898,7 @@ msgstr "Alpha:"
 
 #: plug-ins/common/compose.c:128
 msgid "rgba-compose"
-msgstr "rgba-Komposition"
+msgstr "RGBA-Komposition"
 
 #: plug-ins/common/compose.c:129 plug-ins/common/decompose.c:133
 msgid "HSV"
@@ -1910,11 +1914,11 @@ msgstr "Sättigung:"
 
 #: plug-ins/common/compose.c:129
 msgid "Value:"
-msgstr "Tonwert:"
+msgstr "Wert:"
 
 #: plug-ins/common/compose.c:130
 msgid "hsv-compose"
-msgstr "hsv-Komposition"
+msgstr "HSV-Komposition"
 
 #: plug-ins/common/compose.c:131 plug-ins/common/decompose.c:138
 msgid "CMY"
@@ -1946,7 +1950,7 @@ msgstr "Schwarz:"
 
 #: plug-ins/common/compose.c:134
 msgid "cmyk-compose"
-msgstr "cmyk-Komposition"
+msgstr "CMYK-Komposition"
 
 #: plug-ins/common/compose.c:228
 msgid "Compose an image from multiple gray images"
@@ -1980,7 +1984,7 @@ msgstr "Fasse Kanäle zusammen..."
 
 #: plug-ins/common/compose.c:421
 msgid "compose: drawables have different size"
-msgstr "Zusammenfassen: Bilder haben verschiedene Grössen"
+msgstr "Zusammenfassen: Ebenen haben verschiedene Grössen"
 
 #: plug-ins/common/compose.c:438
 msgid "compose: images have different size"
@@ -2042,10 +2046,9 @@ msgstr "Erweitern"
 
 #: plug-ins/common/convmatrix.c:80 plug-ins/common/warp.c:604
 msgid "Wrap"
-msgstr "umfalten"
+msgstr "Umfalten"
 
-#. Action area
-#: plug-ins/common/convmatrix.c:80 plug-ins/common/gif.c:1185
+#: plug-ins/common/convmatrix.c:80 plug-ins/common/gif.c:1193
 msgid "Crop"
 msgstr "Abschneiden"
 
@@ -2235,7 +2238,7 @@ msgstr "<Image>/Bild/Modus/Zerlegen..."
 
 #: plug-ins/common/decompose.c:303
 msgid "plug_in_decompose: Can only work on RGB*_IMAGE"
-msgstr "plug_in_zerlegen: Kann nur mit RGB*-Bild arbeiten"
+msgstr "plug_in_decompose: Kann nur mit RGB*-Bild arbeiten"
 
 #: plug-ins/common/decompose.c:309
 msgid "Decomposing..."
@@ -2370,7 +2373,7 @@ msgstr "Breite"
 
 #: plug-ins/common/film.c:224 plug-ins/common/film.c:225
 msgid "Compose several images to a roll film"
-msgstr ""
+msgstr "Erstelle eine Filmrolle aus mehreren Bildern"
 
 #: plug-ins/common/film.c:229
 msgid "<Image>/Filters/Combine/Film..."
@@ -2490,7 +2493,7 @@ msgstr ""
 "Transparenzfarbe *könnte* falsch sein, wenn der Viewer keine\n"
 "Transparenz unterstützt."
 
-#: plug-ins/common/gif.c:1218
+#: plug-ins/common/gif.c:1221
 msgid ""
 "The image which you are trying to save as a GIF\n"
 "contains layers which extend beyond the actual\n"
@@ -2505,62 +2508,62 @@ msgstr ""
 "Sie können jetzt diese Ebenen entweder auf den Rand zuschneiden, oder\n"
 "das Speichern abbrechen."
 
-#: plug-ins/common/gif.c:1275
+#: plug-ins/common/gif.c:1278
 msgid "Save as GIF"
 msgstr "Als GIF speichern"
 
 #. regular gif parameter settings
-#: plug-ins/common/gif.c:1311
+#: plug-ins/common/gif.c:1314
 msgid "GIF Options"
 msgstr "GIF Einstellungen"
 
-#: plug-ins/common/gif.c:1319
+#: plug-ins/common/gif.c:1322
 msgid "Interlace"
 msgstr "Interlace"
 
-#: plug-ins/common/gif.c:1331
+#: plug-ins/common/gif.c:1334
 msgid "GIF Comment: "
 msgstr "GIF Kommentar:"
 
 #. additional animated gif parameter settings
-#: plug-ins/common/gif.c:1392
+#: plug-ins/common/gif.c:1395
 msgid "Animated GIF Options"
 msgstr "Einstellungen für Animations-GIF's"
 
-#: plug-ins/common/gif.c:1400
+#: plug-ins/common/gif.c:1403
 msgid "Loop forever"
 msgstr "Unendliche Schleife"
 
-#: plug-ins/common/gif.c:1413
+#: plug-ins/common/gif.c:1416
 msgid "Delay between frames where unspecified: "
 msgstr "Pause zw. Frames (wo es nicht explizit festgelegt ist)"
 
-#: plug-ins/common/gif.c:1427
+#: plug-ins/common/gif.c:1430
 msgid " milliseconds"
 msgstr " Millisekunden"
 
-#: plug-ins/common/gif.c:1438
+#: plug-ins/common/gif.c:1441
 msgid "Frame disposal where unspecified: "
 msgstr "Übergang zw. Frames (wenn nicht explizit...)"
 
-#: plug-ins/common/gif.c:1448
+#: plug-ins/common/gif.c:1451
 msgid "I don't care"
 msgstr "Ist mir egal"
 
-#: plug-ins/common/gif.c:1454
+#: plug-ins/common/gif.c:1457
 msgid "Cumulative layers (combine)"
 msgstr "Kumulative Ebenen (Kombinieren)"
 
-#: plug-ins/common/gif.c:1460
+#: plug-ins/common/gif.c:1463
 msgid "One frame per layer (replace)"
 msgstr "Ein Frame pro Ebene (Ersetzen)"
 
-#: plug-ins/common/gif.c:1518
+#: plug-ins/common/gif.c:1521
 #, c-format
 msgid "GIF: colorstobpp - Eep! too many colours: %d\n"
 msgstr "GIF: colorstobpp - Ups! zu viele Farben: %d\n"
 
-#: plug-ins/common/gif.c:1534
+#: plug-ins/common/gif.c:1537
 #, c-format
 msgid "GIF: bpptocolors - Eep! bpp==%d !\n"
 msgstr "GIF: bpptocolors - Ups! bpp==%d !\n"
@@ -2713,11 +2716,11 @@ msgstr "GIF: zu viele Eingabedaten, ignoriere den Rest...\n"
 
 #: plug-ins/common/grid.c:123
 msgid "Draws a grid."
-msgstr ""
+msgstr "Zeichnet ein Gitter."
 
 #: plug-ins/common/grid.c:124
 msgid "no help available"
-msgstr ""
+msgstr "Keine Hilfe verfügbar"
 
 #: plug-ins/common/grid.c:128
 msgid "<Image>/Filters/Render/Pattern/Grid..."
@@ -3033,26 +3036,26 @@ msgstr "<Image>/Datei/Verschicke Bild..."
 msgid "Send to mail"
 msgstr "Senden an Mail"
 
-#. filename label
-#: plug-ins/common/mail.c:629 plug-ins/imagemap/imap_settings.c:78
+#. Filename label
+#: plug-ins/common/mail.c:630 plug-ins/imagemap/imap_settings.c:78
 msgid "Filename:"
 msgstr "Dateiname:"
 
 #. Encapsulation label
-#: plug-ins/common/mail.c:683
+#: plug-ins/common/mail.c:685
 msgid "Encapsulation:"
 msgstr "Kapselung:"
 
 #. Encapsulation radiobutton
-#: plug-ins/common/mail.c:692
+#: plug-ins/common/mail.c:695
 msgid "Uuencode"
 msgstr "Uuencode"
 
-#: plug-ins/common/mail.c:694
+#: plug-ins/common/mail.c:697
 msgid "MIME"
 msgstr "MIME"
 
-#: plug-ins/common/mail.c:808
+#: plug-ins/common/mail.c:810
 msgid "mail: some sort of error with the file extension or lack thereof \n"
 msgstr ""
 "mail: Irgendein Fehler mit der Dateinamenerweiterung (oder das Fehlen "
@@ -3078,12 +3081,15 @@ msgstr "Zweites Ziel"
 msgid ""
 "Adjust current foreground/background color in the drawable to black/white"
 msgstr ""
+"Ersetzt die Vorder- und Hintergrundfarbe im Bild durch Schwarz und Weiss"
 
 #: plug-ins/common/mapcolor.c:141
 msgid ""
 "The current foreground color is mapped to black, the current background "
 "color is mapped to white."
 msgstr ""
+"Die aktuelle Vordergrundfarbe wird auf Weiss, die aktuelle "
+"Hintergrundfarbe auf Schwarz abgebildet."
 
 #: plug-ins/common/mapcolor.c:146
 msgid "<Image>/Filters/Colors/Map/Adjust FG-BG"
@@ -3094,6 +3100,8 @@ msgid ""
 "Map two source colors to two destination colors. Other colors are mapped by "
 "interpolation."
 msgstr ""
+"Bildet zwei Farben auf zwei neue Farben ab. Andere Farben werden"
+"entsprechend interpoliert."
 
 #: plug-ins/common/mapcolor.c:160
 msgid "<Image>/Filters/Colors/Map/Color Mapping..."
@@ -3107,17 +3115,15 @@ msgstr ""
 
 #: plug-ins/common/mapcolor.c:229
 msgid "Adjusting Foreground/Background"
-msgstr ""
+msgstr "Ersetze Hintergrund-/Vordergrundfarbe"
 
 #: plug-ins/common/mapcolor.c:275
-#, fuzzy
 msgid "Mapping colors"
-msgstr "Kein Speicher für \"mapping farben\""
+msgstr "Bilde Farben ab"
 
 #: plug-ins/common/mapcolor.c:326
-#, fuzzy
 msgid "Map colors"
-msgstr "Farbe"
+msgstr "Farbabbildung"
 
 #: plug-ins/common/mapcolor.c:399
 msgid "To:"
@@ -3169,18 +3175,21 @@ msgid ""
 "light effect is approximately in proportion to 1/r, where r is the distance "
 "from the center of the star. It works with RGB*, GRAY* image."
 msgstr ""
+"Erzeugt einen Effekt wie eine Supernova Explosion. Die Lichtintensität"
+"nimmt vom Zentrum des Sterns proportional mit 1/r ab. Kann mit RGB- und "
+"Graustufenbildern arbeiten"
 
 #: plug-ins/common/nova.c:246
 msgid "<Image>/Filters/Light Effects/SuperNova..."
-msgstr "<Image>/Filter/Licht-Effekte/SuperNova..."
+msgstr "<Image>/Filter/Licht-Effekte/Supernova..."
 
 #: plug-ins/common/nova.c:326
 msgid "Rendering SuperNova..."
-msgstr "Berechne SuperNova..."
+msgstr "Berechne Supernova..."
 
 #: plug-ins/common/nova.c:395
 msgid "SuperNova"
-msgstr ""
+msgstr "Supernova"
 
 #: plug-ins/common/nova.c:449
 msgid "SuperNova Color Picker"
@@ -3192,11 +3201,11 @@ msgstr "Radius:"
 
 #: plug-ins/common/nova.c:461
 msgid "Spokes:"
-msgstr ""
+msgstr "Strahlen:"
 
 #: plug-ins/common/nova.c:464
 msgid "Random Hue:"
-msgstr ""
+msgstr "Zufallsfarbe:"
 
 #. to avoid side effects while initialization
 #: plug-ins/common/nova.c:535
@@ -3205,7 +3214,7 @@ msgstr "Mitte der Nova"
 
 #: plug-ins/common/nova.c:548
 msgid "X: "
-msgstr ""
+msgstr "X: "
 
 #: plug-ins/common/nova.c:562
 msgid "Y: "
@@ -3259,7 +3268,7 @@ msgstr "Grösse:"
 
 #: plug-ins/common/papertile.c:411
 msgid "Fractional Pixels"
-msgstr ""
+msgstr "Teilpixel"
 
 #: libgimp/gimpexport.c:300 plug-ins/common/papertile.c:427
 msgid "Ignore"
@@ -3267,11 +3276,11 @@ msgstr "Ignorieren"
 
 #: plug-ins/common/papertile.c:428
 msgid "Force"
-msgstr ""
+msgstr "Erzwingen"
 
 #: plug-ins/common/papertile.c:440
 msgid "Centering"
-msgstr ""
+msgstr "Zentern"
 
 #: plug-ins/common/papertile.c:452
 msgid "Movement"
@@ -3279,11 +3288,11 @@ msgstr "Bewegung"
 
 #: plug-ins/common/papertile.c:458
 msgid "Max(%):"
-msgstr ""
+msgstr "Max(%):"
 
 #: plug-ins/common/papertile.c:462
 msgid "Wrap Around"
-msgstr ""
+msgstr "Umfalten"
 
 #: plug-ins/common/papertile.c:469
 msgid "Background Type"
@@ -3320,15 +3329,15 @@ msgstr "Ok"
 
 #: plug-ins/common/papertile.c:937
 msgid "Cuts an image into paper tiles, and slides each paper tile."
-msgstr ""
+msgstr "Zerschneidet ein Bild und verschiebt die einzelnen Schnipsel."
 
 #: plug-ins/common/papertile.c:938
 msgid "This plug-in cuts an image into paper tiles and slides each paper tile."
-msgstr ""
+msgstr "Dieses Plugin zerschneidet ein Bild und verschiebt die einzelnen Schnipsel."
 
 #: plug-ins/common/papertile.c:941
 msgid "September 31, 1999"
-msgstr ""
+msgstr "31. September 1999"
 
 #: plug-ins/common/papertile.c:942
 msgid "<Image>/Filters/Map/Paper Tile..."
@@ -3639,7 +3648,7 @@ msgstr ""
 
 #: plug-ins/common/rotate.c:543
 msgid "Sorry, channels and masks can not be rotated."
-msgstr ""
+msgstr "Kanäle und Masken können nicht rotiert werden."
 
 #: plug-ins/common/rotate.c:549
 msgid "Rotating..."
@@ -3647,7 +3656,7 @@ msgstr "Rotiere..."
 
 #: plug-ins/common/screenshot.c:146
 msgid "Creates a screenshot of a single window or the whole screen"
-msgstr ""
+msgstr "Erstellt einen Screenshot eines Fensters oder des ganzen Bildschirms"
 
 #: plug-ins/common/screenshot.c:147
 msgid ""
@@ -3696,11 +3705,11 @@ msgstr "<Image>/Bild/Alpha/Alpha Schwellenwert..."
 
 #: plug-ins/common/threshold_alpha.c:236
 msgid "The layer preserves transparency."
-msgstr ""
+msgstr "Die Ebene bewahrt ihre Transparenz."
 
 #: plug-ins/common/threshold_alpha.c:242
 msgid "RGBA/GRAYA drawable is not selected."
-msgstr ""
+msgstr "Keine RGBA/GRAYA Ebene ausgewählt."
 
 #: plug-ins/common/threshold_alpha.c:300
 msgid "threshold_alpha (0.13):coloring transparency..."
@@ -4663,8 +4672,9 @@ msgstr ""
 "(mpeg2encode muss auf ihrem System installiert sein)"
 
 #: plug-ins/gap/gap_main.c:579
-msgid "<Image>/Video/Encode/MPEG2 mpeg2encode...)"
-msgstr "<Image>/Video/Kodieren/MPEG2..."
+#, fuzzy
+msgid "<Image>/Video/Encode/MPEG2..."
+msgstr "<Image>/Video/Kodieren//MPEG1..."
 
 #: plug-ins/gap/gap_main.c:587
 msgid ""
@@ -5630,19 +5640,19 @@ msgstr "Ebenenstapel :"
 
 #: plug-ins/gap/gap_range_ops.c:291
 msgid "Generate optimal palette"
-msgstr ""
+msgstr "Erzeuge optimale Palette"
 
 #: plug-ins/gap/gap_range_ops.c:292
 msgid "WEB palette"
-msgstr ""
+msgstr "Web Palette"
 
 #: plug-ins/gap/gap_range_ops.c:293
 msgid "Use custom palette"
-msgstr ""
+msgstr "Benutze eigene Palette"
 
 #: plug-ins/gap/gap_range_ops.c:294
 msgid "Use black/white (1-bit) palette"
-msgstr ""
+msgstr "Benutze Schwarz/Weiss (1-bit) Palette"
 
 #: plug-ins/gap/gap_range_ops.c:296
 msgid "Floyd-Steinberg colour dithering (normal)"
@@ -5662,27 +5672,31 @@ msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:310
 msgid "Palette Type"
-msgstr ""
+msgstr "Palettenart"
 
 #: plug-ins/gap/gap_range_ops.c:317
 msgid "Custom Palette"
-msgstr ""
+msgstr "Benutzer-Palette"
 
 #: plug-ins/gap/gap_range_ops.c:318
 msgid ""
 "name of a cutom palette\n"
 "(is ignored if Palette Type is not custom)"
 msgstr ""
+"Name einer Palette\n"
+"(ignoriert, wenn Palettentyp nicht Benutzer-Palette)"
 
 #: plug-ins/gap/gap_range_ops.c:323
 msgid "Remove unused"
-msgstr ""
+msgstr "Entferne unbenutzte"
 
 #: plug-ins/gap/gap_range_ops.c:324
 msgid ""
 "Remove unused or double colors\n"
 "(is ignored if Palette Type is not custom)"
 msgstr ""
+"Entferne unbenutzte oder doppelte Farben\n"
+"(ignoriert, wenn Palettentyp nicht Benutzer-Palette)"
 
 #: plug-ins/gap/gap_range_ops.c:329
 msgid "Number of Colors"
@@ -6076,11 +6090,11 @@ msgstr "Einfügen"
 
 #: plug-ins/gdyntext/charmap_window.c:137
 msgid "Insert the selected char at the cursor position"
-msgstr ""
+msgstr "Ausgewählten Buchstaben an der Cursorposition einfügen"
 
 #: plug-ins/gdyntext/gdyntext.c:148 plug-ins/gdyntext/gdyntext.c:427
 msgid "GIMP Dynamic Text"
-msgstr ""
+msgstr "GIMP Dynamischer Text"
 
 #: plug-ins/gdyntext/gdyntext.c:153
 msgid "<Image>/Filters/Render/Dynamic Text..."
@@ -7058,7 +7072,7 @@ msgstr "Y"
 #. Asym
 #: plug-ins/ifscompose/ifscompose.c:559
 msgid "Asymmetry"
-msgstr ""
+msgstr "Asymmetrie"
 
 #. Shear
 #: plug-ins/ifscompose/ifscompose.c:573
@@ -7085,12 +7099,12 @@ msgstr "Skaliere Farbton:"
 
 #: plug-ins/ifscompose/ifscompose.c:649
 msgid "Scale value by:"
-msgstr ""
+msgstr "Skaliere Wert mit:"
 
 #. Full color control section
 #: plug-ins/ifscompose/ifscompose.c:666
 msgid "Full"
-msgstr ""
+msgstr "Ganz"
 
 #: plug-ins/ifscompose/ifscompose.c:675
 msgid "IfsCompose: Red"
@@ -7187,13 +7201,13 @@ msgstr "Punkt Radius:"
 #: plug-ins/ifscompose/ifscompose.c:1377
 #, c-format
 msgid "Rendering IFS (%d/%d)..."
-msgstr ""
+msgstr "Berechne IFS (%d/%d)..."
 
 #. transfer the image to the drawable
 #: plug-ins/ifscompose/ifscompose.c:1393
 #, c-format
 msgid "Copying IFS to image (%d/%d)..."
-msgstr ""
+msgstr "Kopiere IFS ins Bild (%d/%d)..."
 
 #: plug-ins/imagemap/imap_about.c:33
 #: plug-ins/script-fu/script-fu-scripts.c:1370
@@ -7313,7 +7327,7 @@ msgstr "Punkt hinzufügen"
 #: plug-ins/imagemap/imap_cmd_move_down.c:52
 #: plug-ins/imagemap/imap_cmd_object_down.c:51
 msgid "Move Down"
-msgstr ""
+msgstr "Rauf"
 
 # TODO context ?
 #: plug-ins/imagemap/imap_cmd_move_sash.c:64
@@ -7325,7 +7339,7 @@ msgstr "Pfad bewegen"
 #: plug-ins/imagemap/imap_cmd_move_up.c:52
 #: plug-ins/imagemap/imap_cmd_object_up.c:51
 msgid "Move Up"
-msgstr ""
+msgstr "Runter"
 
 #: plug-ins/imagemap/imap_cmd_paste.c:48 plug-ins/imagemap/imap_toolbar.c:136
 msgid "Paste"
@@ -7491,7 +7505,7 @@ msgstr "Pixel von oben"
 #: plug-ins/imagemap/imap_main.c:137
 #, fuzzy
 msgid "Creates a clickable imagemap."
-msgstr "Erstelle neues Bild"
+msgstr "Erstellt eine \"clickable imagemap\"."
 
 #: plug-ins/imagemap/imap_main.c:142
 msgid "<Image>/Filters/Web/ImageMap..."
@@ -7509,7 +7523,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_polygon.c:68
 msgid "Polygon"
-msgstr ""
+msgstr "Polygon"
 
 #: plug-ins/imagemap/imap_polygon.c:390
 msgid "x (pixels)"
@@ -7618,15 +7632,15 @@ msgstr "Vorhandenen Bereich auswählen"
 
 #: plug-ins/imagemap/imap_tools.c:133
 msgid "Define Rectangle area"
-msgstr ""
+msgstr "Definiere rechteckiges Gebiet"
 
 #: plug-ins/imagemap/imap_tools.c:137
 msgid "Define Circle/Oval area"
-msgstr ""
+msgstr "Definiere rundes/ovales Gebiet"
 
 #: plug-ins/imagemap/imap_tools.c:141
 msgid "Define Polygon area"
-msgstr ""
+msgstr "Definiere Polygon Gebiet"
 
 #: plug-ins/imagemap/imap_tools.c:145
 msgid "Edit selected area info"

@@ -514,18 +514,18 @@ dialog_create ( void )
   }
   
   /* ACTION AREA */
-  button = gtk_button_new_with_label( _("Ok") );
+  button = gtk_button_new_with_label( _("OK") );
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect( GTK_OBJECT(button), "clicked",
-		      GTK_SIGNAL_FUNC(dialog_ok_clicked), NULL );
-  gtk_container_add( GTK_CONTAINER(action_box), button );
+  gtk_signal_connect (GTK_OBJECT(button), "clicked",
+		      GTK_SIGNAL_FUNC (dialog_ok_clicked), NULL );
+  gtk_container_add (GTK_CONTAINER(action_box), button );
   gtk_widget_grab_default (button);
 
-  button = gtk_button_new_with_label( _("Cancel") );
+  button = gtk_button_new_with_label ( _("Cancel") );
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect( GTK_OBJECT(button), "clicked",
+  gtk_signal_connect (GTK_OBJECT(button), "clicked",
 		      GTK_SIGNAL_FUNC(dialog_cancel_clicked), NULL );
-  gtk_container_add( GTK_CONTAINER(action_box), button );
+  gtk_container_add (GTK_CONTAINER(action_box), button );
   
   /* SIGNALS */
   gtk_signal_connect( GTK_OBJECT(w.dialog), "destroy",
