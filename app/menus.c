@@ -983,7 +983,6 @@ menus_reorder_plugins (void)
 				    sizeof (reorder_submenus[0]));
 
   static gchar *reorder_subsubmenus[] = { "<Image>/Filters",
-					  "<Image>/Script-Fu",
 					  "<Toolbox>/Xtns" };
   static gint n_reorder_subsubmenus = (sizeof (reorder_subsubmenus) /
 				       sizeof (reorder_subsubmenus[0]));

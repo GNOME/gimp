@@ -23,12 +23,19 @@
 #include "dialog_handler.h"
 #include "docindex.h"
 #include "fileops.h"
+#include "gimpui.h"
 #include "gimpdnd.h"
+#include "ops_buttons.h"
 #include "session.h"
 
 #include "libgimp/gimpenv.h"
 
 #include "libgimp/gimpintl.h"
+
+#include "pixmaps/folder.xpm"
+#include "pixmaps/raise.xpm"
+#include "pixmaps/lower.xpm"
+#include "pixmaps/delete.xpm"
 
 
 typedef struct
@@ -45,8 +52,81 @@ typedef struct
 } BoolCharPair;
 
 
+/*  forward declarations  */
+
+static void      create_idea_list                  (void);
+static void      idea_add_in_position              (gchar       *label,
+						    gint         position);
+static void      open_idea_window                  (void);
+static void      open_or_raise                     (gchar       *file_name,
+						    gboolean    try_raise);
+
+static void      idea_open_callback                (GtkWidget   *widget,
+						    gpointer     data);
+static void      idea_open_or_raise_callback       (GtkWidget   *widget,
+						    gpointer     data);
+static void      idea_up_callback                  (GtkWidget   *widget,
+						    gpointer     data);
+static void      idea_to_top_callback              (GtkWidget   *widget,
+						    gpointer     data);
+static void      idea_down_callback                (GtkWidget   *widget,
+						    gpointer     data);
+static void      idea_to_bottom_callback           (GtkWidget   *widget,
+						    gpointer     data);
+static void      idea_remove_callback              (GtkWidget   *widget,
+						    gpointer     data);
+static void      idea_hide_callback                (GtkWidget   *widget,
+						    gpointer     data);
+
+static void      load_idea_manager                 (IdeaManager *ideas);
+static void      save_idea_manager                 (IdeaManager *ideas);
+
+static void      clear_white                       (FILE        *fp);
+static gint      getinteger                        (FILE        *fp);
+
+
+/*  local variables  */
+
 static IdeaManager *ideas     = NULL;
 static GList       *idea_list = NULL;
+
+
+/*  the ops buttons  */
+static GtkSignalFunc open_ext_callbacks[] = 
+{
+  idea_open_or_raise_callback, file_open_callback, NULL, NULL
+};
+
+static GtkSignalFunc raise_ext_callbacks[] = 
+{
+  idea_to_top_callback, NULL, NULL, NULL
+};
+
+static GtkSignalFunc lower_ext_callbacks[] = 
+{
+  idea_to_bottom_callback, NULL, NULL, NULL
+};
+
+static OpsButton ops_buttons[] =
+{
+  { folder_xpm, idea_open_callback, open_ext_callbacks,
+    N_("Open the selected entry\n"
+       "<Shift> Raise window if already open\n"
+       "<Control> Load Image dialog"), NULL,
+    NULL, 0 },
+  { raise_xpm, idea_up_callback, raise_ext_callbacks,
+    N_("Move the selected entry up in the index\n"
+       "<Shift> To top"), NULL,
+    NULL, 0 },
+  { lower_xpm, idea_down_callback, lower_ext_callbacks,
+    N_("Move the selected entry down in the index\n"
+       "<Shift> To bottom"), NULL,
+    NULL, 0 },
+  { delete_xpm, idea_remove_callback, NULL,
+    N_("Remove the selected entry from the index"), NULL,
+    NULL, 0 },
+  { NULL, NULL, NULL, NULL, NULL, NULL, 0 }
+};
 
 
 /*  dnd stuff  */
@@ -58,35 +138,6 @@ static GtkTargetEntry drag_types[] =
   GIMP_TARGET_NETSCAPE_URL
 };
 static gint n_drag_types = sizeof (drag_types) / sizeof (drag_types[0]);
-
-
-/*  forward declarations  */
-
-static void      create_idea_list                  (void);
-static void      idea_add_in_position              (gchar       *label,
-						    gint         position);
-static void      open_idea_window                  (void);
-static void      open_or_raise                     (gchar       *file_name);
-
-static void      idea_up_callback                  (GtkWidget   *widget,
-						    gpointer     data);
-static void      idea_down_callback                (GtkWidget   *widget,
-						    gpointer     data);
-static void      idea_remove_callback              (GtkWidget   *widget,
-						    gpointer     data);
-static void      idea_hide_callback                (GtkWidget   *widget,
-						    gpointer     data);
-
-static gboolean  idea_window_delete_event_callback (GtkWidget   *widget,
-						    GdkEvent    *event,
-						    gpointer     data);
-
-static void      load_idea_manager                 (IdeaManager *ideas);
-static void      save_idea_manager                 (IdeaManager *ideas);
-
-static void      clear_white                       (FILE        *fp);
-static gint      getinteger                        (FILE        *fp);
-
 
 
 /*  public functions  */
@@ -266,14 +317,14 @@ create_idea_list (void)
 }
 
 static gint
-open_or_raise_callback (GtkWidget      *widget,
-			GdkEventButton *event,
-			gpointer        func_data)
+list_item_callback (GtkWidget      *widget,
+		    GdkEventButton *event,
+		    gpointer        data)
 {
   if (GTK_IS_LIST_ITEM (widget) &&
       event->type == GDK_2BUTTON_PRESS)
     {
-      open_or_raise (GTK_LABEL (GTK_BIN (widget)->child)->label);
+      open_or_raise (GTK_LABEL (GTK_BIN (widget)->child)->label, FALSE);
     }
 
   return FALSE;
@@ -338,7 +389,7 @@ idea_add_in_position_with_select (gchar    *title,
 	    gtk_list_insert_items (GTK_LIST (ideas->list), list, position);
 
 	  gtk_signal_connect (GTK_OBJECT (listitem), "button_press_event",
-			      GTK_SIGNAL_FUNC (open_or_raise_callback),
+			      GTK_SIGNAL_FUNC (list_item_callback),
 			      NULL);
 
 	  gtk_widget_show (listitem);
@@ -423,7 +474,8 @@ raise_if_match (gpointer data,
 }
 
 static void
-open_or_raise (gchar *file_name)
+open_or_raise (gchar    *file_name,
+	       gboolean  try_raise)
 {
   BoolCharPair pair;
 
@@ -431,9 +483,16 @@ open_or_raise (gchar *file_name)
   pair.string = file_name;
   pair.data   = NULL;
 
-  gdisplays_foreach (raise_if_match, &pair);
-  
-  if (! pair.boole)
+  if (try_raise)
+    {
+      gdisplays_foreach (raise_if_match, &pair);
+
+      if (! pair.boole)
+	{
+	  file_open (file_name, file_name);
+	}
+    }
+  else
     {
       file_open (file_name, file_name);
     }
@@ -519,6 +578,40 @@ idea_move (GtkWidget *widget,
 }
 
 static void
+idea_open_callback (GtkWidget   *widget,
+		    gpointer     data)
+{
+  GtkWidget *selected;
+
+  if (GTK_LIST (ideas->list)->selection)
+    {
+      selected = GTK_LIST (ideas->list)->selection->data;
+      open_or_raise (GTK_LABEL (GTK_BIN (selected)->child)->label, FALSE);
+    }
+  else
+    {
+      file_open_callback (widget, data);
+    }
+}
+
+static void
+idea_open_or_raise_callback (GtkWidget   *widget,
+			     gpointer     data)
+{
+  GtkWidget *selected;
+
+  if (GTK_LIST (ideas->list)->selection)
+    {
+      selected = GTK_LIST (ideas->list)->selection->data;
+      open_or_raise (GTK_LABEL (GTK_BIN (selected)->child)->label, TRUE);
+    }
+  else
+    {
+      file_open_callback (widget, data);
+    }
+}
+
+static void
 idea_up_callback (GtkWidget *widget,
 		  gpointer   data)
 {
@@ -532,6 +625,20 @@ idea_up_callback (GtkWidget *widget,
 }
 
 static void
+idea_to_top_callback (GtkWidget   *widget,
+		      gpointer     data)
+{
+  GtkWidget *selected;
+
+  if (GTK_LIST (ideas->list)->selection)
+    {
+      selected = GTK_LIST (ideas->list)->selection->data;
+      idea_move (selected, - g_list_length (GTK_LIST (ideas->list)->children),
+		 TRUE);
+    }
+}
+
+static void
 idea_down_callback (GtkWidget *widget,
 		    gpointer   data)
 {
@@ -541,6 +648,20 @@ idea_down_callback (GtkWidget *widget,
     {
       selected = GTK_LIST (ideas->list)->selection->data;
       idea_move (selected, 1, TRUE);
+    }
+}
+
+static void
+idea_to_bottom_callback (GtkWidget   *widget,
+			 gpointer     data)
+{
+  GtkWidget *selected;
+
+  if (GTK_LIST (ideas->list)->selection)
+    {
+      selected = GTK_LIST (ideas->list)->selection->data;
+      idea_move (selected, g_list_length (GTK_LIST (ideas->list)->children),
+		 TRUE);
     }
 }
 
@@ -579,7 +700,7 @@ idea_hide_callback (GtkWidget *widget,
   if (ideas || idea_list)
     save_idea_manager (ideas);
 
-  /* False if exitting */
+  /* False if exiting */
   if (ideas)
     {
       create_idea_list ();
@@ -591,65 +712,31 @@ idea_hide_callback (GtkWidget *widget,
     }
 }
 
-static gboolean
-idea_window_delete_event_callback (GtkWidget *widget,
-				   GdkEvent  *event,
-				   gpointer   data)
+static void
+ops_buttons_update (GtkWidget *widget,
+		    gpointer   data)
 {
-  idea_hide_callback (NULL, NULL);
+  GtkWidget *selected = NULL;
+  gint       length   = 0;
+  gint       index    = -1;
 
-  return TRUE;
-}
+  length = g_list_length (GTK_LIST (ideas->list)->children);
 
-static GtkWidget *
-create_idea_toolbar (void)
-{
-  GtkWidget *toolbar;
+  if (GTK_LIST (ideas->list)->selection)
+    {
+      selected = GTK_LIST (ideas->list)->selection->data;
+      index  = g_list_index  (GTK_LIST (ideas->list)->children, selected);
+    }
 
-  toolbar = gtk_toolbar_new (GTK_ORIENTATION_HORIZONTAL, GTK_TOOLBAR_BOTH);
-  gtk_toolbar_set_button_relief (GTK_TOOLBAR (toolbar), GTK_RELIEF_NONE);
+#define SET_OPS_SENSITIVE(button,condition) \
+        gtk_widget_set_sensitive (ops_buttons[(button)].widget, \
+                                  (condition) != 0)
 
-  gtk_toolbar_append_item (GTK_TOOLBAR (toolbar),
-			   _("Open"),
-			   _("Open a file"),
-			   "Toolbar/Open",
-			   NULL,
-			   GTK_SIGNAL_FUNC (file_open_callback),
-			   NULL);
+  SET_OPS_SENSITIVE (1, selected && index > 0);
+  SET_OPS_SENSITIVE (2, selected && index < (length - 1));
+  SET_OPS_SENSITIVE (3, selected);
 
-  gtk_toolbar_append_item (GTK_TOOLBAR (toolbar),
-			   _("Up"),
-			   _("Move the selected entry up in the index"),
-			   "Toolbar/Up",
-			   NULL,
-			   GTK_SIGNAL_FUNC (idea_up_callback),
-			   NULL);
-
-  gtk_toolbar_append_item (GTK_TOOLBAR (toolbar),
-			   _("Down"),
-			   _("Move the selected entry down in the index"),
-			   "Toolbar/Down",
-			   NULL,
-			   GTK_SIGNAL_FUNC (idea_down_callback),
-			   NULL);
-
-  gtk_toolbar_append_item (GTK_TOOLBAR (toolbar),
-			   _("Remove"),
-			   _("Remove the selected entry from the index"),
-			   "Toolbar/Remove",
-			   NULL,
-			   GTK_SIGNAL_FUNC (idea_remove_callback),
-			   NULL);
-
-  gtk_toolbar_append_item (GTK_TOOLBAR (toolbar),
-			   _("Close"),
-			   _("Close the Document Index"),
-			   "Toolbar/Hide",
-			   NULL,
-			   GTK_SIGNAL_FUNC (idea_hide_callback),
-			   NULL);
-
-  return toolbar;
+#undef SET_OPS_SENSITIVE
 }
 
 static void
@@ -657,28 +744,39 @@ open_idea_window (void)
 {
   GtkWidget *main_vbox;
   GtkWidget *scrolled_win;
-  GtkWidget *toolbar;
+  GtkWidget *hbox;
+  GtkWidget *button_box;
+  gint       i;
 
-  /* alloc idea_manager */
   ideas = g_new0 (IdeaManager, 1);
 
-  ideas->window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-  gtk_container_set_border_width (GTK_CONTAINER (ideas->window), 0);
-  gtk_window_set_title (GTK_WINDOW (ideas->window), _("Document Index"));
+  ideas->window = gimp_dialog_new (_("Document Index"), "docindex",
+				   gimp_standard_help_func,
+				   "dialogs/document_index.html",
+				   GTK_WIN_POS_MOUSE,
+				   FALSE, TRUE, FALSE,
 
-  /* Connect the signals */
-  gtk_signal_connect (GTK_OBJECT (ideas->window), "delete_event",
-		      GTK_SIGNAL_FUNC (idea_window_delete_event_callback),
-		      NULL);
+				   _("Close"), idea_hide_callback,
+				   NULL, NULL, NULL, TRUE, TRUE,
 
-  main_vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (ideas->window), main_vbox);
+				   NULL);
+
+  gtk_drag_dest_set (ideas->window,
+                     GTK_DEST_DEFAULT_ALL,
+                     drag_types, n_drag_types,
+                     GDK_ACTION_COPY);
+
+  gimp_dnd_file_dest_set (ideas->window);
+
+  dialog_register (ideas->window);
+  session_set_window_geometry (ideas->window, &document_index_session_info,
+			       TRUE);
+
+  main_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (ideas->window)->vbox),
+		     main_vbox);
   gtk_widget_show (main_vbox);
-
-  /* Toolbar */
-  toolbar = create_idea_toolbar ();
-  gtk_box_pack_start (GTK_BOX (main_vbox), toolbar, FALSE, FALSE, 0);
-  gtk_widget_show (toolbar);
 
   /* Scrolled window */
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
@@ -694,22 +792,29 @@ open_idea_window (void)
 					 ideas->list);
   gtk_widget_show (ideas->list);
 
-  gtk_drag_dest_set (ideas->window,
-                     GTK_DEST_DEFAULT_ALL,
-                     drag_types, n_drag_types,
-                     GDK_ACTION_COPY);
+  /*  The ops buttons  */
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
-  gimp_dnd_file_dest_set (ideas->window);
+  button_box = ops_button_box_new (ops_buttons, OPS_BUTTON_NORMAL);
+  gtk_box_pack_start (GTK_BOX (hbox), button_box, FALSE, FALSE, 0);
+  gtk_widget_show (button_box);
 
-  dialog_register (ideas->window);
-  session_set_window_geometry (ideas->window, &document_index_session_info,
-			       TRUE);
+  for (i = 0; ; i++)
+    {
+      if (ops_buttons[i].widget == NULL)
+	break;
 
-  /*  Connect the "F1" help key  */
-  gimp_help_connect_help_accel (ideas->window,
-				gimp_standard_help_func,
-				"dialogs/document_index.html");
+      gtk_misc_set_padding (GTK_MISC (GTK_BIN (ops_buttons[i].widget)->child),
+			    8, 0);
+    }
 
   /* Load and Show window */
   load_idea_manager (ideas);
+
+  gtk_signal_connect_after (GTK_OBJECT (ideas->list), "selection_changed",
+			    GTK_SIGNAL_FUNC (ops_buttons_update),
+			    NULL);
+  ops_buttons_update (NULL, NULL);
 }

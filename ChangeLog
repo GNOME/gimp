@@ -1,5 +1,14 @@
 2000-05-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/menus.c (menus_reorder_plugins): no need to reorder
+	<Image>/Script-Fu twice.
+
+	* app/docindex.c: replaced the toolbar by an ops_buttons box.
+	Also default to opening the file instead of rising an already
+	open display.
+
+2000-05-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimpdnd.[ch]: new public function gimp_dnd_file_dest_set().
 	Moved the file/url dnd stuff from interface.c to gimpdnd.c.
 
