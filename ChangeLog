@@ -1,3 +1,19 @@
+2005-03-05  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/gimp-composite-generic.c
+	* app/composite/gimp-composite-mmx.c
+	* app/composite/gimp-composite-sse.c
+	Incorporated a very clean patch from starox-gimp@starox.org
+	(Frederic Leroy) which improves the generic performance of the
+	burn compositing function.  Speed is improved at a cost of a 64k
+	look-up table which is probably manageable for 8bpp images, but at
+	larger bpp images (which currently are not supported by the GIMP)
+	this is unlikely to be tolerable.
+
+	The generic C implementation of the burn function uses this
+	look-up table, the mmx/sse implementations have been commented
+	out.
+
 2005-03-05  Sven Neumann  <sven@gimp.org>
 
 	Fix for bug #169274:

@@ -76,17 +76,6 @@ gimp_composite_sse_test (int iterations, int n_pixels)
     }
   gimp_composite_regression_timer_report ("addition_rgba8_rgba8_rgba8", ft0, ft1);
 
-  gimp_composite_context_init (&special_ctx, GIMP_COMPOSITE_BURN, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, n_pixels, (unsigned char *) rgba8A, (unsigned char *) rgba8B, (unsigned char *) rgba8B, (unsigned char *) rgba8D2);
-  gimp_composite_context_init (&generic_ctx, GIMP_COMPOSITE_BURN, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, n_pixels, (unsigned char *) rgba8A, (unsigned char *) rgba8B, (unsigned char *) rgba8B, (unsigned char *) rgba8D1);
-  ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);
-  ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_burn_rgba8_rgba8_rgba8_sse, &special_ctx);
-  if (gimp_composite_regression_compare_contexts ("burn", &generic_ctx, &special_ctx))
-    {
-      printf("burn_rgba8_rgba8_rgba8 failed\n");
-      return (1);
-    }
-  gimp_composite_regression_timer_report ("burn_rgba8_rgba8_rgba8", ft0, ft1);
-
   gimp_composite_context_init (&special_ctx, GIMP_COMPOSITE_DARKEN, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, n_pixels, (unsigned char *) rgba8A, (unsigned char *) rgba8B, (unsigned char *) rgba8B, (unsigned char *) rgba8D2);
   gimp_composite_context_init (&generic_ctx, GIMP_COMPOSITE_DARKEN, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, n_pixels, (unsigned char *) rgba8A, (unsigned char *) rgba8B, (unsigned char *) rgba8B, (unsigned char *) rgba8D1);
   ft0 = gimp_composite_regression_time_function (iterations, gimp_composite_dispatch, &generic_ctx);

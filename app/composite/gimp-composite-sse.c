@@ -114,7 +114,7 @@ gimp_composite_addition_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
   asm("emms");
 }
 
-
+#if 0
 void
 gimp_composite_burn_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
 {
@@ -230,7 +230,7 @@ gimp_composite_burn_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
 
   asm("emms");
 }
-
+#endif
 
 void
 gimp_composite_darken_rgba8_rgba8_rgba8_sse (GimpCompositeContext *_op)
