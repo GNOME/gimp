@@ -490,12 +490,19 @@ indexed_palette_select_palette (GimpContext   *context,
 				GimpPalette   *palette,
                                 IndexedDialog *dialog)
 {
-  if (palette && palette->n_colors <= 256)
+  if (! palette)
+    return;
+
+  if (palette->n_colors > 256)
+    {
+      g_message (_("Cannot convert to a palette with more than 256 colors."));
+    }
+  else
     {
       theCustomPalette = palette;
 
       gtk_label_set_text (GTK_LABEL (GTK_BIN (dialog->custom_palette_button)->child),
-                          GIMP_OBJECT (theCustomPalette)->name);
+                          gimp_object_get_name (GIMP_OBJECT (palette)));
     }
 }
 

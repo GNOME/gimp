@@ -1,3 +1,11 @@
+2004-03-08  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/convert-dialog.c (indexed_palette_select_palette): added
+	a message explaining that GIMP cannot convert to a palette with
+	more than 256 colors. Should actually not list palettes that don't
+	match this criteria, but we'll leave that change for later (see
+	bug #136574).
+
 2004-03-08  Manish Singh  <yosh@gimp.org>
 
 	* app/plug-in/plug-in.h: Use GPid with newer glib so that we work
