@@ -46,6 +46,8 @@ libappdialogs_a_SOURCES = \
 	palette-import-dialog.h		\
 	preferences-dialog.c		\
 	preferences-dialog.h		\
+	print-size-dialog.c		\
+	print-size-dialog.h		\
 	quit-dialog.c			\
 	quit-dialog.h			\
 	resize-dialog.c			\

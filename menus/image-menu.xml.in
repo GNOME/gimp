@@ -283,6 +283,7 @@
       <placeholder name="Resize">
         <menuitem action="image-resize" />
         <menuitem action="image-resize-to-layers" />
+        <menuitem action="image-print-size" />
       </placeholder>
       <placeholder name="Scale">
         <menuitem action="image-scale" />

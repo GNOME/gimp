@@ -81,6 +81,11 @@ static GimpActionEntry image_actions[] =
     G_CALLBACK (image_resize_to_layers_cmd_callback),
     GIMP_HELP_IMAGE_RESIZE_TO_LAYERS },
 
+  { "image-print-size", GTK_STOCK_PRINT,
+    N_("_Print Size..."), NULL, NULL,
+    G_CALLBACK (image_print_size_cmd_callback),
+    GIMP_HELP_IMAGE_PRINT_SIZE },
+
   { "image-scale", GIMP_STOCK_SCALE,
     N_("_Scale Image..."), NULL, NULL,
     G_CALLBACK (image_scale_cmd_callback),
@@ -242,6 +247,7 @@ image_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("image-resize",           gimage);
   SET_SENSITIVE ("image-resize-to-layers", gimage);
+  SET_SENSITIVE ("image-print-size",       gimage);
   SET_SENSITIVE ("image-scale",            gimage);
   SET_SENSITIVE ("image-crop",             gimage && sel);
   SET_SENSITIVE ("image-duplicate",        gimage);

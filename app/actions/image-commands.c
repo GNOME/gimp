@@ -53,6 +53,7 @@
 #include "dialogs/image-merge-layers-dialog.h"
 #include "dialogs/image-new-dialog.h"
 #include "dialogs/image-scale-dialog.h"
+#include "dialogs/print-size-dialog.h"
 #include "dialogs/resize-dialog.h"
 
 #include "actions.h"
@@ -78,6 +79,12 @@ static void   image_resize_callback        (GtkWidget              *dialog,
                                             gint                    height,
                                             gint                    offset_x,
                                             gint                    offset_y,
+                                            gpointer                data);
+static void   image_print_size_callback    (GtkWidget              *dialog,
+                                            GimpImage              *image,
+                                            gdouble                 xresolution,
+                                            gdouble                 yresolution,
+                                            GimpUnit                resolution_unit,
                                             gpointer                data);
 static void   image_scale_callback         (ImageScaleDialog       *dialog);
 
@@ -219,6 +226,32 @@ image_resize_to_layers_cmd_callback (GtkAction *action,
     gimp_progress_end (progress);
 
   gimp_image_flush (gdisp->gimage);
+}
+
+void
+image_print_size_cmd_callback (GtkAction *action,
+                               gpointer   data)
+{
+  GtkWidget   *dialog;
+  GimpDisplay *gdisp;
+  GtkWidget   *widget;
+  return_if_no_display (gdisp, data);
+  return_if_no_widget (widget, data);
+
+  dialog = print_size_dialog_new (gdisp->gimage,
+                                  _("Set Image Print Resolution"),
+                                  "gimp-image-print-size",
+                                  widget,
+                                  gimp_standard_help_func,
+                                  GIMP_HELP_IMAGE_PRINT_SIZE,
+                                  image_print_size_callback,
+                                  NULL);
+
+  g_signal_connect_object (gdisp, "disconnect",
+                           G_CALLBACK (gtk_widget_destroy),
+                           dialog, G_CONNECT_SWAPPED);
+
+  gtk_widget_show (dialog);
 }
 
 void
@@ -431,6 +464,28 @@ image_resize_callback (GtkWidget    *dialog,
 		   "greater than zero."));
     }
 }
+
+static void
+image_print_size_callback (GtkWidget *dialog,
+                           GimpImage *image,
+                           gdouble    xresolution,
+                           gdouble    yresolution,
+                           GimpUnit   resolution_unit,
+                           gpointer   data)
+{
+  gtk_widget_destroy (dialog);
+
+  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_SCALE,
+                               _("Change Print Size"));
+
+  gimp_image_set_resolution (image, xresolution, yresolution);
+  gimp_image_set_unit (image, resolution_unit);
+
+  gimp_image_undo_group_end (image);
+
+  gimp_image_flush (image);
+}
+
 
 static void
 image_scale_callback (ImageScaleDialog  *dialog)

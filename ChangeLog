@@ -1,5 +1,16 @@
 2004-11-13  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/Makefile.am
+	* app/dialogs/print-size-dialog.[ch]: new files for the Print Size
+	dialog that is still missing. Still work in progress...
+
+	* app/actions/image-actions.c
+	* app/actions/image-commands.[ch]
+	* app/widgets/gimphelp-ids.h
+	* menus/image-menu.xml.in: integrate the new dialog.
+
+2004-11-13  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/selection.pdb: deprecate gimp_selection_clear()
 	in favor of gimp_selection_none(). Fixes bug #156765.
 

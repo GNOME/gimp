@@ -111,6 +111,7 @@
 #define GIMP_HELP_IMAGE_ROTATE_270                "gimp-image-rotate-270"
 #define GIMP_HELP_IMAGE_RESIZE                    "gimp-image-resize"
 #define GIMP_HELP_IMAGE_RESIZE_TO_LAYERS          "gimp-image-resize-to-layers"
+#define GIMP_HELP_IMAGE_PRINT_SIZE                "gimp-image-print-size"
 #define GIMP_HELP_IMAGE_SCALE                     "gimp-image-scale"
 #define GIMP_HELP_IMAGE_SCALE_WARNING             "gimp-image-scale-warning"
 #define GIMP_HELP_IMAGE_CROP                      "gimp-image-crop"

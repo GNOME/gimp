@@ -33,6 +33,8 @@ void   image_resize_cmd_callback           (GtkAction *action,
                                             gpointer   data);
 void   image_resize_to_layers_cmd_callback (GtkAction *action,
                                             gpointer   data);
+void   image_print_size_cmd_callback       (GtkAction *action,
+                                            gpointer   data);
 void   image_scale_cmd_callback            (GtkAction *action,
                                             gpointer   data);
 void   image_flip_cmd_callback             (GtkAction *action,
