@@ -7,8 +7,8 @@
 #include "output.h"
 #include "marshall.h"
 
-#ifndef CPP
-#define CPP "cpp"
+#ifndef CPP_PROGRAM
+#define CPP_PROGRAM "cpp"
 #endif
 
 Id header_root = NULL;
@@ -93,7 +93,7 @@ int main(int argc, char* argv[]){
 	FILE* f;
 	
 	init_db();
-	cpp_cmd = g_string_new(CPP);
+	cpp_cmd = g_string_new(CPP_PROGRAM);
 	yydebug=0;
 	get_options(argc, argv);
 	g_string_append(cpp_cmd, " ");

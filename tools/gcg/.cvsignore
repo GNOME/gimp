@@ -6,3 +6,8 @@ parser.c
 parser.h
 y.output
 gcg
+aclocal.m4
+configure
+config.log
+config.status
+config.cache

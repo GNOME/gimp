@@ -1,3 +1,8 @@
+Thu Jan  7 15:50:21 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* configure.in
+	* gcg.c: use CPP_PROGRAM instead of hardcoding "cpp"
+
 1999-01-07  Lauri Alanko  <la@iki.fi>
 
 	* Took out configure from autogen.sh
