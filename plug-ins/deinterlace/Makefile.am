@@ -13,11 +13,10 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
+	 $(top_srcdir)/plug-ins/megawidget/libmegawidget.a		\
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(X_LIBS)				\
-					\
-	 $(top_srcdir)/plug-ins/megawidget/libmegawidget.a		\
 	-lc
 
 DEPS = \

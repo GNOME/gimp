@@ -14,7 +14,7 @@ SUBDIRS = 			\
 	dbbrowser		\
 	fuse			\
 	gflare			\
-##	@GIMPTCL@		\
+	@GIMPTCL@		\
 	refract			\
 	script-fu		\
 	struc			\
