@@ -2357,6 +2357,7 @@ gimp_prop_coordinates_callback (GimpSizeEntry *sizeentry,
   gdouble    *old_x_value;
   gdouble    *old_y_value;
   GimpUnit   *old_unit_value;
+  gboolean    backwards;
 
   x_param_spec = g_object_get_data (G_OBJECT (sizeentry),
                                     "gimp-config-param-spec-x");
@@ -2396,6 +2397,8 @@ gimp_prop_coordinates_callback (GimpSizeEntry *sizeentry,
         }
     }
 
+  backwards = (*old_x_value == x_value);
+
   if (*old_x_value == x_value &&
       *old_y_value == y_value &&
       (old_unit_value == NULL || *old_unit_value == unit_value))
@@ -2415,18 +2418,31 @@ gimp_prop_coordinates_callback (GimpSizeEntry *sizeentry,
   if (G_IS_PARAM_SPEC_INT (x_param_spec) &&
       G_IS_PARAM_SPEC_INT (y_param_spec))
     {
-      g_object_set (config,
-                    x_param_spec->name, ROUND (x_value),
-                    y_param_spec->name, ROUND (y_value),
-                    NULL);
+      if (backwards)
+        g_object_set (config,
+                      y_param_spec->name, ROUND (y_value),
+                      x_param_spec->name, ROUND (x_value),
+                      NULL);
+      else
+        g_object_set (config,
+                      x_param_spec->name, ROUND (x_value),
+                      y_param_spec->name, ROUND (y_value),
+                      NULL);
+
     }
   else if (G_IS_PARAM_SPEC_DOUBLE (x_param_spec) &&
            G_IS_PARAM_SPEC_DOUBLE (y_param_spec))
     {
-      g_object_set (config,
-                    x_param_spec->name, x_value,
-                    y_param_spec->name, y_value,
-                    NULL);
+      if (backwards)
+        g_object_set (config,
+                      y_param_spec->name, y_value,
+                      x_param_spec->name, x_value,
+                      NULL);
+      else
+        g_object_set (config,
+                      x_param_spec->name, x_value,
+                      y_param_spec->name, y_value,
+                      NULL);
     }
 }
 

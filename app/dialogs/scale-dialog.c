@@ -1,0 +1,260 @@
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#include "config.h"
+
+#include <gtk/gtk.h>
+
+#include "libgimpwidgets/gimpwidgets.h"
+
+#include "dialogs-types.h"
+
+#include "core/gimpimage.h"
+#include "core/gimpitem.h"
+
+#include "widgets/gimpenumcombobox.h"
+#include "widgets/gimphelp-ids.h"
+#include "widgets/gimpsizebox.h"
+#include "widgets/gimpviewabledialog.h"
+
+#include "scale-dialog.h"
+
+#include "gimp-intl.h"
+
+
+#define RESPONSE_RESET 1
+
+
+typedef struct _ScaleDialog ScaleDialog;
+
+struct _ScaleDialog
+{
+  GimpViewable          *viewable;
+  GimpUnit               unit;
+  GimpInterpolationType  interpolation;
+  GtkWidget             *box;
+  GtkWidget             *combo;
+  GimpScaleCallback      callback;
+  gpointer               user_data;
+};
+
+
+static void   scale_dialog_response (GtkWidget   *dialog,
+                                     gint         response_id,
+                                     ScaleDialog *private);
+static void   scale_dialog_reset    (ScaleDialog *private);
+
+
+GtkWidget *
+scale_dialog_new (GimpViewable          *viewable,
+                  const gchar           *title,
+                  const gchar           *role,
+                  GtkWidget             *parent,
+                  GimpHelpFunc           help_func,
+                  const gchar           *help_id,
+                  GimpUnit               unit,
+                  GimpInterpolationType  interpolation,
+                  GimpScaleCallback      callback,
+                  gpointer               user_data)
+{
+  GtkWidget   *dialog;
+  GtkWidget   *vbox;
+  GtkWidget   *hbox;
+  GtkWidget   *frame;
+  GtkWidget   *label;
+  ScaleDialog *private;
+  GimpImage   *image = NULL;
+  const gchar *text  = NULL;
+  gint         width, height;
+  gdouble      xres, yres;
+
+  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
+  g_return_val_if_fail (callback != NULL, NULL);
+
+  if (GIMP_IS_IMAGE (viewable))
+    {
+      image = GIMP_IMAGE (viewable);
+
+      width  = gimp_image_get_width (image);
+      height = gimp_image_get_height (image);
+
+      text = _("Image Size");
+    }
+  else if (GIMP_IS_ITEM (viewable))
+    {
+      GimpItem *item = GIMP_ITEM (viewable);
+
+      image = gimp_item_get_image (item);
+
+      width  = gimp_item_width (item);
+      height = gimp_item_height (item);
+
+      text = _("Layer Size");
+    }
+  else
+    {
+      g_return_val_if_reached (NULL);
+    }
+
+  gimp_image_get_resolution (image, &xres, &yres);
+
+  dialog = gimp_viewable_dialog_new (viewable,
+                                     title, role, GIMP_STOCK_SCALE, title,
+                                     parent,
+                                     help_func, help_id,
+
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GIMP_STOCK_RESET, RESPONSE_RESET,
+                                     GIMP_STOCK_SCALE, GTK_RESPONSE_OK,
+
+                                     NULL);
+
+  private = g_new0 (ScaleDialog, 1);
+
+  g_signal_connect_swapped (dialog, "destroy",
+                            G_CALLBACK (g_free),
+                            private);
+
+  private->viewable      = viewable;
+  private->interpolation = interpolation;
+  private->unit          = unit;
+  private->callback      = callback;
+  private->user_data     = user_data;
+
+  private->box = g_object_new (GIMP_TYPE_SIZE_BOX,
+                               "width",       width,
+                               "height",      height,
+                               "unit",        unit,
+                               "xresolution", xres,
+                               "yresolution", yres,
+                               "keep-aspect", TRUE,
+                               NULL);
+
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (scale_dialog_response),
+                    private);
+
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
+  gtk_widget_show (vbox);
+
+  frame = gimp_frame_new (text);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  gtk_container_add (GTK_CONTAINER (frame), private->box);
+  gtk_widget_show (private->box);
+
+  frame = gimp_frame_new (_("Quality"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new_with_mnemonic (_("I_nterpolation:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  private->combo = gimp_enum_combo_box_new (GIMP_TYPE_INTERPOLATION_TYPE);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), private->combo);
+  gtk_box_pack_start (GTK_BOX (hbox), private->combo, TRUE, TRUE, 0);
+  gtk_widget_show (private->combo);
+
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (private->combo),
+                                 private->interpolation);
+
+  return dialog;
+}
+
+static void
+scale_dialog_response (GtkWidget   *dialog,
+                       gint         response_id,
+                       ScaleDialog *private)
+{
+  GimpUnit  unit          = private->unit;
+  gint      interpolation = private->interpolation;
+  gint      width;
+  gint      height;
+
+  switch (response_id)
+    {
+    case GTK_RESPONSE_CANCEL:
+      gtk_widget_destroy (dialog);
+      break;
+
+    case RESPONSE_RESET:
+      scale_dialog_reset (private);
+      break;
+
+    case GTK_RESPONSE_OK:
+      g_object_get (private->box,
+                    "width",  &width,
+                    "height", &height,
+                    "unit",   &unit,
+                    NULL);
+
+      gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (private->combo),
+                                     &interpolation);
+
+      private->callback (dialog,
+                         private->viewable,
+                         width, height, unit, interpolation,
+                         private->user_data);
+      break;
+    }
+}
+
+static void
+scale_dialog_reset (ScaleDialog *private)
+{
+  gint  width;
+  gint  height;
+
+  if (GIMP_IS_IMAGE (private->viewable))
+    {
+      GimpImage *image = GIMP_IMAGE (private->viewable);
+
+      width  = gimp_image_get_width (image);
+      height = gimp_image_get_height (image);
+    }
+  else if (GIMP_IS_ITEM (private->viewable))
+    {
+      GimpItem *item = GIMP_ITEM (private->viewable);
+
+      width  = gimp_item_width (item);
+      height = gimp_item_height (item);
+    }
+  else
+    {
+      g_return_if_reached ();
+    }
+
+  g_object_set (private->box,
+                "width",       width,
+                "height",      height,
+                "unit",        private->unit,
+                "keep-aspect", TRUE,
+                NULL);
+
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (private->combo),
+                                 private->interpolation);
+}

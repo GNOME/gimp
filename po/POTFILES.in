@@ -126,6 +126,7 @@ app/core/gimpunit.c
 app/dialogs/about-dialog.c
 app/dialogs/convert-dialog.c
 app/dialogs/dialogs-constructors.c
+app/dialogs/dialogs.c
 app/dialogs/file-open-dialog.c
 app/dialogs/file-open-location-dialog.c
 app/dialogs/file-save-dialog.c
@@ -140,6 +141,7 @@ app/dialogs/preferences-dialog.c
 app/dialogs/quit-dialog.c
 app/dialogs/resize-dialog.c
 app/dialogs/resolution-calibrate-dialog.c
+app/dialogs/scale-dialog.c
 app/dialogs/stroke-dialog.c
 app/dialogs/tips-dialog.c
 app/dialogs/tips-parser.c
@@ -321,6 +323,7 @@ app/widgets/gimpprogressdialog.c
 app/widgets/gimppropwidgets.c
 app/widgets/gimpselectiondata.c
 app/widgets/gimpselectioneditor.c
+app/widgets/gimpsizebox.c
 app/widgets/gimpstrokeeditor.c
 app/widgets/gimptemplateeditor.c
 app/widgets/gimptexteditor.c
@@ -333,6 +336,7 @@ app/widgets/gimptoolbox.c
 app/widgets/gimptooloptionseditor.c
 app/widgets/gimpundoeditor.c
 app/widgets/gimpvectorstreeview.c
+app/widgets/gimpviewablebox.c
 app/widgets/gimpwidgets-constructors.c
 app/widgets/gimpwidgets-utils.c
 app/widgets/widgets-enums.c

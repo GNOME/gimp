@@ -28,6 +28,8 @@
 
 #include "actions-types.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpchannel-select.h"
 #include "core/gimpcontext.h"
@@ -50,6 +52,7 @@
 #include "widgets/gimpenumwidgets.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemtreeview.h"
+#include "widgets/gimpprogressdialog.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -60,6 +63,7 @@
 #include "tools/tool_manager.h"
 
 #include "dialogs/resize-dialog.h"
+#include "dialogs/scale-dialog.h"
 
 #include "actions.h"
 #include "layers-commands.h"
@@ -338,7 +342,7 @@ layers_scale_cmd_callback (GtkAction *action,
   return_if_no_layer (gimage, layer, data);
   return_if_no_widget (widget, data);
 
-  layers_scale_layer_query (GIMP_IS_DISPLAY (data) ? data : NULL,
+  layers_scale_layer_query (action_data_get_display (data),
                             gimage, layer, widget);
 }
 
@@ -1201,44 +1205,51 @@ layers_add_mask_query (GimpLayer *layer,
 /*  The scale layer dialog  */
 /****************************/
 
-typedef struct _ScaleLayerOptions ScaleLayerOptions;
-
-struct _ScaleLayerOptions
-{
-  ResizeDialog *dialog;
-  GimpDisplay  *gdisp;
-  GimpLayer    *layer;
-};
-
 static void
-scale_layer_query_ok_callback (GtkWidget *widget,
-			       gpointer   data)
+scale_layer_callback (GtkWidget             *dialog,
+                      GimpViewable          *viewable,
+                      gint                   width,
+                      gint                   height,
+                      GimpUnit               unit,
+                      GimpInterpolationType  interpolation,
+                      gpointer               data)
 {
-  ScaleLayerOptions *options = data;
+  GimpDisplay *gdisp = data ? GIMP_DISPLAY (data) : NULL;
 
-  if (options->dialog->width > 0 && options->dialog->height > 0)
+  if (width > 0 && height > 0)
     {
-      GimpImage    *gimage = gimp_item_get_image (GIMP_ITEM (options->layer));
+      GimpItem     *item = GIMP_ITEM (viewable);
       GimpProgress *progress;
+      GtkWidget    *progress_dialog = NULL;
 
-      gtk_widget_set_sensitive (options->dialog->shell, FALSE);
+      gtk_widget_destroy (dialog);
 
-      progress = gimp_progress_start (GIMP_PROGRESS (options->gdisp),
-                                      _("Scaling..."), FALSE);
+      if (width == gimp_item_width (item) && height == gimp_item_height (item))
+        return;
 
-      gimp_item_scale_by_origin (GIMP_ITEM (options->layer),
-                                 options->dialog->width,
-                                 options->dialog->height,
-                                 options->dialog->interpolation,
-                                 progress,
-                                 TRUE);
+      if (gdisp)
+        {
+          progress = GIMP_PROGRESS (gdisp);
+        }
+      else
+        {
+          progress_dialog = gimp_progress_dialog_new ();
+          progress = GIMP_PROGRESS (progress_dialog);
+        }
+
+      progress = gimp_progress_start (progress, _("Scaling..."), FALSE);
+
+      gimp_item_scale_by_origin (item,
+                                 width, height, interpolation,
+                                 progress, TRUE);
 
       if (progress)
         gimp_progress_end (progress);
 
-      gimp_image_flush (gimage);
+      if (progress_dialog)
+        gtk_widget_destroy (progress_dialog);
 
-      gtk_widget_destroy (options->dialog->shell);
+      gimp_image_flush (gimp_item_get_image (item));
     }
   else
     {
@@ -1252,31 +1263,20 @@ layers_scale_layer_query (GimpDisplay *gdisp,
                           GimpLayer   *layer,
                           GtkWidget   *parent)
 {
-  ScaleLayerOptions *options;
+  GtkWidget *dialog;
+  GimpUnit   unit;
 
-  options = g_new0 (ScaleLayerOptions, 1);
+  unit = gdisp ? GIMP_DISPLAY_SHELL (gdisp->shell)->unit : GIMP_UNIT_PIXEL;
 
-  options->gdisp = gdisp;
-  options->layer = layer;
+  dialog = scale_dialog_new (GIMP_VIEWABLE (layer),
+                             _("Scale Layer"), "gimp-layer-scale",
+                             parent,
+                             gimp_standard_help_func, GIMP_HELP_LAYER_SCALE,
+                             unit, gimage->gimp->config->interpolation_type,
+                             scale_layer_callback,
+                             gdisp);
 
-  options->dialog =
-    resize_dialog_new (GIMP_VIEWABLE (layer), parent,
-                       SCALE_DIALOG,
-		       gimp_item_width  (GIMP_ITEM (layer)),
-		       gimp_item_height (GIMP_ITEM (layer)),
-		       gimage->xresolution,
-		       gimage->yresolution,
-		       (gdisp ?
-                        GIMP_DISPLAY_SHELL (gdisp->shell)->unit :
-                        GIMP_UNIT_PIXEL),
-		       G_CALLBACK (scale_layer_query_ok_callback),
-                       options);
-
-  g_object_weak_ref (G_OBJECT (options->dialog->shell),
-		     (GWeakNotify) g_free,
-		     options);
-
-  gtk_widget_show (options->dialog->shell);
+  gtk_widget_show (dialog);
 }
 
 

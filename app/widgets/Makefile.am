@@ -200,6 +200,8 @@ libappwidgets_a_sources = \
 	gimpselectioneditor.h		\
 	gimpsessioninfo.c		\
 	gimpsessioninfo.h		\
+	gimpsizebox.c			\
+	gimpsizebox.h			\
 	gimpstringaction.c		\
 	gimpstringaction.h		\
 	gimpstrokeeditor.c		\

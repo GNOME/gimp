@@ -1,5 +1,20 @@
 2004-10-12  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpsizebox.[ch]: added new widget GimpSizeBox.
+
+	* app/widgets/gimppropwidgets.c: the order of setting the X and Y
+	properties does matter.
+
+	* app/dialogs/Makefile.am
+	* app/dialogs/scale-dialog.[ch]: added first version of a new
+	Scale dialog in an attempt to address bug #151022.
+
+	* app/actions/layers-commands.c: use the new scale dialog.
+
+2004-10-12  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimptemplateeditor.c: added mnemonics for the size
 	entries.
 

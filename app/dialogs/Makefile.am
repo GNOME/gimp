@@ -42,6 +42,8 @@ libappdialogs_a_SOURCES = \
 	resize-dialog.h			\
 	resolution-calibrate-dialog.c	\
 	resolution-calibrate-dialog.h	\
+	scale-dialog.c			\
+	scale-dialog.h			\
 	stroke-dialog.c			\
 	stroke-dialog.h			\
 	tips-dialog.c			\
