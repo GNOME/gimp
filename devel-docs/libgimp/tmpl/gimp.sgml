@@ -24,55 +24,209 @@ all other GIMP Library headers.
 
 
 
-<!-- ##### STRUCT GPlugInInfo ##### -->
+<!-- ##### MACRO gimp_get_data ##### -->
+<para>
+
+</para>
+
+<!-- # Unused Parameters # -->
+@id: 
+@data: 
+
+
+<!-- ##### MACRO gimp_get_data_size ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@id: 
+
+
+<!-- ##### MACRO gimp_set_data ##### -->
+<para>
+
+</para>
+
+<!-- # Unused Parameters # -->
+@id: 
+@data: 
+@length: 
+
+
+<!-- ##### MACRO gimp_query_procedure ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@proc_name: 
+@proc_blurb: 
+@proc_help: 
+@proc_author: 
+@proc_copyright: 
+@proc_date: 
+@proc_type: 
+@nparams: 
+@nreturn_vals: 
+@params: 
+@return_vals: 
+
+
+<!-- ##### MACRO gimp_image_convert_rgb ##### -->
+<para>
+
+</para>
+
+<!-- # Unused Parameters # -->
+@image_ID: 
+
+
+<!-- ##### MACRO gimp_image_convert_grayscale ##### -->
+<para>
+
+</para>
+
+<!-- # Unused Parameters # -->
+@image_ID: 
+
+
+<!-- ##### MACRO gimp_image_convert_indexed ##### -->
+<para>
+
+</para>
+
+<!-- # Unused Parameters # -->
+@image_ID: 
+@dither_type: 
+@palette_type: 
+@num_colors: 
+@alpha_dither: 
+@remove_unused: 
+@palette: 
+
+
+<!-- ##### MACRO gimp_image_duplicate ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@image_ID: 
+
+
+<!-- ##### MACRO gimp_drawable_offset ##### -->
 <para>
 
 </para>
 
 
-<!-- ##### STRUCT GTile ##### -->
+
+<!-- ##### MACRO gimp_drawable_image_id ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@drawable_ID: 
+
+
+<!-- ##### MACRO gimp_drawable_bpp ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@drawable_ID: 
+
+
+<!-- ##### MACRO gimp_channel_get_image_id ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@channel_ID: 
+
+
+<!-- ##### MACRO gimp_layer_get_mask_id ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@layer_ID: 
+
+
+<!-- ##### MACRO gimp_layer_get_image_id ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@layer_ID: 
+
+
+<!-- ##### MACRO gimp_layer_is_floating_selection ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@layer_ID: 
+
+
+<!-- ##### MACRO gimp_layer_get_preserve_transparency ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@layer_ID: 
+
+
+<!-- ##### MACRO gimp_layer_set_preserve_transparency ##### -->
+<para>
+
+</para>
+
+<!-- # Unused Parameters # -->
+@layer_ID: 
+@preserve_transparency: 
+
+
+<!-- ##### USER_FUNCTION GimpInitProc ##### -->
 <para>
 
 </para>
 
 
-<!-- ##### STRUCT GDrawable ##### -->
+
+<!-- ##### USER_FUNCTION GimpQuitProc ##### -->
 <para>
 
 </para>
 
 
-<!-- ##### STRUCT GPixelRgn ##### -->
+
+<!-- ##### USER_FUNCTION GimpQueryProc ##### -->
 <para>
 
 </para>
 
 
-<!-- ##### STRUCT GParamDef ##### -->
-<para>
 
-</para>
-
-
-<!-- ##### STRUCT GParamColor ##### -->
-<para>
-
-</para>
-
-
-<!-- ##### STRUCT GParamRegion ##### -->
-<para>
-
-</para>
-
-
-<!-- ##### STRUCT GParam ##### -->
-<para>
-
-</para>
-
-
-<!-- ##### USER_FUNCTION GRunProc ##### -->
+<!-- ##### USER_FUNCTION GimpRunProc ##### -->
 <para>
 
 </para>
@@ -84,7 +238,37 @@ all other GIMP Library headers.
 @return_vals: 
 
 
-<!-- ##### UNION GParamData ##### -->
+<!-- ##### STRUCT GimpPlugInInfo ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GimpParamDef ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GimpParamColor ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GimpParamRegion ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### UNION GimpParamData ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT GimpParam ##### -->
 <para>
 
 </para>
@@ -107,107 +291,11 @@ all other GIMP Library headers.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_set_data ##### -->
-<para>
-
-</para>
-
-@id: 
-@data: 
-@length: 
-
-
-<!-- ##### FUNCTION gimp_get_data ##### -->
-<para>
-
-</para>
-
-@id: 
-@data: 
-
-
-<!-- ##### FUNCTION gimp_get_data_size ##### -->
-<para>
-
-</para>
-
-@id: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_progress_init ##### -->
-<para>
-
-</para>
-
-@message: 
-
-
-<!-- ##### FUNCTION gimp_progress_update ##### -->
-<para>
-
-</para>
-
-@percentage: 
-
-
 <!-- ##### FUNCTION gimp_default_display ##### -->
 <para>
 
 </para>
 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_message ##### -->
-<para>
-
-</para>
-
-@message: 
-
-
-<!-- ##### FUNCTION gimp_query_database ##### -->
-<para>
-
-</para>
-
-@name_regexp: 
-@blurb_regexp: 
-@help_regexp: 
-@author_regexp: 
-@copyright_regexp: 
-@date_regexp: 
-@proc_type_regexp: 
-@nprocs: 
-@proc_names: 
-
-
-<!-- ##### FUNCTION gimp_query_procedure ##### -->
-<para>
-
-</para>
-
-@proc_name: 
-@proc_blurb: 
-@proc_help: 
-@proc_author: 
-@proc_copyright: 
-@proc_date: 
-@proc_type: 
-@nparams: 
-@nreturn_vals: 
-@params: 
-@return_vals: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_query_images ##### -->
-<para>
-
-</para>
-
-@nimages: 
 @Returns: 
 
 
@@ -258,37 +346,6 @@ all other GIMP Library headers.
 </para>
 
 @name: 
-
-
-<!-- ##### FUNCTION gimp_register_magic_load_handler ##### -->
-<para>
-
-</para>
-
-@name: 
-@extensions: 
-@prefixes: 
-@magics: 
-
-
-<!-- ##### FUNCTION gimp_register_load_handler ##### -->
-<para>
-
-</para>
-
-@name: 
-@extensions: 
-@prefixes: 
-
-
-<!-- ##### FUNCTION gimp_register_save_handler ##### -->
-<para>
-
-</para>
-
-@name: 
-@extensions: 
-@prefixes: 
 
 
 <!-- ##### FUNCTION gimp_run_procedure ##### -->
@@ -385,1832 +442,5 @@ all other GIMP Library headers.
 </para>
 
 @Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_new ##### -->
-<para>
-
-</para>
-
-@width: 
-@height: 
-@type: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_duplicate ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_delete ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-
-
-<!-- ##### FUNCTION gimp_image_width ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_height ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_base_type ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_floating_selection ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_add_channel ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@channel_ID: 
-@position: 
-
-
-<!-- ##### FUNCTION gimp_image_add_layer ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@layer_ID: 
-@position: 
-
-
-<!-- ##### FUNCTION gimp_image_add_layer_mask ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@layer_ID: 
-@mask_ID: 
-
-
-<!-- ##### FUNCTION gimp_image_clean_all ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-
-
-<!-- ##### FUNCTION gimp_image_undo_disable ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-
-
-<!-- ##### FUNCTION gimp_image_undo_enable ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-
-
-<!-- ##### FUNCTION gimp_image_undo_freeze ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-
-
-<!-- ##### FUNCTION gimp_image_undo_thaw ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-
-
-<!-- ##### FUNCTION gimp_undo_push_group_start ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-
-
-<!-- ##### FUNCTION gimp_undo_push_group_end ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-
-
-<!-- ##### FUNCTION gimp_image_flatten ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_lower_channel ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@channel_ID: 
-
-
-<!-- ##### FUNCTION gimp_image_lower_layer ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@layer_ID: 
-
-
-<!-- ##### FUNCTION gimp_image_merge_visible_layers ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@merge_type: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_pick_correlate_layer ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@x: 
-@y: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_raise_channel ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@channel_ID: 
-
-
-<!-- ##### FUNCTION gimp_image_raise_layer ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@layer_ID: 
-
-
-<!-- ##### FUNCTION gimp_image_remove_channel ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@channel_ID: 
-
-
-<!-- ##### FUNCTION gimp_image_remove_layer ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@layer_ID: 
-
-
-<!-- ##### FUNCTION gimp_image_remove_layer_mask ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@layer_ID: 
-@mode: 
-
-
-<!-- ##### FUNCTION gimp_image_resize ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@new_width: 
-@new_height: 
-@offset_x: 
-@offset_y: 
-
-
-<!-- ##### FUNCTION gimp_image_get_active_channel ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_get_active_layer ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_get_channels ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@nchannels: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_get_cmap ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@ncolors: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_get_component_active ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@component: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_get_component_visible ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@component: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_get_filename ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_get_layers ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@nlayers: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_get_selection ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_set_active_channel ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@channel_ID: 
-
-
-<!-- ##### FUNCTION gimp_image_set_active_layer ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@layer_ID: 
-
-
-<!-- ##### FUNCTION gimp_image_set_cmap ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@cmap: 
-@ncolors: 
-
-
-<!-- ##### FUNCTION gimp_image_set_component_active ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@component: 
-@active: 
-
-
-<!-- ##### FUNCTION gimp_image_set_component_visible ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@component: 
-@visible: 
-
-
-<!-- ##### FUNCTION gimp_image_set_filename ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@name: 
-
-
-<!-- ##### FUNCTION gimp_image_parasite_find ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@name: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_parasite_attach ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@parasite: 
-<!-- # Unused Parameters # -->
-@p: 
-
-
-<!-- ##### FUNCTION gimp_image_attach_new_parasite ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@name: 
-@flags: 
-@size: 
-@data: 
-
-
-<!-- ##### FUNCTION gimp_image_parasite_detach ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@name: 
-
-
-<!-- ##### FUNCTION gimp_image_set_resolution ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@xresolution: 
-@yresolution: 
-
-
-<!-- ##### FUNCTION gimp_image_get_resolution ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@xresolution: 
-@yresolution: 
-
-
-<!-- ##### FUNCTION gimp_image_set_unit ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@unit: 
-
-
-<!-- ##### FUNCTION gimp_image_get_unit ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_get_layer_by_tattoo ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@tattoo: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_get_channel_by_tattoo ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@tattoo: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_get_thumbnail_data ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@width: 
-@height: 
-@bytes: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_convert_rgb ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-
-
-<!-- ##### FUNCTION gimp_image_convert_grayscale ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-
-
-<!-- ##### FUNCTION gimp_image_convert_indexed ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@dither_type: 
-@palette_type: 
-@num_colors: 
-@alpha_dither: 
-@remove_unused: 
-@palette: 
-
-
-<!-- ##### FUNCTION gimp_image_add_hguide ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@yposition: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_add_vguide ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@xposition: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_delete_guide ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@guide_ID: 
-
-
-<!-- ##### FUNCTION gimp_image_find_next_guide ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@guide_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_get_guide_orientation ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@guide_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_get_guide_position ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@guide_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_display_new ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_display_delete ##### -->
-<para>
-
-</para>
-
-@display_ID: 
-
-
-<!-- ##### FUNCTION gimp_displays_flush ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### FUNCTION gimp_layer_new ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@name: 
-@width: 
-@height: 
-@type: 
-@opacity: 
-@mode: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_layer_copy ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_layer_delete ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-
-
-<!-- ##### FUNCTION gimp_layer_width ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_layer_height ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_layer_bpp ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_layer_type ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_layer_add_alpha ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-
-
-<!-- ##### FUNCTION gimp_layer_create_mask ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@mask_type: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_layer_resize ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@new_width: 
-@new_height: 
-@offset_x: 
-@offset_y: 
-
-
-<!-- ##### FUNCTION gimp_layer_scale ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@new_width: 
-@new_height: 
-@local_origin: 
-
-
-<!-- ##### FUNCTION gimp_layer_translate ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@offset_x: 
-@offset_y: 
-
-
-<!-- ##### FUNCTION gimp_layer_is_floating_selection ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_layer_get_image_id ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_layer_get_mask_id ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_layer_get_apply_mask ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_layer_get_edit_mask ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_layer_get_mode ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_layer_get_name ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_layer_get_opacity ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_layer_get_preserve_transparency ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_layer_get_show_mask ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_layer_get_visible ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_layer_set_apply_mask ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@apply_mask: 
-
-
-<!-- ##### FUNCTION gimp_layer_set_edit_mask ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@edit_mask: 
-
-
-<!-- ##### FUNCTION gimp_layer_set_mode ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@mode: 
-
-
-<!-- ##### FUNCTION gimp_layer_set_name ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@name: 
-
-
-<!-- ##### FUNCTION gimp_layer_set_offsets ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@offset_x: 
-@offset_y: 
-
-
-<!-- ##### FUNCTION gimp_layer_set_opacity ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@opacity: 
-
-
-<!-- ##### FUNCTION gimp_layer_set_preserve_transparency ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@preserve_transparency: 
-
-
-<!-- ##### FUNCTION gimp_layer_set_show_mask ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@show_mask: 
-
-
-<!-- ##### FUNCTION gimp_layer_set_visible ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@visible: 
-
-
-<!-- ##### FUNCTION gimp_layer_get_tattoo ##### -->
-<para>
-
-</para>
-
-@layer_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_channel_new ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@name: 
-@width: 
-@height: 
-@opacity: 
-@color: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_channel_copy ##### -->
-<para>
-
-</para>
-
-@channel_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_channel_delete ##### -->
-<para>
-
-</para>
-
-@channel_ID: 
-
-
-<!-- ##### FUNCTION gimp_channel_width ##### -->
-<para>
-
-</para>
-
-@channel_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_channel_height ##### -->
-<para>
-
-</para>
-
-@channel_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_channel_get_image_id ##### -->
-<para>
-
-</para>
-
-@channel_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_channel_get_layer_id ##### -->
-<para>
-
-</para>
-
-@channel_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_channel_get_color ##### -->
-<para>
-
-</para>
-
-@channel_ID: 
-@red: 
-@green: 
-@blue: 
-
-
-<!-- ##### FUNCTION gimp_channel_get_name ##### -->
-<para>
-
-</para>
-
-@channel_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_channel_get_opacity ##### -->
-<para>
-
-</para>
-
-@channel_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_channel_get_show_masked ##### -->
-<para>
-
-</para>
-
-@channel_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_channel_get_visible ##### -->
-<para>
-
-</para>
-
-@channel_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_channel_set_color ##### -->
-<para>
-
-</para>
-
-@channel_ID: 
-@red: 
-@green: 
-@blue: 
-
-
-<!-- ##### FUNCTION gimp_channel_set_name ##### -->
-<para>
-
-</para>
-
-@channel_ID: 
-@name: 
-
-
-<!-- ##### FUNCTION gimp_channel_set_opacity ##### -->
-<para>
-
-</para>
-
-@channel_ID: 
-@opacity: 
-
-
-<!-- ##### FUNCTION gimp_channel_set_show_masked ##### -->
-<para>
-
-</para>
-
-@channel_ID: 
-@show_masked: 
-
-
-<!-- ##### FUNCTION gimp_channel_set_visible ##### -->
-<para>
-
-</para>
-
-@channel_ID: 
-@visible: 
-
-
-<!-- ##### FUNCTION gimp_channel_get_tattoo ##### -->
-<para>
-
-</para>
-
-@channel_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_drawable_get ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_drawable_detach ##### -->
-<para>
-
-</para>
-
-@drawable: 
-
-
-<!-- ##### FUNCTION gimp_drawable_flush ##### -->
-<para>
-
-</para>
-
-@drawable: 
-
-
-<!-- ##### FUNCTION gimp_drawable_delete ##### -->
-<para>
-
-</para>
-
-@drawable: 
-
-
-<!-- ##### FUNCTION gimp_drawable_update ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@x: 
-@y: 
-@width: 
-@height: 
-
-
-<!-- ##### FUNCTION gimp_drawable_merge_shadow ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@undoable: 
-
-
-<!-- ##### FUNCTION gimp_drawable_image_id ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_drawable_name ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_drawable_width ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_drawable_height ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_drawable_bpp ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_drawable_type ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_drawable_visible ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_drawable_is_channel ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_drawable_is_rgb ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_drawable_is_gray ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_drawable_has_alpha ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_drawable_is_indexed ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_drawable_is_layer ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_drawable_is_layer_mask ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_drawable_mask_bounds ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@x1: 
-@y1: 
-@x2: 
-@y2: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_drawable_offsets ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@offset_x: 
-@offset_y: 
-
-
-<!-- ##### FUNCTION gimp_drawable_fill ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@fill_type: 
-
-
-<!-- ##### FUNCTION gimp_drawable_set_name ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@name: 
-
-
-<!-- ##### FUNCTION gimp_drawable_set_visible ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@visible: 
-
-
-<!-- ##### FUNCTION gimp_drawable_get_tile ##### -->
-<para>
-
-</para>
-
-@drawable: 
-@shadow: 
-@row: 
-@col: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_drawable_get_tile2 ##### -->
-<para>
-
-</para>
-
-@drawable: 
-@shadow: 
-@x: 
-@y: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_drawable_parasite_find ##### -->
-<para>
-
-</para>
-
-@drawable: 
-@name: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_drawable_parasite_attach ##### -->
-<para>
-
-</para>
-
-@drawable: 
-@parasite: 
-<!-- # Unused Parameters # -->
-@p: 
-
-
-<!-- ##### FUNCTION gimp_drawable_attach_new_parasite ##### -->
-<para>
-
-</para>
-
-@drawable: 
-@name: 
-@flags: 
-@size: 
-@data: 
-
-
-<!-- ##### FUNCTION gimp_drawable_parasite_detach ##### -->
-<para>
-
-</para>
-
-@drawable: 
-@name: 
-
-
-<!-- ##### FUNCTION gimp_drawable_get_thumbnail_data ##### -->
-<para>
-
-</para>
-
-@drawable_ID: 
-@width: 
-@height: 
-@bytes: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_selection_bounds ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@non_empty: 
-@x1: 
-@y1: 
-@x2: 
-@y2: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_selection_float ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@drawable_ID: 
-@x_offset: 
-@y_offset: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_selection_is_empty ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_selection_none ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-
-
-<!-- ##### FUNCTION gimp_tile_ref ##### -->
-<para>
-
-</para>
-
-@tile: 
-
-
-<!-- ##### FUNCTION gimp_tile_ref_zero ##### -->
-<para>
-
-</para>
-
-@tile: 
-
-
-<!-- ##### FUNCTION gimp_tile_unref ##### -->
-<para>
-
-</para>
-
-@tile: 
-@dirty: 
-
-
-<!-- ##### FUNCTION gimp_tile_flush ##### -->
-<para>
-
-</para>
-
-@tile: 
-
-
-<!-- ##### FUNCTION gimp_tile_cache_size ##### -->
-<para>
-
-</para>
-
-@kilobytes: 
-
-
-<!-- ##### FUNCTION gimp_tile_cache_ntiles ##### -->
-<para>
-
-</para>
-
-@ntiles: 
-
-
-<!-- ##### FUNCTION gimp_tile_width ##### -->
-<para>
-
-</para>
-
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_tile_height ##### -->
-<para>
-
-</para>
-
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_pixel_rgn_init ##### -->
-<para>
-
-</para>
-
-@pr: 
-@drawable: 
-@x: 
-@y: 
-@width: 
-@height: 
-@dirty: 
-@shadow: 
-
-
-<!-- ##### FUNCTION gimp_pixel_rgn_resize ##### -->
-<para>
-
-</para>
-
-@pr: 
-@x: 
-@y: 
-@width: 
-@height: 
-
-
-<!-- ##### FUNCTION gimp_pixel_rgn_get_pixel ##### -->
-<para>
-
-</para>
-
-@pr: 
-@buf: 
-@x: 
-@y: 
-
-
-<!-- ##### FUNCTION gimp_pixel_rgn_get_row ##### -->
-<para>
-
-</para>
-
-@pr: 
-@buf: 
-@x: 
-@y: 
-@width: 
-
-
-<!-- ##### FUNCTION gimp_pixel_rgn_get_col ##### -->
-<para>
-
-</para>
-
-@pr: 
-@buf: 
-@x: 
-@y: 
-@height: 
-
-
-<!-- ##### FUNCTION gimp_pixel_rgn_get_rect ##### -->
-<para>
-
-</para>
-
-@pr: 
-@buf: 
-@x: 
-@y: 
-@width: 
-@height: 
-
-
-<!-- ##### FUNCTION gimp_pixel_rgn_set_pixel ##### -->
-<para>
-
-</para>
-
-@pr: 
-@buf: 
-@x: 
-@y: 
-
-
-<!-- ##### FUNCTION gimp_pixel_rgn_set_row ##### -->
-<para>
-
-</para>
-
-@pr: 
-@buf: 
-@x: 
-@y: 
-@width: 
-
-
-<!-- ##### FUNCTION gimp_pixel_rgn_set_col ##### -->
-<para>
-
-</para>
-
-@pr: 
-@buf: 
-@x: 
-@y: 
-@height: 
-
-
-<!-- ##### FUNCTION gimp_pixel_rgn_set_rect ##### -->
-<para>
-
-</para>
-
-@pr: 
-@buf: 
-@x: 
-@y: 
-@width: 
-@height: 
-
-
-<!-- ##### FUNCTION gimp_pixel_rgns_register ##### -->
-<para>
-
-</para>
-
-@nrgns: 
-@Varargs: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_pixel_rgns_register2 ##### -->
-<para>
-
-</para>
-
-@nrgns: 
-@prs: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_pixel_rgns_process ##### -->
-<para>
-
-</para>
-
-@pri_ptr: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_palette_get_background ##### -->
-<para>
-
-</para>
-
-@red: 
-@green: 
-@blue: 
-
-
-<!-- ##### FUNCTION gimp_palette_get_foreground ##### -->
-<para>
-
-</para>
-
-@red: 
-@green: 
-@blue: 
-
-
-<!-- ##### FUNCTION gimp_palette_set_background ##### -->
-<para>
-
-</para>
-
-@red: 
-@green: 
-@blue: 
-
-
-<!-- ##### FUNCTION gimp_palette_set_foreground ##### -->
-<para>
-
-</para>
-
-@red: 
-@green: 
-@blue: 
-
-
-<!-- ##### FUNCTION gimp_gradients_get_list ##### -->
-<para>
-
-</para>
-
-@num_gradients: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_gradients_get_active ##### -->
-<para>
-
-</para>
-
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_gradients_set_active ##### -->
-<para>
-
-</para>
-
-@name: 
-
-
-<!-- ##### FUNCTION gimp_gradients_sample_uniform ##### -->
-<para>
-
-</para>
-
-@num_samples: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_gradients_sample_custom ##### -->
-<para>
-
-</para>
-
-@num_samples: 
-@positions: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_parasite_find ##### -->
-<para>
-
-</para>
-
-@name: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_parasite_attach ##### -->
-<para>
-
-</para>
-
-@parasite: 
-<!-- # Unused Parameters # -->
-@p: 
-
-
-<!-- ##### FUNCTION gimp_attach_new_parasite ##### -->
-<para>
-
-</para>
-
-@name: 
-@flags: 
-@size: 
-@data: 
-
-
-<!-- ##### FUNCTION gimp_parasite_detach ##### -->
-<para>
-
-</para>
-
-@name: 
-
-
-<!-- ##### FUNCTION gimp_help ##### -->
-<para>
-
-</para>
-
-@prog_name: 
-@help_data: 
-
-
-<!-- ##### FUNCTION gimp_plugin_help_register ##### -->
-<para>
-
-</para>
-
-@help_path: 
-
-
-<!-- ##### FUNCTION gimp_plugin_domain_add_with_path ##### -->
-<para>
-
-</para>
-
-@domain_name: 
-@domain_path: 
-
-
-<!-- ##### FUNCTION gimp_plugin_domain_add ##### -->
-<para>
-
-</para>
-
-@domain_name: 
 
 

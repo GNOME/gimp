@@ -1,3 +1,46 @@
+2000-06-08  Sven Neumann  <neo@wintermute.ochsenblut.de>
+
+	* libgimp/libgimp-decl.txt 
+	* libgimp/libgimp-docs.sgml
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimp.sgml
+	* libgimp/tmpl/gimpcompat.sgml
+	* libgimp/tmpl/gimpmenu.sgml
+	* libgimp/tmpl/gimpparasite.sgml
+	* libgimp/tmpl/libgimp-unused.sgml: reflect recent 
+	changes in libgimp
+	
+	* libgimp/tmpl/gimpbrushes.sgml
+	* libgimp/tmpl/gimpchannel.sgml
+	* libgimp/tmpl/gimpchannelops.sgml
+	* libgimp/tmpl/gimpcolor.sgml
+	* libgimp/tmpl/gimpconvert.sgml
+	* libgimp/tmpl/gimpdisplay.sgml
+	* libgimp/tmpl/gimpdrawable.sgml
+	* libgimp/tmpl/gimpedit.sgml
+	* libgimp/tmpl/gimpfileops.sgml
+	* libgimp/tmpl/gimpfloatingsel.sgml
+	* libgimp/tmpl/gimpgimprc.sgml
+	* libgimp/tmpl/gimpgradients.sgml
+	* libgimp/tmpl/gimpguides.sgml
+	* libgimp/tmpl/gimphelp.sgml
+	* libgimp/tmpl/gimpimage.sgml
+	* libgimp/tmpl/gimplayer.sgml
+	* libgimp/tmpl/gimpmessage.sgml
+	* libgimp/tmpl/gimpmisc.sgml
+	* libgimp/tmpl/gimppalette.sgml
+	* libgimp/tmpl/gimpparasite.sgml.sgml
+	* libgimp/tmpl/gimppaths.sgml
+	* libgimp/tmpl/gimppatterns.sgml
+	* libgimp/tmpl/gimppixelrgn.sgml
+	* libgimp/tmpl/gimpplugin.sgml
+	* libgimp/tmpl/gimpproceduraldb.sgml
+	* libgimp/tmpl/gimpselection.sgml
+	* libgimp/tmpl/gimptexttool.sgml
+	* libgimp/tmpl/gimptile.sgml
+	* libgimp/tmpl/gimptools.sgml
+	* libgimp/tmpl/gimpundo.sgml: new files
+
 2000-05-28  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/libgimp-decl.txt

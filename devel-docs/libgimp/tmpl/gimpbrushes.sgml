@@ -1,0 +1,67 @@
+<!-- ##### SECTION Title ##### -->
+gimpbrushes
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_brushes_popup ##### -->
+<para>
+
+</para>
+
+@brush_callback: 
+@popup_title: 
+@initial_brush: 
+@opacity: 
+@spacing: 
+@paint_mode: 
+
+
+<!-- ##### FUNCTION gimp_brushes_close_popup ##### -->
+<para>
+
+</para>
+
+@brush_callback: 
+
+
+<!-- ##### FUNCTION gimp_brushes_set_popup ##### -->
+<para>
+
+</para>
+
+@brush_callback: 
+@brush_name: 
+@opacity: 
+@spacing: 
+@paint_mode: 
+
+
+<!-- ##### FUNCTION gimp_brushes_get_brush_data ##### -->
+<para>
+
+</para>
+
+@brush_name: 
+@opacity: 
+@spacing: 
+@paint_mode: 
+@width: 
+@height: 
+@mask_data_size: 
+@mask_data: 
+@Returns: 
+<!-- # Unused Parameters # -->
+@pname: 
+
+

@@ -1,0 +1,67 @@
+<!-- ##### SECTION Title ##### -->
+gimpedit
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_edit_cut ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+
+
+<!-- ##### FUNCTION gimp_edit_copy ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+
+
+<!-- ##### FUNCTION gimp_edit_paste ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@paste_into: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_edit_clear ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+
+
+<!-- ##### FUNCTION gimp_edit_fill ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@fill_type: 
+
+
+<!-- ##### FUNCTION gimp_edit_stroke ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+
+

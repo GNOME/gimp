@@ -148,6 +148,93 @@ Compatibility definitions for older plug-ins.
 
 
 
+<!-- ##### MACRO gimp_channel_width ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@channel_ID: 
+
+
+<!-- ##### MACRO gimp_channel_height ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@channel_ID: 
+
+
+<!-- ##### MACRO gimp_channel_get_image_ID ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO gimp_channel_get_layer_ID ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO gimp_layer_width ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@layer_ID: 
+
+
+<!-- ##### MACRO gimp_layer_height ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@layer_ID: 
+
+
+<!-- ##### MACRO gimp_layer_bpp ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@layer_ID: 
+
+
+<!-- ##### MACRO gimp_layer_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@layer_ID: 
+
+
+<!-- ##### MACRO gimp_gradient_get_gradient_data ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@pname: 
+@width: 
+@sample_sz: 
+@mask_data: 
+
+
 <!-- ##### MACRO gimp_plugin_help_func ##### -->
 <para>
 
@@ -155,6 +242,33 @@ Compatibility definitions for older plug-ins.
 
 <!-- # Unused Parameters # -->
 @help_data: 
+
+
+<!-- ##### MACRO gimp_query_database ##### -->
+<para>
+
+</para>
+
+<!-- # Unused Parameters # -->
+@name_regexp: 
+@blurb_regexp: 
+@help_regexp: 
+@author_regexp: 
+@copyright_regexp: 
+@date_regexp: 
+@proc_type_regexp: 
+@nprocs: 
+@proc_names: 
+
+
+<!-- ##### MACRO gimp_query_images ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@nimages: 
 
 
 <!-- ##### MACRO Parasite ##### -->
@@ -263,17 +377,6 @@ Compatibility definitions for older plug-ins.
 @b: 
 
 
-<!-- ##### MACRO parasite_has_flag ##### -->
-<para>
-
-</para>
-
-@Returns: 
-<!-- # Unused Parameters # -->
-@p: 
-@flag: 
-
-
 <!-- ##### MACRO parasite_is_type ##### -->
 <para>
 
@@ -305,7 +408,18 @@ Compatibility definitions for older plug-ins.
 @p: 
 
 
-<!-- ##### MACRO parasite_name ##### -->
+<!-- ##### MACRO parasite_has_flag ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@p: 
+@flag: 
+
+
+<!-- ##### MACRO parasite_flags ##### -->
 <para>
 
 </para>
@@ -315,7 +429,7 @@ Compatibility definitions for older plug-ins.
 @p: 
 
 
-<!-- ##### MACRO parasite_flags ##### -->
+<!-- ##### MACRO parasite_name ##### -->
 <para>
 
 </para>
@@ -344,14 +458,14 @@ Compatibility definitions for older plug-ins.
 @p: 
 
 
-<!-- ##### MACRO PixPipeParams ##### -->
+<!-- ##### MACRO PIXPIPE_MAXDIM ##### -->
 <para>
 
 </para>
 
 
 
-<!-- ##### MACRO PIXPIPE_MAXDIM ##### -->
+<!-- ##### MACRO PixPipeParams ##### -->
 <para>
 
 </para>
@@ -367,6 +481,16 @@ Compatibility definitions for older plug-ins.
 @params: 
 
 
+<!-- ##### MACRO pixpipeparams_parse ##### -->
+<para>
+
+</para>
+
+<!-- # Unused Parameters # -->
+@parameters: 
+@params: 
+
+
 <!-- ##### MACRO pixpipeparams_build ##### -->
 <para>
 
@@ -377,13 +501,66 @@ Compatibility definitions for older plug-ins.
 @params: 
 
 
-<!-- ##### MACRO pixpipeparams_parse ##### -->
+<!-- ##### MACRO GPlugInInfo ##### -->
 <para>
 
 </para>
 
-<!-- # Unused Parameters # -->
-@parameters: 
-@params: 
+
+
+<!-- ##### MACRO GTile ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GDrawable ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GPixelRgn ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GParamColor ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GParamRegion ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GParamData ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GParamDef ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GParam ##### -->
+<para>
+
+</para>
+
 
 

@@ -1,0 +1,43 @@
+<!-- ##### SECTION Title ##### -->
+gimpgimprc
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_gimprc_query ##### -->
+<para>
+
+</para>
+
+@token: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_gimprc_set ##### -->
+<para>
+
+</para>
+
+@token: 
+@value: 
+
+
+<!-- ##### FUNCTION gimp_get_monitor_resolution ##### -->
+<para>
+
+</para>
+
+@xres: 
+@yres: 
+
+

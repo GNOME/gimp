@@ -1,0 +1,148 @@
+<!-- ##### SECTION Title ##### -->
+gimpcolor
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_brightness_contrast ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@brightness: 
+@contrast: 
+
+
+<!-- ##### FUNCTION gimp_levels ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@channel: 
+@low_input: 
+@high_input: 
+@gamma: 
+@low_output: 
+@high_output: 
+
+
+<!-- ##### FUNCTION gimp_posterize ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@levels: 
+
+
+<!-- ##### FUNCTION gimp_desaturate ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+
+
+<!-- ##### FUNCTION gimp_equalize ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@mask_only: 
+
+
+<!-- ##### FUNCTION gimp_invert ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+
+
+<!-- ##### FUNCTION gimp_curves_spline ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@channel: 
+@num_points: 
+@control_pts: 
+
+
+<!-- ##### FUNCTION gimp_curves_explicit ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@channel: 
+@num_bytes: 
+@curve: 
+
+
+<!-- ##### FUNCTION gimp_color_balance ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@transfer_mode: 
+@preserve_lum: 
+@cyan_red: 
+@magenta_green: 
+@yellow_blue: 
+
+
+<!-- ##### FUNCTION gimp_histogram ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@channel: 
+@start_range: 
+@end_range: 
+@mean: 
+@std_dev: 
+@median: 
+@pixels: 
+@count: 
+@percentile: 
+
+
+<!-- ##### FUNCTION gimp_hue_saturation ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@hue_range: 
+@hue_offset: 
+@lightness: 
+@saturation: 
+
+
+<!-- ##### FUNCTION gimp_threshold ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@low_threshold: 
+@high_threshold: 
+
+

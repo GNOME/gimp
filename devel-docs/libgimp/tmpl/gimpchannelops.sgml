@@ -1,0 +1,37 @@
+<!-- ##### SECTION Title ##### -->
+gimpchannelops
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_channel_ops_offset ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@wrap_around: 
+@fill_type: 
+@offset_x: 
+@offset_y: 
+
+
+<!-- ##### FUNCTION gimp_channel_ops_duplicate ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+

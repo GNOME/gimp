@@ -1,0 +1,159 @@
+<!-- ##### SECTION Title ##### -->
+gimpchannel
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_channel_new ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@name: 
+@width: 
+@height: 
+@opacity: 
+@color: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_channel_copy ##### -->
+<para>
+
+</para>
+
+@channel_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_channel_delete ##### -->
+<para>
+
+</para>
+
+@channel_ID: 
+
+
+<!-- ##### FUNCTION gimp_channel_get_name ##### -->
+<para>
+
+</para>
+
+@channel_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_channel_set_name ##### -->
+<para>
+
+</para>
+
+@channel_ID: 
+@name: 
+
+
+<!-- ##### FUNCTION gimp_channel_get_visible ##### -->
+<para>
+
+</para>
+
+@channel_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_channel_set_visible ##### -->
+<para>
+
+</para>
+
+@channel_ID: 
+@visible: 
+
+
+<!-- ##### FUNCTION gimp_channel_get_show_masked ##### -->
+<para>
+
+</para>
+
+@channel_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_channel_set_show_masked ##### -->
+<para>
+
+</para>
+
+@channel_ID: 
+@show_masked: 
+
+
+<!-- ##### FUNCTION gimp_channel_get_opacity ##### -->
+<para>
+
+</para>
+
+@channel_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_channel_set_opacity ##### -->
+<para>
+
+</para>
+
+@channel_ID: 
+@opacity: 
+
+
+<!-- ##### FUNCTION gimp_channel_get_color ##### -->
+<para>
+
+</para>
+
+@channel_ID: 
+@red: 
+@green: 
+@blue: 
+
+
+<!-- ##### FUNCTION gimp_channel_set_color ##### -->
+<para>
+
+</para>
+
+@channel_ID: 
+@red: 
+@green: 
+@blue: 
+
+
+<!-- ##### FUNCTION gimp_channel_get_tattoo ##### -->
+<para>
+
+</para>
+
+@channel_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_channel_set_tattoo ##### -->
+<para>
+
+</para>
+
+@channel_ID: 
+@tattoo: 
+
+

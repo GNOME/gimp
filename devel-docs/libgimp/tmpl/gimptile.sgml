@@ -1,0 +1,87 @@
+<!-- ##### SECTION Title ##### -->
+gimptile
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT GimpTile ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION gimp_tile_ref ##### -->
+<para>
+
+</para>
+
+@tile: 
+
+
+<!-- ##### FUNCTION gimp_tile_ref_zero ##### -->
+<para>
+
+</para>
+
+@tile: 
+
+
+<!-- ##### FUNCTION gimp_tile_unref ##### -->
+<para>
+
+</para>
+
+@tile: 
+@dirty: 
+
+
+<!-- ##### FUNCTION gimp_tile_flush ##### -->
+<para>
+
+</para>
+
+@tile: 
+
+
+<!-- ##### FUNCTION gimp_tile_cache_size ##### -->
+<para>
+
+</para>
+
+@kilobytes: 
+
+
+<!-- ##### FUNCTION gimp_tile_cache_ntiles ##### -->
+<para>
+
+</para>
+
+@ntiles: 
+
+
+<!-- ##### FUNCTION gimp_tile_width ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_tile_height ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+

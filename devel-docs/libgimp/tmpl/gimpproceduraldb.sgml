@@ -1,0 +1,113 @@
+<!-- ##### SECTION Title ##### -->
+gimpproceduraldb
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_procedural_db_proc_info ##### -->
+<para>
+
+</para>
+
+@procedure: 
+@blurb: 
+@help: 
+@author: 
+@copyright: 
+@date: 
+@proc_type: 
+@num_args: 
+@num_values: 
+@params: 
+@return_vals: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_procedural_db_get_data ##### -->
+<para>
+
+</para>
+
+@identifier: 
+@data: 
+
+
+<!-- ##### FUNCTION gimp_procedural_db_set_data ##### -->
+<para>
+
+</para>
+
+@identifier: 
+@data: 
+@length: 
+
+
+<!-- ##### FUNCTION gimp_procedural_db_dump ##### -->
+<para>
+
+</para>
+
+@filename: 
+
+
+<!-- ##### FUNCTION gimp_procedural_db_query ##### -->
+<para>
+
+</para>
+
+@name: 
+@blurb: 
+@help: 
+@author: 
+@copyright: 
+@date: 
+@proc_type: 
+@num_matches: 
+@proc_names: 
+
+
+<!-- ##### FUNCTION gimp_procedural_db_proc_arg ##### -->
+<para>
+
+</para>
+
+@procedure: 
+@arg_num: 
+@arg_type: 
+@arg_name: 
+@arg_desc: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_procedural_db_proc_val ##### -->
+<para>
+
+</para>
+
+@procedure: 
+@val_num: 
+@val_type: 
+@val_name: 
+@val_desc: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_procedural_db_get_data_size ##### -->
+<para>
+
+</para>
+
+@identifier: 
+@Returns: 
+
+

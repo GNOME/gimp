@@ -1,0 +1,67 @@
+<!-- ##### SECTION Title ##### -->
+gimpfloatingsel
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_floating_sel_remove ##### -->
+<para>
+
+</para>
+
+@floating_sel_ID: 
+
+
+<!-- ##### FUNCTION gimp_floating_sel_anchor ##### -->
+<para>
+
+</para>
+
+@floating_sel_ID: 
+
+
+<!-- ##### FUNCTION gimp_floating_sel_to_layer ##### -->
+<para>
+
+</para>
+
+@floating_sel_ID: 
+
+
+<!-- ##### FUNCTION gimp_floating_sel_attach ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@drawable_ID: 
+
+
+<!-- ##### FUNCTION gimp_floating_sel_rigor ##### -->
+<para>
+
+</para>
+
+@floating_sel_ID: 
+@undo: 
+
+
+<!-- ##### FUNCTION gimp_floating_sel_relax ##### -->
+<para>
+
+</para>
+
+@floating_sel_ID: 
+@undo: 
+
+

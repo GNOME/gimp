@@ -1,0 +1,174 @@
+<!-- ##### SECTION Title ##### -->
+gimppixelrgn
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT GimpPixelRgn ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION gimp_pixel_rgn_init ##### -->
+<para>
+
+</para>
+
+@pr: 
+@drawable: 
+@x: 
+@y: 
+@width: 
+@height: 
+@dirty: 
+@shadow: 
+
+
+<!-- ##### FUNCTION gimp_pixel_rgn_resize ##### -->
+<para>
+
+</para>
+
+@pr: 
+@x: 
+@y: 
+@width: 
+@height: 
+
+
+<!-- ##### FUNCTION gimp_pixel_rgn_get_pixel ##### -->
+<para>
+
+</para>
+
+@pr: 
+@buf: 
+@x: 
+@y: 
+
+
+<!-- ##### FUNCTION gimp_pixel_rgn_get_row ##### -->
+<para>
+
+</para>
+
+@pr: 
+@buf: 
+@x: 
+@y: 
+@width: 
+
+
+<!-- ##### FUNCTION gimp_pixel_rgn_get_col ##### -->
+<para>
+
+</para>
+
+@pr: 
+@buf: 
+@x: 
+@y: 
+@height: 
+
+
+<!-- ##### FUNCTION gimp_pixel_rgn_get_rect ##### -->
+<para>
+
+</para>
+
+@pr: 
+@buf: 
+@x: 
+@y: 
+@width: 
+@height: 
+
+
+<!-- ##### FUNCTION gimp_pixel_rgn_set_pixel ##### -->
+<para>
+
+</para>
+
+@pr: 
+@buf: 
+@x: 
+@y: 
+
+
+<!-- ##### FUNCTION gimp_pixel_rgn_set_row ##### -->
+<para>
+
+</para>
+
+@pr: 
+@buf: 
+@x: 
+@y: 
+@width: 
+
+
+<!-- ##### FUNCTION gimp_pixel_rgn_set_col ##### -->
+<para>
+
+</para>
+
+@pr: 
+@buf: 
+@x: 
+@y: 
+@height: 
+
+
+<!-- ##### FUNCTION gimp_pixel_rgn_set_rect ##### -->
+<para>
+
+</para>
+
+@pr: 
+@buf: 
+@x: 
+@y: 
+@width: 
+@height: 
+
+
+<!-- ##### FUNCTION gimp_pixel_rgns_register ##### -->
+<para>
+
+</para>
+
+@nrgns: 
+@Varargs: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_pixel_rgns_register2 ##### -->
+<para>
+
+</para>
+
+@nrgns: 
+@prs: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_pixel_rgns_process ##### -->
+<para>
+
+</para>
+
+@pri_ptr: 
+@Returns: 
+
+

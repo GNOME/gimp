@@ -1,0 +1,148 @@
+<!-- ##### SECTION Title ##### -->
+gimppaths
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_path_list ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@num_paths: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_path_get_points ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@pathname: 
+@num_path_point_details: 
+@path_closed: 
+@points_pairs: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_path_get_current ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_path_set_current ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@set_current_path_name: 
+
+
+<!-- ##### FUNCTION gimp_path_set_points ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@pathname: 
+@ptype: 
+@num_path_points: 
+@points_pairs: 
+
+
+<!-- ##### FUNCTION gimp_path_stroke_current ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+
+
+<!-- ##### FUNCTION gimp_path_get_point_at_dist ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@distance: 
+@y_point: 
+@gradient: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_path_get_tattoo ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@pathname: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_get_path_by_tattoo ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@tattoo: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_path_delete ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@path_name_to_del: 
+
+
+<!-- ##### FUNCTION gimp_path_get_locked ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@pathname: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_path_set_locked ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@pathname: 
+@lockstatus: 
+
+
+<!-- ##### FUNCTION gimp_path_set_tattoo ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@pathname: 
+@tattovalue: 
+
+

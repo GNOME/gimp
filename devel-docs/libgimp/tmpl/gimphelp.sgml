@@ -1,0 +1,27 @@
+<!-- ##### SECTION Title ##### -->
+gimphelp
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_help ##### -->
+<para>
+
+</para>
+
+@prog_name: 
+@help_page: 
+<!-- # Unused Parameters # -->
+@help_data: 
+
+

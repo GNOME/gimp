@@ -1,0 +1,96 @@
+<!-- ##### SECTION Title ##### -->
+gimptexttool
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_text_fontname ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@drawable_ID: 
+@x: 
+@y: 
+@text: 
+@border: 
+@antialias: 
+@size: 
+@size_type: 
+@fontname: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_text_get_extents_fontname ##### -->
+<para>
+
+</para>
+
+@text: 
+@size: 
+@size_type: 
+@fontname: 
+@width: 
+@height: 
+@ascent: 
+@descent: 
+
+
+<!-- ##### FUNCTION gimp_text ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@drawable_ID: 
+@x: 
+@y: 
+@text: 
+@border: 
+@antialias: 
+@size: 
+@size_type: 
+@foundry: 
+@family: 
+@weight: 
+@slant: 
+@set_width: 
+@spacing: 
+@registry: 
+@encoding: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_text_get_extents ##### -->
+<para>
+
+</para>
+
+@text: 
+@size: 
+@size_type: 
+@foundry: 
+@family: 
+@weight: 
+@slant: 
+@set_width: 
+@spacing: 
+@registry: 
+@encoding: 
+@width: 
+@height: 
+@ascent: 
+@descent: 
+
+

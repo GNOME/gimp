@@ -1,0 +1,40 @@
+<!-- ##### SECTION Title ##### -->
+gimpmessage
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_message ##### -->
+<para>
+
+</para>
+
+@message: 
+
+
+<!-- ##### FUNCTION gimp_message_get_handler ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_message_set_handler ##### -->
+<para>
+
+</para>
+
+@handler: 
+
+

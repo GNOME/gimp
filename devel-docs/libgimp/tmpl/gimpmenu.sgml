@@ -34,7 +34,7 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 @data: 
 
 
-<!-- ##### USER_FUNCTION GRunBrushCallback ##### -->
+<!-- ##### USER_FUNCTION GimpRunBrushCallback ##### -->
 <para>
 
 </para>
@@ -50,7 +50,7 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 @user_data: 
 
 
-<!-- ##### USER_FUNCTION GRunPatternCallback ##### -->
+<!-- ##### USER_FUNCTION GimpRunPatternCallback ##### -->
 <para>
 
 </para>
@@ -64,7 +64,7 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 @user_data: 
 
 
-<!-- ##### USER_FUNCTION GRunGradientCallback ##### -->
+<!-- ##### USER_FUNCTION GimpRunGradientCallback ##### -->
 <para>
 
 </para>
@@ -158,17 +158,6 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 @Param7: 
 
 
-<!-- ##### FUNCTION gimp_brush_select_widget_close_popup ##### -->
-<para>
-
-</para>
-
-@widget: 
-@Returns: 
-<!-- # Unused Parameters # -->
-@w: 
-
-
 <!-- ##### FUNCTION gimp_brush_select_widget_set_popup ##### -->
 <para>
 
@@ -179,46 +168,20 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 @opacity: 
 @spacing: 
 @paint_mode: 
-@Returns: 
 <!-- # Unused Parameters # -->
+@Returns: 
 @w: 
 
 
-<!-- ##### FUNCTION gimp_brushes_get_brush_data ##### -->
+<!-- ##### FUNCTION gimp_brush_select_widget_close_popup ##### -->
 <para>
 
 </para>
 
-@pname: 
-@opacity: 
-@spacing: 
-@paint_mode: 
-@width: 
-@height: 
-@mask_data: 
+@widget: 
+<!-- # Unused Parameters # -->
 @Returns: 
-
-
-<!-- ##### FUNCTION gimp_brush_set_popup ##### -->
-<para>
-
-</para>
-
-@popup_pnt: 
-@pname: 
-@opacity: 
-@spacing: 
-@paint_mode: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_brush_close_popup ##### -->
-<para>
-
-</para>
-
-@popup_pnt: 
-@Returns: 
+@w: 
 
 
 <!-- ##### FUNCTION gimp_interactive_selection_pattern ##### -->
@@ -255,8 +218,8 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 </para>
 
 @widget: 
-@Returns: 
 <!-- # Unused Parameters # -->
+@Returns: 
 @w: 
 
 
@@ -267,41 +230,9 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 
 @widget: 
 @pname: 
-@Returns: 
 <!-- # Unused Parameters # -->
+@Returns: 
 @w: 
-
-
-<!-- ##### FUNCTION gimp_pattern_get_pattern_data ##### -->
-<para>
-
-</para>
-
-@pname: 
-@width: 
-@height: 
-@bytes: 
-@mask_data: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_pattern_set_popup ##### -->
-<para>
-
-</para>
-
-@popup_pnt: 
-@pname: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_pattern_close_popup ##### -->
-<para>
-
-</para>
-
-@popup_pnt: 
-@Returns: 
 
 
 <!-- ##### FUNCTION gimp_interactive_selection_gradient ##### -->
@@ -339,8 +270,8 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 </para>
 
 @widget: 
-@Returns: 
 <!-- # Unused Parameters # -->
+@Returns: 
 @w: 
 
 
@@ -350,40 +281,10 @@ Widgets and functions for selecting images, layers, brushes, patterns etc.
 </para>
 
 @widget: 
-@pname: 
-@Returns: 
+@gname: 
 <!-- # Unused Parameters # -->
+@pname: 
+@Returns: 
 @w: 
-
-
-<!-- ##### FUNCTION gimp_gradient_get_gradient_data ##### -->
-<para>
-
-</para>
-
-@pname: 
-@width: 
-@sample_sz: 
-@mask_data: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_gradient_set_popup ##### -->
-<para>
-
-</para>
-
-@popup_pnt: 
-@pname: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_gradient_close_popup ##### -->
-<para>
-
-</para>
-
-@popup_pnt: 
-@Returns: 
 
 

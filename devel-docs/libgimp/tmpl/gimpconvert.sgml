@@ -1,0 +1,46 @@
+<!-- ##### SECTION Title ##### -->
+gimpconvert
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_convert_rgb ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+
+
+<!-- ##### FUNCTION gimp_convert_grayscale ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+
+
+<!-- ##### FUNCTION gimp_convert_indexed ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@dither_type: 
+@palette_type: 
+@num_cols: 
+@alpha_dither: 
+@remove_unused: 
+@palette: 
+
+

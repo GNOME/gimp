@@ -1,0 +1,53 @@
+<!-- ##### SECTION Title ##### -->
+gimpfileops
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_register_magic_load_handler ##### -->
+<para>
+
+</para>
+
+@procedure_name: 
+@extensions: 
+@prefixes: 
+@magics: 
+<!-- # Unused Parameters # -->
+@name: 
+
+
+<!-- ##### FUNCTION gimp_register_load_handler ##### -->
+<para>
+
+</para>
+
+@procedure_name: 
+@extensions: 
+@prefixes: 
+<!-- # Unused Parameters # -->
+@name: 
+
+
+<!-- ##### FUNCTION gimp_register_save_handler ##### -->
+<para>
+
+</para>
+
+@procedure_name: 
+@extensions: 
+@prefixes: 
+<!-- # Unused Parameters # -->
+@name: 
+
+

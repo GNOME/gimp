@@ -1,0 +1,316 @@
+<!-- ##### SECTION Title ##### -->
+gimplayer
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_layer_new ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@name: 
+@width: 
+@height: 
+@type: 
+@opacity: 
+@mode: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_layer_copy ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_layer_create_mask ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@mask_type: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_layer_scale ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@new_width: 
+@new_height: 
+@local_origin: 
+
+
+<!-- ##### FUNCTION gimp_layer_resize ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@new_width: 
+@new_height: 
+@offx: 
+@offy: 
+<!-- # Unused Parameters # -->
+@offset_x: 
+@offset_y: 
+
+
+<!-- ##### FUNCTION gimp_layer_delete ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+
+
+<!-- ##### FUNCTION gimp_layer_translate ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@offx: 
+@offy: 
+<!-- # Unused Parameters # -->
+@offset_x: 
+@offset_y: 
+
+
+<!-- ##### FUNCTION gimp_layer_add_alpha ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+
+
+<!-- ##### FUNCTION gimp_layer_set_offsets ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@offx: 
+@offy: 
+<!-- # Unused Parameters # -->
+@offset_x: 
+@offset_y: 
+
+
+<!-- ##### FUNCTION gimp_layer_mask ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_layer_is_floating_sel ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_layer_get_name ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_layer_set_name ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@name: 
+
+
+<!-- ##### FUNCTION gimp_layer_get_visible ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_layer_set_visible ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@visible: 
+
+
+<!-- ##### FUNCTION gimp_layer_get_preserve_trans ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_layer_set_preserve_trans ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@preserve_trans: 
+
+
+<!-- ##### FUNCTION gimp_layer_get_apply_mask ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_layer_set_apply_mask ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@apply_mask: 
+
+
+<!-- ##### FUNCTION gimp_layer_get_show_mask ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_layer_set_show_mask ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@show_mask: 
+
+
+<!-- ##### FUNCTION gimp_layer_get_edit_mask ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_layer_set_edit_mask ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@edit_mask: 
+
+
+<!-- ##### FUNCTION gimp_layer_get_opacity ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_layer_set_opacity ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@opacity: 
+
+
+<!-- ##### FUNCTION gimp_layer_get_mode ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_layer_set_mode ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@mode: 
+
+
+<!-- ##### FUNCTION gimp_layer_get_linked ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_layer_set_linked ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@linked: 
+
+
+<!-- ##### FUNCTION gimp_layer_get_tattoo ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_layer_set_tattoo ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@tattoo: 
+
+

@@ -1,0 +1,57 @@
+<!-- ##### SECTION Title ##### -->
+gimppatterns
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_patterns_get_pattern_data ##### -->
+<para>
+
+</para>
+
+@name: 
+@width: 
+@height: 
+@mask_bpp: 
+@mask_data_size: 
+@mask_data: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_patterns_popup ##### -->
+<para>
+
+</para>
+
+@pattern_callback: 
+@popup_title: 
+@initial_pattern: 
+
+
+<!-- ##### FUNCTION gimp_patterns_close_popup ##### -->
+<para>
+
+</para>
+
+@pattern_callback: 
+
+
+<!-- ##### FUNCTION gimp_patterns_set_popup ##### -->
+<para>
+
+</para>
+
+@pattern_callback: 
+@pattern_name: 
+
+

@@ -1,0 +1,40 @@
+<!-- ##### SECTION Title ##### -->
+gimpdisplay
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_display_new ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_display_delete ##### -->
+<para>
+
+</para>
+
+@display_ID: 
+
+
+<!-- ##### FUNCTION gimp_displays_flush ##### -->
+<para>
+
+</para>
+
+
+

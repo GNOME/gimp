@@ -1,0 +1,100 @@
+<!-- ##### SECTION Title ##### -->
+gimpgradients
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_gradients_get_list ##### -->
+<para>
+
+</para>
+
+@num_gradients: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_gradients_get_active ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_gradients_set_active ##### -->
+<para>
+
+</para>
+
+@name: 
+
+
+<!-- ##### FUNCTION gimp_gradients_sample_uniform ##### -->
+<para>
+
+</para>
+
+@num_samples: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_gradients_sample_custom ##### -->
+<para>
+
+</para>
+
+@num_samples: 
+@positions: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_gradients_get_gradient_data ##### -->
+<para>
+
+</para>
+
+@name: 
+@width: 
+@sample_size: 
+@grad_data: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_gradients_popup ##### -->
+<para>
+
+</para>
+
+@gradients_callback: 
+@popup_title: 
+@initial_gradient: 
+@sample_size: 
+
+
+<!-- ##### FUNCTION gimp_gradients_close_popup ##### -->
+<para>
+
+</para>
+
+@gradients_callback: 
+
+
+<!-- ##### FUNCTION gimp_gradients_set_popup ##### -->
+<para>
+
+</para>
+
+@gradients_callback: 
+@gradient_name: 
+
+

@@ -1,0 +1,64 @@
+<!-- ##### SECTION Title ##### -->
+gimpselection
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_selection_float ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@drawable_ID: 
+@offx: 
+@offy: 
+@Returns: 
+<!-- # Unused Parameters # -->
+@x_offset: 
+@y_offset: 
+
+
+<!-- ##### FUNCTION gimp_selection_bounds ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@none_empty: 
+@x1: 
+@y1: 
+@x2: 
+@y2: 
+@Returns: 
+<!-- # Unused Parameters # -->
+@non_empty: 
+
+
+<!-- ##### FUNCTION gimp_selection_is_empty ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_selection_none ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+
+

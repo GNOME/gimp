@@ -1,0 +1,292 @@
+<!-- ##### SECTION Title ##### -->
+gimpdrawable
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT GimpDrawable ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION gimp_drawable_get ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_detach ##### -->
+<para>
+
+</para>
+
+@drawable: 
+
+
+<!-- ##### FUNCTION gimp_drawable_flush ##### -->
+<para>
+
+</para>
+
+@drawable: 
+
+
+<!-- ##### FUNCTION gimp_drawable_delete ##### -->
+<para>
+
+</para>
+
+@drawable: 
+
+
+<!-- ##### FUNCTION gimp_drawable_name ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_visible ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_set_name ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@name: 
+
+
+<!-- ##### FUNCTION gimp_drawable_get_tile ##### -->
+<para>
+
+</para>
+
+@drawable: 
+@shadow: 
+@row: 
+@col: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_get_tile2 ##### -->
+<para>
+
+</para>
+
+@drawable: 
+@shadow: 
+@x: 
+@y: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_get_thumbnail_data ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@width: 
+@height: 
+@bpp: 
+@Returns: 
+<!-- # Unused Parameters # -->
+@bytes: 
+
+
+<!-- ##### FUNCTION gimp_drawable_merge_shadow ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@undo: 
+<!-- # Unused Parameters # -->
+@undoable: 
+
+
+<!-- ##### FUNCTION gimp_drawable_fill ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@fill_type: 
+
+
+<!-- ##### FUNCTION gimp_drawable_update ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@x: 
+@y: 
+@width: 
+@height: 
+
+
+<!-- ##### FUNCTION gimp_drawable_mask_bounds ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@x1: 
+@y1: 
+@x2: 
+@y2: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_image ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_type ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_has_alpha ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_type_with_alpha ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_is_rgb ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_is_gray ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_is_indexed ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_bytes ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_width ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_height ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_offsets ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@offset_x: 
+@offset_y: 
+
+
+<!-- ##### FUNCTION gimp_drawable_is_layer ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_is_layer_mask ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_is_channel ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@Returns: 
+
+

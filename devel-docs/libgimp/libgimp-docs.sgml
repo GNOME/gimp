@@ -1,5 +1,32 @@
 <!doctype book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
 <!entity libgimp-gimp SYSTEM "sgml/gimp.sgml">
+<!entity libgimp-gimpbrushes SYSTEM "sgml/gimpbrushes.sgml">
+<!entity libgimp-gimpchannel SYSTEM "sgml/gimpchannel.sgml">
+<!entity libgimp-gimpchannelops SYSTEM "sgml/gimpchannelops.sgml">
+<!entity libgimp-gimpcolor SYSTEM "sgml/gimpcolor.sgml">
+<!entity libgimp-gimpconvert SYSTEM "sgml/gimpconvert.sgml">
+<!entity libgimp-gimpdisplay SYSTEM "sgml/gimpdisplay.sgml">
+<!entity libgimp-gimpdrawable SYSTEM "sgml/gimpdrawable.sgml">
+<!entity libgimp-gimpedit SYSTEM "sgml/gimpedit.sgml">
+<!entity libgimp-gimpfileops SYSTEM "sgml/gimpfileops.sgml">
+<!entity libgimp-gimpfloatingsel SYSTEM "sgml/gimpfloatingsel.sgml">
+<!entity libgimp-gimpgimprc SYSTEM "sgml/gimpgimprc.sgml">
+<!entity libgimp-gimpgradients SYSTEM "sgml/gimpgradients.sgml">
+<!entity libgimp-gimpguides SYSTEM "sgml/gimpguides.sgml">
+<!entity libgimp-gimphelp SYSTEM "sgml/gimphelp.sgml">
+<!entity libgimp-gimpimage SYSTEM "sgml/gimpimage.sgml">
+<!entity libgimp-gimplayer SYSTEM "sgml/gimplayer.sgml">
+<!entity libgimp-gimpmessage SYSTEM "sgml/gimpmessage.sgml">
+<!entity libgimp-gimpmisc SYSTEM "sgml/gimpmisc.sgml">
+<!entity libgimp-gimppalette SYSTEM "sgml/gimppalette.sgml">
+<!entity libgimp-gimppixelrgn SYSTEM "sgml/gimppixelrgn.sgml">
+<!entity libgimp-gimpplugin SYSTEM "sgml/gimpplugin.sgml">
+<!entity libgimp-gimpproceduraldb SYSTEM "sgml/gimpproceduraldb.sgml">
+<!entity libgimp-gimpselection SYSTEM "sgml/gimpselection.sgml">
+<!entity libgimp-gimptexttool SYSTEM "sgml/gimptexttool.sgml">
+<!entity libgimp-gimptile SYSTEM "sgml/gimptile.sgml">
+<!entity libgimp-gimptools SYSTEM "sgml/gimptools.sgml">
+<!entity libgimp-gimpundo SYSTEM "sgml/gimpundo.sgml">
 <!entity libgimp-gimpprotocol SYSTEM "sgml/gimpprotocol.sgml">
 <!entity libgimp-gimpsignal SYSTEM "sgml/gimpsignal.sgml">
 <!entity libgimp-gimpcolorspace SYSTEM "sgml/gimpcolorspace.sgml">
@@ -50,14 +77,41 @@
   <chapter id="libgimp">
     <title>GIMP Library</title>
     &libgimp-gimp;
-    &libgimp-gimpcolorspace;
-    &libgimp-gimpcompat;
     &libgimp-gimpenv;
+    &libgimp-gimpcompat;
+    &libgimp-gimpbrushes;
+    &libgimp-gimpchannel;
+    &libgimp-gimpchannelops;
+    &libgimp-gimpcolorspace;
+    &libgimp-gimpcolor;
+    &libgimp-gimpconvert;
+    &libgimp-gimpdisplay;
+    &libgimp-gimpdrawable;
+    &libgimp-gimpedit;
+    &libgimp-gimpfileops;
+    &libgimp-gimpfloatingsel;
+    &libgimp-gimpgimprc;
+    &libgimp-gimpgradients;
+    &libgimp-gimpguides;
+    &libgimp-gimphelp;
+    &libgimp-gimpimage;
+    &libgimp-gimplayer;
     &libgimp-gimpmatrix;
+    &libgimp-gimpmessage;
+    &libgimp-gimpmisc;
+    &libgimp-gimppalette;
     &libgimp-gimpparasite;
     &libgimp-gimpparasiteio;
+    &libgimp-gimppixelrgn;
+    &libgimp-gimpplugin;
+    &libgimp-gimpproceduraldb;
     &libgimp-gimpprotocol;
+    &libgimp-gimpselection;
     &libgimp-gimpsignal;
+    &libgimp-gimptexttool;
+    &libgimp-gimptile;
+    &libgimp-gimptools;
+    &libgimp-gimpundo;
     &libgimp-gimpunit;
     &libgimp-gimputils;
     &libgimp-gimpvector;
