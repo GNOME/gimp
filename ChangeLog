@@ -1,5 +1,17 @@
 2002-02-20  Michael Natterer  <mitch@gimp.org>
 
+	Implemented #10125 ("quick" colour picker does not honour
+	"sample merged")
+
+	* app/tools/gimpcolorpickertool.[ch]: made definition of
+	GimpColorPickerToolOptions public.
+
+	* app/tools/gimppainttool.c: get the color picker's tool_options
+	and pick colors accordingly. Also draw a rectangle for
+	"sample_average".
+
+2002-02-20  Michael Natterer  <mitch@gimp.org>
+
 	Oops, yesterday's "fix" for #10466 made it even worse :)
 
 	* app/core/gimpdrawable-transform.c: need the 0.5 offset to

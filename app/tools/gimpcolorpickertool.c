@@ -49,34 +49,7 @@
 #include "libgimp/gimpintl.h"
 
 
-/*  maximum information buffer size  */
 #define MAX_INFO_BUF 8
-
-
-/*  the color picker structures  */
-
-typedef struct _GimpColorPickerToolOptions GimpColorPickerToolOptions;
-
-struct _GimpColorPickerToolOptions
-{
-  GimpToolOptions  tool_options;
-
-  gboolean     sample_merged;
-  gboolean     sample_merged_d;
-  GtkWidget   *sample_merged_w;
-
-  gboolean     sample_average;
-  gboolean     sample_average_d;
-  GtkWidget   *sample_average_w;
-
-  gdouble      average_radius;
-  gdouble      average_radius_d;
-  GtkObject   *average_radius_w;
-
-  gboolean     update_active;
-  gboolean     update_active_d;
-  GtkWidget   *update_active_w;
-};
 
 
 /*  local function prototypes  */

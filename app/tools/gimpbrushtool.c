@@ -33,6 +33,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-pick-color.h"
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimppaintcore.h"
@@ -44,7 +45,9 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpstatusbar.h"
 
+#include "gimpcolorpickertool.h"
 #include "gimppainttool.h"
+#include "tool_manager.h"
 
 #include "app_procs.h"
 #include "gimprc.h"
@@ -330,10 +333,14 @@ gimp_paint_tool_button_press (GimpTool        *tool,
       (state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)))
     {
       gimp_paint_tool_sample_color (drawable,
-                                    curr_coords.x,
-                                    curr_coords.y,
+                                    coords->x,
+                                    coords->y,
                                     state);
+
       paint_tool->pick_state = TRUE;
+
+      gimp_draw_tool_start (draw_tool, gdisp);
+
       return;
     }
   else
@@ -400,6 +407,13 @@ gimp_paint_tool_button_release (GimpTool        *tool,
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
+  if (paint_tool->pick_state)
+    {
+      gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
+
+      paint_tool->pick_state = FALSE;
+    }
+
   /*  Let the specific painting function finish up  */
   gimp_paint_core_paint (core, drawable, paint_options, FINISH_PAINT);
 
@@ -408,8 +422,6 @@ gimp_paint_tool_button_release (GimpTool        *tool,
 
   /*  Set tool state to inactive -- no longer painting */
   tool->state = INACTIVE;
-
-  paint_tool->pick_state = FALSE;
 
   gimp_paint_core_finish (core, drawable);
 
@@ -436,6 +448,11 @@ gimp_paint_tool_motion (GimpTool        *tool,
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
+  if (paint_tool->pick_state)
+    {
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (paint_tool));
+    }
+
   core->cur_coords = *coords;
 
   {
@@ -450,9 +467,12 @@ gimp_paint_tool_motion (GimpTool        *tool,
   if (paint_tool->pick_state)
     {
       gimp_paint_tool_sample_color (drawable,
-				    core->cur_coords.x,
-                                    core->cur_coords.y,
+				    coords->x,
+                                    coords->y,
 				    state);
+
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (paint_tool));
+
       return;
     }
 
@@ -590,15 +610,38 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
 static void
 gimp_paint_tool_draw (GimpDrawTool *draw_tool)
 {
-  if (draw_tool->gdisp)
+  GimpPaintTool *paint_tool;
+  GimpPaintCore *core;
+
+  paint_tool = GIMP_PAINT_TOOL (draw_tool);
+
+  core = paint_tool->core;
+
+  if (paint_tool->pick_state)
     {
-      GimpPaintTool *paint_tool;
-      GimpPaintCore *core;
+      GimpToolInfo               *info;
+      GimpColorPickerToolOptions *options;
 
-      paint_tool = GIMP_PAINT_TOOL (draw_tool);
+      info = tool_manager_get_info_by_type (GIMP_TOOL (draw_tool)->tool_info->gimp,
+                                            GIMP_TYPE_COLOR_PICKER_TOOL);
 
-      core = paint_tool->core;
+      options = (GimpColorPickerToolOptions *) info->tool_options;
 
+      if (options->sample_average)
+        {
+          gimp_draw_tool_draw_rectangle (draw_tool,
+                                         FALSE,
+                                         (core->cur_coords.x -
+                                          options->average_radius),
+                                         (core->cur_coords.y -
+                                          options->average_radius),
+                                         2 * options->average_radius + 1,
+                                         2 * options->average_radius + 1,
+                                         TRUE);
+        }
+    }
+  else
+    {
       /*  Draw start target  */
       gimp_draw_tool_draw_handle (draw_tool,
                                   GIMP_HANDLE_CROSS,
@@ -635,30 +678,33 @@ gimp_paint_tool_sample_color (GimpDrawable *drawable,
 			      gint          y,
 			      gint          state)
 {
-  GimpRGB  color;
-  guchar  *col;
+  GimpToolInfo               *picker_info;
+  GimpColorPickerToolOptions *picker_options;
+  GimpImage                  *gimage;
+  GimpRGB                     color;
 
-  if( x >= 0 && x < gimp_drawable_width (drawable) &&
-      y >= 0 && y < gimp_drawable_height (drawable))
+  gimage = gimp_drawable_gimage (drawable);
+
+  picker_info = tool_manager_get_info_by_type (gimage->gimp,
+                                               GIMP_TYPE_COLOR_PICKER_TOOL);
+
+  picker_options = (GimpColorPickerToolOptions *) picker_info->tool_options;
+
+  if (gimp_image_pick_color (gimage,
+                             drawable,
+                             picker_options->sample_merged,
+                             x, y,
+                             picker_options->sample_average,
+                             picker_options->average_radius,
+                             &color,
+                             NULL,
+                             NULL))
     {
-      if ((col = gimp_drawable_get_color_at (drawable, x, y)))
-	{
-	  Gimp *gimp;
-
-	  gimp = gimp_drawable_gimage (drawable)->gimp;
-
-	  gimp_rgba_set_uchar (&color,
-			       col[RED_PIX],
-			       col[GREEN_PIX],
-			       col[BLUE_PIX],
-			       255);
-
-	  if ((state & GDK_CONTROL_MASK))
-	    gimp_context_set_foreground (gimp_get_user_context (gimp), &color);
-	  else
-	    gimp_context_set_background (gimp_get_user_context (gimp), &color);
-
-	  g_free (col);
-	}
+      if ((state & GDK_CONTROL_MASK))
+        gimp_context_set_foreground (gimp_get_user_context (gimage->gimp),
+                                     &color);
+      else
+        gimp_context_set_background (gimp_get_user_context (gimage->gimp),
+                                     &color);
     }
 }
