@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.2\n"
-"POT-Creation-Date: 2002-08-20 15:07+0200\n"
+"POT-Creation-Date: 2002-08-26 22:11+0200\n"
 "PO-Revision-Date: 2002-05-24 18:50+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 #: plug-ins/FractalExplorer/Dialogs.c:289
 #: plug-ins/FractalExplorer/Dialogs.c:1386 plug-ins/common/AlienMap.c:1388
 #: plug-ins/common/AlienMap2.c:1367 plug-ins/gfig/gfig.c:3374
-#: plug-ins/imagemap/imap_about.c:43 plug-ins/print/gimp_main_window.c:361
+#: plug-ins/imagemap/imap_about.c:38 plug-ins/print/gimp_main_window.c:361
 #: plug-ins/webbrowser/webbrowser.c:278
 msgid "About"
 msgstr "Über"
@@ -2093,7 +2093,7 @@ msgstr "Sichtbare Ebenen anordnen"
 #: plug-ins/common/pixelize.c:339 plug-ins/common/plasma.c:365
 #: plug-ins/common/png.c:1061 plug-ins/common/polar.c:963
 #: plug-ins/common/randomize.c:722 plug-ins/common/ripple.c:681
-#: plug-ins/common/scatter_hsv.c:433 plug-ins/common/sel_gauss.c:254
+#: plug-ins/common/scatter_hsv.c:433 plug-ins/common/sel_gauss.c:255
 #: plug-ins/common/sharpen.c:618 plug-ins/common/shift.c:390
 #: plug-ins/common/smooth_palette.c:424 plug-ins/common/snoise.c:528
 #: plug-ins/common/sobel.c:263 plug-ins/common/sparkle.c:364
@@ -3239,7 +3239,7 @@ msgid "Create _Histogram"
 msgstr "_Histogramm erstellen"
 
 #: plug-ins/common/destripe.c:674 plug-ins/common/smooth_palette.c:440
-#: plug-ins/common/tile.c:427 plug-ins/imagemap/imap_cmd_guides.c:168
+#: plug-ins/common/tile.c:427 plug-ins/imagemap/imap_cmd_guides.c:163
 #: plug-ins/imagemap/imap_rectangle.c:401
 msgid "_Width:"
 msgstr "_Breite:"
@@ -4686,7 +4686,7 @@ msgid "Subject:"
 msgstr "Betreff:"
 
 #: plug-ins/common/mail.c:542 plug-ins/gfig/gfig.c:3749
-#: plug-ins/imagemap/imap_settings.c:105
+#: plug-ins/imagemap/imap_settings.c:98
 msgid "Filename:"
 msgstr "Dateiname:"
 
@@ -5977,19 +5977,19 @@ msgstr "Sekunden Pause"
 msgid "<Image>/Filters/Blur/Selective Gaussian Blur..."
 msgstr "<Image>/Filter/Weichzeichnen/Selektiver Weichzeichner..."
 
-#: plug-ins/common/sel_gauss.c:200 plug-ins/common/sel_gauss.c:236
+#: plug-ins/common/sel_gauss.c:201 plug-ins/common/sel_gauss.c:237
 msgid "Selective Gaussian Blur"
 msgstr "Selektiver Gaußscher Weichzeichner"
 
-#: plug-ins/common/sel_gauss.c:217
+#: plug-ins/common/sel_gauss.c:218
 msgid "sel_gauss: Cannot operate on indexed color images"
 msgstr "sel_gauss: Kann nicht mit Bildern mit indizierter Farbtabelle arbeiten"
 
-#: plug-ins/common/sel_gauss.c:270
+#: plug-ins/common/sel_gauss.c:271
 msgid "_Blur Radius:"
 msgstr "_Weichzeichner Radius:"
 
-#: plug-ins/common/sel_gauss.c:277
+#: plug-ins/common/sel_gauss.c:278
 msgid "_Max. Delta:"
 msgstr "_Max. Delta:"
 
@@ -6195,7 +6195,7 @@ msgid "Smooth Palette"
 msgstr "Glätte Palette"
 
 #: plug-ins/common/smooth_palette.c:449 plug-ins/common/tile.c:431
-#: plug-ins/imagemap/imap_cmd_guides.c:178
+#: plug-ins/imagemap/imap_cmd_guides.c:173
 #: plug-ins/imagemap/imap_rectangle.c:408
 msgid "_Height:"
 msgstr "_Höhe:"
@@ -9656,7 +9656,7 @@ msgstr ""
 "wurde, oder ihre Installation funktioniert nichtBitte überprüfen Sie das "
 "sorgfältig, bevor Sie einen Bug-Report schicken.</small></body></html>"
 
-#: plug-ins/helpbrowser/helpbrowser.c:340 plug-ins/imagemap/imap_main.c:608
+#: plug-ins/helpbrowser/helpbrowser.c:340 plug-ins/imagemap/imap_main.c:609
 msgid "<Untitled>"
 msgstr "<Unbenannt>"
 
@@ -9822,19 +9822,19 @@ msgstr "Berechne IFS (%d/%d)..."
 msgid "Copying IFS to image (%d/%d)..."
 msgstr "Kopiere IFS ins Bild (%d/%d)..."
 
-#: plug-ins/imagemap/imap_about.c:47
+#: plug-ins/imagemap/imap_about.c:42
 msgid "Imagemap plug-in 2.0"
 msgstr ""
 
-#: plug-ins/imagemap/imap_about.c:49
-msgid "Copyright(c) 1999 by Maurits Rijk"
+#: plug-ins/imagemap/imap_about.c:44
+msgid "Copyright(c) 1999-2002 by Maurits Rijk"
 msgstr ""
 
-#: plug-ins/imagemap/imap_about.c:50
+#: plug-ins/imagemap/imap_about.c:45
 msgid "lpeek.mrijk@consunet.nl"
 msgstr ""
 
-#: plug-ins/imagemap/imap_about.c:52
+#: plug-ins/imagemap/imap_about.c:47
 msgid "  Released under the GNU General Public License  "
 msgstr ""
 
@@ -9849,8 +9849,8 @@ msgid "Center _x:"
 msgstr "Mitte X:"
 
 #: plug-ins/imagemap/imap_circle.c:270 plug-ins/imagemap/imap_circle.c:277
-#: plug-ins/imagemap/imap_circle.c:283 plug-ins/imagemap/imap_grid.c:260
-#: plug-ins/imagemap/imap_grid.c:266 plug-ins/imagemap/imap_polygon.c:446
+#: plug-ins/imagemap/imap_circle.c:283 plug-ins/imagemap/imap_grid.c:255
+#: plug-ins/imagemap/imap_grid.c:261 plug-ins/imagemap/imap_polygon.c:446
 #: plug-ins/imagemap/imap_polygon.c:454 plug-ins/imagemap/imap_rectangle.c:392
 #: plug-ins/imagemap/imap_rectangle.c:399
 #: plug-ins/imagemap/imap_rectangle.c:406
@@ -9908,7 +9908,7 @@ msgstr ""
 "Dadurch können Sie schnell den typischsten Image-Map-Typ erstellen:\n"
 "Eine Bildansammlung von \"thumbnails\", praktisch für Navigationsleisten."
 
-#: plug-ins/imagemap/imap_cmd_guides.c:173
+#: plug-ins/imagemap/imap_cmd_guides.c:168
 #, fuzzy
 msgid "_Left Start at:"
 msgstr ""
@@ -9917,46 +9917,46 @@ msgstr ""
 "Dadurch können Sie schnell den typischsten Image-Map-Typ erstellen:\n"
 "Eine Bildansammlung von \"thumbnails\", praktisch für Navigationsleisten."
 
-#: plug-ins/imagemap/imap_cmd_guides.c:183
+#: plug-ins/imagemap/imap_cmd_guides.c:178
 #, fuzzy
 msgid "_Top Start at:"
 msgstr "Beginn Oben bei"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:188
+#: plug-ins/imagemap/imap_cmd_guides.c:183
 #, fuzzy
 msgid "_Horz. Spacing"
 msgstr "Hor. Abstand"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:194
+#: plug-ins/imagemap/imap_cmd_guides.c:189
 #, fuzzy
 msgid "_No. Across:"
 msgstr "Anz. horiz."
 
-#: plug-ins/imagemap/imap_cmd_guides.c:200
+#: plug-ins/imagemap/imap_cmd_guides.c:195
 #, fuzzy
 msgid "_Vert. Spacing:"
 msgstr "Vert. Abstand"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:206
+#: plug-ins/imagemap/imap_cmd_guides.c:201
 #, fuzzy
 msgid "No. _Down"
 msgstr "Anz. vert."
 
-#: plug-ins/imagemap/imap_cmd_guides.c:214
+#: plug-ins/imagemap/imap_cmd_guides.c:209
 #, fuzzy
 msgid "Base _URL:"
 msgstr "Basis-URL:"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:231
+#: plug-ins/imagemap/imap_cmd_guides.c:226
 #, c-format
 msgid "Image dimensions: %d x %d"
 msgstr "Bildgröße: %d x %d"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:236
+#: plug-ins/imagemap/imap_cmd_guides.c:231
 msgid "Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"
 msgstr "Resultierende Hilfslinien-Reichweite: 0,0 bis 0,0 (0 Flächen)"
 
-#: plug-ins/imagemap/imap_cmd_guides.c:271
+#: plug-ins/imagemap/imap_cmd_guides.c:266
 msgid "Guides"
 msgstr "Hilfslinien"
 
@@ -10149,76 +10149,76 @@ msgstr "Speichere Imagemap"
 msgid "Error"
 msgstr "Fehler"
 
-#: plug-ins/imagemap/imap_grid.c:199
+#: plug-ins/imagemap/imap_grid.c:201
 msgid "Grid Settings"
 msgstr "Gittereinstellungen"
 
-#: plug-ins/imagemap/imap_grid.c:210
+#: plug-ins/imagemap/imap_grid.c:205
 #, fuzzy
 msgid "_Snap-To Grid Enabled"
 msgstr "Am Gitter einrasten"
 
-#: plug-ins/imagemap/imap_grid.c:216
+#: plug-ins/imagemap/imap_grid.c:211
 msgid "Grid Visibility and Type"
 msgstr "Sichtbarkeit und Typ des Gitters"
 
-#: plug-ins/imagemap/imap_grid.c:223
+#: plug-ins/imagemap/imap_grid.c:218
 #, fuzzy
 msgid "_Hidden"
 msgstr "Versteckt"
 
-#: plug-ins/imagemap/imap_grid.c:231
+#: plug-ins/imagemap/imap_grid.c:226
 #, fuzzy
 msgid "_Lines"
 msgstr "Linien"
 
-#: plug-ins/imagemap/imap_grid.c:240
+#: plug-ins/imagemap/imap_grid.c:235
 #, fuzzy
 msgid "C_rosses"
 msgstr "Kreuze"
 
-#: plug-ins/imagemap/imap_grid.c:248
+#: plug-ins/imagemap/imap_grid.c:243
 msgid "Grid Granularity"
 msgstr "Feinheit des Gitters"
 
-#: plug-ins/imagemap/imap_grid.c:256
+#: plug-ins/imagemap/imap_grid.c:251
 #, fuzzy
 msgid "_Width"
 msgstr "_Breite:"
 
-#: plug-ins/imagemap/imap_grid.c:262
+#: plug-ins/imagemap/imap_grid.c:257
 #, fuzzy
 msgid "_Height"
 msgstr "_Höhe:"
 
-#: plug-ins/imagemap/imap_grid.c:276
+#: plug-ins/imagemap/imap_grid.c:271
 msgid "Grid Offset"
 msgstr "Gitterversatz"
 
-#: plug-ins/imagemap/imap_grid.c:284
+#: plug-ins/imagemap/imap_grid.c:279
 #, fuzzy
 msgid "pixels from l_eft"
 msgstr "Pixel von links"
 
-#: plug-ins/imagemap/imap_grid.c:289
+#: plug-ins/imagemap/imap_grid.c:284
 #, fuzzy
 msgid "pixels from _top"
 msgstr "Pixel von oben"
 
-#: plug-ins/imagemap/imap_grid.c:300
+#: plug-ins/imagemap/imap_grid.c:295
 #, fuzzy
 msgid "_Preview"
 msgstr "Vorschau"
 
-#: plug-ins/imagemap/imap_main.c:152
+#: plug-ins/imagemap/imap_main.c:153
 msgid "<Image>/Filters/Web/ImageMap..."
 msgstr "<Image>/Filter/Web/ImageMap..."
 
-#: plug-ins/imagemap/imap_main.c:759
+#: plug-ins/imagemap/imap_main.c:760
 msgid "Data changed"
 msgstr "Daten geändert"
 
-#: plug-ins/imagemap/imap_main.c:763
+#: plug-ins/imagemap/imap_main.c:764
 msgid ""
 "Some data has been changed.\n"
 "Do you really want to discard your changes?"
@@ -10226,20 +10226,20 @@ msgstr ""
 "Daten wurden geändert.\n"
 "Wollen Sie die Änderungen verwerfen?"
 
-#: plug-ins/imagemap/imap_main.c:972
+#: plug-ins/imagemap/imap_main.c:973
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "Datei \"%s\" gesichert."
 
-#: plug-ins/imagemap/imap_main.c:976
+#: plug-ins/imagemap/imap_main.c:977
 msgid "Couldn't save file:"
 msgstr "Konnte Datei nicht sichern:"
 
-#: plug-ins/imagemap/imap_main.c:1001
+#: plug-ins/imagemap/imap_main.c:1002
 msgid "Image size changed"
 msgstr "Bildgrösse geändert"
 
-#: plug-ins/imagemap/imap_main.c:1005
+#: plug-ins/imagemap/imap_main.c:1006
 msgid ""
 "Image size has changed.\n"
 "Resize Area's?"
@@ -10247,11 +10247,11 @@ msgstr ""
 "Bildgröße hat sich geändert.\n"
 "Bereich anpassen?"
 
-#: plug-ins/imagemap/imap_main.c:1036
+#: plug-ins/imagemap/imap_main.c:1037
 msgid "Couldn't read file:"
 msgstr "Konnte Datei nicht lesen:"
 
-#: plug-ins/imagemap/imap_main.c:1082
+#: plug-ins/imagemap/imap_main.c:1083
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
@@ -10324,16 +10324,21 @@ msgstr "Hilfsmittel"
 msgid "Grid Settings..."
 msgstr "Gitter-Einstellungen..."
 
-#: plug-ins/imagemap/imap_menu.c:383
+#: plug-ins/imagemap/imap_menu.c:384
+#, fuzzy
+msgid "Use GIMP Guides..."
+msgstr "Hilfslinien..."
+
+#: plug-ins/imagemap/imap_menu.c:386
 msgid "Create Guides..."
 msgstr "Hilfslinien erstellen..."
 
-#: plug-ins/imagemap/imap_menu.c:390
+#: plug-ins/imagemap/imap_menu.c:393
 #, fuzzy
 msgid "_Help"
 msgstr "Hilfe"
 
-#: plug-ins/imagemap/imap_menu.c:393
+#: plug-ins/imagemap/imap_menu.c:396
 msgid "About ImageMap..."
 msgstr "Über ImageMap..."
 
@@ -10496,35 +10501,35 @@ msgstr "Kommentar"
 msgid "Settings for this Mapfile"
 msgstr "Einstellungen für diese Map-Datei"
 
-#: plug-ins/imagemap/imap_settings.c:108
+#: plug-ins/imagemap/imap_settings.c:101
 msgid "Image name:"
 msgstr "Bildname:"
 
-#: plug-ins/imagemap/imap_settings.c:109
+#: plug-ins/imagemap/imap_settings.c:102
 msgid "Select Image File"
 msgstr "Bilddatei auswählen"
 
-#: plug-ins/imagemap/imap_settings.c:113
+#: plug-ins/imagemap/imap_settings.c:106
 #, fuzzy
 msgid "_Title:"
 msgstr "Titel:"
 
-#: plug-ins/imagemap/imap_settings.c:115
+#: plug-ins/imagemap/imap_settings.c:108
 #, fuzzy
 msgid "Aut_hor:"
 msgstr "Autor:"
 
-#: plug-ins/imagemap/imap_settings.c:117
+#: plug-ins/imagemap/imap_settings.c:110
 #, fuzzy
 msgid "Default _URL:"
 msgstr "Standard-URL:"
 
-#: plug-ins/imagemap/imap_settings.c:119
+#: plug-ins/imagemap/imap_settings.c:112
 #, fuzzy
 msgid "_Description:"
 msgstr "Beschreibung:"
 
-#: plug-ins/imagemap/imap_settings.c:134
+#: plug-ins/imagemap/imap_settings.c:127
 msgid "Map file format"
 msgstr "Map-Datei Format"
 
@@ -11501,25 +11506,9 @@ msgid "No selection to convert"
 msgstr "Keine Auswahl vorhanden"
 
 #: plug-ins/sel2path/sel2path.c:327
-msgid "Sel2Path Advanced Settings"
+#, fuzzy
+msgid "Selection To Path Advanced Settings"
 msgstr "Sel2Path Erweiterte Einstellungen"
-
-#: plug-ins/sel2path/sel2path.c:537
-#, c-format
-msgid "print_spline: strange degree (%d)"
-msgstr "print_spline: strange degree (%d)"
-
-#: plug-ins/sel2path/sel2path.c:546
-msgid "selection_to_path"
-msgstr "Auswahl zu Pfad"
-
-#: plug-ins/sel2path/sel2path.c:574
-msgid "gimp_image_get_selection failed"
-msgstr "gimp_image_get_selection schlug fehl"
-
-#: plug-ins/sel2path/sel2path.c:582
-msgid "Internal error. Selection bpp > 1"
-msgstr "Interner Fehler. Auswahl bpp > 1"
 
 #: plug-ins/sgi/sgi.c:630
 msgid "Save as SGI"
@@ -11666,6 +11655,18 @@ msgstr "Fehler: Kann XJT Eigenschaften-Datei %s nicht lesen"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Fehler: XJT Eigenschaften-Datei %s ist leer"
+
+#~ msgid "print_spline: strange degree (%d)"
+#~ msgstr "print_spline: strange degree (%d)"
+
+#~ msgid "selection_to_path"
+#~ msgstr "Auswahl zu Pfad"
+
+#~ msgid "gimp_image_get_selection failed"
+#~ msgstr "gimp_image_get_selection schlug fehl"
+
+#~ msgid "Internal error. Selection bpp > 1"
+#~ msgstr "Interner Fehler. Auswahl bpp > 1"
 
 #~ msgid "Repeat:"
 #~ msgstr "Wiederholen:"

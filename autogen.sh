@@ -46,7 +46,7 @@ echo
 DIE=0
 
 echo -n "checking for libtool >= $LIBTOOL_REQUIRED_VERSION ... "
-if (libtool --version) < /dev/null > /dev/null 2>&1; then
+if (libtoolize --version) < /dev/null > /dev/null 2>&1; then
     VER=`libtoolize --version \
          | grep libtool | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
     check_version $VER $LIBTOOL_REQUIRED_VERSION
