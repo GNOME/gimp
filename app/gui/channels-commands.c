@@ -178,12 +178,15 @@ channels_delete_cmd_callback (GtkWidget *widget,
   gimp_image_flush (gimage);
 }
 
-static void
-channels_channel_to_selection (GtkWidget      *widget,
-                               gpointer        data,
-                               GimpChannelOps  op)
+void
+channels_to_selection_cmd_callback (GtkWidget *widget,
+                                    gpointer   data,
+                                    guint      action)
 {
-  GimpImage *gimage;
+  GimpChannelOps  op;
+  GimpImage      *gimage;
+
+  op = (GimpChannelOps) action;
 
   if (GIMP_IS_COMPONENT_EDITOR (data))
     {
@@ -206,34 +209,6 @@ channels_channel_to_selection (GtkWidget      *widget,
     }
 
   gimp_image_flush (gimage);
-}
-
-void
-channels_selection_replace_cmd_callback (GtkWidget *widget,
-                                         gpointer   data)
-{
-  channels_channel_to_selection (widget, data, GIMP_CHANNEL_OP_REPLACE);
-}
-
-void
-channels_selection_add_cmd_callback (GtkWidget *widget,
-                                     gpointer   data)
-{
-  channels_channel_to_selection (widget, data, GIMP_CHANNEL_OP_ADD);
-}
-
-void
-channels_selection_sub_cmd_callback (GtkWidget *widget,
-                                     gpointer   data)
-{
-  channels_channel_to_selection (widget, data, GIMP_CHANNEL_OP_SUBTRACT);
-}
-
-void
-channels_selection_intersect_cmd_callback (GtkWidget *widget,
-                                           gpointer   data)
-{
-  channels_channel_to_selection (widget, data, GIMP_CHANNEL_OP_INTERSECT);
 }
 
 void

@@ -145,14 +145,17 @@ vectors_delete_cmd_callback (GtkWidget *widget,
   gimp_image_flush (gimage);
 }
 
-static void
-vectors_vectors_to_selection (GtkWidget      *widget,
-                              gpointer        data,
-                              GimpChannelOps  op)
+void
+vectors_to_selection_cmd_callback (GtkWidget *widget,
+                                   gpointer   data,
+                                   guint      action)
 {
-  GimpImage   *gimage;
-  GimpVectors *active_vectors;
+  GimpChannelOps  op;
+  GimpImage      *gimage;
+  GimpVectors    *active_vectors;
   return_if_no_vectors (gimage, active_vectors, data);
+
+  op = (GimpChannelOps) action;
 
   gimp_image_mask_select_vectors (gimage,
                                   active_vectors,
@@ -160,34 +163,6 @@ vectors_vectors_to_selection (GtkWidget      *widget,
                                   TRUE,
                                   FALSE, 0, 0);
   gimp_image_flush (gimage);
-}
-
-void
-vectors_selection_replace_cmd_callback (GtkWidget *widget,
-                                        gpointer   data)
-{
-  vectors_vectors_to_selection (widget, data, GIMP_CHANNEL_OP_REPLACE);
-}
-
-void
-vectors_selection_add_cmd_callback (GtkWidget *widget,
-                                    gpointer   data)
-{
-  vectors_vectors_to_selection (widget, data, GIMP_CHANNEL_OP_ADD);
-}
-
-void
-vectors_selection_sub_cmd_callback (GtkWidget *widget,
-                                    gpointer   data)
-{
-  vectors_vectors_to_selection (widget, data, GIMP_CHANNEL_OP_SUBTRACT);
-}
-
-void
-vectors_selection_intersect_cmd_callback (GtkWidget *widget,
-                                          gpointer   data)
-{
-  vectors_vectors_to_selection (widget, data, GIMP_CHANNEL_OP_INTERSECT);
 }
 
 void

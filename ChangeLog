@@ -1,3 +1,18 @@
+2003-08-27  Michael Natterer  <mitch@gimp.org>
+
+	Cleaned up my "To Selection" cleanup:
+
+	* app/gui/channels-commands.[ch]
+	* app/gui/layers-commands.[ch]
+	* app/gui/vectors-commands.[ch]: removed the separate
+	cmd_callbacks for REPLACE,ADD,SUBTRACT,INTERSECT and pass the
+	operation as "guint action" to the callback.
+
+	* app/gui/channels-menu.c
+	* app/gui/image-menu.c
+	* app/gui/layers-menu.c
+	* app/gui/vectors-menu.c: changed accordingly.
+
 2003-08-27  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpstroke.[ch]

@@ -407,15 +407,18 @@ layers_mask_delete_cmd_callback (GtkWidget *widget,
     }
 }
 
-static void
-layers_mask_to_selection (GtkWidget      *widget,
-                          gpointer        data,
-                          GimpChannelOps  op)
+void
+layers_mask_to_selection_cmd_callback (GtkWidget *widget,
+                                       gpointer   data,
+                                       guint      action)
 {
-  GimpImage     *gimage;
-  GimpLayer     *active_layer;
-  GimpLayerMask *mask;
+  GimpChannelOps  op;
+  GimpImage      *gimage;
+  GimpLayer      *active_layer;
+  GimpLayerMask  *mask;
   return_if_no_layer (gimage, active_layer, data);
+
+  op = (GimpChannelOps) action;
 
   mask = gimp_layer_get_mask (active_layer);
 
@@ -435,34 +438,6 @@ layers_mask_to_selection (GtkWidget      *widget,
 }
 
 void
-layers_mask_selection_replace_cmd_callback (GtkWidget *widget,
-                                            gpointer   data)
-{
-  layers_mask_to_selection (widget, data, GIMP_CHANNEL_OP_REPLACE);
-}
-
-void
-layers_mask_selection_add_cmd_callback (GtkWidget *widget,
-                                        gpointer   data)
-{
-  layers_mask_to_selection (widget, data, GIMP_CHANNEL_OP_ADD);
-}
-
-void
-layers_mask_selection_sub_cmd_callback (GtkWidget *widget,
-                                        gpointer   data)
-{
-  layers_mask_to_selection (widget, data, GIMP_CHANNEL_OP_SUBTRACT);
-}
-
-void
-layers_mask_selection_intersect_cmd_callback (GtkWidget *widget,
-                                              gpointer   data)
-{
-  layers_mask_to_selection (widget, data, GIMP_CHANNEL_OP_INTERSECT);
-}
-
-void
 layers_alpha_add_cmd_callback (GtkWidget *widget,
                                gpointer   data)
 {
@@ -477,14 +452,17 @@ layers_alpha_add_cmd_callback (GtkWidget *widget,
     }
 }
 
-static void
-layers_alpha_to_selection (GtkWidget      *widget,
-                           gpointer        data,
-                           GimpChannelOps  op)
+void
+layers_alpha_to_selection_cmd_callback (GtkWidget *widget,
+                                        gpointer   data,
+                                        guint      action)
 {
-  GimpImage *gimage;
-  GimpLayer *active_layer;
+  GimpChannelOps  op;
+  GimpImage      *gimage;
+  GimpLayer      *active_layer;
   return_if_no_layer (gimage, active_layer, data);
+
+  op = (GimpChannelOps) action;
 
   if (gimp_drawable_has_alpha (GIMP_DRAWABLE (active_layer)))
     {
@@ -492,34 +470,6 @@ layers_alpha_to_selection (GtkWidget      *widget,
                                     op, FALSE, 0.0, 0.0);
       gimp_image_flush (gimage);
     }
-}
-
-void
-layers_alpha_selection_replace_cmd_callback (GtkWidget *widget,
-                                             gpointer   data)
-{
-  layers_alpha_to_selection (widget, data, GIMP_CHANNEL_OP_REPLACE);
-}
-
-void
-layers_alpha_selection_add_cmd_callback (GtkWidget *widget,
-                                         gpointer   data)
-{
-  layers_alpha_to_selection (widget, data, GIMP_CHANNEL_OP_ADD);
-}
-
-void
-layers_alpha_selection_sub_cmd_callback (GtkWidget *widget,
-                                         gpointer   data)
-{
-  layers_alpha_to_selection (widget, data, GIMP_CHANNEL_OP_SUBTRACT);
-}
-
-void
-layers_alpha_selection_intersect_cmd_callback (GtkWidget *widget,
-                                               gpointer   data)
-{
-  layers_alpha_to_selection (widget, data, GIMP_CHANNEL_OP_INTERSECT);
 }
 
 void

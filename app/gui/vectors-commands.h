@@ -30,14 +30,9 @@ void   vectors_duplicate_cmd_callback            (GtkWidget   *widget,
                                                   gpointer     data);
 void   vectors_delete_cmd_callback               (GtkWidget   *widget,
                                                   gpointer     data);
-void   vectors_selection_replace_cmd_callback    (GtkWidget   *widget,
-                                                  gpointer     data);
-void   vectors_selection_add_cmd_callback        (GtkWidget   *widget,
-                                                  gpointer     data);
-void   vectors_selection_sub_cmd_callback        (GtkWidget   *widget,
-                                                  gpointer     data);
-void   vectors_selection_intersect_cmd_callback  (GtkWidget   *widget,
-                                                  gpointer     data);
+void   vectors_to_selection_cmd_callback         (GtkWidget   *widget,
+                                                  gpointer     data,
+                                                  guint        action);
 void   vectors_selection_to_vectors_cmd_callback (GtkWidget   *widget,
                                                   gpointer     data);
 void   vectors_stroke_cmd_callback               (GtkWidget   *widget,
