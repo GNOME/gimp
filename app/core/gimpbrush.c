@@ -429,7 +429,7 @@ gimp_brush_load_brush (gint         fd,
   GimpBrush   *brush;
   gint         bn_size;
   BrushHeader  header;
-  gchar       *name;
+  gchar       *name = NULL;
   gint         i;
 
   g_return_val_if_fail (filename != NULL, NULL);
@@ -477,11 +477,18 @@ gimp_brush_load_brush (gint         fd,
 	  g_free (name);
 	  return NULL;
 	}
+
+      if (!g_utf8_validate (name, -1, NULL))
+        {
+          g_message (_("Invalid UTF-8 string in GIMP brush file \"%s\"."), 
+                     filename);
+          g_free (name);
+          name = NULL;
+        }
     }
-  else
-    {
-      name = g_strdup (_("Unnamed"));
-    }
+  
+  if (!name)
+    name = g_strdup (_("Unnamed"));
 
   switch (header.bytes)
     {

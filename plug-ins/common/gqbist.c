@@ -4,8 +4,8 @@
  * Jörn Loviscach.
  *
  * It appeared in c't 10/95, page 326 and is called 
- * "Ausgewürfelt - Moderne Kunst algorithmisch erzeugen".
- * (~modern art created with algorithms)
+ * "Ausgewürfelt - Moderne Kunst algorithmisch erzeugen"
+ * (~modern art created with algorithms).
  * 
  * It generates one main formula (the middle button) and 8 variations of it.
  * If you select a variation it becomes the new main formula. If you
@@ -416,9 +416,9 @@ query (void)
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Create images based on a random genetic formula",
-			  "This Plug-in is based on an article by Jörn Loviscach (appeared in c't 10/95, page 326). It generates modern art pictures from a random genetic formula.",
-			  "Jörn Loviscach, Jens Ch. Restemeier",
-			  "Jörn Loviscach, Jens Ch. Restemeier",
+			  "This Plug-in is based on an article by JÃ¶rn Loviscach (appeared in c't 10/95, page 326). It generates modern art pictures from a random genetic formula.",
+			  "JÃ¶rn Loviscach, Jens Ch. Restemeier",
+			  "JÃ¶rn Loviscach, Jens Ch. Restemeier",
 			  PLUG_IN_VERSION,
 			  N_("<Image>/Filters/Render/Pattern/Qbist..."),
 			  "RGB*",

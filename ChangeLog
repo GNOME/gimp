@@ -1,4 +1,18 @@
+2001-09-03  Sven Neumann  <sven@gimp.org>
+
+	* app/plug_in.c
+	* app/core/gimpbrush.c
+	* app/core/gimpbrushpipe.c
+	* app/core/gimpgradient.c
+	* app/core/gimppalette.c
+	* app/core/gimppattern.c: check strings from data files and plug-in 
+	registration for UTF-8 validity. There are probably a lot more places 
+	that need these checks.
+
+	* plug-ins/common/gqbist.c: converted PDB texts to UTF-8.
+
 2001-08-31  Thomas Canty  <tommydal@optushome.com.au>
+
 	* app/colormaps.c
 	* app/gdisplay.c
 	* app/nav_window.c

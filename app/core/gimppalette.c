@@ -301,8 +301,16 @@ gimp_palette_load (const gchar *filename)
 
   if (! strncmp (str, "Name: ", strlen ("Name: ")))
     {
-      gimp_object_set_name (GIMP_OBJECT (palette),
-			    g_strstrip (&str[strlen ("Name: ")]));
+      if (g_utf8_validate (str, -1, NULL))
+        {
+          gimp_object_set_name (GIMP_OBJECT (palette),
+                                g_strstrip (&str[strlen ("Name: ")]));
+        }
+      else
+        {
+          g_message (_("Invalid UTF-8 string in palette file '%s'"), filename);
+          gimp_object_set_name (GIMP_OBJECT (palette), _("Unnamed"));
+        }
 
       if (! fgets (str, 1024, fp))
 	{
@@ -487,7 +495,6 @@ gimp_palette_add_entry (GimpPalette *palette,
 {
   GimpPaletteEntry *entry;
 
-  g_return_val_if_fail (palette != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_PALETTE (palette), NULL);
 
   g_return_val_if_fail (color != NULL, NULL);
@@ -514,7 +521,6 @@ gimp_palette_delete_entry (GimpPalette      *palette,
   GList *list;
   gint   pos = 0;
 
-  g_return_if_fail (palette != NULL);
   g_return_if_fail (GIMP_IS_PALETTE (palette));
 
   g_return_if_fail (entry != NULL);

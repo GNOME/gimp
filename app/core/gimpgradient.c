@@ -320,8 +320,17 @@ gimp_gradient_load (const gchar *filename)
   fgets (line, 1024, file);
   if (! strncmp (line, "Name: ", strlen ("Name: ")))
     {
-      gimp_object_set_name (GIMP_OBJECT (gradient),
-			    g_strstrip (&line[strlen ("Name: ")]));
+      if (g_utf8_validate (line, -1, NULL))
+        {
+          gimp_object_set_name (GIMP_OBJECT (gradient),
+                                g_strstrip (&line[strlen ("Name: ")]));
+        }
+      else
+        {
+          g_message (_("Invalid UTF-8 string in GIMP gradient file \"%s\"."), 
+                     filename);
+          gimp_object_set_name (GIMP_OBJECT (gradient), _("Unnamed"));
+        }
 
       fgets (line, 1024, file);
     }

@@ -312,11 +312,18 @@ gimp_pattern_load (const gchar *filename)
           g_message (_("Error in GIMP pattern file \"%s\"."), filename);
 	  goto error;
         }
+        
+      if (!g_utf8_validate (name, -1, NULL))
+        {
+          g_message (_("Invalid UTF-8 string in GIMP pattern file \"%s\"."), 
+                     filename);
+          g_free (name);
+          name = NULL;
+        }
     }
-  else
-    {
-      name = g_strdup (_("Unnamed"));
-    }
+
+  if (!name)
+    name = g_strdup (_("Unnamed"));
 
   pattern = GIMP_PATTERN (g_object_new (GIMP_TYPE_PATTERN, NULL));
 

@@ -300,13 +300,23 @@ gimp_brush_pipe_load (const gchar *filename)
   if (buffer->len > 0 && buffer->len < 1024)
     {
       pipe = GIMP_BRUSH_PIPE (g_object_new (GIMP_TYPE_BRUSH_PIPE, NULL));
-      gimp_object_set_name (GIMP_OBJECT (pipe), buffer->str);
+
+      if (g_utf8_validate (buffer->str, buffer->len, NULL))
+        {
+          gimp_object_set_name (GIMP_OBJECT (pipe), buffer->str);
+        }
+      else
+        {
+          g_message (_("Invalid UTF-8 string in GIMP brush file \"%s\"."), 
+                     filename);
+          gimp_object_set_name (GIMP_OBJECT (pipe), _("Unnamed"));
+        }
     }
   g_string_free (buffer, TRUE);
 
   if (!pipe)
     {
-      g_message ("Couldn't read name for brush pipe from file '%s'\n", 
+      g_message ("Couldn't read name for brush pipe from file \"%s\".\n", 
 		 filename);
       close (fd);
       return NULL;

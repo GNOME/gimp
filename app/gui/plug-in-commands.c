@@ -1833,6 +1833,7 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
   GSList          *tmp = NULL;
   gchar           *prog = NULL;
   gboolean         add_proc_def;
+  gboolean         valid;
   gint i;
 
   /*  Argument checking
@@ -1890,10 +1891,10 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
       else if (strncmp (proc_install->menu_path, "<Save>", 6) == 0)
 	{
 	  if ((proc_install->nparams < 5) ||
-	      (proc_install->params[0].type != GIMP_PDB_INT32) ||
-	      (proc_install->params[1].type != GIMP_PDB_IMAGE) ||
+	      (proc_install->params[0].type != GIMP_PDB_INT32)    ||
+	      (proc_install->params[1].type != GIMP_PDB_IMAGE)    ||
 	      (proc_install->params[2].type != GIMP_PDB_DRAWABLE) ||
-	      (proc_install->params[3].type != GIMP_PDB_STRING) ||
+	      (proc_install->params[3].type != GIMP_PDB_STRING)   ||
 	      (proc_install->params[4].type != GIMP_PDB_STRING))
 	    {
 	      g_message ("Plug-In \"%s\"\n(%s)\n"
@@ -1924,9 +1925,10 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
   for (i = 1; i < proc_install->nparams; i++) 
     {
       if ((proc_install->params[i].type == GIMP_PDB_INT32ARRAY ||
-	   proc_install->params[i].type == GIMP_PDB_INT8ARRAY ||
+	   proc_install->params[i].type == GIMP_PDB_INT8ARRAY  ||
 	   proc_install->params[i].type == GIMP_PDB_FLOATARRAY ||
-	   proc_install->params[i].type == GIMP_PDB_STRINGARRAY) &&
+	   proc_install->params[i].type == GIMP_PDB_STRINGARRAY) 
+          &&
 	  proc_install->params[i-1].type != GIMP_PDB_INT32) 
 	{
 	  g_message ("Plug-In \"%s\"\n(%s)\n"
@@ -1939,7 +1941,50 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	  return;
 	}
     }
+
+  /*  Sanity check strings for UTF-8 validity  */
+  valid = FALSE;
+
+  if ((proc_install->menu_path == NULL || 
+       g_utf8_validate (proc_install->menu_path, -1, NULL)) &&
+      (g_utf8_validate (proc_install->name, -1, NULL))      &&
+      (proc_install->blurb == NULL || 
+       g_utf8_validate (proc_install->blurb, -1, NULL))     &&
+      (proc_install->help == NULL || 
+       g_utf8_validate (proc_install->help, -1, NULL))      &&
+      (proc_install->author == NULL ||
+       g_utf8_validate (proc_install->author, -1, NULL))    &&
+      (proc_install->copyright == NULL || 
+       g_utf8_validate (proc_install->copyright, -1, NULL)) &&
+      (proc_install->date == NULL ||
+       g_utf8_validate (proc_install->date, -1, NULL)))
+    {
+      valid = TRUE;
+
+      for (i = 0; i < proc_install->nparams && valid; i++)
+        {
+          if (! (g_utf8_validate (proc_install->params[i].name, -1, NULL) &&
+                 (proc_install->params[i].description == NULL || 
+                  g_utf8_validate (proc_install->params[i].description, -1, NULL))))
+            valid = FALSE;
+        }
+      for (i = 0; i < proc_install->nreturn_vals && valid; i++)
+        {
+          if (! (g_utf8_validate (proc_install->return_vals[i].name, -1, NULL) &&
+                 (proc_install->return_vals[i].description == NULL ||
+                  g_utf8_validate (proc_install->return_vals[i].description, -1, NULL))))
+            valid = FALSE;
+        }
+    }
   
+  if (!valid)
+    {
+      g_message ("Plug-In \"%s\"\n(%s)\n"
+                 "attempted to install a procedure with invalid UTF-8 strings.\n", 
+                 g_path_get_basename (current_plug_in->args[0]),
+                 current_plug_in->args[0]);
+      return;
+    }
 
   /*  Initialization  */
 
