@@ -76,6 +76,7 @@ static const GtkItemFactoryEntry image_entries[] =
   { N_("/File/Open"), "<control>O", file_open_cmd_callback, 0 },
   { N_("/File/Save"), "<control>S", file_save_cmd_callback, 0 },
   { N_("/File/Save as"), NULL, file_save_as_cmd_callback, 0 },
+  { N_("/File/Revert"), NULL, file_revert_cmd_callback, 0 },
   { N_("/File/Preferences..."), NULL, file_pref_cmd_callback, 0 },
   { N_("/File/---"), NULL, NULL, 0, "<Separator>" },
   

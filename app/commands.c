@@ -123,6 +123,14 @@ file_save_as_cmd_callback (GtkWidget *widget,
   file_save_as_callback (widget, client_data);
 }
 
+void
+file_revert_cmd_callback (GtkWidget *widget,
+			gpointer   client_data)
+{
+  file_revert_callback (widget, client_data);
+}
+
+
 
 
 void

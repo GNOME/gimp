@@ -32,6 +32,8 @@ void file_save_callback              (GtkWidget *w,
 				      gpointer   client_data);
 void file_save_as_callback           (GtkWidget *w,
 				      gpointer   client_data);
+void file_revert_callback            (GtkWidget *w,
+				      gpointer   client_data);
 void file_load_by_extension_callback (GtkWidget *w,
 				      gpointer   client_data);
 void file_save_by_extension_callback (GtkWidget *w,

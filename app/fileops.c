@@ -68,6 +68,9 @@ static gint file_overwrite_delete_callback  (GtkWidget *w,
 					     GdkEvent  *e,
 					     gpointer   client_data);
 
+static GimpImage* file_open_image   (char *filename,
+				     char *raw_filename);
+
 static void file_open_ok_callback   (GtkWidget *w,
 				     gpointer   client_data);
 static void file_save_ok_callback   (GtkWidget *w,
@@ -651,6 +654,30 @@ file_save_as_callback (GtkWidget *w,
 }
 
 void
+file_revert_callback (GtkWidget *w,
+		      gpointer   client_data)
+{
+  GDisplay *gdisplay;
+  GimpImage *gimage;
+  char *filename, *raw_filename;
+
+  gdisplay = gdisplay_active ();
+
+  if (gdisplay->gimage->has_filename == FALSE)
+    g_message (_("Can't revert. No filename associated with this image"));
+  else
+    {
+      filename = gimage_filename (gdisplay->gimage);
+      raw_filename = prune_filename (filename);
+
+      if ((gimage = file_open_image (filename, raw_filename)) != NULL)
+        gdisplay_reconnect (gdisplay, gimage);
+      else
+        g_message (_("Revert failed."));
+    }
+}
+
+void
 file_load_by_extension_callback (GtkWidget *w,
 				 gpointer   client_data)
 {
@@ -712,16 +739,15 @@ file_save_type_callback (GtkWidget *w,
   save_file_proc = proc;
 }
 
-int
-file_open (char *filename, char* raw_filename)
+static GimpImage*
+file_open_image (char *filename, char *raw_filename)
 {
   PlugInProcDef *file_proc;
   ProcRecord *proc;
   Argument *args;
   Argument *return_vals;
-  GImage *gimage;
   int gimage_id;
-  int return_val;
+  gboolean status;
   int i;
 
   file_proc = load_file_proc;
@@ -731,7 +757,7 @@ file_open (char *filename, char* raw_filename)
   if (!file_proc)
     {
       /* WARNING */
-      return FALSE;
+      return NULL;
     }
 
   proc = &file_proc->db_info;
@@ -747,28 +773,41 @@ file_open (char *filename, char* raw_filename)
   args[2].value.pdb_pointer = raw_filename;
 
   return_vals = procedural_db_execute (proc->name, args);
-  return_val = (return_vals[0].value.pdb_int == PDB_SUCCESS);
+  status = (return_vals[0].value.pdb_int == PDB_SUCCESS);
   gimage_id = return_vals[1].value.pdb_int;
 
   procedural_db_destroy_args (return_vals, proc->num_values);
   g_free (args);
 
-  if ((gimage = gimage_get_ID (gimage_id)) != NULL)
+  if (status)
+    return pdb_id_to_image (gimage_id);
+  else
+    return NULL;
+}
+
+int
+file_open (char *filename, char *raw_filename)
+{
+  GimpImage *gimage;
+
+  if ((gimage = file_open_image (filename, raw_filename)) != NULL)
     {
-      /*  enable & clear all undo steps  */
+      /* enable & clear all undo steps */
       gimage_enable_undo (gimage);
 
-      /*  set the image to clean  */
+      /* set the image to clean  */
       gimage_clean_all (gimage);
 
-      /*  display the image */
+      /* display the image */
       gdisplay_new (gimage, 0x0101);
 
       idea_add (filename);
       menus_last_opened_add (filename);
+
+      return TRUE;
     }
 
-  return return_val;
+  return FALSE;
 }
 
 int

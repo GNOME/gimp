@@ -51,7 +51,7 @@ dnl Why the heck isn't there already a macro for this?
 
 AC_ARG_WITH(gnu-make, [  --with-gnu-make         assume 'make' understands gnu extensions],
 ,
-if $MAKE -v 2>/dev/null | grep 'GNU Make' >/dev/null; then
+if $ac_make -v 2>/dev/null | grep 'GNU Make' >/dev/null; then
   with_gnu_make=yes
 fi)
 

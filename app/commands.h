@@ -10,6 +10,7 @@ void file_new_cmd_callback (GtkWidget           *widget,
 void file_open_cmd_callback (GtkWidget *, gpointer);
 void file_save_cmd_callback (GtkWidget *, gpointer);
 void file_save_as_cmd_callback (GtkWidget *, gpointer);
+void file_revert_cmd_callback (GtkWidget *, gpointer);
 void file_pref_cmd_callback (GtkWidget *, gpointer);
 void file_close_cmd_callback (GtkWidget *, gpointer);
 void file_quit_cmd_callback (GtkWidget *, gpointer);

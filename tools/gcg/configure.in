@@ -1,5 +1,5 @@
 AC_INIT(gcg.c)
-AM_INIT_AUTOMAKE(gcg, 0.1)
+AM_INIT_AUTOMAKE(gcg, 0.1, no-define)
 
 AM_MAINTAINER_MODE
 

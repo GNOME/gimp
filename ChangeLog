@@ -1,3 +1,10 @@
+Mon Jan 11 17:30:06 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* commands.[ch]
+	* fileops.[ch]
+	* gdisplay.[ch]
+	* menus.c: implemented File->Revert
+
 Mon Jan 11 22:02:10 GMT 1999 Adam D. Moss <adam@gimp.org>
 
 	* app/paint_funcs.c:

@@ -144,6 +144,7 @@ struct _GDisplay
 /* member function declarations */
 
 GDisplay * gdisplay_new                    (GimpImage *, unsigned int);
+void       gdisplay_reconnect              (GDisplay *, GimpImage *);
 void       gdisplay_remove_and_delete      (GDisplay *);
 int        gdisplay_mask_value             (GDisplay *, int, int);
 int        gdisplay_mask_bounds            (GDisplay *, int *, int *, int *, int *);
