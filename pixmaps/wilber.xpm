@@ -240,7 +240,7 @@ static char * wilber_xpm[] = {
 "                                : | 0 5 a b c                                                         d * _ _ } 8 8 9 8 e   ",
 "                                ; f g h [ . * i                                                     5 * * _ _ 3 8 9 j j k   ",
 "                                l m < 1 5 a * ! / n                                             o * * ) _ _ 3 8 9 p j j q   ",
-"                                  r f g h [ . b ) _ i                                       &   * * ! ) 2 2 8 9 s j t _     ",
+"                                  r f g h [ . b ) _ i                                       & * * * ! ) 2 2 8 9 s j t _     ",
 "                                  u m g 1 5 v . # * ! * [ w                           x * ! ) ) ) _ _ } } 8 8 s j t y z     ",
 "                                  A B < 0 C D [ v . . + . . . v v h E d F G G + } } _ _ ) _ _ _ _ 3 3 8 8 s 9 j j t 8       ",
 "                                H 4 E | < 0 C D [ v v v . v v [ v 6 . # # ( _ } 2 3 2 2 8 8 8 8 8 9 j 9 j j t t I I J       ",

@@ -1,3 +1,7 @@
+2001-03-12  Simon Budig  <simon@gimp.org>
+
+	* pixmaps/wilber.xpm: Fixed one pixel.
+
 2001-03-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimplayerlistview.c: added some help_data and tooltips.

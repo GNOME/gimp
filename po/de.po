@@ -5205,7 +5205,7 @@ msgstr "Verknüpfen"
 
 #: app/tool_options.c:490
 msgid "Ink Tool"
-msgstr "Tinte"
+msgstr "Zeichenfeder"
 
 #: app/tool_options.c:492 app/tools.c:853 app/tools.c:859
 msgid "Dodge or Burn"
@@ -5459,15 +5459,15 @@ msgstr "Weichzeichnen oder Schärfen"
 
 #: app/tools.c:825
 msgid "Ink"
-msgstr "Tinte"
+msgstr "Zeichenfeder"
 
 #: app/tools.c:826
 msgid "/Tools/Paint Tools/Ink"
-msgstr "/Werkzeuge/Malwerkzeuge/Tinte"
+msgstr "/Werkzeuge/Malwerkzeuge/Zeichenfeder"
 
 #: app/tools.c:831
 msgid "Draw in ink"
-msgstr "Mit Tinte zeichnen"
+msgstr "Mit Zeichenfeder zeichnen"
 
 #: app/tools.c:854
 msgid "/Tools/Paint Tools/DodgeBurn"
