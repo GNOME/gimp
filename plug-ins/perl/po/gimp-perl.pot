@@ -1,0 +1,356 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-perl 1\n"
+"POT-Creation-Date: 1999-09-12 17:58+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: ENCODING\n"
+
+msgid "too many arguments"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
+msgstr ""
+
+msgid "expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
+msgstr ""
+
+msgid "WARNING"
+msgstr ""
+
+msgid "Restore values to the previous ones"
+msgstr ""
+
+msgid "<Image>/Filters"
+msgstr ""
+
+msgid "FATAL: unable to create $tmp: $!\n"
+msgstr ""
+
+msgid ""
+"       interface-arguments are\n"
+"           -o | --output <filespec>   write image to disk, don't display\n"
+"           -i | --interact            let the user edit the values first\n"
+"       script-arguments are\n"
+msgstr ""
+
+msgid "<Image> plug-in called without both image and drawable arguments!\n"
+msgstr ""
+
+msgid "Last Modified"
+msgstr ""
+
+msgid "Shortcuts"
+msgstr ""
+
+msgid "Browse"
+msgstr ""
+
+msgid "Reset all values to their default"
+msgstr ""
+
+msgid "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
+msgstr ""
+
+msgid "Synopsis"
+msgstr ""
+
+msgid "$_: illegal switch, try $0 --help\n"
+msgstr ""
+
+msgid ""
+"the gtk perl module is required to open a dialog\n"
+"window, running with default values"
+msgstr ""
+
+msgid "Color"
+msgstr ""
+
+msgid "Brush Selection Dialog"
+msgstr ""
+
+msgid "<Load> plug-in called without the 3 standard arguments!\n"
+msgstr ""
+
+msgid "could not connect to the gimp server (make sure Net-Server is running)"
+msgstr ""
+
+msgid "Font Selection Dialog ($desc)"
+msgstr ""
+
+msgid "get current background colour from the gimp"
+msgstr ""
+
+msgid "Pattern Selection Dialog"
+msgstr ""
+
+msgid "<Save> plug-in called without the 5 standard arguments!\n"
+msgstr ""
+
+msgid "unable to create socketpair for gimp communications: $!"
+msgstr ""
+
+msgid "function '$exe' not found in this script (must be one of "
+msgstr ""
+
+msgid "parameter '$entry->[1]' is not optional\n"
+msgstr ""
+
+msgid "$s: not an integer\n"
+msgstr ""
+
+msgid "Previous"
+msgstr ""
+
+msgid "unable to create '$fn': $!"
+msgstr ""
+
+msgid "Load"
+msgstr ""
+
+msgid "WARNING: $function returned something that is not an image: \"$img\"\n"
+msgstr ""
+
+msgid "Command"
+msgstr ""
+
+msgid "unable to read '$fn': $!"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Perl/Control Center"
+msgstr ""
+
+msgid "showing only the first 150 matches (of %d)"
+msgstr ""
+
+msgid "Save $name"
+msgstr ""
+
+msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
+msgstr ""
+
+msgid "function/macro \"$name\" not found in $class"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "required callback '$cb' not found\n"
+msgstr ""
+
+msgid "unable to read temporary file $tmp: $!"
+msgstr ""
+
+msgid "interface=... tag is no longer supported\n"
+msgstr ""
+
+msgid "authorization failed: $r[1]\n"
+msgstr ""
+
+msgid "PDB Explorer - the olof edition (yet still an alpha version)"
+msgstr ""
+
+msgid "FATAL: Gimp::Compat version mismatch\n"
+msgstr ""
+
+msgid "use'ing Gimp::PDL is no longer necessary, please remove it!\n"
+msgstr ""
+
+msgid "Illegal default font description for $function: $val\n"
+msgstr ""
+
+msgid "<Toolbox>/Xtns"
+msgstr ""
+
+msgid ""
+"BLURB:\n"
+"\n"
+"$blurb\n"
+"\n"
+"HELP:\n"
+"\n"
+"$help"
+msgstr ""
+
+msgid ""
+"$function: calling $AUTOLOAD without specifying the :auto import tag is "
+"deprecated!\n"
+msgstr ""
+
+msgid "Info"
+msgstr ""
+
+msgid "Fileselector for $name"
+msgstr ""
+
+msgid "Load $name"
+msgstr ""
+
+msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
+msgstr ""
+
+msgid ""
+"$function: function name contains unusual characters, good style is to use only "
+"0-9, a-z and _"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
+msgstr ""
+
+msgid "Plug-In Path"
+msgstr ""
+
+msgid "unable to fork: $!"
+msgstr ""
+
+msgid "register called with too many or wrong arguments\n"
+msgstr ""
+
+msgid "$_ is not a valid import tag for package $pkg"
+msgstr ""
+
+msgid "Unsupported argumenttype $type"
+msgstr ""
+
+msgid "get current foreground colour from the gimp"
+msgstr ""
+
+msgid "trying to start gimp with options \"$opt\"\n"
+msgstr ""
+
+msgid "expected perl-server at other end of socket, got @r\n"
+msgstr ""
+
+msgid "Author"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Parasite Editor"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/PDB Explorer"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid ""
+"\n"
+"\n"
+"EMBEDDED POD DOCUMENTATION:\n"
+"\n"
+msgstr ""
+
+msgid " matching functions"
+msgstr ""
+
+msgid "More..."
+msgstr ""
+
+msgid ""
+"Usage: $0 [gimp-args..] [interface-args..] [script-args..]\n"
+"       gimp-arguments are\n"
+"           -gimp <anything>           used internally only\n"
+"           -h | -help | --help | -?   print some help\n"
+"           -v | --verbose             be more verbose in what you do\n"
+"           --host|--tcp HOST[:PORT]   connect to HOST (optionally using PORT)\n"
+"                                      (for more info, see Gimp::Net(3))\n"
+msgstr ""
+
+msgid ""
+"the gtk perl module is required to run\n"
+"this plug-in in interactive mode\n"
+msgstr ""
+
+msgid "interface '$interface_type' unsupported."
+msgstr ""
+
+msgid "Help"
+msgstr ""
+
+msgid " (press Tab to complete)"
+msgstr ""
+
+msgid "function name contains dashes instead of underscores"
+msgstr ""
+
+msgid "authorization ok, but: $r[1]\n"
+msgstr ""
+
+msgid "Cannot call '$AUTOLOAD' at this time"
+msgstr ""
+
+msgid "no font specified, using default"
+msgstr ""
+
+msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
+msgstr ""
+
+msgid "Defaults"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
+msgstr ""
+
+msgid "text string is empty"
+msgstr ""
+
+msgid "server requests authorization, but no authorization available\n"
+msgstr ""
+
+msgid "Image Types"
+msgstr ""
+
+msgid "$_: unknown/illegal file-save option"
+msgstr ""
+
+msgid "Menu Path"
+msgstr ""
+
+msgid ""
+"$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z "
+"and _ allowed"
+msgstr ""
+
+msgid "Gradient Selection Dialog"
+msgstr ""
+
+msgid "Function Info"
+msgstr ""
+
+msgid "unable to open $rgb_db_path"
+msgstr ""
+
+msgid "9x15bold"
+msgstr ""
+
+msgid "Unable to grok '%s' as colour specifier"
+msgstr ""
+
+msgid "OK"
+msgstr ""
+
+msgid "Accelerator"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "(none)"
+msgstr ""

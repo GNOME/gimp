@@ -1,0 +1,146 @@
+# this is ugly, but it makes Gimp installable from within CPAN
+
+$topdir=".";
+
+$topdir.="/.." while ! -f "$topdir/MANIFEST";
+
+$^W=0;
+
+%cfg = (
+   _CPPFLAGS		=> q[@CPPFLAGS@],
+   _CFLAGS		=> q[@CFLAGS@],
+   _LDFLAGS		=> q[@LDFLAGS@],
+
+   prefix		=> q[@prefix@],
+   exec_prefix		=> q[@exec_prefix@],
+   libdir		=> q[@libdir@],
+   bindir		=> q[@bindir@],
+
+   _PERL		=> q[@PERL@],
+   GIMP			=> q[@GIMP@],
+
+   GIMPTOOL		=> q[@GIMPTOOL@],
+   _GIMP_INC		=> q[@GIMP_CFLAGS@],
+   _GIMP_INC_NOUI	=> q[@GIMP_CFLAGS_NOUI@],
+   _GIMP_LIBS		=> q[@GIMP_LIBS@],
+   _GIMP_LIBS_NOUI	=> q[@GIMP_LIBS_NOUI@],
+
+   GLIB_CFLAGS		=> q[@GLIB_CFLAGS@],
+   GLIB_LIBS		=> q[@GLIB_LIBS@],
+
+   INSTALL		=> q[@INSTALL@],
+   INSTALL_PROGRAM	=> q[@INSTALL_PROGRAM@],
+   gimpplugindir	=> q[@gimpplugindir@],
+
+   _EXTENSIVE_TESTS	=> q[@EXTENSIVE_TESTS@],
+
+   IN_GIMP		=> q[@IN_GIMP@],
+   top_builddir		=> q[@top_builddir@],
+
+   pdl_inc		=> '',
+   pdl_typemaps		=> '',
+   INC1			=> '',
+   DEFINE1		=> '',
+);
+
+sub expand {
+   my $cfg = shift;
+   my $count = 5;
+   while($cfg=~/\$\{/ and $count--) {
+      while(($k,$v)=each %cfg) {
+         $cfg=~s/\$\{$k\}/$v/g;
+      }
+   }
+   $cfg;
+}
+
+while (($k,$v)=each(%cfg)) {
+   $k=~s/^_//;
+   $$k=$v;
+}
+
+$GIMPTOOL       = expand($GIMPTOOL);
+
+if ($IN_GIMP) {
+   $GIMP = $bindir."/gimp" if $IN_GIMP;
+   $GIMP_PREFIX=expand($prefix);
+} else {
+   chomp ($GIMP_PREFIX = `$GIMPTOOL --prefix`);
+   $gimpplugindir = `$GIMPTOOL -n --install-admin-bin /bin/sh`;
+   $gimpplugindir =~ s{^.*\s(.*?)(?:/+bin/sh)\r?\n?$}{$1} &&
+   $gimpplugindir =~ s{/plug-ins$}{} or die "\nFATAL: unable to deduce plugindir from gimptool script\n\n";
+   $GIMP = expand($GIMP);
+}
+
+$cfg{GIMP_PREFIX} = $GIMP_PREFIX;
+
+$GIMP_INC	=~ s%\$topdir%$topdir%g;
+$GIMP_INC_NOUI	=~ s%\$topdir%$topdir%g;
+$GIMP_LIBS	=~ s%\$topdir%$topdir%g;
+$GIMP_LIBS_NOUI	=~ s%\$topdir%$topdir%g;
+
+# $...1 variables should be put in front of the corresponding MakeMaker values.
+$INC1    = "-I$topdir";
+$DEFINE1 = $IN_GIMP ? "-DIN_GIMP" : "";
+
+eval "use PDL";
+if (!$@) {
+   require PDL::Version;
+   if ($PDL::Version::VERSION > 1.99) {
+      require PDL::Core::Dev;
+      if (!$@) {
+         $PDL=1;
+      } else {
+         $do_config_msg && print <<EOF;
+
+ERROR:   PDL::Core::Dev module not found ($@),
+         this is an error in your PDL installation.
+
+EOF
+      }
+   } else {
+      $do_config_msg && print <<EOF;
+
+WARNING: PDL version $PDL::Version::VERSION is installed. Gimp was only
+         tested with 2.0 and higher.  In case of problems its advisable to
+         upgrade PDL to at least version 2.
+
+EOF
+   }
+} else {
+   $do_config_msg && print <<EOF;
+
+WARNING: unable to use PDL (the perl data language). This means that
+         normal pixel access is non-functional. Unless you plan to use
+         Tile/PixelRgn functions together with PDL, this is harmless. The
+         plug-ins using PDL, however, will NOT WORK and you can NO LONGER
+         install PDL later. You can get PDL from any CPAN mirror.
+
+EOF
+}
+
+$do_config_msg && print "checking for PDL support... ", $PDL ? "yes":"no","\n";
+if ($PDL) {
+   $do_config_msg && print "checking for PDL include path... ",&PDL::Core::Dev::PDL_INCLUDE,"\n";
+   $do_config_msg && print "checking for PDL typemap... ",&PDL::Core::Dev::PDL_TYPEMAP,"\n";
+
+   $pdl_inc      = $pdl_inc = &PDL::Core::Dev::PDL_INCLUDE;
+   $pdl_typemaps = "@{[@pdl_typemaps = &PDL::Core::Dev::PDL_TYPEMAP]}";
+   $DEFINE1	.= " -DHAVE_PDL=1";
+} else {
+   @pdl_typemaps = "$topdir/typemap.pdl";
+}
+
+for(keys %cfg) {
+   ($k=$_)=~s/^_//;
+   $cfg{$_}=$$k;
+}
+
+sub MY::makefile {
+   package MY;
+   my $t = shift->SUPER::makefile(@_);
+   $t =~ s/^	false$/	true/m;
+   $t;
+}
+
+

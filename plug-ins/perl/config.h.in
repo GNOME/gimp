@@ -1,0 +1,22 @@
+/* config.h.in.  Generated automatically from configure.in by autoheader.  */
+
+/* Define if you have the vsnprintf function.  */
+#undef HAVE_VSNPRINTF
+
+/* Define if we have DIVIDE_MODE.  */
+#undef HAVE_DIVIDE_MODE
+
+/* Define if you have the _exit function.  */
+#undef HAVE__EXIT
+
+/* Define if you have the vsnprintf function.  */
+#undef HAVE_VSNPRINTF
+
+/* Define if you have the <libgimp/gimpmodule.h> header file.  */
+#undef HAVE_LIBGIMP_GIMPMODULE_H
+
+/* Define if you have the <libintl.h> header file.  */
+#undef HAVE_LIBINTL_H
+
+/* Define if you have the <unistd.h> header file.  */
+#undef HAVE_UNISTD_H

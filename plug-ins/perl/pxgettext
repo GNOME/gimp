@@ -1,0 +1,45 @@
+#!/usr/bin/perl
+
+# a lame attempt at xgettext for perl
+# line line numbers, yet
+
+undef $/;
+
+print <<'EOF';
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-perl 1.14\n"
+"POT-Creation-Date: 1999-09-12 17:58+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: ENCODING\n"
+EOF
+
+while(<>) {
+    while (/__"((?:[^"\\]+|\\.)*)"/sg) {
+       my $s = $1;
+       my $e = "\n";
+       if ($s =~ /\n/) {
+          $e .= "msgid \"\"\n";
+          for (split /\n/, $s) {
+             $e .= "\"$_\\n\"\n";
+          }
+       } else {
+          $e .= "msgid \"$s\"\n";
+       }
+       $e .= "msgstr \"\"\n";
+       push @{$entry{$e}}, $fileposition;
+    }
+}
+
+print keys %entry;
+
+

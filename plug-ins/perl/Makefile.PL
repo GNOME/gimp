@@ -200,9 +200,9 @@ autoconf:
         
 # merge messages into potfile
 msgmerge:
-	etc/pxgettext `find . -name '*.pm' -o -name '*.xs' -o -path './examples/*'` | \\
-        msgmerge -w 83 etc/po/gimp-perl.pot - >gimp-perl.pot~ && \\
-        mv gimp-perl.pot~ etc/po/gimp-perl.pot
+	pxgettext `find . -name '*.pm' -o -name '*.xs' -o -path './examples/*'` | \\
+        msgmerge -w 83 po/gimp-perl.pot - >gimp-perl.pot~ && \\
+        mv gimp-perl.pot~ po/gimp-perl.pot
 ";
 }
 
