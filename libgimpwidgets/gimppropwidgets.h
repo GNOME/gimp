@@ -128,6 +128,16 @@ GtkWidget     * gimp_prop_path_editor_new         (GObject     *config,
                                                    const gchar *filesel_title);
 
 
+/*  GParamInt, GParamDouble   unit: GimpParamUnit  */
+
+GtkWidget     * gimp_prop_size_entry_new          (GObject     *config,
+                                                   const gchar *property_name,
+                                                   const gchar *unit_property_name,
+                                                   const gchar *unit_format,
+                                                   GimpSizeEntryUpdatePolicy  update_policy,
+                                                   gdouble      resolution);
+
+
 /*  x,y: GParamInt, GParamDouble   unit: GimpParamUnit  */
 
 GtkWidget     * gimp_prop_coordinates_new         (GObject     *config,
@@ -139,8 +149,7 @@ GtkWidget     * gimp_prop_coordinates_new         (GObject     *config,
                                                    gdouble      xresolution,
                                                    gdouble      yresolution,
                                                    gboolean     has_chainbutton);
-
-gboolean        gimp_prop_size_entry_connect      (GObject     *config,
+gboolean        gimp_prop_coordinates_connect     (GObject     *config,
                                                    const gchar *x_property_name,
                                                    const gchar *y_property_name,
                                                    const gchar *unit_property_name,

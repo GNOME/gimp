@@ -269,11 +269,11 @@ gimp_template_editor_init (GimpTemplateEditor *editor)
 			     GTK_SPIN_BUTTON (width_pixels));
 
   /*  initialize the sizeentry  */
-  gimp_prop_size_entry_connect (G_OBJECT (editor->template),
-                                "width", "height", "unit",
-                                editor->size_se, NULL,
-                                editor->template->xresolution,
-                                editor->template->yresolution);
+  gimp_prop_coordinates_connect (G_OBJECT (editor->template),
+                                 "width", "height", "unit",
+                                 editor->size_se, NULL,
+                                 editor->template->xresolution,
+                                 editor->template->yresolution);
 
   focus_chain = g_list_append (focus_chain, width_pixels);
   focus_chain = g_list_append (focus_chain, height_pixels);
@@ -341,11 +341,11 @@ gimp_template_editor_init (GimpTemplateEditor *editor)
                              1, 2, 0, 2);
   gtk_widget_show (chainbutton);
 
-  gimp_prop_size_entry_connect (G_OBJECT (editor->template),
-                                "xresolution", "yresolution",
-                                "resolution-unit",
-                                editor->resolution_se, chainbutton,
-                                1.0, 1.0);
+  gimp_prop_coordinates_connect (G_OBJECT (editor->template),
+                                 "xresolution", "yresolution",
+                                 "resolution-unit",
+                                 editor->resolution_se, chainbutton,
+                                 1.0, 1.0);
 
   focus_chain = g_list_append (focus_chain, xres);
   focus_chain = g_list_append (focus_chain, yres);

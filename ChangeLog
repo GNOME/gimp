@@ -1,5 +1,20 @@
 2003-10-01  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimppropwidgets.[ch]: renamed
+	gimp_prop_size_entry_connect() to gimp_prop_coordinates_connect().
+	Added a new property widget that is a single GimpSizeEntry and is
+	connected to size and unit properties.
+
+	* app/widgets/gimptemplateeditor.c: changed accordingly.
+	
+	* app/widgets/gimpstrokeeditor.c: added a "resolution" property
+	and use the new property widget.
+
+	* app/gui/stroke-dialog.c: pass the image resolution to
+	gimp_stroke_editor_new().
+
+2003-10-01  Sven Neumann  <sven@gimp.org>
+
 	* app/composite/gimp-composite-altivec.c
 	* app/composite/gimp-composite-mmx.c
 	* app/composite/gimp-composite-sse.c

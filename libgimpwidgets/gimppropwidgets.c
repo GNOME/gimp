@@ -310,10 +310,10 @@ gimp_prop_boolean_option_menu_new (GObject     *config,
                                 G_CALLBACK (gimp_prop_option_menu_callback),
                                 config,
                                 GINT_TO_POINTER (value),
-                                
+
                                 true_text,  GINT_TO_POINTER (TRUE),  NULL,
                                 false_text, GINT_TO_POINTER (FALSE), NULL,
-                                
+
                                 NULL);
 
   set_param_spec (G_OBJECT (menu), menu, param_spec);
@@ -591,7 +591,7 @@ gimp_prop_enum_stock_box_new (GObject     *config,
                                      config,
                                      &button);
     }
-    
+
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (button),
                                GINT_TO_POINTER (value));
 
@@ -867,7 +867,7 @@ gimp_prop_opacity_entry_new (GObject     *config,
   g_object_get (config, property_name, &value, NULL);
 
   tooltip = gettext (g_param_spec_get_blurb (param_spec));
-  
+
   value *= 100.0;
   lower = G_PARAM_SPEC_DOUBLE (param_spec)->minimum * 100.0;
   upper = G_PARAM_SPEC_DOUBLE (param_spec)->maximum * 100.0;
@@ -1270,7 +1270,7 @@ gimp_prop_text_buffer_callback (GtkTextBuffer *text_buffer,
 
   if (max_len > 0 && strlen (text) > max_len)
     {
-      g_message (_("This text input field is limited to %d characters."), 
+      g_message (_("This text input field is limited to %d characters."),
                  max_len);
 
       gtk_text_buffer_get_iter_at_offset (text_buffer, &start_iter,
@@ -1618,6 +1618,254 @@ gimp_prop_path_editor_notify (GObject        *config,
 }
 
 
+/***************/
+/*  sizeentry  */
+/***************/
+
+static void   gimp_prop_size_entry_callback    (GimpSizeEntry *sizeentry,
+                                                GObject       *config);
+static void   gimp_prop_size_entry_notify      (GObject       *config,
+                                                GParamSpec    *param_spec,
+                                                GimpSizeEntry *sizeentry);
+static void   gimp_prop_size_entry_notify_unit (GObject       *config,
+                                                GParamSpec    *param_spec,
+                                                GimpSizeEntry *sizeentry);
+
+
+GtkWidget *
+gimp_prop_size_entry_new (GObject                   *config,
+                          const gchar               *property_name,
+                          const gchar               *unit_property_name,
+                          const gchar               *unit_format,
+                          GimpSizeEntryUpdatePolicy  update_policy,
+                          gdouble                    resolution)
+{
+  GtkWidget  *sizeentry;
+  GParamSpec *param_spec;
+  GParamSpec *unit_param_spec;
+  gboolean    show_pixels;
+  gdouble     value;
+  GimpUnit    unit_value;
+
+  param_spec = find_param_spec (config, property_name, G_STRLOC);
+  if (! param_spec)
+    return NULL;
+
+  if (unit_property_name)
+    {
+      GValue value = { 0 };
+
+      unit_param_spec = check_param_spec (config, unit_property_name,
+                                          GIMP_TYPE_PARAM_UNIT, G_STRLOC);
+      if (! unit_param_spec)
+        return NULL;
+
+      g_value_init (&value, unit_param_spec->value_type);
+      g_value_set_int (&value, GIMP_UNIT_PIXEL);
+      show_pixels =
+        (g_param_value_validate (unit_param_spec, &value) == FALSE);
+      g_value_unset (&value);
+
+      g_object_get (config,
+                    unit_property_name, &unit_value,
+                    NULL);
+    }
+  else
+    {
+      unit_param_spec = NULL;
+      unit_value      = GIMP_UNIT_INCH;
+      show_pixels     = FALSE;
+    }
+
+  if (G_IS_PARAM_SPEC_INT (param_spec))
+    {
+      gint int_value;
+
+      g_object_get (config,
+                    property_name, &int_value,
+                    NULL);
+
+      value = int_value;
+    }
+  else if (G_IS_PARAM_SPEC_DOUBLE (param_spec))
+    {
+      g_object_get (config,
+                    property_name, &value,
+                    NULL);
+    }
+  else
+    {
+      g_warning ("%s: property '%s' of %s is not int nor double",
+                 G_STRLOC,
+                 property_name,
+                 g_type_name (G_TYPE_FROM_INSTANCE (config)));
+      return NULL;
+    }
+
+  sizeentry = gimp_size_entry_new (1, unit_value, unit_format,
+                                   TRUE, FALSE, FALSE, 10,
+                                   update_policy);
+  gtk_table_set_col_spacing (GTK_TABLE (sizeentry), 1, 4);
+
+  switch (GIMP_SIZE_ENTRY (sizeentry)->update_policy)
+    {
+    case GIMP_SIZE_ENTRY_UPDATE_SIZE:
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
+                                      resolution, FALSE);
+      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
+                                             GIMP_MIN_IMAGE_SIZE,
+                                             GIMP_MAX_IMAGE_SIZE);
+      break;
+
+    case GIMP_SIZE_ENTRY_UPDATE_RESOLUTION:
+      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
+                                             GIMP_MIN_RESOLUTION,
+                                             GIMP_MAX_RESOLUTION);
+      break;
+
+    default:
+      break;
+    }
+
+  gimp_size_entry_set_unit  (GIMP_SIZE_ENTRY (sizeentry), unit_value);
+  gimp_size_entry_set_value (GIMP_SIZE_ENTRY (sizeentry), 0, value);
+
+  g_object_set_data (G_OBJECT (sizeentry), "gimp-config-param-spec",
+                     param_spec);
+  g_object_set_data (G_OBJECT (sizeentry), "gimp-config-param-spec-unit",
+                     unit_param_spec);
+
+  g_signal_connect (sizeentry, "value_changed",
+		    G_CALLBACK (gimp_prop_size_entry_callback),
+		    config);
+
+  if (unit_property_name)
+    {
+      g_signal_connect (sizeentry, "unit_changed",
+                        G_CALLBACK (gimp_prop_size_entry_callback),
+                        config);
+    }
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_size_entry_notify),
+                  sizeentry);
+
+  if (unit_property_name)
+    {
+      connect_notify (config, unit_property_name,
+                      G_CALLBACK (gimp_prop_size_entry_notify_unit),
+                      sizeentry);
+    }
+
+  return sizeentry;
+}
+
+static void
+gimp_prop_size_entry_callback (GimpSizeEntry *sizeentry,
+                               GObject       *config)
+{
+  GParamSpec *param_spec;
+  GParamSpec *unit_param_spec;
+  gdouble     value;
+  GimpUnit    unit_value;
+
+  param_spec = g_object_get_data (G_OBJECT (sizeentry),
+                                  "gimp-config-param-spec");
+  if (! param_spec)
+    return;
+
+  unit_param_spec = g_object_get_data (G_OBJECT (sizeentry),
+                                       "gimp-config-param-spec-unit");
+
+  value      = gimp_size_entry_get_value (sizeentry, 0);
+  unit_value = gimp_size_entry_get_unit (sizeentry);
+
+  if (G_IS_PARAM_SPEC_INT (param_spec))
+    {
+      g_object_set (config,
+                    param_spec->name, ROUND (value),
+
+                    unit_param_spec ?
+                    unit_param_spec->name : NULL, unit_value,
+
+                    NULL);
+    }
+  else if (G_IS_PARAM_SPEC_DOUBLE (param_spec))
+    {
+      g_object_set (config,
+                    param_spec->name, value,
+
+                    unit_param_spec ?
+                    unit_param_spec->name : NULL, unit_value,
+
+                    NULL);
+    }
+}
+
+static void
+gimp_prop_size_entry_notify (GObject       *config,
+                             GParamSpec    *param_spec,
+                             GimpSizeEntry *sizeentry)
+{
+  gdouble value;
+
+  if (G_IS_PARAM_SPEC_INT (param_spec))
+    {
+      gint int_value;
+
+      g_object_get (config,
+                    param_spec->name, &int_value,
+                    NULL);
+
+      value = int_value;
+    }
+  else
+    {
+      g_object_get (config,
+                    param_spec->name, &value,
+                    NULL);
+    }
+
+  if (value != gimp_size_entry_get_value (sizeentry, 0))
+    {
+      g_signal_handlers_block_by_func (sizeentry,
+                                       gimp_prop_size_entry_callback,
+                                       config);
+
+      gimp_size_entry_set_value (sizeentry, 0, value);
+
+      g_signal_handlers_unblock_by_func (sizeentry,
+                                         gimp_prop_size_entry_callback,
+                                         config);
+    }
+}
+
+static void
+gimp_prop_size_entry_notify_unit (GObject       *config,
+                                  GParamSpec    *param_spec,
+                                  GimpSizeEntry *sizeentry)
+{
+  GimpUnit value;
+
+  g_object_get (config,
+                param_spec->name, &value,
+                NULL);
+
+  if (value != gimp_size_entry_get_unit (sizeentry))
+    {
+      g_signal_handlers_block_by_func (sizeentry,
+                                       gimp_prop_size_entry_callback,
+                                       config);
+
+      gimp_size_entry_set_unit (sizeentry, value);
+
+      g_signal_handlers_unblock_by_func (sizeentry,
+                                         gimp_prop_size_entry_callback,
+                                         config);
+    }
+}
+
+
 /*****************/
 /*  coordinates  */
 /*****************/
@@ -1633,6 +1881,7 @@ static void   gimp_prop_coordinates_notify_y    (GObject       *config,
 static void   gimp_prop_coordinates_notify_unit (GObject       *config,
                                                  GParamSpec    *param_spec,
                                                  GimpSizeEntry *sizeentry);
+
 
 GtkWidget *
 gimp_prop_coordinates_new (GObject                   *config,
@@ -1661,14 +1910,14 @@ gimp_prop_coordinates_new (GObject                   *config,
       gtk_widget_show (chainbutton);
     }
 
-  if (! gimp_prop_size_entry_connect (config,
-                                      x_property_name,
-                                      y_property_name,
-                                      unit_property_name,
-                                      sizeentry,
-                                      chainbutton,
-                                      xresolution,
-                                      yresolution))
+  if (! gimp_prop_coordinates_connect (config,
+                                       x_property_name,
+                                       y_property_name,
+                                       unit_property_name,
+                                       sizeentry,
+                                       chainbutton,
+                                       xresolution,
+                                       yresolution))
     {
       gtk_widget_destroy (sizeentry);
       return NULL;
@@ -1678,14 +1927,14 @@ gimp_prop_coordinates_new (GObject                   *config,
 }
 
 gboolean
-gimp_prop_size_entry_connect (GObject     *config,
-                              const gchar *x_property_name,
-                              const gchar *y_property_name,
-                              const gchar *unit_property_name,
-                              GtkWidget   *sizeentry,
-                              GtkWidget   *chainbutton,
-                              gdouble      xresolution,
-                              gdouble      yresolution)
+gimp_prop_coordinates_connect (GObject     *config,
+                               const gchar *x_property_name,
+                               const gchar *y_property_name,
+                               const gchar *unit_property_name,
+                               GtkWidget   *sizeentry,
+                               GtkWidget   *chainbutton,
+                               gdouble      xresolution,
+                               gdouble      yresolution)
 {
   GParamSpec *x_param_spec;
   GParamSpec *y_param_spec;
@@ -1884,11 +2133,12 @@ gimp_prop_coordinates_callback (GimpSizeEntry *sizeentry,
                                     "gimp-config-param-spec-x");
   y_param_spec = g_object_get_data (G_OBJECT (sizeentry),
                                     "gimp-config-param-spec-y");
-  unit_param_spec = g_object_get_data (G_OBJECT (sizeentry),
-                                       "gimp-config-param-spec-unit");
 
   if (! x_param_spec || ! y_param_spec)
     return;
+
+  unit_param_spec = g_object_get_data (G_OBJECT (sizeentry),
+                                       "gimp-config-param-spec-unit");
 
   x_value    = gimp_size_entry_get_refval (sizeentry, 0);
   y_value    = gimp_size_entry_get_refval (sizeentry, 1);

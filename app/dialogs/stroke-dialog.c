@@ -139,7 +139,7 @@ stroke_dialog_new (GimpItem    *item,
   {
     GtkWidget *stroke_editor;
 
-    stroke_editor = gimp_stroke_editor_new (options);
+    stroke_editor = gimp_stroke_editor_new (options, image->yresolution);
     gtk_container_set_border_width (GTK_CONTAINER (stroke_editor), 4);
     gtk_container_add (GTK_CONTAINER (frame), stroke_editor);
     gtk_widget_show (stroke_editor);

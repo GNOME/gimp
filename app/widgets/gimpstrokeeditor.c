@@ -33,12 +33,11 @@
 #include "gimp-intl.h"
 
 
-#define SB_WIDTH 10
-
 enum
 {
   PROP_0,
-  PROP_OPTIONS
+  PROP_OPTIONS,
+  PROP_RESOLUTION
 };
 
 static void      gimp_stroke_editor_class_init   (GimpStrokeEditorClass *klass);
@@ -104,6 +103,13 @@ gimp_stroke_editor_class_init (GimpStrokeEditorClass *klass)
                                                         GIMP_TYPE_STROKE_OPTIONS,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_RESOLUTION,
+                                   g_param_spec_double ("resolution", NULL, NULL,
+                                                        GIMP_MIN_RESOLUTION,
+                                                        GIMP_MAX_RESOLUTION,
+                                                        72.0,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -118,6 +124,9 @@ gimp_stroke_editor_set_property (GObject      *object,
     {
     case PROP_OPTIONS:
       editor->options = GIMP_STROKE_OPTIONS (g_value_dup_object (value));
+      break;
+    case PROP_RESOLUTION:
+      editor->resolution = g_value_get_double (value);
       break;
 
     default:
@@ -139,6 +148,9 @@ gimp_stroke_editor_get_property (GObject    *object,
     case PROP_OPTIONS:
       g_value_set_object (value, editor->options);
       break;
+   case PROP_RESOLUTION:
+      g_value_set_double (value, editor->resolution);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -153,12 +165,10 @@ gimp_stroke_editor_constructor (GType                   type,
 {
   GimpStrokeEditor *editor;
   GtkWidget        *table;
-  GtkWidget        *menu;
   GtkWidget        *box;
-  GtkWidget        *spinbutton;
+  GtkWidget        *size;
   GtkWidget        *button;
   GObject          *object;
-  gint              digits;
   gint              row = 0;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
@@ -173,20 +183,14 @@ gimp_stroke_editor_constructor (GType                   type,
   gtk_box_pack_start (GTK_BOX (editor), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  digits = gimp_unit_get_digits (editor->options->unit);
-  spinbutton = gimp_prop_spin_button_new (G_OBJECT (editor->options), "width",
-                                          1.0, 10.0, digits);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row,
-                             _("Stroke _Width:"), 1.0, 0.5,
-                             spinbutton, 1, FALSE);
+  size = gimp_prop_size_entry_new (G_OBJECT (editor->options), "width", "unit",
+                                   "%a", GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                   editor->resolution);
+  gimp_size_entry_set_pixel_digits (GIMP_SIZE_ENTRY (size), 1);
 
-  menu = gimp_prop_unit_menu_new (G_OBJECT (editor->options), "unit", "%a");
-  g_object_set_data (G_OBJECT (menu), "set_digits", spinbutton);
-  gimp_unit_menu_set_pixel_digits (GIMP_UNIT_MENU (menu), 1);
-  gtk_table_attach (GTK_TABLE (table), menu, 2, 3, row, row + 1,
-                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (menu);
-  row++;
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                             _("Stroke _Width:"), 1.0, 0.5,
+                             size, 1, FALSE);
 
   box = gimp_prop_enum_stock_box_new (G_OBJECT (editor->options), "cap-style",
                                       "gimp-cap", 0, 0);
@@ -238,11 +242,13 @@ gimp_stroke_editor_finalize (GObject *object)
 }
 
 GtkWidget *
-gimp_stroke_editor_new (GimpStrokeOptions *options)
+gimp_stroke_editor_new (GimpStrokeOptions *options,
+                        gdouble            resolution)
 {
   g_return_val_if_fail (GIMP_IS_STROKE_OPTIONS (options), NULL);
 
   return GTK_WIDGET (g_object_new (GIMP_TYPE_STROKE_EDITOR,
-                                   "options", options,
+                                   "options",    options,
+                                   "resolution", resolution,
                                    NULL));
 }

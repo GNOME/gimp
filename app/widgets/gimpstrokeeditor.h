@@ -41,6 +41,7 @@ struct _GimpStrokeEditor
   GtkVBox            parent_instance;
 
   GimpStrokeOptions *options;
+  gdouble            resolution;
 };
 
 struct _GimpStrokeEditorClass
@@ -51,7 +52,8 @@ struct _GimpStrokeEditorClass
 
 GType        gimp_stroke_editor_get_type (void) G_GNUC_CONST;
 
-GtkWidget  * gimp_stroke_editor_new      (GimpStrokeOptions *options);
+GtkWidget  * gimp_stroke_editor_new      (GimpStrokeOptions *options,
+                                          gdouble            resolution);
 
 
 #endif  /*  __GIMP_STROKE_EDITOR_H__  */
