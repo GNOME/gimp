@@ -1,5 +1,11 @@
 2003-05-20  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpdrawable-transform.c
+	(gimp_drawable_transform_tiles_rotate): fixed algorithm for
+	GIMP_ROTATE_180.
+
+2003-05-20  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage-flip.c: no need to include gimp-intl.h.
 	
 	* app/core/gimpimage-rotate.c: change the image size if needed;

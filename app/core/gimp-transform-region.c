@@ -684,8 +684,17 @@ gimp_drawable_transform_tiles_rotate (GimpDrawable     *drawable,
                                 orig_width, buf, 1);
           
           for (j = 0; j < orig_width / 2; j++)
-            for (k = 0; k < orig_bpp; k++)
-              buf[j * orig_bpp + k] = buf[(orig_width - 1 - j) * orig_bpp + k];
+            {
+              guchar *left  = buf + j * orig_bpp;
+              guchar *right = buf + (orig_width - 1 - j) * orig_bpp;
+              
+              for (k = 0; k < orig_bpp; k++)
+                {
+                  guchar tmp = left[k];
+                  left[k]    = right[k];
+                  right[k]   = tmp;
+                }
+            }
 
           pixel_region_set_row (&destPR, new_x, new_y + i, new_width, buf);
         }
