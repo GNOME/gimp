@@ -7,6 +7,9 @@ pluginlib_PROGRAMS = mail
 mail_SOURCES = \
 	mail.c   
 
+CPPFLAGS = \
+	@MAILER@
+
 INCLUDES = \
 	$(X_CFLAGS)			\
 	-I$(top_srcdir)			\

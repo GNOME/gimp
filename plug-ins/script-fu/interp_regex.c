@@ -34,7 +34,7 @@ struct tc_regex *
 get_tc_regex (LISP ptr)
 {
   if NTYPEP
-    (ptr, tc_regex) err ("not a regular expression", ptr);
+    (ptr, tc_regex) my_err ("not a regular expression", ptr);
   return ((struct tc_regex *) ptr->storage_as.string.data);
 }
 
@@ -61,7 +61,7 @@ regcomp_l (LISP pattern, LISP flags)
   if ((error = regcomp (h->r, str, iflags)))
     {
       regerror (error, h->r, errbuff, sizeof (errbuff));
-      return (err (errbuff, pattern));
+      return (my_err (errbuff, pattern));
     }
   h->compflag = 1;
   if (iflags & REG_NOSUB)

@@ -151,7 +151,7 @@ script_fu_find_scripts ()
   gchar *token;
   gchar *next_token;
   gchar *command;
-  gint   err;
+  gint   my_err;
   DIR   *dir;
   struct dirent *dir_ent;
 
@@ -212,9 +212,9 @@ script_fu_find_scripts ()
 	    } /* else */
 
 	  /* Check if directory exists and if it has any items in it */
-	  err = stat (path, &filestat);
+	  my_err = stat (path, &filestat);
 
-	  if (!err && S_ISDIR (filestat.st_mode))
+	  if (!my_err && S_ISDIR (filestat.st_mode))
 	    {
 	      if (path[strlen (path) - 1] != '/')
 		strcat (path, "/");
@@ -235,9 +235,9 @@ script_fu_find_scripts ()
 		      if (strcmp (filename + strlen (filename) - 4, ".scm") == 0)
 			{
 			  /* Check the file and see that it is not a sub-directory */
-			  err = stat (filename, &filestat);
+			  my_err = stat (filename, &filestat);
 
-			  if (!err && S_ISREG (filestat.st_mode))
+			  if (!my_err && S_ISREG (filestat.st_mode))
 			    {
 			      command = g_new (char, strlen ("(load \"\")") + strlen (filename) + 1);
 			      sprintf (command, "(load \"%s\")", filename);
@@ -278,7 +278,7 @@ script_fu_add_script (LISP a)
 
   /*  Check the length of a  */
   if (nlength (a) < 7)
-    return err ("Too few arguments to script-fu-register", NIL);
+    return my_err ("Too few arguments to script-fu-register", NIL);
 
   /*  Create a new script  */
   script = g_new (SFScript, 1);
@@ -347,22 +347,22 @@ script_fu_add_script (LISP a)
 	  if (a != NIL)
 	    {
 	      if (!TYPEP (car (a), tc_flonum))
-		return err ("script-fu-register: argument types must be integer values", NIL);
+		return my_err ("script-fu-register: argument types must be integer values", NIL);
 	      script->arg_types[i] = get_c_long (car (a));
 	      a = cdr (a);
 	    }
 	  else
-	    return err ("script-fu-register: missing type specifier", NIL);
+	    return my_err ("script-fu-register: missing type specifier", NIL);
 
 	  if (a != NIL)
 	    {
 	      if (!TYPEP (car (a), tc_string))
-		return err ("script-fu-register: argument labels must be strings", NIL);
+		return my_err ("script-fu-register: argument labels must be strings", NIL);
 	      script->arg_labels[i] = g_strdup (get_c_string (car (a)));
 	      a = cdr (a);
 	    }
 	  else
-	    return err ("script-fu-register: missing arguments label", NIL);
+	    return my_err ("script-fu-register: missing arguments label", NIL);
 
 	  if (a != NIL)
 	    {
@@ -373,7 +373,7 @@ script_fu_add_script (LISP a)
 		case SF_LAYER:
 		case SF_CHANNEL:
 		  if (!TYPEP (car (a), tc_flonum))
-		    return err ("script-fu-register: drawable defaults must be integer values", NIL);
+		    return my_err ("script-fu-register: drawable defaults must be integer values", NIL);
 		  script->arg_defaults[i].sfa_image = get_c_long (car (a));
 		  script->arg_values[i].sfa_image = script->arg_defaults[i].sfa_image;
 
@@ -404,7 +404,7 @@ script_fu_add_script (LISP a)
 
 		case SF_COLOR:
 		  if (!TYPEP (car (a), tc_cons))
-		    return err ("script-fu-register: color defaults must be a list of 3 integers", NIL);
+		    return my_err ("script-fu-register: color defaults must be a list of 3 integers", NIL);
 		  color_list = car (a);
 		  color[0] = (gdouble) get_c_long (car (color_list)) / 255.0;
 		  color_list = cdr (color_list);
@@ -423,7 +423,7 @@ script_fu_add_script (LISP a)
 
 		case SF_TOGGLE:
 		  if (!TYPEP (car (a), tc_flonum))
-		    return err ("script-fu-register: toggle default must be an integer value", NIL);
+		    return my_err ("script-fu-register: toggle default must be an integer value", NIL);
 		  script->arg_defaults[i].sfa_toggle = (get_c_long (car (a))) ? TRUE : FALSE;
 		  script->arg_values[i].sfa_toggle = script->arg_defaults[i].sfa_toggle;
 
@@ -434,7 +434,7 @@ script_fu_add_script (LISP a)
 
 		case SF_VALUE:
 		  if (!TYPEP (car (a), tc_string))
-		    return err ("script-fu-register: value defaults must be string values", NIL);
+		    return my_err ("script-fu-register: value defaults must be string values", NIL);
 		  script->arg_defaults[i].sfa_value = g_strdup (get_c_string (car (a)));
 
 		  args[i + 1].type = PARAM_STRING;
@@ -448,7 +448,7 @@ script_fu_add_script (LISP a)
 	      a = cdr (a);
 	    }
 	  else
-	    return err ("script-fu-register: missing default argument", NIL);
+	    return my_err ("script-fu-register: missing default argument", NIL);
 	}
     }
 

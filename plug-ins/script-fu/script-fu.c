@@ -508,7 +508,7 @@ marshall_proc_db_call (LISP a)
 
   /*  Make sure there are arguments  */
   if (a == NIL)
-    return err ("Procedure database argument marshaller was called with no arguments.  The procedure to be executed and the arguments it requires (possibly none) must be specified.", NIL);
+    return my_err ("Procedure database argument marshaller was called with no arguments.  The procedure to be executed and the arguments it requires (possibly none) must be specified.", NIL);
 
   /*  Derive the pdb procedure name from the argument or first argument of a list  */
   if (TYPEP (a, tc_cons))
@@ -523,7 +523,7 @@ marshall_proc_db_call (LISP a)
   if (gimp_query_procedure (proc_name, &proc_blurb, &proc_help, &proc_author,
 			    &proc_copyright, &proc_date, &proc_type, &nparams, &nreturn_vals,
 			    &params, &return_vals) == FALSE)
-    return err ("Invalid procedure name specified.", NIL);
+    return my_err ("Invalid procedure name specified.", NIL);
 
 
   /*  Check the supplied number of arguments  */
@@ -531,7 +531,7 @@ marshall_proc_db_call (LISP a)
     {
       sprintf (error_str, "Invalid arguments supplied to %s--(# args: %ld, expecting: %d)",
 	       proc_name, (nlength (a) - 1), nparams);
-      return err (error_str, NIL);
+      return my_err (error_str, NIL);
     }
 
   /*  Marshall the supplied arguments  */
@@ -643,7 +643,7 @@ marshall_proc_db_call (LISP a)
 		list = car (a);
 		num_strings = args[i - 1].data.d_int32;
 		if (nlength (list) != num_strings)
-		  return err ("String array argument has incorrectly specified length", NIL);
+		  return my_err ("String array argument has incorrectly specified length", NIL);
 		array = args[i].data.d_stringarray = g_new (char *, num_strings);
 
 		for (j = 0; j < num_strings; j++)
@@ -669,7 +669,7 @@ marshall_proc_db_call (LISP a)
 	    }
 	  break;
 	case PARAM_REGION:
-	  return err ("Regions are currently unsupported as arguments", car (a));
+	  return my_err ("Regions are currently unsupported as arguments", car (a));
 	  break;
 	case PARAM_DISPLAY:
 	  if (!TYPEP (car (a), tc_flonum))
@@ -726,16 +726,16 @@ marshall_proc_db_call (LISP a)
 	    }
 	  break;
 	case PARAM_BOUNDARY:
-	  return err ("Boundaries are currently unsupported as arguments", car (a));
+	  return my_err ("Boundaries are currently unsupported as arguments", car (a));
 	  break;
 	case PARAM_PATH:
-	  return err ("Paths are currently unsupported as arguments", car (a));
+	  return my_err ("Paths are currently unsupported as arguments", car (a));
 	  break;
 	case PARAM_STATUS:
-	  return err ("Status is for return types, not arguments", car (a));
+	  return my_err ("Status is for return types, not arguments", car (a));
 	  break;
 	default:
-	  return err ("Unknown argument type", NIL);
+	  return my_err ("Unknown argument type", NIL);
 	}
 
       a = cdr (a);
@@ -744,26 +744,26 @@ marshall_proc_db_call (LISP a)
   if (success)
     values = gimp_run_procedure2 (proc_name, &nvalues, nparams, args);
   else
-    return err ("Invalid types specified for arguments", NIL);
+    return my_err ("Invalid types specified for arguments", NIL);
 
   /*  Check the return status  */
   if (! values)
 	{
 	  strcpy (error_str, "Procedural database execution did not return a status:\n    ");
 	  lprin1s (a_saved, error_str + strlen(error_str));
-      return err (error_str, NIL);
+      return my_err (error_str, NIL);
 	}
   switch (values[0].data.d_status)
     {
     case STATUS_EXECUTION_ERROR:
 	  strcpy (error_str, "Procedural database execution failed:\n    ");
 	  lprin1s (a_saved, error_str + strlen(error_str));
-      return err (error_str, NIL);
+      return my_err (error_str, NIL);
       break;
     case STATUS_CALLING_ERROR:
 	  strcpy (error_str, "Procedural database execution failed on invalid input arguments:\n    ");
 	  lprin1s (a_saved, error_str + strlen(error_str));
-      return err (error_str, NIL);
+      return my_err (error_str, NIL);
       break;
     case STATUS_SUCCESS:
       return_val = NIL;
@@ -802,7 +802,7 @@ marshall_proc_db_call (LISP a)
 	      }
 	      break;
 	    case PARAM_INT16ARRAY:
-	      return err ("Arrays are currently unsupported as return values", NIL);
+	      return my_err ("Arrays are currently unsupported as return values", NIL);
 	      break;
 	    case PARAM_INT8ARRAY:
 	      {
@@ -855,7 +855,7 @@ marshall_proc_db_call (LISP a)
 	      return_val = cons (intermediate_val, return_val);
 	      break;
 	    case PARAM_REGION:
-	      return err ("Regions are currently unsupported as return values", NIL);
+	      return my_err ("Regions are currently unsupported as return values", NIL);
 	      break;
 	    case PARAM_DISPLAY:
 	      return_val = cons (flocons (values[i + 1].data.d_int32), return_val);
@@ -876,16 +876,16 @@ marshall_proc_db_call (LISP a)
 	      return_val = cons (flocons (values[i + 1].data.d_int32), return_val);
 	      break;
 	    case PARAM_BOUNDARY:
-	      return err ("Boundaries are currently unsupported as return values", NIL);
+	      return my_err ("Boundaries are currently unsupported as return values", NIL);
 	      break;
 	    case PARAM_PATH:
-	      return err ("Paths are currently unsupported as return values", NIL);
+	      return my_err ("Paths are currently unsupported as return values", NIL);
 	      break;
 	    case PARAM_STATUS:
-	      return err ("Procedural database execution returned multiple status values", NIL);
+	      return my_err ("Procedural database execution returned multiple status values", NIL);
 	      break;
 	    default:
-	      return err ("Unknown return type", NIL);
+	      return my_err ("Unknown return type", NIL);
 	    }
 	}
       break;

@@ -267,14 +267,14 @@ pts_puts (char *from, void *cb)
   memcpy (&into->storage_as.string.data[intolen], from, fitsize);
   into->storage_as.string.data[intolen + fitsize] = 0;
   if (fitsize < fromlen)
-    err ("print to string overflow", NIL);
+    my_err ("print to string overflow", NIL);
   return (1);
 }
 
 LISP
 err_wta_str (LISP exp)
 {
-  return (err ("not a string", exp));
+  return (my_err ("not a string", exp));
 }
 
 LISP
@@ -298,45 +298,45 @@ aref1 (LISP a, LISP i)
 {
   long k;
   if NFLONUMP
-    (i) err ("bad index to aref", i);
+    (i) my_err ("bad index to aref", i);
   k = (long) FLONM (i);
   if (k < 0)
-    err ("negative index to aref", i);
+    my_err ("negative index to aref", i);
   switch TYPE
     (a)
     {
     case tc_string:
     case tc_byte_array:
       if (k >= a->storage_as.string.dim)
-	err ("index too large", i);
+	my_err ("index too large", i);
       return (flocons ((double) a->storage_as.string.data[k]));
     case tc_double_array:
       if (k >= a->storage_as.double_array.dim)
-	err ("index too large", i);
+	my_err ("index too large", i);
       return (flocons (a->storage_as.double_array.data[k]));
     case tc_long_array:
       if (k >= a->storage_as.long_array.dim)
-	err ("index too large", i);
+	my_err ("index too large", i);
       return (flocons (a->storage_as.long_array.data[k]));
     case tc_lisp_array:
       if (k >= a->storage_as.lisp_array.dim)
-	err ("index too large", i);
+	my_err ("index too large", i);
       return (a->storage_as.lisp_array.data[k]);
     default:
-      return (err ("invalid argument to aref", a));
+      return (my_err ("invalid argument to aref", a));
     }
 }
 
 void
 err1_aset1 (LISP i)
 {
-  err ("index to aset too large", i);
+  my_err ("index to aset too large", i);
 }
 
 void
 err2_aset1 (LISP v)
 {
-  err ("bad value to store in array", v);
+  my_err ("bad value to store in array", v);
 }
 
 LISP
@@ -344,10 +344,10 @@ aset1 (LISP a, LISP i, LISP v)
 {
   long k;
   if NFLONUMP
-    (i) err ("bad index to aset", i);
+    (i) my_err ("bad index to aset", i);
   k = (long) FLONM (i);
   if (k < 0)
-    err ("negative index to aset", i);
+    my_err ("negative index to aset", i);
   switch TYPE
     (a)
     {
@@ -379,7 +379,7 @@ aset1 (LISP a, LISP i, LISP v)
       a->storage_as.lisp_array.data[k] = v;
       return (v);
     default:
-      return (err ("invalid argument to aset", a));
+      return (my_err ("invalid argument to aset", a));
     }
 }
 
@@ -455,7 +455,7 @@ cons_array (LISP dim, LISP kind)
   LISP a;
   long flag, n, j;
   if (NFLONUMP (dim) || (FLONM (dim) < 0))
-    return (err ("bad dimension to cons-array", dim));
+    return (my_err ("bad dimension to cons-array", dim));
   else
     n = (long) FLONM (dim);
   flag = no_interrupt (1);
@@ -507,7 +507,7 @@ cons_array (LISP dim, LISP kind)
 	a->storage_as.lisp_array.data[j] = NIL;
     }
   else
-    err ("bad type of array", kind);
+    my_err ("bad type of array", kind);
   no_interrupt (flag);
   return (a);
 }
@@ -565,9 +565,9 @@ substring (LISP str, LISP start, LISP end)
   else
     e = get_c_long (end);
   if ((s < 0) || (s > e))
-    err ("bad start index", start);
+    my_err ("bad start index", start);
   if ((e < 0) || (e > n))
-    err ("bad end index", end);
+    my_err ("bad end index", end);
   return (strcons (e - s, &data[s]));
 }
 
@@ -664,7 +664,7 @@ lreadstring (struct gen_readio * f)
 	{
 	  c = GETC_FCN (f);
 	  if (c == EOF)
-	    err ("eof after \\", NIL);
+	    my_err ("eof after \\", NIL);
 	  switch (c)
 	    {
 	    case 'n':
@@ -691,7 +691,7 @@ lreadstring (struct gen_readio * f)
 		{
 		  c = GETC_FCN (f);
 		  if (c == EOF)
-		    err ("eof after \\0", NIL);
+		    my_err ("eof after \\0", NIL);
 		  if (isdigit (c))
 		    n = n * 8 + c - '0';
 		  else
@@ -704,7 +704,7 @@ lreadstring (struct gen_readio * f)
 	    }
 	}
       if ((j + 1) >= TKBUFFERN)
-	err ("read string overflow", NIL);
+	my_err ("read string overflow", NIL);
       ++j;
       *p++ = c;
     }
@@ -738,7 +738,7 @@ lreadsharp (struct gen_readio * f)
     case 't':
       return (flocons (1));
     default:
-      return (err ("readsharp syntax not handled", NIL));
+      return (my_err ("readsharp syntax not handled", NIL));
     }
 }
 
@@ -929,11 +929,11 @@ href_index (LISP table, LISP key)
 {
   long index;
   if NTYPEP
-    (table, tc_lisp_array) err ("not a hash table", table);
+    (table, tc_lisp_array) my_err ("not a hash table", table);
   index = c_sxhash (key, table->storage_as.lisp_array.dim);
   if ((index < 0) || (index >= table->storage_as.lisp_array.dim))
     {
-      err ("sxhash inconsistency", table);
+      my_err ("sxhash inconsistency", table);
       return (0);
     }
   else
@@ -975,7 +975,7 @@ assoc (LISP x, LISP alist)
     }
   if EQ
     (l, NIL) return (NIL);
-  return (err ("improper list to assoc", alist));
+  return (my_err ("improper list to assoc", alist));
 }
 
 LISP
@@ -991,7 +991,7 @@ assv (LISP x, LISP alist)
     }
   if EQ
     (l, NIL) return (NIL);
-  return (err ("improper list to assv", alist));
+  return (my_err ("improper list to assv", alist));
 }
 
 void
@@ -1092,7 +1092,7 @@ fast_print (LISP obj, LISP table)
 	  putc (tc_symbol, f);
 	  len = strlen (PNAME (obj));
 	  if (len >= TKBUFFERN)
-	    err ("symbol name too long", obj);
+	    my_err ("symbol name too long", obj);
 	  put_long (len, f);
 	  fwrite (PNAME (obj), len, 1, f);
 	  return (sym_t);
@@ -1104,7 +1104,7 @@ fast_print (LISP obj, LISP table)
       if (p->fast_print)
 	return ((*p->fast_print) (obj, table));
       else
-	return (err ("cannot fast-print", obj));
+	return (my_err ("cannot fast-print", obj));
     }
 }
 
@@ -1171,7 +1171,7 @@ fast_read (LISP table)
     case tc_symbol:
       len = get_long (f);
       if (len >= TKBUFFERN)
-	err ("symbol name too long", NIL);
+	my_err ("symbol name too long", NIL);
       fread (tkbuffer, len, 1, f);
       tkbuffer[len] = 0;
       return (rintern (tkbuffer));
@@ -1180,7 +1180,7 @@ fast_read (LISP table)
       if (p->fast_read)
 	return (*p->fast_read) (c, table);
       else
-	return (err ("unknown fast-read opcode", flocons (c)));
+	return (my_err ("unknown fast-read opcode", flocons (c)));
     }
 }
 
@@ -1284,7 +1284,7 @@ long
 get_c_long (LISP x)
 {
   if NFLONUMP
-    (x) err ("not a number", x);
+    (x) my_err ("not a number", x);
   return ((long) FLONM (x));
 }
 
@@ -1292,7 +1292,7 @@ double
 get_c_double (LISP x)
 {
   if NFLONUMP
-    (x) err ("not a number", x);
+    (x) my_err ("not a number", x);
   return (FLONM (x));
 }
 
@@ -1378,7 +1378,7 @@ lfwrite (LISP string, LISP file)
   if (len <= 0)
     return (NIL);
   if (len > dim)
-    err ("write length too long", string);
+    my_err ("write length too long", string);
   flag = no_interrupt (1);
   fwrite (data, 1, len, f);
   no_interrupt (flag);
@@ -1437,10 +1437,10 @@ nlength (LISP obj)
       for (l = obj, n = 0; CONSP (l); l = CDR (l), ++n)
 	INTERRUPT_CHECK ();
       if NNULLP
-	(l) err ("improper list to length", obj);
+	(l) my_err ("improper list to length", obj);
       return (n);
     default:
-      err ("wta to length", obj);
+      my_err ("wta to length", obj);
       return (0);
     }
 }
@@ -1458,14 +1458,14 @@ number2string (LISP x, LISP b, LISP w, LISP p)
   double y;
   long base, width, prec;
   if NFLONUMP
-    (x) err ("wta", x);
+    (x) my_err ("wta", x);
   y = FLONM (x);
   width = NNULLP (w) ? get_c_long (w) : -1;
   if (width > 100)
-    err ("width too long", w);
+    my_err ("width too long", w);
   prec = NNULLP (p) ? get_c_long (p) : -1;
   if (prec > 100)
-    err ("precision too large", p);
+    my_err ("precision too large", p);
   if (NULLP (b) || EQ (sym_e, b) || EQ (sym_f, b))
     {
       if ((width >= 0) && (prec >= 0))
@@ -1502,7 +1502,7 @@ number2string (LISP x, LISP b, LISP w, LISP p)
 		 (long) y);
     }
   else
-    err ("number base not handled", b);
+    my_err ("number base not handled", b);
   return (strcons (strlen (buffer), buffer));
 }
 
@@ -1540,7 +1540,7 @@ string2number (LISP x, LISP b)
 	  result = result * base + toupper (*str) - 'A' + 10;
     }
   else
-    err ("number base not handled", b);
+    my_err ("number base not handled", b);
   return (flocons (result));
 }
 
@@ -1572,7 +1572,7 @@ lstrcpy (LISP dest, LISP src)
   s = get_c_string (src);
   slen = strlen (s);
   if (slen > ddim)
-    err ("string too long", src);
+    my_err ("string too long", src);
   memcpy (d, s, slen);
   d[slen] = 0;
   return (NIL);
@@ -1588,7 +1588,7 @@ lstrcat (LISP dest, LISP src)
   slen = strlen (s);
   dlen = strlen (d);
   if ((slen + dlen) > ddim)
-    err ("string too long", src);
+    my_err ("string too long", src);
   memcpy (&d[dlen], s, slen);
   d[dlen + slen] = 0;
   return (NIL);
@@ -1710,7 +1710,7 @@ base64decode (LISP in)
   if (n == 0)
     return (strcons (0, NULL));
   if (n % 4)
-    err ("illegal base64 data length", in);
+    my_err ("illegal base64 data length", in);
   if (s[n - 1] == base64_encode_table[64])
     {
       if (s[n - 2] == base64_encode_table[64])
@@ -1778,7 +1778,7 @@ memq (LISP x, LISP il)
     }
   if EQ
     (l, NIL) return (NIL);
-  return (err ("improper list to memq", il));
+  return (my_err ("improper list to memq", il));
 }
 
 LISP
@@ -1794,7 +1794,7 @@ member (LISP x, LISP il)
     }
   if EQ
     (l, NIL) return (NIL);
-  return (err ("improper list to member", il));
+  return (my_err ("improper list to member", il));
 }
 
 LISP
@@ -1810,7 +1810,7 @@ memv (LISP x, LISP il)
     }
   if EQ
     (l, NIL) return (NIL);
-  return (err ("improper list to memv", il));
+  return (my_err ("improper list to memv", il));
 }
 
 
@@ -1825,7 +1825,7 @@ nth (LISP x, LISP li)
     (l)
       return (CAR (l));
   else
-    return (err ("bad arg to nth", x));
+    return (my_err ("bad arg to nth", x));
 }
 
 /* these lxxx_default functions are convenient for manipulating
@@ -1932,7 +1932,7 @@ last (LISP l)
 {
   LISP v1, v2;
   v1 = l;
-  v2 = CONSP (v1) ? CDR (v1) : err ("bad arg to last", l);
+  v2 = CONSP (v1) ? CDR (v1) : my_err ("bad arg to last", l);
   while (CONSP (v2))
     {
       INTERRUPT_CHECK ();
@@ -1948,7 +1948,7 @@ butlast (LISP l)
   INTERRUPT_CHECK ();
   STACK_CHECK (&l);
   if NULLP
-    (l) err ("list is empty", l);
+    (l) my_err ("list is empty", l);
   if CONSP (l)
     {
       if NULLP (CDR (l))
@@ -1956,7 +1956,7 @@ butlast (LISP l)
       else
 	return (cons (CAR (l), butlast (CDR (l))));
     }
-  return (err ("not a list", l));
+  return (my_err ("not a list", l));
 }
 
 LISP
@@ -2018,7 +2018,7 @@ lqsort (LISP l, LISP f, LISP g)
   for (v = l, n = 0; CONSP (v); v = CDR (v), ++n)
     INTERRUPT_CHECK ();
   if NNULLP
-    (v) err ("bad list to qsort", l);
+    (v) my_err ("bad list to qsort", l);
   if (n == 0)
     return (NIL);
   j = rand () % n;
@@ -2122,7 +2122,7 @@ mapcar (LISP l)
     case 3:
       return (mapcar2 (fcn, car (cdr (l)), car (cdr (cdr (l)))));
     default:
-      return (err ("mapcar case not handled", l));
+      return (my_err ("mapcar case not handled", l));
     }
 }
 
@@ -2130,9 +2130,9 @@ LISP
 lfmod (LISP x, LISP y)
 {
   if NFLONUMP
-    (x) err ("wta(1st) to fmod", x);
+    (x) my_err ("wta(1st) to fmod", x);
   if NFLONUMP
-    (y) err ("wta(2nd) to fmod", y);
+    (y) my_err ("wta(2nd) to fmod", y);
   return (flocons (fmod (FLONM (x), FLONM (y))));
 }
 
@@ -2160,7 +2160,7 @@ ass (LISP x, LISP alist, LISP fcn)
     }
   if EQ
     (l, NIL) return (NIL);
-  return (err ("improper list to ass", alist));
+  return (my_err ("improper list to ass", alist));
 }
 
 LISP
@@ -2339,7 +2339,7 @@ swrite (LISP stream, LISP table, LISP data)
     case tc_lisp_array:
       n = data->storage_as.lisp_array.dim;
       if (n < 1)
-	err ("no object repeat count", data);
+	my_err ("no object repeat count", data);
       key = data->storage_as.lisp_array.data[0];
       if NULLP
 	(value = href (table, key))
@@ -2369,9 +2369,9 @@ LISP
 lpow (LISP x, LISP y)
 {
   if NFLONUMP
-    (x) err ("wta(1st) to pow", x);
+    (x) my_err ("wta(1st) to pow", x);
   if NFLONUMP
-    (y) err ("wta(2nd) to pow", y);
+    (y) my_err ("wta(2nd) to pow", y);
   return (flocons (pow (FLONM (x), FLONM (y))));
 }
 
@@ -2485,7 +2485,7 @@ getprop (LISP plist, LISP key)
 LISP
 setprop (LISP plist, LISP key, LISP value)
 {
-  err ("not implemented", NIL);
+  my_err ("not implemented", NIL);
   return (NIL);
 }
 

@@ -292,7 +292,7 @@ void
 handle_sigfpe (int sig SIG_restargs)
 {
   signal (SIGFPE, handle_sigfpe);
-  err ("floating point exception", NIL);
+  my_err ("floating point exception", NIL);
 }
 
 void
@@ -308,7 +308,7 @@ handle_sigint (int sig SIG_restargs)
 void
 err_ctrl_c (void)
 {
-  err ("control-c interrupt", NIL);
+  my_err ("control-c interrupt", NIL);
 }
 
 LISP
@@ -604,7 +604,7 @@ set_fatal_exit_hook (void (*fcn) (void))
 static long inside_err = 0;
 
 LISP
-err (char *message, LISP x)
+my_err (char *message, LISP x)
 {
   struct catch_frame *l;
   long was_inside = inside_err;
@@ -674,14 +674,14 @@ err (char *message, LISP x)
 LISP
 errswitch (void)
 {
-  return (err ("BUG. Reached impossible case", NIL));
+  return (my_err ("BUG. Reached impossible case", NIL));
 }
 
 void
 err_stack (char *ptr)
      /* The user could be given an option to continue here */
 {
-  err ("the currently assigned stack limit has been exceded", NIL);
+  my_err ("the currently assigned stack limit has been exceded", NIL);
 }
 
 LISP
@@ -728,7 +728,7 @@ get_c_string (LISP x)
     (x, tc_string)
       return (x->storage_as.string.data);
   else
-    err ("not a symbol or string", x);
+    my_err ("not a symbol or string", x);
   return (NULL);
 }
 
@@ -748,7 +748,7 @@ get_c_string_dim (LISP x, long *len)
       *len = x->storage_as.long_array.dim * sizeof (long);
       return ((char *) x->storage_as.long_array.data);
     default:
-      err ("not a symbol or string", x);
+      my_err ("not a symbol or string", x);
       return (NULL);
     }
 }
@@ -757,16 +757,16 @@ LISP
 lerr (LISP message, LISP x)
 {
   if (CONSP (message) && TYPEP (CAR (message), tc_string))
-    err (NULL, message);
+    my_err (NULL, message);
   else
-    err (get_c_string (message), x);
+    my_err (get_c_string (message), x);
   return (NIL);
 }
 
 void
 gc_fatal_error (void)
 {
-  err ("ran out of storage", NIL);
+  my_err ("ran out of storage", NIL);
 }
 
 LISP
@@ -807,7 +807,7 @@ car (LISP x)
     case tc_cons:
       return (CAR (x));
     default:
-      return (err ("wta to car", x));
+      return (my_err ("wta to car", x));
     }
 }
 
@@ -822,7 +822,7 @@ cdr (LISP x)
     case tc_cons:
       return (CDR (x));
     default:
-      return (err ("wta to cdr", x));
+      return (my_err ("wta to cdr", x));
     }
 }
 
@@ -830,7 +830,7 @@ LISP
 setcar (LISP cell, LISP value)
 {
   if NCONSP
-    (cell) err ("wta to setcar", cell);
+    (cell) my_err ("wta to setcar", cell);
   return (CAR (cell) = value);
 }
 
@@ -838,7 +838,7 @@ LISP
 setcdr (LISP cell, LISP value)
 {
   if NCONSP
-    (cell) err ("wta to setcdr", cell);
+    (cell) my_err ("wta to setcdr", cell);
   return (CDR (cell) = value);
 }
 
@@ -873,9 +873,9 @@ plus (LISP x, LISP y)
     (y)
       return (NULLP (x) ? flocons (0) : x);
   if NFLONUMP
-    (x) err ("wta(1st) to plus", x);
+    (x) my_err ("wta(1st) to plus", x);
   if NFLONUMP
-    (y) err ("wta(2nd) to plus", y);
+    (y) my_err ("wta(2nd) to plus", y);
   return (flocons (FLONM (x) + FLONM (y)));
 }
 
@@ -886,9 +886,9 @@ ltimes (LISP x, LISP y)
     (y)
       return (NULLP (x) ? flocons (1) : x);
   if NFLONUMP
-    (x) err ("wta(1st) to times", x);
+    (x) my_err ("wta(1st) to times", x);
   if NFLONUMP
-    (y) err ("wta(2nd) to times", y);
+    (y) my_err ("wta(2nd) to times", y);
   return (flocons (FLONM (x) * FLONM (y)));
 }
 
@@ -896,14 +896,14 @@ LISP
 difference (LISP x, LISP y)
 {
   if NFLONUMP
-    (x) err ("wta(1st) to difference", x);
+    (x) my_err ("wta(1st) to difference", x);
   if NULLP
     (y)
       return (flocons (-FLONM (x)));
   else
     {
       if NFLONUMP
-	(y) err ("wta(2nd) to difference", y);
+	(y) my_err ("wta(2nd) to difference", y);
       return (flocons (FLONM (x) - FLONM (y)));
     }
 }
@@ -912,14 +912,14 @@ LISP
 Quotient (LISP x, LISP y)
 {
   if NFLONUMP
-    (x) err ("wta(1st) to quotient", x);
+    (x) my_err ("wta(1st) to quotient", x);
   if NULLP
     (y)
       return (flocons (1 / FLONM (x)));
   else
     {
       if NFLONUMP
-	(y) err ("wta(2nd) to quotient", y);
+	(y) my_err ("wta(2nd) to quotient", y);
       return (flocons (FLONM (x) / FLONM (y)));
     }
 }
@@ -929,7 +929,7 @@ lllabs (LISP x)
 {
   double v;
   if NFLONUMP
-    (x) err ("wta to abs", x);
+    (x) my_err ("wta to abs", x);
   v = FLONM (x);
   if (v < 0)
     return (flocons (-v));
@@ -941,7 +941,7 @@ LISP
 lsqrt (LISP x)
 {
   if NFLONUMP
-    (x) err ("wta to sqrt", x);
+    (x) my_err ("wta to sqrt", x);
   return (flocons (sqrt (FLONM (x))));
 }
 
@@ -949,9 +949,9 @@ LISP
 greaterp (LISP x, LISP y)
 {
   if NFLONUMP
-    (x) err ("wta(1st) to greaterp", x);
+    (x) my_err ("wta(1st) to greaterp", x);
   if NFLONUMP
-    (y) err ("wta(2nd) to greaterp", y);
+    (y) my_err ("wta(2nd) to greaterp", y);
   if (FLONM (x) > FLONM (y))
     return (sym_t);
   return (NIL);
@@ -961,9 +961,9 @@ LISP
 lessp (LISP x, LISP y)
 {
   if NFLONUMP
-    (x) err ("wta(1st) to lessp", x);
+    (x) my_err ("wta(1st) to lessp", x);
   if NFLONUMP
-    (y) err ("wta(2nd) to lessp", y);
+    (y) my_err ("wta(2nd) to lessp", y);
   if (FLONM (x) < FLONM (y))
     return (sym_t);
   return (NIL);
@@ -973,9 +973,9 @@ LISP
 greaterEp (LISP x, LISP y)
 {
   if NFLONUMP
-    (x) err ("wta(1st) to greaterp", x);
+    (x) my_err ("wta(1st) to greaterp", x);
   if NFLONUMP
-    (y) err ("wta(2nd) to greaterp", y);
+    (y) my_err ("wta(2nd) to greaterp", y);
   if (FLONM (x) >= FLONM (y))
     return (sym_t);
   return (NIL);
@@ -985,9 +985,9 @@ LISP
 lessEp (LISP x, LISP y)
 {
   if NFLONUMP
-    (x) err ("wta(1st) to lessp", x);
+    (x) my_err ("wta(1st) to lessp", x);
   if NFLONUMP
-    (y) err ("wta(2nd) to lessp", y);
+    (y) my_err ("wta(2nd) to lessp", y);
   if (FLONM (x) <= FLONM (y))
     return (sym_t);
   return (NIL);
@@ -999,9 +999,9 @@ lmax (LISP x, LISP y)
   if NULLP
     (y) return (x);
   if NFLONUMP
-    (x) err ("wta(1st) to max", x);
+    (x) my_err ("wta(1st) to max", x);
   if NFLONUMP
-    (y) err ("wta(2nd) to max", y);
+    (y) my_err ("wta(2nd) to max", y);
   return ((FLONM (x) > FLONM (y)) ? x : y);
 }
 
@@ -1011,9 +1011,9 @@ lmin (LISP x, LISP y)
   if NULLP
     (y) return (x);
   if NFLONUMP
-    (x) err ("wta(1st) to min", x);
+    (x) my_err ("wta(1st) to min", x);
   if NFLONUMP
-    (y) err ("wta(2nd) to min", y);
+    (y) my_err ("wta(2nd) to min", y);
   return ((FLONM (x) < FLONM (y)) ? x : y);
 }
 
@@ -1062,7 +1062,7 @@ symbolp (LISP x)
 LISP
 err_ubv (LISP v)
 {
-  return (err ("unbound variable", v));
+  return (my_err ("unbound variable", v));
 }
 
 LISP
@@ -1070,7 +1070,7 @@ symbol_boundp (LISP x, LISP env)
 {
   LISP tmp;
   if NSYMBOLP
-    (x) err ("not a symbol", x);
+    (x) my_err ("not a symbol", x);
   tmp = envlookup (x, env);
   if NNULLP
     (tmp) return (sym_t);
@@ -1085,7 +1085,7 @@ symbol_value (LISP x, LISP env)
 {
   LISP tmp;
   if NSYMBOLP
-    (x) err ("not a symbol", x);
+    (x) my_err ("not a symbol", x);
   tmp = envlookup (x, env);
   if NNULLP
     (tmp) return (CAR (tmp));
@@ -1103,7 +1103,7 @@ must_malloc (unsigned long size)
   char *tmp;
   tmp = (char *) malloc ((size) ? size : 1);
   if (tmp == (char *) NULL)
-    err ("failed to allocate storage from system", NIL);
+    my_err ("failed to allocate storage from system", NIL);
   return (tmp);
 }
 
@@ -1271,7 +1271,7 @@ init_storage_1 (void)
   long j;
   tkbuffer = (char *) must_malloc (TKBUFFERN + 1);
   if (((gc_kind_copying == 1) && (nheaps != 2)) || (nheaps < 1))
-    err ("invalid number of heaps", NIL);
+    my_err ("invalid number of heaps", NIL);
   heaps = (LISP *) must_malloc (sizeof (LISP) * nheaps);
   for (j = 0; j < nheaps; ++j)
     heaps[j] = NULL;
@@ -1404,7 +1404,7 @@ assq (LISP x, LISP alist)
     }
   if EQ
     (l, NIL) return (NIL);
-  return (err ("improper list to assq", alist));
+  return (my_err ("improper list to assq", alist));
 }
 
 
@@ -1421,7 +1421,7 @@ get_user_type_hooks (long type)
   if ((type >= 0) && (type < tc_table_dim))
     return (&user_types[type]);
   else
-    err ("type number out of range", NIL);
+    my_err ("type number out of range", NIL);
   return (NULL);
 }
 
@@ -1430,7 +1430,7 @@ allocate_user_tc (void)
 {
   long x = user_tc_next;
   if (x > tc_user_max)
-    err ("ran out of user type codes", NIL);
+    my_err ("ran out of user type codes", NIL);
   ++user_tc_next;
   return (x);
 }
@@ -1874,7 +1874,7 @@ void
 gc_kind_check (void)
 {
   if (gc_kind_copying == 1)
-    err ("cannot perform operation with stop-and-copy GC mode. Use -g0\n",
+    my_err ("cannot perform operation with stop-and-copy GC mode. Use -g0\n",
 	 NIL);
 }
 
@@ -1987,7 +1987,7 @@ leval_args (LISP l, LISP env)
   if NULLP
     (l) return (NIL);
   if NCONSP
-    (l) err ("bad syntax argument list", l);
+    (l) my_err ("bad syntax argument list", l);
   result = cons (leval (CAR (l), env), NIL);
   for (v1 = result, v2 = CDR (l);
        CONSP (v2);
@@ -1997,7 +1997,7 @@ leval_args (LISP l, LISP env)
       CDR (v1) = tmp;
     }
   if NNULLP
-    (v2) err ("bad syntax argument list", l);
+    (v2) my_err ("bad syntax argument list", l);
   return (result);
 }
 
@@ -2020,11 +2020,11 @@ envlookup (LISP var, LISP env)
     {
       tmp = CAR (frame);
       if NCONSP
-	(tmp) err ("damaged frame", tmp);
+	(tmp) my_err ("damaged frame", tmp);
       for (fl = CAR (tmp), al = CDR (tmp); CONSP (fl); fl = CDR (fl), al = CDR (al))
 	{
 	  if NCONSP
-	    (al) err ("too few arguments", tmp);
+	    (al) my_err ("too few arguments", tmp);
 	  if EQ
 	    (CAR (fl), var) return (al);
 	}
@@ -2036,7 +2036,7 @@ envlookup (LISP var, LISP env)
 #endif
     }
   if NNULLP
-    (frame) err ("damaged env", env);
+    (frame) my_err ("damaged env", env);
   return (NIL);
 }
 
@@ -2051,7 +2051,7 @@ set_eval_hooks (long type, LISP (*fcn) (LISP, LISP *, LISP *))
 LISP
 err_closure_code (LISP tmp)
 {
-  return (err ("closure code type not valid", tmp));
+  return (my_err ("closure code type not valid", tmp));
 }
 
 LISP
@@ -2225,7 +2225,7 @@ loop:
 	      else
 		goto loop;
 	    }
-	  err ("bad function", tmp);
+	  my_err ("bad function", tmp);
 	}
     default:
       return (x);
@@ -2267,7 +2267,7 @@ lapply (LISP fcn, LISP args)
     case tc_fsubr:
     case tc_msubr:
     case tc_symbol:
-      err ("cannot be applied", fcn);
+      my_err ("cannot be applied", fcn);
     case tc_closure:
       switch TYPE
 	(fcn->storage_as.closure.code)
@@ -2306,9 +2306,9 @@ lapply (LISP fcn, LISP args)
     default:
       p = get_user_type_hooks (TYPE (fcn));
       if (p->leval)
-	return err ("have eval, dont know apply", fcn);
+	return my_err ("have eval, dont know apply", fcn);
       else
-	return err ("cannot be applied", fcn);
+	return my_err ("cannot be applied", fcn);
     }
 }
 
@@ -2317,7 +2317,7 @@ setvar (LISP var, LISP val, LISP env)
 {
   LISP tmp;
   if NSYMBOLP
-    (var) err ("wta(non-symbol) to setvar", var);
+    (var) my_err ("wta(non-symbol) to setvar", var);
   tmp = envlookup (var, env);
   if NULLP
     (tmp) return (VCELL (var) = val);
@@ -2350,7 +2350,7 @@ leval_define (LISP args, LISP env)
   tmp = syntax_define (args);
   var = car (tmp);
   if NSYMBOLP
-    (var) err ("wta(non-symbol) to define", var);
+    (var) my_err ("wta(non-symbol) to define", var);
   val = leval (car (cdr (tmp)), env);
   tmp = envlookup (var, env);
   if NNULLP
@@ -2495,7 +2495,7 @@ lthrow (LISP tag, LISP value)
 	(*l).retval = value;
 	longjmp ((*l).cframe, 2);
       }
-  err ("no *catch found with this tag", tag);
+  my_err ("no *catch found with this tag", tag);
   return (NIL);
 }
 
@@ -2613,10 +2613,10 @@ symbolconc (LISP args)
     {
       s = car (l);
       if NSYMBOLP
-	(s) err ("wta(non-symbol) to symbolconc", s);
+	(s) my_err ("wta(non-symbol) to symbolconc", s);
       size = size + strlen (PNAME (s));
       if (size > TKBUFFERN)
-	err ("symbolconc buffer overflow", NIL);
+	my_err ("symbolconc buffer overflow", NIL);
       strcat (tkbuffer, PNAME (s));
     }
   return (rintern (tkbuffer));
@@ -2811,7 +2811,7 @@ flush_ws (struct gen_readio *f, char *eoferr)
       if (c == EOF)
 	{
 	  if (eoferr)
-	    err (eoferr, NIL);
+	    my_err (eoferr, NIL);
 	  else
 	    return (c);
 	}
@@ -2873,7 +2873,7 @@ lreadr (struct gen_readio *f)
     case '(':
       return (lreadparen (f));
     case ')':
-      err ("unexpected close paren", NIL);
+      my_err ("unexpected close paren", NIL);
     case '\'':
       return (cons (sym_quote, cons (lreadr (f), NIL)));
     case '`':
@@ -2916,7 +2916,7 @@ lreadr (struct gen_readio *f)
 	}
       *p++ = c;
     }
-  return (err ("token larger than TKBUFFERN", NIL));
+  return (my_err ("token larger than TKBUFFERN", NIL));
 }
 
 LISP
@@ -2935,7 +2935,7 @@ lreadparen (struct gen_readio * f)
       tmp = lreadr (f);
       c = flush_ws (f, "end of file inside list");
       if (c != ')')
-	err ("missing close paren", NIL);
+	my_err ("missing close paren", NIL);
       return (tmp);
     }
   return (cons (tmp, lreadparen (f)));
@@ -3034,7 +3034,7 @@ fopen_cg (FILE * (*fcn) (const char *, const char *), char *name, char *how)
     {
       SAFE_STRCPY (errmsg, "could not open ");
       SAFE_STRCAT (errmsg, name);
-      err (errmsg, llast_c_errmsg (-1));
+      my_err (errmsg, llast_c_errmsg (-1));
     }
   sym->storage_as.c_file.name = (char *) must_malloc (strlen (name) + 1);
   strcpy (sym->storage_as.c_file.name, name);
@@ -3072,7 +3072,7 @@ fclose_l (LISP p)
   long flag;
   flag = no_interrupt (1);
   if NTYPEP
-    (p, tc_c_file) err ("not a file", p);
+    (p, tc_c_file) my_err ("not a file", p);
   file_gc_free (p);
   no_interrupt (flag);
   return (NIL);
@@ -3212,7 +3212,7 @@ save_forms (LISP fname, LISP forms, LISP how)
   else if EQ
     (how, cintern ("a")) chow = "a";
   else
-    err ("bad argument to save-forms", how);
+    my_err ("bad argument to save-forms", how);
   if (siod_verbose_level >= 3)
     {
       put_st ((*chow == 'a') ? "appending" : "saving");
@@ -3236,7 +3236,7 @@ save_forms (LISP fname, LISP forms, LISP how)
 LISP
 quit (void)
 {
-  return (err (NULL, NIL));
+  return (my_err (NULL, NIL));
 }
 
 LISP
@@ -3257,7 +3257,7 @@ arglchk (LISP x)
     (x) return (x);
   for (l = x; CONSP (l); l = CDR (l));
   if NNULLP
-    (l) err ("improper formal argument list", x);
+    (l) my_err ("improper formal argument list", x);
 #endif
   return (x);
 }
@@ -3299,9 +3299,9 @@ get_c_file (LISP p, FILE * deflt)
   if (NULLP (p) && deflt)
     return (deflt);
   if NTYPEP
-    (p, tc_c_file) err ("not a file", p);
+    (p, tc_c_file) my_err ("not a file", p);
   if (!p->storage_as.c_file.f)
-    err ("file is closed", p);
+    my_err ("file is closed", p);
   return (p->storage_as.c_file.f);
 }
 
@@ -3698,7 +3698,7 @@ init_subrs_1 (void)
 void
 err0 (void)
 {
-  err ("0", NIL);
+  my_err ("0", NIL);
 }
 
 void

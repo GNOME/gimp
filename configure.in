@@ -128,13 +128,13 @@ dnl Test for libtiff
 
 dnl Test for libjpeg
   if test -z "$LIBJPEG_LIB"; then
-    AC_CHECK_LIB(jpeg, jpeg_create_decompress,
+    AC_CHECK_LIB(jpeg, jpeg_destroy_decompress,
       jpeg_ok=yes,
       jpeg_ok=no
       AC_MSG_WARN(*** JPEG plug-in will not be built (JPEG library not found) ***))
     if test "$jpeg_ok" = yes; then
       AC_MSG_CHECKING([for jpeg.h])
-      AC_TRY_CPP(
+      AC_TRY_COMPILE(
 [#undef PACKAGE
 #undef VERSION
 #include <jpeglib.h>],
@@ -142,7 +142,7 @@ dnl Test for libjpeg
 	jpeg_ok=no)
       AC_MSG_RESULT($jpeg_ok)
       if test "$jpeg_ok" = yes; then
-	JPEG='jpeg'; LIBJPEG_LIB='-ljpeg',
+	JPEG='jpeg'; LIBJPEG_LIB='-ljpeg'
       else
 	AC_MSG_WARN(*** JPEG plug-in will not be built (JPEG header file not found) ***)
       fi
@@ -311,53 +311,65 @@ patterndata=`echo $patterndata`
 dnl This is for generating PDB docuemntation.
 AC_PATH_PROGS(EMACS, emacs xemacs, :)
 
+dnl This is for the mail plug-in
+sendmail_path=":"
+AC_ARG_ENABLE(sendmail_path, [  --with-sendmail=DIR     set sendmail command location],
+if eval "test x$with_sendmail != x"; then
+    sendmail_path=$with_sendmail
+fi)
+AC_PATH_PROG(SENDMAIL, "sendmail", $sendmail_path, $PATH:/usr/lib:/usr/sbin)
+
+if test $ac_cv_path_SENDMAIL != ":"; then
+  MAILER="-DMAILER=\\\"$ac_cv_path_SENDMAIL\\\""
+fi
+
 dnl This is for the print plug-in
 lp_path=":"
-AC_ARG_ENABLE(lp_path, [  --with-lp=DIR    set lp command location],
+AC_ARG_ENABLE(lp_path, [  --with-lp=DIR           set lp command location],
 if eval "test x$with_lp != x"; then
     lp_path=$with_lp
 fi)
 AC_PATH_PROG(LP_COMMAND, "lp", $lp_path,
   $PATH:/usr/bin:/usr/sbin:/usr/ucb:/usr/bsd)
 
-if test $LP_COMMAND != ":"; then
-  LP_DEF=-"DLP_COMMAND=\\\"$LP_COMMAND\\\""
+if test $ac_cv_path_LP_COMMAND != ":"; then
+  LP_DEF="-DLP_COMMAND=\\\"$ac_cv_path_LP_COMMAND\\\""
 fi
 
 lpstat_path=":"
-AC_ARG_ENABLE(lpstat_path, [  --with-lpstat=DIR    set lpstat command location],
+AC_ARG_ENABLE(lpstat_path, [  --with-lpstat=DIR       set lpstat command location],
 if eval "test x$with_lpstat != x"; then
     lpstat_path=$with_lpstat
 fi)
 AC_PATH_PROG(LPSTAT_COMMAND, "lpstat", $lpstat_path,
   $PATH:/usr/bin:/usr/sbin:/usr/ucb:/usr/bsd)
 
-if test $LPSTAT_COMMAND != ":"; then
-  LPSTAT_DEF="-DLPSTAT_COMMAND=\\\"$LPSTAT_COMMAND\\\""
+if test $ac_cv_path_LPSTAT_COMMAND != ":"; then
+  LPSTAT_DEF="-DLPSTAT_COMMAND=\\\"$ac_cv_path_LPSTAT_COMMAND\\\""
 fi
 
 lpr_path=":"
-AC_ARG_ENABLE(lpr_path, [  --with-lpr=DIR    set lpr command location],
+AC_ARG_ENABLE(lpr_path, [  --with-lpr=DIR          set lpr command location],
 if eval "test x$with_lpr != x"; then
     lpr_path=$with_lpr
 fi)
 AC_PATH_PROG(LPR_COMMAND, "lpr", $lpr_path,
   $PATH:/usr/bin:/usr/sbin:/usr/ucb:/usr/bsd)
 
-if test $LPR_COMMAND != ":"; then
-  LPR_DEF="-DLPR_COMMAND=\\\"$LPR_COMMAND\\\""
+if test $ac_cv_path_LPR_COMMAND != ":"; then
+  LPR_DEF="-DLPR_COMMAND=\\\"$ac_cv_path_LPR_COMMAND\\\""
 fi
 
 lpc_path=":"
-AC_ARG_ENABLE(lpc_path, [  --with-lpc=DIR    set lpc command location],
+AC_ARG_ENABLE(lpc_path, [  --with-lpc=DIR          set lpc command location],
 if eval "test x$with_lpc != x"; then
     lpc_path=$with_lpc
 fi)
 AC_PATH_PROG(LPC_COMMAND, "lpc", $lpc_path,
   $PATH:/usr/bin:/usr/sbin:/usr/ucb:/usr/bsd)
 
-if test $LPC_COMMAND != ":"; then
-  LPC_DEF="-DLPC_COMMAND=\\\"$LPC_COMMAND\\\""
+if test $ac_cv_path_LPC_COMMAND != ":"; then
+  LPC_DEF="-DLPC_COMMAND=\\\"$ac_cv_path_LPC_COMMAND\\\""
 fi
 
 AC_SUBST(gimpdir)
@@ -388,6 +400,7 @@ AC_SUBST(LP_DEF)
 AC_SUBST(LPSTAT_DEF)
 AC_SUBST(LPR_DEF)
 AC_SUBST(LPC_DEF)
+AC_SUBST(MAILER)
 
 dnl Output the Makefiles
 

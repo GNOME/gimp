@@ -234,7 +234,7 @@ void set_repl_hooks (void (*puts_f) (char *),
 		     LISP (*eval_f) (LISP),
 		     void (*print_f) (LISP));
 long repl (struct repl_hooks *);
-LISP err (char *message, LISP x);
+LISP my_err (char *message, LISP x);
 LISP errswitch (void);
 char *get_c_string (LISP x);
 char *get_c_string_dim (LISP x, long *);
