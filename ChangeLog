@@ -1,4 +1,17 @@
 2002-06-15  Jakub Steiner <jimmac@ximian.com>
+
+	replaced
+	* themes/Default/images/stock-swap-colors-16.png:
+	with
+	* themes/Default/images/stock-swap-colors-12.png:
+
+     eek, now I know why the wicked 12x12 size ;)
+
+	* libgimpwidgets/gimpstock.c: 
+	* themes/Default/images/Makefile.am: 
+	* themes/Default/images/stock-icons.list: updated
+	
+2002-06-15  Jakub Steiner <jimmac@ximian.com>
 	
 	added:
 

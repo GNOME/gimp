@@ -81,7 +81,7 @@ STOCK_MENU_IMAGES = \
 	stock-qmask-off-16.png			\
 	stock-qmask-on-16.png			\
 	stock-default-colors-12.png		\
-	stock-swap-colors-16.png		\
+	stock-swap-colors-12.png		\
 	stock-tool-options-16.png		\
 	stock-info-16.png			\
 	stock-warning-16.png			\

@@ -267,7 +267,7 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_QMASK_ON,             stock_qmask_on_16             },
 
   { GIMP_STOCK_DEFAULT_COLORS,       stock_default_colors_12       },
-  { GIMP_STOCK_SWAP_COLORS,          stock_swap_colors_16          },
+  { GIMP_STOCK_SWAP_COLORS,          stock_swap_colors_12          },
 
   { GIMP_STOCK_TOOL_OPTIONS,         stock_tool_options_16         },
   { GIMP_STOCK_INFO,                 stock_info_16                 },
