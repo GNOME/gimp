@@ -117,23 +117,20 @@ gimp_cell_renderer_viewable_get_type (void)
 static void
 gimp_cell_renderer_viewable_class_init (GimpCellRendererViewableClass *klass)
 {
-  GObjectClass         *object_class;
-  GtkCellRendererClass *cell_class;
-
-  object_class = G_OBJECT_CLASS (klass);
-  cell_class   = GTK_CELL_RENDERER_CLASS (klass);
+  GObjectClass         *object_class = G_OBJECT_CLASS (klass);
+  GtkCellRendererClass *cell_class   = GTK_CELL_RENDERER_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   viewable_cell_signals[CLICKED] =
     g_signal_new ("clicked",
-		  G_OBJECT_CLASS_TYPE (object_class),
-		  G_SIGNAL_RUN_LAST,
-		  G_STRUCT_OFFSET (GimpCellRendererViewableClass, clicked),
-		  NULL, NULL,
-		  gimp_marshal_VOID__STRING_FLAGS,
-		  G_TYPE_NONE, 2,
-		  G_TYPE_STRING,
+                  G_OBJECT_CLASS_TYPE (object_class),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpCellRendererViewableClass, clicked),
+                  NULL, NULL,
+                  gimp_marshal_VOID__STRING_FLAGS,
+                  G_TYPE_NONE, 2,
+                  G_TYPE_STRING,
                   GDK_TYPE_MODIFIER_TYPE);
 
   object_class->finalize     = gimp_cell_renderer_viewable_finalize;
@@ -163,9 +160,7 @@ gimp_cell_renderer_viewable_init (GimpCellRendererViewable *cellviewable)
 static void
 gimp_cell_renderer_viewable_finalize (GObject *object)
 {
-  GimpCellRendererViewable *cell;
-
-  cell = GIMP_CELL_RENDERER_VIEWABLE (object);
+  GimpCellRendererViewable *cell = GIMP_CELL_RENDERER_VIEWABLE (object);
 
   if (cell->renderer)
     {
@@ -182,9 +177,7 @@ gimp_cell_renderer_viewable_get_property (GObject    *object,
                                           GValue     *value,
                                           GParamSpec *pspec)
 {
-  GimpCellRendererViewable *cell;
-
-  cell = GIMP_CELL_RENDERER_VIEWABLE (object);
+  GimpCellRendererViewable *cell = GIMP_CELL_RENDERER_VIEWABLE (object);
 
   switch (param_id)
     {
@@ -204,16 +197,19 @@ gimp_cell_renderer_viewable_set_property (GObject      *object,
                                           const GValue *value,
                                           GParamSpec   *pspec)
 {
-  GimpCellRendererViewable *cell;
-  
-  cell = GIMP_CELL_RENDERER_VIEWABLE (object);
+  GimpCellRendererViewable *cell = GIMP_CELL_RENDERER_VIEWABLE (object);
 
   switch (param_id)
     {
     case PROP_RENDERER:
-      if (cell->renderer)
-	g_object_unref (cell->renderer);
-      cell->renderer = (GimpPreviewRenderer *) g_value_dup_object (value);
+      {
+        GimpPreviewRenderer *renderer;
+
+        renderer = (GimpPreviewRenderer *) g_value_dup_object (value);
+        if (cell->renderer)
+          g_object_unref (cell->renderer);
+        cell->renderer = renderer;
+      }
       break;
 
     default:

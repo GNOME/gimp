@@ -1,5 +1,13 @@
 2004-02-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcellrendererviewable.c: some general cleanup.
+
+	(gimp_cell_renderer_viewable_set_property): ref the new renderer
+	before unrefing the old one. Fixes potential crash when setting
+	the same renderer again.
+
+2004-02-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimplayer.c (gimp_layer_apply_mask): when deleting the
 	mask, use "Delete Layer Mask" instead of "Apply Layer Mask" as
 	undo description.
