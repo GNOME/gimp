@@ -150,7 +150,7 @@ Enums and definitions.
 @GIMP_BACKGROUND_FILL: 
 @GIMP_WHITE_FILL: 
 @GIMP_TRANSPARENT_FILL: 
-@GIMP_NO_FILL: 
+@GIMP_PATTERN_FILL: 
 
 <!-- ##### ENUM GimpImageBaseType ##### -->
 <para>
