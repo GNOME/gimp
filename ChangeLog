@@ -1,3 +1,7 @@
+Mon May 21 04:08:29 CEST 2001  Marc Lehmann <pcg@goof.com>
+
+	* autogen.sh: allow for automake 1.4-p1 and similar version numbers.
+
 2001-05-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/base/Makefile.am

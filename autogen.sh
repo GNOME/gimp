@@ -34,7 +34,7 @@ echo "see the file HACKING for more information..."
 echo
 
 echo "Testing autoconf... "
-VER=`autoconf --version | grep -iw autoconf | sed "s/.* \([0-9.]*\)[a-z]*$/\1/"`
+VER=`autoconf --version | grep -iw autoconf | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
 if expr $VER \>= 2.13 >/dev/null; then
 	echo "looks OK."
 else
@@ -43,7 +43,7 @@ else
 fi
 
 echo "Testing automake... "
-VER=`automake --version | grep automake | sed "s/.* \([0-9.]*\)[a-z]*$/\1/"`
+VER=`automake --version | grep automake | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
 if expr $VER \>= 1.4 >/dev/null; then
 	echo "looks OK."
 else
