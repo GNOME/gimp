@@ -71,25 +71,27 @@ base_init (GimpBaseConfig *config,
 
   base_config = config;
 
-#ifdef USE_MMX
   if (use_mmx)
     {
-#ifdef ARCH_X86
       g_printerr ("Testing CPU features...\n");
-      g_printerr ("  mmx    : %s\n",
-		  (cpu_accel() & CPU_ACCEL_X86_MMX)    ? "yes" : "no");
-      g_printerr ("  3dnow  : %s\n",
-		  (cpu_accel() & CPU_ACCEL_X86_3DNOW)  ? "yes" : "no");
-      g_printerr ("  mmxext : %s\n",
-		  (cpu_accel() & CPU_ACCEL_X86_MMXEXT) ? "yes" : "no");
-      g_printerr ("  sse    : %s\n",
-		  (cpu_accel() & CPU_ACCEL_X86_SSE)    ? "yes" : "no");
-      g_printerr ("  sse2   : %s\n",
-		  (cpu_accel() & CPU_ACCEL_X86_SSE2)   ? "yes" : "no");
+#ifdef ARCH_X86
+      g_printerr ("  mmx     : %s\n",
+		  (cpu_accel() & CPU_ACCEL_X86_MMX)     ? "yes" : "no");
+      g_printerr ("  3dnow   : %s\n",
+		  (cpu_accel() & CPU_ACCEL_X86_3DNOW)   ? "yes" : "no");
+      g_printerr ("  mmxext  : %s\n",
+		  (cpu_accel() & CPU_ACCEL_X86_MMXEXT)  ? "yes" : "no");
+      g_printerr ("  sse     : %s\n",
+		  (cpu_accel() & CPU_ACCEL_X86_SSE)     ? "yes" : "no");
+      g_printerr ("  sse2    : %s\n",
+		  (cpu_accel() & CPU_ACCEL_X86_SSE2)    ? "yes" : "no");
+#endif
+#ifdef ARCH_PPC
+      g_printerr ("  altivec : %s\n",
+		  (cpu_accel() & CPU_ACCEL_PPC_ALTIVEC) ? "yes" : "no");      
+#endif
       g_printerr ("\n");
-#endif
     }
-#endif
 
   tile_cache_init (config->tile_cache_size);
 

@@ -1,6 +1,9 @@
 2003-07-04  Sven Neumann  <sven@gimp.org>
 
-	* configure.in: minor fixes to the checks for assembler support.
+	* configure.in
+	* app/base/base.c
+	* app/base/cpu-accel.c: added (untested) check for altivec assembly
+	and enabled the run-time altivec check.
 
 2003-07-04  Michael Natterer  <mitch@gimp.org>
 

@@ -120,7 +120,7 @@ sigill_handler (gint n)
 #endif /* ARCH_X86 */
 
 
-#if defined (ARCH_PPC) && defined (ENABLE_ALTIVEC)
+#if defined (ARCH_PPC) && defined (USE_ALTIVEC)
 
 static          sigjmp_buf   jmpbuf;
 static volatile sig_atomic_t canjump = 0;
@@ -138,7 +138,8 @@ sigill_handler (gint sig)
   siglongjmp (jmpbuf, 1);
 }
 
-static guint32 arch_accel (void)
+static guint32
+arch_accel (void)
 {
   signal (SIGILL, sigill_handler);
   if (sigsetjmp (jmpbuf, 1))
@@ -165,7 +166,7 @@ static guint32 arch_accel (void)
 guint32
 cpu_accel (void)
 {
-#if defined (ARCH_X86) || (defined (ARCH_PPC) && defined (ENABLE_ALTIVEC))
+#if defined (ARCH_X86) || (defined (ARCH_PPC) && defined (USE_ALTIVEC))
   static guint32 accel = ~0U;
 
   if (accel != ~0U)
@@ -193,7 +194,7 @@ cpu_accel (void)
 
   return accel;
 
-#else /* !ARCH_X86 && !ARCH_PPC/ENABLE_ALTIVEC */
+#else /* !ARCH_X86 && !ARCH_PPC/USE_ALTIVEC */
   return 0;
 #endif
 }
