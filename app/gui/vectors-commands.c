@@ -248,7 +248,8 @@ vectors_export_cmd_callback (GtkWidget *widget,
   GError      *error = NULL;
   return_if_no_vectors (gimage, active_vectors, data);
 
-  if (! gimp_vectors_export (active_vectors, "path-export.svg", &error))
+  if (! gimp_vectors_export (gimage, active_vectors,
+                             "path-export.svg", &error))
     {
       g_message (error->message);
       g_error_free (error);
