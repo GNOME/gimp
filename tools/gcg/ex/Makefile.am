@@ -3,14 +3,16 @@ GEN_CODE = ostream_s.c file_ostream_s.c
 # actual automake variables
 
 noinst_LIBRARIES = libgcgexample.a
+noinst_PROGRAMS = strtest
 
 CFLAGS = -g -Wall -W -I..
 
 SUFFIXES = .gc .gh
 
-
-
 libgcgexample_a_SOURCES = $(GEN_CODE)
+
+strtest_SOURCES = strtest.c
+strtest_LDADD = libgcgexample.a -lgtk -lgdk -lgmodule -lglib
 
 
 # tools
@@ -21,8 +23,6 @@ MAKEDEPEND = sh -c '$(CC) -M -x c $$* | $(SED) -e "s/.gc.o/_s.c/g"' makedepend
 
 
 # dependencies and other rules for the def files
-# these use gmake functions, so automake variables 
-# cannot depend on these
 
 GCG_DEFS = $(subst _s.c,.gc,$(GEN_CODE))
 

@@ -61,6 +61,7 @@ PNode* p_c_macro(Id id);
 PNode* p_prot_header(Module* m);
 PNode* p_type_header(Module* m);
 PNode* p_func_header(Module* m);
+PNode* p_import_header(Module* m);
 
 
 
@@ -81,8 +82,11 @@ void output_flags(PRoot* out, Def* d);
 PNode* p_type_include(Module* m);
 PNode* p_prot_include(Module* m);
 PNode* p_func_include(Module* m);
+PNode* p_import_include(Module* m);
 
-
+void output_type_import(PRoot* out, Package* pkg, PNode* body);
+void output_macro_import(PRoot* out, PrimType* t, Id mid, Id post);
+void output_var_import(PRoot* out, PrimType* t, PNode* body);
 
 
 

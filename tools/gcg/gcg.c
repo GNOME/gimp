@@ -14,13 +14,15 @@ Id header_root = "..";
 Id source_name = NULL;
 Id impl_name = NULL;
 
+gboolean collect_marshall = FALSE;
+
 GString* cpp_cmd;
 
 void get_options(int argc, char* argv[]){
 	gint x=0;
 	yydebug = yy_flex_debug = FALSE;
 	do{
-		x=getopt(argc, argv, "D:i:dI:o:");
+		x=getopt(argc, argv, "D:i:dI:o:m");
 		switch(x){
 		case 'D':
 			header_root=optarg;
@@ -41,6 +43,8 @@ void get_options(int argc, char* argv[]){
 		case 'o':
 			source_name = optarg;
 			break;
+		case 'm':
+			collect_marshall = TRUE;
 		case '?':
 		case ':':
 			g_error("Bad option %c!\n", x);
@@ -148,7 +152,14 @@ int main(int argc, char* argv[]){
 		       p_col("prot_depends", p_type_include),
 		       p_col("protected", NULL)),
 		 out);
-	return 0;
+
+	open_out(p_import_header, "import",
+		 p_fmt("~~~",
+		       p_func_include(current_module),
+		       p_col("import_depends", p_import_include),
+		       p_col("import_alias", NULL)),
+		 out);
+return 0;
 }
 
 

@@ -78,6 +78,17 @@ PNode* p_func_header(Module* m){
 			     p_c_ident(m->name));
 }
 
+PNode* p_import_header(Module* m){
+	if(m->header)
+		return p_nil;
+	else
+		return p_fmt("~/~_i.h",
+			     m->package->headerbase
+			     ? p_str(m->package->headerbase)
+			     : p_c_ident(m->package->name),
+			     p_c_ident(m->name));
+}
+
 PNode* p_type_include(Module* m){
 	return p_fmt("#include <~>\n",
 		     p_type_header(m));
@@ -91,6 +102,14 @@ PNode* p_prot_include(Module* m){
 PNode* p_func_include(Module* m){
 	return p_fmt("#include <~>\n",
 		     p_func_header(m));
+}
+
+PNode* p_import_include(Module* m){
+	PNode* hdr = p_import_header(m);
+	if(hdr == p_nil)
+		return p_nil;
+	else
+		return p_fmt("#include <~>\n", hdr);
 }
 
 
@@ -298,11 +317,13 @@ void output_def(PRoot* out, Def* d){
 	pr_put(out, "protected", p_str("\n\n"));
 	pr_put(out, "source_head", p_str("\n"));
 	pr_put(out, "type", p_fmt("#define ~ \\\n"
-				  " (~ ? ~() : (void)0, ~)\n",
+				  " (~ ? (void)0 : ~ (), ~)\n",
 				  p_macro_name(t, "type", NULL),
 				  type_var,
 				  p_internal_varname(t, p_str("init_type")),
 				  type_var));
+	output_macro_import(out, t, "type", NULL);
+	output_type_import(out, t->module->package, p_str(t->name));
 	output_var(out, "type",
 		   p_str("GtkType"),
 		   type_var);
@@ -322,6 +343,40 @@ void output_def(PRoot* out, Def* d){
 	
 }
 
+void output_type_import(PRoot* out, Package* pkg, PNode* body){
+#if 1
+	pr_put(out, "import_alias",
+	       p_fmt("#define ~ ~~\n",
+		     body,
+		     p_str(pkg->name),
+		     body));
+#else
+	pr_put(out, "import_alias",
+	       p_fmt("typedef ~~ ~;\n",
+		     p_str(pkg->name),
+		     body,
+		     body));
+#endif
+}
+
+void output_macro_import(PRoot* out, PrimType* t, Id mid, Id post){
+	pr_put(out, "import_alias",
+	       p_fmt("#define ~~~ ~\n",
+		     mid ? p_fmt("~_", p_c_macro(mid)) : p_nil,
+		     p_c_macro(t->name),
+		     post ? p_fmt("_~", p_c_macro(post)) : p_nil,
+		     p_macro_name(t, mid, post)));
+}
+
+void output_var_import(PRoot* out, PrimType* t, PNode* body){
+	pr_put(out, "import_alias",
+	       p_fmt("#define ~_~ ~\n",
+		     p_c_ident(t->name),
+		     body,
+		     p_varname(t, body)));
+}
+	       
+	
 
 /*
 void add_dep(PRoot* out, Id tag, PrimType* type){

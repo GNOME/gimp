@@ -128,6 +128,9 @@ void output_connector(PRoot* out, Method* m){
 			  m->ret_type.prim?p_str("return "):p_nil,
 			  p_self_name(MEMBER(m)),
 			  p_str(MEMBER(m)->name)));
+	output_var_import(out, m->ret_type.prim,
+			  p_fmt("connect_~",
+				p_c_ident(MEMBER(m)->name)));
 }
 		    
 PNode* p_param_marshtype(gpointer p){
@@ -248,6 +251,8 @@ void output_method(PRoot* out, Method* m){
 	 p_nil,
 	 par, 
 	 dispatch);
+
+	output_var_import(out, t, name);
 	
 	fparams_free(par);
 }
@@ -267,6 +272,7 @@ void output_data_member(PRoot* out, DataMember* m){
 			    &m->type,
 			    name,
 			    p_nil);
+		output_var_import(out, t, p_fmt("set_~", name));
 		output_func(out,
 			    "functions",
 			    NULL,
@@ -309,6 +315,7 @@ void output_data_member(PRoot* out, DataMember* m){
 		par=fparams("t", &MEMBER(m)->my_class->self_type[TRUE],
 			    self,
 			    p_nil);
+		output_var_import(out, t, name);
 		output_func(out,
 			    "functions",
 			    &m->type,
@@ -341,15 +348,18 @@ void output_member_cb(gpointer a, gpointer b){
 	output_member(b, a);
 }
 
-PNode* p_class_macros(ObjectDef* o ){
+void output_class_macros(PRoot* out, ObjectDef* o){
 	PrimType* t=DEF(o)->type;
-	return p_fmt("#define ~(o) GTK_CHECK_TYPE(o, ~)\n"
+	pr_put(out, "type",
+	       p_fmt("#define ~(o) GTK_CHECK_TYPE(o, ~)\n"
 		     "#define ~(o) GTK_CHECK_CAST(o, ~, ~)\n",
 		     p_macro_name(t, "is", NULL),
 		     p_macro_name(t, "type", NULL),
 		     p_macro_name(t, NULL, NULL),
 		     p_macro_name(t, "type", NULL),
-		     p_primtype(t));
+		     p_primtype(t)));
+	output_macro_import(out, t, "is", NULL);
+	output_macro_import(out, t, NULL, NULL);
 }
 
 void output_object_type_init(PRoot* out, ObjectDef* o){
@@ -387,7 +397,7 @@ void output_object_type_init(PRoot* out, ObjectDef* o){
 
 void output_object_init(PRoot* out, ObjectDef* o){
 	pr_put(out, "source_head",
-	       p_fmt("static inline void ~ (~ ~);\n",
+	       p_fmt("static void ~ (~ ~);\n",
 		     p_varname(DEF(o)->type, p_str("init_real")),
 		     p_type(&o->self_type[FALSE]),
 		     p_c_ident(DEF(o)->type->name)));
@@ -427,17 +437,19 @@ void output_class_init(PRoot* out, ObjectDef* o){
 
 void output_object(PRoot* out, Def* d){
 	ObjectDef* o = (ObjectDef*)d;
+	pr_put(out, "func_depends", d->type->module);
 	pr_put(out, "func_parent_depends", o->parent->module);
 	pr_put(out, "prot_depends", d->type->module);
 	pr_put(out, "prot_parent_depends", o->parent->module);
 	pr_put(out, "source_prot_depends", d->type->module);
+	pr_put(out, "import_depends", o->parent->module);
 	output_object_type_init(out, o);
 	output_class_init(out, o);
 	output_object_init(out, o);
 	pr_put(out, "protected", p_class_decl(o));
 	pr_put(out, "protected", p_class_body(o));
 	pr_put(out, "type", p_object_decl(o));
-	pr_put(out, "type", p_class_macros(o));
+	output_class_macros(out, o);
 	pr_put(out, "protected", p_object_body(o));
 	g_slist_foreach(o->members, output_member_cb, out);
 }
