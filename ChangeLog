@@ -1,3 +1,12 @@
+2000-02-02  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* plug-ins/gap/gap_decode_mpeg_main.c: fixed typo.
+
+	* plug-ins/common/whirlpinch.c: unmarked blurb and help.
+
+	* po-plug-ins/POTFILES.in: removed plug-ins/perl/Gimp.c
+	which doesn't contain translatable messages.
+
 Tue Feb  1 17:30:52 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/interface.c: when dropping an indexed layer onto the toolbox,

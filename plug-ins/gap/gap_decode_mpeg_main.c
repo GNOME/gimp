@@ -674,7 +674,7 @@ load_range_dialog(gint32 *first_frame,
   
   p_init_arr_arg(&argv[5], WGT_LABEL);
   argv[5].label_txt = _("\nWARNING: do not attempt to split other files than MPEG1 videos\n"
-                         "before yo proceed, you should save all open images");
+                         "before you proceed, you should save all open images");
   
   if(TRUE == p_array_dialog("Split MPEG1 Video to Frames", "Select Framerange", ARGC_DIALOG, argv))
   {

@@ -190,11 +190,9 @@ query (void)
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
-  INIT_I18N();
-
   gimp_install_procedure (PLUG_IN_NAME,
-			  _("Distort an image by whirling and pinching"),
-			  _("Distorts the image by whirling and pinching, which are two common center-based, circular distortions.  Whirling is like projecting the image onto the surface of water in a toilet and flushing.  Pinching is similar to projecting the image onto an elastic surface and pressing or pulling on the center of the surface."),
+			  "Distort an image by whirling and pinching",
+			  "Distorts the image by whirling and pinching, which are two common center-based, circular distortions.  Whirling is like projecting the image onto the surface of water in a toilet and flushing.  Pinching is similar to projecting the image onto an elastic surface and pressing or pulling on the center of the surface.",
 			  "Federico Mena Quintero and Scott Goehring",
 			  "Federico Mena Quintero and Scott Goehring",
 			  PLUG_IN_VERSION,
