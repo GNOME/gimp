@@ -1,3 +1,9 @@
+Thu May 25 00:18:20 BST 2000 Andy Thomas <alt@gimp.org>
+
+	* plug-ins/common/wind.c
+
+	Ok. OK. The direction stuff works with transparent areas as well.
+
 Wed May 24 23:53:04 BST 2000 <alt@gimp.org>
 
 	* plug-ins/common/wind.c

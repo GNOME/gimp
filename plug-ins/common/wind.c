@@ -936,6 +936,13 @@ reverse_buffer (guchar *buffer,
       temp = buffer[i+2];
       buffer[i+2] = buffer[si+2];
       buffer[si+2] = (guchar) temp;
+
+      if(bytes > 3)
+	{
+	  temp = buffer[i+3];
+	  buffer[i+3] = buffer[si+3];
+	  buffer[si+3] = (guchar) temp;
+	}
     }
 
   return;
