@@ -1,3 +1,8 @@
+2000-12-27  Tomas Ogren  <stric@ing.umu.se>
+
+	* plug-ins/ifscompose/ifscompose_storage.c: Remove the last comma in
+	  an enum, xlc barfs
+
 Tue Dec 26 11:10:23 PST 2000 Manish Singh <yosh@gimp.org>
 
 	* app/patterns.c: fix fd leak on loading
