@@ -44,7 +44,7 @@ typedef struct _MessageBox MessageBox;
 
 struct _MessageBox
 {
-  GtkWidget   *mbox;
+  GtkWidget   *dialog;
   GtkWidget   *vbox;
   GtkWidget   *repeat_label;
   gchar       *domain;
@@ -58,9 +58,11 @@ struct _MessageBox
 #define MESSAGE_BOX_MAXIMUM  4
 
 
-static void  gimp_message_box_response (GtkWidget  *widget,
-                                        gint        response_id,
-                                        MessageBox *msg_box);
+static void  gimp_message_box_set_icons (GtkWidget   *dialog,
+                                         const gchar *stock_id);
+static void  gimp_message_box_response  (GtkWidget   *widget,
+                                         gint         response_id,
+                                         MessageBox  *msg_box);
 
 
 extern gchar *prog_name;
@@ -76,7 +78,7 @@ gimp_message_box (const gchar *stock_id,
 		  gpointer     data)
 {
   MessageBox     *msg_box;
-  GtkWidget      *mbox;
+  GtkWidget      *dialog;
   GtkWidget      *hbox;
   GtkWidget      *vbox;
   GtkWidget      *image;
@@ -137,7 +139,7 @@ gimp_message_box (const gchar *stock_id,
 	      msg_box->repeat_label = label;
 	    }
 
-          gtk_window_present (GTK_WINDOW (msg_box->mbox));
+          gtk_window_present (GTK_WINDOW (msg_box->dialog));
 	  return;
 	}
     }
@@ -152,7 +154,7 @@ gimp_message_box (const gchar *stock_id,
 
   msg_box = g_new0 (MessageBox, 1);
 
-  mbox = gimp_dialog_new (_("GIMP Message"), "gimp-message",
+  dialog = gimp_dialog_new (_("GIMP Message"), "gimp-message",
                           NULL, 0,
 			  NULL, NULL,
 
@@ -160,15 +162,17 @@ gimp_message_box (const gchar *stock_id,
 
 			  NULL);
 
-  gtk_window_set_resizable (GTK_WINDOW (mbox), FALSE);
+  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
-  g_signal_connect (mbox, "response",
+  gimp_message_box_set_icons (dialog, stock_id);
+
+  g_signal_connect (dialog, "response",
                     G_CALLBACK (gimp_message_box_response),
                     msg_box);
 
   hbox = gtk_hbox_new (FALSE, 10);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 10);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (mbox)->vbox), hbox);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
   gtk_widget_show (hbox);
 
   image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_DIALOG);
@@ -210,7 +214,7 @@ gimp_message_box (const gchar *stock_id,
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  msg_box->mbox     = mbox;
+  msg_box->dialog   = dialog;
   msg_box->vbox     = vbox;
   msg_box->domain   = g_strdup (domain);
   msg_box->message  = g_strdup (message);
@@ -219,7 +223,42 @@ gimp_message_box (const gchar *stock_id,
 
   message_boxes = g_list_prepend (message_boxes, msg_box);
 
-  gtk_widget_show (mbox);
+  gtk_widget_show (dialog);
+}
+
+static void
+gimp_message_box_set_icons (GtkWidget   *dialog,
+                            const gchar *stock_id)
+{
+  GtkIconSet  *icon_set;
+  GtkIconSize *sizes;
+  GList       *icons = NULL;
+  gint         i, n_sizes;
+
+  gtk_widget_ensure_style (dialog);
+
+  icon_set = gtk_style_lookup_icon_set (dialog->style, stock_id);
+
+  gtk_icon_set_get_sizes (icon_set, &sizes, &n_sizes);
+
+  for (i = 0; i < n_sizes; i++)
+    {
+      if (sizes[i] < GTK_ICON_SIZE_DIALOG)  /* skip the large version */
+        icons = g_list_prepend (icons,
+                                gtk_widget_render_icon (dialog,
+                                                        stock_id, sizes[i],
+                                                        NULL));
+    }
+
+  g_free (sizes);
+
+  if (icons)
+    {
+      gtk_window_set_icon_list (GTK_WINDOW (dialog), icons);
+
+      g_list_foreach (icons, (GFunc) g_object_unref, NULL);
+      g_list_free (icons);
+    }
 }
 
 static void
@@ -232,7 +271,7 @@ gimp_message_box_response (GtkWidget  *widget,
     (* msg_box->callback) (widget, msg_box->data);
 
   /*  Destroy the box  */
-  gtk_widget_destroy (msg_box->mbox);
+  gtk_widget_destroy (msg_box->dialog);
 
   /* make this box available again */
   message_boxes = g_list_remove (message_boxes, msg_box);
