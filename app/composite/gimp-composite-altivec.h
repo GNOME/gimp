@@ -9,13 +9,19 @@ extern gboolean gimp_composite_altivec_init (void);
  */
 extern gboolean gimp_composite_altivec_install (void);
 
-#ifdef ARCH_PPC
+#if defined(USE_ALTIVEC)
+#if defined(ARCH_PPC)
 #if __GNUC__ >= 3
 #define COMPILE_ALTIVEC_IS_OKAY (1)
+#endif /* __GNUC__ >= 3 */
+#endif /* defined(ARCH_PPC) */
+#endif /* defined(USE_ALTIVEC) */
+
+
+#ifdef COMPILE_ALTIVEC_IS_OKAY
 extern void gimp_composite_addition_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx);
 extern void gimp_composite_subtract_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx);
 extern void gimp_composite_swap_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx);
-#endif /* __GNUC__ > 3 */
-#endif  /* ARCH_PPC */
+#endif /* COMPILE_IS_OKAY */
 
 #endif

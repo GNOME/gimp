@@ -1,5 +1,12 @@
 2003-03-06  Manish Singh  <yosh@gimp.org>
 
+	* app/composite/gimp-composite-altivec.c: contort it to compile with
+	Apple's weirdo gcc.
+
+	* app/composite/gimp-composite-altivec.h: honor USE_ALTIVEC.
+
+2003-03-06  Manish Singh  <yosh@gimp.org>
+
 	* configure.in: rework AltiVec tests some.
 
 2003-03-06  Manish Singh  <yosh@gimp.org>

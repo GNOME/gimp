@@ -37,10 +37,20 @@
 #include <altivec.h>
 #endif
 
-const vector unsigned char alphamask={0,0,0,0xff,0,0,0,0xff,0,0,0,0xff,0,0,0,0xff};
+/* Paper over differences between official gcc and Apple's weird gcc */
+#ifdef HAVE_ALTIVEC_H
+#define INIT_VECTOR(v...) {v}
+#define CONST_BUFFER(b)   (b)
+#else
+#define INIT_VECTOR(v...) (v)
+#define CONST_BUFFER(b)   ((const guchar *)(b))
+#endif
+
+static const vector unsigned char alphamask = (const vector unsigned char)
+  INIT_VECTOR(0,0,0,0xff,0,0,0,0xff,0,0,0,0xff,0,0,0,0xff);
 
 /* Load a vector from an unaligned location in memory */
-inline vector unsigned char 
+static inline vector unsigned char 
 LoadUnaligned(const guchar *v)
 {
   if ((long)v & 0x0f) 
@@ -55,7 +65,7 @@ LoadUnaligned(const guchar *v)
 }
 
 /* Load less than a vector from an unaligned location in memory */
-inline vector unsigned char 
+static inline vector unsigned char 
 LoadUnalignedLess(const guchar *v,
                   int n)
 {
@@ -74,7 +84,7 @@ LoadUnalignedLess(const guchar *v,
 }
 
 /* Store a vector to an unaligned location in memory */
-inline void 
+static inline void 
 StoreUnaligned (vector unsigned char v,
                  const guchar *where)
 {
@@ -94,17 +104,17 @@ StoreUnaligned (vector unsigned char v,
       low = vec_sel(low, v, mask);
       high = vec_sel(v, high, mask);
       /* Store the two aligned result vectors */
-      vec_st(low, 0, where);
-      vec_st(high, 16, where);
+      vec_st(low, 0, CONST_BUFFER(where));
+      vec_st(high, 16, CONST_BUFFER(where));
     }
   else
     { /* prevent overflow */
-      vec_st(v, 0, where);
+      vec_st(v, 0, CONST_BUFFER(where));
     }
 }
 
 /* Store less than a vector to an unaligned location in memory */
-inline void 
+static inline void 
 StoreUnalignedLess (vector unsigned char v,
                     const guchar *where,
                     int n)
@@ -113,10 +123,10 @@ StoreUnalignedLess (vector unsigned char v,
   vector unsigned char permuteVector = vec_lvsr(0, where);
   v = vec_perm(v, v, permuteVector); 
   for (i=0; i<n; i++)
-    vec_ste(v, i, where);  
+    vec_ste(v, i, CONST_BUFFER(where));
 }
 
-extern void 
+void 
 gimp_composite_addition_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
 {
   const guchar *A = ctx->A;
@@ -163,7 +173,7 @@ gimp_composite_addition_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
   StoreUnalignedLess(d, D, length);
 };
 
-extern void 
+void 
 gimp_composite_subtract_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
 {
   const guchar *A = ctx->A;
@@ -210,7 +220,7 @@ gimp_composite_subtract_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
   StoreUnalignedLess(d, D, length);
 };
 
-extern void 
+void 
 gimp_composite_swap_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
 {
   const guchar *A = ctx->A;
@@ -237,7 +247,7 @@ gimp_composite_swap_rgba8_rgba8_rgba8_altivec (GimpCompositeContext *ctx)
 };
 
 
-#endif
+#endif /* COMPILE_IS_OKAY */
 
 gboolean
 gimp_composite_altivec_init (void)
