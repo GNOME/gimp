@@ -296,7 +296,7 @@ convert_to_indexed (GimpImage *gimage)
     }
 
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (toggle),
-                               GINT_TO_POINTER (dialog->dither_type));
+                               GINT_TO_POINTER (dialog->palette_type));
 
   /*  the dither type  */
   frame = gtk_frame_new (_("Dithering Options"));

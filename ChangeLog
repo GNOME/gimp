@@ -1,3 +1,8 @@
+2003-02-23  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/convert-dialog.c (convert_to_indexed): set the correct
+	default value for the palette type menu (fixes bug #106798).
+
 2003-02-22  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimprc.c: documented gimp_rc_save().
