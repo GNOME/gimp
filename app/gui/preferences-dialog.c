@@ -1358,7 +1358,19 @@ static void
 prefs_resolution_calibrate_callback (GtkWidget *widget,
 				     gpointer   data)
 {
-  resolution_calibrate_dialog (GTK_WIDGET (data), NULL, NULL, NULL, NULL);
+  GtkWidget *dialog;
+  GtkWidget *notebook;
+  GtkWidget *image;
+
+  dialog = gtk_widget_get_toplevel (GTK_WIDGET (data));
+
+  notebook = g_object_get_data (G_OBJECT (dialog), "notebook");
+
+  image = g_object_get_data (G_OBJECT (notebook), "image");
+
+  resolution_calibrate_dialog (GTK_WIDGET (data),
+                               gtk_image_get_pixbuf (GTK_IMAGE (image)),
+                               NULL, NULL, NULL);
 }
 
 static void
@@ -1390,13 +1402,9 @@ prefs_notebook_append_page (Gimp          *gimp,
 			    gint           page_index)
 {
   GtkWidget   *event_box;
-  GtkWidget   *out_vbox;
   GtkWidget   *vbox;
-  GtkWidget   *frame;
-  GtkWidget   *hbox;
-  GtkWidget   *image;
-  GtkWidget   *label;
-  GdkPixbuf   *pixbuf = NULL;
+  GdkPixbuf   *pixbuf       = NULL;
+  GdkPixbuf   *small_pixbuf = NULL;
   gchar       *markup;
 
   event_box = gtk_event_box_new ();
@@ -1405,30 +1413,13 @@ prefs_notebook_append_page (Gimp          *gimp,
 
   gimp_help_set_help_data (event_box, NULL, help_data);
 
-  out_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_add (GTK_CONTAINER (event_box), out_vbox);
-  gtk_widget_show (out_vbox);
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-  gtk_box_pack_start (GTK_BOX (out_vbox), frame, FALSE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new (NULL);
-  gtk_widget_set_size_request (label, -1, 48);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (event_box), vbox);
+  gtk_widget_show (vbox);
 
   markup = g_strdup_printf ("<b><span size=\"x-large\">%s</span></b>",
                             notebook_label);
-  gtk_label_set_markup (GTK_LABEL (label), markup);
-  g_free (markup);
 
   if (notebook_icon)
     {
@@ -1446,30 +1437,28 @@ prefs_notebook_append_page (Gimp          *gimp,
 
       if (pixbuf)
         {
-          GdkPixbuf *scaled_pixbuf;
-
-          image = gtk_image_new_from_pixbuf (pixbuf);
-          gtk_box_pack_end (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-          gtk_widget_show (image);
-
-          scaled_pixbuf = gdk_pixbuf_scale_simple (pixbuf,
-                                                   18, 18,
-                                                   GDK_INTERP_BILINEAR);
-          g_object_unref (G_OBJECT (pixbuf));
-          pixbuf = scaled_pixbuf;
+          small_pixbuf = gdk_pixbuf_scale_simple (pixbuf,
+                                                  18, 18,
+                                                  GDK_INTERP_BILINEAR);
         }
     }
 
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (out_vbox), vbox);
-  gtk_widget_show (vbox);
-
   gtk_tree_store_append (tree, iter, parent);
-  gtk_tree_store_set (tree, iter, 0, pixbuf, 1, tree_label, 2, page_index, -1);
+  gtk_tree_store_set (tree, iter,
+                      0, small_pixbuf,
+                      1, tree_label,
+                      2, page_index,
+                      3, markup,
+                      4, pixbuf,
+                      -1);
+
+  g_free (markup);
 
   if (pixbuf)
     g_object_unref (pixbuf);
+
+  if (small_pixbuf)
+    g_object_unref (small_pixbuf);
 
   return vbox;
 }
@@ -1479,12 +1468,31 @@ static void
 prefs_tree_select_callback (GtkTreeSelection *sel,
 			    GtkNotebook      *notebook)
 {
+  GtkWidget    *label;
+  GtkWidget    *image;
   GtkTreeModel *model;
   GtkTreeIter   iter;
   GValue        val = { 0, };
 
   if (! gtk_tree_selection_get_selected (sel, &model, &iter))
     return;
+
+  label = g_object_get_data (G_OBJECT (notebook), "label");
+  image = g_object_get_data (G_OBJECT (notebook), "image");
+
+  gtk_tree_model_get_value (model, &iter, 3, &val);
+
+  gtk_label_set_markup (GTK_LABEL (label),
+                        g_value_get_string (&val));
+
+  g_value_unset (&val);
+
+  gtk_tree_model_get_value (model, &iter, 4, &val);
+
+  gtk_image_set_from_pixbuf (GTK_IMAGE (image),
+                             g_value_get_object (&val));
+
+  g_value_unset (&val);
 
   gtk_tree_model_get_value (model, &iter, 2, &val);
 
@@ -1621,6 +1629,7 @@ preferences_dialog_create (Gimp *gimp)
   GtkWidget        *optionmenu;
   GtkWidget        *table;
   GtkWidget        *label;
+  GtkWidget        *image;
   GtkObject        *adjustment;
   GtkWidget        *sizeentry;
   GtkWidget        *sizeentry2;
@@ -1778,7 +1787,9 @@ preferences_dialog_create (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  tree = gtk_tree_store_new (3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);
+  tree = gtk_tree_store_new (5,
+                             GDK_TYPE_PIXBUF, G_TYPE_STRING,
+                             G_TYPE_INT, G_TYPE_STRING, GDK_TYPE_PIXBUF);
   tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (tree));
   g_object_unref (G_OBJECT (tree));
 
@@ -1796,18 +1807,45 @@ preferences_dialog_create (Gimp *gimp)
 
   gtk_container_add (GTK_CONTAINER (frame), tv);
 
-  /* The main preferences notebook */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new (NULL);
+  gtk_widget_set_size_request (label, -1, 48);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  image = gtk_image_new ();
+  gtk_box_pack_end (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_show (image);
+
+  /* The main preferences notebook */
   notebook = gtk_notebook_new ();
   gtk_notebook_set_show_tabs (GTK_NOTEBOOK (notebook), FALSE);
   gtk_notebook_set_show_border (GTK_NOTEBOOK (notebook), FALSE);
-  gtk_container_add (GTK_CONTAINER (frame), notebook);
+  gtk_box_pack_start (GTK_BOX (vbox), notebook, FALSE, FALSE, 0);
 
   g_object_set_data (G_OBJECT (prefs_dialog), "notebook", notebook);
+
+  g_object_set_data (G_OBJECT (notebook), "label", label);
+  g_object_set_data (G_OBJECT (notebook), "image", image);
 
   sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (tv));
   g_signal_connect (G_OBJECT (sel), "changed",

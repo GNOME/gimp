@@ -1,5 +1,11 @@
 2002-02-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/preferences-dialog.c: put the title label & icon outside
+	the notebook and exchange them when flipping pages. Pass an icon
+	to the resolution_calibrate_dialog.
+
+2002-02-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimprc.[ch]
 	* app/config/gimpguiconfig.[ch]
 	* app/gui/toolbox.c: removed the "show_indicators" gimprc option.
