@@ -177,7 +177,6 @@ static void      apply_layer_mode_replace  (PixelRow*, PixelRow*, PixelRow*,
 
 
 
-
 /*  ColorHash structure  */
 typedef struct _ColorHash ColorHash;
 
@@ -249,9 +248,63 @@ paint_funcs_area_free  (
 /*    AREA FUNCTIONS                              */
 /**************************************************/
 
+typedef void (*AbsDiffFunc) (PixelRow*, PixelRow*, PixelRow*, gfloat, int);
+static AbsDiffFunc absdiff_area_funcs (Tag);
+
+
+static AbsDiffFunc 
+absdiff_area_funcs (
+                    Tag tag
+                    )
+	  
+{
+  switch (tag_precision (tag))
+    {
+    case PRECISION_U8:
+      return absdiff_row_u8;
+    case PRECISION_U16:
+      return NULL; /* absdiff_row_u16; */
+    case PRECISION_FLOAT:
+      return NULL; /* absdiff_row_float; */
+    default:
+      return NULL;
+    } 
+}
+ 
+void
+absdiff_area (
+              PixelArea * image,
+              PixelArea * mask,
+              PixelRow * color,
+              gfloat threshold,
+              int antialias
+              )
+{
+  void * pag;
+  Tag tag = pixelarea_tag (image); 
+  AbsDiffFunc absdiff_row = absdiff_area_funcs (tag);
+  /* put in tags check*/
+
+  for (pag = pixelarea_register (2, image, mask);
+       pag != NULL;
+       pag = pixelarea_process (pag))
+    {
+      PixelRow irow;
+      PixelRow mrow;
+      gint h = pixelarea_height (image);
+      while (h--)
+        {
+          pixelarea_getdata (image, &irow, h);
+          pixelarea_getdata (mask, &mrow, h);
+          (*absdiff_row) (&irow, &mrow, color, threshold, antialias);
+        }
+    }
+}
+
+
+
 typedef void (*ColorRowFunc) (PixelRow*, PixelRow*);
 static ColorRowFunc color_area_funcs (Tag);
-
 
 static ColorRowFunc 
 color_area_funcs (
@@ -429,28 +482,13 @@ copy_area_funcs (
   } 
 }
 
-/* FIXME: is this required? */
 void 
 copy_row  (
            PixelRow * src_row,
            PixelRow * dest_row
            )
 {
-  switch (tag_precision (pixelrow_tag (src_row)))
-    {
-    case PRECISION_U8:
-      copy_row_u8 (src_row, dest_row);
-      break;
-    case PRECISION_U16:
-      copy_row_u16 (src_row, dest_row);
-      break;
-    case PRECISION_FLOAT:
-      copy_row_float (src_row, dest_row);
-      break;
-    case PRECISION_NONE:
-      g_warning ("doh in copy_row()");
-      break;	
-    }
+  (*(copy_area_funcs (pixelrow_tag (src_row)))) (src_row, dest_row);
 }
 
 
@@ -4058,7 +4096,6 @@ draw_segments (
   length = MAXIMUM (width , height);
 
   /* get a row with same tag type as dest */
-  /* FIXME leak */
   line_data = (guchar *) g_malloc (length * bytes_per_pixel); 
   pixelrow_init (&line, dest_tag, line_data, length); 
   

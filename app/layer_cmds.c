@@ -89,7 +89,7 @@ layer_new_invoker (Argument *args)
     {
       fp_value = args[5].value.pdb_float;
       if (fp_value >= 0 && fp_value <= 100)
-	opacity = (int) ((fp_value * 255) / 100);
+	opacity = (fp_value / 100.0);
       else
 	success = FALSE;
     }
@@ -103,8 +103,8 @@ layer_new_invoker (Argument *args)
     }
 
   if (success)
-    success = ((layer = layer_new_tag (gimage_id, width, height, tag, storage, name, opacity, mode)) != NULL);
-
+    success = ((layer = layer_new (gimage_id, width, height, tag, storage, name, opacity, mode)) != NULL);
+  
   return_args = procedural_db_return_args (&layer_new_proc, success);
 
   if (success)

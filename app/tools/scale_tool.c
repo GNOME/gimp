@@ -18,19 +18,19 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "appenv.h"
+#include "canvas.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "info_dialog.h"
-#include "paint_funcs.h"
+#include "paint_funcs_area.h"
+#include "pixelarea.h"
 #include "scale_tool.h"
 #include "selection.h"
 #include "tools.h"
 #include "transform_core.h"
 #include "transform_tool.h"
 #include "undo.h"
-
-#include "tile_manager_pvt.h"
 
 #define X1 0
 #define Y1 1
@@ -46,7 +46,7 @@ char          x_ratio_buf     [MAX_INFO_BUF];
 char          y_ratio_buf     [MAX_INFO_BUF];
 
 /*  forward function declarations  */
-static void *      scale_tool_scale   (GImage *, GimpDrawable *, double *, TileManager *, int, Matrix);
+static void *      scale_tool_scale   (GImage *, GimpDrawable *, double *, Canvas *, int, Matrix);
 static void *      scale_tool_recalc  (Tool *, void *);
 static void        scale_tool_motion  (Tool *, void *);
 static void        scale_info_update  (Tool *);
@@ -359,26 +359,33 @@ scale_tool_scale (gimage, drawable, trans_info, float_tiles, interpolation, matr
      GImage *gimage;
      GimpDrawable *drawable;
      double *trans_info;
-     TileManager *float_tiles;
+     Canvas *float_tiles;
      int interpolation;
      Matrix matrix;
 {
-  TileManager *new_tiles;
+  Canvas *new_tiles;
   int x1, y1, x2, y2;
-  PixelRegion srcPR, destPR;
+  PixelArea srcPR, destPR;
 
   x1 = trans_info[X1];
   y1 = trans_info[Y1];
   x2 = trans_info[X2];
   y2 = trans_info[Y2];
 
-  pixel_region_init (&srcPR, float_tiles, 0, 0,
-                     float_tiles->levels[0].width,
-                     float_tiles->levels[0].height, FALSE);
+  pixelarea_init (&srcPR, float_tiles,
+                  0, 0,
+                  0, 0,
+                  FALSE);
 
   /*  Create the new tile manager  */
-  new_tiles = tile_manager_new ((x2 - x1), (y2 - y1), float_tiles->levels[0].bpp);
-  pixel_region_init (&destPR, new_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
+  new_tiles = canvas_new (canvas_tag (float_tiles),
+                          (x2 - x1), (y2 - y1),
+                          STORAGE_TILED);
+
+  pixelarea_init (&destPR, new_tiles,
+                  0, 0,
+                  (x2 - x1), (y2 - y1),
+                  TRUE);
 
 
   if (drawable_type (drawable) == INDEXED_GIMAGE ||
@@ -388,8 +395,8 @@ scale_tool_scale (gimage, drawable, trans_info, float_tiles, interpolation, matr
   else
     scale_area (&srcPR, &destPR);
 
-  new_tiles->x = x1;
-  new_tiles->y = y1;
+  canvas_fixme_setx (new_tiles, x1);
+  canvas_fixme_sety (new_tiles, y1);
 
   return (void *) new_tiles;
 }
@@ -469,8 +476,8 @@ scale_invoker (args)
   int interpolation;
   double trans_info[4];
   int int_value;
-  TileManager *float_tiles;
-  TileManager *new_tiles;
+  Canvas *float_tiles;
+  Canvas *new_tiles;
   Matrix matrix;
   int new_layer;
   Layer *layer;
@@ -525,14 +532,16 @@ scale_invoker (args)
       float_tiles = transform_core_cut (gimage, drawable, &new_layer);
 
       scalex = scaley = 1.0;
-      if (float_tiles->levels[0].width)
-	scalex = (trans_info[X2] - trans_info[X1]) / (double) float_tiles->levels[0].width;
-      if (float_tiles->levels[0].height)
-	scaley = (trans_info[Y2] - trans_info[Y1]) / (double) float_tiles->levels[0].height;
+      if (canvas_width (float_tiles))
+	scalex = (trans_info[X2] - trans_info[X1]) / (double) canvas_width (float_tiles);
+      if (canvas_height (float_tiles))
+	scaley = (trans_info[Y2] - trans_info[Y1]) / (double) canvas_height (float_tiles);
 
       /*  assemble the transformation matrix  */
       identity_matrix  (matrix);
-      translate_matrix (matrix, float_tiles->x, float_tiles->y);
+      translate_matrix (matrix,
+                        canvas_fixme_getx (float_tiles),
+                        canvas_fixme_gety (float_tiles));
       scale_matrix     (matrix, scalex, scaley);
       translate_matrix (matrix, trans_info[X1], trans_info[Y1]);
 
@@ -541,7 +550,7 @@ scale_invoker (args)
 				    float_tiles, interpolation, matrix);
 
       /*  free the cut/copied buffer  */
-      tile_manager_destroy (float_tiles);
+      canvas_delete (float_tiles);
 
       if (new_tiles)
 	success = (layer = transform_core_paste (gimage, drawable, new_tiles, new_layer)) != NULL;

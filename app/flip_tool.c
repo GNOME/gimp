@@ -17,17 +17,17 @@
  */
 #include <stdlib.h>
 #include "appenv.h"
+#include "canvas.h"
 #include "cursorutil.h"
 #include "drawable.h"
 #include "flip_tool.h"
 #include "gdisplay.h"
-#include "tile_manager.h"
 #include "transform_core.h"
 #include "undo.h"
 #include "gimage.h"
-#include "paint_funcs.h"
+#include "paint_funcs_area.h"
+#include "pixelarea.h"
 
-#include "tile_manager_pvt.h"		/* ick. */
 
 #define FLIP       0
 
@@ -41,8 +41,8 @@ struct _FlipOptions
 /*  forward function declarations  */
 static Tool *         tools_new_flip_horz  (void);
 static Tool *         tools_new_flip_vert  (void);
-static TileManager *  flip_tool_flip_horz  (GImage *, GimpDrawable *, TileManager *, int);
-static TileManager *  flip_tool_flip_vert  (GImage *, GimpDrawable *, TileManager *, int);
+static Canvas *  flip_tool_flip_horz  (GImage *, GimpDrawable *, Canvas *, int);
+static Canvas *  flip_tool_flip_vert  (GImage *, GimpDrawable *, Canvas *, int);
 static void           flip_change_type     (int);
 static Argument *     flip_invoker         (Argument *);
 
@@ -234,84 +234,112 @@ tools_new_flip_vert ()
   return tool;
 }
 
-static TileManager *
+static Canvas *
 flip_tool_flip_horz (GImage      *gimage,
 		     GimpDrawable *drawable,
-		     TileManager *orig,
+		     Canvas *orig,
 		     int          flip)
 {
-  TileManager *new;
-  PixelRegion srcPR, destPR;
+  Canvas *new;
+  PixelArea srcPR, destPR;
   int i;
 
   if (!orig)
     return NULL;
 
+  new = canvas_new (canvas_tag (orig),
+                    canvas_width (orig), canvas_height (orig),
+                    STORAGE_TILED);
+
   if (flip > 0)
     {
-      new = tile_manager_new (orig->levels[0].width, orig->levels[0].height, orig->levels[0].bpp);
-      pixel_region_init (&srcPR, orig, 0, 0, orig->levels[0].width, orig->levels[0].height, FALSE);
-      pixel_region_init (&destPR, new, 0, 0, orig->levels[0].width, orig->levels[0].height, TRUE);
+      pixelarea_init (&srcPR, orig,
+                      0, 0,
+                      0, 0,
+                      FALSE);
+
+      pixelarea_init (&destPR, new,
+                      0, 0,
+                      0, 0,
+                      TRUE);
 
       copy_area (&srcPR, &destPR);
-      new->x = orig->x;
-      new->y = orig->y;
     }
   else
     {
-      new = tile_manager_new (orig->levels[0].width, orig->levels[0].height, orig->levels[0].bpp);
-      new->x = orig->x;
-      new->y = orig->y;
-
-      for (i = 0; i < orig->levels[0].width; i++)
+      for (i = 0; i < canvas_width (orig); i++)
 	{
-	  pixel_region_init (&srcPR, orig, i, 0, 1, orig->levels[0].height, FALSE);
-	  pixel_region_init (&destPR, new, (orig->levels[0].width - i - 1), 0, 1, orig->levels[0].height, TRUE);
+	  pixelarea_init (&srcPR, orig,
+                          i, 0,
+                          1, 0,
+                          FALSE);
+
+	  pixelarea_init (&destPR, new,
+                          (canvas_width (orig) - i - 1), 0,
+                          1, 0,
+                          TRUE);
 
 	  copy_area (&srcPR, &destPR);
 	}
     }
+
+  canvas_fixme_setx (new, canvas_fixme_getx (orig));
+  canvas_fixme_sety (new, canvas_fixme_gety (orig));
 
   return new;
 }
 
-static TileManager *
+static Canvas *
 flip_tool_flip_vert (GImage      *gimage,
 		     GimpDrawable *drawable,
-		     TileManager *orig,
+		     Canvas *orig,
 		     int          flip)
 {
-  TileManager *new;
-  PixelRegion srcPR, destPR;
+  Canvas *new;
+  PixelArea srcPR, destPR;
   int i;
 
   if (!orig)
     return NULL;
 
+  new = canvas_new (canvas_tag (orig),
+                    canvas_width (orig), canvas_height (orig),
+                    STORAGE_TILED);
+
   if (flip > 0)
     {
-      new = tile_manager_new (orig->levels[0].width, orig->levels[0].height, orig->levels[0].bpp);
-      pixel_region_init (&srcPR, orig, 0, 0, orig->levels[0].width, orig->levels[0].height, FALSE);
-      pixel_region_init (&destPR, new, 0, 0, orig->levels[0].width, orig->levels[0].height, TRUE);
+      pixelarea_init (&srcPR, orig,
+                      0, 0,
+                      0, 0,
+                      FALSE);
+
+      pixelarea_init (&destPR, new,
+                      0, 0,
+                      0, 0,
+                      TRUE);
 
       copy_area (&srcPR, &destPR);
-      new->x = orig->x;
-      new->y = orig->y;
     }
   else
     {
-      new = tile_manager_new (orig->levels[0].width, orig->levels[0].height, orig->levels[0].bpp);
-      new->x = orig->x;
-      new->y = orig->y;
-
-      for (i = 0; i < orig->levels[0].height; i++)
+      for (i = 0; i < canvas_height (orig); i++)
 	{
-	  pixel_region_init (&srcPR, orig, 0, i, orig->levels[0].width, 1, FALSE);
-	  pixel_region_init (&destPR, new, 0, (orig->levels[0].height - i - 1), orig->levels[0].width, 1, TRUE);
+	  pixelarea_init (&srcPR, orig,
+                          0, i,
+                          0, 1,
+                          FALSE);
+
+	  pixelarea_init (&destPR, new,
+                          0, (canvas_height (orig) - i - 1),
+                          0, 1,
+                          TRUE);
 
 	  copy_area (&srcPR, &destPR);
 	}
     }
+
+  canvas_fixme_setx (new, canvas_fixme_getx (orig));
+  canvas_fixme_sety (new, canvas_fixme_gety (orig));
 
   return new;
 }
@@ -383,8 +411,8 @@ flip_invoker (Argument *args)
   GimpDrawable *drawable;
   int flip_type;
   int int_value;
-  TileManager *float_tiles;
-  TileManager *new_tiles;
+  Canvas *float_tiles;
+  Canvas *new_tiles;
   int new_layer;
   Layer *layer;
   Argument *return_args;
@@ -442,7 +470,7 @@ flip_invoker (Argument *args)
 	}
 
       /*  free the cut/copied buffer  */
-      tile_manager_destroy (float_tiles);
+      canvas_delete (float_tiles);
 
       if (new_tiles)
 	success = (layer = transform_core_paste (gimage, drawable, new_tiles, new_layer)) != NULL;

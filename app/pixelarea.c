@@ -79,19 +79,18 @@ pixelarea_resize (
       pa->x = x;
       pa->y = y;
 
-      if (w == 0)
-        pa->w = canvas_width (pa->canvas);
-      else
+      pa->w = canvas_width (pa->canvas);
+      if ((w > 0) && (w <= pa->w))
         pa->w = w;
 
-      if (h == 0)
-        pa->h = canvas_height (pa->canvas);
-      else
+      pa->h = canvas_height (pa->canvas);
+      if ((h > 0) && (h <= pa->h))
         pa->h = h;
 
+
       pa->dirty = will_dirty;
-      pa->startx = x;
-      pa->starty = y;
+      pa->startx = pa->x;
+      pa->starty = pa->y;
     }
 }
 
@@ -143,22 +142,36 @@ pixelarea_copy_row (
                     int subsample
 		   )
 {
-  guchar *pr_data = pixelrow_data (pr);
-  void *pag;
+  guchar * pr_data = pixelrow_data (pr);
+  int bytes = tag_bytes (pixelarea_tag (pa));
+  int b, remainder;
   PixelArea area;
-  Tag pa_tag = pixelarea_tag (pa);  
+  void *pag;
   
   /* get a pixel area of height 1 for the wanted row. */ 
   pixelarea_init (&area, pa->canvas, x, y ,width, 1, FALSE);  
-  
-  for (pag = pixelarea_register (1, area);
+
+  remainder = 0;
+
+  for (pag = pixelarea_register (1, &area);
        pag != NULL;
        pag = pixelarea_process (pag))
     {
-      guchar * area_data = pixelarea_data (&area);
-      int portion_width = pixelarea_width (&area);  
-      memcpy(pr_data, area_data, tag_bytes (pa_tag) * portion_width);
-      pr_data += portion_width;
+      int cur = remainder;
+      guchar * area_data = pixelarea_data (&area) + cur * bytes;
+      int portion_width = pixelarea_width (&area);
+
+      while (cur < portion_width)
+        {
+          for (b = 0; b < bytes; b++)
+            pr_data[b] = area_data[b];
+
+          cur += subsample;
+          pr_data += bytes * subsample;
+          area_data += bytes * subsample;
+        }
+
+      remainder = cur - portion_width;
     }
 }
 
@@ -185,7 +198,7 @@ pixelarea_copy_col (
   /* get a pixel area of width 1 for the wanted column. */ 
   pixelarea_init (&area, pa->canvas, x, y , 1, height, FALSE);  
   
-  for (pag = pixelarea_register (1, area);
+  for (pag = pixelarea_register (1, &area);
        pag != NULL;
        pag = pixelarea_process (pag))
     {
@@ -225,7 +238,7 @@ pixelarea_write_row (
   /* get a pixel area of height 1 for the row. */ 
   pixelarea_init (&area, pa->canvas, x, y ,width, 1, TRUE);  
   
-  for (pag = pixelarea_register (1, area);
+  for (pag = pixelarea_register (1, &area);
        pag != NULL;
        pag = pixelarea_process (pag))
     {
@@ -261,7 +274,7 @@ pixelarea_write_col (
   /* get a pixel area of width 1 for the wanted column.*/ 
   pixelarea_init (&area, pa->canvas, x, y , 1, height, FALSE);  
   
-  for (pag = pixelarea_register (1, area);
+  for (pag = pixelarea_register (1, &area);
        pag != NULL;
        pag = pixelarea_process (pag))
     {
@@ -704,7 +717,8 @@ pixelareagroup_portion_height (
               height = canvas_portion_height (pa->canvas,
                                               pa->x, pa->y);          
 #define PIXELAREA_C_4_cw
-              height = CLAMP (height, 0 , pag->region_height); 
+              height = CLAMP (height,
+                              0 , pag->region_height - (pa->y - pa->starty)); 
               if (height < min_height)
                 min_height = height;
             }

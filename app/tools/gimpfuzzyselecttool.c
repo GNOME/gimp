@@ -19,6 +19,7 @@
 #include <math.h>
 #include "appenv.h"
 #include "boundary.h"
+#include "canvas.h"
 #include "draw_core.h"
 #include "drawable.h"
 #include "edit_selection.h"
@@ -27,10 +28,10 @@
 #include "gimprc.h"
 #include "gdisplay.h"
 #include "rect_select.h"
-#include "paint_funcs.h"
+#include "paint_funcs_area.h"
+#include "pixelarea.h"
+#include "pixelrow.h"
 
-#define NO  0
-#define YES 1
 
 typedef struct _fuzzy_select FuzzySelect;
 
@@ -41,9 +42,32 @@ struct _fuzzy_select
   int            x, y;         /*  Point from which to execute seed fill  */
   int            last_x;       /*                                         */
   int            last_y;       /*  variables to keep track of sensitivity */
-  int            threshold;    /*  threshold value for soft seed fill     */
+  gfloat         threshold;    /*  threshold value for soft seed fill     */
 
   int            op;           /*  selection operation (ADD, SUB, etc)     */
+};
+
+
+typedef struct _fuzzy_select_helper FuzzySelectHelper;
+
+struct _fuzzy_select_helper
+{
+  /* the image and generated mask */
+  Canvas *   image;
+  Canvas *   mask;
+
+  /* initial color for fill */
+  PixelRow   color;
+
+  /* bounding box for fill */
+  int        x1, x2;
+  int        y1, y2;
+
+  /* threshold for fill */
+  gfloat     threshold;
+
+  /* should fill antialias edges? */
+  int        antialias;
 };
 
 
@@ -72,6 +96,7 @@ static Argument *fuzzy_select_invoker (Argument *);
 /*************************************/
 /*  Fuzzy selection apparatus  */
 
+#
 static int
 is_pixel_sufficiently_different (unsigned char *col1, unsigned char *col2,
 				 int antialias, int threshold, int bytes,
@@ -118,8 +143,9 @@ is_pixel_sufficiently_different (unsigned char *col1, unsigned char *col2,
     }
 }
 
+#if 0
 static void
-ref_tiles (TileManager *src, TileManager *mask, Tile **s_tile, Tile **m_tile,
+ref_tiles (Canvas *src, Canvas *mask, Tile **s_tile, Tile **m_tile,
 	   int x, int y, unsigned char **s, unsigned char **m)
 {
   if (*s_tile != NULL)
@@ -135,17 +161,19 @@ ref_tiles (TileManager *src, TileManager *mask, Tile **s_tile, Tile **m_tile,
   *s = (*s_tile)->data + (*s_tile)->bpp * ((*s_tile)->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
   *m = (*m_tile)->data + (*m_tile)->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH);
 }
+#endif
 
-static int
-find_contiguous_segment (unsigned char *col, PixelRegion *src,
-			 PixelRegion *mask, int width, int bytes,
-			 int has_alpha, int antialias, int threshold,
-			 int initial, int *start, int *end)
+static int 
+find_contiguous_segment  (
+                          FuzzySelectHelper * h,
+                          int x,
+                          int y,
+                          int * start,
+                          int * end
+                          )
 {
-  unsigned char *s, *m;
+#if 0
   unsigned char diff;
-  Tile *s_tile = NULL;
-  Tile *m_tile = NULL;
 
   ref_tiles (src->tiles, mask->tiles, &s_tile, &m_tile, src->x, src->y, &s, &m);
 
@@ -197,104 +225,98 @@ find_contiguous_segment (unsigned char *col, PixelRegion *src,
 
   tile_unref (s_tile, FALSE);
   tile_unref (m_tile, TRUE);
+#endif
   return TRUE;
 }
 
-static void
-find_contiguous_region_helper (PixelRegion *mask, PixelRegion *src,
-			       int has_alpha, int antialias, int threshold, int indexed,
-			       int x, int y, unsigned char *col)
+static void 
+find_contiguous_region_helper  (
+                                FuzzySelectHelper * h,
+                                int x,
+                                int y
+                                )
 {
-  int start, end, i;
-  int val;
-  int bytes;
-
-  Tile *tile;
-
-  if (threshold == 0) threshold = 1;
-  if (x < 0 || x >= src->w) return;
-  if (y < 0 || y >= src->h) return;
-
-  tile = tile_manager_get_tile (mask->tiles, x, y, 0);
-  tile_ref (tile);
-  val = tile->data[tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH)];
-  tile_unref (tile, FALSE);
-  if (val != 0)
+  if (x < h->x1 || x >= h->x2 || y < h->y1 || y >= h->y2)
     return;
 
-  src->x = x;
-  src->y = y;
-
-  bytes = src->bytes;
-  if(indexed)
+  if (canvas_portion_refrw (h->mask, x, y) == REFRC_OK)
     {
-      bytes = has_alpha ? 4 : 3;
-    }
-    
+      PixelRow m;
+      
+      pixelrow_init (&m,
+                     canvas_tag (h->mask),
+                     canvas_portion_data (h->mask, x, y),
+                     1);
 
-  if ( ! find_contiguous_segment (col, src, mask, src->w,
-				  src->bytes, has_alpha,
-				  antialias, threshold, x, &start, &end))
-    return;
+      if (color16_is_black (&m))
+        {
+          int start, end;
 
-  for (i = start + 1; i < end; i++)
-    {
-      find_contiguous_region_helper (mask, src, has_alpha, antialias, threshold, indexed, i, y - 1, col);
-      find_contiguous_region_helper (mask, src, has_alpha, antialias, threshold, indexed, i, y + 1, col);
+          if (find_contiguous_segment (h, x, y, &start, &end))
+            {
+              int i;
+              
+              for (i = start; i <= end; i++)
+                {
+                  find_contiguous_region_helper (h, i, y - 1);
+                  find_contiguous_region_helper (h, i, y + 1);
+                }
+            }
+        }
+
+      canvas_portion_unref (h->mask, x, y);
     }
 }
 
-Channel *
-find_contiguous_region (GImage *gimage, GimpDrawable *drawable, int antialias,
-			int threshold, int x, int y, int sample_merged)
+
+Channel * 
+find_contiguous_region  (
+                         GImage * gimage,
+                         GimpDrawable * drawable,
+                         int antialias,
+                         gfloat threshold,
+                         int x,
+                         int y,
+                         int sample_merged
+                         )
 {
-  PixelRegion srcPR, maskPR;
-  Channel *mask;
-  unsigned char *start;
-  int has_alpha;
-  int indexed;
-  int type;
-  int bytes;
-  Tile *tile;
-
-  if (sample_merged)
-    {
-      pixel_region_init (&srcPR, gimage_composite (gimage), 0, 0,
-			 gimage->width, gimage->height, FALSE);
-      type = gimage_composite_type (gimage);
-      has_alpha = (type == RGBA_GIMAGE ||
-		   type == GRAYA_GIMAGE ||
-		   type == INDEXEDA_GIMAGE);
-    }
-  else
-    {
-      pixel_region_init (&srcPR, drawable_data (drawable), 0, 0,
-			 drawable_width (drawable), drawable_height (drawable), FALSE);
-      has_alpha = drawable_has_alpha (drawable);
-    }
-  indexed = drawable_indexed (drawable);
-  bytes = drawable_bytes (drawable);
+  FuzzySelectHelper h;
+  Channel * mask;
+  Canvas * s, * m;
   
-  if(indexed)
+  s = (sample_merged)
+    ? gimage_composite (gimage)
+    : drawable_data (drawable);
+
+  mask = channel_new_mask (gimage->ID,
+                           canvas_width (s), canvas_height (s),
+                           tag_precision (canvas_tag (s)));
+
+  m = drawable_data (GIMP_DRAWABLE(mask));
+  
+  if (canvas_portion_refro (s, x, y) == REFRC_OK)
     {
-      bytes = has_alpha ? 4 : 3;
+      h.image = s;
+      h.mask = m;
+      
+      h.x1 = 0;
+      h.y1 = 0;
+      h.x2 = canvas_width (s);
+      h.y2 = canvas_height (s);      
+
+      h.antialias = antialias;
+      h.threshold = threshold ? threshold : 0.001;
+      
+      pixelrow_init (&h.color,
+                     canvas_tag (s),
+                     canvas_portion_data (s, x, y),
+                     1);
+
+      find_contiguous_region_helper (&h, x, y);
+
+      canvas_portion_unref (s, x, y);
     }
-  mask = channel_new_mask (gimage->ID, srcPR.w, srcPR.h, default_precision);
-  pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), 0, 0, drawable_width (GIMP_DRAWABLE(mask)), drawable_height (GIMP_DRAWABLE(mask)), TRUE);
-
-  tile = tile_manager_get_tile (srcPR.tiles, x, y, 0);
-  if (tile)
-    {
-      tile_ref (tile);
-
-      start = tile->data + tile->ewidth * tile->bpp * (y % TILE_HEIGHT) +
-	tile->bpp * (x % TILE_WIDTH);
-
-      find_contiguous_region_helper (&maskPR, &srcPR, has_alpha, antialias, threshold, bytes, x, y, start);
-
-      tile_unref (tile, FALSE);
-    }
-
+  
   return mask;
 }
 
@@ -435,8 +457,8 @@ fuzzy_select_motion (Tool *tool, GdkEventMotion *mevent, gpointer gdisp_ptr)
   fuzzy_sel->last_x = mevent->x;
   fuzzy_sel->last_y = mevent->y;
 
-  fuzzy_sel->threshold += diff;
-  fuzzy_sel->threshold = BOUNDS (fuzzy_sel->threshold, 0, 255);
+  fuzzy_sel->threshold += diff/255.0;
+  fuzzy_sel->threshold = BOUNDS (fuzzy_sel->threshold, 0, 1);
 
   /*  calculate the new fuzzy boundary  */
   new_segs = fuzzy_select_calculate (tool, gdisp_ptr, &num_new_segs);
@@ -457,7 +479,7 @@ fuzzy_select_motion (Tool *tool, GdkEventMotion *mevent, gpointer gdisp_ptr)
 static GdkSegment *
 fuzzy_select_calculate (Tool *tool, void *gdisp_ptr, int *nsegs)
 {
-  PixelRegion maskPR;
+  PixelArea maskPR;
   FuzzySelect *fuzzy_sel;
   GDisplay *gdisp;
   Channel *new;
@@ -486,7 +508,11 @@ fuzzy_select_calculate (Tool *tool, void *gdisp_ptr, int *nsegs)
   /*  calculate and allocate a new XSegment array which represents the boundary
    *  of the color-contiguous region
    */
-  pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(fuzzy_mask)), 0, 0, drawable_width (GIMP_DRAWABLE(fuzzy_mask)), drawable_height (GIMP_DRAWABLE(fuzzy_mask)), FALSE);
+  pixelarea_init (&maskPR, drawable_data (GIMP_DRAWABLE(fuzzy_mask)),
+                  0, 0,
+                  0, 0,
+                  FALSE);
+
   bsegs = find_mask_boundary (&maskPR, nsegs, WithinBounds,
 			      0, 0,
 			      drawable_width (GIMP_DRAWABLE(fuzzy_mask)),
@@ -655,7 +681,7 @@ fuzzy_select_invoker (Argument *args)
   GImage *gimage;
   GimpDrawable *drawable;
   int op;
-  int threshold;
+  gfloat threshold;
   int antialias;
   int feather;
   int sample_merged;
@@ -693,7 +719,7 @@ fuzzy_select_invoker (Argument *args)
     {
       int_value = args[4].value.pdb_int;
       if (int_value >= 0 && int_value <= 255)
-	threshold = int_value;
+	threshold = int_value / 255.0;
       else
 	success = FALSE;
     }

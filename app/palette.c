@@ -190,6 +190,36 @@ color16_background  (
 }
 
 
+int
+color16_is_black  (
+                   PixelRow * color
+                   )
+{
+  COLOR16_NEW (init, tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO));
+  COLOR16_INIT (init);
+  copy_row (color, &init);
+  return (*(gfloat*)init_data == 0) ? 1 : 0;
+}
+int
+color16_is_white  (
+                   PixelRow * color
+                   )
+{
+  COLOR16_NEW (init, tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO));
+  COLOR16_INIT (init);
+  copy_row (color, &init);
+  return (*(gfloat*)init_data == 1) ? 1 : 0;
+}
+int
+color16_is_transparent  (
+                         PixelRow * color
+                         )
+{
+  COLOR16_NEW (init, tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_YES));
+  COLOR16_INIT (init);
+  copy_row (color, &init);
+  return (((gfloat*)init_data)[1] == 0) ? 1 : 0;
+}
 
 
 

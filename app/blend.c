@@ -177,13 +177,13 @@ static double gradient_repeat_none(double val);
 static double gradient_repeat_sawtooth(double val);
 static double gradient_repeat_triangular(double val);
 
-static void   gradient_precalc_shapeburst   (GImage *gimage, GimpDrawable *drawable, PixelArea *PR, double dist);
+static void   gradient_precalc_shapeburst   (GImage *gimage, GimpDrawable *drawable, int x, int y, int w, int h, double dist);
 
 static void gradient_render_pixel  (double x, double y, gfloat * color, void * render_data);
 #if 0
 static void   gradient_put_pixel(int x, int y, color_t color, void *put_pixel_data);
 #endif
-static void   gradient_fill_region          (GImage *gimage, GimpDrawable *drawable, PixelArea *PR,
+static void   gradient_fill_region          (GImage *gimage, GimpDrawable *drawable, int x, int y,
 					     int width, int height,
 					     BlendMode blend_mode, GradientType gradient_type,
 					     double offset, RepeatMode repeat,
@@ -750,25 +750,16 @@ blend (GImage       *gimage,
        double        endx,
        double        endy)
 {
-  Canvas * buf = NULL;
-  PixelArea bufPR;
   int x1, y1, x2, y2;
 
   (void) drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-  /* only needed for x y w h */
-  pixelarea_init (&bufPR, buf,
-                  0, 0, (x2 - x1), (y2 - y1), TRUE);
-
   gradient_fill_region (gimage, drawable,
-                        &bufPR, (x2 - x1), (y2 - y1),
+                        x1, y1, (x2 - x1), (y2 - y1),
                         blend_mode, gradient_type, offset, repeat,
                         supersample, max_depth, threshold,
                         (startx - x1), (starty - y1),
-                        (endx - x1), (endy - y1), opacity/100, paint_mode);
-  
-/*   gimage_apply_painthit (gimage, drawable, NULL, &bufPR, */
-/*                          TRUE, opacity / 100, paint_mode, x1, y1); */
+                        (endx - x1), (endy - y1), opacity/100.0, paint_mode);
   
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 }
@@ -1072,7 +1063,10 @@ static void
 gradient_precalc_shapeburst  (
                               GImage * gimage,
                               GimpDrawable * drawable,
-                              PixelArea * PR,
+                              int x,
+                              int y,
+                              int w,
+                              int h,
                               double dist
                               )
 {
@@ -1083,12 +1077,12 @@ gradient_precalc_shapeburst  (
   if (distance_canvas)
     canvas_delete (distance_canvas);
   distance_canvas = canvas_new (tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO),
-                                PR->w, PR->h, STORAGE_TILED);
+                                w, h, STORAGE_TILED);
 
   /*  allocate the selection mask copy  */
   tempRbuf = canvas_new (tag_new (PRECISION_U8, FORMAT_GRAY, ALPHA_NO),
-                         PR->w, PR->h, STORAGE_TILED);
-  pixelarea_init (&tempR, tempRbuf, 0, 0, PR->w, PR->h, TRUE);
+                         w, h, STORAGE_TILED);
+  pixelarea_init (&tempR, tempRbuf, 0, 0, w, h, TRUE);
 
   /*  If the gimage mask is not empty, use it as the shape burst source  */
   if (! gimage_mask_is_empty (gimage))
@@ -1118,7 +1112,7 @@ gradient_precalc_shapeburst  (
 	  PixelArea drawableR;
 
 	  pixelarea_init (&drawableR, drawable_data (drawable),
-                          PR->x, PR->y, PR->w, PR->h, FALSE);
+                          x, y, w, h, FALSE);
 
 	  extract_alpha_area (&drawableR, NULL, &tempR);
 	}
@@ -1138,9 +1132,9 @@ gradient_precalc_shapeburst  (
     PixelArea distR;
     
     pixelarea_init (&tempR, tempRbuf,
-                    0, 0, PR->w, PR->h, TRUE);
+                    0, 0, w, h, TRUE);
     pixelarea_init (&distR, distance_canvas,
-                    0, 0, PR->w, PR->h, TRUE);
+                    0, 0, w, h, TRUE);
 
     max_iteration = shapeburst_area (&tempR, &distR);
 
@@ -1150,7 +1144,7 @@ gradient_precalc_shapeburst  (
         void * pr;
 
         pixelarea_init (&distR, distance_canvas,
-                        0, 0, PR->w, PR->h, TRUE);
+                        0, 0, w, h, TRUE);
 
         for (pr = pixelarea_register (1, &distR);
              pr != NULL;
@@ -1306,7 +1300,8 @@ gradient_put_pixel(int x, int y, color_t color, void *put_pixel_data)
 static void
 gradient_fill_region (GImage       *gimage,
 		      GimpDrawable *drawable,
-		      PixelArea    *PR,
+                      int           x,
+                      int           y,
 		      int           width,
 		      int           height,
 		      BlendMode     blend_mode,
@@ -1406,7 +1401,7 @@ gradient_fill_region (GImage       *gimage,
     case ShapeburstSpherical:
     case ShapeburstDimpled:
       rbd.dist = sqrt(SQR(ex - sx) + SQR(ey - sy));
-      gradient_precalc_shapeburst(gimage, drawable, PR, rbd.dist);
+      gradient_precalc_shapeburst(gimage, drawable, x, y, width, height, rbd.dist);
       break;
 
     default:
@@ -1451,7 +1446,9 @@ gradient_fill_region (GImage       *gimage,
     {
 #if 0
       /* Initialize put pixel data */
-
+#define FIXME
+      /* the PR arg here was a PixelArea that was used only for the x,
+         y, w, h values */
       ppd.PR       = PR;
       ppd.row_data = g_malloc(width * tag_bytes (pixelarea_tag (PR)));
       ppd.bytes    = tag_bytes (pixelarea_tag (PR));
@@ -1471,7 +1468,6 @@ gradient_fill_region (GImage       *gimage,
 #endif
     }
   else
-#if 1
     {
       Canvas * render;
       Canvas * apply;
@@ -1486,12 +1482,12 @@ gradient_fill_region (GImage       *gimage,
       applytag = tag_set_alpha (applytag, ALPHA_YES);
 
       /* alloc canvases */
-      render = canvas_new (rendertag, pixelarea_width (PR), FOO, STORAGE_TILED);
-      apply = canvas_new (applytag, pixelarea_width (PR), FOO, STORAGE_TILED);
+      render = canvas_new (rendertag, width, FOO, STORAGE_TILED);
+      apply = canvas_new (applytag, width, FOO, STORAGE_TILED);
 
       {
         int yy;
-        for (yy = 0; yy < pixelarea_height (PR); yy+=FOO)
+        for (yy = 0; yy < height; yy+=FOO)
           {
             PixelArea PRrender;
             PixelArea PRapply;
@@ -1529,44 +1525,6 @@ gradient_fill_region (GImage       *gimage,
           }
       }
     }
-#else
-    {
-      PixelArea PR2;
-      Canvas * c;
-      void *pr;
-
-      /* alloc a new canvas to build the gradient in */
-      c = canvas_new (tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_YES),
-                      pixelarea_width (PR),
-                      pixelarea_height (PR),
-                      STORAGE_TILED);
-      pixelarea_init (&PR2, c, 0, 0, 0, 0, TRUE);
-
-
-      for (pr = pixelarea_register(1, &PR2);
-           pr != NULL;
-           pr = pixelarea_process(pr))
-	{
-          gint h = pixelarea_height (&PR2);
-          gint y = pixelarea_y (&PR2);
-          for (; h--; y++)
-            {
-              gint w = pixelarea_width (&PR2);
-              gint x = pixelarea_x (&PR2);
-              for (; w--; x++)
-                {
-                  gradient_render_pixel (x, y,
-                                         (gfloat*) canvas_portion_data (c, x, y),
-                                         &rbd);
-                }
-            }
-        }
-
-      pixelarea_init (&PR2, c, 0, 0, 0, 0, TRUE);
-      copy_area (&PR2, PR);
-      canvas_delete (c);
-    }
-#endif
 }
 
 static void

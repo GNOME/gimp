@@ -25,6 +25,7 @@
 #include <math.h>
 #include "appenv.h"
 #include "bezier_selectP.h"
+#include "canvas.h"
 #include "draw_core.h"
 #include "channel_pvt.h"
 #include "drawable.h"
@@ -35,9 +36,9 @@
 #include "interface.h"
 #include "iscissors.h"
 #include "edit_selection.h"
-#include "paint_funcs.h"
+#include "paint_funcs_area.h"
+#include "pixelarea.h"
 #include "rect_select.h"
-#include "temp_buf.h"
 #include "tools.h"
 
 #ifndef M_PI
@@ -97,7 +98,7 @@ struct _iscissors
   int             num_kinks;    /*  number of kinks in list          */
   Channel *       mask;         /*  selection mask                   */
   Kink *          kinks;        /*  kinks in the object outline      */
-  TempBuf *       edge_buf;     /*  edge map buffer                  */
+  Canvas *        edge_buf;     /*  edge map buffer                  */
 };
 
 typedef double BezierMatrix[4][4];
@@ -160,7 +161,7 @@ static double      std_dev    = 1.0;    /* in pixels */
 static int         miss_thres = 4;      /* in intensity */
 
 /*  edge map blocks variables  */
-static TempBuf **  edge_map_blocks = NULL;
+static Canvas **  edge_map_blocks = NULL;
 static int         horz_blocks;
 static int         vert_blocks;
 
@@ -214,7 +215,7 @@ static int    find_next_kink            (Kink *, int, int);
 static double find_distance             (Kink *, int, int);
 static int    go_distance               (Kink *, int, double, double *, double *);
 static int    travel_length             (Kink *, int, int, int, int);
-static int    find_edge_xy              (TempBuf *, int, double, double, double *);
+static int    find_edge_xy              (Canvas *, int, double, double, double *);
 static void   find_boundary             (Tool *);
 static void   shape_of_boundary         (Tool *);
 static void   process_kinks             (Tool *);
@@ -227,8 +228,8 @@ static void   post_process_boundary     (Tool *);
 static void   bezierify_boundary        (Tool *);
 
 /*  edge map buffer utility functions  */
-static TempBuf *  calculate_edge_map    (GImage *, int, int, int, int);
-static void   construct_edge_map        (Tool *, TempBuf *);
+static Canvas *  calculate_edge_map    (GImage *, int, int, int, int);
+static void   construct_edge_map        (Tool *, Canvas *);
 
 /*  edge map blocks utility functions  */
 static void   set_edge_map_blocks       (void *, int, int, int, int);
@@ -236,7 +237,7 @@ static void   allocate_edge_map_blocks  (int, int, int, int);
 static void   free_edge_map_blocks      (void);
 
 /*  gaussian & 1st derivative  */
-static void   gaussian_deriv            (PixelRegion *, PixelRegion *, int, double);
+static void   gaussian_deriv            (PixelArea *, PixelArea *, int, double);
 static void   make_curve                (int *, int *, double, int);
 static void   make_curve_d              (int *, int *, double, int);
 
@@ -920,7 +921,7 @@ iscissors_reset (Iscissors *iscissors)
 
   /*  free edge buffer  */
   if (iscissors->edge_buf)
-    temp_buf_free (iscissors->edge_buf);
+    canvas_delete (iscissors->edge_buf);
 
   /*  free mask  */
   if (iscissors->mask)
@@ -1180,12 +1181,14 @@ travel_length (Kink *kinks,
 }
 
 static int
-find_edge_xy (TempBuf *edge_buf,
+find_edge_xy (Canvas *edge_buf,
 	      int      dir,
 	      double   x,
 	      double   y,
 	      double  *edge)
 {
+  return 0;
+#if 0
   double dx, dy;
   int ix, iy;
   int xx, yy;
@@ -1251,6 +1254,7 @@ find_edge_xy (TempBuf *edge_buf,
     return 1;
   else
     return 0;
+#endif
 }
 
 static void
@@ -1540,8 +1544,15 @@ edge_map_from_boundary (Tool *tool)
 
 
   /*  construct the edge map  */
-  iscissors->edge_buf = temp_buf_new ((x2 - x1), (y2 - y1),
-				      EDGE_WIDTH, x1, y1, black);
+  {
+    Precision p = tag_precision (drawable_tag (drawable));
+    iscissors->edge_buf = canvas_new (tag_new (p, FORMAT_GRAY, ALPHA_NO),
+                                      (x2 - x1), (y2 - y1),
+                                      STORAGE_FLAT);
+    canvas_fixme_setx (iscissors->edge_buf, x1);
+    canvas_fixme_sety (iscissors->edge_buf, y1);
+  }
+  
   construct_edge_map (tool, iscissors->edge_buf);
 }
 
@@ -1855,15 +1866,17 @@ bezierify_boundary (Tool *tool)
 
 }
 
-static TempBuf *
+static Canvas *
 calculate_edge_map (GImage *gimage,
 		    int     x,
 		    int     y,
 		    int     w,
 		    int     h)
 {
-  TempBuf * edge_map;
-  PixelRegion srcPR, destPR;
+  return NULL;
+#if 0
+  Canvas * edge_map;
+  PixelArea srcPR, destPR;
   int width, height;
   int offx, offy;
   int i, j;
@@ -1883,7 +1896,17 @@ calculate_edge_map (GImage *gimage,
   x1 = y1 = x2 = y2 = 0;
 
   /*  allocate the new edge map  */
-  edge_map = temp_buf_new (w, h, EDGE_WIDTH, x, y, NULL);
+  {
+    Precision p = tag_precision (drawable_tag (drawable));
+    edge_map = canvas_new (tag_new (p,
+                                    FORMAT_GRAY,
+                                    ALPHA_NO),
+                           w,
+                           h,
+                           STORAGE_FLAT);
+    canvas_fixme_setx (edge_map, x);
+    canvas_fixme_sety (edge_map, y);
+  }
 
   /*  calculate the extent of the search make a 1 pixel border */
   x1 = BOUNDS (x, 0, drawable_width(drawable));
@@ -1903,7 +1926,9 @@ calculate_edge_map (GImage *gimage,
   srcPR.rowstride = gimage->width * drawable_bytes (drawable);
   srcPR.data = drawable_data (drawable) + y1 * srcPR.rowstride + x1 * srcPR.bytes;*/
 
-  pixel_region_init(&srcPR, drawable_data(drawable), x1, y1, width, height, 1);
+  pixelarea_init (&srcPR, drawable_data(drawable),
+                  x1, y1, width, height,
+                  TRUE);
 
   /*  Get the horizontal derivative  */
   destPR.data = conv1 /*+ MAX_CHANNELS * (CONV_WIDTH * offy + offx)*/;
@@ -1916,13 +1941,17 @@ calculate_edge_map (GImage *gimage,
   destPR.h = CONV_HEIGHT;
   destPR.dirty = 1;
   
-  for (pr =pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
+  for (pr = pixelarea_register (2, &srcPR, &destPR);
+       pr != NULL;
+       pr = pixelarea_process (pr))
     gaussian_deriv (&srcPR, &destPR, HORIZONTAL, std_dev);
 
   /*  Get the vertical derivative  */
   destPR.data = conv2 + MAX_CHANNELS * (CONV_WIDTH * offy + offx);
 
-  for (pr =pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
+  for (pr = pixelarea_register (2, &srcPR, &destPR);
+       pr != NULL;
+       pr = pixelarea_process (pr))
     gaussian_deriv (&srcPR, &destPR, VERTICAL, std_dev);
 
   /*  fill in the edge map  */
@@ -2009,14 +2038,16 @@ calculate_edge_map (GImage *gimage,
 	}
     }
 
-  return edge_map; 
+  return edge_map;
+#endif
 }
 
 static void
 construct_edge_map (Tool    *tool,
-		    TempBuf *edge_buf)
+		    Canvas *edge_buf)
 {
-  TempBuf * block;
+#if 0
+  Canvas * block;
   int index;
   int x, y;
   int endx, endy;
@@ -2026,7 +2057,7 @@ construct_edge_map (Tool    *tool,
   long sboffset;
   long dboffset;
    
-  PixelRegion srcPR, destPR;
+  PixelArea srcPR, destPR;
 /*#define ISCISSORS_STILL_DOES_NOT_WORK */
 #ifdef ISCISSORS_STILL_DOES_NOT_WORK
    FILE *dump; 
@@ -2126,6 +2157,7 @@ construct_edge_map (Tool    *tool,
    fwrite(edge_buf->data, edge_buf->width * edge_buf->height, sizeof (guchar), dump); 
    fclose (dump);
 #endif
+#endif
 }
 
 
@@ -2206,7 +2238,7 @@ allocate_edge_map_blocks (int block_width,
 
   /*  Allocate the array  */
   num_blocks = horz_blocks * vert_blocks;
-  edge_map_blocks = (TempBuf **) g_malloc (sizeof (TempBuf *) * num_blocks);
+  edge_map_blocks = (Canvas **) g_malloc (sizeof (Canvas *) * num_blocks);
 
   /*  Initialize the array  */
   for (i = 0; i < num_blocks; i++)
@@ -2236,7 +2268,7 @@ free_edge_map_blocks ()
 	printf("data:%d ",edge_map_blocks[i]->data);
 	printf("\n");
 */
-      temp_buf_free (edge_map_blocks [i]);
+      canvas_delete (edge_map_blocks [i]);
    }
   g_free (edge_map_blocks);
 
@@ -2249,11 +2281,12 @@ free_edge_map_blocks ()
 
 
 static void
-gaussian_deriv (PixelRegion *input,
-		PixelRegion *output,
+gaussian_deriv (PixelArea *input,
+		PixelArea *output,
 		int          type,
 		double       std_dev)
 {
+#if 0
   long width, height;
   unsigned char *dest, *dp;
   unsigned char *src, *sp, *s;
@@ -2466,6 +2499,7 @@ gaussian_deriv (PixelRegion *input,
     }
 
   g_free (buf);
+#endif
 }
 
 /*
@@ -2551,7 +2585,7 @@ CR_convert (Iscissors *iscissors,
   int x, w;
   int i, j;
   int offx, offy;
-  PixelRegion maskPR;
+  PixelArea maskPR;
   unsigned char *buf, *b;
   GimpDrawable *drawable;
   
@@ -2608,9 +2642,10 @@ CR_convert (Iscissors *iscissors,
     }
 
   drawable_offsets(drawable, &offx, &offy);
-  pixel_region_init (&maskPR, iscissors->mask->drawable.tiles, 0, 0,
-		     iscissors->mask->drawable.width,
-		     iscissors->mask->drawable.height, TRUE);
+  pixelarea_init (&maskPR, drawable_data (GIMP_DRAWABLE (iscissors->mask)),
+                  0, 0,
+                  0, 0,
+                  TRUE);
 
   for (i = 0; i < height-(offy*SUPERSAMPLE); i++)
     {
@@ -2653,7 +2688,7 @@ CR_convert (Iscissors *iscissors,
 
 	      *b++ = (unsigned char) (val / SUPERSAMPLE2);
 	    }
-	  pixel_region_set_row (&maskPR, offx/*0*/, (i / SUPERSAMPLE)+offy, iscissors->mask->drawable.width-offx, buf);
+	  pixelarea_write_row (&maskPR, offx/*0*/, (i / SUPERSAMPLE)+offy, drawable_width (GIMP_DRAWABLE (iscissors->mask))-offx, buf);
 	}
 
       g_slist_free (CR_scanlines[i]);

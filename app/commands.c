@@ -225,8 +225,8 @@ file_new_ok_callback (GtkWidget *widget,
     gimage = gimage_new_tag (vals->width, vals->height, tag);
 
     /*  Make the background (or first) layer  */
-    layer = layer_new_tag (gimage->ID, gimage->width, gimage->height,
-                           tag, vals->storage, "Background", OPAQUE_OPACITY, NORMAL);
+    layer = layer_new (gimage->ID, gimage->width, gimage->height,
+                       tag, vals->storage, "Background", OPAQUE_OPACITY, NORMAL);
   }
   if (layer) {
     /*  add the new layer to the gimage  */

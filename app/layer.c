@@ -227,68 +227,17 @@ transform_color (gimage, layerPR, bufPR, drawable, type)
 /**************************/
 /*  Function definitions  */
 
-
-Layer *
-layer_new (gimage_ID, width, height, type, name, opacity, mode)
-     int gimage_ID;
-     int width, height;
-     int type;
-     char * name;
-     int opacity;
-     int mode;
-{
-  
-  Precision prec = PRECISION_U8;
-  Format format = FORMAT_NONE;
-  Alpha alpha = ALPHA_NONE;
-  Tag   tag;
-
-  switch (type)
-    {
-    case RGB_GIMAGE:
-    case RGBA_GIMAGE:
-      format = FORMAT_RGB;
-      break;
-    case GRAY_GIMAGE:
-    case GRAYA_GIMAGE:
-      format = FORMAT_GRAY;
-      break;
-    case INDEXED_GIMAGE:
-    case INDEXEDA_GIMAGE:
-      format = FORMAT_INDEXED;
-      break;
-    }
-  
-  switch (type)
-    {
-    case RGB_GIMAGE:
-    case GRAY_GIMAGE:
-    case INDEXED_GIMAGE:
-      alpha = ALPHA_NO;
-      break;
-    case RGBA_GIMAGE:
-    case GRAYA_GIMAGE:
-    case INDEXEDA_GIMAGE:
-      alpha = ALPHA_YES;
-      break;
-    }
-  
-  tag = tag_new (prec, format, alpha); 
-  return layer_new_tag (gimage_ID, width, height, tag, STORAGE_TILED, name, opacity, mode);
-}
-
-
 Layer * 
-layer_new_tag  (
-                int gimage_ID,
-                int width,
-                int height,
-                Tag tag,
-                Storage storage,
-                char * name,
-                int opacity,
-                int mode
-                )
+layer_new  (
+            int gimage_ID,
+            int width,
+            int height,
+            Tag tag,
+            Storage storage,
+            char * name,
+            gfloat opacity,
+            int mode
+            )
 {
   Layer * layer;
 
@@ -365,7 +314,7 @@ layer_copy (layer, add_alpha)
     new_layer_tag = tag_set_alpha (new_layer_tag, ALPHA_YES);
 
   /*  allocate a new layer object  */
-  new_layer = layer_new_tag (GIMP_DRAWABLE(layer)->gimage_ID, 
+  new_layer = layer_new (GIMP_DRAWABLE(layer)->gimage_ID, 
 			 GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, 
 			 new_layer_tag, STORAGE_TILED, layer_name, 
 			 layer->opacity, layer->mode);
@@ -410,7 +359,7 @@ layer_from_tiles (gimage_ptr, drawable, tiles, name, opacity, mode)
      GimpDrawable *drawable;
      Canvas *tiles;
      char *name;
-     int opacity;
+     gfloat opacity;
      int mode;
 {
   GImage * gimage;
@@ -432,8 +381,9 @@ layer_from_tiles (gimage_ptr, drawable, tiles, name, opacity, mode)
   new_layer_tag = tag_set_alpha (layer_tag, ALPHA_YES);
 
   /*  Create the new layer  */
-  new_layer = layer_new_tag (0, canvas_width (tiles), canvas_height (tiles),
-			 new_layer_tag, STORAGE_TILED, name, opacity, mode);
+  new_layer = layer_new (0, canvas_width (tiles), canvas_height (tiles),
+                         new_layer_tag, STORAGE_TILED,
+                         name, opacity, mode);
 
   if (!new_layer) {
     g_message("layer_from_tiles: could not allocate new layer");
@@ -1474,9 +1424,15 @@ layer_mask_copy (LayerMask *layer_mask)
 
   /*  copy the contents across layer masks  */
   pixelarea_init (&srcPR, GIMP_DRAWABLE(layer_mask)->tiles,
-	0, 0, GIMP_DRAWABLE(layer_mask)->width, GIMP_DRAWABLE(layer_mask)->height, FALSE);
+                  0, 0,
+                  0, 0,
+                  FALSE);
+
   pixelarea_init (&destPR, GIMP_DRAWABLE(new_layer_mask)->tiles, 
-	0, 0, GIMP_DRAWABLE(layer_mask)->width, GIMP_DRAWABLE(layer_mask)->height, TRUE);
+                  0, 0,
+                  0, 0,
+                  TRUE);
+
   copy_area (&srcPR, &destPR);
 
   /*  free up the layer_mask_name memory  */

@@ -17,7 +17,9 @@
  */
 #include <stdlib.h>
 #include <math.h>
+
 #include "appenv.h"
+#include "canvas.h"
 #include "drawable.h"
 #include "errors.h"
 #include "floating_sel.h"
@@ -28,8 +30,10 @@
 #include "info_dialog.h"
 #include "interface.h"
 #include "layers_dialog.h"
-#include "paint_funcs.h"
+#include "paint_funcs_area.h"
 #include "palette.h"
+#include "pixelarea.h"
+#include "pixelrow.h"
 #include "transform_core.h"
 #include "transform_tool.h"
 #include "tools.h"
@@ -37,7 +41,6 @@
 
 #include "layer_pvt.h"
 #include "drawable_pvt.h"
-#include "tile_manager_pvt.h"
 
 #define    SQR(x) ((x) * (x))
 
@@ -205,7 +208,7 @@ transform_core_button_release (tool, bevent, gdisp_ptr)
 {
   GDisplay *gdisp;
   TransformCore *transform_core;
-  TileManager *new_tiles;
+  Canvas *new_tiles;
   TransformUndo *tu;
   int first_transform;
   int new_layer;
@@ -570,7 +573,7 @@ transform_core_free (tool)
 
   /*  Free up the original selection if it exists  */
   if (transform_core->original)
-    tile_manager_destroy (transform_core->original);
+    canvas_delete (transform_core->original);
 
   /*  If there is an information dialog, free it up  */
   if (transform_info)
@@ -803,7 +806,7 @@ transform_core_reset(tool, gdisp_ptr)
   gdisp = (GDisplay *) gdisp_ptr;
 
   if (transform_core->original)
-    tile_manager_destroy (transform_core->original);
+    canvas_delete (transform_core->original);
   transform_core->original = NULL;
 
   /*  inactivate the tool  */
@@ -820,7 +823,7 @@ transform_core_bounds (tool, gdisp_ptr)
 {
   GDisplay * gdisp;
   TransformCore * transform_core;
-  TileManager * tiles;
+  Canvas * tiles;
   GimpDrawable *drawable;
   int offset_x, offset_y;
 
@@ -832,10 +835,10 @@ transform_core_bounds (tool, gdisp_ptr)
   /*  find the boundaries  */
   if (tiles)
     {
-      transform_core->x1 = tiles->x;
-      transform_core->y1 = tiles->y;
-      transform_core->x2 = tiles->x + tiles->levels[0].width;
-      transform_core->y2 = tiles->y + tiles->levels[0].height;
+      transform_core->x1 = canvas_fixme_getx (tiles);
+      transform_core->y1 = canvas_fixme_gety (tiles);
+      transform_core->x2 = canvas_fixme_getx (tiles) + canvas_width (tiles);
+      transform_core->y2 = canvas_fixme_gety (tiles) + canvas_height (tiles);
     }
   else
     {
@@ -866,16 +869,17 @@ transform_core_recalc (tool, gdisp_ptr)
 }
 
 /*  Actually carry out a transformation  */
-TileManager *
+Canvas *
 transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
      GImage *gimage;
      GimpDrawable *drawable;
-     TileManager *float_tiles;
+     Canvas *float_tiles;
      int interpolation;
      Matrix matrix;
 {
-  PixelRegion destPR;
-  TileManager *tiles;
+#if 0
+  PixelArea destPR;
+  Canvas *tiles;
   Matrix m;
   int itx, ity;
   int tx1, ty1, tx2, ty2;
@@ -955,7 +959,7 @@ transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
 
   /*  Get the new temporary buffer for the transformed result  */
   tiles = tile_manager_new ((tx2 - tx1), (ty2 - ty1), float_tiles->levels[0].bpp);
-  pixel_region_init (&destPR, tiles, 0, 0, (tx2 - tx1), (ty2 - ty1), TRUE);
+  pixelarea_init (&destPR, tiles, 0, 0, (tx2 - tx1), (ty2 - ty1), TRUE);
   tiles->x = tx1;
   tiles->y = ty1;
 
@@ -1193,21 +1197,23 @@ transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
 	}
 
       /*  set the pixel region row  */
-      pixel_region_set_row (&destPR, 0, (y - ty1), width, dest);
+      pixelarea_write_row (&destPR, 0, (y - ty1), width, dest);
     }
 
   g_free (dest);
   return tiles;
+#endif
+  return NULL;
 }
 
 
-TileManager *
+Canvas *
 transform_core_cut (gimage, drawable, new_layer)
      GImage *gimage;
      GimpDrawable *drawable;
      int *new_layer;
 {
-  TileManager *tiles;
+  Canvas *tiles;
 
   /*  extract the selected mask if there is a selection  */
   if (! gimage_mask_is_empty (gimage))
@@ -1221,7 +1227,6 @@ transform_core_cut (gimage, drawable, new_layer)
       tiles = gimage_mask_extract (gimage, drawable, FALSE, TRUE);
       *new_layer = FALSE;
     }
-
   return tiles;
 }
 
@@ -1231,7 +1236,7 @@ Layer *
 transform_core_paste (gimage, drawable, tiles, new_layer)
      GImage *gimage;
      GimpDrawable *drawable;
-     TileManager *tiles;
+     Canvas *tiles;
      int new_layer;
 {
   Layer * layer;
@@ -1240,8 +1245,8 @@ transform_core_paste (gimage, drawable, tiles, new_layer)
   if (new_layer)
     {
       layer = layer_from_tiles (gimage, drawable, tiles, "Transformation", OPAQUE_OPACITY, NORMAL_MODE);
-      GIMP_DRAWABLE(layer)->offset_x = tiles->x;
-      GIMP_DRAWABLE(layer)->offset_y = tiles->y;
+      GIMP_DRAWABLE(layer)->offset_x = canvas_fixme_getx (tiles);
+      GIMP_DRAWABLE(layer)->offset_y = canvas_fixme_gety (tiles);
 
       /*  Start a group undo  */
       undo_push_group_start (gimage, EDIT_PASTE_UNDO);
@@ -1252,7 +1257,7 @@ transform_core_paste (gimage, drawable, tiles, new_layer)
       undo_push_group_end (gimage);
 
       /*  Free the tiles  */
-      tile_manager_destroy (tiles);
+      canvas_delete (tiles);
 
       active_tool_layer = layer;
 
@@ -1280,11 +1285,11 @@ transform_core_paste (gimage, drawable, tiles, new_layer)
       GIMP_DRAWABLE(layer)->tiles = tiles;
 
       /*  Fill in the new layer's attributes  */
-      GIMP_DRAWABLE(layer)->width = tiles->levels[0].width;
-      GIMP_DRAWABLE(layer)->height = tiles->levels[0].height;
-      GIMP_DRAWABLE(layer)->bytes = tiles->levels[0].bpp;
-      GIMP_DRAWABLE(layer)->offset_x = tiles->x;
-      GIMP_DRAWABLE(layer)->offset_y = tiles->y;
+      GIMP_DRAWABLE(layer)->width = canvas_width (tiles);;
+      GIMP_DRAWABLE(layer)->height = canvas_height (tiles);
+      /* GIMP_DRAWABLE(layer)->bytes = tiles->levels[0].bpp; */
+      GIMP_DRAWABLE(layer)->offset_x = canvas_fixme_getx (tiles);
+      GIMP_DRAWABLE(layer)->offset_y = canvas_fixme_gety (tiles);
 
       if (floating_layer)
 	floating_sel_rigor (floating_layer, TRUE);

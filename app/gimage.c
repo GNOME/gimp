@@ -2181,9 +2181,10 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
       drawable_type (GIMP_DRAWABLE (layer)) == INDEXED_GIMAGE)
     {
       merge_layer_tag = gimage_tag (gimage);
-      merge_layer = layer_new_tag (gimage->ID, gimage->width, gimage->height,
-		       merge_layer_tag, STORAGE_TILED, drawable_name (GIMP_DRAWABLE(layer)), 
-			OPAQUE_OPACITY, NORMAL_MODE);
+      merge_layer = layer_new (gimage->ID, gimage->width, gimage->height,
+                               merge_layer_tag, STORAGE_TILED,
+                               drawable_name (GIMP_DRAWABLE(layer)), 
+                               OPAQUE_OPACITY, NORMAL_MODE);
 
       if (!merge_layer) {
 	g_message ("gimage_merge_layers: could not allocate merge layer");
@@ -2196,8 +2197,8 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
 
       /*  set the region to the background color  */
 #define FIXME
-      /* note: there used to be a transform_color here while getting the background
-	color */
+      /* note: there used to be a transform_color here while getting
+	the background color */
       color16_background (&bg_color);
       color_area (&src1PR, &bg_color);
 
@@ -2213,10 +2214,10 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
       layer_tag = drawable_tag (GIMP_DRAWABLE(layer));
       merge_layer_tag = tag_set_alpha (layer_tag, ALPHA_YES);
 
-      merge_layer = layer_new_tag (gimage->ID, (x2 - x1), (y2 - y1),
-			       merge_layer_tag, STORAGE_TILED,
-			       drawable_name (GIMP_DRAWABLE(layer)),
-			       layer->opacity, layer->mode);
+      merge_layer = layer_new (gimage->ID, (x2 - x1), (y2 - y1),
+                               merge_layer_tag, STORAGE_TILED,
+                               drawable_name (GIMP_DRAWABLE(layer)),
+                               layer->opacity, layer->mode);
       
       if (!merge_layer) {
 	g_message ("gimage_merge_layers: could not allocate merge layer");

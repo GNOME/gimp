@@ -40,7 +40,7 @@ struct _GimpLayer
   int edit_mask;                /*  edit mask or layer?          */
   int show_mask;                /*  show mask or layer?          */
 
-  int opacity;                  /*  layer opacity                */
+  gfloat opacity;               /*  layer opacity                */
   int mode;                     /*  layer combination mode       */
 
   /*  Floating selections  */

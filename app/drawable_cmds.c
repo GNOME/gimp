@@ -22,6 +22,9 @@
 #include "gimage.h"
 #include "drawable.h"
 #include "drawable_cmds.h"
+#include "canvas.h"
+#include "paint_funcs_area.h"
+#include "pixelrow.h"
 
 static int int_value;
 static int success;
@@ -1232,8 +1235,7 @@ drawable_set_pixel_invoker (Argument *args)
   GimpDrawable *drawable;
   int x, y;
   int num_channels;
-  unsigned char *pixel, *p;
-  int b;
+  unsigned char *pixel;
 
   success = TRUE;
   if (success)
@@ -1264,19 +1266,44 @@ drawable_set_pixel_invoker (Argument *args)
 
   if (success)
     {
-#if 0
-      Tile * tile = tile_manager_get_tile (drawable_data (drawable), x, y, 0);
-      tile_ref (tile);
+      Canvas * c = drawable_data (drawable);
 
-      x %= TILE_WIDTH;
-      y %= TILE_HEIGHT;
+      if (canvas_portion_refrw (c, x, y) == REFRC_OK)
+        {
+          PixelRow from, to;
+          Format f = FORMAT_NONE;
+          Alpha a = ALPHA_NONE;
 
-      p = tile->data + tile->bpp * (tile->ewidth * y + x);
-      for (b = 0; b < num_channels; b++)
-	*p++ = *pixel++;
+          switch (drawable_bytes (drawable))
+            {
+            case 1:
+              a = ALPHA_NO; f = FORMAT_GRAY; break;
+            case 2:
+              a = ALPHA_YES; f = FORMAT_GRAY; break;
+            case 3:
+              a = ALPHA_NO; f = FORMAT_RGB; break;
+            case 4:
+              a = ALPHA_YES; f = FORMAT_RGB; break;
+            }
+          
+          pixelrow_init (&from,
+                         tag_new (PRECISION_U8, f, a),
+                         pixel,
+                         1);
 
-      tile_unref (tile, TRUE);
-#endif
+          pixelrow_init (&to,
+                         canvas_tag (c),
+                         canvas_portion_data (c, x, y),
+                         1);
+
+          copy_row (&from, &to);
+          
+          canvas_portion_unref (c, x, y);
+        }
+      else
+        {
+          success = FALSE;
+        }
     }
 
   return procedural_db_return_args (&drawable_set_pixel_proc, success);
@@ -1336,14 +1363,13 @@ drawable_get_pixel_invoker (Argument *args)
   int drawable_id;
   GimpDrawable *drawable;
   int x, y;
-  int num_channels;
-  unsigned char *pixel, *p;
-  int b;
+  unsigned char *pixel;
   Argument *return_args;
-
-  num_channels = 0;
-  pixel        = NULL;
-
+  Canvas * c;
+  
+  pixel = NULL;
+  c = NULL;
+  
   success = TRUE;
   if (success)
     drawable_id = args[0].value.pdb_int;
@@ -1353,8 +1379,6 @@ drawable_get_pixel_invoker (Argument *args)
       drawable = drawable_get_ID (drawable_id);
       if (drawable == NULL)
 	success = FALSE;
-      else 
-	num_channels = drawable_bytes (drawable);
     }
   if (success)
     {
@@ -1366,30 +1390,37 @@ drawable_get_pixel_invoker (Argument *args)
       if (y < 0 || y >= drawable_height (drawable))
 	success = FALSE;
     }
-
+  
   if (success)
     {
-#if 0
-      pixel = (unsigned char *) g_new (unsigned char, num_channels);
-      Tile * tile = tile_manager_get_tile (drawable_data (drawable), x, y, 0);
-      tile_ref (tile);
+      c = drawable_data (drawable);
+      pixel = (unsigned char *) g_new (unsigned char, TAG_MAX_BYTES);
+      
+      if (canvas_portion_refro (c, x, y) == REFRC_OK)
+        {
+          PixelRow from, to;
+          
+          pixelrow_init (&from,
+                         canvas_tag (c),
+                         canvas_portion_data (c, x, y),
+                         1);
 
-      x %= TILE_WIDTH;
-      y %= TILE_HEIGHT;
+          pixelrow_init (&to,
+                         tag_set_precision (canvas_tag (c), PRECISION_U8),
+                         pixel,
+                         1);
 
-      p = tile->data + tile->bpp * (tile->ewidth * y + x);
-      for (b = 0; b < num_channels; b++)
-	pixel[b] = p[b];
-
-      tile_unref (tile, FALSE);
-#endif
+          copy_row (&from, &to);
+          
+          canvas_portion_unref (c, x, y);
+        } 
     }
-
+  
   return_args = procedural_db_return_args (&drawable_get_pixel_proc, success);
 
   if (success)
     {
-      return_args[1].value.pdb_int = num_channels;
+      return_args[1].value.pdb_int = tag_bytes (tag_set_precision (canvas_tag (c), PRECISION_U8));
       return_args[2].value.pdb_pointer = pixel;
     }
 

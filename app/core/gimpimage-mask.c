@@ -39,9 +39,6 @@
 #include "layer_pvt.h"
 #include "drawable_pvt.h"
 
-#define FIXME
-/*should find a better place for these--leftover from tiles*/
-int tilesx, tilesy;
 
 /*  feathering variables  */
 double gimage_mask_feather_radius = 5;
@@ -245,8 +242,8 @@ gimage_mask_extract (gimage, drawable, cut_gimage, keep_indexed)
   /*  Allocate the temp buffer  */
   tiles = canvas_new (canvas_tag, (x2 - x1), (y2 - y1), STORAGE_FLAT);
      
-  tilesx = x1 + off_x;
-  tilesy = y1 + off_y;
+  canvas_fixme_setx (tiles, x1 + off_x);
+  canvas_fixme_sety (tiles, y1 + off_y);
 
   /* configure the pixel areas  */
   pixelarea_init (&srcPR, drawable_data (drawable), 
@@ -269,7 +266,9 @@ gimage_mask_extract (gimage, drawable, cut_gimage, keep_indexed)
 	  channel_clear (gimage_get_mask (gimage));
 
 	  /*  Update the region  */
-	  gdisplays_update_area (gimage->ID, tilesx, tilesy,
+	  gdisplays_update_area (gimage->ID,
+                                 canvas_fixme_getx (tiles),
+                                 canvas_fixme_gety (tiles),
 				 canvas_width (tiles), canvas_height (tiles));
 
 	  /*  Invalidate the preview  */
@@ -337,8 +336,8 @@ gimage_mask_float (gimage, drawable, off_x, off_y)
   layer = layer_from_tiles (gimage, drawable, tiles, "Floated Layer", OPAQUE_OPACITY, NORMAL);
 
   /*  Set the offsets  */
-  GIMP_DRAWABLE(layer)->offset_x = tilesx + off_x;
-  GIMP_DRAWABLE(layer)->offset_y = tilesy + off_y;
+  GIMP_DRAWABLE(layer)->offset_x = canvas_fixme_getx (tiles) + off_x;
+  GIMP_DRAWABLE(layer)->offset_y = canvas_fixme_gety (tiles) + off_y;
 
   /*  Free the temp buffer  */
   canvas_delete (tiles);

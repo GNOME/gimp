@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <math.h>
 #include "appenv.h"
+#include "canvas.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
@@ -26,13 +27,11 @@
 #include "palette.h"
 #include "rotate_tool.h"
 #include "selection.h"
-#include "tile_manager.h"
 #include "tools.h"
 #include "transform_core.h"
 #include "transform_tool.h"
 #include "undo.h"
 
-#include "tile_manager_pvt.h"
 
 #ifndef M_PI
 #define M_PI    3.14159265358979323846
@@ -48,7 +47,7 @@
 char          angle_buf  [MAX_INFO_BUF];
 
 /*  forward function declarations  */
-static void *      rotate_tool_rotate  (GImage *, GimpDrawable *, double, TileManager *, int, Matrix);
+static void *      rotate_tool_rotate  (GImage *, GimpDrawable *, double, Canvas *, int, Matrix);
 static void *      rotate_tool_recalc  (Tool *, void *);
 static void        rotate_tool_motion  (Tool *, void *);
 static void        rotate_info_update  (Tool *);
@@ -238,7 +237,7 @@ rotate_tool_rotate (gimage, drawable, angle, float_tiles, interpolation, matrix)
      GImage *gimage;
      GimpDrawable *drawable;
      double angle;
-     TileManager *float_tiles;
+     Canvas *float_tiles;
      int interpolation;
      Matrix matrix;
 {
@@ -308,8 +307,8 @@ rotate_invoker (args)
   int interpolation;
   double angle;
   int int_value;
-  TileManager *float_tiles;
-  TileManager *new_tiles;
+  Canvas *float_tiles;
+  Canvas *new_tiles;
   Matrix matrix;
   int new_layer;
   Layer *layer;
@@ -354,8 +353,8 @@ rotate_invoker (args)
       /*  Cut/Copy from the specified drawable  */
       float_tiles = transform_core_cut (gimage, drawable, &new_layer);
 
-      cx = float_tiles->x + float_tiles->levels[0].width / 2.0;
-      cy = float_tiles->y + float_tiles->levels[0].height / 2.0;
+      cx = canvas_fixme_getx (float_tiles) + canvas_width (float_tiles) / 2.0;
+      cy = canvas_fixme_gety (float_tiles) + canvas_height (float_tiles) / 2.0;
 
       /*  assemble the transformation matrix  */
       identity_matrix  (matrix);
@@ -367,7 +366,7 @@ rotate_invoker (args)
       new_tiles = rotate_tool_rotate (gimage, drawable, angle, float_tiles, interpolation, matrix);
 
       /*  free the cut/copied buffer  */
-      tile_manager_destroy (float_tiles);
+      canvas_delete (float_tiles);
 
       if (new_tiles)
 	success = (layer = transform_core_paste (gimage, drawable, new_tiles, new_layer)) != NULL;

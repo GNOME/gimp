@@ -23,7 +23,8 @@
 #include "equalize.h"
 #include "interface.h"
 #include "gimage.h"
-#include "paint_funcs.h"
+#include "paint_funcs_area.h"
+#include "pixelarea.h"
 
 static void       equalize (GImage *, GimpDrawable *, int);
 static void       eq_histogram (double [3][256], unsigned char [3][256], int, double);
@@ -57,7 +58,7 @@ equalize(gimage, drawable, mask_only)
      int mask_only;
 {
   Channel *sel_mask;
-  PixelRegion srcPR, destPR, maskPR, *sel_maskPR;
+  PixelArea srcPR, destPR, maskPR, *sel_maskPR;
   double hist[3][256];
   unsigned char lut[3][256];
   unsigned char *src, *s;
@@ -83,18 +84,31 @@ equalize(gimage, drawable, mask_only)
 
   /*  Determine the histogram from the drawable data and the attendant mask  */
   no_mask = (drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2) == FALSE);
-  pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
+
+  pixelarea_init (&srcPR, drawable_data (drawable),
+                  x1, y1,
+                  (x2 - x1), (y2 - y1),
+                  FALSE);
+
   sel_maskPR = (no_mask) ? NULL : &maskPR;
+
   if (sel_maskPR)
-    pixel_region_init (sel_maskPR, drawable_data (GIMP_DRAWABLE (sel_mask)), x1 + off_x, y1 + off_y, (x2 - x1), (y2 - y1), FALSE);
+    pixelarea_init (sel_maskPR, drawable_data (GIMP_DRAWABLE (sel_mask)),
+                    x1 + off_x, y1 + off_y,
+                    (x2 - x1), (y2 - y1),
+                    FALSE);
 
   /* Initialize histogram */
   for (b = 0; b < alpha; b++)
     for (j = 0; j < 256; j++)
       hist[b][j] = 0.0;
 
-  for (pr = pixel_regions_register (2, &srcPR, sel_maskPR); pr != NULL; pr = pixel_regions_process (pr))
+  for (pr = pixelarea_register (2, &srcPR, sel_maskPR);
+       pr != NULL;
+       pr = pixelarea_process (pr))
     {
+#define FIXME
+#if 0
       src = srcPR.data;
       if (sel_maskPR)
 	mask = sel_maskPR->data;
@@ -131,17 +145,29 @@ equalize(gimage, drawable, mask_only)
 	  if (sel_maskPR)
 	    mask += sel_maskPR->rowstride;
 	}
+#endif
     }
 
   /* Build equalization LUT */
   eq_histogram (hist, lut, alpha, count);
 
   /*  Apply the histogram  */
-  pixel_region_init (&srcPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  pixel_region_init (&destPR, drawable_shadow (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
+  pixelarea_init (&srcPR, drawable_data (drawable),
+                  x1, y1,
+                  (x2 - x1), (y2 - y1),
+                  FALSE);
 
-  for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
+  pixelarea_init (&destPR, drawable_shadow (drawable),
+                  x1, y1,
+                  (x2 - x1), (y2 - y1),
+                  TRUE);
+
+  for (pr = pixelarea_register (2, &srcPR, &destPR);
+       pr != NULL;
+       pr = pixelarea_process (pr))
     {
+#define FIXME
+#if 0
       src = srcPR.data;
       dest = destPR.data;
       h = srcPR.h;
@@ -166,6 +192,7 @@ equalize(gimage, drawable, mask_only)
 	  src += srcPR.rowstride;
 	  dest += destPR.rowstride;
 	}
+#endif
     }
 
   drawable_merge_shadow (drawable, TRUE);

@@ -312,7 +312,8 @@ temp_buf_copy_area (src, dest, x, y, w, h, border)
   destR.rowstride = new->bytes * new->width;
   destR.data = temp_buf_data (new) + (y1 - y) * destR.rowstride + (x1 - x) * srcR.bytes;
 
-  copy_area (&srcR, &destR);
+  /* paint_funcs.c is no longer being built */
+  /* copy_region (&srcR, &destR); */
 
   return new;
 }

@@ -36,6 +36,80 @@ static unsigned char no_mask = OPAQUE_8BIT;
 
 
 void 
+absdiff_row_u8  (
+                 PixelRow * image,
+                 PixelRow * mask,
+                 PixelRow * col,
+                 gfloat threshold,
+                 int antialias
+                 )
+{
+  guint8 *src           = (guint8*) pixelrow_data (image);
+  guint8 *dest          = (guint8*) pixelrow_data (mask);
+  guint8 *color         = (guint8*) pixelrow_data (col);
+
+  Tag     tag           = pixelrow_tag (image);
+  int     has_alpha     = (tag_alpha (tag) == ALPHA_YES) ? 1 : 0;
+
+  gint    width         = pixelrow_width (image);  
+
+  gint    src_channels  = tag_num_channels (pixelrow_tag (image));
+  gint    dest_channels = tag_num_channels (pixelrow_tag (mask));
+
+  
+
+  threshold *= 255;
+  
+  while (width--)
+    {
+      /*  if there is an alpha channel, never select transparent regions  */
+      if (has_alpha && src[src_channels] == 0)
+        {
+          *dest = 0;
+        }
+      else
+        {
+          gint b;
+          gint diff;
+          gint max = 0;
+          
+          for (b = 0; b < src_channels; b++)
+            {
+              diff = src[b] - color[b];
+              diff = abs (diff);
+              if (diff > max)
+                max = diff;
+            }
+      
+          if (antialias && threshold > 0)
+            {
+              float aa;
+
+              aa = 1.5 - ((float) max / threshold);
+              if (aa <= 0)
+                *dest = 0;
+              else if (aa < 0.5)
+                *dest = (aa * 512);
+              else
+                *dest = 255;
+            }
+          else
+            {
+              if (max > threshold)
+                *dest = 0;
+              else
+                *dest = 255;
+            }
+          
+          src += src_channels;
+          dest += dest_channels;
+        }
+    }
+}
+
+
+
+void 
 color_row_u8  (
                PixelRow * dest_row,
                PixelRow * col

@@ -53,6 +53,9 @@ void color16_transparent  (struct _PixelRow *);
 void color16_foreground   (struct _PixelRow *);
 void color16_background   (struct _PixelRow *);
 
+int  color16_is_black        (struct _PixelRow *);
+int  color16_is_white        (struct _PixelRow *);
+int  color16_is_transparent  (struct _PixelRow *);
 
 
 

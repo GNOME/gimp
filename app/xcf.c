@@ -1606,7 +1606,7 @@ xcf_load_layer (XcfInfo *info,
   info->cp += xcf_read_string (info->fp, &name, 1);
 
   /* create a new layer */
-  layer = layer_new (gimage->ID, width, height, type, name, 255, NORMAL_MODE);
+  layer = layer_new (gimage->ID, width, height, tag_from_drawable_type (type), STORAGE_TILED, name, 1.0, NORMAL_MODE);
   if (!layer)
     {
       g_free (name);

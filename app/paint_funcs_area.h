@@ -28,7 +28,7 @@ struct _PixelRow;
 /* FIXME - this stuff needs to be cleaned up */
 void copy_row (struct _PixelRow *, struct _PixelRow *);
 
-#define OPAQUE_OPACITY 255
+#define OPAQUE_OPACITY 1.0
 
 /*  Color conversion routines  */
 void  rgb_to_hsv            (int *, int *, int *);
@@ -124,6 +124,15 @@ int    map_rgb_to_indexed                 (unsigned char *, int, int,
 void paint_funcs_area_setup (void);
 void paint_funcs_area_free (void);
 
+
+void
+absdiff_area (
+              struct _PixelArea * image,
+              struct _PixelArea * mask,
+              struct _PixelRow * color,
+              gfloat threshold,
+              int antialias
+              );
 
 void 
 color_area  (

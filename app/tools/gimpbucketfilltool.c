@@ -31,7 +31,6 @@
 #include "pixelarea.h"
 #include "pixelrow.h"
 #include "selection.h"
-//#include "temp_buf.h"
 #include "tools.h"
 #include "undo.h"
 
@@ -64,10 +63,10 @@ static void  bucket_fill_control         (Tool *, int, gpointer);
 static void  bucket_fill                 (GImage *, GimpDrawable *, FillMode, int,
 					  double, double, int, double, double);
 
-static void  bucket_fill_region          (FillMode, PixelArea *, PixelArea *,
+static void  bucket_fill_area          (FillMode, PixelArea *, PixelArea *,
 					  PixelRow *, Canvas *, int, int);
-static void  bucket_fill_line_pattern    (unsigned char *, unsigned char *,
-					  Canvas *, int, int, int, int, int);
+static void  bucket_fill_line_pattern    (PixelRow *, PixelRow *,
+					  Canvas *, int, int, int);
 
 static Argument *bucket_fill_invoker     (Argument *);
 
@@ -406,11 +405,10 @@ bucket_fill (gimage, drawable, fill_mode, paint_mode,
      int sample_merged;
      double x, y;
 {
-  TileManager *buf_tiles;
+  Canvas *buf_tiles;
   PixelArea bufPR, maskPR;
   Channel * mask = NULL;
   int x1, y1, x2, y2;
-  unsigned char *d1, *d2;
   GPatternP pattern;
   Canvas * pat_buf = NULL;
   int new_buf = 0;
@@ -420,12 +418,17 @@ bucket_fill (gimage, drawable, fill_mode, paint_mode,
   COLOR16_INIT (col);
   
   if (fill_mode == FgColorFill)
-    color16_foreground (&col);
+    {
+      color16_foreground (&col);
+    }
   else if (fill_mode == BgColorFill)
-    color16_background (&col);
-#if 0
+    {
+      color16_background (&col);
+    }
   else if (fill_mode == PatternFill)
     {
+      Tag masktag;
+      
       pattern = get_active_pattern ();
 
       if (!pattern)
@@ -434,46 +437,47 @@ bucket_fill (gimage, drawable, fill_mode, paint_mode,
 	  return;
 	}
 
+      pat_buf = pattern->mask;
+      
       /*  If the pattern doesn't match the image in terms of color type,
        *  transform it.  (ie  pattern is RGB, image is indexed)
        */
-      if (((pattern->mask->bytes == 3) && !drawable_color (drawable)) ||
-	  ((pattern->mask->bytes == 1) && !drawable_gray (drawable)))
+      
+      masktag = canvas_tag (pattern->mask);
+        
+      if ((tag_format (masktag) != tag_format (tag)) ||
+          (tag_precision (masktag) != tag_precision (tag)))
 	{
-	  int size;
+          PixelArea src, dest;
+          
+          pat_buf = canvas_new (masktag,
+                                canvas_width (pattern->mask),
+                                canvas_height (pattern->mask),
+                                STORAGE_FLAT);
 
-	  if ((pattern->mask->bytes == 1) && drawable_color (drawable))
-	    pat_buf = temp_buf_new (pattern->mask->width, pattern->mask->height, 3, 0, 0, NULL);
-	  else
-	    pat_buf = temp_buf_new (pattern->mask->width, pattern->mask->height, 1, 0, 0, NULL);
+          pixelarea_init (&src, pattern->mask,
+                          0, 0,
+                          0, 0,
+                          FALSE);
 
-	  d1 = temp_buf_data (pattern->mask);
-	  d2 = temp_buf_data (pat_buf);
+          pixelarea_init (&dest, pat_buf,
+                          0, 0,
+                          0, 0,
+                          TRUE);
 
-	  size = pattern->mask->width * pattern->mask->height;
-	  while (size--)
-	    {
-	      gimage_transform_color (gimage, drawable, d1, d2,
-				      (pattern->mask->bytes == 3) ? RGB : GRAY);
-	      d1 += pattern->mask->bytes;
-	      d2 += pat_buf->bytes;
-	    }
+          copy_area (&src, &dest);
 
 	  new_buf = 1;
 	}
-      else
-	pat_buf = pattern->mask;
     }
-#endif
 
   /*  If there is no selection mask, the do a seed bucket
    *  fill...To do this, calculate a new contiguous region
    */
-  drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-#if 0
   if (! drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2))
     {
-      mask = find_contiguous_region (gimage, drawable, TRUE, (int) threshold,
+      mask = NULL;
+      mask = find_contiguous_region (gimage, drawable, TRUE, threshold,
 				     (int) x, (int) y, sample_merged);
 
       channel_bounds (mask, &x1, &y1, &x2, &y2);
@@ -490,8 +494,8 @@ bucket_fill (gimage, drawable, fill_mode, paint_mode,
 	  x2 = BOUNDS (x2, off_x, (off_x + drawable_width (drawable)));
 	  y2 = BOUNDS (y2, off_y, (off_y + drawable_height (drawable)));
 
-	  pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), 
-			     x1, y1, (x2 - x1), (y2 - y1), TRUE);
+	  pixelarea_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), 
+                          x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
 	  /*  translate mask bounds to drawable coords  */
 	  x1 -= off_x;
@@ -500,29 +504,26 @@ bucket_fill (gimage, drawable, fill_mode, paint_mode,
 	  y2 -= off_y;
 	}
       else
-	pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), 
-			   x1, y1, (x2 - x1), (y2 - y1), TRUE);
-
+        {
+          pixelarea_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), 
+                          x1, y1, (x2 - x1), (y2 - y1), TRUE);
+        }
+      
       /*  if the gimage doesn't have an alpha channel,
        *  make sure that the temp buf does.  We need the
        *  alpha channel to fill with the region calculated above
        */
-      if (! has_alpha)
-	{
-	  bytes ++;
-	  has_alpha = 1;
-	}
+      tag = tag_set_alpha (tag, ALPHA_YES);
     }
-#endif
   
   buf_tiles = canvas_new (tag, (x2 - x1), (y2 - y1), STORAGE_TILED);
 
   pixelarea_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
 
   if (mask)
-    bucket_fill_region (fill_mode, &bufPR, &maskPR, &col, pat_buf, x1, y1);
+    bucket_fill_area (fill_mode, &bufPR, &maskPR, &col, pat_buf, x1, y1);
   else
-    bucket_fill_region (fill_mode, &bufPR, NULL, &col, pat_buf, x1, y1);
+    bucket_fill_area (fill_mode, &bufPR, NULL, &col, pat_buf, x1, y1);
 
   pixelarea_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
 
@@ -533,7 +534,7 @@ bucket_fill (gimage, drawable, fill_mode, paint_mode,
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 
   /*  free the temporary buffer  */
-  tile_manager_destroy (buf_tiles);
+  canvas_delete (buf_tiles);
 
   /*  free the mask  */
   if (mask)
@@ -543,44 +544,16 @@ bucket_fill (gimage, drawable, fill_mode, paint_mode,
     canvas_delete (pat_buf);
 }
 
-#if 0
 static void
-bucket_fill_line_color (buf, mask, col, width)
-     PixelRow * buf, * mask;
-     PixelRow * col;
-     int width;
-{
-  int alpha, b;
-
-  alpha = (has_alpha) ? bytes - 1 : bytes;
-  while (width--)
-    {
-      for (b = 0; b < alpha; b++)
-	buf[b] = col[b];
-
-      if (has_alpha)
-	{
-	  if (mask)
-	    buf[alpha] = *mask++;
-	  else
-	    buf[alpha] = OPAQUE_OPACITY;
-	}
-
-      buf += bytes;
-    }
-}
-#endif
-
-#if 0
-static void
-bucket_fill_line_pattern (buf, mask, pattern, has_alpha, bytes, x, y, width)
-     unsigned char * buf, * mask;
+bucket_fill_line_pattern (buf, mask, pattern, x, y, width)
+     PixelRow * buf;
+     PixelRow * mask;
      Canvas * pattern;
-     int has_alpha;
-     int bytes;
      int x, y;
      int width;
 {
+#if 0
+#define FIXME
   unsigned char *pat, *p;
   int alpha, b;
   int i;
@@ -597,21 +570,16 @@ bucket_fill_line_pattern (buf, mask, pattern, has_alpha, bytes, x, y, width)
       for (b = 0; b < alpha; b++)
 	buf[b] = p[b];
 
-      if (has_alpha)
-	{
-	  if (mask)
-	    buf[alpha] = *mask++;
-	  else
-	    buf[alpha] = OPAQUE_OPACITY;
-	}
-
+#define FIXME
+      /* need to copy mask in here */
+      
       buf += bytes;
     }
-}
 #endif
+}
 
 static void
-bucket_fill_region (fill_mode, bufPR, maskPR, col, pattern, off_x, off_y)
+bucket_fill_area (fill_mode, bufPR, maskPR, col, pattern, off_x, off_y)
      FillMode fill_mode;
      PixelArea * bufPR;
      PixelArea * maskPR;
@@ -620,13 +588,14 @@ bucket_fill_region (fill_mode, bufPR, maskPR, col, pattern, off_x, off_y)
      int off_x, off_y;
 {
   void *pr;
-  int y;
+  int yy;
 
   switch (fill_mode)
     {
     case FgColorFill:
     case BgColorFill:
       color_area (bufPR, col);
+#define FIXME
       /* need to copy maskPR in somehow */
       break;
     default:
@@ -635,16 +604,21 @@ bucket_fill_region (fill_mode, bufPR, maskPR, col, pattern, off_x, off_y)
            pr = pixelarea_process (pr))
         {
           PixelRow s, m;
+
+          int y = pixelarea_y (bufPR);
+          int h = pixelarea_height (bufPR);
           
-          for (y = 0; y < bufPR->h; y++)
+          for (yy = y; yy < y+h; yy++)
             {
-              pixelarea_getdata (bufPR, &s, y);
-              pixelarea_getdata (maskPR, &m, y);
-#if 0
-              bucket_fill_line_pattern (s, m, pattern,
-                                        off_x + bufPR->x, off_y + y + bufPR->y,
-                                        bufPR->w);
-#endif
+              int x = pixelarea_x (bufPR);
+              int w = pixelarea_width (bufPR);
+              
+              pixelarea_getdata (bufPR, &s, yy);
+              pixelarea_getdata (maskPR, &m, yy);
+
+              bucket_fill_line_pattern (&s, &m, pattern,
+                                        off_x + x, off_y + yy,
+                                        w);
 	    }
 	}
     }

@@ -38,9 +38,7 @@
 #include "pixelarea.h"
 #include "pixelrow.h"
 #include "tools.h"
-#if 0
 #include "transform_core.h"
-#endif
 #include "undo.h"
 
 #include "drawable_pvt.h"
@@ -877,8 +875,6 @@ undo_push_transform (GImage *gimage,
 {
   Undo * new;
   int size;
-#define FIXME
-#if 0
   size = sizeof (TransformUndo);
 
   if ((new = undo_push (gimage, size, TRANSFORM_UNDO)))
@@ -890,7 +886,6 @@ undo_push_transform (GImage *gimage,
       return TRUE;
     }
   else
-#endif
     {
       g_free (tu_ptr);
       return FALSE;
@@ -904,8 +899,6 @@ undo_pop_transform (GImage *gimage,
 		    int     type,
 		    void   *tu_ptr)
 {
-#define FIXME
-#if 0
   TransformCore * tc;
   TransformUndo * tu;
   TileManager * temp;
@@ -947,7 +940,6 @@ undo_pop_transform (GImage *gimage,
 	  draw_core_resume (tc->core, active_tool);
 	}
     }
-#endif
   return TRUE;
 }
 
@@ -956,15 +948,12 @@ void
 undo_free_transform (int   state,
 		     void *tu_ptr)
 {
-#define FIXME
-#if 0
   TransformUndo * tu;
 
   tu = (TransformUndo *) tu_ptr;
   if (tu->original)
     tile_manager_destroy (tu->original);
   g_free (tu);
-#endif
 }
 
 
@@ -1190,11 +1179,8 @@ undo_push_layer_mod (GImage *gimage,
   drawable_dirty (GIMP_DRAWABLE(layer));
 
   tiles = GIMP_DRAWABLE(layer)->tiles;
-#define FIXME
-#if 0
-  tiles->x = GIMP_DRAWABLE(layer)->offset_x;
-  tiles->y = GIMP_DRAWABLE(layer)->offset_y;
-#endif
+  canvas_fixme_setx (tiles, GIMP_DRAWABLE(layer)->offset_x); 
+  canvas_fixme_sety (tiles, GIMP_DRAWABLE(layer)->offset_y); 
   size = GIMP_DRAWABLE(layer)->width * GIMP_DRAWABLE(layer)->height * GIMP_DRAWABLE(layer)->bytes + sizeof (void *) * 3;
 
   if ((new = undo_push (gimage, size, LAYER_MOD)))
@@ -1254,21 +1240,15 @@ undo_pop_layer_mod (GImage *gimage,
 
   /*  Create a tile manager to store the current layer contents  */
   temp = GIMP_DRAWABLE(layer)->tiles;
-#define FIXME
-#if 0
-  temp->x = GIMP_DRAWABLE(layer)->offset_x;
-  temp->y = GIMP_DRAWABLE(layer)->offset_y;
-#endif
+  canvas_fixme_setx (temp, GIMP_DRAWABLE(layer)->offset_x);
+  canvas_fixme_sety (temp, GIMP_DRAWABLE(layer)->offset_y);
   layer_type = (long) data[2];
   data[2] = (void *) ((long) GIMP_DRAWABLE(layer)->type);
 
   /*  restore the layer's data  */
   GIMP_DRAWABLE(layer)->tiles = tiles;
-#define FIXME
-#if 0
-  GIMP_DRAWABLE(layer)->offset_x = tiles->x;
-  GIMP_DRAWABLE(layer)->offset_y = tiles->y;
-#endif
+  GIMP_DRAWABLE(layer)->offset_x = canvas_fixme_getx (tiles);
+  GIMP_DRAWABLE(layer)->offset_y = canvas_fixme_gety (tiles);
   GIMP_DRAWABLE(layer)->width = canvas_width (tiles);
   GIMP_DRAWABLE(layer)->height = canvas_height (tiles);
   GIMP_DRAWABLE(layer)->bytes = tag_bytes (canvas_tag (tiles));
@@ -1277,11 +1257,8 @@ undo_pop_layer_mod (GImage *gimage,
 
   if (layer->mask) 
     {
-#define FIXME
-#if 0
-      GIMP_DRAWABLE(layer->mask)->offset_x = tiles->x;
-      GIMP_DRAWABLE(layer->mask)->offset_y = tiles->y;
-#endif
+      GIMP_DRAWABLE(layer->mask)->offset_x = canvas_fixme_getx (tiles);
+      GIMP_DRAWABLE(layer->mask)->offset_y = canvas_fixme_gety (tiles);
     }
 
   /*  If the layer type changed, update the gdisplay titles  */

@@ -35,6 +35,7 @@
 #include "layers_dialogP.h"
 #include "ops_buttons.h"
 #include "palette.h"
+#include "paint_funcs_area.h"
 #include "resize.h"
 
 #include "tools/eye.xbm"

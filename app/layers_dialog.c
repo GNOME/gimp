@@ -2929,8 +2929,9 @@ new_layer_query_ok_callback (GtkWidget *w,
       undo_push_group_start (gimage, EDIT_PASTE_UNDO);
 
       layer = layer_new (gimage->ID, options->xsize, options->ysize,
-			 gimage_base_type_with_alpha (gimage),
-			 layer_name, OPAQUE_OPACITY, NORMAL_MODE);
+			 tag_set_alpha (gimage_tag (gimage), ALPHA_YES),
+                         STORAGE_TILED,
+			 layer_name, 1.0, NORMAL_MODE);
       if (layer) 
 	{
 	  drawable_fill (GIMP_DRAWABLE(layer), fill_type);

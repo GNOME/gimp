@@ -128,6 +128,8 @@ channel_new (int gimage_ID, int width, int height, Precision p, char *name,
 
   channel = gtk_type_new (gimp_channel_get_type ());
 
+  pixelrow_init (&channel->col, tag, channel->_col, 1);
+  
   gimp_drawable_configure_tag (GIMP_DRAWABLE(channel), 
                                gimage_ID, width, height,
                                tag, STORAGE_TILED, name);
@@ -401,52 +403,66 @@ channel_toggle_visibility (Channel *channel)
 Canvas *
 channel_preview (Channel *channel, int width, int height)
 {
-#if 1
-  printf ("channel_preview not implemented\n");
-  return NULL;
-#else
-  MaskBuf * preview_buf;
-  PixelRegion srcPR, destPR;
+  Canvas * image_buf, * preview_buf;
+  PixelArea srcPR, destPR;
   int subsample;
 
   /*  The easy way  */
   if (GIMP_DRAWABLE(channel)->preview_valid &&
-      GIMP_DRAWABLE(channel)->preview->width == width &&
-      GIMP_DRAWABLE(channel)->preview->height == height)
+      (canvas_width (GIMP_DRAWABLE(channel)->preview) == width) &&
+      (canvas_height (GIMP_DRAWABLE(channel)->preview) == height))
     return GIMP_DRAWABLE(channel)->preview;
   /*  The hard way  */
   else
     {
+      int w, h;
+
+      image_buf = drawable_data (GIMP_DRAWABLE(channel));
+      w = canvas_width (image_buf);
+      h = canvas_height (image_buf);
+      
       /*  calculate 'acceptable' subsample  */
       subsample = 1;
       if (width < 1) width = 1;
       if (height < 1) height = 1;
-      while ((width * (subsample + 1) * 2 < GIMP_DRAWABLE(channel)->width) &&
-	     (height * (subsample + 1) * 2 < GIMP_DRAWABLE(channel)->height))
+      while ((width * (subsample + 1) * 2 < w) &&
+	     (height * (subsample + 1) * 2 < h))
 	subsample = subsample + 1;
 
-      pixel_region_init (&srcPR, GIMP_DRAWABLE(channel)->tiles, 0, 0, GIMP_DRAWABLE(channel)->width, GIMP_DRAWABLE(channel)->height, FALSE);
+      preview_buf = canvas_new (tag_new (tag_precision (canvas_tag(image_buf)),
+                                         FORMAT_GRAY,
+                                         ALPHA_NO),
+                                width, height,
+                                STORAGE_TILED);
+      
+      pixelarea_init (&srcPR, image_buf,
+                      0, 0,
+                      w, h,
+                      FALSE);
 
-      preview_buf = mask_buf_new (width, height);
-      destPR.bytes = 1;
-      destPR.x = 0;
-      destPR.y = 0;
-      destPR.w = width;
-      destPR.h = height;
-      destPR.rowstride = width;
-      destPR.data = mask_buf_data (preview_buf);
-
-      subsample_region (&srcPR, &destPR, subsample);
-
+      pixelarea_init (&destPR, preview_buf,
+                      0, 0,
+                      width, height,
+                      TRUE);
+#if 0
+      subsample_area (&srcPR, &destPR, subsample);
+#else
+      {
+        COLOR16_NEW (x, canvas_tag (preview_buf));
+        COLOR16_INIT (x);
+        color16_foreground (&x);
+        color_area (&destPR, &x);
+      }
+#endif
+      
       if (GIMP_DRAWABLE(channel)->preview_valid)
-	mask_buf_free (GIMP_DRAWABLE(channel)->preview);
+	canvas_delete (GIMP_DRAWABLE(channel)->preview);
 
       GIMP_DRAWABLE(channel)->preview = preview_buf;
       GIMP_DRAWABLE(channel)->preview_valid = 1;
 
       return GIMP_DRAWABLE(channel)->preview;
     }
-#endif
 }
 
 

@@ -31,17 +31,19 @@
 #include "gimage_mask.h"
 #include "gdisplay.h"
 #include "general.h"
+#include "gimprc.h"
 #include "global_edit.h"
 #include "interface.h"
-#include "paint_funcs.h"
+#include "paint_funcs_area.h"
 #include "palette.h"
+#include "pixelarea.h"
+#include "pixelrow.h"
 #include "procedural_db.h"
 #include "selection.h"
 #include "text_tool.h"
 #include "tools.h"
 #include "undo.h"
 
-#include "tile_manager_pvt.h"
 #include "drawable_pvt.h"
 
 #define FONT_LIST_WIDTH  125
@@ -154,7 +156,7 @@ static int        text_get_xlfd           (double, int, char *, char *, char *,
 					   char *, char *);
 static int        text_load_font          (TextTool *);
 static void       text_init_render        (TextTool *);
-static void       text_gdk_image_to_region (GdkImage *, int, PixelRegion *);
+static void       text_gdk_image_to_region (GdkImage *, int, PixelArea *);
 static int        text_get_extents        (char *, char *, int *, int *, int *, int *);
 static Layer *    text_render             (GImage *, GimpDrawable *, int, int, char *, char *, int, int);
 
@@ -1689,7 +1691,7 @@ text_init_render (TextTool *text_tool)
 static void
 text_gdk_image_to_region (GdkImage    *image,
 			  int          scale,
-			  PixelRegion *textPR)
+			  PixelArea   *textPR)
 {
   int black_pixel;
   int pixel;
@@ -1702,7 +1704,7 @@ text_gdk_image_to_region (GdkImage    *image,
 
   scale2 = scale * scale;
   black_pixel = BlackPixel (DISPLAY, DefaultScreen (DISPLAY));
-  data = textPR->data;
+  data = pixelarea_data (textPR);
 
   for (y = 0, scaley = 0; y < textPR->h; y++, scaley += scale)
     {
@@ -1741,10 +1743,9 @@ text_render (GImage *gimage,
   GdkGC *gc;
   GdkColor black, white;
   Layer *layer;
-  TileManager *mask, *newmask;
-  PixelRegion textPR, maskPR;
-  int layer_type;
-  unsigned char color[MAX_CHANNELS];
+  Canvas *mask, *newmask;
+  PixelArea textPR, maskPR;
+  Tag layer_tag;
   char *str;
   int nstrs;
   int crop;
@@ -1757,10 +1758,13 @@ text_render (GImage *gimage,
 
   /*  determine the layer type  */
   if (drawable)
-    layer_type = drawable_type_with_alpha (drawable);
+    layer_tag = drawable_tag (drawable);
   else
-    layer_type = gimage_base_type_with_alpha (gimage);
+    layer_tag = gimage_tag (gimage);
 
+  layer_tag = tag_set_alpha (layer_tag, ALPHA_YES);
+  
+  
   /* scale the text based on the antialiasing amount */
   if (antialias)
     antialias = SUPERSAMPLE;
@@ -1810,8 +1814,10 @@ text_render (GImage *gimage,
    *  with large pixmaps. (Specifically pixmaps which are larger - width
    *  or height - than the screen).
    */
-  pixmap_width = TILE_WIDTH * antialias;
-  pixmap_height = TILE_HEIGHT * antialias;
+#define FIXME
+  /* these are TILE_WIDTH and TILE_HEIGHT */
+  pixmap_width = 64 * antialias;
+  pixmap_height = 64 * antialias;
 
   /* determine the actual text size based on the amount of antialiasing */
   text_width = width / antialias;
@@ -1832,10 +1838,21 @@ text_render (GImage *gimage,
    * Since the pixmap may not fully bound the text (because we limit its size)
    *  we must tile it around the texts actual bounding box.
    */
-  mask = tile_manager_new (text_width, text_height, 1);
-  pixel_region_init (&maskPR, mask, 0, 0, text_width, text_height, TRUE);
+  mask = canvas_new (tag_new (default_precision,
+                              FORMAT_GRAY,
+                              ALPHA_NO),
+                     text_width,
+                     text_height,
+                     STORAGE_TILED);
 
-  for (pr = pixel_regions_register (1, &maskPR); pr != NULL; pr = pixel_regions_process (pr))
+  pixelarea_init (&maskPR, mask,
+                  0, 0,
+                  0, 0,
+                  TRUE);
+
+  for (pr = pixelarea_register (1, &maskPR);
+       pr != NULL;
+       pr = pixelarea_process (pr))
     {
       /* erase the pixmap */
       gdk_gc_set_foreground (gc, &white);
@@ -1873,23 +1890,38 @@ text_render (GImage *gimage,
   /*  Crop the mask buffer  */
   newmask = crop ? crop_buffer (mask, border) : mask;
   if (newmask != mask)
-    tile_manager_destroy (mask);
+    canvas_delete (mask);
 
   if (newmask && 
-      (layer = layer_new (gimage->ID, newmask->levels[0].width,
-			 newmask->levels[0].height, layer_type,
-			 "Text Layer", OPAQUE_OPACITY, NORMAL_MODE)))
+      (layer = layer_new (gimage->ID,
+                          canvas_width (newmask), canvas_height (newmask),
+                          layer_tag, STORAGE_TILED,
+                          "Text Layer", 1.0, NORMAL_MODE)))
     {
-      /*  color the layer buffer  */
-      gimage_get_foreground (gimage, drawable, color);
-      color[GIMP_DRAWABLE(layer)->bytes - 1] = OPAQUE_OPACITY;
-      pixel_region_init (&textPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
-      color_area (&textPR, color);
+      COLOR16_NEW (color, drawable_tag (GIMP_DRAWABLE(layer)));
+      COLOR16_INIT (color);
+
+      color16_foreground (&color);
+
+      pixelarea_init (&textPR, GIMP_DRAWABLE(layer)->tiles,
+                      0, 0,
+                      0, 0,
+                      TRUE);
+
+      color_area (&textPR, &color);
 
       /*  apply the text mask  */
-      pixel_region_init (&textPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
-      pixel_region_init (&maskPR, newmask, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
-      apply_mask_to_area (&textPR, &maskPR, OPAQUE_OPACITY);
+      pixelarea_init (&textPR, GIMP_DRAWABLE(layer)->tiles,
+                      0, 0,
+                      0, 0,
+                      TRUE);
+
+      pixelarea_init (&maskPR, newmask,
+                      0, 0,
+                      0, 0,
+                      FALSE);
+
+      apply_mask_to_area (&textPR, &maskPR, 1.0);
 
       /*  Start a group undo  */
       undo_push_group_start (gimage, EDIT_PASTE_UNDO);
@@ -1915,14 +1947,14 @@ text_render (GImage *gimage,
       /*  end the group undo  */
       undo_push_group_end (gimage);
 
-      tile_manager_destroy (newmask);
+      canvas_delete (newmask);
     }
   else 
     {
       if (newmask) 
 	{
 	  g_message ("text_render: could not allocate image");
-          tile_manager_destroy (newmask);
+          canvas_delete (newmask);
 	}
       layer = NULL;
     }

@@ -17,6 +17,7 @@
  */
 #include <stdlib.h>
 #include "appenv.h"
+#include "canvas.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
@@ -24,12 +25,10 @@
 #include "perspective_tool.h"
 #include "selection.h"
 #include "tools.h"
-#include "tile_manager.h"
 #include "transform_core.h"
 #include "transform_tool.h"
 #include "undo.h"
 
-#include "tile_manager_pvt.h"
 
 #define X0 0
 #define Y0 1
@@ -46,7 +45,7 @@ char          matrix_row2_buf [256];
 char          matrix_row3_buf [256];
 
 /*  forward function declarations  */
-static void *      perspective_tool_perspective (GImage *, GimpDrawable *, TileManager *, int, Matrix);
+static void *      perspective_tool_perspective (GImage *, GimpDrawable *, Canvas *, int, Matrix);
 static void        perspective_find_transform   (double *, Matrix);
 static void *      perspective_tool_recalc      (Tool *, void *);
 static void        perspective_tool_motion      (Tool *, void *);
@@ -285,7 +284,7 @@ static void *
 perspective_tool_perspective (gimage, drawable, float_tiles, interpolation, matrix)
      GImage *gimage;
      GimpDrawable *drawable;
-     TileManager *float_tiles;
+     Canvas *float_tiles;
      int interpolation;
      Matrix matrix;
 {
@@ -383,8 +382,8 @@ perspective_invoker (args)
   int interpolation;
   double trans_info[8];
   int int_value;
-  TileManager *float_tiles;
-  TileManager *new_tiles;
+  Canvas *float_tiles;
+  Canvas *new_tiles;
   Matrix matrix;
   int new_layer;
   Layer *layer;
@@ -445,14 +444,14 @@ perspective_invoker (args)
        */
       perspective_find_transform (trans_info, m);
 
-      cx     = float_tiles->x;
-      cy     = float_tiles->y;
+      cx     = canvas_fixme_getx(float_tiles);
+      cy     = canvas_fixme_gety(float_tiles);
       scalex = 1.0;
       scaley = 1.0;
-      if (float_tiles->levels[0].width)
-	scalex = 1.0 / float_tiles->levels[0].width;
-      if (float_tiles->levels[0].height)
-	scaley = 1.0 / float_tiles->levels[0].height;
+      if (canvas_width (float_tiles))
+	scalex = 1.0 / canvas_width (float_tiles);
+      if (canvas_height (float_tiles))
+	scaley = 1.0 / canvas_height (float_tiles);
 
       /*  assemble the transformation matrix  */
       identity_matrix  (matrix);
@@ -464,7 +463,7 @@ perspective_invoker (args)
       new_tiles = perspective_tool_perspective (gimage, drawable, float_tiles, interpolation, matrix);
 
       /*  free the cut/copied buffer  */
-      tile_manager_destroy (float_tiles);
+      canvas_delete (float_tiles);
 
       if (new_tiles)
 	success = (layer = transform_core_paste (gimage, drawable, new_tiles, new_layer)) != NULL;

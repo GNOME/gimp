@@ -26,7 +26,8 @@
 #include "gimprc.h"
 #include "gdisplay.h"
 #include "rect_select.h"
-#include "paint_funcs.h"
+#include "paint_funcs_area.h"
+#include "pixelarea.h"
 
 typedef struct _free_select FreeSelect;
 
@@ -140,7 +141,7 @@ static Channel *
 scan_convert (int gimage_ID, int num_pts, FreeSelectPoint *pts,
 	      int width, int height, int antialias)
 {
-  PixelRegion maskPR;
+  PixelArea maskPR;
   Channel * mask;
   GSList **scanlines;
   GSList *list;
@@ -198,9 +199,11 @@ scan_convert (int gimage_ID, int num_pts, FreeSelectPoint *pts,
 			 (int) pts[0].x, (int) pts[0].y);
     }
 
-  pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), 0, 0, 
-		     drawable_width (GIMP_DRAWABLE(mask)), 
-		     drawable_height (GIMP_DRAWABLE(mask)), TRUE);
+  pixelarea_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)),
+                  0, 0, 
+                  drawable_width (GIMP_DRAWABLE(mask)), 
+                  drawable_height (GIMP_DRAWABLE(mask)),
+                  TRUE);
   for (i = 0; i < height; i++)
     {
       list = scanlines[i];
@@ -249,8 +252,8 @@ scan_convert (int gimage_ID, int num_pts, FreeSelectPoint *pts,
 	      *b++ = (unsigned char) (val / SUPERSAMPLE2);
 	    }
 
-	  pixel_region_set_row (&maskPR, 0, (i / SUPERSAMPLE), 
-				drawable_width (GIMP_DRAWABLE(mask)), buf);
+	  pixelarea_write_row (&maskPR, 0, (i / SUPERSAMPLE), 
+                               drawable_width (GIMP_DRAWABLE(mask)), buf);
 	}
 
       g_slist_free (scanlines[i]);

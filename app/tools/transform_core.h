@@ -18,6 +18,8 @@
 #ifndef __TRANSFORM_CORE_H__
 #define __TRANSFORM_CORE_H__
 
+struct _Canvas;
+
 #include "info_dialog.h"
 #include "draw_core.h"
 
@@ -81,7 +83,7 @@ struct _transform_core
   Matrix          transform;    /*  transformation matrix       */
   TranInfo        trans_info;   /*  transformation info         */
 
-  TileManager *   original;     /*  pointer to original tiles   */
+  struct _Canvas *original;     /*  pointer to original tiles   */
 
   TransformFunc   trans_func;   /*  transformation function     */
 
@@ -104,7 +106,7 @@ struct _transform_undo
   int             tool_type;
   TranInfo        trans_info;
   int             first;
-  TileManager *   original;
+  struct _Canvas *original;
 };
 
 
@@ -126,9 +128,9 @@ void          transform_core_free         (Tool *);
 void          transform_core_reset        (Tool *, void *);
 
 /*  transform functions  */
-TileManager * transform_core_do           (GImage *, GimpDrawable *, TileManager *, int, Matrix);
-TileManager * transform_core_cut          (GImage *, GimpDrawable *, int *);
-Layer *       transform_core_paste        (GImage *, GimpDrawable *, TileManager *, int);
+struct _Canvas * transform_core_do           (GImage *, GimpDrawable *, struct _Canvas *, int, Matrix);
+struct _Canvas * transform_core_cut          (GImage *, GimpDrawable *, int *);
+Layer *       transform_core_paste        (GImage *, GimpDrawable *, struct _Canvas *, int);
 
 /*  matrix functions  */
 void          transform_bounding_box      (Tool *);

@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <math.h>
 #include "appenv.h"
+#include "canvas.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
@@ -26,13 +27,11 @@
 #include "palette.h"
 #include "shear_tool.h"
 #include "selection.h"
-#include "tile_manager.h"
 #include "tools.h"
 #include "transform_core.h"
 #include "transform_tool.h"
 #include "undo.h"
 
-#include "tile_manager_pvt.h"
 
 /*  index into trans_info array  */
 #define HORZ_OR_VERT   0
@@ -52,7 +51,7 @@ static char        xshear_buf  [MAX_INFO_BUF];
 static char        yshear_buf  [MAX_INFO_BUF];
 
 /*  forward function declarations  */
-static void *      shear_tool_shear   (GImage *, GimpDrawable *, TileManager *, int, Matrix);
+static void *      shear_tool_shear   (GImage *, GimpDrawable *, Canvas *, int, Matrix);
 static void *      shear_tool_recalc  (Tool *, void *);
 static void        shear_tool_motion  (Tool *, void *);
 static void        shear_info_update  (Tool *);
@@ -284,7 +283,7 @@ static void *
 shear_tool_shear (gimage, drawable, float_tiles, interpolation, matrix)
      GImage *gimage;
      GimpDrawable *drawable;
-     TileManager *float_tiles;
+     Canvas *float_tiles;
      int interpolation;
      Matrix matrix;
 {
@@ -359,8 +358,8 @@ shear_invoker (args)
   int shear_type;
   double shear_magnitude;
   int int_value;
-  TileManager *float_tiles;
-  TileManager *new_tiles;
+  Canvas *float_tiles;
+  Canvas *new_tiles;
   Matrix matrix;
   int new_layer;
   Layer *layer;
@@ -419,23 +418,23 @@ shear_invoker (args)
       /*  Cut/Copy from the specified drawable  */
       float_tiles = transform_core_cut (gimage, drawable, &new_layer);
 
-      cx = float_tiles->x + float_tiles->levels[0].width / 2.0;
-      cy = float_tiles->y + float_tiles->levels[0].height / 2.0;
+      cx = canvas_fixme_getx (float_tiles) + canvas_width (float_tiles) / 2.0;
+      cy = canvas_fixme_gety (float_tiles) + canvas_height (float_tiles) / 2.0;
 
       identity_matrix  (matrix);
       translate_matrix (matrix, -cx, -cy);
       /*  shear matrix  */
       if (shear_type == HORZ)
-	xshear_matrix (matrix, shear_magnitude / float_tiles->levels[0].height);
+	xshear_matrix (matrix, shear_magnitude / canvas_height (float_tiles));
       else if (shear_type == VERT)
-	yshear_matrix (matrix, shear_magnitude / float_tiles->levels[0].width);
+	yshear_matrix (matrix, shear_magnitude / canvas_width (float_tiles));
       translate_matrix (matrix, +cx, +cy);
 
       /*  shear the buffer  */
       new_tiles = shear_tool_shear (gimage, drawable, float_tiles, interpolation, matrix);
 
       /*  free the cut/copied buffer  */
-      tile_manager_destroy (float_tiles);
+      canvas_delete (float_tiles);
 
       if (new_tiles)
 	success = (layer = transform_core_paste (gimage, drawable, new_tiles, new_layer)) != NULL;
