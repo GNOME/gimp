@@ -6252,10 +6252,11 @@ gfig_update_stat_labels()
     {
       gint slen;
       gchar *hm = g_get_home_dir ();
+      gchar *dfn = g_strdup(current_obj->filename);
 #ifdef __EMX__
       hm = _fnslashify(hm);
 #endif
-      gchar *dfn = g_strdup(current_obj->filename);
+
       
 #ifndef __EMX__
       if(!strncmp(dfn,hm,strlen(hm)-1))

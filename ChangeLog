@@ -1,3 +1,8 @@
+1999-12-21  Asbjorn Pettersen  <asbjornP@dualog.no>
+
+	* plug-ins/gfig/gfig.c (gfig_update_stat_labels): 
+	variable dfn placed before code (os/2).
+
 Tue Dec 21 14:53:33 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/blend-anim.scm
