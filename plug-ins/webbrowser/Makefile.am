@@ -1,5 +1,11 @@
 ## Process this file with automake to produce Makefile.in
 
+if OS_WIN32
+mwindows = -mwindows
+endif
+
+AM_LDFLAGS = $(mwindows)
+
 scriptdatadir = $(gimpdatadir)/scripts
 
 scriptdata_DATA = web-browser.scm

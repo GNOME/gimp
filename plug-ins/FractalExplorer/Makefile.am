@@ -1,5 +1,11 @@
 ## Process this file with automake to produce Makefile.in
 
+if OS_WIN32
+mwindows = -mwindows
+endif
+
+AM_LDFLAGS = $(mwindows)
+
 SUBDIRS = fractalexplorer-examples
 
 libexecdir = $(gimpplugindir)/plug-ins
