@@ -1,3 +1,11 @@
+2004-05-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/app-docs.sgml
+	* app/app-sections.txt
+	* app/app.types: updated to include the new actions/ and menus/
+	directories. Lots of fixes and cleanups. Still stuff to do...
+
 2004-05-18  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/tmpl/gimphelpui.sgml

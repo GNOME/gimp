@@ -141,7 +141,6 @@
       <xi:include href="xml/gimpcontainer.xml" />
       <xi:include href="xml/gimpcontainer-filter.xml" />
       <xi:include href="xml/gimplist.xml" />
-      <xi:include href="xml/gimpdatalist.xml" />
       <xi:include href="xml/gimpdocumentlist.xml" />
     </chapter>
 
@@ -407,7 +406,6 @@
 
     <chapter id="app-display-display">
       <title>The GimpDisplay Object</title>
-      <xi:include href="xml/gimpcanvas.xml" />
       <xi:include href="xml/gimpdisplay.xml" />
       <xi:include href="xml/gimpdisplay-area.xml" />
       <xi:include href="xml/gimpdisplay-foreach.xml" />
@@ -417,6 +415,7 @@
 
     <chapter id="app-display-shell">
       <title>The GimpDisplayShell Widget</title>
+      <xi:include href="xml/gimpcanvas.xml" />
       <xi:include href="xml/gimpdisplayshell.xml" />
       <xi:include href="xml/gimpdisplayshell-appearance.xml" />
       <xi:include href="xml/gimpdisplayshell-callbacks.xml" />
@@ -595,10 +594,6 @@
       <xi:include href="xml/gimpcoloreditor.xml" />
       <xi:include href="xml/gimpdevicestatus.xml" />
       <xi:include href="xml/gimperrorconsole.xml" />
-      <xi:include href="xml/gimpdasheditor.xml" />
-      <xi:include href="xml/gimpgrideditor.xml" />
-      <xi:include href="xml/gimpstrokeeditor.xml" />
-      <xi:include href="xml/gimptemplateeditor.xml" />
       <xi:include href="xml/gimptooloptionseditor.xml" />
     </chapter>
 
@@ -624,6 +619,8 @@
       <title>GimpContainerView Widgets</title>
       <xi:include href="xml/gimpcontainerview.xml" />
       <xi:include href="xml/gimpcontainerview-utils.xml" />
+      <xi:include href="xml/gimpcontainercombobox.xml" />
+      <xi:include href="xml/gimpcontainerbox.xml" />
       <xi:include href="xml/gimpcontainergridview.xml" />
       <xi:include href="xml/gimpcontainertreeview.xml" />
       <xi:include href="xml/gimpcontainertreeview-dnd.xml" />
@@ -634,10 +631,10 @@
       <xi:include href="xml/gimpvectorstreeview.xml" />
     </chapter>
 
-    <chapter id="app-widgets-container-menus">
-      <title>GimpContainerMenu Widgets</title>
-      <xi:include href="xml/gimpcontainermenu.xml" />
-      <xi:include href="xml/gimpcontainermenuimpl.xml" />
+    <chapter id="app-widgets-misc-container-views">
+      <title>Misc. Container View Widgets</title>
+      <xi:include href="xml/gimpcontainerpopup.xml" />
+      <xi:include href="xml/gimpviewablebutton.xml" />
     </chapter>
 
     <chapter id="app-widgets-container-editors">
@@ -648,22 +645,34 @@
       <xi:include href="xml/gimpfontview.xml" />
       <xi:include href="xml/gimpimageview.xml" />
       <xi:include href="xml/gimptemplateview.xml" />
+      <xi:include href="xml/gimptoolview.xml" />
     </chapter>
 
     <chapter id="app-widgets-data-factory-views">
       <title>GimpDataFactoryView Widgets</title>
       <xi:include href="xml/gimpdatafactoryview.xml" />
       <xi:include href="xml/gimpbrushfactoryview.xml" />
+      <xi:include href="xml/gimppatternfactoryview.xml" />
     </chapter>
 
     <chapter id="app-widgets-menus">
       <title>Menus</title>
+      <xi:include href="xml/gimpactionfactory.xml" />
       <xi:include href="xml/gimpactiongroup.xml" />
+      <xi:include href="xml/gimpaction.xml" />
       <xi:include href="xml/gimpenumaction.xml" />
+      <xi:include href="xml/gimppluginaction.xml" />
       <xi:include href="xml/gimpstringaction.xml" />
-      <xi:include href="xml/gimpitemfactory.xml" />
       <xi:include href="xml/gimpmenufactory.xml" />
-      <xi:include href="xml/gimpmenuitem.xml" />
+      <xi:include href="xml/gimpuimanager.xml" />
+    </chapter>
+
+    <chapter id="app-widgets-misc-dialogs">
+      <title>Misc. Dialogs</title>
+      <xi:include href="xml/gimpfiledialog.xml" />
+      <xi:include href="xml/gimptexteditor.xml" />
+      <xi:include href="xml/gimptooldialog.xml" />
+      <xi:include href="xml/gimpviewabledialog.xml" />
     </chapter>
 
     <chapter id="app-widgets-misc-widgets">
@@ -672,15 +681,13 @@
       <xi:include href="xml/gimpcolordisplayeditor.xml" />
       <xi:include href="xml/gimpcolorframe.xml" />
       <xi:include href="xml/gimpcolorpanel.xml" />
-      <xi:include href="xml/gimpcontainerpopup.xml" />
-      <xi:include href="xml/gimpfiledialog.xml" />
+      <xi:include href="xml/gimpdasheditor.xml" />
+      <xi:include href="xml/gimpgrideditor.xml" />
       <xi:include href="xml/gimphistogrambox.xml" />
       <xi:include href="xml/gimphistogramview.xml" />
-      <xi:include href="xml/gimptexteditor.xml" />
+      <xi:include href="xml/gimpstrokeeditor.xml" />
+      <xi:include href="xml/gimptemplateeditor.xml" />
       <xi:include href="xml/gimpthumbbox.xml" />
-      <xi:include href="xml/gimptooldialog.xml" />
-      <xi:include href="xml/gimpviewablebutton.xml" />
-      <xi:include href="xml/gimpviewabledialog.xml" />
     </chapter>
 
     <chapter id="app-widgets-previews">
@@ -712,7 +719,10 @@
     <chapter id="app-widgets-constructors">
       <title>Convenience Constructors</title>
       <xi:include href="xml/gimpenumstore.xml" />
+      <xi:include href="xml/gimpunitstore.xml" />
       <xi:include href="xml/gimpenumcombobox.xml" />
+      <xi:include href="xml/gimpunitcombobox.xml" />
+      <xi:include href="xml/gimpscalecombobox.xml" />
       <xi:include href="xml/gimpenumwidgets.xml" />
       <xi:include href="xml/gimppropwidgets.xml" />
       <xi:include href="xml/gimpwidgets-constructors.xml" />
@@ -733,6 +743,121 @@
       <xi:include href="xml/gtkwrapbox.xml" />
       <xi:include href="xml/gtkhwrapbox.xml" />
       <xi:include href="xml/gtkvwrapbox.xml" />
+    </chapter>
+  </part>
+
+  <part id="app-actions-part">
+    <title>Actions</title>
+
+    <chapter id="app-actions-glue">
+      <title>Initialization &amp; Glue Code</title>
+      <xi:include href="xml/actions.xml" />
+    </chapter>
+
+    <chapter id="app-image-actions">
+      <title>Actions &amp; Callbacks Mainly Used in the Image Menu</title>
+      <xi:include href="xml/file-actions.xml" />
+      <xi:include href="xml/file-commands.xml" />
+      <xi:include href="xml/edit-actions.xml" />
+      <xi:include href="xml/edit-commands.xml" />
+      <xi:include href="xml/select-actions.xml" />
+      <xi:include href="xml/select-commands.xml" />
+      <xi:include href="xml/image-actions.xml" />
+      <xi:include href="xml/image-commands.xml" />
+      <xi:include href="xml/drawable-actions.xml" />
+      <xi:include href="xml/drawable-commands.xml" />
+      <xi:include href="xml/tools-actions.xml" />
+      <xi:include href="xml/tools-commands.xml" />
+      <xi:include href="xml/view-actions.xml" />
+      <xi:include href="xml/view-commands.xml" />
+      <xi:include href="xml/help-actions.xml" />
+      <xi:include href="xml/help-commands.xml" />
+      <xi:include href="xml/debug-actions.xml" />
+      <xi:include href="xml/debug-commands.xml" />
+      <xi:include href="xml/dialogs-actions.xml" />
+      <xi:include href="xml/dialogs-commands.xml" />
+      <xi:include href="xml/plug-in-actions.xml" />
+      <xi:include href="xml/plug-in-commands.xml" />
+      <xi:include href="xml/channels-actions.xml" />
+      <xi:include href="xml/channels-commands.xml" />
+      <xi:include href="xml/layers-actions.xml" />
+      <xi:include href="xml/layers-commands.xml" />
+      <xi:include href="xml/vectors-actions.xml" />
+      <xi:include href="xml/vectors-commands.xml" />
+      <xi:include href="xml/qmask-actions.xml" />
+      <xi:include href="xml/qmask-commands.xml" />
+    </chapter>
+
+    <chapter id="app-actions-file-dialog-actions">
+      <title>File Dialog Actions &amp; Callbacks</title>
+      <xi:include href="xml/file-dialog-actions.xml" />
+      <xi:include href="xml/file-dialog-commands.xml" />
+      <xi:include href="xml/file-open-actions.xml" />
+      <xi:include href="xml/file-save-actions.xml" />
+    </chapter>
+
+    <chapter id="app-actions-data-factory-actions">
+      <title>Data Factory Actions &amp; Callbacks</title>
+      <xi:include href="xml/brushes-actions.xml" />
+      <xi:include href="xml/gradients-actions.xml" />
+      <xi:include href="xml/gradients-commands.xml" />
+      <xi:include href="xml/palettes-actions.xml" />
+      <xi:include href="xml/palettes-commands.xml" />
+      <xi:include href="xml/patterns-actions.xml" />
+      <xi:include href="xml/data-commands.xml" />
+    </chapter>
+
+    <chapter id="app-actions-misc-list-actions">
+      <title>Misc. Actions &amp; Callbacks for List &amp; Grid Views</title>
+      <xi:include href="xml/buffers-actions.xml" />
+      <xi:include href="xml/buffers-commands.xml" />
+      <xi:include href="xml/documents-actions.xml" />
+      <xi:include href="xml/documents-commands.xml" />
+      <xi:include href="xml/fonts-actions.xml" />
+      <xi:include href="xml/fonts-commands.xml" />
+      <xi:include href="xml/images-actions.xml" />
+      <xi:include href="xml/images-commands.xml" />
+      <xi:include href="xml/templates-actions.xml" />
+      <xi:include href="xml/templates-commands.xml" />
+    </chapter>
+
+    <chapter id="app-actions-data-editor-actions">
+      <title>Data Editor Actions &amp; Callbacks</title>
+      <xi:include href="xml/colormap-editor-actions.xml" />
+      <xi:include href="xml/colormap-editor-commands.xml" />
+      <xi:include href="xml/gradient-editor-actions.xml" />
+      <xi:include href="xml/gradient-editor-commands.xml" />
+      <xi:include href="xml/palette-editor-actions.xml" />
+      <xi:include href="xml/palette-editor-commands.xml" />
+    </chapter>
+
+    <chapter id="app-actions-misc-actions">
+      <title>Other Actions &amp; Callbacks</title>
+      <xi:include href="xml/dockable-actions.xml" />
+      <xi:include href="xml/dockable-commands.xml" />
+      <xi:include href="xml/error-console-actions.xml" />
+      <xi:include href="xml/error-console-commands.xml" />
+      <xi:include href="xml/tool-options-actions.xml" />
+      <xi:include href="xml/tool-options-commands.xml" />
+    </chapter>
+  </part>
+
+  <part id="app-menus-part">
+    <title>Menus</title>
+
+    <chapter id="app-menus-glue">
+      <title>Initialization &amp; Glue Code</title>
+      <xi:include href="xml/menus.xml" />
+    </chapter>
+
+    <chapter id="app-menus-menus">
+      <title>Menus</title>
+      <xi:include href="xml/file-dialog-menu.xml" />
+      <xi:include href="xml/file-menu.xml" />
+      <xi:include href="xml/image-menu.xml" />
+      <xi:include href="xml/plug-in-menus.xml" />
+      <xi:include href="xml/toolbox-menu.xml" />
+      <xi:include href="xml/tool-options-menu.xml" />
     </chapter>
   </part>
 
@@ -782,93 +907,6 @@
       <xi:include href="xml/gradient-select.xml" />
       <xi:include href="xml/palette-select.xml" />
       <xi:include href="xml/pattern-select.xml" />
-    </chapter>
-
-    <chapter id="app-gui-menus">
-      <title>Menus &amp; Callbacks</title>
-      <xi:include href="xml/menus.xml" />
-    </chapter>
-
-    <chapter id="app-gui-toolbox-and-image-menus">
-      <title>
-        The &lt;Toolbox&gt;, &lt;Image&gt;, &lt;Open&gt; &amp; &lt;Save&gt;
-        Menus &amp; Callbacks
-      </title>
-      <subtitle>
-        Note that the &lt;Image&gt; menu shares callbacks with the
-        &lt;Layers&gt;, &lt;Channels&gt; &amp; &lt;Vectors&gt; menus.
-      </subtitle>
-      <xi:include href="xml/toolbox-menu.xml" />
-      <xi:include href="xml/image-menu.xml" />
-      <xi:include href="xml/file-open-menu.xml" />
-      <xi:include href="xml/file-save-menu.xml" />
-      <xi:include href="xml/plug-in-menus.xml" />
-      <xi:include href="xml/file-commands.xml" />
-      <xi:include href="xml/edit-commands.xml" />
-      <xi:include href="xml/select-commands.xml" />
-      <xi:include href="xml/image-commands.xml" />
-      <xi:include href="xml/drawable-commands.xml" />
-      <xi:include href="xml/tools-commands.xml" />
-      <xi:include href="xml/view-commands.xml" />
-      <xi:include href="xml/help-commands.xml" />
-      <xi:include href="xml/debug-commands.xml" />
-      <xi:include href="xml/plug-in-commands.xml" />
-    </chapter>
-
-    <chapter id="app-gui-layers-channels-and-vectors-menus">
-      <title>
-        The &lt;Layers&gt;, &lt;Channels&gt; &amp; &lt;Vectors&gt;
-        Menus &amp; Callbacks
-      </title>
-      <subtitle>
-        Note that these menus share callbacks with the &lt;Image&gt; menu.
-      </subtitle>
-      <xi:include href="xml/channels-menu.xml" />
-      <xi:include href="xml/channels-commands.xml" />
-      <xi:include href="xml/layers-menu.xml" />
-      <xi:include href="xml/layers-commands.xml" />
-      <xi:include href="xml/vectors-menu.xml" />
-      <xi:include href="xml/vectors-commands.xml" />
-    </chapter>
-
-    <chapter id="app-gui-data-factory-menus">
-      <title>Data Factory Menus &amp; Callbacks</title>
-      <xi:include href="xml/brushes-menu.xml" />
-      <xi:include href="xml/patterns-menu.xml" />
-      <xi:include href="xml/gradients-menu.xml" />
-      <xi:include href="xml/gradients-commands.xml" />
-      <xi:include href="xml/palettes-menu.xml" />
-      <xi:include href="xml/palettes-commands.xml" />
-      <xi:include href="xml/data-commands.xml" />
-    </chapter>
-
-    <chapter id="app-gui-misc-menus">
-      <title>Other Menus &amp; Callbacks</title>
-      <xi:include href="xml/buffers-menu.xml" />
-      <xi:include href="xml/buffers-commands.xml" />
-      <xi:include href="xml/colormap-editor-menu.xml" />
-      <xi:include href="xml/colormap-editor-commands.xml" />
-      <xi:include href="xml/dialogs-menu.xml" />
-      <xi:include href="xml/dialogs-commands.xml" />
-      <xi:include href="xml/dockable-commands.xml" />
-      <xi:include href="xml/documents-menu.xml" />
-      <xi:include href="xml/documents-commands.xml" />
-      <xi:include href="xml/error-console-menu.xml" />
-      <xi:include href="xml/error-console-commands.xml" />
-      <xi:include href="xml/fonts-commands.xml" />
-      <xi:include href="xml/fonts-menu.xml" />
-      <xi:include href="xml/gradient-editor-menu.xml" />
-      <xi:include href="xml/gradient-editor-commands.xml" />
-      <xi:include href="xml/images-menu.xml" />
-      <xi:include href="xml/images-commands.xml" />
-      <xi:include href="xml/palette-editor-menu.xml" />
-      <xi:include href="xml/palette-editor-commands.xml" />
-      <xi:include href="xml/qmask-menu.xml" />
-      <xi:include href="xml/qmask-commands.xml" />
-      <xi:include href="xml/templates-menu.xml" />
-      <xi:include href="xml/templates-commands.xml" />
-      <xi:include href="xml/tool-options-menu.xml" />
-      <xi:include href="xml/tool-options-commands.xml" />
     </chapter>
   </part>
 

@@ -41,7 +41,8 @@ IGNORE_HFILES = \
 	gimpimage-convert-fsdither.h	\
 	gimphelp-ids.h			\
 	gimprc-blurbs.h			\
-	paint-funcs-generic.h
+	paint-funcs-generic.h		\
+	gimpitemfactory.h
 
 # Images to copy into HTML directory
 HTML_IMAGES=
