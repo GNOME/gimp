@@ -181,6 +181,9 @@ gimp_image_find_guide (GimpImage *gimage,
 {
   GList     *list;
   GimpGuide *guide;
+  GimpGuide *ret = NULL;
+  gdouble    dist;
+  gdouble    mindist = G_MAXDOUBLE;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
@@ -200,19 +203,23 @@ gimp_image_find_guide (GimpImage *gimage,
       switch (guide->orientation)
         {
         case GIMP_ORIENTATION_HORIZONTAL:
-          if (ABS (guide->position - y) < GUIDE_EPSILON)
-            return guide;
+          dist = ABS (guide->position - y);
           break;
 
         case GIMP_ORIENTATION_VERTICAL:
-          if (ABS (guide->position - x) < GUIDE_EPSILON)
-            return guide;
+          dist = ABS (guide->position - x);
           break;
 
         default:
-          break;
+          continue;
+        }
+
+      if (dist < MIN (GUIDE_EPSILON, mindist))
+        {
+          mindist = dist;
+          ret = guide;
         }
     }
 
-  return NULL;
+  return ret;
 }

@@ -1,3 +1,14 @@
+2004-01-17  Henrik Brix Andersen  <brix@gimp.org>
+
+	Finally fixed bug #125864:
+
+	* app/core/gimpimage-guides.c (gimp_image_find_guide): iterate
+	over the entire list of guides to determine the closest one.
+
+	* app/core/gimpimage-snap.c: use gdoubles instead of gints for
+	dist and mindist variables to make sure grid and guides with 1px
+	spacings work as expected.
+
 2004-01-17  Sven Neumann  <sven@gimp.org>
 
 	* libgimpthumb/gimpthumbnail.c: added more optional debug output

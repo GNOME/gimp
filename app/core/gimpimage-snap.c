@@ -49,9 +49,9 @@ gimp_image_snap_x (GimpImage *gimage,
   GimpGrid  *grid;
   gdouble    xspacing;
   gdouble    xoffset;
-  gint       mindist = G_MAXINT;
-  gint       dist;
-  gint       i;
+  gdouble    mindist = G_MAXDOUBLE;
+  gdouble    dist;
+  gdouble    i;
   gboolean   snapped = FALSE;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
@@ -102,7 +102,7 @@ gimp_image_snap_x (GimpImage *gimage,
           if (i < 0)
             continue;
 
-          dist = ABS (i - x - 0.5);
+          dist = ABS (i - x);
 
           if (dist < MIN (EPSILON, mindist))
             {
@@ -128,9 +128,9 @@ gimp_image_snap_y (GimpImage *gimage,
   GimpGrid  *grid;
   gdouble    yspacing;
   gdouble    yoffset;
-  gint       mindist = G_MAXINT;
-  gint       dist;
-  gint       i;
+  gdouble    mindist = G_MAXDOUBLE;
+  gdouble    dist;
+  gdouble    i;
   gboolean   snapped = FALSE;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
@@ -181,7 +181,7 @@ gimp_image_snap_y (GimpImage *gimage,
           if (i < 0)
             continue;
 
-          dist = ABS (i - y - 0.5);
+          dist = ABS (i - y);
 
           if (dist < MIN (EPSILON, mindist))
             {
@@ -209,9 +209,9 @@ gimp_image_snap_point (GimpImage *gimage,
   GimpGrid  *grid;
   gdouble    xspacing, yspacing;
   gdouble    xoffset, yoffset;
-  gint       minxdist, minydist;
-  gint       dist;
-  gint       i;
+  gdouble    minxdist, minydist;
+  gdouble    dist;
+  gdouble    i;
   gboolean   snapped = FALSE;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
@@ -288,7 +288,7 @@ gimp_image_snap_point (GimpImage *gimage,
           if (i < 0)
             continue;
 
-          dist = ABS (i - x - 0.5);
+          dist = ABS (i - x);
 
           if (dist < MIN (EPSILON, minxdist))
             {
@@ -303,7 +303,7 @@ gimp_image_snap_point (GimpImage *gimage,
           if (i < 0)
             continue;
 
-          dist = ABS (i - y - 0.5);
+          dist = ABS (i - y);
 
           if (dist < MIN (EPSILON, minydist))
             {
