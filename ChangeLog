@@ -1,5 +1,11 @@
 2003-03-28  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcellrenderertoggle.c
+	(gimp_cell_renderer_toggle_activate): check for event != NULL to
+	avoid crashing when the cell is activated using the keyboard.
+
+2003-03-28  Sven Neumann  <sven@gimp.org>
+
 	* app/text/gimptext-compat.c: respect the antialias parameter.
 
 	* app/text/gimptext.[ch]

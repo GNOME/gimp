@@ -417,7 +417,7 @@ gimp_cell_renderer_toggle_activate (GtkCellRenderer      *cell,
 
   celltoggle = GTK_CELL_RENDERER_TOGGLE (cell);
 
-  if (celltoggle->activatable)
+  if (celltoggle->activatable && event)
     {
       GdkModifierType state = 0;
 

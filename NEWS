@@ -8,6 +8,20 @@ development takes place on the road to the next stable release
 dubbed GIMP 1.4.
 
 
+Overview of Changes in GIMP 1.3.14
+==================================
+
+- Keyboard navigation for grid views [Sven]
+- List and grid views for fonts [Mitch, Sven]
+- Minor text tool improvements [Sven]
+- More icons in even more sizes [Jimmac, Mitch, Sven]
+- I18n header cleanup [Sven]
+- Lots of bug fixes
+
+Other contributors:
+  Manish Singh
+
+
 Overview of Changes in GIMP 1.3.13
 ==================================
 
