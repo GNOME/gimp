@@ -14,6 +14,18 @@ Utilities of general interest
 
 </para>
 
+<!-- ##### FUNCTION gimp_any_to_utf8 ##### -->
+<para>
+
+</para>
+
+@str: 
+@len: 
+@warning_format: 
+@Varargs: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_utf8_strtrim ##### -->
 <para>
 
