@@ -1,5 +1,10 @@
 2003-11-01  Sven Neumann  <sven@gimp.org>
 
+	* app/composite/Makefile.am (EXTRA_PROGRAMS): removed
+	test-composite.
+
+2003-11-01  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimphistogramview.[ch]: removed width and height
 	from the API. It can be set using gtk_widget_size_request(). Set a
 	mimimum height of 80 pixels.

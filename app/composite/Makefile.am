@@ -79,6 +79,10 @@ TESTS = \
 	gimp-composite-sse2-test	\
 	gimp-composite-vis-test
 
+EXTRA_PROGRAMS = gimp-composite-test $(TESTS)
+
+CLEANFILES = $(EXTRA_PROGRAMS)
+
 gimp_composite_test_SOURCES = \
 	gimp-composite-regression.c	\
 	gimp-composite-regression.h	\
@@ -172,8 +176,3 @@ gimp_composite_vis_test_LDADD = \
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/app/base/libappbase.a				\
 	$(GLIB_LIBS)
-
-
-EXTRA_PROGRAMS = test-composite gimp-composite-test $(TESTS)
-
-CLEANFILES = $(EXTRA_PROGRAMS)
