@@ -1,5 +1,10 @@
 2004-07-09  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/file-save-dialog.c (file_save_overwrite): improved text
+	of the dialog.
+
+2004-07-09  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpdialog.c (gimp_dialog_class_init): document
 	that "help-func" and "help-id" properties have been added for 2.2.
 

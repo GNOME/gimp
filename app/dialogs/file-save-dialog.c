@@ -236,8 +236,9 @@ file_save_overwrite (GtkWidget   *save_dialog,
   overwrite_data->raw_filename = g_strdup (raw_filename);
 
   filename = file_utils_uri_to_utf8_filename (uri);
-  message = g_strdup_printf (_("File '%s' exists.\n"
-                               "Overwrite it?"), filename);
+  message = g_strdup_printf (_("A file named '%s' already exists.\n\n"
+                               "Do you want to replace it with the image "
+                               "you are saving?"), filename);
   g_free (filename);
 
   query_box = gimp_query_boolean_box (_("File exists!"),
@@ -246,7 +247,7 @@ file_save_overwrite (GtkWidget   *save_dialog,
                                       GIMP_HELP_FILE_SAVE_OVERWRITE,
                                       GIMP_STOCK_QUESTION,
                                       message,
-                                      GTK_STOCK_YES, GTK_STOCK_NO,
+                                      _("Replace"), GTK_STOCK_CANCEL,
                                       NULL, NULL,
                                       file_save_overwrite_callback,
                                       overwrite_data);
