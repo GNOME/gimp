@@ -71,18 +71,7 @@ typedef struct
   GimpParamDef     *selected_params;
   GimpParamDef     *selected_return_vals; 
 
-  void (* apply_callback) (gchar           *proc_name,
-			   gchar           *scheme_proc_name,
-			   gchar           *proc_blurb,
-			   gchar           *proc_help,
-			   gchar           *proc_author,
-			   gchar           *proc_copyright,
-			   gchar           *proc_date,
-			   GimpPDBProcType  proc_type,
-			   gint             nparams,
-			   gint             nreturn_vals,
-			   GimpParamDef    *params,
-			   GimpParamDef    *return_vals);
+  GimpDBBrowserApplyCallback apply_callback;
 } dbbrowser_t;
 
 /* local functions */
@@ -326,16 +315,16 @@ dialog_select (dbbrowser_t *dbbrowser,
   g_free (dbbrowser->selected_return_vals);
 
   gimp_procedural_db_proc_info (proc_name, 
-				&(dbbrowser->selected_proc_blurb), 
-				&(dbbrowser->selected_proc_help), 
-				&(dbbrowser->selected_proc_author),
-				&(dbbrowser->selected_proc_copyright), 
-				&(dbbrowser->selected_proc_date), 
-				&(dbbrowser->selected_proc_type), 
-				&(dbbrowser->selected_nparams),
-				&(dbbrowser->selected_nreturn_vals), 
-				&(dbbrowser->selected_params), 
-				&(dbbrowser->selected_return_vals));
+				&dbbrowser->selected_proc_blurb,
+				&dbbrowser->selected_proc_help,
+				&dbbrowser->selected_proc_author,
+				&dbbrowser->selected_proc_copyright,
+				&dbbrowser->selected_proc_date,
+				&dbbrowser->selected_proc_type,
+				&dbbrowser->selected_nparams,
+				&dbbrowser->selected_nreturn_vals,
+				&dbbrowser->selected_params,
+				&dbbrowser->selected_return_vals);
 
   /* save the "old" table */
   old_description = dbbrowser->description;
@@ -537,7 +526,7 @@ dialog_show_message (dbbrowser_t *dbbrowser,
       if (dbbrowser->description)
         gtk_container_remove (GTK_CONTAINER (dbbrowser->descr_vbox),
                               dbbrowser->description);
-      
+
       dbbrowser->description = gtk_label_new (message);
       gtk_box_pack_start (GTK_BOX (dbbrowser->descr_vbox),
                           dbbrowser->description, FALSE, FALSE, 0);
@@ -601,7 +590,7 @@ dialog_search_callback (GtkWidget   *widget,
 
   /* search */
 
-  if (widget == (dbbrowser->name_button))
+  if (widget == dbbrowser->name_button)
     {
       dialog_show_message (dbbrowser, _("Searching by name - please wait"));
 
@@ -624,7 +613,7 @@ dialog_search_callback (GtkWidget   *widget,
 
       g_string_free (query, TRUE);
     }
-  else if (widget == (dbbrowser->blurb_button))
+  else if (widget == dbbrowser->blurb_button)
     {
       dialog_show_message (dbbrowser, _("Searching by blurb - please wait"));
 
@@ -637,6 +626,7 @@ dialog_search_callback (GtkWidget   *widget,
   else
     {
       dialog_show_message (dbbrowser, _("Searching - please wait"));
+
       gimp_procedural_db_query (".*", ".*", ".*", ".*", ".*", ".*", ".*", 
 			        &num_procs, &proc_list);
     }
