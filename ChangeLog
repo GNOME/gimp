@@ -1,3 +1,10 @@
+2004-03-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp-edit.c (gimp_edit_extract): fixed bug added when
+	factoring out gimp_edit_extract(): check if tile_manager_crop()
+	cropped away the whole TileManager before making a GimpBuffer from
+	it.
+
 2004-03-07  Sven Neumann  <sven@gimp.org>
 
 	* gimp.spec.in: removed references to static libraries. These
