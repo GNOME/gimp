@@ -7,7 +7,7 @@
  *      Based around original GIF code by David Koblas.
  *
  *
- * Version 2.0.4 - 98/09/15
+ * Version 2.0.5 - 98/09/28
  *                        Adam D. Moss - <adam@gimp.org> <adam@foxbox.org>
  */
 /*
@@ -23,6 +23,9 @@
 /*
  * REVISION HISTORY
  *
+ *
+ * 98/09/28
+ * 2.00.05 - Fixed TigerT's Infinite GIF Bug.  Icky one.
  *
  * 98/09/15
  * 2.00.04 - The facility to specify the background colour of
@@ -1654,7 +1657,7 @@ save_image (char   *filename,
   int Blue[MAXCOLORS];
   guchar *cmap;
   guint rows, cols;
-  int BitsPerPixel, liberalBPP, useBPP;
+  int BitsPerPixel, liberalBPP=0, useBPP=0;
   int colors;
   char *temp_buf;
   int i;
@@ -1756,7 +1759,9 @@ save_image (char   *filename,
     }
   else
     {
-      BitsPerPixel = colorstobpp (256);
+      liberalBPP = BitsPerPixel =
+	colorstobpp (256);
+
       if (drawable_type==INDEXEDA_IMAGE)
 	{
 	  g_print ("GIF: Too many colours?\n");
