@@ -866,7 +866,7 @@ save_as_csim(gpointer param, OutputFunc_t output)
    char *p;
    gchar *description;
    
-   output(param, "<img src=\"%s\" width=%d height=%d border=0 "
+   output(param, "<img src=\"%s\" width=\"%d\" height=\"%d\" border=\"0\" "
 	  "usemap=\"#%s\" />\n\n", _map_info.image_name,
 	  _image_width, _image_height, _map_info.title);
    output(param, "<map name=\"%s\">\n", _map_info.title);

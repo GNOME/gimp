@@ -1,5 +1,5 @@
-#ifndef BISON_IMAP_CSIM_TAB_H
-# define BISON_IMAP_CSIM_TAB_H
+#ifndef BISON_IMAP_CSIM_PARSE_H
+# define BISON_IMAP_CSIM_PARSE_H
 
 #ifndef YYSTYPE
 typedef union {
@@ -40,4 +40,4 @@ typedef union {
 
 extern YYSTYPE csim_lval;
 
-#endif /* not BISON_IMAP_CSIM_TAB_H */
+#endif /* not BISON_IMAP_CSIM_PARSE_H */

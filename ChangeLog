@@ -1,3 +1,15 @@
+2003-05-25  Maurits Rijk <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/imagemap/imap_csim_parse.[ch]: regenerated
+	* plug-ins/imagemap/imap_main.c (save_as_csim): write quoted WIDTH,
+	TAG and BORDER tags.
+	* plug-ins/imagemap/Makefile.am: added -i flag to lex to generate 
+	case-insensitive scanners.
+	* plug-ins/imagemap/imap_csim.y: parse now accepts both tag=FLOAT and
+	tag="FLOAT" to support both old and newstyle HTML. Should fix #113445.
+
+	* plug-ins/common/lic.c: minor code clean-up
+
 2003-05-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/tool_manager.[ch] (tool_manager_set,get): Use

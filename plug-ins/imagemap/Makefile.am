@@ -155,7 +155,7 @@ LDADD = \
 ## code (cern_, csim_, ncsa_).
 
 ## Require flex because the standard lex does not support the -P option.
-LEX=flex
+LEX=flex -i
 YACC=bison -y
 
 imap_cern_lex.c: imap_cern.l

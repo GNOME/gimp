@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -432,7 +432,6 @@ menu_build_mru_items(MRU_t *mru)
       GList *children;
 
       children = gtk_container_get_children(GTK_CONTAINER(_menu.open_recent));
-      
       p = g_list_nth(children, position);
       for (i = 0; i < _menu.nr_off_mru_items; i++, p = p->next) {
 	 gtk_widget_destroy((GtkWidget*) p->data);
@@ -450,7 +449,7 @@ menu_build_mru_items(MRU_t *mru)
 	 add_accelerator(item, accelerator_key, GDK_CONTROL_MASK);
       }
    }
-   _menu.nr_off_mru_items = i + 1;
+   _menu.nr_off_mru_items = i;
 }
 
 void

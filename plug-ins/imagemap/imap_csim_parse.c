@@ -44,7 +44,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -99,12 +99,12 @@ typedef union {
 
 
 
-#define	YYFINAL		101
+#define	YYFINAL		103
 #define	YYFLAG		-32768
 #define	YYNTBASE	33
 
 /* YYTRANSLATE(YYLEX) -- Bison token number corresponding to YYLEX. */
-#define YYTRANSLATE(x) ((unsigned)(x) <= 282 ? yytranslate[x] : 61)
+#define YYTRANSLATE(x) ((unsigned)(x) <= 282 ? yytranslate[x] : 62)
 
 /* YYTRANSLATE[YYLEX] -- Bison token number corresponding to YYLEX. */
 static const char yytranslate[] =
@@ -144,29 +144,30 @@ static const char yytranslate[] =
 static const short yyprhs[] =
 {
        0,     0,     6,    14,    15,    18,    20,    22,    26,    30,
-      34,    38,    42,    49,    50,    53,    55,    57,    59,    63,
-      67,    71,    72,    75,    80,    82,    85,    86,    89,    91,
-      93,    95,    97,    99,   101,   103,   105,   107,   109,   113,
-     117,   121,   123,   127,   131,   135,   139,   143,   147
+      34,    38,    42,    44,    46,    53,    54,    57,    59,    61,
+      63,    67,    71,    75,    76,    79,    84,    86,    89,    90,
+      93,    95,    97,    99,   101,   103,   105,   107,   109,   111,
+     113,   117,   121,   125,   127,   131,   135,   139,   143,   147,
+     151
 };
 static const short yyrhs[] =
 {
-      34,    39,    40,    45,    60,     0,    29,     3,     4,    30,
-      28,    35,    47,     0,     0,    35,    36,     0,    37,     0,
-      38,     0,     7,    30,    27,     0,     8,    30,    28,     0,
-      15,    30,    28,     0,     5,    30,    27,     0,     6,    30,
-      27,     0,    29,     9,    11,    30,    28,    31,     0,     0,
-      40,    41,     0,    43,     0,    44,     0,    42,     0,    25,
-      28,    26,     0,    23,    28,    26,     0,    24,    28,    26,
-       0,     0,    45,    46,     0,    29,    12,    48,    47,     0,
-      31,     0,    32,    31,     0,     0,    48,    49,     0,    50,
-       0,    51,     0,    52,     0,    53,     0,    54,     0,    55,
-       0,    56,     0,    57,     0,    58,     0,    59,     0,    13,
-      30,    28,     0,    14,    30,    28,     0,    16,    30,    28,
-       0,    17,     0,    15,    30,    28,     0,    18,    30,    28,
-       0,    19,    30,    28,     0,    20,    30,    28,     0,    21,
-      30,    28,     0,    22,    30,    28,     0,    29,    10,    31,
-       0
+      34,    40,    41,    46,    61,     0,    29,     3,     4,    30,
+      28,    35,    48,     0,     0,    35,    36,     0,    37,     0,
+      38,     0,     7,    30,    39,     0,     8,    30,    28,     0,
+      15,    30,    28,     0,     5,    30,    39,     0,     6,    30,
+      39,     0,    27,     0,    28,     0,    29,     9,    11,    30,
+      28,    31,     0,     0,    41,    42,     0,    44,     0,    45,
+       0,    43,     0,    25,    28,    26,     0,    23,    28,    26,
+       0,    24,    28,    26,     0,     0,    46,    47,     0,    29,
+      12,    49,    48,     0,    31,     0,    32,    31,     0,     0,
+      49,    50,     0,    51,     0,    52,     0,    53,     0,    54,
+       0,    55,     0,    56,     0,    57,     0,    58,     0,    59,
+       0,    60,     0,    13,    30,    28,     0,    14,    30,    28,
+       0,    16,    30,    28,     0,    17,     0,    15,    30,    28,
+       0,    18,    30,    28,     0,    19,    30,    28,     0,    20,
+      30,    28,     0,    21,    30,    28,     0,    22,    30,    28,
+       0,    29,    10,    31,     0
 };
 
 #endif
@@ -175,11 +176,12 @@ static const short yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined. */
 static const short yyrline[] =
 {
-       0,    62,    65,    71,    72,    75,    76,    77,    78,    79,
-      82,    88,    94,   100,   101,   104,   105,   106,   109,   114,
-     121,   131,   132,   135,   142,   143,   146,   147,   150,   151,
-     152,   153,   154,   155,   156,   157,   158,   159,   162,   179,
-     237,   247,   252,   258,   264,   270,   276,   282,   288
+       0,    64,    67,    73,    74,    77,    78,    79,    80,    81,
+      84,    90,    96,   100,   106,   112,   113,   116,   117,   118,
+     121,   126,   133,   143,   144,   147,   154,   155,   158,   159,
+     162,   163,   164,   165,   166,   167,   168,   169,   170,   171,
+     174,   191,   249,   259,   264,   270,   276,   282,   288,   294,
+     300
 };
 #endif
 
@@ -195,11 +197,12 @@ static const char *const yytname[] =
   "ONFOCUS", "ONBLUR", "AUTHOR", "DESCRIPTION", "BEGIN_COMMENT", 
   "END_COMMENT", "FLOAT", "STRING", "'<'", "'='", "'>'", "'/'", 
   "csim_file", "image", "image_tags", "image_tag", "image_width", 
-  "image_height", "start_map", "comment_lines", "comment_line", 
-  "real_comment", "author_line", "description_line", "area_list", "area", 
-  "xhtml_close", "tag_list", "tag", "shape_tag", "coords_tag", "href_tag", 
-  "nohref_tag", "alt_tag", "target_tag", "onmouseover_tag", 
-  "onmouseout_tag", "onfocus_tag", "onblur_tag", "end_map", 0
+  "image_height", "integer_value", "start_map", "comment_lines", 
+  "comment_line", "real_comment", "author_line", "description_line", 
+  "area_list", "area", "xhtml_close", "tag_list", "tag", "shape_tag", 
+  "coords_tag", "href_tag", "nohref_tag", "alt_tag", "target_tag", 
+  "onmouseover_tag", "onmouseout_tag", "onfocus_tag", "onblur_tag", 
+  "end_map", 0
 };
 #endif
 
@@ -207,20 +210,22 @@ static const char *const yytname[] =
 static const short yyr1[] =
 {
        0,    33,    34,    35,    35,    36,    36,    36,    36,    36,
-      37,    38,    39,    40,    40,    41,    41,    41,    42,    43,
-      44,    45,    45,    46,    47,    47,    48,    48,    49,    49,
-      49,    49,    49,    49,    49,    49,    49,    49,    50,    51,
-      52,    53,    54,    55,    56,    57,    58,    59,    60
+      37,    38,    39,    39,    40,    41,    41,    42,    42,    42,
+      43,    44,    45,    46,    46,    47,    48,    48,    49,    49,
+      50,    50,    50,    50,    50,    50,    50,    50,    50,    50,
+      51,    52,    53,    54,    55,    56,    57,    58,    59,    60,
+      61
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN. */
 static const short yyr2[] =
 {
        0,     5,     7,     0,     2,     1,     1,     3,     3,     3,
-       3,     3,     6,     0,     2,     1,     1,     1,     3,     3,
-       3,     0,     2,     4,     1,     2,     0,     2,     1,     1,
-       1,     1,     1,     1,     1,     1,     1,     1,     3,     3,
-       3,     1,     3,     3,     3,     3,     3,     3,     3
+       3,     3,     1,     1,     6,     0,     2,     1,     1,     1,
+       3,     3,     3,     0,     2,     4,     1,     2,     0,     2,
+       1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
+       3,     3,     3,     1,     3,     3,     3,     3,     3,     3,
+       3
 };
 
 /* YYDEFACT[S] -- default rule to reduce with in state S when YYTABLE
@@ -228,76 +233,74 @@ static const short yyr2[] =
    error. */
 static const short yydefact[] =
 {
-       0,     0,     0,     0,     0,    13,     0,     0,    21,     0,
-       0,     0,     0,     0,    14,    17,    15,    16,     0,     3,
-       0,     0,     0,     0,     0,    22,     1,     0,     0,    19,
-      20,    18,     0,    26,     0,     0,     0,     0,     0,    24,
-       0,     4,     5,     6,     2,    12,    48,     0,     0,     0,
-       0,     0,     0,    25,     0,     0,     0,     0,    41,     0,
-       0,     0,     0,     0,    23,    27,    28,    29,    30,    31,
-      32,    33,    34,    35,    36,    37,    10,    11,     7,     8,
-       9,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-      38,    39,    42,    40,    43,    44,    45,    46,    47,     0,
-       0,     0
+       0,     0,     0,     0,     0,    15,     0,     0,    23,     0,
+       0,     0,     0,     0,    16,    19,    17,    18,     0,     3,
+       0,     0,     0,     0,     0,    24,     1,     0,     0,    21,
+      22,    20,     0,    28,     0,     0,     0,     0,     0,    26,
+       0,     4,     5,     6,     2,    14,    50,     0,     0,     0,
+       0,     0,     0,    27,     0,     0,     0,     0,    43,     0,
+       0,     0,     0,     0,    25,    29,    30,    31,    32,    33,
+      34,    35,    36,    37,    38,    39,    12,    13,    10,    11,
+       7,     8,     9,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,    40,    41,    44,    42,    45,    46,    47,    48,
+      49,     0,     0,     0
 };
 
 static const short yydefgoto[] =
 {
-      99,     2,    27,    41,    42,    43,     5,     8,    14,    15,
-      16,    17,    18,    25,    44,    47,    65,    66,    67,    68,
-      69,    70,    71,    72,    73,    74,    75,    26
+     101,     2,    27,    41,    42,    43,    78,     5,     8,    14,
+      15,    16,    17,    18,    25,    44,    47,    65,    66,    67,
+      68,    69,    70,    71,    72,    73,    74,    75,    26
 };
 
 static const short yypact[] =
 {
-     -21,    18,    -7,    19,    15,-32768,     1,    14,   -19,     0,
-       2,     5,     6,     7,-32768,-32768,-32768,-32768,     8,-32768,
-      10,    13,    16,    17,    -3,-32768,-32768,    -5,     9,-32768,
-  -32768,-32768,    20,-32768,    11,    22,    23,    24,    25,-32768,
-      26,-32768,-32768,-32768,-32768,-32768,-32768,    -2,    21,    29,
-      31,    32,    33,-32768,    34,    35,    36,    37,-32768,    38,
-      39,    40,    41,    42,-32768,-32768,-32768,-32768,-32768,-32768,
+     -21,    22,    -1,    27,    23,-32768,     3,    24,   -19,     6,
+       7,     8,    10,    11,-32768,-32768,-32768,-32768,    12,-32768,
+      14,    17,    18,    19,    -3,-32768,-32768,    -5,     9,-32768,
+  -32768,-32768,    15,-32768,    20,    21,    25,    26,    28,-32768,
+      16,-32768,-32768,-32768,-32768,-32768,-32768,    -2,    -6,    -6,
+      -6,    29,    31,-32768,    30,    32,    33,    34,-32768,    35,
+      36,    37,    38,    39,-32768,-32768,-32768,-32768,-32768,-32768,
   -32768,-32768,-32768,-32768,-32768,-32768,-32768,-32768,-32768,-32768,
-  -32768,    45,    46,    47,    48,    49,    50,    51,    52,    53,
-  -32768,-32768,-32768,-32768,-32768,-32768,-32768,-32768,-32768,    44,
-      59,-32768
+  -32768,-32768,-32768,    42,    43,    44,    45,    46,    47,    48,
+      49,    50,-32768,-32768,-32768,-32768,-32768,-32768,-32768,-32768,
+  -32768,    52,    53,-32768
 };
 
 static const short yypgoto[] =
 {
-  -32768,-32768,-32768,-32768,-32768,-32768,-32768,-32768,-32768,-32768,
-  -32768,-32768,-32768,-32768,   -11,-32768,-32768,-32768,-32768,-32768,
-  -32768,-32768,-32768,-32768,-32768,-32768,-32768,-32768
+  -32768,-32768,-32768,-32768,-32768,-32768,   -26,-32768,-32768,-32768,
+  -32768,-32768,-32768,-32768,-32768,     1,-32768,-32768,-32768,-32768,
+  -32768,-32768,-32768,-32768,-32768,-32768,-32768,-32768,-32768
 };
 
 
-#define	YYLAST		81
+#define	YYLAST		78
 
 
 static const short yytable[] =
 {
       34,    35,    36,    37,    11,    12,    13,    32,     1,    33,
       38,    54,    55,    56,    57,    58,    59,    60,    61,    62,
-      63,     3,     4,     6,     7,    10,    39,    40,    19,    39,
-      40,     9,    20,    21,    22,    23,    64,    24,    28,    29,
-      45,    48,    30,    31,   100,     0,     0,     0,    76,     0,
-       0,    46,    49,    50,    51,    52,    77,    53,    78,   101,
-      79,    80,     0,     0,    81,    82,    83,    84,    85,    86,
-      87,    88,    89,    90,    91,    92,    93,    94,    95,    96,
-      97,    98
+      63,    76,    77,    79,    80,     3,    39,    40,     4,    39,
+      40,     6,     7,     9,    19,    10,    21,    20,    22,    23,
+      45,    24,    28,    29,    30,    31,    46,    53,    64,     0,
+      48,    49,   102,   103,     0,    50,    51,    81,    52,    82,
+      83,     0,    84,    85,    86,    87,    88,    89,    90,    91,
+      92,    93,    94,    95,    96,    97,    98,    99,   100
 };
 
 static const short yycheck[] =
 {
        5,     6,     7,     8,    23,    24,    25,    10,    29,    12,
       15,    13,    14,    15,    16,    17,    18,    19,    20,    21,
-      22,     3,    29,     4,     9,    11,    31,    32,    28,    31,
-      32,    30,    30,    28,    28,    28,    47,    29,    28,    26,
-      31,    30,    26,    26,     0,    -1,    -1,    -1,    27,    -1,
-      -1,    31,    30,    30,    30,    30,    27,    31,    27,     0,
-      28,    28,    -1,    -1,    30,    30,    30,    30,    30,    30,
-      30,    30,    30,    28,    28,    28,    28,    28,    28,    28,
-      28,    28
+      22,    27,    28,    49,    50,     3,    31,    32,    29,    31,
+      32,     4,     9,    30,    28,    11,    28,    30,    28,    28,
+      31,    29,    28,    26,    26,    26,    31,    31,    47,    -1,
+      30,    30,     0,     0,    -1,    30,    30,    28,    30,    28,
+      30,    -1,    30,    30,    30,    30,    30,    30,    30,    30,
+      28,    28,    28,    28,    28,    28,    28,    28,    28
 };
 /* -*-C-*-  Note some compilers choke on comments on `#line' lines.  */
 #line 3 "/usr/share/bison/bison.simple"
@@ -1007,72 +1010,84 @@ yyreduce:
   switch (yyn) {
 
 case 2:
-#line 66 "imap_csim.y"
+#line 68 "imap_csim.y"
 {
 		   g_strreplace(&_map_info->image_name, yyvsp[-2].id);
-		;
-    break;}
+		}
+    break;
 case 7:
-#line 77 "imap_csim.y"
-{;
-    break;}
-case 8:
-#line 78 "imap_csim.y"
-{;
-    break;}
-case 9:
 #line 79 "imap_csim.y"
-{;
-    break;}
+{}
+    break;
+case 8:
+#line 80 "imap_csim.y"
+{}
+    break;
+case 9:
+#line 81 "imap_csim.y"
+{}
+    break;
 case 10:
-#line 83 "imap_csim.y"
+#line 85 "imap_csim.y"
 {
-		   _map_info->old_image_width = (gint) yyvsp[0].value;
-		;
-    break;}
+		   _map_info->old_image_width = yyvsp[0].val;
+		}
+    break;
 case 11:
-#line 89 "imap_csim.y"
+#line 91 "imap_csim.y"
 {
-		   _map_info->old_image_height = (gint) yyvsp[0].value;
-		;
-    break;}
+		   _map_info->old_image_height = yyvsp[0].val;
+		}
+    break;
 case 12:
-#line 95 "imap_csim.y"
+#line 97 "imap_csim.y"
+{
+		  yyval.val = (gint) yyvsp[0].value;
+		}
+    break;
+case 13:
+#line 101 "imap_csim.y"
+{
+		  yyval.val = (gint) atof(yyvsp[0].id);
+		}
+    break;
+case 14:
+#line 107 "imap_csim.y"
 {
 		   g_strreplace(&_map_info->title, yyvsp[-1].id);
-		;
-    break;}
-case 18:
-#line 110 "imap_csim.y"
+		}
+    break;
+case 20:
+#line 122 "imap_csim.y"
 {
-		;
-    break;}
-case 19:
-#line 115 "imap_csim.y"
+		}
+    break;
+case 21:
+#line 127 "imap_csim.y"
 {
 		   g_strreplace(&_map_info->author, yyvsp[-1].id);
 
-		;
-    break;}
-case 20:
-#line 122 "imap_csim.y"
+		}
+    break;
+case 22:
+#line 134 "imap_csim.y"
 {
 		   gchar *description;
 
 		   description = g_strconcat(_map_info->description, yyvsp[-1].id, "\n", 
 					     NULL);
 		   g_strreplace(&_map_info->description, description);
-		;
-    break;}
-case 23:
-#line 136 "imap_csim.y"
+		}
+    break;
+case 25:
+#line 148 "imap_csim.y"
 {
 		   if (current_type != UNDEFINED)
 		      add_shape(current_object);
-		;
-    break;}
-case 38:
-#line 163 "imap_csim.y"
+		}
+    break;
+case 40:
+#line 175 "imap_csim.y"
 {
 		   if (!g_ascii_strcasecmp(yyvsp[0].id, "RECT")) {
 		      current_object = create_rectangle(0, 0, 0, 0);
@@ -1086,10 +1101,10 @@ case 38:
 		   } else if (!g_ascii_strcasecmp(yyvsp[0].id, "DEFAULT")) {
 		      current_type = UNDEFINED;
 		   }
-		;
-    break;}
-case 39:
-#line 180 "imap_csim.y"
+		}
+    break;
+case 41:
+#line 192 "imap_csim.y"
 {
 		   char *p;
 		   if (current_type == RECTANGLE) {
@@ -1144,59 +1159,59 @@ case 39:
 			 polygon_remove_last_point(polygon);
 		      polygon->points = points;
 		   }
-		;
-    break;}
-case 40:
-#line 238 "imap_csim.y"
+		}
+    break;
+case 42:
+#line 250 "imap_csim.y"
 {
 		   if (current_type == UNDEFINED) {
 		      g_strreplace(&_map_info->default_url, yyvsp[0].id);
 		   } else {
 		      object_set_url(current_object, yyvsp[0].id);
 		   }
-		;
-    break;}
-case 41:
-#line 248 "imap_csim.y"
-{
-		;
-    break;}
-case 42:
-#line 253 "imap_csim.y"
-{
-		   object_set_comment(current_object, yyvsp[0].id);
-		;
-    break;}
+		}
+    break;
 case 43:
-#line 259 "imap_csim.y"
+#line 260 "imap_csim.y"
 {
-		   object_set_target(current_object, yyvsp[0].id);
-		;
-    break;}
+		}
+    break;
 case 44:
 #line 265 "imap_csim.y"
 {
-		   object_set_mouse_over(current_object, yyvsp[0].id);
-		;
-    break;}
+		   object_set_comment(current_object, yyvsp[0].id);
+		}
+    break;
 case 45:
 #line 271 "imap_csim.y"
 {
-		   object_set_mouse_out(current_object, yyvsp[0].id);
-		;
-    break;}
+		   object_set_target(current_object, yyvsp[0].id);
+		}
+    break;
 case 46:
 #line 277 "imap_csim.y"
 {
-		   object_set_focus(current_object, yyvsp[0].id);
-		;
-    break;}
+		   object_set_mouse_over(current_object, yyvsp[0].id);
+		}
+    break;
 case 47:
 #line 283 "imap_csim.y"
 {
+		   object_set_mouse_out(current_object, yyvsp[0].id);
+		}
+    break;
+case 48:
+#line 289 "imap_csim.y"
+{
+		   object_set_focus(current_object, yyvsp[0].id);
+		}
+    break;
+case 49:
+#line 295 "imap_csim.y"
+{
 		   object_set_blur(current_object, yyvsp[0].id);
-		;
-    break;}
+		}
+    break;
 }
 
 #line 705 "/usr/share/bison/bison.simple"
@@ -1430,7 +1445,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 291 "imap_csim.y"
+#line 303 "imap_csim.y"
 
 
 static void 

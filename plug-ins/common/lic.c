@@ -54,8 +54,6 @@
 
 #define CHECKBOUNDS(x,y) (x>=0 && y>=0 && x<width && y<height)
 
-#define EPSILON 1.0e-5
-
 #define numx    40              /* Pseudo-random vector grid size */
 #define numy    40
 
@@ -397,11 +395,7 @@ lic_noise (gint    x,
 
   i = (i - minv) / (maxv - minv);
 
-  if (i < 0.0)
-    i = 0.0;
-  
-  if (i > 1.0)
-    i = 1.0;
+  i = CLAMP (i, 0.0, 1.0);
 
   i = (i / 2.0) + 0.5;
 
@@ -485,68 +479,35 @@ lic_image (gint      x,
 }
 
 static gdouble
-get_hue (GimpRGB *col)
+get_hue (const GimpRGB *col)
 {
-  gdouble max, min, delta;
-  gdouble hue = -1.0;
+  GimpHSL hsl;
 
-  max = gimp_rgb_max (col);
-  min = gimp_rgb_min (col);
-
-  if (max == min)
-    {
-      hue = -1.0;
-    }
-  else
-    {
-      delta = max - min;
-      if (col->r == max)
-        hue = (col->g - col->b) / delta;
-      else if (col->g == max)
-        hue = 2.0 + (col->b - col->r) / delta;
-      else if (col->b == max)
-        hue = 4.0 + (col->r - col->g) / delta;
-
-      hue *= 60.0;
-      if (hue < 0.0)
-        hue += 360.0;
-    }
-  return hue;
+  gimp_rgb_to_hsl (col, &hsl);
+  return hsl.h;
 }
 
 static gdouble
-get_saturation (GimpRGB *col)
+get_saturation (const GimpRGB *col)
 {
-  gdouble max, min, l;
-  gdouble sat;
+  GimpHSL hsl;
 
-  max = gimp_rgb_max (col);
-  min = gimp_rgb_min (col);
-
-  if (max == min)
-    {
-      sat = 0.0;
-    }
-  else
-    {
-      l = (max + min) / 2.0;
-      if (l <= 0.5)
-        sat = (max - min) / (max + min);
-      else
-        sat = (max - min) / (2.0 - max - min);
-    }
-  return sat;
+  gimp_rgb_to_hsl (col, &hsl);
+  return hsl.s;
 }
 
 static gdouble
-get_brightness (GimpRGB *col)
+get_brightness (const GimpRGB *col)
 {
-  return (gimp_rgb_max (col) + gimp_rgb_min (col)) / 2.0;
+  GimpHSL hsl;
+
+  gimp_rgb_to_hsl (col, &hsl);
+  return hsl.l;
 }
 
 static guchar*
 rgb_to_hsl (GimpDrawable  *image,
-	    gdouble (*hsl_func)(GimpRGB *col))
+	    gdouble (*hsl_func)(const GimpRGB *col))
 {
   guchar *themap, data[4];
   gint w, h, x, y;
@@ -601,7 +562,7 @@ rgb_to_brightness (GimpDrawable  *image)
 }
 
 static void
-compute_lic_derivative (void)
+compute_lic (gboolean rotate)
 {
   gint xcount, ycount;
   glong counter = 0;
@@ -612,61 +573,19 @@ compute_lic_derivative (void)
     {
       for (xcount = 0; xcount < width; xcount++)
         {
-          /* Get direction vector at (x,y) and normalize it */
-          /* ============================================== */
-
-          vx = gradx (scalarfield, xcount, ycount);
-          vy = grady (scalarfield, xcount, ycount);
-
-          tmp = sqrt (vx * vx + vy * vy);
-          if (tmp != 0.0)
-            {
-              tmp = 1.0 / tmp;
-              vx *= tmp;
-	      vy *= tmp;
-            }
-
-          /* Convolve with the LIC at (x,y) */
-          /* ============================== */
-
-          if (licvals.effect_convolve == 0)
-            {
-              color = peek (xcount, ycount);
-              tmp = lic_noise (xcount, ycount, vx, vy);
-              gimp_rgb_multiply (&color, tmp);
-            }
-          else
-            lic_image (xcount, ycount, vx, vy, &color);
-
-          poke (xcount, ycount, &color);
-
-          counter++;
-
-          if ((counter % width) == 0)
-            gimp_progress_update ((gfloat) counter / (gfloat) maxcounter);
-        }
-    }
-}
-
-static void
-compute_lic_gradient (void)
-{
-  gint xcount, ycount;
-  glong counter = 0;
-  GimpRGB color;
-  gdouble vx, vy, tmp;
-
-  for (ycount = 0; ycount < height; ycount++)
-    {
-      for (xcount = 0; xcount < width; xcount++)
-        {
-          /* Get derivative at (x,y), rotate it 90 degrees and normalize it */
+          /* Get derivative at (x,y) and normalize it */
           /* ============================================================== */
 
           vx = gradx (scalarfield, xcount, ycount);
           vy = grady (scalarfield, xcount, ycount);
 
-          vx = -1.0 * vx; tmp = vy; vy = vx; vx = tmp;
+	  /* Rotate if needed */
+	  if (rotate)
+	    {
+	      tmp = vy; 
+	      vy = -vx; 
+	      vx = tmp;
+	    }
 
           tmp = sqrt (vx * vx + vy * vy);
           if (tmp != 0.0)
@@ -751,10 +670,7 @@ compute_image (void)
         break;
     }
 
-  if (licvals.effect_operator == 0)
-    compute_lic_derivative ();
-  else
-    compute_lic_gradient ();
+  compute_lic (licvals.effect_operator);
 
   g_free (scalarfield);
 
@@ -790,12 +706,12 @@ ok_button_clicked (GtkWidget *widget,
 }
 
 static gint
-effect_image_constrain (gint32    image_id,
+effect_image_constrain (gint32	 image_id,
 			gint32   drawable_id,
 			gpointer data)
 {
   if (drawable_id == -1)
-    return(TRUE);
+    return TRUE;
 
   return gimp_drawable_is_rgb (drawable_id);
 }
@@ -990,9 +906,6 @@ create_main_dialog (void)
 /******************/
 
 static void lic_interactive    (GimpDrawable *drawable);
-/*
-static void lic_noninteractive (GimpDrawable *drawable);
-*/
 
 /*************************************/
 /* Set parameters to standard values */
@@ -1136,13 +1049,5 @@ lic_interactive (GimpDrawable *drawable)
   gtk_main ();
   gdk_flush ();
 }
-
-/*
-static void
-lic_noninteractive (GimpDrawable *drawable)
-{
-  g_message ("Noninteractive not yet implemented! Sorry.\n");
-}
-*/
 
 MAIN ()
