@@ -229,6 +229,13 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_WEB,                      NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_VIDEO,                    NULL,        0, 0, LIBGIMP_DOMAIN },
 
+  { GIMP_STOCK_CAP_BUTT,                 NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_CAP_ROUND,                NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_CAP_SQUARE,               NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_JOIN_MITER,               NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_JOIN_ROUND,               NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_JOIN_BEVEL,               NULL,        0, 0, LIBGIMP_DOMAIN },
+
   { GIMP_STOCK_ERROR,                    NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_INFO,                     NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_QUESTION,                 NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -523,7 +530,14 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_WILBER,                   stock_wilber_16                   },
   { GIMP_TOILET_PAPER,                   stock_toilet_paper_16             },
   { GIMP_STOCK_WEB,                      stock_web_16                      },
-  { GIMP_STOCK_VIDEO,                    stock_video_16                    }
+  { GIMP_STOCK_VIDEO,                    stock_video_16                    },
+
+  { GIMP_STOCK_CAP_BUTT,                 stock_cap_butt_16                 },
+  { GIMP_STOCK_CAP_ROUND,                stock_cap_round_16                },
+  { GIMP_STOCK_CAP_SQUARE,               stock_cap_square_16               },
+  { GIMP_STOCK_JOIN_MITER,               stock_join_miter_16               },
+  { GIMP_STOCK_JOIN_ROUND,               stock_join_round_16               },
+  { GIMP_STOCK_JOIN_BEVEL,               stock_join_bevel_16               }
 };
 
 static struct

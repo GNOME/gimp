@@ -197,6 +197,13 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_WEB                  "gimp-web"
 #define GIMP_STOCK_VIDEO                "gimp-video"
 
+#define GIMP_STOCK_CAP_BUTT             "gimp-cap-butt"
+#define GIMP_STOCK_CAP_ROUND            "gimp-cap-round"
+#define GIMP_STOCK_CAP_SQUARE           "gimp-cap-square"
+#define GIMP_STOCK_JOIN_MITER           "gimp-join-miter"
+#define GIMP_STOCK_JOIN_ROUND           "gimp-join-round"
+#define GIMP_STOCK_JOIN_BEVEL           "gimp-join-bevel"
+
 /*  in dialog size:  */
 
 #define GIMP_STOCK_ERROR                "gimp-error"

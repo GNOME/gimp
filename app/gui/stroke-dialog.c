@@ -94,7 +94,7 @@ stroke_dialog_new (GimpItem    *item,
                               NULL, NULL, NULL, FALSE, FALSE,
 
                               GTK_STOCK_CANCEL, gtk_widget_destroy,
-                              NULL, NULL, NULL, FALSE, TRUE,
+                              NULL, 1, NULL, FALSE, TRUE,
 
                               GTK_STOCK_OK, stroke_dialog_ok_callback,
                               NULL, NULL, NULL, TRUE, FALSE,

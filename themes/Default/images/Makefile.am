@@ -23,6 +23,9 @@ WILBER_VARIABLES = \
 ## Below are compiled in stock icons 
 
 STOCK_MENU_IMAGES = \
+	stock-cap-butt-16.png				\
+	stock-cap-round-16.png				\
+	stock-cap-square-16.png				\
 	stock-channel-16.png				\
 	stock-channel-alpha-16.png			\
 	stock-channel-blue-16.png			\
@@ -57,6 +60,9 @@ STOCK_MENU_IMAGES = \
 	stock-info-16.png				\
 	stock-indexed-palette-16.png			\
 	stock-invert-16.png				\
+	stock-join-bevel-16.png				\
+	stock-join-miter-16.png				\
+	stock-join-round-16.png				\
 	stock-landscape-16.png				\
 	stock-layer-16.png				\
 	stock-layer-to-imagesize-16.png			\

@@ -415,6 +415,48 @@ the ones in dialog size).
 
 
 
+<!-- ##### MACRO GIMP_STOCK_CAP_BUTT ##### -->
+<para>
+<inlinegraphic fileref="stock-cap-butt-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_CAP_ROUND ##### -->
+<para>
+<inlinegraphic fileref="stock-cap-round-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_CAP_SQUARE ##### -->
+<para>
+<inlinegraphic fileref="stock-cap-square-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_JOIN_MITER ##### -->
+<para>
+<inlinegraphic fileref="stock-join-miter-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_JOIN_ROUND ##### -->
+<para>
+<inlinegraphic fileref="stock-join-round-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_JOIN_BEVEL ##### -->
+<para>
+<inlinegraphic fileref="stock-join-bevel-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_SELECTION ##### -->
 <para>
 <inlinegraphic fileref="stock-selection-16.png" format="png"></inlinegraphic>

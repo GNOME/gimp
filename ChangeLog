@@ -1,3 +1,19 @@
+2003-09-27  Sven Neumann  <sven@gimp.org>
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-cap-[butt|round|square]-16.png
+	* themes/Default/images/stock-join-[miter|round|bevel]-16.png:
+	added placeholders for GimpCapStyle and GimpJoinStyle icons.
+
+	* libgimpwidgets/gimpstock.[ch]: register the new icons.
+
+	* app/widgets/gimpstrokeeditor.c: made "options" a construct-only
+	property of the editor and create the widgets in a constructor
+	method. Use stock boxes with the new icons.
+
+	* app/gui/stroke-dialog.c (stroke_dialog_new): let the Cancel
+	button destroy the dialog instead of itself.
+
 2003-09-27  Simon Budig  <simon@gimp.org>
 
 	* app/core/gimpdrawable-stroke.[ch]: changed the API of
