@@ -1,5 +1,9 @@
 2003-06-04  Abel Cheung  <maddog@linux.org.hk>
 
+	* ko.po: Converted to UTF-8. (seems unmaintained)
+
+2003-06-04  Abel Cheung  <maddog@linux.org.hk>
+
 	* zh_TW.po: Updated traditional Chinese translation.
 
 2003-04-27  Abel Cheung  <maddog@linux.org.hk>
