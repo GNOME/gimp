@@ -381,7 +381,7 @@ hue_saturation_dialog_new (void)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (hsd->shell)->vbox), main_vbox);
 
   /*  The main hbox containing hue partitions and sliders  */
-  main_hbox = gtk_hbox_new (FALSE, 4);
+  main_hbox = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), main_hbox, FALSE, FALSE, 0);
 
   /*  The table containing hue partitions  */
@@ -451,7 +451,7 @@ hue_saturation_dialog_new (void)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
   /*  Create the hue scale widget  */
-  label = gtk_label_new (_("Hue"));
+  label = gtk_label_new (_("Hue:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
@@ -485,7 +485,7 @@ hue_saturation_dialog_new (void)
   gtk_widget_show (abox);
 
   /*  Create the lightness scale widget  */
-  label = gtk_label_new (_("Lightness"));
+  label = gtk_label_new (_("Lightness:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
@@ -519,7 +519,7 @@ hue_saturation_dialog_new (void)
   gtk_widget_show (abox);
 
   /*  Create the saturation scale widget  */
-  label = gtk_label_new (_("Saturation"));
+  label = gtk_label_new (_("Saturation:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);

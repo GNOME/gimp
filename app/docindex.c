@@ -112,7 +112,7 @@ static OpsButton ops_buttons[] =
   { folder_xpm, idea_open_callback, open_ext_callbacks,
     N_("Open the selected entry\n"
        "<Shift> Raise window if already open\n"
-       "<Control> Load Image dialog"), NULL,
+       "<Ctrl> Load Image dialog"), NULL,
     NULL, 0 },
   { raise_xpm, idea_up_callback, raise_ext_callbacks,
     N_("Move the selected entry up in the index\n"

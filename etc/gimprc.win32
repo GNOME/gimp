@@ -259,10 +259,11 @@
 (image-title-format "%f-%p.%i (%t) %z%%")
 
 # Global paint options
-#  By default options for the paint tools are global, e.g. all paint tools
-#  use the options you specify in the brushes dialog. You can change this
-#  so each tool has its own settings by uncommenting the next line.
-# (no-global-paint-options)
+#  By default options for the paint tools are local, e.g. all paint tools
+#  use the options you specify in their tool options dialog. If you wish 
+#  to have global settings in the brushes dialog that affect all paint tools, 
+#  you can change this by uncommenting the next line.
+# (global-paint-options)
 
 # Maximal new image size
 #  To prevent mistakes Gimp will warn you if you try to create a very large

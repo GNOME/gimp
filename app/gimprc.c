@@ -144,9 +144,8 @@ gboolean           confirm_on_close = TRUE;
 gboolean           save_session_info = TRUE;
 gboolean           save_device_status = FALSE;
 gboolean           always_restore_session = TRUE;
-gint               default_width = 983;
-gint               default_height = 857;
-/* temporary default size increase to stress test stuff.  -- austin 7/11/99 */
+gint               default_width = 256;
+gint               default_height = 256;
 gint               default_type = RGB;
 gdouble            default_xresolution = 72.0;
 gdouble            default_yresolution = 72.0;
@@ -161,14 +160,14 @@ gdouble            monitor_yres = 72.0;
 gboolean           using_xserver_resolution = FALSE;
 gint               num_processors = 1;
 gchar             *image_title_format = NULL;
-gboolean           global_paint_options = TRUE;
+gboolean           global_paint_options = FALSE;
 gboolean           show_indicators = TRUE;
 gint               max_new_image_size = 33554432;  /* 32 MB */
 gint               thumbnail_mode = 1;
 gboolean           trust_dirty_flag = FALSE;
 gboolean           use_help = TRUE;
 gboolean           nav_window_per_display = FALSE;
-gboolean           info_window_follows_mouse = FALSE;
+gboolean           info_window_follows_mouse = TRUE;
 gint               help_browser = HELP_BROWSER_GIMP;
 
 extern char * module_db_load_inhibit;

@@ -1,3 +1,18 @@
+2000-05-07  Sven Neumann  <sven@gimp.org>
+
+        * gimprc.in
+        * gimprc.win32
+	* app/gimprc.c: set default image size back to 256x256, default
+	to local paint options and info-window-follows-mouse.
+
+	* app/brightness_contrast.c
+	* app/docindex.c
+	* app/hue_saturation.c: picky changes on some labels.
+
+	* app/tips_dialog.c: applied (sort of) gimp-quinet-20000504-0,
+	which replaces the message "Show tip next time" in the
+	Tip Of The Day dialog with "Show tip next time GIMP starts".
+	
 2000-05-06  Nick Lamb  <njl195@zepler.org.uk>
 
 	* plug-ins/bmp/bmpread.c: Fixed long standing "RLE" bug, but

@@ -141,7 +141,8 @@ tips_dialog_create (void)
       gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
       
-      button = gtk_check_button_new_with_label (_("Show tip next time"));
+      button = 
+	gtk_check_button_new_with_label (_("Show tip next time GIMP starts"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				    show_tips);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",

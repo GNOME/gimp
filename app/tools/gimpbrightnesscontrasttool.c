@@ -231,7 +231,7 @@ brightness_contrast_dialog_new (void)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
   /*  Create the brightness scale widget  */
-  label = gtk_label_new (_("Brightness"));
+  label = gtk_label_new (_("Brightness:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
@@ -262,7 +262,7 @@ brightness_contrast_dialog_new (void)
   gtk_widget_show (abox);
 
   /*  Create the contrast scale widget  */
-  label = gtk_label_new (_("Contrast"));
+  label = gtk_label_new (_("Contrast:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
