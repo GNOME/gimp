@@ -1,5 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
+AM_CPPFLAGS = \
+	-DLOCALEDIR=\""$(localedir)"\"
+
 SUBDIRS = gfig-examples
 
 libexecdir = $(gimpplugindir)/plug-ins

@@ -1,3 +1,9 @@
+2000-01-19  David Monniaux  <monniaux@quatramaran.ens.fr>
+
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gfig/Makefile.am
+	* po-plug-ins/POTFILES.in: i18n of gfig
+
 Tue Jan 18 22:34:30 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/fileops_cmds.c

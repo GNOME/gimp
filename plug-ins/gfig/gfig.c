@@ -65,6 +65,8 @@
 #include <math.h>
 #include <gtk/gtk.h>
 
+#include "libgimp/stdplugins-intl.h"
+
 #ifdef G_OS_WIN32
 #  include <io.h>
 #  ifndef W_OK
@@ -630,13 +632,15 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_gfig",
-			  "Create Geometrical shapes with the Gimp",
-			  "More here later",
+			  _("Create Geometrical shapes with the Gimp"),
+			  _("More here later"),
 			  "Andy Thomas",
 			  "Andy Thomas",
 			  "1997",
-			  "<Image>/Filters/Render/Gfig...",
+			  _("<Image>/Filters/Render/Gfig..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -704,6 +708,7 @@ run    (gchar    *name,
     {
     case RUN_INTERACTIVE:
       /*gimp_get_data ("plug_in_gfig", &selvals);*/
+      INIT_I18N_UI();
       if (!gfig_dialog())
 	{
 	  gimp_drawable_detach (drawable);
@@ -4850,7 +4855,7 @@ gfig_dialog (void)
 
   /* Start buildng the dialog up */
   top_level_dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (top_level_dlg), "Gfig");
+  gtk_window_set_title (GTK_WINDOW (top_level_dlg), _("Gfig"));
   gtk_window_position (GTK_WINDOW (top_level_dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (top_level_dlg), "destroy",
 		      (GtkSignalFunc) gfig_close_callback,
@@ -4860,7 +4865,7 @@ gfig_dialog (void)
   gfig_tooltips = gtk_tooltips_new(); 
 
   /*  Action area  */
-  button = gtk_button_new_with_label ("Done");
+  button = gtk_button_new_with_label (_("Done"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) gfig_ok_callback,
@@ -4869,7 +4874,7 @@ gfig_dialog (void)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Paint");
+  button = gtk_button_new_with_label (_("Paint"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) gfig_paint_callback,
@@ -4878,7 +4883,7 @@ gfig_dialog (void)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  save_button = button = gtk_button_new_with_label ("Save");
+  save_button = button = gtk_button_new_with_label (_("Save"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) save_button_press,
@@ -4887,7 +4892,7 @@ gfig_dialog (void)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Clear");
+  button = gtk_button_new_with_label (_("Clear"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) gfig_clear_callback,
@@ -4896,7 +4901,7 @@ gfig_dialog (void)
   gtk_widget_show (button);
 
 
-  undo_widget = button = gtk_button_new_with_label ("Undo");
+  undo_widget = button = gtk_button_new_with_label (_("Undo"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) gfig_undo_callback,
@@ -4905,7 +4910,7 @@ gfig_dialog (void)
   gtk_widget_set_sensitive(button,FALSE);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect(GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gfig_cancel_callback,
@@ -4914,7 +4919,7 @@ gfig_dialog (void)
   gtk_widget_show (button);
 
   /* Start building the frame for the preview area */
-  frame = gtk_frame_new ("preview");
+  frame = gtk_frame_new (_("preview"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 1);
   table = gtk_table_new (6, 6, FALSE); 
@@ -4935,7 +4940,7 @@ gfig_dialog (void)
   gtk_table_attach(GTK_TABLE(table), xframe, 0,1, 0, 2, GTK_FILL, GTK_FILL, 0, 0);    
   gtk_widget_show(xframe);
 
-  frame = gtk_frame_new ("Settings");
+  frame = gtk_frame_new (_("Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 1);
   
@@ -4962,14 +4967,14 @@ gfig_dialog (void)
   gtk_table_attach(GTK_TABLE(table), notebook, 0, 6, 5, 6, GTK_FILL|GTK_EXPAND, GTK_FILL|GTK_EXPAND, 0, 0);
   
   page = paint_page();
-  label = gtk_label_new("Paint");
+  label = gtk_label_new(_("Paint"));
   gtk_widget_show(label);
   gtk_misc_set_alignment(GTK_MISC(label),0.5,0.5);
   gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page, label);
   gtk_widget_show(page);
 
   brush_page_widget = brush_page();
-  label = gtk_label_new("Brush");
+  label = gtk_label_new(_("Brush"));
   gtk_misc_set_alignment(GTK_MISC(label),0.5,0.5);
   gtk_widget_show(label);
   gtk_notebook_append_page(GTK_NOTEBOOK(notebook), brush_page_widget, label);
@@ -4980,7 +4985,7 @@ gfig_dialog (void)
    * would adjust the selection options.
    */
   select_page_widget = select_page();
-  label = gtk_label_new("Select");
+  label = gtk_label_new(_("Select"));
   gtk_widget_show(label);
   gtk_misc_set_alignment(GTK_MISC(label),0.5,0.5);
   gtk_notebook_append_page(GTK_NOTEBOOK(notebook), select_page_widget, label);
@@ -4989,7 +4994,7 @@ gfig_dialog (void)
 
 
   page = options_page();
-  label = gtk_label_new("Options");
+  label = gtk_label_new(_("Options"));
   gtk_widget_show(label);
   gtk_misc_set_alignment(GTK_MISC(label),0.5,0.5);
   gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page, label);
@@ -5039,14 +5044,14 @@ done_warn_dialog (GtkWidget *w,gint count)
   GtkWidget *window = NULL;
   GtkWidget *label;
   GtkWidget *button;
-  gchar buf[128];
+  char *buf;
 
   window = gtk_dialog_new ();
 
-  gtk_window_set_title (GTK_WINDOW (window), "Warning");
+  gtk_window_set_title (GTK_WINDOW (window), _("Warning"));
   gtk_container_border_width (GTK_CONTAINER (window), 0);
   
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) done_ok_window,
                       (gpointer)w);
@@ -5056,7 +5061,7 @@ done_warn_dialog (GtkWidget *w,gint count)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) ok_warn_window,
                       (gpointer)window);
@@ -5065,13 +5070,15 @@ done_warn_dialog (GtkWidget *w,gint count)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->action_area), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  label = gtk_label_new("Unsaved Gfig objects - continue with exiting?");
+  label = gtk_label_new(_("Unsaved Gfig objects - continue with exiting?"));
   gtk_misc_set_padding (GTK_MISC (label), 10, 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), label, TRUE, TRUE, 0);
   gtk_widget_show (label);
 
-  sprintf(buf,"Number objects unsaved = %d\n",count);
+  buf = g_strdup_printf(_("Number objects unsaved = %d\n"),count);
   label = gtk_label_new(buf);
+  g_free(buf);
+
   gtk_misc_set_padding (GTK_MISC (label), 10, 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), label, TRUE, TRUE, 0);
   gtk_widget_show (label);
@@ -5434,7 +5441,7 @@ gfig_dialog_edit_list (GtkWidget *lwidget,GFIGOBJ *obj,gint created)
 
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (options->query_box), "Edit Gfig entry name");
+  gtk_window_set_title (GTK_WINDOW (options->query_box), _("Edit Gfig entry name"));
   gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
 
   /*  the main vbox  */
@@ -5445,7 +5452,7 @@ gfig_dialog_edit_list (GtkWidget *lwidget,GFIGOBJ *obj,gint created)
   /*  the name entry hbox, label and entry  */
   hbox = gtk_hbox_new (FALSE, 1);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  label = gtk_label_new ("Gfig object name:");
+  label = gtk_label_new (_("Gfig object name:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
   options->name_entry = gtk_entry_new ();
@@ -5455,7 +5462,7 @@ gfig_dialog_edit_list (GtkWidget *lwidget,GFIGOBJ *obj,gint created)
   gtk_widget_show (options->name_entry);
   gtk_widget_show (hbox);
 
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc)gfig_list_ok_callback,
                       options);
@@ -5464,7 +5471,7 @@ gfig_dialog_edit_list (GtkWidget *lwidget,GFIGOBJ *obj,gint created)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc)gfig_list_cancel_callback,
                       options);
@@ -5532,7 +5539,7 @@ gfig_rescan_file_selection_ok(GtkWidget *w,
 
   if (!S_ISDIR(filestat.st_mode))
     {
-     g_warning("Entry %.100s is not a directory\n",filenamebuf);
+     g_warning(_("Entry %.100s is not a directory\n"),filenamebuf);
     }  
   else
     {
@@ -5554,8 +5561,8 @@ gfig_rescan_add_entry_callback (GtkWidget *w,
 {
   static GtkWidget *window = NULL;
 
-  /* Call up the file sel dialouge */
-  window = gtk_file_selection_new ("Add Gfig path");
+  /* Call up the file sel dialogue */
+  window = gtk_file_selection_new (_("Add Gfig path"));
   gtk_window_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
   gtk_object_set_user_data(GTK_OBJECT(window),(gpointer)client_data);
 
@@ -5587,7 +5594,7 @@ gfig_rescan_list (void)
 
   /*  the dialog  */
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Rescan for Gfig objects");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Rescan for Gfig objects"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
 
   /*  the main vbox  */
@@ -5623,7 +5630,7 @@ gfig_rescan_list (void)
       list = list->next;
     }
 
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc)gfig_rescan_ok_callback,
                       (gpointer)dlg);
@@ -5645,7 +5652,7 @@ gfig_rescan_list (void)
       rescan_list = NULL;
     }
 
-  button = gtk_button_new_with_label ("Add Dir");
+  button = gtk_button_new_with_label (_("Add Dir"));
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc)gfig_rescan_add_entry_callback,
                       (gpointer)list_widget);
@@ -5657,7 +5664,7 @@ gfig_rescan_list (void)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc)gfig_rescan_cancel_callback,
                       (gpointer)dlg);
@@ -5733,7 +5740,7 @@ load_button_press(GtkWidget *widget,
   static GtkWidget *window = NULL;
 
   /* Load a single object */
-  window = gtk_file_selection_new ("Load Gfig obj");
+  window = gtk_file_selection_new (_("Load Gfig obj"));
   gtk_window_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
   /*gtk_object_set_user_data(GTK_OBJECT(window),(gpointer)client_data);*/
 
@@ -5796,7 +5803,7 @@ paint_layer_copy(gchar *new_name)
   gint32 old_drawable = gfig_drawable;
   if((gfig_drawable = mygimp_layer_copy(gfig_drawable)) < 0)
     {
-      g_warning("Error in copy layer for onlayers\n");
+      g_warning(_("Error in copy layer for onlayers\n"));
       gfig_drawable = old_drawable;
       return;
     }
@@ -5828,7 +5835,7 @@ paint_layer_new(gchar *new_name)
 				1 + isgrey, /* RGBA or GRAYA type */
 				100.0, /* opacity */
 				0 /* mode */)) < 0)
-    printf("Error in creating\n");
+    g_warning(_("Error in creating layer.\n"));
   else
     {
       gimp_image_add_layer(gfig_image,layer_id,-1);
@@ -5912,7 +5919,7 @@ gfig_paint_callback(GtkWidget *widget,
 
       if(ccount == obj_show_single || obj_show_single == -1)
 	{
-	  sprintf(buf,"Gfig Layer %d",layer_count++);
+	  sprintf(buf, _("Gfig Layer %d"),layer_count++);
 	  
 	  if(selvals.painttype != PAINT_SELECTION_TYPE)
 	    {
@@ -5993,10 +6000,10 @@ about_button_press(GtkWidget *widget,
 
   window = gtk_dialog_new ();
 
-  gtk_window_set_title (GTK_WINDOW (window), "About");
+  gtk_window_set_title (GTK_WINDOW (window), _("About"));
   gtk_container_border_width (GTK_CONTAINER (window), 0);
   
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) ok_warn_window,
                       window);
@@ -6020,12 +6027,12 @@ about_button_press(GtkWidget *widget,
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), hbox, TRUE, TRUE, 0);
 
-  label = gtk_label_new("Gfig - GIMP plug-in");
+  label = gtk_label_new(_("Gfig - GIMP plug-in"));
   gtk_misc_set_padding (GTK_MISC (label), 2, 2);
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 
-  label = gtk_label_new("Release 1.3");
+  label = gtk_label_new(_("Release 1.3"));
   gtk_misc_set_padding (GTK_MISC (label), 2, 2);
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
@@ -6035,7 +6042,7 @@ about_button_press(GtkWidget *widget,
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 
-  label = gtk_label_new("Email alt@picnic.demon.co.uk");
+  label = gtk_label_new(_("Email alt@picnic.demon.co.uk"));
   gtk_misc_set_padding (GTK_MISC (label), 2, 2);
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
@@ -6045,7 +6052,7 @@ about_button_press(GtkWidget *widget,
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 
-  label = gtk_label_new("Isometric grid By Rob Saunders");
+  label = gtk_label_new(_("Isometric grid By Rob Saunders"));
   gtk_misc_set_padding (GTK_MISC (label), 2, 2);
   gtk_widget_show (label);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
@@ -6085,7 +6092,7 @@ new_gfig_obj(gchar * name)
   gfig = gfig_new();
 
   if(!name)
-    name = "New gfig obj";
+    name = _("New gfig obj");
 
   gfig->draw_name = g_strdup(name);
 
@@ -6222,7 +6229,7 @@ gfig_delete_gfig_callback(GtkWidget *widget,
     return(FALSE);
 
   delete_dialog = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(delete_dialog), "Delete gfig drawing");
+  gtk_window_set_title(GTK_WINDOW(delete_dialog), _("Delete gfig drawing"));
   gtk_window_position(GTK_WINDOW(delete_dialog), GTK_WIN_POS_MOUSE);
   gtk_container_border_width(GTK_CONTAINER(delete_dialog), 0);
   
@@ -6234,7 +6241,7 @@ gfig_delete_gfig_callback(GtkWidget *widget,
   
   /* Question */
   
-  label = gtk_label_new("Are you sure you want to delete");
+  label = gtk_label_new(_("Are you sure you want to delete"));
   gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.0);
   gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
   gtk_widget_show(label);
@@ -6251,7 +6258,7 @@ gfig_delete_gfig_callback(GtkWidget *widget,
   g_free(str);
   
   /* Buttons */
-  button = gtk_button_new_with_label ("Delete");
+  button = gtk_button_new_with_label (_("Delete"));
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) delete_button_press_ok,
                       data);
@@ -6261,7 +6268,7 @@ gfig_delete_gfig_callback(GtkWidget *widget,
   gtk_object_set_user_data(GTK_OBJECT(button),widget);
   gtk_widget_show (button);
   
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("(Cancel"));
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) delete_button_press_cancel,
                       data);
@@ -6287,7 +6294,7 @@ gfig_update_stat_labels()
   if(current_obj->draw_name)
     sprintf(str,"%.34s",current_obj->draw_name);
   else
-    sprintf(str,"<NONE>");
+    sprintf(str,_("<NONE>"));
 
   gtk_label_set_text(GTK_LABEL(status_label_dname),str);
 
@@ -6326,7 +6333,7 @@ gfig_update_stat_labels()
 #endif
     }
   else
-    sprintf(str,"<NONE>");
+    sprintf(str,_("<NONE>"));
 
   gtk_label_set_text(GTK_LABEL(status_label_fname),str);
 
@@ -6365,7 +6372,7 @@ new_obj_2edit(GFIGOBJ *obj)
   
   if(obj->obj_status & GFIG_READONLY)
     {
-      create_warn_dialog("Editing read-only object - you will not be able to save it");
+      create_warn_dialog(_("Editing read-only object - you will not be able to save it"));
       gtk_widget_set_sensitive(save_button,FALSE);
     }
   else
@@ -6397,7 +6404,7 @@ edit_button_press(GtkWidget *widget,
   if(sel_obj)
     new_obj_2edit(sel_obj);
   else
-    g_warning("Internal error - list item has null object!");
+    g_warning(_("Internal error - list item has null object!"));
 
   return(FALSE);
 }
@@ -6467,9 +6474,8 @@ static void
 gfig_copy_menu_callback(GtkWidget *widget, gpointer data)
 {
   /* Create new entry with name + copy at end & copy object into it */
-  gchar *new_name = g_malloc(strlen(gfig_obj_for_menu->draw_name) + 6);
-
-  sprintf(new_name,"%s copy",gfig_obj_for_menu->draw_name);
+  gchar *new_name =
+    g_strdup_printf(new_name, _("%s copy"), gfig_obj_for_menu->draw_name);
   new_gfig_obj(new_name);
   g_free(new_name);
 
@@ -6500,7 +6506,7 @@ gfig_op_menu_create(GtkWidget *window)
   gtk_window_add_accelerator_table(GTK_WINDOW(window),accelerator_table);
 #endif /* 0 */
 
-  save_menu_item = menu_item = gtk_menu_item_new_with_label("Save");
+  save_menu_item = menu_item = gtk_menu_item_new_with_label(_("Save"));
   gtk_menu_append(GTK_MENU(gfig_op_menu),menu_item);
   gtk_widget_show(menu_item);
 
@@ -6514,7 +6520,7 @@ gfig_op_menu_create(GtkWidget *window)
 				"activate",'S',0);
 #endif /* 0 */
 
-  menu_item = gtk_menu_item_new_with_label("Save as...");
+  menu_item = gtk_menu_item_new_with_label(_("Save as..."));
   gtk_menu_append(GTK_MENU(gfig_op_menu),menu_item);
   gtk_widget_show(menu_item);
   gtk_signal_connect(GTK_OBJECT(menu_item),"activate",
@@ -6527,7 +6533,7 @@ gfig_op_menu_create(GtkWidget *window)
 				"activate",'A',0);
 #endif /* 0 */
 
-  menu_item = gtk_menu_item_new_with_label("Copy");
+  menu_item = gtk_menu_item_new_with_label(_("Copy"));
   gtk_menu_append(GTK_MENU(gfig_op_menu),menu_item);
   gtk_widget_show(menu_item);
   gtk_signal_connect(GTK_OBJECT(menu_item),"activate",
@@ -6540,7 +6546,7 @@ gfig_op_menu_create(GtkWidget *window)
 				"activate",'C',0);
 #endif /* 0 */
 
-  menu_item = gtk_menu_item_new_with_label("Edit");
+  menu_item = gtk_menu_item_new_with_label(_("Edit"));
   gtk_menu_append(GTK_MENU(gfig_op_menu),menu_item);
   gtk_widget_show(menu_item);
   gtk_signal_connect(GTK_OBJECT(menu_item),"activate",
@@ -6601,7 +6607,7 @@ list_button_press(GtkWidget *widget,
       gfig_dialog_edit_list(widget,data,FALSE);
       break;
     default:
-      printf("Unknown event\n");
+      fprintf(stderr, "gfig: unknown event.\n");
       break;
     }
 
@@ -7496,7 +7502,7 @@ get_line(gchar *buf,gint s,FILE * from,gint init)
   
   if(ferror(from))
     {
-      g_warning("Error reading file");
+      g_warning(_("Error reading file"));
       return(0);
     }
 
@@ -7844,7 +7850,7 @@ remove_obj_from_list(GFIGOBJ *obj,DOBJECT *del_obj)
       prev_all = all;
       all = all->next;
     }
-  g_warning("Hey where has the object gone ?");
+  g_warning(_("Hey where has the object gone ?"));
 }
 
 static DOBJPOINTS *
@@ -9458,7 +9464,7 @@ d_draw_poly(DOBJECT *obj)
   draw_sqr(&center_pnt->pnt);
 
   /* Next point defines the radius */
-  radius_pnt = center_pnt->next; /* this defines the vetices */
+  radius_pnt = center_pnt->next; /* this defines the vertices */
 
   if(!radius_pnt)
     {
