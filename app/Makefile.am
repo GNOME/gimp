@@ -10,8 +10,6 @@ mwindows = -mwindows
 
 gimp_win32_resource = gimp-win32res.o
 
-INTLLIBS =
-
 noinst_DATA = .libs/libgimpapp.a
 
 .libs/libgimpapp.a: gimp.exe
@@ -477,14 +475,20 @@ gimp-win32res.o : gimp.rc
 
 install-exec-hook:
 if DEFAULT_BINARY
+if OS_WIN32
+else
 	cd $(DESTDIR)$(bindir) \
 	&& rm -f gimp \
 	&& $(LN_S) gimp-1.2 gimp
 endif
+endif
 
 uninstall-local:
 if DEFAULT_BINARY
+if OS_WIN32
+else
 	rm -f $(DESTDIR)$(bindir)/gimp
+endif
 endif
 
 .PHONY: files
@@ -493,9 +497,6 @@ files:
 	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
 	  echo $$p; \
 	done
-
-## makefile.mingw: $(top_builddir)/config.status $(top_srcdir)/app/makefile.mingw.in
-##  	cd $(top_builddir) && CONFIG_FILES=app/$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
 # GCG stuff
 # 

@@ -1,3 +1,11 @@
+2002-03-21  Tor Lillqvist  <tml@iki.fi>
+
+	* app/Makefile.am: Remove unnecessary empty assignment to INTLLIBS
+	from inside "if OS_WIN32". Don't do the symlinking of gimp-1.2 to
+	gimp on Win32, and not the corresponding rm on uninstall
+	either. Remove completely the already-commented-out makefile.mingw
+	lines.
+
 2002-03-20  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gap/gap_decode_xanim.c: applied a patch from Wolfgang Hofer
