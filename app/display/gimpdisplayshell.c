@@ -371,6 +371,9 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   gimp_dnd_color_dest_add    (GTK_WIDGET (shell),
 			      gimp_display_shell_drop_color,
                               shell);
+  gimp_dnd_file_dest_add     (GTK_WIDGET (shell),
+			      gimp_display_shell_drop_files,
+                              shell);
 
   gimp_help_connect (GTK_WIDGET (shell), gimp_standard_help_func,
 		     GIMP_HELP_IMAGE_WINDOW, NULL);

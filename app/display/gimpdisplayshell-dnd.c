@@ -25,13 +25,18 @@
 #include "core/gimp.h"
 #include "core/gimp-edit.h"
 #include "core/gimpbuffer.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-merge.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimplayer.h"
 #include "core/gimppattern.h"
+
+#include "file/file-open.h"
+#include "file/file-utils.h"
 
 #include "text/gimptext.h"
 #include "text/gimptextlayer.h"
@@ -260,4 +265,82 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
 
   gimp_context_set_display (gimp_get_user_context (gimage->gimp),
                             shell->gdisp);
+}
+
+void
+gimp_display_shell_drop_files (GtkWidget *widget,
+                               GList     *files,
+                               gpointer   data)
+{
+  GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (data);
+  GimpImage        *gimage = shell->gdisp->gimage;;
+  GimpContext      *context;
+  GList            *list;
+
+  context = gimp_get_user_context (gimage->gimp);
+
+  for (list = files; list; list = g_list_next (list))
+    {
+      GimpImage         *new_image;
+      const gchar       *uri = list->data;
+      GimpPDBStatusType  status;
+
+      new_image = file_open_image (gimage->gimp, context, uri, uri,
+                                   NULL, GIMP_RUN_NONINTERACTIVE,
+                                   &status, NULL, NULL);
+
+      if (new_image)
+        {
+          GimpLayer *layer;
+
+          gimp_image_undo_disable (new_image);
+
+          if (gimp_container_num_children (new_image->layers) > 1)
+            gimp_image_merge_visible_layers (new_image, context,
+                                             GIMP_CLIP_TO_IMAGE);
+
+          layer = (GimpLayer *)
+            gimp_container_get_child_by_index (new_image->layers, 0);
+
+          if (layer)
+            {
+              GimpItem *new_item;
+
+              new_item = gimp_item_convert (GIMP_ITEM (layer), gimage,
+                                            GIMP_TYPE_LAYER, TRUE);
+
+              if (new_item)
+                {
+                  GimpLayer *new_layer;
+                  gint       x, y, width, height;
+                  gint       off_x, off_y;
+                  gchar     *basename;
+
+                  new_layer = GIMP_LAYER (new_item);
+
+                  basename = file_utils_uri_to_utf8_basename (uri);
+                  gimp_object_set_name (GIMP_OBJECT (new_layer), basename);
+                  g_free (basename);
+
+                  gimp_display_shell_untransform_viewport (shell, &x, &y,
+                                                           &width, &height);
+
+                  gimp_item_offsets (new_item, &off_x, &off_y);
+
+                  off_x = x + (width  - gimp_item_width  (new_item)) / 2 - off_x;
+                  off_y = y + (height - gimp_item_height (new_item)) / 2 - off_y;
+
+                  gimp_item_translate (new_item, off_x, off_y, FALSE);
+
+                  gimp_image_add_layer (gimage, new_layer, -1);
+                }
+            }
+
+          g_object_unref (new_image);
+        }
+    }
+
+  gimp_image_flush (gimage);
+
+  gimp_context_set_display (context, shell->gdisp);
 }

@@ -1,3 +1,13 @@
+2004-06-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_init): accept
+	file/uri drops.
+
+	* app/display/gimpdisplayshell-dnd.[ch]
+	(gimp_display_shell_drop_files): open any kind of image and turn
+	it into a single layer which is added to the image (suggested by
+	Antenne Springborn).
+
 2004-06-02  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/gradient_edit.pdb
