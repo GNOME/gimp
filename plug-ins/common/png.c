@@ -37,6 +37,10 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.5  1998/03/30 19:05:47  adrian
+ *   updated png.c so non-interactive mode works now
+ *   -adrian
+ *
  *   Revision 1.4  1998/03/26 02:08:23  yosh
  *   * applied gimp-quinet-980122-0 and tweaked the tests a bit, this makes the
  *   optional library tests in configure.
@@ -310,7 +314,7 @@ run(char   *name,		/* I - Name of filter program. */
           * Make sure all the arguments are there!
           */
 
-          if (nparams != 6)
+          if (nparams != 7)
             values[0].data.d_status = STATUS_CALLING_ERROR;
           else
           {
