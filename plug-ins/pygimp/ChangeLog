@@ -1,3 +1,12 @@
+2003-01-08  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/gimpcons.py: import gtkcons only when we're about to use
+	it. This and below allows plug-in query to work even without an
+	interface.
+
+	* plug-ins/pdbbrowse.py: define BrowseWin (which needs gtk) only
+	when we need it and are guaranteed a gui setup.
+
 2002-11-08  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/Makefile.am (EXTRA_DIST): added missing file (#98034).

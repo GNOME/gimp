@@ -18,7 +18,6 @@
 #   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 from gimpfu import *
-import gtkcons
 
 def extension_python_fu_console():
     import gtk, gimpenums, gimpshelf
@@ -34,6 +33,8 @@ def extension_python_fu_console():
     win = gtk.Window()
     win.connect("destroy", gtk.mainquit)
     win.set_title("Gimp-Python Console")
+
+    import gtkcons
     cons = gtkcons.Console(namespace=namespace, quit_cb=gtk.mainquit)
 
     def browse(button, cons):
