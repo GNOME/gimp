@@ -295,7 +295,7 @@ run (gchar   *name,
 	  /*
 	   * Make sure all the arguments are there!
 	   */
-          if (nparams != 8)
+          if (nparams != 12)
 	    {
 	      status = STATUS_CALLING_ERROR;
 	    }
