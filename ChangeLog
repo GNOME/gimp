@@ -1,3 +1,12 @@
+Thu Feb  4 00:07:13 GMT 1999 Andy Thomas <alt@picnic.demon.co.uk>
+
+	Changed:-
+
+	* plug-ins/Makefile.am
+
+	New plugin located in plug-ins/plugindetails. Allows you to browse
+	the plugin menu system.
+
 Wed Feb  3 23:46:12 GMT 1999 Adam D. Moss <adam@gimp.org>
 
 	* app/fileops.c: More work on thumbnailing - the

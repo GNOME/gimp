@@ -100,6 +100,7 @@ SUBDIRS = 			\
 	pix			\
 	pixelize		\
 	plasma			\
+	plugindetails		\
 	pnm			\
 	polar			\
 	print			\
