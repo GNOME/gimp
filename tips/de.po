@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.3.17\n"
-"POT-Creation-Date: 2003-07-05 19:14+0200\n"
-"PO-Revision-Date: 2003-07-04 17:24+0200\n"
+"POT-Creation-Date: 2003-07-08 01:51+0200\n"
+"PO-Revision-Date: 2003-07-08 01:53+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -35,6 +35,12 @@ msgstr ""
 
 #: tips/gimp-tips.xml.in.h:4
 msgid ""
+"<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
+"color instead of the foreground color."
+msgstr "Wird beim Anwenden des Farbeimers die <tt>Strg</tt>-Taste gedrückt, so wird statt der Vordergrund- die Hintergrundfarbe verwendet."
+
+#: tips/gimp-tips.xml.in.h:5
+msgid ""
 "<tt>Ctrl</tt>-drag with the Transform tool in rotation mode will constrain "
 "the rotation to 15 degree angles."
 msgstr ""
@@ -42,7 +48,7 @@ msgstr ""
 "Taste gedrückt, so können für den Winkel nur Vielfache von 15 Grad "
 "eingestellt werden."
 
-#: tips/gimp-tips.xml.in.h:5
+#: tips/gimp-tips.xml.in.h:6
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -51,14 +57,6 @@ msgstr ""
 "<tt>Shift</tt>-Taste alle anderen Ebenen unsichtbar gemacht. Ein weiterer "
 "Klick bei gedrückter <tt>Shift</tt>-Taste lässt alle Ebenen wieder sichtbar "
 "werden."
-
-#: tips/gimp-tips.xml.in.h:6
-msgid ""
-"<tt>Shift</tt>-click with the Bucket Fill tool to have it use the background "
-"color instead of the foreground color."
-msgstr ""
-"Wird beim Anwenden des Farbeimers die <tt>Shift</tt>-Taste gedrückt, so wird "
-"statt der Vordergrund- die Hintergrundfarbe verwendet."
 
 #: tips/gimp-tips.xml.in.h:7
 msgid ""
