@@ -1,4 +1,8 @@
-2003-08-10  Ville P�tsi   <drc@gimp.org>
+2003-08-10  Ville Pätsi  <drc@gimp.org>
+	* gimp.spec.in: Changed package name from gimp to gimp1.3, to 
+	  keep combatibility with GIMP 1.2 packages.
+
+2003-08-10  Ville Pätsi  <drc@gimp.org>
 	* configure.in: Added gimp.spec.
 	* gimp.spec.in: Brought up to date.
 
@@ -2538,7 +2542,7 @@
 	* configure.in: removed "sr" and "sr@Latn" from ALL_LINGUAS until
 	all required po files have been added.
 
-2003-06-23  Danilo Šegan  <dsegan@gmx.net>
+2003-06-23  Danilo Å egan  <dsegan@gmx.net>
 
 	* configure.in: Added "sr" and "sr@Latn" to ALL_LINGUAS.
 
@@ -4823,7 +4827,7 @@
 
 	* app/tools/tool_manager.c (tool_manager_tool_changed): make sure
 	that active_tool->tool_info is non-NULL before dereferencing it.
-	(Spotted by Ville Pätsi).
+	(Spotted by Ville PÃ€tsi).
 
 2003-05-11  Sven Neumann  <sven@gimp.org>
 
@@ -6356,7 +6360,7 @@
 
 2003-04-04  Sven Neumann  <sven@gimp.org>
 
-	Applied a patch from Øyvind Kolås that adds supersampling to the
+	Applied a patch from Ãyvind KolÃ¥s that adds supersampling to the
 	transform operations (bug #109817):
 
 	* app/base/tile-manager-private.h
@@ -6670,7 +6674,7 @@
 
 	* app/core/gimpdrawable-transform-utils.c
 	(gimp_drawable_transform_matrix_perspective): applied patch from
-	Øyvind Kolås that fixes bug #109570.
+	Ãyvind KolÃ¥s that fixes bug #109570.
 
 2003-03-30  Sven Neumann  <sven@gimp.org>
 
@@ -23067,7 +23071,7 @@
 	* themes/Default/images/stock-button-selection-subtract.png: cropped.
 
 	* themes/Default/images/tools/stock-tool-button-brightness-contrast.png:
-	a nicer one from Ville Pätsi.
+	a nicer one from Ville PÃ€tsi.
 
 	* app/gui/menus.c
 	* app/widgets/gimpvectorslistview.c: use the new stock items.
@@ -26164,7 +26168,7 @@
 2001-12-12  Michael Natterer  <mitch@gimp.org>
 
 	* docs/Wilber_Construction_Kit.xcf.gz: new version with additional
-	layers by Ville Pätsi (drc).
+	layers by Ville PÃ€tsi (drc).
 
 2001-12-12  Sven Neumann  <sven@gimp.org>
 
