@@ -673,7 +673,19 @@ transform_core_draw (tool)
     }
 
   if(transform_tool_showpath())
-    paths_draw_current(gdisp,transform_core->core,transform_core->transform);
+    {
+      GimpMatrix tmp_matrix;
+      if (transform_tool_direction () == TRANSFORM_CORRECTIVE)
+	{
+	  gimp_matrix_invert (transform_core->transform,tmp_matrix);
+	}
+      else
+	{
+	  gimp_matrix_duplicate(transform_core->transform,tmp_matrix);
+	}
+
+      paths_draw_current(gdisp,transform_core->core,tmp_matrix);
+    }
 }
 
 Tool *

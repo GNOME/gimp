@@ -1,3 +1,10 @@
+Thu May 27 22:00:58 BST 1999 Andy Thomas <alt@gimp.org>
+
+	* app/transform_core.c
+
+	Bezier curve display during transformation works 
+	with corrective type of transform.
+
 Thu May 27 21:10:31 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
 
 	* plug-ins/print/print-ps.c (ppd_find): use g_strncasecmp() instead
