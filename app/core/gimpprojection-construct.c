@@ -262,19 +262,23 @@ gimp_image_invalidate (GimpImage *gimage,
 	tile = tile_manager_get_tile (tm, j, i, FALSE, FALSE);
 
         /*  check if the tile is outside the bounds  */
-        if ((MIN ((j + tile_ewidth(tile)), x2) - MAX (j, x1)) <= 0)
+        if ((MIN ((j + tile_ewidth (tile)), x2) - MAX (j, x1)) <= 0)
           {
             tile_invalidate_tile (&tile, tm, j, i);
+
             if (j < x1)
-              startx = MAX (startx, (j + tile_ewidth(tile)));
+              startx = MAX (startx,
+                            (j - (j % TILE_WIDTH) + tile_ewidth (tile)));
             else
               endx = MIN (endx, j);
           }
-        else if (MIN ((i + tile_eheight(tile)), y2) - MAX (i, y1) <= 0)
+        else if (MIN ((i + tile_eheight (tile)), y2) - MAX (i, y1) <= 0)
           {
             tile_invalidate_tile (&tile, tm, j, i);
+
             if (i < y1)
-              starty = MAX (starty, (i + tile_eheight(tile)));
+              starty = MAX (starty,
+                            (i - (i % TILE_HEIGHT) + tile_eheight (tile)));
             else
               endy = MIN (endy, i);
           }

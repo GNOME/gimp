@@ -1,3 +1,16 @@
+2004-01-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-projection.c (gimp_image_invalidate): applied
+	patch from Pedro Gimeno that makes sure we always invalidate
+	complete tiles, not parts of it. Fixes bug #116765.
+
+	* app/display/gimpdisplay.c (gimp_display_paint_area): calculate
+	the image area to invalidate using sub-pixel precision and
+	ceil()/floor() the resulting area to make sure we always
+	invalidate a superset of the dirty area, not a subset. A rounding
+	error here has never been reported but would cause effects similar
+	to #116765.
+
 2004-01-12  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpmenu.c (gimp_image_menu_new): call the callback with

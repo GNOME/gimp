@@ -682,14 +682,23 @@ gimp_display_paint_area (GimpDisplay *gdisp,
   h = (y2 - y1);
 
   /*  calculate the extents of the update as limited by what's visible  */
-  gimp_display_shell_untransform_xy (shell,
-                                     0, 0,
-                                     &x1, &y1,
-                                     FALSE, FALSE);
-  gimp_display_shell_untransform_xy (shell,
-                                     shell->disp_width, shell->disp_height,
-                                     &x2, &y2,
-                                     FALSE, FALSE);
+  gimp_display_shell_untransform_xy_f (shell,
+                                       0, 0,
+                                       &x1_f, &y1_f,
+                                       FALSE);
+  gimp_display_shell_untransform_xy_f (shell,
+                                       shell->disp_width, shell->disp_height,
+                                       &x2_f, &y2_f,
+                                       FALSE);
+
+  /*  make sure to limit the invalidated area to a superset of the
+   *  untransformed sub-pixel display area, not a subset.
+   *  bug #116765. --mitch
+   */
+  x1 = floor (x1_f);
+  y1 = floor (y1_f);
+  x2 = ceil (x2_f);
+  y2 = ceil (y2_f);
 
   gimp_image_invalidate (gdisp->gimage, x, y, w, h, x1, y1, x2, y2);
 
