@@ -49,13 +49,14 @@
 
 typedef struct
 {
-  gint period;
-  gint amplitude;
-  gint orientation;
-  gint edges;
-  gint waveform;
-  gint antialias;
-  gint tile;
+  gint     period;
+  gint     amplitude;
+  gint     orientation;
+  gint     edges;
+  gint     waveform;
+  gboolean antialias;
+  gboolean tile;
+  gboolean preview;
 } RippleValues;
 
 
@@ -63,14 +64,15 @@ typedef struct
  */
 static void    query  (void);
 static void    run    (const gchar      *name,
-		       gint              nparams,
-		       const GimpParam  *param,
-		       gint             *nreturn_vals,
-		       GimpParam       **return_vals);
+                       gint              nparams,
+                       const GimpParam  *param,
+                       gint             *nreturn_vals,
+                       GimpParam       **return_vals);
 
-static void      ripple              (GimpDrawable *drawable);
+static void      ripple              (GimpDrawable *drawable,
+                                      GimpPreview  *preview);
 
-static gboolean  ripple_dialog       (void);
+static gboolean  ripple_dialog       (GimpDrawable *drawable);
 
 static gdouble   displace_amount     (gint      location);
 static void      average_two_pixels  (guchar   *dest,
@@ -102,9 +104,9 @@ static RippleValues rvals =
   WRAP,       /* edges       */
   SINE,       /* waveform    */
   TRUE,       /* antialias   */
-  TRUE        /* tile        */
+  TRUE,       /* tile        */
+  TRUE        /* preview     */
 };
-
 
 /***** Functions *****/
 
@@ -128,16 +130,16 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_ripple",
-			  "Ripple the contents of the specified drawable",
-			  "Ripples the pixels of the specified drawable. Each row or column will be displaced a certain number of pixels coinciding with the given wave form",
-			  "Brian Degenhardt <bdegenha@ucsd.edu>",
-			  "Brian Degenhardt",
-			  "1997",
-			  N_("_Ripple..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Ripple the contents of the specified drawable",
+                          "Ripples the pixels of the specified drawable. Each row or column will be displaced a certain number of pixels coinciding with the given wave form",
+                          "Brian Degenhardt <bdegenha@ucsd.edu>",
+                          "Brian Degenhardt",
+                          "1997",
+                          N_("_Ripple..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register ("plug_in_ripple",
                              N_("<Image>/Filters/Distorts"));
@@ -175,29 +177,29 @@ run (const gchar      *name,
       gimp_get_data ("plug_in_ripple", &rvals);
 
       /*  First acquire information with a dialog  */
-      if (! ripple_dialog ())
-	return;
+      if (! ripple_dialog (drawable))
+        return;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
       if (nparams != 10)
-	{
-	  status = GIMP_PDB_CALLING_ERROR;
-	}
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
       else
-	{
-	  rvals.period = param[3].data.d_int32;
-	  rvals.amplitude = param[4].data.d_int32;
+        {
+          rvals.period = param[3].data.d_int32;
+          rvals.amplitude = param[4].data.d_int32;
           rvals.orientation = (param[5].data.d_int32) ? VERTICAL : HORIZONTAL;
           rvals.edges = (param[6].data.d_int32);
           rvals.waveform = param[7].data.d_int32;
           rvals.antialias = (param[8].data.d_int32) ? TRUE : FALSE;
           rvals.tile = (param[9].data.d_int32) ? TRUE : FALSE;
 
-	  if (rvals.edges < SMEAR || rvals.edges > BLACK)
-	    status = GIMP_PDB_CALLING_ERROR;
-	}
+          if (rvals.edges < SMEAR || rvals.edges > BLACK)
+            status = GIMP_PDB_CALLING_ERROR;
+        }
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -213,28 +215,28 @@ run (const gchar      *name,
     {
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->drawable_id) ||
-	  gimp_drawable_is_gray (drawable->drawable_id))
-	{
-	  gimp_progress_init (_("Rippling..."));
+          gimp_drawable_is_gray (drawable->drawable_id))
+        {
+          gimp_progress_init (_("Rippling..."));
 
-	  /*  set the tile cache size  */
-	  gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
+          /*  set the tile cache size  */
+          gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
-	  /*  run the ripple effect  */
-	  ripple (drawable);
+          /*  run the ripple effect  */
+          ripple (drawable, NULL);
 
-	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_displays_flush ();
+          if (run_mode != GIMP_RUN_NONINTERACTIVE)
+            gimp_displays_flush ();
 
-	  /*  Store data  */
-	  if (run_mode == GIMP_RUN_INTERACTIVE)
-	    gimp_set_data ("plug_in_ripple", &rvals, sizeof (RippleValues));
-	}
+          /*  Store data  */
+          if (run_mode == GIMP_RUN_INTERACTIVE)
+            gimp_set_data ("plug_in_ripple", &rvals, sizeof (RippleValues));
+        }
       else
-	{
-	  /* gimp_message ("ripple: cannot operate on indexed color images"); */
-	  status = GIMP_PDB_EXECUTION_ERROR;
-	}
+        {
+          /* gimp_message ("ripple: cannot operate on indexed color images"); */
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
     }
 
   values[0].data.d_status = status;
@@ -243,24 +245,24 @@ run (const gchar      *name,
 }
 
 typedef struct {
-  GimpPixelFetcher	*pft;
-  gint 			 width;
-  gint			 height;
-  gboolean 		 has_alpha;
+  GimpPixelFetcher      *pft;
+  gint                   width;
+  gint                   height;
+  gboolean               has_alpha;
 } RippleParam_t;
 
 static void
 ripple_vertical (gint x,
-		 gint y,
-		 guchar *dest,
-		 gint bpp,
-		 gpointer data)
+                 gint y,
+                 guchar *dest,
+                 gint bpp,
+                 gpointer data)
 {
   RippleParam_t *param = (RippleParam_t*) data;
   GimpPixelFetcher *pft;
   guchar   pixel[4][4];
   gdouble  needy;
-  gint	   yi, height;
+  gint     yi, height;
 
   pft = param->pft;
   height = param->height;
@@ -283,29 +285,29 @@ ripple_vertical (gint x,
   if (rvals.antialias)
     {
       if (yi == height - 1)
-	{
-	  gimp_pixel_fetcher_get_pixel (pft, x, yi, dest);
-	}
+        {
+          gimp_pixel_fetcher_get_pixel (pft, x, yi, dest);
+        }
       else if (needy < 0 && needy > -1)
-	{
-	  gimp_pixel_fetcher_get_pixel (pft, x, 0, dest);
-	}
+        {
+          gimp_pixel_fetcher_get_pixel (pft, x, 0, dest);
+        }
       else if (yi == height - 2 || yi == 0)
-	{
-	  gimp_pixel_fetcher_get_pixel (pft, x, yi, pixel[0]);
-	  gimp_pixel_fetcher_get_pixel (pft, x, yi + 1, pixel[1]);
+        {
+          gimp_pixel_fetcher_get_pixel (pft, x, yi, pixel[0]);
+          gimp_pixel_fetcher_get_pixel (pft, x, yi + 1, pixel[1]);
 
-	  average_two_pixels (dest, pixel, needy, bpp, param->has_alpha);
-	}
+          average_two_pixels (dest, pixel, needy, bpp, param->has_alpha);
+        }
       else
-	{
-	  gimp_pixel_fetcher_get_pixel (pft, x, yi, pixel[0]);
-	  gimp_pixel_fetcher_get_pixel (pft, x, yi + 1, pixel[1]);
-	  gimp_pixel_fetcher_get_pixel (pft, x, yi - 1, pixel[2]);
-	  gimp_pixel_fetcher_get_pixel (pft, x, yi + 2, pixel[3]);
+        {
+          gimp_pixel_fetcher_get_pixel (pft, x, yi, pixel[0]);
+          gimp_pixel_fetcher_get_pixel (pft, x, yi + 1, pixel[1]);
+          gimp_pixel_fetcher_get_pixel (pft, x, yi - 1, pixel[2]);
+          gimp_pixel_fetcher_get_pixel (pft, x, yi + 2, pixel[3]);
 
-	  average_four_pixels (dest, pixel, needy, bpp, param->has_alpha);
-	}
+          average_four_pixels (dest, pixel, needy, bpp, param->has_alpha);
+        }
     } /* antialias */
   else
     {
@@ -315,16 +317,16 @@ ripple_vertical (gint x,
 
 static void
 ripple_horizontal (gint x,
-		 gint y,
-		 guchar *dest,
-		 gint bpp,
-		 gpointer data)
+                 gint y,
+                 guchar *dest,
+                 gint bpp,
+                 gpointer data)
 {
   RippleParam_t *param = (RippleParam_t*) data;
   GimpPixelFetcher *pft;
   guchar   pixel[4][4];
   gdouble  needx;
-  gint	   xi, width;
+  gint     xi, width;
 
   pft = param->pft;
   width = param->width;
@@ -347,30 +349,30 @@ ripple_horizontal (gint x,
   if (rvals.antialias)
     {
       if (xi == width - 1)
-	{
-	  gimp_pixel_fetcher_get_pixel (pft, xi, y, dest);
-	}
+        {
+          gimp_pixel_fetcher_get_pixel (pft, xi, y, dest);
+        }
       else if (floor(needx) ==  -1)
-	{
-	  gimp_pixel_fetcher_get_pixel (pft, 0, y, dest);
-	}
+        {
+          gimp_pixel_fetcher_get_pixel (pft, 0, y, dest);
+        }
 
       else if (xi == width - 2 || xi == 0)
-	{
-	  gimp_pixel_fetcher_get_pixel (pft, xi, y, pixel[0]);
-	  gimp_pixel_fetcher_get_pixel (pft, xi + 1, y, pixel[1]);
+        {
+          gimp_pixel_fetcher_get_pixel (pft, xi, y, pixel[0]);
+          gimp_pixel_fetcher_get_pixel (pft, xi + 1, y, pixel[1]);
 
-	  average_two_pixels (dest, pixel, needx, bpp, param->has_alpha);
-	}
+          average_two_pixels (dest, pixel, needx, bpp, param->has_alpha);
+        }
       else
-	{
-	  gimp_pixel_fetcher_get_pixel (pft, xi, y, pixel[0]);
-	  gimp_pixel_fetcher_get_pixel (pft, xi + 1, y, pixel[1]);
-	  gimp_pixel_fetcher_get_pixel (pft, xi - 1, y, pixel[2]);
-	  gimp_pixel_fetcher_get_pixel (pft, xi + 2, y, pixel[3]);
+        {
+          gimp_pixel_fetcher_get_pixel (pft, xi, y, pixel[0]);
+          gimp_pixel_fetcher_get_pixel (pft, xi + 1, y, pixel[1]);
+          gimp_pixel_fetcher_get_pixel (pft, xi - 1, y, pixel[2]);
+          gimp_pixel_fetcher_get_pixel (pft, xi + 2, y, pixel[3]);
 
-	  average_four_pixels (dest, pixel, needx, bpp, param->has_alpha);
-	}
+          average_four_pixels (dest, pixel, needx, bpp, param->has_alpha);
+        }
     } /* antialias */
 
   else
@@ -380,61 +382,103 @@ ripple_horizontal (gint x,
 }
 
 static void
-ripple (GimpDrawable *drawable)
+ripple (GimpDrawable *drawable,
+        GimpPreview  *preview)
 {
-  GimpRgnIterator *iter;
-  RippleParam_t    param;
+  RippleParam_t param;
 
   param.pft       = gimp_pixel_fetcher_new (drawable, FALSE);
   param.has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   param.width     = drawable->width;
   param.height    = drawable->height;
 
-  if ( rvals.tile )
+  if (preview)
     {
-      rvals.edges = WRAP;
-      rvals.period = (param.width / (param.width / rvals.period) *
-		      (rvals.orientation == HORIZONTAL) +
-		      param.height / (param.height / rvals.period) *
-		      (rvals.orientation == VERTICAL));
+      guchar *buffer, *d;
+      gint    bpp = gimp_drawable_bpp (drawable->drawable_id);
+      gint    width, height;
+      gint    x, y;
+      gint    x1, y1;
+
+      gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_size (preview, &width, &height);
+      d = buffer = g_new (guchar, width * height * bpp);
+      for (y = 0; y < height ; y++)
+        for (x = 0; x < width ; x++)
+          {
+             if (rvals.orientation == VERTICAL)
+               ripple_vertical (x1 + x, y1 + y, d, bpp, &param);
+             else
+               ripple_horizontal (x1 + x, y1 + y, d, bpp, &param);
+             d += bpp;
+          }
+      gimp_preview_draw_buffer (preview, buffer, width * bpp);
+      g_free (buffer);
     }
+  else
+    {
+      GimpRgnIterator *iter;
 
-  iter = gimp_rgn_iterator_new (drawable, 0);
-  gimp_rgn_iterator_dest (iter, (rvals.orientation == VERTICAL)
-			  ? ripple_vertical : ripple_horizontal, &param);
-  gimp_rgn_iterator_free (iter);
+      if ( rvals.tile )
+        {
+          rvals.edges = WRAP;
+          rvals.period = (param.width / (param.width / rvals.period) *
+                          (rvals.orientation == HORIZONTAL) +
+                          param.height / (param.height / rvals.period) *
+                          (rvals.orientation == VERTICAL));
+        }
 
+      iter = gimp_rgn_iterator_new (drawable, 0);
+      gimp_rgn_iterator_dest (iter, (rvals.orientation == VERTICAL)
+                              ? ripple_vertical : ripple_horizontal, &param);
+      gimp_rgn_iterator_free (iter);
+    }
   gimp_pixel_fetcher_destroy (param.pft);
 }
 
 static gboolean
-ripple_dialog (void)
+ripple_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dlg;
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
+  GtkWidget *preview;
   GtkWidget *toggle;
   GtkWidget *toggle_vbox;
-  GtkWidget *main_vbox;
   GtkWidget *frame;
   GtkWidget *table;
   GtkObject *scale_data;
+  GtkWidget *horizontal;
+  GtkWidget *vertical;
+  GtkWidget *wrap;
+  GtkWidget *smear;
+  GtkWidget *black;
+  GtkWidget *sawtooth;
+  GtkWidget *sine;
   gboolean   run;
 
   gimp_ui_init ("ripple", TRUE);
 
-  dlg = gimp_dialog_new (_("Ripple"), "ripple",
-                         NULL, 0,
-			 gimp_standard_help_func, "plug-in-ripple",
+  dialog = gimp_dialog_new (_("Ripple"), "ripple",
+                            NULL, 0,
+                            gimp_standard_help_func, "plug-in-ripple",
 
-			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
+                            NULL);
 
   /*  The main vbox  */
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
-		      FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
+
+  preview = gimp_drawable_preview_new (drawable, &rvals.preview);
+  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
+  gtk_widget_show (preview);
+  g_signal_connect_swapped (preview, "invalidated",
+                            G_CALLBACK (ripple),
+                            drawable);
 
   /* The table to hold the four frames of options */
   table = gtk_table_new (2, 2, FALSE);
@@ -445,7 +489,7 @@ ripple_dialog (void)
   /*  Options section  */
   frame = gimp_frame_new ( _("Options"));
   gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (frame);
 
   toggle_vbox = gtk_vbox_new (FALSE, 6);
@@ -460,6 +504,9 @@ ripple_dialog (void)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &rvals.antialias);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   toggle = gtk_check_button_new_with_mnemonic ( _("_Retain tilability"));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
@@ -469,47 +516,74 @@ ripple_dialog (void)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &rvals.tile);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /*  Orientation toggle box  */
   frame = gimp_int_radio_group_new (TRUE, _("Orientation"),
                                     G_CALLBACK (gimp_radio_button_update),
                                     &rvals.orientation, rvals.orientation,
 
-                                    _("_Horizontal"), HORIZONTAL, NULL,
-                                    _("_Vertical"),   VERTICAL,   NULL,
+                                    _("_Horizontal"), HORIZONTAL, &horizontal,
+                                    _("_Vertical"),   VERTICAL,   &vertical,
 
                                     NULL);
 
   gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 0, 1,
-		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (frame);
+
+  g_signal_connect_swapped (horizontal, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  g_signal_connect_swapped (vertical, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /*  Edges toggle box  */
   frame = gimp_int_radio_group_new (TRUE, _("Edges"),
-				    G_CALLBACK (gimp_radio_button_update),
-				    &rvals.edges, rvals.edges,
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &rvals.edges, rvals.edges,
 
-				    _("_Wrap"),  WRAP,  NULL,
-				    _("_Smear"), SMEAR, NULL,
-				    _("_Black"), BLACK, NULL,
+                                    _("_Wrap"),  WRAP,  &wrap,
+                                    _("_Smear"), SMEAR, &smear,
+                                    _("_Black"), BLACK, &black,
 
-				    NULL);
+                                    NULL);
   gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 1, 2,
-		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
+                    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
   gtk_widget_show (frame);
+
+  g_signal_connect_swapped (wrap, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  g_signal_connect_swapped (smear, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  g_signal_connect_swapped (black, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /*  Wave toggle box  */
   frame = gimp_int_radio_group_new (TRUE, _("Wave Type"),
-				    G_CALLBACK (gimp_radio_button_update),
-				    &rvals.waveform, rvals.waveform,
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &rvals.waveform, rvals.waveform,
 
-				    _("Saw_tooth"), SAWTOOTH, NULL,
-				    _("S_ine"),     SINE,     NULL,
+                                    _("Saw_tooth"), SAWTOOTH, &sawtooth,
+                                    _("S_ine"),     SINE,     &sine,
 
-				    NULL);
+                                    NULL);
   gtk_table_attach (GTK_TABLE (table), frame, 1, 2, 1, 2,
-		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
+                    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
   gtk_widget_show (frame);
+
+  g_signal_connect_swapped (sawtooth, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  g_signal_connect_swapped (sine, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_widget_show (table);
 
@@ -520,33 +594,37 @@ ripple_dialog (void)
 
   /*  Period  */
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				     _("_Period:"), SCALE_WIDTH, 0,
-				     rvals.period, 0, 200, 1, 10, 0,
-				     TRUE, 0, 0,
-				     NULL, NULL);
+                                     _("_Period:"), SCALE_WIDTH, 0,
+                                     rvals.period, 0, 200, 1, 10, 0,
+                                     TRUE, 0, 0,
+                                     NULL, NULL);
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &rvals.period);
+  g_signal_connect_swapped (scale_data, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /*  Amplitude  */
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-				     _("A_mplitude:"), SCALE_WIDTH, 0,
-				     rvals.amplitude, 0, 200, 1, 10, 0,
-				     TRUE, 0, 0,
-				     NULL, NULL);
+                                     _("A_mplitude:"), SCALE_WIDTH, 0,
+                                     rvals.amplitude, 0, 200, 1, 10, 0,
+                                     TRUE, 0, 0,
+                                     NULL, NULL);
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &rvals.amplitude);
+  g_signal_connect_swapped (scale_data, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_widget_show (frame);
   gtk_widget_show (table);
+  gtk_widget_show (dialog);
 
-  gtk_widget_show (main_vbox);
-  gtk_widget_show (dlg);
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
-
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }
@@ -631,8 +709,8 @@ displace_amount (gint location)
               sin (location * (2 * G_PI) / (gdouble) rvals.period));
     case SAWTOOTH:
       return floor (rvals.amplitude *
-		    (fabs ((((location % rvals.period) /
-			     (gdouble) rvals.period) * 4) - 2) - 1));
+                    (fabs ((((location % rvals.period) /
+                             (gdouble) rvals.period) * 4) - 2) - 1));
     }
 
   return 0.0;
