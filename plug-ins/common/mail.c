@@ -19,10 +19,10 @@
 
 /*
    *   GUMP - Gimp Useless Mail Plugin (or Gump Useless Mail Plugin if you prefer)
-   *          version about .80 I would say... give or take a few decimal points
+   *          version about .85 I would say... give or take a few decimal points
    *
    *
-   *   by Adrian Likins <aklikins@eos.ncsu.edu>
+   *   by Adrian Likins <adrian@gimp.org>
    *      MIME encapsulation by Reagan Blundell <reagan@emails.net>
    *
    *
@@ -65,11 +65,11 @@
    *       6) add an option to choose if mail get 
    *          uuencode or not (or MIME'ed for that matter)
    *       7) realtime preview
-   *       8) better entry for comments
-   *       9) list of frequently used addreses
+   *       8) better entry for comments    *done*
+   *       9) list of frequently used addreses     
    *      10) openGL compliance
    *      11) better handling of filesave errors
-   *
+   *     
    *
    *  Version history
    *       .5  - 6/30/97 - inital relese
@@ -85,7 +85,9 @@
    *                       instead of using external program.
    *                     - General cleanup of the MIME handling code.
    *       .80 - 6/23/98 - Added a text box so you can compose real messages.
-   *
+   *       .85 - 3/19/99 - Added a "From:" field. Made it check gimprc for a
+   *                       "gump-from" token and use it. Also made "run with last 
+   *                        values" work.
    * As always: The utility of this plugin is left as an exercise for the reader
    *
  */
@@ -130,6 +132,7 @@ static void close_callback (GtkWidget * widget, gpointer data);
 static void ok_callback (GtkWidget * widget, gpointer data);
 static void encap_callback (GtkWidget * widget, gpointer data);
 static void receipt_callback (GtkWidget * widget, gpointer data);
+static void from_callback (GtkWidget * widget, gpointer data);
 static void subject_callback (GtkWidget * widget, gpointer data);
 static void comment_callback (GtkWidget * widget, gpointer data);
 static void filename_callback (GtkWidget * widget, gpointer data);
@@ -154,6 +157,7 @@ typedef struct
     char receipt[256];
     char subject[256];
     char comment[256];
+    char from[256];
     char filename[256];
     int  encapsulation;
   }
@@ -161,6 +165,7 @@ m_info;
 
 static m_info mail_info = {
   /* I would a assume there is a better way to do this, but this works for now */
+  "\0",
   "\0",
   "\0",
   "\0",
@@ -185,6 +190,7 @@ query ()
     {PARAM_DRAWABLE, "drawable", "Drawable to save"},
     {PARAM_STRING, "filename", "The name of the file to save the image in"},
     {PARAM_STRING, "receipt", "The email address to send to"},
+    {PARAM_STRING, "from", "The email address for the From: field"},
     {PARAM_STRING, "subject", "The subject"},
     {PARAM_STRING, "comment", "The Comment"},
     {PARAM_INT32,  "encapsulation", "Uuencode, MIME"},
@@ -242,16 +248,17 @@ run (char *name,
 	  break;
 	case RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
-	  if (nparams != 8)
+	  if (nparams != 9)
 	    status = STATUS_CALLING_ERROR;
 	  if(status == STATUS_SUCCESS)
 	    {
 	      /* this hasnt been tested yet */
 	      strncpy (mail_info.filename, param[3].data.d_string,256);
 	      strncpy (mail_info.receipt, param[4].data.d_string,256);
-	      strncpy (mail_info.subject, param[5].data.d_string,256);
-	      strncpy (mail_info.comment, param[6].data.d_string,256);
-	      mail_info.encapsulation = param[7].data.d_int32;
+	      strncpy (mail_info.receipt, param[5].data.d_string,256);
+	      strncpy (mail_info.subject, param[6].data.d_string,256);
+	      strncpy (mail_info.comment, param[7].data.d_string,256);
+	      mail_info.encapsulation = param[8].data.d_int32;
 	    }
 	  break;
 	case RUN_WITH_LAST_VALS:
@@ -261,6 +268,9 @@ run (char *name,
 	default:
 	  break;
 	}
+
+      if (run_mode == RUN_INTERACTIVE)
+	gimp_set_data ("plug_in_mail_image", &mail_info, sizeof(m_info));
 
       *nreturn_vals = 1;
       if (save_image (mail_info.filename,
@@ -324,6 +334,8 @@ save_image (char *filename,
 			       PARAM_STRING, tmpname,
 			       PARAM_STRING, tmpname,
 			       PARAM_END);
+
+  
 
   /* need to figure a way to make sure the user is trying to save in an approriate format */
   /* but this can wait....                                                                */
@@ -405,7 +417,9 @@ save_dialog ()
   gint argc;
   gchar **argv;
   gchar buffer[32];
-
+  gint nreturn_vals;
+  GParam *return_vals;
+  
   argc = 1;
   argv = g_new (gchar *, 1);
   argv[0] = g_strdup ("mail");
@@ -413,6 +427,25 @@ save_dialog ()
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
+  /* check gimprc for a preffered "From:" address */
+  return_vals = gimp_run_procedure ("gimp_gimprc_query",
+                                    &nreturn_vals,
+                                    PARAM_STRING, "gump-from",
+                                    PARAM_END);         
+
+  /* check to see if we actually got a value */
+  if (return_vals[0].data.d_status != STATUS_SUCCESS || return_vals[1].data.d_string == NULL)
+    {
+      gimp_destroy_params (return_vals, nreturn_vals);
+    }               
+  else
+    {
+      strncpy (mail_info.from, return_vals[1].data.d_string , 256);
+    }
+
+
+  gimp_destroy_params (return_vals, nreturn_vals);  
+  
   dlg = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (dlg), "Send to mail");
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
@@ -439,7 +472,7 @@ save_dialog ()
   gtk_widget_show (button);
 
   /* table */
-  table = gtk_table_new (6, 3, FALSE);
+  table = gtk_table_new (7, 3, FALSE);
   gtk_container_border_width (GTK_CONTAINER (table), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table, TRUE, TRUE, 0);
   gtk_widget_show (table);
@@ -470,10 +503,39 @@ save_dialog ()
 		      (GtkSignalFunc) receipt_callback, &mail_info.receipt);
   gtk_widget_show (entry);
 
+
+
+  /*  From:  Label */
+  label = gtk_label_new ("From:");
+  gtk_table_attach (GTK_TABLE (table), label,
+		    0, 1, 1, 2,
+		    GTK_EXPAND | GTK_FILL,
+		    GTK_EXPAND | GTK_FILL,
+		    0, 0);
+  gtk_widget_show (label);
+
+  /* from: dialog */
+  entry = gtk_entry_new ();
+  gtk_table_attach (GTK_TABLE (table), entry,
+		    1, 3, 1, 2, 
+		    GTK_EXPAND | GTK_FILL,
+		    GTK_EXPAND | GTK_FILL,
+		    0, 0);
+  gtk_widget_set_usize (entry, 200, 0);
+  
+  sprintf (buffer, "%s", mail_info.from);
+  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
+  gtk_signal_connect (GTK_OBJECT (entry), "changed",
+		      (GtkSignalFunc) from_callback, &mail_info.from);
+  gtk_widget_show (entry);
+
+
+
+
   /*  subject Label */
   label = gtk_label_new ("Subject:");
   gtk_table_attach (GTK_TABLE (table), label,
-		    0, 1, 1, 2,
+		    0, 1, 2, 3,
 		    GTK_EXPAND | GTK_FILL,
 		    GTK_EXPAND | GTK_FILL,
 		    0, 0);
@@ -482,7 +544,7 @@ save_dialog ()
   /* Subject entry */
   entry = gtk_entry_new ();
   gtk_table_attach (GTK_TABLE (table), entry,
-		    1, 3, 1, 2,
+		    1, 3, 2, 3,
 		    GTK_EXPAND | GTK_FILL,
 		    GTK_EXPAND | GTK_FILL,
 		    0, 0);
@@ -497,7 +559,7 @@ save_dialog ()
   /* Comment label  */
   label = gtk_label_new ("Comment:");
   gtk_table_attach (GTK_TABLE (table), label, 
-		    0, 1, 2, 3, 
+		    0, 1, 3, 4, 
 		    GTK_EXPAND | GTK_FILL,
 		    GTK_EXPAND | GTK_FILL,
 		    0, 0);
@@ -506,7 +568,7 @@ save_dialog ()
   /* Comment dialog */
   entry = gtk_entry_new ();
   gtk_table_attach (GTK_TABLE (table), entry, 
-		    1, 3, 2, 3,
+		    1, 3, 3, 4,
 		    GTK_EXPAND | GTK_FILL,
 		    GTK_EXPAND | GTK_FILL,
 		    0, 0);
@@ -521,7 +583,7 @@ save_dialog ()
   /* filename label  */
   label = gtk_label_new ("Filename:");
   gtk_table_attach (GTK_TABLE (table), label, 
-		    0, 1, 3, 4, 
+		    0, 1, 4, 5, 
 		    GTK_EXPAND | GTK_FILL,
 		    GTK_EXPAND | GTK_FILL,
 		    0, 0);
@@ -530,7 +592,7 @@ save_dialog ()
   /* Filename dialog */
   entry = gtk_entry_new ();
   gtk_table_attach (GTK_TABLE (table), entry, 
-		    1, 3, 3, 4,
+		    1, 3, 4, 5,
 		    GTK_EXPAND | GTK_FILL,
 		    GTK_EXPAND | GTK_FILL,
 		    0, 0);
@@ -548,7 +610,7 @@ save_dialog ()
    /*   gtk_box_pack_start (GTK_BOX (box2), table2, TRUE, TRUE, 0);
 	gtk_widget_show (table2); */
    gtk_table_attach (GTK_TABLE (table), table2, 
-		    0, 3, 4, 5,
+		    0, 3, 5, 6,
 		    GTK_EXPAND | GTK_FILL,
 		    GTK_EXPAND | GTK_FILL,
 		     0, 0);
@@ -575,7 +637,7 @@ save_dialog ()
   /* Encapsulation label */
   label = gtk_label_new ("Encapsulation:");
   gtk_table_attach( GTK_TABLE (table), label ,
-		    0, 1, 5, 6,
+		    0, 1, 7, 8,
 		    GTK_EXPAND | GTK_FILL,
 		    GTK_EXPAND | GTK_FILL,
 		    0, 0);
@@ -598,14 +660,14 @@ save_dialog ()
 		      (gpointer) "mime" );
 
   gtk_table_attach( GTK_TABLE (table), button1,
-		    1, 2, 5, 6,
+		    1, 2, 6, 7,
 		    GTK_EXPAND | GTK_FILL, 
 		    GTK_EXPAND | GTK_FILL,
 		    0, 0 );
   gtk_widget_show( button1 );
 
   gtk_table_attach( GTK_TABLE (table), button2,
-		    2, 3, 5, 6,
+		    2, 3, 6, 7,
 		    GTK_EXPAND | GTK_FILL,
 		    GTK_EXPAND | GTK_FILL,
 		    0, 0 );
@@ -752,6 +814,12 @@ receipt_callback (GtkWidget * widget, gpointer data)
 }
 
 static void
+from_callback (GtkWidget *widget, gpointer data)
+{
+  strncpy (mail_info.from, gtk_entry_get_text (GTK_ENTRY (widget)), 256);
+}
+
+static void
 subject_callback (GtkWidget * widget, gpointer data)
 {
   strncpy (mail_info.subject, gtk_entry_get_text (GTK_ENTRY (widget)), 256);
@@ -787,8 +855,9 @@ create_headers (FILE * mailpipe)
 
   fprintf (mailpipe, "To: %s \n", mail_info.receipt);
   fprintf (mailpipe, "Subject: %s \n", mail_info.subject);
-  fprintf (mailpipe, "X-Mailer: GIMP Useless Mail Program v.65\n");
-  fprintf (mailpipe, "X-GUMP-Author: Adrian Likins\n");
+  fprintf (mailpipe, "From: %s \n", mail_info.from);
+  fprintf (mailpipe, "X-Mailer: GIMP Useless Mail Program v.85\n");
+
 
   if(mail_info.encapsulation == ENCAPSULATION_MIME ){
       fprintf (mailpipe, "MIME-Version: 1.0\n");

@@ -2,7 +2,7 @@
 
 pluginlibdir = $(gimpplugindir)/plug-ins
 
-SUBDIRS = gimp_1.0.2_src iter_ALT
+#SUBDIRS = gimp_1.0.2_src iter_ALT
 
 EXTRA_DIST = README README_developers TESTPROT_iter_ALT
 

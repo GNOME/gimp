@@ -1,3 +1,14 @@
+Fri Mar 19 04:01:04 EST 1999 Adrian Likins <adrian@gimp.org>
+	
+	* plug-ins/mail/mail.c: added a from: field, made
+	it check gimprc for a gump-from field (per request
+	by tigert). fixed it so it would actually use
+	the last vals properly.
+
+	* plug-ins/gap/Makefile.am: removed the SUBDIRS line
+	so it at least builds. Probabaly not the right fix,
+	but while I'm committing...
+
 1999-03-18  Jay Cox  <jaycox@earthlink.net>
 
 	* app/ops_buttons.h: removed a c++ style comment
