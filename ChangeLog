@@ -1,3 +1,13 @@
+2003-03-17  Sven Neumann  <sven@gimp.org>
+
+	Applied patches from David Necas <yeti@physics.muni.cz> that fix
+	incorrect RGBA resampling in a number of plug-ins:
+
+	* plug-ins/common/fractaltrace.c: fixes bug #72873.
+	* plug-ins/common/tiler.c: fixes bug #72875.
+	* plug-ins/common/waves.c: fixes bug #72870.
+	* plug-ins/common/whirlpinch.c: fixes bug #72871.
+
 2003-03-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/core-enums.[ch]: added GIMP_UNDO_CHANNEL_COLOR.

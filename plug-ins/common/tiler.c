@@ -35,12 +35,6 @@ static void run   (gchar      *name,
 		   GimpParam **return_vals);
 
 static void tile  (GimpDrawable *drawable);
-static gint scale (gint          width,
-		   gint          height,
-		   gint          x,
-		   gint          y,
-		   gint          data);
-
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -119,43 +113,70 @@ run (gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
-static gint
-scale (gint width,
-       gint height,
-       gint x,
-       gint y,
-       gint data)
+static void
+weld_pixels (guchar *dest1,
+             guchar *dest2,
+             gint width,
+             gint height,
+             gint x,
+             gint y,
+             guint bpp,
+             guchar *src1,
+             guchar *src2)
 {
-  gint A = width/2-1;
-  gint B = height/2-1;
-  gint a, b;
+  gdouble a = (ABS(x - width) - 1)/ (gdouble) (width - 1);
+  gdouble b = (ABS(y - height) - 1) / (gdouble) (height - 1);
+  gdouble w;
+  guint i;
 
-  if (x < width/2)
-    a = width/2 - x - 1; 
+  /* mimic ambiguous point handling in original algorithm */
+  if (a < 1e-8 && b > 0.99999999)
+    w = 1.0;
+  else if (a > 0.99999999 && b < 1e-8)
+    w = 0.0;
   else
-    a = x - width/2 - (width & 1);
+    w = 1.0 - a*b/(a*b + (1.0 - a)*(1.0 - b));
 
-  if (y < height/2)
-    b = height/2 - y -1; 
+  for (i = 0; i < bpp; i++)
+    dest1[i] = dest2[i] = (guchar) (w * src1[i] + (1.0 - w) * src2[i]);
+}
+
+static void
+weld_pixels_alpha (guchar *dest1,
+                   guchar *dest2,
+                   gint width,
+                   gint height,
+                   gint x,
+                   gint y,
+                   guint bpp,
+                   guchar *src1,
+                   guchar *src2)
+{
+  gdouble a = (ABS(x - width) - 1)/ (gdouble) (width - 1);
+  gdouble b = (ABS(y - height) - 1) / (gdouble) (height - 1);
+  gdouble w;
+  gdouble alpha;
+  guint ai = bpp-1;
+  guint i;
+
+  /* mimic ambiguous point handling in original algorithm */
+  if (a < 1e-8 && b > 0.99999999)
+    w = 1.0;
+  else if (a > 0.99999999 && b < 1e-8)
+    w = 0.0;
   else
-    b = y - height/2 - (height & 1);
-  
-  if ((B*a<A*b) || ((B*a==A*b) && (a&1)))
+    w = 1.0 - a*b/(a*b + (1.0 - a)*(1.0 - b));
+
+  alpha = w * src1[ai] + (1.0 - w) * src2[ai];
+
+  dest1[ai] = dest2[ai] = (guchar) alpha;
+  if (dest1[ai])
     {
-      a = A-a;
-      b = B-b;
-      if (a==A)
-	return data;
-      else
-	return data - data * (A*B-a*B) /(A * b + A * B - a * B);
+      for (i = 0; i < ai; i++)
+        dest1[i] = dest2[i] = (guchar) ((w * src1[i] * src1[ai]
+                                        + (1.0 - w) * src2[i] * src2[ai])
+                                        / alpha);
     }
-  else
-    {
-      if (a==A)
-	return 0;
-      else 
-	return data * (A * B - a * B) / (A * b + A * B - a * B);
-  }
 }
 
 static void
@@ -171,8 +192,11 @@ tile_region (GimpDrawable *drawable, gboolean left,
   gint       max_progress;
   GimpPixelRgn  src1_rgn, src2_rgn, dest1_rgn, dest2_rgn;
   gpointer     pr;
+  gboolean   has_alpha;
+  guint      asymmetry_correction;
 
   bpp = gimp_drawable_bpp (drawable->drawable_id);
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   height = y2 - y1;
   width = x2 - x1;
@@ -195,6 +219,8 @@ tile_region (GimpDrawable *drawable, gboolean left,
       rgn2_x = x1;
       off_x = -w - wodd;
     }
+
+  asymmetry_correction = !wodd && !left;
 
   gimp_pixel_rgn_init (&src1_rgn, drawable, rgn1_x, y1, w, h, FALSE, FALSE);
   gimp_pixel_rgn_init (&dest1_rgn, drawable, rgn1_x, y1, w, h, TRUE, TRUE);
@@ -224,22 +250,30 @@ tile_region (GimpDrawable *drawable, gboolean left,
 	  guchar *d2 = dest2;
 	  gint col = src1_rgn.x - x1;
 
-	  for (x = 0; x < src1_rgn.w; x++, col++)
-	    {
-	      gint c;
-
-	      for (c = 0; c < bpp; c++)
-		{
-		  gint val = scale (width, height, col, row, s1[c]) + 
-		     scale (width, height, col + off_x, row + h + hodd, s2[c]);
-
-		  d1[c] = d2[c] = (val > 255) ? 255 : val;
-		}
-	      s1 += bpp;
-	      s2 += bpp;
-	      d1 += bpp;
-	      d2 += bpp;
-	    }
+          if (has_alpha)
+            {
+              for (x = 0; x < src1_rgn.w; x++, col++)
+                {
+                  weld_pixels_alpha (d1, d2, w, h, col + asymmetry_correction,
+                                     row, bpp, s1, s2);
+                  s1 += bpp;
+                  s2 += bpp;
+                  d1 += bpp;
+                  d2 += bpp;
+                }
+            }
+          else
+            {
+              for (x = 0; x < src1_rgn.w; x++, col++)
+                {
+                  weld_pixels (d1, d2, w, h, col + asymmetry_correction,
+                              row, bpp, s1, s2);
+                  s1 += bpp;
+                  s2 += bpp;
+                  d1 += bpp;
+                  d2 += bpp;
+                }
+            }
 
 	  src1 += src1_rgn.rowstride;
 	  src2 += src2_rgn.rowstride;

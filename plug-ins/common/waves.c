@@ -80,6 +80,7 @@ static void wave (guchar  *src,
 		  gint     width,
 		  gint     height,
 		  gint     bypp,
+		  gboolean has_alpha,
 		  gdouble  amplitude,
 		  gdouble  wavelength,
 		  gdouble  phase,
@@ -216,11 +217,12 @@ pluginCore (piArgs *argp,
   gint retval=0;
   GimpPixelRgn srcPr, dstPr;
   guchar *src, *dst;
-  guint width, height, bpp;
+  guint width, height, bpp, has_alpha;
 
   width = drawable->width;
   height = drawable->height;
   bpp = drawable->bpp;
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   src = g_new (guchar, width * height * bpp);
   dst = g_new (guchar, width * height * bpp);
@@ -228,8 +230,9 @@ pluginCore (piArgs *argp,
   gimp_pixel_rgn_init (&dstPr, drawable, 0, 0, width, height, TRUE, TRUE);
   gimp_pixel_rgn_get_rect (&srcPr, src, 0, 0, width, height);
 
-  wave (src, dst, width, height, bpp, argp->amplitude, argp->wavelength,
-        argp->phase, argp->type==0, argp->reflective, 1);
+  wave (src, dst, width, height, bpp, has_alpha,
+        argp->amplitude, argp->wavelength, argp->phase,
+        argp->type==0, argp->reflective, 1);
   gimp_pixel_rgn_set_rect (&dstPr, dst, 0, 0, width, height);
 
   g_free (src);
@@ -416,6 +419,7 @@ waves_do_preview (void)
   dst = g_new (guchar, preview->width * preview->height * preview->bpp);
 
   wave (preview->cache, dst, preview->width, preview->height, preview->bpp,
+        preview->bpp == 2 || preview->bpp == 4,
 	argp->amplitude * preview->scale_x, 
 	argp->wavelength * preview->scale_x,
 	argp->phase, argp->type == 0, argp->reflective, 0);
@@ -464,6 +468,8 @@ mw_preview_new (GtkWidget *parent, GimpDrawable *drawable)
   gtk_widget_show (pframe);
 
   preview = gimp_fixme_preview_new (drawable, FALSE);
+  /* FIXME: this forces gimp_fixme_preview to set its alpha correctly */
+  gimp_fixme_preview_fill_scaled (preview, drawable);
   gtk_container_add (GTK_CONTAINER (pframe), preview->widget);
   gtk_widget_show (preview->widget);
 
@@ -501,6 +507,7 @@ wave (guchar  *src,
       gint     width,
       gint     height,
       gint     bypp,
+      gboolean has_alpha,
       gdouble  amplitude,
       gdouble  wavelength,
       gdouble  phase,
@@ -526,10 +533,8 @@ wave (guchar  *src,
 
   gint xi, yi;
 
-  guchar  values[4];
-  guchar  val;
-
-  gint k;
+  guchar *values[4];
+  guchar  zeroes[4] = { 0, 0, 0, 0 };
 
   phase = phase * G_PI / 180;
   rowsiz   = width * bypp;
@@ -643,32 +648,28 @@ wave (guchar  *src,
 	  x2_in = WITHIN (0, xi + 1, width - 1);
 	  y2_in = WITHIN (0, yi + 1, height - 1);
 
-	  for (k = 0; k < bypp; k++)
-	    {
-	      if (x1_in && y1_in)
-		values[0] = *(p + k);
-	      else
-		values[0] = 0;
+          if (x1_in && y1_in)
+            values[0] = p;
+          else
+            values[0] = zeroes;
 
-	      if (x2_in && y1_in)
-		values[1] = *(p + bypp + k);
-	      else
-		values[1] = 0;
+          if (x2_in && y1_in)
+            values[1] = p + bypp;
+          else
+            values[1] = zeroes;
 
-	      if (x1_in && y2_in)
-		values[2] = *(p + rowsiz + k);
-	      else
-		values[2] = 0;
+          if (x1_in && y2_in)
+            values[2] = p + rowsiz;
+          else
+            values[2] = zeroes;
 
-	      if (x2_in && y2_in)
-		values[3] = *(p + bypp + k + rowsiz);
-	      else
-		values[3] = 0;
+          if (x2_in && y2_in)
+            values[3] = p + bypp + rowsiz;
+          else
+            values[3] = zeroes;
 
-	      val = gimp_bilinear_8 (needx, needy, values);
-
-	      *dest++ = val;
-	    }
+          gimp_bilinear_pixels_8 (dest, needx, needy, bypp, has_alpha, values);
+          dest += bypp;
 	}
 
       dst += rowsiz;

@@ -337,6 +337,7 @@ pixels_get (gint     x,
     }
 }
 
+#include <stdio.h>
 static void
 pixels_get_biliner (gdouble  x,
 		    gdouble  y,
@@ -346,6 +347,7 @@ pixels_get_biliner (gdouble  x,
   gdouble a, b, c, d;
   gint    x1, y1, x2, y2;
   gdouble dx, dy;
+  gdouble alpha;
 
   x1 = (gint) floor (x);
   x2 = x1 + 1;
@@ -364,14 +366,25 @@ pixels_get_biliner (gdouble  x,
   pixels_get (x1, y2, &C);
   pixels_get (x2, y2, &D);
 
-  pixel->r = (guchar) (a * (gdouble) A.r + b * (gdouble) B.r +
-		       c * (gdouble) C.r + d * (gdouble) D.r);
-  pixel->g = (guchar) (a * (gdouble) A.g + b * (gdouble) B.g +
-		       c * (gdouble) C.g + d * (gdouble) D.g);
-  pixel->b = (guchar) (a * (gdouble) A.b + b * (gdouble) B.b +
-		       c * (gdouble) C.b + d * (gdouble) D.b);
-  pixel->a = (guchar) (a * (gdouble) A.a + b * (gdouble) B.a +
-		       c * (gdouble) C.a + d * (gdouble) D.a);
+  alpha = 1.0001*(a * (gdouble) A.a + b * (gdouble) B.a
+                 + c * (gdouble) C.a + d * (gdouble) D.a);
+  pixel->a = (guchar) alpha;
+
+  if (pixel->a)
+    {
+      pixel->r = (guchar) ((a * (gdouble) A.r * A.a
+                            + b * (gdouble) B.r * B.a
+                            + c * (gdouble) C.r * C.a
+                            + d * (gdouble) D.r * D.a) / alpha);
+      pixel->g = (guchar) ((a * (gdouble) A.g * A.a
+                            + b * (gdouble) B.g * B.a
+                            + c * (gdouble) C.g * C.a
+                            + d * (gdouble) D.g * D.a) / alpha);
+      pixel->b = (guchar) ((a * (gdouble) A.b * A.a
+                            + b * (gdouble) B.b * B.a
+                            + c * (gdouble) C.b * C.a
+                            + d * (gdouble) D.b * D.a) / alpha);
+    }
 }
 
 static void
@@ -531,15 +544,26 @@ dialog_preview_setpixel (gint     x,
 			 gint     y,
 			 pixel_t *pixel)
 {
+  guchar grayshade;
+
+  if (pixel->a)
+    grayshade = pixel->r;
+  else
+    grayshade =
+      (((x % (GIMP_CHECK_SIZE * 2) < GIMP_CHECK_SIZE) ?
+        (y % (GIMP_CHECK_SIZE * 2) < GIMP_CHECK_SIZE) :
+        (y % (GIMP_CHECK_SIZE * 2) > GIMP_CHECK_SIZE)) ?
+       GIMP_CHECK_LIGHT : GIMP_CHECK_DARK) * 255;
+
   switch (preview.bpp)
     {
     case 1:
-      preview.pixels[y][x*preview.bpp] = pixel->r;
+      preview.pixels[y][x * preview.bpp] = grayshade;
       break;
     case 3:
-      preview.pixels[y][x*preview.bpp]   = pixel->r;
-      preview.pixels[y][x*preview.bpp+1] = pixel->g;
-      preview.pixels[y][x*preview.bpp+2] = pixel->b;
+      preview.pixels[y][x * preview.bpp]     = grayshade;
+      preview.pixels[y][x * preview.bpp + 1] = pixel->a ? pixel->g : grayshade;
+      preview.pixels[y][x * preview.bpp + 2] = pixel->a ? pixel->b : grayshade;
       break;
     }
 }
@@ -651,9 +675,11 @@ dialog_preview_draw (void)
 		  break;
 		case OUTSIDE_TYPE_BLACK:
 		  pixel.r = pixel.g = pixel.b = 0;
+                  pixel.a = 255;
 		  break;
 		case OUTSIDE_TYPE_WHITE:
 		  pixel.r = pixel.g = pixel.b = 255;
+                  pixel.a = 255;
 		  break;
 		}
 	    }

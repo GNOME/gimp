@@ -350,8 +350,7 @@ whirl_pinch (void)
   guchar          *top_row, *bot_row;
   guchar          *top_p, *bot_p;
   gint             row, col;
-  guchar           pixel[4][4];
-  guchar           values[4];
+  guchar           **pixel;
   double           whirl;
   double           cx, cy;
   int              ix, iy;
@@ -361,6 +360,9 @@ whirl_pinch (void)
   /* Initialize rows */
   top_row = g_malloc (img_bpp * sel_width);
   bot_row = g_malloc (img_bpp * sel_width);
+  pixel = g_new (guchar *, 4);
+  for (i = 0; i < 4; i++)
+    pixel[i] = g_new (guchar, 4);
 
   /* Initialize pixel region */
   gimp_pixel_rgn_init (&dest_rgn, drawable,
@@ -408,16 +410,9 @@ whirl_pinch (void)
 	      gimp_pixel_fetcher_get_pixel (pft, ix,     iy + 1, pixel[2]);
 	      gimp_pixel_fetcher_get_pixel (pft, ix + 1, iy + 1, pixel[3]);
 
-	      for (i = 0; i < img_bpp; i++)
-		{
-		  values[0] = pixel[0][i];
-		  values[1] = pixel[1][i];
-		  values[2] = pixel[2][i];
-		  values[3] = pixel[3][i];
-
-		  *top_p++ = gimp_bilinear_8 (cx, cy, values);
-		}
-
+              gimp_bilinear_pixels_8 (top_p, cx, cy, img_bpp, img_has_alpha,
+                                      pixel);
+              top_p += img_bpp;
 	      /* Bottom */
 
 	      cx = cen_x + (cen_x - cx);
@@ -438,17 +433,9 @@ whirl_pinch (void)
 	      gimp_pixel_fetcher_get_pixel (pfb, ix,     iy + 1, pixel[2]);
 	      gimp_pixel_fetcher_get_pixel (pfb, ix + 1, iy + 1, pixel[3]);
 
-	      for (i = 0; i < img_bpp; i++)
-		{
-		  values[0] = pixel[0][i];
-		  values[1] = pixel[1][i];
-		  values[2] = pixel[2][i];
-		  values[3] = pixel[3][i];
-
-		  *bot_p++ = gimp_bilinear_8 (cx, cy, values);
-		}
-
-	      bot_p -= 2 * img_bpp; /* We move backwards! */
+              gimp_bilinear_pixels_8 (bot_p, cx, cy, img_bpp, img_has_alpha,
+                                      pixel);
+              bot_p -= img_bpp;
 	    }
 	  else
 	    {
@@ -492,6 +479,9 @@ whirl_pinch (void)
   gimp_pixel_fetcher_destroy (pft);
   gimp_pixel_fetcher_destroy (pfb);
 
+  for (i = 0; i < 4; i++)
+    g_free (pixel[i]);
+  g_free (pixel);
   g_free (top_row);
   g_free (bot_row);
 
