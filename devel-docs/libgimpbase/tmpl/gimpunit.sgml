@@ -35,40 +35,33 @@ user-defined units.
 
 <!-- ##### FUNCTION gimp_unit_get_number_of_units ##### -->
 <para>
-  Returns the number of units which are known to the #GimpUnit system.
+
 </para>
 
-@Returns: The number of defined units.
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_unit_get_number_of_built_in_units ##### -->
 <para>
-  Returns the number of #GimpUnit's which are hardcoded in the unit system
-  (UNIT_INCH, UNIT_MM, UNIT_POINT, UNIT_PICA and the "pseudo unit" UNIT_PIXEL).
+
 </para>
 
-@Returns: The number of built-in units.
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_unit_new ##### -->
 <para>
-  Returns the integer ID of the new #GimpUnit.
+
 </para>
 
-<para>
-  Note that a new unit is always created with it's deletion flag
-  set to #TRUE. You will have to set it to #FALSE with
-  gimp_unit_set_deletion_flag() to make the unit definition persistent.
-</para>
-
-@identifier: The unit's identifier string.
-@factor: The unit's factor (how many units are in one inch).
-@digits: The unit's suggested number of digits (see gimp_unit_get_digits()).
-@symbol: The symbol of the unit (e.g. "''" for inch).
-@abbreviation: The abbreviation of the unit.
-@singular: The singular form of the unit.
-@plural: The plural form of the unit.
-@Returns: The ID of the new unit.
+@identifier: 
+@factor: 
+@digits: 
+@symbol: 
+@abbreviation: 
+@singular: 
+@plural: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_unit_get_deletion_flag ##### -->
@@ -76,128 +69,79 @@ user-defined units.
 
 </para>
 
-@unit: The unit you want to know the @deletion_flag of.
-@Returns: The unit's @deletion_flag.
+@unit: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_unit_set_deletion_flag ##### -->
 <para>
-  Sets a #GimpUnit's @deletion_flag. If the @deletion_flag of a unit is
-  #TRUE when GIMP exits, this unit will not be saved in the uses's
-  "unitrc" file.
+
 </para>
 
-<para>
-  Trying to change the @deletion_flag of a built-in unit will be silently
-  ignored.
-</para>
-
-@unit: The unit you want to set the @deletion_flag for.
-@deletion_flag: The new deletion_flag.
+@unit: 
+@deletion_flag: 
 
 
 <!-- ##### FUNCTION gimp_unit_get_factor ##### -->
 <para>
-  A #GimpUnit's @factor is defined to be:
+
 </para>
 
-<para>
-  distance_in_units == (@factor * distance_in_inches)
-</para>
-
-<para>
-  Returns 0 for @unit == GIMP_UNIT_PIXEL.
-</para>
-
-@unit: The unit you want to know the factor of.
-@Returns: The unit's factor.
+@unit: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_unit_get_digits ##### -->
 <para>
-  Returns the number of digits an entry field should provide to get
-  approximately the same accuracy as an inch input field with two digits.
+
 </para>
 
-<para>
-  Returns 0 for @unit == GIMP_UNIT_PIXEL.
-</para>
-
-@unit: The unit you want to know the digits of.
-@Returns: The suggested number of digits.
+@unit: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_unit_get_identifier ##### -->
 <para>
-  This is an unstranslated string.
+
 </para>
 
-<para>
-  NOTE: This string has to be g_free()'d by plugins but is a pointer to a
-        constant string when this function is used from inside the GIMP.
-</para>
-
-@unit: The unit you want to know the identifier of.
-@Returns: The unit's identifier.
+@unit: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_unit_get_symbol ##### -->
 <para>
-  This is e.g. "''" for UNIT_INCH.
-</para>
-
-<para>
-  NOTE: This string has to be g_free()'d by plugins but is a pointer to a
-        constant string when this function is used from inside the GIMP.
 
 </para>
 
-@unit: The unit you want to know the symbol of.
-@Returns: The unit's symbol.
+@unit: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_unit_get_abbreviation ##### -->
 <para>
-  For built-in units, this function returns the translated abbreviation
-  of the unit.
+
 </para>
 
-<para>
-  NOTE: This string has to be g_free()'d by plugins but is a pointer to a
-        constant string when this function is used from inside the GIMP.
-</para>
-
-@unit: The unit you want to know the abbreviation of.
-@Returns: The unit's abbreviation.
+@unit: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_unit_get_singular ##### -->
 <para>
-  For built-in units, this function returns the translated singular form
-  of the unit's name.
+
 </para>
 
-<para>
-  NOTE: This string has to be g_free()'d by plugins but is a pointer to a
-        constant string when this function is used from inside the GIMP.
-</para>
-
-@unit: The unit you want to know the singular form of.
-@Returns: The unit's singular form.
+@unit: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_unit_get_plural ##### -->
 <para>
-  For built-in units, this function returns the translated plural form
-  of the unit's name.
+
 </para>
 
-<para>
-  NOTE: This string has to be g_free()'d by plugins but is a pointer to a
-        constant string when this function is used from inside the GIMP.
-</para>
-
-@unit: The unit you want to know the plural form of.
-@Returns: The unit's plural form.
+@unit: 
+@Returns: 
 
 

@@ -1,3 +1,12 @@
+2003-11-16  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/Makefile.am: ignore "gimpunitcache.h".
+
+	* libgimpbase/Makefile.am: ignore "gimpbase-private.h".
+
+	* libgimpbase/tmpl/gimpunit.sgml: removed docs because the
+	gimpunit.c file is in the right place to be parsed correctly now.
+
 2003-11-15  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/tmpl/gimpexport.sgml: updated after export change.
