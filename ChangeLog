@@ -1,3 +1,14 @@
+Sun May 16 18:23:12 BST 1999  Austin Donnelly  <austin@gimp.org>
+
+	* app/module_db.c: We weren't initialising refs variable before using
+	    it.  Hence some stuff was being prematurely unloaded.  D'oh!
+
+	* app/menus.c: move Module DB browser to the Xtns menu, since it
+	    seems to make more sense being there.
+
+	* cursors/droppermsk: slight improvement over current one, but
+	    really needs proper artist to look at it.
+
 Sun May 16 17:16:59 BST 1999  Adam D. Moss  <adam@gimp.org>
 
 	* app/paint_funcs.c: Fixed a possible bad composite when

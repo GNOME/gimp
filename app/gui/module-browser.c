@@ -108,7 +108,18 @@ typedef struct {
 static GimpSet *modules;
 
 
+/* debug control: */
+
 /*#define DUMP_DB*/
+/*#define DEBUG*/
+
+#ifdef DEBUG
+#undef DUMP_DB
+#define DUMP_DB
+#define TRC(x) printf x
+#else
+#define TRC(x)
+#endif
 
 
 /* prototypes */
@@ -173,10 +184,7 @@ free_a_single_module (gpointer data, gpointer user_data)
 
   if (mod->module && mod->unload && mod->state == ST_LOADED_OK)
     {
-      mod->state = ST_UNLOAD_REQUESTED;
-
-      gimp_module_ref (mod);
-      mod->unload (mod->info->shutdown_data, free_a_single_module_cb, mod);
+      mod_unload (mod, FALSE);
     }
 }
 
@@ -304,6 +312,9 @@ module_info_destroy (GtkObject *object)
 {
   module_info *mod = MODULE_INFO (object);
 
+  /* if this trips, then we're onto some serious lossage in a moment */
+  g_return_if_fail (mod->refs == 0);
+
   if (mod->last_module_error)
     g_free (mod->last_module_error);
   g_free (mod->fullpath);
@@ -391,11 +402,7 @@ valid_module_name (const char *filename)
   const char *basename;
   int len;
 
-  basename = strrchr (filename, G_DIR_SEPARATOR);
-  if (basename)
-    basename++;
-  else
-    basename = filename;
+  basename = g_basename (filename);
 
   len = strlen (basename);
 
@@ -409,6 +416,9 @@ valid_module_name (const char *filename)
   if (strcmp (basename + len - 3, ".so"))
     return FALSE;
 #else
+  if (len < 1 + 4)
+      return FALSE;
+
   if (g_strcasecmp (basename + len - 4, ".dll"))
     return FALSE;
 #endif
@@ -434,6 +444,14 @@ module_initialize (char *filename)
 
   mod->fullpath = g_strdup (filename);
   mod->ondisk = TRUE;
+
+  /* Count of times main gimp is within the module.  Normally, this
+   * will be 1, and we assume that the module won't call its
+   * unload callback until it is satisfied that it's not in use any
+   * more.  refs can be 2 temporarily while we're running the module's
+   * unload function, to stop the module attempting to unload
+   * itself. */
+  mod->refs = 0;
 
   if ((be_verbose == TRUE) || (no_splash == TRUE))
     g_print (_("load module: \"%s\"\n"), filename);
@@ -492,17 +510,18 @@ mod_load (module_info *mod, gboolean verbose)
   /* run module's initialisation */
   mod->init = symbol;
   mod->info = NULL;
+  gimp_module_ref (mod); /* loaded modules are assumed to have a ref of 1 */
   if (mod->init (&mod->info) == GIMP_MODULE_UNLOAD)
   {
     mod->state = ST_LOAD_FAILED;
-    g_module_close (mod->module);
-    mod->module = NULL;
+    gimp_module_unref (mod);
     mod->info = NULL;
     return;
   }
 
   /* module is now happy */
   mod->state = ST_LOADED_OK;
+  TRC (("loaded module %s, state at %p\n", mod->fullpath, mod));
 
   /* do we have an unload function? */
   if (g_module_symbol (mod->module, "module_unload", &symbol))
@@ -520,14 +539,14 @@ mod_unload_completed_callback (void *data)
 
   g_return_if_fail (mod->state == ST_UNLOAD_REQUESTED);
 
-  if (mod->refs == 0)
-  {
-      g_module_close (mod->module);
-      mod->module = NULL;
-  }
+  /* lose the ref we gave this module when we loaded it,
+   * since the module's now happy to be unloaded. */
+  gimp_module_unref (mod);
   mod->info = NULL;
 
   mod->state = ST_UNLOADED_OK;
+
+  TRC (("module unload completed callback for %p\n", mod));
 
   module_info_modified (mod);
 }
@@ -543,7 +562,9 @@ mod_unload (module_info *mod, gboolean verbose)
 
   mod->state = ST_UNLOAD_REQUESTED;
 
-  /* send the unload request.  Need to ref the module so we don't
+  TRC (("module unload requested for %p\n", mod));
+
+  /* Send the unload request.  Need to ref the module so we don't
    * accidentally unload it while this call is in progress (eg if the
    * callback is called before the unload function returns). */
   gimp_module_ref (mod);
@@ -909,6 +930,7 @@ gimp_module_unref (module_info *mod)
 
   if (mod->refs == 0)
   {
+    TRC (("module %p refs hit 0, g_module_closing it\n", mod));
     g_module_close (mod->module);
     mod->module = NULL;
   }

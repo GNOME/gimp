@@ -65,7 +65,7 @@ static const GtkItemFactoryEntry toolbox_entries[] =
   { N_("/File/Dialogs/Device Status..."), NULL, dialogs_device_status_cmd_callback, 0 },
   { N_("/File/Dialogs/Document Index..."), NULL, raise_idea_callback, 0 },
   { N_("/File/Dialogs/Error Console..."), NULL, dialogs_error_console_cmd_callback, 0 },
-  { N_("/File/Dialogs/Module Browser..."), NULL, dialogs_module_browser_cmd_callback, 0 },
+  { N_("/Xtns/Module Browser"), NULL, dialogs_module_browser_cmd_callback, 0 },
   { N_("/File/---"), NULL, NULL, 0, "<Separator>" },
   { N_("/File/---"), NULL, NULL, 0, "<Separator>" }
 };
@@ -311,7 +311,7 @@ menus_create (GtkMenuEntry *entries,
 
   if (redo_image_menu)
     {
-        ifactory = gtk_item_factory_from_path ("<Image>/File/Quit"); 
+        ifactory = gtk_item_factory_from_path ("<Image>/File/Quit");
         menu_item = gtk_item_factory_get_widget (ifactory, "<Image>/File/---moved");
         if (menu_item && menu_item->parent)
             gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, -1);
