@@ -95,6 +95,18 @@ typedef enum
 } GimpConvolveType;
 
 
+#define GIMP_TYPE_INK_BLOB_TYPE (gimp_ink_blob_type_get_type ())
+
+GType gimp_ink_blob_type_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_INK_BLOB_TYPE_ELLIPSE,
+  GIMP_INK_BLOB_TYPE_SQUARE,
+  GIMP_INK_BLOB_TYPE_DIAMOND
+} GimpInkBlobType;
+
+
 /*
  * non-registered enums; register them if needed
  */

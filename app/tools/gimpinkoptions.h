@@ -21,7 +21,6 @@
 
 
 #include "paint/gimppaintoptions.h"
-#include "gimpinktool-blob.h"  /* only used by ink */
 
 
 #define GIMP_TYPE_INK_OPTIONS            (gimp_ink_options_get_type ())
@@ -34,51 +33,20 @@
 
 typedef struct _GimpInkOptions        GimpInkOptions;
 typedef struct _GimpPaintOptionsClass GimpInkOptionsClass;
-typedef struct _BrushWidget           BrushWidget;
-
-
-struct _BrushWidget
-{
-  GtkWidget      *widget;
-  gboolean        state;
-
-  /* EEK */
-  GimpInkOptions *ink_options;
-};
 
 struct _GimpInkOptions
 {
   GimpPaintOptions  paint_options;
 
   gdouble           size;
-  gdouble           size_d;
-  GtkObject        *size_w;
-
   gdouble           sensitivity;
-  gdouble           sensitivity_d;
-  GtkObject        *sensitivity_w;
-
   gdouble           vel_sensitivity;
-  gdouble           vel_sensitivity_d;
-  GtkObject        *vel_sensitivity_w;
-
   gdouble           tilt_sensitivity;
-  gdouble           tilt_sensitivity_d;
-  GtkObject        *tilt_sensitivity_w;
-
   gdouble           tilt_angle;
-  gdouble           tilt_angle_d;
-  GtkObject        *tilt_angle_w;
 
-  BlobFunc          function;
-  BlobFunc          function_d;
-  GtkWidget        *function_w[3];  /* 3 radio buttons */
-
-  gdouble           aspect;
-  gdouble           aspect_d;
-  gdouble           angle;
-  gdouble           angle_d;
-  BrushWidget      *brush_w;
+  GimpInkBlobType   blob_type;
+  gdouble           blob_aspect;
+  gdouble           blob_angle;
 };
 
 

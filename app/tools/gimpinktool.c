@@ -477,13 +477,14 @@ ink_pen_ellipse (GimpInkOptions *options,
 		 gdouble         ytilt,
 		 gdouble         velocity)
 {
-  gdouble size;
-  gdouble tsin, tcos;
-  gdouble aspect, radmin;
-  gdouble x,y;
-  gdouble tscale;
-  gdouble tscale_c;
-  gdouble tscale_s;
+  BlobFunc function = blob_ellipse;
+  gdouble  size;
+  gdouble  tsin, tcos;
+  gdouble  aspect, radmin;
+  gdouble  x,y;
+  gdouble  tscale;
+  gdouble  tscale_c;
+  gdouble  tscale_s;
 
   /* Adjust the size depending on pressure. */
 
@@ -526,42 +527,54 @@ ink_pen_ellipse (GimpInkOptions *options,
   tscale_c = tscale * cos (gimp_deg_to_rad (options->tilt_angle));
   tscale_s = tscale * sin (gimp_deg_to_rad (options->tilt_angle));
 
-  x = (options->aspect * cos (options->angle) +
+  x = (options->blob_aspect * cos (options->blob_angle) +
        xtilt * tscale_c - ytilt * tscale_s);
-  y = (options->aspect * sin (options->angle) +
+  y = (options->blob_aspect * sin (options->blob_angle) +
        ytilt * tscale_c + xtilt * tscale_s);
 
 #ifdef VERBOSE
   g_print ("angle %g aspect %g; %g %g; %g %g\n",
-	   options->angle, options->aspect, tscale_c, tscale_s, x, y);
+	   options->blob_angle, options->blob_aspect, tscale_c, tscale_s, x, y);
 #endif
-  aspect = sqrt(x*x+y*y);
+
+  aspect = sqrt (x*x + y*y);
 
   if (aspect != 0)
     {
-      tcos = x/aspect;
-      tsin = y/aspect;
+      tcos = x / aspect;
+      tsin = y / aspect;
     }
   else
     {
-      tsin = sin (options->angle);
-      tcos = cos (options->angle);
+      tsin = sin (options->blob_angle);
+      tcos = cos (options->blob_angle);
     }
 
-  if (aspect < 1.0) 
-    aspect = 1.0;
-  else if (aspect > 10.0) 
-    aspect = 10.0;
+  aspect = CLAMP (aspect, 1.0, 10.0);
 
-  radmin = SUBSAMPLE * size/aspect;
-  if (radmin < 1.0) radmin = 1.0;
-  
-  return options->function (x_center * SUBSAMPLE,
-                            y_center * SUBSAMPLE,
-                            radmin * aspect * tcos,
-                            radmin * aspect * tsin,  
-                            -radmin * tsin,
-                            radmin * tcos);
+  radmin = MAX (1.0, SUBSAMPLE * size / aspect);
+
+  switch (options->blob_type)
+    {
+    case GIMP_INK_BLOB_TYPE_ELLIPSE:
+      function = blob_ellipse;
+      break;
+
+    case GIMP_INK_BLOB_TYPE_SQUARE:
+      function = blob_square;
+      break;
+
+    case GIMP_INK_BLOB_TYPE_DIAMOND:
+      function = blob_diamond;
+      break;
+    }
+
+  return (* function) (x_center * SUBSAMPLE,
+                       y_center * SUBSAMPLE,
+                       radmin * aspect * tcos,
+                       radmin * aspect * tsin,  
+                       -radmin * tsin,
+                       radmin * tcos);
 }
 
 static void
@@ -572,7 +585,7 @@ dist_smoother_init (GimpInkTool *ink_tool,
 
   ink_tool->dt_index = 0;
 
-  for (i=0; i<DIST_SMOOTHER_BUFFER; i++)
+  for (i = 0; i < DIST_SMOOTHER_BUFFER; i++)
     {
       ink_tool->dt_buffer[i] = initval;
     }

@@ -1,3 +1,22 @@
+2003-02-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/gimpconfig-serialize.c (gimp_config_serialize_property):
+	the virtual serialize_property() returning FALSE doesn't mean the
+	serialization failed but that the function didn't handle the 
+	property, so don't error but continue with the default
+	implementation. Print newlines after properties only if
+	indent_level == 0.
+
+	* app/gui/tool-options-dialog.c: added tool options saving/loading
+	as quickly hacked proof-of-concept.
+
+	* app/paint/paint-enums.[ch]: added enum GimpInkBlobType.
+
+	* app/tools/gimpinkoptions.[ch]: ported to object properties,
+	cleanup.
+
+	* app/tools/gimpinktool.c: changed accordingly.
+
 2003-02-08  Sven Neumann  <sven@gimp.org>
 
 	* HACKING: added a note about generating the developers

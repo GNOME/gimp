@@ -20,9 +20,12 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "gui-types.h"
+
+#include "config/gimpconfig.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
@@ -244,14 +247,62 @@ static void
 tool_options_dialog_save_callback (GtkWidget   *widget,
                                    GimpContext *context)
 {
-  g_print ("Save clicked\n");
+  GimpToolInfo *tool_info;
+  gchar        *filename;
+  GError       *error = NULL;
+
+  tool_info = gimp_context_get_tool (context);
+
+  if (! tool_info)
+    return;
+
+  filename = g_build_filename (gimp_directory (),
+                               "tool-options",
+                               gimp_object_get_name (GIMP_OBJECT (tool_info)),
+                               NULL);
+
+  if (! gimp_config_serialize (G_OBJECT (tool_info->tool_options),
+                               filename,
+                               "# foo\n",
+                               "# bar",
+                               NULL,
+                               &error))
+    {
+      g_message ("EEK: %s\n", error->message);
+      g_clear_error (&error);
+    }
+
+  g_free (filename);
 }
 
 static void
 tool_options_dialog_restore_callback (GtkWidget   *widget,
                                       GimpContext *context)
 {
-  g_print ("Restore clicked\n");
+  GimpToolInfo *tool_info;
+  gchar        *filename;
+  GError       *error = NULL;
+
+  tool_info = gimp_context_get_tool (context);
+
+  if (! tool_info)
+    return;
+
+  filename = g_build_filename (gimp_directory (),
+                               "tool-options",
+                               gimp_object_get_name (GIMP_OBJECT (tool_info)),
+                               NULL);
+
+  if (! gimp_config_deserialize (G_OBJECT (tool_info->tool_options),
+                                 filename,
+                                 NULL,
+                                 &error))
+    {
+      g_message ("EEK: %s\n", error->message);
+      g_clear_error (&error);
+    }
+
+  g_free (filename);
 }
 
 static void

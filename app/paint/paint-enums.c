@@ -106,5 +106,25 @@ gimp_convolve_type_get_type (void)
 }
 
 
+static const GEnumValue gimp_ink_blob_type_enum_values[] =
+{
+  { GIMP_INK_BLOB_TYPE_ELLIPSE, "GIMP_INK_BLOB_TYPE_ELLIPSE", "ellipse" },
+  { GIMP_INK_BLOB_TYPE_SQUARE, "GIMP_INK_BLOB_TYPE_SQUARE", "square" },
+  { GIMP_INK_BLOB_TYPE_DIAMOND, "GIMP_INK_BLOB_TYPE_DIAMOND", "diamond" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_ink_blob_type_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpInkBlobType", gimp_ink_blob_type_enum_values);
+
+  return enum_type;
+}
+
+
 /* Generated data ends here */
 

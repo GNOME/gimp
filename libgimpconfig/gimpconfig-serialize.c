@@ -92,7 +92,10 @@ gimp_config_serialize_properties (GObject  *object,
             return FALSE;
         }
 
-      g_string_assign (str, "\n");
+      if (indent_level == 0)
+        g_string_assign (str, "\n");
+      else
+        g_string_assign (str, "");
     }
 
   g_free (property_specs);
@@ -196,8 +199,9 @@ gimp_config_serialize_property (GObject      *object,
 {
   GTypeClass          *owner_class;
   GimpConfigInterface *config_iface;
-  GimpConfigInterface *parent_iface;
+  GimpConfigInterface *parent_iface = NULL;
   GValue               value = { 0, };
+  gboolean             success = FALSE;
 
   if (! (param_spec->flags & GIMP_PARAM_SERIALIZE))
     return FALSE;
@@ -234,39 +238,41 @@ gimp_config_serialize_property (GObject      *object,
 
   if (config_iface                     &&
       config_iface != parent_iface     && /* see comment above */
-      config_iface->serialize_property)
+      config_iface->serialize_property &&
+      config_iface->serialize_property (object,
+                                        param_spec->param_id,
+                                        (const GValue *) &value,
+                                        param_spec,
+                                        str))
     {
-      if (! config_iface->serialize_property (object,
-					      param_spec->param_id,
-					      (const GValue *) &value,
-					      param_spec,
-					      str))
-        {
-          g_value_unset (&value);
-          return FALSE;
-        }
+      success = TRUE;
     }
-  else
-    {
-      if (! gimp_config_serialize_value (&value, str, escaped))
-        {
-          /* don't warn for empty string properties */
-          if (! G_VALUE_HOLDS_STRING (&value))
-            g_warning ("couldn't serialize property %s::%s of type %s",
-                       g_type_name (G_TYPE_FROM_INSTANCE (object)),
-                       param_spec->name, 
-                       g_type_name (param_spec->value_type));
 
-          g_value_unset (&value);
-          return FALSE;
-        }
+  /*  If there is no serialize_property() method *or* if it returned
+   *  FALSE, continue with the default implementation
+   */
+
+  if (! success && gimp_config_serialize_value (&value, str, escaped))
+    {
+      success = TRUE;
+    }
+
+  if (! success)
+    {
+      /* don't warn for empty string properties */
+      if (! G_VALUE_HOLDS_STRING (&value))
+        g_warning ("couldn't serialize property %s::%s of type %s",
+                   g_type_name (G_TYPE_FROM_INSTANCE (object)),
+                   param_spec->name, 
+                   g_type_name (param_spec->value_type));
     }
 
   g_value_unset (&value);
 
-  g_string_append (str, ")\n");
+  if (success)
+    g_string_append (str, ")\n");
 
-  return TRUE;
+  return success;
 }
 
 /**
