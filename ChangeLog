@@ -1,3 +1,8 @@
+2003-01-29  Manish Singh  <yosh@gimp.org>
+                                                                                
+	* plug-ins/common/jpeg.c (load_image): don't divide by zero if
+	we get all zero resolution info when we load the jpeg.
+
 2003-01-29  Sven Neumann  <sven@gimp.org>
 	
 	* configure.in

@@ -903,7 +903,11 @@ load_image (gchar           *filename,
 	case 0: /* unknown -> set the aspect ratio but use the default
 		*  image resolution
 		*/
-	  asymmetry = xresolution / yresolution;
+	  if (cinfo.Y_density != 0)
+	    asymmetry = xresolution / yresolution;
+	  else
+	    asymmetry = 1.0;
+
 	  gimp_image_get_resolution (image_ID, &xresolution, &yresolution);
 	  xresolution *= asymmetry;
 	  break;
