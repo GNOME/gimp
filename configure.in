@@ -42,7 +42,7 @@ fi)
 
 AC_DEFUN(AC_GIMP_CHECK,
 [
-	AM_PATH_GTK(0.99.7,,
+	AM_PATH_GTK(1.0.0,,
  	  AC_MSG_ERROR(Test for GTK failed. See the file 'INSTALL' for help.))
         X_LIBS=$GTK_LIBS
         X_CFLAGS=$GTK_CFLAGS
@@ -262,13 +262,16 @@ AC_HEADER_TIME
 AC_CHECK_HEADER(sys/time.h, AC_DEFINE(HAVE_SYS_TIME_H))
 AC_CHECK_HEADER(unistd.h, AC_DEFINE(HAVE_UNISTD_H))
 
+dnl for the psd plugin
+AC_C_BIGENDIAN
+
 AC_TYPE_PID_T
 AC_TYPE_SIGNAL
 AC_FUNC_VPRINTF
 
 AC_FUNC_ALLOCA
 
-# Check for sys/select.h
+dnl Check for sys/select.h
 
 AC_MSG_CHECKING([fd_set and sys/select])
 AC_TRY_COMPILE([#include <sys/types.h>],
@@ -546,6 +549,7 @@ plug-ins/gfig/Makefile
 plug-ins/gfig/gfig-examples/Makefile
 plug-ins/screenshot/Makefile
 plug-ins/sharpen/Makefile
+plug-ins/psd/Makefile
 app/Makefile
 docs/Makefile
 data/Makefile

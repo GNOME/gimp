@@ -95,6 +95,7 @@ SUBDIRS = 			\
 	polar			\
 	print			\
 	ps			\
+	psd			\
 	randomize		\
 	ripple			\
 	rotate			\

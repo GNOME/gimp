@@ -1,3 +1,9 @@
+Sun Apr 26 02:34:21 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* updated CEL plugin
+
+	* added PSD plugin and autoconf for byte order
+
 Thu Apr 23 19:08:16 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* Added sharpen to stable dist
