@@ -60,7 +60,7 @@
     (gimp-palette-set-foreground '(255 255 255))
 
     (gimp-blend text-shadow-layer FG-BG-RGB NORMAL
-		SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
+		GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		0 0 1 1)
 
@@ -70,7 +70,7 @@
     (gimp-gradients-set-gradient blend-gradient)
 
     (gimp-blend blend-layer blend-mode NORMAL
-		LINEAR 100 0 REPEAT-NONE blend-gradient-reverse
+		GRADIENT-LINEAR 100 0 REPEAT-NONE blend-gradient-reverse
 		FALSE 0 0 TRUE
 		0 0 width 0)
 

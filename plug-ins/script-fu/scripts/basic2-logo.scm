@@ -47,7 +47,7 @@
     (gimp-palette-set-foreground '(255 255 255))
 
     (gimp-blend logo-layer FG-BG-RGB MULTIPLY
-		RADIAL 100 20 REPEAT-NONE FALSE
+		GRADIENT-RADIAL 100 20 REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		0 0 width height)
 

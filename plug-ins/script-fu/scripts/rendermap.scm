@@ -57,7 +57,7 @@
 	  (gimp-image-add-layer-mask theImage thinLayer theMask)
 
 	  (gimp-blend theMask FG-BG-RGB NORMAL
-		      LINEAR 100 0 REPEAT-TRIANGULAR FALSE
+		      GRADIENT-LINEAR 100 0 REPEAT-TRIANGULAR FALSE
 		      FALSE 0 0 TRUE
 		      0 0 0 (/ theHeight 2)))
 

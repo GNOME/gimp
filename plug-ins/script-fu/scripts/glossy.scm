@@ -81,7 +81,7 @@
         (gimp-gradients-set-gradient blend-gradient-text)
 
         (gimp-blend logo-layer CUSTOM NORMAL
-		    LINEAR 100 0 REPEAT-NONE blend-gradient-text-reverse
+		    GRADIENT-LINEAR 100 0 REPEAT-NONE blend-gradient-text-reverse
 		    FALSE 0 0 TRUE
 		    0 0 0 (+ height 5))))
 
@@ -106,7 +106,7 @@
         (gimp-gradients-set-gradient blend-gradient-outline)
 
         (gimp-blend grow-me CUSTOM NORMAL
-		    LINEAR 100 0 REPEAT-NONE blend-gradient-outline-reverse
+		    GRADIENT-LINEAR 100 0 REPEAT-NONE blend-gradient-outline-reverse
 		    FALSE 0 0 TRUE
 		    0 0 0 (+ height 5))))
 

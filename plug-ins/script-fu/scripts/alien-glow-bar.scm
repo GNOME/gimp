@@ -49,7 +49,7 @@
     (gimp-palette-set-background '(0 0 0))
 
     (gimp-blend ruler-layer FG-BG-RGB NORMAL
-		SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
+		GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		0 0 height height)
 

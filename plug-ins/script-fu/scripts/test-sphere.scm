@@ -176,7 +176,7 @@
 			 (* 2 radius) (* 2 radius) REPLACE TRUE FALSE 0)
 
     (gimp-blend drawable FG-BG-RGB NORMAL
-		RADIAL 100 offset REPEAT-NONE FALSE
+		GRADIENT-RADIAL 100 offset REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		light-x light-y light-end-x light-end-y)
 
@@ -186,7 +186,7 @@
     (gimp-ellipse-select img 10 10 50 50 REPLACE TRUE FALSE 0)
 
     (gimp-blend drawable CUSTOM NORMAL
-		LINEAR 100 offset REPEAT-NONE gradient-reverse
+		GRADIENT-LINEAR 100 offset REPEAT-NONE gradient-reverse
 		FALSE 0 0 TRUE
 		10 10 30 60)
 

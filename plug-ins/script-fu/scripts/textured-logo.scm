@@ -67,7 +67,7 @@
     (gimp-palette-set-foreground '(255 255 255))
 
     (gimp-blend text-shadow-layer FG-BG-RGB NORMAL
-		SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
+		GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		0 0 1 1)
 
@@ -76,7 +76,7 @@
     (gimp-palette-set-background blend-bg)
 
     (gimp-blend blend-layer FG-BG-RGB NORMAL
-		LINEAR 100 0 REPEAT-NONE FALSE
+		GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		0 0 width 0)
 

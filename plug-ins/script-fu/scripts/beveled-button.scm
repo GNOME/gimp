@@ -45,7 +45,7 @@
 		       x2
 		       y2)
   (gimp-blend drawable FG-BG-RGB DARKEN-ONLY
-	      LINEAR 100 0 REPEAT-NONE FALSE
+	      GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
 	      FALSE 0 0 TRUE
 	      x1 y1 x2 y2))
 
@@ -108,7 +108,7 @@
     (gimp-palette-set-background lr-color)
 
     (gimp-blend gradient FG-BG-RGB NORMAL
-		LINEAR 100 0 REPEAT-NONE FALSE
+		GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		0 0 (- img-width 1) (- img-height 1))
 

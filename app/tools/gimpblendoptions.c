@@ -118,7 +118,7 @@ gimp_blend_options_class_init (GimpBlendOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_GRADIENT_TYPE,
                                  "gradient-type", NULL,
                                  GIMP_TYPE_GRADIENT_TYPE,
-                                 GIMP_LINEAR,
+                                 GIMP_GRADIENT_LINEAR,
                                  0);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SUPERSAMPLE,

@@ -89,17 +89,17 @@ init_generated_constants (void)
   setvar (cintern ("TRANSPARENT-FILL"), flocons (3), NIL);
   setvar (cintern ("NO-FILL"), flocons (4), NIL);
 
-  setvar (cintern ("LINEAR"), flocons (0), NIL);
-  setvar (cintern ("BILINEAR"), flocons (1), NIL);
-  setvar (cintern ("RADIAL"), flocons (2), NIL);
-  setvar (cintern ("SQUARE"), flocons (3), NIL);
-  setvar (cintern ("CONICAL-SYMMETRIC"), flocons (4), NIL);
-  setvar (cintern ("CONICAL-ASYMMETRIC"), flocons (5), NIL);
-  setvar (cintern ("SHAPEBURST-ANGULAR"), flocons (6), NIL);
-  setvar (cintern ("SHAPEBURST-SPHERICAL"), flocons (7), NIL);
-  setvar (cintern ("SHAPEBURST-DIMPLED"), flocons (8), NIL);
-  setvar (cintern ("SPIRAL-CLOCKWISE"), flocons (9), NIL);
-  setvar (cintern ("SPIRAL-ANTICLOCKWISE"), flocons (10), NIL);
+  setvar (cintern ("GRADIENT-LINEAR"), flocons (0), NIL);
+  setvar (cintern ("GRADIENT-BILINEAR"), flocons (1), NIL);
+  setvar (cintern ("GRADIENT-RADIAL"), flocons (2), NIL);
+  setvar (cintern ("GRADIENT-SQUARE"), flocons (3), NIL);
+  setvar (cintern ("GRADIENT-CONICAL-SYMMETRIC"), flocons (4), NIL);
+  setvar (cintern ("GRADIENT-CONICAL-ASYMMETRIC"), flocons (5), NIL);
+  setvar (cintern ("GRADIENT-SHAPEBURST-ANGULAR"), flocons (6), NIL);
+  setvar (cintern ("GRADIENT-SHAPEBURST-SPHERICAL"), flocons (7), NIL);
+  setvar (cintern ("GRADIENT-SHAPEBURST-DIMPLED"), flocons (8), NIL);
+  setvar (cintern ("GRADIENT-SPIRAL-CLOCKWISE"), flocons (9), NIL);
+  setvar (cintern ("GRADIENT-SPIRAL-ANTICLOCKWISE"), flocons (10), NIL);
 
   setvar (cintern ("ALL-HUES"), flocons (0), NIL);
   setvar (cintern ("RED-HUES"), flocons (1), NIL);

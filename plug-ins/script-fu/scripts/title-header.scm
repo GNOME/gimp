@@ -122,7 +122,7 @@
     (gimp-layer-set-preserve-trans text-layer TRUE)
 
     (gimp-blend text-layer CUSTOM NORMAL
-		LINEAR 100 0 REPEAT-NONE gradient-reverse
+		GRADIENT-LINEAR 100 0 REPEAT-NONE gradient-reverse
 		FALSE 0.2 3 TRUE
 		padding padding
 		(- text-width padding 1) (- text-height padding 1))
@@ -146,7 +146,7 @@
     (gimp-palette-set-background '(0 0 0))
 
     (gimp-blend bg-layer FG-BG-RGB NORMAL
-		LINEAR 100 0 REPEAT-NONE FALSE
+		GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
 		FALSE 0.2 3 TRUE
 		(- img-width fade-width) 0 (- img-width 1) 0)
 

@@ -48,7 +48,7 @@
     (gimp-gradients-set-gradient gradient)
 
     (gimp-blend logo-layer CUSTOM NORMAL
-		LINEAR 100 0 REPEAT-NONE gradient-reverse
+		GRADIENT-LINEAR 100 0 REPEAT-NONE gradient-reverse
 		FALSE 0 0 TRUE
 		0 0 0 (+ height 5))
 
@@ -96,7 +96,7 @@
     (gimp-palette-set-foreground '(255 255 255))
     (gimp-palette-set-background '(0 0 0))
     (gimp-blend layer-mask FG-BG-RGB NORMAL
-		LINEAR 100 0 REPEAT-NONE FALSE
+		GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		0 (- (/ height 2)) 0 height)
 

@@ -1,3 +1,7 @@
+2003-08-26  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/tmpl/gimpenums.sgml: updated GimpGradientType.
+
 2003-08-23  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets.types: added missing

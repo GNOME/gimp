@@ -701,54 +701,54 @@ gradient_render_pixel (double    x,
 
   switch (rbd->gradient_type)
     {
-    case GIMP_LINEAR:
+    case GIMP_GRADIENT_LINEAR:
       factor = gradient_calc_linear_factor (rbd->dist, rbd->vec, rbd->offset,
 					    x - rbd->sx, y - rbd->sy);
       break;
 
-    case GIMP_BILINEAR:
+    case GIMP_GRADIENT_BILINEAR:
       factor = gradient_calc_bilinear_factor (rbd->dist, rbd->vec, rbd->offset,
 					      x - rbd->sx, y - rbd->sy);
       break;
 
-    case GIMP_RADIAL:
+    case GIMP_GRADIENT_RADIAL:
       factor = gradient_calc_radial_factor (rbd->dist, rbd->offset,
 					    x - rbd->sx, y - rbd->sy);
       break;
 
-    case GIMP_SQUARE:
+    case GIMP_GRADIENT_SQUARE:
       factor = gradient_calc_square_factor (rbd->dist, rbd->offset,
 					    x - rbd->sx, y - rbd->sy);
       break;
 
-    case GIMP_CONICAL_SYMMETRIC:
+    case GIMP_GRADIENT_CONICAL_SYMMETRIC:
       factor = gradient_calc_conical_sym_factor (rbd->dist, rbd->vec, rbd->offset,
 						 x - rbd->sx, y - rbd->sy);
       break;
 
-    case GIMP_CONICAL_ASYMMETRIC:
+    case GIMP_GRADIENT_CONICAL_ASYMMETRIC:
       factor = gradient_calc_conical_asym_factor (rbd->dist, rbd->vec, rbd->offset,
 						  x - rbd->sx, y - rbd->sy);
       break;
 
-    case GIMP_SHAPEBURST_ANGULAR:
+    case GIMP_GRADIENT_SHAPEBURST_ANGULAR:
       factor = gradient_calc_shapeburst_angular_factor (x, y);
       break;
 
-    case GIMP_SHAPEBURST_SPHERICAL:
+    case GIMP_GRADIENT_SHAPEBURST_SPHERICAL:
       factor = gradient_calc_shapeburst_spherical_factor (x, y);
       break;
 
-    case GIMP_SHAPEBURST_DIMPLED:
+    case GIMP_GRADIENT_SHAPEBURST_DIMPLED:
       factor = gradient_calc_shapeburst_dimpled_factor (x, y);
       break;
 
-    case GIMP_SPIRAL_CLOCKWISE:
+    case GIMP_GRADIENT_SPIRAL_CLOCKWISE:
       factor = gradient_calc_spiral_factor (rbd->dist, rbd->vec, rbd->offset,
 					    x - rbd->sx, y - rbd->sy,TRUE);
       break;
 
-    case GIMP_SPIRAL_ANTICLOCKWISE:
+    case GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE:
       factor = gradient_calc_spiral_factor (rbd->dist, rbd->vec, rbd->offset,
 					    x - rbd->sx, y - rbd->sy,FALSE);
       break;
@@ -971,20 +971,20 @@ gradient_fill_region (GimpImage        *gimage,
 
   switch (gradient_type)
     {
-    case GIMP_RADIAL:
+    case GIMP_GRADIENT_RADIAL:
       rbd.dist = sqrt(SQR(ex - sx) + SQR(ey - sy));
       break;
 
-    case GIMP_SQUARE:
+    case GIMP_GRADIENT_SQUARE:
       rbd.dist = MAX (fabs (ex - sx), fabs (ey - sy));
       break;
 
-    case GIMP_CONICAL_SYMMETRIC:
-    case GIMP_CONICAL_ASYMMETRIC:
-    case GIMP_SPIRAL_CLOCKWISE:
-    case GIMP_SPIRAL_ANTICLOCKWISE:
-    case GIMP_LINEAR:
-    case GIMP_BILINEAR:
+    case GIMP_GRADIENT_CONICAL_SYMMETRIC:
+    case GIMP_GRADIENT_CONICAL_ASYMMETRIC:
+    case GIMP_GRADIENT_SPIRAL_CLOCKWISE:
+    case GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE:
+    case GIMP_GRADIENT_LINEAR:
+    case GIMP_GRADIENT_BILINEAR:
       rbd.dist = sqrt (SQR (ex - sx) + SQR (ey - sy));
 
       if (rbd.dist > 0.0)
@@ -995,9 +995,9 @@ gradient_fill_region (GimpImage        *gimage,
 
       break;
 
-    case GIMP_SHAPEBURST_ANGULAR:
-    case GIMP_SHAPEBURST_SPHERICAL:
-    case GIMP_SHAPEBURST_DIMPLED:
+    case GIMP_GRADIENT_SHAPEBURST_ANGULAR:
+    case GIMP_GRADIENT_SHAPEBURST_SPHERICAL:
+    case GIMP_GRADIENT_SHAPEBURST_DIMPLED:
       rbd.dist = sqrt (SQR (ex - sx) + SQR (ey - sy));
       gradient_precalc_shapeburst (gimage, drawable, PR, rbd.dist);
       break;

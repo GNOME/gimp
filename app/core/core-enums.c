@@ -206,17 +206,17 @@ gimp_fill_type_get_type (void)
 
 static const GEnumValue gimp_gradient_type_enum_values[] =
 {
-  { GIMP_LINEAR, N_("Linear"), "linear" },
-  { GIMP_BILINEAR, N_("Bi-Linear"), "bilinear" },
-  { GIMP_RADIAL, N_("Radial"), "radial" },
-  { GIMP_SQUARE, N_("Square"), "square" },
-  { GIMP_CONICAL_SYMMETRIC, N_("Conical (symmetric)"), "conical-symmetric" },
-  { GIMP_CONICAL_ASYMMETRIC, N_("Conical (asymmetric)"), "conical-asymmetric" },
-  { GIMP_SHAPEBURST_ANGULAR, N_("Shapeburst (angular)"), "shapeburst-angular" },
-  { GIMP_SHAPEBURST_SPHERICAL, N_("Shapeburst (spherical)"), "shapeburst-spherical" },
-  { GIMP_SHAPEBURST_DIMPLED, N_("Shapeburst (dimpled)"), "shapeburst-dimpled" },
-  { GIMP_SPIRAL_CLOCKWISE, N_("Spiral (clockwise)"), "spiral-clockwise" },
-  { GIMP_SPIRAL_ANTICLOCKWISE, N_("Spiral (anticlockwise)"), "spiral-anticlockwise" },
+  { GIMP_GRADIENT_LINEAR, N_("Linear"), "linear" },
+  { GIMP_GRADIENT_BILINEAR, N_("Bi-Linear"), "bilinear" },
+  { GIMP_GRADIENT_RADIAL, N_("Radial"), "radial" },
+  { GIMP_GRADIENT_SQUARE, N_("Square"), "square" },
+  { GIMP_GRADIENT_CONICAL_SYMMETRIC, N_("Conical (symmetric)"), "conical-symmetric" },
+  { GIMP_GRADIENT_CONICAL_ASYMMETRIC, N_("Conical (asymmetric)"), "conical-asymmetric" },
+  { GIMP_GRADIENT_SHAPEBURST_ANGULAR, N_("Shapeburst (angular)"), "shapeburst-angular" },
+  { GIMP_GRADIENT_SHAPEBURST_SPHERICAL, N_("Shapeburst (spherical)"), "shapeburst-spherical" },
+  { GIMP_GRADIENT_SHAPEBURST_DIMPLED, N_("Shapeburst (dimpled)"), "shapeburst-dimpled" },
+  { GIMP_GRADIENT_SPIRAL_CLOCKWISE, N_("Spiral (clockwise)"), "spiral-clockwise" },
+  { GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE, N_("Spiral (anticlockwise)"), "spiral-anticlockwise" },
   { 0, NULL, NULL }
 };
 

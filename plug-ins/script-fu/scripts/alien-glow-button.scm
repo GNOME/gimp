@@ -42,7 +42,7 @@
 		       x2
 		       y2)
   (gimp-blend drawable FG-BG-RGB DARKEN-ONLY
-	      LINEAR 100 0 REPEAT-NONE FALSE
+	      GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
 	      FALSE 0 0 TRUE
 	      x1 y1 x2 y2))
 
@@ -97,7 +97,7 @@
     (gimp-palette-set-background '(0 0 0))
 
     (gimp-blend button-layer FG-BG-RGB NORMAL
-		SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
+		GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		0 0 img-height img-width)
 

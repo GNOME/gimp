@@ -67,7 +67,7 @@
     (gimp-palette-set-background '(0 0 0))
 
     (gimp-blend bullet-layer FG-BG-RGB NORMAL
-		RADIAL 100 0 REPEAT-NONE FALSE
+		GRADIENT-RADIAL 100 0 REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		blend-start blend-start
 		(+ half-radius radius) (+ half-radius radius))

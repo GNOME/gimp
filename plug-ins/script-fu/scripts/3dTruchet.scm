@@ -102,7 +102,7 @@
 		      SUB TRUE FALSE 0)
 
       (gimp-blend temp-draw FG-BG-RGB NORMAL
-		  SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
+		  GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
 		  supersample 3 .2 TRUE
 		  size size (* size 2) (/ size 2))
 
@@ -119,7 +119,7 @@
       ;(gimp-edit-fill temp-img temp-draw2 BG-IMAGE-FILL)
 
       (gimp-blend temp-draw2 FG-BG-RGB NORMAL
-		  SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
+		  GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
 		  supersample 3 .2 TRUE
 		  size size (* size 2) (* size 2))
 

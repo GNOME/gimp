@@ -54,7 +54,7 @@
 	  (gimp-gradients-set-gradient "Coffee")
 
 	  (gimp-blend theStain CUSTOM NORMAL
-		      SHAPEBURST-DIMPLED 100 0 REPEAT-NONE FALSE
+		      GRADIENT-SHAPEBURST-DIMPLED 100 0 REPEAT-NONE FALSE
 		      FALSE 0 0 TRUE
 		      0 0 0 0)
 

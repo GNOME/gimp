@@ -94,7 +94,7 @@
 		     (begin
                        ; blend with 20% offset to get less transparency in the front
 		       (gimp-blend bl-mask FG-BG-RGB NORMAL-MODE
-				   LINEAR 100 20 REPEAT-NONE FALSE
+				   GRADIENT-LINEAR 100 20 REPEAT-NONE FALSE
 				   FALSE 0 0 TRUE
 				   (+ bl-x-off bl-width) 0 bl-x-off 0)))
 
@@ -116,7 +116,7 @@
                      ;--- blend glow color inside the letters
 		     (gimp-palette-set-foreground glow-color)
 		     (gimp-blend bl-layer FG-TRANS NORMAL-MODE
-				 LINEAR 100 0 REPEAT-NONE FALSE
+				 GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
 				 FALSE 0 0 TRUE
 				 (+ bl-x-off bl-width) 0
 				 (- (+ bl-x-off bl-width) after-glow) 0)
@@ -129,7 +129,7 @@
 		     (gimp-selection-feather img corona-width)
 		     (gimp-palette-set-foreground glow-color)
 		     (gimp-blend bl-layer FG-TRANS NORMAL-MODE
-				 LINEAR 100 0 REPEAT-NONE FALSE
+				 GRADIENT-LINEAR 100 0 REPEAT-NONE FALSE
 				 FALSE 0 0 TRUE
 				 (- (+ bl-x-off bl-width) corona-width) 0
 				 (- (+ bl-x-off bl-width) after-glow) 0)))

@@ -60,7 +60,7 @@
     (gimp-selection-all img)
 
     (gimp-blend logo-layer FG-BG-RGB NORMAL
-		RADIAL 95 0 REPEAT-NONE FALSE
+		GRADIENT-RADIAL 95 0 REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		indentX indentY indentX (- height indentY))
 

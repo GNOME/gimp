@@ -54,7 +54,7 @@
 			 (* 2 radius) (* 2 radius) REPLACE TRUE FALSE 0)
 
     (gimp-blend drawable FG-BG-RGB NORMAL
-		RADIAL 100 offset REPEAT-NONE FALSE
+		GRADIENT-RADIAL 100 offset REPEAT-NONE FALSE
 		FALSE 0 0 TRUE
 		light-x light-y light-end-x light-end-y)
 

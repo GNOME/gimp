@@ -55,20 +55,20 @@ siod_get_output_file (void)
   return siod_output;
 }
 
-void 
+void
 siod_set_output_file (FILE *file)
 {
   siod_output = file;
 }
 
-int 
+int
 siod_get_verbose_level (void)
 {
   return siod_verbose_level;
 }
 
 
-void 
+void
 siod_set_verbose_level (gint verbose_level)
 {
   siod_verbose_level = verbose_level;
@@ -107,7 +107,7 @@ static void  init_procedures  (void);
 
 static gboolean register_scripts = FALSE;
 
-void 
+void
 siod_init (gboolean local_register_scripts)
 {
   char *siod_argv[] =
@@ -147,10 +147,10 @@ static LISP  script_fu_quit_call      (LISP      a);
 
 
 /*********
-	  
+
 	  Below can be found the functions responsible for registering the gimp functions
 	  and types against the scheme interpreter.
-	  
+
 ********/
 
 
@@ -178,7 +178,7 @@ init_procedures (void)
   init_lsubr ("script-fu-register", script_fu_register_call);
   init_lsubr ("script-fu-quit",     script_fu_quit_call);
 
-  gimp_procedural_db_query (".*", ".*", ".*", ".*", ".*", ".*", ".*", 
+  gimp_procedural_db_query (".*", ".*", ".*", ".*", ".*", ".*", ".*",
 			    &num_procs, &proc_list);
 
   /*  Register each procedure as a scheme func  */
@@ -187,13 +187,13 @@ init_procedures (void)
       proc_name = g_strdup (proc_list[i]);
 
       /*  lookup the procedure  */
-      if (gimp_procedural_db_proc_info (proc_name, 
-					&proc_blurb, 
-					&proc_help, 
+      if (gimp_procedural_db_proc_info (proc_name,
+					&proc_blurb,
+					&proc_help,
 					&proc_author,
-					&proc_copyright, 
-					&proc_date, 
-					&proc_type, 
+					&proc_copyright,
+					&proc_date,
+					&proc_type,
 					&nparams, &nreturn_vals,
 					&params, &return_vals))
 	{
@@ -221,8 +221,8 @@ init_procedures (void)
 	  args = cons (cintern (proc_name), args);
 
 	  /*  set the acture pdb procedure name  */
-	  code = cons (cons (cintern ("quote"), 
-			     cons (cintern (proc_list[i]), NIL)), 
+	  code = cons (cons (cintern ("quote"),
+			     cons (cintern (proc_list[i]), NIL)),
 		       code);
 	  code = cons (cintern ("gimp-proc-db-call"), code);
 
@@ -247,17 +247,17 @@ init_constants (void)
 {
   gchar *gimp_plugin_dir;
 
-  setvar (cintern ("gimp-data-dir"), 
+  setvar (cintern ("gimp-data-dir"),
 	  strcons (-1, (gchar *) gimp_data_directory ()), NIL);
 
   gimp_plugin_dir = gimp_gimprc_query ("gimp_plugin_dir");
   if (gimp_plugin_dir)
     {
-      setvar (cintern ("gimp-plugin-dir"), 
+      setvar (cintern ("gimp-plugin-dir"),
 	      strcons (-1, gimp_plugin_dir), NIL);
       g_free (gimp_plugin_dir);
     }
-  
+
   /* Generated constants */
   init_generated_constants ();
 
@@ -321,6 +321,18 @@ init_constants (void)
   setvar (cintern ("HORIZONTAL"), flocons (GIMP_ORIENTATION_HORIZONTAL), NIL);
   setvar (cintern ("VERTICAL"),   flocons (GIMP_ORIENTATION_VERTICAL),   NIL);
   setvar (cintern ("UNKNOWN"),    flocons (GIMP_ORIENTATION_UNKNOWN),    NIL);
+
+  setvar (cintern ("LINEAR"),               flocons (GIMP_GRADIENT_LINEAR),               NIL);
+  setvar (cintern ("BILINEAR"),             flocons (GIMP_GRADIENT_BILINEAR),             NIL);
+  setvar (cintern ("RADIAL"),               flocons (GIMP_GRADIENT_RADIAL),               NIL);
+  setvar (cintern ("SQUARE"),               flocons (GIMP_GRADIENT_SQUARE),               NIL);
+  setvar (cintern ("CONICAL-SYMMETRIC"),    flocons (GIMP_GRADIENT_CONICAL_SYMMETRIC),    NIL);
+  setvar (cintern ("CONICAL-ASYMMETRIC"),   flocons (GIMP_GRADIENT_CONICAL_ASYMMETRIC),   NIL);
+  setvar (cintern ("SHAPEBURST-ANGULAR"),   flocons (GIMP_GRADIENT_SHAPEBURST_ANGULAR),   NIL);
+  setvar (cintern ("SHAPEBURST-SPHERICAL"), flocons (GIMP_GRADIENT_SHAPEBURST_SPHERICAL), NIL);
+  setvar (cintern ("SHAPEBURST-DIMPLED"),   flocons (GIMP_GRADIENT_SHAPEBURST_DIMPLED),   NIL);
+  setvar (cintern ("SPIRAL-CLOCKWISE"),     flocons (GIMP_GRADIENT_SPIRAL_CLOCKWISE),     NIL);
+  setvar (cintern ("SPIRAL-ANTICLOCKWISE"), flocons (GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE), NIL);
 
   /* Useful misc stuff */
   setvar (cintern ("TRUE"),           flocons (TRUE),  NIL);
@@ -420,7 +432,7 @@ marshall_proc_db_call (LISP a)
 		   "The procedure to be executed and the arguments it requires "
 		   "(possibly none) must be specified.", NIL);
 
-  /*  Derive the pdb procedure name from the argument 
+  /*  Derive the pdb procedure name from the argument
       or first argument of a list  */
   if (TYPEP (a, tc_cons))
     proc_name = get_c_string (car (a));
@@ -431,9 +443,9 @@ marshall_proc_db_call (LISP a)
   script_fu_report_cc (proc_name);
 
   /*  Attempt to fetch the procedure from the database  */
-  if (! gimp_procedural_db_proc_info (proc_name, 
-				      &proc_blurb, 
-				      &proc_help, 
+  if (! gimp_procedural_db_proc_info (proc_name,
+				      &proc_blurb,
+				      &proc_help,
 				      &proc_author,
 				      &proc_copyright,
 				      &proc_date,
@@ -457,7 +469,7 @@ marshall_proc_db_call (LISP a)
   /*  Check the supplied number of arguments  */
   if ((nlength (a) - 1) != nparams)
     {
-      g_snprintf (error_str, sizeof (error_str), 
+      g_snprintf (error_str, sizeof (error_str),
 		  "Invalid arguments supplied to %s--(# args: %ld, expecting: %d)",
 		  proc_name, (nlength (a) - 1), nparams);
       return my_err (error_str, NIL);
@@ -530,7 +542,7 @@ marshall_proc_db_call (LISP a)
 	  if (success)
 	    {
 	      args[i].type = GIMP_PDB_INT32ARRAY;
-	      args[i].data.d_int32array = 
+	      args[i].data.d_int32array =
 		(gint32*) (car (a))->storage_as.long_array.data;
 	    }
 	  break;
@@ -541,7 +553,7 @@ marshall_proc_db_call (LISP a)
 	  if (success)
 	    {
 	      args[i].type = GIMP_PDB_INT16ARRAY;
-	      args[i].data.d_int16array = 
+	      args[i].data.d_int16array =
 		(gint16*) (car (a))->storage_as.long_array.data;
 	    }
 	  break;
@@ -552,7 +564,7 @@ marshall_proc_db_call (LISP a)
 	  if (success)
 	    {
 	      args[i].type = GIMP_PDB_INT8ARRAY;
-	      args[i].data.d_int8array = 
+	      args[i].data.d_int8array =
 		(gint8*) (car (a))->storage_as.string.data;
 	    }
 	  break;
@@ -563,7 +575,7 @@ marshall_proc_db_call (LISP a)
 	  if (success)
 	    {
 	      args[i].type = GIMP_PDB_FLOATARRAY;
-	      args[i].data.d_floatarray = 
+	      args[i].data.d_floatarray =
 		(car (a))->storage_as.double_array.data;
 	    }
 	  break;
@@ -586,7 +598,7 @@ marshall_proc_db_call (LISP a)
 		num_strings = args[i - 1].data.d_int32;
 		if (nlength (list) != num_strings)
 		  return my_err ("String array argument has incorrectly specified length", NIL);
-		array = args[i].data.d_stringarray = 
+		array = args[i].data.d_stringarray =
 		  g_new (char *, num_strings);
 
 		for (j = 0; j < num_strings; j++)
@@ -619,7 +631,7 @@ marshall_proc_db_call (LISP a)
 	  break;
 
 	case GIMP_PDB_REGION:
-	  return my_err ("Regions are currently unsupported as arguments", 
+	  return my_err ("Regions are currently unsupported as arguments",
 			 car (a));
 	  break;
 
@@ -684,12 +696,12 @@ marshall_proc_db_call (LISP a)
 	  break;
 
 	case GIMP_PDB_BOUNDARY:
-	  return my_err ("Boundaries are currently unsupported as arguments", 
+	  return my_err ("Boundaries are currently unsupported as arguments",
 			 car (a));
 	  break;
 
 	case GIMP_PDB_PATH:
-	  return my_err ("Paths are currently unsupported as arguments", 
+	  return my_err ("Paths are currently unsupported as arguments",
 			 car (a));
 	  break;
 
@@ -701,9 +713,9 @@ marshall_proc_db_call (LISP a)
 	      args[i].type = GIMP_PDB_PARASITE;
 	      /* parasite->name */
 	      intermediate_val = car (a);
-	      args[i].data.d_parasite.name = 
+	      args[i].data.d_parasite.name =
 		get_c_string (car (intermediate_val));
-	      
+
 	      /* parasite->flags */
 	      intermediate_val = cdr (intermediate_val);
 	      args[i].data.d_parasite.flags = get_c_long (car(intermediate_val));
@@ -740,7 +752,7 @@ marshall_proc_db_call (LISP a)
     {
       strcpy (error_str, "Procedural database execution did not return a status:\n    ");
       lprin1s (a_saved, error_str + strlen(error_str));
-      
+
       return my_err (error_str, NIL);
     }
 
@@ -766,22 +778,22 @@ marshall_proc_db_call (LISP a)
 	  switch (return_vals[i].type)
 	    {
 	    case GIMP_PDB_INT32:
-	      return_val = cons (flocons (values[i + 1].data.d_int32), 
+	      return_val = cons (flocons (values[i + 1].data.d_int32),
 				 return_val);
 	      break;
 
 	    case GIMP_PDB_INT16:
-	      return_val = cons (flocons (values[i + 1].data.d_int32), 
+	      return_val = cons (flocons (values[i + 1].data.d_int32),
 				 return_val);
 	      break;
 
 	    case GIMP_PDB_INT8:
-	      return_val = cons (flocons (values[i + 1].data.d_int32), 
+	      return_val = cons (flocons (values[i + 1].data.d_int32),
 				 return_val);
 	      break;
 
 	    case GIMP_PDB_FLOAT:
-	      return_val = cons (flocons (values[i + 1].data.d_float), 
+	      return_val = cons (flocons (values[i + 1].data.d_float),
 				 return_val);
 	      break;
 
@@ -799,7 +811,7 @@ marshall_proc_db_call (LISP a)
 		array = arcons (tc_long_array, values[i].data.d_int32, 0);
 		for (j = 0; j < values[i].data.d_int32; j++)
 		  {
-		    array->storage_as.long_array.data[j] = 
+		    array->storage_as.long_array.data[j] =
 		      values[i + 1].data.d_int32array[j];
 		  }
 		return_val = cons (array, return_val);
@@ -818,7 +830,7 @@ marshall_proc_db_call (LISP a)
 		array = arcons (tc_byte_array, values[i].data.d_int32, 0);
 		for (j = 0; j < values[i].data.d_int32; j++)
 		  {
-		    array->storage_as.string.data[j] = 
+		    array->storage_as.string.data[j] =
 		      values[i + 1].data.d_int8array[j];
 		  }
 		return_val = cons (array, return_val);
@@ -833,7 +845,7 @@ marshall_proc_db_call (LISP a)
 		array = arcons (tc_double_array, values[i].data.d_int32, 0);
 		for (j = 0; j < values[i].data.d_int32; j++)
 		  {
-		    array->storage_as.double_array.data[j] = 
+		    array->storage_as.double_array.data[j] =
 		      values[i + 1].data.d_floatarray[j];
 		  }
 		return_val = cons (array, return_val);
@@ -853,7 +865,7 @@ marshall_proc_db_call (LISP a)
 		for (j = 0; j < num_strings; j++)
 		  {
 		    string_len = strlen (array[j]);
-		    string_array = cons (strcons (string_len, array[j]), 
+		    string_array = cons (strcons (string_len, array[j]),
 					 string_array);
 		  }
 
@@ -880,32 +892,32 @@ marshall_proc_db_call (LISP a)
 	      break;
 
 	    case GIMP_PDB_DISPLAY:
-	      return_val = cons (flocons (values[i + 1].data.d_int32), 
+	      return_val = cons (flocons (values[i + 1].data.d_int32),
 				 return_val);
 	      break;
 
 	    case GIMP_PDB_IMAGE:
-	      return_val = cons (flocons (values[i + 1].data.d_int32), 
+	      return_val = cons (flocons (values[i + 1].data.d_int32),
 				 return_val);
 	      break;
 
 	    case GIMP_PDB_LAYER:
-	      return_val = cons (flocons (values[i + 1].data.d_int32), 
+	      return_val = cons (flocons (values[i + 1].data.d_int32),
 				 return_val);
 	      break;
 
 	    case GIMP_PDB_CHANNEL:
-	      return_val = cons (flocons (values[i + 1].data.d_int32), 
+	      return_val = cons (flocons (values[i + 1].data.d_int32),
 				 return_val);
 	      break;
 
 	    case GIMP_PDB_DRAWABLE:
-	      return_val = cons (flocons (values[i + 1].data.d_int32), 
+	      return_val = cons (flocons (values[i + 1].data.d_int32),
 				 return_val);
 	      break;
 
 	    case GIMP_PDB_SELECTION:
-	      return_val = cons (flocons (values[i + 1].data.d_int32), 
+	      return_val = cons (flocons (values[i + 1].data.d_int32),
 				 return_val);
 	      break;
 
@@ -930,15 +942,15 @@ marshall_proc_db_call (LISP a)
 		    string_len = strlen (values[i + 1].data.d_parasite.name);
 		    name    = strcons (string_len,
 				       values[i + 1].data.d_parasite.name);
-		    
+
 		    flags   = flocons (values[i + 1].data.d_parasite.flags);
 		    data    = arcons (tc_byte_array,
 				      values[i+1].data.d_parasite.size, 0);
 		    memcpy(data->storage_as.string.data,
-			   values[i+1].data.d_parasite.data, 
-			   values[i+1].data.d_parasite.size); 
-		    
-		    intermediate_val = cons (name, 
+			   values[i+1].data.d_parasite.data,
+			   values[i+1].data.d_parasite.size);
+
+		    intermediate_val = cons (name,
 					     cons(flags, cons(data, NIL)));
 		    return_val = cons (intermediate_val, return_val);
 		  }

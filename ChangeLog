@@ -1,3 +1,24 @@
+2003-08-26  Sven Neumann  <sven@gimp.org>
+
+	* app/core/core-enums.h: use GIMP_GRADIENT as prefix for the
+	GimpGradientType enum.
+
+	* app/core/core-enums.c
+	* app/pdb/misc_tools_cmds.c
+	* libgimp/gimpenums.h
+	* plug-ins/pygimp/gimpenums.py
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* app/core/gimpdrawable-blend.c
+	* app/tools/gimpblendoptions.c
+	* plug-ins/pygimp/plug-ins/sphere.py
+	* plug-ins/script-fu/scripts: changed accordingly.
+
+	* libgimp/gimpcompat.h	
+	* plug-ins/script-fu/siod-wrapper.c: added compatibility defines
+	for the old enum values.
+
 2003-08-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptransformoptions.c

@@ -75,7 +75,7 @@
     (gimp-selection-all img)
 
     (gimp-blend logo-layer CUSTOM NORMAL
-		LINEAR 100 0 REPEAT-NONE gradient-reverse
+		GRADIENT-LINEAR 100 0 REPEAT-NONE gradient-reverse
 		FALSE 0 0 TRUE
 		0 (* height 0.33333) 0 (* height 0.83333))
 
