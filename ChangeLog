@@ -1,11 +1,35 @@
+2004-12-11  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: set version to 2.2.0.
+
+	* tools/Makefile.am
+	* tools/authorsgen/Makefile.am
+	* tools/authorsgen/authorsgen.pl
+	* tools/authorsgen/contributors: removed authorsgen, a perl script
+	that used to be used to create AUTHORS and authors.h.
+
+	* Makefile.am
+	* authors.dtd
+	* authors.xml: added a simple XML file that lists authors and
+	contributors and a DTD to validate it.
+
+	* authors.xsl: a stylesheet to generate AUTHORS from authors.xml.
+
+	* app/dialogs/Makefile.am
+	* app/dialogs/authors.xsl: a stylesheet to generate authors.h from
+	authors.xml.
+
+	* app/dialogs/authors.h: regenerated.
+
+	* app/dialogs/about-dialog.c: added a const modifier.
+
 2004-12-09  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* app/widgets/gimphistogrameditor.c: make histogram editor,
 	and therefore histogram dialog, use the selection.  Should
 	resolve bug #72959.
 
-	* app/core/gimpdrawable-histogram.h: remove trailing 
-	whitespace.
+	* app/core/gimpdrawable-histogram.h: remove trailing whitespace.
 	
 2004-12-10  Manish Singh  <yosh@gimp.org>
 

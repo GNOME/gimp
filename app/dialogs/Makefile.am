@@ -1,8 +1,21 @@
 ## Process this file with automake to produce Makefile.in
 
+AM_CPPFLAGS = \
+	-DG_LOG_DOMAIN=\"Gimp-Dialogs\"	\
+	@GIMP_THREAD_FLAGS@ 		\
+	@GIMP_MP_FLAGS@
+
+INCLUDES = \
+	-I$(top_builddir)	\
+	-I$(top_srcdir)		\
+	-I$(top_builddir)/app	\
+	-I$(top_srcdir)/app	\
+	$(GTK_CFLAGS)		\
+	-I$(includedir)
+
 noinst_LIBRARIES = libappdialogs.a
 
-libappdialogs_a_SOURCES = \
+libappdialogs_a_sources = \
 	dialogs-types.h			\
 	dialogs.c			\
 	dialogs.h			\
@@ -73,18 +86,18 @@ libappdialogs_a_SOURCES = \
 	vectors-options-dialog.c	\
 	vectors-options-dialog.h
 
-AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Dialogs\"	\
-	@GIMP_THREAD_FLAGS@ 		\
-	@GIMP_MP_FLAGS@
+libappdialogs_a_built_sources = \
+	authors.h
 
-INCLUDES = \
-	-I$(top_builddir)	\
-	-I$(top_srcdir)		\
-	-I$(top_builddir)/app	\
-	-I$(top_srcdir)/app	\
-	$(GTK_CFLAGS)		\
-	-I$(includedir)
+libappdialogs_a_SOURCES = \
+	$(libappdialogs_a_built_sources) $(libappdialogs_a_sources)
 
 EXTRA_DIST = \
+	authors.xsl	\
 	makefile.msc
+
+
+authors.h: $(top_srcdir)/authors.xml
+if HAVE_XSLTPROC
+	$(XSLTPROC) authors.xsl $< > $(@) || rm -f $(@)
+endif

@@ -1,0 +1,6 @@
+<!-- simple DTD for GIMP authors -->
+
+<!ELEMENT gimp-authors (author+, contributor+)>
+
+<!ELEMENT author (#PCDATA)>
+<!ELEMENT contributor (#PCDATA)>

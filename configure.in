@@ -21,7 +21,7 @@ m4_define([gimp_binary_age],
           [m4_eval(100 * gimp_minor_version + gimp_micro_version)])
 
 # For overriding the version string. Comment out if not needed.
-m4_define([gimp_version], [2.2-pre2])
+# m4_define([gimp_version], [2.2.0])
 
 # This is the X.Y used in -lgimp-X.Y
 m4_define([gimp_api_version], [2.0])
@@ -1283,7 +1283,6 @@ AC_ARG_WITH(pdbgen,
   with_pdbgen=$enable_maintainer_mode)
 
 AM_CONDITIONAL(WITH_PDBGEN, test x$with_pdbgen = xyes)
-AM_CONDITIONAL(WITH_AUTHORSGEN, test x$enable_maintainer_mode = xyes)
 
 
 ##################
@@ -1598,7 +1597,6 @@ _______EOF
 AC_CONFIG_FILES([
 gimptool-win32.c
 tools/Makefile
-tools/authorsgen/Makefile
 tools/pdbgen/Makefile
 regexrepl/Makefile
 libgimp/Makefile

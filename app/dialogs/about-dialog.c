@@ -131,7 +131,7 @@ static gboolean  about_dialog_timer       (gpointer           data);
 
 
 static PangoFontDescription  *font_desc     = NULL;
-static gchar                **scroll_text   = authors;
+static const gchar          **scroll_text   = authors;
 static gint                   nscroll_texts = G_N_ELEMENTS (authors);
 static gint                   shuffle_array[G_N_ELEMENTS (authors)];
 

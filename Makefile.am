@@ -35,6 +35,13 @@ pkgconfig_DATA = \
 	gimpthumb-@GIMP_PKGCONFIG_VERSION@.pc	\
 	gimpui-@GIMP_PKGCONFIG_VERSION@.pc
 
+
+AUTHORS: authors.xml
+if HAVE_XSLTPROC
+	$(XSLTPROC) authors.xsl $< > $(@) || rm -f $(@)
+endif
+
+
 EXTRA_SCRIPTS = gimpinstall-@GIMP_TOOL_VERSION@
 
 EXTRA_DIST = \
@@ -52,6 +59,9 @@ EXTRA_DIST = \
 	README			\
 	README.i18n		\
 	README.win32		\
+	authors.dtd		\
+	authors.xml		\
+	authors.xsl		\
 	config.h.win32		\
 	gimp-zip.in		\
 	gimpdefs.msc		\
@@ -75,3 +85,13 @@ DISTCLEANFILES = \
 
 gimpinstall-@GIMP_TOOL_VERSION@:
 	$(LN_S) $(srcdir)/install-sh $(srcdir)/gimpinstall-@GIMP_TOOL_VERSION@
+
+
+validate-authors:
+if HAVE_XMLLINT
+	@$(XMLLINT) --noout --valid authors.xml || \
+	  ( echo "* authors.xml INVALID *"; exit 1; )
+endif
+
+
+dist-hook: validate-authors
