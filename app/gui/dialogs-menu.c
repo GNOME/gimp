@@ -31,6 +31,7 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpimagedock.h"
 #include "widgets/gimpitemfactory.h"
 
@@ -41,9 +42,10 @@
 #include "gimp-intl.h"
 
 
-#define ADD_TAB(path,id,type,stock_id) \
-  { { (path), "foo", dialogs_add_tab_cmd_callback, 0, (type), (stock_id) }, \
-    (id), NULL, NULL }
+#define ADD_TAB(path,id,stock_id,help_id) \
+  { { (path), "", dialogs_add_tab_cmd_callback, 0, \
+      "<StockItem>", (stock_id) }, \
+    (id), (help_id), NULL }
 #define PREVIEW_SIZE(path,size) \
   { { (path), NULL, dialogs_preview_size_cmd_callback, \
       (size), "/Preview Size/Tiny" }, NULL, NULL, NULL }
@@ -60,58 +62,60 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
   MENU_BRANCH ("/_Add Tab"),
 
   ADD_TAB (N_("/Add Tab/Tool _Options..."),     "gimp-tool-options",
-           "<StockItem>",                      GIMP_STOCK_TOOL_OPTIONS),
+           GIMP_STOCK_TOOL_OPTIONS,             GIMP_HELP_TOOL_OPTIONS_DIALOG),
   ADD_TAB (N_("/Add Tab/_Device Status..."),    "gimp-device-status",
-           "<StockItem>",                      GIMP_STOCK_DEVICE_STATUS),
+           GIMP_STOCK_DEVICE_STATUS,            GIMP_HELP_DEVICE_STATUS_DIALOG),
 
   MENU_SEPARATOR ("/Add Tab/---"),
 
   ADD_TAB (N_("/Add Tab/_Layers..."),           "gimp-layer-list",
-           "<StockItem>",                      GIMP_STOCK_LAYERS),
+           GIMP_STOCK_LAYERS,                   GIMP_HELP_LAYER_DIALOG),
   ADD_TAB (N_("/Add Tab/_Channels..."),         "gimp-channel-list",
-           "<StockItem>",                      GIMP_STOCK_CHANNELS),
+           GIMP_STOCK_CHANNELS,                 GIMP_HELP_CHANNEL_DIALOG),
   ADD_TAB (N_("/Add Tab/_Paths..."),            "gimp-vectors-list",
-           "<StockItem>",                      GIMP_STOCK_PATHS),
+           GIMP_STOCK_PATHS,                    GIMP_HELP_PATH_DIALOG),
   ADD_TAB (N_("/Add Tab/_Indexed Palette..."),  "gimp-indexed-palette",
-           "<StockItem>",                      GIMP_STOCK_INDEXED_PALETTE),
+           GIMP_STOCK_INDEXED_PALETTE,          GIMP_HELP_INDEXED_PALETTE_DIALOG),
   ADD_TAB (N_("/Add Tab/_Selection Editor..."), "gimp-selection-editor",
-           "<StockItem>",                      GIMP_STOCK_TOOL_RECT_SELECT),
+           GIMP_STOCK_TOOL_RECT_SELECT,         GIMP_HELP_SELECTION_DIALOG),
   ADD_TAB (N_("/Add Tab/Na_vigation..."),       "gimp-navigation-view",
-           "<StockItem>",                      GIMP_STOCK_NAVIGATION),
+           GIMP_STOCK_NAVIGATION,               GIMP_HELP_NAVIGATION_DIALOG),
   ADD_TAB (N_("/Add Tab/_Undo History..."),     "gimp-undo-history",
-           "<StockItem>",                      GIMP_STOCK_UNDO_HISTORY),
+           GIMP_STOCK_UNDO_HISTORY,             GIMP_HELP_UNDO_DIALOG),
 
   MENU_SEPARATOR ("/Add Tab/---"),
 
   ADD_TAB (N_("/Add Tab/Colo_rs..."),           "gimp-color-editor",
-           "<StockItem>",                      GIMP_STOCK_DEFAULT_COLORS),
+           GIMP_STOCK_DEFAULT_COLORS,           GIMP_HELP_COLOR_DIALOG),
   ADD_TAB (N_("/Add Tab/Brus_hes..."),          "gimp-brush-grid",
-           "<StockItem>",                      GIMP_STOCK_TOOL_PAINTBRUSH),
+           GIMP_STOCK_TOOL_PAINTBRUSH,          GIMP_HELP_BRUSH_DIALOG),
   ADD_TAB (N_("/Add Tab/P_atterns..."),         "gimp-pattern-grid",
-           "<StockItem>",                      GIMP_STOCK_TOOL_BUCKET_FILL),
+           GIMP_STOCK_TOOL_BUCKET_FILL,         GIMP_HELP_PATTERN_DIALOG),
   ADD_TAB (N_("/Add Tab/_Gradients..."),        "gimp-gradient-list",
-           "<StockItem>",                      GIMP_STOCK_TOOL_BLEND),
+           GIMP_STOCK_TOOL_BLEND,               GIMP_HELP_GRADIENT_DIALOG),
   ADD_TAB (N_("/Add Tab/Pal_ettes..."),         "gimp-palette-list",
-           "<StockItem>",                      GTK_STOCK_SELECT_COLOR),
+           GTK_STOCK_SELECT_COLOR,              GIMP_HELP_PALETTE_DIALOG),
   ADD_TAB (N_("/Add Tab/_Fonts..."),            "gimp-font-list",
-           "<StockItem>",                      GTK_STOCK_SELECT_FONT),
+           GTK_STOCK_SELECT_FONT,               GIMP_HELP_FONT_DIALOG),
   ADD_TAB (N_("/Add Tab/_Buffers..."),          "gimp-buffer-list",
-           "<StockItem>",                      GTK_STOCK_PASTE),
+           GTK_STOCK_PASTE,                     GIMP_HELP_BUFFER_DIALOG),
 
   MENU_SEPARATOR ("/Add Tab/---"),
 
   ADD_TAB (N_("/Add Tab/I_mages..."),           "gimp-image-list",
-           "<StockItem>",                      GIMP_STOCK_IMAGES),
+           GIMP_STOCK_IMAGES,                   GIMP_HELP_IMAGE_DIALOG),
   ADD_TAB (N_("/Add Tab/Document Histor_y..."), "gimp-document-list",
-           "<StockItem>",                      GTK_STOCK_OPEN),
+           GTK_STOCK_OPEN,                      GIMP_HELP_DOCUMENT_DIALOG),
   ADD_TAB (N_("/Add Tab/_Templates..."),        "gimp-template-list",
-           "<StockItem>",                      GIMP_STOCK_TEMPLATE),
+           GIMP_STOCK_TEMPLATE,                 GIMP_HELP_TEMPLATE_DIALOG),
   ADD_TAB (N_("/Add Tab/Error Co_nsole..."),    "gimp-error-console",
-           "<StockItem>",                      GIMP_STOCK_WARNING),
+           GIMP_STOCK_WARNING,                  GIMP_HELP_ERRORS_DIALOG),
 
   MENU_SEPARATOR ("/Add Tab/---"),
 
-  ADD_TAB (N_("/Add Tab/Tools..."),            "gimp-tool-list", NULL, NULL),
+  { { N_("/Add Tab/Tools..."), NULL,
+      dialogs_add_tab_cmd_callback, 0 },
+    "gimp-tool-list", NULL, NULL },
 
   { { N_("/_Remove Tab"), NULL,
       dialogs_remove_tab_cmd_callback, 0,

@@ -65,7 +65,7 @@ void        gimp_editor_create_menu   (GimpEditor      *editor,
 GtkWidget * gimp_editor_add_button    (GimpEditor      *editor,
                                        const gchar     *stock_id,
                                        const gchar     *tooltip,
-                                       const gchar     *help_data,
+                                       const gchar     *help_id,
                                        GCallback        callback,
                                        GCallback        extended_callback,
                                        gpointer         callback_data);

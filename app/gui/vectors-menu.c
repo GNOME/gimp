@@ -94,7 +94,7 @@ GimpItemFactoryEntry vectors_menu_entries[] =
       vectors_selection_to_vectors_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_SELECTION_TO_PATH },
     NULL,
-    "filters/sel2path.html", NULL },
+    GIMP_HELP_SELECTION_TO_PATH, NULL },
   { { N_("/Stro_ke Path"), "<control>T",
       vectors_stroke_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_PATH_STROKE },

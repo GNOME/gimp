@@ -36,6 +36,7 @@
 #include "gimpchanneltreeview.h"
 #include "gimpcomponenteditor.h"
 #include "gimpdnd.h"
+#include "gimphelp-ids.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
@@ -115,15 +116,23 @@ gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass)
   item_view_class->add_item        = (GimpAddItemFunc) gimp_image_add_channel;
   item_view_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_channel;
 
-  item_view_class->new_desc             = _("New Channel");
-  item_view_class->duplicate_desc       = _("Duplicate Channel");
-  item_view_class->edit_desc            = _("Edit Channel Attributes");
-  item_view_class->delete_desc          = _("Delete Channel");
-  item_view_class->raise_desc           = _("Raise Channel");
-  item_view_class->raise_to_top_desc    = _("Raise Channel to Top");
-  item_view_class->lower_desc           = _("Lower Channel");
-  item_view_class->lower_to_bottom_desc = _("Lower Channel to Bottom");
-  item_view_class->reorder_desc         = _("Reorder Channel");
+  item_view_class->new_desc                = _("New Channel");
+  item_view_class->new_help_id             = GIMP_HELP_CHANNEL_NEW;
+  item_view_class->duplicate_desc          = _("Duplicate Channel");
+  item_view_class->duplicate_help_id       =  GIMP_HELP_CHANNEL_DUPLICATE;
+  item_view_class->edit_desc               = _("Edit Channel Attributes");
+  item_view_class->edit_help_id            = GIMP_HELP_CHANNEL_EDIT;
+  item_view_class->delete_desc             = _("Delete Channel");
+  item_view_class->delete_help_id          = GIMP_HELP_CHANNEL_DELETE;
+  item_view_class->raise_desc              = _("Raise Channel");
+  item_view_class->raise_help_id           = GIMP_HELP_CHANNEL_RAISE;
+  item_view_class->raise_to_top_desc       = _("Raise Channel to Top");
+  item_view_class->raise_to_top_help_id    = GIMP_HELP_CHANNEL_RAISE_TO_TOP;
+  item_view_class->lower_desc              = _("Lower Channel");
+  item_view_class->lower_help_id           = GIMP_HELP_CHANNEL_LOWER;
+  item_view_class->lower_to_bottom_desc    = _("Lower Channel to Bottom");
+  item_view_class->lower_to_bottom_help_id = GIMP_HELP_CHANNEL_LOWER_TO_BOTTOM;
+  item_view_class->reorder_desc            = _("Reorder Channel");
 }
 
 static void
@@ -144,7 +153,8 @@ gimp_channel_tree_view_init (GimpChannelTreeView *view)
   /*  To Selection button  */
   view->toselection_button =
     gimp_editor_add_button (GIMP_EDITOR (view),
-                            GIMP_STOCK_SELECTION_REPLACE, str, NULL,
+                            GIMP_STOCK_SELECTION_REPLACE, str,
+                            GIMP_HELP_CHANNEL_SELECTION_REPLACE,
                             G_CALLBACK (gimp_channel_tree_view_toselection_clicked),
                             G_CALLBACK (gimp_channel_tree_view_toselection_extended_clicked),
                             view);

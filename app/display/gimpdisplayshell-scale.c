@@ -36,6 +36,7 @@
 
 #include "tools/tool_manager.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "gimpdisplay.h"
@@ -474,7 +475,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
                               GTK_STOCK_ZOOM_100,
                               _("Select Zoom Ratio"),
                               gimp_standard_help_func,
-                              "dialogs/display_scale.html",
+                              GIMP_HELP_VIEW_ZOOM_OTHER,
 
                               GTK_STOCK_CANCEL,
                               gimp_display_shell_scale_dialog_cancel,

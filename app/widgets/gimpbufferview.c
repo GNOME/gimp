@@ -36,6 +36,7 @@
 #include "gimpcontainerview.h"
 #include "gimpbufferview.h"
 #include "gimpdnd.h"
+#include "gimphelp-ids.h"
 
 #include "gimp-intl.h"
 
@@ -139,32 +140,32 @@ gimp_buffer_view_new (GimpViewType     view_type,
 
   buffer_view->paste_button =
     gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GTK_STOCK_PASTE,
-                            _("Paste"), NULL,
+                            GTK_STOCK_PASTE, _("Paste"),
+                            GIMP_HELP_BUFFER_PASTE,
                             G_CALLBACK (gimp_buffer_view_paste_clicked),
                             NULL,
                             editor);
 
   buffer_view->paste_into_button =
     gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GIMP_STOCK_PASTE_INTO,
-                            _("Paste Into"), NULL,
+                            GIMP_STOCK_PASTE_INTO, _("Paste Into"),
+                            GIMP_HELP_BUFFER_PASTE_INTO,
                             G_CALLBACK (gimp_buffer_view_paste_into_clicked),
                             NULL,
                             editor);
 
   buffer_view->paste_as_new_button =
     gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GIMP_STOCK_PASTE_AS_NEW,
-                            _("Paste as New"), NULL,
+                            GIMP_STOCK_PASTE_AS_NEW, _("Paste as New"),
+                            GIMP_HELP_BUFFER_PASTE_AS_NEW,
                             G_CALLBACK (gimp_buffer_view_paste_as_new_clicked),
                             NULL,
                             editor);
 
   buffer_view->delete_button =
     gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GTK_STOCK_DELETE,
-                            _("Delete"), NULL,
+                            GTK_STOCK_DELETE, _("Delete"),
+                            GIMP_HELP_BUFFER_DELETE,
                             G_CALLBACK (gimp_buffer_view_delete_clicked),
                             NULL,
                             editor);

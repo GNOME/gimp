@@ -31,6 +31,7 @@
 #include "core/gimpundostack.h"
 
 #include "gimpcontainertreeview.h"
+#include "gimphelp-ids.h"
 #include "gimpundoeditor.h"
 
 #include "gimp-intl.h"
@@ -118,16 +119,16 @@ gimp_undo_editor_init (GimpUndoEditor *undo_editor)
 
   undo_editor->undo_button =
     gimp_editor_add_button (GIMP_EDITOR (undo_editor),
-                            GTK_STOCK_UNDO,
-                            _("Undo"), NULL,
+                            GTK_STOCK_UNDO, _("Undo"),
+                            GIMP_HELP_EDIT_UNDO,
                             G_CALLBACK (gimp_undo_editor_undo_clicked),
                             NULL,
                             undo_editor);
 
   undo_editor->redo_button =
     gimp_editor_add_button (GIMP_EDITOR (undo_editor),
-                            GTK_STOCK_REDO,
-                            _("Redo"), NULL,
+                            GTK_STOCK_REDO, _("Redo"),
+                            GIMP_HELP_EDIT_REDO,
                             G_CALLBACK (gimp_undo_editor_redo_clicked),
                             NULL,
                             undo_editor);

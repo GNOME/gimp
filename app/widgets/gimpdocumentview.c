@@ -49,6 +49,7 @@
 #include "gimpcontainerview.h"
 #include "gimpdocumentview.h"
 #include "gimpdnd.h"
+#include "gimphelp-ids.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
@@ -170,7 +171,8 @@ gimp_document_view_new (GimpViewType            view_type,
 
   document_view->open_button =
     gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GTK_STOCK_OPEN, str, NULL,
+                            GTK_STOCK_OPEN, str,
+                            GIMP_HELP_DOCUMENT_OPEN,
                             G_CALLBACK (gimp_document_view_open_clicked),
                             G_CALLBACK (gimp_document_view_open_extended_clicked),
                             editor);
@@ -179,8 +181,8 @@ gimp_document_view_new (GimpViewType            view_type,
 
   document_view->remove_button =
     gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GTK_STOCK_REMOVE,
-                            _("Remove selected entry"), NULL,
+                            GTK_STOCK_REMOVE, _("Remove selected entry"),
+                            GIMP_HELP_DOCUMENT_REMOVE,
                             G_CALLBACK (gimp_document_view_remove_clicked),
                             NULL,
                             editor);
@@ -193,7 +195,8 @@ gimp_document_view_new (GimpViewType            view_type,
 
   document_view->refresh_button =
     gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GTK_STOCK_REFRESH, str, NULL,
+                            GTK_STOCK_REFRESH, str,
+                            GIMP_HELP_DOCUMENT_REFRESH,
                             G_CALLBACK (gimp_document_view_refresh_clicked),
                             G_CALLBACK (gimp_document_view_refresh_extended_clicked),
                             editor);

@@ -283,7 +283,7 @@ GtkWidget *
 gimp_editor_add_button (GimpEditor  *editor,
                         const gchar *stock_id,
                         const gchar *tooltip,
-                        const gchar *help_data,
+                        const gchar *help_id,
                         GCallback    callback,
                         GCallback    extended_callback,
                         gpointer     callback_data)
@@ -301,8 +301,8 @@ gimp_editor_add_button (GimpEditor  *editor,
   gtk_box_pack_start (GTK_BOX (editor->button_box), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  if (tooltip || help_data)
-    gimp_help_set_help_data (button, tooltip, help_data);
+  if (tooltip || help_id)
+    gimp_help_set_help_data (button, tooltip, help_id);
 
   if (callback)
     g_signal_connect (button, "clicked",

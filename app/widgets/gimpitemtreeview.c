@@ -220,13 +220,21 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   klass->convert_item                 = NULL;
 
   klass->new_desc                     = NULL;
+  klass->new_help_id                  = NULL;
   klass->duplicate_desc               = NULL;
+  klass->duplicate_help_id            = NULL;
   klass->edit_desc                    = NULL;
+  klass->edit_help_id                 = NULL;
   klass->delete_desc                  = NULL;
+  klass->delete_help_id               = NULL;
   klass->raise_desc                   = NULL;
+  klass->raise_help_id                = NULL;
   klass->raise_to_top_desc            = NULL;
+  klass->raise_to_top_help_id         = NULL;
   klass->lower_desc                   = NULL;
+  klass->lower_help_id                = NULL;
   klass->lower_to_bottom_desc         = NULL;
+  klass->lower_to_bottom_help_id      = NULL;
 }
 
 static void
@@ -249,7 +257,8 @@ gimp_item_tree_view_init (GimpItemTreeView      *view,
 
   view->new_button =
     gimp_editor_add_button (editor,
-                            GTK_STOCK_NEW, view_class->new_desc, NULL,
+                            GTK_STOCK_NEW, view_class->new_desc,
+                            view_class->new_help_id,
                             G_CALLBACK (gimp_item_tree_view_new_clicked),
                             NULL,
                             view);
@@ -261,7 +270,7 @@ gimp_item_tree_view_init (GimpItemTreeView      *view,
 
   view->raise_button =
     gimp_editor_add_button (editor,
-                            GTK_STOCK_GO_UP, str, NULL,
+                            GTK_STOCK_GO_UP, str, view_class->raise_help_id,
                             G_CALLBACK (gimp_item_tree_view_raise_clicked),
                             G_CALLBACK (gimp_item_tree_view_raise_extended_clicked),
                             view);
@@ -275,7 +284,7 @@ gimp_item_tree_view_init (GimpItemTreeView      *view,
 
   view->lower_button =
     gimp_editor_add_button (editor,
-                            GTK_STOCK_GO_DOWN, str, NULL,
+                            GTK_STOCK_GO_DOWN, str, view_class->lower_help_id,
                             G_CALLBACK (gimp_item_tree_view_lower_clicked),
                             G_CALLBACK (gimp_item_tree_view_lower_extended_clicked),
                             view);
@@ -285,21 +294,23 @@ gimp_item_tree_view_init (GimpItemTreeView      *view,
   view->duplicate_button =
     gimp_editor_add_button (editor,
                             GIMP_STOCK_DUPLICATE, view_class->duplicate_desc,
-                            NULL,
+                            view_class->duplicate_help_id,
                             G_CALLBACK (gimp_item_tree_view_duplicate_clicked),
                             NULL,
                             view);
 
   view->edit_button =
     gimp_editor_add_button (editor,
-                            GIMP_STOCK_EDIT, view_class->edit_desc, NULL,
+                            GIMP_STOCK_EDIT, view_class->edit_desc,
+                            view_class->edit_help_id,
                             G_CALLBACK (gimp_item_tree_view_edit_clicked),
                             NULL,
                             view);
 
   view->delete_button =
     gimp_editor_add_button (editor,
-                            GTK_STOCK_DELETE, view_class->delete_desc, NULL,
+                            GTK_STOCK_DELETE, view_class->delete_desc,
+                            view_class->delete_help_id,
                             G_CALLBACK (gimp_item_tree_view_delete_clicked),
                             NULL,
                             view);

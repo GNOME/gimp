@@ -1,3 +1,32 @@
+2003-08-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-filter-dialog.c
+	* app/display/gimpdisplayshell-scale.c
+	* app/display/gimpnavigationview.c
+	* app/gui/dialogs-menu.c
+	* app/gui/documents-menu.c
+	* app/gui/error-console-menu.c
+	* app/gui/gradient-editor-commands.c
+	* app/gui/gradient-editor-menu.c
+	* app/gui/image-menu.c
+	* app/gui/select-commands.c
+	* app/gui/tool-options-dialog.c
+	* app/gui/toolbox-menu.c
+	* app/gui/vectors-menu.c
+	* app/widgets/gimpbufferview.c
+	* app/widgets/gimpchanneltreeview.c
+	* app/widgets/gimpdocumentview.c
+	* app/widgets/gimpeditor.[ch]
+	* app/widgets/gimperrorconsole.c
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimpitemtreeview.[ch]
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpselectioneditor.c
+	* app/widgets/gimptemplateview.c
+	* app/widgets/gimpundoeditor.c
+	* app/widgets/gimpvectorstreeview.c
+	* app/widgets/gimphelp-ids.h: added and updated more help IDs.
+
 2003-08-24  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/paint-funcs-generic.h (blend_pixels): removed

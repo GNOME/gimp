@@ -30,6 +30,7 @@
 
 #include "widgets/gimpdataeditor.h"
 #include "widgets/gimpgradienteditor.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
 #include "gradient-editor-commands.h"
@@ -41,16 +42,20 @@
 
 #define LOAD_LEFT_FROM(num,magic) \
   { { "/Load Left Color From/" num, NULL, \
-      gradient_editor_load_left_cmd_callback, (magic) }, NULL, NULL, NULL }
+      gradient_editor_load_left_cmd_callback, (magic) }, \
+    NULL, GIMP_HELP_GRADIENT_EDITOR_LEFT_LOAD, NULL }
 #define SAVE_LEFT_TO(num,magic) \
   { { "/Save Left Color To/" num, NULL, \
-      gradient_editor_save_left_cmd_callback, (magic) }, NULL, NULL, NULL }
+      gradient_editor_save_left_cmd_callback, (magic) }, \
+    NULL, GIMP_HELP_GRADIENT_EDITOR_LEFT_SAVE, NULL }
 #define LOAD_RIGHT_FROM(num,magic) \
   { { "/Load Right Color From/" num, NULL, \
-      gradient_editor_load_right_cmd_callback, (magic) }, NULL, NULL, NULL }
+      gradient_editor_load_right_cmd_callback, (magic) }, \
+    NULL, GIMP_HELP_GRADIENT_EDITOR_RIGHT_LOAD, NULL }
 #define SAVE_RIGHT_TO(num,magic) \
   { { "/Save Right Color To/" num, NULL, \
-      gradient_editor_save_right_cmd_callback, (magic) }, NULL, NULL, NULL }
+      gradient_editor_save_right_cmd_callback, (magic) }, \
+    NULL, GIMP_HELP_GRADIENT_EDITOR_RIGHT_SAVE, NULL }
 
 
 GimpItemFactoryEntry gradient_editor_menu_entries[] =
@@ -58,7 +63,7 @@ GimpItemFactoryEntry gradient_editor_menu_entries[] =
   { { N_("/L_eft Endpoint's Color..."), NULL,
       gradient_editor_left_color_cmd_callback, 0 },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_LEFT_COLOR, NULL },
 
   MENU_BRANCH (N_("/_Load Left Color From")),
 
@@ -69,15 +74,15 @@ GimpItemFactoryEntry gradient_editor_menu_entries[] =
   { { N_("/Load Left Color From/_Right Endpoint"), NULL,
       gradient_editor_load_left_cmd_callback, 1 },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_LEFT_LOAD, NULL },
   { { N_("/Load Left Color From/_FG Color"), NULL,
       gradient_editor_load_left_cmd_callback, 2 },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_LEFT_LOAD, NULL },
   { { N_("/Load Left Color From/_BG Color"), NULL,
       gradient_editor_load_left_cmd_callback, 3 },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_LEFT_LOAD, NULL },
 
   MENU_SEPARATOR ("/Load Left Color From/---"),
 
@@ -110,26 +115,26 @@ GimpItemFactoryEntry gradient_editor_menu_entries[] =
   { { N_("/R_ight Endpoint's Color..."), NULL,
       gradient_editor_right_color_cmd_callback, 0 },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_RIGHT_COLOR, NULL },
 
   MENU_BRANCH (N_("/Load Right Color Fr_om")),
 
   { { N_("/Load Right Color From/_Right Neighbor's Left Endpoint"), NULL,
       gradient_editor_load_right_cmd_callback, 0 },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_RIGHT_LOAD, NULL },
   { { N_("/Load Right Color From/_Left Endpoint"), NULL,
       gradient_editor_load_right_cmd_callback, 1 },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_RIGHT_LOAD, NULL },
   { { N_("/Load Right Color From/_FG Color"), NULL,
       gradient_editor_load_right_cmd_callback, 2 },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_RIGHT_LOAD, NULL },
   { { N_("/Load Right Color From/_BG Color"), NULL,
       gradient_editor_load_right_cmd_callback, 3 },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_RIGHT_LOAD, NULL },
 
   MENU_SEPARATOR ("/Load Right Color From/---"),
 
@@ -163,93 +168,93 @@ GimpItemFactoryEntry gradient_editor_menu_entries[] =
       gradient_editor_blending_func_cmd_callback,
       GIMP_GRAD_LINEAR, "<RadioItem>" },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_BLENDING, NULL },
   { { N_("/blendingfunction/_Curved"), NULL,
       gradient_editor_blending_func_cmd_callback,
       GIMP_GRAD_CURVED, "/blendingfunction/Linear" },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_BLENDING, NULL },
   { { N_("/blendingfunction/_Sinusodial"), NULL,
       gradient_editor_blending_func_cmd_callback,
       GIMP_GRAD_SINE, "/blendingfunction/Linear" },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_BLENDING, NULL },
   { { N_("/blendingfunction/Spherical (i_ncreasing)"), NULL,
       gradient_editor_blending_func_cmd_callback,
       GIMP_GRAD_SPHERE_INCREASING, "/blendingfunction/Linear" },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_BLENDING, NULL },
   { { N_("/blendingfunction/Spherical (_decreasing)"), NULL,
       gradient_editor_blending_func_cmd_callback,
       GIMP_GRAD_SPHERE_DECREASING, "/blendingfunction/Linear" },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_BLENDING, NULL },
   { { N_("/blendingfunction/(Varies)"), NULL, NULL,
       0, "/blendingfunction/Linear" },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_BLENDING, NULL },
 
   { { N_("/coloringtype/_RGB"), NULL,
       gradient_editor_coloring_type_cmd_callback,
       GIMP_GRAD_RGB, "<RadioItem>" },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_COLORING, NULL },
   { { N_("/coloringtype/HSV (_counter-clockwise hue)"), NULL,
       gradient_editor_coloring_type_cmd_callback,
       GIMP_GRAD_HSV_CCW, "/coloringtype/RGB" },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_COLORING, NULL },
   { { N_("/coloringtype/HSV (clockwise _hue)"), NULL,
       gradient_editor_coloring_type_cmd_callback,
       GIMP_GRAD_HSV_CW, "/coloringtype/RGB" },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_COLORING, NULL },
   { { N_("/coloringtype/(Varies)"), NULL, NULL,
       0, "/coloringtype/RGB" },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_COLORING, NULL },
 
   MENU_SEPARATOR ("/---"),
 
   { { "/flip", "F",
       gradient_editor_flip_cmd_callback, 0 },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_FLIP, NULL },
   { { "/replicate", "R",
       gradient_editor_replicate_cmd_callback, 0 },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_FLIP, NULL },
   { { "/splitmidpoint", "S",
       gradient_editor_split_midpoint_cmd_callback, 0 },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_SPLIT_MIDPOINT, NULL },
   { { "/splituniformly", "U",
       gradient_editor_split_uniformly_cmd_callback, 0 },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_SPLIT_MIDPOINT, NULL },
   { { "/delete", "D",
       gradient_editor_delete_cmd_callback, 0 },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_DELETE, NULL },
   { { "/recenter", "C",
       gradient_editor_recenter_cmd_callback, 0 },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_RECENTER, NULL },
   { { "/redistribute", "<control>C",
       gradient_editor_redistribute_cmd_callback, 0 },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_REDISTRIBUTE, NULL },
 
   MENU_SEPARATOR ("/---"),
 
   { { N_("/Ble_nd Endpoints' Colors"), "B",
       gradient_editor_blend_color_cmd_callback, 0 },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_BLEND_COLOR, NULL },
   { { N_("/Blend Endpoints' Opacit_y"), "<control>B",
       gradient_editor_blend_opacity_cmd_callback, 0 },
     NULL,
-    NULL, NULL },
+    GIMP_HELP_GRADIENT_EDITOR_BLEND_OPACITY, NULL },
 };
 
 #undef LOAD_LEFT_FROM

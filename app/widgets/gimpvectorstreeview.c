@@ -37,6 +37,7 @@
 
 #include "gimpvectorstreeview.h"
 #include "gimpdnd.h"
+#include "gimphelp-ids.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
@@ -120,15 +121,23 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
   item_view_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_vectors;
   item_view_class->convert_item    = (GimpConvertItemFunc) gimp_vectors_convert;
 
-  item_view_class->new_desc             = _("New Path");
-  item_view_class->duplicate_desc       = _("Duplicate Path");
-  item_view_class->edit_desc            = _("Edit Path Attributes");
-  item_view_class->delete_desc          = _("Delete Path");
-  item_view_class->raise_desc           = _("Raise Path");
-  item_view_class->raise_to_top_desc    = _("Raise Path to Top");
-  item_view_class->lower_desc           = _("Lower Path");
-  item_view_class->lower_to_bottom_desc = _("Lower Path to Bottom");
-  item_view_class->reorder_desc         = _("Reorder Path");
+  item_view_class->new_desc                = _("New Path");
+  item_view_class->new_help_id             = GIMP_HELP_PATH_NEW;
+  item_view_class->duplicate_desc          = _("Duplicate Path");
+  item_view_class->duplicate_help_id       = GIMP_HELP_PATH_DUPLICATE;
+  item_view_class->edit_desc               = _("Edit Path Attributes");
+  item_view_class->edit_help_id            = GIMP_HELP_PATH_EDIT;
+  item_view_class->delete_desc             = _("Delete Path");
+  item_view_class->delete_help_id          = GIMP_HELP_PATH_DELETE;
+  item_view_class->raise_desc              = _("Raise Path");
+  item_view_class->raise_help_id           = GIMP_HELP_PATH_RAISE;
+  item_view_class->raise_to_top_desc       = _("Raise Path to Top");
+  item_view_class->raise_to_top_help_id    = GIMP_HELP_PATH_RAISE_TO_TOP;
+  item_view_class->lower_desc              = _("Lower Path");
+  item_view_class->lower_help_id           = GIMP_HELP_PATH_LOWER;
+  item_view_class->lower_to_bottom_desc    = _("Lower Path to Bottom");
+  item_view_class->lower_to_bottom_help_id = GIMP_HELP_PATH_LOWER_TO_BOTTOM;
+  item_view_class->reorder_desc            = _("Reorder Path");
 }
 
 static void
@@ -151,7 +160,8 @@ gimp_vectors_tree_view_init (GimpVectorsTreeView *view)
 
   view->toselection_button =
     gimp_editor_add_button (editor,
-                            GIMP_STOCK_SELECTION_REPLACE, str, NULL,
+                            GIMP_STOCK_SELECTION_REPLACE, str,
+                            GIMP_HELP_PATH_SELECTION_REPLACE,
                             G_CALLBACK (gimp_vectors_tree_view_toselection_clicked),
                             G_CALLBACK (gimp_vectors_tree_view_toselection_extended_clicked),
                             view);
@@ -164,7 +174,8 @@ gimp_vectors_tree_view_init (GimpVectorsTreeView *view)
 
   view->tovectors_button =
     gimp_editor_add_button (editor,
-                            GIMP_STOCK_SELECTION_TO_PATH, str, NULL,
+                            GIMP_STOCK_SELECTION_TO_PATH, str,
+                            GIMP_HELP_SELECTION_TO_PATH,
                             G_CALLBACK (gimp_vectors_tree_view_tovectors_clicked),
                             G_CALLBACK (gimp_vectors_tree_view_tovectors_extended_clicked),
                             view);
@@ -173,7 +184,8 @@ gimp_vectors_tree_view_init (GimpVectorsTreeView *view)
 
   view->stroke_button =
     gimp_editor_add_button (editor,
-                            GIMP_STOCK_PATH_STROKE, _("Stroke Path"), NULL,
+                            GIMP_STOCK_PATH_STROKE, _("Stroke Path"),
+                            GIMP_HELP_PATH_STROKE,
                             G_CALLBACK (gimp_vectors_tree_view_stroke_clicked),
                             NULL,
                             view);

@@ -28,6 +28,7 @@
 
 #include "widgets/gimpcontainereditor.h"
 #include "widgets/gimpcontainerview.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
 #include "documents-commands.h"
@@ -42,34 +43,41 @@ GimpItemFactoryEntry documents_menu_entries[] =
   { { N_("/_Open Image"), "",
       documents_open_document_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_OPEN },
-    NULL, NULL, NULL },
+    NULL,
+    GIMP_HELP_DOCUMENT_OPEN, NULL },
   { { N_("/_Raise or Open Image"), "",
       documents_raise_or_open_document_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_OPEN },
-    NULL, NULL, NULL },
+    NULL,
+    GIMP_HELP_DOCUMENT_OPEN, NULL },
   { { N_("/File Open _Dialog..."), "",
       documents_file_open_dialog_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_OPEN },
-    NULL, NULL, NULL },
+    NULL,
+    GIMP_HELP_DOCUMENT_OPEN, NULL },
   { { N_("/Remove _Entry"), NULL,
       documents_remove_document_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_REMOVE },
-    NULL, NULL, NULL },
+    NULL,
+    GIMP_HELP_DOCUMENT_REMOVE, NULL },
 
   MENU_SEPARATOR ("/---"),
 
   { { N_("/Recreate _Preview"), NULL,
       documents_recreate_preview_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_REFRESH },
-    NULL, NULL, NULL },
+    NULL,
+    GIMP_HELP_DOCUMENT_REFRESH, NULL },
   { { N_("/Reload _all Previews"), NULL,
       documents_reload_previews_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_REFRESH },
-    NULL, NULL, NULL },
+    NULL,
+    GIMP_HELP_DOCUMENT_REFRESH, NULL },
   { { N_("/Remove Dangling E_ntries"), NULL,
       documents_delete_dangling_documents_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_REFRESH },
-    NULL, NULL, NULL },
+    NULL,
+    GIMP_HELP_DOCUMENT_REFRESH, NULL },
 };
 
 gint n_documents_menu_entries = G_N_ELEMENTS (documents_menu_entries);

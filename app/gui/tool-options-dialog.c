@@ -31,6 +31,7 @@
 
 #include "widgets/gimpdnd.h"
 #include "widgets/gimpeditor.h"
+#include "widgets/gimphelp-ids.h"
 
 #include "tool-options-dialog.h"
 
@@ -115,7 +116,7 @@ tool_options_dialog_create (Gimp *gimp)
     gimp_editor_add_button (GIMP_EDITOR (editor),
                             GIMP_STOCK_RESET,
                             _("Reset to factory defaults"),
-                            NULL,
+                            GIMP_HELP_TOOL_OPTIONS_RESET,
                             G_CALLBACK (tool_options_dialog_reset_callback),
                             NULL,
                             user_context);

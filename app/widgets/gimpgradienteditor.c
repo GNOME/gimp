@@ -68,6 +68,7 @@
 
 #include "gimpdnd.h"
 #include "gimpgradienteditor.h"
+#include "gimphelp-ids.h"
 #include "gimpitemfactory.h"
 #include "gimppreview.h"
 #include "gimppreviewrenderergradient.h"
@@ -365,20 +366,20 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
 
   /*  +, - and Zoom Fit buttons  */
   gimp_editor_add_button (GIMP_EDITOR (editor),
-                          GTK_STOCK_ZOOM_OUT,
-                          _("Zoom Out"), NULL,
+                          GTK_STOCK_ZOOM_OUT, _("Zoom Out"),
+                          GIMP_HELP_GRADIENT_EDITOR_ZOOM_OUT,
                           G_CALLBACK (gradient_editor_zoom_out_callback),
                           NULL,
                           editor);
   gimp_editor_add_button (GIMP_EDITOR (editor),
-                          GTK_STOCK_ZOOM_IN,
-                          _("Zoom In"), NULL,
+                          GTK_STOCK_ZOOM_IN, _("Zoom In"),
+                          GIMP_HELP_GRADIENT_EDITOR_ZOOM_IN,
                           G_CALLBACK (gradient_editor_zoom_in_callback),
                           NULL,
                           editor);
   gimp_editor_add_button (GIMP_EDITOR (editor),
-                          GTK_STOCK_ZOOM_FIT,
-                          _("Zoom All"), NULL,
+                          GTK_STOCK_ZOOM_FIT, _("Zoom All"),
+                          GIMP_HELP_GRADIENT_EDITOR_ZOOM_ALL,
                           G_CALLBACK (gradient_editor_zoom_all_callback),
                           NULL,
                           editor);

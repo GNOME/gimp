@@ -25,6 +25,7 @@
 #include "gui-types.h"
 
 #include "widgets/gimperrorconsole.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
 #include "error-console-commands.h"
@@ -38,18 +39,21 @@ GimpItemFactoryEntry error_console_menu_entries[] =
   { { N_("/_Clear Errors"), "",
       error_console_clear_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_CLEAR },
-    NULL, NULL, NULL },
+    NULL,
+    GIMP_HELP_ERRORS_CLEAR, NULL },
 
   { { "/---", NULL, NULL, 0, "<Separator>", NULL }, NULL, NULL, NULL },
 
   { { N_("/Save _All Errors to File..."), "",
       error_console_save_all_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_SAVE_AS },
-    NULL, NULL, NULL },
+    NULL,
+    GIMP_HELP_ERRORS_SAVE, NULL },
   { { N_("/Save _Selection to File..."), "",
       error_console_save_selection_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_SAVE_AS },
-    NULL, NULL, NULL }
+    NULL,
+    GIMP_HELP_ERRORS_SAVE, NULL }
 };
 
 gint n_error_console_menu_entries = G_N_ELEMENTS (error_console_menu_entries);

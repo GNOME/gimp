@@ -49,6 +49,7 @@
 
 #include "gimpselectioneditor.h"
 #include "gimpdnd.h"
+#include "gimphelp-ids.h"
 #include "gimppreview.h"
 #include "gimppreviewrenderer.h"
 #include "gimpwidgets-utils.h"
@@ -165,24 +166,24 @@ gimp_selection_editor_init (GimpSelectionEditor *selection_editor)
 
   selection_editor->all_button =
     gimp_editor_add_button (GIMP_EDITOR (selection_editor),
-                            GIMP_STOCK_SELECTION_ALL,
-                            _("Select All"), NULL,
+                            GIMP_STOCK_SELECTION_ALL, _("Select All"),
+                            GIMP_HELP_SELECTION_ALL,
                             G_CALLBACK (gimp_selection_editor_all_clicked),
                             NULL,
                             selection_editor);
 
   selection_editor->none_button =
     gimp_editor_add_button (GIMP_EDITOR (selection_editor),
-                            GIMP_STOCK_SELECTION_NONE,
-                            _("Select None"), NULL,
+                            GIMP_STOCK_SELECTION_NONE, _("Select None"),
+                            GIMP_HELP_SELECTION_NONE,
                             G_CALLBACK (gimp_selection_editor_none_clicked),
                             NULL,
                             selection_editor);
 
   selection_editor->invert_button =
     gimp_editor_add_button (GIMP_EDITOR (selection_editor),
-                            GIMP_STOCK_INVERT,
-                            _("Invert Selection"), NULL,
+                            GIMP_STOCK_INVERT, _("Invert Selection"),
+                            GIMP_HELP_SELECTION_INVERT,
                             G_CALLBACK (gimp_selection_editor_invert_clicked),
                             NULL,
                             selection_editor);
@@ -190,7 +191,8 @@ gimp_selection_editor_init (GimpSelectionEditor *selection_editor)
   selection_editor->save_button =
     gimp_editor_add_button (GIMP_EDITOR (selection_editor),
                             GIMP_STOCK_SELECTION_TO_CHANNEL,
-                            _("Save Selection to Channel"), NULL,
+                            _("Save Selection to Channel"),
+                            GIMP_HELP_SELECTION_TO_CHANNEL,
                             G_CALLBACK (gimp_selection_editor_save_clicked),
                             NULL,
                             selection_editor);
@@ -201,8 +203,8 @@ gimp_selection_editor_init (GimpSelectionEditor *selection_editor)
 
   selection_editor->path_button =
     gimp_editor_add_button (GIMP_EDITOR (selection_editor),
-                            GIMP_STOCK_SELECTION_TO_PATH,
-                            str, NULL,
+                            GIMP_STOCK_SELECTION_TO_PATH, str,
+                            GIMP_HELP_SELECTION_TO_PATH,
                             G_CALLBACK (gimp_selection_editor_path_clicked),
                             G_CALLBACK (gimp_selection_editor_path_extended_clicked),
                             selection_editor);
@@ -212,7 +214,8 @@ gimp_selection_editor_init (GimpSelectionEditor *selection_editor)
   selection_editor->stroke_button =
     gimp_editor_add_button (GIMP_EDITOR (selection_editor),
                             GIMP_STOCK_SELECTION_STROKE,
-                            _("Stroke Selection"), NULL,
+                            _("Stroke Selection"),
+                            GIMP_HELP_SELECTION_STROKE,
                             G_CALLBACK (gimp_selection_editor_stroke_clicked),
                             NULL,
                             selection_editor);

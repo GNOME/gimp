@@ -29,6 +29,7 @@
 #include "core/gimpgradient.h"
 
 #include "widgets/gimpgradienteditor.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "color-notebook.h"
@@ -525,7 +526,7 @@ gradient_editor_replicate_cmd_callback (GtkWidget *widget,
                               title, "gradient_segment_replicate",
                               GIMP_STOCK_TOOL_BLEND, desc,
                               gimp_standard_help_func,
-                              "dialogs/gradient_editor/replicate_segment.html",
+                              GIMP_HELP_GRADIENT_EDITOR_REPLICATE,
 
                               GTK_STOCK_CANCEL,
                               gradient_editor_dialog_cancel_callback,
@@ -632,7 +633,7 @@ gradient_editor_split_uniformly_cmd_callback (GtkWidget *widget,
                               title, "gradient_segment_split_uniformly",
                               GIMP_STOCK_TOOL_BLEND, desc,
                               gimp_standard_help_func,
-                              "dialogs/gradient_editor/split_segments_uniformly.html",
+                              GIMP_HELP_GRADIENT_EDITOR_SPLIT_UNIFORM,
 
                               GTK_STOCK_CANCEL,
                               gradient_editor_dialog_cancel_callback,

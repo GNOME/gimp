@@ -40,6 +40,7 @@
 #include "gimpcellrenderertoggle.h"
 #include "gimpcellrendererviewable.h"
 #include "gimpdnd.h"
+#include "gimphelp-ids.h"
 #include "gimplayertreeview.h"
 #include "gimppreviewrenderer.h"
 #include "gimpwidgets-constructors.h"
@@ -194,15 +195,23 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   item_view_class->remove_item     = gimp_layer_tree_view_remove_item;
   item_view_class->convert_item    = (GimpConvertItemFunc) gimp_layer_new_from_drawable;
 
-  item_view_class->new_desc             = _("New Layer");
-  item_view_class->duplicate_desc       = _("Duplicate Layer");
-  item_view_class->edit_desc            = _("Edit Layer Attributes");
-  item_view_class->delete_desc          = _("Delete Layer");
-  item_view_class->raise_desc           = _("Raise Layer");
-  item_view_class->raise_to_top_desc    = _("Raise Layer to Top");
-  item_view_class->lower_desc           = _("Lower Layer");
-  item_view_class->lower_to_bottom_desc = _("Lower Layer to Bottom");
-  item_view_class->reorder_desc         = _("Reorder Layer");
+  item_view_class->new_desc                = _("New Layer");
+  item_view_class->new_help_id             = GIMP_HELP_LAYER_NEW;
+  item_view_class->duplicate_desc          = _("Duplicate Layer");
+  item_view_class->duplicate_help_id       = GIMP_HELP_LAYER_DUPLICATE;
+  item_view_class->edit_desc               = _("Edit Layer Attributes");
+  item_view_class->edit_help_id            = GIMP_HELP_LAYER_EDIT;
+  item_view_class->delete_desc             = _("Delete Layer");
+  item_view_class->delete_help_id          = GIMP_HELP_LAYER_DELETE;
+  item_view_class->raise_desc              = _("Raise Layer");
+  item_view_class->raise_help_id           = GIMP_HELP_LAYER_RAISE;
+  item_view_class->raise_to_top_desc       = _("Raise Layer to Top");
+  item_view_class->raise_to_top_help_id    = GIMP_HELP_LAYER_RAISE_TO_TOP;
+  item_view_class->lower_desc              = _("Lower Layer");
+  item_view_class->lower_help_id           = GIMP_HELP_LAYER_LOWER;
+  item_view_class->lower_to_bottom_desc    = _("Lower Layer to Bottom");
+  item_view_class->lower_to_bottom_help_id = GIMP_HELP_LAYER_LOWER_TO_BOTTOM;
+  item_view_class->reorder_desc            = _("Reorder Layer");
 
   gimp_rgba_set (&black_color, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
   gimp_rgba_set (&white_color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
@@ -245,7 +254,7 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
   gtk_box_pack_start (GTK_BOX (hbox), view->paint_mode_menu, FALSE, FALSE, 0);
   gtk_widget_show (view->paint_mode_menu);
 
-  gimp_help_set_help_data (view->paint_mode_menu, 
+  gimp_help_set_help_data (view->paint_mode_menu,
 			   NULL, "#paint_mode_menu");
 
   /*  Preserve transparency toggle  */
@@ -287,7 +296,8 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
 
   view->anchor_button =
     gimp_editor_add_button (GIMP_EDITOR (view),
-                            GIMP_STOCK_ANCHOR, _("Anchor Floating Layer"), NULL,
+                            GIMP_STOCK_ANCHOR, _("Anchor Floating Layer"),
+                            GIMP_HELP_LAYER_ANCHOR,
                             G_CALLBACK (gimp_layer_tree_view_anchor_clicked),
                             NULL,
                             view);

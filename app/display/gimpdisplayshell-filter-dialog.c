@@ -28,6 +28,7 @@
 #include "core/gimpimage.h"
 
 #include "widgets/gimpeditor.h"
+#include "widgets/gimphelp-ids.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -123,7 +124,7 @@ make_dialog (ColorDisplayDialog *cdd)
 
   cdd->dialog = gimp_dialog_new (_("Color Display Filters"), "display_filters",
                                  gimp_standard_help_func,
-                                 "dialogs/display_filters/display_filters.html",
+                                 GIMP_HELP_DISPLAY_FILTER_DIALOG,
                                  GTK_WIN_POS_NONE,
                                  FALSE, TRUE, FALSE,
 
@@ -148,7 +149,7 @@ make_dialog (ColorDisplayDialog *cdd)
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
                                        GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
-				  GTK_POLICY_AUTOMATIC, 
+				  GTK_POLICY_AUTOMATIC,
 				  GTK_POLICY_AUTOMATIC);
   gtk_box_pack_start (GTK_BOX (hbox), scrolled_win, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_win);
@@ -240,7 +241,7 @@ make_dialog (ColorDisplayDialog *cdd)
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
                                        GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
-				  GTK_POLICY_AUTOMATIC, 
+				  GTK_POLICY_AUTOMATIC,
 				  GTK_POLICY_AUTOMATIC);
   gtk_container_add (GTK_CONTAINER (editor), scrolled_win);
   gtk_widget_show (scrolled_win);
@@ -329,7 +330,7 @@ color_display_cancel_callback (GtkWidget          *widget,
 
   gtk_widget_destroy (GTK_WIDGET (cdd->dialog));
   cdd->shell->filters_dialog = NULL;
-  
+
   if (cdd->modified)
     {
       list = cdd->shell->filters;
@@ -349,7 +350,7 @@ color_display_cancel_callback (GtkWidget          *widget,
     }
 }
 
-static void 
+static void
 color_display_update_up_and_down (ColorDisplayDialog *cdd)
 {
   GtkTreeModel *model;

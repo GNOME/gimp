@@ -142,7 +142,7 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TOOL_RECT_SELECT },
     "gimp-selection-editor",
-    GIMP_HELP_SELECT_DIALOG, NULL },
+    GIMP_HELP_SELECTION_DIALOG, NULL },
   { { N_("/File/Dialogs/Na_vigation..."), NULL,
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_NAVIGATION },
@@ -213,7 +213,7 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_WARNING },
     "gimp-error-console",
-    GIMP_HELP_ERROR_DIALOG, NULL },
+    GIMP_HELP_ERRORS_DIALOG, NULL },
 
 #ifdef ENABLE_DEBUG_ENTRIES
   MENU_BRANCH (N_("/File/D_ebug")),

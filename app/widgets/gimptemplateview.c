@@ -41,6 +41,7 @@
 #include "gimpcontainertreeview.h"
 #include "gimptemplateview.h"
 #include "gimpdnd.h"
+#include "gimphelp-ids.h"
 #include "gimppreviewrenderer.h"
 
 #include "gimp-intl.h"
@@ -169,7 +170,8 @@ gimp_template_view_new (GimpViewType     view_type,
   template_view->new_button =
     gimp_editor_add_button (GIMP_EDITOR (editor->view),
                             GTK_STOCK_NEW,
-                            _("Create a new template"), NULL,
+                            _("Create a new template"),
+                            GIMP_HELP_TEMPLATE_NEW,
                             G_CALLBACK (gimp_template_view_new_clicked),
                             NULL,
                             editor);
@@ -177,7 +179,8 @@ gimp_template_view_new (GimpViewType     view_type,
   template_view->duplicate_button =
     gimp_editor_add_button (GIMP_EDITOR (editor->view),
                             GIMP_STOCK_DUPLICATE,
-                            _("Duplicate the selected template"), NULL,
+                            _("Duplicate the selected template"),
+                            GIMP_HELP_TEMPLATE_DUPLICATE,
                             G_CALLBACK (gimp_template_view_duplicate_clicked),
                             NULL,
                             editor);
@@ -185,7 +188,8 @@ gimp_template_view_new (GimpViewType     view_type,
   template_view->edit_button =
     gimp_editor_add_button (GIMP_EDITOR (editor->view),
                             GIMP_STOCK_EDIT,
-                            _("Edit the selected template"), NULL,
+                            _("Edit the selected template"),
+                            GIMP_HELP_TEMPLATE_EDIT,
                             G_CALLBACK (gimp_template_view_edit_clicked),
                             NULL,
                             editor);
@@ -194,7 +198,7 @@ gimp_template_view_new (GimpViewType     view_type,
     gimp_editor_add_button (GIMP_EDITOR (editor->view),
                             GIMP_STOCK_IMAGE,
                             _("Create a new image from the selected template"),
-                            NULL,
+                            GIMP_HELP_TEMPLATE_IMAGE_NEW,
                             G_CALLBACK (gimp_template_view_create_clicked),
                             NULL,
                             editor);
@@ -202,7 +206,8 @@ gimp_template_view_new (GimpViewType     view_type,
   template_view->delete_button =
     gimp_editor_add_button (GIMP_EDITOR (editor->view),
                             GTK_STOCK_DELETE,
-                            _("Delete the selected template"), NULL,
+                            _("Delete the selected template"),
+                            GIMP_HELP_TEMPLATE_DELETE,
                             G_CALLBACK (gimp_template_view_delete_clicked),
                             NULL,
                             editor);

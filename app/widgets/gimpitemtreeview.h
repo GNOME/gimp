@@ -106,13 +106,21 @@ struct _GimpItemTreeViewClass
 
   /*  various descriptive strings for tooltips and undo steps  */
   const gchar          *new_desc;
+  const gchar          *new_help_id;
   const gchar          *duplicate_desc;
+  const gchar          *duplicate_help_id;
   const gchar          *edit_desc;
+  const gchar          *edit_help_id;
   const gchar          *delete_desc;
+  const gchar          *delete_help_id;
   const gchar          *raise_desc;
+  const gchar          *raise_help_id;
   const gchar          *raise_to_top_desc;
+  const gchar          *raise_to_top_help_id;
   const gchar          *lower_desc;
+  const gchar          *lower_help_id;
   const gchar          *lower_to_bottom_desc;
+  const gchar          *lower_to_bottom_help_id;
   const gchar          *reorder_desc;
 };
 
