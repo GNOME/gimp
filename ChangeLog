@@ -1,3 +1,10 @@
+Tue May 11 22:32:22 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* tools/pdbgen/pdb/color.pdb
+	* app/color_cmds.c: fixed some cut'n'paste errors
+
+	* plug-ins/script-fu/scrips/slide.scm: do the rotation correctly
+
 Tue May 11 11:43:36 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* modules/colorsel_water.c: small change not worth a ChangeLog entry

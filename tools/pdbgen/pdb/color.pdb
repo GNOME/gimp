@@ -496,7 +496,7 @@ HELP
 		  'PixelRegion srcPR, destPR', 'int x1, y1, x2, y2' ],
 	code => <<'CODE'
 {
-  if (! gimp_drawable_indexed (drawable))
+  if (gimp_drawable_indexed (drawable))
     success = FALSE;
   else
     {
@@ -670,7 +670,7 @@ HELP
 		  'PixelRegion srcPR, destPR', 'int x1, y1, x2, y2' ],
 	code => <<'CODE'
 {
-  if (! gimp_drawable_indexed (drawable))
+  if (gimp_drawable_indexed (drawable))
     success = FALSE;
   else
     {
@@ -732,7 +732,7 @@ HELP
 		  'PixelRegion srcPR, destPR' ],
 	code => <<'CODE'
 {
-  if (! gimp_drawable_indexed (drawable) || (low_threshold >= high_threshold))
+  if (gimp_drawable_indexed (drawable) || (low_threshold >= high_threshold))
     success = FALSE;
   else
     {

@@ -799,7 +799,7 @@ color_balance_invoker (Argument *args)
 
   if (success)
     {
-      if (! gimp_drawable_indexed (drawable))
+      if (gimp_drawable_indexed (drawable))
 	success = FALSE;
       else
 	{
@@ -1089,7 +1089,7 @@ hue_saturation_invoker (Argument *args)
 
   if (success)
     {
-      if (! gimp_drawable_indexed (drawable))
+      if (gimp_drawable_indexed (drawable))
 	success = FALSE;
       else
 	{
@@ -1197,7 +1197,7 @@ threshold_invoker (Argument *args)
 
   if (success)
     {
-      if (! gimp_drawable_indexed (drawable) || (low_threshold >= high_threshold))
+      if (gimp_drawable_indexed (drawable) || (low_threshold >= high_threshold))
 	success = FALSE;
       else
 	{

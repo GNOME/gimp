@@ -16,12 +16,14 @@
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;
 ;
-; slide.scm   version 0.30   12/13/97
+; slide.scm   version 0.40   99/5/11
 ;
 ; CHANGE-LOG:
 ; 0.20 - first public release
 ; 0.30 - some code cleanup
 ;        now uses the rotate plug-in to improve speed
+; 0.40 - changes to work with gimp-1.1 
+;        if the image was rotated, rotate the whole thing back when finished
 ;
 ; !still in development!
 ; TODO: - change the script so that the film is rotated, not the image
@@ -29,7 +31,7 @@
 ;       - make 'add background' an option
 ;       - ?
 ;
-; Copyright (C) 1997 Sven Neumann (neumanns@uni-duesseldorf.de) 
+; Copyright (C) 1997,1999 Sven Neumann (neumanns@uni-duesseldorf.de) 
 ;  
 ; makes your picture look like a slide
 ;
@@ -199,11 +201,20 @@
     (gimp-threshold film-mask 127 255)
 
     (gimp-image-add-layer image film-layer -1)
-    (gimp-image-add-layer-mask image film-layer film-mask))
+    (gimp-image-add-layer-mask image film-layer film-mask)
+    (gimp-image-remove-layer-mask image film-layer APPLY))
 
 ; reorder the layers
   (gimp-image-raise-layer image pic-layer)
   (gimp-image-raise-layer image pic-layer)
+
+; eventually rotate the whole thing back
+  (if (< ratio 1) 
+      (plug-in-rotate 1
+		      image
+		      pic-layer
+		      3
+		      TRUE))
 
 ; clean up after the script
   (gimp-selection-none image)
@@ -216,9 +227,9 @@
 (script-fu-register "script-fu-slide"
 		    "<Image>/Script-Fu/Decor/Slide"
 		    "Gives the image the look of a slide"
-		    "Sven Neumann (neumanns@uni-duesseldorf.de)"
+		    "Sven Neumann <sven@gimp.org>"
 		    "Sven Neumann"
-		    "12/13/1997"
+		    "1999/5/11"
 		    "RGB GRAY"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
