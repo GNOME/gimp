@@ -1,3 +1,7 @@
+Sun Aug 29 20:40:34 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
+
+	* plug-ins/common/psp.c: Add include <sys/types.h>.
+	
 Sun Aug 29 17:54:58 BST 1999 Adam D. Moss <adam@gimp.org>
 
 	* app/convert.c: *->I: Deterministic colour dithering
