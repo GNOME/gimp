@@ -1,3 +1,17 @@
+2001-09-09  Sven Neumann  <sven@gimp.org>
+
+	* app/devices.c
+	* app/tools/gimppainttool.c: readded the old code here in case the
+	old GDK variable is defined. Since GTK+-1.3.7 is finally out, we want 
+	to try to keep GIMP compile against this release as long as possible.
+
+	* plug-ins/common/gif.c: applied a patch from David Odin 
+	<dindinx@wanadoo.fr> that brings the GIF plug-in back to live.
+	
+	* plug-ins/common/.cvsignore
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/plugin-defs.pl: build it again.
+
 2001-09-08  Daniel Egger  <egger@interearth.com>
 
 	* app/devices.c

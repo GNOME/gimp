@@ -314,28 +314,27 @@ typedef struct
 /* Declare some local functions.
  */
 static void   query                    (void);
-static void   run                      (gchar      *name,
-					gint        nparams,
-					GimpParam  *param,
-					gint       *nreturn_vals,
-					GimpParam **return_vals);
-static gint   save_image               (gchar      *filename,
-					gint32      image_ID,
-					gint32      drawable_ID,
-					gint32      orig_image_ID);
+static void   run                      (gchar          *name,
+					gint            nparams,
+					GimpParam      *param,
+					gint           *nreturn_vals,
+					GimpParam     **return_vals);
+static gint   save_image               (gchar          *filename,
+					gint32          image_ID,
+					gint32          drawable_ID,
+					gint32          orig_image_ID);
 
-static gboolean boundscheck            (gint32      image_ID);
+static gboolean boundscheck            (gint32          image_ID);
 static gboolean badbounds_dialog       (void);
 
-static void   cropok_callback          (GtkWidget  *widget,
-					gpointer    data);
+static void   cropok_callback          (GtkWidget      *widget,
+					gpointer        data);
 
-static gint   save_dialog              (gint32      image_ID);
+static gint   save_dialog              (gint32          image_ID);
 
-static void   save_ok_callback         (GtkWidget  *widget,
-					gpointer    data);
-static void   comment_entry_callback   (GtkWidget  *widget,
-					gpointer    data);
+static void   save_ok_callback         (GtkWidget      *widget,
+					gpointer        data);
+static void   comment_entry_callback   (GtkTextBuffer  *buffer);
 
 
 static gboolean comment_was_edited = FALSE;
@@ -1198,21 +1197,21 @@ badbounds_dialog (void)
 static gint
 save_dialog (gint32 image_ID)
 {
-  GtkWidget *dlg;
-  GtkWidget *main_vbox;
-  GtkWidget *toggle;
-  GtkWidget *label;
-  GtkWidget *spinbutton;
-  GtkObject *adj;
-  GtkWidget *text;
-  GtkWidget *frame;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *disposal_option_menu;
-  GtkWidget *com_table;
-  GtkWidget *vscrollbar;
+  GtkWidget     *dlg;
+  GtkWidget     *main_vbox;
+  GtkWidget     *toggle;
+  GtkWidget     *label;
+  GtkWidget     *spinbutton;
+  GtkObject     *adj;
+  GtkWidget     *text_view;
+  GtkTextBuffer *text_buffer; 
+  GtkWidget     *frame;
+  GtkWidget     *vbox;
+  GtkWidget     *hbox;
+  GtkWidget     *disposal_option_menu;
+  GtkWidget     *scrolled_window;
 #ifdef FACEHUGGERS
-  GimpParasite* GIF2_CMNT;
+  GimpParasite  *GIF2_CMNT;
 #endif
 
   gint32 nlayers;
@@ -1268,16 +1267,24 @@ save_dialog (gint32 image_ID)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gsvals.save_comment);
   gtk_widget_show (toggle);
 
-  com_table = gtk_table_new (1, 1, FALSE);
-  gtk_box_pack_start (GTK_BOX (hbox), com_table, TRUE, TRUE, 0);
+  /* the comment text_view in a gtk_scrolled_window */
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_AUTOMATIC);
+  gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 4);
+  gtk_box_pack_start_defaults (GTK_BOX (hbox), scrolled_window);
+  gtk_widget_show (scrolled_window);
 
-  text = gtk_text_new (NULL, NULL);
-  gtk_text_set_editable (GTK_TEXT (text), TRUE);
-  gtk_widget_set_usize (text, 80,3);
-  gtk_table_attach (GTK_TABLE (com_table), text, 0, 1, 0, 1,
-                    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
-                    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
-  
+  text_buffer = gtk_text_buffer_new (NULL);
+
+  text_view = gtk_text_view_new_with_buffer (text_buffer);
+  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
+  gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
+  gtk_widget_show (text_view);
+
+  g_object_unref (G_OBJECT (text_buffer));
+
   if (globalcomment != NULL)
     {
       g_free (globalcomment);
@@ -1302,17 +1309,10 @@ save_dialog (gint32 image_ID)
 #endif
 
   if (globalcomment)
-    gtk_text_insert (GTK_TEXT (text), NULL, NULL, NULL, globalcomment, -1);
-  gtk_signal_connect (GTK_OBJECT (text), "changed",
-		      GTK_SIGNAL_FUNC (comment_entry_callback),
-		      NULL);
-
-  vscrollbar = gtk_vscrollbar_new (GTK_TEXT (text)->vadj);
-  gtk_table_attach (GTK_TABLE (com_table), vscrollbar, 1, 2, 0, 1,
-		    GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (vscrollbar);
-  gtk_widget_show (text);
-  gtk_widget_show (com_table);
+    gtk_text_buffer_set_text (text_buffer, globalcomment, -1);
+  g_signal_connect (G_OBJECT (text_buffer), "changed",
+                    G_CALLBACK (comment_entry_callback),
+                    NULL);
 
   gtk_widget_show (hbox);
 
@@ -2438,31 +2438,33 @@ save_ok_callback (GtkWidget *widget,
 }
 
 static void
-comment_entry_callback (GtkWidget *widget,
-			gpointer   data)
+comment_entry_callback (GtkTextBuffer *buffer)
 {
-  gint ssize;
-  gchar* str;
+  GtkTextIter   start_iter;
+  GtkTextIter   end_iter;
+  gchar        *text;
 
-  str = gtk_editable_get_chars (GTK_EDITABLE (widget), 0, -1);
-  ssize = strlen (str);
+  gtk_text_buffer_get_bounds (buffer, &start_iter, &end_iter);
+  gtk_text_iter_backward_char (&end_iter);
 
-  /* Temporary kludge for overlength strings - just return */
-  if (ssize > 240)
-    {
-      g_message (_("GIF save: Your comment string is too long.\n"));
-      g_free (str);
-      return;
-    }
+  text = gtk_text_buffer_get_text (buffer, &start_iter, &end_iter, FALSE);
 
-  if (globalcomment != NULL) g_free (globalcomment);
-  globalcomment = g_malloc (ssize + 1);
+  if (strlen (text) > 240)
+  {
+    g_message (_("The default comment is limited to %d characters."), 240);
 
-  /*strcpy(globalcomment, gtk_entry_get_text (GTK_ENTRY (widget)));*/
-  strcpy (globalcomment, str);
-  g_free (str);
+    gtk_text_buffer_get_iter_at_offset (buffer, &start_iter, 240 - 1);
+    gtk_text_buffer_get_end_iter (buffer, &end_iter);
 
-  comment_was_edited = TRUE;
+    /*  this calls us recursivaly, but in the else branch
+     */
+    gtk_text_buffer_delete (buffer, &start_iter, &end_iter);
+  } else
+  {
+    if (globalcomment != NULL) g_free (globalcomment);
+    globalcomment = g_strdup(text);
+    comment_was_edited = TRUE;
+  }
 
-  /*g_print ("COMMENT: %s\n",globalcomment);*/
+  g_free (text);
 }

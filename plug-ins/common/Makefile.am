@@ -67,6 +67,7 @@ libexec_PROGRAMS = @STRIP_BEGIN@ \
 	gee \
 	gee_zoom \
 	gicon \
+	gif \
 	gifload \
 	gih \
 	glasstile \
@@ -790,6 +791,20 @@ gicon_SOURCES = @STRIP_BEGIN@ \
 @STRIP_END@
 
 gicon_LDADD = @STRIP_BEGIN@ \
+	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(GTK_LIBS)							\
+	$(INTLLIBS)							\
+@STRIP_END@
+
+gif_SOURCES = @STRIP_BEGIN@ \
+	gif.c	\
+@STRIP_END@
+
+gif_LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
