@@ -1,3 +1,11 @@
+2000-08-28  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpchainbutton.[ch]: emit a "toggled" signal. This
+	is rarely useful since in most cases you want to connect to 
+	the "changed" signal of the attached size_entries since you can
+	not know otherwise which of the attached entries needs to be
+	adjusted. Providing the signal is good style nevertheless.
+
 2000-08-27  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimp.c: NULL is the default log domain, not "".

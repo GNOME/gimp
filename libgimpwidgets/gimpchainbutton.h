@@ -72,7 +72,9 @@ struct _GimpChainButton
 
 struct _GimpChainButtonClass
 {
-  GtkButtonClass parent_class;
+  GtkTableClass parent_class;
+
+  void (* toggled)  (GimpChainButton *gcb);
 };
 
 

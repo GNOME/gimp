@@ -59,7 +59,16 @@ static gint gimp_chain_button_draw_lines       (GtkWidget       *widget,
 						GdkEventExpose  *eevent,
 						GimpChainButton *gcb);
 
+enum
+{
+  TOGGLED,
+  LAST_SIGNAL
+};
+
+static guint gimp_chain_button_signals[LAST_SIGNAL] = { 0 };
+
 static GtkTableClass *parent_class = NULL;
+
 
 static void
 gimp_chain_button_destroy (GtkObject *object)
@@ -94,6 +103,19 @@ gimp_chain_button_class_init (GimpChainButtonClass *class)
   parent_class = gtk_type_class (gtk_table_get_type ());
 
   object_class->destroy = gimp_chain_button_destroy;
+
+  gimp_chain_button_signals[TOGGLED] = 
+    gtk_signal_new ("toggled",
+		    GTK_RUN_FIRST,
+		    object_class->type,
+		    GTK_SIGNAL_OFFSET (GimpChainButtonClass,
+				       toggled),
+		    gtk_signal_default_marshaller, GTK_TYPE_NONE, 0);
+
+  gtk_object_class_add_signals (object_class, gimp_chain_button_signals, 
+				LAST_SIGNAL);
+
+  class->toggled = NULL;
 
   widget_class->realize = gimp_chain_button_realize;
 }
@@ -306,6 +328,8 @@ gimp_chain_button_clicked_callback (GtkWidget       *widget,
     gtk_pixmap_set (GTK_PIXMAP(gcb->pixmap), gcb->chain, gcb->chain_mask);
   else
     gtk_pixmap_set (GTK_PIXMAP(gcb->pixmap), gcb->broken, gcb->broken_mask);
+
+  gtk_signal_emit (GTK_OBJECT (gcb), gimp_chain_button_signals[TOGGLED]);
 }
 
 static gint
