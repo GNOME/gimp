@@ -48,14 +48,16 @@
  * V 1.09, PK, 15-Feb-2000: Force showpage on EPS-files
  *                          Add "RunLength" compression
  *                          Fix problem with "Level 2" toggle
- * V 1.10, PK, 13-Mar-2000: For load EPSF, allow negative Bounding Box Values
+ * V 1.10, PK, 15-Mar-2000: For load EPSF, allow negative Bounding Box Values
  *                          Save PS: dont start lines of image data with %%
  *                          to prevent problems with stupid PostScript
  *                          analyzer programs (Stanislav Brabec)
+ *                          Add BeginData/EndData comments
+ *                          Save PS: Set default rotation to 0
  */
-#define VERSIO 1.09
-static char dversio[] = "v1.10  13-Mar-2000";
-static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.10  13-Mar-2000";
+#define VERSIO 1.10
+static char dversio[] = "v1.10  15-Mar-2000";
+static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.10  15-Mar-2000";
 
 #include "config.h"
 
@@ -138,7 +140,7 @@ static PSSaveVals psvals =
   5.0, 5.0,       /* Offset */
   1,              /* Unit is mm */
   1,              /* Keep edge ratio */
-  90,             /* Rotate */
+  0,              /* Rotate */
   2,              /* PostScript Level */
   0,              /* Encapsulated PostScript flag */
   0,              /* Preview flag */
@@ -446,6 +448,51 @@ compress_packbits (int nin,
    while (nliteral-- > 0) *(dst++) = *(run_start++);
  }
  *nout = dst - start_dst;
+}
+
+
+typedef struct
+{
+  long eol;
+  long begin_data;
+} PS_DATA_POS;
+
+static PS_DATA_POS ps_data_pos = { 0, 0 };
+
+static void
+ps_begin_data (FILE *ofp)
+
+{
+                   /* %%BeginData: 123456789012 ASCII Bytes */
+ fprintf (ofp, "%s", "%%BeginData:                         ");
+ fflush (ofp);
+ ps_data_pos.eol = ftell (ofp);
+ fprintf (ofp, "\n");
+ fflush (ofp);
+ ps_data_pos.begin_data = ftell (ofp);
+}
+
+static void
+ps_end_data (FILE *ofp)
+
+{long end_data;
+ char s[64];
+
+ if ((ps_data_pos.begin_data > 0) && (ps_data_pos.eol > 0))
+ {
+   fflush (ofp);
+   end_data = ftell (ofp);
+   if (end_data > 0)
+   {
+     sprintf (s, "%ld ASCII Bytes", end_data-ps_data_pos.begin_data);
+     if (fseek (ofp, ps_data_pos.eol - strlen (s), SEEK_SET) == 0)
+     {
+       fprintf (ofp, "%s", s);
+       fseek (ofp, 0, SEEK_END);
+     }
+   }
+ }
+ fprintf (ofp, "%s\n", "%%EndData");
 }
 
 
@@ -2018,6 +2065,7 @@ save_gray  (FILE   *ofp,
     /* Allocate buffer for packbits data. Worst case: Less than 1% increase */
     packb = (guchar *)g_malloc ((width * 105)/100+2);
   }
+  ps_begin_data (ofp);
   fprintf (ofp, "image\n");
 
 #define GET_GRAY_TILE(begin) \
@@ -2054,6 +2102,7 @@ save_gray  (FILE   *ofp,
     ascii85_out (128, ofp); /* Write EOD of RunLengthDecode filter */
     ascii85_done (ofp);
   }
+  ps_end_data (ofp);
   fprintf (ofp, "showpage\n");
   g_free (data);
   if (packb) g_free (packb);
@@ -2119,6 +2168,7 @@ save_bw (FILE   *ofp,
     /* Allocate buffer for packbits data. Worst case: Less than 1% increase */
     packb = (guchar *)g_malloc (((nbsl+1) * 105)/100+2);
   }
+  ps_begin_data (ofp);
   fprintf (ofp, "image\n");
 
 #define GET_BW_TILE(begin) \
@@ -2175,6 +2225,7 @@ save_bw (FILE   *ofp,
     ascii85_out (128, ofp); /* Write EOD of RunLengthDecode filter */
     ascii85_done (ofp);
   }
+  ps_end_data (ofp);
   fprintf (ofp, "showpage\n");
 
   g_free (hex_scanline);
@@ -2277,6 +2328,7 @@ save_index (FILE   *ofp,
     packb = (guchar *)g_malloc ((width * 105)/100+2);
     plane = (guchar *)g_malloc (width);
   }
+  ps_begin_data (ofp);
   fprintf (ofp, "colorimage\n");
 
 #define GET_INDEX_TILE(begin) \
@@ -2318,6 +2370,7 @@ save_index (FILE   *ofp,
       if ((l_run_mode != RUN_NONINTERACTIVE) && ((i % 20) == 0))
 	gimp_progress_update ((double) i / (double) height);
     }
+  ps_end_data (ofp);
   fprintf (ofp, "showpage\n");
 
   g_free (data);
@@ -2390,6 +2443,7 @@ save_rgb (FILE   *ofp,
     packb = (guchar *)g_malloc ((width * 105)/100+2);
     plane = (guchar *)g_malloc (width);
   }
+  ps_begin_data (ofp);
   fprintf (ofp, "colorimage\n");
 
 #define GET_RGB_TILE(begin) \
@@ -2439,6 +2493,7 @@ save_rgb (FILE   *ofp,
       if ((l_run_mode != RUN_NONINTERACTIVE) && ((i % 20) == 0))
 	gimp_progress_update ((double) i / (double) height);
     }
+  ps_end_data (ofp);
   fprintf (ofp, "showpage\n");
   g_free (data);
   if (packb != NULL) g_free (packb);
@@ -2700,7 +2755,7 @@ save_dialog (void)
   /* Image Size */
   frame = gtk_frame_new (_("Image Size"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start (GTK_BOX (main_vbox[0]), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox[0]), frame, TRUE, TRUE, 0);
 
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);

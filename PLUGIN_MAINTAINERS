@@ -170,8 +170,8 @@ SIZE       :  12.5 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : compose
-AUTHOR     : Peter Kirchgessner
-MAINTAINER : 
+AUTHOR     : Peter Kirchgessner <peter@kirchgessner.net>
+MAINTAINER : Peter Kirchgessner <peter@kirchgessner.net>
 SIZE       :  27.4 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
@@ -206,8 +206,8 @@ SIZE       :  26.0 kB  in  2 files (only C files counted)
 COMMENT    : 
 -----------
 NAME       : decompose
-AUTHOR     : Peter Kirchgessner
-MAINTAINER : 
+AUTHOR     : Peter Kirchgessner <peter@kirchgessner.net>
+MAINTAINER : Peter Kirchgessner <peter@kirchgessner.net>
 SIZE       :  23.9 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
@@ -278,14 +278,14 @@ SIZE       :  19.8 kB  in  3 files (only C files counted)
 COMMENT    : 
 -----------
 NAME       : film
-AUTHOR     : Peter Kirchgessner
-MAINTAINER : 
+AUTHOR     : Peter Kirchgessner <peter@kirchgessner.net>
+MAINTAINER : Peter Kirchgessner <peter@kirchgessner.net>
 SIZE       :  45.4 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : fits
-AUTHOR     : Peter Kirchgessner
-MAINTAINER : 
+AUTHOR     : Peter Kirchgessner <peter@kirchgessner.net>
+MAINTAINER : Peter Kirchgessner <peter@kirchgessner.net>
 SIZE       : 106.1 kB  in  2 files (only C files counted)
 COMMENT    : 
 -----------
@@ -524,8 +524,8 @@ SIZE       :  26.1 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : mapcolor
-AUTHOR     : Peter Kirchgessner
-MAINTAINER : 
+AUTHOR     : Peter Kirchgessner <peter@kirchgessner.net>
+MAINTAINER : Peter Kirchgessner <peter@kirchgessner.net>
 SIZE       :  13.9 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
@@ -675,7 +675,7 @@ COMMENT    : sourceforge
 -----------
 NAME       : ps
 AUTHOR     : Peter Kirchgessner <peter@kirchgessner.net>
-MAINTAINER : 
+MAINTAINER : Peter Kirchgessner <peter@kirchgessner.net>
 SIZE       :  73.2 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
@@ -830,8 +830,8 @@ SIZE       :  10.9 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : sunras
-AUTHOR     : Peter Kirchgessner
-MAINTAINER : 
+AUTHOR     : Peter Kirchgessner <peter@kirchgessner.net>
+MAINTAINER : Peter Kirchgessner <peter@kirchgessner.net>
 SIZE       :  40.0 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
@@ -986,8 +986,8 @@ SIZE       :  20.6 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : xwd
-AUTHOR     : Peter Kirchgessner
-MAINTAINER : 
+AUTHOR     : Peter Kirchgessner <peter@kirchgessner.net>
+MAINTAINER : Peter Kirchgessner <peter@kirchgessner.net>
 SIZE       :  56.1 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------

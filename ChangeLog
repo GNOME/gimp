@@ -1,3 +1,9 @@
+2000-04-05  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/ps.c: applied patch provided by Peter
+	Kirchgessner, which sets the default rotation back to 0 and
+	adds %%BeginData/%%EndData comments on save.
+	
 2000-04-05  Nick Lamb <njl195@zepler.org.uk>
 
 	* plug-ins/common/pat.c: Don't claim to export ALPHA or to be
