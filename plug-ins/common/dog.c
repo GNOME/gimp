@@ -94,8 +94,6 @@ static void      compute_difference   (GimpDrawable *drawable,
 static void      normalize            (GimpDrawable *drawable,
                                        guint         maxval);
 
-static void      invert               (GimpDrawable *drawable);
-
 static void      dog                  (GimpDrawable *drawable,
                                        gdouble       inner,
                                        gdouble       outer,
@@ -133,10 +131,10 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 static DoGValues dogvals =
 {
-  5.0,  /* inner radius  */
-  10.0, /* outer radius  */
+  3.0,  /* inner radius  */
+  1.0, /* outer radius  */
   TRUE, /* normalize */
-  FALSE /* invert */
+  TRUE /* invert */
 };
 
 GtkWidget *coord;
@@ -167,7 +165,7 @@ query (void)
                           "Spencer Kimball, Peter Mattis, Sven Neumann, William Skaggs",
                           "1995-2004",
                           N_("Difference of Gaussians..."),
-                          "RGB*",
+                          "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
@@ -484,13 +482,7 @@ dog (GimpDrawable *drawable,
     }
 
   if (dogvals.invert)
-    {
-      invert (drawable);
-      gimp_drawable_flush (drawable);
-      gimp_drawable_merge_shadow (drawable_id, TRUE);
-      gimp_drawable_update (drawable_id, x1, y1, width, height);
-    }
-
+    gimp_invert (drawable_id);
 
 }
 
@@ -580,65 +572,6 @@ compute_difference (GimpDrawable *drawable,
     }
 }
 
-
-static void
-invert (GimpDrawable *drawable)
-{
-  GimpPixelRgn src_rgn, dest_rgn;
-  gint         bpp;
-  gpointer     pr;
-  gint         x, y, k;
-  gint         x1, y1, x2, y2;
-  gboolean     has_alpha;
-
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  bpp = drawable->bpp;
-  has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
-
-  gimp_pixel_rgn_init (&src_rgn,
-                       drawable, 0, 0, drawable->width, drawable->height,
-                       FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn,
-                       drawable, 0, 0, drawable->width, drawable->height,
-                       TRUE, TRUE);
-
-  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
-    {
-      guchar *src  = src_rgn.data;
-      guchar *dest = dest_rgn.data;
-      gint    row  = src_rgn.y - y1;
-
-      for (y = 0; y < src_rgn.h; y++, row++)
-        {
-          guchar *s   = src;
-          guchar *d   = dest;
-          gint    col = src_rgn.x - x1;
-
-          for (x = 0; x < src_rgn.w; x++, col++)
-            {
-
-              if (has_alpha)
-                {
-                  for (k = 0; k < bpp-1; k++)
-                    d[k] = 255 - s[k];
-                }
-              else
-                {
-                  for (k = 0; k < bpp; k++)
-                    d[k] = 255 - s[k];
-                }
-
-              s += bpp;
-              d += bpp;
-            }
-
-          src += src_rgn.rowstride;
-          dest += dest_rgn.rowstride;
-        }
-    }
-}
 
 static void
 normalize (GimpDrawable *drawable,
@@ -1126,17 +1059,44 @@ preview_update_src_view (GtkWidget *widget,
   GdkPixbuf *pixbuf;
   gint       x0, y0;
   gint       w = PREVIEWSIZE;
+  gint       bpp = gimp_drawable_bpp (preview->src_id);
+  gboolean   has_alpha = gimp_drawable_has_alpha (preview->src_id);
+  gint       k;
+  guchar    *pixdata;
+  guchar    *src;
 
   x0 = gtk_adjustment_get_value (GTK_ADJUSTMENT (preview->hadjust));
   y0 = gtk_adjustment_get_value (GTK_ADJUSTMENT (preview->vadjust));
   gimp_pixel_rgn_get_rect (&preview->src_rgn, preview->src_buffer,
                            x0, y0, w, w);
-  pixbuf = gdk_pixbuf_new_from_data (preview->src_buffer,
-                                     GDK_COLORSPACE_RGB,
-                                     gimp_drawable_has_alpha (preview->src_id),
-                                     8, w, w,
-                                     w*gimp_drawable_bpp (preview->src_id),
-                                     NULL, NULL);
+
+  /* it sucks that GdkPixbuf does not handle grayscale images */
+  if (bpp == 1 || bpp == 2)
+    {
+      pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
+                               has_alpha, 8, w, w);
+      pixdata = gdk_pixbuf_get_pixels (pixbuf);
+      src = preview->src_buffer;
+
+      for (k = 0; k < w * w; k++)
+        {
+          *(pixdata++) = *src;
+          *(pixdata++) = *src;
+          *(pixdata++) = *(src++);
+          if (has_alpha)
+            {
+              *(pixdata++) = *(src++);
+            }
+        }
+    }
+  else
+    {
+      pixbuf = gdk_pixbuf_new_from_data (preview->src_buffer,
+                                         GDK_COLORSPACE_RGB,
+                                         has_alpha, 8, w, w,
+                                         w*bpp, NULL, NULL);
+    }
+
   gtk_image_set_from_pixbuf (GTK_IMAGE (preview->sourceimage), pixbuf);
   g_object_unref (pixbuf);
 }
@@ -1150,13 +1110,16 @@ preview_update_preview (GtkWidget *widget,
   GdkPixbuf *pixbuf;
   gint       x0, y0;
   gint       w = PREVIEWSIZE;
-  gint       bpp;
+  gint       bpp = gimp_drawable_bpp (preview->preview_id);
+  gint       has_alpha = gimp_drawable_has_alpha (preview->preview_id);
+  guchar    *pixdata;
+  guchar    *src;
+  gint       k;
 
   dogvals.preview_x0 = x0
     = gtk_adjustment_get_value (GTK_ADJUSTMENT (preview->hadjust));
   dogvals.preview_y0 = y0
     = gtk_adjustment_get_value (GTK_ADJUSTMENT (preview->vadjust));
-  bpp = gimp_drawable_bpp (preview->preview_id);
 
 
   gimp_pixel_rgn_get_rect (&preview->src_rgn, preview->preview_buffer,
@@ -1171,12 +1134,35 @@ preview_update_preview (GtkWidget *widget,
 
   gimp_pixel_rgn_get_rect (&preview->preview_rgn, preview->preview_buffer,
                            0, 0, w, w);
-  pixbuf = gdk_pixbuf_new_from_data (preview->preview_buffer,
-                                     GDK_COLORSPACE_RGB,
-                                     gimp_drawable_has_alpha (preview->preview_id),
-                                     8, w, w,
-                                     w*bpp,
-                                     NULL, NULL);
+
+  /* it sucks that GdkPixbuf does not handle grayscale */
+  if (bpp == 1 || bpp == 2)
+    {
+      pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
+                               has_alpha, 8, w, w);
+      pixdata = gdk_pixbuf_get_pixels (pixbuf);
+      src = preview->preview_buffer;
+
+      for (k = 0; k < w * w; k++)
+        {
+          *(pixdata++) = *src;
+          *(pixdata++) = *src;
+          *(pixdata++) = *(src++);
+          if (has_alpha)
+            {
+              *(pixdata++) = *(src++);
+            }
+        }
+    }
+  else
+    {
+      pixbuf = gdk_pixbuf_new_from_data (preview->preview_buffer,
+                                         GDK_COLORSPACE_RGB,
+                                         has_alpha, 8, w, w,
+                                         w*bpp,
+                                         NULL, NULL);
+    }
+
   gtk_image_set_from_pixbuf (GTK_IMAGE (preview->previewimage), pixbuf);
   g_object_unref (pixbuf);
 }

@@ -1,3 +1,9 @@
+2004-07-05  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/common/dog.c: improved defaults.  use gimp_invert()
+	instead of rolling own.  Use nasty hack to get previews to
+	work with grayscale images.  Accept grayscale images.
+
 2004-07-05  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdata.[ch] (gimp_data_create_filename): Removed the
