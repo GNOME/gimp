@@ -13,7 +13,12 @@ aclocal.m4
 gimptool-1.3
 gimp-1.3.pc
 gimpui-1.3.pc
-intl
+intltool-extract
+intltool-extract.in
+intltool-merge
+intltool-merge.in
+intltool-update
+intltool-update.in
 config.h.in
 stamp-h.in
 ABOUT-NLS
