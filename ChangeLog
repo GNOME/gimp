@@ -1,3 +1,10 @@
+2004-10-27  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gfig/gfig-bezier.[ch]: added a notebook page for the
+	bezier tool options instead of yet another popup window.
+
+	* plug-ins/gfig/gfig-dialog.c: modified accordingly and HIGed a bit.
+
 2004-10-27  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/core/gimpdrawable-transform.c: made the fixed point used in

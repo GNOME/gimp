@@ -190,9 +190,6 @@ static void      file_chooser_response     (GtkFileChooser *chooser,
 static GtkWidget *but_with_pix             (const gchar  *stock_id,
                                             GSList      **group,
                                             gint          baction);
-static gint     bezier_button_press        (GtkWidget      *widget,
-                                            GdkEventButton *event,
-                                            gpointer        data);
 static void     paint_combo_callback       (GtkWidget *widget,
                                             gpointer   data);
 
@@ -928,11 +925,9 @@ draw_buttons (GtkWidget *ww)
   tool_options_spiral (notebook, button);
 
   button = but_with_pix (GFIG_STOCK_BEZIER, &group, BEZIER);
-  g_signal_connect (button, "button_press_event",
-                    G_CALLBACK (bezier_button_press),
-                    NULL);
   TABLE_APPEND (button, _("Create bezier curve. "
                           "Shift + Button ends object creation."));
+  tool_options_bezier (notebook, button);
 
   SKIP_ROW;
 
@@ -1256,15 +1251,15 @@ static void
 options_dialog_callback (GtkWidget *widget,
                          gpointer   data)
 {
-  GtkWidget *options_dlg;
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
   GtkWidget *table;
   GtkWidget *toggle;
-  GtkWidget *vbox;
   GtkObject *size_data;
   GtkWidget *scale;
   GtkObject *scale_data;
 
-  options_dlg = gimp_dialog_new (_("Options"), "gfig",
+  dialog = gimp_dialog_new (_("Options"), "gfig",
                               NULL, 0,
                               gimp_standard_help_func, HELP_ID,
 
@@ -1272,14 +1267,14 @@ options_dialog_callback (GtkWidget *widget,
 
                               NULL);
 
-  vbox = GTK_DIALOG (options_dlg)->vbox;
-
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-
+  main_vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
 
   /* Put buttons in */
   toggle = gtk_check_button_new_with_label (_("Show position"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 6);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &selvals.showpos);
@@ -1289,7 +1284,7 @@ options_dialog_callback (GtkWidget *widget,
   gtk_widget_show (toggle);
 
   toggle = gtk_check_button_new_with_label (_("Hide control points"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 6);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &selvals.opts.showcontrol);
@@ -1300,7 +1295,7 @@ options_dialog_callback (GtkWidget *widget,
   gfig_opt_widget.showcontrol = toggle;
 
   toggle = gtk_check_button_new_with_label (_("Antialiasing"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 6);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &selopt.antia);
@@ -1312,7 +1307,7 @@ options_dialog_callback (GtkWidget *widget,
   table = gtk_table_new (4, 4, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 6);
   gtk_widget_show (table);
 
   size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
@@ -1362,6 +1357,7 @@ options_dialog_callback (GtkWidget *widget,
   scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &selopt.feather_radius);
@@ -1372,39 +1368,43 @@ options_dialog_callback (GtkWidget *widget,
                              _("Radius:"), 0.5, 0.5,
                              scale, 1, FALSE);
 
-  gimp_dialog_run (GIMP_DIALOG (options_dlg));
-  gtk_widget_destroy (options_dlg);
+  gimp_dialog_run (GIMP_DIALOG (dialog));
+
+  gtk_widget_destroy (dialog);
 }
 
 static void
 adjust_grid_callback (GtkWidget *widget,
                       gpointer   data)
 {
-  GtkWidget *grid_dlg;
-  GtkWidget *vbox;
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
   GtkWidget *hbox;
   GtkWidget *table;
   GtkObject *size_data;
   GtkWidget *combo;
 
-  grid_dlg = gimp_dialog_new (_("Grid"), "gfig",
-                              NULL, 0,
-                              gimp_standard_help_func, HELP_ID,
+  dialog = gimp_dialog_new (_("Grid"), "gfig",
+                            NULL, 0,
+                            gimp_standard_help_func, HELP_ID,
 
-                              GTK_STOCK_CLOSE,  GTK_RESPONSE_OK,
+                            GTK_STOCK_CLOSE,  GTK_RESPONSE_OK,
 
-                              NULL);
+                            NULL);
 
-  vbox = GTK_DIALOG (grid_dlg)->vbox;
+  main_vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
 
   hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   size_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
@@ -1455,8 +1455,9 @@ adjust_grid_callback (GtkWidget *widget,
                              _("Grid color:"), 0.0, 0.5,
                              combo, 2, FALSE);
 
-  gimp_dialog_run (GIMP_DIALOG (grid_dlg));
-  gtk_widget_destroy (grid_dlg);
+  gimp_dialog_run (GIMP_DIALOG (dialog));
+
+  gtk_widget_destroy (dialog);
 }
 
 void
@@ -1682,17 +1683,6 @@ num_sides_widget (gchar *d_title,
                                  combo, 1, FALSE);
     }
   return table;
-}
-
-static gint
-bezier_button_press (GtkWidget      *widget,
-                     GdkEventButton *event,
-                     gpointer        data)
-{
-  if ((event->type == GDK_2BUTTON_PRESS) &&
-      (event->button == 1))
-    bezier_dialog ();
-  return FALSE;
 }
 
 void

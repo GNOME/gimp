@@ -36,6 +36,7 @@
 
 #include "gfig.h"
 #include "gfig-dobject.h"
+#include "gfig-dialog.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -431,38 +432,22 @@ d_bezier_end (GdkPoint *pnt, gint shift_down)
 }
 
 void
-bezier_dialog (void)
+tool_options_bezier (GtkWidget *notebook,
+                     GtkWidget *button)
 {
-  static GtkWidget *window = NULL;
   GtkWidget *vbox;
   GtkWidget *toggle;
+  gint       page;
 
-  if (window)
-    {
-      gtk_window_present (GTK_WINDOW (window));
-      return;
-    }
-
-  window = gimp_dialog_new (_("Bezier Settings"), "gfig",
-                            NULL, 0,
-                            gimp_standard_help_func, HELP_ID,
-
-                            GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-
-                            NULL);
-
-  g_signal_connect (window, "response",
-                    G_CALLBACK (gtk_widget_destroy),
-                    NULL);
-  g_signal_connect (window, "destroy",
-                    G_CALLBACK (gtk_widget_destroyed),
-                    &window);
-
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), vbox,
-                      FALSE, FALSE, 0);
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  page = gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox, NULL);
   gtk_widget_show (vbox);
+
+  g_object_set_data (G_OBJECT (button), "page", GINT_TO_POINTER (page));
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (tool_option_page_update),
+                    notebook);
 
   toggle = gtk_check_button_new_with_label (_("Closed"));
   g_signal_connect (toggle, "toggled",
@@ -484,6 +469,4 @@ bezier_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bezier_line_frame);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
-
-  gtk_widget_show (window);
 }
