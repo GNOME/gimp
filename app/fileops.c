@@ -846,6 +846,9 @@ file_open_ok_callback (GtkWidget *w,
 
   gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
 
+  if (err)
+    filename = raw_filename;
+
   if (file_open (filename, raw_filename))
     {
       file_dialog_hide (client_data);
@@ -1125,6 +1128,13 @@ file_proc_find (GSList *procs,
 	  if (strncmp (filename, prefixes->data, strlen (prefixes->data)) == 0)
 	    return file_proc;
 	}
+     }
+
+  procs = all_procs;
+  while (procs)
+    {
+      file_proc = procs->data;
+      procs = procs->next;
 
       for (extensions = file_proc->extensions_list; extension && extensions; extensions = extensions->next)
 	{

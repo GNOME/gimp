@@ -538,7 +538,7 @@ plug_in_file_handler (char *name,
 	    }
 	  proc_def->prefixes_list = plug_in_extensions_parse (proc_def->prefixes);
 
-	  /* MAGICS can be proc_def->prefixes  */
+	  /* MAGICS can be proc_def->magics  */
 	  if (proc_def->magics != magics)
 	    {
 	      if (proc_def->magics)
