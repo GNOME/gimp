@@ -85,12 +85,14 @@ gimp_dither_algo_callback (GtkWidget *widget,
     gtk_entry_get_text (GTK_ENTRY (GTK_COMBO (dither_algo_combo)->entry));
   int i;
 
-  for (i = 0; i < stp_dither_algorithm_count (); i ++)
+  for (i = 0; i < stp_dither_algorithm_count (); i++)
     if (strcasecmp (new_algo, stp_dither_algorithm_text (i)) == 0)
       {
         stp_set_dither_algorithm (*pv, stp_dither_algorithm_name (i));
-        break;
+        return;
       }
+  
+  stp_set_dither_algorithm (*pv, stp_default_dither_algorithm ());
 }
 
 void

@@ -145,7 +145,7 @@ static gint	       suppress_preview_reset = 0;
 static gint            printable_left;	/* Left pixel column of page */
 static gint            printable_top;	/* Top pixel row of page */
 static gint            printable_width;	/* Width of page on screen */
-static gint            printable_height;	/* Height of page on screen */
+static gint            printable_height;/* Height of page on screen */
 static gint            print_width;	/* Printed width of image */
 static gint            print_height;	/* Printed height of image */
 static gint	       left, right;	        /* Imageable area */
@@ -2887,8 +2887,6 @@ gimp_preview_update (void)
   gdouble min_ppi_scaling;   /* Minimum PPI for current page size */
   gdouble min_ppi_scaling1;  /* Minimum PPI for current page size */
   gdouble min_ppi_scaling2;  /* Minimum PPI for current page size */
-  gint    paper_left;
-  gint    paper_top;
   gdouble unit_scaler = 72.0;
 
   (stp_printer_get_printfuncs (current_printer)->media_size)
@@ -2933,29 +2931,29 @@ gimp_preview_update (void)
 
       if (orient == ORIENT_LANDSCAPE)
 	{
-	  temp              = left;
-	  left              = bottom;
-	  bottom            = right;
-	  right             = top;
-	  top               = temp;
+	  temp   = left;
+	  left   = bottom;
+	  bottom = right;
+	  right  = top;
+	  top    = temp;
 	}
       else
 	{
-	  temp              = left;
-	  left              = top;
-	  top               = right;
-	  right             = bottom;
-	  bottom            = temp;
+	  temp   = left;
+	  left   = top;
+	  top    = right;
+	  right  = bottom;
+	  bottom = temp;
 	}
     }
   else if (orient == ORIENT_UPSIDEDOWN)
     {
-      temp              = left;
-      left              = right;
-      right		= temp;
-      temp              = top;
-      top               = bottom;
-      bottom		= temp;
+      temp   = left;
+      left   = right;
+      right  = temp;
+      temp   = top;
+      top    = bottom;
+      bottom = temp;
     }
 
   bottom = paper_height - bottom;

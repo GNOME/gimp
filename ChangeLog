@@ -1,5 +1,14 @@
 2003-03-11  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/print/gimp_color_window.c (gimp_dither_algo_callback):
+	set the default dither algorithm as a fallback in case no
+	algorithm matched. Seems to fix bug #102457.
+
+	* plug-ins/print/gimp_main_window.c: fixed wrong display of paper
+	border that was introduced by my latest changes to the preview code.
+
+2003-03-11  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage.[ch]: made gimp_image_get_active_components()
 	a static function and changed its behaviour so that the image's
 	active components are only used for layers, not for channels.
