@@ -949,13 +949,14 @@ gimp_item_factory_item_key_press (GtkWidget   *widget,
         help_page = NULL;
     }
 
-  /*  For any key except F1, continue with the standard
-   *  GtkItemFactory callback and assign a new shortcut, but don't
-   *  assign a shortcut to the help menu entries...
+  /*  For any valid accelerator key except F1, continue with the
+   *  standard GtkItemFactory callback and assign a new shortcut, but
+   *  don't assign a shortcut to the help menu entries ...
    */
   if (kevent->keyval != GDK_F1)
     {
       if (help_page &&
+          gtk_accelerator_valid (kevent->keyval, 0) &&
 	  (item_factory ==
            (GtkItemFactory *) gimp_item_factory_from_path ("<Toolbox>")) &&
 	  (strcmp (help_page, "help/dialogs/help.html") == 0 ||
