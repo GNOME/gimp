@@ -7,6 +7,7 @@ Revision history for Gimp-Perl extension.
         - new module Gimp::Compat, which is loaded on demand.
         - gimp_text_fontname etc.. are now available in gimp-1.0 as well,
           re-enabled the scripts using it (and depending on 1.1 before).
+        - allow negative "INT32's".
 
 1.081 Thu May  6 19:33:37 CEST 1999
 	- added "oneliners".

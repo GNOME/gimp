@@ -350,7 +350,7 @@ sub die_msg {
 
 # this needs to be improved
 sub quiet_die {
-   die "BE QUIET ABOUT THIS DIE\n";
+   die "IGNORE THIS MESSAGE\n";
 }
 
 unless ($no_SIG) {

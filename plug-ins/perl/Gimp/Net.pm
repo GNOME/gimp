@@ -253,7 +253,7 @@ sub gimp_main {
    gimp_init;
    no strict 'refs';
    eval { Gimp::callback("-net") };
-   if($@ && $@ ne "BE QUIET ABOUT THIS DIE\n") {
+   if($@ && $@ ne "IGNORE THIS MESSAGE\n") {
       Gimp::logger(message => substr($@,0,-1), fatal => 1, function => 'DIE');
       gimp_end;
       -1;

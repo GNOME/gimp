@@ -53,6 +53,13 @@ sub {
 	$oldbg = gimp_palette_get_background();
 	$oldfg = gimp_palette_get_foreground();
 
+  Gimp->install_procedure("plug_in_example_oo", "a test plug-in in perl",
+                         "try it out", "Marc Lehmann", "Marc Lehmann", "1998-04-27",
+                         "<Toolbox>/Xtns/Perl Example Plug-in", "*", &PROC_EXTENSION,
+                         
+                         [[0, "run_mode", "desc"]],
+                         
+                         []);
 
 
 	if ($solidnoise) {

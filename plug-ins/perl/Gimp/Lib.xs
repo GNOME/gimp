@@ -404,7 +404,7 @@ convert_array2paramdef (AV *av, GParamDef **res)
 	    SV *type = 0;
 	    SV *name = 0;
 	    SV *help = 0;
-	
+
 	    if (SvROK (sv) && SvTYPE (SvRV (sv)) == SVt_PVAV)
 	      {
 	        AV *av = (AV *)SvRV(sv);
@@ -598,7 +598,8 @@ static int check_int (char *croak_str, SV *sv)
 
       if (*p
           && *p != '0' && *p != '1' && *p != '2' && *p != '3' && *p != '4'
-          && *p != '5' && *p != '6' && *p != '7' && *p != '8' && *p != '9')
+          && *p != '5' && *p != '6' && *p != '7' && *p != '8' && *p != '9'
+          && *p != '-')
         {
           sprintf (croak_str, "Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a string", p);
           check_for_typoe (croak_str, p);
@@ -969,7 +970,7 @@ static void pii_run(char *name, int nparams, GParam *param, int *xnreturn_vals, 
       
       if (SvTRUE (ERRSV))
 	{
-	   if (strEQ ("BE QUIET ABOUT THIS DIE\n", SvPV (ERRSV, dc)))
+	   if (strEQ ("IGNORE THIS MESSAGE\n", SvPV (ERRSV, dc)))
 	     {
 	       nreturn_vals = 0;
 	       return_vals = g_new (GParam, 1);
