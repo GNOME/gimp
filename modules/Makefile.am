@@ -7,7 +7,7 @@ endif
 
 libexecdir = $(gimpplugindir)/modules
 
-CPPFLAGS = \
+AM_CPPFLAGS = \
 	-DMODULE_COMPILATION
 
 INCLUDES = \
