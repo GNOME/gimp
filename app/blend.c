@@ -1113,13 +1113,13 @@ gradient_calc_shapeburst_dimpled_factor (double x,
 }
 
 static double
-gradient_repeat_none(double val)
+gradient_repeat_none (double val)
 {
   return BOUNDS(val, 0.0, 1.0);
 }
 
 static double
-gradient_repeat_sawtooth(double val)
+gradient_repeat_sawtooth (double val)
 {
   if (val >= 0.0)
     return fmod(val, 1.0);
@@ -1128,7 +1128,7 @@ gradient_repeat_sawtooth(double val)
 }
 
 static double
-gradient_repeat_triangular(double val)
+gradient_repeat_triangular (double val)
 {
   int ival;
 
@@ -1228,7 +1228,7 @@ gradient_precalc_shapeburst (GImage      *gimage,
 
 
 static void
-gradient_render_pixel(double x, double y, color_t *color, void *render_data)
+gradient_render_pixel (double x, double y, color_t *color, void *render_data)
 {
   RenderBlendData *rbd;
   double           factor;
@@ -1321,7 +1321,7 @@ gradient_render_pixel(double x, double y, color_t *color, void *render_data)
 
 
 static void
-gradient_put_pixel(int x, int y, color_t color, void *put_pixel_data)
+gradient_put_pixel (int x, int y, color_t color, void *put_pixel_data)
 {
   PutPixelData  *ppd;
   unsigned char *data;
@@ -1568,7 +1568,7 @@ gradient_fill_region (GImage          *gimage,
 }
 
 static void
-calc_rgb_to_hsv(double *r, double *g, double *b)
+calc_rgb_to_hsv (double *r, double *g, double *b)
 {
   double red, green, blue;
   double h, s, v;
@@ -1640,7 +1640,7 @@ calc_rgb_to_hsv(double *r, double *g, double *b)
 }
 
 static void
-calc_hsv_to_rgb(double *h, double *s, double *v)
+calc_hsv_to_rgb (double *h, double *s, double *v)
 {
   double hue, saturation, value;
   double f, p, q, t;
@@ -1738,7 +1738,8 @@ tools_new_blend ()
   tool->button_press_func = blend_button_press;
   tool->button_release_func = blend_button_release;
   tool->motion_func = blend_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;  tool->modifier_key_func = standard_modifier_key_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;  
+  tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = blend_cursor_update;
   tool->control_func = blend_control;
   tool->preserve = TRUE;

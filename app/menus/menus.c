@@ -55,7 +55,6 @@ static const GtkItemFactoryEntry toolbox_entries[] =
   { N_("/File/About..."), NULL, about_dialog_cmd_callback, 0 },
   { N_("/File/Preferences..."), NULL, file_pref_cmd_callback, 0 },
   { N_("/File/Tip of the day"), NULL, tips_dialog_cmd_callback, 0 },
-  { N_("/File/---"), NULL, NULL, 0, "<Separator>" },
   { N_("/File/Dialogs/Brushes..."), "<control><shift>B", dialogs_brushes_cmd_callback, 0 },
   { N_("/File/Dialogs/Patterns..."), "<control><shift>P", dialogs_patterns_cmd_callback, 0 },
   { N_("/File/Dialogs/Palette..."), "<control>P", dialogs_palette_cmd_callback, 0 },
@@ -67,6 +66,7 @@ static const GtkItemFactoryEntry toolbox_entries[] =
   { N_("/File/Dialogs/Document Index..."), NULL, raise_idea_callback, 0 },
   { N_("/File/Dialogs/Error Console..."), NULL, dialogs_error_console_cmd_callback, 0 },
   { N_("/File/Dialogs/Module Browser..."), NULL, dialogs_module_browser_cmd_callback, 0 },
+  { N_("/File/---"), NULL, NULL, 0, "<Separator>" },
   { N_("/File/---"), NULL, NULL, 0, "<Separator>" }
 };
 static guint n_toolbox_entries = sizeof (toolbox_entries) / sizeof (toolbox_entries[0]);

@@ -85,7 +85,7 @@ static gboolean pending_removebusy = FALSE;
 
 
 static void
-create_cursor(BM_Cursor *bmcursor)
+create_cursor (BM_Cursor *bmcursor)
 {
   GdkPixmap *pixmap;
   GdkPixmap *pixmapmsk;
@@ -97,12 +97,12 @@ create_cursor(BM_Cursor *bmcursor)
 
   pixmap = gdk_bitmap_create_from_data (NULL, bmcursor->bits,
 					bmcursor->width, bmcursor->height);
-  g_return_if_fail(pixmap != NULL);
+  g_return_if_fail (pixmap != NULL);
 
   pixmapmsk = gdk_bitmap_create_from_data (NULL, bmcursor->mask_bits,
 					   bmcursor->width,
 					   bmcursor->height);
-  g_return_if_fail(pixmapmsk != NULL);
+  g_return_if_fail (pixmapmsk != NULL);
   
   bmcursor->cursor = gdk_cursor_new_from_pixmap (pixmap, pixmapmsk, &fg, &bg,
 						 bmcursor->x_hot,
@@ -111,7 +111,7 @@ create_cursor(BM_Cursor *bmcursor)
 }
 
 static void
-gimp_change_win_cursor(GdkWindow *win, GimpCursorType curtype)
+gimp_change_win_cursor (GdkWindow *win, GimpCursorType curtype)
 {
   GdkCursor *cursor;
 

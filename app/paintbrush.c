@@ -384,7 +384,7 @@ paintbrush_motion (PaintCore *paint_core,
 
   gimage_get_foreground (gimage, drawable, col);
 
-  /*  Get a region which can be used to p\\aint to  */
+  /*  Get a region which can be used to paint to  */
   if (! (area = paint_core_get_paint_area (paint_core, drawable)))
     return;
 
@@ -405,7 +405,7 @@ paintbrush_motion (PaintCore *paint_core,
       temp_blend = local_blend;
       
       /* hard core to mode LOOP_TRIANGLE */
-      /* need to maek a gui to handle this */
+      /* need to make a gui to handle this */
       mode = gradient_type;
 
       if(gradient_length)

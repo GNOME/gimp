@@ -1,3 +1,14 @@
+Sat May 15 01:55:12 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* app/menus.c: Moved the seperator down so that it seperates the MRU
+	dialog from the rest.
+	* app/paint_core.c: Show the line you are drawing when using <Shift>
+	on paint_tools. Still need to figure out what's different about the
+	clone tool...
+	* app/blend.c
+	* app/cursorutil.c
+	* app/paintbrush.c: a little bit of code cleanup while I was on it
+
 Sat May 15 00:06:06 BST 1999 Andy Thomas <alt@gimp.org>
 
 	* app/gdisplay.c

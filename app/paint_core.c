@@ -31,6 +31,7 @@
 #include "layers_dialog.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
+#include "palette.h"
 #include "selection.h"
 #include "tools.h"
 #include "undo.h"
@@ -39,6 +40,10 @@
 #include "libgimp/gimpintl.h"
 
 #include "tile.h"			/* ick. */
+
+/*  target size  */
+#define  TARGET_HEIGHT     15
+#define  TARGET_WIDTH      15
 
 #define    SQR(x) ((x) * (x))
 #define    EPSILON  0.00001
@@ -178,8 +183,8 @@ paint_core_button_press (tool, bevent, gdisp_ptr)
       ! (bevent->state & GDK_SHIFT_MASK))
     {
       /*  initialize some values  */
-      paint_core->startx = paint_core->lastx = paint_core->curx;
-      paint_core->starty = paint_core->lasty = paint_core->cury;
+      paint_core->startx = paint_core->lastx = paint_core->curx = x;
+      paint_core->starty = paint_core->lasty = paint_core->cury = y;
       paint_core->startpressure = paint_core->lastpressure = paint_core->curpressure;
       paint_core->startytilt = paint_core->lastytilt = paint_core->curytilt;
       paint_core->startxtilt = paint_core->lastxtilt = paint_core->curxtilt;
@@ -221,7 +226,7 @@ paint_core_button_press (tool, bevent, gdisp_ptr)
   if (paint_core->pick_colors
       && (bevent->state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)))
   {
-    paint_core_sample_color(drawable, x, y, bevent->state);
+    paint_core_sample_color (drawable, x, y, bevent->state);
     paint_core->pick_state = TRUE;
     return;
   }
@@ -237,6 +242,7 @@ paint_core_button_press (tool, bevent, gdisp_ptr)
       paint_core->lastpressure = paint_core->curpressure;
       paint_core->lastxtilt = paint_core->curxtilt;
       paint_core->lastytilt = paint_core->curytilt;
+      ;
     }
   else
     (* paint_core->paint_func) (paint_core, drawable, MOTION_PAINT);
@@ -268,6 +274,7 @@ paint_core_button_release (tool, bevent, gdisp_ptr)
   (* paint_core->paint_func) (paint_core, gimage_active_drawable (gdisp->gimage), FINISH_PAINT);
 
   /*  Set tool state to inactive -- no longer painting */
+  draw_core_stop (paint_core->core, tool);
   tool->state = INACTIVE;
 
   paint_core->pick_state = FALSE;
@@ -293,11 +300,10 @@ paint_core_motion (tool, mevent, gdisp_ptr)
 
   if (paint_core->pick_state)
   {
-    paint_core_sample_color(gimage_active_drawable (gdisp->gimage),
-			    paint_core->curx, paint_core->cury, mevent->state);
+    paint_core_sample_color (gimage_active_drawable (gdisp->gimage),
+			     paint_core->curx, paint_core->cury, mevent->state);
     return;
   }
-
 
   paint_core->curpressure = mevent->pressure;
   paint_core->curxtilt = mevent->xtilt;
@@ -325,13 +331,17 @@ paint_core_cursor_update (tool, mevent, gdisp_ptr)
   Layer *layer;
   PaintCore * paint_core;
   GdkCursorType ctype = GDK_TOP_LEFT_ARROW;
-  int x, y;
 
   gdisp = (GDisplay *) gdisp_ptr;
   paint_core = (PaintCore *) tool->private;
 
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y,
-			       FALSE, FALSE);
+  /*  undraw the current tool  */
+  draw_core_pause (paint_core->core, tool);
+
+  /*  Get the current coordinates  */
+  gdisplay_untransform_coords_f (gdisp, (double) mevent->x, (double) mevent->y,
+				 &paint_core->curx, &paint_core->cury, TRUE);
+
   if ((layer = gimage_get_active_layer (gdisp->gimage))) 
     {
       int off_x, off_y;
@@ -342,19 +352,34 @@ paint_core_cursor_update (tool, mevent, gdisp_ptr)
         {
 	  ctype = GIMP_COLOR_PICKER_CURSOR;
 	}
-      else if (x >= off_x && y >= off_y &&
-	x < (off_x + drawable_width (GIMP_DRAWABLE(layer))) &&
-	y < (off_y + drawable_height (GIMP_DRAWABLE(layer))))
-      {
-	/*  One more test--is there a selected region?
-	 *  if so, is cursor inside?
-	 */
-	if (gimage_mask_is_empty (gdisp->gimage))
-	  ctype = GDK_PENCIL;
-	else if (gimage_mask_value (gdisp->gimage, x, y))
-	  ctype = GDK_PENCIL;
-      }
+      else if (paint_core->curx >= off_x && paint_core->cury >= off_y &&
+	       paint_core->curx < (off_x + drawable_width (GIMP_DRAWABLE(layer))) &&
+	       paint_core->cury < (off_y + drawable_height (GIMP_DRAWABLE(layer))))
+	{
+	  /*  One more test--is there a selected region?
+	   *  if so, is cursor inside?
+	   */
+	  if (gimage_mask_is_empty (gdisp->gimage))
+	    ctype = GDK_PENCIL;
+	  else if (gimage_mask_value (gdisp->gimage, paint_core->curx, paint_core->cury))
+	    ctype = GDK_PENCIL;
+	  
+	}
+
+      /* If shift is down and this is not the first paint stroke, draw a line */
+      if (gdisp_ptr == tool->gdisp_ptr && mevent->state & GDK_SHIFT_MASK)
+	{
+	  if (paint_core->core->gc == NULL)
+	    draw_core_start (paint_core->core, gdisp->canvas->window, tool);
+	  else
+	    {
+	      /* is this a bad hack ? */
+	      paint_core->core->paused_count = 0;
+	      draw_core_resume (paint_core->core, tool);
+	    }
+	}
     }
+
   gdisplay_install_tool_cursor (gdisp, ctype);
 }
 
@@ -382,17 +407,50 @@ paint_core_control (tool, action, gdisp_ptr)
       break;
     case HALT :
       (* paint_core->paint_func) (paint_core, drawable, FINISH_PAINT);
+      draw_core_stop (paint_core->core, tool);
       paint_core_cleanup ();
       break;
     }
 }
 
 void
-paint_core_no_draw (tool)
+paint_core_draw (tool)
      Tool * tool;
 {
+  GDisplay *gdisp;
+  PaintCore * paint_core;
+
+  paint_core = (PaintCore *) tool->private;
+
+  /* if shift was never used, we don't care about a redraw */
+  if (paint_core->core->gc != NULL)
+    {
+      gdisp = (GDisplay *) tool->gdisp_ptr;
+
+      /*  Draw start target  */
+      gdk_draw_line (gdisp->canvas->window, paint_core->core->gc,
+		     paint_core->lastx - (TARGET_WIDTH >> 1), paint_core->lasty,
+		     paint_core->lastx + (TARGET_WIDTH >> 1), paint_core->lasty);
+      gdk_draw_line (gdisp->canvas->window, paint_core->core->gc,
+		     paint_core->lastx, paint_core->lasty - (TARGET_HEIGHT >> 1),
+		     paint_core->lastx, paint_core->lasty + (TARGET_HEIGHT >> 1));
+      
+      /*  Draw end target  */
+      gdk_draw_line (gdisp->canvas->window, paint_core->core->gc,
+		     paint_core->curx - (TARGET_WIDTH >> 1), paint_core->cury,
+		     paint_core->curx + (TARGET_WIDTH >> 1), paint_core->cury);
+      gdk_draw_line (gdisp->canvas->window, paint_core->core->gc,
+		     paint_core->curx, paint_core->cury - (TARGET_HEIGHT >> 1),
+		     paint_core->curx, paint_core->cury + (TARGET_HEIGHT >> 1));
+      
+      /*  Draw the line between the start and end coords  */
+      gdk_draw_line (gdisp->canvas->window, paint_core->core->gc,
+		     paint_core->lastx, paint_core->lasty, 
+		     paint_core->curx, paint_core->cury);
+
+    }
   return;
-}
+}	      
 
 Tool *
 paint_core_new (type)
@@ -404,7 +462,7 @@ paint_core_new (type)
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (PaintCore *) g_malloc (sizeof (PaintCore));
 
-  private->core = draw_core_new (paint_core_no_draw);
+  private->core = draw_core_new (paint_core_draw);
   private->pick_colors = FALSE;
 
   tool->type = type;
@@ -418,7 +476,8 @@ paint_core_new (type)
   tool->button_press_func = paint_core_button_press;
   tool->button_release_func = paint_core_button_release;
   tool->motion_func = paint_core_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;  tool->modifier_key_func = standard_modifier_key_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;  
+  tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = paint_core_cursor_update;
   tool->control_func = paint_core_control;
 
@@ -514,7 +573,10 @@ paint_core_init (paint_core, drawable, x, y)
 }
 
 void
-paint_core_get_color_from_gradient (PaintCore *paint_core, double gradient_length, double *r, double *g, double *b,double *a, int mode)
+paint_core_get_color_from_gradient (PaintCore *paint_core, 
+				    double gradient_length, 
+				    double *r, double *g, double *b, double *a, 
+				    int mode)
 {
   double y;
   double distance;    /* distance in current brush stroke */
@@ -527,10 +589,10 @@ paint_core_get_color_from_gradient (PaintCore *paint_core, double gradient_lengt
  
 
   /* if were past the first chunk... */
-  if((y/gradient_length) > 1.0)
+  if ((y/gradient_length) > 1.0)
     {
       /* if this is an "odd" chunk..." */
-      if((int)(y/gradient_length) & 1)
+      if ((int)(y/gradient_length) & 1)
 	{
 	  /* draw it "normally" */
 	  y = y - (gradient_length*(int)(y/gradient_length));
