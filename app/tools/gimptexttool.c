@@ -19,7 +19,7 @@
 #include "config.h"
 
 #include <stdlib.h>
-#include <string.h>
+#include <errno.h>
 
 #include <gtk/gtk.h>
 #include <pango/pangoft2.h>
@@ -90,36 +90,43 @@ struct _TextOptions
 
 /*  local function prototypes  */
 
-static void   gimp_text_tool_class_init      (GimpTextToolClass *klass);
-static void   gimp_text_tool_init            (GimpTextTool      *tool);
+static void     gimp_text_tool_class_init    (GimpTextToolClass *klass);
+static void     gimp_text_tool_init          (GimpTextTool      *tool);
 
-static void   gimp_text_tool_finalize        (GObject         *object);
+static void     gimp_text_tool_finalize      (GObject           *object);
 
-static void   text_tool_control              (GimpTool        *tool,
-					      GimpToolAction   action,
-					      GimpDisplay     *gdisp);
-static void   text_tool_button_press         (GimpTool        *tool,
-                                              GimpCoords      *coords,
-                                              guint32          time,
-					      GdkModifierType  state,
-					      GimpDisplay     *gdisp);
-static void   text_tool_button_release       (GimpTool        *tool,
-                                              GimpCoords      *coords,
-                                              guint32          time,
-					      GdkModifierType  state,
-					      GimpDisplay     *gdisp);
-static void   text_tool_cursor_update        (GimpTool        *tool,
-                                              GimpCoords      *coords,
-					      GdkModifierType  state,
-					      GimpDisplay     *gdisp);
+static void     text_tool_control              (GimpTool        *tool,
+                                                GimpToolAction   action,
+                                                GimpDisplay     *gdisp);
+static void     text_tool_button_press         (GimpTool        *tool,
+                                                GimpCoords      *coords,
+                                                guint32          time,
+                                                GdkModifierType  state,
+                                                GimpDisplay     *gdisp);
+static void     text_tool_button_release       (GimpTool        *tool,
+                                                GimpCoords      *coords,
+                                                guint32          time,
+                                                GdkModifierType  state,
+                                                GimpDisplay     *gdisp);
+static void     text_tool_cursor_update        (GimpTool        *tool,
+                                                GimpCoords      *coords,
+                                                GdkModifierType  state,
+                                                GimpDisplay     *gdisp);
 
-static void   text_tool_render               (GimpTextTool    *text_tool);
+static void     text_tool_render               (GimpTextTool    *text_tool);
 
 static GimpToolOptions * text_tool_options_new   (GimpToolInfo    *tool_info);
 static void              text_tool_options_reset (GimpToolOptions *tool_options);
 
-static void              text_tool_editor_show   (GimpTextTool    *text_tool);
-static void              text_tool_editor_ok     (GimpTextTool    *text_tool);
+static void     text_tool_editor               (GimpTextTool    *text_tool);
+static void     text_tool_editor_ok            (GimpTextTool    *text_tool);
+static void     text_tool_editor_load          (GtkWidget       *widget,
+                                                GimpTextTool    *text_tool);
+static void     text_tool_editor_load_ok       (GimpTextTool    *text_tool);
+static gboolean text_tool_load_file            (GtkTextBuffer   *buffer,
+                                                const gchar     *filename);
+static void     text_tool_editor_clear         (GtkWidget       *widget,
+                                                GimpTextTool    *text_tool);
 
 /*  local variables  */
 
@@ -224,10 +231,6 @@ gimp_text_tool_finalize (GObject *object)
       g_object_unref (text_tool->buffer);
       text_tool->buffer = NULL;
     }
-  if (text_tool->editor)
-    {
-      gtk_widget_destroy (text_tool->editor);
-    }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -246,6 +249,8 @@ text_tool_control (GimpTool       *tool,
       break;
 
     case HALT:
+      if (GIMP_TEXT_TOOL (tool)->editor)
+        gtk_widget_destroy (GIMP_TEXT_TOOL (tool)->editor);
       break;
 
     default:
@@ -285,7 +290,7 @@ text_tool_button_press (GimpTool        *tool,
 	return;
       }
 
-  text_tool_editor_show (text_tool);
+  text_tool_editor (text_tool);
 }
 
 static void
@@ -537,9 +542,13 @@ text_tool_options_reset (GimpToolOptions *tool_options)
                             options->line_spacing_d);
 }
 
+
+/* text editor */
+
 static void
-text_tool_editor_show (GimpTextTool *text_tool)
+text_tool_editor (GimpTextTool *text_tool)
 {
+  GtkWidget *toolbar;
   GtkWidget *scrolled_window;
   GtkWidget *text_view;
 
@@ -565,16 +574,32 @@ text_tool_editor_show (GimpTextTool *text_tool)
 
                                        NULL);
 
+  gtk_dialog_set_has_separator (GTK_DIALOG (text_tool->editor), FALSE);
+
   g_object_add_weak_pointer (G_OBJECT (text_tool->editor),
                              (gpointer) &text_tool->editor);
+
+  toolbar = gtk_toolbar_new ();
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (text_tool->editor)->vbox),
+                      toolbar, FALSE, FALSE, 0);
+  gtk_widget_show (toolbar);
+ 
+  gtk_toolbar_insert_stock (GTK_TOOLBAR (toolbar), GTK_STOCK_OPEN,
+                            _("Load Text from File"), NULL,
+                            G_CALLBACK (text_tool_editor_load), text_tool,
+                            0);
+  gtk_toolbar_insert_stock (GTK_TOOLBAR (toolbar), GTK_STOCK_CLEAR,
+                            _("Clear all Text"), NULL,
+                            G_CALLBACK (text_tool_editor_clear), text_tool,
+                            1);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
 				  GTK_POLICY_AUTOMATIC,
 				  GTK_POLICY_AUTOMATIC);
   gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 4);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (text_tool->editor)->vbox),
-                     scrolled_window);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (text_tool->editor)->vbox),
+                      scrolled_window, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_window);
 
   text_view = gtk_text_view_new_with_buffer (text_tool->buffer);
@@ -587,10 +612,113 @@ text_tool_editor_show (GimpTextTool *text_tool)
 static void
 text_tool_editor_ok (GimpTextTool *text_tool)
 {
-  if (!text_tool->editor)
-    return;
-
   gtk_widget_destroy (text_tool->editor);
 
   text_tool_render (text_tool);
+}
+
+static void
+text_tool_editor_load (GtkWidget    *widget,
+                       GimpTextTool *text_tool)
+{
+  GtkFileSelection *filesel;
+
+  if (text_tool->filesel)
+    {
+      if (text_tool->filesel->window)
+        gdk_window_raise (text_tool->filesel->window);
+
+      return;
+    }
+
+  filesel =
+    GTK_FILE_SELECTION (gtk_file_selection_new (_("Open Text File (UTF-8)")));
+
+  gtk_window_set_wmclass (GTK_WINDOW (filesel), "gimp-text-load-file", "Gimp");
+  gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
+
+  gtk_container_set_border_width (GTK_CONTAINER (filesel), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (filesel->button_area), 2);
+
+  gtk_window_set_transient_for (GTK_WINDOW (filesel),
+                                GTK_WINDOW (text_tool->editor));
+  gtk_window_set_destroy_with_parent (GTK_WINDOW (filesel), TRUE);
+
+  g_signal_connect_swapped (G_OBJECT (filesel->ok_button), "clicked",
+                            G_CALLBACK (text_tool_editor_load_ok),
+                            text_tool);
+  g_signal_connect_swapped (G_OBJECT (filesel->cancel_button), "clicked",
+                            G_CALLBACK (gtk_widget_destroy),
+                            filesel);
+
+  gtk_widget_show (GTK_WIDGET (filesel));
+
+  text_tool->filesel = GTK_WIDGET (filesel);
+  g_object_add_weak_pointer (G_OBJECT (filesel),
+                             (gpointer) &text_tool->filesel);
+}
+
+static void
+text_tool_editor_load_ok (GimpTextTool *text_tool)
+{
+  const gchar *filename;
+
+  filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (text_tool->filesel));
+  
+  if (text_tool_load_file (text_tool->buffer, filename))
+    gtk_widget_destroy (text_tool->filesel);
+}
+
+static gboolean
+text_tool_load_file (GtkTextBuffer *buffer,
+                     const gchar   *filename)
+{
+  FILE        *file;
+  gchar        buf[2048];
+  gint         remaining = 0;
+  GtkTextIter  iter;
+
+  file = fopen (filename, "r");
+  
+  if (!file)
+    {
+      g_message (_("Error opening file '%s': %s"),
+                 filename, g_strerror (errno));
+      return FALSE;
+    }
+
+  gtk_text_buffer_set_text (buffer, "", 0);
+  gtk_text_buffer_get_iter_at_offset (buffer, &iter, 0);
+
+  while (!feof (file))
+    {
+      const char *leftover;
+      gint count;
+      gint to_read = sizeof (buf) - remaining - 1;
+
+      count = fread (buf + remaining, 1, to_read, file);
+      buf[count + remaining] = '\0';
+
+      g_utf8_validate (buf, count + remaining, &leftover);
+
+      gtk_text_buffer_insert (buffer, &iter, buf, leftover - buf);
+
+      remaining = (buf + remaining + count) - leftover;
+      g_memmove (buf, leftover, remaining);
+
+      if (remaining > 6 || count < to_read)
+        break;
+    }
+
+  if (remaining)
+    g_message (_("Invalid UTF-8 data in file '%s'."), filename);
+
+  return TRUE;
+}
+
+static void
+text_tool_editor_clear (GtkWidget    *widget,
+                        GimpTextTool *text_tool)
+{
+  gtk_text_buffer_set_text (text_tool->buffer, "", 0);
 }

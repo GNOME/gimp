@@ -1,5 +1,9 @@
 2002-10-11  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptexttool.[ch]: allow to load text from a file.
+
+2002-10-11  Sven Neumann  <sven@gimp.org>
+
 	* Made 1.3.9 release.
 
 2002-10-11  Sven Neumann  <sven@gimp.org>

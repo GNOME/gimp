@@ -43,6 +43,7 @@ struct _GimpTextTool
 
   GtkTextBuffer *buffer;
   GtkWidget     *editor;
+  GtkWidget     *filesel;
 };
 
 struct _GimpTextToolClass
