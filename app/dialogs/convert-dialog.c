@@ -132,13 +132,13 @@ convert_dialog_new (GimpImage *gimage,
                     G_CALLBACK (indexed_destroy_callback),
                     dialog);
 
-  main_vbox = gtk_vbox_new (FALSE, 4);
+  main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog->shell)->vbox),
 		     main_vbox);
   gtk_widget_show (main_vbox);
 
-  frame = gtk_frame_new (_("General Palette Options"));
+  frame = gimp_frame_new (_("General Palette Options"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -287,7 +287,7 @@ convert_dialog_new (GimpImage *gimage,
                                    dialog->palette_type);
 
   /*  the dither type  */
-  frame = gtk_frame_new (_("Dithering Options"));
+  frame = gimp_frame_new (_("Dithering Options"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -321,14 +321,9 @@ convert_dialog_new (GimpImage *gimage,
      for transparent/animated GIFs */
   if (gimp_image_has_alpha (gimage))
     {
-      frame = gtk_frame_new (_("[ Warning ]"));
+      frame = gimp_frame_new (_("[ Warning ]"));
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
-
-      vbox = gtk_vbox_new (FALSE, 1);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-      gtk_container_add (GTK_CONTAINER (frame), vbox);
-      gtk_widget_show (vbox);
 
       label = gtk_label_new
 	(_("You are attempting to convert an image with an alpha channel "
@@ -337,7 +332,7 @@ convert_dialog_new (GimpImage *gimage,
            "intend to create a transparent or animated GIF file."));
       gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-      gtk_container_add (GTK_CONTAINER (vbox), label);
+      gtk_container_add (GTK_CONTAINER (frame), label);
       gtk_widget_show (label);
     }
 

@@ -43,7 +43,7 @@ static void   gimp_color_frame_menu_callback (GtkWidget           *widget,
 static void   gimp_color_frame_update        (GimpColorFrame      *frame);
 
 
-static GtkFrameClass *parent_class = NULL;
+static GimpFrameClass *parent_class = NULL;
 
 
 GType
@@ -66,7 +66,7 @@ gimp_color_frame_get_type (void)
         (GInstanceInitFunc) gimp_color_frame_init,
       };
 
-      type = g_type_register_static (GTK_TYPE_FRAME,
+      type = g_type_register_static (GIMP_TYPE_FRAME,
                                      "GimpColorFrame",
                                      &frame_info, 0);
     }

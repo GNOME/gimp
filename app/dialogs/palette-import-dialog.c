@@ -197,24 +197,23 @@ palette_import_dialog_new (Gimp *gimp)
                               import_dialog_drop_callback,
                               import_dialog);
 
-  main_hbox = gtk_hbox_new (FALSE, 4);
+  main_hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (import_dialog->dialog)->vbox),
                      main_hbox);
   gtk_widget_show (main_hbox);
 
-  vbox = gtk_vbox_new (FALSE, 4);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
 
   /*  The "Source" frame  */
-  frame = gtk_frame_new (_("Select Source"));
+  frame = gimp_frame_new (_("Select Source"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (2, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_container_add (GTK_CONTAINER (frame), table);
@@ -311,12 +310,11 @@ palette_import_dialog_new (Gimp *gimp)
 
 
   /*  The "Import" frame  */
-  frame = gtk_frame_new (_("Import Options"));
+  frame = gimp_frame_new (_("Import Options"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (4, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_container_add (GTK_CONTAINER (frame), table);
@@ -370,12 +368,11 @@ palette_import_dialog_new (Gimp *gimp)
 
 
   /*  The "Preview" frame  */
-  frame = gtk_frame_new (_("Preview"));
+  frame = gimp_frame_new (_("Preview"));
   gtk_box_pack_start (GTK_BOX (main_hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
   gtk_container_add (GTK_CONTAINER (frame), abox);
   gtk_widget_show (abox);
 

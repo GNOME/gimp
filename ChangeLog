@@ -1,3 +1,15 @@
+2004-05-03  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpframe.c (gimp_frame_size_allocate): respect
+	the frame's border width.
+
+	* app/widgets/gimpcolorframe.[ch]: derive from GimpFrame.
+
+	* app/gui/convert-dialog.c
+	* app/gui/info-window.c
+	* app/gui/palette-import-dialog.c
+	* app/gui/resize-dialog.c: use GimpFrames, changed some spacings.
+
 2004-05-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/dockable-commands.c (dockable_add_tab_cmd_callback):

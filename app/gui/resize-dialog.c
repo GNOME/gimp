@@ -204,7 +204,7 @@ resize_widget_new (GimpViewable *viewable,
 	    window_title = _("Scale Layer");
             window_desc  = _("Scale Layer Options");
 	    help_page    = GIMP_HELP_LAYER_SCALE;
-	    frame        = gtk_frame_new (_("Size"));
+	    frame        = gimp_frame_new (_("Size"));
 	    break;
 
 	  case ResizeImage:
@@ -212,7 +212,7 @@ resize_widget_new (GimpViewable *viewable,
 	    window_title = _("Scale Image");
             window_desc  = _("Scale Image Options");
 	    help_page    = GIMP_HELP_IMAGE_SCALE;
-	    frame        = gtk_frame_new (_("Pixel Dimensions"));
+	    frame        = gimp_frame_new (_("Pixel Dimensions"));
 	    break;
 	  }
 	break;
@@ -236,7 +236,7 @@ resize_widget_new (GimpViewable *viewable,
 	    help_page    = GIMP_HELP_IMAGE_RESIZE;
 	    break;
 	  }
-	frame = gtk_frame_new (_("Size"));
+	frame = gimp_frame_new (_("Size"));
 	break;
       }
 
@@ -265,7 +265,7 @@ resize_widget_new (GimpViewable *viewable,
   }
 
   /*  the main vbox  */
-  main_vbox = gtk_vbox_new (FALSE, 4);
+  main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (resize->resize_shell)->vbox),
 		     main_vbox);
@@ -275,11 +275,9 @@ resize_widget_new (GimpViewable *viewable,
   gtk_widget_show (frame);
 
   vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   table = gtk_table_new (6, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
@@ -455,12 +453,11 @@ resize_widget_new (GimpViewable *viewable,
       GtkWidget *button;
       GtkWidget *abox;
 
-      frame = gtk_frame_new (_("Offset"));
+      frame = gimp_frame_new (_("Offset"));
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
-      vbox = gtk_vbox_new (FALSE, 4);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+      vbox = gtk_vbox_new (FALSE, 6);
       gtk_container_add (GTK_CONTAINER (frame), vbox);
       gtk_widget_show (vbox);
 
@@ -546,12 +543,11 @@ resize_widget_new (GimpViewable *viewable,
   /*  the resolution stuff  */
   if ((type == ScaleWidget) && (resize->target == ResizeImage))
     {
-      frame = gtk_frame_new (_("Print Size & Display Unit"));
+      frame = gimp_frame_new (_("Print Size & Display Unit"));
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
-      vbox = gtk_vbox_new (FALSE, 2);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+      vbox = gtk_vbox_new (FALSE, 6);
       gtk_container_add (GTK_CONTAINER (frame), vbox);
 
       table = gtk_table_new (4, 2, FALSE);

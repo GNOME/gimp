@@ -104,9 +104,7 @@ info_window_page_switch (GtkWidget       *widget,
 			 gint             page_num,
                          InfoDialog      *info_win)
 {
-  InfoWinData *iwd;
-
-  iwd = (InfoWinData *) info_win->user_data;
+  InfoWinData *iwd = (InfoWinData *) info_win->user_data;
 
   iwd->showing_extended = (page_num == 1);
 }
@@ -123,16 +121,14 @@ static void
 info_window_create_extended (InfoDialog *info_win,
                              Gimp       *gimp)
 {
-  GtkWidget   *hbox;
+  InfoWinData *iwd = (InfoWinData *) info_win->user_data;
   GtkWidget   *frame;
   GtkWidget   *table;
+  GtkWidget   *hbox;
   GtkWidget   *vbox;
-  InfoWinData *iwd;
 
-  iwd = (InfoWinData *) info_win->user_data;
-
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_notebook_append_page (GTK_NOTEBOOK (info_win->info_notebook),
 			    vbox, gtk_label_new (_("Extended")));
   gtk_widget_show (vbox);
@@ -140,16 +136,15 @@ info_window_create_extended (InfoDialog *info_win,
 
   /* cursor information */
 
-  hbox = gtk_hbox_new (TRUE, 4);
+  hbox = gtk_hbox_new (TRUE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  frame = gtk_frame_new (_("Pixels"));
+  frame = gimp_frame_new (_("Pixels"));
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (2, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_container_add (GTK_CONTAINER (frame), table);
@@ -167,12 +162,11 @@ info_window_create_extended (InfoDialog *info_win,
                              _("Y:"), 1.0, 0.5,
                              iwd->pixel_labels[1], 1, FALSE);
 
-  frame = gtk_frame_new (_("Units"));
+  frame = gimp_frame_new (_("Units"));
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (2, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_container_add (GTK_CONTAINER (frame), table);
@@ -462,7 +456,7 @@ info_window_free (InfoDialog *info_win)
 void
 info_window_update (GimpDisplay *gdisp)
 {
-  GimpDisplayShell *shell;
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (gdisp->shell);
   GimpImage        *gimage;
   InfoWinData      *iwd;
   gint              type;
@@ -472,8 +466,6 @@ info_window_update (GimpDisplay *gdisp)
   gdouble           res_unit_factor;
   gchar             format_buf[32];
   InfoDialog       *info_win;
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   info_win = shell->info_dialog;
 

@@ -149,8 +149,8 @@ gimp_frame_size_request (GtkWidget      *widget,
       requisition->height += child_requisition.height;
     }
 
-  requisition->width  += GTK_CONTAINER (widget)->border_width;
-  requisition->height += GTK_CONTAINER (widget)->border_width;
+  requisition->width  += 2 * GTK_CONTAINER (widget)->border_width;
+  requisition->height += 2 * GTK_CONTAINER (widget)->border_width;
 }
 
 static void
@@ -171,6 +171,7 @@ gimp_frame_size_allocate (GtkWidget     *widget,
     {
       GtkAllocation   label_allocation;
       GtkRequisition  label_requisition;
+      gint            border_width = GTK_CONTAINER (widget)->border_width;
       gfloat          xalign;
 
       gtk_widget_get_child_requisition (frame->label_widget,
@@ -181,10 +182,10 @@ gimp_frame_size_allocate (GtkWidget     *widget,
       else
 	xalign = 1.0 - frame->label_xalign;
 
-      label_allocation.x      = (allocation->x +
+      label_allocation.x      = (allocation->x + border_width +
                                  xalign * (gfloat) (allocation->width -
                                                     label_requisition.width));
-      label_allocation.y      = allocation->y;
+      label_allocation.y      = allocation->y + border_width;
       label_allocation.width  = label_requisition.width;
       label_allocation.height = label_requisition.height;
 
