@@ -101,13 +101,13 @@ image_new_init (void)
   fill_type_names = g_list_append (fill_type_names, new_fill_type);
 
   /* Set the last values used to default values. */
-  last_values.width = default_width;
-  last_values.height = default_height;
-  last_values.unit = default_units;
-  last_values.xresolution = default_xresolution;
-  last_values.yresolution = default_yresolution;
-  last_values.res_unit = default_resolution_units;
-  last_values.type = default_type;
+  last_values.width = gimprc.default_width;
+  last_values.height = gimprc.default_height;
+  last_values.unit = gimprc.default_units;
+  last_values.xresolution = gimprc.default_xresolution;
+  last_values.yresolution = gimprc.default_yresolution;
+  last_values.res_unit = gimprc.default_resolution_units;
+  last_values.type = gimprc.default_type;
   last_values.fill_type = BACKGROUND_FILL;
 }
 
@@ -287,12 +287,12 @@ image_new_create_image (const GimpImageNewValues *values)
   gimp_image_set_resolution (image, values->xresolution, values->yresolution);
   gimp_image_set_unit (image, values->unit);
 
-  if (default_comment)
+  if (gimprc.default_comment)
     {
       comment_parasite = gimp_parasite_new ("gimp-comment",
 					    GIMP_PARASITE_PERSISTENT,
-					    strlen (default_comment) + 1,
-					    (gpointer) default_comment);
+					    strlen (gimprc.default_comment) + 1,
+					    (gpointer) gimprc.default_comment);
       gimp_image_parasite_attach (image, comment_parasite);
       gimp_parasite_free (comment_parasite);
     }

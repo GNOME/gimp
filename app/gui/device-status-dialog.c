@@ -973,7 +973,7 @@ void
 device_status_free (void)
 {                                     
   /* Save device status on exit */
-  if (save_device_status)
+  if (gimprc.save_device_status)
     devices_write_rc ();
 
   if (deviceD)

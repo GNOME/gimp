@@ -586,7 +586,7 @@ view_info_window_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  if (! info_window_follows_mouse) 
+  if (! gimprc.info_window_follows_mouse) 
     {
       if (! gdisp->window_info_dialog)
 	gdisp->window_info_dialog = info_window_create ((void *) gdisp);
@@ -607,7 +607,7 @@ view_nav_window_cmd_callback (GtkWidget *widget,
   GDisplay *gdisp;
   return_if_no_display (gdisp);
 
-  if (nav_window_per_display) 
+  if (gimprc.nav_window_per_display) 
     {
       if (! gdisp->window_nav_dialog)
 	gdisp->window_nav_dialog = nav_window_create ((void *) gdisp);

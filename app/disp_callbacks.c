@@ -195,7 +195,8 @@ gdisplay_canvas_events (GtkWidget *canvas,
       /*  create the selection object  */
       gdisp->select = selection_create (gdisp->canvas->window, gdisp,
 					gdisp->gimage->height,
-					gdisp->gimage->width, marching_speed);
+					gdisp->gimage->width, 
+					gimprc.marching_speed);
 
       gdisp->disp_width = gdisp->canvas->allocation.width;
       gdisp->disp_height = gdisp->canvas->allocation.height;
@@ -643,7 +644,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
   /* <Toolbox>/File/Preferences.../Interface/...         */
   /* Image Windows/Disable Cursor Updating is TOGGLED ON */
  
-  if (no_cursor_updating == 0)
+  if (gimprc.no_cursor_updating == 0)
     {
       if (active_tool && !gimp_image_is_empty (gdisp->gimage) &&
 	  !(state & (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK)))

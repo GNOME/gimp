@@ -78,7 +78,7 @@ void
 gimp_help (const gchar *help_path,
 	   const gchar *help_data)
 {
-  if (use_help)
+  if (gimprc.use_help)
     {
       GimpIdleHelp *idle_help;
 
@@ -106,7 +106,7 @@ gimp_idle_help (gpointer data)
 
   idle_help = (GimpIdleHelp *) data;
 
-  if (idle_help->help_data == NULL && help_browser != HELP_BROWSER_GIMP)
+  if (idle_help->help_data == NULL && gimprc.help_browser != HELP_BROWSER_GIMP)
     idle_help->help_data = g_strdup ("introduction.html");
 
 #ifdef DEBUG_HELP
@@ -123,7 +123,7 @@ gimp_idle_help (gpointer data)
   g_print ("\n");
 #endif  /*  DEBUG_HELP  */
 
-  switch (help_browser)
+  switch (gimprc.help_browser)
     {
     case HELP_BROWSER_GIMP:
       if (gimp_help_internal (idle_help->help_path,
@@ -160,7 +160,7 @@ gimp_help_internal_not_found_callback (GtkWidget *widget,
 
   if (use_netscape)
     {
-      help_browser = HELP_BROWSER_NETSCAPE;
+      gimprc.help_browser = HELP_BROWSER_NETSCAPE;
 
       update = g_list_append (update, "help-browser");
       save_gimprc (&update, &remove);
@@ -201,7 +201,7 @@ gimp_help_internal (const gchar *help_path,
 	  gtk_widget_show (not_found);
 	  gtk_main ();
 	  
-	  return (help_browser != HELP_BROWSER_NETSCAPE);
+	  return (gimprc.help_browser != HELP_BROWSER_NETSCAPE);
 	}
 
       args = g_new (Argument, 4);

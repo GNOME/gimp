@@ -174,15 +174,15 @@ app_init (void)
 #endif /* DISPLAY_FILTERS */
 
   RESET_BAR();
-  if (always_restore_session)
+  if (gimprc.always_restore_session)
     restore_session = TRUE;
 
   /* make sure the monitor resolution is valid */
-  if (monitor_xres < GIMP_MIN_RESOLUTION ||
-      monitor_yres < GIMP_MIN_RESOLUTION)
+  if (gimprc.monitor_xres < GIMP_MIN_RESOLUTION ||
+      gimprc.monitor_yres < GIMP_MIN_RESOLUTION)
     {
-      gdisplay_xserver_resolution (&monitor_xres, &monitor_yres);
-      using_xserver_resolution = TRUE;
+      gdisplay_xserver_resolution (&gimprc.monitor_xres, &gimprc.monitor_yres);
+      gimprc.using_xserver_resolution = TRUE;
     }
 
   /* Now we are ready to draw the splash-screen-image to the start-up window */

@@ -41,8 +41,8 @@ typedef enum
 #define  SCALEDEST(g)   (g->scale >> 8)
 
 /* finding the effective screen resolution (double) */
-#define  SCREEN_XRES(g) (g->dot_for_dot? g->gimage->xresolution : monitor_xres)
-#define  SCREEN_YRES(g) (g->dot_for_dot? g->gimage->yresolution : monitor_yres)
+#define  SCREEN_XRES(g) (g->dot_for_dot? g->gimage->xresolution : gimprc.monitor_xres)
+#define  SCREEN_YRES(g) (g->dot_for_dot? g->gimage->yresolution : gimprc.monitor_yres)
 
 /* calculate scale factors (double) */
 #define  SCALEFACTOR_X(g)  ((SCALEDEST(g) * SCREEN_XRES(g)) /          \

@@ -83,8 +83,8 @@ tips_dialog_create (void)
       g_free (temp);
     }
 
-  if (last_tip >= tips_count || last_tip < 0)
-    last_tip = 0;
+  if (gimprc.last_tip >= tips_count || gimprc.last_tip < 0)
+    gimprc.last_tip = 0;
 
   if (tips_dialog)
     return tips_dialog;
@@ -115,7 +115,7 @@ tips_dialog_create (void)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
   gtk_widget_show (hbox);
 
-  tips_label = gtk_label_new (tips_text[last_tip]);
+  tips_label = gtk_label_new (tips_text[gimprc.last_tip]);
   gtk_label_set_justify (GTK_LABEL (tips_label), GTK_JUSTIFY_LEFT);
   gtk_misc_set_alignment (GTK_MISC (tips_label), 0.5, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), tips_label, TRUE, TRUE, 3);
@@ -140,14 +140,14 @@ tips_dialog_create (void)
   gtk_widget_show (hbox);
 
   button = gtk_check_button_new_with_label (_("Show tip next time GIMP starts"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), show_tips);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), gimprc.show_tips);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      GTK_SIGNAL_FUNC (tips_toggle_update),
-		      &show_tips);
+		      &gimprc.show_tips);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  old_show_tips = show_tips;
+  old_show_tips = gimprc.show_tips;
 
   bbox = gtk_hbutton_box_new ();
   gtk_box_pack_end (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
@@ -203,11 +203,11 @@ tips_dialog_destroy (GtkWidget *widget,
 
   /* the last-shown-tip is now saved in sessionrc */
 
-  if (show_tips != old_show_tips)
+  if (gimprc.show_tips != old_show_tips)
     {
       update = g_list_append (update, "show-tips");
       remove = g_list_append (remove, "dont-show-tips");
-      old_show_tips = show_tips;
+      old_show_tips = gimprc.show_tips;
       save_gimprc (&update, &remove);
     }
   g_list_free (update);
@@ -218,24 +218,24 @@ static void
 tips_show_previous (GtkWidget *widget,
 		    gpointer  data)
 {
-  last_tip--;
+  gimprc.last_tip--;
 
-  if (last_tip < 0)
-    last_tip = tips_count - 1;
+  if (gimprc.last_tip < 0)
+    gimprc.last_tip = tips_count - 1;
 
-  gtk_label_set_text (GTK_LABEL (tips_label), tips_text[last_tip]);
+  gtk_label_set_text (GTK_LABEL (tips_label), tips_text[gimprc.last_tip]);
 }
 
 static void
 tips_show_next (GtkWidget *widget,
 		gpointer   data)
 {
-  last_tip++;
+  gimprc.last_tip++;
 
-  if (last_tip >= tips_count)
-    last_tip = 0;
+  if (gimprc.last_tip >= tips_count)
+    gimprc.last_tip = 0;
 
-  gtk_label_set_text (GTK_LABEL (tips_label), tips_text[last_tip]);
+  gtk_label_set_text (GTK_LABEL (tips_label), tips_text[gimprc.last_tip]);
 }
 
 static void

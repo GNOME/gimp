@@ -1206,16 +1206,16 @@ user_install_resolution (void)
     gimp_coordinates_new (GIMP_UNIT_INCH, pixels_per_unit,
 			  FALSE, FALSE, 75,
 			  GIMP_SIZE_ENTRY_UPDATE_RESOLUTION,
-			  abs (monitor_xres - monitor_yres) < GIMP_MIN_RESOLUTION,
+			  abs (gimprc.monitor_xres - gimprc.monitor_yres) < GIMP_MIN_RESOLUTION,
 			  FALSE,
 			  _("Monitor Resolution X:"),
-			  monitor_xres,
+			  gimprc.monitor_xres,
 			  1.0,
 			  GIMP_MIN_RESOLUTION,
 			  GIMP_MAX_RESOLUTION,
 			  0, 0,
 			  _("Y:"),
-			  monitor_yres,
+			  gimprc.monitor_yres,
 			  1.0,
 			  GIMP_MIN_RESOLUTION,
 			  GIMP_MAX_RESOLUTION,
@@ -1268,7 +1268,7 @@ user_install_resolution (void)
 		      GTK_SIGNAL_FUNC (gimp_toggle_button_sensitive_update),
 		      NULL);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (xserver_toggle),
-				using_xserver_resolution);
+				gimprc.using_xserver_resolution);
 }
 
 static void
@@ -1305,33 +1305,33 @@ user_install_resolution_done (void)
       base_config->swap_path = new_swap_path;
       update = g_list_append (update, "swap-path");
     }
-  if (using_xserver_resolution != new_using_xserver_resolution ||
-      ABS (monitor_xres - new_monitor_xres) > GIMP_MIN_RESOLUTION)
+  if (gimprc.using_xserver_resolution != new_using_xserver_resolution ||
+      ABS (gimprc.monitor_xres - new_monitor_xres) > GIMP_MIN_RESOLUTION)
     {
-      monitor_xres = new_monitor_xres;
+      gimprc.monitor_xres = new_monitor_xres;
       update = g_list_append (update, "monitor-xresolution");
     }
-  if (using_xserver_resolution != new_using_xserver_resolution ||
-      ABS (monitor_yres - new_monitor_yres) > GIMP_MIN_RESOLUTION)
+  if (gimprc.using_xserver_resolution != new_using_xserver_resolution ||
+      ABS (gimprc.monitor_yres - new_monitor_yres) > GIMP_MIN_RESOLUTION)
     {
-      monitor_yres = new_monitor_yres;
+      gimprc.monitor_yres = new_monitor_yres;
       update = g_list_append (update, "monitor-yresolution");
     }
 
-  using_xserver_resolution = new_using_xserver_resolution;
+  gimprc.using_xserver_resolution = new_using_xserver_resolution;
 
-  if (using_xserver_resolution)
+  if (gimprc.using_xserver_resolution)
     {
       /* special value of 0 for either x or y res in the gimprc file
        * means use the xserver's current resolution */
-      monitor_xres = 0.0;
-      monitor_yres = 0.0;
+      gimprc.monitor_xres = 0.0;
+      gimprc.monitor_yres = 0.0;
     }
 
   save_gimprc (&update, &remove);
 
-  if (using_xserver_resolution)
-    gdisplay_xserver_resolution (&monitor_xres, &monitor_yres);
+  if (gimprc.using_xserver_resolution)
+    gdisplay_xserver_resolution (&gimprc.monitor_xres, &gimprc.monitor_yres);
 
   g_list_free (update);
   g_list_free (remove);

@@ -414,7 +414,7 @@ toolbox_create (void)
 
   create_color_area (wbox);
 
-  if (show_indicators)
+  if (gimprc.show_indicators)
     create_indicator_area (wbox, gimp_context_get_user ());
 
   gtk_drag_dest_set (window,

@@ -201,7 +201,8 @@ gimp_undo_real_push (GimpUndo  *undo,
                      GimpImage *gimage)
 {
   undo->preview = gimp_viewable_get_preview (GIMP_VIEWABLE (gimage),
-                                             preview_size, preview_size);
+                                             gimprc.preview_size, 
+					     gimprc.preview_size);
 }
 
 static void

@@ -1945,8 +1945,8 @@ xcf_load_image_props (XcfInfo   *info,
 		yres < GIMP_MIN_RESOLUTION || yres > GIMP_MAX_RESOLUTION)
 	      {
 		g_message ("Warning, resolution out of range in XCF file");
-		xres = default_xresolution;
-		yres = default_yresolution;
+		xres = gimprc.default_xresolution;
+		yres = gimprc.default_yresolution;
 	      }
 	    gimage->xresolution = xres;
 	    gimage->yresolution = yres;

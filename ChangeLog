@@ -1,3 +1,62 @@
+2001-06-03  Dave Neary  <dneary@eircom.net>
+
+	* app/gimprc.[ch]: Made all the global options members of one
+	struct, gimprc.
+
+	* app/app_procs.c
+	* app/colormaps.c
+	* app/context_manager.c
+	* app/devices.c
+	* app/disp_callbacks.c
+	* app/file-save.c
+	* app/gdisplay.c
+	* app/gdisplay.h
+	* app/gdisplay_ops.c
+	* app/gimphelp.c
+	* app/image_new.c
+	* app/interface.c
+	* app/module_db.c
+	* app/nav_window.c
+	* app/plug_in.c
+	* app/resize.c
+	* app/scale.c
+	* app/selection.c
+	* app/undo.c
+	* app/undo_history.c
+	* app/user_install.c
+	* app/xcf.c
+
+	* app/core/gimpcontext.c
+	* app/core/gimpimage.c
+	* app/core/gimpundo.c
+
+	* app/gui/brush-select.c
+	* app/gui/commands.c
+	* app/gui/file-new-dialog.c
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c
+	* app/gui/gui.c
+	* app/gui/layer-select.c
+	* app/gui/menus.c
+	* app/gui/paths-dialog.c
+	* app/gui/preferences-dialog.c
+	* app/gui/session.c
+	* app/gui/tips-dialog.c
+	* app/gui/toolbox.c
+
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimppainttool.c
+	* app/tools/paint_options.c
+	* app/tools/selection_options.c
+
+	* app/widgets/gimpdrawablelistview.c
+
+	* tools/pdbgen/pdb/gimprc.pdb
+	* app/pdb/gimprc_cmds.c: Changed accordingly.
+	
 2001-06-01  Dave Neary  <dneary@eircom.net>
 
 	* app/tools/gimpbycolorselecttool.c: added a call to

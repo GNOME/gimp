@@ -76,7 +76,7 @@ gui_init (void)
   menus_reorder_plugins ();
 
   gximage_init ();
-  render_setup (transparency_type, transparency_size);
+  render_setup (gimprc.transparency_type, gimprc.transparency_size);
 
   dialogs_init ();
 
@@ -86,7 +86,7 @@ gui_init (void)
   /*  tooltips  */
   gimp_help_init ();
 
-  if (! show_tool_tips)
+  if (! gimprc.show_tool_tips)
     gimp_help_disable_tooltips ();
 
   gimp_dialog_factory_dialog_new (global_dialog_factory, "gimp:toolbox");
@@ -96,13 +96,13 @@ gui_init (void)
    */
   {
     FILE   *fp;
-    gchar **filenames = g_new0 (gchar *, last_opened_size);
+    gchar **filenames = g_new0 (gchar *, gimprc.last_opened_size);
     gint    i;
 
     if ((fp = document_index_parse_init ()))
       {
 	/*  read the filenames...  */
-	for (i = 0; i < last_opened_size; i++)
+	for (i = 0; i < gimprc.last_opened_size; i++)
 	  if ((filenames[i] = document_index_parse_line (fp)) == NULL)
 	    break;
 
@@ -132,7 +132,7 @@ gui_restore (void)
 void
 gui_post_init (void)
 {
-  if (show_tips)
+  if (gimprc.show_tips)
     {
       gimp_dialog_factory_dialog_new (global_dialog_factory, "gimp:tips-dialog");
     }

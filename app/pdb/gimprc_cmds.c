@@ -163,8 +163,8 @@ get_monitor_resolution_invoker (Argument *args)
   gdouble xres;
   gdouble yres;
 
-  xres = monitor_xres;
-  yres = monitor_yres;
+  xres = gimprc.monitor_xres;
+  yres = gimprc.monitor_yres;
   success = TRUE;
 
   return_args = procedural_db_return_args (&get_monitor_resolution_proc, success);

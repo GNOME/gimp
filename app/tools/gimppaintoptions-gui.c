@@ -214,7 +214,7 @@ paint_options_init (PaintOptions         *options,
       gtk_widget_show (separator);
     }
 
-  if (! global_paint_options)
+  if (! gimprc.global_paint_options)
     gtk_widget_show (vbox);
 
   /*  the "incremental" toggle  */
@@ -266,7 +266,7 @@ paint_options_new (GtkType               tool_type,
   options = g_new (PaintOptions, 1);
   paint_options_init (options, tool_type, reset_func);
 
-  if (global_paint_options && options->global)
+  if (gimprc.global_paint_options && options->global)
     gtk_widget_show (options->global);
 
   return options;
@@ -311,10 +311,10 @@ paint_options_set_global (gboolean global)
 
   global = global ? TRUE : FALSE;
 
-  if (global_paint_options == global)
+  if (gimprc.global_paint_options == global)
     return;
 
-  global_paint_options = global;
+  gimprc.global_paint_options = global;
 
   for (list = paint_options_list; list; list = list->next)
     {

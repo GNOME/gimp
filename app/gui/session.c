@@ -114,7 +114,7 @@ session_save (void)
   gimp_dialog_factories_session_save (fp);
 
   /* save last tip shown */
-  fprintf (fp, "(last-tip-shown %d)\n\n", last_tip + 1);
+  fprintf (fp, "(last-tip-shown %d)\n\n", gimprc.last_tip + 1);
 
   color_history_write (fp);
 

@@ -598,7 +598,8 @@ resize_widget_new (ResizeType    type,
       gtk_widget_set_usize (spinbutton, 75, 0);
 
       private->resolution_se =
-	gimp_size_entry_new (1, default_resolution_units, _("pixels/%a"),
+	gimp_size_entry_new (1, gimprc.default_resolution_units, 
+			     _("pixels/%a"),
 			     FALSE, FALSE, FALSE, 75,
 			     GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
       gtk_table_set_col_spacing (GTK_TABLE (private->resolution_se), 1, 2);

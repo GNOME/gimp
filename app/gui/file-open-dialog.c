@@ -598,7 +598,7 @@ set_preview (const gchar *fullfname,
 	}
       else
 	{
-	  switch (thumbnail_mode)
+	  switch (gimprc.thumbnail_mode)
 	    {
 	    case 0:
 	      gtk_label_set_text (GTK_LABEL(open_options_label),
@@ -723,7 +723,7 @@ file_open_genbutton_callback (GtkWidget *widget,
 		RGBbuf  = make_RGBbuf_from_tempbuf (tempbuf,
 						    &RGBbuf_w,
 						    &RGBbuf_h);
-		if (thumbnail_mode)
+		if (gimprc.thumbnail_mode)
 		  {
 		    file_save_thumbnail (gimage_to_be_thumbed,
 					 full_filename, tempbuf);

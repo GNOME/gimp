@@ -1261,11 +1261,11 @@ create_dummy_iwd (GDisplay   *gdisp,
   iwd->ratio               = 1.0;
   iwd->block_window_marker = FALSE;
   iwd->nav_preview_width   = 
-    (nav_preview_size < 0 || nav_preview_size > 256) ? 
-    NAV_PREVIEW_WIDTH : nav_preview_size;
+    (gimprc.nav_preview_size < 0 || gimprc.nav_preview_size > 256) ? 
+    NAV_PREVIEW_WIDTH : gimprc.nav_preview_size;
   iwd->nav_preview_height  = 
-    (nav_preview_size < 0 || nav_preview_size > 256) ? 
-    NAV_PREVIEW_HEIGHT : nav_preview_size;
+    (gimprc.nav_preview_size < 0 || gimprc.nav_preview_size > 256) ? 
+    NAV_PREVIEW_HEIGHT : gimprc.nav_preview_size;
   iwd->block_adj_sig       = FALSE;
   iwd->frozen              = FALSE;
   iwd->timer_id            = 0;
@@ -1726,11 +1726,11 @@ nav_window_preview_resized (InfoDialog *idialog)
   iwd->imageheight = 1;
 
   iwd->nav_preview_width = 
-    (nav_preview_size < 0 || nav_preview_size > 256) ? 
-    NAV_PREVIEW_WIDTH : nav_preview_size;
+    (gimprc.nav_preview_size < 0 || gimprc.nav_preview_size > 256) ? 
+    NAV_PREVIEW_WIDTH : gimprc.nav_preview_size;
   iwd->nav_preview_height = 
-    (nav_preview_size < 0 || nav_preview_size > 256) ? 
-    NAV_PREVIEW_HEIGHT : nav_preview_size;
+    (gimprc.nav_preview_size < 0 || gimprc.nav_preview_size > 256) ? 
+    NAV_PREVIEW_HEIGHT : gimprc.nav_preview_size;
 
   nav_window_update_window_marker (idialog); 
 }

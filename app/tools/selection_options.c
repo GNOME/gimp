@@ -65,7 +65,7 @@ selection_options_init (SelectionOptions     *options,
   options->feather_radius = options->feather_radius_d = 10.0;
   options->antialias      = options->antialias_d      = TRUE;
   options->sample_merged  = options->sample_merged_d  = FALSE;
-  options->threshold                                  = default_threshold;
+  options->threshold                                  = gimprc.default_threshold;
   options->fixed_size     = options->fixed_size_d     = FALSE;
   options->fixed_height   = options->fixed_height_d   = 1;
   options->fixed_width    = options->fixed_width_d    = 1;
@@ -198,7 +198,7 @@ selection_options_init (SelectionOptions     *options,
       gtk_widget_show (label);
 
       options->threshold_w = 
-	gtk_adjustment_new (default_threshold, 0.0, 255.0, 1.0, 1.0, 0.0);
+	gtk_adjustment_new (gimprc.default_threshold, 0.0, 255.0, 1.0, 1.0, 0.0);
       scale = gtk_hscale_new (GTK_ADJUSTMENT (options->threshold_w));
       gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
       gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
@@ -328,7 +328,7 @@ selection_options_reset (ToolOptions *tool_options)
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
 				    options->sample_merged_d);
       gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w),
-				default_threshold);
+				gimprc.default_threshold);
     }
 
   if (options->fixed_size_w)

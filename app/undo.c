@@ -313,13 +313,13 @@ static gboolean
 undo_free_up_space (GimpImage *gimage)
 {
   /* If there are 0 levels of undo return FALSE.  */
-  if (levels_of_undo == 0)
+  if (gimprc.levels_of_undo == 0)
     return FALSE;
 
   /*  Delete the item on the bottom of the stack if we have the maximum
    *  levels of undo already
    */
-  while (gimage->undo_levels >= levels_of_undo)
+  while (gimage->undo_levels >= gimprc.levels_of_undo)
     gimage->undo_stack = remove_stack_bottom (gimage);
 
   return TRUE;

@@ -394,7 +394,7 @@ gimp_drawable_list_view_new (GimpImage               *gimage,
 
   view = GIMP_CONTAINER_VIEW (list_view);
 
-  view->preview_size = preview_size;
+  view->preview_size = gimprc.preview_size;
 
   list_view->drawable_type         = drawable_type;
   list_view->signal_name           = g_strdup (signal_name);

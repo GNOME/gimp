@@ -830,7 +830,7 @@ by_color_select_dialog_new (void)
   bcd = g_new (ByColorDialog, 1);
   bcd->gimage    = NULL;
   bcd->operation = SELECTION_REPLACE;
-  bcd->threshold = default_threshold;
+  bcd->threshold = gimprc.default_threshold;
 
   /*  The shell and main vbox  */
   bcd->shell = gimp_dialog_new (_("By Color Selection"), "by_color_selection",
@@ -1133,7 +1133,7 @@ by_color_select_reset_callback (GtkWidget *widget,
 
   gtk_widget_activate (bcd->replace_button);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (bcd->threshold_adj),
-			    default_threshold);
+			    gimprc.default_threshold);
 }
 
 static void

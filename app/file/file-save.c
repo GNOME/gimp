@@ -181,7 +181,7 @@ file_save (GimpImage   *gimage,
       /* gimage_set_save_proc(gimage, file_proc); */
 
       /* Write a thumbnail for the saved image, where appropriate */
-      switch (thumbnail_mode)
+      switch (gimprc.thumbnail_mode)
 	{
 	case 0:
 	  break;

@@ -322,18 +322,18 @@ plug_in_init (void)
     plug_in_init_shm ();
 
   /* search for binaries in the plug-in directory path */
-  gimp_datafiles_read_directories (plug_in_path, MODE_EXECUTABLE,
+  gimp_datafiles_read_directories (gimprc.plug_in_path, MODE_EXECUTABLE,
 				   plug_in_init_file, NULL);
 
   /* read the pluginrc file for cached data */
   filename = NULL;
-  if (pluginrc_path)
+  if (gimprc.pluginrc_path)
     {
-      if (g_path_is_absolute (pluginrc_path))
-        filename = g_strdup (pluginrc_path);
+      if (g_path_is_absolute (gimprc.pluginrc_path))
+        filename = g_strdup (gimprc.pluginrc_path);
       else
         filename = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s",
-				    gimp_directory (), pluginrc_path);
+				    gimp_directory (), gimprc.pluginrc_path);
     }
   else
     filename = gimp_personal_rc_file ("pluginrc");
@@ -853,7 +853,7 @@ plug_in_new (gchar *name)
 
   if (! g_path_is_absolute (name))
     {
-      path = plug_in_search_in_path (plug_in_path, name);
+      path = plug_in_search_in_path (gimprc.plug_in_path, name);
 
       if (! path)
 	{
@@ -1307,15 +1307,15 @@ plug_in_run (ProcRecord *proc_rec,
 	  config.tile_width   = TILE_WIDTH;
 	  config.tile_height  = TILE_HEIGHT;
 	  config.shm_ID       = shm_ID;
-	  config.gamma        = gamma_val;
-	  config.install_cmap = install_cmap;
+	  config.gamma        = gimprc.gamma_val;
+	  config.install_cmap = gimprc.install_cmap;
 	  config.use_xshm     = gdk_get_use_xshm ();
 	  config.gdisp_ID     = gdisp_ID;
 
 	  if (gtk_check_version (1, 2, 8))
-	    config.min_colors = CLAMP (min_colors, 27, 216);
+	    config.min_colors = CLAMP (gimprc.min_colors, 27, 216);
 	  else
-	    config.min_colors = CLAMP (min_colors, 27, 256);
+	    config.min_colors = CLAMP (gimprc.min_colors, 27, 256);
 
 	  proc_run.name    = proc_rec->name;
 	  proc_run.nparams = argc;

@@ -116,8 +116,8 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  xres = monitor_xres;
-  yres = monitor_yres;
+  xres = gimprc.monitor_xres;
+  yres = gimprc.monitor_yres;
   success = TRUE;
 }
 CODE

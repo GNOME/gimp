@@ -520,7 +520,7 @@ selection_create (GdkWindow *win,
   new = g_new (Selection, 1);
   base_type = gimp_image_base_type (gdisp->gimage);
 
-  if (cycled_marching_ants)
+  if (gimprc.cycled_marching_ants)
     {
       new->cycle = TRUE;
       if (!cycled_ants_pixmap)

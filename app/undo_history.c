@@ -747,7 +747,7 @@ undo_history_new (GimpImage *gimage)
 
   st = g_new0 (undo_history_st, 1);
   st->gimage = gimage;
-  st->preview_size = preview_size;
+  st->preview_size = gimprc.preview_size;
 
   /*  gimage signals  */
   gtk_signal_connect (GTK_OBJECT (gimage), "undo_event",

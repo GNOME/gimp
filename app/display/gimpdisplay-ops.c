@@ -127,7 +127,7 @@ gdisplay_close_window (GDisplay *gdisp,
   if (! kill_it &&
       (gdisp->gimage->disp_count == 1) &&
       gdisp->gimage->dirty &&
-      confirm_on_close)
+      gimprc.confirm_on_close)
     {
       gdisplay_close_warning_dialog
 	(g_basename (gimp_image_filename (gdisp->gimage)), gdisp);

@@ -172,7 +172,7 @@ change_scale (GDisplay     *gdisp,
       gdisp->offset_y = (int) (offset_y - (gdisp->disp_height / 2));
 
       /*  resize the image  */
-      resize_display (gdisp, allow_resize_windows, TRUE);
+      resize_display (gdisp, gimprc.allow_resize_windows, TRUE);
     }
 }
 

@@ -135,7 +135,7 @@ file_save_callback (GtkWidget *widget,
     return;
 
   /*  Only save if the gimage has been modified  */
-  if (!trust_dirty_flag || gdisplay->gimage->dirty != 0)
+  if (!gimprc.trust_dirty_flag || gdisplay->gimage->dirty != 0)
     {
       gchar *filename;
 

@@ -148,7 +148,7 @@ gdisplay_new (GimpImage *gimage,
   gdisp->offset_x           = 0;
   gdisp->offset_y           = 0;
   gdisp->scale              = scale;
-  gdisp->dot_for_dot        = default_dot_for_dot;
+  gdisp->dot_for_dot        = gimprc.default_dot_for_dot;
   gdisp->gimage             = gimage;
   gdisp->window_info_dialog = NULL;
   gdisp->window_nav_dialog  = NULL;
@@ -280,7 +280,7 @@ gdisplay_format_title (GDisplay *gdisp,
     }
 
   i = 0;
-  format = image_title_format;
+  format = gimprc.image_title_format;
 
   while (i < title_len && *format)
     {
@@ -1378,7 +1378,7 @@ gdisplay_set_dot_for_dot (GDisplay *gdisp,
       gdisp->dot_for_dot = dot_for_dot;
 
       gdisplay_resize_cursor_label (gdisp);
-      resize_display (gdisp, allow_resize_windows, TRUE);
+      resize_display (gdisp, gimprc.allow_resize_windows, TRUE);
     }
 }
 
@@ -1838,7 +1838,7 @@ gdisplay_real_install_tool_cursor (GDisplay           *gdisp,
 {
   if (cursor_type != GIMP_BAD_CURSOR)
     {
-      switch (cursor_mode)
+      switch (gimprc.cursor_mode)
 	{
 	case CURSOR_MODE_TOOL_ICON:
 	  break;

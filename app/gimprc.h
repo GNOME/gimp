@@ -19,68 +19,74 @@
 #ifndef __GIMPRC_H__
 #define __GIMPRC_H__
 
+typedef struct _GimpRc GimpRc;
 
-/*  global gimprc variables  */
-extern gchar             *plug_in_path;
-extern gchar             *brush_path;
-extern gchar             *default_brush;
-extern gchar             *pattern_path;
-extern gchar             *default_pattern;
-extern gchar             *palette_path;
-extern gchar             *default_palette;
-extern gchar             *gradient_path;
-extern gchar             *default_gradient;
-extern gchar             *pluginrc_path;
-extern gchar             *module_path;
-extern gint               marching_speed;
-extern gint               last_opened_size;
-extern gdouble            gamma_val;
-extern gint               transparency_type;
-extern gboolean           perfectmouse;
-extern gint               transparency_size;
-extern gint               levels_of_undo;
-extern gint               min_colors;
-extern gboolean           install_cmap;
-extern gboolean           cycled_marching_ants;
-extern gint               default_threshold;
-extern gboolean           allow_resize_windows;
-extern gboolean           no_cursor_updating;
-extern gint               preview_size;
-extern gint               nav_preview_size;
-extern gboolean           show_rulers;
-extern GimpUnit           default_units;
-extern gboolean           show_statusbar;
-extern gboolean           auto_save;
-extern gboolean           confirm_on_close;
-extern gint               default_width, default_height;
-extern gint               default_type;
-extern GimpUnit           default_resolution_units;
-extern gdouble            default_xresolution;
-extern gdouble            default_yresolution;
-extern gchar             *default_comment;
-extern gboolean           default_dot_for_dot;
-extern gboolean           save_session_info;
-extern gboolean           save_device_status;
-extern gboolean           always_restore_session;
-extern gboolean           show_tips;
-extern gint               last_tip;
-extern gboolean           show_tool_tips;
-extern gdouble            monitor_xres;
-extern gdouble            monitor_yres;
-extern gboolean           using_xserver_resolution;
-extern gchar             *image_title_format;
-extern gboolean           global_paint_options;
-extern gchar             *module_db_load_inhibit;
-extern gboolean           show_indicators;
-extern guint              max_new_image_size;
-extern gint               thumbnail_mode;
-extern gboolean           trust_dirty_flag;
-extern gboolean           use_help;
-extern gboolean           nav_window_per_display;
-extern gboolean           info_window_follows_mouse;
-extern gint               help_browser;
-extern gint               cursor_mode;
-extern gboolean           disable_tearoff_menus;
+/*  global gimprc variables  - need some comments on this stuff */
+struct _GimpRc 
+{
+  gchar             *plug_in_path;
+  gchar             *brush_path;
+  gchar             *default_brush;
+  gchar             *pattern_path;
+  gchar             *default_pattern;
+  gchar             *palette_path;
+  gchar             *default_palette;
+  gchar             *gradient_path;
+  gchar             *default_gradient;
+  gchar             *pluginrc_path;
+  gchar             *module_path;
+  gint               marching_speed;
+  gint               last_opened_size;
+  gdouble            gamma_val;
+  gint               transparency_type;
+  gboolean           perfectmouse;
+  gint               transparency_size;
+  gint               levels_of_undo;
+  gint               min_colors;
+  gboolean           install_cmap;
+  gboolean           cycled_marching_ants;
+  gint               default_threshold;
+  gboolean           allow_resize_windows;
+  gboolean           no_cursor_updating;
+  gint               preview_size;
+  gint               nav_preview_size;
+  gboolean           show_rulers;
+  GimpUnit           default_units;
+  gboolean           show_statusbar;
+  gboolean           auto_save;
+  gboolean           confirm_on_close;
+  gint               default_width, default_height;
+  gint               default_type;
+  GimpUnit           default_resolution_units;
+  gdouble            default_xresolution;
+  gdouble            default_yresolution;
+  gchar             *default_comment;
+  gboolean           default_dot_for_dot;
+  gboolean           save_session_info;
+  gboolean           save_device_status;
+  gboolean           always_restore_session;
+  gboolean           show_tips;
+  gint               last_tip;
+  gboolean           show_tool_tips;
+  gdouble            monitor_xres;
+  gdouble            monitor_yres;
+  gboolean           using_xserver_resolution;
+  gchar             *image_title_format;
+  gboolean           global_paint_options;
+  gchar             *module_db_load_inhibit;
+  gboolean           show_indicators;
+  guint              max_new_image_size;
+  gint               thumbnail_mode;
+  gboolean           trust_dirty_flag;
+  gboolean           use_help;
+  gboolean           nav_window_per_display;
+  gboolean           info_window_follows_mouse;
+  gint               help_browser;
+  gint               cursor_mode;
+  gboolean           disable_tearoff_menus;
+};
+
+extern GimpRc gimprc;
 
 /*  function prototypes  */
 gboolean    gimprc_init         (void); /* this has to be called before any file

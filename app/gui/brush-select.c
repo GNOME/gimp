@@ -284,7 +284,7 @@ brush_select_new (gchar   *title,
   if (! title)
     {
       /*  if we are in per-tool paint options mode, hide the paint options  */
-      brush_select_show_paint_options (bsp, global_paint_options);
+      brush_select_show_paint_options (bsp, gimprc.global_paint_options);
     }
 
   gtk_widget_show (bsp->shell);

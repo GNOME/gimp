@@ -422,7 +422,7 @@ gimp_paint_tool_button_press (GimpTool       *tool,
   gdisplays_selection_visibility (gdisp->gimage, SelectionPause);
 
   /* add motion memory if perfectmouse is set */
-  if (perfectmouse != 0)
+  if (gimprc.perfectmouse != 0)
     gdk_pointer_grab (gdisp->canvas->window, FALSE,
 		      GDK_BUTTON1_MOTION_MASK |
 		      GDK_BUTTON_RELEASE_MASK,

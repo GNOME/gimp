@@ -98,7 +98,8 @@ layer_select_init (GimpImage *gimage,
       layer_select = g_new0 (LayerSelect, 1);
 
       layer_select->preview      = gimp_preview_new (GIMP_VIEWABLE (layer),
-						     preview_size, 1, FALSE);
+						     gimprc.preview_size, 1, 
+						     FALSE);
       layer_select->label        = gtk_label_new (NULL);
 
       layer_select_set_gimage (layer_select, gimage);
@@ -167,7 +168,7 @@ layer_select_update_preview_size (void)
   if (layer_select != NULL)
     {
       gimp_preview_set_size (GIMP_PREVIEW (layer_select->preview), 
-			     preview_size, 1);
+			     gimprc.preview_size, 1);
     }  
 }
 
@@ -265,7 +266,7 @@ layer_select_set_gimage (LayerSelect *layer_select,
   gimp_preview_set_viewable (GIMP_PREVIEW (layer_select->preview),
 			     GIMP_VIEWABLE (layer_select->current_layer));
   gimp_preview_set_size (GIMP_PREVIEW (layer_select->preview),
-			 preview_size, 1);
+			 gimprc.preview_size, 1);
   gtk_label_set_text (GTK_LABEL (layer_select->label),
 		      GIMP_OBJECT (layer_select->current_layer)->name);
 }

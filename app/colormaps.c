@@ -41,7 +41,7 @@ gulong marching_ants_pixels[8];
 static void
 set_app_colors (void)
 {
-  cycled_marching_ants = FALSE;
+  gimprc.cycled_marching_ants = FALSE;
 
   g_black_pixel = get_color (0, 0, 0);
   g_gray_pixel  = get_color (127, 127, 127);
@@ -64,12 +64,12 @@ void
 get_standard_colormaps (void)
 {
   if (gtk_check_version (1, 2, 8))
-    min_colors = CLAMP (min_colors, 27, 216);
+    gimprc.min_colors = CLAMP (gimprc.min_colors, 27, 216);
   else
-    min_colors = CLAMP (min_colors, 27, 256);
+    gimprc.min_colors = CLAMP (gimprc.min_colors, 27, 256);
 
-  gdk_rgb_set_min_colors (min_colors);
-  gdk_rgb_set_install (install_cmap);
+  gdk_rgb_set_min_colors (gimprc.min_colors);
+  gdk_rgb_set_install (gimprc.install_cmap);
 
   g_visual = gdk_rgb_get_visual ();
   g_cmap   = gdk_rgb_get_cmap ();

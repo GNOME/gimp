@@ -91,7 +91,7 @@ file_new_ok_callback (GtkWidget *widget,
   values->res_unit =
     gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (info->resolution_se));
 
-  if (info->size > max_new_image_size)
+  if (info->size > gimprc.max_new_image_size)
     {
       file_new_confirm_dialog (info);
     }
@@ -116,29 +116,29 @@ file_new_reset_callback (GtkWidget *widget,
 
   gimp_chain_button_set_active
     (GIMP_CHAIN_BUTTON (info->couple_resolutions),
-     ABS (default_xresolution - default_yresolution) < GIMP_MIN_RESOLUTION);
+     ABS (gimprc.default_xresolution - gimprc.default_yresolution) < GIMP_MIN_RESOLUTION);
 
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->resolution_se),
-			      0, default_xresolution);
+			      0, gimprc.default_xresolution);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->resolution_se),
-			      1, default_yresolution);
+			      1, gimprc.default_yresolution);
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (info->resolution_se),
-			    default_resolution_units);
+			    gimprc.default_resolution_units);
 
   gtk_signal_handler_unblock_by_data (GTK_OBJECT (info->resolution_se), info);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se),
-				  0, default_xresolution, TRUE);
+				  0, gimprc.default_xresolution, TRUE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se),
-				  1, default_yresolution, TRUE);
+				  1, gimprc.default_yresolution, TRUE);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->size_se),
-			      0, default_width);
+			      0, gimprc.default_width);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->size_se),
-			      1, default_height);
+			      1, gimprc.default_height);
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (info->size_se),
-			    default_units);
+			    gimprc.default_units);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (info->type_w[default_type]),
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (info->type_w[gimprc.default_type]),
 				TRUE);
   gtk_toggle_button_set_active
     (GTK_TOGGLE_BUTTON (info->fill_type_w[BACKGROUND_FILL]), TRUE);
@@ -192,7 +192,7 @@ file_new_confirm_dialog (NewImageInfo *info)
   gtk_widget_set_sensitive (info->dlg, FALSE);
 
   size = image_new_get_size_string (info->size);
-  max_size = image_new_get_size_string (max_new_image_size);
+  max_size = image_new_get_size_string (gimprc.max_new_image_size);
 
   /* xgettext:no-c-format */
 	    
@@ -551,7 +551,7 @@ ui_new_image_window_create (const GimpImageNewValues *values_orig)
   gtk_widget_set_usize (spinbutton, 75, 0);
 
   info->resolution_se =
-    gimp_size_entry_new (1, default_resolution_units, _("pixels/%a"),
+    gimp_size_entry_new (1, gimprc.default_resolution_units, _("pixels/%a"),
 		         FALSE, FALSE, FALSE, 75,
 		         GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
   gtk_table_set_col_spacing (GTK_TABLE (info->resolution_se), 1, 2);

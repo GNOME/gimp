@@ -401,9 +401,9 @@ gimp_image_init (GimpImage *gimage)
 
   gimage->width                 = 0;
   gimage->height                = 0;
-  gimage->xresolution           = default_xresolution;
-  gimage->yresolution           = default_yresolution;
-  gimage->unit                  = default_units;
+  gimage->xresolution           = gimprc.default_xresolution;
+  gimage->yresolution           = gimprc.default_yresolution;
+  gimage->unit                  = gimprc.default_units;
   gimage->base_type             = RGB;
 
   gimage->cmap                  = NULL;

@@ -267,64 +267,64 @@ static PrefsState
 prefs_check_settings (void)
 {
   /*  First, check for invalid values...  */
-  if (levels_of_undo < 0) 
+  if (gimprc.levels_of_undo < 0) 
     {
       g_message (_("Error: Levels of undo must be zero or greater."));
-      levels_of_undo = old_levels_of_undo;
+      gimprc.levels_of_undo = old_levels_of_undo;
       return PREFS_CORRUPT;
     }
-  if (marching_speed < 50)
+  if (gimprc.marching_speed < 50)
     {
       g_message (_("Error: Marching speed must be 50 or greater."));
-      marching_speed = old_marching_speed;
+      gimprc.marching_speed = old_marching_speed;
       return PREFS_CORRUPT;
     }
-  if (default_width < 1)
+  if (gimprc.default_width < 1)
     {
       g_message (_("Error: Default width must be one or greater."));
-      default_width = old_default_width;
+      gimprc.default_width = old_default_width;
       return PREFS_CORRUPT;
     }
-  if (default_height < 1)
+  if (gimprc.default_height < 1)
     {
       g_message (_("Error: Default height must be one or greater."));
-      default_height = old_default_height;
+      gimprc.default_height = old_default_height;
       return PREFS_CORRUPT;
     }
-  if (default_units < GIMP_UNIT_INCH ||
-      default_units >= gimp_unit_get_number_of_units ())
+  if (gimprc.default_units < GIMP_UNIT_INCH ||
+      gimprc.default_units >= gimp_unit_get_number_of_units ())
     {
       g_message (_("Error: Default unit must be within unit range."));
-      default_units = old_default_units;
+      gimprc.default_units = old_default_units;
       return PREFS_CORRUPT;
     }
-  if (default_xresolution < GIMP_MIN_RESOLUTION ||
-      default_yresolution < GIMP_MIN_RESOLUTION)
+  if (gimprc.default_xresolution < GIMP_MIN_RESOLUTION ||
+      gimprc.default_yresolution < GIMP_MIN_RESOLUTION)
     {
       g_message (_("Error: Default resolution must not be zero."));
-      default_xresolution = old_default_xresolution;
-      default_yresolution = old_default_yresolution;
+      gimprc.default_xresolution = old_default_xresolution;
+      gimprc.default_yresolution = old_default_yresolution;
       return PREFS_CORRUPT;
     }
-  if (default_resolution_units < GIMP_UNIT_INCH ||
-      default_resolution_units >= gimp_unit_get_number_of_units ())
+  if (gimprc.default_resolution_units < GIMP_UNIT_INCH ||
+      gimprc.default_resolution_units >= gimp_unit_get_number_of_units ())
     {
       g_message (_("Error: Default resolution unit must be within unit range."));
-      default_resolution_units = old_default_resolution_units;
+      gimprc.default_resolution_units = old_default_resolution_units;
       return PREFS_CORRUPT;
     }
-  if (monitor_xres < GIMP_MIN_RESOLUTION ||
-      monitor_yres < GIMP_MIN_RESOLUTION)
+  if (gimprc.monitor_xres < GIMP_MIN_RESOLUTION ||
+      gimprc.monitor_yres < GIMP_MIN_RESOLUTION)
     {
       g_message (_("Error: Monitor resolution must not be zero."));
-      monitor_xres = old_monitor_xres;
-      monitor_yres = old_monitor_yres;
+      gimprc.monitor_xres = old_monitor_xres;
+      gimprc.monitor_yres = old_monitor_yres;
       return PREFS_CORRUPT;
     }
-  if (image_title_format == NULL)
+  if (gimprc.image_title_format == NULL)
     {
       g_message (_("Error: Image title format must not be NULL."));
-      image_title_format = old_image_title_format;
+      gimprc.image_title_format = old_image_title_format;
       return PREFS_CORRUPT;
     }
 
@@ -435,7 +435,7 @@ prefs_ok_callback (GtkWidget *widget,
       break;
 
     case PREFS_OK:
-      if (show_tool_tips)
+      if (gimprc.show_tool_tips)
 	gimp_help_enable_tooltips ();
       else
 	gimp_help_disable_tooltips ();
@@ -498,7 +498,7 @@ prefs_save_callback (GtkWidget *widget,
       /* don't break */
 
     case PREFS_OK:
-      if (show_tool_tips)
+      if (gimprc.show_tool_tips)
 	gimp_help_enable_tooltips ();
       else
 	gimp_help_disable_tooltips ();
@@ -516,57 +516,57 @@ prefs_save_callback (GtkWidget *widget,
 
   /*  Save variables so that we can restore them later  */
   save_stingy_memory_use         = base_config->stingy_memory_use;
-  save_min_colors                = min_colors;
-  save_install_cmap              = install_cmap;
-  save_cycled_marching_ants      = cycled_marching_ants;
-  save_last_opened_size          = last_opened_size;
-  save_show_indicators           = show_indicators;
-  save_nav_window_per_display    = nav_window_per_display;
-  save_info_window_follows_mouse = info_window_follows_mouse;
+  save_min_colors                = gimprc.min_colors;
+  save_install_cmap              = gimprc.install_cmap;
+  save_cycled_marching_ants      = gimprc.cycled_marching_ants;
+  save_last_opened_size          = gimprc.last_opened_size;
+  save_show_indicators           = gimprc.show_indicators;
+  save_nav_window_per_display    = gimprc.nav_window_per_display;
+  save_info_window_follows_mouse = gimprc.info_window_follows_mouse;
 
   save_temp_path      = base_config->temp_path;
   save_swap_path      = base_config->swap_path;
-  save_brush_path     = brush_path;
-  save_pattern_path   = pattern_path;
-  save_palette_path   = palette_path;
-  save_gradient_path  = gradient_path;
-  save_plug_in_path   = plug_in_path;
-  save_module_path    = module_path;
+  save_brush_path     = gimprc.brush_path;
+  save_pattern_path   = gimprc.pattern_path;
+  save_palette_path   = gimprc.palette_path;
+  save_gradient_path  = gimprc.gradient_path;
+  save_plug_in_path   = gimprc.plug_in_path;
+  save_module_path    = gimprc.module_path;
 
-  if (levels_of_undo != old_levels_of_undo)
+  if (gimprc.levels_of_undo != old_levels_of_undo)
     {
       update = g_list_append (update, "undo-levels");
     }
-  if (marching_speed != old_marching_speed)
+  if (gimprc.marching_speed != old_marching_speed)
     {
       update = g_list_append (update, "marching-ants-speed");
     }
-  if (allow_resize_windows != old_allow_resize_windows)
+  if (gimprc.allow_resize_windows != old_allow_resize_windows)
     {
       update = g_list_append (update, "allow-resize-windows");
       remove = g_list_append (remove, "dont-allow-resize-windows");
     }
-  if (auto_save != old_auto_save)
+  if (gimprc.auto_save != old_auto_save)
     {
       update = g_list_append (update, "auto-save");
       remove = g_list_append (remove, "dont-auto-save");
     }
-  if (no_cursor_updating != old_no_cursor_updating)
+  if (gimprc.no_cursor_updating != old_no_cursor_updating)
     {
       update = g_list_append (update, "cursor-updating");
       remove = g_list_append (remove, "no-cursor-updating");
     }
-  if (show_tool_tips != old_show_tool_tips)
+  if (gimprc.show_tool_tips != old_show_tool_tips)
     {
       update = g_list_append (update, "show-tool-tips");
       remove = g_list_append (remove, "dont-show-tool-tips");
     }
-  if (show_rulers != old_show_rulers)
+  if (gimprc.show_rulers != old_show_rulers)
     {
       update = g_list_append (update, "show-rulers");
       remove = g_list_append (remove, "dont-show-rulers");
     }
-  if (show_statusbar != old_show_statusbar)
+  if (gimprc.show_statusbar != old_show_statusbar)
     {
       update = g_list_append (update, "show-statusbar");
       remove = g_list_append (remove, "dont-show-statusbar");
@@ -575,132 +575,132 @@ prefs_save_callback (GtkWidget *widget,
     {
       update = g_list_append (update, "interpolation-type");
     }
-  if (confirm_on_close != old_confirm_on_close)
+  if (gimprc.confirm_on_close != old_confirm_on_close)
     {
       update = g_list_append (update, "confirm-on-close");
       remove = g_list_append (remove, "dont-confirm-on-close");
     }
-  if (save_session_info != old_save_session_info)
+  if (gimprc.save_session_info != old_save_session_info)
     {
       update = g_list_append (update, "save-session-info");
       remove = g_list_append (remove, "dont-save-session-info");
     }
-  if (save_device_status!= old_save_device_status)
+  if (gimprc.save_device_status!= old_save_device_status)
     {
       update = g_list_append (update, "save-device-status");
       remove = g_list_append (remove, "dont-save-device-status");
     }
-  if (always_restore_session != old_always_restore_session)
+  if (gimprc.always_restore_session != old_always_restore_session)
     {
       update = g_list_append (update, "always-restore-session");
     }
-  if (default_width != old_default_width ||
-      default_height != old_default_height)
+  if (gimprc.default_width != old_default_width ||
+      gimprc.default_height != old_default_height)
     {
       update = g_list_append (update, "default-image-size");
     }
-  if (default_units != old_default_units)
+  if (gimprc.default_units != old_default_units)
     {
       update = g_list_append (update, "default-units");
     }
-  if (ABS (default_xresolution - old_default_xresolution) > GIMP_MIN_RESOLUTION)
+  if (ABS (gimprc.default_xresolution - old_default_xresolution) > GIMP_MIN_RESOLUTION)
     {
       update = g_list_append (update, "default-xresolution");
     }
-  if (ABS (default_yresolution - old_default_yresolution) > GIMP_MIN_RESOLUTION)
+  if (ABS (gimprc.default_yresolution - old_default_yresolution) > GIMP_MIN_RESOLUTION)
     {
       update = g_list_append (update, "default-yresolution");
     }
-  if (default_resolution_units != old_default_resolution_units)
+  if (gimprc.default_resolution_units != old_default_resolution_units)
     {
       update = g_list_append (update, "default-resolution-units");
     }
-  if (default_type != old_default_type)
+  if (gimprc.default_type != old_default_type)
     {
       update = g_list_append (update, "default-image-type");
     }
-  if (prefs_strcmp (default_comment, old_default_comment))
+  if (prefs_strcmp (gimprc.default_comment, old_default_comment))
     {
       update = g_list_append (update, "default-comment");
     }
-  if (default_dot_for_dot != old_default_dot_for_dot)
+  if (gimprc.default_dot_for_dot != old_default_dot_for_dot)
     {
       update = g_list_append (update, "default-dot-for-dot");
       remove = g_list_append (remove, "dont-default-dot-for-dot");
     }
-  if (preview_size != old_preview_size)
+  if (gimprc.preview_size != old_preview_size)
     {
       update = g_list_append (update, "preview-size");
     }
-  if (nav_preview_size != old_nav_preview_size)
+  if (gimprc.nav_preview_size != old_nav_preview_size)
     {
       update = g_list_append (update, "nav-preview-size");
     }
-  if (perfectmouse != old_perfectmouse)
+  if (gimprc.perfectmouse != old_perfectmouse)
     {
       update = g_list_append (update, "perfect-mouse");
     }
-  if (transparency_type != old_transparency_type)
+  if (gimprc.transparency_type != old_transparency_type)
     {
       update = g_list_append (update, "transparency-type");
     }
-  if (transparency_size != old_transparency_size)
+  if (gimprc.transparency_size != old_transparency_size)
     {
       update = g_list_append (update, "transparency-size");
     }
-  if (using_xserver_resolution != old_using_xserver_resolution ||
-      ABS(monitor_xres - old_monitor_xres) > GIMP_MIN_RESOLUTION)
+  if (gimprc.using_xserver_resolution != old_using_xserver_resolution ||
+      ABS(gimprc.monitor_xres - old_monitor_xres) > GIMP_MIN_RESOLUTION)
     {
       update = g_list_append (update, "monitor-xresolution");
     }
-  if (using_xserver_resolution != old_using_xserver_resolution ||
-      ABS(monitor_yres - old_monitor_yres) > GIMP_MIN_RESOLUTION)
+  if (gimprc.using_xserver_resolution != old_using_xserver_resolution ||
+      ABS(gimprc.monitor_yres - old_monitor_yres) > GIMP_MIN_RESOLUTION)
     {
       update = g_list_append (update, "monitor-yresolution");
     }
-  if (using_xserver_resolution)
+  if (gimprc.using_xserver_resolution)
     {
       /* special value of 0 for either x or y res in the gimprc file
        * means use the xserver's current resolution */
-      monitor_xres = 0.0;
-      monitor_yres = 0.0;
+      gimprc.monitor_xres = 0.0;
+      gimprc.monitor_yres = 0.0;
     }
-  if (prefs_strcmp (image_title_format, old_image_title_format))
+  if (prefs_strcmp (gimprc.image_title_format, old_image_title_format))
     {
       update = g_list_append (update, "image-title-format");
     }
-  if (global_paint_options != old_global_paint_options)
+  if (gimprc.global_paint_options != old_global_paint_options)
     {
       update = g_list_append (update, "global-paint-options");
       remove = g_list_append (remove, "no-global-paint-options");
     }
-  if (max_new_image_size != old_max_new_image_size)
+  if (gimprc.max_new_image_size != old_max_new_image_size)
     {
       update = g_list_append (update, "max-new-image-size");
     }
-  if (thumbnail_mode != old_thumbnail_mode)
+  if (gimprc.thumbnail_mode != old_thumbnail_mode)
     {
       update = g_list_append (update, "thumbnail-mode");
     }
-  if (trust_dirty_flag != old_trust_dirty_flag)
+  if (gimprc.trust_dirty_flag != old_trust_dirty_flag)
     {
       update = g_list_append (update, "trust-dirty-flag");
       remove = g_list_append (remove, "dont-trust-dirty-flag");
     }
-  if (use_help != old_use_help)
+  if (gimprc.use_help != old_use_help)
     {
       update = g_list_append (update, "use-help");
       remove = g_list_append (remove, "dont-use-help");
     }
-  if (help_browser != old_help_browser)
+  if (gimprc.help_browser != old_help_browser)
     {
       update = g_list_append (update, "help-browser");
     }
-  if (cursor_mode != old_cursor_mode)
+  if (gimprc.cursor_mode != old_cursor_mode)
     {
       update = g_list_append (update, "cursor-mode");
     }
-  if (default_threshold != old_default_threshold)
+  if (gimprc.default_threshold != old_default_threshold)
     {
       update = g_list_append (update, "default-threshold");
     }
@@ -717,45 +717,45 @@ prefs_save_callback (GtkWidget *widget,
     }
   if (edit_min_colors != old_min_colors)
     {
-      min_colors = edit_min_colors;
+      gimprc.min_colors = edit_min_colors;
       update = g_list_append (update, "min-colors");
     }
   if (edit_install_cmap != old_install_cmap)
     {
-      install_cmap = edit_install_cmap;
+      gimprc.install_cmap = edit_install_cmap;
       update = g_list_append (update, "install-colormap");
     }
   if (edit_cycled_marching_ants != old_cycled_marching_ants)
     {
-      cycled_marching_ants = edit_cycled_marching_ants;
+      gimprc.cycled_marching_ants = edit_cycled_marching_ants;
       update = g_list_append (update, "colormap-cycling");
     }
   if (edit_last_opened_size != old_last_opened_size)
     {
-      last_opened_size = edit_last_opened_size;
+      gimprc.last_opened_size = edit_last_opened_size;
       update = g_list_append (update, "last-opened-size");
     }
   if (edit_show_indicators != old_show_indicators)
     {
-      show_indicators = edit_show_indicators;
+      gimprc.show_indicators = edit_show_indicators;
       update = g_list_append (update, "show-indicators");
       remove = g_list_append (remove, "dont-show-indicators");
     }
   if (edit_nav_window_per_display != old_nav_window_per_display)
     {
-      nav_window_per_display = edit_nav_window_per_display;
+      gimprc.nav_window_per_display = edit_nav_window_per_display;
       update = g_list_append (update, "nav-window-per-display");
       remove = g_list_append (remove, "nav-window-follows-auto");
     }
   if (edit_info_window_follows_mouse != old_info_window_follows_mouse)
     {
-      info_window_follows_mouse = edit_info_window_follows_mouse;
+      gimprc.info_window_follows_mouse = edit_info_window_follows_mouse;
       update = g_list_append (update, "info-window-follows-mouse");
       remove = g_list_append (remove, "info-window-per-display");
     }
   if (edit_disable_tearoff_menus != old_disable_tearoff_menus)
     {
-      disable_tearoff_menus = edit_disable_tearoff_menus;
+      gimprc.disable_tearoff_menus = edit_disable_tearoff_menus;
       update = g_list_append (update, "disable-tearoff-menus");
     }
 
@@ -771,32 +771,32 @@ prefs_save_callback (GtkWidget *widget,
     }
   if (prefs_strcmp (old_brush_path, edit_brush_path))
     {
-      brush_path = edit_brush_path;
+      gimprc.brush_path = edit_brush_path;
       update = g_list_append (update, "brush-path");
     }
   if (prefs_strcmp (old_pattern_path, edit_pattern_path))
     {
-      pattern_path = edit_pattern_path;
+      gimprc.pattern_path = edit_pattern_path;
       update = g_list_append (update, "pattern-path");
     }
   if (prefs_strcmp (old_palette_path, edit_palette_path))
     {
-      palette_path = edit_palette_path;
+      gimprc.palette_path = edit_palette_path;
       update = g_list_append (update, "palette-path");
     }
   if (prefs_strcmp (old_gradient_path, edit_gradient_path))
     {
-      gradient_path = edit_gradient_path;
+      gimprc.gradient_path = edit_gradient_path;
       update = g_list_append (update, "gradient-path");
     }
   if (prefs_strcmp (old_plug_in_path, edit_plug_in_path))
     {
-      plug_in_path = edit_plug_in_path;
+      gimprc.plug_in_path = edit_plug_in_path;
       update = g_list_append (update, "plug-in-path");
     }
   if (prefs_strcmp (old_module_path, edit_module_path))
     {
-      module_path = edit_module_path;
+      gimprc.module_path = edit_module_path;
       update = g_list_append (update, "module-path");
     }
 
@@ -811,27 +811,28 @@ prefs_save_callback (GtkWidget *widget,
   save_gimprc (&update, &remove);
 
 
-  if (using_xserver_resolution)
-    gdisplay_xserver_resolution (&monitor_xres, &monitor_yres);
+  if (gimprc.using_xserver_resolution)
+    gdisplay_xserver_resolution (&(gimprc.monitor_xres),
+    &(gimprc.monitor_yres));
 
   /*  restore variables which must not change  */
   base_config->stingy_memory_use = save_stingy_memory_use;
-  min_colors                     = save_min_colors;
-  install_cmap                   = save_install_cmap;
-  cycled_marching_ants           = save_cycled_marching_ants;
-  last_opened_size               = save_last_opened_size;
-  show_indicators                = save_show_indicators;
-  nav_window_per_display         = save_nav_window_per_display;
-  info_window_follows_mouse      = save_info_window_follows_mouse;
+  gimprc.min_colors                     = save_min_colors;
+  gimprc.install_cmap                   = save_install_cmap;
+  gimprc.cycled_marching_ants           = save_cycled_marching_ants;
+  gimprc.last_opened_size               = save_last_opened_size;
+  gimprc.show_indicators                = save_show_indicators;
+  gimprc.nav_window_per_display         = save_nav_window_per_display;
+  gimprc.info_window_follows_mouse      = save_info_window_follows_mouse;
 
   base_config->temp_path = save_temp_path;
   base_config->swap_path = save_swap_path;
-  brush_path             = save_brush_path;
-  pattern_path           = save_pattern_path;
-  palette_path           = save_palette_path;
-  gradient_path          = save_gradient_path;
-  plug_in_path           = save_plug_in_path;
-  module_path            = save_module_path;
+  gimprc.brush_path             = save_brush_path;
+  gimprc.pattern_path           = save_pattern_path;
+  gimprc.palette_path           = save_palette_path;
+  gimprc.gradient_path          = save_gradient_path;
+  gimprc.plug_in_path           = save_plug_in_path;
+  gimprc.module_path            = save_module_path;
 
   /*  no need to restore values which are only changed on "OK" and "Save"  */
 
@@ -850,55 +851,55 @@ prefs_cancel_callback (GtkWidget *widget,
   base_config->interpolation_type = old_interpolation_type;
   base_config->num_processors     = old_num_processors;
 
-  levels_of_undo           = old_levels_of_undo;
-  marching_speed           = old_marching_speed;
-  allow_resize_windows     = old_allow_resize_windows;
-  auto_save                = old_auto_save;
-  no_cursor_updating       = old_no_cursor_updating;
-  perfectmouse             = old_perfectmouse;
-  show_tool_tips           = old_show_tool_tips;
-  show_rulers              = old_show_rulers;
-  show_statusbar           = old_show_statusbar;
-  confirm_on_close         = old_confirm_on_close;
-  save_session_info        = old_save_session_info;
-  save_device_status       = old_save_device_status;
-  default_width            = old_default_width;
-  default_height           = old_default_height;
-  default_units            = old_default_units;
-  default_xresolution      = old_default_xresolution;
-  default_yresolution      = old_default_yresolution;
-  default_resolution_units = old_default_resolution_units;
-  default_type             = old_default_type;
-  default_dot_for_dot      = old_default_dot_for_dot;
-  monitor_xres             = old_monitor_xres;
-  monitor_yres             = old_monitor_yres;
-  using_xserver_resolution = old_using_xserver_resolution;
-  max_new_image_size       = old_max_new_image_size;
-  thumbnail_mode           = old_thumbnail_mode;
-  trust_dirty_flag         = old_trust_dirty_flag;
-  use_help                 = old_use_help;
-  help_browser             = old_help_browser;
-  cursor_mode              = old_cursor_mode;
-  default_threshold        = old_default_threshold;
+  gimprc.levels_of_undo           = old_levels_of_undo;
+  gimprc.marching_speed           = old_marching_speed;
+  gimprc.allow_resize_windows     = old_allow_resize_windows;
+  gimprc.auto_save                = old_auto_save;
+  gimprc.no_cursor_updating       = old_no_cursor_updating;
+  gimprc.perfectmouse             = old_perfectmouse;
+  gimprc.show_tool_tips           = old_show_tool_tips;
+  gimprc.show_rulers              = old_show_rulers;
+  gimprc.show_statusbar           = old_show_statusbar;
+  gimprc.confirm_on_close         = old_confirm_on_close;
+  gimprc.save_session_info        = old_save_session_info;
+  gimprc.save_device_status       = old_save_device_status;
+  gimprc.default_width            = old_default_width;
+  gimprc.default_height           = old_default_height;
+  gimprc.default_units            = old_default_units;
+  gimprc.default_xresolution      = old_default_xresolution;
+  gimprc.default_yresolution      = old_default_yresolution;
+  gimprc.default_resolution_units = old_default_resolution_units;
+  gimprc.default_type             = old_default_type;
+  gimprc.default_dot_for_dot      = old_default_dot_for_dot;
+  gimprc.monitor_xres             = old_monitor_xres;
+  gimprc.monitor_yres             = old_monitor_yres;
+  gimprc.using_xserver_resolution = old_using_xserver_resolution;
+  gimprc.max_new_image_size       = old_max_new_image_size;
+  gimprc.thumbnail_mode           = old_thumbnail_mode;
+  gimprc.trust_dirty_flag         = old_trust_dirty_flag;
+  gimprc.use_help                 = old_use_help;
+  gimprc.help_browser             = old_help_browser;
+  gimprc.cursor_mode              = old_cursor_mode;
+  gimprc.default_threshold        = old_default_threshold;
 
   /*  restore variables which need some magic  */
-  if (preview_size != old_preview_size)
+  if (gimprc.preview_size != old_preview_size)
     {
       /* lc_dialog_rebuild (old_preview_size); FIXME: update preview size */
       layer_select_update_preview_size ();
     }
-  if (nav_preview_size != old_nav_preview_size)
+  if (gimprc.nav_preview_size != old_nav_preview_size)
     {
-      nav_preview_size = old_nav_preview_size;
+      gimprc.nav_preview_size = old_nav_preview_size;
       gdisplays_nav_preview_resized ();
     }
-  if ((transparency_type != old_transparency_type) ||
-      (transparency_size != old_transparency_size))
+  if ((gimprc.transparency_type != old_transparency_type) ||
+      (gimprc.transparency_size != old_transparency_size))
     {
-      transparency_type = old_transparency_type;
-      transparency_size = old_transparency_size;
+      gimprc.transparency_type = old_transparency_type;
+      gimprc.transparency_size = old_transparency_size;
 
-      render_setup (transparency_type, transparency_size);
+      render_setup (gimprc.transparency_type, gimprc.transparency_size);
       gimp_container_foreach (image_context,
 			      (GFunc) gimp_image_invalidate_layer_previews,
 			      NULL);
@@ -909,8 +910,8 @@ prefs_cancel_callback (GtkWidget *widget,
       gdisplays_flush ();
     }
 
-  prefs_strset (&image_title_format, old_image_title_format);
-  prefs_strset (&default_comment, old_default_comment);
+  prefs_strset (&(gimprc.image_title_format), old_image_title_format);
+  prefs_strset (&(gimprc.default_comment), old_default_comment);
 
   context_manager_set_global_paint_options (old_global_paint_options);
 
@@ -946,19 +947,19 @@ prefs_toggle_callback (GtkWidget *widget,
   val = (gint *) data;
 
   /*  toggle buttos  */
-  if (data == &allow_resize_windows   ||
-      data == &auto_save              ||
-      data == &no_cursor_updating     ||
-      data == &perfectmouse           ||
-      data == &show_tool_tips         ||
-      data == &show_rulers            ||
-      data == &show_statusbar         ||
-      data == &confirm_on_close       ||
-      data == &save_session_info      ||
-      data == &save_device_status     ||
-      data == &always_restore_session ||
-      data == &default_dot_for_dot    ||
-      data == &use_help               ||
+  if (data == &(gimprc.allow_resize_windows)   ||
+      data == &(gimprc.auto_save)              ||
+      data == &(gimprc.no_cursor_updating)     ||
+      data == &(gimprc.perfectmouse)           ||
+      data == &(gimprc.show_tool_tips)         ||
+      data == &(gimprc.show_rulers)            ||
+      data == &(gimprc.show_statusbar)         ||
+      data == &(gimprc.confirm_on_close)       ||
+      data == &(gimprc.save_session_info)      ||
+      data == &(gimprc.save_device_status)     ||
+      data == &(gimprc.always_restore_session) ||
+      data == &(gimprc.default_dot_for_dot)    ||
+      data == &(gimprc.use_help)               ||
 
       data == &edit_stingy_memory_use         ||
       data == &edit_install_cmap              ||
@@ -972,23 +973,23 @@ prefs_toggle_callback (GtkWidget *widget,
     }
 
   /*  radio buttons  */
-  else if (data == &thumbnail_mode                  ||
+  else if (data == &(gimprc.thumbnail_mode)                  ||
 	   data == &base_config->interpolation_type ||
-           data == &trust_dirty_flag                ||
-	   data == &help_browser                    ||
-	   data == &cursor_mode                     ||
-	   data == &default_type)
+           data == &(gimprc.trust_dirty_flag)                ||
+	   data == &(gimprc.help_browser)                    ||
+	   data == &(gimprc.cursor_mode)                     ||
+	   data == &(gimprc.default_type))
     {
       *val = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));
     }
 
   /*  values which need some magic  */
-  else if ((data == &transparency_type) ||
-	   (data == &transparency_size))
+  else if ((data == &(gimprc.transparency_type)) ||
+	   (data == &(gimprc.transparency_size)))
     {
       *val = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));
 
-      render_setup (transparency_type, transparency_size);
+      render_setup (gimprc.transparency_type, gimprc.transparency_size);
       gimp_container_foreach (image_context,
 			      (GFunc) gimp_image_invalidate_layer_previews,
 			      NULL);
@@ -998,7 +999,7 @@ prefs_toggle_callback (GtkWidget *widget,
       gdisplays_expose_full ();
       gdisplays_flush ();
     }
-  else if (data == &global_paint_options)
+  else if (data == &(gimprc.global_paint_options))
     {
       context_manager_set_global_paint_options
 	(GTK_TOGGLE_BUTTON (widget)->active);
@@ -1029,7 +1030,7 @@ static void
 prefs_nav_preview_size_callback (GtkWidget *widget,
 				 gpointer   data)
 {
-  nav_preview_size = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));;
+  gimprc.nav_preview_size = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));;
   gdisplays_nav_preview_resized ();
 }
 
@@ -1105,11 +1106,11 @@ static void
 prefs_default_size_callback (GtkWidget *widget,
 			     gpointer   data)
 {
-  default_width =
+  gimprc.default_width =
     RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0));
-  default_height =
+  gimprc.default_height =
     RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1));
-  default_units = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (widget));
+  gimprc.default_units = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (widget));
 }
 
 static void
@@ -1154,15 +1155,15 @@ prefs_default_resolution_callback (GtkWidget *widget,
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_sizeentry),
 				  1, yres, FALSE);
 
-  default_width =
+  gimprc.default_width =
     RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size_sizeentry), 0));
-  default_height =
+  gimprc.default_height =
     RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size_sizeentry), 1));
 
-  default_xresolution = xres;
-  default_yresolution = yres;
+  gimprc.default_xresolution = xres;
+  gimprc.default_yresolution = yres;
 
-  default_resolution_units = 
+  gimprc.default_resolution_units = 
     gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (widget));
 }
 
@@ -1176,22 +1177,23 @@ prefs_res_source_callback (GtkWidget *widget,
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
     {
-      gdisplay_xserver_resolution (&monitor_xres, &monitor_yres);
-      using_xserver_resolution = TRUE;
+      gdisplay_xserver_resolution (&(gimprc.monitor_xres),
+				   &(gimprc.monitor_yres));
+      gimprc.using_xserver_resolution = TRUE;
     }
   else
     {
       monitor_resolution_sizeentry =
 	gtk_object_get_data (GTK_OBJECT (widget), "monitor_resolution_sizeentry");
-
+      
       if (monitor_resolution_sizeentry)
 	{
-	  monitor_xres = gimp_size_entry_get_refval
+	  gimprc.monitor_xres = gimp_size_entry_get_refval
 	    (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry), 0);
-	  monitor_yres = gimp_size_entry_get_refval
+	  gimprc.monitor_yres = gimp_size_entry_get_refval
 	    (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry), 1);
 	}
-      using_xserver_resolution = FALSE;
+      gimprc.using_xserver_resolution = FALSE;
     }
 }
 
@@ -1229,8 +1231,8 @@ prefs_monitor_resolution_callback (GtkWidget *widget,
 	yres = new_yres;
     }
 
-  monitor_xres = xres;
-  monitor_yres = yres;
+  gimprc.monitor_xres = xres;
+  gimprc.monitor_yres = yres;
 }
 
 static void
@@ -1393,23 +1395,23 @@ preferences_dialog_create (void)
        *  copy config vals to edit variables.
        */
       edit_stingy_memory_use         = base_config->stingy_memory_use;
-      edit_min_colors                = min_colors;
-      edit_install_cmap              = install_cmap;
-      edit_cycled_marching_ants      = cycled_marching_ants;
-      edit_last_opened_size          = last_opened_size;
-      edit_show_indicators           = show_indicators;
-      edit_nav_window_per_display    = nav_window_per_display;
-      edit_info_window_follows_mouse = info_window_follows_mouse;
-      edit_disable_tearoff_menus     = disable_tearoff_menus;
+      edit_min_colors                = gimprc.min_colors;
+      edit_install_cmap              = gimprc.install_cmap;
+      edit_cycled_marching_ants      = gimprc.cycled_marching_ants;
+      edit_last_opened_size          = gimprc.last_opened_size;
+      edit_show_indicators           = gimprc.show_indicators;
+      edit_nav_window_per_display    = gimprc.nav_window_per_display;
+      edit_info_window_follows_mouse = gimprc.info_window_follows_mouse;
+      edit_disable_tearoff_menus     = gimprc.disable_tearoff_menus;
 
       edit_temp_path      = prefs_strdup (base_config->temp_path);	
       edit_swap_path      = prefs_strdup (base_config->swap_path);
-      edit_plug_in_path   = prefs_strdup (plug_in_path);
-      edit_module_path    = prefs_strdup (module_path);
-      edit_brush_path     = prefs_strdup (brush_path);
-      edit_pattern_path   = prefs_strdup (pattern_path);
-      edit_palette_path   = prefs_strdup (palette_path);
-      edit_gradient_path  = prefs_strdup (gradient_path);
+      edit_plug_in_path   = prefs_strdup (gimprc.plug_in_path);
+      edit_module_path    = prefs_strdup (gimprc.module_path);
+      edit_brush_path     = prefs_strdup (gimprc.brush_path);
+      edit_pattern_path   = prefs_strdup (gimprc.pattern_path);
+      edit_palette_path   = prefs_strdup (gimprc.palette_path);
+      edit_gradient_path  = prefs_strdup (gimprc.gradient_path);
     }
 
   /*  assign edit variables for values which get changed on "OK" and "Save"
@@ -1421,45 +1423,45 @@ preferences_dialog_create (void)
   old_interpolation_type       = base_config->interpolation_type;
   old_num_processors           = base_config->num_processors;
 
-  old_perfectmouse             = perfectmouse;
-  old_transparency_type        = transparency_type;
-  old_transparency_size        = transparency_size;
-  old_levels_of_undo           = levels_of_undo;
-  old_marching_speed           = marching_speed;
-  old_allow_resize_windows     = allow_resize_windows;
-  old_auto_save                = auto_save;
-  old_preview_size             = preview_size;
-  old_nav_preview_size         = nav_preview_size;
-  old_no_cursor_updating       = no_cursor_updating;
-  old_show_tool_tips           = show_tool_tips;
-  old_show_rulers              = show_rulers;
-  old_show_statusbar           = show_statusbar;
-  old_confirm_on_close         = confirm_on_close;
-  old_save_session_info        = save_session_info;
-  old_save_device_status       = save_device_status;
-  old_always_restore_session   = always_restore_session;
-  old_default_width            = default_width;
-  old_default_height           = default_height;
-  old_default_units            = default_units;
-  old_default_xresolution      = default_xresolution;
-  old_default_yresolution      = default_yresolution;
-  old_default_resolution_units = default_resolution_units;
-  old_default_type             = default_type;
-  old_default_dot_for_dot      = default_dot_for_dot;
-  old_monitor_xres             = monitor_xres;
-  old_monitor_yres             = monitor_yres;
-  old_using_xserver_resolution = using_xserver_resolution;
-  old_global_paint_options     = global_paint_options;
-  old_max_new_image_size       = max_new_image_size;
-  old_thumbnail_mode           = thumbnail_mode;
-  old_trust_dirty_flag         = trust_dirty_flag;
-  old_use_help                 = use_help;
-  old_help_browser             = help_browser;
-  old_cursor_mode              = cursor_mode;
-  old_default_threshold        = default_threshold;
+  old_perfectmouse             = gimprc.perfectmouse;
+  old_transparency_type        = gimprc.transparency_type;
+  old_transparency_size        = gimprc.transparency_size;
+  old_levels_of_undo           = gimprc.levels_of_undo;
+  old_marching_speed           = gimprc.marching_speed;
+  old_allow_resize_windows     = gimprc.allow_resize_windows;
+  old_auto_save                = gimprc.auto_save;
+  old_preview_size             = gimprc.preview_size;
+  old_nav_preview_size         = gimprc.nav_preview_size;
+  old_no_cursor_updating       = gimprc.no_cursor_updating;
+  old_show_tool_tips           = gimprc.show_tool_tips;
+  old_show_rulers              = gimprc.show_rulers;
+  old_show_statusbar           = gimprc.show_statusbar;
+  old_confirm_on_close         = gimprc.confirm_on_close;
+  old_save_session_info        = gimprc.save_session_info;
+  old_save_device_status       = gimprc.save_device_status;
+  old_always_restore_session   = gimprc.always_restore_session;
+  old_default_width            = gimprc.default_width;
+  old_default_height           = gimprc.default_height;
+  old_default_units            = gimprc.default_units;
+  old_default_xresolution      = gimprc.default_xresolution;
+  old_default_yresolution      = gimprc.default_yresolution;
+  old_default_resolution_units = gimprc.default_resolution_units;
+  old_default_type             = gimprc.default_type;
+  old_default_dot_for_dot      = gimprc.default_dot_for_dot;
+  old_monitor_xres             = gimprc.monitor_xres;
+  old_monitor_yres             = gimprc.monitor_yres;
+  old_using_xserver_resolution = gimprc.using_xserver_resolution;
+  old_global_paint_options     = gimprc.global_paint_options;
+  old_max_new_image_size       = gimprc.max_new_image_size;
+  old_thumbnail_mode           = gimprc.thumbnail_mode;
+  old_trust_dirty_flag         = gimprc.trust_dirty_flag;
+  old_use_help                 = gimprc.use_help;
+  old_help_browser             = gimprc.help_browser;
+  old_cursor_mode              = gimprc.cursor_mode;
+  old_default_threshold        = gimprc.default_threshold;
 
-  prefs_strset (&old_image_title_format, image_title_format);	
-  prefs_strset (&old_default_comment, default_comment);	
+  prefs_strset (&old_image_title_format, gimprc.image_title_format);	
+  prefs_strset (&old_default_comment, gimprc.default_comment);	
 
   /*  values which will need a restart  */
   old_stingy_memory_use         = edit_stingy_memory_use;
@@ -1540,7 +1542,7 @@ preferences_dialog_create (void)
 					  GTK_CTREE (ctree),
 					  _("New File"),
 					  "dialogs/preferences/new_file.html",
-					  NULL,
+				          NULL,
 					  &top_insert,
 					  page_index);
   gtk_widget_show (vbox);
@@ -1559,7 +1561,7 @@ preferences_dialog_create (void)
   gtk_widget_show (hbox);
 
   sizeentry =
-    gimp_size_entry_new (2, default_units, "%p", FALSE, FALSE, TRUE, 75,
+    gimp_size_entry_new (2, gimprc.default_units, "%p", FALSE, FALSE, TRUE, 75,
 			 GIMP_SIZE_ENTRY_UPDATE_SIZE);
 
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry),
@@ -1570,17 +1572,19 @@ preferences_dialog_create (void)
 				_("Pixels"), 1, 4, 0.0);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry),
-				  0, default_xresolution, FALSE);
+				  0, gimprc.default_xresolution, FALSE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry),
-				  1, default_yresolution, FALSE);
+				  1, gimprc.default_yresolution, FALSE);
 
   gimp_size_entry_set_refval_boundaries
     (GIMP_SIZE_ENTRY (sizeentry), 0, GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
   gimp_size_entry_set_refval_boundaries
     (GIMP_SIZE_ENTRY (sizeentry), 1, GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
 
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0, default_width);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1, default_height);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0,
+  gimprc.default_width);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1,
+  gimprc.default_height);
 
   gtk_signal_connect (GTK_OBJECT (sizeentry), "unit_changed",
 		      GTK_SIGNAL_FUNC (prefs_default_size_callback),
@@ -1607,12 +1611,12 @@ preferences_dialog_create (void)
   pixels_per_unit = g_strconcat (_("Pixels"), "/%s", NULL);
 
   sizeentry2 =
-    gimp_size_entry_new (2, default_resolution_units, pixels_per_unit,
+    gimp_size_entry_new (2, gimprc.default_resolution_units, pixels_per_unit,
 			 FALSE, FALSE, TRUE, 75,
 			 GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
 
   button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
-  if (ABS (default_xresolution - default_yresolution) < GIMP_MIN_RESOLUTION)
+  if (ABS (gimprc.default_xresolution - gimprc.default_yresolution) < GIMP_MIN_RESOLUTION)
     gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (button), TRUE);
   gtk_table_attach_defaults (GTK_TABLE (sizeentry2), button, 1, 3, 3, 4);
   gtk_widget_show (button);
@@ -1630,11 +1634,11 @@ preferences_dialog_create (void)
     (GIMP_SIZE_ENTRY (sizeentry2), 0, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
   gimp_size_entry_set_refval_boundaries
     (GIMP_SIZE_ENTRY (sizeentry2), 1, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
-
+  
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry2),
-			      0, default_xresolution);
+			      0, gimprc.default_xresolution);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry2),
-			      1, default_yresolution);
+			      1, gimprc.default_yresolution);
 
   gtk_signal_connect (GTK_OBJECT (sizeentry2), "unit_changed",
 		      (GtkSignalFunc) prefs_default_resolution_callback,
@@ -1662,7 +1666,8 @@ preferences_dialog_create (void)
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
-			   &default_type, (gpointer) default_type,
+			   &(gimprc.default_type), (gpointer)
+                           gimprc.default_type,
 
 			   _("RGB"),       (gpointer) RGB, NULL,
 			   _("Grayscale"), (gpointer) GRAY, NULL,
@@ -1673,13 +1678,13 @@ preferences_dialog_create (void)
 			     optionmenu, 1, TRUE);
 
   /*  The maximum size of a new image  */  
-  adjustment = gtk_adjustment_new (max_new_image_size, 
+  adjustment = gtk_adjustment_new (gimprc.max_new_image_size, 
 				   0, (4069.0 * 1024 * 1024 - 1), 
 				   1.0, 1.0, 0.0);
   hbox = gimp_mem_size_entry_new (GTK_ADJUSTMENT (adjustment));
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_uint_adjustment_update),
-		      &max_new_image_size);
+		      &(gimprc.max_new_image_size));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Maximum Image Size:"), 1.0, 0.5,
 			     hbox, 1, TRUE);
@@ -1707,10 +1712,10 @@ preferences_dialog_create (void)
 
   text = gtk_text_new (NULL, NULL);
   gtk_text_set_editable (GTK_TEXT (text), TRUE);
-  gtk_text_insert (GTK_TEXT (text), NULL, NULL, NULL, default_comment, -1);
+  gtk_text_insert (GTK_TEXT (text), NULL, NULL, NULL, gimprc.default_comment, -1);
   gtk_signal_connect (GTK_OBJECT (text), "changed",
 		      GTK_SIGNAL_FUNC (prefs_text_callback),
-		      &default_comment);
+		      &(gimprc.default_comment));
   gtk_container_add (GTK_CONTAINER (hbox), text);
   gtk_widget_show (text);
 
@@ -1743,7 +1748,7 @@ preferences_dialog_create (void)
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
-			   &transparency_type, (gpointer) transparency_type,
+			   &(gimprc.transparency_type), (gpointer) gimprc.transparency_type,
 
 			   _("Light Checks"),    (gpointer) LIGHT_CHECKS, NULL,
 			   _("Mid-Tone Checks"), (gpointer) GRAY_CHECKS, NULL,
@@ -1759,7 +1764,8 @@ preferences_dialog_create (void)
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
-			   &transparency_size, (gpointer) transparency_size,
+			   &(gimprc.transparency_size), (gpointer)
+                           gimprc.transparency_size,
 
 			   _("Small"),  (gpointer) SMALL_CHECKS, NULL,
 			   _("Medium"), (gpointer) MEDIUM_CHECKS, NULL,
@@ -1849,7 +1855,8 @@ preferences_dialog_create (void)
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, prefs_preview_size_callback,
-			   &preview_size, (gpointer) preview_size,
+			   &(gimprc.preview_size), (gpointer)
+                           gimprc.preview_size,
 
 			   _("None"),   (gpointer)   0, NULL,
 			   _("Tiny"),   (gpointer)  24, NULL,
@@ -1865,7 +1872,8 @@ preferences_dialog_create (void)
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, prefs_nav_preview_size_callback,
-			   &nav_preview_size, (gpointer) nav_preview_size,
+			   &(gimprc.nav_preview_size), (gpointer)
+                           gimprc.nav_preview_size,
 
 			   _("Small"),  (gpointer)  48, NULL,
 			   _("Medium"), (gpointer)  80, NULL,
@@ -1946,21 +1954,21 @@ preferences_dialog_create (void)
 
   button = gtk_check_button_new_with_label (_("Show Tool Tips"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				show_tool_tips);
+				gimprc.show_tool_tips);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &show_tool_tips);
+		      &(gimprc.show_tool_tips));
   gtk_widget_show (button);
 
   button =
     gtk_check_button_new_with_label (_("Context Sensitive Help with \"F1\""));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				use_help);
+				gimprc.use_help);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &use_help);
+		      &(gimprc.use_help));
   gtk_widget_show (button);
 
   vbox2 = prefs_frame_new (_("Help Browser"), GTK_BOX (vbox));
@@ -1973,7 +1981,7 @@ preferences_dialog_create (void)
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
-			   &help_browser, (gpointer) help_browser,
+			   &(gimprc.help_browser), (gpointer) gimprc.help_browser,
 
 			   _("Internal"), (gpointer) HELP_BROWSER_GIMP, NULL,
 			   _("Netscape"), (gpointer) HELP_BROWSER_NETSCAPE, NULL,
@@ -1999,38 +2007,38 @@ preferences_dialog_create (void)
 
   button = gtk_check_button_new_with_label (_("Use \"Dot for Dot\" by default"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				default_dot_for_dot);
+				gimprc.default_dot_for_dot);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &default_dot_for_dot);
+		      &(gimprc.default_dot_for_dot));
   gtk_widget_show (button);
 
   button = gtk_check_button_new_with_label(_("Resize Window on Zoom"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				allow_resize_windows);
+				gimprc.allow_resize_windows);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &allow_resize_windows);
+		      &(gimprc.allow_resize_windows));
   gtk_widget_show (button);
 
   button = gtk_check_button_new_with_label(_("Show Rulers"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				show_rulers);
+				gimprc.show_rulers);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &show_rulers);
+		      &(gimprc.show_rulers));
   gtk_widget_show (button);
 
   button = gtk_check_button_new_with_label(_("Show Statusbar"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				show_statusbar);
+				gimprc.show_statusbar);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &show_statusbar);
+		      &(gimprc.show_statusbar));
   gtk_widget_show (button);
 
   table = gtk_table_new (2, 2, FALSE);
@@ -2042,11 +2050,11 @@ preferences_dialog_create (void)
 
   spinbutton =
     gimp_spin_button_new (&adjustment,
-			  marching_speed, 50.0, 32000.0, 10.0, 100.0, 1.0,
+			  gimprc.marching_speed, 50.0, 32000.0, 10.0, 100.0, 1.0,
 			  1.0, 0.0);
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &marching_speed);
+		      &(gimprc.marching_speed));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Marching Ants Speed:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
@@ -2058,7 +2066,7 @@ preferences_dialog_create (void)
   /* Set the currently used string as "Custom" */
   comboitem = gtk_list_item_new_with_label (_("Custom"));
   gtk_combo_set_item_string (GTK_COMBO (combo), GTK_ITEM (comboitem),
-			     image_title_format);
+			     gimprc.image_title_format);
   gtk_container_add (GTK_CONTAINER (GTK_COMBO (combo)->list), comboitem);
   gtk_widget_show (comboitem);
   /* set some commonly used format strings */
@@ -2085,7 +2093,7 @@ preferences_dialog_create (void)
 
   gtk_signal_connect (GTK_OBJECT (GTK_COMBO (combo)->entry), "changed",
 		      GTK_SIGNAL_FUNC (prefs_string_callback), 
-		      &image_title_format);
+		      &(gimprc.image_title_format));
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Image Title Format:"), 1.0, 0.5,
@@ -2097,20 +2105,20 @@ preferences_dialog_create (void)
   button =
     gtk_check_button_new_with_label (_("Perfect-but-Slow Pointer Tracking"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				perfectmouse);
+				gimprc.perfectmouse);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &perfectmouse);
+		      &(gimprc.perfectmouse));
   gtk_widget_show (button);
 
   button = gtk_check_button_new_with_label (_("Disable Cursor Updating"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				no_cursor_updating);
+				gimprc.no_cursor_updating);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &no_cursor_updating);
+		      &(gimprc.no_cursor_updating));
   gtk_widget_show (button);
 
   table = gtk_table_new (1, 2, FALSE);
@@ -2121,7 +2129,8 @@ preferences_dialog_create (void)
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
-			   &cursor_mode, (gpointer) cursor_mode,
+			   &(gimprc.cursor_mode), 
+                           (gpointer) gimprc.cursor_mode,
 
 			   _("Tool Icon"),
 			   (gpointer) CURSOR_MODE_TOOL_ICON, NULL,
@@ -2153,11 +2162,11 @@ preferences_dialog_create (void)
   button =
     gtk_check_button_new_with_label(_("Use Global Paint Options"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				global_paint_options);
+				gimprc.global_paint_options);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &global_paint_options);
+		      &(gimprc.global_paint_options));
   gtk_widget_show (button);
 
   vbox2 = prefs_frame_new (_("Finding Contiguous Regions"), GTK_BOX (vbox));
@@ -2172,11 +2181,11 @@ preferences_dialog_create (void)
   /*  Default threshold  */
   spinbutton =
     gimp_spin_button_new (&adjustment,
-			  default_threshold, 0.0, 255.0,
+			  gimprc.default_threshold, 0.0, 255.0,
 			  1.0, 5.0, 0.0, 1.0, 0.0);
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &default_threshold);
+		      &(gimprc.default_threshold));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Default Threshold:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
@@ -2222,10 +2231,10 @@ preferences_dialog_create (void)
   /*  Levels of Undo  */
   spinbutton =
     gimp_spin_button_new (&adjustment,
-			  levels_of_undo, 0.0, 255.0, 1.0, 5.0, 0.0, 1.0, 0.0);
+			  gimprc.levels_of_undo, 0.0, 255.0, 1.0, 5.0, 0.0, 1.0, 0.0);
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &levels_of_undo);
+		      &(gimprc.levels_of_undo));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Levels of Undo:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
@@ -2300,7 +2309,8 @@ preferences_dialog_create (void)
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
-			   &thumbnail_mode, (gpointer) thumbnail_mode,
+			   &(gimprc.thumbnail_mode), (gpointer)
+                           gimprc.thumbnail_mode,
 
 			   _("Always"), (gpointer) 1, NULL,
 			   _("Never"),  (gpointer) 0, NULL,
@@ -2312,7 +2322,8 @@ preferences_dialog_create (void)
 
   optionmenu =
     gimp_option_menu_new2 (FALSE, prefs_toggle_callback,
-			   &trust_dirty_flag, (gpointer) trust_dirty_flag,
+			   &(gimprc.trust_dirty_flag), 
+			   (gpointer) gimprc.trust_dirty_flag,
 
 			   _("Only when Modified"), (gpointer) 1, NULL,
 			   _("Always"),             (gpointer) 0, NULL,
@@ -2339,11 +2350,11 @@ preferences_dialog_create (void)
 
   button = gtk_check_button_new_with_label (_("Save Window Positions on Exit"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				save_session_info);
+				gimprc.save_session_info);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &save_session_info);
+		      &(gimprc.save_session_info));
   gtk_widget_show (button);
 
   hbox = gtk_hbox_new (FALSE, 2);
@@ -2361,22 +2372,22 @@ preferences_dialog_create (void)
 
   button = gtk_check_button_new_with_label (_("Always Try to Restore Session"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				always_restore_session);
+				gimprc.always_restore_session);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &always_restore_session);
+		      &(gimprc.always_restore_session));
   gtk_widget_show (button);
 
   vbox2 = prefs_frame_new (_("Devices"), GTK_BOX (vbox));
 
   button = gtk_check_button_new_with_label (_("Save Device Status on Exit"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				save_device_status);
+				gimprc.save_device_status);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      GTK_SIGNAL_FUNC (prefs_toggle_callback),
-		      &save_device_status);
+		      &(gimprc.save_device_status));
   gtk_widget_show (button);
 
   /* Monitor */
@@ -2416,9 +2427,9 @@ preferences_dialog_create (void)
   pixels_per_unit = NULL;
 
   button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
-  if (ABS (monitor_xres - monitor_yres) < GIMP_MIN_RESOLUTION)
+  if (ABS (gimprc.monitor_xres - gimprc.monitor_yres) < GIMP_MIN_RESOLUTION)
     gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (button), TRUE);
-   gtk_object_set_data (GTK_OBJECT (sizeentry), "chain_button", button); 
+  gtk_object_set_data (GTK_OBJECT (sizeentry), "chain_button", button); 
   gtk_table_attach_defaults (GTK_TABLE (sizeentry), button, 1, 3, 3, 4);
   gtk_widget_show (button);
 
@@ -2436,8 +2447,10 @@ preferences_dialog_create (void)
 					 GIMP_MIN_RESOLUTION,
 					 GIMP_MAX_RESOLUTION);
 
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0, monitor_xres);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1, monitor_yres);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0,
+			      gimprc.monitor_xres);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1,
+			      gimprc.monitor_yres);
 
   gtk_signal_connect (GTK_OBJECT (sizeentry), "value_changed",
 		      GTK_SIGNAL_FUNC (prefs_monitor_resolution_callback),
@@ -2448,11 +2461,11 @@ preferences_dialog_create (void)
 
   gtk_container_add (GTK_CONTAINER (abox), sizeentry);
   gtk_widget_show (sizeentry);
-  gtk_widget_set_sensitive (sizeentry, !using_xserver_resolution);
-
+  gtk_widget_set_sensitive (sizeentry, !gimprc.using_xserver_resolution);
+  
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
-
+  
   calibrate_button = gtk_button_new_with_label (_("Calibrate"));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (calibrate_button)->child), 4, 0);
   gtk_signal_connect (GTK_OBJECT (calibrate_button), "clicked",
@@ -2460,7 +2473,7 @@ preferences_dialog_create (void)
 		      sizeentry);
   gtk_box_pack_start (GTK_BOX (hbox), calibrate_button, FALSE, FALSE, 0);
   gtk_widget_show (calibrate_button);
-  gtk_widget_set_sensitive (calibrate_button, !using_xserver_resolution);
+  gtk_widget_set_sensitive (calibrate_button, !gimprc.using_xserver_resolution);
 
   group = NULL;
   button = gtk_radio_button_new_with_label (group, _("From windowing system"));
@@ -2480,23 +2493,23 @@ preferences_dialog_create (void)
   gtk_widget_show (button);
   gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
-
+  
   separator = gtk_hseparator_new ();
   gtk_box_pack_start (GTK_BOX (vbox2), separator, FALSE, FALSE, 0);
   gtk_widget_show (separator);
-
+  
   button = gtk_radio_button_new_with_label (group, _("Manually:"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
-
+  
   gtk_box_pack_start (GTK_BOX (vbox2), abox, FALSE, FALSE, 0);
   gtk_widget_show (abox);
-
+  
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
-
- if (!using_xserver_resolution)
+  
+  if (!gimprc.using_xserver_resolution)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
   /* Directories */
@@ -2510,7 +2523,7 @@ preferences_dialog_create (void)
 				     page_index);
   gtk_widget_show (vbox);
   page_index++;
-
+  
   {
     static const struct
     {
@@ -2524,13 +2537,13 @@ preferences_dialog_create (void)
       { N_("Swap Dir:"), N_("Select Swap Dir"), &edit_swap_path },
     };
     static gint ndirs = sizeof (dirs) / sizeof (dirs[0]);
-
+    
     table = gtk_table_new (ndirs + 1, 2, FALSE);
     gtk_table_set_row_spacings (GTK_TABLE (table), 2);
     gtk_table_set_col_spacings (GTK_TABLE (table), 4);
     gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, TRUE, 0);
     gtk_widget_show (table);
-
+    
     for (i = 0; i < ndirs; i++)
       {
 	fileselection = gimp_file_selection_new (gettext(dirs[i].fs_label),

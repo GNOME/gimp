@@ -1552,7 +1552,7 @@ menus_last_opened_add (gchar *filename)
 
   num_entries = g_slist_length (last_opened_raw_filenames);
 
-  if (num_entries == last_opened_size)
+  if (num_entries == gimprc.last_opened_size)
     {
       list = g_slist_last (last_opened_raw_filenames);
       if (list)
@@ -1586,12 +1586,12 @@ menus_init_mru (void)
   gchar                *accelerators;
   gint                  i;
 
-  last_opened_entries = g_new (GimpItemFactoryEntry, last_opened_size);
+  last_opened_entries = g_new (GimpItemFactoryEntry, gimprc.last_opened_size);
 
-  paths = g_new (gchar, last_opened_size * MRU_MENU_ENTRY_SIZE);
+  paths = g_new (gchar, gimprc.last_opened_size * MRU_MENU_ENTRY_SIZE);
   accelerators = g_new (gchar, 9 * MRU_MENU_ACCEL_SIZE);
 
-  for (i = 0; i < last_opened_size; i++)
+  for (i = 0; i < gimprc.last_opened_size; i++)
     {
       gchar *path, *accelerator;
 
@@ -1615,10 +1615,10 @@ menus_init_mru (void)
 	g_snprintf (accelerator, MRU_MENU_ACCEL_SIZE, "<control>%d", i + 1);
     }
 
-  menus_create_items (toolbox_factory, last_opened_size,
+  menus_create_items (toolbox_factory, gimprc.last_opened_size,
 		      last_opened_entries, NULL, 2, TRUE);
 
-  for (i=0; i < last_opened_size; i++)
+  for (i=0; i < gimprc.last_opened_size; i++)
     {
       menu_item =
 	gtk_item_factory_get_widget (toolbox_factory,
@@ -1763,12 +1763,12 @@ menus_create_item (GtkItemFactory       *item_factory,
 
   if (! (strstr (entry->entry.path, "tearoff1")))
     {
-      if (! disable_tearoff_menus && create_tearoff)
+      if (! gimprc.disable_tearoff_menus && create_tearoff)
 	{
 	  menus_create_branches (item_factory, entry);
 	}
     }
-  else if (disable_tearoff_menus || ! create_tearoff)
+  else if (gimprc.disable_tearoff_menus || ! create_tearoff)
     {
       return;
     }

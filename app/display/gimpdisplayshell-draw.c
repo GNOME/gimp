@@ -526,7 +526,7 @@ create_display_shell (GDisplay *gdisp,
 
   /*  show everything  *******************************************************/
 
-  if (show_rulers)
+  if (gimprc.show_rulers)
     {
       gtk_widget_show (gdisp->origin);
       gtk_widget_show (gdisp->hrule);
@@ -545,7 +545,7 @@ create_display_shell (GDisplay *gdisp,
   gtk_widget_show (gdisp->statusbar);
   gtk_widget_show (gdisp->progressbar);
   gtk_widget_show (gdisp->cancelbutton);
-  if (show_statusbar)
+  if (gimprc.show_statusbar)
     {
       gtk_widget_show (gdisp->statusarea);
     }

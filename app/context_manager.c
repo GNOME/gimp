@@ -126,7 +126,7 @@ context_manager_tool_changed (GimpContext  *user_context,
 	  return;
 	}
 
-      if (! global_paint_options)
+      if (! gimprc.global_paint_options)
 	{
 	  if (active_tool &&
 	      (tool_context = tool_manager_get_info_by_tool (active_tool)->context))
@@ -193,7 +193,7 @@ context_manager_init (void)
   /* Create the global data factories */
   global_brush_factory =
     gimp_data_factory_new (GIMP_TYPE_BRUSH,
-			   (const gchar **) &brush_path,
+			   (const gchar **) &gimprc.brush_path,
 			   brush_loader_entries,
 			   n_brush_loader_entries,
 			   gimp_brush_new,
@@ -201,7 +201,7 @@ context_manager_init (void)
 
   global_pattern_factory =
     gimp_data_factory_new (GIMP_TYPE_PATTERN,
-			   (const gchar **) &pattern_path,
+			   (const gchar **) &gimprc.pattern_path,
 			   pattern_loader_entries,
 			   n_pattern_loader_entries,
 			   gimp_pattern_new,
@@ -209,7 +209,7 @@ context_manager_init (void)
 
   global_gradient_factory =
     gimp_data_factory_new (GIMP_TYPE_GRADIENT,
-			   (const gchar **) &gradient_path,
+			   (const gchar **) &gimprc.gradient_path,
 			   gradient_loader_entries,
 			   n_gradient_loader_entries,
 			   gimp_gradient_new,
@@ -217,7 +217,7 @@ context_manager_init (void)
 
   global_palette_factory =
     gimp_data_factory_new (GIMP_TYPE_PALETTE,
-			   (const gchar **) &palette_path,
+			   (const gchar **) &gimprc.palette_path,
 			   palette_loader_entries,
 			   n_palette_loader_entries,
 			   gimp_palette_new,
@@ -262,12 +262,12 @@ context_manager_init (void)
   /* register internal tools */
   tools_init ();
 
-  if (! global_paint_options && active_tool &&
+  if (! gimprc.global_paint_options && active_tool &&
       (tool_context = tool_manager_get_info_by_tool (active_tool)->context))
     {
       gimp_context_set_parent (tool_context, user_context);
     }
-  else if (global_paint_options)
+  else if (gimprc.global_paint_options)
     {
       gimp_context_set_parent (global_tool_context, user_context);
     }
@@ -301,7 +301,7 @@ context_manager_set_global_paint_options (gboolean global)
   GimpToolInfo *tool_info;
   GimpContext  *context;
 
-  if (global == global_paint_options)
+  if (global == gimprc.global_paint_options)
     return;
 
   paint_options_set_global (global);
