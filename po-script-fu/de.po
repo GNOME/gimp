@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.17\n"
-"POT-Creation-Date: 2000-02-27 20:19+0100\n"
+"POT-Creation-Date: 2000-02-28 17:47-0800\n"
 "PO-Revision-Date: 2000-02-27 20:20+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -13,43 +13,43 @@ msgstr ""
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:157
+#: plug-ins/script-fu/script-fu-console.c:158
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Interaktive Aufrufe sind in Skript-Fu's Konsolen-Modus nicht möglich"
 
-#: plug-ins/script-fu/script-fu-console.c:193
+#: plug-ins/script-fu/script-fu-console.c:194
 msgid "Script-Fu Console"
 msgstr "Skript-Fu Konsole"
 
 #. Action area
-#: plug-ins/script-fu/script-fu-console.c:205
+#: plug-ins/script-fu/script-fu-console.c:206
 #: plug-ins/script-fu/script-fu-scripts.c:1961
 msgid "Close"
 msgstr "Schliessen"
 
 #. The info vbox
-#: plug-ins/script-fu/script-fu-console.c:213
+#: plug-ins/script-fu/script-fu-console.c:214
 msgid "SIOD Output"
 msgstr "SIOD Ausgabe"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:290
+#: plug-ins/script-fu/script-fu-console.c:291
 msgid "Current Command"
 msgstr "Kommando"
 
-#: plug-ins/script-fu/script-fu-console.c:311
+#: plug-ins/script-fu/script-fu-console.c:312
 msgid "Browse..."
 msgstr "Durchsuchen..."
 
-#: plug-ins/script-fu/script-fu-console.c:574
+#: plug-ins/script-fu/script-fu-console.c:575
 msgid "Unable to open SIOD output pipe"
 msgstr "Kann SIOD-Ausgabe-Pipe nicht öffnen"
 
-#: plug-ins/script-fu/script-fu-console.c:578
+#: plug-ins/script-fu/script-fu-console.c:579
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Kann mit dem SIOD-Ausgabe-pipe keinen Stream erstellen"
 
-#: plug-ins/script-fu/script-fu-console.c:625
+#: plug-ins/script-fu/script-fu-console.c:626
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Skript-Fu's Auswerten-Modus ermöglicht nur nicht-interaktive Aufrufe"
 

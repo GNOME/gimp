@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2000-02-27 20:03+0100\n"
+"POT-Creation-Date: 2000-02-28 17:47-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,47 +14,47 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: ENCODING\n"
 
-#: plug-ins/script-fu/script-fu-console.c:157
+#: plug-ins/script-fu/script-fu-console.c:158
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Script-Fu 콘솔 모드는 오직 상호작용적 작용에서만 허용됩니다."
 
-#: plug-ins/script-fu/script-fu-console.c:193
+#: plug-ins/script-fu/script-fu-console.c:194
 msgid "Script-Fu Console"
 msgstr "Script-Fu 콘솔"
 
 #. Action area
-#: plug-ins/script-fu/script-fu-console.c:205
-#: plug-ins/script-fu/script-fu-scripts.c:1957
+#: plug-ins/script-fu/script-fu-console.c:206
+#: plug-ins/script-fu/script-fu-scripts.c:1961
 msgid "Close"
 msgstr "닫기"
 
 #. The info vbox
-#: plug-ins/script-fu/script-fu-console.c:213
+#: plug-ins/script-fu/script-fu-console.c:214
 msgid "SIOD Output"
 msgstr "SIOD 출력"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:290
+#: plug-ins/script-fu/script-fu-console.c:291
 msgid "Current Command"
 msgstr "현재 명령"
 
-#: plug-ins/script-fu/script-fu-console.c:311
+#: plug-ins/script-fu/script-fu-console.c:312
 msgid "Browse..."
 msgstr "찾아보기..."
 
-#: plug-ins/script-fu/script-fu-console.c:574
+#: plug-ins/script-fu/script-fu-console.c:575
 msgid "Unable to open SIOD output pipe"
 msgstr "SIOD 출력 파이프를 열수 없습니다."
 
-#: plug-ins/script-fu/script-fu-console.c:578
+#: plug-ins/script-fu/script-fu-console.c:579
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "SIOD 출력 파이프에서 스트림을 열수 없습니다."
 
-#: plug-ins/script-fu/script-fu-console.c:625
+#: plug-ins/script-fu/script-fu-console.c:626
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu 평가 모드는 오직 상호작용을 하지 않는 작용에서만 가능"
 
-#. strip the first part of the menupath if it says _("Script-Fu")
+#. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-scripts.c:1207
 #: plug-ins/script-fu/script-fu-scripts.c:1209
 #, fuzzy
@@ -68,60 +68,60 @@ msgid "Script-Fu: %s"
 msgstr "Script-Fu 콘솔"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1232
+#: plug-ins/script-fu/script-fu-scripts.c:1236
 msgid "Script Arguments"
 msgstr "스크립트 인수"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1296
+#: plug-ins/script-fu/script-fu-scripts.c:1300
 #, fuzzy
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu 파일 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1302
+#: plug-ins/script-fu/script-fu-scripts.c:1306
 msgid "Script Toggle"
 msgstr "스크립트 토글"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1364
+#: plug-ins/script-fu/script-fu-scripts.c:1368
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu 파일 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1396
+#: plug-ins/script-fu/script-fu-scripts.c:1400
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu 패턴 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1403
+#: plug-ins/script-fu/script-fu-scripts.c:1407
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu 색감변화도 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1411
+#: plug-ins/script-fu/script-fu-scripts.c:1415
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu 브러쉬 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1436
+#: plug-ins/script-fu/script-fu-scripts.c:1440
 #, fuzzy
 msgid "Reset to Defaults"
 msgstr " 초기값으로 재설정"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1462
+#: plug-ins/script-fu/script-fu-scripts.c:1466
 msgid "About"
 msgstr "대하여"
 
 #. Action area
-#: plug-ins/script-fu/script-fu-scripts.c:1476
+#: plug-ins/script-fu/script-fu-scripts.c:1480
 #: plug-ins/script-fu/script-fu-server.c:559
 msgid "OK"
 msgstr "확인"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1485
+#: plug-ins/script-fu/script-fu-scripts.c:1489
 #: plug-ins/script-fu/script-fu-server.c:568
 msgid "Cancel"
 msgstr "취소"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1590
+#: plug-ins/script-fu/script-fu-scripts.c:1594
 msgid "NOT SET"
 msgstr "결정않됨"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1661
+#: plug-ins/script-fu/script-fu-scripts.c:1665
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -129,27 +129,27 @@ msgstr ""
 "적어도 당신이 선택한 한 글꼴이 잘못되었다\n"
 "설정을 검사해보세요\n"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1928
+#: plug-ins/script-fu/script-fu-scripts.c:1932
 #, fuzzy
 msgid "Author:"
 msgstr "저자 :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1934
+#: plug-ins/script-fu/script-fu-scripts.c:1938
 #, fuzzy
 msgid "Copyright:"
 msgstr "저작권 :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1940
+#: plug-ins/script-fu/script-fu-scripts.c:1944
 #, fuzzy
 msgid "Date:"
 msgstr "날짜 :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1948
+#: plug-ins/script-fu/script-fu-scripts.c:1952
 #, fuzzy
 msgid "Image Types:"
 msgstr "이미지 유형: "
 
-#: plug-ins/script-fu/script-fu-scripts.c:2097
+#: plug-ins/script-fu/script-fu-scripts.c:2101
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu 폰트 셀렉션"
 

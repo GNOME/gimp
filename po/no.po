@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.14\n"
-"POT-Creation-Date: 2000-02-26 20:30+0100\n"
+"POT-Creation-Date: 2000-03-03 01:08-0800\n"
 "PO-Revision-Date: 2000-02-26 20:35+01:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -120,10 +120,10 @@ msgstr "Avslutt"
 #: app/gdisplay_color_ui.c:129 app/gdisplay_ops.c:346 app/gimpprogress.c:112
 #: app/global_edit.c:739 app/gradient.c:1769 app/gradient.c:4839
 #: app/gradient.c:5400 app/hue_saturation.c:377 app/interface.c:984
-#: app/layers_dialog.c:3308 app/layers_dialog.c:3499 app/layers_dialog.c:3599
-#: app/layers_dialog.c:3701 app/layers_dialog.c:3964 app/levels.c:341
-#: app/palette.c:1826 app/posterize.c:201 app/preferences_dialog.c:1469
-#: app/qmask.c:281 app/resize.c:193 app/resize.c:1343 app/threshold.c:275
+#: app/layers_dialog.c:3326 app/layers_dialog.c:3517 app/layers_dialog.c:3617
+#: app/layers_dialog.c:3889 app/levels.c:341 app/palette.c:1826
+#: app/posterize.c:201 app/preferences_dialog.c:1469 app/qmask.c:281
+#: app/resize.c:193 app/resize.c:1343 app/threshold.c:275
 #: modules/cdisplay_gamma.c:358
 msgid "Cancel"
 msgstr "Avbryt"
@@ -136,11 +136,11 @@ msgstr "Bezier sti allerede lukket."
 msgid "Corrupt curve"
 msgstr "Korrupt kurve"
 
-#: app/bezier_select.c:2862
+#: app/bezier_select.c:2878
 msgid "Curve not closed!"
 msgstr "Kurve ikke lukket!"
 
-#: app/bezier_select.c:3149 app/gimage_mask.c:605
+#: app/bezier_select.c:3165 app/gimage_mask.c:605
 msgid "Paintbrush operation failed."
 msgstr "Paintbrush operasjon feilet."
 
@@ -240,7 +240,7 @@ msgstr "Tilpassende supersampling"
 msgid "Max Depth:"
 msgstr "Maks dybde:"
 
-#: app/blend.c:386 app/bucket_fill.c:127 app/fuzzy_select.c:649
+#: app/blend.c:386 app/bucket_fill.c:127 app/fuzzy_select.c:657
 msgid "Threshold:"
 msgstr "Terskel:"
 
@@ -277,15 +277,15 @@ msgstr "Lysstyrke-kontrast opererer ikke på indekserte tegneobjekter."
 #: app/color_balance.c:271 app/color_notebook.c:122 app/convert.c:504
 #: app/curves.c:555 app/file_new_dialog.c:207 app/file_new_dialog.c:353
 #: app/gdisplay_color_ui.c:127 app/gimpui.c:122 app/hue_saturation.c:373
-#: app/layers_dialog.c:3306 app/layers_dialog.c:3497 app/layers_dialog.c:3597
-#: app/layers_dialog.c:3962 app/levels.c:337 app/module_db.c:281
+#: app/layers_dialog.c:3324 app/layers_dialog.c:3515 app/layers_dialog.c:3615
+#: app/layers_dialog.c:3887 app/levels.c:337 app/module_db.c:281
 #: app/posterize.c:197 app/preferences_dialog.c:1465 app/qmask.c:279
 #: app/resize.c:191 app/resize.c:1343 app/threshold.c:271
 #: modules/cdisplay_gamma.c:351
 msgid "OK"
 msgstr "OK"
 
-#: app/brightness_contrast.c:216 app/by_color_select.c:630
+#: app/brightness_contrast.c:216 app/by_color_select.c:634
 #: app/color_balance.c:273 app/curves.c:557 app/file_new_dialog.c:355
 #: app/hue_saturation.c:375 app/levels.c:339 app/posterize.c:199
 #: app/threshold.c:273 app/tools.c:1086 app/transform_core.c:412
@@ -315,12 +315,12 @@ msgid "Brush Editor"
 msgstr "Penseleditor"
 
 #. The close button
-#: app/brush_edit.c:216 app/brush_select.c:278 app/by_color_select.c:632
+#: app/brush_edit.c:216 app/brush_select.c:278 app/by_color_select.c:636
 #: app/color_notebook.c:122 app/color_picker.c:297 app/colormap_dialog.i.c:170
 #: app/crop.c:1054 app/devices.c:755 app/docindexif.c:105
 #: app/errorconsole.c:281 app/gdisplay_ops.c:346 app/gradient.c:801
 #: app/gradient_select.c:153 app/histogram_tool.c:276 app/info_window.c:255
-#: app/lc_dialog.c:195 app/measure.c:273 app/nav_window.c:1345
+#: app/lc_dialog.c:195 app/measure.c:286 app/nav_window.c:1345
 #: app/palette.c:2072 app/palette.c:2088 app/palette.c:3118
 #: app/palette_select.c:66 app/pattern_select.c:172
 #: app/preferences_dialog.c:359 app/tips_dialog.c:171 app/tools.c:1088
@@ -341,7 +341,7 @@ msgstr "Hardhet:"
 msgid "Aspect Ratio:"
 msgstr "Aspektrate:"
 
-#: app/brush_edit.c:312 app/measure.c:269 app/rotate_tool.c:88
+#: app/brush_edit.c:312 app/measure.c:282 app/rotate_tool.c:88
 msgid "Angle:"
 msgstr "Vinkel:"
 
@@ -359,11 +359,11 @@ msgstr "Oppdater"
 msgid "No Brushes available"
 msgstr "Ingen pensler tilgjengelig"
 
-#: app/brush_select.c:445 app/layers_dialog.c:373 app/tool_options.c:506
+#: app/brush_select.c:445 app/layers_dialog.c:372 app/tool_options.c:506
 msgid "Opacity:"
 msgstr "Ugjennomsiktighet:"
 
-#: app/brush_select.c:453 app/layers_dialog.c:325 app/tool_options.c:530
+#: app/brush_select.c:453 app/layers_dialog.c:324 app/tool_options.c:530
 msgid "Mode:"
 msgstr "Modus:"
 
@@ -402,7 +402,7 @@ msgid "Sample Merged"
 msgstr "Prøve sammenslått"
 
 #. frame for Fill Type
-#: app/bucket_fill.c:156 app/file_new_dialog.c:628
+#: app/bucket_fill.c:156 app/channel_ops.c:170 app/file_new_dialog.c:628
 msgid "Fill Type"
 msgstr "Fylltype"
 
@@ -427,36 +427,36 @@ msgid "No available patterns for this operation."
 msgstr "Ingen tilgjengelige mønstre for denne operasjonen."
 
 #. The shell and main vbox
-#: app/by_color_select.c:625
+#: app/by_color_select.c:629
 msgid "By Color Selection"
 msgstr "Ved fargevalg"
 
-#: app/by_color_select.c:681
+#: app/by_color_select.c:685
 msgid "Inactive"
 msgstr "Inaktiv"
 
-#: app/by_color_select.c:689
+#: app/by_color_select.c:693
 msgid "Selection Mode"
 msgstr "Utvalgsmetode"
 
-#: app/by_color_select.c:691 app/paint_funcs.c:100
+#: app/by_color_select.c:695 app/paint_funcs.c:100
 msgid "Replace"
 msgstr "Erstatt"
 
-#: app/by_color_select.c:693 app/colormap_dialog.i.c:127
+#: app/by_color_select.c:697 app/colormap_dialog.i.c:127
 #: app/gdisplay_color_ui.c:114
 msgid "Add"
 msgstr "Legg til"
 
-#: app/by_color_select.c:695 app/layers_dialog.c:341 app/tool_options.c:903
+#: app/by_color_select.c:699 app/layers_dialog.c:340 app/tool_options.c:903
 msgid "Subtract"
 msgstr "Trekk fra"
 
-#: app/by_color_select.c:697
+#: app/by_color_select.c:701
 msgid "Intersect"
 msgstr "Kryss"
 
-#: app/by_color_select.c:709
+#: app/by_color_select.c:713
 msgid "Fuzziness Threshold"
 msgstr "Terskel for \"Fuzziness\""
 
@@ -465,7 +465,7 @@ msgid "copy"
 msgstr "kopier"
 
 #. formulate the new layer_mask name
-#: app/channel.c:195 app/gradient.c:1600 app/layer.c:318 app/layer.c:1666
+#: app/channel.c:195 app/gradient.c:1600 app/layer.c:318 app/layer.c:1672
 #, c-format
 msgid "%s copy"
 msgstr "%s kopier"
@@ -494,16 +494,12 @@ msgstr "Y:"
 msgid "Wrap Around"
 msgstr "Bryt rundt"
 
-#: app/channel_ops.c:170
-msgid "Fill Options"
-msgstr "Alternativer for fyll"
-
 #: app/channel_ops.c:174 app/image_new.c:69 app/image_new.c:223
-#: app/layers_dialog.c:3404
+#: app/layers_dialog.c:3422
 msgid "Background"
 msgstr "Bakgrunn"
 
-#: app/channel_ops.c:175 app/image_new.c:79 app/layers_dialog.c:3406
+#: app/channel_ops.c:175 app/image_new.c:79 app/layers_dialog.c:3424
 msgid "Transparent"
 msgstr "Transparent"
 
@@ -715,10 +711,10 @@ msgstr "Hex triplet"
 msgid "Intensity:"
 msgstr "Intensitet:"
 
-#: app/color_picker.c:625 app/color_picker.c:626 app/color_picker.c:627
-#: app/color_picker.c:628 app/color_picker.c:629 app/color_picker.c:630
-#: app/color_picker.c:631 app/color_picker.c:649 app/color_picker.c:664
-#: app/color_picker.c:682 app/info_window.c:185 app/info_window.c:191
+#: app/color_picker.c:633 app/color_picker.c:634 app/color_picker.c:635
+#: app/color_picker.c:636 app/color_picker.c:637 app/color_picker.c:638
+#: app/color_picker.c:639 app/color_picker.c:657 app/color_picker.c:672
+#: app/color_picker.c:690 app/info_window.c:185 app/info_window.c:191
 #: app/info_window.c:197 app/info_window.c:203 app/info_window.c:422
 #: app/info_window.c:423 app/info_window.c:424 app/info_window.c:425
 #: app/info_window.c:447
@@ -886,7 +882,7 @@ msgid "Allow Enlarging"
 msgstr "Tillat forstørring"
 
 #. tool toggle
-#: app/crop.c:211 app/flip_tool.c:91
+#: app/crop.c:211 app/flip_tool.c:91 app/magnify.c:132
 msgid "Tool Toggle"
 msgstr "Verktøy bryter"
 
@@ -923,7 +919,7 @@ msgid "Width:"
 msgstr "Bredde:"
 
 #: app/crop.c:1079 app/file_new_dialog.c:395 app/file_new_dialog.c:413
-#: app/layers_dialog.c:3345 app/resize.c:240 app/resize.c:265 app/resize.c:510
+#: app/layers_dialog.c:3363 app/resize.c:240 app/resize.c:265 app/resize.c:510
 #: app/scale_tool.c:79 app/scale_tool.c:86 app/tool_options.c:350
 msgid "Height:"
 msgstr "Høyde:"
@@ -949,7 +945,7 @@ msgstr "Kurver for indekserte tegnede objekter kan ikke justeres."
 msgid "Modify Curves for Channel:"
 msgstr "Endre kurver for kanal:"
 
-#: app/curves.c:579 app/histogram_tool.c:303 app/layers_dialog.c:347
+#: app/curves.c:579 app/histogram_tool.c:303 app/layers_dialog.c:346
 #: app/levels.c:369 app/paint_funcs.c:97 app/tool_options.c:909
 msgid "Value"
 msgstr "Verdi"
@@ -1097,11 +1093,11 @@ msgstr "Brenn"
 msgid "Mode"
 msgstr "Modus"
 
-#: app/edit_selection.c:178
+#: app/edit_selection.c:181
 msgid "Move: 0, 0"
 msgstr "Flytt: 0, 0"
 
-#: app/edit_selection.c:411 app/edit_selection.c:421
+#: app/edit_selection.c:427 app/edit_selection.c:437
 msgid "Move: "
 msgstr "Flytt: "
 
@@ -1515,43 +1511,39 @@ msgstr ""
 "Den ble sannsynligvis ikke kompilert fordi\n"
 "du ikke har GtkXmHTML installert."
 
-#: app/gimpimage.c:546
-msgid "gimp_image_scale: Layer with zero width or height has been rejected."
-msgstr "gimp_image_scale: Lag med null høyde eller bredde har blitt avvist."
-
-#: app/gimpimage.c:1164
+#: app/gimpimage.c:1154
 msgid "attach parasite to image"
 msgstr "fest parasitt til bildet"
 
-#: app/gimpimage.c:1187
+#: app/gimpimage.c:1177
 msgid "detach parasite from image"
 msgstr "løsriv parasitt fra bildet"
 
-#: app/gimpimage.c:2242
+#: app/gimpimage.c:2232
 msgid "Layer cannot be raised any further"
 msgstr "Laget kan ikke heves mer"
 
-#: app/gimpimage.c:2268
+#: app/gimpimage.c:2258
 msgid "Layer cannot be lowered any further"
 msgstr "Laget kan ikke senkes mer"
 
-#: app/gimpimage.c:2292
+#: app/gimpimage.c:2282
 msgid "Layer is already on top"
 msgstr "Laget er allerede øverst"
 
-#: app/gimpimage.c:2298
+#: app/gimpimage.c:2288
 msgid "Can't raise Layer without alpha"
 msgstr "Kan ikke heve lag uten alpha"
 
-#: app/gimpimage.c:2325
+#: app/gimpimage.c:2315
 msgid "Layer is already on bottom"
 msgstr "Laget er allerede nederst"
 
-#: app/gimpimage.c:2380
+#: app/gimpimage.c:2370
 msgid "BG has no alpha, layer was placed above"
 msgstr "BG har ikke alpha, laget ble plassert over"
 
-#: app/gimpimage.c:2449
+#: app/gimpimage.c:2439
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
@@ -1559,11 +1551,11 @@ msgstr ""
 "Ikke nok synlige lag til å gjøre sammenslåing.\n"
 "Det må være minst to."
 
-#: app/gimpimage.c:2529
+#: app/gimpimage.c:2519
 msgid "There are not enough visible layers for a merge down."
 msgstr "Ikke nok synlige lag til å slå sammen nedover."
 
-#: app/gimpimage.c:2925
+#: app/gimpimage.c:2915
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1571,7 +1563,7 @@ msgstr ""
 "Kunne ikke legge til lagmaske siden\n"
 "laget allerede har en."
 
-#: app/gimpimage.c:2929
+#: app/gimpimage.c:2919
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1579,7 +1571,7 @@ msgstr ""
 "Kunne ikke legge til lagmaske til et\n"
 "lag i et indeksert vilde."
 
-#: app/gimpimage.c:2933
+#: app/gimpimage.c:2923
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1587,34 +1579,24 @@ msgstr ""
 "Kan ikke legge til lagmaske til et lag\n"
 "uten en alpha-kanal."
 
-#: app/gimpimage.c:2940
+#: app/gimpimage.c:2930
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Kan ikke legge til lagmaske med forskjellig dimesjon fra det spesifiserte "
 "laget."
 
-#: app/gimpimage.c:3043
+#: app/gimpimage.c:3033
 msgid "Channel cannot be raised any further"
 msgstr "Kanalen kan ikke heves mer"
 
-#: app/gimpimage.c:3092
+#: app/gimpimage.c:3082
 msgid "Channel cannot be lowered any further"
 msgstr "Kanalen kan ikke senkes mer"
 
-#: app/gimpimage.c:3298 app/palette.c:364 app/palette.c:941 app/palette.c:1077
+#: app/gimpimage.c:3288 app/palette.c:364 app/palette.c:941 app/palette.c:1077
 #: app/palette.c:2022 app/palette.c:2749 app/palette.c:2881
 msgid "Untitled"
 msgstr "Uten navn"
-
-#: app/gimpparasite.c:136
-msgid ""
-"# GIMP parasiterc\n"
-"# This file will be entirely rewritten every time you quit the gimp.\n"
-"\n"
-msgstr ""
-"# GIMP parasiterc\n"
-"# Denne filen vil bli skrevet på nytt hver gang du avslutter GIMP.\n"
-"\n"
 
 #: app/gimpprogress.c:107
 msgid "Progress"
@@ -1695,7 +1677,7 @@ msgstr "GIMP melding"
 msgid "pixel"
 msgstr "piksel"
 
-#: app/gimpunit.c:59 app/measure.c:437 app/measure.c:441 app/paint_core.c:494
+#: app/gimpunit.c:59 app/measure.c:454 app/measure.c:458 app/paint_core.c:498
 msgid "pixels"
 msgstr "piksler"
 
@@ -2188,7 +2170,7 @@ msgid "Hue / Lightness / Saturation Adjustments"
 msgstr "Justeringer for Glød / Lys / Metning"
 
 #. Create the hue scale widget
-#: app/hue_saturation.c:457 app/layers_dialog.c:344 app/paint_funcs.c:94
+#: app/hue_saturation.c:457 app/layers_dialog.c:343 app/paint_funcs.c:94
 #: app/tool_options.c:906
 msgid "Hue"
 msgstr "Glød"
@@ -2199,7 +2181,7 @@ msgid "Lightness"
 msgstr "Lys"
 
 #. Create the saturation scale widget
-#: app/hue_saturation.c:525 app/layers_dialog.c:345 app/paint_funcs.c:95
+#: app/hue_saturation.c:525 app/layers_dialog.c:344 app/paint_funcs.c:95
 #: app/tool_options.c:907
 msgid "Saturation"
 msgstr "Metning"
@@ -2209,11 +2191,11 @@ msgstr "Metning"
 msgid "Grayscale"
 msgstr "Gråtone"
 
-#: app/image_new.c:64 app/layers_dialog.c:3403
+#: app/image_new.c:64 app/layers_dialog.c:3421
 msgid "Foreground"
 msgstr "Forgrunn"
 
-#: app/image_new.c:74 app/layers_dialog.c:3405
+#: app/image_new.c:74 app/layers_dialog.c:3423
 msgid "White"
 msgstr "Hvit"
 
@@ -2835,7 +2817,7 @@ msgstr "Kanal"
 msgid "Channel Ops"
 msgstr "Kanaloperasjoner"
 
-#: app/internal_procs.c:80 app/layers_dialog.c:346 app/paint_funcs.c:96
+#: app/internal_procs.c:80 app/layers_dialog.c:345 app/paint_funcs.c:96
 #: app/tool_options.c:793 app/tool_options.c:908
 msgid "Color"
 msgstr "Farge"
@@ -2955,37 +2937,20 @@ msgstr "Inverteringsoperasjonene feilet."
 msgid "Zero width or height layers not allowed."
 msgstr "Lag uten høyde eller bredde er ikke tillatt."
 
-#: app/layer.c:349
-msgid "layer_copy: could not allocate new layer"
-msgstr "layer_copy: kunne ikke allokere nytt lag"
-
-#: app/layer.c:424
-msgid "layer_new_from_tiles: could not allocate new layer"
-msgstr "layer_new_from_tiles: kunne ikke allokere nytt lag"
-
 #: app/layer.c:477
 #, c-format
 msgid "%s mask"
 msgstr "%s maske"
 
-#: app/layer.c:846
-msgid ""
-"layer_scale_by_factors: Error. Requested width or height scale equals zero."
-msgstr "layer_scale_by_factors: Feil. Forespurt bredde elle høyde skala er lik null."
-
-#: app/layer.c:902
-msgid "layer_scale: Error. Requested width or height equals zero."
-msgstr "layer_scale: Feil. Forespurt bredde eller høyde er lik null."
-
 #: app/layer_select.c:102
 msgid "Layer Select"
 msgstr "Velg lag"
 
-#: app/layers_dialog.c:224 app/layers_dialog.c:3335
+#: app/layers_dialog.c:223 app/layers_dialog.c:3353
 msgid "New Layer"
 msgstr "Nytt lag"
 
-#: app/layers_dialog.c:228
+#: app/layers_dialog.c:227
 msgid ""
 "Raise Layer    \n"
 "<Shift> To Top"
@@ -2993,7 +2958,7 @@ msgstr ""
 "Hev lag    \n"
 "<Shift> til øverst"
 
-#: app/layers_dialog.c:233
+#: app/layers_dialog.c:232
 msgid ""
 "Lower Layer       \n"
 "<Shift> To Bottom"
@@ -3001,135 +2966,118 @@ msgstr ""
 "Senk lag       \n"
 "<Shift> til nederst"
 
-#: app/layers_dialog.c:238
+#: app/layers_dialog.c:237
 msgid "Duplicate Layer"
 msgstr "Dupliser lag"
 
-#: app/layers_dialog.c:242
+#: app/layers_dialog.c:241
 msgid "Anchor Layer"
 msgstr "Forankre lag"
 
-#: app/layers_dialog.c:246
+#: app/layers_dialog.c:245
 msgid "Delete Layer"
 msgstr "Slett lag"
 
-#: app/layers_dialog.c:333 app/paint_funcs.c:83 app/tool_options.c:894
+#: app/layers_dialog.c:332 app/paint_funcs.c:83 app/tool_options.c:894
 msgid "Normal"
 msgstr "Normal"
 
-#: app/layers_dialog.c:334 app/paint_funcs.c:84 app/tool_options.c:895
+#: app/layers_dialog.c:333 app/paint_funcs.c:84 app/tool_options.c:895
 msgid "Dissolve"
 msgstr "Oppløs"
 
-#: app/layers_dialog.c:335 app/paint_funcs.c:86 app/tool_options.c:897
+#: app/layers_dialog.c:334 app/paint_funcs.c:86 app/tool_options.c:897
 msgid "Multiply (Burn)"
 msgstr "Multipliser (Burn)"
 
-#: app/layers_dialog.c:336 app/paint_funcs.c:98 app/tool_options.c:898
+#: app/layers_dialog.c:335 app/paint_funcs.c:98 app/tool_options.c:898
 msgid "Divide (Dodge)"
 msgstr "Divider (Dodge)"
 
-#: app/layers_dialog.c:337 app/paint_funcs.c:87 app/tool_options.c:899
+#: app/layers_dialog.c:336 app/paint_funcs.c:87 app/tool_options.c:899
 msgid "Screen"
 msgstr "Skjerm"
 
-#: app/layers_dialog.c:338 app/paint_funcs.c:88 app/tool_options.c:900
+#: app/layers_dialog.c:337 app/paint_funcs.c:88 app/tool_options.c:900
 msgid "Overlay"
 msgstr "Legg over"
 
-#: app/layers_dialog.c:339 app/paint_funcs.c:89 app/tool_options.c:901
+#: app/layers_dialog.c:338 app/paint_funcs.c:89 app/tool_options.c:901
 msgid "Difference"
 msgstr "Differens"
 
-#: app/layers_dialog.c:340 app/paint_funcs.c:90 app/tool_options.c:902
+#: app/layers_dialog.c:339 app/paint_funcs.c:90 app/tool_options.c:902
 msgid "Addition"
 msgstr "Tillegg"
 
-#: app/layers_dialog.c:342 app/paint_funcs.c:92 app/tool_options.c:904
+#: app/layers_dialog.c:341 app/paint_funcs.c:92 app/tool_options.c:904
 msgid "Darken Only"
 msgstr "Gjør kun mørkere"
 
-#: app/layers_dialog.c:343 app/paint_funcs.c:93 app/tool_options.c:905
+#: app/layers_dialog.c:342 app/paint_funcs.c:93 app/tool_options.c:905
 msgid "Lighten Only"
 msgstr "Gjør kun lysere"
 
-#: app/layers_dialog.c:357
+#: app/layers_dialog.c:356
 msgid "Keep Trans."
 msgstr "Behold trans."
 
-#: app/layers_dialog.c:1787
+#: app/layers_dialog.c:1805
 msgid "Empty Layer Copy"
 msgstr "Kopiering av lag uten innhold"
 
-#: app/layers_dialog.c:2048 app/layers_dialog.c:3139 app/layers_dialog.c:3522
+#: app/layers_dialog.c:2066 app/layers_dialog.c:3157 app/layers_dialog.c:3540
 msgid "Floating Selection"
 msgstr "Flytende utvalg"
 
-#: app/layers_dialog.c:3300
+#: app/layers_dialog.c:3318
 msgid "New Layer Options"
 msgstr "Alternativer for nytt lag"
 
 #. The name label and entry
-#: app/layers_dialog.c:3325
+#: app/layers_dialog.c:3343
 msgid "Layer Name:"
 msgstr "Navn på lag:"
 
 #. The size labels
-#: app/layers_dialog.c:3339
+#: app/layers_dialog.c:3357
 msgid "Layer Width:"
 msgstr "Bredde på lag:"
 
-#: app/layers_dialog.c:3399
+#: app/layers_dialog.c:3417
 msgid "Layer Fill Type"
 msgstr "Fylltype for lag"
 
-#: app/layers_dialog.c:3491
+#: app/layers_dialog.c:3509
 msgid "Edit Layer Attributes"
 msgstr "Rediger lagets attributter"
 
-#: app/layers_dialog.c:3514
+#: app/layers_dialog.c:3532
 msgid "Layer name:"
 msgstr "Navn på lag:"
 
-#: app/layers_dialog.c:3591
+#: app/layers_dialog.c:3609
 msgid "Add Mask Options"
 msgstr "Legg til alternativer for maske"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3606
+#: app/layers_dialog.c:3624
 msgid "Initialize Layer Mask to:"
 msgstr "Initialiser lagets maske til:"
 
-#: app/layers_dialog.c:3611
+#: app/layers_dialog.c:3629
 msgid "White (Full Opacity)"
 msgstr "Hvitt (Helt ugjennomsiktig)"
 
-#: app/layers_dialog.c:3613
+#: app/layers_dialog.c:3631
 msgid "Black (Full Transparency)"
 msgstr "Sort (Helt gjennomsiktig)"
 
-#: app/layers_dialog.c:3615
+#: app/layers_dialog.c:3633
 msgid "Layer's Alpha Channel"
 msgstr "Lagets alfakanal"
 
-#: app/layers_dialog.c:3691
-msgid "Layer Mask Options"
-msgstr "Alternativer for lagets maske"
-
-#: app/layers_dialog.c:3697
-msgid "Apply"
-msgstr "Bruk"
-
-#: app/layers_dialog.c:3699
-msgid "Discard"
-msgstr "Forkast"
-
-#. The name entry hbox, label and entry
-#: app/layers_dialog.c:3713
-msgid "Apply layer mask?"
-msgstr "Bruk lagets maske?"
-
-#: app/layers_dialog.c:3767 app/layers_dialog.c:3855
+#: app/layers_dialog.c:3692 app/layers_dialog.c:3780
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -3137,27 +3085,27 @@ msgstr ""
 "Ugyldig bredde eller høyde.\n"
 "Begge må være positive."
 
-#: app/layers_dialog.c:3956
+#: app/layers_dialog.c:3881
 msgid "Layer Merge Options"
 msgstr "Alternativer for fletting av lag"
 
-#: app/layers_dialog.c:3977
+#: app/layers_dialog.c:3902
 msgid "Final, Merged Layer should be:"
 msgstr "Endelig, flettet lag skal være:"
 
-#: app/layers_dialog.c:3978
+#: app/layers_dialog.c:3903
 msgid "Final, Anchored Layer should be:"
 msgstr "Endelig, forankret lag skal være:"
 
-#: app/layers_dialog.c:3983
+#: app/layers_dialog.c:3908
 msgid "Expanded as necessary"
 msgstr "Utvides etter behov"
 
-#: app/layers_dialog.c:3985
+#: app/layers_dialog.c:3910
 msgid "Clipped to image"
 msgstr "Klippes til bildet"
 
-#: app/layers_dialog.c:3987
+#: app/layers_dialog.c:3912
 msgid "Clipped to bottom layer"
 msgstr "Klippes til bunnlag"
 
@@ -3211,13 +3159,23 @@ msgstr "Lagre nivåer"
 msgid "Load/Save Levels"
 msgstr "Laste/Lagre nivåer"
 
-#: app/magnify.c:99
+#: app/magnify.c:111
 msgid "Magnify Tool"
 msgstr "Verktøy for forstørrelse"
 
-#: app/magnify.c:108
+#: app/magnify.c:121
 msgid "Allow Window Resizing"
 msgstr "Tillat endring av størrelse for vinduer"
+
+#: app/magnify.c:136
+#, fuzzy
+msgid "Zoom in"
+msgstr "Zoom inn og ut"
+
+#: app/magnify.c:138
+#, fuzzy
+msgid "Zoom out"
+msgstr "Zoom inn og ut"
 
 #: app/main.c:271
 msgid "GIMP version"
@@ -3313,7 +3271,7 @@ msgstr "  --system-gimprc <gimprc> Bruk en alternativ system gimprc fil.\n"
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Dette konsollvinduet vil lukkes om ti sekunder)\n"
 
-#: app/measure.c:118 app/measure.c:266
+#: app/measure.c:118 app/measure.c:279
 msgid "Measure Tool"
 msgstr "Måleverktøy"
 
@@ -3321,11 +3279,11 @@ msgstr "Måleverktøy"
 msgid "Use Info Window"
 msgstr "Bruk infovindu"
 
-#: app/measure.c:268
+#: app/measure.c:281
 msgid "Distance:"
 msgstr "Avstand:"
 
-#: app/measure.c:437 app/measure.c:442 app/measure.c:450 app/measure.c:475
+#: app/measure.c:454 app/measure.c:459 app/measure.c:467 app/measure.c:495
 msgid "degrees"
 msgstr "grader"
 
@@ -4053,110 +4011,116 @@ msgid "/Add Layer Mask..."
 msgstr "/Legg til maske for lag..."
 
 #: app/menus.c:693
-msgid "/Apply Layer Mask..."
+#, fuzzy
+msgid "/Apply Layer Mask"
 msgstr "/Bruk maske for lag..."
 
 #: app/menus.c:695
+#, fuzzy
+msgid "/Delete Layer Mask"
+msgstr "/Slett lag"
+
+#: app/menus.c:697
 msgid "/Mask to Selection"
 msgstr "/Maske til utvalg"
 
-#: app/menus.c:700
+#: app/menus.c:702
 msgid "/Add Alpha Channel"
 msgstr "/Legg til alfakanal"
 
-#: app/menus.c:702
+#: app/menus.c:704
 msgid "/Alpha to Selection"
 msgstr "/Alfa til utvalg"
 
-#: app/menus.c:707
+#: app/menus.c:709
 msgid "/Edit Layer Attributes..."
 msgstr "/Rediger lagattributter..."
 
-#: app/menus.c:718
+#: app/menus.c:720
 msgid "/New Channel..."
 msgstr "/Ny kanal..."
 
-#: app/menus.c:720
+#: app/menus.c:722
 msgid "/Raise Channel"
 msgstr "/Hev kanal"
 
-#: app/menus.c:722
+#: app/menus.c:724
 msgid "/Lower Channel"
 msgstr "/Senk kanal"
 
-#: app/menus.c:724
+#: app/menus.c:726
 msgid "/Duplicate Channel"
 msgstr "/Dupliser kanal"
 
-#: app/menus.c:729
+#: app/menus.c:731
 msgid "/Channel to Selection"
 msgstr "/Kanal til utvalg"
 
-#: app/menus.c:731
+#: app/menus.c:733
 msgid "/Add to Selection"
 msgstr "/Legg til i utvalg"
 
-#: app/menus.c:733
+#: app/menus.c:735
 msgid "/Subtract from Selection"
 msgstr "/Trekk fra utvalg"
 
-#: app/menus.c:735
+#: app/menus.c:737
 msgid "/Intersect with Selection"
 msgstr "/Kryss med utvalg"
 
-#: app/menus.c:740
+#: app/menus.c:742
 msgid "/Delete Channel"
 msgstr "/Slett kanal"
 
-#: app/menus.c:745
+#: app/menus.c:747
 msgid "/Edit Channel Attributes..."
 msgstr "/Rediger attributter for kanal..."
 
-#: app/menus.c:756
+#: app/menus.c:758
 msgid "/New Path"
 msgstr "/Ny sti"
 
-#: app/menus.c:758
+#: app/menus.c:760
 msgid "/Duplicate Path"
 msgstr "/Duplisert sti"
 
-#: app/menus.c:760
+#: app/menus.c:762
 msgid "/Path to Selection"
 msgstr "/Sti til utvalg"
 
-#: app/menus.c:762
+#: app/menus.c:764
 msgid "/Selection to Path"
 msgstr "/Utvalg til sti"
 
-#: app/menus.c:764
+#: app/menus.c:766
 msgid "/Stroke Path"
 msgstr "/Strøk sti"
 
-#: app/menus.c:766
+#: app/menus.c:768
 msgid "/Delete Path"
 msgstr "/Slett sti"
 
-#: app/menus.c:771
+#: app/menus.c:773
 msgid "/Copy Path"
 msgstr "/Kopier sti"
 
-#: app/menus.c:773
+#: app/menus.c:775
 msgid "/Paste Path"
 msgstr "/Lim inn sti"
 
-#: app/menus.c:775
+#: app/menus.c:777
 msgid "/Import Path..."
 msgstr "/Importsti..."
 
-#: app/menus.c:777
+#: app/menus.c:779
 msgid "/Export Path..."
 msgstr "/Eksportsti..."
 
-#: app/menus.c:782
+#: app/menus.c:784
 msgid "/Edit Path Attributes..."
 msgstr "Rediger attributter for sti..."
 
-#: app/menus.c:1308
+#: app/menus.c:1310
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr "Feil under åpning av fil: %s\n"
@@ -4252,7 +4216,7 @@ msgstr "Tilstand: "
 msgid "Autoload during startup"
 msgstr "Autolasting under oppstart"
 
-#: app/move.c:454
+#: app/move.c:456
 msgid "Move Tool"
 msgstr "Flytteverktøy"
 
@@ -4266,7 +4230,7 @@ msgstr "Navigasjon: %s-%d.%d"
 msgid "Navigation: No Image"
 msgstr "Navigasjon: Ikke noe bilde"
 
-#: app/paint_core.c:713
+#: app/paint_core.c:717
 msgid "No brushes available for use with this tool."
 msgstr "Ingen pensler tilgjengelig for bruk med dette verktøyet."
 
@@ -5230,23 +5194,23 @@ msgstr "Rediger attributter for Qmaske"
 msgid "Mask Opacity:"
 msgstr "Masken ugjennomsiktighet:"
 
-#: app/rect_select.c:182
+#: app/rect_select.c:186
 msgid "Selection: ADD"
 msgstr "Utvalg: ADD"
 
-#: app/rect_select.c:185
+#: app/rect_select.c:189
 msgid "Selection: SUBTRACT"
 msgstr "Utvalg: SUBTRACT"
 
-#: app/rect_select.c:188
+#: app/rect_select.c:192
 msgid "Selection: INTERSECT"
 msgstr "Utvalg: INTERSECT"
 
-#: app/rect_select.c:191
+#: app/rect_select.c:195
 msgid "Selection: REPLACE"
 msgstr "Utvalg: REPLACE"
 
-#: app/rect_select.c:407 app/rect_select.c:414
+#: app/rect_select.c:421 app/rect_select.c:428
 msgid "Selection: "
 msgstr "Utvalg: "
 
@@ -5632,8 +5596,9 @@ msgid "Magnify"
 msgstr "Forstørr"
 
 #: app/tools.c:215
-msgid "/Tools/Transform Tools/Magnify"
-msgstr "/Verktøy/Transformasjonsverktøy/cTransformer"
+#, fuzzy
+msgid "/Tools/Magnify"
+msgstr "Forstørr"
 
 #: app/tools.c:220
 msgid "Zoom in & out"
@@ -6209,3 +6174,47 @@ msgstr "Vannfarge"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Fargehistorikk"
+
+#~ msgid "Fill Options"
+#~ msgstr "Alternativer for fyll"
+
+#~ msgid "gimp_image_scale: Layer with zero width or height has been rejected."
+#~ msgstr "gimp_image_scale: Lag med null høyde eller bredde har blitt avvist."
+
+#~ msgid ""
+#~ "# GIMP parasiterc\n"
+#~ "# This file will be entirely rewritten every time you quit the gimp.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "# GIMP parasiterc\n"
+#~ "# Denne filen vil bli skrevet på nytt hver gang du avslutter GIMP.\n"
+#~ "\n"
+
+#~ msgid "layer_copy: could not allocate new layer"
+#~ msgstr "layer_copy: kunne ikke allokere nytt lag"
+
+#~ msgid "layer_new_from_tiles: could not allocate new layer"
+#~ msgstr "layer_new_from_tiles: kunne ikke allokere nytt lag"
+
+#~ msgid ""
+#~ "layer_scale_by_factors: Error. Requested width or height scale equals zero."
+#~ msgstr ""
+#~ "layer_scale_by_factors: Feil. Forespurt bredde elle høyde skala er lik null."
+
+#~ msgid "layer_scale: Error. Requested width or height equals zero."
+#~ msgstr "layer_scale: Feil. Forespurt bredde eller høyde er lik null."
+
+#~ msgid "Layer Mask Options"
+#~ msgstr "Alternativer for lagets maske"
+
+#~ msgid "Apply"
+#~ msgstr "Bruk"
+
+#~ msgid "Discard"
+#~ msgstr "Forkast"
+
+#~ msgid "Apply layer mask?"
+#~ msgstr "Bruk lagets maske?"
+
+#~ msgid "/Tools/Transform Tools/Magnify"
+#~ msgstr "/Verktøy/Transformasjonsverktøy/cTransformer"

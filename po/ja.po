@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.18\n"
-"POT-Creation-Date: 2000-02-29 15:50+0900\n"
+"POT-Creation-Date: 2000-03-03 01:08-0800\n"
 "PO-Revision-Date: 2000-02-29 15:53+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@awa.tohoku.ac.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -122,10 +122,10 @@ msgstr "終了"
 #: app/gdisplay_color_ui.c:129 app/gdisplay_ops.c:346 app/gimpprogress.c:112
 #: app/global_edit.c:739 app/gradient.c:1769 app/gradient.c:4839
 #: app/gradient.c:5400 app/hue_saturation.c:377 app/interface.c:984
-#: app/layers_dialog.c:3308 app/layers_dialog.c:3499 app/layers_dialog.c:3599
-#: app/layers_dialog.c:3701 app/layers_dialog.c:3964 app/levels.c:341
-#: app/palette.c:1826 app/posterize.c:201 app/preferences_dialog.c:1469
-#: app/qmask.c:281 app/resize.c:193 app/resize.c:1343 app/threshold.c:275
+#: app/layers_dialog.c:3326 app/layers_dialog.c:3517 app/layers_dialog.c:3617
+#: app/layers_dialog.c:3889 app/levels.c:341 app/palette.c:1826
+#: app/posterize.c:201 app/preferences_dialog.c:1469 app/qmask.c:281
+#: app/resize.c:193 app/resize.c:1343 app/threshold.c:275
 #: modules/cdisplay_gamma.c:358
 msgid "Cancel"
 msgstr "取消"
@@ -138,11 +138,11 @@ msgstr "ベジエパスは既に閉じています."
 msgid "Corrupt curve"
 msgstr "壊れた曲線"
 
-#: app/bezier_select.c:2862
+#: app/bezier_select.c:2878
 msgid "Curve not closed!"
 msgstr "曲線は閉じられていません!"
 
-#: app/bezier_select.c:3149 app/gimage_mask.c:605
+#: app/bezier_select.c:3165 app/gimage_mask.c:605
 msgid "Paintbrush operation failed."
 msgstr "絵筆操作失敗."
 
@@ -242,7 +242,7 @@ msgstr "適応型スーパーサンプリング"
 msgid "Max Depth:"
 msgstr "最大深度:"
 
-#: app/blend.c:386 app/bucket_fill.c:127 app/fuzzy_select.c:649
+#: app/blend.c:386 app/bucket_fill.c:127 app/fuzzy_select.c:657
 msgid "Threshold:"
 msgstr "閾値:"
 
@@ -279,8 +279,8 @@ msgstr "インデックス画像に対しては明るさ-コントラストを操作できません."
 #: app/color_balance.c:271 app/color_notebook.c:122 app/convert.c:504
 #: app/curves.c:555 app/file_new_dialog.c:207 app/file_new_dialog.c:353
 #: app/gdisplay_color_ui.c:127 app/gimpui.c:122 app/hue_saturation.c:373
-#: app/layers_dialog.c:3306 app/layers_dialog.c:3497 app/layers_dialog.c:3597
-#: app/layers_dialog.c:3962 app/levels.c:337 app/module_db.c:281
+#: app/layers_dialog.c:3324 app/layers_dialog.c:3515 app/layers_dialog.c:3615
+#: app/layers_dialog.c:3887 app/levels.c:337 app/module_db.c:281
 #: app/posterize.c:197 app/preferences_dialog.c:1465 app/qmask.c:279
 #: app/resize.c:191 app/resize.c:1343 app/threshold.c:271
 #: modules/cdisplay_gamma.c:351
@@ -322,7 +322,7 @@ msgstr "ブラシエディタ"
 #: app/crop.c:1054 app/devices.c:755 app/docindexif.c:105
 #: app/errorconsole.c:281 app/gdisplay_ops.c:346 app/gradient.c:801
 #: app/gradient_select.c:153 app/histogram_tool.c:276 app/info_window.c:255
-#: app/lc_dialog.c:195 app/measure.c:273 app/nav_window.c:1345
+#: app/lc_dialog.c:195 app/measure.c:286 app/nav_window.c:1345
 #: app/palette.c:2072 app/palette.c:2088 app/palette.c:3118
 #: app/palette_select.c:66 app/pattern_select.c:172
 #: app/preferences_dialog.c:359 app/tips_dialog.c:171 app/tools.c:1088
@@ -343,7 +343,7 @@ msgstr "強度:"
 msgid "Aspect Ratio:"
 msgstr "アスペクト比:"
 
-#: app/brush_edit.c:312 app/measure.c:269 app/rotate_tool.c:88
+#: app/brush_edit.c:312 app/measure.c:282 app/rotate_tool.c:88
 msgid "Angle:"
 msgstr "角度:"
 
@@ -361,11 +361,11 @@ msgstr "再読み込み"
 msgid "No Brushes available"
 msgstr "利用可能なブラシがありません"
 
-#: app/brush_select.c:445 app/layers_dialog.c:373 app/tool_options.c:506
+#: app/brush_select.c:445 app/layers_dialog.c:372 app/tool_options.c:506
 msgid "Opacity:"
 msgstr "不透明度:"
 
-#: app/brush_select.c:453 app/layers_dialog.c:325 app/tool_options.c:530
+#: app/brush_select.c:453 app/layers_dialog.c:324 app/tool_options.c:530
 msgid "Mode:"
 msgstr "モード:"
 
@@ -404,7 +404,7 @@ msgid "Sample Merged"
 msgstr "レイヤー結合色"
 
 #. frame for Fill Type
-#: app/bucket_fill.c:156 app/file_new_dialog.c:628
+#: app/bucket_fill.c:156 app/channel_ops.c:170 app/file_new_dialog.c:628
 msgid "Fill Type"
 msgstr "塗りつぶしの種類"
 
@@ -450,7 +450,7 @@ msgstr "置換"
 msgid "Add"
 msgstr "追加"
 
-#: app/by_color_select.c:699 app/layers_dialog.c:341 app/tool_options.c:903
+#: app/by_color_select.c:699 app/layers_dialog.c:340 app/tool_options.c:903
 msgid "Subtract"
 msgstr "減算"
 
@@ -496,16 +496,12 @@ msgstr "Y:"
 msgid "Wrap Around"
 msgstr "回り込み"
 
-#: app/channel_ops.c:170
-msgid "Fill Options"
-msgstr "塗りつぶしオプション"
-
 #: app/channel_ops.c:174 app/image_new.c:69 app/image_new.c:223
-#: app/layers_dialog.c:3404
+#: app/layers_dialog.c:3422
 msgid "Background"
 msgstr "背景"
 
-#: app/channel_ops.c:175 app/image_new.c:79 app/layers_dialog.c:3406
+#: app/channel_ops.c:175 app/image_new.c:79 app/layers_dialog.c:3424
 msgid "Transparent"
 msgstr "透明"
 
@@ -888,7 +884,7 @@ msgid "Allow Enlarging"
 msgstr "拡大を許可する"
 
 #. tool toggle
-#: app/crop.c:211 app/flip_tool.c:91
+#: app/crop.c:211 app/flip_tool.c:91 app/magnify.c:132
 msgid "Tool Toggle"
 msgstr "機能切替え"
 
@@ -925,7 +921,7 @@ msgid "Width:"
 msgstr "幅:"
 
 #: app/crop.c:1079 app/file_new_dialog.c:395 app/file_new_dialog.c:413
-#: app/layers_dialog.c:3345 app/resize.c:240 app/resize.c:265 app/resize.c:510
+#: app/layers_dialog.c:3363 app/resize.c:240 app/resize.c:265 app/resize.c:510
 #: app/scale_tool.c:79 app/scale_tool.c:86 app/tool_options.c:350
 msgid "Height:"
 msgstr "高さ:"
@@ -951,7 +947,7 @@ msgstr "インデックス描画対象に対する色カーブは調整できません"
 msgid "Modify Curves for Channel:"
 msgstr "カーブ変更対象チャンネル:"
 
-#: app/curves.c:579 app/histogram_tool.c:303 app/layers_dialog.c:347
+#: app/curves.c:579 app/histogram_tool.c:303 app/layers_dialog.c:346
 #: app/levels.c:369 app/paint_funcs.c:97 app/tool_options.c:909
 msgid "Value"
 msgstr "明度"
@@ -1600,16 +1596,6 @@ msgstr "これ以上チャンネルを下降させられません"
 msgid "Untitled"
 msgstr "名称未設定"
 
-#: app/gimpparasite.c:136
-msgid ""
-"# GIMP parasiterc\n"
-"# This file will be entirely rewritten every time you quit the gimp.\n"
-"\n"
-msgstr ""
-"# GIMP parasiterc\n"
-"# This file will be entirely rewritten every time you quit the gimp.\n"
-"\n"
-
 #: app/gimpprogress.c:107
 msgid "Progress"
 msgstr "進度"
@@ -1689,7 +1675,7 @@ msgstr "GIMP メッセージ"
 msgid "pixel"
 msgstr "ピクセル"
 
-#: app/gimpunit.c:59 app/measure.c:437 app/measure.c:441 app/paint_core.c:498
+#: app/gimpunit.c:59 app/measure.c:454 app/measure.c:458 app/paint_core.c:498
 msgid "pixels"
 msgstr "ピクセル"
 
@@ -2182,7 +2168,7 @@ msgid "Hue / Lightness / Saturation Adjustments"
 msgstr "色相 / 明度 / 彩度 調整"
 
 #. Create the hue scale widget
-#: app/hue_saturation.c:457 app/layers_dialog.c:344 app/paint_funcs.c:94
+#: app/hue_saturation.c:457 app/layers_dialog.c:343 app/paint_funcs.c:94
 #: app/tool_options.c:906
 msgid "Hue"
 msgstr "色相"
@@ -2193,7 +2179,7 @@ msgid "Lightness"
 msgstr "明度"
 
 #. Create the saturation scale widget
-#: app/hue_saturation.c:525 app/layers_dialog.c:345 app/paint_funcs.c:95
+#: app/hue_saturation.c:525 app/layers_dialog.c:344 app/paint_funcs.c:95
 #: app/tool_options.c:907
 msgid "Saturation"
 msgstr "彩度"
@@ -2203,11 +2189,11 @@ msgstr "彩度"
 msgid "Grayscale"
 msgstr "グレースケール"
 
-#: app/image_new.c:64 app/layers_dialog.c:3403
+#: app/image_new.c:64 app/layers_dialog.c:3421
 msgid "Foreground"
 msgstr "前景"
 
-#: app/image_new.c:74 app/layers_dialog.c:3405
+#: app/image_new.c:74 app/layers_dialog.c:3423
 msgid "White"
 msgstr "白"
 
@@ -2838,7 +2824,7 @@ msgstr "チャンネル"
 msgid "Channel Ops"
 msgstr "チャンネル操作"
 
-#: app/internal_procs.c:80 app/layers_dialog.c:346 app/paint_funcs.c:96
+#: app/internal_procs.c:80 app/layers_dialog.c:345 app/paint_funcs.c:96
 #: app/tool_options.c:793 app/tool_options.c:908
 msgid "Color"
 msgstr "色"
@@ -2967,11 +2953,11 @@ msgstr "%s マスク"
 msgid "Layer Select"
 msgstr "レイヤー選択"
 
-#: app/layers_dialog.c:224 app/layers_dialog.c:3335
+#: app/layers_dialog.c:223 app/layers_dialog.c:3353
 msgid "New Layer"
 msgstr "新規レイヤー"
 
-#: app/layers_dialog.c:228
+#: app/layers_dialog.c:227
 msgid ""
 "Raise Layer    \n"
 "<Shift> To Top"
@@ -2979,7 +2965,7 @@ msgstr ""
 "レイヤーを前面へ\n"
 "<Shift> 最前面へ"
 
-#: app/layers_dialog.c:233
+#: app/layers_dialog.c:232
 msgid ""
 "Lower Layer       \n"
 "<Shift> To Bottom"
@@ -2987,135 +2973,118 @@ msgstr ""
 "レイヤーを背面へ\n"
 "<Shift> 最背面へ"
 
-#: app/layers_dialog.c:238
+#: app/layers_dialog.c:237
 msgid "Duplicate Layer"
 msgstr "レイヤー複製"
 
-#: app/layers_dialog.c:242
+#: app/layers_dialog.c:241
 msgid "Anchor Layer"
 msgstr "レイヤー固定"
 
-#: app/layers_dialog.c:246
+#: app/layers_dialog.c:245
 msgid "Delete Layer"
 msgstr "レイヤー削除"
 
-#: app/layers_dialog.c:333 app/paint_funcs.c:83 app/tool_options.c:894
+#: app/layers_dialog.c:332 app/paint_funcs.c:83 app/tool_options.c:894
 msgid "Normal"
 msgstr "標準"
 
-#: app/layers_dialog.c:334 app/paint_funcs.c:84 app/tool_options.c:895
+#: app/layers_dialog.c:333 app/paint_funcs.c:84 app/tool_options.c:895
 msgid "Dissolve"
 msgstr "消散"
 
-#: app/layers_dialog.c:335 app/paint_funcs.c:86 app/tool_options.c:897
+#: app/layers_dialog.c:334 app/paint_funcs.c:86 app/tool_options.c:897
 msgid "Multiply (Burn)"
 msgstr "乗算"
 
-#: app/layers_dialog.c:336 app/paint_funcs.c:98 app/tool_options.c:898
+#: app/layers_dialog.c:335 app/paint_funcs.c:98 app/tool_options.c:898
 msgid "Divide (Dodge)"
 msgstr "除算"
 
-#: app/layers_dialog.c:337 app/paint_funcs.c:87 app/tool_options.c:899
+#: app/layers_dialog.c:336 app/paint_funcs.c:87 app/tool_options.c:899
 msgid "Screen"
 msgstr "スクリーン"
 
-#: app/layers_dialog.c:338 app/paint_funcs.c:88 app/tool_options.c:900
+#: app/layers_dialog.c:337 app/paint_funcs.c:88 app/tool_options.c:900
 msgid "Overlay"
 msgstr "オーバーレイ"
 
-#: app/layers_dialog.c:339 app/paint_funcs.c:89 app/tool_options.c:901
+#: app/layers_dialog.c:338 app/paint_funcs.c:89 app/tool_options.c:901
 msgid "Difference"
 msgstr "差分"
 
-#: app/layers_dialog.c:340 app/paint_funcs.c:90 app/tool_options.c:902
+#: app/layers_dialog.c:339 app/paint_funcs.c:90 app/tool_options.c:902
 msgid "Addition"
 msgstr "加算"
 
-#: app/layers_dialog.c:342 app/paint_funcs.c:92 app/tool_options.c:904
+#: app/layers_dialog.c:341 app/paint_funcs.c:92 app/tool_options.c:904
 msgid "Darken Only"
 msgstr "比較(暗)"
 
-#: app/layers_dialog.c:343 app/paint_funcs.c:93 app/tool_options.c:905
+#: app/layers_dialog.c:342 app/paint_funcs.c:93 app/tool_options.c:905
 msgid "Lighten Only"
 msgstr "比較(明)"
 
-#: app/layers_dialog.c:357
+#: app/layers_dialog.c:356
 msgid "Keep Trans."
 msgstr "透明保護"
 
-#: app/layers_dialog.c:1787
+#: app/layers_dialog.c:1805
 msgid "Empty Layer Copy"
 msgstr "空レイヤーコピー"
 
-#: app/layers_dialog.c:2048 app/layers_dialog.c:3139 app/layers_dialog.c:3522
+#: app/layers_dialog.c:2066 app/layers_dialog.c:3157 app/layers_dialog.c:3540
 msgid "Floating Selection"
 msgstr "フローティング選択"
 
-#: app/layers_dialog.c:3300
+#: app/layers_dialog.c:3318
 msgid "New Layer Options"
 msgstr "新規レイヤーオプション"
 
 #. The name label and entry
-#: app/layers_dialog.c:3325
+#: app/layers_dialog.c:3343
 msgid "Layer Name:"
 msgstr "レイヤー名:"
 
 #. The size labels
-#: app/layers_dialog.c:3339
+#: app/layers_dialog.c:3357
 msgid "Layer Width:"
 msgstr "レイヤー幅:"
 
-#: app/layers_dialog.c:3399
+#: app/layers_dialog.c:3417
 msgid "Layer Fill Type"
 msgstr "レイヤー塗りつぶし種"
 
-#: app/layers_dialog.c:3491
+#: app/layers_dialog.c:3509
 msgid "Edit Layer Attributes"
 msgstr "レイヤーの属性を変更"
 
-#: app/layers_dialog.c:3514
+#: app/layers_dialog.c:3532
 msgid "Layer name:"
 msgstr "レイヤー名:"
 
-#: app/layers_dialog.c:3591
+#: app/layers_dialog.c:3609
 msgid "Add Mask Options"
 msgstr "レイヤーマスク追加オプション"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3606
+#: app/layers_dialog.c:3624
 msgid "Initialize Layer Mask to:"
 msgstr "レイヤーマスクの初期化方法:"
 
-#: app/layers_dialog.c:3611
+#: app/layers_dialog.c:3629
 msgid "White (Full Opacity)"
 msgstr "白 (完全不透明)"
 
-#: app/layers_dialog.c:3613
+#: app/layers_dialog.c:3631
 msgid "Black (Full Transparency)"
 msgstr "黒 (完全透明)"
 
-#: app/layers_dialog.c:3615
+#: app/layers_dialog.c:3633
 msgid "Layer's Alpha Channel"
 msgstr "レイヤーのアルファチャンネル"
 
-#: app/layers_dialog.c:3691
-msgid "Layer Mask Options"
-msgstr "レイヤーマスクオプション"
-
-#: app/layers_dialog.c:3697
-msgid "Apply"
-msgstr "適用"
-
-#: app/layers_dialog.c:3699
-msgid "Discard"
-msgstr "破棄"
-
-#. The name entry hbox, label and entry
-#: app/layers_dialog.c:3713
-msgid "Apply layer mask?"
-msgstr "レイヤーマスクを適用しますか?"
-
-#: app/layers_dialog.c:3767 app/layers_dialog.c:3855
+#: app/layers_dialog.c:3692 app/layers_dialog.c:3780
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -3123,27 +3092,27 @@ msgstr ""
 "幅または高さが不正です.\n"
 "両方とも正数でなければいけません."
 
-#: app/layers_dialog.c:3956
+#: app/layers_dialog.c:3881
 msgid "Layer Merge Options"
 msgstr "レイヤー結合オプション"
 
-#: app/layers_dialog.c:3977
+#: app/layers_dialog.c:3902
 msgid "Final, Merged Layer should be:"
 msgstr "最終的に結合されたレイヤーは:"
 
-#: app/layers_dialog.c:3978
+#: app/layers_dialog.c:3903
 msgid "Final, Anchored Layer should be:"
 msgstr "最終的に固定されたレイヤーは:"
 
-#: app/layers_dialog.c:3983
+#: app/layers_dialog.c:3908
 msgid "Expanded as necessary"
 msgstr "必要に応じて拡大"
 
-#: app/layers_dialog.c:3985
+#: app/layers_dialog.c:3910
 msgid "Clipped to image"
 msgstr "画像サイズに切り取り"
 
-#: app/layers_dialog.c:3987
+#: app/layers_dialog.c:3912
 msgid "Clipped to bottom layer"
 msgstr "最背面レイヤーサイズに切り取り"
 
@@ -3197,13 +3166,23 @@ msgstr "保存レベル"
 msgid "Load/Save Levels"
 msgstr "読み込み/保存レベル"
 
-#: app/magnify.c:99
+#: app/magnify.c:111
 msgid "Magnify Tool"
 msgstr "虫めがねツール"
 
-#: app/magnify.c:108
+#: app/magnify.c:121
 msgid "Allow Window Resizing"
 msgstr "ウィンドウサイズの自動変更"
+
+#: app/magnify.c:136
+#, fuzzy
+msgid "Zoom in"
+msgstr "ズームイン & ズームアウト"
+
+#: app/magnify.c:138
+#, fuzzy
+msgid "Zoom out"
+msgstr "ズームイン & ズームアウト"
 
 #: app/main.c:271
 msgid "GIMP version"
@@ -3300,7 +3279,7 @@ msgstr "  --system-gimprc <gimprc> 指定するシステム gimprc を使用する。\n"
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(このコンソールウィンドウは10秒後に閉じます)\n"
 
-#: app/measure.c:118 app/measure.c:266
+#: app/measure.c:118 app/measure.c:279
 msgid "Measure Tool"
 msgstr "定規ツール"
 
@@ -3308,11 +3287,11 @@ msgstr "定規ツール"
 msgid "Use Info Window"
 msgstr "情報ウインドウを使用"
 
-#: app/measure.c:268
+#: app/measure.c:281
 msgid "Distance:"
 msgstr "距離:"
 
-#: app/measure.c:437 app/measure.c:442 app/measure.c:450 app/measure.c:475
+#: app/measure.c:454 app/measure.c:459 app/measure.c:467 app/measure.c:495
 msgid "degrees"
 msgstr "度"
 
@@ -4040,110 +4019,116 @@ msgid "/Add Layer Mask..."
 msgstr "/レイヤーマスク追加..."
 
 #: app/menus.c:693
-msgid "/Apply Layer Mask..."
+#, fuzzy
+msgid "/Apply Layer Mask"
 msgstr "/レイヤーマスク適用..."
 
 #: app/menus.c:695
+#, fuzzy
+msgid "/Delete Layer Mask"
+msgstr "/レイヤー削除"
+
+#: app/menus.c:697
 msgid "/Mask to Selection"
 msgstr "/レイヤーマスクを選択領域に"
 
-#: app/menus.c:700
+#: app/menus.c:702
 msgid "/Add Alpha Channel"
 msgstr "/アルファチャンネルを追加"
 
-#: app/menus.c:702
+#: app/menus.c:704
 msgid "/Alpha to Selection"
 msgstr "/不透明部分を選択領域に"
 
-#: app/menus.c:707
+#: app/menus.c:709
 msgid "/Edit Layer Attributes..."
 msgstr "/レイヤーの属性を変更..."
 
-#: app/menus.c:718
+#: app/menus.c:720
 msgid "/New Channel..."
 msgstr "/新規チャンネル..."
 
-#: app/menus.c:720
+#: app/menus.c:722
 msgid "/Raise Channel"
 msgstr "/チャンネル上昇"
 
-#: app/menus.c:722
+#: app/menus.c:724
 msgid "/Lower Channel"
 msgstr "/チャンネル下降"
 
-#: app/menus.c:724
+#: app/menus.c:726
 msgid "/Duplicate Channel"
 msgstr "/チャンネル複製"
 
-#: app/menus.c:729
+#: app/menus.c:731
 msgid "/Channel to Selection"
 msgstr "/チャンネルを選択領域へ"
 
-#: app/menus.c:731
+#: app/menus.c:733
 msgid "/Add to Selection"
 msgstr "/選択領域に加える"
 
-#: app/menus.c:733
+#: app/menus.c:735
 msgid "/Subtract from Selection"
 msgstr "/選択領域から引く"
 
-#: app/menus.c:735
+#: app/menus.c:737
 msgid "/Intersect with Selection"
 msgstr "/選択領域との交わり"
 
-#: app/menus.c:740
+#: app/menus.c:742
 msgid "/Delete Channel"
 msgstr "/チャンネル削除"
 
-#: app/menus.c:745
+#: app/menus.c:747
 msgid "/Edit Channel Attributes..."
 msgstr "/チャンネルの属性を変更..."
 
-#: app/menus.c:756
+#: app/menus.c:758
 msgid "/New Path"
 msgstr "/新規パス"
 
-#: app/menus.c:758
+#: app/menus.c:760
 msgid "/Duplicate Path"
 msgstr "/パス複製"
 
-#: app/menus.c:760
+#: app/menus.c:762
 msgid "/Path to Selection"
 msgstr "/パスを選択領域へ"
 
-#: app/menus.c:762
+#: app/menus.c:764
 msgid "/Selection to Path"
 msgstr "/選択領域をパスへ"
 
-#: app/menus.c:764
+#: app/menus.c:766
 msgid "/Stroke Path"
 msgstr "/パスをストローク描画"
 
-#: app/menus.c:766
+#: app/menus.c:768
 msgid "/Delete Path"
 msgstr "/パス削除"
 
-#: app/menus.c:771
+#: app/menus.c:773
 msgid "/Copy Path"
 msgstr "/パスをコピー"
 
-#: app/menus.c:773
+#: app/menus.c:775
 msgid "/Paste Path"
 msgstr "/パスをペースト"
 
-#: app/menus.c:775
+#: app/menus.c:777
 msgid "/Import Path..."
 msgstr "/パスをインポート..."
 
-#: app/menus.c:777
+#: app/menus.c:779
 msgid "/Export Path..."
 msgstr "/パスをエクスポート..."
 
-#: app/menus.c:782
+#: app/menus.c:784
 msgid "/Edit Path Attributes..."
 msgstr "/パスの属性を変更..."
 
-#: app/menus.c:1308
+#: app/menus.c:1310
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr "ファイルを開けません: %s\n"
@@ -5217,23 +5202,23 @@ msgstr "クイックマスク属性を変更"
 msgid "Mask Opacity:"
 msgstr "マスク不透明度:"
 
-#: app/rect_select.c:182
+#: app/rect_select.c:186
 msgid "Selection: ADD"
 msgstr "選択: 追加"
 
-#: app/rect_select.c:185
+#: app/rect_select.c:189
 msgid "Selection: SUBTRACT"
 msgstr "選択: 引き算"
 
-#: app/rect_select.c:188
+#: app/rect_select.c:192
 msgid "Selection: INTERSECT"
 msgstr "選択: 共通部分"
 
-#: app/rect_select.c:191
+#: app/rect_select.c:195
 msgid "Selection: REPLACE"
 msgstr "選択: 置換"
 
-#: app/rect_select.c:407 app/rect_select.c:414
+#: app/rect_select.c:421 app/rect_select.c:428
 msgid "Selection: "
 msgstr "選択: "
 
@@ -5620,8 +5605,9 @@ msgid "Magnify"
 msgstr "虫めがね"
 
 #: app/tools.c:215
-msgid "/Tools/Transform Tools/Magnify"
-msgstr "/道具/変換ツール/虫めがね"
+#, fuzzy
+msgid "/Tools/Magnify"
+msgstr "虫めがね"
 
 #: app/tools.c:220
 msgid "Zoom in & out"
@@ -6197,3 +6183,30 @@ msgstr "水彩"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "色使用歴"
+
+#~ msgid "Fill Options"
+#~ msgstr "塗りつぶしオプション"
+
+#~ msgid ""
+#~ "# GIMP parasiterc\n"
+#~ "# This file will be entirely rewritten every time you quit the gimp.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "# GIMP parasiterc\n"
+#~ "# This file will be entirely rewritten every time you quit the gimp.\n"
+#~ "\n"
+
+#~ msgid "Layer Mask Options"
+#~ msgstr "レイヤーマスクオプション"
+
+#~ msgid "Apply"
+#~ msgstr "適用"
+
+#~ msgid "Discard"
+#~ msgstr "破棄"
+
+#~ msgid "Apply layer mask?"
+#~ msgstr "レイヤーマスクを適用しますか?"
+
+#~ msgid "/Tools/Transform Tools/Magnify"
+#~ msgstr "/道具/変換ツール/虫めがね"

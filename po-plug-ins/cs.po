@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.1.17\n"
-"POT-Creation-Date: 2000-03-01 21:37+0100\n"
+"POT-Creation-Date: 2000-03-03 11:42-0800\n"
 "PO-Revision-Date: 2000-03-02 09:44+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -6258,7 +6258,8 @@ msgid "Create a new unit with the currently seleted unit as template."
 msgstr "Vytvoøit novou jednotku s právì zvolenou jednotkou jako vzorem."
 
 #: plug-ins/common/uniteditor.c:592
-msgid "Delete Unit"
+#, fuzzy
+msgid "Don't Save Unit"
 msgstr "Smazat jednotku"
 
 #: plug-ins/common/uniteditor.c:599
@@ -6266,8 +6267,9 @@ msgid "Don't save the currently selected unit before GIMP exits."
 msgstr "Nezapisovat právì zvolenou jednotku pøed skonèením programu GIMP."
 
 #: plug-ins/common/uniteditor.c:604
-msgid "Undelete Unit"
-msgstr "Zru¹it smazání jednotky"
+#, fuzzy
+msgid "Save Unit"
+msgstr "Nová jednotka"
 
 #: plug-ins/common/uniteditor.c:611
 msgid "Save the currently selected unit before GIMP exits."
@@ -8240,7 +8242,8 @@ msgstr "Volba filtru pro pou¾ití na animovaná políèka"
 
 #: plug-ins/gap/gap_mod_layer.c:802
 msgid "GAP Modify: No layer selected in last handled frame\n"
-msgstr "Modifikace GAP: V posledním zpracovaném políèku nejsou zvoleny ¾ádné vrstvy\n"
+msgstr ""
+"Modifikace GAP: V posledním zpracovaném políèku nejsou zvoleny ¾ádné vrstvy\n"
 
 #: plug-ins/gap/gap_mod_layer.c:888
 msgid "Modifying Frames/Layer(s) .."
@@ -9690,13 +9693,16 @@ msgstr "Náhled implicitního textového vzorku"
 msgid ""
 "Holding the Shift key while pressing this button will force GDynText in "
 "changing the layer name as done in GIMP 1.0."
-msgstr "Podr¾ení Pøeøaïovaèe bìhem stisknutí tohoto tlaèítka pøinutí GDynText ke zmìnì jména vrstvy jako u  programu GIMP 1.0."
+msgstr ""
+"Podr¾ení Pøeøaïovaèe bìhem stisknutí tohoto tlaèítka pøinutí GDynText ke "
+"zmìnì jména vrstvy jako u  programu GIMP 1.0."
 
 #: plug-ins/gdyntext/gdyntext_ui.c:920
 #, c-format
 msgid ""
 "Warning file \"%s\" is larger than the maximum allowed text length (%d).\n"
-msgstr "Soubor varování \"%s\" je vìt¹í ne¾ maximální povolená délka textu (%d).\n"
+msgstr ""
+"Soubor varování \"%s\" je vìt¹í ne¾ maximální povolená délka textu (%d).\n"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:928
 #, c-format
@@ -9713,7 +9719,8 @@ msgstr "<Image>/Filtry/Vyobrazení/Gfig..."
 
 #: plug-ins/gfig/gfig.c:861
 msgid "gfig-path misconfigured - the following directories were not found"
-msgstr "gfig-path ¹patnì nakonfigurovaná - následující adresáøe nebyly nalezeny"
+msgstr ""
+"gfig-path ¹patnì nakonfigurovaná - následující adresáøe nebyly nalezeny"
 
 #: plug-ins/gfig/gfig.c:1084
 msgid "First Gfig"
@@ -9821,7 +9828,9 @@ msgstr "Vytvoøit spirálu"
 
 #: plug-ins/gfig/gfig.c:2185
 msgid "Create bezier curve. Shift + Button ends object creation."
-msgstr "Vytváøí Bézierovu køivku. Pøeøaïovaè + tlaèítko my¹i ukonèuje vytváøení objektu."
+msgstr ""
+"Vytváøí Bézierovu køivku. Pøeøaïovaè + tlaèítko my¹i ukonèuje vytváøení "
+"objektu."
 
 #: plug-ins/gfig/gfig.c:2191
 msgid "Move an object"
@@ -9862,7 +9871,10 @@ msgid ""
 "Use the brush/pencil or the airbrush when drawing on the image. Pattern "
 "paints with currently selected brush with a pattern. Only applies to "
 "circles/ellipses if Approx. Circles/Ellipses toggle is set."
-msgstr "Pou¾ít ¹tìtce/tu¾ky pøi kreslení obrázku rozpra¹ovaèem. Vzorek kreslí právì zvolenou stopou se vzorkem. U¾ije se pouze na kru¾nicích/elipsách, je-li pøepínaè Pøibli¾né kru¾nice/elipsy nastaven."
+msgstr ""
+"Pou¾ít ¹tìtce/tu¾ky pøi kreslení obrázku rozpra¹ovaèem. Vzorek kreslí právì "
+"zvolenou stopou se vzorkem. U¾ije se pouze na kru¾nicích/elipsách, je-li "
+"pøepínaè Pøibli¾né kru¾nice/elipsy nastaven."
 
 #: plug-ins/gfig/gfig.c:2787 plug-ins/rcm/rcm_dialog.c:121
 msgid "Original"
@@ -9881,7 +9893,9 @@ msgstr "Vícenásobný"
 
 #: plug-ins/gfig/gfig.c:2793
 msgid "Draw all objects on one layer (original or new) or one object per layer"
-msgstr "Vykreslí v¹echny objekty v jedné vrstvì (pùvodní nebo nové) nebo jeden objekt na vrstvu"
+msgstr ""
+"Vykreslí v¹echny objekty v jedné vrstvì (pùvodní nebo nové) nebo jeden "
+"objekt na vrstvu"
 
 #: plug-ins/gfig/gfig.c:2798
 msgid "Draw on:"
@@ -9901,7 +9915,8 @@ msgstr "Výbìr+vyplnit"
 msgid ""
 "Draw type. Either a brush or a selection. See brush page or selection page "
 "for more options"
-msgstr "Typ kreslení. Buï stopa nebo výbìr. Dal¹í volby viz stránka stop a výbìru"
+msgstr ""
+"Typ kreslení. Buï stopa nebo výbìr. Dal¹í volby viz stránka stop a výbìru"
 
 #: plug-ins/gfig/gfig.c:2840
 msgid "Using:"
@@ -9911,7 +9926,9 @@ msgstr "U¾ití:"
 msgid ""
 "Layer background type. Copy causes previous layer to be copied before the "
 "draw is performed"
-msgstr "Typo pozadí vrstvy. Kopie zpùsobí zkopírování pøedchozí vrstvy pøed provedením kreslení"
+msgstr ""
+"Typo pozadí vrstvy. Kopie zpùsobí zkopírování pøedchozí vrstvy pøed "
+"provedením kreslení"
 
 #: plug-ins/gfig/gfig.c:2859
 msgid "With BG of:"
@@ -9941,7 +9958,9 @@ msgstr "Pøibli¾né kru¾nice/elipsy"
 msgid ""
 "Approx. circles & ellipses using lines. Allows the use of brush fading with "
 "these types of objects."
-msgstr "Pøibli¾né kru¾nice a elipsy pou¾ívají èar. Umo¾òuje u tohoto typu objektù pou¾ít dobìhu ¹tìtce."
+msgstr ""
+"Pøibli¾né kru¾nice a elipsy pou¾ívají èar. Umo¾òuje u tohoto typu objektù "
+"pou¾ít dobìhu ¹tìtce."
 
 #: plug-ins/gfig/gfig.c:2989
 msgid "Fade out:"
@@ -12825,3 +12844,6 @@ msgstr "Chyba: Nelze naèíst soubor %s XJT vlastností"
 #, c-format
 msgid "Error,XJT propertyfile %s is empty"
 msgstr "Chyba: Soubor %s XJT vlastností je prázdný"
+
+#~ msgid "Undelete Unit"
+#~ msgstr "Zru¹it smazání jednotky"

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2000-02-27 20:03+0100\n"
+"POT-Creation-Date: 2000-02-28 17:47-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,47 +14,47 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: ENCODING\n"
 
-#: plug-ins/script-fu/script-fu-console.c:157
+#: plug-ins/script-fu/script-fu-console.c:158
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:193
+#: plug-ins/script-fu/script-fu-console.c:194
 msgid "Script-Fu Console"
 msgstr "Console Script-Fu"
 
 #. Action area
-#: plug-ins/script-fu/script-fu-console.c:205
-#: plug-ins/script-fu/script-fu-scripts.c:1957
+#: plug-ins/script-fu/script-fu-console.c:206
+#: plug-ins/script-fu/script-fu-scripts.c:1961
 msgid "Close"
 msgstr "Chiudi"
 
 #. The info vbox
-#: plug-ins/script-fu/script-fu-console.c:213
+#: plug-ins/script-fu/script-fu-console.c:214
 msgid "SIOD Output"
 msgstr "SIOD Uscita"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:290
+#: plug-ins/script-fu/script-fu-console.c:291
 msgid "Current Command"
 msgstr "Comando Attuale"
 
-#: plug-ins/script-fu/script-fu-console.c:311
+#: plug-ins/script-fu/script-fu-console.c:312
 msgid "Browse..."
 msgstr "Naviga..."
 
-#: plug-ins/script-fu/script-fu-console.c:574
+#: plug-ins/script-fu/script-fu-console.c:575
 msgid "Unable to open SIOD output pipe"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:578
+#: plug-ins/script-fu/script-fu-console.c:579
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:625
+#: plug-ins/script-fu/script-fu-console.c:626
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
-#. strip the first part of the menupath if it says _("Script-Fu")
+#. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-scripts.c:1207
 #: plug-ins/script-fu/script-fu-scripts.c:1209
 #, fuzzy
@@ -68,85 +68,85 @@ msgid "Script-Fu: %s"
 msgstr "Console Script-Fu"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1232
+#: plug-ins/script-fu/script-fu-scripts.c:1236
 msgid "Script Arguments"
 msgstr "Argomenti dello Script"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1296
+#: plug-ins/script-fu/script-fu-scripts.c:1300
 #, fuzzy
 msgid "Script-Fu Color Selection"
 msgstr "Script-fu Selezione File"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1302
+#: plug-ins/script-fu/script-fu-scripts.c:1306
 msgid "Script Toggle"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1364
+#: plug-ins/script-fu/script-fu-scripts.c:1368
 msgid "Script-Fu File Selection"
 msgstr "Script-fu Selezione File"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1396
+#: plug-ins/script-fu/script-fu-scripts.c:1400
 msgid "Script-fu Pattern Selection"
 msgstr "Script-fu Selezione Pattern"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1403
+#: plug-ins/script-fu/script-fu-scripts.c:1407
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-fu Selezione Gradiente"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1411
+#: plug-ins/script-fu/script-fu-scripts.c:1415
 msgid "Script-Fu Brush Selection"
 msgstr "Script-fu Selezione Pennello"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1436
+#: plug-ins/script-fu/script-fu-scripts.c:1440
 msgid "Reset to Defaults"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1462
+#: plug-ins/script-fu/script-fu-scripts.c:1466
 msgid "About"
 msgstr "Informazioni"
 
 #. Action area
-#: plug-ins/script-fu/script-fu-scripts.c:1476
+#: plug-ins/script-fu/script-fu-scripts.c:1480
 #: plug-ins/script-fu/script-fu-server.c:559
 msgid "OK"
 msgstr "OK"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1485
+#: plug-ins/script-fu/script-fu-scripts.c:1489
 #: plug-ins/script-fu/script-fu-server.c:568
 msgid "Cancel"
 msgstr "Cancella"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1590
+#: plug-ins/script-fu/script-fu-scripts.c:1594
 msgid "NOT SET"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1661
+#: plug-ins/script-fu/script-fu-scripts.c:1665
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1928
+#: plug-ins/script-fu/script-fu-scripts.c:1932
 #, fuzzy
 msgid "Author:"
 msgstr "Autore :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1934
+#: plug-ins/script-fu/script-fu-scripts.c:1938
 #, fuzzy
 msgid "Copyright:"
 msgstr "Copyright :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1940
+#: plug-ins/script-fu/script-fu-scripts.c:1944
 #, fuzzy
 msgid "Date:"
 msgstr "Data :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1948
+#: plug-ins/script-fu/script-fu-scripts.c:1952
 #, fuzzy
 msgid "Image Types:"
 msgstr "Tipi di Immagini: "
 
-#: plug-ins/script-fu/script-fu-scripts.c:2097
+#: plug-ins/script-fu/script-fu-scripts.c:2101
 msgid "Script-Fu Font Selection"
 msgstr "Script-fu Selezione Font"
 

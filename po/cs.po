@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.17\n"
-"POT-Creation-Date: 2000-03-01 21:37+0100\n"
+"POT-Creation-Date: 2000-03-03 01:08-0800\n"
 "PO-Revision-Date: 2000-03-01 21:40+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -240,7 +240,7 @@ msgstr "Adaptivní pøevzorkování"
 msgid "Max Depth:"
 msgstr "Nejvìt¹í hloubka:"
 
-#: app/blend.c:386 app/bucket_fill.c:127 app/fuzzy_select.c:649
+#: app/blend.c:386 app/bucket_fill.c:127 app/fuzzy_select.c:657
 msgid "Threshold:"
 msgstr "Práh:"
 
@@ -320,7 +320,7 @@ msgstr "Editor stop"
 #: app/crop.c:1054 app/devices.c:755 app/docindexif.c:105
 #: app/errorconsole.c:281 app/gdisplay_ops.c:346 app/gradient.c:801
 #: app/gradient_select.c:153 app/histogram_tool.c:276 app/info_window.c:255
-#: app/lc_dialog.c:195 app/measure.c:273 app/nav_window.c:1345
+#: app/lc_dialog.c:195 app/measure.c:286 app/nav_window.c:1345
 #: app/palette.c:2072 app/palette.c:2088 app/palette.c:3118
 #: app/palette_select.c:66 app/pattern_select.c:172
 #: app/preferences_dialog.c:359 app/tips_dialog.c:171 app/tools.c:1088
@@ -341,7 +341,7 @@ msgstr "Tvrdost:"
 msgid "Aspect Ratio:"
 msgstr "Pomìr stran:"
 
-#: app/brush_edit.c:312 app/measure.c:269 app/rotate_tool.c:88
+#: app/brush_edit.c:312 app/measure.c:282 app/rotate_tool.c:88
 msgid "Angle:"
 msgstr "Úhel:"
 
@@ -402,7 +402,7 @@ msgid "Sample Merged"
 msgstr "Slouèený vzorek"
 
 #. frame for Fill Type
-#: app/bucket_fill.c:156 app/file_new_dialog.c:628
+#: app/bucket_fill.c:156 app/channel_ops.c:170 app/file_new_dialog.c:628
 msgid "Fill Type"
 msgstr "Typ vyplòování"
 
@@ -493,10 +493,6 @@ msgstr "Y:"
 #: app/channel_ops.c:164
 msgid "Wrap Around"
 msgstr "Oøíznout kolem"
-
-#: app/channel_ops.c:170
-msgid "Fill Options"
-msgstr "Volby vyplòování"
 
 #: app/channel_ops.c:174 app/image_new.c:69 app/image_new.c:223
 #: app/layers_dialog.c:3422
@@ -1598,16 +1594,6 @@ msgstr "Kanál nemù¾e být je¹tì ní¾"
 msgid "Untitled"
 msgstr "Bez názvu"
 
-#: app/gimpparasite.c:136
-msgid ""
-"# GIMP parasiterc\n"
-"# This file will be entirely rewritten every time you quit the gimp.\n"
-"\n"
-msgstr ""
-"# Záznam GIMP parazitù\n"
-"# Tento soubor bude zcela pøepsán, kdykoliv opustíte gimp.\n"
-"\n"
-
 #: app/gimpprogress.c:107
 msgid "Progress"
 msgstr "Prùbìh"
@@ -1687,7 +1673,7 @@ msgstr "Zpráva programu GIMP"
 msgid "pixel"
 msgstr "pixel"
 
-#: app/gimpunit.c:59 app/measure.c:437 app/measure.c:441 app/paint_core.c:498
+#: app/gimpunit.c:59 app/measure.c:454 app/measure.c:458 app/paint_core.c:498
 msgid "pixels"
 msgstr "pixely"
 
@@ -3289,7 +3275,7 @@ msgstr ""
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Toto konzolové okno se zavøe bìhem deseti sekund)\n"
 
-#: app/measure.c:118 app/measure.c:266
+#: app/measure.c:118 app/measure.c:279
 msgid "Measure Tool"
 msgstr "Mìøidlo"
 
@@ -3297,11 +3283,11 @@ msgstr "Mìøidlo"
 msgid "Use Info Window"
 msgstr "Pou¾ít informaèního okna"
 
-#: app/measure.c:268
+#: app/measure.c:281
 msgid "Distance:"
 msgstr "Vzdálenost:"
 
-#: app/measure.c:437 app/measure.c:442 app/measure.c:450 app/measure.c:475
+#: app/measure.c:454 app/measure.c:459 app/measure.c:467 app/measure.c:495
 msgid "degrees"
 msgstr "stupnì"
 
@@ -5209,23 +5195,23 @@ msgstr "Úpravy vlastností Qmask"
 msgid "Mask Opacity:"
 msgstr "Krytí masky:"
 
-#: app/rect_select.c:183
+#: app/rect_select.c:186
 msgid "Selection: ADD"
 msgstr "Výbìr: PØIDÁNÍ"
 
-#: app/rect_select.c:186
+#: app/rect_select.c:189
 msgid "Selection: SUBTRACT"
 msgstr "Výbìr: ODEBRÁNÍ"
 
-#: app/rect_select.c:189
+#: app/rect_select.c:192
 msgid "Selection: INTERSECT"
 msgstr "Výbìr: PRÙNIK"
 
-#: app/rect_select.c:192
+#: app/rect_select.c:195
 msgid "Selection: REPLACE"
 msgstr "Výbìr: PØEPSÁNÍ"
 
-#: app/rect_select.c:414 app/rect_select.c:421
+#: app/rect_select.c:421 app/rect_select.c:428
 msgid "Selection: "
 msgstr "Výbìr: "
 
@@ -6187,3 +6173,15 @@ msgstr "Vodové barvy"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Historie barev"
+
+#~ msgid "Fill Options"
+#~ msgstr "Volby vyplòování"
+
+#~ msgid ""
+#~ "# GIMP parasiterc\n"
+#~ "# This file will be entirely rewritten every time you quit the gimp.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "# Záznam GIMP parazitù\n"
+#~ "# Tento soubor bude zcela pøepsán, kdykoliv opustíte gimp.\n"
+#~ "\n"

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins 1.1.10\n"
-"POT-Creation-Date: 2000-02-11 10:24-0800\n"
+"POT-Creation-Date: 2000-02-28 17:47-0800\n"
 "PO-Revision-Date: 1999-10-13 05:33:05+0900\n"
 "Last-Translator: Young-Boo Park <DIRBOO@hitel.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -12,68 +12,68 @@ msgstr ""
 "Content-Type: text/plain; charset=euc-kr\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpcolorbutton.c:105
+#: libgimp/gimpcolorbutton.c:116
 msgid "/Use Foreground Color"
 msgstr ""
 
-#: libgimp/gimpcolorbutton.c:106
+#: libgimp/gimpcolorbutton.c:117
 msgid "/Use Background Color"
 msgstr ""
 
-#: libgimp/gimpexport.c:155
+#: libgimp/gimpexport.c:158
 #, fuzzy
 msgid "can't Handle Layers"
 msgstr "계층을 조절할수 없습니다."
 
-#: libgimp/gimpexport.c:156 libgimp/gimpexport.c:165
+#: libgimp/gimpexport.c:159 libgimp/gimpexport.c:168
 #, fuzzy
 msgid "Merge Visible Layers"
 msgstr "보이는 계층 머지"
 
-#: libgimp/gimpexport.c:164
+#: libgimp/gimpexport.c:167
 #, fuzzy
 msgid "can only Handle Layers as Animation Frames"
 msgstr "에니메이션 프래임인 계층만 조절할수 있습니다."
 
-#: libgimp/gimpexport.c:165
+#: libgimp/gimpexport.c:168
 #, fuzzy
 msgid "Save as Animation"
 msgstr "에니메이션으로 저장"
 
-#: libgimp/gimpexport.c:173
+#: libgimp/gimpexport.c:176
 #, fuzzy
 msgid "can't Handle Transparency"
 msgstr "투명하게를 조절할 수 없습니다."
 
-#: libgimp/gimpexport.c:174
+#: libgimp/gimpexport.c:177
 msgid "Flatten Image"
 msgstr "플래튼 이미지"
 
-#: libgimp/gimpexport.c:182
+#: libgimp/gimpexport.c:185
 #, fuzzy
 msgid "can only Handle RGB Images"
 msgstr "오직 RGB 이미지만 조절할 수 있습니다"
 
-#: libgimp/gimpexport.c:183 libgimp/gimpexport.c:211 libgimp/gimpexport.c:220
+#: libgimp/gimpexport.c:186 libgimp/gimpexport.c:214 libgimp/gimpexport.c:223
 msgid "Convert to RGB"
 msgstr "RGB로 바꾸기"
 
-#: libgimp/gimpexport.c:191
+#: libgimp/gimpexport.c:194
 #, fuzzy
 msgid "can only Handle Grayscale Images"
 msgstr "오직 그레이스케일 이미지만 조절 할수 있습니다"
 
-#: libgimp/gimpexport.c:192 libgimp/gimpexport.c:211 libgimp/gimpexport.c:232
+#: libgimp/gimpexport.c:195 libgimp/gimpexport.c:214 libgimp/gimpexport.c:235
 #, fuzzy
 msgid "Convert to Grayscale"
 msgstr "그레이스케일로 바꾸기"
 
-#: libgimp/gimpexport.c:200
+#: libgimp/gimpexport.c:203
 #, fuzzy
 msgid "can only Handle Indexed Images"
 msgstr "인덱스된 이미지들만 조절할 수 있습니다."
 
-#: libgimp/gimpexport.c:201 libgimp/gimpexport.c:220 libgimp/gimpexport.c:230
+#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:223 libgimp/gimpexport.c:233
 msgid ""
 "Convert to indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -81,26 +81,26 @@ msgstr ""
 "인덱스된 기본 새팅으로 바꾸기\n"
 "(그것의 결과를 직접 조정하세요.)"
 
-#: libgimp/gimpexport.c:210
+#: libgimp/gimpexport.c:213
 #, fuzzy
 msgid "can only Handle RGB or Grayscale Images"
 msgstr "RGB 혹은 그레이스케일 이미지만 조절할 수 있습니다"
 
-#: libgimp/gimpexport.c:219
+#: libgimp/gimpexport.c:222
 #, fuzzy
 msgid "can only Handle RGB or Indexed Images"
 msgstr "RGB 혹은 인덱스된 이미지만 조절할 수 있습니다"
 
-#: libgimp/gimpexport.c:229
+#: libgimp/gimpexport.c:232
 #, fuzzy
 msgid "can only Handle Grayscale or Indexed Images"
 msgstr "RGB 혹은 인덱스된 이미지만 조절할 수 있습니다"
 
-#: libgimp/gimpexport.c:240
+#: libgimp/gimpexport.c:243
 msgid "needs an Alpha Channel"
 msgstr ""
 
-#: libgimp/gimpexport.c:241
+#: libgimp/gimpexport.c:244
 msgid "Add Alpha Channel"
 msgstr ""
 
@@ -109,25 +109,25 @@ msgstr ""
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:310
+#: libgimp/gimpexport.c:313
 msgid "Export File"
 msgstr "경로 전하기(export)"
 
-#: libgimp/gimpexport.c:315
+#: libgimp/gimpexport.c:318
 msgid "Export"
 msgstr "전하기(export)"
 
-#: libgimp/gimpexport.c:317
+#: libgimp/gimpexport.c:320
 msgid "Ignore"
 msgstr "무시"
 
-#: libgimp/gimpexport.c:319 libgimp/gimpquerybox.c:160
-#: libgimp/gimpquerybox.c:197 libgimp/gimpquerybox.c:235
-#: libgimp/gimpquerybox.c:275
+#: libgimp/gimpexport.c:322 libgimp/gimpquerybox.c:180
+#: libgimp/gimpquerybox.c:234 libgimp/gimpquerybox.c:290
+#: libgimp/gimpquerybox.c:353 libgimp/gimpunitmenu.c:497
 msgid "Cancel"
 msgstr "취소"
 
-#: libgimp/gimpexport.c:334
+#: libgimp/gimpexport.c:337
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
@@ -135,24 +135,17 @@ msgstr ""
 "양식에 따라 그것을 저장하기 전에 당신의 이미지는 전해져야만(export) 합니다 : "
 
 #. the footline
-#: libgimp/gimpexport.c:397
+#: libgimp/gimpexport.c:400
 msgid "The export conversion won't modify your original image."
 msgstr "전하기(export) 전환은 당신의 원래 이미지를 바꾸기 않을 것입니다."
 
-#: libgimp/gimpfileselection.c:394
+#: libgimp/gimpfileselection.c:350
 msgid "Select File"
 msgstr "파일 선택"
 
-#: libgimp/gimpfileselection.c:404 libgimp/gimpunitmenu.c:484
-msgid "Select"
-msgstr "선택"
-
-#: libgimp/gimpfileselection.c:405 libgimp/gimpunitmenu.c:486
-msgid "Close"
-msgstr "닫기"
-
-#: libgimp/gimpquerybox.c:160 libgimp/gimpquerybox.c:197
-#: libgimp/gimpquerybox.c:235 libgimp/gimpquerybox.c:275
+#: libgimp/gimpquerybox.c:180 libgimp/gimpquerybox.c:234
+#: libgimp/gimpquerybox.c:290 libgimp/gimpquerybox.c:353
+#: libgimp/gimpunitmenu.c:495
 msgid "OK"
 msgstr ""
 
@@ -207,18 +200,40 @@ msgstr "퍼센트"
 msgid "More..."
 msgstr "좀 더..."
 
-#: libgimp/gimpunitmenu.c:479
+#: libgimp/gimpunitmenu.c:490
 msgid "Unit Selection"
 msgstr "단위 셀렉션"
 
-#: libgimp/gimpunitmenu.c:516
+#: libgimp/gimpunitmenu.c:527
 #, fuzzy
 msgid "Unit"
 msgstr "단위 "
 
-#: libgimp/gimpunitmenu.c:517
+#: libgimp/gimpunitmenu.c:528
 msgid "Factor"
 msgstr "프랙탈"
+
+#: libgimp/gimpwidgets.c:704
+msgid ""
+"If the \"Time\" button is not pressed, use this value for random number "
+"generator seed - this allows you to repeat a given \"random\" operation"
+msgstr ""
+
+#: libgimp/gimpwidgets.c:709
+msgid "Time"
+msgstr ""
+
+#: libgimp/gimpwidgets.c:718
+msgid ""
+"Seed random number generator from the current time - this guarantees a "
+"reasonable randomization"
+msgstr ""
+
+#~ msgid "Select"
+#~ msgstr "선택"
+
+#~ msgid "Close"
+#~ msgstr "닫기"
 
 #~ msgid "warning: no home directory."
 #~ msgstr "경고: 홈 디렉토리가 아닙니다."

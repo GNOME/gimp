@@ -1,3 +1,7 @@
+Fri Mar  3 15:08:41 PST 2000 Manish Singh <yosh@gimp.org>
+
+	* Made 1.1.18 release
+
 2000-03-03  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpprotocol.c (_gp_proc_return_destroy): fixed a
