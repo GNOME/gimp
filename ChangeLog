@@ -1,5 +1,9 @@
 2004-12-29  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: bumped version to 2.3.0.
+
+2004-12-29  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/file-save-dialog.c (file_save_dialog_response):
 	handle a NULL return value from gtk_file_chooser_get_uri(). Fixes
 	bug #162443.
@@ -37,6 +41,7 @@
 	handle case where layer with alpha is decomposed into
 	something that does not encode alpha -- now does.
 
+	
 2004-12-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimp-edit.c (gimp_edit_set_buffer): new utility
