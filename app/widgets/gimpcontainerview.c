@@ -734,20 +734,21 @@ gimp_container_view_get_preview (GimpDocked   *docked,
   GtkWidget         *preview;
   gint               width;
   gint               height;
+  gint               border_width = 1;
   const gchar       *prop_name;
-  gboolean           is_tool;
 
   gtk_icon_size_lookup (size, &width, &height);
 
   prop_name = gimp_context_type_to_prop_name (view->container->children_type);
 
-  is_tool = (strcmp (prop_name, "tool") == 0);
+  if (! strcmp (prop_name, "tool") ||
+      ! strcmp (prop_name, "template"))
+    border_width = 0;
 
   preview = gimp_prop_preview_new (G_OBJECT (context), prop_name, height);
   GIMP_PREVIEW (preview)->renderer->size = -1;
   gimp_preview_renderer_set_size_full (GIMP_PREVIEW (preview)->renderer,
-                                       width, height,
-                                       is_tool ? 0 : 1);
+                                       width, height, border_width);
 
   return preview;
 }

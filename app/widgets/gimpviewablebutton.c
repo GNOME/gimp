@@ -72,10 +72,10 @@ gimp_viewable_button_get_type (void)
       };
 
       button_type = g_type_register_static (GIMP_TYPE_BUTTON,
-                                            "GimpViewableButton", 
+                                            "GimpViewableButton",
                                             &button_info, 0);
     }
-  
+
   return button_type;
 }
 
@@ -89,7 +89,7 @@ gimp_viewable_button_class_init (GimpViewableButtonClass *klass)
   object_class = GTK_OBJECT_CLASS (klass);
   widget_class = GTK_WIDGET_CLASS (klass);
   button_class = GTK_BUTTON_CLASS (klass);
- 
+
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->destroy      = gimp_viewable_button_destroy;
@@ -142,7 +142,7 @@ gimp_viewable_button_scroll_event (GtkWidget      *widget,
   gint                index;
 
   button = GIMP_VIEWABLE_BUTTON (widget);
-  
+
   object = gimp_context_get_by_type (button->context,
                                      button->container->children_type);
 

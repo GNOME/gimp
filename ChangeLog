@@ -1,7 +1,15 @@
+2003-10-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainerview.c
+	(gimp_container_view_get_preview): create tab widgets without
+	border for both the tools and templates views.
+
+	* app/widgets/gimpviewablebutton.c: removed trailing whitespace.
+
 2003-10-15  Jakub Steiner <jimmac@ximian.com>
 
-	* themes/Default/images/preferences/default-grid.png: nothing fancy doable
-	  here
+	* themes/Default/images/preferences/default-grid.png: nothing fancy
+	doable here
 	
 2003-10-15  Sven Neumann  <sven@gimp.org>
 
