@@ -219,7 +219,7 @@ static void       script_fu_brush_preview           (gchar     *name,
  *  Local variables
  */
 
-static GTree       *script_list = NULL;
+static GTree       *script_list  = NULL;
 static SFInterface *sf_interface = NULL;  /*  there can only be at most one
 					      interactive interface  */
 					      
@@ -252,11 +252,7 @@ script_fu_find_scripts (void)
       g_tree_destroy (script_list);
     }
 
-#ifdef ENABLE_NLS
   script_list = g_tree_new ((GCompareFunc) strcoll);
-#else
-  script_list = g_tree_new ((GCompareFunc) strcmp);
-#endif
 
   path_str = gimp_gimprc_query ("script-fu-path");
 

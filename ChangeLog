@@ -1,5 +1,12 @@
 2002-12-13  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpintl.h
+	* libgimp/libgimp-intl.h
+	* plug-ins/script-fu/script-fu-scripts.c: removed remaining usage
+	of ENABLE_NLS.
+
+2002-12-13  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/image.pdb: added new PDB function
 	gimp_image_is_dirty() on request of Wolfgang Hofer (#77508).
 

@@ -2,6 +2,8 @@ Makefile
 Makefile.in
 libgimpmodule.args
 libgimpmodule.hierarchy
+libgimpmodule.interfaces
+libgimpmodule.prerequisites
 libgimpmodule.signals
 libgimpmodule-decl.txt
 libgimpmodule-decl-list.txt

@@ -26,20 +26,17 @@
 #error "config.h must be included prior to libgimp-intl.h"
 #endif
 
-#ifdef ENABLE_NLS
-#    include <libintl.h>
-#    define _(String) dgettext ("gimp14-libgimp", String)
-#    undef gettext
-#    define gettext(String) dgettext ("gimp14-libgimp", String)
-#    ifdef gettext_noop
-#        define N_(String) gettext_noop (String)
-#    else
-#        define N_(String) (String)
-#    endif
+#include <libintl.h>
+
+
+#define _(String) dgettext ("gimp14-libgimp", String)
+
+#undef gettext
+#define gettext(String) dgettext ("gimp14-libgimp", String)
+
+#ifdef gettext_noop
+#    define N_(String) gettext_noop (String)
 #else
-/* Stubs that do something close enough.  */
-#    define gettext(String) (String)
-#    define _(String) (String)
 #    define N_(String) (String)
 #endif
 
