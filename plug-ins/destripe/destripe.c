@@ -158,7 +158,7 @@ query(void)
       "This plug-in tries to remove vertical stripes from an image.",
       "Marc Lehmann <pcg@goof.com>", "Marc Lehmann <pcg@goof.com>",
       PLUG_IN_VERSION,
-      "<Image>/Filters/Enhance/Destripe...",
+      "<Image>/Filters/Enhance/Destripe",
       "RGB*, GRAY*",
       PROC_PLUG_IN, nargs, nreturn_vals, args, return_vals);
 }

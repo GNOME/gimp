@@ -731,6 +731,7 @@ save_dialog ()
   argv[0] = g_strdup ("save");
 
   gtk_init (&argc, &argv);
+  gtk_rc_parse(gimp_gtkrc());
 
   dlg = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (dlg), "Save as Xpm");

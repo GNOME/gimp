@@ -703,6 +703,8 @@ randomize_dialog()
     argv[0] = g_strdup("randomize");
 
     gtk_init(&argc, &argv);
+    gtk_rc_parse(gimp_gtkrc());
+
 /*
  *  Open a new dialog, label it and set up its
  *  destroy callback.

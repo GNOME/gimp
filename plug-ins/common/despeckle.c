@@ -43,6 +43,12 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.6  1998/03/16 06:33:44  yosh
+ *   configure saves CFLAGS properly
+ *   all plugins should parse gtkrc now
+ *
+ *   -Yosh
+ *
  *   Revision 1.5  1998/01/25 09:29:23  yosh
  *   Plugin updates
  *   Properly generated aa Makefile (still not built by default)
@@ -246,7 +252,7 @@ query(void)
       "Michael Sweet <mike@easysw.com>",
       "Michael Sweet <mike@easysw.com>",
       PLUG_IN_VERSION,
-      "<Image>/Filters/Enhance/Despeckle...", "RGB*, GRAY*",
+      "<Image>/Filters/Enhance/Despeckle", "RGB*, GRAY*",
       PROC_PLUG_IN, nargs, nreturn_vals, args, return_vals);
 }
 

@@ -309,6 +309,7 @@ int	doDialog()
 	argv[0] = g_strdup("exchange");
 
 	gtk_init(&argc, &argv);
+	gtk_rc_parse(gimp_gtkrc());
 
 	/* set up the dialog */
 	dialog = gtk_dialog_new();

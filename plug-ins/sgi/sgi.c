@@ -34,6 +34,12 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.2  1998/03/16 06:33:56  yosh
+ *   configure saves CFLAGS properly
+ *   all plugins should parse gtkrc now
+ *
+ *   -Yosh
+ *
  *   Revision 1.1.1.1  1997/11/24 22:04:37  sopwith
  *   Let's try this import one last time.
  *
@@ -674,6 +680,7 @@ save_dialog(void)
   argv[0] = g_strdup("sgi");
 
   gtk_init(&argc, &argv);
+  gtk_rc_parse(gimp_gtkrc());
 
   signal(SIGBUS, SIG_DFL);
   signal(SIGSEGV, SIG_DFL);

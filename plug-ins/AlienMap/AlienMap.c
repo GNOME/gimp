@@ -646,6 +646,7 @@ alienmap_dialog(void)
         argv[0] = g_strdup("alienmap");
 
         gtk_init(&argc, &argv);
+        gtk_rc_parse(gimp_gtkrc());
 
         gtk_preview_set_gamma(gimp_gamma());
         gtk_preview_set_install_cmap(gimp_install_cmap());

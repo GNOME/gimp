@@ -307,7 +307,7 @@ displace_dialog (GDrawable *drawable)
 #endif 
 
   gtk_init (&argc, &argv);
-
+  gtk_rc_parse(gimp_gtkrc());
   dlg = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (dlg), "Displace");
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);

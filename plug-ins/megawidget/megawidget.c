@@ -91,6 +91,7 @@ mw_app_new(gchar *resname, gchar *appname, gint *runpp){
 
    argv[0] = g_strdup(resname);
    gtk_init(&argc, &argv);
+   gtk_rc_parse(gimp_gtkrc());
 
    dlg = gtk_dialog_new();
    gtk_object_set_data(GTK_OBJECT(dlg), "runp", runpp);

@@ -798,7 +798,7 @@ bumpmap_dialog(void)
 	argv[0] = g_strdup("bumpmap");
 
 	gtk_init(&argc, &argv);
-
+	gtk_rc_parse(gimp_gtkrc());
 	gdk_set_use_xshm(gimp_use_xshm());
 	
 	gtk_preview_set_gamma(gimp_gamma());

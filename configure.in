@@ -62,12 +62,6 @@ AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_GIMP_CHECK
 
-gimp_save_CFLAGS="$CFLAGS"
-gimp_save_LIBS="$LIBS"
-
-CFLAGS="$GTK_CFLAGS $CFLAGS"
-LIBS="$LIBS $GTK_LIBS"
-
 if eval "test x$GCC = xyes"; then
   if echo "$CFLAGS" | grep "\-Wall" > /dev/null 2> /dev/null; then
     CFLAGS="$CFLAGS"
@@ -89,6 +83,12 @@ if eval "test x$GCC = xyes"; then
     fi
   fi
 fi
+
+gimp_save_CFLAGS="$CFLAGS"
+gimp_save_LIBS="$LIBS"
+
+CFLAGS="$GTK_CFLAGS $CFLAGS"
+LIBS="$LIBS $GTK_LIBS"
 
 dnl Test for Xmu
   if test -z "$LIBXMU_LIB"; then

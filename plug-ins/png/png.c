@@ -37,6 +37,12 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.3  1998/03/16 06:33:54  yosh
+ *   configure saves CFLAGS properly
+ *   all plugins should parse gtkrc now
+ *
+ *   -Yosh
+ *
  *   Revision 1.2  1998/01/05 09:30:23  yosh
  *   Check for div-by-zero in by_color_select.c when threshold is 0
  *   The text tool handles the no fonts case better
@@ -827,6 +833,7 @@ save_dialog(void)
   argv[0] = g_strdup("png");
 
   gtk_init(&argc, &argv);
+  gtk_rc_parse(gimp_gtkrc());
 
  /*
   * Open a dialog window...
