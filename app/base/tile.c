@@ -19,6 +19,13 @@ tile_init (Tile *tile,
   tile->swap_num = 1;
   tile->swap_offset = -1;
   tile->tm = NULL;
+  tile->next = tile->prev = NULL;
+  tile->listhead = NULL;
+#ifdef USE_PTHREADS
+  {
+    pthread_mutex_init(&tile->mutex, NULL);
+  }
+#endif
 }
 
 int tile_ref_count = 0;
@@ -30,6 +37,9 @@ _tile_ref (Tile *tile, char *func_name)
 tile_ref (Tile *tile)
 #endif
 {
+#ifdef USE_PTHREADS
+  pthread_mutex_lock(&(tile->mutex));
+#endif
   /*  g_print ("tile_ref:    0x%08x  %s\n", tile, func_name); */
 
   tile_ref_count += 1;
@@ -61,6 +71,9 @@ tile_ref (Tile *tile)
    */
   if (!tile->valid)
     tile_manager_validate ((TileManager*) tile->tm, tile);
+#if USE_PTHREADS
+  pthread_mutex_unlock(&(tile->mutex));
+#endif
 }
 
 void
@@ -70,6 +83,9 @@ _tile_unref (Tile *tile, int dirty, char *func_name)
 tile_unref (Tile *tile, int dirty)
 #endif
 {
+#ifdef USE_PTHREADS
+  pthread_mutex_lock(&(tile->mutex));
+#endif
   /*  g_print ("tile_unref:  0x%08x  %s\n", tile, func_name); */
 
   tile_ref_count -= 1;
@@ -80,7 +96,11 @@ tile_unref (Tile *tile, int dirty)
 
   /* Mark the tile dirty if indicated
    */
-  tile->dirty |= dirty;
+  if (dirty && !tile->dirty) 
+    {
+      tile->dirty = TRUE;
+      tile_cache_insert (tile);
+    }
 
   /* If this was the last reference to the tile, then
    *  swap it out to disk.
@@ -95,37 +115,43 @@ tile_unref (Tile *tile, int dirty)
 	tile_swap_out (tile);
       /*  Otherwise, just throw out the data--the same stuff is in swap
        */
-      else
-	{
-	  g_free (tile->data);
-	  tile->data = NULL;
-	}
+      g_free (tile->data);
+      tile->data = NULL;
     }
+#if USE_PTHREADS
+  pthread_mutex_unlock(&(tile->mutex));
+#endif
 }
 
 void
 tile_alloc (Tile *tile)
 {
   if (tile->data)
-    return;
+    goto out;
 
   /* Allocate the data for the tile.
    */
   tile->data = g_new (guchar, tile_size (tile));
+out:
 }
 
 int
 tile_size (Tile *tile)
 {
+  int size;
   /* Return the actual size of the tile data.
    *  (Based on its effective width and height).
    */
-  return tile->ewidth * tile->eheight * tile->bpp;
+  size = tile->ewidth * tile->eheight * tile->bpp;
+  return size;
 }
 
 void
 tile_invalidate (Tile *tile)
 {
+#ifdef USE_PTHREADS
+  pthread_mutex_lock(&(tile->mutex));
+#endif
   /* Invalidate the tile. (Must be valid first).
    */
   if (tile->valid)
@@ -156,4 +182,7 @@ tile_invalidate (Tile *tile)
 	  tile_swap_delete (tile);
 	}
     }
+#if USE_PTHREADS
+  pthread_mutex_unlock(&(tile->mutex));
+#endif
 }

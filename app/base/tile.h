@@ -9,6 +9,9 @@
 
 #include <sys/types.h>
 #include <glib.h>
+#ifdef USE_PTHREADS
+#include <pthread.h>
+#endif
 
 
 typedef struct _Tile Tile;
@@ -48,6 +51,12 @@ struct _Tile
 		       *  We need this in order to call the tile managers validate
 		       *  proc whenever the tile is referenced yet invalid.
 		       */
+  Tile *next;
+  Tile *prev;	      /* List pointers for the tile cache lists */
+  void *listhead;     /* Pointer to the head of the list this tile is on */
+#ifdef USE_PTHREADS
+  pthread_mutex_t mutex;
+#endif
 };
 
 

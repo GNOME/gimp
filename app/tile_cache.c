@@ -1,69 +1,95 @@
+#include <gtk/gtkmain.h>
 #include <glib.h>
 #include "gimprc.h"
 #include "tile_cache.h"
 #include "tile_swap.h"
+#ifdef USE_PTHREADS
+#include <pthread.h>
+#endif
+
+#include "stdio.h"
 
 /*  This is the percentage of the maximum cache size that should be cleared
  *   from the cache when an eviction is necessary
  */
 #define FREE_QUANTUM 0.1
 
-static void  tile_cache_init       (void);
-static void  tile_cache_zorch_next (void);
-static guint tile_cache_hash       (Tile *tile);
+static void  tile_cache_init           (void);
+static gint  tile_cache_zorch_next     (void);
+static void  tile_cache_flush_internal (Tile *tile);
 
+#ifdef USE_PTHREADS
+static void* tile_idle_thread          (void *);
+#else
+static gint  tile_idle_preswap         (gpointer);
+#endif
 
 static int initialize = TRUE;
-static GHashTable *tile_hash_table = NULL;
-static GList *tile_list_head = NULL;
-static GList *tile_list_tail = NULL;
+
+typedef struct _TileList {
+  Tile* first;
+  Tile* last;
+} TileList;
+
 static unsigned long max_tile_size = TILE_WIDTH * TILE_HEIGHT * 4;
 static unsigned long cur_cache_size = 0;
 static unsigned long max_cache_size = 0;
+static unsigned long cur_cache_dirty = 0;
+static TileList clean_list = { NULL, NULL };
+static TileList dirty_list = { NULL, NULL };
+
+#ifdef USE_PTHREADS
+static pthread_t preswap_thread;
+static pthread_mutex_t dirty_mutex = PTHREAD_MUTEX_INITIALIZER;
+static pthread_cond_t dirty_signal = PTHREAD_COND_INITIALIZER;
+static pthread_mutex_t tile_mutex  = PTHREAD_MUTEX_INITIALIZER;
+#else
+static gint idle_swapper = 0;
+#endif
 
 
 void
 tile_cache_insert (Tile *tile)
 {
-  GList *tmp;
+  TileList *list;
+  TileList *newlist;
 
   if (initialize)
     tile_cache_init ();
+
+#if USE_PTHREADS
+  pthread_mutex_lock(&tile_mutex);
+#endif
+  if (tile->data == NULL) goto out;	
 
   /* First check and see if the tile is already
    *  in the cache. In that case we will simply place
    *  it at the end of the tile list to indicate that
    *  it was the most recently accessed tile.
    */
-  tmp = g_hash_table_lookup (tile_hash_table, tile);
 
-  if (tmp)
+  list = (TileList*)(tile->listhead);
+  newlist = (tile->dirty || tile->swap_offset == -1) ? &dirty_list : &clean_list;
+
+  /* if list is NULL, the tile is not in the cache */
+
+  if (list) 
     {
-      /* The tile was already in the cache. Place it at
-       *  the end of the tile list.
-       */
-      if (tmp == tile_list_tail)
-	tile_list_tail = tile_list_tail->prev;
-      tile_list_head = g_list_remove_link (tile_list_head, tmp);
-      if (!tile_list_head)
-	tile_list_tail = NULL;
-      g_list_free (tmp);
+      /* Tile is in the cache.  Remove it from its current list and
+	 put it at the tail of the proper list (clean or dirty) */
 
-      /* Remove the old reference to the tiles list node
-       *  in the tile hash table.
-       */
-      g_hash_table_remove (tile_hash_table, tile);
+      if (tile->next) 
+	tile->next->prev = tile->prev;
+      else
+	list->last = tile->prev;
+      
+      if (tile->prev)
+	tile->prev->next = tile->next;
+      else
+	list->first = tile->next;
 
-      tile_list_tail = g_list_append (tile_list_tail, tile);
-      if (!tile_list_head)
-	tile_list_head = tile_list_tail;
-      tile_list_tail = g_list_last (tile_list_tail);
-
-      /* Add the tiles list node to the tile hash table. The
-       *  list node is indexed by the tile itself. This makes
-       *  for a quick lookup of which list node the tile is in.
-       */
-      g_hash_table_insert (tile_hash_table, tile, tile_list_tail);
+      tile->listhead = NULL;
+      if (list == &dirty_list) cur_cache_dirty -= tile_size (tile);
     }
   else
     {
@@ -73,26 +99,11 @@ tile_cache_insert (Tile *tile)
        *  cache is smaller than the size of a tile in which case
        *  it won't be possible to put it in the cache.
        */
-      if ((cur_cache_size + max_tile_size) > max_cache_size)
+      while ((cur_cache_size + max_tile_size) > max_cache_size)
 	{
-	  while (tile_list_head && (cur_cache_size + max_cache_size * FREE_QUANTUM) > max_cache_size)
-	    tile_cache_zorch_next ();
-
-	  if ((cur_cache_size + max_tile_size) > max_cache_size)
-	    return;
+	  if (!tile_cache_zorch_next()) goto out;
 	}
-
-      /* Place the tile at the end of the tile list.
-       */
-      tile_list_tail = g_list_append (tile_list_tail, tile);
-      if (!tile_list_head)
-	tile_list_head = tile_list_tail;
-      tile_list_tail = g_list_last (tile_list_tail);
-
-      /* Add the tiles list node to the tile hash table.
-       */
-      g_hash_table_insert (tile_hash_table, tile, tile_list_tail);
-
+      
       /* Note the increase in the number of bytes the cache
        *  is referencing.
        */
@@ -116,46 +127,107 @@ tile_cache_insert (Tile *tile)
 	  tile->dirty = FALSE;
 	}
     }
+
+  /* Put the tile at the end of the proper list */
+
+  tile->next = NULL;
+  tile->prev = newlist->last;
+  tile->listhead = newlist;
+
+  if (newlist->last) newlist->last->next = tile;
+  else               newlist->first = tile;
+  newlist->last = tile;
+
+  if (tile->dirty) 
+    {
+      cur_cache_dirty += tile_size (tile);
+#ifdef USE_PTHREADS
+      pthread_mutex_lock(&dirty_mutex);
+      pthread_cond_signal(&dirty_signal);
+      pthread_mutex_unlock(&dirty_mutex);
+#endif
+    }
+out:
+#ifdef USE_PTHREADS
+  pthread_mutex_unlock(&tile_mutex);
+#endif
+
 }
 
 void
 tile_cache_flush (Tile *tile)
 {
-  GList *tmp;
-
   if (initialize)
     tile_cache_init ();
 
+#ifdef USE_PTHREADS
+  pthread_mutex_lock(&tile_mutex);
+#endif
+
+  tile_cache_flush_internal (tile);
+
+#ifdef USE_PTHREADS
+  pthread_mutex_unlock(&tile_mutex);
+#endif
+}
+
+static void
+tile_cache_flush_internal (Tile *tile)
+{
+  TileList *list;
+
   /* Find where the tile is in the cache.
    */
-  tmp = g_hash_table_lookup (tile_hash_table, tile);
+  
+  list = (TileList*)(tile->listhead);
 
-  if (tmp)
+  if (list) 
     {
-      /* If the tile is in the cache, then remove it from the
-       *  tile list.
-       */
-      if (tmp == tile_list_tail)
-	tile_list_tail = tile_list_tail->prev;
-      tile_list_head = g_list_remove_link (tile_list_head, tmp);
-      if (!tile_list_head)
-	tile_list_tail = NULL;
-      g_list_free (tmp);
-
-      /* Remove the tile from the tile hash table.
-       */
-      g_hash_table_remove (tile_hash_table, tile);
-
       /* Note the decrease in the number of bytes the cache
        *  is referencing.
        */
       cur_cache_size -= tile_size (tile);
+      if (list == &dirty_list) cur_cache_dirty -= tile_size (tile);
 
+      if (tile->next) 
+	tile->next->prev = tile->prev;
+      else
+	list->last = tile->prev;
+      
+      if (tile->prev)
+	tile->prev->next = tile->next;
+      else
+	list->first = tile->next;
+
+      tile->listhead = NULL;
+      
       /* Unreference the tile.
-       * "tile_unref" may be used here since it does not call
-       *  this function (or any of the cache functions).
        */
-      tile_unref (tile, FALSE);
+      {
+	extern int tile_ref_count;
+	tile_ref_count -= 1;
+      }
+
+      /* Decrement the reference count.
+       */
+      tile->ref_count -= 1;
+
+      /* If this was the last reference to the tile, then
+       *  swap it out to disk.
+       */
+      if (tile->ref_count == 0)
+	{
+	  /*  Only need to swap out in two cases:
+	   *   1)  The tile is dirty
+	   *   2)  The tile has never been swapped
+	   */
+	  if (tile->dirty || tile->swap_offset == -1)
+	    tile_swap_out (tile);
+	  /*  Otherwise, just throw out the data--the same stuff is in swap
+	   */
+	  g_free (tile->data);
+	  tile->data = NULL;
+	}
     }
 }
 
@@ -167,11 +239,16 @@ tile_cache_set_size (unsigned long cache_size)
 
   max_cache_size = cache_size;
 
-  if (max_cache_size >= max_tile_size)
+#if USE_PTHREADS
+  pthread_mutex_lock(&tile_mutex);
+#endif
+  while (cache_size >= max_cache_size)
     {
-      while (cur_cache_size > max_cache_size)
-	tile_cache_zorch_next ();
+      if (!tile_cache_zorch_next ()) break;
     }
+#if USE_PTHREADS
+  pthread_mutex_unlock(&tile_mutex);
+#endif
 }
 
 
@@ -182,21 +259,118 @@ tile_cache_init ()
     {
       initialize = FALSE;
 
-      tile_hash_table = g_hash_table_new ((GHashFunc) tile_cache_hash, NULL);
+      clean_list.first = clean_list.last = NULL;
+      dirty_list.first = dirty_list.last = NULL;
 
       max_cache_size = tile_cache_size;
+
+#ifdef USE_PTHREADS
+      pthread_create (&preswap_thread, NULL, &tile_idle_thread, NULL);
+#else
+      idle_swapper = gtk_timeout_add (250,
+				      (GtkFunction) tile_idle_preswap, 
+				      (gpointer) 0);
+#endif
     }
 }
 
-static void
+static gint
 tile_cache_zorch_next ()
 {
-  if (tile_list_head)
-    tile_cache_flush ((Tile*) tile_list_head->data);
+  Tile *tile;
+
+  if      (clean_list.first) tile = clean_list.first;
+  else if (dirty_list.first) tile = dirty_list.first;
+  else return FALSE;
+
+#ifdef USE_PTHREADS
+  pthread_mutex_unlock(&tile_mutex);
+  pthread_mutex_lock(&(tile->mutex));
+  pthread_mutex_lock(&tile_mutex);
+#endif
+  tile_cache_flush_internal (tile);
+#ifdef USE_PTHREADS
+  pthread_mutex_unlock(&(tile->mutex));
+#endif
+  return TRUE;
 }
 
-static guint
-tile_cache_hash (Tile *tile)
+#if USE_PTHREADS
+static void *
+tile_idle_thread (void *data)
 {
-  return (gulong) tile;
+  Tile *tile;
+  TileList *list;
+
+  fprintf (stderr,"starting tile preswapper\n");
+
+  while(1) 
+    {
+      if (!dirty_list.first) sleep(1);
+      if (!dirty_list.first) {
+	pthread_mutex_lock(&dirty_mutex);
+	pthread_cond_wait(&dirty_signal,&dirty_mutex);
+	pthread_mutex_unlock(&dirty_mutex);
+      }
+      if ((tile = dirty_list.first) &&
+	  (pthread_mutex_lock(&(tile->mutex)) == 0))
+	{
+	  pthread_mutex_lock(&tile_mutex);
+
+	  list = tile->listhead;
+
+	  if (list == &dirty_list) cur_cache_dirty -= tile_size (tile);
+	  
+	  if (tile->next) 
+	    tile->next->prev = tile->prev;
+	  else
+	    list->last = tile->prev;
+      
+	  if (tile->prev)
+	    tile->prev->next = tile->next;
+	  else
+	    list->first = tile->next;
+
+	  tile->next = NULL;
+	  tile->prev = clean_list.last;
+	  tile->listhead = &clean_list;
+
+	  if (clean_list.last) clean_list.last->next = tile;
+	  else                 clean_list.first = tile;
+	  clean_list.last = tile;
+
+	  pthread_mutex_unlock(&tile_mutex);
+	  tile_swap_out(tile);
+	  pthread_mutex_unlock(&(tile->mutex));
+	}
+    }
 }
+
+#else
+static gint
+tile_idle_preswap (gpointer data)
+{
+  Tile *tile;
+  if (cur_cache_dirty*2 < max_cache_size) return TRUE;
+  if ((tile = dirty_list.first)) 
+    {
+      tile_swap_out(tile);
+
+      dirty_list.first = tile->next;
+      if (tile->next) 
+	tile->next->prev = NULL;
+      else
+	dirty_list.last = NULL;
+
+      tile->next = NULL;
+      tile->prev = clean_list.last;
+      tile->listhead = &clean_list;
+      if (clean_list.last) clean_list.last->next = tile;
+      else                 clean_list.first = tile;
+      clean_list.last = tile;
+      cur_cache_dirty -= tile_size (tile);
+    }
+  
+  return TRUE;
+}
+#endif

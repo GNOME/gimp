@@ -4,6 +4,9 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+#ifdef USE_PTHREADS
+#include <pthread.h>
+#endif
 
 
 #define MAX_OPEN_SWAP_FILES  16
@@ -76,6 +79,9 @@ static GList *open_swap_files = NULL;
 static int nopen_swap_files = 0;
 static int next_swap_num = 1;
 static long swap_file_grow = 16 * TILE_WIDTH * TILE_HEIGHT * 4;
+#ifdef USE_PTHREADS
+static pthread_mutex_t swapfile_mutex = PTHREAD_MUTEX_INITIALIZER;
+#endif
 
 
 static void
@@ -244,6 +250,9 @@ tile_swap_command (Tile *tile,
 		   int   command)
 {
   SwapFile *swap_file;
+#ifdef USE_PTHREADS
+  pthread_mutex_lock(&swapfile_mutex);
+#endif
 
   if (initialize)
     tile_swap_init ();
@@ -253,7 +262,7 @@ tile_swap_command (Tile *tile,
     if (!swap_file)
       {
 	g_message ("could not find swap file for tile");
-	return;
+	goto out;
       }
 
     if (swap_file->fd == -1)
@@ -261,9 +270,13 @@ tile_swap_command (Tile *tile,
 	tile_swap_open (swap_file);
 
 	if (swap_file->fd == -1)
-	  return;
+	  goto out;
       }
   } while ((* swap_file->swap_func) (swap_file->fd, tile, command, swap_file->user_data));
+out:
+#ifdef USE_PTHREADS
+  pthread_mutex_unlock(&swapfile_mutex);
+#endif
 }
 
 static void
@@ -369,7 +382,7 @@ tile_swap_default_in (DefSwapFile *def_swap_file,
 
       if (err <= 0)
 	{
-	  g_message ("unable to read tile data from disk: %d ( %d ) bytes read", err, nleft);
+	  g_message ("unable to read tile data from disk: %d/%d ( %d ) bytes read", err, errno, nleft);
 	  return;
 	}
 
@@ -427,8 +440,9 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
 
   def_swap_file->cur_position += rbytes;
 
-  g_free (tile->data);
-  tile->data = NULL;
+  /*  g_free (tile->data);
+  tile->data = NULL; */
+  tile->dirty = FALSE;
 }
 
 static void
