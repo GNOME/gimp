@@ -437,7 +437,7 @@ gimp_preview_toggle_callback (GtkWidget   *toggle,
       preview->update_preview = FALSE;
     }
 
-  g_object_notify (G_OBJECT (toggle), "update");
+  g_object_notify (G_OBJECT (preview), "update");
 }
 
 /**
