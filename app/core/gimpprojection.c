@@ -1568,62 +1568,62 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
       lnum = g_slist_length (gdisp->gimage->layers);
     }
 
-  menus_set_sensitive (_("<Image>/Layers/Stack/Previous Layer"), !fs && !aux && lp && lind > 0);
-  menus_set_sensitive (_("<Image>/Layers/Stack/Next Layer"), !fs && !aux && lp && lind < (lnum - 1));
-  menus_set_sensitive (_("<Image>/Layers/Stack/Raise Layer"), !fs && !aux && lp && alpha && lind > 0);
-  menus_set_sensitive (_("<Image>/Layers/Stack/Lower Layer"), !fs && !aux && lp && alpha && lind < (lnum - 1));
-  menus_set_sensitive (_("<Image>/Layers/Stack/Layer to Top"), !fs && !aux && lp && alpha && lind > 0);
-  menus_set_sensitive (_("<Image>/Layers/Stack/Layer to Bottom"), !fs && !aux && lp && alpha && lind < (lnum - 1));
-  menus_set_sensitive (_("<Image>/Layers/Anchor Layer"), fs && !aux && lp);
-  menus_set_sensitive (_("<Image>/Layers/Merge Visible Layers"), !fs && !aux && lp);
-  menus_set_sensitive (_("<Image>/Layers/Flatten Image"), !fs && !aux && lp);
-  menus_set_sensitive (_("<Image>/Layers/Alpha To Selection"), !aux && lp && alpha);
-  menus_set_sensitive (_("<Image>/Layers/Mask To Selection"), !aux && lm && lp);
-  menus_set_sensitive (_("<Image>/Layers/Add Alpha Channel"), !fs && !aux && lp && !lm && !alpha);
+  menus_set_sensitive_locale ("<Image>", N_("/Layers/Stack/Previous Layer"), !fs && !aux && lp && lind > 0);
+  menus_set_sensitive_locale ("<Image>", N_("/Layers/Stack/Next Layer"), !fs && !aux && lp && lind < (lnum - 1));
+  menus_set_sensitive_locale ("<Image>", N_("/Layers/Stack/Raise Layer"), !fs && !aux && lp && alpha && lind > 0);
+  menus_set_sensitive_locale ("<Image>", N_("/Layers/Stack/Lower Layer"), !fs && !aux && lp && alpha && lind < (lnum - 1));
+  menus_set_sensitive_locale ("<Image>", N_("/Layers/Stack/Layer to Top"), !fs && !aux && lp && alpha && lind > 0);
+  menus_set_sensitive_locale ("<Image>", N_("/Layers/Stack/Layer to Bottom"), !fs && !aux && lp && alpha && lind < (lnum - 1));
+  menus_set_sensitive_locale ("<Image>", N_("/Layers/Anchor Layer"), fs && !aux && lp);
+  menus_set_sensitive_locale ("<Image>", N_("/Layers/Merge Visible Layers"), !fs && !aux && lp);
+  menus_set_sensitive_locale ("<Image>", N_("/Layers/Flatten Image"), !fs && !aux && lp);
+  menus_set_sensitive_locale ("<Image>", N_("/Layers/Alpha To Selection"), !aux && lp && alpha);
+  menus_set_sensitive_locale ("<Image>", N_("/Layers/Mask To Selection"), !aux && lm && lp);
+  menus_set_sensitive_locale ("<Image>", N_("/Layers/Add Alpha Channel"), !fs && !aux && lp && !lm && !alpha);
 
-  menus_set_sensitive (_("<Image>/Image/RGB"), (base_type != RGB));
-  menus_set_sensitive (_("<Image>/Image/Grayscale"), (base_type != GRAY));
-  menus_set_sensitive (_("<Image>/Image/Indexed"), (base_type != INDEXED));
+  menus_set_sensitive_locale ("<Image>", N_("/Image/RGB"), (base_type != RGB));
+  menus_set_sensitive_locale ("<Image>", N_("/Image/Grayscale"), (base_type != GRAY));
+  menus_set_sensitive_locale ("<Image>", N_("/Image/Indexed"), (base_type != INDEXED));
 
-  menus_set_sensitive (_("<Image>/Image/Colors/Threshold"), (base_type != INDEXED));
-  menus_set_sensitive (_("<Image>/Image/Colors/Posterize") , (base_type != INDEXED));
-  menus_set_sensitive (_("<Image>/Image/Colors/Equalize"), (base_type != INDEXED));
-  menus_set_sensitive (_("<Image>/Image/Colors/Invert"), (base_type != INDEXED));
+  menus_set_sensitive_locale ("<Image>", N_("/Image/Colors/Threshold"), (base_type != INDEXED));
+  menus_set_sensitive_locale ("<Image>", N_("/Image/Colors/Posterize") , (base_type != INDEXED));
+  menus_set_sensitive_locale ("<Image>", N_("/Image/Colors/Equalize"), (base_type != INDEXED));
+  menus_set_sensitive_locale ("<Image>", N_("/Image/Colors/Invert"), (base_type != INDEXED));
 
-  menus_set_sensitive (_("<Image>/Image/Colors/Color Balance"), (base_type == RGB));
-  menus_set_sensitive (_("<Image>/Image/Colors/Brightness-Contrast"), (base_type != INDEXED));
-  menus_set_sensitive (_("<Image>/Image/Colors/Hue-Saturation"), (base_type == RGB));
-  menus_set_sensitive (_("<Image>/Image/Colors/Curves"), (base_type != INDEXED));
-  menus_set_sensitive (_("<Image>/Image/Colors/Levels"), (base_type != INDEXED));
+  menus_set_sensitive_locale ("<Image>", N_("/Image/Colors/Color Balance"), (base_type == RGB));
+  menus_set_sensitive_locale ("<Image>", N_("/Image/Colors/Brightness-Contrast"), (base_type != INDEXED));
+  menus_set_sensitive_locale ("<Image>", N_("/Image/Colors/Hue-Saturation"), (base_type == RGB));
+  menus_set_sensitive_locale ("<Image>", N_("/Image/Colors/Curves"), (base_type != INDEXED));
+  menus_set_sensitive_locale ("<Image>", N_("/Image/Colors/Levels"), (base_type != INDEXED));
 
-  menus_set_sensitive (_("<Image>/Image/Colors/Desaturate"), (base_type == RGB));
+  menus_set_sensitive_locale ("<Image>", N_("/Image/Colors/Desaturate"), (base_type == RGB));
 
-  menus_set_sensitive (_("<Image>/Image/Alpha/Add Alpha Channel"), !fs && !aux && lp && !lm && !alpha);
+  menus_set_sensitive_locale ("<Image>", N_("/Image/Alpha/Add Alpha Channel"), !fs && !aux && lp && !lm && !alpha);
 
-  menus_set_sensitive (_("<Image>/Select"), lp);
-  menus_set_sensitive (_("<Image>/Edit/Cut"), lp);
-  menus_set_sensitive (_("<Image>/Edit/Copy"), lp);
-  menus_set_sensitive (_("<Image>/Edit/Paste"), lp);
-  menus_set_sensitive (_("<Image>/Edit/Paste Into"), lp);
-  menus_set_sensitive (_("<Image>/Edit/Clear"), lp);
-  menus_set_sensitive (_("<Image>/Edit/Fill"), lp);
-  menus_set_sensitive (_("<Image>/Edit/Stroke"), lp);
-  menus_set_sensitive (_("<Image>/Edit/Cut Named"), lp);
-  menus_set_sensitive (_("<Image>/Edit/Copy Named"), lp);
-  menus_set_sensitive (_("<Image>/Edit/Paste Named"), lp);
-  menus_set_sensitive (_("<Image>/Image/Colors"), lp);
-  menus_set_sensitive (_("<Image>/Image/Channel Ops/Offset"), lp);
-  menus_set_sensitive (_("<Image>/Image/Histogram"), lp);
-  menus_set_sensitive (_("<Image>/Filters"), lp);
+  menus_set_sensitive_locale ("<Image>", N_("/Select"), lp);
+  menus_set_sensitive_locale ("<Image>", N_("/Edit/Cut"), lp);
+  menus_set_sensitive_locale ("<Image>", N_("/Edit/Copy"), lp);
+  menus_set_sensitive_locale ("<Image>", N_("/Edit/Paste"), lp);
+  menus_set_sensitive_locale ("<Image>", N_("/Edit/Paste Into"), lp);
+  menus_set_sensitive_locale ("<Image>", N_("/Edit/Clear"), lp);
+  menus_set_sensitive_locale ("<Image>", N_("/Edit/Fill"), lp);
+  menus_set_sensitive_locale ("<Image>", N_("/Edit/Stroke"), lp);
+  menus_set_sensitive_locale ("<Image>", N_("/Edit/Cut Named"), lp);
+  menus_set_sensitive_locale ("<Image>", N_("/Edit/Copy Named"), lp);
+  menus_set_sensitive_locale ("<Image>", N_("/Edit/Paste Named"), lp);
+  menus_set_sensitive_locale ("<Image>", N_("/Image/Colors"), lp);
+  menus_set_sensitive_locale ("<Image>", N_("/Image/Channel Ops/Offset"), lp);
+  menus_set_sensitive_locale ("<Image>", N_("/Image/Histogram"), lp);
+  menus_set_sensitive_locale ("<Image>", N_("/Filters"), lp);
 
   /* save selection to channel */
-  menus_set_sensitive (_("<Image>/Select/Save To Channel"), !fs);
+  menus_set_sensitive_locale ("<Image>", N_("/Select/Save To Channel"), !fs);
 
-  menus_set_state (_("<Image>/View/Toggle Rulers"), GTK_WIDGET_VISIBLE (gdisp->origin) ? 1 : 0);
-  menus_set_state (_("<Image>/View/Toggle Guides"), gdisp->draw_guides);
-  menus_set_state (_("<Image>/View/Snap To Guides"), gdisp->snap_to_guides);
-  menus_set_state (_("<Image>/View/Toggle Statusbar"), GTK_WIDGET_VISIBLE (gdisp->statusarea) ? 1 : 0);
-  menus_set_state (_("<Image>/View/Dot for dot"), gdisp->dot_for_dot);
+  menus_set_state_locale ("<Image>", N_("/View/Toggle Rulers"), GTK_WIDGET_VISIBLE (gdisp->origin) ? 1 : 0);
+  menus_set_state_locale ("<Image>", N_("/View/Toggle Guides"), gdisp->draw_guides);
+  menus_set_state_locale ("<Image>", N_("/View/Snap To Guides"), gdisp->snap_to_guides);
+  menus_set_state_locale ("<Image>", N_("/View/Toggle Statusbar"), GTK_WIDGET_VISIBLE (gdisp->statusarea) ? 1 : 0);
+  menus_set_state_locale ("<Image>", N_("/View/Dot for dot"), gdisp->dot_for_dot);
 
   plug_in_set_menu_sensitivity (type);
 }

@@ -693,8 +693,8 @@ static void
 really_quit_cancel_callback (GtkWidget *widget,
 			     GtkWidget *dialog)
 {
-  menus_set_sensitive (_("<Toolbox>/File/Quit"), TRUE);
-  menus_set_sensitive (_("<Image>/File/Quit"), TRUE);
+  menus_set_sensitive_locale ("<Toolbox>", N_("/File/Quit"), TRUE);
+  menus_set_sensitive_locale ("<Image>", N_("/File/Quit"), TRUE);
   gtk_widget_destroy (dialog);
 }
 
@@ -714,8 +714,8 @@ really_quit_dialog (void)
   GtkWidget *button;
   GtkWidget *label;
 
-  menus_set_sensitive (_("<Toolbox>/File/Quit"), FALSE);
-  menus_set_sensitive (_("<Image>/File/Quit"), FALSE);
+  menus_set_sensitive_locale ("<Toolbox>", N_("/File/Quit"), FALSE);
+  menus_set_sensitive_locale ("<Image>", N_("/File/Quit"), FALSE);
 
   dialog = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (dialog), "really_quit", "Gimp");

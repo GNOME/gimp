@@ -1,5 +1,16 @@
 1999-06-06  Tomas Ogren  <stric@ing.umu.se>
 
+	* app/menus.[ch]: locale-wrapper for menus_set_sensitive (..._locale)
+	  and menus_set_state (..._locale) which splits the menu-entry
+	  "<Foo>/Bar/Baz" into "<Foo>" and "/Bar/Baz" to remove double
+	  translations
+	* app/app_procs.c, app/channels_dialog.c, app/fileops.c, app/gdisplay.c
+	* app/gdisplay_ops.c, app/layers_dialog.c, app/paths_dialog.c
+	* app/plug_in.c:
+	  Use the _locale version from above
+
+1999-06-06  Tomas Ogren  <stric@ing.umu.se>
+
 	* app/{color_notebook.c,color_select.c,lc_dialog.c,temp_buf.c,tool_options.c,tools.c}:
 	  Misc l10n fixes
 

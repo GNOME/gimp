@@ -910,57 +910,57 @@ layers_dialog_set_menu_sensitivity ()
       lnum = g_slist_length (layersD->gimage->layers);
     }
 
-  menus_set_sensitive (_("<Layers>/Stack/Previous Layer"),
+  menus_set_sensitive_locale ("<Layers>", N_("/Stack/Previous Layer"),
 		       fs && ac && gimage && lp && lind > 0);
-  menus_set_sensitive (_("<Layers>/Stack/Next Layer"),
+  menus_set_sensitive_locale ("<Layers>", N_("/Stack/Next Layer"),
 		       fs && ac && gimage && lp && lind < (lnum - 1));
 
-  menus_set_sensitive (_("<Layers>/Stack/Raise Layer"),
+  menus_set_sensitive_locale ("<Layers>", N_("/Stack/Raise Layer"),
 		       fs && ac && gimage && lp && alpha && lind > 0);
   gtk_widget_set_sensitive (layers_ops_buttons[1].widget,
 			    fs && ac && gimage && lp && alpha && lind > 0);
 
-  menus_set_sensitive (_("<Layers>/Stack/Lower Layer"),
+  menus_set_sensitive_locale ("<Layers>", N_("/Stack/Lower Layer"),
 		       fs && ac && gimage && lp && lind < (lnum - 1));
   gtk_widget_set_sensitive (layers_ops_buttons[2].widget,
 			    fs && ac && gimage && lp && lind < (lnum - 1));
 
-  menus_set_sensitive (_("<Layers>/Stack/Layer to Top"),
+  menus_set_sensitive_locale ("<Layers>", N_("/Stack/Layer to Top"),
 		       fs && ac && gimage && lp && alpha && lind > 0);
-  menus_set_sensitive (_("<Layers>/Stack/Layer to Bottom"),
+  menus_set_sensitive_locale ("<Layers>", N_("/Stack/Layer to Bottom"),
 		       fs && ac && gimage && lp && lind < (lnum - 1));
 
-  menus_set_sensitive (_("<Layers>/New Layer"), gimage);
+  menus_set_sensitive_locale ("<Layers>", N_("/New Layer"), gimage);
   gtk_widget_set_sensitive (layers_ops_buttons[0].widget, gimage);
 
-  menus_set_sensitive (_("<Layers>/Duplicate Layer"), fs && ac && gimage && lp);
+  menus_set_sensitive_locale ("<Layers>", N_("/Duplicate Layer"), fs && ac && gimage && lp);
   gtk_widget_set_sensitive (layers_ops_buttons[3].widget,
 			    fs && ac && gimage && lp);
 
-  menus_set_sensitive (_("<Layers>/Delete Layer"), ac && gimage && lp);
+  menus_set_sensitive_locale ("<Layers>", N_("/Delete Layer"), ac && gimage && lp);
   gtk_widget_set_sensitive (layers_ops_buttons[4].widget, ac && gimage && lp);
 
-  menus_set_sensitive (_("<Layers>/Anchor Layer"), !fs && ac && gimage && lp);
+  menus_set_sensitive_locale ("<Layers>", N_("/Anchor Layer"), !fs && ac && gimage && lp);
   gtk_widget_set_sensitive (layers_ops_buttons[5].widget,
 			    !fs && ac && gimage && lp);
 
-  menus_set_sensitive (_("<Layers>/Scale Layer"), ac && gimage && lp);
-  menus_set_sensitive (_("<Layers>/Resize Layer"), ac && gimage && lp);
+  menus_set_sensitive_locale ("<Layers>", N_("/Scale Layer"), ac && gimage && lp);
+  menus_set_sensitive_locale ("<Layers>", N_("/Resize Layer"), ac && gimage && lp);
 
-  menus_set_sensitive (_("<Layers>/Merge Visible Layers"),
+  menus_set_sensitive_locale ("<Layers>", N_("/Merge Visible Layers"),
 		       fs && ac && gimage && lp);
-  menus_set_sensitive (_("<Layers>/Merge Down"), fs && ac && gimage && lp);
-  menus_set_sensitive (_("<Layers>/Flatten Image"), fs && ac && gimage && lp);
+  menus_set_sensitive_locale ("<Layers>", N_("/Merge Down"), fs && ac && gimage && lp);
+  menus_set_sensitive_locale ("<Layers>", N_("/Flatten Image"), fs && ac && gimage && lp);
 
-  menus_set_sensitive (_("<Layers>/Add Layer Mask"),
+  menus_set_sensitive_locale ("<Layers>", N_("/Add Layer Mask"),
 		       fs && ac && gimage && !lm && lp && alpha);
-  menus_set_sensitive (_("<Layers>/Apply Layer Mask"),
+  menus_set_sensitive_locale ("<Layers>", N_("/Apply Layer Mask"),
 		       fs && ac && gimage && lm && lp);
-  menus_set_sensitive (_("<Layers>/Alpha to Selection"),
+  menus_set_sensitive_locale ("<Layers>", N_("/Alpha to Selection"),
 		       fs && ac && gimage && lp && alpha);
-  menus_set_sensitive (_("<Layers>/Mask to Selection"),
+  menus_set_sensitive_locale ("<Layers>", N_("/Mask to Selection"),
 		       fs && ac && gimage && lm && lp);
-  menus_set_sensitive (_("<Layers>/Add Alpha Channel"), !alpha);
+  menus_set_sensitive_locale ("<Layers>", N_("/Add Alpha Channel"), !alpha);
 
   /*  set mode, preserve transparency and opacity to insensitive
    *  if there are no layers

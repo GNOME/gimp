@@ -181,30 +181,30 @@ paths_ops_button_set_sensitive (gint     but,
   switch(but)
     {
     case NEW_PATH_BUTTON:
-      menus_set_sensitive (_("<Paths>/New Path"), sensitive);
+      menus_set_sensitive_locale ("<Paths>", N_("/New Path"), sensitive);
       gtk_widget_set_sensitive(paths_ops_buttons[0].widget,sensitive);
       break;
     case DUP_PATH_BUTTON:
-      menus_set_sensitive (_("<Paths>/Duplicate Path"), sensitive);
+      menus_set_sensitive_locale ("<Paths>", N_("/Duplicate Path"), sensitive);
       gtk_widget_set_sensitive(paths_ops_buttons[1].widget,sensitive);
       break;
     case DEL_PATH_BUTTON:
-      menus_set_sensitive (_("<Paths>/Delete Path"), sensitive);
+      menus_set_sensitive_locale ("<Paths>", N_("/Delete Path"), sensitive);
       gtk_widget_set_sensitive(paths_ops_buttons[2].widget,sensitive);
       break;
     case PATH_TO_SEL_BUTTON:
-      menus_set_sensitive (_("<Paths>/Path to Selection"), sensitive);
+      menus_set_sensitive_locale ("<Paths>", N_("/Path to Selection"), sensitive);
       gtk_widget_set_sensitive(paths_ops_buttons[3].widget,sensitive);
       break;
     case STROKE_PATH_BUTTON:
-      menus_set_sensitive (_("<Paths>/Stroke Path"), sensitive);
+      menus_set_sensitive_locale ("<Paths>", N_("/Stroke Path"), sensitive);
       gtk_widget_set_sensitive(paths_ops_buttons[4].widget,sensitive);
       break;
     case COPY_PATH_BUTTON:
-      menus_set_sensitive (_("<Paths>/Copy Path"), sensitive);
+      menus_set_sensitive_locale ("<Paths>", N_("/Copy Path"), sensitive);
       break;
     case PASTE_PATH_BUTTON:
-      menus_set_sensitive (_("<Paths>/Paste Path"), sensitive);
+      menus_set_sensitive_locale ("<Paths>", N_("/Paste Path"), sensitive);
       break;
     default:
       g_warning(_("paths_ops_button_set_sensitive:: invalid button specified"));

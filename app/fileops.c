@@ -1534,10 +1534,10 @@ file_save_ok_callback (GtkWidget *w,
 static void
 file_dialog_show (GtkWidget *filesel)
 {
-  menus_set_sensitive (_("<Toolbox>/File/Open"), FALSE);
-  menus_set_sensitive (_("<Image>/File/Open"), FALSE);
-  menus_set_sensitive (_("<Image>/File/Save"), FALSE);
-  menus_set_sensitive (_("<Image>/File/Save as"), FALSE);
+  menus_set_sensitive_locale ("<Toolbox>", N_("/File/Open"), FALSE);
+  menus_set_sensitive_locale ("<Image>", N_("/File/Open"), FALSE);
+  menus_set_sensitive_locale ("<Image>", N_("/File/Save"), FALSE);
+  menus_set_sensitive_locale ("<Image>", N_("/File/Save as"), FALSE);
 
   gtk_widget_show (filesel);
 }
@@ -1547,10 +1547,10 @@ file_dialog_hide (GtkWidget *filesel)
 {
   gtk_widget_hide (filesel);
 
-  menus_set_sensitive (_("<Toolbox>/File/Open"), TRUE);
-  menus_set_sensitive (_("<Image>/File/Open"), TRUE);
-  menus_set_sensitive (_("<Image>/File/Save"), TRUE);
-  menus_set_sensitive (_("<Image>/File/Save as"), TRUE);
+  menus_set_sensitive_locale ("<Toolbox>", N_("/File/Open"), TRUE);
+  menus_set_sensitive_locale ("<Image>", N_("/File/Open"), TRUE);
+  menus_set_sensitive_locale ("<Image>", N_("/File/Save"), TRUE);
+  menus_set_sensitive_locale ("<Image>", N_("/File/Save as"), TRUE);
 
   return TRUE;
 }
@@ -1996,6 +1996,6 @@ file_update_menus (GSList *procs,
       procs = procs->next;
 
       if (file_proc->db_info.proc_type != PDB_EXTENSION)
-	menus_set_sensitive (gettext(file_proc->menu_path), (file_proc->image_types_val & image_type));
+	menus_set_sensitive (file_proc->menu_path, (file_proc->image_types_val & image_type));
     }
 }

@@ -534,31 +534,31 @@ channels_dialog_set_menu_sensitivity ()
   else
     aux_sens = FALSE;
 
-  menus_set_sensitive (_("<Channels>/New Channel"), !fs_sens);
+  menus_set_sensitive_locale ("<Channels>", N_("/New Channel"), !fs_sens);
   gtk_widget_set_sensitive (channels_ops_buttons[0].widget, !fs_sens);
 
-  menus_set_sensitive (_("<Channels>/Raise Channel"), !fs_sens && aux_sens);
+  menus_set_sensitive_locale ("<Channels>", N_("/Raise Channel"), !fs_sens && aux_sens);
   gtk_widget_set_sensitive (channels_ops_buttons[1].widget,
 			    !fs_sens && aux_sens);
 
-  menus_set_sensitive (_("<Channels>/Lower Channel"), !fs_sens && aux_sens);
+  menus_set_sensitive_locale ("<Channels>", N_("/Lower Channel"), !fs_sens && aux_sens);
   gtk_widget_set_sensitive (channels_ops_buttons[2].widget,
 			    !fs_sens && aux_sens);
 
-  menus_set_sensitive (_("<Channels>/Duplicate Channel"), !fs_sens && aux_sens);
+  menus_set_sensitive_locale ("<Channels>", N_("/Duplicate Channel"), !fs_sens && aux_sens);
   gtk_widget_set_sensitive (channels_ops_buttons[3].widget,
 			    !fs_sens && aux_sens);
 
-  menus_set_sensitive (_("<Channels>/Delete Channel"), !fs_sens && aux_sens);
+  menus_set_sensitive_locale ("<Channels>", N_("/Delete Channel"), !fs_sens && aux_sens);
   gtk_widget_set_sensitive (channels_ops_buttons[4].widget,
 			    !fs_sens && aux_sens);
 
-  menus_set_sensitive (_("<Channels>/Channel to Selection"), aux_sens);
+  menus_set_sensitive_locale ("<Channels>", N_("/Channel to Selection"), aux_sens);
   gtk_widget_set_sensitive (channels_ops_buttons[5].widget, aux_sens);
 
-  menus_set_sensitive (_("<Channels>/Add to Selection"), aux_sens);
-  menus_set_sensitive (_("<Channels>/Subtract From Selection"), aux_sens);
-  menus_set_sensitive (_("<Channels>/Intersect With Selection"), aux_sens);
+  menus_set_sensitive_locale ("<Channels>", N_("/Add to Selection"), aux_sens);
+  menus_set_sensitive_locale ("<Channels>", N_("/Subtract From Selection"), aux_sens);
+  menus_set_sensitive_locale ("<Channels>", N_("/Intersect With Selection"), aux_sens);
 }
 
 
