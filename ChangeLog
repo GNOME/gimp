@@ -1,3 +1,8 @@
+Thu Apr 30 03:15:51 EDT 1998 Matthew Wilson <msw@gimp.org>
+
+	* app/curves.c: Another small change to keep the segfaults away
+	* app/disp_callbacks.c: An attempt to squelch some warnings
+
 Thu Apr 30 02:08:23 EDT 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/channels_dialog.c

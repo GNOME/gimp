@@ -353,8 +353,6 @@ curves_initialize (void *gdisp_ptr)
   /*  The curves dialog  */
   if (!curves_dialog)
     curves_dialog = curves_new_dialog ();
-  else if (!GTK_WIDGET_VISIBLE (curves_dialog->shell))
-    gtk_widget_show (curves_dialog->shell);
 
   /*  Initialize the values  */
   curves_dialog->channel = HISTOGRAM_VALUE;
@@ -397,6 +395,8 @@ curves_initialize (void *gdisp_ptr)
   /* set the current selection */
   gtk_option_menu_set_history ( GTK_OPTION_MENU (curves_dialog->channel_menu), 0);
 
+  if (!GTK_WIDGET_VISIBLE (curves_dialog->shell))
+    gtk_widget_show (curves_dialog->shell);
 
 
   curves_update (curves_dialog, GRAPH | DRAW);
@@ -575,7 +575,6 @@ curves_new_dialog ()
   build_action_area (GTK_DIALOG (cd->shell), action_items, 3, 0);
 
   gtk_widget_show (vbox);
-  gtk_widget_show (cd->shell);
 
   return cd;
 }
