@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-libexecdir = $(gimpplugindir)/modules
+libdir = $(gimpplugindir)/modules
 
 CPPFLAGS = -DMODULE_COMPILATION
 
@@ -18,7 +18,7 @@ EXTRA_DIST = \
 	gimpmodregister.h	\
 	colorsel_water.c
 
-libexec_LTLIBRARIES = \
+lib_LTLIBRARIES = \
 	libcolorsel_triangle.la		\
 	libcdisplay_gamma.la		\
 	libcdisplay_highcontrast.la
