@@ -1,3 +1,9 @@
+2004-01-21  Tor Lillqvist  <tml@iki.fi>
+
+	* app/gui/themes.c (themes_list_themes_foreach): Fix undefined
+	behaviour. Fixes crash in bringing up the Preferences dialog when
+	compiled with Sun's compiler.
+
 2004-01-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable-transform.c (gimp_drawable_transform_paste): 

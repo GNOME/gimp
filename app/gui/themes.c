@@ -299,7 +299,7 @@ themes_list_themes_foreach (gpointer key,
 
   **index = g_strdup ((gchar *) key);
 
-  *index = (*index)++;
+  (*index)++;
 }
 
 static void
