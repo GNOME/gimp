@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.14\n"
 "POT-Creation-Date: 1999-09-12 17:58+0200\n"
-"PO-Revision-Date: 2000-03-09 01:12+09:00\n"
+"PO-Revision-Date: 2000-03-28 16:40+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -86,13 +86,13 @@ msgid "$function: function name contains unusual characters, good style is to us
 msgstr ""
 
 msgid "Help"
-msgstr ""
+msgstr "ヘルプ"
 
 msgid "unable to fork: $!"
 msgstr ""
 
 msgid "FG"
-msgstr ""
+msgstr "前景"
 
 msgid "FATAL: unable to create $tmp: $!\n"
 msgstr ""
@@ -101,7 +101,7 @@ msgid "/Filters/Logulator"
 msgstr ""
 
 msgid "<Image>/Guides/Guide Grid"
-msgstr ""
+msgstr "<Image>/ガイド/ガイド格子"
 
 msgid "dunno how to return param type %d"
 msgstr ""
@@ -122,7 +122,7 @@ msgid "Image Types"
 msgstr ""
 
 msgid "<Image>/Filters/Colors/Fire"
-msgstr ""
+msgstr "<Image>/フィルタ/色/火"
 
 msgid "could not connect to the gimp server (make sure Perl-Server is running)"
 msgstr ""
@@ -143,7 +143,7 @@ msgid "Synopsis"
 msgstr ""
 
 msgid "Plug-In Path"
-msgstr ""
+msgstr "プラグインパス"
 
 msgid "unable to convert Gimp::Drawable into Gimp::GDrawable (id %d)"
 msgstr ""
@@ -152,10 +152,10 @@ msgid "Restore values to the previous ones"
 msgstr ""
 
 msgid "<Image>/Select/Triangle"
-msgstr ""
+msgstr "<Image>/選択/三角形"
 
 msgid "<Toolbox>/Xtns/Render/Stamps"
-msgstr ""
+msgstr "<Toolbox>/拡張/下塗り/スタンプ"
 
 msgid "Illegal default font description for $function: $val\n"
 msgstr ""
@@ -194,7 +194,7 @@ msgid "last argument to gimp_pattern_select_widget must be scalar ref"
 msgstr ""
 
 msgid "<Image>/Filters/Render/TeX String"
-msgstr ""
+msgstr "<Image>/フィルタ/下塗り/TeX 文字"
 
 msgid "Fileselector for $name"
 msgstr ""
@@ -317,7 +317,7 @@ msgid "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
 msgstr ""
 
 msgid "<Toolbox>/Xtns/Perl/Server"
-msgstr ""
+msgstr "<Toolbox>/拡張/Perl/サーバ"
 
 msgid "accepted unix connection"
 msgstr ""
@@ -353,7 +353,7 @@ msgid "BLURB:\n\n$blurb\n\nHELP:\n\n$help"
 msgstr ""
 
 msgid "OK"
-msgstr ""
+msgstr "了解"
 
 msgid "argument incompatible with type IMAGE"
 msgstr ""
@@ -365,7 +365,7 @@ msgid "accepting connections on port $port"
 msgstr ""
 
 msgid "<Image>/Select/Round Rectangular Selection"
-msgstr ""
+msgstr "<Image>/選択/面取り矩形"
 
 msgid "<Image>/Edit/Repeat & Duplicate"
 msgstr ""
@@ -685,10 +685,10 @@ msgid "dimension mismatch, pdl has dimension %d but at least %d dimensions requi
 msgstr ""
 
 msgid "Save"
-msgstr ""
+msgstr "保存"
 
 msgid "<Toolbox>/Xtns/Perl/Control Center"
-msgstr "<Image>/拡張/Perl/コントロールセンタ"
+msgstr "<Toolbox>/拡張/Perl/コントロールセンタ"
 
 msgid "<Image>/Filters/Logulator/Carved"
 msgstr ""
@@ -715,7 +715,7 @@ msgid "<Image>/Filters/Logulator/Glossy"
 msgstr ""
 
 msgid "Command"
-msgstr ""
+msgstr "コマンド"
 
 msgid "<Image>/Filters/Logulator/Transparent Logo"
 msgstr ""
@@ -727,13 +727,13 @@ msgid "$function: calling $AUTOLOAD without specifying the :auto import tag is d
 msgstr ""
 
 msgid "DESCRIPTION"
-msgstr ""
+msgstr "説明"
 
 msgid "Accelerator"
 msgstr ""
 
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 msgid "<Image>/Filters/Map/Xach Shadows..."
 msgstr "<Image>/フィルタ/マップ/Xach 影つけ..."
@@ -742,7 +742,7 @@ msgid "argument type %s expected (not %s)"
 msgstr ""
 
 msgid "BG"
-msgstr ""
+msgstr "背景"
 
 msgid "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
 msgstr ""
@@ -763,7 +763,7 @@ msgid "Bumpmap"
 msgstr "バンプマップ"
 
 msgid "Date/Version"
-msgstr ""
+msgstr "日付/バージョン"
 
 msgid "<Image>/Filters/Animation/Animate Cells"
 msgstr "<Image>/フィルタ/動画/動画セル"
