@@ -1,3 +1,11 @@
+2003-07-17  Sven Neumann  <sven@gimp.org>
+
+	* app/vectors/Makefile.am
+	* app/vectors/gimpanchor.[ch]: added a simple GimpAnchor API.
+
+	* app/vectors/gimpbezierstroke.c
+	* app/vectors/gimpstroke.c: use the new functions.
+
 2003-07-17  Jakub Steiner <jimmac@ximian.com>
 
 	* plug-ins/common/*.c: added mnemonics for plugins

@@ -3,7 +3,7 @@
  *
  * gimpstroke.c
  * Copyright (C) 2002 Simon Budig  <simon@gimp.org>
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -101,7 +101,7 @@ gimp_stroke_get_type (void)
       };
 
       stroke_type = g_type_register_static (GIMP_TYPE_OBJECT,
-                                            "GimpStroke", 
+                                            "GimpStroke",
                                             &stroke_info, 0);
     }
 
@@ -162,12 +162,15 @@ static void
 gimp_stroke_finalize (GObject *object)
 {
   GimpStroke *stroke;
+  GList      *list;
 
   stroke = GIMP_STROKE (object);
 
-#ifdef __GNUC__
-#warning FIXME: implement gimp_stroke_finalize()
-#endif
+  for (list = stroke->anchors; list; list = list->next)
+    gimp_anchor_free ((GimpAnchor *) list->data);
+
+  if (stroke->temp_anchor)
+    gimp_anchor_free (stroke->temp_anchor);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -274,7 +277,7 @@ gimp_stroke_real_anchor_get_next (const GimpStroke *stroke,
 
   if (list)
     return (GimpAnchor *) list->data;
- 
+
   return NULL;
 }
 
@@ -533,18 +536,12 @@ gimp_stroke_real_duplicate (const GimpStroke *stroke)
 
   for (list = new_stroke->anchors; list; list = g_list_next (list))
     {
-      GimpAnchor *new_anchor = g_new0 (GimpAnchor, 1);
-
-      *new_anchor = *((GimpAnchor *) (list->data));
-
-      list->data = new_anchor;
+      list->data = gimp_anchor_duplicate ((GimpAnchor *) list->data);
     }
 
   if (stroke->temp_anchor)
     {
-      new_stroke->temp_anchor = g_new0 (GimpAnchor, 1);
-
-      *(new_stroke->temp_anchor) = *(stroke->temp_anchor);
+      new_stroke->temp_anchor = gimp_anchor_duplicate (stroke->temp_anchor);
     }
 
   return new_stroke;
@@ -628,7 +625,7 @@ gimp_stroke_real_get_draw_controls (const GimpStroke  *stroke)
 
   return g_list_reverse (ret_list);
 }
-          
+
 
 GArray *
 gimp_stroke_get_draw_lines (const GimpStroke  *stroke)

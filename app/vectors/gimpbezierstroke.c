@@ -3,7 +3,7 @@
  *
  * gimpstroke.c
  * Copyright (C) 2002 Simon Budig  <simon@gimp.org>
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -113,7 +113,7 @@ gimp_bezier_stroke_get_type (void)
       };
 
       bezier_stroke_type = g_type_register_static (GIMP_TYPE_STROKE,
-                                                   "GimpBezierStroke", 
+                                                   "GimpBezierStroke",
                                                    &bezier_stroke_info, 0);
     }
 
@@ -166,6 +166,7 @@ gimp_bezier_stroke_new (void)
 
   stroke->anchors = NULL;
   stroke->closed = FALSE;
+
   return stroke;
 }
 
@@ -224,9 +225,7 @@ gimp_bezier_stroke_extend (GimpBezierStroke     *bezier_stroke,
       /* assure that there is no neighbor specified */
       g_return_val_if_fail (neighbor == NULL, NULL);
 
-      anchor = g_new0 (GimpAnchor, 1);
-      anchor->position = *coords;
-      anchor->type = GIMP_ANCHOR_CONTROL;
+      anchor = gimp_anchor_new (GIMP_ANCHOR_CONTROL, coords);
 
       stroke->anchors = g_list_append (stroke->anchors, anchor);
 
@@ -247,9 +246,11 @@ gimp_bezier_stroke_extend (GimpBezierStroke     *bezier_stroke,
                                               EXTEND_SIMPLE);
 
           break;
+
         default:
           anchor = NULL;
         }
+
       return anchor;
     }
   else
@@ -324,6 +325,8 @@ gimp_bezier_stroke_extend (GimpBezierStroke     *bezier_stroke,
 
       if (loose_end)
         {
+          GimpAnchorType  type;
+
           /* We have to detect the type of the point to add... */
 
           control_count = 0;
@@ -350,27 +353,27 @@ gimp_bezier_stroke_extend (GimpBezierStroke     *bezier_stroke,
           switch (extend_mode)
             {
             case EXTEND_SIMPLE:
-              anchor = g_new0 (GimpAnchor, 1);
-              anchor->position = *coords;
-
               switch (control_count)
                 {
                 case 0:
-                  anchor->type = GIMP_ANCHOR_CONTROL;
+                  type = GIMP_ANCHOR_CONTROL;
                   break;
                 case 1:
                   if (listneighbor)  /* only one handle in the path? */
-                    anchor->type = GIMP_ANCHOR_CONTROL;
+                    type = GIMP_ANCHOR_CONTROL;
                   else
-                    anchor->type = GIMP_ANCHOR_ANCHOR;
+                    type = GIMP_ANCHOR_ANCHOR;
                   break;
                 case 2:
-                  anchor->type = GIMP_ANCHOR_ANCHOR;
+                  type = GIMP_ANCHOR_ANCHOR;
                   break;
                 default:
-                  g_printerr ("inconsistent bezier curve: "
-                              "%d successive control handles", control_count);
+                  g_warning ("inconsistent bezier curve: "
+                             "%d successive control handles", control_count);
+                  type = GIMP_ANCHOR_ANCHOR;
                 }
+
+              anchor = gimp_anchor_new (type, coords);
 
               if (loose_end == 1)
                 stroke->anchors = g_list_append (stroke->anchors, anchor);
@@ -406,8 +409,8 @@ gimp_bezier_stroke_extend (GimpBezierStroke     *bezier_stroke,
                                                       EXTEND_SIMPLE);
                   break;
                 default:
-                  g_printerr ("inconsistent bezier curve: "
-                              "%d successive control handles", control_count);
+                  g_warning ("inconsistent bezier curve: "
+                             "%d successive control handles", control_count);
                 }
             }
 
@@ -542,8 +545,8 @@ gimp_bezier_stroke_anchor_convert (GimpStroke            *stroke,
       break;
 
     default:
-      g_printerr ("gimp_bezier_stroke_anchor_convert: "
-                  "unimplemented anchor conversion %d\n", feature);
+      g_warning ("gimp_bezier_stroke_anchor_convert: "
+                 "unimplemented anchor conversion %d\n", feature);
     }
 }
 
@@ -560,7 +563,7 @@ gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
 
   g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (stroke), NULL);
   g_return_val_if_fail (ret_closed != NULL, NULL);
-  
+
   if (!stroke->anchors)
     {
       *ret_closed = FALSE;
@@ -604,7 +607,7 @@ gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
         segmentcoords[3] = ((GimpAnchor *) anchorlist->data)->position;
 
       gimp_bezier_coords_subdivide (segmentcoords, precision, &ret_coords);
-      
+
     }
 
   ret_coords = g_array_append_val (ret_coords, segmentcoords[3]);
@@ -646,7 +649,7 @@ gimp_bezier_coords_mix (const gdouble     amul,
     }
 }
 
-                        
+
 /*    (a+b)/2   */
 
 static void
@@ -738,7 +741,7 @@ gimp_bezier_coords_length (const GimpCoords *a)
 /*
  * a helper function that determines if a bezier segment is "straight
  * enough" to be approximated by a line.
- * 
+ *
  * Needs four GimpCoords in an array.
  */
 
@@ -876,7 +879,7 @@ gimp_bezier_coords_subdivide2 (const GimpCoords *beziercoords,
       gimp_bezier_coords_subdivide2 (&(subdivided[3]), precision,
                                      ret_coords, depth-1);
     }
-  
+
   /* g_printerr ("gimp_bezier_coords_subdivide end: %d entries\n", (*ret_coords)->len); */
 }
 

@@ -15,6 +15,7 @@ noinst_LIBRARIES = libappvectors.a
 
 libappvectors_a_SOURCES = \
 	vectors-types.h		\
+	gimpanchor.c		\
 	gimpanchor.h		\
 	gimpbezierstroke.h	\
 	gimpbezierstroke.c	\

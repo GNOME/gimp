@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpanchor.h
+ * gimpanchor.c
  * Copyright (C) 2002 Simon Budig  <simon@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,23 +19,37 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_ANCHOR_H__
-#define __GIMP_ANCHOR_H__
+#include "config.h"
+
+#include "glib-object.h"
+
+#include "vectors-types.h"
+
+#include "gimpanchor.h"
 
 
-struct _GimpAnchor
+GimpAnchor *
+gimp_anchor_new (GimpAnchorType    type,
+                 const GimpCoords *position)
 {
-  GimpCoords        position;
+  GimpAnchor *anchor = g_new0 (GimpAnchor, 1);
 
-  GimpAnchorType    type;   /* Interpretation dependant on GimpStroke type */
-  gboolean          selected;
-};
+  anchor->type = type;
 
+  if (position)
+    anchor->position = *position;
 
-GimpAnchor  * gimp_anchor_new       (GimpAnchorType    type,
-                                     const GimpCoords *position);
-void          gimp_anchor_free      (GimpAnchor       *anchor);
-GimpAnchor  * gimp_anchor_duplicate (const GimpAnchor *anchor);
+  return anchor;
+}
 
+void
+gimp_anchor_free (GimpAnchor *anchor)
+{
+  g_free (anchor);
+}
 
-#endif /* __GIMP_ANCHOR_H__ */
+GimpAnchor *
+gimp_anchor_duplicate (const GimpAnchor *anchor)
+{
+  return g_memdup (anchor, sizeof (GimpAnchor));
+}
