@@ -75,8 +75,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
@@ -2080,10 +2078,8 @@ CML_save_to_file_response (GtkFileSelection *fs,
                            gpointer          data)
 {
   const gchar *filename;
-  struct stat  buf;
   FILE        *file = NULL;
   gint         channel_id;
-  gint         err;
 
   if (response_id != GTK_RESPONSE_OK)
     {
@@ -2095,33 +2091,26 @@ CML_save_to_file_response (GtkFileSelection *fs,
   if (! filename)
     return;
 
-  err = stat (filename, &buf);	/* returns zero if success */
-  if ((err == 0) || (errno == ENOENT))
+  if (g_file_test (filename, G_FILE_TEST_EXISTS))
     {
-      if (errno == ENOENT)
-	{
-	  file = fopen (filename, "w");
-	}
-      else if (buf.st_mode & S_IFDIR)
-	{
-	  GString *s = g_string_new (filename);
+      if (g_file_test (filename, G_FILE_TEST_IS_DIR))
+        {
+          gchar *path = g_build_filename (filename, G_DIR_SEPARATOR_S, NULL);
 
-	  if (filename[strlen (filename) - 1] != '/')
-	    g_string_append_c (s, '/');
-	  gtk_file_selection_set_filename (fs, s->str);
-	  g_string_free (s, TRUE);
-	  return;
-	}
-      else if (buf.st_mode & S_IFREG) /* already exists */
-	{
-	  if (! force_overwrite (filename, GTK_WIDGET (fs)))
-            return;
+          gtk_file_selection_set_filename (fs, path);
 
-          file = fopen (filename, "w");
-	}
+          g_free (path);
+
+          return;
+        }
+
+      if (! force_overwrite (filename, GTK_WIDGET (fs)))
+        return;
     }
 
-  if ((err != 0) && (file == NULL))
+  file = fopen (filename, "w");
+
+  if (! file)
     {
       g_message (_("Could not open '%s' for writing: %s"),
                  filename, g_strerror (errno));
@@ -2208,7 +2197,8 @@ force_overwrite (const gchar *filename,
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 6);
   gtk_widget_show (hbox);
 
-  buffer = g_strdup_printf (_("%s\nexists, Overwrite?"), filename);
+  buffer = g_strdup_printf (_("File '%s' exists.\n"
+                              "Overwrite it?"), filename);
   label = gtk_label_new (buffer);
   g_free (buffer);
 

@@ -3,7 +3,7 @@
  *
  * Copyright (C) 2002 Martin Guldahl <mguldahl@xmission.com>
  * Based on GTK code from:
- *    homomorphic (Copyright (C) 2001 Valter Marcus Hilden)         
+ *    homomorphic (Copyright (C) 2001 Valter Marcus Hilden)
  *    rand-noted  (Copyright (C) 1998 Miles O'Neal)
  *    nlfilt      (Copyright (C) 1997 Eric L. Hernes)
  *    pagecurl    (Copyright (C) 1996 Federico Mena Quintero)
@@ -22,20 +22,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
- * $Id$
  ****************************************************************************/
 
 #include "config.h"
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <time.h>
-#include <assert.h>
 #include <string.h>
-#include <sys/stat.h>
-#include <unistd.h>
 #include <errno.h>
+
+#include <sys/types.h>
+#include <sys/stat.h>
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
 
 #ifdef __GNUC__
 #warning GTK_DISABLE_DEPRECATED
@@ -44,6 +44,11 @@
 
 #include <gtk/gtk.h>
 
+#ifdef G_OS_WIN32
+#include <libgimpbase/gimpwin32-io.h>
+#endif
+
+#include <libgimpmath/gimpmath.h>
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -947,7 +952,7 @@ mw_preview_build (GimpDrawable *drawable)
 
   gimp_pixel_rgn_init (&pr, drawable, sel_x1, sel_y1, sel_width, sel_height,
                        FALSE, FALSE);
-  
+
   drwBits = g_new (guchar, sel_width * drawable->bpp);
 
   bc = mwp->bits = g_new (guchar, mwp->width * mwp->height * mwp->bpp);
@@ -1033,6 +1038,35 @@ cm_preserve_luminosity_callback (GtkWidget    *widget,
     cm_preview (mix);
 }
 
+static gchar *
+cm_settings_filename (CmParamsType *mix)
+{
+  gchar *filename;
+
+  if (! mix->filename)
+    mix->filename = g_strdup ("settings");
+
+  if (! g_path_is_absolute (mix->filename))
+    {
+      gchar *basedir;
+
+      basedir = g_build_filename (gimp_directory (), "channel-mixer", NULL);
+
+      if (! g_file_test (basedir, G_FILE_TEST_IS_DIR))
+        mkdir (basedir, 0775);
+
+      filename = g_build_filename (basedir, mix->filename, NULL);
+
+      g_free (basedir);
+    }
+  else
+    {
+      filename = g_strdup (mix->filename);
+    }
+
+  return filename;
+}
+
 /*----------------------------------------------------------------------
  *
  *--------------------------------------------------------------------*/
@@ -1040,9 +1074,8 @@ static void
 cm_load_file_callback (GtkWidget    *widget,
                        CmParamsType *mix)
 {
-  static GtkWidget *filesel;
+  static GtkWidget *filesel = NULL;
   gchar            *fname;
-  struct stat       s;
 
   if (!filesel)
     {
@@ -1062,26 +1095,7 @@ cm_load_file_callback (GtkWidget    *widget,
                         NULL);
     }
 
-  if (mix->filename == NULL)
-    mix->filename = g_strdup ("settings");
-
-  if (mix->filename[0] != '/')
-    {
-      gchar *basedir;
-
-      basedir = g_build_filename (gimp_directory (), "channel_mixer", NULL);
-
-      stat (basedir, &s);
-      if (!S_ISDIR (s.st_mode))
-        mkdir (basedir, 0775);
-
-      fname = g_build_filename (basedir, mix->filename, NULL);
-
-      g_free (basedir);
-    }
-  else
-    fname = g_strdup (mix->filename);
-
+  fname = cm_settings_filename (mix);
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel), fname);
   g_free (fname);
 
@@ -1180,8 +1194,10 @@ cm_load_file_response_callback (GtkFileSelection *fs,
             cm_preview (mix);
         }
       else
-	g_message (_("Could not open '%s' for reading: %s"),
-	           mix->filename, g_strerror (errno));
+        {
+          g_message (_("Could not open '%s' for reading: %s"),
+                     mix->filename, g_strerror (errno));
+        }
     }
 
   gtk_widget_hide (GTK_WIDGET (fs));
@@ -1194,9 +1210,8 @@ static void
 cm_save_file_callback (GtkWidget    *widget,
                        CmParamsType *mix)
 {
-  static GtkWidget *filesel;
+  static GtkWidget *filesel = NULL;
   gchar            *fname;
-  struct stat       s;
 
   if (!filesel)
     {
@@ -1216,26 +1231,7 @@ cm_save_file_callback (GtkWidget    *widget,
                         NULL);
     }
 
-  if (mix->filename == NULL)
-    mix->filename = g_strdup ("settings");
-
-  if (mix->filename[0] != '/')
-    {
-      gchar *basedir;
-
-      basedir = g_build_filename (gimp_directory (), "channel_mixer", NULL);
-
-      stat (basedir, &s);
-      if (!S_ISDIR (s.st_mode))
-        mkdir (basedir, 0775);
-
-      fname = g_build_filename (basedir, mix->filename, NULL);
-
-      g_free (basedir);
-    }
-  else
-    fname = g_strdup (mix->filename);
-
+  fname = cm_settings_filename (mix);
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel), fname);
   g_free (fname);
 
@@ -1251,8 +1247,6 @@ cm_save_file_response_callback (GtkFileSelection *fs,
                                 CmParamsType     *mix)
 {
   const gchar *filename;
-  struct stat  s;
-  gint         err;
   FILE        *file = NULL;
 
   if (response_id != GTK_RESPONSE_OK)
@@ -1265,33 +1259,26 @@ cm_save_file_response_callback (GtkFileSelection *fs,
   if (! filename)
     return;
 
-  err = stat (filename, &s);  /* returns zero if success */
-  if ((err == 0) || (errno == ENOENT))
+  if (g_file_test (filename, G_FILE_TEST_EXISTS))
     {
-      if (errno == ENOENT)
+      if (g_file_test (filename, G_FILE_TEST_IS_DIR))
         {
-          file = fopen (filename, "w");
-        }
-      else if (s.st_mode & S_IFDIR)
-        {
-          GString *s = g_string_new (filename);
+          gchar *path = g_build_filename (filename, G_DIR_SEPARATOR_S, NULL);
 
-          if (filename[strlen (filename) - 1] != '/')
-            g_string_append_c (s, '/');
-          gtk_file_selection_set_filename (fs, s->str);
-          g_string_free (s, TRUE);
+          gtk_file_selection_set_filename (fs, path);
+
+          g_free (path);
+
           return;
         }
-      else if (s.st_mode & S_IFREG) /* already exists */
-        {
-          if (! cm_force_overwrite (filename, GTK_WIDGET (fs)))
-            return;
 
-           file = fopen (filename, "w");
-        }
+      if (! cm_force_overwrite (filename, GTK_WIDGET (fs)))
+        return;
     }
-                                                                                
-  if ((err != 0) && (file == NULL))
+
+  file = fopen (filename, "w");
+
+  if (! file)
     {
       g_message (_("Could not open '%s' for writing: %s"),
                  filename, g_strerror (errno));
@@ -1335,7 +1322,8 @@ cm_force_overwrite (const gchar *filename,
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 6);
   gtk_widget_show (hbox);
 
-  buffer = g_strdup_printf (_("%s\nexists, Overwrite?"), filename);
+  buffer = g_strdup_printf (_("File '%s' exists.\n"
+                              "Overwrite it?"), filename);
   label = gtk_label_new (buffer);
   g_free (buffer);
 
@@ -1400,7 +1388,8 @@ cm_save_file (CmParamsType *mix,
  *
  *--------------------------------------------------------------------*/
 static void
-cm_option_callback (GtkWidget * widget, CmParamsType *mix)
+cm_option_callback (GtkWidget    *widget,
+                    CmParamsType *mix)
 {
   gimp_menu_item_update (widget, &mix->output_channel);
 
