@@ -60,7 +60,6 @@
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-selection.h"
-#include "gximage.h"
 
 #include "gimprc.h"
 #include "nav_window.h"
@@ -207,7 +206,10 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->cursor_format_str[0]  = '\0';
   shell->cancelbutton          = NULL;
 
-  shell->scroll_gc             = NULL;
+  shell->render_buf            = g_malloc (GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH  *
+                                           GIMP_DISPLAY_SHELL_RENDER_BUF_HEIGHT *
+                                           3);
+  shell->render_gc             = NULL;
 
   shell->icon_size             = 32;
   shell->icon_idle_id          = 0;
@@ -264,10 +266,16 @@ gimp_display_shell_destroy (GtkObject *object)
   gdisplay_color_detach_all (gdisp);
 #endif /* DISPLAY_FILTERS */
 
-  if (shell->scroll_gc)
+  if (shell->render_buf)
     {
-      gdk_gc_unref (shell->scroll_gc);
-      shell->scroll_gc = NULL;
+      g_free (shell->render_buf);
+      shell->render_buf = NULL;
+    }
+
+  if (shell->render_gc)
+    {
+      gdk_gc_unref (shell->render_gc);
+      shell->render_gc = NULL;
     }
 
   if (shell->icon_idle_id)
@@ -1983,16 +1991,6 @@ gimp_display_shell_display_area (GimpDisplayShell *shell,
   gint    dx, dy;
   gint    i, j;
 
-#ifdef DISPLAY_FILTERS
-  guchar *buf;
-  gint    bpp, bpl;
-  GList  *list;
-
-  buf = gximage_get_data ();
-  bpp = gximage_get_bpp ();
-  bpl = gximage_get_bpl ();
-#endif /* DISPLAY_FILTERS */
-
   sx = SCALEX (shell->gdisp, shell->gdisp->gimage->width);
   sy = SCALEY (shell->gdisp, shell->gdisp->gimage->height);
 
@@ -2058,17 +2056,18 @@ gimp_display_shell_display_area (GimpDisplayShell *shell,
       y2 = shell->disp_yoffset + sy;
     }
 
-  /*  display the image in GXIMAGE_WIDTH x GXIMAGE_HEIGHT sized chunks */
-  for (i = y1; i < y2; i += GXIMAGE_HEIGHT)
+  /*  display the image in RENDER_BUF_WIDTH x RENDER_BUF_HEIGHT sized chunks */
+  for (i = y1; i < y2; i += GIMP_DISPLAY_SHELL_RENDER_BUF_HEIGHT)
     {
-      for (j = x1; j < x2; j += GXIMAGE_WIDTH)
+      for (j = x1; j < x2; j += GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH)
         {
-          dx = MIN (x2 - j, GXIMAGE_WIDTH);
-          dy = MIN (y2 - i, GXIMAGE_HEIGHT);
+          dx = MIN (x2 - j, GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH);
+          dy = MIN (y2 - i, GIMP_DISPLAY_SHELL_RENDER_BUF_HEIGHT);
 
-          render_image (shell->gdisp,
-                        j - shell->disp_xoffset, i - shell->disp_yoffset,
-                        dx, dy);
+          gimp_display_shell_render (shell,
+                                     j - shell->disp_xoffset,
+                                     i - shell->disp_yoffset,
+                                     dx, dy);
 
 #if 0
           /* Invalidate the projection just after we render it! */
@@ -2078,20 +2077,6 @@ gimp_display_shell_display_area (GimpDisplayShell *shell,
                                                 dx, dy,
                                                 0, 0, 0, 0);
 #endif
-
-#ifdef DISPLAY_FILTERS
-          for (list = shell->cd_list; list; list = g_list_next (list))
-            {
-              ColorDisplayNode *node = (ColorDisplayNode *) list->data;
-
-              node->cd_convert (node->cd_ID, buf, dx, dy, bpp, bpl);
-            }
-#endif /* DISPLAY_FILTERS */
-
-          gximage_put (shell->canvas->window,
-                       j, i, dx, dy,
-                       shell->offset_x,
-                       shell->offset_y);
         }
     }
 }

@@ -88,7 +88,8 @@ struct _GimpDisplayShell
   gchar             cursor_format_str[CURSOR_FORMAT_LENGTH];
   GtkWidget        *cancelbutton;      /*  cancel button       */
 
-  GdkGC            *scroll_gc;         /*  GC for scrolling    */
+  guchar           *render_buf;        /*  buffer for rendering the image     */
+  GdkGC            *render_gc;         /*  GC for rendering the image         */
 
   gint              icon_size;         /*  size of the icon pixmap            */
   guint             icon_idle_id;      /*  ID of the idle-function            */

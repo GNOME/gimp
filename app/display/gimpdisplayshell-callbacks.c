@@ -173,9 +173,9 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
   shell->disp_width  = canvas->allocation.width;
   shell->disp_height = canvas->allocation.height;
 
-  /*  create GC for scrolling  */
-  shell->scroll_gc = gdk_gc_new (shell->canvas->window);
-  gdk_gc_set_exposures (shell->scroll_gc, TRUE);
+  /*  create GC for rendering  */
+  shell->render_gc = gdk_gc_new (shell->canvas->window);
+  gdk_gc_set_exposures (shell->render_gc, TRUE);
 
   /*  set up the scrollbar observers  */
   g_signal_connect (G_OBJECT (shell->hsbdata), "value_changed",

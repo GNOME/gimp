@@ -38,7 +38,6 @@
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-render.h"
-#include "display/gximage.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpitemfactory.h"
@@ -249,7 +248,6 @@ gui_init (Gimp *gimp)
   color_display_init ();
 #endif /* DISPLAY_FILTERS */
 
-  gximage_init ();
   render_setup (gimprc.transparency_type, gimprc.transparency_size);
 
   dialogs_init (gimp);
@@ -314,7 +312,6 @@ gui_exit (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   menus_exit (gimp);
-  gximage_free ();
   render_free ();
 
   dialogs_exit (gimp);

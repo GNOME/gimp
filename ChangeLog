@@ -1,3 +1,23 @@
+2001-11-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/Makefile.am
+	* app/display/gximage.[ch]: removed. It was a wrapper around
+	nothing since we use GdkRGB.
+
+	* app/display/gimpdisplayshell-render.[ch]: added the render
+	buf size defines here, added the #if 0'ed display filter stuff
+	and the actual GdkRGB render stuff here too.
+
+	* app/display/gimpdisplayshell.[ch]: added shell->render_buf as
+	replacement for the global gximage buffer, renamed shell->scroll_gc
+	to shell->render_gc and use it all over the place when rendering
+	image data.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-scroll.c: changed accordingly.
+
+	* app/gui/gui.c: don't call gximage init/exit stuff.
+
 2001-11-30  Rebecca Walter  <bex@gimp.org>
 
 	* app/gui/gradient-select.c

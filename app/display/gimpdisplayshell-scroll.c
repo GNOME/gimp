@@ -88,7 +88,7 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
       shell->offset_y += y_offset;
 
       gdk_draw_drawable (shell->canvas->window,
-			 shell->scroll_gc,
+			 shell->render_gc,
 			 shell->canvas->window,
 			 src_x, src_y,
 			 dest_x, dest_y,

@@ -31,9 +31,6 @@ libappdisplay_a_SOURCES = @STRIP_BEGIN@ 	\
 	gimpdisplayshell-scroll.h		\
 	gimpdisplayshell-selection.c		\
 	gimpdisplayshell-selection.h		\
-	\
-	gximage.c				\
-	gximage.h				\
 @STRIP_END@
 
 AM_CPPFLAGS = @STRIP_BEGIN@ \

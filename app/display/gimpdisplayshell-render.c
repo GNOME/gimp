@@ -34,12 +34,8 @@
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-render.h"
-#include "gximage.h"
 
 #include "gimprc.h"
-
-
-#define MAX_PREVIEW_SIZE 256  /* EEK */
 
 
 typedef struct _RenderInfo  RenderInfo;
@@ -48,22 +44,22 @@ typedef void (* RenderFunc) (RenderInfo *info);
 
 struct _RenderInfo
 {
-  GimpDisplay *gdisp;
-  TileManager *src_tiles;
-  guint       *alpha;
-  guchar      *scale;
-  guchar      *src;
-  guchar      *dest;
-  gint         x, y;
-  gint         w, h;
-  gfloat       scalex;
-  gfloat       scaley;
-  gint         src_x, src_y;
-  gint         src_bpp;
-  gint         dest_bpp;
-  gint         dest_bpl;
-  gint         dest_width;
-  gint         byte_order;
+  GimpDisplayShell *shell;
+  TileManager      *src_tiles;
+  guint            *alpha;
+  guchar           *scale;
+  guchar           *src;
+  guchar           *dest;
+  gint              x, y;
+  gint              w, h;
+  gfloat            scalex;
+  gfloat            scaley;
+  gint              src_x, src_y;
+  gint              src_bpp;
+  gint              dest_bpp;
+  gint              dest_bpl;
+  gint              dest_width;
+  gint              byte_order;
 };
 
 
@@ -110,7 +106,7 @@ render_setup (GimpCheckType check_type,
 
   /*  allocate a buffer for arranging information from a row of tiles  */
   if (! tile_buf)
-    tile_buf = g_new (guchar, GXIMAGE_WIDTH * MAX_CHANNELS);
+    tile_buf = g_new (guchar, GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH * MAX_CHANNELS);
 
   if (! render_blend_dark_check)
     render_blend_dark_check = g_new (guchar, 65536);
@@ -145,6 +141,8 @@ render_setup (GimpCheckType check_type,
   g_free (render_check_buf);
   g_free (render_empty_buf);
   g_free (render_temp_buf);
+
+#define MAX_PREVIEW_SIZE 256  /* EEK */
 
   /*  calculate check buffer for previews  */
   if (TRUE /* preview_size */)
@@ -188,24 +186,24 @@ render_free (void)
 
 /*  Render Image functions  */
 
-static void     render_image_rgb                (RenderInfo   *info);
-static void     render_image_rgb_a              (RenderInfo   *info);
-static void     render_image_gray               (RenderInfo   *info);
-static void     render_image_gray_a             (RenderInfo   *info);
-static void     render_image_indexed            (RenderInfo   *info);
-static void     render_image_indexed_a          (RenderInfo   *info);
+static void     render_image_rgb                (RenderInfo       *info);
+static void     render_image_rgb_a              (RenderInfo       *info);
+static void     render_image_gray               (RenderInfo       *info);
+static void     render_image_gray_a             (RenderInfo       *info);
+static void     render_image_indexed            (RenderInfo       *info);
+static void     render_image_indexed_a          (RenderInfo       *info);
 
-static void     render_image_init_info          (RenderInfo   *info,
-						 GimpDisplay  *gdisp,
-						 gint          x,
-						 gint          y,
-						 gint          w,
-						 gint          h);
-static guint  * render_image_init_alpha         (gint          mult);
-static guchar * render_image_accelerate_scaling (gint          width,
-						 gint          start,
-						 gfloat        scalex);
-static guchar * render_image_tile_fault         (RenderInfo   *info);
+static void     render_image_init_info          (RenderInfo       *info,
+						 GimpDisplayShell *shell,
+						 gint              x,
+						 gint              y,
+						 gint              w,
+						 gint              h);
+static guint  * render_image_init_alpha         (gint              mult);
+static guchar * render_image_accelerate_scaling (gint              width,
+						 gint              start,
+						 gfloat            scalex);
+static guchar * render_image_tile_fault         (RenderInfo       *info);
 
 
 static RenderFunc render_funcs[6] =
@@ -227,23 +225,27 @@ static RenderFunc render_funcs[6] =
 /*****************************************************************/
 
 void
-render_image (GimpDisplay *gdisp,
-	      gint         x,
-	      gint         y,
-	      gint         w,
-	      gint         h)
+gimp_display_shell_render (GimpDisplayShell *shell,
+                           gint              x,
+                           gint              y,
+                           gint              w,
+                           gint              h)
 {
   RenderInfo info;
   gint       image_type;
 
-  render_image_init_info (&info, gdisp, x, y, w, h);
+#ifdef DISPLAY_FILTERS
+  GList     *list;
+#endif
 
-  image_type = gimp_image_projection_type (gdisp->gimage);
+  render_image_init_info (&info, shell, x, y, w, h);
+
+  image_type = gimp_image_projection_type (shell->gdisp->gimage);
 
   if ((image_type < 0) || (image_type > 5))
     {
       g_message ("unknown gimage projection type: %d",
-		 gimp_image_projection_type (gdisp->gimage));
+		 gimp_image_projection_type (shell->gdisp->gimage));
       return;
     }
 
@@ -257,9 +259,37 @@ render_image (GimpDisplay *gdisp,
    * are in case of future need.  -- austin, 28th Nov 1998.
    */
   if (image_type != RGBA_GIMAGE && image_type != GRAYA_GIMAGE)
-      g_warning ("using untested projection type %d", image_type);
+    g_warning ("using untested projection type %d", image_type);
 
   (* render_funcs[image_type]) (&info);
+
+#if 0
+#ifdef DISPLAY_FILTERS
+  /*  apply filters to the rendered projection  */
+  for (list = shell->cd_list; list; list = g_list_next (list))
+    {
+      ColorDisplayNode *node = (ColorDisplayNode *) list->data;
+
+      node->cd_convert (node->cd_ID,
+                        shell->render_buf,
+                        w, h,
+                        3,
+                        3 * GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH);
+    }
+#endif /* DISPLAY_FILTERS */
+#endif
+
+  /*  put it to the screen  */
+  gdk_draw_rgb_image_dithalign (shell->canvas->window,
+                                shell->render_gc,
+                                x + shell->disp_xoffset,
+                                y + shell->disp_yoffset,
+                                w, h,
+                                GDK_RGB_DITHER_MAX,
+                                shell->render_buf,
+                                3 * GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH,
+                                shell->offset_x,
+                                shell->offset_y);
 }
 
 
@@ -281,7 +311,7 @@ render_image_indexed (RenderInfo *info)
   gfloat  error;
   gfloat  step;
 
-  cmap = gimp_image_get_colormap (info->gdisp->gimage);
+  cmap = gimp_image_get_colormap (info->shell->gdisp->gimage);
 
   y  = info->y;
   ye = info->y + info->h;
@@ -355,7 +385,7 @@ render_image_indexed_a (RenderInfo *info)
   gfloat  error;
   gfloat  step;
 
-  cmap = gimp_image_get_colormap (info->gdisp->gimage);
+  cmap = gimp_image_get_colormap (info->shell->gdisp->gimage);
   alpha = info->alpha;
 
   y  = info->y;
@@ -736,39 +766,39 @@ render_image_rgb_a (RenderInfo *info)
 }
 
 static void
-render_image_init_info (RenderInfo  *info,
-			GimpDisplay *gdisp,
-			gint         x,
-			gint         y,
-			gint         w,
-			gint         h)
+render_image_init_info (RenderInfo       *info,
+			GimpDisplayShell *shell,
+			gint              x,
+			gint              y,
+			gint              w,
+			gint              h)
 {
-  info->gdisp      = gdisp;
-  info->src_tiles  = gimp_image_projection (gdisp->gimage);
-  info->x          = x + GIMP_DISPLAY_SHELL (gdisp->shell)->offset_x;
-  info->y          = y + GIMP_DISPLAY_SHELL (gdisp->shell)->offset_y;
+  info->shell      = shell;
+  info->src_tiles  = gimp_image_projection (shell->gdisp->gimage);
+  info->x          = x + shell->offset_x;
+  info->y          = y + shell->offset_y;
   info->w          = w;
   info->h          = h;
-  info->scalex     = SCALEFACTOR_X (gdisp);
-  info->scaley     = SCALEFACTOR_Y (gdisp);
-  info->src_x      = UNSCALEX (gdisp, info->x);
-  info->src_y      = UNSCALEY (gdisp, info->y);
-  info->src_bpp    = gimp_image_projection_bytes (gdisp->gimage);
-  info->dest       = gximage_get_data ();
-  info->dest_bpp   = gximage_get_bpp ();
-  info->dest_bpl   = gximage_get_bpl ();
+  info->scalex     = SCALEFACTOR_X (shell->gdisp);
+  info->scaley     = SCALEFACTOR_Y (shell->gdisp);
+  info->src_x      = UNSCALEX (shell->gdisp, info->x);
+  info->src_y      = UNSCALEY (shell->gdisp, info->y);
+  info->src_bpp    = gimp_image_projection_bytes (shell->gdisp->gimage);
+  info->dest       = shell->render_buf;
+  info->dest_bpp   = 3;
+  info->dest_bpl   = info->dest_bpp * GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH;
   info->dest_width = info->w * info->dest_bpp;
-  info->byte_order = gximage_get_byte_order ();
+  info->byte_order = GDK_MSB_FIRST;
   info->scale      = render_image_accelerate_scaling (w, info->x, info->scalex);
   info->alpha      = NULL;
 
-  switch (gimp_image_projection_type (gdisp->gimage))
+  switch (gimp_image_projection_type (shell->gdisp->gimage))
     {
     case RGBA_GIMAGE:
     case GRAYA_GIMAGE:
     case INDEXEDA_GIMAGE:
       info->alpha =
-	render_image_init_alpha (gimp_image_projection_opacity (gdisp->gimage));
+	render_image_init_alpha (gimp_image_projection_opacity (shell->gdisp->gimage));
       break;
     default:
       /* nothing special needs doing */
@@ -797,7 +827,7 @@ render_image_init_alpha (gint mult)
   return alpha_mult;
 }
 
-static guchar*
+static guchar *
 render_image_accelerate_scaling (gint   width,
 				 gint   start,
 				 gfloat scalex)
@@ -808,19 +838,19 @@ render_image_accelerate_scaling (gint   width,
   gfloat step;
   gint   i;
 
-  if (!scale)
-    scale = g_new (guchar, GXIMAGE_WIDTH + 1);
+  if (! scale)
+    scale = g_new (guchar, GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH + 1);
 
   step = 1.0 / scalex;
 
   error = start * step;
-  error -= ((int)error) - step;
+  error -= ((gint) error) - step;
 
   for (i = 0; i <= width; i++)
-  {
-    scale[i] = ((int)error);
-    error += step - (int)error;
-  }    
+    {
+      scale[i] = ((gint) error);
+      error += step - (gint) error;
+    }
 
   return scale;
 }

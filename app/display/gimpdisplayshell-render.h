@@ -16,19 +16,24 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_DISPLAY_RENDER_H__
-#define __GIMP_DISPLAY_RENDER_H__
+#ifndef __GIMP_DISPLAY_SHELL_RENDER_H__
+#define __GIMP_DISPLAY_SHELL_RENDER_H__
+
+
+#define GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH  256
+#define GIMP_DISPLAY_SHELL_RENDER_BUF_HEIGHT 256
 
 
 /*  Functions  */
 void   render_setup (GimpCheckType  check_type,
 		     GimpCheckSize  check_size);
 void   render_free  (void);
-void   render_image (GimpDisplay   *gdisp,
-		     gint           x,
-		     gint           y,
-		     gint           w,
-		     gint           h);
+
+void   gimp_display_shell_render (GimpDisplayShell *shell,
+                                  gint              x,
+                                  gint              y,
+                                  gint              w,
+                                  gint              h);
 
 /*
  *  Extern variables
@@ -40,4 +45,4 @@ extern guchar *render_blend_dark_check;
 extern guchar *render_blend_light_check;
 
 
-#endif  /*  __GIMP_DISPLAY_RENDER_H__  */
+#endif  /*  __GIMP_DISPLAY_SHELL_RENDER_H__  */
