@@ -12,7 +12,7 @@ endif
 
 AM_LDFLAGS = $(mwindows)
 
-SUBDIRS = fractalexplorer-examples
+SUBDIRS = examples
 
 libexecdir = $(gimpplugindir)/plug-ins
 

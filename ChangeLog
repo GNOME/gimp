@@ -1,5 +1,11 @@
 2004-01-21  Manish Singh  <yosh@gimp.org>
 
+	* configure.in
+	* plug-ins/FractalExplorer/Makefile.am: renamed obnoxiously long
+	fractalexplorer-examples directory to simply examples.
+
+2004-01-21  Manish Singh  <yosh@gimp.org>
+
 	* configure.in: modernized, made a lot of things m4 macros, and made
 	versioning a lot more finegrained, in anticipation for post-2.0.
 

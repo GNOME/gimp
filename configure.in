@@ -380,7 +380,7 @@ PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= fontconfig_required_version)
 
 AC_PATH_PROG(FREETYPE_CONFIG, freetype-config, no)
 if test "x$FREETYPE_CONFIG" != "xno" ; then
-  AC_MSG_CHECKING([for Freetype libraries])
+  AC_MSG_CHECKING([for freetype libraries])
   FREETYPE_LIBS=`$FREETYPE_CONFIG --libs`
   AC_MSG_RESULT($FREETYPE_LIBS)
 fi
@@ -1468,7 +1468,7 @@ plug-ins/script-fu/scripts/Makefile
 plug-ins/script-fu/scripts/images/Makefile
 plug-ins/xjt/Makefile
 plug-ins/FractalExplorer/Makefile
-plug-ins/FractalExplorer/fractalexplorer-examples/Makefile
+plug-ins/FractalExplorer/examples/Makefile
 plug-ins/Lighting/Makefile
 plug-ins/MapObject/Makefile
 plug-ins/bmp/Makefile
