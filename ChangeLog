@@ -1,5 +1,10 @@
 2004-09-21  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/jpeg.c (save_dialog): let the dialog collapse
+	with the expander by making it not resizable.
+
+2004-09-21  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-close.c
 	(gimp_display_shell_close_dialog): resolved a mnemonics collision.
 
