@@ -50,6 +50,7 @@ EXTRA_DIST = \
 	TODO.xml		\
 	config.h.win32		\
 	gimp.spec.in		\
+	gimp.spec		\
 	gimptool-win32.c.in	\
 	intltool-extract.in	\
 	intltool-merge.in	\

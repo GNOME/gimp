@@ -1,3 +1,7 @@
+2003-08-28  Ville Pätsi  <drc@gimp.org>
+	* Makefile.am: Add gimp.spec to EXTRA_DIST to add it to
+	the dist tarball.
+
 2003-08-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimplayertreeview.c
