@@ -332,10 +332,12 @@ unsharp_region (GimpPixelRgn srcPR,
   x = x2-x1;
   y = y2-y1;
 
-  /* generate convolution matrix and make sure it's smaller than each dimension */
-  cmatrix_length = gen_convolve_matrix(radius, &cmatrix);
+  /* generate convolution matrix
+     and make sure it's smaller than each dimension */
+  cmatrix_length = gen_convolve_matrix (radius, &cmatrix);
+
   /* generate lookup table */
-  ctable = gen_lookup_table(cmatrix, cmatrix_length);
+  ctable = gen_lookup_table (cmatrix, cmatrix_length);
 
   /*  allocate row buffers  */
   cur_row  = g_new (guchar, x * bytes);
@@ -348,21 +350,21 @@ unsharp_region (GimpPixelRgn srcPR,
   /* blank out a region of the destination memory area, I think */
   for (row = 0; row < y; row++)
     {
-      gimp_pixel_rgn_get_row(&destPR, dest_row, x1, y1+row, (x2-x1));
-      memset(dest_row, 0, x*bytes);
-      gimp_pixel_rgn_set_row(&destPR, dest_row, x1, y1+row, (x2-x1));
+      gimp_pixel_rgn_get_row (&destPR, dest_row, x1, y1+row, (x2-x1));
+      memset (dest_row, 0, x*bytes);
+      gimp_pixel_rgn_set_row (&destPR, dest_row, x1, y1+row, (x2-x1));
     }
 
   /* blur the rows */
   for (row = 0; row < y; row++)
     {
-      gimp_pixel_rgn_get_row(&srcPR, cur_row, x1, y1+row, x);
-      gimp_pixel_rgn_get_row(&destPR, dest_row, x1, y1+row, x);
-      blur_line(ctable, cmatrix, cmatrix_length, cur_row, dest_row, x, bytes);
-      gimp_pixel_rgn_set_row(&destPR, dest_row, x1, y1+row, x);
+      gimp_pixel_rgn_get_row (&srcPR, cur_row, x1, y1+row, x);
+      gimp_pixel_rgn_get_row( &destPR, dest_row, x1, y1+row, x);
+      blur_line (ctable, cmatrix, cmatrix_length, cur_row, dest_row, x, bytes);
+      gimp_pixel_rgn_set_row (&destPR, dest_row, x1, y1+row, x);
 
-      if (row%5 == 0)
-        gimp_progress_update ((gdouble)row/(3*y));
+      if (row % 5 == 0)
+        gimp_progress_update ((gdouble) row / (3*y));
     }
 
   /* allocate column buffers */
@@ -372,13 +374,13 @@ unsharp_region (GimpPixelRgn srcPR,
   /* blur the cols */
   for (col = 0; col < x; col++)
     {
-      gimp_pixel_rgn_get_col(&destPR, cur_col, x1+col, y1, y);
-      gimp_pixel_rgn_get_col(&destPR, dest_col, x1+col, y1, y);
-      blur_line(ctable, cmatrix, cmatrix_length, cur_col, dest_col, y, bytes);
-      gimp_pixel_rgn_set_col(&destPR, dest_col, x1+col, y1, y);
+      gimp_pixel_rgn_get_col (&destPR, cur_col, x1+col, y1, y);
+      gimp_pixel_rgn_get_col (&destPR, dest_col, x1+col, y1, y);
+      blur_line (ctable, cmatrix, cmatrix_length, cur_col, dest_col, y, bytes);
+      gimp_pixel_rgn_set_col (&destPR, dest_col, x1+col, y1, y);
 
-      if (col%5 == 0)
-        gimp_progress_update ((gdouble)col/(3*x) + 0.33);
+      if (col % 5 == 0)
+        gimp_progress_update ((gdouble) col / (3 * x) + 0.33);
     }
 
   if ((run_mode != GIMP_RUN_NONINTERACTIVE))
@@ -392,47 +394,51 @@ unsharp_region (GimpPixelRgn srcPR,
   for (row = 0; row < y; row++)
     {
       value = 0;
+
       /* get source row */
-      gimp_pixel_rgn_get_row(&srcPR, cur_row, x1, y1+row, x);
+      gimp_pixel_rgn_get_row (&srcPR, cur_row, x1, y1+row, x);
+
       /* get dest row */
-      gimp_pixel_rgn_get_row(&destPR, dest_row, x1, y1+row, x);
+      gimp_pixel_rgn_get_row (&destPR, dest_row, x1, y1+row, x);
+
       /* combine the two */
       for (u = 0; u < x; u++)
         {
           for (v = 0; v < bytes; v++)
             {
               diff = (cur_row[u*bytes+v] - dest_row[u*bytes+v]);
+
               /* do tresholding */
               if (abs (2 * diff) < threshold)
                 diff = 0;
 
               value = cur_row[u*bytes+v] + amount * diff;
 
-              if (value < 0) dest_row[u*bytes+v] =0;
-              else if (value > 255) dest_row[u*bytes+v] = 255;
-              else  dest_row[u*bytes+v] = value;
+              dest_row[u*bytes+v] = CLAMP (value, 0, 255);
             }
         }
       /* update progress bar every five rows */
       if (row%5 == 0)
-        gimp_progress_update ((gdouble)row/(3*y) + 0.67);
+        gimp_progress_update ((gdouble) row / (3*y) + 0.67);
 
       gimp_pixel_rgn_set_row(&destPR, dest_row, x1, y1+row, x);
     }
 
+  gimp_progress_update (0.0);
+
   /* free the memory we took */
-  g_free(cur_row);
-  g_free(dest_row);
-  g_free(cur_col);
-  g_free(dest_col);
   g_free(cmatrix);
   g_free(ctable);
-
+  g_free(dest_col);
+  g_free(cur_col);
+  g_free(dest_row);
+  g_free(cur_row);
 }
 
 /* this function is written as if it is blurring a column at a time,
    even though it can operate on rows, too.  There is no difference
-   in the processing of the lines, at least to the blur_line function. */
+   in the processing of the lines, at least to the blur_line function.
+ */
 static inline void
 blur_line (gdouble *ctable,
            gdouble *cmatrix,
