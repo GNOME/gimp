@@ -1584,7 +1584,6 @@ msgid "Brush pipes should have at least one brush."
 msgstr "Sivellinputkessa pitäisi olla vähintään yksi sivellin."
 
 #: app/gimpbrushpipe.c:416 app/gimpbrushpipe.c:424
-#, fuzzy
 msgid "Failed to load one of the brushes in the brush pipe."
 msgstr "Yhtä sivellinputken siveltimistä ei voitu ladata."
 
@@ -1611,11 +1610,11 @@ msgstr "nimetön"
 #: app/gimpdrawable.c:764
 #, c-format
 msgid "Layer type %d not supported."
-msgstr "Taso tyyppiä %d ei tuettu."
+msgstr "Tasotyyppi %d ei ole tuettu."
 
 #: app/gimphelp.c:190
 msgid "Could not find GIMP Help Browser"
-msgstr ""
+msgstr "GIMP-avustusselain ei löytynyt"
 
 #: app/gimphelp.c:192
 msgid ""
@@ -1625,11 +1624,11 @@ msgid ""
 msgstr ""
 "Ei voitu löytää GIMP Help Browser proseduuria.\n"
 "Sitä ei todennäköisesti ole käännetty mukaan\n"
-"koska sinulla ei ole GtkXmHTML kirjastoa asennettuna."
+"koska sinulla ei ole GtkXmHTML-kirjastoa asennettuna."
 
 #: app/gimphelp.c:195
 msgid "Use Netscape instead"
-msgstr ""
+msgstr "Käytä Netscape-selainta"
 
 #: app/gimpimage.c:2322
 msgid "Layer cannot be raised any further"
@@ -2866,92 +2865,84 @@ msgid "Zoom out"
 msgstr "Zoomaa ulos"
 
 #: app/main.c:285
-#, fuzzy
 msgid ""
 "\n"
 "Invalid option.\n"
-msgstr "Sallitut vivut ovat:\n"
+msgstr ""
+"\n"
+"Epäkelpo vipu.\n"
 
 #: app/main.c:301
 msgid "GIMP version"
 msgstr "GIMPin versio"
 
 #: app/main.c:305
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "Usage: %s [option ... ] [file ... ]\n"
 "\n"
-msgstr "Käyttö: %s [vipu ...] [tiedostot ...]\n"
+msgstr ""
+"\n"
+"Käyttö: %s [vipu ...] [tiedostot ...]\n"
+"\n"
 
 #: app/main.c:306
-#, fuzzy
 msgid "Options:\n"
-msgstr "Tallennusasetukset"
+msgstr "Vivut:\n"
 
 #: app/main.c:307
-#, fuzzy
 msgid "  -b, --batch <commands>   Run in batch mode.\n"
-msgstr "  -b --batch <komennot>   Aja eräajona.\n"
+msgstr "  -b, --batch <komennot>   Aja eräajona.\n"
 
 #: app/main.c:308
-#, fuzzy
 msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
 msgstr ""
-"  --console-messages       Tulosta varoitukset pääteikkunaan erillisten "
+"  -c, --console-messages   Tulosta varoitukset pääteikkunaan erillisten "
 "dialogi-ikkunoiden sijaan.\n"
 
 #: app/main.c:309
-#, fuzzy
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
 msgstr ""
-"  --no-data    Älä lataa kuvioita, väriliukumia, paletteja tai siveltimiä.\n"
+"  -d, --no-data            Älä lataa kuvioita, väriliukumia, paletteja tai siveltimiä.\n"
 
 #: app/main.c:310
-#, fuzzy
 msgid "  -i, --no-interface       Run without a user interface.\n"
-msgstr "  -n --no-interface       Aja ilman käyttöliittymää.\n"
+msgstr "  -i, --no-interface       Aja ilman käyttöliittymää.\n"
 
 #: app/main.c:311
-#, fuzzy
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
-msgstr "  -g --gimprc <gimprc>    Käytä toista gimprc-tiedostoa.\n"
+msgstr "  -g, --gimprc <gimprc>    Käytä toista gimprc-tiedostoa.\n"
 
 #: app/main.c:312
-#, fuzzy
 msgid "  -h, --help               Output this help.\n"
-msgstr "  -h --help               Tulosta tämä avustusteksti.\n"
+msgstr "  -h, --help               Tulosta tämä avustusteksti.\n"
 
 #: app/main.c:313
-#, fuzzy
 msgid "  -r, --restore-session    Try to restore saved session.\n"
-msgstr "  -r --restore-session    Yritä palauttaa talletettua istuntoa.\n"
+msgstr "  -r, --restore-session    Yritä palauttaa talletettua istuntoa.\n"
 
 #: app/main.c:314
-#, fuzzy
 msgid "  -s, --no-splash          Do not show the startup window.\n"
-msgstr "  --no-splash             Älä näytä alkuikkunaa.\n"
+msgstr "  -s, --no-splash          Älä näytä alkuikkunaa.\n"
 
 #: app/main.c:315
-#, fuzzy
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
-msgstr "  --no-splash-image       Älä lisää kuvaa alkuikkunaan.\n"
+msgstr "  -S, --no-splash-image    Älä lisää kuvaa alkuikkunaan.\n"
 
 #: app/main.c:316
-#, fuzzy
 msgid "  -v, --version            Output version information.\n"
-msgstr "  -v --version            Tulosta versiotiedot.\n"
+msgstr "  -v, --version            Tulosta versiotiedot.\n"
 
 #: app/main.c:317
 msgid "  --verbose                Show startup messages.\n"
-msgstr "  --verbose               Näytä käynnistyslokia.\n"
+msgstr "  --verbose                Näytä käynnistyslokia.\n"
 
 #: app/main.c:318
-#, fuzzy
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
@@ -2964,29 +2955,26 @@ msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr "  --no-xshm               Älä käytä X:n Shared Memory -piirrettä.\n"
 
 #: app/main.c:320
-#, fuzzy
 msgid ""
 "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
-"  --debug-handlers         Laita päälle debuggaus signaali hallitsijat ei "
-"fataaleille signaaleille.\n"
+"  --debug-handlers         Mahdollista vähemmän vakavien virheitten tutkinta.\n"
 
 #: app/main.c:321
 msgid "  --display <display>      Use the designated X display.\n"
-msgstr "  --display <näyttö>       Käytä osoitettua X-näyttöä.\n"
+msgstr "  --display <näyttö>       Käytä toista X-näyttöä.\n"
 
 #: app/main.c:322
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
-msgstr ""
-"  --system-gimprc <gimprc> Käytä vaihtoehtoista "
-"järjestelmä-gimprc-tiedostoa.\n"
+msgstr "  --system-gimprc <gimprc> Käytä vaihtoehtoista yleistä gimprc-tiedostoa.\n"
 
 #: app/main.c:324
-#, fuzzy
 msgid ""
 "                           Debugging mode for fatal signals.\n"
 "\n"
-msgstr "\t\t\t  Debuggaus tila fataaleille signaaleille.\n"
+msgstr ""
+"                           Tutkintatila vakaville signaaleille.\n"
+"\n"
 
 #: app/main.c:341
 msgid "(This console window will close in ten seconds)\n"
@@ -3972,9 +3960,9 @@ msgstr ""
 "RGB arvot säädetyn alueen ulkopuolella"
 
 #: app/palette.c:507
-#, fuzzy, c-format
+#, c-format
 msgid "Can't save palette \"%s\"\n"
-msgstr "ei voi tallettaa palettia \"%s\"\n"
+msgstr "En voi tallettaa palettia \"%s\"\n"
 
 #: app/palette.c:1150
 msgid "Black"
@@ -4170,24 +4158,24 @@ msgid "No Patterns available"
 msgstr "Ei kuvioita saatavilla"
 
 #: app/patterns.c:187
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown GIMP pattern version #%d in \"%s\"\n"
-msgstr "Tuntematon GIMP-versio %d tiedostossa \"%s\"\n"
+msgstr "Tuntematon GIMP-kuviotiedoston versio %d tiedostossa \"%s\"\n"
 
 #: app/patterns.c:204
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP pattern file \"%s\""
-msgstr "Virhe kuviotiedostossa...lopetan."
+msgstr "Virhe kuviotiedostossa \"%s\""
 
 #: app/patterns.c:219
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP pattern file \"%s\" appears to be truncated."
-msgstr "Kuviotiedostoa on katkaistu."
+msgstr "Kuviotiedostoa \"%s\" on katkaistu."
 
 #: app/patterns.c:278
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading pattern \"%s\""
-msgstr "Virhe tiedoston avauksessa: %s\n"
+msgstr "Virhe kuviotiedostoa \"%s\" luettaessa"
 
 #: app/perspective_tool.c:59
 msgid "Perspective Transform Information"

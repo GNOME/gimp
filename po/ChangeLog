@@ -1,3 +1,7 @@
+2000-10-07  Tor Lillqvist  <tml@iki.fi>
+
+	* fi.po: Fix fuzzies.
+
 2000-10-06  Sven Neumann  <sven@gimp.org>
 
 	* pl.po: applied gimp-art-20000926-0 -> Updates to the polish 
