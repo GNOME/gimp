@@ -1,3 +1,20 @@
+2004-12-17  Simon Budig  <simon@gimp.org>
+
+	* data/images/gimp-splash.png: Added new splash by
+	Bill Luhtala <bluhtala@telus.net>.
+
+	* data/images/gimp-logo.png: Added new Image for the about dialog
+	by Philip Lafleur <deathpudding@gmail.com>.
+
+	* app/dialogs/about-dialog.c: Adjusted text colors and placement
+	to the new image.
+
+	* data/images/gimp2_0_logo.png
+	* data/images/gimp2_0_splash.png: Added for historical reasons.
+
+	* data/images/gimp_logo.png: Removed (renamed to gimp-logo.png)
+	* data/images/Makefile.am: changed accordingly.
+
 2004-12-16  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* app/core/gimpgradient-load.c: reject .ggr files whose 

@@ -89,13 +89,13 @@ typedef struct
 
 PangoColor gradient[] =
 {
-  { 50372, 50372, 50115 },
+  { 139 * 257, 137 * 257, 124 * 257 },
   { 65535, 65535, 65535 },
-  { 10000, 10000, 10000 },
+  { 5000, 5000, 5000 },
 };
 
-PangoColor foreground = { 10000, 10000, 10000 };
-PangoColor background = { 50372, 50372, 50115 };
+PangoColor foreground = { 5000, 5000, 5000 };
+PangoColor background = { 139 * 257, 137 * 257, 124 * 257 };
 
 /* backup values */
 
@@ -176,16 +176,16 @@ about_dialog_create (void)
 
       if (! about_dialog_load_logo (widget))
         {
-	  gtk_widget_destroy (widget);
-	  about_info.about_dialog = NULL;
-	  return NULL;
-	}
+          gtk_widget_destroy (widget);
+          about_info.about_dialog = NULL;
+          return NULL;
+        }
 
       about_dialog_center (GTK_WINDOW (widget));
 
       /* place the scrolltext at the bottom of the image */
       about_info.textarea.width = about_info.pixmaparea.width;
-      about_info.textarea.height = 50;
+      about_info.textarea.height = 32; /* gets changed in _expose () as well */
       about_info.textarea.x = 0;
       about_info.textarea.y = (about_info.pixmaparea.height -
                                about_info.textarea.height);
@@ -202,8 +202,8 @@ about_dialog_create (void)
       gtk_widget_show (widget);
 
       g_signal_connect (widget, "expose_event",
-			G_CALLBACK (about_dialog_logo_expose),
-			NULL);
+                        G_CALLBACK (about_dialog_logo_expose),
+                        NULL);
 
       gtk_widget_realize (widget);
       gdk_window_set_background (widget->window,
@@ -264,7 +264,7 @@ about_dialog_create (void)
 
 static void
 about_dialog_destroy (GtkObject *object,
-		      gpointer   data)
+                      gpointer   data)
 {
   about_info.about_dialog = NULL;
   about_dialog_unmap (NULL, NULL);
@@ -322,8 +322,8 @@ about_dialog_center (GtkWindow *window)
 
 static gboolean
 about_dialog_logo_expose (GtkWidget      *widget,
-			  GdkEventExpose *event,
-			  gpointer        data)
+                          GdkEventExpose *event,
+                          gpointer        data)
 {
   gint width, height;
 
@@ -364,6 +364,9 @@ about_dialog_logo_expose (GtkWidget      *widget,
       height = mask ? (about_info.pixmaparea.height > 0) &&
                       (about_info.pixmaparea.width > 0): 0);
 
+      about_info.textarea.height = pp ? 50 : 32;
+      about_info.textarea.y = (about_info.pixmaparea.height -
+                               about_info.textarea.height);
     }
 
   /* only operate on the region covered by the pixmap */
@@ -439,8 +442,8 @@ about_dialog_logo_expose (GtkWidget      *widget,
 
 static gint
 about_dialog_button (GtkWidget      *widget,
-		     GdkEventButton *event,
-		     gpointer        data)
+                     GdkEventButton *event,
+                     gpointer        data)
 {
   gtk_widget_hide (about_info.about_dialog);
 
@@ -449,8 +452,8 @@ about_dialog_button (GtkWidget      *widget,
 
 static gint
 about_dialog_key (GtkWidget      *widget,
-		  GdkEventKey    *event,
-		  gpointer        data)
+                  GdkEventKey    *event,
+                  gpointer        data)
 {
   /* placeholder */
   switch (event->keyval)
@@ -975,7 +978,6 @@ about_dialog_load_logo (GtkWidget *window)
   gchar       *filename;
   GdkPixbuf   *pixbuf;
   GdkGC       *gc;
-  gint         width;
   PangoLayout *layout;
   PangoFontDescription *desc;
   GPL         *noise;
@@ -984,7 +986,7 @@ about_dialog_load_logo (GtkWidget *window)
     return TRUE;
 
   filename = g_build_filename (gimp_data_directory (), "images",
-                               "gimp_logo.png", NULL);
+                               "gimp-logo.png", NULL);
 
   pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
   g_free (filename);
@@ -1026,10 +1028,8 @@ about_dialog_load_logo (GtkWidget *window)
                    about_info.pixmaparea.height,
                    GDK_RGB_DITHER_NORMAL, 0, 0);
 
-  pango_layout_get_pixel_size (layout, &width, NULL);
-
   gdk_draw_layout (GDK_DRAWABLE (about_info.logo_pixmap),
-                   gc, 222, 137, layout);
+                   gc, 8, 39, layout);
 
   g_object_unref (pixbuf);
   g_object_unref (layout);
