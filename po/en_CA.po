@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-07 11:07-0500\n"
-"PO-Revision-Date: 2004-11-07 14:29-0400\n"
+"POT-Creation-Date: 2004-11-09 17:24-0500\n"
+"PO-Revision-Date: 2004-11-09 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -5228,7 +5228,7 @@ msgstr "Layer"
 msgid "Rename Layer"
 msgstr "Rename Layer"
 
-#: app/core/gimplayer.c:254 app/pdb/layer_cmds.c:657 app/pdb/layer_cmds.c:736
+#: app/core/gimplayer.c:254 app/pdb/layer_cmds.c:659 app/pdb/layer_cmds.c:738
 msgid "Move Layer"
 msgstr "Move Layer"
 
@@ -6630,7 +6630,7 @@ msgid "Select Temp Folder"
 msgstr "Select Temp Folder"
 
 #: app/dialogs/preferences-dialog.c:2221
-#: app/dialogs/user-install-dialog.c:1400
+#: app/dialogs/user-install-dialog.c:1401
 msgid "Swap folder:"
 msgstr "Swap folder:"
 
@@ -7193,7 +7193,7 @@ msgstr "Creating folder '%s'..."
 msgid "Cannot create folder '%s': %s"
 msgstr "Cannot create folder '%s': %s"
 
-#: app/dialogs/user-install-dialog.c:1359
+#: app/dialogs/user-install-dialog.c:1360
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called "
 "\"Tile Cache\".  You should adjust its size to fit into memory.  Consider "
@@ -7203,11 +7203,11 @@ msgstr ""
 "\"Tile Cache\".  You should adjust its size to fit into memory.  Consider "
 "the amount of memory used by other running processes."
 
-#: app/dialogs/user-install-dialog.c:1372
+#: app/dialogs/user-install-dialog.c:1373
 msgid "Tile cache size:"
 msgstr "Tile cache size:"
 
-#: app/dialogs/user-install-dialog.c:1384
+#: app/dialogs/user-install-dialog.c:1385
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be "
 "written to a swap file.  This file should be located on a local filesystem "
@@ -7219,7 +7219,7 @@ msgstr ""
 "with enough free space (several hundred MB). On a UNIX system, you may want "
 "to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 
-#: app/dialogs/user-install-dialog.c:1395
+#: app/dialogs/user-install-dialog.c:1396
 msgid "Select swap dir"
 msgstr "Select swap dir"
 
@@ -7287,11 +7287,11 @@ msgstr "Dark check colour"
 msgid "Custom color"
 msgstr "Custom colour"
 
-#: app/display/gimpdisplayshell.c:876
+#: app/display/gimpdisplayshell.c:939
 msgid "Zoom image when window size changes"
 msgstr "Zoom image when window size changes"
 
-#: app/display/gimpdisplayshell.c:896
+#: app/display/gimpdisplayshell.c:959
 msgid "Toggle Quick Mask"
 msgstr "Toggle Quick Mask"
 
@@ -8775,6 +8775,24 @@ msgstr "Move layers & selections"
 #: app/tools/gimpmovetool.c:112
 msgid "_Move"
 msgstr "_Move"
+
+#: app/tools/gimpmovetool.c:294 app/tools/gimpmovetool.c:569
+#, c-format
+msgid "Move Guide: %d"
+msgstr "Move Guide: %d"
+
+#: app/tools/gimpmovetool.c:562
+msgid "Delete Guide"
+msgstr "Delete Guide"
+
+#: app/tools/gimpmovetool.c:564
+msgid "Cancel Guide"
+msgstr "Cancel Guide"
+
+#: app/tools/gimpmovetool.c:571
+#, c-format
+msgid "Add Guide: %d"
+msgstr "Add Guide: %d"
 
 #: app/tools/gimppaintbrushtool.c:52
 msgid "Paint fuzzy brush strokes"
