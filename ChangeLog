@@ -196,7 +196,6 @@
 	* plug-ins/common/gee.c: Using "env" instead of "environ" caused
 	a clash. Changed the other one to "environment".
 
->>>>>>> 1.3131
 2000-12-17  Tor Lillqvist  <tml@iki.fi>
 
 	* config.h.win32: Typo.
