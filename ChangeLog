@@ -1,5 +1,9 @@
 2005-02-08  Sven Neumann  <sven@gimp.org>
 
+	* tools/gimp-remote.c: add the gtk+ options to the GOptionContext.
+
+2005-02-08  Sven Neumann  <sven@gimp.org>
+
 	* INSTALL: updated.
 
 2005-02-08  Sven Neumann  <sven@gimp.org>

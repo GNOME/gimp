@@ -355,12 +355,7 @@ main (gint    argc,
   /* parse the command-line options */
   context = g_option_context_new ("[FILE|URI...]");
   g_option_context_add_main_entries (context, main_entries, NULL);
-
-#ifdef __GNUC__
-#warning FIXME: add this code as soon as we depend on gtk+-2.6
-#endif
-  /* g_option_context_add_group (context, gtk_get_option_group (TRUE));
-   */
+  g_option_context_add_group (context, gtk_get_option_group (TRUE));
 
   if (! g_option_context_parse (context, &argc, &argv, &error))
     {
