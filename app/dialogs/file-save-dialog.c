@@ -95,7 +95,6 @@ file_save_dialog_response (GtkWidget *save_dialog,
 {
   GimpFileDialog *dialog = GIMP_FILE_DIALOG (save_dialog);
   gchar          *uri;
-  gchar          *filename;
 
   if (response_id != GTK_RESPONSE_OK)
     {
@@ -107,31 +106,35 @@ file_save_dialog_response (GtkWidget *save_dialog,
 
   uri = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (save_dialog));
 
-  filename = g_filename_from_uri (uri, NULL, NULL);
-
-  if (g_file_test (filename, G_FILE_TEST_EXISTS))
+  if (uri && strlen (uri))
     {
-      file_save_overwrite (save_dialog, uri, uri);
-    }
-  else
-    {
-      gimp_file_dialog_set_sensitive (dialog, FALSE);
+      gchar *filename = g_filename_from_uri (uri, NULL, NULL);
+      g_return_if_fail (filename != NULL);
 
-      if (file_save_dialog_save_image (save_dialog,
-                                       dialog->gimage,
-                                       uri,
-                                       uri,
-                                       dialog->file_proc,
-                                       dialog->save_a_copy))
+      if (g_file_test (filename, G_FILE_TEST_EXISTS))
         {
-          gtk_widget_hide (save_dialog);
+          file_save_overwrite (save_dialog, uri, uri);
+        }
+      else
+        {
+          gimp_file_dialog_set_sensitive (dialog, FALSE);
+
+          if (file_save_dialog_save_image (save_dialog,
+                                           dialog->gimage,
+                                           uri,
+                                           uri,
+                                           dialog->file_proc,
+                                           dialog->save_a_copy))
+            {
+              gtk_widget_hide (save_dialog);
+            }
+
+          gimp_file_dialog_set_sensitive (dialog, TRUE);
         }
 
-      gimp_file_dialog_set_sensitive (dialog, TRUE);
+      g_free (filename);
+      g_free (uri);
     }
-
-  g_free (uri);
-  g_free (filename);
 }
 
 typedef struct _OverwriteData OverwriteData;
