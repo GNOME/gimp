@@ -1,5 +1,10 @@
 2004-12-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimp-edit.c (gimp_edit_set_buffer): new utility
+	function instead of code duplication.
+
+2004-12-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/base/base-enums.[ch]: added translatable strings to the
 	GimpLayerModeEffects enum because they will soon disappear from
 	widgets/gimpwidgets-constructors.c

@@ -55,6 +55,9 @@ static const GimpBuffer * gimp_edit_extract       (GimpImage    *gimage,
                                                    GimpDrawable *drawable,
                                                    GimpContext  *context,
                                                    gboolean      cut_pixels);
+static const GimpBuffer * gimp_edit_set_buffer    (Gimp         *gimp,
+                                                   TileManager  *tiles,
+                                                   gboolean      mask_empty);
 static gboolean           gimp_edit_fill_internal (GimpImage    *gimage,
                                                    GimpDrawable *drawable,
                                                    GimpContext  *context,
@@ -130,29 +133,7 @@ gimp_edit_copy_visible (GimpImage   *gimage,
    */
   copy_region_nocow (&srcPR, &destPR);
 
-  /*  Only crop if the gimage mask wasn't empty  */
-  if (non_empty)
-    {
-      TileManager *crop = tile_manager_crop (tiles, 0);
-
-      if (crop != tiles)
-        {
-          tile_manager_unref (tiles);
-          tiles = crop;
-        }
-    }
-
-  if (tiles)
-    {
-      GimpBuffer *buffer = gimp_buffer_new (tiles, "Global Buffer", FALSE);
-
-      gimp_set_global_buffer (gimage->gimp, buffer);
-      g_object_unref (buffer);
-
-      return gimage->gimp->global_buffer;
-    }
-
-  return NULL;
+  return gimp_edit_set_buffer (gimage->gimp, tiles, ! non_empty);
 }
 
 GimpLayer *
@@ -424,8 +405,16 @@ gimp_edit_extract (GimpImage    *gimage,
   if (cut_pixels)
     gimp_image_undo_group_end (gimage);
 
+  return gimp_edit_set_buffer (gimage->gimp, tiles, empty);
+}
+
+static const GimpBuffer *
+gimp_edit_set_buffer (Gimp        *gimp,
+                      TileManager *tiles,
+                      gboolean     mask_empty)
+{
   /*  Only crop if the gimage mask wasn't empty  */
-  if (tiles && ! empty)
+  if (tiles && ! mask_empty)
     {
       TileManager *crop = tile_manager_crop (tiles, 0);
 
@@ -440,10 +429,10 @@ gimp_edit_extract (GimpImage    *gimage,
     {
       GimpBuffer *buffer = gimp_buffer_new (tiles, "Global Buffer", FALSE);
 
-      gimp_set_global_buffer (gimage->gimp, buffer);
+      gimp_set_global_buffer (gimp, buffer);
       g_object_unref (buffer);
 
-      return gimage->gimp->global_buffer;
+      return gimp->global_buffer;
     }
 
   return NULL;
