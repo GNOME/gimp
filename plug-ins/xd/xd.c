@@ -494,7 +494,6 @@ select_event (GtkWidget *widget,
 	      GdkEvent  *event)
 {
   preview_selected_version = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));
-  g_print ("%d selected\n", preview_selected_version);
   return 0;
 }
 
@@ -753,6 +752,9 @@ get_a_version (XdFile* xd, gchar* ext)
 						     xpm_buffers[i].dptr,
 						     xpm_buffers[i].dsize);
     }
+
+  /* Select the most recent version. */
+  gtk_list_select_item (GTK_LIST (plist), xd->versions - 1);
 
   gtk_main ();
   gdk_flush ();
