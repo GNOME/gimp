@@ -405,8 +405,8 @@ SIZE       :  12.7 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : gpb
-AUTHOR     : Tor Lillqvist
-MAINTAINER : 
+AUTHOR     : Tor Lillqvist <tml@iki.fi>
+MAINTAINER : Tor Lillqvist <tml@iki.fi>
 SIZE       :  35.9 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
@@ -964,19 +964,19 @@ COMMENT    :
 -----------
 NAME       : winprint
 AUTHOR     : Tor Lillqvist <tml@iki.fi>
-MAINTAINER : 
+MAINTAINER : Tor Lillqvist <tml@iki.fi>
 SIZE       :  18.2 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : winsnap
 AUTHOR     : Craig Setera
-MAINTAINER : 
+MAINTAINER : Tor Lillqvist <tml@iki.fi>
 SIZE       :  29.9 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : wmf
 AUTHOR     : Tor Lillqvist <tml@iki.fi>
-MAINTAINER : 
+MAINTAINER : Tor Lillqvist <tml@iki.fi>
 SIZE       :  75.1 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------

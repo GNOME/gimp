@@ -410,7 +410,7 @@ make_initialization_status_window (void)
        */
       style = gtk_widget_get_style (win_initstatus);
       max_label_length =
-	0.95 * (float)strlen (AUTHORS) *
+	0.8 * (float)strlen (AUTHORS) *
 	((float)logo_area_width /
 	 (float)gdk_string_width (style->font, AUTHORS));
     }

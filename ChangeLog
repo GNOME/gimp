@@ -1,3 +1,12 @@
+2000-01-06  Tor Lillqvist  <tml@iki.fi>
+
+	* app/app_procs.c (make_initialization_status_window): Finetune
+	the max_label_length hack, to avoid the splash screen's width
+	wobbling (on Win32).
+
+	* PLUGIN_MAINTAINERS: Added myself as maintainer of gpb, winprint,
+	winsnap, and wmf.
+	
 Thu Jan  6 01:29:20 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/general.c
