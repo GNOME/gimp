@@ -29,6 +29,7 @@
 #include "brush_select.h"
 #include "buildmenu.h"
 #include "canvas.h"
+#include "clone.h"
 #include "colormaps.h"
 #include "datafiles.h"
 #include "errors.h"
@@ -36,7 +37,6 @@
 #include "gimprc.h"
 #include "menus.h"
 #include "paint_funcs_area.h"
-#include "paint_funcs_row.h"
 #include "palette.h"
 #include "pixelarea.h"
 #include "pixelrow.h"
@@ -106,7 +106,7 @@ brushes_init ()
   
 #define BRUSHES_C_4_cw
   /* Make some extra brushes for debugging paint_funcs */
-#if 0
+#if 1
   {
     GBrushP brush;
     brush = create_default_brush(1,1);

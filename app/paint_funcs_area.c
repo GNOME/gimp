@@ -21,16 +21,17 @@
 
 #include "appenv.h"
 #include "boundary.h"
+#include "clone.h"   /*FIXME: this is just till copy_row finds a home */
 #include "gimprc.h"
 #include "paint_funcs_area.h"
-#include "paint_funcs_row.h"
+#include "paint_funcs_row_u8.h"
+#include "paint_funcs_row_u16.h"
+#include "paint_funcs_row_float.h"
 #include "pixelarea.h"
 #include "pixelrow.h"
 #include "tag.h"
 
-
 #define EPSILON            0.0001
-
 
 /* only for scale_area et al. */
 typedef enum _ScaleType ScaleType;
@@ -72,115 +73,84 @@ LayerMode layer_modes_16[] =
   { 1, "Replace" }
 };
 
+/* convolve_area */
 
+typedef void  (*ConvolveAreaFunc) (PixelArea*,PixelArea*,gint*,gint,gint,gint,gint);
+static ConvolveAreaFunc convolve_area_funcs (Tag);
 static void convolve_area_u8 (PixelArea*, PixelArea*, gint*, gint, gint, gint, gint);
 static void convolve_area_u16 (PixelArea*, PixelArea*, gint*, gint, gint, gint, gint);
 static void convolve_area_float (PixelArea*, PixelArea*, gint*, gint, gint, gint, gint);
-typedef void  (*ConvolveAreaFunc) (PixelArea*,PixelArea*,gint*,gint,gint,gint,gint);
-static ConvolveAreaFunc convolve_area_funcs[3] =
-{
-  convolve_area_u8,
-  convolve_area_u16,
-  convolve_area_float
-};
 
+/* gaussian_blur_area */
+static void gaussian_blur_area_funcs (Tag);
 
+typedef gdouble*  (*GaussianCurveFunc) (gint,gint*);
+static GaussianCurveFunc gaussian_curve;
 static gdouble* gaussian_curve_u8 (gint, gint*); 
 static gdouble* gaussian_curve_u16 (gint, gint*); 
 static gdouble* gaussian_curve_float (gint, gint*); 
-typedef gdouble*  (*GaussianCurveFunc) (gint,gint*);
-static GaussianCurveFunc gaussian_curve_funcs[] =
-{
-  gaussian_curve_u8,
-  gaussian_curve_u16,
-  gaussian_curve_float
-};
 
-
+typedef void  (*RleRowFunc) (PixelRow*,gint*,PixelRow*);
+static RleRowFunc rle_row; 
 static void rle_row_u8 (PixelRow*, gint*, PixelRow*);
 static void rle_row_u16 (PixelRow*, gint*, PixelRow*);
 static void rle_row_float (PixelRow*, gint*, PixelRow*);
-typedef void  (*RleRowFunc) (PixelRow*,gint*,PixelRow*);
-static RleRowFunc rle_row_funcs[] =
-{
-  rle_row_u8,
-  rle_row_u16,
-  rle_row_float
-};
 
-
+typedef void  (*GaussianBlurRowFunc) (PixelRow*,PixelRow*,gint*, PixelRow*,gint,gfloat*,gfloat);
+static GaussianBlurRowFunc gaussian_blur_row;
 static void gaussian_blur_row_u8 (PixelRow*, PixelRow*, gint*, PixelRow*, gint, gfloat*, gfloat); 
 static void gaussian_blur_row_u16 (PixelRow*, PixelRow*, gint*, PixelRow*, gint, gfloat*, gfloat); 
 static void gaussian_blur_row_float (PixelRow*, PixelRow*, gint*, PixelRow*, gint, gfloat*, gfloat); 
-typedef void  (*GaussianBlurRowFunc) (PixelRow*,PixelRow*,gint*, PixelRow*,gint,gfloat*,gfloat);
-static GaussianBlurRowFunc gaussian_blur_row_funcs[] =
-{
-  gaussian_blur_row_u8,
-  gaussian_blur_row_u16,
-  gaussian_blur_row_float
-};
 
+/* scale_area_no_resample */
+static void scale_area_no_resample_funcs (Tag);
 
-static void scale_row_no_resample_u8 (PixelRow*, PixelRow*, gint*);
-static void scale_row_no_resample_u16 ( PixelRow*, PixelRow*, gint*);
-static void scale_row_no_resample_float ( PixelRow*, PixelRow*, gint*);
 typedef void (*ScaleRowNoResampleFunc) (PixelRow*,PixelRow*,gint*);
-static ScaleRowNoResampleFunc scale_row_no_resample_funcs[] =
-{
-  scale_row_no_resample_u8,
-  scale_row_no_resample_u16,
-  scale_row_no_resample_float
-};
+ScaleRowNoResampleFunc scale_row_no_resample;
+static void scale_row_no_resample_u8 (PixelRow*, PixelRow*, gint*);
+static void scale_row_no_resample_u16 (PixelRow*, PixelRow*, gint*);
+static void scale_row_no_resample_float (PixelRow*, PixelRow*, gint*);
 
+/* scale_area */
+static void scale_area_funcs (Tag);
 
-static void scale_row_u8 (guchar*, guchar*, guchar*, guchar*, gdouble, gdouble*, gdouble, gdouble, gdouble*, gint, gint, gint, gint); 
-static void scale_row_u16 ( guchar*, guchar*, guchar*, guchar*, gdouble, gdouble*, gdouble, gdouble, gdouble*, gint, gint, gint, gint); 
-static void scale_row_float ( guchar*, guchar*, guchar*, guchar*, gdouble, gdouble*, gdouble, gdouble, gdouble*, gint, gint, gint, gint); 
-typedef void (*ScaleRowFunc) ( guchar*, guchar*, guchar*, guchar*, 
-		    gdouble, gdouble*, gdouble, gdouble, gdouble*, 
-		    gint, gint, gint, gint); 
-static ScaleRowFunc scale_row_funcs[] =
-{
-  scale_row_u8,
-  scale_row_u16,
-  scale_row_float
-};
+typedef void (*ScaleRowResampleFunc) ( guchar*, guchar*, guchar*, guchar*, 
+		               gdouble, gdouble*, gdouble, gdouble, 
+			       gdouble*, gint, gint, gint, gint); 
+static ScaleRowResampleFunc scale_row_resample;
+static void scale_row_resample_u8 (guchar*, guchar*, guchar*, guchar*, 
+			  gdouble, gdouble*, gdouble, gdouble, 
+			  gdouble*, gint, gint, gint, gint); 
+static void scale_row_resample_u16 (guchar*, guchar*, guchar*, guchar*, 
+			  gdouble, gdouble*, gdouble, gdouble, 
+			  gdouble*, gint, gint, gint, gint); 
+static void scale_row_resample_float (guchar*, guchar*, guchar*, guchar*, 
+			  gdouble, gdouble*, gdouble, gdouble, 
+			  gdouble*, gint, gint, gint, gint); 
 
-
-static void scale_set_dest_row_u8 (PixelRow*, gdouble*);
-static void scale_set_dest_row_u16 ( PixelRow*, gdouble*);
-static void scale_set_dest_row_float ( PixelRow*, gdouble*);
 typedef void (*ScaleSetDestRowFunc) (PixelRow*, gdouble*);
-static ScaleSetDestRowFunc scale_set_dest_row_funcs[] =
-{
-  scale_set_dest_row_u8,
-  scale_set_dest_row_u16,
-  scale_set_dest_row_float
-};
+static ScaleSetDestRowFunc scale_set_dest_row;
+static void scale_set_dest_row_u8 (PixelRow*, gdouble*);
+static void scale_set_dest_row_u16 (PixelRow*, gdouble*);
+static void scale_set_dest_row_float (PixelRow*, gdouble*);
 
+/* subsample_area */
+static void subsample_area_funcs (Tag); 
 
+typedef void (*SubsampleRowFunc) (PixelRow*, gdouble*, gdouble, gdouble, gdouble*);
+static SubsampleRowFunc subsample_row;
 static void subsample_row_u8 (PixelRow *, gdouble *, gdouble, gdouble, gdouble*);   
 static void subsample_row_u16(PixelRow *, gdouble *, gdouble, gdouble, gdouble*);   
 static void subsample_row_float (PixelRow *, gdouble *, gdouble, gdouble, gdouble*);   
-typedef void (*SubsampleRowFunc) (PixelRow*, gdouble*, gdouble, gdouble, gdouble*);
-static SubsampleRowFunc subsample_row_funcs[] =
-{
-  subsample_row_u8,
-  subsample_row_u16,
-  subsample_row_float
-};
 
+/* thin_area */
+static void thin_area_funcs (Tag); 
 
+typedef gint (*ThinRowFunc) (PixelRow*,PixelRow*,PixelRow*,PixelRow*,gint);
+static ThinRowFunc thin_row;
 static gint thin_row_u8 (PixelRow*, PixelRow*, PixelRow*, PixelRow*, gint);
 static gint thin_row_u16 ( PixelRow*, PixelRow*, PixelRow*, PixelRow*, gint);
 static gint thin_row_float ( PixelRow*, PixelRow*, PixelRow*, PixelRow*, gint);
-typedef gint (*ThinRowFunc) (PixelRow*,PixelRow*,PixelRow*,PixelRow*,gint);
-static ThinRowFunc thin_row_funcs[] =
-{
-  thin_row_u8,
-  thin_row_u16,
-  thin_row_float
-};
 
 
 
@@ -209,8 +179,6 @@ static void      apply_layer_mode_replace  (PixelRow*, PixelRow*, PixelRow*,
 
 
 
-
-
 void 
 paint_funcs_area_setup  (
                          void
@@ -233,6 +201,29 @@ paint_funcs_area_free  (
 /*    AREA FUNCTIONS                              */
 /**************************************************/
 
+typedef void (*ColorRowFunc) (PixelRow*, PixelRow*);
+static ColorRowFunc color_area_funcs (Tag);
+
+
+static ColorRowFunc 
+color_area_funcs (
+		Tag tag
+		)
+	  
+{
+  switch (tag_precision (tag))
+  {
+  case PRECISION_U8:
+    return color_row_u8;
+  case PRECISION_U16:
+    return color_row_u16;
+  case PRECISION_FLOAT:
+    return color_row_float;
+  default:
+    return NULL;
+  } 
+}
+ 
 void 
 color_area  (
              PixelArea * area,
@@ -240,8 +231,9 @@ color_area  (
              )
 {
   void * pag;
-  /* Tag area_tag = pixelarea_tag (area); */
-  /* Tag color_tag = pixelrow_tag (color); */ 
+  Tag area_tag = pixelarea_tag (area); 
+  Tag color_tag = pixelrow_tag (color); 
+  ColorRowFunc color_row = color_area_funcs (area_tag);
   /* put in tags check*/
 
   for (pag = pixelarea_register (1, area);
@@ -253,11 +245,33 @@ color_area  (
       while (h--)
         {
           pixelarea_getdata (area, &row, h);
-          color_row (&row, color);
+          (*color_row) (&row, color);
         }
     }
 }
 
+
+typedef void (*BlendRowFunc) (PixelRow*, PixelRow*, PixelRow*, gfloat);
+static BlendRowFunc blend_area_funcs (Tag);
+
+static BlendRowFunc 
+blend_area_funcs (
+		Tag tag
+		)
+	  
+{
+  switch (tag_precision (tag))
+  {
+  case PRECISION_U8:
+    return blend_row_u8;
+  case PRECISION_U16:
+    return blend_row_u16;
+  case PRECISION_FLOAT:
+    return blend_row_float;
+  default:
+    return NULL;
+  } 
+}
 
 void 
 blend_area  (
@@ -271,7 +285,7 @@ blend_area  (
   Tag src1_tag = pixelarea_tag (src1_area); 
   Tag src2_tag = pixelarea_tag (src2_area); 
   Tag dest_tag = pixelarea_tag (dest_area); 
-  
+  BlendRowFunc blend_row = blend_area_funcs (dest_tag); 
   /* put in tags check */
   
   for (pag = pixelarea_register (3, src1_area, src2_area, dest_area);
@@ -290,11 +304,32 @@ blend_area  (
           pixelarea_getdata (dest_area, &dest_row, h);
             
          /*blend_pixels (s1, s2, d, blend, src1->w, src1->bytes, src1_has_alpha); */
-           blend_row (&src1_row, &src2_row, &dest_row, blend);
+           (*blend_row) (&src1_row, &src2_row, &dest_row, blend);
         }
     }
 }
 
+typedef void (*ShadeRowFunc) (PixelRow*, PixelRow*, PixelRow*, gfloat);
+static ShadeRowFunc shade_area_funcs (Tag);
+
+static ShadeRowFunc 
+shade_area_funcs (
+		Tag tag
+		)
+	  
+{
+  switch (tag_precision (tag))
+  {
+  case PRECISION_U8:
+    return shade_row_u8;
+  case PRECISION_U16:
+    return shade_row_u16;
+  case PRECISION_FLOAT:
+    return shade_row_float;
+  default:
+    return NULL;
+  } 
+}
 
 void 
 shade_area  (
@@ -307,7 +342,7 @@ shade_area  (
   void *  pag;
   Tag src_tag = pixelarea_tag (src_area); 
   Tag dest_tag = pixelarea_tag (dest_area); 
-
+  ShadeRowFunc shade_row = shade_area_funcs (src_tag);
   /*put in tags check*/
   
   for (pag = pixelarea_register (2, src_area, dest_area);
@@ -323,9 +358,31 @@ shade_area  (
           pixelarea_getdata (src_area, &src_row, h);
           pixelarea_getdata (dest_area, &dest_row, h);
             
-          shade_row (&src_row, &dest_row, col, blend);
+          (*shade_row) (&src_row, &dest_row, col, blend);
         }
     }
+}
+
+typedef void (*CopyRowFunc) (PixelRow*, PixelRow*);
+static CopyRowFunc copy_area_funcs (Tag);
+
+static CopyRowFunc 
+copy_area_funcs (
+		Tag tag
+		)
+	  
+{
+  switch (tag_precision (tag))
+  {
+  case PRECISION_U8:
+    return copy_row_u8;
+  case PRECISION_U16:
+    return copy_row_u16;
+  case PRECISION_FLOAT:
+    return copy_row_float;
+  default:
+    return NULL;
+  } 
 }
 
 
@@ -335,9 +392,12 @@ copy_area  (
             PixelArea * dest_area
             )
 {
+  Tag src_tag = pixelarea_tag (src_area);
+  Tag dest_tag = pixelarea_tag (dest_area);
   PixelRow srow;
   PixelRow drow;
   void * pag;
+  CopyRowFunc copy_row = copy_area_funcs (src_tag);
 
   for (pag = pixelarea_register (2, src_area, dest_area);
        pag != NULL;
@@ -348,12 +408,33 @@ copy_area  (
         {
           pixelarea_getdata (src_area, &srow, h);
           pixelarea_getdata (dest_area, &drow, h);
-          copy_row (&srow, &drow);
+          (*copy_row) (&srow, &drow);
         }
     }
 }
 
 
+typedef void (*AddAlphaRowFunc) (PixelRow*, PixelRow*);
+static AddAlphaRowFunc add_alpha_area_funcs (Tag);
+
+static AddAlphaRowFunc 
+add_alpha_area_funcs (
+		Tag tag
+		)
+	  
+{
+  switch (tag_precision (tag))
+  {
+  case PRECISION_U8:
+    return add_alpha_row_u8;
+  case PRECISION_U16:
+    return add_alpha_row_u16;
+  case PRECISION_FLOAT:
+    return add_alpha_row_float;
+  default:
+    return NULL;
+  } 
+}
 
 
 void 
@@ -365,6 +446,7 @@ add_alpha_area  (
   void *  pag;
   Tag src_tag = pixelarea_tag (src_area); 
   Tag dest_tag = pixelarea_tag (dest_area); 
+  AddAlphaRowFunc add_alpha_row = add_alpha_area_funcs (src_tag);
 
    /*put in tags check*/
   
@@ -382,11 +464,32 @@ add_alpha_area  (
           pixelarea_getdata (dest_area, &dest_row, h);
             
   	 /*add_alpha_pixels (s, d, src->w, src->bytes);*/
-          add_alpha_row (&src_row, &dest_row);
+          (*add_alpha_row) (&src_row, &dest_row);
         }
     }
 }
 
+typedef void (*FlattenRowFunc) (PixelRow*, PixelRow*, PixelRow*);
+static FlattenRowFunc flatten_area_funcs (Tag);
+
+static FlattenRowFunc 
+flatten_area_funcs (
+		Tag tag
+		)
+	  
+{
+  switch (tag_precision (tag))
+  {
+  case PRECISION_U8:
+    return flatten_row_u8;
+  case PRECISION_U16:
+    return flatten_row_u16;
+  case PRECISION_FLOAT:
+    return flatten_row_float;
+  default:
+    return NULL;
+  } 
+}
 
 /* UNUSED */
 void 
@@ -399,6 +502,7 @@ flatten_area  (
   void *  pag;
   Tag src_tag = pixelarea_tag (src_area); 
   Tag dest_tag = pixelarea_tag (dest_area); 
+  FlattenRowFunc flatten_row = flatten_area_funcs (src_tag);
 
    /*put in tags check*/
   
@@ -416,11 +520,32 @@ flatten_area  (
           pixelarea_getdata (dest_area, &dest_row, h);
             
           /*flatten_pixels (s, d, bg, src->w, src->bytes);*/
-          flatten_row (&src_row, &dest_row, bg);
+          (*flatten_row) (&src_row, &dest_row, bg);
         }
     }
 }
 
+typedef void (*ExtractAlphaRowFunc) (PixelRow*, PixelRow*, PixelRow*);
+static ExtractAlphaRowFunc extract_alpha_area_funcs (Tag);
+
+static ExtractAlphaRowFunc 
+extract_alpha_area_funcs (
+		Tag tag
+		)
+	  
+{
+  switch (tag_precision (tag))
+  {
+  case PRECISION_U8:
+    return extract_alpha_row_u8;
+  case PRECISION_U16:
+    return extract_alpha_row_u16;
+  case PRECISION_FLOAT:
+    return extract_alpha_row_float;
+  default:
+    return NULL;
+  } 
+}
 
 void 
 extract_alpha_area  (
@@ -433,6 +558,7 @@ extract_alpha_area  (
   Tag src_tag = pixelarea_tag (src_area); 
   Tag dest_tag = pixelarea_tag (dest_area); 
   Tag mask_tag = pixelarea_tag (mask_area); 
+  ExtractAlphaRowFunc extract_alpha_row = extract_alpha_area_funcs (src_tag);
 
    /*put in tags check*/
   
@@ -452,11 +578,43 @@ extract_alpha_area  (
           pixelarea_getdata (mask_area, &mask_row, h);
             
   	 /* extract_alpha_pixels (s, m, d, src->w, src->bytes); */
-          extract_alpha_row (&src_row, &mask_row, &dest_row);
+          (*extract_alpha_row) (&src_row, &mask_row, &dest_row);
         }
     }
 }
 
+typedef void (*ExtractFromIntenRowFunc) (PixelRow*, PixelRow*, PixelRow*, PixelRow*, gint);
+typedef void (*ExtractFromIndexedRowFunc) (PixelRow*, PixelRow*, PixelRow*, unsigned char *, PixelRow*, gint);
+static ExtractFromIntenRowFunc extract_from_inten_row;
+static ExtractFromIndexedRowFunc extract_from_indexed_row;
+static void extract_from_area_funcs (Tag);
+
+static void 
+extract_from_area_funcs (
+			Tag tag
+		    )
+		  
+{
+  switch (tag_precision (tag))
+  {
+  case PRECISION_U8:
+    extract_from_inten_row = extract_from_inten_row_u8; 
+    extract_from_indexed_row = extract_from_indexed_row_u8; 
+    break;
+  case PRECISION_U16:
+    extract_from_inten_row = extract_from_inten_row_u16; 
+    extract_from_indexed_row = extract_from_indexed_row_u16; 
+    break;
+  case PRECISION_FLOAT:
+    extract_from_inten_row = extract_from_inten_row_float; 
+    extract_from_indexed_row = NULL; 
+    break;
+  default:
+    extract_from_inten_row = NULL; 
+    extract_from_indexed_row = NULL; 
+    break;
+  } 
+}
 
 void 
 extract_from_area  (
@@ -474,6 +632,7 @@ extract_from_area  (
   Tag mask_tag = pixelarea_tag (mask_area); 
   Format format = tag_format (src_tag);
 
+  extract_from_area_funcs (src_tag);
    /*put in tags check*/
   
   for (pag = pixelarea_register (3, src_area, dest_area, mask_area);
@@ -498,18 +657,140 @@ extract_from_area  (
 	    case FORMAT_RGB:
 	    case FORMAT_GRAY:
   	      /*extract_from_inten_pixels (s, d, m, bg, cut, src->w, src->bytes,src_has_alpha);*/
-              extract_from_inten_row (&src_row, &dest_row, &mask_row, bg, cut);
+              (*extract_from_inten_row) (&src_row, &dest_row, &mask_row, bg, cut);
 	      break;
 	    case FORMAT_INDEXED:
   	      /*extract_from_indexed_pixels (s, d, m, cmap--wheres the cmap?, bg, cut, src->w, src  bytes, src_has_alpha);*/
-              extract_from_indexed_row (&src_row, &dest_row, &mask_row, cmap, bg, cut);
+              (*extract_from_indexed_row) (&src_row, &dest_row, &mask_row, cmap, bg, cut);
 	      break;
 	    }
         }
     }
 }
 
+typedef void (*MultiplyAlphaRowFunc) (PixelRow*);
+static MultiplyAlphaRowFunc  multiply_alpha_area_funcs (Tag);
 
+static MultiplyAlphaRowFunc 
+multiply_alpha_area_funcs (
+		Tag tag
+		)
+	  
+{
+  switch (tag_precision (tag))
+  {
+  case PRECISION_U8:
+    return multiply_alpha_row_u8;
+  case PRECISION_U16:
+    return multiply_alpha_row_u16;
+  case PRECISION_FLOAT:
+    return multiply_alpha_row_float;
+  default:
+    return NULL;
+  } 
+}
+
+
+/* Convert from unmultiplied to premultiplied alpha. */ 
+void 
+multiply_alpha_area  (
+                      PixelArea * src_area
+                      )
+{
+  void *  pag;
+  Tag src_tag = pixelarea_tag (src_area); 
+  MultiplyAlphaRowFunc multiply_alpha_row = multiply_alpha_area_funcs (src_tag);
+ 
+   /*put in tags check*/
+  
+  for (pag = pixelarea_register (1, src_area);
+       pag != NULL;
+       pag = pixelarea_process (pag))
+    {
+      PixelRow src_row;
+ 
+      gint h = pixelarea_height (src_area);
+      while (h--)
+        {
+          pixelarea_getdata (src_area, &src_row, h);
+            
+          (*multiply_alpha_row) (&src_row);
+        }
+    }
+}
+
+
+typedef void (*SeparateAlphaRowFunc) (PixelRow*);
+static SeparateAlphaRowFunc separate_alpha_area_funcs (Tag);
+
+static SeparateAlphaRowFunc 
+separate_alpha_area_funcs (
+		Tag tag
+		)
+	  
+{
+  switch (tag_precision (tag))
+  {
+  case PRECISION_U8:
+    return separate_alpha_row_u8;
+  case PRECISION_U16:
+    return separate_alpha_row_u16;
+  case PRECISION_FLOAT:
+    return separate_alpha_row_float;
+  default:
+    return NULL;
+  } 
+}
+
+
+/* Convert from premultiplied alpha to unpremultiplied */
+void 
+separate_alpha_area  (
+                      PixelArea * src_area
+                      )
+{
+  void *  pag;
+  Tag src_tag = pixelarea_tag (src_area); 
+  SeparateAlphaRowFunc separate_alpha_row = separate_alpha_area_funcs (src_tag);
+
+   /*put in tags check*/
+  
+  for (pag = pixelarea_register (1, src_area);
+       pag != NULL;
+       pag = pixelarea_process (pag))
+    {
+      PixelRow src_row;
+ 
+      gint h = pixelarea_height (src_area);
+      while (h--)
+        {
+          pixelarea_getdata (src_area, &src_row, h);
+            
+          (*separate_alpha_row) (&src_row);
+        }
+    }
+}
+
+
+static ConvolveAreaFunc 
+convolve_area_funcs (
+			Tag tag
+		    )
+		  
+{
+  switch (tag_precision (tag))
+  {
+  case PRECISION_U8:
+    return convolve_area_u8; 
+  case PRECISION_U16:
+    return convolve_area_u16; 
+  case PRECISION_FLOAT:
+    return convolve_area_float; 
+  default:
+    return NULL; 
+  } 
+}
+ 
 void 
 convolve_area  (
                 PixelArea * src_area,
@@ -525,7 +806,7 @@ convolve_area  (
   guint src_area_width = pixelarea_width (src_area);  
   Tag src_tag = pixelarea_tag (src_area);
   Tag dest_tag = pixelarea_tag (dest_area);
-  Precision prec = tag_precision (src_tag);
+  ConvolveAreaFunc convolve_area_func = convolve_area_funcs (dest_tag);
 
   if ( !tag_equal (src_tag, dest_tag) )
      return;
@@ -544,7 +825,7 @@ convolve_area  (
 		src_area_height < (matrix_size - 1))
     return;
 
-  (*convolve_area_funcs [prec-1]) (src_area, dest_area, matrix, 
+  (*convolve_area_func) (src_area, dest_area, matrix, 
 				matrix_size, divisor, mode, offset);
 }
 
@@ -925,62 +1206,40 @@ convolve_area_float (PixelArea *src_area,
     }
 }
 
+/**************************************************/
+/*    GAUSSIAN_BLUR                               */
+/**************************************************/
 
-/* Convert from unmultiplied to premultiplied alpha. */ 
-void 
-multiply_alpha_area  (
-                      PixelArea * src_area
-                      )
+static void 
+gaussian_blur_area_funcs (
+			Tag tag
+		    )
+		  
 {
-  void *  pag;
-  Tag src_tag = pixelarea_tag (src_area); 
-
-   /*put in tags check*/
-  
-  for (pag = pixelarea_register (1, src_area);
-       pag != NULL;
-       pag = pixelarea_process (pag))
-    {
-      PixelRow src_row;
- 
-      gint h = pixelarea_height (src_area);
-      while (h--)
-        {
-          pixelarea_getdata (src_area, &src_row, h);
-            
-          multiply_alpha_row (&src_row);
-        }
-    }
+  switch (tag_precision (tag))
+  {
+  case PRECISION_U8:
+    gaussian_curve = gaussian_curve_u8;	
+    gaussian_blur_row = gaussian_blur_row_u8;	
+    rle_row = rle_row_u8; 
+    break;
+  case PRECISION_U16:
+    gaussian_curve = gaussian_curve_u16;	
+    gaussian_blur_row = gaussian_blur_row_u16;	
+    rle_row = rle_row_u16; 
+    break;
+  case PRECISION_FLOAT:
+    gaussian_curve = gaussian_curve_float;	
+    gaussian_blur_row = gaussian_blur_row_float;	
+    rle_row = rle_row_float; 
+    break;
+  default:
+    gaussian_curve = NULL;	
+    gaussian_blur_row = NULL;	
+    rle_row = NULL; 
+    break;
+  } 
 }
-
-
-/* Convert from premultiplied alpha to unpremultiplied */
-void 
-separate_alpha_area  (
-                      PixelArea * src_area
-                      )
-{
-  void *  pag;
-  Tag src_tag = pixelarea_tag (src_area); 
-
-   /*put in tags check*/
-  
-  for (pag = pixelarea_register (1, src_area);
-       pag != NULL;
-       pag = pixelarea_process (pag))
-    {
-      PixelRow src_row;
- 
-      gint h = pixelarea_height (src_area);
-      while (h--)
-        {
-          pixelarea_getdata (src_area, &src_row, h);
-            
-          separate_alpha_row (&src_row);
-        }
-    }
-}
-
 
 void 
 gaussian_blur_area  (
@@ -996,7 +1255,6 @@ gaussian_blur_area  (
   gint *rle_count;  
   Tag rle_values_tag;
   Tag src_tag = pixelarea_tag (src_area);
-  Precision prec = tag_precision (src_tag);
   guint width = pixelarea_width (src_area);
   guint height = pixelarea_height (src_area);
   guint bytes_per_pixel = tag_bytes (src_tag);
@@ -1006,11 +1264,13 @@ gaussian_blur_area  (
   gint src_y = pixelarea_y (src_area);
 
   /* add a tag check here to look for an alpha channel */
+
+  gaussian_blur_area_funcs (src_tag);
  
   if (radius == 0.0) return;		
   
   /* get a gaussian  */
-  curve = (*gaussian_curve_funcs[prec-1])(radius, &length ); 
+  curve = (*gaussian_curve)(radius, &length ); 
   
   /* compute a sum for the gaussian */ 
   sum = g_malloc (sizeof (gfloat) * (2 * length + 1));
@@ -1043,10 +1303,10 @@ gaussian_blur_area  (
       pixelarea_copy_col (src_area, &src_col, src_x + col, src_y, height, 1);
       
       /* get an "rle" of the columns alpha */
-      (*rle_row_funcs [prec-1]) (&src_col, rle_count, &rle_values);
+      (*rle_row) (&src_col, rle_count, &rle_values);
       
       /* run a 1d gaussian on the column */
-      (*gaussian_blur_row_funcs [prec-1]) (&src_col, &src_col, rle_count, 
+      (*gaussian_blur_row) (&src_col, &src_col, rle_count, 
 					 &rle_values, length, sum, total); 
 
       /* copy the result back into the src */
@@ -1065,10 +1325,10 @@ gaussian_blur_area  (
       pixelarea_copy_row (src_area, &dest_row, src_x, src_y + row, width, 1); 
       
       /* get an "rle" of the rows alpha */
-      (*rle_row_funcs [prec-1]) (&src_row, rle_count, &rle_values);
+      (*rle_row) (&src_row, rle_count, &rle_values);
       
       /* run a 1d gaussian on the row */
-      (*gaussian_blur_row_funcs [prec-1]) (&src_row, &dest_row, rle_count, 
+      (*gaussian_blur_row) (&src_row, &dest_row, rle_count, 
 					 &rle_values, length, sum, total); 
 
       /* copy the result into src */ 	
@@ -1510,6 +1770,27 @@ border_area  (
 /* non-interpolating scale_region.  [adam]
  */
 
+static void
+scale_area_no_resample_funcs (Tag tag)
+{
+  switch (tag_precision (tag))
+  {
+  case PRECISION_U8:
+    scale_row_no_resample = scale_row_no_resample_u8;	
+    break;
+  case PRECISION_U16:
+    scale_row_no_resample = scale_row_no_resample_u16;	
+    break;
+  case PRECISION_FLOAT:
+    scale_row_no_resample = scale_row_no_resample_float;	
+    break;
+  default:
+    scale_row_no_resample = NULL;	
+    break;
+  } 
+}
+
+
 void 
 scale_area_no_resample  (
                          PixelArea * src_area,
@@ -1530,7 +1811,8 @@ scale_area_no_resample  (
   gint bytes_per_pixel = tag_bytes (src_tag);
   gint num_channels = tag_num_channels (src_tag);
   gint row_num_channels;
-  Precision prec = tag_precision (src_tag);
+
+  scale_area_no_resample_funcs (src_tag);
 
   /* get a dest row to copy src pixels to */ 
   dest_row_data = (guchar *) g_malloc (width * bytes_per_pixel); 
@@ -1569,7 +1851,7 @@ scale_area_no_resample  (
 	{
           /* pixel_region_get_row (srcPR, 0, y_src_offsets[y], orig_width, src, 1); */
           pixelarea_copy_row (src_area, &src_row, 0, y_src_offsets[y], orig_width,  1);
-          (*scale_row_no_resample_funcs [prec-1]) (&src_row, &dest_row, x_src_offsets);
+          (*scale_row_no_resample) (&src_row, &dest_row, x_src_offsets);
 	  last_src_y = y_src_offsets[y];
 	}
       /* pixel_region_set_row (destPR, 0 , y, width, dest); */
@@ -1627,8 +1909,32 @@ scale_row_no_resample_float  (
     dest[x] = src[x_src_offsets[x]];
 }
 
-
-
+static void 
+scale_area_funcs (
+			Tag tag
+		    )
+		  
+{
+  switch (tag_precision (tag))
+  {
+  case PRECISION_U8:
+    scale_row_resample = scale_row_resample_u8;	
+    scale_set_dest_row = scale_set_dest_row_u8;	
+    break;
+  case PRECISION_U16:
+    scale_row_resample = scale_row_resample_u16;	
+    scale_set_dest_row = scale_set_dest_row_u16;	
+    break;
+  case PRECISION_FLOAT:
+    scale_row_resample = scale_row_resample_float;	
+    scale_set_dest_row = scale_set_dest_row_float;	
+    break;
+  default:
+    scale_row_resample = NULL;	
+    scale_set_dest_row = NULL;	
+    break;
+  } 
+}
 
 void 
 scale_area  (
@@ -1659,7 +1965,9 @@ scale_area  (
   Tag dest_tag = pixelarea_tag (dest_area);
   gint num_channels = tag_num_channels (dest_tag);
   gint bytes_per_pixel = tag_bytes (dest_tag);
-  Precision prec = tag_precision (src_tag); 
+ 
+  /* set up the function pointers for scale */ 
+  scale_area_funcs (src_tag);
 
   /* set up the src rows and data  */
   src_m1_row_data = (guchar *) g_malloc (orig_width * bytes_per_pixel);
@@ -1772,7 +2080,7 @@ scale_area  (
 	src_p2 = pixelrow_data (&src_p1_row);
        
       /* scale and accumulate into row_accum array */ 
-      (*scale_row_funcs [prec-1])(src, src_m1, src_p1, src_p2, dy, x_frac, y_frac, x_rat, 
+      (*scale_row_resample)(src, src_m1, src_p1, src_p2, dy, x_frac, y_frac, x_rat, 
 			row_accum, num_channels, orig_width, width, scale_type); 
 
       if (advance_dest_y)
@@ -1785,7 +2093,7 @@ scale_area  (
             row_accum[x] *= tot_frac; 
          
           /* this sets dest row from array row_accum */
-          (*scale_set_dest_row_funcs [prec-1])( &dest_row, row_accum ); 
+          (*scale_set_dest_row)( &dest_row, row_accum ); 
 	  
           /*  clear row_accum  */
 	  memset (row_accum, 0, sizeof (double) * width * num_channels);
@@ -1867,7 +2175,7 @@ scale_set_dest_row_float  (
 
 
 static void 
-scale_row_u8  (
+scale_row_resample_u8  (
                guchar * src,
                guchar * src_m1,
                guchar * src_p1,
@@ -1987,7 +2295,7 @@ scale_row_u8  (
 }
 
 static void 
-scale_row_u16  (
+scale_row_resample_u16  (
                 guchar * src,
                 guchar * src_m1,
                 guchar * src_p1,
@@ -2107,7 +2415,7 @@ scale_row_u16  (
 }
 
 static void 
-scale_row_float  (
+scale_row_resample_float  (
                   guchar * src,
                   guchar * src_m1,
                   guchar * src_p1,
@@ -2226,7 +2534,25 @@ scale_row_float  (
     }
 }
 
-
+static void 
+subsample_area_funcs (Tag tag)
+{
+  switch (tag_precision (tag))
+  {
+  case PRECISION_U8:
+    subsample_row = subsample_row_u8;
+    break;
+  case PRECISION_U16:
+    subsample_row = subsample_row_u16;
+    break;
+  case PRECISION_FLOAT:
+    subsample_row = subsample_row_float;
+    break;
+  default:
+    subsample_row = NULL;
+    break;
+  } 
+}
 
 void 
 subsample_area  (
@@ -2248,7 +2574,6 @@ subsample_area  (
   guchar *src_row_data;
   Tag src_tag = pixelarea_tag (src_area);
   Tag dest_tag = pixelarea_tag (dest_area);
-  Precision prec = tag_precision (src_tag); 
   
   /* src and dest width and height */
   gint orig_width = pixelarea_width (src_area) / subsample;
@@ -2260,6 +2585,7 @@ subsample_area  (
   gint bytes_per_pixel = tag_bytes (dest_tag);
   gint num_channels = tag_num_channels (dest_tag); 
 
+  subsample_area_funcs (src_tag);
   /*  set up the src pixel row */
   src_row_data = (guchar *) g_malloc (orig_width * bytes_per_pixel);
   pixelrow_init (&src_row, src_tag, src_row_data, orig_width);
@@ -2325,7 +2651,7 @@ subsample_area  (
 
       y_last += y_frac;
        
-      (*subsample_row_funcs[prec-1]) ( &src_row, x_frac, y_frac, x_rat, row_accum);   
+      (*subsample_row) ( &src_row, x_frac, y_frac, x_rat, row_accum);   
 
       if (advance_dest)
 	{
@@ -2336,7 +2662,7 @@ subsample_area  (
             row_accum[x] *= tot_frac; 
          
           /*  set dest row from row_accum */
-          (*scale_set_dest_row_funcs [prec-1])( &dest_row, row_accum ); 
+          (*scale_set_dest_row)( &dest_row, row_accum ); 
           
           dest_row_num++;
 
@@ -2605,6 +2931,25 @@ shapeburst_area  (
 }
 
 
+static void 
+thin_area_funcs (Tag tag)
+{
+  switch (tag_precision (tag))
+  {
+  case PRECISION_U8:
+    thin_row = thin_row_u8;
+    break;
+  case PRECISION_U16:
+    thin_row = thin_row_u16;
+    break;
+  case PRECISION_FLOAT:
+    thin_row = thin_row_float;
+    break;
+  default:
+    thin_row = NULL;
+    break;
+  } 
+}
 
 gint 
 thin_area  (
@@ -2621,7 +2966,6 @@ thin_area  (
   PixelRow dest_row;
   
   Tag src_tag = pixelarea_tag (src_area);
-  Precision prec = tag_precision (src_tag);
   gint bytes_per_pixel = tag_bytes (src_tag);
   guint width = pixelarea_width (src_area);
   guint height = pixelarea_height (src_area);
@@ -2635,7 +2979,9 @@ thin_area  (
   
   /* get buffer for the dest row */
   guchar *dest_row_data = (guchar *) g_malloc (width  * bytes_per_pixel); 
-  
+ 
+  thin_area_funcs (src_tag);
+ 
   /* clear buffers to 0 */
   memset (prev_row_data, 0, (width + 2) * bytes_per_pixel);
   memset (next_row_data, 0, (width + 2) * bytes_per_pixel);
@@ -2659,7 +3005,7 @@ thin_area  (
       else
         memset (next_row_data, 0, width  * bytes_per_pixel);
        
-      found_one = (*thin_row_funcs [prec-1]) (&cur_row, &next_row, &prev_row, &dest_row, type);
+      found_one = (*thin_row) (&cur_row, &next_row, &prev_row, &dest_row, type);
 
       pixelarea_write_row (src_area, &dest_row, src_x, src_y + i, width);
       
@@ -2857,6 +3203,27 @@ thin_row_float  (
    return found_one;
 }
 
+typedef void (*SwapRowFunc) (PixelRow*, PixelRow*);
+static SwapRowFunc swap_area_funcs (Tag);
+
+static SwapRowFunc 
+swap_area_funcs (
+		Tag tag
+		)
+	  
+{
+  switch (tag_precision (tag))
+  {
+  case PRECISION_U8:
+    return swap_row_u8;
+  case PRECISION_U16:
+    return swap_row_u16;
+  case PRECISION_FLOAT:
+    return swap_row_float;
+  default:
+    return NULL;
+  } 
+}
 
 void 
 swap_area  (
@@ -2867,7 +3234,7 @@ swap_area  (
   void * pag;
   Tag src_tag = pixelarea_tag (src_area); 
   Tag dest_tag = pixelarea_tag (dest_area); 
-
+  SwapRowFunc swap_row = swap_area_funcs (src_tag);
    /* put in tags check */
   
   for (pag = pixelarea_register (2, src_area, dest_area);
@@ -2884,11 +3251,32 @@ swap_area  (
           pixelarea_getdata (dest_area, &dest_row, h);
             
           /* swap_pixels (s, d, src->w * bytes); */
-          swap_row (&src_row, &dest_row);
+          (*swap_row) (&src_row, &dest_row);
         }
     }
 }
 
+typedef void (*ApplyMaskToAlphaChannelRowFunc) (PixelRow*, PixelRow*, gfloat);
+static ApplyMaskToAlphaChannelRowFunc apply_mask_to_area_funcs (Tag);
+
+static ApplyMaskToAlphaChannelRowFunc 
+apply_mask_to_area_funcs (
+		Tag tag
+		)
+	  
+{
+  switch (tag_precision (tag))
+  {
+  case PRECISION_U8:
+    return apply_mask_to_alpha_channel_row_u8;
+  case PRECISION_U16:
+    return apply_mask_to_alpha_channel_row_u16;
+  case PRECISION_FLOAT:
+    return apply_mask_to_alpha_channel_row_float;
+  default:
+    return NULL;
+  } 
+}
 
 void 
 apply_mask_to_area  (
@@ -2900,6 +3288,7 @@ apply_mask_to_area  (
   void *  pag;
   Tag src_tag = pixelarea_tag (src_area); 
   Tag mask_tag = pixelarea_tag (mask_area); 
+  ApplyMaskToAlphaChannelRowFunc apply_mask_to_alpha_channel_row = apply_mask_to_area_funcs (src_tag);
 
   /* put in tags check */
   
@@ -2918,11 +3307,32 @@ apply_mask_to_area  (
 	  pixelarea_getdata (mask_area, &maskrow, h);
 
           /*apply_mask_to_alpha_channel(s, m, opacity, src-> w, srcPR->bytes);*/
-          apply_mask_to_alpha_channel_row (&srcrow, &maskrow, opacity);
+          (*apply_mask_to_alpha_channel_row) (&srcrow, &maskrow, opacity);
 	}
     }
 }
 
+typedef void (*CombineMaskAndAlphaChannelRowFunc) (PixelRow*, PixelRow*, gfloat);
+static CombineMaskAndAlphaChannelRowFunc  combine_mask_and_area_funcs(Tag);
+
+static CombineMaskAndAlphaChannelRowFunc 
+combine_mask_and_area_funcs (
+		Tag tag
+		)
+	  
+{
+  switch (tag_precision (tag))
+  {
+  case PRECISION_U8:
+    return combine_mask_and_alpha_channel_row_u8;
+  case PRECISION_U16:
+    return combine_mask_and_alpha_channel_row_u16;
+  case PRECISION_FLOAT:
+    return combine_mask_and_alpha_channel_row_float;
+  default:
+    return NULL;
+  } 
+}
 
 void 
 combine_mask_and_area  (
@@ -2934,6 +3344,8 @@ combine_mask_and_area  (
   void *  pag;
   Tag src_tag = pixelarea_tag (src_area); 
   Tag mask_tag = pixelarea_tag (mask_area); 
+  CombineMaskAndAlphaChannelRowFunc combine_mask_and_alpha_channel_row = 
+			combine_mask_and_area_funcs (src_tag);
 
   /*put in tags check */
   
@@ -2952,11 +3364,32 @@ combine_mask_and_area  (
 	  pixelarea_getdata (mask_area, &maskrow, h);
 
   	  /*combine_mask_and_alpha_channel (s, m, opacity, src->w,src->bytes);*/
-	  combine_mask_and_alpha_channel_row (&srcrow, &maskrow, opacity);
+	  (*combine_mask_and_alpha_channel_row) (&srcrow, &maskrow, opacity);
 	}
     }
 }
 
+typedef void (*CopyGrayToIntenARowFunc) (PixelRow*, PixelRow*);
+static CopyGrayToIntenARowFunc  copy_gray_to_area_funcs(Tag);
+
+static CopyGrayToIntenARowFunc  
+copy_gray_to_area_funcs (
+		Tag tag
+		)
+	  
+{
+  switch (tag_precision (tag))
+  {
+  case PRECISION_U8:
+    return copy_gray_to_inten_a_row_u8;
+  case PRECISION_U16:
+    return copy_gray_to_inten_a_row_u16;
+  case PRECISION_FLOAT:
+    return copy_gray_to_inten_a_row_float;
+  default:
+    return NULL;
+  } 
+}
 
 void 
 copy_gray_to_area  (
@@ -2967,6 +3400,9 @@ copy_gray_to_area  (
   void *  pag;
   Tag src_tag = pixelarea_tag (src_area); 
   Tag dest_tag = pixelarea_tag (dest_area); 
+  CopyGrayToIntenARowFunc copy_gray_to_inten_a_row = 
+			copy_gray_to_area_funcs (src_tag);
+
 
    /*put in tags check*/
   
@@ -2984,9 +3420,67 @@ copy_gray_to_area  (
           pixelarea_getdata (dest_area, &dest_row, h);
             
   	  /*copy_gray_to_inten_a_pixels (s, d, src->w, dest->bytes);*/
-          copy_gray_to_inten_a_row (&src_row, &dest_row);
+         (*copy_gray_to_inten_a_row) (&src_row, &dest_row);
         }
     }
+}
+
+
+static void initial_area_funcs (Tag);
+typedef void (*InitialChannelRowFunc) (PixelRow *,PixelRow *);
+typedef void (*InitialIndexedRowFunc) (PixelRow *, PixelRow *, unsigned char *);
+typedef void (*InitialIndexedARowFunc) (PixelRow *, PixelRow *, PixelRow *, unsigned char *, gfloat);
+typedef void (*DissolveRowFunc) (PixelRow *, PixelRow *, gint , gint, gfloat);
+typedef void (*InitialIntenRowFunc) (PixelRow *, PixelRow *, PixelRow *, gfloat, gint *);
+typedef void (*InitialIntenARowFunc) (PixelRow *, PixelRow *, PixelRow *, gfloat, gint *);
+static InitialChannelRowFunc initial_channel_row;
+static InitialIndexedRowFunc initial_indexed_row;
+static InitialIndexedARowFunc initial_indexed_a_row;
+static DissolveRowFunc dissolve_row;
+static InitialIntenRowFunc initial_inten_row;
+static InitialIntenARowFunc initial_inten_a_row;
+
+static void 
+initial_area_funcs (
+		Tag tag
+		)
+	  
+{
+  switch (tag_precision (tag))
+  {
+  case PRECISION_U8:
+    initial_channel_row = initial_channel_row_u8; 
+    initial_indexed_row = initial_indexed_row_u8; 
+    initial_indexed_a_row = initial_indexed_a_row_u8; 
+    dissolve_row = dissolve_row_u8; 
+    initial_inten_row = initial_inten_row_u8; 
+    initial_inten_a_row = initial_inten_a_row_u8; 
+    break;
+  case PRECISION_U16:
+    initial_channel_row = initial_channel_row_u16; 
+    initial_indexed_row = initial_indexed_row_u16; 
+    initial_indexed_a_row = initial_indexed_a_row_u16; 
+    dissolve_row = dissolve_row_u16; 
+    initial_inten_row = initial_inten_row_u16; 
+    initial_inten_a_row = initial_inten_a_row_u16; 
+    break;
+  case PRECISION_FLOAT:
+    initial_channel_row = initial_channel_row_float; 
+    initial_indexed_row = NULL; 
+    initial_indexed_a_row = NULL; 
+    dissolve_row = dissolve_row_float; 
+    initial_inten_row = initial_inten_row_float; 
+    initial_inten_a_row = initial_inten_a_row_float; 
+    break;
+  default:
+    initial_channel_row = NULL; 
+    initial_indexed_row = NULL; 
+    initial_indexed_a_row = NULL; 
+    dissolve_row = NULL; 
+    initial_inten_row = NULL; 
+    initial_inten_a_row = NULL; 
+    break;
+  } 
 }
 
 
@@ -3013,9 +3507,9 @@ initial_area  (
   gint src_num_channels = tag_num_channels (src_tag);
   gint src_bytes = tag_bytes (src_tag); /* per pixel */
   gint src_bytes_per_channel = src_bytes / src_num_channels;
-  Precision prec = tag_precision (src_tag); 
-   
+  Precision prec = tag_precision(src_tag); 
   /*put in tags check*/
+  initial_area_funcs (src_tag);
   
   /* get a buffer for dissolve if needed */
   
@@ -3056,17 +3550,17 @@ initial_area  (
 	    case INITIAL_CHANNEL_MASK:
 	    case INITIAL_CHANNEL_SELECTION:
   	      /*initial_channel_pixels (s, d, src->w, dest->bytes);*/
-              initial_channel_row (&src_row, &dest_row);
+              (*initial_channel_row) (&src_row, &dest_row);
 	      break;
 
 	    case INITIAL_INDEXED:
   	      /*initial_indexed_pixels (s, d, data, src->w);*/
-              initial_indexed_row (&src_row, &dest_row, data);
+              (*initial_indexed_row) (&src_row, &dest_row, data);
 	      break;
 
 	    case INITIAL_INDEXED_ALPHA:
   	      /*initial_indexed_a_pixels (s, d, m, data, opacity, src->w);*/
-              initial_indexed_a_row (&src_row, &dest_row, &mask_row, data, opacity);
+              (*initial_indexed_a_row) (&src_row, &dest_row, &mask_row, data, opacity);
 	      break;
 
 	    case INITIAL_INTENSITY:
@@ -3074,12 +3568,12 @@ initial_area  (
 		{
   		  /*dissolve_pixels (s, buf, src->x, src->y + h, opacity, src->w, src->bytes, src->bytes + 1, 0);*/
   		  /*initial_inten_pixels (buf, d, m, opacity, affect, src->w,  src->bytes);*/
- 		  dissolve_row (&src_row, &buf_row, src_x, src_y + h, opacity);
-                  initial_inten_row (&buf_row, &dest_row, &mask_row, opacity, affect);
+ 		  (*dissolve_row) (&src_row, &buf_row, src_x, src_y + h, opacity);
+                  (*initial_inten_row) (&buf_row, &dest_row, &mask_row, opacity, affect);
 		}
 	      else
 		/*initial_inten_pixels (s, d, m, opacity, affect, src->w, pixel_region_bytes (src));*/
-                initial_inten_row (&src_row, &dest_row, &mask_row, opacity, affect);
+                (*initial_inten_row) (&src_row, &dest_row, &mask_row, opacity, affect);
 	      break;
 
 	    case INITIAL_INTENSITY_ALPHA:
@@ -3087,12 +3581,12 @@ initial_area  (
 		{
 		  /* dissolve_pixels (s, buf, src->x, src->y + h, opacity, src->w, src->bytes, src->bytes, 1);*/
 		  /* initial_inten_a_pixels (buf, d, m, opacity, affect, src->w, src->bytes);*/
-                  dissolve_row (&src_row, &buf_row, src_x, src_y + h, opacity);
-                  initial_inten_a_row (&buf_row, &dest_row, &mask_row, opacity, affect);
+                  (*dissolve_row) (&src_row, &buf_row, src_x, src_y + h, opacity);
+                  (*initial_inten_a_row) (&buf_row, &dest_row, &mask_row, opacity, affect);
 		}
 	      else
 		/*initial_inten_a_pixels (s, d, m, opacity, affect, src->w, src->bytes);*/
-                initial_inten_a_row (&src_row, &dest_row, &mask_row, opacity, affect);
+                (*initial_inten_a_row) (&src_row, &dest_row, &mask_row, opacity, affect);
 	      break;
 	    }
         }
@@ -3101,6 +3595,122 @@ initial_area  (
       g_free (buf_row_data);
 }
 
+static void combine_areas_funcs (Tag);
+typedef void (*CombineIndexedAndIndexedRowFunc) (PixelRow *, PixelRow *, PixelRow *, PixelRow *, gfloat, gint *);
+typedef void (*CombineIndexedAndIndexedARowFunc) (PixelRow *, PixelRow *, PixelRow *, PixelRow *, gfloat, gint *);
+typedef void (*CombineIndexedAAndIndexedARowFunc) (PixelRow *, PixelRow *, PixelRow *, PixelRow *, gfloat, gint *);
+typedef void (*CombineIntenAAndIndexedARowFunc) (PixelRow *, PixelRow *, PixelRow *, PixelRow *, unsigned char *, gfloat);
+typedef void (*CombineIntenAAndChannelMaskRowFunc) (PixelRow *, PixelRow *, PixelRow *, PixelRow *, gfloat);
+typedef void (*CombineIntenAAndChannelSelectionRowFunc) (PixelRow *, PixelRow *, PixelRow *, PixelRow *, gfloat);
+typedef void (*CombineIntenAndIntenRowFunc) (PixelRow *, PixelRow *, PixelRow *, PixelRow *, gfloat, gint *);
+typedef void (*CombineIntenAndIntenARowFunc) (PixelRow *, PixelRow *, PixelRow *, PixelRow *, gfloat, gint *);
+typedef void (*CombineIntenAAndIntenRowFunc) (PixelRow *, PixelRow *, PixelRow *, PixelRow *, gfloat, gint *,gint);
+typedef void (*CombineIntenAAndIntenARowFunc) (PixelRow *, PixelRow *, PixelRow *, PixelRow *, gfloat, gint *,gint);
+typedef void (*BehindIntenRowFunc) (PixelRow *, PixelRow *, PixelRow *, PixelRow *, gfloat, gint *);
+typedef void (*BehindIndexedRowFunc) (PixelRow *, PixelRow *, PixelRow *, PixelRow *, gfloat, gint *);
+typedef void (*ReplaceIntenRowFunc) (PixelRow *, PixelRow *, PixelRow *, PixelRow *, gfloat, gint *);
+typedef void (*ReplaceIndexedRowFunc) (PixelRow *, PixelRow *, PixelRow *, PixelRow *, gfloat, gint *);
+typedef void (*EraseIntenRowFunc) (PixelRow *, PixelRow *, PixelRow *, PixelRow *, gfloat, gint *);
+typedef void (*EraseIndexedRowFunc) (PixelRow *, PixelRow *, PixelRow *, PixelRow *, gfloat, gint *);
+static CombineIndexedAndIndexedRowFunc combine_indexed_and_indexed_row;
+static CombineIndexedAndIndexedARowFunc combine_indexed_and_indexed_a_row;
+static CombineIndexedAAndIndexedARowFunc combine_indexed_a_and_indexed_a_row;
+static CombineIntenAAndIndexedARowFunc combine_inten_a_and_indexed_a_row;
+static CombineIntenAAndChannelMaskRowFunc combine_inten_a_and_channel_mask_row;
+static CombineIntenAAndChannelSelectionRowFunc combine_inten_a_and_channel_selection_row;
+static CombineIntenAndIntenRowFunc combine_inten_and_inten_row;
+static CombineIntenAndIntenARowFunc combine_inten_and_inten_a_row;
+static CombineIntenAAndIntenRowFunc combine_inten_a_and_inten_row;
+static CombineIntenAAndIntenARowFunc combine_inten_a_and_inten_a_row;
+static BehindIntenRowFunc behind_inten_row;
+static BehindIndexedRowFunc behind_indexed_row;
+static ReplaceIntenRowFunc replace_inten_row;
+static ReplaceIndexedRowFunc replace_indexed_row;
+static EraseIntenRowFunc erase_inten_row;
+static EraseIndexedRowFunc erase_indexed_row;
+
+static void 
+combine_areas_funcs (
+		Tag tag
+		)
+	  
+{
+  switch (tag_precision (tag))
+  {
+  case PRECISION_U8:
+    combine_indexed_and_indexed_row = combine_indexed_and_indexed_row_u8;
+    combine_indexed_and_indexed_a_row = combine_indexed_and_indexed_a_row_u8; 
+    combine_indexed_a_and_indexed_a_row = combine_indexed_a_and_indexed_a_row_u8;
+    combine_inten_a_and_indexed_a_row = combine_inten_a_and_indexed_a_row_u8; 
+    combine_inten_a_and_channel_mask_row = combine_inten_a_and_channel_mask_row_u8; 
+    combine_inten_a_and_channel_selection_row = combine_inten_a_and_channel_selection_row_u8; 
+    combine_inten_and_inten_row = combine_inten_and_inten_row_u8; 
+    combine_inten_and_inten_a_row = combine_inten_and_inten_a_row_u8; 
+    combine_inten_a_and_inten_row = combine_inten_a_and_inten_row_u8; 
+    combine_inten_a_and_inten_a_row = combine_inten_a_and_inten_a_row_u8; 
+    behind_inten_row = behind_inten_row_u8; 
+    behind_indexed_row = behind_indexed_row_u8; 
+    replace_inten_row = replace_inten_row_u8; 
+    replace_indexed_row = replace_indexed_row_u8; 
+    erase_inten_row = erase_inten_row_u8; 
+    erase_indexed_row = erase_indexed_row_u8;
+    break;
+  case PRECISION_U16:
+    combine_indexed_and_indexed_row = combine_indexed_and_indexed_row_u16;
+    combine_indexed_and_indexed_a_row = combine_indexed_and_indexed_a_row_u16; 
+    combine_indexed_a_and_indexed_a_row = combine_indexed_a_and_indexed_a_row_u16;
+    combine_inten_a_and_indexed_a_row = combine_inten_a_and_indexed_a_row_u16; 
+    combine_inten_a_and_channel_mask_row = combine_inten_a_and_channel_mask_row_u16; 
+    combine_inten_a_and_channel_selection_row = combine_inten_a_and_channel_selection_row_u16; 
+    combine_inten_and_inten_row = combine_inten_and_inten_row_u16; 
+    combine_inten_and_inten_a_row = combine_inten_and_inten_a_row_u16; 
+    combine_inten_a_and_inten_row = combine_inten_a_and_inten_row_u16; 
+    combine_inten_a_and_inten_a_row = combine_inten_a_and_inten_a_row_u16; 
+    behind_inten_row = behind_inten_row_u16; 
+    behind_indexed_row = behind_indexed_row_u16; 
+    replace_inten_row = replace_inten_row_u16; 
+    replace_indexed_row = replace_indexed_row_u16; 
+    erase_inten_row = erase_inten_row_u16; 
+    erase_indexed_row = erase_indexed_row_u16;
+    break;
+  case PRECISION_FLOAT:
+    combine_indexed_and_indexed_row = NULL;
+    combine_indexed_and_indexed_a_row = NULL; 
+    combine_indexed_a_and_indexed_a_row = NULL;
+    combine_inten_a_and_indexed_a_row = NULL; 
+    combine_inten_a_and_channel_mask_row = combine_inten_a_and_channel_mask_row_float; 
+    combine_inten_a_and_channel_selection_row = combine_inten_a_and_channel_selection_row_float; 
+    combine_inten_and_inten_row = combine_inten_and_inten_row_float; 
+    combine_inten_and_inten_a_row = combine_inten_and_inten_a_row_float; 
+    combine_inten_a_and_inten_row = combine_inten_a_and_inten_row_float; 
+    combine_inten_a_and_inten_a_row = combine_inten_a_and_inten_a_row_float; 
+    behind_inten_row = behind_inten_row_float; 
+    behind_indexed_row = NULL; 
+    replace_inten_row = replace_inten_row_float; 
+    replace_indexed_row = NULL; 
+    erase_inten_row = erase_inten_row_float; 
+    erase_indexed_row = NULL;
+    break;
+  default:
+    combine_indexed_and_indexed_row = NULL;
+    combine_indexed_and_indexed_a_row = NULL; 
+    combine_indexed_a_and_indexed_a_row = NULL;
+    combine_inten_a_and_indexed_a_row = NULL; 
+    combine_inten_a_and_channel_mask_row = NULL; 
+    combine_inten_a_and_channel_selection_row = NULL; 
+    combine_inten_and_inten_row = NULL; 
+    combine_inten_and_inten_a_row = NULL; 
+    combine_inten_a_and_inten_row = NULL; 
+    combine_inten_a_and_inten_a_row = NULL; 
+    behind_inten_row = NULL; 
+    behind_indexed_row = NULL; 
+    replace_inten_row = NULL; 
+    replace_indexed_row = NULL; 
+    erase_inten_row = NULL; 
+    erase_indexed_row = NULL;
+    break;
+  } 
+}
 
 void 
 combine_areas  (
@@ -3133,6 +3743,8 @@ combine_areas  (
   Tag buf_tag = src2_tag;
   gint src2_width = pixelarea_width (src2_area);
   gint src2_bytes = tag_bytes (src2_tag);
+ 
+  combine_areas_funcs (src1_tag); 
   
   buf_size = src2_width * src2_bytes;
   buf_row_data = (guchar *) g_malloc (buf_size);
@@ -3186,23 +3798,24 @@ combine_areas  (
 	    default:
 	      break;
 	    }
-	  
+	 
+  
           /*  based on the type of the initial image...  */
 	  switch (combine)
 	    {
 	    case COMBINE_INDEXED_INDEXED:
 	      /*combine_indexed_and_indexed_pixels (s1, s2, d, m, opacity, affect, src1->w, src1->bytes);*/
-              combine_indexed_and_indexed_row (&src1_row, &src2_row, &dest_row, &mask_row, opacity, affect);
+              (*combine_indexed_and_indexed_row) (&src1_row, &src2_row, &dest_row, &mask_row, opacity, affect);
 	      break;
 
 	    case COMBINE_INDEXED_INDEXED_A:
 	      /*combine_indexed_and_indexed_a_pixels (s1, s2, d, m, opacity, affect, src1->w, src1->bytes);*/
-              combine_indexed_and_indexed_a_row (&src1_row, &src2_row, &dest_row, &mask_row, opacity, affect);
+              (*combine_indexed_and_indexed_a_row) (&src1_row, &src2_row, &dest_row, &mask_row, opacity, affect);
 	      break;
 
 	    case COMBINE_INDEXED_A_INDEXED_A:
 	      /*combine_indexed_a_and_indexed_a_pixels (s1, s2, d, m, opacity, affect, src1->w, src1->bytes);*/
-              combine_indexed_a_and_indexed_a_row (&src1_row, &src2_row, &dest_row, &mask_row, opacity, affect);
+              (*combine_indexed_a_and_indexed_a_row) (&src1_row, &src2_row, &dest_row, &mask_row, opacity, affect);
 	      break;
 
 	    case COMBINE_INTEN_A_INDEXED_A:
@@ -3210,7 +3823,7 @@ combine_areas  (
 	       *  indexed layer's colormap
 	       */
 	      /*combine_inten_a_and_indexed_a_pixels (s1, s2, d, m, data, opacity, src1->w, dest->bytes);*/
-              combine_inten_a_and_indexed_a_row (&src1_row, &src2_row, &dest_row, &mask_row, data, opacity );
+              (*combine_inten_a_and_indexed_a_row) (&src1_row, &src2_row, &dest_row, &mask_row, data, opacity );
 	      break;
 
 	    case COMBINE_INTEN_A_CHANNEL_MASK:
@@ -3219,63 +3832,64 @@ combine_areas  (
 	       */
               /*combine_inten_a_and_channel_mask_pixels (s1, s2, d, data, opacity, src1->w, dest->bytes);*/
 /* FIXME -- the data argument should be a Paint to pass to this routine */                
-              combine_inten_a_and_channel_mask_row (&src1_row, &src2_row, &dest_row, NULL, opacity );
+              (*combine_inten_a_and_channel_mask_row) (&src1_row, &src2_row, &dest_row, NULL, opacity );
 	      break;
 
 	    case COMBINE_INTEN_A_CHANNEL_SELECTION:
 	      /*combine_inten_a_and_channel_selection_pixels (s1, s2, d, data, opacity, src1->w, src1->bytes);*/
 /* FIXME -- the data argument should be a Paint to pass to this routine */                
-              combine_inten_a_and_channel_selection_row (&src1_row, &src2_row, &dest_row, NULL, opacity );
+              (*combine_inten_a_and_channel_selection_row) (&src1_row, &src2_row, &dest_row, NULL, opacity );
 	      break;
+
 
 	    case COMBINE_INTEN_INTEN:
 	      /*combine_inten_and_inten_pixels (s1, s, d, m, opacity, affect, src1->w, src1->bytes);*/
-              combine_inten_and_inten_row (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect);
+              (*combine_inten_and_inten_row) (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect);
 	      break;
 
 	    case COMBINE_INTEN_INTEN_A:
 	      /*combine_inten_and_inten_a_pixels (s1, s, d, m, opacity, affect, src1->w, src1->bytes);*/
-              combine_inten_and_inten_a_row (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect);
+              (*combine_inten_and_inten_a_row) (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect);
 	      break;
 
 	    case COMBINE_INTEN_A_INTEN:
               /*combine_inten_a_and_inten_pixels (s1, s, d, m, opacity, affect, mode_affect, src1->w, src1->bytes);*/
-              combine_inten_a_and_inten_row (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect, mode_affect);
+              (*combine_inten_a_and_inten_row) (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect, mode_affect);
 	      break;
 
 	    case COMBINE_INTEN_A_INTEN_A:
 	      /*combine_inten_a_and_inten_a_pixels (s1, s, d, m, opacity, affect, mode_affect, src1->w, src1->bytes);*/
-              combine_inten_a_and_inten_a_row (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect, mode_affect);
+              (*combine_inten_a_and_inten_a_row) (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect, mode_affect);
 	      break;
 
 	    case BEHIND_INTEN:
 	      /*behind_inten_pixels (s1, s, d, m, opacity, affect, src1->w, src1->bytes, src2->bytes, ha1, ha2);*/
-              behind_inten_row (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect);
+              (*behind_inten_row) (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect);
 	      break;
 
 	    case BEHIND_INDEXED:
 	      /*behind_indexed_pixels (s1, s, d, m, opacity, affect, src1->w, src1->bytes, src2->bytes, ha1, ha2);*/
-              behind_inten_row (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect);
+              (*behind_indexed_row) (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect);
 	      break;
 
 	    case REPLACE_INTEN:
               /*replace_inten_pixels (s1, s, d, m, opacity, affect, src1->w, src1->bytes, src2->bytes, ha1, ha2);*/
-              replace_inten_row (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect);
+              (*replace_inten_row) (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect);
 	      break;
 
 	    case REPLACE_INDEXED:
               /*replace_indexed_pixels (s1, s, d, m, opacity, affect, src1->w, src1->bytes, src2->bytes, ha1, ha2);*/
-              replace_indexed_row (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect);
+              (*replace_indexed_row) (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect);
 	      break;
 
 	    case ERASE_INTEN:
 	      /*erase_inten_pixels (s1, s, d, m, opacity, affect, src1->w, src1->bytes);*/
-              erase_inten_row (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect);
+              (*erase_inten_row) (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect);
 	      break;
 
 	    case ERASE_INDEXED:
               /*erase_indexed_pixels (s1, s, d, m, opacity, affect, src1->w, src1->bytes);*/
-              erase_indexed_row (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect);
+              (*erase_indexed_row) (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect);
 	      break;
 
 	    case NO_COMBINATION:
@@ -3407,9 +4021,10 @@ draw_segments (
   /* initialize line with opacity */
   {
     Tag t = tag_new (PRECISION_FLOAT, FORMAT_GRAY, ALPHA_NO);
+    ColorRowFunc color_row = color_area_funcs (t);
     PixelRow paint;
     pixelrow_init (&paint, t, (guchar*)&opacity, 1);
-    color_row(&line, &paint);
+    (*color_row)(&line, &paint);
   }
 
   for (i = 0; i < num_segs; i++)
@@ -3518,6 +4133,97 @@ cubic (
 /************************************/
 /*       apply layer modes          */
 /************************************/
+static void apply_layer_mode_funcs (Tag);
+
+typedef void (*MultiplyRowFunc) (PixelRow *, PixelRow *, PixelRow *);
+typedef void (*ScreenRowFunc) (PixelRow *, PixelRow *, PixelRow *);
+typedef void (*OverlayRowFunc) (PixelRow *, PixelRow *, PixelRow *);
+typedef void (*DifferenceRowFunc) (PixelRow *, PixelRow *, PixelRow *);
+typedef void (*AddRowFunc) (PixelRow *, PixelRow *, PixelRow *);
+typedef void (*SubtractRowFunc) (PixelRow *, PixelRow *, PixelRow *);
+typedef void (*DarkenRowFunc) (PixelRow *, PixelRow *, PixelRow *);
+typedef void (*LightenRowFunc) (PixelRow *, PixelRow *, PixelRow *);
+typedef void (*HsvOnlyRowFunc) (PixelRow *, PixelRow *, PixelRow *, gint);
+typedef void (*ColorOnlyRowFunc) (PixelRow *, PixelRow *, PixelRow *, gint);
+static AddAlphaRowFunc add_alpha_row;
+static MultiplyRowFunc multiply_row;
+static ScreenRowFunc screen_row;
+static OverlayRowFunc overlay_row;
+static DifferenceRowFunc difference_row;
+static AddRowFunc add_row;
+static SubtractRowFunc subtract_row;
+static DarkenRowFunc darken_row;
+static LightenRowFunc lighten_row;
+static HsvOnlyRowFunc hsv_only_row;
+static ColorOnlyRowFunc color_only_row;
+
+static void 
+apply_layer_mode_funcs (
+		Tag tag
+		)
+	  
+{
+  switch (tag_precision (tag))
+  {
+  case PRECISION_U8:
+    add_alpha_row = add_alpha_row_u8;
+    dissolve_row = dissolve_row_u8; 
+    multiply_row = multiply_row_u8; 
+    screen_row = screen_row_u8; 
+    overlay_row = overlay_row_u8; 
+    difference_row = difference_row_u8; 
+    add_row = add_row_u8; 
+    subtract_row = subtract_row_u8; 
+    darken_row = darken_row_u8; 
+    lighten_row = lighten_row_u8; 
+    hsv_only_row = hsv_only_row_u8; 
+    color_only_row = color_only_row_u8; 
+    break;
+  case PRECISION_U16:
+    add_alpha_row = add_alpha_row_u16;
+    dissolve_row = dissolve_row_u16; 
+    multiply_row = multiply_row_u16; 
+    screen_row = screen_row_u16; 
+    overlay_row = overlay_row_u16; 
+    difference_row = difference_row_u16; 
+    add_row = add_row_u16; 
+    subtract_row = subtract_row_u16; 
+    darken_row = darken_row_u16; 
+    lighten_row = lighten_row_u16; 
+    hsv_only_row = hsv_only_row_u16; 
+    color_only_row = color_only_row_u16; 
+    break;
+  case PRECISION_FLOAT:
+    add_alpha_row = add_alpha_row_float;
+    dissolve_row = dissolve_row_float; 
+    multiply_row = multiply_row_float; 
+    screen_row = screen_row_float; 
+    overlay_row = overlay_row_float; 
+    difference_row = difference_row_float; 
+    add_row = add_row_float; 
+    subtract_row = subtract_row_float; 
+    darken_row = darken_row_float; 
+    lighten_row = lighten_row_float; 
+    hsv_only_row = hsv_only_row_float; 
+    color_only_row = color_only_row_float; 
+    break;
+  default:
+    add_alpha_row = NULL;
+    dissolve_row = NULL; 
+    multiply_row = NULL; 
+    screen_row = NULL; 
+    overlay_row = NULL; 
+    difference_row = NULL; 
+    add_row = NULL; 
+    subtract_row = NULL; 
+    darken_row = NULL; 
+    lighten_row = NULL; 
+    hsv_only_row = NULL; 
+    color_only_row = NULL; 
+    break;
+  } 
+}
+
 
 static int 
 apply_layer_mode  (
@@ -3540,7 +4246,9 @@ apply_layer_mode  (
   guchar *src2_data = pixelrow_data (src2_row); 
   gint width = pixelrow_width (dest_row); 
   Format src1_format = tag_format (src1_tag);
-
+  
+  apply_layer_mode_funcs (src1_tag);
+ 
   if (!ha1 && !ha2)
     combine = COMBINE_INTEN_INTEN;
   else if (!ha1 && ha2)
@@ -3562,51 +4270,51 @@ apply_layer_mode  (
       /*  Since dissolve requires an alpha channels...  */
       if (! ha2)
 	/*add_alpha_pixels (src2, *dest, length, b2);*/
-      add_alpha_row (src2_row, dest_row);
+      (*add_alpha_row) (src2_row, dest_row);
 
       /*dissolve_pixels (src2, *dest, x, y, opacity, length, b2, ((ha2) ? b2 : b2 + 1), ha2);*/
-      dissolve_row (src2_row, dest_row, x, y, opacity);
+      (*dissolve_row) (src2_row, dest_row, x, y, opacity);
       combine = (ha1) ? COMBINE_INTEN_A_INTEN_A : COMBINE_INTEN_INTEN_A;
       break;
 
     case MULTIPLY_MODE:
       /*multiply_pixels (src1, src2, *dest, length, b1, b2, ha1, ha2);*/
-      multiply_row (src1_row, src2_row, dest_row);
+      (*multiply_row) (src1_row, src2_row, dest_row);
       break;
 
     case SCREEN_MODE:
       /*screen_pixels (src1, src2, *dest, length, b1, b2, ha1, ha2);*/
-      screen_row (src1_row, src2_row, dest_row);
+      (*screen_row) (src1_row, src2_row, dest_row);
       break;
 
     case OVERLAY_MODE:
       /*overlay_pixels (src1, src2, *dest, length, b1, b2, ha1, ha2);*/
-      overlay_row (src1_row, src2_row, dest_row);
+      (*overlay_row) (src1_row, src2_row, dest_row);
       break;
 
     case DIFFERENCE_MODE:
       /*difference_pixels (src1, src2, *dest, length, b1, b2, ha1, ha2);*/
-      difference_row (src1_row, src2_row, dest_row);
+      (*difference_row) (src1_row, src2_row, dest_row);
       break;
 
     case ADDITION_MODE:
       /*add_pixels (src1, src2, *dest, length, b1, b2, ha1, ha2);*/
-      add_row (src1_row, src2_row, dest_row);
+      (*add_row) (src1_row, src2_row, dest_row);
       break;
 
     case SUBTRACT_MODE:
       /*subtract_pixels (src1, src2, *dest, length, b1, b2, ha1, ha2);*/
-      subtract_row (src1_row, src2_row, dest_row);
+      (*subtract_row) (src1_row, src2_row, dest_row);
       break;
 
     case DARKEN_ONLY_MODE:
       /*darken_pixels (src1, src2, *dest, length, b1, b2, ha1, ha2);*/
-      darken_row (src1_row, src2_row, dest_row);
+      (*darken_row) (src1_row, src2_row, dest_row);
       break;
 
     case LIGHTEN_ONLY_MODE:
       /*lighten_pixels (src1, src2, *dest, length, b1, b2, ha1, ha2);*/
-      lighten_row (src1_row, src2_row, dest_row);
+      (*lighten_row) (src1_row, src2_row, dest_row);
       break;
 
     case HUE_MODE: case SATURATION_MODE: case VALUE_MODE:
@@ -3614,7 +4322,7 @@ apply_layer_mode  (
       /*if (b1 > 2) */
 	/*hsv_only_pixels (src1, src2, *dest, mode, length, b1, b2, ha1, ha2);*/
       if( src1_format == FORMAT_RGB )
-        hsv_only_row (src1_row, src2_row, dest_row, mode);
+        (*hsv_only_row) (src1_row, src2_row, dest_row, mode);
       else
 	/* *dest = src2; */
          pixelrow_init (dest_row, dest_tag, src2_data, width);
@@ -3625,7 +4333,7 @@ apply_layer_mode  (
       /* if (b1 > 2) */
 	 /* color_only_pixels (src1, src2, *dest, mode, length, b1, b2, ha1, ha2); */
       if( src1_format == FORMAT_RGB )
-        color_only_row (src1_row, src2_row, dest_row, mode);
+        (*color_only_row) (src1_row, src2_row, dest_row, mode);
       else
          /* *dest = src2; */
          pixelrow_init (dest_row, dest_tag, src2_data, width);
@@ -3732,6 +4440,29 @@ apply_indexed_layer_mode  (
   return combine;
 }
 
+
+typedef void (*ReplaceRowFunc) (PixelRow*, PixelRow*, PixelRow*, PixelRow*, gfloat, gint*);
+static ReplaceRowFunc apply_layer_mode_replace_funcs (Tag);
+
+static ReplaceRowFunc 
+apply_layer_mode_replace_funcs (
+		Tag tag
+		)
+	  
+{
+  switch (tag_precision (tag))
+  {
+  case PRECISION_U8:
+    return replace_row_u8;
+  case PRECISION_U16:
+    return replace_row_u16;
+  case PRECISION_FLOAT:
+    return replace_row_float;
+  default:
+    return NULL;
+  } 
+}
+ 
 static void 
 apply_layer_mode_replace  (
                            PixelRow * src1_row,
@@ -3742,6 +4473,8 @@ apply_layer_mode_replace  (
                            gint * affect
                            )
 {
+  Tag src1_tag = pixelrow_tag (src1_row);
+  ReplaceRowFunc replace_row = apply_layer_mode_replace_funcs (src1_tag);
   /*replace_pixels (src1, src2, dest, mask, length, opacity, affect, b1, b2);*/
-  replace_row (src1_row, src2_row, dest_row, mask_row, opacity, affect);
+  (*replace_row) (src1_row, src2_row, dest_row, mask_row, opacity, affect);
 }

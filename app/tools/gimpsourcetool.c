@@ -88,6 +88,29 @@ static CloneOptions *clone_options = NULL;
 #include "pixelrow.h"
 
 
+void 
+copy_row  (
+           PixelRow * src_row,
+           PixelRow * dest_row
+           )
+{
+  switch (tag_precision (pixelrow_tag (src_row)))
+    {
+    case PRECISION_U8:
+      copy_row_u8 (src_row, dest_row);
+      break;
+    case PRECISION_U16:
+      copy_row_u16 (src_row, dest_row);
+      break;
+    case PRECISION_FLOAT:
+      copy_row_float (src_row, dest_row);
+      break;
+    case PRECISION_NONE:
+      g_warning ("doh in copy_row()");
+      break;	
+    }
+}
+
 /*******************************************************
  8bit routines
 ********************************************************/
@@ -1177,6 +1200,7 @@ copy_row_float_rgb_to_u8  (
       break;
     case FORMAT_GRAY:
       copy_row_float_rgb_to_u8_gray (src_row, dest_row);
+      break;
     case FORMAT_INDEXED:
     case FORMAT_NONE:
       g_warning ("doh in copy_row_float_rgb_to_u8()");
@@ -1197,6 +1221,7 @@ copy_row_float_rgb_to_u16  (
       break;
     case FORMAT_GRAY:
       copy_row_float_rgb_to_u16_gray (src_row, dest_row);
+      break;
     case FORMAT_INDEXED:
     case FORMAT_NONE:
       g_warning ("doh in copy_row_float_rgb_to_u16()");

@@ -134,7 +134,7 @@ static MenuItem palette_ops[] =
 
 #include "tag.h"
 #include "pixelrow.h"
-#include "paint_funcs_row.h"
+#include "clone.h"
 
 void 
 color16_black  (

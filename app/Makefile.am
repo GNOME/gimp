@@ -22,8 +22,6 @@ gimp_SOURCES = \
 	paint_funcs_row_u16.h   \
 	paint_funcs_row_float.c \
 	paint_funcs_row_float.h \
-	paint_funcs_row.c       \
-	paint_funcs_row.h       \
 	paint_funcs_area.c      \
 	paint_funcs_area.h      \
 	tilebuf.c               \
