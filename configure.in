@@ -946,20 +946,20 @@ fi
 AM_CONDITIONAL(BUILD_PYTHON, test "x$enable_python" != xno)
 
 
-####################################################
-# Determine where to install the GNOME2 desktop file
-####################################################
+#################################################################
+# Determine where to install the GNOME2 desktop & mime info files
+#################################################################
 
-AC_ARG_WITH(gnome-desktop, [  --with-gnome-desktop=PATH     install a gimp.desktop link here [default=auto]])
+AC_ARG_WITH(gnome-datadir, [  --with-gnome-datadir=PATH     where to install GNOME2 files [default=auto]])
 
-if test "x$with_gnome_desktop" != x; then
-  GNOME_DESKTOP_PATH=$with_gnome_desktop
+if test "x$with_gnome_datadir" != x; then
+  GNOME_DATADIR=$with_gnome_datadir
 else
-  GNOME_DESKTOP_PATH="$datadir/applications"
+  GNOME_DATADIR="$datadir"
 fi
 
-AM_CONDITIONAL(GNOME_DESKTOP_PATH, test "x$with_gnome_desktop" != xno)
-AC_SUBST(GNOME_DESKTOP_PATH)
+AM_CONDITIONAL(GNOME_DATADIR, test "x$with_gnome_datadir" != xno)
+AC_SUBST(GNOME_DATADIR)
 
 
 ######################################

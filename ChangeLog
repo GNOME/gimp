@@ -1,3 +1,15 @@
+2003-01-05  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: changed --with-gnome-desktop to --with-gnome-datadir
+
+	* data/misc/gimp.applications
+	* data/misc/gimp.keys: added mime info files from Hadess
+	<hadess@hadess.net> so gnome-vfs can associate various mime types
+	with GIMP.
+
+	* data/misc/Makefile.am: install everything into the right
+	subdirectories of GNOME_DATADIR.
+
 2003-01-05  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* libgimp/gimpmisc.c (gimp_pixel_fetcher_get_pixel2): x and y
@@ -6,7 +18,7 @@
 
 2003-01-05  Sven Neumann  <sven@gimp.org>
 
-        * libgimpwidgets/gimpchainbutton.[ch]
+	* libgimpwidgets/gimpchainbutton.[ch]
 	* libgimpwidgets/gimpcolorarea.[ch]
 	* libgimpwidgets/gimpcolorbutton.[ch]
 	* libgimpwidgets/gimpdialog.c
