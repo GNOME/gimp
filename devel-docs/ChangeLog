@@ -1,9 +1,11 @@
 2002-05-13  Sven Neumann  <sven@gimp.org>
 
-	* libgimpcolor/libgimpcolor-docs.sgml: removed GimpColorTypes section.
+	* libgimpcolor/libgimpcolor-docs.sgml: removed GimpColorTypes and
+	GimpColor sections.
 
 	* libgimpcolor/libgimpcolor-sections.txt: updated.
 
+	* libgimpcolor/tmpl/gimpcolor.sgml
 	* libgimpcolor/tmpl/gimpcolortypes.sgml: removed.
 
 	* libgimpcolor/tmpl/gimpadaptivesupersample.sgml
