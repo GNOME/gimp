@@ -169,6 +169,8 @@ gimp_display_shell_events (GtkWidget        *widget,
           case GDK_Alt_L:     case GDK_Alt_R:
           case GDK_Shift_L:   case GDK_Shift_R:
           case GDK_Control_L: case GDK_Control_R:
+          case GDK_Return:    case GDK_KP_Enter:
+          case GDK_BackSpace: case GDK_Delete:
             break;
 
           case GDK_Escape:
@@ -1072,13 +1074,17 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         switch (kevent->keyval)
           {
+          case GDK_Return:
+          case GDK_KP_Enter:
+          case GDK_BackSpace:
+          case GDK_Delete:
           case GDK_Left:
           case GDK_Right:
           case GDK_Up:
           case GDK_Down:
             if (! gimp_image_is_empty (gimage))
               {
-                tool_manager_arrow_key_active (gimp,
+                tool_manager_key_press_active (gimp,
                                                kevent,
                                                gdisp);
               }

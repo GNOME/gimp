@@ -131,6 +131,8 @@ static void   gimp_vector_tool_move_selected_anchors
                                                (GimpVectorTool  *vector_tool,
                                                 gdouble          x,
                                                 gdouble          y);
+static void   gimp_vector_tool_delete_selected_anchors
+                                               (GimpVectorTool  *vector_tool);
 static void   gimp_vector_tool_verify_state    (GimpVectorTool  *vector_tool);
 static void   gimp_vector_tool_undo_push       (GimpVectorTool  *vector_tool,
                                                 const gchar     *desc);
@@ -814,6 +816,15 @@ gimp_vector_tool_arrow_key (GimpTool     *tool,
 
       switch (kevent->keyval)
         {
+          case GDK_KP_Enter:
+          case GDK_Return:
+            gimp_vector_tool_to_selection_extended (vector_tool,
+                                                    kevent->state);
+            break;
+          case GDK_BackSpace:
+          case GDK_Delete:
+            gimp_vector_tool_delete_selected_anchors (vector_tool);
+            break;
           case GDK_Left:
             gimp_vector_tool_move_selected_anchors (vector_tool, -xdist, 0);
             break;
@@ -1681,6 +1692,32 @@ gimp_vector_tool_move_selected_anchors (GimpVectorTool *vector_tool,
                                               cur_anchor,
                                               &offset,
                                               GIMP_ANCHOR_FEATURE_NONE);
+        }
+
+      g_list_free (anchors);
+    }
+}
+
+static void
+gimp_vector_tool_delete_selected_anchors (GimpVectorTool *vector_tool)
+{
+  GimpAnchor *cur_anchor;
+  GimpStroke *cur_stroke = NULL;
+  GList *anchors;
+  GList *list;
+
+  while ((cur_stroke = gimp_vectors_stroke_get_next (vector_tool->vectors,
+                                                     cur_stroke)))
+    {
+      /* anchors */
+      anchors = gimp_stroke_get_draw_anchors (cur_stroke);
+
+      for (list = anchors; list; list = g_list_next (list))
+        {
+          cur_anchor = GIMP_ANCHOR (list->data);
+
+          if (cur_anchor->selected)
+            gimp_stroke_anchor_delete (cur_stroke, cur_anchor);
         }
 
       g_list_free (anchors);

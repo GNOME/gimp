@@ -1,3 +1,18 @@
+2004-06-12  Simon Budig  <simon@gimp.org>
+
+	* app/tools/tool_manager.[ch]: renamed
+	tool_manager_arrow_key_active to tool_manager_key_press_active.
+
+	* app/display/gimpdisplayshell-callbacks.c: Also dispatch
+	GDK_Return/KP_Enter/BackSpace/Delete to the tools "arrow_key"
+	member of GimpTool probably should be renamed.
+
+	* app/tools/gimpvectortool.c: Use Enter/Return to convert the
+	current path to a selection, use Backspace/Delete to delete the
+	currently active anchors in a path.
+
+	Implemented on Jimmacs request - thanks for being a great host  :)
+
 2004-06-12  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimphistogrameditor.c (gimp_histogram_editor_init):

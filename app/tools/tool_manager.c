@@ -329,7 +329,7 @@ tool_manager_motion_active (Gimp            *gimp,
 }
 
 void
-tool_manager_arrow_key_active (Gimp        *gimp,
+tool_manager_key_press_active (Gimp        *gimp,
                                GdkEventKey *kevent,
                                GimpDisplay *gdisp)
 {
