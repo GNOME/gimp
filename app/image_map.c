@@ -29,6 +29,8 @@
 
 #include "tile_manager_pvt.h"
 
+#include "libgimp/gimpintl.h"
+
 #define WAITING 0
 #define WORKING 1
 
@@ -278,7 +280,7 @@ image_map_abort (ImageMap image_map)
       /* if the user has changed the image depth get out quickly */
       if (destPR.bytes != srcPR.bytes) 
 	{
-	  g_message ("image depth change, unable to restore original image");
+	  g_message (_("image depth change, unable to restore original image"));
 	  tile_manager_destroy (_image_map->undo_tiles);
 	  g_free (_image_map);
 	  return;

@@ -167,7 +167,7 @@ create_bucket_options (void)
   hbox = gtk_hbox_new (FALSE, 1);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Fill Opacity"));
+  label = gtk_label_new (_("Fill Opacity: "));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -186,7 +186,7 @@ create_bucket_options (void)
   hbox = gtk_hbox_new (FALSE, 1);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Fill Threshold"));
+  label = gtk_label_new (_("Fill Threshold: "));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -205,7 +205,7 @@ create_bucket_options (void)
   hbox = gtk_hbox_new (FALSE, 1);
   gtk_container_border_width (GTK_CONTAINER (hbox), 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  label = gtk_label_new (_("Mode:"));
+  label = gtk_label_new (_("Mode: "));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 2);
   menu = create_paint_mode_menu (bucket_fill_paint_mode_callback,NULL);
   option_menu = gtk_option_menu_new ();
@@ -216,7 +216,7 @@ create_bucket_options (void)
   gtk_widget_show (hbox);
 
   /*  the radio frame and box  */
-  radio_frame = gtk_frame_new (_("Fill Type"));
+  radio_frame = gtk_frame_new (_("Fill Type: "));
   gtk_box_pack_start (GTK_BOX (vbox), radio_frame, FALSE, FALSE, 0);
 
   radio_box = gtk_vbox_new (FALSE, 1);
@@ -226,7 +226,7 @@ create_bucket_options (void)
   /*  the radio buttons  */
   for (i = 0; i < 2; i++)
     {
-      radio_button = gtk_radio_button_new_with_label (group, button_names[i]);
+      radio_button = gtk_radio_button_new_with_label (group, gettext(button_names[i]));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
       gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
 			  (GtkSignalFunc) bucket_fill_mode_callback,

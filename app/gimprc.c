@@ -36,6 +36,9 @@
 #include "session.h"
 #include "tools.h"
 
+#include "config.h"
+#include "libgimp/gimpintl.h"
+
 #define ERROR  0
 #define DONE   1
 #define OK     2
@@ -293,7 +296,7 @@ gimp_directory ()
 	      gimp_dir[len_env_home_dir] = '/';
 	    }
 	  else
-	    g_message ("warning: no home directory.");
+	    g_message (_("warning: no home directory."));
 
 	  strncpy (&gimp_dir[len_env_home_dir+1],
 		   env_gimp_dir,
@@ -308,7 +311,7 @@ gimp_directory ()
 	  gimp_dir[len_env_home_dir] = '/';
 	}
       else
-	g_message ("warning: no home directory.");
+	g_message (_("warning: no home directory."));
 
       strncpy (&gimp_dir[len_env_home_dir+1],
 	       GIMPDIR,
@@ -340,7 +343,7 @@ parse_gimprc ()
   else
     sprintf (libfilename, "%s/gimprc", DATADIR);
 
-  app_init_update_status("Resource configuration", libfilename, -1);
+  app_init_update_status(_("Resource configuration"), libfilename, -1);
   if (alternate_system_gimprc != NULL) 
     {
       strncpy (libfilename, alternate_system_gimprc, 512);
@@ -380,7 +383,7 @@ parse_gimprc_file (char *filename)
     return;
 
   if ((be_verbose == TRUE) || (no_splash == TRUE))
-    g_print ("parsing \"%s\"\n", filename);
+    g_print (_("parsing \"%s\"\n"), filename);
 
   cur_token = -1;
   next_token = -1;
@@ -399,9 +402,9 @@ parse_gimprc_file (char *filename)
 
   if (status == ERROR)
     {
-      g_print ("error parsing: \"%s\"\n", filename);
-      g_print ("  at line %d column %d\n", parse_info.linenum, parse_info.charnum);
-      g_print ("  unexpected token: %s\n", token_sym);
+      g_print (_("error parsing: \"%s\"\n"), filename);
+      g_print (_("  at line %d column %d\n"), parse_info.linenum, parse_info.charnum);
+      g_print (_("  unexpected token: %s\n"), token_sym);
     }
 }
 
@@ -1118,7 +1121,7 @@ parse_plug_in_def (gpointer val1p,
   return OK;
 
 error:
-  g_message ("error parsing pluginrc");
+  g_message (_("error parsing pluginrc"));
   tmp_list = plug_in_def->proc_defs;
   while (tmp_list)
     {
@@ -1453,7 +1456,7 @@ transform_path (char *path,
 		}
 	      else
 		{
-		  terminate("gimprc token referenced but not defined: %s", token);
+		  terminate(_("gimprc token referenced but not defined: %s"), token);
 		}
 	    }
 	  tmp2 = transform_path (tmp2, FALSE);
@@ -2150,10 +2153,10 @@ open_backup_file (char *filename,
   if ((*fp_old = fopen (filename, "rb")) == NULL)
     {
       if (errno == EACCES)
-        return "Can't open gimprc; permission problems";
+        return _("Can't open gimprc; permission problems");
       if (errno == ENOENT)
-        return "Can't open gimprc; file does not exist";
-      return "Can't open gimprc, reason unknown";
+        return _("Can't open gimprc; file does not exist");
+      return _("Can't open gimprc, reason unknown");
     }
 
   oldfilename = g_malloc (strlen (filename) + 5);
@@ -2162,10 +2165,10 @@ open_backup_file (char *filename,
     {
       g_free (oldfilename);
       if (errno == EACCES)
-        return "Can't rename gimprc to gimprc.old; permission problems";
+        return _("Can't rename gimprc to gimprc.old; permission problems");
       if (errno == EISDIR)
-        return "Can't rename gimprc to gimprc.old; gimprc.old is a directory";
-      return "Can't rename gimprc to gimprc.old, reason unknown";
+        return _("Can't rename gimprc to gimprc.old; gimprc.old is a directory");
+      return _("Can't rename gimprc to gimprc.old, reason unknown");
     }
 
   if ((*fp_new = fopen (filename, "wb")) == NULL)
@@ -2173,8 +2176,8 @@ open_backup_file (char *filename,
       (void) rename (oldfilename, filename);
       g_free (oldfilename);
       if (errno == EACCES)
-        return "Can't write to gimprc; permission problems";
-      return "Can't write to gimprc, reason unknown";
+        return _("Can't write to gimprc; permission problems");
+      return _("Can't write to gimprc, reason unknown");
     }
 
   g_free (oldfilename);

@@ -37,6 +37,8 @@
 #include "palette.h"
 #include "session.h"
 
+#include "libgimp/gimpintl.h"
+
 #define ENTRY_WIDTH  12
 #define ENTRY_HEIGHT 10
 #define SPACING 1
@@ -116,18 +118,18 @@ static int color_select_active = 0; */
 
 static ActionAreaItem action_items[] =
 {
-  { "New", palette_new_callback, NULL, NULL },
-  { "Edit", palette_edit_callback, NULL, NULL },
-  { "Delete", palette_delete_callback, NULL, NULL },
-  { "Close", palette_close_callback, NULL, NULL },
+  { N_("New"), palette_new_callback, NULL, NULL },
+  { N_("Edit"), palette_edit_callback, NULL, NULL },
+  { N_("Delete"), palette_delete_callback, NULL, NULL },
+  { N_("Close"), palette_close_callback, NULL, NULL },
 };
 
 static MenuItem palette_ops[] =
 {
-  { "New Palette", 0, 0, palette_new_entries_callback, NULL, NULL, NULL },
-  { "Delete Palette", 0, 0, palette_delete_entries_callback, NULL, NULL, NULL },
-  { "Refresh Palettes", 0, 0, palette_refresh_callback, NULL, NULL, NULL },
-  { "Close", 0, 0, palette_close_callback, NULL, NULL, NULL },
+  { N_("New Palette"), 0, 0, palette_new_entries_callback, NULL, NULL, NULL },
+  { N_("Delete Palette"), 0, 0, palette_delete_entries_callback, NULL, NULL, NULL },
+  { N_("Refresh Palettes"), 0, 0, palette_refresh_callback, NULL, NULL, NULL },
+  { N_("Close"), 0, 0, palette_close_callback, NULL, NULL, NULL },
   { NULL, 0, 0, NULL, NULL, NULL, NULL },
 };
 
@@ -175,7 +177,7 @@ palette_create ()
       gtk_window_set_wmclass (GTK_WINDOW (palette->shell), "color_palette", "Gimp");
       session_set_window_geometry (palette->shell, &palette_session_info, FALSE);
       gtk_window_set_policy (GTK_WINDOW (palette->shell), FALSE, FALSE, FALSE);
-      gtk_window_set_title (GTK_WINDOW (palette->shell), "Color Palette");
+      gtk_window_set_title (GTK_WINDOW (palette->shell), _("Color Palette"));
       vbox = gtk_vbox_new (FALSE, 1);
       gtk_container_border_width (GTK_CONTAINER (vbox), 1);
       gtk_box_pack_start (GTK_BOX (GTK_DIALOG (palette->shell)->vbox), vbox, TRUE, TRUE, 0);
@@ -203,7 +205,7 @@ palette_create ()
       gtk_menu_item_set_submenu (GTK_MENU_ITEM (menu_bar_item), palette->palette_ops);
       arrow_hbox = gtk_hbox_new (FALSE, 1);
       gtk_container_add (GTK_CONTAINER (menu_bar_item), arrow_hbox);
-      label = gtk_label_new ("Ops");
+      label = gtk_label_new (_("Ops"));
       arrow = gtk_arrow_new (GTK_ARROW_DOWN, GTK_SHADOW_OUT);
       gtk_box_pack_start (GTK_BOX (arrow_hbox), arrow, FALSE, FALSE, 0);
       gtk_box_pack_start (GTK_BOX (arrow_hbox), label, FALSE, FALSE, 4);
@@ -224,7 +226,7 @@ palette_create ()
 
       /*  The active color name  */
       palette->color_name = gtk_entry_new ();
-      gtk_entry_set_text (GTK_ENTRY (palette->color_name), "Active Color Name");
+      gtk_entry_set_text (GTK_ENTRY (palette->color_name), _("Active Color Name"));
       gtk_box_pack_start (GTK_BOX (vbox), palette->color_name, FALSE, FALSE, 0);
 
       gtk_widget_show (palette->color_name);
@@ -480,7 +482,7 @@ palette_create_palette_menu (PaletteP        palette,
 
   if (i == 0)
     {
-      menu_item = gtk_menu_item_new_with_label ("none");
+      menu_item = gtk_menu_item_new_with_label (_("none"));
       gtk_container_add (GTK_CONTAINER (palette->menu), menu_item);
       gtk_widget_show (menu_item);
 
@@ -614,7 +616,7 @@ palette_entries_save (PaletteEntriesP  palette,
   /*  Open the requested file  */
   if (! (fp = fopen (filename, "wb")))
     {
-      g_message ("can't save palette \"%s\"\n", filename);
+      g_message (_("can't save palette \"%s\"\n"), filename);
       return;
     }
 
@@ -700,7 +702,7 @@ palette_change_color (int r,
       switch (state)
 	{
 	case COLOR_NEW:
-	  palette->color = palette_add_entry (palette->entries, "Untitled", r, g, b);
+	  palette->color = palette_add_entry (palette->entries, _("Untitled"), r, g, b);
 
 	  palette_calc_scrollbar (palette);
 	  palette_draw_entries (palette);
@@ -832,11 +834,11 @@ palette_new_callback (GtkWidget *w,
     {
       if (active_color == FOREGROUND)
 	palette->color =
-	  palette_add_entry (palette->entries, "Untitled",
+	  palette_add_entry (palette->entries, _("Untitled"),
 			     foreground[0], foreground[1], foreground[2]);
       else if (active_color == BACKGROUND)
 	palette->color =
-	  palette_add_entry (palette->entries, "Untitled",
+	  palette_add_entry (palette->entries, _("Untitled"),
 			     background[0], background[1], background[2]);
 
       palette_calc_scrollbar (palette);
@@ -950,7 +952,7 @@ static void
 palette_new_entries_callback (GtkWidget *w,
 			      gpointer   client_data)
 {
-  query_string_box ("New Palette", "Enter a name for new palette", NULL,
+  query_string_box (_("New Palette"), _("Enter a name for new palette"), NULL,
 		    palette_add_entries_callback, NULL);
 }
 
@@ -1347,7 +1349,7 @@ palette_add_entry (PaletteEntriesP  entries,
       if (name)
 	entry->name = g_strdup (name);
       else
-	entry->name = g_strdup ("Untitled");
+	entry->name = g_strdup (_("Untitled"));
       entry->position = entries->n_colors;
 
       entries->colors = g_slist_append (entries->colors, entry);
@@ -1399,7 +1401,7 @@ palette_delete_entry (PaletteP palette)
 	}
 
       if (palette->entries->n_colors == 0)
-	palette->color = palette_add_entry (palette->entries, "Black", 0, 0, 0);
+	palette->color = palette_add_entry (palette->entries, _("Black"), 0, 0, 0);
 
       palette_calc_scrollbar (palette);
       palette_draw_entries (palette);

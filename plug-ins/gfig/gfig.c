@@ -2959,7 +2959,6 @@ gfig_gen_brush_preview(BRUSHDESC *bdesc)
 	 {
 	 case BRUSH_BRUSH_TYPE:
 	   return_vals = gimp_run_procedure ("gimp_paintbrush", &nreturn_vals,
-					     PARAM_IMAGE, brush_image_ID,
 					     PARAM_DRAWABLE, layer_ID,
 					     PARAM_FLOAT,0.0,
 					     PARAM_INT32,2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
@@ -2968,7 +2967,6 @@ gfig_gen_brush_preview(BRUSHDESC *bdesc)
 	   break;
 	 case BRUSH_PENCIL_TYPE:
 	   return_vals = gimp_run_procedure ("gimp_pencil", &nreturn_vals,
-					     PARAM_IMAGE, brush_image_ID,
 					     PARAM_DRAWABLE, layer_ID,
 					     PARAM_INT32,2,
 					     PARAM_FLOATARRAY, &line_pnts[0],  
@@ -2976,7 +2974,6 @@ gfig_gen_brush_preview(BRUSHDESC *bdesc)
 	   break;
 	 case BRUSH_AIRBRUSH_TYPE:
 	   return_vals = gimp_run_procedure ("gimp_airbrush", &nreturn_vals,
-					     PARAM_IMAGE, brush_image_ID,
 					     PARAM_DRAWABLE, layer_ID,
 					     PARAM_FLOAT,(gdouble)selvals.airbrushpressure,
 					     PARAM_INT32,2,
@@ -2985,7 +2982,6 @@ gfig_gen_brush_preview(BRUSHDESC *bdesc)
 	   break;
 	 case BRUSH_PATTERN_TYPE:
 	   return_vals = gimp_run_procedure ("gimp_clone", &nreturn_vals,
-					     PARAM_IMAGE, brush_image_ID,
 					     PARAM_DRAWABLE, layer_ID,
 					     PARAM_DRAWABLE, layer_ID,
 					     PARAM_INT32, 1,
@@ -5839,7 +5835,6 @@ paint_layer_fill()
 
   return_vals = gimp_run_procedure ("gimp_bucket_fill",
                                     &nreturn_vals,
-				    PARAM_IMAGE, gfig_image,
 				    PARAM_DRAWABLE, gfig_drawable,
 				    PARAM_INT32, selopt.fill_type, /* Fill mode */
 				    PARAM_INT32, 0, /* NORMAL */
@@ -8122,7 +8117,6 @@ d_paint_line(DOBJECT *obj)
 	{
 	case BRUSH_BRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_paintbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.brushfade,
 					    PARAM_INT32,seg_count*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
@@ -8131,7 +8125,6 @@ d_paint_line(DOBJECT *obj)
 	  break;
 	case BRUSH_PENCIL_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_pencil", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32,seg_count*2,
 					    PARAM_FLOATARRAY, &line_pnts[0],  
@@ -8139,7 +8132,6 @@ d_paint_line(DOBJECT *obj)
 	  break;
 	case BRUSH_AIRBRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_airbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.airbrushpressure,
 					    PARAM_INT32,seg_count*2,
@@ -8148,7 +8140,6 @@ d_paint_line(DOBJECT *obj)
 	  break;
 	case BRUSH_PATTERN_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_clone", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32, 1,
@@ -8595,7 +8586,6 @@ d_paint_circle(DOBJECT *obj)
     return;
 
   return_vals = gimp_run_procedure ("gimp_edit_stroke", &nreturn_vals,
-				    PARAM_IMAGE, gfig_image,
 				    PARAM_DRAWABLE, gfig_drawable,
 				    PARAM_END);
 
@@ -8985,7 +8975,6 @@ d_paint_approx_ellipse(DOBJECT *obj)
 	{
 	case BRUSH_BRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_paintbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.brushfade,
 					    PARAM_INT32,(i/2)*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
@@ -8994,7 +8983,6 @@ d_paint_approx_ellipse(DOBJECT *obj)
 	  break;
 	case BRUSH_PENCIL_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_pencil", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32,(i/2)*2,
 					    PARAM_FLOATARRAY, &line_pnts[0],  
@@ -9002,7 +8990,6 @@ d_paint_approx_ellipse(DOBJECT *obj)
 	  break;
 	case BRUSH_AIRBRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_airbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.airbrushpressure,
 					    PARAM_INT32,(i/2)*2,
@@ -9011,7 +8998,6 @@ d_paint_approx_ellipse(DOBJECT *obj)
 	  break;
 	case BRUSH_PATTERN_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_clone", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32, 1,
@@ -9132,7 +9118,6 @@ d_paint_ellipse(DOBJECT *obj)
     return;
 
   return_vals = gimp_run_procedure ("gimp_edit_stroke", &nreturn_vals,
-				    PARAM_IMAGE, gfig_image,
 				    PARAM_DRAWABLE, gfig_drawable,
 				    PARAM_END);
 
@@ -9623,7 +9608,6 @@ d_paint_poly(DOBJECT *obj)
 	{
 	case BRUSH_BRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_paintbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.brushfade,
 					    PARAM_INT32,(i/2)*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
@@ -9632,7 +9616,6 @@ d_paint_poly(DOBJECT *obj)
 	  break;
 	case BRUSH_PENCIL_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_pencil", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32,(i/2)*2,
 					    PARAM_FLOATARRAY, &line_pnts[0],  
@@ -9640,7 +9623,6 @@ d_paint_poly(DOBJECT *obj)
 	  break;
 	case BRUSH_AIRBRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_airbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.airbrushpressure,
 					    PARAM_INT32,(i/2)*2,
@@ -9649,7 +9631,6 @@ d_paint_poly(DOBJECT *obj)
 	  break;
 	case BRUSH_PATTERN_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_clone", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32, 1,
@@ -10596,7 +10577,6 @@ d_paint_arc(DOBJECT *obj)
 	{
 	case BRUSH_BRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_paintbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.brushfade,
 					    PARAM_INT32,(i/2)*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
@@ -10605,7 +10585,6 @@ d_paint_arc(DOBJECT *obj)
 	  break;
 	case BRUSH_PENCIL_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_pencil", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32,(i/2)*2,
 					    PARAM_FLOATARRAY, &line_pnts[0],  
@@ -10613,7 +10592,6 @@ d_paint_arc(DOBJECT *obj)
 	  break;
 	case BRUSH_AIRBRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_airbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.airbrushpressure,
 					    PARAM_INT32,(i/2)*2,
@@ -10622,7 +10600,6 @@ d_paint_arc(DOBJECT *obj)
 	  break;
 	case BRUSH_PATTERN_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_clone", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32, 1,
@@ -11172,7 +11149,6 @@ d_paint_star(DOBJECT *obj)
 	{
 	case BRUSH_BRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_paintbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.brushfade,
 					    PARAM_INT32,(i/2)*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
@@ -11181,7 +11157,6 @@ d_paint_star(DOBJECT *obj)
 	  break;
 	case BRUSH_PENCIL_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_pencil", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32,(i/2)*2,
 					    PARAM_FLOATARRAY, &line_pnts[0],  
@@ -11189,7 +11164,6 @@ d_paint_star(DOBJECT *obj)
 	  break;
 	case BRUSH_AIRBRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_airbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.airbrushpressure,
 					    PARAM_INT32,(i/2)*2,
@@ -11198,7 +11172,6 @@ d_paint_star(DOBJECT *obj)
 	  break;
 	case BRUSH_PATTERN_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_clone", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32, 1,
@@ -11679,7 +11652,6 @@ d_paint_spiral(DOBJECT *obj)
 	{
 	case BRUSH_BRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_paintbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.brushfade,
 					    PARAM_INT32,(i/2)*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
@@ -11688,7 +11660,6 @@ d_paint_spiral(DOBJECT *obj)
 	  break;
 	case BRUSH_PENCIL_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_pencil", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32,(i/2)*2,
 					    PARAM_FLOATARRAY, &line_pnts[0],  
@@ -11696,7 +11667,6 @@ d_paint_spiral(DOBJECT *obj)
 	  break;
 	case BRUSH_AIRBRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_airbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.airbrushpressure,
 					    PARAM_INT32,(i/2)*2,
@@ -11705,7 +11675,6 @@ d_paint_spiral(DOBJECT *obj)
 	  break;
 	case BRUSH_PATTERN_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_clone", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32, 1,
@@ -12212,7 +12181,6 @@ d_paint_bezier(DOBJECT *obj)
 	{
 	case BRUSH_BRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_paintbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.brushfade,
 					    PARAM_INT32,(i/2)*2*GFIG_LCC,/* GIMP BUG should be 2!!!!*/
@@ -12221,7 +12189,6 @@ d_paint_bezier(DOBJECT *obj)
 	  break;
 	case BRUSH_PENCIL_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_pencil", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32,(i/2)*2,
 					    PARAM_FLOATARRAY, &line_pnts[0],  
@@ -12229,7 +12196,6 @@ d_paint_bezier(DOBJECT *obj)
 	  break;
 	case BRUSH_AIRBRUSH_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_airbrush", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_FLOAT,(gdouble)selvals.airbrushpressure,
 					    PARAM_INT32,(i/2)*2,
@@ -12238,7 +12204,6 @@ d_paint_bezier(DOBJECT *obj)
 	  break;
 	case BRUSH_PATTERN_TYPE:
 	  return_vals = gimp_run_procedure ("gimp_clone", &nreturn_vals,
-					    PARAM_IMAGE, gfig_image,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_DRAWABLE, gfig_drawable,
 					    PARAM_INT32, 1,

@@ -28,6 +28,8 @@
 #include "gximage.h"
 #include "interface.h"
 
+#include "libgimp/gimpintl.h"
+
 #define MAX_BUF 256
 
 typedef struct _InfoWinData InfoWinData;
@@ -45,12 +47,12 @@ struct _InfoWinData
 /*  The different classes of visuals  */
 static char *visual_classes[] =
 {
-  "Static Gray",
-  "Grayscale",
-  "Static Color",
-  "Pseudo Color",
-  "True Color",
-  "Direct Color",
+  N_("Static Gray"),
+  N_("Grayscale"),
+  N_("Static Color"),
+  N_("Pseudo Color"),
+  N_("True Color"),
+  N_("Direct Color"),
 };
 
 
@@ -117,7 +119,7 @@ info_window_close_callback (GtkWidget *w,
 
 static ActionAreaItem action_items[] =
 {
-  { "Close", info_window_close_callback, NULL, NULL },
+  { N_("Close"), info_window_close_callback, NULL, NULL },
 };
 
 InfoDialog *
@@ -136,7 +138,7 @@ info_window_create (void *gdisp_ptr)
 
   /*  allocate the title buffer  */
   title_buf = (char *) g_malloc (sizeof (char) * (strlen (title) + 15));
-  sprintf (title_buf, "%s: Window Info", title);
+  sprintf (title_buf, _("%s: Window Info"), title);
 
   /*  create the info dialog  */
   info_win = info_dialog_new (title_buf);
@@ -153,18 +155,18 @@ info_window_create (void *gdisp_ptr)
   iwd->shades_str[0] = '\0';
 
   /*  add the information fields  */
-  info_dialog_add_field (info_win, "Dimensions (w x h): ", iwd->dimensions_str, NULL, NULL);
-  info_dialog_add_field (info_win, "Resolution: ", iwd->resolution_str, NULL, NULL);
-  info_dialog_add_field (info_win, "Scale Ratio: ", iwd->scale_str, NULL, NULL);
-  info_dialog_add_field (info_win, "Display Type: ", iwd->color_type_str, NULL, NULL);
-  info_dialog_add_field (info_win, "Visual Class: ", iwd->visual_class_str, NULL, NULL);
-  info_dialog_add_field (info_win, "Visual Depth: ", iwd->visual_depth_str, NULL, NULL);
+  info_dialog_add_field (info_win, _("Dimensions (w x h): "), iwd->dimensions_str, NULL, NULL);
+  info_dialog_add_field (info_win, _("Resolution: "), iwd->resolution_str, NULL, NULL);
+  info_dialog_add_field (info_win, _("Scale Ratio: "), iwd->scale_str, NULL, NULL);
+  info_dialog_add_field (info_win, _("Display Type: "), iwd->color_type_str, NULL, NULL);
+  info_dialog_add_field (info_win, _("Visual Class: "), iwd->visual_class_str, NULL, NULL);
+  info_dialog_add_field (info_win, _("Visual Depth: "), iwd->visual_depth_str, NULL, NULL);
   if (type == RGB)
-    info_dialog_add_field (info_win, "Shades of Color: ", iwd->shades_str, NULL, NULL);
+    info_dialog_add_field (info_win, _("Shades of Color: "), iwd->shades_str, NULL, NULL);
   else if (type == INDEXED)
-    info_dialog_add_field (info_win, "Shades: ", iwd->shades_str, NULL, NULL);
+    info_dialog_add_field (info_win, _("Shades: "), iwd->shades_str, NULL, NULL);
   else if (type == GRAY)
-    info_dialog_add_field (info_win, "Shades of Gray: ", iwd->shades_str, NULL, NULL);
+    info_dialog_add_field (info_win, _("Shades of Gray: "), iwd->shades_str, NULL, NULL);
 
   /*  update the fields  */
   info_window_update (info_win, gdisp_ptr);
@@ -211,11 +213,11 @@ info_window_update (InfoDialog *info_win,
 
   /*  color type  */
   if (type == RGB)
-    sprintf (iwd->color_type_str, "%s", "RGB Color");
+    sprintf (iwd->color_type_str, "%s", _("RGB Color"));
   else if (type == GRAY)
-    sprintf (iwd->color_type_str, "%s", "Grayscale");
+    sprintf (iwd->color_type_str, "%s", _("Grayscale"));
   else if (type == INDEXED)
-    sprintf (iwd->color_type_str, "%s", "Indexed Color");
+    sprintf (iwd->color_type_str, "%s", _("Indexed Color"));
 
   /*  visual class  */
   if (type == RGB ||

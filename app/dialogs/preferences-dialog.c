@@ -47,6 +47,7 @@
 #include "tools.h"
 #include "undo.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 typedef struct
@@ -844,13 +845,13 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (abox), table, TRUE, TRUE, 0);
       gtk_widget_show (table);
       
-      label = gtk_label_new (_("Width:"));
+      label = gtk_label_new (_("Width: "));
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 			GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (label);
 
-      label = gtk_label_new (_("Height:"));
+      label = gtk_label_new (_("Height: "));
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 			GTK_FILL, GTK_FILL, 0, 0);
@@ -914,7 +915,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
       gtk_widget_show (hbox);
       
-      label = gtk_label_new (_("Preview size:"));
+      label = gtk_label_new (_("Preview size: "));
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
       
@@ -961,7 +962,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       group = NULL;
       for (i = 0; i < ntransparencies; i++)
         {
-	  button = gtk_radio_button_new_with_label (group, transparencies[i]);
+	  button = gtk_radio_button_new_with_label (group, gettext(transparencies[i]));
           group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
           gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
           gtk_object_set_user_data (GTK_OBJECT (button),
@@ -985,7 +986,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       group = NULL;
       for (i = 0; i < nchecks; i++)
         {
-          button = gtk_radio_button_new_with_label (group, checks[i]);
+          button = gtk_radio_button_new_with_label (group, gettext(checks[i]));
           group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
           gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
           gtk_object_set_user_data (GTK_OBJECT (button),
@@ -1186,7 +1187,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       menu = gtk_menu_new ();
       for (i = 0; i < nmem_size_units; i++)
         {
-          menuitem = gtk_menu_item_new_with_label (mem_size_units[i].label);
+          menuitem = gtk_menu_item_new_with_label (gettext(mem_size_units[i].label));
 	  gtk_menu_append (GTK_MENU (menu), menuitem);
 	  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			      (GtkSignalFunc) file_prefs_mem_size_unit_callback,
@@ -1300,7 +1301,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 
       for (i = 0; i < ndirs; i++)
 	{
-	  label = gtk_label_new (dirs[i].label);
+	  label = gtk_label_new (gettext(dirs[i].label));
 	  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	  gtk_table_attach (GTK_TABLE (table), label, 0, 1, i, i+1,
                             GTK_FILL, GTK_FILL, 0, 0);

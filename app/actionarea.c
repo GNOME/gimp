@@ -18,6 +18,9 @@
 #include "appenv.h"
 #include "actionarea.h"
 
+#include "config.h"
+#include "libgimp/gimpintl.h"
+
 void
 build_action_area (GtkDialog *      dlg,
 		   ActionAreaItem * actions,
@@ -31,7 +34,7 @@ build_action_area (GtkDialog *      dlg,
 
   for (i = 0; i < num_actions; i++)
     {
-      button = gtk_button_new_with_label (actions[i].label);
+      button = gtk_button_new_with_label (gettext(actions[i].label));
       GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
       gtk_box_pack_start (GTK_BOX (dlg->action_area), button, TRUE, TRUE, 0);
 

@@ -181,7 +181,7 @@ init_text_options(TextToolOptions *options)
 
   /* Create the border hbox, border spinner, and label  */
   hbox = gtk_hbox_new(FALSE, 2);
-  label = gtk_label_new (_("Border"));
+  label = gtk_label_new (_("Border: "));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
   gtk_widget_show(label);

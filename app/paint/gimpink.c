@@ -27,6 +27,8 @@
 #include "blob.h"
 #include "gdisplay.h"
 
+#include "libgimp/gimpintl.h"
+
 #include "tile.h"			/* ick. */
 
 #include <math.h>
@@ -163,14 +165,14 @@ create_ink_options ()
   vbox = gtk_vbox_new (FALSE, 1);
 
   /*  the main label  */
-  label = gtk_label_new ("Ink Options");
+  label = gtk_label_new (_("Ink Options"));
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   /* size slider */
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
-  label = gtk_label_new ("Size:");
+  label = gtk_label_new (_("Size:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 2);
   
   adj = GTK_ADJUSTMENT (gtk_adjustment_new (3.0, 0.0, 20.0, 1.0, 5.0, 0.0));
@@ -186,7 +188,7 @@ create_ink_options ()
   /* sens slider */
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
-  label = gtk_label_new ("Sensitivity:");
+  label = gtk_label_new (_("Sensitivity:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 2);
   
   adj = GTK_ADJUSTMENT (gtk_adjustment_new (1.0, 0.0, 1.0, 0.01, 0.1, 0.0));
@@ -206,7 +208,7 @@ create_ink_options ()
   
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX(vbox), hbox, FALSE, FALSE, 5);
-  label = gtk_label_new ("Shape:");
+  label = gtk_label_new (_("Shape:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   
   aspect_frame = gtk_aspect_frame_new (NULL, 0.5, 0.5, 1.0, FALSE);

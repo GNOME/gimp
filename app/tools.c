@@ -57,6 +57,7 @@
 #include "tools.h"
 #include "transform_tool.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 #include "pixmaps2.h"

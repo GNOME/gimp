@@ -42,6 +42,7 @@
 #include "gimplistP.h"
 #include "gimpbrushlistP.h"
 
+#include "libgimp/gimpintl.h"
 
 /*  global variables  */
 GimpBrush     *active_brush = NULL;
@@ -198,7 +199,7 @@ get_active_brush ()
     {
       have_default_brush = 0;
       if (!active_brush)
-	fatal_error ("Specified default brush not found!");
+	fatal_error (_("Specified default brush not found!"));
     }
   else if (! active_brush && brush_list)
     /* need a gimp_list_get_first() type function */

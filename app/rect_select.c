@@ -24,6 +24,7 @@
 #include "rect_select.h"
 #include "rect_selectP.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 #define NO  0
@@ -198,7 +199,7 @@ create_selection_options (ToolType tool_type)
       
       hbox = gtk_hbox_new (TRUE, 5);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      label = gtk_label_new (_(" Width: "));
+      label = gtk_label_new (_("Width: "));
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       adj = (GtkAdjustment *) gtk_adjustment_new (options->fixed_width, 1.0,
                                                   32767.0, 1.0, 50.0, 0.0);
@@ -216,7 +217,7 @@ create_selection_options (ToolType tool_type)
       
       hbox = gtk_hbox_new (TRUE, 5);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      label = gtk_label_new (_(" Height: "));
+      label = gtk_label_new (_("Height: "));
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       adj = (GtkAdjustment *) gtk_adjustment_new (options->fixed_height, 1.0,
                                                   32767.0, 1.0, 50.0, 0.0);
@@ -246,7 +247,7 @@ create_selection_options (ToolType tool_type)
   hbox = gtk_hbox_new (FALSE, 1);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Feather Radius"));
+  label = gtk_label_new (_("Feather Radius: "));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 

@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <string.h>
-#include "gimpimageP.h"
 
+#include "gimpimageP.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
@@ -29,6 +29,8 @@
 #include "parasitelist.h"
 #include "undo.h"
 #include "gimpsignal.h"
+
+#include "libgimp/gimpintl.h"
 
 #include "tile_manager.h"
 #include "tile.h"
@@ -532,7 +534,7 @@ gimp_image_apply_image (GimpImage *gimage, GimpDrawable *drawable, PixelRegion *
   operation = valid_combinations [drawable_type (drawable)][src2PR->bytes];
   if (operation == -1)
     {
-      g_message ("gimp_image_apply_image sent illegal parameters");
+      g_message (_("gimp_image_apply_image sent illegal parameters"));
       return;
     }
 
@@ -626,7 +628,7 @@ gimp_image_replace_image (GimpImage *gimage, GimpDrawable *drawable, PixelRegion
   operation = valid_combinations [drawable_type (drawable)][src2PR->bytes];
   if (operation == -1)
     {
-      g_message ("gimp_image_apply_image sent illegal parameters");
+      g_message (_("gimp_image_apply_image sent illegal parameters"));
       return;
     }
 
@@ -904,7 +906,7 @@ gimp_image_get_new_tattoo(GimpImage *image)
 {
   image->tattoo_state++;
   if (image->tattoo_state <= 0)
-    g_warning("Tattoo state has become corrupt (2.1 billion operation limit exceded)");
+    g_warning(_("Tattoo state has become corrupt (2.1 billion operation limit exceded)"));
   return (image->tattoo_state);
 }
 
@@ -948,7 +950,7 @@ project_indexed (GimpImage *gimage, Layer *layer,
     initial_region (src, dest, NULL, gimage->cmap, layer->opacity,
 		    layer->mode, gimage->visible, INITIAL_INDEXED);
   else
-    g_message ("Unable to project indexed image.");
+    g_message (_("Unable to project indexed image."));
 }
 
 
@@ -1710,7 +1712,7 @@ gimp_image_raise_layer (GimpImage *gimage, Layer *layer_arg)
 	    }
 	  else
 	    {
-	      g_message ("Layer cannot be raised any further");
+	      g_message (_("Layer cannot be raised any further"));
 	      return NULL;
 	    }
 	}
@@ -1782,7 +1784,7 @@ gimp_image_lower_layer (GimpImage *gimage, Layer *layer_arg)
 	    }
 	  else
 	    {
-	      g_message ("Layer cannot be lowered any further");
+	      g_message (_("Layer cannot be lowered any further"));
 	      return NULL;
 	    }
 	}
@@ -1811,12 +1813,12 @@ gimp_image_raise_layer_to_top (GimpImage *gimage, Layer *layer_arg)
   if (layer == layer_arg)
     {
       /* layer_arg is already the top_layer */
-      g_message ("Layer is  already on top");
+      g_message (_("Layer is already on top"));
       return NULL;
     }
   if (! layer_has_alpha (layer_arg))
     {
-      g_message ("cant raise Layer without alpha");
+      g_message (_("Can't raise Layer without alpha"));
       return NULL;
     }
   
@@ -1908,7 +1910,7 @@ gimp_image_lower_layer_to_bottom (GimpImage *gimage, Layer *layer_arg)
 	  if (layer == layer_arg)
 	    {
 	      /* there is no next layer below layer_arg */
-	      g_message ("Layer is  already on bottom");
+	      g_message (_("Layer is already on bottom"));
 	    }
 	  /* bottom is reached, we can stop now */
 	  break;
@@ -1921,7 +1923,7 @@ gimp_image_lower_layer_to_bottom (GimpImage *gimage, Layer *layer_arg)
 	}
       else
 	{
-	  g_message ("BG has no alpha, layer was placed above");
+	  g_message (_("BG has no alpha, layer was placed above"));
 	  break;
 	}
       
@@ -1978,7 +1980,7 @@ gimp_image_merge_visible_layers (GimpImage *gimage, MergeType merge_type)
     }
   else
     {
-      g_message ("There are not enough visible layers for a merge.\nThere must be at least two.");
+      g_message (_("There are not enough visible layers for a merge.\nThere must be at least two."));
       g_slist_free (merge_list);
       return NULL;
     }
@@ -2050,7 +2052,7 @@ gimp_image_merge_down (GimpImage *gimage,
     }
   else 
     {
-      g_message ("There are not enough visible layers for a merge down.");
+      g_message (_("There are not enough visible layers for a merge down."));
       g_slist_free (merge_list);
       return NULL;
     }
@@ -2161,7 +2163,7 @@ gimp_image_merge_layers (GimpImage *gimage, GSList *merge_list, MergeType merge_
 			       type, drawable_get_name (GIMP_DRAWABLE(layer)), OPAQUE_OPACITY, NORMAL_MODE);
 
       if (!merge_layer) {
-	g_message ("gimp_image_merge_layers: could not allocate merge layer");
+	g_message (_("gimp_image_merge_layers: could not allocate merge layer"));
 	return NULL;
       }
 
@@ -2194,7 +2196,7 @@ gimp_image_merge_layers (GimpImage *gimage, GSList *merge_list, MergeType merge_
 
       
       if (!merge_layer) {
-	g_message ("gimp_image_merge_layers: could not allocate merge layer");
+	g_message (_("gimp_image_merge_layers: could not allocate merge layer"));
 	return NULL;
       }
 
@@ -2233,7 +2235,7 @@ gimp_image_merge_layers (GimpImage *gimage, GSList *merge_list, MergeType merge_
       operation = valid_combinations [drawable_type (GIMP_DRAWABLE(merge_layer))][drawable_bytes (GIMP_DRAWABLE(layer))];
       if (operation == -1)
 	{
-	  g_message ("gimp_image_merge_layers attempting to merge incompatible layers\n");
+	  g_message (_("gimp_image_merge_layers attempting to merge incompatible layers\n"));
 	  return NULL;
 	}
 
@@ -2313,7 +2315,7 @@ gimp_image_add_layer (GimpImage *gimage, Layer *float_layer, int position)
   if (GIMP_DRAWABLE(float_layer)->gimage != NULL && 
       GIMP_DRAWABLE(float_layer)->gimage != gimage) 
     {
-      g_message ("gimp_image_add_layer: attempt to add layer to wrong image");
+      g_message (_("gimp_image_add_layer: attempt to add layer to wrong image"));
       return NULL;
     }
 
@@ -2323,7 +2325,7 @@ gimp_image_add_layer (GimpImage *gimage, Layer *float_layer, int position)
       {
 	if (ll->data == float_layer) 
 	  {
-	    g_message ("gimp_image_add_layer: trying to add layer to image twice");
+	    g_message (_("gimp_image_add_layer: trying to add layer to image twice"));
 	    return NULL;
 	  }
 	ll = g_slist_next(ll);
@@ -2433,22 +2435,24 @@ LayerMask *
 gimp_image_add_layer_mask (GimpImage *gimage, Layer *layer, LayerMask *mask)
 {
   LayerMaskUndo *lmu;
-  char *error = NULL;;
 
   if (layer->mask != NULL)
-    error = "Unable to add a layer mask since\nthe layer already has one.";
+  {
+    g_message(_("Unable to add a layer mask since\nthe layer already has one."));
+  }
   if (drawable_indexed (GIMP_DRAWABLE(layer)))
-    error = "Unable to add a layer mask to a\nlayer in an indexed image.";
+  {
+    g_message(_("Unable to add a layer mask to a\nlayer in an indexed image."));
+  }
   if (! layer_has_alpha (layer))
-    error = "Cannot add layer mask to a layer\nwith no alpha channel.";
+  {
+    g_message(_("Cannot add layer mask to a layer\nwith no alpha channel."));
+  }
   if (drawable_width (GIMP_DRAWABLE(layer)) != drawable_width (GIMP_DRAWABLE(mask)) || drawable_height (GIMP_DRAWABLE(layer)) != drawable_height (GIMP_DRAWABLE(mask)))
-    error = "Cannot add layer mask of different dimensions than specified layer.";
-
-  if (error)
-    {
-      g_message (error);
-      return NULL;
-    }
+  {
+    g_message(_("Cannot add layer mask of different dimensions than specified layer."));
+    return NULL;
+  }
 
   layer_add_mask (layer, mask);
 
@@ -2550,7 +2554,7 @@ gimp_image_raise_channel (GimpImage *gimage, Channel * channel_arg)
 	    }
 	  else
 	    {
-	      g_message ("Channel cannot be raised any further");
+	      g_message (_("Channel cannot be raised any further"));
 	      return NULL;
 	    }
 	}
@@ -2597,7 +2601,7 @@ gimp_image_lower_channel (GimpImage *gimage, Channel *channel_arg)
 	    }
 	  else
 	    {
-	      g_message ("Channel cannot be lowered any further");
+	      g_message (_("Channel cannot be lowered any further"));
 	      return NULL;
 	    }
 	}
@@ -2617,7 +2621,7 @@ gimp_image_add_channel (GimpImage *gimage, Channel *channel, int position)
   if (GIMP_DRAWABLE(channel)->gimage != NULL &&
       GIMP_DRAWABLE(channel)->gimage != gimage)
     {
-      g_message ("gimp_image_add_channel: attempt to add channel to wrong image");
+      g_message (_("gimp_image_add_channel: attempt to add channel to wrong image"));
       return NULL;
     }
 
@@ -2627,7 +2631,7 @@ gimp_image_add_channel (GimpImage *gimage, Channel *channel, int position)
       {
 	if (cc->data == channel) 
 	  {
-	    g_message ("gimp_image_add_channel: trying to add channel to image twice");
+	    g_message (_("gimp_image_add_channel: trying to add channel to image twice"));
 	    return NULL;
 	  }
 	cc = g_slist_next (cc);
@@ -2753,7 +2757,7 @@ gimp_image_filename (GimpImage *gimage)
   if (gimage->has_filename)
     return gimage->filename;
   else
-    return "Untitled";
+    return _("Untitled");
 }
 
 int

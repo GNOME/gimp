@@ -26,6 +26,7 @@
 #include "interface.h"
 #include "gimprc.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 static void install_run (InstallCallback);

@@ -38,6 +38,8 @@
 
 #include "pixmaps.h"
 
+#include "libgimp/gimpintl.h"
+
 /*  local functions  */
 static void  tools_select_update   (GtkWidget *widget,
 				    gpointer   data);
@@ -226,9 +228,9 @@ create_color_area (GtkWidget *parent)
 
   col_area = color_area_create (54, 42, default_pixmap, swap_pixmap);
   gtk_container_add (GTK_CONTAINER (alignment), col_area);
-  gtk_tooltips_set_tip (tool_tips, col_area, "Foreground & background colors.  The small black "
+  gtk_tooltips_set_tip (tool_tips, col_area, _("Foreground & background colors.  The small black "
 			"and white squares reset colors.  The small arrows swap colors.  Double "
-			"click to change colors.",
+			"click to change colors."),
 			NULL);
   gtk_widget_show (col_area);
   gtk_widget_show (alignment);
@@ -312,7 +314,7 @@ create_tools (GtkWidget *parent)
 			      (GtkSignalFunc) tools_button_press,
 			      (gpointer) tool_info[j].tool_id);
 
-	  gtk_tooltips_set_tip (tool_tips, button, tool_info[j].tool_desc, tool_info[i].private_tip);
+	  gtk_tooltips_set_tip (tool_tips, button, gettext(tool_info[j].tool_desc), tool_info[i].private_tip);
 
 	  gtk_widget_show (pixmap);
 	  gtk_widget_show (alignment);
@@ -441,7 +443,7 @@ create_toolbox ()
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_wmclass (GTK_WINDOW (window), "toolbox", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (window), "The GIMP");
+  gtk_window_set_title (GTK_WINDOW (window), _("The GIMP"));
   session_set_window_geometry (window, &toolbox_session_info, TRUE);
   gtk_signal_connect (GTK_OBJECT (window), "delete_event",
 		      GTK_SIGNAL_FUNC (toolbox_delete),
@@ -727,7 +729,7 @@ create_display_shell (GDisplay* gdisp,
   gtk_widget_set_usize (gdisp->progressbar, 80, -1);
   gtk_box_pack_start (GTK_BOX (gdisp->statusarea), gdisp->progressbar, FALSE, TRUE, 0);
 
-  gdisp->cancelbutton = gtk_button_new_with_label("Cancel");
+  gdisp->cancelbutton = gtk_button_new_with_label(_("Cancel"));
   gtk_box_pack_start (GTK_BOX (gdisp->statusarea), gdisp->cancelbutton, FALSE, TRUE, 0);
   gtk_widget_set_sensitive (gdisp->cancelbutton, FALSE);
 
@@ -820,7 +822,7 @@ query_string_box (char        *title,
 
   gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (qbox)->action_area), 2);
 
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) query_box_ok_callback,
@@ -829,7 +831,7 @@ query_string_box (char        *title,
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) query_box_cancel_callback,
@@ -946,14 +948,14 @@ message_box (char        *message,
 
   mbox = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (mbox), "gimp_message", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (mbox), "GIMP Message");
+  gtk_window_set_title (GTK_WINDOW (mbox), _("GIMP Message"));
   gtk_window_position (GTK_WINDOW (mbox), GTK_WIN_POS_MOUSE);
   gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (mbox)->action_area), 2);
   gtk_signal_connect (GTK_OBJECT (mbox), "delete_event",
 		      GTK_SIGNAL_FUNC (message_box_delete_callback),
 		      msg_box);
 
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) message_box_close_callback,

@@ -19,6 +19,9 @@
 #include "buildmenu.h"
 #include "interface.h"
 
+#include "config.h"
+#include "libgimp/gimpintl.h"
+
 GtkWidget *
 build_menu (MenuItem            *items,
 	    GtkAccelGroup       *accel_group)
@@ -38,7 +41,7 @@ build_menu (MenuItem            *items,
 	}
       else
 	{
-	  menu_item = gtk_menu_item_new_with_label (items->label);
+	  menu_item = gtk_menu_item_new_with_label (gettext(items->label));
 	  gtk_container_add (GTK_CONTAINER (menu), menu_item);
 
 	  if (items->accelerator_key && accel_group)

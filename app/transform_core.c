@@ -111,7 +111,10 @@ static ActionAreaItem action_items[2] =
 
 static char *action_labels[4] =
 {
-  N_("Rotate"), N_("Scale"), N_("Shear"), N_("Transform")
+  N_("Rotate"),
+  N_("Scale"),
+  N_("Shear"),
+  N_("Transform")
 };
 
 void

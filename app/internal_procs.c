@@ -74,6 +74,7 @@
 #include "parasite_cmds.h"
 #include "procedural_db.h"
 
+#include "libgimp/gimpintl.h"
 
 void
 internal_procs_init ()
@@ -82,7 +83,7 @@ internal_procs_init ()
   /* grep -c procedural_db_register internal_procs.c */
   gfloat total_pcount = 257;
 
-  app_init_update_status("Internal Procedures", "Tool procedures",
+  app_init_update_status(_("Internal Procedures"), _("Tool procedures"),
 			 pcount/total_pcount);
 
   /*  Tool procedures  */
@@ -115,7 +116,7 @@ internal_procs_init ()
   procedural_db_register (&text_tool_get_extents_proc_ext); pcount++;
   procedural_db_register (&text_tool_get_extents_proc_fontname); pcount++;
   
-  app_init_update_status(NULL, "GDisplay procedures",
+  app_init_update_status(NULL, _("GDisplay procedures"),
 			 pcount/total_pcount);
 
   /*  GDisplay procedures  */
@@ -123,7 +124,7 @@ internal_procs_init ()
   procedural_db_register (&gdisplay_delete_proc); pcount++;
   procedural_db_register (&gdisplays_flush_proc); pcount++;
 
-  app_init_update_status(NULL, "Edit procedures",
+  app_init_update_status(NULL, _("Edit procedures"),
 			 pcount/total_pcount);
 
   /*  Edit procedures  */
@@ -134,7 +135,7 @@ internal_procs_init ()
   procedural_db_register (&edit_fill_proc); pcount++;
   procedural_db_register (&edit_stroke_proc); pcount++;
 
-  app_init_update_status(NULL, "GImage procedures",
+  app_init_update_status(NULL, _("GImage procedures"),
 			 pcount/total_pcount);
 
   /*  GImage procedures  */
@@ -199,7 +200,7 @@ internal_procs_init ()
   procedural_db_register (&gimp_image_get_layer_by_tattoo_proc); pcount++;
   procedural_db_register (&gimp_image_get_channel_by_tattoo_proc); pcount++;
 
-  app_init_update_status(NULL, "GImage mask procedures",
+  app_init_update_status(NULL, _("GImage mask procedures"),
 			 pcount/total_pcount);
 
   /*  GImage mask procedures  */
@@ -221,7 +222,7 @@ internal_procs_init ()
   procedural_db_register (&gimage_mask_load_proc); pcount++;
   procedural_db_register (&gimage_mask_save_proc); pcount++;
 
-  app_init_update_status(NULL, "Layer procedures",
+  app_init_update_status(NULL, _("Layer procedures"),
 			 pcount/total_pcount);
 
   /*  Layer procedures  */
@@ -256,7 +257,7 @@ internal_procs_init ()
   procedural_db_register (&layer_get_linked_proc); pcount++;
   procedural_db_register (&layer_set_linked_proc); pcount++;
 
-  app_init_update_status(NULL, "Channel procedures",
+  app_init_update_status(NULL, _("Channel procedures"),
 			 pcount/total_pcount);
 
   /*  Channel procedures  */
@@ -275,7 +276,7 @@ internal_procs_init ()
   procedural_db_register (&channel_set_color_proc); pcount++;
   procedural_db_register (&channel_get_tattoo_proc); pcount++;
 
-  app_init_update_status(NULL, "Drawable procedures",
+  app_init_update_status(NULL, _("Drawable procedures"),
 			 pcount/total_pcount);
 
   /*  Drawable procedures  */
@@ -303,7 +304,7 @@ internal_procs_init ()
   procedural_db_register (&gimp_drawable_attach_parasite_proc); pcount++;
   procedural_db_register (&gimp_drawable_detach_parasite_proc); pcount++;
 
-  app_init_update_status(NULL, "Floating selections",
+  app_init_update_status(NULL, _("Floating selections"),
 			 pcount/total_pcount);
 
   /*  Floating Selections  */
@@ -314,14 +315,14 @@ internal_procs_init ()
   procedural_db_register (&floating_sel_rigor_proc); pcount++;
   procedural_db_register (&floating_sel_relax_proc); pcount++;
 
-  app_init_update_status(NULL, "Undo",
+  app_init_update_status(NULL, _("Undo"),
 			 pcount/total_pcount);
 
   /*  Undo  */
   procedural_db_register (&undo_push_group_start_proc); pcount++;
   procedural_db_register (&undo_push_group_end_proc); pcount++;
 
-  app_init_update_status(NULL, "Palette",
+  app_init_update_status(NULL, _("Palette"),
 			 pcount/total_pcount);
 
   /*  Palette  */
@@ -333,7 +334,7 @@ internal_procs_init ()
   procedural_db_register (&palette_swap_colors_proc); pcount++; 
   procedural_db_register (&palette_refresh_proc); pcount++;
 
-  app_init_update_status(NULL, "Interface procedures",
+  app_init_update_status(NULL, _("Interface procedures"),
 			 pcount/total_pcount);
 
   /*  Interface procs  */
@@ -369,7 +370,7 @@ internal_procs_init ()
   procedural_db_register (&gradients_set_popup_proc); pcount++;
   procedural_db_register (&gradients_get_gradient_data_proc); pcount++;
 
-  app_init_update_status(NULL, "Image procedures",
+  app_init_update_status(NULL, _("Image procedures"),
 			 pcount/total_pcount);
 
   /*  Image procedures  */
@@ -392,19 +393,19 @@ internal_procs_init ()
   procedural_db_register (&convert_indexed_proc); pcount++;
   procedural_db_register (&convert_indexed_palette_proc); pcount++;
 
-  app_init_update_status(NULL, "Channel ops",
+  app_init_update_status(NULL, _("Channel ops"),
 			 pcount/total_pcount);
 
   /*  Channel Ops procedures  */
   procedural_db_register (&channel_ops_duplicate_proc); pcount++;
   procedural_db_register (&channel_ops_offset_proc); pcount++;
 
-  app_init_update_status(NULL, "gimprc ops",
+  app_init_update_status(NULL, _("gimprc ops"),
 			 pcount/total_pcount);
   /*  Gimprc procedures  */
   procedural_db_register (&gimprc_query_proc); pcount++;
 
-  app_init_update_status(NULL, "parasites",
+  app_init_update_status(NULL, _("parasites"),
 			 pcount/total_pcount);
   /*  parasite procedures  */
   procedural_db_register (&parasite_new_proc); pcount++;
@@ -412,7 +413,7 @@ internal_procs_init ()
   procedural_db_register (&gimp_attach_parasite_proc); pcount++;
   procedural_db_register (&gimp_detach_parasite_proc); pcount++;
 
-  app_init_update_status(NULL, "Procedural database",
+  app_init_update_status(NULL, _("Procedural database"),
 			 pcount/total_pcount);
 
   /*  Procedural Database  */

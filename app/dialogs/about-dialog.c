@@ -23,12 +23,12 @@
 
 #include "libgimp/gimpfeatures.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 #include "about_dialog.h"
 #include "interface.h"
 
-#include "config.h"
 
 #define ANIMATION_STEPS 16
 #define ANIMATION_SIZE 2

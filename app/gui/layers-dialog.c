@@ -43,6 +43,8 @@
 #include "session.h"
 #include "undo.h"
 
+#include "libgimp/gimpintl.h"
+
 #include "tools/eye.xbm"
 #include "tools/linked.xbm"
 #include "tools/layer.xbm"
@@ -217,41 +219,41 @@ static int suspend_gimage_notify = 0;
 
 static MenuItem layers_ops[] =
 {
-  { "New Layer", 'N', GDK_CONTROL_MASK,
+  { N_("New Layer"), 'N', GDK_CONTROL_MASK,
     layers_dialog_new_layer_callback, NULL, NULL, NULL },
-  { "Raise Layer", 'F', GDK_CONTROL_MASK,
+  { N_("Raise Layer"), 'F', GDK_CONTROL_MASK,
     layers_dialog_raise_layer_callback, NULL, NULL, NULL },
-  { "Lower Layer", 'B', GDK_CONTROL_MASK,
+  { N_("Lower Layer"), 'B', GDK_CONTROL_MASK,
     layers_dialog_lower_layer_callback, NULL, NULL, NULL },
-  { "Duplicate Layer", 'C', GDK_CONTROL_MASK,
+  { N_("Duplicate Layer"), 'C', GDK_CONTROL_MASK,
     layers_dialog_duplicate_layer_callback, NULL, NULL, NULL },
-  { "Delete Layer", 'X', GDK_CONTROL_MASK,
+  { N_("Delete Layer"), 'X', GDK_CONTROL_MASK,
     layers_dialog_delete_layer_callback, NULL, NULL, NULL },
-  { "Scale Layer", 'S', GDK_CONTROL_MASK,
+  { N_("Scale Layer"), 'S', GDK_CONTROL_MASK,
     layers_dialog_scale_layer_callback, NULL, NULL, NULL },
-  { "Resize Layer", 'R', GDK_CONTROL_MASK,
+  { N_("Resize Layer"), 'R', GDK_CONTROL_MASK,
     layers_dialog_resize_layer_callback, NULL, NULL, NULL },
-  { "Add Layer Mask", 0, 0,
+  { N_("Add Layer Mask"), 0, 0,
     layers_dialog_add_layer_mask_callback, NULL, NULL, NULL },
-  { "Apply Layer Mask", 0, 0,
+  { N_("Apply Layer Mask"), 0, 0,
     layers_dialog_apply_layer_mask_callback, NULL, NULL, NULL },
-  { "Anchor Layer", 'H', GDK_CONTROL_MASK,
+  { N_("Anchor Layer"), 'H', GDK_CONTROL_MASK,
     layers_dialog_anchor_layer_callback, NULL, NULL, NULL },
-  { "Merge Visible Layers", 'M', GDK_CONTROL_MASK,
+  { N_("Merge Visible Layers"), 'M', GDK_CONTROL_MASK,
     layers_dialog_merge_layers_callback, NULL, NULL, NULL },
-  { "Merge Down", 'M', GDK_CONTROL_MASK,
+  { N_("Merge Down"), 'M', GDK_CONTROL_MASK,
     layers_dialog_merge_down_callback, NULL, NULL, NULL },
-  { "Flatten Image", 0, 0,
+  { N_("Flatten Image"), 0, 0,
     layers_dialog_flatten_image_callback, NULL, NULL, NULL },
-  { "Alpha To Selection", 0, 0,
+  { N_("Alpha To Selection"), 0, 0,
     layers_dialog_alpha_select_callback, NULL, NULL, NULL },
-  { "Mask To Selection", 0, 0,
+  { N_("Mask To Selection"), 0, 0,
     layers_dialog_mask_select_callback, NULL, NULL, NULL },
-  { "Add Alpha Channel", 0, 0,
+  { N_("Add Alpha Channel"), 0, 0,
     layers_dialog_add_alpha_channel_callback, NULL, NULL, NULL },
-  { "Layer to Top", 'T', GDK_CONTROL_MASK,
+  { N_("Layer to Top"), 'T', GDK_CONTROL_MASK,
     layers_dialog_raise_layer_to_top_callback, NULL, NULL, NULL },
-  { "Layer to Bottom", 'U', GDK_CONTROL_MASK,
+  { N_("Layer to Bottom"), 'U', GDK_CONTROL_MASK,
     layers_dialog_lower_layer_to_bottom_callback, NULL, NULL, NULL },
  { NULL, 0, 0, NULL, NULL, NULL, NULL },
 };
@@ -259,33 +261,33 @@ static MenuItem layers_ops[] =
 /*  the option menu items -- the paint modes  */
 static MenuItem option_items[] =
 {
-  { "Normal", 0, 0, paint_mode_menu_callback, (gpointer) NORMAL_MODE, NULL, NULL },
-  { "Dissolve", 0, 0, paint_mode_menu_callback, (gpointer) DISSOLVE_MODE, NULL, NULL },
-  { "Multiply (Burn)", 0, 0, paint_mode_menu_callback, (gpointer) MULTIPLY_MODE, NULL, NULL },
-  { "Divide (Dodge)", 0, 0, paint_mode_menu_callback, (gpointer) DIVIDE_MODE, NULL, NULL },
-  { "Screen", 0, 0, paint_mode_menu_callback, (gpointer) SCREEN_MODE, NULL, NULL },
-  { "Overlay", 0, 0, paint_mode_menu_callback, (gpointer) OVERLAY_MODE, NULL, NULL },
-  { "Difference", 0, 0, paint_mode_menu_callback, (gpointer) DIFFERENCE_MODE, NULL, NULL },
-  { "Addition", 0, 0, paint_mode_menu_callback, (gpointer) ADDITION_MODE, NULL, NULL },
-  { "Subtract", 0, 0, paint_mode_menu_callback, (gpointer) SUBTRACT_MODE, NULL, NULL },
-  { "Darken Only", 0, 0, paint_mode_menu_callback, (gpointer) DARKEN_ONLY_MODE, NULL, NULL },
-  { "Lighten Only", 0, 0, paint_mode_menu_callback, (gpointer) LIGHTEN_ONLY_MODE, NULL, NULL },
-  { "Hue", 0, 0, paint_mode_menu_callback, (gpointer) HUE_MODE, NULL, NULL },
-  { "Saturation", 0, 0, paint_mode_menu_callback, (gpointer) SATURATION_MODE, NULL, NULL },
-  { "Color", 0, 0, paint_mode_menu_callback, (gpointer) COLOR_MODE, NULL, NULL },
-  { "Value", 0, 0, paint_mode_menu_callback, (gpointer) VALUE_MODE, NULL, NULL },
+  { N_("Normal"), 0, 0, paint_mode_menu_callback, (gpointer) NORMAL_MODE, NULL, NULL },
+  { N_("Dissolve"), 0, 0, paint_mode_menu_callback, (gpointer) DISSOLVE_MODE, NULL, NULL },
+  { N_("Multiply (Burn)"), 0, 0, paint_mode_menu_callback, (gpointer) MULTIPLY_MODE, NULL, NULL },
+  { N_("Divide (Dodge)"), 0, 0, paint_mode_menu_callback, (gpointer) DIVIDE_MODE, NULL, NULL },
+  { N_("Screen"), 0, 0, paint_mode_menu_callback, (gpointer) SCREEN_MODE, NULL, NULL },
+  { N_("Overlay"), 0, 0, paint_mode_menu_callback, (gpointer) OVERLAY_MODE, NULL, NULL },
+  { N_("Difference"), 0, 0, paint_mode_menu_callback, (gpointer) DIFFERENCE_MODE, NULL, NULL },
+  { N_("Addition"), 0, 0, paint_mode_menu_callback, (gpointer) ADDITION_MODE, NULL, NULL },
+  { N_("Subtract"), 0, 0, paint_mode_menu_callback, (gpointer) SUBTRACT_MODE, NULL, NULL },
+  { N_("Darken Only"), 0, 0, paint_mode_menu_callback, (gpointer) DARKEN_ONLY_MODE, NULL, NULL },
+  { N_("Lighten Only"), 0, 0, paint_mode_menu_callback, (gpointer) LIGHTEN_ONLY_MODE, NULL, NULL },
+  { N_("Hue"), 0, 0, paint_mode_menu_callback, (gpointer) HUE_MODE, NULL, NULL },
+  { N_("Saturation"), 0, 0, paint_mode_menu_callback, (gpointer) SATURATION_MODE, NULL, NULL },
+  { N_("Color"), 0, 0, paint_mode_menu_callback, (gpointer) COLOR_MODE, NULL, NULL },
+  { N_("Value"), 0, 0, paint_mode_menu_callback, (gpointer) VALUE_MODE, NULL, NULL },
   { NULL, 0, 0, NULL, NULL, NULL, NULL }
 };
 
 /* the ops buttons */
 static OpsButton layers_ops_buttons[] =
 {
-  { new_xpm, layers_dialog_new_layer_callback, "New Layer", NULL },
-  { raise_xpm, layers_dialog_raise_layer_callback, "Raise Layer", NULL },
-  { lower_xpm, layers_dialog_lower_layer_callback, "Lower Layer", NULL },
-  { duplicate_xpm, layers_dialog_duplicate_layer_callback, "Duplicate Layer", NULL },
-  { delete_xpm, layers_dialog_delete_layer_callback, "Delete Layer", NULL },
-  { anchor_xpm, layers_dialog_anchor_layer_callback, "Anchor Layer", NULL },
+  { new_xpm, layers_dialog_new_layer_callback, N_("New Layer"), NULL },
+  { raise_xpm, layers_dialog_raise_layer_callback, N_("Raise Layer"), NULL },
+  { lower_xpm, layers_dialog_lower_layer_callback, N_("Lower Layer"), NULL },
+  { duplicate_xpm, layers_dialog_duplicate_layer_callback, N_("Duplicate Layer"), NULL },
+  { delete_xpm, layers_dialog_delete_layer_callback, N_("Delete Layer"), NULL },
+  { anchor_xpm, layers_dialog_anchor_layer_callback, N_("Anchor Layer"), NULL },
   { NULL, NULL, NULL, NULL }
 };
 
@@ -308,7 +310,7 @@ lc_dialog_create (GimpImage* gimage)
     {
       lc_shell = gtk_dialog_new ();
       
-      gtk_window_set_title (GTK_WINDOW (lc_shell), "Layers & Channels");
+      gtk_window_set_title (GTK_WINDOW (lc_shell), _("Layers & Channels"));
       gtk_window_set_wmclass (GTK_WINDOW (lc_shell), "layers_and_channels", "Gimp");
       session_set_window_geometry (lc_shell, &lc_dialog_session_info, TRUE);
       gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (lc_shell)->vbox), 2);
@@ -330,7 +332,7 @@ lc_dialog_create (GimpImage* gimage)
       gtk_box_pack_start (GTK_BOX(lc_subshell), util_box, FALSE, FALSE, 0);
 
       /*  The GIMP image option menu  */
-      label = gtk_label_new ("Image:");
+      label = gtk_label_new (_("Image:"));
       gtk_box_pack_start (GTK_BOX (util_box), label, FALSE, FALSE, 2);
       image_option_menu = gtk_option_menu_new ();
       image_menu = create_image_menu (&gimage, &default_index, image_menu_callback);
@@ -352,13 +354,13 @@ lc_dialog_create (GimpImage* gimage)
       notebook = gtk_notebook_new ();
       gtk_box_pack_start (GTK_BOX(lc_subshell), notebook, TRUE, TRUE, 0);
 
-      label = gtk_label_new ("Layers");
+      label = gtk_label_new (_("Layers"));
       gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
 				layers_dialog_create (),
 				label);
       gtk_widget_show (label);
 
-      label = gtk_label_new ("Channels");
+      label = gtk_label_new (_("Channels"));
       gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
 				channels_dialog_create (),
 				label);
@@ -371,7 +373,7 @@ lc_dialog_create (GimpImage* gimage)
 
       gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG(lc_shell)->action_area), 1);
       /*  The close button  */
-      button = gtk_button_new_with_label ("Close");
+      button = gtk_button_new_with_label (_("Close"));
       gtk_box_pack_start (GTK_BOX (GTK_DIALOG(lc_shell)->action_area), button, TRUE, TRUE, 0);
       gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			  (GtkSignalFunc) lc_dialog_close_callback,
@@ -675,7 +677,7 @@ layers_dialog_create ()
       layersD->mode_box = util_box = gtk_hbox_new (FALSE, 1);
       gtk_box_pack_start (GTK_BOX (vbox), util_box, FALSE, FALSE, 0);
 
-      label = gtk_label_new ("Mode:");
+      label = gtk_label_new (_("Mode:"));
       gtk_box_pack_start (GTK_BOX (util_box), label, FALSE, FALSE, 2);
 
       menu = build_menu (option_items, NULL);
@@ -686,7 +688,7 @@ layers_dialog_create ()
       gtk_widget_show (layersD->mode_option_menu);
       gtk_option_menu_set_menu (GTK_OPTION_MENU (layersD->mode_option_menu), menu);
 
-      layersD->preserve_trans = gtk_check_button_new_with_label ("Keep Trans.");
+      layersD->preserve_trans = gtk_check_button_new_with_label (_("Keep Trans."));
       gtk_box_pack_start (GTK_BOX (util_box), layersD->preserve_trans, FALSE, FALSE, 2);
       gtk_signal_connect (GTK_OBJECT (layersD->preserve_trans), "toggled",
 			  (GtkSignalFunc) preserve_trans_update,
@@ -698,7 +700,7 @@ layers_dialog_create ()
       /*  Opacity scale  */
       layersD->opacity_box = util_box = gtk_hbox_new (FALSE, 1);
       gtk_box_pack_start (GTK_BOX (vbox), util_box, FALSE, FALSE, 0);
-      label = gtk_label_new ("Opacity:");
+      label = gtk_label_new (_("Opacity:"));
       gtk_box_pack_start (GTK_BOX (util_box), label, FALSE, FALSE, 2);
       layersD->opacity_data = GTK_ADJUSTMENT (gtk_adjustment_new (100.0, 0.0, 100.0, 1.0, 1.0, 0.0));
       slider = gtk_hscale_new (layersD->opacity_data);
@@ -821,7 +823,7 @@ create_image_menu (GimpImage**          def,
   if (!data.num_items)
     {
       GtkWidget* menu_item;
-      menu_item = gtk_menu_item_new_with_label ("none");
+      menu_item = gtk_menu_item_new_with_label (_("none"));
       gtk_container_add (GTK_CONTAINER (data.menu), menu_item);
       gtk_widget_show (menu_item);
     }
@@ -859,7 +861,7 @@ layers_dialog_update (GimpImage* gimage)
       layer_widget_delete (lw);
     }
   if (layersD->layer_widgets)
-    g_message ("layersD->layer_widgets not empty!");
+    g_message (_("layersD->layer_widgets not empty!"));
   layersD->layer_widgets = NULL;
 
   /*  Find the preview extents  */
@@ -1427,7 +1429,7 @@ paint_mode_menu_get_position (gint mode)
 	i++;
     }
   
-  g_message ("Unknown layer mode");
+  g_message (_("Unknown layer mode"));
   return 0;
 }
 
@@ -2110,7 +2112,7 @@ create_layer_widget (GImage *gimage,
 
   /*  the layer name label */
   if (layer_is_floating_sel (layer))
-    layer_widget->label = gtk_label_new ("Floating Selection");
+    layer_widget->label = gtk_label_new (_("Floating Selection"));
   else
     layer_widget->label = gtk_label_new (layer_get_name(layer));
   gtk_box_pack_start (GTK_BOX (hbox), layer_widget->label, FALSE, FALSE, 2);
@@ -2932,7 +2934,7 @@ layer_widget_layer_flush (GtkWidget *widget,
     }
 
   if (layer_is_floating_sel (layer_widget->layer))
-    name = "Floating Selection";
+    name = _("Floating Selection");
   else
     name = layer_get_name(layer_widget->layer);
 
@@ -3049,7 +3051,7 @@ new_layer_query_ok_callback (GtkWidget *w,
 	} 
       else 
 	{
-	  g_message ("new_layer_query_ok_callback: could not allocate new layer");
+	  g_message (_("new_layer_query_ok_callback: could not allocate new layer"));
 	}
     }
   
@@ -3125,8 +3127,8 @@ layers_dialog_new_layer_query (GimpImage* gimage)
 {
   static ActionAreaItem action_items[2] =
   {
-    { "OK", new_layer_query_ok_callback, NULL, NULL },
-    { "Cancel", new_layer_query_cancel_callback, NULL, NULL }
+    { N_("OK"), new_layer_query_ok_callback, NULL, NULL },
+    { N_("Cancel"), new_layer_query_cancel_callback, NULL, NULL }
   };
   NewLayerOptions *options;
   GtkWidget *vbox;
@@ -3140,10 +3142,10 @@ layers_dialog_new_layer_query (GimpImage* gimage)
   char size[12];
   char *button_names[4] =
   {
-    "Foreground",
-    "Background",
-    "White",
-    "Transparent"
+    N_("Foreground"),
+    N_("Background"),
+    N_("White"),
+    N_("Transparent")
   };
   ActionCallback button_callbacks[4] =
   {
@@ -3161,7 +3163,7 @@ layers_dialog_new_layer_query (GimpImage* gimage)
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "new_layer_options", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (options->query_box), "New Layer Options");
+  gtk_window_set_title (GTK_WINDOW (options->query_box), _("New Layer Options"));
   gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
 
   /* handle the wm close signal */
@@ -3178,7 +3180,7 @@ layers_dialog_new_layer_query (GimpImage* gimage)
   gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
 
   /*  the name entry hbox, label and entry  */
-  label = gtk_label_new ("Layer name:");
+  label = gtk_label_new (_("Layer name:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 1);
@@ -3188,12 +3190,12 @@ layers_dialog_new_layer_query (GimpImage* gimage)
   gtk_widget_set_usize (options->name_entry, 75, 0);
   gtk_table_attach (GTK_TABLE (table), options->name_entry, 1, 2, 0, 1,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_SHRINK, 1, 1);
-  gtk_entry_set_text (GTK_ENTRY (options->name_entry), (layer_name ? layer_name : "New Layer"));
+  gtk_entry_set_text (GTK_ENTRY (options->name_entry), (layer_name ? layer_name : _("New Layer")));
   gtk_widget_show (options->name_entry);
 
   /*  the xsize entry hbox, label and entry  */
   sprintf (size, "%d", gimage->width);
-  label = gtk_label_new ("Layer width:");
+  label = gtk_label_new (_("Layer width: "));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 1);
@@ -3207,7 +3209,7 @@ layers_dialog_new_layer_query (GimpImage* gimage)
 
   /*  the ysize entry hbox, label and entry  */
   sprintf (size, "%d", gimage->height);
-  label = gtk_label_new ("Layer height:");
+  label = gtk_label_new (_("Layer height: "));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 1);
@@ -3222,7 +3224,7 @@ layers_dialog_new_layer_query (GimpImage* gimage)
   gtk_widget_show (table);
 
   /*  the radio frame and box  */
-  radio_frame = gtk_frame_new ("Layer Fill Type");
+  radio_frame = gtk_frame_new (_("Layer Fill Type"));
   gtk_box_pack_start (GTK_BOX (vbox), radio_frame, FALSE, FALSE, 0);
 
   radio_box = gtk_vbox_new (FALSE, 1);
@@ -3231,7 +3233,7 @@ layers_dialog_new_layer_query (GimpImage* gimage)
   /*  the radio buttons  */
   for (i = 0; i < 4; i++)
     {
-      radio_button = gtk_radio_button_new_with_label (group, button_names[i]);
+      radio_button = gtk_radio_button_new_with_label (group, gettext(button_names[i]));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
       gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
@@ -3324,8 +3326,8 @@ layers_dialog_edit_layer_query (LayerWidget *layer_widget)
 {
   static ActionAreaItem action_items[2] =
   {
-    { "OK", edit_layer_query_ok_callback, NULL, NULL },
-    { "Cancel", edit_layer_query_cancel_callback, NULL, NULL }
+    { N_("OK"), edit_layer_query_ok_callback, NULL, NULL },
+    { N_("Cancel"), edit_layer_query_cancel_callback, NULL, NULL }
   };
   EditLayerOptions *options;
   GtkWidget *vbox;
@@ -3338,7 +3340,7 @@ layers_dialog_edit_layer_query (LayerWidget *layer_widget)
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "edit_layer_attrributes", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (options->query_box), "Edit Layer Attributes");
+  gtk_window_set_title (GTK_WINDOW (options->query_box), _("Edit Layer Attributes"));
   gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
 
   /*  handle the wm close signal */
@@ -3354,14 +3356,14 @@ layers_dialog_edit_layer_query (LayerWidget *layer_widget)
   /*  the name entry hbox, label and entry  */
   hbox = gtk_hbox_new (FALSE, 1);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  label = gtk_label_new ("Layer name:");
+  label = gtk_label_new (_("Layer name: "));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
   options->name_entry = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (hbox), options->name_entry, TRUE, TRUE, 0);
   gtk_entry_set_text (GTK_ENTRY (options->name_entry),
 		      ((layer_is_floating_sel (layer_widget->layer) ?
-			"Floating Selection" : layer_get_name(layer_widget->layer))));
+			_("Floating Selection") : layer_get_name(layer_widget->layer))));
   gtk_widget_show (options->name_entry);
   gtk_widget_show (hbox);
 
@@ -3464,8 +3466,8 @@ layers_dialog_add_mask_query (Layer *layer)
 {
   static ActionAreaItem action_items[2] =
   {
-    { "OK", add_mask_query_ok_callback, NULL, NULL },
-    { "Cancel", add_mask_query_cancel_callback, NULL, NULL }
+    { N_("OK"), add_mask_query_ok_callback, NULL, NULL },
+    { N_("Cancel"), add_mask_query_cancel_callback, NULL, NULL }
   };
   AddMaskOptions *options;
   GtkWidget *vbox;
@@ -3477,9 +3479,9 @@ layers_dialog_add_mask_query (Layer *layer)
   int i;
   char *button_names[3] =
   {
-    "White (Full Opacity)",
-    "Black (Full Transparency)",
-    "Layer's Alpha Channel"
+    N_("White (Full Opacity)"),
+    N_("Black (Full Transparency)"),
+    N_("Layer's Alpha Channel")
   };
   ActionCallback button_callbacks[3] =
   {
@@ -3496,7 +3498,7 @@ layers_dialog_add_mask_query (Layer *layer)
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "add_mask_options", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (options->query_box), "Add Mask Options");
+  gtk_window_set_title (GTK_WINDOW (options->query_box), _("Add Mask Options"));
   gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
 
   /*  handle the wm close signal */
@@ -3510,7 +3512,7 @@ layers_dialog_add_mask_query (Layer *layer)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (options->query_box)->vbox), vbox, TRUE, TRUE, 0);
 
   /*  the name entry hbox, label and entry  */
-  label = gtk_label_new ("Initialize Layer Mask To:");
+  label = gtk_label_new (_("Initialize Layer Mask To:"));
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -3524,7 +3526,7 @@ layers_dialog_add_mask_query (Layer *layer)
   /*  the radio buttons  */
   for (i = 0; i < 3; i++)
     {
-      radio_button = gtk_radio_button_new_with_label (group, button_names[i]);
+      radio_button = gtk_radio_button_new_with_label (group, gettext(button_names[i]));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
       gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
@@ -3609,9 +3611,9 @@ layers_dialog_apply_mask_query (Layer *layer)
 {
   static ActionAreaItem action_items[3] =
   {
-    { "Apply", apply_mask_query_apply_callback, NULL, NULL },
-    { "Discard", apply_mask_query_discard_callback, NULL, NULL },
-    { "Cancel", apply_mask_query_cancel_callback, NULL, NULL }
+    { N_("Apply"), apply_mask_query_apply_callback, NULL, NULL },
+    { N_("Discard"), apply_mask_query_discard_callback, NULL, NULL },
+    { N_("Cancel"), apply_mask_query_cancel_callback, NULL, NULL }
   };
   ApplyMaskOptions *options;
   GtkWidget *vbox;
@@ -3624,7 +3626,7 @@ layers_dialog_apply_mask_query (Layer *layer)
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "layer_mask_options", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (options->query_box), "Layer Mask Options");
+  gtk_window_set_title (GTK_WINDOW (options->query_box), _("Layer Mask Options"));
   gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
 
   /*  handle the wm close signal */
@@ -3639,7 +3641,7 @@ layers_dialog_apply_mask_query (Layer *layer)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (options->query_box)->vbox), vbox, TRUE, TRUE, 0);
 
   /*  the name entry hbox, label and entry  */
-  label = gtk_label_new ("Apply layer mask?");
+  label = gtk_label_new (_("Apply layer mask?"));
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -3702,7 +3704,7 @@ scale_layer_query_ok_callback (GtkWidget *w,
       g_free (options);
     }
   else
-    g_message ("Invalid width or height.  Both must be positive.");
+    g_message (_("Invalid width or height.  Both must be positive."));
 }
 
 static void
@@ -3732,8 +3734,8 @@ layers_dialog_scale_layer_query (Layer *layer)
 {
   static ActionAreaItem action_items[3] =
   {
-    { "OK", scale_layer_query_ok_callback, NULL, NULL },
-    { "Cancel", scale_layer_query_cancel_callback, NULL, NULL }
+    { N_("OK"), scale_layer_query_ok_callback, NULL, NULL },
+    { N_("Cancel"), scale_layer_query_cancel_callback, NULL, NULL }
   };
   ScaleLayerOptions *options;
   GtkWidget *vbox;
@@ -3748,7 +3750,7 @@ layers_dialog_scale_layer_query (Layer *layer)
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "scale_layer", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (options->query_box), "Scale Layer");
+  gtk_window_set_title (GTK_WINDOW (options->query_box), _("Scale Layer"));
   gtk_window_set_policy (GTK_WINDOW (options->query_box), FALSE, FALSE, TRUE);
   gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
 
@@ -3823,7 +3825,7 @@ resize_layer_query_ok_callback (GtkWidget *w,
       g_free (options);
     }
   else
-    g_message ("Invalid width or height.  Both must be positive.");
+    g_message (_("Invalid width or height.  Both must be positive."));
 }
 
 static void
@@ -3853,8 +3855,8 @@ layers_dialog_resize_layer_query (Layer *layer)
 {
   static ActionAreaItem action_items[3] =
   {
-    { "OK", resize_layer_query_ok_callback, NULL, NULL },
-    { "Cancel", resize_layer_query_cancel_callback, NULL, NULL }
+    { N_("OK"), resize_layer_query_ok_callback, NULL, NULL },
+    { N_("Cancel"), resize_layer_query_cancel_callback, NULL, NULL }
   };
   ResizeLayerOptions *options;
   GtkWidget *vbox;
@@ -3869,7 +3871,7 @@ layers_dialog_resize_layer_query (Layer *layer)
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "resize_layer", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (options->query_box), "Resize Layer");
+  gtk_window_set_title (GTK_WINDOW (options->query_box), _("Resize Layer"));
   gtk_window_set_policy (GTK_WINDOW (options->query_box), FALSE, TRUE, TRUE);
   gtk_window_set_policy (GTK_WINDOW (options->query_box), FALSE, FALSE, TRUE);
   gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
@@ -3984,8 +3986,8 @@ layers_dialog_layer_merge_query (GImage *gimage,
 {
   static ActionAreaItem action_items[2] =
   {
-    { "OK", layer_merge_query_ok_callback, NULL, NULL },
-    { "Cancel", layer_merge_query_cancel_callback, NULL, NULL }
+    { N_("OK"), layer_merge_query_ok_callback, NULL, NULL },
+    { N_("Cancel"), layer_merge_query_cancel_callback, NULL, NULL }
   };
   LayerMergeOptions *options;
   GtkWidget *vbox;
@@ -3997,9 +3999,9 @@ layers_dialog_layer_merge_query (GImage *gimage,
   int i;
   char *button_names[3] =
   {
-    "Expanded as necessary",
-    "Clipped to image",
-    "Clipped to bottom layer"
+    N_("Expanded as necessary"),
+    N_("Clipped to image"),
+    N_("Clipped to bottom layer")
   };
   ActionCallback button_callbacks[3] =
   {
@@ -4017,7 +4019,7 @@ layers_dialog_layer_merge_query (GImage *gimage,
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "layer_merge_options", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (options->query_box), "Layer Merge Options");
+  gtk_window_set_title (GTK_WINDOW (options->query_box), _("Layer Merge Options"));
   gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
 
   /* hadle the wm close signal */
@@ -4032,9 +4034,9 @@ layers_dialog_layer_merge_query (GImage *gimage,
 
   /*  the name entry hbox, label and entry  */
   if (merge_visible)
-    label = gtk_label_new ("Final, merged layer should be:");
+    label = gtk_label_new (_("Final, merged layer should be:"));
   else
-    label = gtk_label_new ("Final, anchored layer should be:");
+    label = gtk_label_new (_("Final, anchored layer should be:"));
 
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
@@ -4049,7 +4051,7 @@ layers_dialog_layer_merge_query (GImage *gimage,
   /*  the radio buttons  */
   for (i = 0; i < 3; i++)
     {
-      radio_button = gtk_radio_button_new_with_label (group, button_names[i]);
+      radio_button = gtk_radio_button_new_with_label (group, gettext(button_names[i]));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
       gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",

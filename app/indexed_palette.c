@@ -36,6 +36,8 @@
 #include "palette.h"
 #include "undo.h"
 
+#include "libgimp/gimpintl.h"
+
 #define EVENT_MASK     GDK_BUTTON_PRESS_MASK | GDK_ENTER_NOTIFY_MASK
 
 #define CELL_WIDTH     12
@@ -91,12 +93,12 @@ static int color_select_active = 0;
 /*  the action area structure  */
 static ActionAreaItem action_items[] =
 {
-  { "Close", indexed_palette_close_callback, NULL, NULL },
+  { N_("Close"), indexed_palette_close_callback, NULL, NULL },
 };
 
 static MenuItem indexed_color_ops[] =
 {
-  { "Close", 'W', GDK_CONTROL_MASK,
+  { N_("Close"), 'W', GDK_CONTROL_MASK,
     indexed_palette_close_callback, NULL, NULL, NULL },
   { NULL, 0, 0, NULL, NULL, NULL, NULL },
 };
@@ -135,7 +137,7 @@ indexed_palette_create (GimpImage* gimage)
       indexedP->shell = gtk_dialog_new ();
       gtk_window_set_wmclass (GTK_WINDOW (indexedP->shell), "indexed_color_palette", "Gimp");
       gtk_window_set_policy (GTK_WINDOW (indexedP->shell), FALSE, TRUE, TRUE); 
-      gtk_window_set_title (GTK_WINDOW (indexedP->shell), "Indexed Color Palette");
+      gtk_window_set_title (GTK_WINDOW (indexedP->shell), _("Indexed Color Palette"));
       gtk_window_add_accel_group (GTK_WINDOW (indexedP->shell), accel_group);
       gtk_signal_connect (GTK_OBJECT (indexedP->shell), "delete_event",
 			  GTK_SIGNAL_FUNC (gtk_widget_hide_on_delete),
@@ -151,7 +153,7 @@ indexed_palette_create (GimpImage* gimage)
       gtk_box_pack_start (GTK_BOX (vbox), util_box, FALSE, FALSE, 0);
 
       /*  The GIMP image option menu  */
-      label = gtk_label_new ("Image:");
+      label = gtk_label_new (_("Image:"));
       gtk_box_pack_start (GTK_BOX (util_box), label, FALSE, FALSE, 2);
       indexedP->image_option_menu = gtk_option_menu_new ();
       gtk_box_pack_start (GTK_BOX (util_box), indexedP->image_option_menu, TRUE, TRUE, 2);
@@ -172,7 +174,7 @@ indexed_palette_create (GimpImage* gimage)
       gtk_menu_item_set_submenu (GTK_MENU_ITEM (menu_bar_item), ops_menu);
       arrow_hbox = gtk_hbox_new (FALSE, 1);
       gtk_container_add (GTK_CONTAINER (menu_bar_item), arrow_hbox);
-      label = gtk_label_new ("Ops");
+      label = gtk_label_new (_("Operations"));
       arrow = gtk_arrow_new (GTK_ARROW_DOWN, GTK_SHADOW_OUT);
       gtk_box_pack_start (GTK_BOX (arrow_hbox), arrow, FALSE, FALSE, 0);
       gtk_box_pack_start (GTK_BOX (arrow_hbox), label, FALSE, FALSE, 4);
@@ -211,7 +213,7 @@ indexed_palette_create (GimpImage* gimage)
       /* some helpful hints */
       hbox = gtk_hbox_new(FALSE, 1);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 1);
-      label = gtk_label_new (" Click to select color.  Right-click to edit color");
+      label = gtk_label_new (_("Click to select color.  Right-click to edit color"));
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 1);
 
       gtk_widget_show (hbox);
@@ -529,7 +531,7 @@ create_image_menu (GimpImage**       def,
   if (!data.num_items)
     {
       GtkWidget* menu_item;
-      menu_item = gtk_menu_item_new_with_label ("none");
+      menu_item = gtk_menu_item_new_with_label (_("none"));
       gtk_container_add (GTK_CONTAINER (data.menu), menu_item);
       gtk_widget_show (menu_item);
     }

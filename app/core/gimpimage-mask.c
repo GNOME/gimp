@@ -31,6 +31,8 @@
 #include "paint_core.h"
 #include "undo.h"
 
+#include "libgimp/gimpintl.h"
+
 #include "layer_pvt.h"
 #include "tile_manager_pvt.h"
 #include "drawable_pvt.h"
@@ -209,7 +211,7 @@ gimage_mask_extract (gimage, drawable, cut_gimage, keep_indexed)
   non_empty = drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
   if (non_empty && (!(x2 - x1) || !(y2 - y1)))
     {
-      g_message ("Unable to cut/copy because the selected\nregion is empty.");
+      g_message (_("Unable to cut/copy because the selected\nregion is empty."));
       return NULL;
     }
 
@@ -332,7 +334,7 @@ gimage_mask_float (gimage, drawable, off_x, off_y)
   non_empty = drawable_mask_bounds ( (drawable), &x1, &y1, &x2, &y2);
   if (! non_empty || (x2 - x1) == 0 || (y2 - y1) == 0)
     {
-      g_message ("Float Selection: No selection to float.");
+      g_message (_("Float Selection: No selection to float."));
       return NULL;
     }
 
@@ -343,7 +345,7 @@ gimage_mask_float (gimage, drawable, off_x, off_y)
   tiles = gimage_mask_extract (gimage, drawable, TRUE, FALSE);
 
   /*  Create a new layer from the buffer  */
-  layer = layer_from_tiles (gimage, drawable, tiles, "Floated Layer", OPAQUE_OPACITY, NORMAL);
+  layer = layer_from_tiles (gimage, drawable, tiles, _("Floated Layer"), OPAQUE_OPACITY, NORMAL);
 
   /*  Set the offsets  */
   GIMP_DRAWABLE(layer)->offset_x = tiles->x + off_x;
@@ -486,7 +488,7 @@ gimage_mask_layer_alpha (gimage, layer)
     }
   else
     {
-      g_message ("The active layer has no alpha channel\nto convert to a selection.");
+      g_message (_("The active layer has no alpha channel\nto convert to a selection."));
       return;
     }
 }
@@ -505,7 +507,7 @@ gimage_mask_layer_mask (gimage, layer)
     }
   else
     {
-      g_message ("The active layer has no mask\nto convert to a selection.");
+      g_message (_("The active layer has no mask\nto convert to a selection."));
       return;
     }
 }
@@ -554,7 +556,7 @@ gimage_mask_stroke (gimage, drawable)
 
   if (! gimage_mask_boundary (gimage, &bs_in, &bs_out, &num_segs_in, &num_segs_out))
     {
-      g_message ("No selection to stroke!");
+      g_message (_("No selection to stroke!"));
       return FALSE;
     }
 

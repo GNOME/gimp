@@ -32,6 +32,8 @@
 #include "tools.h"
 #include "undo.h"
 
+#include "libgimp/gimpintl.h"
+
 #include "tile_manager_pvt.h"
 #include "drawable_pvt.h"
 
@@ -279,7 +281,7 @@ edit_paste (GImage      *gimage,
   int cx, cy;
 
   /*  Make a new floating layer  */
-  float_layer = layer_from_tiles (gimage, drawable, paste, "Pasted Layer", OPAQUE_OPACITY, NORMAL);
+  float_layer = layer_from_tiles (gimage, drawable, paste, _("Pasted Layer"), OPAQUE_OPACITY, NORMAL);
 
   if (float_layer)
     {
@@ -586,9 +588,9 @@ paste_named_buffer (GDisplay *gdisp)
 {
   static ActionAreaItem action_items[3] =
   {
-    { "Paste", named_buffer_paste_callback, NULL, NULL },
-    { "Delete", named_buffer_delete_callback, NULL, NULL },
-    { "Cancel", named_buffer_cancel_callback, NULL, NULL }
+    { N_("Paste"), named_buffer_paste_callback, NULL, NULL },
+    { N_("Delete"), named_buffer_delete_callback, NULL, NULL },
+    { N_("Cancel"), named_buffer_cancel_callback, NULL, NULL }
   };
   PasteNamedDlg *pn_dlg;
   GtkWidget *vbox;
@@ -601,7 +603,7 @@ paste_named_buffer (GDisplay *gdisp)
 
   pn_dlg->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (pn_dlg->shell), "paste_named_buffer", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (pn_dlg->shell), "Paste Named Buffer");
+  gtk_window_set_title (GTK_WINDOW (pn_dlg->shell), _("Paste Named Buffer"));
   gtk_window_position (GTK_WINDOW (pn_dlg->shell), GTK_WIN_POS_MOUSE);
 
   gtk_signal_connect (GTK_OBJECT (pn_dlg->shell), "delete_event",
@@ -613,7 +615,7 @@ paste_named_buffer (GDisplay *gdisp)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (pn_dlg->shell)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  label = gtk_label_new ("Select a buffer to paste:");
+  label = gtk_label_new (_("Select a buffer to paste:"));
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -632,7 +634,7 @@ paste_named_buffer (GDisplay *gdisp)
   set_list_of_named_buffers (pn_dlg->list);
   gtk_widget_show (pn_dlg->list);
 
-  paste_into = gtk_check_button_new_with_label ("Replace Current Selection");
+  paste_into = gtk_check_button_new_with_label (_("Replace Current Selection"));
   gtk_box_pack_start (GTK_BOX (vbox), paste_into, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (paste_into), "toggled",
 		      (GtkSignalFunc) named_buffer_paste_into_update,
@@ -694,7 +696,7 @@ named_edit_cut (void *gdisp_ptr)
   gdisp = (GDisplay *) gdisp_ptr;
   active_tool_control (HALT, gdisp_ptr);
 
-  query_string_box ("Cut Named", "Enter a name for this buffer", NULL,
+  query_string_box (_("Cut Named"), _("Enter a name for this buffer"), NULL,
 		    cut_named_buffer_callback, gdisp);
   return TRUE;
 }
@@ -723,7 +725,7 @@ named_edit_copy (void *gdisp_ptr)
 
   gdisp = (GDisplay *) gdisp_ptr;
   
-  query_string_box ("Copy Named", "Enter a name for this buffer", NULL,
+  query_string_box (_("Copy Named"), _("Enter a name for this buffer"), NULL,
 		    copy_named_buffer_callback, gdisp);
   return TRUE;
 }

@@ -26,6 +26,7 @@
 #include "gimage_mask.h"
 #include "parasitelist.h"
 
+#include "libgimp/gimpintl.h"
 
 enum {
   INVALIDATE_PREVIEW,
@@ -158,7 +159,7 @@ gimp_drawable_fill (GimpDrawable *drawable, guchar r, guchar g,
 	  c[ALPHA_I_PIX] = a;
       break;
     default:
-      g_message ("Can't fill unknown image type.");
+      g_message (_("Can't fill unknown image type."));
       break;
     }
 
@@ -600,7 +601,7 @@ gimp_drawable_configure (GimpDrawable *drawable,
   int alpha;
 
   if (!name)
-    name = "unnamed";
+    name = _("unnamed");
 
   switch (type)
     {
@@ -617,7 +618,7 @@ gimp_drawable_configure (GimpDrawable *drawable,
     case INDEXEDA_GIMAGE:
       bpp = 2; alpha = 1; break;
     default:
-      g_message ("Layer type %d not supported.", type);
+      g_message (_("Layer type %d not supported."), type);
       return;
     }
 

@@ -1,3 +1,11 @@
+Mon Nov 23 06:44:10 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* applied gimp-stric-981116-1, lots o files changes in app. i18n
+	patch.
+
+	* plug-ins/gfig/gfig.c: applied gimp-tml-981121-0, use proper PDB
+	params
+
 Mon Nov 23 01:17:57 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* configure.in: require GTK+ 1.1.5

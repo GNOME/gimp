@@ -27,6 +27,7 @@
 #include "transform_core.h"
 #include "transform_tool.h"
 
+#include "config.h"
 #include "libgimp/gimpintl.h"
 
 typedef struct _TransformOptions TransformOptions;
@@ -161,7 +162,7 @@ create_transform_options (void)
   for (i = 0; i < 4; i++)
     {
       radio_button =
-	gtk_radio_button_new_with_label (group, transform_button_names[i]);
+	gtk_radio_button_new_with_label (group, gettext(transform_button_names[i]));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
       gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
@@ -200,7 +201,7 @@ create_transform_options (void)
   for (i = 0; i < 2; i++)
     {
       radio_button =
-	gtk_radio_button_new_with_label (group, direction_button_names[i]);
+	gtk_radio_button_new_with_label (group, gettext(direction_button_names[i]));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
       gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",

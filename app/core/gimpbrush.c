@@ -25,6 +25,8 @@
 #include "gimprc.h"
 #include "brush_header.h"
 
+#include "libgimp/gimpintl.h"
+
 enum{
   DIRTY,
   RENAME,
@@ -195,14 +197,14 @@ gimp_brush_load(GimpBrush *brush, char *filename)
     brush->name = (char *) g_malloc (sizeof (char) * bn_size);
     if ((fread (brush->name, 1, bn_size, fp)) < bn_size)
     {
-      g_message ("Error in GIMP brush file...aborting.");
+      g_message (_("Error in GIMP brush file...aborting."));
       fclose (fp);
       gimp_object_destroy (brush);
       return;
     }
   }
   else
-    brush->name = g_strdup ("Unnamed");
+    brush->name = g_strdup (_("Unnamed"));
 
   switch(header.version)
   {
@@ -220,10 +222,10 @@ gimp_brush_load(GimpBrush *brush, char *filename)
   /*  Read the brush mask data  */
      if ((fread (temp_buf_data (brush->mask), 1, header.width * header.height,
 		 fp)) <	 header.width * header.height)
-       g_message ("GIMP brush file appears to be truncated.");
+       g_message (_("GIMP brush file appears to be truncated."));
      break;
    default:
-     g_message ("Unknown brush format version #%d in \"%s\"\n",
+     g_message (_("Unknown brush format version #%d in \"%s\"\n"),
 		header.version, filename);
      fclose (fp);
      gimp_object_destroy (brush);

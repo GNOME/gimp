@@ -29,6 +29,8 @@
 #include "image_map.h"
 #include "interface.h"
 
+#include "libgimp/gimpintl.h"
+
 #define HUE_PARTITION_MASK  GDK_EXPOSURE_MASK | GDK_ENTER_NOTIFY_MASK
 
 #define TEXT_WIDTH  45
@@ -317,7 +319,7 @@ tools_new_hue_saturation ()
 
   /*  The tool options  */
   if (!hue_saturation_options)
-    hue_saturation_options = tools_register_no_options (HUE_SATURATION,	"Hue-Saturation Options");
+    hue_saturation_options = tools_register_no_options (HUE_SATURATION, _("Hue-Saturation Options"));
 
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (HueSaturation *) g_malloc (sizeof (HueSaturation));
@@ -361,7 +363,7 @@ hue_saturation_initialize (GDisplay *gdisp)
 
   if (! drawable_color (gimage_active_drawable (gdisp->gimage)))
     {
-      g_message ("Hue-Saturation operates only on RGB color drawables.");
+      g_message (_("Hue-Saturation operates only on RGB color drawables."));
       return;
     }
 
@@ -407,8 +409,8 @@ hue_saturation_free ()
 /*  the action area structure  */
 static ActionAreaItem action_items[] =
 {
-  { "OK", hue_saturation_ok_callback, NULL, NULL },
-  { "Cancel", hue_saturation_cancel_callback, NULL, NULL }
+  { N_("OK"), hue_saturation_ok_callback, NULL, NULL },
+  { N_("Cancel"), hue_saturation_cancel_callback, NULL, NULL }
 };
 
 static HueSaturationDialog *
@@ -430,13 +432,13 @@ hue_saturation_new_dialog ()
   int i;
   char *hue_partition_names[7] =
   {
-    "Master",
-    "R",
-    "Y",
-    "G",
-    "C",
-    "B",
-    "M"
+    N_("Master"),
+    N_("R"),
+    N_("Y"),
+    N_("G"),
+    N_("C"),
+    N_("B"),
+    N_("M")
   };
   ActionCallback hue_partition_callbacks[7] =
   {
@@ -456,7 +458,7 @@ hue_saturation_new_dialog ()
   /*  The shell and main vbox  */
   hsd->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (hsd->shell), "hue_saturation", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (hsd->shell), "Hue-Saturation");
+  gtk_window_set_title (GTK_WINDOW (hsd->shell), _("Hue-Saturation"));
   
   /* handle the wm close signal */
   gtk_signal_connect (GTK_OBJECT (hsd->shell), "delete_event",
@@ -518,7 +520,7 @@ hue_saturation_new_dialog ()
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new ("Hue / Lightness / Saturation Adjustments");
+  label = gtk_label_new (_("Hue / Lightness / Saturation Adjustments"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
@@ -528,7 +530,7 @@ hue_saturation_new_dialog ()
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
   /*  Create the hue scale widget  */
-  label = gtk_label_new ("Hue");
+  label = gtk_label_new (_("Hue"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 2, 2);
@@ -562,7 +564,7 @@ hue_saturation_new_dialog ()
 
 
   /*  Create the lightness scale widget  */
-  label = gtk_label_new ("Lightness");
+  label = gtk_label_new (_("Lightness"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 2, 2);
@@ -596,7 +598,7 @@ hue_saturation_new_dialog ()
 
 
   /*  Create the saturation scale widget  */
-  label = gtk_label_new ("Saturation");
+  label = gtk_label_new (_("Saturation"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 2, 2);
@@ -619,7 +621,7 @@ hue_saturation_new_dialog ()
   hsd->saturation_text = gtk_entry_new ();
   gtk_widget_set_usize (hsd->saturation_text, TEXT_WIDTH, TEXT_HEIGHT);
   gtk_table_attach (GTK_TABLE (table), hsd->saturation_text, 2, 3, 2, 3,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 2, 2);
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 3, 2);
   gtk_signal_connect (GTK_OBJECT (hsd->saturation_text), "changed",
 		      (GtkSignalFunc) hue_saturation_saturation_text_update,
 		      hsd);
@@ -634,7 +636,7 @@ hue_saturation_new_dialog ()
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   /*  The preview toggle  */
-  toggle = gtk_check_button_new_with_label ("Preview");
+  toggle = gtk_check_button_new_with_label (_("Preview"));
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), hsd->preview);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -731,7 +733,7 @@ static void
 hue_saturation_preview (HueSaturationDialog *hsd)
 {
   if (!hsd->image_map)
-    g_message ("hue_saturation_preview(): No image map");
+    g_message (_("hue_saturation_preview(): No image map"));
   active_tool->preserve = TRUE;
   image_map_apply (hsd->image_map, hue_saturation, (void *) hsd);
   active_tool->preserve = FALSE;

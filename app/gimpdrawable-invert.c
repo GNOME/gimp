@@ -24,6 +24,8 @@
 #include "invert.h"
 #include "gimage.h"
 
+#include "libgimp/gimpintl.h"
+
 static void       invert (GimpDrawable *);
 static Argument * invert_invoker (Argument *);
 
@@ -42,7 +44,7 @@ image_invert (gimage_ptr)
 
   if (drawable_indexed (drawable))
     {
-      g_message ("Invert does not operate on indexed drawables.");
+      g_message (_("Invert does not operate on indexed drawables."));
       return;
     }
 
@@ -52,7 +54,7 @@ image_invert (gimage_ptr)
 					PDB_END);
 
   if (return_vals[0].value.pdb_int != PDB_SUCCESS)
-    g_message ("Invert operation failed.");
+    g_message (_("Invert operation failed."));
 
   procedural_db_destroy_args (return_vals, nreturn_vals);
 }

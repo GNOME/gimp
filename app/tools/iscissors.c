@@ -39,6 +39,8 @@
 #include "temp_buf.h"
 #include "tools.h"
 
+#include "libgimp/gimpintl.h"
+
 #ifndef M_PI
 #define M_PI    3.14159265358979323846
 #endif /* M_PI */
@@ -315,13 +317,13 @@ iscissors_selection_options (void)
   vbox = gtk_vbox_new (FALSE, 1);
 
   /*  the main label  */
-  label = gtk_label_new ("Intelligent Scissors Options");
+  label = gtk_label_new (_("Intelligent Scissors Options"));
 
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   /*  the antialias toggle button  */
-  antialias_toggle = gtk_check_button_new_with_label ("Antialiasing");
+  antialias_toggle = gtk_check_button_new_with_label (_("Antialiasing"));
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON(antialias_toggle),
 			       options->antialias);
   gtk_box_pack_start (GTK_BOX (vbox), antialias_toggle, FALSE, FALSE, 0);
@@ -331,7 +333,7 @@ iscissors_selection_options (void)
   gtk_widget_show (antialias_toggle);
 
   /*  the feather toggle button  */
-  feather_toggle = gtk_check_button_new_with_label ("Feather");
+  feather_toggle = gtk_check_button_new_with_label (_("Feather"));
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON(feather_toggle),
 			       options->feather);
   gtk_box_pack_start (GTK_BOX (vbox), feather_toggle, FALSE, FALSE, 0);
@@ -344,7 +346,7 @@ iscissors_selection_options (void)
   hbox = gtk_hbox_new (FALSE, 1);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new ("Feather Radius");
+  label = gtk_label_new (_("Feather Radius: "));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -364,7 +366,7 @@ iscissors_selection_options (void)
   hbox = gtk_hbox_new (FALSE, 1);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new ("Curve Resolution");
+  label = gtk_label_new (_("Curve Resolution: "));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -384,7 +386,7 @@ iscissors_selection_options (void)
   hbox = gtk_hbox_new (FALSE, 1);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new ("Edge Detect Thresh.");
+  label = gtk_label_new (_("Edge Detect Threshold: "));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -404,7 +406,7 @@ iscissors_selection_options (void)
   hbox = gtk_hbox_new (FALSE, 1);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new ("Elasticity.");
+  label = gtk_label_new (_("Elasticity: "));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -422,7 +424,7 @@ iscissors_selection_options (void)
 
 
   /*  the convert to bezier button  */
-  convert_button = gtk_button_new_with_label ("Convert to Bezier Curve");
+  convert_button = gtk_button_new_with_label (_("Convert to Bezier Curve"));
   gtk_box_pack_start (GTK_BOX (vbox), convert_button, TRUE, TRUE, 0);
   gtk_signal_connect(GTK_OBJECT (convert_button) , "clicked",
 			(GtkSignalFunc) selection_to_bezier,
@@ -952,7 +954,7 @@ add_segment (int *num_segs,
       segs = (GdkSegment *) g_realloc ((void *) segs, sizeof (GdkSegment) * max_segs);
 
       if (!segs)
-	fatal_error ("Unable to reallocate segment array in iscissors.");
+	fatal_error (_("Unable to reallocate segment array in iscissors."));
     }
 
   if (*num_segs)
@@ -995,7 +997,7 @@ add_point (int    *num_pts,
       pts = (Point *) g_realloc ((void *) pts, sizeof (Point) * max_pts);
 
       if (!pts)
-	fatal_error ("Unable to reallocate points array in iscissors.");
+	fatal_error (_("Unable to reallocate points array in iscissors."));
     }
 
   pts[*num_pts].x = x;
@@ -1799,7 +1801,7 @@ bezierify_boundary (Tool *tool)
 
   if (iscissors->num_pts < 4)
     {
-      g_message ("Boundary contains < 4 points!  Cannot bezierify.");
+      g_message (_("Boundary contains < 4 points!  Cannot bezierify."));
       return;
     }
 
