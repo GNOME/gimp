@@ -666,7 +666,33 @@ gimp_config_deserialize_object (GValue     *value,
   prop_object = g_value_get_object (value);
 
   if (! prop_object)
-    return G_TOKEN_RIGHT_PAREN;
+    {
+      /*  if the object property is not GIMP_PARAM_AGGREGATE, read
+       *  the type of the object and create it
+       */
+      if (! (prop_spec->flags & GIMP_PARAM_AGGREGATE))
+        {
+          gchar *type_name;
+          GType  type;
+
+          if (! gimp_scanner_parse_string (scanner, &type_name))
+            return G_TOKEN_STRING;
+
+          type = g_type_from_name (type_name);
+          g_free (type_name);
+
+          if (! g_type_is_a (type, prop_spec->value_type))
+            return G_TOKEN_STRING;
+
+          prop_object = g_object_new (type, NULL);
+
+          g_value_take_object (value, prop_object);
+        }
+      else
+        {
+          return G_TOKEN_RIGHT_PAREN;
+        }
+    }
 
   config_iface = GIMP_CONFIG_GET_INTERFACE (prop_object);
 

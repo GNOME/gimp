@@ -120,12 +120,14 @@ gimp_controller_class_init (GimpControllerClass *klass)
                                    g_param_spec_string ("name", NULL, NULL,
                                                         "Unnamed Controller",
                                                         G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+                                                        G_PARAM_CONSTRUCT |
+                                                        GIMP_CONTROLLER_PARAM_SERIALIZE));
   g_object_class_install_property (object_class, PROP_ENABLED,
                                    g_param_spec_boolean ("enabled", NULL, NULL,
                                                          TRUE,
                                                          G_PARAM_READWRITE |
-                                                         G_PARAM_CONSTRUCT));
+                                                         G_PARAM_CONSTRUCT |
+                                                         GIMP_CONTROLLER_PARAM_SERIALIZE));
 
   controller_signals[EVENT] =
     g_signal_new ("event",

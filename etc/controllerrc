@@ -1,30 +1,37 @@
 # GIMP controllerrc
+# 
+# This file will be entirely rewritten every time you quit the gimp.
 
-(controller "GimpControllerWheel"
-    (options
-        (name "Main Mouse Wheel"))
-    (mapping "scroll-up-shift-control-alt" "context-font-next")
-    (mapping "scroll-up-control-alt" "context-gradient-next")
-    (mapping "scroll-up-shift-alt" "context-pattern-next")
-    (mapping "scroll-up-shift-control" "context-brush-next")
-    (mapping "scroll-up-alt" "context-opacity-increase-skip")
-    (mapping "scroll-down-shift-control-alt" "context-font-previous")
-    (mapping "scroll-down-control-alt" "context-gradient-previous")
-    (mapping "scroll-down-shift-alt" "context-pattern-previous")
-    (mapping "scroll-down-shift-control" "context-brush-previous")
-    (mapping "scroll-down-alt" "context-opacity-decrease-skip"))
+(GimpControllerInfo "Main Mouse Wheel"
+    (controller "GimpControllerWheel"
+        (name "Main Mouse Wheel")
+        (enabled yes))
+    (mapping
+        (map "scroll-down-alt" "context-opacity-decrease-skip")
+        (map "scroll-down-control-alt" "context-gradient-previous")
+        (map "scroll-down-shift-alt" "context-pattern-previous")
+        (map "scroll-down-shift-control" "context-brush-previous")
+        (map "scroll-down-shift-control-alt" "context-font-previous")
+        (map "scroll-up-alt" "context-opacity-increase-skip")
+        (map "scroll-up-control-alt" "context-gradient-next")
+        (map "scroll-up-shift-alt" "context-pattern-next")
+        (map "scroll-up-shift-control" "context-brush-next")
+        (map "scroll-up-shift-control-alt" "context-font-next")))
+(GimpControllerInfo "ShuttlePRO"
+    (controller "ControllerLinuxInput"
+        (name "ShuttlePRO")
+        (enabled yes)
+        (device "/dev/input/event2"))
+    (mapping
+        (map "button-0" "tools-rect-select")
+        (map "button-1" "tools-ellipse-select")
+        (map "button-2" "tools-bucket-fill")
+        (map "button-3" "tools-blend")
+        (map "button-4" "tools-pencil")
+        (map "button-5" "tools-paintbrush")
+        (map "button-6" "tools-eraser")
+        (map "button-7" "tools-airbrush")
+        (map "wheel-turn-left" "context-brush-radius-decrease")
+        (map "wheel-turn-right" "context-brush-radius-increase")))
 
-(controller "ControllerLinuxInput"
-    (options
-	(name   "ShuttlePRO")
-	(device "/dev/input/event2"))
-    (mapping "button-0" "tools-rect-select")
-    (mapping "button-1" "tools-ellipse-select")
-    (mapping "button-2" "tools-bucket-fill")
-    (mapping "button-3" "tools-blend")
-    (mapping "button-4" "tools-pencil")
-    (mapping "button-5" "tools-paintbrush")
-    (mapping "button-6" "tools-eraser")
-    (mapping "button-7" "tools-airbrush")
-    (mapping "wheel-turn-left" "context-brush-radius-decrease")
-    (mapping "wheel-turn-right" "context-brush-radius-increase"))
+# end of controllerrc

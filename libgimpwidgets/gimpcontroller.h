@@ -27,6 +27,10 @@ G_BEGIN_DECLS
 
 /* For information look at the html documentation */
 
+
+#define GIMP_CONTROLLER_PARAM_SERIALIZE (1 << (0 + G_PARAM_USER_SHIFT))
+
+
 typedef enum
 {
   GIMP_CONTROLLER_EVENT_TRIGGER,

@@ -22,16 +22,19 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpwidgets/gimpcontroller.h"
 
 #include "widgets-types.h"
 
 #include "config/gimpconfig.h"
+#include "config/gimpconfig-error.h"
 #include "config/gimpconfig-params.h"
 #include "config/gimpconfig-utils.h"
 #include "config/gimpconfigwriter.h"
 #include "config/gimpscanner.h"
 
 #include "core/gimp.h"
+#include "core/gimplist.h"
 
 #include "gimpcontrollerinfo.h"
 #include "gimpcontrollers.h"
@@ -48,7 +51,8 @@ typedef struct _GimpControllerManager GimpControllerManager;
 
 struct _GimpControllerManager
 {
-  GList          *controllers;
+  GimpContainer  *controllers;
+  GQuark          event_mapped_id;
   GimpController *wheel;
   GimpUIManager  *ui_manager;
 };
@@ -59,12 +63,11 @@ struct _GimpControllerManager
 static GimpControllerManager * gimp_controller_manager_get  (Gimp *gimp);
 static void   gimp_controller_manager_free (GimpControllerManager *manager);
 
-static gboolean gimp_controller_info_event (GimpController            *controller,
-                                            const GimpControllerEvent *event,
-                                            GimpControllerInfo        *info);
-
-static GTokenType  gimp_controller_deserialize (GimpControllerManager *manager,
-                                                GScanner              *scanner);
+static gboolean gimp_controllers_event_mapped (GimpControllerInfo        *info,
+                                               GimpController            *controller,
+                                               const GimpControllerEvent *event,
+                                               const gchar               *action_name,
+                                               GimpControllerManager     *manager);
 
 
 /*  public functions  */
@@ -82,6 +85,13 @@ gimp_controllers_init (Gimp *gimp)
   g_object_set_data_full (G_OBJECT (gimp),
                           GIMP_CONTROLLER_MANAGER_DATA_KEY, manager,
                           (GDestroyNotify) gimp_controller_manager_free);
+
+  manager->controllers = gimp_list_new (GIMP_TYPE_CONTROLLER_INFO, TRUE);
+
+  manager->event_mapped_id =
+    gimp_container_add_handler (manager->controllers, "event-mapped",
+                                G_CALLBACK (gimp_controllers_event_mapped),
+                                manager);
 
   /*  EEEEEEK  */
   {
@@ -110,21 +120,12 @@ gimp_controllers_exit (Gimp *gimp)
   g_type_class_unref (g_type_class_peek (GIMP_TYPE_CONTROLLER_WHEEL));
 }
 
-enum
-{
-  CONTROLLER,
-  CONTROLLER_OPTIONS,
-  CONTROLLER_MAPPING
-};
-
 void
 gimp_controllers_restore (Gimp          *gimp,
                           GimpUIManager *ui_manager)
 {
   GimpControllerManager *manager;
   gchar                 *filename;
-  GScanner              *scanner;
-  GTokenType             token;
   GError                *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
@@ -139,81 +140,46 @@ gimp_controllers_restore (Gimp          *gimp,
 
   filename = gimp_personal_rc_file ("controllerrc");
 
-  scanner = gimp_scanner_new_file (filename, &error);
-
-  if (! scanner)
+  if (! gimp_config_deserialize_file (GIMP_CONFIG (manager->controllers),
+                                      filename, NULL, &error))
     {
-      g_clear_error (&error);
-      g_free (filename);
-      return;
-    }
-
-  g_scanner_scope_add_symbol (scanner, 0, "controller",
-                              GINT_TO_POINTER (CONTROLLER));
-  g_scanner_scope_add_symbol (scanner, CONTROLLER, "options",
-                              GINT_TO_POINTER (CONTROLLER_OPTIONS));
-  g_scanner_scope_add_symbol (scanner, CONTROLLER, "mapping",
-                              GINT_TO_POINTER (CONTROLLER_MAPPING));
-
-  token = G_TOKEN_LEFT_PAREN;
-
-  while (g_scanner_peek_next_token (scanner) == token)
-    {
-      token = g_scanner_get_next_token (scanner);
-
-      switch (token)
+      if (error->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
         {
-        case G_TOKEN_LEFT_PAREN:
-          token = G_TOKEN_SYMBOL;
-          break;
+          g_clear_error (&error);
+          g_free (filename);
 
-        case G_TOKEN_SYMBOL:
-          if (scanner->value.v_symbol == GINT_TO_POINTER (CONTROLLER))
+          filename = g_build_filename (gimp_sysconf_directory (),
+                                       "controllerrc", NULL);
+
+          if (! gimp_config_deserialize_file (GIMP_CONFIG (manager->controllers),
+                                              filename, NULL, &error))
             {
-              g_scanner_set_scope (scanner, CONTROLLER);
-              token = gimp_controller_deserialize (manager, scanner);
-
-              if (token == G_TOKEN_RIGHT_PAREN)
-                g_scanner_set_scope (scanner, 0);
-              else
-                break;
+              g_message (error->message);
             }
-          token = G_TOKEN_RIGHT_PAREN;
-          break;
-
-        case G_TOKEN_RIGHT_PAREN:
-          token = G_TOKEN_LEFT_PAREN;
-          break;
-
-        default: /* do nothing */
-          break;
         }
-    }
+      else
+        {
+          g_message (error->message);
+        }
 
-  if (token != G_TOKEN_LEFT_PAREN)
-    {
-      g_scanner_get_next_token (scanner);
-      g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
-                             _("fatal parse error"), TRUE);
-    }
-
-  if (error)
-    {
-      g_message (error->message);
       g_clear_error (&error);
-
-      gimp_config_file_backup_on_error (filename, "controllerrc", NULL);
     }
 
-  gimp_scanner_destroy (scanner);
-  g_free (filename);
+  gimp_list_reverse (GIMP_LIST (manager->controllers));
 
-  manager->controllers = g_list_reverse (manager->controllers);
+  g_free (filename);
 }
 
 void
 gimp_controllers_save (Gimp *gimp)
 {
+  const gchar *header =
+    "GIMP controllerrc\n"
+    "\n"
+    "This file will be entirely rewritten every time you quit the gimp.";
+  const gchar *footer =
+    "end of controllerrc";
+
   GimpControllerManager *manager;
   gchar                 *filename;
   GError                *error = NULL;
@@ -225,6 +191,16 @@ gimp_controllers_save (Gimp *gimp)
   g_return_if_fail (manager != NULL);
 
   filename = gimp_personal_rc_file ("controllerrc");
+
+  if (! gimp_config_serialize_to_file (GIMP_CONFIG (manager->controllers),
+                                       filename,
+                                       header, footer, NULL,
+                                       &error))
+    {
+      g_message (error->message);
+      g_error_free (error);
+    }
+
   g_free (filename);
 }
 
@@ -253,203 +229,38 @@ gimp_controller_manager_get (Gimp *gimp)
 static void
 gimp_controller_manager_free (GimpControllerManager *manager)
 {
-  g_list_foreach (manager->controllers, (GFunc) g_object_unref, NULL);
-  g_list_free (manager->controllers);
+  gimp_container_remove_handler (manager->controllers,
+                                 manager->event_mapped_id);
 
+  g_object_unref (manager->controllers);
   g_object_unref (manager->ui_manager);
 
   g_free (manager);
 }
 
-static GTokenType
-gimp_controller_deserialize (GimpControllerManager *manager,
-                             GScanner              *scanner)
-{
-  GimpControllerInfo *info = NULL;
-  GTokenType          token;
-  gchar              *controller_name;
-  GType               controller_type;
-
-  token = G_TOKEN_STRING;
-
-  if (! gimp_scanner_parse_string (scanner, &controller_name))
-    goto error;
-
-  controller_type = g_type_from_name (controller_name);
-  g_free (controller_name);
-
-  if (! g_type_is_a (controller_type, GIMP_TYPE_CONTROLLER))
-    goto error;
-
-  info = g_object_new (GIMP_TYPE_CONTROLLER_INFO, NULL);
-
-  info->controller = gimp_controller_new (controller_type);
-
-  /* EEEEEK */
-  {
-    GParamSpec **props;
-    gint         n_props;
-    gint         i;
-
-    props = g_object_class_list_properties (g_type_class_peek (controller_type),
-                                            &n_props);
-
-    for (i = 0; i < n_props; i++)
-      props[i]->flags |= GIMP_PARAM_SERIALIZE;
-
-    g_free (props);
-  }
-
-  token = G_TOKEN_LEFT_PAREN;
-
-  while (g_scanner_peek_next_token (scanner) == token)
-    {
-      token = g_scanner_get_next_token (scanner);
-
-      switch (token)
-        {
-        case G_TOKEN_LEFT_PAREN:
-          token = G_TOKEN_SYMBOL;
-          break;
-
-        case G_TOKEN_SYMBOL:
-          switch (GPOINTER_TO_INT (scanner->value.v_symbol))
-            {
-            case CONTROLLER_OPTIONS:
-              {
-                GimpConfigInterface *config_iface;
-
-                config_iface = GIMP_CONFIG_GET_INTERFACE (info->controller);
-
-                if (! config_iface->deserialize (GIMP_CONFIG (info->controller),
-                                                 scanner,
-                                                 1,
-                                                 FALSE))
-                  {
-                    goto error;
-                  }
-              }
-              break;
-
-            case CONTROLLER_MAPPING:
-              {
-                GtkAction *action = NULL;
-                GList     *list;
-                gchar     *event_name;
-                gchar     *action_name;
-
-                token = G_TOKEN_INT;
-                if (! gimp_scanner_parse_string (scanner, &event_name))
-                  goto error;
-
-                token = G_TOKEN_STRING;
-                if (! gimp_scanner_parse_string (scanner, &action_name))
-                  goto error;
-
-                for (list = gtk_ui_manager_get_action_groups (GTK_UI_MANAGER (manager->ui_manager));
-                     list;
-                     list = g_list_next (list))
-                  {
-                    GtkActionGroup *group = list->data;
-
-                    action = gtk_action_group_get_action (group, action_name);
-
-                    if (action)
-                      break;
-                  }
-
-                if (action)
-                  {
-                    g_hash_table_insert (info->mapping, event_name,
-                                         g_object_ref (action));
-                  }
-                else
-                  {
-                    g_free (event_name);
-                    g_printerr ("%s: action '%s' not found\n",
-                                G_STRFUNC, action_name);
-                  }
-
-                g_free (action_name);
-              }
-              break;
-
-            default:
-              break;
-            }
-          token = G_TOKEN_RIGHT_PAREN;
-          break;
-
-        case G_TOKEN_RIGHT_PAREN:
-          token = G_TOKEN_LEFT_PAREN;
-          break;
-
-        default:
-          break;
-        }
-    }
-
-  if (token == G_TOKEN_LEFT_PAREN)
-    {
-      token = G_TOKEN_RIGHT_PAREN;
-
-      if (g_scanner_peek_next_token (scanner) == token)
-        {
-          g_signal_connect (info->controller, "event",
-                            G_CALLBACK (gimp_controller_info_event),
-                            info);
-
-          if (GIMP_IS_CONTROLLER_WHEEL (info->controller))
-            manager->wheel = info->controller;
-
-          manager->controllers = g_list_prepend (manager->controllers, info);
-        }
-      else
-        {
-          goto error;
-        }
-    }
-  else
-    {
-    error:
-      if (info)
-        g_object_unref (info);
-    }
-
-  return token;
-}
-
 static gboolean
-gimp_controller_info_event (GimpController            *controller,
-                            const GimpControllerEvent *event,
-                            GimpControllerInfo        *info)
+gimp_controllers_event_mapped (GimpControllerInfo        *info,
+                               GimpController            *controller,
+                               const GimpControllerEvent *event,
+                               const gchar               *action_name,
+                               GimpControllerManager     *manager)
 {
-  GtkAction   *action;
-  const gchar *class_name;
-  const gchar *event_name;
-  const gchar *event_blurb;
+  GList *list;
 
-  class_name = GIMP_CONTROLLER_GET_CLASS (controller)->name;
-
-  event_name = gimp_controller_get_event_name (controller, event->any.event_id);
-  event_blurb = gimp_controller_get_event_blurb (controller, event->any.event_id);
-
-  g_print ("Received '%s' (class '%s')\n"
-           "    controller event '%s (%s)'\n",
-           controller->name, class_name,
-           event_name, event_blurb);
-
-  action = g_hash_table_lookup (info->mapping, event_name);
-
-  if (action)
+  for (list = gtk_ui_manager_get_action_groups (GTK_UI_MANAGER (manager->ui_manager));
+       list;
+       list = g_list_next (list))
     {
-      g_print ("    handled by action '%s'\n\n", gtk_action_get_name (action));
-      gtk_action_activate (action);
-      return TRUE;
-    }
-  else
-    {
-      g_print ("    not handled\n\n");
+      GtkActionGroup *group = list->data;
+      GtkAction      *action;
+
+      action = gtk_action_group_get_action (group, action_name);
+
+      if (action)
+        {
+          gtk_action_activate (action);
+          return TRUE;
+        }
     }
 
   return FALSE;

@@ -211,7 +211,8 @@ linux_input_class_init (ControllerLinuxInputClass *klass)
                                    g_param_spec_string ("device", NULL, NULL,
                                                         NULL,
                                                         G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+                                                        G_PARAM_CONSTRUCT |
+                                                        GIMP_CONTROLLER_PARAM_SERIALIZE));
 
   controller_class->name            = _("Linux Input Events");
 

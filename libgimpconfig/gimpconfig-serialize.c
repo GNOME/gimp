@@ -257,8 +257,7 @@ gimp_config_serialize_property (GimpConfig       *config,
 
   if (! success)
     {
-      if (G_VALUE_HOLDS_OBJECT (&value) &&
-          (param_spec->flags & GIMP_PARAM_AGGREGATE))
+      if (G_VALUE_HOLDS_OBJECT (&value))
         {
           GimpConfigInterface *config_iface = NULL;
           GimpConfig          *prop_object;
@@ -273,6 +272,17 @@ gimp_config_serialize_property (GimpConfig       *config,
           if (config_iface)
             {
               gimp_config_writer_open (writer, param_spec->name);
+
+              /*  if the object property is not GIMP_PARAM_AGGREGATE,
+               *  deserializing will need to know the exact type
+               *  in order to create the object
+               */
+              if (! (param_spec->flags & GIMP_PARAM_AGGREGATE))
+                {
+                  GType object_type = G_TYPE_FROM_INSTANCE (prop_object);
+
+                  gimp_config_writer_string (writer, g_type_name (object_type));
+                }
 
               success = config_iface->serialize (prop_object, writer, NULL);
 

@@ -48,6 +48,11 @@ struct _GimpControllerInfo
 struct _GimpControllerInfoClass
 {
   GimpObjectClass parent_class;
+
+  gboolean (* event_mapped) (GimpControllerInfo        *info,
+                             GimpController            *controller,
+                             const GimpControllerEvent *event,
+                             const gchar               *action_name);
 };
 
 

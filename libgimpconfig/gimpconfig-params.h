@@ -223,13 +223,20 @@ GParamSpec * gimp_param_spec_unit         (const gchar  *name,
                                    flags | GIMP_CONFIG_PARAM_FLAGS))
 
 
-/*  object properties are _not_ G_PARAM_CONSTRUCT  */
+/*  object and pointer properties are _not_ G_PARAM_CONSTRUCT  */
 
 #define GIMP_CONFIG_INSTALL_PROP_OBJECT(class, id,\
                                         name, blurb, object_type, flags)\
   g_object_class_install_property (class, id,\
                                    g_param_spec_object (name, NULL, blurb,\
                                    object_type,\
+                                   flags |\
+                                   G_PARAM_READWRITE | GIMP_PARAM_SERIALIZE))
+
+#define GIMP_CONFIG_INSTALL_PROP_POINTER(class, id,\
+                                         name, blurb, flags)\
+  g_object_class_install_property (class, id,\
+                                   g_param_spec_pointer (name, NULL, blurb,\
                                    flags |\
                                    G_PARAM_READWRITE | GIMP_PARAM_SERIALIZE))
 

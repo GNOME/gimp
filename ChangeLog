@@ -1,3 +1,33 @@
+2004-06-16  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpcontroller.[ch]: added #define
+	GIMP_CONTROLLER_PARAM_SERIALIZE. Made all properties serializable.
+
+	* modules/controller_linux_input.c: made "device-name"
+	serializable.
+
+	* app/config/gimpconfig-params.h: added macro
+	GIMP_CONFIG_INSTALL_PROP_POINTER() which needs to be handled
+	by custom (de)serialize_property() implementations.
+
+	* app/config/gimpconfig-deserialize.c
+	* app/config/gimpconfig-serialize.c: made object (de)serialization
+	work for object properties which are *not* GIMP_PARAM_AGGREGATE.
+	Write/parse the exact type of the object to create to enable this.
+
+	* app/core/gimpmarshal.list: new marshaller for GimpControllerInfo.
+
+	* app/widgets/gimpcontrollerinfo.[ch]: implement GimpConfigInterface
+	and add "controller" and "mapping" properties. Add "event-mapped"
+	signal which carries the action_name.
+
+	* app/widgets/gimpcontrollers.c: removed all deserialization code
+	and simply (de)serialize the controller container. Install a
+	container handler for "event-mapped" and do the action_name ->
+	action mapping in the callback.
+
+	* etc/controllerrc: regenerated with new syntax. Delete your old one!
+
 2004-06-16  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcontrollerwheel.c
