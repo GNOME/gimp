@@ -45,7 +45,6 @@
  * because it came out of merging the old Whirl 2.08 and Pinch 2.08
  * plug-ins.  */
 
-
 #include "config.h"
 
 #include <signal.h>
@@ -108,10 +107,10 @@ typedef struct
 /***** Prototypes *****/
 
 static void query (void);
-static void run   (char    *name,
-		   int      nparams,
+static void run   (gchar   *name,
+		   gint     nparams,
 		   GParam  *param,
-		   int     *nreturn_vals,
+		   gint    *nreturn_vals,
 		   GParam **return_vals);
 
 static void   whirl_pinch (void);
@@ -132,11 +131,7 @@ static void build_preview_source_image (void);
 
 static gint whirl_pinch_dialog    (void);
 static void dialog_update_preview (void);
-static void dialog_create_value   (char *title, GtkTable *table, int row,
-				   gdouble *value,
-				   double left, double right, double step);
 static void dialog_scale_update   (GtkAdjustment *adjustment, gdouble *value);
-static void dialog_entry_update   (GtkWidget *widget, gdouble *value);
 static void dialog_ok_callback    (GtkWidget *widget, gpointer data);
 
 
@@ -221,10 +216,10 @@ query (void)
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[1];
@@ -798,10 +793,11 @@ build_preview_source_image (void)
 static gint
 whirl_pinch_dialog (void)
 {
-  GtkWidget  *dialog;
-  GtkWidget  *top_table;
-  GtkWidget  *frame;
-  GtkWidget  *table;
+  GtkWidget *dialog;
+  GtkWidget *top_table;
+  GtkWidget *frame;
+  GtkWidget *table;
+  GtkObject *adj;
   gint        argc;
   gchar     **argv;
   guchar     *color_cube;
@@ -875,12 +871,29 @@ whirl_pinch_dialog (void)
 		    GTK_EXPAND | GTK_FILL, 0, 0, 0);
   gtk_widget_show (table);
 
-  dialog_create_value ("Whirl Angle:", GTK_TABLE (table), 0, &wpvals.whirl,
-		       -360.0, 360.0, 1.0);
-  dialog_create_value ("Pinch Amount:", GTK_TABLE (table), 1, &wpvals.pinch,
-		       -1.0, 1.0, 0.01);
-  dialog_create_value ("Radius:", GTK_TABLE (table), 2, &wpvals.radius,
-		       0.0, 2.0, 0.01);
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			      "Whirl Angle:", SCALE_WIDTH, 0,
+			      wpvals.whirl, -360.0, 360.0, 1.0, 15.0, 2,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_scale_update),
+		      &wpvals.whirl);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+			      "Pinch Amount:", SCALE_WIDTH, 0,
+			      wpvals.pinch, -1.0, 1.0, 0.01, 0.1, 3,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_scale_update),
+		      &wpvals.pinch);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+			      "Radius:", SCALE_WIDTH, 0,
+			      wpvals.radius, 0.0, 2.0, 0.01, 0.1, 3,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_scale_update),
+		      &wpvals.radius);
 
   /* Done */
 
@@ -1021,103 +1034,12 @@ dialog_update_preview (void)
 }
 
 static void
-dialog_create_value (char     *title,
-		     GtkTable *table,
-		     int       row,
-		     gdouble  *value,
-		     double    left,
-		     double    right,
-		     double    step)
-{
-  GtkWidget *label;
-  GtkWidget *scale;
-  GtkWidget *entry;
-  GtkObject *scale_data;
-  gchar      buf[256];
-
-  label = gtk_label_new (title);
-  gtk_misc_set_alignment (GTK_MISC(label), 1.0, 0.5);
-  gtk_table_attach (table, label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  scale_data = gtk_adjustment_new (*value, left, right,
-				   step,
-				   step,
-				   0.0);
-
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) dialog_scale_update,
-		      value);
-
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (table, scale, 1, 2, row, row + 1,
-		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-  gtk_scale_set_digits (GTK_SCALE (scale), 3);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_CONTINUOUS);
-  gtk_widget_show (scale);
-
-  entry = gtk_entry_new ();
-  gtk_object_set_user_data (GTK_OBJECT (entry), scale_data);
-  gtk_object_set_user_data (scale_data, entry);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  g_snprintf (buf, sizeof (buf), "%0.3f", *value);
-  gtk_entry_set_text (GTK_ENTRY (entry), buf);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) dialog_entry_update,
-		      value);
-  gtk_table_attach (GTK_TABLE (table), entry, 2, 3, row, row + 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (entry);
-}
-
-static void
 dialog_scale_update (GtkAdjustment *adjustment,
 		     gdouble       *value)
 {
-  GtkWidget *entry;
-  gchar      buf[256];
+  gimp_double_adjustment_update (adjustment, value);
 
-  if (*value != adjustment->value)
-    {
-      *value = adjustment->value;
-
-      entry = gtk_object_get_user_data (GTK_OBJECT (adjustment));
-      g_snprintf (buf, sizeof (buf), "%0.3f", *value);
-
-      gtk_signal_handler_block_by_data (GTK_OBJECT (entry), value);
-      gtk_entry_set_text (GTK_ENTRY (entry), buf);
-      gtk_signal_handler_unblock_by_data (GTK_OBJECT (entry), value);
-
-      dialog_update_preview ();
-    }
-}
-
-static void
-dialog_entry_update (GtkWidget *widget,
-		     gdouble   *value)
-{
-  GtkAdjustment *adjustment;
-  gdouble        new_value;
-
-  new_value = atof (gtk_entry_get_text (GTK_ENTRY (widget)));
-
-  if (*value != new_value)
-    {
-      adjustment = gtk_object_get_user_data (GTK_OBJECT (widget));
-
-      if ((new_value >= adjustment->lower) &&
-	  (new_value <= adjustment->upper))
-	{
-	  *value            = new_value;
-	  adjustment->value = new_value;
-
-	  gtk_signal_emit_by_name (GTK_OBJECT (adjustment), "value_changed");
-
-	  dialog_update_preview ();
-	}
-    }
+  dialog_update_preview ();
 }
 
 static void
@@ -1125,5 +1047,6 @@ dialog_ok_callback (GtkWidget *widget,
 		    gpointer   data)
 {
   wpint.run = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
 }

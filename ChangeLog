@@ -1,3 +1,23 @@
+2000-01-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/info_window.c:
+	s/gtk_container_border_width/gtk_container_set_border_width/
+
+	* plug-ins/common/engrave.c
+	* plug-ins/common/noisify.c
+	* plug-ins/common/oilify.c
+	* plug-ins/common/polar.c
+	* plug-ins/common/whirlpinch.c
+	* plug-ins/ifscompose/Makefile.am
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/maze/Makefile.am
+	* plug-ins/maze/maze_face.c
+	* plug-ins/pagecurl/Makefile.am
+	* plug-ins/pagecurl/pagecurl.c
+	* plug-ins/struc/Makefile.am
+	* plug-ins/struc/struc.c: more spinbuttons instead of entries,
+	dialog layout, stuff...
+	
 Fri Jan 14 16:10:38 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/FractalExplorer/Dialogs.c

@@ -69,7 +69,7 @@ static gchar *visual_classes[] =
   N_("Direct Color"),
 };
 
-static gchar * info_window_title(GDisplay   *gdisp);
+static gchar * info_window_title (GDisplay *gdisp);
 
 static void
 get_shades (GDisplay *gdisp,
@@ -197,7 +197,7 @@ info_window_image_preview_book (InfoDialog *info_win)
   gtk_box_pack_start (GTK_BOX (hbox1), alignment, TRUE, TRUE, 0);
 
   table2 = gtk_table_new (5, 2, TRUE);
-  gtk_container_border_width (GTK_CONTAINER (table2), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (table2), 2);
   gtk_widget_show (table2);
   gtk_container_add (GTK_CONTAINER (frame), table2);
   gtk_container_add (GTK_CONTAINER (alignment), frame); 
@@ -366,10 +366,10 @@ info_window_create (GDisplay *gdisp)
 static InfoDialog *info_window_auto = NULL;
 
 static gchar *
-info_window_title(GDisplay   *gdisp)
+info_window_title (GDisplay *gdisp)
 {
-  char       *title;
-  gchar       *title_buf;
+  gchar *title;
+  gchar *title_buf;
   
   title = g_basename (gimage_filename (gdisp->gimage));
   
@@ -378,7 +378,7 @@ info_window_title(GDisplay   *gdisp)
 			       title,
 			       pdb_image_to_id (gdisp->gimage),
 			       gdisp->instance);
-  
+
   return title_buf;
 }
 
@@ -411,7 +411,7 @@ info_window_change_display (GimpContext *context, /* NOT USED */
 }
 
 void
-info_window_follow_auto()
+info_window_follow_auto (void)
 {
   GDisplay * gdisp;
 
@@ -437,9 +437,9 @@ info_window_follow_auto()
 }
 
 void  
-info_window_update_RGB  (GDisplay *gdisp,
-			 gdouble      tx,
-			 gdouble      ty)
+info_window_update_RGB (GDisplay *gdisp,
+			gdouble   tx,
+			gdouble   ty)
 {
   InfoWinData *iwd;
   gchar buff[5];
@@ -449,7 +449,7 @@ info_window_update_RGB  (GDisplay *gdisp,
   InfoDialog *info_win = gdisp->window_info_dialog;
   gboolean force_update = FALSE;
 
-  if(!info_win && info_window_auto != NULL)
+  if (!info_win && info_window_auto != NULL)
     {
       info_win = info_window_auto;
     }

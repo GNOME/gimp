@@ -29,70 +29,59 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
-#define ENTRY_WIDTH     30
-#define SCALE_WIDTH     125
-#define HISTSIZE	256
+#define SCALE_WIDTH  125
+#define HISTSIZE     256
 
-#define MODE_RGB        0
-#define MODE_INTEN      1
+#define MODE_RGB       0
+#define MODE_INTEN     1
 
-#define INTENSITY(p)    ((unsigned int) (p[0]*77+p[1]*150+p[2]*29) >> 8)
+#define INTENSITY(p)   ((guint) (p[0]*77+p[1]*150+p[2]*29) >> 8)
 
-typedef struct {
+typedef struct
+{
   gdouble mask_size;
   gint mode;
 } OilifyVals;
 
-typedef struct {
+typedef struct
+{
   gint run;
 } OilifyInterface;
 
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (char      *name,
-                         int        nparams,
+static void      run    (gchar     *name,
+                         gint       nparams,
                          GParam    *param,
-                         int       *nreturn_vals,
+                         gint      *nreturn_vals,
                          GParam   **return_vals);
-static void      oilify_rgb (GDrawable * drawable);
-static void      oilify_intensity (GDrawable * drawable);
 
-static gint      oilify_dialog ();
+static void      oilify_rgb         (GDrawable *drawable);
+static void      oilify_intensity   (GDrawable *drawable);
 
-static void      oilify_ok_callback     (GtkWidget *widget,
-                                         gpointer   data);
-static void      oilify_scale_update    (GtkAdjustment *adjustment,
-                                         double        *scale_val);
-static void      oilify_entry_update    (GtkWidget *widget,
-                                         gdouble *value);
-static void      dialog_create_value    (char *title,
-                                         GtkTable *table,
-                                         int row,
-                                         gdouble *value,
-                                         double left,
-                                         double right);
+static gint      oilify_dialog      (void);
 
-static void      oilify_toggle_update   (GtkWidget *widget,
-                                         gpointer   data);
+static void      oilify_ok_callback (GtkWidget *widget,
+				     gpointer   data);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 static OilifyVals ovals =
 {
-  7.0,     /* mask size  */
-  0        /* mode */
+  7.0,     /* mask size */
+  0        /* mode      */
 };
 
 static OilifyInterface oint =
@@ -104,7 +93,7 @@ static OilifyInterface oint =
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args[] =
   {
@@ -134,10 +123,10 @@ query ()
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[1];
@@ -258,9 +247,12 @@ oilify_rgb (GDrawable *drawable)
 
   n = (int) ovals.mask_size / 2;
 
-  gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
+  gimp_pixel_rgn_init (&dest_rgn, drawable,
+		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
 
-  for (pr1 = gimp_pixel_rgns_register (1, &dest_rgn); pr1 != NULL; pr1 = gimp_pixel_rgns_process (pr1))
+  for (pr1 = gimp_pixel_rgns_register (1, &dest_rgn);
+       pr1 != NULL;
+       pr1 = gimp_pixel_rgns_process (pr1))
     {
       dest_row = dest_rgn.data;
 
@@ -279,9 +271,12 @@ oilify_rgb (GDrawable *drawable)
 	      x4 = CLAMP ((x + n + 1), x1, x2);
 	      y4 = CLAMP ((y + n + 1), y1, y2);
  
-	      gimp_pixel_rgn_init (&src_rgn, drawable, x3, y3, (x4 - x3), (y4 - y3), FALSE, FALSE);
+	      gimp_pixel_rgn_init (&src_rgn, drawable,
+				   x3, y3, (x4 - x3), (y4 - y3), FALSE, FALSE);
  
-	      for (pr2 = gimp_pixel_rgns_register (1, &src_rgn); pr2 != NULL; pr2 = gimp_pixel_rgns_process (pr2))
+	      for (pr2 = gimp_pixel_rgns_register (1, &src_rgn);
+		   pr2 != NULL;
+		   pr2 = gimp_pixel_rgns_process (pr2))
 		{
 		  src_row = src_rgn.data;
 		  
@@ -364,9 +359,12 @@ oilify_intensity (GDrawable *drawable)
   
   n = (int) ovals.mask_size / 2;
   
-  gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
+  gimp_pixel_rgn_init (&dest_rgn, drawable,
+		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
   
-  for (pr1 = gimp_pixel_rgns_register (1, &dest_rgn); pr1 != NULL; pr1 = gimp_pixel_rgns_process (pr1))
+  for (pr1 = gimp_pixel_rgns_register (1, &dest_rgn);
+       pr1 != NULL;
+       pr1 = gimp_pixel_rgns_process (pr1))
     {
       dest_row = dest_rgn.data;
       
@@ -385,9 +383,12 @@ oilify_intensity (GDrawable *drawable)
 	      x4 = CLAMP ((x + n + 1), x1, x2);
 	      y4 = CLAMP ((y + n + 1), y1, y2);
 	      
-	      gimp_pixel_rgn_init (&src_rgn, drawable, x3, y3, (x4 - x3), (y4 - y3), FALSE, FALSE);
+	      gimp_pixel_rgn_init (&src_rgn, drawable,
+				   x3, y3, (x4 - x3), (y4 - y3), FALSE, FALSE);
 	      
-	      for (pr2 = gimp_pixel_rgns_register (1, &src_rgn); pr2 != NULL; pr2 = gimp_pixel_rgns_process (pr2))
+	      for (pr2 = gimp_pixel_rgns_register (1, &src_rgn);
+		   pr2 != NULL;
+		   pr2 = gimp_pixel_rgns_process (pr2))
 		{
 		  src_row = src_rgn.data;
 		  
@@ -440,6 +441,7 @@ oilify_dialog (void)
   GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *toggle;
+  GtkWidget *adj;
   gchar **argv;
   gint    argc;
 
@@ -469,21 +471,30 @@ oilify_dialog (void)
   /*  parameter settings  */
   frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+
   table = gtk_table_new (2, 3, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 10);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  toggle = gtk_check_button_new_with_label (_("Use intensity algorithm"));
+  toggle = gtk_check_button_new_with_label (_("Use Intensity Algorithm"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 0, 1, GTK_FILL, 0, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-                      (GtkSignalFunc) oilify_toggle_update,
+                      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
                       &ovals.mode);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), ovals.mode);
   gtk_widget_show (toggle);
 
-  dialog_create_value(_("Mask Size"), GTK_TABLE(table), 1, &ovals.mask_size, 3.0, 50.0);
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+			      _("Mask Size:"), SCALE_WIDTH, 0,
+			      ovals.mask_size, 3.0, 50.0, 1.0, 5.0, 0,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
+		      &ovals.mask_size);
 
   gtk_widget_show (frame);
   gtk_widget_show (table);
@@ -495,112 +506,11 @@ oilify_dialog (void)
   return oint.run;
 }
 
-
-/*  Oilify interface functions  */
-
 static void
 oilify_ok_callback (GtkWidget *widget,
                     gpointer   data)
 {
   oint.run = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
 }
-
-/*
- * Thanks to Quartic for these.
- */
-static void
-dialog_create_value(char *title, GtkTable *table, int row, gdouble *value, double left, double right)
-{
-  GtkWidget *label;
-  GtkWidget *scale;
-  GtkWidget *entry;
-  GtkObject *scale_data;
-  char       buf[256];
-  
-  label = gtk_label_new(title);
-  gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-  gtk_table_attach(table, label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
-  gtk_widget_show(label);
-  
-  scale_data = gtk_adjustment_new(*value, left, right, 1.0, 5.0, 5.0);
-  
-  gtk_signal_connect(GTK_OBJECT(scale_data), "value_changed",
-		     (GtkSignalFunc) oilify_scale_update,
-		     value);
-  
-  scale = gtk_hscale_new(GTK_ADJUSTMENT(scale_data));
-  gtk_widget_set_usize(scale, SCALE_WIDTH, 0);
-  gtk_table_attach(table, scale, 1, 2, row, row + 1, GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_scale_set_draw_value(GTK_SCALE(scale), FALSE);
-  gtk_scale_set_digits(GTK_SCALE(scale), 3);
-  gtk_range_set_update_policy(GTK_RANGE(scale), GTK_UPDATE_CONTINUOUS);
-  gtk_widget_show(scale);
-  
-  entry = gtk_entry_new();
-  gtk_object_set_user_data(GTK_OBJECT(entry), scale_data);
-  gtk_object_set_user_data(scale_data, entry);
-  gtk_widget_set_usize(entry, ENTRY_WIDTH, 0);
-  sprintf(buf, "%.0f", *value);
-  gtk_entry_set_text(GTK_ENTRY(entry), buf);
-  gtk_signal_connect(GTK_OBJECT(entry), "changed",
-		     (GtkSignalFunc) oilify_entry_update,
-		     value);
-  gtk_table_attach(GTK_TABLE(table), entry, 2, 3, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
-  gtk_widget_show(entry);
-}
-
-static void
-oilify_entry_update(GtkWidget *widget, gdouble *value)
-{
-  GtkAdjustment *adjustment;
-  gdouble        new_value;
-
-  new_value = atof(gtk_entry_get_text(GTK_ENTRY(widget)));
-  
-  if (*value != new_value) {
-    adjustment = gtk_object_get_user_data(GTK_OBJECT(widget));
-
-    if ((new_value >= adjustment->lower) &&
-	(new_value <= adjustment->upper)) {
-      *value            = new_value;
-      adjustment->value = new_value;
-      
-      gtk_signal_emit_by_name(GTK_OBJECT(adjustment), "value_changed");
-    } /* if */
-  } /* if */
-}
-
-static void
-oilify_scale_update (GtkAdjustment *adjustment, gdouble *value)
-{
-  GtkWidget *entry;
-  char       buf[256];
-  
-  if (*value != adjustment->value) {
-    adjustment->value = (int) adjustment->value | 1;
-    *value = adjustment->value;
-    
-    entry = gtk_object_get_user_data(GTK_OBJECT(adjustment));
-    sprintf(buf, "%.0f", *value);
-    
-    gtk_signal_handler_block_by_data(GTK_OBJECT(entry), value);
-    gtk_entry_set_text(GTK_ENTRY(entry), buf);
-    gtk_signal_handler_unblock_by_data(GTK_OBJECT(entry), value);
-  } /* if */
-}
- 
-static void
-oilify_toggle_update (GtkWidget *widget,
-		      gpointer   data)
-{
-  int *toggle_val;
-  
-  toggle_val = (int *) data;
-  
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = MODE_INTEN;
-  else
-    *toggle_val = MODE_RGB;
-}
-

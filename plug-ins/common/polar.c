@@ -90,42 +90,45 @@
 
 /***** Types *****/
 
-typedef struct {
-	gdouble circle;
-	gdouble angle;
-	gint backwards;
-	gint inverse;
-	gint polrec;
+typedef struct
+{
+  gdouble circle;
+  gdouble angle;
+  gint backwards;
+  gint inverse;
+  gint polrec;
 } polarize_vals_t;
 
-typedef struct {
-	GtkWidget *preview;
-	guchar    *check_row_0;
-	guchar    *check_row_1;
-	guchar    *image;
-	guchar    *dimage;
+typedef struct
+{
+  GtkWidget *preview;
+  guchar    *check_row_0;
+  guchar    *check_row_1;
+  guchar    *image;
+  guchar    *dimage;
 
-	gint run;
+  gint       run;
 } polarize_interface_t;
 
-typedef struct {
-	gint       col, row;
-	gint       img_width, img_height, img_bpp, img_has_alpha;
-	gint       tile_width, tile_height;
-	guchar     bg_color[4];
-	GDrawable *drawable;
-	GTile     *tile;
+typedef struct
+{
+  gint       col, row;
+  gint       img_width, img_height, img_bpp, img_has_alpha;
+  gint       tile_width, tile_height;
+  guchar     bg_color[4];
+  GDrawable *drawable;
+  GTile     *tile;
 } pixel_fetcher_t;
 
 
 /***** Prototypes *****/
 
-static void query(void);
-static void run(char    *name,
-		int      nparams,
-		GParam  *param,
-		int     *nreturn_vals,
-		GParam **return_vals);
+static void query (void);
+static void run   (gchar   *name,
+		   gint     nparams,
+		   GParam  *param,
+		   gint    *nreturn_vals,
+		   GParam **return_vals);
 
 static void   polarize(void);
 static int    calc_undistorted_coords(double wx, double wy,
@@ -139,41 +142,42 @@ static void             pixel_fetcher_destroy(pixel_fetcher_t *pf);
 
 static void build_preview_source_image(void);
 
-static gint polarize_dialog(void);
-static void dialog_update_preview(void);
-static void dialog_create_value(char *title, GtkTable *table, int row, gdouble *value,
-				double left, double right, double step);
-static void dialog_scale_update(GtkAdjustment *adjustment, gdouble *value);
-static void dialog_entry_update(GtkWidget *widget, gdouble *value);
-static void dialog_ok_callback(GtkWidget *widget, gpointer data);
+static gint polarize_dialog       (void);
+static void dialog_update_preview (void);
 
-static void polar_toggle_callback(GtkWidget *widget, gpointer data);
+static void dialog_scale_update (GtkAdjustment *adjustment, gdouble *value);
+static void dialog_ok_callback  (GtkWidget *widget, gpointer data);
+
+static void polar_toggle_callback (GtkWidget *widget, gpointer data);
 
 /***** Variables *****/
 
-GPlugInInfo PLUG_IN_INFO = {
-	NULL,   /* init_proc */
-	NULL,   /* quit_proc */
-	query,  /* query_proc */
-	run     /* run_proc */
-}; /* PLUG_IN_INFO */
+GPlugInInfo PLUG_IN_INFO =
+{
+  NULL,   /* init_proc */
+  NULL,   /* quit_proc */
+  query,  /* query_proc */
+  run     /* run_proc */
+};
 
-static polarize_vals_t pcvals = {
-	100.0, /* circle */
-	0.0,  /* angle */
-	0, /* backwards */
-	1,  /* inverse */
-	1  /* polar to rectangular? */
-}; /* pcvals */
+static polarize_vals_t pcvals =
+{
+  100.0, /* circle */
+  0.0,  /* angle */
+  0, /* backwards */
+  1,  /* inverse */
+  1  /* polar to rectangular? */
+};
 
-static polarize_interface_t pcint = {
-	NULL,  /* preview */
-	NULL,  /* check_row_0 */
-	NULL,  /* check_row_1 */
-	NULL,  /* image */
-	NULL,  /* dimage */
-	FALSE  /* run */
-}; /* pcint */
+static polarize_interface_t pcint =
+{
+  NULL,  /* preview */
+  NULL,  /* check_row_0 */
+  NULL,  /* check_row_1 */
+  NULL,  /* image */
+  NULL,  /* dimage */
+  FALSE  /* run */
+};
 
 static GDrawable *drawable;
 
@@ -187,199 +191,196 @@ static double scale_x, scale_y;
 
 /***** Functions *****/
 
-/*****/
-
-MAIN()
-
-
-/*****/
+MAIN ()
 
 static void
-query(void)
+query (void)
 {
-	static GParamDef args[] = {
-		{ PARAM_INT32,    "run_mode",  "Interactive, non-interactive" },
-		{ PARAM_IMAGE,    "image",     "Input image" },
-		{ PARAM_DRAWABLE, "drawable",  "Input drawable" },
-		{ PARAM_FLOAT,    "circle",    "Circle depth in %" },
-		{ PARAM_FLOAT,    "angle",     "Offset angle" },
-		{ PARAM_INT32,    "backwards",    "Map backwards?" },
-		{ PARAM_INT32,    "inverse",     "Map from top?" },
-		{ PARAM_INT32,    "polrec",     "Polar to rectangular?" },
-	}; /* args */
+  static GParamDef args[] =
+  {
+    { PARAM_INT32,    "run_mode",  "Interactive, non-interactive" },
+    { PARAM_IMAGE,    "image",     "Input image" },
+    { PARAM_DRAWABLE, "drawable",  "Input drawable" },
+    { PARAM_FLOAT,    "circle",    "Circle depth in %" },
+    { PARAM_FLOAT,    "angle",     "Offset angle" },
+    { PARAM_INT32,    "backwards",    "Map backwards?" },
+    { PARAM_INT32,    "inverse",     "Map from top?" },
+    { PARAM_INT32,    "polrec",     "Polar to rectangular?" },
+  };
 
-	static GParamDef *return_vals  = NULL;
-	static int        nargs        = sizeof(args) / sizeof(args[0]);
-	static int        nreturn_vals = 0;
+  static GParamDef *return_vals  = NULL;
+  static int        nargs        = sizeof(args) / sizeof(args[0]);
+  static int        nreturn_vals = 0;
 
-    INIT_I18N();
+  INIT_I18N();
 
-	gimp_install_procedure(PLUG_IN_NAME,
-			       _("Converts and image to and from polar coords"),
-			       _("Remaps and image from rectangular coordinates to polar coordinats or vice versa"),
-			       "Daniel Dunbar and Federico Mena Quintero",
-			       "Daniel Dunbar and Federico Mena Quintero",
-			       PLUG_IN_VERSION,
-			       N_("<Image>/Filters/Distorts/Polar Coords..."),
-			       "RGB*, GRAY*",
-			       PROC_PLUG_IN,
-			       nargs,
-			       nreturn_vals,
-			       args,
-			       return_vals);
-} /* query */
-
-
-/*****/
+  gimp_install_procedure (PLUG_IN_NAME,
+			  _("Converts and image to and from polar coords"),
+			  _("Remaps and image from rectangular coordinates to polar coordinats or vice versa"),
+			  "Daniel Dunbar and Federico Mena Quintero",
+			  "Daniel Dunbar and Federico Mena Quintero",
+			  PLUG_IN_VERSION,
+			  N_("<Image>/Filters/Distorts/Polar Coords..."),
+			  "RGB*, GRAY*",
+			  PROC_PLUG_IN,
+			  nargs,
+			  nreturn_vals,
+			  args,
+			  return_vals);
+}
 
 static void
-run(char    *name,
-    int      nparams,
-    GParam  *param,
-    int     *nreturn_vals,
-    GParam **return_vals)
+run (gchar   *name,
+     gint     nparams,
+     GParam  *param,
+     gint    *nreturn_vals,
+     GParam **return_vals)
 {
-	static GParam values[1];
+  static GParam values[1];
 
-	GRunModeType run_mode;
-	GStatusType  status;
-	double       xhsiz, yhsiz;
-	int          pwidth, pheight;
+  GRunModeType run_mode;
+  GStatusType  status;
+  double       xhsiz, yhsiz;
+  int          pwidth, pheight;
 
-	status   = STATUS_SUCCESS;
-	run_mode = param[0].data.d_int32;
+  status   = STATUS_SUCCESS;
+  run_mode = param[0].data.d_int32;
 
-	values[0].type          = PARAM_STATUS;
-	values[0].data.d_status = status;
+  values[0].type          = PARAM_STATUS;
+  values[0].data.d_status = status;
 
-	*nreturn_vals = 1;
-	*return_vals  = values;
+  *nreturn_vals = 1;
+  *return_vals  = values;
 
-	/* Get the active drawable info */
+  /* Get the active drawable info */
 
-	drawable = gimp_drawable_get(param[2].data.d_drawable);
+  drawable = gimp_drawable_get(param[2].data.d_drawable);
 
-	img_width     = gimp_drawable_width(drawable->id);
-	img_height    = gimp_drawable_height(drawable->id);
-	img_bpp       = gimp_drawable_bpp(drawable->id);
-	img_has_alpha = gimp_drawable_has_alpha(drawable->id);
+  img_width     = gimp_drawable_width(drawable->id);
+  img_height    = gimp_drawable_height(drawable->id);
+  img_bpp       = gimp_drawable_bpp(drawable->id);
+  img_has_alpha = gimp_drawable_has_alpha(drawable->id);
 
-	gimp_drawable_mask_bounds(drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+  gimp_drawable_mask_bounds(drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
-	/* Calculate scaling parameters */
+  /* Calculate scaling parameters */
 
-	sel_width  = sel_x2 - sel_x1;
-	sel_height = sel_y2 - sel_y1;
+  sel_width  = sel_x2 - sel_x1;
+  sel_height = sel_y2 - sel_y1;
 
-	cen_x = (double) (sel_x1 + sel_x2 - 1) / 2.0;
-	cen_y = (double) (sel_y1 + sel_y2 - 1) / 2.0;
+  cen_x = (double) (sel_x1 + sel_x2 - 1) / 2.0;
+  cen_y = (double) (sel_y1 + sel_y2 - 1) / 2.0;
 
-	xhsiz = (double) (sel_width - 1) / 2.0;
-	yhsiz = (double) (sel_height - 1) / 2.0;
+  xhsiz = (double) (sel_width - 1) / 2.0;
+  yhsiz = (double) (sel_height - 1) / 2.0;
 
-	if (xhsiz < yhsiz) {
-		scale_x = yhsiz / xhsiz;
-		scale_y = 1.0;
-	} else if (xhsiz > yhsiz) {
-		scale_x = 1.0;
-		scale_y = xhsiz / yhsiz;
-	} else {
-		scale_x = 1.0;
-		scale_y = 1.0;
-	} /* else */
+  if (xhsiz < yhsiz)
+    {
+      scale_x = yhsiz / xhsiz;
+      scale_y = 1.0;
+    }
+  else if (xhsiz > yhsiz)
+    {
+      scale_x = 1.0;
+      scale_y = xhsiz / yhsiz;
+    }
+  else
+    {
+      scale_x = 1.0;
+      scale_y = 1.0;
+    }
 
-	/* Calculate preview size */
+  /* Calculate preview size */
 
-	if (sel_width > sel_height) {
-		pwidth  = MIN(sel_width, PREVIEW_SIZE);
-		pheight = sel_height * pwidth / sel_width;
-	} else {
-		pheight = MIN(sel_height, PREVIEW_SIZE);
-		pwidth  = sel_width * pheight / sel_height;
-	} /* else */
+  if (sel_width > sel_height)
+    {
+      pwidth  = MIN(sel_width, PREVIEW_SIZE);
+      pheight = sel_height * pwidth / sel_width;
+    }
+  else
+    {
+      pheight = MIN(sel_height, PREVIEW_SIZE);
+      pwidth  = sel_width * pheight / sel_height;
+    }
 
-	preview_width  = MAX(pwidth, 2); /* Min size is 2 */
-	preview_height = MAX(pheight, 2);
+  preview_width  = MAX(pwidth, 2); /* Min size is 2 */
+  preview_height = MAX(pheight, 2);
 
-	/* See how we will run */
+  /* See how we will run */
 
-	switch (run_mode) {
-		case RUN_INTERACTIVE:
-          INIT_I18N_UI();
-			/* Possibly retrieve data */
+  switch (run_mode)
+    {
+    case RUN_INTERACTIVE:
+      INIT_I18N_UI();
 
-			gimp_get_data(PLUG_IN_NAME, &pcvals);
+      /* Possibly retrieve data */
+      gimp_get_data(PLUG_IN_NAME, &pcvals);
 
-			/* Get information from the dialog */
+      /* Get information from the dialog */
+      if (!polarize_dialog())
+	return;
 
-			if (!polarize_dialog())
-				return;
+      break;
 
-			break;
+    case RUN_NONINTERACTIVE:
+      INIT_I18N();
 
-		case RUN_NONINTERACTIVE:
-          INIT_I18N();
-			/* Make sure all the arguments are present */
+      /* Make sure all the arguments are present */
+      if (nparams != 8)
+	status = STATUS_CALLING_ERROR;
 
-			if (nparams != 8)
-				status = STATUS_CALLING_ERROR;
+      if (status == STATUS_SUCCESS)
+	{
+	  pcvals.circle  = param[3].data.d_float;
+	  pcvals.angle  = param[4].data.d_float;
+	  pcvals.backwards  = param[5].data.d_int32;
+	  pcvals.inverse  = param[6].data.d_int32;
+	  pcvals.polrec  = param[7].data.d_int32;
+	}
 
-			if (status == STATUS_SUCCESS) {
-				pcvals.circle  = param[3].data.d_float;
-				pcvals.angle  = param[4].data.d_float;
-				pcvals.backwards  = param[5].data.d_int32;
-				pcvals.inverse  = param[6].data.d_int32;
-				pcvals.polrec  = param[7].data.d_int32;
-			} /* if */
+      break;
 
-			break;
+    case RUN_WITH_LAST_VALS:
+      INIT_I18N();
 
-		case RUN_WITH_LAST_VALS:
-          INIT_I18N();
-			/* Possibly retrieve data */
+      /* Possibly retrieve data */
+      gimp_get_data(PLUG_IN_NAME, &pcvals);
+      break;
 
-			gimp_get_data(PLUG_IN_NAME, &pcvals);
-			break;
+    default:
+      break;
+    }
 
-		default:
-			break;
-	} /* switch */
+  /* Distort the image */
+  if ((status == STATUS_SUCCESS) &&
+      (gimp_drawable_is_rgb(drawable->id) ||
+       gimp_drawable_is_gray(drawable->id)))
+    {
+      /* Set the tile cache size */
+      gimp_tile_cache_ntiles(2 * (drawable->width + gimp_tile_width() - 1) / gimp_tile_width());
 
-	/* Distort the image */
+      /* Run! */
+      polarize();
 
-	if ((status == STATUS_SUCCESS) &&
-	    (gimp_drawable_is_rgb(drawable->id) ||
-	     gimp_drawable_is_gray(drawable->id))) {
-		/* Set the tile cache size */
+      /* If run mode is interactive, flush displays */
+      if (run_mode != RUN_NONINTERACTIVE)
+	gimp_displays_flush();
 
-		gimp_tile_cache_ntiles(2 * (drawable->width + gimp_tile_width() - 1) / gimp_tile_width());
+      /* Store data */
+      if (run_mode == RUN_INTERACTIVE)
+	gimp_set_data(PLUG_IN_NAME, &pcvals, sizeof(polarize_vals_t));
+    }
+  else if (status == STATUS_SUCCESS)
+    status = STATUS_EXECUTION_ERROR;
 
-		/* Run! */
+  values[0].data.d_status = status;
 
-		polarize();
-
-		/* If run mode is interactive, flush displays */
-
-		if (run_mode != RUN_NONINTERACTIVE)
-			gimp_displays_flush();
-
-		/* Store data */
-
-		if (run_mode == RUN_INTERACTIVE)
-			gimp_set_data(PLUG_IN_NAME, &pcvals, sizeof(polarize_vals_t));
-	} else if (status == STATUS_SUCCESS)
-		status = STATUS_EXECUTION_ERROR;
-
-	values[0].data.d_status = status;
-
-	gimp_drawable_detach(drawable);
-} /* run */
-
-
-/*****/
+  gimp_drawable_detach(drawable);
+}
 
 static void
-polarize(void) {
+polarize (void)
+{
   GPixelRgn        dest_rgn;
   guchar           *dest, *d;
   guchar           pixel[4][4];
@@ -391,7 +392,6 @@ polarize(void) {
   gint    x1, y1, x2, y2;
   gint    x, y, b;
   gpointer pr;
-
   
   pixel_fetcher_t *pft;
 
@@ -401,72 +401,81 @@ polarize(void) {
 #endif
 
   /* Get selection area */
-
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
 
   /* Initialize pixel region */
-
-  gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
+  gimp_pixel_rgn_init (&dest_rgn, drawable,
+		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
   
   pft = pixel_fetcher_new(drawable);
 
   gimp_palette_get_background(&bg_color[0], &bg_color[1], &bg_color[2]);
-  pixel_fetcher_set_bg_color(pft, bg_color[0], bg_color[1], bg_color[2], (img_has_alpha ? 0 : 255));
+  pixel_fetcher_set_bg_color(pft, bg_color[0], bg_color[1], bg_color[2],
+			     (img_has_alpha ? 0 : 255));
 
   progress     = 0;
   max_progress = img_width * img_height;
 
   gimp_progress_init( _("Polarizing..."));
 
-  for (pr = gimp_pixel_rgns_register (1, &dest_rgn); pr != NULL; pr = gimp_pixel_rgns_process (pr)) {
-    dest = dest_rgn.data;
+  for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
+    {
+      dest = dest_rgn.data;
 
-    for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++) {
-      d = dest;
+      for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
+	{
+	  d = dest;
 
-      for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++) {
- 	if (calc_undistorted_coords(x, y, &cx, &cy)) {
-	  pixel_fetcher_get_pixel(pft, cx, cy, pixel[0]);
-	  pixel_fetcher_get_pixel(pft, cx + 1, cy, pixel[1]);
-	  pixel_fetcher_get_pixel(pft, cx, cy + 1, pixel[2]);
-	  pixel_fetcher_get_pixel(pft, cx + 1, cy + 1, pixel[3]);
+	  for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
+	    {
+	      if (calc_undistorted_coords(x, y, &cx, &cy))
+		{
+		  pixel_fetcher_get_pixel(pft, cx, cy, pixel[0]);
+		  pixel_fetcher_get_pixel(pft, cx + 1, cy, pixel[1]);
+		  pixel_fetcher_get_pixel(pft, cx, cy + 1, pixel[2]);
+		  pixel_fetcher_get_pixel(pft, cx + 1, cy + 1, pixel[3]);
 
-	  for (b = 0; b < img_bpp; b++) {
-	    values[0] = pixel[0][b];
-	    values[1] = pixel[1][b];
-	    values[2] = pixel[2][b];
-	    values[3] = pixel[3][b];
+		  for (b = 0; b < img_bpp; b++)
+		    {
+		      values[0] = pixel[0][b];
+		      values[1] = pixel[1][b];
+		      values[2] = pixel[2][b];
+		      values[3] = pixel[3][b];
 	   
-	    d[b] = bilinear(cx, cy, values);
-	  }
-	} else {
-	  pixel_fetcher_get_pixel(pft, x, y, pixel2);
-   	  for (b = 0; b < img_bpp; b++) {
-           d[b] = 255;
-	  }	  
-	}
+		      d[b] = bilinear(cx, cy, values);
+		    }
+		}
+	      else
+		{
+		  pixel_fetcher_get_pixel(pft, x, y, pixel2);
+		  for (b = 0; b < img_bpp; b++)
+		    {
+		      d[b] = 255;
+		    }	  
+		}
 
-	d += dest_rgn.bpp;
-      }
+	      d += dest_rgn.bpp;
+	    }
       
-      dest += dest_rgn.rowstride;
-    }
-    progress += dest_rgn.w *dest_rgn.h;
+	  dest += dest_rgn.rowstride;
+	}
+      progress += dest_rgn.w *dest_rgn.h;
     
-    gimp_progress_update((double) progress / max_progress);
-  }
+      gimp_progress_update((double) progress / max_progress);
+    }
   
   gimp_drawable_flush(drawable);
   gimp_drawable_merge_shadow(drawable->id, TRUE);
   gimp_drawable_update(drawable->id, x1, y1, (x2 - x1), (y2 - y1));
-} /* polarize */
+}
 
-
-/*****/
-
-static int
-calc_undistorted_coords(double wx, double wy,
-			double *x, double *y)
+static gint
+calc_undistorted_coords (double  wx,
+			 double  wy,
+			 double *x,
+			 double *y)
 {
   int    inside;
   double phi, phi2;
@@ -497,383 +506,412 @@ calc_undistorted_coords(double wx, double wy,
   angle = pcvals.angle;
   angl = (double)angle / 180.0 * G_PI;
 
-  if (pcvals.polrec) {
-    if (wx >= cen_x) {
-      if (wy > cen_y) {
-	phi = G_PI - atan (((double)(wx - cen_x))/((double)(wy - cen_y)));
-	r   = sqrt (SQR (wx - cen_x) + SQR (wy - cen_y));
-      } else if (wy < cen_y) {
-	phi = atan (((double)(wx - cen_x))/((double)(cen_y - wy)));
-	r   = sqrt (SQR (wx - cen_x) + SQR (cen_y - wy));
-      } else {
-	phi = G_PI / 2;
-	r   = wx - cen_x; /* cen_x - x1; */
-      }
-    } else if (wx < cen_x) {
-      if (wy < cen_y) {
-	phi = 2 * G_PI - atan (((double)(cen_x -wx))/((double)(cen_y - wy)));
-	r   = sqrt (SQR (cen_x - wx) + SQR (cen_y - wy));
-      } else if (wy > cen_y) {
-        phi = G_PI + atan (((double)(cen_x - wx))/((double)(wy - cen_y)));
-        r   = sqrt (SQR (cen_x - wx) + SQR (wy - cen_y));
-      } else {
-        phi = 1.5 * G_PI;
-        r   = cen_x - wx; /* cen_x - x1; */
-      }
-    }
-    if (wx != cen_x) {
-      m = fabs (((double)(wy - cen_y)) / ((double)(wx - cen_x)));
-    } else {
-      m = 0;
-    }
-    
-    if (m <= ((double)(y2 - y1) / (double)(x2 - x1))) {
-      if (wx == cen_x) {
-	xmax = 0;
-	ymax = cen_y - y1;
-      } else {
-	xmax = cen_x - x1;
-	ymax = m * xmax;
-      }
-    } else {
-      ymax = cen_y - y1;
-      xmax = ymax / m;
-    }
-    
-    rmax = sqrt ( (double)(SQR (xmax) + SQR (ymax)) );
-    
-    t = ((cen_y - y1) < (cen_x - x1)) ? (cen_y - y1) : (cen_x - x1);
-    rmax = (rmax - t) / 100 * (100 - circle) + t;
-    
-    phi = fmod (phi + angl, 2*G_PI);
-    
-    if (pcvals.backwards)
-      x_calc = x2 - 1 - (x2 - x1 - 1)/(2*G_PI) * phi;
-    else
-      x_calc = (x2 - x1 - 1)/(2*G_PI) * phi + x1;
-    
-    if (pcvals.inverse)
-      y_calc = (y2 - y1)/rmax   * r   + y1;
-    else
-      y_calc = y2 - (y2 - y1)/rmax * r;
-    
-    xi = (int) (x_calc+0.5);
-    yi = (int) (y_calc+0.5);
-    
-    if (WITHIN(0, xi, img_width - 1) && WITHIN(0, yi, img_height - 1)) {
-      *x = x_calc;
-      *y = y_calc;
-      
-      inside = TRUE;
-    } else {
-      inside = FALSE;
-    }
-  } else {
-    
-    if (pcvals.backwards)
-      phi = (2 * G_PI) * (x2 - wx) / xdiff;
-    else
-      phi = (2 * G_PI) * (wx - x1) / xdiff;
-    
-    phi = fmod (phi + angl, 2 * G_PI);
-    
-    if (phi >= 1.5 * G_PI)
-      phi2 = 2 * G_PI - phi;
-    else
-      if (phi >= G_PI)
-	phi2 = phi - G_PI;
-      else
-	if (phi >= 0.5 * G_PI)
-	  phi2 = G_PI - phi;
-	else
-	  phi2 = phi;
-    
-    xx = tan (phi2);
-    if (xx != 0)
-      m = (double) 1.0 / xx;
-    else
-      m = 0;
-    
-    if (m <= ((double)(ydiff) / (double)(xdiff)))
-      {
-	if (phi2 == 0)
-	  {
-	    xmax = 0;
-	    ymax = ym - y1;
-	  }
-	else
-	  {
-	    xmax = xm - x1;
-	    ymax = m * xmax;
-	  }
-      }
-    else
-      {
-	ymax = ym - y1;
-	xmax = ymax / m;
-      }
-    
-    rmax = sqrt ((double)(SQR (xmax) + SQR (ymax)));
-    
-    t = ((ym - y1) < (xm - x1)) ? (ym - y1) : (xm - x1);
-    
-    rmax = (rmax - t) / 100.0 * (100 - circle) + t;
-    
-    if (pcvals.inverse)
-      r = rmax * (double)((wy - y1) / (double)(ydiff));
-    else
-      r = rmax * (double)((y2 - wy) / (double)(ydiff));
-    
-    xx = r * sin (phi2);
-    yy = r * cos (phi2);
-    
-    if (phi >= 1.5 * G_PI)
-      {
-	x_calc = (double)xm - xx;
-	y_calc = (double)ym - yy;
-      }
-    else
-      if (phi >= G_PI)
+  if (pcvals.polrec)
+    {
+      if (wx >= cen_x)
 	{
-	  x_calc = (double)xm - xx;
-	  y_calc = (double)ym + yy;
+	  if (wy > cen_y)
+	    {
+	      phi = G_PI - atan (((double)(wx - cen_x))/((double)(wy - cen_y)));
+	      r   = sqrt (SQR (wx - cen_x) + SQR (wy - cen_y));
+	    }
+	  else if (wy < cen_y)
+	    {
+	      phi = atan (((double)(wx - cen_x))/((double)(cen_y - wy)));
+	      r   = sqrt (SQR (wx - cen_x) + SQR (cen_y - wy));
+	    }
+	  else
+	    {
+	      phi = G_PI / 2;
+	      r   = wx - cen_x; /* cen_x - x1; */
+	    }
+	}
+      else if (wx < cen_x)
+	{
+	  if (wy < cen_y)
+	    {
+	      phi = 2 * G_PI - atan (((double)(cen_x -wx)) /
+				     ((double)(cen_y - wy)));
+	      r   = sqrt (SQR (cen_x - wx) + SQR (cen_y - wy));
+	    }
+	  else if (wy > cen_y)
+	    {
+	      phi = G_PI + atan (((double)(cen_x - wx))/((double)(wy - cen_y)));
+	      r   = sqrt (SQR (cen_x - wx) + SQR (wy - cen_y));
+	    }
+	  else
+	    {
+	      phi = 1.5 * G_PI;
+	      r   = cen_x - wx; /* cen_x - x1; */
+	    }
+	}
+      if (wx != cen_x)
+	{
+	  m = fabs (((double)(wy - cen_y)) / ((double)(wx - cen_x)));
 	}
       else
-	if (phi >= 0.5 * G_PI)
+	{
+	  m = 0;
+	}
+    
+      if (m <= ((double)(y2 - y1) / (double)(x2 - x1)))
+	{
+	  if (wx == cen_x)
+	    {
+	      xmax = 0;
+	      ymax = cen_y - y1;
+	    }
+	  else
+	    {
+	      xmax = cen_x - x1;
+	      ymax = m * xmax;
+	    }
+	}
+      else
+	{
+	  ymax = cen_y - y1;
+	  xmax = ymax / m;
+	}
+    
+      rmax = sqrt ( (double)(SQR (xmax) + SQR (ymax)) );
+    
+      t = ((cen_y - y1) < (cen_x - x1)) ? (cen_y - y1) : (cen_x - x1);
+      rmax = (rmax - t) / 100 * (100 - circle) + t;
+    
+      phi = fmod (phi + angl, 2*G_PI);
+    
+      if (pcvals.backwards)
+	x_calc = x2 - 1 - (x2 - x1 - 1)/(2*G_PI) * phi;
+      else
+	x_calc = (x2 - x1 - 1)/(2*G_PI) * phi + x1;
+    
+      if (pcvals.inverse)
+	y_calc = (y2 - y1)/rmax   * r   + y1;
+      else
+	y_calc = y2 - (y2 - y1)/rmax * r;
+    
+      xi = (int) (x_calc+0.5);
+      yi = (int) (y_calc+0.5);
+    
+      if (WITHIN(0, xi, img_width - 1) && WITHIN(0, yi, img_height - 1))
+	{
+	  *x = x_calc;
+	  *y = y_calc;
+      
+	  inside = TRUE;
+	}
+      else
+	{
+	  inside = FALSE;
+	}
+    }
+  else
+    {
+      if (pcvals.backwards)
+	phi = (2 * G_PI) * (x2 - wx) / xdiff;
+      else
+	phi = (2 * G_PI) * (wx - x1) / xdiff;
+    
+      phi = fmod (phi + angl, 2 * G_PI);
+    
+      if (phi >= 1.5 * G_PI)
+	phi2 = 2 * G_PI - phi;
+      else
+	if (phi >= G_PI)
+	  phi2 = phi - G_PI;
+	else
+	  if (phi >= 0.5 * G_PI)
+	    phi2 = G_PI - phi;
+	  else
+	    phi2 = phi;
+    
+      xx = tan (phi2);
+      if (xx != 0)
+	m = (double) 1.0 / xx;
+      else
+	m = 0;
+    
+      if (m <= ((double)(ydiff) / (double)(xdiff)))
+	{
+	  if (phi2 == 0)
+	    {
+	      xmax = 0;
+	      ymax = ym - y1;
+	    }
+	  else
+	    {
+	      xmax = xm - x1;
+	      ymax = m * xmax;
+	    }
+	}
+      else
+	{
+	  ymax = ym - y1;
+	  xmax = ymax / m;
+	}
+    
+      rmax = sqrt ((double)(SQR (xmax) + SQR (ymax)));
+    
+      t = ((ym - y1) < (xm - x1)) ? (ym - y1) : (xm - x1);
+    
+      rmax = (rmax - t) / 100.0 * (100 - circle) + t;
+    
+      if (pcvals.inverse)
+	r = rmax * (double)((wy - y1) / (double)(ydiff));
+      else
+	r = rmax * (double)((y2 - wy) / (double)(ydiff));
+    
+      xx = r * sin (phi2);
+      yy = r * cos (phi2);
+    
+      if (phi >= 1.5 * G_PI)
+	{
+	  x_calc = (double)xm - xx;
+	  y_calc = (double)ym - yy;
+	}
+      else
+	if (phi >= G_PI)
 	  {
-	    x_calc = (double)xm + xx;
+	    x_calc = (double)xm - xx;
 	    y_calc = (double)ym + yy;
 	  }
 	else
-	  {
-	    x_calc = (double)xm + xx;
-	    y_calc = (double)ym - yy;
-	  }
+	  if (phi >= 0.5 * G_PI)
+	    {
+	      x_calc = (double)xm + xx;
+	      y_calc = (double)ym + yy;
+	    }
+	  else
+	    {
+	      x_calc = (double)xm + xx;
+	      y_calc = (double)ym - yy;
+	    }
     
-    xi = (int)(x_calc + 0.5);
-    yi = (int)(y_calc + 0.5);
+      xi = (int)(x_calc + 0.5);
+      yi = (int)(y_calc + 0.5);
   
-    if (WITHIN(0, xi, img_width - 1) && WITHIN(0, yi, img_height - 1)) {
-      *x = x_calc;
-      *y = y_calc;
+      if (WITHIN(0, xi, img_width - 1) && WITHIN(0, yi, img_height - 1)) {
+	*x = x_calc;
+	*y = y_calc;
       
-      inside = TRUE;
-    } else {
-      inside = FALSE;
+	inside = TRUE;
+      }
+      else
+	{
+	  inside = FALSE;
+	}
     }
-  }
   
   return inside;
 }
- /* calc_undistorted_coords */
 
-/*****/
 static guchar
-bilinear(double x, double y, guchar *values)
+bilinear (double  x,
+	  double  y,
+	  guchar *values)
 {
-        double m0, m1;
+  double m0, m1;
 
-        x = fmod(x, 1.0);
-        y = fmod(y, 1.0);
+  x = fmod(x, 1.0);
+  y = fmod(y, 1.0);
 
-        if (x < 0.0)
-                x += 1.0;
+  if (x < 0.0)
+    x += 1.0;
 
-        if (y < 0.0)
-                y += 1.0;
+  if (y < 0.0)
+    y += 1.0;
 
-        m0 = (double) values[0] + x * ((double) values[1] - values[0]);
-        m1 = (double) values[2] + x * ((double) values[3] - values[2]);
+  m0 = (double) values[0] + x * ((double) values[1] - values[0]);
+  m1 = (double) values[2] + x * ((double) values[3] - values[2]);
 
-        return (guchar) (m0 + y * (m1 - m0));
-} /* bilinear */
-
-/*****/
+  return (guchar) (m0 + y * (m1 - m0));
+}
 
 static pixel_fetcher_t *
-pixel_fetcher_new(GDrawable *drawable)
+pixel_fetcher_new (GDrawable *drawable)
 {
-	pixel_fetcher_t *pf;
+  pixel_fetcher_t *pf;
 
-	pf = g_malloc(sizeof(pixel_fetcher_t));
+  pf = g_malloc(sizeof(pixel_fetcher_t));
 
-	pf->col           = -1;
-	pf->row           = -1;
-	pf->img_width     = gimp_drawable_width(drawable->id);
-	pf->img_height    = gimp_drawable_height(drawable->id);
-	pf->img_bpp       = gimp_drawable_bpp(drawable->id);
-	pf->img_has_alpha = gimp_drawable_has_alpha(drawable->id);
-	pf->tile_width    = gimp_tile_width();
-	pf->tile_height   = gimp_tile_height();
-	pf->bg_color[0]   = 0;
-	pf->bg_color[1]   = 0;
-	pf->bg_color[2]   = 0;
-	pf->bg_color[3]   = 0;
+  pf->col           = -1;
+  pf->row           = -1;
+  pf->img_width     = gimp_drawable_width(drawable->id);
+  pf->img_height    = gimp_drawable_height(drawable->id);
+  pf->img_bpp       = gimp_drawable_bpp(drawable->id);
+  pf->img_has_alpha = gimp_drawable_has_alpha(drawable->id);
+  pf->tile_width    = gimp_tile_width();
+  pf->tile_height   = gimp_tile_height();
+  pf->bg_color[0]   = 0;
+  pf->bg_color[1]   = 0;
+  pf->bg_color[2]   = 0;
+  pf->bg_color[3]   = 0;
 
-	pf->drawable    = drawable;
-	pf->tile        = NULL;
+  pf->drawable    = drawable;
+  pf->tile        = NULL;
 
-	return pf;
-} /* pixel_fetcher_new */
-
-
-/*****/
+  return pf;
+}
 
 static void
-pixel_fetcher_set_bg_color(pixel_fetcher_t *pf, guchar r, guchar g, guchar b, guchar a)
+pixel_fetcher_set_bg_color (pixel_fetcher_t *pf,
+			    guchar           r,
+			    guchar           g,
+			    guchar           b,
+			    guchar           a)
 {
-	pf->bg_color[0] = r;
-	pf->bg_color[1] = g;
-	pf->bg_color[2] = b;
+  pf->bg_color[0] = r;
+  pf->bg_color[1] = g;
+  pf->bg_color[2] = b;
 
-	if (pf->img_has_alpha)
-		pf->bg_color[pf->img_bpp - 1] = a;
-} /* pixel_fetcher_set_bg_color */
-
-
-/*****/
+  if (pf->img_has_alpha)
+    pf->bg_color[pf->img_bpp - 1] = a;
+}
 
 static void
-pixel_fetcher_get_pixel(pixel_fetcher_t *pf, int x, int y, guchar *pixel)
+pixel_fetcher_get_pixel (pixel_fetcher_t *pf,
+			 int              x,
+			 int              y,
+			 guchar          *pixel)
 {
-	gint    col, row;
-	gint    coloff, rowoff;
-	guchar *p;
-	int     i;
+  gint    col, row;
+  gint    coloff, rowoff;
+  guchar *p;
+  int     i;
 
-	if ((x < sel_x1) || (x >= sel_x2) ||
-	    (y < sel_y1) || (y >= sel_y2)) {
-		for (i = 0; i < pf->img_bpp; i++)
-			pixel[i] = pf->bg_color[i];
+  if ((x < sel_x1) || (x >= sel_x2) ||
+      (y < sel_y1) || (y >= sel_y2))
+    {
+      for (i = 0; i < pf->img_bpp; i++)
+	pixel[i] = pf->bg_color[i];
 
-		return;
-	} /* if */
+      return;
+    }
 
-	col    = x / pf->tile_width;
-	coloff = x % pf->tile_width;
-	row    = y / pf->tile_height;
-	rowoff = y % pf->tile_height;
+  col    = x / pf->tile_width;
+  coloff = x % pf->tile_width;
+  row    = y / pf->tile_height;
+  rowoff = y % pf->tile_height;
 
-	if ((col != pf->col) ||
-	    (row != pf->row) ||
-	    (pf->tile == NULL)) {
-		if (pf->tile != NULL)
-			gimp_tile_unref(pf->tile, FALSE);
+  if ((col != pf->col) ||
+      (row != pf->row) ||
+      (pf->tile == NULL))
+    {
+      if (pf->tile != NULL)
+	gimp_tile_unref(pf->tile, FALSE);
 
-		pf->tile = gimp_drawable_get_tile(pf->drawable, FALSE, row, col);
-		gimp_tile_ref(pf->tile);
+      pf->tile = gimp_drawable_get_tile(pf->drawable, FALSE, row, col);
+      gimp_tile_ref(pf->tile);
 
-		pf->col = col;
-		pf->row = row;
-	} /* if */
+      pf->col = col;
+      pf->row = row;
+    }
 
-	p = pf->tile->data + pf->img_bpp * (pf->tile->ewidth * rowoff + coloff);
+  p = pf->tile->data + pf->img_bpp * (pf->tile->ewidth * rowoff + coloff);
 
-	for (i = pf->img_bpp; i; i--)
-		*pixel++ = *p++;
-} /* pixel_fetcher_get_pixel */
-
-
-/*****/
+  for (i = pf->img_bpp; i; i--)
+    *pixel++ = *p++;
+}
 
 static void
-pixel_fetcher_destroy(pixel_fetcher_t *pf)
+pixel_fetcher_destroy (pixel_fetcher_t *pf)
 {
-	if (pf->tile != NULL)
-		gimp_tile_unref(pf->tile, FALSE);
+  if (pf->tile != NULL)
+    gimp_tile_unref (pf->tile, FALSE);
 
-	g_free(pf);
-} /* pixel_fetcher_destroy */
-
-
-/*****/
+  g_free (pf);
+}
 
 static void
-build_preview_source_image(void)
+build_preview_source_image (void)
 {
-	double           left, right, bottom, top;
-	double           px, py;
-	double           dx, dy;
-	int              x, y;
-	guchar          *p;
-	guchar           pixel[4];
-	pixel_fetcher_t *pf;
+  double           left, right, bottom, top;
+  double           px, py;
+  double           dx, dy;
+  int              x, y;
+  guchar          *p;
+  guchar           pixel[4];
+  pixel_fetcher_t *pf;
 
-	pcint.check_row_0 = g_malloc(preview_width * sizeof(guchar));
-	pcint.check_row_1 = g_malloc(preview_width * sizeof(guchar));
-	pcint.image       = g_malloc(preview_width * preview_height * 4 * sizeof(guchar));
-	pcint.dimage      = g_malloc(preview_width * preview_height * 3 * sizeof(guchar));
+  pcint.check_row_0 = g_malloc(preview_width * sizeof(guchar));
+  pcint.check_row_1 = g_malloc(preview_width * sizeof(guchar));
+  pcint.image       = g_malloc(preview_width * preview_height * 4 * sizeof(guchar));
+  pcint.dimage      = g_malloc(preview_width * preview_height * 3 * sizeof(guchar));
 
-	left   = sel_x1;
-	right  = sel_x2 - 1;
-	bottom = sel_y2 - 1;
-	top    = sel_y1;
+  left   = sel_x1;
+  right  = sel_x2 - 1;
+  bottom = sel_y2 - 1;
+  top    = sel_y1;
 
-	dx = (right - left) / (preview_width - 1);
-	dy = (bottom - top) / (preview_height - 1);
+  dx = (right - left) / (preview_width - 1);
+  dy = (bottom - top) / (preview_height - 1);
 
-	py = top;
+  py = top;
 
-	pf = pixel_fetcher_new(drawable);
+  pf = pixel_fetcher_new(drawable);
 
-	p = pcint.image;
+  p = pcint.image;
 
-	for (y = 0; y < preview_height; y++) {
-		px = left;
+  for (y = 0; y < preview_height; y++)
+    {
+      px = left;
 
-		for (x = 0; x < preview_width; x++) {
-			/* Checks */
+      for (x = 0; x < preview_width; x++)
+	{
+	  /* Checks */
 
-			if ((x / CHECK_SIZE) & 1) {
-				pcint.check_row_0[x] = CHECK_DARK;
-				pcint.check_row_1[x] = CHECK_LIGHT;
-			} else {
-				pcint.check_row_0[x] = CHECK_LIGHT;
-				pcint.check_row_1[x] = CHECK_DARK;
-			} /* else */
+	  if ((x / CHECK_SIZE) & 1)
+	    {
+	      pcint.check_row_0[x] = CHECK_DARK;
+	      pcint.check_row_1[x] = CHECK_LIGHT;
+	    }
+	  else
+	    {
+	      pcint.check_row_0[x] = CHECK_LIGHT;
+	      pcint.check_row_1[x] = CHECK_DARK;
+	    }
 
-			/* Thumbnail image */
+	  /* Thumbnail image */
 
-			pixel_fetcher_get_pixel(pf, (int) px, (int) py, pixel);
+	  pixel_fetcher_get_pixel(pf, (int) px, (int) py, pixel);
 
-			if (img_bpp < 3) {
-				if (img_has_alpha)
-					pixel[3] = pixel[1];
-				else
-					pixel[3] = 255;
+	  if (img_bpp < 3)
+	    {
+	      if (img_has_alpha)
+		pixel[3] = pixel[1];
+	      else
+		pixel[3] = 255;
 
-				pixel[1] = pixel[0];
-				pixel[2] = pixel[0];
-			} else
-				if (!img_has_alpha)
-					pixel[3] = 255;
+	      pixel[1] = pixel[0];
+	      pixel[2] = pixel[0];
+	    }
+	  else if (!img_has_alpha)
+	    pixel[3] = 255;
 
-			*p++ = pixel[0];
-			*p++ = pixel[1];
-			*p++ = pixel[2];
-			*p++ = pixel[3];
+	  *p++ = pixel[0];
+	  *p++ = pixel[1];
+	  *p++ = pixel[2];
+	  *p++ = pixel[3];
 
-			px += dx;
-		} /* for */
+	  px += dx;
+	}
 
-		py += dy;
-	} /* for */
+      py += dy;
+    }
 
-	pixel_fetcher_destroy(pf);
-} /* build_preview_source_image */
-
-
-/*****/
+  pixel_fetcher_destroy(pf);
+}
 
 static gint
 polarize_dialog (void)
 {
-  GtkWidget  *dialog;
-  GtkWidget  *top_table;
-  GtkWidget  *frame;
-  GtkWidget  *table;
-  GtkWidget  *toggle;
-  GtkWidget  *hbox;
+  GtkWidget *dialog;
+  GtkWidget *top_table;
+  GtkWidget *frame;
+  GtkWidget *table;
+  GtkWidget *toggle;
+  GtkWidget *hbox;
+  GtkObject *adj;
   gint     argc;
   gchar  **argv;
   guchar  *color_cube;
@@ -942,15 +980,27 @@ polarize_dialog (void)
 
   /* Controls */
   table = gtk_table_new (2, 3, FALSE);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_attach (GTK_TABLE (top_table), table, 0, 3, 1, 2,
 		    GTK_EXPAND | GTK_FILL, 0, 0, 0);
   gtk_widget_show (table);
 
-  dialog_create_value (_("Circle Depth in Percent:"), GTK_TABLE (table),
-		       0, &pcvals.circle, 0, 100.0, 1.0);
-  dialog_create_value (_("Offset Angle:"), GTK_TABLE (table),
-		       1, &pcvals.angle, 0, 359, 1.0);
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			      _("Circle Depth in Percent:"), SCALE_WIDTH, 0,
+			      pcvals.circle, 0.0, 100.0, 1.0, 10.0, 2,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_scale_update),
+		      &pcvals.circle);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+			      _("Offset Angle:"), SCALE_WIDTH, 0,
+			      pcvals.angle, 0.0, 359.0, 1.0, 15.0, 2,
+			      NULL, NULL);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_scale_update),
+		      &pcvals.angle);
 
   /* togglebuttons for backwards, top, polar->rectangular */
   hbox = gtk_hbox_new (TRUE, 4);
@@ -960,7 +1010,7 @@ polarize_dialog (void)
   toggle = gtk_check_button_new_with_label (_("Map Backwards"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pcvals.backwards);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled", 
-		      (GtkSignalFunc) polar_toggle_callback,
+		      GTK_SIGNAL_FUNC (polar_toggle_callback),
 		      &pcvals.backwards);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
   gtk_widget_show (toggle);
@@ -1107,103 +1157,12 @@ dialog_update_preview (void)
 }
 
 static void
-dialog_create_value (char     *title,
-		     GtkTable *table,
-		     int       row,
-		     gdouble  *value,
-		     double    left,
-		     double    right,
-		     double    step)
-{
-  GtkWidget *label;
-  GtkWidget *scale;
-  GtkWidget *entry;
-  GtkObject *scale_data;
-  gchar      buf[256];
-
-  label = gtk_label_new (title);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (table, label, 0, 1, row, row + 1, GTK_FILL, GTK_FILL, 4, 0);
-  gtk_widget_show (label);
-
-  scale_data = gtk_adjustment_new (*value, left, right,
-				   step,
-				   step,
-				   0.0);
-
-  gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
-		      (GtkSignalFunc) dialog_scale_update,
-		      value);
-
-  scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
-  gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
-  gtk_table_attach (table, scale, 1, 2, row, row + 1,
-		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
-  gtk_scale_set_digits (GTK_SCALE (scale), 3);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_CONTINUOUS);
-  gtk_widget_show (scale);
-
-  entry = gtk_entry_new ();
-  gtk_object_set_user_data (GTK_OBJECT (entry), scale_data);
-  gtk_object_set_user_data (scale_data, entry);
-  gtk_widget_set_usize (entry, ENTRY_WIDTH, 0);
-  g_snprintf(buf, sizeof (buf), "%0.3f", *value);
-  gtk_entry_set_text (GTK_ENTRY (entry), buf);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-		      (GtkSignalFunc) dialog_entry_update,
-		      value);
-  gtk_table_attach (GTK_TABLE (table), entry, 2, 3, row, row + 1,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (entry);
-}
-
-static void
 dialog_scale_update (GtkAdjustment *adjustment,
 		     gdouble       *value)
 {
-  GtkWidget *entry;
-  gchar      buf[256];
+  gimp_double_adjustment_update (adjustment, value);
 
-  if (*value != adjustment->value)
-    {
-      *value = adjustment->value;
-
-      entry = gtk_object_get_user_data(GTK_OBJECT(adjustment));
-      g_snprintf(buf, sizeof (buf), "%0.3f", *value);
-
-      gtk_signal_handler_block_by_data (GTK_OBJECT (entry), value);
-      gtk_entry_set_text (GTK_ENTRY (entry), buf);
-      gtk_signal_handler_unblock_by_data (GTK_OBJECT (entry), value);
-
-      dialog_update_preview ();
-    }
-}
-
-static void
-dialog_entry_update (GtkWidget *widget,
-		     gdouble   *value)
-{
-  GtkAdjustment *adjustment;
-  gdouble        new_value;
-
-  new_value = atof (gtk_entry_get_text (GTK_ENTRY (widget)));
-
-  if (*value != new_value)
-    {
-      adjustment = gtk_object_get_user_data (GTK_OBJECT (widget));
-
-      if ((new_value >= adjustment->lower) &&
-	  (new_value <= adjustment->upper))
-	{
-	  *value            = new_value;
-	  adjustment->value = new_value;
-
-	  gtk_signal_emit_by_name (GTK_OBJECT (adjustment), "value_changed");
-
-	  dialog_update_preview ();
-	}
-    }
+  dialog_update_preview ();
 }
 
 static void
@@ -1219,14 +1178,7 @@ static void
 polar_toggle_callback (GtkWidget *widget,
 		       gpointer   data)
 {
-  gint *toggle_val;
-
-  toggle_val = (gint *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
+  gimp_toggle_button_update (widget, data);
 
   dialog_update_preview ();
 }

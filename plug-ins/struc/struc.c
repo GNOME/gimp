@@ -31,51 +31,67 @@
  * 
  */ 
 
+#include "config.h"
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "struc.h"
-#include "gtk/gtk.h"
-#include "config.h"
-#include "libgimp/gimp.h"
+
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
 
+#include "struc.h"
+
 /* --- Typedefs --- */
-typedef struct {
+enum
+{
+  TOP_RIGHT,
+  TOP_LEFT,
+  BOTTOM_LEFT,
+  BOTTOM_RIGHT
+};
+
+typedef struct
+{
   gint direction;
   gint depth;
 } StrucValues;
-typedef struct {
-    gint run;
+
+typedef struct
+{
+  gint run;
 } StructInterface;
 
 /* --- Declare local functions --- */
 static void query (void);
-static void run (char      *name,
-	         int        nparams,
-       	         GParam    *param,
-		 int       *nreturn_vals,
-	         GParam   **return_vals);
-static gint struc_dialog (void);
-static void struc_close_callback (GtkWidget *widget, gpointer data);
-static void struc_ok_callback (GtkWidget *widget, gpointer data);
-static void struc_scale_update (GtkAdjustment *adjustment, gpointer data);
-static void struc_toggle_update (GtkWidget *widget, gint32 value);
-static void strucpi (GDrawable *drawable);
+static void run   (gchar     *name,
+		   gint       nparams,
+		   GParam    *param,
+		   gint      *nreturn_vals,
+		   GParam   **return_vals);
+
+static gint struc_dialog      (void);
+static void struc_ok_callback (GtkWidget *widget,
+			       gpointer   data);
+
+static void strucpi           (GDrawable *drawable);
 
 /* --- Variables --- */
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 static StrucValues svals =
 {
-    0,     /* direction*/
-    4      /* depth */
+  0,     /* direction*/
+  4      /* depth */
 };
 static StructInterface s_int =
 {
@@ -87,7 +103,8 @@ static StructInterface s_int =
 
 MAIN ()
 
-static void query () 
+static void
+query (void)
 {
   static GParamDef args[] =
   {
@@ -116,11 +133,12 @@ static void query ()
 			  args, return_vals);
 }
 
-static void run (gchar   *name,
-                 gint     nparams,
-                 GParam  *param,
-                 gint    *nreturn_vals,
-                 GParam **return_vals)
+static void
+run (gchar   *name,
+     gint     nparams,
+     GParam  *param,
+     gint    *nreturn_vals,
+     GParam **return_vals)
 {
   static GParam values[1];
   GDrawable *drawable;
@@ -135,11 +153,14 @@ static void run (gchar   *name,
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = status;
   
-  if (run_mode == RUN_INTERACTIVE) {
-    INIT_I18N_UI();
-  } else {
-    INIT_I18N();
-  }
+  if (run_mode == RUN_INTERACTIVE)
+    {
+      INIT_I18N_UI();
+    }
+  else
+    {
+      INIT_I18N();
+    }
 
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
@@ -210,163 +231,99 @@ static void run (gchar   *name,
   gimp_drawable_detach (drawable);
 }
 
-static gint struc_dialog(void)
+static gint
+struc_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *hbbox;
-  GtkWidget *oframe, *iframe;
-  GtkWidget *abox, *bbox, *cbox;
-  GtkWidget *button, *label;
-  GtkWidget *scale;
-  GtkObject *adjustment;
+  GtkWidget *vbox;
+  GtkWidget *frame;
+  GtkWidget *table;
+  GtkObject *adj;
   gchar	**argv;	
-  gint  argc;
+  gint    argc;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup("struc");
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
+  argv[0] = g_strdup ("struc");
 
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), _("Struc"));
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
-  gtk_container_border_width (GTK_CONTAINER (dlg), 0);
-  gtk_signal_connect (GTK_OBJECT(dlg), "destroy",
-		     (GtkSignalFunc) struc_close_callback,
-		     NULL);
-  /*  Action area  */
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
- 
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) struc_ok_callback,
-		      dlg);
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
+  dlg = gimp_dialog_new (_("Apply Canvas"), "struc",
+			 gimp_plugin_help_func, "filters/struc.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
 
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+			 _("OK"), struc_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
+  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_main_quit),
+		      NULL);
 
   /* Parameter settings */
-  abox = gtk_vbox_new (FALSE, 5); 
-  gtk_container_border_width (GTK_CONTAINER (abox), 5);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
-		      abox, FALSE, FALSE, 0);
+  frame = gtk_frame_new (_("Parameter Settings"));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
 
-  oframe = gtk_frame_new ( _("Filter options"));
-  gtk_frame_set_shadow_type (GTK_FRAME (oframe), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start (GTK_BOX (abox),
-		     oframe, TRUE, TRUE, 0);
-  
-  bbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (bbox), 5);
-  gtk_container_add (GTK_CONTAINER (oframe), bbox);
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
-  /* Radio buttons */
-  iframe = gtk_frame_new ( _("Direction"));
-  gtk_frame_set_shadow_type (GTK_FRAME (iframe), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start (GTK_BOX (bbox),
-		     iframe, FALSE, FALSE, 0);
+  frame =
+    gimp_radio_group_new2 (TRUE, _("Direction"),
+			   gimp_radio_button_update,
+			   &svals.direction, (gpointer) svals.direction,
 
-  cbox= gtk_vbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (cbox), 5);
-  gtk_container_add (GTK_CONTAINER (iframe), cbox);
-  
-  {
-    int   i;
-    char * name[4]= { N_("Top-right"), N_("Top-left"), N_("Bottom-left"), N_("Bottom-right")};
+			   _("Top-Right"),    (gpointer) TOP_RIGHT, NULL,
+			   _("Top-Left"),     (gpointer) TOP_LEFT, NULL,
+			   _("Bottom-Left"),  (gpointer) BOTTOM_LEFT, NULL,
+			   _("Bottom-Right"), (gpointer) BOTTOM_RIGHT, NULL,
 
-    button = NULL;
-    for (i=0; i < 4; i++)
-      {
-	button = gtk_radio_button_new_with_label (
-           (button==NULL) ? NULL :
-	      gtk_radio_button_group (GTK_RADIO_BUTTON (button)), gettext(name[i]));
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), 
-				    (svals.direction==i));
+			   NULL);
 
-	gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			    (GtkSignalFunc) struc_toggle_update,
-			    (gpointer) i);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-	gtk_box_pack_start (GTK_BOX (cbox), button, FALSE, FALSE, 0);
-	gtk_widget_show (button);
-      }
-  }
+  table = gtk_table_new (1, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
-  gtk_widget_show(cbox);
-  gtk_widget_show(iframe);
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+			      _("Depth:"), 100, 0,
+			      svals.depth, 1, 50, 1, 5, 0,
+			      NULL, NULL);
+  gtk_signal_connect (adj, "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &svals.depth);
 
-  /* Horizontal scale */
-  label=gtk_label_new ( _("Depth"));
-  gtk_misc_set_alignment (GTK_MISC(label), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX(bbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  gtk_widget_show (dlg);
 
-  adjustment = gtk_adjustment_new (svals.depth, 1, 50, 1, 1, 1);
-  gtk_signal_connect (adjustment, "value_changed",
-		     (GtkSignalFunc) struc_scale_update,
-		     &(svals.depth));
-  scale= gtk_hscale_new (GTK_ADJUSTMENT (adjustment));
-  gtk_widget_set_usize (GTK_WIDGET (scale), 150, 30);
-  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
-  gtk_scale_set_digits (GTK_SCALE (scale), 0);
-  gtk_scale_set_draw_value (GTK_SCALE (scale), TRUE);
-  gtk_box_pack_start (GTK_BOX (bbox), scale, FALSE, FALSE,0);
-  gtk_widget_show (scale );
-
-  gtk_widget_show(bbox);
-
-  gtk_widget_show(oframe);
-  gtk_widget_show(abox);
-  gtk_widget_show(dlg);
-
-  gtk_main();  
-  gdk_flush();
+  gtk_main ();
+  gdk_flush ();
 
   return s_int.run;
 }
 
-/* Interface functions */
-static void struc_close_callback (GtkWidget *widget, gpointer data)
-{
-  gtk_main_quit ();
-}
-
-static void struc_ok_callback (GtkWidget *widget, gpointer data)
+static void
+struc_ok_callback (GtkWidget *widget,
+		   gpointer   data)
 {
   s_int.run = TRUE;
+
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-static void struc_scale_update (GtkAdjustment *adjustment, gpointer data)
-{
-  gint *dptr = (gint*) data;
-  *dptr = (gint) adjustment->value;
-}
-
-static void struc_toggle_update (GtkWidget *widget, gint32 value)
-{
-   if (GTK_TOGGLE_BUTTON (widget)->active)
-     svals.direction = value;
-}
-
 /* Filter function */
-static void strucpi (GDrawable *drawable)
+static void
+strucpi (GDrawable *drawable)
 {
   GPixelRgn srcPR, destPR;
   gint width, height;
@@ -438,44 +395,45 @@ static void strucpi (GDrawable *drawable)
       gimp_pixel_rgn_get_row (&srcPR, cur_row, x1, row, (x2-x1));
       d = dest;
       rcol = 0;
-      switch (bytes) {
-      case 1:  /* Grayscale */
-      case 2:  /* Grayscale alpha */
-	for (col = 0; col < (x2 - x1) * bytes; col+=bytes)
-	  {
-	    varde = cur_row[col] + mult*sdata[rcol*xm+rrow*ym+offs];
-	    if (varde > 255 ) varde = 255;
-	    if (varde < 0) varde = 0;
-	    *d++ = (guchar)varde;
-	    if (bytes == 2) 
-	      *d++ = cur_row[col+1];
-	    rcol++;
-	    if (rcol == 128) rcol = 0;
-	  }
-	break;
-      case 3:  /* RGB */
-      case 4:  /* RGB alpha */
-	for (col = 0; col < (x2 - x1) * bytes; col+=bytes)
-	  {
-	    varde = cur_row[col] + mult*sdata[rcol*xm+rrow*ym+offs];
-	    if (varde > 255 ) varde = 255;
-	    if (varde < 0) varde = 0;
-	    *d++ = (guchar)varde;
-	    varde = cur_row[col+1] + mult*sdata[rcol*xm+rrow*ym+offs];
-	    if (varde > 255 ) varde = 255;
-	    if (varde < 0) varde = 0;
-	    *d++ = (guchar)varde;
-	    varde = cur_row[col+2] + mult*sdata[rcol*xm+rrow*ym+offs];
-	    if (varde > 255 ) varde = 255;
-	    if (varde < 0) varde = 0;
-	    *d++ = (guchar)varde;
-	    if (bytes == 4)
-	      *d++ = cur_row[col+3];
-	    rcol++;
-	    if (rcol == 128) rcol = 0;
-	  }
-	break;
-      }
+      switch (bytes)
+	{
+	case 1:  /* Grayscale */
+	case 2:  /* Grayscale alpha */
+	  for (col = 0; col < (x2 - x1) * bytes; col+=bytes)
+	    {
+	      varde = cur_row[col] + mult*sdata[rcol*xm+rrow*ym+offs];
+	      if (varde > 255 ) varde = 255;
+	      if (varde < 0) varde = 0;
+	      *d++ = (guchar)varde;
+	      if (bytes == 2) 
+		*d++ = cur_row[col+1];
+	      rcol++;
+	      if (rcol == 128) rcol = 0;
+	    }
+	  break;
+	case 3:  /* RGB */
+	case 4:  /* RGB alpha */
+	  for (col = 0; col < (x2 - x1) * bytes; col+=bytes)
+	    {
+	      varde = cur_row[col] + mult*sdata[rcol*xm+rrow*ym+offs];
+	      if (varde > 255 ) varde = 255;
+	      if (varde < 0) varde = 0;
+	      *d++ = (guchar)varde;
+	      varde = cur_row[col+1] + mult*sdata[rcol*xm+rrow*ym+offs];
+	      if (varde > 255 ) varde = 255;
+	      if (varde < 0) varde = 0;
+	      *d++ = (guchar)varde;
+	      varde = cur_row[col+2] + mult*sdata[rcol*xm+rrow*ym+offs];
+	      if (varde > 255 ) varde = 255;
+	      if (varde < 0) varde = 0;
+	      *d++ = (guchar)varde;
+	      if (bytes == 4)
+		*d++ = cur_row[col+3];
+	      rcol++;
+	      if (rcol == 128) rcol = 0;
+	    }
+	  break;
+	}
       /*  store the dest  */
       gimp_pixel_rgn_set_row (&destPR, dest, x1, row, (x2 - x1));
 

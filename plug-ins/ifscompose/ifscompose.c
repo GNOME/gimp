@@ -38,30 +38,36 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-#include "gtk/gtk.h"
-#include "libgimp/gimp.h"
-#include "libgimp/gimpui.h"
+
+#include <gtk/gtk.h>
+
+#include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
+
 #include "libgimp/stdplugins-intl.h"
+
 #include "ifscompose.h"
 
-#define SCALE_WIDTH     150
-#define ENTRY_WIDTH 60
-#define DESIGN_AREA_MAX_SIZE 256
+#define SCALE_WIDTH            150
+#define ENTRY_WIDTH             60
+#define DESIGN_AREA_MAX_SIZE   256
 
 #define PREVIEW_RENDER_CHUNK 10000
 
-#define UNDO_LEVELS 10
+#define UNDO_LEVELS             10
 
 #define IFSCOMPOSE_PARASITE "ifscompose-parasite"
-#define IFSCOMPOSE_DATA "plug_in_ifscompose"
+#define IFSCOMPOSE_DATA     "plug_in_ifscompose"
 
-typedef enum {
+typedef enum
+{
   OP_TRANSLATE,
   OP_ROTATE,			/* or scale */
   OP_STRETCH
 } DesignOp;
 
-typedef enum {
+typedef enum
+{
   VALUE_PAIR_INT,
   VALUE_PAIR_DOUBLE
 } ValuePairType;
@@ -74,7 +80,8 @@ typedef struct
 
   ValuePairType type;
 
-  union {
+  union
+  {
     gdouble *d;
     gint    *i;
   } data;
@@ -84,23 +91,23 @@ typedef struct
 
 typedef struct
 {
-  IfsComposeVals ifsvals;
-  AffElement **elements;
-  gint *element_selected;
-  gint current_element;
+  IfsComposeVals   ifsvals;
+  AffElement     **elements;
+  gint            *element_selected;
+  gint             current_element;
 } UndoItem;
 
 typedef struct
 {
-  IfsColor *color;
-  gchar *name;
+  IfsColor  *color;
+  gchar     *name;
   GtkWidget *hbox;
   GtkWidget *orig_preview;
   GtkWidget *preview;
   GtkWidget *dialog;
-  gint fixed_point;
+  gint       fixed_point;
 
-  gint in_change_callback;
+  gint       in_change_callback;
 } ColorMap;
 
 typedef struct
@@ -119,17 +126,17 @@ typedef struct
   GtkWidget *op_menu;
   GdkPixmap *pixmap;
 
-  DesignOp op;
-  gdouble op_x;
-  gdouble op_y;
-  gdouble op_xcenter;
-  gdouble op_ycenter;
-  gdouble op_center_x;
-  gdouble op_center_y;
-  guint button_state;
-  gint num_selected;
+  DesignOp   op;
+  gdouble    op_x;
+  gdouble    op_y;
+  gdouble    op_xcenter;
+  gdouble    op_ycenter;
+  gdouble    op_center_x;
+  gdouble    op_center_y;
+  guint      button_state;
+  gint       num_selected;
 
-  GdkGC *selected_gc;
+  GdkGC     *selected_gc;
 } IfsDesignArea;
 
 typedef struct
@@ -155,95 +162,99 @@ typedef struct
   GtkWidget *current_frame;
 
   GtkWidget *move_button;
-  gint move_handler;
+  gint       move_handler;
   GtkWidget *rotate_button;
-  gint rotate_handler;
+  gint       rotate_handler;
   GtkWidget *stretch_button;
-  gint stretch_handler;
+  gint       stretch_handler;
 
   GtkWidget *preview;
-  guchar *preview_data;
-  gint preview_iterations;
+  guchar    *preview_data;
+  gint       preview_iterations;
 
-  gint drawable_width,drawable_height;
+  gint       drawable_width;
+  gint       drawable_height;
 
-  AffElement *selected_orig;
-  gint current_element;
-  AffElementVals current_vals;
-  gint auto_preview;
+  AffElement     *selected_orig;
+  gint            current_element;
+  AffElementVals  current_vals;
+  gint            auto_preview;
 
-  gint in_update;		/* true if we're currently in
+  gint       in_update;		/* true if we're currently in
 				   update_values() - don't do anything
 				   on updates */
 } IfsDialog;
 
 typedef struct
 {
-  gint       run;
+  gint run;
 } IfsComposeInterface;
 
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (char      *name,
-			 int        nparams,
+static void      run    (gchar     *name,
+			 gint       nparams,
 			 GParam    *param,
-			 int       *nreturn_vals,
+			 gint      *nreturn_vals,
 			 GParam   **return_vals);
 
 /*  user interface functions  */
-static gint      ifs_compose_dialog     (GDrawable *drawable);
-static void      ifs_options_dialog      ();
-static GtkWidget *ifs_compose_trans_page ();
-static GtkWidget *ifs_compose_color_page ();
-static void design_op_menu_popup         (gint button, guint32 activate_time);
-static void design_op_menu_create        (GtkWidget *window);
-static void design_area_create(GtkWidget *window,gint design_width,
-			       gint design_height);
+static gint       ifs_compose_dialog     (GDrawable *drawable);
+static void       ifs_options_dialog     (void);
+static GtkWidget *ifs_compose_trans_page (void);
+static GtkWidget *ifs_compose_color_page (void);
+static void       design_op_menu_popup   (gint button, guint32 activate_time);
+static void       design_op_menu_create  (GtkWidget *window);
+static void       design_area_create     (GtkWidget *window, gint design_width,
+					  gint design_height);
 
 /* functions for drawing design window */
-static void update_values();
-static void set_current_element(gint index);
-static gint design_area_expose(GtkWidget *widget,GdkEventExpose *event);
-static gint design_area_button_press(GtkWidget *widget,
-				     GdkEventButton *event);
-static gint design_area_button_release(GtkWidget *widget,
-				       GdkEventButton *event);
-static void design_area_select_all_callback(GtkWidget *w, gpointer data);
-static gint design_area_configure(GtkWidget *widget,
-				  GdkEventConfigure *event);
-static gint design_area_motion(GtkWidget *widget, GdkEventMotion *event);
-static void design_area_redraw(void);
+static void update_values                   (void);
+static void set_current_element             (gint index);
+static gint design_area_expose              (GtkWidget *widget,
+					     GdkEventExpose *event);
+static gint design_area_button_press        (GtkWidget *widget,
+					     GdkEventButton *event);
+static gint design_area_button_release      (GtkWidget *widget,
+					     GdkEventButton *event);
+static void design_area_select_all_callback (GtkWidget *w, gpointer data);
+static gint design_area_configure           (GtkWidget *widget,
+					     GdkEventConfigure *event);
+static gint design_area_motion              (GtkWidget *widget,
+					     GdkEventMotion *event);
+static void design_area_redraw              (void);
 
 /* Undo ring functions */
-static void undo_begin(void);
-static void undo_update(gint element);
-static void undo_exchange(gint el);
-static void undo(void);
-static void redo(void);
+static void undo_begin    (void);
+static void undo_update   (gint element);
+static void undo_exchange (gint el);
+static void undo          (void);
+static void redo          (void);
 
-static void recompute_center(int save_undo);
-static void recompute_center_cb(GtkWidget *, gpointer);
+static void recompute_center    (int save_undo);
+static void recompute_center_cb (GtkWidget *, gpointer);
 
-static void ifs_compose(GDrawable *drawable);
+static void ifs_compose (GDrawable *drawable);
 
-static void color_map_set_preview_color(GtkWidget *preview,
-					IfsColor *color);
-static ColorMap *color_map_create(gchar *name,IfsColor *orig_color,
-				  IfsColor *data, gint fixed_point);
-static void color_map_clicked_callback(GtkWidget *widget,ColorMap *colormap);
-static void color_map_destroy_callback(GtkWidget *widget,ColorMap *colormap);
-static void color_map_color_changed_cb(GtkWidget *widget,
-				       ColorMap *color_map);
-static void color_map_update(ColorMap *color_map);
+static void color_map_set_preview_color (GtkWidget *preview,
+					 IfsColor *color);
+static ColorMap *color_map_create (gchar *name,IfsColor *orig_color,
+				   IfsColor *data, gint fixed_point);
+static void color_map_clicked_callback (GtkWidget *widget,ColorMap *colormap);
+static void color_map_destroy_callback (GtkWidget *widget,ColorMap *colormap);
+static void color_map_color_changed_cb (GtkWidget *widget,
+					ColorMap *color_map);
+static void color_map_update           (ColorMap *color_map);
 
 /* interface functions */
-static void simple_color_toggled(GtkWidget *widget,gpointer data);
-static void simple_color_set_sensitive();
-static void val_changed_update ();
-static ValuePair *value_pair_create (gpointer data, gdouble lower, gdouble upper,
-	      gboolean create_scale, ValuePairType type);
-static void value_pair_update(ValuePair *value_pair);
+static void simple_color_toggled (GtkWidget *widget,gpointer data);
+static void simple_color_set_sensitive (void);
+static void val_changed_update (void);
+static ValuePair *value_pair_create (gpointer data,
+				     gdouble lower, gdouble upper,
+				     gboolean create_scale, ValuePairType type);
+static void value_pair_update (ValuePair *value_pair);
 static void value_pair_entry_callback (GtkWidget   *w,
 				       ValuePair   *value_pair);
 static void value_pair_destroy_callback (GtkWidget   *widget,
@@ -254,45 +265,43 @@ static void value_pair_button_release (GtkWidget *widget,
 static void value_pair_scale_callback   (GtkAdjustment *adjustment,
 					 ValuePair *value_pair);
 
-static void auto_preview_callback (GtkWidget *widget, gpointer data);
-static void design_op_callback (GtkWidget *widget, gpointer data);
-static void design_op_update_callback (GtkWidget *widget, gpointer data);
+static void auto_preview_callback      (GtkWidget *widget, gpointer data);
+static void design_op_callback         (GtkWidget *widget, gpointer data);
+static void design_op_update_callback  (GtkWidget *widget, gpointer data);
 static void flip_check_button_callback (GtkWidget *widget, gpointer data);
-static gint preview_idle_render();
+static gint preview_idle_render        (void);
 
-static void ifs_options_close_callback ();
-static void ifs_compose_set_defaults ();
+static void ifs_compose_set_defaults      (void);
 static void ifs_compose_defaults_callback (GtkWidget *widget,
 					   gpointer   data);
-static void ifs_compose_new_callback (GtkWidget *widget,
-				      gpointer   data);
-static void ifs_compose_delete_callback (GtkWidget *widget,
-					 gpointer   data);
-static void ifs_compose_preview_callback (GtkWidget *widget,
-					  GtkWidget *preview);
+static void ifs_compose_new_callback      (GtkWidget *widget,
+					   gpointer   data);
+static void ifs_compose_delete_callback   (GtkWidget *widget,
+					   gpointer   data);
+static void ifs_compose_preview_callback  (GtkWidget *widget,
+					   GtkWidget *preview);
 
-static void ifs_compose_close_callback (GtkWidget *widget,
-					GtkWidget **destroyed_widget);
-static void ifs_compose_ok_callback (GtkWidget *widget,
-				     GtkWidget *window);
-
+static void ifs_compose_close_callback    (GtkWidget *widget,
+					   GtkWidget **destroyed_widget);
+static void ifs_compose_ok_callback       (GtkWidget *widget,
+					   GtkWidget *window);
 
 /*
  *  Some static variables
  */
 
-IfsDialog *ifsD = 0;
-IfsOptionsDialog *ifsOptD = 0;
-IfsDesignArea *ifsDesign = 0;
+IfsDialog        *ifsD = NULL;
+IfsOptionsDialog *ifsOptD = NULL;
+IfsDesignArea    *ifsDesign = NULL;
 
-static AffElement **elements = 0;
-static gint *element_selected = 0;
-static gint element_count = 0;
+static AffElement **elements = NULL;
+static gint        *element_selected = NULL;
+static gint         element_count = 0;
 
 static UndoItem undo_ring[UNDO_LEVELS];
-static gint undo_cur = -1;
-static gint undo_num = 0;
-static gint undo_start = 0;
+static gint     undo_cur = -1;
+static gint     undo_num = 0;
+static gint     undo_start = 0;
 
 /* num_elements = 0, signals not inited */
 static IfsComposeVals ifsvals =
@@ -307,8 +316,7 @@ static IfsComposeVals ifsvals =
   0.5,				/* center_y */
 };
 
-static
- IfsComposeInterface ifscint =
+static IfsComposeInterface ifscint =
 {
   FALSE,        /* run */
 };
@@ -325,7 +333,7 @@ GPlugInInfo PLUG_IN_INFO =
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args[] =
   {
@@ -361,10 +369,10 @@ query ()
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[1];
@@ -385,7 +393,7 @@ run (char    *name,
   INIT_I18N_UI(); 
 
   /* kill (getpid(), 19); */
-  
+
   /*  Get the active drawable  */
   active_drawable = gimp_drawable_get (param[2].data.d_drawable);
 
@@ -443,7 +451,8 @@ run (char    *name,
 
   /*  Render the fractal  */
   if ((status == STATUS_SUCCESS) &&
-      (gimp_drawable_is_rgb (active_drawable->id) || gimp_drawable_is_gray (active_drawable->id)))
+      (gimp_drawable_is_rgb (active_drawable->id) ||
+       gimp_drawable_is_gray (active_drawable->id)))
     {
       /*  set the tile cache size so that the operation works well  */
       gimp_tile_cache_ntiles (2 * (MAX (active_drawable->width, active_drawable->height) /
@@ -459,20 +468,20 @@ run (char    *name,
       /*  Store data for next invocation - both globally and
        *  as a parasite on this layer
        */
-     if (run_mode == RUN_INTERACTIVE)
-       {
-	 char *str = ifsvals_stringify (&ifsvals, elements);
-	 Parasite *parasite;
+      if (run_mode == RUN_INTERACTIVE)
+	{
+	  char *str = ifsvals_stringify (&ifsvals, elements);
+	  Parasite *parasite;
 
-	 gimp_set_data (IFSCOMPOSE_DATA, str, strlen(str)+1);
-	 parasite = parasite_new (IFSCOMPOSE_PARASITE,
-				  PARASITE_PERSISTENT | PARASITE_UNDOABLE,
-				  strlen(str)+1, str);
-	 gimp_drawable_parasite_attach (active_drawable->id, parasite);
-	 parasite_free (parasite);
+	  gimp_set_data (IFSCOMPOSE_DATA, str, strlen(str)+1);
+	  parasite = parasite_new (IFSCOMPOSE_PARASITE,
+				   PARASITE_PERSISTENT | PARASITE_UNDOABLE,
+				   strlen(str)+1, str);
+	  gimp_drawable_parasite_attach (active_drawable->id, parasite);
+	  parasite_free (parasite);
 
-	 g_free (str);
-       }
+	  g_free (str);
+	}
     }
   else if (status == STATUS_SUCCESS)
     {
@@ -485,119 +494,123 @@ run (char    *name,
 }
 
 static GtkWidget *
-ifs_compose_trans_page ()
+ifs_compose_trans_page (void)
 {
   GtkWidget *vbox;
   GtkWidget *table;
   GtkWidget *label;
 
-  vbox = gtk_vbox_new(FALSE, 0);
-  gtk_container_border_width(GTK_CONTAINER(vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
 
-  table = gtk_table_new(3, 6, FALSE);
-  gtk_table_set_row_spacings(GTK_TABLE(table),6);
-  gtk_container_border_width(GTK_CONTAINER(table), 0);
-  gtk_box_pack_start(GTK_BOX(vbox), table, TRUE, TRUE, 0);
-  gtk_widget_show(table);
+  table = gtk_table_new (3, 6, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 6);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 3, 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 1, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
   /* X */
 
-  label = gtk_label_new (_("X"));
-  gtk_misc_set_alignment(GTK_MISC(label), 0.0, 1.0);
-  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1, GTK_FILL, GTK_FILL,
-		   4, 0);
-  gtk_widget_show(label);
+  label = gtk_label_new (_("X:"));
+  gtk_misc_set_alignment(GTK_MISC(label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
 
-  ifsD->x_pair = value_pair_create(&ifsD->current_vals.x, 0.0, 1.0, FALSE,
-				   VALUE_PAIR_DOUBLE);
-  gtk_table_attach(GTK_TABLE(table), ifsD->x_pair->entry,1,2,0,1,
-		   GTK_FILL,GTK_FILL,4,0);
+  ifsD->x_pair = value_pair_create (&ifsD->current_vals.x, 0.0, 1.0, FALSE,
+				    VALUE_PAIR_DOUBLE);
+  gtk_table_attach (GTK_TABLE(table), ifsD->x_pair->entry, 1, 2, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->x_pair->entry);
 
   /* Y */
 
-  label = gtk_label_new (_("Y"));
-  gtk_misc_set_alignment(GTK_MISC(label), 0.0, 1.0);
-  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2,
-		   GTK_FILL, GTK_FILL, 4, 0);
-  gtk_widget_show(label);
+  label = gtk_label_new (_("Y:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
 
-  ifsD->y_pair = value_pair_create(&ifsD->current_vals.y, 0.0, 1.0, FALSE,
-				   VALUE_PAIR_DOUBLE);
-  gtk_table_attach(GTK_TABLE(table), ifsD->y_pair->entry,1,2,1,2,
-		   GTK_FILL,GTK_FILL,4,0);
+  ifsD->y_pair = value_pair_create (&ifsD->current_vals.y, 0.0, 1.0, FALSE,
+				    VALUE_PAIR_DOUBLE);
+  gtk_table_attach (GTK_TABLE(table), ifsD->y_pair->entry, 1, 2, 1, 2,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->y_pair->entry);
 
   /* Scale */
 
-  label = gtk_label_new(_("Scale"));
-  gtk_misc_set_alignment(GTK_MISC(label), 0.0, 1.0);
-  gtk_table_attach(GTK_TABLE(table), label, 2, 3, 0, 1,
-		   GTK_FILL, GTK_FILL, 4, 0);
-  gtk_widget_show(label);
+  label = gtk_label_new (_("Scale:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
 
-  ifsD->scale_pair = value_pair_create(&ifsD->current_vals.scale, 0.0,1.0, 
-				       FALSE, VALUE_PAIR_DOUBLE);
-  gtk_table_attach(GTK_TABLE(table), ifsD->scale_pair->entry,3,4,0,1,
-		   GTK_FILL,GTK_FILL,4,0);
+  ifsD->scale_pair = value_pair_create (&ifsD->current_vals.scale, 0.0, 1.0, 
+				        FALSE, VALUE_PAIR_DOUBLE);
+  gtk_table_attach (GTK_TABLE (table), ifsD->scale_pair->entry, 3, 4, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->scale_pair->entry);
 
   /* Angle */
 
-  label = gtk_label_new(_("Angle"));
-  gtk_misc_set_alignment(GTK_MISC(label), 0.0, 1.0);
-  gtk_table_attach(GTK_TABLE(table), label, 2, 3, 1, 2,
-		   GTK_FILL, GTK_FILL, 4, 0);
-  gtk_widget_show(label);
+  label = gtk_label_new (_("Angle:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 1, 2,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
 
-  ifsD->angle_pair = value_pair_create(&ifsD->current_vals.theta,-180,180,
-				       FALSE, VALUE_PAIR_DOUBLE);
-  gtk_table_attach(GTK_TABLE(table), ifsD->angle_pair->entry,3,4,1,2,
-		   GTK_FILL,GTK_FILL,4,0);
+  ifsD->angle_pair = value_pair_create (&ifsD->current_vals.theta, -180, 180,
+					FALSE, VALUE_PAIR_DOUBLE);
+  gtk_table_attach (GTK_TABLE (table), ifsD->angle_pair->entry, 3, 4, 1, 2,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->angle_pair->entry);
 
   /* Asym */
 
-  label = gtk_label_new(_("Asymmetry"));
-  gtk_misc_set_alignment(GTK_MISC(label), 0.0, 1.0);
-  gtk_table_attach(GTK_TABLE(table), label, 4, 5, 0, 1,
-		   GTK_FILL, GTK_FILL, 4, 0);
-  gtk_widget_show(label);
+  label = gtk_label_new (_("Asymmetry:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 4, 5, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
 
-  ifsD->asym_pair = value_pair_create(&ifsD->current_vals.asym,0.10,10.0,
-				      FALSE, VALUE_PAIR_DOUBLE);
-  gtk_table_attach(GTK_TABLE(table), ifsD->asym_pair->entry,5,6,0,1,
-		   GTK_FILL,GTK_FILL,4,0);
+  ifsD->asym_pair = value_pair_create (&ifsD->current_vals.asym, 0.10, 10.0,
+				       FALSE, VALUE_PAIR_DOUBLE);
+  gtk_table_attach (GTK_TABLE (table), ifsD->asym_pair->entry, 5, 6, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->asym_pair->entry);
 
   /* Shear */
 
-  label = gtk_label_new(_("Shear"));
-  gtk_misc_set_alignment(GTK_MISC(label), 0.0, 1.0);
-  gtk_table_attach(GTK_TABLE(table), label, 4, 5, 1, 2,
-		   GTK_FILL, GTK_FILL, 4, 0);
-  gtk_widget_show(label);
+  label = gtk_label_new (_("Shear:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 4, 5, 1, 2,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
 
-  ifsD->shear_pair = value_pair_create(&ifsD->current_vals.shear,-10.0,10.0,
-				       FALSE, VALUE_PAIR_DOUBLE);
-  gtk_table_attach(GTK_TABLE(table), ifsD->shear_pair->entry,5,6,1,2,
-		   GTK_FILL,GTK_FILL,4,0);
+  ifsD->shear_pair = value_pair_create (&ifsD->current_vals.shear, -10.0, 10.0,
+					FALSE, VALUE_PAIR_DOUBLE);
+  gtk_table_attach (GTK_TABLE (table), ifsD->shear_pair->entry, 5, 6, 1, 2,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->shear_pair->entry);
 
   /* Flip */
 
   ifsD->flip_check_button = gtk_check_button_new_with_label (_("Flip"));
-  gtk_table_attach(GTK_TABLE(table), ifsD->flip_check_button,0,1,2,3,
-		   GTK_FILL,GTK_FILL,4,0);
-  gtk_signal_connect(GTK_OBJECT(ifsD->flip_check_button), "toggled",
-		     (GtkSignalFunc)flip_check_button_callback,NULL);
-  gtk_widget_show(ifsD->flip_check_button);
+  gtk_table_attach (GTK_TABLE (table), ifsD->flip_check_button, 0, 6, 2, 3,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_signal_connect (GTK_OBJECT (ifsD->flip_check_button), "toggled",
+		      GTK_SIGNAL_FUNC (flip_check_button_callback),
+		      NULL);
+  gtk_widget_show (ifsD->flip_check_button);
 
   return vbox;
 }
 
 static GtkWidget *
-ifs_compose_color_page ()
+ifs_compose_color_page (void)
 {
   GtkWidget *vbox;
   GtkWidget *table;
@@ -605,107 +618,108 @@ ifs_compose_color_page ()
   GSList *group = NULL;
   IfsColor color;
 
-  vbox = gtk_vbox_new(FALSE, 0);
-  gtk_container_border_width(GTK_CONTAINER(vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
 
-  table = gtk_table_new(3, 5, FALSE);
-  gtk_table_set_row_spacings(GTK_TABLE(table),6);
-  gtk_container_border_width(GTK_CONTAINER(table), 0);
-  gtk_box_pack_start(GTK_BOX(vbox), table, TRUE, TRUE, 0);
-  gtk_widget_show(table);
+  table = gtk_table_new (3, 5, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
   /* Simple color control section */
 
   ifsD->simple_button = gtk_radio_button_new_with_label (group, _("Simple"));
-  gtk_table_attach(GTK_TABLE(table), ifsD->simple_button, 0, 1, 0, 2,
-		   GTK_FILL, GTK_FILL, 4, 0);
+  gtk_table_attach (GTK_TABLE (table), ifsD->simple_button, 0, 1, 0, 2,
+		    GTK_FILL, GTK_FILL, 0, 0);
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (ifsD->simple_button));
   gtk_signal_connect (GTK_OBJECT (ifsD->simple_button), "toggled",
-		      (GtkSignalFunc) simple_color_toggled, NULL);
+		      GTK_SIGNAL_FUNC (simple_color_toggled),
+		      NULL);
   gtk_widget_show (ifsD->simple_button);
 
   color.vals[0] = 1.0;
   color.vals[1] = 0.0;
   color.vals[2] = 0.0;
-  ifsD->target_cmap = color_map_create(_("IfsCompose: Target"),NULL,
-				       &ifsD->current_vals.target_color,TRUE);
-  gtk_table_attach(GTK_TABLE(table), ifsD->target_cmap->hbox, 1, 2, 0, 2,
-		   GTK_FILL, 0, 4, 0);
-  gtk_widget_show(ifsD->target_cmap->hbox);
+  ifsD->target_cmap = color_map_create (_("IfsCompose: Target"), NULL,
+					&ifsD->current_vals.target_color, TRUE);
+  gtk_table_attach (GTK_TABLE (table), ifsD->target_cmap->hbox, 1, 2, 0, 2,
+		    GTK_FILL, 0, 0, 0);
+  gtk_widget_show (ifsD->target_cmap->hbox);
 
-  label = gtk_label_new(_("Scale hue by:"));
-  gtk_misc_set_alignment(GTK_MISC(label),1.0,0.5);
-  gtk_table_attach(GTK_TABLE(table), label, 2, 3, 0, 1,
-		   GTK_FILL, GTK_FILL, 4, 0);
-  gtk_widget_show(label);
+  label = gtk_label_new (_("Scale Hue by:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
 
-  ifsD->hue_scale_pair = value_pair_create(&ifsD->current_vals.hue_scale,
-				       0.0,1.0, TRUE, VALUE_PAIR_DOUBLE);
-  gtk_table_attach(GTK_TABLE(table), ifsD->hue_scale_pair->scale, 3, 4, 0, 1,
-		   GTK_FILL, GTK_FILL, 4, 0);
+  ifsD->hue_scale_pair = value_pair_create (&ifsD->current_vals.hue_scale,
+					    0.0, 1.0, TRUE, VALUE_PAIR_DOUBLE);
+  gtk_table_attach (GTK_TABLE (table), ifsD->hue_scale_pair->scale, 3, 4, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->hue_scale_pair->scale);
-  gtk_table_attach(GTK_TABLE(table), ifsD->hue_scale_pair->entry, 4, 5, 0, 1,
-		   GTK_FILL, GTK_FILL, 4, 0);
+  gtk_table_attach (GTK_TABLE (table), ifsD->hue_scale_pair->entry, 4, 5, 0, 1,
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->hue_scale_pair->entry);
 
-  label = gtk_label_new(_("Scale value by:"));
-  gtk_misc_set_alignment(GTK_MISC(label),1.0,0.5);
-  gtk_table_attach(GTK_TABLE(table), label, 2, 3, 1, 2,
-		   GTK_FILL, GTK_FILL, 4, 0);
-  gtk_widget_show(label);
+  label = gtk_label_new (_("Scale Value by:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 1, 2,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
 
-  ifsD->value_scale_pair = value_pair_create(&ifsD->current_vals.value_scale,
-				       0.0,1.0, TRUE, VALUE_PAIR_DOUBLE);
-  gtk_table_attach(GTK_TABLE(table), ifsD->value_scale_pair->scale,
-		   3, 4, 1, 2, GTK_FILL, GTK_FILL, 4, 0);
+  ifsD->value_scale_pair = value_pair_create (&ifsD->current_vals.value_scale,
+					      0.0, 1.0, TRUE, VALUE_PAIR_DOUBLE);
+  gtk_table_attach (GTK_TABLE (table), ifsD->value_scale_pair->scale,
+		    3, 4, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->value_scale_pair->scale);
-  gtk_table_attach(GTK_TABLE(table), ifsD->value_scale_pair->entry,
-		   4, 5, 1, 2, GTK_FILL, GTK_FILL, 4, 0);
+  gtk_table_attach (GTK_TABLE (table), ifsD->value_scale_pair->entry,
+		    4, 5, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->value_scale_pair->entry);
 
   /* Full color control section */
 
   ifsD->full_button = gtk_radio_button_new_with_label (group, _("Full"));
-  gtk_table_attach(GTK_TABLE(table), ifsD->full_button, 0, 1, 2, 3,
-		   GTK_FILL, GTK_FILL, 4, 0);
+  gtk_table_attach (GTK_TABLE (table), ifsD->full_button, 0, 1, 2, 3,
+		    GTK_FILL, GTK_FILL, 0, 0);
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (ifsD->full_button));
   gtk_widget_show (ifsD->full_button);
 
   color.vals[0] = 1.0;
   color.vals[1] = 0.0;
   color.vals[2] = 0.0;
-  ifsD->red_cmap = color_map_create(_("IfsCompose: Red"),&color,
-				    &ifsD->current_vals.red_color,FALSE);
-  gtk_table_attach(GTK_TABLE(table), ifsD->red_cmap->hbox, 1, 2, 2, 3,
-		   GTK_FILL, GTK_FILL, 4, 0);
-  gtk_widget_show(ifsD->red_cmap->hbox);
+  ifsD->red_cmap = color_map_create (_("IfsCompose: Red"),&color,
+				     &ifsD->current_vals.red_color, FALSE);
+  gtk_table_attach (GTK_TABLE (table), ifsD->red_cmap->hbox, 1, 2, 2, 3,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (ifsD->red_cmap->hbox);
 
   color.vals[0] = 0.0;
   color.vals[1] = 1.0;
   color.vals[2] = 0.0;
-  ifsD->green_cmap = color_map_create(_("IfsCompose: Green"),&color,
-				    &ifsD->current_vals.green_color,FALSE);
-  gtk_table_attach(GTK_TABLE(table), ifsD->green_cmap->hbox, 2, 3, 2, 3,
-		   GTK_FILL, GTK_FILL, 4, 0);
-  gtk_widget_show(ifsD->green_cmap->hbox);
+  ifsD->green_cmap = color_map_create( _("IfsCompose: Green"),&color,
+				       &ifsD->current_vals.green_color, FALSE);
+  gtk_table_attach (GTK_TABLE (table), ifsD->green_cmap->hbox, 2, 3, 2, 3,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (ifsD->green_cmap->hbox);
 
   color.vals[0] = 0.0;
   color.vals[1] = 0.0;
   color.vals[2] = 2.0;
-  ifsD->blue_cmap = color_map_create(_("IfsCompose: Blue"),&color,
-				    &ifsD->current_vals.blue_color,FALSE);
-  gtk_table_attach(GTK_TABLE(table), ifsD->blue_cmap->hbox, 3, 4, 2, 3,
-		   GTK_FILL, GTK_FILL, 4, 0);
-  gtk_widget_show(ifsD->blue_cmap->hbox);
+  ifsD->blue_cmap = color_map_create (_("IfsCompose: Blue"),&color,
+				      &ifsD->current_vals.blue_color, FALSE);
+  gtk_table_attach (GTK_TABLE (table), ifsD->blue_cmap->hbox, 3, 4, 2, 3,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (ifsD->blue_cmap->hbox);
 
   color.vals[0] = 0.0;
   color.vals[1] = 0.0;
   color.vals[2] = 0.0;
-  ifsD->black_cmap = color_map_create(_("IfsCompose: Black"),&color,
-				    &ifsD->current_vals.black_color,FALSE);
-  gtk_table_attach(GTK_TABLE(table), ifsD->black_cmap->hbox, 4, 5, 2, 3,
-		   GTK_FILL, GTK_FILL, 4, 0);
-  gtk_widget_show(ifsD->black_cmap->hbox);
+  ifsD->black_cmap = color_map_create (_("IfsCompose: Black"), &color,
+				       &ifsD->current_vals.black_color, FALSE);
+  gtk_table_attach (GTK_TABLE (table), ifsD->black_cmap->hbox, 4, 5, 2, 3,
+		    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (ifsD->black_cmap->hbox);
 
   return vbox;
 }
@@ -725,13 +739,14 @@ ifs_compose_dialog (GDrawable *drawable)
   GtkWidget *aspect_frame;
   GtkWidget *notebook;
   GtkWidget *page;
-  guchar *color_cube;
-  gchar **argv;
-  gint argc;
+  guchar  *color_cube;
+  gchar  **argv;
+  gint     argc;
 
-  gint design_width, design_height;
+  gint design_width;
+  gint design_height;
 
-  design_width = drawable->width;
+  design_width  = drawable->width;
   design_height = drawable->height;
 
   if (design_width > design_height)
@@ -751,8 +766,8 @@ ifs_compose_dialog (GDrawable *drawable)
 	}
     }
 
-  ifsD = g_new(IfsDialog,1);
-  ifsD->auto_preview = TRUE;
+  ifsD = g_new (IfsDialog, 1);
+  ifsD->auto_preview  = TRUE;
   ifsD->drawable_width = drawable->width;
   ifsD->drawable_height = drawable->height;
 
@@ -763,9 +778,9 @@ ifs_compose_dialog (GDrawable *drawable)
 
   ifsD->in_update = 0;
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("ifs_compose");
+  argc    = 1;
+  argv    = g_new (gchar *, 1);
+  argv[0] = g_strdup ("ifscompose");
 
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
@@ -779,87 +794,63 @@ ifs_compose_dialog (GDrawable *drawable)
   gtk_widget_set_default_visual (gtk_preview_get_visual ());
   gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), _("IfsCompose"));
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+  dlg = gimp_dialog_new (_("IfsCompose"), "ifscompose",
+			 gimp_plugin_help_func, "filters/ifscompose.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 _("OK"), ifs_compose_ok_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("New"), ifs_compose_new_callback,
+			 NULL, NULL, NULL, FALSE, FALSE,
+			 _("Delete"), ifs_compose_delete_callback,
+			 NULL, NULL, NULL, FALSE, FALSE,
+			 _("Reset"), ifs_compose_defaults_callback,
+			 NULL, NULL, NULL, FALSE, FALSE,
+			 _("Cancel"), gtk_widget_destroy,
+			 NULL, 1, NULL, FALSE, TRUE,
+
+			 NULL);
+
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) ifs_compose_close_callback,
+		      GTK_SIGNAL_FUNC (ifs_compose_close_callback),
 		      &dlg);
 
-  /*  Action area  */
-
-  button = gtk_button_new_with_label (_("New"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) ifs_compose_new_callback,
-                      dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Delete"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) ifs_compose_delete_callback,
-                      dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Defaults"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      GTK_SIGNAL_FUNC (ifs_compose_defaults_callback),
-                      NULL);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      GTK_SIGNAL_FUNC (ifs_compose_ok_callback),
-                      dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) gtk_widget_destroy,
-			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
   /*  The main vbox */
-  main_vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_border_width (GTK_CONTAINER (main_vbox), 10);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox, TRUE, TRUE, 0);
+  main_vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
+		      TRUE, TRUE, 0);
 
   /*  The design area */
-  hbox = gtk_hbox_new (FALSE, 5);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, TRUE, TRUE, 0);
 
-  aspect_frame = gtk_aspect_frame_new(NULL,
-				      0.5, 0.5,
-				      (gdouble)design_width/design_height,0);
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+
+  aspect_frame = gtk_aspect_frame_new (NULL,
+				       0.5, 0.5,
+				       (gdouble) design_width / design_height,
+				       0);
   gtk_frame_set_shadow_type (GTK_FRAME (aspect_frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (hbox), aspect_frame, TRUE, TRUE, 0);
 
-  design_area_create(dlg,design_width,design_height);
+  design_area_create (dlg, design_width, design_height);
   gtk_container_add (GTK_CONTAINER (aspect_frame), ifsDesign->area);
 
   gtk_widget_show (ifsDesign->area);
   gtk_widget_show (aspect_frame);
 
-  /* the preview */
+  /*  The Preview  */
 
-  aspect_frame = gtk_aspect_frame_new(NULL,
-				      0.5, 0.5,
-				      (gdouble)design_width/design_height,0);
+  aspect_frame = gtk_aspect_frame_new (NULL,
+				       0.5, 0.5,
+				       (gdouble) design_width / design_height,
+				       0);
   gtk_frame_set_shadow_type (GTK_FRAME (aspect_frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (hbox), aspect_frame, TRUE, TRUE, 0);
 
   ifsD->preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW(ifsD->preview),design_width,design_height);
+  gtk_preview_size (GTK_PREVIEW (ifsD->preview), design_width, design_height);
   gtk_container_add (GTK_CONTAINER (aspect_frame), ifsD->preview);
   gtk_widget_show (ifsD->preview);
 
@@ -869,69 +860,74 @@ ifs_compose_dialog (GDrawable *drawable)
 
   /* Iterations and preview options */
 
-  hbox = gtk_hbox_new(FALSE,1);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 5);
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
 
-  util_hbox = gtk_hbox_new(FALSE,5);
-  gtk_container_add(GTK_CONTAINER(hbox), util_hbox);
-
-  ifsD->move_button = gtk_toggle_button_new_with_label(_("Move"));
-  gtk_box_pack_start (GTK_BOX(util_hbox), ifsD->move_button, TRUE, TRUE, 0);
-  gtk_widget_show (ifsD->move_button);
-  ifsD->move_handler = gtk_signal_connect(GTK_OBJECT(ifsD->move_button),"toggled",
-		     (GtkSignalFunc)design_op_callback,
-		     (gpointer)((long)OP_TRANSLATE));
-
-  ifsD->rotate_button = gtk_toggle_button_new_with_label(_("Rotate/Scale"));
-  gtk_box_pack_start (GTK_BOX(util_hbox), ifsD->rotate_button, TRUE, TRUE, 0);
-  gtk_widget_show (ifsD->rotate_button);
-  ifsD->rotate_handler = gtk_signal_connect(GTK_OBJECT(ifsD->rotate_button),
-					    "toggled",
-					    (GtkSignalFunc)design_op_callback,
-					    (gpointer)((long)OP_ROTATE));
-
-  ifsD->stretch_button = gtk_toggle_button_new_with_label(_("Stretch"));
-  gtk_box_pack_start (GTK_BOX(util_hbox), ifsD->stretch_button, TRUE, TRUE, 0);
-  gtk_widget_show (ifsD->stretch_button);
-  ifsD->stretch_handler = gtk_signal_connect(GTK_OBJECT(ifsD->stretch_button),
-				     "toggled",
-				     (GtkSignalFunc)design_op_callback,
-				     (gpointer)((long)OP_STRETCH));
-
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ifsD->move_button),TRUE);
-
-  gtk_widget_show (util_hbox);
-
-  alignment = gtk_alignment_new(1.0,0.5,0.5,0.0);
+  alignment = gtk_alignment_new (1.0, 0.5, 0.5, 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), alignment, TRUE, TRUE, 0);
 
-  util_hbox = gtk_hbox_new(FALSE,5);
-  gtk_container_add(GTK_CONTAINER(alignment), util_hbox);
+  util_hbox = gtk_hbox_new (FALSE, 4);
+  gtk_container_add (GTK_CONTAINER (alignment), util_hbox);
+
+  ifsD->move_button = gtk_toggle_button_new_with_label (_("Move"));
+  gtk_box_pack_start (GTK_BOX (util_hbox), ifsD->move_button,
+		      TRUE, TRUE, 0);
+  gtk_widget_show (ifsD->move_button);
+  ifsD->move_handler =
+    gtk_signal_connect (GTK_OBJECT (ifsD->move_button),"toggled",
+			GTK_SIGNAL_FUNC (design_op_callback),
+			(gpointer) ((long) OP_TRANSLATE));
+
+  ifsD->rotate_button = gtk_toggle_button_new_with_label (_("Rotate/Scale"));
+  gtk_box_pack_start (GTK_BOX (util_hbox), ifsD->rotate_button,
+		      TRUE, TRUE, 0);
+  gtk_widget_show (ifsD->rotate_button);
+  ifsD->rotate_handler =
+    gtk_signal_connect (GTK_OBJECT (ifsD->rotate_button), "toggled",
+			GTK_SIGNAL_FUNC (design_op_callback),
+			(gpointer) ((long) OP_ROTATE));
+
+  ifsD->stretch_button = gtk_toggle_button_new_with_label (_("Stretch"));
+  gtk_box_pack_start (GTK_BOX (util_hbox), ifsD->stretch_button,
+		      TRUE, TRUE, 0);
+  gtk_widget_show (ifsD->stretch_button);
+  ifsD->stretch_handler =
+    gtk_signal_connect (GTK_OBJECT (ifsD->stretch_button), "toggled",
+			GTK_SIGNAL_FUNC (design_op_callback),
+			(gpointer) ((long) OP_STRETCH));
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ifsD->move_button), TRUE);
+
+  gtk_widget_show (alignment);
+  gtk_widget_show (util_hbox);
+
+  alignment = gtk_alignment_new (1.0, 0.5, 0.5, 0.0);
+  gtk_box_pack_start (GTK_BOX (hbox), alignment, TRUE, TRUE, 0);
+
+  util_hbox = gtk_hbox_new (FALSE, 4);
+  gtk_container_add (GTK_CONTAINER (alignment), util_hbox);
 
   button = gtk_button_new_with_label (_("Render Options"));
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) ifs_options_dialog,
+			     GTK_SIGNAL_FUNC (ifs_options_dialog),
 			     NULL);
-  gtk_box_pack_start (GTK_BOX (util_hbox), button,
-		      TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (util_hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
   button = gtk_button_new_with_label (_("Preview"));
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) ifs_compose_preview_callback,
+			     GTK_SIGNAL_FUNC (ifs_compose_preview_callback),
 			     GTK_OBJECT (ifsD->preview));
-  gtk_box_pack_start (GTK_BOX (util_hbox), button,
-		      TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (util_hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
   check_button = gtk_check_button_new_with_label (_("Auto"));
-  gtk_box_pack_start (GTK_BOX (util_hbox), check_button,
-		      FALSE, FALSE, 0);
-  gtk_toggle_button_set_active ( GTK_TOGGLE_BUTTON(check_button) ,
-				ifsD->auto_preview );
-  gtk_signal_connect ( GTK_OBJECT (check_button), "toggled",
-		       (GtkSignalFunc) auto_preview_callback,
-		       NULL );
+  gtk_box_pack_start (GTK_BOX (util_hbox), check_button, TRUE, TRUE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check_button),
+				ifsD->auto_preview);
+  gtk_signal_connect (GTK_OBJECT (check_button), "toggled",
+		      GTK_SIGNAL_FUNC (auto_preview_callback),
+		      NULL);
   gtk_widget_show (check_button);
 
   gtk_widget_show (util_hbox);
@@ -940,53 +936,55 @@ ifs_compose_dialog (GDrawable *drawable)
 
   /* The current transformation frame */
 
-  ifsD->current_frame = gtk_frame_new(NULL);
+  ifsD->current_frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (ifsD->current_frame),
 			     GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start(GTK_BOX(main_vbox),ifsD->current_frame,FALSE,FALSE,0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), ifsD->current_frame,
+		      FALSE, FALSE, 0);
 
-  vbox = gtk_vbox_new(FALSE,0);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 5);
-  gtk_container_add (GTK_CONTAINER(ifsD->current_frame), vbox);
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (ifsD->current_frame), vbox);
 
   /* The notebook */
 
-  notebook = gtk_notebook_new();
-  gtk_notebook_set_tab_pos(GTK_NOTEBOOK(notebook), GTK_POS_TOP);
-  gtk_box_pack_start(GTK_BOX(vbox),notebook,FALSE,FALSE,5);
-  gtk_widget_show(notebook);
+  notebook = gtk_notebook_new ();
+  gtk_notebook_set_tab_pos (GTK_NOTEBOOK (notebook), GTK_POS_TOP);
+  gtk_box_pack_start (GTK_BOX (vbox), notebook, FALSE, FALSE, 0);
+  gtk_widget_show (notebook);
 
-  page = ifs_compose_trans_page();
-  label = gtk_label_new("Spatial Transformation");
-  gtk_misc_set_alignment(GTK_MISC(label), 0.5, 0.5);
-  gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page, label);
-  gtk_widget_show(page);
+  page = ifs_compose_trans_page ();
+  label = gtk_label_new (_("Spatial Transformation"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
+  gtk_widget_show (page);
 
-  page = ifs_compose_color_page();
-  label = gtk_label_new(_("Color Transformation"));
-  gtk_misc_set_alignment(GTK_MISC(label), 0.5, 0.5);
-  gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page, label);
-  gtk_widget_show(page);
+  page = ifs_compose_color_page ();
+  label = gtk_label_new (_("Color Transformation"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
+  gtk_widget_show (page);
 
   /* The probability entry */
 
-  hbox = gtk_hbox_new(FALSE,5);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 5);
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+
   label = gtk_label_new (_("Relative Probability:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_box_pack_start(GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  ifsD->prob_pair = value_pair_create(&ifsD->current_vals.prob,0.0,5.0, TRUE,
-				      VALUE_PAIR_DOUBLE);
+  ifsD->prob_pair = value_pair_create (&ifsD->current_vals.prob, 0.0, 5.0, TRUE,
+				       VALUE_PAIR_DOUBLE);
   gtk_box_pack_start (GTK_BOX (hbox), ifsD->prob_pair->scale, TRUE, TRUE, 0);
   gtk_widget_show (ifsD->prob_pair->scale);
   gtk_box_pack_start (GTK_BOX (hbox), ifsD->prob_pair->entry, FALSE, TRUE, 0);
   gtk_widget_show (ifsD->prob_pair->entry);
 
-  gtk_widget_show(hbox);
-  gtk_widget_show(vbox);
-  gtk_widget_show(ifsD->current_frame);
+  gtk_widget_show (hbox);
+  gtk_widget_show (vbox);
+  gtk_widget_show (ifsD->current_frame);
 
   gtk_widget_show (main_vbox);
 
@@ -994,16 +992,16 @@ ifs_compose_dialog (GDrawable *drawable)
     {
       ifs_compose_set_defaults();
       if (ifsD->auto_preview)
-	ifs_compose_preview_callback(NULL, ifsD->preview);
+	ifs_compose_preview_callback (NULL, ifsD->preview);
     }
   else
     {
-      int i;
-      gdouble ratio = (gdouble)ifsD->drawable_height/ifsD->drawable_width;
+      gint i;
+      gdouble ratio = (gdouble) ifsD->drawable_height / ifsD->drawable_width;
 
-      element_selected = g_new(gint, ifsvals.num_elements);
+      element_selected = g_new (gint, ifsvals.num_elements);
       element_selected[0] = TRUE;
-      for (i=1;i<ifsvals.num_elements;i++)
+      for (i = 1; i < ifsvals.num_elements; i++)
 	element_selected[i] = FALSE;
 
       if (ratio != ifsvals.aspect_ratio)
@@ -1027,23 +1025,23 @@ ifs_compose_dialog (GDrawable *drawable)
 	      x_offset = 0;
 	      y_offset = (ratio - ifsvals.aspect_ratio)/2;
 	    }
-	  aff2_scale(&t1,scale,0);
-	  aff2_translate(&t2,x_offset,y_offset);
-	  aff2_compose(&t3,&t2,&t1);
-	  aff2_invert(&t1,&t3);
+	  aff2_scale (&t1, scale, 0);
+	  aff2_translate (&t2, x_offset, y_offset);
+	  aff2_compose (&t3, &t2, &t1);
+	  aff2_invert (&t1, &t3);
 
-	  aff2_apply(&t3,ifsvals.center_x,ifsvals.center_y,&center_x,
-		     &center_y);
+	  aff2_apply (&t3, ifsvals.center_x, ifsvals.center_y, &center_x,
+		      &center_y);
 
-	  for (i=0;i<ifsvals.num_elements;i++)
+	  for (i = 0; i < ifsvals.num_elements; i++)
 	    {
-	      aff_element_compute_trans(elements[i],1,ifsvals.aspect_ratio,
-					ifsvals.center_x,ifsvals.center_y);
-	      aff2_compose(&t2,&elements[i]->trans,&t1);
-	      aff2_compose(&elements[i]->trans,&t3,&t2);
-	      aff_element_decompose_trans(elements[i],&elements[i]->trans,
-					   1,ifsvals.aspect_ratio,
-					   center_x,center_y);
+	      aff_element_compute_trans (elements[i],1,ifsvals.aspect_ratio,
+					 ifsvals.center_x, ifsvals.center_y);
+	      aff2_compose (&t2, &elements[i]->trans, &t1);
+	      aff2_compose (&elements[i]->trans, &t3, &t2);
+	      aff_element_decompose_trans (elements[i],&elements[i]->trans,
+					   1, ifsvals.aspect_ratio,
+					   center_x, center_y);
 	    }
 	  ifsvals.center_x = center_x;
 	  ifsvals.center_y = center_y;
@@ -1051,16 +1049,16 @@ ifs_compose_dialog (GDrawable *drawable)
 	  ifsvals.aspect_ratio = ratio;
 	}
 
-      for (i=0;i<ifsvals.num_elements;i++)
-	aff_element_compute_color_trans(elements[i]);
+      for (i = 0; i < ifsvals.num_elements; i++)
+	aff_element_compute_color_trans (elements[i]);
       /* boundary and spatial transformations will be computed
 	 when the design_area gets a ConfigureNotify event */
 
-      set_current_element(0);
+      set_current_element (0);
       if (ifsD->auto_preview)
-	ifs_compose_preview_callback(NULL, ifsD->preview);
+	ifs_compose_preview_callback (NULL, ifsD->preview);
 
-      ifsD->selected_orig = g_new(AffElement,ifsvals.num_elements);
+      ifsD->selected_orig = g_new (AffElement, ifsvals.num_elements);
     }
 
   gtk_widget_show (dlg);
@@ -1076,7 +1074,7 @@ ifs_compose_dialog (GDrawable *drawable)
 
   gdk_flush ();
 
-  gdk_gc_destroy(ifsDesign->selected_gc);
+  gdk_gc_destroy (ifsDesign->selected_gc);
 
   g_free(ifsD);
 
@@ -1084,39 +1082,48 @@ ifs_compose_dialog (GDrawable *drawable)
 }
 
 static void
-design_area_create(GtkWidget *window,gint design_width,gint design_height)
+design_area_create (GtkWidget *window,
+		    gint       design_width,
+		    gint       design_height)
 {
-  ifsDesign = g_new(IfsDesignArea,1);
+  ifsDesign = g_new (IfsDesignArea, 1);
 
   ifsDesign->op = OP_TRANSLATE;
   ifsDesign->button_state = 0;
   ifsDesign->pixmap = NULL;
   ifsDesign->selected_gc = NULL;
 
-  ifsDesign->area = gtk_drawing_area_new();
-  gtk_drawing_area_size (GTK_DRAWING_AREA(ifsDesign->area),design_width,
-					  design_height);
+  ifsDesign->area = gtk_drawing_area_new ();
+  gtk_drawing_area_size (GTK_DRAWING_AREA (ifsDesign->area),
+			 design_width, design_height);
 
-  gtk_signal_connect(GTK_OBJECT(ifsDesign->area),"expose_event",
-		     (GtkSignalFunc)design_area_expose,NULL);
-  gtk_signal_connect(GTK_OBJECT(ifsDesign->area),"button_press_event",
-		     (GtkSignalFunc)design_area_button_press,NULL);
-  gtk_signal_connect(GTK_OBJECT(ifsDesign->area),"button_release_event",
-		     (GtkSignalFunc)design_area_button_release,NULL);
-  gtk_signal_connect(GTK_OBJECT(ifsDesign->area),"motion_notify_event",
-		     (GtkSignalFunc)design_area_motion,NULL);
-  gtk_signal_connect(GTK_OBJECT(ifsDesign->area),"configure_event",
-		     (GtkSignalFunc) design_area_configure, NULL);
+  gtk_signal_connect (GTK_OBJECT (ifsDesign->area), "expose_event",
+		      (GtkSignalFunc)design_area_expose,
+		      NULL);
+  gtk_signal_connect (GTK_OBJECT (ifsDesign->area), "button_press_event",
+		      (GtkSignalFunc)design_area_button_press,
+		      NULL);
+  gtk_signal_connect (GTK_OBJECT (ifsDesign->area), "button_release_event",
+		      (GtkSignalFunc)design_area_button_release,
+		      NULL);
+  gtk_signal_connect (GTK_OBJECT (ifsDesign->area), "motion_notify_event",
+		      (GtkSignalFunc)design_area_motion,
+		      NULL);
+  gtk_signal_connect (GTK_OBJECT (ifsDesign->area), "configure_event",
+		      (GtkSignalFunc) design_area_configure,
+		      NULL);
   gtk_widget_set_events (ifsDesign->area,
-			 GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK |
-			 GDK_BUTTON_RELEASE_MASK | GDK_POINTER_MOTION_MASK |
+			 GDK_EXPOSURE_MASK |
+			 GDK_BUTTON_PRESS_MASK |
+			 GDK_BUTTON_RELEASE_MASK |
+			 GDK_POINTER_MOTION_MASK |
 			 GDK_POINTER_MOTION_HINT_MASK);
 
-  design_op_menu_create(window);
+  design_op_menu_create (window);
 }
 
 static void
-design_op_menu_create(GtkWidget *window)
+design_op_menu_create (GtkWidget *window)
 {
   GtkWidget *menu_item;
   GtkAccelGroup *accel_group;
@@ -1220,112 +1227,105 @@ design_op_menu_create(GtkWidget *window)
 }
 
 static void
-design_op_menu_popup(gint button, guint32 activate_time)
+design_op_menu_popup (gint    button,
+		      guint32 activate_time)
 {
-  gtk_menu_popup(GTK_MENU(ifsDesign->op_menu),NULL,NULL,NULL,NULL,button,activate_time);
+  gtk_menu_popup (GTK_MENU (ifsDesign->op_menu),
+		  NULL, NULL, NULL, NULL,
+		  button, activate_time);
 }
 
 static void
-ifs_options_dialog()
+ifs_options_dialog (void)
 {
-  GtkWidget *button;
   GtkWidget *table;
   GtkWidget *label;
 
   if (!ifsOptD)
     {
-      ifsOptD = g_new(IfsOptionsDialog,1);
+      ifsOptD = g_new (IfsOptionsDialog, 1);
 
-      ifsOptD->dialog = gtk_dialog_new();
-      gtk_window_set_title(GTK_WINDOW(ifsOptD->dialog), _("IfsCompose Options"));
-      gtk_window_position(GTK_WINDOW(ifsOptD->dialog), GTK_WIN_POS_MOUSE);
-      gtk_signal_connect (GTK_OBJECT(ifsOptD->dialog),
-			   "delete_event",
-			   GTK_SIGNAL_FUNC (gtk_widget_hide_on_delete),
-			   &ifsOptD->dialog);
-      gtk_signal_connect(GTK_OBJECT(ifsOptD->dialog), "destroy",
-			 (GtkSignalFunc) ifs_options_close_callback,
+      ifsOptD->dialog =
+	gimp_dialog_new (_("IfsCompose Options"), "ifscompose",
+			 gimp_plugin_help_func, "filters/ifscompose.html",
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, TRUE, FALSE,
+
+			 _("Close"), gtk_widget_hide,
+			 NULL, 1, NULL, TRUE, TRUE,
+
 			 NULL);
-      /* Action area */
-
-      button = gtk_button_new_with_label (_("Close"));
-      GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-      gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			  (GtkSignalFunc) ifs_options_close_callback,
-			  NULL);
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (ifsOptD->dialog)->action_area),
-			  button, TRUE, TRUE, 0);
-      gtk_widget_show (button);
 
       /* Table of options */
 
-      table = gtk_table_new(4,3,FALSE);
-      gtk_container_border_width(GTK_CONTAINER(table),10);
-      gtk_table_set_row_spacings(GTK_TABLE(table), 4);
-      gtk_table_set_col_spacings(GTK_TABLE(table), 4);
-      gtk_box_pack_start(GTK_BOX(GTK_DIALOG(ifsOptD->dialog)->vbox), table,
-			 FALSE,FALSE,0);
-      gtk_widget_show(table);
+      table = gtk_table_new (4, 3, FALSE);
+      gtk_container_set_border_width (GTK_CONTAINER (table), 6);
+      gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+      gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (ifsOptD->dialog)->vbox), table,
+			  FALSE, FALSE, 0);
+      gtk_widget_show (table);
 
-      label = gtk_label_new(_("Max. Memory:"));
-      gtk_misc_set_alignment(GTK_MISC(label),1.0,0.5);
-      gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1,
-		       GTK_FILL, GTK_FILL, 4, 0);
-      gtk_widget_show(label);
+      label = gtk_label_new (_("Max. Memory:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+			GTK_FILL, GTK_FILL, 0, 0);
+      gtk_widget_show (label);
 
-      ifsOptD->memory_pair = value_pair_create(&ifsvals.max_memory,
-					       1,1000000,FALSE,
-					       VALUE_PAIR_INT);
-      gtk_table_attach(GTK_TABLE(table), ifsOptD->memory_pair->entry,
-		       1, 2, 0, 1, GTK_FILL, GTK_FILL, 4, 0);
+      ifsOptD->memory_pair = value_pair_create (&ifsvals.max_memory,
+						1, 1000000, FALSE,
+						VALUE_PAIR_INT);
+      gtk_table_attach (GTK_TABLE (table), ifsOptD->memory_pair->entry,
+			1, 2, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (ifsOptD->memory_pair->entry);
 
-      label = gtk_label_new(_("Iterations:"));
-      gtk_misc_set_alignment(GTK_MISC(label),1.0,0.5);
-      gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2,
-		       GTK_FILL, GTK_FILL, 4, 0);
-      gtk_widget_show(label);
+      label = gtk_label_new (_("Iterations:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+			GTK_FILL, GTK_FILL, 0, 0);
+      gtk_widget_show (label);
 
-      ifsOptD->iterations_pair = value_pair_create(&ifsvals.iterations,1,10000000,FALSE,
-						VALUE_PAIR_INT);
-      gtk_table_attach(GTK_TABLE(table), ifsOptD->iterations_pair->entry,
-		       1, 2, 1, 2, GTK_FILL, GTK_FILL, 4, 0);
+      ifsOptD->iterations_pair = value_pair_create (&ifsvals.iterations,
+						    1, 10000000, FALSE,
+						    VALUE_PAIR_INT);
+      gtk_table_attach (GTK_TABLE (table), ifsOptD->iterations_pair->entry,
+			1, 2, 1, 2, GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (ifsOptD->iterations_pair->entry);
       gtk_widget_show (label);
 
-      label = gtk_label_new(_("Subdivide:"));
-      gtk_misc_set_alignment(GTK_MISC(label),1.0,0.5);
-      gtk_table_attach(GTK_TABLE(table), label, 0, 1, 2, 3,
-		       GTK_FILL, GTK_FILL, 4, 0);
-      gtk_widget_show(label);
+      label = gtk_label_new (_("Subdivide:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
+			GTK_FILL, GTK_FILL, 0, 0);
+      gtk_widget_show (label);
 
-      ifsOptD->subdivide_pair = value_pair_create(&ifsvals.subdivide,1,10,
-						  FALSE,
-						  VALUE_PAIR_INT);
-      gtk_table_attach(GTK_TABLE(table), ifsOptD->subdivide_pair->entry,
-		       1, 2, 2, 3, GTK_FILL, GTK_FILL, 4, 0);
+      ifsOptD->subdivide_pair = value_pair_create (&ifsvals.subdivide,
+						   1, 10, FALSE,
+						   VALUE_PAIR_INT);
+      gtk_table_attach (GTK_TABLE (table), ifsOptD->subdivide_pair->entry,
+			1, 2, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (ifsOptD->subdivide_pair->entry);
 
-      label = gtk_label_new(_("Spot Radius:"));
-      gtk_misc_set_alignment(GTK_MISC(label),1.0,0.5);
-      gtk_table_attach(GTK_TABLE(table), label, 0, 1, 3, 4,
-		       GTK_FILL, GTK_FILL, 4, 0);
-      gtk_widget_show(label);
+      label = gtk_label_new (_("Spot Radius:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
+			GTK_FILL, GTK_FILL, 0, 0);
+      gtk_widget_show (label);
 
-      ifsOptD->radius_pair = value_pair_create(&ifsvals.radius,0,5,
-					       TRUE,
-					       VALUE_PAIR_DOUBLE);
-      gtk_table_attach(GTK_TABLE(table), ifsOptD->radius_pair->scale,
-		       1, 2, 3, 4, GTK_FILL, GTK_FILL, 4, 0);
+      ifsOptD->radius_pair = value_pair_create (&ifsvals.radius,
+						0, 5, TRUE,
+						VALUE_PAIR_DOUBLE);
+      gtk_table_attach (GTK_TABLE (table), ifsOptD->radius_pair->scale,
+			1, 2, 3, 4, GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (ifsOptD->radius_pair->scale);
-      gtk_table_attach(GTK_TABLE(table), ifsOptD->radius_pair->entry,
-		       2, 3, 3, 4, GTK_FILL, GTK_FILL, 4, 0);
+      gtk_table_attach (GTK_TABLE (table), ifsOptD->radius_pair->entry,
+			2, 3, 3, 4, GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (ifsOptD->radius_pair->entry);
 
-      value_pair_update(ifsOptD->iterations_pair);
-      value_pair_update(ifsOptD->subdivide_pair);
-      value_pair_update(ifsOptD->memory_pair);
-      value_pair_update(ifsOptD->radius_pair);
+      value_pair_update (ifsOptD->iterations_pair);
+      value_pair_update (ifsOptD->subdivide_pair);
+      value_pair_update (ifsOptD->memory_pair);
+      value_pair_update (ifsOptD->radius_pair);
 
       gtk_widget_show (ifsOptD->dialog);
     }
@@ -1337,7 +1337,7 @@ ifs_options_dialog()
 }
 
 static void
-ifs_compose(GDrawable *drawable)
+ifs_compose (GDrawable *drawable)
 {
   gint i,j;
   GDrawableType type = gimp_drawable_type(drawable->id);
@@ -1494,7 +1494,7 @@ ifs_compose(GDrawable *drawable)
 }
 
 static void
-update_values()
+update_values (void)
 {
   ifsD->in_update = TRUE;
 
@@ -1530,7 +1530,7 @@ update_values()
 }
 
 static void
-set_current_element(gint index)
+set_current_element (gint index)
 {
   ifsD->current_element = index;
 
@@ -1540,7 +1540,8 @@ set_current_element(gint index)
 }
 
 static gint
-design_area_expose(GtkWidget *widget,GdkEventExpose *event)
+design_area_expose (GtkWidget      *widget,
+		    GdkEventExpose *event)
 {
   gint i;
   gint cx,cy;
@@ -1593,7 +1594,8 @@ design_area_expose(GtkWidget *widget,GdkEventExpose *event)
 }
 
 static gint
-design_area_configure(GtkWidget *widget, GdkEventConfigure *event)
+design_area_configure (GtkWidget         *widget,
+		       GdkEventConfigure *event)
 {
   int i;
   gdouble width = widget->allocation.width;
@@ -1619,7 +1621,8 @@ design_area_configure(GtkWidget *widget, GdkEventConfigure *event)
 }
 
 static gint
-design_area_button_press(GtkWidget *widget, GdkEventButton *event)
+design_area_button_press (GtkWidget      *widget,
+			  GdkEventButton *event)
 {
   gint i;
   gdouble width = ifsDesign->area->allocation.width;
@@ -1700,7 +1703,8 @@ design_area_button_press(GtkWidget *widget, GdkEventButton *event)
 }
 
 static gint
-design_area_button_release(GtkWidget *widget, GdkEventButton *event)
+design_area_button_release (GtkWidget      *widget,
+			    GdkEventButton *event)
 {
   if (event->button == 1 &&
       (ifsDesign->button_state & GDK_BUTTON1_MASK))
@@ -1713,7 +1717,8 @@ design_area_button_release(GtkWidget *widget, GdkEventButton *event)
 }
 
 static gint
-design_area_motion(GtkWidget *widget, GdkEventMotion *event)
+design_area_motion (GtkWidget      *widget,
+		    GdkEventMotion *event)
 {
   gint i;
   gdouble xo;
@@ -1815,7 +1820,7 @@ design_area_motion(GtkWidget *widget, GdkEventMotion *event)
 }
 
 static void
-design_area_redraw(void)
+design_area_redraw (void)
 {
   gint i;
   gdouble width = ifsDesign->area->allocation.width;
@@ -1831,7 +1836,7 @@ design_area_redraw(void)
 
 /* Undo ring functions */
 static void
-undo_begin(void)
+undo_begin (void)
 {
   gint i,j;
   gint to_delete;
@@ -1874,7 +1879,7 @@ undo_begin(void)
 }
 
 static void
-undo_update(gint el)
+undo_update (gint el)
 {
   AffElement *elem;
   /* initialize */
@@ -1891,7 +1896,7 @@ undo_update(gint el)
 }
 
 static void
-undo_exchange(gint el)
+undo_exchange (gint el)
 {
   gint i;
   AffElement **telements;
@@ -1938,7 +1943,7 @@ undo_exchange(gint el)
 }
 
 static void
-undo(void)
+undo (void)
 {
   if (undo_cur >= 0)
     {
@@ -1948,7 +1953,7 @@ undo(void)
 }
 
 static void
-redo(void)
+redo (void)
 {
   if (undo_cur != undo_num - 1)
     {
@@ -1958,7 +1963,8 @@ redo(void)
 }
 
 static void
-design_area_select_all_callback(GtkWidget *w, gpointer data)
+design_area_select_all_callback (GtkWidget *w,
+				 gpointer   data)
 {
   gint i;
 
@@ -1971,7 +1977,7 @@ design_area_select_all_callback(GtkWidget *w, gpointer data)
 /*  Interface functions  */
 
 static void
-val_changed_update ()
+val_changed_update (void)
 {
   gdouble width = ifsDesign->area->allocation.width;
   gdouble height = ifsDesign->area->allocation.height;
@@ -2000,7 +2006,8 @@ val_changed_update ()
 #define COLOR_SAMPLE_SIZE 30
 
 static void
-color_map_set_preview_color(GtkWidget *preview, IfsColor *color)
+color_map_set_preview_color (GtkWidget *preview,
+			     IfsColor  *color)
 {
   gint i;
   guchar buf[3*COLOR_SAMPLE_SIZE];
@@ -2018,8 +2025,10 @@ color_map_set_preview_color(GtkWidget *preview, IfsColor *color)
 }
 
 static ColorMap *
-color_map_create(gchar *name, IfsColor *orig_color, IfsColor *data,
-		 gint fixed_point)
+color_map_create (gchar    *name,
+		  IfsColor *orig_color,
+		  IfsColor *data,
+		  gint      fixed_point)
 {
   GtkWidget *frame;
   GtkWidget *label;
@@ -2079,8 +2088,8 @@ color_map_create(gchar *name, IfsColor *orig_color, IfsColor *data,
 }
 
 static void
-color_map_clicked_callback(GtkWidget *widget,
-			   ColorMap *color_map)
+color_map_clicked_callback (GtkWidget *widget,
+			    ColorMap  *color_map)
 {
   GtkColorSelectionDialog *csd;
 
@@ -2127,16 +2136,16 @@ color_map_clicked_callback(GtkWidget *widget,
 }
 
 static void
-color_map_destroy_callback(GtkWidget *widget,
-			   ColorMap *color_map)
+color_map_destroy_callback (GtkWidget *widget,
+			    ColorMap  *color_map)
 {
   if (color_map->dialog)
     gtk_widget_destroy (color_map->dialog);
 }
 
 static void
-color_map_color_changed_cb(GtkWidget *widget,
-			   ColorMap *color_map)
+color_map_color_changed_cb (GtkWidget *widget,
+			    ColorMap  *color_map)
 {
   color_map->in_change_callback = TRUE;
 
@@ -2158,7 +2167,7 @@ color_map_color_changed_cb(GtkWidget *widget,
 }
 
 static void
-color_map_update(ColorMap *color_map)
+color_map_update (ColorMap *color_map)
 {
   color_map_set_preview_color(color_map->preview,color_map->color);
   if (color_map->fixed_point)
@@ -2174,7 +2183,7 @@ color_map_update(ColorMap *color_map)
 }
 
 static void
-simple_color_set_sensitive()
+simple_color_set_sensitive (void)
 {
   gint sc = elements[ifsD->current_element]->v.simple_color;
 
@@ -2191,7 +2200,8 @@ simple_color_set_sensitive()
 }
 
 static void
-simple_color_toggled(GtkWidget *widget,gpointer data)
+simple_color_toggled (GtkWidget *widget,
+		      gpointer   data)
 {
   AffElement *cur = elements[ifsD->current_element];
   cur->v.simple_color = GTK_TOGGLE_BUTTON(widget)->active;
@@ -2208,24 +2218,28 @@ simple_color_toggled(GtkWidget *widget,gpointer data)
    scale) */
 
 static ValuePair *
-value_pair_create (gpointer data, gdouble lower, gdouble upper,
-		   gboolean create_scale, ValuePairType type)
+value_pair_create (gpointer      data,
+		   gdouble       lower,
+		   gdouble       upper,
+		   gboolean      create_scale,
+		   ValuePairType type)
 {
 
   ValuePair *value_pair = g_new(ValuePair,1);
   value_pair->data.d = data;
   value_pair->type = type;
 
-  value_pair->adjustment = gtk_adjustment_new (1.0, lower, upper,
-					  (upper-lower)/100, (upper-lower)/10,
-					  0.0);
+  value_pair->adjustment =
+    gtk_adjustment_new (1.0, lower, upper,
+			(upper-lower) / 100, (upper-lower) / 10,
+			0.0);
   /* We need to sink the adjustment, since we may not create a scale for
    * it, so nobody will assume the initial refcount
    */
   gtk_object_ref (value_pair->adjustment);
   gtk_object_sink (value_pair->adjustment);
   gtk_signal_connect (GTK_OBJECT (value_pair->adjustment), "value_changed",
-		      (GtkSignalFunc) value_pair_scale_callback,
+		      GTK_SIGNAL_FUNC (value_pair_scale_callback),
 		      value_pair);
 
   if (create_scale)
@@ -2255,15 +2269,17 @@ value_pair_create (gpointer data, gdouble lower, gdouble upper,
   gtk_widget_set_usize (value_pair->entry, ENTRY_WIDTH, 0);
   value_pair->entry_handler_id =
     gtk_signal_connect (GTK_OBJECT (value_pair->entry), "changed",
-			(GtkSignalFunc) value_pair_entry_callback, value_pair);
+			GTK_SIGNAL_FUNC (value_pair_entry_callback),
+			value_pair);
   gtk_signal_connect (GTK_OBJECT (value_pair->entry), "destroy",
-		      (GtkSignalFunc) value_pair_destroy_callback, value_pair);
+		      GTK_SIGNAL_FUNC (value_pair_destroy_callback),
+		      value_pair);
 
   return value_pair;
 }
 
 static void
-value_pair_update(ValuePair *value_pair)
+value_pair_update (ValuePair *value_pair)
 {
   gchar buffer[32];
 
@@ -2287,16 +2303,16 @@ value_pair_update(ValuePair *value_pair)
 }
 
 static void
-value_pair_button_release (GtkWidget *widget,
-		       GdkEventButton *event,
-		       gpointer data)
+value_pair_button_release (GtkWidget      *widget,
+			   GdkEventButton *event,
+			   gpointer        data)
 {
-  val_changed_update();
+  val_changed_update ();
 }
 
 static void
 value_pair_scale_callback (GtkAdjustment *adjustment,
-			   ValuePair *value_pair)
+			   ValuePair     *value_pair)
 {
   gchar buffer[32];
   gint changed = FALSE;
@@ -2330,10 +2346,10 @@ value_pair_scale_callback (GtkAdjustment *adjustment,
 }
 
 static void
-value_pair_entry_callback (GtkWidget   *widget,
-			   ValuePair   *value_pair)
+value_pair_entry_callback (GtkWidget *widget,
+			   ValuePair *value_pair)
 {
-  GtkAdjustment *adjustment = GTK_ADJUSTMENT(value_pair->adjustment);
+  GtkAdjustment *adjustment = GTK_ADJUSTMENT (value_pair->adjustment);
   gdouble new_value;
   gdouble old_value;
 
@@ -2366,8 +2382,8 @@ value_pair_entry_callback (GtkWidget   *widget,
 }
 
 static void
-value_pair_destroy_callback (GtkWidget   *widget,
-			     ValuePair   *value_pair)
+value_pair_destroy_callback (GtkWidget *widget,
+			     ValuePair *value_pair)
 {
   if (value_pair->scale)
     gtk_object_unref (GTK_OBJECT (value_pair->scale));
@@ -2375,7 +2391,8 @@ value_pair_destroy_callback (GtkWidget   *widget,
 }
  
 static void
-design_op_callback (GtkWidget *widget, gpointer data)
+design_op_callback (GtkWidget *widget,
+		    gpointer   data)
 {
   DesignOp op = (DesignOp)data;
 
@@ -2417,7 +2434,8 @@ design_op_callback (GtkWidget *widget, gpointer data)
 }
 
 static void
-design_op_update_callback (GtkWidget *widget, gpointer data)
+design_op_update_callback (GtkWidget *widget,
+			   gpointer   data)
 {
   DesignOp op = (DesignOp)data;
 
@@ -2442,13 +2460,14 @@ design_op_update_callback (GtkWidget *widget, gpointer data)
 }
 
 static void
-recompute_center_cb(GtkWidget *w, gpointer data)
+recompute_center_cb (GtkWidget *w,
+		     gpointer   data)
 {
   recompute_center(TRUE);
 }
 
 static void
-recompute_center(int save_undo)
+recompute_center (int save_undo)
 {
   int i;
   gdouble x,y;
@@ -2494,7 +2513,7 @@ recompute_center(int save_undo)
 
 static void
 auto_preview_callback (GtkWidget *widget,
-		       gpointer data)
+		       gpointer   data)
 {
   if (ifsD->auto_preview)
     {
@@ -2509,21 +2528,14 @@ auto_preview_callback (GtkWidget *widget,
 
 static void
 flip_check_button_callback (GtkWidget *widget,
-		      gpointer data)
+			    gpointer   data)
 {
   ifsD->current_vals.flip = GTK_TOGGLE_BUTTON(widget)->active;
-  val_changed_update();
+  val_changed_update ();
 }
 
 static void
-ifs_options_close_callback ()
-{
-  if (ifsOptD)
-    gtk_widget_hide(ifsOptD->dialog);
-}
-
-static void
-ifs_compose_set_defaults ()
+ifs_compose_set_defaults (void)
 {
   gint i;
   IfsColor color;
@@ -2584,7 +2596,7 @@ ifs_compose_set_defaults ()
 
 static void
 ifs_compose_defaults_callback (GtkWidget *widget,
-			       gpointer data)
+			       gpointer   data)
 {
   gint i;
   gdouble width = ifsDesign->area->allocation.width;
@@ -2701,7 +2713,7 @@ ifs_compose_close_callback (GtkWidget *widget,
 }
 
 static gint
-preview_idle_render()
+preview_idle_render (void)
 {
   gint i;
   gint width = GTK_WIDGET(ifsD->preview)->requisition.width;
