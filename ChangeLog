@@ -1,3 +1,7 @@
+2003-09-01  Simon Budig  <simon@gimp.org>
+
+	* vectors/gimpbezierstroke.c: fixed it to create proper strokes...
+
 2003-09-01  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimptext-vectors.c: use the new bezier stroke API.

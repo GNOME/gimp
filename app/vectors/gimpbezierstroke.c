@@ -1295,15 +1295,15 @@ gimp_bezier_stroke_new_moveto (const GimpCoords *start)
 
   stroke = gimp_bezier_stroke_new ();
 
-  gimp_bezier_stroke_extend (stroke, start,
-                             NULL,
-                             EXTEND_SIMPLE);
-  gimp_bezier_stroke_extend (stroke, start,
-                             GIMP_ANCHOR (stroke->anchors->data),
-                             EXTEND_SIMPLE);
-  gimp_bezier_stroke_extend (stroke, start,
-                             GIMP_ANCHOR (stroke->anchors->data),
-                             EXTEND_SIMPLE);
+  stroke->anchors = g_list_prepend (stroke->anchors,
+                                    gimp_anchor_new (GIMP_ANCHOR_CONTROL,
+                                                     start));
+  stroke->anchors = g_list_prepend (stroke->anchors,
+                                    gimp_anchor_new (GIMP_ANCHOR_ANCHOR,
+                                                     start));
+  stroke->anchors = g_list_prepend (stroke->anchors,
+                                    gimp_anchor_new (GIMP_ANCHOR_CONTROL,
+                                                     start));
   return stroke;
 }
 
@@ -1315,15 +1315,15 @@ gimp_bezier_stroke_lineto (GimpStroke       *stroke,
   g_return_if_fail (stroke->closed == FALSE);
   g_return_if_fail (stroke->anchors != NULL);
 
-  gimp_bezier_stroke_extend (stroke, end,
-                             GIMP_ANCHOR (stroke->anchors->data),
-                             EXTEND_SIMPLE);
-  gimp_bezier_stroke_extend (stroke, end,
-                             GIMP_ANCHOR (stroke->anchors->data),
-                             EXTEND_SIMPLE);
-  gimp_bezier_stroke_extend (stroke, end,
-                             GIMP_ANCHOR (stroke->anchors->data),
-                             EXTEND_SIMPLE);
+  stroke->anchors = g_list_prepend (stroke->anchors,
+                                    gimp_anchor_new (GIMP_ANCHOR_CONTROL,
+                                                     end));
+  stroke->anchors = g_list_prepend (stroke->anchors,
+                                    gimp_anchor_new (GIMP_ANCHOR_ANCHOR,
+                                                     end));
+  stroke->anchors = g_list_prepend (stroke->anchors,
+                                    gimp_anchor_new (GIMP_ANCHOR_CONTROL,
+                                                     end));
 }
 
 void
@@ -1346,15 +1346,15 @@ gimp_bezier_stroke_conicto (GimpStroke       *stroke,
 
   gimp_bezier_coords_mix (2.0 / 3.0, control, 1.0 / 3.0, end, &coords);
   
-  gimp_bezier_stroke_extend (stroke, &coords,
-                             GIMP_ANCHOR (stroke->anchors->data),
-                             EXTEND_SIMPLE);
-  gimp_bezier_stroke_extend (stroke, end,
-                             GIMP_ANCHOR (stroke->anchors->data),
-                             EXTEND_SIMPLE);
-  gimp_bezier_stroke_extend (stroke, end,
-                             GIMP_ANCHOR (stroke->anchors->data),
-                             EXTEND_SIMPLE);
+  stroke->anchors = g_list_prepend (stroke->anchors,
+                                    gimp_anchor_new (GIMP_ANCHOR_CONTROL,
+                                                     &coords));
+  stroke->anchors = g_list_prepend (stroke->anchors,
+                                    gimp_anchor_new (GIMP_ANCHOR_ANCHOR,
+                                                     end));
+  stroke->anchors = g_list_prepend (stroke->anchors,
+                                    gimp_anchor_new (GIMP_ANCHOR_CONTROL,
+                                                     end));
 }
 
 void
@@ -1369,15 +1369,15 @@ gimp_bezier_stroke_cubicto (GimpStroke       *stroke,
 
   GIMP_ANCHOR (stroke->anchors->data)->position = *control1;
 
-  gimp_bezier_stroke_extend (stroke, control2,
-                             GIMP_ANCHOR (stroke->anchors->data),
-                             EXTEND_SIMPLE);
-  gimp_bezier_stroke_extend (stroke, end,
-                             GIMP_ANCHOR (stroke->anchors->data),
-                             EXTEND_SIMPLE);
-  gimp_bezier_stroke_extend (stroke, end,
-                             GIMP_ANCHOR (stroke->anchors->data),
-                             EXTEND_SIMPLE);
+  stroke->anchors = g_list_prepend (stroke->anchors,
+                                    gimp_anchor_new (GIMP_ANCHOR_CONTROL,
+                                                     control2));
+  stroke->anchors = g_list_prepend (stroke->anchors,
+                                    gimp_anchor_new (GIMP_ANCHOR_ANCHOR,
+                                                     end));
+  stroke->anchors = g_list_prepend (stroke->anchors,
+                                    gimp_anchor_new (GIMP_ANCHOR_CONTROL,
+                                                     end));
 }
 
 
