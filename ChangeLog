@@ -1,3 +1,10 @@
+2001-07-18  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-text-console.c: stop reading on EOF
+
+	* plug-ins/script-fu/script-fu-console.c
+	* plug-ins/script-fu/script-fu.c: some small cleanups
+
 2001-07-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/batch.[ch]: seems Mathieu messed up the last commit :) Added

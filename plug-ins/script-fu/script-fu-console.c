@@ -635,7 +635,7 @@ script_fu_eval_run (gchar      *name,
   switch (run_mode)
     {
     case GIMP_RUN_NONINTERACTIVE:
-      if (repl_c_string (params[1].data.d_string, 0, 0, 1) != 0)
+      if (siod_interpret_string (params[1].data.d_string) != 0)
 	status = GIMP_PDB_EXECUTION_ERROR;
       break;
 

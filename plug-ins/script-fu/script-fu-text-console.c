@@ -71,50 +71,49 @@ script_fu_text_console_run (char     *name,
   values[0].data.d_status = status;
 }
 
-static char *
-read_command (void)
+static gboolean
+read_command (GString *command)
 {
   unsigned char c;
-  GString *string;
-  char *retval;
+  int next;
   int left = 0, right = 0;
 
-  string = g_string_new ("");
+  g_string_assign (command, "");
 
-  c = (unsigned char )fgetc (stdin);
-  while (!((c == '\n') && (left == right)))
+  while ((next = fgetc (stdin)) != EOF)
     {
-     
+      c = (unsigned char) next;
+
+      if ((c == '\n') && (left == right))
+        break;
+
       if (c == '(')
 	left++;
       else if (c == ')')
 	right++;
       
-      if (c != '\n') 
-	string = g_string_append_c (string, c);
-      else
-	string = g_string_append_c (string, ' ');
-
-      c = (unsigned char )fgetc (stdin);      
+      g_string_append_c (command, c != '\n' ? c : ' ');
     }
-    
-  retval = string->str;
-  g_string_free (string, 0);
 
-  return retval;
+  return (next == EOF);
 }
 
 static void 
 script_fu_text_console_interface (void)
 {
-  char *command;
+  gboolean quit = FALSE;
+  GString *command;
 
-  while (1)
+  command = g_string_new ("");
+
+  while (!quit)
     {
-      command = read_command ();
-      siod_interpret_string (command);
-      g_free (command);
+      quit = read_command (command);
+      if (command->len > 0)
+        siod_interpret_string (command->str);
     }
+
+  g_string_free (command, TRUE);
 }
 
 
