@@ -1248,6 +1248,7 @@ user_install_migrate_files (const gchar   *oldgimp,
 
           if (g_file_test (source, G_FILE_TEST_IS_REGULAR) &&
               (strncmp (basename, "gimpswap.", 9) != 0)    &&
+              (strncmp (basename, "menurc",    6) != 0)    &&
               (strncmp (basename, "pluginrc",  8) != 0)    &&
               (strncmp (basename, "themerc",   7) != 0))
             {
