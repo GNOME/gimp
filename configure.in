@@ -540,7 +540,7 @@ if test "x$platform_win32" = "xyes"; then
 elif test "x$shmtype" = "xsysv"; then
   AC_CHECK_HEADER(sys/ipc.h,
     [AC_DEFINE(HAVE_IPC_H, 1,
-               [Define to 1 if you have the <sys/ipc.h> heacder file.])],
+               [Define to 1 if you have the <sys/ipc.h> header file.])],
     no_sys_ipc=yes)
   AC_CHECK_HEADER(sys/shm.h,
     [AC_DEFINE(HAVE_SHM_H, 1,
@@ -583,16 +583,30 @@ elif test "x$shmtype" = "xsysv"; then
     shmtype=none
   fi
 elif test "x$shmtype" = "xposix"; then
-  AC_CHECK_LIB(rt, shm_open)
+  have_shm_open=no
+
+  AC_CHECK_FUNC(shm_open, have_shm_open=yes)
+
+  RT_LIBS=
+  if test "$have_shm_open" != "yes"; then
+    gimp_save_LIBS=$LIBS
+    LIBS=""
+
+    AC_CHECK_LIB(rt, shm_open, have_shm_open=yes)
+
+    RT_LIBS="$LIBS"
+    LIBS=$gimp_save_LIBS
+  fi
+  AC_SUBST(RT_LIBS)
 
   AC_CHECK_HEADER(sys/mman.h,
     [AC_DEFINE(HAVE_MMAN_H, 1,
-               [Define to 1 if you have the <sys/mman.h> heacder file.])],
+               [Define to 1 if you have the <sys/mman.h> header file.])],
     no_sys_mman=yes)
 
   if test "$ac_cv_func_mmap" = "yes" &&
-     test "$ac_cv_lib_rt_shm_open" = "yes" &&
-     test "$ac_cv_header_sys_mman_h" = "yes"; then
+     test "$ac_cv_header_sys_mman_h" = "yes" &&
+     test "$have_shm_open" = "yes"; then
     AC_DEFINE(USE_POSIX_SHM, 1, [Define to 1 to use POSIX shared memory])
   else
     shmtype=none

@@ -30,6 +30,7 @@ LDADD = \
 	winsnap-win32res.o					\
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la	\
+	$(RT_LIBS)							\
 	$(GTK_LIBS)						\
 	$(INTLLIBS)
 

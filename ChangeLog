@@ -1,3 +1,14 @@
+2004-01-03  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: check for shm_open in libc too, and define RT_LIBS
+	accordingly.
+
+	* gimptool-1.3.in
+	* app/Makefile.am
+	* libgimp/Makefile.am
+	* plug-ins/*/Makefile.am
+	* plug-ins/common/mkgen.pl: use RT_LIBS.
+
 2004-01-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell.c: some cosmetics while reviewing

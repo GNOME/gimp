@@ -243,7 +243,7 @@ libgimp_1_3_la_LDFLAGS = \
 	$(no_undefined) \
 	$(libgimp_export_symbols)
 
-libgimp_1_3_la_LIBADD = $(libgimpcolor) $(libgimpbase) $(GLIB_LIBS) 
+libgimp_1_3_la_LIBADD = $(libgimpcolor) $(libgimpbase) $(GLIB_LIBS) $(RT_LIBS)
 
 libgimp_1_3_la_DEPENDENCIES = $(gimp_def) $(libgimpcolor) $(libgimpbase)
 
@@ -253,7 +253,7 @@ libgimpui_1_3_la_LDFLAGS = \
 	$(libgimpui_export_symbols)
 
 libgimpui_1_3_la_LIBADD = $(libgimp) $(libgimpwidgets) $(libgimpcolor) \
-	 $(libgimpbase) $(libgimpmodule) $(GTK_LIBS)
+	 $(libgimpbase) $(libgimpmodule) $(GTK_LIBS) $(RT_LIBS)
 
 libgimpui_1_3_la_DEPENDENCIES = $(gimpui_def) $(libgimp) $(libgimpwidgets) $(libgimpbase)
 

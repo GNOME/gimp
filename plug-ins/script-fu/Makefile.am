@@ -13,20 +13,20 @@ libexecdir = $(gimpplugindir)/plug-ins
 libexec_PROGRAMS = script-fu
 
 script_fu_SOURCES = \
-	script-fu.c		\
-	script-fu-console.c	\
-	script-fu-console.h	\
-	script-fu-text-console.h\
-	script-fu-text-console.c\
-	script-fu-constants.c	\
-	script-fu-constants.h	\
-	script-fu-intl.h	\
-	script-fu-scripts.c	\
-	script-fu-scripts.h	\
-	script-fu-server.c	\
-	script-fu-server.h	\
-	script-fu-enums.h	\
-	siod-wrapper.c		\
+	script-fu.c			\
+	script-fu-console.c		\
+	script-fu-console.h		\
+	script-fu-text-console.h	\
+	script-fu-text-console.c	\
+	script-fu-constants.c		\
+	script-fu-constants.h		\
+	script-fu-intl.h		\
+	script-fu-scripts.c		\
+	script-fu-scripts.h		\
+	script-fu-server.c		\
+	script-fu-server.h		\
+	script-fu-enums.h		\
+	siod-wrapper.c			\
 	siod-wrapper.h
 
 INCLUDES = \
@@ -50,5 +50,6 @@ LDADD = \
 	siod/libsiod.a							\
 	$(GTK_LIBS)							\
 	$(SOCKET_LIBS)							\
+	$(RT_LIBS)							\
 	$(INTLLIBS)							\
 	$(REGEXREPL)

@@ -55,11 +55,10 @@ EXTRA_DIST = \\
 INCLUDES = \\
 	-I\$(top_srcdir)					\\
 	-I\$(top_srcdir)/plug-ins/libgimpoldpreview	\\
-	\@GTK_CFLAGS\@					\\
-	\@X_CFLAGS\@					\\
-	\@EXIF_CFLAGS\@					\\
-	\@SVG_CFLAGS\@					\\
-	\@WMF_CFLAGS\@					\\
+	\$(GTK_CFLAGS)					\\
+	\$(EXIF_CFLAGS)					\\
+	\$(SVG_CFLAGS)					\\
+	\$(WMF_CFLAGS)					\\
 	-I\$(includedir)
 
 libexec_PROGRAMS = \\
@@ -70,7 +69,7 @@ $opts
 
 install-\%: \%
 	\@\$(NORMAL_INSTALL)
-	\$(mkinstalldirs) \$(DESTDIRS)\$(libexecdir)
+	\$(mkinstalldirs) \$(DESTDIR)\$(libexecdir)
 	\@if test -f \$<; then \\
 	  echo " \$(LIBTOOL)  --mode=install \$(INSTALL_PROGRAM) \$< \$(DESTDIR)\$(libexecdir)/`echo \$<|sed 's/\$(EXEEXT)\$\$//'|sed '\$(transform)'|sed 's/\$\$/\$(EXEEXT)/'`"; \\
 	  \$(LIBTOOL)  --mode=install \$(INSTALL_PROGRAM) \$< \$(DESTDIR)\$(libexecdir)/`echo \$<|sed 's/\$(EXEEXT)\$\$//'|sed '\$(transform)'|sed 's/\$\$/\$(EXEEXT)/'`; \\
@@ -105,11 +104,11 @@ foreach (sort keys %plugins) {
 	$optlib = "\n\t\$(LIB\U$name\E)\t\t\t\t\t\t\t\\";
     }
 
-    my $deplib = "\@INTLLIBS\@";
+    my $deplib = "\$(RT_LIBS)\t\t\t\t\t\t\t\\\n\t\$(INTLLIBS)";
     if (exists $plugins{$_}->{libdep}) {
 	my @lib = split(/:/, $plugins{$_}->{libdep});
 	foreach $lib (@lib) {
-	    $deplib = "\@\U$lib\E_LIBS\@\t\t\t\t\t\t\t\\\n\t$deplib";
+	    $deplib = "\$(\U$lib\E_LIBS)\t\t\t\t\t\t\t\\\n\t$deplib";
 	}
     }
 

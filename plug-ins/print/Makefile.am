@@ -25,4 +25,5 @@ LDADD = \
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(PRINT_LIBS)							\
+	$(RT_LIBS)							\
 	$(INTLLIBS)

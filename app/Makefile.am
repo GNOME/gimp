@@ -100,6 +100,7 @@ gimp_1_3_LDADD = \
 	$(FREETYPE_LIBS)						\
 	$(GIMP_THREAD_LIBS)						\
 	$(GIMP_MP_LIBS)							\
+	$(RT_LIBS)							\
 	$(INTLLIBS)							\
 	$(REGEXREPL)
 

@@ -19,6 +19,8 @@ includedir=@includedir@
 gimpplugindir=@gimpplugindir@
 gimpdatadir=@gimpdatadir@
 
+rt_libs=@RT_LIBS@
+
 usage()
 {
   cat <<EOF
@@ -200,13 +202,13 @@ while test $# -gt 0; do
       done
       case $1 in
         --libs)
-          echo $libdirs -lgimpui-@LT_RELEASE@ -lgimpwidgets-@LT_RELEASE@ -lgimp-@LT_RELEASE@ -lgimpcolor-@LT_RELEASE@ -lgimpmath-@LT_RELEASE@ -lgimpbase-@LT_RELEASE@ $my_gtk_libs ;;
+          echo $libdirs -lgimpui-@LT_RELEASE@ -lgimpwidgets-@LT_RELEASE@ -lgimp-@LT_RELEASE@ -lgimpcolor-@LT_RELEASE@ -lgimpmath-@LT_RELEASE@ -lgimpbase-@LT_RELEASE@ $my_gtk_libs $rt_libs ;;
         --libs-nogimpui)
-          echo $libdirs -lgimp-@LT_RELEASE@ -lgimpcolor-@LT_RELEASE@ -lgimpmath-@LT_RELEASE@ -lgimpbase-@LT_RELEASE@ $my_gtk_libs ;;
+          echo $libdirs -lgimp-@LT_RELEASE@ -lgimpcolor-@LT_RELEASE@ -lgimpmath-@LT_RELEASE@ -lgimpbase-@LT_RELEASE@ $my_gtk_libs $rt_libs ;;
       esac
       ;;
     --libs-noui)
-      echo -L@libdir@ -lgimp-@LT_RELEASE@ -lgimpcolor-@LT_RELEASE@ -lgimpmath-@LT_RELEASE@ -lgimpbase-@LT_RELEASE@ $glib_libs
+      echo -L@libdir@ -lgimp-@LT_RELEASE@ -lgimpcolor-@LT_RELEASE@ -lgimpmath-@LT_RELEASE@ -lgimpbase-@LT_RELEASE@ $glib_libs $rt_libs
       ;;
     --install-bin | --install-admin-bin \
     | --install-bin-strip | --install-admin-bin-strip \

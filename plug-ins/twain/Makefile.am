@@ -31,5 +31,6 @@ LDADD = \
 	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)						\
+	$(RT_LIBS)							\
 	$(INTLLIBS)						\
 	-luser32

@@ -25,5 +25,6 @@ LDADD = \
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
+	$(RT_LIBS)							\
 	$(LIBJPEG)							\
 	$(INTLLIBS)
