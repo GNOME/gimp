@@ -1,5 +1,12 @@
 2004-07-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimptemplateeditor.c
+	* plug-ins/common/gif.c
+	* plug-ins/common/jpeg.c: set GTK_SHADOW_IN on scrolled windows of
+	text views. Fixes bug #148025.
+
+2004-07-21  Michael Natterer  <mitch@gimp.org>
+
 	Enabled the various "Clear saved foobar now" buttons in prefs:
 
 	* app/gui/session.[ch]

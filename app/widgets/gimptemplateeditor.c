@@ -413,11 +413,11 @@ gimp_template_editor_constructor (GType                  type,
                              combo, 1, FALSE);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
+                                       GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
 				  GTK_POLICY_AUTOMATIC,
 				  GTK_POLICY_AUTOMATIC);
-  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
-                                       GTK_SHADOW_ETCHED_IN);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
                              _("Co_mment:"), 0.0, 0.0,
                              scrolled_window, 1, FALSE);
