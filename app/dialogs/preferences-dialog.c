@@ -2739,12 +2739,12 @@ preferences_dialog_create (Gimp *gimp)
   if (! gimprc.using_xserver_resolution)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
-  /* Directories */
+  /* Folders */
   vbox = prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
-				     _("Directories"),
+				     _("Folders"),
 				     GTK_TREE_STORE (tree),
-				     _("Directories"),
-				     "dialogs/preferences/directories.html",
+				     _("Folders"),
+				     "dialogs/preferences/folders.html",
 				     NULL,
 				     &top_iter,
 				     page_index);
@@ -2785,7 +2785,7 @@ preferences_dialog_create (Gimp *gimp)
       }
   }
 
-  /* Directories / <paths> */
+  /* Folders / <paths> */
   {
     static const struct
     {
@@ -2797,37 +2797,37 @@ preferences_dialog_create (Gimp *gimp)
     }
     paths[] =
     {
-      { N_("Brushes"), N_("Brushes Directories"),
-	"dialogs/preferences/directories.html#brushes",
-	N_("Select Brushes Dir"),
+      { N_("Brushes"), N_("Brush Folders"),
+	"dialogs/preferences/folders.html#brushes",
+	N_("Select Brush Folders"),
 	&edit_brush_path },
-      { N_("Patterns"), N_("Patterns Directories"),
-	"dialogs/preferences/directories.html#patterns",
-	N_("Select Patterns Dir"),
+      { N_("Patterns"), N_("Pattern Folders"),
+	"dialogs/preferences/folders.html#patterns",
+	N_("Select Pattern Folders"),
 	&edit_pattern_path },
-      { N_("Palettes"), N_("Palettes Directories"),
-	"dialogs/preferences/directories.html#palettes",
-	N_("Select Palettes Dir"),
+      { N_("Palettes"), N_("Palette Folders"),
+	"dialogs/preferences/folders.html#palettes",
+	N_("Select Palette Folders"),
 	&edit_palette_path },
-      { N_("Gradients"), N_("Gradients Directories"),
-	"dialogs/preferences/directories.html#gradients",
-	N_("Select Gradients Dir"),
+      { N_("Gradients"), N_("Gradient Folders"),
+	"dialogs/preferences/folders.html#gradients",
+	N_("Select Gradient Folders"),
 	&edit_gradient_path },
-      { N_("Plug-Ins"), N_("Plug-Ins Directories"),
-	"dialogs/preferences/directories.html#plug_ins",
-	N_("Select Plug-Ins Dir"),
+      { N_("Plug-Ins"), N_("Plug-In Folders"),
+	"dialogs/preferences/folders.html#plug_ins",
+	N_("Select Plug-In Folders"),
 	&edit_plug_in_path },
-      { N_("Tool Plug-Ins"), N_("Tool Plug-Ins Directories"),
-	"dialogs/preferences/directories.html#tool_plug_ins",
-	N_("Select Tool Plug-Ins Dir"),
+      { N_("Tool Plug-Ins"), N_("Tool Plug-In Folders"),
+	"dialogs/preferences/folders.html#tool_plug_ins",
+	N_("Select Tool Plug-In Folders"),
 	&edit_tool_plug_in_path },
-      { N_("Modules"), N_("Modules Directories"),
-	"dialogs/preferences/directories.html#modules",
-	N_("Select Modules Dir"),
+      { N_("Modules"), N_("Module Folders"),
+	"dialogs/preferences/folders.html#modules",
+	N_("Select Module Folders"),
 	&edit_module_path },
-      { N_("Themes"), N_("Themes Directories"),
-	"dialogs/preferences/directories.html#themes",
-	N_("Select Themes Dir"),
+      { N_("Themes"), N_("Theme Folders"),
+	"dialogs/preferences/folders.html#themes",
+	N_("Select Theme Folders"),
 	&edit_theme_path }
     };
 
