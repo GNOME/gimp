@@ -1,5 +1,15 @@
 2001-07-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am
+	* app/gimage.[ch]: removed.
+
+	* app/core/gimp.c: s/gimage_new/gimp_image_new/
+
+	* app/gui/gui.c
+	* app/tools/tool_manager.c: added the handlers from gimage.c
+
+2001-07-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/tool_manager.[ch]: put all tool_manager variables into
 	a struct which is attached to a "Gimp". Pass a Gimp* to all
 	tool_manager functions.

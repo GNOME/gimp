@@ -29,6 +29,7 @@
 #include "widgets/widgets-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
@@ -48,6 +49,7 @@
 #include "image_render.h"
 #include "menus.h"
 #include "palette-editor.h"
+#include "palette-import-dialog.h"
 #include "pattern-select.h"
 #include "session.h"
 #include "tool-options-dialog.h"
@@ -67,21 +69,50 @@
 
 /*  local function prototypes  */
 
-static void   gui_display_new                 (GimpImage   *gimage);
-static gint   gui_rotate_the_shield_harmonics (GtkWidget   *widget,
-					       GdkEvent    *eevent,
-					       gpointer     data);
-static void   gui_really_quit_callback        (GtkWidget   *button,
-					       gboolean     quit,
-					       gpointer     data);
-static void   gui_display_changed             (GimpContext *context,
-					       GDisplay    *display,
-					       gpointer     data);
+static void   gui_display_new                     (GimpImage   *gimage);
+static gint   gui_rotate_the_shield_harmonics     (GtkWidget   *widget,
+						   GdkEvent    *eevent,
+						   gpointer     data);
+static void   gui_really_quit_callback            (GtkWidget   *button,
+						   gboolean     quit,
+						   gpointer     data);
+
+static void   gui_display_changed                 (GimpContext *context,
+						   GDisplay    *display,
+						   gpointer     data);
+
+static void   gui_image_destroy                   (GimpImage   *gimage,
+						   gpointer     data);
+static void   gui_image_colormap_changed          (GimpImage   *gimage,
+						   gint         ncol,
+						   gpointer     data);
+static void   gui_image_name_changed              (GimpImage   *gimage,
+						   gpointer     data);
+static void   gui_image_size_changed              (GimpImage   *gimage,
+						   gpointer     data);
+static void   gui_image_alpha_changed             (GimpImage   *gimage,
+						   gpointer     data);
+static void   gui_image_repaint                   (GimpImage   *gimage,
+						   gint         x,
+						   gint         y,
+						   gint         w,
+						   gint         h,
+						   gpointer     data);
 
 
 /*  global variables  */
 
 extern GSList *display_list;  /*  from gdisplay.c  */
+
+
+/*  private variables  */
+
+static GQuark image_destroy_handler_id          = 0;
+static GQuark image_colormap_changed_handler_id = 0;
+static GQuark image_name_changed_handler_id     = 0;
+static GQuark image_size_changed_handler_id     = 0;
+static GQuark image_alpha_changed_handler_id    = 0;
+static GQuark image_repaint_handler_id          = 0;
 
 
 /*  public functions  */
@@ -91,10 +122,40 @@ gui_init (Gimp *gimp)
 {
   gimp->create_display_func = gui_display_new;
 
+  image_destroy_handler_id =
+    gimp_container_add_handler (gimp->images, "destroy",
+				GTK_SIGNAL_FUNC (gui_image_destroy),
+				gimp);
+
+  image_colormap_changed_handler_id =
+    gimp_container_add_handler (gimp->images, "colormap_changed",
+				GTK_SIGNAL_FUNC (gui_image_colormap_changed),
+				gimp);
+
+  image_name_changed_handler_id =
+    gimp_container_add_handler (gimp->images, "name_changed",
+				GTK_SIGNAL_FUNC (gui_image_name_changed),
+				gimp);
+
+  image_size_changed_handler_id =
+    gimp_container_add_handler (gimp->images, "size_changed",
+				GTK_SIGNAL_FUNC (gui_image_size_changed),
+				gimp);
+
+  image_alpha_changed_handler_id =
+    gimp_container_add_handler (gimp->images, "alpha_changed",
+				GTK_SIGNAL_FUNC (gui_image_alpha_changed),
+				gimp);
+
+  image_repaint_handler_id =
+    gimp_container_add_handler (gimp->images, "repaint",
+				GTK_SIGNAL_FUNC (gui_image_repaint),
+				gimp);
+
   gtk_signal_connect (GTK_OBJECT (gimp_get_user_context (gimp)),
 		      "display_changed",
 		      GTK_SIGNAL_FUNC (gui_display_changed),
-		      NULL);
+		      gimp);
 
   /* make sure the monitor resolution is valid */
   if (gimprc.monitor_xres < GIMP_MIN_RESOLUTION ||
@@ -200,6 +261,20 @@ gui_exit (Gimp *gimp)
   toolbox_free ();
 
   gimp_help_free ();
+
+  gimp_container_remove_handler (gimp->images, image_destroy_handler_id);
+  gimp_container_remove_handler (gimp->images, image_colormap_changed_handler_id);
+  gimp_container_remove_handler (gimp->images, image_name_changed_handler_id);
+  gimp_container_remove_handler (gimp->images, image_size_changed_handler_id);
+  gimp_container_remove_handler (gimp->images, image_alpha_changed_handler_id);
+  gimp_container_remove_handler (gimp->images, image_repaint_handler_id);
+
+  image_destroy_handler_id          = 0;
+  image_colormap_changed_handler_id = 0;
+  image_name_changed_handler_id     = 0;
+  image_size_changed_handler_id     = 0;
+  image_alpha_changed_handler_id    = 0;
+  image_repaint_handler_id          = 0;
 }
 
 void
@@ -341,10 +416,98 @@ gui_really_quit_callback (GtkWidget *button,
     }
 }
 
+
+/*  FIXME: this junk should mostly go to the display subsystem  */
+
 static void
 gui_display_changed (GimpContext *context,
 		     GDisplay    *display,
 		     gpointer     data)
 {
+  Gimp *gimp;
+
+  gimp = (Gimp *) data;
+
   gdisplay_set_menu_sensitivity (display);
+}
+
+static void
+gui_image_destroy (GimpImage *gimage,
+		   gpointer   data)
+{
+  Gimp *gimp;
+
+  gimp = (Gimp *) data;
+
+  /*  check if this is the last image  */
+  if (gimp_container_num_children (gimp->images) == 1)
+    {
+      dialog_show_toolbox ();
+    }
+}
+
+static void
+gui_image_colormap_changed (GimpImage *gimage,
+			    gint       ncol,
+			    gpointer   data)
+{
+  Gimp *gimp;
+
+  gimp = (Gimp *) data;
+
+  if (gimp_image_base_type (gimage) == INDEXED)
+    gdisplays_update_full (gimage);
+}
+
+static void
+gui_image_name_changed (GimpImage *gimage,
+			gpointer   data)
+{
+  Gimp *gimp;
+
+  gimp = (Gimp *) data;
+
+  gdisplays_update_title (gimage);
+
+  palette_import_image_renamed (gimage);
+}
+
+static void
+gui_image_size_changed (GimpImage *gimage,
+			gpointer   data)
+{
+  Gimp *gimp;
+
+  gimp = (Gimp *) data;
+
+  /*  shrink wrap and update all views  */
+  gdisplays_resize_cursor_label (gimage);
+  gdisplays_update_full (gimage);
+  gdisplays_shrink_wrap (gimage);
+}
+
+static void
+gui_image_alpha_changed (GimpImage *gimage,
+			 gpointer   data)
+{
+  Gimp *gimp;
+
+  gimp = (Gimp *) data;
+
+  gdisplays_update_title (gimage);
+}
+
+static void
+gui_image_repaint (GimpImage *gimage,
+		   gint       x,
+		   gint       y,
+		   gint       w,
+		   gint       h,
+		   gpointer   data)
+{
+  Gimp *gimp;
+
+  gimp = (Gimp *) data;
+
+  gdisplays_update_area (gimage, x, y, w, h);
 }

@@ -46,7 +46,6 @@
 
 #include "appenv.h"
 #include "app_procs.h"
-#include "gimage.h"
 #include "gimpparasite.h"
 
 #include "libgimp/gimpintl.h"
@@ -353,7 +352,7 @@ gimp_create_image (Gimp              *gimp,
   g_return_val_if_fail (gimp != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  gimage = gimage_new (gimp, width, height, type);
+  gimage = gimp_image_new (gimp, width, height, type);
 
   gimp_container_add (gimp->images, GIMP_OBJECT (gimage));
 

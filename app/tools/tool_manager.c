@@ -68,17 +68,21 @@ struct _GimpToolManager
   GSList      *tool_stack;
 
   GimpContext *global_tool_context;
+
+  GQuark       image_dirty_handler_id;
 };
 
 
 /*  local function prototypes  */
 
-static GimpToolManager * tool_manager_get          (Gimp            *gimp);
-static void              tool_manager_set          (Gimp            *gimp,
-						    GimpToolManager *tool_manager);
-static void              tool_manager_tool_changed (GimpContext     *user_context,
-						    GimpToolInfo    *tool_info,
-						    gpointer         data);
+static GimpToolManager * tool_manager_get (Gimp            *gimp);
+static void              tool_manager_set (Gimp            *gimp,
+					   GimpToolManager *tool_manager);
+static void   tool_manager_tool_changed   (GimpContext     *user_context,
+					   GimpToolInfo    *tool_info,
+					   gpointer         data);
+static void   tool_manager_image_dirty    (GimpImage       *gimage,
+					   gpointer         data);
 
 
 /*  public functions  */
@@ -92,11 +96,17 @@ tool_manager_init (Gimp *gimp)
 
   tool_manager = g_new0 (GimpToolManager, 1);
 
-  tool_manager->active_tool         = NULL;
-  tool_manager->tool_stack          = NULL;
-  tool_manager->global_tool_context = NULL;
+  tool_manager->active_tool            = NULL;
+  tool_manager->tool_stack             = NULL;
+  tool_manager->global_tool_context    = NULL;
+  tool_manager->image_dirty_handler_id = 0;
 
   tool_manager_set (gimp, tool_manager);
+
+  tool_manager->image_dirty_handler_id =
+    gimp_container_add_handler (gimp->images, "dirty",
+				GTK_SIGNAL_FUNC (tool_manager_image_dirty),
+				tool_manager);
 
   user_context = gimp_get_user_context (gimp);
 
@@ -145,6 +155,9 @@ tool_manager_exit (Gimp *gimp)
   tool_manager = tool_manager_get (gimp);
 
   gtk_object_unref (GTK_OBJECT (tool_manager->global_tool_context));
+
+  gimp_container_remove_handler (gimp->images,
+				 tool_manager->image_dirty_handler_id);
 
   g_free (tool_manager);
 
@@ -634,4 +647,30 @@ tool_manager_tool_changed (GimpContext  *user_context,
     }
 
   tool_manager_select_tool (user_context->gimp, new_tool);
+}
+
+static void
+tool_manager_image_dirty (GimpImage *gimage,
+			  gpointer   data)
+{
+  GimpToolManager *tool_manager;
+
+  tool_manager = (GimpToolManager *) data;
+
+  if (tool_manager->active_tool && ! tool_manager->active_tool->preserve)
+    {
+      GDisplay *gdisp = tool_manager->active_tool->gdisp;
+
+      if (gdisp)
+	{
+	  if (gdisp->gimage == gimage)
+	    tool_manager_initialize_tool (gimage->gimp,
+					  tool_manager->active_tool,
+					  gdisp);
+	  else
+	    tool_manager_initialize_tool (gimage->gimp,
+					  tool_manager->active_tool,
+					  NULL);
+	}
+    }
 }
