@@ -30,11 +30,13 @@ IGNORE_HFILES = \
 	gimp-composite-dispatch.h	\
 	gimp-composite-regression.h	\
 	gimp-composite-altivec.h	\
+	gimp-composite-3dnow.h		\
 	gimp-composite-mmx.h		\
 	gimp-composite-sse.h		\
 	gimp-composite-sse2.h		\
 	gimp-composite-vis.h		\
-	gimphelp-ids.h
+	gimphelp-ids.h			\
+	gimprc-blurbs.h
 
 # Images to copy into HTML directory
 HTML_IMAGES=

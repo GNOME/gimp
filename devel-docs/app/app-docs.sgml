@@ -79,7 +79,6 @@
     <xi:include href="xml/gimpguiconfig.xml"/>
     <xi:include href="xml/gimppluginconfig.xml"/>
     <xi:include href="xml/gimprc.xml"/>
-    <xi:include href="xml/gimprc-blurbs.xml"/>
   </chapter>
 
   <chapter>
@@ -185,6 +184,7 @@
     <title>Vectors</title>
     <xi:include href="xml/gimpanchor.xml"/>
     <xi:include href="xml/gimpbezierstroke.xml"/>
+    <xi:include href="xml/gimpcoordmath.xml"/>
     <xi:include href="xml/gimpstroke.xml"/>
     <xi:include href="xml/gimpvectors.xml"/>
     <xi:include href="xml/gimpvectors-compat.xml"/>

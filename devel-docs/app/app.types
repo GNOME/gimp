@@ -184,7 +184,7 @@ gimp_preview_renderer_brush_get_type
 gimp_preview_renderer_drawable_get_type 
 gimp_preview_renderer_gradient_get_type 
 gimp_preview_renderer_image_get_type 
-gimp_preview_renderer_text_layer_get_type 
+gimp_preview_renderer_layer_get_type 
 gimp_selection_editor_get_type 
 gimp_template_editor_get_type 
 gimp_template_view_get_type 
