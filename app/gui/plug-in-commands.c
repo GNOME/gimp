@@ -44,7 +44,7 @@
 #include <windows.h>
 #include <process.h>
 
-#ifdef _MSC_VER
+#ifdef NATIVE_WIN32
 #include <fcntl.h>
 #include <io.h>
 #endif

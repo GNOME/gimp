@@ -189,8 +189,9 @@
 /* #undef HAVE_LIBI */
 
 /* There are three orthogonal switches regarding Unix, X11 and Windows:
-   X_DISPLAY_MISSING vs. WINDOWS_DISPLAY, WIN32 (vs __unix__),
-   NATIVE_WIN32 vs. __CYGWIN32__ */
+ * GDK_WINDOWING (from GTk+), WIN32 (vs __unix__ or something else),
+ * NATIVE_WIN32 vs. __CYGWIN32__
+*/
 
 /* Define if the X Window System is missing or not being used.  */
 #define X_DISPLAY_MISSING 1
@@ -201,5 +202,7 @@
 /* Define if the Win32 GDI API is being used.  */
 #define WINDOWS_DISPLAY 1
 
-/* Define if compiling for Win32 but not with the Cygnus Unix emulation.  */
+/* Define if compiling for Win32 but not with the Cygwin POSIX emulation,
+ * i.e. with Microsoft C runtime. This macro probably should be renamed.
+*/
 #define NATIVE_WIN32 1

@@ -20,6 +20,11 @@
 
 
 #include <gtk/gtk.h>
+
+#ifdef NATIVE_WIN32
+#include <process.h>		/* For _getpid() */
+#endif
+
 #include "plug_in.h"
 #include "gimpimageF.h"
 

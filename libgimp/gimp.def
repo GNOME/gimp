@@ -82,7 +82,7 @@ EXPORTS
 	gimp_image_disable_undo
 	gimp_image_enable_undo
 	gimp_image_find_parasite
-	gimp_image_findnext_guide
+	gimp_image_find_next_guide
 	gimp_image_flatten
 	gimp_image_floating_selection
 	gimp_image_get_active_channel
@@ -209,6 +209,18 @@ EXPORTS
 	gimp_tile_unref
 	gimp_tile_width
 	gimp_uninstall_temp_proc
+	gimp_unit_get_abbreviation
+	gimp_unit_get_deletion_flag
+	gimp_unit_get_digits
+	gimp_unit_get_factor
+	gimp_unit_get_identifier
+	gimp_unit_get_number_of_units
+	gimp_unit_get_number_of_built_in_units
+	gimp_unit_get_plural
+	gimp_unit_get_singular
+	gimp_unit_get_symbol
+	gimp_unit_new
+	gimp_unit_set_deletion_flag
 	gimp_use_xshm
 	gp_config_write
 	gp_extension_ack_write

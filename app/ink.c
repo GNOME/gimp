@@ -945,7 +945,11 @@ time_smoother_result (InkTool* ink_tool)
       result += ink_tool->ts_buffer[i];
     }
 
+#ifdef _MSC_VER
+  return (gdouble) (gint64) (result / TIME_SMOOTHER_BUFFER);
+#else
   return (result / TIME_SMOOTHER_BUFFER);
+#endif
 }
 
 

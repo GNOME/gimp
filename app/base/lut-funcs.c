@@ -16,11 +16,17 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
 #include "gimplut.h"
 #include "gimphistogram.h"
 #include <stdio.h>
 #include <math.h>
 #include <glib.h>
+
+#ifndef HAVE_RINT
+#define rint(x) floor (x + 0.5)
+#endif
 
 /* ---------- Brightness/Contrast -----------*/
 

@@ -297,7 +297,7 @@ register_magic_load_handler_invoker (Argument *args)
     
       success = TRUE;
     
-    done:
+    done: ;
     }
 
   return procedural_db_return_args (&register_magic_load_handler_proc, success);
@@ -442,7 +442,7 @@ register_save_handler_invoker (Argument *args)
     
       success = TRUE;
     
-    done:
+    done: ;
     }
 
   return procedural_db_return_args (&register_save_handler_proc, success);

@@ -20,6 +20,8 @@
 
 #include "procedural_db.h"
 
+#include <string.h>
+
 #include "brush_select.h"
 #include "gimpbrushlist.h"
 #include "paint_funcs.h"

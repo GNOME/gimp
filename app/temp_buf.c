@@ -28,7 +28,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#ifdef _MSC_VER
+#ifdef NATIVE_WIN32
 #include <process.h>		/* For _getpid() */
 #endif
  

@@ -33,8 +33,7 @@
 #endif
 #include <errno.h>
 
-#ifdef _MSC_VER
-#include <process.h>		/* For _getpid() */
+#ifdef NATIVE_WIN32
 #include <direct.h>		/* For _mkdir() */
 #define mkdir(path,mode) _mkdir(path)
 #endif

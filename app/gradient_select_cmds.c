@@ -20,6 +20,8 @@
 
 #include "procedural_db.h"
 
+#include <string.h>
+
 #include "gradient.h"
 #include "gradient_header.h"
 

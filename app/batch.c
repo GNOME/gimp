@@ -9,7 +9,7 @@
 #include <unistd.h>
 #endif
 
-#ifdef _MSC_VER
+#ifdef NATIVE_WIN32
 #include <io.h>
 #endif
 

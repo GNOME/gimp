@@ -35,7 +35,7 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 
-#ifdef _MSC_VER
+#ifdef NATIVE_WIN32
 #include <io.h>
 #ifndef S_IRUSR
 #define S_IRUSR _S_IREAD

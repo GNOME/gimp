@@ -20,6 +20,8 @@
 
 #include "procedural_db.h"
 
+#include <string.h>
+
 #include "pattern_select.h"
 
 static ProcRecord patterns_popup_proc;

@@ -24,7 +24,7 @@
 #include <time.h>
 #include <glib.h>
 
-#ifdef _MSC_VER
+#ifdef NATIVE_WIN32
 #ifndef S_ISREG
 #define S_ISREG(m) (((m) & _S_IFMT) == _S_IFREG)
 #endif

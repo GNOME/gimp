@@ -20,6 +20,8 @@
 
 #include "procedural_db.h"
 
+#include <string.h>
+
 #include "convert.h"
 #include "gimage.h"
 #include "palette.h"

@@ -21,6 +21,7 @@
 #include "procedural_db.h"
 
 #include <stdio.h>
+#include <string.h>
 
 #include "drawable.h"
 #include "layer.h"

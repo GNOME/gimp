@@ -18,7 +18,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <gdk/gdkkeysyms.h>
-#include <gdk/gdkprivate.h>
+#include <gdk/gdk.h>
+#if GDK_WINDOWING == GDK_WINDOWING_WIN32
+# define POINTS POINTS_win32	/* Guard against clash */
+#endif
+#include <gdkprivate.h>
+#if GDK_WINDOWING == GDK_WINDOWING_WIN32
+# undef POINTS
+#endif
 #include "appenv.h"
 #include "actionarea.h"
 #include "buildmenu.h"

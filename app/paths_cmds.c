@@ -20,6 +20,8 @@
 
 #include "procedural_db.h"
 
+#include <string.h>
+
 #include "gimage.h"
 #include "pathsP.h"
 

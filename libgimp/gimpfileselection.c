@@ -35,6 +35,15 @@
 #include "pixmaps/yes.xpm"
 #include "pixmaps/no.xpm"
 
+#ifdef NATIVE_WIN32
+# ifndef S_ISDIR
+#  define S_ISDIR(m) ((m) & _S_IFDIR)
+# endif
+# ifndef S_ISREG
+#  define S_ISREG(m) ((m) & _S_IFREG)
+# endif
+#endif
+
 /*  callbacks
  */
 static void gimp_file_selection_realize         (GtkWidget *widget,

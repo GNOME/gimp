@@ -20,6 +20,8 @@
 
 #include "procedural_db.h"
 
+#include <string.h>
+
 #include "channel.h"
 #include "cursorutil.h"
 #include "drawable.h"

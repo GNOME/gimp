@@ -32,7 +32,7 @@
 #include <dirent.h>
 #endif
 
-#ifdef _MSC_VER
+#ifdef NATIVE_WIN32
 #ifndef S_ISDIR
 #define S_ISDIR(m) (((m) & _S_IFMT) == _S_IFDIR)
 #define S_ISREG(m) (((m) & _S_IFMT) == _S_IFREG)
