@@ -8,14 +8,14 @@
 # Nikos 14aug03 update 417 translated messages
 # ta panta rei 25Jan04 update  791 trasnlated messages
 # Nikos 8Oct04 Update and fix [Bug 154234]  - Broken GIMP translation (Greek)] 
-#
+# Nikos 10Oct04 Update translation 826 translated messages.
 # Note: (future translators: please read the README.i18n before you start)
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-10-08 01:26-0300\n"
-"PO-Revision-Date: 2004-10-08 03:00-0300\n"
+"PO-Revision-Date: 2004-10-08 01:30-0300\n"
 "Last-Translator: Nikos Charonitakis <charosn@her.fothnet.gr>\n"
 "Language-Team: Greek <nls@hellug.gr>\n"
 "MIME-Version: 1.0\n"
@@ -4950,17 +4950,16 @@ msgstr "/Διάλογοι/Κονσόλα Σφαλμάτων..."
 
 #
 #: app/gui/image-menu.c:1088
-#, fuzzy
 msgid "/Filte_rs"
-msgstr "Αρχεία/"
+msgstr "/_Φίλτρα"
 
 #: app/gui/image-menu.c:1090
 msgid "/Filters/Repeat Last"
-msgstr "/Φίλτρα/Επανάληψη Προηγούμενου"
+msgstr "/Filters/Επανάληψη Τελευταίου"
 
 #: app/gui/image-menu.c:1095
 msgid "/Filters/Re-Show Last"
-msgstr "/Φίλτρα/Επανεμφάνιση Προηγούμενου"
+msgstr "/Filters/Επανεμφάνιση Προηγούμενου"
 
 #
 #: app/gui/image-menu.c:1103
@@ -4979,9 +4978,8 @@ msgid "/Filters/Colors/Ma_p"
 msgstr "/Φίλτρα/Χρώματα"
 
 #: app/gui/image-menu.c:1106
-#, fuzzy
 msgid "/Filters/_Noise"
-msgstr "/Φίλτρα/Θόρυβος"
+msgstr "/Filters/_Θόρυβος"
 
 #
 #: app/gui/image-menu.c:1107
@@ -5099,9 +5097,9 @@ msgid "Other (%s) ..."
 msgstr ""
 
 #: app/gui/image-menu.c:1759
-#, fuzzy, c-format
+#, c-format
 msgid "_Zoom (%s)"
-msgstr "Μεγέθυνση"
+msgstr "_Μεγέθυνση (%s)"
 
 #: app/gui/images-menu.c:42
 #, fuzzy
@@ -5114,9 +5112,8 @@ msgid "/_New View"
 msgstr "/Προβολή/_Νέα Προβολή"
 
 #: app/gui/images-menu.c:50
-#, fuzzy
 msgid "/_Delete Image"
-msgstr "Διαγραφή Στρώματος"
+msgstr "_Διαγραφή Εικόνας"
 
 #
 #. General
@@ -5193,15 +5190,13 @@ msgstr "Πληροφορίες Εικόνας"
 
 #. add the information fields
 #: app/gui/info-window.c:251
-#, fuzzy
 msgid "Pixel Dimensions:"
-msgstr "Επεκτάσεις Αρχείων"
+msgstr "Διαστάσεις Εικονοστοχείων:"
 
 #
 #: app/gui/info-window.c:253
-#, fuzzy
 msgid "Print Size:"
-msgstr "Επισκόπηση:"
+msgstr "Μέγεθος Εκτύπωσης:"
 
 #
 #: app/gui/info-window.c:255
@@ -5607,15 +5602,13 @@ msgid "<No modules>"
 msgstr "Μονάδες"
 
 #: app/gui/module-browser.c:430 app/gui/module-browser.c:439
-#, fuzzy
 msgid "On disk"
-msgstr "Λίστα Εικονιδίων"
+msgstr "Στο δίσκο"
 
 #
 #: app/gui/module-browser.c:430
-#, fuzzy
 msgid "Only in memory"
-msgstr "Κύρια μνήμη"
+msgstr "Μόνο στη μνήμη"
 
 #: app/gui/module-browser.c:439
 #, fuzzy
@@ -5672,12 +5665,11 @@ msgstr "Κατάσταση:"
 
 #: app/gui/module-browser.c:506
 msgid "Last Error:"
-msgstr ""
+msgstr "Τελευταίο Σφάλμα:"
 
 #: app/gui/module-browser.c:507
-#, fuzzy
 msgid "Available Types:"
-msgstr "Τύπος γεμίσματος"
+msgstr "Διαθέσιμοι Τύποι:"
 
 #
 #: app/gui/offset-dialog.c:96
@@ -6089,9 +6081,8 @@ msgstr "Χρήση Δυναμικών Συντομεύσεων _Πληκτρολ
 #
 #. Themes
 #: app/gui/preferences-dialog.c:1249
-#, fuzzy
 msgid "Select Theme"
-msgstr "Επιλογή εκτυπωτή"
+msgstr "Επιλογή Θέματος"
 
 #: app/gui/preferences-dialog.c:1279
 #, fuzzy
@@ -6117,7 +6108,7 @@ msgstr ""
 
 #: app/gui/preferences-dialog.c:1356
 msgid "Show Tips on _Startup"
-msgstr ""
+msgstr "Εμφάνιση Συμβουλών στην _Εκκίνηση"
 
 #. Help Browser
 #: app/gui/preferences-dialog.c:1360
@@ -6131,14 +6122,12 @@ msgid "Help _Browser to Use:"
 msgstr "Πρόγραμμα βοήθειας"
 
 #: app/gui/preferences-dialog.c:1369 app/widgets/widgets-enums.c:55
-#, fuzzy
 msgid "Web Browser"
-msgstr "Πρόγραμμα βοήθειας"
+msgstr "Περιηγητής Ιστοσελίδων"
 
 #: app/gui/preferences-dialog.c:1373
-#, fuzzy
 msgid "Select Web Browser"
-msgstr "Πρόγραμμα βοήθειας"
+msgstr "Επιλογή Περιηγητή Ιστοσελίδων"
 
 #: app/gui/preferences-dialog.c:1377
 #, fuzzy
@@ -6183,9 +6172,8 @@ msgid "Paint Options Shared Between Tools"
 msgstr ""
 
 #: app/gui/preferences-dialog.c:1426
-#, fuzzy
 msgid "_Brush"
-msgstr "Πινέλο:"
+msgstr "_Πινέλο:"
 
 #: app/gui/preferences-dialog.c:1429
 #, fuzzy
@@ -6195,15 +6183,13 @@ msgstr "Σχέδιο"
 #. Input Devices
 #: app/gui/preferences-dialog.c:1441 app/gui/preferences-dialog.c:1444
 #: app/gui/preferences-dialog.c:2025
-#, fuzzy
 msgid "Input Devices"
 msgstr "Συσκευές Εισόδου"
 
 #. Input Device Settings
 #: app/gui/preferences-dialog.c:1451
-#, fuzzy
 msgid "Extended Input Devices"
-msgstr "Συσκευές Εισόδου"
+msgstr "Εκτεταμένες Συσκευές Εισόδου"
 
 #: app/gui/preferences-dialog.c:1459
 #, fuzzy
@@ -6373,7 +6359,7 @@ msgstr "Ανάλυση Οθόνης"
 
 #: app/gui/preferences-dialog.c:1737
 msgid "Monitor"
-msgstr "Έλεγχος"
+msgstr "Οθόνη"
 
 #: app/gui/preferences-dialog.c:1743
 msgid "Get Monitor Resolution"
@@ -6399,7 +6385,7 @@ msgstr "_Χειρωνακτικά"
 
 #: app/gui/preferences-dialog.c:1851 app/gui/preferences-dialog.c:1854
 msgid "Window Management"
-msgstr ""
+msgstr "Διαχείριση Παραθύρων"
 
 #
 #: app/gui/preferences-dialog.c:1860
@@ -7088,23 +7074,22 @@ msgstr "/Διάλογοι/_Ιδιότητες"
 #: app/gui/toolbox-menu.c:79
 #, fuzzy
 msgid "/File/_Acquire"
-msgstr "/Αρχείο/Λήψη"
+msgstr "/File/_Λήψη"
 
 #: app/gui/toolbox-menu.c:83
-#, fuzzy
 msgid "/File/_Preferences"
-msgstr "/Αρχείο/_Προτιμήσεις..."
+msgstr "/File/_Προτιμήσεις..."
 
 #. <Toolbox>/File/Dialogs
 #: app/gui/toolbox-menu.c:91
 #, fuzzy
 msgid "/File/_Dialogs"
-msgstr "/Διάλογοι/Στ_ρώματα"
+msgstr "/File/Στ_ρώματα"
 
 #: app/gui/toolbox-menu.c:93
 #, fuzzy
 msgid "/File/Dialogs/Create New Doc_k"
-msgstr "/Αρχείο/Διάλογοι/Σχέδια..."
+msgstr "/File/Διάλογοι/Σχέδια..."
 
 #: app/gui/toolbox-menu.c:95
 #, fuzzy
@@ -7240,12 +7225,12 @@ msgstr "Αρχεία/"
 #. <Toolbox>/Xtns
 #: app/gui/toolbox-menu.c:249
 msgid "/_Xtns"
-msgstr "/_Επκτς"
+msgstr "/_Xtns"
 
 #: app/gui/toolbox-menu.c:251
 #, fuzzy
 msgid "/Xtns/_Module Manager"
-msgstr "/Επκτς/Περιήγηση Συστατικών..."
+msgstr "/Xtns/Περιήγηση Συστατικών..."
 
 #. <Toolbox>/Help
 #: app/gui/toolbox-menu.c:260
@@ -7253,9 +7238,8 @@ msgid "/_Help"
 msgstr "/_Βοήθεια"
 
 #: app/gui/toolbox-menu.c:262
-#, fuzzy
 msgid "/Help/_Help"
-msgstr "/Βοήθεια/_Βοήθεια..."
+msgstr "/Help/_Βοήθεια"
 
 #: app/gui/toolbox-menu.c:267
 #, fuzzy
@@ -7263,15 +7247,13 @@ msgid "/Help/_Context Help"
 msgstr "/Βοήθεια/Βοήθεια βάσει Περιεχομένου..."
 
 #: app/gui/toolbox-menu.c:272
-#, fuzzy
 msgid "/Help/_Tip of the Day"
-msgstr "/Βοήθεια/Υπόδειξη της Ημέρας..."
+msgstr "/Help/_Συμβουλή της Ημέρας"
 
 #
 #: app/gui/toolbox-menu.c:277
-#, fuzzy
 msgid "/Help/_About"
-msgstr "/Βοήθεια/_Περί..."
+msgstr "/Help/_Περί"
 
 #: app/gui/user-install-dialog.c:132
 msgid ""
