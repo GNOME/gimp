@@ -920,7 +920,11 @@ ps_open (char *filename,
 
  /* Check if the file is a PDF. For PDF, we cant set geometry */
  is_pdf = 0;
+#ifndef __EMX__
+ fd_popen = fopen (filename, "r");
+#else
  fd_popen = fopen (filename, "rb");
+#endif
  if (fd_popen != NULL)
  {char hdr[4];
 
@@ -996,7 +1000,11 @@ ps_open (char *filename,
 
 #ifndef USE_REAL_OUTPUTFILE
  /* Start the command and use a pipe for reading the PNM-file. */
+#ifndef __EMX__
+ fd_popen = popen (cmd, "r");
+#else
  fd_popen = popen (cmd, "rb");
+#endif
 #else
  /* If someone does not like the pipe (or it does not work), just start */
  /* ghostscript with a real outputfile. When ghostscript has finished,  */
@@ -1018,7 +1026,11 @@ ps_open (char *filename,
  }
 #endif      
  system (cmd);
+#ifndef __EMX__
+ fd_popen = fopen (pnmfile, "r");
+#else
  fd_popen = fopen (pnmfile, "rb");
+#endif
 #endif
  g_free (cmd);
 
