@@ -34,11 +34,6 @@
 
 #include <string.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #ifdef G_OS_WIN32
@@ -205,6 +200,8 @@ static void     raise_selected_obj         (GtkWidget *widget,
 static void     lower_selected_obj         (GtkWidget *widget,
                                             gpointer   data);
 
+static GtkUIManager *create_ui_manager     (GtkWidget *window);
+
 gint
 gfig_dialog (void)
 {
@@ -225,6 +222,7 @@ gfig_dialog (void)
   GtkWidget    *notebook;
   GtkWidget    *right_vbox;
   GtkWidget    *hbox;
+  GtkUIManager *ui_manager;
 
   gimp_ui_init ("gfig", TRUE);
 
@@ -310,7 +308,6 @@ gfig_dialog (void)
                                    GTK_STOCK_CLEAR,  RESPONSE_CLEAR,
                                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                    GTK_STOCK_CLOSE,  GTK_RESPONSE_OK,
-                                   _("Paint"),       RESPONSE_PAINT,
 
                                    NULL);
 
@@ -325,64 +322,13 @@ gfig_dialog (void)
                                      RESPONSE_UNDO, undo_water_mark >= 0);
 
   /* build the menu */
-  menubar = gtk_menu_bar_new ();
+  ui_manager = create_ui_manager (top_level_dlg);
+  menubar = gtk_ui_manager_get_widget (ui_manager, "/ui/gfig-menubar");
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (top_level_dlg)->vbox),
                       menubar, FALSE, FALSE, 0);
   gtk_widget_show (menubar);
 
-  /* File menu */
-  menuitem = gtk_menu_item_new_with_mnemonic ("_File");
-  gtk_menu_shell_append (GTK_MENU_SHELL (menubar), menuitem);
-  gtk_widget_show (menuitem);
-
-  menu = gtk_menu_new ();
-  gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
-  gtk_widget_show (menu);
-
-  menuitem = gtk_image_menu_item_new_from_stock (GTK_STOCK_OPEN, NULL);
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-  g_signal_connect (menuitem, "activate",
-                    G_CALLBACK (load_button_callback),
-                    NULL);
-  gtk_widget_show (menuitem);
-
-  menuitem = gtk_menu_item_new_with_mnemonic ("_Import");
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-  g_signal_connect (menuitem, "activate",
-                    G_CALLBACK (merge_button_callback),
-                    NULL);
-  gtk_widget_show (menuitem);
-
-  menuitem = gtk_image_menu_item_new_from_stock (GTK_STOCK_SAVE, NULL);
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-  g_signal_connect (menuitem, "activate",
-                    G_CALLBACK (gfig_save_menu_callback),
-                    NULL);
-  gtk_widget_show (menuitem);
-
-  /* Grid menu */
-  menuitem = gtk_menu_item_new_with_mnemonic ("_Edit");
-  gtk_menu_shell_append (GTK_MENU_SHELL (menubar), menuitem);
-  gtk_widget_show (menuitem);
-
-  menu = gtk_menu_new ();
-  gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
-  gtk_widget_show (menu);
-
-  menuitem = gtk_menu_item_new_with_mnemonic ("_Grid");
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-  g_signal_connect (menuitem, "activate",
-                    G_CALLBACK (adjust_grid_callback),
-                    NULL);
-  gtk_widget_show (menuitem);
-
-  menuitem = gtk_image_menu_item_new_from_stock (GTK_STOCK_PREFERENCES, NULL);
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-  g_signal_connect (menuitem, "activate",
-                    G_CALLBACK (options_dialog_callback),
-                    NULL);
-  gtk_widget_show (menuitem);
-
+  /* Main box */
   main_hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (top_level_dlg)->vbox), main_hbox,
@@ -642,10 +588,6 @@ gfig_response (GtkWidget *widget,
       gtk_widget_destroy (widget);
       break;
 
-    case RESPONSE_PAINT:
-      gfig_paint_callback ();
-      break;
-
     default:
       gtk_widget_destroy (widget);
       break;
@@ -684,32 +626,7 @@ static void
 merge_button_callback (GtkWidget *widget,
                        gpointer   data)
 {
-  GList     *sellist;
-  GFigObj   *sel_obj;
-  DAllObjs  *obj_copies;
-  GtkWidget *list = (GtkWidget *) data;
-
-  /* Must update which object we are editing */
-  /* Get the list and which item is selected */
-  /* Only allow single selections */
-
   /* apparently this function (call) is all broken at the moment */
-  g_return_if_fail (list != NULL);
-
-  sellist = GTK_LIST (list)->selection;
-
-  sel_obj = (GFigObj *) g_object_get_data (G_OBJECT (sellist->data),
-                                           "user_data");
-
-  if (sel_obj && sel_obj->obj_list && sel_obj != gfig_context->current_obj)
-    {
-      /* Copy list tag onto current & redraw */
-      obj_copies = copy_all_objs (sel_obj->obj_list);
-      prepend_to_all_obj (gfig_context->current_obj, obj_copies);
-
-      /* redraw all */
-      gtk_widget_queue_draw (gfig_context->preview);
-    }
 }
 
 static void
@@ -842,6 +759,86 @@ create_save_file_chooser (GFigObj   *obj,
 
 
   gtk_window_present (GTK_WINDOW (window));
+}
+
+static GtkUIManager *
+create_ui_manager (GtkWidget *window)
+{
+static GtkActionEntry actions[] =
+  {
+    { "gfig-menubar", NULL, "GFig Menu" },
+
+    { "gfig-file-menu", NULL, "File" },
+
+    { "open", GTK_STOCK_OPEN,
+      NULL, "<control>O", NULL,
+      G_CALLBACK (load_button_callback) },
+
+    { "save", GTK_STOCK_SAVE,
+      NULL, "<control>S", NULL,
+      G_CALLBACK (gfig_save_menu_callback) },
+
+    { "gfig-edit-menu", NULL, "Edit" },
+
+    { "grid", GIMP_STOCK_GRID,
+      N_("Grid"), "<control>G", NULL,
+      G_CALLBACK (adjust_grid_callback) },
+
+    { "options", GTK_STOCK_PREFERENCES,
+      NULL, "<control>P", NULL,
+      G_CALLBACK (options_dialog_callback) }
+  };
+  static GtkRadioActionEntry radio_actions[] =
+  {
+    { "line", GIMP_STOCK_TOOL_MOVE,
+      N_("Move"), "M", NULL, 0 },
+
+    { "rotate", GIMP_STOCK_TOOL_ROTATE,
+      N_("Rotate"), "R", N_("Rotate / Scale"), 1/*OP_ROTATE*/ },
+
+    { "stretch", GIMP_STOCK_TOOL_PERSPECTIVE,
+      N_("Stretch"), "S", NULL, 2/*OP_STRETCH*/ }
+  };
+
+  GtkUIManager   *ui_manager = gtk_ui_manager_new ();
+  GtkActionGroup *group      = gtk_action_group_new ("Actions");
+
+  gtk_action_group_set_translation_domain (group, NULL);
+
+  gtk_action_group_add_actions (group,
+                                actions,
+                                G_N_ELEMENTS (actions),
+                                window);
+/*  gtk_action_group_add_radio_actions (group,
+                                      radio_actions,
+                                      G_N_ELEMENTS (radio_actions),
+                                      ifsDesign->op,
+                                      G_CALLBACK (design_op_update_callback),
+                                      window);*/
+
+  gtk_window_add_accel_group (GTK_WINDOW (window),
+                              gtk_ui_manager_get_accel_group (ui_manager));
+  gtk_accel_group_lock (gtk_ui_manager_get_accel_group (ui_manager));
+
+  gtk_ui_manager_insert_action_group (ui_manager, group, -1);
+  g_object_unref (group);
+
+  gtk_ui_manager_add_ui_from_string (ui_manager,
+                                     "<ui>"
+                                     "  <menubar name=\"gfig-menubar\">"
+                                     "    <menu name=\"File\" action=\"gfig-file-menu\">"
+                                     "      <menuitem action=\"open\" />"
+                                     "      <menuitem action=\"save\" />"
+                                     "    </menu>"
+                                     "    <menu name=\"Edit\" action=\"gfig-edit-menu\">"
+                                     "      <menuitem action=\"grid\" />"
+                                     "      <menuitem action=\"options\" />"
+                                     "    </menu>"
+                                     "  </menubar>"
+                                     "</ui>",
+                                     -1, NULL);
+
+  return ui_manager;
 }
 
 void

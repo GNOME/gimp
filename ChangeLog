@@ -1,3 +1,9 @@
+2004-11-11  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/gfig/gfig-dialog.c: use a GtkUIManager for the menu and
+	automagically have it translated!  The button bar will follow the same
+	path.  Remove the now useless "Paint" button.
+
 2004-11-11  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig-dump.c: groff doesn't like lines to start
