@@ -1,3 +1,30 @@
+2000-03-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimage_mask.[ch] (gimage_mask_extract): add an "add_alpha"
+	parameter to allow selected regions to be extracted without having
+	an alpha channel added.
+
+	* app/global_edit.c: pass add_alpha = TRUE.
+
+	* app/transform_core.[ch]: made the transform core work on
+	non-layer drawables even if no selection is present. Fixes #7485
+	and #7555.
+
+	- transform_core_cut(): extract the mask without alpha if
+	  operating on a non-layer without having a selection.
+	- transform_core_paste(): return a boolean indicating success
+	  instead of a layer and handle channels correctly.
+	- transform_core_do(): if the "floating_tiles" passed to the
+	  function are from an un-floated non-layer, treat the whole
+	  non-layer as alpha channel and never enter the loop which
+	  transforms the (not present) color channels.
+	  Also clip the result to ensure that the channel never grows
+	  larger then the image.
+
+	* app/tools_cmds.c
+	* tools/pdbgen/pdb/tools.pdb: transform_core_paste() returns a
+	gboolean now.
+
 2000-03-26  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/gap/gap_main.c
@@ -44,7 +71,7 @@ Sat Mar 25 20:57:24 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 	* app/gimage_cmds.c: corrected the description and help for the
 	gimp_image_[get|set]_component_* functions.
 
-	* app/info_dialog.h: include dialog_handler.h
+	* app/info_dialog.c: include dialog_handler.h
 
 2000-03-25  Sven Neumann  <sven@gimp.org>
 

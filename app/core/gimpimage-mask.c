@@ -183,7 +183,8 @@ TileManager *
 gimage_mask_extract (GImage       *gimage,
 		     GimpDrawable *drawable,
 		     gboolean      cut_gimage,
-		     gboolean      keep_indexed)
+		     gboolean      keep_indexed,
+		     gboolean      add_alpha)
 {
   TileManager * tiles;
   Channel * sel_mask;
@@ -216,17 +217,23 @@ gimage_mask_extract (GImage       *gimage,
   switch (drawable_type (drawable))
     {
     case RGB_GIMAGE: case RGBA_GIMAGE:
-      bytes = 4; type = RGB; break;
+      bytes = add_alpha ? 4 : drawable->bytes;
+      type = RGB;
+      break;
     case GRAY_GIMAGE: case GRAYA_GIMAGE:
-      bytes = 2; type = GRAY; break;
+      bytes = add_alpha ? 2 : drawable->bytes;
+      type = GRAY;
+      break;
     case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
       if (keep_indexed)
 	{
-	  bytes = 2;  type = GRAY;
+	  bytes = add_alpha ? 2 : drawable->bytes;
+	  type = GRAY;
 	}
       else
 	{
-	  bytes = 4;  type = INDEXED;
+	  bytes = add_alpha ? 4 : drawable->bytes;
+	  type = INDEXED;
 	}
       break;
     default:
@@ -347,7 +354,7 @@ gimage_mask_float (GImage       *gimage,
   undo_push_group_start (gimage, FLOAT_MASK_UNDO);
 
   /*  Cut the selected region  */
-  tiles = gimage_mask_extract (gimage, drawable, TRUE, FALSE);
+  tiles = gimage_mask_extract (gimage, drawable, TRUE, FALSE, TRUE);
 
   /*  Create a new layer from the buffer  */
   layer = layer_new_from_tiles (gimage, gimp_drawable_type_with_alpha(drawable), tiles, 

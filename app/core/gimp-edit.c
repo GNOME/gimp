@@ -192,7 +192,7 @@ edit_cut (GImage       *gimage,
   empty = gimage_mask_is_empty (gimage);
 
   /*  Next, cut the mask portion from the gimage  */
-  cut = gimage_mask_extract (gimage, drawable, TRUE, FALSE);
+  cut = gimage_mask_extract (gimage, drawable, TRUE, FALSE, TRUE);
 
   /*  Only crop if the gimage mask wasn't empty  */
   if (cut && empty == FALSE)
@@ -243,7 +243,7 @@ edit_copy (GImage       *gimage,
   empty = gimage_mask_is_empty (gimage);
 
   /*  First, copy the masked portion of the gimage  */
-  copy = gimage_mask_extract (gimage, drawable, FALSE, FALSE);
+  copy = gimage_mask_extract (gimage, drawable, FALSE, FALSE, TRUE);
 
   /*  Only crop if the gimage mask wasn't empty  */
   if (copy && empty == FALSE)

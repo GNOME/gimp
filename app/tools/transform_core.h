@@ -163,7 +163,7 @@ TileManager * transform_core_do    (GImage          *gimage,
 TileManager * transform_core_cut   (GImage          *gimage,
 				    GimpDrawable    *drawable,
 				    gboolean        *new_layer);
-Layer       * transform_core_paste (GImage          *gimage,
+gboolean      transform_core_paste (GImage          *gimage,
 				    GimpDrawable    *drawable,
 				    TileManager     *tiles,
 				    gboolean         new_layer);

@@ -1565,7 +1565,6 @@ flip_invoker (Argument *args)
   gint32 flip_type;
   GimpImage *gimage;
   TileManager *float_tiles, *new_tiles;
-  Layer *layer;
   gboolean new_layer;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
@@ -1606,10 +1605,7 @@ flip_invoker (Argument *args)
       tile_manager_destroy (float_tiles);
     
       if (new_tiles)
-	{
-	  layer = transform_core_paste (gimage, drawable, new_tiles, new_layer);
-	  success = (layer != NULL);
-	}
+	success = transform_core_paste (gimage, drawable, new_tiles, new_layer);
       else
 	success = FALSE;
     
@@ -2107,7 +2103,6 @@ perspective_invoker (Argument *args)
   gboolean interpolation;
   GimpImage *gimage;
   TileManager *float_tiles, *new_tiles;
-  Layer *layer;
   gboolean new_layer;
   double cx, cy;
   double scalex, scaley;
@@ -2175,10 +2170,7 @@ perspective_invoker (Argument *args)
       tile_manager_destroy (float_tiles);
     
       if (new_tiles)
-	{
-	  layer = transform_core_paste (gimage, drawable, new_tiles, new_layer);
-	  success = layer != NULL;
-	}
+	success = transform_core_paste (gimage, drawable, new_tiles, new_layer);
       else
 	success = FALSE;
     
@@ -2388,7 +2380,6 @@ rotate_invoker (Argument *args)
   gdouble angle;
   GimpImage *gimage;
   TileManager *float_tiles, *new_tiles;
-  Layer *layer;
   gboolean new_layer;
   double cx, cy;
   GimpMatrix3 matrix;
@@ -2428,10 +2419,7 @@ rotate_invoker (Argument *args)
       tile_manager_destroy (float_tiles);
     
       if (new_tiles)
-	{
-	  layer = transform_core_paste (gimage, drawable, new_tiles, new_layer);
-	  success = layer != NULL;
-	}
+	success = transform_core_paste (gimage, drawable, new_tiles, new_layer);
       else
 	success = FALSE;
     
@@ -2500,7 +2488,6 @@ scale_invoker (Argument *args)
   gboolean interpolation;
   GimpImage *gimage;
   TileManager *float_tiles, *new_tiles;
-  Layer *layer;
   gboolean new_layer;
   double scalex, scaley;
   double trans_info[4];
@@ -2555,10 +2542,7 @@ scale_invoker (Argument *args)
 	  tile_manager_destroy (float_tiles);
     
 	  if (new_tiles)
-	    {
-	      layer = transform_core_paste (gimage, drawable, new_tiles, new_layer);
-	      success = layer != NULL;
-	    }
+	    success = transform_core_paste (gimage, drawable, new_tiles, new_layer);
 	  else
 	    success = FALSE;
     
@@ -2647,7 +2631,6 @@ shear_invoker (Argument *args)
   gdouble magnitude;
   GimpImage *gimage;
   TileManager *float_tiles, *new_tiles;
-  Layer *layer;
   gboolean new_layer;
   double cx, cy;
   GimpMatrix3 matrix;
@@ -2698,10 +2681,7 @@ shear_invoker (Argument *args)
       tile_manager_destroy (float_tiles);
     
       if (new_tiles)
-	{
-	  layer = transform_core_paste (gimage, drawable, new_tiles, new_layer);
-	  success = layer != NULL;
-	}
+	success = transform_core_paste (gimage, drawable, new_tiles, new_layer);
       else
 	success = FALSE;
     

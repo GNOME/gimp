@@ -49,7 +49,8 @@ void            gimage_mask_translate     (GImage       *gimage,
 TileManager *   gimage_mask_extract       (GImage       *gimage,
 					   GimpDrawable *drawable,
 					   gboolean      cut_gimage,
-					   gboolean      keep_indexed);
+					   gboolean      keep_indexed,
+					   gboolean      add_alpha);
 
 Layer *         gimage_mask_float         (GImage       *gimage,
 					   GimpDrawable *drawable,

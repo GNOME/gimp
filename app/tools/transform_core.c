@@ -538,7 +538,7 @@ transform_core_doit (Tool     *tool,
   new_tiles = (* transform_core->trans_func) (tool, gdisp_ptr, FINISH);
 
   (* transform_core->trans_func) (tool, gdisp_ptr, INIT);
-  
+
   transform_core_recalc (tool, gdisp_ptr);
 
   if (new_tiles)
@@ -1171,8 +1171,8 @@ transform_core_do (GImage          *gimage,
   alpha = 0;
 
   /*  turn interpolation off for simple transformations (e.g. rot90)  */
-  if (gimp_matrix3_is_simple (matrix)
-      || interpolation_type == NEAREST_NEIGHBOR_INTERPOLATION)
+  if (gimp_matrix3_is_simple (matrix) ||
+      interpolation_type == NEAREST_NEIGHBOR_INTERPOLATION)
     interpolation = FALSE;
 
   /*  Get the background color  */
@@ -1194,6 +1194,17 @@ transform_core_do (GImage          *gimage,
       /*  If the gimage is indexed color, ignore smoothing value  */
       interpolation = 0;
       break;
+    }
+
+  /*  enable rotating un-floated non-layers  */
+  if (float_tiles->bpp == 1)
+    {
+      bg_col[0] = OPAQUE_OPACITY;
+
+      /*  setting alpha = 0 will cause the channel's value to be treated
+       *  as alpha and the color channel loops never to be entered
+       */
+      alpha = 0;
     }
 
   if (transform_tool_direction () == TRANSFORM_CORRECTIVE)
@@ -1218,7 +1229,7 @@ transform_core_do (GImage          *gimage,
   y2 = y1 + float_tiles->height;
 
   /*  Find the bounding coordinates  */
-  if (active_tool && transform_tool_clip ())
+  if (alpha == 0 || (active_tool && transform_tool_clip ()))
     {
       tx1 = x1;
       ty1 = y1;
@@ -1272,9 +1283,9 @@ transform_core_do (GImage          *gimage,
       pixel_surround_init (&surround, float_tiles, 1, 1, bg_col);
     }
 
-  width = tiles->width;
+  width  = tiles->width;
   height = tiles->height;
-  bytes = tiles->bpp;
+  bytes  = tiles->bpp;
 
   dest = g_new (guchar, width * bytes);
 
@@ -1319,10 +1330,8 @@ transform_core_do (GImage          *gimage,
 
           if (interpolation)
        	    {
-
               if (interpolation_type == CUBIC_INTERPOLATION)
        	        {
-
                   /*  ttx & tty are the subpixel coordinates of the point in
 		   *  the original selection's floating buffer.
 		   *  We need the four integer pixel coords around them:
@@ -1352,33 +1361,35 @@ transform_core_do (GImage          *gimage,
                       dy = tty - ity;
 
 		      /* calculate alpha of result */
-                      start = &data[alpha];
-                      a_val = cubic (dy,
-		                     CUBIC_ROW (dx, start, bytes),
-		                     CUBIC_ROW (dx, start + row, bytes),
+		      start = &data[alpha];
+		      a_val = cubic (dy,
+				     CUBIC_ROW (dx, start, bytes),
+				     CUBIC_ROW (dx, start + row, bytes),
 				     CUBIC_ROW (dx, start + row + row, bytes),
 				     CUBIC_ROW (dx, start + row + row + row, bytes));
 
 		      if (a_val <= 0.0)
 			{
 			  a_recip = 0.0;
-                          d[alpha] = 0;
+			  d[alpha] = 0;
 			}
-                      else if (a_val > 255.0)
+		      else if (a_val > 255.0)
 			{
-		  	  a_recip = 1.0 / a_val;
-                          d[alpha] = 255;
+			  a_recip = 1.0 / a_val;
+			  d[alpha] = 255;
 			}
 		      else
 			{
 			  a_recip = 1.0 / a_val;
-                          d[alpha] = RINT(a_val);
+			  d[alpha] = RINT(a_val);
 			}
 
-                      /* for colour channels c,
-                       * result = bicubic (c * alpha) / bicubic (alpha)
-	               */
-                      for (i = -alpha; i < 0; ++i)
+		      /*  for colour channels c,
+		       *  result = bicubic (c * alpha) / bicubic (alpha)
+		       *
+		       *  never entered for alpha == 0
+		       */
+		      for (i = -alpha; i < 0; ++i)
 			{
 			  start = &data[alpha];
 			  newval =
@@ -1388,24 +1399,24 @@ transform_core_do (GImage          *gimage,
 					 CUBIC_SCALED_ROW (dx, start + row, bytes, i),
 					 CUBIC_SCALED_ROW (dx, start + row + row, bytes, i),
 					 CUBIC_SCALED_ROW (dx, start + row + row + row, bytes, i)));
-                        if (newval <= 0)
-			  {
-			    *d++ = 0;
-			  }
-			else if (newval > 255)
-			  {
-			    *d++ = 255;
-			  }
-			else
-			  {
-			    *d++ = newval;
-			  }
+			  if (newval <= 0)
+			    {
+			      *d++ = 0;
+			    }
+			  else if (newval > 255)
+			    {
+			      *d++ = 255;
+			    }
+			  else
+			    {
+			      *d++ = newval;
+			    }
 			}
 
+		      /*  alpha already done  */
 		      d++;
 
-                      pixel_surround_release (&surround);
-
+		      pixel_surround_release (&surround);
 		    }
                   else /* not in source range */
                     {
@@ -1441,10 +1452,10 @@ transform_core_do (GImage          *gimage,
                       dy = tty - ity;
 
 		      /* calculate alpha value of result pixel */
-                      chan = &data[alpha];
-                      a_val = BILINEAR (chan[0], chan[bytes], chan[row],
+		      chan = &data[alpha];
+		      a_val = BILINEAR (chan[0], chan[bytes], chan[row],
 					chan[row+bytes], dx, dy);
-                      if (a_val <= 0.0)
+		      if (a_val <= 0.0)
 			{
 			  a_recip = 0.0;
 			  d[alpha] = 0.0;
@@ -1462,8 +1473,10 @@ transform_core_do (GImage          *gimage,
 
 		      /*  for colour channels c,
 		       *  result = bilinear (c * alpha) / bilinear (alpha)
+		       *
+		       *  never entered for alpha == 0
 		       */
-                      for (i = -alpha; i < 0; ++i)
+		      for (i = -alpha; i < 0; ++i)
 			{
 			  chan = &data[alpha];
 			  newval =
@@ -1473,21 +1486,22 @@ transform_core_do (GImage          *gimage,
 					    chan[row] * chan[row+i],
 					    chan[row+bytes] * chan[row+bytes+i],
 					    dx, dy));
-                        if (newval <= 0)
-			  {
-			    *d++ = 0;
-			  }
-			else if (newval > 255)
-			  {
-			    *d++ = 255;
-			  }
-			else
-			  {
-			    *d++ = newval;
-			  }
+			  if (newval <= 0)
+			    {
+			      *d++ = 0;
+			    }
+			  else if (newval > 255)
+			    {
+			      *d++ = 255;
+			    }
+			  else
+			    {
+			      *d++ = newval;
+			    }
 			}
-		      /* already set alpha */
-                      d++;
+
+		      /*  alpha already done  */
+		      d++;
 
                       pixel_surround_release (&surround);
 		    }
@@ -1552,13 +1566,16 @@ transform_core_cut (GImage       *gimage,
   /*  extract the selected mask if there is a selection  */
   if (! gimage_mask_is_empty (gimage))
     {
-      tiles = gimage_mask_extract (gimage, drawable, TRUE, TRUE);
+      tiles = gimage_mask_extract (gimage, drawable, TRUE, TRUE, TRUE);
       *new_layer = TRUE;
     }
   /*  otherwise, just copy the layer  */
   else
     {
-      tiles = gimage_mask_extract (gimage, drawable, FALSE, TRUE);
+      if (GIMP_IS_LAYER (drawable))
+	tiles = gimage_mask_extract (gimage, drawable, FALSE, TRUE, TRUE);
+      else
+	tiles = gimage_mask_extract (gimage, drawable, FALSE, TRUE, FALSE);
       *new_layer = FALSE;
     }
 
@@ -1567,23 +1584,27 @@ transform_core_cut (GImage       *gimage,
 
 
 /*  Paste a transform to the gdisplay  */
-Layer *
+gboolean
 transform_core_paste (GImage       *gimage,
 		      GimpDrawable *drawable,
 		      TileManager  *tiles,
 		      gboolean      new_layer)
 {
-  Layer *layer;
-  Layer *floating_layer;
+  Layer   *layer   = NULL;
+  Channel *channel = NULL;
+  Layer   *floating_layer;
 
   if (new_layer)
     {
-      layer = layer_new_from_tiles (gimage, gimp_drawable_type_with_alpha(drawable), tiles, _("Transformation"),
+      layer = layer_new_from_tiles (gimage,
+				    gimp_drawable_type_with_alpha (drawable),
+				    tiles,
+				    _("Transformation"),
 				    OPAQUE_OPACITY, NORMAL_MODE);
       if (!layer)
         {
           g_warning ("transform_core_paste: layer_new_frome_tiles() failed");
-          return NULL;
+          return FALSE;
         }
       GIMP_DRAWABLE (layer)->offset_x = tiles->x;
       GIMP_DRAWABLE (layer)->offset_y = tiles->y;
@@ -1599,55 +1620,61 @@ transform_core_paste (GImage       *gimage,
       /*  Free the tiles  */
       tile_manager_destroy (tiles);
 
-      return layer;
+      return TRUE;
     }
   else
     {
       if (GIMP_IS_LAYER (drawable))
 	layer = GIMP_LAYER (drawable);
+      else if (GIMP_IS_CHANNEL (drawable))
+	channel = GIMP_CHANNEL (drawable);
       else
-	return NULL;
+	return FALSE;
 
-      layer_add_alpha (layer);
+      if (layer)
+	layer_add_alpha (layer);
       floating_layer = gimage_floating_sel (gimage);
 
       if (floating_layer)
 	floating_sel_relax (floating_layer, TRUE);
 
       gdisplays_update_area (gimage,
-			     GIMP_DRAWABLE (layer)->offset_x,
-			     GIMP_DRAWABLE (layer)->offset_y,
-			     GIMP_DRAWABLE (layer)->width,
-			     GIMP_DRAWABLE (layer)->height);
+			     drawable->offset_x,
+			     drawable->offset_y,
+			     drawable->width,
+			     drawable->height);
 
       /*  Push an undo  */
-      undo_push_layer_mod (gimage, layer);
+      if (layer)
+	undo_push_layer_mod (gimage, layer);
+      else if (channel)
+	undo_push_channel_mod (gimage, channel);
 
       /*  set the current layer's data  */
-      GIMP_DRAWABLE(layer)->tiles = tiles;
+      drawable->tiles = tiles;
 
       /*  Fill in the new layer's attributes  */
-      GIMP_DRAWABLE (layer)->width    = tiles->width;
-      GIMP_DRAWABLE (layer)->height   = tiles->height;
-      GIMP_DRAWABLE (layer)->bytes    = tiles->bpp;
-      GIMP_DRAWABLE (layer)->offset_x = tiles->x;
-      GIMP_DRAWABLE (layer)->offset_y = tiles->y;
+      drawable->width    = tiles->width;
+      drawable->height   = tiles->height;
+      drawable->bytes    = tiles->bpp;
+      drawable->offset_x = tiles->x;
+      drawable->offset_y = tiles->y;
 
       if (floating_layer)
 	floating_sel_rigor (floating_layer, TRUE);
 
-      drawable_update (GIMP_DRAWABLE (layer),
+      drawable_update (drawable,
 		       0, 0,
-		       GIMP_DRAWABLE (layer)->width,
-		       GIMP_DRAWABLE (layer)->height);
+		       gimp_drawable_width (drawable),
+		       gimp_drawable_height (drawable));
 
       /*  if we were operating on the floating selection, then it's boundary 
        *  and previews need invalidating
        */
-      if (layer == floating_layer)
+      if (drawable == (GimpDrawable *) floating_layer)
 	floating_sel_invalidate (floating_layer);
 
-      return layer;
+      return TRUE;
     }
 }
 
