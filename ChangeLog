@@ -1,3 +1,8 @@
+Wed Apr 29 07:50:26 EDT 1998 Adrian Likins <adrian@gimp.org>
+
+	* gimp.1: updated man page to reflect new --debug-handlers
+	argument 
+
 Wed Apr 29 04:05:34 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* configure.in: tightened png header check
