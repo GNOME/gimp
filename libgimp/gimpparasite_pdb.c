@@ -136,7 +136,8 @@ gimp_image_parasite_find (gint32       image_ID,
 {
   GParam *return_vals;
   gint nreturn_vals;
-  GimpParasite *parasite;
+  GimpParasite *parasite = NULL;
+
   return_vals = gimp_run_procedure ("gimp_image_parasite_find",
 				    &nreturn_vals,
 				    PARAM_IMAGE, image_ID,
@@ -144,11 +145,7 @@ gimp_image_parasite_find (gint32       image_ID,
 				    PARAM_END);
 
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    {
-      parasite = gimp_parasite_copy (&return_vals[1].data.d_parasite);
-    }
-  else
-    parasite = NULL;
+    parasite = gimp_parasite_copy (&return_vals[1].data.d_parasite);
 
   gimp_destroy_params (return_vals, nreturn_vals);
   

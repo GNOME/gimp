@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball
  *
- * gimpimage.c
+ * gimplayer.c
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -21,54 +21,26 @@
 
 #include "gimp.h"
 
-
-guchar *
-gimp_image_get_cmap (gint32  image_ID,
-		     gint   *num_colors)
+gint32
+gimp_layer_new (gint32                image_ID,
+		gchar                *name,
+		gint                  width,
+		gint                  height,
+		GimpImageType         type,
+		gdouble               opacity,
+		GimpLayerModeEffects  mode)
 {
-  gint    num_bytes;
-  guchar *cmap;
-
-  cmap = _gimp_image_get_cmap (image_ID,
-			       &num_bytes);
-
-  *num_colors = num_bytes / 3;
-
-  return cmap;
+  return _gimp_layer_new (image_ID,
+			  width,
+			  height,
+			  type,
+			  name,
+			  opacity,
+			  mode);
 }
 
-void
-gimp_image_set_cmap (gint32  image_ID,
-		     guchar *cmap,
-		     gint    num_colors)
+gint32
+gimp_layer_copy (gint32  layer_ID)
 {
-  _gimp_image_set_cmap (image_ID,
-			num_colors * 3,
-			cmap);
-}
-
-guchar *
-gimp_image_get_thumbnail_data (gint32  image_ID,
-			       gint   *width,
-			       gint   *height,
-			       gint   *bpp)
-{
-  gint    ret_width;
-  gint    ret_height;
-  guchar *image_data;
-  gint    data_size;
-
-  _gimp_image_thumbnail (image_ID,
-			 *width,
-			 *height,
-			 &ret_width,
-			 &ret_height,
-			 bpp,
-			 &data_size,
-			 &image_data);
-
-  *width  = ret_width;
-  *height = ret_height;
-
-  return image_data;
+  return _gimp_layer_copy (layer_ID, FALSE);
 }

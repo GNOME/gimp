@@ -761,9 +761,10 @@ _gimp_image_thumbnail (gint32   image_ID,
                                     PARAM_INT32, height,
                                     PARAM_END);
 
-  *thumbnail_data_count = 0;
-  *ret_width  = 0;
+  *ret_width = 0;
   *ret_height = 0;
+  *thumbnail_data_count = 0;
+  *thumbnail_data = NULL;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
     {
       *ret_width = return_vals[1].data.d_int32;

@@ -227,3 +227,29 @@ gimp_drawable_get_tile2 (GimpDrawable *drawable,
 
   return gimp_drawable_get_tile (drawable, shadow, row, col);
 }
+
+guchar *
+gimp_drawable_get_thumbnail_data (gint32  drawable_ID,
+				  gint   *width,
+				  gint   *height,
+				  gint   *bpp)
+{
+  gint    ret_width;
+  gint    ret_height;
+  guchar *image_data;
+  gint    data_size;
+
+  _gimp_drawable_thumbnail (drawable_ID,
+			    *width,
+			    *height,
+			    &ret_width,
+			    &ret_height,
+			    bpp,
+			    &data_size,
+			    &image_data);
+
+  *width  = ret_width;
+  *height = ret_height;
+
+  return image_data;
+}

@@ -158,6 +158,9 @@ libgimp_la_SOURCES = \
 	gimphelp.c		\
 	gimpimage.c		\
 	gimpimage.h		\
+	gimplayer.c		\
+	gimplayer.h		\
+	gimplimits.h		\
 	gimpmatrix.c		\
 	gimpmatrix.h		\
 	gimpparasite.c		\
@@ -224,6 +227,7 @@ gimpinclude_HEADERS = \
 	gimpgradientselect.h	\
 	gimphelpui.h		\
 	gimpimage.h		\
+	gimplayer.h		\
 	gimplimits.h		\
 	gimpmath.h		\
 	gimpmatrix.h		\
