@@ -31,7 +31,6 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
 #include "core/gimpimage-mask-select.h"
 #include "core/gimpimage-merge.h"
 #include "core/gimpimage-undo.h"
@@ -339,7 +338,8 @@ layers_crop_cmd_callback (GtkWidget *widget,
   gint       off_x, off_y;
   return_if_no_layer (gimage, active_layer, data);
 
-  if (! gimp_image_mask_bounds (gimage, &x1, &y1, &x2, &y2))
+  if (! gimp_channel_bounds (gimp_image_get_mask (gimage),
+                             &x1, &y1, &x2, &y2))
     {
       g_message (_("Cannot crop because the current selection is empty."));
       return;

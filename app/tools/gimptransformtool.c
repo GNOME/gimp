@@ -1147,9 +1147,9 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
 
         case GIMP_TRANSFORM_TYPE_SELECTION:
         case GIMP_TRANSFORM_TYPE_PATH:
-          gimp_image_mask_bounds (gdisp->gimage,
-                                  &tr_tool->x1, &tr_tool->y1,
-                                  &tr_tool->x2, &tr_tool->y2);
+          gimp_channel_bounds (gimp_image_get_mask (gdisp->gimage),
+                               &tr_tool->x1, &tr_tool->y1,
+                               &tr_tool->x2, &tr_tool->y2);
           break;
         }
     }

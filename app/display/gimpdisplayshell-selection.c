@@ -27,8 +27,8 @@
 #include "base/boundary.h"
 
 #include "core/gimp.h"
+#include "core/gimpchannel.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-mask.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -690,11 +690,12 @@ selection_generate_segs (Selection *select)
   BoundSeg       *segs_layer;
 
   /*  Ask the gimage for the boundary of its selected region...
-   *  Then transform that information into a new buffer of XSegments
+   *  Then transform that information into a new buffer of GdkSegments
    */
-  gimp_image_mask_boundary (select->shell->gdisp->gimage,
-                            &segs_in, &segs_out,
-                            &select->num_segs_in, &select->num_segs_out);
+  gimp_channel_boundary (gimp_image_get_mask (select->shell->gdisp->gimage),
+                         &segs_in, &segs_out,
+                         &select->num_segs_in, &select->num_segs_out,
+                         0, 0, 0, 0);
 
   if (select->num_segs_in)
     {

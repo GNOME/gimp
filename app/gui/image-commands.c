@@ -25,12 +25,12 @@
 #include "gui-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-crop.h"
 #include "core/gimpimage-duplicate.h"
 #include "core/gimpimage-flip.h"
-#include "core/gimpimage-mask.h"
 #include "core/gimpimage-merge.h"
 #include "core/gimpimage-resize.h"
 #include "core/gimpimage-rotate.h"
@@ -251,7 +251,8 @@ image_crop_cmd_callback (GtkWidget *widget,
   gint         x1, y1, x2, y2;
   return_if_no_display (gdisp, data);
 
-  if (! gimp_image_mask_bounds (gdisp->gimage, &x1, &y1, &x2, &y2))
+  if (! gimp_channel_bounds (gimp_image_get_mask (gdisp->gimage),
+                             &x1, &y1, &x2, &y2))
     {
       g_message (_("Cannot crop because the current selection is empty."));
       return;

@@ -46,33 +46,6 @@
 
 /*  public functions  */
 
-gboolean
-gimp_image_mask_boundary (GimpImage       *gimage,
-                          const BoundSeg **segs_in,
-                          const BoundSeg **segs_out,
-                          gint            *num_segs_in,
-                          gint            *num_segs_out)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-
-  return gimp_channel_boundary (gimp_image_get_mask (gimage),
-                                segs_in, segs_out,
-                                num_segs_in, num_segs_out,
-                                0, 0, 0, 0);
-}
-
-gboolean
-gimp_image_mask_bounds (GimpImage *gimage,
-                        gint      *x1,
-                        gint      *y1,
-                        gint      *x2,
-                        gint      *y2)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-
-  return gimp_channel_bounds (gimp_image_get_mask (gimage), x1, y1, x2, y2);
-}
-
 void
 gimp_image_mask_push_undo (GimpImage   *gimage,
                            const gchar *undo_desc)

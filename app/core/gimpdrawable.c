@@ -44,7 +44,6 @@
 #include "gimpdrawable-preview.h"
 #include "gimpdrawable-transform.h"
 #include "gimpimage.h"
-#include "gimpimage-mask.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
 #include "gimplist.h"
@@ -808,7 +807,7 @@ gimp_drawable_mask_bounds (GimpDrawable *drawable,
 
   g_return_val_if_fail (gimage != NULL, FALSE);
 
-  if (gimp_image_mask_bounds (gimage, x1, y1, x2, y2))
+  if (gimp_channel_bounds (gimp_image_get_mask (gimage), x1, y1, x2, y2))
     {
       gint off_x, off_y;
 

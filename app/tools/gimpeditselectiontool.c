@@ -31,6 +31,7 @@
 
 #include "base/boundary.h"
 
+#include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-mask.h"
@@ -260,11 +261,12 @@ init_edit_selection (GimpTool    *tool,
   edit_select->x = edit_select->origx = coords->x - off_x;
   edit_select->y = edit_select->origy = coords->y - off_y;
 
-  gimp_image_mask_boundary (gdisp->gimage,
-                            (const BoundSeg **) &edit_select->segs_in,
-                            (const BoundSeg **) &edit_select->segs_out,
-                            &edit_select->num_segs_in,
-                            &edit_select->num_segs_out);
+  gimp_channel_boundary (gimp_image_get_mask (gdisp->gimage),
+                         (const BoundSeg **) &edit_select->segs_in,
+                         (const BoundSeg **) &edit_select->segs_out,
+                         &edit_select->num_segs_in,
+                         &edit_select->num_segs_out,
+                         0, 0, 0, 0);
 
   edit_select->segs_in  = g_memdup (edit_select->segs_in,
                                     edit_select->num_segs_in *
@@ -292,7 +294,8 @@ init_edit_selection (GimpTool    *tool,
     switch (edit_select->edit_type)
       {
       case EDIT_MASK_TRANSLATE:
-        gimp_image_mask_bounds (gdisp->gimage, &x1, &y1, &x2, &y2);
+        gimp_channel_bounds (gimp_image_get_mask (gdisp->gimage),
+                             &x1, &y1, &x2, &y2);
         break;
 
       case EDIT_MASK_TO_LAYER_TRANSLATE:

@@ -37,7 +37,6 @@
 #include "core/gimpgrid.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-grid.h"
-#include "core/gimpimage-mask.h"
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayermask.h"
@@ -274,7 +273,8 @@ xcf_save_image (XcfInfo   *info,
   nchannels = (guint) gimp_container_num_children (gimage->channels);
 
   /* check and see if we have to save out the selection */
-  have_selection = gimp_image_mask_bounds (gimage, &t1, &t2, &t3, &t4);
+  have_selection = gimp_channel_bounds (gimp_image_get_mask (gimage),
+                                        &t1, &t2, &t3, &t4);
   if (have_selection)
     nchannels += 1;
 

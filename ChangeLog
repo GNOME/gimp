@@ -1,3 +1,17 @@
+2003-09-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-mask.[ch]: removed the _bounds() and
+	_boundary() wrappers.
+
+	* app/core/gimpdrawable.c
+	* app/display/gimpdisplayshell-selection.c
+	* app/gui/image-commands.c
+	* app/gui/layers-commands.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimptransformtool.c
+	* app/xcf/xcf-save.c: changed accordingly.
+
 2003-09-03  Sven Neumann  <sven@gimp.org>
 
 	* devel-docs/gbr.txt

@@ -27,10 +27,9 @@
 
 #include "tools-types.h"
 
-#include "core/gimpdrawable.h"
+#include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-crop.h"
-#include "core/gimpimage-mask.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpdialogfactory.h"
@@ -1151,9 +1150,9 @@ crop_selection_callback (GtkWidget    *widget,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (crop));
 
-  if (! gimp_image_mask_bounds (gdisp->gimage,
-                                &crop->x1, &crop->y1,
-                                &crop->x2, &crop->y2))
+  if (! gimp_channel_bounds (gimp_image_get_mask (gdisp->gimage),
+                             &crop->x1, &crop->y1,
+                             &crop->x2, &crop->y2))
     {
       if (options->layer_only)
         {

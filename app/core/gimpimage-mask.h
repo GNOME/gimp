@@ -20,20 +20,6 @@
 #define __GIMP_IMAGE_MASK_H__
 
 
-/*  pure wrappers around the resp. GimpChannel::foo() functions:  */
-
-gboolean      gimp_image_mask_boundary    (GimpImage       *gimage,
-                                           const BoundSeg **segs_in,
-                                           const BoundSeg **segs_out,
-                                           gint            *num_segs_in,
-                                           gint            *num_segs_out);
-gboolean      gimp_image_mask_bounds      (GimpImage       *gimage,
-                                           gint            *x1,
-                                           gint            *y1,
-                                           gint            *x2,
-                                           gint            *y2);
-
-
 /*  pure wrappers around the resp. GimpSelection functions:  */
 
 void          gimp_image_mask_push_undo   (GimpImage       *gimage,
