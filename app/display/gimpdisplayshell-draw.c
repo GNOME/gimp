@@ -298,9 +298,9 @@ gimp_display_shell_draw_sample_point (GimpDisplayShell *shell,
                                       gboolean          active)
 {
   GimpCanvasStyle style;
+  gdouble         x, y;
   gint            x1, x2;
   gint            y1, y2;
-  gint            x, y;
   gint            w, h;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
@@ -309,25 +309,23 @@ gimp_display_shell_draw_sample_point (GimpDisplayShell *shell,
   if (sample_point->x < 0)
     return;
 
-  gimp_display_shell_transform_xy (shell,
-                                   sample_point->x,
-                                   sample_point->y,
-                                   &x, &y, FALSE);
+  gimp_display_shell_transform_xy_f (shell,
+                                     sample_point->x + 0.5,
+                                     sample_point->y + 0.5,
+                                     &x, &y, FALSE);
 
-  x1 = x - GIMP_SAMPLE_POINT_DRAW_SIZE;
-  x2 = x + GIMP_SAMPLE_POINT_DRAW_SIZE;
-  y1 = y - GIMP_SAMPLE_POINT_DRAW_SIZE;
-  y2 = y + GIMP_SAMPLE_POINT_DRAW_SIZE;
+  x1 = floor (x - GIMP_SAMPLE_POINT_DRAW_SIZE);
+  x2 = ceil  (x + GIMP_SAMPLE_POINT_DRAW_SIZE);
+  y1 = floor (y - GIMP_SAMPLE_POINT_DRAW_SIZE);
+  y2 = ceil  (y + GIMP_SAMPLE_POINT_DRAW_SIZE);
 
   gdk_drawable_get_size (shell->canvas->window, &w, &h);
 
-  if (x < 0 || y < 0 || x >= w || y >= h)
+  if (x < - GIMP_SAMPLE_POINT_DRAW_SIZE   ||
+      y < - GIMP_SAMPLE_POINT_DRAW_SIZE   ||
+      x > w + GIMP_SAMPLE_POINT_DRAW_SIZE ||
+      y > h + GIMP_SAMPLE_POINT_DRAW_SIZE)
     return;
-
-  if (x1 < 0) x1 = 0;
-  if (y1 < 0) y1 = 0;
-  if (x2 > w) x2 = w;
-  if (y2 > h) y2 = h;
 
   if (active)
     style = GIMP_CANVAS_STYLE_SAMPLE_POINT_ACTIVE;
@@ -373,9 +371,7 @@ gimp_display_shell_draw_sample_points (GimpDisplayShell *shell)
            list;
            list = g_list_next (list))
 	{
-	  gimp_display_shell_draw_sample_point(shell,
-                                               (GimpSamplePoint *) list->data,
-                                               FALSE);
+	  gimp_display_shell_draw_sample_point (shell, list->data, FALSE);
 	}
     }
 }

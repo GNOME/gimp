@@ -1,3 +1,13 @@
+2005-03-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-sample-points.c
+	* app/display/gimpdisplayshell-draw.c
+	* app/display/gimpdisplayshell.c
+	* app/tools/gimpcolortool.c: make sure sample points always have
+	coordinates in the range [0..width/height-1], also added lots of
+	+0.5 because they live at the pixels' centers, not at their
+	borders. Fixed drawing of sample points at the display borders.
+
 2005-03-19  Manish Singh  <yosh@gimp.org>
 
 	* app/config/Makefile.am: actually link test program with

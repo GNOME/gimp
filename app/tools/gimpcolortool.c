@@ -326,10 +326,10 @@ gimp_color_tool_button_release (GimpTool        *tool,
 
       gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
 
-      if ((color_tool->sample_point_x <  x          ||
-           color_tool->sample_point_x > (x + width) ||
-           color_tool->sample_point_y < y           ||
-           color_tool->sample_point_y > (y + height)))
+      if ((color_tool->sample_point_x <  x              ||
+           color_tool->sample_point_x > (x + width - 1) ||
+           color_tool->sample_point_y < y               ||
+           color_tool->sample_point_y > (y + height - 1)))
         {
           if (color_tool->sample_point)
             {
@@ -400,8 +400,8 @@ gimp_color_tool_motion (GimpTool        *tool,
                                        &tx, &ty,
                                        FALSE);
 
-      if (tx < 0 || tx >= shell->disp_width ||
-          ty < 0 || ty >= shell->disp_height)
+      if (tx < 0 || tx > shell->disp_width ||
+          ty < 0 || ty > shell->disp_height)
 	{
 	  color_tool->sample_point_x = -1;
           color_tool->sample_point_y = -1;
@@ -412,16 +412,16 @@ gimp_color_tool_motion (GimpTool        *tool,
         {
           gint x, y, width, height;
 
-          color_tool->sample_point_x = RINT (coords->x);
-          color_tool->sample_point_y = RINT (coords->y);
+          color_tool->sample_point_x = floor (coords->x);
+          color_tool->sample_point_y = floor (coords->y);
 
           gimp_display_shell_untransform_viewport (shell, &x, &y,
                                                    &width, &height);
 
-          if ((color_tool->sample_point_x <  x          ||
-               color_tool->sample_point_x > (x + width) ||
-               color_tool->sample_point_y < y           ||
-               color_tool->sample_point_y > (y + height)))
+          if ((color_tool->sample_point_x <  x              ||
+               color_tool->sample_point_x > (x + width - 1) ||
+               color_tool->sample_point_y < y               ||
+               color_tool->sample_point_y > (y + height - 1)))
             {
               delete_point = TRUE;
             }
@@ -571,13 +571,13 @@ gimp_color_tool_draw (GimpDrawTool *draw_tool)
           color_tool->sample_point_y != -1)
         {
           gimp_draw_tool_draw_line (draw_tool,
-                                    0, color_tool->sample_point_y,
+                                    0, color_tool->sample_point_y + 0.5,
                                     draw_tool->gdisp->gimage->width,
-                                    color_tool->sample_point_y,
+                                    color_tool->sample_point_y + 0.5,
                                     FALSE);
           gimp_draw_tool_draw_line (draw_tool,
-                                    color_tool->sample_point_x, 0,
-                                    color_tool->sample_point_x,
+                                    color_tool->sample_point_x + 0.5, 0,
+                                    color_tool->sample_point_x + 0.5,
                                     draw_tool->gdisp->gimage->height,
                                     FALSE);
         }

@@ -1276,8 +1276,8 @@ void
 gimp_display_shell_expose_sample_point (GimpDisplayShell *shell,
                                         GimpSamplePoint  *sample_point)
 {
-  gint x, y;
-  gint xmin, xmax, ymin, ymax;
+  gdouble x, y;
+  gint    x1, y1, x2, y2;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (sample_point != NULL);
@@ -1285,18 +1285,19 @@ gimp_display_shell_expose_sample_point (GimpDisplayShell *shell,
   if (sample_point->x < 0)
     return;
 
-  gimp_display_shell_transform_xy (shell,
-                                   sample_point->x,
-                                   sample_point->y,
-                                   &x, &y,
-                                   FALSE);
+  gimp_display_shell_transform_xy_f (shell,
+                                     sample_point->x + 0.5,
+                                     sample_point->y + 0.5,
+                                     &x, &y,
+                                     FALSE);
 
-  xmin = MAX (0, x - GIMP_SAMPLE_POINT_DRAW_SIZE);
-  xmax = MIN (shell->disp_width, x + GIMP_SAMPLE_POINT_DRAW_SIZE);
-  ymin = MAX (0, y - GIMP_SAMPLE_POINT_DRAW_SIZE);
-  ymax = MIN (shell->disp_height, y + GIMP_SAMPLE_POINT_DRAW_SIZE);
+  x1 = MAX (0, floor (x - GIMP_SAMPLE_POINT_DRAW_SIZE));
+  y1 = MAX (0, floor (y - GIMP_SAMPLE_POINT_DRAW_SIZE));
+  x2 = MIN (shell->disp_width,  ceil (x + GIMP_SAMPLE_POINT_DRAW_SIZE));
+  y2 = MIN (shell->disp_height, ceil (y + GIMP_SAMPLE_POINT_DRAW_SIZE));
 
-  gimp_display_shell_expose_area (shell, xmin, ymin, xmax, ymax);
+  /* HACK: add 3 instead of 1 so the number gets cleared too */
+  gimp_display_shell_expose_area (shell, x1, y1, x2 - x1 + 3, y2 - y1 + 3);
 }
 
 void

@@ -41,8 +41,8 @@ gimp_image_add_sample_point_at_pos (GimpImage *gimage,
   GimpSamplePoint *sample_point;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
-  g_return_val_if_fail (x >= 0 && x <= gimage->width, NULL);
-  g_return_val_if_fail (y >= 0 && y <= gimage->height, NULL);
+  g_return_val_if_fail (x >= 0 && x < gimage->width, NULL);
+  g_return_val_if_fail (y >= 0 && y < gimage->height, NULL);
 
   sample_point = g_new0 (GimpSamplePoint, 1);
 
@@ -92,8 +92,8 @@ gimp_image_add_sample_point (GimpImage       *gimage,
   g_return_if_fail (sample_point != NULL);
   g_return_if_fail (x >= 0);
   g_return_if_fail (y >= 0);
-  g_return_if_fail (x <= gimage->width);
-  g_return_if_fail (y <= gimage->height);
+  g_return_if_fail (x < gimage->width);
+  g_return_if_fail (y < gimage->height);
 
   gimage->sample_points = g_list_append (gimage->sample_points, sample_point);
 
@@ -148,8 +148,8 @@ gimp_image_move_sample_point (GimpImage       *gimage,
   g_return_if_fail (sample_point != NULL);
   g_return_if_fail (x >= 0);
   g_return_if_fail (y >= 0);
-  g_return_if_fail (x <= gimage->width);
-  g_return_if_fail (y <= gimage->height);
+  g_return_if_fail (x < gimage->width);
+  g_return_if_fail (y < gimage->height);
 
   if (push_undo)
     gimp_image_undo_push_image_sample_point (gimage, _("Move Sample Point"),
@@ -169,10 +169,8 @@ gimp_image_find_sample_point (GimpImage *gimage,
                               gdouble    epsilon_y)
 {
   GList           *list;
-  GimpSamplePoint *sample_point;
-  GimpSamplePoint *ret            = NULL;
-  gdouble          dist;
-  gdouble          mindist        = G_MAXDOUBLE;
+  GimpSamplePoint *ret     = NULL;
+  gdouble          mindist = G_MAXDOUBLE;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (epsilon_x > 0 && epsilon_y > 0, NULL);
@@ -185,12 +183,14 @@ gimp_image_find_sample_point (GimpImage *gimage,
 
   for (list = gimage->sample_points; list; list = g_list_next (list))
     {
-      sample_point = (GimpSamplePoint *) list->data;
+      GimpSamplePoint *sample_point = list->data;
+      gdouble          dist;
 
       if (sample_point->x < 0 || sample_point->y < 0)
         continue;
 
-      dist = hypot ( sample_point->x - x, sample_point->y - y);
+      dist = hypot ((sample_point->x + 0.5) - x,
+                    (sample_point->y + 0.5) - y);
       if (dist < MIN (epsilon_y, mindist))
         {
           mindist = dist;
