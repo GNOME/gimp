@@ -23,8 +23,7 @@
 extern GSList *save_procs;
 
 
-void   file_save_pre_init              (void);
-void   file_save_post_init             (void);
+void   file_save_menu_init             (void);
 
 void   file_save_callback              (GtkWidget   *widget,
                                         gpointer     data);

@@ -22,7 +22,6 @@
 
 #include "apptypes.h"
 
-#include "app_procs.h"
 #include "colormaps.h"
 #include "gimprc.h"
 

@@ -23,7 +23,6 @@
 void       gimp_init              (gint          gimp_argc,
                                    gchar       **gimp_argv);
 
-void       app_init               (void);
 void       app_init_update_status (const gchar  *label1,
                                    const gchar  *label2,
                                    gdouble       percentage);

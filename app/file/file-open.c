@@ -138,12 +138,7 @@ extern GSList *display_list; /* from gdisplay.c */
 /*  public functions  */
 
 void
-file_open_pre_init (void)
-{
-}
-
-void
-file_open_post_init (void)
+file_open_menu_init (void)
 {
   GimpItemFactoryEntry  entry;
   PlugInProcDef        *file_proc;

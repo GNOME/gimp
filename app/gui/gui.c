@@ -30,19 +30,26 @@
 
 #include "widgets/gimpdialogfactory.h"
 
+#include "brush-select.h"
 #include "devices.h"
 #include "dialogs.h"
 #include "docindex.h"
+#include "errorconsole.h"
 #include "gimprc.h"
+#include "gradient-select.h"
 #include "gui.h"
 #include "gximage.h"
 #include "image_render.h"
 #include "lc_dialog.h"
 #include "menus.h"
+#include "palette-editor.h"
+#include "pattern-select.h"
 #include "session.h"
 #include "toolbox.h"
 
 #include "app_procs.h"
+#include "file-open.h"
+#include "file-save.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -57,6 +64,9 @@ static void   really_quit_callback (GtkWidget *button,
 void
 gui_init (void)
 {
+  file_open_menu_init ();
+  file_save_menu_init ();
+
   menus_reorder_plugins ();
 
   gximage_init ();
@@ -110,6 +120,11 @@ gui_shutdown (void)
 {
   session_save ();
   device_status_free ();
+
+  brush_dialog_free ();
+  pattern_dialog_free ();
+  palette_dialog_free ();
+  gradient_dialog_free ();
 }
 
 void
@@ -124,6 +139,7 @@ gui_exit (void)
   /*  handle this in the dialog factory:  */
   lc_dialog_free ();
   document_index_free ();
+  error_console_free ();
   tool_options_dialog_free ();
   toolbox_free ();
 }

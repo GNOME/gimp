@@ -56,12 +56,7 @@
 
 #include "gui/color-notebook.h"
 #include "gui/color-select.h"
-#include "gui/colormap-dialog.h"
-#include "gui/brush-select.h"
 #include "gui/gui.h"
-#include "gui/gradient-select.h"
-#include "gui/palette-editor.h"
-#include "gui/pattern-select.h"
 #include "gui/splash.h"
 #include "gui/tips-dialog.h"
 
@@ -71,9 +66,7 @@
 #include "color_transfer.h"
 #include "colormaps.h"
 #include "context_manager.h"
-#include "errorconsole.h"
 #include "file-open.h"
-#include "file-save.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
 #include "gimpcontext.h"
@@ -103,11 +96,11 @@
 #include "libgimp/gimpintl.h"
 
 
+static void   app_init             (void);
 static void   toast_old_temp_files (void);
 
 
 static gboolean is_app_exit_finish_done = FALSE;
-gboolean        we_are_exiting          = FALSE;
 
 
 void
@@ -147,7 +140,7 @@ app_init_update_status (const gchar *text1,
 /* #define RESET_BAR() app_init_update_status("", "", 0) */
 #define RESET_BAR()
 
-void
+static void
 app_init (void)
 {
   const gchar *gtkrc;
@@ -220,10 +213,6 @@ app_init (void)
     }
 
   RESET_BAR();
-  file_open_pre_init ();   /*  pre-initialize the file types     */
-  file_save_pre_init ();
-
-  RESET_BAR();
   xcf_init ();             /*  initialize the xcf file format routines */
 
   /*  initialize  the global parasite table  */
@@ -252,8 +241,6 @@ app_init (void)
   module_db_init ();         /*  load any modules we need           */
 
   RESET_BAR();
-  file_open_post_init ();    /*  post-initialize the file types     */
-  file_save_post_init ();
 
   /* Add the swap file  */
   if (swap_path == NULL)
@@ -307,7 +294,6 @@ app_exit_finish (void)
   is_app_exit_finish_done = TRUE;
 
   message_handler = CONSOLE;
-  we_are_exiting  = TRUE;
 
   if (! no_interface)
     {
@@ -319,10 +305,6 @@ app_exit_finish (void)
   global_edit_free ();
   named_buffers_free ();
   swapping_free ();
-  brush_dialog_free ();
-  pattern_dialog_free ();
-  palette_dialog_free ();
-  gradient_dialog_free ();
   context_manager_free ();
   hue_saturation_free ();
   curves_free ();
@@ -330,7 +312,6 @@ app_exit_finish (void)
   paint_funcs_free ();
   plug_in_kill ();
   procedural_db_free ();
-  error_console_free ();
   tile_swap_exit ();
   save_unitrc ();
   gimp_parasiterc_save ();

@@ -1,3 +1,19 @@
+2001-04-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/app_procs.[ch]: removed stuff which now lives in gui/gui.c,
+	removed global variable "we_are_exiting", made app_init() static.
+
+	* app/appenv.h: removed "we_are_exiting".
+
+	* app/colormaps.c: don't #include "app_procs.h"
+
+	* app/file-open.[ch]
+	* app/file-save.[ch]: removed the *_pre_init() functions and
+	renamed the *_post_init() functions to *_menu_init().
+
+	* app/gui/gui.c: added more GUI init and shutdown code from
+	app_procs.c
+
 2001-04-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainermenuimpl.c: only work around option

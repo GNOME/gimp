@@ -37,7 +37,6 @@ extern gboolean use_debug_handler;
 extern gboolean console_messages;
 extern gboolean restore_session;
 extern gboolean double_speed;
-extern gboolean we_are_exiting;   /* this is used in session_get_window_info() */
 
 extern MessageHandlerType message_handler;
 

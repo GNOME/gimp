@@ -23,8 +23,7 @@
 extern GSList *load_procs;
 
 
-void   file_open_pre_init              (void);
-void   file_open_post_init             (void);
+void   file_open_menu_init             (void);
 
 void   file_open_callback              (GtkWidget   *widget,
                                         gpointer     data);

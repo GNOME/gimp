@@ -127,12 +127,7 @@ static gboolean   set_filename = TRUE;
 /*  public functions  */
 
 void
-file_save_pre_init (void)
-{
-}
-
-void
-file_save_post_init (void)
+file_save_menu_init (void)
 {
   GimpItemFactoryEntry  entry;
   PlugInProcDef        *file_proc;
