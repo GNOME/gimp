@@ -1360,8 +1360,10 @@ device_status_update (guint32 deviceid)
 	  gtk_widget_show (deviceD->patterns[i]);
 	}
     }
-  brush_area_update();
-  pattern_area_update();
+  if (show_indicators) {
+  	brush_area_update();
+  	pattern_area_update();
+	}
 }
 
 

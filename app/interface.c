@@ -550,7 +550,8 @@ create_toolbox ()
   /*create_tool_label (vbox);*/
   /*create_progress_area (vbox);*/
   create_color_area (vbox);
-  create_indicator_area (vbox);
+  if (show_indicators)
+      create_indicator_area (vbox);
   gtk_widget_show (window);
 
 

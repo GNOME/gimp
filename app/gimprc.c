@@ -149,6 +149,7 @@ int       using_xserver_resolution = FALSE;
 int       num_processors = 1;
 char *    image_title_format = NULL;
 int       global_paint_options = TRUE;
+int       show_indicators = TRUE;
 int       max_new_image_size = 33554432;  /* 32 MB */
 int       thumbnail_mode = 1;
 
@@ -288,6 +289,8 @@ static ParseFunc funcs[] =
   { "image-title-format",        TT_STRING,     &image_title_format, NULL },
   { "parasite",                  TT_XPARASITE,  NULL, NULL },
   { "global-paint-options",      TT_BOOLEAN,    &global_paint_options, NULL },
+  { "show-indicators",           TT_BOOLEAN,    &show_indicators, NULL },
+  { "dont-show-indicators",      TT_BOOLEAN,    NULL, &show_indicators },
   { "no-global-paint-options",   TT_BOOLEAN,    NULL, &global_paint_options },
   { "module-load-inhibit",       TT_PATH,       &module_db_load_inhibit, NULL },
   { "max-new-image-size",        TT_MEMSIZE,    &max_new_image_size, NULL },

@@ -1,3 +1,18 @@
+Sun Jun 13 21:05:00 CST 1999 Seth Burgess <sjburges@gimp.org>
+	
+	* app/devices
+	* app/gimprc.[c,h]
+	* app/interface.c
+	* app/preferences_dialog.c: Make the indicator area on the toolbar
+	something that the user can turn off after a restart.  Currently it
+	(and most other such fucntions) give no indication of error if user
+	clicks OK and not Save - this needs to let the user know that changes
+	will not take effect w/o a save.  It will not update once OK is clicked
+	though, which is very much less than preferable behavior
+	
+	* app/indicator_area.c: fixed a bug that let the preview stay up if the
+	user clicked, dragged, and refocussed on another widget
+	 
 Sat Jun 12 23:45:01 CEST 1999 Marc Lehmann <pcg@goof.com>
 
 	* docs/parasites.txt: nicks comments...

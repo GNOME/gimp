@@ -101,6 +101,7 @@ static char *     old_image_title_format;
 static int        old_global_paint_options;
 static int        old_max_new_image_size;
 static int        old_thumbnail_mode;
+static int 	  old_show_indicators;
 
 /*  variables which can't be changed on the fly  */
 static int        edit_stingy_memory_use;
@@ -273,6 +274,12 @@ file_prefs_ok_callback (GtkWidget *widget,
     gtk_tooltips_enable (tool_tips);
   else
     gtk_tooltips_disable (tool_tips);
+
+  /* This needs modification to notify the user of which simply cannot be
+   * changed on the fly.  Currently it ignores these options if only OK is
+   * pressed.
+   */
+
 }
 
 static void
@@ -369,6 +376,12 @@ file_prefs_save_callback (GtkWidget *widget,
     {
       update = g_list_append (update, "save-device-status");
       remove = g_list_append (remove, "dont-save-device-status");
+    }
+  if (show_indicators != old_show_indicators)
+    {
+      update = g_list_append (update, "show-indicators");
+      remove = g_list_append (remove, "dont-show-indicators");
+      restart_notification = TRUE;
     }
   if (always_restore_session != old_always_restore_session)
     update = g_list_append (update, "always-restore-session");
@@ -560,6 +573,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   num_processors = old_num_processors;
   max_new_image_size = old_max_new_image_size;
   thumbnail_mode = old_thumbnail_mode;
+  show_indicators = old_show_indicators;
 
   if (preview_size != old_preview_size)
     {
@@ -653,6 +667,8 @@ file_prefs_toggle_callback (GtkWidget *widget,
     }
   else if (data == &global_paint_options)
     paint_options_set_global (GTK_TOGGLE_BUTTON (widget)->active);
+  else if (data == &show_indicators)
+    show_indicators = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data == &thumbnail_mode)
     {
       val = data;
@@ -1435,6 +1451,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   old_global_paint_options = global_paint_options;
   old_max_new_image_size = max_new_image_size;
   old_thumbnail_mode = thumbnail_mode;
+  old_show_indicators = show_indicators;
 
   file_prefs_strset (&old_temp_path, edit_temp_path);
   file_prefs_strset (&old_swap_path, edit_swap_path);
@@ -1951,6 +1968,22 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
+  
+  /* Indicators */
+  vbox2 = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+  gtk_container_add (GTK_CONTAINER (vbox), vbox2);
+  gtk_widget_show (vbox2);
+
+  button =
+    gtk_check_button_new_with_label(_("Display brush and pattern indicators on Toolbar"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				show_indicators);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      (GtkSignalFunc) file_prefs_toggle_callback,
+	        	&show_indicators);
+  gtk_widget_show (button);
 
   /* Expand the "Interface" branch */
   gtk_ctree_expand (GTK_CTREE (ctree), top_insert);

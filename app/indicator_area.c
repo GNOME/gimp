@@ -121,6 +121,7 @@ brush_area_update ()
   int ystart;
   int i, j;
 
+
   brush = get_active_brush();
   if (!brush) 
     {
@@ -368,9 +369,15 @@ pattern_area_events (GtkWidget    *widget,
 
     case GDK_BUTTON_PRESS:
       bevent = (GdkEventButton *) event;
-
+ 
       if (bevent->button == 1)
         {
+        gdk_pointer_grab (widget->window, FALSE,
+                         (GDK_POINTER_MOTION_HINT_MASK |
+                          GDK_BUTTON1_MOTION_MASK |
+                          GDK_BUTTON_RELEASE_MASK),
+                        NULL, NULL, bevent->time);
+
 	 create_pattern_dialog(); 
 
               /*  Show the pattern popup window if the pattern is too large  */
@@ -384,6 +391,7 @@ pattern_area_events (GtkWidget    *widget,
       bevent = (GdkEventButton *) event;
   
       if (bevent->button == 1)
+        gdk_pointer_ungrab (bevent->time);
         {
         if (device_patpopup != NULL)
            gtk_widget_hide (device_patpopup);
