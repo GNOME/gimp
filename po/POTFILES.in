@@ -33,6 +33,7 @@ app/core/gimpdrawable-desaturate.c
 app/core/gimpdrawable-equalize.c
 app/core/gimpdrawable-invert.c
 app/core/gimpdrawable-offset.c
+app/core/gimpdrawable-stroke.c
 app/core/gimpdrawable-transform.c
 app/core/gimpdrawable.c
 app/core/gimpenvirontable.c
@@ -185,6 +186,7 @@ app/text/gimptextlayer.c
 app/text/gimptextlayer-transform.c
 
 app/tools/tools-enums.c
+app/tools/gimp-tools.c
 app/tools/gimpairbrushtool.c
 app/tools/gimpblendoptions.c
 app/tools/gimpblendtool.c
