@@ -16,7 +16,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
  
-/*< proxy-skip >*/
 #ifndef __DISPLAY_TYPES_H__
 #define __DISPLAY_TYPES_H__
 
@@ -26,10 +25,10 @@
 #include "display/display-enums.h"
 
 
-typedef struct _GimpDisplay        GimpDisplay; /*< proxy-resume >*/
+typedef struct _GimpDisplay        GimpDisplay;
 typedef struct _GimpDisplayShell   GimpDisplayShell;
 
-typedef struct _GimpNavigationView GimpNavigationView; /*< proxy-skip >*/
+typedef struct _GimpNavigationView GimpNavigationView;
 typedef struct _GimpStatusbar      GimpStatusbar;
 
 typedef struct _NavigationDialog   NavigationDialog;

@@ -24,8 +24,6 @@
 
 #include "tools-types.h"
 
-#include "libgimptool/gimptool.h"
-
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimpairbrush.h"

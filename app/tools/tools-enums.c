@@ -3,11 +3,11 @@
 
 #include "config.h"
 #include <glib-object.h>
-#include "libgimpproxy/gimpproxytypes.h"
-#include "gimptoolenums.h"
-#include "libgimp/libgimp-intl.h"
+#include "core/core-enums.h"
+#include "tools-enums.h"
+#include "gimp-intl.h"
 
-/* enumerations from "./gimptoolenums.h" */
+/* enumerations from "./tools-enums.h" */
 
 static const GEnumValue gimp_crop_type_enum_values[] =
 {

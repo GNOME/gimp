@@ -1,6 +1,0 @@
-EXPORTS
-	gimp_object_get_memsize
-	gimp_object_get_name
-	gimp_object_get_type
-	gimp_object_name_changed
-	gimp_object_set_name

@@ -21,9 +21,10 @@
 #include <gtk/gtk.h>
 
 #include "tools-types.h"
+
 #include "core/gimp.h"
 
-#include "libgimptool/gimptoolmodule.h"
+#include "gimptoolmodule.h"
 
 
 static void     gimp_tool_module_class_init (GimpToolModuleClass *klass);

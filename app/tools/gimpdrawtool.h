@@ -20,7 +20,7 @@
 #define __GIMP_DRAW_TOOL_H__
 
 
-#include "libgimptool/gimptool.h"
+#include "gimptool.h"
 
 
 typedef enum

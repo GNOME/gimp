@@ -16,8 +16,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/*< proxy-skip >*/
-
 #ifndef __CORE_TYPES_H__
 #define __CORE_TYPES_H__
 
@@ -47,7 +45,7 @@ typedef enum
 
 /*  base objects  */
 
-typedef struct _GimpObject          GimpObject; /*< proxy-include >*/
+typedef struct _GimpObject          GimpObject;
 
 typedef struct _Gimp                Gimp;
 
@@ -67,8 +65,8 @@ typedef struct _GimpItem            GimpItem;
 typedef struct _GimpBuffer          GimpBuffer;
 
 typedef struct _GimpPaintInfo       GimpPaintInfo;
-typedef struct _GimpToolInfo        GimpToolInfo; /*< proxy-include >*/
-typedef struct _GimpToolOptions     GimpToolOptions; /*< proxy-include >*/
+typedef struct _GimpToolInfo        GimpToolInfo;
+typedef struct _GimpToolOptions     GimpToolOptions;
 
 typedef struct _GimpImagefile       GimpImagefile;
 typedef struct _GimpDocumentList    GimpDocumentList;
@@ -78,7 +76,7 @@ typedef struct _GimpTemplate        GimpTemplate;
 
 /*  drawable objects  */
 
-typedef struct _GimpDrawable        GimpDrawable; /*< proxy-resume >*/
+typedef struct _GimpDrawable        GimpDrawable;
 
 typedef struct _GimpChannel         GimpChannel;
 
@@ -90,7 +88,7 @@ typedef struct _GimpImage           GimpImage;
 
 /*  data objects  */
 
-typedef struct _GimpData            GimpData; /*< proxy-skip >*/
+typedef struct _GimpData            GimpData;
 
 typedef struct _GimpBrush	    GimpBrush;
 typedef struct _GimpBrushGenerated  GimpBrushGenerated;
@@ -120,7 +118,7 @@ typedef struct _GimpUndoAccumulator GimpUndoAccumulator;
 
 /*  non-object types  */
 
-typedef struct _GimpCoords          GimpCoords; /*< proxy-include >*/
+typedef struct _GimpCoords          GimpCoords;
 
 typedef struct _GimpGuide           GimpGuide;
 

@@ -33,8 +33,7 @@
 
 #include "widgets/gimpitemfactory.h"
 
-#include "libgimptool/gimptool.h"
-
+#include "tools/gimptool.h"
 #include "tools/tool_manager.h"
 
 #include "gimpdisplay.h"

@@ -31,8 +31,6 @@
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 
-#include "libgimptool/gimptoolcontrol.h"
-
 #include "display/gimpdisplay.h"
 
 #ifdef __GNUC__

@@ -24,15 +24,6 @@
 
 #include "tools-types.h"
 
-/*FIXME: remove when proper module loading is in place */
-#include "config/gimpcoreconfig.h"
-#include "config/gimpconfig-path.h"
-#include "core/gimp.h"
-/*end remove */
-
-#include "libgimptool/gimptool.h"
-#include "libgimptool/gimptoolmodule.h"
-
 #include "tool_manager.h"
 
 #include "gimpairbrushtool.h"
@@ -74,13 +65,6 @@
 #include "gimptexttool.h"
 #include "gimpvectortool.h"
 
-void 
-cheesey_module_loading_hack (GimpDatafileData *file_data)
-{
-  gimp_tool_module_new (file_data->filename,
-                        tool_manager_register_tool,
-                        file_data->user_data);
-}
 
 void
 tools_init (Gimp *gimp)
@@ -148,22 +132,6 @@ tools_init (Gimp *gimp)
     {
       register_funcs[i] (tool_manager_register_tool, gimp);
     }
-
-#if 0
-  if (g_module_supported ())
-    {
-      gchar *path = gimp_config_path_expand (gimp->config->tool_plug_in_path,
-                                             TRUE, NULL);
-
-      gimp_datafiles_read_directories (path,
-                                       0 /* no flags */,
-                                       cheesey_module_loading_hack,
-                                       gimp);
-
-      g_free (path);
-    }
-#endif
-
 }
 
 void

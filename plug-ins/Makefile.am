@@ -53,5 +53,4 @@ SUBDIRS = 			\
 	sel2path		\
 	$(WEBBROWSER)		\
 	$(XJT)			\
-	common			\
-	tools
+	common

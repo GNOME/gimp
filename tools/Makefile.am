@@ -35,7 +35,6 @@ INCLUDES = \
 
 EXTRA_DIST = \
 	gimp-mkenums	\
-	gimp-mkproxy	\
 	gimppath2svg.py	\
 	rmshm
 

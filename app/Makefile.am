@@ -115,7 +115,6 @@ gimp_1_3_LDADD = \
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpmodule/libgimpmodule-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimptool/libgimptool-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(PANGOFT2_LIBS)						\
 	$(LIBART_LIBS)							\

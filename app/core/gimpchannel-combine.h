@@ -19,10 +19,8 @@
 #ifndef __GIMP_CHANNEL_H__
 #define __GIMP_CHANNEL_H__
 
-
 #include "gimpdrawable.h"
 
-/*< proxy-skip >*/
 
 /*  Half way point where a region is no longer visible in a selection  */
 #define HALF_WAY 127
@@ -37,8 +35,6 @@
 
 
 typedef struct _GimpChannelClass GimpChannelClass;
-
-/*< proxy-resume >*/
 
 struct _GimpChannel
 {
@@ -59,8 +55,6 @@ struct _GimpChannel
   gint          x1, y1;            /*  coordinates for bounding box   */
   gint          x2, y2;            /*  lower right hand coordinate    */
 };
-
-/*< proxy-skip >*/
 
 struct _GimpChannelClass
 {

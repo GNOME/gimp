@@ -1,3 +1,52 @@
+2003-04-15  Sven Neumann  <sven@gimp.org>
+
+	Removed support for pluggable tools:
+
+	* configure.in: bumped version number to 1.3.15.
+
+	* Makefile.am 
+	* libgimpproxy
+	* libgimptool
+	* plug-ins/Makefile.am
+	* plug-ins/plugin-helper
+	* plug-ins/tools: removed libgimpproxy, libgimptool and plug-ins
+	that used it.
+
+	* tools/Makefile.am
+	* tools/gimp-mkproxy: removed tool that used to generate
+	libgimpproxy.
+
+	* app/core/core-enums.h
+	* app/core/gimpchannel.h
+	* app/display/display-types.h
+	* app/widgets/widgets-enums.h: removed proxy-skip/resume stuff.
+
+	* app/core/gimpobject.c: use gimp marshallers.
+
+	* app/tools/Makefile.am
+	* app/tools/gimptool.h	
+	* app/tools/tools-enums.[ch]: moved these files back from
+	libgimptool.
+
+	* app/tools/gimptool.c
+	* app/tools/gimptoolcontrol.h: merged back functionality from
+	libgimptool.
+	
+	* app/Makefile.am
+	* app/display/gimpdisplay.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/gui/tools-commands.c
+	* app/tools/gimpairbrushtool.c
+	* app/tools/gimpbucketfilltool.h
+	* app/tools/gimpdrawtool.h
+	* app/tools/gimpimagemaptool.h
+	* app/tools/gimpinktool.h
+	* app/tools/gimptoolmodule.c
+	* app/tools/tool_manager.c
+	* app/tools/tools-types.h
+	* app/tools/tools.c
+	* tools/pdbgen/Makefile.am: changed accordingly.
+
 2003-04-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainergridview.[ch]: added a "selected_item"

@@ -18,8 +18,6 @@ SUBDIRS = \
 	libgimpbase		\
 	libgimpmodule		\
 	libgimpwidgets		\
-	libgimpproxy            \
-	libgimptool		\
 	libgimp			\
 	app			\
 	$(GIMP_MODULES)		\

@@ -2,7 +2,8 @@
 
 noinst_LIBRARIES = libapptools.a
 
-libapptools_a_SOURCES = \
+libapptools_a_sources = \
+	tools-enums.h			\
 	tools-types.h			\
 	tools.c				\
 	tools.h				\
@@ -115,6 +116,7 @@ libapptools_a_SOURCES = \
 	gimpthresholdtool.c		\
 	gimpthresholdtool.h		\
 	gimptool.c			\
+	gimptool.h			\
 	gimptoolcontrol.c		\
 	gimptoolcontrol.h		\
 	gimptoolmodule.c		\
@@ -136,15 +138,37 @@ libapptools_a_SOURCES = \
 	tool_manager.c			\
 	tool_manager.h
 
+libapptools_a_built_sources = tools-enums.c
+
+libapptools_a_SOURCES = $(libapptools_a_built_sources) $(libapptools_a_sources)
+
+
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Tools\"	\
 	@GIMP_THREAD_FLAGS@ 		\
 	@GIMP_MP_FLAGS@
 
 INCLUDES = \
-	-I$(top_builddir)	\
 	-I$(top_srcdir)		\
-	-I$(top_builddir)/app	\
 	-I$(top_srcdir)/app	\
 	$(GTK_CFLAGS)		\
 	-I$(includedir)
+
+
+#
+# rules to generate built sources
+#
+# setup autogeneration dependencies
+gen_sources = xgen-tec
+CLEANFILES = $(gen_sources)
+
+$(srcdir)/tools-enums.c: $(srcdir)/tools-enums.h $(GIMP_MKENUMS)
+	$(GIMP_MKENUMS) \
+		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"core/core-enums.h\"\n#include \"tools-enums.h\"\n#include \"gimp-intl.h\"" \
+		--fprod "\n/* enumerations from \"@filename@\" */" \
+		--vhead "\nstatic const GEnumValue @enum_name@_enum_values[] =\n{" \
+		--vprod "  { @VALUENAME@, @valuedesc@, \"@valuenick@\" }," \
+		--vtail "  { 0, NULL, NULL }\n};\n\nGType\n@enum_name@_get_type (void)\n{\n  static GType enum_type = 0;\n\n  if (!enum_type)\n    enum_type = g_enum_register_static (\"@EnumName@\", @enum_name@_enum_values);\n\n  return enum_type;\n}\n" \
+		$(srcdir)/tools-enums.h > xgen-tec \
+	&& cp xgen-tec $(@F) \
+	&& rm -f xgen-tec

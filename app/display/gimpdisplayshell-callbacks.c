@@ -39,9 +39,8 @@
 #include "core/gimplayer.h"
 #include "core/gimptoolinfo.h"
 
-#include "libgimptool/gimptoolcontrol.h"
-
 #include "tools/gimpmovetool.h"
+#include "tools/gimptoolcontrol.h"
 #include "tools/tool_manager.h"
 
 #include "widgets/gimpcursor.h"

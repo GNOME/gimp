@@ -20,7 +20,7 @@
 #define  __GIMP_BUCKET_FILL_TOOL_H__
 
 
-#include "libgimptool/gimptool.h"
+#include "gimptool.h"
 
 
 #define GIMP_TYPE_BUCKET_FILL_TOOL            (gimp_bucket_fill_tool_get_type ())

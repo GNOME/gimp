@@ -19,17 +19,50 @@
 #ifndef __TOOLS_TYPES_H__
 #define __TOOLS_TYPES_H__
 
-
 #include "paint/paint-types.h"
 #include "display/display-types.h"
-#include "libgimptool/gimptooltypes.h"
+
+#include "tools/tools-enums.h"
 
 
-/*  tools  */
+G_BEGIN_DECLS
 
+
+typedef struct _GimpTool               GimpTool;
+typedef struct _GimpToolModule         GimpToolModule;
+typedef struct _GimpToolControl        GimpToolControl;
+
+typedef struct _GimpPaintTool          GimpPaintTool;
+typedef struct _GimpDrawTool           GimpDrawTool;
+typedef struct _GimpPathTool           GimpPathTool;
+typedef struct _GimpTransformTool      GimpTransformTool;
 
 typedef struct _GimpBezierSelectPoint  GimpBezierSelectPoint;
 typedef struct _GimpBezierSelectTool   GimpBezierSelectTool;
 
+
+/*  functions  */
+
+typedef GtkWidget * (* GimpToolOptionsGUIFunc) (GimpToolOptions *tool_options);
+
+typedef void (* GimpToolRegisterCallback) (GType                     tool_type,
+                                           GType                     tool_option_type,
+                                           GimpToolOptionsGUIFunc    options_gui_func,
+                                           gboolean                  tool_context,
+                                           const gchar              *identifier,
+                                           const gchar              *blurb,
+                                           const gchar              *help,
+                                           const gchar              *menu_path,
+                                           const gchar              *menu_accel,
+                                           const gchar              *help_domain,
+                                           const gchar              *help_data,
+                                           const gchar              *stock_id,
+                                           gpointer                  register_data);
+
+typedef void (* GimpToolRegisterFunc)     (GimpToolRegisterCallback  callback,
+					   gpointer                  register_data);
+
+
+G_END_DECLS
 
 #endif /* __TOOLS_TYPES_H__ */

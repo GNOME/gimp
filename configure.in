@@ -32,7 +32,7 @@ GIMPPRINT_REQUIRED_VERSION=4.2.0
 #
 GIMP_MAJOR_VERSION=1
 GIMP_MINOR_VERSION=3
-GIMP_MICRO_VERSION=14
+GIMP_MICRO_VERSION=15
 GIMP_INTERFACE_AGE=0
 GIMP_BINARY_AGE=0
 GIMP_VERSION=$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION.$GIMP_MICRO_VERSION
@@ -1063,10 +1063,6 @@ dnl a tuned version of glib-mkenums
 GIMP_MKENUMS="\$(top_srcdir)/tools/gimp-mkenums"
 AC_SUBST(GIMP_MKENUMS)
 
-dnl autogenerator for proxy objects
-GIMP_MKPROXY="\$(top_srcdir)/tools/gimp-mkproxy"
-AC_SUBST(GIMP_MKPROXY)
-
 
 ##########################################
 # Default to disable deprecated GTK+ stuff
@@ -1085,10 +1081,6 @@ GIMP_MODULES=modules
 AC_SUBST(GIMP_PLUGINS)
 AC_SUBST(GIMP_MODULES)
 
-dnl These are not built nor included in the tarball for the time being.
-dnl plug-ins/plugin-helper/Makefile
-dnl plug-ins/tools/common/Makefile
-
 AC_OUTPUT([
 tools/Makefile
 tools/authorsgen/Makefile
@@ -1100,8 +1092,6 @@ libgimpbase/Makefile
 libgimpcolor/Makefile
 libgimpmath/Makefile
 libgimpmodule/Makefile
-libgimpproxy/Makefile
-libgimptool/Makefile
 libgimpwidgets/Makefile
 app/Makefile
 app/base/Makefile

@@ -19,18 +19,8 @@
 #ifndef __GIMP_TOOL_H__
 #define __GIMP_TOOL_H__
 
-/* EEEEK! */
-/* #include "app/widgets/widgets-types.h" */
-
-/* FIXME: what should we do about gimpobject? */
-/*#include "gimpobject.h"*/
+#include "core/gimpobject.h"
 #include "gimptoolcontrol.h"
-
-
-/*  The possibilities for where the cursor lies  */
-#define  ACTIVE_LAYER      (1 << 0)
-#define  SELECTION         (1 << 1)
-#define  NON_ACTIVE_LAYER  (1 << 2)
 
 
 #define GIMP_TYPE_TOOL            (gimp_tool_get_type ())
@@ -49,37 +39,12 @@ struct _GimpTool
 
   GimpToolInfo      *tool_info;
 
-  gint               ID;           /*  unique tool ID                             */
+  gint               ID;           /*  unique tool ID                         */
 
   GimpToolControl   *control;
 
-  GimpDisplay       *gdisp;        /*  pointer to currently active gdisp          */
-  GimpDrawable      *drawable;     /*  pointer to the tool's current drawable     */
-  
-/* This will soon go away */
-#if 0
-  GimpToolState  state;        /*  state of tool activity                     */
-  gint           paused_count; /*  paused control count                       */
-
-  gboolean       scroll_lock;        /*  allow scrolling or not               */
-  gboolean       auto_snap_to;       /*  snap to guides automatically         */
-  gboolean       preserve;           /*  Preserve this tool across drawable   *
-                                      *  changes                              */
-  gboolean       handle_empty_image; /*  invoke the tool on images without    *
-                                      *  active drawable                      */
-  gboolean       perfectmouse;       /*  tool is affected by gimprc's         *
-                                      *  "prefectmouse" setting               */
-  GdkCursorType      cursor;
-  GimpToolCursorType tool_cursor;
-  GimpCursorModifier cursor_modifier;
-
-  GdkCursorType      toggle_cursor;
-  GimpToolCursorType toggle_tool_cursor;
-  GimpCursorModifier toggle_cursor_modifier;
-
-  gboolean           toggled;
-#endif
-
+  GimpDisplay       *gdisp;        /*  pointer to currently active gdisp      */
+  GimpDrawable      *drawable;     /*  pointer to the tool's current drawable */
 };
 
 struct _GimpToolClass

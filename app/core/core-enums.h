@@ -16,14 +16,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/*< proxy-skip >*/
-
 #ifndef __CORE_ENUMS_H__
 #define __CORE_ENUMS_H__
 
 #if 0
-   This file is parsed by three scripts, enumgen.pl in tools/pdbgen,
-   gimp-mkenums, and gimp-mkproxy. All enums that are not marked with 
+   This file is parsed by two scripts, enumgen.pl in tools/pdbgen,
+   and gimp-mkenums. All enums that are not marked with 
    /*< pdb-skip >*/ are exported to libgimp and the PDB. Enums that are
    not marked with /*< skip >*/ are registered with the GType system. 
    If you want the enum to be skipped by both scripts, you have to use 
@@ -31,9 +29,6 @@
 
    All enum values that are marked with /*< skip >*/ are skipped for
    both targets.
-
-   Anything not between proxy-skip and proxy-resume 
-   pairs will be copied into libgimpproxy by gimp-mkproxy.
 #endif
 
 
@@ -84,7 +79,6 @@ typedef enum
 
 GType gimp_channel_ops_get_type (void) G_GNUC_CONST;
 
-/*< proxy-resume >*/
 typedef enum
 {
   GIMP_CHANNEL_OP_ADD,       /*< desc="Add to the current selection"         >*/
@@ -92,7 +86,6 @@ typedef enum
   GIMP_CHANNEL_OP_REPLACE,   /*< desc="Replace the current selection"        >*/
   GIMP_CHANNEL_OP_INTERSECT  /*< desc="Intersect with the current selection" >*/
 } GimpChannelOps;
-/*< proxy-skip >*/
 
 
 #define GIMP_TYPE_CHANNEL_TYPE (gimp_channel_type_get_type ())

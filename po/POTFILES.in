@@ -179,6 +179,7 @@ app/text/gimptext-compat.c
 app/text/gimptext.c
 app/text/gimptextlayer.c
 
+app/tools/tools-enums.c
 app/tools/gimpairbrushtool.c
 app/tools/gimpbezierselecttool.c
 app/tools/gimpblendoptions.c
@@ -286,5 +287,3 @@ app/xcf/xcf-seek.c
 app/xcf/xcf.c
 
 data/misc/gimp.desktop.in.in
-
-libgimptool/gimptoolenums.c
