@@ -1714,7 +1714,6 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
     }
 
   SET_SENSITIVE ("Layers/Stack", gdisp);
-  SET_SENSITIVE ("Layers/Rotate", gdisp);
   if (gdisp)
     {
       SET_SENSITIVE ("Layers/Stack/Previous Layer",
@@ -1730,6 +1729,8 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
       SET_SENSITIVE ("Layers/Stack/Layer to Bottom",
 		     !fs && !aux && lp && alpha && lind < (lnum - 1));
     }
+  SET_SENSITIVE ("Layers/Rotate", gdisp && !aux && !lm & lp);
+  SET_SENSITIVE ("Layers/Layer to Imagesize", gdisp && !aux && lp);
 
   SET_SENSITIVE ("Layers/Anchor Layer", gdisp && fs && !aux && lp);
   SET_SENSITIVE ("Layers/Merge Visible Layers...", gdisp && !fs && !aux && lp);
