@@ -130,18 +130,18 @@ selection_option selopt =
   100.0,        /* Max opacity */
 };
 
-/* Must keep in step with the above */
+/* Should be kept in sync with GfigOpts */
 typedef struct
 {
-  void      *gridspacing;
-  GtkWidget *gridtypemenu;
-  GtkWidget *drawgrid;
-  GtkWidget *snap2grid;
-  GtkWidget *lockongrid;
-  GtkWidget *showcontrol;
+  GtkAdjustment *gridspacing;
+  GtkWidget     *gridtypemenu;
+  GtkWidget     *drawgrid;
+  GtkWidget     *snap2grid;
+  GtkWidget     *lockongrid;
+  GtkWidget     *showcontrol;
 } GfigOptWidgets;
 
-static GfigOptWidgets gfig_opt_widget;
+static GfigOptWidgets gfig_opt_widget = { NULL, NULL, NULL, NULL, NULL, NULL };
 static gchar         *gfig_path       = NULL;
 static GtkWidget     *page_menu_bg;
 static GtkWidget     *tool_options_notebook;
@@ -1247,7 +1247,10 @@ options_dialog_callback (GtkWidget *widget,
                         G_CALLBACK (toggle_show_image),
                         NULL);
       gtk_widget_show (toggle);
+
       gfig_opt_widget.showcontrol = toggle;
+      g_object_add_weak_pointer (G_OBJECT (gfig_opt_widget.showcontrol),
+                                 (gpointer) &gfig_opt_widget.showcontrol);
 
       toggle = gtk_check_button_new_with_label (_("Antialiasing"));
       gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 6);
@@ -1343,8 +1346,8 @@ adjust_grid_callback (GtkWidget *widget,
       GtkWidget *main_vbox;
       GtkWidget *hbox;
       GtkWidget *table;
-      GtkObject *size_data;
       GtkWidget *combo;
+      GtkObject *size_data;
 
       dialog = gimp_dialog_new (_("Grid"), "gfig-grid",
                                 GTK_WIDGET (data), 0, NULL, NULL,
@@ -1388,7 +1391,10 @@ adjust_grid_callback (GtkWidget *widget,
       g_signal_connect (size_data, "value_changed",
                         G_CALLBACK (draw_grid_clear),
                         NULL);
-      gfig_opt_widget.gridspacing = size_data;
+
+      gfig_opt_widget.gridspacing = GTK_ADJUSTMENT (size_data);
+      g_object_add_weak_pointer (G_OBJECT (gfig_opt_widget.gridspacing),
+                                 (gpointer) &gfig_opt_widget.gridspacing);
 
       combo = gimp_int_combo_box_new (_("Rectangle"), RECT_GRID,
                                       _("Polar"),     POLAR_GRID,
@@ -1405,6 +1411,8 @@ adjust_grid_callback (GtkWidget *widget,
                                  combo, 2, FALSE);
 
       gfig_opt_widget.gridtypemenu = combo;
+      g_object_add_weak_pointer (G_OBJECT (gfig_opt_widget.gridtypemenu),
+                                 (gpointer) &gfig_opt_widget.gridtypemenu);
 
       combo = gimp_int_combo_box_new (_("Normal"),    GTK_STATE_NORMAL,
                                       _("Black"),     GFIG_BLACK_GC,
@@ -1464,36 +1472,39 @@ update_options (GFigObj *old_obj)
   /* New vals */
   if (selvals.opts.gridspacing != gfig_context->current_obj->opts.gridspacing)
     {
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (gfig_opt_widget.gridspacing),
-                                gfig_context->current_obj->opts.gridspacing);
-    }
-  if (selvals.opts.drawgrid != gfig_context->current_obj->opts.drawgrid)
-    {
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gfig_opt_widget.drawgrid),
-                                    gfig_context->current_obj->opts.drawgrid);
-    }
-  if (selvals.opts.snap2grid != gfig_context->current_obj->opts.snap2grid)
-    {
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gfig_opt_widget.snap2grid),
-                                    gfig_context->current_obj->opts.snap2grid);
-    }
-  if (selvals.opts.lockongrid != gfig_context->current_obj->opts.lockongrid)
-    {
-#if 0
-      /* Maurits: code not implemented */
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gfig_opt_widget.lockongrid),
-                                    gfig_context->current_obj->opts.lockongrid);
-#endif
-    }
-  if (selvals.opts.showcontrol != gfig_context->current_obj->opts.showcontrol)
-    {
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gfig_opt_widget.showcontrol),
-                                    gfig_context->current_obj->opts.showcontrol);
+      if (gfig_opt_widget.gridspacing)
+        gtk_adjustment_set_value (gfig_opt_widget.gridspacing,
+                                  gfig_context->current_obj->opts.gridspacing);
     }
   if (selvals.opts.gridtype != gfig_context->current_obj->opts.gridtype)
     {
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (gfig_opt_widget.gridtypemenu),
-                                     gfig_context->current_obj->opts.gridtype);
+      if (gfig_opt_widget.gridtypemenu)
+        gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (gfig_opt_widget.gridtypemenu),
+                                       gfig_context->current_obj->opts.gridtype);
+    }
+  if (selvals.opts.drawgrid != gfig_context->current_obj->opts.drawgrid)
+    {
+      if (gfig_opt_widget.drawgrid)
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gfig_opt_widget.drawgrid),
+                                      gfig_context->current_obj->opts.drawgrid);
+    }
+  if (selvals.opts.snap2grid != gfig_context->current_obj->opts.snap2grid)
+    {
+      if (gfig_opt_widget.snap2grid)
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gfig_opt_widget.snap2grid),
+                                      gfig_context->current_obj->opts.snap2grid);
+    }
+  if (selvals.opts.lockongrid != gfig_context->current_obj->opts.lockongrid)
+    {
+      if (gfig_opt_widget.lockongrid)
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gfig_opt_widget.lockongrid),
+                                      gfig_context->current_obj->opts.lockongrid);
+    }
+  if (selvals.opts.showcontrol != gfig_context->current_obj->opts.showcontrol)
+    {
+      if (gfig_opt_widget.showcontrol)
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (gfig_opt_widget.showcontrol),
+                                      gfig_context->current_obj->opts.showcontrol);
     }
 }
 

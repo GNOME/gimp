@@ -1,7 +1,12 @@
 2004-11-28  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/gfig/gfig-dialog.c: make sure that widgets in the Grid
+	and Preferences dialogs are only accessed while the dialogs exist.
+
+2004-11-28  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/gfig/gfig-dialog.c: made the Grid and Preferences
-	dialogs singeltons and declared them as transient to the GFig
+	dialogs singletons and declared them as transient to the GFig
 	window. Don't let them run their own main loop.
 
 2004-11-28  Sven Neumann  <sven@gimp.org>
