@@ -1,33 +1,28 @@
-THIS IS A PREVIEW RELEASE FOR TESTING PURPOSES
-==============================================
+The GNU Image Manipulation Program Version 2.2
+----------------------------------------------
 
-This is a preview release of GIMP 2.2 which will replace GIMP 2.0 as
-the stable GIMP. This is not yet the final release but it should have
-all the features that 2.2.0 will have. This code hasn't seen a lot of
-testing yet so there are certainly bugs. If you find any, make sure
-you report them at bugzilla.gnome.org (after checking that it isn't
-reported already).
+This is version 2.2 of The GIMP. Version 2.2 is an update on GIMP 2.0.
+GIMP 2.2 is fully backward compatible to GIMP 2.0. Plug-ins and
+scripts written for GIMP 2.0 will continue to work and don't need to
+be changed nor recompiled to be used with GIMP 2.2.  We do however
+hope that plug-in authors will update their plug-ins for GIMP 2.2 and
+adapt the GUI changes we did with this version.
 
-Please do not install this pre-releae of GIMP 2.2 into the same prefix
-as GIMP 2.0. It would overwrite most of the GIMP 2.0 installation. To
-install in parallel to 2.0, please use a different prefix which is not
-in your default library search path. If you wish to replace GIMP 2.0
-with this pre-release, then please remove the GIMP 2.0 installation
-before installing this software.
+GIMP 2.2 replaces GIMP 2.0. It is advised that you uninstall GIMP 2.0
+before installing GIMP 2.2. If you want to keep GIMP 2.0 installed in
+parallel to GIMP 2.2, you have to choose a separate prefix which is
+not in your default library search path.
 
-The GIMP 2.2 plug-in API is fully backward compatible to GIMP 2.0.
-Plug-ins for GIMP 2.0 should continue to work and don't need to be
-recompiled. We do however hope that plug-in authors will update their
-plug-ins for GIMP 2.2 and adapt the GUI changes we did with this
-version.
+This code has already seen quite some testing but a lot has changed
+since version GIMP 2.0 and we could very well have introduced new
+bugs. If you find any , make sure you report them at bugzilla.gnome.org
+(after checking that it isn't reported already).
 
-It might turn out that we have to do some late changes to the newly
-added API before the final 2.2.0 release, so don't consider the API
-strictly frozen yet. The API is however guaranteed to be backward
-compatible (source and binary) with the GIMP 2.0 API. If you find that
-your 2.0 plug-in break when used with the GIMP 2.2 libraries, or if
-you cannot compile a GIMP 2.0 plug-in against the GIMP 2.2 header
-files, please report that as a bug.
+The GIMP 2.2 API is guaranteed to be backward compatible (source and
+binary) with the GIMP 2.0 API. If you find that your 2.0 plug-in break
+when used with the GIMP 2.2 libraries, or if you cannot compile a GIMP
+2.0 plug-in against the GIMP 2.2 header files, please report that as a
+bug.
 
 If you want to hack on The GIMP, please read the file HACKING. For
 detailed installation instructions, see the file INSTALL.

@@ -1,13 +1,41 @@
 The GNU Image Manipulation Program Version 2.2
 ----------------------------------------------
 
-This is a preview release of GIMP 2.2. This is not yet the final 2.2.0
-release which will replace GIMP 2.0 as the stable GIMP version. This
-code hasn't seen a lot of testing yet so there are certainly bugs. If
-you find any, make sure you report them at bugzilla.gnome.org (after
-checking that it isn't reported already).
+This is version 2.2 of The GIMP. Version 2.2 is an update on GIMP 2.0.
+GIMP 2.2 is fully backward compatible to GIMP 2.0. Plug-ins and
+scripts written for GIMP 2.0 will continue to work and don't need to
+be changed nor recompiled to be used with GIMP 2.2.  We do however
+hope that plug-in authors will update their plug-ins for GIMP 2.2 and
+adapt the GUI changes we did with this version.
 
 Please follow the installation instructions in INSTALL.
+
+
+Overview of Changes in GIMP 2.2.0 (since 2.2-pre2 was released)
+=================================
+
+- More work on GFig plug-in.
+
+- Build fixes for Win32 and IRIX.
+
+- Added --no-splash command-line option for gimp-remote.
+
+- More tweaks to the migration of user settings.
+
+- Improved input controller modules, added ALSA support to the MIDI module.
+
+- Allow to transform layers with masks.
+
+- Let the histogram respect the selection.
+
+- Lots of bug fixes and some optimizations.
+
+
+Contributors: 
+
+   Michael Natterer, Sven Neumann, David Odin, Manish Singh, Kevin Cozens,
+   Joao S. O. Bueno, Karine Proot, Tim Mooney, Wolfgang Hofer, Simon Budig,
+   Bill Skaggs, Øyvind Kolås
 
 
 Overview of Changes in GIMP 2.2-pre2

@@ -1,8 +1,16 @@
 Installation instructions for GIMP 2.2
 --------------------------------------
 
-There are some basic steps to building and installing this development
-version of The GIMP.
+There are some basic steps to building and installing The GIMP.
+
+GIMP 2.2 replaces GIMP 2.0. It is advised that you uninstall GIMP 2.0
+before installing GIMP 2.2. If you want to keep GIMP 2.0 installed in
+parallel to GIMP 2.2, you have to choose a separate prefix which is
+not in your default library search path.
+
+GIMP 2.2 is fully backward compatible to GIMP 2.0. Plug-ins and
+scripts written for GIMP 2.0 will continue to work and don't need to
+be changed nor recompiled to be used with GIMP 2.2.
 
 Please do not install this pre-releae of GIMP 2.2 into the same prefix
 as GIMP 2.0. It would overwrite most of the GIMP 2.0 installation. To
@@ -33,10 +41,13 @@ header files installed.
      ftp://ftp.gtk.org/. GTK+-2.x and friends can be installed side
      by side with GTK+-1.2.
 
-  3. We require PangoFT2, a Pango backend that uses FreeType2. Make sure 
-     you have FreeType2 and fontconfig installed before you compile Pango.
-     FreeType2 can be downloaded from http://www.freetype.org/.
-     Fontconfig from http://x2.freedesktop.org/software/fontconfig.
+  3. We require PangoFT2, a Pango backend that uses FreeType2. Make
+     sure you have FreeType2 and fontconfig installed before you
+     compile Pango.  FreeType2 can be downloaded from
+     http://www.freetype.org/.  Fontconfig from
+     http://x2.freedesktop.org/software/fontconfig.  GIMP 2.2 depends
+     on freetype2 being newer than version 2.1.7. Older versions are
+     known to have bugs that seriously affect stability of The GIMP.
 
   4. We use libart2. Grab the module libart_lgpl out of GNOME CVS or
      fetch the tarball from
