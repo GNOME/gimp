@@ -497,9 +497,9 @@ gimp_template_editor_constructor (GType                  type,
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
   gtk_widget_show (text_view);
 
-  g_signal_connect (editor->template, "notify",
-                    G_CALLBACK (gimp_template_editor_template_notify),
-                    editor);
+  g_signal_connect_object (editor->template, "notify",
+                           G_CALLBACK (gimp_template_editor_template_notify),
+                           editor, 0);
 
   return object;
 }
