@@ -185,7 +185,7 @@ gimp_curves_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_IMAGE_MAP_TOOL,
-					  "GimpCurvesTool", 
+					  "GimpCurvesTool",
                                           &tool_info, 0);
     }
 
@@ -373,13 +373,13 @@ gimp_curves_tool_color_picked (GimpColorTool *color_tool,
   c_tool->col_value[GIMP_HISTOGRAM_RED]   = r;
   c_tool->col_value[GIMP_HISTOGRAM_GREEN] = g;
   c_tool->col_value[GIMP_HISTOGRAM_BLUE]  = b;
-  
+
   if (gimp_drawable_has_alpha (drawable))
     c_tool->col_value[GIMP_HISTOGRAM_ALPHA] = a;
-      
+
   if (gimp_drawable_is_indexed (drawable))
     c_tool->col_value[GIMP_HISTOGRAM_ALPHA] = color_index;
-      
+
   c_tool->col_value[GIMP_HISTOGRAM_VALUE] = MAX (MAX (r, g), b);
 
   gtk_widget_queue_draw (c_tool->graph);
@@ -412,14 +412,14 @@ curves_add_point (GimpCurvesTool *c_tool,
 		closest_point = i;
 	      }
 	}
-      
+
       if (distance > MIN_DISTANCE)
 	closest_point = (curvex + 8) / 16;
-      
+
       c_tool->curves->points[cchan][closest_point][0] = curvex;
       c_tool->curves->points[cchan][closest_point][1] = c_tool->curves->curve[cchan][curvex];
       break;
-      
+
     case GIMP_CURVE_FREE:
       c_tool->curves->curve[cchan][x] = 255 - y;
       break;
@@ -433,7 +433,7 @@ gimp_curves_tool_map (GimpImageMapTool *image_map_tool)
 
   c_tool = GIMP_CURVES_TOOL (image_map_tool);
 
-  gimp_lut_setup (c_tool->lut, 
+  gimp_lut_setup (c_tool->lut,
 		  (GimpLutFunc) curves_lut_func,
                   c_tool->curves,
 		  gimp_drawable_bytes (image_map_tool->drawable));
@@ -560,7 +560,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
-  
+
   /*  Horizontal button box for load / save */
   frame = gtk_frame_new (_("All Channels"));
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
@@ -638,12 +638,12 @@ curves_update (GimpCurvesTool *c_tool,
 {
   GimpHistogramChannel sel_channel;
   gint                 i, j;
-  
+
   if (c_tool->color)
     {
       sel_channel = c_tool->channel;
     }
-  else 
+  else
     {
       if (c_tool->channel == 2)
         sel_channel = GIMP_HISTOGRAM_ALPHA;
@@ -769,7 +769,7 @@ curves_channel_callback (GtkWidget      *widget,
     {
       if (c_tool->channel > 1)
         c_tool->channel = 2;
-      else 
+      else
         c_tool->channel = 1;
     }
 
@@ -930,7 +930,7 @@ curves_graph_events (GtkWidget      *widget,
 	  c_tool->last = y;
 	  break;
 	}
-      
+
       gtk_grab_add (widget);
 
       curves_calculate_curve (c_tool->curves, c_tool->channel);
@@ -1071,29 +1071,29 @@ curve_print_loc (GimpCurvesTool *c_tool)
     {
       c_tool->cursor_layout = gtk_widget_create_pango_layout (c_tool->graph,
                                                               "x:888 y:888");
-      pango_layout_get_pixel_extents (c_tool->cursor_layout, 
+      pango_layout_get_pixel_extents (c_tool->cursor_layout,
                                       NULL, &c_tool->cursor_rect);
     }
-  
+
   x = RADIUS * 2 + 2;
   y = RADIUS * 2 + 2;
   w = c_tool->cursor_rect.width  + 4;
   h = c_tool->cursor_rect.height + 4;
-  
-  gdk_draw_rectangle (c_tool->graph->window, 
+
+  gdk_draw_rectangle (c_tool->graph->window,
                       c_tool->graph->style->bg_gc[GTK_STATE_ACTIVE],
                       TRUE,
                       x, y, w + 1, h + 1);
-  gdk_draw_rectangle (c_tool->graph->window, 
+  gdk_draw_rectangle (c_tool->graph->window,
                       c_tool->graph->style->black_gc,
                       FALSE,
                       x, y, w, h);
-  
+
   g_snprintf (buf, sizeof (buf), "x:%3d y:%3d",
               c_tool->cursor_x, 255 - c_tool->cursor_y);
   pango_layout_set_text (c_tool->cursor_layout, buf, 11);
-  
-  gdk_draw_layout (c_tool->graph->window, 
+
+  gdk_draw_layout (c_tool->graph->window,
                    c_tool->graph->style->black_gc,
                    x + 2, y + 2,
                    c_tool->cursor_layout);
@@ -1116,7 +1116,7 @@ curves_graph_expose (GtkWidget      *widget,
     {
       sel_channel = c_tool->channel;
     }
-  else 
+  else
     {
       if (c_tool->channel == 2)
         sel_channel = GIMP_HISTOGRAM_ALPHA;
@@ -1155,7 +1155,7 @@ curves_graph_expose (GtkWidget      *widget,
       gdk_draw_lines (widget->window,
                       c_tool->graph->style->black_gc,
                       points, 256);
-      
+
       /*  Draw the points  */
       for (i = 0; i < 17; i++)
         {
@@ -1168,7 +1168,7 @@ curves_graph_expose (GtkWidget      *widget,
                           RADIUS * 2, RADIUS * 2, 0, 23040);
         }
     }
-  
+
   if (c_tool->col_value[sel_channel] >= 0)
     {
       /* draw the color line */
@@ -1178,31 +1178,31 @@ curves_graph_expose (GtkWidget      *widget,
                      RADIUS,
                      c_tool->col_value[sel_channel] + RADIUS,
                      GRAPH_HEIGHT + RADIUS);
-      
+
       /* and xpos indicator */
       g_snprintf (buf, sizeof (buf), "x:%d",
                   c_tool->col_value[sel_channel]);
-      
+
       if (! c_tool->xpos_layout)
         c_tool->xpos_layout = gtk_widget_create_pango_layout (c_tool->graph,
                                                               buf);
       else
         pango_layout_set_text (c_tool->xpos_layout, buf, -1);
-      
+
       pango_layout_get_pixel_size (c_tool->xpos_layout, &offset, &height);
-      
+
       if ((c_tool->col_value[sel_channel] + RADIUS) < 127)
         offset = RADIUS + 4;
       else
         offset = - (offset + 2);
-      
+
       gdk_draw_layout (widget->window,
                        c_tool->graph->style->black_gc,
                        c_tool->col_value[sel_channel] + offset,
                        GRAPH_HEIGHT - height - 2,
                        c_tool->xpos_layout);
     }
-  
+
   curve_print_loc (c_tool);
 }
 
@@ -1317,7 +1317,7 @@ curves_read_from_file (GimpCurvesTool *c_tool,
   gchar buf[50];
   gint  index[5][17];
   gint  value[5][17];
-  
+
   if (! fgets (buf, 50, file))
     return FALSE;
 
@@ -1371,7 +1371,7 @@ curves_write_to_file (GimpCurvesTool *c_tool,
 
   for (i = 0; i < 5; i++)
     if (c_tool->curves->curve_type[i] == GIMP_CURVE_FREE)
-      {  
+      {
 	/*  pick representative points from the curve
             and make them control points  */
 	for (j = 0; j <= 8; j++)
@@ -1379,7 +1379,7 @@ curves_write_to_file (GimpCurvesTool *c_tool,
 	    index = CLAMP0255 (j * 32);
 	    c_tool->curves->points[i][j * 2][0] = index;
 	    c_tool->curves->points[i][j * 2][1] = c_tool->curves->curve[i][index];
-	  }      
+	  }
       }
 
   fprintf (file, "# GIMP Curves File\n");
@@ -1388,9 +1388,9 @@ curves_write_to_file (GimpCurvesTool *c_tool,
     {
       for (j = 0; j < 17; j++)
 	fprintf (file, "%d %d ",
-                 c_tool->curves->points[i][j][0], 
+                 c_tool->curves->points[i][j][0],
                  c_tool->curves->points[i][j][1]);
-      
+
       fprintf (file, "\n");
     }
 }

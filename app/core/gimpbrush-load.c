@@ -118,7 +118,7 @@ gimp_brush_get_type (void)
       };
 
       brush_type = g_type_register_static (GIMP_TYPE_DATA,
-					   "GimpBrush", 
+					   "GimpBrush",
 					   &brush_info, 0);
   }
 
@@ -140,7 +140,7 @@ gimp_brush_class_init (GimpBrushClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  brush_signals[SPACING_CHANGED] = 
+  brush_signals[SPACING_CHANGED] =
     g_signal_new ("spacing_changed",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
@@ -578,7 +578,7 @@ gimp_brush_load_brush (gint          fd,
       /*  spacing is not defined in version 1  */
       header.spacing = 25;
     }
-  
+
    /*  Read in the brush name  */
   if ((bn_size = (header.header_size - sizeof (header))))
     {
@@ -595,13 +595,13 @@ gimp_brush_load_brush (gint          fd,
 
       if (!g_utf8_validate (name, -1, NULL))
         {
-          g_message (_("Invalid UTF-8 string in brush file '%s'."), 
+          g_message (_("Invalid UTF-8 string in brush file '%s'."),
                      filename);
           g_free (name);
           name = NULL;
         }
     }
-  
+
   if (!name)
     name = g_strdup (_("Unnamed"));
 
@@ -668,7 +668,3 @@ gimp_brush_load_brush (gint          fd,
 
   return brush;
 }
-
-
-
-

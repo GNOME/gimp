@@ -415,7 +415,7 @@ gimp_paint_core_start (GimpPaintCore    *core,
 
   core->last_paint.x = -1e6;
   core->last_paint.y = -1e6;
-  
+
   return TRUE;
 }
 
@@ -499,7 +499,7 @@ gimp_paint_core_cleanup (GimpPaintCore *core)
  * gimp_paint_core_constrain_helper:
  * @dx: the (fixed) delta-x
  * @dy: a suggested delta-y
- * 
+ *
  * Returns an adjusted dy' near dy such that the slope (dx,dy') is a
  * multiple of 15 degrees.
  **/
@@ -603,7 +603,7 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
   gimp_avoid_exact_integer (&core->last_coords.y);
   gimp_avoid_exact_integer (&core->cur_coords.x);
   gimp_avoid_exact_integer (&core->cur_coords.y);
-  
+
   delta.x        = core->cur_coords.x        - core->last_coords.x;
   delta.y        = core->cur_coords.y        - core->last_coords.y;
   delta.pressure = core->cur_coords.pressure - core->last_coords.pressure;
@@ -654,7 +654,7 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
    *  brush position's x or y coordinate - note that st_factor may
    *  be negative!)
    */
-  
+
   if (delta.x*delta.x > delta.y*delta.y)
     {
       st_factor = delta.x;
@@ -665,7 +665,7 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
       st_factor = delta.y;
       st_offset = core->last_coords.y - 0.5;
     }
-  
+
   if (fabs (st_factor) > dist / core->spacing)
     {
       /*  The stripe principle leads to brush positions that are spaced
@@ -710,7 +710,7 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
        *  tricky to see just why. Do not change this algorithm unless you
        *  are sure you know what you're doing!
        */
-      
+
       /*  Basic case: round the beginning and ending point to nearest
        *  stripe center.
        */
@@ -719,7 +719,7 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
 
       t0 = (s0 - st_offset) / st_factor;
       tn = (sn - st_offset) / st_factor;
-      
+
       x = (gint) floor (core->last_coords.x + t0 * delta.x);
       y = (gint) floor (core->last_coords.y + t0 * delta.y);
       if (t0 < 0.0 && !( x == (gint) floor (core->last_coords.x) &&
@@ -829,11 +829,11 @@ gimp_paint_core_get_color_from_gradient (GimpPaintCore         *core,
     pos = 1.0;
 
   /*  for the once modes, set pos close to 1.0 after the first chunk  */
-  if ((mode == GIMP_GRADIENT_ONCE_FORWARD || 
+  if ((mode == GIMP_GRADIENT_ONCE_FORWARD ||
        mode == GIMP_GRADIENT_ONCE_BACKWARD) && pos >= 1.0)
     pos = 0.9999999;
 
-  if ((((gint) pos & 1) && mode != GIMP_GRADIENT_LOOP_SAWTOOTH) || 
+  if ((((gint) pos & 1) && mode != GIMP_GRADIENT_LOOP_SAWTOOTH) ||
       mode == GIMP_GRADIENT_ONCE_BACKWARD)
     pos = 1.0 - (pos - (gint) pos);
   else

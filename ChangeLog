@@ -1,5 +1,12 @@
 2003-07-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpbrush.c
+	* app/paint/gimppaintcore.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimptool.c: removed trailing whitespace.
+
+2003-07-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/base/boundary.[ch]: added "guchar threshold" parameters all
 	over the place instead of always using 127. Made the HALF_WAY
 	#define public.

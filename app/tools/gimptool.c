@@ -101,7 +101,7 @@ gimp_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_OBJECT,
-                                          "GimpTool", 
+                                          "GimpTool",
                                           &tool_info, 0);
     }
 
@@ -144,7 +144,7 @@ static void
 gimp_tool_finalize (GObject *object)
 {
   GimpTool *tool = GIMP_TOOL (object);
-  
+
   if (tool->control)
     {
       g_object_unref (tool->control);
@@ -252,7 +252,7 @@ gimp_tool_real_cursor_update (GimpTool        *tool,
 /*  public functions  */
 
 void
-gimp_tool_initialize (GimpTool    *tool, 
+gimp_tool_initialize (GimpTool    *tool,
                       GimpDisplay *gdisp)
 {
   g_return_if_fail (GIMP_IS_TOOL (tool));
@@ -262,8 +262,8 @@ gimp_tool_initialize (GimpTool    *tool,
 }
 
 void
-gimp_tool_control (GimpTool       *tool, 
-                   GimpToolAction  action, 
+gimp_tool_control (GimpTool       *tool,
+                   GimpToolAction  action,
                    GimpDisplay    *gdisp)
 {
   g_return_if_fail (GIMP_IS_TOOL (tool));
