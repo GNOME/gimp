@@ -363,7 +363,7 @@ gimp_unit_menu_build_string (gchar *format, GUnit unit)
 	      break;
 
 	    default:
-	      g_warning (_("unit-menu-format contains unknown"
+	      g_warning (_("unit-menu-format contains unknown "
 			   "format sequence '%%%c'"), *format);
 	      break;
 	    }

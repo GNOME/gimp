@@ -1,3 +1,8 @@
+1999-07-22  Tomas Ogren  <stric@ing.umu.se>
+
+	* plug-ins/common/gifload.c:
+	* libgimp/gimpunitmenu.c: Fixed some tyops
+
 1999-07-21  Tor Lillqvist  <tml@iki.fi>
 
 	* README.win32: Update gcc instructions. Remove warning about

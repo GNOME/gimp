@@ -361,7 +361,7 @@ load_image (char *filename)
 	  /* Extension */
 	  if (!ReadOK (fd, &c, 1))
 	    {
-	      g_message (_("GIF: OF / read error on extension function code\n"));
+	      g_message (_("GIF: EOF / read error on extension function code\n"));
 	      return image_ID; /* will be -1 if failed on first image! */
 	    }
 	  DoExtension (fd, c);
