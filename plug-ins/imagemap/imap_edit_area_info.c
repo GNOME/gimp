@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2000 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -342,16 +342,10 @@ object_was_changed(AreaInfoDialog_t *dialog)
 }
 
 static void
-edit_area_ok_cb(gpointer data)
+edit_area_apply_cb(gpointer data)
 {
    AreaInfoDialog_t *param = (AreaInfoDialog_t*) data;
    Object_t *obj = param->obj;
-
-   object_list_remove_geometry_cb(obj->list, param->geometry_cb_id);
-
-   /* Fix me: nasty hack */
-   if (param->add)
-      command_list_add(edit_object_command_new(obj));
 
    object_set_url(obj, gtk_entry_get_text(GTK_ENTRY(param->url)));
    object_set_target(obj, gtk_entry_get_text(GTK_ENTRY(param->target)));
@@ -363,10 +357,25 @@ edit_area_ok_cb(gpointer data)
    object_set_blur(obj, gtk_entry_get_text(GTK_ENTRY(param->blur)));
    object_update(obj, param->infotab);
    update_shape(obj);
-   object_unlock(obj);
 
    if (object_was_changed(param))
       redraw_preview();
+}
+
+static void
+edit_area_ok_cb(gpointer data)
+{
+   AreaInfoDialog_t *param = (AreaInfoDialog_t*) data;
+   Object_t *obj = param->obj;
+
+   object_list_remove_geometry_cb(obj->list, param->geometry_cb_id);
+
+   /* Fix me: nasty hack */
+   if (param->add)
+      command_list_add(edit_object_command_new(obj));
+
+   edit_area_apply_cb(data);
+   object_unlock(obj);
    object_unref(param->clone);
 }
 
@@ -415,6 +424,7 @@ create_edit_area_info_dialog(Object_t *obj)
    data->browse = NULL;
    data->dialog = make_default_dialog(_("Area Settings"));
    default_dialog_set_ok_cb(data->dialog, edit_area_ok_cb, data);
+   default_dialog_set_apply_cb(data->dialog, edit_area_apply_cb, data);
    default_dialog_set_cancel_cb(data->dialog, edit_area_cancel_cb, data);
 
    data->notebook = notebook = gtk_notebook_new();

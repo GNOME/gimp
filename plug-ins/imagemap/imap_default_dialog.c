@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2000 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +45,9 @@ static void
 dialog_apply(GtkWidget *widget, gpointer data)
 {
    DefaultDialog_t *dialog = (DefaultDialog_t*) data;
-   if (dialog->ok_cb)
+   if (dialog->apply_cb)
+      dialog->apply_cb(dialog->apply_cb_data);
+   else if (dialog->ok_cb)
       dialog->ok_cb(dialog->ok_cb_data);
 }
 
@@ -67,6 +69,15 @@ default_dialog_set_ok_cb(DefaultDialog_t *dialog, void (*ok_cb)(gpointer),
 }
 
 void 
+default_dialog_set_apply_cb(DefaultDialog_t *dialog, 
+			    void (*apply_cb)(gpointer), 
+			    gpointer apply_cb_data)
+{
+   dialog->apply_cb = apply_cb;
+   dialog->apply_cb_data = apply_cb_data;
+}
+
+void 
 default_dialog_set_cancel_cb(DefaultDialog_t *dialog, 
 			     void (*cancel_cb)(gpointer), 
 			     gpointer cancel_cb_data)
@@ -82,6 +93,7 @@ make_default_dialog(const gchar *title)
    GtkWidget *dialog, *hbbox;
 
    data->ok_cb = NULL;
+   data->apply_cb = NULL;
    data->cancel_cb = NULL;
    data->dialog = dialog = gtk_dialog_new();
    gtk_window_set_title(GTK_WINDOW(dialog), title);
