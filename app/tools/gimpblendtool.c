@@ -91,6 +91,8 @@ gimp_blend_tool_register (GimpToolRegisterCallback  callback,
   (* callback) (GIMP_TYPE_BLEND_TOOL,
                 GIMP_TYPE_BLEND_OPTIONS,
                 gimp_blend_options_gui,
+                GIMP_CONTEXT_FOREGROUND_MASK |
+                GIMP_CONTEXT_BACKGROUND_MASK |
                 GIMP_CONTEXT_OPACITY_MASK    |
                 GIMP_CONTEXT_PAINT_MODE_MASK |
                 GIMP_CONTEXT_GRADIENT_MASK,

@@ -82,6 +82,8 @@ gimp_bucket_fill_tool_register (GimpToolRegisterCallback  callback,
   (* callback) (GIMP_TYPE_BUCKET_FILL_TOOL,
                 GIMP_TYPE_BUCKET_FILL_OPTIONS,
                 gimp_bucket_fill_options_gui,
+                GIMP_CONTEXT_FOREGROUND_MASK |
+                GIMP_CONTEXT_BACKGROUND_MASK |
                 GIMP_CONTEXT_OPACITY_MASK    |
                 GIMP_CONTEXT_PAINT_MODE_MASK |
                 GIMP_CONTEXT_PATTERN_MASK,

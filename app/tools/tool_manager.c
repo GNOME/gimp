@@ -518,6 +518,10 @@ tool_manager_tool_changed (GimpContext  *user_context,
       GimpCoreConfig      *config       = user_context->gimp->config;
       GimpContextPropMask  global_props = 0;
 
+      /*  FG and BG are always shared between all tools  */
+      global_props |= GIMP_CONTEXT_FOREGROUND_MASK;
+      global_props |= GIMP_CONTEXT_BACKGROUND_MASK;
+
       if (config->global_brush)
         global_props |= GIMP_CONTEXT_BRUSH_MASK;
       if (config->global_pattern)

@@ -1,3 +1,24 @@
+2004-05-04  Michael Natterer  <mitch@gimp.org>
+
+	Treat FG/BG just like all other context properties:
+
+	* app/paint/gimppaintoptions.h: added GIMP_CONTEXT_FOREGROUND_MASK
+	and _BACKGROUND_MASK to GIMP_PAINT_OPTIONS_CONTEXT_MASK to specify
+	that they are used by GimpPaintOptions (automatically affects all
+	paint tools).
+
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpinktool.c: set FOREGROUND_MASK and BACKGROUND_MASK
+	manually here.
+
+	* app/tools/tool_manager.c (tool_manager_tool_changed): decide
+	about the globality of FG and BG at the same place where we decide
+	about the brush's, pattern's etc. globality, but hardcode them to
+	global = TRUE instead of looking at GimpConfig.
+
+	Fixes bug #141786.
+
 2004-05-04  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/sobel.c (sobel_dialog): removed frame, adjusted
