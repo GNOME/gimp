@@ -41,13 +41,15 @@
 
 static void      gimp_text_layer_class_init    (GimpTextLayerClass *klass);
 static void      gimp_text_layer_init          (GimpTextLayer      *layer);
-static void      gimp_text_layer_finalize      (GObject            *object);
+static void      gimp_text_layer_dispose       (GObject            *object);
 
 static gsize     gimp_text_layer_get_memsize   (GimpObject         *object);
 static TempBuf * gimp_text_layer_get_preview   (GimpViewable       *viewable,
 						gint                width,
 						gint                height);
 
+static void      gimp_text_layer_notify_text   (GimpTextLayer      *layer);
+static gboolean  gimp_text_layer_idle_render   (GimpTextLayer      *layer);
 static gboolean  gimp_text_layer_render        (GimpTextLayer      *layer);
 static void      gimp_text_layer_render_layout (GimpTextLayer      *layer,
                                                 GimpTextLayout     *layout);
@@ -97,7 +99,7 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize = gimp_text_layer_finalize;
+  object_class->dispose  = gimp_text_layer_dispose;
 
   gimp_object_class->get_memsize = gimp_text_layer_get_memsize;
 
@@ -111,19 +113,24 @@ gimp_text_layer_init (GimpTextLayer *layer)
 }
 
 static void
-gimp_text_layer_finalize (GObject *object)
+gimp_text_layer_dispose (GObject *object)
 {
   GimpTextLayer *layer;
 
   layer = GIMP_TEXT_LAYER (object);
 
+  if (layer->idle_render_id)
+    {
+      g_source_remove (layer->idle_render_id);
+      layer->idle_render_id = 0;
+    }
   if (layer->text)
     {
       g_object_unref (layer->text);
       layer->text = NULL;
     }
 
-  G_OBJECT_CLASS (parent_class)->finalize (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 GimpLayer *
@@ -148,15 +155,15 @@ gimp_text_layer_new (GimpImage *image,
 
   layer->text = g_object_ref (text);
 
-  g_signal_connect_object (text, "notify",
-                           G_CALLBACK (gimp_text_layer_render),
-                           layer, G_CONNECT_SWAPPED);
-
   if (!gimp_text_layer_render (layer))
     {
       g_object_unref (layer);
       return NULL;
     }
+
+  g_signal_connect_object (text, "notify",
+                           G_CALLBACK (gimp_text_layer_notify_text),
+                           layer, G_CONNECT_SWAPPED);
 
   return GIMP_LAYER (layer);
 }
@@ -195,6 +202,28 @@ gimp_text_layer_get_preview (GimpViewable *viewable,
 {
   return GIMP_VIEWABLE_CLASS (parent_class)->get_preview (viewable,
 							  width, height);
+}
+
+static void
+gimp_text_layer_notify_text (GimpTextLayer *layer)
+{
+  if (layer->idle_render_id)
+    return;
+
+  layer->idle_render_id =
+    g_idle_add_full (G_PRIORITY_LOW,
+                     (GSourceFunc) gimp_text_layer_idle_render, layer,
+                     NULL);
+}
+
+static gboolean
+gimp_text_layer_idle_render (GimpTextLayer *layer)
+{
+  layer->idle_render_id = 0;
+
+  gimp_text_layer_render (layer);
+
+  return FALSE;
 }
 
 static gboolean

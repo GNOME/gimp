@@ -145,6 +145,8 @@ gimp_font_selection_init (GimpFontSelection *fontsel)
   GtkWidget *button;
   GtkWidget *image;
 
+  gtk_box_set_spacing (GTK_BOX (fontsel), 2);
+
   fontsel->context = NULL;
 
   fontsel->entry = gtk_entry_new ();

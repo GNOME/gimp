@@ -577,7 +577,7 @@ gimp_enum_stock_box_new_with_range (GType         enum_type,
 
   enum_class = g_type_class_ref (enum_type);
 
-  hbox = gtk_hbox_new (FALSE, 1);
+  hbox = gtk_hbox_new (FALSE, 2);
   g_object_weak_ref (G_OBJECT (hbox),
                      (GWeakNotify) g_type_class_unref, enum_class);
 
@@ -590,6 +590,8 @@ gimp_enum_stock_box_new_with_range (GType         enum_type,
         continue;
 
       button = gtk_radio_button_new (group);
+      
+      gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
 
       if (first_button && *first_button == NULL)
         *first_button = button;

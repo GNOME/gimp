@@ -31,6 +31,7 @@
 
 #include "text/gimptext.h"
 
+#include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpfontselection.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimptexteditor.h"
@@ -101,6 +102,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   GtkWidget       *button;
   GtkWidget       *unit_menu;
   GtkWidget       *font_selection;
+  GtkWidget       *box;
   GtkWidget       *spinbutton;
   gint             digits;
 
@@ -110,10 +112,9 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
   vbox = tool_options->main_vbox;
 
-  table = gtk_table_new (4, 4, FALSE);
+  table = gtk_table_new (4, 6, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacing  (GTK_TABLE (table), 3, 12);
   gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (table), FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -140,20 +141,27 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
   button = gimp_prop_color_button_new (G_OBJECT (options->text),
                                        "color", _("Text Color"),
-				       48, 24, GIMP_COLOR_AREA_FLAT); 
+				       48, 24, GIMP_COLOR_AREA_FLAT);
+  gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
+                                GIMP_CONTEXT (options));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              _("Color:"), 1.0, 0.5, button, 2, TRUE);
 
-  spinbutton = gimp_prop_spin_button_new (G_OBJECT (options->text),
-                                          "letter-spacing", 0.1, 1.0, 2);
-  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
-  gimp_table_attach_stock (GTK_TABLE (table), 0, 3,
-                           GIMP_STOCK_LETTER_SPACING, spinbutton);
+  box = gimp_prop_enum_stock_box_new (G_OBJECT (options->text),
+                                      "justify", "gtk-justify", 0, 0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
+                             _("Justify:"), 1.0, 0.5, box, 2, TRUE);
 
   spinbutton = gimp_prop_spin_button_new (G_OBJECT (options->text),
-                                          "line-spacing", 0.1, 1.0, 2);
+                                          "indent", 1.0, 10.0, 1);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
   gimp_table_attach_stock (GTK_TABLE (table), 0, 4,
+                           _("Indentation"), spinbutton);
+
+  spinbutton = gimp_prop_spin_button_new (G_OBJECT (options->text),
+                                          "line-spacing", 1.0, 10.0, 1);
+  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
+  gimp_table_attach_stock (GTK_TABLE (table), 0, 5,
                            GIMP_STOCK_LINE_SPACING, spinbutton);
 }
 

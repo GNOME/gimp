@@ -41,6 +41,7 @@ struct _GimpTextLayer
   GimpLayer     layer;
 
   GimpText     *text;
+  guint         idle_render_id;
 };
 
 struct _GimpTextLayerClass

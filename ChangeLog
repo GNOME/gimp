@@ -1,3 +1,21 @@
+2003-02-05  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpobject.c (gimp_object_set_name_safe): replaced with
+	an UTF-8 safe rewrite.
+
+	* app/widgets/gimpwidgets-utils.c (gimp_table_attach_stock): hacked
+	to allow being used with non-existent stock_ids (for prototyping).
+
+	* app/widgets/gimpenummenu.c: set the radio button mode correctly.
+
+	* app/widgets/gimpfontselection.c: tweaked spacing.
+
+	* app/tools/gimptextoptions.c: added controls for justification and
+	indentation. Removed letter-spacing control for now.
+
+	* app/text/gimptextlayer.[ch]: rerender the text layer from a low
+	priority idle function.
+
 2003-02-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimpairbrush.c
