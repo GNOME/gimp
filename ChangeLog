@@ -1,5 +1,10 @@
 2004-10-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpobject.c: #include "libgimpbase/gimpbase.h", not
+	just gimputils.h
+
+2004-10-25  Michael Natterer  <mitch@gimp.org>
+
 	* menus/toolbox-menu.xml.in: commented out the "Debug" submenu.
 	Should do this via an xsltproc --param actually...
 
