@@ -120,4 +120,5 @@ big cad style cross-hairs cursor?
 
 more info available to the user in general (current brush, etc)
 
-
+some sort of image locking, so we don't munge images by doing >1 ops
+on them at once
