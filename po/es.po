@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.x\n"
-"POT-Creation-Date: 2003-03-07 12:10+0100\n"
+"POT-Creation-Date: 2003-03-10 12:08+0100\n"
 "PO-Revision-Date: 2003-03-07 18:39+0100\n"
 "Last-Translator: Pablo Gonzalo del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -123,7 +123,8 @@ msgstr "  -s, --no-splash          No mostrar la ventana de inicio.\n"
 
 #: app/main.c:467
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
-msgstr "  -S, --no-splash-image    No poner una imagen en la ventana de inicio.\n"
+msgstr ""
+"  -S, --no-splash-image    No poner una imagen en la ventana de inicio.\n"
 
 #: app/main.c:468
 msgid "  -v, --version            Output version information.\n"
@@ -137,9 +138,7 @@ msgstr "  --verbose                Mostrar mensajes de inicio.\n"
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
-msgstr ""
-"  --no-shm                 No compartir la memoria entre El GIMP y las "
-"extensiones (plug-ins).\n"
+msgstr "  --no-shm                 No compartir la memoria entre El GIMP y las extensiones.\n"
 
 #: app/main.c:471
 msgid "  --no-mmx                 Do not use MMX routines.\n"
@@ -148,9 +147,9 @@ msgstr "  --no-xshm                No utilizar las rutinas MMX.\n"
 # //R Posiblemente estará mal
 # Creo que ahora está un poco mejor. FVD
 #: app/main.c:472
-#, fuzzy
-msgid "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
-msgstr "  --debug-handlers         Activar manejadores de señales no fatales de depuración.\n"
+msgid ""
+"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
+msgstr "  --debug-handlers         Activar los manejadores de señales no fatales de depuración.\n"
 
 #: app/main.c:473
 msgid "  --display <display>      Use the designated X display.\n"
@@ -158,7 +157,8 @@ msgstr "  --display <display>      Usar la pantalla X designada.\n"
 
 #: app/main.c:474
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
-msgstr "  --system-gimprc <gimprc> Usar un archivo de sistema «gimprc» alternativo.\n"
+msgstr ""
+"  --system-gimprc <gimprc> Usar un archivo de sistema «gimprc» alternativo.\n"
 
 #: app/main.c:475
 msgid ""
@@ -303,12 +303,12 @@ msgid "Failed to create temporary file for '%s': %s"
 msgstr "Ha fallado la creación del archivo temporal para «%s»: %s"
 
 #: app/config/gimpconfigwriter.c:89
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open '%s' for writing: %s"
 msgstr "No se ha podido abrir «%s» para escritura: %s"
 
 #: app/config/gimpconfigwriter.c:330
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "The original file has not been touched."
@@ -317,7 +317,7 @@ msgstr ""
 "El archivo original no ha sido modificado."
 
 #: app/config/gimpconfigwriter.c:337
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "No file has been created."
@@ -326,7 +326,7 @@ msgstr ""
 "No se ha creado ningún archivo."
 
 #: app/config/gimpconfigwriter.c:347
-#, fuzzy, c-format
+#, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Ocurrió un error al escribir «%s»: %s"
 
@@ -367,7 +367,10 @@ msgid ""
 "Specify that marching ants for selected regions will be drawn with colormap "
 "cycling as opposed to be drawn as animated lines.  This color cycling option "
 "works only with 8-bit displays."
-msgstr "Especifica que las hormigas marchantes de las regiones seleccionadas serán dibujadas con un mapa de color cíclico en vez de ser dibujadas como líneas animadas. Esta opción de color cíclico sólo funciona con pantallas de 8 bits."
+msgstr ""
+"Especifica que las hormigas marchantes de las regiones seleccionadas serán "
+"dibujadas con un mapa de color cíclico en vez de ser dibujadas como líneas "
+"animadas. Esta opción de color cíclico sólo funciona con pantallas de 8 bits."
 
 #: app/config/gimprc-blurbs.h:28
 msgid "Ask for confirmation before closing an image without saving."
@@ -392,7 +395,7 @@ msgstr ""
 msgid ""
 "When enabled, this will ensure that each pixel of an image gets mapped to a "
 "pixel on the screen."
-msgstr "Cuando se encuentre activado esto asegurará que cada pixel de una imagen se asigne a un pixel de la pantalla."
+msgstr "Cuando se encuentre activado esto asegurará que cada píxel de una imagen se asigne a un píxel de la pantalla."
 
 #: app/config/gimprc-blurbs.h:74
 msgid ""
@@ -401,7 +404,7 @@ msgid ""
 "progresses in all directions until the difference of pixel intensity from "
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
-msgstr "Herramientas como «Selección borrosa» y «Relleno de celda» buscan regiones basadas en un algoritmo de búsqueda de semilla.  El relleno de semilla arranca en el pixel seleccionado inicialmente y avanza en todas direcciones hasta que la diferencia de la intensidad del pixel del original es más grande que el umbral especificado. Este valor representa el umbral predeterminado."
+msgstr "Herramientas como «Selección borrosa» y «Relleno de celda» buscan regiones basadas en un algoritmo de búsqueda de semilla.  El relleno de semilla arranca en el píxel seleccionado inicialmente y avanza en todas direcciones hasta que la diferencia de la intensidad del píxel del original es más grande que el umbral especificado. Este valor representa el umbral predeterminado."
 
 #: app/config/gimprc-blurbs.h:124
 msgid "Sets the browser used by the help system."
@@ -415,7 +418,8 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:130
 msgid "Sets the text to appear in image window titles."
-msgstr "Establece el texto que aparecerá en los títulos de las ventanas de imágenes."
+msgstr ""
+"Establece el texto que aparecerá en los títulos de las ventanas de imágenes."
 
 #: app/config/gimprc-blurbs.h:133
 msgid "When enabled, the GIMP will use a different info window per image view."
@@ -427,23 +431,26 @@ msgstr ""
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
-msgstr "Cuando se encuentre activado esto asegurará que la imagen se vea completa depués de abrirse, de otro modo será mostrada con una escala de 1:1."
+msgstr ""
+"Cuando se encuentre activado esto asegurará que la imagen se vea completa "
+"depués de abrirse, de otro modo será mostrada con una escala de 1:1."
 
 #: app/config/gimprc-blurbs.h:140
 msgid "Install a private colormap; might be useful on pseudocolor visuals."
-msgstr ""
-"Instala un mapa de color privado; podría ser muy útil en las visualizaciones "
-"de pseudo-color."
+msgstr "Instala un mapa de color privado; podría ser muy útil en las pantallas de pseudo-color."
 
 #: app/config/gimprc-blurbs.h:143
-msgid "Sets the level of interpolation used for scaling and other transformations."
+msgid ""
+"Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 "Establece el nivel de interpolación utilizado para el redimensionado y otras "
 "transformaciones."
 
 #: app/config/gimprc-blurbs.h:147
 msgid "How many recently opened image filenames to keep on the File menu."
-msgstr "Cuántos nombres de archivos de imágenes abiertas recientemente se deben mantener en el menú Archivo."
+msgstr ""
+"Cuántos nombres de archivos de imágenes abiertas recientemente se deben "
+"mantener en el menú Archivo."
 
 #: app/config/gimprc-blurbs.h:150
 msgid ""
@@ -457,7 +464,9 @@ msgstr ""
 msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
-msgstr "El GIMP advertirá al usuario si realiza un intento de crear una imagen que podría requerir más memoria que el tamaño especificado aquí."
+msgstr ""
+"El GIMP advertirá al usuario si realiza un intento de crear una imagen que "
+"podría requerir más memoria que el tamaño especificado aquí."
 
 #: app/config/gimprc-blurbs.h:158
 msgid ""
@@ -479,7 +488,10 @@ msgstr ""
 msgid ""
 "On multiprocessor machines, if GIMP has been compiled with --enable-mp this "
 "sets how many processors GIMP should use simultaneously."
-msgstr "En las máquinas con múltiples procesadores, si El GIMP ha sido compilado con «--enable-mp» esto define cuántos procesadores debería utilizar El GIMP simultáneamente."
+msgstr ""
+"En las máquinas con múltiples procesadores, si El GIMP ha sido compilado con "
+"«--enable-mp» esto define cuántos procesadores debería utilizar El GIMP "
+"simultáneamente."
 
 #: app/config/gimprc-blurbs.h:196
 msgid ""
@@ -488,30 +500,41 @@ msgid ""
 "painting with large brushes should be more accurate, but it may be slower.  "
 "Perversely, on some X servers enabling this option results in faster "
 "painting."
-msgstr "Cuando se encuentre activado, se consultará al servidor X por la posición actual del ratón con cada evento de movimiento, en vez de confiar en la sugerencia de posición.  Esto significa que pintar con brochas grandes debería ser más preciso, pero puede ser más lento.  Perversamente en algunos servidores X al activarse esta opción se obtiene un pintado más rápido."
+msgstr ""
+"Cuando se encuentre activado, se consultará al servidor X por la posición "
+"actual del ratón con cada evento de movimiento, en vez de confiar en la "
+"sugerencia de posición.  Esto significa que pintar con brochas grandes "
+"debería ser más preciso, pero puede ser más lento.  Perversamente en algunos "
+"servidores X al activarse esta opción se obtiene un pintado más rápido."
 
 #: app/config/gimprc-blurbs.h:209
 msgid "Sets whether GIMP should create previews of layers and channels."
-msgstr "Establece si El GIMP debería crear vistas previas de las capas y los canales."
+msgstr ""
+"Establece si El GIMP debería crear vistas previas de las capas y los canales."
 
 #: app/config/gimprc-blurbs.h:212
-#, fuzzy
 msgid "Sets the default preview size for layers and channels."
-msgstr "Establece el tamaño predeterminado de la vista previa de las capas y los canales."
+msgstr ""
+"Establece el tamaño predeterminado de la vista previa de las capas y los "
+"canales."
 
 # Creo que aquí es necesaria la coma. FVD
 #: app/config/gimprc-blurbs.h:215
 msgid ""
 "When enabled, the image window will automatically resize itself, whenever "
 "the physical image size changes."
-msgstr "Cuando se encuentre activado, la ventana de la imagen se redimensionará automáticamente a sí misma cuando cambie el tamaño físico de la imagen."
+msgstr ""
+"Cuando se encuentre activado, la ventana de la imagen se redimensionará "
+"automáticamente a sí misma cuando cambie el tamaño físico de la imagen."
 
 # También me parece necesaria la coma. FVD
 #: app/config/gimprc-blurbs.h:219
 msgid ""
 "When enabled, the image window will automatically resize itself, when "
 "zooming into and out of images."
-msgstr "Cuando se encuentre activado, la ventana de la imagen se redimensionará automáticamente a sí misma cuando se aumenten o achiquen las imágenes."
+msgstr ""
+"Cuando se encuentre activado, la ventana de la imagen se redimensionará "
+"automáticamente a sí misma cuando se aumenten o achiquen las imágenes."
 
 #: app/config/gimprc-blurbs.h:223
 msgid "Let GIMP try to restore your last saved session on each startup."
@@ -520,8 +543,11 @@ msgstr ""
 "inicio."
 
 #: app/config/gimprc-blurbs.h:226
-msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
-msgstr "Recordar la herramienta, el patrón, el color y las brochas actuales entre distintas sesiones de El GIMP."
+msgid ""
+"Remember the current tool, pattern, color, and brush across GIMP sessions."
+msgstr ""
+"Recordar la herramienta, el patrón, el color y las brochas actuales entre "
+"distintas sesiones de El GIMP."
 
 #: app/config/gimprc-blurbs.h:230
 msgid "Save the positions and sizes of the main dialogs when the GIMP exits."
@@ -550,7 +576,10 @@ msgstr ""
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Toggle Statusbar\" command."
-msgstr "Cuando está activado la barra de estado es visible de forma predeterminada. Esto también puede ser activado con el comando «Ver->Mostrar la barra de estado»."
+msgstr ""
+"Cuando está activado la barra de estado es visible de forma predeterminada. "
+"Esto también puede ser activado con el comando «Ver->Mostrar la barra de "
+"estado»."
 
 #: app/config/gimprc-blurbs.h:248
 msgid "Enable to display a handy GIMP tip on startup."
@@ -619,11 +648,10 @@ msgid ""
 "smaller cache size causes the GIMP to use more swap space and less memory."
 msgstr ""
 "El cache de mosaico es utilizado para asegurarse de que El GIMP no "
-"desperdicie mosaicos entre la memoria y el disco. Establecer este valor "
-"como alto hará que El GIMP utilice menos espacio de intercambio, pero "
-"también causa que El GIMP utilice más memoria. Normalmente, un tamaño de "
-"caché mas pequeño causa que El GIMP utilice más espacio de intercambio y "
-"menos memoria."
+"desperdicie mosaicos entre la memoria y el disco. Establecer este valor como "
+"alto hará que El GIMP utilice menos espacio de intercambio, pero también "
+"causa que El GIMP utilice más memoria. Normalmente, un tamaño de caché mas "
+"pequeño causa que El GIMP utilice más espacio de intercambio y menos memoria."
 
 #: app/config/gimprc-blurbs.h:296
 msgid "Sets the manner in which transparency is displayed in images."
@@ -631,7 +659,8 @@ msgstr "Establece la forma en que se muestra la transparencia en las imágenes."
 
 #: app/config/gimprc-blurbs.h:299
 msgid "Sets the size of the checkerboard used to display transparency."
-msgstr "Establece el tamaño del cuadriculado utilizado para mostrar la transparencia."
+msgstr ""
+"Establece el tamaño del cuadriculado utilizado para mostrar la transparencia."
 
 #: app/config/gimprc-blurbs.h:302
 msgid ""
@@ -654,12 +683,16 @@ msgstr ""
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack."
-msgstr "Establece el límite superior de la memoria que cada imagen utiliza para guardar las operaciones en la pila de deshacer."
+msgstr ""
+"Establece el límite superior de la memoria que cada imagen utiliza para "
+"guardar las operaciones en la pila de deshacer."
 
 # es necesaria la coma. FVD
 #: app/config/gimprc-blurbs.h:314
 msgid "When enabled, pressing F1 will open the help browser."
-msgstr "Cuando se encuentre activado, al presionar la tecla F1 se abrirá el navegador de la ayuda."
+msgstr ""
+"Cuando se encuentre activado, al presionar la tecla F1 se abrirá el "
+"navegador de la ayuda."
 
 #: app/config/gimpscanner.c:76 app/gui/paths-dialog.c:1962
 #: app/gui/paths-dialog.c:2087 app/tools/gimpcurvestool.c:1414
@@ -795,15 +828,13 @@ msgstr "Cuadrado"
 
 # ¿por qué en femenino ? FVD
 #: app/core/core-enums.c:194
-#, fuzzy
 msgid "Conical (symmetric)"
-msgstr "Cónica (simétrica)"
+msgstr "Cónico (simétrico)"
 
 # ¿por qué en femenino? FVD
 #: app/core/core-enums.c:195
-#, fuzzy
 msgid "Conical (asymmetric)"
-msgstr "Cónica (asimétrica)"
+msgstr "Cónico (asimétrico)"
 
 #: app/core/core-enums.c:196
 msgid "Shapeburst (angular)"
@@ -990,9 +1021,8 @@ msgstr "Selección flotante"
 
 # Creo que es un verbo. FVD
 #: app/core/core-enums.c:445 app/core/gimplayer-floating-sel.c:131
-#, fuzzy
 msgid "Anchor Floating Selection"
-msgstr "Anclar selección flotante"
+msgstr "Anclar la selección flotante"
 
 #: app/core/core-enums.c:446 app/core/gimpedit.c:199
 #: app/widgets/gimpbufferview.c:147
@@ -1039,9 +1069,8 @@ msgstr "Imagen"
 
 # Es posible que aquí Mod sea una abreviatura de Modification. FVD
 #: app/core/core-enums.c:456
-#, fuzzy
 msgid "Image Mod"
-msgstr "Módulo de imagen"
+msgstr "Modif. de imagen"
 
 #: app/core/core-enums.c:457 app/gui/file-new-dialog.c:373
 msgid "Image Type"
@@ -1076,9 +1105,8 @@ msgstr "Borrar la capa"
 
 # Es posible que aquí Mod sea una abreviatura de Modification. FVD
 #: app/core/core-enums.c:466
-#, fuzzy
 msgid "Layer Mod"
-msgstr "Módulo de capa"
+msgstr "Modif. capa"
 
 #: app/core/core-enums.c:467 app/core/gimplayer.c:610
 #: app/gui/layers-commands.c:889
@@ -1109,9 +1137,8 @@ msgstr "Borrar canal"
 
 # Es posible que aquí Mod sea una abreviatura de Modification. FVD
 #: app/core/core-enums.c:473
-#, fuzzy
 msgid "Channel Mod"
-msgstr "Módulo de canal"
+msgstr "Modif. canal"
 
 #: app/core/core-enums.c:474
 msgid "Channel Reposition"
@@ -1126,9 +1153,8 @@ msgid "Delete Vectors"
 msgstr "Borrar vectores"
 
 #: app/core/core-enums.c:477
-#, fuzzy
 msgid "Vectors Mod"
-msgstr "Modulo de vectores"
+msgstr "Modif. vectores"
 
 #: app/core/core-enums.c:478
 msgid "Vectors Reposition"
@@ -1277,7 +1303,8 @@ msgstr "Error fatal de análisis: «%s» no es un archivo de brocha de El GIMP"
 #: app/core/gimpbrushgenerated.c:411
 #, c-format
 msgid "Fatal Parse Error: '%s': unknown GIMP Brush version"
-msgstr "Error fatal de análisis: «%s»: versión de brocha de El GIMP desconocida"
+msgstr ""
+"Error fatal de análisis: «%s»: versión de brocha de El GIMP desconocida"
 
 #: app/core/gimpbrushpipe.c:382 app/core/gimpbrushpipe.c:402
 #: app/core/gimpbrushpipe.c:492
@@ -1330,9 +1357,8 @@ msgid "Shrink Channel"
 msgstr "Achicar el canal"
 
 #: app/core/gimpchannel.c:1610
-#, fuzzy
 msgid "Translate Channel"
-msgstr "Traducir el canal"
+msgstr "Trasladar el canal"
 
 #: app/core/gimpchannel.c:1686
 msgid "Channel Load"
@@ -1391,7 +1417,6 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdrawable-blend.c:235 app/tools/gimpblendtool.c:93
-#, fuzzy
 msgid "Blend"
 msgstr "Mezcla"
 
@@ -1418,11 +1443,11 @@ msgstr "Invertir"
 #. push an undo
 #: app/core/gimpdrawable-offset.c:312
 msgid "Offset Drawable"
-msgstr "Desplazar dibujable"
+msgstr "Deslizar dibujable"
 
 #: app/core/gimpdrawable-transform.c:663 app/tools/gimpfliptool.c:81
 msgid "Flip"
-msgstr "Simétrico"
+msgstr "Invertir simétricamente"
 
 #: app/core/gimpdrawable-transform.c:752
 msgid "Transformation"
@@ -1477,7 +1502,8 @@ msgstr "Nombre de variable ilegal en el archivo de ambiente %s: %s"
 #: app/core/gimpgradient.c:363
 #, c-format
 msgid "Fatal Parse Error: '%s' is not a GIMP Gradient file"
-msgstr "Error fatal de análisis: «%s» no es un archivo de gradientes de El GIMP"
+msgstr ""
+"Error fatal de análisis: «%s» no es un archivo de gradientes de El GIMP"
 
 #: app/core/gimpgradient.c:383
 #, c-format
@@ -1830,9 +1856,8 @@ msgid "Remote image"
 msgstr "Imagen remota"
 
 #: app/core/gimpimagefile.c:695
-#, fuzzy
 msgid "Failed to open"
-msgstr "Falla en la apertura"
+msgstr "Ha fallado la apertura"
 
 #: app/core/gimpimagefile.c:720
 msgid "No preview available"
@@ -1958,7 +1983,7 @@ msgid "Layer to Image Size"
 msgstr "Capa a tamaño de imagen"
 
 #: app/core/gimppalette.c:375
-#, c-format, fuzzy
+#, c-format
 msgid ""
 "Loading palette '%s':\n"
 "Corrupt palette: missing magic header\n"
@@ -1966,7 +1991,7 @@ msgid ""
 msgstr ""
 "Cargando la paleta «%s»:\n"
 "Paleta rota: falta la cabecera mágica\n"
-"¿Necesita este archivo ser convertido de DOS?"
+"¿Es necesario convertir este archivo de DOS?"
 
 #: app/core/gimppalette.c:381
 #, c-format
@@ -2071,17 +2096,16 @@ msgstr "Cadena UTF-8 inválida en el archivo de patrón «%s»"
 #: app/core/gimppattern.c:401
 #, c-format
 msgid "Fatal parsing error: Pattern file '%s' appears truncated."
-msgstr "Error fatal de análisis: El archivo de patrón  «%s» parece estar truncado."
+msgstr ""
+"Error fatal de análisis: El archivo de patrón  «%s» parece estar truncado."
 
 #. pseudo unit
 #: app/core/gimpunit.c:55
 msgid "pixel"
-msgstr "pixel"
+msgstr "píxel"
 
-# en plural lleva acento?? FVD
 #: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:579
 #: app/tools/gimpmeasuretool.c:582 app/tools/gimppainttool.c:559
-#, fuzzy
 msgid "pixels"
 msgstr "píxeles"
 
@@ -2144,7 +2168,6 @@ msgid "Light Check Color"
 msgstr "Color de los cuadros claros"
 
 #: app/display/display-enums.c:35
-#, fuzzy
 msgid "Dark Check Color"
 msgstr "Color de los cuadros oscuros"
 
@@ -2259,11 +2282,11 @@ msgstr "RGB-vacío"
 
 #: app/display/gimpdisplayshell-title.c:166
 msgid "grayscale-empty"
-msgstr "Tonos de grises-vacío"
+msgstr "Escala de grises-vacío"
 
 #: app/display/gimpdisplayshell-title.c:166
 msgid "grayscale"
-msgstr "Tonos de grises"
+msgstr "Escala de grises"
 
 #: app/display/gimpdisplayshell-title.c:169
 msgid "indexed-empty"
@@ -2804,7 +2827,7 @@ msgstr "Editor de paleta"
 
 #: app/gui/dialogs-constructors.c:1141
 msgid "Display Navigation"
-msgstr "Navegación de la pantalla"
+msgstr "Navegación de la vista"
 
 #: app/gui/dialogs-constructors.c:1141
 msgid "Navigation"
@@ -2983,14 +3006,12 @@ msgid "Desaturate operates only on RGB color drawables."
 msgstr "Desaturación sólo funciona en dibujables de color RGB"
 
 #: app/gui/drawable-commands.c:97
-#, fuzzy
 msgid "Invert does not operate on indexed drawables."
-msgstr "Invertir no funciona con imágenes indexadas."
+msgstr "Invertir no funciona con dibujables indexados."
 
 #: app/gui/drawable-commands.c:115
-#, fuzzy
 msgid "Equalize does not operate on indexed drawables."
-msgstr "Balancear no funciona en imágenes indexadas"
+msgstr "Balancear no funciona en dibujables indexados"
 
 #: app/gui/edit-commands.c:192
 msgid "Cut Named"
@@ -3424,7 +3445,7 @@ msgstr "Tipo de coloreado para el segmento"
 
 #: app/gui/gradient-editor-menu.c:393
 msgid "Flip Segment"
-msgstr "Invertir segmento"
+msgstr "Invertir segmento simétricamente"
 
 #: app/gui/gradient-editor-menu.c:394
 msgid "Replicate Segment..."
@@ -3460,7 +3481,7 @@ msgstr "Tipo de coloreado para la selección"
 
 #: app/gui/gradient-editor-menu.c:406
 msgid "Flip Selection"
-msgstr "Invertir selección"
+msgstr "Invertir selección simétricamente"
 
 #: app/gui/gradient-editor-menu.c:407
 msgid "Replicate Selection..."
@@ -3871,7 +3892,6 @@ msgstr "/Imagen/Modo/RGB"
 
 # Ahora es escala de grises pero antes era Tonos de grises. FVD
 #: app/gui/image-menu.c:428
-#, fuzzy
 msgid "/Image/Mode/Grayscale"
 msgstr "/Imagen/Modo/Escala de grises"
 
@@ -4190,9 +4210,8 @@ msgid "/Filters/Map"
 msgstr "/Filtros/Mapa"
 
 #: app/gui/image-menu.c:809
-#, fuzzy
 msgid "/Filters/Render"
-msgstr "/Filtros/Render"
+msgstr "/Filtros/Renderizar"
 
 #: app/gui/image-menu.c:810
 msgid "/Filters/Web"
@@ -4226,11 +4245,11 @@ msgstr "Rehacer"
 
 #: app/gui/images-menu.c:42
 msgid "/Raise Displays"
-msgstr "/Elevar las pantallas"
+msgstr "/Elevar las vistas"
 
 #: app/gui/images-menu.c:46
 msgid "/New Display"
-msgstr "/Nueva pantalla"
+msgstr "/Nueva vista"
 
 #: app/gui/images-menu.c:50
 msgid "/Delete Image"
@@ -4336,7 +4355,7 @@ msgstr "Resolución:"
 
 #: app/gui/info-window.c:353
 msgid "Scale Ratio:"
-msgstr "Porcentaje de la escala:"
+msgstr "Relación de la escala:"
 
 #: app/gui/info-window.c:355
 msgid "Display Type:"
@@ -4344,10 +4363,9 @@ msgstr "Tipo de imagen:"
 
 #: app/gui/info-window.c:357
 msgid "Visual Class:"
-msgstr "Tipo de visual:"
+msgstr "Tipo de pantalla:"
 
 #: app/gui/info-window.c:359
-#, fuzzy
 msgid "Visual Depth:"
 msgstr "Profundidad de la pantalla:"
 
@@ -4588,19 +4606,18 @@ msgstr "Tipos disponibles:"
 
 # no será un verbo? FVD
 #: app/gui/offset-dialog.c:92
-#, fuzzy
 msgid "Offset Layer"
-msgstr "Capa deslizada"
+msgstr "Deslizar capa"
 
 # no será un verbo? FVD
 #: app/gui/offset-dialog.c:94
 msgid "Offset Layer Mask"
-msgstr "Máscara de la capa deslizada"
+msgstr "Deslizar la máscara de capa"
 
 # no será un verbo? FVD
 #: app/gui/offset-dialog.c:96
 msgid "Offset Channel"
-msgstr "Canal deslizado"
+msgstr "Deslizar canal"
 
 #: app/gui/offset-dialog.c:102 app/gui/resize-dialog.c:442
 msgid "Offset"
@@ -4881,12 +4898,11 @@ msgid "Save Path"
 msgstr "Guardar ruta"
 
 #: app/gui/pattern-select.c:244
-#, fuzzy
 msgid ""
 "Unable to run pattern callback.\n"
 "The corresponding plug-in may have crashed."
 msgstr ""
-"No se puede ejecutar la llamada revertida al patrón.\n"
+"No se puede ejecutar la devolución del patrón.\n"
 "La extensión correspondiente debe haber fallado."
 
 #: app/gui/patterns-menu.c:44
@@ -4985,12 +5001,11 @@ msgstr "Interfaz"
 
 #: app/gui/preferences-dialog.c:1098
 msgid "_Enable Layer & Channel Previews"
-msgstr ""
+msgstr "_Activar las vistas previas de las capas y los canales"
 
 #: app/gui/preferences-dialog.c:1104
-#, fuzzy
 msgid "_Layer & Channel Preview Size:"
-msgstr "Tamaño de vistas previas de _navegación:"
+msgstr "Tamaño de las vistas previas de _capas y canales:"
 
 #: app/gui/preferences-dialog.c:1107
 msgid "_Navigation Preview Size:"
@@ -5128,7 +5143,7 @@ msgstr "Ajustar a la ventana"
 
 #: app/gui/preferences-dialog.c:1325
 msgid "Inital Zoom Ratio:"
-msgstr "Porcentaje de aumento inicial:"
+msgstr "Relación de aumento inicial:"
 
 #: app/gui/preferences-dialog.c:1328
 msgid "Marching _Ants Speed:"
@@ -5148,9 +5163,8 @@ msgid "Custom Color:"
 msgstr "Color personalizado:"
 
 #: app/gui/preferences-dialog.c:1341
-#, fuzzy
 msgid "Select Custom Canvas Padding Color"
-msgstr "Seleccione el color de ajuste personalizado del lienzo"
+msgstr "Seleccione el color personalizado de relleno del lienzo"
 
 #. Zoom & Resize Behavior
 #: app/gui/preferences-dialog.c:1347
@@ -5204,11 +5218,11 @@ msgstr "Mostrar el porcentaje de aumento"
 
 #: app/gui/preferences-dialog.c:1405
 msgid "Show zoom ratio"
-msgstr "Mostrar el porcentaje de aumento"
+msgstr "Mostrar la relación de aumento"
 
 #: app/gui/preferences-dialog.c:1406
 msgid "Show reversed zoom ratio"
-msgstr "Mostrar el porcentaje de aumento invertido"
+msgstr "Mostrar la relación inversa de aumento"
 
 #: app/gui/preferences-dialog.c:1407
 msgid "Show memory usage"
@@ -5518,11 +5532,11 @@ msgstr "Nueva anchura:"
 #. the scale ratio labels
 #: app/gui/resize-dialog.c:371
 msgid "Ratio X:"
-msgstr "Porcentaje de X:"
+msgstr "Relación de X:"
 
 #: app/gui/resize-dialog.c:431
 msgid "Constrain aspect ratio"
-msgstr "Restringir la razón de aspecto"
+msgstr "Restringir la relación de aspecto"
 
 #: app/gui/resize-dialog.c:501
 msgid "Center"
@@ -5783,13 +5797,13 @@ msgid ""
 "is cached in this file.  This file is intended to\n"
 "be GIMP-readable only, and should not be edited."
 msgstr ""
-"Las extensiones (plug-ins) y las extensiones son programas\n"
-"externos ejecutados por El GIMP que proporcionan funcionalidades\n"
-"adicionales. Estos programas se buscan en tiempo de ejecución,\n"
-"y se almacena la información acerca de su función y fechas de\n"
-"modificación en este archivo para conseguir un inicio de El GIMP\n"
-"más rápido. Este archivo sólo debe ser leído por El GIMP, y no\n"
-"debe ser editado."
+"Las extensiones y los añadidos son programas externos\n"
+"ejecutados por El GIMP que proporcionan funcionalidades\n"
+"adicionales. Estos programas se buscan en tiempo de\n"
+"ejecución, y se almacena la información acerca de su\n"
+"función y fechas de modificación en este archivo para\n"
+"conseguir un inicio de El GIMP más rápido. Este archivo\n"
+"sólo debe ser leído por El GIMP, y no debe ser editado."
 
 #: app/gui/user-install-dialog.c:163
 msgid ""
@@ -6176,7 +6190,7 @@ msgid "Copying file '%s' from '%s'\n"
 msgstr "Copiando el archivo «%s» desde «%s»\n"
 
 #: app/gui/user-install-dialog.c:1130
-#, c-format, fuzzy
+#, c-format
 msgid "  Failure: %s\n"
 msgstr "  Ha fallado: %s\n"
 
@@ -6198,7 +6212,8 @@ msgid ""
 "with enough free space (several hundred MB). On a UNIX system, you\n"
 "may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 msgstr ""
-"Todas las imágenes y datos de «deshacer» que no quepan en la «cache de mosaico» \n"
+"Todas las imágenes y datos de «deshacer» que no quepan en la «cache de "
+"mosaico» \n"
 "serán escritos en un archivo de intercambio. Este archivo debería estar\n"
 "situado en un sistema de archivos local con suficiente espacio libre \n"
 "(varios cientos de Mb). En un sistema UNIX, debería usar el directorio\n"
@@ -6219,11 +6234,13 @@ msgstr ""
 #: app/gui/user-install-dialog.c:1243
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
-msgstr "Obtener la resolución desde el sistema de ventanas (actualmente %d x %d ppp)"
+msgstr ""
+"Obtener la resolución desde el sistema de ventanas (actualmente %d x %d ppp)"
 
 #: app/gui/user-install-dialog.c:1261
 msgid "Alternatively, you can set the monitor resolution manually."
-msgstr "Alternativamente usted puede definir la resolución del monitor manualmente."
+msgstr ""
+"Alternativamente usted puede definir la resolución del monitor manualmente."
 
 #: app/gui/user-install-dialog.c:1307
 msgid ""
@@ -6563,11 +6580,9 @@ msgstr "Procedimiento interno de El GIMP"
 msgid "GIMP Plug-In"
 msgstr "Extensión de El GIMP"
 
-# Esto nos pasa por llamarle extensiones a los "Plugines":-) FVD
 #: app/pdb/procedural_db_cmds.c:67
-#, fuzzy
 msgid "GIMP Extension"
-msgstr "Extensión de El GIMP"
+msgstr "Añadido de El GIMP"
 
 #: app/pdb/procedural_db_cmds.c:68
 msgid "Temporary Procedure"
@@ -6629,12 +6644,12 @@ msgstr "Inicializando la extensión: «%s»\n"
 #. run the available extensions
 #: app/plug-in/plug-ins.c:284
 msgid "Starting Extensions"
-msgstr "Inicializando las extensiones"
+msgstr "Inicializando los añadidos"
 
 #: app/plug-in/plug-ins.c:298
 #, c-format
 msgid "Starting extension: \"%s\""
-msgstr "Inicializando la extensión: «%s»"
+msgstr "Inicializando el añadido: «%s»"
 
 #: app/text/text-enums.c:13
 msgid "Left Justified"
@@ -6777,7 +6792,7 @@ msgstr "Ajusta el brillo y el contraste"
 
 #: app/tools/gimpbrightnesscontrasttool.c:181
 msgid "Brightness-Contrast does not operate on indexed drawables."
-msgstr "Brillo-Contraste no funciona con imágenes de color indexado"
+msgstr "Brillo-Contraste no funciona con dibujables de color indexado"
 
 #: app/tools/gimpbrightnesscontrasttool.c:236
 msgid "_Brightness:"
@@ -6869,11 +6884,11 @@ msgstr "Ajustar el balance de colores"
 
 #: app/tools/gimpcolorbalancetool.c:194
 msgid "Color balance operates only on RGB color drawables."
-msgstr "Balance de color sólo funciona en imágenes con color RGB"
+msgstr "Balance de color sólo funciona en dibujables con color RGB"
 
 #: app/tools/gimpcolorbalancetool.c:279
 msgid "Select Range to Modify"
-msgstr "Seleccione el rango a modificar"
+msgstr "Seleccione el rango para modificar"
 
 #: app/tools/gimpcolorbalancetool.c:288
 msgid "Modify Selected Range's Color Levels"
@@ -7045,7 +7060,7 @@ msgstr "Ajustar las curvas de color"
 
 #: app/tools/gimpcurvestool.c:309
 msgid "Curves for indexed drawables cannot be adjusted."
-msgstr "No se pueden ajustar curvas para imágenes indexadas."
+msgstr "No se pueden ajustar curvas para dibujables indexados."
 
 #: app/tools/gimpcurvestool.c:619 app/tools/gimplevelstool.c:403
 msgid "R_eset Channel"
@@ -7149,14 +7164,12 @@ msgid "Hard Edge"
 msgstr "Bordes duros"
 
 #: app/tools/gimpfliptool.c:82
-#, fuzzy
 msgid "Flip the layer or selection"
-msgstr "Figura simétrica de la imagen o selección"
+msgstr "Invertir la imagen o selección simétricamente"
 
 #: app/tools/gimpfliptool.c:83
-#, fuzzy
 msgid "/Tools/Transform Tools/Flip"
-msgstr "/Herramientas/Herramientas de transformación/Simétrico"
+msgstr "/Herramientas/Herramientas de transformación/Invertir simétricamente"
 
 #: app/tools/gimpfreeselecttool.c:93
 msgid "Select hand-drawn regions"
@@ -7188,7 +7201,7 @@ msgstr "/Capa/Colores/Histograma..."
 
 #: app/tools/gimphistogramtool.c:183
 msgid "Histogram does not operate on indexed drawables."
-msgstr "Histograma no funciona en imágenes indexadas."
+msgstr "Histograma no funciona en dibujables indexados."
 
 #: app/tools/gimphistogramtool.c:330
 msgid "Mean:"
@@ -7244,7 +7257,7 @@ msgstr "Ajustar el tono / luminosidad / saturación"
 
 #: app/tools/gimphuesaturationtool.c:210
 msgid "Hue-Saturation operates only on RGB color drawables."
-msgstr "Tono-saturación sólo funciona con imágenes RGB."
+msgstr "Tono-saturación sólo funciona con dibujables RGB."
 
 #: app/tools/gimphuesaturationtool.c:265
 msgid "_Master"
@@ -7276,7 +7289,7 @@ msgstr "_M"
 
 #: app/tools/gimphuesaturationtool.c:276
 msgid "Select Primary Color to Modify"
-msgstr "Seleccione el color primario a modificar"
+msgstr "Seleccione el color primario para modificar"
 
 #: app/tools/gimphuesaturationtool.c:305
 msgid "Modify all colors"
@@ -7376,7 +7389,7 @@ msgstr "Ajusta los niveles de color"
 
 #: app/tools/gimplevelstool.c:281
 msgid "Levels for indexed drawables cannot be adjusted."
-msgstr "Los niveles de imágenes indexadas no pueden ajustarse."
+msgstr "Los niveles de dibujables indexados no pueden ajustarse."
 
 #: app/tools/gimplevelstool.c:391
 msgid "Modify Levels for Channel:"
@@ -7488,9 +7501,8 @@ msgstr "Mover la capa actual"
 
 # galicismo (?) FVD
 #: app/tools/gimpmoveoptions.c:184
-#, fuzzy
 msgid "Pick a Layer to Move"
-msgstr "Seleccione una capa a mover"
+msgstr "Seleccione una capa para mover"
 
 #. move mask
 #: app/tools/gimpmoveoptions.c:191
@@ -7576,7 +7588,7 @@ msgstr "Cuantizar (reducir la cantidad de colores)"
 
 #: app/tools/gimpposterizetool.c:173
 msgid "Posterize does not operate on indexed drawables."
-msgstr "Cuantizar no funciona en imágenes indexadas."
+msgstr "Cuantizar no funciona en dibujables indexados."
 
 #: app/tools/gimpposterizetool.c:227
 msgid "Posterize _Levels:"
@@ -7657,7 +7669,7 @@ msgstr "Anchura actual:"
 
 #: app/tools/gimpscaletool.c:197
 msgid "Scale Ratio X:"
-msgstr "Porcentaje de escala X:"
+msgstr "Relación de escala X:"
 
 # //R Ojito
 #: app/tools/gimpselectionoptions.c:138
@@ -7666,7 +7678,8 @@ msgstr "Bordes suavizados"
 
 #: app/tools/gimpselectionoptions.c:152
 msgid "Allow completely transparent regions to be selected"
-msgstr "Permitir que las regiones completamente transparentes sean seleccionadas"
+msgstr ""
+"Permitir que las regiones completamente transparentes sean seleccionadas"
 
 #: app/tools/gimpselectionoptions.c:158
 msgid "Base selection on all visible layers"
@@ -7674,7 +7687,8 @@ msgstr "Selección base en todas las capas visibles"
 
 #: app/tools/gimpselectionoptions.c:173
 msgid "Use all visible layers when shrinking the selection"
-msgstr "Utilizar todas las capas visibles cuando se está achicando la selección"
+msgstr ""
+"Utilizar todas las capas visibles cuando se está achicando la selección"
 
 #: app/tools/gimpselectionoptions.c:406
 msgid "Antialiasing"
@@ -7793,7 +7807,7 @@ msgstr "Aplicar umbral"
 
 #: app/tools/gimpthresholdtool.c:201
 msgid "Threshold does not operate on indexed drawables."
-msgstr "El umbral no funciona en imágenes indexadas."
+msgstr "El umbral no funciona en dibujables indexados."
 
 #: app/tools/gimpthresholdtool.c:260
 msgid "Threshold Range:"
@@ -7801,9 +7815,8 @@ msgstr "Rango del umbral:"
 
 # Podría ser Dirección de transformación o algo así. FVD
 #: app/tools/gimptransformoptions.c:289
-#, fuzzy
 msgid "Transform Direction"
-msgstr "Transformar la dirección"
+msgstr "Dirección de la transformación"
 
 #. the clip resulting image toggle button
 #: app/tools/gimptransformoptions.c:307
@@ -7841,7 +7854,7 @@ msgid ""
 "the aspect ratio"
 msgstr ""
 "Activar los conmutadores «Mantener altura» y \n"
-"«Mantener anchura» para restringir el porcentaje\n"
+"«Mantener anchura» para restringir la relación\n"
 "de aspecto"
 
 #: app/tools/gimptransformoptions.c:386
@@ -7935,7 +7948,7 @@ msgstr "Dureza:"
 
 #: app/widgets/gimpbrusheditor.c:158
 msgid "Aspect Ratio:"
-msgstr "Porcentaje de aspecto:"
+msgstr "Relación de aspecto:"
 
 #: app/widgets/gimpbrushfactoryview.c:115
 msgid "Spacing:"
@@ -7978,16 +7991,13 @@ msgstr ""
 "%s  Extraer\n"
 "%s%s%s  Intersectar"
 
-# ¿Por qué? FVD
 #: app/widgets/gimpcoloreditor.c:236
-#, fuzzy
 msgid "FG"
 msgstr "FR"
 
-# ¿Por qué? FVD
 #: app/widgets/gimpcoloreditor.c:236
 msgid "BG"
-msgstr "FD"
+msgstr "FO"
 
 #: app/widgets/gimpcoloreditor.c:240
 msgid "Edit Foreground Color"
@@ -8216,13 +8226,11 @@ msgstr "Base de El GIMP #%d"
 
 #: app/widgets/gimpimageview.c:143
 msgid "Raise this image's displays"
-msgstr "Elevar estas pantallas de imagen"
+msgstr "Elevar estas vistas de imagen"
 
-# Display es pantalla de un ordenador, pero aquí me parece más bien "Presentación". FVD
 #: app/widgets/gimpimageview.c:152
-#, fuzzy
 msgid "Create a new display for this image"
-msgstr "Crear una nueva pantalla para esta imagen"
+msgstr "Crear una nueva vista para esta imagen"
 
 #: app/widgets/gimpimageview.c:161
 msgid "Delete this image"
@@ -8530,7 +8538,8 @@ msgstr "No se ha podido buscar dentro del archivo XCF: %s"
 #: app/xcf/xcf.c:261
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr "Error XCF: Se encontró una versión %d de archivo de tipo XCF no soportada"
+msgstr ""
+"Error XCF: Se encontró una versión %d de archivo de tipo XCF no soportada"
 
 #: app/xcf/xcf.c:325
 #, c-format
@@ -8559,9 +8568,8 @@ msgstr "Tamaño fijo"
 
 # Quizá mejor Relación de aspecto. FVD
 #: libgimptool/gimptoolenums.c:118
-#, fuzzy
 msgid "Fixed Aspect Ratio"
-msgstr "Porcentaje de aspecto fijo"
+msgstr "Relación de aspecto fija"
 
 #: libgimptool/gimptoolenums.c:136
 msgid "Don't Show Grid"
@@ -8735,4 +8743,3 @@ msgstr "Espaciado de las líneas de la rejilla"
 
 #~ msgid "Reset"
 #~ msgstr "Restaurar"
-
