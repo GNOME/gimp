@@ -1,3 +1,8 @@
+2005-02-26  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/png.c: revert change to read images one row at a
+	time, it didn't really fix the bug.
+
 2005-02-26  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdrawable-blend.c: minor code cleanup.

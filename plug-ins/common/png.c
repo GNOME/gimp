@@ -322,7 +322,7 @@ query (void)
                           "Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>, Nick Lamb <njl195@zepler.org.uk>",
                           PLUG_IN_VERSION,
                           NULL,
-			  NULL,
+                          NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args_set_defaults), 0,
                           save_args_set_defaults, NULL);
@@ -418,13 +418,13 @@ run (const gchar      *name,
 
           alpha = gimp_drawable_has_alpha (drawable_ID);
 
-	  /*
-	   * If the image has no transparency, then there is usually
-	   * no need to save a bKGD chunk.  For more information, see:
-	   * http://bugzilla.gnome.org/show_bug.cgi?id=92395
-	   */
-	  if (! alpha)
-	    pngvals.bkgd = FALSE;
+          /*
+           * If the image has no transparency, then there is usually
+           * no need to save a bKGD chunk.  For more information, see:
+           * http://bugzilla.gnome.org/show_bug.cgi?id=92395
+           */
+          if (! alpha)
+            pngvals.bkgd = FALSE;
 
           /*
            * Then acquire information with a dialog...
@@ -437,7 +437,7 @@ run (const gchar      *name,
           /*
            * Make sure all the arguments are there!
            */
-	  if (nparams != 5)
+          if (nparams != 5)
             {
               if (nparams != 12 && nparams != 14)
                 {
@@ -504,7 +504,7 @@ run (const gchar      *name,
 
       *nreturn_vals = 9;
 
-#define SET_VALUE(index, field)	G_STMT_START { \
+#define SET_VALUE(index, field)        G_STMT_START { \
  values[(index)].type = GIMP_PDB_INT32;        \
  values[(index)].data.d_int32 = pngvals.field; \
 } G_STMT_END
@@ -789,7 +789,7 @@ load_image (const gchar *filename,
       g_message (_("Unknown color model in PNG file '%s'."),
                  gimp_filename_to_utf8 (filename));
       return -1;
-    };
+    }
 
   image = gimp_image_new (info->width, info->height, image_type);
   if (image == -1)
@@ -797,7 +797,7 @@ load_image (const gchar *filename,
       g_message ("Could not create new image for '%s'",
                  gimp_filename_to_utf8 (filename));
       gimp_quit ();
-    };
+    }
 
   /*
    * Create the "background" layer to hold the image...
@@ -958,13 +958,7 @@ load_image (const gchar *filename,
             gimp_pixel_rgn_get_rect (&pixel_rgn, pixel, 0, begin,
                                      drawable->width, num);
 
-          if (num_passes == 1)
-            {
-              for (i = 0; i < num; i++)
-                png_read_row (pp, pixels[i], NULL);
-            }
-          else
-            png_read_rows (pp, pixels, NULL, num);
+          png_read_rows (pp, pixels, NULL, num);
 
           gimp_pixel_rgn_set_rect (&pixel_rgn, pixel, 0, begin,
                                    drawable->width, num);
@@ -972,8 +966,8 @@ load_image (const gchar *filename,
           gimp_progress_update (((double) pass +
                                  (double) end / (double) info->height) /
                                 (double) num_passes);
-        };
-    };
+        }
+    }
 
   png_read_end (pp, info);
 
@@ -982,32 +976,32 @@ load_image (const gchar *filename,
       gchar *comment = NULL;
 
       for (i = 0; i < num_texts && !comment; i++)
-	{
-	  if (text->key == NULL || strcmp (text->key, "Comment"))
-	    continue;
+        {
+          if (text->key == NULL || strcmp (text->key, "Comment"))
+            continue;
 
-	  if (text->text_length > 0)   /*  tEXt  */
-	    {
-	      comment = g_convert (text->text, -1,
-				   "UTF-8", "ISO-8859-1",
-				   NULL, NULL, NULL);
-	    }
-	  else if (g_utf8_validate (text->text, -1, NULL))
-	    {                          /*  iTXt  */
-	      comment = g_strdup (text->text);
-	    }
-	}
+          if (text->text_length > 0)   /*  tEXt  */
+            {
+              comment = g_convert (text->text, -1,
+                                   "UTF-8", "ISO-8859-1",
+                                   NULL, NULL, NULL);
+            }
+          else if (g_utf8_validate (text->text, -1, NULL))
+            {                          /*  iTXt  */
+              comment = g_strdup (text->text);
+            }
+        }
 
       if (comment && *comment)
-	{
-	  GimpParasite *parasite;
+        {
+          GimpParasite *parasite;
 
-	  parasite = gimp_parasite_new ("gimp-comment",
-					GIMP_PARASITE_PERSISTENT,
-					strlen (comment) + 1, comment);
-	  gimp_image_parasite_attach (image, parasite);
-	  gimp_parasite_free (parasite);
-	}
+          parasite = gimp_parasite_new ("gimp-comment",
+                                        GIMP_PARASITE_PERSISTENT,
+                                        strlen (comment) + 1, comment);
+          gimp_image_parasite_attach (image, parasite);
+          gimp_parasite_free (parasite);
+        }
 
       g_free (comment);
     }
@@ -1032,7 +1026,7 @@ load_image (const gchar *filename,
       gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width,
                            drawable->height, TRUE, FALSE);
 
-      pixel = g_new (guchar, tile_height * drawable->width * 2);        /* bpp == 1 */
+      pixel = g_new (guchar, tile_height * drawable->width * 2); /* bpp == 1 */
 
       for (begin = 0, end = tile_height;
            begin < drawable->height; begin += tile_height, end += tile_height)
@@ -1252,7 +1246,7 @@ save_image (const gchar *filename,
     default:
       g_message ("Image type can't be saved as PNG");
       return 0;
-    };
+    }
 
   /*
    * Fix bit depths for (possibly) smaller colormap images
@@ -1300,10 +1294,10 @@ save_image (const gchar *filename,
 
       parasite = gimp_image_parasite_find (orig_image_ID, "gamma");
       if (parasite)
-	{
+        {
           gamma = g_ascii_strtod (gimp_parasite_data (parasite), NULL);
-	  gimp_parasite_free (parasite);
-	}
+          gimp_parasite_free (parasite);
+        }
 
       png_set_gAMA (pp, info, gamma);
     }
@@ -1439,8 +1433,8 @@ save_image (const gchar *filename,
           gimp_progress_update (((double) pass + (double) end /
                                  (double) info->height) /
                                 (double) num_passes);
-        };
-    };
+        }
+    }
 
   png_write_end (pp, info);
   png_write_destroy (pp);
@@ -1594,19 +1588,19 @@ save_dialog (gint32    image_ID,
                          NULL, 0,
                          gimp_standard_help_func, "file-png-save-defaults",
 
-			 _("_Load defaults"), RESPONSE_LOAD_DEFAULTS,
-			 _("_Save defaults"), RESPONSE_SAVE_DEFAULTS,
+                         _("_Load defaults"), RESPONSE_LOAD_DEFAULTS,
+                         _("_Save defaults"), RESPONSE_SAVE_DEFAULTS,
                          GTK_STOCK_CANCEL,   GTK_RESPONSE_CANCEL,
                          GTK_STOCK_OK,       GTK_RESPONSE_OK,
 
                          NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
-					      RESPONSE_LOAD_DEFAULTS,
-                                              RESPONSE_SAVE_DEFAULTS,
-					      GTK_RESPONSE_OK,
-                                              GTK_RESPONSE_CANCEL,
-                                              -1);
+                                           RESPONSE_LOAD_DEFAULTS,
+                                           RESPONSE_SAVE_DEFAULTS,
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   g_signal_connect (dlg, "response",
                     G_CALLBACK (save_dialog_response),
