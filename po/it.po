@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-07 08:50+0100\n"
-"PO-Revision-Date: 2004-12-07 10:28+0100\n"
+"POT-Creation-Date: 2004-12-15 08:30+0100\n"
+"PO-Revision-Date: 2004-12-15 08:32+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -63,7 +63,7 @@ msgstr ""
 msgid "Opening '%s' failed: %s"
 msgstr "L'apertura di '%s' è fallita: %s"
 
-#: app/batch.c:85
+#: app/batch.c:84 app/batch.c:101
 #, c-format
 msgid "The batch interpreter '%s' is not available, batch mode disabled."
 msgstr ""
@@ -1134,7 +1134,7 @@ msgstr "_Modifica"
 msgid "_Buffer"
 msgstr "_Buffer"
 
-#: app/actions/edit-actions.c:65 app/actions/edit-actions.c:225
+#: app/actions/edit-actions.c:65 app/actions/edit-actions.c:230
 msgid "_Undo"
 msgstr "Ann_ulla"
 
@@ -1143,7 +1143,7 @@ msgstr "Ann_ulla"
 msgid "Undo"
 msgstr "Annulla"
 
-#: app/actions/edit-actions.c:71 app/actions/edit-actions.c:226
+#: app/actions/edit-actions.c:71 app/actions/edit-actions.c:231
 msgid "_Redo"
 msgstr "_Ripeti"
 
@@ -1167,52 +1167,57 @@ msgstr "_Taglia"
 msgid "_Copy"
 msgstr "_Copia"
 
+#. GIMP_STOCK_COPY_VISIBLE,
 #: app/actions/edit-actions.c:93
+msgid "Copy _Visible"
+msgstr "Copia il _Visibile"
+
+#: app/actions/edit-actions.c:98
 msgid "_Paste"
 msgstr "_Incolla"
 
-#: app/actions/edit-actions.c:98
+#: app/actions/edit-actions.c:103
 msgid "Paste _Into"
 msgstr "Incolla _dentro"
 
-#: app/actions/edit-actions.c:103
+#: app/actions/edit-actions.c:108
 msgid "Paste as _New"
 msgstr "Incolla come _nuovo"
 
-#: app/actions/edit-actions.c:108
+#: app/actions/edit-actions.c:113
 msgid "Cu_t Named..."
 msgstr "_Taglia con nome..."
 
-#: app/actions/edit-actions.c:113
+#: app/actions/edit-actions.c:118
 msgid "_Copy Named..."
 msgstr "_Copia con nome..."
 
-#: app/actions/edit-actions.c:118
+#: app/actions/edit-actions.c:123
 msgid "_Paste Named..."
 msgstr "_Incolla con nome..."
 
-#: app/actions/edit-actions.c:123
+#: app/actions/edit-actions.c:128
 msgid "Cl_ear"
 msgstr "Canc_ella"
 
-#: app/actions/edit-actions.c:131
+#: app/actions/edit-actions.c:136
 msgid "Fill with _FG Color"
 msgstr "Riempi con colore di _primo piano"
 
-#: app/actions/edit-actions.c:136
+#: app/actions/edit-actions.c:141
 msgid "Fill with B_G Color"
 msgstr "Riempi con colore di _sfondo"
 
-#: app/actions/edit-actions.c:141
+#: app/actions/edit-actions.c:146
 msgid "Fill with P_attern"
 msgstr "Riempi con il _motivo"
 
-#: app/actions/edit-actions.c:209
+#: app/actions/edit-actions.c:214
 #, c-format
 msgid "_Undo %s"
 msgstr "Ann_ulla %s"
 
-#: app/actions/edit-actions.c:214
+#: app/actions/edit-actions.c:219
 #, c-format
 msgid "_Redo %s"
 msgstr "_Ripeti %s"
@@ -1225,27 +1230,27 @@ msgstr "Cancella cronologia annullamenti"
 msgid "Really clear image's undo history?"
 msgstr "Cancellare la cronologia annullamenti?"
 
-#: app/actions/edit-commands.c:199
+#: app/actions/edit-commands.c:210
 msgid "Cut Named"
 msgstr "Taglia con nome"
 
-#: app/actions/edit-commands.c:202 app/actions/edit-commands.c:222
+#: app/actions/edit-commands.c:213 app/actions/edit-commands.c:233
 msgid "Enter a name for this buffer"
 msgstr "Inserisci un nome per questo buffer"
 
-#: app/actions/edit-commands.c:219
+#: app/actions/edit-commands.c:230
 msgid "Copy Named"
 msgstr "Copia con nome"
 
-#: app/actions/edit-commands.c:326
+#: app/actions/edit-commands.c:337
 msgid "There is no active layer or channel to cut from."
 msgstr "Non c'è un livello o un canale attivo da cui tagliare."
 
-#: app/actions/edit-commands.c:338 app/actions/edit-commands.c:375
+#: app/actions/edit-commands.c:349 app/actions/edit-commands.c:386
 msgid "(Unnamed Buffer)"
 msgstr "(buffer senza nome)"
 
-#: app/actions/edit-commands.c:363
+#: app/actions/edit-commands.c:374
 msgid "There is no active layer or channel to copy from."
 msgstr "Non c'è un livello o un canale attivo da cui copiare"
 
@@ -2682,7 +2687,7 @@ msgstr "Apri"
 msgid "Load text from file"
 msgstr "Carica testo dal file"
 
-#: app/actions/text-editor-actions.c:50 app/core/gimp-edit.c:284
+#: app/actions/text-editor-actions.c:50 app/core/gimp-edit.c:350
 msgid "Clear"
 msgstr "Cancella"
 
@@ -2712,7 +2717,7 @@ msgstr "Apri file di testo (UTF-8)"
 
 #: app/actions/text-editor-commands.c:132 app/config/gimpconfig-utils.c:552
 #: app/config/gimpscanner.c:92 app/core/gimpbrush.c:393
-#: app/core/gimpbrushgenerated.c:601 app/core/gimpbrushpipe.c:344
+#: app/core/gimpbrushgenerated.c:601 app/core/gimpbrushpipe.c:338
 #: app/core/gimpgradient-load.c:63 app/core/gimppalette.c:360
 #: app/core/gimppattern.c:328 app/tools/gimpimagemaptool.c:603
 #: app/xcf/xcf.c:291
@@ -4393,11 +4398,11 @@ msgstr "Àncora selezione fluttuante"
 msgid "Remove floating selection"
 msgstr "Rimuovi selezione fluttuante"
 
-#: app/core/core-enums.c:1055 app/core/gimp-edit.c:201
+#: app/core/core-enums.c:1055 app/core/gimp-edit.c:267
 msgid "Paste"
 msgstr "Incolla"
 
-#: app/core/core-enums.c:1056 app/core/gimp-edit.c:352
+#: app/core/core-enums.c:1056 app/core/gimp-edit.c:418
 msgid "Cut"
 msgstr "Taglia"
 
@@ -4428,7 +4433,7 @@ msgstr "Rimuovi parasite"
 msgid "Import paths"
 msgstr "Importa tracciati"
 
-#: app/core/core-enums.c:1063 app/pdb/drawable_cmds.c:1690
+#: app/core/core-enums.c:1063 app/pdb/drawable_cmds.c:1693
 msgid "Plug-In"
 msgstr "Plug-in"
 
@@ -4528,27 +4533,32 @@ msgstr "FS rilassato"
 msgid "EEK: can't undo"
 msgstr "Impossibile annullare!"
 
-#: app/core/gimp-edit.c:129 app/core/gimp-edit.c:253
+#: app/core/gimp-edit.c:109 app/core/gimpselection.c:668
+msgid "Unable to cut or copy because the selected region is empty."
+msgstr ""
+"Non è possibile a tagliare o copiare perché la regione selezionata è vuota."
+
+#: app/core/gimp-edit.c:195 app/core/gimp-edit.c:319
 msgid "Pasted Layer"
 msgstr "Livello incollato"
 
-#: app/core/gimp-edit.c:303
+#: app/core/gimp-edit.c:369
 msgid "Fill with FG Color"
 msgstr "Riempi con colore di primo piano"
 
-#: app/core/gimp-edit.c:307 app/core/gimp-edit.c:328
+#: app/core/gimp-edit.c:373 app/core/gimp-edit.c:394
 msgid "Fill with BG Color"
 msgstr "Riempi con colore di sfondo"
 
-#: app/core/gimp-edit.c:311
+#: app/core/gimp-edit.c:377
 msgid "Fill with White"
 msgstr "Riempi con il bianco"
 
-#: app/core/gimp-edit.c:315
+#: app/core/gimp-edit.c:381
 msgid "Fill with Transparency"
 msgstr "Riempi con la trasparenza"
 
-#: app/core/gimp-edit.c:319
+#: app/core/gimp-edit.c:385
 msgid "Fill with Pattern"
 msgstr "Riempi con il motivo"
 
@@ -4620,7 +4630,7 @@ msgstr ""
 "Errore di analisi fatale nel file pennello '%s': il file sembra troncato."
 
 #: app/core/gimpbrush.c:603 app/core/gimpbrushgenerated.c:648
-#: app/core/gimpbrushpipe.c:360
+#: app/core/gimpbrushpipe.c:354
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Stringa UTF-8 non valida nel file pennello '%s'."
@@ -4671,8 +4681,8 @@ msgstr "Errore durante la lettura del file pennello '%s': %s"
 msgid "File is truncated"
 msgstr "Il file è troncato"
 
-#: app/core/gimpbrushpipe.c:375 app/core/gimpbrushpipe.c:395
-#: app/core/gimpbrushpipe.c:485
+#: app/core/gimpbrushpipe.c:369 app/core/gimpbrushpipe.c:389
+#: app/core/gimpbrushpipe.c:479
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr "Errore fatale di analisi nel file pennello '%s': il file è errato."
@@ -4968,23 +4978,23 @@ msgstr "Cambia voce mappa colore"
 msgid "Add Color to Colormap"
 msgstr "Aggiungi colore alla mappa colore"
 
-#: app/core/gimpimage-convert.c:780
+#: app/core/gimpimage-convert.c:788
 msgid "Convert Image to RGB"
 msgstr "Converti in RGB"
 
-#: app/core/gimpimage-convert.c:784
+#: app/core/gimpimage-convert.c:792
 msgid "Convert Image to Grayscale"
 msgstr "Converti in scala di grigi"
 
-#: app/core/gimpimage-convert.c:788
+#: app/core/gimpimage-convert.c:796
 msgid "Convert Image to Indexed"
 msgstr "Converti in indicizzata"
 
-#: app/core/gimpimage-convert.c:867
+#: app/core/gimpimage-convert.c:875
 msgid "Converting to indexed (stage 2)..."
 msgstr "Conversione in indicizzata (fase 2)..."
 
-#: app/core/gimpimage-convert.c:911
+#: app/core/gimpimage-convert.c:919
 msgid "Converting to indexed (stage 3)..."
 msgstr "Conversione in indicizzata (fase 3)..."
 
@@ -5233,8 +5243,8 @@ msgstr "Impossibile creare l'anteprima"
 
 #. pixel size
 #: app/core/gimpimagefile.c:624 app/dialogs/info-window.c:552
-#: app/widgets/gimpsizebox.c:533 app/widgets/gimptemplateeditor.c:638
-#: app/widgets/gimptemplateeditor.c:674
+#: app/widgets/gimpsizebox.c:552 app/widgets/gimptemplateeditor.c:637
+#: app/widgets/gimptemplateeditor.c:673
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d x %d pixel"
@@ -5475,7 +5485,7 @@ msgstr ""
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Stringa UTF-8 non valida nel file motivo di GIMP '%s'."
 
-#: app/core/gimppdbprogress.c:260 app/widgets/gimppdbdialog.c:314
+#: app/core/gimppdbprogress.c:260 app/widgets/gimppdbdialog.c:320
 #, c-format
 msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
 msgstr ""
@@ -5509,11 +5519,6 @@ msgstr "Inverti selezione"
 #: app/core/gimpselection.c:307
 msgid "No selection to stroke."
 msgstr "Nessuna selezione da disegnare"
-
-#: app/core/gimpselection.c:668
-msgid "Unable to cut or copy because the selected region is empty."
-msgstr ""
-"Non è possibile a tagliare o copiare perché la regione selezionata è vuota."
 
 #: app/core/gimpselection.c:815
 msgid "Cannot float selection because the selected region is empty."
@@ -5841,7 +5846,7 @@ msgstr "Sei sicuro di quello che sta per fare?"
 #. General
 #: app/dialogs/info-dialog.c:363 app/dialogs/preferences-dialog.c:1514
 #: app/dialogs/preferences-dialog.c:1668
-#: app/widgets/gimpcontrollereditor.c:195
+#: app/widgets/gimpcontrollereditor.c:197
 msgid "General"
 msgstr "Generale"
 
@@ -5996,12 +6001,12 @@ msgid "Layer _Name:"
 msgstr "_Nome livello:"
 
 #. The size labels
-#: app/dialogs/layer-options-dialog.c:127 app/tools/gimpcroptool.c:1026
+#: app/dialogs/layer-options-dialog.c:127 app/tools/gimpcroptool.c:1046
 #: app/tools/gimpselectionoptions.c:529
 msgid "Width:"
 msgstr "Larghezza:"
 
-#: app/dialogs/layer-options-dialog.c:133 app/tools/gimpcroptool.c:1030
+#: app/dialogs/layer-options-dialog.c:133 app/tools/gimpcroptool.c:1050
 #: app/tools/gimpscaletool.c:166 app/tools/gimpselectionoptions.c:537
 msgid "Height:"
 msgstr "Altezza:"
@@ -6082,7 +6087,7 @@ msgstr "Data:"
 msgid "Location:"
 msgstr "Disposizione:"
 
-#: app/dialogs/module-dialog.c:505 app/widgets/gimpcontrollereditor.c:240
+#: app/dialogs/module-dialog.c:505 app/widgets/gimpcontrollereditor.c:242
 msgid "State:"
 msgstr "Stato:"
 
@@ -6825,33 +6830,33 @@ msgstr "Cartelle dei temi"
 msgid "Select Theme Folders"
 msgstr "Seleziona cartelle dei temi"
 
-#: app/dialogs/print-size-dialog.c:129
+#: app/dialogs/print-size-dialog.c:130
 msgid "Print Size"
 msgstr "Dimensione di stampa"
 
 #. the image size labels
-#: app/dialogs/print-size-dialog.c:156 app/widgets/gimpsizebox.c:240
+#: app/dialogs/print-size-dialog.c:157 app/widgets/gimpsizebox.c:241
 #: app/widgets/gimptemplateeditor.c:236
 msgid "_Width:"
 msgstr "_Larghezza:"
 
-#: app/dialogs/print-size-dialog.c:163 app/widgets/gimpsizebox.c:247
+#: app/dialogs/print-size-dialog.c:164 app/widgets/gimpsizebox.c:248
 #: app/widgets/gimptemplateeditor.c:243
 msgid "H_eight:"
 msgstr "Alt_ezza:"
 
 #. the resolution labels
-#: app/dialogs/print-size-dialog.c:211 app/widgets/gimpsizebox.c:329
+#: app/dialogs/print-size-dialog.c:212 app/widgets/gimpsizebox.c:338
 #: app/widgets/gimptemplateeditor.c:363
 msgid "_X resolution:"
 msgstr "Risoluzione _X:"
 
-#: app/dialogs/print-size-dialog.c:218 app/widgets/gimpsizebox.c:336
+#: app/dialogs/print-size-dialog.c:219 app/widgets/gimpsizebox.c:345
 #: app/widgets/gimptemplateeditor.c:370
 msgid "_Y resolution:"
 msgstr "Risoluzione _Y:"
 
-#: app/dialogs/print-size-dialog.c:229 app/widgets/gimpsizebox.c:348
+#: app/dialogs/print-size-dialog.c:230 app/widgets/gimpsizebox.c:357
 #: app/widgets/gimptemplateeditor.c:383
 #, c-format
 msgid "pixels/%a"
@@ -7596,7 +7601,7 @@ msgstr "Carattere non valido in sequenza URI"
 msgid "Deleting \"%s\" failed: %s"
 msgstr "La cancellazione di \"%s\" è fallita: %s"
 
-#: app/gui/splash.c:135
+#: app/gui/splash.c:118
 msgid "GIMP Startup"
 msgstr "Avvio di GIMP"
 
@@ -7747,7 +7752,7 @@ msgstr "Inclinazione..."
 msgid "2D Transform..."
 msgstr "Trasformazione 2D..."
 
-#: app/pdb/edit_cmds.c:608 app/tools/gimpblendtool.c:249
+#: app/pdb/edit_cmds.c:673 app/tools/gimpblendtool.c:249
 msgid "Blending..."
 msgstr "Sfumatura in corso..."
 
@@ -8477,44 +8482,44 @@ msgstr "Permetti ingrandimento %s"
 msgid "Keep aspect ratio  %s"
 msgstr "Rapporto di dimensioni fisso  %s"
 
-#: app/tools/gimpcroptool.c:163
+#: app/tools/gimpcroptool.c:164
 msgid "Crop & Resize"
 msgstr "Taglierina"
 
-#: app/tools/gimpcroptool.c:164
+#: app/tools/gimpcroptool.c:165
 msgid "Crop or Resize an image"
 msgstr "Ritaglia o ridimensiona un'immagine"
 
-#: app/tools/gimpcroptool.c:165
+#: app/tools/gimpcroptool.c:166
 msgid "_Crop & Resize"
 msgstr "_Taglio e ridimensione"
 
 #. initialize the statusbar display
-#: app/tools/gimpcroptool.c:498 app/tools/gimpcroptool.c:957
+#: app/tools/gimpcroptool.c:499 app/tools/gimpcroptool.c:983
 msgid "Crop: "
 msgstr "Taglio:"
 
-#: app/tools/gimpcroptool.c:990
+#: app/tools/gimpcroptool.c:1010
 msgid "Crop & Resize Information"
 msgstr "Informazioni taglierino e ridimensionamento"
 
-#: app/tools/gimpcroptool.c:1009
+#: app/tools/gimpcroptool.c:1029
 msgid "Origin X:"
 msgstr "Origine X:"
 
-#: app/tools/gimpcroptool.c:1013
+#: app/tools/gimpcroptool.c:1033
 msgid "Origin Y:"
 msgstr "Origine Y:"
 
-#: app/tools/gimpcroptool.c:1051 app/widgets/gimpbrusheditor.c:194
+#: app/tools/gimpcroptool.c:1071 app/widgets/gimpbrusheditor.c:194
 msgid "Aspect ratio:"
 msgstr "Rapporto di aspetto:"
 
-#: app/tools/gimpcroptool.c:1062
+#: app/tools/gimpcroptool.c:1082
 msgid "From selection"
 msgstr "Dalla selezione"
 
-#: app/tools/gimpcroptool.c:1070
+#: app/tools/gimpcroptool.c:1090
 msgid "Auto shrink"
 msgstr "Riduzione automatica"
 
@@ -8551,7 +8556,7 @@ msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Le curve per il livelli a colori indicizzati non sono modificabili."
 
 #: app/tools/gimpcurvestool.c:481 app/tools/gimplevelstool.c:415
-#: app/widgets/gimphistogrameditor.c:160
+#: app/widgets/gimphistogrameditor.c:161
 msgid "Channel:"
 msgstr "Canale:"
 
@@ -9585,7 +9590,7 @@ msgstr "Impossibile importare tracciati da '%s': %s"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpactionview.c:292 app/widgets/gimpcontrollereditor.c:345
+#: app/widgets/gimpactionview.c:292 app/widgets/gimpcontrollereditor.c:374
 msgid "Action"
 msgstr "Azione"
 
@@ -9647,7 +9652,7 @@ msgstr "Percentuale di larghezza del pennello"
 #: app/widgets/gimpbufferview.c:165 app/widgets/gimpbufferview.c:246
 #: app/widgets/gimpcontainergridview.c:206
 #: app/widgets/gimpcontainergridview.c:657
-#: app/widgets/gimphistogrameditor.c:146 app/widgets/gimphistogrameditor.c:355
+#: app/widgets/gimphistogrameditor.c:147 app/widgets/gimphistogrameditor.c:359
 msgid "(None)"
 msgstr "(Nessuno)"
 
@@ -9787,23 +9792,23 @@ msgstr "Anteprima più piccola"
 msgid "Larger Previews"
 msgstr "Anteprima più grande"
 
-#: app/widgets/gimpcontrollereditor.c:208
+#: app/widgets/gimpcontrollereditor.c:210
 msgid "Dump events from this controller"
 msgstr "Esegui un dump degli eventi da questo controller"
 
-#: app/widgets/gimpcontrollereditor.c:213
+#: app/widgets/gimpcontrollereditor.c:215
 msgid "Enable this controller"
 msgstr "Abilita questo controller"
 
-#: app/widgets/gimpcontrollereditor.c:234
+#: app/widgets/gimpcontrollereditor.c:236
 msgid "Name:"
 msgstr "Nome:"
 
-#: app/widgets/gimpcontrollereditor.c:340
+#: app/widgets/gimpcontrollereditor.c:369
 msgid "Event"
 msgstr "Evento"
 
-#: app/widgets/gimpcontrollereditor.c:521
+#: app/widgets/gimpcontrollereditor.c:550
 msgid "Select Controller Event Action"
 msgstr "Seleziona l'azione evento controller"
 
@@ -10106,7 +10111,22 @@ msgstr "Primo piano: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "Sfondo: %d, %d, %d"
 
-#: app/widgets/gimpdock.c:430
+#: app/widgets/gimpdock.c:348 app/widgets/gimpdock.c:359
+msgid "Close all tabs?"
+msgstr "Chiudere tutte le schede?"
+
+#: app/widgets/gimpdock.c:354
+msgid "Close all Tabs"
+msgstr "Chiudi tutte le schede"
+
+#: app/widgets/gimpdock.c:361
+#, c-format
+msgid ""
+"This window has %d tabs open. Closing the window will also close all its "
+"tabs."
+msgstr "Questa finestra ha %d schede aperte. La chiusura della finestra provocherà la chiusura di tutte le schede."
+
+#: app/widgets/gimpdock.c:474
 msgid "You can drop dockable dialogs here."
 msgstr "Puoi rilasciare qui le finestre di dialogo agganciabili."
 
@@ -10295,27 +10315,27 @@ msgstr "Impossibile eseguire il plug-in visualizzatore dell'aiuto di GIMP."
 msgid "Use _web browser instead"
 msgstr "Usa in alternativa il navigatore _web"
 
-#: app/widgets/gimphistogrameditor.c:133
+#: app/widgets/gimphistogrameditor.c:134
 msgid "Mean:"
 msgstr "Media:"
 
-#: app/widgets/gimphistogrameditor.c:134
+#: app/widgets/gimphistogrameditor.c:135
 msgid "Std Dev:"
 msgstr "Deviazione standard"
 
-#: app/widgets/gimphistogrameditor.c:135
+#: app/widgets/gimphistogrameditor.c:136
 msgid "Median:"
 msgstr "Mediana"
 
-#: app/widgets/gimphistogrameditor.c:136
+#: app/widgets/gimphistogrameditor.c:137
 msgid "Pixels:"
 msgstr "Pixel:"
 
-#: app/widgets/gimphistogrameditor.c:137
+#: app/widgets/gimphistogrameditor.c:138
 msgid "Count:"
 msgstr "Conteggio:"
 
-#: app/widgets/gimphistogrameditor.c:138
+#: app/widgets/gimphistogrameditor.c:139
 msgid "Percentile:"
 msgstr "Percentile:"
 
@@ -10330,11 +10350,11 @@ msgstr ""
 "Se abilitata, la finestra segue automaticamente l'immagine su cui si sta "
 "lavorando."
 
-#: app/widgets/gimpitemtreeview.c:987
+#: app/widgets/gimpitemtreeview.c:996
 msgid "Set Item Exclusive Visible"
 msgstr "Imposta voce esclusiva visibile"
 
-#: app/widgets/gimpitemtreeview.c:995
+#: app/widgets/gimpitemtreeview.c:1004
 msgid "Set Item Exclusive Linked"
 msgstr "Imposta voce esclusiva collegata"
 
@@ -10367,7 +10387,7 @@ msgstr "Non definito"
 msgid "Columns:"
 msgstr "Colonne:"
 
-#: app/widgets/gimppropwidgets.c:1487
+#: app/widgets/gimppropwidgets.c:1537
 #, c-format
 msgid "This text input field is limited to %d characters."
 msgstr "Questo campo di testo in ingresso è limitato a %d caratteri."
@@ -10387,16 +10407,16 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "UTF-8 non valido"
 
-#: app/widgets/gimpsizebox.c:289
+#: app/widgets/gimpsizebox.c:290
 msgid "Keep aspect ratio"
 msgstr "Mantieni il rapporto dimensioni"
 
-#: app/widgets/gimpsizebox.c:555
+#: app/widgets/gimpsizebox.c:574
 #, c-format
 msgid "%d x %d dpi"
 msgstr "%d x %d dpi"
 
-#: app/widgets/gimpsizebox.c:559
+#: app/widgets/gimpsizebox.c:578
 #, c-format
 msgid "%d dpi"
 msgstr "%d dpi"
@@ -10442,32 +10462,32 @@ msgstr "%p"
 msgid "_Advanced Options"
 msgstr "Opzioni _avanzate"
 
-#: app/widgets/gimptemplateeditor.c:438
+#: app/widgets/gimptemplateeditor.c:437
 msgid "Color_space:"
 msgstr "_Spazio colore:"
 
-#: app/widgets/gimptemplateeditor.c:446
+#: app/widgets/gimptemplateeditor.c:445
 msgid "_Fill with:"
 msgstr "_Riempi con:"
 
-#: app/widgets/gimptemplateeditor.c:456
+#: app/widgets/gimptemplateeditor.c:455
 msgid "Comme_nt:"
 msgstr "Comme_nto:"
 
-#: app/widgets/gimptemplateeditor.c:566
+#: app/widgets/gimptemplateeditor.c:565
 msgid "_Name:"
 msgstr "_Nome:"
 
-#: app/widgets/gimptemplateeditor.c:577
+#: app/widgets/gimptemplateeditor.c:576
 msgid "_Icon:"
 msgstr "_Icona:"
 
-#: app/widgets/gimptemplateeditor.c:695
+#: app/widgets/gimptemplateeditor.c:694
 #, c-format
 msgid "%d x %d dpi, %s"
 msgstr "%d x %d dpi, %s"
 
-#: app/widgets/gimptemplateeditor.c:699
+#: app/widgets/gimptemplateeditor.c:698
 #, c-format
 msgid "%d dpi, %s"
 msgstr "%d dpi, %s"
