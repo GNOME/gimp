@@ -535,8 +535,9 @@ gimp_selection_data_get_image (GtkSelectionData *selection,
       return NULL;
     }
 
-  id = (gchar *) selection->data;
+  id = g_strndup (selection->data, selection->length);
   ID = atoi (id);
+  g_free (id);
 
   if (! ID)
     return NULL;
@@ -582,10 +583,15 @@ gimp_selection_data_get_component (GtkSelectionData *selection,
       return NULL;
     }
 
-  id = (gchar *) selection->data;
+  id = g_strndup (selection->data, selection->length);
 
   if (sscanf (id, "%i:%i", &ID, &ch) != 2)
-    return NULL;
+    {
+      g_free (id);
+      return NULL;
+    }
+
+  g_free (id);
 
   if (! ID)
     return NULL;
@@ -631,8 +637,9 @@ gimp_selection_data_get_item (GtkSelectionData *selection,
       return NULL;
     }
 
-  id = (gchar *) selection->data;
+  id = g_strndup (selection->data, selection->length);
   ID = atoi (id);
+  g_free (id);
 
   if (! ID)
     return NULL;
