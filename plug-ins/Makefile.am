@@ -133,8 +133,6 @@ scriptdata =
 
 pluginlibdir = $(gimpplugindir)/plug-ins
 
-EXTRA_DIST = build.in
-
 INCLUDES = \
 	$(X_CFLAGS)			\
 	-I$(top_srcdir)			\
