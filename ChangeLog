@@ -1,3 +1,7 @@
+2003-10-14  Dave Neary  <bolsh@gimp.org>
+
+	* libgimpcolor/gimpcolorspace.c: Some more gtkdocs. 
+
 2003-10-14  Sven Neumann  <sven@gimp.org>
 
 	* app/composite/gimp-composite.h: don't use gtk-doc style comments
