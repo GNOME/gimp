@@ -1,3 +1,9 @@
+2004-07-19  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdrawable-combine.c (gimp_channel_combine_ellipse):
+	backported improvements to the anti-aliasing for
+        elliptical selections from HEAD branch (bug #147836).
+
 2004-07-18  Philip Lafleur  <plafleur@cvs.gnome.org>
 
 	* app/tools/gimpinktool-blob.c (blob_make_convex): Check if the
