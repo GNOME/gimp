@@ -1,3 +1,9 @@
+2004-07-14  Philip Lafleur  <plafleur@cvs.gnome.org>
+
+	* plug-ins/common/mng.c (respin_cmap): Properly check the return
+	value of find_unused_ia_color(). The plugin will now save indexed
+	MNGs correctly; fixes bug #139947. Also converted tabs to spaces.
+
 2004-07-14  Michael Natterer  <mitch@gimp.org>
 
 	Code review & cleanup:
