@@ -100,9 +100,11 @@ gimp_color_scale_init (GimpColorScale *scale)
 {
   GtkRange *range = GTK_RANGE (scale);
 
+  GTK_SCALE (scale)->draw_value = FALSE;
+
   range->slider_size_fixed = TRUE;
   range->orientation       = GTK_ORIENTATION_HORIZONTAL;
-  /* FIXME: range should be flippable */
+  range->flippable         = TRUE;
 
   scale->channel = GIMP_COLOR_SELECTOR_HUE;
 
@@ -301,9 +303,6 @@ gimp_color_scale_expose (GtkWidget      *widget,
                      range->range_rect.width,
                      range->range_rect.height);
 
-  if (! range->adjustment)
-    return FALSE;
-
   switch (range->orientation)
     {
     case GTK_ORIENTATION_HORIZONTAL:
@@ -352,8 +351,8 @@ gimp_color_scale_expose (GtkWidget      *widget,
           break;
         case GTK_ORIENTATION_VERTICAL:
           for (h = area.height, x = area.x + area.width - 1, y = area.y;
-               h > 0; h -= 2, x++, y++)
-            gdk_draw_line (widget->window, widget->style->black_gc,
+               h > 0; h -= 2, x--, y++)
+            gdk_draw_line (widget->window, widget->style->white_gc,
                            x, y, x, y + h - 1);
           break;
         }
@@ -370,14 +369,24 @@ gimp_color_scale_new (GtkOrientation            orientation,
                       const GimpHSV            *hsv)
 {
   GimpColorScale *scale;
+  GtkRange       *range;
+
+  g_return_val_if_fail ((rgb == NULL && hsv == NULL) ||
+                        (rgb != NULL && hsv != NULL), NULL);
 
   scale = g_object_new (GIMP_TYPE_COLOR_SCALE, NULL);
 
-  GTK_RANGE (scale)->orientation = orientation;
+  range = GTK_RANGE (scale);
+  range->orientation = orientation;
+  range->flippable   = (orientation == GTK_ORIENTATION_HORIZONTAL);
 
   scale->channel = channel;
-  scale->rgb     = *rgb;
-  scale->hsv     = *hsv;
+
+  if (rgb && hsv)
+    {
+      scale->rgb = *rgb;
+      scale->hsv = *hsv;
+    }
 
   return GTK_WIDGET (scale);
 }
@@ -413,14 +422,31 @@ gimp_color_scale_set_color (GimpColorScale *scale,
   gtk_widget_queue_draw (GTK_WIDGET (scale));
 }
 
+/* as in gtkrange.c */
+static gboolean
+should_invert (GtkRange *range)
+{  
+  if (range->orientation == GTK_ORIENTATION_HORIZONTAL)
+    return
+      (range->inverted && !range->flippable) ||
+      (range->inverted && range->flippable &&
+       gtk_widget_get_direction (GTK_WIDGET (range)) == GTK_TEXT_DIR_LTR) ||
+      (!range->inverted && range->flippable &&
+       gtk_widget_get_direction (GTK_WIDGET (range)) == GTK_TEXT_DIR_RTL);
+  else
+    return range->inverted;
+}
+
 static void
 gimp_color_scale_render (GimpColorScale *scale)
 {
+  GtkRange *range;
   GimpRGB   rgb;
   GimpHSV   hsv;
   guint     x, y;
   gdouble  *channel_value = NULL; /* shut up compiler */
   gboolean  to_rgb        = FALSE;
+  gboolean  invert;
   guchar   *buf;
   guchar   *d;
   guchar    r, g, b;
@@ -460,24 +486,30 @@ gimp_color_scale_render (GimpColorScale *scale)
       break;
     }
 
-  switch (GTK_RANGE (scale)->orientation)
+  range = GTK_RANGE (scale);
+  invert = should_invert (range);
+
+  switch (range->orientation)
     {
     case GTK_ORIENTATION_HORIZONTAL:
       d = buf;
 
-      for (x = 0; x < scale->width; x++)
+      for (x = 0, d = buf; x < scale->width; x++, d += 3)
         {
-          *channel_value = (gdouble) x / (gdouble) (scale->width - 1);
+          gdouble value = (gdouble) x / (gdouble) (scale->width - 1);
+
+          if (invert)
+            value = 1.0 - value;
+
+          *channel_value = value;
 
           if (to_rgb)
             gimp_hsv_to_rgb (&hsv, &rgb);
 
           gimp_rgb_get_uchar (&rgb, d, d + 1, d + 2);
-          d += 3;
         }
 
       d = buf + scale->rowstride;
-
       for (y = 1; y < scale->height; y++)
         {
           memcpy (d, buf, scale->rowstride);
@@ -488,20 +520,23 @@ gimp_color_scale_render (GimpColorScale *scale)
     case GTK_ORIENTATION_VERTICAL:
       for (y = 0; y < scale->height; y++)
         {
-          d = buf;
-          
-          *channel_value = (gdouble) y / (gdouble) (scale->height - 1);
+          gdouble value = (gdouble) y / (gdouble) (scale->height - 1);
+
+          if (invert)
+            value = 1.0 - value;
+
+          *channel_value = value;
           
           if (to_rgb)
             gimp_hsv_to_rgb (&hsv, &rgb);
 
           gimp_rgb_get_uchar (&rgb, &r, &g, &b);
 
-          for (x = 0; x < scale->width; x++)
+          for (x = 0, d = buf; x < scale->width; x++, d += 3)
             {
-              *d++ = r;
-              *d++ = g;
-              *d++ = b;
+              d[0] = r;
+              d[1] = g;
+              d[2] = b;
             }
 
           buf += scale->rowstride;
@@ -513,16 +548,21 @@ gimp_color_scale_render (GimpColorScale *scale)
 static void
 gimp_color_scale_render_alpha (GimpColorScale *scale)
 {
-  GimpRGB  rgb;
-  gdouble  a;
-  guint    x, y;
-  guchar  *buf;
-  guchar  *d, *l;
+  GtkRange *range;
+  GimpRGB   rgb;
+  gboolean  invert;
+  gdouble   a;
+  guint     x, y;
+  guchar   *buf;
+  guchar   *d, *l;
+
+  range = GTK_RANGE (scale);
+  invert = should_invert (range);
 
   buf = scale->buf;
   rgb = scale->rgb;
 
-  switch (GTK_RANGE (scale)->orientation)
+  switch (range->orientation)
     {
     case GTK_ORIENTATION_HORIZONTAL:
       {
@@ -546,6 +586,9 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
               }
             
             a = (gdouble) x / (gdouble) (scale->width - 1);
+
+            if (invert)
+              a = 1.0 - a;
             
             l[0] = (GIMP_CHECK_LIGHT +
                     (rgb.r - GIMP_CHECK_LIGHT) * a) * 255.999;
@@ -586,6 +629,9 @@ gimp_color_scale_render_alpha (GimpColorScale *scale)
           {
             a = (gdouble) y / (gdouble) (scale->height - 1);
             
+            if (invert)
+              a = 1.0 - a;
+
             light[0] = (GIMP_CHECK_LIGHT +
                         (rgb.r - GIMP_CHECK_LIGHT) * a) * 255.999;
             light[1] = (GIMP_CHECK_LIGHT +

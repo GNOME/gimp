@@ -1,5 +1,10 @@
 2002-10-31  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpcolorscale.c: made inverted and flippable work
+	correctly.
+
+2002-10-31  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpcolorscale.c: added the missing bits for
 	channel == GIMP_COLOR_SELECTOR_ALPHA and for vertical orientation.
 
