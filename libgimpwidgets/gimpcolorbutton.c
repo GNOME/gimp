@@ -204,12 +204,9 @@ gimp_color_button_init (GimpColorButton      *button,
 
   for (i = 0; i < G_N_ELEMENTS (actions); i++)
     {
-      const gchar *label;
-      const gchar *tooltip;
+      const gchar *label   = gettext (actions[i].label);
+      const gchar *tooltip = gettext (actions[i].tooltip);
       GtkAction   *action;
-
-      label   = gettext (actions[i].label);
-      tooltip = gettext (actions[i].label);
 
       action = g_object_new (klass->get_action_type (button),
                              "name",     actions[i].name,
@@ -283,19 +280,11 @@ gimp_color_button_button_press (GtkWidget      *widget,
                                 GdkEventButton *bevent)
 {
   GimpColorButton *button = GIMP_COLOR_BUTTON (widget);
-  gint             x;
-  gint             y;
 
   if (bevent->button == 3)
     {
-      GtkWidget *menu;
-
-      gdk_window_get_origin (GTK_WIDGET (widget)->window, &x, &y);
-      x += widget->allocation.x;
-      y += widget->allocation.y;
-
-      menu = gtk_ui_manager_get_widget (button->popup_menu,
-                                        "/color-button-popup");
+      GtkWidget *menu = gtk_ui_manager_get_widget (button->popup_menu,
+                                                   "/color-button-popup");
 
       gtk_menu_set_screen (GTK_MENU (menu), gtk_widget_get_screen (widget));
 
