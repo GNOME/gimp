@@ -1,5 +1,16 @@
 2004-02-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/plug-ins.c (plug_ins_init): use g_clear_error()
+	instead of g_error_free() and re-use the same GError location for
+	pluginrc parsing and writing.
+
+	(plug_ins_proc_def_insert): when overriding a PlugInProcDef, don't
+	take over the menu_path and menu_accel of the overridden proc
+	because (a) it's just plain wrong and (b) we don't need to
+	preserve the proc_defs' order any more (see below).
+
+2004-02-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/plug-in-proc.[ch]: added new function
 	plug_in_proc_def_compare_menu_path() which is a GCompareDataFunc.
 	(uses g_utf8_collate() on the translated menu paths).

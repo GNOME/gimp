@@ -133,7 +133,7 @@ plug_ins_init (Gimp               *gimp,
   if (! plug_in_rc_parse (gimp, filename, &error))
     {
       g_message (error->message);
-      g_error_free (error);
+      g_clear_error (&error);
     }
 
   /*  Query any plug-ins that have changed since we last wrote out
@@ -215,8 +215,6 @@ plug_ins_init (Gimp               *gimp,
   /* write the pluginrc file if necessary */
   if (gimp->write_pluginrc)
     {
-      GError *error = NULL;
-
       if (gimp->be_verbose)
 	g_print (_("Writing '%s'\n"),
 		 gimp_filename_to_utf8 (filename));
@@ -224,7 +222,7 @@ plug_ins_init (Gimp               *gimp,
       if (! plug_in_rc_write (gimp->plug_in_defs, filename, &error))
         {
           g_message ("%s", error->message);
-          g_error_free (error);
+          g_clear_error (&error);
         }
 
       gimp->write_pluginrc = FALSE;
@@ -974,17 +972,6 @@ plug_ins_proc_def_insert (Gimp          *gimp,
       if (strcmp (proc_def->db_info.name, tmp_proc_def->db_info.name) == 0)
 	{
 	  list->data = proc_def;
-
-	  if (proc_def->menu_path)
-	    g_free (proc_def->menu_path);
-	  if (proc_def->accelerator)
-	    g_free (proc_def->accelerator);
-
-	  proc_def->menu_path   = tmp_proc_def->menu_path;
-	  proc_def->accelerator = tmp_proc_def->accelerator;
-
-	  tmp_proc_def->menu_path   = NULL;
-	  tmp_proc_def->accelerator = NULL;
 
 	  return tmp_proc_def;
 	}
