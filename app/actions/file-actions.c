@@ -20,6 +20,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
@@ -240,20 +241,25 @@ file_actions_last_opened_update (GimpContainer   *container,
               const gchar *uri;
               gchar       *filename;
               gchar       *basename;
+              gchar       *escaped;
 
               uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
 
               filename = file_utils_uri_to_utf8_filename (uri);
               basename = file_utils_uri_to_utf8_basename (uri);
 
+              escaped = gimp_escape_uline (basename);
+
+              g_free (basename);
+
               g_object_set (G_OBJECT (action),
-                            "label",   basename,
+                            "label",   escaped,
                             "tooltip", filename,
                             "visible", TRUE,
                             NULL);
 
               g_free (filename);
-              g_free (basename);
+              g_free (escaped);
 
               g_object_set_data (G_OBJECT (action),
 				 "gimp-imagefile", imagefile);

@@ -32,6 +32,7 @@ const gchar * gimp_filename_to_utf8  (const gchar *filename);
 gchar       * gimp_memsize_to_string (guint64      memsize);
 
 gchar       * gimp_strip_uline       (const gchar *str);
+gchar       * gimp_escape_uline      (const gchar *str);
 
 
 #endif  /* __GIMP_UTILS_H__ */

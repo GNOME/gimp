@@ -331,3 +331,44 @@ gimp_strip_uline (const gchar *str)
 
   return escaped;
 }
+
+/**
+ * gimp_escape_uline:
+ * @str: Underline infested string (or %NULL)
+ *
+ * This function returns a copy of @str with all underline converted
+ * to two adjacent underlines. This comes in handy when needing to display
+ * strings with underlines (like filenames) in a place that would convert
+ * them to mnemonics.
+ *
+ * Return value: A (possibly escaped) copy of @str which should be
+ * freed using g_free() when it is not needed any longer.
+ **/
+gchar *
+gimp_escape_uline (const gchar *str)
+{
+  gchar *escaped;
+  gchar *p;
+  gint   n_ulines = 0;
+
+  if (! str)
+    return NULL;
+
+  for (p = (gchar *) str; *p; p++)
+    if (*p == '_')
+      n_ulines++;
+
+  p = escaped = g_malloc (strlen (str) + n_ulines + 1);
+
+  while (*str)
+    {
+      if (*str == '_')
+        *p++ = '_';
+
+      *p++ = *str++;
+    }
+
+  *p = '\0';
+
+  return escaped;
+}
