@@ -1689,7 +1689,7 @@ new_channel_query_delete_callback (GtkWidget *w,
 {
   new_channel_query_cancel_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void
@@ -1868,7 +1868,7 @@ edit_channel_query_delete_callback (GtkWidget *w,
 {
   edit_channel_query_cancel_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void

@@ -1809,7 +1809,7 @@ lc_dialog_close_callback (GtkWidget *w,
 			  gpointer   client_data)
 {
   if (!lc_shell)
-    return TRUE;
+    return FALSE;
 
   if (GTK_WIDGET_VISIBLE (lc_shell))
     gtk_widget_hide (lc_shell);
@@ -1817,7 +1817,7 @@ lc_dialog_close_callback (GtkWidget *w,
   if (layersD) 
     layersD->gimage_id = -1;
 
-  return FALSE;
+  return TRUE;
 }
 
 
@@ -2910,7 +2910,7 @@ new_layer_query_delete_callback (GtkWidget *w,
 {
   new_layer_query_cancel_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 
@@ -3142,7 +3142,7 @@ edit_layer_query_delete_callback (GtkWidget *w,
 {
   edit_layer_query_cancel_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void
@@ -3253,7 +3253,7 @@ add_mask_query_delete_callback (GtkWidget *w,
 {
   add_mask_query_cancel_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void
@@ -3428,7 +3428,7 @@ apply_mask_query_delete_callback (GtkWidget *w,
 {
   apply_mask_query_cancel_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void
@@ -3551,7 +3551,7 @@ scale_layer_query_delete_callback (GtkWidget *w,
 {
   scale_layer_query_cancel_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void
@@ -3672,7 +3672,7 @@ resize_layer_query_delete_callback (GtkWidget *w,
 {
   resize_layer_query_cancel_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void
@@ -3772,7 +3772,7 @@ layer_merge_query_delete_callback (GtkWidget *w,
 {
   layer_merge_query_cancel_callback (w, client_data);
   
-  return FALSE;
+  return TRUE;
 }
 
 static void

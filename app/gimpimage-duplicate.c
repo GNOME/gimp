@@ -485,7 +485,7 @@ offset_delete_callback (GtkWidget *widget,
 {
   offset_cancel_callback (widget, data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void

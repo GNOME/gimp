@@ -643,7 +643,7 @@ color_balance_delete_callback (GtkWidget *w,
 {
   color_balance_cancel_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void

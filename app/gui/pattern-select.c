@@ -653,7 +653,7 @@ pattern_select_delete_callback (GtkWidget *w,
 {
   pattern_select_close_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void

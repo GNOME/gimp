@@ -533,7 +533,7 @@ tools_options_delete_callback (GtkWidget *w,
 {
   tools_options_dialog_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void

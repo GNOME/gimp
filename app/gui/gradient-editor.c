@@ -1255,7 +1255,7 @@ ed_close_callback(GtkWidget *widget, gpointer client_data)
 	if (GTK_WIDGET_VISIBLE(g_editor->shell))
 		gtk_widget_hide(g_editor->shell);
 
-	return FALSE;
+	return TRUE;
 } /* ed_close_callback */
 
 

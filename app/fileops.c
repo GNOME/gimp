@@ -68,12 +68,6 @@ static void file_open_ok_callback   (GtkWidget *w,
 				     gpointer   client_data);
 static void file_save_ok_callback   (GtkWidget *w,
 				     gpointer   client_data);
-static void file_cancel_callback    (GtkWidget *w,
-				     gpointer   client_data);
-
-static gint file_delete_callback    (GtkWidget *w,
-				     GdkEvent  *e,
-				     gpointer   client_data);
 
 static void file_dialog_show        (GtkWidget *filesel);
 static void file_dialog_hide        (GtkWidget *filesel);
@@ -478,10 +472,14 @@ file_open_callback (GtkWidget *w,
       fileload = gtk_file_selection_new ("Load Image");
       gtk_window_position (GTK_WINDOW (fileload), GTK_WIN_POS_MOUSE);
       gtk_window_set_wmclass (GTK_WINDOW (fileload), "load_image", "Gimp");
-      gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (fileload)->cancel_button), "clicked",
-			  (GtkSignalFunc) file_cancel_callback, fileload);
-      gtk_signal_connect (GTK_OBJECT (fileload), "delete_event",
-			  (GtkSignalFunc) file_delete_callback, fileload);
+      gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (fileload)->cancel_button),
+				 "clicked",
+				 GTK_SIGNAL_FUNC (gtk_widget_hide),
+				 GTK_OBJECT (fileload));
+      gtk_signal_connect (GTK_OBJECT (fileload),
+			  "delete_event",
+			  GTK_SIGNAL_FUNC (gtk_widget_delete_hides),
+			  NULL);
       gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (fileload)->ok_button), "clicked", (GtkSignalFunc) file_open_ok_callback, fileload);
     }
   else
@@ -563,10 +561,14 @@ file_save_as_callback (GtkWidget *w,
       filesave = gtk_file_selection_new ("Save Image");
       gtk_window_set_wmclass (GTK_WINDOW (filesave), "save_image", "Gimp");
       gtk_window_position (GTK_WINDOW (filesave), GTK_WIN_POS_MOUSE);
-      gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesave)->cancel_button), "clicked",
-			  (GtkSignalFunc) file_cancel_callback, filesave);
-      gtk_signal_connect (GTK_OBJECT (filesave), "delete_event",
-			  (GtkSignalFunc) file_delete_callback, filesave);
+      gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesave)->cancel_button),
+			  "clicked",
+			  GTK_SIGNAL_FUNC (gtk_widget_hide),
+			  GTK_OBJECT (filesave));
+      gtk_signal_connect (GTK_OBJECT (filesave),
+			  "delete_event",
+			  GTK_SIGNAL_FUNC (gtk_widget_delete_hides),
+			  NULL);
       gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesave)->ok_button), "clicked", (GtkSignalFunc) file_save_ok_callback, filesave);
     }
   else
@@ -882,7 +884,7 @@ file_save_ok_callback (GtkWidget *w,
       else
 	{
 	  s = g_string_new (NULL);
-	  g_string_sprintf (s, "%s is an irregular file", raw_filename, g_strerror(errno));
+	  g_string_sprintf (s, "%s is an irregular file (%s)", raw_filename, g_strerror(errno));
 	}
     }
   else if (file_save (image_ID, filename, raw_filename))
@@ -899,23 +901,6 @@ file_save_ok_callback (GtkWidget *w,
   message_box (s->str, NULL, NULL);
 
   g_string_free (s, TRUE);
-}
-
-static gint
-file_delete_callback (GtkWidget *w,
-		      GdkEvent *e,
-		      gpointer client_data)
-{
-  file_cancel_callback (w, client_data);
-
-  return FALSE;
-}
-
-static void
-file_cancel_callback (GtkWidget *w,
-		      gpointer   client_data)
-{
-  file_dialog_hide (client_data);
 }
 
 static void
@@ -965,7 +950,8 @@ file_overwrite (char *filename, char* raw_filename)
   gtk_window_set_title (GTK_WINDOW (overwrite_box->obox), "File Exists!");
   gtk_window_position (GTK_WINDOW (overwrite_box->obox), GTK_WIN_POS_MOUSE);
 
-  gtk_signal_connect (GTK_OBJECT (overwrite_box->obox), "delete_event",
+  gtk_signal_connect (GTK_OBJECT (overwrite_box->obox),
+		      "delete_event",
 		      (GtkSignalFunc) file_overwrite_delete_callback,
 		      overwrite_box);
 
@@ -1028,7 +1014,7 @@ file_overwrite_delete_callback (GtkWidget *w,
 {
   file_overwrite_no_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void

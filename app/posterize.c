@@ -376,7 +376,7 @@ posterize_delete_callback (GtkWidget *w, GdkEvent *e, gpointer data)
 {
   posterize_cancel_callback (w, data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void

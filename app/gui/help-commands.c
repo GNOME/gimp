@@ -232,7 +232,7 @@ file_new_delete_callback (GtkWidget *widget,
 {
   file_new_cancel_callback (widget, data);
 
-  return FALSE;
+  return TRUE;
 }
   
 
@@ -751,7 +751,7 @@ file_prefs_delete_callback (GtkWidget *widget,
   file_prefs_cancel_callback (widget, dlg);
 
   /* the widget is already destroyed here no need to try again */
-  return FALSE;
+  return TRUE;
 }
 
 static void
@@ -2457,7 +2457,7 @@ image_delete_callback (GtkWidget *w,
 {
   image_cancel_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 

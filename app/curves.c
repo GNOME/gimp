@@ -1001,7 +1001,7 @@ curves_delete_callback (GtkWidget *w,
 {
   curves_cancel_callback (w, data);
 
-  return FALSE;
+  return TRUE;
 }
 static void
 curves_preview_update (GtkWidget *w,

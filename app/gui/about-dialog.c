@@ -122,8 +122,6 @@ about_dialog_create (int timeout)
       gtk_window_position (GTK_WINDOW (about_dialog), GTK_WIN_POS_CENTER);
       gtk_signal_connect (GTK_OBJECT (about_dialog), "destroy",
 			  (GtkSignalFunc) about_dialog_destroy, NULL);
-      gtk_signal_connect (GTK_OBJECT (about_dialog), "delete_event",
-			  (GtkSignalFunc) about_dialog_destroy, NULL);
       gtk_signal_connect (GTK_OBJECT (about_dialog), "unmap_event",
 			  (GtkSignalFunc) about_dialog_unmap, NULL);
       gtk_signal_connect (GTK_OBJECT (about_dialog), "button_press_event",

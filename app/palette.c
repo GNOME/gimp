@@ -883,7 +883,7 @@ palette_dialog_delete_callback (GtkWidget *w,
 {
   palette_close_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 

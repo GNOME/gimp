@@ -788,7 +788,7 @@ color_select_delete_callback (GtkWidget *w,
 {
   color_select_cancel_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
   
 

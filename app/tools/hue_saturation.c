@@ -754,7 +754,7 @@ hue_saturation_delete_callback (GtkWidget *w,
 {
   hue_saturation_cancel_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void

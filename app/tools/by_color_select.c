@@ -852,7 +852,7 @@ by_color_select_delete_callback (GtkWidget *w,
 {
   by_color_select_close_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void

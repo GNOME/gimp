@@ -1090,7 +1090,7 @@ levels_delete_callback (GtkWidget *w,
 {
   levels_cancel_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void

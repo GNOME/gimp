@@ -512,7 +512,7 @@ threshold_delete_callback (GtkWidget *w,
 {
   threshold_cancel_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void

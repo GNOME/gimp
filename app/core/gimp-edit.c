@@ -552,7 +552,7 @@ named_buffer_dialog_delete_callback (GtkWidget *w,
 {
   named_buffer_cancel_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void

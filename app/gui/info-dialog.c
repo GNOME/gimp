@@ -200,11 +200,11 @@ info_dialog_update (InfoDialog *idialog)
 static gint
 info_dialog_delete_callback (GtkWidget *w,
 			     GdkEvent *e,
-			     gpointer client_data) {
-
+			     gpointer client_data)
+{
   info_dialog_popdown ((InfoDialog *) client_data);
-  return FALSE;
 
+  return TRUE;
 }
 
 

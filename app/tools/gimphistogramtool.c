@@ -550,7 +550,7 @@ histogram_tool_delete_callback (GtkWidget *widget,
 {
   histogram_tool_cancel_callback (widget, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void

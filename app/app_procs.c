@@ -318,6 +318,9 @@ make_initialization_status_window(void)
 	  GtkWidget *vbox;
 
 	  win_initstatus = gtk_window_new(GTK_WINDOW_DIALOG);
+	  gtk_signal_connect (GTK_OBJECT (win_initstatus), "delete_event",
+			      GTK_SIGNAL_FUNC (gtk_true),
+			      NULL);
 	  gtk_window_set_wmclass (GTK_WINDOW(win_initstatus), "gimp_startup", "Gimp");
 	  gtk_window_set_title(GTK_WINDOW(win_initstatus),
 		               "GIMP Startup");
@@ -584,7 +587,7 @@ really_quit_delete_callback (GtkWidget *widget,
 {
   really_quit_cancel_callback (GTK_BUTTON(widget), (GtkWidget *) client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void

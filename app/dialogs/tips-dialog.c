@@ -57,6 +57,8 @@ tips_dialog_create ()
       gtk_window_position (GTK_WINDOW (tips_dialog), GTK_WIN_POS_CENTER);
       gtk_signal_connect (GTK_OBJECT (tips_dialog), "delete_event",
 			  GTK_SIGNAL_FUNC (tips_dialog_hide), NULL);
+      /* destroy the tips window if the mainlevel gtk_main() function is left */
+      gtk_quit_add (1, (GtkFunction) gtk_widget_destroy, tips_dialog);
 
       vbox = gtk_vbox_new (FALSE, 0);
       gtk_container_add (GTK_CONTAINER (tips_dialog), vbox);
@@ -160,7 +162,7 @@ tips_dialog_hide (GtkWidget *widget,
   g_list_free (update);
   g_list_free (remove);
 
-  return FALSE;
+  return TRUE;
 }
 
 static int

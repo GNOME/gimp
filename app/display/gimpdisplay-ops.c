@@ -289,7 +289,7 @@ gdisplay_delete_warning_callback (GtkWidget *widget,
 {
   gdisplay_cancel_warning_callback (widget, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void

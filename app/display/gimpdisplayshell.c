@@ -820,7 +820,7 @@ query_box_delete_callback (GtkWidget *w,
 {
   query_box_cancel_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void
@@ -957,7 +957,7 @@ message_box_delete_callback (GtkWidget *w, GdkEvent *e, gpointer client_data)
 {
   message_box_close_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 

@@ -615,7 +615,7 @@ text_delete_callback (GtkWidget *w,
 {
   text_cancel_callback (w, client_data);
   
-  return FALSE;
+  return TRUE;
 }
 
 static void

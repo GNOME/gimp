@@ -505,7 +505,7 @@ brightness_contrast_delete_callback (GtkWidget *w,
 {
   brightness_contrast_cancel_callback (w, d);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void

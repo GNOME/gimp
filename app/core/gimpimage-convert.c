@@ -529,6 +529,7 @@ indexed_ok_callback (GtkWidget *widget,
 
   gtk_widget_destroy (dialog->shell);
   g_free (dialog);
+  dialog = NULL;
 }
 
 static gint
@@ -538,7 +539,7 @@ indexed_delete_callback (GtkWidget *w,
 {
   indexed_cancel_callback (w, client_data);
 
-  return FALSE;
+  return TRUE;
 }
 
 static void
@@ -550,6 +551,7 @@ indexed_cancel_callback (GtkWidget *widget,
   dialog = (IndexedDialog *) client_data;
   gtk_widget_destroy (dialog->shell);
   g_free (dialog);
+  dialog = NULL;
 }
 
 static void
