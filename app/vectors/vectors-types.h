@@ -33,6 +33,12 @@ typedef enum
   CONTROL_HANDLE,
 } GimpAnchorType;
 
+typedef enum
+{
+  EXTEND_SIMPLE,
+  EXTEND_EDITABLE,
+} GimpVectorExtendMode;
+
 typedef struct _GimpStroke            GimpStroke;
 typedef struct _GimpStrokeClass       GimpStrokeClass;
 typedef struct _GimpBezierStroke      GimpBezierStroke;

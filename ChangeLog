@@ -1,3 +1,14 @@
+2002-12-31  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/vectors-types.h: New Type: GimpVectorExtendMode
+
+	* app/tools/gimpvectortool.c
+	* app/vectors/gimpstroke.[ch]
+	* app/vectors/gimpbezierstroke.[ch]: More stuff on the path
+	(pun intended) to a better path tool...
+
+	Thanks to Sven for being my host in Berlin!
+
 2002-12-31  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/fileops.pdb (gimp_temp_name): need to expand the

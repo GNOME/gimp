@@ -149,27 +149,33 @@ static GimpAnchor *
 gimp_stroke_real_anchor_get (const GimpStroke *stroke,
                              const GimpCoords *coord)
 {
-  gdouble     dx, dy, mindist;
+  gdouble     dx, dy, mindist = -1;
   GList      *list;
   GimpAnchor *anchor = NULL;
 
   g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
 
-  list = stroke->anchors;
-  if (list)
-    {
-      dx = coord->x - ((GimpAnchor *) list->data)->position.x;
-      dy = coord->y - ((GimpAnchor *) list->data)->position.y;
-      anchor = (GimpAnchor *) list->data;
-      mindist = dx * dx + dy * dy;
-      list = list->next;
-    }
+  list = gimp_stroke_get_draw_controls (stroke);
 
   while (list)
     {
       dx = coord->x - ((GimpAnchor *) list->data)->position.x;
       dy = coord->y - ((GimpAnchor *) list->data)->position.y;
-      if (mindist > dx * dx + dy * dy)
+      if (mindist < 0 || mindist > dx * dx + dy * dy)
+        {
+          mindist = dx * dx + dy * dy;
+          anchor = (GimpAnchor *) list->data;
+        }
+      list = list->next;
+    }
+
+  list = gimp_stroke_get_draw_anchors (stroke);
+
+  while (list)
+    {
+      dx = coord->x - ((GimpAnchor *) list->data)->position.x;
+      dy = coord->y - ((GimpAnchor *) list->data)->position.y;
+      if (mindist < 0 || mindist > dx * dx + dy * dy)
         {
           mindist = dx * dx + dy * dy;
           anchor = (GimpAnchor *) list->data;
@@ -500,8 +506,7 @@ gimp_stroke_get_draw_anchors (const GimpStroke  *stroke)
 
 
 GList *
-gimp_stroke_get_draw_controls (const GimpStroke  *stroke,
-                               const GimpAnchor  *active)
+gimp_stroke_get_draw_controls (const GimpStroke  *stroke)
 {
   GimpStrokeClass *stroke_class;
 
@@ -510,7 +515,7 @@ gimp_stroke_get_draw_controls (const GimpStroke  *stroke,
   stroke_class = GIMP_STROKE_GET_CLASS (stroke);
 
   if (stroke_class->get_draw_controls)
-    return stroke_class->get_draw_controls (stroke, active);
+    return stroke_class->get_draw_controls (stroke);
   else
     {
       GList *cur_ptr, *ret_list = NULL;
@@ -540,8 +545,7 @@ gimp_stroke_get_draw_controls (const GimpStroke  *stroke,
 }
           
 GArray *
-gimp_stroke_get_draw_lines (const GimpStroke  *stroke,
-                            const GimpAnchor  *active)
+gimp_stroke_get_draw_lines (const GimpStroke  *stroke)
 {
   GimpStrokeClass *stroke_class;
 
@@ -550,7 +554,7 @@ gimp_stroke_get_draw_lines (const GimpStroke  *stroke,
   stroke_class = GIMP_STROKE_GET_CLASS (stroke);
 
   if (stroke_class->get_draw_lines)
-    return stroke_class->get_draw_lines (stroke, active);
+    return stroke_class->get_draw_lines (stroke);
   else
     {
       GList *cur_ptr;

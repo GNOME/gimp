@@ -99,11 +99,9 @@ struct _GimpStrokeClass
                                                           
   GList       * (* get_draw_anchors)     (const GimpStroke  *stroke);
   
-  GList       * (* get_draw_controls)    (const GimpStroke  *stroke,
-                                          const GimpAnchor  *active);
+  GList       * (* get_draw_controls)    (const GimpStroke  *stroke);
   
-  GArray      * (* get_draw_lines)       (const GimpStroke  *stroke,
-                                          const GimpAnchor  *active);
+  GArray      * (* get_draw_lines)       (const GimpStroke  *stroke);
 };
 
 
@@ -176,10 +174,8 @@ GimpStroke   * gimp_stroke_make_bezier         (const GimpStroke     *stroke);
 
 GList        * gimp_stroke_get_draw_anchors    (const GimpStroke  *stroke);
            
-GList        * gimp_stroke_get_draw_controls   (const GimpStroke  *stroke,
-                                                const GimpAnchor  *active);
+GList        * gimp_stroke_get_draw_controls   (const GimpStroke  *stroke);
            
-GArray       * gimp_stroke_get_draw_lines      (const GimpStroke  *stroke,
-                                                const GimpAnchor  *active);
+GArray       * gimp_stroke_get_draw_lines      (const GimpStroke  *stroke);
 
 #endif /* __GIMP_STROKE_H__ */

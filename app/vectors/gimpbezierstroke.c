@@ -172,7 +172,7 @@ gimp_bezier_stroke_new (const GimpCoords *start)
   g_printerr ("Adding at %f, %f\n", start->x, start->y);
   
   anchor->type = ANCHOR_HANDLE;
-  anchor->selected = FALSE;
+  anchor->selected = TRUE;
 
   stroke->anchors = g_list_append (stroke->anchors, anchor);
   return stroke;
@@ -200,7 +200,8 @@ gimp_bezier_stroke_new_from_coords (const GimpCoords *coords,
         {
           last_anchor = gimp_bezier_stroke_extend (bezier_stroke,
                                                    &(coords[count]),
-                                                   last_anchor);
+                                                   last_anchor,
+                                                   EXTEND_SIMPLE);
         }
     }
   return stroke;
@@ -208,15 +209,15 @@ gimp_bezier_stroke_new_from_coords (const GimpCoords *coords,
 
 
 GimpAnchor *
-gimp_bezier_stroke_extend (GimpBezierStroke *bezier_stroke,
-                           const GimpCoords *coords,
-                           GimpAnchor       *neighbor)
+gimp_bezier_stroke_extend (GimpBezierStroke     *bezier_stroke,
+                           const GimpCoords     *coords,
+                           GimpAnchor           *neighbor,
+                           GimpVectorExtendMode  extend_mode)
 {
-  GimpAnchor       *anchor;
+  GimpAnchor       *anchor=NULL;
   GimpStroke       *stroke;
   GList            *listneighbor;
-  gint              loose_end;
-  GimpAnchorType    ntype1 = -1, ntype2 = -1;
+  gint              loose_end, control_count;
 
   g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (bezier_stroke), NULL);
   g_return_val_if_fail ((neighbor != NULL), NULL);
@@ -245,57 +246,97 @@ gimp_bezier_stroke_extend (GimpBezierStroke *bezier_stroke,
 
   if (loose_end)
     {
-      anchor = g_new0 (GimpAnchor, 1);
-      anchor->position.x = coords->x;
-      anchor->position.y = coords->y;
-      anchor->position.pressure = 1.0;
-      anchor->position.xtilt = 0.5;
-      anchor->position.ytilt = 0.5;
-      anchor->position.wheel = 0.5;
+      /* We have to detect the type of the point to add... */
 
-      anchor->selected = FALSE;
-
-      /* We have to detect the type of the newly added point... */
-
-      ntype1 = ((GimpAnchor *) listneighbor->data)->type;
-      if (loose_end == 1 && listneighbor->prev)
-        {
-          ntype2 = ((GimpAnchor *) listneighbor->prev->data)->type;
-        }
-      else if (loose_end == -1 && listneighbor->next)
-        {
-          ntype2 = ((GimpAnchor *) listneighbor->next->data)->type;
-        }
-      else
-        {
-          anchor->type = CONTROL_HANDLE;
-        }
-
-      if (ntype1 == ANCHOR_HANDLE)
-        {
-          anchor->type = CONTROL_HANDLE;
-        }
-      else
-        {
-          if (ntype2 == CONTROL_HANDLE)
-            {
-              anchor->type = ANCHOR_HANDLE;
-            }
-          else
-            {
-              anchor->type = CONTROL_HANDLE;
-            }
-        }
-
-      g_printerr ("Extending at %f, %f, type %d\n",
-                  coords->x, coords->y, anchor->type);
+      control_count = 0;
 
       if (loose_end == 1)
-        stroke->anchors = g_list_append (stroke->anchors, anchor);
+        {
+          while (listneighbor &&
+                 ((GimpAnchor *) listneighbor->data)->type == CONTROL_HANDLE)
+            {
+              control_count++;
+              listneighbor = listneighbor->prev;
+            }
+        }
+      else
+        {
+          while (listneighbor &&
+                 ((GimpAnchor *) listneighbor->data)->type == CONTROL_HANDLE)
+            {
+              control_count++;
+              listneighbor = listneighbor->next;
+            }
+        }
 
-      if (loose_end == -1)
-        stroke->anchors = g_list_prepend (stroke->anchors, anchor);
+      switch (extend_mode)
+        {
+        case EXTEND_SIMPLE:
+          anchor = g_new0 (GimpAnchor, 1);
+          anchor->position.x = coords->x;
+          anchor->position.y = coords->y;
+          anchor->position.pressure = 1.0;
+          anchor->position.xtilt = 0.5;
+          anchor->position.ytilt = 0.5;
+          anchor->position.wheel = 0.5;
 
+          anchor->selected = FALSE;
+
+          switch (control_count)
+            {
+            case 0:
+            case 1:
+              anchor->type = CONTROL_HANDLE;
+              break;
+            case 2:
+              anchor->type = ANCHOR_HANDLE;
+              break;
+            default:
+              g_printerr ("inconsistent bezier curve: "
+                          "%d successive control handles", control_count);
+            }
+
+          g_printerr ("Extending at %f, %f, type %d\n",
+                      coords->x, coords->y, anchor->type);
+
+          if (loose_end == 1)
+            stroke->anchors = g_list_append (stroke->anchors, anchor);
+
+          if (loose_end == -1)
+            stroke->anchors = g_list_prepend (stroke->anchors, anchor);
+          break;
+
+        case EXTEND_EDITABLE:
+          switch (control_count)
+            {
+            case 0:
+              neighbor = gimp_bezier_stroke_extend (bezier_stroke,
+                                                    &(neighbor->position),
+                                                    neighbor,
+                                                    EXTEND_SIMPLE);
+            case 1:
+              neighbor = gimp_bezier_stroke_extend (bezier_stroke,
+                                                    coords,
+                                                    neighbor,
+                                                    EXTEND_SIMPLE);
+            case 2:
+              neighbor = gimp_bezier_stroke_extend (bezier_stroke,
+                                                    coords,
+                                                    neighbor,
+                                                    EXTEND_SIMPLE);
+
+              gimp_stroke_anchor_select (stroke, neighbor, TRUE);
+
+              anchor = gimp_bezier_stroke_extend (bezier_stroke,
+                                                  coords,
+                                                  neighbor,
+                                                  EXTEND_SIMPLE);
+              break;
+            default:
+              g_printerr ("inconsistent bezier curve: "
+                          "%d successive control handles", control_count);
+            }
+        }
       return anchor;
     }
   else

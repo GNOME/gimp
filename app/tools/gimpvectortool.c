@@ -51,7 +51,7 @@
 
 
 /*  definitions  */
-#define  TARGET         8
+#define  TARGET         9
 #define  ARC_RADIUS     30
 #define  STATUSBAR_SIZE 128
 
@@ -273,15 +273,19 @@ gimp_vector_tool_button_press (GimpTool        *tool,
         {
           gimp_draw_tool_pause (GIMP_DRAW_TOOL (vector_tool));
 
-          vector_tool->function = VECTORS_MOVING;
-          vector_tool->cur_stroke = stroke;
-          vector_tool->cur_anchor = anchor;
           if (anchor->type == ANCHOR_HANDLE)
             gimp_stroke_anchor_select (stroke, anchor, TRUE);
           
+          /* doublecheck if there are control handles at this anchor */
+          anchor = gimp_vectors_anchor_get (vector_tool->vectors,
+                                            coords, &stroke);
+
+          vector_tool->function = VECTORS_MOVING;
+          vector_tool->cur_stroke = stroke;
+          vector_tool->cur_anchor = anchor;
+
           gimp_draw_tool_resume (GIMP_DRAW_TOOL (vector_tool));
         }
-
     }
   
   if (vector_tool->function == VECTORS_CREATING)
@@ -324,13 +328,9 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 	  gimp_draw_tool_stop (GIMP_DRAW_TOOL (vector_tool));
 	}
 
-      anchor = gimp_bezier_stroke_extend (GIMP_BEZIER_STROKE (vector_tool->cur_stroke), coords, vector_tool->cur_anchor);
+      anchor = gimp_bezier_stroke_extend (GIMP_BEZIER_STROKE (vector_tool->cur_stroke), coords, vector_tool->cur_anchor, EXTEND_EDITABLE);
       if (anchor)
-        {
-          vector_tool->cur_anchor = anchor;
-          if (anchor->type == ANCHOR_HANDLE)
-            gimp_stroke_anchor_select (stroke, anchor, TRUE);
-        }
+        vector_tool->cur_anchor = anchor;
 
       /*  set the gdisplay  */
       tool->gdisp = gdisp;
@@ -491,8 +491,7 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
       g_list_free (draw_anchors);
 
       /* control handles */
-      draw_anchors = gimp_stroke_get_draw_controls (cur_stroke,
-                                                   vector_tool->cur_anchor);
+      draw_anchors = gimp_stroke_get_draw_controls (cur_stroke);
       ptr = draw_anchors;
 
       while (ptr) 
@@ -503,8 +502,8 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
                                       GIMP_HANDLE_SQUARE,
                                       cur_anchor->position.x,
                                       cur_anchor->position.y,
-                                      TARGET-1,
-                                      TARGET-1,
+                                      TARGET-2,
+                                      TARGET-2,
                                       GTK_ANCHOR_CENTER,
                                       FALSE);
           ptr = ptr->next;
@@ -513,7 +512,7 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
       g_list_free (draw_anchors);
 
       /* the lines to the control handles */
-      coords = gimp_stroke_get_draw_lines (cur_stroke, vector_tool->cur_anchor);
+      coords = gimp_stroke_get_draw_lines (cur_stroke);
       
       if (coords->len % 2 == 0)
         {
