@@ -3885,7 +3885,7 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
      case OP_RDLIST: {
           sc->args = cons(sc, sc->value, sc->args);
           sc->tok = token(sc);
-          if (sc->tok == TOK_COMMENT) {
+          while (sc->tok == TOK_COMMENT) {
                int c;
                while ((c=inchar(sc)) != '\n' && c!=EOF)
                     ;
