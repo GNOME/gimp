@@ -1,3 +1,11 @@
+2004-05-04  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/preferences-dialog.c
+	* app/widgets/widgets-enums.[ch]
+	* app/widgets/gimpwidgets-utils.c (gimp_window_set_hint): added
+	new window hint "keep-above" to force toolbox and/or dock windows
+	to be kept above (if the WM supports this hint). Fixes bug #131672.
+
 2004-05-04  Michael Natterer  <mitch@gimp.org>
 
 	Fix bug #141719:

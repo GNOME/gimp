@@ -1820,17 +1820,17 @@ prefs_dialog_new (Gimp       *gimp,
 				     &top_iter,
 				     page_index++);
 
-  vbox2 = prefs_frame_new (_("Window Type Hints"),
+  vbox2 = prefs_frame_new (_("Window Manager Hints"),
                            GTK_CONTAINER (vbox), FALSE);
 
   table = prefs_table_new (2, GTK_CONTAINER (vbox2), FALSE);
 
   prefs_enum_combo_box_add (object, "toolbox-window-hint", 0, 0,
-                            _("Window Type Hint for the _Toolbox:"),
+                            _("Hint for the _Toolbox:"),
                             GTK_TABLE (table), 0);
 
   prefs_enum_combo_box_add (object, "dock-window-hint", 0, 0,
-                            _("Window Type Hint for the _Docks:"),
+                            _("Hint for the _Docks:"),
                             GTK_TABLE (table), 1);
 
   vbox2 = prefs_frame_new (_("Focus"),

@@ -135,6 +135,7 @@ static const GEnumValue gimp_window_hint_enum_values[] =
 {
   { GIMP_WINDOW_HINT_NORMAL, N_("Normal Window"), "normal" },
   { GIMP_WINDOW_HINT_UTILITY, N_("Utility Window"), "utility" },
+  { GIMP_WINDOW_HINT_KEEP_ABOVE, N_("Keep Above"), "keep-above" },
   { 0, NULL, NULL }
 };
 

@@ -105,8 +105,9 @@ GType gimp_window_hint_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_WINDOW_HINT_NORMAL,   /*< desc="Normal Window"  >*/
-  GIMP_WINDOW_HINT_UTILITY,  /*< desc="Utility Window" >*/
+  GIMP_WINDOW_HINT_NORMAL,     /*< desc="Normal Window"  >*/
+  GIMP_WINDOW_HINT_UTILITY,    /*< desc="Utility Window" >*/
+  GIMP_WINDOW_HINT_KEEP_ABOVE  /*< desc="Keep Above"     >*/
 } GimpWindowHint;
 
 
@@ -118,7 +119,7 @@ typedef enum
 {
   GIMP_ZOOM_IN,  /*< desc="Zoom in"  >*/
   GIMP_ZOOM_OUT, /*< desc="Zoom out" >*/
-  GIMP_ZOOM_TO   /*< skip >*/ 
+  GIMP_ZOOM_TO   /*< skip >*/
 } GimpZoomType;
 
 
