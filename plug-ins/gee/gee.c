@@ -309,7 +309,7 @@ static void do_playback()
 void domap1(unsigned char *src, unsigned char *dest,
 	    int bx, int by, int cx, int cy)
 {
-#ifdef __GNUC__
+#ifdef __AAARGH_GNUC__
   unsigned int dy __attribute__ ((aligned));
   signed int bycxmcybx __attribute__ ((aligned));
   signed int bx2,by2 __attribute__ ((aligned));
@@ -338,7 +338,7 @@ void domap1(unsigned char *src, unsigned char *dest,
 
   for (dy=0;dy<256;dy++)
     {
-#ifdef __GNUC__
+#ifdef __AAARGH_GNUC__
       unsigned int __attribute__ ((aligned)) sx;
       unsigned int __attribute__ ((aligned)) sy;
       unsigned int __attribute__ ((aligned)) dx;
@@ -378,7 +378,7 @@ void domap1(unsigned char *src, unsigned char *dest,
 void domap3(unsigned char *src, unsigned char *dest,
 	    int bx, int by, int cx, int cy)
 {
-#ifdef __GNUC__
+#ifdef __AAARGH_GNUC__
   unsigned int dy __attribute__ ((aligned));
   signed int bycxmcybx __attribute__ ((aligned));
   signed int bx2,by2 __attribute__ ((aligned));
@@ -407,7 +407,7 @@ void domap3(unsigned char *src, unsigned char *dest,
 
   for (dy=0;dy<256;dy++)
     {
-#ifdef __GNUC__
+#ifdef __AAARGH_GNUC__
       unsigned int __attribute__ ((aligned)) sx;
       unsigned int __attribute__ ((aligned)) sy;
       unsigned int __attribute__ ((aligned)) dx;

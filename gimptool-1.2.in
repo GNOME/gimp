@@ -20,15 +20,15 @@ if test $# -eq 0; then
 fi
 
 if test x${GTK_CONFIG+set} != xset ; then
-      gtk_config=@GTK_CONFIG@
+      gtk_config='@GTK_CONFIG@'
 else
-      gtk_config=$GTK_CONFIG
+      gtk_config="$GTK_CONFIG"
 fi
 
 if test x${CC+set} != xset ; then
-      cc=@CC@
+      cc='@CC@'
 else
-      cc=$CC
+      cc="$CC"
 fi
 
 if test x${CFLAGS+set} != xset ; then

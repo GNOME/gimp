@@ -1,5 +1,5 @@
 /*
- * Animation Optimizer plug-in version 0.70.0
+ * Animation Optimizer plug-in version 1.0.0
  *
  * by Adam D. Moss, 1997-98
  *     adam@gimp.org
@@ -10,6 +10,10 @@
 
 /*
  * REVISION HISTORY:
+ *
+ * 98.05.17 : version 1.0.0
+ *            Finally preserves frame timings / layer names.  Has
+ *            a progress bar now.  No longer beta, I suppose.
  *
  * 98.04.19 : version 0.70.0
  *            Plug-in doubles up as Animation UnOptimize too!  (This
@@ -34,7 +38,7 @@
 
 /*
  * BUGS:
- *  Probably a few
+ *  ?
  */
 
 /*
@@ -48,7 +52,6 @@
 #include <string.h>
 #include <ctype.h>
 #include "libgimp/gimp.h"
-#include "gtk/gtk.h"
 
 
 
@@ -73,9 +76,6 @@ static        void do_optimizations   (void);
 /*static         int parse_ms_tag       (char *str);*/
 static DisposeType parse_disposal_tag (char *str);
 
-static void window_close_callback  (GtkWidget *widget,
-				    gpointer   data);
-
 static DisposeType  get_frame_disposal  (guint whichframe);
 
 
@@ -91,7 +91,6 @@ GPlugInInfo PLUG_IN_INFO =
 
 
 /* Global widgets'n'stuff */
-GtkWidget* progress;
 guint      width,height;
 gint32     image_id;
 gint32     new_image_id;
@@ -195,47 +194,9 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
 }
 
 
-#if 0 /* function is presently not used */
-
-static int
-parse_ms_tag (char *str)
-{
-  gint sum = 0;
-  gint offset = 0;
-  gint length;
-
-  length = strlen(str);
-
-  while ((offset<length) && (str[offset]!='('))
-    offset++;
-  
-  if (offset>=length)
-    return(-1);
-
-  if (!isdigit(str[++offset]))
-    return(-2);
-
-  do
-    {
-      sum *= 10;
-      sum += str[offset] - '0';
-      offset++;
-    }
-  while ((offset<length) && (isdigit(str[offset])));  
-
-  if (length-offset <= 2)
-    return(-3);
-
-  if ((toupper(str[offset]) != 'M') || (toupper(str[offset+1]) != 'S'))
-    return(-4);
-
-  return (sum);
-}
-
-#endif /* parse_ms_tag */
 
 static DisposeType
-parse_disposal_tag (char *str)
+parse_disposal_tag (gchar *str)
 {
   gint offset = 0;
   gint length;
@@ -255,151 +216,39 @@ parse_disposal_tag (char *str)
 }
 
 
-#if 0 /* function is presently unused */
 
-static void
-build_dialog(GImageType basetype,
-	     char*      imagename)
+static gchar*
+remove_disposal_tag (gchar* str)
 {
-  gchar** argv;
-  gint argc;
+  gchar* dest;
+  gint offset = 0;
+  gint destoffset = 0;
+  gint length;
 
-  gchar* windowname;
+  length = strlen(str);
+  dest = g_malloc(length+11);
+  memset(dest, 0, length+11);
 
-  GtkWidget* dlg;
-  GtkWidget* button;
-  GtkWidget* toggle;
-  GtkWidget* label;
-  GtkWidget* entry;
-  GtkWidget* frame;
-  GtkWidget* frame2;
-  GtkWidget* vbox;
-  GtkWidget* vbox2;
-  GtkWidget* hbox;
-  GtkWidget* hbox2;
-  guchar* color_cube;
-  GSList* group = NULL;
+  strcpy(dest, str);
 
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("animationoptimize");
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
-  gdk_set_use_xshm (gimp_use_xshm ());
-  /*  gtk_preview_set_gamma (gimp_gamma ());
-  gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-                              color_cube[2], color_cube[3]);
-  gtk_widget_set_default_visual (gtk_preview_get_visual ());
-  gtk_widget_set_default_colormap (gtk_preview_get_cmap ());*/
-
-
-  dlg = gtk_dialog_new ();
-  windowname = g_malloc(strlen("Animation Playback: ")+strlen(imagename)+1);
-  strcpy(windowname,"Animation Playback: ");
-  strcat(windowname,imagename);
-  gtk_window_set_title (GTK_WINDOW (dlg), windowname);
-  g_free(windowname);
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      (GtkSignalFunc) window_close_callback,
-		      NULL);
-
-  
-  /* Action area - 'close' button only. */
-
-  button = gtk_button_new_with_label ("Close");
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-			     (GtkSignalFunc) window_close_callback,
-			     NULL);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area),
-		      button, TRUE, TRUE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-  
-
-  {
-    /* The 'playback' half of the dialog */
-    
-    /*    windowname = g_malloc(strlen("Playback: ")+strlen(imagename)+1);
-    strcpy(windowname,"Playback: ");
-    strcat(windowname,imagename);
-    frame = gtk_frame_new (windowname);
-    g_free(windowname);
-    gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-    gtk_container_border_width (GTK_CONTAINER (frame), 3);
-    gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
-			frame, TRUE, TRUE, 0);
-    
+  while ((offset+9)<=length)
     {
-      hbox = gtk_hbox_new (FALSE, 5);
-      gtk_container_border_width (GTK_CONTAINER (hbox), 3);
-      gtk_container_add (GTK_CONTAINER (frame), hbox);
-      
-      {
-	vbox = gtk_vbox_new (FALSE, 5);
-	gtk_container_border_width (GTK_CONTAINER (vbox), 3);
-	gtk_container_add (GTK_CONTAINER (hbox), vbox);
-	
+      if (strncmp(&str[offset],"(combine)",9)==0) 
 	{
-	  progress = gtk_progress_bar_new ();
-	  gtk_widget_set_usize (progress, 150, 15);
-	  gtk_box_pack_start (GTK_BOX (vbox), progress, TRUE, TRUE, 0);
-	  gtk_widget_show (progress);
-
-	  hbox2 = gtk_hbox_new (FALSE, 0);
-	  gtk_container_border_width (GTK_CONTAINER (hbox2), 0);
-	  gtk_box_pack_start (GTK_BOX (vbox), hbox2, TRUE, TRUE, 0);
-	  
-	  {
-	    button = gtk_button_new_with_label ("Play/Stop");
-	    gtk_signal_connect (GTK_OBJECT (button), "clicked",
-				(GtkSignalFunc) playstop_callback, NULL);
-	    gtk_box_pack_start (GTK_BOX (hbox2), button, TRUE, TRUE, 0);
-	    gtk_widget_show (button);
-	    
-	    button = gtk_button_new_with_label ("Rewind");
-	    gtk_signal_connect (GTK_OBJECT (button), "clicked",
-				(GtkSignalFunc) rewind_callback, NULL);
-	    gtk_box_pack_start (GTK_BOX (hbox2), button, TRUE, TRUE, 0);
-	    gtk_widget_show (button);
-	    
-	    button = gtk_button_new_with_label ("Step");
-	    gtk_signal_connect (GTK_OBJECT (button), "clicked",
-				(GtkSignalFunc) step_callback, NULL);
-	    gtk_box_pack_start (GTK_BOX (hbox2), button, TRUE, TRUE, 0);
-	    gtk_widget_show (button);
-	  }
-	  if (total_frames<=1) gtk_widget_set_sensitive (hbox2, FALSE);
-	  gtk_widget_show(hbox2);
-
-	  frame2 = gtk_frame_new (NULL);
-	  gtk_frame_set_shadow_type (GTK_FRAME (frame2), GTK_SHADOW_ETCHED_IN);
-	  gtk_box_pack_start (GTK_BOX (vbox), frame2, FALSE, FALSE, 0);
-	    
-	  {
-	    preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-	    gtk_preview_size (GTK_PREVIEW (preview), width, height);
-	    gtk_container_add (GTK_CONTAINER (frame2), preview);
-	    gtk_widget_show(preview);
-	  }
-	  gtk_widget_show(frame2);
+	  offset+=9;
 	}
-	gtk_widget_show(vbox);
-	
-      }
-      gtk_widget_show(hbox);
-      
+      if (strncmp(&str[offset],"(replace)",9)==0) 
+	{
+	  offset+=9;
+	}
+      dest[destoffset] = str[offset];
+      destoffset++;
+      offset++;
     }
-    gtk_widget_show(frame);
-    */ 
-  }
-  gtk_widget_show(dlg);
+
+  return dest;
 }
 
-#endif /* build_dialog */
 
 
 /* Rendering Functions */
@@ -429,11 +278,19 @@ do_optimizations(void)
   guchar* this_frame = NULL;
   guchar* last_frame = NULL;
   guchar* opti_frame = NULL;
+
+  gchar* oldlayer_name;
+  gchar* newlayer_name;
   
   gboolean can_combine;
 
   gint32 bbox_top, bbox_bottom, bbox_left, bbox_right;
   gint32 rbox_top, rbox_bottom, rbox_left, rbox_right;
+
+  if (optimize)
+    gimp_progress_init ("Optimizing Animation...");
+  else
+    gimp_progress_init ("UnOptimizing Animation...");
 
   width     = gimp_image_width(image_id);
   height    = gimp_image_height(image_id);
@@ -483,7 +340,7 @@ do_optimizations(void)
       /* FIXME - How do we tell if a gimp_drawable_get() fails? */
       if (gimp_drawable_width(drawable->id)==0)
 	{
-	  window_close_callback(NULL, NULL);
+	  gimp_quit();
 	}
 
       dispose = get_frame_disposal(this_frame_num);
@@ -934,13 +791,22 @@ do_optimizations(void)
        *
        */
 
+      oldlayer_name =
+	gimp_layer_get_name(layers[total_frames-(this_frame_num+1)]);
+      newlayer_name = remove_disposal_tag(oldlayer_name);
+      g_free(oldlayer_name);
+
+      if (this_frame_num > 0)
+	strcat(newlayer_name, can_combine?"(combine)":"(replace)");
+  
       new_layer_id = gimp_layer_new(new_image_id,
-				    can_combine?"(combine)":"(replace)",
+				    newlayer_name,
 				    bbox_right-bbox_left,
 				    bbox_bottom-bbox_top,
 				    drawabletype_alpha,
 				    100.0,
 				    NORMAL_MODE);
+      g_free(newlayer_name);
 
       gimp_image_add_layer (new_image_id, new_layer_id, 0);
 
@@ -955,7 +821,10 @@ do_optimizations(void)
 			       bbox_bottom-bbox_top);
       gimp_drawable_flush (drawable);
       gimp_drawable_detach (drawable);     
-      gimp_layer_translate (new_layer_id, (gint)bbox_left, (gint)bbox_top); 
+      gimp_layer_translate (new_layer_id, (gint)bbox_left, (gint)bbox_top);
+
+      gimp_progress_update (((double)this_frame_num+1.0) /
+			    ((double)total_frames));
     }
 
   gimp_display_new (new_image_id);
@@ -975,26 +844,6 @@ do_optimizations(void)
 
 /* Util. */
 
-#if 0    /* function is presently unused */
-
-static guint32
-get_frame_duration (guint whichframe)
-{
-  gchar* layer_name;
-  gint   duration;
-
-  layer_name = gimp_layer_get_name(layers[total_frames-(whichframe+1)]);
-  duration = parse_ms_tag(layer_name);
-  g_free(layer_name);
-
-  if (duration < 0) duration = 100; /* FIXME for default-if-not-said  */
-  if (duration == 0) duration = 60; /* FIXME - 0-wait is nasty */
-
-  return ((guint32) duration);
-}
-
-#endif /* get_frame_duration */
-
 static DisposeType
 get_frame_disposal (guint whichframe)
 {
@@ -1008,14 +857,4 @@ get_frame_disposal (guint whichframe)
   return(disposal);
 }
 
-
-
-/*  Callbacks  */
-
-static void
-window_close_callback (GtkWidget *widget,
-		       gpointer   data)
-{
-  gtk_main_quit();
-}
 

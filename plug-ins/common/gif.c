@@ -7,7 +7,7 @@
  *      Based around original GIF code by David Koblas.
  *
  *
- * Version 2.0.2 - 98/04/28
+ * Version 2.0.3 - 98/05/18
  *                        Adam D. Moss - <adam@gimp.org> <adam@foxbox.org>
  */
 /*
@@ -23,6 +23,11 @@
 /*
  * REVISION HISTORY
  *
+ *
+ * 98/05/18
+ * 2.00.03 - If we did manage to decode at least one frame of a
+ *           gif, be sure to display the resulting image even if
+ *           it terminated abruptly.
  *
  * 98/04/28
  * 2.00.02 - Fixed a bug with (ms) tag parsing.
@@ -529,9 +534,6 @@ run (char    *name,
 
 #define MAXCOLORMAPSIZE  256
 
-#define TRUE             1
-#define FALSE            0
-
 #define CM_RED           0
 #define CM_GREEN         1
 #define CM_BLUE          2
@@ -673,7 +675,7 @@ load_image (char *filename)
       if (!ReadOK (fd, &c, 1))
 	{
 	  printf ("GIF: EOF / read error on image data\n");
-	  return -1;
+	  return image_ID; /* will be -1 if failed on first image! */
 	}
 
       if (c == ';')
@@ -688,7 +690,7 @@ load_image (char *filename)
 	  if (!ReadOK (fd, &c, 1))
 	    {
 	      printf ("GIF: OF / read error on extention function code\n");
-	      return -1;
+	      return image_ID; /* will be -1 if failed on first image! */
 	    }
 	  DoExtension (fd, c);
 	  continue;
@@ -706,7 +708,7 @@ load_image (char *filename)
       if (!ReadOK (fd, buf, 9))
 	{
 	  printf ("GIF: couldn't read left/top/width/height\n");
-	  return -1;
+	  return image_ID; /* will be -1 if failed on first image! */
 	}
 
       useGlobalColormap = !BitSet (buf[8], LOCALCOLORMAP);
@@ -718,7 +720,7 @@ load_image (char *filename)
 	  if (ReadColorMap (fd, bitPixel, localColorMap, &grayScale))
 	    {
 	      printf ("GIF: error reading local colormap\n");
-	      return -1;
+	      return image_ID; /* will be -1 if failed on first image! */
 	    }
 	  image_ID = ReadImage (fd, filename, LM_to_uint (buf[4], buf[5]),
 				LM_to_uint (buf[6], buf[7]),
@@ -2181,9 +2183,6 @@ GetPixel (int x,
  *            BitsPerPixel, Red, Green, Blue, GetPixel )
  *
  *****************************************************************************/
-
-#define TRUE 1
-#define FALSE 0
 
 static int Width, Height;
 static int curx, cury;
