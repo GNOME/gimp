@@ -1,5 +1,9 @@
 2005-04-06  Sven Neumann  <sven@gimp.org>
 
+	* app/Makefile.am: don't use -mwindows when linking gimp-console.
+
+2005-04-06  Sven Neumann  <sven@gimp.org>
+
 	* libgimpconfig/gimpconfig-path.[ch] (gimp_param_spec_config_path):
 	declare default_value as const and allocate a copy.
 

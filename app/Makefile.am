@@ -136,8 +136,6 @@ gimp_console_2_3_CPPFLAGS = \
 	$(AM_CPPFLAGS)			\
 	-DGIMP_CONSOLE_COMPILATION
 
-gimp_console_2_3_LDFLAGS = $(gimp_2_3_LDFLAGS)
-
 gimp_console_2_3_LDADD = \
 	widgets/widgets-enums.o		\
 	display/display-enums.o		\
