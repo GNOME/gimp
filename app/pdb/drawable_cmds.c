@@ -1793,7 +1793,7 @@ static ProcRecord drawable_update_proc =
 {
   "gimp_drawable_update",
   "Update the specified region of the drawable.",
-  "This procedure updates the specified region of the drawable. The (x, y) coordinate pair is relative to the drawable's origin, not to the image origin. Therefore, the entire drawable can be updated with: {x->0, y->0, w->width, h->height }.",
+  "This procedure updates the specified region of the drawable. The (x, y) coordinate pair is relative to the drawable's origin, not to the image origin. Therefore, the entire drawable can be updated using (0, 0, width, height).",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

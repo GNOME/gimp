@@ -235,8 +235,7 @@ sub drawable_update {
     $help = <<'HELP';
 This procedure updates the specified region of the drawable. The (x, y)
 coordinate pair is relative to the drawable's origin, not to the image origin.
-Therefore, the entire drawable can be updated with: {x->0, y->0, w->width,
-h->height }.
+Therefore, the entire drawable can be updated using (0, 0, width, height).
 HELP
 
     &std_pdb_misc;

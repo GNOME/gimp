@@ -1,5 +1,12 @@
 2004-11-27  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/drawable.pdb: minor change to the PDB docs.
+
+	* libgimp/gimpdrawable_pdb.c
+	* tools/pdbgen/pdb/drawable.pdb: regenerated.
+
+2004-11-27  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/winicon/icosave.c
 	* plug-ins/winicon/main.[ch]: moved code around.
 
