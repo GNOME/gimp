@@ -7,10 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-18 01:47+0100\n"
-"PO-Revision-Date: 2004-03-18 02:16+0200\n"
+"POT-Creation-Date: 2004-12-17 04:01+0200\n"
+"PO-Revision-Date: 2004-12-17 04:32+0200\n"
 "Last-Translator: Mikko Paananen <mikko at ipi.fi>\n"
-"Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
+"Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -146,11 +146,11 @@ msgstr "Tiedoston vienti"
 
 #: libgimp/gimpexport.c:458
 msgid "_Ignore"
-msgstr "Ohita"
+msgstr "_Ohita"
 
 #: libgimp/gimpexport.c:460
 msgid "_Export"
-msgstr "Vie"
+msgstr "_Vie"
 
 #. the headline
 #: libgimp/gimpexport.c:482
@@ -158,13 +158,12 @@ msgstr "Vie"
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
-msgstr ""
-"Kuvasi pitää viedä tallennusta %s:ksi muokata ulosvientiä varten koska:"
+msgstr "Kuvaasi pitää muokata muotoon %s tallennusta varten:"
 
 #. the footline
 #: libgimp/gimpexport.c:553
 msgid "The export conversion won't modify your original image."
-msgstr "Muokkaus ulosvientiä varten ei vaikuta alkuperäiseen kuvaan."
+msgstr "Muokkaus ei vaikuta alkuperäiseen kuvaan."
 
 #: libgimp/gimpexport.c:653
 #, c-format
@@ -172,7 +171,7 @@ msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"Olet tallentamassa tason maskia nimellä %s\n"
+"Olet tallentamassa tason maskia nimellä %s.\n"
 "Tämä ei tallenna näkyviä tasoja."
 
 #: libgimp/gimpexport.c:659
@@ -194,12 +193,11 @@ msgstr "Väriliu'un valinta"
 
 #: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:181
 msgid "(Empty)"
-msgstr ""
+msgstr "(tyhjä)"
 
 #: libgimp/gimppalettemenu.c:91
-#, fuzzy
 msgid "Palette Selection"
-msgstr "Kuvion valinta"
+msgstr "Paletin valinta"
 
 #: libgimp/gimppatternmenu.c:113
 msgid "Pattern Selection"
@@ -211,73 +209,71 @@ msgstr "prosenttia"
 
 #: libgimpbase/gimpbaseenums.c:23
 msgid "Small"
-msgstr ""
+msgstr "Pieni"
 
 #: libgimpbase/gimpbaseenums.c:24
 msgid "Medium"
-msgstr ""
+msgstr "Keskikokoinen"
 
 #: libgimpbase/gimpbaseenums.c:25
 msgid "Large"
-msgstr ""
+msgstr "Suuri"
 
 #: libgimpbase/gimpbaseenums.c:57
 msgid "Light Checks"
-msgstr ""
+msgstr "Vaaleat ruudut"
 
 #: libgimpbase/gimpbaseenums.c:58
 msgid "Mid-Tone Checks"
-msgstr ""
+msgstr "Keskisävyiset ruudut"
 
 #: libgimpbase/gimpbaseenums.c:59
 msgid "Dark Checks"
-msgstr ""
+msgstr "Tummat ruudut"
 
 #: libgimpbase/gimpbaseenums.c:60
 msgid "White Only"
-msgstr ""
+msgstr "Vain valkoinen"
 
 #: libgimpbase/gimpbaseenums.c:61
 msgid "Gray Only"
-msgstr ""
+msgstr "Vain harmaa"
 
 #: libgimpbase/gimpbaseenums.c:62
-#, fuzzy
 msgid "Black Only"
-msgstr "Musta"
+msgstr "Vain musta"
 
 #: libgimpbase/gimpbaseenums.c:91
 msgid "RGB color"
-msgstr ""
+msgstr "RGB-väri"
 
 #: libgimpbase/gimpbaseenums.c:92 libgimpbase/gimpbaseenums.c:127
-#, fuzzy
 msgid "Grayscale"
-msgstr "Muunna harmaasävyihin"
+msgstr "Harmaasävy"
 
 #: libgimpbase/gimpbaseenums.c:93
 msgid "Indexed color"
-msgstr ""
+msgstr "Indeksoitu paletti"
 
 #: libgimpbase/gimpbaseenums.c:125
 msgid "RGB"
-msgstr ""
+msgstr "RGB"
 
 #: libgimpbase/gimpbaseenums.c:126
 msgid "RGB-alpha"
-msgstr ""
+msgstr "RGB+alfa"
 
 #: libgimpbase/gimpbaseenums.c:128
 msgid "Grayscale-alpha"
-msgstr ""
+msgstr "Harmaasävy+alfa"
 
 #: libgimpbase/gimpbaseenums.c:129
 msgid "Indexed"
-msgstr ""
+msgstr "Indeksoitu"
 
 #: libgimpbase/gimpbaseenums.c:130
 msgid "Indexed-alpha"
-msgstr ""
+msgstr "Indeksoitu+alfa"
 
 #: libgimpbase/gimpmemsize.c:177
 #, c-format
@@ -372,29 +368,25 @@ msgid "Failed to create thumbnail folder '%s'."
 msgstr "Ei voinut luoda esikatselukuville kansiota '%s'."
 
 #: libgimpthumb/gimpthumbnail.c:919
-#, fuzzy, c-format
+#, c-format
 msgid "Could not create thumbnail for %s: %s"
-msgstr "Ei voinut luoda esikatselukuville kansiota '%s'."
+msgstr "Ei voinut luoda esikatselukuvaa %s: %s"
 
 #: libgimpwidgets/gimpcolorbutton.c:99
-#, fuzzy
 msgid "_Foreground Color"
-msgstr "/Edustaväri"
+msgstr "_Edustaväri"
 
 #: libgimpwidgets/gimpcolorbutton.c:103
-#, fuzzy
 msgid "_Background Color"
-msgstr "/Taustaväri"
+msgstr "_Taustaväri"
 
 #: libgimpwidgets/gimpcolorbutton.c:107
-#, fuzzy
 msgid "Blac_k"
-msgstr "/Musta"
+msgstr "_Musta"
 
 #: libgimpwidgets/gimpcolorbutton.c:111
-#, fuzzy
 msgid "_White"
-msgstr "/Valkoinen"
+msgstr "_Valkoinen"
 
 #: libgimpwidgets/gimpcolorscales.c:133
 msgid "Scales"
@@ -458,13 +450,12 @@ msgid "Alpha"
 msgstr "Alfa"
 
 #: libgimpwidgets/gimpcolorscales.c:243
-#, fuzzy
 msgid "Hexadecimal color notation as used in HTML and CSS"
-msgstr "HTML-kielen heksadesimaaliarvo"
+msgstr "HTML-kielen heksadesimaalimerkintä"
 
 #: libgimpwidgets/gimpcolorscales.c:248
 msgid "HTML _Notation:"
-msgstr ""
+msgstr "HTML-merkintä:"
 
 #: libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
@@ -483,17 +474,14 @@ msgid "Select File"
 msgstr "Valitse tiedosto"
 
 #: libgimpwidgets/gimpmemsizeentry.c:232
-#, fuzzy
 msgid "Kilobytes"
 msgstr "kilotavua"
 
 #: libgimpwidgets/gimpmemsizeentry.c:233
-#, fuzzy
 msgid "Megabytes"
 msgstr "megatavua"
 
 #: libgimpwidgets/gimpmemsizeentry.c:234
-#, fuzzy
 msgid "Gigabytes"
 msgstr "gigatavua"
 
@@ -515,16 +503,16 @@ msgstr ""
 
 #: libgimpwidgets/gimppreviewarea.c:126
 msgid "Check Size"
-msgstr ""
+msgstr "Tarkista koko"
 
 #: libgimpwidgets/gimppreviewarea.c:133
 msgid "Check Style"
-msgstr ""
+msgstr "Tarkista tyyli"
 
 #. toggle button to (des)activate the instant preview
 #: libgimpwidgets/gimppreview.c:240
 msgid "_Preview"
-msgstr ""
+msgstr "_Esikatselu"
 
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -532,7 +520,7 @@ msgstr "Ankkuri"
 
 #: libgimpwidgets/gimpstock.c:114
 msgid "C_enter"
-msgstr ""
+msgstr "Keskitä"
 
 #: libgimpwidgets/gimpstock.c:115
 msgid "_Duplicate"
@@ -564,7 +552,7 @@ msgstr "Näkyvä"
 
 #: libgimpwidgets/gimpstock.c:154 libgimpwidgets/gimpstock.c:158
 msgid "_Stroke"
-msgstr ""
+msgstr "_Piirrä"
 
 #: libgimpwidgets/gimpstock.c:170
 msgid "L_etter Spacing"
@@ -584,15 +572,15 @@ msgstr "_Skaalaa"
 
 #: libgimpwidgets/gimpstock.c:271
 msgid "Crop"
-msgstr "R_ajaa"
+msgstr "Rajaa"
 
 #: libgimpwidgets/gimpstock.c:288
 msgid "_Transform"
-msgstr "Muunna"
+msgstr "_Muunna"
 
 #: libgimpwidgets/gimpstock.c:291
 msgid "_Rotate"
-msgstr "_Pyöritä"
+msgstr "_Kierrä"
 
 #: libgimpwidgets/gimpstock.c:293
 msgid "_Shear"
@@ -656,7 +644,7 @@ msgstr "Värisokeus"
 
 #: modules/cdisplay_colorblind.c:540
 msgid "Color _Deficiency Type:"
-msgstr "Värisokeuden tyyppi"
+msgstr "Värisokeuden tyyppi:"
 
 #: modules/cdisplay_gamma.c:105
 msgid "Gamma color display filter"
@@ -759,13 +747,12 @@ msgid "Black"
 msgstr "Musta"
 
 #: modules/colorsel_cmyk.c:191
-#, fuzzy
 msgid "Black _Pullout:"
-msgstr "Mustan poisto (%):"
+msgstr "Mustan poisto:"
 
 #: modules/colorsel_cmyk.c:208
 msgid "The percentage of black to pull out of the colored inks."
-msgstr ""
+msgstr "Mustan poisto prosentteina värillisistä musteista."
 
 #: modules/colorsel_triangle.c:104
 msgid "Painter-style triangle color selector"

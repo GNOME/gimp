@@ -1,15 +1,16 @@
-# Gimp 1.2  script-fu finnish translation
+# Gimp script-fu finnish translation
 # Copyright (C) 2000 Free Software Foundation, Inc.
 # Ville Hautamäki <villeh@cs.joensuu.fi>, 2000.
-#
+# Päivitti versiota 2.0 varten
+# Mikko Paananen
 msgid ""
 msgstr ""
 "Project-Id-Version: script-fu \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-18 01:48+0100\n"
-"PO-Revision-Date: 2004-03-19 01:51+0200\n"
-"Last-Translator: Ville Hautamäki <villeh@cs.joensuu.fi>\n"
-"Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
+"POT-Creation-Date: 2004-12-17 04:02+0200\n"
+"PO-Revision-Date: 2004-12-18 06:42+0200\n"
+"Last-Translator: Mikko Paananen <mikko@ipi.fi>\n"
+"Language-Team: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
@@ -32,9 +33,8 @@ msgid "Current Command"
 msgstr "Nykyinen komento"
 
 #: plug-ins/script-fu/script-fu-console.c:267
-#, fuzzy
 msgid "_Browse..."
-msgstr "Selaa..."
+msgstr "_Selaa..."
 
 #: plug-ins/script-fu/script-fu-console.c:548
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
@@ -42,12 +42,12 @@ msgstr "Script-Fu:n evaluointitila sallii ainoastaan ei-interaktiivisen käytön
 
 #: plug-ins/script-fu/script-fu-interface.c:177
 msgid "Script-Fu cannot process two scripts at the same time."
-msgstr ""
+msgstr "Script-Fu ei voi suorittaa kahta komentosarjaa samaan aikaan."
 
 #: plug-ins/script-fu/script-fu-interface.c:179
 #, c-format
 msgid "You are already running the \"%s\" script."
-msgstr ""
+msgstr "Komentosarja \"%s\" on jo ajossa."
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-interface.c:202
@@ -63,7 +63,7 @@ msgstr "Script-Fu: %s"
 #. the script arguments frame
 #: plug-ins/script-fu/script-fu-interface.c:254
 msgid "Script Arguments"
-msgstr "Scriptin parametrit"
+msgstr "Komentosarjan parametrit"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
@@ -89,9 +89,8 @@ msgid "Script-Fu Font Selection"
 msgstr "Script-Fu merkistön valinta"
 
 #: plug-ins/script-fu/script-fu-interface.c:454
-#, fuzzy
 msgid "Script-Fu Palette Selection"
-msgstr "Script-fu kuvioiden selain"
+msgstr "Script-fu palettien selain"
 
 #: plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-fu Pattern Selection"
@@ -107,13 +106,12 @@ msgstr "Script-Fu siveltimien selain"
 
 #. the script progress frame
 #: plug-ins/script-fu/script-fu-interface.c:533
-#, fuzzy
 msgid "Script Progress"
-msgstr "Scriptin parametrit"
+msgstr "Komentosarjan eteneminen"
 
 #: plug-ins/script-fu/script-fu-interface.c:541
 msgid "(none)"
-msgstr ""
+msgstr "(ei mitään)"
 
 #: plug-ins/script-fu/script-fu-interface.c:1058
 #: plug-ins/dbbrowser/gimpprocview.c:198
@@ -158,28 +156,26 @@ msgid "Server Logfile:"
 msgstr "Palvelimen lokitiedosto:"
 
 #: plug-ins/script-fu/script-fu.c:122
-#, fuzzy
 msgid "Script-Fu _Console"
 msgstr "Script-Fu-konsoli"
 
 #: plug-ins/script-fu/script-fu.c:129 plug-ins/script-fu/script-fu.c:158
 #: plug-ins/script-fu/script-fu.c:290
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu"
-msgstr "<Toolbox>/Xtns/Script-Fu/Käynnistä palvelin"
+msgstr "<Toolbox>/Laajennokset/Script-Fu"
 
 #: plug-ins/script-fu/script-fu.c:151
 msgid "_Start Server..."
-msgstr ""
+msgstr "Käynnistä palvelin..."
 
 #: plug-ins/script-fu/script-fu.c:282
 msgid "_Refresh Scripts"
-msgstr ""
+msgstr "Päivitä skriptit"
 
 #: plug-ins/dbbrowser/gimpprocbrowser.c:128
 #: plug-ins/dbbrowser/gimpprocbrowser.c:142
 msgid "Procedure Browser"
-msgstr ""
+msgstr "Proseduuriselain"
 
 #: plug-ins/dbbrowser/gimpprocbrowser.c:132
 #: plug-ins/dbbrowser/gimpprocbrowser.c:146
@@ -209,49 +205,48 @@ msgstr "Etsitään – odota"
 
 #: plug-ins/dbbrowser/gimpprocbrowser.c:428
 msgid "1 Procedure"
-msgstr ""
+msgstr "Yksi proseduuri"
 
 #: plug-ins/dbbrowser/gimpprocbrowser.c:430
 #, c-format
 msgid "%d Procedures"
-msgstr ""
+msgstr "%d proseduuria"
 
 #: plug-ins/dbbrowser/gimpprocbrowser.c:476
 msgid "No matches"
 msgstr "Ei löytynyt"
 
 #: plug-ins/dbbrowser/gimpprocview.c:133
-#, fuzzy
 msgid "Parameters"
-msgstr "Halkaisija:"
+msgstr "Parametrit"
 
 #: plug-ins/dbbrowser/gimpprocview.c:146
 msgid "Return Values"
-msgstr ""
+msgstr "Paluuarvot"
 
 #: plug-ins/dbbrowser/gimpprocview.c:159
 msgid "Additional Information"
-msgstr ""
+msgstr "Lisätietoja"
 
 #: plug-ins/dbbrowser/gimpprocview.c:319
 msgid "Internal GIMP procedure"
-msgstr ""
+msgstr "Sisäinen proseduuri"
 
 #: plug-ins/dbbrowser/gimpprocview.c:320
 msgid "GIMP Plug-In"
-msgstr ""
+msgstr "GIMP-liitännäinen"
 
 #: plug-ins/dbbrowser/gimpprocview.c:321
 msgid "GIMP Extension"
-msgstr ""
+msgstr "GIMP-laajennus"
 
 #: plug-ins/dbbrowser/gimpprocview.c:322
 msgid "Temporary Procedure"
-msgstr ""
+msgstr "Väliaikainen proseduuri"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
-msgstr ""
+msgstr "3D reunus..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:2
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
@@ -274,9 +269,8 @@ msgstr ""
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:1
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo"
-msgstr "<Image>/Script-Fu/Decor/Wanha valokuva..."
+msgstr "<Image>/Script-Fu/Läpinäkyvyydestä logo"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:3
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
@@ -307,20 +301,17 @@ msgstr "<Image>/Script-Fu/Decor/Wanha valokuva..."
 #: plug-ins/script-fu/scripts/text-circle.scm.h:1
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:2
 #: plug-ins/script-fu/scripts/title-header.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos"
-msgstr "<Toolbox>/Xtns/Script-Fu/Käynnistä palvelin"
+msgstr "<Toolbox>/Laajennokset/Script-Fu/Logot"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:4
-#, fuzzy
 msgid "Bumpmap (alpha layer) blur radius"
 msgstr "Kuhmutuksen säde (Alfatasolla)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:5
 #: plug-ins/script-fu/scripts/glossy.scm.h:7
-#, fuzzy
 msgid "Default bumpmap settings"
-msgstr "Kuhmutuksen asetukset"
+msgstr "Kuhmutuksen perusasetukset"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:6
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
@@ -400,12 +391,10 @@ msgstr "Kirjasin"
 #: plug-ins/script-fu/scripts/text-circle.scm.h:5
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:7
 #: plug-ins/script-fu/scripts/title-header.scm.h:3
-#, fuzzy
 msgid "Font size (pixels)"
 msgstr "Kirjasinkoko (pikseleinä)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:8
-#, fuzzy
 msgid "Outline blur radius"
 msgstr "Ulkoreunan sumennuksen säde"
 
@@ -423,19 +412,16 @@ msgstr "Kuvio"
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:10
 #: plug-ins/script-fu/scripts/glossy.scm.h:17
 #: plug-ins/script-fu/scripts/round-corners.scm.h:6
-#, fuzzy
 msgid "Shadow X offset"
 msgstr "Varjon X siirtymä"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:11
 #: plug-ins/script-fu/scripts/glossy.scm.h:18
 #: plug-ins/script-fu/scripts/round-corners.scm.h:7
-#, fuzzy
 msgid "Shadow Y offset"
 msgstr "Varjon Y siirtymä"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:12
-#, fuzzy
 msgid "Shadow blur radius"
 msgstr "Varjon sumennuksen säde"
 
@@ -491,9 +477,8 @@ msgstr ""
 #: plug-ins/script-fu/scripts/swirltile.scm.h:1
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
 #: plug-ins/script-fu/scripts/truchet.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns"
-msgstr "<Toolbox>/Xtns/Script-Fu/Käynnistä palvelin"
+msgstr "<Toolbox>/Xtns/Script-Fu/Kuviot"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:3
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
@@ -525,34 +510,33 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Käynnistä palvelin"
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:3
 #: plug-ins/script-fu/scripts/truchet.scm.h:2
-#, fuzzy
 msgid "Background color"
 msgstr "Taustaväri"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:4
 #: plug-ins/script-fu/scripts/truchet.scm.h:3
 msgid "Block size"
-msgstr ""
+msgstr "Palan koko"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:5
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:7
 msgid "End blend"
-msgstr ""
+msgstr "Lopun sekoitus"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:6
 #: plug-ins/script-fu/scripts/truchet.scm.h:5
 msgid "Number of X tiles"
-msgstr ""
+msgstr "Lohkoja vaakasuoraan"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:7
 #: plug-ins/script-fu/scripts/truchet.scm.h:6
 msgid "Number of Y tiles"
-msgstr ""
+msgstr "Lohkoja pystysuuntaan"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:8
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:16
 msgid "Start blend"
-msgstr ""
+msgstr "Alun sekoitus"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:9
 msgid "Supersample"
@@ -571,18 +555,17 @@ msgstr "Paksuus"
 #: plug-ins/script-fu/scripts/old-photo.scm.h:1
 #: plug-ins/script-fu/scripts/round-corners.scm.h:1
 #: plug-ins/script-fu/scripts/slide.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Decor"
-msgstr "<Image>/Script-Fu/Decor/Wanha valokuva..."
+msgstr "<Image>/Script-Fu/Koristeelliset"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:2
 msgid "Add B_evel..."
-msgstr ""
+msgstr "Lisää viiste..."
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:3
 #: plug-ins/script-fu/scripts/chip-away.scm.h:12
 msgid "Keep bump layer"
-msgstr ""
+msgstr "Säilytä kuhmutustaso"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:5
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
@@ -590,40 +573,35 @@ msgstr ""
 #: plug-ins/script-fu/scripts/round-corners.scm.h:8
 #: plug-ins/script-fu/scripts/slide.scm.h:6
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:6
-#, fuzzy
 msgid "Work on copy"
 msgstr "Työskentele kopiolla"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:2
 msgid "Add _Border..."
-msgstr ""
+msgstr "Lisää reunus..."
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:3
-#, fuzzy
 msgid "Border X size"
 msgstr "Reunan X koko"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:4
-#, fuzzy
 msgid "Border Y size"
 msgstr "Reunan Y koko"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:5
-#, fuzzy
 msgid "Border color"
 msgstr "Reunan väri"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:6
 msgid "Delta value on color"
-msgstr ""
+msgstr "Värin muutosarvo"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow"
-msgstr "<Toolbox>/Xtns/Script-Fu/Patterns/Maastokuvio..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web-sivu teemat/Alien-hohto"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -637,7 +615,7 @@ msgstr "Alas"
 #: plug-ins/script-fu/scripts/camo.scm.h:5
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
 msgid "Flatten image"
-msgstr ""
+msgstr "Yhdistä kuva"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
@@ -649,7 +627,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:8
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:6
 msgid "Glow color"
-msgstr ""
+msgstr "Hehkun väri"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
@@ -679,24 +657,21 @@ msgstr "Ylös"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:11
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:9
-#, fuzzy
 msgid "_Arrow..."
-msgstr "Selaa..."
+msgstr "_Nuoli..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
-#, fuzzy
 msgid "Bar height"
-msgstr "Korkeus"
+msgstr "Viivan korkeus"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
 msgid "Bar length"
-msgstr ""
+msgstr "Viivan pituus"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:7
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:5
-#, fuzzy
 msgid "_Hrule..."
-msgstr "Selaa..."
+msgstr "_Vaakaerotin..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 #: plug-ins/script-fu/scripts/text-circle.scm.h:6
@@ -706,19 +681,17 @@ msgstr "Säde"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:6
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:5
-#, fuzzy
 msgid "_Bullet..."
-msgstr "Selaa..."
+msgstr "_Kohta..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:2
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
 msgid "B_utton..."
-msgstr ""
+msgstr "P_ainike..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
-#, fuzzy
 msgid "Glow radius"
-msgstr "Varjon sumennuksen säde"
+msgstr "Hehkun säde"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:6
@@ -738,61 +711,56 @@ msgstr "Reunustus"
 #: plug-ins/script-fu/scripts/news-text.scm.h:11
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:14
 #: plug-ins/script-fu/scripts/speed-text.scm.h:9
-#, fuzzy
 msgid "Text color"
 msgstr "Tekstin väri"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
 msgid "Alien _Glow..."
-msgstr ""
+msgstr "Alienhehku..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
-#, fuzzy
 msgid "Glow size (pixels * 4)"
-msgstr "Kirjasinkoko (pikseleinä)"
+msgstr "Hehkun koko (pikseliä × 4)"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
 msgid "Alien _Neon..."
-msgstr ""
+msgstr "Alien _neon..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
 msgid "Fade away"
-msgstr ""
+msgstr "Häivytys"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:9
 msgid "Number of bands"
-msgstr ""
+msgstr "Kaistojen määrä"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:11
 msgid "Width of bands"
-msgstr ""
+msgstr "Kaistojen leveys"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:12
 msgid "Width of gaps"
-msgstr ""
+msgstr "Välien leveys"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:1
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
 #: plug-ins/script-fu/scripts/image-structure.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Utils"
-msgstr "/Script-Fu/"
+msgstr "<Image>/Script-Fu/Työkalut"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:2
 #: plug-ins/script-fu/scripts/font-map.scm.h:1
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils"
-msgstr "<Toolbox>/Xtns/Script-Fu/Käynnistä palvelin"
+msgstr "<Toolbox>/Xtns/Script-Fu/Työkalut"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:5
 #, no-c-format
 msgid "Buffer amount (% height of text)"
-msgstr ""
+msgstr "Puskurin määrä (% tekstin korkeudesta)"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:6
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
-#, fuzzy
 msgid "File name"
 msgstr "Tiedostonimi"
 
@@ -805,40 +773,37 @@ msgstr "Tiedostonimi"
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
-#, fuzzy
 msgid "Transparent background"
 msgstr "Läpinäkyvä tausta"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:12
 msgid "_ASCII to Image..."
-msgstr ""
+msgstr "_ASCII kuvaksi..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:13
 msgid "_ASCII to Layer..."
-msgstr ""
+msgstr "_ASCII Tasoksi..."
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:8
 msgid "_Basic I..."
-msgstr ""
+msgstr "Perus I"
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:3
 msgid "B_asic II..."
-msgstr ""
+msgstr "Perus II"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:1
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons"
-msgstr "<Toolbox>/Xtns/Script-Fu/Käynnistä palvelin"
+msgstr "<Toolbox>/Xtns/Script-Fu/Painikkeet"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:2
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:2
 msgid "Bevel width"
-msgstr ""
+msgstr "Viisteen leveys"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:5
-#, fuzzy
 msgid "Lower-right color"
 msgstr "Oikean alareunan väri"
 
@@ -850,10 +815,9 @@ msgstr "Painettu"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:8
 msgid "Simple _Beveled Button..."
-msgstr ""
+msgstr "Yksinkertainen viistottu painike..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:11
-#, fuzzy
 msgid "Upper-left color"
 msgstr "Vasemman yläreunan väri"
 
@@ -862,9 +826,8 @@ msgstr "Vasemman yläreunan väri"
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern"
-msgstr "<Toolbox>/Xtns/Script-Fu/Patterns/Maastokuvio..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web-sivu teemat/Viistottu kuvio"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
@@ -872,7 +835,7 @@ msgstr "Halkaisija:"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
 msgid "H_eading..."
-msgstr ""
+msgstr "Otsikko..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:5
@@ -894,12 +857,10 @@ msgstr "Leveys"
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:1
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:1
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Animators"
-msgstr "<Image>/Script-Fu/Decor/Wanha valokuva..."
+msgstr "<Image>/Script-Fu/Animaatiot"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:2
-#, fuzzy
 msgid "Intermediate frames"
 msgstr "Väliruutuja"
 
@@ -908,38 +869,36 @@ msgid "Looped"
 msgstr "Silmukka"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:4
-#, fuzzy
 msgid "Max. blur radius"
-msgstr "Varjon sumennuksen säde"
+msgstr "Suurin sumennussäde"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:5
-#, fuzzy
 msgid "_Blend..."
-msgstr "Selaa..."
+msgstr "_Sekoita..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:4
 msgid "Blen_ded..."
-msgstr ""
+msgstr "Sekoitettu..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:5
 msgid "Blend mode"
-msgstr ""
+msgstr "Sekoitustila"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:6
 msgid "Custom Gradient"
-msgstr ""
+msgstr "Oma väriliuku"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:8
 msgid "FG-BG-HSV"
-msgstr ""
+msgstr "Edusta-tausta-HSV"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:9
 msgid "FG-BG-RGB"
-msgstr ""
+msgstr "Edusta-tausta-RGB"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:10
 msgid "FG-Transparent"
-msgstr ""
+msgstr "Edusta-läpinäkyvä"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:13
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:7
@@ -957,7 +916,6 @@ msgstr "Väriliuku"
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:3
 #: plug-ins/script-fu/scripts/rendermap.scm.h:5
 #: plug-ins/script-fu/scripts/title-header.scm.h:4
-#, fuzzy
 msgid "Gradient reverse"
 msgstr "Väriliuku takaperin"
 
@@ -972,7 +930,7 @@ msgstr "Taustaväri"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
 msgid "Bo_vination..."
-msgstr ""
+msgstr "Lehmätys..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
 msgid "Spots density X"
@@ -983,42 +941,40 @@ msgid "Spots density Y"
 msgstr "Kuvioiden tiheys Y"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
-#, fuzzy
 msgid "Add glowing"
-msgstr "Lisää kiilto"
+msgstr "Lisää hohto"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
 msgid "After glow"
-msgstr ""
+msgstr "Jälkihohto"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 msgid "B_urn-In..."
-msgstr ""
+msgstr "Polta..."
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Burn-In: Need two layers in total!"
-msgstr ""
+msgstr "Polta: tarvitaan kaksi tasoa!"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
-#, fuzzy
 msgid "Corona width"
 msgstr "Koronan paksuus"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 msgid "Fadeout"
-msgstr ""
+msgstr "Häivytys"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 msgid "Fadeout width"
-msgstr ""
+msgstr "Häivytyksen leveys"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
 msgid "Prepare for GIF"
-msgstr ""
+msgstr "Optimoi GIF"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
 msgid "Speed (pixels/frame)"
-msgstr ""
+msgstr "Nopeus (pikseliä/ruutu)"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:2
 msgid "Color 1"
@@ -1039,7 +995,6 @@ msgstr "Rakeisuus"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:7
 #: plug-ins/script-fu/scripts/rendermap.scm.h:7
-#, fuzzy
 msgid "Image size"
 msgstr "Kuvan koko"
 
@@ -1050,25 +1005,24 @@ msgstr "Pehmennys"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:9
 msgid "_Camouflage..."
-msgstr ""
+msgstr "Naamioväri..."
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:1
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Stencil Ops"
-msgstr "<Image>/Script-Fu/Decor/Wanha valokuva..."
+msgstr "<Image>/Script-Fu/Stensiilit"
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:2
 msgid "C_arve-It..."
-msgstr ""
+msgstr "Kaiverra..."
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:3
 msgid "Carve white areas"
-msgstr ""
+msgstr "Kaiverra vaaleat alueet"
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:4
 msgid "Image to carve"
-msgstr ""
+msgstr "Kaiverrettava kuva"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:2
 msgid "Background Image"
@@ -1076,150 +1030,144 @@ msgstr "Taustakuva"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:3
 msgid "Carve raised text"
-msgstr ""
+msgstr "Kaiverra teksti koholle"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:4
 msgid "Carved..."
-msgstr ""
+msgstr "Kaiverrettu..."
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:7
 msgid "Padding around text"
-msgstr ""
+msgstr "Tekstin reunustus"
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:4
-#, fuzzy
 msgid "Chalk color"
 msgstr "Liidun väri"
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:8
 msgid "_Chalk..."
-msgstr ""
+msgstr "_Liitu..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:3
 msgid "Blur amount"
-msgstr ""
+msgstr "Sumennuksen määrä"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:4
 msgid "Chip Awa_y..."
-msgstr ""
+msgstr "Sirpaleista..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:5
 msgid "Chip amount"
-msgstr ""
+msgstr "Sirpaleen määrä"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:6
 msgid "Drop shadow"
-msgstr ""
+msgstr "Varjo"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:7
 msgid "Fill BG with pattern"
-msgstr ""
+msgstr "Täytä tausta kuviolla"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:10
 msgid "Invert"
-msgstr ""
+msgstr "Käännä"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:11
 msgid "Keep background"
-msgstr ""
+msgstr "Säilytä tausta"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:2
-#, fuzzy
 msgid "C_hrome-It..."
-msgstr "Selaa..."
+msgstr "_Kromita..."
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:3
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
 msgid "Chrome balance"
-msgstr ""
+msgstr "Kromitasapaino"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:4
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:3
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
 msgid "Chrome factor"
-msgstr ""
+msgstr "Kromikerroin"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:5
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
 msgid "Chrome lightness"
-msgstr ""
+msgstr "Kromivalotus"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:6
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
 msgid "Chrome saturation"
-msgstr ""
+msgstr "Kromikylläisyys"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:7
 msgid "Chrome white areas"
-msgstr ""
+msgstr "Kromaa valkoiset alueet"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:8
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:5
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
 msgid "Environment map"
-msgstr ""
+msgstr "Ympäristökartta"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:9
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
 msgid "Highlight balance"
-msgstr ""
+msgstr "Valaistustasapaino"
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:5
-#, fuzzy
 msgid "C_hrome..."
-msgstr "Selaa..."
+msgstr "_Kromi..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:8
 msgid "Offsets (pixels * 2)"
-msgstr ""
+msgstr "Siirtymä (pikseliä × 2)"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:1
 #: plug-ins/script-fu/scripts/grid-system.scm.h:1
 #: plug-ins/script-fu/scripts/lava.scm.h:1
 #: plug-ins/script-fu/scripts/line-nova.scm.h:1
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Render"
-msgstr "<Image>/Script-Fu/Decor/Wanha valokuva..."
+msgstr "<Image>/Script-Fu/Luo"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:2
 msgid "Circuit seed"
-msgstr ""
+msgstr "Siemenluku"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:3
 #: plug-ins/script-fu/scripts/lava.scm.h:3
 #: plug-ins/script-fu/scripts/predator.scm.h:3
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:11
 msgid "Keep selection"
-msgstr ""
+msgstr "Säilytä valinta"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:4
 msgid "No background (only for separate layer)"
-msgstr ""
+msgstr "Ei taustaa (vain erilliselle tasolle)"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:5
 msgid "Oilify mask size"
-msgstr ""
+msgstr "Öljyväri-maskin koko"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:6
 #: plug-ins/script-fu/scripts/lava.scm.h:6
 #: plug-ins/script-fu/scripts/predator.scm.h:6
-#, fuzzy
 msgid "Separate layer"
 msgstr "Erillinen taso"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:7
 msgid "_Circuit..."
-msgstr ""
+msgstr "_Piiri..."
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:1
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:1
 #: plug-ins/script-fu/scripts/predator.scm.h:1
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
 #: plug-ins/script-fu/scripts/weave.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Alchemy"
-msgstr "<Image>/Script-Fu/Decor/Wanha valokuva..."
+msgstr "<Image>/Script-Fu/Alchemy"
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:2
 #: plug-ins/script-fu/scripts/swirltile.scm.h:2
@@ -1242,14 +1190,13 @@ msgstr "Syvyys"
 #: plug-ins/script-fu/scripts/clothify.scm.h:6
 #: plug-ins/script-fu/scripts/swirltile.scm.h:6
 msgid "Elevation"
-msgstr ""
+msgstr "Kohoama"
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:7
 msgid "_Clothify..."
-msgstr ""
+msgstr "Kangas"
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:2
-#, fuzzy
 msgid ""
 "Darken only\n"
 "(Better, but only for images with alot of white)"
@@ -1263,71 +1210,65 @@ msgstr "Tahrat"
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:4
 msgid "_Coffee Stain..."
-msgstr ""
+msgstr "Kahvitahra..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:4
 msgid "Comic Boo_k..."
-msgstr ""
+msgstr "Sarjakuva..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:9
-#, fuzzy
 msgid "Outline color"
 msgstr "Ulkoreunan väri"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:10
 #: plug-ins/script-fu/scripts/glossy.scm.h:12
-#, fuzzy
 msgid "Outline size"
 msgstr "Ulkoreunan koko"
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
 msgid "Cool _Metal..."
-msgstr ""
+msgstr "Viileä metalli..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:4
-#, fuzzy
 msgid "Effect size (pixels)"
-msgstr "Siirtymä (pikseliä)"
+msgstr "Efektin koko (pikseliä)"
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
-#, fuzzy
 msgid "Background image"
 msgstr "Taustakuva"
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:4
 msgid "Crystal..."
-msgstr ""
+msgstr "Kristalli..."
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:1
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:1
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:1
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:1
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection"
-msgstr "Script-Fu tiedostojen selain"
+msgstr "<Image>/Script-Fu/Valinta"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:2
-#, fuzzy
 msgid "Granularity (1 is low)"
-msgstr "Rakeisuus"
+msgstr "Rakeisuus (1 on matala)"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:4
 msgid "Smooth horizontally"
-msgstr ""
+msgstr "Pehmennä vaakasuuntaan"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:5
 msgid "Smooth vertically"
-msgstr ""
+msgstr "Pehmennä pystysuuntaan"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:6
 msgid "Spread"
-msgstr ""
+msgstr "Levitä"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:7
 msgid "Threshold (bigger 1<-->255 smaller)"
-msgstr ""
+msgstr "Raja (iso 1<-->255 pieni)"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:8
 msgid "_Distress Selection..."
@@ -1336,283 +1277,269 @@ msgstr ""
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:1
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Shadow"
-msgstr "<Image>/Script-Fu/Decor/Wanha valokuva..."
+msgstr "<Image>/Script-Fu/Varjo"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:2
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
 msgid "Allow resizing"
-msgstr ""
+msgstr "Salli koon muuttaminen"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:3
 #: plug-ins/script-fu/scripts/news-text.scm.h:3
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:4
 #: plug-ins/script-fu/scripts/round-corners.scm.h:4
 #: plug-ins/script-fu/scripts/swirltile.scm.h:4
-#, fuzzy
 msgid "Blur radius"
-msgstr "Varjon sumennuksen säde"
+msgstr "Pehmennuksen säde"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:4
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:5
 msgid "Color"
-msgstr ""
+msgstr "Väri"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:5
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
 msgid "Offset X"
-msgstr ""
+msgstr "Siirtymä X"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:6
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:9
 msgid "Offset Y"
-msgstr ""
+msgstr "Siirtymä Y"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:7
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:10
 msgid "Opacity"
-msgstr ""
+msgstr "Peitto"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:8
 msgid "_Drop-Shadow..."
-msgstr ""
+msgstr "Varjo..."
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:2
 msgid "Columns"
-msgstr ""
+msgstr "Sarakkeet"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:3
 msgid "Erase"
-msgstr ""
+msgstr "Poista"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:4
 msgid "Erase/fill"
-msgstr ""
+msgstr "Poista/täytä"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:5
 msgid "Even"
-msgstr ""
+msgstr "Parillinen"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:6
 msgid "Even/odd"
-msgstr ""
+msgstr "Parillinen/pariton"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:7
 msgid "Fill with BG"
-msgstr ""
+msgstr "Täytä taustalla"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:8
 msgid "Odd"
-msgstr ""
+msgstr "Pariton"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:9
 msgid "Rows"
-msgstr ""
+msgstr "Rivit"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:10
 msgid "Rows/cols"
-msgstr ""
+msgstr "Rivit/Sarakkeet"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:11
 msgid "_Erase every other Row..."
-msgstr ""
+msgstr "_Poista joka toinen rivi..."
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:2
 msgid "Apply generated layermask"
-msgstr ""
+msgstr "Sovella luotua tasomaskia"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:3
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
 #: plug-ins/script-fu/scripts/old-photo.scm.h:2
-#, fuzzy
 msgid "Border size"
-msgstr "Reunan X koko"
+msgstr "Reunuksen koko"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:4
 msgid "Clear unselected maskarea"
-msgstr ""
+msgstr "Tyhjennä valitsematon maskialue"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:6
 #, no-c-format
 msgid "Fade from %"
-msgstr ""
+msgstr "Häivytä %:sta"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:8
 #, no-c-format
 msgid "Fade to   %"
-msgstr ""
+msgstr "Häivytä %:iin"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:9
 msgid "Use growing selection"
-msgstr ""
+msgstr "Käytä kasvavaa valintaa"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:10
 msgid "_Fade Outline..."
-msgstr ""
+msgstr "Häivytä reuna..."
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:2
 #: plug-ins/script-fu/scripts/land.scm.h:2
 msgid "Detail level"
-msgstr ""
+msgstr "Yksityiskohtataso"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:3
 #: plug-ins/script-fu/scripts/land.scm.h:4
-#, fuzzy
 msgid "Image height"
-msgstr "Kuvan koko"
+msgstr "Kuvan korkeus"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:4
 #: plug-ins/script-fu/scripts/land.scm.h:5
-#, fuzzy
 msgid "Image width"
-msgstr "Kuvan koko"
+msgstr "Kuvan leveys"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:5
 #: plug-ins/script-fu/scripts/land.scm.h:7
 msgid "Random seed"
-msgstr ""
+msgstr "Siemenluku"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:6
 #: plug-ins/script-fu/scripts/land.scm.h:8
 msgid "Scale X"
-msgstr ""
+msgstr "Skaalaa X"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:7
 #: plug-ins/script-fu/scripts/land.scm.h:9
 msgid "Scale Y"
-msgstr ""
+msgstr "Skaalaa Y"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:8
 msgid "_Flatland..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
-#, fuzzy
 msgid "Active colors"
-msgstr "Ulkoreunan väri"
+msgstr "Aktiiviset värit"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:3
 msgid "Black on white"
-msgstr ""
+msgstr "Musta valkoisella"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:4
-#, fuzzy
 msgid "Font _size (pixels)"
-msgstr "Kirjasinkoko (pikseleinä)"
+msgstr "Kirjasin_koko (pikseliä)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:5
 msgid "Use font _name as text"
-msgstr ""
+msgstr "Käytä kirjasimen nimeä tekstinä"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:6
 msgid "_Border (pixels)"
-msgstr ""
+msgstr "_Reunus (pikseliä)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:7
-#, fuzzy
 msgid "_Color scheme"
-msgstr "Väri 3"
+msgstr "_Väriskeema"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:8
 msgid "_Filter (regexp)"
-msgstr ""
+msgstr "_Suodatin (regexp)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:9
 msgid "_Font Map..."
-msgstr ""
+msgstr "_Kirjasinkartta..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:10
 msgid "_Labels"
-msgstr ""
+msgstr "_Nimiöt"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:11
 msgid "_Text"
-msgstr ""
+msgstr "_Teksti"
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:8
-#, fuzzy
 msgid "_Frosty..."
-msgstr "Selaa..."
+msgstr "Hileinen..."
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
 msgid "Add shadow"
-msgstr ""
+msgstr "Lisää varjo"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
 msgid "Blur border"
-msgstr ""
+msgstr "Pehmennysreuna"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
 msgid "Granularity (1 is Low)"
-msgstr ""
+msgstr "Rakeisuus (1 on matala)"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
 #, no-c-format
 msgid "Shadow weight (%)"
-msgstr ""
+msgstr "Varjon vahvuus (%)"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:11
 msgid "_Fuzzy Border..."
-msgstr ""
+msgstr "Häivytä reuna..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org"
-msgstr "<Toolbox>/Xtns/Script-Fu/Patterns/Maastokuvio..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Web-sivu teemat/Gimp.Org (klassinen)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-#, fuzzy
 msgid "Autocrop"
-msgstr "Tekijä:"
+msgstr "Automaattirajaus"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
-#, fuzzy
 msgid "Dark color"
-msgstr "Liidun väri"
+msgstr "Tumma väri"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:6
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:9
-#, fuzzy
 msgid "Highlight color"
-msgstr "Oikean alareunan väri"
+msgstr "Korostusväri"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:7
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:6
 msgid "Index image"
-msgstr ""
+msgstr "Indeksikuva"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:8
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:7
 msgid "Number of colors"
-msgstr ""
+msgstr "Värien määrä"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:9
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:10
 msgid "Remove background"
-msgstr ""
+msgstr "Poista tausta"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:10
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:11
 msgid "Select-by-color threshold"
-msgstr ""
+msgstr "Valitse-värin-mukaan raja"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:11
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:12
-#, fuzzy
 msgid "Shadow color"
-msgstr "Liidun väri"
+msgstr "Varjon väri"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:14
 msgid "_Big Header..."
-msgstr ""
+msgstr "Iso otsikko..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:15
 msgid "_Small Header..."
-msgstr ""
+msgstr "Pieni otsikko..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:13
 msgid "T_ube Sub-Button Label..."
@@ -1632,191 +1559,182 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:4
 msgid "Blend gradient (Text)"
-msgstr ""
+msgstr "Väriliuku (teksti)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:5
 msgid "Blend gradient (outline)"
-msgstr ""
+msgstr "Väriliuku (ulkoreuna)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:6
 msgid "Blend gradient (text)"
-msgstr ""
+msgstr "Väriliuku (teksti)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:10
 msgid "Glo_ssy..."
-msgstr ""
+msgstr "Kiiltävä..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:11
-#, fuzzy
 msgid "Outline gradient reverse"
-msgstr "Väriliuku takaperin"
+msgstr "Käänteinen ulkoreunan väriliuku"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:13
 msgid "Pattern (outline)"
-msgstr ""
+msgstr "Kuvio (ulkoreuna)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:14
 msgid "Pattern (overlay)"
-msgstr ""
+msgstr "Kuvio (päällystaso)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:15
-#, fuzzy
 msgid "Pattern (text)"
-msgstr "Kuvio"
+msgstr "Kuvio (teksti)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:16
 #: plug-ins/script-fu/scripts/sphere.scm.h:5
 msgid "Shadow"
-msgstr ""
+msgstr "Varjo"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:20
-#, fuzzy
 msgid "Text gradient reverse"
-msgstr "Väriliuku takaperin"
+msgstr "Tekstiväriliuku takaperin"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:21
 msgid "Use pattern for outline instead of gradient"
-msgstr ""
+msgstr "Käytä kuviota ulkoreunalla väriliu'un sijaan"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:22
 msgid "Use pattern for text instead of gradient"
-msgstr ""
+msgstr "Käytä kuviota tekstissä väriliu'un sijaan"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:23
 msgid "Use pattern overlay"
-msgstr ""
+msgstr "Käytä päällystason kuviota"
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:4
-#, fuzzy
 msgid "Effect size (pixels * 3)"
-msgstr "Siirtymä (pikseliä)"
+msgstr "Efektin koko (pikseliä × 3)"
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:7
 msgid "Glo_wing Hot..."
-msgstr ""
+msgstr "Hehkuva kuuma..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
 msgid "Bevel height (Sharpness)"
-msgstr ""
+msgstr "Viistouksen korkeus (terävyys)"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
 msgid "Bevel height (sharpness)"
-msgstr ""
+msgstr "Viistouksen korkeus (terävyys)"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:4
-#, fuzzy
 msgid "Border size (pixels)"
-msgstr "Kirjasinkoko (pikseleinä)"
+msgstr "Reunuksen koko (pikseliä)"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:10
-#, fuzzy
 msgid "Gradient Beve_l..."
-msgstr "Väriliuku takaperin"
+msgstr "Viistottu väriliuku..."
 
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:2
 msgid "Custom _Gradient..."
-msgstr ""
+msgstr "Oma väriliuku..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:2
 msgid "X divisions"
-msgstr ""
+msgstr "X jako"
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:3
 msgid "Y divisions"
-msgstr ""
+msgstr "Y jako"
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:4
 msgid "_Grid..."
-msgstr ""
+msgstr "Ristikko..."
 
 #: plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
 msgid "Creates four Guides around the bounding box of the current selection."
-msgstr ""
+msgstr "Luo neljä apulinjaa valinnan ympärille."
 
 #: plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
 msgid "New Guides from _Selection"
-msgstr ""
+msgstr "Uudet apulinjat valinnasta"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
 #: plug-ins/script-fu/scripts/guides-new.scm.h:1
-#, fuzzy
 msgid "Direction"
 msgstr "Suunta"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:2
 #: plug-ins/script-fu/scripts/guides-new.scm.h:2
 msgid "Horizontal"
-msgstr ""
+msgstr "Vaakasuora"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:3
 msgid "New Guide (by _Percent)..."
-msgstr ""
+msgstr "Uusi apulinja (%)..."
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:5
 #, no-c-format
 msgid "Position (in %)"
-msgstr ""
+msgstr "Sijainti (%:na)"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
 #: plug-ins/script-fu/scripts/guides-new.scm.h:4
 msgid "Vertical"
-msgstr ""
+msgstr "Pystysuora"
 
 #: plug-ins/script-fu/scripts/guides-new.scm.h:3
 msgid "New _Guide..."
-msgstr ""
+msgstr "Uusi apulinja..."
 
 #: plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
 msgid "_Remove all Guides"
-msgstr ""
+msgstr "Poista kaikki apulinjat"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
 msgid "BG opacity"
-msgstr ""
+msgstr "Taustan peitto"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:3
 msgid "Draw _HSV Graph..."
-msgstr ""
+msgstr "Piirrä _HSV graafi..."
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:4
 msgid "End X"
-msgstr ""
+msgstr "Loppu X"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:5
 msgid "End Y"
-msgstr ""
+msgstr "Loppu Y"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:6
 msgid "From top-left to bottom-right"
-msgstr ""
+msgstr "Ylhäältä vasemmalta - alas oikealle"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:7
 msgid "Graph scale"
-msgstr ""
+msgstr "Graafin skaala"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:8
 msgid "Start X"
-msgstr ""
+msgstr "Alku X"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:9
 msgid "Start Y"
-msgstr ""
+msgstr "Alku Y"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:10
 msgid "Use selection bounds instead of belows"
-msgstr ""
+msgstr "Käytä valinnan rajoja"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
-#, fuzzy
 msgid "Frame color"
-msgstr "Kehys"
+msgstr "Ruudun väri"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
-#, fuzzy
 msgid "Frame size"
-msgstr "Kehys"
+msgstr "Ruudun koko"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
 msgid "Imigre-26..."
@@ -1824,162 +1742,155 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:2
 msgid "Apply layer mask (or discard)"
-msgstr ""
+msgstr "Käytä tason maskia (tai hylkää)"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:4
 msgid "Create new image"
-msgstr ""
+msgstr "Luo uusi kuva"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:5
 msgid "Insert layer names"
-msgstr ""
+msgstr "Lisää tasojen nimet"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:6
-#, fuzzy
 msgid "Make new background"
-msgstr "Läpinäkyvä tausta"
+msgstr "Luo uusi tausta"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:7
 msgid "Outer border"
-msgstr ""
+msgstr "Ulkoreunus"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:8
-#, fuzzy
 msgid "Pad color"
-msgstr "Liidun väri"
+msgstr "Täyttökuvion väri"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:9
 msgid "Pad opacity"
-msgstr ""
+msgstr "Täyttökuvion peitto"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:10
 msgid "Padding for transparent regions"
-msgstr ""
+msgstr "Täyttö läpinäkyville alueille"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:11
 msgid "Shear length"
-msgstr ""
+msgstr "Väännön pituus"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:12
 msgid "Show Image _Structure..."
-msgstr ""
+msgstr "Näytä kuvan _rakenne..."
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:13
 msgid "Space between layers"
-msgstr ""
+msgstr "Tila tasojen välissä"
 
 #: plug-ins/script-fu/scripts/land.scm.h:6
 msgid "Land height"
-msgstr ""
+msgstr "Maan korkeus"
 
 #: plug-ins/script-fu/scripts/land.scm.h:10
 msgid "Sea depth"
-msgstr ""
+msgstr "Veden syvyys"
 
 #: plug-ins/script-fu/scripts/land.scm.h:11
 msgid "_Land..."
-msgstr ""
+msgstr "Maa..."
 
 #: plug-ins/script-fu/scripts/lava.scm.h:4
 #: plug-ins/script-fu/scripts/swirltile.scm.h:8
 msgid "Roughness"
-msgstr ""
+msgstr "Epätasaisuus"
 
 #: plug-ins/script-fu/scripts/lava.scm.h:5
 msgid "Seed"
-msgstr ""
+msgstr "Siemen"
 
 #: plug-ins/script-fu/scripts/lava.scm.h:8
 msgid "Use current gradient"
-msgstr ""
+msgstr "Käytä valittua väriliukua"
 
 #: plug-ins/script-fu/scripts/lava.scm.h:9
 msgid "_Lava..."
-msgstr ""
+msgstr "_Lava..."
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Line _Nova..."
-msgstr ""
+msgstr "Line _Nova..."
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:3
 msgid "Number of lines"
-msgstr ""
+msgstr "Viivojen määrä"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:4
-#, fuzzy
 msgid "Offset radius"
-msgstr "Siirtymä (pikseliä)"
+msgstr "Siirtymän säde"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:5
 msgid "Randomness"
-msgstr ""
+msgstr "Satunnaisuus"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:6
 msgid "Sharpness (degrees)"
-msgstr ""
+msgstr "Terävyys (astetta)"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush"
-msgstr "<Toolbox>/Xtns/Script-Fu/Käynnistä palvelin"
+msgstr "<Toolbox>/Xtns/Script-Fu/Luo sivellin"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:2
 msgid "Elli_ptical, Feathered..."
-msgstr ""
+msgstr "Elliptinen, sulitettu..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:3
 msgid "Feathering"
-msgstr ""
+msgstr "Sulitus"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:5
-#, fuzzy
 msgid "Name"
-msgstr "Nimi:"
+msgstr "Nimi"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:6
 msgid "Re_ctangular, Feathered..."
-msgstr ""
+msgstr "Nelikulmio, sulitettu..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:7
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 msgid "Spacing"
-msgstr ""
+msgstr "Välistys"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:9
 msgid "_Elliptical..."
-msgstr ""
+msgstr "Elliptinen..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:10
 msgid "_Rectangular..."
-msgstr ""
+msgstr "Neliömäinen..."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:4
 msgid "Create shadow"
-msgstr ""
+msgstr "Luo varjo"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:5
-#, fuzzy
 msgid "Effect size (pixels * 5)"
-msgstr "Siirtymä (pikseliä)"
+msgstr "Efektin koko (pikseliä × 5)"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:9
 msgid "N_eon..."
-msgstr ""
+msgstr "N_eon..."
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:4
-#, fuzzy
 msgid "Cell size (pixels)"
-msgstr "Kirjasinkoko (pikseleinä)"
+msgstr "Solun koko (pikseliä)"
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:6
 #: plug-ins/script-fu/scripts/speed-text.scm.h:4
 #, no-c-format
 msgid "Density (%)"
-msgstr ""
+msgstr "Tiheys (%)"
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:9
 msgid "Newsprint Text..."
-msgstr ""
+msgstr "Sanomalehtiteksti..."
 
 #: plug-ins/script-fu/scripts/old-photo.scm.h:3
 msgid "Defocus"
@@ -1995,212 +1906,201 @@ msgstr "Seepia"
 
 #: plug-ins/script-fu/scripts/old-photo.scm.h:7
 msgid "_Old Photo..."
-msgstr ""
+msgstr "Vanha valokuva..."
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
 msgid "Angle"
-msgstr ""
+msgstr "Kulma"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:6
 msgid "Cubic"
-msgstr ""
+msgstr "Neliöllinen"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
 msgid "Interpolation"
-msgstr ""
+msgstr "Interpolaatio"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
 msgid "Linear"
-msgstr ""
+msgstr "Lineaarinen"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
 msgid "None"
-msgstr ""
+msgstr "Ei mitään"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:11
 msgid "Relative distance of horizon"
-msgstr ""
+msgstr "Suhteellinen etäisyys horisontista"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:12
 msgid "Relative length of shadow"
-msgstr ""
+msgstr "Varjon suhteellinen pituus"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:13
 msgid "_Perspective..."
-msgstr ""
+msgstr "Perspektiivi..."
 
 #: plug-ins/script-fu/scripts/predator.scm.h:2
 msgid "Edge amount"
-msgstr ""
+msgstr "Reunan määrä"
 
 #: plug-ins/script-fu/scripts/predator.scm.h:4
 msgid "Pixel amount"
-msgstr ""
+msgstr "Pikselimäärä"
 
 #: plug-ins/script-fu/scripts/predator.scm.h:5
 msgid "Pixelize"
-msgstr ""
+msgstr "Pikselöi"
 
 #: plug-ins/script-fu/scripts/predator.scm.h:7
 msgid "_Predator..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:5
-#, fuzzy
 msgid "Lower color"
-msgstr "Oikean alareunan väri"
+msgstr "Alempi väri"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:6
 msgid "Lower color (active)"
-msgstr ""
+msgstr "Alempi väri (aktiivinen)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:7
-#, fuzzy
 msgid "Not pressed"
-msgstr "Painettu"
+msgstr "Ei painettu"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:8
 msgid "Not pressed (active)"
-msgstr ""
+msgstr "Ei painettu (aktiivinen)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:9
 msgid "Padding X"
-msgstr ""
+msgstr "Reunustus X"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:10
 msgid "Padding Y"
-msgstr ""
+msgstr "Reunustus Y"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:12
 msgid "Round ratio"
-msgstr ""
+msgstr "Pyöreyssuhde"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:15
-#, fuzzy
 msgid "Text color (active)"
-msgstr "Tekstin väri"
+msgstr "Tekstin väri (aktiivinen)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:16
-#, fuzzy
 msgid "Upper color"
-msgstr "Vasemman yläreunan väri"
+msgstr "Ylempi väri"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:17
-#, fuzzy
 msgid "Upper color (active)"
-msgstr "Vasemman yläreunan väri"
+msgstr "Ylempi väri (aktiivinen)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:18
 msgid "_Round Button..."
-msgstr ""
+msgstr "Pyöreä painike..."
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:2
 msgid "Behaviour"
-msgstr ""
+msgstr "Käyttäytyminen"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:3
 msgid "Detail in Middle"
-msgstr ""
+msgstr "Yksityiskohdat keskellä"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:8
 msgid "Render _Map..."
-msgstr ""
+msgstr "Luo kartta..."
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:9
 msgid "Tile"
-msgstr ""
+msgstr "Lohko"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
 msgid "Black"
-msgstr ""
+msgstr "Musta"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
 msgid "Edge behaviour"
-msgstr ""
+msgstr "Reunan käytös"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:4
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:4
 msgid "Number of frames"
-msgstr ""
+msgstr "Ruutujen määrä"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:5
 msgid "Rippling strength"
-msgstr ""
+msgstr "Aaltoilun voimakkuus"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:6
 msgid "Smear"
-msgstr ""
+msgstr "Tuhri"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:7
 msgid "Wrap"
-msgstr ""
+msgstr "Kierrä"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:8
 msgid "_Rippling..."
-msgstr ""
+msgstr "Aaltoilu..."
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:2
-#, fuzzy
 msgid "Add background"
-msgstr "Taustakuva"
+msgstr "Lisää tausta"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:3
 msgid "Add drop-shadow"
-msgstr ""
+msgstr "Lisää varjo"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:5
 msgid "Edge radius"
-msgstr ""
+msgstr "Reunan säde"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:9
 msgid "_Round Corners..."
-msgstr ""
+msgstr "Pyöristä reunat..."
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 msgid "Brush name"
-msgstr ""
+msgstr "Siveltimen nimi"
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:5
-#, fuzzy
 msgid "To _Brush..."
-msgstr "Selaa..."
+msgstr "_Siveltimeksi..."
 
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:2
 msgid "To _Image"
-msgstr ""
+msgstr "_Kuvaksi..."
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
-#, fuzzy
 msgid "Pattern name"
-msgstr "Kuvio"
+msgstr "Kuvion nimi"
 
 #: plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
-#, fuzzy
 msgid "To _Pattern..."
-msgstr "Kuvio"
+msgstr "Kuvioksi..."
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
-#, fuzzy
 msgid "Concave"
-msgstr "Peru"
+msgstr "Kovera"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:3
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "Radius (%)"
-msgstr "Säde"
+msgstr "Säde (%)"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:4
 msgid "Rounded R_ectangle..."
-msgstr ""
+msgstr "Pyö_ristetty neliö..."
 
 #: plug-ins/script-fu/scripts/slide.scm.h:3
-#, fuzzy
 msgid "Font color"
-msgstr "Tekstin väri"
+msgstr "Kirjasinmen väri"
 
 #: plug-ins/script-fu/scripts/slide.scm.h:4
 msgid "Number"
-msgstr ""
+msgstr "Numero"
 
 #: plug-ins/script-fu/scripts/slide.scm.h:7
 msgid "_Slide..."
@@ -2208,77 +2108,75 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
 msgid "SOTA Chrome..."
-msgstr ""
+msgstr "SOTA kromi..."
 
 #: plug-ins/script-fu/scripts/speed-text.scm.h:7
 msgid "Speed Text..."
-msgstr ""
+msgstr "Vauhtiteksti..."
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Misc"
-msgstr "<Toolbox>/Xtns/Script-Fu/Käynnistä palvelin"
+msgstr "<Toolbox>/Xtns/Script-Fu/Sekalaiset"
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:3
 msgid "Lighting (degrees)"
-msgstr ""
+msgstr "Valaistus (astetta)"
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:4
 msgid "Radius (pixels)"
-msgstr ""
+msgstr "Säde (pikseliä)"
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:6
-#, fuzzy
 msgid "Sphere color"
-msgstr "Vasemman yläreunan väri"
+msgstr "Pallon väri"
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:7
-#, fuzzy
 msgid "_Sphere..."
-msgstr "Selaa..."
+msgstr "Pallo..."
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:2
 msgid "Frames"
-msgstr ""
+msgstr "Ruutuja"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:3
 msgid "Index to n colors (0 = remain RGB)"
-msgstr ""
+msgstr "Indeksi n:ksi väriksi (0 = säilytä RGB)"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:5
 msgid "Turn from left to right"
-msgstr ""
+msgstr "Käänny vasemmalta oikealle"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:7
 msgid "_Spinning Globe..."
-msgstr ""
+msgstr "Pyörivä maapallo..."
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
-msgstr ""
+msgstr "Ruisku"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:3
 msgid "Brush"
-msgstr ""
+msgstr "Sivellin"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:4
 msgid "Circle"
-msgstr ""
+msgstr "Ympyrä"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
-#, fuzzy
 msgid "Color method"
-msgstr "Väri 3"
+msgstr "Värimetodi"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
 msgid ""
 "Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
 "netword.com/*spyrogimp"
 msgstr ""
+"Piirrä spirograafeja, epitrosoideja ja Lissajoun käyriä. Lisätietoja http://"
+"netword.com/*spyrogimp"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
 msgid "Epitrochoid"
-msgstr ""
+msgstr "Epitrosoidi"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:9
 msgid "Frame"
@@ -2286,244 +2184,236 @@ msgstr "Kehys"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
 msgid "Gradient: Loop Sawtooth"
-msgstr ""
+msgstr "Väriliuku: toistuva saha-aalto"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
 msgid "Gradient: Loop Triangle"
-msgstr ""
+msgstr "Väriliuku: toistuva kolmio"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
 msgid "Hexagon"
-msgstr ""
+msgstr "Heksagoni"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
 msgid "Hole ratio"
-msgstr ""
+msgstr "Reiän suhde"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
 msgid "Inner teeth"
-msgstr ""
+msgstr "Sisähammastus"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:16
 msgid "Lissajous"
-msgstr ""
+msgstr "Lissajou"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:17
 msgid "Margin (pixels)"
-msgstr ""
+msgstr "Marginaali (pikseliä)"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
 msgid "Outer teeth"
-msgstr ""
+msgstr "Ulkohammastus"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
 msgid "Pencil"
-msgstr ""
+msgstr "Kynä"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:20
 msgid "Pentagon"
-msgstr ""
+msgstr "Pentagoni"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:21
 msgid "Polygon: 10 sides"
-msgstr ""
+msgstr "10-sivuinen polygoni"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:22
 msgid "Polygon: 7 sides"
-msgstr ""
+msgstr "7-sivuinen polygoni"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:23
 msgid "Polygon: 8 sides"
-msgstr ""
+msgstr "8-sivuinen polygoni"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:24
 msgid "Polygon: 9 sides"
-msgstr ""
+msgstr "9-sivuinen polygoni"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:25
 msgid "Shape"
-msgstr ""
+msgstr "Muoto"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:26
 msgid "Solid Color"
-msgstr ""
+msgstr "Yhtenäinen väri"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:27
 msgid "Spyrograph"
-msgstr ""
+msgstr "Spirograafi"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:28
 msgid "Square"
-msgstr ""
+msgstr "Neliö"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:29
 #: plug-ins/script-fu/scripts/text-circle.scm.h:7
 msgid "Start angle"
-msgstr ""
+msgstr "Alkukulma"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:30
 msgid "Tool"
-msgstr ""
+msgstr "Työkalu"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:31
 msgid "Triangle"
-msgstr ""
+msgstr "Kolmio"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:32
 msgid "Type"
-msgstr ""
+msgstr "Tyyppi"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:33
 msgid "_Spyrogimp..."
-msgstr ""
+msgstr "Spirograafi..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:4
-#, fuzzy
 msgid "Burst color"
-msgstr "Reunan väri"
+msgstr "Ryöpyn väri"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:5
-#, fuzzy
 msgid "Effect size (pixels * 30)"
-msgstr "Kirjasinkoko (pikseleinä)"
+msgstr "Efektin koko (pikseliä × 30)"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:8
 msgid "Starb_urst..."
-msgstr ""
+msgstr "Tähtiryöppy..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:3
-#, fuzzy
 msgid "Effect size (pixels * 4)"
-msgstr "Siirtymä (pikseliä)"
+msgstr "Efektin koko (pikseliä × 4)"
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:7
-#, fuzzy
 msgid "Sta_rscape..."
-msgstr "Selaa..."
+msgstr "Tähdistö"
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:9
 msgid "Swirl-_Tile..."
-msgstr ""
+msgstr "Pyörrekuvio"
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:10
 msgid "Whirl amount"
-msgstr ""
+msgstr "Pyörteen määrä"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of times to whirl"
-msgstr ""
+msgstr "Pyörteen kierrokset"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
 msgid "Quarter size"
-msgstr ""
+msgstr "Neljänneskoko"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
 msgid "Whirl angle"
-msgstr ""
+msgstr "Pyörteen kulma"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:5
 msgid "_Swirly..."
-msgstr ""
+msgstr "Pyörre..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
-#, fuzzy
 msgid "Base color"
-msgstr "Reunan väri"
+msgstr "Perusväri"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
 msgid "Edge only"
-msgstr ""
+msgstr "Vain reuna"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
 msgid "Edge width"
-msgstr ""
+msgstr "Reunan leveys"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
 msgid "Hit rate"
-msgstr ""
+msgstr "Osumasuhde"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:12
 msgid "_Particle Trace..."
-msgstr ""
+msgstr "Hiukkasen jäljitys"
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:2
 msgid "Antialias"
-msgstr ""
+msgstr "Reunan pehmennys"
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:3
 msgid "Fill angle"
-msgstr ""
+msgstr "Täyttökulma"
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:9
 msgid "Text Circle..."
-msgstr ""
+msgstr "Tekstiympyrä"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:5
 msgid "Ending blend"
-msgstr ""
+msgstr "Lopun sekoitus"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
-msgstr ""
+msgstr "Heksagonit"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:9
 msgid "Mosaic tile type"
-msgstr ""
+msgstr "Mosaiikki"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:10
 msgid "Octagons"
-msgstr ""
+msgstr "Oktagonit"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:12
 msgid "Squares"
-msgstr ""
+msgstr "Neliöt"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:13
 msgid "Starting blend"
-msgstr ""
+msgstr "Alun sekoitus"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:15
-#, fuzzy
 msgid "Text pattern"
-msgstr "Kuvio"
+msgstr "Tekstin kuvio"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:16
 msgid "_Textured..."
-msgstr ""
+msgstr "Pinnoitettu..."
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:1
 msgid "Blur horizontally"
-msgstr ""
+msgstr "Sumenna vaakasuoraan"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:2
-#, fuzzy
 msgid "Blur type"
-msgstr "Sumenna Y"
+msgstr "Sumennustyyppi"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:3
 msgid "Blur vertically"
-msgstr ""
+msgstr "Sumenna pystysuoraan"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:4
 msgid "IIR"
-msgstr ""
+msgstr "IIR"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:5
 msgid "RLE"
-msgstr ""
+msgstr "RLE"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:7
 msgid "_Tileable Blur..."
-msgstr ""
+msgstr "_Saumaton sumennus..."
 
 #: plug-ins/script-fu/scripts/title-header.scm.h:6
 msgid "Web Title Header..."
-msgstr ""
+msgstr "Web-otsikko..."
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:4
-#, fuzzy
 msgid "Foreground color"
-msgstr "Taustaväri"
+msgstr "Edustaväri"
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:7
 msgid "T_ruchet..."
@@ -2531,153 +2421,459 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
 msgid "Mask opacity"
-msgstr ""
+msgstr "Maskin peitto"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
 msgid "Mask size"
-msgstr ""
+msgstr "Maskin koko"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:4
 msgid "_Unsharp Mask..."
-msgstr ""
+msgstr "Sumennusmaski..."
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:2
 msgid "Amplitude"
-msgstr ""
+msgstr "Voimakkuus"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:3
 msgid "Invert direction"
-msgstr ""
+msgstr "Käänteinen suunta"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:5
 msgid "Wavelength"
-msgstr ""
+msgstr "Aallonpituus"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:6
 msgid "_Waves..."
-msgstr ""
+msgstr "Aallot..."
 
 #: plug-ins/script-fu/scripts/weave.scm.h:2
 msgid "Ribbon spacing"
-msgstr ""
+msgstr "Nauhojen väli"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:3
 msgid "Ribbon width"
-msgstr ""
+msgstr "Nauhan leveys"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:4
 msgid "Shadow darkness"
-msgstr ""
+msgstr "Varjon tummuus"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:5
-#, fuzzy
 msgid "Shadow depth"
-msgstr "Varjon Y siirtymä"
+msgstr "Varjon syvyys"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:6
 msgid "Thread density"
-msgstr ""
+msgstr "Langan tiheys"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:7
 msgid "Thread intensity"
-msgstr ""
+msgstr "Langan voimakkuus"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:8
 msgid "Thread length"
-msgstr ""
+msgstr "Langan pituus"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:9
 msgid "_Weave..."
-msgstr ""
+msgstr "Kudos..."
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:1
 msgid "<Toolbox>/Help/The GIMP Online"
-msgstr ""
+msgstr "<Toolbox>/Help/GIMP verkossa"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:2
 msgid "Plug-in _Registry"
-msgstr ""
+msgstr "Liitännäisrekisteri"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:3
 msgid "_Developer Web Site"
-msgstr ""
+msgstr "Kehittäjien sivusto"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:4
 msgid "_Main Web Site"
-msgstr ""
+msgstr "Web-sivusto"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:2
-#, fuzzy
 msgid "Drop shadow X offset"
 msgstr "Varjon X siirtymä"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:3
-#, fuzzy
 msgid "Drop shadow Y offset"
 msgstr "Varjon Y siirtymä"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:4
-#, fuzzy
 msgid "Drop shadow blur radius"
 msgstr "Varjon sumennuksen säde"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:5
 msgid "Drop shadow color"
-msgstr ""
+msgstr "Varjon väri"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:6
 msgid "Drop shadow opacity"
-msgstr ""
+msgstr "Varjon peitto"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:7
 msgid "Highlight X offset"
-msgstr ""
+msgstr "Korostuksen X siirtymä"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:8
 msgid "Highlight Y offset"
-msgstr ""
+msgstr "Korostuksen Y siirtymä"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight opacity"
-msgstr ""
+msgstr "Korostuksen peitto"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
-msgstr ""
+msgstr "_Xach-efekti..."
+
+#~ msgid "Copy _Visible"
+#~ msgstr "Kopio näkyvä"
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 #~ msgstr "<Toolbox>/Xtns/Script-Fu/Virkistä scriptit"
 
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/3D _Outline..."
+#~ msgstr "<Image>/Script-Fu/Läpinäkyvyydestä logo/3D _Reunus..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D _Outline..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/3D _Reunus..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3_D Truchet..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Kuviot/3_D Truchet..."
+
+#~ msgid "<Image>/Script-Fu/Decor/Add B_evel..."
+#~ msgstr "<Image>/Script-Fu/Koristeelliset/Lisää viiste..."
+
+#~ msgid "<Image>/Script-Fu/Decor/Add _Border..."
+#~ msgstr "<Image>/Script-Fu/Koristeelliset/Lisää reunus..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Web-sivu teemat/Alien-hohto/_Nuoli..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Bullet..."
+#~ msgstr ""
+#~ "<Toolbox>/Xtns/Script-Fu/Web-sivu teemat/Alien-hohto/_Järjestysmerkki..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Web-sivu teemat/Alien-hohto/Nappula..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Alien _Glow..."
+#~ msgstr "<Image>/Script-Fu/Läpinäkyvyydestä logo/Alien-_hohto..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Glow..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/Alien-_hohto..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Alien _Neon..."
+#~ msgstr "<Image>/Script-Fu/Läpinäkyvyydestä logo/Alien-_neoni..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Neon..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/Alien-_neoni..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII Kuvaksi..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/_Basic I..."
+#~ msgstr "<Image>/Script-Fu/Läpinäkyvyydestä logo/_Perus I..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Basic I..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/_Perus I..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/B_asic II..."
+#~ msgstr "<Image>/Script-Fu/Läpinäkyvyydestä logo/P_erus II..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/B_asic II..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/P_erus II..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Bullet..."
+#~ msgstr ""
+#~ "<Toolbox>/Xtns/Script-Fu/Web-sivu teemat/Beveled Pattern/"
+#~ "_Järjestysmerkki..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
+#~ msgstr ""
+#~ "<Toolbox>/Xtns/Script-Fu/Web-sivu teemat/Beveled Pattern/_Nappula..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/H_eading..."
+#~ msgstr ""
+#~ "<Toolbox>/Xtns/Script-Fu/Web-sivu teemat/Beveled Pattern/_Otsikko..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Hrule..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Web-sivu teemat/Beveled Pattern/_Erotin..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Blen_ded..."
+#~ msgstr "<Image>/Script-Fu/Läpinäkyvyydestä logo/Blen_ded..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blen_ded..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/Sekoitettu..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Bo_vination..."
+#~ msgstr "<Image>/Script-Fu/Läpinäkyvyydestä logo/Lehmätys..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bo_vination..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/Lehmätys..."
+
+#~ msgid "<Image>/Script-Fu/Animators/B_urn-In..."
+#~ msgstr "<Image>/Script-Fu/Animaatiot/_Polta..."
+
+#~ msgid "Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
+#~ msgstr "Polttaa tekstitason kuvaan; V2.1"
+
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Camouflage..."
-#~ msgstr "<Toolbox>/Xtns/Script-Fu/Patterns/Maastokuvio..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Kuviot/Maastokuvio..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/Kaiverrettu..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/_Chalk..."
+#~ msgstr "<Image>/Script-Fu/Läpinäkyvyydestä logo/_Liitu..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Chalk..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/_Liitu..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Chip Awa_y..."
+#~ msgstr "<Image>/Script-Fu/Läpinäkyvyydestä logo/Sirpaloitu teksti..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Awa_y..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/Sirpaloitu teksti..."
+
+#~ msgid "<Image>/Script-Fu/Stencil Ops/C_hrome-It..."
+#~ msgstr "<Image>/Script-Fu/Stencil Ops/Kromita..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/C_hrome..."
+#~ msgstr "<Image>/Script-Fu/Läpinäkyvyydestä logo/_Kromi..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/C_hrome..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/_Kromi..."
+
+#~ msgid "<Image>/Script-Fu/Render/_Circuit..."
+#~ msgstr "<Image>/Script-Fu/Luo/_Piiri..."
+
+#~ msgid "<Image>/Script-Fu/Alchemy/_Clothify..."
+#~ msgstr "<Image>/Script-Fu/Alchemy/_Kangas..."
 
 #~ msgid "<Image>/Script-Fu/Decor/_Coffee Stain..."
-#~ msgstr "<Image>/Script-Fu/Decor/Kahvitahra..."
+#~ msgstr "<Image>/Script-Fu/Koristeelliset/K_ahvitahra..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Comic Boo_k..."
+#~ msgstr "<Image>/Script-Fu/Läpinäkyvyydestä logo/Sarjakuva..."
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Boo_k..."
-#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logos/Sarjakuva..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/Sarjakuva..."
 
-#, fuzzy
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Cool _Metal..."
+#~ msgstr "<Image>/Script-Fu/Läpinäkyvyydestä logo/Viileä metalli..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool _Metal..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/Viileä metalli..."
+
 #~ msgid "<Image>/Edit/Copy/Copy _Visible"
-#~ msgstr "<Image>/Edit/Kopioi näkyvä osa"
+#~ msgstr "<Image>/Edit/Kopioi _näkyvä osa"
 
-#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/Kristalli..."
+
+#~ msgid "<Image>/Script-Fu/Selection/_Fade Outline..."
+#~ msgstr "<Image>/Script-Fu/Valinta/_Häivytä ulkoreuna..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Flatland..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Kuviot/_Flatland..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Utils/_Font Map..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Utils/_Kirjasinkartta..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/_Frosty..."
+#~ msgstr "<Image>/Script-Fu/Läpinäkyvyydestä logo/_Hileinen..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Frosty..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/_Hileinen..."
+
+#~ msgid "<Image>/Script-Fu/Decor/_Fuzzy Border..."
+#~ msgstr "<Image>/Script-Fu/Koristeelliset/_Pehmeä reunus..."
+
 #~ msgid ""
 #~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
-#~ msgstr "<Toolbox>/Xtns/Script-Fu/Patterns/Maastokuvio..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Web-sivu teemat/Gimp.Org/_Pieni otsikko..."
 
-#, fuzzy
+#~ msgid ""
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-"
+#~ "Button Label..."
+#~ msgstr ""
+#~ "<Toolbox>/Xtns/Script-Fu/Web-sivu teemat/Gimp.Org/T_ube Sub-Button "
+#~ "Label..."
+
+#~ msgid ""
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
+#~ "Button Label..."
+#~ msgstr ""
+#~ "<Toolbox>/Xtns/Script-Fu/Web-sivu teemat/Gimp.Org/Tub_e Sub-Sub-Button "
+#~ "Label..."
+
 #~ msgid ""
 #~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
 #~ "Labels..."
-#~ msgstr "<Toolbox>/Xtns/Script-Fu/Patterns/Maastokuvio..."
+#~ msgstr ""
+#~ "<Toolbox>/Xtns/Script-Fu/Web-sivu teemat/Gimp.Org/_General Tube Labels..."
+
+#~ msgid ""
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
+#~ "Label..."
+#~ msgstr ""
+#~ "<Toolbox>/Xtns/Script-Fu/Web-sivu teemat/Gimp.Org/_Tube Button Label..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
+#~ msgstr "<Image>/Script-Fu/Läpinäkyvyydestä logo/Kiiltävä..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_ssy..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/Kiiltävä..."
+
+#~ msgid "Use tattern for outline instead of gradient"
+#~ msgstr "Käytä kuviota ulkoreunalla väriliu'un sijaan"
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Glo_wing Hot..."
+#~ msgstr "<Image>/Script-Fu/Läpinäkyvyydestä logo/Hehkuvan kuuma..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_wing Hot..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/Hehkuvan kuuma..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Beve_l..."
+#~ msgstr "<Image>/Script-Fu/Läpinäkyvyydestä logo/Väriliuku viistous..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Beve_l..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/Väriliuku viistous..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom _Gradient..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Utils/Oma väriliuku..."
+
+#~ msgid "<Image>/Script-Fu/Render/_Grid..."
+#~ msgstr "<Image>/Script-Fu/Luo/_Ristikko..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/Imigre-26..."
+
+#~ msgid "<Image>/Script-Fu/Render/Line _Nova..."
+#~ msgstr "<Image>/Script-Fu/Luo/Viiva _nova..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elli_ptical, Feathered..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Make Brush/Elli_ptinen, sulitettu..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Re_ctangular, Feathered..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Make Brush/N_eliömäinen, sulitettu..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Rectangular..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Make Brush/_Neliömäinen..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/N_eon..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/N_eon..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/Sanomalehtiteksti..."
+
+#~ msgid "<Image>/Script-Fu/Decor/_Old Photo..."
+#~ msgstr "<Image>/Script-Fu/Koristeelliset/Wanha valokuva..."
+
+#~ msgid "<Image>/Script-Fu/Shadow/_Perspective..."
+#~ msgstr "<Image>/Script-Fu/Shadow/_Perspektiivi..."
+
+#~ msgid "<Image>/Script-Fu/Alchemy/_Predator..."
+#~ msgstr "<Image>/Script-Fu/Alchemy/_Predator..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Buttons/_Round Button..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Buttons/_Pyöreä nappula..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render _Map..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Kuviot/Luo kartta..."
+
+#~ msgid "<Image>/Script-Fu/Animators/_Rippling..."
+#~ msgstr "<Image>/Script-Fu/Animaatiot/_Aaltoilu..."
+
+#~ msgid "<Image>/Script-Fu/Decor/_Round Corners..."
+#~ msgstr "<Image>/Script-Fu/Koristeelliset/_Pyöristä reunat..."
+
+#~ msgid "<Image>/Script-Fu/Selection/To _Brush..."
+#~ msgstr "<Image>/Script-Fu/Valinta/_Siveltimeksi..."
+
+#~ msgid "<Image>/Script-Fu/Selection/To _Pattern..."
+#~ msgstr "<Image>/Script-Fu/Valinta/Kuvi_oksi..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/SOTA-Kromi..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/Vauhtiteksti..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Misc/_Sphere..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Sekalaiset/Pallo..."
+
+#~ msgid "<Image>/Script-Fu/Animators/_Spinning Globe..."
+#~ msgstr "<Image>/Script-Fu/Animaatiot/_Pyörivä maapallo..."
+
+#~ msgid "<Image>/Script-Fu/Render/_Spyrogimp..."
+#~ msgstr "<Image>/Script-Fu/Luo/_Spyrogimp..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Starb_urst..."
+#~ msgstr "<Image>/Script-Fu/Läpinäkyvyydestä logo/Tähtiryöppy..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starb_urst..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/Tähtiryöppy..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Sta_rscape..."
+#~ msgstr "<Image>/Script-Fu/Läpinäkyvyydestä logo/Tähdistö..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Sta_rscape..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/Tähdistö..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-_Tile..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Kuviot/Pyörrekuvio..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Kuviot/_Pyörre..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/_Particle Trace..."
+#~ msgstr "<Image>/Script-Fu/Läpinäkyvyydestä logo/_Hiukkasen jäljitys..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Particle Trace..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/_Hiukkasen jäljitys..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/Tekstiympyrä..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/_Textured..."
+#~ msgstr "<Image>/Script-Fu/Läpinäkyvyydestä logo/_Pinnoitettu..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Textured..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/_Pinnoitettu..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logot/Web otsikko..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/T_ruchet..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Kuviot/T_ruchet..."
+
+#~ msgid "<Image>/Script-Fu/Alchemy/_Unsharp Mask..."
+#~ msgstr "<Image>/Script-Fu/Alchemy/_Sumennusmaski..."
+
+#~ msgid "<Image>/Script-Fu/Animators/_Waves..."
+#~ msgstr "<Image>/Script-Fu/Animaatiot/_Aallot..."
+
+#~ msgid "<Toolbox>/Help/The GIMP Online/Plug-in _Registry"
+#~ msgstr "<Toolbox>/Help/GIMP verkossa/Liitännäisrekisteri"
+
+#~ msgid "<Toolbox>/Help/The GIMP Online/_Developer Web Site"
+#~ msgstr "<Toolbox>/Help/GIMP verkossa/_Kehittäjän sivusto"
+
+#~ msgid "<Image>/Script-Fu/Shadow/_Xach-Effect..."
+#~ msgstr "<Image>/Script-Fu/Shadow/_Xach-efekti..."
+
+#~ msgid "About"
+#~ msgstr "Tietoja"
 
 #~ msgid "Re-read all available scripts"
 #~ msgstr "Lue uudestaan kaikki skriptit"
-
-#, fuzzy
-#~ msgid "_About"
-#~ msgstr "Tietoja"
 
 #~ msgid "DB Browser"
 #~ msgstr "Selain"
@@ -2694,6 +2890,20 @@ msgstr ""
 #~ msgid "Help:"
 #~ msgstr "Apu:"
 
+#~ msgid ""
+#~ "\n"
+#~ "\t\t    SF-ADJUSTMENT _"
+#~ msgstr ""
+#~ "\n"
+#~ "\t\t    SF-Säätö _"
+
+#~ msgid ""
+#~ "\n"
+#~ "\t\t    SF-COLOR      _"
+#~ msgstr ""
+#~ "\n"
+#~ "\t\t    SF-Väri      _"
+
 #~ msgid "Font Size (pixels)"
 #~ msgstr "Kirjasinkoko (pikseleinä)"
 
@@ -2703,6 +2913,9 @@ msgstr ""
 #~ msgid "Transparent Background"
 #~ msgstr "Läpinäkyvä tausta"
 
+#~ msgid "Relative radius"
+#~ msgstr "Suhteellinen säde"
+
 #~ msgid "Unable to open a stream on the SIOD output pipe"
 #~ msgstr "SIODin tulostusputkea ei saatu avatuksi"
 
@@ -2711,6 +2924,9 @@ msgstr ""
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
 #~ msgstr "<Toolbox>/Xtns/Script-Fu/Script-Fu Konsoli"
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Käynnistä palvelin"
 
 #~ msgid ""
 #~ "At least one font you've choosen is invalid.\n"
