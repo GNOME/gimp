@@ -581,7 +581,8 @@ doit (void)
       srcrow[4] = temprow;
       my_get_row (&srcPR, srcrow[4], sx1 - 2, row + 3, w + 4);
 
-      gimp_progress_update ((double) (row - sy1) / h);
+      if (row % 10 == 0)
+        gimp_progress_update ((double) (row - sy1) / h);
     }
 
   /* put the final rows in the buffer in place */

@@ -265,6 +265,8 @@ pluginCore (struct piArgs *argp)
   exrowsize = (width + 2) * Bpp;
   p_update = width / 20 + 1;
 
+  gimp_tile_cache_ntiles (2 * (width / gimp_tile_width () + 1));
+
   gimp_pixel_rgn_init (&srcPr, drw, 0, 0, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&dstPr, drw, 0, 0, width, height, TRUE, TRUE);
 

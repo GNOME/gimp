@@ -1,5 +1,18 @@
 2002-05-03  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/borderaverage.c
+	* plug-ins/common/convmatrix.c
+	* plug-ins/common/nlfilt.c
+	* plug-ins/common/papertile.c
+	* plug-ins/common/vpropagate.c: applied a patch from iccii@hotmail.com
+        that adds missing calls to gimp_tile_cache_ntiles() to speed up the
+        plug-ins considerably (bug #78358).
+
+	* plug-ins/common/colorify.c: fix for drawables with alpha from
+	iccii@hotmail.com.
+
+2002-05-03  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/tools/tool-safe-mode.c: removed another warning.
 
 2002-05-03  Michael Natterer  <mitch@gimp.org>

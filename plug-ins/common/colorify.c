@@ -199,6 +199,8 @@ run (gchar      *name,
 	}
     }
 
+  gimp_drawable_detach (drawable);
+
   values[0].data.d_status = status;
 }
 
@@ -212,6 +214,7 @@ colorify (GimpDrawable *drawable)
   gint  max_progress;
   gint  sel_x1, sel_x2, sel_y1, sel_y2;
   gint  sel_width, sel_height;
+  gint  has_alpha;
   gint  x, y;
   gint  i;
 
@@ -231,12 +234,12 @@ colorify (GimpDrawable *drawable)
   sel_width  = sel_x2 - sel_x1;
   sel_height = sel_y2 - sel_y1;
 
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+
   max_progress = sel_width * sel_height;
 
   if (max_progress <= 0)
     return;
-
-  gimp_tile_cache_ntiles (2 * (sel_width / gimp_tile_width()) + 1);
 
   gimp_pixel_rgn_init (&src_rgn, drawable,
 		       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
@@ -265,13 +268,15 @@ colorify (GimpDrawable *drawable)
 	      d[1] = final_green_lookup[lum];
 	      d[2] = final_blue_lookup[lum];
 
+              if (has_alpha)
+		d[3] = s[3];
+
 	      s += src_rgn.bpp;
 	      d += dest_rgn.bpp;
 	    }
 
 	  src += src_rgn.rowstride;
 	  dest += dest_rgn.rowstride;
-
 	}
 
       /* Update progress */

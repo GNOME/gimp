@@ -875,6 +875,8 @@ plugin_run (gchar      *name,
   p.selection.width  = p.selection.x1 - p.selection.x0;
   p.selection.height = p.selection.y1 - p.selection.y0;
 
+  gimp_tile_cache_ntiles (2 * (p.selection.width / gimp_tile_width () + 1));
+
   if (gimp_drawable_is_rgb (p.drawable->drawable_id))
     {
       switch (p.run_mode)
@@ -936,6 +938,8 @@ plugin_run (gchar      *name,
 	}
     }
   
+  gimp_drawable_detach (p.drawable);
+
   {
     static GimpParam return_value[1];
     return_value[0].type          = GIMP_PDB_STATUS;

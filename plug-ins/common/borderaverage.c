@@ -243,6 +243,8 @@ borderaverage (GimpDrawable *drawable,
   height = drawable->height;
   bytes = drawable->bpp;
 
+  gimp_tile_cache_ntiles (2 * ((x2 - x1) / gimp_tile_width () + 1));
+
   /*  allocate row buffer  */
   buffer = g_new (guchar, (x2 - x1) * bytes);
 

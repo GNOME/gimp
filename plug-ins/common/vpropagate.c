@@ -411,6 +411,8 @@ value_propagate_body (gint drawable_id)
   height = drawable->height;
   bytes = drawable->bpp;
 
+  gimp_tile_cache_ntiles (2 * ((endx - begx) / gimp_tile_width() + 1));
+
   prev_row = g_new (guchar, (endx - begx + 2) * bytes);
   cur_row  = g_new (guchar, (endx - begx + 2) * bytes);
   next_row = g_new (guchar, (endx - begx + 2) * bytes);
