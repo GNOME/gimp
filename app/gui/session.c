@@ -316,8 +316,18 @@ session_info_deserialize (GScanner *scanner,
               break;
 
             case SESSION_INFO_AUX:
-              while (gimp_scanner_parse_string (scanner, &string))
-                info->aux_info = g_list_append (info->aux_info, string);
+              while ((token =
+                      g_scanner_peek_next_token (scanner)) == G_TOKEN_STRING)
+                {
+                  if (gimp_scanner_parse_string (scanner, &string))
+                    info->aux_info = g_list_append (info->aux_info, string);
+                  else
+                    break;
+                }
+
+              if (token != G_TOKEN_RIGHT_PAREN)
+                token = G_TOKEN_STRING;
+
               break;
 
             case SESSION_INFO_DOCK:
@@ -404,13 +414,21 @@ session_info_dock_deserialize (GScanner        *scanner,
             {
             case SESSION_INFO_DOCK_BOOK:
               list = NULL;
-              while (gimp_scanner_parse_string (scanner, &string))
-                list = g_list_append (list, string);
+              while ((token =
+                      g_scanner_peek_next_token (scanner)) == G_TOKEN_STRING)
+                {
+                  if (gimp_scanner_parse_string (scanner, &string))
+                    list = g_list_append (list, string);
+                  else
+                    break;
+                }
 
               if (list)
                 info->sub_dialogs = g_list_append (info->sub_dialogs, list);
-        
-              token = G_TOKEN_RIGHT_PAREN;
+
+              if (token != G_TOKEN_RIGHT_PAREN)
+                token = G_TOKEN_STRING;
+
               break;
 
             default:
