@@ -1,3 +1,10 @@
+2004-04-11  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/plug-ins/py-slice.py: When using a separate dir for
+	images, actually prepend the dir to the img srcs in the html. Allow
+	only horizontal or vertical guides in an image, do not require both.
+	A bit smarter path handling. Addresses most of bug #138714.
+
 2004-04-11  Hans Breuer  <hans@breuer.org>
 
 	* app/makefile.msc : build sanity.obj

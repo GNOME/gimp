@@ -11,7 +11,7 @@ def pyslice(image, drawable, save_path, html_filename,
 
     vert, horz = get_guides(image)
 
-    if len(vert) == 0 or len(horz) == 0:
+    if len(vert) == 0 and len(horz) == 0:
         return
 
     gimp.progress_init("Py-Slice")
@@ -21,16 +21,21 @@ def pyslice(image, drawable, save_path, html_filename,
     def check_path(path):
         path = os.path.abspath(path)
 
-        if not os.path.isdir(path):
+        if not os.path.exists(path):
             os.mkdir(path)
 
         return path
     
     save_path = check_path(save_path)
 
+    if not os.path.isdir(save_path):
+        save_path = os.path.dirname(save_path)
+
     if separate:
+        image_relative_path = image_path
         image_path = check_path(os.path.join(save_path, image_path))
     else:
+        image_relative_path = ''
         image_path = save_path
 
     tw = TableWriter(os.path.join(save_path, html_filename),
@@ -57,7 +62,15 @@ def pyslice(image, drawable, save_path, html_filename,
             src = slice(image, image_path, image_basename, image_extension,
                         left, right, top, bottom, i, j)
 
-            tw.cell(src, right - left, bottom - top)
+            if image_relative_path:
+                if image_relative_path.endswith('/'):
+                    src_path = image_relative_path + src
+                else:
+                    src_path = image_relative_path + '/' + src
+            else:
+                src_path = src
+
+            tw.cell(src_path, right - left, bottom - top)
 
             left = right + cellspacing
 
@@ -180,7 +193,7 @@ register(
     "<Image>/Filters/Web/Py-Slice...",
     "*",
     [
-        (PF_STRING, "save_path", "The path to export the HTML to", "/tmp"),
+        (PF_STRING, "save_path", "The path to export the HTML to", os.getcwd()),
         (PF_STRING, "html_filename", "Filename to export", "py-slice.html"),
         (PF_STRING, "image_basename", "What to call the images", "pyslice"),
         (PF_RADIO, "image_extension", "The format of the images: {gif, jpg, png}", "gif", (("gif", "gif"), ("jpg", "jpg"), ("png", "png"))),
