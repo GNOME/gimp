@@ -23,6 +23,7 @@ PKG_LINK = \
 	..\widgets\appwidgets-$(PKG_VER).lib \
 
 OBJECTS = \
+	gimp-paint.obj \
 	gimpairbrush.obj \
 	gimpairbrushoptions.obj \
 	gimpclone.obj \
@@ -42,7 +43,6 @@ OBJECTS = \
 	gimppenciloptions.obj \
 	gimpsmudge.obj \
 	gimpsmudgeoptions.obj \
-	paint.obj \
 	paint-enums.obj \
 
 INCLUDES = \

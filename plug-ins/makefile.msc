@@ -31,11 +31,11 @@ FROMPLUGINSDIR=YES		# Used to bypass other parts below
 # List plug-ins. We must use several lists to work around nmake's limits
 
 # The COMMON* ones are in the common subdirectory
-COMMON1 = AlienMap AlienMap2 CEL CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch checkerboard color_enhance colorify colortoalpha compose convmatrix csource cubism curve_bend
+COMMON1 = AlienMap AlienMap2 ccanalyze CEL CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch checkerboard color_enhance colorify colortoalpha compose convmatrix csource cubism curve_bend
 COMMON2 = decompose deinterlace depthmerge despeckle destripe diffraction displace edge emboss engrave exchange film flarefx fractaltrace
 COMMON3 = gauss_iir gauss_rle gbr gee gee_zoom gicon gif gifload gih glasstile gqbist gradmap grid gtm guillotine gz header hot hrz illusion iwarp jigsaw jpeg laplace lic
 COMMON4 = mapcolor max_rgb mblur newsprint nlfilt noisify normalize nova oilify papertile pat pcx pix pixelize plasma plugindetails png pnm polar ps psd psd_save psp randomize ripple rotate
-COMMON5 = sample_colorize scatter_hsv semiflatten sharpen shift sinus smooth_palette snoise sobel sparkle spheredesigner spread struc sunras tga threshold_alpha tiff tile tileit tiler uniteditor unsharp video vinvert vpropagate 
+COMMON5 = sample_colorize scatter_hsv semiflatten sharpen shift sinus smooth_palette snoise sobel sparkle spheredesigner spread struc sunras svg tga threshold_alpha tiff tile tileit tiler uniteditor unsharp video vinvert vpropagate 
 COMMON6 = warp waves whirlpinch winclipboard wind winprint wiredebug wmf xbm xwd zealouscrop
 
 # These have own subdirectories each
@@ -46,7 +46,7 @@ SEPARATE = FractalExplorer Lighting MapObject bmp dbbrowser faxg3 fits flame fp 
 # ..\unofficial-plug-ins directory, go there, and do "nmake -f
 # makefile.msc unofficial".
 
-UNOFFICIAL = Anamorphose DigitalSignature RGB_Displace ccanalyze gimp_ace guash sel_gauss magiceye psd_save user_filter
+UNOFFICIAL = Anamorphose DigitalSignature RGB_Displace gimp_ace guash sel_gauss magiceye psd_save user_filter
 
 # The main target
 
@@ -163,9 +163,7 @@ guash-data-install :
 !IFDEF EXTRA_FractalExplorer
 OBJECTS = \
 	Dialogs.obj \
-	Events.obj \
-	FractalExplorer.obj \
-	Globals.obj
+	FractalExplorer.obj
 !ENDIF
 
 !IFDEF EXTRA_Lighting
@@ -280,6 +278,15 @@ EXTRA_DEPS = images/gfig-stock-pixbufs.h
 
 OBJECTS = \
 	gfig.obj \
+	gfig-arc.obj \
+	gfig-bezier.obj \
+	gfig-circle.obj \
+	gfig-dobject.obj \
+	gfig-ellipse.obj \
+	gfig-line.obj \
+	gfig-poly.obj \
+	gfig-spiral.obj \
+	gfig-star.obj \
 	gfig-stock.obj
 !ENDIF
 
@@ -450,6 +457,11 @@ OBJECTS = \
 	sgilib.obj
 !ENDIF
 
+!IFDEF EXTRA_svg
+EXTRACFLAGS = $(RSVG_CFLAGS)
+EXTRALIBS = $(RSVG_LIBS)
+!ENDIF
+
 !IFDEF EXTRA_tiff
 EXTRACFLAGS = -I$(TIFF)
 EXTRALIBS = $(TIFF)\libtiff.lib $(JPEG)\libjpeg.lib $(ZLIB)\zlib.lib user32.lib
@@ -556,8 +568,7 @@ EXTRALIBS = user32.lib gdi32.lib
 !IFDEF EXTRA_xjt
 OBJECTS = \
 	xjt.obj \
-	xjpeg.obj \
-	xpdb_calls.obj
+	xjpeg.obj
 EXTRACFLAGS = $(JPEG_CFLAGS)
 EXTRALIBS = $(JPEG_LIBS)
 !ENDIF

@@ -30,6 +30,7 @@ OBJECTS = \
 	gimpcellrendererviewable.obj \
 	gimpchanneltreeview.obj \
 	gimpcoloreditor.obj \
+	gimpcolorframe.obj \
 	gimpcolormapeditor.obj \
 	gimpcolorpanel.obj \
 	gimpcomponenteditor.obj \
@@ -53,16 +54,18 @@ OBJECTS = \
 	gimpdock.obj \
 	gimpdockable.obj \
 	gimpdockbook.obj \
+	gimpdocked.obj \
 	gimpdocumentview.obj \
 	gimpdrawabletreeview.obj \
 	gimpeditor.obj \
 	gimpenummenu.obj \
 	gimperrorconsole.obj \
-	gimpfontselection.obj \
-	gimpfontselection-dialog.obj \
+	gimpfontview.obj \
 	gimpgradienteditor.obj \
+	gimpgrideditor.obj \
 	gimphelp.obj \
 	gimphistogrambox.obj \
+	gimphistogrameditor.obj \
 	gimphistogramview.obj \
 	gimpimagedock.obj \
 	gimpimageeditor.obj \
@@ -81,10 +84,13 @@ OBJECTS = \
 	gimppreviewrendererdrawable.obj \
 	gimppreviewrenderergradient.obj \
 	gimppreviewrendererimage.obj \
-	gimppreviewrenderertextlayer.obj \
+	gimppreviewrendererlayer.obj \
+	gimppreviewrenderervectors.obj \
 	gimppreviewrenderer-utils.obj \
 	gimppropwidgets.obj \
 	gimpselectioneditor.obj \
+	gimpsessioninfo.obj \
+	gimpstrokeeditor.obj \
 	gimptemplateeditor.obj \
 	gimptemplateview.obj \
 	gimptexteditor.obj \
@@ -92,6 +98,8 @@ OBJECTS = \
 	gimptoolbox-dnd.obj \
 	gimptoolbox-color-area.obj \
 	gimptoolbox-indicator-area.obj \
+	gimptooldialog.obj \
+	gimptooloptionseditor.obj \
 	gimpundoeditor.obj \
 	gimpvectorstreeview.obj \
 	gimpviewablebutton.obj \

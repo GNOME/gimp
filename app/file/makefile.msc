@@ -15,6 +15,7 @@ INCLUDES = \
 	-I$(PRJ_TOP) \
 	-I$(PRJ_TOP)/app \
 	$(GLIB_CFLAGS) \
+	$(GDK_PIXBUF_CFLAGS)
 
 DEFINES = \
 	-DG_LOG_DOMAIN=\"Gimp-File\"

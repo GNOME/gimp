@@ -6,8 +6,9 @@ PKG_VER = 1.3
 !INCLUDE $(TOP)\glib\build\win32\make.msc
 
 PKG_LINK = \
-	$(GLIB_LIBS) $(GTK2)\gdk-pixbuf\gdk_pixbuf-$(GTK2_VER).lib $(INTL_LIBS) \
-	$(LIBART_LIBS) $(PANGOFT2_LIBS) \
+	$(GLIB_LIBS) $(GTK_PIXBUF_LIBS) $(INTL_LIBS) $(LIBART_LIBS) \
+	$(PANGOWIN32_LIBS) $(GDK_PIXBUF_LIBS) \
+#	$(PANGOFT2_LIBS) \
 	\
 	..\..\regexrepl\regexrepl.lib \
 	\
@@ -15,29 +16,34 @@ PKG_LINK = \
 	..\..\libgimpcolor\gimpcolor-$(PKG_VER).lib \
 	..\..\libgimpmath\gimpmath-$(PKG_VER).lib \
 	..\..\libgimpmodule\gimpmodule-$(PKG_VER).lib \
-	..\..\libgimpwidgets\gimpwidgets-$(PKG_VER).lib \
 	\
 	..\config\appconfig-$(PKG_VER).lib \
 	..\base\appbase-$(PKG_VER).lib \
 	..\paint-funcs\apppaint-funcs-$(PKG_VER).lib \
-	..\vectors\appvectors.lib \
-	..\paint\apppaint.lib \
-	..\pdb\apppdb.lib \
-	..\plug-in\appplug-in.lib \
-	..\file\appfile.lib \
-	..\xcf\xcf.lib \
+#	..\vectors\appvectors.lib \
+#	..\text\apptext.lib \
+#	..\paint\apppaint.lib \
+#	..\pdb\apppdb.lib \
+#	..\plug-in\appplug-in.lib \
+#	..\file\appfile.lib \
+#	..\xcf\xcf.lib \
 
 OBJECTS = \
 #	..\undo.obj \
 	core-enums.obj \
 	cpercep.obj \
 	gimp.obj \
+	gimp-edit.obj \
+	gimp-units.obj \
 	gimpbrush.obj \
 	gimpbrushgenerated.obj \
 	gimpbrushpipe.obj \
 	gimpbuffer.obj \
 	gimpchannel.obj \
+	gimpchannel-combine.obj \
+	gimpchannel-select.obj \
 	gimpcontainer.obj \
+	gimpcontainer-filter.obj \
 	gimpcontext.obj \
 	gimpdata.obj \
 	gimpdatafactory.obj \
@@ -47,15 +53,16 @@ OBJECTS = \
 	gimpdrawable.obj \
 	gimpdrawable-blend.obj \
 	gimpdrawable-bucket-fill.obj \
+	gimpdrawable-combine.obj \
 	gimpdrawable-desaturate.obj \
 	gimpdrawable-equalize.obj \
 	gimpdrawable-histogram.obj \
 	gimpdrawable-invert.obj \
 	gimpdrawable-offset.obj \
 	gimpdrawable-preview.obj \
+	gimpdrawable-stroke.obj \
 	gimpdrawable-transform.obj \
-	gimpdrawable-transform-utils.obj \
-	gimpedit.obj \
+#	gimpdrawable-transform-utils.obj \
 	gimpenvirontable.obj \
 	gimpgradient.obj \
 	gimpgrid.obj \
@@ -71,8 +78,8 @@ OBJECTS = \
 	gimpimage-flip.obj \
 	gimpimage-grid.obj \
 	gimpimage-guides.obj \
-	gimpimage-mask.obj \
-	gimpimage-mask-select.obj \
+#	gimpimage-mask.obj \
+#	gimpimage-mask-select.obj \
 	gimpimage-merge.obj \
 	gimpimage-new.obj \
 	gimpimage-pick-color.obj \
@@ -85,16 +92,18 @@ OBJECTS = \
 	gimpimage-scale.obj \
 	gimpimage-undo.obj \
 	gimpimage-undo-push.obj \
+	gimpimage-unit.obj \
 	gimpimagefile.obj \
 	gimpitem.obj \
 	gimpitem-linked.obj \
+	gimpitem-preview.obj \
 	gimpitemundo.obj \
 	gimplayer.obj \
 	gimplayer-floating-sel.obj \
 	gimplayermask.obj \
 	gimplist.obj \
 	gimpmarshal.obj \
-	gimpmodules.obj \
+	gimp-modules.obj \
 	gimpobject.obj \
 	gimppaintinfo.obj \
 	gimppalette.obj \
@@ -104,14 +113,17 @@ OBJECTS = \
 	gimppattern.obj \
 	gimppreviewcache.obj \
 	gimpscanconvert.obj \
+	gimpselection.obj \
+	gimpstrokeoptions.obj \
 	gimptemplate.obj \
 	gimptooloptions.obj \
+	gimp-transform-utils.obj \
 	gimp-templates.obj \
 	gimptoolinfo.obj \
 	gimpundo.obj \
 	gimpundostack.obj \
 	gimpunit.obj \
-	gimpunits.obj \
+#	gimpunits.obj \
 	gimpviewable.obj \
 	gimp-utils.obj \
 

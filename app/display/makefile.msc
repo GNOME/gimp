@@ -21,10 +21,12 @@ PKG_LINK = \
 	..\core\appcore-$(PKG_VER).lib \
 
 OBJECTS = \
+	gimpcanvas.obj \
 	gimpdisplay.obj \
 	gimpdisplay-area.obj \
 	gimpdisplay-foreach.obj \
 	gimpdisplay-handlers.obj \
+	gimpdisplayoptions.obj \
 	gimpdisplayshell.obj \
 	gimpdisplayshell-appearance.obj \
 	gimpdisplayshell-callbacks.obj \

@@ -51,7 +51,8 @@ OBJECTS = \
 	gimpfliptool.obj \
 	gimpfreeselecttool.obj \
 	gimpfuzzyselecttool.obj \
-	gimphistogramtool.obj \
+	gimphistogramoptions.obj \
+#	gimphistogramtool.obj \
 	gimphuesaturationtool.obj \
 	gimpimagemaptool.obj \
 	gimpinkoptions.obj \
@@ -90,7 +91,7 @@ OBJECTS = \
 	gimpvectoroptions.obj \
 	gimpvectortool.obj \
 	tool_manager.obj \
-	tools.obj \
+	gimp-tools.obj \
 	tools-enums.obj \
 
 INCLUDES = \

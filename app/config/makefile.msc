@@ -13,7 +13,9 @@ PKG_LINK = \
 	..\..\libgimpwidgets\gimpwidgets-$(PKG_VER).lib \
 	..\..\libgimpbase\gimpbase-$(PKG_VER).lib \
 	..\..\libgimpcolor\gimpcolor-$(PKG_VER).lib \
-	$(GLIB_LIBS) $(INTL_LIBS)
+	..\..\libgimpmath\gimpmath-$(PKG_VER).lib \
+	$(GLIB_LIBS) $(GOBJECT_LIBS) $(INTL_LIBS) \
+	$(GDK_PIXBUF_LIBS)
 
 OBJECTS = \
 	gimpbaseconfig.obj \
@@ -33,14 +35,20 @@ OBJECTS = \
 	gimppluginconfig.obj \
 	gimprc.obj \
 	gimpscanner.obj \
+	gimpxmlparser.obj \
 	\
-#	config-noelf.obj
+!IFDEF DLLGIMP
+	config-noelf.obj
+!ENDIF
 
 INCLUDES = \
 	-FImsvc_recommended_pragmas.h \
 	-I $(PRJ_TOP) \
 	-I $(PRJ_TOP)/app \
 	$(GLIB_CFLAGS) \
+	$(GDK_PIXBUF_CFLAGS)
+
+#	-DG_DISABLE_CAST_CHECKS
 
 DEFINES = \
 	-DG_LOG_DOMAIN=\"Gimp-Config\"

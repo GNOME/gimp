@@ -57,6 +57,8 @@ OBJECTS = \
 	file-save-dialog.obj \
 	file-save-menu.obj \
 	font-select.obj \
+	fonts-commands.obj \
+	fonts-menu.obj \
 	gradient-editor-commands.obj \
 	gradient-editor-menu.obj \
 	gradients-commands.obj \
@@ -64,6 +66,7 @@ OBJECTS = \
 	gradient-select.obj \
 	grid-dialog.obj \
 	gui.obj \
+	gui-vtable.obj \
 	help-commands.obj \
 	image-commands.obj \
 	image-menu.obj \
@@ -94,11 +97,14 @@ OBJECTS = \
 	select-commands.obj \
 	session.obj \
 	splash.obj \
+	stroke-dialog.obj \
 	templates-commands.obj \
 	templates-menu.obj \
+	themes.obj \
 	tips-dialog.obj \
 	tips-parser.obj \
-	tool-options-dialog.obj \
+	tool-options-commands.obj \
+	tool-options-menu.obj \
 	toolbox-menu.obj \
 	tools-commands.obj \
 	user-install-dialog.obj \

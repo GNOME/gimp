@@ -9,7 +9,7 @@ PKG_LINK = \
 	$(GLIB_LIBS) \
 	..\base\appbase-$(PKG_VER).lib \
 	\
-	..\core\appcore-$(PKG_VER).lib \
+#	..\core\appcore-$(PKG_VER).lib \
 
 top_srcdir = $(PRJ_TOP)
 top_builddir = $(PRJ_TOP)
@@ -24,9 +24,11 @@ INCLUDES = \
 
 OBJECTS = \
 	gimpanchor.obj \
-	gimpvectors.obj \
-	gimpbezierstroke.obj \
+	gimpcoordmath.obj \
 	gimpstroke.obj \
+	gimpvectors-export.obj \
+	gimpvectors-import.obj \
+	gimpbezierstroke.obj \
 	gimpvectors.obj \
 	gimpvectors-compat.obj \
 	gimpvectors-preview.obj \

@@ -11,6 +11,7 @@ PKG_LINK = \
 	$(GLIB_LIBS) \
 	..\..\libgimpcolor\gimpcolor-$(PKG_VER).lib \
 	..\paint-funcs\apppaint-funcs-$(PKG_VER).lib \
+	..\composite\appcomposite-$(PKG_VER).lib \
 	..\config\appconfig-$(PKG_VER).lib
 
 OBJECTS = \

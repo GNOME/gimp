@@ -12,10 +12,18 @@ LT_RELEASE = $(PKG_VER)
 
 OBJECTS = \
 	gimp-composite.obj \
-	gimp-composite-dispatch.obj \
 	gimp-composite-generic.obj \
+	gimp-composite-generic-installer.obj \
 	gimp-composite-mmx.obj \
 	gimp-composite-sse.obj \
+	gimp-composite-sse2.obj \
+	\
+	gimp-composite-3dnow-installer.obj \
+	gimp-composite-altivec-installer.obj \
+	gimp-composite-mmx-installer.obj \
+	gimp-composite-sse-installer.obj \
+	gimp-composite-sse2-installer.obj \
+	gimp-composite-vis-installer.obj \
 
 mmx_sources = \
 	

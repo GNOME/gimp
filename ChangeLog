@@ -1,7 +1,7 @@
-2003-10-08  Hans Breuer  <hans@breuer.org>
+2003-11-16  Hans Breuer  <hans@breuer.org>
 
 	* app/text/*.c : still unacceptable patched to compile 
-	without FT2, see bug #
+	without FT2, see bug #113681
 
 	* **makefile.msc : updated
 

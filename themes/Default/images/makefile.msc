@@ -13,14 +13,14 @@ STOCK_VARIABLES = \
 	stock_button_duplicate		stock-button-duplicate.png	\
 	stock_button_edit		stock-button-edit.png	\
 	stock_button_eye		stock-button-eye.png	\
-	stock_button_hchain_broken		stock-button-hchain-broken.png	\
 	stock_button_hchain		stock-button-hchain.png	\
+	stock_button_hchain_broken		stock-button-hchain-broken.png	\
 	stock_button_linked		stock-button-linked.png	\
 	stock_button_lower		stock-button-lower.png	\
 	stock_button_new		stock-button-new.png	\
+	stock_button_paste		stock-button-paste.png	\
 	stock_button_paste_as_new		stock-button-paste-as-new.png	\
 	stock_button_paste_into		stock-button-paste-into.png	\
-	stock_button_paste		stock-button-paste.png	\
 	stock_button_path_stroke		stock-button-path-stroke.png	\
 	stock_button_raise		stock-button-raise.png	\
 	stock_button_refresh		stock-button-refresh.png	\
@@ -34,8 +34,11 @@ STOCK_VARIABLES = \
 	stock_button_stroke		stock-button-stroke.png	\
 	stock_button_to_path		stock-button-to-path.png	\
 	stock_button_to_selection		stock-button-to-selection.png	\
-	stock_button_vchain_broken		stock-button-vchain-broken.png	\
 	stock_button_vchain		stock-button-vchain.png	\
+	stock_button_vchain_broken		stock-button-vchain-broken.png	\
+	stock_cap_butt_16	stock-cap-butt-16.png \
+	stock_cap_round_16	stock-cap-round-16.png \
+	stock_cap_square_16	stock-cap-square-16.png \
 	stock_channel_16		stock-channel-16.png	\
 	stock_channel_24		stock-channel-24.png	\
 	stock_channel_32		stock-channel-32.png	\
@@ -63,6 +66,7 @@ STOCK_VARIABLES = \
 	stock_channels_16		stock-channels-16.png	\
 	stock_channels_24		stock-channels-24.png	\
 	stock_char_picker_22		stock-char-picker-22.png	\
+	stock_close_12	stock-close-12.png \
 	stock_color_picker_black_18		stock-color-picker-black-18.png	\
 	stock_color_picker_gray_18		stock-color-picker-gray-18.png	\
 	stock_color_picker_white_18		stock-color-picker-white-18.png	\
@@ -75,6 +79,7 @@ STOCK_VARIABLES = \
 	stock_default_colors_12		stock-default-colors-12.png	\
 	stock_delete_16		stock-delete-16.png	\
 	stock_device_status_16		stock-device-status-16.png	\
+	stock_device_status_24		stock-device-status-24.png	\
 	stock_duplicate_16		stock-duplicate-16.png	\
 	stock_edit_16		stock-edit-16.png	\
 	stock_error_64		stock-error-64.png	\
@@ -82,6 +87,10 @@ STOCK_VARIABLES = \
 	stock_eye_20		stock-eye-20.png	\
 	stock_flip_horizontal_16		stock-flip-horizontal-16.png	\
 	stock_flip_vertical_16		stock-flip-vertical-16.png	\
+	stock_floating_selection_16	stock-floating-selection-16.png \
+	stock_floating_selection_24	stock-floating-selection-24.png \
+	stock_floating_selection_32	stock-floating-selection-32.png \
+	stock_floating_selection_48	stock-floating-selection-48.png \
 	stock_gradient_bilinear_16		stock-gradient-bilinear-16.png	\
 	stock_gradient_conical_asymmetric_16		stock-gradient-conical-asymmetric-16.png	\
 	stock_gradient_conical_symmetric_16		stock-gradient-conical-symmetric-16.png	\
@@ -103,6 +112,10 @@ STOCK_VARIABLES = \
 	stock_gravity_west_24		stock-gravity-west-24.png	\
 	stock_grid_16		stock-grid-16.png	\
 	stock_grow_16		stock-grow-16.png	\
+	stock_histogram_16		stock-histogram-16.png \
+	stock_histogram_22		stock-histogram-22.png \
+	stock_histogram_linear_16		stock-histogram-linear-16.png	\
+	stock_histogram_logarithmic_16	stock-histogram-logarithmic-16.png	\
 	stock_hchain_24		stock-hchain-24.png	\
 	stock_hchain_broken_24		stock-hchain-broken-24.png	\
 	stock_image_16		stock-image-16.png	\
@@ -111,10 +124,15 @@ STOCK_VARIABLES = \
 	stock_image_48		stock-image-48.png	\
 	stock_images_16		stock-images-16.png	\
 	stock_images_24		stock-images-24.png	\
+	stock_indexed_palette_16	stock-indexed-palette-16.png \
+	stock_indexed_palette_24	stock-indexed-palette-24.png \
 	stock_info_16		stock-info-16.png	\
 	stock_info_24		stock-info-24.png	\
 	stock_info_64		stock-info-64.png	\
 	stock_invert_16		stock-invert-16.png	\
+	stock_join_bevel_16	stock-join-bevel-16.png \
+	stock_join_miter_16	stock-join-miter-16.png \
+	stock_join_round_16	stock-join-round-16.png \
 	stock_landscape_16		stock-landscape-16.png	\
 	stock_layer_16		stock-layer-16.png	\
 	stock_layer_24		stock-layer-24.png	\
@@ -132,18 +150,22 @@ STOCK_VARIABLES = \
 	stock_menu_convert_grayscale		stock-menu-convert-grayscale.png	\
 	stock_menu_convert_indexed		stock-menu-convert-indexed.png	\
 	stock_menu_convert_rgb		stock-menu-convert-rgb.png	\
+	stock_menu_left_12	stock-menu-left-12.png \
 	stock_menu_merge_down		stock-menu-merge-down.png	\
 	stock_menu_navigation		stock-menu-navigation.png	\
 	stock_menu_qmask_off		stock-menu-qmask-off.png	\
 	stock_menu_qmask_on		stock-menu-qmask-on.png	\
 	stock_menu_reshow_filter		stock-menu-reshow-filter.png	\
 	stock_menu_resize		stock-menu-resize.png	\
+	stock_menu_right_12	stock-menu-right-12.png \
 	stock_menu_rotate_180		stock-menu-rotate-180.png	\
 	stock_menu_rotate_270		stock-menu-rotate-270.png	\
 	stock_menu_rotate_90		stock-menu-rotate-90.png	\
 	stock_menu_scale		stock-menu-scale.png	\
 	stock_menu_selection_to_channel		stock-menu-selection-to-channel.png	\
 	stock_merge_down_16		stock-merge-down-16.png	\
+	stock_move_to_screen_16	stock-move-to-screen-16.png	\
+	stock_move_to_screen_24	stock-move-to-screen-24.png	\
 	stock_navigation_16		stock-navigation-16.png	\
 	stock_new_16		stock-new-16.png	\
 	stock_none_16		stock-none-16.png	\
@@ -195,6 +217,13 @@ STOCK_VARIABLES = \
 	stock_toilet_paper_16		stock-toilet-paper-16.png	\
 	stock_toilet_paper_24		stock-toilet-paper-24.png	\
 	stock_tool_options_16		stock-tool-options-16.png	\
+	stock_tool_options_24		stock-tool-options-24.png	\
+	stock_tools_16		stock-tools-16.png \
+	stock_tools_24		stock-tools-24.png \
+	stock_transparency_16	stock-transparency-16.png \
+	stock_transparency_24	stock-transparency-24.png \
+	stock_undo_history_16		stock-undo-history-16.png \
+	stock_undo_history_24		stock-undo-history-24.png \
 	stock_vchain_24		stock-vchain-24.png	\
 	stock_vchain_broken_24		stock-vchain-broken-24.png	\
 	stock_video_16		stock-video-16.png	\
@@ -303,7 +332,7 @@ STOCK_TOOL_VARIABLES = \
 	stock_tool_move_22		tools/stock-tool-move-22.png	\
 	stock_tool_paintbrush_16		tools/stock-tool-paintbrush-16.png	\
 	stock_tool_paintbrush_22		tools/stock-tool-paintbrush-22.png	\
-#	stock_tool_path_16		tools/stock-tool-path-16.png	\
+	stock_tool_path_16		tools/stock-tool-path-16.png	\
 	stock_tool_path_22		tools/stock-tool-path-22.png	\
 	stock_tool_pencil_16		tools/stock-tool-pencil-16.png	\
 	stock_tool_pencil_22		tools/stock-tool-pencil-22.png	\

@@ -254,7 +254,8 @@ plug_ins_init (Gimp               *gimp,
             g_slist_prepend (gimp->plug_in_locale_domains, def);
 
           g_print ("added locale domain \"%s\" for path \"%s\"\n",
-                   def->domain_name, def->domain_path);
+                   def->domain_name ? def->domain_name : "(null)",
+                   def->domain_path ? def->domain_path : "(null)");
 	}
 
       if (plug_in_def->help_domain_name)
@@ -271,7 +272,8 @@ plug_ins_init (Gimp               *gimp,
             g_slist_prepend (gimp->plug_in_help_domains, def);
 
           g_print ("added help domain \"%s\" for base uri \"%s\"\n",
-                   def->domain_name, def->domain_uri);
+                   def->domain_name ? def->domain_name : "(null)", 
+                   def->domain_uri ? def->domain_uri : "(null)");
 	}
     }
 

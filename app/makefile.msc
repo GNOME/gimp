@@ -79,7 +79,7 @@ OBJECTS = \
 	main.obj \
 	batch.obj \
 	errors.obj \
-	libgimp_glue.obj \
+	units.obj \
 
 
 EXTRA_DIST = \

@@ -147,17 +147,24 @@ gimp_memsize_entry_unit_callback (GtkWidget        *widget,
   guint shift = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (widget),
 						     "gimp-item-data"));
 
+#if _MSC_VER < 1200
+#  define CAST (gint64)
+#else
+#  define CAST
+#endif
+
   if (shift != entry->shift)
     {
       entry->shift = shift;
 
-      entry->adjustment->value = entry->value >> shift;
-      entry->adjustment->lower = entry->lower >> shift;
-      entry->adjustment->upper = entry->upper >> shift;
+      entry->adjustment->value = CAST entry->value >> shift;
+      entry->adjustment->lower = CAST entry->lower >> shift;
+      entry->adjustment->upper = CAST entry->upper >> shift;
 
       gtk_adjustment_value_changed (entry->adjustment);
       gtk_adjustment_changed (entry->adjustment);
     }
+#undef CAST
 }
 
 
@@ -180,6 +187,12 @@ gimp_memsize_entry_new (guint64  value,
   GimpMemsizeEntry *entry;
   guint             shift;
 
+#if _MSC_VER < 1200
+#  define CAST (gint64)
+#else
+#  define CAST
+#endif
+
   g_return_val_if_fail (value >= lower && value <= upper, NULL);
 
   entry = g_object_new (GIMP_TYPE_MEMSIZE_ENTRY, NULL);
@@ -196,9 +209,11 @@ gimp_memsize_entry_new (guint64  value,
   entry->shift = shift;
 
   entry->spinbutton = gimp_spin_button_new ((GtkObject **) &entry->adjustment,
-                                            (value >> shift),
-                                            (lower >> shift),
-                                            (upper >> shift), 1, 8, 0, 1, 0);
+                                            CAST (value >> shift),
+                                            CAST (lower >> shift),
+                                            CAST (upper >> shift), 1, 8, 0, 1, 0);
+
+#undef CAST
 
   g_object_ref (entry->adjustment);
   gtk_object_sink (GTK_OBJECT (entry->adjustment));
@@ -257,7 +272,15 @@ gimp_memsize_entry_set_value (GimpMemsizeEntry *entry,
       gimp_int_option_menu_set_history (GTK_OPTION_MENU (entry->menu), shift);
     }
 
-  gtk_adjustment_set_value (entry->adjustment, value >> shift);
+#if _MSC_VER < 1200
+#  define CAST (gint64)
+#else
+#  define CAST
+#endif
+
+  gtk_adjustment_set_value (entry->adjustment, CAST (value >> shift));
+
+#undef CASE
 }
 
 /**

@@ -184,6 +184,15 @@ gimp_any_to_utf8 (const gchar  *str,
 gchar *
 gimp_memsize_to_string (guint64 memsize)
 {
+#if defined _MSC_VER && (_MSC_VER < 1200)
+/* sorry, error C2520: conversion from unsigned __int64 to double not 
+ *                     implemented, use signed __int64
+ */
+#  define CAST_DOUBLE (gdouble)(gint64)
+#else
+#  define CAST_DOUBLE (gdouble)
+#endif
+
   if (memsize < 1024)
     {
       return g_strdup_printf (_("%d Bytes"), (gint) memsize);
@@ -191,11 +200,11 @@ gimp_memsize_to_string (guint64 memsize)
 
   if (memsize < 1024 * 10)
     {
-      return g_strdup_printf (_("%.2f KB"), (gdouble) memsize / 1024.0);
+      return g_strdup_printf (_("%.2f KB"), CAST_DOUBLE memsize / 1024.0);
     }
   else if (memsize < 1024 * 100)
     {
-      return g_strdup_printf (_("%.1f KB"), (gdouble) memsize / 1024.0);
+      return g_strdup_printf (_("%.1f KB"), CAST_DOUBLE memsize / 1024.0);
     }
   else if (memsize < 1024 * 1024)
     {
@@ -206,11 +215,11 @@ gimp_memsize_to_string (guint64 memsize)
 
   if (memsize < 1024 * 10)
     {
-      return g_strdup_printf (_("%.2f MB"), (gdouble) memsize / 1024.0);
+      return g_strdup_printf (_("%.2f MB"), CAST_DOUBLE memsize / 1024.0);
     }
   else if (memsize < 1024 * 100)
     {
-      return g_strdup_printf (_("%.1f MB"), (gdouble) memsize / 1024.0);
+      return g_strdup_printf (_("%.1f MB"), CAST_DOUBLE memsize / 1024.0);
     }
   else if (memsize < 1024 * 1024)
     {
@@ -221,16 +230,17 @@ gimp_memsize_to_string (guint64 memsize)
 
   if (memsize < 1024 * 10)
     {
-      return g_strdup_printf (_("%.2f GB"), (gdouble) memsize / 1024.0);
+      return g_strdup_printf (_("%.2f GB"), CAST_DOUBLE memsize / 1024.0);
     }
   else if (memsize < 1024 * 100)
     {
-      return g_strdup_printf (_("%.1f GB"), (gdouble) memsize / 1024.0);
+      return g_strdup_printf (_("%.1f GB"), CAST_DOUBLE memsize / 1024.0);
     }
   else
     {
       return g_strdup_printf (_("%d GB"), (gint) memsize / 1024);
     }
+#undef CAST_DOUBLE
 }
 
 /**

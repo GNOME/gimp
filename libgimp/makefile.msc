@@ -55,6 +55,7 @@ PDB_WRAPPERS_O = \
 	gimpedit_pdb.obj \
 	gimpfileops_pdb.obj \
 	gimpfloatingsel_pdb.obj \
+	gimpfonts_pdb.obj \
 	gimpfontselect_pdb.obj \
 	gimpgimprc_pdb.obj \
 	gimpgradients_pdb.obj \
@@ -68,6 +69,8 @@ PDB_WRAPPERS_O = \
 	gimpmisctools_pdb.obj \
 	gimppainttools_pdb.obj \
 	gimppalette_pdb.obj \
+	gimppalettes_pdb.obj \
+	gimppaletteselect_pdb.obj \
 	gimpparasite_pdb.obj \
 	gimppaths_pdb.obj \
 	gimppatterns_pdb.obj \
@@ -99,17 +102,21 @@ gimp_OBJECTS = \
 	gimp.obj \
 	$(PDB_WRAPPERS_O) \
 #	$(gimpi_OBJECTS) \
+	gimpbrushselect.obj \
 	gimpchannel.obj \
 	gimpdrawable.obj \
+	gimpfontselect.obj \
+	gimpgradientselect.obj \
 #	gimphelp.obj \
 	gimpimage.obj \
 	gimplayer.obj \
 	gimpmisc.obj \
+	gimppatternselect.obj \
 	gimppixelrgn.obj \
 	gimpproceduraldb.obj \
 	gimpselection.obj \
 	gimptile.obj \
-	gimpunit.obj \
+	gimpunitcache.obj \
 
 #?	gimpprotocol.obj \
 
@@ -127,15 +134,11 @@ gimp.obj : gimp.c
 gimpui_OBJECTS = \
 	gimpui.obj \
 	gimpbrushmenu.obj \
-	gimpbrushselect.obj \
 	gimpfontmenu.obj \
-	gimpfontselect.obj \
 	gimpfontselect_pdb.obj \
 	gimpgradientmenu.obj \
-	gimpgradientselect.obj \
 	gimpmenu.obj \
 	gimppatternmenu.obj \
-	gimppatternselect.obj \
 	gimpexport.obj \
 	gimpmiscui.obj \
 #	gimppatheditor.obj \
@@ -143,6 +146,7 @@ gimpui_OBJECTS = \
 gimpui-$(GIMP_VER).dll : $(gimpui_OBJECTS) gimpui.def
 	$(CC) $(CFLAGS) -LD -Fegimpui-$(GIMP_VER).dll $(gimpui_OBJECTS) \
 	gimp-$(GIMP_VER).lib ..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
+	..\libgimpmodule\gimpmodule-$(GIMP_VER).lib \
 	..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
 	..\libgimpbase\gimpbase-$(GIMP_VER).lib \
 	$(GTK2_LIBS) $(INTL_LIBS) $(DEPLIBS) $(LDFLAGS) /def:gimpui.def

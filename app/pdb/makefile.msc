@@ -43,6 +43,7 @@ OBJECTS = \
 	edit_cmds.obj \
 	fileops_cmds.obj \
 	floating_sel_cmds.obj \
+	fonts_cmds.obj \
 	font_select_cmds.obj \
 	gimprc_cmds.obj \
 	gradients_cmds.obj \

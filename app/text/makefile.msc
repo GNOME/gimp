@@ -14,12 +14,19 @@ PKG_LINK = \
 	..\core\appcore-$(PKG_VER).lib
 
 OBJECTS = \
+	gimp-fonts.obj \
 	gimpfont.obj \
 	gimpfontlist.obj \
 	gimptext.obj \
+	gimptext-parasite.obj \
+	gimptext-bitmap-win32.obj \
 	gimptext-compat.obj \
+	gimptext-vectors-win32.obj \
+	gimptext-xlfd.obj \
 	gimptextlayer.obj \
+	gimptextlayer-xcf.obj \
 	gimptextlayout.obj \
+	gimptextlayout-render.obj \
 	text-enums.obj \
 
 INCLUDES = \

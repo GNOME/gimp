@@ -28,12 +28,14 @@ PKG_LINK = \
 	$(GLIB_LIBS) $(INTL_LIBS)
 
 OBJECTS = \
+	gimpbase-private.obj \
 	gimpenv.obj \
 	gimpdatafiles.obj \
 	gimpsignal.obj \
 	gimpparasite.obj \
 	gimpparasiteio.obj \
 	gimpprotocol.obj \
+	gimpunit.obj \
 	gimputils.obj \
 	gimpwire.obj \
 

@@ -208,6 +208,7 @@ themes_apply_theme (Gimp        *gimp,
   gchar       *gtkrc_user;
   gchar       *themerc;
   FILE        *file;
+  gchar       *name;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -239,18 +240,27 @@ themes_apply_theme (Gimp        *gimp,
       goto cleanup;
     }
 
-  fprintf (file,
-           "# GIMP themerc\n"
-           "#\n"
-           "# This file is written on GIMP startup and on every theme change.\n"
-           "# It is NOT supposed to be edited manually. Edit your personal\n"
-           "# gtkrc file instead (%s).\n"
-           "\n"
-           "include \"%s\"\n"
-           "include \"%s\"\n"
-           "\n"
-           "# end of themerc\n",
-           gtkrc_user, gtkrc_theme, gtkrc_user);
+  {
+    gchar *esc_gtkrc_theme = g_strescape (gtkrc_theme, NULL);
+    gchar *esc_gtkrc_user  = g_strescape (gtkrc_user, NULL);
+
+    fprintf (file,
+             "# GIMP themerc\n"
+             "#\n"
+             "# This file is written on GIMP startup and on every theme change.\n"
+             "# It is NOT supposed to be edited manually. Edit your personal\n"
+             "# gtkrc file instead (%s).\n"
+             "\n"
+             "include \"%s\"\n"
+             "include \"%s\"\n"
+             "\n"
+             "# end of themerc\n",
+             gtkrc_user, 
+             esc_gtkrc_theme, esc_gtkrc_user);
+
+    g_free (esc_gtkrc_theme);
+    g_free (esc_gtkrc_user);
+  }
 
   fclose (file);
 
