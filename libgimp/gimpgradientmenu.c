@@ -65,6 +65,10 @@ static void gimp_gradient_select_widget_clicked  (GtkWidget      *widget,
                                                   GradientSelect *gradient_sel);
 static void gimp_gradient_select_widget_destroy  (GtkWidget      *widget,
                                                   GradientSelect *gradient_sel);
+static void gimp_gradient_select_preview_size_allocate
+                                                 (GtkWidget      *widget,
+                                                  GtkAllocation  *allocation,
+                                                  GradientSelect *gradient_sel);
 static void gimp_gradient_select_preview_expose  (GtkWidget      *preview,
                                                   GdkEventExpose *event,
                                                   GradientSelect *gradient_sel);
@@ -108,6 +112,8 @@ gimp_gradient_select_widget_new (const gchar             *title,
 
   gradient_sel->button = gtk_button_new ();
 
+  gradient_sel->gradient_name = g_strdup (gradient_name);
+
   g_signal_connect (gradient_sel->button, "clicked",
                     G_CALLBACK (gimp_gradient_select_widget_clicked),
                     gradient_sel);
@@ -121,17 +127,13 @@ gimp_gradient_select_widget_new (const gchar             *title,
                      gradient_sel->preview);
   gtk_widget_show (gradient_sel->preview);
 
+  g_signal_connect (gradient_sel->preview, "size_allocate",
+                    G_CALLBACK (gimp_gradient_select_preview_size_allocate),
+                    gradient_sel);
+
   g_signal_connect (gradient_sel->preview, "expose_event",
                     G_CALLBACK (gimp_gradient_select_preview_expose),
                     gradient_sel);
-
-  /* Do initial gradient setup */
-  gradient_sel->gradient_name =
-    gimp_gradients_get_gradient_data (gradient_name,
-                                      gradient_sel->sample_size,
-                                      gradient_sel->reverse,
-                                      &gradient_sel->width,
-                                      &gradient_sel->gradient_data);
 
   g_object_set_data (G_OBJECT (gradient_sel->button),
                      GRADIENT_SELECT_DATA_KEY, gradient_sel);
@@ -279,6 +281,34 @@ gimp_gradient_select_widget_destroy (GtkWidget      *widget,
 }
 
 static void
+gimp_gradient_select_preview_size_allocate (GtkWidget      *widget,
+                                            GtkAllocation  *allocation,
+                                            GradientSelect *gradient_sel)
+{
+  gchar   *name;
+  gdouble *data;
+  gint     width;
+
+  name = gimp_gradients_get_gradient_data (gradient_sel->gradient_name,
+                                           allocation->width,
+                                           gradient_sel->reverse,
+                                           &width,
+                                           &data);
+
+  if (name)
+    {
+      gradient_sel->sample_size   = allocation->width;
+      gradient_sel->width         = width;
+
+      g_free (gradient_sel->gradient_name);
+      gradient_sel->gradient_name = name;
+
+      g_free (gradient_sel->gradient_data);
+      gradient_sel->gradient_data = data;
+    }
+}
+
+static void
 gimp_gradient_select_preview_expose (GtkWidget      *widget,
                                      GdkEventExpose *event,
                                      GradientSelect *gradient_sel)
@@ -290,8 +320,10 @@ gimp_gradient_select_preview_expose (GtkWidget      *widget,
   guchar        *odd;
   gint           x, y;
 
-  /*  Draw the gradient  */
   src = gradient_sel->gradient_data;
+  if (! src)
+    return;
+
   p0  = even = g_malloc (gradient_sel->width * 3);
   p1  = odd  = g_malloc (gradient_sel->width * 3);
 
@@ -334,7 +366,7 @@ gimp_gradient_select_preview_expose (GtkWidget      *widget,
                                     event->area.x, y,
                                     event->area.width, 1,
                                     GDK_RGB_DITHER_MAX,
-                                    buf + event->area.x,
+                                    buf + event->area.x * 3,
                                     gradient_sel->width * 3,
                                     - event->area.x, - y);
     }
