@@ -243,6 +243,12 @@ gimp_floating_sel_relax
 </SECTION>
 
 <SECTION>
+<FILE>gimpfonts</FILE>
+gimp_fonts_refresh
+gimp_fonts_get_list
+</SECTION>
+
+<SECTION>
 <FILE>gimpfontselect</FILE>
 GimpRunFontCallback
 gimp_font_select_new

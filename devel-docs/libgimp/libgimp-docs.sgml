@@ -12,6 +12,7 @@
 <!ENTITY GimpEdit SYSTEM "xml/gimpedit.xml">
 <!ENTITY GimpFileops SYSTEM "xml/gimpfileops.xml">
 <!ENTITY GimpFloatingsel SYSTEM "xml/gimpfloatingsel.xml">
+<!ENTITY GimpFonts SYSTEM "xml/gimpfonts.xml">
 <!ENTITY GimpFontSelect SYSTEM "xml/gimpfontselect.xml">
 <!ENTITY GimpGimprc SYSTEM "xml/gimpgimprc.xml">
 <!ENTITY GimpGradients SYSTEM "xml/gimpgradients.xml">
@@ -75,6 +76,7 @@
     &GimpEdit;
     &GimpFileops;
     &GimpFloatingsel;
+    &GimpFonts;
     &GimpGimprc;
     &GimpGradients;
     &GimpGuides;

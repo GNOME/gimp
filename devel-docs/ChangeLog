@@ -1,3 +1,9 @@
+2003-09-04  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-docs.sgml
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpfonts.sgml: added docs for new fonts API.
+
 2003-09-03  Sven Neumann  <sven@gimp.org>
 
 	* app/Makefile.am (IGNORE_HFILES): added some more files to ignore.
