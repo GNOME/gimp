@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-04 03:39+0200\n"
-"PO-Revision-Date: 2004-05-04 12:24+0200\n"
+"POT-Creation-Date: 2004-05-27 03:40+0200\n"
+"PO-Revision-Date: 2004-05-27 14:01+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -290,7 +290,11 @@ msgid ""
 "swap file. Some parts of your images may be corrupted. Try to save your work "
 "using different filenames, restart the Gimp and check the location of the "
 "swap directory in your Preferences."
-msgstr "Nemohu otevřít odkládací soubor. Gimpu došla paměť a nemůže použít odkládací soubor. Některé části vašich obrázků mohou být poškozeny. Zkuste uložit svou práci pod jinými názvy souborů, spustit Gimp znovu a zkontrolovat nastavení odkládacího adresáře ve vašich Předvolbách."
+msgstr ""
+"Nemohu otevřít odkládací soubor. Gimpu došla paměť a nemůže použít odkládací "
+"soubor. Některé části vašich obrázků mohou být poškozeny. Zkuste uložit svou "
+"práci pod jinými názvy souborů, spustit Gimp znovu a zkontrolovat nastavení "
+"odkládacího adresáře ve vašich Předvolbách."
 
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
@@ -337,7 +341,7 @@ msgstr "Nemohu expandovat ${%s}"
 #: app/core/gimpbrush.c:396 app/core/gimpbrushgenerated.c:379
 #: app/core/gimpbrushpipe.c:349 app/core/gimpgradient.c:352
 #: app/core/gimppalette.c:369 app/core/gimppattern.c:328
-#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:420
+#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:423
 #: app/xcf/xcf.c:273
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -473,15 +477,11 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:74
 msgid ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
-"algorithm.  The seed fill starts at the intially selected pixel and "
+"algorithm.  The seed fill starts at the initially selected pixel and "
 "progresses in all directions until the difference of pixel intensity from "
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
-msgstr ""
-"Nástroje jako přibližný výběr a plechovka hledají oblasti algoritmem "
-"semínkového vyplňování. Semínkové vyplňování začne na původně vybraném "
-"pixelu a pokračuje ve všech směrech, dokud není rozdíl intenzity pixelu od "
-"originálu větší než zadaný limit. Tato hodnota reprezentuje implicitní limit."
+msgstr "Nástroje jako přibližný výběr a plechovka hledají oblasti algoritmem semínkového vyplňování. Semínkové vyplňování začne na původně vybraném pixelu a pokračuje ve všech směrech, dokud není rozdíl intenzity pixelu od originálu větší než zadaný limit. Tato hodnota představuje implicitní limit."
 
 #: app/config/gimprc-blurbs.h:87
 msgid ""
@@ -569,6 +569,20 @@ msgid ""
 msgstr ""
 "Nastavuje minimální počet barev systému alokovaných pro GIMP, obecně "
 "důležité jen pro osmibitové displeje."
+
+#: app/config/gimprc-blurbs.h:193
+msgid ""
+"Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
+"forces the X server to be queried for both horizontal and vertical "
+"resolution information."
+msgstr "Nastaví vodorovné rozlišení monitoru v bodech na palec. Je-li nastaveno na 0, vynutí získání informací o vodorovném a svislém rozlišení z X serveru."
+
+#: app/config/gimprc-blurbs.h:198
+msgid ""
+"Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
+"forces the X server to be queried for both horizontal and vertical "
+"resolution information."
+msgstr "Nastaví svislé rozlišení monitoru v bodech na palec. Je-li nastaveno na 0, vynutí získání informací o vodorovném a svislém rozlišení z X serveru."
 
 #: app/config/gimprc-blurbs.h:203
 msgid ""
@@ -2376,7 +2390,7 @@ msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr "Jednotka používaná pro zobrazování souřadnic mimo režim bod na bod."
 
 #: app/core/gimptemplate.c:150
-msgid "The horizonal image resolution."
+msgid "The horizontal image resolution."
 msgstr "Vodorovné rozlišení obrázku."
 
 #: app/core/gimptemplate.c:155
@@ -2388,8 +2402,8 @@ msgstr "Svislé rozlišení obrázku."
 msgid "pixel"
 msgstr "pixel"
 
-#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:872
-#: app/tools/gimppainttool.c:707
+#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:780
+#: app/tools/gimpmeasuretool.c:872 app/tools/gimppainttool.c:707
 msgid "pixels"
 msgstr "pixelů"
 
@@ -3554,7 +3568,7 @@ msgid "/blendingfunction/_Curved"
 msgstr "/funkcemísení/_Zakřivená"
 
 #: app/gui/gradient-editor-menu.c:178
-msgid "/blendingfunction/_Sinusodial"
+msgid "/blendingfunction/_Sinusoidal"
 msgstr "/funkcemísení/_Sinusoidní"
 
 #: app/gui/gradient-editor-menu.c:183
@@ -5653,7 +5667,7 @@ msgid "Fit to Window"
 msgstr "Přizpůsobit velikosti okna"
 
 #: app/gui/preferences-dialog.c:1512
-msgid "Inital Zoom Ratio:"
+msgid "Initial Zoom Ratio:"
 msgstr "Počáteční zvětšení:"
 
 #. Pointer Movement Feedback
@@ -9628,11 +9642,11 @@ msgstr "Načíst text ze souboru"
 msgid "Clear all Text"
 msgstr "Vymazat všechen text"
 
-#: app/widgets/gimptexteditor.c:364
+#: app/widgets/gimptexteditor.c:367
 msgid "Open Text File (UTF-8)"
 msgstr "Otevřít textový soubor (UTF-8)"
 
-#: app/widgets/gimptexteditor.c:449
+#: app/widgets/gimptexteditor.c:452
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Neplatná data v kódování UTF-8 v souboru '%s'."
