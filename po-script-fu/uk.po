@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins-1.1.19\n"
-"POT-Creation-Date: 2000-12-18 23:30-0800\n"
+"POT-Creation-Date: 2001-01-12 09:52+0200\n"
 "PO-Revision-Date: 2000-03-10 11:26+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -22,7 +22,7 @@ msgstr "Консоль Скрипт-Фу"
 
 #. Action area
 #: plug-ins/script-fu/script-fu-console.c:199
-#: plug-ins/script-fu/script-fu-scripts.c:2033
+#: plug-ins/script-fu/script-fu-scripts.c:2041
 msgid "Close"
 msgstr "Закрити"
 
@@ -53,70 +53,70 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Режим виконання Скрипт-Фу дозволя╓ лише не╕нтерактивну роботу"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1206
-#: plug-ins/script-fu/script-fu-scripts.c:1209
+#: plug-ins/script-fu/script-fu-scripts.c:1210
+#: plug-ins/script-fu/script-fu-scripts.c:1213
 msgid "/Script-Fu/"
 msgstr "/Скрипт-Фу/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1208
-#: plug-ins/script-fu/script-fu-scripts.c:1211
+#: plug-ins/script-fu/script-fu-scripts.c:1212
+#: plug-ins/script-fu/script-fu-scripts.c:1215
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Скрипт-Фу: %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1234
+#: plug-ins/script-fu/script-fu-scripts.c:1238
 msgid "Script Arguments"
 msgstr "Аргументи скрипту"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1257
+#: plug-ins/script-fu/script-fu-scripts.c:1261
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1304
+#: plug-ins/script-fu/script-fu-scripts.c:1308
 msgid "Script-Fu Color Selection"
 msgstr "Виб╕р кольору Скрипт-Фу"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1374
+#: plug-ins/script-fu/script-fu-scripts.c:1382
 msgid "Script-Fu File Selection"
 msgstr "Виб╕р файлу Скрипт-Фу"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1406
+#: plug-ins/script-fu/script-fu-scripts.c:1414
 msgid "Script-fu Pattern Selection"
 msgstr "Виб╕р в╕зерунку Скрипт-Фу"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1413
+#: plug-ins/script-fu/script-fu-scripts.c:1421
 msgid "Script-Fu Gradient Selection"
 msgstr "Виб╕р град╕╓нту Скрипт-Фу"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1421
+#: plug-ins/script-fu/script-fu-scripts.c:1429
 msgid "Script-Fu Brush Selection"
 msgstr "Виб╕р пензля Скрипт-Фу"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1467
+#: plug-ins/script-fu/script-fu-scripts.c:1475
 msgid "Reset to Defaults"
 msgstr "Скасувати"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1493
+#: plug-ins/script-fu/script-fu-scripts.c:1501
 msgid "About"
 msgstr "Про"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1507
+#: plug-ins/script-fu/script-fu-scripts.c:1515
 #: plug-ins/script-fu/script-fu-server.c:544
 msgid "OK"
 msgstr "Гаразд"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1516
+#: plug-ins/script-fu/script-fu-scripts.c:1524
 #: plug-ins/script-fu/script-fu-server.c:546
 msgid "Cancel"
 msgstr "В╕дмова"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1682
+#: plug-ins/script-fu/script-fu-scripts.c:1690
 msgid "NOT SET"
 msgstr "НЕ ВИЗНАЧЕНО"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1711
+#: plug-ins/script-fu/script-fu-scripts.c:1719
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -124,27 +124,27 @@ msgstr ""
 "Принаймн╕ один з вибраних вами шрифт╕в нев╕рний.\n"
 "Будь ласка, перев╕рте ваш╕ настройки.\n"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2004
+#: plug-ins/script-fu/script-fu-scripts.c:2012
 msgid "Author:"
 msgstr "Автор:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2010
+#: plug-ins/script-fu/script-fu-scripts.c:2018
 msgid "Copyright:"
 msgstr "Авторське право:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2016
+#: plug-ins/script-fu/script-fu-scripts.c:2024
 msgid "Date:"
 msgstr "Дата:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2024
+#: plug-ins/script-fu/script-fu-scripts.c:2032
 msgid "Image Types:"
 msgstr "Типи зображень:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2189
+#: plug-ins/script-fu/script-fu-scripts.c:2195
 msgid "Script-Fu Font Selection"
 msgstr "Виб╕р шрифту Скрипт-Фу"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2256
+#: plug-ins/script-fu/script-fu-scripts.c:2262
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -557,7 +557,7 @@ msgstr "<Toolbox>/Розш./Скрипт-Фу/Р╕зне/Сфера..."
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Скрипт-Фу/В╕зерунки/Тривим╕рний Труше..."
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
@@ -589,7 +589,7 @@ msgstr "<Toolbox>/Розш./Скрипт-Фу/В╕зерунки/Трохо╕да..."
 
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
-msgstr ""
+msgstr "<Toolbox>/Розш./Скрипт-Фу/В╕зерунки/Труше..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
