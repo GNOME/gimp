@@ -26,13 +26,17 @@
 #include "gui-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpbrush.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
+#include "core/gimppattern.h"
 #include "core/gimppalette.h"
 #include "core/gimptoolinfo.h"
+
+#include "text/gimpfont.h"
 
 #include "vectors/gimpvectors.h"
 
@@ -92,30 +96,22 @@
 static void dialogs_indexed_palette_selected      (GimpColormapEditor *editor,
                                                    GimpDockable       *dockable);
 
-static GtkWidget * dialogs_brush_tab_func         (GimpDockable       *dockable,
+static GtkWidget * dialogs_viewable_tab_func      (GimpDockable       *dockable,
                                                    GimpDockbook       *dockbook,
-                                                   GtkIconSize         size);
-static GtkWidget * dialogs_pattern_tab_func       (GimpDockable       *dockable,
-                                                   GimpDockbook       *dockbook,
-                                                   GtkIconSize         size);
-static GtkWidget * dialogs_gradient_tab_func      (GimpDockable       *dockable,
-                                                   GimpDockbook       *dockbook,
-                                                   GtkIconSize         size);
-static GtkWidget * dialogs_palette_tab_func       (GimpDockable       *dockable,
-                                                   GimpDockbook       *dockbook,
-                                                   GtkIconSize         size);
-static GtkWidget * dialogs_font_tab_func          (GimpDockable       *dockable,
-                                                   GimpDockbook       *dockbook,
-                                                   GtkIconSize         size);
+                                                   GtkIconSize         size,
+                                                   gpointer            tab_data);
 static GtkWidget * dialogs_tool_tab_func          (GimpDockable       *dockable,
                                                    GimpDockbook       *dockbook,
-                                                   GtkIconSize         size);
+                                                   GtkIconSize         size,
+                                                   gpointer            tab_data);
 static GtkWidget * dialogs_tool_options_tab_func  (GimpDockable       *dockable,
                                                    GimpDockbook       *dockbook,
-                                                   GtkIconSize         size);
+                                                   GtkIconSize         size,
+                                                   gpointer            tab_data);
 static GtkWidget * dialogs_stock_text_tab_func    (GimpDockable       *dockable,
                                                    GimpDockbook       *dockbook,
-                                                   GtkIconSize         size);
+                                                   GtkIconSize         size,
+                                                   gpointer            tab_data);
 
 static void   dialogs_set_view_context_func         (GimpDockable     *dockable,
                                                      GimpContext      *context);
@@ -137,6 +133,7 @@ static GtkWidget * dialogs_dockable_new (GtkWidget                  *widget,
 					 const gchar                *short_name,
                                          const gchar                *stock_id,
 					 GimpDockableGetTabFunc      get_tab_func,
+                                         gpointer                    get_tab_data,
 					 GimpDockableSetContextFunc  set_context_func);
 
 static void dialogs_image_item_view_image_changed  (GimpContext         *context,
@@ -269,7 +266,7 @@ dialogs_tool_options_get (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
                                _("Tool Options"), _("Tool Options"), NULL,
-                               dialogs_tool_options_tab_func,
+                               dialogs_tool_options_tab_func, NULL,
                                NULL);
 }
 
@@ -290,7 +287,7 @@ dialogs_error_console_get (GimpDialogFactory *factory,
   return dialogs_dockable_new (view,
                                _("Error Console"), _("Errors"),
                                GIMP_STOCK_WARNING,
-                               NULL,
+                               NULL, NULL,
                                NULL);
 }
 
@@ -312,7 +309,7 @@ dialogs_image_list_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Image List"), _("Images"), NULL,
-			       NULL,
+			       NULL, NULL,
 			       dialogs_set_editor_context_func);
 }
 
@@ -333,7 +330,8 @@ dialogs_brush_list_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Brush List"), _("Brushes"), NULL,
-			       dialogs_brush_tab_func,
+			       dialogs_viewable_tab_func,
+                               (gpointer) GIMP_TYPE_BRUSH,
 			       dialogs_set_editor_context_func);
 }
 
@@ -353,7 +351,8 @@ dialogs_pattern_list_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Pattern List"), _("Patterns"), NULL,
-			       dialogs_pattern_tab_func,
+			       dialogs_viewable_tab_func,
+                               (gpointer) GIMP_TYPE_PATTERN,
 			       dialogs_set_editor_context_func);
 }
 
@@ -373,7 +372,8 @@ dialogs_gradient_list_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Gradient List"), _("Gradients"), NULL,
-			       dialogs_gradient_tab_func,
+			       dialogs_viewable_tab_func,
+                               (gpointer) GIMP_TYPE_GRADIENT,
 			       dialogs_set_editor_context_func);
 }
 
@@ -393,7 +393,8 @@ dialogs_palette_list_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Palette List"), _("Palettes"), NULL,
-			       dialogs_palette_tab_func,
+			       dialogs_viewable_tab_func,
+                               (gpointer) GIMP_TYPE_PALETTE,
 			       dialogs_set_editor_context_func);
 }
 
@@ -411,7 +412,8 @@ dialogs_font_list_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Font List"), _("Fonts"), NULL,
-			       dialogs_font_tab_func,
+			       dialogs_viewable_tab_func,
+                               (gpointer) GIMP_TYPE_FONT,
 			       dialogs_set_view_context_func);
 }
 
@@ -429,7 +431,7 @@ dialogs_tool_list_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Tool List"), _("Tools"), NULL,
-			       dialogs_tool_tab_func,
+			       dialogs_tool_tab_func, NULL,
 			       dialogs_set_view_context_func);
 }
 
@@ -449,7 +451,7 @@ dialogs_buffer_list_view_new (GimpDialogFactory *factory,
   return dialogs_dockable_new (view,
 			       _("Buffer List"), _("Buffers"),
                                GTK_STOCK_PASTE,
-			       dialogs_stock_text_tab_func,
+			       dialogs_stock_text_tab_func, NULL,
 			       dialogs_set_editor_context_func);
 }
 
@@ -471,7 +473,7 @@ dialogs_image_grid_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Image Grid"), _("Images"), NULL,
-			       NULL,
+			       NULL, NULL,
 			       dialogs_set_editor_context_func);
 }
 
@@ -492,7 +494,8 @@ dialogs_brush_grid_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Brush Grid"), _("Brushes"), NULL,
-			       dialogs_brush_tab_func,
+			       dialogs_viewable_tab_func,
+                               (gpointer) GIMP_TYPE_BRUSH,
 			       dialogs_set_editor_context_func);
 }
 
@@ -512,7 +515,8 @@ dialogs_pattern_grid_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Pattern Grid"), _("Patterns"), NULL,
-			       dialogs_pattern_tab_func,
+			       dialogs_viewable_tab_func,
+                               (gpointer) GIMP_TYPE_PATTERN,
 			       dialogs_set_editor_context_func);
 }
 
@@ -532,7 +536,8 @@ dialogs_gradient_grid_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Gradient Grid"), _("Gradients"), NULL,
-			       dialogs_gradient_tab_func,
+			       dialogs_viewable_tab_func,
+                               (gpointer) GIMP_TYPE_GRADIENT,
 			       dialogs_set_editor_context_func);
 }
 
@@ -552,7 +557,8 @@ dialogs_palette_grid_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Palette Grid"), _("Palettes"), NULL,
-			       dialogs_palette_tab_func,
+			       dialogs_viewable_tab_func,
+                               (gpointer) GIMP_TYPE_PALETTE,
 			       dialogs_set_editor_context_func);
 }
 
@@ -570,7 +576,8 @@ dialogs_font_grid_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Font Grid"), _("Fonts"), NULL,
-			       dialogs_font_tab_func,
+			       dialogs_viewable_tab_func,
+                               (gpointer) GIMP_TYPE_FONT,
 			       dialogs_set_view_context_func);
 }
 
@@ -588,7 +595,7 @@ dialogs_tool_grid_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
 			       _("Tool Grid"), _("Tools"), NULL,
-			       dialogs_tool_tab_func,
+			       dialogs_tool_tab_func, NULL,
 			       dialogs_set_view_context_func);
 }
 
@@ -608,7 +615,7 @@ dialogs_buffer_grid_view_new (GimpDialogFactory *factory,
   return dialogs_dockable_new (view,
 			       _("Buffer Grid"), _("Buffers"),
                                GTK_STOCK_PASTE,
-			       dialogs_stock_text_tab_func,
+			       dialogs_stock_text_tab_func, NULL,
 			       dialogs_set_editor_context_func);
 }
 
@@ -640,8 +647,8 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
                              factory->menu_factory, "<Layers>");
 
   dockable = dialogs_dockable_new (view,
-				   "Layer List", _("Layers"), NULL,
-				   NULL,
+				   _("Layer List"), _("Layers"), NULL,
+				   NULL, NULL,
 				   dialogs_set_image_item_context_func);
 
   gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
@@ -674,8 +681,8 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
                              factory->menu_factory, "<Channels>");
 
   dockable = dialogs_dockable_new (view,
-				   "Channel List", _("Channels"), NULL,
-				   NULL,
+				   _("Channel List"), _("Channels"), NULL,
+				   NULL, NULL,
 				   dialogs_set_image_item_context_func);
 
   gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
@@ -713,8 +720,8 @@ dialogs_vectors_list_view_new (GimpDialogFactory *factory,
   vectors_view->stroke_item_func = vectors_stroke_vectors;
 
   dockable = dialogs_dockable_new (view,
-				   "Paths List", _("Paths"), NULL,
-				   NULL,
+				   _("Paths List"), _("Paths"), NULL,
+				   NULL, NULL,
 				   dialogs_set_image_item_context_func);
 
   gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
@@ -739,8 +746,8 @@ dialogs_path_list_view_new (GimpDialogFactory *factory,
   g_object_add_weak_pointer (G_OBJECT (view), (gpointer *) &view);
 
   dockable = dialogs_dockable_new (view,
-				   _("Old Path List"), _("Old Paths"), NULL,
-				   NULL,
+				   "Old Path List", "Old Paths", NULL,
+				   NULL, NULL,
 				   dialogs_set_path_context_func);
 
   gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
@@ -763,7 +770,7 @@ dialogs_indexed_palette_new (GimpDialogFactory *factory,
 
   dockable = dialogs_dockable_new (view,
 				   _("Indexed Palette"), _("Colormap"), NULL,
-				   NULL,
+				   NULL, NULL,
 				   dialogs_set_image_editor_context_func);
 
   gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
@@ -791,7 +798,7 @@ dialogs_selection_editor_new (GimpDialogFactory *factory,
   dockable = dialogs_dockable_new (view,
 				   _("Selection Editor"), _("Selection"),
                                    GIMP_STOCK_TOOL_RECT_SELECT,
-				   dialogs_stock_text_tab_func,
+				   dialogs_stock_text_tab_func, NULL,
 				   dialogs_set_image_editor_context_func);
 
   gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
@@ -815,7 +822,7 @@ dialogs_undo_history_new (GimpDialogFactory *factory,
   dockable = dialogs_dockable_new (view,
 				   _("Undo History"), _("Undo"),
                                    GTK_STOCK_UNDO,
-				   dialogs_stock_text_tab_func,
+				   dialogs_stock_text_tab_func, NULL,
 				   dialogs_set_image_editor_context_func);
 
   gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
@@ -838,7 +845,7 @@ dialogs_color_editor_new (GimpDialogFactory *factory,
   return dialogs_dockable_new (view,
 			       _("Color Editor"), _("Color"),
                                GTK_STOCK_SELECT_COLOR,
-			       dialogs_stock_text_tab_func,
+			       dialogs_stock_text_tab_func, NULL,
 			       dialogs_set_color_editor_context_func);
 }
 
@@ -859,7 +866,7 @@ dialogs_document_list_new (GimpDialogFactory *factory,
   return dialogs_dockable_new (view,
 			       _("Document History List"), _("History"),
                                GTK_STOCK_OPEN,
-			       dialogs_stock_text_tab_func,
+			       dialogs_stock_text_tab_func, NULL,
 			       dialogs_set_editor_context_func);
 }
 
@@ -880,7 +887,7 @@ dialogs_document_grid_new (GimpDialogFactory *factory,
   return dialogs_dockable_new (view,
 			       _("Document History Grid"), _("History"),
                                GTK_STOCK_OPEN,
-			       dialogs_stock_text_tab_func,
+			       dialogs_stock_text_tab_func, NULL,
 			       dialogs_set_editor_context_func);
 }
 
@@ -900,7 +907,7 @@ dialogs_template_list_new (GimpDialogFactory *factory,
   return dialogs_dockable_new (view,
 			       _("List of Templates"), _("Templates"),
                                GIMP_STOCK_TEMPLATE,
-			       dialogs_stock_text_tab_func,
+			       dialogs_stock_text_tab_func, NULL,
 			       dialogs_set_editor_context_func);
 }
 
@@ -920,7 +927,8 @@ dialogs_brush_editor_get (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (GTK_WIDGET (brush_editor),
                                _("Brush Editor"), _("Brush Editor"), NULL,
-                               NULL, NULL);
+                               NULL, NULL,
+                               NULL);
 }
 
 void
@@ -948,7 +956,8 @@ dialogs_gradient_editor_get (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (GTK_WIDGET (gradient_editor),
 			       _("Gradient Editor"), _("Gradient Editor"), NULL,
-			       NULL, NULL);
+			       NULL, NULL,
+                               NULL);
 }
 
 void
@@ -976,7 +985,8 @@ dialogs_palette_editor_get (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (GTK_WIDGET (palette_editor),
 			       _("Palette Editor"), _("Palette Editor"), NULL,
-			       NULL, NULL);
+			       NULL, NULL,
+                               NULL);
 }
 
 void
@@ -1012,7 +1022,7 @@ dialogs_navigation_view_new (GimpDialogFactory *factory,
   return dialogs_dockable_new (view,
                                _("Display Navigation"), _("Navigation"),
                                GIMP_STOCK_NAVIGATION,
-                               dialogs_stock_text_tab_func,
+                               dialogs_stock_text_tab_func, NULL,
                                dialogs_set_navigation_context_func);
 }
 
@@ -1051,133 +1061,31 @@ dialogs_indexed_palette_selected (GimpColormapEditor *editor,
 }
 
 static GtkWidget *
-dialogs_brush_tab_func (GimpDockable *dockable,
-			GimpDockbook *dockbook,
-			GtkIconSize   size)
+dialogs_viewable_tab_func (GimpDockable *dockable,
+                           GimpDockbook *dockbook,
+                           GtkIconSize   size,
+                           gpointer      tab_data)
 {
   GimpContext *context;
   GtkWidget   *preview;
   gint         width;
   gint         height;
+  GType        type;
 
   context = dockbook->dock->context;
 
   gtk_icon_size_lookup (size, &width, &height);
+
+  type = (GType) tab_data;
 
   preview =
-    gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_brush (context)),
+    gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_by_type (context,
+                                                                    type)),
 			   width, height, 1,
 			   FALSE, FALSE, FALSE);
 
-  g_signal_connect_object (context, "brush_changed",
-			   G_CALLBACK (gimp_preview_set_viewable),
-			   preview,
-			   G_CONNECT_SWAPPED);
-
-  return preview;
-}
-
-static GtkWidget *
-dialogs_pattern_tab_func (GimpDockable *dockable,
-			  GimpDockbook *dockbook,
-			  GtkIconSize   size)
-{
-  GimpContext *context;
-  GtkWidget   *preview;
-  gint         width;
-  gint         height;
-
-  context = dockbook->dock->context;
-
-  gtk_icon_size_lookup (size, &width, &height);
-
-  preview =
-    gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_pattern (context)),
-			   width, height, 1,
-			   FALSE, FALSE, FALSE);
-
-  g_signal_connect_object (context, "pattern_changed",
-			   G_CALLBACK (gimp_preview_set_viewable),
-			   preview,
-			   G_CONNECT_SWAPPED);
-
-  return preview;
-}
-
-static GtkWidget *
-dialogs_gradient_tab_func (GimpDockable *dockable,
-			   GimpDockbook *dockbook,
-			   GtkIconSize   size)
-{
-  GimpContext *context;
-  GtkWidget   *preview;
-  gint         width;
-  gint         height;
-
-  context = dockbook->dock->context;
-
-  gtk_icon_size_lookup (size, &width, &height);
-
-   preview =
-    gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_gradient (context)),
-			   width, height, 1,
-			   FALSE, FALSE, FALSE);
-
-  g_signal_connect_object (context, "gradient_changed",
-			   G_CALLBACK (gimp_preview_set_viewable),
-			   preview,
-			   G_CONNECT_SWAPPED);
-
-  return preview;
-}
-
-static GtkWidget *
-dialogs_palette_tab_func (GimpDockable *dockable,
-			  GimpDockbook *dockbook,
-			  GtkIconSize   size)
-{
-  GimpContext *context;
-  GtkWidget   *preview;
-  gint         width;
-  gint         height;
-
-  context = dockbook->dock->context;
-
-  gtk_icon_size_lookup (size, &width, &height);
-
-  preview =
-    gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_palette (context)),
-			   width, height, 1,
-			   FALSE, FALSE, FALSE);
-
-  g_signal_connect_object (context, "palette_changed",
-			   G_CALLBACK (gimp_preview_set_viewable),
-			   preview,
-			   G_CONNECT_SWAPPED);
-
-  return preview;
-}
-
-static GtkWidget *
-dialogs_font_tab_func (GimpDockable *dockable,
-                       GimpDockbook *dockbook,
-                       GtkIconSize   size)
-{
-  GimpContext *context;
-  GtkWidget   *preview;
-  gint         width;
-  gint         height;
-
-  context = dockbook->dock->context;
-
-  gtk_icon_size_lookup (size, &width, &height);
-
-  preview =
-    gimp_preview_new_full (GIMP_VIEWABLE (gimp_context_get_font (context)),
-			   width, height, 1,
-			   FALSE, FALSE, FALSE);
-
-  g_signal_connect_object (context, "font_changed",
+  g_signal_connect_object (context,
+                           gimp_context_type_to_signal_name (type),
 			   G_CALLBACK (gimp_preview_set_viewable),
 			   preview,
 			   G_CONNECT_SWAPPED);
@@ -1198,8 +1106,9 @@ dialogs_tool_tab_tool_changed (GimpContext  *context,
 
 static GtkWidget *
 dialogs_tool_tab_func (GimpDockable *dockable,
-		       GimpDockbook *dockbook,
-		       GtkIconSize   size)
+                       GimpDockbook *dockbook,
+                       GtkIconSize   size,
+                       gpointer      tab_data)
 {
   GimpContext  *context;
   GimpViewable *viewable;
@@ -1213,9 +1122,9 @@ dialogs_tool_tab_func (GimpDockable *dockable,
                                     size);
 
   g_signal_connect_object (context, "tool_changed",
-			   G_CALLBACK (dialogs_tool_tab_tool_changed),
-			   image,
-			   0);
+                           G_CALLBACK (dialogs_tool_tab_tool_changed),
+                           image,
+                           0);
 
   return image;
 }
@@ -1245,7 +1154,8 @@ dialogs_tool_options_tool_changed (GimpContext  *context,
 static GtkWidget *
 dialogs_tool_options_tab_func (GimpDockable *dockable,
                                GimpDockbook *dockbook,
-                               GtkIconSize   size)
+                               GtkIconSize   size,
+                               gpointer      tab_data)
 {
   GimpContext  *context;
   GimpToolInfo *tool_info;
@@ -1287,7 +1197,8 @@ dialogs_tool_options_tab_func (GimpDockable *dockable,
 static GtkWidget *
 dialogs_stock_text_tab_func (GimpDockable *dockable,
                              GimpDockbook *dockbook,
-                             GtkIconSize   size)
+                             GtkIconSize   size,
+                             gpointer      tab_data)
 {
   GimpContext *context;
   GtkWidget   *hbox;
@@ -1494,15 +1405,17 @@ dialogs_dockable_new (GtkWidget                  *widget,
 		      const gchar                *short_name,
                       const gchar                *stock_id,
 		      GimpDockableGetTabFunc      get_tab_func,
+                      gpointer                    get_tab_data,
 		      GimpDockableSetContextFunc  set_context_func)
 {
   GtkWidget *dockable;
 
   dockable = gimp_dockable_new (name,
-				short_name,
+                                short_name,
                                 stock_id,
-				get_tab_func,
-				set_context_func);
+                                get_tab_func,
+                                get_tab_data,
+                                set_context_func);
   gtk_container_add (GTK_CONTAINER (dockable), widget);
   gtk_widget_show (widget);
 

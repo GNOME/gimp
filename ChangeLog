@@ -1,5 +1,15 @@
 2003-04-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdockable.[ch]: Added "gpointer get_tab_data" to
+	GimpDockableGetTabFunc and to gimp_dockable_new().
+
+	* app/gui/dialogs-constructors.c: changed accordingly. Replaced
+	dialogs_[brush,pattern,gradient,palette,font]_tab_func() by
+	dialogs_viewable_tab_func() which gets passed the GType as
+	get_tab_data.
+
+2003-04-08  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpviewable.[ch]: added vitrual function
 	GimpViewable::get_description() which returns the string that
 	should be presented to the user plus an optional tooltip with more

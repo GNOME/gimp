@@ -120,6 +120,7 @@ gimp_dockable_init (GimpDockable *dockable)
   dockable->dockbook         = NULL;
   dockable->context          = NULL;
   dockable->get_tab_func     = NULL;
+  dockable->get_tab_data     = NULL;
   dockable->set_context_func = NULL;
 }
 
@@ -151,8 +152,7 @@ gimp_dockable_destroy (GtkObject *object)
       dockable->stock_id = NULL;
     }
 
-  if (GTK_OBJECT_CLASS (parent_class))
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void
@@ -179,6 +179,7 @@ gimp_dockable_new (const gchar                *name,
 		   const gchar                *short_name,
                    const gchar                *stock_id,
 		   GimpDockableGetTabFunc      get_tab_func,
+                   gpointer                    get_tab_data,
 		   GimpDockableSetContextFunc  set_context_func)
 {
   GimpDockable *dockable;
@@ -193,6 +194,7 @@ gimp_dockable_new (const gchar                *name,
   dockable->stock_id    = g_strdup (stock_id);
 
   dockable->get_tab_func     = get_tab_func;
+  dockable->get_tab_data     = get_tab_data;
   dockable->set_context_func = set_context_func;
 
   return GTK_WIDGET (dockable);
@@ -216,13 +218,10 @@ gimp_dockable_set_context (GimpDockable *dockable,
 			   GimpContext  *context)
 {
   g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
-  g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
+  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
 
   if (context != dockable->context)
-    {
-      GIMP_DOCKABLE_GET_CLASS (dockable)->set_context (dockable,
-						       context);
-    }
+    GIMP_DOCKABLE_GET_CLASS (dockable)->set_context (dockable, context);
 }
 
 static GtkWidget *
@@ -234,9 +233,8 @@ gimp_dockable_real_get_tab_widget (GimpDockable *dockable,
   g_return_val_if_fail (GIMP_IS_DOCKBOOK (dockbook), NULL);
 
   if (dockable->get_tab_func)
-    {
-      return dockable->get_tab_func (dockable, dockbook, size);
-    }
+    return dockable->get_tab_func (dockable, dockbook, size,
+                                   dockable->get_tab_data);
 
   if (dockable->stock_id)
     return gtk_image_new_from_stock (dockable->stock_id, size);
@@ -249,12 +247,10 @@ gimp_dockable_real_set_context (GimpDockable *dockable,
 				GimpContext  *context)
 {
   g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
-  g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
+  g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
 
   if (dockable->set_context_func)
-    {
-      dockable->set_context_func (dockable, context);
-    }
+    dockable->set_context_func (dockable, context);
 
   dockable->context = context;
 }
