@@ -1,3 +1,8 @@
+2004-09-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am (GTKDOC_LIBS): removed same linker hacks
+	as in app/Makefile.am.
+
 2004-09-18  Sven Neumann  <sven@gimp.org>
 
 	* app/Makefile.am (unused_symbols): synced with toplevel

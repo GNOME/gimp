@@ -62,44 +62,27 @@ GTKDOC_CFLAGS = \
 	$(GTK_CFLAGS)	\
 	-I$(includedir)
 
-unused_symbols = \
-	-u $(SYMPREFIX)gimp_container_filter		\
-	-u $(SYMPREFIX)gimp_xml_parser_new		\
-	-u $(SYMPREFIX)gimp_drawable_stroke_vectors	\
-	-u $(SYMPREFIX)gimp_coords_mix			\
-	\
-	-u $(SYMPREFIX)convert_dialog_new		\
-	-u $(SYMPREFIX)grid_dialog_new			\
-	-u $(SYMPREFIX)info_dialog_new			\
-	-u $(SYMPREFIX)info_window_create		\
-	-u $(SYMPREFIX)offset_dialog_new		\
-	-u $(SYMPREFIX)palette_import_dialog_show	\
-	-u $(SYMPREFIX)resize_dialog_new		\
-	-u $(SYMPREFIX)stroke_dialog_new		\
-	-u $(SYMPREFIX)color_dialog_new
-
 GTKDOC_LIBS = \
-	$(unused_symbols)						     \
         $(top_builddir)/app/app_procs.o					     \
         $(top_builddir)/app/batch.o					     \
         $(top_builddir)/app/errors.o					     \
         $(top_builddir)/app/units.o					     \
-        $(top_builddir)/app/config/libappconfig.a			     \
         $(top_builddir)/app/gui/libappgui.a				     \
+	$(top_builddir)/app/actions/libappactions.a			     \
         $(top_builddir)/app/dialogs/libappdialogs.a			     \
         $(top_builddir)/app/menus/libappmenus.a				     \
-	$(top_builddir)/app/actions/libappactions.a			     \
         $(top_builddir)/app/display/libappdisplay.a			     \
         $(top_builddir)/app/tools/libapptools.a				     \
         $(top_builddir)/app/widgets/libappwidgets.a			     \
-        $(top_builddir)/app/core/libappcore.a				     \
         $(top_builddir)/app/pdb/libapppdb.a				     \
+        $(top_builddir)/app/vectors/libappvectors.a			     \
+        $(top_builddir)/app/plug-in/libappplug-in.a			     \
+        $(top_builddir)/app/core/libappcore.a				     \
         $(top_builddir)/app/paint/libapppaint.a				     \
         $(top_builddir)/app/xcf/libappxcf.a				     \
         $(top_builddir)/app/text/libapptext.a				     \
-        $(top_builddir)/app/vectors/libappvectors.a			     \
         $(top_builddir)/app/file/libappfile.a				     \
-        $(top_builddir)/app/plug-in/libappplug-in.a			     \
+        $(top_builddir)/app/config/libappconfig.a			     \
         $(top_builddir)/app/paint-funcs/libapppaint-funcs.a		     \
         $(top_builddir)/app/composite/libappcomposite.a			     \
         $(top_builddir)/app/base/libappbase.a				     \
