@@ -1,3 +1,8 @@
+2003-03-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-render.c: #include
+	"core/gimpimage-colormap.h".
+
 2003-03-19  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimplevelstool.c: tweaked the dialog layout a little.
