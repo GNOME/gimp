@@ -1,5 +1,40 @@
 2001-02-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimpcontext.[ch]: added "set_by_type", "get_by_type" and
+	"changed_by_type" methods which take a GtkType and decide from
+	that if to manipulate the Brush, Pattern etc.
+
+	* app/gimpcontainerview.[ch]
+	* app/gimpcontainergridview.[ch]
+	* app/gimpcontainerlistview.[ch]: added a GimpContext to the views
+	which is used to manage the active item.
+
+	* app/commands.c: pass the user_context to the test views.
+
+	* app/gimpbrushpreview.c
+	* app/gimppatternpreview.c
+	* app/gimppreview.[ch]: added a virtual "needs_popup" method which
+	returns a boolen indicating if the viewable is already fully
+	visible.
+
+	* app/gimage.[ch]: removed gimage_foreach() and some other
+	functions which can easily be done be gimp_container_foreach().
+	Removed gimage_delete().
+
+	* app/fileops.c
+	* app/gdisplay.c
+	* app/lc_dialog.c
+	* app/nav_window.c
+	* app/palette_import.c
+	* app/preferences_dialog.c
+	* app/xcf.c
+	* app/pdb/image_cmds.c
+	* tools/pdbgen/pdb/image.pdb: changed accordingly. Switched from
+	"disp_count" refcounting to real GtkObject refcounting for
+	GimpImages.
+
+2001-02-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimpbrush.[ch]
 	* app/gimpbrushpreview.c: moved the scale and pipe indicator
 	rendering code from GimpBrush to GimpBrushPreview.

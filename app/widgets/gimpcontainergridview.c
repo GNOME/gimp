@@ -28,6 +28,7 @@
 #include "colormaps.h"
 #include "gimpcontainer.h"
 #include "gimpcontainergridview.h"
+#include "gimpcontext.h"
 #include "gimppreview.h"
 #include "gimpconstrainedhwrapbox.h"
 
@@ -44,6 +45,8 @@ static void     gimp_container_grid_view_remove_item  (GimpContainerView      *v
 						       gpointer                insert_data);
 static void     gimp_container_grid_view_clear_items  (GimpContainerView      *view);
 static void gimp_container_grid_view_set_preview_size (GimpContainerView      *view);
+static void    gimp_container_grid_view_item_selected (GtkWidget              *widget,
+						       gpointer                data);
 
 
 static GimpContainerViewClass *parent_class = NULL;
@@ -146,6 +149,7 @@ gimp_container_grid_view_destroy (GtkObject *object)
 
 GtkWidget *
 gimp_container_grid_view_new (GimpContainer *container,
+			      GimpContext   *context,
 			      gint           preview_width,
 			      gint           preview_height,
 			      gint           min_items_x,
@@ -156,6 +160,7 @@ gimp_container_grid_view_new (GimpContainer *container,
 
   g_return_val_if_fail (container != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (! context || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (preview_width  > 0 && preview_width  <= 64, NULL);
   g_return_val_if_fail (preview_height > 0 && preview_height <= 64, NULL);
   g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, NULL);
@@ -173,6 +178,8 @@ gimp_container_grid_view_new (GimpContainer *container,
 			(preview_height + 2) * min_items_y - 2);
 
   gimp_container_view_set_container (view, container);
+
+  gimp_container_view_set_context (view, context);
 
   return GTK_WIDGET (grid_view);
 }
@@ -199,6 +206,10 @@ gimp_container_grid_view_insert_item (GimpContainerView *view,
 				preview, index);
 
   gtk_widget_show (preview);
+
+  gtk_signal_connect (GTK_OBJECT (preview), "clicked",
+		      GTK_SIGNAL_FUNC (gimp_container_grid_view_item_selected),
+		      view);
 
   return (gpointer) preview;
 }
@@ -250,4 +261,12 @@ gimp_container_grid_view_set_preview_size (GimpContainerView *view)
     }
 
   gtk_widget_queue_resize (grid_view->wrap_box);
+}
+
+static void
+gimp_container_grid_view_item_selected (GtkWidget *widget,
+					gpointer   data)
+{
+  gimp_container_view_item_selected (GIMP_CONTAINER_VIEW (data),
+				     GIMP_PREVIEW (widget)->viewable);
 }

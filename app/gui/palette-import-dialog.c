@@ -29,6 +29,7 @@
 
 #include "context_manager.h"
 #include "gimage.h"
+#include "gimpcontainer.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimppalette.h"
@@ -45,16 +46,14 @@
 #include "libgimp/gimpintl.h"
 
 
-/* New palette code... */
-
 #define IMPORT_PREVIEW_WIDTH  80
 #define IMPORT_PREVIEW_HEIGHT 80
-#define MAX_IMAGE_COLORS      (10000*2)
+#define MAX_IMAGE_COLORS      (10000 * 2)
 
 typedef enum
 {
-  GRAD_IMPORT = 0,
-  IMAGE_IMPORT = 1,
+  GRAD_IMPORT    = 0,
+  IMAGE_IMPORT   = 1,
   INDEXED_IMPORT = 2
 } ImportType;
 
@@ -317,11 +316,15 @@ palette_import_image_menu_activate (gint        redo,
   /* Get list of images */
   if (import_dialog->import_type == INDEXED_IMPORT)
     {
-      gimage_foreach (palette_import_gimlist_indexed_cb, &list);
+      gimp_container_foreach (image_context,
+			      palette_import_gimlist_indexed_cb,
+			      &list);
     }
   else
     {
-      gimage_foreach (palette_import_gimlist_cb, &list);
+      gimp_container_foreach (image_context,
+			      palette_import_gimlist_cb,
+			      &list);
     }
 
   num_images = g_slist_length (list);
@@ -445,11 +448,15 @@ palette_import_image_count (ImportType type)
 
   if (type == INDEXED_IMPORT)
     {
-      gimage_foreach (palette_import_gimlist_indexed_cb, &list);
+      gimp_container_foreach (image_context,
+			      palette_import_gimlist_indexed_cb,
+			      &list);
     }
   else
     {
-      gimage_foreach (palette_import_gimlist_cb, &list);
+      gimp_container_foreach (image_context,
+			      palette_import_gimlist_cb,
+			      &list);
     }
 
   num_images = g_slist_length (list);

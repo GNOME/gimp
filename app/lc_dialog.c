@@ -655,7 +655,9 @@ lc_dialog_create_image_menu (GimpImage     **def,
 
   *default_index = -1;
 
-  gimage_foreach (lc_dialog_create_image_menu_callback, &data);
+  gimp_container_foreach (image_context,
+			  lc_dialog_create_image_menu_callback,
+			  &data);
 
   if (! data.num_items)
     {

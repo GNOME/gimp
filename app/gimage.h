@@ -26,8 +26,7 @@
 GImage * gimage_new                  (gint               width,
 				      gint               height,
 				      GimpImageBaseType  base_type);
-void     gimage_delete               (GImage            *gimage);
-void     gimage_invalidate_previews  (void);
+
 void     gimage_set_layer_mask_apply (GImage            *gimage,
 				      GimpLayer         *layer);
 void     gimage_set_layer_mask_edit  (GImage            *gimage,
@@ -35,8 +34,6 @@ void     gimage_set_layer_mask_edit  (GImage            *gimage,
 				      gboolean           edit);
 void     gimage_set_layer_mask_show  (GImage            *gimage,
 				      GimpLayer         *layer);
-void     gimage_foreach              (GFunc              func,
-				      gpointer           user_data);
 
 
 extern guint32 next_guide_id;

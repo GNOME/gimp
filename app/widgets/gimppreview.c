@@ -58,6 +58,7 @@ enum
   CLICKED,
   CREATE_PREVIEW,
   CREATE_POPUP,
+  NEEDS_POPUP,
   LAST_SIGNAL
 };
 
@@ -80,6 +81,8 @@ static TempBuf   * gimp_preview_create_preview       (GimpPreview      *preview)
 static TempBuf   * gimp_preview_real_create_preview  (GimpPreview      *preview);
 static GtkWidget * gimp_preview_create_popup         (GimpPreview      *preview);
 static GtkWidget * gimp_preview_real_create_popup    (GimpPreview      *preview);
+static gboolean    gimp_preview_needs_popup          (GimpPreview      *preview);
+static gboolean    gimp_preview_real_needs_popup     (GimpPreview      *preview);
 
 static void        gimp_preview_popup_show           (GimpPreview      *preview, 
 						      gint              x,
@@ -157,6 +160,15 @@ gimp_preview_class_init (GimpPreviewClass *klass)
                     gimp_marshal_POINTER__NONE,
 		    GTK_TYPE_POINTER, 0);
 
+  preview_signals[NEEDS_POPUP] = 
+    gtk_signal_new ("needs_popup",
+                    GTK_RUN_LAST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpPreviewClass,
+				       needs_popup),
+                    gtk_marshal_BOOL__NONE,
+		    GTK_TYPE_BOOL, 0);
+
   gtk_object_class_add_signals (object_class, preview_signals, LAST_SIGNAL);
 
   object_class->destroy = gimp_preview_destroy;
@@ -170,6 +182,7 @@ gimp_preview_class_init (GimpPreviewClass *klass)
   klass->clicked        = NULL;
   klass->create_preview = gimp_preview_real_create_preview;
   klass->create_popup   = gimp_preview_real_create_popup;
+  klass->needs_popup    = gimp_preview_real_needs_popup;
 }
 
 static void
@@ -282,7 +295,7 @@ gimp_preview_button_press_event (GtkWidget      *widget,
 	{
 	  gtk_grab_add (widget);
 
-	  if (preview->show_popup)
+	  if (preview->show_popup && gimp_preview_needs_popup (preview))
 	    {
 	      gimp_preview_popup_show (preview,
 				       bevent->x,
@@ -411,6 +424,23 @@ gimp_preview_real_create_popup (GimpPreview *preview)
   return gimp_preview_new (preview->viewable,
 			   popup_width, popup_height,
 			   FALSE, FALSE);
+}
+
+static gboolean
+gimp_preview_needs_popup (GimpPreview *preview)
+{
+  gboolean needs_popup = FALSE;
+
+  gtk_signal_emit (GTK_OBJECT (preview), preview_signals[NEEDS_POPUP],
+		   &needs_popup);
+
+  return needs_popup;
+}
+
+static gboolean
+gimp_preview_real_needs_popup (GimpPreview *preview)
+{
+  return TRUE;
 }
 
 static gboolean

@@ -92,38 +92,6 @@ gimage_new (gint              width,
   return gimage;
 }
 
-
-/* Ack, GimpImages have their own ref counts! This is going to cause
-   trouble.. It should be pretty easy to convert to proper GtkObject
-   ref counting, though. */
-
-/* This caused trouble indeed. The ref_count was only used by the
-   displays showing the image, so I renamed it to disp_count to 
-   make clear that it should only be used for display references.
-                                               (Sven, 23.01.2000) */ 
-
-void
-gimage_delete (GimpImage *gimage)
-{
-  if (gimage->disp_count <= 0)
-    gtk_object_unref (GTK_OBJECT (gimage));
-}
-
-static void
-gimage_invalidate_previews_foreach_func (gpointer image, 
-					 gpointer user_data)
-{
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
-}
-
-void
-gimage_invalidate_previews (void)
-{
-  gimp_container_foreach (image_context,
-			  gimage_invalidate_previews_foreach_func,
-			  NULL);
-}
-
 static void
 gimage_dirty_handler (GimpImage *gimage)
 {
@@ -142,29 +110,6 @@ gimage_dirty_handler (GimpImage *gimage)
 }
 
 static void
-gimlist_cb (gpointer image, 
-	    gpointer data)
-{
-  GSList **list = (GSList **) data;
-
-  *list = g_slist_prepend (*list, image);
-}
-
-gint
-gimage_image_count (void)
-{
-  GSList *list       = NULL;
-  gint    num_images = 0;
-
-  gimage_foreach (gimlist_cb, &list);
-  num_images = g_slist_length (list);
-
-  g_slist_free (list);
-
-  return num_images;
-}
-
-static void
 gimage_destroy_handler (GimpImage *gimage)
 {
   GList *list;
@@ -180,7 +125,8 @@ gimage_destroy_handler (GimpImage *gimage)
 
   g_list_free (gimage->guides);
 
-  if (gimage_image_count () == 1)  /*  This is the last image  */
+  /*  check if this is the last image  */
+  if (gimp_container_num_children (image_context) == 1)
     {
       dialog_show_toolbox ();
     }
@@ -288,11 +234,4 @@ gimage_set_layer_mask_show (GimpImage *gimage,
   gdisplays_update_area (gimage, off_x, off_y,
 			 gimp_drawable_width (GIMP_DRAWABLE (layer)), 
 			 gimp_drawable_height (GIMP_DRAWABLE (layer)));
-}
-
-void
-gimage_foreach (GFunc    func, 
-		gpointer user_data)
-{
-  gimp_container_foreach (image_context, func, user_data);
 }

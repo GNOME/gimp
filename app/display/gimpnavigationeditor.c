@@ -1532,7 +1532,7 @@ nav_window_get_gdisp (void)
   GDisplay  *gdisp   = NULL;
   GimpImage *gimage;
 
-  gimage_foreach (gimlist_cb, &list);
+  gimp_container_foreach (image_context, gimlist_cb, &list);
 
   if (!list)
     return NULL;

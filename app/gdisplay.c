@@ -127,7 +127,7 @@ gdisplay_new (GimpImage *gimage,
 	      guint      scale)
 {
   GDisplay *gdisp;
-  gchar title [MAX_TITLE_BUF];
+  gchar     title [MAX_TITLE_BUF];
 
   /*  If there isn't an interface, never create a gdisplay  */
   if (no_interface)
@@ -214,6 +214,9 @@ gdisplay_new (GimpImage *gimage,
 
   gimage->instance_count++;   /* this is obsolete */
   gimage->disp_count++;
+
+  gtk_object_ref (GTK_OBJECT (gimage));
+  gtk_object_sink (GTK_OBJECT (gimage));
 
   lc_dialog_preview_update (gimage);
 
@@ -420,7 +423,7 @@ gdisplay_delete (GDisplay *gdisp)
 
   /*  free the gimage  */
   gdisp->gimage->disp_count--;
-  gimage_delete (gdisp->gimage);
+  gtk_object_unref (GTK_OBJECT (gdisp->gimage));
 
   if (gdisp->nav_popup)
     nav_popup_free (gdisp->nav_popup);
@@ -2367,7 +2370,7 @@ gdisplay_reconnect (GDisplay  *gdisp,
 
   gtk_signal_disconnect_by_data (GTK_OBJECT (gdisp->gimage), gdisp);
   gdisp->gimage->disp_count--;
-  gimage_delete (gdisp->gimage);
+  gtk_object_unref (GTK_OBJECT (gdisp->gimage));
 
   instance = gimage->instance_count;
   gimage->instance_count++;
@@ -2375,6 +2378,9 @@ gdisplay_reconnect (GDisplay  *gdisp,
 
   gdisp->gimage = gimage;
   gdisp->instance = instance;
+
+  gtk_object_ref (GTK_OBJECT (gimage));
+  gtk_object_sink (GTK_OBJECT (gimage));
 
   /* reconnect our clean / dirty signals */
   gtk_signal_connect (GTK_OBJECT (gimage), "dirty",

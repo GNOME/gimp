@@ -34,6 +34,7 @@ static void   gimp_pattern_preview_class_init (GimpPatternPreviewClass *klass);
 static void   gimp_pattern_preview_init       (GimpPatternPreview      *preview);
 
 static GtkWidget * gimp_pattern_preview_create_popup (GimpPreview *preview);
+static gboolean    gimp_pattern_preview_needs_popup  (GimpPreview *preview);
 
 
 static GimpPreviewClass *parent_class = NULL;
@@ -76,6 +77,7 @@ gimp_pattern_preview_class_init (GimpPatternPreviewClass *klass)
   parent_class = gtk_type_class (GIMP_TYPE_PREVIEW);
 
   preview_class->create_popup = gimp_pattern_preview_create_popup;
+  preview_class->needs_popup  = gimp_pattern_preview_needs_popup;
 }
 
 static void
@@ -96,4 +98,26 @@ gimp_pattern_preview_create_popup (GimpPreview *preview)
 			   popup_width,
 			   popup_height,
 			   FALSE, FALSE);
+}
+
+static gboolean
+gimp_pattern_preview_needs_popup (GimpPreview *preview)
+{
+  GimpPattern *pattern;
+  gint         pattern_width;
+  gint         pattern_height;
+  gint         width;
+  gint         height;
+
+  pattern        = GIMP_PATTERN (preview->viewable);
+  pattern_width  = pattern->mask->width;
+  pattern_height = pattern->mask->height;
+
+  width  = GTK_WIDGET (preview)->requisition.width;
+  height = GTK_WIDGET (preview)->requisition.height;
+
+  if (pattern_width > width || pattern_height > height)
+    return TRUE;
+
+  return FALSE;
 }

@@ -36,6 +36,7 @@ static void   gimp_brush_preview_init       (GimpBrushPreview      *preview);
 
 static TempBuf   * gimp_brush_preview_create_preview (GimpPreview *preview);
 static GtkWidget * gimp_brush_preview_create_popup   (GimpPreview *preview);
+static gboolean    gimp_brush_preview_needs_popup    (GimpPreview *preview);
 
 
 static GimpPreviewClass *parent_class = NULL;
@@ -79,6 +80,7 @@ gimp_brush_preview_class_init (GimpBrushPreviewClass *klass)
 
   preview_class->create_preview = gimp_brush_preview_create_preview;
   preview_class->create_popup   = gimp_brush_preview_create_popup;
+  preview_class->needs_popup    = gimp_brush_preview_needs_popup;
 }
 
 static void
@@ -224,4 +226,26 @@ gimp_brush_preview_create_popup (GimpPreview *preview)
 			   popup_width,
 			   popup_height,
 			   FALSE, FALSE);
+}
+
+static gboolean
+gimp_brush_preview_needs_popup (GimpPreview *preview)
+{
+  GimpBrush *brush;
+  gint       brush_width;
+  gint       brush_height;
+  gint       width;
+  gint       height;
+
+  brush        = GIMP_BRUSH (preview->viewable);
+  brush_width  = brush->mask->width;
+  brush_height = brush->mask->height;
+
+  width  = GTK_WIDGET (preview)->requisition.width;
+  height = GTK_WIDGET (preview)->requisition.height;
+
+  if (brush_width > width || brush_height > height)
+    return TRUE;
+
+  return FALSE;
 }

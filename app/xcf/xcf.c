@@ -1808,7 +1808,7 @@ xcf_load_image (XcfInfo *info)
   g_message ("XCF: This file is corrupt!  I could not even\n"
 	     "salvage any partial image data from it.");
 
-  gimage_delete (gimage);
+  gtk_object_unref (GTK_OBJECT (gimage));
 
   return NULL;
 }

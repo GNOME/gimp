@@ -27,11 +27,13 @@
 #include "apptypes.h"
 #include "procedural_db.h"
 
+#include "context_manager.h"
 #include "cursorutil.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage.h"
 #include "gimpchannel.h"
+#include "gimpcontainer.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
@@ -184,7 +186,7 @@ image_list_invoker (Argument *args)
   GSList *list = NULL;
   int i;
 
-  gimage_foreach (gimlist_cb, &list);
+  gimp_container_foreach (image_context, gimlist_cb, &list);
   num_images = g_slist_length (list);
 
   if (num_images)
@@ -464,7 +466,7 @@ image_delete_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    gimage_delete (gimage);
+    gtk_object_sink (GTK_OBJECT (gimage));
 
   return procedural_db_return_args (&image_delete_proc, success);
 }

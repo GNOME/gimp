@@ -228,7 +228,7 @@ HELP
     $help  .= ' in the GIMP.';
 
     for ($invoke{code}) {
-	s/list = .*$/gimage_foreach (gimlist_cb, &list);/m;
+	s/list = .*$/gimp_container_foreach (image_context, gimlist_cb, &list);/m;
 	s/DRAWABLE/IMAGE/;
 	s/gimp_drawable_get_ID/pdb_image_to_id/;
     }
@@ -347,7 +347,7 @@ HELP
 
     @inargs = ( &std_image_arg );
 
-    %invoke = ( code => 'gimage_delete (gimage);' );
+    %invoke = ( code => 'gtk_object_sink (GTK_OBJECT (gimage));' );
 }
 
 sub image_free_shadow {
@@ -1433,8 +1433,9 @@ CODE
 }
 
 
-@headers = qw(<string.h> "gimage.h" "libgimpmath/gimpmath.h"
-	      "temp_buf.h" "libgimp/gimplimits.h" "libgimp/gimpintl.h");
+@headers = qw(<string.h> "gimage.h" "context_manager.h" "gimpcontainer.h"
+              "libgimpmath/gimpmath.h" "temp_buf.h" "libgimp/gimplimits.h"
+              "libgimp/gimpintl.h");
 
 $extra{app}->{code} = <<'CODE';
 /* Yuup, this is somewhat unsmooth, to say the least */

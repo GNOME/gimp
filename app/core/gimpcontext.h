@@ -197,6 +197,17 @@ void          gimp_context_copy_args         (GimpContext        *src,
 					      GimpContext        *dest,
 					      GimpContextArgMask  args_mask);
 
+/*  manipulate by GtkType  */
+GimpContextArgType gimp_context_type_to_arg        (GtkType type);
+const gchar     * gimp_context_type_to_signal_name (GtkType type);
+GimpObject       * gimp_context_get_by_type        (GimpContext     *context,
+						    GtkType          type);
+void               gimp_context_set_by_type        (GimpContext     *context,
+						    GtkType          type,
+						    GimpObject      *object);
+void               gimp_context_changed_by_type    (GimpContext     *context,
+						    GtkType          type);
+
 /*  image  */
 GimpImage        * gimp_context_get_image          (GimpContext     *context);
 void               gimp_context_set_image          (GimpContext     *context,

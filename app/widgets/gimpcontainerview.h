@@ -38,6 +38,7 @@ struct _GimpContainerView
   GtkVBox        parent_instance;
 
   GimpContainer *container;
+  GimpContext   *context;
 
   GHashTable    *hash_table;
 
@@ -55,6 +56,9 @@ struct _GimpContainerViewClass
   void     (* remove_item)      (GimpContainerView *view,
 				 GimpViewable      *object,
 				 gpointer           insert_data);
+  void     (* select_item)      (GimpContainerView *view,
+				 GimpViewable      *object,
+				 gpointer           insert_data);
   void     (* clear_items)      (GimpContainerView *view);
   void     (* set_preview_size) (GimpContainerView *view);
 };
@@ -64,9 +68,19 @@ GtkType   gimp_container_view_get_type         (void);
 
 void      gimp_container_view_set_container    (GimpContainerView *view,
 						GimpContainer     *container);
+void      gimp_container_view_set_context      (GimpContainerView *view,
+						GimpContext       *context);
 void      gimp_container_view_set_preview_size (GimpContainerView *view,
 						gint               width,
 						gint               height);
+void      gimp_container_view_select_item      (GimpContainerView *view,
+						GimpViewable      *viewable);
+
+
+/*  private  */
+
+void      gimp_container_view_item_selected    (GimpContainerView *view,
+						GimpViewable      *item);
 
 
 #endif  /*  __GIMP_CONTAINER_VIEW_H__  */

@@ -1332,6 +1332,7 @@ static void
 container_view_new (gboolean       list,
 		    gchar         *title,
 		    GimpContainer *container,
+		    GimpContext   *context,
 		    gint           preview_width,
 		    gint           preview_height)
 {
@@ -1354,6 +1355,7 @@ container_view_new (gboolean       list,
   if (list)
     {
       view = gimp_container_list_view_new (container,
+					   context,
 					   preview_width,
 					   preview_height,
 					   4, 4);
@@ -1361,6 +1363,7 @@ container_view_new (gboolean       list,
   else
     {
       view = gimp_container_grid_view_new (container,
+					   context,
 					   preview_width,
 					   preview_height,
 					   4, 4);
@@ -1386,42 +1389,60 @@ void
 dialogs_test_image_container_list_view_cmd_callback (GtkWidget *widget,
 						     gpointer   client_data)
 {
-  container_view_new (TRUE, "Image List", image_context, 64, 64);
+  container_view_new (TRUE, "Image List",
+		      image_context,
+		      gimp_context_get_user (),
+		      64, 64);
 }
 
 void
 dialogs_test_pattern_container_list_view_cmd_callback (GtkWidget *widget,
 						       gpointer   client_data)
 {
-  container_view_new (TRUE, "Pattern List", global_pattern_list, 24, 24);
+  container_view_new (TRUE, "Pattern List",
+		      global_pattern_list,
+		      gimp_context_get_user (),
+		      24, 24);
 }
 
 void
 dialogs_test_brush_container_list_view_cmd_callback (GtkWidget *widget,
 						     gpointer   client_data)
 {
-  container_view_new (TRUE, "Brush List", global_brush_list, 24, 24);
+  container_view_new (TRUE, "Brush List",
+		      global_brush_list,
+		      gimp_context_get_user (),
+		      24, 24);
 }
 
 void
 dialogs_test_image_container_grid_view_cmd_callback (GtkWidget *widget,
 						     gpointer   client_data)
 {
-  container_view_new (FALSE, "Image Grid", image_context, 64, 64);
+  container_view_new (FALSE, "Image Grid",
+		      image_context,
+		      gimp_context_get_user (),
+		      64, 64);
 }
 
 void
 dialogs_test_pattern_container_grid_view_cmd_callback (GtkWidget *widget,
 						       gpointer   client_data)
 {
-  container_view_new (FALSE, "Pattern Grid", global_pattern_list, 24, 24);
+  container_view_new (FALSE, "Pattern Grid",
+		      global_pattern_list,
+		      gimp_context_get_user (),
+		      24, 24);
 }
 
 void
 dialogs_test_brush_container_grid_view_cmd_callback (GtkWidget *widget,
 						     gpointer   client_data)
 {
-  container_view_new (FALSE, "Brush Grid", global_brush_list, 32, 32);
+  container_view_new (FALSE, "Brush Grid",
+		      global_brush_list,
+		      gimp_context_get_user (),
+		      32, 32);
 }
 
 /*****  Help  *****/

@@ -32,8 +32,9 @@
 #include "cursorutil.h"
 #include "gdisplay_ops.h"
 #include "gdisplay.h"
-#include "gimage.h"
+#include "gimpcontainer.h"
 #include "gimphelp.h"
+#include "gimpimage.h"
 #include "gimprc.h"
 #include "image_render.h"
 #include "lc_dialog.h"
@@ -907,8 +908,12 @@ prefs_cancel_callback (GtkWidget *widget,
       transparency_size = old_transparency_size;
 
       render_setup (transparency_type, transparency_size);
-      gimage_foreach ((GFunc) gimp_image_invalidate_layer_previews, NULL);
-      gimage_invalidate_previews ();
+      gimp_container_foreach (image_context,
+			      (GFunc) gimp_image_invalidate_layer_previews,
+			      NULL);
+      gimp_container_foreach (image_context,
+			      (GFunc) gimp_viewable_invalidate_preview,
+			      NULL);
       gdisplays_expose_full ();
       gdisplays_flush ();
     }
@@ -994,8 +999,12 @@ prefs_toggle_callback (GtkWidget *widget,
       *val = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));
 
       render_setup (transparency_type, transparency_size);
-      gimage_foreach ((GFunc) gimp_image_invalidate_layer_previews, NULL);
-      gimage_invalidate_previews ();
+      gimp_container_foreach (image_context,
+			      (GFunc) gimp_image_invalidate_layer_previews,
+			      NULL);
+      gimp_container_foreach (image_context,
+			      (GFunc) gimp_viewable_invalidate_preview,
+			      NULL);
       gdisplays_expose_full ();
       gdisplays_flush ();
     }
