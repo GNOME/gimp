@@ -185,7 +185,7 @@ run (const gchar      *name,
    * Get drawable information...
    */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
-  gimp_tile_cache_ntiles(2 * (drawable->width / gimp_tile_width() + 1));
+  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 
   switch (run_mode)
     {
@@ -285,7 +285,7 @@ blur_line (gdouble *ctable,
     {
       for (row = 0; row < y ; row++)
         {
-          scale=0;
+          scale = 0;
           /* find the scale factor */
           for (j = 0; j < y ; j++)
             {
@@ -294,6 +294,7 @@ blur_line (gdouble *ctable,
                   (j + cmatrix_length/2 - row < cmatrix_length))
                 scale += cmatrix[j + cmatrix_length/2 - row];
             }
+
           for (i = 0; i<bytes; i++)
             {
               sum = 0;
@@ -303,6 +304,7 @@ blur_line (gdouble *ctable,
                       (j <= row + cmatrix_length/2))
                     sum += cur_col[j*bytes + i] * cmatrix[j];
                 }
+
               dest_col[row*bytes + i] = (guchar) ROUND (sum / scale);
             }
         }
@@ -313,15 +315,18 @@ blur_line (gdouble *ctable,
       for (row = 0; row < cmatrix_middle; row++)
         {
           /* find scale factor */
-          scale=0;
+          scale = 0;
+
           for (j = cmatrix_middle - row; j<cmatrix_length; j++)
             scale += cmatrix[j];
+
           for (i = 0; i<bytes; i++)
             {
               sum = 0;
               for (j = cmatrix_middle - row; j<cmatrix_length; j++)
                 {
-                  sum += cur_col[(row + j-cmatrix_middle)*bytes + i] * cmatrix[j];
+                  sum +=
+                    cur_col[(row + j-cmatrix_middle)*bytes + i] * cmatrix[j];
                 }
               dest_col[row*bytes + i] = (guchar) ROUND (sum / scale);
             }
@@ -337,6 +342,7 @@ blur_line (gdouble *ctable,
               cmatrix_p = cmatrix;
               cur_col_p1 = cur_col_p;
               ctable_p = ctable;
+
               for (j = cmatrix_length; j>0; j--)
                 {
                   sum += *(ctable_p + *cur_col_p1);
@@ -348,7 +354,7 @@ blur_line (gdouble *ctable,
             }
         }
 
-      /* for the edge condition , we only use available info, and scale to one */
+      /* for the edge condition, we only use available info, and scale to one */
       for (; row < y; row++)
         {
           /* find scale factor */
@@ -360,7 +366,8 @@ blur_line (gdouble *ctable,
               sum = 0;
               for (j = 0; j<y-row + cmatrix_middle; j++)
                 {
-                  sum += cur_col[(row + j-cmatrix_middle)*bytes + i] * cmatrix[j];
+                  sum +=
+                    cur_col[(row + j-cmatrix_middle)*bytes + i] * cmatrix[j];
                 }
               dest_col[row*bytes + i] = (guchar) ROUND (sum / scale);
             }
@@ -395,13 +402,13 @@ unsharp_mask (GimpDrawable *drawable,
 
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2-x1), (y2-y1));
+  gimp_drawable_update (drawable->drawable_id, x1, y1, x2 - x1, y2 - y1);
 }
 
-/* perform an unsharp mask on the region, given a source region, dest.
-   region, width and height of the regions, and corner coordinates of
-   a subregion to act upon.  Everything outside the subregion is unaffected.
-*/
+/* Perform an unsharp mask on the region, given a source region, dest.
+ * region, width and height of the regions, and corner coordinates of
+ * a subregion to act upon.  Everything outside the subregion is unaffected.
+ */
 static void
 unsharp_region (GimpPixelRgn *srcPR,
                 GimpPixelRgn *destPR,
@@ -432,11 +439,11 @@ unsharp_region (GimpPixelRgn *srcPR,
   gint threshold;
   gint diff;
   gint value;
-  gint u,v;
+  gint u, v;
 
   /* find height and width of subregion to act on */
-  x = x2-x1;
-  y = y2-y1;
+  x = x2 - x1;
+  y = y2 - y1;
 
   /* generate convolution matrix
      and make sure it's smaller than each dimension */
@@ -449,25 +456,21 @@ unsharp_region (GimpPixelRgn *srcPR,
   cur_row  = g_new (guchar, x * bytes);
   dest_row = g_new (guchar, x * bytes);
 
-  /* find height and width of subregion to act on */
-  x = x2-x1;
-  y = y2-y1;
-
   /* blank out a region of the destination memory area, I think */
   for (row = 0; row < y; row++)
     {
-      gimp_pixel_rgn_get_row (destPR, dest_row, x1, y1+row, (x2-x1));
+      gimp_pixel_rgn_get_row (destPR, dest_row, x1, y1 + row, (x2 - x1));
       memset (dest_row, 0, x * bytes);
-      gimp_pixel_rgn_set_row (destPR, dest_row, x1, y1+row, (x2-x1));
+      gimp_pixel_rgn_set_row (destPR, dest_row, x1, y1 + row, (x2 - x1));
     }
 
   /* blur the rows */
   for (row = 0; row < y; row++)
     {
-      gimp_pixel_rgn_get_row (srcPR, cur_row, x1, y1+row, x);
-      gimp_pixel_rgn_get_row (destPR, dest_row, x1, y1+row, x);
+      gimp_pixel_rgn_get_row (srcPR, cur_row, x1, y1 + row, x);
+      gimp_pixel_rgn_get_row (destPR, dest_row, x1, y1 + row, x);
       blur_line (ctable, cmatrix, cmatrix_length, cur_row, dest_row, x, bytes);
-      gimp_pixel_rgn_set_row (destPR, dest_row, x1, y1+row, x);
+      gimp_pixel_rgn_set_row (destPR, dest_row, x1, y1 + row, x);
 
       if (show_progress && row % 5 == 0)
         gimp_progress_update ((gdouble) row / (3 * y));
@@ -480,10 +483,10 @@ unsharp_region (GimpPixelRgn *srcPR,
   /* blur the cols */
   for (col = 0; col < x; col++)
     {
-      gimp_pixel_rgn_get_col (destPR, cur_col, x1+col, y1, y);
-      gimp_pixel_rgn_get_col (destPR, dest_col, x1+col, y1, y);
+      gimp_pixel_rgn_get_col (destPR, cur_col, x1 + col, y1, y);
+      gimp_pixel_rgn_get_col (destPR, dest_col, x1 + col, y1, y);
       blur_line (ctable, cmatrix, cmatrix_length, cur_col, dest_col, y, bytes);
-      gimp_pixel_rgn_set_col (destPR, dest_col, x1+col, y1, y);
+      gimp_pixel_rgn_set_col (destPR, dest_col, x1 + col, y1, y);
 
       if (show_progress && col % 5 == 0)
         gimp_progress_update ((gdouble) col / (3 * x) + 0.33);
@@ -502,10 +505,10 @@ unsharp_region (GimpPixelRgn *srcPR,
       value = 0;
 
       /* get source row */
-      gimp_pixel_rgn_get_row (srcPR, cur_row, x1, y1+row, x);
+      gimp_pixel_rgn_get_row (srcPR, cur_row, x1, y1 + row, x);
 
       /* get dest row */
-      gimp_pixel_rgn_get_row (destPR, dest_row, x1, y1+row, x);
+      gimp_pixel_rgn_get_row (destPR, dest_row, x1, y1 + row, x);
 
       /* combine the two */
       for (u = 0; u < x; u++)
@@ -527,7 +530,7 @@ unsharp_region (GimpPixelRgn *srcPR,
       if (show_progress && row % 5 == 0)
         gimp_progress_update ((gdouble) row / (3 * y) + 0.67);
 
-      gimp_pixel_rgn_set_row (destPR, dest_row, x1, y1+row, x);
+      gimp_pixel_rgn_set_row (destPR, dest_row, x1, y1 + row, x);
     }
 
   if (show_progress)
@@ -586,33 +589,30 @@ gen_convolve_matrix (gdouble   radius,
    */
 
   /* first we do the top (right) half of matrix */
-  for (i = matrix_length/2 + 1; i < matrix_length; i++)
+  for (i = matrix_length / 2 + 1; i < matrix_length; i++)
     {
-      double base_x = i - floor(matrix_length/2) - 0.5;
+      double base_x = i - floor (matrix_length / 2) - 0.5;
       sum = 0;
       for (j = 1; j <= 50; j++)
         {
-          if ( base_x+0.02*j <= radius )
-            sum += exp (-(base_x+0.02*j)*(base_x+0.02*j) /
-                        (2*std_dev*std_dev));
+          if (base_x + 0.02 * j <= radius)
+            sum += exp (- SQR (base_x + 0.02 * j) / (2 * SQR (std_dev)));
         }
-      cmatrix[i] = sum/50;
+      cmatrix[i] = sum / 50;
     }
 
   /* mirror the thing to the bottom half */
-  for (i=0; i<=matrix_length/2; i++) {
-    cmatrix[i] = cmatrix[matrix_length-1-i];
-  }
+  for (i = 0; i <= matrix_length / 2; i++)
+    cmatrix[i] = cmatrix[matrix_length - 1 - i];
 
   /* find center val -- calculate an odd number of quanta to make it symmetric,
    * even if the center point is weighted slightly higher than others. */
   sum = 0;
   for (j = 0; j <= 50; j++)
     {
-      sum += exp (-(0.5+0.02*j)*(0.5+0.02*j) /
-                  (2*std_dev*std_dev));
+      sum += exp (- SQR (0.5 + 0.02 * j) / (2 * SQR (std_dev)));
     }
-  cmatrix[matrix_length/2] = sum/51;
+  cmatrix[matrix_length / 2] = sum / 51;
 
   /* normalize the distribution by scaling the total sum to one */
   sum=0;
