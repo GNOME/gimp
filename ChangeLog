@@ -1,5 +1,13 @@
 2003-11-14  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpmemsizeentry.[ch]: changed to use guint64
+	instead of gulong.
+
+	* app/core/gimptemplate.c (gimp_template_notify): removed unused
+	variable.
+
+2003-11-14  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/gimputils.[ch] (gimp_memsize_to_string): take a
 	guint64 parameter and handle values beyond a gigabyte.
 

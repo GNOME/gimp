@@ -306,7 +306,6 @@ gimp_template_notify (GObject    *object,
                       GParamSpec *pspec)
 {
   GimpTemplate *template;
-  guint64       size;
   gint          channels;
 
   template = GIMP_TEMPLATE (object);

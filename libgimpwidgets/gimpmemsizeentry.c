@@ -133,7 +133,7 @@ static void
 gimp_memsize_entry_adj_callback (GtkAdjustment    *adj,
 				 GimpMemsizeEntry *entry)
 {
-  gulong size = gtk_adjustment_get_value (adj);
+  guint64 size = gtk_adjustment_get_value (adj);
 
   entry->value = size << entry->shift;
 
@@ -173,9 +173,9 @@ gimp_memsize_entry_unit_callback (GtkWidget        *widget,
  * Returns: Pointer to the new #GimpMemsizeEntry.
  **/
 GtkWidget *
-gimp_memsize_entry_new (gulong  value,
-			gulong  lower,
-			gulong  upper)
+gimp_memsize_entry_new (guint64  value,
+			guint64  lower,
+			guint64  upper)
 {
   GimpMemsizeEntry *entry;
   guint             shift;
@@ -196,9 +196,9 @@ gimp_memsize_entry_new (gulong  value,
   entry->shift = shift;
 
   entry->spinbutton = gimp_spin_button_new ((GtkObject **) &entry->adjustment,
-                                            value >> shift,
-                                            lower >> shift,
-                                            upper >> shift, 1, 8, 0, 1, 0);
+                                            (value >> shift),
+                                            (lower >> shift),
+                                            (upper >> shift), 1, 8, 0, 1, 0);
 
   g_object_ref (entry->adjustment);
   gtk_object_sink (GTK_OBJECT (entry->adjustment));
@@ -237,7 +237,7 @@ gimp_memsize_entry_new (gulong  value,
  **/
 void
 gimp_memsize_entry_set_value (GimpMemsizeEntry *entry,
-			      gulong            value)
+			      guint64           value)
 {
   guint shift;
 
@@ -270,7 +270,7 @@ gimp_memsize_entry_set_value (GimpMemsizeEntry *entry,
  *
  * Returns: the current value of @entry (in Bytes).
  **/
-gulong
+guint64
 gimp_memsize_entry_get_value (GimpMemsizeEntry *entry)
 {
   g_return_val_if_fail (GIMP_IS_MEMSIZE_ENTRY (entry), 0);

@@ -1,17 +1,17 @@
-/* LIBGIMP - The GIMP Library 
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpmemsizeentry.h
- * Copyright (C) 2000-2003  Sven Neumann <sven@gimp.org> 
+ * Copyright (C) 2000-2003  Sven Neumann <sven@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU  
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -42,9 +42,9 @@ struct _GimpMemsizeEntry
 {
   GtkHBox            parent_instance;
 
-  gulong             value;
-  gulong             lower;
-  gulong             upper;
+  guint64            value;
+  guint64            lower;
+  guint64            upper;
 
   guint              shift;
 
@@ -63,12 +63,12 @@ struct _GimpMemsizeEntryClass
 
 GType       gimp_memsize_entry_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_memsize_entry_new       (gulong            value,
-					  gulong            lower,
-					  gulong            upper);
+GtkWidget * gimp_memsize_entry_new       (guint64           value,
+					  guint64           lower,
+					  guint64           upper);
 void        gimp_memsize_entry_set_value (GimpMemsizeEntry *entry,
-					  gulong            value);
-gulong      gimp_memsize_entry_get_value (GimpMemsizeEntry *entry);
+					  guint64           value);
+guint64     gimp_memsize_entry_get_value (GimpMemsizeEntry *entry);
 
 
 G_END_DECLS
