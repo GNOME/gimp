@@ -1,3 +1,8 @@
+2003-12-14  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/pygimp-image.c: use get_name for the repr instead
+	of get_filename, to be more consistent.
+
 2003-12-14  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/Lighting/Makefile.am

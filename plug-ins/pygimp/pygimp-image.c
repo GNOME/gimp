@@ -880,7 +880,7 @@ img_repr(PyGimpImage *self)
     PyObject *s;
     gchar *name;
 
-    name = gimp_image_get_filename(self->ID);
+    name = gimp_image_get_name(self->ID);
     s = PyString_FromFormat("<gimp.image '%s'>", name?name:"(null)");
     g_free(name);
     return s;
