@@ -1,4 +1,6 @@
 # translation of gimp.HEAD.po to 
+# translation of gimp.HEAD.po to
+# translation of gimp.HEAD.po to
 # translation of gimp.HEAD.po to latvian
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
@@ -9,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-22 11:01+0100\n"
-"PO-Revision-Date: 2004-12-05 22:07+0200\n"
+"PO-Revision-Date: 2004-12-06 22:46+0200\n"
 "Last-Translator: Gatis Kalnins <gatis.kalnins@metatrons.org>\n"
 "Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -5348,11 +5350,11 @@ msgstr "punkti"
 
 #: app/core/gimpunit.c:63
 msgid "pica"
-msgstr ""
+msgstr "pica"
 
 #: app/core/gimpunit.c:63
 msgid "picas"
-msgstr ""
+msgstr "picas"
 
 #: app/core/gimpunit.c:70
 msgid "percent"
@@ -6631,71 +6633,71 @@ msgstr "Kalibrēt attēla izšķirtspēju"
 
 #: app/dialogs/resolution-calibrate-dialog.c:120
 msgid "Measure the rulers and enter their lengths:"
-msgstr ""
+msgstr "Izmēriet lineālus un ievadiet to garumu:"
 
 #: app/dialogs/resolution-calibrate-dialog.c:145
 msgid "_Horizontal:"
-msgstr ""
+msgstr "Horizontālā:"
 
 #: app/dialogs/resolution-calibrate-dialog.c:150
 msgid "_Vertical:"
-msgstr ""
+msgstr "Vertikālā:"
 
 #. Image size frame
 #: app/dialogs/scale-dialog.c:96 app/widgets/gimptemplateeditor.c:214
 msgid "Image Size"
-msgstr ""
+msgstr "Attēla izmērs"
 
 #: app/dialogs/scale-dialog.c:168
 msgid "Quality"
-msgstr ""
+msgstr "Kvalitāte"
 
 #: app/dialogs/scale-dialog.c:180
 msgid "I_nterpolation:"
-msgstr ""
+msgstr "Interpolācija:"
 
 #: app/dialogs/scale-dialog.c:194
 msgid ""
 "Indexed color layers are always scaled without interpolation. The chosen "
 "interpolation type will affect channels and masks only."
-msgstr ""
+msgstr "Indeksētie slāņu mērogošana vienmēr notiek bez interpolācijas. Izmantojot izvēlēto interpolācijas tipu tiks mērogoti tikai kanāli un maskas."
 
 #: app/dialogs/stroke-dialog.c:104
 msgid "Choose Stroke Style"
-msgstr ""
+msgstr "Norādīt apvilkšanas stilu"
 
 #: app/dialogs/stroke-dialog.c:209
 msgid "Paint Tool:"
-msgstr ""
+msgstr "Zīmēšanas rīks:"
 
 #: app/dialogs/tips-dialog.c:90
 msgid "<b>Your GIMP tips file appears to be missing!</b>"
-msgstr ""
+msgstr "<b>GIMP palīgfails nav atrasts!</b>"
 
 #: app/dialogs/tips-dialog.c:92
 #, c-format
 msgid "There should be a file called '%s'. Please check your installation."
-msgstr ""
+msgstr "Jābūt failam '%s'. Pārbaudiet programmas instalāciju."
 
 #: app/dialogs/tips-dialog.c:98
 msgid "<b>The GIMP tips file could not be parsed!</b>"
-msgstr ""
+msgstr "<b>GIMP palīgfails nav korekti izanalizējams!</b>"
 
 #: app/dialogs/tips-dialog.c:131
 msgid "GIMP Tip of the Day"
-msgstr ""
+msgstr "GIMP dienas padoms"
 
 #: app/dialogs/tips-dialog.c:195
 msgid "Show tip next time GIMP starts"
-msgstr ""
+msgstr "Rādīt dienas padomu, kad GIMP startēsies nākamreiz"
 
 #: app/dialogs/tips-dialog.c:219
 msgid "_Previous tip"
-msgstr ""
+msgstr "Iepriekšējais padoms"
 
 #: app/dialogs/tips-dialog.c:228
 msgid "_Next tip"
-msgstr ""
+msgstr "Nākošais padoms"
 
 #. This is a special string to specify the language identifier to
 #. look for in the gimp-tips.xml file. Please translate the C in it
@@ -6704,20 +6706,20 @@ msgstr ""
 #.
 #: app/dialogs/tips-parser.c:165
 msgid "tips-locale:C"
-msgstr ""
+msgstr "tips-locale:lv"
 
 #: app/dialogs/user-install-dialog.c:132
 msgid ""
 "The gimprc is used to store personal preferences that affect GIMP's default "
 "behavior.  Paths to search for brushes, palettes, gradients, patterns, plug-"
 "ins and modules can also configured here."
-msgstr ""
+msgstr "Fails gimprc tiek izmantots GIMP personālo parametru glabāšanai. Šeit norādītas arī otu, palešu, gradientu, šablonu un moduļu atrašanās vietas."
 
 #: app/dialogs/user-install-dialog.c:141
 msgid ""
 "GIMP uses an additional gtkrc file so you can configure it to look "
 "differently than other GTK apps."
-msgstr ""
+msgstr "GIMP izmanto papildus gtkrc failu, tāpēc jūs tā izskatu varat nokonfigurēt savādāku nekā citām GTK programmām."
 
 #: app/dialogs/user-install-dialog.c:147
 msgid ""
@@ -6725,7 +6727,7 @@ msgid ""
 "additional functionality.  These programs are searched for at run-time and "
 "information about their functionality and mod-times is cached in this file.  "
 "This file is intended to be GIMP-readable only, and should not be edited."
-msgstr ""
+msgstr "Moduļi un paplašinājumi - tās ir ārējās programmas, ko izmanto GIMP un kas dod papildus iespējas. Šo programmu meklēšana notiek starta laikā un informācija par tiem glabājas šajā failā. Šo failu lasa tikai GIMP un to nedrīkst rediģēt."
 
 #: app/dialogs/user-install-dialog.c:157
 msgid ""
@@ -6733,20 +6735,20 @@ msgid ""
 "of your configuration so it can. be remembered for the next session.  You "
 "may edit this file if you wish, but it is much easier to define the keys "
 "from within The GIMP.  Deleting this file will restore the default shortcuts."
-msgstr ""
+msgstr "Taustiņu kombinācijas var izmainīt. Menurc satur jūsu izveidotās konfigurācijas kopiju. Ja jūs vēlaties, tad drīkstat šo failu labot, bet vienkāršāk taustiņus ir nodefinēt ar GIMP. Šī faila izdzēšana atjaunos noklusētos iestatījumus."
 
 #: app/dialogs/user-install-dialog.c:167
 msgid ""
 "The sessionrc is used to store what dialog windows were open the last time "
 "you quit The GIMP.  You can configure The GIMP to reopen these dialogs at "
 "the saved position."
-msgstr ""
+msgstr "Fails sessionrc tiek izmantots dialogu logu stāvokļa saglabāšanai GIMP darbības beigšanas laikā. Jūs varat nokonfigurēt GIMP, lai tas startētos šādā stāvoklī."
 
 #: app/dialogs/user-install-dialog.c:174
 msgid ""
 "This file holds a collection of standard media sizes that serve as image "
 "templates."
-msgstr ""
+msgstr "Šis fails satur attēlu standartizmēru sarakstu, kas tiek izmantoti kā šabloni."
 
 #: app/dialogs/user-install-dialog.c:180
 msgid ""
@@ -6754,14 +6756,14 @@ msgid ""
 "additional units and use them just like you use the built-in units inches, "
 "millimeters, points and picas.  This file is overwritten each time you quit "
 "the GIMP."
-msgstr ""
+msgstr "Fails unitrc tiek izmantots jūsu norādīto mērvienību uzglabāšanai. Jūs varat norādīt papildus vienības un izmantot tās tāpāt kā iebūvētās mērvienības: collas, milimetrus utt. Šis fails tiek pārrakstīts katru reizi, kad GIMP tiek aizvērts."
 
 #: app/dialogs/user-install-dialog.c:189
 msgid ""
 "This folder is used to store user defined brushes. The GIMP checks this "
 "folder in addition to the system-wide GIMP brushes installation when "
 "searching for brushes."
-msgstr ""
+msgstr "Šī mape tiek izmantota lietotāja izveidoto otu uzglabāšanai. Noklusējot failā gimprc ir ieslēgta šīs mapes pārbaude papildus sistēmas mapei."
 
 #: app/dialogs/user-install-dialog.c:197
 msgid ""
@@ -6769,35 +6771,35 @@ msgid ""
 "GIMP checks this folder in addition to the system-wide GIMP fonts "
 "installation when searching for fonts. Use this only if you really want to "
 "have GIMP-only fonts, otherwise put things in your global font directory."
-msgstr ""
+msgstr "Šī mape tiek izmantota šriftu uzglabāšanai, kurus izmanto tikai GIMP. Startēšanas laikā GIMP pārbauda šo mapi tāpat kā sistēmas. Izmantojiet šo mapi gadījumos, ja kaut kādus šriftus izmantojat tikai darbā ar GIMP. Visos citos gadījumos šrifti tiek izvietoti kopējā mapē."
 
 #: app/dialogs/user-install-dialog.c:207
 msgid ""
 "This folder is used to store user defined gradients.  The GIMP checks this "
 "folder in addition to the system-wide GIMP gradients installation when "
 "searching for gradients."
-msgstr ""
+msgstr "Šī mape tiek izmantota gradientu uzglabāšanai. Startēšanas laikā GIMP pārbauda šo mapi tāpat kā sistēmas."
 
 #: app/dialogs/user-install-dialog.c:214
 msgid ""
 "This folder is used to store user defined palettes.  The GIMP checks this "
 "folder in addition to the system-wide GIMP palettes installation when "
 "searching for palettes."
-msgstr ""
+msgstr "Šī mape tiek izmantota palešu uzglabāšanai. Startēšanas laikā GIMP pārbauda šo mapi tāpat kā sistēmas."
 
 #: app/dialogs/user-install-dialog.c:221
 msgid ""
 "This folder is used to store user defined patterns.  The GIMP checks this "
 "folder in addition to the system-wide GIMP patterns installation when "
 "searching for patterns."
-msgstr ""
+msgstr "Šī mape tiek izmantota šablonu uzglabāšanai. Startēšanas laikā GIMP pārbauda šo mapi tāpat kā sistēmas."
 
 #: app/dialogs/user-install-dialog.c:228
 msgid ""
 "This folder is used to store user created, temporary, or otherwise non-"
 "system-supported plug-ins.  The GIMP checks this folder in addition to the "
 "system-wide GIMP plug-in folder when searching for plug-ins."
-msgstr ""
+msgstr "Šī mape tiek izmantota lietotāja izveidoto, pagaidu un citu neuzturēto moduļu uzglabāšanai. Startēšanas laikā GIMP pārbauda šo mapi tāpat kā sistēmas."
 
 #: app/dialogs/user-install-dialog.c:236
 msgid ""
@@ -6805,7 +6807,7 @@ msgid ""
 "system-supported DLL modules.  The GIMP checks this folder in addition to "
 "the system-wide GIMP module folder when searching for modules to load during "
 "initialization."
-msgstr ""
+msgstr "Šī mape tiek izmantota lietotāja izveidoto, pagaidu un citu neuzturēto dinamiski ielādējamo moduļu uzglabāšanai. Startēšanas laikā GIMP pārbauda šo mapi tāpat kā sistēmas."
 
 #: app/dialogs/user-install-dialog.c:245
 msgid ""
@@ -6813,22 +6815,22 @@ msgid ""
 "system-supported additions to the plug-in environment.  The GIMP checks this "
 "folder in addition to the system-wide GIMP environment folder when searching "
 "for plug-in environment modification files."
-msgstr ""
+msgstr "Šī mape tiek izmantota lietotāja izveidoto, pagaidu un citu neuzturēto moduļu uzglabāšanai. Startēšanas laikā GIMP pārbauda šo mapi tāpat kā sistēmas."
 
 #: app/dialogs/user-install-dialog.c:255
 msgid ""
 "This folder is used to store user created and installed scripts.  The GIMP "
 "checks this folder in addition to the systemwide GIMP scripts folder when "
 "searching for scripts."
-msgstr ""
+msgstr "Šī mape tiek izmantota lietotāja izveidoto un uzstādito skriptu uzglabāšanai. Startēšanas laikā GIMP pārbauda šo mapi tāpat kā sistēmas."
 
 #: app/dialogs/user-install-dialog.c:263
 msgid "This folder is searched for image templates."
-msgstr ""
+msgstr "Šī mape tiek izmantota paraugu uzglabāšanai."
 
 #: app/dialogs/user-install-dialog.c:268
 msgid "This folder is searched for user-installed themes."
-msgstr ""
+msgstr "Šī mape tiek izmantota lietotāja uzstādīto tēmu uzglabāšanai."
 
 #: app/dialogs/user-install-dialog.c:273
 msgid ""
@@ -6836,35 +6838,35 @@ msgid ""
 "usage.  If The GIMP is unceremoniously killed, files of the form: gimp<#>."
 "<#> may persist in this folder.  These files are useless across GIMP "
 "sessions and can be destroyed with impunity."
-msgstr ""
+msgstr "Šī mape tiek izmantota atpakaļsoļu faila uzglabāšanai, lai atslogotu datora atmiņu. Ja GIMP tiks izslēgts nekorekti, faili šajā katalogā saglabāsies šādā veidā: gimp<#>.<#>. Šie faili nav nepieciešami beidzot darbu ar GIMP un tos drīkst izdzēst."
 
 #: app/dialogs/user-install-dialog.c:282
 msgid "This folder is used to store tool options."
-msgstr ""
+msgstr "Šī mape tiek izmantota rīku parametru uzglabāšanai."
 
 #: app/dialogs/user-install-dialog.c:287
 msgid "This folder is used to store parameter files for the Curves tool."
-msgstr ""
+msgstr "Šī mape tiek izmantota Kontūras rīku parametru uzglabāšanai."
 
 #: app/dialogs/user-install-dialog.c:292
 msgid "This folder is used to store parameter files for the Levels tool."
-msgstr ""
+msgstr "Šī mape tiek izmantota Līmeņu rīku parametru uzglabāšanai."
 
 #: app/dialogs/user-install-dialog.c:389
 msgid "Installation successful.  Click \"Continue\" to proceed."
-msgstr ""
+msgstr "Instalācija pabeigta. Nospiediet \"Turpināt\"."
 
 #: app/dialogs/user-install-dialog.c:395
 msgid "Installation failed.  Contact system administrator."
-msgstr ""
+msgstr "Instalācija pārtraukta. Sazinieties ar sistēmas administratoru."
 
 #: app/dialogs/user-install-dialog.c:609
 msgid "GIMP User Installation"
-msgstr ""
+msgstr "GIMP Lietotāja instalācija"
 
 #: app/dialogs/user-install-dialog.c:614
 msgid "Continue"
-msgstr ""
+msgstr "Turpināt"
 
 #. GPL_PAGE
 #. version number
@@ -6874,10 +6876,12 @@ msgid ""
 "Welcome to\n"
 "The GIMP %d.%d User Installation"
 msgstr ""
+"Laipni aicināti\n"
+"GIMP %d.%d Lietotāja instalāciju uzsākot."
 
 #: app/dialogs/user-install-dialog.c:771
 msgid "Click \"Continue\" to enter the GIMP user installation."
-msgstr ""
+msgstr "Nospiediet \"Turpināt\", lai sāktu GIMP instalāciju."
 
 #: app/dialogs/user-install-dialog.c:778
 msgid ""
@@ -6885,6 +6889,10 @@ msgid ""
 "Copyright (C) 1995-2004\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
+"<b>GIMP - GNU Image Manipulation Program</b>\n"
+"<i>GNU attēlu apstrādes programma</i>\n"
+"Autortiesības (C) 1995-2004\n"
+"Spencer Kimball, Peter Mattis un GIMP Izstrādes grupa."
 
 #: app/dialogs/user-install-dialog.c:788
 msgid ""
@@ -6892,7 +6900,7 @@ msgid ""
 "under the terms of the GNU General Public License as published by the Free "
 "Software Foundation; either version 2 of the License, or (at your option) "
 "any later version."
-msgstr ""
+msgstr "Šī programma ir brīva programmatūra; Jūs drīkstat to izplatīt un/vai modificēt tās programmkodu saskaņā ar GNU General Public License, ko publicējis Brīvās Programmatūras Fonds, 2.versiju vai citu agrāku versiju (pēc Jūsu ieskatiem)."
 
 #: app/dialogs/user-install-dialog.c:794
 msgid ""
@@ -6900,7 +6908,7 @@ msgid ""
 "ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or "
 "FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for "
 "more details."
-msgstr ""
+msgstr "Šī programma tiek izplatīta cerībā, ka tā ir noderīga, taču BEZ JEBKĀDĀM GARANTIJĀM. tai skaitā BEZ GARANTIJĀM IZMANTOŠANAI JEBKĀDIEM MĒRĶIEM. Sīkāku informāciju skatiet GNU General Public License."
 
 #: app/dialogs/user-install-dialog.c:800
 msgid ""
@@ -6908,93 +6916,95 @@ msgid ""
 "this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
 "Place - Suite 330, Boston, MA 02111-1307, USA."
 msgstr ""
+"Jums jāsaņem GNU General Public License kopija kopā ar šo programmu; ja tas nav noticis, rakstiet Free Software Foundation, Inc., 59 Temple "
+"Place - Suite 330, Boston, MA 02111-1307, USA."
 
 #: app/dialogs/user-install-dialog.c:810
 msgid "Migrate User Settings"
-msgstr ""
+msgstr "Pārnest lietotāja parametrus"
 
 #: app/dialogs/user-install-dialog.c:811
 msgid "Click \"Continue\" to proceed with the user installation."
-msgstr ""
+msgstr "Spiediet \"Turpināt\", lai sāktu instalācijas procesu."
 
 #: app/dialogs/user-install-dialog.c:816
 msgid "It seems you have used GIMP 2.0 before."
-msgstr ""
+msgstr "Iespējams, agrāk Jūs izmantojāt GIMP 2.0."
 
 #: app/dialogs/user-install-dialog.c:820
 msgid "_Migrate GIMP 2.0 user settings"
-msgstr ""
+msgstr "Pārcelt GIMP 2.0 lietotāja parametrus."
 
 #: app/dialogs/user-install-dialog.c:823
 msgid "Do a _fresh user installation"
-msgstr ""
+msgstr "Sākt jaunu instalāciju"
 
 #: app/dialogs/user-install-dialog.c:851
 msgid "Personal GIMP Folder"
-msgstr ""
+msgstr "GIMP personiskais katalogs"
 
 #: app/dialogs/user-install-dialog.c:852
 msgid "Click \"Continue\" to create your personal GIMP folder."
-msgstr ""
+msgstr "Spiediet \"Turpināt\", lai izveidotu GIMP personisko katalogu."
 
 #: app/dialogs/user-install-dialog.c:896
 #, c-format
 msgid ""
 "For a proper GIMP installation, a folder named '<b>%s</b>' needs to be "
 "created."
-msgstr ""
+msgstr "Pareizai GIMP uzstādīšanai, nepieciešams izveidot mapi ar nosaukumu '<b>%s</b>'."
 
 #: app/dialogs/user-install-dialog.c:903
 msgid ""
 "This folder will contain a number of important files.  Click on one of the "
 "files or folders in the tree to get more information about the selected item."
-msgstr ""
+msgstr "Šī mape saturēs virkni svarīgu failu. Lai iegūtu sīkāku informāciju, uzklikšķiniet uz mapes."
 
 #: app/dialogs/user-install-dialog.c:991
 msgid "User Installation Log"
-msgstr ""
+msgstr "Lietotāja instalācijas žurnālfails"
 
 #: app/dialogs/user-install-dialog.c:992
 msgid "Please wait while your personal GIMP folder is being created..."
-msgstr ""
+msgstr "Lūdzu uzgaidiet, kamēr tiek izveidota jūsu personiskā GIMP mape..."
 
 #: app/dialogs/user-install-dialog.c:999
 msgid "GIMP Performance Tuning"
-msgstr ""
+msgstr "GIMP darbības optimizēšana"
 
 #: app/dialogs/user-install-dialog.c:1000
 msgid "Click \"Continue\" to accept the settings above."
-msgstr ""
+msgstr "Spiest \"Turpināt\" lai apstiprinātu parametrus."
 
 #: app/dialogs/user-install-dialog.c:1005
 msgid "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
-msgstr ""
+msgstr "<b>Optimālai GIMP darbībai daži iestatījumi var tikt mainīti.</b>"
 
 #: app/dialogs/user-install-dialog.c:1065
 #, c-format
 msgid "Copying file '%s' from '%s'..."
-msgstr ""
+msgstr "Failu kopēšana: '%s' no '%s'..."
 
 #: app/dialogs/user-install-dialog.c:1084
 #, c-format
 msgid "Creating folder '%s'..."
-msgstr ""
+msgstr "Kataloga '%s' izveidošana..."
 
 #: app/dialogs/user-install-dialog.c:1098
 #, c-format
 msgid "Cannot create folder '%s': %s"
-msgstr ""
+msgstr "Nevar izveidot mapi '%s': %s"
 
 #: app/dialogs/user-install-dialog.c:1360
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called "
 "\"Tile Cache\".  You should adjust its size to fit into memory.  Consider "
 "the amount of memory used by other running processes."
-msgstr ""
+msgstr "GIMP izmanto ierobežotu atmiņas apjomu attēlu informācijas uzglabāšanai (t.s., \"attēlu buferis\"). Jūs varat norādīt šo apjomu, taču apdomājiet to cik daudz atmiņas aizņem citi procesi!"
 
 #: app/dialogs/user-install-dialog.c:1373
 msgid "Tile cache size:"
-msgstr ""
+msgstr "Attēlu bufera izmērs:"
 
 #: app/dialogs/user-install-dialog.c:1385
 msgid ""
@@ -7002,529 +7012,529 @@ msgid ""
 "written to a swap file.  This file should be located on a local filesystem "
 "with enough free space (several hundred MB). On a UNIX system, you may want "
 "to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
-msgstr ""
+msgstr "Visi attēli un atpakaļsoļu informācija, kas neietilpst attēlu buferī tiks ierakstīta swap failā. Šim failam jāatrodas uz šī datora cietņa ar pietiekošu apjomu brīvas vietas (vairāki simti megabaitu). UNIX tipa sistēmās Jūs varat izmantot sistēmas pagaidfailu mapi (\"/tmp\" vai \"/var/tmp\")."
 
 #: app/dialogs/user-install-dialog.c:1396
 msgid "Select swap dir"
-msgstr ""
+msgstr "Norātīt swap mapi"
 
 #: app/dialogs/vectors-export-dialog.c:53
 msgid "Export Path to SVG"
-msgstr ""
+msgstr "Eksprtēt kontūru uz SVG"
 
 #: app/dialogs/vectors-export-dialog.c:78
 msgid "Export the active path"
-msgstr ""
+msgstr "Eksportēt aktīvo kontūru"
 
 #: app/dialogs/vectors-export-dialog.c:79
 msgid "Export all paths from this image"
-msgstr ""
+msgstr "Eksportēt visas kontūras no šī attēla"
 
 #: app/dialogs/vectors-import-dialog.c:57
 msgid "Import Paths from SVG"
-msgstr ""
+msgstr "Importēt kontūras no SVG"
 
 #: app/dialogs/vectors-import-dialog.c:83
 msgid "All Files (*.*)"
-msgstr ""
+msgstr "Visi faili (*.*)"
 
 #: app/dialogs/vectors-import-dialog.c:88
 msgid "Scalable SVG image (*.svg)"
-msgstr ""
+msgstr "Mērogojams SVG attēls (*.svg)"
 
 #: app/dialogs/vectors-import-dialog.c:99
 msgid "_Merge imported paths"
-msgstr ""
+msgstr "Apvienot importētās kontūras"
 
 #: app/dialogs/vectors-import-dialog.c:109
 msgid "_Scale imported paths to fit image"
-msgstr ""
+msgstr "Mērogot importētās kontūras atbilstoši attēla izmēriem"
 
 #: app/dialogs/vectors-options-dialog.c:113
 msgid "Path Name:"
-msgstr ""
+msgstr "Kontūras nosaukums:"
 
 #: app/display/display-enums.c:24
 msgid "Tool icon"
-msgstr ""
+msgstr "Rīka piktogramma"
 
 #: app/display/display-enums.c:25
 msgid "Tool icon with crosshair"
-msgstr ""
+msgstr "Rīka piktogramma ar krustiņu"
 
 #: app/display/display-enums.c:26
 msgid "Crosshair only"
-msgstr ""
+msgstr "Tikai krustiņš"
 
 #: app/display/display-enums.c:55
 msgid "From theme"
-msgstr ""
+msgstr "No tēmas"
 
 #: app/display/display-enums.c:56
 msgid "Light check color"
-msgstr ""
+msgstr "Gaišs"
 
 #: app/display/display-enums.c:57
 msgid "Dark check color"
-msgstr ""
+msgstr "Tumšs"
 
 #: app/display/display-enums.c:58
 msgid "Custom color"
-msgstr ""
+msgstr "Izvēlētā krāsa"
 
 #: app/display/gimpdisplayshell.c:939
 msgid "Zoom image when window size changes"
-msgstr ""
+msgstr "Tālummainīt attēlu, kad mainās loga izmēri"
 
 #: app/display/gimpdisplayshell.c:959
 msgid "Toggle Quick Mask"
-msgstr ""
+msgstr "Pārslēgt ātrmasku"
 
 #: app/display/gimpdisplayshell-close.c:122
 #: app/display/gimpdisplayshell-close.c:185
 #, c-format
 msgid "Close %s"
-msgstr ""
+msgstr "Aizvērt %s"
 
 #: app/display/gimpdisplayshell-close.c:131
 msgid "Do_n't save"
-msgstr ""
+msgstr "Nesaglabāt"
 
 #: app/display/gimpdisplayshell-close.c:192
 #, c-format
 msgid "Save the changes to image '%s' before closing?"
-msgstr ""
+msgstr "Saglabāt '%s' izmaiņas pirms aizvēršanas?"
 
 #: app/display/gimpdisplayshell-close.c:209
 #, c-format
 msgid "If you don't save the image, changes from the last %s will be lost."
-msgstr ""
+msgstr "Ja Jūs nesaglabāsiet attēlu, pēdējās '%s' izmaiņas tiks zaudētas."
 
 #. one second, the time period
 #: app/display/gimpdisplayshell-close.c:266
 msgid "second"
-msgstr ""
+msgstr "sekunde"
 
 #: app/display/gimpdisplayshell-close.c:269
 #, c-format
 msgid "%d seconds"
-msgstr ""
+msgstr "%d sekundes"
 
 #: app/display/gimpdisplayshell-close.c:275
 msgid "minute"
-msgstr ""
+msgstr "minūte"
 
 #: app/display/gimpdisplayshell-close.c:277
 #, c-format
 msgid "%d minutes"
-msgstr ""
+msgstr "%d minūtes"
 
 #: app/display/gimpdisplayshell-dnd.c:96
 msgid "Drop New Layer"
-msgstr ""
+msgstr "Nolaist jaunu slāni"
 
 #: app/display/gimpdisplayshell-dnd.c:140
 msgid "Drop New Path"
-msgstr ""
+msgstr "Nolaist jaunu kontūru"
 
 #: app/display/gimpdisplayshell-filter-dialog.c:73
 msgid "Color Display Filters"
-msgstr ""
+msgstr "Ekrāna krāsu filtri"
 
 #: app/display/gimpdisplayshell-filter-dialog.c:76
 msgid "Configure Color Display Filters"
-msgstr ""
+msgstr "Iestatīt ekrāna krāsu filtrus"
 
 #: app/display/gimpdisplayshell-layer-select.c:122
 msgid "Layer Select"
-msgstr ""
+msgstr "Iezīmēt slāni"
 
 #: app/display/gimpdisplayshell-scale.c:537
 msgid "Zoom Ratio"
-msgstr ""
+msgstr "Mērogs"
 
 #: app/display/gimpdisplayshell-scale.c:539
 msgid "Select Zoom Ratio"
-msgstr ""
+msgstr "Izvēlēties mērogu"
 
 #: app/display/gimpdisplayshell-scale.c:574
 msgid "Zoom Ratio:"
-msgstr ""
+msgstr "Mērogs:"
 
 #: app/display/gimpdisplayshell-scale.c:601
 msgid "Zoom:"
-msgstr ""
+msgstr "Tālummaiņa:"
 
 #: app/display/gimpdisplayshell-title.c:234
 msgid "RGB-empty"
-msgstr ""
+msgstr "RGB-tukšs"
 
 #: app/display/gimpdisplayshell-title.c:237
 msgid "grayscale-empty"
-msgstr ""
+msgstr "pelēktoņi-tukšs"
 
 #: app/display/gimpdisplayshell-title.c:237
 msgid "grayscale"
-msgstr ""
+msgstr "pelēktoņu"
 
 #: app/display/gimpdisplayshell-title.c:240
 msgid "indexed-empty"
-msgstr ""
+msgstr "indeksēts-tukšs"
 
 #: app/display/gimpdisplayshell-title.c:240
 msgid "indexed"
-msgstr ""
+msgstr "indeksēts"
 
 #: app/display/gimpdisplayshell-title.c:292
 msgid "(modified)"
-msgstr ""
+msgstr "(izmainīts)"
 
 #: app/display/gimpdisplayshell-title.c:298
 msgid "(clean)"
-msgstr ""
+msgstr "(neizmainīts)"
 
 #: app/display/gimpdisplayshell-title.c:325
 msgid "1 layer"
-msgstr ""
+msgstr "1 slānis"
 
 #: app/display/gimpdisplayshell-title.c:325
 #, c-format
 msgid "%d layers"
-msgstr ""
+msgstr "%d slāņi"
 
 #: app/display/gimpstatusbar.c:142
 msgid "Shadow type"
-msgstr ""
+msgstr "Ēnas tips"
 
 #: app/display/gimpstatusbar.c:143
 msgid "Style of bevel around the statusbar text"
-msgstr ""
+msgstr "Statusa joslas teksta robežas stils"
 
 #: app/display/gimpstatusbar.c:218
 msgid "Cancel"
-msgstr ""
+msgstr "Atcelt"
 
 #: app/file/file-open.c:105 app/file/file-save.c:132
 msgid "Unknown file type"
-msgstr ""
+msgstr "Nezināms faila tips"
 
 #: app/file/file-open.c:120 app/file/file-save.c:146
 msgid "Not a regular file"
-msgstr ""
+msgstr "Neparasts fails"
 
 #: app/file/file-open.c:173
 msgid "Plug-In returned SUCCESS but did not return an image"
-msgstr ""
+msgstr "Modulis sekmīgi paveica darbību, taču neatgrieza attēlu"
 
 #: app/file/file-open.c:181
 msgid "Plug-In could not open image"
-msgstr ""
+msgstr "Modulis nevar atvērt attēlu"
 
 #: app/file/file-open.c:417
 msgid "Image doesn't contain any visible layers"
-msgstr ""
+msgstr "Attēls nesatur redzamus slāņus"
 
 #: app/file/file-save.c:213
 msgid "Plug-In could not save image"
-msgstr ""
+msgstr "Modulis nevar saglabāt attēlu"
 
 #: app/file/file-utils.c:107
 msgid "Invalid character sequence in URI"
-msgstr ""
+msgstr "Nepareiza simbolu secība URI adresē"
 
 #: app/gui/session.c:247 app/menus/menus.c:351 app/widgets/gimpdevices.c:218
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
-msgstr ""
+msgstr "Dzēsti \"%s\" neizdevās: %s"
 
 #: app/gui/splash.c:102
 msgid "GIMP Startup"
-msgstr ""
+msgstr "GIMP startēšana"
 
 #: app/gui/themes.c:231 app/plug-in/plug-ins.c:254
 #, c-format
 msgid "Writing '%s'\n"
-msgstr ""
+msgstr "Ieraksts '%s'\n"
 
 #: app/gui/themes.c:284
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
-msgstr ""
+msgstr "Pievienot tēmu '%s' (%s)\n"
 
 #: app/paint/gimpairbrush.c:69 app/tools/gimpairbrushtool.c:55
 msgid "Airbrush"
-msgstr ""
+msgstr "Aerogrāfs"
 
 #: app/paint/gimpbrushcore.c:369
 msgid "No brushes available for use with this tool."
-msgstr ""
+msgstr "Nav pieejamu otu šim rīkam."
 
 #: app/paint/gimpclone.c:89 app/tools/gimpclonetool.c:89
 msgid "Clone"
-msgstr ""
+msgstr "Klonēt"
 
 #: app/paint/gimpconvolve.c:121 app/tools/gimpconvolvetool.c:70
 msgid "Convolve"
-msgstr ""
+msgstr "Izpludināt"
 
 #: app/paint/gimpdodgeburn.c:87 app/tools/gimpdodgeburntool.c:70
 msgid "Dodge/Burn"
-msgstr ""
+msgstr "Izgaismošana/Aptumšošana"
 
 #: app/paint/gimperaser.c:64 app/tools/gimperasertool.c:70
 msgid "Eraser"
-msgstr ""
+msgstr "Dzēšgumija"
 
 #: app/paint/gimpink.c:101 app/tools/gimpinktool.c:62
 msgid "Ink"
-msgstr ""
+msgstr "Spalva"
 
 #: app/paint/gimppaintbrush.c:65 app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush"
-msgstr ""
+msgstr "Ota"
 
 #: app/paint/gimppencil.c:38 app/tools/gimppenciltool.c:51
 msgid "Pencil"
-msgstr ""
+msgstr "Zīmulis"
 
 #: app/paint/gimpsmudge.c:78 app/tools/gimpsmudgetool.c:54
 msgid "Smudge"
-msgstr ""
+msgstr "Traips"
 
 #: app/paint/paint-enums.c:23
 msgid "Image source"
-msgstr ""
+msgstr "Sākumattēls"
 
 #: app/paint/paint-enums.c:24
 msgid "Pattern source"
-msgstr ""
+msgstr "Sākumšablons"
 
 #: app/paint/paint-enums.c:52
 msgid "Non-aligned"
-msgstr ""
+msgstr "Bez izlīdzināšanas"
 
 #: app/paint/paint-enums.c:53
 msgid "Aligned"
-msgstr ""
+msgstr "Izlīdzināts"
 
 #: app/paint/paint-enums.c:54
 msgid "Registered"
-msgstr ""
+msgstr "Reģistrēts"
 
 #: app/paint/paint-enums.c:81 app/widgets/gimpwidgets-constructors.c:60
 #: app/widgets/gimpwidgets-constructors.c:93
 msgid "Dodge"
-msgstr ""
+msgstr "Izgaismotājs"
 
 #: app/paint/paint-enums.c:82 app/widgets/gimpwidgets-constructors.c:61
 #: app/widgets/gimpwidgets-constructors.c:94
 msgid "Burn"
-msgstr ""
+msgstr "Aptumšotājs"
 
 #: app/paint/paint-enums.c:109
 msgid "Blur"
-msgstr ""
+msgstr "Izpludināšana"
 
 #: app/paint/paint-enums.c:110
 msgid "Sharpen"
-msgstr ""
+msgstr "Asums"
 
 #: app/paint/paint-enums.c:167
 msgid "Constant"
-msgstr ""
+msgstr "Konstante"
 
 #: app/paint/paint-enums.c:168 app/tools/gimppaintoptions-gui.c:161
 msgid "Incremental"
-msgstr ""
+msgstr "Papildinošs"
 
 #: app/pdb/color_cmds.c:140 app/tools/gimpbrightnesscontrasttool.c:85
 msgid "Brightness-Contrast"
-msgstr ""
+msgstr "Spilgtums-Kontrasts"
 
 #: app/pdb/color_cmds.c:457 app/tools/gimpposterizetool.c:78
 msgid "Posterize"
-msgstr ""
+msgstr "Plakātēšana"
 
 #: app/pdb/color_cmds.c:745 app/pdb/color_cmds.c:870
 #: app/tools/gimpcurvestool.c:143
 msgid "Curves"
-msgstr ""
+msgstr "Līknes"
 
 #: app/pdb/color_cmds.c:995 app/tools/gimpcolorbalancetool.c:96
 msgid "Color Balance"
-msgstr ""
+msgstr "Krāsu balansēšana"
 
 #: app/pdb/color_cmds.c:1120 app/tools/gimpcolorizetool.c:96
 msgid "Colorize"
-msgstr ""
+msgstr "Tonēšana"
 
 #: app/pdb/color_cmds.c:1399 app/tools/gimphuesaturationtool.c:110
 msgid "Hue-Saturation"
-msgstr ""
+msgstr "Toņ-Piesātinātība"
 
 #: app/pdb/color_cmds.c:1506 app/tools/gimpthresholdtool.c:92
 msgid "Threshold"
-msgstr ""
+msgstr "Slieksnis"
 
 #: app/pdb/drawable_transform_cmds.c:249 app/pdb/drawable_transform_cmds.c:404
 msgid "Flip..."
-msgstr ""
+msgstr "Spoguļtēls..."
 
 #: app/pdb/drawable_transform_cmds.c:563 app/pdb/drawable_transform_cmds.c:746
 #: app/pdb/transform_tools_cmds.c:197 app/tools/gimpperspectivetool.c:141
 msgid "Perspective..."
-msgstr ""
+msgstr "Perspektīve..."
 
 #: app/pdb/drawable_transform_cmds.c:1650
 #: app/pdb/drawable_transform_cmds.c:1791 app/pdb/transform_tools_cmds.c:586
 #: app/tools/gimpsheartool.c:158
 msgid "Shearing..."
-msgstr ""
+msgstr "Kropļošana..."
 
 #: app/pdb/drawable_transform_cmds.c:1943
 #: app/pdb/drawable_transform_cmds.c:2124
 #: app/pdb/drawable_transform_cmds.c:2311
 #: app/pdb/drawable_transform_cmds.c:2512 app/pdb/transform_tools_cmds.c:719
 msgid "2D Transform..."
-msgstr ""
+msgstr "2D pārveide..."
 
 #: app/pdb/edit_cmds.c:608 app/tools/gimpblendtool.c:249
 msgid "Blending..."
-msgstr ""
+msgstr "Aizliešana..."
 
 #: app/pdb/image_cmds.c:3756 app/text/gimptext-parasite.c:168
 msgid "(invalid UTF-8 string)"
-msgstr ""
+msgstr "(nekorekta UTF-8 rinda)"
 
 #: app/pdb/image_cmds.c:3898
 msgid "Image resolution is out of bounds, using the default resolution instead."
-msgstr ""
+msgstr "Attēla izškirtspēja pārsniedz pieļaujamo, tiek izmantotas noklusētās vērtības."
 
 #: app/pdb/internal_procs.c:86
 msgid "Internal Procedures"
-msgstr ""
+msgstr "Iekšējās procedūras"
 
 #: app/pdb/internal_procs.c:86
 msgid "Brush"
-msgstr ""
+msgstr "Ota"
 
 #: app/pdb/internal_procs.c:89
 msgid "Brush UI"
-msgstr ""
+msgstr "UI ota"
 
 #: app/pdb/internal_procs.c:98 app/tools/gimppaintoptions-gui.c:282
 #: app/widgets/gimpwidgets-constructors.c:75
 #: app/widgets/gimpwidgets-constructors.c:108
 msgid "Color"
-msgstr ""
+msgstr "Krāsa"
 
 #: app/pdb/internal_procs.c:104
 msgid "Convert"
-msgstr ""
+msgstr "Pārveidošana"
 
 #: app/pdb/internal_procs.c:107
 msgid "Display procedures"
-msgstr ""
+msgstr "Attēlošanas procedūras"
 
 #: app/pdb/internal_procs.c:110
 msgid "Drawable procedures"
-msgstr ""
+msgstr "Zīmējuma procedūras"
 
 #: app/pdb/internal_procs.c:113
 msgid "Transformation procedures"
-msgstr ""
+msgstr "Pārveides procedūras"
 
 #: app/pdb/internal_procs.c:116
 msgid "Edit procedures"
-msgstr ""
+msgstr "Rediģēšanas procedūras"
 
 #: app/pdb/internal_procs.c:119
 msgid "File Operations"
-msgstr ""
+msgstr "Darbības ar failiem"
 
 #: app/pdb/internal_procs.c:122
 msgid "Floating selections"
-msgstr ""
+msgstr "Peldošie iezīmējumi"
 
 #: app/pdb/internal_procs.c:125
 msgid "Font UI"
-msgstr ""
+msgstr "UI šrifts"
 
 #: app/pdb/internal_procs.c:131
 msgid "Gimprc procedures"
-msgstr ""
+msgstr "Gimprc procedūras"
 
 #: app/pdb/internal_procs.c:134
 msgid "Gradient"
-msgstr ""
+msgstr "Gradients"
 
 #: app/pdb/internal_procs.c:137
 msgid "Gradient UI"
-msgstr ""
+msgstr "UI gradients"
 
 #: app/pdb/internal_procs.c:143
 msgid "Guide procedures"
-msgstr ""
+msgstr "Palīglīniju procedūras"
 
 #: app/pdb/internal_procs.c:146
 msgid "Help procedures"
-msgstr ""
+msgstr "Palīga procedūras"
 
 #: app/pdb/internal_procs.c:155
 msgid "Message procedures"
-msgstr ""
+msgstr "Paziņojumu procedūras"
 
 #: app/pdb/internal_procs.c:158
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Dažādi"
 
 #: app/pdb/internal_procs.c:161
 msgid "Paint Tool procedures"
-msgstr ""
+msgstr "Zīmēšanas rīka procedūras"
 
 #: app/pdb/internal_procs.c:164
 msgid "Palette"
-msgstr ""
+msgstr "Palete"
 
 #: app/pdb/internal_procs.c:167
 msgid "Palette UI"
-msgstr ""
+msgstr "UI palete"
 
 #: app/pdb/internal_procs.c:173
 msgid "Parasite procedures"
-msgstr ""
+msgstr "Trokšņu procedūras"
 
 #: app/pdb/internal_procs.c:182
 msgid "Pattern UI"
-msgstr ""
+msgstr "UI šablons"
 
 #: app/pdb/internal_procs.c:188
 msgid "Plug-in"
-msgstr ""
+msgstr "Modulis"
 
 #: app/pdb/internal_procs.c:191
 msgid "Procedural database"
-msgstr ""
+msgstr "Procedūru datu bāze"
 
 #: app/pdb/internal_procs.c:194 app/widgets/gimpprogressdialog.c:239
 msgid "Progress"
-msgstr ""
+msgstr "Progress"
 
 #: app/pdb/internal_procs.c:197
 msgid "Image mask"
-msgstr ""
+msgstr "Attēla maska"
 
 #: app/pdb/internal_procs.c:200
 msgid "Selection Tool procedures"
-msgstr ""
+msgstr "Iezīmēšanas rīka procedūras"
 
 #: app/pdb/internal_procs.c:203
 msgid "Text procedures"
-msgstr ""
+msgstr "Teksta procedūras"
 
 #: app/pdb/internal_procs.c:206
 msgid "Transform Tool procedures"
-msgstr ""
+msgstr "Pārveidošanas rīka procedūras"
 
 #: app/pdb/procedural_db.c:254
 #, c-format
@@ -7532,6 +7542,8 @@ msgid ""
 "PDB calling error:\n"
 "procedure '%s' not found"
 msgstr ""
+"PDB izsaukšanas kļūda:\n"
+"procedūra '%s' nav atrasta"
 
 #: app/pdb/procedural_db.c:275 app/pdb/procedural_db.c:387
 #, c-format
@@ -7539,26 +7551,28 @@ msgid ""
 "PDB calling error for procedure '%s':\n"
 "Argument #%d type mismatch (expected %s, got %s)"
 msgstr ""
+"PDB procedūras '%s' izsaukšanas kļūda:\n"
+"Argumenta #%d tipa neatbilstība (gadīts %s, saņemts %s)"
 
 #: app/pdb/procedural_db_cmds.c:80
 msgid "Internal GIMP procedure"
-msgstr ""
+msgstr "Iekšēja GIMP procedūra"
 
 #: app/pdb/procedural_db_cmds.c:81
 msgid "GIMP Plug-In"
-msgstr ""
+msgstr "GIMP modulis"
 
 #: app/pdb/procedural_db_cmds.c:82
 msgid "GIMP Extension"
-msgstr ""
+msgstr "GIMP paplašinājums"
 
 #: app/pdb/procedural_db_cmds.c:83
 msgid "Temporary Procedure"
-msgstr ""
+msgstr "Pagaidu procedūra"
 
 #: app/pdb/selection_tools_cmds.c:332 app/tools/gimpfreeselecttool.c:96
 msgid "Free Select"
-msgstr ""
+msgstr "Brīva iezīmēšana"
 
 #: app/plug-in/plug-in.c:544 app/plug-in/plug-in.c:574
 #, c-format
