@@ -13,7 +13,8 @@ sub register($$$$$$$$$;@) {
    my($function,$blurb,$help,$author,$copyright,$date,
       $menupath,$imagetypes,$params,$code)=@_;
    $function =~ s%^perl_fu_%logulator_% or die;
-   $menupath =~ s%^<Toolbox>/Xtns/Perl-Fu/Logos/%<Image>/Filters/Logulator/% or die;
+   my $mp = __"<Image>/Filters/Logulator";
+   $menupath =~ s%([^/]+)$%$mp/$1% or die;
    my($i,$j)=0;
    my($ti,$fsi,$fi);
    $i=@$params;

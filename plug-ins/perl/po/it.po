@@ -506,6 +506,10 @@ msgstr "<Image>/Filters/Edge-Detect/2x2 Individuazione Contorni"
 msgid "<Image>/Layers/Center Layer"
 msgstr "<Image>/Layers/Centra Livello"
 
+#, fuzzy
+msgid "<Image>/Filters/Logulator"
+msgstr "<Image>/Filters/"
+
 msgid "closing connection %d (%d requests in %g seconds)"
 msgstr "ora chiudo connessione %d (%d richiesto in %g secondi)"
 
@@ -807,6 +811,9 @@ msgstr "<Image>/Filters/Misc/Webify"
 
 msgid "<Image>/Filters/Animation/Animate Cells"
 msgstr "<Image>/Filters/Animazione/Animazione Celle"
+
+msgid "<Image>/View/3D Surface"
+msgstr ""
 
 msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
 msgstr ""

@@ -467,6 +467,10 @@ msgstr ""
 msgid "<Image>/Layers/Center Layer"
 msgstr "<Image>/Filter/"
 
+#, fuzzy
+msgid "<Image>/Filters/Logulator"
+msgstr "<Image>/Filter/"
+
 msgid "closing connection %d (%d requests in %g seconds)"
 msgstr "Schlieﬂe Verbindung %d (%d Anfragen in %g Sekunden)"
 
@@ -741,6 +745,9 @@ msgid "<Image>/Filters/Misc/Webify"
 msgstr "<Image>/Filter/"
 
 msgid "<Image>/Filters/Animation/Animate Cells"
+msgstr ""
+
+msgid "<Image>/View/3D Surface"
 msgstr ""
 
 msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
