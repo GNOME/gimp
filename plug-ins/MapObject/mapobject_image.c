@@ -134,18 +134,16 @@ peek_cylinder_image (gint image,
 }
 
 void
-poke (gint    x,
-      gint    y,
-      GimpRGB *color)
+poke (gint      x,
+      gint      y,
+      GimpRGB  *color,
+      gpointer  data)
 {
-  static guchar data[4];
-  
-  data[0] = (guchar) (color->r * 255.0);
-  data[1] = (guchar) (color->g * 255.0);
-  data[2] = (guchar) (color->b * 255.0);
-  data[3] = (guchar) (color->a * 255.0);
+  static guchar col[4];
 
-  gimp_pixel_rgn_set_pixel (&dest_region, data, x, y);
+  gimp_rgba_get_uchar (color, &col[0], &col[1], &col[2], &col[3]);
+
+  gimp_pixel_rgn_set_pixel (&dest_region, col, x, y);
 }
 
 gint
@@ -223,7 +221,7 @@ get_image_color (gdouble  u,
 		 gdouble  v,
 		 gint    *inside)
 {
-  gint   x1, y1, x2, y2;
+  gint    x1, y1, x2, y2;
   GimpRGB p[4];
 
   pos_to_int (u, v, &x1, &y1);
@@ -246,7 +244,7 @@ get_image_color (gdouble  u,
       p[2] = peek (x1, y2);
       p[3] = peek (x2, y2);
 
-      return gck_bilinear_rgba (u * width, v * height, p);
+      return gimp_bilinear_rgba (u * width, v * height, p);
     }
 
   if (checkbounds (x1, y1) == FALSE)
@@ -273,7 +271,7 @@ get_image_color (gdouble  u,
   p[2] = peek (x1, y2);
   p[3] = peek (x2, y2);
 
-  return gck_bilinear_rgba (u * width, v * height, p);
+  return gimp_bilinear_rgba (u * width, v * height, p);
 }
 
 GimpRGB
@@ -281,7 +279,8 @@ get_box_image_color (gint    image,
 		     gdouble u,
 		     gdouble v)
 {
-  gint   w,h, x1, y1, x2, y2;
+  gint    w, h;
+  gint    x1, y1, x2, y2;
   GimpRGB p[4];
  
   w = box_drawables[image]->width;
@@ -304,7 +303,7 @@ get_box_image_color (gint    image,
   p[2] = peek_box_image (image, x1, y2);
   p[3] = peek_box_image (image, x2, y2);
 
-  return gck_bilinear_rgba (u * w, v * h, p);
+  return gimp_bilinear_rgba (u * w, v * h, p);
 }
 
 GimpRGB
@@ -312,7 +311,8 @@ get_cylinder_image_color (gint    image,
 			  gdouble u,
 			  gdouble v)
 {
-  gint   w,h, x1, y1, x2, y2;
+  gint    w, h;
+  gint    x1, y1, x2, y2;
   GimpRGB p[4];
  
   w = cylinder_drawables[image]->width;
@@ -335,7 +335,7 @@ get_cylinder_image_color (gint    image,
   p[2] = peek_cylinder_image (image, x1, y2);
   p[3] = peek_cylinder_image (image, x2, y2);
 
-  return gck_bilinear_rgba (u * w, v * h, p);
+  return gimp_bilinear_rgba (u * w, v * h, p);
 }
 
 /****************************************/

@@ -240,7 +240,7 @@ get_image_color (gdouble  u,
 		 gdouble  v,
 		 gint    *inside)
 {
-  gint   x1, y1, x2, y2;
+  gint    x1, y1, x2, y2;
   GimpRGB p[4];
  
   x1 = RINT (u);
@@ -267,7 +267,7 @@ get_image_color (gdouble  u,
   p[2] = peek (x1, y2);
   p[3] = peek (x2, y2);
 
-  return gck_bilinear_rgba (u, v, p);
+  return gimp_bilinear_rgba (u, v, p);
 }
 
 gdouble
@@ -297,7 +297,7 @@ get_map_value (GimpPixelRgn *region,
   p[2] = (gdouble) peek_map (region, x1, y2);
   p[3] = (gdouble) peek_map (region, x2, y2);
 
-  return gck_bilinear (u, v, p);
+  return gimp_bilinear (u, v, p);
 }
 
 static void

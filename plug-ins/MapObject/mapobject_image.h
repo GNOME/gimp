@@ -40,7 +40,8 @@ extern GimpRGB      peek                     (gint          x,
 					     gint          y);
 extern void        poke                     (gint          x,
 					     gint          y,
-					     GimpRGB       *color);
+					     GimpRGB      *color,
+					     gpointer      data);
 extern GimpVector3 int_to_pos               (gint          x,
 					     gint          y);
 extern void        pos_to_int               (gdouble       x,
@@ -48,14 +49,14 @@ extern void        pos_to_int               (gdouble       x,
 					     gint         *scr_x,
 					     gint         *scr_y);
 
-extern GimpRGB      get_image_color          (gdouble       u,
-					     gdouble       v,
-					     gint         *inside);
-extern GimpRGB      get_box_image_color      (gint          image,
-					     gdouble       u,
-					     gdouble       v);
-extern GimpRGB      get_cylinder_image_color (gint          image,
-					     gdouble       u,
-					     gdouble       v);
+extern GimpRGB      get_image_color          (gdouble      u,
+					      gdouble      v,
+					      gint        *inside);
+extern GimpRGB      get_box_image_color      (gint         image,
+					      gdouble      u,
+					      gdouble      v);
+extern GimpRGB      get_cylinder_image_color (gint         image,
+					      gdouble      u,
+					      gdouble      v);
 
 #endif  /* __MAPOBJECT_IMAGE_H__ */

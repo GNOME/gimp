@@ -56,12 +56,6 @@ typedef struct
   GckDitherType dithermethod;
 } GckVisualInfo;
 
-typedef void (* GckRenderFunction)      (gdouble, gdouble, GimpRGB *);
-typedef void (* GckPutPixelFunction)    (gint, gint, GimpRGB *);
-typedef void (* GckProgressFunction)    (gint, gint, gint);
-typedef void (* GckColorUpdateFunction) (GimpRGB *);
-
-
 GckVisualInfo *gck_visualinfo_new        (void);
 void           gck_visualinfo_destroy    (GckVisualInfo *visinfo);
 
@@ -79,27 +73,6 @@ void      gck_gc_set_foreground     (GckVisualInfo *visinfo,GdkGC *gc,
                                      guchar r, guchar g, guchar b); 
 void      gck_gc_set_background     (GckVisualInfo *visinfo,GdkGC *gc,
                                      guchar r, guchar g, guchar b); 
-
-/********************/
-/* Color operations */
-/********************/
-
-double  gck_bilinear      (double x,double y, double    *values);
-guchar  gck_bilinear_8    (double x,double y, guchar    *values);
-guint16 gck_bilinear_16   (double x,double y, guint16   *values);
-guint32 gck_bilinear_32   (double x,double y, guint32   *values);
-GimpRGB  gck_bilinear_rgb  (double x,double y, GimpRGB *values);
-GimpRGB  gck_bilinear_rgba (double x,double y, GimpRGB *values);
-
-/* Supersampling */
-/* ============= */
-
-gulong    gck_adaptive_supersample_area (int x1,int y1,int x2,int y2,
-                                         int max_depth,
-                                         double threshold,
-                                         GckRenderFunction    render_func,
-                                         GckPutPixelFunction  put_pixel_func,
-                                         GckProgressFunction  progress_func);
 
 #ifdef __cplusplus
 }

@@ -167,10 +167,10 @@ typedef void (* TileValidateProc)     (TileManager *tm,
 
 typedef void (* ToolOptionsResetFunc) (void);
 
-typedef void (* GimpProgressFunc)     (gint         ymin,
-				       gint         ymax,
-				       gint         curr_y,
-				       gpointer     progress_data);
+typedef void (* GimpProgressFunc)     (gint         min,
+				       gint         max,
+				       gint         current,
+				       gpointer     data);
 
 typedef void (* ImageMapApplyFunc)    (PixelRegion *srcPR,
 				       PixelRegion *destPR,

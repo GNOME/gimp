@@ -24,28 +24,28 @@
 #define __ASUPSAMPLE_H__
 
 
-typedef void (* render_func_t)    (gdouble   x,
+typedef void (* GimpRenderFunc)   (gdouble   x,
 				   gdouble   y,
 				   GimpRGB  *color,
-				   gpointer  render_data);
-typedef void (* put_pixel_func_t) (gint      x,
+				   gpointer  data);
+typedef void (* GimpPutPixelFunc) (gint      x,
 				   gint      y,
-				   GimpRGB   color,
-				   gpointer  put_pixel_data);
+				   GimpRGB  *color,
+				   gpointer  data);
 
 
-gulong   adaptive_supersample_area (gint              x1,
-				    gint              y1,
-				    gint              x2,
-				    gint              y2,
-				    gint              max_depth,
-				    gdouble           threshold,
-				    render_func_t     render_func,
-				    gpointer          render_data,
-				    put_pixel_func_t  put_pixel_func,
-				    gpointer          put_pixel_data,
-				    GimpProgressFunc  progress_func,
-				    gpointer          progress_data);
+gulong   gimp_adaptive_supersample_area (gint              x1,
+					 gint              y1,
+					 gint              x2,
+					 gint              y2,
+					 gint              max_depth,
+					 gdouble           threshold,
+					 GimpRenderFunc    render_func,
+					 gpointer          render_data,
+					 GimpPutPixelFunc  put_pixel_func,
+					 gpointer          put_pixel_data,
+					 GimpProgressFunc  progress_func,
+					 gpointer          progress_data);
 
 
 #endif /* __ASUPSAMPLE_H__ */

@@ -27,6 +27,8 @@
 #include <libgimp/gimpenums.h>
 #include <libgimp/gimptypes.h>
 
+#include <libgimp/gimpadaptivesupersample.h>
+#include <libgimp/gimpbilinear.h>
 #include <libgimp/gimpchannel.h>
 #include <libgimp/gimpcolor.h>
 #include <libgimp/gimpcolorspace.h>

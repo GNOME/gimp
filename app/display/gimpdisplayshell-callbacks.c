@@ -160,7 +160,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 
   gdisp = (GDisplay *) gtk_object_get_user_data (GTK_OBJECT (canvas));
 
-  if (!canvas->window) 
+  if (!canvas->window)
     return FALSE;
 
   /*  If this is the first event...  */
@@ -180,10 +180,10 @@ gdisplay_canvas_events (GtkWidget *canvas,
 
       /*  set up the scrollbar observers  */
       gtk_signal_connect (GTK_OBJECT (gdisp->hsbdata), "value_changed",
-			  (GtkSignalFunc) scrollbar_horz_update,
+			  GTK_SIGNAL_FUNC(scrollbar_horz_update),
 			  gdisp);
       gtk_signal_connect (GTK_OBJECT (gdisp->vsbdata), "value_changed",
-			  (GtkSignalFunc) scrollbar_vert_update,
+			  GTK_SIGNAL_FUNC (scrollbar_vert_update),
 			  gdisp);
 
       /*  setup scale properly  */
@@ -191,7 +191,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
     }
 
   /*  Find out what device the event occurred upon  */
-  if (!gimp_busy && devices_check_change (event))
+  if (! gimp_busy && devices_check_change (event))
     gdisplay_check_device_cursor (gdisp);
 
   switch (event->type)
@@ -216,7 +216,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
       break;
 
     case GDK_LEAVE_NOTIFY:
-      if (((GdkEventCrossing*) event)->mode != GDK_CROSSING_NORMAL)
+      if (((GdkEventCrossing *) event)->mode != GDK_CROSSING_NORMAL)
 	return TRUE;
       gdisplay_update_cursor (gdisp, 0, 0);
       gtk_label_set_text (GTK_LABEL (gdisp->cursor_label), "");
@@ -227,7 +227,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
       break;
 
     case GDK_ENTER_NOTIFY:
-      if (((GdkEventCrossing*) event)->mode != GDK_CROSSING_NORMAL)
+      if (((GdkEventCrossing *) event)->mode != GDK_CROSSING_NORMAL)
 	return TRUE;
       /* Actually, should figure out tx,ty here */
       break;
@@ -247,12 +247,12 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  gtk_grab_add (canvas);
 
 	  /* This is a hack to prevent other stuff being run in the middle of
-	     a tool operation (like changing image types.... brrrr). We just
-	     block all the keypress event. A better solution is to implement
-	     some sort of locking for images.
-	     Note that this is dependent on specific GTK behavior, and isn't
-	     guaranteed to work in future versions of GTK.
-	     -Yosh
+	   * a tool operation (like changing image types.... brrrr). We just
+	   * block all the keypress event. A better solution is to implement
+	   * some sort of locking for images.
+	   * Note that this is dependent on specific GTK behavior, and isn't
+	   * guaranteed to work in future versions of GTK.
+	   * -Yosh
 	   */
 	  if (key_signal_id == 0)
 	    key_signal_id = gtk_signal_connect (GTK_OBJECT (canvas),
@@ -261,7 +261,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 						NULL);
 
 	  if (active_tool && ((active_tool->type == MOVE) ||
-			      !gimp_image_is_empty (gdisp->gimage)))
+			      ! gimp_image_is_empty (gdisp->gimage)))
 	    {
 	      if (active_tool->auto_snap_to)
 		{
@@ -363,9 +363,8 @@ gdisplay_canvas_events (GtkWidget *canvas,
        *
        *  ugly: fuzzy_select sets busy cursors while ACTIVE.
        */
-      if (gimp_busy &&
-	  !(active_tool->type == FUZZY_SELECT &&
-	    active_tool->state == ACTIVE))
+      if (gimp_busy && ! (active_tool->type == FUZZY_SELECT &&
+			  active_tool->state == ACTIVE))
 	return TRUE;
 
       switch (bevent->button)
@@ -394,7 +393,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 		      bevent->y = ty;
 		      update_cursor = TRUE;
 		    }
-		  
+
 		  (* active_tool->button_release_func) (active_tool, bevent,
 							gdisp);
 		}
@@ -437,14 +436,13 @@ gdisplay_canvas_events (GtkWidget *canvas,
        *
        *  ugly: fuzzy_select sets busy cursors while ACTIVE.
        */
-      if (gimp_busy &&
-	  !(active_tool->type == FUZZY_SELECT &&
-	    active_tool->state == ACTIVE))
+      if (gimp_busy && ! (active_tool->type == FUZZY_SELECT &&
+			  active_tool->state == ACTIVE))
 	return TRUE;
 
      /* Ask for the pointer position, but ignore it except for cursor
-      * handling, so motion events sync with the button press/release events */
-
+      * handling, so motion events sync with the button press/release events
+      */
       if (mevent->is_hint)
 	{
 	  gdk_input_window_get_pointer (canvas->window, current_device, &tx, &ty,
@@ -469,7 +467,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	}
 
       if (active_tool && ((active_tool->type == MOVE) ||
-			  !gimp_image_is_empty (gdisp->gimage)) &&
+			  ! gimp_image_is_empty (gdisp->gimage)) &&
 	  (mevent->state & GDK_BUTTON1_MASK))
 	{
 	  if (active_tool->state == ACTIVE)

@@ -245,7 +245,7 @@ static void    gradient_render_pixel             (gdouble       x,
 						  gpointer      render_data);
 static void    gradient_put_pixel                (gint          x,
 						  gint          y,
-						  GimpRGB       color,
+						  GimpRGB      *color,
 						  gpointer      put_pixel_data);
 
 static void    gradient_fill_region              (GImage       *gimage,
@@ -1403,7 +1403,7 @@ gradient_render_pixel (double    x,
 static void
 gradient_put_pixel (int      x, 
 		    int      y, 
-		    GimpRGB  color, 
+		    GimpRGB *color, 
 		    void    *put_pixel_data)
 {
   PutPixelData  *ppd;
@@ -1417,17 +1417,17 @@ gradient_put_pixel (int      x,
 
   if (ppd->bytes >= 3)
     {
-      *data++ = color.r * 255.0;
-      *data++ = color.g * 255.0;
-      *data++ = color.b * 255.0;
-      *data++ = color.a * 255.0;
+      *data++ = color->r * 255.0;
+      *data++ = color->g * 255.0;
+      *data++ = color->b * 255.0;
+      *data++ = color->a * 255.0;
     }
   else
     {
       /* Convert to grayscale */
 
-      *data++ = 255.0 * INTENSITY (color.r, color.g, color.b);
-      *data++ = color.a * 255.0;
+      *data++ = 255.0 * INTENSITY (color->r, color->g, color->b);
+      *data++ = color->a * 255.0;
     }
 
   /* Paint whole row if we are on the rightmost pixel */
@@ -1588,11 +1588,11 @@ gradient_fill_region (GImage           *gimage,
 
       /* Render! */
 
-      adaptive_supersample_area (0, 0, (width - 1), (height - 1),
-				 max_depth, threshold,
-				 gradient_render_pixel, &rbd,
-				 gradient_put_pixel, &ppd,
-				 progress_callback, progress_data);
+      gimp_adaptive_supersample_area (0, 0, (width - 1), (height - 1),
+				      max_depth, threshold,
+				      gradient_render_pixel, &rbd,
+				      gradient_put_pixel, &ppd,
+				      progress_callback, progress_data);
 
       /* Clean up */
 

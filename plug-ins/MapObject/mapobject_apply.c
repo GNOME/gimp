@@ -187,9 +187,10 @@ init_compute (void)
 }
 
 void
-render (gdouble  x,
-	gdouble  y,
-	GimpRGB  *col)
+render (gdouble   x,
+	gdouble   y,
+	GimpRGB  *col,
+	gpointer  data)
 {
   GimpVector3 pos;
 
@@ -201,9 +202,10 @@ render (gdouble  x,
 }
 
 void
-show_progress (gint min,
-	       gint max,
-	       gint curr)
+show_progress (gint     min,
+	       gint     max,
+	       gint     curr,
+	       gpointer data)
 {
   gimp_progress_update ((gdouble) curr / (gdouble) max);
 }
@@ -288,7 +290,7 @@ compute_image (void)
             {
               p = int_to_pos (xcount, ycount);
               color = (* get_ray_color) (&p);
-              poke (xcount, ycount, &color);
+              poke (xcount, ycount, &color, NULL);
 
               if ((progress_counter++ % width) == 0)
                 gimp_progress_update ((gdouble) progress_counter /
@@ -298,13 +300,16 @@ compute_image (void)
     }
   else
     {
-      gck_adaptive_supersample_area (0, 0,
-				     width - 1, height - 1,
-				     max_depth,
-				     mapvals.pixeltreshold,
-				     render,
-				     poke,
-				     show_progress);
+      gimp_adaptive_supersample_area (0, 0,
+				      width - 1, height - 1,
+				      max_depth,
+				      mapvals.pixeltreshold,
+				      render,
+				      NULL,
+				      poke,
+				      NULL,
+				      show_progress,
+				      NULL);
     }
 
   /* Update the region */

@@ -1,3 +1,29 @@
+2001-01-23  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/Makefile.am
+	* libgimp/gimp.h
+	* libgimp/gimpadaptivesupersample.[ch]
+	* libgimp/gimpbilinear.[ch]: new files cut out of LibGCK.
+
+	* plug-ins/libgck/gck/gck.h
+	* plug-ins/libgck/gck/gckcolor.c: removed the bilinear and
+	supersample code.
+
+	* app/apptypes.h
+	* app/asupsample.[ch]
+	* app/tools/blend.c: made the adaptive_supersample interface the
+	same as in libgimp but don't use the libgimp function yet.
+
+	The libgimp function takes total transparancy into account when
+	weighting the 4 resulting RGBA values, the app function always
+	weights them equally. Please have a look at the code.
+
+	* plug-ins/Lighting/lighting_image.c
+	* plug-ins/MapObject/mapobject_apply.c
+	* plug-ins/MapObject/mapobject_image.[ch]: changed accordingly.
+
+	* app/disp_callbacks.c: paranoia cleanups.
+
 2001-01-22  Sven Neumann  <sven@gimp.org>
 
 	* app/gdisplay.c
