@@ -4859,7 +4859,7 @@ msgstr "Назва:"
 #: plug-ins/dbbrowser/dbbrowser_utils.c:359
 #: plug-ins/gap/gap_dbbrowser_utils.c:342
 msgid "Blurb:"
-msgstr ""
+msgstr "Анотац╕я:"
 
 #: plug-ins/common/plugindetails.c:395
 #: plug-ins/dbbrowser/dbbrowser_utils.c:478
@@ -6860,17 +6860,17 @@ msgstr "Перегляд БД (╕н╕ц╕ал╕зац╕я...)"
 #: plug-ins/dbbrowser/dbbrowser_utils.c:173
 #: plug-ins/gap/gap_dbbrowser_utils.c:183
 msgid "Search by Blurb"
-msgstr ""
+msgstr "Пошук за анотац╕╓ю"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:381
 #: plug-ins/gap/gap_dbbrowser_utils.c:364
 msgid "In:"
-msgstr ""
+msgstr "Вх╕д:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:428
 #: plug-ins/gap/gap_dbbrowser_utils.c:410
 msgid "Out:"
-msgstr ""
+msgstr "Вих╕д:"
 
 #. show the author & the copyright
 #: plug-ins/dbbrowser/dbbrowser_utils.c:516
@@ -6886,7 +6886,7 @@ msgstr "Дата:"
 #: plug-ins/dbbrowser/dbbrowser_utils.c:546
 #: plug-ins/gap/gap_dbbrowser_utils.c:527
 msgid "Copyright:"
-msgstr "Авторське право:"
+msgstr "Авторськ╕ права:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:641
 msgid "DB Browser (by name - please wait)"
@@ -6942,20 +6942,20 @@ msgstr ""
 
 #: plug-ins/flame/flame.c:137
 msgid "<Image>/Filters/Render/Nature/Flame..."
-msgstr ""
+msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Природа/Вогонь..."
 
 #: plug-ins/flame/flame.c:218
 msgid "Drawing Flame..."
-msgstr ""
+msgstr "Малювання вогню..."
 
 #: plug-ins/flame/flame.c:299
 msgid "Flame works only on RGB drawables."
-msgstr ""
+msgstr "Вогонь працю╓ лише на RGB-зображеннях."
 
 #: plug-ins/flame/flame.c:415
 #, c-format
 msgid "%s: Is not a regular file"
-msgstr ""
+msgstr "%s: Це не звичайний файл"
 
 #: plug-ins/flame/flame.c:619 plug-ins/flame/flame.c:981
 msgid "Edit Flame"
@@ -7016,7 +7016,7 @@ msgstr ""
 
 #: plug-ins/flame/flame.c:924 plug-ins/flame/flame.c:963
 msgid "Flame"
-msgstr ""
+msgstr "Вогонь"
 
 #: plug-ins/flame/flame.c:1033 plug-ins/print/gimp_color_window.c:114
 msgid "Contrast:"
@@ -7061,7 +7061,7 @@ msgstr ""
 
 #: plug-ins/fp/fp.c:128
 msgid "Convert the image to RGB first!"
-msgstr ""
+msgstr "Сперш перетвор╕ть зображення у RGB!"
 
 #: plug-ins/fp/fp.c:133
 msgid "Applying the Filter Pack..."
