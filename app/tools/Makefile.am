@@ -136,8 +136,7 @@ libapptools_a_SOURCES = \
 	tool_manager.c			\
 	tool_manager.h			\
 	path_tool.h			\
-	path_tool.c			\
-	path_toolP.h
+	path_tool.c
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Tools\"	\

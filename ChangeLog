@@ -1,3 +1,8 @@
+2003-02-12  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/Makefile.am
+	* app/tools/path_toolP.h: removed this unused header file.
+
 2003-02-11  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am
