@@ -105,19 +105,19 @@ void query (void)
     {PARAM_DRAWABLE, "drawable", "Input drawable"},
 
     {PARAM_INT32,    "hwidth",   "Horizontal Width   (>= 0)"},
-    {PARAM_INT32,    "hspace",   "Horizontal Spacing (>= 0)"},
+    {PARAM_INT32,    "hspace",   "Horizontal Spacing (>= 1)"},
     {PARAM_INT32,    "hoffset",  "Horizontal Offset  (>= 0)"},
     {PARAM_COLOR,    "hcolor",   "Horizontal Colour"},
     {PARAM_INT8,     "hopacity", "Horizontal Opacity (0...255)"},
 
     {PARAM_INT32,    "vwidth",   "Vertical Width   (>= 0)"},
-    {PARAM_INT32,    "vspace",   "Vertical Spacing (>= 0)"},
+    {PARAM_INT32,    "vspace",   "Vertical Spacing (>= 1)"},
     {PARAM_INT32,    "voffset",  "Vertical Offset  (>= 0)"},
     {PARAM_COLOR,    "vcolor",   "Vertical Colour"},
     {PARAM_INT8,     "vopacity", "Vertical Opacity (0...255)"},
 
     {PARAM_INT32,    "iwidth",   "Intersection Width   (>= 0)"},
-    {PARAM_INT32,    "ispace",   "Intersection Spacing (>= 0)"},
+    {PARAM_INT32,    "ispace",   "Intersection Spacing (>= 1)"},
     {PARAM_INT32,    "ioffset",  "Intersection Offset  (>= 0)"},
     {PARAM_COLOR,    "icolor",   "Intersection Colour"},
     {PARAM_INT8,     "iopacity", "Intersection Opacity (0...255)"},
@@ -171,7 +171,7 @@ run (gchar   *name,
       if (status == STATUS_SUCCESS)
 	{
 	  grid_cfg.hwidth    = MAX (0, param[3].data.d_int32);
-	  grid_cfg.hspace    = MAX (0, param[4].data.d_int32);
+	  grid_cfg.hspace    = MAX (1, param[4].data.d_int32);
 	  grid_cfg.hoffset   = MAX (0, param[5].data.d_int32);
 	  grid_cfg.hcolor[0] = param[6].data.d_color.red;
 	  grid_cfg.hcolor[1] = param[6].data.d_color.green;
@@ -179,7 +179,7 @@ run (gchar   *name,
 	  grid_cfg.hcolor[3] = param[7].data.d_int8;
 
 	  grid_cfg.vwidth    = MAX (0, param[8].data.d_int32);
-	  grid_cfg.vspace    = MAX (0, param[9].data.d_int32);
+	  grid_cfg.vspace    = MAX (1, param[9].data.d_int32);
 	  grid_cfg.voffset   = MAX (0, param[10].data.d_int32);
 	  grid_cfg.vcolor[0] = param[11].data.d_color.red;
 	  grid_cfg.vcolor[1] = param[11].data.d_color.green;
@@ -187,7 +187,7 @@ run (gchar   *name,
 	  grid_cfg.vcolor[3] = param[12].data.d_int8;
 
 	  grid_cfg.iwidth    = MAX (0, param[13].data.d_int32);
-	  grid_cfg.ispace    = MAX (0, param[14].data.d_int32);
+	  grid_cfg.ispace    = MAX (1, param[14].data.d_int32);
 	  grid_cfg.ioffset   = MAX (0, param[15].data.d_int32);
 	  grid_cfg.icolor[0] = param[16].data.d_color.red;
 	  grid_cfg.icolor[1] = param[16].data.d_color.green;
@@ -588,9 +588,9 @@ dialog (gint32     image_ID,
   gimp_size_entry_set_size (GIMP_SIZE_ENTRY (space), 2, 0.0, (gdouble)(drawable->width));
 
   /*  set upper and lower limits (in pixels)  */
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 0, 0.0, (gdouble)(drawable->width));
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 1, 0.0, (gdouble)(drawable->height));
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 2, 0.0, (gdouble)(drawable->width));
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 0, 1.0, (gdouble)(drawable->width));
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 1, 1.0, (gdouble)(drawable->height));
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 2, 1.0, (gdouble)(drawable->width));
 
   gtk_table_set_col_spacing (GTK_TABLE (space), 2, 12);
   gtk_table_set_col_spacing (GTK_TABLE (space), 3, 12);
