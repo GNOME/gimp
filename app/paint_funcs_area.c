@@ -189,7 +189,6 @@ color_area  (
     {
       PixelRow row;
       gint h = pixelarea_height (src_area);
-      printf ("coloring %d rows\n", h);
       while (h--)
         {
           pixelarea_getdata (src_area, &row, h);
@@ -3179,11 +3178,14 @@ combine_areas  (
   gint src1_bytes = tag_bytes (src1_tag);
   gint src1_bytes_per_channel = src1_bytes / src1_num_channels;
   Precision prec = tag_precision (src1_tag); 
+
   
   /*put in tags check*/
   
   Tag buf_tag = tag_new (tag_format (src1_tag), prec, ALPHA_YES);
   
+  trace_enter ("combine_areas");
+
   if ( tag_alpha(src1_tag) == ALPHA_YES )
     buf_size = src1_width * src1_bytes;
   else
@@ -3343,6 +3345,8 @@ combine_areas  (
     } 
     if (buf_row_data)
       g_free (buf_row_data);
+
+    trace_exit();
 }
 
 

@@ -24,8 +24,8 @@
 #include "tile_manager.h" /* temporary */
 
 
-#define TILE16_WIDTH 64
-#define TILE16_HEIGHT 64
+#define TILE16_WIDTH   64
+#define TILE16_HEIGHT  64
 
 typedef struct _Tile16 Tile16;
 
@@ -93,15 +93,18 @@ tilebuf_delete  (
                  TileBuf * t
                  )
 {
-  if (t->tiles)
+  if (t)
     {
-      int n = tile16_index (t, t->width - 1, t->height - 1) + 1;
-      while (n--)
-        if (t->tiles[n].data)
-          g_free (t->tiles[n].data);
-      g_free (t->tiles);
+      if (t->tiles)
+        {
+          int n = tile16_index (t, t->width - 1, t->height - 1) + 1;
+          while (n--)
+            if (t->tiles[n].data)
+              g_free (t->tiles[n].data);
+          g_free (t->tiles);
+        }
+      g_free (t);
     }
-  g_free (t);
 }
 
 
@@ -110,15 +113,18 @@ tilebuf_clone  (
                 TileBuf * t
                 )
 {
-  TileBuf *newt;
+  TileBuf *newt = NULL;
 
-  newt = (TileBuf *) g_malloc (sizeof (TileBuf));
+  if (t)
+    {
+      newt = (TileBuf *) g_malloc (sizeof (TileBuf));
 
-  newt->tag = t->tag;
-  newt->width = t->width;
-  newt->height = t->height;
+      newt->tag = t->tag;
+      newt->width = t->width;
+      newt->height = t->height;
 
-  /* tile16_clone (t, newt); */
+      /* tile16_clone (t, newt); */
+    }
   
   return newt;
 }
@@ -129,7 +135,9 @@ tilebuf_tag  (
               TileBuf * t
               )
 {
-  return t->tag;
+  if (t)
+    return t->tag;
+  return tag_null ();
 }
 
 
@@ -138,7 +146,7 @@ tilebuf_precision  (
                     TileBuf * t
                     )
 {
-  return tag_precision (t->tag);
+  return tag_precision (tilebuf_tag (t));
 }
 
 
@@ -147,7 +155,7 @@ tilebuf_format  (
                  TileBuf * t
                  )
 {
-  return tag_format (t->tag);
+  return tag_format (tilebuf_tag (t));
 }
 
 
@@ -156,7 +164,7 @@ tilebuf_alpha  (
                 TileBuf * t
                 )
 {
-  return tag_alpha (t->tag);
+  return tag_alpha (tilebuf_tag (t));
 }
 
 
@@ -195,7 +203,9 @@ tilebuf_width  (
                 TileBuf * t
                 )
 {
-  return t->width;
+  if (t)
+    return t->width;
+  return 0;
 }
 
 
@@ -204,7 +214,9 @@ tilebuf_height  (
                  TileBuf * t
                  )
 {
-  return t->height;
+  if (t)
+    return t->height;
+  return 0;
 }
 
 
@@ -330,7 +342,7 @@ tilebuf_rowstride  (
                     int y
                     )
 {
-  return TILE16_WIDTH * tag_bytes (t->tag);
+  return TILE16_WIDTH * tag_bytes (tilebuf_tag (t));
 }
 
 
@@ -341,7 +353,12 @@ tilebuf_portion_width  (
                         int y
                         )
 {
-  return TILE16_WIDTH - tile16_xoffset (t, x);
+  if (t)
+    if (x+TILE16_WIDTH > t->width)
+      return tile16_xoffset (t, t->width);
+    else
+      return TILE16_WIDTH;
+  return 0;
 }
 
 
@@ -352,7 +369,12 @@ tilebuf_portion_height  (
                          int y
                          )
 {
-  return TILE16_HEIGHT - tile16_yoffset (t, y);
+  if (t)
+    if (y+TILE16_HEIGHT > t->height)
+      return tile16_yoffset (t, t->height);
+    else
+      return TILE16_HEIGHT;
+  return 0;
 }
 
 
@@ -367,9 +389,13 @@ tile16_index (
               int y
               )
 {
-  x = x / TILE16_WIDTH;
-  y = y / TILE16_HEIGHT;
-  return (y * (t->width + TILE16_WIDTH - 1) / TILE16_WIDTH + x);
+  if (t)
+    {
+      x = x / TILE16_WIDTH;
+      y = y / TILE16_HEIGHT;
+      return (y * (t->width + TILE16_WIDTH - 1) / TILE16_WIDTH + x);
+    }
+  return -1;
 }
 
 
@@ -403,24 +429,25 @@ tilebuf_to_tm  (
                 TileManager * tm
                 )
 {
-  int i;
-  
-  i = ( ( (t->width + TILE16_WIDTH - 1) / TILE16_WIDTH ) *
-        ( (t->height + TILE16_HEIGHT - 1) / TILE16_HEIGHT ) );
-
-  while (i--)
+  if (t && tm)
     {
-      Tile * tile = tile_manager_get (tm, i, 0);
+      int i = ( ( (t->width + TILE16_WIDTH - 1) / TILE16_WIDTH ) *
+                ( (t->height + TILE16_HEIGHT - 1) / TILE16_HEIGHT ) );
 
-      if (t->tiles[i].valid == TRUE)
+      while (i--)
         {
-          int n =
-            TILE16_WIDTH *
-            TILE16_HEIGHT *
-            tag_bytes (tilebuf_tag (t));
-          tile_ref (tile);
-          memcpy (tile->data, t->tiles[i].data, n);
-          tile_unref (tile, TRUE);
+          Tile * tile = tile_manager_get (tm, i, 0);
+          
+          if (t->tiles[i].valid == TRUE)
+            {
+              int n =
+                TILE16_WIDTH *
+                TILE16_HEIGHT *
+                tag_bytes (tilebuf_tag (t));
+              tile_ref (tile);
+              memcpy (tile->data, t->tiles[i].data, n);
+              tile_unref (tile, TRUE);
+            }
         }
     }
 }
@@ -432,34 +459,34 @@ tilebuf_from_tm  (
                   TileManager * tm
                   )
 {
-  int i;
-  
-  i = ( ( (t->width + TILE16_WIDTH - 1) / TILE16_WIDTH ) *
-        ( (t->height + TILE16_HEIGHT - 1) / TILE16_HEIGHT ) );
-  
-  while (i--)
-    {
-      Tile * tile = tile_manager_get (tm, i, 0);
-
-      t->tiles[i].valid = FALSE;
-      t->tiles[i].ref_count = 0;
-      if (t->tiles[i].data)
-        g_free (t->tiles[i].data);
-      t->tiles[i].data = NULL;
+  if (t && tm)
+    {  
+      int i = ( ( (t->width + TILE16_WIDTH - 1) / TILE16_WIDTH ) *
+                ( (t->height + TILE16_HEIGHT - 1) / TILE16_HEIGHT ) );
       
-      if (tile->valid)
+      while (i--)
         {
-          int n =
-            TILE16_WIDTH *
-            TILE16_HEIGHT *
-            tag_bytes (tilebuf_tag (t));
-          t->tiles[i].valid = TRUE;
-          t->tiles[i].data = g_new (guchar, n);
-          tile_ref (tile);
-          memcpy (t->tiles[i].data, tile->data, n);
-          tile_unref (tile, FALSE);
+          Tile * tile = tile_manager_get (tm, i, 0);
+          
+          t->tiles[i].valid = FALSE;
+          t->tiles[i].ref_count = 0;
+          if (t->tiles[i].data)
+            g_free (t->tiles[i].data);
+          t->tiles[i].data = NULL;
+          
+          if (tile->valid)
+            {
+              int n =
+                TILE16_WIDTH *
+                TILE16_HEIGHT *
+                tag_bytes (tilebuf_tag (t));
+              t->tiles[i].valid = TRUE;
+              t->tiles[i].data = g_new (guchar, n);
+              tile_ref (tile);
+              memcpy (t->tiles[i].data, tile->data, n);
+              tile_unref (tile, FALSE);
+            }
         }
     }
 }
-
 

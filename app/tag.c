@@ -144,8 +144,8 @@ tag_set_alpha (
 
 guint
 tag_num_channels (
-           Tag x
-           )
+                  Tag x
+                  )
 {
   int y;
   
@@ -278,8 +278,13 @@ tag_string_alpha (
 
 
 
-
-
+Tag
+tag_null (
+          void
+          )
+{
+  return tag_new (PRECISION_NONE, FORMAT_NONE, ALPHA_NONE);
+}
 
 
 
@@ -306,5 +311,5 @@ tag_by_bytes  (
       return tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_YES);
       break;
     }
-  return tag_new (PRECISION_NONE, FORMAT_NONE, ALPHA_NONE);
+  return tag_null ();
 }

@@ -225,10 +225,8 @@ paintbrush_motion  (
         Tag tag = tag_new (canvas_precision (area), FORMAT_GRAY, ALPHA_NO);      
         Paint * b_opac = arg_float (tag, drawable, (float) get_brush_opacity ());
         Paint * i_opac = arg_float (tag, drawable, (float) paint_left);
-#if 0
         paint_core_16_area_paste (paint_core, drawable, b_opac, i_opac,
                                   SOFT, CONSTANT, get_brush_paint_mode ());
-#endif
         paint_delete (b_opac);
         paint_delete (i_opac);
       }

@@ -77,6 +77,7 @@ guchar *  tag_string_precision  (Precision);
 guchar *  tag_string_format     (Format);
 guchar *  tag_string_alpha      (Alpha);
 
+Tag       tag_null              (void);
 
 
 /* hack hack */

@@ -112,7 +112,8 @@ paint_delete (
               Paint * p
               )
 {
-  g_free (p);
+  if (p)
+    g_free (p);
 }
 
 
@@ -121,9 +122,14 @@ paint_clone (
              Paint * p
              )
 {
-  Paint *new_p;
-  new_p = g_malloc (sizeof (Paint));
-  *new_p = *p;
+  Paint *new_p = NULL;
+
+  if (p)
+    {
+      new_p = g_malloc (sizeof (Paint));
+      *new_p = *p;
+    }
+  
   return new_p;
 }
 
@@ -133,7 +139,9 @@ paint_tag (
            Paint * p
            )
 {
-  return p->tag;
+  if (p)
+    return p->tag;
+  return tag_null ();
 }
 
 
@@ -142,7 +150,7 @@ paint_precision (
                  Paint * p
                  )
 {
-  return tag_precision (p->tag);
+  return tag_precision (paint_tag (p));
 }
 
 
@@ -151,7 +159,7 @@ paint_format (
               Paint * p
               )
 {
-  return tag_format (p->tag);
+  return tag_format (paint_tag (p));
 }
 
 
@@ -160,7 +168,7 @@ paint_alpha (
              Paint * p
              )
 {
-  return tag_alpha (p->tag);
+  return tag_alpha (paint_tag (p));
 }
 
 
@@ -170,10 +178,7 @@ paint_set_precision (
                      Precision  precision
                      )
 {
-  if (tag_precision (p->tag) == precision)
-    return precision;
-  /* WRITEME */
-  return PRECISION_NONE;
+  return tag_precision (paint_tag (p));
 }
 
 
@@ -183,10 +188,7 @@ paint_set_format (
                   Format  format
                   )
 {
-  if (tag_format (p->tag) == format)
-    return format;
-  /* WRITEME */
-  return FORMAT_NONE;
+  return tag_format (paint_tag (p));
 }
 
 
@@ -196,10 +198,7 @@ paint_set_alpha (
                  Alpha   alpha
                  )
 {
-  if (tag_alpha (p->tag) == alpha)
-    return alpha;
-  /* WRITEME */
-  return ALPHA_NONE;
+  return tag_alpha (paint_tag (p));
 }
 
 
@@ -253,7 +252,9 @@ paint_drawable (
                 Paint * p
                 )
 {
-  return p->drawable;
+  if (p)
+    return p->drawable;
+  return NULL;
 }
 
 
@@ -263,7 +264,9 @@ paint_set_drawable (
                     GimpDrawable * d
                     )
 {
-  return (p->drawable = d);
+  if (p)
+    return (p->drawable = d);
+  return NULL;
 }
 
 
@@ -272,7 +275,9 @@ paint_data (
             Paint * p
             )
 {
-  return &p->data;
+  if (p)
+    return &p->data;
+  return NULL;
 }
 
 
@@ -281,7 +286,7 @@ paint_bytes (
              Paint * p
              )
 {
-  return tag_bytes (p->tag);
+  return tag_bytes (paint_tag (p));
 }
 
 

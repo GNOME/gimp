@@ -29,9 +29,12 @@ pixelrow_init  (
                 int width
                 )
 {
-  p->tag = tag;
-  p->buffer = buffer;
-  p->width = width;
+  if (p)
+    {
+      p->tag = tag;
+      p->buffer = buffer;
+      p->width = width;
+    }
 }
 
 
@@ -41,9 +44,9 @@ pixelrow_getdata  (
                    int x
                    )
 {
-  if (x >= p->width)
-    return NULL;
-  return (p->buffer + (x * tag_bytes (p->tag)));
+  if (p && (x < p->width))
+    return (p->buffer + (x * tag_bytes (p->tag)));
+  return NULL;
 }
 
 
@@ -81,7 +84,9 @@ pixelrow_tag  (
                PixelRow * p
                )
 {
-  return p->tag;
+  if (p)
+    return p->tag;
+  return tag_null ();
 }
 
 
@@ -90,7 +95,9 @@ pixelrow_width  (
                  PixelRow * p
                  )
 {
-  return p->width;
+  if (p)
+    return p->width;
+  return 0;
 }
 
 
@@ -99,7 +106,9 @@ pixelrow_data  (
                 PixelRow * p
                 )
 {
-  return p->buffer;
+  if (p)
+    return p->buffer;
+  return NULL;
 }
 
 

@@ -126,7 +126,7 @@ canvas_tag  (
     else if (c->flat_data)
       return flatbuf_tag (c->flat_data);
 
-  return tag_new (PRECISION_NONE, FORMAT_NONE, ALPHA_NONE);
+  return tag_null ();
 }
 
 
@@ -365,16 +365,21 @@ canvas_from_tb (
                 TempBuf *tb
                 )
 {
-  Canvas *c;
-  
-  c = canvas_new (tag_by_bytes (tb->bytes),
-                  tb->width,
-                  tb->height,
-                  TILING_NEVER);
+  if (tb)
+    {
+      Canvas *c;
+      
+      c = canvas_new (tag_by_bytes (tb->bytes),
+                      tb->width,
+                      tb->height,
+                      TILING_NEVER);
+      
+      flatbuf_from_tb (c->flat_data, tb);
+      
+      return c;
+    }
 
-  flatbuf_from_tb (c->flat_data, tb);
-
-  return c;
+  return NULL;
 }
 
 
@@ -383,16 +388,21 @@ canvas_to_tb (
               Canvas *c
               )
 {
-  TempBuf *tb;
+  if (c)
+    {
+      TempBuf *tb;
 
-  tb = temp_buf_new (canvas_width (c),
-                     canvas_height (c),
-                     tag_bytes (canvas_tag (c)),
-                     0, 0, NULL);
+      tb = temp_buf_new (canvas_width (c),
+                         canvas_height (c),
+                         tag_bytes (canvas_tag (c)),
+                         0, 0, NULL);
   
-  flatbuf_to_tb (c->flat_data, tb);
+      flatbuf_to_tb (c->flat_data, tb);
 
-  return tb;
+      return tb;
+    }
+
+  return NULL;
 }
 
 
@@ -401,16 +411,21 @@ canvas_from_tm (
                 TileManager *tm
                 )
 {
-  Canvas *c;
+  if (tm)
+    {
+      Canvas *c;
 
-  c = canvas_new (tag_by_bytes (tm_bytes (tm)),
-                  tm_width (tm),
-                  tm_height (tm),
-                  TILING_ALWAYS);
+      c = canvas_new (tag_by_bytes (tm_bytes (tm)),
+                      tm_width (tm),
+                      tm_height (tm),
+                      TILING_ALWAYS);
 
-  tilebuf_from_tm (c->tile_data, tm);
+      tilebuf_from_tm (c->tile_data, tm);
+      
+      return c;
+    }
 
-  return c;
+  return NULL;
 }
 
 
@@ -419,13 +434,18 @@ canvas_to_tm (
               Canvas *c
               )
 {
-  TileManager *tm;
+  if (c)
+    {
+      TileManager *tm;
 
-  tm = tile_manager_new (canvas_width (c),
-                         canvas_height (c),
-                         tag_bytes (canvas_tag (c)));
+      tm = tile_manager_new (canvas_width (c),
+                             canvas_height (c),
+                             tag_bytes (canvas_tag (c)));
   
-  tilebuf_to_tm (c->tile_data, tm);
+      tilebuf_to_tm (c->tile_data, tm);
 
-  return tm;
+      return tm;
+    }
+
+  return NULL;
 }

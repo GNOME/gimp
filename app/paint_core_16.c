@@ -86,7 +86,40 @@ static Canvas *  canvas_buf = NULL;
 
 
 
+/* temporary */
+static char indent[] = "                                                 ";
+static int level = 48;
 
+void 
+trace_enter  (
+              char * func
+              )
+{
+  printf ("%s%s () {\n", indent+level, func);
+  level -= 2;
+}
+
+
+void 
+trace_exit  (
+             void
+             )
+{
+  level += 2;
+  printf ("%s}\n", indent+level);
+}
+
+
+void 
+trace_printf  (
+               char * msg
+               )
+{
+  printf ("%s%s\n", indent+level, msg);
+}
+
+
+  
 
 /* ------------------------------------------------------------------------
 
@@ -602,7 +635,7 @@ paint_core_16_area  (
 
   if (canvas_buf)
     canvas_delete (canvas_buf);
-  canvas_buf = canvas_new (tag, (x2 - x1), (y2 - y1), TILING_NEVER);
+  canvas_buf = canvas_new (tag, (x2 - x1), (y2 - y1), TILING_YES);
   
   return canvas_buf;
 }
@@ -704,6 +737,8 @@ paint_core_16_area_paste  (
 {
   Canvas *brush_mask;
 
+  trace_enter ("paint_core_16_area_paste");
+  
   if (! drawable_gimage (drawable))
     return;
   
@@ -712,7 +747,6 @@ paint_core_16_area_paste  (
   painthit_init (drawable,
                  paint_core->x, paint_core->y,
                  canvas_width (canvas_buf), canvas_height (canvas_buf));
-  
   switch (apply_mode)
     {
     case CONSTANT:
@@ -726,6 +760,8 @@ paint_core_16_area_paste  (
     }
   
   painthit_finish (drawable, paint_core, canvas_buf);
+
+  trace_exit ();
 }
 
 
@@ -786,7 +822,7 @@ painthit_init  (
   pixelarea_init (&a, undo_tiles, c, x, y, w, h, TRUE);
   {
     void * pag;
-    for (pag = pixelarea_register (1, a);
+    for (pag = pixelarea_register (1, &a);
          pag != NULL;
          pag = pixelarea_process (pag))
       {

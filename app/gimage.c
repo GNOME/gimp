@@ -67,10 +67,7 @@ static void     project_indexed              (GImage *, Layer *, PixelRegion *,
 static void     project_channel              (GImage *, Channel *, PixelRegion *,
 					      PixelRegion *);
 
-/*
- *  Global variables
- */
-int valid_combinations[][MAX_CHANNELS + 1] =
+static int valid_combinations[][MAX_CHANNELS + 1] =
 {
   /* RGB GIMAGE */
   { -1, -1, -1, COMBINE_INTEN_INTEN, COMBINE_INTEN_INTEN_A },
@@ -606,85 +603,106 @@ gimage_apply_painthit  (
                         int y
                         )
 {
-#if 0
-  Channel * mask;
-  int x1, y1, x2, y2;
-  int offset_x, offset_y;
-  PixelRegion src1PR, destPR, maskPR;
   int operation;
-  int active [MAX_CHANNELS];
 
-  /*  get the selection mask if one exists  */
-  mask = (gimage_mask_is_empty (gimage)) ?
-    NULL : gimage_get_mask (gimage);
+  trace_enter ("gimage_apply_painthit");
 
-  /*  configure the active channel array  */
-  gimage_get_active_channels (gimage, drawable, active);
+  /* make sure we're doing something legal */
+  operation = valid_combinations
+    [drawable_type (drawable)]
+    [tag_bytes (pixelarea_tag (src2PR))];
 
-  /*  determine what sort of operation is being attempted and
-   *  if it's actually legal...
-   */
-  operation = valid_combinations [drawable_type (drawable)][src2PR->bytes];
   if (operation == -1)
+    return;
+  
+  {
+    Channel * mask;
+    PixelArea src1PR, destPR, maskPR;
+    Canvas *d = NULL;
+    Canvas *m = NULL;
+    
+    /*  get the selection mask if one exists  */
+    mask = (gimage_mask_is_empty (gimage)) ?
+      NULL : gimage_get_mask (gimage);
+
+    
     {
-      warning ("gimage_apply_image sent illegal parameters\n");
-      return;
+      int offset_x, offset_y;
+      int x1, y1, x2, y2;
+      
+      /*  get the layer offsets  */
+      drawable_offsets (drawable, &offset_x, &offset_y);
+      
+      /*  make sure the image application coordinates are within
+          gimage and mask bounds */
+      x1 = CLAMP (x, 0, drawable_width (drawable));
+      y1 = CLAMP (y, 0, drawable_height (drawable));
+      x2 = CLAMP (x + pixelarea_width (src2PR), 0, drawable_width (drawable));
+      y2 = CLAMP (y + pixelarea_height (src2PR), 0, drawable_height (drawable));
+      
+      if (mask)
+        {
+          x1 = CLAMP (x1, -offset_x, drawable_width (GIMP_DRAWABLE(mask)) - offset_x);
+          y1 = CLAMP (y1, -offset_y, drawable_height (GIMP_DRAWABLE(mask)) - offset_y);
+          x2 = CLAMP (x2, -offset_x, drawable_width (GIMP_DRAWABLE(mask)) - offset_x);
+          y2 = CLAMP (y2, -offset_y, drawable_height (GIMP_DRAWABLE(mask)) - offset_y);
+        }
+
+
+      /* apply the undo if the caller wants one */
+      if (undo)
+        drawable_apply_image (drawable, x1, y1, x2, y2, NULL, FALSE);
+
+
+      /* set up the pixel regions */
+      {
+        d = canvas_from_tm (drawable_data (drawable));
+        
+        if (src1_tiles)
+          pixelarea_init (&src1PR, src1_tiles, NULL,
+                          x1, y1, (x2 - x1), (y2 - y1), FALSE);
+        else
+          pixelarea_init (&src1PR, d, NULL,
+                          x1, y1, (x2 - x1), (y2 - y1), FALSE);
+
+        /* evil.... */
+        src2PR->x = src2PR->startx = (src2PR->x + (x1 - x));
+        src2PR->y = src2PR->starty = (src2PR->y + (y1 - y));
+        src2PR->w = (x2 - x1);
+        src2PR->h = (y2 - y1);
+        
+        pixelarea_init (&destPR, d, NULL,
+                        x1, y1, (x2 - x1), (y2 - y1), TRUE);
+        
+        if (mask)
+          {
+            m = canvas_from_tm (drawable_data (GIMP_DRAWABLE(mask)));
+            pixelarea_init (&maskPR, m, NULL,
+                            x1 + offset_x, y1 + offset_y, (x2 - x1), (y2 - y1), FALSE);
+          }
+      }
     }
-
-  /*  get the layer offsets  */
-  drawable_offsets (drawable, &offset_x, &offset_y);
-
-  /*  make sure the image application coordinates are within gimage bounds  */
-  x1 = CLAMP (x, 0, drawable_width (drawable));
-  y1 = CLAMP (y, 0, drawable_height (drawable));
-  x2 = CLAMP (x + src2PR->w, 0, drawable_width (drawable));
-  y2 = CLAMP (y + src2PR->h, 0, drawable_height (drawable));
-
-  if (mask)
+    
+    
     {
-      /*  make sure coordinates are in mask bounds ...
-       *  we need to add the layer offset to transform coords
-       *  into the mask coordinate system
-       */
-      x1 = CLAMP (x1, -offset_x, drawable_width (GIMP_DRAWABLE(mask)) - offset_x);
-      y1 = CLAMP (y1, -offset_y, drawable_height (GIMP_DRAWABLE(mask)) - offset_y);
-      x2 = CLAMP (x2, -offset_x, drawable_width (GIMP_DRAWABLE(mask)) - offset_x);
-      y2 = CLAMP (y2, -offset_y, drawable_height (GIMP_DRAWABLE(mask)) - offset_y);
-    }
-
-  /*  If the calling procedure specified an undo step...  */
-  if (undo)
-    drawable_apply_image (drawable, x1, y1, x2, y2, NULL, FALSE);
-
-  /* configure the pixel regions
-   *  If an alternative to using the drawable's data as src1 was provided...
-   */
-  if (src1_tiles)
-    pixel_region_init (&src1PR, src1_tiles, x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  else
-    pixel_region_init (&src1PR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  pixel_region_init (&destPR, drawable_data (drawable), x1, y1, (x2 - x1), (y2 - y1), TRUE);
-  pixel_region_resize (src2PR, src2PR->x + (x1 - x), src2PR->y + (y1 - y), (x2 - x1), (y2 - y1));
-
-  if (mask)
-    {
-      int mx, my;
-
-      /*  configure the mask pixel region
-       *  don't use x1 and y1 because they are in layer
-       *  coordinate system.  Need mask coordinate system
-       */
-      mx = x1 + offset_x;
-      my = y1 + offset_y;
-
-      pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), mx, my, (x2 - x1), (y2 - y1), FALSE);
-      combine_regions (&src1PR, src2PR, &destPR, &maskPR, NULL,
-		       opacity, mode, active, operation);
-    }
-  else
-    combine_regions (&src1PR, src2PR, &destPR, NULL, NULL,
-		     opacity, mode, active, operation);
+      int active [MAX_CHANNELS];
+      
+      gimage_get_active_channels (gimage, drawable, active);
+#if 0
+      if (mask)
+        combine_areas (&src1PR, src2PR, &destPR, &maskPR, NULL,
+                       opacity, mode, active, operation);
+      else
+        combine_areas (&src1PR, src2PR, &destPR, NULL, NULL,
+                       opacity, mode, active, operation);
 #endif
+    }
+
+    canvas_delete (d);
+    canvas_delete (m);
+  }
+
+  trace_exit ();  
 }
 
 
