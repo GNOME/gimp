@@ -30,7 +30,7 @@
 #include "core/core-enums.h"
 
 #include "gimpconfig.h"
-#include "gimpguiconfig.h"
+#include "gimprc.h"
 
 
 static void  notify_callback      (GObject     *object,
@@ -44,7 +44,7 @@ int
 main (int   argc,
       char *argv[])
 {
-  GObject     *config;
+  GimpRc      *gimprc;
   const gchar *filename = "foorc";
   gchar       *header;
   gint         i;
@@ -65,26 +65,27 @@ main (int   argc,
 
   g_print ("Testing GimpConfig ...\n\n");
 
-  config = g_object_new (GIMP_TYPE_GUI_CONFIG, NULL);
+  gimprc = gimp_rc_new ();
 
   g_print (" Serializing %s to '%s' ... ", 
-           g_type_name (G_TYPE_FROM_INSTANCE (config)), filename);
-  gimp_config_serialize (config, filename);
+           g_type_name (G_TYPE_FROM_INSTANCE (gimprc)), filename);
+  gimp_config_serialize (G_OBJECT (gimprc), filename);
   g_print ("done.\n\n");
 
-  g_signal_connect (config, "notify",
+  g_signal_connect (G_OBJECT (gimprc), "notify",
                     G_CALLBACK (notify_callback),
                     NULL);
 
   g_print (" Deserializing from '%s' ...\n", filename);
-  gimp_config_deserialize (config, filename, TRUE);
+  gimp_config_deserialize (G_OBJECT (gimprc), filename, TRUE);
 
   header = "\n  Unknown string tokens:\n";
-  gimp_config_foreach_unknown_token (config, output_unknown_token, &header);
+  gimp_config_foreach_unknown_token (G_OBJECT (gimprc), 
+                                     output_unknown_token, &header);
 
   g_print ("\n");
 
-  g_object_unref (config);
+  g_object_unref (G_OBJECT (gimprc));
   
   g_print ("Done.\n");
 

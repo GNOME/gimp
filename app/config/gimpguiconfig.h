@@ -22,7 +22,7 @@
 #ifndef __GIMP_GUI_CONFIG_H__
 #define __GIMP_GUI_CONFIG_H__
 
-#include "gimpdisplayconfig.h"
+#include "config/gimpdisplayconfig.h"
 
 
 #define GIMP_TYPE_GUI_CONFIG            (gimp_gui_config_get_type ())

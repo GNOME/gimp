@@ -26,6 +26,8 @@ libappconfig_a_SOURCES = @STRIP_BEGIN@ 	\
 	gimpdisplayconfig.h		\
 	gimpguiconfig.c			\
 	gimpguiconfig.h			\
+	gimprc.c			\
+	gimprc.h			\
 @STRIP_END@
 
 AM_CPPFLAGS = @STRIP_BEGIN@ 		\
@@ -42,9 +44,9 @@ INCLUDES = @STRIP_BEGIN@ 		\
 @STRIP_END@
 
 #
-# test programs, not to be installed
+# test programs, not to be built by default and never installed
 #
-noinst_PROGRAMS = test-config
+EXTRA_PROGRAMS = test-config
 
 test_config_DEPENDENCIES = @STRIP_BEGIN@ 				\
 	libappconfig.a							\

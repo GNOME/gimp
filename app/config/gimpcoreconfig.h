@@ -24,7 +24,7 @@
 
 #include "core/core-enums.h"
 
-#include "gimpbaseconfig.h"
+#include "config/gimpbaseconfig.h"
 
 
 #define GIMP_TYPE_CORE_CONFIG            (gimp_core_config_get_type ())

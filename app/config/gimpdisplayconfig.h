@@ -24,7 +24,7 @@
 
 #include "display/display-enums.h"
 
-#include "gimpcoreconfig.h"
+#include "config/gimpcoreconfig.h"
 
 
 #define GIMP_TYPE_DISPLAY_CONFIG            (gimp_display_config_get_type ())

@@ -1,3 +1,17 @@
+2001-12-18  Sven Neumann  <sven@gimp.org>
+
+	* app/config/Makefile.am: don't build test-config by default.
+	
+	* app/config/gimprc.[ch]: new files for the GimpRc implementation.
+
+	* app/config/gimpcoreconfig.h
+	* app/config/gimpdisplayconfig.h
+	* app/config/gimpguiconfig.h: include the necessary enum headers
+	here and prefix local includes with config so the files can be safely
+	included from almost everywhere.
+	
+	* app/config/test-config.c: instantiate and test GimpRc.
+
 2001-12-18  DindinX  <David@dindinx.org>
 
 	* app/base/boundary.c:
