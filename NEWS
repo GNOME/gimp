@@ -55,10 +55,16 @@ Bugs fixed in GIMP 2.0pre4
 - 130568: Mostly fix Van Gogh (LIC) plug-in (Simon)
 - 70673:  Let Curves and Levels widgets scale with the dialog (Sven)
 - 135059: Remember the preview setting for all ImageMap tools (Sven)
- 
+- 135630: Don't make the resolution calibration dialog modal (Sven, Pedro)
+- 133266: Saner max. value for the blend tool's supersampling (Sven, Pedro)
+- 135866: Fix displacement handling in bumpmap plug-in (Pedro, Joao)
+- 135994: Fix offsets when scaling or resizing vectors (Simon)
+- 133453: Experiments with global shortcuts (Mitch, Simon)
+
 Other contributions: 
-  Manish Singh, Michael Naterrer, Sven Neumann, Henrik Brix Andersen, Pedro 
-  Gimeno, Jakub Steiner, Simon Budig
+  Manish Singh, Michael Naterrer, Sven Neumann, Henrik Brix Andersen,
+  Jakub Steiner, Simon Budig
+
 
 Bugs fixed in GIMP 2.0pre3
 ==========================
