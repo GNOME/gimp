@@ -1,3 +1,11 @@
+Sun Aug 29 00:40:20 BST 1999 Adam D. Moss <adam@gimp.org>
+
+	* app/convert.h
+	* app/convert.c: *->I: Deterministic alpha dithering over layers,
+	reduced bleeding of transparent values into opaque values, added
+	optional stage to remove duplicate or unused colour entries from final
+	colourmap.
+
 Sat Aug 28 15:36:36 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/gdisplay.[ch]

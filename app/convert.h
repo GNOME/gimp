@@ -44,6 +44,11 @@ void convert_image         (GimpImage *,
 			    int, int,
 			    ConvertPaletteType);
 
+void convert_image2        (GimpImage *,
+			    GimpImageBaseType,
+			    int, int, int, int,
+			    ConvertPaletteType);
+
 extern PaletteEntriesP theCustomPalette;
 
 #endif  /*  __CONVERT_H__  */
