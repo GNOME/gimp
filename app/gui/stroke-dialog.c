@@ -63,7 +63,8 @@ stroke_dialog_new (GimpItem    *item,
                    const gchar *stock_id,
                    const gchar *help_id)
 {
-  GimpStrokeOptions *options;
+  static GimpStrokeOptions *options = NULL;
+
   GimpImage         *image;
   GtkWidget         *dialog;
   GtkWidget         *main_vbox;
@@ -77,9 +78,10 @@ stroke_dialog_new (GimpItem    *item,
 
   image = gimp_item_get_image (item);
 
-  options = g_object_new (GIMP_TYPE_STROKE_OPTIONS,
-                          "gimp", image->gimp,
-                          NULL);
+  if (!options)
+    options = g_object_new (GIMP_TYPE_STROKE_OPTIONS,
+                            "gimp", image->gimp,
+                            NULL);
 
   gimp_context_set_parent (GIMP_CONTEXT (options),
                            gimp_get_user_context (image->gimp));
@@ -109,8 +111,7 @@ stroke_dialog_new (GimpItem    *item,
                               NULL);
 
   g_object_set_data (G_OBJECT (dialog), "gimp-item", item);
-  g_object_set_data_full (G_OBJECT (dialog), "gimp-stroke-options", options,
-                          (GDestroyNotify) g_object_unref);
+  g_object_set_data (G_OBJECT (dialog), "gimp-stroke-options", options);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);

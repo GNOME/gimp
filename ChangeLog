@@ -1,5 +1,10 @@
 2003-09-28  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/stroke-dialog.c (stroke_dialog_new): as a temporary hack,
+	let the Stroke Dialog remember the last used stroke options.
+
+2003-09-28  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage-duplicate.c (gimp_image_duplicate): also
 	duplicate vectors and grid.
 
