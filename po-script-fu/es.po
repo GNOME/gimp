@@ -1,13 +1,14 @@
 # Spanish translation for gimp-script-fu.
 # Copyright © 1998-2000,2003 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gimp package.
 # Oscar Cebellán Ramos <cebaman@bigfoot.com>
-# Pablo Gonzalo del Campo <pablodc@bigfoot.com>, 2003
+# Pablo Gonzalo del Campo <pablodc@bigfoot.com>, 2003.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.29\n"
-"POT-Creation-Date: 2003-02-18 01:09+0100\n"
-"PO-Revision-Date: 2003-02-06 17:54-0300\n"
+"Project-Id-Version: GIMP 1.3.x\n"
+"POT-Creation-Date: 2003-02-19 03:57+0100\n"
+"PO-Revision-Date: 2003-02-19 13:12-0300\n"
 "Last-Translator: Pablo Gonzalo del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -47,8 +48,7 @@ msgstr "No se puede abrir la tubería SIOD de salida"
 
 #: plug-ins/script-fu/script-fu-console.c:632
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr ""
-"El modo de evaluación de Script-Fu sólo permite invocación no interactiva"
+msgstr "El modo de evaluación de Script-Fu sólo permite invocación no interactiva"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-scripts.c:1186
@@ -107,18 +107,18 @@ msgstr ""
 "Al menos una de las fuentes que ha elegido no es válida.\n"
 "Por favor compruebe sus ajustes.\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:482
 #: plug-ins/script-fu/script-fu-scripts.c:1960
+#: plug-ins/dbbrowser/dbbrowser_utils.c:482
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:498
 #: plug-ins/script-fu/script-fu-scripts.c:1966
+#: plug-ins/dbbrowser/dbbrowser_utils.c:498
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:490
 #: plug-ins/script-fu/script-fu-scripts.c:1972
+#: plug-ins/dbbrowser/dbbrowser_utils.c:490
 msgid "Date:"
 msgstr "Fecha:"
 
@@ -530,8 +530,7 @@ msgstr "Valor delta en el color"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
-msgstr ""
-"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/Flecha..."
+msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/Flecha..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -587,8 +586,7 @@ msgstr "Arriba"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
-msgstr ""
-"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/Barra Hor...."
+msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/Barra Hor...."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
 msgid "Bar Height"
@@ -600,8 +598,7 @@ msgstr "Longitud de la barra"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
-msgstr ""
-"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/Bolita..."
+msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/Bolita..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 #: plug-ins/script-fu/scripts/text-circle.scm.h:6
@@ -611,8 +608,7 @@ msgstr "Radio"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
-msgstr ""
-"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/Botón..."
+msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor alienigena/Botón..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
 msgid "Glow Radius"
@@ -748,13 +744,11 @@ msgstr "Color superior-izquierdo"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
-msgstr ""
-"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/Flecha..."
+msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/Flecha..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
-msgstr ""
-"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/Bolita..."
+msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/Bolita..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
@@ -766,13 +760,11 @@ msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/Botón..
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
-msgstr ""
-"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/Encabezado..."
+msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/Encabezado..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
-msgstr ""
-"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/Barra Hor...."
+msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/Barra Hor...."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
@@ -1382,13 +1374,11 @@ msgstr "Peso de la sombra (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
-msgstr ""
-"<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Gimp.Org/Encabezado grande..."
+msgstr "<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Gimp.Org/Encabezado grande..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
-msgstr ""
-"<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Gimp.Org/Encabezado pequeño..."
+msgstr "<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Gimp.Org/Encabezado pequeño..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "AutoCrop"
@@ -1429,8 +1419,7 @@ msgid "Shadow Color"
 msgstr "Color de la sombra"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
-msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
 msgstr ""
 "<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Gimp.Org/Etiquetas generales "
 "del Tubo..."
@@ -1442,8 +1431,7 @@ msgstr ""
 "tubo..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
 msgstr ""
 "<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Gimp.Org/Etiqueta de sub-botón "
 "del tubo..."
@@ -1887,7 +1875,6 @@ msgid "Smear"
 msgstr "Manchar"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:7
-#, fuzzy
 msgid "Wrap"
 msgstr "Desformar"
 
@@ -1913,7 +1900,7 @@ msgstr "<Image>/Script-Fu/Selección/A brocha..."
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 msgid "Brush Name"
-msgstr ""
+msgstr "Nombre de la brocha"
 
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:1
 msgid "<Image>/Script-Fu/Selection/To Image"
@@ -2183,7 +2170,7 @@ msgstr "Color de frente"
 # //R La verdad es que no tengo muy claro lo de unsharp...
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
 msgid "<Image>/Script-Fu/Alchemy/Unsharp Mask..."
-msgstr "<Image>/Script-Fu/Alquimia/Máscara de desenfocado..."
+msgstr "<Image>/Script-Fu/Alquimia/Máscara de desenfoque..."
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
 msgid "Mask Opacity"
@@ -2231,7 +2218,7 @@ msgstr "Profundidad de la sombra"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:6
 msgid "Thread Density"
-msgstr "Densidad de hilos"
+msgstr "Densidad de los hilos"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:7
 msgid "Thread Intensity"
@@ -2378,3 +2365,4 @@ msgstr "<Toolbox>/Exts/Visor Web/FAQ de usuario"
 #~ msgstr ""
 #~ "Error de Script-Fu\n"
 #~ "%s"
+
