@@ -313,10 +313,10 @@ select_window (const GdkScreen *screen)
 
 #warning Win32 screenshot window chooser not implemented yet
   return 0;
-#else
-#warning screenshot window chooser not implemented yet for this GDB backend
+#else /* GDK_WINDOWING_WIN32 */
+#warning screenshot window chooser not implemented yet for this GDK backend
   return 0;
-#endif /* GDK_WINDOWING_WIN32 */
+#endif
 }
 
 /* Create a GimpImage from a GdkPixbuf */
