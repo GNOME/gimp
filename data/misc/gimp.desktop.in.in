@@ -2,7 +2,7 @@
 Version=1.0
 Encoding=UTF-8
 Type=Application
-_Name=The GIMP
+_Name=GNU Image Manipulation Program
 _GenericName=Image Editor
 _Comment=Create images and edit photographs
 Exec=gimp-remote-@GIMP_APP_VERSION@ %U

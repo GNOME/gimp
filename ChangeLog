@@ -1,3 +1,8 @@
+2005-02-02  Sven Neumann  <sven@gimp.org>
+
+	* data/misc/gimp.desktop.in.in (_Name): experimentally expand the
+	GIMP acronym. Not sure if this is a good idea at all...
+
 2005-02-01  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimagemap.c (gimp_image_map_do): tiny optimization
