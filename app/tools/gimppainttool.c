@@ -347,7 +347,7 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   GimpPaintTool    *paint_tool = GIMP_PAINT_TOOL (tool);
   GimpPaintOptions *paint_options;
   GimpPaintCore    *core;
-  GimpBrush        *current_brush;
+  GimpBrush        *current_brush = NULL;
   GimpDrawable     *drawable;
   GdkDisplay       *gdk_display;
   GimpCoords        curr_coords;
@@ -428,7 +428,8 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   gimp_paint_core_paint (core, drawable, paint_options, INIT_PAINT);
 
   /*  store the current brush pointer  */
-  current_brush = GIMP_BRUSH_CORE (core)->brush;
+  if (GIMP_IS_BRUSH_CORE (core))
+    current_brush = GIMP_BRUSH_CORE (core)->brush;
 
   if (core->flags & CORE_TRACES_ON_WINDOW)
     gimp_paint_core_paint (core, drawable, paint_options, PRETRACE_PAINT);
@@ -449,7 +450,8 @@ gimp_paint_tool_button_press (GimpTool        *tool,
     gimp_paint_core_paint (core, drawable, paint_options, POSTTRACE_PAINT);
 
   /*  restore the current brush pointer  */
-  GIMP_BRUSH_CORE (core)->brush = current_brush;
+  if (GIMP_IS_BRUSH_CORE (core))
+    GIMP_BRUSH_CORE (core)->brush = current_brush;
 }
 
 static void

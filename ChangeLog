@@ -1,3 +1,9 @@
+2004-05-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimppainttool.c (gimp_paint_tool_button_press): check
+	if the GimpPaintCore really is a GimpBrushCore before catsting and
+	fiddling with internaly.
+
 2004-05-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/Makefile.am
