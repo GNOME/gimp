@@ -630,6 +630,16 @@ script_fu_combo_callback (GtkWidget *widget,
 }
 
 static void
+script_fu_string_update (gchar       **dest,
+                         const gchar  *src)
+{
+  if (*dest)
+    g_free (*dest);
+
+  *dest = g_strdup (src);
+}
+
+static void
 script_fu_pattern_callback (const gchar  *name,
                             gint          width,
                             gint          height,
@@ -638,10 +648,7 @@ script_fu_pattern_callback (const gchar  *name,
                             gboolean      closing,
                             gpointer      data)
 {
-  gchar **pname = data;
-
-  g_free (*pname);
-  *pname = g_strdup (name);
+  script_fu_string_update (data, name);
 }
 
 static void
@@ -651,10 +658,7 @@ script_fu_gradient_callback (const gchar   *name,
                              gboolean       closing,
                              gpointer       data)
 {
-  gchar **gname = data;
-
-  g_free (*gname);
-  *gname = g_strdup (name);
+  script_fu_string_update (data, name);
 }
 
 static void
@@ -662,10 +666,7 @@ script_fu_font_callback (const gchar *name,
                          gboolean     closing,
                          gpointer     data)
 {
-  gchar **fname = data;
-
-  g_free (*fname);
-  *fname = g_strdup (name);
+  script_fu_string_update (data, name);
 }
 
 static void
@@ -673,10 +674,7 @@ script_fu_palette_callback (const gchar *name,
                             gboolean     closing,
                             gpointer     data)
 {
-  gchar **fname = data;
-
-  g_free (*fname);
-  *fname = g_strdup (name);
+  script_fu_string_update (data, name);
 }
 
 static void
