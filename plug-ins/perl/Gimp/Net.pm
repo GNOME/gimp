@@ -15,7 +15,7 @@ use base qw(DynaLoader);
 
 use Socket; # IO::Socket is _really_ slow, so don't use it!
 
-use Gimp 'croak';
+use Gimp ('croak','__');
 
 require DynaLoader;
 
@@ -78,9 +78,9 @@ sub gimp_call_procedure {
       $req="TRCE".args2net(0,$trace_level,@_);
       print $server_fh pack("N",length($req)).$req;
       do {
-         read($server_fh,$len,4) == 4 or die "protocol error";
+         read($server_fh,$len,4) == 4 or die "protocol error (3)";
          $len=unpack("N",$len);
-         read($server_fh,$req,abs($len)) == $len or die "protocol error";
+         read($server_fh,$req,abs($len)) == $len or die "protocol error (4)";
          if ($len<0) {
             ($req,@args)=net2args(0,$req);
             print "ignoring callback $req\n";
@@ -97,9 +97,9 @@ sub gimp_call_procedure {
       $req="EXEC".args2net(0,@_);
       print $server_fh pack("N",length($req)).$req;
       do {
-         read($server_fh,$len,4) == 4 or die "protocol error";
+         read($server_fh,$len,4) == 4 or die "protocol error (5)";
          $len=unpack("N",$len);
-         read($server_fh,$req,abs($len)) == $len or die "protocol error";
+         read($server_fh,$req,abs($len)) == $len or die "protocol error (6)";
          if ($len<0) {
             ($req,@args)=net2args(0,$req);
             print "ignoring callback $req\n";
@@ -139,12 +139,12 @@ sub set_trace {
 sub start_server {
    my $opt = shift;
    $opt = $Gimp::spawn_opts unless $opt;
-   print "trying to start gimp with options \"$opt\"\n" if $Gimp::verbose;
+   print __"trying to start gimp with options \"$opt\"\n" if $Gimp::verbose;
    $server_fh=local *SERVER_FH;
    my $gimp_fh=local *CLIENT_FH;
    socketpair $server_fh,$gimp_fh,AF_UNIX,SOCK_STREAM,PF_UNSPEC
       or socketpair $server_fh,$gimp_fh,AF_LOCAL,SOCK_STREAM,PF_UNSPEC
-      or croak "unable to create socketpair for gimp communications: $!";
+      or croak __"unable to create socketpair for gimp communications: $!";
 
    # do it here so it i done only once
    require Gimp::Config;
@@ -178,7 +178,7 @@ sub start_server {
       }
       exit(255);
    } else {
-      croak "unable to fork: $!";
+      croak __"unable to fork: $!";
    }
 }
 
@@ -222,27 +222,27 @@ sub gimp_init {
    } else {
       $server_fh = try_connect ("");
    }
-   defined $server_fh or croak "could not connect to the gimp server (make sure Net-Server is running)";
+   defined $server_fh or croak __"could not connect to the gimp server (make sure Net-Server is running)";
    { my $fh = select $server_fh; $|=1; select $fh }
    
    my @r = response;
    
-   die "expected perl-server at other end of socket, got @r\n"
+   die __"expected perl-server at other end of socket, got @r\n"
       unless $r[0] eq "PERL-SERVER";
    shift @r;
-   die "expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
+   die __"expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
       unless $r[0] eq $Gimp::_PROT_VERSION;
    shift @r;
    
    for(@r) {
       if($_ eq "AUTH") {
-         die "server requests authorization, but no authorization available\n"
+         die __"server requests authorization, but no authorization available\n"
             unless $auth;
          my $req = "AUTH".$auth;
          print $server_fh pack("N",length($req)).$req;
          my @r = response;
-         die "authorization failed: $r[1]\n" unless $r[0];
-         print "authorization ok, but: $r[1]\n" if $Gimp::verbose and $r[1];
+         die __"authorization failed: $r[1]\n" unless $r[0];
+         print __"authorization ok, but: $r[1]\n" if $Gimp::verbose and $r[1];
       }
    }
 

@@ -2,12 +2,12 @@ package Gimp;
 
 use strict 'vars';
 use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $AUTOLOAD %EXPORT_TAGS @EXPORT_FAIL
-            @_consts @_procs $interface_pkg $interface_type @_param @_al_consts
+            $interface_pkg $interface_type
             @PREFIXES $_PROT_VERSION
             @gimp_gui_functions $function $basename $spawn_opts
             $in_quit $in_run $in_net $in_init $in_query $no_SIG
             $help $verbose $host $in_top);
-use subs qw(init end lock unlock canonicalize_color);
+use subs qw(init end lock unlock canonicalize_color __);
 
 require DynaLoader;
 
@@ -15,7 +15,7 @@ require DynaLoader;
 
 $VERSION = 1.14;
 
-@_param = qw(
+my @_param = qw(
 	PARAM_BOUNDARY	PARAM_CHANNEL	PARAM_COLOR	PARAM_DISPLAY	PARAM_DRAWABLE
 	PARAM_END	PARAM_FLOAT	PARAM_IMAGE	PARAM_INT32	PARAM_FLOATARRAY
 	PARAM_INT16	PARAM_PARASITE	PARAM_STRING	PARAM_PATH	PARAM_INT16ARRAY
@@ -24,7 +24,7 @@ $VERSION = 1.14;
 );
 
 # constants that, in some earlier version, were autoloaded
-@_consts = (@_param,
+my @_consts = (@_param,
 #ENUM_NAME#
 'PRESSURE',            'SOFT',                'HARD',                'RGBA_IMAGE',          'INDEXED_IMAGE',       'GRAYA_IMAGE',         'RGB_IMAGE',           
 'INDEXEDA_IMAGE',      'GRAY_IMAGE',          'CUSTOM',              'FG_BG_HSV',           'FG_TRANS',            'FG_BG_RGB',           'BLUE_CHANNEL',        
@@ -67,8 +67,6 @@ sub ADD_ALPHA_MASK	() { &ALPHA_MASK }
 sub ORIENTATION_HORIZONTAL	() { &HORIZONTAL }
 sub ORIENTATION_VERTICAL	() { &VERTICAL   }
 sub ORIENTATION_UNKNOWN		() { &UNKNOWN    }
-
-@_procs = ('main','xlfd_size');
 
 bootstrap Gimp $VERSION;
 
@@ -125,17 +123,18 @@ sub croak {
    goto &Carp::croak;
 }
 
+my @_procs = ('main', 'xlfd_size', '__');
+my @_default = (@_procs, ':consts' ,':_auto2');
+   
 # we really abuse the import facility..
 sub import($;@) {
    my $pkg = shift;
    my $up = caller;
    my @export;
 
-   # make a quick but dirty guess ;)
+   @_=@_default unless @_;
    
-   @_=(@_procs,':consts',':_auto2') unless @_;
-   
-   for(@_) {
+   for(map { $_ eq ":DEFAULT" ? @_default : $_ } @_) {
       if ($_ eq ":auto") {
          push(@export,@_consts,@_procs);
          *{"$up\::AUTOLOAD"} = sub {
@@ -147,8 +146,8 @@ sub import($;@) {
       } elsif ($_ eq ":_auto2") {
          push(@export,@_consts,@_procs);
          *{"$up\::AUTOLOAD"} = sub {
-            warn "$function: calling $AUTOLOAD without specifying the :auto import tag is deprecated!\n";
-            croak "Cannot call '$AUTOLOAD' at this time" unless initialized();
+            warn __"$function: calling $AUTOLOAD without specifying the :auto import tag is deprecated!\n";
+            croak __"Cannot call '$AUTOLOAD' at this time" unless initialized();
             my ($class,$name) = $AUTOLOAD =~ /^(.*)::(.*?)$/;
             *{$AUTOLOAD} = sub { Gimp->$name(@_) };
             goto &$AUTOLOAD;
@@ -158,7 +157,7 @@ sub import($;@) {
       } elsif ($_ eq ":param") {
          push(@export,@_param);
       } elsif (/^interface=(\S+)$/) {
-         croak "interface=... tag is no longer supported\n";
+         croak __"interface=... tag is no longer supported\n";
       } elsif ($_=~/spawn_options=(\S+)/) {
          $spawn_opts = $1;
       } elsif ($_ ne "") {
@@ -166,7 +165,7 @@ sub import($;@) {
       } elsif ($_ eq "") {
          #nop #d#FIXME, Perl-Server requires this!
       } else {
-         croak "$_ is not a valid import tag for package $pkg";
+         croak __"$_ is not a valid import tag for package $pkg";
       }
    }
    
@@ -221,7 +220,7 @@ sub canonicalize_colour {
    } else {
       unless (%rgb_db) {
          if ($rgb_db_path) {
-            open RGB_TEXT,"<$rgb_db_path" or croak "unable to open $rgb_db_path";
+            open RGB_TEXT,"<$rgb_db_path" or croak __"unable to open $rgb_db_path";
          } else {
             *RGB_TEXT=*DATA;
          }
@@ -234,7 +233,7 @@ sub canonicalize_colour {
       if ($rgb_db{lc($_[0])}) {
          return $rgb_db{lc($_[0])};
       } else {
-         croak "Unable to grok '".join(",",@_),"' as colour specifier";
+         croak sprintf __"Unable to grok '%s' as colour specifier", join(",",@_);
       }
    }
 }
@@ -262,15 +261,14 @@ if (@ARGV) {
          $_=shift(@ARGV);
          if (/^-h$|^--?help$|^-\?$/) {
             $help=1;
-            print <<EOF;
-Usage: $0 [gimp-args..] [interface-args..] [script-args..]
+            print __"Usage: $0 [gimp-args..] [interface-args..] [script-args..]
        gimp-arguments are
            -gimp <anything>           used internally only
            -h | -help | --help | -?   print some help
            -v | --verbose             be more verbose in what you do
            --host|--tcp HOST[:PORT]   connect to HOST (optionally using PORT)
                                       (for more info, see Gimp::Net(3))
-EOF
+";
          } elsif (/^-v$|^--verbose$/) {
             $verbose++;
          } elsif (/^--host$|^--tcp$/) {
@@ -302,7 +300,7 @@ sub _initialized_callback {
          require Gimp::Compat;
          $compat_gimp_version[0] == $Gimp::Compat::max_gimp_version[0]
             && $compat_gimp_version[1] == $Gimp::Compat::max_gimp_version[1]
-               or die "FATAL: Gimp::Compat version mismatch\n";
+               or die __"FATAL: Gimp::Compat version mismatch\n";
       }
    }
    if (@log) {
@@ -355,7 +353,7 @@ unless($no_SIG) {
       unless ($in_quit) {
          warn $_[0];
       } else {
-         logger(message => substr($_[0],0,-1), fatal => 0, function => 'WARNING');
+         logger(message => substr($_[0],0,-1), fatal => 0, function => __"WARNING");
       }
    };
 }
@@ -373,7 +371,7 @@ sub call_callback {
    } elsif (UNIVERSAL::can($caller,$cb)) {
       &{"$caller\::$cb"};
    } else {
-      die_msg "required callback '$cb' not found\n" if $req;
+      die_msg __"required callback '$cb' not found\n" if $req;
    }
 }
 
@@ -422,7 +420,7 @@ if ($interface_type=~/^lib$/i) {
 } elsif ($interface_type=~/^net$/i) {
    $interface_pkg="Gimp::Net";
 } else {
-   croak "interface '$interface_type' unsupported.";
+   croak __"interface '$interface_type' unsupported.";
 }
 
 eval "require $interface_pkg" or croak "$@";
@@ -503,7 +501,7 @@ sub AUTOLOAD {
          goto &$AUTOLOAD;
       }
    }
-   croak "function/macro \"$name\" not found in $class";
+   croak __"function/macro \"$name\" not found in $class";
 }
 
 sub _pseudoclass {
@@ -638,9 +636,14 @@ All constants from gimpenums.h (BG_IMAGE_FILL, RUN_NONINTERACTIVE, NORMAL_MODE, 
 
 Set default spawn options to I<options>, see L<Gimp::Net>.
 
+=item _:DEFAULT
+
+The default set (see below).
+
 =back
 
-The default (unless '' is specified) is C<main xlfd_size :consts>.
+The default (unless '' is specified) is C<main xlfd_size :consts __>.
+(C<__> is used for i18n purposes).
 
 =head1 GETTING STARTED
 

@@ -1,4 +1,5 @@
 #include "config.h"
+#include "../perl-intl.h"
 
 /* dunno where this comes from */
 #undef VOIDUSED
@@ -37,7 +38,7 @@ static void need_pdl (void)
     {
       /* Get pointer to structure of core shared C routines */
       if (!(CoreSV = perl_get_sv("PDL::SHARE",FALSE)))
-        Perl_croak("gimp-perl-pixel functions require the PDL::Core module");
+        Perl_croak(__("gimp-perl-pixel functions require the PDL::Core module"));
 
       PDL = (Core*) SvIV(CoreSV);
     }
@@ -70,10 +71,10 @@ static void destroy_object (SV *sv)
             }
         }
       else
-        croak ("Internal error: Gimp::Net #101, please report!");
+        croak (__("Internal error: Gimp::Net #101, please report!"));
     }
   else
-    croak ("Internal error: Gimp::Net #100, please report!");
+    croak (__("Internal error: Gimp::Net #100, please report!"));
 }
 
 /* allocate this much as initial length */
@@ -134,7 +135,7 @@ static void sv2net (int deobjectify, SV *s, SV *sv)
       else if (SvTYPE(rv) == SVt_PVMG)
         sv2net (deobjectify, s, rv);
       else
-        croak ("Internal error: unable to convert reference in sv2net, please report!");
+        croak (__("Internal error: unable to convert reference in sv2net, please report!"));
     }
   else if (SvOK(sv))
     {
@@ -189,7 +190,7 @@ static SV *net2sv (int objectify, char **_s)
       case 'b':
         sscanf (s, "%x:%n", &ui, &n); s += n;
         if (ui >= sizeof str)
-          croak ("Internal error: stashname too long, please report!");
+          croak (__("Internal error: stashname too long, please report!"));
 
         memcpy (str, s, ui); s += ui;
         str[ui] = 0;
@@ -202,7 +203,7 @@ static SV *net2sv (int objectify, char **_s)
 
             sv = (SV*)g_hash_table_lookup (object_cache, (id=l,&id));
             if (!sv)
-              croak ("Internal error: asked to deobjectify an object not in the cache, please report!");
+              croak (__("Internal error: asked to deobjectify an object not in the cache, please report!"));
           }
         else
           sv = net2sv (objectify, &s);
@@ -222,7 +223,7 @@ static SV *net2sv (int objectify, char **_s)
         break;
 
       default:
-        croak ("Internal error: unable to handle argtype '%c' in net2sv, please report!", s[-1]);
+        croak (__("Internal error: unable to handle argtype '%c' in net2sv, please report!"), s[-1]);
     }
 
   *_s = s;
@@ -248,7 +249,6 @@ args2net(deobjectify,...)
 	for (index = 1; index < items; index++)
           sv2net (deobjectify, RETVAL, ST(index));
 
-        /*printf (">>>>%s\n",SvPV_nolen(RETVAL));*//*D*/
         OUTPUT:
         RETVAL
 
@@ -258,7 +258,6 @@ net2args(objectify,s)
 	char *	s
         PPCODE:
 
-        /*printf ("<<<<%s\n",s);*//*D*/
         if (objectify) init_object_cache;
 
         /* this depends on a trailing zero! */

@@ -15,11 +15,11 @@ use subs qw(
 );
 
 sub gimp_init {
-   Gimp::croak "gimp_init not implemented for the Lib interface";
+   Gimp::croak Gimp::_("gimp_init not implemented for the Lib interface");
 }
 
 sub gimp_end {
-   Gimp::croak "gimp_end not implemented for in the Lib interface";
+   Gimp::croak Gimp::_("gimp_end not implemented for in the Lib interface");
 }
 
 sub lock {

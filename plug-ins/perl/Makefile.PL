@@ -31,7 +31,7 @@ if ($ARGV[0] ne "--writemakefile") {
    $ENV{PERL}=$Config{perlpath};
    $ENV{MAKEFILE_PL}=$0;
    $ENV{IN_GIMP}=0;
-   exit system("./etc/configure",@ARGV)>>8;
+   exit system("./configure",@ARGV)>>8;
 } else {
    shift;
    local $do_config_msg = 1;
@@ -190,8 +190,19 @@ force_uninstall_from_perldirs ::
 force_uninstall_from_sitedirs ::
 	\$(PERL) -MExtUtils::Install -e 'uninstall(\$\$ARGV[0],1,0)' ".$self->catfile('$(SITEARCHEXP)','auto','$(FULLEXT)','.packlist')."
 
+# generate tags file
 tags: .
 	ctags --lang=c `find . -name '*.xs' -print`
+
+# run autoconf (&c)
+autoconf:
+	aclocal; autoheader; autoconf
+        
+# merge messages into potfile
+msgmerge:
+	etc/pxgettext `find . -name '*.pm' -o -name '*.xs' -o -path './examples/*'` | \\
+        msgmerge -w 83 etc/po/gimp-perl.pot - >gimp-perl.pot~ && \\
+        mv gimp-perl.pot~ etc/po/gimp-perl.pot
 ";
 }
 
@@ -260,7 +271,7 @@ WriteMakefile(
     		    'Gimp/Module.pm'	=> '$(INST_LIBDIR)/Gimp/Module.pm',
     		    'Gimp/Config.pm'	=> '$(INST_LIBDIR)/Gimp/Config.pm',
     		   },
-    'LIBS'	=> [''],
+    'LIBS'	=> ['-lintl'],
     'INC'	=> "$INC1 $GIMP_INC_NOUI $CPPFLAGS $CFLAGS",
     'DEFINE'	=> "$DEFINE1 $DEFS",
     'EXE_FILES'	=> [qw(scm2perl scm2scm gimpdoc xcftopnm embedxpm)],

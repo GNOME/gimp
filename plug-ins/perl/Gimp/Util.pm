@@ -127,8 +127,8 @@ sub text_draw {
   my ($bg_layer,$text_layer);
   my $tcol; # temp. color
 
-  warn ("text string is empty") if ($text eq "");
-  warn ("no font specified, using default") if ($font eq "");
+  warn __"text string is empty" if $text eq "";
+  warn __"no font specified, using default" if $font eq "";
   $font = "Helvetica" if ($font eq "");
 
   $tcol = gimp_palette_get_foreground ();
@@ -177,8 +177,8 @@ sub image_create_text {
   my $bg_layer;
   my $image;
 
-  warn ("text string is empty") if ($text eq "");
-  warn ("no font specified, using default") if ($font eq "");
+  warn (__"text string is empty") if ($text eq "");
+  warn (__"no font specified, using default") if ($font eq "");
   $font = "Helvetica" if ($font eq "");
   # create an image. We'll just set whatever size here because we want
   # to resize the image when we figure out how big the text is.
@@ -371,6 +371,4 @@ sub gimp_layer_set_position {
 Various, version 1.000 written mainly by Tels (http://bloodgate.com/). The author
 of the Gimp-Perl extension (contact him to include new functions) is Marc
 Lehmann <pcg@goof.com>
-
-
 

@@ -1,4 +1,5 @@
 #include "config.h"
+#include "../perl-intl.h"
 
 /* FIXME */
 /* sys/param.h is redefining these! */

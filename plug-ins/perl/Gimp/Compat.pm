@@ -45,7 +45,7 @@ package      Gimp::Compat;
 
 $VERSION=$Gimp::VERSION;
 
-use Gimp 'croak';
+use Gimp ('croak', '__');
 
 # as a failsafe check, lowest version NOT requiring this module
 @max_gimp_version = (1,1);
@@ -85,7 +85,7 @@ sub xlfd_unpack {
        -$p
        -($p)     (?# rgstry )
        -($p)     (?# encdng )
-     /x or die "xlfd_unpack: unmatched XLFD '$fontname'\n";
+     /x or die __"xlfd_unpack: unmatched XLFD '$fontname'\n";
 
     my $size;
     if ($pixelsize && $pixelsize ne "*") {
@@ -141,6 +141,4 @@ fun 1,1,gimp_paintbrush,sub {
 };
 
 1;
-
-
 

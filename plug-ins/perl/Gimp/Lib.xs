@@ -1,4 +1,5 @@
 #include "config.h"
+#include "../perl-intl.h"
 
 #include <assert.h>
 #include <stdio.h>
@@ -120,13 +121,13 @@ static void old_pdl (pdl **p, short ndims, int dim0)
   PDL->converttype (p, PDL_B, PDL_PERM);
 
   if ((*p)->ndims < ndims + (dim0 > 1))
-    croak ("dimension mismatch, pdl has dimension %d but at least %d dimensions allowed", (*p)->ndims, ndims + (dim0 > 1));
+    croak (__("dimension mismatch, pdl has dimension %d but at least %d dimensions allowed"), (*p)->ndims, ndims + (dim0 > 1));
 
   if ((*p)->ndims > ndims + 1)
-    croak ("dimension mismatch, pdl has dimension %d but at most %d dimensions required", (*p)->ndims, ndims + 1);
+    croak (__("dimension mismatch, pdl has dimension %d but at most %d dimensions required"), (*p)->ndims, ndims + 1);
 
   if ((*p)->ndims > ndims && (*p)->dims[0] != dim0)
-    croak ("pixel size mismatch, pdl has %d channel pixels but %d channels are required", (*p)->dims[0], dim0);
+    croak (__("pixel size mismatch, pdl has %d channel pixels but %d channels are required"), (*p)->dims[0], dim0);
 }
 
 static void pixel_rgn_pdl_delete_data (pdl *p, int param)
@@ -216,7 +217,7 @@ static SV *new_gdrawable (gint32 id)
        GDrawable *gdr = gimp_drawable_get (id);
 
        if (!gdr)
-         croak ("unable to convert Gimp::Drawable into Gimp::GDrawable (id %d)", id);
+         croak (__("unable to convert Gimp::Drawable into Gimp::GDrawable (id %d)"), id);
 
        if (!stash)
          stash = gv_stashpv (PKG_GDRAWABLE, 1);
@@ -234,7 +235,7 @@ static SV *new_gdrawable (gint32 id)
 static GDrawable *old_gdrawable (SV *sv)
 {
   if (!(sv_derived_from (sv, PKG_GDRAWABLE)))
-    croak ("argument is not of type " PKG_GDRAWABLE);
+    croak (__("argument is not of type %s"), PKG_GDRAWABLE);
 
   /* the next line lacks any type of checking.  */
   return (GDrawable *)SvIV(SvRV(sv));
@@ -257,7 +258,7 @@ SV *new_tile (GTile *tile, SV *gdrawable)
 static GTile *old_tile (SV *sv)
 {
   if (!sv_derived_from (sv, PKG_TILE))
-    croak ("argument is not of type " PKG_TILE);
+    croak (__("argument is not of type %s"), PKG_TILE);
   
   /* the next line lacks any type of checking.  */
   return (GTile *)SvIV(*(hv_fetch ((HV*)SvRV(sv), "_tile", 5, 0)));
@@ -289,7 +290,7 @@ static SV *new_gpixelrgn (SV *gdrawable, int x, int y, int width, int height, in
           || sv_derived_from (gdrawable, PKG_CHANNEL))
         gdrawable = sv_2mortal (new_gdrawable (SvIV (SvRV (gdrawable))));
       else
-        croak ("argument is not of type " PKG_GDRAWABLE);
+        croak (__("argument is not of type %s"), PKG_GDRAWABLE);
     }
 
   if (!stash)
@@ -306,7 +307,7 @@ static SV *new_gpixelrgn (SV *gdrawable, int x, int y, int width, int height, in
 static GPixelRgn *old_pixelrgn (SV *sv)
 {
   if (!sv_derived_from (sv, PKG_PIXELRGN))
-    croak ("argument is not of type " PKG_PIXELRGN);
+    croak (__("argument is not of type %s"), PKG_PIXELRGN);
   
   return (GPixelRgn *)SvPV_nolen(SvRV(sv));
 }
@@ -416,7 +417,7 @@ perl_paramdef_count (GParamDef *arg, int count)
 	              j < args[index-1].data.d_int32 - 1 ? ", " : ""); \
     } \
   else \
-    trace_printf ("(UNINITIALIZED)"); \
+    trace_printf (__("(UNINITIALIZED)")); \
   trace_printf ("]"); \
 }
 
@@ -503,10 +504,10 @@ dump_params (int nparams, GParam *args, GParamDef *params)
                      trace_printf ("%d", args[i].data.d_parasite.flags & ~found);
                    }
                  
-                 trace_printf (", %d bytes data]", args[i].data.d_parasite.size);
+                 trace_printf (__(", %d bytes data]"), args[i].data.d_parasite.size);
                }
               else
-                trace_printf ("[undefined]");
+                trace_printf (__("[undefined]"));
 	    }
 	    break;
 #endif
@@ -576,7 +577,7 @@ convert_array2paramdef (AV *av, GParamDef **res)
 	          count += 1 + !!is_array (SvIV (type));
 	      }
 	    else
-	      croak ("malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or PARAM_TYPE");
+	      croak (__("malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or PARAM_TYPE"));
 	  }
 	
 	if (def)
@@ -663,10 +664,10 @@ unbless (SV *sv, char *type, char *croak_str)
 	if (SvTYPE (SvRV (sv)) == SVt_PVMG)
 	  return SvIV (SvRV (sv));
 	else
-	  strcpy (croak_str, "only blessed scalars accepted here");
+	  strcpy (croak_str, __("only blessed scalars accepted here"));
       }
     else
-      sprintf (croak_str, "argument type %s expected (not %s)", type, HvNAME(SvSTASH(SvRV(sv))));
+      sprintf (croak_str, __("argument type %s expected (not %s)"), type, HvNAME(SvSTASH(SvRV(sv))));
   else
     return SvIV (sv);
   
@@ -701,7 +702,7 @@ canonicalize_colour (char *err, SV *sv, GParamColor *c)
   PUTBACK;
   
   if (perl_call_pv ("Gimp::canonicalize_colour", G_SCALAR) != 1)
-    croak ("canonicalize_colour did not return a value!");
+    croak (__("FATAL: canonicalize_colour did not return a value!"));
   
   SPAGAIN;
   
@@ -718,13 +719,13 @@ canonicalize_colour (char *err, SV *sv, GParamColor *c)
 	      c->blue  = SvIV(*av_fetch(av, 2, 0));
 	    }
 	  else
-	    sprintf (err, "a color must have three components (array elements)");
+	    sprintf (err, __("a color must have three components (array elements)"));
 	}
       else
-	sprintf (err, "illegal type for colour specification");
+	sprintf (err, __("illegal type for colour specification"));
     }
   else
-    sprintf (err, "unable to grok colour specification");
+    sprintf (err, __("unable to grok colour specification"));
   
   PUTBACK;
   FREETMPS;
@@ -747,7 +748,7 @@ static void check_for_typoe (char *croak_str, char *p)
   return;
 
 gotit:
-  sprintf (croak_str, "Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to 'use strict'", p, b);
+  sprintf (croak_str, __("Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to 'use strict'"), p, b);
 }
 
 /* check for 'enumeration types', i.e. integer constants. do not allow
@@ -763,7 +764,7 @@ static int check_int (char *croak_str, SV *sv)
           && *p != '5' && *p != '6' && *p != '7' && *p != '8' && *p != '9'
           && *p != '-')
         {
-          sprintf (croak_str, "Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a string", p);
+          sprintf (croak_str, __("Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a string"), p);
           check_for_typoe (croak_str, p);
           return 0;
         }
@@ -874,7 +875,7 @@ push_gimp_sv (GParam *arg, int array_as_ref)
       case PARAM_STRINGARRAY:	push_gimp_av (arg, d_stringarray, neuSVpv, array_as_ref); break;
 	
       default:
-	croak ("dunno how to return param type %d", arg->type);
+	croak (__("dunno how to return param type %d"), arg->type);
     }
   
   if (sv)
@@ -898,7 +899,7 @@ push_gimp_sv (GParam *arg, int array_as_ref)
     } \
   else \
     { \
-      sprintf (croak_str, "perl-arrayref required as datatype for a gimp-array"); \
+      sprintf (croak_str, __("perl-arrayref required as datatype for a gimp-array")); \
       arg->data.datatype = 0; \
     } \
 }
@@ -906,7 +907,7 @@ push_gimp_sv (GParam *arg, int array_as_ref)
 #define sv2gimp_extract_noref(fun,str) \
 	fun(sv); \
 	if (SvROK(sv)) \
-	  sprintf (croak_str, "Unable to convert a reference to type '%s'", str); \
+	  sprintf (croak_str, __("Unable to convert a reference to type '%s'"), str); \
       	break;
 /*
  * convert a perl scalar into a GParam, return true if
@@ -957,7 +958,7 @@ convert_sv2gimp (char *croak_str, GParam *arg, SV *sv)
                                         arg->data.d_image      = unbless(sv, PKG_IMAGE   , croak_str); break;
                   }
                 else
-                  strcpy (croak_str, "argument incompatible with type IMAGE");
+                  strcpy (croak_str, __("argument incompatible with type IMAGE"));
 
                 return 0;
               }
@@ -999,13 +1000,13 @@ convert_sv2gimp (char *croak_str, GParam *arg, SV *sv)
 	            arg->data.d_parasite.data  = SvPV(*av_fetch(av, 2, 0), arg->data.d_parasite.size);
 	          }
 	        else
-	          sprintf (croak_str, "illegal parasite specification, expected three array members");
+	          sprintf (croak_str, __("illegal parasite specification, expected three array members"));
 	      }
 	    else
-	      sprintf (croak_str, "illegal parasite specification, arrayref expected");
+	      sprintf (croak_str, __("illegal parasite specification, arrayref expected"));
 	  }
 	else
-	  sprintf (croak_str, "illegal parasite specification, reference expected");
+	  sprintf (croak_str, __("illegal parasite specification, reference expected"));
 	
 	break;
 #endif
@@ -1017,7 +1018,7 @@ convert_sv2gimp (char *croak_str, GParam *arg, SV *sv)
       case PARAM_STRINGARRAY:	av2gimp (arg, sv, d_stringarray, gchar *, SvPv); break;
 	
       default:
-	sprintf (croak_str, "dunno how to pass arg type %d", arg->type);
+	sprintf (croak_str, __("dunno how to pass arg type %d"), arg->type);
     }
   
   return 1;
@@ -1221,7 +1222,7 @@ static void pii_run(char *name, int nparams, GParam *param, int *xnreturn_vals, 
 	     }
 	  
 	  if (count && !err_msg)
-	    err_msg = g_strdup_printf ("plug-in returned %d more values than expected", count);
+	    err_msg = g_strdup_printf (__("plug-in returned %d more values than expected"), count);
 	}
       
       while (count--)
@@ -1234,7 +1235,7 @@ static void pii_run(char *name, int nparams, GParam *param, int *xnreturn_vals, 
       LEAVE;
     }
   else
-    err_msg = g_strdup_printf ("being called as '%s', but '%s' not registered in the pdb", name, name);
+    err_msg = g_strdup_printf (__("being called as '%s', but '%s' not registered in the pdb"), name, name);
   
   if (err_msg)
     {
@@ -1340,10 +1341,10 @@ gimp_main(...)
 		              argc++;
 		          }
 		        else
-		          croak ("internal error (please report): too many main arguments");
+		          croak (__("internal error (please report): too many main arguments"));
 		      }
 		    else
-		      croak ("arguments to main not yet supported!");
+		      croak (__("arguments to main not yet supported!"));
 		    
 	            gimp_is_initialized = 1;
 		    RETVAL = gimp_main (argc, argv);
@@ -1519,7 +1520,7 @@ gimp_call_procedure (proc_name, ...)
                             if (trace & TRACE_CALL)
                               {
                                 dump_params (i, args, params);
-                                trace_printf (" = [argument error]\n");
+                                trace_printf (__(" = [argument error]\n"));
                               }
                         
                             goto error;
@@ -1535,10 +1536,10 @@ gimp_call_procedure (proc_name, ...)
                     if (i < nparams || j < items)
                       {
                         if (trace & TRACE_CALL)
-                          trace_printf ("[unfinished]\n");
+                          trace_printf (__("[unfinished]\n"));
                         
-                        sprintf (croak_str, "%s arguments for function '%s'",
-                                 i < nparams ? "not enough" : "too many", proc_name);
+                        sprintf (croak_str, __("%s arguments for function '%s'"),
+                                 i < nparams ? __("not enough") : __("too many"), proc_name);
                         
                         if (nparams)
                           destroy_params (args, nparams);
@@ -1559,9 +1560,9 @@ gimp_call_procedure (proc_name, ...)
                         if (values && values[0].type == PARAM_STATUS)
                           {
                             if (values[0].data.d_status == STATUS_EXECUTION_ERROR)
-                              sprintf (croak_str, "%s: procedural database execution failed", proc_name);
+                              sprintf (croak_str, __("%s: procedural database execution failed"), proc_name);
                             else if (values[0].data.d_status == STATUS_CALLING_ERROR)
-                              sprintf (croak_str, "%s: procedural database execution failed on invalid input arguments", proc_name);
+                              sprintf (croak_str, __("%s: procedural database execution failed on invalid input arguments"), proc_name);
                             else if (values[0].data.d_status == STATUS_SUCCESS)
                               {
                                 EXTEND(SP, perl_paramdef_count (return_vals, nvalues-1));
@@ -1577,10 +1578,10 @@ gimp_call_procedure (proc_name, ...)
                                 SPAGAIN;
                               }
                             else
-                              sprintf (croak_str, "unsupported status code: %d, fatal error\n", values[0].data.d_status);
+                              sprintf (croak_str, __("unsupported status code: %d, fatal error\n"), values[0].data.d_status);
                           }
                         else
-                          sprintf (croak_str, "gimp didn't return an execution status, fatal error");
+                          sprintf (croak_str, __("gimp didn't return an execution status, fatal error"));
                         
                       }
                     
@@ -1596,7 +1597,7 @@ gimp_call_procedure (proc_name, ...)
                       croak (croak_str);
                   }
                 else
-                  croak ("gimp procedure '%s' not found", proc_name);
+                  croak (__("gimp procedure '%s' not found"), proc_name);
 	}
 
 void
@@ -1635,7 +1636,7 @@ gimp_install_procedure(name, blurb, help, author, copyright, date, menu_path, im
             g_free (apd);
           }
         else
-          croak ("params and return_vals must be array refs (even if empty)!");
+          croak (__("params and return_vals must be array refs (even if empty)!"));
 
 void
 gimp_uninstall_temp_proc(name)
@@ -1783,7 +1784,7 @@ gimp_pixel_rgns_register(...)
         else if (items == 3)
 	  RETVAL = gimp_pixel_rgns_register (3, old_pixelrgn (ST (0)), old_pixelrgn (ST (1)), old_pixelrgn (ST (2)));
         else
-          croak ("gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to gimp-1.1 and report this error");
+          croak (__("gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to gimp-1.1 and report this error"));
         OUTPUT:
         RETVAL
 
@@ -2112,7 +2113,7 @@ gimp_pixel_rgn_data(pr,newdata=0)
             stride = pr->bpp * newdata->dims[newdata->ndims-2];
 
             if (pr->h != newdata->dims[newdata->ndims-1])
-              croak ("pdl height != region height");
+              croak (__("pdl height != region height"));
 
             for (y   = 0, src = newdata->data, dst = pr->data;
                  y < pr->h;
@@ -2152,7 +2153,7 @@ gimp_tile_get_data(tile)
 	GTile *	tile
 	CODE:
         need_pdl;
-        croak ("gimp_tile_get_data is not yet implemented\n");
+        croak (__("gimp_tile_get_data is not yet implemented\n"));
 	gimp_tile_ref (tile);
 	gimp_tile_unref (tile, 0);
 	OUTPUT:
@@ -2163,7 +2164,7 @@ gimp_tile_set_data(tile,data)
 	GTile *	tile
 	SV *	data
 	CODE:
-        croak ("gimp_tile_set_data is not yet implemented\n"); (void *)data;
+        croak (__("gimp_tile_set_data is not yet implemented\n")); (void *)data;
 	gimp_tile_ref_zero (tile);
 	gimp_tile_unref (tile, 1);
 
@@ -2185,7 +2186,7 @@ gimp_pixel_rgn_data(...)
           gimp_tile_get_data		= 11
           gimp_tile_set_data		= 12
 	CODE:
-        croak ("This module was built without support for PDL.");
+        croak (__("This module was built without support for PDL."));
  
 #endif
 
@@ -2307,7 +2308,7 @@ _new_pattern_select(dname, ipattern, nameref)
 	CODE:
 	{
 		if (!SvROK (nameref))
-		  croak ("last argument to gimp_pattern_select_widget must be scalar ref");
+		  croak (__("last argument to gimp_pattern_select_widget must be scalar ref"));
 		
 		nameref = SvRV (nameref);
 		SvUPGRADE (nameref, SVt_PV);

@@ -1,6 +1,9 @@
 #include "config.h"
+#include "perl-intl.h"
 
 #include <libgimp/gimp.h>
+
+/*#include <locale.h>*//*notyet*//*D*/
 
 /* FIXME */
 /* sys/param.h is redefining these! */
@@ -37,6 +40,9 @@ MODULE = Gimp	PACKAGE = Gimp
 
 PROTOTYPES: ENABLE
 
+BOOT:
+	/*setlocale (LC_MESSAGES, "");*//* done by perl *//*notyet*//*D*/
+
 void
 _exit()
 	CODE:
@@ -48,6 +54,28 @@ _exit()
 	raise(9);
 #endif
 	abort();
+
+char *
+bindtextdomain(d,dir)
+	char *	d
+	char *	dir
+
+char *
+textdomain(d)
+	char *	d
+
+char *
+gettext(s)
+	char *	s
+
+char *
+dgettext(d,s)
+	char *	d
+	char *	s
+
+char *
+__(s)
+	char *	s
 
 void
 xs_exit(status)

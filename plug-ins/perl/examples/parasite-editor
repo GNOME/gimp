@@ -3,7 +3,7 @@
 #BEGIN {$^W=1};
 
 use Gimp::Feature qw(perl-5.005 gtk-1.2);
-use Gimp ();
+use Gimp ('__');
 use Gimp::Fu;
 use Gtk;
 
@@ -279,7 +279,7 @@ register "extension_parasite_editor",
          "Marc Lehmann",
          "Marc Lehmann",
          $VERSION,
-         "<Toolbox>/Xtns/Parasite Editor",
+         __"<Toolbox>/Xtns/Parasite Editor",
          "",
          [],
          [],

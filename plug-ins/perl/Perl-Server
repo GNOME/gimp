@@ -15,7 +15,7 @@ use strict;
 use vars qw($use_unix $use_tcp $trace_res $server_quit $max_pkt $unix $tcp $ps_flags
             $auth @authorized $exclusive $rm $saved_rm %stats);
 # the '' might be required (i.e. no ()). why??
-use Gimp ();
+use Gimp ('__');
 use Gimp::Net ();
 
 Gimp::set_trace(\$trace_res);
@@ -106,14 +106,14 @@ sub handle_request($) {
          print $fh pack("N",length($data)).$data;
          Gimp::set_trace(0);
       } elsif ($req eq "QUIT") {
-         slog "received QUIT request";
+         slog __"received QUIT request";
          $server_quit = 1;
       } elsif($req eq "AUTH") {
-         $data=Gimp::Net::args2net(0,1,"authorization unnecessary");
+         $data=Gimp::Net::args2net(0,1,__"authorization unnecessary");
          print $fh pack("N",length($data)).$data;
       } elsif($req eq "LOCK") {
          my($lock,$shared)=unpack("N*",$data);
-         slog "WARNING: shared locking requested but not implemented" if $shared;
+         slog __"WARNING: shared locking requested but not implemented" if $shared;
          if($lock) {
             unless($exclusive) {
                $saved_rm=$rm;
@@ -125,12 +125,12 @@ sub handle_request($) {
                $exclusive--;
                $rm = $saved_rm unless $exclusive;
             } else {
-               slog "WARNING: client tried to unlock without holding a lock";
+               slog __"WARNING: client tried to unlock without holding a lock";
             }
          }
       } else {
          print $fh pack("N",0);
-         slog "illegal command received, aborting connection";
+         slog __"illegal command received, aborting connection";
          return 0;
       }
    } else {
@@ -141,7 +141,7 @@ sub handle_request($) {
             $authorized[fileno($fh)]=1;
          } else {
             $ok=0;
-            $msg="wrong authorization, aborting connection";
+            $msg=__"wrong authorization, aborting connection";
             slog $msg;
             sleep 5; # safety measure
          }
@@ -150,7 +150,7 @@ sub handle_request($) {
          return $ok;
       } else {
          print $fh pack("N",0);
-         slog "unauthorized command received, aborting connection";
+         slog __"unauthorized command received, aborting connection";
          return 0;
       }
    }
@@ -165,7 +165,7 @@ sub extension_perl_server {
   if ($run_mode == &Gimp::RUN_NONINTERACTIVE) {
      if ($ps_flags & &Gimp::_PS_FLAG_BATCH) {
         my($fh) = local *FH;
-        open $fh,"+<&$extra" or die "unable to open Gimp::Net communications socket\n";
+        open $fh,"+<&$extra" or die __"unable to open Gimp::Net communications socket\n";
         select $fh; $|=1; select STDOUT;
         reply $fh,"PERL-SERVER",$Gimp::_PROT_VERSION;
         while(!$server_quit and !eof($fh)) {
@@ -185,7 +185,7 @@ sub extension_perl_server {
   my $host = $ENV{'GIMP_HOST'};
   $auth = $host=~s/^(.*)\@// ? $1 : undef;	# get authorization
   
-  slog "server version $Gimp::VERSION started".($auth ? ", authorization required" : "");
+  slog __"server version $Gimp::VERSION started".($auth ? __", authorization required" : "");
   
   $SIG{PIPE}='IGNORE'; # may not work, since libgimp (eech) overwrites it.        
   my($unix_path)=$Gimp::Net::default_unix_dir.$Gimp::Net::default_unix_sock;
@@ -193,14 +193,14 @@ sub extension_perl_server {
   
   if ($host ne "") {
      if ($host=~s{^spawn/}{}) {
-        die "invalid GIMP_HOST: 'spawn' is not a valid connection method for the server";
+        die __"invalid GIMP_HOST: 'spawn' is not a valid connection method for the server";
      } elsif ($host=~s{^unix/}{/}) {
         $unix = local *FH;
         socket($unix,AF_UNIX,SOCK_STREAM,PF_UNSPEC)
           && bind($unix,sockaddr_un $host)
           && listen($unix,5)
-            or die "unable to create listening unix socket: $!\n";
-        slog "accepting connections in $host";
+            or die __"unable to create listening unix socket: $!\n";
+        slog __"accepting connections in $host";
         vec($rm,fileno($unix),1)=1;
      } else {
         $host=~s{^tcp/}{};
@@ -211,8 +211,8 @@ sub extension_perl_server {
            && bind($tcp,sockaddr_in $port,INADDR_ANY)
            && setsockopt($tcp,SOL_SOCKET,SO_REUSEADDR,1)
            && listen($tcp,5)
-             or die "unable to create listening tcp socket: $!\n";
-        slog "accepting connections on port $port";
+             or die __"unable to create listening tcp socket: $!\n";
+        slog __"accepting connections on port $port";
         vec($rm,fileno($tcp),1)=1;
      }
   } else {
@@ -224,8 +224,8 @@ sub extension_perl_server {
         socket($unix,AF_UNIX,SOCK_STREAM,PF_UNSPEC)
            && bind($unix,sockaddr_un $unix_path)
            && listen($unix,5)
-             or die "unable to create listening unix socket: $!\n";
-        slog "accepting connections on $unix_path";
+             or die __"unable to create listening unix socket: $!\n";
+        slog __"accepting connections on $unix_path";
         vec($rm,fileno($unix),1)=1;
      }
      if ($use_tcp && $auth) {
@@ -234,13 +234,13 @@ sub extension_perl_server {
            && bind($tcp,sockaddr_in $Gimp::Net::default_tcp_port,INADDR_ANY)
            && setsockopt($tcp,SOL_SOCKET,SO_REUSEADDR,1)
            && listen($tcp,5)
-             or die "unable to create listening tcp socket: $!\n";
-        slog "accepting connections on port $Gimp::Net::default_tcp_port";
+             or die __"unable to create listening tcp socket: $!\n";
+        slog __"accepting connections on port $Gimp::Net::default_tcp_port";
         vec($rm,fileno($tcp),1)=1;
     }
   }
   
-  !$tcp || $auth or die "authorization required for tcp connections";
+  !$tcp || $auth or die __"authorization required for tcp connections";
   
   sub new_connection {
      my $fh = shift;
@@ -257,15 +257,15 @@ sub extension_perl_server {
     if(select($r=$rm,undef,undef,undef)>0) {
       if ($tcp && vec($r,fileno($tcp),1)) {
         my $h = local *FH;
-        my ($port,$host) = sockaddr_in (accept ($h,$tcp)) or die "unable to accept tcp connection: $!\n";
+        my ($port,$host) = sockaddr_in (accept ($h,$tcp)) or die __"unable to accept tcp connection: $!\n";
         new_connection($h);
-        slog "accepted tcp connection from ",inet_ntoa($host),":$port";
+        slog __"accepted tcp connection from ",inet_ntoa($host),":$port";
       }
       if ($unix && vec($r,fileno($unix),1)) {
         my $h = local *FH;
-        accept ($h,$unix) or die "unable to accept unix connection: $!\n";
+        accept ($h,$unix) or die __"unable to accept unix connection: $!\n";
         new_connection($h);
-        slog("accepted unix connection");
+        slog __"accepted unix connection";
       }
       for $f (keys(%handles)) {
         if(vec($r,$f,1)) {
@@ -273,11 +273,11 @@ sub extension_perl_server {
           if(handle_request($fh)) {
             $stats{$f}[0]++;
           } else {
-             slog "closing connection ",$f," ($stats{$f}[0] requests in ",time-$stats{$f}[1]," seconds)";
+            slog sprintf __"closing connection %d (%d requests in %f seconds)", $f, $stats{$f}[0], time-$stats{$f}[1];
             if ($exclusive) {
                $rm = $saved_rm;
                $exclusive = 0;
-               slog "WARNING: client disconnected while holding an active lock\n";
+               slog __"WARNING: client disconnected while holding an active lock\n";
             }
             vec($rm,$f,1)=0;
             delete $handles{$f};
@@ -289,7 +289,7 @@ sub extension_perl_server {
     }
   }
   
-  slog "server going down...";
+  slog __"server going down...";
   if ($use_tcp) {
     undef $tcp;
   }
@@ -304,7 +304,7 @@ sub query {
    Gimp->install_procedure("extension_perl_server", "Start the Gimp-Perl Server",
                            "This is the server for plug-ins written using the Gimp::Net module",
                            "Marc Lehmann <pcg\@goof.com>", "Marc Lehmann", "1998-07-22",
-                           "<Toolbox>/Xtns/Perl/Server", "*",&Gimp::PROC_EXTENSION,
+                           __"<Toolbox>/Xtns/Perl/Server", "*",&Gimp::PROC_EXTENSION,
                            [
                             [&Gimp::PARAM_INT32, "run_mode", "Interactive, [non-interactive]"],
                             [&Gimp::PARAM_INT32, "flags", "internal flags (must be 0)"],

@@ -1,8 +1,8 @@
 package Gimp::PDL;
 
-use Gimp ();
+use Gimp ('__');
 
-warn "use'ing Gimp::PDL is no longer necessary, please remove it\n";
+warn __"use'ing Gimp::PDL is no longer necessary, please remove it!\n";
 
 1;
 __END__

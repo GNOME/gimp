@@ -3,7 +3,7 @@
 #BEGIN {$^W=1};
 
 use Gimp::Feature qw(perl-5.005 gtk-1.2);
-use Gimp (':consts');
+use Gimp (':consts','__');
 use Gimp::Fu;
 use Gtk;
 use Gtk::Gdk;
@@ -187,13 +187,13 @@ sub complete_function {
    my @matches = eval { sort grep /$name/i,@function };
    if(@matches>1e6) {#d#
       set_clist map(($_,$_),@matches[0..149]);
-      $synopsis->set("showing only the first 150 matches (of ".(scalar@matches).")");
+      $synopsis->set(sprintf __"showing only the first 150 matches (of %d)", (scalar@matches));
    } elsif(@matches>1) {
       set_clist map(($_,$_),@matches);
-      $synopsis->set(scalar@matches." matching functions");
+      $synopsis->set(scalar@matches.__" matching functions");
    } else {
       set_clist @matches,@matches;
-      $synopsis->set($matches[0]." (press Tab to complete)");
+      $synopsis->set($matches[0].__" (press Tab to complete)");
    }
 }
 
@@ -240,7 +240,7 @@ sub update_completion {
    if ($idx == 0) {
       complete_function($words[0]);
    } elsif ($idx>@args) {
-      $synopsis->set('too many arguments');
+      $synopsis->set(__"too many arguments");
       set_clist;
    } else {
       complete_type(@{$args[$idx-1]});
@@ -348,10 +348,10 @@ sub inputline {
 
 sub info {
    my $info = new Gtk::Dialog;
-   $info->set_title("Function Info");
+   $info->set_title(__"Function Info");
    $info->signal_connect(delete_event => sub { $info->hide });
 
-   my $close = new Gtk::Button "Close";
+   my $close = new Gtk::Button __"Close";
    $close->signal_connect(clicked => sub { $info->hide });
    $info->action_area->add($close);
 
@@ -364,9 +364,9 @@ sub info {
    };
 
    $blurb_label = new Gtk::Label;
-   add_info("Menu Path", $menupath_label = new Gtk::Label);
-   add_info("Accelerator", $accelerator_label = new Gtk::Label);
-   add_info("Image Types", $imagetypes_label = new Gtk::Label);
+   add_info(__"Menu Path", $menupath_label = new Gtk::Label);
+   add_info(__"Accelerator", $accelerator_label = new Gtk::Label);
+   add_info(__"Image Types", $imagetypes_label = new Gtk::Label);
 
    $help_text = new Gtk::Text;
    $help_text->set_editable(0);
@@ -374,14 +374,14 @@ sub info {
    my $cs = new Gtk::ScrolledWindow undef,undef;
    $cs->set_policy(-automatic,-automatic);
    $cs->add ($help_text);
-   add_info ("Description", $cs, 1);
+   add_info (__"Description", $cs, 1);
 
-   add_info("Author", $author_label = new Gtk::Label);
-   add_info("Last Modified", $last_modified_label = new Gtk::Label);
-   add_info("Plug-In Path", $plugin_path_label = new Gtk::Label);
+   add_info(__"Author", $author_label = new Gtk::Label);
+   add_info(__"Last Modified", $last_modified_label = new Gtk::Label);
+   add_info(__"Plug-In Path", $plugin_path_label = new Gtk::Label);
 
    my $h = new Gtk::HBox(0,5);
-   my $more = new Gtk::Button "More...";
+   my $more = new Gtk::Button __"More...";
    $more->signal_connect(clicked => sub { $info->visible ? $info->hide : $info->show_all });
    $h->add($blurb_label);
    $h->add($more);
@@ -401,10 +401,10 @@ sub create_main {
    $ex = $w->style->font->string_width ('Mn')*0.5;
    $ey = $w->style->font->string_width ('My');
 
-   $w->set_title('PDB Explorer - the olof edition (yet still an alpha version)');
+   $w->set_title(__"PDB Explorer - the olof edition (yet still an alpha version)");
    $w->signal_connect("destroy",sub {main_quit Gtk});
 
-   $b = new Gtk::Button "Close";
+   $b = new Gtk::Button __"Close";
    $w->action_area->add($b);
    $b->signal_connect("clicked",sub {main_quit Gtk});
 
@@ -436,20 +436,20 @@ sub create_main {
 
    $table->border_width(10);
 
-   $table->attach(new Gtk::Label("Synopsis") ,0,1,0,1,{},{},0,0);
+   $table->attach(new Gtk::Label(__"Synopsis") ,0,1,0,1,{},{},0,0);
       $table->attach($synopsis ,1,2,0,1,{},{},0,0);
          $table->attach(Gimp::UI::logo($w),2,3,0,1,{},{},0,0);
-   $table->attach(new Gtk::Label("Command")  ,0,1,1,2,{},{},0,0);
+   $table->attach(new Gtk::Label(__"Command")  ,0,1,1,2,{},{},0,0);
       $table->attach($inputline,1,2,1,2,['expand','fill'],{},0,0);
          $table->attach($result,2,3,1,2,['expand','fill'],{},0,0);
-   $table->attach(new Gtk::Label("Shortcuts"),0,1,2,3,{},{},0,0);
+   $table->attach(new Gtk::Label(__"Shortcuts"),0,1,2,3,{},{},0,0);
       $table->attach($cs       ,1,2,2,3,['expand','fill'],['expand','fill'],0,0);
          $table->attach($rs,2,3,2,3,['expand','fill'],['expand','fill'],0,0);
-   $table->attach(new Gtk::Label("Status"),0,1,3,4,{},{},0,0);
+   $table->attach(new Gtk::Label(__"Status"),0,1,3,4,{},{},0,0);
       $table->attach($statusbar,1,3,3,4,['expand','fill'],['expand','fill'],0,0);
 
    # the Info frame
-   my $ci = new Gtk::Frame "Info";
+   my $ci = new Gtk::Frame __"Info";
    $ci->border_width(10);
    my $v = new Gtk::VBox(0,5);
    $ci->add($v);
@@ -478,7 +478,7 @@ register "extension_pdb_explorer",
          "Marc Lehmann",
          "Marc Lehmann",
          "0.4alpha",
-         "<Toolbox>/Xtns/PDB Explorer",
+         __"<Toolbox>/Xtns/PDB Explorer",
          "",
          [],
          sub {

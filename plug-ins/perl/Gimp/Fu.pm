@@ -1,6 +1,6 @@
 package Gimp::Fu;
 
-use Gimp 'croak';
+use Gimp ('croak', '__');
 use Gimp::Data;
 use File::Basename;
 
@@ -178,10 +178,10 @@ sub interact {
    
    if ($@) {
       my @res = map {
-         die "the gtk perl module is required to run\nthis plug-in in interactive mode\n" unless defined $_->[3];
+         die __"the gtk perl module is required to run\nthis plug-in in interactive mode\n" unless defined $_->[3];
          $_->[3];
       } @types;
-      Gimp::logger(message => "the gtk perl module is required to open a dialog\nwindow, running with default values",
+      Gimp::logger(message => __"the gtk perl module is required to open a dialog\nwindow, running with default values",
                    fatal => 1, function => $function);
       return (1,@res);
    }
@@ -213,7 +213,7 @@ sub this_script {
       return $this if lc($exe) eq lc($fun);
       push(@names,$fun);
    }
-   die "function '$exe' not found in this script (must be one of ".join(", ",@names).")\n";
+   die __"function '$exe' not found in this script (must be one of ".join(", ",@names).")\n";
 }
 
 my $latest_image;
@@ -236,7 +236,7 @@ sub string2pf($$) {
            || $type==PF_SLIDER
            || $type==PF_SPINNER
            || $type==PF_ADJUSTMENT) {
-      die "$s: not an integer\n" unless $s==int($s);
+      die __"$s: not an integer\n" unless $s==int($s);
       $s*1;
    } elsif($type==PF_FLOAT) {
       $s*1;
@@ -246,7 +246,7 @@ sub string2pf($$) {
       $s?1:0;
    #} elsif($type==PF_IMAGE) {
    } else {
-      die "conversion to type $pf_type2string{$type} is not yet implemented\n";
+      die __"conversion to type $pf_type2string{$type} is not yet implemented\n";
    }
 }
 
@@ -291,7 +291,7 @@ Gimp::on_net {
 	 } else {
            my $arg=shift @ARGV;
 	   my $idx=$map{$1};
-	   die "$_: illegal switch, try $0 --help\n" unless defined($idx);
+	   die __"$_: illegal switch, try $0 --help\n" unless defined($idx);
 	   $args[$idx]=string2pf($arg,$params->[$idx]);
 	   $interact--;
 	 }
@@ -306,7 +306,7 @@ Gimp::on_net {
        next if defined $args[$i];
        my $entry = $params->[$i];
        $args[$i] = $entry->[3];             # Default value
-       die "parameter '$entry->[1]' is not optional\n" unless defined $args[$i] || $interact>0;
+       die __"parameter '$entry->[1]' is not optional\n" unless defined $args[$i] || $interact>0;
    }
    
    # Go for it
@@ -638,24 +638,26 @@ sub register($$$$$$$$$;@) {
       } elsif (/^<None>/) {
          $type = &Gimp::PROC_EXTENSION;
       } else {
-         die "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!";
+         die __"menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!";
       }
    }
+   s%^<Toolbox>/Xtns%__("<Toolbox>/Xtns")%e;
+   s%^<Image>/Filters%__("<Image>/Filters")%e;
    undef $menupath if $menupath eq "<None>";#d#
    
-   @_==0 or die "register called with too many or wrong arguments\n";
+   @_==0 or die __"register called with too many or wrong arguments\n";
    
    for my $p (@$params,@$results) {
       next unless ref $p;
-      int($p->[0]) eq $p->[0] or croak "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'";
-      $p->[1]=~/^[0-9a-z_]+$/ or carp "$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z and _ allowed";
+      int($p->[0]) eq $p->[0] or croak __"$function: argument/return value '$p->[1]' has illegal type '$p->[0]'";
+      $p->[1]=~/^[0-9a-z_]+$/ or carp __"$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z and _ allowed";
    }
 
    $function="perl_fu_".$function unless $function =~ /^(?:perl_fu_|extension_|plug_in_|file_)/ || $function =~ s/^\+//;
    
-   $function=~/^[0-9a-z_]+(-ALT)?$/ or carp "$function: function name contains unusual characters, good style is to use only 0-9, a-z and _";
+   $function=~/^[0-9a-z_]+(-ALT)?$/ or carp __"$function: function name contains unusual characters, good style is to use only 0-9, a-z and _";
 
-   Gimp::logger message => "function name contains dashes instead of underscores",
+   Gimp::logger message => __"function name contains dashes instead of underscores",
                 function => $function, fatal => 0
       if $function =~ y/-//;
 
@@ -676,18 +678,18 @@ sub register($$$$$$$$$;@) {
 
       for($menupath) {
          if (/^<Image>\//) {
-            @_ >= 2 or die "<Image> plug-in called without both image and drawable arguments!\n";
+            @_ >= 2 or die __"<Image> plug-in called without both image and drawable arguments!\n";
             @pre = (shift,shift);
          } elsif (/^<Toolbox>\// or !defined $menupath) {
             # valid ;)
          } elsif (/^<Load>\//) {
-            @_ >= 2 or die "<Load> plug-in called without the 3 standard arguments!\n";
+            @_ >= 2 or die __"<Load> plug-in called without the 3 standard arguments!\n";
             @pre = (shift,shift);
          } elsif (/^<Save>\//) {
-            @_ >= 4 or die "<Save> plug-in called without the 5 standard arguments!\n";
+            @_ >= 4 or die __"<Save> plug-in called without the 5 standard arguments!\n";
             @pre = (shift,shift,shift,shift);
          } elsif (defined $_) {
-            die "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!";
+            die __"menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!";
          }
       }
       if ($run_mode == &Gimp::RUN_INTERACTIVE
@@ -720,7 +722,7 @@ sub register($$$$$$$$$;@) {
       } elsif ($run_mode == &Gimp::RUN_NONINTERACTIVE) {
          # nop
       } else {
-         die "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n";
+         die __"run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n";
       }
       $input_image = $_[0]   if ref $_[0]   eq "Gimp::Image";
       $input_image = $pre[0] if ref $pre[0] eq "Gimp::Image";
@@ -751,7 +753,7 @@ sub register($$$$$$$$$;@) {
                      $img->display_new unless $input_image && $$img == $$input_image;
                   }
                } elsif (!@$retvals) { 
-                  warn "WARNING: $function returned something that is not an image: \"$img\"\n";
+                  warn __"WARNING: $function returned something that is not an image: \"$img\"\n";
                }
             }
          }
@@ -833,7 +835,7 @@ sub save_image($$) {
       $smooth=$1 eq "+", 	next if s/^([-+])[sS]//;
       $quality=$1*0.01,		next if s/^-[qQ](\d+)//;
       $compress=$1,		next if s/^-[cC](\d+)//;
-      croak "$_: unknown/illegal file-save option";
+      croak __"$_: unknown/illegal file-save option";
    }
    $flatten=(()=$img->get_layers)>1 unless defined $flatten;
    
@@ -871,12 +873,11 @@ sub main {
    $old_trace = Gimp::set_trace (0);
    if ($Gimp::help) {
       my $this=this_script;
-      print <<EOF;
-       interface-arguments are
+      print __"       interface-arguments are
            -o | --output <filespec>   write image to disk, don't display
            -i | --interact            let the user edit the values first
        script-arguments are
-EOF
+";
       print_switches ($this);
    } else {
       Gimp::main;

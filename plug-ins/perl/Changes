@@ -6,6 +6,9 @@ Revision history for Gimp-Perl extension.
           called.
         - started to revamp the extra argument handling.
         - updated PDB Explorer a bit, still broken.
+        - started i18n.
+        - put help window into a scrolledwindow, as to a suggestion by Jens
+          Lauterbach. Karlsruhe rules!
 
 1.13  Wed Sep  8 02:55:43 CEST 1999
 	- removed some glib-1.1 compatibility cruft.

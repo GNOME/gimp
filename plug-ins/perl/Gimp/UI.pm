@@ -1,6 +1,6 @@
 package Gimp::UI;
 
-use Gimp ();
+use Gimp ('__');
 use Gimp::Fu;
 use Gtk;
 
@@ -80,7 +80,7 @@ sub new($$$$) {
    if (@items) {
       $$var=$items[0]->[1];
    } else {
-      my $item = new Gtk::MenuItem "(none)";
+      my $item = new Gtk::MenuItem __"(none)";
       $menu->append($item);
       $$var=undef;
    }
@@ -91,6 +91,7 @@ sub new($$$$) {
 package Gimp::UI::PreviewSelect;
 
 use Gtk;
+use Gimp '__';
 use base 'Gtk::Button';
 
 # this is an utter HACK for the braindamanged gtk (NOT Gtk!)
@@ -170,7 +171,7 @@ sub GTK_OBJECT_INIT {
    });
    $s->add_with_viewport ($l);
    
-   my $button = new Gtk::Button "OK";
+   my $button = new Gtk::Button __"OK";
    signal_connect $button "clicked", sub {
       hide $w;
       if($l->selection) {
@@ -183,7 +184,7 @@ sub GTK_OBJECT_INIT {
    grab_default $button;
    show $button;
    
-   $button = new Gtk::Button "Cancel";
+   $button = new Gtk::Button __"Cancel";
    signal_connect $button "clicked", sub {hide $w};
    $w->action_area->pack_start($button,1,1,0);
    can_default $button 1;
@@ -195,9 +196,10 @@ sub GTK_OBJECT_INIT {
 package Gimp::UI::PatternSelect;
 
 use Gtk;
+use Gimp '__';
 use base 'Gimp::UI::PreviewSelect';
 
-sub get_title { "Pattern Selection Dialog" }
+sub get_title { __"Pattern Selection Dialog" }
 sub get_list { Gimp->patterns_list }
 
 sub new_preview {
@@ -243,9 +245,10 @@ sub new {
 package Gimp::UI::BrushSelect;
 
 use Gtk;
+use Gimp '__';
 use base 'Gimp::UI::PreviewSelect';
 
-sub get_title { "Brush Selection Dialog" }
+sub get_title { __"Brush Selection Dialog" }
 sub get_list { Gimp->brushes_list }
 
 sub new_preview {
@@ -287,8 +290,9 @@ package Gimp::UI::GradientSelect;
 
 use Gtk;
 use base 'Gimp::UI::PreviewSelect';
+use Gimp '__';
 
-sub get_title { "Gradient Selection Dialog" }
+sub get_title { __"Gradient Selection Dialog" }
 sub get_list { keys %gradients }
 
 sub new_preview {
@@ -314,6 +318,7 @@ package Gimp::UI::ColorSelectButton;
 
 use strict;
 use vars qw($VERSION @ISA);
+use Gimp '__';
 use Gtk;
 
 @ISA = qw(Gtk::Button);
@@ -411,7 +416,7 @@ sub cb_color_button {
     	return;
     }
 
-    my $cs_window=new Gtk::ColorSelectionDialog("Color");
+    my $cs_window=new Gtk::ColorSelectionDialog(__"Color");
     $cs_window->colorsel->set_color(map($_*1/255,@{$color_button->{_color}}));
     $cs_window->show();
     $cs_window->ok_button->signal_connect("clicked",
@@ -505,21 +510,24 @@ sub help_window(\$$$) {
    my($helpwin,$blurb,$help)=@_;
    unless ($$helpwin) {
       $$helpwin = new Gtk::Dialog;
-      $$helpwin->set_title("Help for ".$Gimp::function);
+      $$helpwin->set_title(_("Help for ").$Gimp::function);
       my($font,$b);
 
       $b = new Gtk::Text;
       $b->set_editable (0);
       $b->set_word_wrap (1);
 
-      $font = load Gtk::Gdk::Font "9x15bold";
-      $font = fontset_load Gtk::Gdk::Font "-*-courier-medium-r-normal--*-120-*-*-*-*-*" unless $font;
+      $font = load Gtk::Gdk::Font __"9x15bold";
+      $font = fontset_load Gtk::Gdk::Font __"-*-courier-medium-r-normal--*-120-*-*-*-*-*" unless $font;
       $font = $b->style->font unless $font;
-      $$helpwin->vbox->add($b);
-      $b->insert($font,$b->style->fg(-normal),undef,"BLURB:\n\n$blurb\n\nHELP:\n\n$help");
+      my $cs = new Gtk::ScrolledWindow undef,undef;
+      $cs->set_policy(-automatic,-automatic);
+      $cs->add($b);
+      $$helpwin->vbox->add($cs);
+      $b->insert($font,$b->style->fg(-normal),undef,__"BLURB:\n\n$blurb\n\nHELP:\n\n$help");
       $b->set_usize($font->string_width('M')*80,($font->ascent+$font->descent)*26);
 
-      my $button = new Gtk::Button "OK";
+      my $button = new Gtk::Button __"OK";
       signal_connect $button "clicked",sub { hide $$helpwin };
       $$helpwin->action_area->add($button);
       
@@ -530,7 +538,7 @@ sub help_window(\$$$) {
          my $pod = new Gimp::Pod;
          my $text = $pod->format;
          if ($text) {
-            $b->insert($font,$b->style->fg(-normal),undef,"\n\nEMBEDDED POD DOCUMENTATION:\n\n");
+            $b->insert($font,$b->style->fg(-normal),undef,__"\n\nEMBEDDED POD DOCUMENTATION:\n\n");
             $b->insert($font,$b->style->fg(-normal),undef,$text);
          }
       });
@@ -606,15 +614,15 @@ sub interact($$$$@) {
            &new_PF_STRING;
            
         } elsif($type == PF_FONT) {
-           my $fs=new Gtk::FontSelectionDialog "Font Selection Dialog ($desc)";
-           my $def = "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1";
+           my $fs=new Gtk::FontSelectionDialog __"Font Selection Dialog ($desc)";
+           my $def = __"-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1";
            my $val;
            
            my $l=new Gtk::Label "!error!";
            my $setval = sub {
               $val=$_[0];
               unless (defined $val && $fs->set_font_name ($val)) {
-                 warn "Illegal default font description for $function: $val\n" if defined $val;
+                 warn __"Illegal default font description for $function: $val\n" if defined $val;
                  $val=$def;
                  $fs->set_font_name ($val);
               }
@@ -662,14 +670,14 @@ sub interact($$$$@) {
            signal_connect $c "clicked", sub {
              $b->set('color', "@{Gimp::Palette->get_foreground}");
            };
-           set_tip $t $c,"get current foreground colour from the gimp";
+           set_tip $t $c,__"get current foreground colour from the gimp";
            $a->pack_start ($c,1,1,0);
            
            my $d = new Gtk::Button "BG";
            signal_connect $d "clicked", sub {
              $b->set('color', "@{Gimp::Palette->get_background}");
            };
-           set_tip $t $d,"get current background colour from the gimp";
+           set_tip $t $d,__"get current background colour from the gimp";
            $a->pack_start ($d,1,1,0);
            
         } elsif($type == PF_TOGGLE) {
@@ -738,7 +746,7 @@ sub interact($$$$@) {
            if ($gimp_10) {
               &new_PF_STRING;
            } else {
-              $a=new Gimp::UI::PatternSelect -active => defined $value ? $value : (Gimp->gradients_get_pattern)[0];
+              $a=new Gimp::UI::PatternSelect -active => defined $value ? $value : (Gimp->patterns_get_pattern)[0];
               push(@setvals,sub{$a->set('active',$_[0])});
               push(@getvals,sub{$a->get('active')});
            }
@@ -747,7 +755,7 @@ sub interact($$$$@) {
            if ($gimp_10) {
               &new_PF_STRING;
            } else {
-              $a=new Gimp::UI::BrushSelect -active =>  defined $value ? $value : (Gimp->gradients_get_brush)[0];
+              $a=new Gimp::UI::BrushSelect -active =>  defined $value ? $value : (Gimp->brushes_get_brush)[0];
               push(@setvals,sub{$a->set('active',$_[0])});
               push(@getvals,sub{$a->get('active')});
            }
@@ -756,7 +764,7 @@ sub interact($$$$@) {
            if ($gimp_10) {
               &new_PF_STRING;
            } else {
-              $a=new Gimp::UI::GradientSelect -active => defined $value ? $value : (Gimp->gradients_get_active)[0];
+              $a=new Gimp::UI::GradientSelect -active => defined $value ? $value : (Gimp->gimp_gradients_get_active)[0];
               push(@setvals,sub{$a->set('active',$_[0])});
               push(@getvals,sub{$a->get('active')});
            }
@@ -772,7 +780,7 @@ sub interact($$$$@) {
            my $s = $a;
            $a = new Gtk::HBox 0,5;
            $a->add ($s);
-           my $b = new Gtk::Button "Browse";
+           my $b = new Gtk::Button __"Browse";
            $a->add ($b);
            my $f = new Gtk::FileSelection $desc;
            $b->signal_connect (clicked => sub { $f->set_filename ($s->get_text); $f->show_all });
@@ -802,14 +810,14 @@ sub interact($$$$@) {
            my $buttons = new Gtk::HBox 1,5;
            $h->add($buttons);
 
-           my $load = new Gtk::Button "Load"; $buttons->add($load);
-           my $save = new Gtk::Button "Save"; $buttons->add($save);
-           my $edit = new Gtk::Button "Edit"; $buttons->add($edit);
+           my $load = new Gtk::Button __"Load"; $buttons->add($load);
+           my $save = new Gtk::Button __"Save"; $buttons->add($save);
+           my $edit = new Gtk::Button __"Edit"; $buttons->add($edit);
 
            $edit->signal_connect(clicked => sub {
               my $editor = $ENV{EDITOR} || "vi";
               my $tmp = Gimp->temp_name("txt");
-              open TMP,">$tmp" or die "FATAL: unable to create $tmp: $!\n"; print TMP &$gv; close TMP;
+              open TMP,">$tmp" or die __"FATAL: unable to create $tmp: $!\n"; print TMP &$gv; close TMP;
               $w->hide;
               main_iteration Gtk;
               system ('xterm','-T',"$editor: $name",'-e',$editor,$tmp);
@@ -817,13 +825,13 @@ sub interact($$$$@) {
               if (open TMP,"<$tmp") {
                  local $/; &$sv(scalar<TMP>); close TMP;
               } else {
-                 Gimp->message("unable to read temporary file $tmp: $!");
+                 Gimp->message(__"unable to read temporary file $tmp: $!");
               }
            });
 
            my $filename = ($e{prefix} || eval { Gimp->directory } || ".") . "/";
            
-           my $f = new Gtk::FileSelection "Fileselector for $name";
+           my $f = new Gtk::FileSelection __"Fileselector for $name";
            $f->set_filename($filename);
            $f->cancel_button->signal_connect (clicked => sub { $f->hide });
            my $lf =sub {
@@ -833,7 +841,7 @@ sub interact($$$$@) {
                  local $/; &$sv(scalar<TMP>);
                  close TMP;
               } else {
-                 Gimp->message("unable to read '$fn': $!");
+                 Gimp->message(__"unable to read '$fn': $!");
               }
            };
            my $sf =sub {
@@ -843,18 +851,18 @@ sub interact($$$$@) {
                  print TMP &$gv;
                  close TMP;
               } else {
-                 Gimp->message("unable to create '$fn': $!");
+                 Gimp->message(__"unable to create '$fn': $!");
               }
            };
            my $lshandle;
            $load->signal_connect (clicked => sub {
-              $f->set_title("Load $name");
+              $f->set_title(__"Load $name");
               $f->ok_button->signal_disconnect($lshandle) if $lshandle;
               $lshandle=$f->ok_button->signal_connect (clicked => $lf);
               $f->show_all;
            });
            $save->signal_connect (clicked => sub {
-              $f->set_title("Save $name");
+              $f->set_title(__"Save $name");
               $f->ok_button->signal_disconnect($lshandle) if $lshandle;
               $lshandle=$f->ok_button->signal_connect (clicked => $sf);
               $f->show_all;
@@ -864,7 +872,7 @@ sub interact($$$$@) {
            push @getvals,$gv;
 
         } else {
-           $label="Unsupported argumenttype $type";
+           $label=__"Unsupported argumenttype $type";
            push(@setvals,sub{});
            push(@getvals,sub{$value});
         }
@@ -883,41 +891,41 @@ sub interact($$$$@) {
         $res++;
      }
      
-     $button = new Gtk::Button "Help";
+     $button = new Gtk::Button __"Help";
      $g->attach($button,0,1,$res,$res+1,{},{},4,2);
      signal_connect $button "clicked", sub { help_window($helpwin,$blurb,$help) };
      
      my $v=new Gtk::HBox 0,5;
      $g->attach($v,1,2,$res,$res+1,{},{},4,2);
      
-     $button = new Gtk::Button "Defaults";
+     $button = new Gtk::Button __"Defaults";
      signal_connect $button "clicked", sub {
        for my $i (0..$#defaults) {
          $setvals[$i]->($defaults[$i]);
        }
      };
-     set_tip $t $button,"Reset all values to their default";
+     set_tip $t $button,__"Reset all values to their default";
      $v->add($button);
      
-     $button = new Gtk::Button "Previous";
+     $button = new Gtk::Button __"Previous";
      signal_connect $button "clicked", sub {
        for my $i (0..$#lastvals) {
          $setvals[$i]->($lastvals[$i]);
        }
      };
      $v->add($button);
-     set_tip $t $button,"Restore values to the previous ones";
+     set_tip $t $button,__"Restore values to the previous ones";
      
      signal_connect $w "destroy", sub {main_quit Gtk};
 
-     $button = new Gtk::Button "OK";
+     $button = new Gtk::Button __"OK";
      signal_connect $button "clicked", sub {$res = 1; hide $w; main_quit Gtk};
      $w->action_area->pack_start($button,1,1,0);
      can_default $button 1;
      grab_default $button;
      add $accel 0xFF0D, [], [], $button, "clicked";
      
-     $button = new Gtk::Button "Cancel";
+     $button = new Gtk::Button __"Cancel";
      signal_connect $button "clicked", sub {hide $w; main_quit Gtk};
      $w->action_area->pack_start($button,1,1,0);
      can_default $button 1;
