@@ -22,13 +22,14 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "image_map.h"
-#include "paint_funcs.h"
 #include "pixel_region.h"
 #include "tile.h"
 #include "tile_manager.h"

@@ -28,6 +28,8 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "brush_scale.h"
 #include "cursorutil.h"
 #include "devices.h"
@@ -39,7 +41,6 @@
 #include "gimpgradient.h"
 #include "gimpimage.h"
 #include "gimprc.h"
-#include "paint_funcs.h"
 #include "pixel_region.h"
 #include "selection.h"
 #include "temp_buf.h"

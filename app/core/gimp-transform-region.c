@@ -27,6 +27,8 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "cursorutil.h"
 #include "drawable.h"
 #include "floating_sel.h"
@@ -41,7 +43,6 @@
 #include "gimpui.h"
 #include "info_dialog.h"
 #include "path_transform.h"
-#include "paint_funcs.h"
 #include "pixel_region.h"
 #include "pixel_surround.h"
 #include "undo.h"

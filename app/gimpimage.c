@@ -27,6 +27,8 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "cursorutil.h"
 #include "drawable.h"
 #include "floating_sel.h"
@@ -42,7 +44,6 @@
 #include "gimprc.h"
 #include "gimpparasite.h"
 #include "gimpundostack.h"
-#include "paint_funcs.h"
 #include "parasitelist.h"
 #include "path.h"
 #include "pixel_region.h"

@@ -22,11 +22,12 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "appenv.h"
 #include "drawable.h"
 #include "desaturate.h"
 #include "gimpimage.h"
-#include "paint_funcs.h"
 #include "pixel_region.h"
 
 #include "libgimp/gimpintl.h"

@@ -29,6 +29,8 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "gimage_mask.h"
 #include "gimpchannel.h"
 #include "gimpdrawable.h"
@@ -38,7 +40,6 @@
 #include "gimplist.h"
 #include "gimppreviewcache.h"
 #include "gimpparasite.h"
-#include "paint_funcs.h"
 #include "parasitelist.h"
 #include "pixel_region.h"
 #include "tile.h"

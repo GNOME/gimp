@@ -27,6 +27,8 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "cursorutil.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
@@ -39,7 +41,6 @@
 #include "path_transform.h"
 #include "pixel_region.h"
 #include "tile_manager.h"
-#include "paint_funcs.h"
 
 #include "gimpfliptool.h"
 #include "tool_manager.h"

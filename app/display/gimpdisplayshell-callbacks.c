@@ -27,6 +27,8 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "tools/gimpbucketfilltool.h"
 #include "tools/gimpfuzzyselecttool.h"
 #include "tools/gimpmovetool.h"
@@ -47,7 +49,6 @@
 #include "gimprc.h"
 #include "info_window.h"
 #include "layer_select.h"
-#include "paint_funcs.h"
 #include "pixel_region.h"
 #include "scale.h"
 #include "scroll.h"

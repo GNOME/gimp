@@ -25,6 +25,15 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
+#include "tools/gimpbycolorselecttool.h"
+#include "tools/gimptool.h"
+#include "tools/gimpdrawtool.h"
+#include "tools/gimppainttool.h"
+#include "tools/gimptransformtool.h"
+#include "tools/tool_manager.h"
+
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
@@ -37,20 +46,12 @@
 #include "gimplayermask.h"
 #include "gimpparasite.h"
 #include "gimprc.h"
-#include "paint_funcs.h"
 #include "parasitelist.h"
 #include "path_transform.h"
 #include "pixel_region.h"
 #include "tile_manager.h"
 #include "tile.h"
 #include "undo.h"
-
-#include "tools/gimpbycolorselecttool.h"
-#include "tools/gimptool.h"
-#include "tools/gimpdrawtool.h"
-#include "tools/gimppainttool.h"
-#include "tools/gimptransformtool.h"
-#include "tools/tool_manager.h"
 
 #include "libgimp/gimpparasite.h"
 

@@ -29,6 +29,8 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "boundary.h"
 #include "drawable.h"
 #include "floating_sel.h"
@@ -38,7 +40,6 @@
 #include "gimplayer.h"
 #include "gimplayermask.h"
 #include "parasitelist.h"
-#include "paint_funcs.h"
 #include "pixel_region.h"
 #include "undo.h"
 #include "temp_buf.h"

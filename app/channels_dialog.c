@@ -27,6 +27,8 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "appenv.h"
 #include "channels_dialog.h"
 #include "color_panel.h"
@@ -43,7 +45,6 @@
 #include "lc_dialogP.h"
 #include "menus.h"
 #include "ops_buttons.h"
-#include "paint_funcs.h"
 #include "temp_buf.h"
 #include "undo.h"
 

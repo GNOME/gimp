@@ -29,8 +29,9 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs.h"
+
 #include "gimprc.h"
-#include "paint_funcs.h"
 #include "pixel_processor.h"
 #include "pixel_region.h"
 #include "tile_manager.h"

@@ -45,13 +45,14 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "cursorutil.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpchannel.h"
 #include "gimpimage.h"
-#include "paint_funcs.h"
 #include "pixel_region.h"
 #include "temp_buf.h"
 #include "scan_convert.h"

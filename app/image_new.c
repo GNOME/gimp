@@ -24,6 +24,8 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "appenv.h"
 #include "drawable.h"
 #include "file_new_dialog.h"
@@ -33,7 +35,6 @@
 #include "gimplayer.h"
 #include "gimprc.h"
 #include "image_new.h"
-#include "paint_funcs.h"
 #include "tile_manager.h"
 
 #include "libgimp/gimpparasite.h"

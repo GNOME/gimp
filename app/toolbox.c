@@ -26,6 +26,8 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "tools/gimptoolinfo.h"
 #include "tools/tool_options_dialog.h"
 #include "tools/tool_manager.h"
@@ -45,7 +47,6 @@
 #include "gtkhwrapbox.h"
 #include "indicator_area.h"
 #include "menus.h"
-#include "paint_funcs.h"
 #include "session.h"
 #include "pixel_region.h"
 #include "tile_manager.h"

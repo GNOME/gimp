@@ -28,6 +28,8 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "appenv.h"
 #include "colormaps.h"
 #include "drawable.h"
@@ -47,7 +49,6 @@
 #include "lc_dialogP.h"
 #include "menus.h"
 #include "ops_buttons.h"
-#include "paint_funcs.h"
 #include "resize.h"
 #include "temp_buf.h"
 #include "undo.h"

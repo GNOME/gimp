@@ -22,6 +22,8 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "tools/gimptool.h"
 #include "tools/gimppainttool.h"
 #include "tools/paint_options.h"
@@ -37,7 +39,6 @@
 #include "gimplayer.h"
 #include "gimplayermask.h"
 #include "gimprc.h"
-#include "paint_funcs.h"
 #include "pixel_region.h"
 #include "tile_manager.h"
 #include "undo.h"

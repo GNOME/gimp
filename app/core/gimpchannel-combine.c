@@ -28,7 +28,8 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
+#include "paint-funcs/paint-funcs.h"
+
 #include "boundary.h"
 #include "drawable.h"
 #include "gimpimage.h"
@@ -36,7 +37,6 @@
 #include "gimpchannel.h"
 #include "gimplayer.h"
 #include "gimplut.h"
-#include "paint_funcs.h"
 #include "parasitelist.h"
 #include "pixel_processor.h"
 #include "pixel_region.h"

@@ -26,12 +26,13 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage.h"
 #include "gimplut.h"
 #include "gimpcontext.h"
-#include "paint_funcs.h"
 #include "pixel_region.h"
 #include "selection.h"
 #include "temp_buf.h"
@@ -45,6 +46,7 @@
 #include "pixmaps2.h"
 
 #include "libgimp/gimpintl.h"
+
 
 /*  Default values  */
 

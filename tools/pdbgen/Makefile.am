@@ -57,8 +57,8 @@ enum_headers = \
 	../../app/errors.h			\
 	../../app/gimpimage.h			\
 	../../app/lut_funcs.h			\
-	../../app/paint_funcs.h			\
 	../../app/plug_in.h			\
+	../../app/paint-funcs/paint-funcs.h	\
 	../../app/tools/gimpblendtool.h		\
 	../../app/tools/gimpbucketfilltool.h	\
 	../../app/tools/gimpclonetool.h		\

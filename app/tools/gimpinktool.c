@@ -28,6 +28,8 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "cursorutil.h"
 #include "drawable.h"
 #include "gimage_mask.h"
@@ -36,7 +38,6 @@
 #include "gimprc.h"
 #include "undo.h"
 #include "gdisplay.h"
-#include "paint_funcs.h"
 #include "pixel_region.h"
 #include "temp_buf.h"
 #include "tile.h"

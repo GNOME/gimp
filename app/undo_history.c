@@ -49,12 +49,13 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "dialog_handler.h"
 #include "gimage_mask.h"
 #include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimprc.h"
-#include "paint_funcs.h"
 #include "pixel_region.h"
 #include "temp_buf.h"
 #include "undo.h"

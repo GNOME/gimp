@@ -26,13 +26,14 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "gimpchannel.h"
 #include "gimpimage.h"
 #include "gimpdrawable.h"
 #include "gimpdrawablepreview.h"
 #include "gimplayer.h"
 #include "gimppreviewcache.h"
-#include "paint_funcs.h"
 #include "pixel_region.h"
 #include "temp_buf.h"
 #include "tile_manager.h"

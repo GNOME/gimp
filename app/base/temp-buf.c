@@ -38,12 +38,14 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "gimpimage.h"
 #include "gimprc.h"
-#include "paint_funcs.h"
 #include "pixel_region.h"
 #include "temp_buf.h"
 #include "image_render.h"
+
 
 static guchar * temp_buf_allocate (guint);
 static void     temp_buf_to_color (TempBuf *src_buf,

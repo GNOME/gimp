@@ -35,6 +35,8 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "drawable.h"
 #include "errors.h"
 #include "floating_sel.h"
@@ -45,7 +47,6 @@
 #include "gimplayer.h"
 #include "gimpui.h"
 #include "global_edit.h"
-#include "paint_funcs.h"
 #include "pixel_region.h"
 #include "plug_in.h"
 #include "selection.h"

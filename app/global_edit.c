@@ -26,6 +26,8 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "tools/gimptool.h"
 #include "tools/tool_manager.h"
 
@@ -39,7 +41,6 @@
 #include "gimplayermask.h"
 #include "global_edit.h"
 #include "image_new.h"
-#include "paint_funcs.h"
 #include "pixel_region.h"
 #include "tile_manager.h"
 #include "undo.h"

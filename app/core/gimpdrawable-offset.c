@@ -28,6 +28,8 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "apptypes.h"
 #include "channel_ops.h"
 #include "cursorutil.h"
@@ -39,7 +41,6 @@
 #include "gimpcontext.h"
 #include "gimplayer.h"
 #include "gimplist.h"
-#include "paint_funcs.h"
 #include "parasitelist.h"
 #include "path.h"
 #include "pixel_region.h"

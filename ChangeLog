@@ -1,3 +1,47 @@
+2001-04-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint_funcs.c
+	* app/paint_funcs.h
+	* app/paint_funcs_simd.S: removed the old files.
+
+	* tools/pdbgen/Makefile.am
+	* app/app_procs.c
+	* app/channel_ops.c
+	* app/channels_dialog.c
+	* app/desaturate.c
+	* app/disp_callbacks.c
+	* app/floating_sel.c
+	* app/gimage.c
+	* app/gimage_mask.c
+	* app/gimpchannel.c
+	* app/gimpdrawable-preview.c
+	* app/gimpdrawable.c
+	* app/gimpimage.c
+	* app/gimplayer.c
+	* app/gimplayermask.c
+	* app/global_edit.c
+	* app/image_map.c
+	* app/image_new.c
+	* app/layers_dialog.c
+	* app/temp_buf.c
+	* app/toolbox.c
+	* app/undo.c
+	* app/undo_history.c
+	* app/paint-funcs/paint-funcs.c
+	* app/tools/gimpairbrushtool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimppaintbrushtool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimppenciltool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimptransformtool.c: changed accordingly.
+
 2001-04-07  Simon Budig  <simon@gimp.org>
 
 	* app/Makefile.am

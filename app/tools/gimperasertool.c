@@ -25,13 +25,14 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "cursorutil.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
-#include "paint_funcs.h"
 #include "selection.h"
 #include "temp_buf.h"
 

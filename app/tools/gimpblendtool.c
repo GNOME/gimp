@@ -28,6 +28,8 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
 #include "appenv.h"
 #include "asupsample.h"
 #include "cursorutil.h"
@@ -40,7 +42,6 @@
 #include "gimpdnd.h"
 #include "gimpgradient.h"
 #include "gimpprogress.h"
-#include "paint_funcs.h"
 #include "pixel_region.h"
 #include "selection.h"
 #include "undo.h"

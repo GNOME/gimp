@@ -44,6 +44,15 @@
 
 #include "apptypes.h"
 
+#include "paint-funcs/paint-funcs.h"
+
+#include "pdb/internal_procs.h"
+
+#include "tools/curves.h"
+#include "tools/hue_saturation.h"
+#include "tools/levels.h"
+#include "tools/tool_options_dialog.h"
+
 #include "appenv.h"
 #include "app_procs.h"
 #include "batch.h"
@@ -68,7 +77,6 @@
 #include "image_render.h"
 #include "lc_dialog.h"
 #include "menus.h"
-#include "paint_funcs.h"
 #include "palette.h"
 #include "pattern_select.h"
 #include "plug_in.h"
@@ -92,13 +100,6 @@
 #include "color_notebook.h"
 #include "color_select.h"
 #include "gimpparasite.h"
-
-#include "tools/curves.h"
-#include "tools/hue_saturation.h"
-#include "tools/levels.h"
-#include "tools/tool_options_dialog.h"
-
-#include "pdb/internal_procs.h"
 
 #include "libgimp/gimplimits.h"
 #include "libgimp/gimpfeatures.h"
