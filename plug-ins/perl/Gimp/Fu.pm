@@ -171,8 +171,11 @@ sub interact($$$@) {
      $w = new Gtk::Dialog;
      set_title $w "$0";
      
-     ($g = new Gtk::Label wrap_text($blurb,40))->show;
-     $w->vbox->pack_start($g,1,1,0);
+     (my $h = new Gtk::HBox 0,2)->show;
+     $h->add(new Gtk::Label wrap_text($blurb,40))->show;
+     (my $p = new Gtk::Button "Help")->show;
+     $h->add($p);
+     $w->vbox->pack_start($h,1,1,0);
      
      ($g = new Gtk::Table scalar@types,2,0)->show;
      $g->border_width(4);
@@ -916,6 +919,13 @@ EOF
       Gimp::main;
    }
 };
+
+sub logo {
+   new Gtk::Pixmap(Gtk::Gdk::Pixmap->create_from_xpm_d($_[0]->window,$_[0]->style->black,
+      #%XPM:logo%
+      #%XPM%
+   ))
+}
 
 1;
 __END__
