@@ -247,8 +247,8 @@ gimp_stroke_editor_new (GimpStrokeOptions *options,
 {
   g_return_val_if_fail (GIMP_IS_STROKE_OPTIONS (options), NULL);
 
-  return GTK_WIDGET (g_object_new (GIMP_TYPE_STROKE_EDITOR,
-                                   "options",    options,
-                                   "resolution", resolution,
-                                   NULL));
+  return g_object_new (GIMP_TYPE_STROKE_EDITOR,
+                       "options",    options,
+                       "resolution", resolution,
+                       NULL);
 }

@@ -345,9 +345,9 @@ gimp_grid_editor_new (GimpGrid *grid,
 {
   g_return_val_if_fail (GIMP_IS_GRID (grid), NULL);
 
-  return GTK_WIDGET (g_object_new (GIMP_TYPE_GRID_EDITOR,
-                                   "grid",        grid,
-                                   "xresolution", xresolution,
-                                   "yresolution", yresolution,
-                                   NULL));
+  return g_object_new (GIMP_TYPE_GRID_EDITOR,
+                       "grid",        grid,
+                       "xresolution", xresolution,
+                       "yresolution", yresolution,
+                       NULL);
 }

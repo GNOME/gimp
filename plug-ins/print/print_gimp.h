@@ -29,11 +29,6 @@
 #ifndef __PRINT_GIMP_H__
 #define __PRINT_GIMP_H__
 
-#ifdef __GNUC__
-#define inline __inline__
-#endif
-
-
 /*
  * All Gimp-specific code is in this file.
  */

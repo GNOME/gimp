@@ -1,5 +1,13 @@
 2003-11-01  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/print/print_gimp.h: don't try to define inline, glib
+	does it for us.
+
+	* app/widgets/gimpgrideditor.c
+	* app/widgets/gimpstrokeeditor.c: remove unnecessary GTK_WIDGET casts.
+
+2003-11-01  Manish Singh  <yosh@gimp.org>
+
 	* configure.in: Only add FOO_DISABLE_DEPRECATED flags with GTK+ 2.2.x.
 	Add -DGDK_MULTIHEAD_SAFE.
 
