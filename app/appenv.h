@@ -18,37 +18,31 @@
 #ifndef __APPENV_H__
 #define __APPENV_H__
 
-#include "glib.h"
+#include <gtk/gtk.h>
 
-#include "gtk/gtk.h"
 #include "gimpsetF.h"
-#include "colormap_dialog.t.h"
 
-/*   important macros - we reuse the ones from glib */
-#define BOUNDS(a,x,y)  CLAMP(a,x,y)
-#define MINIMUM(x,y)   MIN(x,y)
-#define MAXIMUM(x,y)   MAX(x,y)
-
-typedef enum {
+typedef enum
+{
   MESSAGE_BOX,
   CONSOLE,
   ERROR_CONSOLE
 } MessageHandlerType;
 
-extern int no_interface;
-extern int no_splash;
-extern int no_splash_image;
-extern int no_data;
-extern int be_verbose;
-extern int use_debug_handler;
-extern int console_messages;
-extern int restore_session;
-extern int we_are_exiting;       /* this is used in session_get_window_info() */
-extern GimpSet* image_context;
+extern gint no_interface;
+extern gint no_splash;
+extern gint no_splash_image;
+extern gint no_data;
+extern gint be_verbose;
+extern gint use_debug_handler;
+extern gint console_messages;
+extern gint restore_session;
+extern gint we_are_exiting;      /* this is used in session_get_window_info() */
+extern GimpSet *image_context;
 extern MessageHandlerType message_handler;
 
 #ifdef G_OS_WIN32
-char *quote_spaces (char *string);
+gchar * quote_spaces (gchar *string);
 #endif
 
-#endif /*  APPENV_H  */
+#endif /*  __APPENV_H__  */
