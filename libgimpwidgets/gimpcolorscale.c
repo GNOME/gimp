@@ -45,6 +45,7 @@ static gboolean gimp_color_scale_expose        (GtkWidget        *widget,
                                                 GdkEventExpose   *event);
 
 static void     gimp_color_scale_render        (GimpColorScale   *scale);
+static void     gimp_color_scale_render_alpha  (GimpColorScale   *scale);
 
 
 static GtkScaleClass * parent_class = NULL;
@@ -322,33 +323,41 @@ gimp_color_scale_expose (GtkWidget      *widget,
 
   if (gdk_rectangle_intersect (&event->area, &area, &expose_area))
     {
+      gdk_gc_set_clip_rectangle (widget->style->black_gc, &expose_area);
       switch (range->orientation)
         {
         case GTK_ORIENTATION_HORIZONTAL:
-          gdk_gc_set_clip_rectangle (widget->style->black_gc, &expose_area);
-
           for (w = area.width, x = area.x, y = area.y;
                w > 0; w -= 2, x++, y++)
             gdk_draw_line (widget->window, widget->style->black_gc,
                            x, y, x + w - 1, y);
-
-          gdk_gc_set_clip_rectangle (widget->style->black_gc, NULL);
+          break;
+        case GTK_ORIENTATION_VERTICAL:
+          for (h = area.height, x = area.x, y = area.y;
+               h > 0; h -= 2, x++, y++)
+            gdk_draw_line (widget->window, widget->style->black_gc,
+                           x, y, x, y + h - 1);
+          break;
+        }
+      gdk_gc_set_clip_rectangle (widget->style->black_gc, NULL);
           
-          gdk_gc_set_clip_rectangle (widget->style->white_gc, &expose_area);
-
+      gdk_gc_set_clip_rectangle (widget->style->white_gc, &expose_area);
+      switch (range->orientation)
+        {
+        case GTK_ORIENTATION_HORIZONTAL:      
           for (w = area.width, x = area.x, y = area.y + area.height - 1;
                w > 0; w -= 2, x++, y--)
             gdk_draw_line (widget->window, widget->style->white_gc,
                            x, y, x + w - 1, y);
-
-          gdk_gc_set_clip_rectangle (widget->style->white_gc, NULL);
-
           break;
-
         case GTK_ORIENTATION_VERTICAL:
-          /* FIXME: unimplemented */
+          for (h = area.height, x = area.x + area.width - 1, y = area.y;
+               h > 0; h -= 2, x++, y++)
+            gdk_draw_line (widget->window, widget->style->black_gc,
+                           x, y, x, y + h - 1);
           break;
         }
+      gdk_gc_set_clip_rectangle (widget->style->white_gc, NULL);
     }
 
   return FALSE;
@@ -414,9 +423,16 @@ gimp_color_scale_render (GimpColorScale *scale)
   gboolean  to_rgb        = FALSE;
   guchar   *buf;
   guchar   *d;
+  guchar    r, g, b;
 
   if ((buf = scale->buf) == NULL)
     return;
+
+  if (scale->channel == GIMP_COLOR_SELECTOR_ALPHA)
+    {
+      gimp_color_scale_render_alpha (scale);
+      return;
+    }
 
   rgb = scale->rgb;
   hsv = scale->hsv;
@@ -444,8 +460,9 @@ gimp_color_scale_render (GimpColorScale *scale)
       break;
     }
 
-  if (GTK_RANGE (scale)->orientation == GTK_ORIENTATION_HORIZONTAL)
+  switch (GTK_RANGE (scale)->orientation)
     {
+    case GTK_ORIENTATION_HORIZONTAL:
       d = buf;
 
       for (x = 0; x < scale->width; x++)
@@ -466,17 +483,15 @@ gimp_color_scale_render (GimpColorScale *scale)
           memcpy (d, buf, scale->rowstride);
           d += scale->rowstride;
         }
-    }
-  else
-    {
-      guchar r, g, b;
+      break;
 
+    case GTK_ORIENTATION_VERTICAL:
       for (y = 0; y < scale->height; y++)
         {
           d = buf;
-
+          
           *channel_value = (gdouble) y / (gdouble) (scale->height - 1);
-
+          
           if (to_rgb)
             gimp_hsv_to_rgb (&hsv, &rgb);
 
@@ -491,5 +506,117 @@ gimp_color_scale_render (GimpColorScale *scale)
 
           buf += scale->rowstride;
         }
+      break;
+    }
+}
+
+static void
+gimp_color_scale_render_alpha (GimpColorScale *scale)
+{
+  GimpRGB  rgb;
+  gdouble  a;
+  guint    x, y;
+  guchar  *buf;
+  guchar  *d, *l;
+
+  buf = scale->buf;
+  rgb = scale->rgb;
+
+  switch (GTK_RANGE (scale)->orientation)
+    {
+    case GTK_ORIENTATION_HORIZONTAL:
+      {
+        guchar  *light;
+        guchar  *dark;
+
+        light = buf;
+        /* this won't work correctly for very thin scales */
+        dark  = (scale->height > GIMP_CHECK_SIZE_SM ?
+                 buf + GIMP_CHECK_SIZE_SM * scale->rowstride : light);
+      
+        for (x = 0, d = light, l = dark; x < scale->width; x++)
+          {
+            if ((x % GIMP_CHECK_SIZE_SM) == 0)
+              {
+                guchar *t;
+                
+                t = d;
+                d = l;
+                l = t;
+              }
+            
+            a = (gdouble) x / (gdouble) (scale->width - 1);
+            
+            l[0] = (GIMP_CHECK_LIGHT +
+                    (rgb.r - GIMP_CHECK_LIGHT) * a) * 255.999;
+            l[1] = (GIMP_CHECK_LIGHT +
+                    (rgb.g - GIMP_CHECK_LIGHT) * a) * 255.999;
+            l[2] = (GIMP_CHECK_LIGHT +
+                    (rgb.b - GIMP_CHECK_LIGHT) * a) * 255.999;
+            l += 3;
+          
+            d[0] = (GIMP_CHECK_DARK +
+                    (rgb.r - GIMP_CHECK_DARK) * a) * 255.999;
+            d[1] = (GIMP_CHECK_DARK +
+                    (rgb.g - GIMP_CHECK_DARK) * a) * 255.999;
+            d[2] = (GIMP_CHECK_DARK +
+                    (rgb.b - GIMP_CHECK_DARK) * a) * 255.999;
+            d += 3;
+          }
+
+        for (y = 0, d = buf; y < scale->height; y++, d += scale->rowstride)
+          {
+            if (y == 0 || y == GIMP_CHECK_SIZE_SM)
+              continue;
+            
+            if ((y / GIMP_CHECK_SIZE_SM) & 1)
+              memcpy (d, dark, scale->rowstride);
+            else
+              memcpy (d, light, scale->rowstride);
+          }
+      }
+      break;
+      
+    case GTK_ORIENTATION_VERTICAL:
+      {
+        guchar  light[3];
+        guchar  dark[3];
+
+        for (y = 0, d = buf; y < scale->height; y++, d += scale->rowstride)
+          {
+            a = (gdouble) y / (gdouble) (scale->height - 1);
+            
+            light[0] = (GIMP_CHECK_LIGHT +
+                        (rgb.r - GIMP_CHECK_LIGHT) * a) * 255.999;
+            light[1] = (GIMP_CHECK_LIGHT +
+                        (rgb.g - GIMP_CHECK_LIGHT) * a) * 255.999;
+            light[2] = (GIMP_CHECK_LIGHT +
+                        (rgb.b - GIMP_CHECK_LIGHT) * a) * 255.999;
+
+            dark[0] = (GIMP_CHECK_DARK +
+                       (rgb.r - GIMP_CHECK_DARK) * a) * 255.999;
+            dark[1] = (GIMP_CHECK_DARK +
+                       (rgb.g - GIMP_CHECK_DARK) * a) * 255.999;
+            dark[2] = (GIMP_CHECK_DARK +
+                       (rgb.b - GIMP_CHECK_DARK) * a) * 255.999;
+
+            for (x = 0, l = d; x < scale->width; x++, l += 3)
+              {
+                if (((x / GIMP_CHECK_SIZE_SM) ^ (y / GIMP_CHECK_SIZE_SM)) & 1)
+                  {
+                    l[0] = light[0];
+                    l[1] = light[1];
+                    l[2] = light[2];
+                  }
+                else
+                  {
+                    l[0] = dark[0];
+                    l[1] = dark[1];
+                    l[2] = dark[2];
+                  }
+              }
+          }
+      }
+      break;
     }
 }

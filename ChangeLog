@@ -1,3 +1,8 @@
+2002-10-31  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpcolorscale.c: added the missing bits for
+	channel == GIMP_COLOR_SELECTOR_ALPHA and for vertical orientation.
+
 2002-10-30  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/Makefile.am: install gimpcolorscale.h.
