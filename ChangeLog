@@ -1,5 +1,18 @@
 2004-08-31  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/script-fu-scripts.[ch]: removed the GUI code...
+	Also did some minor cleanups.
+
+	* plug-ins/script-fu/script-fu-interface.[ch]: ...and added it here.
+
+	* plug-ins/script-fu/script-fu-types.h: new file keeping the
+	various struct defs needed by both the above files.
+
+	* plug-ins/script-fu/Makefile.am
+	* plug-ins/script-fu/siod-wrapper.c: changed accordingly.
+
+2004-08-31  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimppreview.c (gimp_preview_toggle_callback):
 	notify the "update" property on the preview, not the toggle.
 

@@ -20,15 +20,17 @@
 
 #include <string.h> /* memcpy, strcpy, strlen */
 
-#include <glib.h>
+#include <gtk/gtk.h>
 
 #include "libgimp/gimp.h"
 
 #include "siod/siod.h"
 
+#include "script-fu-types.h"
+
 #include "script-fu-constants.h"
 #include "script-fu-console.h"
-#include "script-fu-enums.h"
+#include "script-fu-interface.h"
 #include "script-fu-scripts.h"
 #include "script-fu-server.h"
 
@@ -480,7 +482,7 @@ marshall_proc_db_call (LISP a)
     proc_name = get_c_string (a);
 
   /*  report the current command  */
-  script_fu_report_cc (proc_name);
+  script_fu_interface_report_cc (proc_name);
 
   /*  Attempt to fetch the procedure from the database  */
   if (! gimp_procedural_db_proc_info (proc_name,

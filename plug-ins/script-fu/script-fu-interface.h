@@ -16,13 +16,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __SCRIPT_FU_SCRIPTS_H__
-#define __SCRIPT_FU_SCRIPTS_H__
+#ifndef __SCRIPT_FU_INTERFACE_H__
+#define __SCRIPT_FU_INTERFACE_H__
 
 
-void  script_fu_find_scripts  (void);
-LISP  script_fu_add_script    (LISP         a);
-void  script_fu_error_msg     (const gchar *command);
+void  script_fu_interface           (SFScript *script);
+void  script_fu_interface_report_cc (gchar    *command);
 
 
-#endif /*  __SCRIPT_FU_SCRIPTS__  */
+#endif /*  __SCRIPT_FU_INTERFACE_H__  */

@@ -22,6 +22,8 @@ script_fu_SOURCES = \
 	script-fu.c			\
 	script-fu-console.c		\
 	script-fu-console.h		\
+	script-fu-interface.c		\
+	script-fu-interface.h		\
 	script-fu-text-console.h	\
 	script-fu-text-console.c	\
 	script-fu-constants.c		\
@@ -31,6 +33,7 @@ script_fu_SOURCES = \
 	script-fu-scripts.h		\
 	script-fu-server.c		\
 	script-fu-server.h		\
+	script-fu-types.h		\
 	script-fu-enums.h		\
 	siod-wrapper.c			\
 	siod-wrapper.h
