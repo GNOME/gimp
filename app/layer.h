@@ -101,29 +101,30 @@ void            layer_resize (Layer *, int, int, int, int);
 BoundSeg *      layer_boundary (Layer *, int *);
 void            layer_invalidate_boundary (Layer *);
 int             layer_pick_correlate (Layer *, int, int);
-LayerMask *     layer_mask_new	(GimpImage*, int, int, char *, 
-				 int, unsigned char *);
-LayerMask *	layer_mask_copy	(LayerMask *);
-void		layer_mask_delete	(LayerMask *);
+
+LayerMask *     layer_mask_new	     (GimpImage*, int, int, char *, 
+				      int, unsigned char *);
+LayerMask *	layer_mask_copy	     (LayerMask *);
+void		layer_mask_delete    (LayerMask *);
 LayerMask *	layer_mask_get_ID    (int);
-LayerMask *	layer_mask_ref (LayerMask *);
-void   		layer_mask_unref (LayerMask *);
+LayerMask *	layer_mask_ref       (LayerMask *);
+void   		layer_mask_unref     (LayerMask *);
+Layer *         layer_mask_get_layer (LayerMask *);
 
 /* access functions */
 
-
-void            layer_set_name (Layer *, char *);
-char *          layer_get_name (Layer *);
-unsigned char * layer_data (Layer *);
-LayerMask *     layer_get_mask (Layer *);
-int             layer_has_alpha (Layer *);
+void            layer_set_name        (Layer *, char *);
+char *          layer_get_name        (Layer *);
+unsigned char * layer_data            (Layer *);
+LayerMask *     layer_get_mask        (Layer *);
+int             layer_has_alpha       (Layer *);
 int             layer_is_floating_sel (Layer *);
-int		layer_linked (Layer *);
-TempBuf *       layer_preview (Layer *, int, int);
-TempBuf *       layer_mask_preview (Layer *, int, int);
+int		layer_linked          (Layer *);
+TempBuf *       layer_preview         (Layer *, int, int);
+TempBuf *       layer_mask_preview    (Layer *, int, int);
 
-void            layer_invalidate_previews  (GimpImage*);
-Tattoo          layer_get_tattoo(const Layer *);
+void            layer_invalidate_previews (GimpImage*);
+Tattoo          layer_get_tattoo (const Layer *);
 
 
 #define drawable_layer GIMP_IS_LAYER

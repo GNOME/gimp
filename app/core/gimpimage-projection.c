@@ -2125,7 +2125,6 @@ gimp_image_raise_layer (GimpImage *gimage,
   return NULL;
 }
 
-
 Layer *
 gimp_image_lower_layer (GimpImage *gimage, 
 			Layer     *layer_arg)
@@ -3043,7 +3042,7 @@ gimp_image_raise_channel (GimpImage *gimage,
   Channel *prev_channel;
   GSList *list;
   GSList *prev;
-  int index = -1;
+  gint index = -1;
 
   list = gimage->channels;
   prev = NULL;
@@ -3061,7 +3060,10 @@ gimp_image_raise_channel (GimpImage *gimage,
 	    {
 	      list->data = prev_channel;
 	      prev->data = channel;
-	      drawable_update (GIMP_DRAWABLE(channel), 0, 0, drawable_width (GIMP_DRAWABLE(channel)), drawable_height (GIMP_DRAWABLE(channel)));
+	      drawable_update (GIMP_DRAWABLE (channel),
+			       0, 0,
+			       drawable_width  (GIMP_DRAWABLE (channel)),
+			       drawable_height (GIMP_DRAWABLE (channel)));
 	      return prev_channel;
 	    }
 	  else
@@ -3088,7 +3090,7 @@ gimp_image_lower_channel (GimpImage *gimage,
   Channel *next_channel;
   GSList *list;
   GSList *next;
-  int index = 0;
+  gint index = 0;
 
   list = gimage->channels;
   next_channel = NULL;
@@ -3108,8 +3110,10 @@ gimp_image_lower_channel (GimpImage *gimage,
 	    {
 	      list->data = next_channel;
 	      next->data = channel;
-	      drawable_update (GIMP_DRAWABLE(channel), 0, 0, drawable_width (GIMP_DRAWABLE(channel)), drawable_height (GIMP_DRAWABLE(channel)));
-
+	      drawable_update (GIMP_DRAWABLE (channel),
+			       0, 0,
+			       drawable_width  (GIMP_DRAWABLE (channel)),
+			       drawable_height (GIMP_DRAWABLE (channel)));
 	      return next_channel;
 	    }
 	  else
@@ -3123,6 +3127,62 @@ gimp_image_lower_channel (GimpImage *gimage,
     }
 
   return NULL;
+}
+
+
+Channel *
+gimp_image_position_channel (GimpImage *gimage, 
+			     Channel   *channel_arg,
+			     gint       new_index)
+{
+  Channel *channel;
+  GSList *list;
+  GSList *next;
+  gint index;
+  gint list_length;
+
+  list = gimage->channels;
+  list_length = g_slist_length (list);
+
+  next    = NULL;
+  channel = NULL;
+  index   = 0;
+
+  /* find channel_arg */
+  while (list)
+    {
+      channel = (Channel *) list->data;
+      if (channel == channel_arg)
+	{
+	  break;
+	}
+      list = g_slist_next (list);
+      index++;
+    }
+
+  if (channel != channel_arg)
+    {
+      /* The requested channel was not found in the channel stack
+       * Return without changing anything
+       */
+      return NULL;
+    }
+
+  if (new_index < 0)
+    new_index = 0;
+
+  if (new_index >= list_length)
+    new_index = list_length - 1;
+
+  list = g_slist_remove (gimage->channels, channel);
+  gimage->channels = g_slist_insert (list, channel, new_index);
+
+  drawable_update (GIMP_DRAWABLE (channel),
+		   0, 0,
+		   drawable_width  (GIMP_DRAWABLE (channel)),
+		   drawable_height (GIMP_DRAWABLE (channel)));
+
+  return channel;
 }
 
 

@@ -198,6 +198,7 @@ LayerMask *     gimp_image_add_layer_mask         (GimpImage *, Layer *, LayerMa
 Channel *       gimp_image_remove_layer_mask      (GimpImage *, Layer *, int);
 Channel *       gimp_image_raise_channel          (GimpImage *, Channel *);
 Channel *       gimp_image_lower_channel          (GimpImage *, Channel *);
+Channel *       gimp_image_position_channel       (GimpImage *, Channel *, gint);
 Channel *       gimp_image_add_channel            (GimpImage *, Channel *, int);
 Channel *       gimp_image_remove_channel         (GimpImage *, Channel *);
 void            gimp_image_construct              (GimpImage *, int, int, int, int, gboolean);

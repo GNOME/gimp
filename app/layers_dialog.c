@@ -106,13 +106,6 @@ struct _LayersDialog
   GSList    *layer_widgets;
 };
 
-typedef enum
-{
-  LAYER_DROP_NONE,
-  LAYER_DROP_ABOVE,
-  LAYER_DROP_BELOW
-} LayerDropType;
-
 typedef struct _LayerWidget LayerWidget;
 
 struct _LayerWidget
@@ -139,7 +132,7 @@ struct _LayerWidget
   gboolean  show_mask;
   gboolean  visited;
 
-  LayerDropType drop_type;
+  GimpDropType drop_type;
 };
 
 /*  layers dialog widget routines  */
@@ -184,14 +177,16 @@ static gboolean layer_widget_drag_motion_callback (GtkWidget *,
 static gboolean layer_widget_drag_drop_callback   (GtkWidget *,
 						   GdkDragContext *,
 						   gint, gint, guint);
-static void layer_widget_drag_begin_callback   (GtkWidget *,
-						GdkDragContext *);
+static void layer_widget_drag_begin_callback      (GtkWidget *,
+						   GdkDragContext *);
+static void layer_mask_drag_begin_callback        (GtkWidget *,
+						   GdkDragContext *);
 static void layer_widget_drag_leave_callback      (GtkWidget *,
 						   GdkDragContext *,
 						   guint);
 static void layer_widget_drag_indicator_callback  (GtkWidget *, gpointer);
 
-static void layer_widget_draw_drop_indicator (LayerWidget *, LayerDropType);
+static void layer_widget_draw_drop_indicator (LayerWidget *, GimpDropType);
 static void layer_widget_delete              (LayerWidget *);
 static void layer_widget_select_update       (GtkWidget *, gpointer);
 static gint layer_widget_button_events       (GtkWidget *, GdkEvent *);
@@ -299,9 +294,15 @@ static GtkTargetEntry layer_target_table[] =
 {
   GIMP_TARGET_LAYER
 };
+static guint n_layer_targets = (sizeof (layer_target_table) /
+				sizeof (layer_target_table[0]));
 
-static guint n_targets = (sizeof (layer_target_table) /
-			  sizeof (layer_target_table[0]));
+static GtkTargetEntry layer_mask_target_table[] =
+{
+  GIMP_TARGET_LAYER_MASK
+};
+static guint n_layer_mask_targets = (sizeof (layer_mask_target_table) /
+				     sizeof (layer_mask_target_table[0]));
 
 
 /************************************/
@@ -420,28 +421,28 @@ layers_dialog_create ()
   gtk_box_pack_start (GTK_BOX (vbox), button_box, FALSE, FALSE, 2);
   gtk_widget_show (button_box);
 
-  /*  drop to new  */
+  /*  Drop to new  */
   gtk_drag_dest_set (layers_ops_buttons[0].widget,
 		     GTK_DEST_DEFAULT_ALL,
-                     layer_target_table, n_targets,
+                     layer_target_table, n_layer_targets,
                      GDK_ACTION_COPY);
   gtk_signal_connect (GTK_OBJECT (layers_ops_buttons[0].widget), "drag_drop",
                       GTK_SIGNAL_FUNC (layers_dialog_drag_new_layer_callback),
 		      NULL);
 
-  /*  drop to duplicate  */
+  /*  Drop to duplicate  */
   gtk_drag_dest_set (layers_ops_buttons[3].widget,
 		     GTK_DEST_DEFAULT_ALL,
-                     layer_target_table, n_targets,
+                     layer_target_table, n_layer_targets,
                      GDK_ACTION_COPY);
   gtk_signal_connect (GTK_OBJECT (layers_ops_buttons[3].widget), "drag_drop",
                       GTK_SIGNAL_FUNC (layers_dialog_drag_duplicate_layer_callback),
 		      NULL);
 
-  /*  drop to trahcan  */
+  /*  Drop to trahcan  */
   gtk_drag_dest_set (layers_ops_buttons[5].widget,
 		     GTK_DEST_DEFAULT_ALL,
-                     layer_target_table, n_targets,
+                     layer_target_table, n_layer_targets,
                      GDK_ACTION_COPY);
   gtk_signal_connect (GTK_OBJECT (layers_ops_buttons[5].widget), "drag_drop",
                       GTK_SIGNAL_FUNC (layers_dialog_drag_delete_layer_callback),
@@ -1897,7 +1898,7 @@ layer_widget_create (GImage *gimage,
   layer_widget->edit_mask     = layer->edit_mask;
   layer_widget->show_mask     = layer->show_mask;
   layer_widget->visited       = TRUE;
-  layer_widget->drop_type     = LAYER_DROP_NONE;
+  layer_widget->drop_type     = GIMP_DROP_NONE;
 
   if (layer->mask)
     layer_widget->active_preview = (layer->edit_mask) ? MASK_PREVIEW : LAYER_PREVIEW;
@@ -1982,6 +1983,19 @@ layer_widget_create (GImage *gimage,
   if (layer->mask != NULL)
     gtk_widget_show (layer_widget->mask_preview);
 
+  /*  dnd source  */
+  gtk_drag_source_set (layer_widget->mask_preview,
+		       GDK_BUTTON1_MASK,
+                       layer_mask_target_table, n_layer_mask_targets, 
+                       GDK_ACTION_MOVE | GDK_ACTION_COPY);
+
+  gtk_signal_connect (GTK_OBJECT (layer_widget->mask_preview), "drag_begin",
+                      GTK_SIGNAL_FUNC (layer_mask_drag_begin_callback),
+		      NULL);
+
+  gtk_object_set_data (GTK_OBJECT (layer_widget->mask_preview),
+		       "gimp_layer_mask", (gpointer) layer);
+
   /*  the layer name label */
   if (layer_is_floating_sel (layer))
     layer_widget->label = gtk_label_new (_("Floating Selection"));
@@ -2004,7 +2018,7 @@ layer_widget_create (GImage *gimage,
   /*  dnd destination  */
   gtk_drag_dest_set (list_item,
 		     GTK_DEST_DEFAULT_ALL,
-                     layer_target_table, n_targets,
+                     layer_target_table, n_layer_targets,
                      GDK_ACTION_MOVE);
 
   gtk_signal_connect (GTK_OBJECT (list_item), "drag_leave",
@@ -2016,9 +2030,6 @@ layer_widget_create (GImage *gimage,
   gtk_signal_connect (GTK_OBJECT (list_item), "drag_drop",
                       GTK_SIGNAL_FUNC (layer_widget_drag_drop_callback),
 		      NULL);
-  gtk_signal_connect (GTK_OBJECT (list_item), "drag_begin",
-                      GTK_SIGNAL_FUNC (layer_widget_drag_begin_callback),
-		      NULL);
 
   /*  re-paint the drop indicator after drawing the widget  */
   gtk_signal_connect_after (GTK_OBJECT (list_item), "draw",
@@ -2028,8 +2039,12 @@ layer_widget_create (GImage *gimage,
   /*  dnd source  */
   gtk_drag_source_set (list_item,
 		       GDK_BUTTON1_MASK,
-                       layer_target_table, n_targets, 
+                       layer_target_table, n_layer_targets, 
                        GDK_ACTION_MOVE | GDK_ACTION_COPY);
+
+  gtk_signal_connect (GTK_OBJECT (list_item), "drag_begin",
+                      GTK_SIGNAL_FUNC (layer_widget_drag_begin_callback),
+		      NULL);
 
   gtk_object_set_data (GTK_OBJECT (list_item), "gimp_layer", (gpointer) layer);
 
@@ -2056,7 +2071,7 @@ layer_widget_drag_motion_callback (GtkWidget      *widget,
   gint         src_index;
   gint         difference;
 
-  LayerDropType drop_type   = LAYER_DROP_NONE;
+  GimpDropType  drop_type   = GIMP_DROP_NONE;
   GdkDragAction drag_action = GDK_ACTION_DEFAULT;
   gboolean      return_val  = FALSE;
 
@@ -2080,15 +2095,15 @@ layer_widget_drag_motion_callback (GtkWidget      *widget,
 	  difference = dest_index - src_index;
 
 	  drop_type = ((y < widget->allocation.height / 2) ?
-		       LAYER_DROP_ABOVE : LAYER_DROP_BELOW);
+		       GIMP_DROP_ABOVE : GIMP_DROP_BELOW);
 
 	  if (difference < 0 &&
-	      drop_type == LAYER_DROP_BELOW)
+	      drop_type == GIMP_DROP_BELOW)
 	    {
 	      dest_index++;
 	    }
 	  else if (difference > 0 &&
-		   drop_type == LAYER_DROP_ABOVE)
+		   drop_type == GIMP_DROP_ABOVE)
 	    {
 	      dest_index--;
 	    }
@@ -2100,7 +2115,7 @@ layer_widget_drag_motion_callback (GtkWidget      *widget,
 	    }
 	  else
 	    {
-	      drop_type = LAYER_DROP_NONE;
+	      drop_type = GIMP_DROP_NONE;
 	    }
 	}
     }
@@ -2117,180 +2132,29 @@ layer_widget_drag_motion_callback (GtkWidget      *widget,
   return return_val;
 }
 
-#define GRAD_CHECK_SIZE_SM 4
-
-#define GRAD_CHECK_DARK  (1.0 / 3.0)
-#define GRAD_CHECK_LIGHT (2.0 / 3.0)
-
-/* Good idea for size to be <= small preview size in LCP dialog.
- * that way we get good cache hits.
- */
-
-#define DRAG_IMAGE_SZ    32 
-
 static void
 layer_widget_drag_begin_callback (GtkWidget      *widget,
 				  GdkDragContext *context)
 {
-  GdkPixmap   *drag_pixmap;
   LayerWidget *layer_widget;
-  Layer       *layer;
-  TempBuf     *tmpbuf;
-  gint         bpp;
-  gint         x,y;
-  guchar      *src;
-  gdouble      r, g, b, a;
-  gdouble      c0, c1;
-  guchar      *p0, *p1,*even,*odd;
-  gint         width;
-  gint         height;
-  GdkGC       *gc = NULL;
-  gdouble      ratio;
-  int          offx, offy;
-
-  if(!preview_size)
-    return;
 
   layer_widget = (LayerWidget *) gtk_object_get_user_data (GTK_OBJECT (widget));
-  layer = layer_widget->layer;
 
-  if (layer_widget->gimage->width > layer_widget->gimage->height)
-    ratio = (double) DRAG_IMAGE_SZ / (double) layer_widget->gimage->width;
-  else
-    ratio = (double) DRAG_IMAGE_SZ / (double) layer_widget->gimage->height;
+  gimp_dnd_set_drawable_preview_icon (widget, context,
+				      GIMP_DRAWABLE (layer_widget->layer));
+}
 
-  width = (int) (ratio * layer_widget->gimage->width);
-  height = (int) (ratio * layer_widget->gimage->height);
+static void
+layer_mask_drag_begin_callback (GtkWidget      *widget,
+				GdkDragContext *context)
+{
+  LayerWidget *layer_widget;
 
-  if (width < 1) 
-    width = 1;
-  if (height < 1)
-    height = 1;
+  layer_widget = (LayerWidget *) gtk_object_get_user_data (GTK_OBJECT (widget));
 
-  offx = (int) (ratio * GIMP_DRAWABLE (layer_widget->layer)->offset_x);
-  offy = (int) (ratio * GIMP_DRAWABLE (layer_widget->layer)->offset_y);
-
-  drag_pixmap = gdk_pixmap_new (widget->window,
-				width+2, height+2, -1);
-
-  /* Is this always valid??? */
-  gc = widget->style->bg_gc[GTK_STATE_NORMAL];
-
-  gdk_draw_rectangle (drag_pixmap, 
-		      gc,
-		      TRUE,
-		      0,0,
-		      width+2,
-		      height+2);
-
-  gc = layer_widget->layer_preview->style->black_gc;
-
-  gdk_draw_rectangle (drag_pixmap, 
-		      gc,
-		      FALSE,
-		      0,0,
-		      width+1,
-		      height+1);
-
-  /* readjust for actual layer size */
-  width = (int) (ratio * GIMP_DRAWABLE (layer_widget->layer)->width);
-  height = (int) (ratio * GIMP_DRAWABLE (layer_widget->layer)->height);
-
-  if (width < 1) 
-    width = 1;
-  if (height < 1)
-    height = 1;
-
-  tmpbuf = layer_preview (layer, width, height);
-  
-  bpp = tmpbuf->bytes;
-
-  /*  Draw the thumbnail with checks  */
-  src =  temp_buf_data (tmpbuf);
-  
-  even = g_malloc(width*3);
-  odd = g_malloc(width*3);
-  
-  for (y = 0; y < height; y++)
-    {
-      p0 = even;
-      p1 = odd;
-      
-      for (x = 0; x < width; x++) {
-	if(bpp == 4)
-	  {
-	    r =  ((gdouble)src[x*4+0])/255.0;
-	    g = ((gdouble)src[x*4+1])/255.0;
-	    b = ((gdouble)src[x*4+2])/255.0;
-	    a = ((gdouble)src[x*4+3])/255.0;
-	  }
-	else if(bpp == 3)
-	  {
-	    r =  ((gdouble)src[x*3+0])/255.0;
-	    g = ((gdouble)src[x*3+1])/255.0;
-	    b = ((gdouble)src[x*3+2])/255.0;
-	    a = 1.0;
-	  }
-	else
-	  {
-	    r = ((gdouble)src[x*bpp+0])/255.0;
-	    g = b = r;
-	    if(bpp == 2)
-	      a = ((gdouble)src[x*bpp+1])/255.0;
-	    else
-	      a = 1.0;
-	  }
-
-	if ((x / GRAD_CHECK_SIZE_SM) & 1) {
-	  c0 = GRAD_CHECK_LIGHT;
-	  c1 = GRAD_CHECK_DARK;
-	} else {
-	  c0 = GRAD_CHECK_DARK;
-	  c1 = GRAD_CHECK_LIGHT;
-	} /* else */
-	
-	*p0++ = (c0 + (r - c0) * a) * 255.0;
-	*p0++ = (c0 + (g - c0) * a) * 255.0;
-	*p0++ = (c0 + (b - c0) * a) * 255.0;
-	
-	*p1++ = (c1 + (r - c1) * a) * 255.0;
-	*p1++ = (c1 + (g - c1) * a) * 255.0;
-	*p1++ = (c1 + (b - c1) * a) * 255.0;
-	
-      } /* for */
-      
-      if ((y / GRAD_CHECK_SIZE_SM) & 1)
-	{
-	  gdk_draw_rgb_image(drag_pixmap,gc,
-			     1+offx,y+1+offy,
-			     width,
-			     1,
-			     GDK_RGB_DITHER_NORMAL,
-			     (guchar *)odd,
-			     3);
-	}
-      else
-	{
-	  gdk_draw_rgb_image(drag_pixmap,gc,
-			     1+offx,y+1+offy,
-			     width,
-			     1,
-			     GDK_RGB_DITHER_NORMAL,
-			     (guchar *)even,
-			     3);
-	}
-      src += width * bpp;
-    }
-  g_free(even);
-  g_free(odd);
-
-  gtk_drag_set_icon_pixmap (context,
-			    gtk_widget_get_colormap (widget),
-			    drag_pixmap,
-			    NULL,
-			    -8,-8);
-
-  gdk_pixmap_unref (drag_pixmap);
+  gimp_dnd_set_drawable_preview_icon
+    (widget, context,
+     GIMP_DRAWABLE (layer_get_mask (layer_widget->layer)));
 }
 
 static gboolean
@@ -2307,8 +2171,8 @@ layer_widget_drag_drop_callback (GtkWidget      *widget,
   gint         src_index;
   gint         difference;
 
-  LayerDropType drop_type  = LAYER_DROP_NONE;
-  gboolean      return_val = FALSE;
+  GimpDropType drop_type  = GIMP_DROP_NONE;
+  gboolean     return_val = FALSE;
 
   dest = (LayerWidget *) gtk_object_get_user_data (GTK_OBJECT (widget));
 
@@ -2330,15 +2194,15 @@ layer_widget_drag_drop_callback (GtkWidget      *widget,
 	  difference = dest_index - src_index;
 
 	  drop_type = ((y < widget->allocation.height / 2) ?
-		       LAYER_DROP_ABOVE : LAYER_DROP_BELOW);
+		       GIMP_DROP_ABOVE : GIMP_DROP_BELOW);
 
 	  if (difference < 0 &&
-	      drop_type == LAYER_DROP_BELOW)
+	      drop_type == GIMP_DROP_BELOW)
 	    {
 	      dest_index++;
 	    }
 	  else if (difference > 0 &&
-		   drop_type == LAYER_DROP_ABOVE)
+		   drop_type == GIMP_DROP_ABOVE)
 	    {
 	      dest_index--;
 	    }
@@ -2354,7 +2218,7 @@ layer_widget_drag_drop_callback (GtkWidget      *widget,
     }
 
   layer_widget_draw_drop_indicator (dest, dest->drop_type);
-  dest->drop_type = LAYER_DROP_NONE;
+  dest->drop_type = GIMP_DROP_NONE;
 
   gtk_drag_finish (context, return_val, FALSE, time);
 
@@ -2370,7 +2234,7 @@ layer_widget_drag_leave_callback (GtkWidget      *widget,
 
   layer_widget = (LayerWidget *) gtk_object_get_user_data (GTK_OBJECT (widget));
 
-  layer_widget->drop_type = LAYER_DROP_NONE;
+  layer_widget->drop_type = GIMP_DROP_NONE;
 }
 
 static void
@@ -2386,7 +2250,7 @@ layer_widget_drag_indicator_callback (GtkWidget *widget,
 
 static void
 layer_widget_draw_drop_indicator (LayerWidget   *layer_widget,
-				  LayerDropType  drop_type)
+				  GimpDropType   drop_type)
 {
   static GdkGC *gc = NULL;
   gint y = 0;
@@ -2407,9 +2271,9 @@ layer_widget_draw_drop_indicator (LayerWidget   *layer_widget,
 				  GDK_CAP_BUTT, GDK_JOIN_MITER);
     }
 
-  if (drop_type != LAYER_DROP_NONE)
+  if (drop_type != GIMP_DROP_NONE)
     {
-      y = ((drop_type == LAYER_DROP_ABOVE) ?
+      y = ((drop_type == GIMP_DROP_ABOVE) ?
 	   3 : layer_widget->list_item->allocation.height - 4);
 
       gdk_draw_line (layer_widget->list_item->window, gc,

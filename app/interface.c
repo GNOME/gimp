@@ -123,7 +123,8 @@ static GtkTargetEntry toolbox_target_table[] =
   GIMP_TARGET_NETSCAPE_URL,
   GIMP_TARGET_LAYER,
   GIMP_TARGET_CHANNEL,
-  GIMP_TARGET_LAYER_MASK
+  GIMP_TARGET_LAYER_MASK,
+  GIMP_TARGET_COMPONENT
 };
 static guint toolbox_n_targets = (sizeof (toolbox_target_table) /
 				  sizeof (toolbox_target_table[0]));
@@ -1455,13 +1456,13 @@ toolbox_set_drag_dest (GtkWidget *object)
 }
 
 static void
-toolbox_drag_data_received (GtkWidget          *widget,
-			    GdkDragContext     *context,
-			    gint                x,
-			    gint                y,
-			    GtkSelectionData   *data,
-			    guint               info,
-			    guint               time)
+toolbox_drag_data_received (GtkWidget        *widget,
+			    GdkDragContext   *context,
+			    gint              x,
+			    gint              y,
+			    GtkSelectionData *data,
+			    guint             info,
+			    guint             time)
 {
   switch (context->action)
     {
@@ -1490,17 +1491,21 @@ toolbox_drag_drop (GtkWidget      *widget,
 
   if ((src_widget = gtk_drag_get_source_widget (context)))
     {
-      GimpDrawable *drawable   = NULL;
-      Layer        *layer      = NULL;
-      Channel      *channel    = NULL;
-      LayerMask    *layer_mask = NULL;
+      GimpDrawable *drawable       = NULL;
+      Layer        *layer          = NULL;
+      Channel      *channel        = NULL;
+      Layer        *layer_mask     = NULL;
+      GimpImage    *component      = NULL;
+      ChannelType   component_type = -1;
 
       layer = (Layer *) gtk_object_get_data (GTK_OBJECT (src_widget),
 					     "gimp_layer");
       channel = (Channel *) gtk_object_get_data (GTK_OBJECT (src_widget),
 						 "gimp_channel");
-      layer_mask = (LayerMask *) gtk_object_get_data (GTK_OBJECT (src_widget),
-						      "gimp_layer_mask");
+      layer_mask = (Layer *) gtk_object_get_data (GTK_OBJECT (src_widget),
+						  "gimp_layer_mask");
+      component = (GImage *) gtk_object_get_data (GTK_OBJECT (src_widget),
+						  "gimp_component");
 
       if (layer)
 	{
@@ -1512,45 +1517,95 @@ toolbox_drag_drop (GtkWidget      *widget,
 	}
       else if (layer_mask)
 	{
-	  drawable = GIMP_DRAWABLE (layer_mask);
-	  channel  = GIMP_CHANNEL  (layer_mask);
+	  drawable = GIMP_DRAWABLE (layer_get_mask (layer_mask));
+	}
+      else if (component)
+	{
+	  component_type =
+	    (ChannelType) gtk_object_get_data (GTK_OBJECT (src_widget),
+					       "gimp_component_type");
 	}
 
-      if (layer)
+      if (drawable)
 	{
-          GImage    *gimage;
-	  LayerMask *mask;
-	  Layer     *new_layer;
-	  GImage    *new_gimage;
-	  LayerMask *new_mask;
-          gint       width, height;
-	  gint       off_x, off_y;
+          GImage *gimage;
+	  GImage *new_gimage;
+	  Layer  *new_layer;
+          gint    width, height;
+	  gint    off_x, off_y;
+	  gint    bytes;
+
+	  GimpImageBaseType type;
 
 	  gimage = gimp_drawable_gimage (drawable);
           width  = gimp_drawable_width  (drawable);
           height = gimp_drawable_height (drawable);
+	  bytes  = gimp_drawable_bytes  (drawable);
 
-	  new_gimage = gimage_new (width, height, gimage->base_type);
+	  switch (gimp_drawable_type (drawable))
+	    {
+	    case RGB_GIMAGE: case RGBA_GIMAGE:
+	      type = RGB; break;
+	    case GRAY_GIMAGE: case GRAYA_GIMAGE:
+	      type = GRAY; break;
+	    case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
+	      type = INDEXED; break;
+	    default:
+	      type = RGB; break;
+	    }
+
+	  new_gimage = gimage_new (width, height, type);
 	  gimage_disable_undo (new_gimage);
 
 	  gimage_set_resolution (new_gimage,
 				 gimage->xresolution, gimage->yresolution);
 	  gimage_set_unit (new_gimage, gimage->unit);
 
-	  new_layer = layer_copy (layer, FALSE);
+	  if (layer)
+	    {
+	      new_layer = layer_copy (layer, FALSE);
+	    }
+	  else
+	    {
+	      /*  a non-layer drawable can't have an alpha channel,
+	       *  so add one
+	       */
+	      PixelRegion  srcPR, destPR;
+	      TileManager *tiles;
+
+	      tiles = tile_manager_new (width, height, bytes + 1);
+
+	      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+				 0, 0, width, height, FALSE);
+	      pixel_region_init (&destPR, tiles,
+				 0, 0, width, height, TRUE);
+
+	      add_alpha_region (&srcPR, &destPR);
+
+	      new_layer = layer_from_tiles (new_gimage, drawable, tiles,
+					    "", OPAQUE_OPACITY, NORMAL_MODE);
+
+	      tile_manager_destroy (tiles);
+	    }
 
 	  gimp_drawable_set_gimage (GIMP_DRAWABLE (new_layer), new_gimage);
 
 	  layer_set_name (GIMP_LAYER (new_layer),
-			  layer_get_name (GIMP_LAYER (layer)));
+			  gimp_drawable_get_name (drawable));
 
-	  mask     = layer_get_mask (layer);
-	  new_mask = layer_get_mask (new_layer);
-
-	  if (new_mask)
+	  if (layer)
 	    {
-	      gimp_drawable_set_name (GIMP_DRAWABLE (new_mask),
-				      gimp_drawable_get_name (GIMP_DRAWABLE (mask)));
+	      LayerMask *mask;
+	      LayerMask *new_mask;
+
+	      mask     = layer_get_mask (layer);
+	      new_mask = layer_get_mask (new_layer);
+
+	      if (new_mask)
+		{
+		  gimp_drawable_set_name (GIMP_DRAWABLE (new_mask),
+					  gimp_drawable_get_name (GIMP_DRAWABLE (mask)));
+		}
 	    }
 
 	  gimp_drawable_offsets (GIMP_DRAWABLE (new_layer), &off_x, &off_y);

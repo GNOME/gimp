@@ -1,3 +1,25 @@
+1999-08-20  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/Makefile.am
+	* app/gimpdnd.c: new file. Contains a function which creates dnd
+	preview icons for all kinds of drawables.
+
+	* app/gimpdnd.h: added the new dnd types.
+
+	* app/channels_dialog.c: same dnd functions as in the layers
+	dialog. Fixed channels_dialog_flush(). Code cleanup.
+
+	* app/layers_dialog.c: enabled dnd for layer masks.
+
+	* app/disp_callbacks.c
+	* app/interface.c: dnd code generalization. The toolbox and the
+	display accept drop of any kind of drawable now.
+
+	* app/gimage.h
+	* app/gimpimage.[ch]: new function gimp_image_position_channel().
+
+	* app/layer.[ch]: new function layer_mask_get_layer().
+
 Fri Aug 20 02:17:18 1999  Jay Cox  (jaycox@earthlink.net)
 
 	* app/apptypes.h: added InterpolationType enum.

@@ -621,14 +621,14 @@ gdisplay_drag_drop (GtkWidget      *widget,
       GimpDrawable *drawable   = NULL;
       Layer        *layer      = NULL;
       Channel      *channel    = NULL;
-      LayerMask    *layer_mask = NULL;
+      Layer        *layer_mask = NULL;
 
       layer = (Layer *) gtk_object_get_data (GTK_OBJECT (src_widget),
 					     "gimp_layer");
       channel = (Channel *) gtk_object_get_data (GTK_OBJECT (src_widget),
 						 "gimp_channel");
-      layer_mask = (LayerMask *) gtk_object_get_data (GTK_OBJECT (src_widget),
-						      "gimp_layer_mask");
+      layer_mask = (Layer *) gtk_object_get_data (GTK_OBJECT (src_widget),
+						  "gimp_layer_mask");
 
       if (layer)
 	{
@@ -640,8 +640,7 @@ gdisplay_drag_drop (GtkWidget      *widget,
 	}
       else if (layer_mask)
 	{
-	  drawable = GIMP_DRAWABLE (layer_mask);
-	  channel  = GIMP_CHANNEL  (layer_mask);
+	  drawable = GIMP_DRAWABLE (layer_get_mask (layer_mask));
 	}
 
       /*  FIXME: implement special treatment of channel etc.

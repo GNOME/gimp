@@ -84,6 +84,7 @@ void       gimage_foreach               (GFunc func, gpointer user_data);
 #define gimage_remove_layer_mask gimp_image_remove_layer_mask
 #define gimage_raise_channel gimp_image_raise_channel
 #define gimage_lower_channel gimp_image_lower_channel
+#define gimage_position_channel gimp_image_position_channel
 #define gimage_add_channel gimp_image_add_channel
 #define gimage_remove_channel gimp_image_remove_channel
 #define gimage_construct gimp_image_construct

@@ -1494,7 +1494,6 @@ layer_mask_copy (LayerMask *layer_mask)
   return new_layer_mask;
 }
 
-
 LayerMask *
 layer_mask_get_ID (gint ID)
 {
@@ -1520,11 +1519,16 @@ layer_mask_ref (LayerMask *mask)
   return mask;
 }
 
-
 void
 layer_mask_unref (LayerMask *mask)
 {
   gtk_object_unref (GTK_OBJECT (mask));
+}
+
+Layer *
+layer_mask_get_layer (LayerMask *mask)
+{
+  return mask->layer;
 }
 
 void
