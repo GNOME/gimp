@@ -916,63 +916,63 @@ ProcArg text_tool_args[] =
 {
   { PDB_IMAGE,
     "image",
-    N_("the image")
+    "the image"
   },
   { PDB_DRAWABLE,
     "drawable",
-    N_("the affected drawable: (-1 for a new text layer)")
+    "the affected drawable: (-1 for a new text layer)"
   },
   { PDB_FLOAT,
     "x",
-    N_("the x coordinate for the left side of text bounding box")
+    "the x coordinate for the left side of text bounding box"
   },
   { PDB_FLOAT,
     "y",
-    N_("the y coordinate for the top of text bounding box")
+    "the y coordinate for the top of text bounding box"
   },
   { PDB_STRING,
     "text",
-    N_("the text to generate")
+    "the text to generate"
   },
   { PDB_INT32,
     "border",
-    N_("the size of the border: border >= 0")
+    "the size of the border: border >= 0"
   },
   { PDB_INT32,
     "antialias",
-    N_("generate antialiased text")
+    "generate antialiased text"
   },
   { PDB_FLOAT,
     "size",
-    N_("the size of text in either pixels or points")
+    "the size of text in either pixels or points"
   },
   { PDB_INT32,
     "size_type",
-    N_("the units of the specified size: { PIXELS (0), POINTS (1) }")
+    "the units of the specified size: { PIXELS (0), POINTS (1) }"
   },
   { PDB_STRING,
     "foundry",
-    N_("the font foundry, \"*\" for any")
+    "the font foundry, \"*\" for any"
   },
   { PDB_STRING,
     "family",
-    N_("the font family, \"*\" for any")
+    "the font family, \"*\" for any"
   },
   { PDB_STRING,
     "weight",
-    N_("the font weight, \"*\" for any")
+    "the font weight, \"*\" for any"
   },
   { PDB_STRING,
     "slant",
-    N_("the font slant, \"*\" for any")
+    "the font slant, \"*\" for any"
   },
   { PDB_STRING,
     "set_width",
-    N_("the font set-width parameter, \"*\" for any")
+    "the font set-width parameter, \"*\" for any"
   },
   { PDB_STRING,
     "spacing",
-    N_("the font spacing, \"*\" for any")
+    "the font spacing, \"*\" for any"
   }
 };
 
@@ -980,18 +980,18 @@ ProcArg text_tool_out_args[] =
 {
   { PDB_LAYER,
     "text_layer",
-    N_("the new text layer")
+    "the new text layer"
   }
 };
 
 ProcRecord text_tool_proc =
 {
   "gimp_text",
-  N_("Add text at the specified location as a floating selection or a new layer."),
-  N_("This tool requires font information in the form of seven parameters: {size, foundry, family, weight, slant, set_width, spacing}.  The font size can either be specified in units of pixels or points, and the appropriate metric is specified using the size_type "
-     "argument.  The x and y parameters together control the placement of the new text by specifying the upper left corner of the text bounding box.  If the antialias parameter is non-zero, the generated text will blend more smoothly with underlying layers. " 
-     "This option requires more time and memory to compute than non-antialiased text; the resulting floating selection or layer, however, will require the same amount of memory with or without antialiasing.  If the specified drawable parameter is valid, the "
-     "text will be created as a floating selection attached to the drawable.  If the drawable parameter is not valid (-1), the text will appear as a new layer.  Finally, a border can be specified around the final rendered text.  The border is measured in pixels."),
+  "Add text at the specified location as a floating selection or a new layer.",
+  "This tool requires font information in the form of seven parameters: {size, foundry, family, weight, slant, set_width, spacing}.  The font size can either be specified in units of pixels or points, and the appropriate metric is specified using the size_type "
+  "argument.  The x and y parameters together control the placement of the new text by specifying the upper left corner of the text bounding box.  If the antialias parameter is non-zero, the generated text will blend more smoothly with underlying layers. " 
+  "This option requires more time and memory to compute than non-antialiased text; the resulting floating selection or layer, however, will require the same amount of memory with or without antialiasing.  If the specified drawable parameter is valid, the "
+  "text will be created as a floating selection attached to the drawable.  If the drawable parameter is not valid (-1), the text will appear as a new layer.  Finally, a border can be specified around the final rendered text.  The border is measured in pixels.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -1015,71 +1015,71 @@ ProcArg text_tool_args_ext[] =
 {
   { PDB_IMAGE,
     "image",
-    N_("the image")
+    "the image"
   },
   { PDB_DRAWABLE,
     "drawable",
-    N_("the affected drawable: (-1 for a new text layer)")
+    "the affected drawable: (-1 for a new text layer)"
   },
   { PDB_FLOAT,
     "x",
-    N_("the x coordinate for the left side of text bounding box")
+    "the x coordinate for the left side of text bounding box"
   },
   { PDB_FLOAT,
     "y",
-    N_("the y coordinate for the top of text bounding box")
+    "the y coordinate for the top of text bounding box"
   },
   { PDB_STRING,
     "text",
-    N_("the text to generate")
+    "the text to generate"
   },
   { PDB_INT32,
     "border",
-    N_("the size of the border: border >= 0")
+    "the size of the border: border >= 0"
   },
   { PDB_INT32,
     "antialias",
-    N_("generate antialiased text")
+    "generate antialiased text"
   },
   { PDB_FLOAT,
     "size",
-    N_("the size of text in either pixels or points")
+    "the size of text in either pixels or points"
   },
   { PDB_INT32,
     "size_type",
-    N_("the units of the specified size: { PIXELS (0), POINTS (1) }")
+    "the units of the specified size: { PIXELS (0), POINTS (1) }"
   },
   { PDB_STRING,
     "foundry",
-    N_("the font foundry, \"*\" for any")
+    "the font foundry, \"*\" for any"
   },
   { PDB_STRING,
     "family",
-    N_("the font family, \"*\" for any")
+    "the font family, \"*\" for any"
   },
   { PDB_STRING,
     "weight",
-    N_("the font weight, \"*\" for any")
+    "the font weight, \"*\" for any"
   },
   { PDB_STRING,
     "slant",
-    N_("the font slant, \"*\" for any")
+    "the font slant, \"*\" for any"
   },
   { PDB_STRING,
     "set_width",
-    N_("the font set-width parameter, \"*\" for any")
+    "the font set-width parameter, \"*\" for any"
   },
   { PDB_STRING,
     "spacing",
-    N_("the font spacing, \"*\" for any")
+    "the font spacing, \"*\" for any"
   },
   { PDB_STRING,
     "registry",
-    N_("the font registry, \"*\" for any")
+    "the font registry, \"*\" for any"
   },
   { PDB_STRING,
     "encoding",
-    N_("the font encoding, \"*\" for any")
+    "the font encoding, \"*\" for any"
   }
 };
 
@@ -1087,18 +1087,18 @@ ProcArg text_tool_out_args_ext[] =
 {
   { PDB_LAYER,
     "text_layer",
-    N_("the new text layer")
+    "the new text layer"
   }
 };
 
 ProcRecord text_tool_proc_ext =
 {
   "gimp_text_ext",
-  N_("Add text at the specified location as a floating selection or a new layer."),
-  N_("This tool requires font information in the form of nine parameters: {size, foundry, family, weight, slant, set_width, spacing, registry, encoding}.  The font size can either be specified in units of pixels or points, and the appropriate metric is specified using the size_type "
-     "argument.  The x and y parameters together control the placement of the new text by specifying the upper left corner of the text bounding box.  If the antialias parameter is non-zero, the generated text will blend more smoothly with underlying layers. " 
-     "This option requires more time and memory to compute than non-antialiased text; the resulting floating selection or layer, however, will require the same amount of memory with or without antialiasing.  If the specified drawable parameter is valid, the "
-     "text will be created as a floating selection attached to the drawable.  If the drawable parameter is not valid (-1), the text will appear as a new layer.  Finally, a border can be specified around the final rendered text.  The border is measured in pixels."),
+  "Add text at the specified location as a floating selection or a new layer.",
+  "This tool requires font information in the form of nine parameters: {size, foundry, family, weight, slant, set_width, spacing, registry, encoding}.  The font size can either be specified in units of pixels or points, and the appropriate metric is specified using the size_type "
+  "argument.  The x and y parameters together control the placement of the new text by specifying the upper left corner of the text bounding box.  If the antialias parameter is non-zero, the generated text will blend more smoothly with underlying layers. " 
+  "This option requires more time and memory to compute than non-antialiased text; the resulting floating selection or layer, however, will require the same amount of memory with or without antialiasing.  If the specified drawable parameter is valid, the "
+  "text will be created as a floating selection attached to the drawable.  If the drawable parameter is not valid (-1), the text will appear as a new layer.  Finally, a border can be specified around the final rendered text.  The border is measured in pixels.",
   "Martin Edlman",
   "Spencer Kimball & Peter Mattis",
   "1998",
@@ -1122,43 +1122,43 @@ ProcArg text_tool_args_fontname[] =
 {
   { PDB_IMAGE,
     "image",
-    N_("the image")
+    "the image"
   },
   { PDB_DRAWABLE,
     "drawable",
-    N_("the affected drawable: (-1 for a new text layer)")
+    "the affected drawable: (-1 for a new text layer)"
   },
   { PDB_FLOAT,
     "x",
-    N_("the x coordinate for the left side of text bounding box")
+    "the x coordinate for the left side of text bounding box"
   },
   { PDB_FLOAT,
     "y",
-    N_("the y coordinate for the top of text bounding box")
+    "the y coordinate for the top of text bounding box"
   },
   { PDB_STRING,
     "text",
-    N_("the text to generate")
+    "the text to generate"
   },
   { PDB_INT32,
     "border",
-    N_("the size of the border: border >= 0")
+    "the size of the border: border >= 0"
   },
   { PDB_INT32,
     "antialias",
-    N_("generate antialiased text")
+    "generate antialiased text"
   },
   { PDB_FLOAT,
     "size",
-    N_("the size of text in either pixels or points")
+    "the size of text in either pixels or points"
   },
   { PDB_INT32,
     "size_type",
-    N_("the units of the specified size: { PIXELS (0), POINTS (1) }")
+    "the units of the specified size: { PIXELS (0), POINTS (1) }"
   },
   { PDB_STRING,
     "fontname",
-    N_("the fontname (conforming to the X Logical Font Description Conventions)")
+    "the fontname (conforming to the X Logical Font Description Conventions)"
   }
 };
 
@@ -1166,18 +1166,18 @@ ProcArg text_tool_out_args_fontname[] =
 {
   { PDB_LAYER,
     "text_layer",
-    N_("the new text layer")
+    "the new text layer"
   }
 };
 
 ProcRecord text_tool_proc_fontname =
 {
   "gimp_text_fontname",
-  N_("Add text at the specified location as a floating selection or a new layer."),
-  N_("This tool requires font information as a fontname conforming to the 'X Logical Font Description Conventions'. You can specify the fontsize in units of pixels or points, and the appropriate metric is specified using the size_type argument. The fontsize specified in the fontname is silently ignored."
-     "The x and y parameters together control the placement of the new text by specifying the upper left corner of the text bounding box.  If the antialias parameter is non-zero, the generated text will blend more smoothly with underlying layers.  "
-     "This option requires more time and memory to compute than non-antialiased text; the resulting floating selection or layer, however, will require the same amount of memory with or without antialiasing.  If the specified drawable parameter is valid, the "
-     "text will be created as a floating selection attached to the drawable.  If the drawable parameter is not valid (-1), the text will appear as a new layer.  Finally, a border can be specified around the final rendered text.  The border is measured in pixels."),
+  "Add text at the specified location as a floating selection or a new layer.",
+  "This tool requires font information as a fontname conforming to the 'X Logical Font Description Conventions'. You can specify the fontsize in units of pixels or points, and the appropriate metric is specified using the size_type argument. The fontsize specified in the fontname is silently ignored."
+  "The x and y parameters together control the placement of the new text by specifying the upper left corner of the text bounding box.  If the antialias parameter is non-zero, the generated text will blend more smoothly with underlying layers.  "
+  "This option requires more time and memory to compute than non-antialiased text; the resulting floating selection or layer, however, will require the same amount of memory with or without antialiasing.  If the specified drawable parameter is valid, the "
+  "text will be created as a floating selection attached to the drawable.  If the drawable parameter is not valid (-1), the text will appear as a new layer.  Finally, a border can be specified around the final rendered text.  The border is measured in pixels.",
   "Martin Edlman, Sven Neumann",
   "Spencer Kimball & Peter Mattis",
   "1998",
@@ -1202,39 +1202,39 @@ ProcArg text_tool_get_extents_args[] =
 {
   { PDB_STRING,
     "text",
-    N_("the text to generate")
+    "the text to generate"
   },
   { PDB_FLOAT,
     "size",
-    N_("the size of text in either pixels or points")
+    "the size of text in either pixels or points"
   },
   { PDB_INT32,
     "size_type",
-    N_("the units of the specified size: { PIXELS (0), POINTS (1) }")
+    "the units of the specified size: { PIXELS (0), POINTS (1) }"
   },
   { PDB_STRING,
     "foundry",
-    N_("the font foundry, \"*\" for any")
+    "the font foundry, \"*\" for any"
   },
   { PDB_STRING,
     "family",
-    N_("the font family, \"*\" for any")
+    "the font family, \"*\" for any"
   },
   { PDB_STRING,
     "weight",
-    N_("the font weight, \"*\" for any")
+    "the font weight, \"*\" for any"
   },
   { PDB_STRING,
     "slant",
-    N_("the font slant, \"*\" for any")
+    "the font slant, \"*\" for any"
   },
   { PDB_STRING,
     "set_width",
-    N_("the font set-width parameter, \"*\" for any")
+    "the font set-width parameter, \"*\" for any"
   },
   { PDB_STRING,
     "spacing",
-    N_("the font spacing, \"*\" for any")
+    "the font spacing, \"*\" for any"
   }
 };
 
@@ -1242,27 +1242,27 @@ ProcArg text_tool_get_extents_out_args[] =
 {
   { PDB_INT32,
     "width",
-    N_("the width of the specified text")
+    "the width of the specified text"
   },
   { PDB_INT32,
     "height",
-    N_("the height of the specified text")
+    "the height of the specified text"
   },
   { PDB_INT32,
     "ascent",
-    N_("the ascent of the specified font")
+    "the ascent of the specified font"
   },
   { PDB_INT32,
     "descent",
-    N_("the descent of the specified font")
+    "the descent of the specified font"
   }
 };
 
 ProcRecord text_tool_get_extents_proc =
 {
   "gimp_text_get_extents",
-  N_("Get extents of the bounding box for the specified text"),
-  N_("This tool returns the width and height of a bounding box for the specified text string with the specified font information.  Ascent and descent for the specified font are returned as well."),
+  "Get extents of the bounding box for the specified text",
+  "This tool returns the width and height of a bounding box for the specified text string with the specified font information.  Ascent and descent for the specified font are returned as well.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -1286,47 +1286,47 @@ ProcArg text_tool_get_extents_args_ext[] =
 {
   { PDB_STRING,
     "text",
-    N_("the text to generate")
+    "the text to generate"
   },
   { PDB_FLOAT,
     "size",
-    N_("the size of text in either pixels or points")
+    "the size of text in either pixels or points"
   },
   { PDB_INT32,
     "size_type",
-    N_("the units of the specified size: { PIXELS (0), POINTS (1) }")
+    "the units of the specified size: { PIXELS (0), POINTS (1) }"
   },
   { PDB_STRING,
     "foundry",
-    N_("the font foundry, \"*\" for any")
+    "the font foundry, \"*\" for any"
   },
   { PDB_STRING,
     "family",
-    N_("the font family, \"*\" for any")
+    "the font family, \"*\" for any"
   },
   { PDB_STRING,
     "weight",
-    N_("the font weight, \"*\" for any")
+    "the font weight, \"*\" for any"
   },
   { PDB_STRING,
     "slant",
-    N_("the font slant, \"*\" for any")
+    "the font slant, \"*\" for any"
   },
   { PDB_STRING,
     "set_width",
-    N_("the font set-width parameter, \"*\" for any")
+    "the font set-width parameter, \"*\" for any"
   },
   { PDB_STRING,
     "spacing",
-    N_("the font spacing, \"*\" for any")
+    "the font spacing, \"*\" for any"
   },
   { PDB_STRING,
     "registry",
-    N_("the font registry, \"*\" for any")
+    "the font registry, \"*\" for any"
   },
   { PDB_STRING,
     "encoding",
-    N_("the font encoding, \"*\" for any")
+    "the font encoding, \"*\" for any"
   }
 };
 
@@ -1334,27 +1334,27 @@ ProcArg text_tool_get_extents_out_args_ext[] =
 {
   { PDB_INT32,
     "width",
-    N_("the width of the specified text")
+    "the width of the specified text"
   },
   { PDB_INT32,
     "height",
-    N_("the height of the specified text")
+    "the height of the specified text"
   },
   { PDB_INT32,
     "ascent",
-    N_("the ascent of the specified font")
+    "the ascent of the specified font"
   },
   { PDB_INT32,
     "descent",
-    N_("the descent of the specified font")
+    "the descent of the specified font"
   }
 };
 
 ProcRecord text_tool_get_extents_proc_ext =
 {
   "gimp_text_get_extents_ext",
-  N_("Get extents of the bounding box for the specified text"),
-  N_("This tool returns the width and height of a bounding box for the specified text string with the specified font information.  Ascent and descent for the specified font are returned as well."),
+  "Get extents of the bounding box for the specified text",
+  "This tool returns the width and height of a bounding box for the specified text string with the specified font information.  Ascent and descent for the specified font are returned as well.",
   "Martin Edlman",
   "Spencer Kimball & Peter Mattis",
   "1998",
@@ -1378,19 +1378,19 @@ ProcArg text_tool_get_extents_args_fontname[] =
 {
   { PDB_STRING,
     "text",
-    N_("the text to generate")
+    "the text to generate"
   },
   { PDB_FLOAT,
     "size",
-    N_("the size of text in either pixels or points")
+    "the size of text in either pixels or points"
   },
   { PDB_INT32,
     "size_type",
-    N_("the units of the specified size: { PIXELS (0), POINTS (1) }")
+    "the units of the specified size: { PIXELS (0), POINTS (1) }"
   },
   { PDB_STRING,
     "fontname",
-    N_("the fontname (conforming to the X Logical Font Description Conventions)")
+    "the fontname (conforming to the X Logical Font Description Conventions)"
   }  
 };
 
@@ -1398,27 +1398,27 @@ ProcArg text_tool_get_extents_out_args_fontname[] =
 {
   { PDB_INT32,
     "width",
-    N_("the width of the specified text")
+    "the width of the specified text"
   },
   { PDB_INT32,
     "height",
-    N_("the height of the specified text")
+    "the height of the specified text"
   },
   { PDB_INT32,
     "ascent",
-    N_("the ascent of the specified font")
+    "the ascent of the specified font"
   },
   { PDB_INT32,
     "descent",
-    N_("the descent of the specified font")
+    "the descent of the specified font"
   }
 };
 
 ProcRecord text_tool_get_extents_proc_fontname =
 {
   "gimp_text_get_extents_fontname",
-  N_("Get extents of the bounding box for the specified text"),
-  N_("This tool returns the width and height of a bounding box for the specified text string with the specified font information.  Ascent and descent for the specified font are returned as well."),
+  "Get extents of the bounding box for the specified text",
+  "This tool returns the width and height of a bounding box for the specified text string with the specified font information.  Ascent and descent for the specified font are returned as well.",
   "Martin Edlman, Sven Neumann",
   "Spencer Kimball & Peter Mattis",
   "1998",

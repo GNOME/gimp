@@ -29,6 +29,8 @@
 #include "selection.h"
 #include "tools.h"
 
+#include "libgimp/gimpintl.h"
+
 /*  forward function declarations  */
 static void         paintbrush_motion      (PaintCore *, GimpDrawable *, double, gboolean);
 static Argument *   paintbrush_invoker     (Argument *);
@@ -92,7 +94,7 @@ create_paint_options (void)
   vbox = gtk_vbox_new (FALSE, 1);
 
   /*  the main label  */
-  label = gtk_label_new ("Paintbrush Options");
+  label = gtk_label_new (_("Paintbrush Options"));
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -100,7 +102,7 @@ create_paint_options (void)
   hbox = gtk_hbox_new (FALSE, 1);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new ("Fade Out");
+  label = gtk_label_new (_("Fade Out"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -117,7 +119,7 @@ create_paint_options (void)
 
 
   /* the incremental toggle */
-  incremental_toggle = gtk_check_button_new_with_label ("Incremental");
+  incremental_toggle = gtk_check_button_new_with_label (_("Incremental"));
   gtk_box_pack_start (GTK_BOX (vbox), incremental_toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (incremental_toggle), "toggled",
 		      (GtkSignalFunc) paintbrush_toggle_update,

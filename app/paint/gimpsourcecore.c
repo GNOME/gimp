@@ -549,31 +549,31 @@ ProcArg clone_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the drawable")
+    "the drawable"
   },
   { PDB_DRAWABLE,
     "src_drawable",
-    N_("the source drawable")
+    "the source drawable"
   },
   { PDB_INT32,
     "clone_type",
-    N_("the type of clone: { IMAGE-CLONE (0), PATTERN-CLONE (1) }")
+    "the type of clone: { IMAGE-CLONE (0), PATTERN-CLONE (1) }"
   },
   { PDB_FLOAT,
     "src_x",
-    N_("the x coordinate in the source image")
+    "the x coordinate in the source image"
   },
   { PDB_FLOAT,
     "src_y",
-    N_("the y coordinate in the source image")
+    "the y coordinate in the source image"
   },
   { PDB_INT32,
     "num_strokes",
-    N_("number of stroke control points (count each coordinate as 2 points)")
+    "number of stroke control points (count each coordinate as 2 points)"
   },
   { PDB_FLOATARRAY,
     "strokes",
-    N_("array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}")
+    "array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}"
   }
 };
 
@@ -581,8 +581,8 @@ ProcArg clone_args[] =
 ProcRecord clone_proc =
 {
   "gimp_clone",
-  N_("Clone from the source to the dest drawable using the current brush"),
-  N_("This tool clones (copies) from the source drawable starting at the specified source coordinates to the dest drawable.  If the \"clone_type\" argument is set to PATTERN-CLONE, then the current pattern is used as the source and the \"src_drawable\" argument is ignored.  Pattern cloning assumes a tileable pattern and mods the sum of the src coordinates and subsequent stroke offsets with the width and height of the pattern.  For image cloning, if the sum of the src coordinates and subsequent stroke offsets exceeds the extents of the src drawable, then no paint is transferred.  The clone tool is capable of transforming between any image types including RGB->Indexed--although converting from any type to indexed is significantly slower."),
+  "Clone from the source to the dest drawable using the current brush",
+  "This tool clones (copies) from the source drawable starting at the specified source coordinates to the dest drawable.  If the \"clone_type\" argument is set to PATTERN-CLONE, then the current pattern is used as the source and the \"src_drawable\" argument is ignored.  Pattern cloning assumes a tileable pattern and mods the sum of the src coordinates and subsequent stroke offsets with the width and height of the pattern.  For image cloning, if the sum of the src coordinates and subsequent stroke offsets exceeds the extents of the src drawable, then no paint is transferred.  The clone tool is capable of transforming between any image types including RGB->Indexed--although converting from any type to indexed is significantly slower.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

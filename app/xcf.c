@@ -162,20 +162,20 @@ static ProcArg xcf_load_args[] =
 {
   { PDB_INT32,
     "dummy_param",
-    N_("dummy parameter") },
+    "dummy parameter" },
   { PDB_STRING,
     "filename",
-    N_("The name of the file to load") },
+    "The name of the file to load" },
   { PDB_STRING,
     "raw_filename",
-    N_("The name of the file to load") },
+    "The name of the file to load" },
 };
 
 static ProcArg xcf_load_return_vals[] =
 {
   { PDB_IMAGE,
     "image",
-    N_("Output image") },
+    "Output image" },
 };
 
 static PlugInProcDef xcf_plug_in_load_proc =
@@ -190,10 +190,10 @@ static PlugInProcDef xcf_plug_in_load_proc =
   0,    /* ignored for load */
   {
     "gimp_xcf_load",
-    N_("loads file saved in the .xcf file format"),
-    N_("The xcf file format has been designed specifically for loading and saving tiled and layered images in the GIMP. This procedure will load the specified file."),
-    N_("Spencer Kimball & Peter Mattis"),
-    N_("Spencer Kimball & Peter Mattis"),
+    "loads file saved in the .xcf file format",
+    "The xcf file format has been designed specifically for loading and saving tiled and layered images in the GIMP. This procedure will load the specified file.",
+    "Spencer Kimball & Peter Mattis",
+    "Spencer Kimball & Peter Mattis",
     "1995-1996",
     PDB_INTERNAL,
     3,
@@ -210,19 +210,19 @@ static ProcArg xcf_save_args[] =
 {
   { PDB_INT32,
     "dummy_param",
-    N_("dummy parameter") },
+    "dummy parameter" },
   { PDB_IMAGE,
     "image",
-    N_("Input image") },
+    "Input image" },
   { PDB_DRAWABLE,
     "drawable",
-    N_("Active drawable of input image") },
+    "Active drawable of input image" },
   { PDB_STRING,
     "filename",
-    N_("The name of the file to save the image in") },
+    "The name of the file to save the image in" },
   { PDB_STRING,
     "raw_filename",
-    N_("The name of the file to load") },
+    "The name of the file to load" },
 };
 
 static PlugInProcDef xcf_plug_in_save_proc =
@@ -237,10 +237,10 @@ static PlugInProcDef xcf_plug_in_save_proc =
   0, /* fill me in at runtime */
   {
     "gimp_xcf_save",
-    N_("saves file in the .xcf file format"),
-    N_("The xcf file format has been designed specifically for loading and saving tiled and layered images in the GIMP. This procedure will save the specified image in the xcf file format."),
-    N_("Spencer Kimball & Peter Mattis"),
-    N_("Spencer Kimball & Peter Mattis"),
+    "saves file in the .xcf file format",
+    "The xcf file format has been designed specifically for loading and saving tiled and layered images in the GIMP. This procedure will save the specified image in the xcf file format.",
+    "Spencer Kimball & Peter Mattis",
+    "Spencer Kimball & Peter Mattis",
     "1995-1996",
     PDB_INTERNAL,
     5,

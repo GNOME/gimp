@@ -23,6 +23,8 @@
 #include "interface.h"
 #include "session.h"
 
+#include "libgimp/gimpintl.h"
+
 /*  static functions  */
 static InfoField * info_field_new (InfoDialog *, char *, char *, GtkSignalFunc, gpointer);
 static void        update_field (InfoField *);
@@ -44,7 +46,7 @@ info_field_new (InfoDialog    *idialog,
   row = idialog->nfields + 1;
   gtk_table_resize (GTK_TABLE (idialog->info_table), 2, row);
 
-  label = gtk_label_new (title);
+  label = gtk_label_new (gettext(title));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach_defaults (GTK_TABLE (idialog->info_table), label, 
 			     0, 1, row - 1, row);
@@ -113,7 +115,7 @@ info_dialog_new (char *title)
 
   shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (shell), "info_dialog", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (shell), title);
+  gtk_window_set_title (GTK_WINDOW (shell), gettext(title));
   session_set_window_geometry (shell, &info_dialog_session_info, FALSE );
 
   gtk_signal_connect (GTK_OBJECT (shell), "delete_event",

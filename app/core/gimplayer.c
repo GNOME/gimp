@@ -33,6 +33,8 @@
 #include "parasitelist.h"
 #include "undo.h"
 
+#include "libgimp/gimpintl.h"
+
 #include "layer_pvt.h"
 #include "tile_manager_pvt.h"
 #include "tile.h"			/* ick. */
@@ -236,7 +238,7 @@ layer_new (gimage, width, height, type, name, opacity, mode)
   Layer * layer;
 
   if (width == 0 || height == 0) {
-    g_message ("Zero width or height layers not allowed.");
+    g_message (_("Zero width or height layers not allowed."));
     return NULL;
   }
 
@@ -304,13 +306,13 @@ layer_copy (layer, add_alpha)
   name = layer_get_name(layer);
   ext = strrchr(name, '#');
   layer_name = (char *) g_malloc (strlen (name) + 6);
-  if ((strlen(name) >= 4 &&  strcmp(&name[strlen(name) -4], "copy") == 0) ||
+  if ((strlen(name) >= 4 &&  strcmp(&name[strlen(name) -4], _("copy")) == 0) ||
       (ext && (number = atoi(ext+1)) > 0 && 
        ((int)(log10(number) + 1)) == strlen(ext+1)))
     /* don't have rudundant "copy"s */
     sprintf (layer_name, "%s", name);
   else
-    sprintf (layer_name, "%s copy", name);
+    sprintf (layer_name, _("%s copy"), name);
   /*  when copying a layer, the copy ALWAYS has an alpha channel  */
   if (add_alpha)
     {
@@ -339,7 +341,7 @@ layer_copy (layer, add_alpha)
 			 GIMP_DRAWABLE(layer)->height,
 			 new_type, layer_name, layer->opacity, layer->mode);
   if (!new_layer) {
-    g_message ("layer_copy: could not allocate new layer");
+    g_message (_("layer_copy: could not allocate new layer"));
     goto cleanup;
   }
 
@@ -416,7 +418,7 @@ layer_from_tiles (gimage_ptr, drawable, tiles, name, opacity, mode)
 			 layer_type, name, opacity, mode);
 
   if (!new_layer) {
-    g_message ("layer_from_tiles: could not allocate new layer");
+    g_message (_("layer_from_tiles: could not allocate new layer"));
     return NULL;
   }
 
@@ -471,8 +473,8 @@ layer_create_mask (layer, add_mask_type)
   unsigned char white_mask = OPAQUE_OPACITY;
   unsigned char black_mask = TRANSPARENT_OPACITY;
 
-  mask_name = (char *) g_malloc (strlen (GIMP_DRAWABLE(layer)->name) + strlen ("mask") + 2);
-  sprintf (mask_name, "%s mask", GIMP_DRAWABLE(layer)->name);
+  mask_name = (char *) g_malloc (strlen (GIMP_DRAWABLE(layer)->name) + strlen (_("mask")) + 2);
+  sprintf (mask_name, _("%s mask"), GIMP_DRAWABLE(layer)->name);
 
   /*  Create the layer mask  */
   mask = layer_mask_new (GIMP_DRAWABLE(layer)->gimage, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height,
@@ -1425,7 +1427,7 @@ layer_mask_copy (LayerMask *layer_mask)
 
   /*  formulate the new layer_mask name  */
   layer_mask_name = (char *) g_malloc (strlen (GIMP_DRAWABLE(layer_mask)->name) + 6);
-  sprintf (layer_mask_name, "%s copy", GIMP_DRAWABLE(layer_mask)->name);
+  sprintf (layer_mask_name, _("%s copy"), GIMP_DRAWABLE(layer_mask)->name);
 
   /*  allocate a new layer_mask object  */
   new_layer_mask = layer_mask_new (GIMP_DRAWABLE(layer_mask)->gimage, 

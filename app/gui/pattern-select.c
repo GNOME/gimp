@@ -29,6 +29,7 @@
 #include "paint_funcs.h"
 #include "session.h"
 
+#include "libgimp/gimpintl.h"
 
 #define MIN_CELL_SIZE    32
 #define MAX_CELL_SIZE    45
@@ -72,8 +73,8 @@ static void pattern_select_scroll_update     (GtkAdjustment *, gpointer);
 /*  the action area structure  */
 static ActionAreaItem action_items[2] =
 {
-  { "Close", pattern_select_close_callback, NULL, NULL },
-  { "Refresh", pattern_select_refresh_callback, NULL, NULL },
+  { N_("Close"), pattern_select_close_callback, NULL, NULL },
+  { N_("Refresh"), pattern_select_refresh_callback, NULL, NULL },
 };
 
 gint NUM_PATTERN_COLUMNS = 6;
@@ -108,7 +109,7 @@ pattern_select_new (gchar * title,
   gtk_window_set_wmclass (GTK_WINDOW (psp->shell), "patternselection", "Gimp");
   if(!title)
     {
-      gtk_window_set_title (GTK_WINDOW (psp->shell), "Pattern Selection");
+      gtk_window_set_title (GTK_WINDOW (psp->shell), _("Pattern Selection"));
       session_set_window_geometry (psp->shell, &pattern_select_session_info, TRUE);
     }
   else
@@ -144,7 +145,7 @@ pattern_select_new (gchar * title,
   label_box = gtk_hbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (label_box), 2);
   gtk_box_pack_start (GTK_BOX (psp->options_box), label_box, FALSE, FALSE, 0);
-  psp->pattern_name = gtk_label_new ("Active");
+  psp->pattern_name = gtk_label_new (_("Active"));
   gtk_box_pack_start (GTK_BOX (label_box), psp->pattern_name, FALSE, FALSE, 2);
   psp->pattern_size = gtk_label_new ("(0x0)");
   gtk_box_pack_start (GTK_BOX (label_box), psp->pattern_size, FALSE, FALSE, 5);
@@ -251,7 +252,7 @@ pattern_change_callbacks(PatternSelectP psp, gint closing)
 					    PDB_END);
  
       if (!return_vals || return_vals[0].value.pdb_int != PDB_SUCCESS)
-	g_message ("failed to run pattern callback function");
+	g_message (_("failed to run pattern callback function"));
       
       procedural_db_destroy_args (return_vals, nreturn_vals);
     }

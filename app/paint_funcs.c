@@ -28,6 +28,8 @@
 #include "tile_manager_pvt.h"  /* For copy-on-write */
 #include "tile.h"			/* ick. */
 
+#include "libgimp/gimpintl.h"
+
 #include <stdio.h>
 
 #define STD_BUF_SIZE       1021
@@ -57,24 +59,24 @@ struct _LayerMode
 
 LayerMode layer_modes[] =
 {
-  { 1, "Normal" },
-  { 1, "Dissolve" },
-  { 1, "Behind" },
-  { 0, "Multiply (Burn)" },
-  { 0, "Screen" },
-  { 0, "Overlay" },
-  { 0, "Difference" },
-  { 0, "Addition" },
-  { 0, "Subtraction" },
-  { 0, "Darken Only" },
-  { 0, "Lighten Only" },
-  { 0, "Hue" },
-  { 0, "Saturation" },
-  { 0, "Color" },
-  { 0, "Value" },
-  { 0, "Divide (Dodge)" },
-  { 1, "Erase" },
-  { 1, "Replace" }
+  { 1, N_("Normal") },
+  { 1, N_("Dissolve") },
+  { 1, N_("Behind") },
+  { 0, N_("Multiply (Burn)") },
+  { 0, N_("Screen") },
+  { 0, N_("Overlay") },
+  { 0, N_("Difference") },
+  { 0, N_("Addition") },
+  { 0, N_("Subtraction") },
+  { 0, N_("Darken Only") },
+  { 0, N_("Lighten Only") },
+  { 0, N_("Hue") },
+  { 0, N_("Saturation") },
+  { 0, N_("Color") },
+  { 0, N_("Value") },
+  { 0, N_("Divide (Dodge)") },
+  { 1, N_("Erase") },
+  { 1, N_("Replace") }
 };
 
 /*  ColorHash structure  */
@@ -1004,7 +1006,7 @@ replace_pixels (unsigned char *src1,
 
   if (bytes1 != bytes2)
     {
-      g_message ("replace_pixels only works on commensurate pixel regions");
+      g_message (_("replace_pixels only works on commensurate pixel regions"));
       return;
     }
 
@@ -4063,7 +4065,7 @@ border_region(PixelRegion *src, gint16 radius)
 
   if (radius < 0)
   {
-    g_warning ("border_region: negative radius specified.");
+    g_warning (_("border_region: negative radius specified."));
     return;
   }
   if (radius == 0)

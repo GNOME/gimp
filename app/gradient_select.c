@@ -54,6 +54,8 @@
 #include "session.h"
 #include "actionarea.h"
 
+#include "libgimp/gimpintl.h"
+
 #define G_SAMPLE 40
 
 typedef struct _GradSelect _GradSelect, *GradSelectP;
@@ -81,8 +83,8 @@ static void grad_change_callbacks(GradSelectP gsp, gint closing);
 
 static ActionAreaItem action_items[2] =
 {
-  { "Close", grad_select_close_callback, NULL, NULL },
-  { "Edit", grad_select_edit_callback, NULL, NULL },
+  { N_("Close"), grad_select_close_callback, NULL, NULL },
+  { N_("Edit"), grad_select_edit_callback, NULL, NULL },
 };
 
 void
@@ -397,7 +399,7 @@ grad_change_callbacks(GradSelectP gsp, gint closing)
 					    PDB_END);
  
       if (!return_vals || return_vals[0].value.pdb_int != PDB_SUCCESS)
-	g_message ("failed to run gradient callback function");
+	g_message (_("failed to run gradient callback function"));
       else
 	procedural_db_destroy_args (return_vals, nreturn_vals);
     }
@@ -479,8 +481,8 @@ gsel_new_selection(gchar * title,
   gtk_clist_set_row_height(GTK_CLIST(gsp->clist), 18);
   
   gtk_clist_set_column_width(GTK_CLIST(gsp->clist), 0, 52);
-  gtk_clist_set_column_title(GTK_CLIST(gsp->clist), 0, "Gradient");
-  gtk_clist_set_column_title(GTK_CLIST(gsp->clist), 1, "Name");
+  gtk_clist_set_column_title(GTK_CLIST(gsp->clist), 0, _("Gradient"));
+  gtk_clist_set_column_title(GTK_CLIST(gsp->clist), 1, _("Name"));
   gtk_clist_column_titles_show(GTK_CLIST(gsp->clist));
   
   hbox = gtk_hbox_new(FALSE, 8);
@@ -512,7 +514,7 @@ gsel_new_selection(gchar * title,
 
   if(!title)
     {
-      gtk_window_set_title (GTK_WINDOW (gsp->shell), "Gradient Selection");
+      gtk_window_set_title (GTK_WINDOW (gsp->shell), _("Gradient Selection"));
     }
   else
     {
@@ -560,7 +562,7 @@ grad_create_gradient_editor(void)
 {
   if(gradient_select_dialog == NULL)
     {
-      gradient_select_dialog = gsel_new_selection("Gradients",NULL);
+      gradient_select_dialog = gsel_new_selection(_("Gradients"),NULL);
   
       session_set_window_geometry (gradient_select_dialog->shell, &gradient_select_session_info, TRUE);
     }

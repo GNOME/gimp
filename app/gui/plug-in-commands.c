@@ -165,17 +165,17 @@ static ProcArg progress_init_args[] =
 {
   { PDB_STRING,
     "message",
-    N_("Message to use in the progress dialog.") },
+    "Message to use in the progress dialog." },
   { PDB_INT32,
     "gdisplay",
-    N_("GDisplay to update progressbar in, or -1 for a seperate window") }
+    "GDisplay to update progressbar in, or -1 for a seperate window" }
 };
 
 static ProcRecord progress_init_proc =
 {
   "gimp_progress_init",
-  N_("Initializes the progress bar for the current plug-in"),
-  N_("Initializes the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in."),
+  "Initializes the progress bar for the current plug-in",
+  "Initializes the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -191,14 +191,14 @@ static ProcArg progress_update_args[] =
 {
   { PDB_FLOAT,
     "percentage",
-    N_("Percentage of progress completed") }
+    "Percentage of progress completed" }
 };
 
 static ProcRecord progress_update_proc =
 {
   "gimp_progress_update",
-  N_("Updates the progress bar for the current plug-in"),
-  N_("Updates the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in."),
+  "Updates the progress bar for the current plug-in",
+  "Updates the progress bar for the current plug-in. It is only valid to call this procedure from a plug-in.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -215,14 +215,14 @@ static ProcArg message_args[] =
 {
   { PDB_STRING,
     "message",
-    N_("Message to display in the dialog.") }
+    "Message to display in the dialog." }
 };
 
 static ProcRecord message_proc =
 {
   "gimp_message",
-  N_("Displays a dialog box with a message"),
-  N_("Displays a dialog box with a message. Useful for status or error reporting."),
+  "Displays a dialog box with a message",
+  "Displays a dialog box with a message. Useful for status or error reporting.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -239,14 +239,14 @@ static ProcArg message_handler_get_out_args[] =
 {
   { PDB_INT32,
     "handler",
-    N_("the current handler type: { MESSAGE_BOX (0), CONSOLE (1) }") }
+    "the current handler type: { MESSAGE_BOX (0), CONSOLE (1) }" }
 };
 
 static ProcRecord message_handler_get_proc =
 {
   "gimp_message_handler_get",
-  N_("Returns the current state of where warning messages are displayed."),
-  N_("This procedure returns the way g_message warnings are displayed. They can be shown in a dialog box or printed on the console where gimp was started."),
+  "Returns the current state of where warning messages are displayed.",
+  "This procedure returns the way g_message warnings are displayed. They can be shown in a dialog box or printed on the console where gimp was started.",
   "Manish Singh",
   "Manish Singh",
   "1998",
@@ -262,14 +262,14 @@ static ProcArg message_handler_set_args[] =
 {
   { PDB_INT32,
     "handler",
-    N_("the new handler type: { MESSAGE_BOX (0), CONSOLE (1) }") }
+    "the new handler type: { MESSAGE_BOX (0), CONSOLE (1) }" }
 };
 
 static ProcRecord message_handler_set_proc =
 {
   "gimp_message_handler_set",
-  N_("Controls where warning messages are displayed."),
-  N_("This procedure controls how g_message warnings are displayed. They can be shown in a dialog box or printed on the console where gimp was started."),
+  "Controls where warning messages are displayed.",
+  "This procedure controls how g_message warnings are displayed. They can be shown in a dialog box or printed on the console where gimp was started.",
   "Manish Singh",
   "Manish Singh",
   "1998",
@@ -285,15 +285,15 @@ static ProcArg plugin_temp_PDB_name_out_args[] =
 {
   { PDB_STRING,
     "Temp name",
-    N_("A unique temporary name for a temporary PDB entry name"),
+    "A unique temporary name for a temporary PDB entry name",
   },
 };
 
 static ProcRecord plugin_temp_PDB_name_proc =
 {
   "gimp_temp_PDB_name",
-  N_("Generates a unique temporary PDB name"),
-  N_("This procedure generates a temporary PDB entry name that is guaranteed to be unique. It is many used by the interactive popup dialogs to generate a PDB entry name."),
+  "Generates a unique temporary PDB name",
+  "This procedure generates a temporary PDB entry name that is guaranteed to be unique. It is many used by the interactive popup dialogs to generate a PDB entry name.",
   "Andy Thomas",
   "Andy Thomas",
   "1998",

@@ -378,15 +378,15 @@ ProcArg rotate_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the affected drawable")
+    "the affected drawable"
   },
   { PDB_INT32,
     "interpolation",
-    N_("whether to use interpolation")
+    "whether to use interpolation"
   },
   { PDB_FLOAT,
     "angle",
-    N_("the angle of rotation (radians)"),
+    "the angle of rotation (radians)",
   }
 };
 
@@ -394,15 +394,15 @@ ProcArg rotate_out_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the rotated drawable")
+    "the rotated drawable"
   }
 };
 
 ProcRecord rotate_proc =
 {
   "gimp_rotate",
-  N_("Rotate the specified drawable about its center through the specified angle"),
-  N_("This tool rotates the specified drawable if no selection exists.  If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then rotated by the specified amount.  The interpolation parameter can be set to TRUE to indicate that either linear or cubic interpolation should be used to smooth the resulting rotated drawable.  The return value is the ID of the rotated drawable.  If there was no selection, this will be equal to the drawable ID supplied as input.  Otherwise, this will be the newly created and rotated drawable."),
+  "Rotate the specified drawable about its center through the specified angle",
+  "This tool rotates the specified drawable if no selection exists.  If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then rotated by the specified amount.  The interpolation parameter can be set to TRUE to indicate that either linear or cubic interpolation should be used to smooth the resulting rotated drawable.  The return value is the ID of the rotated drawable.  If there was no selection, this will be equal to the drawable ID supplied as input.  Otherwise, this will be the newly created and rotated drawable.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

@@ -491,39 +491,39 @@ ProcArg free_select_args[] =
 {
   { PDB_IMAGE,
     "image",
-    N_("the image")
+    "the image"
   },
   { PDB_INT32,
     "num_pts",
-    N_("number of points (count 1 coordinate as two points)")
+    "number of points (count 1 coordinate as two points)"
   },
   { PDB_FLOATARRAY,
     "segs",
-    N_("array of points: { p1.x, p1.y, p2.x, p2.y, ..., pn.x, pn.y}")
+    "array of points: { p1.x, p1.y, p2.x, p2.y, ..., pn.x, pn.y}"
   },
   { PDB_INT32,
     "operation",
-    N_("the selection operation: { ADD (0), SUB (1), REPLACE (2), INTERSECT (3) }")
+    "the selection operation: { ADD (0), SUB (1), REPLACE (2), INTERSECT (3) }"
   },
   { PDB_INT32,
     "antialias",
-    N_("antialiasing option for selections")
+    "antialiasing option for selections"
   },
   { PDB_INT32,
     "feather",
-    N_("feather option for selections")
+    "feather option for selections"
   },
   { PDB_FLOAT,
     "feather_radius",
-    N_("radius for feather operation")
+    "radius for feather operation"
   }
 };
 
 ProcRecord free_select_proc =
 {
   "gimp_free_select",
-  N_("Create a polygonal selection over the specified image"),
-  N_("This tool creates a polygonal selection over the specified image.  The polygonal region can be either added to, subtracted from, or replace the contents of the previous selection mask.  The polygon is specified through an array of floating point numbers and its length.  The length of array must be 2n, where n is the number of points.  Each point is defined by 2 floating point values which correspond to the x and y coordinates.  If the final point does not connect to the starting point, a connecting segment is automatically added.  If the feather option is enabled, the resulting selection is blurred before combining.  The blur is a gaussian blur with the specified feather radius."),
+  "Create a polygonal selection over the specified image",
+  "This tool creates a polygonal selection over the specified image.  The polygonal region can be either added to, subtracted from, or replace the contents of the previous selection mask.  The polygon is specified through an array of floating point numbers and its length.  The length of array must be 2n, where n is the number of points.  Each point is defined by 2 floating point values which correspond to the x and y coordinates.  If the final point does not connect to the starting point, a connecting segment is automatically added.  If the feather option is enabled, the resulting selection is blurred before combining.  The blur is a gaussian blur with the specified feather radius.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

@@ -24,6 +24,8 @@
 #include "gdisplay.h"
 #include "undo.h"
 
+#include "libgimp/gimpintl.h"
+
 int
 drawable_ID (GimpDrawable *drawable)
 {
@@ -55,7 +57,7 @@ drawable_fill (GimpDrawable *drawable, int fill_type){
 	  return;
 	
 	default:
-	  g_warning ("drawable_fill called with unknown fill type");
+	  g_warning (_("drawable_fill called with unknown fill type"));
 	  a=r=g=b=0;
 	  break;
 	}

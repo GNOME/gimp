@@ -190,7 +190,7 @@ channel_copy (Channel *channel)
     /* don't have rudundant "copy"s */
     sprintf (channel_name, "%s", name);
   else
-    sprintf (channel_name, N_("%s copy"), name);
+    sprintf (channel_name, _("%s copy"), name);
 
   /*  allocate a new channel object  */
   new_channel = channel_new (GIMP_DRAWABLE(channel)->gimage, 

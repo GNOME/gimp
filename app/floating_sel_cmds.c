@@ -61,15 +61,15 @@ ProcArg floating_sel_remove_args[] =
 {
   { PDB_LAYER,
     "floating_sel",
-    N_("the floating selection")
+    "the floating selection"
   }
 };
 
 ProcRecord floating_sel_remove_proc =
 {
   "gimp_floating_sel_remove",
-  N_("Remove the specified floating selection from its associated drawable"),
-  N_("This procedure removes the floating selection completely, without any side effects.  The associated drawable is then set to active."),
+  "Remove the specified floating selection from its associated drawable",
+  "This procedure removes the floating selection completely, without any side effects.  The associated drawable is then set to active.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -119,15 +119,15 @@ ProcArg floating_sel_anchor_args[] =
 {
   { PDB_LAYER,
     "floating_sel",
-    N_("the floating selection")
+    "the floating selection"
   }
 };
 
 ProcRecord floating_sel_anchor_proc =
 {
   "gimp_floating_sel_anchor",
-  N_("Anchor the specified floating selection to its associated drawable"),
-  N_("This procedure anchors the floating selection to its associated drawable.  This is similar to merging with a merge type of ClipToBottomLayer.  The floating selection layer is no longer valid after this operation."),
+  "Anchor the specified floating selection to its associated drawable",
+  "This procedure anchors the floating selection to its associated drawable.  This is similar to merging with a merge type of ClipToBottomLayer.  The floating selection layer is no longer valid after this operation.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -177,15 +177,15 @@ ProcArg floating_sel_to_layer_args[] =
 {
   { PDB_LAYER,
     "floating_sel",
-    N_("the floating selection")
+    "the floating selection"
   }
 };
 
 ProcRecord floating_sel_to_layer_proc =
 {
   "gimp_floating_sel_to_layer",
-  N_("Transforms the specified floating selection into a layer"),
-  N_("This procedure transforms the specified floating selection into a layer with the same offsets and extents.  The composited image will look precisely the same, but the floating selection layer will no longer be clipped to the extents of the drawable it was attached to.  The floating selection will become the active layer.  This procedure will not work if the floating selection has a different base type from the underlying image.  This might be the case if the floating selection is above an auxillary channel or a layer mask."),
+  "Transforms the specified floating selection into a layer",
+  "This procedure transforms the specified floating selection into a layer with the same offsets and extents.  The composited image will look precisely the same, but the floating selection layer will no longer be clipped to the extents of the drawable it was attached to.  The floating selection will become the active layer.  This procedure will not work if the floating selection has a different base type from the underlying image.  This might be the case if the floating selection is above an auxillary channel or a layer mask.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -237,18 +237,18 @@ ProcArg floating_sel_attach_args[] =
 {
   { PDB_LAYER,
     "layer",
-    N_("the layer (is attached as floating selection)")
+    "the layer (is attached as floating selection)"
   },
   { PDB_DRAWABLE,
     "drawable",
-    N_("the drawable (where to attach the floating selection)")
+    "the drawable (where to attach the floating selection)"
   }
 };
 
 ProcRecord floating_sel_attach_proc =
 {
   "gimp_floating_sel_attach",
-  N_("Attach the specified layer as floating to the specified drawable"),
+  "Attach the specified layer as floating to the specified drawable",
   "This procedure attaches the layer as floating selection to the drawable.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
@@ -305,18 +305,18 @@ ProcArg floating_sel_rigor_args[] =
 {
   { PDB_LAYER,
     "floating_sel",
-    N_("the floating selection")
+    "the floating selection"
   },
   { PDB_INT32,
     "undo",
-    N_("TRUE or FALSE")
+    "TRUE or FALSE"
   }
 };
 
 ProcRecord floating_sel_rigor_proc =
 {
   "gimp_floating_sel_rigor",
-  N_("Rigor the floating selection"),
+  "Rigor the floating selection",
   "This procedure rigors the floating selection.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
@@ -374,18 +374,18 @@ ProcArg floating_sel_relax_args[] =
 {
   { PDB_LAYER,
     "floating_sel",
-    N_("the floating selection")
+    "the floating selection"
   },
   { PDB_INT32,
     "undo",
-    N_("TRUE or FALSE")
+    "TRUE or FALSE"
   }
 };
 
 ProcRecord floating_sel_relax_proc =
 {
   "gimp_floating_sel_relax",
-  N_("Relax the floating selection"),
+  "Relax the floating selection",
   "This procedure relaxes the floating selection.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",

@@ -1,3 +1,10 @@
+Tue Dec 15 16:18:40 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* app/*: stuff from patches/i18n by Daniel Egger
+
+	* app/channels_dialog.c: fixes minor buglets in the channels
+	dialog
+
 Mon Dec 14 18:56:42 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* removed intl virtual modules, use them new fangled

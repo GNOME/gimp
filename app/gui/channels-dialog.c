@@ -151,9 +151,6 @@ static GdkPixmap *channel_pixmap[3] = { NULL, NULL, NULL };
 
 static int suspend_gimage_notify = 0;
 
-static guint32 button_click_time = 0;
-static int button_last_id = 0;
-
 static MenuItem channels_ops[] =
 {
   { N_("New Channel"), 'N', GDK_CONTROL_MASK,
@@ -322,7 +319,7 @@ channels_dialog_flush ()
 
   /*  Switch positions of items if necessary  */
   list = channelsD->channel_widgets;
-  pos = -channelsD->num_components + 1;
+  pos = -channelsD->num_components;
   while (list)
     {
       cw = (ChannelWidget *) list->data;
@@ -770,16 +767,6 @@ channel_list_events (GtkWidget *widget,
 	      gtk_menu_popup (GTK_MENU (channelsD->ops_menu), NULL, NULL, NULL, NULL, bevent->button, bevent->time);
 	      return TRUE;
 	    }
-	  /* Grumble - we have to handle double clicks ourselves because channels_dialog_flush is broken */
-	  if (channel_widget->type == Auxillary) {
-	    if ((event->button.time < (button_click_time + 250)) && (channel_widget->ID == button_last_id)) {
-	      channels_dialog_edit_channel_query (channel_widget);
-	      return TRUE;
-	    } else {
-	      button_click_time = event->button.time;
-	      button_last_id = channel_widget->ID;
-	    }
-	  }
 	  break;
 
 	case GDK_2BUTTON_PRESS:

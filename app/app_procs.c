@@ -99,16 +99,16 @@ static ProcArg quit_args[] =
 {
   { PDB_INT32,
     "kill",
-    N_("Flag specifying whether to kill the gimp process or exit normally") },
+    "Flag specifying whether to kill the gimp process or exit normally" },
 };
 
 static ProcRecord quit_proc =
 {
   "gimp_quit",
-  N_("Causes the gimp to exit gracefully"),
-  N_("The internal procedure which can either be used to make the gimp quit normally, or to have the gimp clean up its resources and exit immediately. The normaly shutdown process allows for querying the user to save any dirty images."),
-  N_("Spencer Kimball & Peter Mattis"),
-  N_("Spencer Kimball & Peter Mattis"),
+  "Causes the gimp to exit gracefully",
+  "The internal procedure which can either be used to make the gimp quit normally, or to have the gimp clean up its resources and exit immediately. The normaly shutdown process allows for querying the user to save any dirty images.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
   "1995-1996",
   PDB_INTERNAL,
   1,
@@ -346,7 +346,7 @@ make_initialization_status_window(void)
 			      NULL);
 	  gtk_window_set_wmclass (GTK_WINDOW(win_initstatus), "gimp_startup", "Gimp");
 	  gtk_window_set_title(GTK_WINDOW(win_initstatus),
-		               "GIMP Startup");
+		               _("GIMP Startup"));
 
 	  if (no_splash_image == FALSE && splash_logo_load_size (win_initstatus))
 	    {

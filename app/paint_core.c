@@ -33,6 +33,8 @@
 #include "tools.h"
 #include "undo.h"
 
+#include "libgimp/gimpintl.h"
+
 #include "tile.h"			/* ick. */
 
 #define    SQR(x) ((x) * (x))
@@ -421,7 +423,7 @@ paint_core_init (paint_core, drawable, x, y)
   }
   if (!(brush = get_active_brush ()))
     {
-      g_message ("No brushes available for use with this tool.");
+      g_message (_("No brushes available for use with this tool."));
       return FALSE;
     }
   gtk_object_ref(GTK_OBJECT(brush));
@@ -1101,7 +1103,7 @@ paint_core_replace (paint_core, brush_mask, drawable, brush_opacity, image_opaci
 
   if (mode != INCREMENTAL)
     {
-      g_message ("paint_core_replace only works in INCREMENTAL mode");
+      g_message (_("paint_core_replace only works in INCREMENTAL mode"));
       return;
     }
 
@@ -1242,7 +1244,7 @@ set_undo_tiles (drawable, x, y, w, h)
 
   if (undo_tiles == NULL) 
     {
-      g_warning ("set_undo_tiles: undo_tiles is null");
+      g_warning (_("set_undo_tiles: undo_tiles is null"));
       return;
     }
 

@@ -28,6 +28,8 @@
 #include "interface.h"
 #include "palette.h"
 
+#include "libgimp/gimpintl.h"
+
 #include "channel_pvt.h"
 
 #define ENTRY_WIDTH        60
@@ -100,7 +102,7 @@ channel_ops_offset (GimpImage* gimage)
 
   off_d->dlg = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (off_d->dlg), "offset", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (off_d->dlg), "Offset");
+  gtk_window_set_title (GTK_WINDOW (off_d->dlg), _("Offset"));
 
   /* handle the wm close signal */
   gtk_signal_connect (GTK_OBJECT (off_d->dlg), "delete_event",
@@ -108,7 +110,7 @@ channel_ops_offset (GimpImage* gimage)
 		      off_d);
 
   /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) offset_ok_callback,
@@ -117,7 +119,7 @@ channel_ops_offset (GimpImage* gimage)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) offset_cancel_callback,
@@ -134,7 +136,7 @@ channel_ops_offset (GimpImage* gimage)
   table = gtk_table_new (2, 2, FALSE);
   gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
 
-  label = gtk_label_new ("Offset X:");
+  label = gtk_label_new (_("Offset X:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 2, 2);
   off_d->off_x_entry = gtk_entry_new ();
@@ -144,7 +146,7 @@ channel_ops_offset (GimpImage* gimage)
   gtk_widget_show (label);
   gtk_widget_show (off_d->off_x_entry);
 
-  label = gtk_label_new ("Offset Y:");
+  label = gtk_label_new (_("Offset Y:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL, GTK_FILL, 2, 2);
   off_d->off_y_entry = gtk_entry_new ();
@@ -156,19 +158,19 @@ channel_ops_offset (GimpImage* gimage)
   gtk_widget_show (table);
 
   /*  the wrap around option  */
-  check = gtk_check_button_new_with_label ("Wrap-Around");
+  check = gtk_check_button_new_with_label (_("Wrap-Around"));
   gtk_box_pack_start (GTK_BOX (vbox), check, FALSE, FALSE, 0);
   gtk_widget_show (check);
 
   /*  The fill options  */
-  off_d->fill_options = gtk_frame_new ("Fill Options");
+  off_d->fill_options = gtk_frame_new (_("Fill Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (off_d->fill_options), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (vbox), off_d->fill_options, FALSE, TRUE, 0);
   toggle_vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (toggle_vbox), 5);
   gtk_container_add (GTK_CONTAINER (off_d->fill_options), toggle_vbox);
 
-  toggle = gtk_radio_button_new_with_label (group, "Background");
+  toggle = gtk_radio_button_new_with_label (group, _("Background"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -179,7 +181,7 @@ channel_ops_offset (GimpImage* gimage)
 
   if (drawable_has_alpha (drawable))
     {
-      toggle = gtk_radio_button_new_with_label (group, "Transparent");
+      toggle = gtk_radio_button_new_with_label (group, _("Transparent"));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -190,7 +192,7 @@ channel_ops_offset (GimpImage* gimage)
     }
 
   /*  the by half height and half width offtion */
-  push = gtk_button_new_with_label ("Offset by (x/2),(y/2)");
+  push = gtk_button_new_with_label (_("Offset by (x/2),(y/2)"));
   gtk_box_pack_start (GTK_BOX (vbox), push, FALSE, FALSE,0);
   gtk_widget_show (push);
 

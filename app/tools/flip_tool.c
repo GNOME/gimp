@@ -334,11 +334,11 @@ ProcArg flip_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the affected drawable")
+    "the affected drawable"
   },
   { PDB_INT32,
     "flip_type",
-    N_("Type of flip: { HORIZONTAL (0), VERTICAL (1) }")
+    "Type of flip: { HORIZONTAL (0), VERTICAL (1) }"
   }
 };
 
@@ -346,15 +346,15 @@ ProcArg flip_out_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the flipped drawable")
+    "the flipped drawable"
   }
 };
 
 ProcRecord flip_proc =
 {
   "gimp_flip",
-  N_("Flip the specified drawable about its center either vertically or horizontally"),
-  N_("This tool flips the specified drawable if no selection exists.  If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then flipd by the specified amount.  The return value is the ID of the flipped drawable.  If there was no selection, this will be equal to the drawable ID supplied as input.  Otherwise, this will be the newly created and flipd drawable.  The flip type parameter indicates whether the flip will be applied horizontally or vertically."),
+  "Flip the specified drawable about its center either vertically or horizontally",
+  "This tool flips the specified drawable if no selection exists.  If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then flipd by the specified amount.  The return value is the ID of the flipped drawable.  If there was no selection, this will be equal to the drawable ID supplied as input.  Otherwise, this will be the newly created and flipd drawable.  The flip type parameter indicates whether the flip will be applied horizontally or vertically.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

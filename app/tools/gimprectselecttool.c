@@ -725,43 +725,43 @@ ProcArg rect_select_args[] =
 {
   { PDB_IMAGE,
     "image",
-    N_("the image")
+    "the image"
   },
   { PDB_FLOAT,
     "x",
-    N_("x coordinate of upper-left corner of rectangle")
+    "x coordinate of upper-left corner of rectangle"
   },
   { PDB_FLOAT,
     "y",
-    N_("y coordinate of upper-left corner of rectangle")
+    "y coordinate of upper-left corner of rectangle"
   },
   { PDB_FLOAT,
     "width",
-    N_("the width of the rectangle: width > 0")
+    "the width of the rectangle: width > 0"
   },
   { PDB_FLOAT,
     "height",
-    N_("the height of the rectangle: height > 0")
+    "the height of the rectangle: height > 0"
   },
   { PDB_INT32,
     "operation",
-    N_("the selection operation: { ADD (0), SUB (1), REPLACE (2), INTERSECT (3) }")
+    "the selection operation: { ADD (0), SUB (1), REPLACE (2), INTERSECT (3) }"
   },
   { PDB_INT32,
     "feather",
-    N_("feather option for selections")
+    "feather option for selections"
   },
   { PDB_FLOAT,
     "feather_radius",
-    N_("radius for feather operation")
+    "radius for feather operation"
   }
 };
 
 ProcRecord rect_select_proc =
 {
   "gimp_rect_select",
-  N_("Create a rectangular selection over the specified image"),
-  N_("This tool creates a rectangular selection over the specified image.  The rectangular region can be either added to, subtracted from, or replace the contents of the previous selection mask.  If the feather option is enabled, the resulting selection is blurred before combining.  The blur is a gaussian blur with the specified feather radius."),
+  "Create a rectangular selection over the specified image",
+  "This tool creates a rectangular selection over the specified image.  The rectangular region can be either added to, subtracted from, or replace the contents of the previous selection mask.  If the feather option is enabled, the resulting selection is blurred before combining.  The blur is a gaussian blur with the specified feather radius.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

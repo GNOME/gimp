@@ -1712,67 +1712,67 @@ ProcArg blend_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("The affected drawable")
+    "The affected drawable"
   },
   { PDB_INT32,
     "blend_mode",
-    N_("The type of blend: { FG-BG-RGB (0), FG-BG-HSV (1), FG-TRANS (2), CUSTOM (3) }")
+    "The type of blend: { FG-BG-RGB (0), FG-BG-HSV (1), FG-TRANS (2), CUSTOM (3) }"
   },
   { PDB_INT32,
     "paint_mode",
-    N_("the paint application mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5) DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }")
+    "the paint application mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5) DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }"
   },
   { PDB_INT32,
     "gradient_type",
-    N_("The type of gradient: { LINEAR (0), BILINEAR (1), RADIAL (2), SQUARE (3), CONICAL-SYMMETRIC (4), CONICAL-ASYMMETRIC (5), SHAPEBURST-ANGULAR (6), SHAPEBURST-SPHERICAL (7), SHAPEBURST-DIMPLED (8) }")
+    "The type of gradient: { LINEAR (0), BILINEAR (1), RADIAL (2), SQUARE (3), CONICAL-SYMMETRIC (4), CONICAL-ASYMMETRIC (5), SHAPEBURST-ANGULAR (6), SHAPEBURST-SPHERICAL (7), SHAPEBURST-DIMPLED (8) }"
   },
   { PDB_FLOAT,
     "opacity",
-    N_("The opacity of the final blend (0 <= opacity <= 100)")
+    "The opacity of the final blend (0 <= opacity <= 100)"
   },
   { PDB_FLOAT,
     "offset",
-    N_("Offset relates to the starting and ending coordinates specified for the blend.  This parameter is mode depndent (0 <= offset)")
+    "Offset relates to the starting and ending coordinates specified for the blend.  This parameter is mode depndent (0 <= offset)"
   },
   { PDB_INT32,
     "repeat",
-    N_("Repeat mode: { REPEAT-NONE (0), REPEAT-SAWTOOTH (1), REPEAT-TRIANGULAR (2) }")
+    "Repeat mode: { REPEAT-NONE (0), REPEAT-SAWTOOTH (1), REPEAT-TRIANGULAR (2) }"
   },
   { PDB_INT32,
     "supersample",
-    N_("Do adaptive supersampling (true / false)")
+    "Do adaptive supersampling (true / false)"
   },
   { PDB_INT32,
     "max_depth",
-    N_("Maximum recursion levels for supersampling")
+    "Maximum recursion levels for supersampling"
   },
   { PDB_FLOAT,
     "threshold",
-    N_("Supersampling threshold")
+    "Supersampling threshold"
   },
   { PDB_FLOAT,
     "x1",
-    N_("The x coordinate of this blend's starting point")
+    "The x coordinate of this blend's starting point"
   },
   { PDB_FLOAT,
     "y1",
-    N_("The y coordinate of this blend's starting point")
+    "The y coordinate of this blend's starting point"
   },
   { PDB_FLOAT,
     "x2",
-    N_("The x coordinate of this blend's ending point")
+    "The x coordinate of this blend's ending point"
   },
   { PDB_FLOAT,
     "y2",
-    N_("The y coordinate of this blend's ending point")
+    "The y coordinate of this blend's ending point"
   }
 };
 
 ProcRecord blend_proc =
 {
   "gimp_blend",
-  N_("Blend between the starting and ending coordinates with the specified blend mode and gradient type."),
-  N_("This tool requires information on the paint application mode, the blend mode, and the gradient type.  It creates the specified variety of blend using the starting and ending coordinates as defined for each gradient type."),
+  "Blend between the starting and ending coordinates with the specified blend mode and gradient type.",
+  "This tool requires information on the paint application mode, the blend mode, and the gradient type.  It creates the specified variety of blend using the starting and ending coordinates as defined for each gradient type.",
   "Spencer Kimball & Peter Mattis & Federico Mena Quintero",
   "Spencer Kimball & Peter Mattis & Federico Mena Quintero",
   "1995-1996",

@@ -365,19 +365,19 @@ ProcArg shear_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the affected drawable")
+    "the affected drawable"
   },
   { PDB_INT32,
     "interpolation",
-    N_("whether to use interpolation")
+    "whether to use interpolation"
   },
   { PDB_INT32,
     "shear_type",
-    N_("Type of shear: { HORIZONTAL (0), VERTICAL (1) }")
+    "Type of shear: { HORIZONTAL (0), VERTICAL (1) }"
   },
   { PDB_FLOAT,
     "magnitude",
-    N_("the magnitude of the shear")
+    "the magnitude of the shear"
   }
 };
 
@@ -385,15 +385,15 @@ ProcArg shear_out_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the sheard drawable")
+    "the sheard drawable"
   }
 };
 
 ProcRecord shear_proc =
 {
   "gimp_shear",
-  N_("Shear the specified drawable about its center by the specified magnitude"),
-  N_("This tool shears the specified drawable if no selection exists.  If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then sheard by the specified amount.  The interpolation parameter can be set to TRUE to indicate that either linear or cubic interpolation should be used to smooth the resulting sheard drawable.  The return value is the ID of the sheard drawable.  If there was no selection, this will be equal to the drawable ID supplied as input.  Otherwise, this will be the newly created and sheard drawable.  The shear type parameter indicates whether the shear will be applied horizontally or vertically.  The magnitude can be either positive or negative and indicates the extent (in pixels) to shear by."),
+  "Shear the specified drawable about its center by the specified magnitude",
+  "This tool shears the specified drawable if no selection exists.  If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then sheard by the specified amount.  The interpolation parameter can be set to TRUE to indicate that either linear or cubic interpolation should be used to smooth the resulting sheard drawable.  The return value is the ID of the sheard drawable.  If there was no selection, this will be equal to the drawable ID supplied as input.  Otherwise, this will be the newly created and sheard drawable.  The shear type parameter indicates whether the shear will be applied horizontally or vertically.  The magnitude can be either positive or negative and indicates the extent (in pixels) to shear by.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

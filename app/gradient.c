@@ -649,7 +649,7 @@ grad_create_gradient_editor_init(gint need_show)
 			 GTK_EXPAND | GTK_FILL, GTK_FILL, 8, 2);
 	gtk_widget_show(g_editor->hint_label);
 
-	button = ed_create_button(N_("Close"), 0.5, 0.5, (GtkSignalFunc) ed_close_callback, NULL);
+	button = ed_create_button(_("Close"), 0.5, 0.5, (GtkSignalFunc) ed_close_callback, NULL);
 	gtk_widget_set_usize(button, GRAD_CLOSE_BUTTON_WIDTH, 0);
 	gtk_table_attach(GTK_TABLE(table), button, 1, 2, 0, 2, GTK_FILL, GTK_EXPAND | GTK_FILL, 8, 0);
 	gtk_widget_show(button);
@@ -713,37 +713,37 @@ grad_create_gradient_editor_init(gint need_show)
 
 	/* Buttons for gradient functions */
 
-	button = ed_create_button(N_("New gradient"), 0.0, 0.5,
+	button = ed_create_button(_("New gradient"), 0.0, 0.5,
 				  (GtkSignalFunc) ed_new_gradient_callback, NULL);
 	gtk_box_pack_start(GTK_BOX(gvbox), button, TRUE, TRUE, 0);
 	gtk_widget_show(button);
 
-	button = ed_create_button(N_("Copy gradient"), 0.0, 0.5,
+	button = ed_create_button(_("Copy gradient"), 0.0, 0.5,
 				  (GtkSignalFunc) ed_copy_gradient_callback, NULL);
 	gtk_box_pack_start(GTK_BOX(gvbox), button, TRUE, TRUE, 0);
 	gtk_widget_show(button);
 
-	button = ed_create_button(N_("Delete gradient"), 0.0, 0.5,
+	button = ed_create_button(_("Delete gradient"), 0.0, 0.5,
 				  (GtkSignalFunc) ed_delete_gradient_callback, NULL);
 	gtk_box_pack_start(GTK_BOX(gvbox), button, TRUE, TRUE, 0);
 	gtk_widget_show(button);
 
-	button = ed_create_button(N_("Save as POV-Ray"), 0.0, 0.5,
+	button = ed_create_button(_("Save as POV-Ray"), 0.0, 0.5,
 				  (GtkSignalFunc) ed_save_pov_callback, NULL);
 	gtk_box_pack_start(GTK_BOX(gvbox), button, TRUE, TRUE, 0);
 	gtk_widget_show(button);
 
-	button = ed_create_button(N_("Save Gradients"), 0.0, 0.5,
+	button = ed_create_button(_("Save Gradients"), 0.0, 0.5,
 				  (GtkSignalFunc) ed_save_grads_callback, NULL);
 	gtk_box_pack_start(GTK_BOX(gvbox), button, TRUE, TRUE, 0);
 	gtk_widget_show(button);
 
-	button = ed_create_button(N_("Rename Gradient"), 0.0, 0.5,
+	button = ed_create_button(_("Rename Gradient"), 0.0, 0.5,
 				  (GtkSignalFunc) ed_rename_grads_callback, NULL);
 	gtk_box_pack_start(GTK_BOX(gvbox), button, TRUE, TRUE, 0);
 	gtk_widget_show(button);
 
-	button = ed_create_button(N_("Refresh gradients"), 0.0, 0.5,
+	button = ed_create_button(_("Refresh gradients"), 0.0, 0.5,
 				  (GtkSignalFunc) ed_refresh_callback, NULL);
 	gtk_box_pack_start(GTK_BOX(gvbox), button, TRUE, TRUE, 0);
 	gtk_widget_show(button);
@@ -757,15 +757,15 @@ grad_create_gradient_editor_init(gint need_show)
 
 	/* Zoom buttons */
 
-	button = ed_create_button(N_("Zoom all"), 0.5, 0.5, (GtkSignalFunc) ed_zoom_all_callback, g_editor);
+	button = ed_create_button(_("Zoom all"), 0.5, 0.5, (GtkSignalFunc) ed_zoom_all_callback, g_editor);
 	gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
 	gtk_widget_show(button);
 
-	button = ed_create_button(N_("Zoom -"), 0.5, 0.5, (GtkSignalFunc) ed_zoom_out_callback, g_editor);
+	button = ed_create_button(_("Zoom -"), 0.5, 0.5, (GtkSignalFunc) ed_zoom_out_callback, g_editor);
 	gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
 	gtk_widget_show(button);
 
-	button = ed_create_button(N_("Zoom +"), 0.5, 0.5, (GtkSignalFunc) ed_zoom_in_callback, g_editor);
+	button = ed_create_button(_("Zoom +"), 0.5, 0.5, (GtkSignalFunc) ed_zoom_in_callback, g_editor);
 	gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
 	gtk_widget_show(button);
 
@@ -1481,7 +1481,7 @@ ed_delete_gradient_callback(GtkWidget *widget, gpointer client_data)
 
 	/* Buttons */
 
-	button = ed_create_button(N_("Delete"), 0.5, 0.5,
+	button = ed_create_button(_("Delete"), 0.5, 0.5,
 				  (GtkSignalFunc) ed_do_delete_gradient_callback,
 				  (gpointer) dialog);
 	GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
@@ -1490,7 +1490,7 @@ ed_delete_gradient_callback(GtkWidget *widget, gpointer client_data)
 	gtk_widget_grab_default(button);
 	gtk_widget_show(button);
 
-	button = ed_create_button(N_("Cancel"), 0.5, 0.5,
+	button = ed_create_button(_("Cancel"), 0.5, 0.5,
 				  (GtkSignalFunc) ed_cancel_delete_gradient_callback,
 				  (gpointer) dialog);
 	GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
@@ -3872,9 +3872,9 @@ cpopup_create_blending_menu(void)
 
 	for (i = 0; i < num_items; i++) {
 		if (i == (num_items - 1))
-			menuitem = gtk_radio_menu_item_new_with_label(group, "(Varies)");
+			menuitem = gtk_radio_menu_item_new_with_label(group, _("(Varies)"));
 		else
-			menuitem = gtk_radio_menu_item_new_with_label(group, blending_types[i]);
+			menuitem = gtk_radio_menu_item_new_with_label(group, gettext(blending_types[i]));
 
 		group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(menuitem));
 
@@ -4560,7 +4560,7 @@ cpopup_split_uniform_callback(GtkWidget *widget, gpointer data)
 
 	/* Buttons */
 
-	button = ed_create_button(N_("Split"), 0.5, 0.5,
+	button = ed_create_button(_("Split"), 0.5, 0.5,
 				  (GtkSignalFunc) cpopup_split_uniform_split_callback,
 				  (gpointer) dialog);
 	GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
@@ -4569,7 +4569,7 @@ cpopup_split_uniform_callback(GtkWidget *widget, gpointer data)
 	gtk_widget_grab_default(button);
 	gtk_widget_show(button);
 
-	button = ed_create_button(N_("Cancel"), 0.5, 0.5,
+	button = ed_create_button(_("Cancel"), 0.5, 0.5,
 				  (GtkSignalFunc) cpopup_split_uniform_cancel_callback,
 				  (gpointer) dialog);
 	GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
@@ -4915,7 +4915,7 @@ cpopup_replicate_callback(GtkWidget *widget, gpointer data)
 
 	/* Buttons */
 
-	button = ed_create_button(N_("Replicate"), 0.5, 0.5,
+	button = ed_create_button(_("Replicate"), 0.5, 0.5,
 				  (GtkSignalFunc) cpopup_do_replicate_callback,
 				  (gpointer) dialog);
 	GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
@@ -4924,7 +4924,7 @@ cpopup_replicate_callback(GtkWidget *widget, gpointer data)
 	gtk_widget_grab_default(button);
 	gtk_widget_show(button);
 
-	button = ed_create_button(N_("Cancel"), 0.5, 0.5,
+	button = ed_create_button(_("Cancel"), 0.5, 0.5,
 				  (GtkSignalFunc) cpopup_replicate_cancel_callback,
 				  (gpointer) dialog);
 	GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);

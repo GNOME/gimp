@@ -29,6 +29,8 @@
 #include "image_map.h"
 #include "interface.h"
 
+#include "libgimp/gimpintl.h"
+
 #define TEXT_WIDTH 45
 #define HISTOGRAM_WIDTH 256
 #define HISTOGRAM_HEIGHT 150
@@ -90,13 +92,13 @@ static Argument * histogram_invoker (Argument *args);
 
 static char * histogram_info_names[7] =
 {
-  "Mean: ",
-  "Std Dev: ",
-  "Median: ",
-  "Pixels: ",
-  "Intensity: ",
-  "Count: ",
-  "Percentile: "
+  N_("Mean: "),
+  N_("Std Dev: "),
+  N_("Median: "),
+  N_("Pixels: "),
+  N_("Intensity: "),
+  N_("Count: "),
+  N_("Percentile: ")
 };
 
 /*  histogram_tool machinery  */
@@ -505,7 +507,7 @@ histogram_tool_new_dialog ()
       y = (i % 4);
       x = (i / 4) * 2;
 
-      label = gtk_label_new (histogram_info_names[i]);
+      label = gtk_label_new (gettext(histogram_info_names[i]));
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, x, x + 1, y, y + 1,
 			GTK_FILL, GTK_FILL, 2, 2);

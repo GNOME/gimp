@@ -236,19 +236,19 @@ ProcArg equalize_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the drawable")
+    "the drawable"
   },
   { PDB_INT32,
     "mask_only",
-    N_("equalization option")
+    "equalization option"
   }
 };
 
 ProcRecord equalize_proc =
 {
   "gimp_equalize",
-  N_("Equalize the contents of the specified drawable"),
-  N_("This procedure equalizes the contents of the specified drawable.  Each intensity channel is equalizeed independently.  The equalizeed intensity is given as inten' = (255 - inten).  Indexed color drawables are not valid for this operation.  The 'mask_only' option specifies whether to adjust only the area of the image within the selection bounds, or the entire image based on the histogram of the selected area.  If there is no selection, the entire image is adjusted based on the histogram for the entire image."),
+  "Equalize the contents of the specified drawable",
+  "This procedure equalizes the contents of the specified drawable.  Each intensity channel is equalizeed independently.  The equalizeed intensity is given as inten' = (255 - inten).  Indexed color drawables are not valid for this operation.  The 'mask_only' option specifies whether to adjust only the area of the image within the selection bounds, or the entire image based on the histogram of the selected area.  If there is no selection, the entire image is adjusted based on the histogram for the entire image.",
   "Federico Mena Quintero & Spencer Kimball & Peter Mattis",
   "Federico Mena Quintero & Spencer Kimball & Peter Mattis",
   "1996",

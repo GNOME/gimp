@@ -36,6 +36,7 @@
 #include "gimprc.h"
 #include "menus.h"
 
+#include "libgimp/gimpintl.h"
 
 /*  global variables  */
 GPatternP           active_pattern = NULL;
@@ -133,7 +134,7 @@ get_active_pattern ()
     {
       have_default_pattern = 0;
       if (!active_pattern)
-	fatal_error ("Specified default pattern not found!");
+	fatal_error (_("Specified default pattern not found!"));
 
     }
   else if (! active_pattern && pattern_list)
@@ -202,7 +203,7 @@ load_pattern (char *filename)
   /*  Check for correct version  */
   if (header.version != FILE_VERSION)
     {
-      g_message ("Unknown GIMP version #%d in \"%s\"\n", header.version,
+      g_message (_("Unknown GIMP version #%d in \"%s\"\n"), header.version,
 		 filename);
       fclose (fp);
       free_pattern (pattern);
@@ -218,21 +219,21 @@ load_pattern (char *filename)
       pattern->name = (char *) g_malloc (sizeof (char) * bn_size);
       if ((fread (pattern->name, 1, bn_size, fp)) < bn_size)
 	{
-	  g_message ("Error in GIMP pattern file...aborting.");
+	  g_message (_("Error in GIMP pattern file...aborting."));
 	  fclose (fp);
 	  free_pattern (pattern);
 	  return;
 	}
     }
   else
-    pattern->name = g_strdup ("Unnamed");
+    pattern->name = g_strdup (_("Unnamed"));
 
   /*  Read the pattern mask data  */
   /*  Read the image data  */
   if ((fread (temp_buf_data (pattern->mask), 1,
 	      header.width * header.height * header.bytes, fp)) <
       header.width * header.height * header.bytes)
-    g_message ("GIMP pattern file appears to be truncated.");
+    g_message (_("GIMP pattern file appears to be truncated."));
 
   /*  Clean up  */
   fclose (fp);

@@ -26,6 +26,8 @@
 #include "layer_select.h"
 #include "layers_dialogP.h"
 
+#include "libgimp/gimpintl.h"
+
 
 #define PREVIEW_EVENT_MASK GDK_EXPOSURE_MASK | GDK_ENTER_NOTIFY_MASK
 
@@ -96,7 +98,7 @@ layer_select_init (GImage  *gimage,
       /*  The shell and main vbox  */
       layer_select->shell = gtk_window_new (GTK_WINDOW_POPUP);
       gtk_window_set_wmclass (GTK_WINDOW (layer_select->shell), "layer_select", "Gimp");
-      gtk_window_set_title (GTK_WINDOW (layer_select->shell), "Layer Select");
+      gtk_window_set_title (GTK_WINDOW (layer_select->shell), _("Layer Select"));
       gtk_window_set_position (GTK_WINDOW (layer_select->shell), GTK_WIN_POS_MOUSE);
       gtk_signal_connect (GTK_OBJECT (layer_select->shell), "event",
 			  (GtkSignalFunc) layer_select_events,
@@ -132,7 +134,7 @@ layer_select_init (GImage  *gimage,
       gtk_widget_show (alignment);
 
       /*  the layer name label */
-      layer_select->label = gtk_label_new ("Layer");
+      layer_select->label = gtk_label_new (_("Layer"));
       gtk_box_pack_start (GTK_BOX (hbox), layer_select->label, FALSE, FALSE, 2);
       gtk_widget_show (layer_select->label);
 

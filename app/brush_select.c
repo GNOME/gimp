@@ -1272,35 +1272,35 @@ ProcArg brushes_popup_in_args[] =
 {
   { PDB_STRING,
     "brush_callback",
-    N_("the callback PDB proc to call when brush selection is made")
+    "the callback PDB proc to call when brush selection is made"
   },
   { PDB_STRING,
     "popup title",
-    N_("title to give the popup window"),
+    "title to give the popup window",
   },
   { PDB_STRING,
     "initial brush",
-    N_("The name of the brush to set as the first selected"),
+    "The name of the brush to set as the first selected",
   },
   { PDB_FLOAT,
     "initial opacity",
-    N_("The initial opacity of the brush"),
+    "The initial opacity of the brush",
   },
   { PDB_INT32,
     "initial spacing",
-    N_("The initial spacing of the brush (if < 0 then use brush default spacing)"),
+    "The initial spacing of the brush (if < 0 then use brush default spacing)",
   },
   { PDB_INT32,
     "initial paint mode",
-    N_("The initial paint mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5) DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }"),
+    "The initial paint mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5) DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }",
   },
 };
 
 ProcRecord brushes_popup_proc =
 {
   "gimp_brushes_popup",
-  N_("Invokes the Gimp brush selection"),
-  N_("This procedure popups the brush selection dialog"),
+  "Invokes the Gimp brush selection",
+  "This procedure popups the brush selection dialog",
   "Andy Thomas",
   "Andy Thomas",
   "1998",
@@ -1385,15 +1385,15 @@ ProcArg brush_close_popup_in_args[] =
 {
   { PDB_STRING,
     "callback_PDB_entry_name",
-    N_("The name of the callback registered for this popup"),
+    "The name of the callback registered for this popup",
   },
 };
 
 ProcRecord brushes_close_popup_proc =
 {
   "gimp_brushes_close_popup",
-  N_("Popdown the Gimp brush selection"),
-  N_("This procedure closes an opened brush selection dialog"),
+  "Popdown the Gimp brush selection",
+  "This procedure closes an opened brush selection dialog",
   "Andy Thomas",
   "Andy Thomas",
   "1998",
@@ -1473,31 +1473,31 @@ ProcArg brush_set_popup_in_args[] =
 {
   { PDB_STRING,
     "callback_PDB_entry_name",
-    N_("The name of the callback registered for this popup"),
+    "The name of the callback registered for this popup",
   },
   { PDB_STRING,
     "brushname",
-    N_("The name of the brush to set as selected"),
+    "The name of the brush to set as selected",
   },
   { PDB_FLOAT,
     "opacity",
-    N_("The initial opacity of the brush"),
+    "The initial opacity of the brush",
   },
   { PDB_INT32,
     "spacing",
-    N_("The initial spacing of the brush (if < 0 then use brush default spacing)"),
+    "The initial spacing of the brush (if < 0 then use brush default spacing)",
   },
   { PDB_INT32,
     "initial paint mode",
-    N_("The initial paint mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5) DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }"),
+    "The initial paint mode: { NORMAL (0), DISSOLVE (1), BEHIND (2), MULTIPLY/BURN (3), SCREEN (4), OVERLAY (5) DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }",
   },
 };
 
 ProcRecord brushes_set_popup_proc =
 {
   "gimp_brushes_set_popup",
-  N_("Sets the current brush selection in a popup"),
-  N_("Sets the current brush selection in a popup"),
+  "Sets the current brush selection in a popup",
+  "Sets the current brush selection in a popup",
   "Andy Thomas",
   "Andy Thomas",
   "1998",

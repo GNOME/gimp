@@ -1374,7 +1374,7 @@ bezier_convert (BezierSelect *bezier_sel,
           list = list->next;
 /*
           if (!list)
-	    g_message ("cannot properly scanline convert bezier curve: %d", i);
+	    g_message (_("cannot properly scanline convert bezier curve: %d"), i);
           else
 */
             {

@@ -27,6 +27,8 @@
 #include "move.h"
 #include "undo.h"
 
+#include "libgimp/gimpintl.h"
+
 typedef struct _MoveTool MoveTool;
 
 struct _MoveTool
@@ -418,7 +420,7 @@ tools_new_move_tool ()
   MoveTool * private;
 
   if (! move_options)
-    move_options = tools_register_no_options (MOVE, "Move Tool Options");
+    move_options = tools_register_no_options (MOVE, _("Move Tool Options"));
 
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (MoveTool *) g_malloc (sizeof (MoveTool));

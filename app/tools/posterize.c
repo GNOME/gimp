@@ -26,6 +26,8 @@
 #include "interface.h"
 #include "posterize.h"
 
+#include "libgimp/gimpintl.h"
+
 #define TEXT_WIDTH 55
 
 typedef struct _Posterize Posterize;
@@ -198,7 +200,7 @@ tools_new_posterize ()
 
   /*  The tool options  */
   if (!posterize_options)
-    posterize_options = tools_register_no_options (POSTERIZE, "Posterize Options");
+    posterize_options = tools_register_no_options (POSTERIZE, _("Posterize Options"));
 
   /*  The posterize dialog  */
   if (!posterize_dialog)
@@ -247,7 +249,7 @@ posterize_initialize (GDisplay *gdisp)
 {
   if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
     {
-      g_message ("Posterize does not operate on indexed drawables.");
+      g_message (_("Posterize does not operate on indexed drawables."));
       return;
     }
 
@@ -271,8 +273,8 @@ posterize_initialize (GDisplay *gdisp)
 /*  the action area structure  */
 static ActionAreaItem action_items[] =
 {
-  { "OK", posterize_ok_callback, NULL, NULL },
-  { "Cancel", posterize_cancel_callback, NULL, NULL }
+  { N_("OK"), posterize_ok_callback, NULL, NULL },
+  { N_("Cancel"), posterize_cancel_callback, NULL, NULL }
 };
 
 static PosterizeDialog *
@@ -291,7 +293,7 @@ posterize_new_dialog ()
   /*  The shell and main vbox  */
   pd->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (pd->shell), "posterize", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (pd->shell), "Posterize");
+  gtk_window_set_title (GTK_WINDOW (pd->shell), _("Posterize"));
 
   gtk_signal_connect (GTK_OBJECT (pd->shell), "delete_event",
 		      GTK_SIGNAL_FUNC (posterize_delete_callback),
@@ -305,7 +307,7 @@ posterize_new_dialog ()
   hbox = gtk_hbox_new (TRUE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new ("Posterize Levels: ");
+  label = gtk_label_new (_("Posterize Levels: "));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, FALSE, 0);
   gtk_widget_show (label);
@@ -326,7 +328,7 @@ posterize_new_dialog ()
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   /*  The preview toggle  */
-  toggle = gtk_check_button_new_with_label ("Preview");
+  toggle = gtk_check_button_new_with_label (_("Preview"));
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), pd->preview);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -352,7 +354,7 @@ static void
 posterize_preview (PosterizeDialog *pd)
 {
   if (!pd->image_map)
-    g_message ("posterize_preview(): No image map");
+    g_message (_("posterize_preview(): No image map"));
   active_tool->preserve = TRUE;
   image_map_apply (pd->image_map, posterize, (void *) pd);
   active_tool->preserve = FALSE;

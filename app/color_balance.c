@@ -392,7 +392,7 @@ color_balance_new_dialog ()
   /*  The shell and main vbox  */
   cbd->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (cbd->shell), "color_balance", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (cbd->shell), N_("Color Balance"));
+  gtk_window_set_title (GTK_WINDOW (cbd->shell), _("Color Balance"));
   
   /* handle the wm close signal */
   gtk_signal_connect (GTK_OBJECT (cbd->shell), "delete_event",
@@ -879,35 +879,35 @@ ProcArg color_balance_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the drawable")
+    "the drawable"
   },
   { PDB_INT32,
     "transfer_mode",
-    N_("Transfer mode: { SHADOWS (0), MIDTONES (1), HIGHLIGHTS (2) }")
+    "Transfer mode: { SHADOWS (0), MIDTONES (1), HIGHLIGHTS (2) }"
   },
   { PDB_INT32,
     "preserve_lum",
-    N_("Preserve luminosity values at each pixel")
+    "Preserve luminosity values at each pixel"
   },
   { PDB_FLOAT,
     "cyan_red",
-    N_("Cyan-Red color balance: (-100 <= cyan_red <= 100)")
+    "Cyan-Red color balance: (-100 <= cyan_red <= 100)"
   },
   { PDB_FLOAT,
     "magenta_green",
-    N_("Magenta-Green color balance: (-100 <= magenta_green <= 100)")
+    "Magenta-Green color balance: (-100 <= magenta_green <= 100)"
   },
   { PDB_FLOAT,
     "yellow_blue",
-    N_("Yellow-Blue color balance: (-100 <= yellow_blue <= 100)")
+    "Yellow-Blue color balance: (-100 <= yellow_blue <= 100)"
   }
 };
 
 ProcRecord color_balance_proc =
 {
   "gimp_color_balance",
-  N_("Modify the color balance of the specified drawable"),
-  N_("Modify the color balance of the specified drawable.  There are three axis which can be modified: cyan-red, magenta-green, and yellow-blue.  Negative values increase the amount of the former, positive values increase the amount of the latter.  Color balance can be controlled with the 'transfer_mode' setting, which allows shadows, midtones, and highlights in an image to be affected differently.  The 'preserve_lum' parameter, if non-zero, ensures that the luminosity of each pixel remains fixed."),
+  "Modify the color balance of the specified drawable",
+  "Modify the color balance of the specified drawable.  There are three axis which can be modified: cyan-red, magenta-green, and yellow-blue.  Negative values increase the amount of the former, positive values increase the amount of the latter.  Color balance can be controlled with the 'transfer_mode' setting, which allows shadows, midtones, and highlights in an image to be affected differently.  The 'preserve_lum' parameter, if non-zero, ensures that the luminosity of each pixel remains fixed.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",

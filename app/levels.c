@@ -30,6 +30,8 @@
 #include "interface.h"
 #include "levels.h"
 
+#include "libgimp/gimpintl.h"
+
 #define LOW_INPUT          0x1
 #define GAMMA              0x2
 #define HIGH_INPUT         0x4
@@ -368,7 +370,7 @@ tools_new_levels ()
 
   /*  The tool options  */
   if (!levels_options)
-    levels_options = tools_register_no_options (LEVELS, "Levels Options");
+    levels_options = tools_register_no_options (LEVELS, _("Levels Options"));
 
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (Levels *) g_malloc (sizeof (Levels));
@@ -407,11 +409,11 @@ tools_free_levels (Tool *tool)
 
 static MenuItem color_option_items[] =
 {
-  { "Value", 0, 0, levels_value_callback, NULL, NULL, NULL },
-  { "Red", 0, 0, levels_red_callback, NULL, NULL, NULL },
-  { "Green", 0, 0, levels_green_callback, NULL, NULL, NULL },
-  { "Blue", 0, 0, levels_blue_callback, NULL, NULL, NULL },
-  { "Alpha", 0, 0, levels_alpha_callback, NULL, NULL, NULL },
+  { N_("Value"), 0, 0, levels_value_callback, NULL, NULL, NULL },
+  { N_("Red"), 0, 0, levels_red_callback, NULL, NULL, NULL },
+  { N_("Green"), 0, 0, levels_green_callback, NULL, NULL, NULL },
+  { N_("Blue"), 0, 0, levels_blue_callback, NULL, NULL, NULL },
+  { N_("Alpha"), 0, 0, levels_alpha_callback, NULL, NULL, NULL },
   { NULL, 0, 0, NULL, NULL, NULL, NULL }
 };
 
@@ -422,7 +424,7 @@ levels_initialize (GDisplay *gdisp)
 
   if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
     {
-      g_message ("Levels for indexed drawables cannot be adjusted.");
+      g_message (_("Levels for indexed drawables cannot be adjusted."));
       return;
     }
 
@@ -499,9 +501,9 @@ levels_free ()
 /*  the action area structure  */
 static ActionAreaItem action_items[] =
 {
-  { "Auto Levels", levels_auto_levels_callback, NULL, NULL },
-  { "OK", levels_ok_callback, NULL, NULL },
-  { "Cancel", levels_cancel_callback, NULL, NULL }
+  { N_("Auto Levels"), levels_auto_levels_callback, NULL, NULL },
+  { N_("OK"), levels_ok_callback, NULL, NULL },
+  { N_("Cancel"), levels_cancel_callback, NULL, NULL }
 };
 
 static LevelsDialog *
@@ -527,7 +529,7 @@ levels_new_dialog ()
   /*  The shell and main vbox  */
   ld->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (ld->shell), "levels", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (ld->shell), "Levels");
+  gtk_window_set_title (GTK_WINDOW (ld->shell), _("Levels"));
 
   /* handle the wm close signal */
   gtk_signal_connect (GTK_OBJECT (ld->shell), "delete_event",
@@ -542,7 +544,7 @@ levels_new_dialog ()
   channel_hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), channel_hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new ("Modify Levels for Channel: ");
+  label = gtk_label_new (_("Modify Levels for Channel: "));
   gtk_box_pack_start (GTK_BOX (channel_hbox), label, FALSE, FALSE, 0);
 
   menu = build_menu (color_option_items, NULL);
@@ -558,7 +560,7 @@ levels_new_dialog ()
   hbox = gtk_hbox_new (TRUE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new ("Input Levels: ");
+  label = gtk_label_new (_("Input Levels: "));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -642,7 +644,7 @@ levels_new_dialog ()
   hbox = gtk_hbox_new (TRUE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new ("Output Levels: ");
+  label = gtk_label_new (_("Output Levels: "));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -701,7 +703,7 @@ levels_new_dialog ()
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   /*  The preview toggle  */
-  toggle = gtk_check_button_new_with_label ("Preview");
+  toggle = gtk_check_button_new_with_label (_("Preview"));
   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), ld->preview);
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -902,7 +904,7 @@ static void
 levels_preview (LevelsDialog *ld)
 {
   if (!ld->image_map)
-    g_warning ("No image map");
+    g_warning (_("No image map"));
   active_tool->preserve = TRUE;
   image_map_apply (ld->image_map, levels, (void *) ld);
   active_tool->preserve = FALSE;

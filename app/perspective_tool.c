@@ -29,6 +29,8 @@
 #include "transform_tool.h"
 #include "undo.h"
 
+#include "libgimp/gimpintl.h"
+
 #include "tile_manager_pvt.h"
 
 #define X0 0
@@ -68,7 +70,7 @@ perspective_tool_transform (tool, gdisp_ptr, state)
     case INIT :
       if (!transform_info)
 	{
-	  transform_info = info_dialog_new ("Perspective Transform Information");
+	  transform_info = info_dialog_new (_("Perspective Transform Information"));
 	  info_dialog_add_field (transform_info, "Matrix: ",
 				 matrix_row_buf[0], NULL, NULL);
 	  info_dialog_add_field (transform_info, "        ",

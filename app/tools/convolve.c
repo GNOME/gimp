@@ -426,23 +426,23 @@ ProcArg convolve_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the drawable")
+    "the drawable"
   },
   { PDB_FLOAT,
     "pressure",
-    N_("the pressure: 0 <= pressure <= 100")
+    "the pressure: 0 <= pressure <= 100"
   },
   { PDB_INT32,
     "convolve_type",
-    N_("convolve type: { BLUR (0), SHARPEN (1) }")
+    "convolve type: { BLUR (0), SHARPEN (1) }"
   },
   { PDB_INT32,
     "num_strokes",
-    N_("number of stroke control points (count each coordinate as 2 points)")
+    "number of stroke control points (count each coordinate as 2 points)"
   },
   { PDB_FLOATARRAY,
     "strokes",
-    N_("array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}")
+    "array of stroke coordinates: {s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y}"
   }
 };
 
@@ -450,8 +450,8 @@ ProcArg convolve_args[] =
 ProcRecord convolve_proc =
 {
   "gimp_convolve",
-  N_("Convolve (Blur, Sharpen) using the current brush"),
-  N_("This tool convolves the specified drawable with either a sharpening or blurring kernel.  The pressure parameter controls the magnitude of the operation.  Like the paintbrush, this tool linearly interpolates between the specified stroke coordinates."),
+  "Convolve (Blur, Sharpen) using the current brush",
+  "This tool convolves the specified drawable with either a sharpening or blurring kernel.  The pressure parameter controls the magnitude of the operation.  Like the paintbrush, this tool linearly interpolates between the specified stroke coordinates.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

@@ -613,23 +613,23 @@ ProcArg threshold_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the drawable")
+    "the drawable"
   },
   { PDB_INT32,
     "low_threshold",
-    N_("the low threshold value: (0 <= low_threshold <= 255)")
+    "the low threshold value: (0 <= low_threshold <= 255)"
   },
   { PDB_INT32,
     "high_threshold",
-    N_("the high threshold value: (0 <= high_threshold <= 255)")
+    "the high threshold value: (0 <= high_threshold <= 255)"
   }
 };
 
 ProcRecord threshold_proc =
 {
   "gimp_threshold",
-  N_("Threshold the specified drawable"),
-  N_("This procedures generates a threshold map of the specified drawable.  All pixels between the values of 'low_threshold' and 'high_threshold' are replaced with white, and all other pixels with black."),
+  "Threshold the specified drawable",
+  "This procedures generates a threshold map of the specified drawable.  All pixels between the values of 'low_threshold' and 'high_threshold' are replaced with white, and all other pixels with black.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1997",

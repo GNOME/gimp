@@ -29,6 +29,8 @@
 #include "selection.h"
 #include "tools.h"
 
+#include "libgimp/gimpintl.h"
+
 /*  forward function declarations  */
 static void         pencil_motion       (PaintCore *, GimpDrawable *);
 static Argument *   pencil_invoker  (Argument *);
@@ -68,7 +70,7 @@ tools_new_pencil ()
   PaintCore * private;
 
   if (!pencil_options)
-    pencil_options = tools_register_no_options (PENCIL, "Pencil Options");
+    pencil_options = tools_register_no_options (PENCIL, _("Pencil Options"));
 
   tool = paint_core_new (PENCIL);
 

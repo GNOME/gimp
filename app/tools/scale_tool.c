@@ -440,27 +440,27 @@ ProcArg scale_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the affected drawable")
+    "the affected drawable"
   },
   { PDB_INT32,
     "interpolation",
-    N_("whether to use interpolation")
+    "whether to use interpolation"
   },
   { PDB_FLOAT,
     "x1",
-    N_("the x coordinate of the upper-left corner of newly scaled region")
+    "the x coordinate of the upper-left corner of newly scaled region"
   },
   { PDB_FLOAT,
     "y1",
-    N_("the y coordinate of the upper-left corner of newly scaled region")
+    "the y coordinate of the upper-left corner of newly scaled region"
   },
   { PDB_FLOAT,
     "x2",
-    N_("the x coordinate of the lower-right corner of newly scaled region")
+    "the x coordinate of the lower-right corner of newly scaled region"
   },
   { PDB_FLOAT,
     "y2",
-    N_("the y coordinate of the lower-right corner of newly scaled region")
+    "the y coordinate of the lower-right corner of newly scaled region"
   }
 };
 
@@ -468,15 +468,15 @@ ProcArg scale_out_args[] =
 {
   { PDB_DRAWABLE,
     "drawable",
-    N_("the scaled drawable")
+    "the scaled drawable"
   }
 };
 
 ProcRecord scale_proc =
 {
   "gimp_scale",
-  N_("Scale the specified drawable"),
-  N_("This tool scales the specified drawable if no selection exists.  If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then scaled by the specified amount.  The interpolation parameter can be set to TRUE to indicate that either linear or cubic interpolation should be used to smooth the resulting scaled drawable.  The return value is the ID of the scaled drawable.  If there was no selection, this will be equal to the drawable ID supplied as input.  Otherwise, this will be the newly created and scaled drawable."),
+  "Scale the specified drawable",
+  "This tool scales the specified drawable if no selection exists.  If a selection exists, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then scaled by the specified amount.  The interpolation parameter can be set to TRUE to indicate that either linear or cubic interpolation should be used to smooth the resulting scaled drawable.  The return value is the ID of the scaled drawable.  If there was no selection, this will be equal to the drawable ID supplied as input.  Otherwise, this will be the newly created and scaled drawable.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

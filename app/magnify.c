@@ -24,6 +24,8 @@
 #include "magnify.h"
 #include "scale.h"
 
+#include "libgimp/gimpintl.h"
+
 /*   types of magnify operations  */
 #define ZOOMIN            0
 #define ZOOMOUT           1
@@ -128,7 +130,7 @@ create_magnify_options (void)
   vbox = gtk_vbox_new (FALSE, 1);
 
   /*  the main label  */
-  label = gtk_label_new ("Magnify Options");
+  label = gtk_label_new (_("Magnify Options"));
 
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
@@ -136,7 +138,7 @@ create_magnify_options (void)
   /*  the allow_resize toggle button  */
   allow_resize_toggle = gtk_check_button_new ();
   gtk_box_pack_start (GTK_BOX (vbox), allow_resize_toggle, FALSE, FALSE, 0);
-  label = gtk_label_new ("Allow Window Resizing");
+  label = gtk_label_new (_("Allow Window Resizing"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_container_add (GTK_CONTAINER (allow_resize_toggle), label);
   gtk_widget_show (label);
