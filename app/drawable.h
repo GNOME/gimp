@@ -23,12 +23,21 @@
 #include "gimpdrawable.h"
 
 
-gint drawable_ID          (GimpDrawable *);
-void drawable_fill        (GimpDrawable *drawable, GimpFillType fill_type);
+gint drawable_ID          (GimpDrawable *drawable);
+void drawable_fill        (GimpDrawable *drawable,
+			   GimpFillType fill_type);
 void drawable_update      (GimpDrawable *drawable,
-			   gint x, gint y, gint w, gint h);
-void drawable_apply_image (GimpDrawable *, gint, gint, gint, gint, 
-			   TileManager *, gint);
+			   gint          x,
+			   gint          y,
+			   gint          w,
+			   gint          h);
+void drawable_apply_image (GimpDrawable *drawable,
+			   gint          x1,
+			   gint          y1,
+			   gint          x2,
+			   gint          y2, 
+			   TileManager  *,
+			   gint          );
 
 
 #define drawable_merge_shadow gimp_drawable_merge_shadow
@@ -48,8 +57,6 @@ void drawable_apply_image (GimpDrawable *, gint, gint, gint, gint,
 #define drawable_visible gimp_drawable_visible	
 #define drawable_offsets gimp_drawable_offsets
 #define drawable_cmap gimp_drawable_cmap
-#define drawable_get_name gimp_drawable_get_name		
-#define drawable_set_name gimp_drawable_set_name		
 
 #define drawable_get_ID gimp_drawable_get_ID
 #define drawable_deallocate gimp_drawable_deallocate	

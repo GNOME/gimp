@@ -612,8 +612,8 @@ duplicate (GimpImage *gimage)
       /*  Make sure if the layer has a layer mask, it's name isn't screwed up  */
       if (new_layer->mask)
 	{
-	  gimp_drawable_set_name(GIMP_DRAWABLE(new_layer->mask),
-			  gimp_drawable_get_name(GIMP_DRAWABLE(layer->mask)));
+	  gimp_object_set_name (GIMP_OBJECT (new_layer->mask),
+				gimp_object_get_name (GIMP_OBJECT (layer->mask)));
 	}
 
       if (gimage->active_layer == layer)
@@ -643,8 +643,8 @@ duplicate (GimpImage *gimage)
       gimp_drawable_set_gimage(GIMP_DRAWABLE(new_channel), new_gimage);
 
       /*  Make sure the copied channel doesn't say: "<old channel> copy"  */
-      gimp_drawable_set_name(GIMP_DRAWABLE(new_channel),
-			     gimp_drawable_get_name(GIMP_DRAWABLE(channel)));
+      gimp_object_set_name (GIMP_OBJECT (new_channel),
+			    gimp_object_get_name (GIMP_OBJECT (channel)));
 
       if (gimage->active_channel == channel)
 	active_channel = (new_channel);

@@ -187,7 +187,8 @@ channel_copy (const Channel *channel)
   gint         len;
 
   /*  formulate the new channel name  */
-  name = drawable_get_name (GIMP_DRAWABLE (channel));
+  name = gimp_object_get_name (GIMP_OBJECT (channel));
+
   ext = strrchr (name, '#');
   len = strlen (_("copy"));
   if ((strlen (name) >= len &&
@@ -231,13 +232,13 @@ void
 channel_set_name (Channel     *channel,
                   const gchar *name)
 {
-  gimp_drawable_set_name (GIMP_DRAWABLE (channel), name);
+  gimp_object_set_name (GIMP_OBJECT (channel), name);
 }
 
 const gchar *
 channel_get_name (const Channel *channel)
 {
-  return gimp_drawable_get_name (GIMP_DRAWABLE (channel));
+  return gimp_object_get_name (GIMP_OBJECT (channel));
 }
 
 void 

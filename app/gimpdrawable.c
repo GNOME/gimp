@@ -52,9 +52,10 @@ enum
   LAST_SIGNAL
 };
 
-static void gimp_drawable_class_init (GimpDrawableClass *klass);
-static void gimp_drawable_init	     (GimpDrawable      *drawable);
-static void gimp_drawable_destroy    (GtkObject		*object);
+static void gimp_drawable_class_init   (GimpDrawableClass *klass);
+static void gimp_drawable_init	       (GimpDrawable      *drawable);
+static void gimp_drawable_destroy      (GtkObject         *object);
+static void gimp_drawable_name_changed (GimpObject        *drawable);
 
 
 static guint gimp_drawable_signals[LAST_SIGNAL] = { 0 };
@@ -90,9 +91,11 @@ gimp_drawable_get_type (void)
 static void
 gimp_drawable_class_init (GimpDrawableClass *klass)
 {
-  GtkObjectClass *object_class;
+  GtkObjectClass  *object_class;
+  GimpObjectClass *gimp_object_class;
 
-  object_class = (GtkObjectClass *) klass;
+  object_class      = (GtkObjectClass *) klass;
+  gimp_object_class = (GimpObjectClass *) klass;
 
   parent_class = gtk_type_class (GIMP_TYPE_OBJECT);
 
@@ -110,7 +113,103 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
 
   object_class->destroy = gimp_drawable_destroy;
 
+  gimp_object_class->name_changed = gimp_drawable_name_changed;
+
   klass->invalidate_preview = NULL;
+}
+
+static void
+gimp_drawable_name_changed (GimpObject *object)
+{
+  GimpDrawable *drawable;
+  GimpDrawable *drawable2;
+  GSList       *list, *list2, *base_list;
+  gint          unique_ext = 0;
+  gchar        *ext;
+  gchar        *new_name = NULL;
+
+  g_return_if_fail (GIMP_IS_DRAWABLE (object));
+
+  drawable = GIMP_DRAWABLE (object);
+
+  /*  if no other layers to check name against  */
+  if (drawable->gimage == NULL || drawable->gimage->layers == NULL)
+    return;
+
+  if (GIMP_IS_LAYER (drawable))
+    base_list = drawable->gimage->layers;
+  else if (GIMP_IS_CHANNEL (drawable))
+    base_list = drawable->gimage->channels;
+  else
+    base_list = NULL;
+
+  for (list = base_list; list; list = g_slist_next (list))
+    {
+      drawable2 = GIMP_DRAWABLE (list->data);
+
+      if (drawable != drawable2 &&
+	  strcmp (gimp_object_get_name (GIMP_OBJECT (drawable)),
+		  gimp_object_get_name (GIMP_OBJECT (drawable2))) == 0)
+	{
+          ext = strrchr (GIMP_OBJECT (drawable)->name, '#');
+
+          if (ext)
+            {
+	      gchar *ext_str;
+
+	      unique_ext = atoi (ext + 1);
+
+	      ext_str = g_strdup_printf ("%d", unique_ext);
+
+	      /*  check if the extension really is of the form "#<n>"  */
+	      if (! strcmp (ext_str, ext + 1))
+		{
+		  *ext = '\0';
+		}
+	      else
+                {
+                  unique_ext = 0;
+                }
+
+              g_free (ext_str);
+            }
+          else
+            {
+              unique_ext = 0;
+            }
+
+	  do
+	    {
+	      unique_ext++;
+
+	      g_free (new_name);
+
+	      new_name = g_strdup_printf ("%s#%d",
+					  GIMP_OBJECT (drawable)->name,
+					  unique_ext);
+
+              for (list2 = base_list; list2; list2 = g_slist_next (list2))
+                {
+		  drawable2 = GIMP_DRAWABLE (list2->data);
+
+		  if (drawable == drawable2)
+		    continue;
+
+                  if (! strcmp (GIMP_OBJECT (drawable2)->name, new_name))
+                    {
+                      break;
+                    }
+                }
+            }
+          while (list2);
+
+          g_free (GIMP_OBJECT (drawable)->name);
+
+          GIMP_OBJECT (drawable)->name = new_name;
+
+          break;
+        }
+    }
 }
 
 
@@ -356,100 +455,6 @@ gimp_drawable_visible (const GimpDrawable *drawable)
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
   return drawable->visible;
-}
-
-const gchar *
-gimp_drawable_get_name (const GimpDrawable *drawable)
-{
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-
-  return drawable->name;
-}
-
-void
-gimp_drawable_set_name (GimpDrawable *drawable,
-			const gchar  *name)
-{
-  GSList       *list, *listb, *base_list;
-  GimpDrawable *drawableb;
-  gint          number = 1;
-  gchar        *newname;
-  gchar        *ext;
-  gchar         numberbuf[20];
-
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (name != NULL);
-
-  if (drawable->name)
-    {
-      g_free (drawable->name);
-      drawable->name = NULL;
-    }
-
-  if (drawable->gimage == NULL || drawable->gimage->layers == NULL)
-    {
-      /* no other layers to check name against */
-      drawable->name = g_strdup (name);
-      return;
-    }
-
-  if (GIMP_IS_LAYER (drawable))
-    base_list = drawable->gimage->layers;
-  else if (GIMP_IS_CHANNEL (drawable))
-    base_list = drawable->gimage->channels;
-  else
-    base_list = NULL;
-
-  for (list = base_list; list; list = g_slist_next (list))
-    {
-      drawableb = GIMP_DRAWABLE (list->data);
-      if (drawable != drawableb &&
-	  strcmp (name, gimp_drawable_get_name (drawableb)) == 0)
-	{ /* names conflict */
-	  newname = g_malloc (strlen (name) + 10); /* if this aint enough 
-						      yer screwed */
-	  strcpy (newname, name);
-	  if ((ext = strrchr (newname, '#')))
-	    {
-	      number = atoi(ext+1);
-	      /* Check if there really was the number we think after the # */
-	      g_snprintf (numberbuf, sizeof (numberbuf), "#%d", number);
-	      if (strcmp (ext, numberbuf) != 0)
-		{
-		  /* No, so just ignore the # */
-		  number = 1;
-		  ext = &newname[strlen (newname)];
-		}
-	    }
-	  else
-	    {
-	      number = 1;
-	      ext = &newname[strlen (newname)];
-	    }
-	  sprintf (ext, "#%d", number + 1);
-	  listb = base_list;
-	  while (listb) /* make sure the new name is unique */
-	    {
-	      drawableb = GIMP_DRAWABLE (listb->data);
-
-	      if (drawable != drawableb &&
-		  strcmp (newname, gimp_drawable_get_name (drawableb)) == 0)
-		{
-		  number++;
-		  sprintf (ext, "#%d", number+1);
-		  /* Rescan from beginning */
-		  listb = base_list;
-		  continue;
-		}
-	      listb = listb->next;
-	    }
-	  drawable->name = g_strdup (newname);
-	  g_free (newname);
-	  return;
-	}
-    }
-
-  drawable->name = g_strdup (name);
 }
 
 guchar *
@@ -727,7 +732,6 @@ gimp_drawable_deallocate (GimpDrawable *drawable)
 static void
 gimp_drawable_init (GimpDrawable *drawable)
 {
-  drawable->name          = NULL;
   drawable->tiles         = NULL;
   drawable->visible       = FALSE;
   drawable->width         = 0;
@@ -764,9 +768,6 @@ gimp_drawable_destroy (GtkObject *object)
   drawable = GIMP_DRAWABLE (object);
 
   g_hash_table_remove (gimp_drawable_table, (gpointer) drawable->ID);
-  
-  if (drawable->name)
-    g_free (drawable->name);
 
   if (drawable->tiles)
     tile_manager_destroy (drawable->tiles);
@@ -816,7 +817,6 @@ gimp_drawable_configure (GimpDrawable  *drawable,
       return;
     }
 
-  drawable->name      = NULL;
   drawable->width     = width;
   drawable->height    = height;
   drawable->bytes     = bpp;
@@ -834,7 +834,7 @@ gimp_drawable_configure (GimpDrawable  *drawable,
   if (gimage)
     gimp_drawable_set_gimage (drawable, gimage);
 
-  gimp_drawable_set_name (drawable, name);
+  gimp_object_set_name (GIMP_OBJECT (drawable), name);
 
   /*  preview variables  */
   drawable->preview_cache = NULL;

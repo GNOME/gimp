@@ -1,5 +1,23 @@
 2001-01-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimpdrawable.[ch]: removed the "name" parameter and use
+	GimpObject's name instead.
+
+	* app/channel.c
+	* app/channel_ops.c
+	* app/channels_dialog.c
+	* app/drawable.h
+	* app/gimpimage.c
+	* app/interface.c
+	* app/layer.c
+	* app/layer_select.c
+	* app/layers_dialog.c
+	* app/qmask.c
+	* app/undo.c
+	* app/xcf.c: changed accordingly, cleanup.
+
+2001-01-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/gimpbrushlist.c
 	* app/gimpdrawable.c: forgot to remove #include "gimpsignal.h"
 

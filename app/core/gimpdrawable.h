@@ -36,7 +36,6 @@ struct _GimpDrawable
 {
   GimpObject data;
 
-  gchar         *name;                  /* name of drawable               */
   TileManager   *tiles;                 /* tiles for drawable data        */
   gboolean       visible;               /* controls visibility            */
   gint           width, height;		/* size of drawable               */
@@ -96,13 +95,11 @@ gint            gimp_drawable_bytes              (GimpDrawable *);
 gint            gimp_drawable_width              (GimpDrawable *);
 gint            gimp_drawable_height             (GimpDrawable *);
 gboolean	gimp_drawable_visible	         (const GimpDrawable *drawable);
-void            gimp_drawable_offsets            (GimpDrawable *, 
-						  gint *, gint *);
+void            gimp_drawable_offsets            (GimpDrawable       *drawable, 
+						  gint               *offset_x,
+						  gint               *offset_y);
 
 guchar        * gimp_drawable_cmap               (const GimpDrawable *drawable);
-const gchar   *	gimp_drawable_get_name	         (const GimpDrawable *drawable);
-void 		gimp_drawable_set_name	         (GimpDrawable       *drawable,
-						  const gchar        *name);
 
 guchar        * gimp_drawable_get_color_at       (GimpDrawable       *drawable,
 						  gint                x,
@@ -132,5 +129,6 @@ void            gimp_drawable_configure          (GimpDrawable       *drawable,
 						  gint                height,
 						  GimpImageType       type,
 						  const gchar        *name);
+
 
 #endif /* __GIMP_DRAWABLE_H__ */

@@ -324,7 +324,7 @@ layer_select_set_layer (LayerSelect *layer_select)
 
   /*  Set the layer label  */
   gtk_label_set_text (GTK_LABEL (layer_select->label),
-		      drawable_get_name (GIMP_DRAWABLE (layer)));
+		      gimp_object_get_name (GIMP_OBJECT (layer)));
 }
 
 static gint

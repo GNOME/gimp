@@ -1304,7 +1304,7 @@ xcf_save_layer (XcfInfo *info,
   info->cp += xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->type, 1);
 
   /* write out the layers name */
-  info->cp += xcf_write_string (info->fp, &GIMP_DRAWABLE(layer)->name, 1);
+  info->cp += xcf_write_string (info->fp, &GIMP_OBJECT (layer)->name, 1);
 
   /* write out the layer properties */
   xcf_save_layer_props (info, gimage, layer);
@@ -1363,7 +1363,7 @@ xcf_save_channel (XcfInfo *info,
   info->cp += xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(channel)->height, 1);
 
   /* write out the channels name */
-  info->cp += xcf_write_string (info->fp, &GIMP_DRAWABLE(channel)->name, 1);
+  info->cp += xcf_write_string (info->fp, &GIMP_OBJECT (channel)->name, 1);
 
   /* write out the channel properties */
   xcf_save_channel_props (info, gimage, channel);

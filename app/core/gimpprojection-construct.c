@@ -839,7 +839,7 @@ gimp_image_apply_image (GimpImage	 *gimage,
   /*  determine what sort of operation is being attempted and
    *  if it's actually legal...
    */
-  operation = valid_combinations[drawable_type (drawable)][src2PR->bytes];
+  operation = valid_combinations[gimp_drawable_type (drawable)][src2PR->bytes];
   if (operation == -1)
     {
       g_message ("gimp_image_apply_image sent illegal parameters");
@@ -847,13 +847,13 @@ gimp_image_apply_image (GimpImage	 *gimage,
     }
 
   /*  get the layer offsets  */
-  drawable_offsets (drawable, &offset_x, &offset_y);
+  gimp_drawable_offsets (drawable, &offset_x, &offset_y);
 
   /*  make sure the image application coordinates are within gimage bounds  */
-  x1 = CLAMP (x, 0, drawable_width  (drawable));
-  y1 = CLAMP (y, 0, drawable_height (drawable));
-  x2 = CLAMP (x + src2PR->w, 0, drawable_width  (drawable));
-  y2 = CLAMP (y + src2PR->h, 0, drawable_height (drawable));
+  x1 = CLAMP (x, 0, gimp_drawable_width  (drawable));
+  y1 = CLAMP (y, 0, gimp_drawable_height (drawable));
+  x2 = CLAMP (x + src2PR->w, 0, gimp_drawable_width  (drawable));
+  y2 = CLAMP (y + src2PR->h, 0, gimp_drawable_height (drawable));
 
   if (mask)
     {
@@ -861,10 +861,10 @@ gimp_image_apply_image (GimpImage	 *gimage,
        *  we need to add the layer offset to transform coords
        *  into the mask coordinate system
        */
-      x1 = CLAMP (x1, -offset_x, drawable_width (GIMP_DRAWABLE (mask))-offset_x);
-      y1 = CLAMP (y1, -offset_y, drawable_height(GIMP_DRAWABLE (mask))-offset_y);
-      x2 = CLAMP (x2, -offset_x, drawable_width (GIMP_DRAWABLE (mask))-offset_x);
-      y2 = CLAMP (y2, -offset_y, drawable_height(GIMP_DRAWABLE (mask))-offset_y);
+      x1 = CLAMP (x1, -offset_x, gimp_drawable_width (GIMP_DRAWABLE (mask))-offset_x);
+      y1 = CLAMP (y1, -offset_y, gimp_drawable_height(GIMP_DRAWABLE (mask))-offset_y);
+      x2 = CLAMP (x2, -offset_x, gimp_drawable_width (GIMP_DRAWABLE (mask))-offset_x);
+      y2 = CLAMP (y2, -offset_y, gimp_drawable_height(GIMP_DRAWABLE (mask))-offset_y);
     }
 
   /*  If the calling procedure specified an undo step...  */
@@ -878,9 +878,9 @@ gimp_image_apply_image (GimpImage	 *gimage,
     pixel_region_init (&src1PR, src1_tiles, 
 		       x1, y1, (x2 - x1), (y2 - y1), FALSE);
   else
-    pixel_region_init (&src1PR, drawable_data (drawable), 
+    pixel_region_init (&src1PR, gimp_drawable_data (drawable), 
 		       x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  pixel_region_init (&destPR, drawable_data (drawable), 
+  pixel_region_init (&destPR, gimp_drawable_data (drawable), 
 		     x1, y1, (x2 - x1), (y2 - y1), TRUE);
   pixel_region_resize (src2PR, 
 		       src2PR->x + (x1 - x), src2PR->y + (y1 - y), 
@@ -898,7 +898,7 @@ gimp_image_apply_image (GimpImage	 *gimage,
       my = y1 + offset_y;
 
       pixel_region_init (&maskPR, 
-			 drawable_data (GIMP_DRAWABLE(mask)), 
+			 gimp_drawable_data (GIMP_DRAWABLE (mask)), 
 			 mx, my, 
 			 (x2 - x1), (y2 - y1), 
 			 FALSE);
@@ -946,7 +946,7 @@ gimp_image_replace_image (GimpImage    *gimage,
   /*  determine what sort of operation is being attempted and
    *  if it's actually legal...
    */
-  operation = valid_combinations [drawable_type (drawable)][src2PR->bytes];
+  operation = valid_combinations [gimp_drawable_type (drawable)][src2PR->bytes];
   if (operation == -1)
     {
       g_message ("gimp_image_apply_image sent illegal parameters");
@@ -954,13 +954,13 @@ gimp_image_replace_image (GimpImage    *gimage,
     }
 
   /*  get the layer offsets  */
-  drawable_offsets (drawable, &offset_x, &offset_y);
+  gimp_drawable_offsets (drawable, &offset_x, &offset_y);
 
   /*  make sure the image application coordinates are within gimage bounds  */
-  x1 = CLAMP (x, 0, drawable_width (drawable));
-  y1 = CLAMP (y, 0, drawable_height (drawable));
-  x2 = CLAMP (x + src2PR->w, 0, drawable_width (drawable));
-  y2 = CLAMP (y + src2PR->h, 0, drawable_height (drawable));
+  x1 = CLAMP (x, 0, gimp_drawable_width (drawable));
+  y1 = CLAMP (y, 0, gimp_drawable_height (drawable));
+  x2 = CLAMP (x + src2PR->w, 0, gimp_drawable_width (drawable));
+  y2 = CLAMP (y + src2PR->h, 0, gimp_drawable_height (drawable));
 
   if (mask)
     {
@@ -968,10 +968,10 @@ gimp_image_replace_image (GimpImage    *gimage,
        *  we need to add the layer offset to transform coords
        *  into the mask coordinate system
        */
-      x1 = CLAMP (x1, -offset_x, drawable_width (GIMP_DRAWABLE (mask))-offset_x);
-      y1 = CLAMP (y1, -offset_y, drawable_height(GIMP_DRAWABLE (mask))-offset_y);
-      x2 = CLAMP (x2, -offset_x, drawable_width (GIMP_DRAWABLE (mask))-offset_x);
-      y2 = CLAMP (y2, -offset_y, drawable_height(GIMP_DRAWABLE (mask))-offset_y);
+      x1 = CLAMP (x1, -offset_x, gimp_drawable_width (GIMP_DRAWABLE (mask))-offset_x);
+      y1 = CLAMP (y1, -offset_y, gimp_drawable_height(GIMP_DRAWABLE (mask))-offset_y);
+      x2 = CLAMP (x2, -offset_x, gimp_drawable_width (GIMP_DRAWABLE (mask))-offset_x);
+      y2 = CLAMP (y2, -offset_y, gimp_drawable_height(GIMP_DRAWABLE (mask))-offset_y);
     }
 
   /*  If the calling procedure specified an undo step...  */
@@ -981,9 +981,9 @@ gimp_image_replace_image (GimpImage    *gimage,
   /* configure the pixel regions
    *  If an alternative to using the drawable's data as src1 was provided...
    */
-  pixel_region_init (&src1PR, drawable_data (drawable),
+  pixel_region_init (&src1PR, gimp_drawable_data (drawable),
 		     x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  pixel_region_init (&destPR, drawable_data (drawable),
+  pixel_region_init (&destPR, gimp_drawable_data (drawable),
 		     x1, y1, (x2 - x1), (y2 - y1), TRUE);
   pixel_region_resize (src2PR,
 		       src2PR->x + (x1 - x), src2PR->y + (y1 - y),
@@ -1001,7 +1001,7 @@ gimp_image_replace_image (GimpImage    *gimage,
       my = y1 + offset_y;
 
       pixel_region_init (&mask2PR, 
-			 drawable_data (GIMP_DRAWABLE(mask)), 
+			 gimp_drawable_data (GIMP_DRAWABLE (mask)), 
 			 mx, my, 
 			 (x2 - x1), (y2 - y1), 
 			 FALSE);
@@ -1652,19 +1652,19 @@ gimp_image_construct_layers (GimpImage *gimage,
       /*  only add layers that are visible and not floating selections 
 	  to the list  */
       if (!layer_is_floating_sel (layer) && 
-	  drawable_visible (GIMP_DRAWABLE (layer)))
+	  gimp_drawable_visible (GIMP_DRAWABLE (layer)))
 	reverse_list = g_slist_prepend (reverse_list, layer);
     }
 
   while (reverse_list)
     {
       layer = (Layer *) reverse_list->data;
-      drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
       x1 = CLAMP (off_x, x, x + w);
       y1 = CLAMP (off_y, y, y + h);
-      x2 = CLAMP (off_x + drawable_width (GIMP_DRAWABLE (layer)), x, x + w);
-      y2 = CLAMP (off_y + drawable_height (GIMP_DRAWABLE (layer)), y, y + h);
+      x2 = CLAMP (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer)), x, x + w);
+      y2 = CLAMP (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer)), y, y + h);
 
       /* configure the pixel regions  */
       pixel_region_init (&src1PR, gimp_image_projection (gimage), 
@@ -1675,7 +1675,7 @@ gimp_image_construct_layers (GimpImage *gimage,
       if (layer->mask && layer->show_mask)
 	{
 	  pixel_region_init (&src2PR, 
-			     drawable_data (GIMP_DRAWABLE (layer->mask)),
+			     gimp_drawable_data (GIMP_DRAWABLE (layer->mask)),
 			     (x1 - off_x), (y1 - off_y),
 			     (x2 - x1), (y2 - y1), FALSE);
 
@@ -1685,14 +1685,14 @@ gimp_image_construct_layers (GimpImage *gimage,
       else
 	{
 	  pixel_region_init (&src2PR, 
-			     drawable_data (GIMP_DRAWABLE (layer)),
+			     gimp_drawable_data (GIMP_DRAWABLE (layer)),
 			     (x1 - off_x), (y1 - off_y),
 			     (x2 - x1), (y2 - y1), FALSE);
 
 	  if (layer->mask && layer->apply_mask)
 	    {
 	      pixel_region_init (&maskPR, 
-				 drawable_data (GIMP_DRAWABLE (layer->mask)),
+				 gimp_drawable_data (GIMP_DRAWABLE (layer->mask)),
 				 (x1 - off_x), (y1 - off_y),
 				 (x2 - x1), (y2 - y1), FALSE);
 	      mask = &maskPR;
@@ -1703,7 +1703,7 @@ gimp_image_construct_layers (GimpImage *gimage,
 	  /*  Based on the type of the layer, project the layer onto the
 	   *  projection image...
 	   */
-	  switch (drawable_type (GIMP_DRAWABLE (layer)))
+	  switch (gimp_drawable_type (GIMP_DRAWABLE (layer)))
 	    {
 	    case RGB_GIMAGE: case GRAY_GIMAGE:
 	      /* no mask possible */
@@ -1756,13 +1756,15 @@ gimp_image_construct_channels (GimpImage *gimage,
     {
       channel = (Channel *) reverse_list->data;
 
-      if (drawable_visible (GIMP_DRAWABLE (channel)))
+      if (gimp_drawable_visible (GIMP_DRAWABLE (channel)))
 	{
 	  /* configure the pixel regions  */
-	  pixel_region_init (&src1PR, gimp_image_projection (gimage), 
+	  pixel_region_init (&src1PR,
+			     gimp_image_projection (gimage), 
 			     x, y, w, h, 
 			     TRUE);
-	  pixel_region_init (&src2PR, drawable_data (GIMP_DRAWABLE (channel)), 
+	  pixel_region_init (&src2PR,
+			     gimp_drawable_data (GIMP_DRAWABLE (channel)), 
 			     x, y, w, h, 
 			     FALSE);
 
@@ -1800,14 +1802,14 @@ gimp_image_initialize_projection (GimpImage *gimage,
       gint off_x, off_y;
 
       layer = (Layer *) list->data;
-      drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
-      if (drawable_visible (GIMP_DRAWABLE (layer)) &&
+      if (gimp_drawable_visible (GIMP_DRAWABLE (layer)) &&
 	  ! layer_has_alpha (layer) &&
 	  (off_x <= x) &&
 	  (off_y <= y) &&
-	  (off_x + drawable_width (GIMP_DRAWABLE (layer)) >= x + w) &&
-	  (off_y + drawable_height (GIMP_DRAWABLE (layer)) >= y + h))
+	  (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer)) >= x + w) &&
+	  (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer)) >= y + h))
 	{
 	  coverage = 1;
 	  break;
@@ -1848,7 +1850,7 @@ gimp_image_get_active_channels (GimpImage    *gimage,
 	{
 	  layer = GIMP_LAYER (drawable);
 	  if (layer_has_alpha (layer) && layer->preserve_trans)
-	    active[drawable_bytes (drawable) - 1] = 0;
+	    active[gimp_drawable_bytes (drawable) - 1] = 0;
 	}
     }
 }
@@ -2219,7 +2221,7 @@ gimp_image_get_channel_by_name (const GimpImage *gimage,
        channels = g_slist_next (channels))
     {
       channel = (Channel *) channels->data;
-      if (! strcmp (drawable_get_name (GIMP_DRAWABLE (channel)), name))
+      if (! strcmp (gimp_object_get_name (GIMP_OBJECT (channel)), name))
       return channel;
     }
 
@@ -2862,7 +2864,7 @@ gimp_image_merge_layers (GimpImage *gimage,
   /*  Start a merge undo group  */
   undo_push_group_start (gimage, LAYER_MERGE_UNDO);
 
-  name = g_strdup (drawable_get_name (GIMP_DRAWABLE(layer)));
+  name = g_strdup (gimp_object_get_name (GIMP_OBJECT (layer)));
 
   if (merge_type == FLATTEN_IMAGE ||
       drawable_type (GIMP_DRAWABLE (layer)) == INDEXED_GIMAGE)
@@ -2875,7 +2877,7 @@ gimp_image_merge_layers (GimpImage *gimage,
 	}
 
       merge_layer = layer_new (gimage, (x2 - x1), (y2 - y1),
-			       type, drawable_get_name (GIMP_DRAWABLE (layer)),
+			       type, gimp_object_get_name (GIMP_OBJECT (layer)),
 			       OPAQUE_OPACITY, NORMAL_MODE);
       if (!merge_layer)
 	{
@@ -3044,7 +3046,7 @@ gimp_image_merge_layers (GimpImage *gimage,
 
   /* set the name after the original layers have been removed so we don't
      end up with #2 appended to the name */
-  drawable_set_name (GIMP_DRAWABLE (merge_layer), name);
+  gimp_object_set_name (GIMP_OBJECT (merge_layer), name);
   g_free (name);
 
   /*  End the merge undo group  */

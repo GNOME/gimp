@@ -3695,7 +3695,7 @@ edit_layer_query_ok_callback (GtkWidget *widget,
   if ((layer = options->layer))
     {
       /*  Set the new layer name  */
-      if (GIMP_DRAWABLE (layer)->name && layer_is_floating_sel (layer))
+      if (GIMP_OBJECT (layer)->name && layer_is_floating_sel (layer))
 	{
 	  /*  If the layer is a floating selection, make it a layer  */
 	  floating_sel_to_layer (layer);

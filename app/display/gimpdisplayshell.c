@@ -1262,7 +1262,7 @@ toolbox_drag_drop (GtkWidget      *widget,
 	  gimp_drawable_set_gimage (GIMP_DRAWABLE (new_layer), new_gimage);
 
 	  layer_set_name (GIMP_LAYER (new_layer),
-			  gimp_drawable_get_name (drawable));
+			  gimp_object_get_name (GIMP_OBJECT (drawable)));
 
 	  if (layer)
 	    {
@@ -1274,8 +1274,8 @@ toolbox_drag_drop (GtkWidget      *widget,
 
 	      if (new_mask)
 		{
-		  gimp_drawable_set_name (GIMP_DRAWABLE (new_mask),
-					  gimp_drawable_get_name (GIMP_DRAWABLE (mask)));
+		  gimp_object_set_name (GIMP_OBJECT (new_mask),
+					gimp_object_get_name (GIMP_OBJECT (mask)));
 		}
 	    }
 

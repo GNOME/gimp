@@ -327,7 +327,8 @@ layer_copy (Layer    *layer,
   PixelRegion    destPR;
 
   /*  formulate the new layer name  */
-  name = layer_get_name (layer);
+  name = gimp_object_get_name (GIMP_OBJECT (layer));
+
   ext = strrchr (name, '#');
   len = strlen (_("copy"));
 
@@ -529,7 +530,8 @@ layer_create_mask (Layer       *layer,
   guchar       white_mask = OPAQUE_OPACITY;
   guchar       black_mask = TRANSPARENT_OPACITY;
 
-  mask_name = g_strdup_printf (_("%s mask"), GIMP_DRAWABLE (layer)->name);
+  mask_name = g_strdup_printf (_("%s mask"),
+			       gimp_object_get_name (GIMP_OBJECT (layer)));
 
   /*  Create the layer mask  */
   mask = layer_mask_new (GIMP_DRAWABLE (layer)->gimage,
@@ -1289,13 +1291,13 @@ void
 layer_set_name (Layer       *layer,
 		const gchar *name)
 {
-  gimp_drawable_set_name (GIMP_DRAWABLE (layer), name);
+  gimp_object_set_name (GIMP_OBJECT (layer), name);
 }
 
 const gchar *
 layer_get_name (const Layer *layer)
 {
-  return gimp_drawable_get_name (GIMP_DRAWABLE (layer));
+  return gimp_object_get_name (GIMP_OBJECT (layer));
 }
 
 guchar *
@@ -1804,8 +1806,9 @@ layer_mask_copy (LayerMask *layer_mask)
   PixelRegion  srcPR, destPR;
 
   /*  formulate the new layer_mask name  */
-  layer_mask_name = g_strdup_printf (_("%s copy"), 
-				     GIMP_DRAWABLE(layer_mask)->name);
+  layer_mask_name =
+    g_strdup_printf (_("%s copy"), 
+		     gimp_object_get_name (GIMP_OBJECT (layer_mask)));
 
   /*  allocate a new layer_mask object  */
   new_layer_mask = layer_mask_new (GIMP_DRAWABLE(layer_mask)->gimage, 

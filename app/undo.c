@@ -183,7 +183,7 @@ layer_size (Layer *layer)
     sizeof (Layer) + 
     GIMP_DRAWABLE (layer)->width * GIMP_DRAWABLE (layer)->height *
     GIMP_DRAWABLE (layer)->bytes + 
-    strlen (GIMP_DRAWABLE (layer)->name);
+    strlen (GIMP_OBJECT (layer)->name);
 
   if (layer_get_mask (layer))
     size += channel_size (GIMP_CHANNEL (layer_get_mask (layer)));
@@ -200,7 +200,7 @@ channel_size (Channel *channel)
   size =
     sizeof (Channel) +
     GIMP_DRAWABLE (channel)->width * GIMP_DRAWABLE (channel)->height +
-    strlen (GIMP_DRAWABLE (channel)->name);
+    strlen (GIMP_OBJECT (channel)->name);
 
   return size;
 }
