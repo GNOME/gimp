@@ -1,3 +1,9 @@
+2003-12-19  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpplugin.sgml
+	* libgimp/tmpl/gimpproceduraldb.sgml: updated.
+
 2003-12-18  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/tmpl/gimppatheditor.sgml

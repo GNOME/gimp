@@ -33,14 +33,6 @@ Functions useful for plugins, e.g. registration and progress indicators.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_temp_PDB_name ##### -->
-<para>
-
-</para>
-
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_plugin_domain_register ##### -->
 <para>
 

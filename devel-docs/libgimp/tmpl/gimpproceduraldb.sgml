@@ -15,6 +15,14 @@ Functions for querying and changing procedural database (PDB) entries.
 
 </para>
 
+<!-- ##### FUNCTION gimp_procedural_db_temp_name ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_procedural_db_proc_info ##### -->
 <para>
 

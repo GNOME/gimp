@@ -492,13 +492,13 @@ gimp_pixel_rgns_process
 <FILE>gimpplugin</FILE>
 gimp_progress_init
 gimp_progress_update
-gimp_temp_PDB_name
 gimp_plugin_domain_register
 gimp_plugin_help_register
 </SECTION>
 
 <SECTION>
 <FILE>gimpproceduraldb</FILE>
+gimp_procedural_db_temp_name
 gimp_procedural_db_proc_info
 gimp_procedural_db_get_data
 gimp_procedural_db_set_data
