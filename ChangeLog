@@ -1,3 +1,10 @@
+2000-06-25  Sven Neumann  <sven@gimp.org>
+
+	* app/resize.c (offset_update): Adding 0.5 isn't always the 
+	right thing to do when converting to integer. Especially
+	not if dealing with negative values. This change should
+	fix the off-by-one error reported lately.
+
 2000-06-25  Tuomas Kuosmanen  <tigert@tigert.gimp.org>
 
 	* cursors/bezier_select_small.xbm

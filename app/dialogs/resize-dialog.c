@@ -824,12 +824,10 @@ offset_update (GtkWidget *widget,
   resize = (Resize *) data;
   private = (ResizePrivate *) resize->private_part;
 
-  offset_x = (gint)
-    (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->offset_se), 0) + 0.5);
+  offset_x = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->offset_se), 0);
   offset_x = resize_bound_off_x (resize, offset_x);
 
-  offset_y = (gint)
-    (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->offset_se), 1) + 0.5);
+  offset_y = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->offset_se), 1);
   offset_y = resize_bound_off_y (resize, offset_y);
 
   if ((offset_x != resize->offset_x) ||
