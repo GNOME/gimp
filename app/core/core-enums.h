@@ -19,6 +19,7 @@
 #ifndef __CORE_ENUMS_H__
 #define __CORE_ENUMS_H__
 
+
 #if 0
    This file is parsed by two scripts, enumgen.pl in tools/pdbgen,
    and gimp-mkenums. All enums that are not marked with
@@ -505,6 +506,27 @@ typedef enum /*< pdb-skip >*/
 } GimpUndoType;
 
 
+#define GIMP_TYPE_DIRTY_MASK (gimp_dirty_mask_get_type ())
+
+GType gimp_dirty_mask_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_DIRTY_NONE            = 0,
+
+  GIMP_DIRTY_IMAGE           = 1 << 0,
+  GIMP_DIRTY_IMAGE_META      = 1 << 1,
+  GIMP_DIRTY_IMAGE_STRUCTURE = 1 << 2,
+  GIMP_DIRTY_ITEM            = 1 << 3,
+  GIMP_DIRTY_ITEM_META       = 1 << 4,
+  GIMP_DIRTY_DRAWABLE        = 1 << 5,
+  GIMP_DIRTY_VECTORS         = 1 << 6,
+  GIMP_DIRTY_SELECTION       = 1 << 7,
+
+  GIMP_DIRTY_ALL             = 0xff
+} GimpDirtyMask;
+
+
 /*
  * non-registered enums; register them if needed
  */
@@ -620,5 +642,6 @@ typedef enum  /*< pdb-skip, skip >*/
   GIMP_IMAGE_SCALE_TOO_SMALL,
   GIMP_IMAGE_SCALE_TOO_BIG
 } GimpImageScaleCheckType;
+
 
 #endif /* __CORE_ENUMS_H__ */

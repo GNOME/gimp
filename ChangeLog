@@ -1,5 +1,29 @@
 2004-07-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/core-enums.h: added still unused flags type
+	GimpDirtyMask.
+
+	* app/base/Makefile.am
+	* app/core/Makefile.am
+	* app/display/Makefile.am
+	* app/paint/Makefile.am
+	* app/text/Makefile.am
+	* app/tools/Makefile.am
+	* app/widgets/Makefile.am
+	* libgimpthumb/Makefile.am: changed calls to gimp-mkenums to
+	support GTypeFlags and to make the value arrays private to the
+	get_type() functions.
+
+	* app/base/base-enums.c
+	* app/core/core-enums.c
+	* app/display/display-enums.c
+	* app/paint/paint-enums.c
+	* app/text/text-enums.c
+	* app/tools/tools-enums.c
+	* app/widgets/widgets-enums.c: regenerated.
+
+2004-07-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimpclone.c: converted tabs to spaces.
 
 2004-07-28  DindinX  <david.odin@cpe.fr>
