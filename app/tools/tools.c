@@ -70,6 +70,7 @@
 #include "gimpsmudgetool.h"
 #include "gimptexttool.h"
 #include "gimptoolmodule.h"
+#include "gimpvectortool.h"
 
 void 
 cheesey_module_loading_hack (const gchar *filename,
@@ -126,6 +127,7 @@ tools_init (Gimp *gimp)
     /*  non-modifying tools  */
 
     gimp_path_tool_register,
+    gimp_vector_tool_register,
     gimp_measure_tool_register,
     gimp_magnify_tool_register,
     gimp_histogram_tool_register,

@@ -4,6 +4,7 @@ SUBDIRS = \
 	paint-funcs	\
 	base 		\
 	core		\
+	vectors		\
 	config		\
 	paint		\
 	xcf		\
@@ -128,6 +129,7 @@ gimp_1_3_LDADD = @STRIP_BEGIN@ \
 	widgets/libappwidgets.a						\
 	core/libappcore.a						\
 	pdb/libapppdb.a							\
+	vectors/libappvectors.a						\
 	paint/libapppaint.a						\
 	xcf/libappxcf.a							\
 	file/libappfile.a						\

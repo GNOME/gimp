@@ -1,3 +1,28 @@
+2002-02-22  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/Makefile
+	* app/vectors/Makefile.am
+	* app/vectors/Makefile.in
+	* app/vectors/gimpanchor.h
+	* app/vectors/gimpbezier.c
+	* app/vectors/gimpbezier.h
+	* app/vectors/gimpvectors.c
+	* app/vectors/gimpvectors.h
+	* app/vectors/vectors-types.h: new files, the beginning
+	of a new vector infrastructure for gimp.
+	
+	* configure.in
+	* app/Makefile.am
+	* app/core/core-types.h: changed accordingly.
+
+	* app/tools/Makefile.am
+	* app/tools/gimpvectortool.c
+	* app/tools/gimpvectortool.h
+	* app/tools/tools.c: New tool without practical use (yet),
+	using the new infrastructure.
+
+	to be continued...
+
 2002-02-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am

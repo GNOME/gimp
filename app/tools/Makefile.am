@@ -103,6 +103,8 @@ libapptools_a_SOURCES = @STRIP_BEGIN@ \
 	gimptoolmodule.h		\
 	gimptransformtool.c		\
 	gimptransformtool.h		\
+	gimpvectortool.c		\
+	gimpvectortool.h		\
 	\
 	transform_options.c     	\
 	transform_options.h     	\
