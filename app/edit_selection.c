@@ -417,8 +417,8 @@ edit_selection_motion (Tool           *tool,
 	    edit_select.y1 = 0;
 
 	    edit_select.edit_type = EDIT_FLOATING_SEL_TRANSLATE;
-	    break;
-      
+            /*  Don't break, fall through.  */
+
 	  case EDIT_FLOATING_SEL_TRANSLATE:
 	    layer = gimage_get_active_layer (gdisp->gimage);
       
