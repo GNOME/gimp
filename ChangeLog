@@ -1,3 +1,9 @@
+2005-03-20  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/core/gimpimage-convert.c: applied patch from Adam
+	Moss converning gray->indexed conversion,
+	fixes bug #170825.
+
 2005-03-20  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimptext.[ch]
