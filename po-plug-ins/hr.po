@@ -6597,7 +6597,7 @@ msgstr "Screen Shot"
 #: plug-ins/twain/twain.c:363 plug-ins/winsnap/winsnap.c:1081
 #, fuzzy
 msgid "<Toolbox>/File/Acquire"
-msgstr "_<Toolbox>/Datoteka/Izvuci/TWAIN..."
+msgstr "<Toolbox>/Datoteka/Izvuci/TWAIN..."
 
 #: plug-ins/common/screenshot.c:395
 msgid "Error grabbing the pointer"
@@ -13019,7 +13019,7 @@ msgstr "Greška XJT datoteka %s je prazna."
 #~ msgstr "Pregled (1:4) - Desni klik za Skok"
 
 #~ msgid "<Toolbox>/File/Acquire/_Screen Shot..."
-#~ msgstr "_<Toolbox>/Datoteka/Izvuci/Screen Shot..."
+#~ msgstr "<Toolbox>/Datoteka/Izvuci/Screen Shot..."
 
 #~ msgid "<Image>/Filters/Blur/_Selective Gaussian Blur..."
 #~ msgstr "<Image>/Filteri/Zamućenje/Selektivno Gausian zamućenje..."
