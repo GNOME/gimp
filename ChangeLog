@@ -1,3 +1,9 @@
+1999-09-21  Zach Beane <xach@mint.net>
+
+	* app/color_cmds.c:
+	Reverted the patch I applied to fix the SOTA-Chrome bug. Yosh says he
+	will add a new GUINT8ARRAY type to the PDB to fix this the right way.
+
 Tue Sep 21 15:05:50 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/papertile.c: Updated papertile plug-in to the 
