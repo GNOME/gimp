@@ -1,3 +1,12 @@
+2003-09-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpitemtreeview.c (gimp_item_tree_view_constructor): 
+	order the "visible" and "linked" columns by inserting them with
+	the right index, not by reordering code.
+
+	(gimp_item_tree_view_set_container): set the handler_ids to 0
+	after disconnecting them.
+
 2003-09-15  Sven Neumann  <sven@gimp.org>
 
 	* app/vectors/gimpvectors-import.c: name the vectors after the

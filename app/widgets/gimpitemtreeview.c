@@ -332,7 +332,8 @@ gimp_item_tree_view_init (GimpItemTreeView      *view,
   gtk_widget_set_sensitive (view->edit_button,      FALSE);
   gtk_widget_set_sensitive (view->delete_button,    FALSE);
 
-  view->linked_changed_handler_id = 0;
+  view->visible_changed_handler_id = 0;
+  view->linked_changed_handler_id  = 0;
 }
 
 static GObject *
@@ -363,23 +364,6 @@ gimp_item_tree_view_constructor (GType                  type,
   column = gtk_tree_view_column_new ();
   gtk_tree_view_insert_column (tree_view->view, column, 0);
 
-  item_view->chain_cell = gimp_cell_renderer_toggle_new (GIMP_STOCK_LINKED);
-  gtk_tree_view_column_pack_start (column, item_view->chain_cell, FALSE);
-  gtk_tree_view_column_set_attributes (column, item_view->chain_cell,
-                                       "active",
-                                       item_view->model_column_linked,
-                                       NULL);
-
-  tree_view->toggle_cells = g_list_prepend (tree_view->toggle_cells,
-                                            item_view->chain_cell);
-
-  g_signal_connect (item_view->chain_cell, "clicked",
-                    G_CALLBACK (gimp_item_tree_view_chain_clicked),
-                    item_view);
-
-  column = gtk_tree_view_column_new ();
-  gtk_tree_view_insert_column (tree_view->view, column, 0);
-
   item_view->eye_cell = gimp_cell_renderer_toggle_new (GIMP_STOCK_VISIBLE);
   gtk_tree_view_column_pack_start (column, item_view->eye_cell, FALSE);
   gtk_tree_view_column_set_attributes (column, item_view->eye_cell,
@@ -392,6 +376,23 @@ gimp_item_tree_view_constructor (GType                  type,
 
   g_signal_connect (item_view->eye_cell, "clicked",
                     G_CALLBACK (gimp_item_tree_view_eye_clicked),
+                    item_view);
+
+  column = gtk_tree_view_column_new ();
+  gtk_tree_view_insert_column (tree_view->view, column, 1);
+
+  item_view->chain_cell = gimp_cell_renderer_toggle_new (GIMP_STOCK_LINKED);
+  gtk_tree_view_column_pack_start (column, item_view->chain_cell, FALSE);
+  gtk_tree_view_column_set_attributes (column, item_view->chain_cell,
+                                       "active",
+                                       item_view->model_column_linked,
+                                       NULL);
+
+  tree_view->toggle_cells = g_list_prepend (tree_view->toggle_cells,
+                                            item_view->chain_cell);
+
+  g_signal_connect (item_view->chain_cell, "clicked",
+                    G_CALLBACK (gimp_item_tree_view_chain_clicked),
                     item_view);
 
   return object;
@@ -583,6 +584,9 @@ gimp_item_tree_view_set_container (GimpContainerView *view,
 				     item_view->visible_changed_handler_id);
       gimp_container_remove_handler (view->container,
 				     item_view->linked_changed_handler_id);
+
+      item_view->visible_changed_handler_id = 0;
+      item_view->linked_changed_handler_id  = 0;
     }
 
   GIMP_CONTAINER_VIEW_CLASS (parent_class)->set_container (view, container);
