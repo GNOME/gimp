@@ -105,7 +105,8 @@ void 		gimp_channel_set_color         (GimpChannel       *channel,
 
 void            gimp_channel_scale             (GimpChannel       *channel, 
 						gint               new_width, 
-						gint               new_height);
+						gint               new_height,
+                                                GimpInterpolationType  interpolation_type);
 void            gimp_channel_resize            (GimpChannel       *channel, 
 						gint               new_width,
 						gint               new_height,

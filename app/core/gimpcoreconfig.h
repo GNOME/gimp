@@ -22,33 +22,35 @@
 
 struct _GimpCoreConfig
 {
-  gchar             *plug_in_path;
-  gchar             *tool_plug_in_path;
-  gchar             *module_path;
+  GimpInterpolationType  interpolation_type;
 
-  gchar             *brush_path;
-  gchar             *pattern_path;
-  gchar             *palette_path;
-  gchar             *gradient_path;
+  gchar                 *plug_in_path;
+  gchar                 *tool_plug_in_path;
+  gchar                 *module_path;
 
-  gchar             *default_brush;
-  gchar             *default_pattern;
-  gchar             *default_palette;
-  gchar             *default_gradient;
+  gchar                 *brush_path;
+  gchar                 *pattern_path;
+  gchar                 *palette_path;
+  gchar                 *gradient_path;
 
-  gchar             *default_comment;
-  GimpImageBaseType  default_type;
-  gint               default_width;
-  gint               default_height;
-  GimpUnit           default_units;
-  gdouble            default_xresolution;
-  gdouble            default_yresolution;
-  GimpUnit           default_resolution_units;
+  gchar                 *default_brush;
+  gchar                 *default_pattern;
+  gchar                 *default_palette;
+  gchar                 *default_gradient;
 
-  gint               levels_of_undo;
-  gchar             *pluginrc_path;
-  gchar             *module_db_load_inhibit;
-  gboolean           write_thumbnails;
+  gchar                 *default_comment;
+  GimpImageBaseType      default_type;
+  gint                   default_width;
+  gint                   default_height;
+  GimpUnit               default_units;
+  gdouble                default_xresolution;
+  gdouble                default_yresolution;
+  GimpUnit               default_resolution_units;
+
+  gint                   levels_of_undo;
+  gchar                 *pluginrc_path;
+  gchar                 *module_db_load_inhibit;
+  gboolean               write_thumbnails;
 };
 
 

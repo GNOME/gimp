@@ -36,11 +36,12 @@
 
 
 void
-gimp_image_scale (GimpImage        *gimage, 
-		  gint              new_width, 
-		  gint              new_height,
-                  GimpProgressFunc  progress_func,
-                  gpointer          progress_data)
+gimp_image_scale (GimpImage             *gimage, 
+		  gint                   new_width, 
+		  gint                   new_height,
+                  GimpInterpolationType  interpolation_type,
+                  GimpProgressFunc       progress_func,
+                  gpointer               progress_data)
 {
   GimpChannel *channel;
   GimpLayer   *layer;
@@ -93,7 +94,7 @@ gimp_image_scale (GimpImage        *gimage,
     {
       channel = (GimpChannel *) list->data;
 
-      gimp_channel_scale (channel, new_width, new_height);
+      gimp_channel_scale (channel, new_width, new_height, interpolation_type);
 
       if (progress_func)
         {
@@ -109,7 +110,8 @@ gimp_image_scale (GimpImage        *gimage,
       else
   */
 
-  gimp_channel_scale (gimage->selection_mask, new_width, new_height);
+  gimp_channel_scale (gimage->selection_mask, new_width, new_height,
+                      interpolation_type);
   gimp_image_mask_invalidate (gimage);
 
   /*  Scale all layers  */
@@ -119,7 +121,8 @@ gimp_image_scale (GimpImage        *gimage,
     {
       layer = (GimpLayer *) list->data;
 
-      if (! gimp_layer_scale_by_factors (layer, img_scale_w, img_scale_h))
+      if (! gimp_layer_scale_by_factors (layer, img_scale_w, img_scale_h,
+                                         interpolation_type))
 	{
 	  /* Since 0 < img_scale_w, img_scale_h, failure due to one or more
 	   * vanishing scaled layer dimensions. Implicit delete implemented

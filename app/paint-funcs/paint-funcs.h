@@ -314,7 +314,8 @@ void  gaussian_blur_region                (PixelRegion *, double, double);
 
 void  border_region                       (PixelRegion *, gint16, gint16);
 
-void  scale_region                        (PixelRegion *, PixelRegion *);
+void  scale_region                        (PixelRegion *, PixelRegion *,
+                                           GimpInterpolationType);
 
 void  scale_region_no_resample            (PixelRegion *, PixelRegion *);
 

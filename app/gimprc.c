@@ -338,12 +338,12 @@ gimprc_init (Gimp *gimp)
 	{ "swap-path",          TT_PATH,    NULL, NULL },
 	{ "tile-cache-size",    TT_MEMSIZE, NULL, NULL },
 	{ "stingy-memory-use",  TT_BOOLEAN, NULL, NULL },
-	{ "interpolation-type", TT_INTERP,  NULL, NULL },
 	{ "num-processors",     TT_INT,     NULL, NULL }
       };
 
       static ParseFunc core_funcs[] =
       {
+	{ "interpolation-type",       TT_INTERP,    NULL, NULL },
 	{ "plug-in-path",             TT_PATH,      NULL, NULL },
 	{ "module-path",              TT_PATH,      NULL, NULL },
 	{ "brush-path",               TT_PATH,      NULL, NULL },
@@ -373,32 +373,32 @@ gimprc_init (Gimp *gimp)
       base_funcs[1].val1p  = &base_config->swap_path;
       base_funcs[2].val1p  = &base_config->tile_cache_size;
       base_funcs[3].val1p  = &base_config->stingy_memory_use;
-      base_funcs[4].val1p  = &base_config->interpolation_type;
-      base_funcs[5].val1p  = &base_config->num_processors;
+      base_funcs[4].val1p  = &base_config->num_processors;
 
-      core_funcs[0].val1p  = &gimp->config->plug_in_path;
-      core_funcs[1].val1p  = &gimp->config->module_path;
-      core_funcs[2].val1p  = &gimp->config->brush_path;
-      core_funcs[3].val1p  = &gimp->config->pattern_path;
-      core_funcs[4].val1p  = &gimp->config->palette_path;
-      core_funcs[5].val1p  = &gimp->config->gradient_path;
-      core_funcs[6].val1p  = &gimp->config->default_brush;
-      core_funcs[7].val1p  = &gimp->config->default_pattern;
-      core_funcs[8].val1p  = &gimp->config->default_palette;
-      core_funcs[9].val1p  = &gimp->config->default_gradient;
-      core_funcs[10].val1p = &gimp->config->default_comment;
-      core_funcs[11].val1p = &gimp->config->default_type;
-      core_funcs[12].val1p = &gimp->config->default_width;
-      core_funcs[12].val2p = &gimp->config->default_height;
-      core_funcs[13].val1p = &gimp->config->default_units;
-      core_funcs[14].val1p = &gimp->config->default_xresolution;
+      core_funcs[0].val1p  = &gimp->config->interpolation_type;
+      core_funcs[1].val1p  = &gimp->config->plug_in_path;
+      core_funcs[2].val1p  = &gimp->config->module_path;
+      core_funcs[3].val1p  = &gimp->config->brush_path;
+      core_funcs[4].val1p  = &gimp->config->pattern_path;
+      core_funcs[5].val1p  = &gimp->config->palette_path;
+      core_funcs[6].val1p  = &gimp->config->gradient_path;
+      core_funcs[7].val1p  = &gimp->config->default_brush;
+      core_funcs[8].val1p  = &gimp->config->default_pattern;
+      core_funcs[9].val1p  = &gimp->config->default_palette;
+      core_funcs[10].val1p = &gimp->config->default_gradient;
+      core_funcs[11].val1p = &gimp->config->default_comment;
+      core_funcs[12].val1p = &gimp->config->default_type;
+      core_funcs[13].val1p = &gimp->config->default_width;
+      core_funcs[13].val2p = &gimp->config->default_height;
+      core_funcs[14].val1p = &gimp->config->default_units;
       core_funcs[15].val1p = &gimp->config->default_xresolution;
-      core_funcs[16].val1p = &gimp->config->default_resolution_units;
-      core_funcs[17].val1p = &gimp->config->levels_of_undo;
-      core_funcs[18].val1p = &gimp->config->pluginrc_path;
-      core_funcs[19].val1p = &gimp->config->module_db_load_inhibit;
-      core_funcs[20].val1p = &gimp->config->write_thumbnails;
-      core_funcs[21].val1p = &gimp->config->tool_plug_in_path;
+      core_funcs[16].val1p = &gimp->config->default_xresolution;
+      core_funcs[17].val1p = &gimp->config->default_resolution_units;
+      core_funcs[18].val1p = &gimp->config->levels_of_undo;
+      core_funcs[19].val1p = &gimp->config->pluginrc_path;
+      core_funcs[20].val1p = &gimp->config->module_db_load_inhibit;
+      core_funcs[21].val1p = &gimp->config->write_thumbnails;
+      core_funcs[22].val1p = &gimp->config->tool_plug_in_path;
 
       parse_func_hash = g_hash_table_new (g_str_hash, g_str_equal);
 

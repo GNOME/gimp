@@ -1021,7 +1021,9 @@ scale_layer_query_ok_callback (GtkWidget *widget,
 	    floating_sel_relax (layer, TRUE);
 
 	  gimp_layer_scale (layer, 
-			    options->resize->width, options->resize->height,
+			    options->resize->width,
+                            options->resize->height,
+                            options->resize->interpolation,
 			    TRUE);
 
 	  if (gimp_layer_is_floating_sel (layer))

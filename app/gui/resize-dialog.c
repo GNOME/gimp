@@ -61,6 +61,9 @@ struct _ResizePrivate
   GtkWidget *resolution_se;
   GtkWidget *equal_res;
 
+  /*  interpolation menu  */
+  GtkWidget *interpolation_menu;
+
   gint       old_width, old_height;
   gdouble    old_res_x, old_res_y;
 };
@@ -144,17 +147,19 @@ resize_widget_new (GimpImage    *gimage,
 
   resize = (Resize *) private;
 
-  resize->type         = type;
-  resize->target       = target;
-  resize->width        = width;
-  resize->height       = height;
-  resize->resolution_x = resolution_x;
-  resize->resolution_y = resolution_y;
-  resize->unit         = unit;
-  resize->ratio_x      = 1.0;
-  resize->ratio_y      = 1.0;
-  resize->offset_x     = 0;
-  resize->offset_y     = 0;
+  resize->gimage        = gimage;
+  resize->type          = type;
+  resize->target        = target;
+  resize->width         = width;
+  resize->height        = height;
+  resize->resolution_x  = resolution_x;
+  resize->resolution_y  = resolution_y;
+  resize->unit          = unit;
+  resize->ratio_x       = 1.0;
+  resize->ratio_y       = 1.0;
+  resize->offset_x      = 0;
+  resize->offset_y      = 0;
+  resize->interpolation = gimage->gimp->config->interpolation_type;
 
   /*  dialog box  */
   {
@@ -649,6 +654,44 @@ resize_widget_new (GimpImage    *gimage,
       gtk_widget_show (vbox);
     }
 
+  /*  the interpolation menu  */
+  if (type == ScaleWidget)
+    {
+      GtkWidget *hbox;
+
+      hbox = gtk_hbox_new (FALSE, 4);
+      gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
+
+      label = gtk_label_new (_("Interpolation Type:"));
+      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+
+      private->interpolation_menu =
+        gimp_option_menu_new2 (FALSE,
+                               G_CALLBACK (gimp_menu_item_update),
+                               &resize->interpolation,
+                               GINT_TO_POINTER (resize->interpolation),
+
+                               _("Nearest Neighbor (Fastest)"),
+                               GINT_TO_POINTER (GIMP_NEAREST_NEIGHBOR_INTERPOLATION),
+                               NULL,
+
+                               _("Linear"),
+                               GINT_TO_POINTER (GIMP_LINEAR_INTERPOLATION),
+                               NULL,
+
+                               _("Cubic (Slowest & Best)"),
+                               GINT_TO_POINTER (GIMP_CUBIC_INTERPOLATION),
+                               NULL,
+
+                               NULL);
+
+      gtk_box_pack_start (GTK_BOX (hbox), private->interpolation_menu,
+                          FALSE, FALSE, 0);
+      gtk_widget_show (private->interpolation_menu);
+    }
+
   gtk_widget_show (main_vbox);
 
   /*  finally, activate the first entry  */
@@ -804,6 +847,13 @@ reset_callback (GtkWidget *widget,
       resolution_update (resize, private->old_res_x, private->old_res_y);
     }
 
+  if (resize->type == ScaleWidget)
+    {
+      resize->interpolation = resize->gimage->gimp->config->interpolation_type;
+
+      gimp_option_menu_set_history (GTK_OPTION_MENU (private->interpolation_menu),
+                                    GINT_TO_POINTER (resize->interpolation));
+    }
 }
   
 static void

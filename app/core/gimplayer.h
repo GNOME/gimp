@@ -126,10 +126,12 @@ void            gimp_layer_translate           (GimpLayer            *layer,
 void            gimp_layer_add_alpha           (GimpLayer            *layer);
 gboolean        gimp_layer_scale_by_factors    (GimpLayer            *layer, 
                                                 gdouble               w_factor, 
-                                                gdouble               h_factor);
+                                                gdouble               h_factor,
+                                                GimpInterpolationType interpolation_type);
 void            gimp_layer_scale               (GimpLayer            *layer, 
                                                 gint                  new_width,
                                                 gint                  new_height,
+                                                GimpInterpolationType interpolation_type,
                                                 gboolean              local_origin);
 void            gimp_layer_resize              (GimpLayer            *layer,
                                                 gint                  new_width,

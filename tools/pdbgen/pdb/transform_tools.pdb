@@ -125,7 +125,8 @@ HELP
 
     %invoke = (
 	vars => [ 'gint x1, y1, x2, y2', 'gdouble trans_info[8]',
-                  'GimpMatrix3 matrix' ],
+                  'GimpMatrix3 matrix',
+                  'GimpInterpolationType interpolation_type' ],
 	code => <<'CODE'
 {
   gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
@@ -142,9 +143,14 @@ HELP
                                               trans_info[Y3],
                                               matrix);
 
+  if (interpolation)
+    interpolation_type = gimp->config->interpolation_type;
+  else
+    interpolation_type = GIMP_NEAREST_NEIGHBOR_INTERPOLATION;
+
   /* Perspective the selection */
   success = gimp_drawable_transform_affine (drawable,
-                                            interpolation, 
+                                            interpolation_type,
                                             FALSE,
 				            matrix,
                                             GIMP_TRANSFORM_FORWARD);
@@ -182,7 +188,8 @@ HELP
     @outargs = ( &drawable_out_arg('rotated') );
 
     %invoke = (
-	vars => [ 'gint x1, y1, x2, y2', 'GimpMatrix3 matrix' ],
+	vars => [ 'gint x1, y1, x2, y2', 'GimpMatrix3 matrix',
+                  'GimpInterpolationType interpolation_type' ],
 	code => <<'CODE'
 {
   gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
@@ -192,9 +199,14 @@ HELP
                                          angle,
                                          matrix);
 
+  if (interpolation)
+    interpolation_type = gimp->config->interpolation_type;
+  else
+    interpolation_type = GIMP_NEAREST_NEIGHBOR_INTERPOLATION;
+
   /* Rotate the selection */
   success = gimp_drawable_transform_affine (drawable,
-                                            interpolation,
+                                            interpolation_type,
                                             FALSE,
                                             matrix,
                                             GIMP_TRANSFORM_FORWARD);
@@ -241,7 +253,8 @@ HELP
 
     %invoke = (
 	vars => [ 'gint x1, y1, x2, y2', 'gdouble trans_info[4]',
-                  'GimpMatrix3 matrix' ],
+                  'GimpMatrix3 matrix',
+                  'GimpInterpolationType interpolation_type' ],
 	code => <<'CODE'
 {
   if (trans_info[X0] < trans_info[X1] &&
@@ -257,9 +270,14 @@ HELP
                                             trans_info[Y1],
                                             matrix);
 
+      if (interpolation)
+        interpolation_type = gimp->config->interpolation_type;
+      else
+        interpolation_type = GIMP_NEAREST_NEIGHBOR_INTERPOLATION;
+
       /* Scale the selection */
       success = gimp_drawable_transform_affine (drawable,
-                                                interpolation,
+                                                interpolation_type,
                                                 FALSE,
                                                 matrix,
                                                 GIMP_TRANSFORM_FORWARD);
@@ -307,7 +325,8 @@ HELP
     @outargs = ( &drawable_out_arg('sheared') );
 
     %invoke = (
-	vars => [ 'gint x1, y1, x2, y2', 'GimpMatrix3 matrix' ],
+	vars => [ 'gint x1, y1, x2, y2', 'GimpMatrix3 matrix',
+                  'GimpInterpolationType interpolation_type' ],
 	code => <<'CODE'
 {
   gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
@@ -322,9 +341,14 @@ HELP
                                         magnitude,
                                         matrix);
 
+  if (interpolation)
+    interpolation_type = gimp->config->interpolation_type;
+  else
+    interpolation_type = GIMP_NEAREST_NEIGHBOR_INTERPOLATION;
+
   /* Shear the selection */
   success = gimp_drawable_transform_affine (drawable,
-                                            interpolation,
+                                            interpolation_type,
                                             FALSE,
                                             matrix,
                                             GIMP_TRANSFORM_FORWARD);
@@ -377,7 +401,8 @@ HELP
     @outargs = ( &drawable_out_arg('transformed') );
 
     %invoke = (
-	vars => [ 'GimpMatrix3 matrix' ],
+	vars => [ 'GimpMatrix3 matrix',
+                  'GimpInterpolationType interpolation_type' ],
 	code => <<'CODE'
 {
   /* Assemble the transformation matrix */
@@ -387,9 +412,14 @@ HELP
   gimp_matrix3_rotate    (matrix, angle);
   gimp_matrix3_translate (matrix, dest_x, dest_y);
 
+  if (interpolation)
+    interpolation_type = gimp->config->interpolation_type;
+  else
+    interpolation_type = GIMP_NEAREST_NEIGHBOR_INTERPOLATION;
+
   /* Transform the selection */
   success = gimp_drawable_transform_affine (drawable,
-				            interpolation,
+				            interpolation_type,
                                             FALSE,
                                             matrix,
                                             GIMP_TRANSFORM_FORWARD);
@@ -398,7 +428,8 @@ CODE
     );
 }
 
-@headers = qw("libgimpmath/gimpmath.h" "core/gimpdrawable-transform.h"
+@headers = qw("libgimpmath/gimpmath.h" "core/gimp.h"
+              "core/gimpcoreconfig.h" "core/gimpdrawable-transform.h"
               "core/gimpdrawable-transform-utils.h" "core/gimpdrawable.h");
 
 @procs = qw(flip perspective rotate scale shear transform_2d);

@@ -31,6 +31,8 @@
 #include "base/base-enums.h"
 #include "core/core-enums.h"
 #include "core/core-types.h"
+#include "core/gimp.h"
+#include "core/gimpcoreconfig.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
@@ -401,7 +403,7 @@ layer_scale_invoker (Gimp     *gimp,
 	  if (floating_layer)
 	    floating_sel_relax (floating_layer, TRUE);
     
-	  gimp_layer_scale (layer, new_width, new_height, local_origin);
+	  gimp_layer_scale (layer, new_width, new_height, gimp->config->interpolation_type, local_origin);
     
 	  if (floating_layer)
 	    floating_sel_rigor (floating_layer, TRUE);

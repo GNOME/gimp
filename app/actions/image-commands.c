@@ -349,6 +349,7 @@ image_scale_implement (ImageResize *image_scale)
 	  gimp_image_scale (gimage,
 			    image_scale->resize->width,
 			    image_scale->resize->height,
+                            image_scale->resize->interpolation,
                             progress_update_and_flush, progress);
 
           progress_end (progress);

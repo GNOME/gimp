@@ -33,13 +33,12 @@
 
 static GimpBaseConfig  static_base_config =
 {
-  INIT_MEMBER(temp_path          , NULL),
-  INIT_MEMBER(swap_path          , NULL),
+  INIT_MEMBER(temp_path        , NULL),
+  INIT_MEMBER(swap_path        , NULL),
 
-  INIT_MEMBER(tile_cache_size    , 33554432),
-  INIT_MEMBER(stingy_memory_use  , FALSE),
-  INIT_MEMBER(interpolation_type , GIMP_LINEAR_INTERPOLATION),
-  INIT_MEMBER(num_processors     , 1)
+  INIT_MEMBER(tile_cache_size  , 33554432),
+  INIT_MEMBER(stingy_memory_use, FALSE),
+  INIT_MEMBER(num_processors   , 1)
 };
 
 #undef INIT_MEMBER

@@ -51,7 +51,6 @@ enum
   PROP_STINGY_MEMORY_USE,
   PROP_NUM_PROCESSORS,
   PROP_TILE_CACHE_SIZE,
-  PROP_INTERPOLATION_TYPE,
 };
 
 static GObjectClass *parent_class = NULL;
@@ -114,10 +113,6 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_TILE_CACHE_SIZE,
                                     "tile-cache-size",
                                     0, G_MAXUINT, 1 << 25);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_INTERPOLATION_TYPE,
-                                 "interpolation-type",
-                                 GIMP_TYPE_INTERPOLATION_TYPE, 
-                                 GIMP_LINEAR_INTERPOLATION);
 }
 
 static void
@@ -162,9 +157,6 @@ gimp_base_config_set_property (GObject      *object,
     case PROP_TILE_CACHE_SIZE:
       base_config->tile_cache_size = g_value_get_uint (value);
       break;
-    case PROP_INTERPOLATION_TYPE:
-      base_config->interpolation_type = g_value_get_enum (value);
-      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -197,9 +189,6 @@ gimp_base_config_get_property (GObject    *object,
       break;
     case PROP_TILE_CACHE_SIZE:
       g_value_set_uint (value, base_config->tile_cache_size);
-      break;
-    case PROP_INTERPOLATION_TYPE:
-      g_value_set_enum (value, base_config->interpolation_type);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

@@ -39,35 +39,36 @@ typedef struct _GimpCoreConfigClass GimpCoreConfigClass;
 
 struct _GimpCoreConfig
 {
-  GimpBaseConfig       parent_instance;
+  GimpBaseConfig         parent_instance;
 
-  gchar               *plug_in_path;
-  gchar               *tool_plug_in_path;
-  gchar               *module_path;
-  gchar               *brush_path;
-  gchar               *pattern_path;
-  gchar               *palette_path;
-  gchar               *gradient_path;
-  gchar               *default_brush;
-  gchar               *default_pattern;
-  gchar               *default_palette;
-  gchar               *default_gradient;
-  gchar               *default_comment;
-  GimpImageBaseType    default_image_type;
-  gint                 default_image_width;
-  gint                 default_image_height;
-  GimpUnit             default_unit;
-  gdouble              default_xresolution;
-  gdouble              default_yresolution;
-  GimpUnit             default_resolution_unit;
-  gint                 levels_of_undo;
-  gchar               *plug_in_rc_path;
-  gchar               *module_load_inhibit;
-  GimpPreviewSize      preview_size;
-  gboolean             write_thumbnails;
-  gdouble              gamma_val;
-  gboolean             install_cmap;
-  gint                 min_colors;
+  GimpInterpolationType  interpolation_type;
+  gchar                 *plug_in_path;
+  gchar                 *tool_plug_in_path;
+  gchar                 *module_path;
+  gchar                 *brush_path;
+  gchar                 *pattern_path;
+  gchar                 *palette_path;
+  gchar                 *gradient_path;
+  gchar                 *default_brush;
+  gchar                 *default_pattern;
+  gchar                 *default_palette;
+  gchar                 *default_gradient;
+  gchar                 *default_comment;
+  GimpImageBaseType      default_image_type;
+  gint                   default_image_width;
+  gint                   default_image_height;
+  GimpUnit               default_unit;
+  gdouble                default_xresolution;
+  gdouble                default_yresolution;
+  GimpUnit               default_resolution_unit;
+  gint                   levels_of_undo;
+  gchar                 *plug_in_rc_path;
+  gchar                 *module_load_inhibit;
+  GimpPreviewSize        preview_size;
+  gboolean               write_thumbnails;
+  gdouble                gamma_val;
+  gboolean               install_cmap;
+  gint                   min_colors;
 };
 
 struct _GimpCoreConfigClass

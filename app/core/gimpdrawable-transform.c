@@ -79,7 +79,7 @@ static gdouble   gimp_drawable_transform_cubic (gdouble dx,
 TileManager *
 gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                                       TileManager            *float_tiles,
-                                      gboolean                interpolation,
+                                      GimpInterpolationType   interpolation_type,
                                       gboolean                clip_result,
                                       GimpMatrix3             matrix,
                                       GimpTransformDirection  direction,
@@ -123,9 +123,10 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
   alpha = 0;
 
   /*  turn interpolation off for simple transformations (e.g. rot90)  */
-  if (gimp_matrix3_is_simple (matrix) ||
-      base_config->interpolation_type == GIMP_NEAREST_NEIGHBOR_INTERPOLATION)
-    interpolation = FALSE;
+  if (gimp_matrix3_is_simple (matrix))
+    {
+      interpolation_type = GIMP_NEAREST_NEIGHBOR_INTERPOLATION;
+    }
 
   /*  Get the background color  */
   gimp_image_get_background (gimage, drawable, bg_col);
@@ -144,7 +145,7 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
       bg_col[ALPHA_I_PIX] = TRANSPARENT_OPACITY;
       alpha = ALPHA_I_PIX;
       /*  If the gimage is indexed color, ignore smoothing value  */
-      interpolation = FALSE;
+      interpolation_type = GIMP_NEAREST_NEIGHBOR_INTERPOLATION;
       break;
     default:
       g_assert_not_reached ();
@@ -230,21 +231,20 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
   tile_manager_set_offsets (tiles, tx1, ty1);
 
   /* initialise the pixel_surround accessor */
-  if (interpolation)
+  switch (interpolation_type)
     {
-      if (base_config->interpolation_type == GIMP_CUBIC_INTERPOLATION)
-	{
-	  pixel_surround_init (&surround, float_tiles, 4, 4, bg_col);
-	}
-      else
-	{
-	  pixel_surround_init (&surround, float_tiles, 2, 2, bg_col);
-	}
-    }
-  else
-    {
+    case GIMP_CUBIC_INTERPOLATION:
+      pixel_surround_init (&surround, float_tiles, 4, 4, bg_col);
+      break;
+
+    case GIMP_LINEAR_INTERPOLATION:
+      pixel_surround_init (&surround, float_tiles, 2, 2, bg_col);
+      break;
+
+    case GIMP_NEAREST_NEIGHBOR_INTERPOLATION:
       /* not actually useful, keeps the code cleaner */
       pixel_surround_init (&surround, float_tiles, 1, 1, bg_col);
+      break;
     }
 
   width  = tile_manager_width (tiles);
@@ -292,195 +292,192 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
 
           /*  Set the destination pixels  */
 
-          if (interpolation)
-       	    {
-              if (base_config->interpolation_type == GIMP_CUBIC_INTERPOLATION)
-       	        {
-                  /*  ttx & tty are the subpixel coordinates of the point in
-		   *  the original selection's floating buffer.
-		   *  We need the four integer pixel coords around them:
-		   *  itx to itx + 3, ity to ity + 3
-                   */
-                  itx = floor (ttx);
-                  ity = floor (tty);
-
-		  /* check if any part of our region overlaps the buffer */
-
-                  if ((itx + 2) >= x1 && (itx - 1) < x2 &&
-                      (ity + 2) >= y1 && (ity - 1) < y2 )
-                    {
-                      guchar  *data;
-                      gint     row;
-                      gdouble  dx, dy;
-                      guchar  *start;
-
-		      /* lock the pixel surround */
-                      data = pixel_surround_lock (&surround,
-						  itx - 1 - x1, ity - 1 - y1);
-
-                      row = pixel_surround_rowstride (&surround);
-
-                      /* the fractional error */
-                      dx = ttx - itx;
-                      dy = tty - ity;
-
-		      /* calculate alpha of result */
-		      start = &data[alpha];
-		      a_val = gimp_drawable_transform_cubic
-			(dy,
-			 CUBIC_ROW (dx, start, bytes),
-			 CUBIC_ROW (dx, start + row, bytes),
-			 CUBIC_ROW (dx, start + row + row, bytes),
-			 CUBIC_ROW (dx, start + row + row + row, bytes));
-
-		      if (a_val <= 0.0)
-			{
-			  a_recip = 0.0;
-			  d[alpha] = 0;
-			}
-		      else if (a_val > 255.0)
-			{
-			  a_recip = 1.0 / a_val;
-			  d[alpha] = 255;
-			}
-		      else
-			{
-			  a_recip = 1.0 / a_val;
-			  d[alpha] = RINT(a_val);
-			}
-
-		      /*  for colour channels c,
-		       *  result = bicubic (c * alpha) / bicubic (alpha)
-		       *
-		       *  never entered for alpha == 0
-		       */
-		      for (i = -alpha; i < 0; ++i)
-			{
-			  start = &data[alpha];
-			  newval =
-			    RINT (a_recip *
-				  gimp_drawable_transform_cubic
-				  (dy,
-				   CUBIC_SCALED_ROW (dx, start, bytes, i),
-				   CUBIC_SCALED_ROW (dx, start + row, bytes, i),
-				   CUBIC_SCALED_ROW (dx, start + row + row, bytes, i),
-				   CUBIC_SCALED_ROW (dx, start + row + row + row, bytes, i)));
-			  if (newval <= 0)
-			    {
-			      *d++ = 0;
-			    }
-			  else if (newval > 255)
-			    {
-			      *d++ = 255;
-			    }
-			  else
-			    {
-			      *d++ = newval;
-			    }
-			}
-
-		      /*  alpha already done  */
-		      d++;
-
-		      pixel_surround_release (&surround);
-		    }
-                  else /* not in source range */
-                    {
-                      /*  increment the destination pointers  */
-                      for (b = 0; b < bytes; b++)
-                        *d++ = bg_col[b];
-                    }
-                }
-
-       	      else  /*  linear  */
-                {
-                  itx = floor (ttx);
-                  ity = floor (tty);
-
-		  /*  expand source area to cover interpolation region
-		   *  (which runs from itx to itx + 1, same in y)
-		   */
-                  if ((itx + 1) >= x1 && itx < x2 &&
-                      (ity + 1) >= y1 && ity < y2 )
-                    {
-                      guchar  *data;
-                      gint     row;
-                      double   dx, dy;
-                      guchar  *chan;
-
-		      /* lock the pixel surround */
-                      data = pixel_surround_lock (&surround, itx - x1, ity - y1);
-
-                      row = pixel_surround_rowstride (&surround);
-
-                      /* the fractional error */
-                      dx = ttx - itx;
-                      dy = tty - ity;
-
-		      /* calculate alpha value of result pixel */
-		      chan = &data[alpha];
-		      a_val = BILINEAR (chan[0], chan[bytes], chan[row],
-					chan[row+bytes], dx, dy);
-		      if (a_val <= 0.0)
-			{
-			  a_recip = 0.0;
-			  d[alpha] = 0.0;
-			}
-		      else if (a_val >= 255.0)
-			{
-			  a_recip = 1.0 / a_val;
-			  d[alpha] = 255;
-			}
-		      else
-			{
-			  a_recip = 1.0 / a_val;
-			  d[alpha] = RINT (a_val);
-			}
-
-		      /*  for colour channels c,
-		       *  result = bilinear (c * alpha) / bilinear (alpha)
-		       *
-		       *  never entered for alpha == 0
-		       */
-		      for (i = -alpha; i < 0; ++i)
-			{
-			  chan = &data[alpha];
-			  newval =
-			    RINT (a_recip *
-				  BILINEAR (chan[0] * chan[i],
-					    chan[bytes] * chan[bytes+i],
-					    chan[row] * chan[row+i],
-					    chan[row+bytes] * chan[row+bytes+i],
-					    dx, dy));
-			  if (newval <= 0)
-			    {
-			      *d++ = 0;
-			    }
-			  else if (newval > 255)
-			    {
-			      *d++ = 255;
-			    }
-			  else
-			    {
-			      *d++ = newval;
-			    }
-			}
-
-		      /*  alpha already done  */
-		      d++;
-
-                      pixel_surround_release (&surround);
-		    }
-                  else /* not in source range */
-                    {
-                      /*  increment the destination pointers  */
-                      for (b = 0; b < bytes; b++)
-                        *d++ = bg_col[b];
-                    }
-		}
-	    }
-          else  /*  no interpolation  */
+          switch (interpolation_type)
             {
+            case GIMP_CUBIC_INTERPOLATION:
+              /*  ttx & tty are the subpixel coordinates of the point in
+               *  the original selection's floating buffer.
+               *  We need the four integer pixel coords around them:
+               *  itx to itx + 3, ity to ity + 3
+               */
+              itx = floor (ttx);
+              ity = floor (tty);
+
+              /* check if any part of our region overlaps the buffer */
+
+              if ((itx + 2) >= x1 && (itx - 1) < x2 &&
+                  (ity + 2) >= y1 && (ity - 1) < y2 )
+                {
+                  guchar  *data;
+                  gint     row;
+                  gdouble  dx, dy;
+                  guchar  *start;
+
+                  /* lock the pixel surround */
+                  data = pixel_surround_lock (&surround,
+                                              itx - 1 - x1, ity - 1 - y1);
+
+                  row = pixel_surround_rowstride (&surround);
+
+                  /* the fractional error */
+                  dx = ttx - itx;
+                  dy = tty - ity;
+
+                  /* calculate alpha of result */
+                  start = &data[alpha];
+                  a_val = gimp_drawable_transform_cubic
+                    (dy,
+                     CUBIC_ROW (dx, start, bytes),
+                     CUBIC_ROW (dx, start + row, bytes),
+                     CUBIC_ROW (dx, start + row + row, bytes),
+                     CUBIC_ROW (dx, start + row + row + row, bytes));
+
+                  if (a_val <= 0.0)
+                    {
+                      a_recip = 0.0;
+                      d[alpha] = 0;
+                    }
+                  else if (a_val > 255.0)
+                    {
+                      a_recip = 1.0 / a_val;
+                      d[alpha] = 255;
+                    }
+                  else
+                    {
+                      a_recip = 1.0 / a_val;
+                      d[alpha] = RINT(a_val);
+                    }
+
+                  /*  for colour channels c,
+                   *  result = bicubic (c * alpha) / bicubic (alpha)
+                   *
+                   *  never entered for alpha == 0
+                   */
+                  for (i = -alpha; i < 0; ++i)
+                    {
+                      start = &data[alpha];
+                      newval =
+                        RINT (a_recip *
+                              gimp_drawable_transform_cubic
+                              (dy,
+                               CUBIC_SCALED_ROW (dx, start, bytes, i),
+                               CUBIC_SCALED_ROW (dx, start + row, bytes, i),
+                               CUBIC_SCALED_ROW (dx, start + row + row, bytes, i),
+                               CUBIC_SCALED_ROW (dx, start + row + row + row, bytes, i)));
+                      if (newval <= 0)
+                        {
+                          *d++ = 0;
+                        }
+                      else if (newval > 255)
+                        {
+                          *d++ = 255;
+                        }
+                      else
+                        {
+                          *d++ = newval;
+                        }
+                    }
+
+                  /*  alpha already done  */
+                  d++;
+
+                  pixel_surround_release (&surround);
+                }
+              else /* not in source range */
+                {
+                  /*  increment the destination pointers  */
+                  for (b = 0; b < bytes; b++)
+                    *d++ = bg_col[b];
+                }
+              break;
+
+            case GIMP_LINEAR_INTERPOLATION:
+              itx = floor (ttx);
+              ity = floor (tty);
+
+              /*  expand source area to cover interpolation region
+               *  (which runs from itx to itx + 1, same in y)
+               */
+              if ((itx + 1) >= x1 && itx < x2 &&
+                  (ity + 1) >= y1 && ity < y2 )
+                {
+                  guchar  *data;
+                  gint     row;
+                  double   dx, dy;
+                  guchar  *chan;
+
+                  /* lock the pixel surround */
+                  data = pixel_surround_lock (&surround, itx - x1, ity - y1);
+
+                  row = pixel_surround_rowstride (&surround);
+
+                  /* the fractional error */
+                  dx = ttx - itx;
+                  dy = tty - ity;
+
+                  /* calculate alpha value of result pixel */
+                  chan = &data[alpha];
+                  a_val = BILINEAR (chan[0], chan[bytes], chan[row],
+                                    chan[row+bytes], dx, dy);
+                  if (a_val <= 0.0)
+                    {
+                      a_recip = 0.0;
+                      d[alpha] = 0.0;
+                    }
+                  else if (a_val >= 255.0)
+                    {
+                      a_recip = 1.0 / a_val;
+                      d[alpha] = 255;
+                    }
+                  else
+                    {
+                      a_recip = 1.0 / a_val;
+                      d[alpha] = RINT (a_val);
+                    }
+
+                  /*  for colour channels c,
+                   *  result = bilinear (c * alpha) / bilinear (alpha)
+                   *
+                   *  never entered for alpha == 0
+                   */
+                  for (i = -alpha; i < 0; ++i)
+                    {
+                      chan = &data[alpha];
+                      newval =
+                        RINT (a_recip *
+                              BILINEAR (chan[0] * chan[i],
+                                        chan[bytes] * chan[bytes+i],
+                                        chan[row] * chan[row+i],
+                                        chan[row+bytes] * chan[row+bytes+i],
+                                        dx, dy));
+                      if (newval <= 0)
+                        {
+                          *d++ = 0;
+                        }
+                      else if (newval > 255)
+                        {
+                          *d++ = 255;
+                        }
+                      else
+                        {
+                          *d++ = newval;
+                        }
+                    }
+
+                  /*  alpha already done  */
+                  d++;
+
+                  pixel_surround_release (&surround);
+                }
+              else /* not in source range */
+                {
+                  /*  increment the destination pointers  */
+                  for (b = 0; b < bytes; b++)
+                    *d++ = bg_col[b];
+                }
+              break;
+
+            case GIMP_NEAREST_NEIGHBOR_INTERPOLATION:
               itx = floor (ttx);
               ity = floor (tty);
 
@@ -497,14 +494,15 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
                     *d++ = src[0][b];
 
                   tile_release (tile[0], FALSE);
-		}
+                }
               else /* not in source range */
                 {
                   /*  increment the destination pointers  */
                   for (b = 0; b < bytes; b++)
                     *d++ = bg_col[b];
                 }
-	    }
+              break;
+            }
 
 	  /*  increment the transformed coordinates  */
 	  tx += xinc;
@@ -587,7 +585,7 @@ gimp_drawable_transform_tiles_flip (GimpDrawable            *drawable,
 
 gboolean
 gimp_drawable_transform_affine (GimpDrawable           *drawable,
-                                gboolean                interpolation,
+                                GimpInterpolationType   interpolation_type,
                                 gboolean                clip_result,
                                 GimpMatrix3             matrix,
                                 GimpTransformDirection  direction)
@@ -616,7 +614,7 @@ gimp_drawable_transform_affine (GimpDrawable           *drawable,
       /* transform the buffer */
       new_tiles = gimp_drawable_transform_tiles_affine (drawable,
                                                         float_tiles,
-                                                        interpolation, 
+                                                        interpolation_type, 
                                                         FALSE,
                                                         matrix,
                                                         GIMP_TRANSFORM_FORWARD,

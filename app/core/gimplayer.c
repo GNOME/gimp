@@ -880,11 +880,12 @@ gimp_layer_add_alpha (GimpLayer *layer)
 }
 
 static void
-gimp_layer_scale_lowlevel (GimpLayer *layer,
-			   gint       new_width,
-			   gint       new_height,
-			   gint       new_offset_x,
-			   gint       new_offset_y)
+gimp_layer_scale_lowlevel (GimpLayer             *layer,
+			   gint                   new_width,
+			   gint                   new_height,
+			   gint                   new_offset_x,
+			   gint                   new_offset_y,
+                           GimpInterpolationType  interpolation_type)
 {
   PixelRegion  srcPR, destPR;
   TileManager *new_tiles;
@@ -915,11 +916,14 @@ gimp_layer_scale_lowlevel (GimpLayer *layer,
    *   resampling because that doesn't necessarily make sense for INDEXED
    *   images.
    */
-  if ((GIMP_DRAWABLE (layer)->type == GIMP_INDEXED_IMAGE) || 
-      (GIMP_DRAWABLE (layer)->type == GIMP_INDEXEDA_IMAGE))
-    scale_region_no_resample (&srcPR, &destPR);
+  if (GIMP_IMAGE_TYPE_IS_INDEXED (GIMP_DRAWABLE (layer)->type))
+    {
+      scale_region (&srcPR, &destPR, GIMP_NEAREST_NEIGHBOR_INTERPOLATION);
+    }
   else
-    scale_region (&srcPR, &destPR);
+    {
+      scale_region (&srcPR, &destPR, interpolation_type);
+    }
 
   /*  Push the layer on the undo stack  */
   undo_push_layer_mod (GIMP_DRAWABLE (layer)->gimage, layer);
@@ -937,7 +941,9 @@ gimp_layer_scale_lowlevel (GimpLayer *layer,
     {
       GIMP_DRAWABLE (layer->mask)->offset_x = GIMP_DRAWABLE (layer)->offset_x;
       GIMP_DRAWABLE (layer->mask)->offset_y = GIMP_DRAWABLE (layer)->offset_y;
-      gimp_channel_scale (GIMP_CHANNEL (layer->mask), new_width, new_height);
+
+      gimp_channel_scale (GIMP_CHANNEL (layer->mask), new_width, new_height,
+                          interpolation_type);
     }
 
   /*  Make sure we're not caching any old selection info  */
@@ -1012,9 +1018,10 @@ gimp_layer_check_scaling (const GimpLayer *layer,
  *          #FALSE if the scaled layer has at least one zero dimension
  **/
 gboolean
-gimp_layer_scale_by_factors (GimpLayer *layer,
-			     gdouble    w_factor,
-			     gdouble    h_factor)
+gimp_layer_scale_by_factors (GimpLayer             *layer,
+			     gdouble                w_factor,
+			     gdouble                h_factor,
+                             GimpInterpolationType  interpolation_type)
 {
   gint new_width, new_height;
   gint new_offset_x, new_offset_y;
@@ -1034,7 +1041,8 @@ gimp_layer_scale_by_factors (GimpLayer *layer,
     {
       gimp_layer_scale_lowlevel (layer,
 				 new_width, new_height,
-				 new_offset_x, new_offset_y);
+				 new_offset_x, new_offset_y,
+                                 interpolation_type);
       return TRUE;
     }
 
@@ -1069,10 +1077,11 @@ gimp_layer_scale_by_factors (GimpLayer *layer,
  *               & painted to new layer tiles 
  **/
 void
-gimp_layer_scale (GimpLayer *layer,
-		  gint       new_width,
-		  gint       new_height,
-		  gboolean   local_origin)
+gimp_layer_scale (GimpLayer             *layer,
+		  gint                   new_width,
+		  gint                   new_height,
+                  GimpInterpolationType  interpolation_type,
+		  gboolean               local_origin)
 {
   gint new_offset_x, new_offset_y;
 
@@ -1103,7 +1112,8 @@ gimp_layer_scale (GimpLayer *layer,
 
   gimp_layer_scale_lowlevel (layer, 
 			     new_width, new_height, 
-			     new_offset_x, new_offset_y);
+			     new_offset_x, new_offset_y,
+                             interpolation_type);
 }
 
 void

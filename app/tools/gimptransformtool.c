@@ -823,7 +823,7 @@ gimp_transform_tool_transform_tiles (GimpTransformTool *transform_tool,
 
   ret = gimp_drawable_transform_tiles_affine (gimp_image_active_drawable (tool->gdisp->gimage),
                                               transform_tool->original,
-                                              options->smoothing,
+                                              options->interpolation,
                                               options->clip,
                                               transform_tool->transform,
                                               options->direction,

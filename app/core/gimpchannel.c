@@ -278,9 +278,10 @@ gimp_channel_set_opacity (GimpChannel *channel,
 }
 
 void
-gimp_channel_scale (GimpChannel *channel,
-		    gint         new_width,
-		    gint         new_height)
+gimp_channel_scale (GimpChannel           *channel,
+		    gint                   new_width,
+		    gint                   new_height,
+                    GimpInterpolationType  interpolation_type)
 {
   PixelRegion  srcPR, destPR;
   TileManager *new_tiles;
@@ -312,7 +313,7 @@ gimp_channel_scale (GimpChannel *channel,
                      TRUE);
 
   /*  Sclae the channel  */
-  scale_region (&srcPR, &destPR);
+  scale_region (&srcPR, &destPR, interpolation_type);
 
   /*  Push the channel on the undo stack  */
   undo_push_channel_mod (GIMP_DRAWABLE (channel)->gimage, channel);

@@ -37,23 +37,27 @@ typedef struct _Resize Resize;
 
 struct _Resize
 {
-  GtkWidget   *resize_shell;
+  GtkWidget             *resize_shell;
 
-  ResizeType   type;
-  ResizeTarget target;
+  GimpImage             *gimage;
 
-  gint         width;
-  gint         height;
+  ResizeType             type;
+  ResizeTarget           target;
 
-  gdouble      resolution_x;
-  gdouble      resolution_y;
-  GimpUnit     unit;
+  gint                   width;
+  gint                   height;
 
-  gdouble      ratio_x;
-  gdouble      ratio_y;
+  gdouble                resolution_x;
+  gdouble                resolution_y;
+  GimpUnit               unit;
 
-  gint         offset_x;
-  gint         offset_y;
+  gdouble                ratio_x;
+  gdouble                ratio_y;
+
+  gint                   offset_x;
+  gint                   offset_y;
+
+  GimpInterpolationType  interpolation;
 };
 
 

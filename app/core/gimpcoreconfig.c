@@ -29,10 +29,11 @@
 void
 gimp_core_config_init (Gimp *gimp)
 {
-  g_return_if_fail (gimp != NULL);
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   gimp->config = g_new0 (GimpCoreConfig, 1);
+
+  gimp->config->interpolation_type       = GIMP_LINEAR_INTERPOLATION;
 
   gimp->config->tool_plug_in_path        = NULL;
   gimp->config->plug_in_path             = NULL;

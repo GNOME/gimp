@@ -29,6 +29,8 @@
 #include "procedural_db.h"
 
 #include "core/core-types.h"
+#include "core/gimp.h"
+#include "core/gimpcoreconfig.h"
 #include "core/gimpdrawable-transform-utils.h"
 #include "core/gimpdrawable-transform.h"
 #include "core/gimpdrawable.h"
@@ -137,6 +139,7 @@ perspective_invoker (Gimp     *gimp,
   gint x1, y1, x2, y2;
   gdouble trans_info[8];
   GimpMatrix3 matrix;
+  GimpInterpolationType interpolation_type;
 
   drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
@@ -176,9 +179,14 @@ perspective_invoker (Gimp     *gimp,
 						  trans_info[Y3],
 						  matrix);
     
+      if (interpolation)
+	interpolation_type = gimp->config->interpolation_type;
+      else
+	interpolation_type = GIMP_NEAREST_NEIGHBOR_INTERPOLATION;
+    
       /* Perspective the selection */
       success = gimp_drawable_transform_affine (drawable,
-						interpolation, 
+						interpolation_type,
 						FALSE,
 						matrix,
 						GIMP_TRANSFORM_FORWARD);
@@ -283,6 +291,7 @@ rotate_invoker (Gimp     *gimp,
   gdouble angle;
   gint x1, y1, x2, y2;
   GimpMatrix3 matrix;
+  GimpInterpolationType interpolation_type;
 
   drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
@@ -301,9 +310,14 @@ rotate_invoker (Gimp     *gimp,
 					     angle,
 					     matrix);
     
+      if (interpolation)
+	interpolation_type = gimp->config->interpolation_type;
+      else
+	interpolation_type = GIMP_NEAREST_NEIGHBOR_INTERPOLATION;
+    
       /* Rotate the selection */
       success = gimp_drawable_transform_affine (drawable,
-						interpolation,
+						interpolation_type,
 						FALSE,
 						matrix,
 						GIMP_TRANSFORM_FORWARD);
@@ -372,6 +386,7 @@ scale_invoker (Gimp     *gimp,
   gint x1, y1, x2, y2;
   gdouble trans_info[4];
   GimpMatrix3 matrix;
+  GimpInterpolationType interpolation_type;
 
   drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
@@ -402,9 +417,14 @@ scale_invoker (Gimp     *gimp,
 						trans_info[Y1],
 						matrix);
     
+	  if (interpolation)
+	    interpolation_type = gimp->config->interpolation_type;
+	  else
+	    interpolation_type = GIMP_NEAREST_NEIGHBOR_INTERPOLATION;
+    
 	  /* Scale the selection */
 	  success = gimp_drawable_transform_affine (drawable,
-						    interpolation,
+						    interpolation_type,
 						    FALSE,
 						    matrix,
 						    GIMP_TRANSFORM_FORWARD);
@@ -494,6 +514,7 @@ shear_invoker (Gimp     *gimp,
   gdouble magnitude;
   gint x1, y1, x2, y2;
   GimpMatrix3 matrix;
+  GimpInterpolationType interpolation_type;
 
   drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
@@ -521,9 +542,14 @@ shear_invoker (Gimp     *gimp,
 					    magnitude,
 					    matrix);
     
+      if (interpolation)
+	interpolation_type = gimp->config->interpolation_type;
+      else
+	interpolation_type = GIMP_NEAREST_NEIGHBOR_INTERPOLATION;
+    
       /* Shear the selection */
       success = gimp_drawable_transform_affine (drawable,
-						interpolation,
+						interpolation_type,
 						FALSE,
 						matrix,
 						GIMP_TRANSFORM_FORWARD);
@@ -602,6 +628,7 @@ transform_2d_invoker (Gimp     *gimp,
   gdouble dest_x;
   gdouble dest_y;
   GimpMatrix3 matrix;
+  GimpInterpolationType interpolation_type;
 
   drawable = gimp_drawable_get_by_ID (gimp, args[0].value.pdb_int);
   if (drawable == NULL)
@@ -632,9 +659,14 @@ transform_2d_invoker (Gimp     *gimp,
       gimp_matrix3_rotate    (matrix, angle);
       gimp_matrix3_translate (matrix, dest_x, dest_y);
     
+      if (interpolation)
+	interpolation_type = gimp->config->interpolation_type;
+      else
+	interpolation_type = GIMP_NEAREST_NEIGHBOR_INTERPOLATION;
+    
       /* Transform the selection */
       success = gimp_drawable_transform_affine (drawable,
-						interpolation,
+						interpolation_type,
 						FALSE,
 						matrix,
 						GIMP_TRANSFORM_FORWARD);

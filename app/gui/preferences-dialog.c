@@ -614,7 +614,7 @@ prefs_save_callback (GtkWidget *widget,
       update = g_list_append (update, "show-statusbar");
       remove = g_list_append (remove, "dont-show-statusbar");
     }
-  if (base_config->interpolation_type != old_interpolation_type)
+  if (gimp->config->interpolation_type != old_interpolation_type)
     {
       update = g_list_append (update, "interpolation-type");
     }
@@ -912,9 +912,9 @@ prefs_cancel_callback (GtkWidget *widget,
   gtk_widget_destroy (dlg);
 
   /*  restore ordinary gimprc variables  */
-  base_config->interpolation_type        = old_interpolation_type;
   base_config->num_processors            = old_num_processors;
 
+  gimp->config->interpolation_type       = old_interpolation_type;
   gimp->config->default_type             = old_default_type;
   gimp->config->default_width            = old_default_width;
   gimp->config->default_height           = old_default_height;
@@ -1062,11 +1062,11 @@ prefs_toggle_callback (GtkWidget *widget,
     }
 
   /*  radio buttons  */
-  else if (data == &base_config->interpolation_type ||
-	   data == &gimp->config->default_type      ||
-	   data == &gimp->config->write_thumbnails  ||
-           data == &gimprc.trust_dirty_flag         ||
-	   data == &gimprc.help_browser             ||
+  else if (data == &gimp->config->interpolation_type ||
+	   data == &gimp->config->default_type       ||
+	   data == &gimp->config->write_thumbnails   ||
+           data == &gimprc.trust_dirty_flag          ||
+	   data == &gimprc.help_browser              ||
 	   data == &gimprc.cursor_mode)
     {
       *val = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
@@ -1550,9 +1550,9 @@ preferences_dialog_create (Gimp *gimp)
   edit_tile_cache_size = base_config->tile_cache_size;
 
   /*  remember all old values  */
-  old_interpolation_type       = base_config->interpolation_type;
   old_num_processors           = base_config->num_processors;
 
+  old_interpolation_type       = gimp->config->interpolation_type;
   old_default_type             = gimp->config->default_type;
   old_default_width            = gimp->config->default_width;
   old_default_height           = gimp->config->default_height;
@@ -2532,14 +2532,14 @@ preferences_dialog_create (Gimp *gimp)
   optionmenu =
     gimp_option_menu_new2 (FALSE,
 			   G_CALLBACK (prefs_toggle_callback),
-			   &base_config->interpolation_type,
-			   GINT_TO_POINTER (base_config->interpolation_type),
+			   &gimp->config->interpolation_type,
+			   GINT_TO_POINTER (gimp->config->interpolation_type),
 
-			   _("Nearest Neighbor (Fast)"),
+			   _("Nearest Neighbor (Fastest)"),
 			   GINT_TO_POINTER (GIMP_NEAREST_NEIGHBOR_INTERPOLATION), NULL,
 			   _("Linear"),
 			   GINT_TO_POINTER (GIMP_LINEAR_INTERPOLATION), NULL,
-			   _("Cubic (Slow)"),
+			   _("Cubic (Slowest & Best)"),
 			   GINT_TO_POINTER (GIMP_CUBIC_INTERPOLATION), NULL,
 
 			   NULL);

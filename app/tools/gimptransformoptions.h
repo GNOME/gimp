@@ -33,9 +33,9 @@ struct _TransformOptions
   GimpTransformDirection  direction_d;
   GtkWidget              *direction_w[2];  /* 2 radio buttons */
 
-  gboolean                smoothing;
-  gboolean                smoothing_d;
-  GtkWidget              *smoothing_w;
+  GimpInterpolationType   interpolation;
+  /* GimpInterpolationType interpolation_d; (from gimprc) */
+  GtkWidget              *interpolation_w;
 
   gboolean                clip;
   gboolean                clip_d;

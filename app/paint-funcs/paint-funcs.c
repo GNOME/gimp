@@ -2895,12 +2895,13 @@ shrink_line (gdouble               *dest,
 }
 
 static void
-get_scaled_row (void        **src,
-		gint          y,
-		gint          new_width,
-		PixelRegion  *srcPR,
-		gdouble      *row,
-		guchar       *src_tmp)
+get_scaled_row (void                 **src,
+		gint                   y,
+		gint                   new_width,
+		PixelRegion           *srcPR,
+		gdouble               *row,
+		guchar                *src_tmp,
+                GimpInterpolationType  interpolation_type)
 {
 /* get the necesary lines from the source image, scale them,
    and put them into src[] */
@@ -2913,10 +2914,10 @@ get_scaled_row (void        **src,
 				 row, src_tmp, 1);
     if (new_width > srcPR->w)
       expand_line(src[3], row, srcPR->bytes, 
-		  srcPR->w, new_width, base_config->interpolation_type);
+		  srcPR->w, new_width, interpolation_type);
     else if (srcPR->w > new_width)
       shrink_line(src[3], row, srcPR->bytes, 
-		  srcPR->w, new_width, base_config->interpolation_type);
+		  srcPR->w, new_width, interpolation_type);
     else /* no scailing needed */
       memcpy(src[3], row, sizeof (double) * new_width * srcPR->bytes);
   }
@@ -2925,8 +2926,9 @@ get_scaled_row (void        **src,
 }
 
 void
-scale_region (PixelRegion *srcPR,
-	      PixelRegion *destPR)
+scale_region (PixelRegion           *srcPR,
+	      PixelRegion           *destPR,
+              GimpInterpolationType  interpolation_type)
 {
   gdouble *src[4];
   guchar  *src_tmp;
@@ -2940,11 +2942,11 @@ scale_region (PixelRegion *srcPR,
   gint     old_y = -4, new_y;
   gint     x, y;
 
-  if (base_config->interpolation_type == GIMP_NEAREST_NEIGHBOR_INTERPOLATION)
-  {
-    scale_region_no_resample (srcPR, destPR);
-    return;
-   }
+  if (interpolation_type == GIMP_NEAREST_NEIGHBOR_INTERPOLATION)
+    {
+      scale_region_no_resample (srcPR, destPR);
+      return;
+    }
 
   orig_width = srcPR->w;
   orig_height = srcPR->h;
@@ -2985,7 +2987,8 @@ scale_region (PixelRegion *srcPR,
       const double inv_ratio = 1.0 / y_rat;
       if (y == 0) /* load the first row if this it the first time through  */
 	get_scaled_row((void **)&src[0], 0, width, srcPR, row,
-		       src_tmp);
+		       src_tmp,
+                       interpolation_type);
       new_y = (int)((y) * y_rat);
       frac = 1.0 - (y*y_rat - new_y);
       for (x  = 0; x < width*bytes; x++)
@@ -2995,14 +2998,16 @@ scale_region (PixelRegion *srcPR,
       max--;
 
       get_scaled_row((void **)&src[0], ++new_y, width, srcPR, row,
-		     src_tmp);
+		     src_tmp,
+                     interpolation_type);
       
       while (max > 0)
       {
 	for (x  = 0; x < width*bytes; x++)
 	  accum[x] += src[3][x];
 	get_scaled_row((void **)&src[0], ++new_y, width, srcPR, row,
-		       src_tmp);
+		       src_tmp,
+                       interpolation_type);
 	max--;
       }
       frac = (y + 1)*y_rat - ((int)((y + 1)*y_rat));
@@ -3020,10 +3025,11 @@ scale_region (PixelRegion *srcPR,
       { /* get the necesary lines from the source image, scale them,
 	   and put them into src[] */
 	get_scaled_row((void **)&src[0], old_y + 2, width, srcPR, row,
-		       src_tmp);
+		       src_tmp,
+                       interpolation_type);
 	old_y++;
       }
-      switch(base_config->interpolation_type)
+      switch(interpolation_type)
       {
        case GIMP_CUBIC_INTERPOLATION:
        {
@@ -3055,7 +3061,8 @@ scale_region (PixelRegion *srcPR,
     else /* height == orig_height */
     {
       get_scaled_row((void **)&src[0], y, width, srcPR, row,
-		     src_tmp);
+		     src_tmp,
+                     interpolation_type);
       memcpy(accum, src[3], sizeof(double) * width * bytes);
     }
     if (pixel_region_has_alpha(srcPR))

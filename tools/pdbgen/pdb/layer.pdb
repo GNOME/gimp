@@ -97,8 +97,13 @@ HELP
 	$args .= $_->{name};
     }
 
-    &layer_change_invoke("LAYER_\U$op\E",
-			 "gimp_layer_$op (layer, new_width, new_height, $args);");
+    if ($op eq 'scale') {
+        &layer_change_invoke("LAYER_\U$op\E",
+			     "gimp_layer_$op (layer, new_width, new_height, gimp->config->interpolation_type, $args);");
+    } else {
+        &layer_change_invoke("LAYER_\U$op\E",
+			     "gimp_layer_$op (layer, new_width, new_height, $args);");
+    }
 }
 
 sub layer_get_prop_proc {
@@ -550,7 +555,8 @@ HELP
     $date = '1998';
 CODE
 
-@headers = qw("core/gimplist.h" "pdb_glue.h");
+@headers = qw("core/gimplist.h" "core/gimp.h" "core/gimpcoreconfig.h"
+              "pdb_glue.h");
 
 unshift @procs, qw(layer_new layer_copy layer_create_mask layer_scale
 		   layer_resize layer_delete layer_translate layer_add_alpha

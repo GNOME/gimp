@@ -323,7 +323,9 @@ HELP
 	headers => [ qw("core/gimpimage-scale.h") ],
 	code => <<'CODE'
 {
-  gimp_image_scale (gimage, new_width, new_height, NULL, NULL);
+  gimp_image_scale (gimage, new_width, new_height,
+                    gimp->config->interpolation_type,
+                    NULL, NULL);
 }
 CODE
     );
@@ -1498,8 +1500,9 @@ CODE
 
 
 @headers = qw(<string.h> "core/gimp.h" "core/gimpcontainer.h"
-	      "core/gimplist.h" "core/gimpunit.h" "base/temp-buf.h" 
-	      "libgimpmath/gimpmath.h" "libgimpbase/gimpbase.h"
+              "core/gimpcoreconfig.h" "core/gimplist.h" "core/gimpunit.h"
+              "base/temp-buf.h" "libgimpmath/gimpmath.h"
+              "libgimpbase/gimpbase.h"
               "libgimp/gimpintl.h");
 
 $extra{app}->{code} = <<'CODE';

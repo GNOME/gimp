@@ -25,6 +25,8 @@
 
 #include "tools-types.h"
 
+#include "core/gimp.h"
+#include "core/gimpcoreconfig.h"
 #include "core/gimptoolinfo.h"
 
 #include "gimprotatetool.h"
@@ -81,14 +83,14 @@ transform_options_init (TransformOptions *options,
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;
 
-  options->smoothing   = options->smoothing_d   = TRUE;
-  options->show_path   = options->show_path_d   = TRUE;
-  options->clip        = options->clip_d        = FALSE;
-  options->direction   = options->direction_d   = GIMP_TRANSFORM_FORWARD;
-  options->grid_size   = options->grid_size_d   = 32;
-  options->show_grid   = options->show_grid_d   = TRUE;
-  options->constrain_1 = options->constrain_1_d = FALSE;
-  options->constrain_2 = options->constrain_2_d = FALSE;
+  options->direction     = options->direction_d   = GIMP_TRANSFORM_FORWARD;
+  options->interpolation = tool_info->gimp->config->interpolation_type;
+  options->show_path     = options->show_path_d   = TRUE;
+  options->clip          = options->clip_d        = FALSE;
+  options->grid_size     = options->grid_size_d   = 32;
+  options->show_grid     = options->show_grid_d   = TRUE;
+  options->constrain_1   = options->constrain_1_d = FALSE;
+  options->constrain_2   = options->constrain_2_d = FALSE;
 
   frame = gimp_radio_group_new2 (TRUE, _("Transform Direction"),
                                  G_CALLBACK (gimp_radio_button_update),
@@ -108,14 +110,37 @@ transform_options_init (TransformOptions *options,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  /*  the smoothing toggle button  */
-  options->smoothing_w = gtk_check_button_new_with_label (_("Smoothing"));
-  gtk_box_pack_start (GTK_BOX (vbox), options->smoothing_w, FALSE, FALSE, 0);
-  gtk_widget_show (options->smoothing_w);
+  /*  the interpolation menu  */
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
-  g_signal_connect (G_OBJECT (options->smoothing_w), "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->smoothing);
+  label = gtk_label_new (_("Interpolation:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  options->interpolation_w =
+    gimp_option_menu_new2 (FALSE,
+                           G_CALLBACK (gimp_menu_item_update),
+                           &options->interpolation,
+                           GINT_TO_POINTER (options->interpolation),
+
+                           _("None (Fastest)"),
+                           GINT_TO_POINTER (GIMP_NEAREST_NEIGHBOR_INTERPOLATION),
+                           NULL,
+
+                           _("Linear"),
+                           GINT_TO_POINTER (GIMP_LINEAR_INTERPOLATION),
+                           NULL,
+
+                           _("Cubic (Slowest & Best)"),
+                           GINT_TO_POINTER (GIMP_CUBIC_INTERPOLATION),
+                           NULL,
+
+                           NULL);
+
+  gtk_box_pack_start (GTK_BOX (hbox), options->interpolation_w, FALSE, FALSE, 0);
+  gtk_widget_show (options->interpolation_w);
 
   /*  the clip resulting image toggle button  */
   options->clip_w = gtk_check_button_new_with_label (_("Clip Result"));
@@ -255,8 +280,11 @@ transform_options_reset (GimpToolOptions *tool_options)
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->direction_w[0]),
                                GINT_TO_POINTER (options->direction_d));
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->smoothing_w),
-				options->smoothing_d);
+  options->interpolation =
+    tool_options->tool_info->gimp->config->interpolation_type;
+  gimp_option_menu_set_history (GTK_OPTION_MENU (options->interpolation_w),
+				GINT_TO_POINTER (options->interpolation));
+
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->clip_w),
 				options->clip_d);
 

@@ -46,6 +46,7 @@ static void  gimp_core_config_get_property (GObject             *object,
 enum
 {
   PROP_0,
+  PROP_INTERPOLATION_TYPE,
   PROP_PLUG_IN_PATH,
   PROP_TOOL_PLUG_IN_PATH,
   PROP_MODULE_PATH,
@@ -119,6 +120,10 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   object_class->set_property = gimp_core_config_set_property;
   object_class->get_property = gimp_core_config_get_property;
 
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_INTERPOLATION_TYPE,
+                                 "interpolation-type",
+                                 GIMP_TYPE_INTERPOLATION_TYPE, 
+                                 GIMP_LINEAR_INTERPOLATION);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PLUG_IN_PATH,
                                  "plug-in-path",
                                  gimp_config_build_plug_in_path ("plug-ins"));
@@ -240,6 +245,9 @@ gimp_core_config_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_INTERPOLATION_TYPE:
+      core_config->interpolation_type = g_value_get_enum (value);
+      break;
     case PROP_PLUG_IN_PATH:
       g_free (core_config->plug_in_path);
       core_config->plug_in_path = g_value_dup_string (value);
@@ -354,6 +362,9 @@ gimp_core_config_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_INTERPOLATION_TYPE:
+      g_value_set_enum (value, core_config->interpolation_type);
+      break;
     case PROP_PLUG_IN_PATH:
       g_value_set_string (value, core_config->plug_in_path);
       break;

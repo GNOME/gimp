@@ -37,14 +37,13 @@ typedef struct _GimpBaseConfigClass GimpBaseConfigClass;
 
 struct _GimpBaseConfig
 {
-  GObject                parent_instance;
+  GObject   parent_instance;
 
-  gchar                 *temp_path;
-  gchar                 *swap_path;
-  gboolean               stingy_memory_use;
-  guint                  num_processors;
-  guint                  tile_cache_size;
-  GimpInterpolationType  interpolation_type;
+  gchar    *temp_path;
+  gchar    *swap_path;
+  gboolean  stingy_memory_use;
+  guint     num_processors;
+  guint     tile_cache_size;
 };
 
 struct _GimpBaseConfigClass

@@ -35,6 +35,7 @@
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpcoreconfig.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage-crop.h"
 #include "core/gimpimage-duplicate.h"
@@ -534,7 +535,9 @@ image_scale_invoker (Gimp     *gimp,
 
   if (success)
     {
-      gimp_image_scale (gimage, new_width, new_height, NULL, NULL);
+      gimp_image_scale (gimage, new_width, new_height,
+			gimp->config->interpolation_type,
+			NULL, NULL);
     }
 
   return procedural_db_return_args (&image_scale_proc, success);

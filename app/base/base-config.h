@@ -24,12 +24,11 @@ typedef struct _GimpBaseConfig GimpBaseConfig;
 
 struct _GimpBaseConfig
 {
-  gchar                 *temp_path;
-  gchar                 *swap_path;
-  guint                  tile_cache_size;
-  gboolean               stingy_memory_use;
-  GimpInterpolationType  interpolation_type;
-  gint                   num_processors;
+  gchar    *temp_path;
+  gchar    *swap_path;
+  guint     tile_cache_size;
+  gboolean  stingy_memory_use;
+  gint      num_processors;
 };
 
 
