@@ -12,22 +12,13 @@ FILE=plug-ins
 
 DIE=0
 
-have_libtool=false
-if libtool --version < /dev/null > /dev/null 2>&1 ; then
-        libtool_version=`libtoolize --version |  libtoolize --version | sed 's/^[^0-9]*\([0-9.][0-9.]*\).*/\1/'`
-        case $libtool_version in
-            1.4*)
-                have_libtool=true
-                ;;
-        esac
-fi
-if $have_libtool ; then : ; else
+(libtool --version) < /dev/null > /dev/null 2>&1 || {
         echo
-        echo "You must have libtool 1.4 installed to compile $PROJECT."
+        echo "You must have libtool installed to compile $PROJECT."
         echo "Install the appropriate package for your distribution,"
         echo "or get the source tarball at ftp://ftp.gnu.org/pub/gnu/"
         DIE=1
-fi
+}
 
 (autoconf --version) < /dev/null > /dev/null 2>&1 || {
 	echo
@@ -45,10 +36,19 @@ fi
 	DIE=1
 }
 
-echo "I am testing that you have the required versions of autoconf, automake"
-echo "and gettext. This test is not foolproof, so if anything goes wrong,"
-echo "see the file HACKING for more information..."
+echo "I am testing that you have the required versions of libtool, autoconf," 
+echo "automake and gettext. This test is not foolproof, so if anything goes"
+echo "wrong, see the file HACKING for more information..."
 echo
+
+echo "Testing libtool... "
+VER=`libtoolize --version | grep libtool | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
+if expr $VER \>= 1.3.4 >/dev/null; then
+	echo "looks OK."
+else
+	echo "too old! (Need 1.3.4, have $VER)"
+	DIE=1
+fi
 
 echo "Testing autoconf... "
 VER=`autoconf --version | grep -iw autoconf | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`

@@ -1,11 +1,11 @@
 Requirements
 ------------
-If you want to hack on the GIMP project, it will make you life easier
-to have the following packages installed:
+If you want to hack on the GIMP project, it will make your life easier
+to have the following packages (or newer versions) installed:
 
 	- GNU autoconf 2.13
 	- GNU automake 1.4
-	- GNU libtool 1.2d
+	- GNU libtool 1.3.4
 	- GNU gettext 10.38
 		Available in ftp://alpha.gnu.org/gnu
 
