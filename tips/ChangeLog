@@ -1,3 +1,7 @@
+2004-06-08  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am (tips_POFILES): added ca.po (Catalan).
+
 2004-06-08  Jordi Mallach  <jordi@sindominio.net>
 
 	* ca.po: Added Catalan translation by

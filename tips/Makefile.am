@@ -7,6 +7,7 @@ tips_in_files = gimp-tips.xml.in
 tipsdata_DATA = $(tips_in_files:.xml.in=.xml)
 
 tips_POFILES = \
+	ca.po		\
 	cs.po		\
 	da.po		\
 	de.po		\
@@ -20,8 +21,8 @@ tips_POFILES = \
 	hr.po		\
 	id.po		\
 	it.po		\
-	lt.po		\
 	ja.po		\
+	lt.po		\
 	ms.po		\
 	nl.po		\
 	no.po		\
