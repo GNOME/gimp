@@ -4,13 +4,20 @@
 
 
 GIMP 1.3 is the development branch of The GIMP. Here's where the
-development takes place on the road to the next stablerelease
+development takes place on the road to the next stable release
 dubbed GIMP 1.4.
 
 
 Overview of Changes in GIMP 1.3.12
 ==================================
 
+- Improved the code that handles the plug-ins [Mitch]
+- Updated the gimprc man-page, or actually, wrote a tool that does it [Sven]
+- Improved the code that handles all the menus [Mitch]
+- Added new PSD save plug-in [Bolsh]
+- Added back SphereDesigner plug-in [Sven]
+- More plug-ins cleaned up [Maurits, Sven]
+- Reorganized startup code [Yosh]
 - Portability fixes for 64bit platforms [Yosh, Sven]
 - Handle large swap files (>2GB) [Sven]
 - Updates to the Win32 build system [Tor Lillqvist, Hans Breuer]
@@ -18,7 +25,7 @@ Overview of Changes in GIMP 1.3.12
 - Lots of bug fixes
 
 Other contributors:
-  Maurits Rijk, Garry R. Osgood, Jakub Steiner
+  Garry R. Osgood, Jakub Steiner, Simon Budig, Henrik Brix Anderse
 
 
 Overview of Changes in GIMP 1.3.11

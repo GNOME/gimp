@@ -15,13 +15,11 @@ INCLUDES = \
         -I$(includedir)
 
 EXTRA_DIST = \
-	makefile.msc		\
-	colorsel_water.c
+	makefile.msc
 
 lib_LTLIBRARIES = \
 	libcolorsel_triangle.la		\
 	libcolorsel_water.la		\
-	\
 	libcdisplay_colorblind.la	\
 	libcdisplay_gamma.la		\
 	libcdisplay_highcontrast.la

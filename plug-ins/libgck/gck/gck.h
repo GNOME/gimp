@@ -28,14 +28,6 @@
 extern "C" {
 #endif
 
-#define GCK_CONSTRAIN_RGB      1<<0
-#define GCK_CONSTRAIN_RGBA     1<<1
-#define GCK_CONSTRAIN_GRAY     1<<2
-#define GCK_CONSTRAIN_GRAYA    1<<3
-#define GCK_CONSTRAIN_INDEXED  1<<4
-#define GCK_CONSTRAIN_INDEXEDA 1<<5
-#define GCK_CONSTRAIN_ALL      0xff
-
 typedef enum
 {
   DITHER_NONE,

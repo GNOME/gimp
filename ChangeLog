@@ -1,3 +1,12 @@
+2003-01-19  Sven Neumann  <sven@gimp.org>
+
+	* app/main.c: just a minor string change.
+
+	* modules/Makefile.am: minor cleanup
+
+	* plug-ins/libgck/gck/gck.h
+	* plug-ins/libgck/gck/gckcolor.c: removed unused functions.
+
 2003-01-18  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/CML_explorer.c (CML_next_value): g_rand_new is a

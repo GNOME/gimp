@@ -167,7 +167,7 @@ main (int    argc,
 	{
           const gchar *msg;
 
-          msg = _("GIMP could not initialize the GUI.\n"
+          msg = _("GIMP could not initialize the graphical user interface.\n"
                   "Make sure a proper setup for your display environment exists.");
           g_print ("%s\n\n", msg);
 
