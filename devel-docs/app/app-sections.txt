@@ -1593,6 +1593,7 @@ gimp_display_shell_resume
 gimp_display_shell_update_icon
 gimp_display_shell_shrink_wrap
 gimp_display_shell_selection_visibility
+gimp_display_shell_set_highlight
 <SUBSECTION Standard>
 GimpDisplayShellClass
 GIMP_DISPLAY_SHELL
@@ -1803,7 +1804,6 @@ gimp_display_shell_untransform_viewport
 <TITLE>GimpNavigationEditor</TITLE>
 GimpNavigationEditor
 gimp_navigation_editor_new
-gimp_navigation_editor_set_shell
 gimp_navigation_editor_popup
 <SUBSECTION Standard>
 GimpNavigationEditorClass
@@ -4130,7 +4130,6 @@ gimp_container_view_get_by_dockable
 <TITLE>GimpDataEditor</TITLE>
 GimpDataEditor
 GimpDataEditorClass
-gimp_data_editor_construct
 gimp_data_editor_set_data
 gimp_data_editor_get_data
 <SUBSECTION Standard>
@@ -4145,7 +4144,6 @@ GIMP_DATA_EDITOR_GET_CLASS
 
 <SECTION>
 <FILE>gimpdatafactoryview</FILE>
-GimpDataEditFunc
 <TITLE>GimpDataFactoryView</TITLE>
 GimpDataFactoryView
 gimp_data_factory_view_new
@@ -4263,10 +4261,6 @@ GIMP_DEVICE_STATUS_GET_CLASS
 
 <SECTION>
 <FILE>gimpdialogfactory</FILE>
-GIMP_DIALOG_VISIBILITY_KEY
-GimpDialogVisibilityState
-GimpDialogNewFunc
-GimpDialogFactoryEntry
 <TITLE>GimpDialogFactory</TITLE>
 GimpDialogFactory
 gimp_dialog_factory_new
@@ -4281,6 +4275,7 @@ gimp_dialog_factory_dock_new
 gimp_dialog_factory_add_dialog
 gimp_dialog_factory_add_foreign
 gimp_dialog_factory_remove_dialog
+gimp_dialog_factory_set_constructor
 gimp_dialog_factories_session_save
 gimp_dialog_factories_session_restore
 gimp_dialog_factories_session_clear
@@ -4288,6 +4283,11 @@ gimp_dialog_factories_toggle
 gimp_dialog_factories_set_busy
 gimp_dialog_factories_unset_busy
 gimp_dialog_factory_from_widget
+GIMP_DIALOG_VISIBILITY_KEY
+GimpDialogVisibilityState
+GimpDialogNewFunc
+GimpDialogFactoryEntry
+GimpDialogConstructor
 <SUBSECTION Standard>
 GimpDialogFactoryClass
 GIMP_DIALOG_FACTORY
@@ -4906,21 +4906,6 @@ GIMP_PDB_DIALOG_GET_CLASS
 </SECTION>
 
 <SECTION>
-<FILE>gimpdataselect</FILE>
-<TITLE>GimpDataSelect</TITLE>
-GimpDataSelect
-<SUBSECTION Standard>
-GimpDataSelectClass
-GIMP_DATA_SELECT
-GIMP_IS_DATA_SELECT
-GIMP_TYPE_DATA_SELECT
-gimp_data_select_get_type
-GIMP_DATA_SELECT_CLASS
-GIMP_IS_DATA_SELECT_CLASS
-GIMP_DATA_SELECT_GET_CLASS
-</SECTION>
-
-<SECTION>
 <FILE>gimpfontselect</FILE>
 <TITLE>GimpFontSelect</TITLE>
 GimpFontSelect
@@ -5045,6 +5030,7 @@ gimp_view_renderer_draw
 gimp_view_renderer_default_render_buffer
 gimp_view_renderer_default_render_stock
 gimp_view_renderer_render_buffer
+gimp_view_renderer_render_pixbuf
 gimp_view_render_to_buffer
 <SUBSECTION Standard>
 GimpViewRendererClass
@@ -5055,6 +5041,11 @@ gimp_view_renderer_get_type
 GIMP_VIEW_RENDERER_CLASS
 GIMP_IS_VIEW_RENDERER_CLASS
 GIMP_VIEW_RENDERER_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpviewrenderer-frame</FILE>
+gimp_view_renderer_get_frame_pixbuf
 </SECTION>
 
 <SECTION>
@@ -6175,6 +6166,7 @@ gimp_scanner_parse_matrix2
 GimpXmlParser
 gimp_xml_parser_new
 gimp_xml_parser_parse_file
+gimp_xml_parser_parse_fd
 gimp_xml_parser_parse_io_channel
 gimp_xml_parser_parse_buffer
 gimp_xml_parser_free
@@ -6621,6 +6613,7 @@ gimp_palette_import_from_indexed_image
 GimpPickable
 GimpPickableInterface
 gimp_pickable_get_image_type
+gimp_pickable_get_image
 gimp_pickable_get_tiles
 gimp_pickable_get_color_at
 gimp_pickable_pick_color
@@ -6649,6 +6642,7 @@ GimpProjectionIdleRender
 GimpProjection
 gimp_projection_new
 gimp_projection_get_tiles
+gimp_projection_get_image
 gimp_projection_get_image_type
 gimp_projection_get_bytes
 gimp_projection_get_opacity
@@ -6761,6 +6755,33 @@ file_utils_uri_to_utf8_filename
 </SECTION>
 
 <SECTION>
+<FILE>gimprecentitem</FILE>
+GimpRecentItem
+gimp_recent_item_new
+gimp_recent_item_ref
+gimp_recent_item_unref
+gimp_recent_item_new_from_uri
+gimp_recent_item_set_uri
+gimp_recent_item_get_uri
+gimp_recent_item_get_uri_utf8
+gimp_recent_item_set_mime_type
+gimp_recent_item_get_mime_type
+gimp_recent_item_set_timestamp
+gimp_recent_item_get_timestamp
+gimp_recent_item_get_groups
+gimp_recent_item_in_group
+gimp_recent_item_add_group
+gimp_recent_item_remove_group
+gimp_recent_item_set_private
+gimp_recent_item_get_private
+</SECTION>
+
+<SECTION>
+<FILE>gimprecentlist</FILE>
+gimp_recent_list_add_uri
+</SECTION>
+
+<SECTION>
 <FILE>about-dialog</FILE>
 about_dialog_create
 </SECTION>
@@ -6786,6 +6807,7 @@ convert_dialog_new
 
 <SECTION>
 <FILE>dialogs-constructors</FILE>
+dialogs_dockable_constructor
 dialogs_image_new_new
 dialogs_file_open_new
 dialogs_file_open_location_new
@@ -6801,41 +6823,39 @@ dialogs_dock_new
 dialogs_tool_options_get
 dialogs_device_status_get
 dialogs_error_console_get
-dialogs_image_list_view_new
-dialogs_brush_list_view_new
-dialogs_pattern_list_view_new
-dialogs_gradient_list_view_new
-dialogs_palette_list_view_new
-dialogs_font_list_view_new
-dialogs_tool_list_view_new
-dialogs_buffer_list_view_new
-dialogs_document_list_new
-dialogs_template_list_new
-dialogs_image_grid_view_new
 dialogs_brush_grid_view_new
-dialogs_pattern_grid_view_new
-dialogs_gradient_grid_view_new
-dialogs_palette_grid_view_new
-dialogs_font_grid_view_new
-dialogs_tool_grid_view_new
+dialogs_brush_list_view_new
 dialogs_buffer_grid_view_new
-dialogs_document_grid_new
-dialogs_layer_list_view_new
+dialogs_buffer_list_view_new
 dialogs_channel_list_view_new
-dialogs_vectors_list_view_new
-dialogs_path_list_view_new
-dialogs_histogram_editor_new
-dialogs_indexed_palette_new
-dialogs_selection_editor_new
-dialogs_undo_history_new
-dialogs_navigation_view_new
 dialogs_color_editor_new
+dialogs_colormap_editor_new
+dialogs_document_grid_view_new
+dialogs_document_list_view_new
+dialogs_font_grid_view_new
+dialogs_font_list_view_new
+dialogs_gradient_grid_view_new
+dialogs_gradient_list_view_new
+dialogs_histogram_editor_new
+dialogs_image_grid_view_new
+dialogs_image_list_view_new
+dialogs_layer_list_view_new
+dialogs_navigation_editor_new
+dialogs_palette_grid_view_new
+dialogs_palette_list_view_new
+dialogs_path_list_view_new
+dialogs_pattern_grid_view_new
+dialogs_pattern_list_view_new
+dialogs_selection_editor_new
+dialogs_template_grid_view_new
+dialogs_template_list_view_new
+dialogs_tool_grid_view_new
+dialogs_tool_list_view_new
+dialogs_undo_editor_new
+dialogs_vectors_list_view_new
 dialogs_brush_editor_get
-dialogs_edit_brush_func
 dialogs_gradient_editor_get
-dialogs_edit_gradient_func
 dialogs_palette_editor_get
-dialogs_edit_palette_func
 </SECTION>
 
 <SECTION>

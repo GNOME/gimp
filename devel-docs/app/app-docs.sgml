@@ -300,6 +300,8 @@
     <xi:include href="xml/file-open.xml" />
     <xi:include href="xml/file-save.xml" />
     <xi:include href="xml/file-utils.xml" />
+    <xi:include href="xml/gimprecentitem.xml" />
+    <xi:include href="xml/gimprecentlist.xml" />
   </part>
 
   <part id="app-vectors-part">
@@ -734,7 +736,6 @@
     <chapter id="app-widgets-pdb-dialogs">
       <title>PDB-Controllable Selection Dialogs</title>
       <xi:include href="xml/gimppdbdialog.xml" />
-      <xi:include href="xml/gimpdataselect.xml" />
       <xi:include href="xml/gimpbrushselect.xml" />
       <xi:include href="xml/gimpfontselect.xml" />
       <xi:include href="xml/gimpgradientselect.xml" />
@@ -774,6 +775,7 @@
     <chapter id="app-widgets-view-renderers">
       <title>View Renderers</title>
       <xi:include href="xml/gimpviewrenderer.xml" />
+      <xi:include href="xml/gimpviewrenderer-frame.xml" />
       <xi:include href="xml/gimpviewrenderer-utils.xml" />
       <xi:include href="xml/gimpviewrendererbrush.xml" />
       <xi:include href="xml/gimpviewrendererbuffer.xml" />

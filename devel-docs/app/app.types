@@ -73,7 +73,6 @@ gimp_data_editor_get_type
 gimp_data_factory_get_type
 gimp_data_factory_view_get_type
 gimp_data_get_type
-gimp_data_select_get_type
 gimp_device_info_get_type
 gimp_device_status_get_type
 gimp_dialog_factory_get_type
