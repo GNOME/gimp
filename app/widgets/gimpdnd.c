@@ -1119,8 +1119,8 @@ gimp_dnd_set_svg_data (GtkWidget        *widget,
                        gpointer          set_svg_data,
                        GtkSelectionData *selection)
 {
-  gchar *svg_data;
-  gint   svg_data_length;
+  const gchar *svg_data;
+  gint         svg_data_length;
 
   svg_data = gimp_selection_data_get_svg (selection, &svg_data_length);
 

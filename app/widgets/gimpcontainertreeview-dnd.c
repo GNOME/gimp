@@ -386,8 +386,8 @@ gimp_container_tree_view_drag_data_received (GtkWidget             *widget,
         case GIMP_DND_TYPE_SVG_XML:
           if (tree_view_class->drop_svg)
             {
-              gchar *svg_data;
-              gint   svg_data_length;
+              const gchar *svg_data;
+              gint         svg_data_length;
 
               svg_data = gimp_selection_data_get_svg (selection_data,
                                                       &svg_data_length);

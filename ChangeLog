@@ -1,3 +1,12 @@
+2004-06-30  Michael Natterer  <mitch@gimp.org>
+
+	* widgets/gimpselectiondata.[ch] (gimp_selection_data_get_svg):
+	changed return value from gchar* to const gchar*. Renamed
+	parameters to be consistent with other SVG functions.
+
+	* widgets/gimpcontainertreeview-dnd.c
+	* widgets/gimpdnd.c: changed accordingly.
+
 2004-06-30  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpstroke.[ch]

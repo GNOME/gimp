@@ -378,24 +378,24 @@ gimp_selection_data_get_color (GtkSelectionData *selection,
 void
 gimp_selection_data_set_svg (GtkSelectionData *selection,
                              GdkAtom           atom,
-                             const gchar      *data,
-                             gint              data_length)
+                             const gchar      *svg_data,
+                             gint              svg_data_length)
 {
   g_return_if_fail (selection != NULL);
   g_return_if_fail (atom != GDK_NONE);
-  g_return_if_fail (data != NULL);
-  g_return_if_fail (data_length > 0);
+  g_return_if_fail (svg_data != NULL);
+  g_return_if_fail (svg_data_length > 0);
 
   gtk_selection_data_set (selection, atom,
-                          8, (guchar *) data, data_length);
+                          8, (guchar *) svg_data, svg_data_length);
 }
 
-gchar *
+const gchar *
 gimp_selection_data_get_svg (GtkSelectionData *selection,
-                             gint             *length)
+                             gint             *svg_data_length)
 {
   g_return_val_if_fail (selection != NULL, NULL);
-  g_return_val_if_fail (length != NULL, NULL);
+  g_return_val_if_fail (svg_data_length != NULL, NULL);
 
   if ((selection->format != 8) || (selection->length < 1))
     {
@@ -403,9 +403,9 @@ gimp_selection_data_get_svg (GtkSelectionData *selection,
       return NULL;
     }
 
-  *length = selection->length;
+  *svg_data_length = selection->length;
 
-  return selection->data;
+  return (const gchar *) selection->data;
 }
 
 void

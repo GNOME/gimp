@@ -41,10 +41,10 @@ gboolean        gimp_selection_data_get_color     (GtkSelectionData *selection,
 
 void            gimp_selection_data_set_svg       (GtkSelectionData *selection,
                                                    GdkAtom           atom,
-                                                   const gchar      *data,
-                                                   gint              data_length);
-gchar         * gimp_selection_data_get_svg       (GtkSelectionData *selection,
-                                                   gint             *length);
+                                                   const gchar      *svg_data,
+                                                   gint              svg_data_length);
+const gchar   * gimp_selection_data_get_svg       (GtkSelectionData *selection,
+                                                   gint             *svg_data_length);
 
 
 /*  image  */
