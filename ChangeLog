@@ -1,3 +1,7 @@
+2003-11-22  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/preferences-dialog.c: let the templates editor expand.
+
 2003-11-21  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpcolordisplaystack.h: forgot to declare

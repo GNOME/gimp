@@ -1116,7 +1116,7 @@ prefs_dialog_new (Gimp       *gimp,
   }
 
   editor = gimp_template_editor_new (core_config->default_image, gimp, FALSE);
-  gtk_box_pack_start (GTK_BOX (vbox), editor, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), editor, TRUE, TRUE, 0);
   gtk_widget_show (editor);
 
   table = prefs_table_new (1, GTK_CONTAINER (vbox), TRUE);
