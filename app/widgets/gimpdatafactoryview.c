@@ -210,13 +210,16 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
                         factory_view);
     }
 
-  factory_view->edit_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor->view),
-                            GIMP_STOCK_EDIT,
-                            _("Edit"), NULL,
-                            G_CALLBACK (gimp_data_factory_view_edit_clicked),
-                            NULL,
-                            editor);
+  if (edit_func != NULL)
+    {
+      factory_view->edit_button =
+        gimp_editor_add_button (GIMP_EDITOR (editor->view),
+                                GIMP_STOCK_EDIT,
+                                _("Edit"), NULL,
+                                G_CALLBACK (gimp_data_factory_view_edit_clicked),
+                                NULL,
+                                editor);
+    }
 
   factory_view->new_button =
     gimp_editor_add_button (GIMP_EDITOR (editor->view),
@@ -257,9 +260,12 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
        (GimpViewable *) gimp_context_get_by_type (context,
 						  factory->container->children_type));
 
-  gimp_container_view_enable_dnd (editor->view,
-				  GTK_BUTTON (factory_view->edit_button),
-				  factory->container->children_type);
+  if (factory_view->edit_button)
+    {
+      gimp_container_view_enable_dnd (editor->view,
+                                      GTK_BUTTON (factory_view->edit_button),
+                                      factory->container->children_type);
+    }
   gimp_container_view_enable_dnd (editor->view,
 				  GTK_BUTTON (factory_view->duplicate_button),
 				  factory->container->children_type);
@@ -452,7 +458,9 @@ gimp_data_factory_view_select_item (GimpContainerEditor *editor,
       delete_sensitive    = data->deletable;
     }
 
-  gtk_widget_set_sensitive (view->edit_button,      edit_sensitive);
+  if (view->edit_button)
+    gtk_widget_set_sensitive (view->edit_button,    edit_sensitive);
+
   gtk_widget_set_sensitive (view->duplicate_button, duplicate_sensitive);
   gtk_widget_set_sensitive (view->delete_button,    delete_sensitive);
 }

@@ -122,6 +122,10 @@ static void   gimp_item_tree_view_edit_clicked      (GtkWidget         *widget,
 
 static void   gimp_item_tree_view_new_clicked       (GtkWidget         *widget,
                                                      GimpItemTreeView  *view);
+static void   gimp_item_tree_view_new_extended_clicked
+                                                    (GtkWidget         *widget,
+                                                     guint              state,
+                                                     GimpItemTreeView  *view);
 static void   gimp_item_tree_view_new_dropped       (GtkWidget         *widget,
                                                      GimpViewable      *viewable,
                                                      gpointer           data);
@@ -340,13 +344,19 @@ gimp_item_tree_view_init (GimpItemTreeView      *view,
                             NULL,
                             view);
 
+  str = g_strdup_printf (_("%s\n"
+                           "%s  use defaults"),
+                         view_class->new_desc,
+                         gimp_get_mod_name_shift ());
+
   view->new_button =
     gimp_editor_add_button (editor,
-                            GTK_STOCK_NEW, view_class->new_desc,
-                            view_class->new_help_id,
+                            GTK_STOCK_NEW, str, view_class->new_help_id,
                             G_CALLBACK (gimp_item_tree_view_new_clicked),
-                            NULL,
+                            G_CALLBACK (gimp_item_tree_view_new_extended_clicked),
                             view);
+
+  g_free (str);
 
   str = g_strdup_printf (_("%s\n"
                            "%s  To Top"),
@@ -1000,6 +1010,14 @@ gimp_item_tree_view_new_clicked (GtkWidget        *widget,
                                  GimpItemTreeView *view)
 {
   view->new_item_func (view->gimage, NULL, TRUE, GTK_WIDGET (view));
+}
+
+static void
+gimp_item_tree_view_new_extended_clicked (GtkWidget        *widget,
+                                          guint             state,
+                                          GimpItemTreeView *view)
+{
+  view->new_item_func (view->gimage, NULL, FALSE, GTK_WIDGET (view));
 }
 
 static void

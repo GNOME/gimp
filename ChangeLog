@@ -1,3 +1,13 @@
+2004-03-17  Simon Budig  <simon@gimp.org>
+
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpvectorstreeview.c
+	* app/widgets/gimpdatafactoryview.c: remove basically useless
+	edit buttons in the layers, vectors and patterns dialog.
+
+	* app/widgets/gimpitemtreeview.c: Make Shift-Click on the "New"
+	button create a new item using defaults.
+
 2004-03-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable.c (gimp_drawable_set_tiles): ref new

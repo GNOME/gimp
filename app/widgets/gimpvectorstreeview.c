@@ -153,6 +153,10 @@ gimp_vectors_tree_view_init (GimpVectorsTreeView *view)
 
   editor = GIMP_EDITOR (view);
 
+  /*  Hide basically useless Edit button  */
+
+  gtk_widget_hide (GIMP_ITEM_TREE_VIEW (view)->edit_button);
+
   str = g_strdup_printf (_("Path to Selection\n"
                            "%s  Add\n"
                            "%s  Subtract\n"

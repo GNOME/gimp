@@ -312,6 +312,10 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
 		    G_CALLBACK (gimp_layer_tree_view_opacity_scale_changed),
 		    view);
 
+  /*  Hide basically useless Edit button  */
+
+  gtk_widget_hide (GIMP_ITEM_TREE_VIEW (view)->edit_button);
+
   /*  Anchor button  */
 
   view->anchor_button =
