@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.1.18\n"
-"POT-Creation-Date: 2000-06-06 12:41-0700\n"
-"PO-Revision-Date: 2000-06-11 01:35+00:00\n"
+"POT-Creation-Date: 2000-07-20 17:43+0000\n"
+"PO-Revision-Date: 2000-07-20 17:47+00:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -174,11 +174,11 @@ msgstr "<Toolbox>/Расш./Скрипт-Фу/Консоль..."
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Сервер..."
 
-#: plug-ins/script-fu/script-fu.c:1009 plug-ins/script-fu/script-fu.c:1010
+#: plug-ins/script-fu/script-fu.c:1016 plug-ins/script-fu/script-fu.c:1017
 msgid "Re-read all available scripts"
 msgstr "Перечитать все доступные скрипты"
 
-#: plug-ins/script-fu/script-fu.c:1014
+#: plug-ins/script-fu/script-fu.c:1021
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Расш./Скрипт-Фу/Обновить..."
 
@@ -1219,15 +1219,15 @@ msgstr "План-Прозрачное"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "Fade Away"
-msgstr ""
+msgstr "Затухание"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Fade From %"
-msgstr ""
+msgstr "Затухание от %"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Fade To   %"
-msgstr ""
+msgstr "Затухание к %"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "Feathering"
