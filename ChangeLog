@@ -1,5 +1,11 @@
 2004-03-12  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/siod-wrapper.c (marshall_proc_db_call):
+	applied a patch from Kevin Cozens that improves Script-Fu error
+	reporting (addresses bug #73610).
+
+2004-03-12  Sven Neumann  <sven@gimp.org>
+
 	* data/misc/gimp.keys.in: removed category entry. This would have
 	to be translated and it's not our job to define where image/jpeg
 	belongs to.

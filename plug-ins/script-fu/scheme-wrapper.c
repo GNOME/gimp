@@ -456,7 +456,12 @@ marshall_proc_db_call (LISP a)
 				      &proc_type,
 				      &nparams, &nreturn_vals,
 				      &params, &return_vals))
-    return my_err ("Invalid procedure name specified.", NIL);
+  {
+    convert_string (proc_name);
+    g_snprintf (error_str, sizeof (error_str),
+                "Invalid procedure name %s specified", proc_name);
+    return my_err (error_str, NIL);
+  }
 
   /* Free the name and the description which are of no use here.  */
   for (i = 0; i < nparams; i++)
@@ -473,8 +478,10 @@ marshall_proc_db_call (LISP a)
   /*  Check the supplied number of arguments  */
   if ((nlength (a) - 1) != nparams)
     {
+      convert_string (proc_name);
       g_snprintf (error_str, sizeof (error_str),
-		  "Invalid arguments supplied to %s--(# args: %ld, expecting: %d)",
+		  "Invalid arguments supplied to %s -- "
+                  "(# args: %ld, expecting: %d)",
 		  proc_name, (nlength (a) - 1), nparams);
       return my_err (error_str, NIL);
     }
@@ -601,7 +608,14 @@ marshall_proc_db_call (LISP a)
 		list = car (a);
 		num_strings = args[i - 1].data.d_int32;
 		if (nlength (list) != num_strings)
-		  return my_err ("String array argument has incorrectly specified length", NIL);
+		{
+		  convert_string (proc_name);
+		  g_snprintf (error_str, sizeof (error_str),
+                              "String array (argument %d) for function %s has "
+                              "incorrect length (got %ld, expected %d)",
+                              i+1, proc_name, nlength(list), num_strings);
+		  return my_err (error_str, NIL);
+		}
 		array = args[i].data.d_stringarray =
 		  g_new (char *, num_strings);
 
@@ -764,22 +778,36 @@ marshall_proc_db_call (LISP a)
 	  break;
 
 	default:
-	  return my_err ("Unknown argument type", NIL);
+	  convert_string (proc_name);
+	  g_snprintf (error_str, sizeof (error_str),
+                      "Argument %d for %s is an unknown type",
+                      i+1, proc_name);
+	  return my_err (error_str, NIL);
 	}
+
+      if (!success)
+        break;
 
       a = cdr (a);
     }
 
   if (success)
-    values = gimp_run_procedure2 (proc_name, &nvalues, nparams, args);
+    {
+      values = gimp_run_procedure2 (proc_name, &nvalues, nparams, args);
+    }
   else
-    return my_err ("Invalid types specified for arguments", NIL);
+    {
+      g_snprintf (error_str, sizeof (error_str),
+                  "Invalid type for argument %d to %s", i+1, proc_name);
+      return my_err (error_str, NIL);
+    }
 
   /*  Check the return status  */
   if (! values)
     {
-      strcpy (error_str, "Procedural database execution did not return a status:\n    ");
-      lprin1s (a_saved, error_str + strlen(error_str));
+      strcpy (error_str,
+              "Procedural database execution did not return a status:\n    ");
+      lprin1s (a_saved, error_str + strlen (error_str));
 
       return my_err (error_str, NIL);
     }
@@ -787,14 +815,16 @@ marshall_proc_db_call (LISP a)
   switch (values[0].data.d_status)
     {
     case GIMP_PDB_EXECUTION_ERROR:
-      strcpy (error_str, "Procedural database execution failed:\n    ");
-      lprin1s (a_saved, error_str + strlen(error_str));
+      strcpy (error_str,
+              "Procedural database execution failed:\n    ");
+      lprin1s (a_saved, error_str + strlen (error_str));
       return my_err (error_str, NIL);
       break;
 
     case GIMP_PDB_CALLING_ERROR:
-      strcpy (error_str, "Procedural database execution failed on invalid input arguments:\n    ");
-      lprin1s (a_saved, error_str + strlen(error_str));
+      strcpy (error_str,
+              "Procedural database execution failed on invalid input arguments:\n    ");
+      lprin1s (a_saved, error_str + strlen (error_str));
       return my_err (error_str, NIL);
       break;
 
