@@ -1,3 +1,8 @@
+2004-07-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in.h (struct _PlugIn): removed obsolete
+	compile-time check for GLIB >= 2.3.5.
+
 2004-07-19  Shlomi Fish  <shlomif@iglu.org.il>
 
 	* ChangeLog: Fixed a copy-and-paste error with the dates of my commits.
