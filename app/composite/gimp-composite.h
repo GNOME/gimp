@@ -118,7 +118,7 @@ struct GimpCompositeOperationEffects
 
 extern struct GimpCompositeOperationEffects gimp_composite_operation_effects[];
 
-/**
+/*
  * This is structure for communicating all that is necessary to a
  * compositing operation.
  */
@@ -145,9 +145,11 @@ typedef struct
 } GimpCompositeContext;
 
 
-struct GimpCompositeOptions {
-		unsigned long bits;
+struct GimpCompositeOptions
+{
+  gulong  bits;
 };
+
 #define GIMP_COMPOSITE_OPTION_USE         0x1
 #define GIMP_COMPOSITE_OPTION_INITIALISED 0x2
 #define GIMP_COMPOSITE_OPTION_VERBOSE     0x4
