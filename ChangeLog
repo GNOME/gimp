@@ -1,3 +1,8 @@
+2004-12-05  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/wmf.c: applied patch from Karine Proot that
+	limits the size of the preview in the WMF loader (bug #133521).
+
 2004-12-04  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/gfig/gfig-arc.c

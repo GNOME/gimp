@@ -758,10 +758,10 @@ wmf_get_pixbuf (const gchar *filename,
   wmf_gd_t       *ddata = NULL;
   wmfAPI         *API   = NULL;
   wmfAPI_Options  api_options;
+  gint            file_width;
+  gint            file_height;
   wmfD_Rect       bbox;
   gint           *gd_pixels = NULL;
-
-  *width = *height = -1;
 
   flags = WMF_OPT_IGNORE_NONFATAL | WMF_OPT_FUNCTION;
   api_options.function = wmf_gd_function;
@@ -781,14 +781,42 @@ wmf_get_pixbuf (const gchar *filename,
   if (err != wmf_E_None)
     goto _wmf_error;
 
-  err = wmf_display_size (API, width, height,
+  err = wmf_display_size (API, &file_width, &file_height,
                           WMF_DEFAULT_RESOLUTION, WMF_DEFAULT_RESOLUTION);
-  if (err != wmf_E_None || *width <= 0 || *height <= 0)
+  if (err != wmf_E_None || file_width <= 0 || file_height <= 0)
+    goto _wmf_error;
+
+  if (!*width || !*height)
+    goto _wmf_error;
+
+  /*  either both arguments negative or none  */
+  if ((*width * *height) < 0)
     goto _wmf_error;
 
   ddata->bbox   = bbox;
-  ddata->width  = *width;
-  ddata->height = *height;
+
+  if (*width > 0)
+    {
+      ddata->width  = *width;
+      ddata->height = *height;
+    }
+  else
+    {
+      gdouble w      = file_width;
+      gdouble h      = file_height;
+      gdouble aspect = ((gdouble) *width) / (gdouble) *height;
+
+      if (aspect > (w / h))
+        {
+          ddata->height = abs (*height);
+          ddata->width  = (gdouble) abs (*width) * (w / h) + 0.5;
+        }
+      else
+        {
+          ddata->width  = abs (*width);
+          ddata->height = (gdouble) abs (*height) / (w / h) + 0.5;
+        }
+    }
 
   err = wmf_play (API, 0, &bbox);
   if (err != wmf_E_None)
@@ -801,12 +829,15 @@ wmf_get_pixbuf (const gchar *filename,
   if (gd_pixels == NULL)
     goto _wmf_error;
 
-  pixels = pixbuf_gd_convert (gd_pixels, *width, *height);
+  pixels = pixbuf_gd_convert (gd_pixels, ddata->width, ddata->height);
   if (pixels == NULL)
     goto _wmf_error;
 
   wmf_api_destroy (API);
   API = NULL;
+
+  *width = ddata->width;
+  *height = ddata->height;
 
  _wmf_error:
   if (API)
