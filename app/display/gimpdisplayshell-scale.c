@@ -498,7 +498,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  if (!shell->other_scale)
+  if ((shell->other_scale & 0xFFFF) == 0)
     shell->other_scale = shell->scale;
 
   spin = gimp_spin_button_new (&data->dest_adj,

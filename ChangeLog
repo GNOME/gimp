@@ -1,5 +1,11 @@
 2003-04-11  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_dialog): fixed fnord that caused the
+	dialog to sometimes show a ratio of 0:0.
+
+2003-04-11  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpwidgets-utils.c (gimp_get_icon_size): return
 	GTK_ICON_SIZE_INVALID for non-existant icons.
 
