@@ -36,6 +36,7 @@ IGNORE_HFILES = \
 	gimp-composite-sse2.h		\
 	gimp-composite-vis.h		\
 	gimp-composite-x86.h		\
+	gimp-intl.h			\
 	gimpimage-convert-data.h	\
 	gimpimage-convert-fsdither.h	\
 	gimphelp-ids.h			\
