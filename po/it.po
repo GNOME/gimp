@@ -33,7 +33,6 @@ msgid "Please visit http://www.gimp.org/ for more info"
 msgstr "Visitate http://www.gimp.org/ per maggiori informazioni"
 
 #: app/airbrush.c:127
-#, fuzzy
 msgid "Rate:"
 msgstr "Ammontare:"
 
@@ -174,6 +173,7 @@ msgid ""
 "selection"
 msgstr ""
 "bezier_select_button_press(): Tentativo di modificare una curva aperta bezier"
+"selezione"
 
 #: app/bezier_select.c:1288
 msgid "bezier_select_motion(): Encountered orphaned bezier control point"
@@ -445,7 +445,6 @@ msgid "Refresh"
 msgstr "Aggiorna"
 
 #: app/brush_select.c:156
-#, fuzzy
 msgid "Brush Selection"
 msgstr "Selezione Pennello"
 
@@ -1515,7 +1514,7 @@ msgstr "/Modifica/Incolla con Nome"
 
 #: app/gdisplay.c:1607
 msgid "/Select"
-msgstr "/Selezione/"
+msgstr "/Selezione"
 
 #: app/gdisplay.c:1608 app/menus.c:130
 msgid "/Select/Save To Channel"
@@ -3477,7 +3476,6 @@ msgid "Channels"
 msgstr "Canali"
 
 #: app/levels.c:197
-#, fuzzy
 msgid "Levels Options"
 msgstr "Opzioni Livelli"
 
@@ -5098,11 +5096,11 @@ msgstr "Bordo:"
 
 #: app/text_tool.c:208
 msgid "Use Dynamic Text"
-msgstr "Utilizza Testo Dinamico"
+msgstr "Utilizza GDynText"
 
 #: app/text_tool.c:278
 msgid "text_call_gdyntext: gDynText procedure lookup failed"
-msgstr ""
+msgstr "text_call_gdyntext: procedura di richiamo GDynText fallita"
 
 #. Create the shell
 #: app/text_tool.c:399 app/text_tool.c:401
@@ -5120,6 +5118,8 @@ msgid ""
 "If you don't have scalable fonts, try turning off antialiasing in the tool "
 "options."
 msgstr ""
+"\n"
+"Se non avete caratteri scalabili, provate a disabilitare l'antialiasing negli strumenti"
 
 #: app/text_tool.c:722
 msgid "Text Layer"
@@ -5170,7 +5170,7 @@ msgstr ""
 
 #: app/tips_dialog.c:57
 msgid "gimp_tips.txt"
-msgstr "gimp_tips-it.txt"
+msgstr "gimp_tips.it.txt"
 
 #: app/tips_dialog.c:69
 msgid "GIMP Tip of the day"
@@ -5195,7 +5195,7 @@ msgid ""
 "GIMP data directory.  Please check your installation."
 msgstr ""
 "Il file dei Suggerimenti GIMP non è stato trovato!\n"
-"Dovrebbe esserci un file chiamato gimp_tips-it.txt nella\n"
+"Dovrebbe esserci un file chiamato gimp-tips.it.txt nella\n"
 "directory data di GIMP. Controllate la vostra installazione."
 
 #: app/tools.c:81
@@ -5228,7 +5228,7 @@ msgstr "Selezione Libera"
 
 #: app/tools.c:113
 msgid "/Tools/Free Select"
-msgstr "Strumenti/Selezione Libera"
+msgstr "/Strumenti/Selezione Libera"
 
 #: app/tools.c:116
 msgid "Select hand-drawn regions"
@@ -5268,7 +5268,7 @@ msgstr "/Strumenti/Forbici Intelligenti"
 
 #: app/tools.c:161
 msgid "Select shapes from image"
-msgstr ""
+msgstr "Seleziona aree dall'immagine"
 
 #: app/tools.c:171
 msgid "Move"
@@ -5292,7 +5292,7 @@ msgstr "/Strumenti/Lente"
 
 #: app/tools.c:191
 msgid "Zoom in & out"
-msgstr "Zoom Avanti/Indietro"
+msgstr "Zoom Avanti-Indietro"
 
 #: app/tools.c:201
 msgid "Crop & Resize"
@@ -5387,7 +5387,7 @@ msgstr "/Strumenti/Matita"
 
 #: app/tools.c:356
 msgid "Draw sharp pencil strokes"
-msgstr ""
+msgstr "Matita da Disegno"
 
 #: app/tools.c:366
 msgid "Paintbrush"
@@ -5399,7 +5399,7 @@ msgstr "/Strumenti/Pennello di Pittura"
 
 #: app/tools.c:371
 msgid "Paint fuzzy brush strokes"
-msgstr ""
+msgstr "Pennello da Pittura"
 
 #: app/tools.c:381
 msgid "Eraser"
@@ -5459,25 +5459,23 @@ msgstr "/Strumenti/Stilo"
 
 #: app/tools.c:446
 msgid "Draw in ink"
-msgstr ""
+msgstr "Stilo"
 
 #: app/tools.c:456 app/tools.c:461
 msgid "Dodge or Burn"
-msgstr ""
+msgstr "Decrementale-Incrementale"
 
 #: app/tools.c:458
-#, fuzzy
 msgid "/Tools/DodgeBurn"
-msgstr "/Strumenti/---"
+msgstr "/Strumenti/De-Incrementale"
 
 #: app/tools.c:471 app/tools.c:476
 msgid "Smudge"
-msgstr ""
+msgstr "Sfumino"
 
 #: app/tools.c:473
-#, fuzzy
 msgid "/Tools/Smudge"
-msgstr "/Strumenti/---"
+msgstr "/Strumenti/Sfumino"
 
 #: app/tools.c:487
 msgid "By Color Select"
@@ -5525,7 +5523,7 @@ msgstr "ERRORE: tipo di selezione sconosciuta"
 
 #: app/tool_options.c:273
 msgid "Feather"
-msgstr "Feather"
+msgstr "Piumata"
 
 #: app/tool_options.c:381
 msgid "Fixed size / aspect ratio"
@@ -5561,7 +5559,7 @@ msgstr "Opzioni Strumento Stampino"
 
 #: app/tool_options.c:566
 msgid "Convolver Options"
-msgstr "Opzioni Sfumino"
+msgstr "Opzioni Sfumatura"
 
 #: app/tool_options.c:568
 msgid "Ink Options"
@@ -5569,11 +5567,11 @@ msgstr "Opzioni Stilo"
 
 #: app/tool_options.c:570
 msgid "Dodge or Burn Options"
-msgstr "Opzioni Dodge o Burn"
+msgstr "Opzioni De-Incremento"
 
 #: app/tool_options.c:572
 msgid "Smudge Options"
-msgstr "Opzioni Macchia"
+msgstr "Opzioni Sfumino"
 
 #: app/tool_options.c:573
 msgid "ERROR: Unknown Paint Type"
@@ -5596,10 +5594,12 @@ msgid ""
 "Transformations do not work on\n"
 "layers that contain layer masks."
 msgstr ""
+"Trasformazioni non possono avvenire\n"
+"su livelli che contengono livelli maschere."
 
 #: app/transform_core.c:1140
 msgid "homogeneous coordinate = 0...\n"
-msgstr ""
+msgstr "coordinate omogenee = 0...\n"
 
 #: app/transform_core.c:1395
 msgid "Transformation"
@@ -5900,209 +5900,245 @@ msgstr ") o \\) senza coppia"
 msgid "No previous regular expression"
 msgstr "Non esiste un'espressione regolare precedente"
 
+ 
 #~ msgid "select"
 #~ msgstr "selezione"
 
+ 
 #~ msgid "close"
 #~ msgstr "chiudi"
 
-#~ msgid "<Toolbox>/File/New"
-#~ msgstr "<Toolbox>/File/Nuovo"
-
-#~ msgid "<Toolbox>/File/Tip of the day" 
-#~ msgstr "<Toolbox>/File/Suggerimento del giorno"
-
-#~ msgid "<Toolbox>/File/Dialogs" 
-#~ msgstr "<Toolbox>/File/Finestre"
-
+ 
 #~ msgid "<Toolbox>/File/Quit"
 #~ msgstr "<Toolbox>/File/Esci"
 
-#~ msgid "<Image>/File/New" 
-#~ msgstr "<Image>/File/Nuovo"
+ 
+#~ msgid "<Image>/File/Quit"
+#~ msgstr "<Image>/File/Esci"
 
-#~ msgid "<Image>/File/Preferences" 
-#~ msgstr "<Image>/File/Preferenze"
+ 
+#~ msgid "Automatic"
+#~ msgstr "Automatico"
 
-#~ msgid "<Image>/File/Mail image"
-#~ msgstr "<Image>/File/Spedisci immagine"
+ 
+#~ msgid "<Toolbox>/File/Open"
+#~ msgstr "<Toolbox>/File/Apri"
 
-#~ msgid "<Image>/File/Print" 
-#~ msgstr "<Image>/File/Stampa"
+ 
+#~ msgid "<Image>/File/Open"
+#~ msgstr "<Image>/File/Apri"
+
+ 
+#~ msgid "<Image>/File/Save"
+#~ msgstr "<Image>/File/Salva"
+
+ 
+#~ msgid "<Image>/File/Save as"
+#~ msgstr "<Image>/File/Salva con nome"
+
+ 
+#~ msgid "<Image>/Layers/Stack/Previous Layer"
+#~ msgstr "<Image>/Livelli/Pila/Livello Precedente"
+
+ 
+#~ msgid "<Image>/Layers/Stack/Next Layer"
+#~ msgstr "<Image>/Livelli/Pila/Livello Successivo"
+
+ 
+#~ msgid "<Image>/Layers/Stack/Raise Layer"
+#~ msgstr "<Image>/Livelli/Pila/Alza Livello"
+
+ 
+#~ msgid "<Image>/Layers/Stack/Lower Layer"
+#~ msgstr "<Image>/Livelli/Pila/Abbassa Livello"
+
+ 
+#~ msgid "<Image>/Layers/Stack/Layer to Top"
+#~ msgstr "<Image>/Livelli/Pila/Livello in Alto"
+
+ 
+#~ msgid "<Image>/Layers/Anchor Layer"
+#~ msgstr "<Image>/Livelli/Ancora livello"
+
+ 
+#~ msgid "<Image>/Layers/Merge Visible Layers"
+#~ msgstr "<Image>/Livelli/Incolla Livelli Visibili"
+
+ 
+#~ msgid "<Image>/Layers/Flatten Image"
+#~ msgstr "<Image>/Livelli/Unisci Immagine"
+
+ 
+#~ msgid "<Image>/Layers/Alpha To Selection"
+#~ msgstr "<Image>/Livelli/Da Alpha a Selezione"
+
+ 
+#~ msgid "<Image>/Layers/Mask To Selection"
+#~ msgstr "<Image>/Livelli/Da Maschera a Selezione"
+
+ 
+#~ msgid "<Image>/Layers/Add Alpha Channel"
+#~ msgstr "<Image>/Livelli/Aggiungi Canale Alpha"
+
+ 
+#~ msgid "<Image>/Image/RGB"
+#~ msgstr "<Image>/Immagine/RGB"
+
+ 
+#~ msgid "<Image>/Image/Grayscale"
+#~ msgstr "<Image>/Immagine/Scala di grigio"
+
+ 
+#~ msgid "<Image>/Image/Indexed"
+#~ msgstr "<Image>/Immagine/Indicizzata"
+
+ 
+#~ msgid "<Image>/Image/Colors/Threshold"
+#~ msgstr "<Image>/Immagine/Colori/Soglia"
+
+ 
+#~ msgid "<Image>/Image/Colors/Posterize"
+#~ msgstr "<Image>/Immagine/Colori/Posterize"
+
+ 
+#~ msgid "<Image>/Image/Colors/Equalize"
+#~ msgstr "<Image>/Immagine/Colori/Equalizza"
+
+ 
+#~ msgid "<Image>/Image/Colors/Invert"
+#~ msgstr "<Image>/Immagine/Colori/Inverti"
+
+ 
+#~ msgid "<Image>/Image/Colors/Color Balance"
+#~ msgstr "<Image>/Immagine/Colori/Bilanciamento Colore"
+
+ 
+#~ msgid "<Image>/Image/Colors/Brightness-Contrast"
+#~ msgstr "<Image>/Immagine/Colori/Luminosità-Contrasta"
+
+ 
+#~ msgid "<Image>/Image/Colors/Hue-Saturation"
+#~ msgstr "<Image>/Immagine/Colori/Saturazione Hue"
+
+ 
+#~ msgid "<Image>/Image/Colors/Curves"
+#~ msgstr "<Image>/Immagine/Colori/Curve"
+
+ 
+#~ msgid "<Image>/Image/Colors/Levels"
+#~ msgstr "<Image>/Immagine/Colori/Livelli"
+
+ 
+#~ msgid "<Image>/Image/Colors/Desaturate"
+#~ msgstr "<Image>/Immagine/Colori/Desaturazione"
+
+ 
+#~ msgid "<Image>/Image/Alpha/Add Alpha Channel"
+#~ msgstr "<Image>/Immagine/Alpha/Aggiungi Canale Alpha"
+
+ 
+#~ msgid "<Image>/Select"
+#~ msgstr "<Image>/Immagine/Selezione"
+
+ 
+#~ msgid "<Image>/Edit/Cut"
+#~ msgstr "<Image>/Modifica/Taglia"
+
+ 
+#~ msgid "<Image>/Edit/Copy"
+#~ msgstr "<Image>/Modifica/Copia"
+
+ 
+#~ msgid "<Image>/Edit/Paste"
+#~ msgstr "<Image>/Modifica/Incolla"
+
+ 
+#~ msgid "<Image>/Edit/Paste Into"
+#~ msgstr "<Image>/Modifica/Incolla dentro"
+
+ 
+#~ msgid "<Image>/Edit/Fill"
+#~ msgstr "<Image>/Modifica/Riempi"
+
+ 
+#~ msgid "<Image>/Edit/Stroke"
+#~ msgstr "<Image>/Modifica/Sbarra"
+
+ 
+#~ msgid "<Image>/Edit/Cut Named"
+#~ msgstr "<Image>/Modifica/Taglia con Nome"
+
+ 
+#~ msgid "<Image>/Edit/Copy Named"
+#~ msgstr "<Image>/Modifica/Copia con Nome"
+
+ 
+#~ msgid "<Image>/Edit/Paste Named"
+#~ msgstr "<Image>/Modifica/Incolla con Nome"
+
+ 
+#~ msgid "<Image>/Image/Colors"
+#~ msgstr "<Image>/Immagine/Colori"
+
+ 
+#~ msgid "<Image>/Image/Channel Ops/Offset"
+#~ msgstr "<Image>/Immagine/Operazioni Canale/Spostamento"
+
+ 
+#~ msgid "<Image>/Filters"
+#~ msgstr "<Image>/Filtri"
+
+ 
+#~ msgid "<Image>/Select/Save To Channel"
+#~ msgstr "<Image>/Selezione/Salva in Canale"
+
+ 
+#~ msgid "<Image>/View/Toggle Rulers"
+#~ msgstr "<Image>/Vista/Righelli"
+
+ 
+#~ msgid "<Image>/View/Toggle Guides"
+#~ msgstr "<Image>/Vista/Guide"
+
+ 
+#~ msgid "<Image>/View/Snap To Guides"
+#~ msgstr "<Image>/Vista/Costringi alle guide"
+
+ 
+#~ msgid "<Image>/View/Toggle Statusbar"
+#~ msgstr "<Image>/Vista/Barra di stato"
+
  
 #~ msgid "<Image>/File/Close"
 #~ msgstr "<Image>/File/Chiudi"
 
-#~ msgid "<Image>/File/Quit"
-#~ msgstr "<Image>/File/Esci"
-
-#~ msgid "Automatic"
-#~ msgstr "Automatico"
-
-#~ msgid "<Toolbox>/File/Open"
-#~ msgstr "<Toolbox>/File/Apri"
-
-#~ msgid "<Image>/File/Open"
-#~ msgstr "<Image>/File/Apri"
-
-#~ msgid "<Image>/File/Save"
-#~ msgstr "<Image>/File/Salva"
-
-#~ msgid "<Image>/File/Save as"
-#~ msgstr "<Immagine>/File/Salva con nome"
-
-#~ msgid "<Image>/Layers/Stack/Previous Layer"
-#~ msgstr "<Image>/Livelli/Livello Precedente"
-
-#~ msgid "<Image>/Layers/Stack/Next Layer"
-#~ msgstr "<Image>/Livelli/Livello Successivo"
-
-#~ msgid "<Image>/Layers/Stack/Raise Layer"
-#~ msgstr "<Image>/Livelli/Porta livello in alto"
-
-#~ msgid "<Image>/Layers/Stack/Lower Layer"
-#~ msgstr "<Image>/Livelli/Porta livello in basso"
-
-#~ msgid "<Image>/Layers/Stack/Layer to Top"
-#~ msgstr "<Image>/Livelli/Porta livello in alto"
-
-#~ msgid "<Image>/Layers/Anchor Layer"
-#~ msgstr "<Image>/Livelli/Ancora livello"
-
-#~ msgid "<Image>/Layers/Merge Visible Layers"
-#~ msgstr "<Image>/Livelli/Incolla Livelli Visibili"
-
-#~ msgid "<Image>/Layers/Flatten Image"
-#~ msgstr "<Image>/Livelli/Appiattisci immagine"
-
-#~ msgid "<Image>/Layers/Alpha To Selection"
-#~ msgstr "<Image>/Livelli/Da Alpha a Selezione"
-
-#~ msgid "<Image>/Layers/Mask To Selection"
-#~ msgstr "<Image>/Livelli/Da Maschera a Selezione"
-
-#~ msgid "<Image>/Layers/Add Alpha Channel"
-#~ msgstr "<Image>/Livelli/Aggiungi Canale Alpha"
-
-#~ msgid "<Image>/Image/RGB"
-#~ msgstr "<Image>/Immagine/RGB"
-
-#~ msgid "<Image>/Image/Grayscale"
-#~ msgstr "<Image>/Immagine/Scala di grigio"
-
-#~ msgid "<Image>/Image/Indexed"
-#~ msgstr "<Immagine>/Immagine/Indicizzata"
-
-#~ msgid "<Image>/Image/Colors/Threshold"
-#~ msgstr "<Image>/Immagine/Colori/Inverti"
-
-#~ msgid "<Image>/Image/Colors/Posterize"
-#~ msgstr "<Image>/Immagine/Colori/Riduci saturazione"
-
-#~ msgid "<Image>/Image/Colors/Equalize"
-#~ msgstr "<Image>/Immagine/Colori/Equalizza"
-
-#~ msgid "<Image>/Image/Colors/Invert"
-#~ msgstr "<Image>/Immagine/Colori/Inverti"
-
-#~ msgid "<Image>/Image/Colors/Color Balance"
-#~ msgstr "<Image>/Immagine/Colori/Bilanciamento Colore"
-
-#~ msgid "<Image>/Image/Colors/Brightness-Contrast"
-#~ msgstr "<Image>/Immagine/Colori/Luminosità-Contrasto"
-
-#~ msgid "<Image>/Image/Colors/Hue-Saturation"
-#~ msgstr "<Image>/Immagine/Colori/Riduci saturazione"
-
-#~ msgid "<Image>/Image/Colors/Curves"
-#~ msgstr "<Image>/Immagine/Colori/Curve"
-
-#~ msgid "<Image>/Image/Colors/Levels"
-#~ msgstr "<Image>/Immagine/Colori/Livelli"
-
-#~ msgid "<Image>/Image/Colors/Desaturate"
-#~ msgstr "<Image>/Immagine/Colori/Desaturazione"
-
-#~ msgid "<Image>/Image/Alpha/Add Alpha Channel"
-#~ msgstr "<Image>/Immagine/Alpha/Aggiungi canale alpha"
-
-#~ msgid "<Image>/Select"
-#~ msgstr "<Image>/Immagine/Seleziona"
-
-#~ msgid "<Image>/Edit/Cut"
-#~ msgstr "<Image>/Modifica/Taglia"
-
-#~ msgid "<Image>/Edit/Copy"
-#~ msgstr "<Image>/Modifica/Copia"
-
-#~ msgid "<Image>/Edit/Paste"
-#~ msgstr "<Image>/Modifica/Incolla"
-
-#~ msgid "<Image>/Edit/Paste Into"
-#~ msgstr "<Image>/Modifica/Incolla dentro"
-
-#~ msgid "<Image>/Edit/Fill"
-#~ msgstr "<Image>/Modifica/Riempi"
-
-#~ msgid "<Image>/Edit/Stroke"
-#~ msgstr "<Image>/Modifica/Sbarra"
-
-#~ msgid "<Image>/Edit/Cut Named"
-#~ msgstr "<Image>/Modifica/Taglia con Nome"
-
-#~ msgid "<Image>/Edit/Copy Named"
-#~ msgstr "<Image>/Modifica/Copia con Nome"
-
-#~ msgid "<Image>/Edit/Paste Named"
-#~ msgstr "<Image>/Modifica/Incolla con Nome"
-
-#~ msgid "<Image>/Image/Colors"
-#~ msgstr "<Image>/Immagine/Colori"
-
-#~ msgid "<Image>/Image/Channel Ops/Offset"
-#~ msgstr "<Image>/Immagine/Operazioni canale/Spostamento"
-
-#~ msgid "<Image>/Filters"
-#~ msgstr "<Image>/Filtri"
-
-#~ msgid "<Image>/Select/Save To Channel"
-#~ msgstr "<Image>/Selezione/Salva in Canale"
-
-#~ msgid "<Image>/View/Toggle Rulers"
-#~ msgstr "<Image>/Vista/Righelli"
-
-#~ msgid "<Image>/View/Toggle Guides"
-#~ msgstr "<Image>/Vista/Guide"
-
-#~ msgid "<Image>/View/Snap To Guides"
-#~ msgstr "<Image>/Vista/Costringi alle guide"
-
-#~ msgid "<Image>/View/Toggle Statusbar"
-#~ msgstr "<Image>/Vista/Barra di stato"
-
-#~ msgid "<Image>/File/Close"
-#~ msgstr "<Image>/File/Chiudi"
-
+ 
 #~ msgid "Replace Current Selection"
 #~ msgstr "Sostituisci la Corrente Selezione"
 
+ 
 #~ msgid "Lower Layer"
-#~ msgstr ""
+#~ msgstr "Abbassa Livello"
 
+ 
 #~ msgid "/Select/Toggle"
 #~ msgstr "/Selezione/Cambia"
 
+ 
 #~ msgid "<Image>/Filters/Repeat last"
 #~ msgstr "<Image>/Filtri/Ripeti ultimo"
 
+ 
 #~ msgid "<Image>/Filters/Re-show last"
 #~ msgstr "<Image>/Filtri/Mostra ultimo"
 
+ 
 #~ msgid "Add Channel To Selection"
 #~ msgstr "Aggiungi Canale alla Selezione"
 
+ 
 #~ msgid "\t\tyou quit the GIMP.\n"
-#~ msgstr "\t\tesci da GIMP.\n"
+#~ msgstr "\t\tuscite da GIMP.\n"
 
 #~ msgid ""
 #~ "Unable to set sensitivity for menu which doesn't exist:\n"
@@ -6111,6 +6147,7 @@ msgstr "Non esiste un'espressione regolare precedente"
 #~ "Impossibile cambiare la sensibilità di un menu che non esiste:\n"
 #~ "%s"
 
+ 
 #~ msgid ""
 #~ "Unable to set state for menu which doesn't exist:\n"
 #~ "%s\n"
@@ -6118,33 +6155,50 @@ msgstr "Non esiste un'espressione regolare precedente"
 #~ "Impossibile cambiare lo stato di un menu che non esiste:\n"
 #~ "%s"
 
+ 
 #~ msgid "PDB lookup failed on %s"
-#~ msgstr "Errore aprendo il file: %s\n"
+#~ msgstr "Ricerca PDB fallita su %s"
 
-#, fuzzy
+ 
 #~ msgid "# GIMP sessionrc\n"
-#~ msgstr ""
+#~ msgstr "# GIMP sessionrc\n"
 
+ 
 #~ msgid "Image procedures"
 #~ msgstr "Procedure Immagine"
 
+ 
 #~ msgid "/_File"
 #~ msgstr "/_File"
 
+ 
 #~ msgid "/File/_Dialogs"
 #~ msgstr "/File/_Finestre"
 
-#~ msgid "/_Tools"
-#~ msgstr "/_Strumenti"
 
+#~ msgid "/File/Dialogs"
+#~ msgstr "/File/Finestre"
+
+
+#~ msgid "<Image>/File/_Dialogs"
+#~ msgstr "<Image>/File/_Finestre"
+
+
+#~ msgid "<Toolbox>/File/_Dialogs"
+#~ msgstr "<Toolbox>/File/_Finestre"
+
+ 
 #~ msgid "Gradient Length"
-#~ msgstr "Dimensione Gradiente"
+#~ msgstr "Lunghezza Gradienti"
 
+ 
 #~ msgid "GIMP Extension"
-#~ msgstr "Estensioni di GIMP"
+#~ msgstr "Versione di GIMP"
 
+ 
 #~ msgid "refresh"
 #~ msgstr "aggiorna"
 
+ 
 #~ msgid "Delete a channel"
-#~ msgstr "Cancella un canale"
+#~ msgstr "Elimina Canale"
