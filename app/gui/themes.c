@@ -19,6 +19,7 @@
 #include "config.h"
 
 #include <errno.h>
+#include <stdarg.h>
 #include <stdio.h>
 
 #include <gtk/gtk.h>
@@ -149,6 +150,53 @@ themes_get_theme_dir (Gimp        *gimp,
     theme_name = "Default";
 
   return g_hash_table_lookup (themes_hash, theme_name);
+}
+
+gchar *
+themes_get_theme_file (Gimp        *gimp,
+                       const gchar *first_component,
+                       ...)
+{
+  GimpGuiConfig *gui_config;
+  gchar         *file;
+  gchar         *component;
+  gchar         *path;
+  va_list        args;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (first_component != NULL, NULL);
+
+  file = g_strdup (first_component);
+
+  va_start (args, first_component);
+
+  while ((component = va_arg (args, gchar *)))
+    {
+      gchar *tmp;
+
+      tmp = g_build_filename (file, component, NULL);
+      g_free (file);
+      file = tmp;
+    }
+
+  va_end (args);
+
+  gui_config = GIMP_GUI_CONFIG (gimp->config);
+
+  path = g_build_filename (themes_get_theme_dir (gimp, gui_config->theme),
+                           file, NULL);
+
+  if (! g_file_test (path, G_FILE_TEST_EXISTS))
+    {
+      g_free (path);
+
+      path = g_build_filename (themes_get_theme_dir (gimp, NULL),
+                               file, NULL);
+    }
+
+  g_free (file);
+
+  return path;
 }
 
 void

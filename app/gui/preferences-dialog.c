@@ -477,15 +477,10 @@ prefs_notebook_append_page (Gimp          *gimp,
 
   if (notebook_icon)
     {
-      GimpGuiConfig *gui_config;
-      gchar         *filename;
+      gchar *filename;
 
-      gui_config = GIMP_GUI_CONFIG (gimp->config);
-
-      filename = g_build_filename (themes_get_theme_dir (gimp,
-                                                         gui_config->theme),
-                                   "images", "preferences", notebook_icon,
-                                   NULL);
+      filename = themes_get_theme_file (gimp, "images", "preferences",
+                                        notebook_icon, NULL);
 
       if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
         pixbuf = gdk_pixbuf_new_from_file (filename, NULL);

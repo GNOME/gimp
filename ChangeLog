@@ -1,5 +1,15 @@
 2003-11-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/themes.c (themes_get_theme_file): new utility function
+	which takes a filename relative to the theme's root directory and
+	returns the absolute path to the file in the current theme. It
+	falls back to the resp. path in the default theme if the given
+	file is not present in the current theme.
+
+	* app/gui/preferences-dialog.c (prefs_notebook_append_page): use it.
+
+2003-11-15  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/gimpexport.[ch]: added new export capabilities
 	GIMP_EXPORT_CAN_HANDLE_BITMAP and _CAN_HANDLE_LAYER_MASKS and
 	export the image accordingly. Code cleanup.
