@@ -1,3 +1,12 @@
+Sun Sep 26 23:12:45 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/brush_select.[ch]: Introduced a small margin around the
+	brushes, so the rectangle that shows which brush is selected isn't
+	drawn over the brush.
+	Animate brushpipes in the popup.
+
+	* gimpcontextpreview.c: fixed some off-by-one errors.
+
 Sun Sep 26 13:31:21 MEST 1999  Jens Lautenbacher <jens@tellux.de>
                                Sven Neumann <sven@gimp.org>
 
@@ -13,6 +22,7 @@ Sat Sep 25 22:09:30 PDT 1999 Manish Singh <yosh@gimp.org>
 	* configure.in: version number bump
 
 	* app/unittest/Makefile.am: commented out unused var targets to
+	
 	quell warnings
 
 	* libgimp/stdplugins-intl.h: fix include guard

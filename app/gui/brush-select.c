@@ -42,19 +42,19 @@
 
 #include "libgimp/gimpintl.h"
 
-#define MIN_CELL_SIZE     24
-#define MAX_CELL_SIZE     24  /*  disable variable brush preview size  */ 
+#define MIN_CELL_SIZE     25
+#define MAX_CELL_SIZE     25  /*  disable variable brush preview size  */ 
 
 #define STD_BRUSH_COLUMNS 5
 #define STD_BRUSH_ROWS    5
 
-/* how long to wait after mouse-down before showing pattern popup */
+/* how long to wait after mouse-down before showing brush popup */
 #define POPUP_DELAY_MS      150
 
 #define MAX_WIN_WIDTH(bsp)     (MIN_CELL_SIZE * ((bsp)->NUM_BRUSH_COLUMNS))
 #define MAX_WIN_HEIGHT(bsp)    (MIN_CELL_SIZE * ((bsp)->NUM_BRUSH_ROWS))
-#define MARGIN_WIDTH      3
-#define MARGIN_HEIGHT     3
+#define MARGIN_WIDTH      1
+#define MARGIN_HEIGHT     1
 
 #define BRUSH_EVENT_MASK  GDK_EXPOSURE_MASK | \
                           GDK_BUTTON_PRESS_MASK | \
@@ -62,12 +62,13 @@
                           GDK_BUTTON1_MOTION_MASK | \
 			  GDK_ENTER_NOTIFY_MASK
 
-/*  the pixmap for the scale_indicator  */
-#define scale_indicator_width 7
-#define scale_indicator_height 7
+/*  the pixmaps for the [scale|pipe]_indicators  */
+#define indicator_width 7
+#define indicator_height 7
 
-#define WHT {255,255,255}
-#define BLK {  0,  0,  0}
+#define WHT {255, 255, 255}
+#define BLK {  0,   0,   0}
+#define RED {255, 127, 127}
 
 static unsigned char scale_indicator_bits[7][7][3] = 
 {
@@ -78,6 +79,28 @@ static unsigned char scale_indicator_bits[7][7][3] =
   { WHT, WHT, WHT, BLK, WHT, WHT, WHT },
   { WHT, WHT, WHT, BLK, WHT, WHT, WHT },
   { WHT, WHT, WHT, WHT, WHT, WHT, WHT }
+};
+
+static unsigned char pipe_indicator_bits[7][7][3] = 
+{
+  { WHT, WHT, WHT, WHT, WHT, WHT, WHT },
+  { WHT, WHT, WHT, WHT, WHT, WHT, RED },
+  { WHT, WHT, WHT, WHT, WHT, RED, RED },
+  { WHT, WHT, WHT, WHT, RED, RED, RED },
+  { WHT, WHT, WHT, RED, RED, RED, RED },
+  { WHT, WHT, RED, RED, RED, RED, RED },
+  { WHT, RED, RED, RED, RED, RED, RED }
+};
+
+static unsigned char scale_pipe_indicator_bits[7][7][3] = 
+{
+  { WHT, WHT, WHT, WHT, WHT, WHT, WHT },
+  { WHT, WHT, WHT, BLK, WHT, WHT, RED },
+  { WHT, WHT, WHT, BLK, WHT, RED, RED },
+  { WHT, BLK, BLK, BLK, BLK, BLK, RED },
+  { WHT, WHT, WHT, BLK, RED, RED, RED },
+  { WHT, WHT, RED, BLK, RED, RED, RED },
+  { WHT, RED, RED, RED, RED, RED, RED }
 };
 
 
@@ -175,6 +198,7 @@ brush_select_new (gchar   *title,
   bsp->brush = NULL; /* NULL -> main dialog window */
   bsp->brush_popup = NULL;
   bsp->popup_timeout_tag = 0;
+  bsp->popup_anim_timeout_tag = 0;
   bsp->NUM_BRUSH_COLUMNS = STD_BRUSH_COLUMNS;
   bsp->NUM_BRUSH_ROWS = STD_BRUSH_ROWS;
 
@@ -582,15 +606,15 @@ brush_change_callbacks (BrushSelectP bsp,
     {
       return_vals = procedural_db_run_proc (name,
 					    &nreturn_vals,
-					    PDB_STRING,brush->name,
-					    PDB_FLOAT,bsp->opacity_value,
-					    PDB_INT32,bsp->spacing_value,
-					    PDB_INT32,(gint)bsp->paint_mode,
-					    PDB_INT32,brush->mask->width,
-					    PDB_INT32,brush->mask->height,
-					    PDB_INT32,brush->mask->width * brush->mask->height,
-					    PDB_INT8ARRAY,temp_buf_data (brush->mask),
-					    PDB_INT32,closing,
+					    PDB_STRING, brush->name,
+					    PDB_FLOAT, bsp->opacity_value,
+					    PDB_INT32, bsp->spacing_value,
+					    PDB_INT32, (gint)bsp->paint_mode,
+					    PDB_INT32, brush->mask->width,
+					    PDB_INT32, brush->mask->height,
+					    PDB_INT32, brush->mask->width * brush->mask->height,
+					    PDB_INT8ARRAY, temp_buf_data (brush->mask),
+					    PDB_INT32, closing,
 					    PDB_END);
  
       if (!return_vals || return_vals[0].value.pdb_int != PDB_SUCCESS)
@@ -738,6 +762,75 @@ brush_removed_callback (GimpBrushList *list,
  *  Local functions
  */
 
+
+static void
+draw_brush_popup (GtkPreview *preview,
+		  GimpBrush  *brush,
+		  gint        width,
+		  gint        height)
+{
+  gint x, y;
+  gint brush_width, brush_height;
+  gint offset_x, offset_y;
+  guchar *mask, *buf, *b;
+  guchar bg;
+  
+  brush_width = brush->mask->width;
+  brush_height = brush->mask->height;
+  offset_x = (width - brush_width) / 2;
+  offset_y = (height - brush_height) / 2;
+
+  mask = temp_buf_data (brush->mask);
+  buf = g_new (guchar, 3 * width);
+  memset (buf, 255, 3 * width);
+
+  if (GIMP_IS_BRUSH_PIXMAP (brush)) 
+    {
+      guchar *pixmap = temp_buf_data (GIMP_BRUSH_PIXMAP (brush)->pixmap_mask);
+
+      for (y = 0; y < offset_y; y++)
+	gtk_preview_draw_row (preview, buf, 0, y, width); 
+      for (y = offset_y; y < brush_height + offset_y; y++)
+	{
+	  b = buf + 3 * offset_x;
+	  for (x = 0; x < brush_width ; x++)
+	    {
+	      bg = (255 - *mask);
+	      *b++ = bg + (*mask * *pixmap++) / 255;
+	      *b++ = bg + (*mask * *pixmap++) / 255; 
+	      *b++ = bg + (*mask * *pixmap++) / 255;
+	      mask++;
+	    }
+	  gtk_preview_draw_row (preview, buf, 0, y, width); 
+	}
+      memset (buf, 255, 3 * width);
+      for (y = brush_height + offset_y; y < height; y++)
+	gtk_preview_draw_row (preview, buf, 0, y, width); 
+    }
+  else
+    {
+      for (y = 0; y < offset_y; y++)
+	gtk_preview_draw_row (preview, buf, 0, y, width); 
+      for (y = offset_y; y < brush_height + offset_y; y++)
+	{
+	  b = buf + 3 * offset_x;
+	  for (x = 0; x < brush_width ; x++)
+	    {
+	      bg = 255 - *mask++;
+	      memset (b, bg, 3);
+	      b += 3;
+	    }   
+	  gtk_preview_draw_row (preview, buf, 0, y, width); 
+	}
+      memset (buf, 255, 3 * width);
+      for (y = brush_height + offset_y; y < height; y++)
+	gtk_preview_draw_row (preview, buf, 0, y, width);    
+    }
+
+  g_free (buf);
+}
+
+
 typedef struct {
   BrushSelectP   bsp;
   int            x;
@@ -745,6 +838,31 @@ typedef struct {
   GimpBrushP     brush;
 } popup_timeout_args_t;
 
+
+static gint
+brush_popup_anim_timeout (gpointer data)
+{
+  popup_timeout_args_t *args = data;
+  BrushSelectP bsp = args->bsp;
+  GimpBrushPipe *pipe;
+  GimpBrush *brush;
+
+  if (bsp->brush_popup != NULL && !GTK_WIDGET_VISIBLE (bsp->brush_popup))
+    {
+      bsp->popup_anim_timeout_tag = 0;
+      return (FALSE);
+    }
+
+  pipe = GIMP_BRUSH_PIPE (args->brush);
+  if (++bsp->popup_pipe_index >= pipe->nbrushes)
+    bsp->popup_pipe_index = 0;
+  brush = GIMP_BRUSH (pipe->brushes[bsp->popup_pipe_index]);
+
+  draw_brush_popup (GTK_PREVIEW (bsp->brush_preview), brush, args->x, args->y);
+  gtk_widget_queue_draw (bsp->brush_preview);
+
+  return (TRUE);
+}
 
 static gboolean
 brush_popup_timeout (gpointer data)
@@ -756,8 +874,6 @@ brush_popup_timeout (gpointer data)
   gint x_org, y_org;
   gint scr_w, scr_h;
   gint width, height;
-  guchar *mask, *buf, *b;
-  guchar bg;
 
   /* timeout has gone off so our tag is now invalid  */
   bsp->popup_timeout_tag = 0;
@@ -786,6 +902,19 @@ brush_popup_timeout (gpointer data)
   /* decide where to put the popup */
   width = brush->mask->width;
   height = brush->mask->height;
+  if (GIMP_IS_REALLY_A_BRUSH_PIPE (brush))
+    {      
+      GimpBrushPipe *pipe = GIMP_BRUSH_PIPE (brush);
+      GimpBrush *tmp_brush;
+      gint i;
+      
+      for (i = 1; i < pipe->nbrushes; i++)
+	{
+	  tmp_brush = GIMP_BRUSH (pipe->brushes[i]);
+	  width = MAX (width, tmp_brush->mask->width);
+	  height = MAX (height, tmp_brush->mask->height);
+	}
+    }
   gdk_window_get_origin (bsp->preview->window, &x_org, &y_org);
   scr_w = gdk_screen_width ();
   scr_h = gdk_screen_height ();
@@ -799,47 +928,23 @@ brush_popup_timeout (gpointer data)
 
   gtk_widget_popup (bsp->brush_popup, x, y);
 
-  /*  Draw the brush  */
-  buf = g_new (guchar, 3 * width);
-  mask = temp_buf_data (brush->mask);
-  if (GIMP_IS_BRUSH_PIXMAP (brush)) 
-    {
-      guchar *pixmap = temp_buf_data (GIMP_BRUSH_PIXMAP (brush)->pixmap_mask);
-      for (y = 0; y < height; y++)
-	{
-	  b = buf;
-	  for (x = 0; x < width ; x++)
-	    {
-	      bg = (255 - *mask);
-	      *b++ = bg + (*mask * *pixmap++) / 255;
-	      *b++ = bg + (*mask * *pixmap++) / 255; 
-	      *b++ = bg + (*mask * *pixmap++) / 255;
-	      mask++;
-	    }
-	  gtk_preview_draw_row (GTK_PREVIEW (bsp->brush_preview), buf, 0, y, width);
-	}
-    }
-  else 
-    {
-      for (y = 0; y < height; y++)
-	{
-	  b = buf;
-	  /*  Invert the mask for display.  */ 
-	  for (x = 0; x < width; x++)
-	    { 
-	      bg = 255 - *mask++;
-	      memset (b, bg, 3);
-	      b += 3;
-	    }
-	  gtk_preview_draw_row (GTK_PREVIEW (bsp->brush_preview), buf, 0, y, width);
-	}
-    }
-
-  g_free (buf);
-
   /*  Draw the brush preview  */
+  draw_brush_popup (GTK_PREVIEW (bsp->brush_preview), brush, width, height);
   gtk_widget_queue_draw (bsp->brush_preview);
 
+  if (GIMP_IS_REALLY_A_BRUSH_PIPE (brush) && bsp->popup_anim_timeout_tag == 0)
+    {
+      static popup_timeout_args_t timeout_args;
+      
+      timeout_args.bsp = bsp;
+      timeout_args.x = width;
+      timeout_args.y = height;
+      timeout_args.brush = brush;
+
+      bsp->popup_pipe_index = 0;
+      bsp->popup_anim_timeout_tag = gtk_timeout_add (300, brush_popup_anim_timeout,
+						     &timeout_args);
+    }
   return FALSE;  /* don't repeat */
 }
 
@@ -870,6 +975,10 @@ brush_popup_close (BrushSelectP bsp)
     gtk_timeout_remove (bsp->popup_timeout_tag);
   bsp->popup_timeout_tag = 0;
 
+  if (bsp->popup_anim_timeout_tag != 0)
+    gtk_timeout_remove (bsp->popup_anim_timeout_tag);
+  bsp->popup_anim_timeout_tag = 0;
+
   if (bsp->brush_popup != NULL)
     gtk_widget_hide (bsp->brush_popup);
 }
@@ -884,24 +993,28 @@ display_brush (BrushSelectP bsp,
   guchar *mask, *buf, *b;
   guchar bg;
   gboolean scale = FALSE;
+  gint cell_width, cell_height;
   gint width, height;
   gint offset_x, offset_y;
   gint yend;
   gint ystart;
   gint i, j;
 
+  cell_width = bsp->cell_width - 2*MARGIN_WIDTH;
+  cell_height = bsp->cell_height - 2*MARGIN_HEIGHT;
+
   mask_buf = brush->mask;
   if (GIMP_IS_BRUSH_PIXMAP (brush))
-    pixmap_buf = GIMP_BRUSH_PIXMAP(brush)->pixmap_mask;
+    pixmap_buf = GIMP_BRUSH_PIXMAP (brush)->pixmap_mask;
 
-  if (mask_buf->width > bsp->cell_width || mask_buf->height > bsp->cell_height)
+  if (mask_buf->width > cell_width || mask_buf->height > cell_height)
     {
-      gdouble ratio_x = (gdouble)mask_buf->width / bsp->cell_width;
-      gdouble ratio_y = (gdouble)mask_buf->height / bsp->cell_height;
+      gdouble ratio_x = (gdouble)mask_buf->width / cell_width;
+      gdouble ratio_y = (gdouble)mask_buf->height / cell_height;
    
       mask_buf = brush_scale_mask (mask_buf, 
-				   (gdouble)(mask_buf->width) / MAX (ratio_x, ratio_y), 
-				   (gdouble)(mask_buf->height) / MAX (ratio_x, ratio_y));
+				   (gdouble)(mask_buf->width) / MAX (ratio_x, ratio_y) + 0.5, 
+				   (gdouble)(mask_buf->height) / MAX (ratio_x, ratio_y) + 0.5);
       if (GIMP_IS_BRUSH_PIXMAP (brush))
 	{
 	  /*  TODO: the scale function should scale the pixmap 
@@ -912,17 +1025,17 @@ display_brush (BrushSelectP bsp,
     }
 
   /*  calculate the offset into the image  */
-  width = (mask_buf->width > bsp->cell_width) ? bsp->cell_width : mask_buf->width;
-  height = (mask_buf->height > bsp->cell_height) ? bsp->cell_height : mask_buf->height;
+  width = (mask_buf->width > cell_width) ? cell_width : mask_buf->width;
+  height = (mask_buf->height > cell_height) ? cell_height : mask_buf->height;
 
-  offset_x = col * bsp->cell_width + ((bsp->cell_width - width) >> 1);
-  offset_y = row * bsp->cell_height + ((bsp->cell_height - height) >> 1) - bsp->scroll_offset;
+  offset_x = col * bsp->cell_width + ((cell_width - width) >> 1) + MARGIN_WIDTH;
+  offset_y = row * bsp->cell_height + ((cell_height - height) >> 1) - bsp->scroll_offset + MARGIN_HEIGHT;
 
   ystart = BOUNDS (offset_y, 0, bsp->preview->allocation.height);
   yend = BOUNDS (offset_y + height, 0, bsp->preview->allocation.height);
 
   mask = temp_buf_data (mask_buf) + (ystart - offset_y) * mask_buf->width;
-  buf = g_new (guchar, 3 * bsp->cell_width);
+  buf = g_new (guchar, 3 * cell_width);
 
   if (GIMP_IS_BRUSH_PIXMAP (brush)) 
     { 
@@ -962,22 +1075,32 @@ display_brush (BrushSelectP bsp,
     }
   g_free (buf);
 
+  offset_x = (col + 1) * bsp->cell_width  - indicator_width - MARGIN_WIDTH;
+  offset_y = (row + 1) * bsp->cell_height - indicator_height - bsp->scroll_offset - MARGIN_HEIGHT;
+  
   if (scale)
     {
-      offset_x = (col + 1) * bsp->cell_width  - scale_indicator_width;
-      offset_y = (row + 1) * bsp->cell_height - scale_indicator_height - bsp->scroll_offset;;
-
-      for (i = 0; i < scale_indicator_height; i++, offset_y++)
-	{ 
-	  if (offset_y > 0 && offset_y < bsp->preview->allocation.height)
-	    gtk_preview_draw_row (GTK_PREVIEW (bsp->preview),
-				  scale_indicator_bits[i][0],
-				  offset_x, offset_y, 
-				  scale_indicator_width);
-	}
       temp_buf_free (mask_buf);
       if (GIMP_IS_BRUSH_PIXMAP (brush))
 	temp_buf_free (pixmap_buf);
+      for (i = 0; i < indicator_height; i++, offset_y++)
+	{ 
+	  if (offset_y > 0 && offset_y < bsp->preview->allocation.height)
+	    (GIMP_IS_REALLY_A_BRUSH_PIPE (brush)) ?
+	      gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), scale_pipe_indicator_bits[i][0],
+				    offset_x, offset_y, indicator_width) :
+	      gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), scale_indicator_bits[i][0],
+				    offset_x, offset_y, indicator_width);
+	}
+    }
+  else if (GIMP_IS_REALLY_A_BRUSH_PIPE (brush))
+    {
+      for (i = 0; i < indicator_height; i++, offset_y++)
+	{
+	  if (offset_y > 0 && offset_y < bsp->preview->allocation.height)
+	    gtk_preview_draw_row (GTK_PREVIEW (bsp->preview), pipe_indicator_bits[i][0],
+				  offset_x, offset_y, indicator_width);
+	}
     }
 }
 
@@ -1222,7 +1345,7 @@ update_active_brush_field (BrushSelectP bsp)
 
 
 static void
-edit_active_brush()
+edit_active_brush ()
 {
   if (GIMP_IS_BRUSH_GENERATED (get_active_brush ()))
   {
@@ -1248,7 +1371,7 @@ edit_active_brush()
 }
 
 static void
-delete_active_brush(BrushSelectP  bsp)
+delete_active_brush (BrushSelectP  bsp)
 {
   if (GIMP_IS_BRUSH_GENERATED (get_active_brush ()))
   {
@@ -1332,7 +1455,8 @@ brush_select_events (GtkWidget    *widget,
 	      
 	      /*  Show the brush popup window if the brush is too large  */
 	      if (brush->mask->width > bsp->cell_width ||
-		  brush->mask->height > bsp->cell_height)
+		  brush->mask->height > bsp->cell_height ||
+		  GIMP_IS_REALLY_A_BRUSH_PIPE (brush))
 		brush_popup_open (bsp, bevent->x, bevent->y, brush);
 	    }
 	}

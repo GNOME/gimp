@@ -397,10 +397,7 @@ gimp_context_preview_popup_open (GimpContextPreview *gcp,
 	      }
 	  }
 	else if (gcp->popup_width <= gcp->width && gcp->popup_height <= gcp->height)
-	  {    
-	    g_print ("no reason\n"); 
-	    return;
-	  }
+	  return;
       }
       break;
     case GCP_PATTERN:
@@ -463,7 +460,7 @@ gimp_context_preview_popup_open (GimpContextPreview *gcp,
     {
     case GCP_BRUSH:      
       gimp_context_preview_draw_brush_popup (gcp);
-      if (GIMP_IS_REALLY_A_BRUSH_PIPE (gcp->data))
+      if (GIMP_IS_REALLY_A_BRUSH_PIPE (gcp->data) && gcp_pipe_timer == 0)
 	{
 	  gcp_pipe_index = 0;
 	  gcp_pipe_timer = gtk_timeout_add (300, (GtkFunction)gimp_context_preview_animate_pipe, gcp);
@@ -486,6 +483,8 @@ gimp_context_preview_popup_close ()
 {
   if (gcp_pipe_timer > 0)
     gtk_timeout_remove (gcp_pipe_timer);
+  gcp_pipe_timer = 0;
+  
   if (gcp_popup != NULL)
     gtk_widget_hide (gcp_popup);
 }
@@ -584,8 +583,8 @@ static void draw_brush (GtkPreview *preview,
       gdouble ratio_x = (gdouble)brush_width / width;
       gdouble ratio_y = (gdouble)brush_height / height;
       
-      brush_width =  (gdouble)brush_width / MAX (ratio_x, ratio_y); 
-      brush_height = (gdouble)brush_height / MAX (ratio_x, ratio_y);
+      brush_width =  (gdouble)brush_width / MAX (ratio_x, ratio_y) + 0.5; 
+      brush_height = (gdouble)brush_height / MAX (ratio_x, ratio_y) + 0.5;
       
       mask_buf = brush_scale_mask (mask_buf, brush_width, brush_height);
       if (GIMP_IS_BRUSH_PIXMAP (brush))
@@ -649,8 +648,8 @@ static void draw_brush (GtkPreview *preview,
 
   if (scale)
     {
-      offset_x = width - indicator_width - 1;
-      offset_y = height - indicator_height - 1;
+      offset_x = width - indicator_width;
+      offset_y = height - indicator_height;
       for (y = 0; y < indicator_height; y++)
 	(GIMP_IS_REALLY_A_BRUSH_PIPE (brush)) ?
 	  gtk_preview_draw_row (preview, scale_pipe_indicator_bits[y][0],
@@ -663,8 +662,8 @@ static void draw_brush (GtkPreview *preview,
     }
   else if (!is_popup && GIMP_IS_REALLY_A_BRUSH_PIPE (brush))
     {
-      offset_x = width - indicator_width - 1;
-      offset_y = height - indicator_height - 1;
+      offset_x = width - indicator_width;
+      offset_y = height - indicator_height;
       for (y = 0; y < indicator_height; y++)
 	gtk_preview_draw_row (preview, pipe_indicator_bits[y][0],
 			      offset_x, offset_y + y, indicator_width);
@@ -718,9 +717,12 @@ gimp_context_preview_animate_pipe (GimpContextPreview *gcp)
   GimpBrush *brush;
 
   g_return_val_if_fail (gcp != NULL && GIMP_IS_REALLY_A_BRUSH_PIPE (gcp->data), FALSE);
-  if (gcp_popup != NULL && !GTK_WIDGET_VISIBLE (gcp_popup)) 
-    return (FALSE);
-
+  if (gcp_popup != NULL && !GTK_WIDGET_VISIBLE (gcp_popup))
+    {
+      gcp_pipe_timer = 0;
+      return (FALSE);
+    }
+  
   pipe = GIMP_BRUSH_PIPE (gcp->data);
   if (++gcp_pipe_index >= pipe->nbrushes)
     gcp_pipe_index = 0;
