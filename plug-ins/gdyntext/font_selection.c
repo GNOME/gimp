@@ -398,7 +398,7 @@ int main(void)
 	gtk_init(NULL, NULL);
 		
   window = gtk_window_new(GTK_WINDOW_DIALOG);
-  gtk_container_border_width(GTK_CONTAINER(window), 4);
+  gtk_container_set_border_width(GTK_CONTAINER(window), 4);
 	gtk_signal_connect(GTK_OBJECT(window), "destroy",
 		GTK_SIGNAL_FUNC(gtk_main_quit), NULL);
 	gtk_widget_show(window);

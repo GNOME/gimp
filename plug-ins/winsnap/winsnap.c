@@ -922,12 +922,12 @@ snap_dialog(void)
   /*  Single Window */
   frame = gtk_frame_new(NULL);
   gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width(GTK_CONTAINER(frame), 4);
+  gtk_container_set_border_width(GTK_CONTAINER(frame), 4);
   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox),
 		     frame, TRUE, TRUE, 0);
 
   vbox = gtk_vbox_new(FALSE, 4);
-  gtk_container_border_width(GTK_CONTAINER(vbox), 4);
+  gtk_container_set_border_width(GTK_CONTAINER(vbox), 4);
   gtk_container_add(GTK_CONTAINER(frame), vbox);
 
   hbox = gtk_hbox_new (FALSE, 4);
@@ -940,8 +940,8 @@ snap_dialog(void)
   gtk_signal_connect ( GTK_OBJECT (winsnapintf.single_button), "toggled",
 		       (GtkSignalFunc) snap_toggle_update,
 		       &radio_pressed[0]);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (winsnapintf.single_button),
-				   radio_pressed[0]);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (winsnapintf.single_button),
+				radio_pressed[0]);
   gtk_widget_show (winsnapintf.single_button);
   radio_label = gtk_label_new (_("Grab a single window"));
   gtk_box_pack_start (GTK_BOX (hbox),
@@ -958,8 +958,8 @@ snap_dialog(void)
   gtk_signal_connect (GTK_OBJECT (winsnapintf.decor_button), "toggled",
                       (GtkSignalFunc) snap_toggle_update,
                       &decorations);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (winsnapintf.decor_button),
-			       decorations);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (winsnapintf.decor_button),
+				decorations);
   gtk_box_pack_end (GTK_BOX (hbox), winsnapintf.decor_button, FALSE, FALSE, 0);
   gtk_widget_set_sensitive (winsnapintf.decor_button, radio_pressed[0]);
   gtk_widget_show (winsnapintf.decor_button);
@@ -972,12 +972,12 @@ snap_dialog(void)
   /* Root Window */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
 		      frame, TRUE, TRUE, 0);
 
   hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
 
   winsnapintf.root_button = gtk_radio_button_new ( radio_group );
@@ -986,8 +986,8 @@ snap_dialog(void)
   gtk_signal_connect ( GTK_OBJECT (winsnapintf.root_button), "toggled",
 		       (GtkSignalFunc) snap_toggle_update,
 		       &radio_pressed[1]);
-  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (winsnapintf.root_button),
-				   radio_pressed[1]);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (winsnapintf.root_button),
+				radio_pressed[1]);
   gtk_widget_show (winsnapintf.root_button);
 
   radio_label = gtk_label_new (_("Grab the whole screen"));
@@ -1000,12 +1000,12 @@ snap_dialog(void)
   /* with delay */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
 		      frame, TRUE, TRUE, 0);
 
   hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
 
   label = gtk_label_new (_("after"));
