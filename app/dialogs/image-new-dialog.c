@@ -12,8 +12,9 @@
 #include "gdisplay.h"
 
 #include "libgimp/gimpchainbutton.h"
-#include "libgimp/gimpintl.h"
+#include "libgimp/gimplimits.h"
 #include "libgimp/gimpsizeentry.h"
+#include "libgimp/gimpintl.h"
 
 typedef struct {
   GtkWidget *dlg;
@@ -373,10 +374,12 @@ file_new_cmd_callback (GtkWidget *widget,
 				  vals->xresolution, FALSE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (vals->size_sizeentry), 1,
 				  vals->yresolution, FALSE);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (vals->size_sizeentry),
-					 0, 1, 32767);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (vals->size_sizeentry),
-					 1, 1, 32767);
+  gimp_size_entry_set_refval_boundaries
+    (GIMP_SIZE_ENTRY (vals->size_sizeentry), 0,
+     GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
+  gimp_size_entry_set_refval_boundaries
+    (GIMP_SIZE_ENTRY (vals->size_sizeentry), 1,
+     GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (vals->size_sizeentry), 0,
 			      vals->width);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (vals->size_sizeentry), 1,
@@ -403,8 +406,9 @@ file_new_cmd_callback (GtkWidget *widget,
   vals->simple_res = gimp_size_entry_new (1, vals->res_unit, "%s",
 					  FALSE, FALSE, FALSE, 75,
 					  GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (vals->simple_res),
-					 0, 1, 32767);
+  gimp_size_entry_set_refval_boundaries
+    (GIMP_SIZE_ENTRY (vals->simple_res), 0,
+     GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (vals->simple_res), 0,
 			      MIN(vals->xresolution, vals->yresolution));
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (vals->simple_res),
@@ -426,10 +430,12 @@ file_new_cmd_callback (GtkWidget *widget,
     gimp_size_entry_new (2, vals->res_unit, "%s",
 			 FALSE, FALSE, TRUE, 75,
 			 GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (vals->resolution_sizeentry),
-					 0, 1, 32767);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (vals->resolution_sizeentry),
-					 1, 1, 32767);
+  gimp_size_entry_set_refval_boundaries
+    (GIMP_SIZE_ENTRY (vals->resolution_sizeentry), 0,
+     GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
+  gimp_size_entry_set_refval_boundaries
+     (GIMP_SIZE_ENTRY (vals->resolution_sizeentry), 1,
+     GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (vals->resolution_sizeentry), 0,
 			      vals->xresolution);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (vals->resolution_sizeentry), 1,
@@ -498,7 +504,6 @@ file_new_cmd_callback (GtkWidget *widget,
   if (vals->type == GRAY)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
   gtk_widget_show (button);
-
 
   /* frame for fill type */
   frame = gtk_frame_new (_("Fill Type"));

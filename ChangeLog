@@ -1,3 +1,23 @@
+1999-05-09  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* libgimp/Makefile.am
+	* libgimp/gimplimits.h: new file. Currently contains constants for
+	image size and resolution.
+
+	* app/file_new_dialog.c
+	* app/resize.c: use the new constants.
+
+	* app/layers_dialog.c: use a sizeentry in the "New Layer" query
+	box. Folded the "Layer Fill Type" callbacks into one function.
+
+	* app/text_tool.c
+	* app/text_tool_cmds.c
+	* tools/pdbgen/pdb/text_tool.pdb: did the calculations for
+	resolutions < 1.0 right this time.
+
+	* app/gimage_cmds.c
+	* tool/pdbgen/pdb/gimage.pdb: fixed a typo.
+
 Sun May  9 16:23:47 BST 1999  Adam D. Moss  <adam@gimp.org>
 
 	* app/tile.c

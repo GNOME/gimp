@@ -28,6 +28,8 @@
 #include "layer.h"
 #include "text_tool.h"
 
+#include "libgimp/gimplimits.h"
+
 static ProcRecord text_fontname_proc;
 static ProcRecord text_get_extents_fontname_proc;
 static ProcRecord text_proc;
@@ -59,16 +61,16 @@ text_xlfd_insert_size (gchar    *fontname,
   if (size <= 0)
     return NULL;
 
-  if (xresolution < (1.0 / 65536.0) ||
-      yresolution < (1.0 / 65536.0) ||
+  if (xresolution < GIMP_MIN_RESOLUTION ||
+      yresolution < GIMP_MIN_RESOLUTION ||
       metric == PIXELS)
     {
       xresolution = yresolution = 0.0;
     }
   else
     {
-      xresolution = MIN (xresolution, 65536.0);
-      yresolution = MIN (yresolution, 65536.0);
+      xresolution = MIN (xresolution, GIMP_MAX_RESOLUTION);
+      yresolution = MIN (yresolution, GIMP_MAX_RESOLUTION);
     }
 
   if (antialias)
@@ -80,13 +82,16 @@ text_xlfd_insert_size (gchar    *fontname,
    */
   if (metric == POINTS && xresolution != 0.0)
     {
+      /*  the xlfd uses decipoints  */
+      size *= 10;
+
       /*  X allows only integer resolution values, so we do some
        *  ugly calculations (starting with yres because the size of
        *  a font is it's height)
        */
       if (yresolution < 1.0)
 	{
-	  size *= (1.0 / yresolution);
+	  size /= (1.0 / yresolution);
 	  xresolution *= (1.0 / yresolution);
 	  yresolution = 1.0;
 	}
@@ -94,14 +99,11 @@ text_xlfd_insert_size (gchar    *fontname,
       /*  res may be != (int) res
        *  (important only for very small resolutions)
        */
+      size *= yresolution / (double) (int) yresolution;
       xresolution /= yresolution / (double) (int) yresolution;
-      size /= yresolution / (double) (int) yresolution;
 
       /*  finally, if xres became invalid by the above calculations  */
-      xresolution = BOUNDS (xresolution, 1.0, 65536.0);
-
-      /*  the xlfd uses decipoints  */
-      size *= 10;
+      xresolution = BOUNDS (xresolution, 1.0, GIMP_MAX_RESOLUTION);
     }
 
   sprintf (size_buffer, "%d", (int) size);

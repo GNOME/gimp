@@ -53,6 +53,7 @@
 #include "tile_manager_pvt.h"
 #include "drawable_pvt.h"
 
+#include "libgimp/gimplimits.h"
 #include "libgimp/gimpintl.h"
 
 #define FOUNDRY      0
@@ -119,7 +120,7 @@ static gint       text_delete_callback    (GtkWidget *, GdkEvent *, gpointer);
 static void       text_init_render        (TextTool *);
 static void       text_gdk_image_to_region (GdkImage *, int, PixelRegion *);
 static void       text_size_multiply      (char **fontname, int);
-static void       text_set_resolution     (char **fontname, int, int);
+static void       text_set_resolution     (char **fontname, double, double);
 
 Layer *           text_render             (GImage *, GimpDrawable *,
 					   int, int, char *, char *, int, int);
@@ -495,7 +496,7 @@ text_init_render (TextTool *text_tool)
    *  correctly according to the image's resolution.
    *  FIXME: this currently can't be activated for the PDB, as the text has
    *         to be rendered in the size "text_get_extents" returns.
-   *  TODO: add an image parameter to "text_get_extents"
+   *  TODO: add resolution parameters to "text_get_extents"
    */
   text_set_resolution (&fontname,
 		       gdisp->gimage->xresolution,
@@ -922,37 +923,74 @@ text_size_multiply(char **fontname,
 }
 
 static void
-text_set_resolution (char **fontname,
-		     int    xres,
-		     int    yres)
+text_set_resolution (char   **fontname,
+		     double   xresolution,
+		     double   yresolution)
 {
-  char *point_str;
+  char *size_str;
   char *xres_str;
   char *yres_str;
   char *newfont;
   char *end;
+  char new_size[16];
   char new_xres[16];
   char new_yres[16];
+  double points;
+
+  int size;
+  int xres;
+  int yres;
 
   /* get the point size string */
-  text_field_edges(*fontname, POINT_SIZE, &point_str, &end);
+  text_field_edges (*fontname, POINT_SIZE, &size_str, &end);
 
   /* don't set the resolution if the point size is unspecified */
-  if (*point_str == '*')
+  if (xresolution < GIMP_MIN_RESOLUTION ||
+      yresolution < GIMP_MIN_RESOLUTION ||
+      *size_str == '*')
     return;
+
+  points = atof (size_str);
+
+  /*  X allows only integer resolution values, so we do some
+   *  ugly calculations (starting with yres because the size of
+   *  a font is it's height)
+   */
+  if (yresolution < 1.0)
+    {
+      points /= (1.0 / yresolution);
+      xresolution *= (1.0 / yresolution);
+      yresolution = 1.0;
+    }
+
+  /*  res may be != (int) res
+   *  (important only for very small resolutions)
+   */
+  points *= yresolution / (double) (int) yresolution;
+  xresolution /= yresolution / (double) (int) yresolution;
+
+  /* finally, if xres became invalid by the above calculations */
+  xresolution = BOUNDS (xresolution, 1.0, GIMP_MAX_RESOLUTION);
 
   /* slice the font spec around the resolution fields */
   text_field_edges (*fontname, XRESOLUTION, &xres_str, &end);
   text_field_edges (*fontname, YRESOLUTION, &yres_str, &end);
 
+  *(size_str - 1) = 0;
   *(xres_str - 1) = 0;
   *(yres_str - 1) = 0;
 
   /* convert the resolutions to text */
+  size = (int) points;
+  xres = (int) xresolution;
+  yres = (int) yresolution;
+
+  TO_TXT (size);
   TO_TXT (xres);
   TO_TXT (yres);
 
-  newfont = g_strdup_printf ("%s-%s-%s%s", *fontname, new_xres, new_yres, end);
+  newfont = g_strdup_printf ("%s-%s-%s-%s%s",
+			     *fontname, new_size, new_xres, new_yres, end);
 
   g_free (*fontname);
 

@@ -1132,7 +1132,7 @@ description of the unit system.
 HELP
 
 my $unit_misc = <<'CODE';
-    $author = $copyright = 'Michael Naterrer';
+    $author = $copyright = 'Michael Natterer';
     $date = '1998';
 CODE
 &image_accessors('unit', 'unit (min UNIT_INCH)', 'unit', 0,

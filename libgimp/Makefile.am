@@ -98,6 +98,7 @@ gimpinclude_HEADERS = \
 	gimpenv.h		\
 	gimpfeatures.h		\
 	gimpfileselection.h	\
+	gimplimits.h		\
 	gimpmatrix.h		\
 	gimpmenu.h		\
 	gimpmodule.h		\

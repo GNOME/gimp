@@ -22,17 +22,9 @@
 #include "gimprc.h"
 
 #include "libgimp/gimpchainbutton.h"
+#include "libgimp/gimplimits.h"
 #include "libgimp/gimpsizeentry.h"
 #include "libgimp/gimpintl.h"
-
-/*  TODO: - move size/resolution constants to a central place
- *        - agree on reasonable values ;)
- */
-#define MIN_IMAGE_SIZE  1
-#define MAX_IMAGE_SIZE  65536
-
-#define MIN_RESOLUTION  (1.0 / 65536.0)
-#define MAX_RESOLUTION  65536.0
 
 #define EVENT_MASK  GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK
 #define DRAWING_AREA_SIZE 200
@@ -305,10 +297,12 @@ resize_widget_new (ResizeType    type,
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se), 1,
 				  resolution_y, FALSE);
 
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (private->size_se),
-					 0, MIN_IMAGE_SIZE, MAX_IMAGE_SIZE);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (private->size_se),
-					 1, MIN_IMAGE_SIZE, MAX_IMAGE_SIZE);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (private->size_se), 0,
+					 GIMP_MIN_IMAGE_SIZE,
+					 GIMP_MAX_IMAGE_SIZE);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (private->size_se), 1,
+					 GIMP_MIN_IMAGE_SIZE,
+					 GIMP_MAX_IMAGE_SIZE);
 
   gimp_size_entry_set_size (GIMP_SIZE_ENTRY (private->size_se), 0, 0, width);
   gimp_size_entry_set_size (GIMP_SIZE_ENTRY (private->size_se), 1, 0, height);
@@ -352,8 +346,8 @@ resize_widget_new (ResizeType    type,
   /*  the scale ratio spinbuttons  */
   private->ratio_x_adj =
     gtk_adjustment_new (resize->ratio_x, 
-			(double) MIN_IMAGE_SIZE / (double) resize->width,
-			(double) MAX_IMAGE_SIZE / (double) resize->width,
+			(double) GIMP_MIN_IMAGE_SIZE / (double) resize->width,
+			(double) GIMP_MAX_IMAGE_SIZE / (double) resize->width,
 			0.01, 0.1, 1);
   spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (private->ratio_x_adj), 1, 4);
   gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
@@ -368,8 +362,8 @@ resize_widget_new (ResizeType    type,
 
   private->ratio_y_adj =
     gtk_adjustment_new (resize->ratio_y,
-			(double) MIN_IMAGE_SIZE / (double) resize->height,
-			(double) MAX_IMAGE_SIZE / (double) resize->height,
+			(double) GIMP_MIN_IMAGE_SIZE / (double) resize->height,
+			(double) GIMP_MAX_IMAGE_SIZE / (double) resize->height,
 			0.01, 0.1, 1);
   spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (private->ratio_y_adj), 1, 4);
   gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
@@ -546,10 +540,10 @@ resize_widget_new (ResizeType    type,
 
       gimp_size_entry_set_refval_boundaries
 	(GIMP_SIZE_ENTRY (private->printsize_se),
-	 0, MIN_IMAGE_SIZE, MAX_IMAGE_SIZE);
+	 0, GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
       gimp_size_entry_set_refval_boundaries
 	(GIMP_SIZE_ENTRY (private->printsize_se),
-	 1, MIN_IMAGE_SIZE, MAX_IMAGE_SIZE);
+	 1, GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
 
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->printsize_se),
 				  0, resize->width);
@@ -601,10 +595,10 @@ resize_widget_new (ResizeType    type,
 
       gimp_size_entry_set_refval_boundaries
 	(GIMP_SIZE_ENTRY (private->resolution_se),
-	 0, MIN_RESOLUTION, MAX_RESOLUTION);
+	 0, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
       gimp_size_entry_set_refval_boundaries
 	(GIMP_SIZE_ENTRY (private->resolution_se),
-	 1, MIN_RESOLUTION, MAX_RESOLUTION);
+	 1, GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
 
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->resolution_se),
 				  0, resize->resolution_x);
@@ -884,13 +878,13 @@ size_callback (GtkWidget *w,
 	{
 	  ratio_y = ratio_x;
 	  height = (double) private->old_height * ratio_y;
-	  height = BOUNDS (height, MIN_IMAGE_SIZE, MAX_IMAGE_SIZE);
+	  height = BOUNDS (height, GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
 	}
       else
 	{
 	  ratio_x = ratio_y;
 	  width = (double) private->old_width * ratio_x;
-	  width = BOUNDS (width, MIN_IMAGE_SIZE, MAX_IMAGE_SIZE);
+	  width = BOUNDS (width, GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
 	}
     }
 
@@ -929,10 +923,10 @@ ratio_callback (GtkWidget *w,
 	}
     }
 
-  width =
-    BOUNDS (private->old_width * ratio_x, MIN_IMAGE_SIZE, MAX_IMAGE_SIZE);
-  height =
-    BOUNDS (private->old_height * ratio_y, MIN_IMAGE_SIZE, MAX_IMAGE_SIZE);
+  width = BOUNDS (private->old_width * ratio_x,
+		  GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
+  height = BOUNDS (private->old_height * ratio_y,
+		   GIMP_MIN_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE);
 
   size_update (resize, width, height, ratio_x, ratio_y);
 }
@@ -1032,9 +1026,9 @@ printsize_update (GtkWidget *w,
    *  resolution.
    */
   res_x = BOUNDS (resize->resolution_x * width / print_width,
-		  MIN_RESOLUTION, MAX_RESOLUTION);
+		  GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
   res_y = BOUNDS (resize->resolution_y * height / print_height,
-		  MIN_RESOLUTION, MAX_RESOLUTION);
+		  GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION);
 
   if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (private->equal_res)))
     {

@@ -45,6 +45,8 @@
 #include "session.h"
 #include "undo.h"
 
+#include "libgimp/gimplimits.h"
+#include "libgimp/gimpsizeentry.h"
 #include "libgimp/gimpintl.h"
 
 #include "pixmaps/eye.xbm"
@@ -3034,8 +3036,7 @@ typedef struct _NewLayerOptions NewLayerOptions;
 struct _NewLayerOptions {
   GtkWidget *query_box;
   GtkWidget *name_entry;
-  GtkWidget *xsize_entry;
-  GtkWidget *ysize_entry;
+  GtkWidget *size_se;
   int fill_type;
   int xsize;
   int ysize;
@@ -3059,8 +3060,10 @@ new_layer_query_ok_callback (GtkWidget *w,
     g_free (layer_name);
   layer_name = g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
   fill_type = options->fill_type;
-  options->xsize = atoi (gtk_entry_get_text (GTK_ENTRY (options->xsize_entry)));
-  options->ysize = atoi (gtk_entry_get_text (GTK_ENTRY (options->ysize_entry)));
+  options->xsize =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (options->size_se), 0);
+  options->ysize =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (options->size_se), 1);
 
   if ((gimage = options->gimage))
     {
@@ -3113,44 +3116,14 @@ new_layer_query_delete_callback (GtkWidget *w,
 
 
 static void
-new_layer_background_callback (GtkWidget *w,
-			       gpointer   client_data)
+new_layer_query_fill_type_callback (GtkWidget *w,
+				    gpointer   client_data)
 {
   NewLayerOptions *options;
 
   options = (NewLayerOptions *) client_data;
-  options->fill_type = BACKGROUND_FILL;
-}
-
-
-static void
-new_layer_foreground_callback (GtkWidget *w,
-			       gpointer   client_data)
-{
-  NewLayerOptions *options;
-
-  options = (NewLayerOptions *) client_data;
-  options->fill_type = FOREGROUND_FILL;
-}
-
-static void
-new_layer_white_callback (GtkWidget *w,
-			  gpointer   client_data)
-{
-  NewLayerOptions *options;
-
-  options = (NewLayerOptions *) client_data;
-  options->fill_type = WHITE_FILL;
-}
-
-static void
-new_layer_transparent_callback (GtkWidget *w,
-				gpointer   client_data)
-{
-  NewLayerOptions *options;
-
-  options = (NewLayerOptions *) client_data;
-  options->fill_type = TRANSPARENT_FILL;
+  options->fill_type =
+    (int) gtk_object_get_data (GTK_OBJECT (w), "layer_fill_type");
 }
 
 static void
@@ -3165,25 +3138,19 @@ layers_dialog_new_layer_query (GimpImage* gimage)
   GtkWidget *vbox;
   GtkWidget *table;
   GtkWidget *label;
+  GtkObject *adjustment;
+  GtkWidget *spinbutton;
   GtkWidget *radio_frame;
   GtkWidget *radio_box;
   GtkWidget *radio_button;
   GSList *group = NULL;
   int i;
-  char size[12];
   char *button_names[4] =
   {
     N_("Foreground"),
     N_("Background"),
     N_("White"),
     N_("Transparent")
-  };
-  ActionCallback button_callbacks[4] =
-  {
-    new_layer_foreground_callback,
-    new_layer_background_callback,
-    new_layer_white_callback,
-    new_layer_transparent_callback
   };
 
   /*  the new options structure  */
@@ -3203,54 +3170,84 @@ layers_dialog_new_layer_query (GimpImage* gimage)
 		      options);
 
   /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 1);
+  vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (options->query_box)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (options->query_box)->vbox), vbox,
+		      TRUE, TRUE, 0);
 
   table = gtk_table_new (3, 2, FALSE);
-  gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 4);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
-  /*  the name entry hbox, label and entry  */
-  label = gtk_label_new (_("Layer name:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  /*  the name label and entry  */
+  label = gtk_label_new (_("Layer Name:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 1);
   gtk_widget_show (label);
 
   options->name_entry = gtk_entry_new ();
   gtk_widget_set_usize (options->name_entry, 75, 0);
-  gtk_table_attach (GTK_TABLE (table), options->name_entry, 1, 2, 0, 1,
-		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_SHRINK, 1, 1);
-  gtk_entry_set_text (GTK_ENTRY (options->name_entry), (layer_name ? layer_name : _("New Layer")));
+  gtk_table_attach_defaults (GTK_TABLE (table), options->name_entry, 1, 2, 0, 1);
+  gtk_entry_set_text (GTK_ENTRY (options->name_entry),
+		      (layer_name ? layer_name : _("New Layer")));
   gtk_widget_show (options->name_entry);
 
-  /*  the xsize entry hbox, label and entry  */
-  g_snprintf (size, 12, "%d", gimage->width);
-  label = gtk_label_new (_("Layer width: "));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  /*  the size labels  */
+  label = gtk_label_new (_("Layer Width:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 1);
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
   gtk_widget_show (label);
-  options->xsize_entry = gtk_entry_new ();
-  gtk_widget_set_usize (options->xsize_entry, 75, 0);
-  gtk_table_attach (GTK_TABLE (table), options->xsize_entry, 1, 2, 1, 2,
-		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_SHRINK, 1, 1);
-  gtk_entry_set_text (GTK_ENTRY (options->xsize_entry), size);
-  gtk_widget_show (options->xsize_entry);
 
-  /*  the ysize entry hbox, label and entry  */
-  g_snprintf (size, 12, "%d", gimage->height);
-  label = gtk_label_new (_("Layer height: "));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  label = gtk_label_new (_("Height:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 1);
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
   gtk_widget_show (label);
-  options->ysize_entry = gtk_entry_new ();
-  gtk_widget_set_usize (options->ysize_entry, 75, 0);
-  gtk_table_attach (GTK_TABLE (table), options->ysize_entry, 1, 2, 2, 3,
-		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_SHRINK, 1, 1);
-  gtk_entry_set_text (GTK_ENTRY (options->ysize_entry), size);
-  gtk_widget_show (options->ysize_entry);
+
+  /*  the size sizeentry  */
+  adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
+  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment), 1, 2);
+  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
+				   GTK_SHADOW_NONE);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  gtk_widget_set_usize (spinbutton, 75, 0);
+  
+  options->size_se = gimp_size_entry_new (1, UNIT_PIXEL, "%a",
+					  TRUE, TRUE, FALSE, 75,
+					  GIMP_SIZE_ENTRY_UPDATE_SIZE);
+  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (options->size_se),
+                             GTK_SPIN_BUTTON (spinbutton), NULL);
+  gtk_table_attach_defaults (GTK_TABLE (options->size_se), spinbutton,
+                             1, 2, 0, 1);
+  gtk_widget_show (spinbutton);
+  gtk_table_attach (GTK_TABLE (table), options->size_se, 1, 2, 1, 3,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (options->size_se);
+
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options->size_se), 0,
+                                  gimage->xresolution, FALSE);
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options->size_se), 1,
+                                  gimage->yresolution, FALSE);
+
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (options->size_se), 0,
+                                         GIMP_MIN_IMAGE_SIZE,
+                                         GIMP_MAX_IMAGE_SIZE);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (options->size_se), 1,
+                                         GIMP_MIN_IMAGE_SIZE,
+                                         GIMP_MAX_IMAGE_SIZE);
+
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (options->size_se), 0,
+			    0, gimage->width);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (options->size_se), 1,
+			    0, gimage->height);
+
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (options->size_se), 0,
+			      gimage->width);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (options->size_se), 1,
+			      gimage->height);
 
   gtk_widget_show (table);
 
@@ -3264,11 +3261,14 @@ layers_dialog_new_layer_query (GimpImage* gimage)
   /*  the radio buttons  */
   for (i = 0; i < 4; i++)
     {
-      radio_button = gtk_radio_button_new_with_label (group, gettext(button_names[i]));
+      radio_button =
+	gtk_radio_button_new_with_label (group, gettext(button_names[i]));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
       gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
+      gtk_object_set_data (GTK_OBJECT (radio_button), "layer_fill_type",
+			   (gpointer) i);
       gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-			  (GtkSignalFunc) button_callbacks[i],
+			  (GtkSignalFunc) new_layer_query_fill_type_callback,
 			  options);
 
       /*  set the correct radio button  */
