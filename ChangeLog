@@ -1,5 +1,10 @@
 2005-01-07  Sven Neumann  <neumann@jpk.com>
 
+	* data/misc/gimp.desktop.in.in: changed Comment field as suggested
+	in bug #160990.
+
+2005-01-07  Sven Neumann  <neumann@jpk.com>
+
 	* plug-ins/common/mail.c: just some minor formatting changes.
 
 2005-01-07  Sven Neumann  <sven@gimp.org>
