@@ -45,7 +45,7 @@ gimp_image_scale (GimpImage             *gimage,
                   GimpProgressFunc       progress_func,
                   gpointer               progress_data)
 {
-  GimpChannel *channel;
+  GimpItem    *item;
   GimpLayer   *layer;
   GimpLayer   *floating_layer;
   GList       *list;
@@ -95,9 +95,9 @@ gimp_image_scale (GimpImage             *gimage,
        list; 
        list = g_list_next (list))
     {
-      channel = (GimpChannel *) list->data;
+      item = (GimpItem *) list->data;
 
-      gimp_channel_scale (channel, new_width, new_height, interpolation_type);
+      gimp_item_scale (item, new_width, new_height, 0, 0, interpolation_type);
 
       if (progress_func)
         {
@@ -113,8 +113,8 @@ gimp_image_scale (GimpImage             *gimage,
       else
   */
 
-  gimp_channel_scale (gimage->selection_mask, new_width, new_height,
-                      interpolation_type);
+  gimp_item_scale (GIMP_ITEM (gimage->selection_mask), new_width, new_height,
+                   0, 0, interpolation_type);
   gimp_image_mask_invalidate (gimage);
 
   /*  Scale all layers  */

@@ -322,6 +322,27 @@ gimp_item_rename (GimpItem    *item,
     item_class->rename (item, new_name, item_class->rename_desc);
 }
 
+void
+gimp_item_scale (GimpItem              *item,
+                 gint                   new_width,
+                 gint                   new_height,
+                 gint                   new_offset_x,
+                 gint                   new_offset_y,
+                 GimpInterpolationType  interpolation_type)
+{
+  GimpItemClass *item_class;
+
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  if (new_width == 0 || new_height == 0)
+    return;
+
+  item_class = GIMP_ITEM_GET_CLASS (item);
+
+  item_class->scale (item, new_width, new_height, new_offset_x, new_offset_y,
+                     interpolation_type);
+}
+
 gint
 gimp_item_get_ID (GimpItem *item)
 {

@@ -58,6 +58,12 @@ static gsize      gimp_channel_get_memsize (GimpObject       *object);
 static GimpItem * gimp_channel_duplicate   (GimpItem         *item,
                                             GType             new_type,
                                             gboolean          add_alpha);
+static void       gimp_channel_scale       (GimpItem         *item,
+                                            gint              new_width,
+                                            gint              new_height,
+                                            gint              new_offset_x,
+                                            gint              new_offset_y,
+                                            GimpInterpolationType  interp_type);
 
 static void       gimp_channel_push_undo   (GimpChannel      *mask,
                                             const gchar      *undo_desc);
@@ -118,6 +124,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
   viewable_class->default_stock_id = "gimp-channel";
 
   item_class->duplicate            = gimp_channel_duplicate;
+  item_class->scale                = gimp_channel_scale;
   item_class->default_name         = _("Channel");
   item_class->rename_desc          = _("Rename Channel");
 }
@@ -216,6 +223,30 @@ gimp_channel_duplicate (GimpItem *item,
   new_channel->y2           = channel->y2;
 
   return new_item;
+}
+
+static void
+gimp_channel_scale (GimpItem              *item,
+		    gint                   new_width,
+		    gint                   new_height,
+                    gint                   new_offset_x,
+                    gint                   new_offset_y,
+                    GimpInterpolationType  interpolation_type)
+{
+  GimpChannel *channel;
+
+  channel = GIMP_CHANNEL (item);
+
+  gimp_image_undo_push_channel_mod (gimp_item_get_image (item),
+                                    _("Scale Channel"),
+                                    channel);
+
+  GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
+                                         new_offset_x, new_offset_y,
+                                         interpolation_type);
+
+  /*  bounds are now unknown  */
+  channel->bounds_known = FALSE;
 }
 
 static void
@@ -418,66 +449,6 @@ gimp_channel_set_show_masked (GimpChannel *channel,
 			    GIMP_DRAWABLE (channel)->width,
 			    GIMP_DRAWABLE (channel)->height);
     }
-}
-
-void
-gimp_channel_scale (GimpChannel           *channel,
-		    gint                   new_width,
-		    gint                   new_height,
-                    GimpInterpolationType  interpolation_type)
-{
-  PixelRegion  srcPR, destPR;
-  TileManager *new_tiles;
-
-  g_return_if_fail (GIMP_IS_CHANNEL (channel));
-
-  if (new_width == 0 || new_height == 0)
-    return;
-
-  /*  Update the old channel position  */
-  gimp_drawable_update (GIMP_DRAWABLE (channel),
-			0, 0,
-			GIMP_DRAWABLE (channel)->width,
-			GIMP_DRAWABLE (channel)->height);
-
-  /*  Allocate the new channel  */
-  new_tiles = tile_manager_new (new_width, new_height, 1);
-
-  /*  Configure the pixel regions  */
-  pixel_region_init (&srcPR, GIMP_DRAWABLE (channel)->tiles,
-		     0, 0,
-		     GIMP_DRAWABLE (channel)->width,
-		     GIMP_DRAWABLE (channel)->height,
-                     FALSE);
-
-  pixel_region_init (&destPR, new_tiles,
-                     0, 0,
-                     new_width, new_height,
-                     TRUE);
-
-  /*  Sclae the channel  */
-  scale_region (&srcPR, &destPR, interpolation_type);
-
-  /*  Push the channel on the undo stack  */
-  gimp_image_undo_push_channel_mod (gimp_item_get_image (GIMP_ITEM (channel)),
-                                    _("Scale Channel"),
-                                    channel);
-
-  /*  Configure the new channel  */
-  GIMP_DRAWABLE (channel)->tiles  = new_tiles;
-  GIMP_DRAWABLE (channel)->width  = new_width;
-  GIMP_DRAWABLE (channel)->height = new_height;
-
-  /*  bounds are now unknown  */
-  channel->bounds_known = FALSE;
-
-  /*  Update the new channel position  */
-  gimp_drawable_update (GIMP_DRAWABLE (channel),
-			0, 0,
-			GIMP_DRAWABLE (channel)->width,
-			GIMP_DRAWABLE (channel)->height);
-
-  gimp_viewable_size_changed (GIMP_VIEWABLE (channel));
 }
 
 void

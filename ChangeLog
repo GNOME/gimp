@@ -1,3 +1,37 @@
+2003-05-07  Michael Natterer  <mitch@gimp.org>
+
+	Started to abstract item transformation so we can easily
+	transform multiple linked items later:
+
+	* app/core/gimpitem.[ch]: added new virtual function
+	GimpItem::scale() with the same signature as the former
+	gimp_layer_scale_lowlevel().
+
+	* app/core/gimpdrawable.c: implement scale() and do the
+	common parts of layer/channel scaling here.
+
+	* app/core/gimpchannel.[ch]
+	* app/core/gimplayer.[ch]: implement scale() for the
+	channel/layer specific parts of scaling.
+
+	* app/core/gimplayer.[ch]: renamed gimp_layer_scale() to
+	gimp_layer_scale_by_origin().
+
+	* app/vectors/gimpvectors.c: added empty scale() implementation.
+
+	* app/core/gimpimage-scale.c
+	* app/core/gimpimage-undo-push.c
+	* app/gui/layers-commands.c
+	* tools/pdbgen/pdb/layer.pdb: changed accordingly.
+
+	* app/pdb/layer_cmds.c: regenerated.
+
+	Unrelated:
+
+	* app/core/gimpimage-undo-push.c: fixed item rename undo to
+	take the size of the saved name into account. Removed old
+	path_undo stuff.
+
 2003-05-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/tools-enums.[ch]: removed GimpToolState (ACTIVE,

@@ -53,15 +53,22 @@ struct _GimpItemClass
   void       (* removed)   (GimpItem    *item);
 
   /*  virtual functions  */
-  GimpItem * (* duplicate) (GimpItem    *item,
-                            GType        new_type,
-                            gboolean     add_alpha);
-  void       (* rename)    (GimpItem    *item,
-                            const gchar *new_name,
-                            const gchar *undo_desc);
+  GimpItem * (* duplicate) (GimpItem              *item,
+                            GType                  new_type,
+                            gboolean               add_alpha);
+  void       (* rename)    (GimpItem              *item,
+                            const gchar           *new_name,
+                            const gchar           *undo_desc);
+  void       (* scale)     (GimpItem              *item,
+                            gint                   new_width,
+                            gint                   new_height,
+                            gint                   new_offset_x,
+                            gint                   new_offset_y,
+                            GimpInterpolationType  interpolation_type);
 
   const gchar *default_name;
   const gchar *rename_desc;
+  const gchar *scale_desc;
 };
 
 
@@ -78,6 +85,13 @@ GimpItem      * gimp_item_duplicate       (GimpItem       *item,
 
 void            gimp_item_rename          (GimpItem       *item,
                                            const gchar    *new_name);
+
+void            gimp_item_scale           (GimpItem       *item,
+                                           gint            new_width,
+                                           gint            new_height,
+                                           gint            new_offset_x,
+                                           gint            new_offset_y,
+                                           GimpInterpolationType  interp_type);
 
 gint            gimp_item_get_ID          (GimpItem       *item);
 GimpItem      * gimp_item_get_by_ID       (Gimp           *gimp,

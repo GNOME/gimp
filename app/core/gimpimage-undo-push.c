@@ -21,11 +21,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
 
-#include "tools/tools-types.h"
+#include "core-types.h"
 
 #include "config/gimpcoreconfig.h"
 
@@ -56,8 +56,6 @@
 #include "paint/gimppaintcore.h"
 
 #include "vectors/gimpvectors.h"
-
-#include "path_transform.h"
 
 #include "gimp-intl.h"
 
@@ -1014,14 +1012,19 @@ gimp_image_undo_push_item_rename (GimpImage   *gimage,
                                   const gchar *undo_desc,
                                   GimpItem    *item)
 {
-  GimpUndo *new;
+  GimpUndo    *new;
+  gsize        size;
+  const gchar *name;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
+  name = gimp_object_get_name (GIMP_OBJECT (item));
+
+  size = sizeof (ItemRenameUndo) + strlen (name) + 1;
+
   if ((new = gimp_image_undo_push_item (gimage, item,
-                                        sizeof (ItemRenameUndo),
-                                        sizeof (ItemRenameUndo),
+                                        size, sizeof (ItemRenameUndo),
                                         GIMP_UNDO_ITEM_RENAME, undo_desc,
                                         TRUE,
                                         undo_pop_item_rename,
@@ -1031,7 +1034,7 @@ gimp_image_undo_push_item_rename (GimpImage   *gimage,
 
       iru = new->data;
 
-      iru->old_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (item)));
+      iru->old_name = g_strdup (name);
 
       return TRUE;
     }
@@ -1694,9 +1697,8 @@ typedef struct _LayerDisplaceUndo LayerDisplaceUndo;
 
 struct _LayerDisplaceUndo
 {
-  gint    old_offset_x;
-  gint    old_offset_y;
-  GSList *path_undo;
+  gint old_offset_x;
+  gint old_offset_y;
 };
 
 static gboolean undo_pop_layer_displace  (GimpUndo            *undo,
@@ -1729,7 +1731,6 @@ gimp_image_undo_push_layer_displace (GimpImage   *gimage,
 
       ldu->old_offset_x = GIMP_DRAWABLE (layer)->offset_x;
       ldu->old_offset_y = GIMP_DRAWABLE (layer)->offset_y;
-      ldu->path_undo    = path_transform_start_undo (gimage);
 
       return TRUE;
     }
@@ -1761,10 +1762,6 @@ undo_pop_layer_displace (GimpUndo            *undo,
   ldu->old_offset_x = offset_x;
   ldu->old_offset_y = offset_y;
 
-  /* Now undo paths bits */
-  if (ldu->path_undo)
-    path_transform_do_undo (undo->gimage, ldu->path_undo);
-
   return TRUE;
 }
 
@@ -1775,9 +1772,6 @@ undo_free_layer_displace (GimpUndo     *undo,
   LayerDisplaceUndo *ldu;
 
   ldu = (LayerDisplaceUndo *) undo->data;
-
-  if (ldu->path_undo)
-    path_transform_free_undo (ldu->path_undo);  
 
   g_free (ldu);
 }

@@ -75,6 +75,12 @@ static GimpItem * gimp_layer_duplicate          (GimpItem           *item,
 static void       gimp_layer_rename             (GimpItem           *item,
                                                  const gchar        *new_name,
                                                  const gchar        *undo_desc);
+static void       gimp_layer_scale              (GimpItem           *item,
+                                                 gint                new_width,
+                                                 gint                new_height,
+                                                 gint                new_offset_x,
+                                                 gint                new_offset_y,
+                                                 GimpInterpolationType  interp_type);
 
 static void       gimp_layer_transform_color    (GimpImage          *gimage,
                                                  PixelRegion        *layerPR,
@@ -185,6 +191,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
 
   item_class->duplicate              = gimp_layer_duplicate;
   item_class->rename                 = gimp_layer_rename;
+  item_class->scale                  = gimp_layer_scale;
   item_class->default_name           = _("Layer");
   item_class->rename_desc            = _("Rename Layer");
 
@@ -342,6 +349,46 @@ gimp_layer_rename (GimpItem    *item,
 
   if (gimage && floating_sel)
     gimp_image_undo_group_end (gimage);
+}
+
+static void
+gimp_layer_scale (GimpItem              *item,
+                  gint                   new_width,
+                  gint                   new_height,
+                  gint                   new_offset_x,
+                  gint                   new_offset_y,
+                  GimpInterpolationType  interpolation_type)
+{
+  GimpLayer *layer;
+  GimpImage *gimage;
+
+  layer = GIMP_LAYER (item);
+
+  gimage = gimp_item_get_image (item);
+
+  if (layer->mask)
+    gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_SCALE,
+                                 _("Scale Layer"));
+
+  gimp_image_undo_push_layer_mod (gimage, _("Scale Layer"), layer);
+
+  GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
+                                         new_offset_x, new_offset_y,
+                                         interpolation_type);
+
+  /*  If there is a layer mask, make sure it gets scaled also  */
+  if (layer->mask)
+    {
+      gimp_item_scale (GIMP_ITEM (layer->mask),
+                       new_width, new_height,
+                       new_offset_x, new_offset_y,
+                       interpolation_type);
+
+      gimp_image_undo_group_end (gimage);
+    }
+
+  /*  Make sure we're not caching any old selection info  */
+  gimp_layer_invalidate_boundary (layer);
 }
 
 static void
@@ -967,87 +1014,6 @@ gimp_layer_add_alpha (GimpLayer *layer)
     }
 }
 
-static void
-gimp_layer_scale_lowlevel (GimpLayer             *layer,
-			   gint                   new_width,
-			   gint                   new_height,
-			   gint                   new_offset_x,
-			   gint                   new_offset_y,
-                           GimpInterpolationType  interpolation_type)
-{
-  PixelRegion  srcPR, destPR;
-  TileManager *new_tiles;
-
-  /*  Update the old layer position  */
-  gimp_drawable_update (GIMP_DRAWABLE (layer),
-			0, 0,
-			GIMP_DRAWABLE (layer)->width, 
-			GIMP_DRAWABLE (layer)->height);
-
-  /*  Configure the pixel regions  */
-  pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 
-		     0, 0, 
-		     GIMP_DRAWABLE (layer)->width, 
-		     GIMP_DRAWABLE (layer)->height, 
-		     FALSE);
-
-  /*  Allocate the new layer, configure dest region  */
-  new_tiles = tile_manager_new (new_width, new_height, 
-				GIMP_DRAWABLE (layer)->bytes);
-  pixel_region_init (&destPR, new_tiles, 
-		     0, 0, 
-		     new_width, new_height, 
-		     TRUE);
-
-  /*  Scale the layer -
-   *   If the layer is of type INDEXED, then we don't use pixel-value
-   *   resampling because that doesn't necessarily make sense for INDEXED
-   *   images.
-   */
-  if (GIMP_IMAGE_TYPE_IS_INDEXED (GIMP_DRAWABLE (layer)->type))
-    {
-      scale_region (&srcPR, &destPR, GIMP_INTERPOLATION_NONE);
-    }
-  else
-    {
-      scale_region (&srcPR, &destPR, interpolation_type);
-    }
-
-  /*  Push the layer on the undo stack  */
-  gimp_image_undo_push_layer_mod (gimp_item_get_image (GIMP_ITEM (layer)),
-                                  _("Scale Layer"),
-                                  layer);
-
-  /*  Configure the new layer  */
-
-  GIMP_DRAWABLE (layer)->offset_x = new_offset_x;
-  GIMP_DRAWABLE (layer)->offset_y = new_offset_y;
-  GIMP_DRAWABLE (layer)->tiles    = new_tiles;
-  GIMP_DRAWABLE (layer)->width    = new_width;
-  GIMP_DRAWABLE (layer)->height   = new_height;
-
-  /*  If there is a layer mask, make sure it gets scaled also  */
-  if (layer->mask) 
-    {
-      GIMP_DRAWABLE (layer->mask)->offset_x = GIMP_DRAWABLE (layer)->offset_x;
-      GIMP_DRAWABLE (layer->mask)->offset_y = GIMP_DRAWABLE (layer)->offset_y;
-
-      gimp_channel_scale (GIMP_CHANNEL (layer->mask), new_width, new_height,
-                          interpolation_type);
-    }
-
-  /*  Make sure we're not caching any old selection info  */
-  gimp_layer_invalidate_boundary (layer);
-
-  /*  Update the new layer position  */
-  gimp_drawable_update (GIMP_DRAWABLE (layer),
-			0, 0,
-			GIMP_DRAWABLE (layer)->width, 
-			GIMP_DRAWABLE (layer)->height);
-
-  gimp_viewable_size_changed (GIMP_VIEWABLE (layer));
-}
-
 /**
  * gimp_layer_check_scaling:
  * @layer:      Layer to check
@@ -1135,10 +1101,10 @@ gimp_layer_scale_by_factors (GimpLayer             *layer,
 
   if (new_width != 0 && new_height != 0)
     {
-      gimp_layer_scale_lowlevel (layer,
-				 new_width, new_height,
-				 new_offset_x, new_offset_y,
-                                 interpolation_type);
+      gimp_item_scale (GIMP_ITEM (layer),
+                       new_width, new_height,
+                       new_offset_x, new_offset_y,
+                       interpolation_type);
       return TRUE;
     }
 
@@ -1146,7 +1112,7 @@ gimp_layer_scale_by_factors (GimpLayer             *layer,
 }
 
 /**
- * gimp_layer_scale:
+ * gimp_layer_scale_by_origin:
  * @layer:        The layer to be transformed by width & height scale factors
  * @new_width:    The width that layer will acquire
  * @new_height:   The height that the layer will acquire
@@ -1173,11 +1139,11 @@ gimp_layer_scale_by_factors (GimpLayer             *layer,
  *               & painted to new layer tiles 
  **/
 void
-gimp_layer_scale (GimpLayer             *layer,
-		  gint                   new_width,
-		  gint                   new_height,
-                  GimpInterpolationType  interpolation_type,
-		  gboolean               local_origin)
+gimp_layer_scale_by_origin (GimpLayer             *layer,
+                            gint                   new_width,
+                            gint                   new_height,
+                            GimpInterpolationType  interpolation_type,
+                            gboolean               local_origin)
 {
   gint new_offset_x, new_offset_y;
 
@@ -1208,10 +1174,10 @@ gimp_layer_scale (GimpLayer             *layer,
 			      (gdouble) GIMP_DRAWABLE (layer)->height));
     }
 
-  gimp_layer_scale_lowlevel (layer, 
-			     new_width, new_height, 
-			     new_offset_x, new_offset_y,
-                             interpolation_type);
+  gimp_item_scale (GIMP_ITEM (layer), 
+                   new_width, new_height, 
+                   new_offset_x, new_offset_y,
+                   interpolation_type);
 }
 
 void

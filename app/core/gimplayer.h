@@ -111,7 +111,7 @@ gboolean        gimp_layer_scale_by_factors    (GimpLayer            *layer,
                                                 gdouble               w_factor, 
                                                 gdouble               h_factor,
                                                 GimpInterpolationType interpolation_type);
-void            gimp_layer_scale               (GimpLayer            *layer, 
+void            gimp_layer_scale_by_origin     (GimpLayer            *layer, 
                                                 gint                  new_width,
                                                 gint                  new_height,
                                                 GimpInterpolationType interpolation_type,

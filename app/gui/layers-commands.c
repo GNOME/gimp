@@ -935,22 +935,26 @@ scale_layer_query_ok_callback (GtkWidget *widget,
 
       if (gimage)
 	{
-	  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_SCALE,
-                                       _("Scale Layer"));
+	  if (gimp_layer_is_floating_sel (layer))
+            {
+              gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_SCALE,
+                                           _("Scale Layer"));
+
+              floating_sel_relax (layer, TRUE);
+            }
+
+	  gimp_layer_scale_by_origin (layer, 
+                                      options->resize->width,
+                                      options->resize->height,
+                                      options->resize->interpolation,
+                                      TRUE);
 
 	  if (gimp_layer_is_floating_sel (layer))
-	    floating_sel_relax (layer, TRUE);
+            {
+              floating_sel_rigor (layer, TRUE);
 
-	  gimp_layer_scale (layer, 
-			    options->resize->width,
-                            options->resize->height,
-                            options->resize->interpolation,
-			    TRUE);
-
-	  if (gimp_layer_is_floating_sel (layer))
-	    floating_sel_rigor (layer, TRUE);
-
-	  gimp_image_undo_group_end (gimage);
+              gimp_image_undo_group_end (gimage);
+            }
 
           gimp_image_flush (gimage);
 	}

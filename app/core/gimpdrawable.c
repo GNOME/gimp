@@ -74,6 +74,12 @@ static void       gimp_drawable_invalidate_preview (GimpViewable      *viewable)
 static GimpItem * gimp_drawable_duplicate          (GimpItem          *item,
                                                     GType              new_type,
                                                     gboolean           add_alpha);
+static void       gimp_drawable_scale              (GimpItem          *item,
+                                                    gint               new_width,
+                                                    gint               new_height,
+                                                    gint               new_offset_x,
+                                                    gint               new_offset_y,
+                                                    GimpInterpolationType interp_type);
 
 
 /*  private variables  */
@@ -145,6 +151,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   viewable_class->get_preview        = gimp_drawable_get_preview;
 
   item_class->duplicate              = gimp_drawable_duplicate;
+  item_class->scale                  = gimp_drawable_scale;
 
   klass->visibility_changed          = NULL;
 }
@@ -281,6 +288,61 @@ gimp_drawable_duplicate (GimpItem *item,
     add_alpha_region (&srcPR, &destPR);
 
   return new_item;
+}
+
+static void
+gimp_drawable_scale (GimpItem              *item,
+                     gint                   new_width,
+                     gint                   new_height,
+                     gint                   new_offset_x,
+                     gint                   new_offset_y,
+                     GimpInterpolationType  interpolation_type)
+{
+  GimpDrawable *drawable;
+  PixelRegion   srcPR, destPR;
+  TileManager  *new_tiles;
+
+  drawable = GIMP_DRAWABLE (item);
+
+  /*  Update the old position  */
+  gimp_drawable_update (drawable, 0, 0, drawable->width, drawable->height);
+
+  /*  Allocate the new channel  */
+  new_tiles = tile_manager_new (new_width, new_height, drawable->bytes);
+
+  /*  Configure the pixel regions  */
+  pixel_region_init (&srcPR, drawable->tiles,
+		     0, 0,
+		     drawable->width,
+		     drawable->height,
+                     FALSE);
+
+  pixel_region_init (&destPR, new_tiles,
+                     0, 0,
+                     new_width, new_height,
+                     TRUE);
+
+  /*  Scale the drawable -
+   *   If the drawable is indexed, then we don't use pixel-value
+   *   resampling because that doesn't necessarily make sense for indexed
+   *   images.
+   */
+  if (gimp_drawable_is_indexed (drawable))
+    interpolation_type = GIMP_INTERPOLATION_NONE;
+
+  scale_region (&srcPR, &destPR, interpolation_type);
+
+  /*  Configure the new channel  */
+  drawable->tiles    = new_tiles;
+  drawable->width    = new_width;
+  drawable->height   = new_height;
+  drawable->offset_x = new_offset_x;
+  drawable->offset_y = new_offset_y;
+
+  /*  Update the new position  */
+  gimp_drawable_update (drawable, 0, 0, drawable->width, drawable->height);
+
+  gimp_viewable_size_changed (GIMP_VIEWABLE (drawable));
 }
 
 void
