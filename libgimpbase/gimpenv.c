@@ -303,12 +303,14 @@ gimp_path_parse (gchar     *path,
       if (!patharray[i])
 	break;
 
+#ifndef G_OS_WIN32
       if (*patharray[i] == '~')
 	{
 	  dir = g_string_new (home);
 	  g_string_append (dir, patharray[i] + 1);
 	}
       else
+#endif
 	{
 	  dir = g_string_new (patharray[i]);
 	}

@@ -1769,12 +1769,15 @@ transform_path (gchar    *path,
   tmp = path;
   while (*tmp)
     {
+#ifndef G_OS_WIN32
       if (*tmp == '~')
 	{
 	  length += strlen (home);
 	  tmp += 1;
 	}
-      else if (*tmp == '$')
+      else
+#endif
+	   if (*tmp == '$')
 	{
 	  tmp += 1;
 	  if (!*tmp || (*tmp != '{'))
@@ -1795,6 +1798,19 @@ transform_path (gchar    *path,
 	    {
 	      /* maybe token is an environment variable */
 	      tmp2 = g_getenv (token);
+#ifdef G_OS_WIN32
+	      /* The default user gimprc on Windows references
+	       * ${TEMP}, but not all Windows installations have that
+	       * environment variable, even if it should be kinda
+	       * standard. So special-case it.
+	       */
+	      if (tmp2 == NULL &&
+		  (g_strcasecmp (token, "temp") == 0 ||
+		   g_strcasecmp (token, "tmp") == 0))
+		{
+		  tmp2 = g_get_tmp_dir ();
+		}
+#endif
 	      if (tmp2 != NULL)
 		{
 		  is_env = TRUE;
@@ -1845,6 +1861,7 @@ transform_path (gchar    *path,
 
   while (*tmp)
     {
+#ifndef G_OS_WIN32
       if (*tmp == '~')
 	{
 	  *tmp2 = '\0';
@@ -1852,7 +1869,9 @@ transform_path (gchar    *path,
 	  tmp2 += strlen (home);
 	  tmp += 1;
 	}
-      else if (*tmp == '$')
+      else
+#endif
+	   if (*tmp == '$')
 	{
 	  tmp += 1;
 	  if (!*tmp || (*tmp != '{'))

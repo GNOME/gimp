@@ -1,3 +1,14 @@
+2000-05-16  Tor Lillqvist  <tml@iki.fi>
+
+	* libgimp/gimpenv.c (gimp_path_parse)
+	* app/gimprc.c (transform_path): Don't try to handle tilde (~) at
+	all on Windows. The tilde is used when mangling long file names
+	into 8.3 form, and some people have a HOME environment variable
+	that contains this kind of 8.3 path with a tilde. This causes
+	interesting effects if we expand a tilde in some gimprc variable
+	with $HOME, which contains a tilde, which we expand with $HOME,
+	etc.
+
 2000-05-14  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/common/gpb.c (gih_save_dialog): Fix typo introduced
