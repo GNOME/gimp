@@ -144,8 +144,8 @@ void angle_update(GtkWidget *widget, GtkScale *scale)
   GtkAdjustment *adjustment;
 
   valueptr=(gdouble *)gtk_object_get_data(GTK_OBJECT(widget),"ValuePtr");
-  adjustment=gtk_range_get_adjustment(GTK_RANGE(scale));
-  
+  adjustment=gtk_range_get_adjustment(GTK_RANGE(widget));
+
   *valueptr=(gdouble)adjustment->value;
 
   if (mapvals.showgrid==TRUE)

@@ -1,3 +1,8 @@
+Sat Jan  9 03:42:30 EST 1999 Peter Teichman  <pat4@acpub.duke.edu>
+
+	* plug-ins/MapObject/mapobject_ui.c (angle_update): fixed a
+	segfault.. The wrong argument to angle_update was being dereferenced.
+
 Thu Jan  7 15:45:14 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* configure.in: added pl to ALL_LINGUAS
