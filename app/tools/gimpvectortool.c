@@ -213,7 +213,6 @@ gimp_vector_tool_control (GimpTool       *tool,
 
     case HALT:
       /* gimp_tool_pop_status (tool); */
-      gimp_tool_control_halt (tool->control);
       gimp_vector_tool_clear_vectors (vector_tool);
       break;
 
@@ -270,6 +269,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
       gdisp->gimage != GIMP_ITEM (vector_tool->vectors)->gimage)
     gimp_vector_tool_clear_vectors (vector_tool);
 
+  gimp_tool_control_activate (tool->control);
   tool->gdisp = gdisp;
 
   switch (vector_tool->function)
@@ -353,10 +353,13 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
       /* avoid doing anything stupid */
       vector_tool->function = VECTORS_FINISHED;
-      gimp_tool_control_halt (tool->control);
+      
+      break;
+
+    default:
+      break;
     }
 
-  gimp_tool_control_activate (tool->control);
   gimp_draw_tool_start (GIMP_DRAW_TOOL (vector_tool), gdisp);
 }
 
@@ -658,6 +661,13 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
       /* GIMP_CURSOR_MODIFIER_MINUS */
       break;
     }
+
+  /*
+   * gimp_tool_control_set_cursor (tool->control, ctype);
+   * gimp_tool_control_set_tool_cursor (tool->control,
+   *                                    GIMP_BEZIER_SELECT_TOOL_CURSOR);
+   * gimp_tool_control_set_cursor_modifier (tool->control, cmodifier);
+   */
 
   gimp_tool_set_cursor (tool, gdisp, GIMP_MOUSE_CURSOR, tool_cursor, cmodifier);
 }
