@@ -22,7 +22,13 @@
 #ifndef __GIMP_MATH_H__
 #define __GIMP_MATH_H__
 
+#ifdef HAVE_MATH_H
 #include <math.h>
+#endif
+
+#ifdef HAVE_IEEEFP_H
+#include <ieeefp.h>
+#endif
 
 #ifdef G_OS_WIN32
 #include <float.h>
@@ -86,16 +92,21 @@ extern "C" {
 #define gimp_deg_to_rad(angle) ((angle) * (2.0 * G_PI) / 360.0)
 #define gimp_rad_to_deg(angle) ((angle) * 360.0 / (2.0 * G_PI))
 
+#ifdef HAVE_FINITE
+#define FINITE(x) finite(x)
+#else
+#ifdef HAVE_ISFINITE
+#define FINITE(x) isfinite(x)
+#else
 #ifdef G_OS_WIN32
 #define FINITE(x) _finite(x)
 #else
 #ifdef __EMX__
 #define FINITE(x) isfinite(x)
-#else
-#define FINITE(x) finite(x) 
-#endif
-#endif
-
+#endif /* __EMX__ */
+#endif /* G_OS_WIN32 */
+#endif /* HAVE_ISFINITE */
+#endif /* HAVE_FINITE */
 
 #ifdef __cplusplus
 }

@@ -142,6 +142,8 @@ fi
 
 changequote([,])dnl
 
+AC_CHECK_HEADERS(math.h ieeefp.h)
+
 dnl DU4 native cc currently needs -std1 for ANSI mode (instead of K&R)
 AC_MSG_CHECKING([for extra flags to get ANSI library prototypes])
 gimp_save_LIBS=$LIBS
@@ -416,6 +418,20 @@ AC_TYPE_SIGNAL
 AC_FUNC_VPRINTF
 
 AC_FUNC_ALLOCA
+
+dnl Check for finite or isfinite
+AC_CHECK_FUNCS(finite, , [
+  AC_MSG_CHECKING(for finite in <math.h>)
+  AC_TRY_LINK([#include <math.h>], [double f = 0.0; finite (f)], [
+    AC_DEFINE(HAVE_FINITE)
+    AC_MSG_RESULT(yes)], [
+    AC_MSG_RESULT(no)
+    AC_MSG_CHECKING(for isfinite in <math.h>)
+    AC_TRY_LINK([#include <math.h>], [float f = 0.0; isfinite(f)], [
+      AC_DEFINE(HAVE_ISFINITE)
+      AC_MSG_RESULT(yes)], AC_MSG_RESULT(no))])])
+AC_SUBST(HAVE_FINITE)
+AC_SUBST(HAVE_ISFINITE)
 
 dnl Check for sys/select.h
 
