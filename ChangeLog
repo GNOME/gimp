@@ -2,7 +2,7 @@
 
 	* plug-ins/winicon/icoload.c:
 	* plug-ins/winicon/icosave.c: Applied a patch from Brion Vibber
-	that fixes byte-swapping on big endian hosts.	Fixes bug #147610.
+	that fixes byte-swapping on big endian hosts. Fixes bug #147610.
 
 2004-07-15  Sven Neumann  <sven@gimp.org>
 
