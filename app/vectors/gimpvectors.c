@@ -385,13 +385,12 @@ gimp_vectors_scale (GimpItem              *item,
                     gpointer               progress_data)
 {
   GimpVectors *vectors = GIMP_VECTORS (item);
+  GimpImage   *image = gimp_item_get_image (item);
   GList       *list;
 
   gimp_vectors_freeze (vectors);
 
-  gimp_image_undo_push_vectors_mod (gimp_item_get_image (item),
-                                    _("Scale Path"),
-                                    vectors);
+  gimp_image_undo_push_vectors_mod (image, _("Scale Path"), vectors);
 
   for (list = vectors->strokes; list; list = g_list_next (list))
     {
@@ -400,11 +399,11 @@ gimp_vectors_scale (GimpItem              *item,
       gimp_stroke_scale (stroke,
                          (gdouble) new_width  / (gdouble) item->width,
                          (gdouble) new_height / (gdouble) item->height);
+      gimp_stroke_translate (stroke, new_offset_x, new_offset_y);
     }
 
-  GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
-                                         new_offset_x, new_offset_y,
-                                         interpolation_type,
+  GIMP_ITEM_CLASS (parent_class)->scale (item, image->width, image->height,
+                                         0, 0, interpolation_type,
                                          progress_callback, progress_data);
 
   gimp_vectors_thaw (vectors);
@@ -418,13 +417,12 @@ gimp_vectors_resize (GimpItem *item,
                      gint      offset_y)
 {
   GimpVectors *vectors = GIMP_VECTORS (item);
+  GimpImage   *image = gimp_item_get_image (item);
   GList       *list;
 
   gimp_vectors_freeze (vectors);
 
-  gimp_image_undo_push_vectors_mod (gimp_item_get_image (item),
-                                    _("Resize Path"),
-                                    vectors);
+  gimp_image_undo_push_vectors_mod (image, _("Resize Path"), vectors);
 
   for (list = vectors->strokes; list; list = g_list_next (list))
     {
@@ -433,8 +431,8 @@ gimp_vectors_resize (GimpItem *item,
       gimp_stroke_translate (stroke, offset_x, offset_y);
     }
 
-  GIMP_ITEM_CLASS (parent_class)->resize (item, new_width, new_height,
-                                          offset_x, offset_y);
+  GIMP_ITEM_CLASS (parent_class)->resize (item, image->width, image->width,
+                                          0, 0);
 
   gimp_vectors_thaw (vectors);
 }

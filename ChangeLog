@@ -1,3 +1,11 @@
+2004-03-03  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpvectors.c: fixed offset handling. Vectors
+	objects always have 0,0 as offsets and image->width,
+	image->height as their dimensions.
+
+	Fixes bug #135994.
+
 2004-03-03  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpthumb/gimpthumb-utils.[ch] (gimp_thumb_file_test):
