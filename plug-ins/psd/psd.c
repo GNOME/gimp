@@ -172,7 +172,7 @@ typedef struct PsdLayer
   gboolean protecttrans;
   gboolean visible;
 
-  guchar* name;
+  gchar* name;
 
   gint32 lm_x;
   gint32 lm_y;
@@ -211,7 +211,7 @@ static PSDimage psd_image;
 
 
 static struct {
-    guchar signature[4];
+    gchar signature[4];
     gushort version;
     guchar reserved[6];
     gushort channels;
@@ -247,9 +247,9 @@ static const gchar *prog_name = "PSD";
 
 static void unpack_pb_channel(FILE *fd, guchar *dst, gint32 unpackedlen,
 				  guint32 *offset);
-static void decode(long clen, long uclen, gchar *src, gchar *dst, int step);
+static void decode(long clen, long uclen, gchar *src, guchar *dst, int step);
 static void packbitsdecode(long *clenp, long uclen,
-			   gchar *src, gchar *dst, int step);
+			   gchar *src, guchar *dst, int step);
 static void cmyk2rgb(guchar *src, guchar *destp,
 		     long width, long height, int alpha);
 static void cmykp2rgb(guchar *src, guchar *destp,
@@ -262,9 +262,9 @@ static void xfread(FILE *fd, void *buf, long len, gchar *why);
 static void *xmalloc(size_t n);
 static void read_whole_file(FILE *fd);
 static void reshuffle_cmap(guchar *map256);
-static guchar *getpascalstring(FILE *fd, guchar *why);
-void throwchunk(size_t n, FILE * fd, guchar *why);
-void dumpchunk(size_t n, FILE * fd, guchar *why);
+static gchar *getpascalstring(FILE *fd, gchar *why);
+void throwchunk(size_t n, FILE * fd, gchar *why);
+void dumpchunk(size_t n, FILE * fd, gchar *why);
 
 
 MAIN()
@@ -1382,9 +1382,11 @@ load_image(char *name)
 {
   FILE *fd;
   gboolean want_aux;
-  char *name_buf, *cmykbuf;
+  char *name_buf;
+  unsigned char *cmykbuf;
   static int number = 1;
-  unsigned char *dest, *temp;
+  char *temp;
+  guchar *dest;
   long channels, nguchars;
   psd_imagetype imagetype;
   int cmyk = 0, step = 1;
@@ -1864,7 +1866,7 @@ load_image(char *name)
 
 
 static void
-decode(long clen, long uclen, char * src, char * dst, int step)
+decode(long clen, long uclen, char * src, guchar * dst, int step)
 {
     gint i, j;
     gint32 l;
@@ -1893,7 +1895,7 @@ decode(long clen, long uclen, char * src, char * dst, int step)
  * Decode a PackBits data stream.
  */
 static void
-packbitsdecode(long * clenp, long uclen, char * src, char * dst, int step)
+packbitsdecode(long * clenp, long uclen, char * src, guchar * dst, int step)
 {
     gint n, b;
     gint32 clen = *clenp;
@@ -2023,7 +2025,7 @@ cmykp2rgb(unsigned char * src, unsigned char * dst,
     int r, g, b, k;
     int i, j;
     long n;
-    char *rp, *gp, *bp, *kp, *ap;
+    guchar *rp, *gp, *bp, *kp, *ap;
 
     n = width * height;
     rp = src;
@@ -2081,7 +2083,7 @@ cmyk_to_rgb(gint *c, gint *m, gint *y, gint *k)
 
 
 void
-dumpchunk(size_t n, FILE * fd, guchar *why)
+dumpchunk(size_t n, FILE * fd, gchar *why)
 {
   guint32 i;
 
@@ -2097,9 +2099,9 @@ dumpchunk(size_t n, FILE * fd, guchar *why)
 
 
 void
-throwchunk(size_t n, FILE * fd, guchar *why)
+throwchunk(size_t n, FILE * fd, gchar *why)
 {
-  guchar *tmpchunk;
+  gchar *tmpchunk;
 
   if (n==0)
     {
@@ -2125,10 +2127,10 @@ getchunk(size_t n, FILE * fd, char *why)
 #endif
 
 
-static guchar *
-getpascalstring(FILE *fd, guchar *why)
+static gchar *
+getpascalstring(FILE *fd, gchar *why)
 {
-  guchar *tmpchunk;
+  gchar *tmpchunk;
   guchar len;
 
   xfread(fd, &len, 1, why);

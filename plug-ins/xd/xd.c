@@ -68,7 +68,7 @@ GPlugInInfo PLUG_IN_INFO =
   run,     /* run_proc */
 };
 
-MAIN ();
+MAIN ()
 
 static void
 query ()
@@ -510,7 +510,7 @@ get_buffer (XdFile* xd, gchar* ext, gint ver)
 
   sprintf (req, "xdelta-xpm-%d-%d", PREVIEW_MAX_DIM, ver);
 
-  key.dptr = req;
+  key.dptr = (guchar*)req;
   key.dsize = strlen (req);
 
   dat = gdbm_fetch (xd->dbf, key);

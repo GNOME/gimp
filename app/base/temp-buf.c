@@ -68,10 +68,11 @@ temp_buf_to_color (src_buf, dest_buf)
 
   while (num_bytes--)
     {
+      unsigned char tmpch;
       *dest++ = *src++;  /* alpha channel */
-      *dest++ = *src;
-      *dest++ = *src;
-      *dest++ = *src++;
+      *dest++ = tmpch = *src++;
+      *dest++ = tmpch;
+      *dest++ = tmpch;
     }
 }
 
@@ -115,7 +116,7 @@ temp_buf_new (width, height, bytes, x, y, col)
 {
   long i;
   int j;
-  unsigned char * init, * data;
+  unsigned char * data;
   TempBuf * temp;
 
   temp = (TempBuf *) g_malloc (sizeof (TempBuf));
@@ -128,21 +129,46 @@ temp_buf_new (width, height, bytes, x, y, col)
   temp->swapped = FALSE;
   temp->filename = NULL;
 
-  temp->data   = temp_buf_allocate (width * height * bytes);
+  temp->data = data = temp_buf_allocate (width * height * bytes);
 
   /*  initialize the data  */
   if (col)
     {
-      i = width * height;
-      data = temp->data;
-
-      while (i--)
-	{
-	  j = bytes;
-	  init = col;
-	  while (j--)
-	    *data++ = *init++;
-	}
+      /* First check if we can save a lot of work */
+      if (bytes == 1)
+        {
+          memset (data, *col, width * height);
+        }
+      else if ((bytes == 3) && (col[1] == *col) && (*col == col[2]))
+        {
+          memset (data, *col, width * height * 3);
+        }
+      else if ((bytes == 4) && (col[1] == *col) && (*col == col[2]) && (col[2] == col[3]))
+        {
+          memset (data, *col, (width * height) << 2);
+        }
+      else
+        {
+          /* No, we cannot */
+          unsigned char * dptr;
+          /* Fill the first row */
+          dptr = data;
+          for (i = width - 1; i >= 0; --i)
+            {
+              unsigned char * init;
+              j = bytes;
+              init = col;
+              while (j--)
+                *dptr++ = *init++;
+            }
+          /* Now copy from it (we set bytes to bytesperrow now) */
+          bytes *= width;
+          while (--height)
+            {
+              memcpy (dptr, data, bytes);
+              dptr += bytes;
+            }
+        }
     }
 
   return temp;
@@ -170,24 +196,23 @@ temp_buf_copy (src, dest)
       new = dest;
       if (dest->width != src->width || dest->height != src->height)
 	warning ("In temp_buf_copy, the widths or heights don't match.");
+      /*  The temp buf is smart, and can translate between color and gray  */
+      /*  (only necessary if not we allocated it */
+      if (src->bytes != new->bytes)
+        {
+          if (src->bytes == 4)  /* RGB color */
+	    temp_buf_to_gray (src, new);
+          else if (src->bytes == 2) /* grayscale */
+	    temp_buf_to_color (src, new);
+          else
+	    warning ("Cannot convert from indexed color.");
+	  return new;
+        }
     }
 
-  /*  The temp buf is smart, and can translate between color and gray  */
-  if (src->bytes != new->bytes)
-    {
-      if (src->bytes == 4)  /* RGB color */
-	temp_buf_to_gray (src, new);
-      else if (src->bytes == 2) /* grayscale */
-	temp_buf_to_color (src, new);
-      else
-	warning ("Cannot convert from indexed color.");
-    }
-  else
-    {
-      /* make the copy */
-      length = src->width * src->height * src->bytes;
-      memcpy (temp_buf_data (new), temp_buf_data (src), length);
-    }
+  /* make the copy */
+  length = src->width * src->height * src->bytes;
+  memcpy (temp_buf_data (new), temp_buf_data (src), length);
 
   return new;
 }
@@ -473,6 +498,7 @@ temp_buf_unswap (buf)
 {
   struct stat stat_buf;
   FILE * fp;
+  gboolean succ = FALSE;
 
   if (!buf || !buf->swapped)
     return;
@@ -491,12 +517,18 @@ temp_buf_unswap (buf)
   buf->data   = temp_buf_allocate (buf->width * buf->height * buf->bytes);
 
   /*  Find out if the filename of the swapped data is an existing file... */
+  /*  (buf->filname HAS to be != 0 */
   if (!stat (buf->filename, &stat_buf))
     {
       if ((fp = fopen (buf->filename, "r")))
 	{
-	  fread (buf->data, buf->width * buf->height * buf->bytes, 1, fp);
+	  size_t blocksRead;
+	  blocksRead = fread (buf->data, buf->width * buf->height * buf->bytes, 1, fp);
 	  fclose (fp);
+	  if (blocksRead != 1)
+	    perror ("Read error on temp buf");
+	  else
+	    succ = TRUE;
 	}
       else
 	perror ("Error in temp buf caching");
@@ -504,11 +536,10 @@ temp_buf_unswap (buf)
       /*  Delete the swap file  */
       unlink (buf->filename);
     }
-  else
+  if (!succ)
     warning ("Error in temp buf caching: information swapped to disk was lost!");
 
-  if (buf->filename)
-    g_free (buf->filename);   /*  free filename  */
+  g_free (buf->filename);   /*  free filename  */
   buf->filename = NULL;
 }
 

@@ -43,6 +43,17 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.12  1998/04/28 03:50:16  yosh
+ *   * plug-ins/animationplay/animationplay.c
+ *   * plug-ins/CEL/CEL.c
+ *   * plug-ins/psd/psd.c
+ *   * plug-ins/xd/xd.c: applied gimp-joke-980427-0, warning cleanups
+ *
+ *   * app/temp_buf.c: applied gimp-entity-980427-0, temp_buf swap speedups and
+ *   more robust tempfile handling
+ *
+ *   -Yosh
+ *
  *   Revision 1.11  1998/04/27 22:00:59  neo
  *   Updated sharpen and despeckle. Wow, sharpen is balzingly fast now, while
  *   despeckle is still sort of lame...
@@ -137,14 +148,6 @@
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
-
-
-/*
- * Macros...
- */
-
-#define MIN(a,b)		(((a) < (b)) ? (a) : (b))
-#define MAX(a,b)		(((a) > (b)) ? (a) : (b))
 
 
 /*
@@ -704,8 +707,9 @@ despeckle_dialog(void)
   gtk_rc_parse(gimp_gtkrc());
   gdk_set_use_xshm(gimp_use_xshm());
 
-  signal(SIGBUS, SIG_DFL);
-  signal(SIGSEGV, SIG_DFL);
+  /* signal(SIGBUS, SIG_DFL);
+  signal(SIGSEGV, SIG_DFL); */
+
   gtk_preview_set_gamma(gimp_gamma());
   gtk_preview_set_install_cmap(gimp_install_cmap());
   color_cube = gimp_color_cube();
@@ -1165,12 +1169,6 @@ preview_update(void)
 static void
 preview_exit(void)
 {
-  int	row,	/* Looping var */
-	size;	/* Size of row buffer */
-
-
-  size = MAX_RADIUS * 2 + 1;
-
   g_free(preview_src);
   g_free(preview_dst);
   g_free(preview_sort);

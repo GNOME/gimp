@@ -162,7 +162,7 @@ gint       ncolours;
 
 
 /* for shaping */
-guchar    *shape_preview_mask;
+gchar    *shape_preview_mask;
 GtkWidget *shape_window;
 GtkWidget *shape_fixed;
 GtkPreview *shape_preview;
@@ -295,7 +295,7 @@ parse_disposal_tag (char *str)
 
 
 static void
-reshape_from_bitmap(guchar* bitmap)
+reshape_from_bitmap(gchar* bitmap)
 {
   GdkBitmap *shape_mask;
 

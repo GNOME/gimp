@@ -172,7 +172,7 @@ static void run(char *name, int nparams, GParam *param,
 static gint32 load_image(char *file, char *brief) {
   FILE*		fp;		/* Read file pointer */
   char		*progress;	/* Title for progress display */
-  guchar	header[32];	/* File header */
+  gchar	        header[32];	/* File header */
   int		height, width,	/* Dimensions of image */
   		colours;	/* Number of colours */
 
@@ -306,7 +306,7 @@ static gint32 load_image(char *file, char *brief) {
 }
 
 static gint load_palette(FILE *fp, guchar palette[]) {
-  guchar	header[32];	/* File header */
+  gchar	        header[32];	/* File header */
   guchar	buffer[2];
   int		i, bpp, colours= 0;
 
@@ -342,7 +342,7 @@ static gint load_palette(FILE *fp, guchar palette[]) {
 static gint save_image(char *file, char *brief, gint32 image, gint32 layer) {
   FILE*		fp;		/* Write file pointer */
   char		*progress;	/* Title for progress display */
-  guchar	header[32];	/* File header */
+  gchar 	header[32];	/* File header */
   gint		colours, type;	/* Number of colours, type of layer */
 
   guchar	*buffer,	/* Temporary buffer */
