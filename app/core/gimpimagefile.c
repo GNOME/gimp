@@ -54,23 +54,26 @@ enum
   LAST_SIGNAL
 };
 
-static void       gimp_imagefile_class_init      (GimpImagefileClass *klass);
-static void       gimp_imagefile_init            (GimpImagefile  *imagefile);
-static void       gimp_imagefile_finalize        (GObject        *object);
-static void       gimp_imagefile_name_changed    (GimpObject     *object);
+static void       gimp_imagefile_class_init       (GimpImagefileClass *klass);
+static void       gimp_imagefile_init             (GimpImagefile  *imagefile);
+static void       gimp_imagefile_finalize         (GObject        *object);
+static void       gimp_imagefile_name_changed     (GimpObject     *object);
 
-static TempBuf  * gimp_imagefile_get_new_preview (GimpViewable   *viewable,
-                                                  gint            width,
-                                                  gint            height);
-static TempBuf *  gimp_imagefile_load_thumb      (GimpImagefile  *imagefile,
-                                                  gint            size);
-static gboolean   gimp_imagefile_save_thumb      (GimpImagefile  *imagefile,
-                                                  GimpImage      *gimage,
-                                                  gint            size,
-                                                  GError        **error);
+static void       gimp_imagefile_notify_thumbnail (GimpImagefile  *imagefile,
+                                                   GParamSpec     *pspec);
 
-static gchar    * gimp_imagefile_get_description (GimpViewable   *viewable,
-                                                  gchar         **tooltip);
+static TempBuf  * gimp_imagefile_get_new_preview  (GimpViewable   *viewable,
+                                                   gint            width,
+                                                   gint            height);
+static TempBuf *  gimp_imagefile_load_thumb       (GimpImagefile  *imagefile,
+                                                   gint            size);
+static gboolean   gimp_imagefile_save_thumb       (GimpImagefile  *imagefile,
+                                                   GimpImage      *gimage,
+                                                   gint            size,
+                                                   GError        **error);
+
+static gchar    * gimp_imagefile_get_description  (GimpViewable   *viewable,
+                                                   gchar         **tooltip);
 
 
 static guint gimp_imagefile_signals[LAST_SIGNAL] = { 0 };
@@ -137,6 +140,8 @@ gimp_imagefile_class_init (GimpImagefileClass *klass)
   viewable_class->get_new_preview     = gimp_imagefile_get_new_preview;
   viewable_class->get_description     = gimp_imagefile_get_description;
 
+  g_type_class_ref (GIMP_TYPE_IMAGE_TYPE);
+
   creator = g_strdup_printf ("gimp-%d.%d",
                              GIMP_MAJOR_VERSION, GIMP_MINOR_VERSION);
 
@@ -151,6 +156,10 @@ gimp_imagefile_init (GimpImagefile *imagefile)
   imagefile->gimp        = NULL;
   imagefile->thumbnail   = gimp_thumbnail_new ();
   imagefile->description = NULL;
+
+  g_signal_connect_object (imagefile->thumbnail, "notify",
+                           G_CALLBACK (gimp_imagefile_notify_thumbnail),
+                           imagefile, G_CONNECT_SWAPPED);
 }
 
 static void
@@ -197,6 +206,8 @@ void
 gimp_imagefile_update (GimpImagefile *imagefile,
                        gint           size)
 {
+  gchar *uri;
+
   g_return_if_fail (GIMP_IS_IMAGEFILE (imagefile));
   g_return_if_fail (size <= 256);
 
@@ -208,10 +219,10 @@ gimp_imagefile_update (GimpImagefile *imagefile,
 
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (imagefile));
 
-  gimp_thumbnail_peek_image (imagefile->thumbnail);
-  gimp_thumbnail_peek_thumb (imagefile->thumbnail, size);
+  g_object_get (imagefile->thumbnail,
+                "image-uri", &uri,
+                NULL);
 
-#if 0
   if (uri)
     {
       GimpImagefile *documents_imagefile;
@@ -224,8 +235,9 @@ gimp_imagefile_update (GimpImagefile *imagefile,
         {
           gimp_imagefile_update (GIMP_IMAGEFILE (documents_imagefile), size);
         }
+
+      g_free (uri);
     }
-#endif
 }
 
 void
@@ -316,6 +328,17 @@ gimp_imagefile_name_changed (GimpObject *object)
   gimp_thumbnail_set_uri (imagefile->thumbnail, gimp_object_get_name (object));
 }
 
+static void
+gimp_imagefile_notify_thumbnail (GimpImagefile *imagefile,
+                                 GParamSpec    *pspec)
+{
+  if (strcmp (pspec->name, "image-state") == 0 ||
+      strcmp (pspec->name, "thumb-state") == 0)
+    {
+      g_signal_emit (imagefile, gimp_imagefile_signals[INFO_CHANGED], 0);
+    }
+}
+
 static TempBuf *
 gimp_imagefile_get_new_preview (GimpViewable *viewable,
                                 gint          width,
@@ -330,8 +353,6 @@ gimp_imagefile_get_new_preview (GimpViewable *viewable,
     return NULL;
 
   temp_buf = gimp_imagefile_load_thumb (imagefile, MAX (width, height));
-
-  /*  FIXME: add back .xvpics compatibility  */
 
   if (temp_buf)
     {
@@ -577,10 +598,14 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
                            gint            size,
                            GError        **error)
 {
-  const gchar *uri;
-  GdkPixbuf   *pixbuf;
-  gint         width, height;
-  gboolean     success = FALSE;
+  const gchar   *uri;
+  GdkPixbuf     *pixbuf;
+  GEnumClass    *enum_class;
+  GimpImageType  type;
+  const gchar   *type_str;
+  gint           num_layers;
+  gint           width, height;
+  gboolean       success = FALSE;
 
   if (size < 1)
     return TRUE;
@@ -614,6 +639,23 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
   /*  when layer previews are disabled, we won't get a pixbuf  */
   if (! pixbuf)
     return TRUE;
+
+  type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (gimp_image_base_type (gimage));
+
+  if (gimp_image_has_alpha (gimage))
+    type = GIMP_IMAGE_TYPE_WITH_ALPHA (type);
+
+  enum_class = g_type_class_peek (GIMP_TYPE_IMAGE_TYPE);
+  type_str = g_enum_get_value (enum_class, type)->value_nick;
+
+  num_layers = gimp_container_num_children (gimage->layers);
+
+  g_object_set (imagefile->thumbnail,
+                "image-width",      gimage->width,
+                "image-height",     gimage->height,
+                "image-type",       type_str,
+                "image-num-layers", num_layers,
+                NULL);
 
   success = gimp_thumbnail_save_thumb (imagefile->thumbnail,
                                        pixbuf,

@@ -1,3 +1,14 @@
+2004-01-06  Sven Neumann  <sven@gimp.org>
+
+	Fixes to the new thumbnail code. Will need more changes...
+	
+	* app/core/gimpimagefile.c: set image information before calling
+	gimp_thumbnail_save_thumb(). Emit the "info_changed" signal when
+	the thumbnail states change.
+
+	* libgimpthumb/gimpthumbnail.c: redone gimp_thumbnail_load_thumb().
+	Added some debugging code that is by default disabled.
+
 2004-01-05  Manish Singh  <yosh@gimp.org>
 
 	* app/paint-funcs/paint-funcs.c (expand_line): on second thought, just
