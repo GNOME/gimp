@@ -1,5 +1,10 @@
 2002-04-03  Manish Singh  <yosh@gimp.org>
 
+	* app/core/gimpobject.c: use gobject marshaller names directly so
+	libgimpproxy doesn't need gimpmarshal.* around
+
+2002-04-03  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/tools/Makefile.am
 	* plug-ins/tools/common/Makefile.am: make it work with automake 1.5
 

@@ -24,7 +24,6 @@
 
 #include "core-types.h"
 
-#include "gimpmarshal.h"
 #include "gimpobject.h"
 
 
@@ -100,13 +99,16 @@ gimp_object_class_init (GimpObjectClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  /* we use the gobject marshaller names directly so libgimpproxy doesn't need
+   * gimpmarshal.* around. -Yosh
+   */
   object_signals[DISCONNECT] =
     g_signal_new ("disconnect",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpObjectClass, disconnect),
 		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
+		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   object_signals[NAME_CHANGED] =
@@ -115,7 +117,7 @@ gimp_object_class_init (GimpObjectClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpObjectClass, name_changed),
 		  NULL, NULL,
-		  gimp_marshal_VOID__VOID,
+		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
   object_class->dispose      = gimp_object_dispose;
