@@ -58,5 +58,5 @@ FILES = \
 	xcf.gbr
 
 install-data-local:
-	rm -f $(brushdatadir)/round1.vbr
+	rm -f $(brushdatadir)/round1.vbr $(brushdatadir)/pepper.gpb
 

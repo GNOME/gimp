@@ -1,6 +1,22 @@
 2000-12-18  Sven Neumann  <sven@gimp.org>
 	    Jens Lautenbacher <jtl@gimp.org>
 
+	* data/brushes/Makefile.am: remove old pepper.gpb when installing new
+	brushes.
+
+	* data/brushes/SketchBrush-16.gih
+	* data/brushes/SketchBrush-32.gih
+	* data/brushes/SketchBrush-64.gih: converted to grayscale brush pipes.
+
+	* plug-ins/common/gih.c: commented out code that sets loaded pipe
+	parameters as parasite until we figure out how to do it right.
+
+	* devel-docs/gpb.txt: mention that the .gpb format is obsolete.
+	* devel-docs/gih.txt: updated.
+	
+2000-12-18  Sven Neumann  <sven@gimp.org>
+	    Jens Lautenbacher <jtl@gimp.org>
+
 	* plug-ins/common/gbr.c: save and load brush name into/from layer name.
 
 	* plug-ins/common/gih.c: added gih loader. The loader is able to read

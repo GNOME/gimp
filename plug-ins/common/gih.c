@@ -628,7 +628,7 @@ gih_load_image (gchar *filename)
   gchar   *name = NULL;
   gint     num_of_brushes = 0;
   gchar   *paramstring;
-  GimpParasite *pipe_parasite;
+/*    GimpParasite *pipe_parasite; */
 
   temp = g_strdup_printf (_("Loading %s:"), filename);
   gimp_progress_init (temp);
@@ -696,7 +696,11 @@ gih_load_image (gchar *filename)
 	
       gimp_progress_update ((gdouble) i / (gdouble) num_of_brushes);
     }
-  
+
+  /*  Some code to attach the paramstring as parasite.
+      Commented out at the moment since we do not load the pipe
+      as specified and attaching this data breaks saving. 
+
   while (*paramstring && isspace (*paramstring))
     paramstring++;
 
@@ -704,10 +708,13 @@ gih_load_image (gchar *filename)
     {
       pipe_parasite = gimp_parasite_new ("gimp-brush-pipe-parameters",
 					 GIMP_PARASITE_PERSISTENT,
-					 strlen (paramstring) + 1, paramstring);
+					 strlen (paramstring) + 1, 
+					 paramstring);
       gimp_image_parasite_attach (image_ID, pipe_parasite);
       gimp_parasite_free (pipe_parasite);
     }
+
+   */
 
   g_string_free (buffer, TRUE);
 

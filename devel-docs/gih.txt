@@ -1,15 +1,15 @@
 Gimp Image Pipe Format
 
-	The gih format is use to store a series of pixmap brushes,
-and some extra info for how to use them. 
+The gih format is use to store a series of brushes, and some extra info 
+for how to use them. 
 
 Basically, the format is real simple. It is a text header, followed
-by a series of gpb files, all concatenated together.
+by a series of gbr files, all concatenated together.
 
-An image pipe can be thought of as an n-dimensional array of pixmap
-brushes.  Each dimension is indexed when the pipe is used in painting
-by some parameter, eg an incremental counter, a random value, pointing
-device pen pressure,tilt or velocity , etc.
+An image pipe can be thought of as an n-dimensional array of brushes.  
+Each dimension is indexed when the pipe is used in painting by some 
+parameter, eg an incremental counter, a random value, pointing device 
+pen pressure,tilt or velocity , etc.
 
 An idea for how to implement editing of image pipes (with the GIMP) is
 that each layer of the edited image representing the pipe is divided
@@ -31,36 +31,21 @@ Fire
 6 ncells:6 step:20 dim:1 cols:3 rows:2 rank0:6 selection:incremental
 ===========================
 
-The rest is just gpb files catted in.
+The rest is just gbr files catted in.
 
 Making a gih file:
 
-	1. Create a series of gpb files. Note these do not
+	1. Create a series of gbr files. Note these do not
 	need to be the same size.
 
 	2. Create a text header like above.
 
 	3. Combine them all together:
 
-		cat header brush1.gpb brush2.gpb brush3.gpb > foo.gih
+		cat header brush1.gbr brush2.gbr brush3.gbr > foo.gih
+
+
+Or use the GIH plug-in to save a brush pipe from an image.
 
 
 Thats about it for now.
-
-
-Other bits:
-==========
-
-The spacing for the pipe is currently based on the spacing
-for the last brush in the pipe. 
-
-WARNING:
-=======
-
-The header file format, and possible the entire file format
-is likely to change.
-
-
-Adrian Likins
-aug 18, 1999
-
