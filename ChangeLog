@@ -1,5 +1,10 @@
 2005-01-01  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
+	* plug-ins/Lighting/lighting_ui.c: add a control for
+	viewpoint distance.  Should finish fixing bug #4044.
+
+2005-01-01  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
 	* plug-ins/jpeg/Makefile.am
 	* plug-ins/jpeg/NEWS
 	* plug-ins/jpeg/jpeg.c

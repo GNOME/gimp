@@ -59,6 +59,9 @@ static void xyzval_update             (GtkEntry        *entry);
 static void toggle_update             (GtkWidget       *widget,
                                        gpointer         data);
 
+static void     distance_update       (GtkAdjustment   *adj,
+                                       gpointer         data);
+
 static gboolean  bumpmap_constrain    (gint32           image_id,
                                        gint32           drawable_id,
                                        gpointer         data);
@@ -113,6 +116,16 @@ toggle_update (GtkWidget *widget,
                gpointer   data)
 {
   gimp_toggle_button_update (widget, data);
+
+  draw_preview_image (TRUE);
+}
+
+
+static void
+distance_update (GtkAdjustment *adj,
+                 gpointer   data)
+{
+  mapvals.viewpoint.z = gtk_adjustment_get_value (adj);
 
   draw_preview_image (TRUE);
 }
@@ -252,6 +265,8 @@ create_options_page (void)
   GtkWidget *frame;
   GtkWidget *vbox;
   GtkWidget *toggle;
+  GtkWidget *table;
+  GtkObject *adj;
 
   page = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (page), 12);
@@ -303,6 +318,20 @@ create_options_page (void)
   gimp_help_set_help_data (toggle,
                            _("Enable/disable high quality preview"), NULL);
 
+  table = gtk_table_new (1, 3, FALSE);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 12);
+  gtk_widget_show (table);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+                              _("Distance"), 100, 6,
+                              mapvals.viewpoint.z,
+                              0.0, 2.0, 0.01, 0.05,
+                              3, TRUE, 0.0, 0.0,
+                              "Distance of observer from surface",
+                              "plug-in-lighting");
+  g_signal_connect (adj, "value_changed",
+                    G_CALLBACK (distance_update),
+                    NULL);
 
   gtk_widget_show (page);
 
