@@ -1,3 +1,10 @@
+2003-08-08  Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimppainttool.c: Added changing the opacity via
+	cursor keys. Left/Right: +- 1%, UpDown: +- 10%.
+
+	I am just committing this, because jimmac will kill me if I dont...
+
 2003-08-07  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpstroke.[ch]
