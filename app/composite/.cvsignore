@@ -1,0 +1,8 @@
+Makefile
+Makefile.in
+.deps
+.libs
+*.lo
+libappcomposite.la
+gimp-composite-dispatch.c
+ns.pyc
