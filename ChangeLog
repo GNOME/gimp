@@ -1,5 +1,12 @@
 2004-06-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcursor.c: some cleanup. Make the tool_cursor
+	and cursor_modifier components slightly transparent.
+
+	* cursors/cursor-mouse.png: was the wrong image.
+
+2004-06-03  Michael Natterer  <mitch@gimp.org>
+
 	* cursors/Makefile.am
 	* cursors/*.png: added PNG version of all cursors.
 

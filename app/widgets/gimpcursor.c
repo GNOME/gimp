@@ -570,9 +570,7 @@ gimp_cursor_new_from_bitmap (GdkDisplay         *display,
   /*  prepare the tool cursor  */
 
   if (tool_cursor >= GIMP_LAST_STOCK_TOOL_CURSOR_ENTRY)
-    {
-      tool_cursor = GIMP_TOOL_CURSOR_NONE;
-    }
+    tool_cursor = GIMP_TOOL_CURSOR_NONE;
 
   if (tool_cursor != GIMP_TOOL_CURSOR_NONE)
     {
@@ -585,9 +583,7 @@ gimp_cursor_new_from_bitmap (GdkDisplay         *display,
   /*  prepare the cursor modifier  */
 
   if (modifier >= GIMP_LAST_CURSOR_MODIFIER_ENTRY)
-    {
-      modifier = GIMP_CURSOR_MODIFIER_NONE;
-    }
+    modifier = GIMP_CURSOR_MODIFIER_NONE;
 
   if (modifier != GIMP_CURSOR_MODIFIER_NONE)
     {
@@ -722,9 +718,7 @@ gimp_cursor_new_from_pixbuf (GdkDisplay         *display,
   /*  prepare the tool cursor  */
 
   if (tool_cursor >= GIMP_LAST_STOCK_TOOL_CURSOR_ENTRY)
-    {
-      tool_cursor = GIMP_TOOL_CURSOR_NONE;
-    }
+    tool_cursor = GIMP_TOOL_CURSOR_NONE;
 
   if (tool_cursor != GIMP_TOOL_CURSOR_NONE)
     {
@@ -737,9 +731,7 @@ gimp_cursor_new_from_pixbuf (GdkDisplay         *display,
   /*  prepare the cursor modifier  */
 
   if (modifier >= GIMP_LAST_CURSOR_MODIFIER_ENTRY)
-    {
-      modifier = GIMP_CURSOR_MODIFIER_NONE;
-    }
+    modifier = GIMP_CURSOR_MODIFIER_NONE;
 
   if (modifier != GIMP_CURSOR_MODIFIER_NONE)
     {
@@ -749,15 +741,11 @@ gimp_cursor_new_from_pixbuf (GdkDisplay         *display,
         create_cursor_pixbuf (bmmodifier);
     }
 
-  width  = gdk_pixbuf_get_width (bmcursor->pixbuf);
+  width  = gdk_pixbuf_get_width  (bmcursor->pixbuf);
   height = gdk_pixbuf_get_height (bmcursor->pixbuf);
-
-  /*  new bitmap and mask for on-the-fly cursor creation  */
 
   pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, width, height);
   gdk_pixbuf_fill (pixbuf, 0);
-
-  /*  first draw the bitmap completely ... */
 
   gdk_pixbuf_composite (bmcursor->pixbuf, pixbuf,
                         0, 0, width, height,
@@ -768,13 +756,13 @@ gimp_cursor_new_from_pixbuf (GdkDisplay         *display,
     gdk_pixbuf_composite (bmmodifier->pixbuf, pixbuf,
                           0, 0, width, height,
                           0.0, 0.0, 1.0, 1.0,
-                          GDK_INTERP_NEAREST, 255);
+                          GDK_INTERP_NEAREST, 180);
 
   if (bmtool)
     gdk_pixbuf_composite (bmtool->pixbuf, pixbuf,
                           0, 0, width, height,
                           0.0, 0.0, 1.0, 1.0,
-                          GDK_INTERP_NEAREST, 255);
+                          GDK_INTERP_NEAREST, 180);
 
   cursor = gdk_cursor_new_from_pixbuf (display, pixbuf,
                                        bmcursor->x_hot,
