@@ -62,8 +62,6 @@ redraw (GDisplay *gdisp,
     }
 }
 
-static int scrolled = 0;
-
 gint
 gdisplay_canvas_events (GtkWidget *canvas,
 			GdkEvent  *event)
@@ -77,6 +75,8 @@ gdisplay_canvas_events (GtkWidget *canvas,
   GdkModifierType tmask;
   guint state = 0;
   gint return_val = FALSE;
+  static gboolean scrolled = FALSE;
+  static guint key_signal_id = 0;
 
   gdisp = (GDisplay *) gtk_object_get_user_data (GTK_OBJECT (canvas));
 
@@ -140,6 +140,10 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	{
 	case 1:
 	  gtk_grab_add (canvas);
+	  key_signal_id = gtk_signal_connect (GTK_OBJECT (canvas),
+					      "key_press_event",
+					      GTK_SIGNAL_FUNC (gtk_true),
+					      NULL);
 	  if (active_tool && ((active_tool->type == MOVE) ||
 			      !gimage_is_empty (gdisp->gimage)))
 	      {
@@ -165,7 +169,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  break;
 
 	case 2:
-	  scrolled = 1;
+	  scrolled = TRUE;
 	  gtk_grab_add (canvas);
 	  start_grab_and_scroll (gdisp, bevent);
 	  break;
@@ -188,6 +192,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
       switch (bevent->button)
 	{
 	case 1:
+	  gtk_signal_disconnect (GTK_OBJECT (canvas), key_signal_id);
 	  gtk_grab_remove (canvas);
 	  gdk_pointer_ungrab (bevent->time);  /* fixes pointer grab bug */
 	  if (active_tool && ((active_tool->type == MOVE) ||
@@ -206,7 +211,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  break;
 
 	case 2:
-	  scrolled = 0;
+	  scrolled = FALSE;
 	  gtk_grab_remove (canvas);
 	  end_grab_and_scroll (gdisp, bevent);
 	  break;

@@ -1,3 +1,10 @@
+Wed Apr 15 02:03:25 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/disp_callbacks.c: disable keyboard accelerators
+	during mouse image operations, so nothing funky happens
+	in the middle of a motion (like converting image types
+	or running a plugin)
+
 Wed Apr 15 01:58:12 EDT 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/gdisplay.c: made a change to gdisplays_update_area to
