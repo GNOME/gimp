@@ -112,7 +112,6 @@ gimp_image_get_guide_orientation (gint32 image_id,
   GParam *return_vals;
   int nreturn_vals;
   GOrientation rtn_guide_orientation;
-  gint32 pdb_orientation;
 
   return_vals = gimp_run_procedure ("gimp_image_get_guide_orientation",
 				    &nreturn_vals,

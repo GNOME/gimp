@@ -639,6 +639,7 @@ plug-ins/FractalExplorer/fractalexplorer-examples/Makefile
 plug-ins/Lighting/Makefile
 plug-ins/MapObject/Makefile
 plug-ins/bmp/Makefile
+plug-ins/common/Makefile
 plug-ins/faxg3/Makefile
 plug-ins/fits/Makefile
 plug-ins/flame/Makefile
