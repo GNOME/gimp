@@ -2,11 +2,46 @@
 #include "output.h"
 #include "marshall.h"
 
+
+typedef enum {
+	MARSHALL_INT,
+	MARSHALL_DOUBLE,
+	MARSHALL_POINTER,
+	MARSHALL_VOID,
+	MARSHALL_LONG
+} MarshallType;
+
+
 struct _SignalType {
 	Id package;
-	GtkType rettype;
+	MarshallType rettype;
 	GSList* argtypes;
 };
+
+MarshallType marshalling_type(Type* t){
+	if(!t)
+		return MARSHALL_VOID;
+	if(t->indirection)
+		return MARSHALL_POINTER;
+	if(!t->prim)
+		return MARSHALL_VOID;
+	switch(t->prim->kind){
+	case TYPE_INT:
+	case TYPE_FLAGS:
+	case TYPE_ENUM:
+		return MARSHALL_INT;
+	case TYPE_LONG:
+		return MARSHALL_LONG;
+	case TYPE_DOUBLE:
+		return MARSHALL_DOUBLE;
+	case TYPE_NONE:
+		return MARSHALL_VOID;
+	default:
+		g_assert_not_reached();
+		return MARSHALL_VOID;
+	}
+}
+
 
 SignalType* sig_type(Method* m){
 	SignalType *t=g_new(SignalType, 1);
@@ -15,7 +50,7 @@ SignalType* sig_type(Method* m){
 	t->rettype = marshalling_type(&m->ret_type);
 	while(p){
 		Param* param=p->data;
-		GtkType* t=g_new(GtkType, 1);
+		MarshallType* t=g_new(MarshallType, 1);
 		*t=marshalling_type(&param->type);
 		a=g_slist_prepend(a, t);
 		p=p->next;
@@ -35,63 +70,61 @@ void sig_type_free(SignalType* t){
 	g_free(t);
 }
 
-PNode* p_gtype_name(GtkType t, gboolean abbr){
+PNode* p_gtype_name(MarshallType t, gboolean abbr){
 	static const struct GTypeName{
-		GtkType type;
+		MarshallType type;
 		Id name;
 		Id aname;
 	}names[]={
-		{GTK_TYPE_POINTER, "POINTER", "P"},
-		{GTK_TYPE_INT, "INT", "I"},
-		{GTK_TYPE_DOUBLE, "DOUBLE", "D"},
-		{GTK_TYPE_LONG, "LONG", "L"},
-		{GTK_TYPE_CHAR, "CHAR", "C"},
-		{GTK_TYPE_NONE, "NONE", "0"},
+		{MARSHALL_POINTER, "POINTER", "P"},
+		{MARSHALL_INT, "INT", "I"},
+		{MARSHALL_DOUBLE, "DOUBLE", "D"},
+		{MARSHALL_LONG, "LONG", "L"},
+		{MARSHALL_VOID, "NONE", "0"},
 	};
 	gint i;
 	
-	for(i=0;i<sizeof(names)/sizeof(names[0]);i++)
+	for(i=0;i<(gint)(sizeof(names)/sizeof(names[0]));i++)
 		if(names[i].type==t)
-			if(abbr)
-				return p_str(names[i].aname);
-			else
-				return p_str(names[i].name);
+			return p_str(abbr
+				     ?names[i].aname
+				     :names[i].name);
 	g_assert_not_reached();
 	return NULL;
 }
 
 PNode* p_gtabbr(gpointer p){
-	GtkType* t=p;
+	MarshallType* t=p;
 	return p_gtype_name(*t, TRUE);
 }
 
-GtkType marshalling_type(Type* t){
-	g_assert(t);
 
-	if(!t->prim)
-		return GTK_TYPE_NONE;
-	
-	g_assert(t->prim->kind!=GTK_TYPE_INVALID);
 
-	if(t->indirection)
-		return GTK_TYPE_POINTER;
-	switch(t->prim->kind){
-	case GTK_TYPE_UINT:
-	case GTK_TYPE_BOOL:
-	case GTK_TYPE_FLAGS:
-	case GTK_TYPE_ENUM:
-		return GTK_TYPE_INT;
-	case GTK_TYPE_STRING:
-		return GTK_TYPE_POINTER;
-	case GTK_TYPE_UCHAR:
-		return GTK_TYPE_CHAR;
-	case GTK_TYPE_ULONG:
-		return GTK_TYPE_LONG;
-	default:
-		return t->prim->kind;
-	}
+PNode* p_gtktype(Type* t){
+	if(t->indirection==0){
+		if(!t->prim)
+			return p_str("GTK_TYPE_NONE");
+		switch(t->prim->kind){
+		case TYPE_INT:
+			return p_str("GTK_TYPE_INT");
+		case TYPE_DOUBLE:
+			return p_str("GTK_TYPE_DOUBLE");
+		case TYPE_ENUM:
+		case TYPE_FLAGS:
+			return p_macro_name(t->prim, "TYPE", NULL);
+		default:
+			g_assert_not_reached();
+			return p_str("GTK_TYPE_NONE");
+		}
+	}else if(t->indirection==1
+		 && t->prim
+		 && (t->prim->kind==TYPE_FOREIGN
+		     || t->prim->kind==TYPE_OBJECT))
+		return p_macro_name(t->prim, "TYPE", NULL);
+	else
+		return p_str("GTK_TYPE_POINTER");
 }
-
+			
 
 PNode* p_signal_func_name(SignalType* t, PNode* basename){
 	return p_fmt("_~_~_~_~",
@@ -116,15 +149,65 @@ PNode* p_handler_type(SignalType* t){
 		     p_for(t->argtypes, p_gtabbr, p_nil));
 }
 
+PNode* p_signal_id(Method* s){
+	PrimType* t=DEF(MEMBER(s)->my_class)->type;
+	return p_fmt("_~_~_signal_~",
+		     p_c_ident(t->module->name),
+		     p_c_ident(t->name),
+		     p_c_ident(MEMBER(s)->name));
+}
 
 typedef struct{
 	PNode* args;
 	gint idx;
 }ArgMarshData;
 
-		
 PNode* p_arg_marsh(gpointer p, gpointer d){
-	GtkType* t=p;
+	Param* par=p;
+	gint* idx=d;
+	(*idx)++;
+	return p_fmt(/* "\targs[~].type=~;\n" unnecessary... */
+		     "\tGTK_VALUE_~(args[~]) = ~;\n",
+		     /* p_prf("%d", *idx),
+			p_gtktype(&par->type), */
+		     p_gtype_name(marshalling_type(&par->type), FALSE),
+		     p_prf("%d", *idx),
+		     p_c_ident(par->name));
+}
+		     
+PNode* p_sig_marshalling(Method* m){
+	gint idx=-1;
+	gboolean ret=marshalling_type(&m->ret_type)!=MARSHALL_VOID;
+	return p_fmt("\t{\n"
+		     "\tGtkArg args[~];\n"
+		     "~"
+		     "~"
+		     "~"
+		     "\tgtk_signal_emitv((GtkObject*)~, ~, args);\n"
+		     "~"
+		     "\t}\n",
+		     p_prf("%d",
+			   g_slist_length(m->params)+ret),
+		     ret
+		     ?p_fmt("\t~ retval;\n",
+			    p_type(&m->ret_type))
+		     :p_nil,
+		     p_for(m->params, p_arg_marsh, &idx),
+		     ret
+		     /* cannot use retloc here, ansi forbids casted lvalues */
+		     ?p_fmt("\tGTK_VALUE_POINTER(args[~]) = &retval;\n",
+			    p_prf("%d", g_slist_length(m->params)))
+		     :p_nil,
+		     p_c_ident(DEF(MEMBER(m)->my_class)->type->name),
+		     p_signal_id(m),
+		     ret
+		     ?p_str("\treturn retval;\n")
+		     :p_nil);
+}
+		     
+		
+PNode* p_arg_demarsh(gpointer p, gpointer d){
+	MarshallType* t=p;
 	ArgMarshData* data=d;
 	return p_fmt("\t\tGTK_VALUE_~(~[~]),\n",
 		     p_gtype_name(*t, FALSE),
@@ -136,7 +219,7 @@ PNode* p_demarshaller(SignalType* t){
 	gint idx=0;
 
 	
-	return p_lst((t->rettype==GTK_TYPE_NONE)
+	return p_lst((t->rettype==TYPE_NONE)
 		     ? p_fmt("\t*(GTK_RETLOC_~(args[~])) =\n",
 			     p_gtype_name(t->rettype, FALSE),
 			     p_prf("%d", g_slist_length(t->argtypes)))
@@ -145,7 +228,7 @@ PNode* p_demarshaller(SignalType* t){
 			   "~"
 			   "\tuser_data);\n",
 			   p_cast(p_handler_type(t), p_str("func")),
-			   p_for(t->argtypes, p_arg_marsh, &idx)),
+			   p_for(t->argtypes, p_arg_demarsh, &idx)),
 		     p_nil);
 }
 

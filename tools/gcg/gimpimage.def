@@ -37,8 +37,8 @@ class Image : Object{
 	g.int num-cols;
 	read-only BaseType base-type;
 	read-write g.int foobar;
-	Layer* active-layer;
-	Layer* floating-sel;
+	read-write Layer& active-layer;
+	read-write Layer* floating-sel;
 	public static Image* new(g.int width,
 				 g.int height,
 				 BaseType base-type);
@@ -46,6 +46,19 @@ class Image : Object{
 	public static g.int foo-1(Layer* x);
 	public direct g.int foo-2(Layer* x);
 	public abstract void foo-3(g.int x);
-	public pre-emit void foo-4(g.int x) const;
-	public post-emit void foo-5(g.int x, Drawable**& n, Image* z);
+	protected pre-emit void foo-4(g.int x) const;
+	public post-emit g.int foo-5(g.int x, Drawable**& n, Image* z);
+	public post-emit g.int foo-6(g.int a1,
+g.int a2,
+g.int a3, 
+g.int a4, 
+g.int a5, 
+g.int a6, 
+g.int a7, 
+g.int a8, 
+g.int a9, 
+g.int a10, 
+g.int a11, 
+g.int a12, 
+g.int a13); 
 };

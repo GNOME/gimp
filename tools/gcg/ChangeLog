@@ -1,3 +1,8 @@
+1998-11-18  Lauri Alanko  <la@iki.fi>
+
+	* Signal marshalling should be pretty complete now. Demarshalling
+	isn't quite yet, though..
+
 1998-11-17  Lauri Alanko  <la@iki.fi>
 
 	* Misc enhancements.

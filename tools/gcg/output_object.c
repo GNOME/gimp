@@ -1,6 +1,10 @@
 #include "output.h"
 #include "marshall.h"
 
+PNode* p_self_name(Member* o){
+	return p_c_ident(DEF(o->my_class)->type->name);
+}
+
 PNode* p_object_member(Member* m){
 	DataMember* d;
 	if(m->membertype != MEMBER_DATA)
@@ -94,13 +98,6 @@ PNode* p_real_varname(PrimType* t, PNode* name){
 		     p_varname(t, name));
 }	
 
-PNode* p_signal_id(Method* s){
-	PrimType* t=DEF(MEMBER(s)->my_class)->type;
-	return p_fmt("_~_~_signal_~",
-		     p_c_ident(t->module->name),
-		     p_c_ident(t->name),
-		     p_c_ident(MEMBER(s)->name));
-}
 
 PNode* p_signal_handler_type(Method* s){
 	Member* m=MEMBER(s);
@@ -112,9 +109,9 @@ PNode* p_signal_handler_type(Method* s){
 
 void output_connector(PRoot* out, Method* m){
 	FunParams* par=fparams("t",
-		    &MEMBER(m)->my_class->self_type[m->self_const],
-		    p_c_ident(DEF(MEMBER(m)->my_class)->type->name),
-		    p_nil);
+			       &MEMBER(m)->my_class->self_type[m->self_const],
+			       p_self_name(MEMBER(m)),
+			       p_nil);
 
 	output_func(out, "functions",
 		    &m->ret_type,
@@ -129,7 +126,7 @@ void output_connector(PRoot* out, Method* m){
 			  "\t\t(GtkSignalFunc)handler,\n"
 			  "\t\tuser_data);\n",
 			  m->ret_type.prim?p_str("return "):p_nil,
-			  p_c_ident(DEF(MEMBER(m)->my_class)->type->name),
+			  p_self_name(MEMBER(m)),
 			  p_str(MEMBER(m)->name)));
 }
 		    
@@ -148,9 +145,9 @@ void output_method(PRoot* out, Method* m){
 	else
 		par = fparams("tp",
 			       &MEMBER(m)->my_class->self_type[m->self_const],
-			       p_c_ident(t->name),
-			       p_nil,
-			       m->params);
+			      p_self_name(MEMBER(m)),
+			      p_nil,
+			      m->params);
 	switch(k){
 		SignalType* sig;
 	case METH_EMIT_PRE:
@@ -158,22 +155,19 @@ void output_method(PRoot* out, Method* m){
 	case METH_EMIT_BOTH:
 		sig=sig_type(m);
 		output_var(out, NULL,
-			   p_str("GtkSignal"),
+			   p_str("GtkSignalID"),
 			   p_signal_id(m));
 		o.names=FALSE;
 		o.types=TRUE;
 		pr_add(out, "functions",
-		       p_fmt("typedef ~ (*~)(~);\n",
+		       p_fmt("typedef ~ (*~)(~, gpointer);\n",
 			     p_type(&m->ret_type),
 			     p_signal_handler_type(m),
 			     p_params(par, &o)));
 		output_connector(out, m);
 		o.names=TRUE;
 		o.types=FALSE;
-		dispatch=p_fmt("~(~, (GtkObject*)~)",
-			       p_signal_marshaller_name(sig),
-			       p_signal_id(m),
-			       p_params(par, &o));
+		dispatch=p_sig_marshalling(m);
 		break;
 	case METH_STATIC:
 	case METH_DIRECT:
@@ -185,12 +179,18 @@ void output_method(PRoot* out, Method* m){
 			     p_real_varname(t, name),
 			     p_params(par, &o)));
 		o.types=FALSE;
-		dispatch=p_fmt("~(~)",
+		dispatch=p_fmt("\t~ ~(~);\n",
+			       m->ret_type.prim?
+			       p_str("return "):
+			       p_nil,
 			       p_real_varname(t, name),
 			       p_params(par, &o));
 		break;
 	case METH_VIRTUAL:
-		dispatch=p_fmt("((~*)((GtkObject*)~)->klass)->~(~)",
+		dispatch=p_fmt("\t~((~*)((GtkObject*)~)->klass)->~(~);\n",
+			       m->ret_type.prim?
+			       p_str("return "):
+			       p_nil,
 			       p_class_name(DEF(MEMBER(m)->my_class)->type),
 			       p_c_ident(t->name),
 			       name,
@@ -204,21 +204,22 @@ void output_method(PRoot* out, Method* m){
 	 p_varname(t, name),
 	 p_nil,
 	 par, 
-	 p_fmt("\t~~;\n",
-	       m->ret_type.prim ? p_str("return ") : p_nil,
-	       dispatch));
-	 fparams_free(par);
+	 dispatch);
+	
+	fparams_free(par);
 }
 
 void output_data_member(PRoot* out, DataMember* m){
 	PrimType* t=DEF(MEMBER(m)->my_class)->type;
 	PNode* name = p_c_ident(MEMBER(m)->name);
+	PNode* self = p_self_name(MEMBER(m));
+	
 	
 	switch(m->prot){
 		FunParams* par;
 	case DATA_READWRITE: {
 		par=fparams("tt", &MEMBER(m)->my_class->self_type[FALSE],
-			    p_str("self"),
+			    self,
 			    p_nil,
 			    &m->type,
 			    name,
@@ -229,7 +230,32 @@ void output_data_member(PRoot* out, DataMember* m){
 			    p_varname(t, p_fmt("set_~", name)),
 			    p_nil,
 			    par,
-			    p_fmt("\tself->~ = ~;\n",
+			    p_fmt("~"
+				  "\t~->~ = ~;\n",
+				  (m->type.prim->kind==TYPE_OBJECT
+				   && m->type.indirection==1)
+				  ?m->type.notnull
+				  ?p_fmt("\tgtk_object_ref "
+					 "((GtkObject*) ~);\n"
+					 "\tgtk_object_unref "
+					 "((GtkObject*) ~->~);\n",
+					 name,
+					 self,
+					 name)
+				  :p_fmt("\tif(~)\n"
+					 "\t\tgtk_object_ref "
+					 "((GtkObject*) ~);\n"
+					 "\tif(~->~)\n"
+					 "\t\tgtk_object_unref "
+					 "((GtkObject*) ~->~);\n",
+					 name,
+					 name,
+					 self,
+					 name,
+					 self,
+					 name)
+				  :p_nil,
+				  self,
 				  name,
 				  name));
 		fparams_free(par);
@@ -237,7 +263,7 @@ void output_data_member(PRoot* out, DataMember* m){
 	/* fall through */
 	case DATA_READONLY:
 		par=fparams("t", &MEMBER(m)->my_class->self_type[TRUE],
-			    p_str("self"),
+			    self,
 			    p_nil);
 		output_func(out,
 			    "functions",
@@ -245,7 +271,8 @@ void output_data_member(PRoot* out, DataMember* m){
 			    p_varname(t, name),
 			    p_nil,
 			    par,
-			    p_fmt("\treturn self->~;\n",
+			    p_fmt("\treturn ~->~;\n",
+				  self,
 				  name));
 		fparams_free(par);
 	case DATA_PROTECTED:
@@ -310,8 +337,8 @@ void output_object_type_init(PRoot* out, ObjectDef* o){
 
 PNode* p_param_marshtype(gpointer p){
 	Param* param=p;
-	return p_fmt(",\n\t\tGTK_TYPE_~",
-		     p_gtype_name(marshalling_type(&param->type), FALSE));
+	return p_fmt(",\n\t\t~",
+		     p_gtktype(&param->type));
 }
 
 PNode* p_member_class_init(gpointer m, gpointer o){
@@ -327,18 +354,23 @@ PNode* p_member_class_init(gpointer m, gpointer o){
 	case METH_EMIT_PRE:
 	case METH_EMIT_POST:
 	case METH_EMIT_BOTH:
-		return p_fmt("\t~ =\n"
+		return p_fmt("\t{\n"
+			     "\textern void ~ (GtkObject*, GtkSignalFunc, "
+			     "gpointer, GtkArg*);\n"
+			     "\t~ =\n"
 			     "\tgtk_signal_new(\"~\",\n"
 			     "\t\tGTK_RUN_~,\n"
 			     "\t\tobklass->type,\n"
 			     "\t\tGTK_SIGNAL_OFFSET (~, ~),\n"
 			     "\t\t~,\n"
-			     "\t\tGTK_TYPE_~,\n"
+			     "\t\t~,\n"
 			     "\t\t~"
 			     "~);\n"
 			     "\tgtk_object_class_add_signals(obklass,\n"
 			     "\t\t&~,\n"
-			     "\t\t1);\n",
+			     "\t\t1);\n"
+			     "\t}\n",
+			     p_signal_demarshaller_name(sig),
 			     p_signal_id(meth),
 			     p_str(mem->name),
 			     p_str(meth->kind==METH_EMIT_PRE
@@ -349,8 +381,7 @@ PNode* p_member_class_init(gpointer m, gpointer o){
 			     p_class_name(DEF(ob)->type),
 			     p_c_ident(mem->name),
 			     p_signal_demarshaller_name(sig),
-			     p_gtype_name(marshalling_type(&meth->ret_type),
-					  FALSE),
+			     p_gtktype(&meth->ret_type),
 			     p_prf("%d", g_slist_length(meth->params)),
 			     p_for(meth->params, p_param_marshtype, p_nil),
 			     p_signal_id(meth));
@@ -377,7 +408,7 @@ void output_object_init(PRoot* out, ObjectDef* o){
 			  p_type(&o->self_type[FALSE]),
 			  p_c_ident(DEF(o)->type->name)),
 		    NULL,
-		    p_fmt("\t\t~ (~);\n",
+		    p_fmt("\t~ (~);\n",
 			  p_varname(DEF(o)->type, p_str("init_real")),
 			  p_c_ident(DEF(o)->type->name)));
 }
@@ -396,7 +427,7 @@ void output_class_init(PRoot* out, ObjectDef* o){
 		    p_fmt("\tGtkObjectClass* obklass = \n"
 			  "\t\t(GtkObjectClass*) klass;\n"
 			  "~"
-			  "\t\t~ (klass);\n",
+			  "\t~ (klass);\n",
 			  p_for(o->members, p_member_class_init, o),
 			  p_varname(DEF(o)->type, p_str("class_init_real"))));
 }

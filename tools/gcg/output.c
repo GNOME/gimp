@@ -129,7 +129,7 @@ PNode* p_type_guard(Type* t, PNode* var){
 	((t->indirection && t->notnull
 	     ? p_fmt("\tg_assert (~);\n", var)
 	     : p_nil),
-	 ((t->indirection==1 && p->kind == GTK_TYPE_OBJECT)
+	 ((t->indirection==1 && p->kind == TYPE_OBJECT)
 	  ? (t->notnull
 		? p_fmt("\tg_assert (~(~));\n",
 			p_macro_name(p, "IS", NULL),
@@ -139,11 +139,11 @@ PNode* p_type_guard(Type* t, PNode* var){
 		     p_macro_name(p, "IS", NULL),
 		     var))
 	  : (t->indirection==0
-	     ? ((p->kind == GTK_TYPE_ENUM)
+	     ? ((p->kind == TYPE_ENUM)
 		? p_fmt("\tg_assert (~ <= ~);\n",
 			var,
 			p_macro_name(p, NULL, "LAST"))
-		: ((p->kind == GTK_TYPE_FLAGS)
+		: ((p->kind == TYPE_FLAGS)
 		   ? p_fmt("\tg_assert ((~ << 1) < ~);\n",
 			   var,
 			   p_macro_name(p, NULL, "LAST"))
@@ -171,6 +171,23 @@ PNode* p_prototype(Type* rettype, PNode* name,
 		     args1,
 		     p_params(args2, &o));
 }
+
+void output_var_alias(PRoot* out, PrimType* t, PNode* basename){
+	pr_add(out, "import_alias",
+	       p_fmt("#define ~ ~_~\n",
+		     basename,
+		     p_c_ident(t->module->name),
+		     basename));
+}
+
+void output_type_alias(PRoot* out, PrimType* t, PNode* basename){
+	pr_add(out, "import_alias",
+	       p_fmt("typedef ~~ ~;\n",
+		     p_str(t->module->name),
+		     basename,
+		     basename));
+}
+	       
 
 void output_func(PRoot* out,
 		 Id tag,
@@ -239,13 +256,13 @@ void output_def(PRoot* out, Def* d){
 		   p_str("GtkType"),
 		   type_var);
 	switch(d->type->kind){
-	case GTK_TYPE_OBJECT:
+	case TYPE_OBJECT:
 		output_object(out, d);
 		break;
-	case GTK_TYPE_ENUM:
+	case TYPE_ENUM:
 		output_enum(out, d);
 		break;
-	case GTK_TYPE_FLAGS:
+	case TYPE_FLAGS:
 		output_flags(out, d);
 		break;
 	default:

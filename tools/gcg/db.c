@@ -14,7 +14,7 @@ PrimType* get_type(Id modname, Id name){
 		p=g_new(PrimType, 1);
 		p->module=m;
 		p->name=name;
-		p->kind=GTK_TYPE_INVALID;
+		p->kind=TYPE_INVALID;
 		p->decl_header=NULL;
 		p->def_header=NULL;
 		p->definition=NULL;

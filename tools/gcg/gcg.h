@@ -1,7 +1,6 @@
 #ifndef __GCG_H__
 #define __GCG_H__
 #include <glib.h>
-#include <gtk/gtktypeutils.h>
 
 extern gboolean in_ident;
 
@@ -25,6 +24,17 @@ typedef struct _DefClass DefClass;
 typedef struct _Param Param;
 typedef struct _Module Module;
 
+typedef enum{
+	TYPE_INVALID,
+	TYPE_NONE,
+	TYPE_INT,
+	TYPE_LONG,
+	TYPE_DOUBLE,
+	TYPE_ENUM,
+	TYPE_FLAGS,
+	TYPE_FOREIGN,
+	TYPE_OBJECT
+} TypeKind;
 
 struct _Module {
 	Id name;
@@ -35,7 +45,7 @@ struct _Module {
 struct _PrimType {
 	Module* module;
 	Id name;
-	GtkFundamentalType kind;
+	TypeKind kind;
 	Id decl_header;
 	Id def_header;
 	Def* definition;

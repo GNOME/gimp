@@ -29,7 +29,7 @@ static GSList* imports_list;
 	EmitDef emit_def;
 	gboolean bool;
 	Type type;
-	GtkFundamentalType fund_type;
+	TypeKind fund_type;
 };
 
 %token T_MODULE
@@ -135,21 +135,21 @@ decllist: /* empty */ | decllist decl;
 decl: simpledecl ;/* | classdecl | opaquedecl | protclassdecl;*/
 
 fundtype: T_INT {
-	$$ = GTK_TYPE_INT;
+	$$ = TYPE_INT;
 } | T_DOUBLE {
-	$$ = GTK_TYPE_DOUBLE;
+	$$ = TYPE_DOUBLE;
 } | T_BOXED {
-	$$ = GTK_TYPE_BOXED;
+	$$ = TYPE_FOREIGN;
 } | T_CLASS {
-	$$ = GTK_TYPE_OBJECT;
+	$$ = TYPE_OBJECT;
 } | T_ENUM {
-	$$ = GTK_TYPE_ENUM;
+	$$ = TYPE_ENUM;
 } | T_FLAGS {
-	$$ = GTK_TYPE_FLAGS;
+	$$ = TYPE_FLAGS;
 }
 
 simpledecl: fundtype primtype T_END {
-	g_assert($2->kind==GTK_TYPE_INVALID);
+	g_assert($2->kind==TYPE_INVALID);
 	$2->kind = $1;
 };
 
@@ -273,7 +273,7 @@ def: classdef | enumdef | flagsdef;
 
 enumdef: T_ENUM primtype T_OPEN_B idlist T_CLOSE_B docstring T_END {
 	EnumDef* d=g_new(EnumDef, 1);
-	g_assert($2->kind==GTK_TYPE_ENUM);
+	g_assert($2->kind==TYPE_ENUM);
 	d->alternatives = $4;
 	$$=DEF(d);
 	$$->type=$2;
@@ -282,7 +282,7 @@ enumdef: T_ENUM primtype T_OPEN_B idlist T_CLOSE_B docstring T_END {
 
 flagsdef: T_FLAGS primtype T_OPEN_B idlist T_CLOSE_B docstring T_END {
 	FlagsDef* d=g_new(FlagsDef, 1);
-	g_assert($2->kind==GTK_TYPE_ENUM);
+	g_assert($2->kind==TYPE_ENUM);
 	d->flags = $4;
 	$$=DEF(d);
 	$$->type=$2;
@@ -296,8 +296,8 @@ parent: /* empty */{
 }
 
 classdef: T_CLASS primtype parent docstring T_OPEN_B {
-	g_assert($2->kind==GTK_TYPE_OBJECT);
-	g_assert(!$3 || $3->kind==GTK_TYPE_OBJECT);
+	g_assert($2->kind==TYPE_OBJECT);
+	g_assert(!$3 || $3->kind==TYPE_OBJECT);
 	current_class=g_new(ObjectDef, 1);
 } classbody T_CLOSE_B T_END {
 	Type t={FALSE, 1, TRUE, $2};
@@ -305,7 +305,7 @@ classdef: T_CLASS primtype parent docstring T_OPEN_B {
 	t.is_const=TRUE;
 	current_class->self_type[1]=t;
 	current_class->parent = $3;
-	current_class->members = $7;
+	current_class->members = g_slist_reverse($7);
 	$$=DEF(current_class);
 	current_class=NULL;
 	$$->type = $2;
