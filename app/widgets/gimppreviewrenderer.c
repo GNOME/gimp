@@ -199,7 +199,8 @@ gimp_preview_renderer_new (GType    viewable_type,
   GimpPreviewRenderer *renderer;
 
   g_return_val_if_fail (g_type_is_a (viewable_type, GIMP_TYPE_VIEWABLE), NULL);
-  g_return_val_if_fail (size > 0 && size <= GIMP_PREVIEW_MAX_SIZE, NULL);
+  g_return_val_if_fail (size >  0 &&
+                        size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
   g_return_val_if_fail (border_width >= 0 &&
                         border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH, NULL);
 
@@ -224,8 +225,10 @@ gimp_preview_renderer_new_full (GType    viewable_type,
   GimpPreviewRenderer *renderer;
 
   g_return_val_if_fail (g_type_is_a (viewable_type, GIMP_TYPE_VIEWABLE), NULL);
-  g_return_val_if_fail (width  > 0 && width  <= GIMP_PREVIEW_MAX_SIZE, NULL);
-  g_return_val_if_fail (height > 0 && height <= GIMP_PREVIEW_MAX_SIZE, NULL);
+  g_return_val_if_fail (width >  0 &&
+                        width <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
+  g_return_val_if_fail (height > 0 &&
+                        height <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
   g_return_val_if_fail (border_width >= 0 &&
                         border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH, NULL);
 
@@ -319,7 +322,8 @@ gimp_preview_renderer_set_size (GimpPreviewRenderer *renderer,
   gint width, height;
 
   g_return_if_fail (GIMP_IS_PREVIEW_RENDERER (renderer));
-  g_return_if_fail (preview_size > 0 && preview_size <= GIMP_PREVIEW_MAX_SIZE);
+  g_return_if_fail (preview_size >  0 &&
+                    preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
   g_return_if_fail (border_width >= 0 &&
                     border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH);
 
@@ -349,8 +353,10 @@ gimp_preview_renderer_set_size_full (GimpPreviewRenderer *renderer,
                                      gint                 border_width)
 {
   g_return_if_fail (GIMP_IS_PREVIEW_RENDERER (renderer));
-  g_return_if_fail (width  > 0 && width  <= GIMP_PREVIEW_MAX_SIZE);
-  g_return_if_fail (height > 0 && height <= GIMP_PREVIEW_MAX_SIZE);
+  g_return_if_fail (width >  0 &&
+                    width <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
+  g_return_if_fail (height > 0 &&
+                    height <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
   g_return_if_fail (border_width >= 0 &&
                     border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH);
 

@@ -263,7 +263,7 @@ gimp_container_tree_view_new (GimpContainer *container,
                         NULL);
   g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (preview_size > 0 &&
-                        preview_size <= GIMP_PREVIEW_MAX_SIZE, NULL);
+                        preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
   g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, NULL);
   g_return_val_if_fail (min_items_y > 0 && min_items_y <= 64, NULL);
 

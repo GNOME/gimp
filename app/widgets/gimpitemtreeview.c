@@ -353,9 +353,9 @@ gimp_item_tree_view_new (gint                  preview_size,
   GimpContainerView     *view;
   GimpContainerTreeView *tree_view;
 
-  g_return_val_if_fail (preview_size > 0 &&
-			preview_size <= GIMP_PREVIEW_MAX_SIZE, NULL);
-  g_return_val_if_fail (! gimage || GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (preview_size >  0 &&
+			preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
+  g_return_val_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (signal_name != NULL, NULL);
   g_return_val_if_fail (new_item_func != NULL, NULL);
   g_return_val_if_fail (edit_item_func != NULL, NULL);

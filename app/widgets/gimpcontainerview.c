@@ -35,7 +35,6 @@
 #include "gimpcontainerview.h"
 #include "gimpcontainerview-utils.h"
 #include "gimpdnd.h"
-#include "gimppreview.h"
 
 
 enum
@@ -353,7 +352,8 @@ gimp_container_view_construct (GimpContainerView *view,
   g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
   g_return_if_fail (container == NULL || GIMP_IS_CONTAINER (container));
   g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
-  g_return_if_fail (preview_size > 0 && preview_size <= GIMP_PREVIEW_MAX_SIZE);
+  g_return_if_fail (preview_size >  0 &&
+                    preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
   g_return_if_fail (min_items_x <= 64);
   g_return_if_fail (min_items_y <= 64);
 
@@ -439,7 +439,8 @@ gimp_container_view_set_preview_size (GimpContainerView *view,
 				      gint               preview_size)
 {
   g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
-  g_return_if_fail (preview_size > 0 && preview_size <= GIMP_PREVIEW_MAX_SIZE);
+  g_return_if_fail (preview_size >  0 &&
+                    preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
 
   if (view->preview_size != preview_size)
     {

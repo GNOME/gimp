@@ -39,6 +39,7 @@
 #include "gimpchannel.h"
 #include "gimpimage.h"
 #include "gimpdrawable.h"
+#include "gimpdrawable-preview.h"
 #include "gimplayer.h"
 #include "gimppreviewcache.h"
 

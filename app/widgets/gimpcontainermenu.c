@@ -32,7 +32,6 @@
 
 #include "gimpcontainermenu.h"
 #include "gimpcontainerview-utils.h"
-#include "gimppreview.h"
 
 
 enum
@@ -351,7 +350,8 @@ gimp_container_menu_set_preview_size (GimpContainerMenu *menu,
 				      gint               preview_size)
 {
   g_return_if_fail (GIMP_IS_CONTAINER_MENU (menu));
-  g_return_if_fail (preview_size > 0 && preview_size <= GIMP_PREVIEW_MAX_SIZE);
+  g_return_if_fail (preview_size  > 0 &&
+                    preview_size <= GIMP_VIEWABLE_MAX_POPUP_SIZE);
 
   if (menu->preview_size != preview_size)
     {

@@ -29,6 +29,7 @@
 
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
+#include "core/gimpviewable.h"
 
 #include "gimpcontainermenuimpl.h"
 #include "gimpmenuitem.h"
@@ -124,10 +125,11 @@ gimp_container_menu_new (GimpContainer *container,
   GimpContainerMenuImpl *menu_impl;
   GimpContainerMenu     *menu;
 
-  g_return_val_if_fail (! container || GIMP_IS_CONTAINER (container), NULL);
-  g_return_val_if_fail (! context || GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
+                        NULL);
+  g_return_val_if_fail (context == NULL || GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (preview_size > 0 &&
-			preview_size <= GIMP_PREVIEW_MAX_SIZE, NULL);
+			preview_size <= GIMP_VIEWABLE_MAX_POPUP_SIZE, NULL);
 
   menu_impl = g_object_new (GIMP_TYPE_CONTAINER_MENU_IMPL, NULL);
 

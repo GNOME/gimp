@@ -23,8 +23,7 @@
 #define __GIMP_PREVIEW_RENDERER_H__
 
 
-#define GIMP_PREVIEW_MAX_SIZE         1024
-#define GIMP_PREVIEW_MAX_BORDER_WIDTH   16
+#define GIMP_PREVIEW_MAX_BORDER_WIDTH 16
 
 
 #define GIMP_TYPE_PREVIEW_RENDERER            (gimp_preview_renderer_get_type ())

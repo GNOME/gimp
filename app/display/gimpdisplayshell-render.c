@@ -237,45 +237,35 @@ render_setup_notify (gpointer    config,
   g_free (render_white_buf);
   g_free (render_temp_buf);
 
-#ifdef __GNUC__
-#warning #define MAX_PREVIEW_SIZE 1024  /* GIMP_PREVIEW_MAX_SIZE (EEK) */
-#endif
-#define MAX_PREVIEW_SIZE 1024  /* GIMP_PREVIEW_MAX_SIZE (EEK) */
+#define BUF_SIZE (MAX (GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH, \
+                       GIMP_VIEWABLE_MAX_PREVIEW_SIZE) + 4)
+
+  render_check_buf = g_new  (guchar, BUF_SIZE * 3);
+  render_empty_buf = g_new0 (guchar, BUF_SIZE * 3);
+  render_white_buf = g_new  (guchar, BUF_SIZE * 3);
+  render_temp_buf  = g_new  (guchar, BUF_SIZE * 3);
 
   /*  calculate check buffer for previews  */
-  if (TRUE /* preview_size */)
+
+  memset (render_white_buf, 255, BUF_SIZE * 3);
+
+  for (i = 0; i < BUF_SIZE; i++)
     {
-      render_check_buf = g_new (guchar, (MAX_PREVIEW_SIZE + 4) * 3);
-
-      for (i = 0; i < (MAX_PREVIEW_SIZE + 4); i++)
-	{
-	  if (i & 0x4)
-	    {
-	      render_check_buf[i * 3 + 0] = render_blend_dark_check[0];
-	      render_check_buf[i * 3 + 1] = render_blend_dark_check[0];
-	      render_check_buf[i * 3 + 2] = render_blend_dark_check[0];
-	    }
-	  else
-	    {
-	      render_check_buf[i * 3 + 0] = render_blend_light_check[0];
-	      render_check_buf[i * 3 + 1] = render_blend_light_check[0];
-	      render_check_buf[i * 3 + 2] = render_blend_light_check[0];
-	    }
-	}
-
-      render_empty_buf = g_new0 (guchar, (MAX_PREVIEW_SIZE + 4) * 3);
-      render_white_buf = g_new  (guchar, (MAX_PREVIEW_SIZE + 4) * 3);
-      render_temp_buf  = g_new  (guchar, (MAX_PREVIEW_SIZE + 4) * 3);
-
-      memset (render_white_buf, 255, (MAX_PREVIEW_SIZE + 4) * 3);
+      if (i & 0x4)
+        {
+          render_check_buf[i * 3 + 0] = render_blend_dark_check[0];
+          render_check_buf[i * 3 + 1] = render_blend_dark_check[0];
+          render_check_buf[i * 3 + 2] = render_blend_dark_check[0];
+        }
+      else
+        {
+          render_check_buf[i * 3 + 0] = render_blend_light_check[0];
+          render_check_buf[i * 3 + 1] = render_blend_light_check[0];
+          render_check_buf[i * 3 + 2] = render_blend_light_check[0];
+        }
     }
-  else
-    {
-      render_check_buf = NULL;
-      render_empty_buf = NULL;
-      render_white_buf = NULL;
-      render_temp_buf  = NULL;
-    }
+
+#undef BUF_SIZE
 }
 
 

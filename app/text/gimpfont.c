@@ -247,11 +247,8 @@ gimp_font_get_popup_size (GimpViewable *viewable,
   pango_layout_set_text (font->popup_layout, gettext (GIMP_TEXT_PANGRAM), -1);
   pango_layout_get_pixel_extents (font->popup_layout, NULL, &logical);
 
-#ifdef __GNUC__
-#warning FIXME #need to use GIMP_PREVIEW_MAX_SIZE here
-#endif
-  *popup_width  = MIN (logical.width  + 6, 1024);
-  *popup_height = MIN (logical.height + 6, 1024);
+  *popup_width  = MIN (logical.width  + 6, GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
+  *popup_height = MIN (logical.height + 6, GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
 
   font->popup_width  = *popup_width;
   font->popup_height = *popup_height;

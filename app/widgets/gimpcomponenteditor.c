@@ -246,7 +246,7 @@ gimp_component_editor_new (gint             preview_size,
   GimpComponentEditor *editor;
 
   g_return_val_if_fail (preview_size > 0 &&
-			preview_size <= GIMP_PREVIEW_MAX_SIZE, NULL);
+			preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
 
   editor = g_object_new (GIMP_TYPE_COMPONENT_EDITOR, NULL);
@@ -269,7 +269,8 @@ gimp_component_editor_set_preview_size (GimpComponentEditor *editor,
   gboolean     iter_valid;
 
   g_return_if_fail (GIMP_IS_COMPONENT_EDITOR (editor));
-  g_return_if_fail (preview_size > 0 && preview_size <= GIMP_PREVIEW_MAX_SIZE);
+  g_return_if_fail (preview_size >  0 &&
+                    preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
 
   tree_widget = GTK_WIDGET (editor->view);
 

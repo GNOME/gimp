@@ -36,7 +36,6 @@
 
 #include "gimpcontainerview.h"
 #include "gimpbrushfactoryview.h"
-#include "gimppreview.h"
 
 #include "gimp-intl.h"
 
@@ -160,7 +159,7 @@ gimp_brush_factory_view_new (GimpViewType      view_type,
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
   g_return_val_if_fail (preview_size > 0 &&
-			preview_size <= GIMP_PREVIEW_MAX_SIZE, NULL);
+			preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
   g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, NULL);
   g_return_val_if_fail (min_items_y > 0 && min_items_y <= 64, NULL);
 

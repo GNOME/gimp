@@ -275,7 +275,7 @@ gimp_viewable_calc_preview_size (GimpViewable *viewable,
 
   if (return_width)  *return_width  = width;
   if (return_height) *return_height = height;
-  if (scaling_up)    *scaling_up = (xratio > 1.0) || (yratio > 1.0);
+  if (scaling_up)    *scaling_up    = (xratio > 1.0) || (yratio > 1.0);
 }
 
 void
@@ -286,14 +286,21 @@ gimp_viewable_get_preview_size (GimpViewable *viewable,
                                 gint         *width,
                                 gint         *height)
 {
+  gint w, h;
+
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
   g_return_if_fail (size > 0);
-  g_return_if_fail (width != NULL);
-  g_return_if_fail (height != NULL);
 
   GIMP_VIEWABLE_GET_CLASS (viewable)->get_preview_size (viewable, size,
                                                         popup, dot_for_dot,
-                                                        width, height);
+                                                        &w, &h);
+
+  w = MIN (w, GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
+  h = MIN (h, GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
+
+  if (width)  *width  = w;
+  if (height) *height = h;
+
 }
 
 gboolean
@@ -312,15 +319,20 @@ gimp_viewable_get_popup_size (GimpViewable *viewable,
 
   if (viewable_class->get_popup_size)
     {
-      gint dummy_width;
-      gint dummy_height;
+      gint w, h;
 
-      if (! popup_width)  popup_width  = &dummy_width;
-      if (! popup_height) popup_height = &dummy_height;
+      if (viewable_class->get_popup_size (viewable,
+                                          width, height, dot_for_dot,
+                                          &w, &h))
+        {
+          w = MIN (w, GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
+          h = MIN (h, GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
 
-      return viewable_class->get_popup_size (viewable,
-                                             width, height, dot_for_dot,
-                                             popup_width, popup_height);
+          if (popup_width)  *popup_width  = w;
+          if (popup_height) *popup_height = h;
+
+          return TRUE;
+        }
     }
 
   return FALSE;

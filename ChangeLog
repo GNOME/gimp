@@ -1,3 +1,33 @@
+2003-04-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpviewable.h: #define GIMP_VIEWABLE_MAX_PREVIEW_SIZE
+	here.
+
+	* app/widgets/gimppreview.h
+	* app/widgets/gimppreviewrenderer.h: removed the #defines here.
+
+	* app/core/gimpviewable.c (gimp_preview_get[_popup]_size): check
+	the return values to be within bounds.
+
+	* app/text/gimpfont.c
+	* app/display/gimpdisplayshell-render.c: use the new constant
+	instead of the magic "1024".
+
+	* app/core/gimpdrawable-preview.c: #include our own header file.
+
+	* app/widgets/gimpbrushfactoryview.c
+	* app/widgets/gimpcomponenteditor.c
+	* app/widgets/gimpcontainereditor.c
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainermenu.c
+	* app/widgets/gimpcontainermenuimpl.c
+	* app/widgets/gimpcontainertreeview.c
+	* app/widgets/gimpcontainerview.c
+	* app/widgets/gimpdatafactoryview.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimppreview.c
+	* app/widgets/gimppreviewrenderer.c: changed accordingly.
+
 2003-04-01  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/tileblur.scm (script-fu-tile-blur):

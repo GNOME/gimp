@@ -242,9 +242,9 @@ gimp_preview_size_allocate (GtkWidget     *widget,
 
   if (preview->expand)
     {
-      width  = MIN (GIMP_PREVIEW_MAX_SIZE,
+      width  = MIN (GIMP_VIEWABLE_MAX_PREVIEW_SIZE,
                     allocation->width - 2 * preview->renderer->border_width);
-      height = MIN (GIMP_PREVIEW_MAX_SIZE,
+      height = MIN (GIMP_VIEWABLE_MAX_PREVIEW_SIZE,
                     allocation->height - 2 * preview->renderer->border_width);
 
       if (preview->renderer->width  != width ||
@@ -260,7 +260,7 @@ gimp_preview_size_allocate (GtkWidget     *widget,
               gint scaled_height;
 
               gimp_viewable_get_preview_size (preview->renderer->viewable,
-                                              GIMP_PREVIEW_MAX_SIZE,
+                                              GIMP_VIEWABLE_MAX_PREVIEW_SIZE,
                                               preview->renderer->is_popup,
                                               preview->renderer->dot_for_dot,
                                               &preview_width,
@@ -545,7 +545,8 @@ gimp_preview_new_by_types (GType    preview_type,
 
   g_return_val_if_fail (g_type_is_a (preview_type, GIMP_TYPE_PREVIEW), NULL);
   g_return_val_if_fail (g_type_is_a (viewable_type, GIMP_TYPE_VIEWABLE), NULL);
-  g_return_val_if_fail (size > 0 && size <= GIMP_PREVIEW_MAX_SIZE, NULL);
+  g_return_val_if_fail (size >  0 &&
+                        size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
   g_return_val_if_fail (border_width >= 0 &&
                         border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH, NULL);
 
@@ -580,8 +581,10 @@ gimp_preview_new_full_by_types (GType    preview_type,
 
   g_return_val_if_fail (g_type_is_a (preview_type, GIMP_TYPE_PREVIEW), NULL);
   g_return_val_if_fail (g_type_is_a (viewable_type, GIMP_TYPE_VIEWABLE), NULL);
-  g_return_val_if_fail (width  > 0 && width  <= GIMP_PREVIEW_MAX_SIZE, NULL);
-  g_return_val_if_fail (height > 0 && height <= GIMP_PREVIEW_MAX_SIZE, NULL);
+  g_return_val_if_fail (width >  0 &&
+                        width <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
+  g_return_val_if_fail (height >  0 &&
+                        height <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
   g_return_val_if_fail (border_width >= 0 &&
                         border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH, NULL);
 
@@ -610,7 +613,7 @@ gimp_preview_set_viewable (GimpPreview  *preview,
   GType viewable_type = G_TYPE_NONE;
 
   g_return_if_fail (GIMP_IS_PREVIEW (preview));
-  g_return_if_fail (! viewable || GIMP_IS_VIEWABLE (viewable));
+  g_return_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable));
 
   if (viewable)
     {
@@ -667,7 +670,8 @@ gimp_preview_set_size (GimpPreview *preview,
 		       gint         border_width)
 {
   g_return_if_fail (GIMP_IS_PREVIEW (preview));
-  g_return_if_fail (preview_size > 0 && preview_size <= GIMP_PREVIEW_MAX_SIZE);
+  g_return_if_fail (preview_size >  0 &&
+                    preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
   g_return_if_fail (border_width >= 0 &&
                     border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH);
 
@@ -682,8 +686,10 @@ gimp_preview_set_size_full (GimpPreview *preview,
 			    gint         border_width)
 {
   g_return_if_fail (GIMP_IS_PREVIEW (preview));
-  g_return_if_fail (width  > 0 && width  <= GIMP_PREVIEW_MAX_SIZE);
-  g_return_if_fail (height > 0 && height <= GIMP_PREVIEW_MAX_SIZE);
+  g_return_if_fail (width >  0 &&
+                    width <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
+  g_return_if_fail (height >  0 &&
+                    height <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE);
   g_return_if_fail (border_width >= 0 &&
                     border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH);
 

@@ -175,8 +175,8 @@ gimp_data_factory_view_construct (GimpDataFactoryView *factory_view,
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY_VIEW (factory_view), FALSE);
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), FALSE);
-  g_return_val_if_fail (preview_size > 0 &&
-			preview_size <= GIMP_PREVIEW_MAX_SIZE, FALSE);
+  g_return_val_if_fail (preview_size >  0 &&
+			preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, FALSE);
   g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, FALSE);
   g_return_val_if_fail (min_items_y > 0 && min_items_y <= 64, FALSE);
 
