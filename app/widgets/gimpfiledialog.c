@@ -378,10 +378,7 @@ gimp_file_dialog_set_uri (GimpFileDialog  *dialog,
 
   if (gimage)
     {
-      gchar *filename = gimp_image_get_filename (gimage);
-
-      if (filename)
-        real_uri = g_filename_to_uri (filename, NULL, NULL);
+      real_uri = g_strdup (gimp_object_get_name (GIMP_OBJECT (gimage)));
     }
   else if (uri)
     {
