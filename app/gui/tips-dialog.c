@@ -36,7 +36,7 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "wilber.h"
+#include "pixmaps/wilber3.xpm"
 
 
 #define TIPS_DIR_NAME "tips"
@@ -68,17 +68,13 @@ tips_dialog_create (void)
   GtkWidget *hbox;
   GtkWidget *bbox;
   GtkWidget *frame;
-  GtkWidget *preview;
+  GtkWidget *pixmap;
   GtkWidget *button;
-  gchar     *temp;
-  guchar    *utemp;
-  guchar    *src;
-  guchar    *dest;
-  gint       x;
-  gint       y;
 
   if (tips_count == 0)
     {
+      gchar *temp;
+
       temp = g_strdup_printf ("%s" G_DIR_SEPARATOR_S TIPS_DIR_NAME
                               G_DIR_SEPARATOR_S "%s",
 			      gimp_data_directory (),
@@ -125,29 +121,16 @@ tips_dialog_create (void)
      
       vbox2 = gtk_vbox_new (FALSE, 0);
       gtk_box_pack_end (GTK_BOX (hbox), vbox2, FALSE, FALSE, 0);
+      gtk_widget_show (vbox2);
+
       frame = gtk_frame_new (NULL);
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
       gtk_box_pack_start (GTK_BOX (vbox2), frame, TRUE, FALSE, 0);
-
-      preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-      gtk_preview_size (GTK_PREVIEW (preview), wilber_width, wilber_height);
-      utemp = g_new (guchar, wilber_width * 3);
-      src = (guchar *)wilber_data;
-      for (y = 0; y < wilber_height; y++)
-	{
-	  dest = utemp;
-	  for (x = 0; x < wilber_width; x++)
-	    {
-	      HEADER_PIXEL (src, dest);
-	      dest += 3;
-	    }
-	  gtk_preview_draw_row (GTK_PREVIEW (preview), utemp, 0, y, wilber_width); 
-	}
-      g_free(utemp);
-      gtk_container_add (GTK_CONTAINER (frame), preview);
-      gtk_widget_show (preview);
       gtk_widget_show (frame);
-      gtk_widget_show (vbox2);
+
+      pixmap = gimp_pixmap_new (wilber3_xpm);
+      gtk_container_add (GTK_CONTAINER (frame), pixmap);
+      gtk_widget_show (pixmap);
  
       hbox = gtk_hbox_new (FALSE, 15);
       gtk_container_set_border_width (GTK_CONTAINER (hbox), 10);

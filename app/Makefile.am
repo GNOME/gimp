@@ -317,9 +317,7 @@ gimp_SOURCES = \
 	histogramwidget.h		\
 	\
 	marching_ants.h		\
-	pixmaps.h		\
-	pixmaps2.h		\
-	wilber.h
+	pixmaps2.h
 
 EXTRA_DIST = \
 	makefile.mingw		\

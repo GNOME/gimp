@@ -4,6 +4,7 @@ EXTRA_DIST = \
 	anchor.xpm	\
 	chain.xpm	\
 	channel.xbm	\
+	default.xpm	\
 	delete.xpm	\
 	duplicate.xpm	\
 	eek.xpm		\
@@ -33,11 +34,13 @@ EXTRA_DIST = \
 	qmasknosel.xpm	\
 	question.xpm	\
 	refresh.xpm	\
+	swap.xpm	\
 	topath.xpm	\
 	toselection.xpm	\
 	update.xpm      \
 	wilber.xpm	\
 	wilber2.xpm	\
+	wilber3.xpm	\
 	yes.xpm         \
 	zoom_in.xpm	\
 	zoom_out.xpm

@@ -1,3 +1,20 @@
+2001-02-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/pixmaps.h
+	* app/wilber.h: removed some data files from app/
+
+	* pixmaps/Makefile.am
+	* pixmaps/default.xpm
+	* pixmaps/swap.xpm
+	* pixmaps/wilber3.xpm: added them here.
+
+	* app/pixmaps2.h: added the "dialog_bits" stuff here.
+
+	* app/tips_dialog.c
+	* app/toolbox.c: use the new XPMs and remove hacks which created
+	the GdkPixmaps and GtkPreviews manually.
+
 2001-02-22  Simon Budig  <simon@gimp.org>
 
 	* app/interface.c

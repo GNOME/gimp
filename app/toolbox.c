@@ -52,7 +52,8 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps.h"
+#include "pixmaps/default.xpm"
+#include "pixmaps/swap.xpm"
 
 
 /*  local functions  */
@@ -70,12 +71,6 @@ static gint        toolbox_check_device       (GtkWidget      *widget,
 					       GdkEvent       *event,
 					       gpointer        data);
 
-static GdkPixmap * create_pixmap              (GdkWindow      *parent,
-					       GdkBitmap     **mask,
-					       gchar         **data,
-					       gint            width,
-					       gint            height);
-
 static void        toolbox_style_set_callback (GtkWidget      *window,
 					       GtkStyle       *previous_style,
 					       gpointer        data);
@@ -90,24 +85,11 @@ static void        toolbox_drop_tool          (GtkWidget      *widget,
 					       gpointer        data);
 
 
-static gint pixmap_colors[8][3] =
-{
-  { 0x00, 0x00, 0x00 }, /* a -   0 */
-  { 0x24, 0x24, 0x24 }, /* b -  36 */
-  { 0x49, 0x49, 0x49 }, /* c -  73 */
-  { 0x6D, 0x6D, 0x6D }, /* d - 109 */
-  { 0x92, 0x92, 0x92 }, /* e - 146 */
-  { 0xB6, 0xB6, 0xB6 }, /* f - 182 */
-  { 0xDB, 0xDB, 0xDB }, /* g - 219 */
-  { 0xFF, 0xFF, 0xFF }, /* h - 255 */
-};
-
 #define COLUMNS 3
 #define ROWS    8
 #define MARGIN  2
 
 /*  local variables  */
-static GdkColor    colors[11];
 static GtkWidget * toolbox_shell = NULL;
 
 static GtkTargetEntry toolbox_target_table[] =
@@ -174,34 +156,6 @@ toolbox_check_device (GtkWidget *widget,
 }
 
 static void
-allocate_colors (GtkWidget *parent)
-{
-  GdkColormap *colormap;
-  gint i;
-
-  gtk_widget_realize (parent);
-  colormap = gdk_window_get_colormap (parent->window);
-
-  for (i = 0; i < 8; i++)
-    {
-      colors[i].red   = pixmap_colors[i][0] << 8;
-      colors[i].green = pixmap_colors[i][1] << 8;
-      colors[i].blue  = pixmap_colors[i][2] << 8;
-
-      gdk_color_alloc (colormap, &colors[i]);
-    }
-
-  colors[8] = parent->style->bg[GTK_STATE_NORMAL];
-  gdk_color_alloc (colormap, &colors[8]);
-
-  colors[9] = parent->style->bg[GTK_STATE_ACTIVE];
-  gdk_color_alloc (colormap, &colors[9]);
-
-  colors[10] = parent->style->bg[GTK_STATE_PRELIGHT];
-  gdk_color_alloc (colormap, &colors[10]);
-}
-
-static void
 create_indicator_area (GtkWidget *parent)
 {
   GtkWidget *frame;
@@ -243,10 +197,14 @@ create_color_area (GtkWidget *parent)
   if (! GTK_WIDGET_REALIZED (parent))
     gtk_widget_realize (parent);
 
-  default_pixmap = create_pixmap (parent->window, &default_mask, default_bits,
-				  default_width, default_height);
-  swap_pixmap    = create_pixmap (parent->window, &swap_mask, swap_bits,
-				  swap_width, swap_height);
+  default_pixmap = gdk_pixmap_create_from_xpm_d (parent->window,
+                                                 &default_mask,
+                                                 &parent->style->bg[GTK_STATE_NORMAL],
+                                                 default_xpm);
+  swap_pixmap = gdk_pixmap_create_from_xpm_d (parent->window,
+					      &swap_mask,
+					      &parent->style->bg[GTK_STATE_NORMAL],
+					      swap_xpm);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
@@ -365,93 +323,6 @@ create_tools (GtkWidget   *parent,
   gtk_widget_show (wbox);
 }
 
-static GdkPixmap *
-create_pixmap (GdkWindow  *parent,
-	       GdkBitmap **mask,
-	       gchar     **data,
-	       gint        width,
-	       gint        height)
-{
-  GdkPixmap   *pixmap;
-  GdkImage    *image;
-  GdkGC       *gc;
-  GdkVisual   *visual;
-  GdkColormap *cmap;
-  gint         r, s, t, cnt;
-  guchar      *mem;
-  guchar       value;
-  guint32      pixel;
-
-  visual = gdk_window_get_visual (parent);
-  cmap = gdk_window_get_colormap (parent);
-  image = gdk_image_new (GDK_IMAGE_NORMAL, visual, width, height);
-  pixmap = gdk_pixmap_new (parent, width, height, -1);
-  gc = NULL;
-
-  if (mask)
-    {
-      GdkColor tmp_color;
-
-      *mask = gdk_pixmap_new (parent, width, height, 1);
-      gc = gdk_gc_new (*mask);
-      gdk_draw_rectangle (*mask, gc, TRUE, 0, 0, -1, -1);
-
-      tmp_color.pixel = 1;
-      gdk_gc_set_foreground (gc, &tmp_color);
-    }
-
-  for (r = 0; r < height; r++)
-    {
-      mem = image->mem;
-      mem += image->bpl * r;
-
-      for (s = 0, cnt = 0; s < width; s++)
-	{
-	  value = data[r][s];
-
-	  if (value == '.')
-	    {
-	      pixel = colors[8].pixel;
-
-	      if (mask)
-		{
-		  if (cnt < s)
-		    gdk_draw_line (*mask, gc, cnt, r, s - 1, r);
-		  cnt = s + 1;
-		}
-	    }
-	  else
-	    {
-	      pixel = colors[value - 'a'].pixel;
-	    }
-
-	  if (image->byte_order == GDK_LSB_FIRST)
-	    {
-	      for (t = 0; t < image->bpp; t++)
-		*mem++ = (guchar) ((pixel >> (t * 8)) & 0xFF);
-	    }
-	  else
-	    {
-	      for (t = 0; t < image->bpp; t++)
-		*mem++ = (guchar) ((pixel >> ((image->bpp - t - 1) * 8)) & 0xFF);
-	    }
-	}
-
-      if (mask && (cnt < s))
-	gdk_draw_line (*mask, gc, cnt, r, s - 1, r);
-    }
-
-  if (mask)
-    gdk_gc_destroy (gc);
-
-  gc = gdk_gc_new (parent);
-  gdk_draw_image (pixmap, gc, image, 0, 0, 0, 0, width, height);
-  gdk_gc_destroy (gc);
-  gdk_image_destroy (image);
-
-  return pixmap;
-}
-
 void
 toolbox_create (void)
 {
@@ -515,11 +386,9 @@ toolbox_create (void)
   gtk_container_add (GTK_CONTAINER (window), main_vbox);
   gtk_widget_show (main_vbox);
 
-  /*  allocate the colors for creating pixmaps  */
-  allocate_colors (main_vbox);
-
   /*  tooltips  */
   gimp_help_init ();
+
   if (!show_tool_tips)
     gimp_help_disable_tooltips ();
 
