@@ -1,5 +1,23 @@
 2000-03-24  Michael Natterer  <mitch@gimp.org>
 
+	* Makefile.am
+	* gimp1_0_splash.ppm: added
+	* gimp1_1_splash.ppm: removed
+
+	* gimp_splash.ppm: the image formerly known as gimp1_1_splash.ppm
+
+	* app/app_procs.c: load gimp_splash.ppm
+
+	The idea if shearing the data_dir between Gimp versions has
+	vanished, so this seems like the right thing to do (TM).
+
+	Keep the 1.0 splash around for sentimental reasons but don't
+	install it anymore.
+
+	* plug-ins/common/autocrop.c: indentation paranoia.
+	
+2000-03-24  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug_in.c (plug_in_proc_def_remove): pass FALSE to
 	plug_in_proc_def_destroy() so the proc_def structure gets actually
 	freed.

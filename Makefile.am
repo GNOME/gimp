@@ -103,7 +103,7 @@ EXTRA_DIST = \
 	unitrc					\
 	gimp_logo.ppm				\
 	gimp_splash.ppm				\
-	gimp1_1_splash.ppm			\
+	gimp1_0_splash.ppm			\
 	rmshm					\
 	user_install				\
 	user_install.bat			\
@@ -122,7 +122,6 @@ gimpdata_DATA = \
 	unitrc			 \
 	gimp_logo.ppm		 \
 	gimp_splash.ppm		 \
-	gimp1_1_splash.ppm	 \
 	ps-menurc
 
 gimpdata_SCRIPTS = user_install

@@ -162,7 +162,7 @@ splash_logo_load_size (GtkWidget *window)
   if (logo_pixmap)
     return TRUE;
 
-  g_snprintf (buf, sizeof(buf), "%s" G_DIR_SEPARATOR_S "gimp1_1_splash.ppm",
+  g_snprintf (buf, sizeof(buf), "%s" G_DIR_SEPARATOR_S "gimp_splash.ppm",
 	      gimp_data_directory ());
 
   fp = fopen (buf, "rb");
@@ -199,7 +199,7 @@ splash_logo_load (GtkWidget *window)
   if (logo_pixmap)
     return TRUE;
 
-  g_snprintf (buf, sizeof(buf), "%s" G_DIR_SEPARATOR_S "gimp1_1_splash.ppm",
+  g_snprintf (buf, sizeof(buf), "%s" G_DIR_SEPARATOR_S "gimp_splash.ppm",
 	      gimp_data_directory ());
 
   fp = fopen (buf, "rb");
