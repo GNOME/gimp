@@ -280,6 +280,12 @@ N_("When enabled, menus can be torn off.")
 #define CAN_CHANGE_ACCELS_BLURB \
 N_("When enabled, you can change keyboard shortcuts for menu items on the fly.")
 
+#define SAVE_ACCELS_BLURB \
+N_("Save changed keyboard shortcuts when the GIMP exits.")
+
+#define RESTORE_ACCELS_BLURB \
+N_("Restore saved keyboard shortcuts on each GIMP startup.")
+
 #define TEMP_PATH_BLURB \
 N_("Sets the temporary storage directory. Files will appear here " \
    "during the course of running the GIMP.  Most files will disappear " \

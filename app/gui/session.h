@@ -23,6 +23,7 @@
 void   session_init    (Gimp *gimp);
 void   session_restore (Gimp *gimp);
 void   session_save    (Gimp *gimp);
+void   session_clear   (Gimp *gimp);
 
 
 #endif  /*  __SESSION_H__  */

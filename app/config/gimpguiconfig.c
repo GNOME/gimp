@@ -66,6 +66,8 @@ enum
   PROP_SHOW_TOOL_TIPS,
   PROP_TEAROFF_MENUS,
   PROP_CAN_CHANGE_ACCELS,
+  PROP_SAVE_ACCELS,
+  PROP_RESTORE_ACCELS,
   PROP_LAST_OPENED_SIZE,
   PROP_MAX_NEW_IMAGE_SIZE,
   PROP_THEME_PATH,
@@ -170,6 +172,14 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                     "can-change-accels", CAN_CHANGE_ACCELS_BLURB,
                                     FALSE,
                                     0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAVE_ACCELS,
+                                    "save-accels", SAVE_ACCELS_BLURB,
+                                    TRUE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RESTORE_ACCELS,
+                                    "restore-accels", RESTORE_ACCELS_BLURB,
+                                    TRUE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_LAST_OPENED_SIZE,
                                 "last-opened-size", LAST_OPENED_SIZE_BLURB,
                                 0, 1024, 4,
@@ -260,6 +270,12 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_CAN_CHANGE_ACCELS:
       gui_config->can_change_accels = g_value_get_boolean (value);
       break;
+    case PROP_SAVE_ACCELS:
+      gui_config->save_accels = g_value_get_boolean (value);
+      break;
+    case PROP_RESTORE_ACCELS:
+      gui_config->restore_accels = g_value_get_boolean (value);
+      break;
     case PROP_LAST_OPENED_SIZE:
       gui_config->last_opened_size = g_value_get_int (value);
       break;
@@ -334,6 +350,12 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_CAN_CHANGE_ACCELS:
       g_value_set_boolean (value, gui_config->can_change_accels);
+      break;
+    case PROP_SAVE_ACCELS:
+      g_value_set_boolean (value, gui_config->save_accels);
+      break;
+    case PROP_RESTORE_ACCELS:
+      g_value_set_boolean (value, gui_config->restore_accels);
       break;
     case PROP_LAST_OPENED_SIZE:
       g_value_set_int (value, gui_config->last_opened_size);

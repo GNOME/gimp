@@ -91,8 +91,6 @@ static gboolean menus_initialized = FALSE;
 void
 menus_init (Gimp *gimp)
 {
-  gchar *filename;
-
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (menus_initialized == FALSE);
 
@@ -234,22 +232,12 @@ menus_init (Gimp *gimp)
                                    NULL, qmask_menu_update, TRUE,
                                    n_qmask_menu_entries,
                                    qmask_menu_entries);
-
-  filename = gimp_personal_rc_file ("menurc");
-  gtk_accel_map_load (filename);
-  g_free (filename);
 }
 
 void
 menus_exit (Gimp *gimp)
 {
-  gchar *filename;
-
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  filename = gimp_personal_rc_file ("menurc");
-  gtk_accel_map_save (filename);
-  g_free (filename);
 
   g_object_unref (global_menu_factory);
   global_menu_factory = NULL;
@@ -257,6 +245,44 @@ menus_exit (Gimp *gimp)
   g_signal_handlers_disconnect_by_func (gimp->config,
                                         menu_can_change_accels,
                                         NULL);
+}
+
+void
+menus_restore (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (GIMP_GUI_CONFIG (gimp->config)->restore_accels)
+    {
+      gchar *filename;
+
+      filename = gimp_personal_rc_file ("menurc");
+      gtk_accel_map_load (filename);
+      g_free (filename);
+    }
+}
+
+void
+menus_save (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (GIMP_GUI_CONFIG (gimp->config)->save_accels)
+    {
+      gchar *filename;
+
+      filename = gimp_personal_rc_file ("menurc");
+      gtk_accel_map_save (filename);
+      g_free (filename);
+    }
+}
+
+void
+menus_clear (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  g_print ("TODO: implement menus_clear()\n");
 }
 
 void

@@ -290,6 +290,8 @@ gui_restore (Gimp     *gimp,
 
   gimp->message_handler = GIMP_MESSAGE_BOX;
 
+  menus_restore (gimp);
+
   toolbox_item_factory = gimp_menu_factory_menu_new (global_menu_factory,
                                                      "<Toolbox>",
                                                      GTK_TYPE_MENU_BAR,
@@ -329,10 +331,8 @@ gui_post_init (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   if (GIMP_GUI_CONFIG (gimp->config)->show_tips)
-    {
-      gimp_dialog_factory_dialog_new (global_dialog_factory,
-                                      "gimp-tips-dialog", -1);
-    }
+    gimp_dialog_factory_dialog_new (global_dialog_factory,
+                                    "gimp-tips-dialog", -1);
 }
 
 void
@@ -561,6 +561,7 @@ gui_exit_callback (Gimp     *gimp,
   gimp->message_handler = GIMP_CONSOLE;
 
   session_save (gimp);
+  menus_save (gimp);
 
   if (GIMP_GUI_CONFIG (gimp->config)->save_device_status)
     gimp_devices_save (gimp);

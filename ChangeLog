@@ -1,3 +1,20 @@
+2003-04-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/gimpguiconfig.[ch]
+	* app/config/gimprc-blurbs.h: added "gboolean save_accels" and
+	"gboolean restore_accels".
+
+	* app/gui/menus.[ch]: added menus_restore(), menus_save() and
+	menus_clear().
+
+	* app/gui/session.[ch]: added session_clear().
+
+	* app/gui/gui.c: call menus_restore() and menus_save().
+
+	* app/gui/preferences-dialog.c: brought the full core config
+	options overkill to the GUI. Needs to be simplified. Cleaned
+	up the "Interface" page a bit.
+
 2003-04-07  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpeditselectiontool.c (selection_transform_segs):

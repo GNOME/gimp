@@ -236,6 +236,14 @@ session_save (Gimp *gimp)
   gimp_config_writer_finish (writer, "end of sessionrc", NULL);
 }
 
+void
+session_clear (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  g_print ("TODO: implement session_clear()\n");
+}
+
 
 /*  private functions  */
 

@@ -32,6 +32,9 @@ extern GimpMenuFactory *global_menu_factory;
 
 void   menus_init                   (Gimp            *gimp);
 void   menus_exit                   (Gimp            *gimp);
+void   menus_restore                (Gimp            *gimp);
+void   menus_save                   (Gimp            *gimp);
+void   menus_clear                  (Gimp            *gimp);
 
 void   menus_last_opened_add        (GimpItemFactory *item_factory,
                                      Gimp            *gimp);

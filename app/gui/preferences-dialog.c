@@ -42,6 +42,7 @@
 #include "widgets/gimppropwidgets.h"
 
 #include "gui.h"
+#include "menus.h"
 #include "resolution-calibrate-dialog.h"
 #include "session.h"
 
@@ -1092,13 +1093,13 @@ prefs_dialog_new (Gimp    *gimp,
 				     page_index++);
 
   /*  General  */
-  vbox2 = prefs_frame_new (_("General"), GTK_CONTAINER (vbox), FALSE);
+  vbox2 = prefs_frame_new (_("Previews"), GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add (config, "layer-previews",
                           _("_Enable Layer & Channel Previews"),
                           GTK_BOX (vbox2));
 
-  table = prefs_table_new (4, GTK_CONTAINER (vbox2), FALSE);
+  table = prefs_table_new (2, GTK_CONTAINER (vbox2), FALSE);
 
   prefs_enum_option_menu_add (config, "layer-preview-size", 0, 0,
                               _("_Layer & Channel Preview Size:"),
@@ -1106,9 +1107,6 @@ prefs_dialog_new (Gimp    *gimp,
   prefs_enum_option_menu_add (config, "navigation-preview-size", 0, 0,
                               _("_Navigation Preview Size:"),
                               GTK_TABLE (table), 1);
-  prefs_spin_button_add (config, "last-opened-size", 1.0, 5.0, 0,
-                         _("_Recent Documents List Size:"),
-                         GTK_TABLE (table), 3);
 
   /* Dialog Bahavior */
   vbox2 = prefs_frame_new (_("Dialog Behavior"), GTK_CONTAINER (vbox), FALSE);
@@ -1124,9 +1122,47 @@ prefs_dialog_new (Gimp    *gimp,
                           _("Enable _Tearoff Menus"),
                           GTK_BOX (vbox2));
 
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
+
+  prefs_spin_button_add (config, "last-opened-size", 1.0, 5.0, 0,
+                         _("Open _Recent Menu Size:"),
+                         GTK_TABLE (table), 3);
+
+  /* Keyboard Shortcuts */
+  vbox2 = prefs_frame_new (_("Keyboard Shortcuts"), GTK_CONTAINER (vbox), FALSE);
+
   prefs_check_button_add (config, "can-change-accels",
                           _("Dynamic _Keyboard Shortcuts"),
                           GTK_BOX (vbox2));
+  prefs_check_button_add (config, "save-accels",
+                          _("Save Keyboard Shortcuts on Exit"),
+                          GTK_BOX (vbox2));
+  prefs_check_button_add (config, "restore-accels",
+                          _("Restore Saved Keyboard Shortcuts on Start-up"),
+                          GTK_BOX (vbox2));
+
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  button = gtk_button_new_with_label (_("Save Keyboard Shortcuts Now"));
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (menus_save),
+                            gimp);
+
+  button = gtk_button_new_with_label (_("Clear Saved Keyboard Shortcuts Now"));
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (menus_clear),
+                            gimp);
 
   /* Window Positions */
   vbox2 = prefs_frame_new (_("Window Positions"), GTK_CONTAINER (vbox), FALSE);
@@ -1138,19 +1174,28 @@ prefs_dialog_new (Gimp    *gimp,
                           _("R_estore Saved Window Positions on Start-up"),
                           GTK_BOX (vbox2));
 
-  hbox = gtk_hbox_new (FALSE, 2);
+  hbox = gtk_hbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
-      
-  button = gtk_button_new_with_label (_("Clear Saved Window Positions Now"));
+
+  button = gtk_button_new_with_label (_("Save Window Positions Now"));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (gimp_dialog_factories_session_clear),
-                    NULL);
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (session_save),
+                            gimp);
+
+  button = gtk_button_new_with_label (_("Clear Saved Window Positions Now"));
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (session_clear),
+                            gimp);
 
 
   /*****************************/
