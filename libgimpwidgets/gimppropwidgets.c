@@ -38,7 +38,6 @@
 
 #include "gimpcolorpanel.h"
 #include "gimpdnd.h"
-#include "gimpenumwidgets.h"
 #include "gimpview.h"
 #include "gimppropwidgets.h"
 #include "gimpwidgets-constructors.h"

@@ -78,6 +78,8 @@ libgimpwidgets_2_0_la_sources = \
 	gimpcolordisplay.h	\
 	gimpcolordisplaystack.c	\
 	gimpcolordisplaystack.h	\
+	gimpenumwidgets.c	\
+	gimpenumwidgets.h	\
 	gimpcolorhexentry.c	\
 	gimpcolorhexentry.h	\
 	gimpcolornotebook.c	\
@@ -176,6 +178,7 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpdialog.h		\
 	gimpenumcombobox.h	\
 	gimpenumstore.h		\
+	gimpenumwidgets.h	\
 	gimpfileentry.h		\
 	gimpframe.h		\
 	gimphelpui.h		\

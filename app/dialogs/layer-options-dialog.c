@@ -32,7 +32,6 @@
 #include "text/gimptext.h"
 #include "text/gimptextlayer.h"
 
-#include "widgets/gimpenumwidgets.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "layer-options-dialog.h"

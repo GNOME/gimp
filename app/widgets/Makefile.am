@@ -125,8 +125,6 @@ libappwidgets_a_sources = \
 	gimpeditor.h			\
 	gimpenumaction.c		\
 	gimpenumaction.h		\
-	gimpenumwidgets.c		\
-	gimpenumwidgets.h		\
 	gimperrorconsole.c		\
 	gimperrorconsole.h		\
 	gimperrordialog.c		\

@@ -104,6 +104,13 @@ EXPORTS
 	gimp_enum_store_new_with_values_valist
 	gimp_enum_store_new_with_values
 	gimp_enum_store_set_stock_prefix
+	gimp_enum_radio_box_new 
+	gimp_enum_radio_box_new_with_range
+	gimp_enum_radio_frame_new
+	gimp_enum_radio_frame_new_with_range
+	gimp_enum_stock_box_new
+	gimp_enum_stock_box_new_with_range
+	gimp_enum_stock_box_set_child_padding
 	gimp_file_entry_get_filename
 	gimp_file_entry_get_type
 	gimp_file_entry_new

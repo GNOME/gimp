@@ -1,3 +1,28 @@
+2005-01-28  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/widgets/gimpenumwidgets.c
+	* app/widgets/gimpenumwidgets.h: magic-moved from here...
+
+	* libgimpwidgets/gimpenumwidgets.c
+	* libgimpwidgets/gimpenumwidgets.h: ...to here.
+
+	* app/dialogs/convert-dialog.c
+	* app/dialogs/layer-add-mask-dialog.c
+	* app/dialogs/layer-options-dialog.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c
+	* app/widgets/Makefile.am
+	* app/widgets/gimpbrusheditor.c
+	* app/widgets/gimpeditor.c
+	* app/widgets/gimppropwidgets.c
+	* app/widgets/gimptemplateeditor.c
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgets.def
+	* libgimpwidgets/gimpwidgets.h: all changed accordingly.
+	Still need to do devel-docs.
+
 2005-01-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/Makefile.am
@@ -25,7 +50,7 @@
 	* menus/dockable-menu.xml.in
 	* menus/image-menu.xml.in: changed accordingly.
 
-2005-01-26  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+2005-01-28  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* libgimp/gimpdrawablepreview.c: set preview bounds correctly
 	when previewed drawable extends beyond image edges, 

@@ -26,7 +26,6 @@
 
 #include "core/gimplayer.h"
 
-#include "widgets/gimpenumwidgets.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
 

@@ -44,6 +44,7 @@
 #include <libgimpwidgets/gimpdialog.h>
 #include <libgimpwidgets/gimpenumcombobox.h>
 #include <libgimpwidgets/gimpenumstore.h>
+#include <libgimpwidgets/gimpenumwidgets.h>
 #include <libgimpwidgets/gimpfileentry.h>
 #include <libgimpwidgets/gimpframe.h>
 #include <libgimpwidgets/gimphelpui.h>

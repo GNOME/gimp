@@ -34,7 +34,6 @@
 #include "core/gimpcontext.h"
 
 #include "gimpbrusheditor.h"
-#include "gimpenumwidgets.h"
 #include "gimpview.h"
 
 #include "gimp-intl.h"
