@@ -1,3 +1,8 @@
+2000-05-06  Nick Lamb  <njl195@zepler.org.uk>
+
+	* plug-ins/bmp/bmpread.c: Fixed long standing "RLE" bug, but
+	without really understanding the code :(
+
 2000-05-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/menus.c (menus_reorder_plugins): no need to reorder

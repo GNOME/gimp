@@ -466,8 +466,9 @@ ReadImage (FILE   *fd,
 		if (((guchar) buf[0]==0) && ((guchar) buf[1]==2))
 		  /* Deltarecord */
 		  {
-		    xpos += (guchar) buf[2];
-		    ypos += (guchar) buf[3];
+		    egal = ReadOK (fd, buf, 2);
+		    xpos += (guchar) buf[0];
+		    ypos -= (guchar) buf[1];
 		  }
 	      }
 	    break;
