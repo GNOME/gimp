@@ -1,3 +1,11 @@
+2005-02-19  Manish Singh  <yosh@gimp.org>
+
+	Merged from HEAD:
+
+	* plug-ins/pygimp/plug-ins/py-slice.py: Ignore guides at or beyond
+	image bounds, since those aren't valid slicing bounds. Fixes bug
+	#167843.
+
 2005-02-20  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD:
