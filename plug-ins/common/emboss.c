@@ -83,11 +83,9 @@ static void run   (const gchar      *name,
                    gint             *nretvals,
                    GimpParam       **retvals);
 
-static gint emboss            (GimpDrawable *drawable);
-static gint emboss_dialog     (GimpDrawable *drawable);
-
-static void emboss_do_preview (GimpDrawable *drawable,
+static gint emboss            (GimpDrawable *drawable,
                                GimpPreview  *preview);
+static gint emboss_dialog     (GimpDrawable *drawable);
 
 static inline void EmbossInit (gdouble       azimuth,
                                gdouble       elevation,
@@ -189,7 +187,7 @@ run (const gchar      *name,
       evals.depth     = param[5].data.d_int32;
       evals.embossp   = param[6].data.d_int32;
 
-      if (emboss (drawable)==-1)
+      if (emboss (drawable, NULL)==-1)
         {
           rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
           break;
@@ -199,7 +197,7 @@ run (const gchar      *name,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_get_data ("plug_in_emboss", &evals);
       /* use this image and drawable, even with last args */
-      if (emboss (drawable)==-1)
+      if (emboss (drawable, NULL)==-1)
         {
           rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
         }
@@ -325,7 +323,8 @@ EmbossRow (guchar *src,
 }
 
 static gint
-emboss (GimpDrawable *drawable)
+emboss (GimpDrawable *drawable,
+        GimpPreview  *preview)
 {
   GimpPixelRgn  src, dst;
   gint          p_update;
@@ -335,29 +334,44 @@ emboss (GimpDrawable *drawable)
   gint          bypp, rowsize, has_alpha;
   guchar       *srcbuf, *dstbuf;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  if (preview)
+    {
+      gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_size (preview, &width, &height);
+      x2 = x1 + width;
+      y2 = y1 + height;
+    }
+  else
+    {
+      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-  /* expand the bounds a little */
-  x1 = MAX (0, x1 - evals.depth);
-  y1 = MAX (0, y1 - evals.depth);
-  x2 = MIN (drawable->width, x2 + evals.depth);
-  y2 = MIN (drawable->height, y2 + evals.depth);
+      /* expand the bounds a little */
+      x1 = MAX (0, x1 - evals.depth);
+      y1 = MAX (0, y1 - evals.depth);
+      x2 = MIN (drawable->width, x2 + evals.depth);
+      y2 = MIN (drawable->height, y2 + evals.depth);
 
-  width = x2 - x1;
-  height = y2 - y1;
+      width = x2 - x1;
+      height = y2 - y1;
+    }
   bypp = drawable->bpp;
   p_update = height / 20;
   rowsize = width * bypp;
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
-  gimp_pixel_rgn_init (&src, drawable, x1, y1, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&dst, drawable, x1, y1, width, height, TRUE, TRUE);
+  gimp_pixel_rgn_init (&src, drawable,
+                       x1, y1, width, height,
+                       FALSE, FALSE);
+  gimp_pixel_rgn_init (&dst, drawable,
+                       x1, y1, width, height,
+                       preview == NULL, TRUE);
 
   srcbuf = g_new0 (guchar, rowsize * 3);
   dstbuf = g_new0 (guchar, rowsize);
 
   EmbossInit (DtoR(evals.azimuth), DtoR(evals.elevation), evals.depth);
-  gimp_progress_init (_("Emboss"));
+  if (!preview)
+    gimp_progress_init (_("Emboss"));
 
   gimp_tile_cache_ntiles ((width + gimp_tile_width () - 1) / gimp_tile_width ());
 
@@ -377,7 +391,7 @@ emboss (GimpDrawable *drawable)
 
   for (y = 0; y < height - 2; y++)
     {
-      if (y % p_update == 0)
+      if ((y % p_update == 0) && !preview)
           gimp_progress_update ((gdouble) y / (gdouble) height);
 
       gimp_pixel_rgn_get_rect (&src, srcbuf, x1, y1+y, width, 3);
@@ -385,15 +399,24 @@ emboss (GimpDrawable *drawable)
                  dstbuf, width, bypp, has_alpha);
      gimp_pixel_rgn_set_row (&dst, dstbuf, x1, y1+y+1, width);
   }
-  gimp_progress_update (1.0);
+
+  if (preview)
+    {
+      gimp_drawable_preview_draw_region (GIMP_DRAWABLE_PREVIEW (preview),
+                                         &dst);
+    }
+  else
+    {
+      gimp_progress_update (1.0);
+
+      gimp_drawable_flush (drawable);
+      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+      gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
+      gimp_displays_flush ();
+    }
 
   g_free (srcbuf);
   g_free (dstbuf);
-
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
-  gimp_displays_flush ();
 
   return 0;
 }
@@ -427,11 +450,11 @@ emboss_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_aspect_preview_new (drawable, NULL);
+  preview = gimp_drawable_preview_new (drawable, &evals.preview);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",
-                            G_CALLBACK (emboss_do_preview),
+                            G_CALLBACK (emboss),
                             drawable);
 
   frame = gimp_int_radio_group_new (TRUE, _("Function"),
@@ -503,52 +526,8 @@ emboss_dialog (GimpDrawable *drawable)
   gtk_widget_destroy (dialog);
 
   if (run)
-    return emboss (drawable);
+    return emboss (drawable, NULL);
   else
     return -1;
 }
 
-static void
-emboss_do_preview (GimpDrawable *drawable,
-                   GimpPreview  *preview)
-{
-  guchar  *dst, *c, *src;
-  gint     y, rowsize;
-  gint     width, height, bpp;
-  gboolean has_alpha;
-
-  gimp_preview_get_size (preview, &width, &height);
-  bpp = gimp_drawable_bpp (drawable->drawable_id);
-  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
-  src = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
-                                          &width, &height, &bpp);
-
-  rowsize = width * bpp;
-
-  dst = g_new (guchar, rowsize * height);
-  c = g_new (guchar, rowsize * bpp);
-  memcpy (c, src, rowsize);
-  memcpy (c + rowsize, src, rowsize * 2);
-  EmbossInit (DtoR (evals.azimuth), DtoR (evals.elevation),
-              MAX (1, evals.depth * width / drawable->width));
-
-  EmbossRow (c, evals.embossp ? (guchar *) 0 : c,
-             dst, width, bpp, has_alpha);
-
-  memcpy (c, src + ((height-2) * rowsize), rowsize * 2);
-  memcpy (c + (rowsize * 2), src + ((height - 1) * rowsize), rowsize);
-  EmbossRow (c, evals.embossp ? (guchar *) 0 : c,
-             dst + rowsize * (height-1), width, bpp, has_alpha);
-  g_free (c);
-
-  for (y = 0, c = src; y < height - 2; y++, c += rowsize)
-    {
-      EmbossRow (c, evals.embossp ? (guchar *) 0 : c,
-                 dst + rowsize * (y+1), width, bpp, has_alpha);
-    }
-
-  gimp_preview_draw_buffer (preview, dst, rowsize);
-
-  g_free (dst);
-  g_free (src);
-}

@@ -1,3 +1,9 @@
+2004-10-14  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/emboss.c: use a GimpDrawablePreview instead of a
+	GimpAspectPreview, since this plug-in is somewhat edge-oriented and
+	this makes the code simpler ;)
+
 2004-10-14  Michael Natterer  <mitch@gimp.org>
 
 	* themes/Default/images/stock-gradient-bilinear-16.png
