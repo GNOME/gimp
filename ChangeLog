@@ -1,3 +1,8 @@
+2004-04-15  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/paint-funcs.h: fixed declaration of
+	initial_region() (bug #140115).
+
 2004-04-14  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/film.c: fixed typo (bug #140039).

@@ -356,7 +356,7 @@ void  initial_region                      (PixelRegion *, PixelRegion *,
 					   gint,
                                            GimpLayerModeEffects,
                                            gboolean *,
-                                           CombinationMode);
+                                           InitialMode);
 
 void  combine_regions                     (PixelRegion *, PixelRegion *,
 					   PixelRegion *, PixelRegion *,
