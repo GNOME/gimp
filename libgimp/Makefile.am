@@ -169,7 +169,7 @@ gimpinclude_HEADERS = @STRIP_BEGIN@ \
 	gimpmenu.h			\
 @STRIP_END@
 
-EXTRA_HEADERS +=
+EXTRA_HEADERS =
 
 libgimp_1_3_la_LDFLAGS = @STRIP_BEGIN@ \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\

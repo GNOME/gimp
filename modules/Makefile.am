@@ -28,7 +28,7 @@ libexec_LTLIBRARIES = @STRIP_BEGIN@ \
 ##	libcolorsel_gtk.la		\
 ##	libcolorsel_water.la		\
 
-EXTRA_LTLIBRARIES +=
+EXTRA_LTLIBRARIES =
 
 ## libcolorsel_gtk_la_SOURCES = colorsel_gtk.c
 ## libcolorsel_gtk_la_LDFLAGS = -avoid-version -module

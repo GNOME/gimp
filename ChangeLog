@@ -1,3 +1,16 @@
+2001-12-01  Daniel Egger  <degger@fhm.edu>
+
+	* app/core/Makefile.am
+	* libgimp/Makefile.am
+	* libgimpbase/Makefile.am
+	* libgimpcolor/Makefile.am
+	* libgimpmath/Makefile.am
+	* libgimpwidgets/Makefile.am
+	* modules/Makefile.am
+	* themes/Default/Makefile.am: Don't try to concatenate something
+	to a variable not used before but simply assign it. Shuts up
+	annoying automake warnings for me.
+
 2001-12-01  Abel Cheung  <maddog@linux.org.hk>
 
         * tips/{Makefile.am,makefile.mingw}: Added gimp_tips.zh_TW.txt

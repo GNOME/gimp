@@ -77,7 +77,7 @@ libgimpwidgetsinclude_HEADERS = @STRIP_BEGIN@ \
 	gimpunitmenu.h		\
 @STRIP_END@
 
-EXTRA_HEADERS +=
+EXTRA_HEADERS =
 
 libgimpwidgets_1_3_la_LDFLAGS = @STRIP_BEGIN@ \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\

@@ -167,7 +167,7 @@ EXTRA_DIST = \
 #
 # setup autogeneration dependancies
 gen_sources = xgen-gmh xgen-gmc
-CLEANFILES += $(gen_sources)
+CLEANFILES = $(gen_sources)
 
 $(srcdir)/stamp-gimpmarshal.h: $(srcdir)/gimpmarshal.list gimpmarshal.h
 	glib-genmarshal --prefix=gimp_marshal $(srcdir)/gimpmarshal.list --header >> xgen-gmh \
