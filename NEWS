@@ -47,6 +47,10 @@ Bugs fixed in GIMP 2.0pre3
 - 133099: Duplicate PDB entries problem (Mitch)
 - 133122: Disallow renaming of layer masks and some floating selections (Mitch)
 - 130118: Allow non-UTF8 characters in the GIMP home directory (Mitch)
+- 122026: Workaround a bug in gdk_draw_segments() (David Odin)
+- 133280: Remove deleted scripts from the menu (Mitch)
+- 133180: Sort menu entries for save and load procedures (Mitch)
+- 131563: Use percentages for zoom ratios (Simon, Sven)
 
 Other contributions:
   Manish Singh, Tor Lillqvist, Jakub Steiner, Michael Natterer,
