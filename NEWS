@@ -6,6 +6,40 @@ are being added. Very soon now, the next stable GIMP release, GIMP 2.2,
 will emerge out of this.
 
 
+Overview of Changes in GIMP 2.1.6
+=================================
+
+- Added more drawable previews (Color Exchange, DOG, Deinterlace,
+  Engrave, Oilify, Shift).
+
+- Added new preview widget that shows a scaled view of the full
+  drawable. Use it for Solid Noise and Plasma.
+
+- Added "Open as Layer" functionality to the menus.
+
+- Implemented the recent-file-spec for shared storage of a list of
+  recently used files (really URIs).
+
+- Cleaned up plug-in procedure handling. Added the possibility to let
+  plug-ins and scripts run using a private GimpContext.
+
+- Added multi-line text entries for Script-Fu and Gimp-Python.
+
+- Cleaned up PDB API for brushes, gradients, palettes and patterns.
+  Deprecated lots of functions and added saner replacements.
+
+- Let GimpView handle pixbuf previews. Added a (themable) drop shadow
+  to image-file previews.
+
+
+Contributors:
+
+   Michael Natterer, Sven Neumann, David Odin, Maurits Rijk, Dave Neary,
+   Manish Singh, Robert Oegren, Kevin Cozens, Kevin Turner, Dov Grobgeld,
+   Joao S. O. Bueno
+
+
+
 Overview of Changes in GIMP 2.1.5
 =================================
 
