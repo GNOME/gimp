@@ -187,25 +187,25 @@ static gboolean         FP_Range_Change_Events (GtkWidget *widget,
                                                 FP_Params *current);
 
 static void      Create_A_Preview        (GtkWidget  **,
-                                   GtkWidget  **,
-                                   int,
-                                   int           );
+                                          GtkWidget  **,
+                                          int,
+                                          int           );
 
 static void      Create_A_Table_Entry    (GtkWidget  **,
-                                   GtkWidget  *,
-                                   const gchar *);
+                                          GtkWidget  *,
+                                          const gchar *);
 
 static void Check_Button_In_A_Box       (GtkWidget     *,
-                                  const gchar   *label,
-                                  GtkSignalFunc  func,
-                                  gpointer       data,
-                                  int            clicked);
+                                         const gchar   *label,
+                                         GtkSignalFunc  func,
+                                         gpointer       data,
+                                         int            clicked);
 
 static void Frames_Check_Button_In_A_Box (GtkWidget     *,
-                                   const gchar   *label,
-                                   GtkSignalFunc  func,
-                                   GtkWidget     *frame,
-                                   int            clicked);
+                                          const gchar   *label,
+                                          GtkSignalFunc  func,
+                                          GtkWidget     *frame,
+                                          int            clicked);
 
 
 #define RESPONSE_RESET 1
@@ -466,44 +466,36 @@ fp (GimpDrawable *drawable)
 static GtkWidget *
 fp_create_bna (void)
 {
-  GtkWidget *frame, *blabel, *alabel, *bframe, *aframe, *table;
+  GtkWidget *table;
+  GtkWidget *label;
+  GtkWidget *bframe, *aframe;
 
   Create_A_Preview (&origPreview, &bframe, reduced->width, reduced->height);
   Create_A_Preview (&curPreview, &aframe, reduced->width, reduced->height);
-
-  frame = gtk_frame_new (_("Before and After"));
-
-  /* All the previews */
-  alabel = gtk_label_new (_("Current:"));
-  gtk_widget_show (alabel);
-  gtk_misc_set_alignment (GTK_MISC (alabel), 0.0, 0.5);
-
-  blabel = gtk_label_new (_("Original:"));
-  gtk_widget_show (blabel);
-  gtk_misc_set_alignment (GTK_MISC (blabel), 0.0, 0.5);
 
   table = gtk_table_new (2, 2, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
 
-  gtk_container_add (GTK_CONTAINER (frame), table);
-
-  gtk_table_attach (GTK_TABLE (table), blabel, 0, 1, 0, 1,
-                    0, GTK_EXPAND | GTK_FILL, 0, 0);
-
-  gtk_table_attach (GTK_TABLE (table), alabel, 1, 2, 0, 1,
-                    0, GTK_EXPAND | GTK_FILL, 0, 0);
+  label = gtk_label_new (_("Original:"));
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_widget_show (label);
 
   gtk_table_attach (GTK_TABLE (table), bframe, 0, 1, 1, 2,
-                    GTK_EXPAND, GTK_EXPAND, 0, 0);
+                    GTK_EXPAND, 0, 0, 0);
+
+  label = gtk_label_new (_("Current:"));
+  gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1,
+                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_widget_show (label);
 
   gtk_table_attach (GTK_TABLE (table), aframe, 1, 2, 1, 2,
-                    GTK_EXPAND, GTK_EXPAND, 0, 0);
+                    GTK_EXPAND, 0, 0, 0);
 
   gtk_widget_show (table);
-  gtk_widget_show (frame);
 
-  return frame;
+  return table;
 }
 
 /* close a sub dialog (from window manager) by simulating toggle click */
@@ -1697,7 +1689,7 @@ fp_render_preview(GtkWidget *preview,
   gint RH = reduced->height;
   gint backupP[3], P[3], tempSat[JUDGE_BY][256];
 
-  a = g_new(guchar, 4*RW*RH);
+  a = g_new (guchar, 4*RW*RH);
 
   if (changewhat==SATURATION)
     for (k=0; k<256; k++) {
@@ -1784,12 +1776,13 @@ fp_render_preview(GtkWidget *preview,
         a[(i * RW + j) * 4 + 3] = 255;
     }
   }
+
   gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
                           0, 0, RW, RH,
                           GIMP_RGBA_IMAGE,
                           a,
                           RW * 4);
-  free (a);
+  g_free (a);
 }
 
 static void
@@ -1890,7 +1883,6 @@ fp_range_preview_spill (GtkWidget *preview,
 {
   gint   i, j;
   guchar data[256 * RANGE_HEIGHT * 3];
-  
 
   for (i = 0; i < RANGE_HEIGHT; i++)
     {

@@ -1,3 +1,8 @@
+2005-01-03  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/fp.c: removed GtkFrame from dialog and replaced
+	a call to free() by g_free().
+
 2005-01-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimpbrushcore.c
