@@ -1,3 +1,8 @@
+Sun Sep 26 04:18:48 MEST 1999  Jens Lautenbacher <jens@tellux.de>
+                               Sven Neumann <sven@gimp.org>
+
+	* app/gimpcontextpreview.[ch]: animate brush_pipes in the popup 
+
 Sat Sep 25 23:40:25 MEST 1999  Jens Lautenbacher <jens@tellux.de>
                                Sven Neumann <sven@gimp.org>
 

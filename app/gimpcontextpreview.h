@@ -53,6 +53,8 @@ struct _GimpContextPreview
   GimpContextPreviewType   type;               /*  GCP_BRUSH|GCP_PATTERN|GCP_GRADIENT  */
   gint                     width;              /*  preview width                       */
   gint                     height;             /*  preview_height                      */
+  gint                     popup_width;        /*  popup preview width                 */
+  gint                     popup_height;       /*  popup preview_height                */
   gboolean                 show_popup;         /*  popup a larger preview on press     */
   gboolean                 show_tooltips;      /*  install tooltips showing the name   */
   gboolean                 drag_source;        /*  make the preview a drag_source      */

@@ -35,14 +35,15 @@
 #include "patterns.h"
 #include "temp_buf.h"
 
-/*  the pixmap for the scale_indicator  */
-#define scale_indicator_width 7
-#define scale_indicator_height 7
+/*  the pixmaps for the [scale|pipe]_indicators  */
+#define indicator_width 7
+#define indicator_height 7
 
-#define WHT {255,255,255}
-#define BLK {  0,  0,  0}
+#define WHT {255, 255, 255}
+#define BLK {  0,   0,   0}
+#define RED {255, 127, 127}
 
-static guchar scale_indicator_bits[7][7][3] = 
+static unsigned char scale_indicator_bits[7][7][3] = 
 {
   { WHT, WHT, WHT, WHT, WHT, WHT, WHT },
   { WHT, WHT, WHT, BLK, WHT, WHT, WHT },
@@ -52,6 +53,29 @@ static guchar scale_indicator_bits[7][7][3] =
   { WHT, WHT, WHT, BLK, WHT, WHT, WHT },
   { WHT, WHT, WHT, WHT, WHT, WHT, WHT }
 };
+
+static unsigned char pipe_indicator_bits[7][7][3] = 
+{
+  { WHT, WHT, WHT, WHT, WHT, WHT, WHT },
+  { WHT, WHT, WHT, WHT, WHT, WHT, RED },
+  { WHT, WHT, WHT, WHT, WHT, RED, RED },
+  { WHT, WHT, WHT, WHT, RED, RED, RED },
+  { WHT, WHT, WHT, RED, RED, RED, RED },
+  { WHT, WHT, RED, RED, RED, RED, RED },
+  { WHT, RED, RED, RED, RED, RED, RED }
+};
+
+static unsigned char scale_pipe_indicator_bits[7][7][3] = 
+{
+  { WHT, WHT, WHT, WHT, WHT, WHT, WHT },
+  { WHT, WHT, WHT, BLK, WHT, WHT, RED },
+  { WHT, WHT, WHT, BLK, WHT, RED, RED },
+  { WHT, BLK, BLK, BLK, BLK, BLK, RED },
+  { WHT, WHT, WHT, BLK, RED, RED, RED },
+  { WHT, WHT, RED, BLK, RED, RED, RED },
+  { WHT, RED, RED, RED, RED, RED, RED }
+};
+
 
 /*  size of the gradient popup  */
 #define GRADIENT_POPUP_WIDTH  128
@@ -68,6 +92,8 @@ static guchar scale_indicator_bits[7][7][3] =
 /*  shared widgets for the popups  */
 static GtkWidget *gcp_popup = NULL;
 static GtkWidget *gcp_popup_preview = NULL;
+static guint gcp_pipe_timer = 0;
+static guint gcp_pipe_index = 0;
 
 /*  dnd stuff  */
 static GtkWidget *gcp_drag_window = NULL;
@@ -111,6 +137,7 @@ static void     gimp_context_preview_drag_begin           (GtkWidget *,
 static void     gimp_context_preview_draw_brush           (GimpContextPreview *);
 static void     gimp_context_preview_draw_brush_popup     (GimpContextPreview *);
 static void     gimp_context_preview_draw_brush_drag      (GimpContextPreview *);
+static gint     gimp_context_preview_animate_pipe         (GimpContextPreview *);
 static void     gimp_context_preview_draw_pattern         (GimpContextPreview *);
 static void     gimp_context_preview_draw_pattern_popup   (GimpContextPreview *);
 static void     gimp_context_preview_draw_pattern_drag    (GimpContextPreview *);
@@ -120,7 +147,7 @@ static void     gimp_context_preview_draw_gradient_drag   (GimpContextPreview *)
 
 static gint brush_dirty_callback  (GimpBrush *, GimpContextPreview *);
 static gint brush_rename_callback (GimpBrush *, GimpContextPreview *);
-static void draw_brush            (GtkPreview *, GimpBrush*, int, int);
+static void draw_brush            (GtkPreview *, GimpBrush*, int, int, gboolean);
 static void draw_pattern          (GtkPreview *, GPattern*, int, int);
 static void draw_gradient         (GtkPreview *, gradient_t*, int, int);
 
@@ -170,6 +197,8 @@ gimp_context_preview_init (GimpContextPreview *gcp)
   gcp->type = GCP_LAST;
   gcp->width = 0;
   gcp->height = 0;
+  gcp->popup_width = 0;
+  gcp->popup_height = 0;
   gcp->show_popup = FALSE;
   gcp->show_tooltips = FALSE;
   gcp->drag_source = FALSE;
@@ -342,7 +371,6 @@ gimp_context_preview_popup_open (GimpContextPreview *gcp,
 {
   gint x_org, y_org;
   gint scr_w, scr_h;
-  gint width, height;
 
   g_return_if_fail (gcp != NULL);
   if (!gcp->data)
@@ -353,27 +381,46 @@ gimp_context_preview_popup_open (GimpContextPreview *gcp,
     case GCP_BRUSH:
       {
 	GimpBrush *brush = GIMP_BRUSH (gcp->data);
-	width  = brush->mask->width;
-	height = brush->mask->height;
+	gcp->popup_width  = brush->mask->width;
+	gcp->popup_height = brush->mask->height;
+
+	if (GIMP_IS_BRUSH_PIPE (brush) && GIMP_BRUSH_PIPE (brush)->nbrushes > 1)
+	  {
+	    GimpBrushPipe *pipe = GIMP_BRUSH_PIPE (brush);
+	    gint i;
+
+	    for (i = 1; i < pipe->nbrushes; i++)
+	      {
+		brush = GIMP_BRUSH (pipe->brushes[i]);
+		gcp->popup_width = MAX (gcp->popup_width, brush->mask->width);
+		gcp->popup_height = MAX (gcp->popup_height, brush->mask->height);
+	      }
+	  }
+	else if (gcp->popup_width <= gcp->width && gcp->popup_height <= gcp->height)
+	  {    
+	    g_print ("no reason\n"); 
+	    return;
+	  }
       }
       break;
     case GCP_PATTERN:
       {
 	GPattern *pattern = (GPattern*)gcp->data;
-	width  = pattern->mask->width;
-	height = pattern->mask->height;
+	gcp->popup_width  = pattern->mask->width;
+	gcp->popup_height = pattern->mask->height;
+	if (gcp->popup_width <= gcp->width && gcp->popup_height <= gcp->height)
+	  return;      
       }
       break;
     case GCP_GRADIENT:
-      width  = GRADIENT_POPUP_WIDTH;
-      height = GRADIENT_POPUP_HEIGHT;
-      break;
-    default:
+      gcp->popup_width  = GRADIENT_POPUP_WIDTH;
+      gcp->popup_height = GRADIENT_POPUP_HEIGHT;
+      if (gcp->popup_width <= gcp->width && gcp->popup_height <= gcp->height)
+	return;
+     break;
+     default:
       return;
     }
-
-  if (width <= gcp->width && height <= gcp->height)
-    return;
 
   /* make sure the popup exists and is not visible */
   if (gcp_popup == NULL)
@@ -403,19 +450,24 @@ gimp_context_preview_popup_open (GimpContextPreview *gcp,
   gdk_window_get_origin (GTK_WIDGET (gcp)->window, &x_org, &y_org);
   scr_w = gdk_screen_width ();
   scr_h = gdk_screen_height ();
-  x = x_org + x - (width >> 1);
-  y = y_org + y - (height >> 1);
+  x = x_org + x - (gcp->popup_width >> 1);
+  y = y_org + y - (gcp->popup_height >> 1);
   x = (x < 0) ? 0 : x;
   y = (y < 0) ? 0 : y;
-  x = (x + width > scr_w) ? scr_w - width : x;
-  y = (y + height > scr_h) ? scr_h - height : y;
-  gtk_preview_size (GTK_PREVIEW (gcp_popup_preview), width, height);
+  x = (x + gcp->popup_width > scr_w) ? scr_w - gcp->popup_width : x;
+  y = (y + gcp->popup_height > scr_h) ? scr_h - gcp->popup_height : y;
+  gtk_preview_size (GTK_PREVIEW (gcp_popup_preview), gcp->popup_width, gcp->popup_height);
   gtk_widget_popup (gcp_popup, x, y);
 
   switch (gcp->type)
     {
-    case GCP_BRUSH:
+    case GCP_BRUSH:      
       gimp_context_preview_draw_brush_popup (gcp);
+      if (GIMP_IS_BRUSH_PIPE (gcp->data) && (GIMP_BRUSH_PIPE (gcp->data)->nbrushes > 1))
+	{
+	  gcp_pipe_index = 0;
+	  gcp_pipe_timer = gtk_timeout_add (300, (GtkFunction)gimp_context_preview_animate_pipe, gcp);
+	}
       break;
     case GCP_PATTERN:
       gimp_context_preview_draw_pattern_popup (gcp);
@@ -428,10 +480,12 @@ gimp_context_preview_popup_open (GimpContextPreview *gcp,
     }  
   gtk_widget_queue_draw (gcp_popup_preview);
 }
-
+  
 static void
 gimp_context_preview_popup_close ()
 {
+  if (gcp_pipe_timer > 0)
+    gtk_timeout_remove (gcp_pipe_timer);
   if (gcp_popup != NULL)
     gtk_widget_hide (gcp_popup);
 }
@@ -508,7 +562,8 @@ gimp_context_preview_drag_begin (GtkWidget      *widget,
 static void draw_brush (GtkPreview *preview,
 			GimpBrush  *brush,
 			gint        width,
-			gint        height)
+			gint        height,
+			gboolean    is_popup)
 {
   gboolean scale = FALSE;
   gint brush_width, brush_height;
@@ -520,7 +575,7 @@ static void draw_brush (GtkPreview *preview,
 
   mask_buf = brush->mask;
   if (GIMP_IS_BRUSH_PIXMAP (brush))
-    pixmap_buf = GIMP_BRUSH_PIXMAP(brush)->pixmap_mask;
+    pixmap_buf = GIMP_BRUSH_PIXMAP (brush)->pixmap_mask;
   brush_width = mask_buf->width;
   brush_height = mask_buf->height;
 
@@ -594,14 +649,25 @@ static void draw_brush (GtkPreview *preview,
 
   if (scale)
     {
-      offset_x = width - scale_indicator_width - 1;
-      offset_y = height - scale_indicator_height - 1;
-      for (y = 0; y < scale_indicator_height; y++)
-	gtk_preview_draw_row (preview, scale_indicator_bits[y][0],
-			      offset_x, offset_y + y, scale_indicator_width);
+      offset_x = width - indicator_width - 1;
+      offset_y = height - indicator_height - 1;
+      for (y = 0; y < indicator_height; y++)
+	(GIMP_IS_BRUSH_PIPE (brush) && GIMP_BRUSH_PIPE (brush)->nbrushes > 1) ?
+	  gtk_preview_draw_row (preview, scale_pipe_indicator_bits[y][0],
+				offset_x, offset_y + y, indicator_width) :
+	  gtk_preview_draw_row (preview, scale_indicator_bits[y][0],
+				offset_x, offset_y + y, indicator_width);
       temp_buf_free (mask_buf);
       if (GIMP_IS_BRUSH_PIXMAP (brush))
 	temp_buf_free (pixmap_buf);
+    }
+  else if (!is_popup && GIMP_IS_BRUSH_PIPE (brush) && GIMP_BRUSH_PIPE (brush)->nbrushes > 1)
+    {
+      offset_x = width - indicator_width - 1;
+      offset_y = height - indicator_height - 1;
+      for (y = 0; y < indicator_height; y++)
+	gtk_preview_draw_row (preview, pipe_indicator_bits[y][0],
+			      offset_x, offset_y + y, indicator_width);
     }
 
   g_free (buf);
@@ -616,7 +682,7 @@ gimp_context_preview_draw_brush_popup (GimpContextPreview *gcp)
 
   brush = GIMP_BRUSH (gcp->data);
   draw_brush (GTK_PREVIEW (gcp_popup_preview), brush, 
-	      brush->mask->width, brush->mask->height);
+	      gcp->popup_width, gcp->popup_height, TRUE);
 }
 
 static void
@@ -630,7 +696,7 @@ gimp_context_preview_draw_brush_drag (GimpContextPreview *gcp)
   gtk_preview_size (GTK_PREVIEW (gcp_drag_preview), 
 		    DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);      
   draw_brush (GTK_PREVIEW (gcp_drag_preview), brush, 
-	      DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);
+	      DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE, FALSE);
 }
 
 static void
@@ -641,7 +707,29 @@ gimp_context_preview_draw_brush (GimpContextPreview *gcp)
   g_return_if_fail (gcp != NULL && GIMP_IS_BRUSH (gcp->data));
 
   brush = GIMP_BRUSH (gcp->data);
-  draw_brush (GTK_PREVIEW (gcp), brush, gcp->width, gcp->height);
+  draw_brush (GTK_PREVIEW (gcp), brush, gcp->width, gcp->height, FALSE);
+}
+
+
+static gint
+gimp_context_preview_animate_pipe (GimpContextPreview *gcp)
+{
+  GimpBrushPipe *pipe;
+  GimpBrush *brush;
+
+  g_return_val_if_fail (gcp != NULL && GIMP_IS_BRUSH_PIPE (gcp->data), FALSE);
+  if (gcp_popup != NULL && !GTK_WIDGET_VISIBLE (gcp_popup)) 
+    return (FALSE);
+
+  pipe = GIMP_BRUSH_PIPE (gcp->data);
+  if (++gcp_pipe_index >= pipe->nbrushes)
+    gcp_pipe_index = 0;
+  brush = GIMP_BRUSH (pipe->brushes[gcp_pipe_index]);
+  draw_brush (GTK_PREVIEW (gcp_popup_preview), brush,
+	      gcp->popup_width, gcp->popup_height, TRUE);
+  gtk_widget_draw (gcp_popup_preview, NULL);
+  
+  return (TRUE);
 }
 
 /*  brush callbacks  */
@@ -723,7 +811,7 @@ gimp_context_preview_draw_pattern_popup (GimpContextPreview *gcp)
 
   pattern = (GPattern*)(gcp->data);
   draw_pattern (GTK_PREVIEW (gcp_popup_preview), pattern, 
-		pattern->mask->width, pattern->mask->height);
+		gcp->popup_width, gcp->popup_height);
 }
 
 static void
@@ -822,7 +910,7 @@ gimp_context_preview_draw_gradient_popup (GimpContextPreview *gcp)
   
   gradient = (gradient_t*)(gcp->data);
   draw_gradient (GTK_PREVIEW (gcp_popup_preview), gradient, 
-		 GRADIENT_POPUP_WIDTH, GRADIENT_POPUP_HEIGHT);
+		 gcp->popup_width, gcp->popup_height);
 }
 
 static void
