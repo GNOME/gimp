@@ -82,13 +82,6 @@
           </entry>
 	</row>
  	<row>
-	  <entry><filename>etc</filename></entry>
-	  <entry>
-            Configuration files that get installed with the
-            <application>GIMP</application>.
-          </entry>
-	</row>
- 	<row>
 	  <entry><filename>libgimp</filename></entry>
 	  <entry>
             The main <application>GIMP</application> library. It provides the
@@ -344,7 +337,7 @@
 	  <row>
 	    <entry><filename>app/gui</filename></entry>
 	    <entry>
-	      he code that puts the user interface together
+	      the code that puts the user interface together
 	    </entry>
 	  </row>
 
