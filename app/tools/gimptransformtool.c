@@ -683,16 +683,16 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
 
   /* We test if the transformed polygon is convex.
    * if z1 and z2 have the same sign as well as z3 and z4
-   * the polygon is convex. */
-
-  z1 = (tr_tool->tx2-tr_tool->tx1)*(tr_tool->ty4-tr_tool->ty1)
-          -(tr_tool->tx4-tr_tool->tx1)*(tr_tool->ty2-tr_tool->ty1);
-  z2 = (tr_tool->tx4-tr_tool->tx1)*(tr_tool->ty3-tr_tool->ty1)
-          -(tr_tool->tx3-tr_tool->tx1)*(tr_tool->ty4-tr_tool->ty1);
-  z3 = (tr_tool->tx4-tr_tool->tx2)*(tr_tool->ty3-tr_tool->ty2)
-          -(tr_tool->tx3-tr_tool->tx2)*(tr_tool->ty4-tr_tool->ty2);
-  z4 = (tr_tool->tx3-tr_tool->tx2)*(tr_tool->ty1-tr_tool->ty2)
-          -(tr_tool->tx1-tr_tool->tx2)*(tr_tool->ty3-tr_tool->ty2);
+   * the polygon is convex.
+   */
+  z1 = (tr_tool->tx2-tr_tool->tx1 * tr_tool->ty4-tr_tool->ty1 -
+        tr_tool->tx4-tr_tool->tx1 * tr_tool->ty2-tr_tool->ty1);
+  z2 = (tr_tool->tx4-tr_tool->tx1 * tr_tool->ty3-tr_tool->ty1 -
+        tr_tool->tx3-tr_tool->tx1 * tr_tool->ty4-tr_tool->ty1);
+  z3 = (tr_tool->tx4-tr_tool->tx2 * tr_tool->ty3-tr_tool->ty2 -
+        tr_tool->tx3-tr_tool->tx2 * tr_tool->ty4-tr_tool->ty2);
+  z4 = (tr_tool->tx3-tr_tool->tx2 * tr_tool->ty1-tr_tool->ty2 -
+        tr_tool->tx1-tr_tool->tx2 * tr_tool->ty3-tr_tool->ty2);
 
   /*  Draw the grid (not for path transform since it looks ugly)  */
 
@@ -819,9 +819,11 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                   NULL, NULL);
 
   if (gimp_item_get_linked (active_item))
-    gimp_item_linked_transform (active_item, &tr_tool->transform,
+    gimp_item_linked_transform (active_item,
+                                &tr_tool->transform,
                                 options->direction,
-                                options->interpolation, options->clip,
+                                options->interpolation,
+                                options->clip,
                                 progress ?
                                 gimp_progress_update_and_flush : NULL,
                                 progress);
@@ -1041,7 +1043,7 @@ gimp_transform_tool_transform_bounding_box (GimpTransformTool *tr_tool)
 				tr_tool->cx, tr_tool->cy,
 				&tr_tool->tcx, &tr_tool->tcy);
 
-  if (tr_tool->grid_coords != NULL && tr_tool->tgrid_coords != NULL)
+  if (tr_tool->grid_coords && tr_tool->tgrid_coords)
     {
       gint i, k;
       gint gci;

@@ -1,5 +1,12 @@
 2004-03-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpdrawtool.c
+	* app/tools/gimpselectiontool.c
+	* app/tools/gimptool.c
+	* app/tools/gimptransformtool.c: minor cleanup.
+
+2004-03-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/tool_manager.c (tool_manager_image_dirty): don't
 	reinitialize the tool when the image becomes dirty but just cancel
 	it (fixes bug #131965). Also, only cancel the tool if the tool is

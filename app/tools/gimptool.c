@@ -94,7 +94,7 @@ static void     gimp_tool_real_cursor_update  (GimpTool        *tool,
 
 static GimpObjectClass *parent_class = NULL;
 
-static gint global_tool_ID = 0;
+static gint global_tool_ID = 1;
 
 
 GType
@@ -128,9 +128,7 @@ gimp_tool_get_type (void)
 static void
 gimp_tool_class_init (GimpToolClass *klass)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -195,9 +193,7 @@ gimp_tool_set_property (GObject      *object,
                         const GValue *value,
                         GParamSpec   *pspec)
 {
-  GimpTool *tool;
-
-  tool = GIMP_TOOL (object);
+  GimpTool *tool = GIMP_TOOL (object);
 
   switch (property_id)
     {
@@ -217,9 +213,7 @@ gimp_tool_get_property (GObject    *object,
                         GValue     *value,
                         GParamSpec *pspec)
 {
-  GimpTool *tool;
-
-  tool = GIMP_TOOL (object);
+  GimpTool *tool = GIMP_TOOL (object);
 
   switch (property_id)
     {
@@ -367,8 +361,8 @@ gimp_tool_control (GimpTool       *tool,
         }
       else
         {
-          g_warning ("gimp_tool_control(): "
-                     "unable to RESUME tool with tool->paused_count == 0");
+          g_warning ("gimp_tool_control: unable to RESUME tool with "
+                     "tool->control->paused_count == 0");
         }
       break;
 

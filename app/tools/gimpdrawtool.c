@@ -944,6 +944,7 @@ gimp_draw_tool_on_vectors_handle (GimpDrawTool    *draw_tool,
     *ret_anchor = NULL;
   if (ret_stroke)
     *ret_stroke = NULL;
+
   return FALSE;
 }
 
@@ -1031,8 +1032,6 @@ gimp_draw_tool_on_vectors (GimpDrawTool *draw_tool,
                            GimpVectors **ret_vectors)
 {
   GList *list;
-  GimpVectors *vectors;
-  gboolean on_curve;
 
   if (ret_coords)        *ret_coords         = *coords;
   if (ret_pos)           *ret_pos            = -1.0;
@@ -1045,22 +1044,20 @@ gimp_draw_tool_on_vectors (GimpDrawTool *draw_tool,
        list;
        list = g_list_next (list))
     {
-      vectors = list->data;
+      GimpVectors *vectors = list->data;
 
       if (! gimp_item_get_visible (GIMP_ITEM (vectors)))
         continue;
 
-      on_curve = gimp_draw_tool_on_vectors_curve (draw_tool,
-                                                  gdisp,
-                                                  vectors, coords,
-                                                  width, height,
-                                                  ret_coords,
-                                                  ret_pos,
-                                                  ret_segment_start,
-                                                  ret_segment_end,
-                                                  ret_stroke);
-
-      if (on_curve)
+      if (gimp_draw_tool_on_vectors_curve (draw_tool,
+                                           gdisp,
+                                           vectors, coords,
+                                           width, height,
+                                           ret_coords,
+                                           ret_pos,
+                                           ret_segment_start,
+                                           ret_segment_end,
+                                           ret_stroke))
         {
           if (ret_vectors)
             *ret_vectors = vectors;

@@ -68,18 +68,18 @@ gimp_selection_tool_get_type (void)
       static const GTypeInfo tool_info =
       {
         sizeof (GimpSelectionToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_selection_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpSelectionTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_selection_tool_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_selection_tool_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpSelectionTool),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_selection_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
-					  "GimpSelectionTool", 
+                                          "GimpSelectionTool",
                                           &tool_info, 0);
     }
 
@@ -89,9 +89,7 @@ gimp_selection_tool_get_type (void)
 static void
 gimp_selection_tool_class_init (GimpSelectionToolClass *klass)
 {
-  GimpToolClass *tool_class;
-
-  tool_class = GIMP_TOOL_CLASS (klass);
+  GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -104,10 +102,6 @@ gimp_selection_tool_class_init (GimpSelectionToolClass *klass)
 static void
 gimp_selection_tool_init (GimpSelectionTool *selection_tool)
 {
-  GimpTool *tool;
-
-  tool = GIMP_TOOL (selection_tool);
-  
   selection_tool->op       = SELECTION_REPLACE;
   selection_tool->saved_op = SELECTION_REPLACE;
 }
@@ -246,11 +240,9 @@ gimp_selection_tool_cursor_update (GimpTool        *tool,
                                    GdkModifierType  state,
                                    GimpDisplay     *gdisp)
 {
-  GimpSelectionTool  *selection_tool;
+  GimpSelectionTool  *selection_tool = GIMP_SELECTION_TOOL (tool);
   GimpToolCursorType  tool_cursor;
   GimpCursorModifier  cmodifier;
-
-  selection_tool = GIMP_SELECTION_TOOL (tool);
 
   tool_cursor = gimp_tool_control_get_tool_cursor (tool->control);
   cmodifier   = GIMP_CURSOR_MODIFIER_NONE;
@@ -263,7 +255,7 @@ gimp_selection_tool_cursor_update (GimpTool        *tool,
     case SELECTION_SUBTRACT:
       cmodifier = GIMP_CURSOR_MODIFIER_MINUS;
       break;
-    case SELECTION_INTERSECT: 
+    case SELECTION_INTERSECT:
       cmodifier = GIMP_CURSOR_MODIFIER_INTERSECT;
       break;
     case SELECTION_REPLACE:
