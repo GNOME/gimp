@@ -312,7 +312,13 @@ render_image_indexed (RenderInfo *info)
 
       initial = FALSE;
 
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
 
+      error += step;
     }
 }
 
