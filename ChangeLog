@@ -1,8 +1,16 @@
+2004-11-13  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/selection.pdb: deprecate gimp_selection_clear()
+	in favor of gimp_selection_none(). Fixes bug #156765.
+
+	* app/pdb/selection_cmds.c
+	* libgimp/gimpselection_pdb.[ch]: regenerated.
+
 2004-11-13  Kevin Cozens  <kcozens@cvs.gimp.org>
 
 	* plug-ins/gfig/gfig.c
-	* plug-ins/gfig/gfig-dialog.c: Changed gimp-selection-none to
-	gimp-selection-clear (bug #156765)
+	* plug-ins/gfig/gfig-dialog.c: Changed gimp_selection_clear() to
+	gimp_selection_none() (bug #156765).
 
 2004-11-13  Kevin Cozens  <kcozens@cvs.gimp.org>
 

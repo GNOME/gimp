@@ -207,14 +207,7 @@ CODE
 }
 
 sub selection_clear {
-    $blurb = 'Set the selection to none, clearing all previous content.';
-
-    $help = <<'HELP';
-This procedure sets the selection mask to empty, assigning the value 0 to every
-pixel in the selection channel.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated ('gimp_selection_none');
 
     @inargs = ( &std_image_arg );
 

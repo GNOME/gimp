@@ -238,10 +238,7 @@ _gimp_selection_float (gint32 drawable_ID,
  * gimp_selection_clear:
  * @image_ID: The image.
  *
- * Set the selection to none, clearing all previous content.
- *
- * This procedure sets the selection mask to empty, assigning the value
- * 0 to every pixel in the selection channel.
+ * This procedure is deprecated! Use gimp_selection_none() instead.
  *
  * Returns: TRUE on success.
  */

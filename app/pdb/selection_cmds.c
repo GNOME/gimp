@@ -478,12 +478,12 @@ static ProcArg selection_clear_inargs[] =
 static ProcRecord selection_clear_proc =
 {
   "gimp_selection_clear",
-  "Set the selection to none, clearing all previous content.",
-  "This procedure sets the selection mask to empty, assigning the value 0 to every pixel in the selection channel.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  NULL,
+  "This procedure is deprecated! Use 'gimp_selection_none' instead.",
+  "This procedure is deprecated! Use 'gimp_selection_none' instead.",
+  "",
+  "",
+  "",
+  "gimp_selection_none",
   GIMP_INTERNAL,
   1,
   selection_clear_inargs,
