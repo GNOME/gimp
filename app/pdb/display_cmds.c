@@ -59,10 +59,7 @@ display_new_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if (! gimp_image_is_empty (gimage))
-	success = (gdisp = gdisplay_new (gimage, scale)) != NULL;
-      else
-	success = FALSE;
+      success = (gdisp = gdisplay_new (gimage, scale)) != NULL;
     }
 
   return_args = procedural_db_return_args (&display_new_proc, success);
