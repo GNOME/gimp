@@ -90,7 +90,7 @@ layer_new_invoker (Argument *args)
   if (success)
     {
       int_value = args[6].value.pdb_int;
-      if (int_value >= NORMAL_MODE && int_value <= VALUE_MODE)
+      if (int_value >= NORMAL_MODE && int_value <= DIVIDE_MODE)
 	mode = int_value;
       else
 	success = FALSE;
@@ -136,7 +136,7 @@ ProcArg layer_new_args[] =
   },
   { PDB_INT32,
     "mode",
-    "the layer combination mode: { NORMAL (0), DISSOLVE (1), MULTIPLY (3), SCREEN (4), OVERLAY (5) DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14) }"
+    "the layer combination mode: { NORMAL (0), DISSOLVE (1), MULTIPLY (3), SCREEN (4), OVERLAY (5) DIFFERENCE (6), ADDITION (7), SUBTRACT (8), DARKEN-ONLY (9), LIGHTEN-ONLY (10), HUE (11), SATURATION (12), COLOR (13), VALUE (14), DIVIDE/DODGE (15) }"
   }
 };
 
@@ -1753,7 +1753,7 @@ layer_set_mode_invoker (Argument *args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      if (int_value >= NORMAL_MODE && int_value <= VALUE_MODE)
+      if (int_value >= NORMAL_MODE && int_value <= DIVIDE_MODE)
 	layer->mode = int_value;
       else
 	success = FALSE;

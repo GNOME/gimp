@@ -1,3 +1,8 @@
+Mon Mar  8 21:23:10 CET 1999 Marc Lehmann <pcg@goof.com>
+
+	* app/layer_cmds.c: updated gimp_layer_new and gimp_layer_set_mode to
+        accept a DIVIDE_MODE argument.
+
 1999-03-08  Jay Cox  <jaycox@earthlink.net>
 
 	* app/plug_in.c: use g_io_channel_close/unref pairs instead of close
