@@ -1,5 +1,10 @@
 2004-10-04  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/script-fu-interface.c (script_fu_reset):
+	fixed reset for SF_TEXT values.
+
+2004-10-04  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu-interface.c (script_fu_interface):
 	oops, didn't meant to remove that line.
 

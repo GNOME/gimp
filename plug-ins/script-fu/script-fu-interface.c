@@ -898,13 +898,16 @@ script_fu_reset (SFScript *script)
 
         case SF_TEXT:
           {
+            GtkWidget     *view;
             GtkTextBuffer *buffer;
 
             g_free (script->arg_values[i].sfa_value);
             script->arg_values[i].sfa_value =
               g_strdup (script->arg_defaults[i].sfa_value);
 
-            buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget));
+            view = gtk_bin_get_child (GTK_BIN (widget));
+            buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
+
             gtk_text_buffer_set_text (buffer,
                                       script->arg_values[i].sfa_value, -1);
           }
