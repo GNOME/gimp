@@ -1,4 +1,4 @@
-;; text-circle.scm -- a script for The GIMP 1.1
+;; text-circle.scm -- a script for The GIMP
 ;; Author: Shuji Narazaki <narazaki@gimp.org>
 ;; Time-stamp: <1998/11/25 13:26:51 narazaki@gimp.org>
 ;; Version 2.5
@@ -6,21 +6,6 @@
 ;;   jseymour@jimsun.LinxNet.com (Jim Seymour)
 ;;   Sven Neumann <neumanns@uni-duesseldorf.de>
 
-;; Note:
-;;  Please remove /usr/local/share/gimp/scripts/circle-logo.scm, which is
-;;  obsolete version of this script.
-
-;; Implementation memo:
-;; This script uses "extra-pole".
-;; Namely, when rendering a letter, gimp-text is invoked with the letter
-;; followed by " lAgy", then strips it by gimp-layer-resize. I call this " lAgy"
-;; extra-pole. Why is it needed?
-;; Since a text is located by its left-upper corner's position, THERE IS NO WAY
-;; TO PLACE LETTERS ON A BASE LINE!
-;; (FURTHERMORE, GIMP-TEXT EATS WHITESPACES AT THE BEGINNING/END OF LINE.)
-;; Thus, as a dirty trick, by adding tall letters: "lA", and "gy" which have
-;; large descent value to each letter temporally, most letters in most fonts
-;; are aligned correctly. But don't expect completeness :-<
 
 (if (not (symbol-bound? 'script-fu-text-circle-debug? (the-environment)))
     (define script-fu-text-circle-debug? #f))
@@ -28,7 +13,6 @@
 (define (script-fu-text-circle text radius start-angle fill-angle
 			       font-size antialias font-name)
   ;;(set! script-fu-text-circle-debug? #t)
-  (define extra-pole TRUE)		; for debugging purpose
   (define modulo fmod)			; in R4RS way
   (define (wrap-string str) (string-append "\"" str "\""))
   (define (white-space-string? str)
@@ -43,15 +27,9 @@
 	 (rad-90 (/ *pi* 2))
 	 (center-x (/ drawable-size 2))
 	 (center-y center-x)
-	 ;; widths of " lAgy" and of "l Agy" will be different, because gimp-text
-	 ;; strips spaces at the beginning of a string![Mon Apr 27 15:10:39 1998]
-	 (fixed-pole0 "l Agy")
-	 ;; the following used as real pad.
-	 (fixed-pole " lAgy")
-	 (font-infos (gimp-text-get-extents-fontname fixed-pole font-size
+	 (font-infos (gimp-text-get-extents-fontname "lAgy" font-size
 						     PIXELS font-name))
 	 (desc (nth 3 font-infos))
-	 (extra 0)			; extra is calculated from real layer
 	 (angle-list #f)
 	 (letter "")
 	 (new-layer #f)
@@ -63,16 +41,7 @@
     (set! start-angle-rad (* (/ (modulo start-angle 360) 360) 2 *pi*))
     (set! fill-angle-rad (* (/ fill-angle 360) 2 *pi*))
     (set! radian-step (/ fill-angle-rad char-num))
-    ;; set extra
-    (if (eq? extra-pole TRUE)
-	(let ((temp-pole-layer (car (gimp-text-fontname img -1 0 0
-					       fixed-pole0
-					       1 antialias
-					       font-size PIXELS
-					       font-name))))
-	  (set! extra (car (gimp-drawable-width temp-pole-layer)))
-	  (gimp-image-remove-layer img temp-pole-layer))
-	(set! extra 0))
+ 
     ;; make width-list
     ;;  In a situation,
     ;; (car (gimp-drawable-width (car (gimp-text ...)))
@@ -113,19 +82,16 @@
 	  ;; Running gimp-text with " " causes an error!
 	  (let* ((new-layer
 		  (car (gimp-text-fontname img -1 0 0
-					   (if (eq? extra-pole TRUE)
-					       (string-append letter fixed-pole)
-					       letter)
+					   letter
 					   1 antialias
 					   font-size PIXELS
 					   font-name)))
 		 (width (car (gimp-drawable-width new-layer)))
 		 (height (car (gimp-drawable-height new-layer)))
 		 (rotate-radius (- (/ height 2) desc))
-		 (new-width (- width extra))
 		 (angle (+ start-angle-rad (- (nth index angle-list) rad-90))))
-	    ;; delete fixed-pole
-	    (gimp-layer-resize new-layer new-width height 0 0)
+
+	    (gimp-layer-resize new-layer width height 0 0)
 	    (set! width (car (gimp-drawable-width new-layer)))
 	    (if (not script-fu-text-circle-debug?)
 		(begin
@@ -172,13 +138,13 @@
  "Shuji Narazaki"
  "1997-1998"
  ""
- SF-STRING     _"Text" "The GNU Image Manipulation Program Version 1.1 "
- SF-ADJUSTMENT _"Radius" '(80 1 8000 1 1 0 1)
- SF-ADJUSTMENT _"Start Angle" '(0 -180 180 1 1 0 1)
- SF-ADJUSTMENT _"Fill Angle" '(360 -360 360 1 1 0 1)
+ SF-STRING     _"Text" "The GNU Image Manipulation Program Version 2.0 "
+ SF-ADJUSTMENT _"Radius"             '(80 1 8000 1 1 0 1)
+ SF-ADJUSTMENT _"Start Angle"        '(0 -180 180 1 1 0 1)
+ SF-ADJUSTMENT _"Fill Angle"         '(360 -360 360 1 1 0 1)
  SF-ADJUSTMENT _"Font Size (pixels)" '(18 1 1000 1 1 0 1)
- SF-TOGGLE     _"Antialias" TRUE
- SF-FONT       _"Font" "Sans"
+ SF-TOGGLE     _"Antialias"          TRUE
+ SF-FONT       _"Font"               "Sans"
 )
 
 ;; text-circle.scm ends here
