@@ -1249,12 +1249,12 @@ msgstr "Низ:"
 #: plug-ins/MapObject/mapobject_ui.c:1131
 #: plug-ins/print/gimp_main_window.c:386
 msgid "Left:"
-msgstr ""
+msgstr "Л╕воруч:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1131
 #: plug-ins/print/gimp_main_window.c:408
 msgid "Right:"
-msgstr ""
+msgstr "Праворуч:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1137
 msgid "Map Images to Box Faces"
@@ -1618,7 +1618,7 @@ msgstr "Про Чужу Мапу 2"
 #. Let user choose KCF palette (cancel ignores)
 #: plug-ins/common/CEL.c:194
 msgid "Load KISS Palette"
-msgstr ""
+msgstr "Завантажити пал╕тру KISS"
 
 #: plug-ins/common/CEL.c:262
 #, c-format
@@ -2078,6 +2078,8 @@ msgid ""
 "Parameters were Saved to\n"
 "\"%s\""
 msgstr ""
+"Параметри було збережено в\n"
+"\"%s\""
 
 #: plug-ins/common/CML_explorer.c:2249
 msgid "CML File Operation Warning"
@@ -2098,7 +2100,7 @@ msgstr "Завантажити параметри з"
 
 #: plug-ins/common/CML_explorer.c:2308
 msgid "Selective Load from"
-msgstr ""
+msgstr "Виб╕ркове завантаження з"
 
 #: plug-ins/common/CML_explorer.c:2412
 msgid "Error: it's not CML parameter file."
@@ -4268,23 +4270,23 @@ msgstr "Перем╕стити"
 
 #: plug-ins/common/iwarp.c:1035
 msgid "Grow"
-msgstr ""
+msgstr "Р╕ст"
 
 #: plug-ins/common/iwarp.c:1036
 msgid "Swirl CCW"
-msgstr ""
+msgstr "Вихор CCW"
 
 #: plug-ins/common/iwarp.c:1038
 msgid "Shrink"
-msgstr ""
+msgstr "Зменшення"
 
 #: plug-ins/common/iwarp.c:1039
 msgid "Swirl CW"
-msgstr ""
+msgstr "Вихор CW"
 
 #: plug-ins/common/iwarp.c:1060 plug-ins/common/sinus.c:1989
 msgid "Bilinear"
-msgstr ""
+msgstr "Б╕л╕н╕йний"
 
 #: plug-ins/common/iwarp.c:1078
 msgid "Adaptive Supersample"
