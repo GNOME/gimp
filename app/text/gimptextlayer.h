@@ -47,6 +47,7 @@ struct _GimpTextLayer
                                  */
   guint         idle_render_id;
   gboolean      auto_rename;
+  gboolean      modified;
 };
 
 struct _GimpTextLayerClass
@@ -55,15 +56,17 @@ struct _GimpTextLayerClass
 };
 
 
-GType       gimp_text_layer_get_type (void) G_GNUC_CONST;
+GType       gimp_text_layer_get_type    (void) G_GNUC_CONST;
 
-GimpLayer * gimp_text_layer_new        (GimpImage     *image,
-                                        GimpText      *text);
-GimpText  * gimp_text_layer_get_text   (GimpTextLayer *layer);
-void        gimp_text_layer_set_text   (GimpTextLayer *layer,
-                                        GimpText      *text);
-void        gimp_text_layer_discard    (GimpTextLayer *layer);
-void        gimp_text_layer_flush      (GimpTextLayer *layer);
+GimpLayer * gimp_text_layer_new         (GimpImage     *image,
+                                         GimpText      *text);
+GimpText  * gimp_text_layer_get_text    (GimpTextLayer *layer);
+void        gimp_text_layer_set_text    (GimpTextLayer *layer,
+                                         GimpText      *text);
+void        gimp_text_layer_discard     (GimpTextLayer *layer);
+void        gimp_text_layer_flush       (GimpTextLayer *layer);
+
+gboolean    gimp_drawable_is_text_layer (GimpDrawable  *drawable);
 
 
 #endif /* __GIMP_TEXT_LAYER_H__ */

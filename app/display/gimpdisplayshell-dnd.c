@@ -177,7 +177,6 @@ gimp_display_shell_bucket_fill (GimpDisplayShell   *shell,
 {
   GimpImage    *gimage = shell->gdisp->gimage;
   GimpDrawable *drawable;
-  GimpText     *text;
 
   if (gimage->gimp->busy)
     return;
@@ -188,12 +187,12 @@ gimp_display_shell_bucket_fill (GimpDisplayShell   *shell,
     return;
 
   /* FIXME: there should be a virtual method for this that the
-     GimpTextLayer can override. */
-
-  if (color &&
-      GIMP_IS_TEXT_LAYER (drawable) &&
-      (text = gimp_text_layer_get_text (GIMP_TEXT_LAYER (drawable))) != NULL)
+   *        GimpTextLayer can override.
+   */
+  if (color && gimp_drawable_is_text_layer (drawable))
     {
+      GimpText *text = gimp_text_layer_get_text (GIMP_TEXT_LAYER (drawable));
+
       g_object_set (text, "color", color, NULL);
       gimp_text_layer_flush (GIMP_TEXT_LAYER (drawable));
     }

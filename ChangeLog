@@ -1,5 +1,16 @@
 2004-03-13  Sven Neumann  <sven@gimp.org>
 
+	* app/text/gimptextlayer.[ch]: implement GimpDrawable functions
+	that affect the tiles and mark the text layer as modified. Added
+	new function gimp_drawable_is_text_layer() that checks whether a
+	drawable is an unmodified text layer.
+
+	* app/display/gimpdisplayshell-dnd.c (gimp_display_shell_bucket_fill):
+	use gimp_drawable_is_text_layer() and only set the text color if the
+	text layer is unmodified. Fixes bug #136623.
+
+2004-03-13  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdrawable.[ch]: added new virtual function
 	GimpDrawable::set_tiles().
 

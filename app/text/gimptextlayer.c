@@ -54,26 +54,49 @@
 #include "gimp-intl.h"
 
 
-static void       gimp_text_layer_class_init    (GimpTextLayerClass *klass);
-static void       gimp_text_layer_init          (GimpTextLayer  *layer);
-static void       gimp_text_layer_dispose       (GObject        *object);
-static void       gimp_text_layer_finalize      (GObject        *object);
+static void       gimp_text_layer_class_init     (GimpTextLayerClass *klass);
+static void       gimp_text_layer_init           (GimpTextLayer  *layer);
+static void       gimp_text_layer_dispose        (GObject        *object);
+static void       gimp_text_layer_finalize       (GObject        *object);
 
-static gint64     gimp_text_layer_get_memsize   (GimpObject     *object,
-                                                 gint64         *gui_size);
+static gint64     gimp_text_layer_get_memsize    (GimpObject     *object,
+                                                  gint64         *gui_size);
 
-static GimpItem * gimp_text_layer_duplicate     (GimpItem       *item,
-                                                 GType           new_type,
-                                                 gboolean        add_alpha);
-static gboolean   gimp_text_layer_rename        (GimpItem       *item,
-                                                 const gchar    *new_name,
-                                                 const gchar    *undo_desc);
+static GimpItem * gimp_text_layer_duplicate      (GimpItem       *item,
+                                                  GType           new_type,
+                                                  gboolean        add_alpha);
+static gboolean   gimp_text_layer_rename         (GimpItem       *item,
+                                                  const gchar    *new_name,
+                                                  const gchar    *undo_desc);
 
-static void       gimp_text_layer_text_notify   (GimpTextLayer  *layer);
-static gboolean   gimp_text_layer_idle_render   (GimpTextLayer  *layer);
-static gboolean   gimp_text_layer_render_now    (GimpTextLayer  *layer);
-static void       gimp_text_layer_render_layout (GimpTextLayer  *layer,
-                                                 GimpTextLayout *layout);
+static void       gimp_text_layer_apply_region   (GimpDrawable   *drawable,
+                                                  PixelRegion    *src2PR,
+                                                  gboolean        push_undo,
+                                                  const gchar    *undo_desc,
+                                                  gdouble         opacity,
+                                                  GimpLayerModeEffects  mode,
+                                                  TileManager    *src1_tiles,
+                                                  gint            x,
+                                                  gint            y);
+static void       gimp_text_layer_replace_region (GimpDrawable   *drawable,
+                                                  PixelRegion    *src2PR,
+                                                  gboolean        push_undo,
+                                                  const gchar    *undo_desc,
+                                                  gdouble         opacity,
+                                                  PixelRegion    *maskPR,
+                                                  gint            x,
+                                                  gint            y);
+static void       gimp_text_layer_set_tiles      (GimpDrawable   *drawable,
+                                                  gboolean        push_undo,
+                                                  const gchar    *undo_desc,
+                                                  TileManager    *tiles,
+                                                  GimpImageType   type);
+
+static void       gimp_text_layer_text_notify    (GimpTextLayer  *layer);
+static gboolean   gimp_text_layer_idle_render    (GimpTextLayer  *layer);
+static gboolean   gimp_text_layer_render_now     (GimpTextLayer  *layer);
+static void       gimp_text_layer_render_layout  (GimpTextLayer  *layer,
+                                                  GimpTextLayout *layout);
 
 
 static GimpLayerClass *parent_class = NULL;
@@ -110,15 +133,11 @@ gimp_text_layer_get_type (void)
 static void
 gimp_text_layer_class_init (GimpTextLayerClass *klass)
 {
-  GObjectClass      *object_class;
-  GimpObjectClass   *gimp_object_class;
-  GimpViewableClass *viewable_class;
-  GimpItemClass     *item_class;
-
-  object_class      = G_OBJECT_CLASS (klass);
-  gimp_object_class = GIMP_OBJECT_CLASS (klass);
-  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
-  item_class        = GIMP_ITEM_CLASS (klass);
+  GObjectClass      *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
+  GimpItemClass     *item_class        = GIMP_ITEM_CLASS (klass);
+  GimpDrawableClass *drawable_class    = GIMP_DRAWABLE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -139,6 +158,10 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
   item_class->rotate               = gimp_text_layer_rotate;
   item_class->transform            = gimp_text_layer_transform;
 #endif
+
+  drawable_class->apply_region     = gimp_text_layer_apply_region;
+  drawable_class->replace_region   = gimp_text_layer_replace_region;
+  drawable_class->set_tiles        = gimp_text_layer_set_tiles;
 }
 
 static void
@@ -148,6 +171,7 @@ gimp_text_layer_init (GimpTextLayer *layer)
   layer->text_parasite  = NULL;
   layer->idle_render_id = 0;
   layer->auto_rename    = TRUE;
+  layer->modified       = FALSE;
 }
 
 static void
@@ -245,6 +269,55 @@ gimp_text_layer_rename (GimpItem    *item,
   return FALSE;
 }
 
+static void
+gimp_text_layer_apply_region (GimpDrawable         *drawable,
+                              PixelRegion          *src2PR,
+                              gboolean              push_undo,
+                              const gchar          *undo_desc,
+                              gdouble               opacity,
+                              GimpLayerModeEffects  mode,
+                              TileManager          *src1_tiles,
+                              gint                  x,
+                              gint                  y)
+{
+  GIMP_DRAWABLE_CLASS (parent_class)->apply_region (drawable, src2PR,
+                                                    push_undo, undo_desc,
+                                                    opacity, mode,
+                                                    src1_tiles, x, y);
+  GIMP_TEXT_LAYER (drawable)->modified = TRUE;
+}
+
+static void
+gimp_text_layer_replace_region (GimpDrawable *drawable,
+                                PixelRegion  *src2PR,
+                                gboolean      push_undo,
+                                const gchar  *undo_desc,
+                                gdouble       opacity,
+                                PixelRegion  *maskPR,
+                                gint          x,
+                                gint          y)
+{
+  GIMP_DRAWABLE_CLASS (parent_class)->replace_region (drawable, src2PR,
+                                                      push_undo, undo_desc,
+                                                      opacity,
+                                                      maskPR, x, y);
+  GIMP_TEXT_LAYER (drawable)->modified = TRUE;
+}
+
+static void
+gimp_text_layer_set_tiles (GimpDrawable  *drawable,
+                           gboolean       push_undo,
+                           const gchar   *undo_desc,
+                           TileManager   *tiles,
+                           GimpImageType  type)
+{
+  GIMP_DRAWABLE_CLASS (parent_class)->set_tiles (drawable,
+                                                 push_undo, undo_desc,
+                                                 tiles, type);
+  GIMP_TEXT_LAYER (drawable)->modified = TRUE;
+}
+
+
 /**
  * gimp_text_layer_new:
  * @image: the #GimpImage the layer should belong to
@@ -326,6 +399,16 @@ gimp_text_layer_get_text (GimpTextLayer *layer)
 
   return layer->text;
 }
+
+
+gboolean
+gimp_drawable_is_text_layer (GimpDrawable *drawable)
+{
+  return (GIMP_IS_TEXT_LAYER (drawable)    &&
+          GIMP_TEXT_LAYER (drawable)->text &&
+          GIMP_TEXT_LAYER (drawable)->modified == FALSE);
+}
+
 
 /**
  * gimp_text_layer_discard:
